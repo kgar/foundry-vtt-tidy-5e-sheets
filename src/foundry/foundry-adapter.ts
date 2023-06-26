@@ -19,6 +19,7 @@ export const FoundryAdapter = {
     return Actors.registerSheet('dnd5e', sheet, {
       types: ['character'],
       makeDefault: true,
+      label: 'TODO: Localize, but Tidy 5e kgar',
     });
   },
   getTemplate(templateName: string) {
@@ -47,8 +48,10 @@ declare const dnd5e: {
       ActorSheet5eCharacter: ConstructorOf<{
         actor: {
           limited: boolean;
+          isOwner: boolean;
         };
         activateListeners(html: { get: (index: number) => HTMLElement }): void;
+        submit(): void;
       }>;
     };
   };

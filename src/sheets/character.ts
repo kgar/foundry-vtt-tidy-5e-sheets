@@ -1,5 +1,5 @@
 import { FoundryAdapter } from '../foundry/foundry-adapter';
-import CharacterSheet from './character.svelte';
+import Tidy5eSheet from './tidy5e-sheet.svelte';
 
 const ActorSheet5eCharacter = FoundryAdapter.getActorSheetClass();
 
@@ -12,8 +12,13 @@ export class Tidy5eSheetKgar extends ActorSheet5eCharacter {
     super.activateListeners(html);
 
     const node = html.get(0);
-    new CharacterSheet({
+    new Tidy5eSheet({
       target: node,
+      props: {
+        actor: this.actor,
+        submit: this.submit.bind(this),
+        owner: this.actor.isOwner
+      }
     });
   }
 }
