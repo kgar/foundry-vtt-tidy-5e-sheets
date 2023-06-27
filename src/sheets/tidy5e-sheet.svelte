@@ -1,10 +1,11 @@
 <script lang="ts">
-  export let actor: any;
+  import type { Actor5e, ActorReference } from 'src/foundry/foundry-adapter';
+
+  export let actor: Actor5e;
+  export let actorReference: ActorReference;
   export let submit: () => void;
-  export let owner: boolean;
   export let localize: (value: string) => string;
-  export let debug: any = '';
-  export let dnd5eConfig: any;
+  export let debug: any = 'Put any debug information here, if ya need it.';
 
   function submitWhenEnterKey(e: KeyboardEvent) {
     if (e.key == 'Enter') {
@@ -12,10 +13,12 @@
       submit();
     }
   }
+
+  console.log('Tidy5e KGar', debug);
 </script>
 
 <div style="height: 100%; overflow-y: scroll; overflow-x: hidden">
-  {#if owner}
+  {#if actor.isOwner}
     <h1
       contenteditable="true"
       spellcheck="false"
@@ -41,58 +44,38 @@
 
   <p>
     Actor Name: {actor.name}<br />
-    Owner: {owner}
+    Owner: {actor.isOwner}
   </p>
 
   <p>
     HP: {actor.system.attributes.hp.value} / {actor.system.attributes.hp.max}
   </p>
 
-  {#each Object.entries(actor.system.abilities) as ability}
+  {#each actorReference.abilitiesList as ability}
     <div style="display: flex;">
-      <button on:click={(event) => actor.rollAbility(ability[0], { event })}
-        >{dnd5eConfig.abilities[ability[0]].label}</button
+      <button
+        on:click={(event) => actor.rollAbility(ability.abbreviation, { event })}
+        >{actorReference.abilities[ability.abbreviation].label}</button
       >
-      <button on:click={(event) => actor.rollAbilityTest(ability[0], { event })}
-        >Do a {dnd5eConfig.abilities[ability[0]].label} roll!</button
+      <button
+        on:click={(event) =>
+          actor.rollAbilityTest(ability.abbreviation, { event })}
+        >Do a {actorReference.abilities[ability.abbreviation].label} roll!</button
       >
-      <button on:click={(event) => actor.rollAbilitySave(ability[0], { event })}
-        >Make a {dnd5eConfig.abilities[ability[0]].label} save!</button
+      <button
+        on:click={(event) =>
+          actor.rollAbilitySave(ability.abbreviation, { event })}
+        >Make a {actorReference.abilities[ability.abbreviation].label} save!</button
       >
     </div>
   {/each}
   <hr />
   <div style="display: grid; grid-template-columns: 1fr 1fr 1fr;">
-    {#each Object.entries(actor.system.skills) as skill}
-      <button on:click={(event) => actor.rollSkill(skill[0], { event })}
-        >{dnd5eConfig.skills[skill[0]].label}</button
+    {#each actorReference.skillsList as skill}
+      <button
+        on:click={(event) => actor.rollSkill(skill.abbreviation, { event })}
+        >{actorReference.skills[skill.abbreviation].label}</button
       >
     {/each}
   </div>
-
-  <pre style="height: 400px; overflow-y: scroll">
-{JSON.stringify(actor, null, '  ')}
-  </pre>
-  {JSON.stringify(debug, null, '  ')}
 </div>
-
-<style lang="scss">
-  [contenteditable] {
-    border: none;
-    outline: none;
-    display: inline-block;
-    border-radius: 3px;
-    -moz-user-select: text;
-    -khtml-user-select: text;
-    -webkit-user-select: text;
-    -o-user-select: text;
-    user-select: text;
-
-    &:empty::before {
-      content: attr(data-placeholder);
-      pointer-events: none;
-      display: block; // For Firefox
-      color: var(--t5e-tertiary-color);
-    }
-  }
-</style>

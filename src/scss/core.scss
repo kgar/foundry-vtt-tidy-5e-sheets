@@ -1,0 +1,19 @@
+.tidy5e-kgar {
+  [contenteditable] {
+    border: none;
+    outline: none;
+    border-radius: 3px;
+    -moz-user-select: text;
+    -khtml-user-select: text;
+    -webkit-user-select: text;
+    -o-user-select: text;
+    user-select: text;
+
+    &:empty::before {
+      content: attr(data-placeholder);
+      pointer-events: none;
+      display: block; // For Firefox
+      color: var(--t5e-tertiary-color);
+    }
+  }
+}

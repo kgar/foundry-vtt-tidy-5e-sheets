@@ -17,9 +17,9 @@ export class Tidy5eSheetKgar extends ActorSheet5eCharacter {
       props: {
         actor: this.actor,
         submit: this.submit.bind(this),
-        owner: this.actor.isOwner,
         localize: FoundryAdapter.localize,
-        dnd5eConfig: FoundryAdapter.getDnd5eConfig(),
+        actorReference: FoundryAdapter.getActorReference(),
+        debug: this.actor,
       },
     });
   }

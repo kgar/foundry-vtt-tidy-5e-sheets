@@ -28,9 +28,32 @@ export const FoundryAdapter = {
   localize(value: string) {
     return game.i18n.localize(value);
   },
-  getDnd5eConfig() {
-    return CONFIG.DND5E;
+  getActorReference(): ActorReference {
+    return {
+      skills: CONFIG.DND5E.skills,
+      skillsList: Object.entries(CONFIG.DND5E.skills).map(
+        (x: [string, any]) => ({
+          abbreviation: x[0],
+          ...x[1],
+        })
+      ),
+      abilities: CONFIG.DND5E.abilities,
+      abilitiesList: Object.values(CONFIG.DND5E.abilities),
+    };
   },
+};
+
+/* ------------------------------------------------------
+* Facade Types
+--------------------------------------------------------- */
+
+export type ActorReference = {
+  skills: Record<string, SkillReference>;
+  skillsList: ({
+    abbreviation: string;
+  } & SkillReference)[];
+  abilities: Record<string, AbilityReference>;
+  abilitiesList: AbilityReference[];
 };
 
 /* ------------------------------------------------------
@@ -52,15 +75,29 @@ declare const dnd5e: {
   applications: {
     actor: {
       ActorSheet5eCharacter: ConstructorOf<{
-        actor: {
-          limited: boolean;
-          isOwner: boolean;
-        };
+        actor: Actor5e;
         activateListeners(html: { get: (index: number) => HTMLElement }): void;
         submit(): void;
       }>;
     };
   };
+};
+export type Actor5e = {
+  name: string;
+  limited: boolean;
+  isOwner: boolean;
+  system: {
+    attributes: {
+      hp: {
+        value: number | null;
+        max: number | null;
+      };
+    };
+  };
+  rollAbility(abbreviation: string, options: { event: Event }): void;
+  rollAbilityTest(abbreviation: string, options: { event: Event }): void;
+  rollAbilitySave(abbreviation: string, options: { event: Event }): void;
+  rollSkill(abbreviation: string, options: { event: Event }): void;
 };
 declare const game: {
   user: {
@@ -82,4 +119,16 @@ declare const Actors: {
 };
 declare const CONFIG: {
   DND5E: any;
+};
+
+type AbilityReference = {
+  abbreviation: string;
+  defaults: Record<string, number>;
+  label: string;
+  type: string;
+};
+
+type SkillReference = {
+  label: string;
+  ability: string;
 };
