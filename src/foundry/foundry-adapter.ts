@@ -25,6 +25,9 @@ export const FoundryAdapter = {
   getTemplate(templateName: string) {
     return `modules/${CONSTANTS.MODULE_ID}/templates/${templateName}`;
   },
+  localize(value: string) {
+    return game.i18n.localize(value);
+  },
 };
 
 /* ------------------------------------------------------
@@ -62,6 +65,9 @@ declare const game: {
   };
   settings: {
     get: (moduleId: string, settingName: string) => unknown;
+  };
+  i18n: {
+    localize(value: string): string;
   };
 };
 declare const Actors: {
