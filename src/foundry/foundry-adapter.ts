@@ -28,6 +28,9 @@ export const FoundryAdapter = {
   localize(value: string) {
     return game.i18n.localize(value);
   },
+  getDnd5eConfig() {
+    return CONFIG.DND5E;
+  },
 };
 
 /* ------------------------------------------------------
@@ -76,4 +79,7 @@ declare const Actors: {
     sheet: ConstructorOf<any>,
     options: unknown
   ): unknown;
+};
+declare const CONFIG: {
+  DND5E: any;
 };
