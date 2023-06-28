@@ -41,6 +41,28 @@ export const FoundryAdapter = {
       abilitiesList: Object.values(CONFIG.DND5E.abilities),
     };
   },
+  /**
+   *
+   * @param content           - the editor content to include
+   * @param targetDataField   - the data field to update when this editor is saved
+   * @param editable          - whether the editor should allow editing
+   * @returns
+   */
+  createEditorHtml(
+    content: string,
+    targetDataField: string,
+    editable: boolean
+  ) {
+    return HandlebarsHelpers.editor(content, {
+      hash: {
+        target: targetDataField,
+        button: true,
+        engine: 'prosemirror',
+        collaborate: false,
+        editable,
+      },
+    });
+  },
 };
 
 /* ------------------------------------------------------
@@ -93,6 +115,11 @@ export type Actor5e = {
         max: number | null;
       };
     };
+    details: {
+      background: string;
+      bond: string;
+      flaw: string;
+    };
   };
   rollAbility(abbreviation: string, options: { event: Event }): void;
   rollAbilityTest(abbreviation: string, options: { event: Event }): void;
@@ -131,4 +158,26 @@ type AbilityReference = {
 type SkillReference = {
   label: string;
   ability: string;
+};
+
+type TextEditorOptions = Partial<{
+  target: string;
+  button: boolean;
+  class: string;
+  editable: boolean;
+  engine: string;
+  collaborate: boolean;
+  owner: boolean;
+  documents: boolean;
+  rollData: any;
+  content: string;
+}>;
+
+declare var HandlebarsHelpers: {
+  editor: (
+    content: string,
+    options?: {
+      hash: TextEditorOptions;
+    }
+  ) => string;
 };
