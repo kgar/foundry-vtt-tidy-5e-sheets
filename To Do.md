@@ -11,6 +11,7 @@
   - [ ] Reread this https://foundryvtt.wiki/en/development/guides/handling-data and compare it to Tidy5e's approach
   - [ ] https://foundryvtt.wiki/en/development/api/flags
   - [ ] https://foundryvtt.wiki/en/development/api/settings
+- [ ] Can the svelte view leverage prosemirror?
 - [ ] Set up project constants for handling T5EK flags
 - [ ] Implement "Tidy5e KGar Sheet" Game Settings tracer bullet
   - [ ] Add section to Game Settings
