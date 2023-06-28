@@ -1,23 +1,57 @@
 <script lang="ts">
-  import type { Actor5e, ActorReference } from 'src/foundry/foundry-adapter';
+  import type { Actor5e } from '../foundry/foundry-adapter';
+  import { onMount } from 'svelte';
+  import { FoundryAdapter } from '../foundry/foundry-adapter';
+  import SheetEditor from './sheet-editor.svelte';
+  import type { SheetFunctions } from 'src/types/types';
 
   export let actor: Actor5e;
-  export let actorReference: ActorReference;
-  export let submit: () => void;
-  export let localize: (value: string) => string;
   export let debug: any = 'Put any debug information here, if ya need it.';
+  export let sheetFunctions: SheetFunctions;
 
   function submitWhenEnterKey(e: KeyboardEvent) {
     if (e.key == 'Enter') {
       e.preventDefault();
-      submit();
+      sheetFunctions.submit();
     }
   }
 
   console.log('Tidy5e KGar', debug);
+  const actorReference = FoundryAdapter.getActorReference();
+  const localize = FoundryAdapter.localize;
+
+  onMount(() => {
+    sheetFunctions.activateListeners();
+  });
 </script>
 
 <div style="height: 100%; overflow-y: scroll; overflow-x: hidden">
+  <article style="height: 200px;">
+    <div>Test: Background Editor</div>
+
+    <SheetEditor
+      content={actor.system.details.background}
+      target="system.details.background"
+      editable={actor.isOwner || FoundryAdapter.userIsGm()}
+    />
+  </article>
+  <article style="height: 200px;">
+    <div>Test: Bond Editor</div>
+    <SheetEditor
+      content={actor.system.details.bond}
+      target="system.details.bond"
+      editable={actor.isOwner || FoundryAdapter.userIsGm()}
+    />
+  </article>
+  <article style="height: 200px;">
+    <div>Test: Flaw Editor</div>
+    <SheetEditor
+      content={actor.system.details.flaw}
+      target="system.details.flaw"
+      editable={actor.isOwner || FoundryAdapter.userIsGm()}
+    />
+  </article>
+
   {#if actor.isOwner}
     <h1
       contenteditable="true"
@@ -25,7 +59,7 @@
       data-placeholder={localize('DND5E.Name')}
       data-maxlength="40"
       bind:textContent={actor.name}
-      on:blur={submit}
+      on:blur={sheetFunctions.submit}
       on:keypress={submitWhenEnterKey}
     />
   {:else}
@@ -38,7 +72,7 @@
     name="name"
     type="hidden"
     value={actor.name}
-    placeholder="TODO: localize 'DND5E.Name'"
+    placeholder={localize('DND5E.Name')}
     maxlength="40"
   />
 

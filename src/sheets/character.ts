@@ -9,17 +9,15 @@ export class Tidy5eSheetKgar extends ActorSheet5eCharacter {
   }
 
   activateListeners(html: { get: (index: number) => HTMLElement }) {
-    super.activateListeners(html);
-
     const node = html.get(0);
     new Tidy5eSheet({
       target: node,
       props: {
         actor: this.actor,
-        submit: this.submit.bind(this),
-        localize: FoundryAdapter.localize,
-        actorReference: FoundryAdapter.getActorReference(),
-        debug: this.actor,
+        sheetFunctions: {
+          activateListeners: () => super.activateListeners(html),
+          submit: this.submit.bind(this),
+        },
       },
     });
   }
