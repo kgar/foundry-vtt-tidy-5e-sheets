@@ -8,6 +8,7 @@
   - [x] Editing data and having it persist
 - [x] Global SCSS configured that is scoped to `.tidy5e-kgar`
 - [ ] Figure out how flags work
+  - [ ] Reread this https://foundryvtt.wiki/en/development/guides/handling-data and compare it to Tidy5e's approach
 - [ ] Set up project constants for handling T5EK flags
 - [ ] Implement "Tidy5e KGar Sheet" Game Settings tracer bullet
   - [ ] Add section to Game Settings
@@ -29,15 +30,19 @@
     - [ ] GM
     - [ ] Unlimited
     - [ ] Limited
+    - [ ] Favorites system
   - [ ] NPC
     - [ ] GM
     - [ ] Unlimited
     - [ ] Limited
+    - [ ] Favorites system
   - [ ] Vehicle
     - [ ] GM
     - [ ] Unlimited
     - [ ] Limited
+    - [ ] Favorites system
   - [ ] Item
+    - [ ] Favorites system
 - [ ] Reimplement the misc templates
   - [ ] Favorites
     - [ ] Item
@@ -46,6 +51,12 @@
     - [ ] spell class filter form
 - [ ] Reimplement game settings integration
 - [ ] Reimplement sheet settings dialog
+- [ ] Remember last selected tab when reopening a tabbed sheet
+- [ ] Remember scroll position for every tab in an open sheet, and return to that position when navigating to a tab; default 0
+  - [ ] Stretch: can we remember scroll top for a given sheet when closing the sheet and reopening?
+    - [ ] What about when reloading Foundry client?
+- [ ] All open Tidy sheets should be re-rendered when options are updated
+- [ ] 
 
 > \* Most recent breakages in Tidy5e sheets were related to magic HTML conventions that hook into invisible jquery wire-ups. You have to go read through the core HBS's for character sheets. Since you're already there, skip the limitations imposed by trying to recreate their sheet and instead use the public API. After all the public API provides deprecation notices, whereas the 5e sheet can just suddenly be structured differently on a new version. Not much they will do about that.
 
