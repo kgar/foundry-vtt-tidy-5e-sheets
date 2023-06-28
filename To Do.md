@@ -12,6 +12,7 @@
   - [ ] https://foundryvtt.wiki/en/development/api/flags
   - [ ] https://foundryvtt.wiki/en/development/api/settings
 - [x] Can the svelte view leverage prosemirror? YES.
+- [ ] Use context API to provide sheet functions
 - [ ] Set up project constants for handling T5EK flags
 - [ ] Implement "Tidy5e KGar Sheet" Game Settings tracer bullet
   - [ ] Add section to Game Settings
