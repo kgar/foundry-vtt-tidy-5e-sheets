@@ -7,8 +7,10 @@
   - [x] Rolling
   - [x] Editing data and having it persist
 - [x] Global SCSS configured that is scoped to `.tidy5e-kgar`
-- [ ] Figure out how flags work
+- [ ] Figure out how flags and settings work
   - [ ] Reread this https://foundryvtt.wiki/en/development/guides/handling-data and compare it to Tidy5e's approach
+  - [ ] https://foundryvtt.wiki/en/development/api/flags
+  - [ ] https://foundryvtt.wiki/en/development/api/settings
 - [ ] Set up project constants for handling T5EK flags
 - [ ] Implement "Tidy5e KGar Sheet" Game Settings tracer bullet
   - [ ] Add section to Game Settings
