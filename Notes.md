@@ -21,7 +21,11 @@ The main mitigating factor needed when going this route is to avoid trying to ma
 
 Reactivity works a hell of a lot better in svelte than in the handlebars / jQuery world.
 
-The main unknown here is whether I can use existing prose mirror in a svelte component, and hook into all operations, like saving and enriching HTML.
+~~The main unknown here is whether I can use existing prose mirror in a svelte component, and hook into all operations, like saving and enriching HTML.~~
+
+I can interop with handlebars helpers ✅
+
+This is the way.
 
 
 ## Hooks
@@ -38,3 +42,6 @@ when registering settings, those marked as `config: true` will appear in the con
 `game.settings.registerMenu` : adds a button to the relevant config screen and allows you to put up a form application with your own settings / etc.
 
 
+## Pro Tips
+
+- globalThis `dnd5e` is chock full of valuable content such as `dnd5e.applications.actor.ActorHitDiceConfig` class among other actor classes for summoning dialogs. This is a crucial piece to have available so that the sheets do not have to rely on magic / invisible jquery targets.
