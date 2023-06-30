@@ -26,6 +26,185 @@
 </script>
 
 <div style="height: 100%; overflow-y: scroll; overflow-x: hidden">
+  <!-- Portrait -->
+  <img
+    src={actor.img}
+    alt={actor.name}
+    title={localize('T5EK.EditActorImage') +
+      ' / ' +
+      localize('T5EK.ShowActorImage')}
+  />
+
+  <!-- Death Saves -->
+  <i class="fas fa-check" />
+  <input
+    type="text"
+    name="system.attributes.death.success"
+    data-dtype="Number"
+    placeholder="0"
+    value={actor.system.attributes.death.success}
+    maxlength="1"
+    data-tooltip={localize('T5EK.DeathSave')}
+  />
+
+  <div on:click={(event) => actor.rollDeathSave({ event })}>
+    <i class="fas fa-skull" />
+  </div>
+
+  <input
+    type="text"
+    name="system.attributes.death.failure"
+    data-dtype="Number"
+    placeholder="0"
+    value={actor.system.attributes.death.failure}
+    maxlength="1"
+  />
+  <i class="fas fa-times" />
+
+  <!-- Exhaustion -->
+  <!-- TODO: Learn the full breadth of exhaustion features in Tidy 5e and reimplement -->
+  <div data-tooltip="TODO: Put exhaustion definition here">
+    <span>
+      {actor.system.attributes.exhaustion}
+    </span>
+    <i
+      class="far"
+      class:fa-grin={actor.system.attributes.exhaustion === 0}
+      class:fa-smile={actor.system.attributes.exhaustion === 1}
+      class:fa-meh={actor.system.attributes.exhaustion === 2}
+      class:fa-frown={actor.system.attributes.exhaustion === 3}
+      class:fa-frown-open={actor.system.attributes.exhaustion === 4}
+      class:fa-tired={actor.system.attributes.exhaustion === 5}
+      class:fa-dizzy={actor.system.attributes.exhaustion === 6}
+    />
+    <ul>
+      <li on:click={() => actor.update({ 'system.attributes.exhaustion': 0 })}>
+        0
+      </li>
+      <li on:click={() => actor.update({ 'system.attributes.exhaustion': 1 })}>
+        1
+      </li>
+      <li on:click={() => actor.update({ 'system.attributes.exhaustion': 2 })}>
+        2
+      </li>
+      <li on:click={() => actor.update({ 'system.attributes.exhaustion': 3 })}>
+        3
+      </li>
+      <li on:click={() => actor.update({ 'system.attributes.exhaustion': 4 })}>
+        4
+      </li>
+      <li on:click={() => actor.update({ 'system.attributes.exhaustion': 5 })}>
+        5
+      </li>
+      <li on:click={() => actor.update({ 'system.attributes.exhaustion': 6 })}>
+        6
+      </li>
+    </ul>
+  </div>
+
+  <!-- DMspiration -->
+  <label data-tooltip={localize('T5EK.Inspiration')}>
+    <input
+      type="checkbox"
+      name="system.attributes.inspiration"
+      data-dtype="Boolean"
+      checked={actor.system.attributes.inspiration}
+    />
+    <i class="inspiration-icon fas fa-dice-d20" />
+  </label>
+
+  <!-- Short/Long Rest -->
+  <div>
+    <span data-tooltip={localize('TIDY5E.RestHint')}>
+      <i class="fas fa-bed" />
+    </span>
+    <span
+      data-tooltip={localize('TIDY5E.RestS')}
+      on:click={(event) => sheetFunctions.onShortRest(event)}
+    >
+      <i class="fas fa-hourglass-half" />
+    </span>
+    <span
+      data-tooltip={localize('TIDY5E.RestL')}
+      on:click={(event) => sheetFunctions.onLongRest(event)}
+    >
+      <i class="fas fa-hourglass-end" />
+    </span>
+  </div>
+
+  <!-- HP / HP Max -->
+  <input
+    name="system.attributes.hp.value"
+    type="text"
+    value={actor.system.attributes.hp.value}
+    placeholder="10"
+    data-tooltip={localize('DND5E.HitPointsCurrent')}
+    data-dtype="Number"
+    maxlength="5"
+    aria-describedby="tooltip"
+  />
+  <span> / </span>
+  <!-- TODO: Implement "Allow Max HP Override" / TIDY5E.Settings.AllowHpMaxOverride -->
+  <span
+    data-tooltip={actor.system.attributes.hp.max
+      ? localize('DND5E.HitPointsOverride')
+      : localize('DND5E.HitPointsMax')}
+  >
+    {actor.system.attributes.hp.max}</span
+  >
+  <a
+    data-tooltip={localize('DND5E.HitPointsConfig')}
+    on:click={new dnd5e.applications.actor.ActorHitPointsConfig(actor).render(
+      true
+    )}
+  >
+    <i class="fas fa-cog" />
+  </a>
+
+  <!-- Hit Dice -->
+  <div
+    data-tooltip="{localize('DND5E.HitDice')}: {actor.system.attributes
+      .hd}/{actor.system.details.level}&#10;{localize('DND5E.HitDiceConfig')}"
+  >
+    <a
+      on:click={new dnd5e.applications.actor.ActorHitDiceConfig(actor).render(
+        true
+      )}>{actor.system.attributes.hd}</a
+    >
+  </div>
+
+  <!-- Name -->
+
+  <!-- XP / XP To Next Level -->
+  <!-- Level -->
+
+  <!-- Class / Subclass -->
+  <!-- TODO: Remember to account for multiclassing -->
+  <!-- Size , Race , Background , Alignment , Proficiency , Origin Summary Configuration Cog -->
+  <!-- Speed , Configure Movement Speed Cog -->
+
+  <!-- AC  -->
+  <!-- Initiative (mod, cog) , Str (rollable, score, mod, save, proficient, cog) thru Cha (rollable, score, mod, save, proficient, cog) -->
+
+  <!-- Tabs -->
+  <!-- Lock -->
+
+  <!-- Tab: Attributes -->
+
+  <!-- Tab: Inventory -->
+
+  <!-- Tab: Spellbook -->
+
+  <!-- Tab: Features -->
+
+  <!-- Tab: Effects -->
+
+  <!-- Tab: Biography -->
+
+  <!-- Tab: Journal -->
+
+  <!-- Cross-cutting: Item Info Card -->
+
   <article style="height: 200px;">
     <div>Test: Background Editor</div>
 
