@@ -19,7 +19,7 @@ export const FoundryAdapter = {
     return Actors.registerSheet('dnd5e', sheet, {
       types: ['character'],
       makeDefault: true,
-      label: 'TODO: Localize, but Tidy 5e kgar',
+      label: 'Tidy 5e kgar',
     });
   },
   getTemplate(templateName: string) {
@@ -63,6 +63,13 @@ export const FoundryAdapter = {
       },
     });
   },
+  mergeObject<T>(
+    original: T,
+    other: Partial<T>,
+    options?: Partial<MergeObjectOptions>
+  ) {
+    return mergeObject(original, other, options);
+  },
 };
 
 /* ------------------------------------------------------
@@ -96,14 +103,17 @@ declare const foundry: any;
 declare const dnd5e: {
   applications: {
     actor: {
-      ActorSheet5eCharacter: ConstructorOf<{
-        actor: Actor5e;
-        activateListeners(html: { get: (index: number) => HTMLElement }): void;
-        submit(): void;
-      }>;
+      ActorSheet5eCharacter: typeof ActorSheet5eCharacter;
     };
   };
 };
+declare class ActorSheet5eCharacter {
+  actor: Actor5e;
+  activateListeners(html: { get: (index: number) => HTMLElement }): void;
+  submit(): void;
+  static get defaultOptions(): Record<string, unknown>;
+  close(options: unknown): Promise<void>;
+}
 export type Actor5e = {
   name: string;
   limited: boolean;
@@ -140,7 +150,7 @@ declare const game: {
 declare const Actors: {
   registerSheet(
     system: string,
-    sheet: ConstructorOf<any>,
+    sheet: typeof ActorSheet5eCharacter,
     options: unknown
   ): unknown;
 };
@@ -181,3 +191,19 @@ declare var HandlebarsHelpers: {
     }
   ) => string;
 };
+
+type MergeObjectOptions = {
+  insertKeys: boolean;
+  insertValues: boolean;
+  overwrite: boolean;
+  recursive: boolean;
+  inplace: boolean;
+  enforceTypes: boolean;
+  performDeletions: boolean;
+};
+
+declare var mergeObject: <T>(
+  original: T,
+  other: Partial<T>,
+  options?: Partial<MergeObjectOptions>
+) => T;

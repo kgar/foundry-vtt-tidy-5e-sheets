@@ -1,28 +1,66 @@
+import { CONSTANTS } from 'src/constants';
 import { FoundryAdapter } from '../foundry/foundry-adapter';
 import Tidy5eSheet from './tidy5e-sheet.svelte';
 
 const ActorSheet5eCharacter = FoundryAdapter.getActorSheetClass();
 
 export class Tidy5eSheetKgar extends ActorSheet5eCharacter {
+  sheet?: Tidy5eSheet;
+
   get template() {
     return FoundryAdapter.getTemplate('tidy5e-sheet-kgar.html');
   }
 
+  static get defaultOptions() {
+    return FoundryAdapter.mergeObject(super.defaultOptions, {
+      classes: ['tidy5e', 'sheet', 'actor', 'character'],
+      height: 840,
+    });
+  }
+
   activateListeners(html: { get: (index: number) => HTMLElement }) {
     const node = html.get(0);
-    new Tidy5eSheet({
+    this.sheet = new Tidy5eSheet({
       target: node,
       props: {
         actor: this.actor,
         sheetFunctions: {
           activateListeners: () => super.activateListeners(html),
           submit: this.submit.bind(this),
-          // TODO: Apply types ✅
           render: this.render.bind(this),
           onShortRest: this._onShortRest.bind(this),
           onLongRest: this._onLongRest.bind(this),
         },
+        scrollTop: this.actor.flags[CONSTANTS.MODULE_ID]?.scrollTop ?? 0,
       },
     });
+  }
+
+  close(options: unknown = {}) {
+    console.log('closing the sheet; wanna do something here?', this.sheet);
+    this.#saveScrollTop();
+    return super.close(options);
+  }
+
+  override submit(): void {
+    this.#saveScrollTop();
+    super.submit();
+  }
+
+  #saveScrollTop() {
+    if (this.sheet) {
+      const scrollViewIndex = this.sheet.$$.props.scrollView;
+      if (typeof scrollViewIndex === 'number') {
+        const scrollView = this.sheet.$$.ctx[scrollViewIndex] as HTMLElement;
+        console.log('looking at scrollView', scrollView);
+        console.log('scrollTop', scrollView.scrollTop);
+        this.actor.setFlag(
+          CONSTANTS.MODULE_ID,
+          'scrollTop',
+          scrollView.scrollTop
+        );
+        this.actor.setFlag(CONSTANTS.MODULE_ID, 'tab', 'TODO: Implement');
+      }
+    }
   }
 }

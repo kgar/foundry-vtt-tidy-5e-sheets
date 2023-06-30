@@ -8,6 +8,8 @@
   export let actor: Actor5e;
   export let debug: any = 'Put any debug information here, if ya need it.';
   export let sheetFunctions: SheetFunctions;
+  export let scrollTop: number = 0;
+  export let scrollView: HTMLElement | undefined = undefined;
 
   function submitWhenEnterKey(e: KeyboardEvent) {
     if (e.key == 'Enter') {
@@ -21,19 +23,31 @@
   const localize = FoundryAdapter.localize;
 
   onMount(() => {
+    if (scrollView) {
+      console.log('setting scroll top to ' + scrollTop);
+      scrollView.scrollTop = scrollTop;
+      // const tab = actor.getFlag(CONSTANTS.MODULE_ID, 'tab') ?? 0;
+    }
     sheetFunctions.activateListeners();
   });
 </script>
 
-<div style="height: 100%; overflow-y: scroll; overflow-x: hidden">
+<div
+  style="height: 100%; overflow-y: scroll; overflow-x: hidden"
+  bind:this={scrollView}
+>
   <!-- Portrait -->
-  <img
-    src={actor.img}
-    alt={actor.name}
-    title={localize('T5EK.EditActorImage') +
-      ' / ' +
-      localize('T5EK.ShowActorImage')}
-  />
+  <!-- FIXME: this hardcoded height is to make scroll position work while this form is unstyled.  -->
+  <div style="height: 200px">
+    <img
+      src={actor.img}
+      alt={actor.name}
+      title={localize('T5EK.EditActorImage') +
+        ' / ' +
+        localize('T5EK.ShowActorImage')}
+      style="height: 200px"
+    />
+  </div>
 
   <!-- Death Saves -->
   <i class="fas fa-check" />
@@ -103,7 +117,7 @@
   </div>
 
   <!-- DMspiration -->
-  <label data-tooltip={localize('T5EK.Inspiration')}>
+  <label data-tooltip={localize('DND5E.Inspiration')}>
     <input
       type="checkbox"
       name="system.attributes.inspiration"
@@ -174,6 +188,29 @@
   </div>
 
   <!-- Name -->
+  {#if actor.isOwner}
+    <h1
+      contenteditable="true"
+      spellcheck="false"
+      data-placeholder={localize('DND5E.Name')}
+      data-maxlength="40"
+      bind:textContent={actor.name}
+      on:blur={sheetFunctions.submit}
+      on:keypress={submitWhenEnterKey}
+    />
+  {:else}
+    <h1>
+      {actor.name}
+    </h1>
+  {/if}
+
+  <input
+    name="name"
+    type="hidden"
+    value={actor.name}
+    placeholder={localize('DND5E.Name')}
+    maxlength="40"
+  />
 
   <!-- XP / XP To Next Level -->
   <!-- Level -->
@@ -230,30 +267,6 @@
       editable={actor.isOwner || FoundryAdapter.userIsGm()}
     />
   </article>
-
-  {#if actor.isOwner}
-    <h1
-      contenteditable="true"
-      spellcheck="false"
-      data-placeholder={localize('DND5E.Name')}
-      data-maxlength="40"
-      bind:textContent={actor.name}
-      on:blur={sheetFunctions.submit}
-      on:keypress={submitWhenEnterKey}
-    />
-  {:else}
-    <h1>
-      {actor.name}
-    </h1>
-  {/if}
-
-  <input
-    name="name"
-    type="hidden"
-    value={actor.name}
-    placeholder={localize('DND5E.Name')}
-    maxlength="40"
-  />
 
   <p>
     Actor Name: {actor.name}<br />
