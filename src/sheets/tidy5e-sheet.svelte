@@ -46,7 +46,43 @@
         ' / ' +
         localize('T5EK.ShowActorImage')}
       style="height: 200px"
+      on:click={(event) => {
+        const rect = event.currentTarget.getBoundingClientRect();
+        const target = event.currentTarget;
+        const current = foundry.utils.getProperty(actor, 'img');
+        const originalEvent = event;
+        const fp = new FilePicker({
+          type: 'image',
+          current,
+          callback: (path) => {
+            target.src = path;
+            sheetFunctions.submit();
+            actor.update({ img: path });
+          },
+          top: rect.top + 40,
+          left: rect.left + 10,
+        });
+        return fp.browse();
+      }}
     />
+    <div>
+      <a
+        on:click={() =>
+          new ImagePopout(actor.img, {
+            title: 'Portrait: ' + actor.name,
+            shareable: true,
+            uuid: actor.uuid,
+          }).render(true)}>{localize('TIDY5E.ShowPortraitArt')}</a
+      >
+      <a
+        on:click={() =>
+          new ImagePopout(actor.prototypeToken.texture.src, {
+            title: 'Portrait: ' + actor.name,
+            shareable: true,
+            uuid: actor.uuid,
+          }).render(true)}>{localize('TIDY5E.ShowTokenArt')}</a
+      >
+    </div>
   </div>
 
   <!-- Death Saves -->
@@ -92,25 +128,60 @@
       class:fa-dizzy={actor.system.attributes.exhaustion === 6}
     />
     <ul>
-      <li on:click={() => actor.update({ 'system.attributes.exhaustion': 0 })}>
+      <li
+        on:click={() => {
+          sheetFunctions.submit();
+          actor.update({ 'system.attributes.exhaustion': 0 });
+        }}
+      >
         0
       </li>
-      <li on:click={() => actor.update({ 'system.attributes.exhaustion': 1 })}>
+      <li
+        on:click={() => {
+          sheetFunctions.submit();
+          actor.update({ 'system.attributes.exhaustion': 1 });
+        }}
+      >
         1
       </li>
-      <li on:click={() => actor.update({ 'system.attributes.exhaustion': 2 })}>
+      <li
+        on:click={() => {
+          sheetFunctions.submit();
+          actor.update({ 'system.attributes.exhaustion': 2 });
+        }}
+      >
         2
       </li>
-      <li on:click={() => actor.update({ 'system.attributes.exhaustion': 3 })}>
+      <li
+        on:click={() => {
+          sheetFunctions.submit();
+          actor.update({ 'system.attributes.exhaustion': 3 });
+        }}
+      >
         3
       </li>
-      <li on:click={() => actor.update({ 'system.attributes.exhaustion': 4 })}>
+      <li
+        on:click={() => {
+          sheetFunctions.submit();
+          actor.update({ 'system.attributes.exhaustion': 4 });
+        }}
+      >
         4
       </li>
-      <li on:click={() => actor.update({ 'system.attributes.exhaustion': 5 })}>
+      <li
+        on:click={() => {
+          sheetFunctions.submit();
+          actor.update({ 'system.attributes.exhaustion': 5 });
+        }}
+      >
         5
       </li>
-      <li on:click={() => actor.update({ 'system.attributes.exhaustion': 6 })}>
+      <li
+        on:click={() => {
+          sheetFunctions.submit();
+          actor.update({ 'system.attributes.exhaustion': 6 });
+        }}
+      >
         6
       </li>
     </ul>

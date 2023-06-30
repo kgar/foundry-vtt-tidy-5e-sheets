@@ -30,6 +30,7 @@ export class Tidy5eSheetKgar extends ActorSheet5eCharacter {
           render: this.render.bind(this),
           onShortRest: this._onShortRest.bind(this),
           onLongRest: this._onLongRest.bind(this),
+          onEditImage: this._onEditImage.bind(this),
         },
         scrollTop: this.actor.flags[CONSTANTS.MODULE_ID]?.scrollTop ?? 0,
       },
@@ -38,16 +39,16 @@ export class Tidy5eSheetKgar extends ActorSheet5eCharacter {
 
   close(options: unknown = {}) {
     console.log('closing the sheet; wanna do something here?', this.sheet);
-    this.#saveScrollTop();
+    this.#trySaveScrollTop();
     return super.close(options);
   }
 
   override submit(): void {
-    this.#saveScrollTop();
+    this.#trySaveScrollTop();
     super.submit();
   }
 
-  #saveScrollTop() {
+  #trySaveScrollTop() {
     if (this.sheet) {
       const scrollViewIndex = this.sheet.$$.props.scrollView;
       if (typeof scrollViewIndex === 'number') {

@@ -4,4 +4,5 @@ export type SheetFunctions = {
   render: (force: boolean) => void;
   onShortRest: (event: Event) => void;
   onLongRest: (event: Event) => void;
+  onEditImage: (event: Event) => void;
 };
