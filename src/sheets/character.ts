@@ -17,6 +17,10 @@ export class Tidy5eSheetKgar extends ActorSheet5eCharacter {
         sheetFunctions: {
           activateListeners: () => super.activateListeners(html),
           submit: this.submit.bind(this),
+          // TODO: Apply types ✅
+          render: this.render.bind(this),
+          onShortRest: this._onShortRest.bind(this),
+          onLongRest: this._onLongRest.bind(this),
         },
       },
     });
