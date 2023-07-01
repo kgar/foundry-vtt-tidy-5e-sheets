@@ -72,7 +72,7 @@
             title: 'Portrait: ' + actor.name,
             shareable: true,
             uuid: actor.uuid,
-          }).render(true)}>{localize('TIDY5E.ShowPortraitArt')}</a
+          }).render(true)}>{localize('T5EK.ShowPortraitArt')}</a
       >
       <a
         on:click={() =>
@@ -80,7 +80,7 @@
             title: 'Portrait: ' + actor.name,
             shareable: true,
             uuid: actor.uuid,
-          }).render(true)}>{localize('TIDY5E.ShowTokenArt')}</a
+          }).render(true)}>{localize('T5EK.ShowTokenArt')}</a
       >
     </div>
   </div>
@@ -200,17 +200,17 @@
 
   <!-- Short/Long Rest -->
   <div>
-    <span data-tooltip={localize('TIDY5E.RestHint')}>
+    <span data-tooltip={localize('T5EK.RestHint')}>
       <i class="fas fa-bed" />
     </span>
     <span
-      data-tooltip={localize('TIDY5E.RestS')}
+      data-tooltip={localize('T5EK.RestS')}
       on:click={(event) => sheetFunctions.onShortRest(event)}
     >
       <i class="fas fa-hourglass-half" />
     </span>
     <span
-      data-tooltip={localize('TIDY5E.RestL')}
+      data-tooltip={localize('T5EK.RestL')}
       on:click={(event) => sheetFunctions.onLongRest(event)}
     >
       <i class="fas fa-hourglass-end" />
@@ -229,7 +229,7 @@
     aria-describedby="tooltip"
   />
   <span> / </span>
-  <!-- TODO: Implement "Allow Max HP Override" / TIDY5E.Settings.AllowHpMaxOverride -->
+  <!-- TODO: Implement "Allow Max HP Override" / T5EK.Settings.AllowHpMaxOverride -->
   <span
     data-tooltip={actor.system.attributes.hp.max
       ? localize('DND5E.HitPointsOverride')

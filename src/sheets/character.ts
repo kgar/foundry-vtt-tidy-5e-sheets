@@ -8,7 +8,7 @@ export class Tidy5eSheetKgar extends ActorSheet5eCharacter {
   sheet?: Tidy5eSheet;
 
   get template() {
-    return FoundryAdapter.getTemplate('tidy5e-sheet-kgar.html');
+    return FoundryAdapter.getTemplate('tidy5e-sheet-kgar-template.hbs');
   }
 
   static get defaultOptions() {
