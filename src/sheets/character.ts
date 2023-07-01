@@ -1,6 +1,7 @@
 import { CONSTANTS } from 'src/constants';
 import { FoundryAdapter } from '../foundry/foundry-adapter';
 import Tidy5eSheet from './tidy5e-sheet.svelte';
+import { log } from 'src/utils/logging';
 
 const ActorSheet5eCharacter = FoundryAdapter.getActorSheetClass();
 
@@ -38,7 +39,7 @@ export class Tidy5eSheetKgar extends ActorSheet5eCharacter {
   }
 
   close(options: unknown = {}) {
-    console.log('closing the sheet; wanna do something here?', this.sheet);
+    log('closing the sheet; wanna do something here?', this.sheet);
     this.#trySaveScrollTop();
     return super.close(options);
   }
@@ -53,8 +54,8 @@ export class Tidy5eSheetKgar extends ActorSheet5eCharacter {
       const scrollViewIndex = this.sheet.$$.props.scrollView;
       if (typeof scrollViewIndex === 'number') {
         const scrollView = this.sheet.$$.ctx[scrollViewIndex] as HTMLElement;
-        console.log('looking at scrollView', scrollView);
-        console.log('scrollTop', scrollView.scrollTop);
+        log('looking at scrollView', scrollView);
+        log('scrollTop', scrollView.scrollTop);
         this.actor.setFlag(
           CONSTANTS.MODULE_ID,
           'scrollTop',

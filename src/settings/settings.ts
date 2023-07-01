@@ -2,6 +2,7 @@ import { CONSTANTS } from '../constants';
 import { FoundryAdapter } from '../foundry/foundry-adapter';
 import { Tidy5eKgarUserSettings } from './user-settings-form';
 import { RGBAToHexAFromColor } from '../utils/tidy5e-color-picker';
+import { log } from 'src/utils/logging';
 
 export function initSettings() {
   // General Settings

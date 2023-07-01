@@ -4,6 +4,7 @@
   import { FoundryAdapter } from '../foundry/foundry-adapter';
   import SheetEditor from './sheet-editor.svelte';
   import type { SheetFunctions } from 'src/types/types';
+  import { log } from 'src/utils/logging';
 
   export let actor: Actor5e;
   export let debug: any = 'Put any debug information here, if ya need it.';
@@ -18,13 +19,13 @@
     }
   }
 
-  console.log('Tidy5e KGar', debug);
+  log('Tidy5e KGar', debug);
   const actorReference = FoundryAdapter.getActorReference();
   const localize = FoundryAdapter.localize;
 
   onMount(() => {
     if (scrollView) {
-      console.log('setting scroll top to ' + scrollTop);
+      log('setting scroll top to ' + scrollTop);
       scrollView.scrollTop = scrollTop;
       // const tab = actor.getFlag(CONSTANTS.MODULE_ID, 'tab') ?? 0;
     }
