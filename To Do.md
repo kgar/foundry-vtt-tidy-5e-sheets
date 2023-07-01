@@ -16,6 +16,9 @@
 - [x] Set up project constants for handling T5EK flags
 - [ ] Create a type that represents the settings
   - [ ] Ideally, it should contain the data for registering the settings, too, and the type should derive from the data 🤯
+  - [ ] You could do a const object with the keys as setting names and the values as whatever is needed for registration, etc.
+    - [ ] Registration data, get(), set()
+  - [ ] With that object, you could iterate over the entries and create the relevant settings object.
 - [ ] Properly lock down all gm-only settings
 - [x] Implement "Tidy5e KGar Sheet" Game Settings tracer bullet
   - [x] Add section to Game Settings
