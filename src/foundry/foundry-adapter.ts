@@ -7,8 +7,8 @@ export const FoundryAdapter = {
   userIsGm() {
     return game.user.isGM;
   },
-  getGameSetting(moduleId: string, settingName: string): unknown {
-    return game.settings.get(moduleId, settingName);
+  getGameSetting<T = string>(settingName: string): T {
+    return game.settings.get(CONSTANTS.MODULE_ID, settingName) as T;
   },
   onReady(func: Function) {
     Hooks.on('ready', func);

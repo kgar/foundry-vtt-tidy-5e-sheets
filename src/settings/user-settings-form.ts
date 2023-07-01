@@ -36,7 +36,6 @@ export class Tidy5eKgarUserSettings extends FormApplication {
 	}
 
 	getSettingsData() {
-		// debug(game.settings.get('tidy5e-sheet'))
 		const settings = [
 			"ammoEquippedOnly",
 			"activeEffectsMarker",
@@ -150,10 +149,9 @@ export class Tidy5eKgarUserSettings extends FormApplication {
 			"debug"
 		];
 
-		// return game.settings.get('tidy5e-sheet', 'user-settings');
 		let data = {};
 		settings.forEach((setting) => {
-			data[setting] = { value: game.settings.get(CONSTANTS.MODULE_ID, setting) };
+			data[setting] = { value: FoundryAdapter.getGameSetting(setting) };
 			// debug(data[setting]);
 		});
 		return data;
@@ -226,7 +224,7 @@ export class Tidy5eKgarUserSettings extends FormApplication {
 		// debug(settingOptions);
 		for (let key in data) {
 			// debug(`Key: ${key} with value: ${data[key]}`);
-			let oldSetting = game.settings.get(CONSTANTS.MODULE_ID, key);
+			let oldSetting = FoundryAdapter.getGameSetting(key);
 			let newSetting = data[key];
 			if (oldSetting == newSetting) continue;
 			// debug(`${key} changed to "${data[key]}"`);

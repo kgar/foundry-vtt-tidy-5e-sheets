@@ -2,7 +2,7 @@
 //License: MIT
 //Documentation: https://github.com/kaelad02/adv-reminder/blob/54207ec1ef0500439e57521f15956c07e4c02af4/src/settings.js#L91-L104
 
-import { CONSTANTS } from "src/constants";
+import { FoundryAdapter } from "src/foundry/foundry-adapter";
 
 export function colorPicker(moduleId, settingId, html) {
   const settingInput = html.find(`input[name="${moduleId}.${settingId}"]`);
@@ -393,67 +393,67 @@ export const mapDefaultColorsDarkRGB = {
 };
 
 export function applyColorPickerCustomization(html) {
-  if (game.settings.get(CONSTANTS.MODULE_ID, 'colorPickerEnabled')) {
+  if (FoundryAdapter.getGameSetting('colorPickerEnabled')) {
     // Color picker settings
     const vColorPickerEquipped = HexToRGBA(
-      game.settings.get(CONSTANTS.MODULE_ID, 'colorPickerEquipped'),
+      FoundryAdapter.getGameSetting('colorPickerEquipped'),
       0.3
     );
     const vColorPickerEquippedOutline = HexToRGBA(
-      game.settings.get(CONSTANTS.MODULE_ID, 'colorPickerEquippedOutline')
+      FoundryAdapter.getGameSetting('colorPickerEquippedOutline')
     );
     const vColorPickerEquippedAccent = HexToRGBA(
-      game.settings.get(CONSTANTS.MODULE_ID, 'colorPickerEquippedAccent')
+      FoundryAdapter.getGameSetting('colorPickerEquippedAccent')
     );
     const vColorPickerPrepared = HexToRGBA(
-      game.settings.get(CONSTANTS.MODULE_ID, 'colorPickerPrepared'),
+      FoundryAdapter.getGameSetting('colorPickerPrepared'),
       0.3
     );
     const vColorPickerPreparedOutline = HexToRGBA(
-      game.settings.get(CONSTANTS.MODULE_ID, 'colorPickerPreparedOutline')
+      FoundryAdapter.getGameSetting('colorPickerPreparedOutline')
     );
     const vColorPickerPreparedAccent = HexToRGBA(
-      game.settings.get(CONSTANTS.MODULE_ID, 'colorPickerPreparedAccent')
+      FoundryAdapter.getGameSetting('colorPickerPreparedAccent')
     );
     const vColorPickerPact = HexToRGBA(
-      game.settings.get(CONSTANTS.MODULE_ID, 'colorPickerPact'),
+      FoundryAdapter.getGameSetting('colorPickerPact'),
       0.3
     );
     const vColorPickerPactOutline = HexToRGBA(
-      game.settings.get(CONSTANTS.MODULE_ID, 'colorPickerPactOutline')
+      FoundryAdapter.getGameSetting('colorPickerPactOutline')
     );
     const vColorPickerPactAccent = HexToRGBA(
-      game.settings.get(CONSTANTS.MODULE_ID, 'colorPickerPactAccent')
+      FoundryAdapter.getGameSetting('colorPickerPactAccent')
     );
     const vColorPickerAtWill = HexToRGBA(
-      game.settings.get(CONSTANTS.MODULE_ID, 'colorPickerAtWill'),
+      FoundryAdapter.getGameSetting('colorPickerAtWill'),
       0.3
     );
     const vColorPickerAtWillOutline = HexToRGBA(
-      game.settings.get(CONSTANTS.MODULE_ID, 'colorPickerAtWillOutline')
+      FoundryAdapter.getGameSetting('colorPickerAtWillOutline')
     );
     const vColorPickerAtWillAccent = HexToRGBA(
-      game.settings.get(CONSTANTS.MODULE_ID, 'colorPickerAtWillAccent')
+      FoundryAdapter.getGameSetting('colorPickerAtWillAccent')
     );
     const vColorPickerInnate = HexToRGBA(
-      game.settings.get(CONSTANTS.MODULE_ID, 'colorPickerInnate'),
+      FoundryAdapter.getGameSetting('colorPickerInnate'),
       0.3
     );
     const vColorPickerInnateOutline = HexToRGBA(
-      game.settings.get(CONSTANTS.MODULE_ID, 'colorPickerInnateOutline')
+      FoundryAdapter.getGameSetting('colorPickerInnateOutline')
     );
     const vColorPickerInnateAccent = HexToRGBA(
-      game.settings.get(CONSTANTS.MODULE_ID, 'colorPickerInnateAccent')
+      FoundryAdapter.getGameSetting('colorPickerInnateAccent')
     );
     const vColorPickerAlwaysPrepared = HexToRGBA(
-      game.settings.get(CONSTANTS.MODULE_ID, 'colorPickerAlwaysPrepared'),
+      FoundryAdapter.getGameSetting('colorPickerAlwaysPrepared'),
       0.3
     );
     const vColorPickerAlwaysPreparedOutline = HexToRGBA(
-      game.settings.get(CONSTANTS.MODULE_ID, 'colorPickerAlwaysPreparedOutline')
+      FoundryAdapter.getGameSetting('colorPickerAlwaysPreparedOutline')
     );
     const vColorPickerAlwaysPreparedAccent = HexToRGBA(
-      game.settings.get(CONSTANTS.MODULE_ID, 'colorPickerAlwaysPreparedAccent')
+      FoundryAdapter.getGameSetting('colorPickerAlwaysPreparedAccent')
     );
 
     // Equipped
@@ -463,7 +463,7 @@ export function applyColorPickerCustomization(html) {
       .each(function (index, element) {
         const curValue = $(element).css(`background`);
         let newValue =
-          game.settings.get(CONSTANTS.MODULE_ID, 'colorScheme') === 'dark'
+          FoundryAdapter.getGameSetting('colorScheme') === 'dark'
             ? curValue.replace(
                 mapDefaultColorsDarkRGBA.t5e_equipped,
                 vColorPickerEquipped
@@ -474,7 +474,7 @@ export function applyColorPickerCustomization(html) {
               );
 
         newValue =
-          game.settings.get(CONSTANTS.MODULE_ID, 'colorScheme') === 'dark'
+          FoundryAdapter.getGameSetting('colorScheme') === 'dark'
             ? newValue.replace(
                 mapDefaultColorsDarkRGB.t5e_equipped,
                 vColorPickerEquipped
@@ -492,7 +492,7 @@ export function applyColorPickerCustomization(html) {
       .each(function (index, element) {
         const curValue = $(element).css(`background`);
         let newValue =
-          game.settings.get(CONSTANTS.MODULE_ID, 'colorScheme') === 'dark'
+          FoundryAdapter.getGameSetting('colorScheme') === 'dark'
             ? curValue.replace(
                 mapDefaultColorsDarkRGBA.t5e_equipped,
                 vColorPickerEquipped
@@ -503,7 +503,7 @@ export function applyColorPickerCustomization(html) {
               );
 
         newValue =
-          game.settings.get(CONSTANTS.MODULE_ID, 'colorScheme') === 'dark'
+          FoundryAdapter.getGameSetting('colorScheme') === 'dark'
             ? newValue.replace(
                 mapDefaultColorsDarkRGB.t5e_equipped,
                 vColorPickerEquipped
@@ -521,7 +521,7 @@ export function applyColorPickerCustomization(html) {
       .each(function (index, element) {
         const curValue = $(element).css(`-webkit-box-shadow`);
         let newValue =
-          game.settings.get(CONSTANTS.MODULE_ID, 'colorScheme') === 'dark'
+          FoundryAdapter.getGameSetting('colorScheme') === 'dark'
             ? curValue.replace(
                 mapDefaultColorsDarkRGBA.t5e_equipped_outline,
                 vColorPickerEquippedOutline
@@ -532,7 +532,7 @@ export function applyColorPickerCustomization(html) {
               );
 
         newValue =
-          game.settings.get(CONSTANTS.MODULE_ID, 'colorScheme') === 'dark'
+          FoundryAdapter.getGameSetting('colorScheme') === 'dark'
             ? newValue.replace(
                 mapDefaultColorsDarkRGB.t5e_equipped_outline,
                 vColorPickerEquippedOutline
@@ -546,7 +546,7 @@ export function applyColorPickerCustomization(html) {
 
         const curValue2 = $(element).css(`box-shadow`);
         let newValue2 =
-          game.settings.get(CONSTANTS.MODULE_ID, 'colorScheme') === 'dark'
+          FoundryAdapter.getGameSetting('colorScheme') === 'dark'
             ? curValue2.replace(
                 mapDefaultColorsDarkRGBA.t5e_equipped_outline,
                 vColorPickerEquippedOutline
@@ -557,7 +557,7 @@ export function applyColorPickerCustomization(html) {
               );
 
         newValue2 =
-          game.settings.get(CONSTANTS.MODULE_ID, 'colorScheme') === 'dark'
+          FoundryAdapter.getGameSetting('colorScheme') === 'dark'
             ? newValue2.replace(
                 mapDefaultColorsDarkRGB.t5e_equipped_outline,
                 vColorPickerEquippedOutline
@@ -575,7 +575,7 @@ export function applyColorPickerCustomization(html) {
       .each(function (index, element) {
         const curValue = $(element).css(`-webkit-box-shadow`);
         let newValue =
-          game.settings.get(CONSTANTS.MODULE_ID, 'colorScheme') === 'dark'
+          FoundryAdapter.getGameSetting('colorScheme') === 'dark'
             ? curValue.replace(
                 mapDefaultColorsDarkRGBA.t5e_equipped_accent,
                 vColorPickerEquippedAccent
@@ -586,7 +586,7 @@ export function applyColorPickerCustomization(html) {
               );
 
         newValue =
-          game.settings.get(CONSTANTS.MODULE_ID, 'colorScheme') === 'dark'
+          FoundryAdapter.getGameSetting('colorScheme') === 'dark'
             ? newValue.replace(
                 mapDefaultColorsDarkRGB.t5e_equipped_accent,
                 vColorPickerEquippedAccent
@@ -600,7 +600,7 @@ export function applyColorPickerCustomization(html) {
 
         const curValue2 = $(element).css(`box-shadow`);
         let newValue2 =
-          game.settings.get(CONSTANTS.MODULE_ID, 'colorScheme') === 'dark'
+          FoundryAdapter.getGameSetting('colorScheme') === 'dark'
             ? curValue2.replace(
                 mapDefaultColorsDarkRGBA.t5e_equipped_accent,
                 vColorPickerEquippedAccent
@@ -611,7 +611,7 @@ export function applyColorPickerCustomization(html) {
               );
 
         newValue2 =
-          game.settings.get(CONSTANTS.MODULE_ID, 'colorScheme') === 'dark'
+          FoundryAdapter.getGameSetting('colorScheme') === 'dark'
             ? newValue2.replace(
                 mapDefaultColorsDarkRGB.t5e_equipped_accent,
                 vColorPickerEquippedAccent
@@ -631,7 +631,7 @@ export function applyColorPickerCustomization(html) {
       .each(function (index, element) {
         const curValue = $(element).css(`background`);
         let newValue =
-          game.settings.get(CONSTANTS.MODULE_ID, 'colorScheme') === 'dark'
+          FoundryAdapter.getGameSetting('colorScheme') === 'dark'
             ? curValue.replace(
                 mapDefaultColorsDarkRGBA.t5e_prepared,
                 vColorPickerPrepared
@@ -642,7 +642,7 @@ export function applyColorPickerCustomization(html) {
               );
 
         newValue =
-          game.settings.get(CONSTANTS.MODULE_ID, 'colorScheme') === 'dark'
+          FoundryAdapter.getGameSetting('colorScheme') === 'dark'
             ? newValue.replace(
                 mapDefaultColorsDarkRGB.t5e_prepared,
                 vColorPickerPrepared
@@ -660,7 +660,7 @@ export function applyColorPickerCustomization(html) {
       .each(function (index, element) {
         const curValue = $(element).css(`background`);
         let newValue =
-          game.settings.get(CONSTANTS.MODULE_ID, 'colorScheme') === 'dark'
+          FoundryAdapter.getGameSetting('colorScheme') === 'dark'
             ? curValue.replace(
                 mapDefaultColorsDarkRGBA.t5e_prepared,
                 vColorPickerPrepared
@@ -671,7 +671,7 @@ export function applyColorPickerCustomization(html) {
               );
 
         newValue =
-          game.settings.get(CONSTANTS.MODULE_ID, 'colorScheme') === 'dark'
+          FoundryAdapter.getGameSetting('colorScheme') === 'dark'
             ? newValue.replace(
                 mapDefaultColorsDarkRGB.t5e_prepared,
                 vColorPickerPrepared
@@ -689,7 +689,7 @@ export function applyColorPickerCustomization(html) {
       .each(function (index, element) {
         const curValue = element.style[`-webkit-box-shadow`];
         let newValue =
-          game.settings.get(CONSTANTS.MODULE_ID, 'colorScheme') === 'dark'
+          FoundryAdapter.getGameSetting('colorScheme') === 'dark'
             ? curValue.replace(
                 mapDefaultColorsDarkRGBA.t5e_prepared_outline,
                 vColorPickerPreparedOutline
@@ -700,7 +700,7 @@ export function applyColorPickerCustomization(html) {
               );
 
         newValue =
-          game.settings.get(CONSTANTS.MODULE_ID, 'colorScheme') === 'dark'
+          FoundryAdapter.getGameSetting('colorScheme') === 'dark'
             ? newValue.replace(
                 mapDefaultColorsDarkRGB.t5e_prepared_outline,
                 vColorPickerPreparedOutline
@@ -714,7 +714,7 @@ export function applyColorPickerCustomization(html) {
 
         const curValue2 = $(element).css(`box-shadow`);
         let newValue2 =
-          game.settings.get(CONSTANTS.MODULE_ID, 'colorScheme') === 'dark'
+          FoundryAdapter.getGameSetting('colorScheme') === 'dark'
             ? curValue2.replace(
                 mapDefaultColorsDarkRGBA.t5e_prepared_outline,
                 vColorPickerPreparedOutline
@@ -725,7 +725,7 @@ export function applyColorPickerCustomization(html) {
               );
 
         newValue2 =
-          game.settings.get(CONSTANTS.MODULE_ID, 'colorScheme') === 'dark'
+          FoundryAdapter.getGameSetting('colorScheme') === 'dark'
             ? newValue2.replace(
                 mapDefaultColorsDarkRGB.t5e_prepared_outline,
                 vColorPickerPreparedOutline
@@ -743,7 +743,7 @@ export function applyColorPickerCustomization(html) {
       .each(function (index, element) {
         const curValue = $(element).css(`-webkit-box-shadow`);
         let newValue =
-          game.settings.get(CONSTANTS.MODULE_ID, 'colorScheme') === 'dark'
+          FoundryAdapter.getGameSetting('colorScheme') === 'dark'
             ? curValue.replace(
                 mapDefaultColorsDarkRGBA.t5e_prepared_accent,
                 vColorPickerPreparedAccent
@@ -754,7 +754,7 @@ export function applyColorPickerCustomization(html) {
               );
 
         newValue =
-          game.settings.get(CONSTANTS.MODULE_ID, 'colorScheme') === 'dark'
+          FoundryAdapter.getGameSetting('colorScheme') === 'dark'
             ? newValue.replace(
                 mapDefaultColorsDarkRGB.t5e_prepared_accent,
                 vColorPickerPreparedAccent
@@ -768,7 +768,7 @@ export function applyColorPickerCustomization(html) {
 
         const curValue2 = $(element).css(`box-shadow`);
         let newValue2 =
-          game.settings.get(CONSTANTS.MODULE_ID, 'colorScheme') === 'dark'
+          FoundryAdapter.getGameSetting('colorScheme') === 'dark'
             ? curValue2.replace(
                 mapDefaultColorsDarkRGBA.t5e_prepared_accent,
                 vColorPickerPreparedAccent
@@ -779,7 +779,7 @@ export function applyColorPickerCustomization(html) {
               );
 
         newValue2 =
-          game.settings.get(CONSTANTS.MODULE_ID, 'colorScheme') === 'dark'
+          FoundryAdapter.getGameSetting('colorScheme') === 'dark'
             ? newValue2.replace(
                 mapDefaultColorsDarkRGB.t5e_prepared_accent,
                 vColorPickerPreparedAccent
@@ -799,7 +799,7 @@ export function applyColorPickerCustomization(html) {
       .each(function (index, element) {
         const curValue = $(element).css(`background`);
         let newValue =
-          game.settings.get(CONSTANTS.MODULE_ID, 'colorScheme') === 'dark'
+          FoundryAdapter.getGameSetting('colorScheme') === 'dark'
             ? curValue.replace(
                 mapDefaultColorsDarkRGBA.t5e_pact,
                 vColorPickerPact
@@ -807,7 +807,7 @@ export function applyColorPickerCustomization(html) {
             : curValue.replace(mapDefaultColorsRGBA.t5e_pact, vColorPickerPact);
 
         newValue =
-          game.settings.get(CONSTANTS.MODULE_ID, 'colorScheme') === 'dark'
+          FoundryAdapter.getGameSetting('colorScheme') === 'dark'
             ? newValue.replace(
                 mapDefaultColorsDarkRGB.t5e_pact,
                 vColorPickerPact
@@ -822,7 +822,7 @@ export function applyColorPickerCustomization(html) {
       .each(function (index, element) {
         const curValue = $(element).css(`background`);
         let newValue =
-          game.settings.get(CONSTANTS.MODULE_ID, 'colorScheme') === 'dark'
+          FoundryAdapter.getGameSetting('colorScheme') === 'dark'
             ? curValue.replace(
                 mapDefaultColorsDarkRGBA.t5e_pact,
                 vColorPickerPact
@@ -830,7 +830,7 @@ export function applyColorPickerCustomization(html) {
             : curValue.replace(mapDefaultColorsRGBA.t5e_pact, vColorPickerPact);
 
         newValue =
-          game.settings.get(CONSTANTS.MODULE_ID, 'colorScheme') === 'dark'
+          FoundryAdapter.getGameSetting('colorScheme') === 'dark'
             ? newValue.replace(
                 mapDefaultColorsDarkRGB.t5e_pact,
                 vColorPickerPact
@@ -845,7 +845,7 @@ export function applyColorPickerCustomization(html) {
       .each(function (index, element) {
         const curValue = $(element).css(`-webkit-box-shadow`);
         let newValue =
-          game.settings.get(CONSTANTS.MODULE_ID, 'colorScheme') === 'dark'
+          FoundryAdapter.getGameSetting('colorScheme') === 'dark'
             ? curValue.replace(
                 mapDefaultColorsDarkRGBA.t5e_pact_outline,
                 vColorPickerPactOutline
@@ -856,7 +856,7 @@ export function applyColorPickerCustomization(html) {
               );
 
         newValue =
-          game.settings.get(CONSTANTS.MODULE_ID, 'colorScheme') === 'dark'
+          FoundryAdapter.getGameSetting('colorScheme') === 'dark'
             ? newValue.replace(
                 mapDefaultColorsDarkRGB.t5e_pact_outline,
                 vColorPickerPactOutline
@@ -870,7 +870,7 @@ export function applyColorPickerCustomization(html) {
 
         const curValue2 = $(element).css(`box-shadow`);
         let newValue2 =
-          game.settings.get(CONSTANTS.MODULE_ID, 'colorScheme') === 'dark'
+          FoundryAdapter.getGameSetting('colorScheme') === 'dark'
             ? curValue2.replace(
                 mapDefaultColorsDarkRGBA.t5e_pact_outline,
                 vColorPickerPactOutline
@@ -881,7 +881,7 @@ export function applyColorPickerCustomization(html) {
               );
 
         newValue2 =
-          game.settings.get(CONSTANTS.MODULE_ID, 'colorScheme') === 'dark'
+          FoundryAdapter.getGameSetting('colorScheme') === 'dark'
             ? newValue2.replace(
                 mapDefaultColorsDarkRGB.t5e_pact_outline,
                 vColorPickerPactOutline
@@ -899,7 +899,7 @@ export function applyColorPickerCustomization(html) {
       .each(function (index, element) {
         const curValue = $(element).css(`-webkit-box-shadow`);
         let newValue =
-          game.settings.get(CONSTANTS.MODULE_ID, 'colorScheme') === 'dark'
+          FoundryAdapter.getGameSetting('colorScheme') === 'dark'
             ? curValue.replace(
                 mapDefaultColorsDarkRGBA.t5e_pact_accent,
                 vColorPickerPactAccent
@@ -910,7 +910,7 @@ export function applyColorPickerCustomization(html) {
               );
 
         newValue =
-          game.settings.get(CONSTANTS.MODULE_ID, 'colorScheme') === 'dark'
+          FoundryAdapter.getGameSetting('colorScheme') === 'dark'
             ? newValue.replace(
                 mapDefaultColorsDarkRGB.t5e_pact_accent,
                 vColorPickerPactAccent
@@ -924,7 +924,7 @@ export function applyColorPickerCustomization(html) {
 
         const curValue2 = $(element).css(`box-shadow`);
         let newValue2 =
-          game.settings.get(CONSTANTS.MODULE_ID, 'colorScheme') === 'dark'
+          FoundryAdapter.getGameSetting('colorScheme') === 'dark'
             ? curValue2.replace(
                 mapDefaultColorsDarkRGBA.t5e_pact_accent,
                 vColorPickerPactAccent
@@ -935,7 +935,7 @@ export function applyColorPickerCustomization(html) {
               );
 
         newValue2 =
-          game.settings.get(CONSTANTS.MODULE_ID, 'colorScheme') === 'dark'
+          FoundryAdapter.getGameSetting('colorScheme') === 'dark'
             ? newValue2.replace(
                 mapDefaultColorsDarkRGB.t5e_pact_accent,
                 vColorPickerPactAccent
@@ -955,7 +955,7 @@ export function applyColorPickerCustomization(html) {
       .each(function (index, element) {
         const curValue = $(element).css(`background`);
         let newValue =
-          game.settings.get(CONSTANTS.MODULE_ID, 'colorScheme') === 'dark'
+          FoundryAdapter.getGameSetting('colorScheme') === 'dark'
             ? curValue.replace(
                 mapDefaultColorsDarkRGBA.t5e_atwill,
                 vColorPickerAtWill
@@ -966,7 +966,7 @@ export function applyColorPickerCustomization(html) {
               );
 
         newValue =
-          game.settings.get(CONSTANTS.MODULE_ID, 'colorScheme') === 'dark'
+          FoundryAdapter.getGameSetting('colorScheme') === 'dark'
             ? newValue.replace(
                 mapDefaultColorsDarkRGB.t5e_atwill,
                 vColorPickerAtWill
@@ -984,7 +984,7 @@ export function applyColorPickerCustomization(html) {
       .each(function (index, element) {
         const curValue = $(element).css(`background`);
         let newValue =
-          game.settings.get(CONSTANTS.MODULE_ID, 'colorScheme') === 'dark'
+          FoundryAdapter.getGameSetting('colorScheme') === 'dark'
             ? curValue.replace(
                 mapDefaultColorsDarkRGBA.t5e_atwill,
                 vColorPickerAtWill
@@ -995,7 +995,7 @@ export function applyColorPickerCustomization(html) {
               );
 
         newValue =
-          game.settings.get(CONSTANTS.MODULE_ID, 'colorScheme') === 'dark'
+          FoundryAdapter.getGameSetting('colorScheme') === 'dark'
             ? newValue.replace(
                 mapDefaultColorsDarkRGB.t5e_atwill,
                 vColorPickerAtWill
@@ -1013,7 +1013,7 @@ export function applyColorPickerCustomization(html) {
       .each(function (index, element) {
         const curValue = $(element).css(`-webkit-box-shadow`);
         let newValue =
-          game.settings.get(CONSTANTS.MODULE_ID, 'colorScheme') === 'dark'
+          FoundryAdapter.getGameSetting('colorScheme') === 'dark'
             ? curValue.replace(
                 mapDefaultColorsDarkRGBA.t5e_atwill_outline,
                 vColorPickerAtWillOutline
@@ -1024,7 +1024,7 @@ export function applyColorPickerCustomization(html) {
               );
 
         newValue =
-          game.settings.get(CONSTANTS.MODULE_ID, 'colorScheme') === 'dark'
+          FoundryAdapter.getGameSetting('colorScheme') === 'dark'
             ? newValue.replace(
                 mapDefaultColorsDarkRGB.t5e_atwill_outline,
                 vColorPickerAtWillOutline
@@ -1038,7 +1038,7 @@ export function applyColorPickerCustomization(html) {
 
         const curValue2 = $(element).css(`box-shadow`);
         let newValue2 =
-          game.settings.get(CONSTANTS.MODULE_ID, 'colorScheme') === 'dark'
+          FoundryAdapter.getGameSetting('colorScheme') === 'dark'
             ? curValue2.replace(
                 mapDefaultColorsDarkRGBA.t5e_atwill_outline,
                 vColorPickerAtWillOutline
@@ -1049,7 +1049,7 @@ export function applyColorPickerCustomization(html) {
               );
 
         newValue2 =
-          game.settings.get(CONSTANTS.MODULE_ID, 'colorScheme') === 'dark'
+          FoundryAdapter.getGameSetting('colorScheme') === 'dark'
             ? newValue2.replace(
                 mapDefaultColorsDarkRGB.t5e_atwill_outline,
                 vColorPickerAtWillOutline
@@ -1067,7 +1067,7 @@ export function applyColorPickerCustomization(html) {
       .each(function (index, element) {
         const curValue = $(element).css(`-webkit-box-shadow`);
         let newValue =
-          game.settings.get(CONSTANTS.MODULE_ID, 'colorScheme') === 'dark'
+          FoundryAdapter.getGameSetting('colorScheme') === 'dark'
             ? curValue.replace(
                 mapDefaultColorsDarkRGBA.t5e_atwill_accent,
                 vColorPickerAtWillAccent
@@ -1078,7 +1078,7 @@ export function applyColorPickerCustomization(html) {
               );
 
         newValue =
-          game.settings.get(CONSTANTS.MODULE_ID, 'colorScheme') === 'dark'
+          FoundryAdapter.getGameSetting('colorScheme') === 'dark'
             ? newValue.replace(
                 mapDefaultColorsDarkRGB.t5e_atwill_accent,
                 vColorPickerAtWillAccent
@@ -1092,7 +1092,7 @@ export function applyColorPickerCustomization(html) {
 
         const curValue2 = $(element).css(`box-shadow`);
         let newValue2 =
-          game.settings.get(CONSTANTS.MODULE_ID, 'colorScheme') === 'dark'
+          FoundryAdapter.getGameSetting('colorScheme') === 'dark'
             ? curValue2.replace(
                 mapDefaultColorsDarkRGBA.t5e_atwill_accent,
                 vColorPickerAtWillAccent
@@ -1103,7 +1103,7 @@ export function applyColorPickerCustomization(html) {
               );
 
         newValue2 =
-          game.settings.get(CONSTANTS.MODULE_ID, 'colorScheme') === 'dark'
+          FoundryAdapter.getGameSetting('colorScheme') === 'dark'
             ? newValue2.replace(
                 mapDefaultColorsDarkRGB.t5e_atwill_accent,
                 vColorPickerAtWillAccent
@@ -1123,7 +1123,7 @@ export function applyColorPickerCustomization(html) {
       .each(function (index, element) {
         const curValue = $(element).css(`background`);
         let newValue =
-          game.settings.get(CONSTANTS.MODULE_ID, 'colorScheme') === 'dark'
+          FoundryAdapter.getGameSetting('colorScheme') === 'dark'
             ? curValue.replace(
                 mapDefaultColorsDarkRGBA.t5e_innate,
                 vColorPickerInnate
@@ -1134,7 +1134,7 @@ export function applyColorPickerCustomization(html) {
               );
 
         newValue =
-          game.settings.get(CONSTANTS.MODULE_ID, 'colorScheme') === 'dark'
+          FoundryAdapter.getGameSetting('colorScheme') === 'dark'
             ? newValue.replace(
                 mapDefaultColorsDarkRGB.t5e_innate,
                 vColorPickerInnate
@@ -1152,7 +1152,7 @@ export function applyColorPickerCustomization(html) {
       .each(function (index, element) {
         const curValue = $(element).css(`background`);
         let newValue =
-          game.settings.get(CONSTANTS.MODULE_ID, 'colorScheme') === 'dark'
+          FoundryAdapter.getGameSetting('colorScheme') === 'dark'
             ? curValue.replace(
                 mapDefaultColorsDarkRGBA.t5e_innate,
                 vColorPickerInnate
@@ -1163,7 +1163,7 @@ export function applyColorPickerCustomization(html) {
               );
 
         newValue =
-          game.settings.get(CONSTANTS.MODULE_ID, 'colorScheme') === 'dark'
+          FoundryAdapter.getGameSetting('colorScheme') === 'dark'
             ? newValue.replace(
                 mapDefaultColorsDarkRGB.t5e_innate,
                 vColorPickerInnate
@@ -1181,7 +1181,7 @@ export function applyColorPickerCustomization(html) {
       .each(function (index, element) {
         const curValue = $(element).css(`-webkit-box-shadow`);
         let newValue =
-          game.settings.get(CONSTANTS.MODULE_ID, 'colorScheme') === 'dark'
+          FoundryAdapter.getGameSetting('colorScheme') === 'dark'
             ? curValue.replace(
                 mapDefaultColorsDarkRGBA.t5e_innate_outline,
                 vColorPickerInnateOutline
@@ -1192,7 +1192,7 @@ export function applyColorPickerCustomization(html) {
               );
 
         newValue =
-          game.settings.get(CONSTANTS.MODULE_ID, 'colorScheme') === 'dark'
+          FoundryAdapter.getGameSetting('colorScheme') === 'dark'
             ? newValue.replace(
                 mapDefaultColorsDarkRGB.t5e_innate_outline,
                 vColorPickerInnateOutline
@@ -1206,7 +1206,7 @@ export function applyColorPickerCustomization(html) {
 
         const curValue2 = $(element).css(`box-shadow`);
         let newValue2 =
-          game.settings.get(CONSTANTS.MODULE_ID, 'colorScheme') === 'dark'
+          FoundryAdapter.getGameSetting('colorScheme') === 'dark'
             ? curValue2.replace(
                 mapDefaultColorsDarkRGBA.t5e_innate_outline,
                 vColorPickerInnateOutline
@@ -1217,7 +1217,7 @@ export function applyColorPickerCustomization(html) {
               );
 
         newValue2 =
-          game.settings.get(CONSTANTS.MODULE_ID, 'colorScheme') === 'dark'
+          FoundryAdapter.getGameSetting('colorScheme') === 'dark'
             ? newValue2.replace(
                 mapDefaultColorsDarkRGB.t5e_innate_outline,
                 vColorPickerInnateOutline
@@ -1235,7 +1235,7 @@ export function applyColorPickerCustomization(html) {
       .each(function (index, element) {
         const curValue = $(element).css(`-webkit-box-shadow`);
         let newValue =
-          game.settings.get(CONSTANTS.MODULE_ID, 'colorScheme') === 'dark'
+          FoundryAdapter.getGameSetting('colorScheme') === 'dark'
             ? curValue.replace(
                 mapDefaultColorsDarkRGBA.t5e_innate_accent,
                 vColorPickerInnateAccent
@@ -1246,7 +1246,7 @@ export function applyColorPickerCustomization(html) {
               );
 
         newValue =
-          game.settings.get(CONSTANTS.MODULE_ID, 'colorScheme') === 'dark'
+          FoundryAdapter.getGameSetting('colorScheme') === 'dark'
             ? newValue.replace(
                 mapDefaultColorsDarkRGB.t5e_innate_accent,
                 vColorPickerInnateAccent
@@ -1260,7 +1260,7 @@ export function applyColorPickerCustomization(html) {
 
         const curValue2 = $(element).css(`box-shadow`);
         let newValue2 =
-          game.settings.get(CONSTANTS.MODULE_ID, 'colorScheme') === 'dark'
+          FoundryAdapter.getGameSetting('colorScheme') === 'dark'
             ? curValue2.replace(
                 mapDefaultColorsDarkRGBA.t5e_innate_accent,
                 vColorPickerInnateAccent
@@ -1271,7 +1271,7 @@ export function applyColorPickerCustomization(html) {
               );
 
         newValue2 =
-          game.settings.get(CONSTANTS.MODULE_ID, 'colorScheme') === 'dark'
+          FoundryAdapter.getGameSetting('colorScheme') === 'dark'
             ? newValue2.replace(
                 mapDefaultColorsDarkRGB.t5e_innate_accent,
                 vColorPickerInnateAccent
@@ -1293,7 +1293,7 @@ export function applyColorPickerCustomization(html) {
       .each(function (index, element) {
         const curValue = $(element).css(`background`);
         let newValue =
-          game.settings.get(CONSTANTS.MODULE_ID, 'colorScheme') === 'dark'
+          FoundryAdapter.getGameSetting('colorScheme') === 'dark'
             ? curValue.replace(
                 mapDefaultColorsDarkRGBA.t5e_alwaysprepared,
                 vColorPickerAlwaysPrepared
@@ -1304,7 +1304,7 @@ export function applyColorPickerCustomization(html) {
               );
 
         newValue =
-          game.settings.get(CONSTANTS.MODULE_ID, 'colorScheme') === 'dark'
+          FoundryAdapter.getGameSetting('colorScheme') === 'dark'
             ? newValue.replace(
                 mapDefaultColorsDarkRGB.t5e_alwaysprepared,
                 vColorPickerAlwaysPrepared
@@ -1322,7 +1322,7 @@ export function applyColorPickerCustomization(html) {
       .each(function (index, element) {
         const curValue = $(element).css(`background`);
         let newValue =
-          game.settings.get(CONSTANTS.MODULE_ID, 'colorScheme') === 'dark'
+          FoundryAdapter.getGameSetting('colorScheme') === 'dark'
             ? curValue.replace(
                 mapDefaultColorsDarkRGBA.t5e_alwaysprepared,
                 vColorPickerAlwaysPrepared
@@ -1333,7 +1333,7 @@ export function applyColorPickerCustomization(html) {
               );
 
         newValue =
-          game.settings.get(CONSTANTS.MODULE_ID, 'colorScheme') === 'dark'
+          FoundryAdapter.getGameSetting('colorScheme') === 'dark'
             ? newValue.replace(
                 mapDefaultColorsDarkRGB.t5e_alwaysprepared,
                 vColorPickerAlwaysPrepared
@@ -1351,7 +1351,7 @@ export function applyColorPickerCustomization(html) {
       .each(function (index, element) {
         const curValue = $(element).css(`-webkit-box-shadow`);
         let newValue =
-          game.settings.get(CONSTANTS.MODULE_ID, 'colorScheme') === 'dark'
+          FoundryAdapter.getGameSetting('colorScheme') === 'dark'
             ? curValue.replace(
                 mapDefaultColorsDarkRGBA.t5e_alwaysprepared_outline,
                 vColorPickerAlwaysPreparedOutline
@@ -1362,7 +1362,7 @@ export function applyColorPickerCustomization(html) {
               );
 
         newValue =
-          game.settings.get(CONSTANTS.MODULE_ID, 'colorScheme') === 'dark'
+          FoundryAdapter.getGameSetting('colorScheme') === 'dark'
             ? newValue.replace(
                 mapDefaultColorsDarkRGB.t5e_alwaysprepared_outline,
                 vColorPickerAlwaysPreparedOutline
@@ -1376,7 +1376,7 @@ export function applyColorPickerCustomization(html) {
 
         const curValue2 = $(element).css(`box-shadow`);
         let newValue2 =
-          game.settings.get(CONSTANTS.MODULE_ID, 'colorScheme') === 'dark'
+          FoundryAdapter.getGameSetting('colorScheme') === 'dark'
             ? curValue2.replace(
                 mapDefaultColorsDarkRGBA.t5e_alwaysprepared_outline,
                 vColorPickerAlwaysPreparedOutline
@@ -1387,7 +1387,7 @@ export function applyColorPickerCustomization(html) {
               );
 
         newValue2 =
-          game.settings.get(CONSTANTS.MODULE_ID, 'colorScheme') === 'dark'
+          FoundryAdapter.getGameSetting('colorScheme') === 'dark'
             ? newValue2.replace(
                 mapDefaultColorsDarkRGB.t5e_alwaysprepared_outline,
                 vColorPickerAlwaysPreparedOutline
@@ -1407,7 +1407,7 @@ export function applyColorPickerCustomization(html) {
       .each(function (index, element) {
         const curValue = $(element).css(`-webkit-box-shadow`);
         let newValue =
-          game.settings.get(CONSTANTS.MODULE_ID, 'colorScheme') === 'dark'
+          FoundryAdapter.getGameSetting('colorScheme') === 'dark'
             ? curValue.replace(
                 mapDefaultColorsDarkRGBA.t5e_alwaysprepared_accent,
                 vColorPickerAlwaysPreparedAccent
@@ -1418,7 +1418,7 @@ export function applyColorPickerCustomization(html) {
               );
 
         newValue =
-          game.settings.get(CONSTANTS.MODULE_ID, 'colorScheme') === 'dark'
+          FoundryAdapter.getGameSetting('colorScheme') === 'dark'
             ? newValue.replace(
                 mapDefaultColorsDarkRGB.t5e_alwaysprepared_accent,
                 vColorPickerAlwaysPreparedAccent
@@ -1432,7 +1432,7 @@ export function applyColorPickerCustomization(html) {
 
         const curValue2 = $(element).css(`box-shadow`);
         let newValue2 =
-          game.settings.get(CONSTANTS.MODULE_ID, 'colorScheme') === 'dark'
+          FoundryAdapter.getGameSetting('colorScheme') === 'dark'
             ? curValue2.replace(
                 mapDefaultColorsDarkRGBA.t5e_alwaysprepared_accent,
                 vColorPickerAlwaysPreparedAccent
@@ -1443,7 +1443,7 @@ export function applyColorPickerCustomization(html) {
               );
 
         newValue2 =
-          game.settings.get(CONSTANTS.MODULE_ID, 'colorScheme') === 'dark'
+          FoundryAdapter.getGameSetting('colorScheme') === 'dark'
             ? newValue2.replace(
                 mapDefaultColorsDarkRGB.t5e_alwaysprepared_accent,
                 vColorPickerAlwaysPreparedAccent

@@ -43,7 +43,7 @@ export function initSettings() {
     },
   });
 
-  const colorScheme = game.settings.get(CONSTANTS.MODULE_ID, 'colorScheme');
+  const colorScheme = FoundryAdapter.getGameSetting('colorScheme');
   if (colorScheme === 'dark') {
     document.querySelector('html')?.classList.add('tidy5eKgarDark');
   }
@@ -418,7 +418,7 @@ export function initSettings() {
     onChange: () => {
       setDnd5eCssVariable(
         '--pc-border',
-        game.settings.get(CONSTANTS.MODULE_ID, 'hpOverlayBorder') + 'px'
+        FoundryAdapter.getGameSetting('hpOverlayBorder') + 'px'
       );
     },
   });
@@ -433,7 +433,7 @@ export function initSettings() {
     onChange: (data) => {
       setDnd5eCssVariable(
         '--npc-border',
-        game.settings.get(CONSTANTS.MODULE_ID, 'hpOverlayBorderNpc') + 'px'
+        FoundryAdapter.getGameSetting('hpOverlayBorderNpc') + 'px'
       );
     },
   });
@@ -448,7 +448,7 @@ export function initSettings() {
     onChange: (data) => {
       setDnd5eCssVariable(
         '--vehicle-border',
-        game.settings.get(CONSTANTS.MODULE_ID, 'hpOverlayBorderVehicle') + 'px'
+        FoundryAdapter.getGameSetting('hpOverlayBorderVehicle') + 'px'
       );
     },
   });
