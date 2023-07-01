@@ -283,10 +283,54 @@
     maxlength="40"
   />
 
-  <!-- XP / XP To Next Level -->
   <!-- Level -->
+  <h2 class="level">
+    {localize('DND5E.AbbreviationLevel')}
+    {actor.system.details.level}
+  </h2>
+  <!-- XP / XP To Next Level -->
+  {#if game.settings.get('dnd5e', 'disableExperienceTracking')}
+    <!-- NO XP View -->
+  {:else}
+    <div class="xp-tracker">
+      <div class="experience">
+        <input
+          class="current-xp"
+          type="text"
+          name="system.details.xp.value"
+          value={actor.system.details.xp.value}
+          placeholder="0"
+          data-dtype="Number"
+          maxlength="7"
+        />
+        <span class="sep">/</span>
+        {#if FoundryAdapter.userIsGm()}
+          <input
+            class="max-xp max"
+            type="text"
+            name="system.details.xp.max"
+            value={actor.system.details.xp.max}
+            placeholder="0"
+            data-dtype="Number"
+            maxlength="7"
+          />
+        {:else}
+          <span class="max">{actor.system.details.xp.max}</span>
+        {/if}
+      </div>
+      <div class="xp-bar">
+        <div class="xp-bar-total">
+          <span
+            class="xp-bar-current"
+            style="width: {actor.system.details.xp.pct}%"
+          />
+        </div>
+      </div>
+    </div>
+  {/if}
 
   <!-- Class / Subclass -->
+
   <!-- TODO: Remember to account for multiclassing -->
   <!-- Size , Race , Background , Alignment , Proficiency , Origin Summary Configuration Cog -->
   <!-- Speed , Configure Movement Speed Cog -->
