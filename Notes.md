@@ -45,3 +45,8 @@ when registering settings, those marked as `config: true` will appear in the con
 ## Pro Tips
 
 - globalThis `dnd5e` is chock full of valuable content such as `dnd5e.applications.actor.ActorHitDiceConfig` class among other actor classes for summoning dialogs. This is a crucial piece to have available so that the sheets do not have to rely on magic / invisible jquery targets.
+
+
+## Links
+
+- https://tobiasahlin.com/blog/move-from-jquery-to-vanilla-javascript/ 😈
