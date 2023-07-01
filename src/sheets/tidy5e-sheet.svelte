@@ -331,6 +331,11 @@
   {/if}
 
   <!-- Class / Subclass -->
+  {#if FoundryAdapter.getGameSetting('playerNameEnabled')}
+    Player Name Enabled!
+  {:else}
+    Player Name NOT Enabled....
+  {/if}
 
   <!-- TODO: Remember to account for multiclassing -->
   <!-- Size , Race , Background , Alignment , Proficiency , Origin Summary Configuration Cog -->

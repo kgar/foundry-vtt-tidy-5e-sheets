@@ -10,6 +10,9 @@ export const FoundryAdapter = {
   getGameSetting<T = string>(settingName: string): T {
     return game.settings.get(CONSTANTS.MODULE_ID, settingName) as T;
   },
+  async setGameSetting(key: string, value: unknown): Promise<void> {
+    await game.settings.set(CONSTANTS.MODULE_ID, key, value);
+  },
   onReady(func: Function) {
     Hooks.on('ready', func);
   },
@@ -142,6 +145,7 @@ declare const game: {
   };
   settings: {
     get: (moduleId: string, settingName: string) => unknown;
+    set: (moduleId: string, key: string, value: unknown) => Promise<void>;
   };
   i18n: {
     localize(value: string): string;

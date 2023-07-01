@@ -13,7 +13,10 @@
   - [ ] https://foundryvtt.wiki/en/development/api/settings
 - [x] Can the svelte view leverage prosemirror? YES.
 - [x] Use context API to provide sheet functions: skipped this. Not enough pain yet to introduce context API.
-- [ ] Set up project constants for handling T5EK flags
+- [x] Set up project constants for handling T5EK flags
+- [ ] Create a type that represents the settings
+  - [ ] Ideally, it should contain the data for registering the settings, too, and the type should derive from the data 🤯
+- [ ] Properly lock down all gm-only settings
 - [x] Implement "Tidy5e KGar Sheet" Game Settings tracer bullet
   - [x] Add section to Game Settings
   - [x] Add setting for color theme
@@ -27,13 +30,13 @@
     - [ ] Encapsulate and organize
   - [ ] Apply styles to make the header look verbatim like the original
   - [ ] Add existing CSS variables
-- [ ] Register all settings
-- [ ] Fill out the main settings dialog
+- [x] Register all settings
+- [x] Fill out the main settings dialog
 - [ ] Implement "Tidy5e KGar Sheet Settings" dialog tracer bullet
-  - [ ] Create dialog
-  - [ ] Add Default Player Sheet Width setting
-  - [ ] Add "Save Changes" button with icon
-  - [ ] Changes should be instantaneously displayed on open sheets (trigger a render of all open sheets)
+  - [x] Create dialog
+  - [x] Add Default Player Sheet Width setting
+  - [x] Add "Save Changes" button with icon
+  - [x] Changes should be instantaneously displayed on open sheets (trigger a render of all open sheets) - 💪 it required awaiting the settings updates when saving changes
 - [ ] Fill out remainder of settings
 - [ ] ... next steps
 
