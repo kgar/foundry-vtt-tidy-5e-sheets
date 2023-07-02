@@ -5,6 +5,7 @@
   import SheetEditor from './sheet-editor.svelte';
   import type { SheetFunctions } from 'src/types/types';
   import { log } from 'src/utils/logging';
+  import { SettingsProvider } from 'src/settings/settings';
 
   export let actor: Actor5e;
   export let debug: any = 'Put any debug information here, if ya need it.';
@@ -331,7 +332,7 @@
   {/if}
 
   <!-- Class / Subclass -->
-  {#if FoundryAdapter.getGameSetting('playerNameEnabled')}
+  {#if SettingsProvider.settings.playerNameEnabled.get()}
     Player Name Enabled!
   {:else}
     Player Name NOT Enabled....

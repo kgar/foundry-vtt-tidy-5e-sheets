@@ -4,11 +4,11 @@
 // export let debugEnabled = 0;
 
 import { CONSTANTS } from 'src/constants';
-import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+import { SettingsProvider } from 'src/settings/settings';
 
 // 0 = none, warnings = 1, debug = 2, all = 3
 export function debug(msg, args = '') {
-  if (FoundryAdapter.getGameSetting('debug')) {
+  if (SettingsProvider.settings.debug.get()) {
     console.log(`DEBUG | ${CONSTANTS.MODULE_ID} | ${msg}`, args);
     //@ts-ignore
     if (
