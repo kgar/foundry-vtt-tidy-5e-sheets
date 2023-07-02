@@ -14,12 +14,7 @@
 - [x] Can the svelte view leverage prosemirror? YES.
 - [x] Use context API to provide sheet functions: skipped this. Not enough pain yet to introduce context API.
 - [x] Set up project constants for handling T5EK flags
-- [ ] Create a type that represents the settings
-  - [ ] Ideally, it should contain the data for registering the settings, too, and the type should derive from the data 🤯
-  - [ ] You could do a const object with the keys as setting names and the values as whatever is needed for registration, etc.
-    - [ ] Registration data, get(), set()
-  - [ ] With that object, you could iterate over the entries and create the relevant settings object.
-- [ ] Properly lock down all gm-only settings
+- [x] Create a settings object that contains the data for registering the settings and a typed getter
 - [x] Implement "Tidy5e KGar Sheet" Game Settings tracer bullet
   - [x] Add section to Game Settings
   - [x] Add setting for color theme
@@ -35,12 +30,14 @@
   - [ ] Add existing CSS variables
 - [x] Register all settings
 - [x] Fill out the main settings dialog
-- [ ] Implement "Tidy5e KGar Sheet Settings" dialog tracer bullet
+- [x] Implement "Tidy5e KGar Sheet Settings" dialog tracer bullet
   - [x] Create dialog
   - [x] Add Default Player Sheet Width setting
   - [x] Add "Save Changes" button with icon
   - [x] Changes should be instantaneously displayed on open sheets (trigger a render of all open sheets) - 💪 it required awaiting the settings updates when saving changes
-- [ ] Fill out remainder of settings
+- [x] Fill out remainder of settings
+- [ ] Convert sheet settings to use svelte view, and then make it a lot nicer and more convenient.
+- [ ] Properly lock down all gm-only settings
 - [ ] ... next steps
 
 ## Big Picture
