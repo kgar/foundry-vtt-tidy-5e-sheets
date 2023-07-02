@@ -333,7 +333,7 @@
     </div>
   {/if}
 
-  <!-- Player Name / Class / Subclass -->
+  <!-- Player Name -->
   {#if SettingsProvider.settings.playerNameEnabled.get()}
     {#if actor.isOwner}
       <input
@@ -356,6 +356,59 @@
       <span data-placeholder={localize('T5EK.PlayerName')}>{playerName}</span>
     {/if}
   {/if}
+
+  <!-- Class / Subclass -->
+  <!-- HINT: sheetInstance.isEditable will work for "data.editable"; just pass that down for context -->
+  <!--
+if (data.editable) {
+		if (!game.settings.get(CONSTANTS.MODULE_ID, "classListDisabled")) {
+			// let actor = game.actors.entities.find(a => a_id === data.actor._id);
+			let actor = app.actor;
+			let classList = [];
+			let items = data.actor.items;
+			for (let item of items) {
+				if (item.type === "class") {
+					let levelsHtml = item.system.levels ? `<span class='levels-info'>${item.system.levels}</span>` : ``;
+					classList.push(
+						`<li class='class-item' data-tooltip='${item.name} (${item.system.levels})'>${
+							item.name + levelsHtml
+						}</li>`
+					);
+					/*
+					classList.push(
+						`<li class='class-item' data-tooltip='${item.name} (${item.system.levels})'>${
+							truncate(item.name, 30, false) + levelsHtml
+						}</li>`
+					);
+					*/
+				}
+				if (item.type === "subclass") {
+					classList.push(`<li class='class-item' data-tooltip='${item.name}'>${item.name}</li>`);
+					/*
+					classList.push(
+						`<li class='class-item' data-tooltip='${item.name}'>${truncate(item.name, 30, false)}</li>`
+					);
+					*/
+				}
+			}
+			let classListHtml = `<ul class='class-list'>${classList.join("")}</ul>`;
+
+			mergeObject(actor, { "flags.tidy5e-sheet.classlist": classListHtml });
+			let classListTarget = html.find(".bonus-information");
+			classListTarget.append(classListHtml);
+		}
+
+		// Prepare summary
+
+		html.find(".origin-summary span.origin-summary-text").each(function () {
+			let originalText = $(this).text();
+			//$(this).text(truncate($(this).text(), 20, false));
+			$(this).attr("data-tooltip", originalText);
+		});
+	}
+
+
+  -->
 
   <!-- TODO: Remember to account for multiclassing -->
   <!-- Size , Race , Background , Alignment , Proficiency , Origin Summary Configuration Cog -->
