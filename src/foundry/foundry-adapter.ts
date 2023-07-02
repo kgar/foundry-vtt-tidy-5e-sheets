@@ -73,6 +73,12 @@ export const FoundryAdapter = {
   ) {
     return mergeObject(original, other, options);
   },
+  tryGetFlag<T>(flagged: any, flagName: string) {
+    return flagged.flags?.[CONSTANTS.MODULE_ID][flagName] as
+      | T
+      | null
+      | undefined;
+  },
 };
 
 /* ------------------------------------------------------

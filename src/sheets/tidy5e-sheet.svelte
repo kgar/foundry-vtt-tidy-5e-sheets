@@ -32,6 +32,8 @@
     }
     sheetFunctions.activateListeners();
   });
+
+  let playerName = FoundryAdapter.tryGetFlag(actor, 'playerName');
 </script>
 
 <div
@@ -331,11 +333,28 @@
     </div>
   {/if}
 
-  <!-- Class / Subclass -->
+  <!-- Player Name / Class / Subclass -->
   {#if SettingsProvider.settings.playerNameEnabled.get()}
-    Player Name Enabled!
-  {:else}
-    Player Name NOT Enabled....
+    {#if actor.isOwner}
+      <input
+        name="flags.tidy5e-sheet-kgar.playerName"
+        type="hidden"
+        value={playerName}
+        placeholder={localize('T5EK.PlayerName')}
+        maxlength="40"
+      />
+      <span
+        contenteditable="true"
+        spellcheck="false"
+        data-placeholder={localize('T5EK.PlayerName')}
+        data-maxlength="40"
+        bind:textContent={playerName}
+        on:blur={sheetFunctions.submit}
+        on:keypress={submitWhenEnterKey}
+      />
+    {:else}
+      <span data-placeholder={localize('T5EK.PlayerName')}>{playerName}</span>
+    {/if}
   {/if}
 
   <!-- TODO: Remember to account for multiclassing -->

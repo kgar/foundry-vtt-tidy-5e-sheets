@@ -22,12 +22,14 @@
   - [x] Add "Save Changes" button with icon
   - [x] Changes should be instantaneously displayed on open sheets (might need to use a svelte store for this)
   - [ ] Stub out the main sheet header
+    - [ ] Make a component for the Ability Score Block and reuse
     - [ ] Make it fully functional
       - [ ] Account for TODOs about implementing things
-    - [ ] Stub TS types
+    - [ ] Stub TS types and resolve TS errors
     - [ ] Encapsulate and organize
   - [ ] Apply styles to make the header look verbatim like the original
   - [ ] Add existing CSS variables
+  - [ ] Make dark mode a simple update to the variables, rather than a totally different class.
 - [x] Register all settings
 - [x] Fill out the main settings dialog
 - [x] Implement "Tidy5e KGar Sheet Settings" dialog tracer bullet
@@ -36,6 +38,44 @@
   - [x] Add "Save Changes" button with icon
   - [x] Changes should be instantaneously displayed on open sheets (trigger a render of all open sheets) - 💪 it required awaiting the settings updates when saving changes
 - [x] Fill out remainder of settings
+- [ ] Create custom tab component
+  - [ ] Use show/hide scheme so that scroll and state are remembered
+  - [ ] Rethink how to emit scroll position to the sheet so that rerenders and submissions can feed the position back through
+- [ ] Implement the tabs
+  - [ ] Attributes
+    - [ ] Functionality
+    - [ ] Settings
+    - [ ] Styles
+  - [ ] Inventory
+    - [ ] Functionality
+    - [ ] Settings
+    - [ ] Styles
+  - [ ] Spellbook
+    - [ ] Functionality
+    - [ ] Settings
+    - [ ] Styles
+  - [ ] Features
+    - [ ] Functionality
+    - [ ] Settings
+    - [ ] Styles
+  - [ ] Effects
+    - [ ] Functionality
+    - [ ] Settings
+    - [ ] Styles
+  - [ ] Biography
+    - [ ] Functionality
+    - [ ] Settings
+    - [ ] Styles
+  - [ ] Journal
+    - [ ] Functionality
+    - [ ] Settings
+    - [ ] Styles
+- [ ] Update scroll position
+  - [ ] Track locally to the current sheet instance; continue to pass through in the same manner as before
+  - [ ] Remember the last selected tab and that tab's scroll position so that rerenders and submissions do not cause scroll jumping
+  - [ ] Use a custom tab component that leverages hidden content so that scroll is remembered while actively using the sheet
+  - [ ] Do not use flags
+  - [ ] Support remembering scroll between rerenders, submissions, etc.
 - [ ] Convert sheet settings to use svelte view, and then make it a lot nicer and more convenient.
 - [ ] Properly lock down all gm-only settings
 - [ ] ... next steps
@@ -95,3 +135,6 @@
 - [ ] Explore how to perform Automated UI testing with something like [Cypress](https://www.cypress.io/app)
 - [ ] Explain levels of exhaustion effects for each individual exhaustion button
 - [ ] Study a11y and apply it to the forms
+- [ ] Import/Export custom color themes 💪
+- [ ] Sheet settings: Use non-Foundry-module color picker (Svelte has a nice one) for setting CSS colors
+- [ ] 
