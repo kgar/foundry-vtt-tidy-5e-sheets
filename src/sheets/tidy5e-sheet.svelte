@@ -3,7 +3,7 @@
   import { onMount } from 'svelte';
   import { FoundryAdapter } from '../foundry/foundry-adapter';
   import SheetEditor from './sheet-editor.svelte';
-  import type { SheetFunctions } from 'src/types/types';
+  import type { ClassSummary, ItemStub, SheetFunctions } from 'src/types/types';
   import { log } from 'src/utils/logging';
   import { SettingsProvider } from 'src/settings/settings';
 
@@ -12,6 +12,7 @@
   export let sheetFunctions: SheetFunctions;
   export let scrollTop: number = 0;
   export let scrollView: HTMLElement | undefined = undefined;
+  export let isEditable: boolean;
 
   function submitWhenEnterKey(e: KeyboardEvent) {
     if (e.key == 'Enter') {
@@ -34,6 +35,17 @@
   });
 
   let playerName = FoundryAdapter.tryGetFlag(actor, 'playerName');
+
+  /*
+  Loop through items
+  When item.type === 'class', get item.name and item.system.levels (number)
+  -> then classMap.set(item.system.identifier, {...(classMap.get(item.system.identifier) ?? {}), className, levels})
+  When item.type === 'subclass', get item.name
+
+  */
+
+  const classAndSubclassSummaries: ClassSummary[] =
+    FoundryAdapter.getClassAndSubclassSummaries(actor);
 </script>
 
 <div
@@ -359,58 +371,22 @@
 
   <!-- Class / Subclass -->
   <!-- HINT: sheetInstance.isEditable will work for "data.editable"; just pass that down for context -->
-  <!--
-if (data.editable) {
-		if (!game.settings.get(CONSTANTS.MODULE_ID, "classListDisabled")) {
-			// let actor = game.actors.entities.find(a => a_id === data.actor._id);
-			let actor = app.actor;
-			let classList = [];
-			let items = data.actor.items;
-			for (let item of items) {
-				if (item.type === "class") {
-					let levelsHtml = item.system.levels ? `<span class='levels-info'>${item.system.levels}</span>` : ``;
-					classList.push(
-						`<li class='class-item' data-tooltip='${item.name} (${item.system.levels})'>${
-							item.name + levelsHtml
-						}</li>`
-					);
-					/*
-					classList.push(
-						`<li class='class-item' data-tooltip='${item.name} (${item.system.levels})'>${
-							truncate(item.name, 30, false) + levelsHtml
-						}</li>`
-					);
-					*/
-				}
-				if (item.type === "subclass") {
-					classList.push(`<li class='class-item' data-tooltip='${item.name}'>${item.name}</li>`);
-					/*
-					classList.push(
-						`<li class='class-item' data-tooltip='${item.name}'>${truncate(item.name, 30, false)}</li>`
-					);
-					*/
-				}
-			}
-			let classListHtml = `<ul class='class-list'>${classList.join("")}</ul>`;
 
-			mergeObject(actor, { "flags.tidy5e-sheet.classlist": classListHtml });
-			let classListTarget = html.find(".bonus-information");
-			classListTarget.append(classListHtml);
-		}
-
-		// Prepare summary
-
-		html.find(".origin-summary span.origin-summary-text").each(function () {
-			let originalText = $(this).text();
-			//$(this).text(truncate($(this).text(), 20, false));
-			$(this).attr("data-tooltip", originalText);
-		});
-	}
-
-
-  -->
-
-  <!-- TODO: Remember to account for multiclassing -->
+  {#if isEditable}
+    <div>
+      {#each classAndSubclassSummaries as summary, i}
+        {#if i > 0}
+          /
+        {/if}
+        <span data-tooltip={summary.class}>{summary.class}</span>
+        {#if summary.subclass}
+          <span data-tooltip={summary.subclass}>({summary.subclass})</span>
+        {/if}
+        <span>{summary.level ?? '0'}</span>
+      {/each}
+    </div>
+  {/if}
+  
   <!-- Size , Race , Background , Alignment , Proficiency , Origin Summary Configuration Cog -->
   <!-- Speed , Configure Movement Speed Cog -->
 

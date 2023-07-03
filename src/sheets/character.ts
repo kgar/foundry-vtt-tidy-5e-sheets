@@ -34,6 +34,7 @@ export class Tidy5eSheetKgar extends ActorSheet5eCharacter {
           onEditImage: this._onEditImage.bind(this),
         },
         scrollTop: this.actor.flags[CONSTANTS.MODULE_ID]?.scrollTop ?? 0,
+        isEditable: this.isEditable
       },
     });
   }

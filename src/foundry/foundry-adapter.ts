@@ -1,3 +1,4 @@
+import type { ClassSummary, ItemStub } from 'src/types/types';
 import { CONSTANTS } from '../constants';
 
 export const FoundryAdapter = {
@@ -78,6 +79,29 @@ export const FoundryAdapter = {
       | T
       | null
       | undefined;
+  },
+  getClassAndSubclassSummaries(actor: Actor5e) {
+    return actor.items.reduce(
+      (map: Map<string, ClassSummary>, item: ItemStub) => {
+        if (item.type === 'class') {
+          const data: ClassSummary = map.get(item.system.identifier) ?? {};
+          data.class = item.name;
+          data.level = item.system.levels?.toString();
+          map.set(item.system.identifier, data);
+        }
+
+        if (item.type === 'subclass') {
+          const data: ClassSummary = map.get(item.system.identifier) ?? {};
+          data.subclass = item.name;
+          if (item.system.classIdentifier !== undefined) {
+            map.set(item.system.classIdentifier, data);
+          }
+        }
+
+        return map;
+      },
+      new Map<string, ClassSummary>()
+    );
   },
 };
 
