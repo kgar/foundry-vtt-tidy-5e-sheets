@@ -441,6 +441,25 @@
   {/if}
 
   <!-- Speed , Configure Movement Speed Cog -->
+  <h4>{localize('DND5E.Speed')}</h4>
+  {#if context.movement.primary}
+    <span data-tooltip={context.movement.primary}
+      >{context.movement.primary}</span
+    >
+  {/if}
+  {#if context.movement.special}
+    |
+    <span data-tooltip={context.movement.special}
+      >{context.movement.special}</span
+    >
+  {/if}
+  <a
+    data-tooltip={localize('DND5E.MovementConfig')}
+    on:click={() =>
+      new dnd5e.applications.actor.ActorMovementConfig(context.actor).render(
+        true
+      )}><i class="fas fa-cog" /></a
+  >
 
   <!-- AC  -->
   <!-- Initiative (mod, cog) , Str (rollable, score, mod, save, proficient, cog) thru Cha (rollable, score, mod, save, proficient, cog) -->
