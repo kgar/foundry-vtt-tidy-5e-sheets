@@ -7,8 +7,8 @@ export default defineConfig({
   plugins: [svelte()],
   resolve: {
     alias: {
-      src: path.resolve('./src')
-    }
+      src: path.resolve('./src'),
+    },
   },
   build: {
     lib: {
@@ -23,6 +23,7 @@ export default defineConfig({
         },
       },
     },
+    sourcemap: true,
     minify: 'terser',
     terserOptions: {
       keep_classnames: true,
