@@ -106,6 +106,25 @@ export const FoundryAdapter = {
       new Map<string, ClassSummary>()
     );
   },
+  getActorCharacterSummaryEntries(actorContext: any): string[] {
+    const entries: string[] = [];
+
+    if (actorContext.system.details.race) {
+      entries.push(actorContext.system.details.race);
+    }
+
+    if (actorContext.labels.background) {
+      entries.push(actorContext.labels.background);
+    } else if (actorContext.system.details.background) {
+      entries.push(actorContext.system.details.background);
+    }
+
+    if (actorContext.system.details.alignment) {
+      entries.push(actorContext.system.details.alignment);
+    }
+
+    return entries;
+  },
 };
 
 /* ------------------------------------------------------

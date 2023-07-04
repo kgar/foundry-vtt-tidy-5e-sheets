@@ -19,12 +19,11 @@ export class Tidy5eSheetKgar extends ActorSheet5eCharacter {
     });
   }
 
-  activateListeners(html: { get: (index: number) => HTMLElement }) {
+  async activateListeners(html: { get: (index: number) => HTMLElement }) {
     const node = html.get(0);
     this.sheet = new Tidy5eSheet({
       target: node,
       props: {
-        actor: this.actor,
         sheetFunctions: {
           activateListeners: () => super.activateListeners(html),
           submit: this.submit.bind(this),
@@ -34,7 +33,8 @@ export class Tidy5eSheetKgar extends ActorSheet5eCharacter {
           onEditImage: this._onEditImage.bind(this),
         },
         scrollTop: this.actor.flags[CONSTANTS.MODULE_ID]?.scrollTop ?? 0,
-        isEditable: this.isEditable
+        isEditable: this.isEditable,
+        context: await super.getData(this.options),
       },
     });
   }

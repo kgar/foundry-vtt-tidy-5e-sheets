@@ -6,13 +6,16 @@
   import type { ClassSummary, ItemStub, SheetFunctions } from 'src/types/types';
   import { log } from 'src/utils/logging';
   import { SettingsProvider } from 'src/settings/settings';
+  import Tidy5eActorOriginSummaryConfig from './tidy5e-actor-origin-summary-config';
 
-  export let actor: Actor5e;
   export let debug: any = 'Put any debug information here, if ya need it.';
   export let sheetFunctions: SheetFunctions;
   export let scrollTop: number = 0;
   export let scrollView: HTMLElement | undefined = undefined;
   export let isEditable: boolean;
+  // TODO: Type this.
+  export let context: { actor: Actor5e } & Record<string, any>;
+  console.log(context);
 
   function submitWhenEnterKey(e: KeyboardEvent) {
     if (e.key == 'Enter') {
@@ -34,7 +37,7 @@
     sheetFunctions.activateListeners();
   });
 
-  let playerName = FoundryAdapter.tryGetFlag(actor, 'playerName');
+  let playerName = FoundryAdapter.tryGetFlag(context.actor, 'playerName');
 
   /*
   Loop through items
@@ -45,8 +48,11 @@
   */
 
   const classAndSubclassSummaries = Array.from(
-    FoundryAdapter.getClassAndSubclassSummaries(actor).values()
+    FoundryAdapter.getClassAndSubclassSummaries(context.actor).values()
   );
+
+  const characterSummaryEntries =
+    FoundryAdapter.getActorCharacterSummaryEntries(context);
 </script>
 
 <div
@@ -57,8 +63,8 @@
   <!-- FIXME: this hardcoded height is to make scroll position work while this form is unstyled.  -->
   <div style="height: 200px">
     <img
-      src={actor.img}
-      alt={actor.name}
+      src={context.actor.img}
+      alt={context.actor.name}
       title={localize('T5EK.EditActorImage') +
         ' / ' +
         localize('T5EK.ShowActorImage')}
@@ -66,7 +72,7 @@
       on:click={(event) => {
         const rect = event.currentTarget.getBoundingClientRect();
         const target = event.currentTarget;
-        const current = foundry.utils.getProperty(actor, 'img');
+        const current = foundry.utils.getProperty(context.actor, 'img');
         const originalEvent = event;
         const fp = new FilePicker({
           type: 'image',
@@ -74,7 +80,7 @@
           callback: (path) => {
             target.src = path;
             sheetFunctions.submit();
-            actor.update({ img: path });
+            context.actor.update({ img: path });
           },
           top: rect.top + 40,
           left: rect.left + 10,
@@ -85,18 +91,18 @@
     <div>
       <a
         on:click={() =>
-          new ImagePopout(actor.img, {
-            title: 'Portrait: ' + actor.name,
+          new ImagePopout(context.actor.img, {
+            title: 'Portrait: ' + context.actor.name,
             shareable: true,
-            uuid: actor.uuid,
+            uuid: context.actor.uuid,
           }).render(true)}>{localize('T5EK.ShowPortraitArt')}</a
       >
       <a
         on:click={() =>
-          new ImagePopout(actor.prototypeToken.texture.src, {
-            title: 'Portrait: ' + actor.name,
+          new ImagePopout(context.actor.prototypeToken.texture.src, {
+            title: 'Portrait: ' + context.actor.name,
             shareable: true,
-            uuid: actor.uuid,
+            uuid: context.actor.uuid,
           }).render(true)}>{localize('T5EK.ShowTokenArt')}</a
       >
     </div>
@@ -109,12 +115,12 @@
     name="system.attributes.death.success"
     data-dtype="Number"
     placeholder="0"
-    value={actor.system.attributes.death.success}
+    value={context.system.attributes.death.success}
     maxlength="1"
     data-tooltip={localize('T5EK.DeathSave')}
   />
 
-  <div on:click={(event) => actor.rollDeathSave({ event })}>
+  <div on:click={(event) => context.actor.rollDeathSave({ event })}>
     <i class="fas fa-skull" />
   </div>
 
@@ -123,7 +129,7 @@
     name="system.attributes.death.failure"
     data-dtype="Number"
     placeholder="0"
-    value={actor.system.attributes.death.failure}
+    value={context.system.attributes.death.failure}
     maxlength="1"
   />
   <i class="fas fa-times" />
@@ -132,23 +138,23 @@
   <!-- TODO: Learn the full breadth of exhaustion features in Tidy 5e and reimplement -->
   <div data-tooltip="TODO: Put exhaustion definition here">
     <span>
-      {actor.system.attributes.exhaustion}
+      {context.system.attributes.exhaustion}
     </span>
     <i
       class="far"
-      class:fa-grin={actor.system.attributes.exhaustion === 0}
-      class:fa-smile={actor.system.attributes.exhaustion === 1}
-      class:fa-meh={actor.system.attributes.exhaustion === 2}
-      class:fa-frown={actor.system.attributes.exhaustion === 3}
-      class:fa-frown-open={actor.system.attributes.exhaustion === 4}
-      class:fa-tired={actor.system.attributes.exhaustion === 5}
-      class:fa-dizzy={actor.system.attributes.exhaustion === 6}
+      class:fa-grin={context.system.attributes.exhaustion === 0}
+      class:fa-smile={context.system.attributes.exhaustion === 1}
+      class:fa-meh={context.system.attributes.exhaustion === 2}
+      class:fa-frown={context.system.attributes.exhaustion === 3}
+      class:fa-frown-open={context.system.attributes.exhaustion === 4}
+      class:fa-tired={context.system.attributes.exhaustion === 5}
+      class:fa-dizzy={context.system.attributes.exhaustion === 6}
     />
     <ul>
       <li
         on:click={() => {
           sheetFunctions.submit();
-          actor.update({ 'system.attributes.exhaustion': 0 });
+          context.actor.update({ 'system.attributes.exhaustion': 0 });
         }}
       >
         0
@@ -156,7 +162,7 @@
       <li
         on:click={() => {
           sheetFunctions.submit();
-          actor.update({ 'system.attributes.exhaustion': 1 });
+          context.actor.update({ 'system.attributes.exhaustion': 1 });
         }}
       >
         1
@@ -164,7 +170,7 @@
       <li
         on:click={() => {
           sheetFunctions.submit();
-          actor.update({ 'system.attributes.exhaustion': 2 });
+          context.actor.update({ 'system.attributes.exhaustion': 2 });
         }}
       >
         2
@@ -172,7 +178,7 @@
       <li
         on:click={() => {
           sheetFunctions.submit();
-          actor.update({ 'system.attributes.exhaustion': 3 });
+          context.actor.update({ 'system.attributes.exhaustion': 3 });
         }}
       >
         3
@@ -180,7 +186,7 @@
       <li
         on:click={() => {
           sheetFunctions.submit();
-          actor.update({ 'system.attributes.exhaustion': 4 });
+          context.actor.update({ 'system.attributes.exhaustion': 4 });
         }}
       >
         4
@@ -188,7 +194,7 @@
       <li
         on:click={() => {
           sheetFunctions.submit();
-          actor.update({ 'system.attributes.exhaustion': 5 });
+          context.actor.update({ 'system.attributes.exhaustion': 5 });
         }}
       >
         5
@@ -196,7 +202,7 @@
       <li
         on:click={() => {
           sheetFunctions.submit();
-          actor.update({ 'system.attributes.exhaustion': 6 });
+          context.actor.update({ 'system.attributes.exhaustion': 6 });
         }}
       >
         6
@@ -210,7 +216,7 @@
       type="checkbox"
       name="system.attributes.inspiration"
       data-dtype="Boolean"
-      checked={actor.system.attributes.inspiration}
+      checked={context.system.attributes.inspiration}
     />
     <i class="inspiration-icon fas fa-dice-d20" />
   </label>
@@ -238,7 +244,7 @@
   <input
     name="system.attributes.hp.value"
     type="text"
-    value={actor.system.attributes.hp.value}
+    value={context.system.attributes.hp.value}
     placeholder="10"
     data-tooltip={localize('DND5E.HitPointsCurrent')}
     data-dtype="Number"
@@ -248,54 +254,54 @@
   <span> / </span>
   <!-- TODO: Implement "Allow Max HP Override" / T5EK.Settings.AllowHpMaxOverride -->
   <span
-    data-tooltip={actor.system.attributes.hp.max
+    data-tooltip={context.system.attributes.hp.max
       ? localize('DND5E.HitPointsOverride')
       : localize('DND5E.HitPointsMax')}
   >
-    {actor.system.attributes.hp.max}</span
+    {context.system.attributes.hp.max}</span
   >
   <a
     data-tooltip={localize('DND5E.HitPointsConfig')}
-    on:click={new dnd5e.applications.actor.ActorHitPointsConfig(actor).render(
-      true
-    )}
+    on:click={new dnd5e.applications.actor.ActorHitPointsConfig(
+      context.actor
+    ).render(true)}
   >
     <i class="fas fa-cog" />
   </a>
 
   <!-- Hit Dice -->
   <div
-    data-tooltip="{localize('DND5E.HitDice')}: {actor.system.attributes
-      .hd}/{actor.system.details.level}&#10;{localize('DND5E.HitDiceConfig')}"
+    data-tooltip="{localize('DND5E.HitDice')}: {context.system.attributes
+      .hd}/{context.system.details.level}&#10;{localize('DND5E.HitDiceConfig')}"
   >
     <a
-      on:click={new dnd5e.applications.actor.ActorHitDiceConfig(actor).render(
-        true
-      )}>{actor.system.attributes.hd}</a
+      on:click={new dnd5e.applications.actor.ActorHitDiceConfig(
+        context.actor
+      ).render(true)}>{context.system.attributes.hd}</a
     >
   </div>
 
   <!-- Name -->
-  {#if actor.isOwner}
+  {#if context.owner}
     <h1
       contenteditable="true"
       spellcheck="false"
       data-placeholder={localize('DND5E.Name')}
       data-maxlength="40"
-      bind:textContent={actor.name}
+      bind:textContent={context.actor.name}
       on:blur={sheetFunctions.submit}
       on:keypress={submitWhenEnterKey}
     />
   {:else}
     <h1>
-      {actor.name}
+      {context.actor.name}
     </h1>
   {/if}
 
   <input
     name="name"
     type="hidden"
-    value={actor.name}
+    value={context.actor.name}
     placeholder={localize('DND5E.Name')}
     maxlength="40"
   />
@@ -303,7 +309,7 @@
   <!-- Level -->
   <h2 class="level">
     {localize('DND5E.AbbreviationLevel')}
-    {actor.system.details.level}
+    {context.system.details.level}
   </h2>
   <!-- XP / XP To Next Level -->
   {#if game.settings.get('dnd5e', 'disableExperienceTracking')}
@@ -315,7 +321,7 @@
           class="current-xp"
           type="text"
           name="system.details.xp.value"
-          value={actor.system.details.xp.value}
+          value={context.system.details.xp.value}
           placeholder="0"
           data-dtype="Number"
           maxlength="7"
@@ -326,20 +332,20 @@
             class="max-xp max"
             type="text"
             name="system.details.xp.max"
-            value={actor.system.details.xp.max}
+            value={context.system.details.xp.max}
             placeholder="0"
             data-dtype="Number"
             maxlength="7"
           />
         {:else}
-          <span class="max">{actor.system.details.xp.max}</span>
+          <span class="max">{context.system.details.xp.max}</span>
         {/if}
       </div>
       <div class="xp-bar">
         <div class="xp-bar-total">
           <span
             class="xp-bar-current"
-            style="width: {actor.system.details.xp.pct}%"
+            style="width: {context.system.details.xp.pct}%"
           />
         </div>
       </div>
@@ -348,7 +354,7 @@
 
   <!-- Player Name -->
   {#if SettingsProvider.settings.playerNameEnabled.get()}
-    {#if actor.isOwner}
+    {#if context.owner}
       <input
         name="flags.tidy5e-sheet-kgar.playerName"
         type="hidden"
@@ -371,8 +377,6 @@
   {/if}
 
   <!-- Class / Subclass -->
-  <!-- HINT: sheetInstance.isEditable will work for "data.editable"; just pass that down for context -->
-
   {#if isEditable}
     <div>
       {#each classAndSubclassSummaries as summary, i}
@@ -388,7 +392,54 @@
     </div>
   {/if}
 
-  <!-- Size , Race , Background , Alignment , Proficiency , Origin Summary Configuration Cog -->
+  <!-- Character Summary: Size , Race , Background , Alignment , Proficiency , Origin Summary Configuration Cog -->
+  <select
+    class="actor-size"
+    name="system.traits.size"
+    bind:value={context.system.traits.size}
+  >
+    <option value="tiny">Tiny</option>
+    <option value="sm">Small</option>
+    <option value="med">Medium</option>
+    <option value="lg">Large</option>
+    <option value="huge">Huge</option>
+    <option value="grg">Gargantuan</option>
+  </select>
+
+  {#each characterSummaryEntries as entry}
+    <!-- TODO: There's an `::after` style here to create the little bullet
+  .tidy5e.sheet.actor .origin-summary li span::after {
+    content: "";
+    display: block;
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: var(--t5e-primary-color);
+    position: absolute;
+    top: 50%;
+    left: 0px;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+  -->
+    * <span data-tooltip={entry}>{entry}</span>
+  {/each}
+
+  <span>
+    {localize('DND5E.Proficiency')}: {context.labels.proficiency}
+  </span>
+
+  {#if context.owner}
+    <a
+      class="config-button origin-summary-tidy"
+      data-tooltip={localize('TIDY5E.OriginSummaryConfig')}
+      on:click={() =>
+        new Tidy5eActorOriginSummaryConfig(context.actor).render(true)}
+    >
+      <i class="fas fa-cog" />
+    </a>
+  {/if}
+
   <!-- Speed , Configure Movement Speed Cog -->
 
   <!-- AC  -->
@@ -417,51 +468,53 @@
     <div>Test: Background Editor</div>
 
     <SheetEditor
-      content={actor.system.details.background}
+      content={context.system.details.background}
       target="system.details.background"
-      editable={actor.isOwner || FoundryAdapter.userIsGm()}
+      editable={context.owner || FoundryAdapter.userIsGm()}
     />
   </article>
   <article style="height: 200px;">
     <div>Test: Bond Editor</div>
     <SheetEditor
-      content={actor.system.details.bond}
+      content={context.system.details.bond}
       target="system.details.bond"
-      editable={actor.isOwner || FoundryAdapter.userIsGm()}
+      editable={context.owner || FoundryAdapter.userIsGm()}
     />
   </article>
   <article style="height: 200px;">
     <div>Test: Flaw Editor</div>
     <SheetEditor
-      content={actor.system.details.flaw}
+      content={context.system.details.flaw}
       target="system.details.flaw"
-      editable={actor.isOwner || FoundryAdapter.userIsGm()}
+      editable={context.owner || FoundryAdapter.userIsGm()}
     />
   </article>
 
   <p>
-    Actor Name: {actor.name}<br />
-    Owner: {actor.isOwner}
+    Actor Name: {context.actor.name}<br />
+    Owner: {context.owner}
   </p>
 
   <p>
-    HP: {actor.system.attributes.hp.value} / {actor.system.attributes.hp.max}
+    HP: {context.system.attributes.hp.value} / {context.system.attributes.hp
+      .max}
   </p>
 
   {#each actorReference.abilitiesList as ability}
     <div style="display: flex;">
       <button
-        on:click={(event) => actor.rollAbility(ability.abbreviation, { event })}
+        on:click={(event) =>
+          context.actor.rollAbility(ability.abbreviation, { event })}
         >{actorReference.abilities[ability.abbreviation].label}</button
       >
       <button
         on:click={(event) =>
-          actor.rollAbilityTest(ability.abbreviation, { event })}
+          context.actor.rollAbilityTest(ability.abbreviation, { event })}
         >Do a {actorReference.abilities[ability.abbreviation].label} roll!</button
       >
       <button
         on:click={(event) =>
-          actor.rollAbilitySave(ability.abbreviation, { event })}
+          context.actor.rollAbilitySave(ability.abbreviation, { event })}
         >Make a {actorReference.abilities[ability.abbreviation].label} save!</button
       >
     </div>
@@ -470,7 +523,8 @@
   <div style="display: grid; grid-template-columns: 1fr 1fr 1fr;">
     {#each actorReference.skillsList as skill}
       <button
-        on:click={(event) => actor.rollSkill(skill.abbreviation, { event })}
+        on:click={(event) =>
+          context.actor.rollSkill(skill.abbreviation, { event })}
         >{actorReference.skills[skill.abbreviation].label}</button
       >
     {/each}
