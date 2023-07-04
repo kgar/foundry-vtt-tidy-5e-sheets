@@ -75,12 +75,12 @@ export const FoundryAdapter = {
     return mergeObject(original, other, options);
   },
   tryGetFlag<T>(flagged: any, flagName: string) {
-    return flagged.flags?.[CONSTANTS.MODULE_ID][flagName] as
+    return flagged.flags?.[CONSTANTS.MODULE_ID]?.[flagName] as
       | T
       | null
       | undefined;
   },
-  getClassAndSubclassSummaries(actor: Actor5e) {
+  getClassAndSubclassSummaries(actor: Actor5e): Map<string, ClassSummary> {
     return actor.items.reduce(
       (map: Map<string, ClassSummary>, item: ItemStub) => {
         if (item.type === 'class') {
@@ -90,8 +90,11 @@ export const FoundryAdapter = {
           map.set(item.system.identifier, data);
         }
 
-        if (item.type === 'subclass') {
-          const data: ClassSummary = map.get(item.system.identifier) ?? {};
+        if (
+          item.type === 'subclass' &&
+          item.system.classIdentifier !== undefined
+        ) {
+          const data: ClassSummary = map.get(item.system.classIdentifier) ?? {};
           data.subclass = item.name;
           if (item.system.classIdentifier !== undefined) {
             map.set(item.system.classIdentifier, data);

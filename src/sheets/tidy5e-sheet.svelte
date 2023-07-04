@@ -44,8 +44,9 @@
 
   */
 
-  const classAndSubclassSummaries: ClassSummary[] =
-    FoundryAdapter.getClassAndSubclassSummaries(actor);
+  const classAndSubclassSummaries = Array.from(
+    FoundryAdapter.getClassAndSubclassSummaries(actor).values()
+  );
 </script>
 
 <div
@@ -386,7 +387,7 @@
       {/each}
     </div>
   {/if}
-  
+
   <!-- Size , Race , Background , Alignment , Proficiency , Origin Summary Configuration Cog -->
   <!-- Speed , Configure Movement Speed Cog -->
 
