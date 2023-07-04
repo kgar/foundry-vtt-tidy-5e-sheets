@@ -20,5 +20,5 @@ export type ItemStub = {
     classIdentifier?: string;
     identifier: string;
     levels?: number;
-  }
-}
+  };
+};
