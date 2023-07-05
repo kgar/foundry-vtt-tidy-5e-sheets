@@ -14,7 +14,7 @@ export class Tidy5eSheetKgar extends ActorSheet5eCharacter {
 
   static get defaultOptions() {
     return FoundryAdapter.mergeObject(super.defaultOptions, {
-      classes: ['tidy5e', 'sheet', 'actor', 'character'],
+      classes: ['tidy5e-kgar', 'sheet', 'actor', 'character'],
       height: 840,
     });
   }
@@ -31,6 +31,8 @@ export class Tidy5eSheetKgar extends ActorSheet5eCharacter {
           onShortRest: this._onShortRest.bind(this),
           onLongRest: this._onLongRest.bind(this),
           onEditImage: this._onEditImage.bind(this),
+          onToggleAbilityProficiency:
+            this._onToggleAbilityProficiency.bind(this),
         },
         scrollTop: this.actor.flags[CONSTANTS.MODULE_ID]?.scrollTop ?? 0,
         isEditable: this.isEditable,

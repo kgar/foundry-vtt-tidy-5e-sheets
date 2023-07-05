@@ -5,6 +5,7 @@ export type SheetFunctions = {
   onShortRest: (event: Event) => void;
   onLongRest: (event: Event) => void;
   onEditImage: (event: Event) => void;
+  onToggleAbilityProficiency: (event: Event) => void;
 };
 
 export type ClassSummary = {
@@ -22,3 +23,5 @@ export type ItemStub = {
     levels?: number;
   };
 };
+
+export type RoundedPortaitStyleOptions = 'default' | 'pc' | 'npc' | 'all';
