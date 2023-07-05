@@ -49,3 +49,6 @@ when registering settings, those marked as `config: true` will appear in the con
 
 - https://tobiasahlin.com/blog/move-from-jquery-to-vanilla-javascript/ 😈
 - [Foundry v10 API Documentation](https://foundryvtt.com/api/v10/)
+- Stuff for semantic HTML and Aria
+  - https://stackoverflow.com/questions/19203501/semantic-mark-up-and-wai-aria-for-tabbed-section
+  - 

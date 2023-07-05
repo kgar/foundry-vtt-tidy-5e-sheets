@@ -23,10 +23,10 @@
   - [x] Changes should be instantaneously displayed on open sheets (might need to use a svelte store for this)
   - [ ] Stub out the main sheet header
     - [ ] Make a component for the Ability Score Block and reuse
-    - [ ] Make it fully functional
-      - [ ] Account for TODOs about implementing things
+    - [x] Make it fully functional
     - [ ] Stub TS types and resolve TS errors
     - [ ] Encapsulate and organize
+    - [ ] Account for TODOs about implementing things
   - [ ] Apply styles to make the header look verbatim like the original
   - [ ] Add existing CSS variables
   - [ ] Make dark mode a simple update to the variables, rather than a totally different class.
@@ -78,6 +78,7 @@
   - [ ] Support remembering scroll between rerenders, submissions, etc.
 - [ ] Convert sheet settings to use svelte view, and then make it a lot nicer and more convenient.
 - [ ] Properly lock down all gm-only settings
+- [ ] Use semantic HTML for the sheets (how do I utilize header, section, article, nav, etc.?)
 - [ ] ... next steps
 
 ## Big Picture

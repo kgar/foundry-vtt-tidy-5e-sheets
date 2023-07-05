@@ -32,19 +32,6 @@ export const FoundryAdapter = {
   localize(value: string) {
     return game.i18n.localize(value);
   },
-  getActorReference(): ActorReference {
-    return {
-      skills: CONFIG.DND5E.skills,
-      skillsList: Object.entries(CONFIG.DND5E.skills).map(
-        (x: [string, any]) => ({
-          abbreviation: x[0],
-          ...x[1],
-        })
-      ),
-      abilities: CONFIG.DND5E.abilities,
-      abilitiesList: Object.values(CONFIG.DND5E.abilities),
-    };
-  },
   /**
    *
    * @param content           - the editor content to include
@@ -191,6 +178,7 @@ export type Actor5e = {
   rollAbilitySave(abbreviation: string, options: { event: Event }): void;
   rollSkill(abbreviation: string, options: { event: Event }): void;
 };
+export type CharacterSheetContext = { actor: Actor5e } & Record<string, any>;
 declare const game: {
   user: {
     isGM: boolean;
