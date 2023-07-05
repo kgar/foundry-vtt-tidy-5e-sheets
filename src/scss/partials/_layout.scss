@@ -1,0 +1,33 @@
+.flex-row {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
+
+.flex-grow-1 {
+  flex-grow: 1;
+}
+
+.small-gap {
+  gap: 0.5rem;
+}
+
+.extra-small-gap {
+  gap: 0.25rem;
+}
+
+.no-gap {
+  gap: 0;
+}
+
+.justifty-content-space-between {
+  justify-content: space-between;
+}
+
+.align-items-center {
+  align-items: center;
+}
+
+.align-items-right {
+  align-items: right;
+}
