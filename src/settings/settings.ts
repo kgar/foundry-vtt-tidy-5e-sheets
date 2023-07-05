@@ -3,7 +3,7 @@ import { FoundryAdapter } from '../foundry/foundry-adapter';
 import { Tidy5eKgarUserSettings } from './user-settings-form';
 import { RGBAToHexAFromColor } from '../utils/tidy5e-color-picker';
 import { ResetSettingsDialog } from './ResetSettingsDialog';
-import { error } from 'src/utils/logging';
+import type { RoundedPortaitStyleOptions } from 'src/types/types';
 
 export function createSettings() {
   return {
@@ -616,27 +616,11 @@ export function createSettings() {
             all: FoundryAdapter.localize('T5EK.Settings.PortraitStyle.all'),
           },
           default: 'all',
-          // TODO: This should be accomplished by virtue of the setting being changed and the views updating themselves in response (or the "rerender all views" function)
-          // onChange: (data) => {
-
-          // if (data == 'npc' || data == 'all') {
-          //   $('.tidy5e-sheet.tidy5e-npc .profile').addClass('roundPortrait');
-          //   $('.tidy5e-sheet.tidy5e-vehicle .profile').addClass('roundPortrait');
-          // }
-          // if (data == 'pc' || data == 'all') {
-          //   $('.tidy5e-sheet .profile').addClass('roundPortrait');
-          //   $('.tidy5e-sheet.tidy5e-npc .profile').removeClass('roundPortrait');
-          //   $('.tidy5e-sheet.tidy5e-vehicle .profile').removeClass('roundPortrait');
-          // }
-          // if (data == 'default') {
-          //   $('.tidy5e-sheet .profile').removeClass('roundPortrait');
-          //   $('.tidy5e-sheet.tidy5e-npc .profile').removeClass('roundPortrait');
-          //   $('.tidy5e-sheet.tidy5e-vehicle .profile').removeClass('roundPortrait');
-          // }
-          // },
         },
-        get() {
-          return FoundryAdapter.getGameSetting<string>('portraitStyle');
+        get(): RoundedPortaitStyleOptions {
+          return FoundryAdapter.getGameSetting<RoundedPortaitStyleOptions>(
+            'portraitStyle'
+          );
         },
       },
 
