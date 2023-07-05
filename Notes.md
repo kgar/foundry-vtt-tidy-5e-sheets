@@ -48,3 +48,4 @@ when registering settings, those marked as `config: true` will appear in the con
 ## Links
 
 - https://tobiasahlin.com/blog/move-from-jquery-to-vanilla-javascript/ 😈
+- [Foundry v10 API Documentation](https://foundryvtt.com/api/v10/)
