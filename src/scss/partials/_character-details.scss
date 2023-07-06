@@ -84,9 +84,13 @@
     color: var(--t5e-secondary-color);
     margin-left: 0.25rem;
     line-height: 1;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
   }
 
   .origin-summary {
+    margin-left: 0.25rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -98,15 +102,37 @@
     padding: 0.1875rem 0 0.125rem 0;
     margin-top: 0.125rem;
 
-    // .truncate {
-    //   white-space: nowrap;
-    //   overflow: hidden;
-    //   text-overflow: ellipsis;
-    //   min-width: 0;
-    // }
+    .origin-points {
+      flex: 1;
+      display: grid;
+      grid-template-columns:
+        min-content /* Size */
+        min-content /* Bullet */
+        minmax(auto, min-content) /* Species */
+        min-content /* Bullet */
+        minmax(auto, min-content) /* Background */
+        min-content /* Bullet */
+        minmax(auto, min-content) /* Alignment */;
+      gap: 0.25rem;
+      align-items: center;
+    }
+
+    .truncate {
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+    }
 
     .actor-size {
       height: 1.15rem;
     }
+  }
+
+  .player-name {
+    display: inline-block;
+    min-width: 3.125rem;
+    font-weight: 600;
+    padding: 0px 0.25rem;
+    white-space: nowrap;
   }
 }

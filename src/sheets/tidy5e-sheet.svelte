@@ -158,16 +158,19 @@
           <span
             contenteditable="true"
             spellcheck="false"
+            class="player-name"
             data-placeholder={localize('T5EK.PlayerName')}
             data-maxlength="40"
             bind:textContent={playerName}
             on:blur={sheetFunctions.submit}
             on:keypress={submitWhenEnterKey}
           />
+          <span>&#8226;</span>
         {:else}
           <span data-placeholder={localize('T5EK.PlayerName')}
             >{playerName}</span
           >
+          <span>&#8226;</span>
         {/if}
       {/if}
 
@@ -196,7 +199,7 @@
 
     <!-- Origin Summary: Size , Race , Background , Alignment , Proficiency , Origin Summary Configuration Cog -->
     <section class="origin-summary">
-      <span class="flex-row extra-small-gap align-items-center">
+      <span class="origin-points">
         <!-- TODO: Consider implementing the hidden select that the original sheet has, or figure out a way to format this select in such a way that it agrees with the rest of the layout instead of undermining it. -->
         <select
           class="actor-size"
@@ -212,10 +215,10 @@
         </select>
         {#each characterSummaryEntries as entry}
           <span>&#8226;</span>
-          <span data-tooltip={entry}>{entry}</span>
+          <span data-tooltip={entry} class="truncate">{entry}</span>
         {/each}
       </span>
-      <span class="flex-row">
+      <span class="flex-row align-items-center extra-small-gap">
         <b>
           {localize('DND5E.Proficiency')}: {context.labels.proficiency}
         </b>
