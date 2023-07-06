@@ -130,8 +130,9 @@
 
   .player-name {
     display: inline-block;
-    min-width: 3.125rem;
     font-weight: 600;
+    margin: -0.25rem;
+    min-width: 3.125rem;
     padding: 0px 0.25rem;
     white-space: nowrap;
   }
