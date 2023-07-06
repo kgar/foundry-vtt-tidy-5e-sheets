@@ -238,157 +238,164 @@
       </span>
     </section>
     <!-- Speed , Configure Movement Speed Cog -->
-    <h4>{localize('DND5E.Speed')}</h4>
-    {#if context.movement.primary}
-      <span data-tooltip={context.movement.primary}
-        >{context.movement.primary}</span
-      >
-    {/if}
-    {#if context.movement.special}
-      |
-      <span data-tooltip={context.movement.special}
-        >{context.movement.special}</span
-      >
-    {/if}
-    <a
-      data-tooltip={localize('DND5E.MovementConfig')}
-      on:click={() =>
-        new dnd5e.applications.actor.ActorMovementConfig(context.actor).render(
-          true
-        )}><i class="fas fa-cog" /></a
-    >
-    <!-- AC  -->
-    <div style="max-width: 200px">
-      <svg
-        version="1.1"
-        x="0px"
-        y="0px"
-        viewBox="0 0 90 100"
-        xml:space="preserve"
-      >
-        <path
-          d="M45,100C-2.6,79.3,0,12.6,0,12.6c0-2.2,1.8-4,4.4-4.6l39.1-7.9C44,0,44.5,0,45,0c0.5,0,1,0,1.4,0.1L85.5,8
-            c2.6,0.5,4.4,2.4,4.4,4.6C90,12.6,92.6,79.3,45,100L45,100z"
-        />
-      </svg>
-    </div>
-    <a
-      class="config-button"
-      data-attribution="attributes.ac"
-      data-attribution-caption="DND5E.ArmorClass"
-      data-tooltip-direction="DOWN"
-      on:click={() =>
-        new dnd5e.applications.actor.ActorArmorConfig(context.actor).render(
-          true
-        )}>{context.system.attributes.ac.value}</a
-    >
-    <!-- Initiative (mod, cog) , Str (rollable, score, mod, save, proficient, cog) thru Cha (rollable, score, mod, save, proficient, cog) -->
-    <div>
-      <h4
-        title={localize('DND5E.Initiative')}
-        on:click={(event) => context.actor.rollInitiativeDialog({ event })}
-      >
-        {localize('TIDY5E.AbbrInitiative')}
-      </h4>
-      <div class="value">
-        <span>{formatAsModifier(context.system.attributes.init.total)}</span>
-      </div>
-      <label
-        >{localize('TIDY5E.AbbrMod')}
-        <input
-          name="system.attributes.init.bonus"
-          type="text"
-          placeholder="0"
-          data-dtype="Number"
-          value={context.system.attributes.init.bonus}
-          maxlength="2"
-        />
-      </label>
-      <a
-        data-tooltip={localize('DND5E.InitiativeConfig')}
-        on:click={() =>
-          new dnd5e.applications.actor.ActorInitiativeConfig(
-            context.actor
-          ).render(true)}
-      >
-        <i class="fas fa-cog" />
-      </a>
-    </div>
-    <ul class="ability-scores">
-      {#each abilities as [id, ability]}
-        <li
-          class:proficient={ability.proficient}
-          data-ability={id}
-          data-key={id}
+    <section class="movement flex-row small-gap">
+      <h4>{localize('DND5E.Speed')}</h4>
+      {#if context.movement.primary}
+        <span data-tooltip={context.movement.primary}
+          >{context.movement.primary}</span
         >
+      {/if}
+      {#if context.movement.special}
+        |
+        <span data-tooltip={context.movement.special}
+          >{context.movement.special}</span
+        >
+      {/if}
+      <a
+        class="configure"
+        data-tooltip={localize('DND5E.MovementConfig')}
+        on:click={() =>
+          new dnd5e.applications.actor.ActorMovementConfig(
+            context.actor
+          ).render(true)}><i class="fas fa-cog" /></a
+      >
+    </section>
+    <!-- AC  -->
+    <section class="character-stats">
+      <!-- TODO: switch these back to unordered <li> -->
+      <div class="ac-display">
+        <div>
+          <svg
+            version="1.1"
+            x="0px"
+            y="0px"
+            viewBox="0 0 90 100"
+            xml:space="preserve"
+          >
+            <path
+              d="M45,100C-2.6,79.3,0,12.6,0,12.6c0-2.2,1.8-4,4.4-4.6l39.1-7.9C44,0,44.5,0,45,0c0.5,0,1,0,1.4,0.1L85.5,8
+                c2.6,0.5,4.4,2.4,4.4,4.6C90,12.6,92.6,79.3,45,100L45,100z"
+            />
+          </svg>
+        </div>
+        <a
+          class="config-button"
+          data-attribution="attributes.ac"
+          data-attribution-caption="DND5E.ArmorClass"
+          data-tooltip-direction="DOWN"
+          on:click={() =>
+            new dnd5e.applications.actor.ActorArmorConfig(context.actor).render(
+              true
+            )}>{context.system.attributes.ac.value}</a
+        >
+      </div>
+      <div
+        class="horizontal-separator"
+        aria-hidden="true"
+        role="presentation"
+      />
+      <!-- Initiative (mod, cog) , Str (rollable, score, mod, save, proficient, cog) thru Cha (rollable, score, mod, save, proficient, cog) -->
+      <div>
+        <h4
+          title={localize('DND5E.Initiative')}
+          on:click={(event) => context.actor.rollInitiativeDialog({ event })}
+        >
+          {localize('TIDY5E.AbbrInitiative')}
+        </h4>
+        <div class="value">
+          <span>{formatAsModifier(context.system.attributes.init.total)}</span>
+        </div>
+        <label
+          >{localize('TIDY5E.AbbrMod')}
+          <input
+            name="system.attributes.init.bonus"
+            type="text"
+            placeholder="0"
+            data-dtype="Number"
+            value={context.system.attributes.init.bonus}
+            maxlength="2"
+          />
+        </label>
+        <a
+          data-tooltip={localize('DND5E.InitiativeConfig')}
+          on:click={() =>
+            new dnd5e.applications.actor.ActorInitiativeConfig(
+              context.actor
+            ).render(true)}
+        >
+          <i class="fas fa-cog" />
+        </a>
+      </div>
+      {#each abilities as [id, ability], i}
+        <div
+          class="horizontal-separator"
+          aria-hidden="true"
+          role="presentation"
+        />
+        <div>
+          <h4
+            data-tooltip={ability.label}
+            on:click={(event) => context.actor.rollAbility(ability, { event })}
+          >
+            {id}
+          </h4>
           <div>
-            <h4
-              data-tooltip={ability.label}
-              on:click={(event) =>
-                context.actor.rollAbility(ability, { event })}
-            >
-              {id}
-            </h4>
-            <div>
-              <input
-                type="text"
-                name="system.abilities.{id}.value"
-                value={ability.value}
-                placeholder="10"
-                data-dtype="Number"
-              />
-            </div>
-            <div>
-              <span
-                data-tooltip={localize('DND5E.AbilityModifier')}
-                on:click={(event) =>
-                  context.actor.rollAbilityTest(id, { event })}
-                >{formatAsModifier(ability.mod)}</span
-              >
-              <span
-                data-tooltip={localize('DND5E.ActionSave')}
-                on:click={(event) =>
-                  context.actor.rollAbilitySave(id, { event })}
-                >{formatAsModifier(ability.save)}</span
-              >
-              <input
-                type="hidden"
-                name="system.abilities.{id}.proficient"
-                value={ability.proficient}
-                data-dtype="Number"
-              />
-              <a
-                title={localize('DND5E.Proficiency')}
-                on:click={() =>
-                  context.actor.update({
-                    [`system.abilities.${id}.proficient`]:
-                      1 - parseInt(ability.proficient),
-                  })}
-              >
-                {@html ability.icon}
-              </a>
-              <a
-                data-tooltip={localize('DND5E.AbilityConfigure')}
-                on:click={() =>
-                  new dnd5e.applications.actor.ActorAbilityConfig(
-                    context.actor,
-                    null,
-                    id
-                  ).render(true)}
-              >
-                <i class="fas fa-cog" />
-              </a>
-            </div>
-            <span class="mod-label ability-mod-label"
-              >{localize('TIDY5E.AbbrMod')}</span
-            >
-            <span class="mod-label save-mod-label"
-              >{localize('TIDY5E.AbbrSavingThrow')}</span
-            >
+            <input
+              type="text"
+              name="system.abilities.{id}.value"
+              value={ability.value}
+              placeholder="10"
+              data-dtype="Number"
+            />
           </div>
-        </li>
+          <div>
+            <span
+              data-tooltip={localize('DND5E.AbilityModifier')}
+              on:click={(event) => context.actor.rollAbilityTest(id, { event })}
+              >{formatAsModifier(ability.mod)}</span
+            >
+            <span
+              data-tooltip={localize('DND5E.ActionSave')}
+              on:click={(event) => context.actor.rollAbilitySave(id, { event })}
+              >{formatAsModifier(ability.save)}</span
+            >
+            <input
+              type="hidden"
+              name="system.abilities.{id}.proficient"
+              value={ability.proficient}
+              data-dtype="Number"
+            />
+            <a
+              title={localize('DND5E.Proficiency')}
+              on:click={() =>
+                context.actor.update({
+                  [`system.abilities.${id}.proficient`]:
+                    1 - parseInt(ability.proficient),
+                })}
+            >
+              {@html ability.icon}
+            </a>
+            <a
+              data-tooltip={localize('DND5E.AbilityConfigure')}
+              on:click={() =>
+                new dnd5e.applications.actor.ActorAbilityConfig(
+                  context.actor,
+                  null,
+                  id
+                ).render(true)}
+            >
+              <i class="fas fa-cog" />
+            </a>
+          </div>
+          <span class="mod-label ability-mod-label"
+            >{localize('TIDY5E.AbbrMod')}</span
+          >
+          <span class="mod-label save-mod-label"
+            >{localize('TIDY5E.AbbrSavingThrow')}</span
+          >
+        </div>
       {/each}
-    </ul>
+    </section>
   </div>
 </header>
 <nav class="tidy5e-kgar-sheet-tabs">TODO: Tabs and Lock Here</nav>

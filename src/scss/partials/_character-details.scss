@@ -136,4 +136,45 @@
     padding: 0px 0.25rem;
     white-space: nowrap;
   }
+
+  .movement {
+    display: flex;
+    flex-direction: row;
+    gap: 0.25rem;
+    border-bottom: 1px solid var(--t5e-light-color);
+    padding: 0.1875rem 0 0.125rem 0.25rem;
+    font-size: 0.875rem;
+    line-height: 1;
+
+    &:not(:hover) .configure {
+      opacity: 0;
+    }
+
+    .configure i {
+      font-size: 0.75rem;
+      color: var(--t5e-tertiary-color);
+      transition: color 0.3s ease;
+      cursor: pointer;
+    }
+
+    .configure:hover i {
+      color: var(--t5e-secondary-color);
+    }
+  }
+
+  .character-stats {
+    display: flex;
+    flex-direction: row;
+    gap: 0.25rem;
+    margin-top: 0.25rem;
+
+    > *:not(.horizontal-separator) {
+      flex: 1;
+    }
+  }
+
+  .horizontal-separator {
+    background: var(--t5e-faint-color);
+    width: 1px;
+  }
 }
