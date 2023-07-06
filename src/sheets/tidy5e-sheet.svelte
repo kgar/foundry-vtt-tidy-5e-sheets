@@ -1,23 +1,20 @@
 <script lang="ts">
-  import type {
-    Actor5e,
-    CharacterSheetContext,
-  } from '../foundry/foundry-adapter';
+  import type { CharacterSheetContext } from '../foundry/foundry-adapter';
   import { onMount } from 'svelte';
   import { FoundryAdapter } from '../foundry/foundry-adapter';
-  import type { SheetFunctions } from 'src/types/types';
+  import type { SheetFunctions, TidyDropdownOption } from 'src/types/types';
   import { log } from 'src/utils/logging';
   import { SettingsProvider } from 'src/settings/settings';
   import Tidy5eActorOriginSummaryConfig from './tidy5e-actor-origin-summary-config';
   import { formatAsModifier } from 'src/utils/formatting';
   import CharacterPortrait from './character-portrait.svelte';
+  import TidyDropdownList from './tidy-dropdown-list.svelte';
 
   export let debug: any = 'Put any debug information here, if ya need it.';
   export let sheetFunctions: SheetFunctions;
   export let scrollTop: number = 0;
   export let scrollView: HTMLElement | undefined = undefined;
   export let isEditable: boolean;
-  // TODO: Type this.
   export let context: CharacterSheetContext;
   console.log(context);
 
@@ -58,6 +55,18 @@
     FoundryAdapter.getActorCharacterSummaryEntries(context);
 
   $: abilities = Object.entries<any>(context.abilities);
+
+  const sizes: TidyDropdownOption[] = Object.entries(
+    context.config.actorSizes
+  ).map(([abbreviation, size]) => ({
+    value: abbreviation,
+    text: size as string,
+  }));
+
+  const currentSize: TidyDropdownOption = {
+    value: context.system.traits.size,
+    text: context.config.actorSizes[context.system.traits.size],
+  };
 </script>
 
 <header class="tidy5e-kgar-sheet-header flex-row">
@@ -201,18 +210,12 @@
     <section class="origin-summary">
       <span class="origin-points">
         <!-- TODO: Consider implementing the hidden select that the original sheet has, or figure out a way to format this select in such a way that it agrees with the rest of the layout instead of undermining it. -->
-        <select
-          class="actor-size"
-          name="system.traits.size"
-          bind:value={context.system.traits.size}
-        >
-          <option value="tiny">Tiny</option>
-          <option value="sm">Small</option>
-          <option value="med">Medium</option>
-          <option value="lg">Large</option>
-          <option value="huge">Huge</option>
-          <option value="grg">Gargantuan</option>
-        </select>
+        <TidyDropdownList
+          options={sizes}
+          selected={currentSize}
+          on:optionClicked={(event) =>
+            context.actor.update({ 'system.traits.size': event.detail.value })}
+        />
         {#each characterSummaryEntries as entry}
           <span>&#8226;</span>
           <span data-tooltip={entry} class="truncate">{entry}</span>

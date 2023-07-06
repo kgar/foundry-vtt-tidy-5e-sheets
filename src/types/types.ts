@@ -25,3 +25,5 @@ export type ItemStub = {
 };
 
 export type RoundedPortaitStyleOptions = 'default' | 'pc' | 'npc' | 'all';
+
+export type TidyDropdownOption = { value: any; text: string };
