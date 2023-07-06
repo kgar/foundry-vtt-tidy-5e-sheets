@@ -1,8 +1,16 @@
 <script lang="ts">
-  export let ac: string | number;
+  /**
+   * The Armor Class value.
+   */
+  export let ac: string | number = '0';
+
+  /**
+   * Optional CSS class list string to apply to the AC Shield container element.
+   */
+  export let cssClass: string = '';
 </script>
 
-<div class="ac-display">
+<div class="ac-display {cssClass}">
   <div class="ac-shield">
     <svg
       version="1.1"
@@ -29,9 +37,9 @@
 <style lang="scss">
   .ac-display {
     position: relative;
-    width: 3.75rem;
 
     .ac-shield {
+      width: 3.75rem;
       height: 100%;
       display: flex;
       flex-direction: column;
@@ -42,10 +50,10 @@
           fill: var(--t5e-light-color);
         }
       }
+      margin: 0 auto;
     }
 
     .attribute-value {
-      // z-index: 1;
       position: absolute;
       width: 100%;
       height: 100%;
@@ -55,15 +63,8 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      // top: 40%;
-      // left: 50%;
-      // -webkit-transform: translate(-50%, -50%);
-      // transform: translate(-50%, -50%);
       font-size: 2.25rem;
-      // height: 1.5rem;
       font-weight: 700;
-      // margin: 0 auto;
-      // width: 2.75rem;
     }
   }
 </style>

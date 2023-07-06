@@ -10,6 +10,7 @@
   import CharacterPortrait from './character-portrait.svelte';
   import TidyDropdownList from './tidy-dropdown-list.svelte';
   import AcShield from './ac-shield.svelte';
+  import AttributeBlock from './attribute-block.svelte';
 
   export let debug: any = 'Put any debug information here, if ya need it.';
   export let sheetFunctions: SheetFunctions;
@@ -270,6 +271,7 @@
           new dnd5e.applications.actor.ActorArmorConfig(context.actor).render(
             true
           )}
+        cssClass="align-self-flex-start"
       />
       <div
         class="horizontal-separator"
@@ -308,73 +310,14 @@
           <i class="fas fa-cog" />
         </a>
       </div>
-      {#each abilities as [id, ability], i}
+      {#each abilities as [id, ability]}
         <div
           class="horizontal-separator"
           aria-hidden="true"
           role="presentation"
         />
         <div>
-          <h4
-            data-tooltip={ability.label}
-            on:click={(event) => context.actor.rollAbility(ability, { event })}
-          >
-            {id}
-          </h4>
-          <div>
-            <input
-              type="text"
-              name="system.abilities.{id}.value"
-              value={ability.value}
-              placeholder="10"
-              data-dtype="Number"
-            />
-          </div>
-          <div>
-            <span
-              data-tooltip={localize('DND5E.AbilityModifier')}
-              on:click={(event) => context.actor.rollAbilityTest(id, { event })}
-              >{formatAsModifier(ability.mod)}</span
-            >
-            <span
-              data-tooltip={localize('DND5E.ActionSave')}
-              on:click={(event) => context.actor.rollAbilitySave(id, { event })}
-              >{formatAsModifier(ability.save)}</span
-            >
-            <input
-              type="hidden"
-              name="system.abilities.{id}.proficient"
-              value={ability.proficient}
-              data-dtype="Number"
-            />
-            <a
-              title={localize('DND5E.Proficiency')}
-              on:click={() =>
-                context.actor.update({
-                  [`system.abilities.${id}.proficient`]:
-                    1 - parseInt(ability.proficient),
-                })}
-            >
-              {@html ability.icon}
-            </a>
-            <a
-              data-tooltip={localize('DND5E.AbilityConfigure')}
-              on:click={() =>
-                new dnd5e.applications.actor.ActorAbilityConfig(
-                  context.actor,
-                  null,
-                  id
-                ).render(true)}
-            >
-              <i class="fas fa-cog" />
-            </a>
-          </div>
-          <span class="mod-label ability-mod-label"
-            >{localize('TIDY5E.AbbrMod')}</span
-          >
-          <span class="mod-label save-mod-label"
-            >{localize('TIDY5E.AbbrSavingThrow')}</span
-          >
+          <AttributeBlock abbreviation={id} {ability} actor={context.actor} />
         </div>
       {/each}
     </section>
