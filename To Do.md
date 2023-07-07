@@ -138,4 +138,4 @@
 - [ ] Study a11y and apply it to the forms
 - [ ] Import/Export custom color themes 💪
 - [ ] Sheet settings: Use non-Foundry-module color picker (Svelte has a nice one) for setting CSS colors
-- [ ] 
+- [ ] UI test idea - create automated walkthrough of the application which provides screenshots of relevant areas with relevant features toggled on and off. This should go into a markdown report with the screenshots. It should report any console errors as well.

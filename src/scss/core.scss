@@ -2,62 +2,21 @@
   @import './partials/general';
   @import './partials/layout';
   @import './partials/character-details';
+  @import './partials/portrait';
 
-  .profile {
-    width: 9.375rem;
-    height: 9.375rem;
-  }
-
-  .portrait {
-    width: 100%;
-    height: 100%;
-    border-radius: 5px;
-    overflow: hidden;
-    border: 1px solid var(--t5e-icon-outline);
-    position: relative;
-    mix-blend-mode: multiply;
-    z-index: 2;
-
-    &.round-portrait,
-    &.round-portrait .player-image {
-      border-radius: 50%;
-    }
-
-    .portrait-menu {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      font-size: 12px;
-      line-height: 1;
-      white-space: nowrap;
-      display: flex;
-      flex-direction: column;
-
-      .portrait-menu-item {
-        background: var(--t5e-background);
-        color: var(--t5e-primary-font);
-        border: none;
-        margin: 1px 0;
-        padding: 4px 6px;
-        line-height: 1;
-        font-size: 12px;
-        border: 1px solid var(--t5e-light-color);
-        border-radius: 5px;
-        text-align: center;
-
-        &:hover {
-          background: var(--t5e-background);
-          color: var(--t5e-primary-accent);
-        }
-      }
+  &.sheet.actor {
+    .window-content {
+      padding: 0;
+      margin: 0;
+      color: var(--t5e-primary-font);
+      font-family: var(--t5e-signika);
     }
   }
 
-  .player-image {
-    background: var(--t5e-icon-background);
-    box-shadow: 0 0 10px var(--t5e-icon-shadow) inset;
+  .tidy5e-kgar-sheet-header {
+    display: flex;
+    justify-content: center;
+    padding: 10px 16px 16px 16px;
+    background: var(--t5e-header-background);
   }
-
-
 }
