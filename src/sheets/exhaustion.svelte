@@ -15,8 +15,14 @@
   }>();
 
   const exhaustionClasses = [
-    ''
-  ]
+    'far fa-grin',
+    'far fa-smile',
+    'far fa-meh',
+    'far fa-frown',
+    'far fa-frown-open',
+    'far fa-tired',
+    'far fa-dizzy',
+  ];
 </script>
 
 <div
@@ -31,24 +37,7 @@
       class="exhaustion-icon"
       data-tooltip={localize(`T5EK.Exhaustion${level}`)}
     >
-      <!-- <i
-          class="far"
-          class:fa-grin={context.system.attributes.exhaustion === 0}
-          class:fa-smile={context.system.attributes.exhaustion === 1}
-          class:fa-meh={context.system.attributes.exhaustion === 2}
-          class:fa-frown={context.system.attributes.exhaustion === 3}
-          class:fa-frown-open={context.system.attributes.exhaustion === 4}
-          class:fa-tired={context.system.attributes.exhaustion === 5}
-          class:fa-dizzy={context.system.attributes.exhaustion === 6}
-        /> -->
-      <!-- TODO: Simplify with a more direct approach -->
-      <i class="far fa-grin" />
-      <i class="far fa-smile" />
-      <i class="far fa-meh" />
-      <i class="far fa-frown" />
-      <i class="far fa-frown-open" />
-      <i class="far fa-tired" />
-      <i class="far fa-dizzy" />
+      <i class={exhaustionClasses[level] ?? ''} />
     </div>
     <ul class="exhaust-level">
       {#each [0, 1, 2, 3, 4, 5, 6] as levelOption}
@@ -151,20 +140,10 @@
     color: var(--t5e-primary-font);
   }
 
-  // # exhaustion effect note #
-
-  .exhaustion-container .exhaustion-icon i {
-    display: none;
-  }
-
   // # exhaustion color coding #
 
   .exhaustion-container.level-0 .exhaust-level li:nth-of-type(1) {
     background: transparent;
-  }
-
-  .exhaustion-container.level-0 .exhaustion-icon i:nth-child(1) {
-    display: inline-block;
   }
 
   .exhaustion-container:not(.level-):not(.level-0) .exhaustion-icon {
@@ -178,27 +157,11 @@
     background: var(--t5e-exhaustion-lvl1);
   }
 
-  .exhaustion-container.level-1 .exhaustion-icon i:nth-child(2) {
-    display: inline-block;
-  }
-
-  .exhaustion-container.level-2 .exhaustion-icon i:nth-child(3) {
-    display: inline-block;
-  }
-
   .exhaustion-container:not(.level-):not(.level-0):not(.level-1):not(.level-2)
     .exhaustion-icon,
   .exhaustion-container.level-3 .exhaust-level li:nth-of-type(-n + 4),
   .exhaustion-container.level-4 .exhaust-level li:nth-of-type(-n + 5) {
     background: var(--t5e-exhaustion-lvl2);
-  }
-
-  .exhaustion-container.level-3 .exhaustion-icon i:nth-child(4) {
-    display: inline-block;
-  }
-
-  .exhaustion-container.level-4 .exhaustion-icon i:nth-child(5) {
-    display: inline-block;
   }
 
   .exhaustion-container:not(.level-):not(.level-0):not(.level-1):not(
@@ -208,14 +171,6 @@
   .exhaustion-container.level-5 .exhaust-level li:nth-of-type(-n + 6),
   .exhaustion-container.level-6 .exhaust-level li:nth-of-type(-n + 7) {
     background: var(--t5e-exhaustion-lvl3);
-  }
-
-  .exhaustion-container.level-5 .exhaustion-icon i:nth-child(6) {
-    display: inline-block;
-  }
-
-  .exhaustion-container.level-6 .exhaustion-icon i:nth-child(7) {
-    display: inline-block;
   }
 
   .exhaustion-container:not(.level-):not(.level-0) .level-display {
