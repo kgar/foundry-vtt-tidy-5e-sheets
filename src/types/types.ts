@@ -27,3 +27,10 @@ export type ItemStub = {
 export type RoundedPortaitStyleOptions = 'default' | 'pc' | 'npc' | 'all';
 
 export type TidyDropdownOption = { value: any; text: string };
+
+export type PortraitCharmRadiusClass =
+  | 'top-left'
+  | 'top-right'
+  | 'bottom-left'
+  | 'bottom-right'
+  | 'rounded';

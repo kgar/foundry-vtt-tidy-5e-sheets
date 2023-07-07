@@ -1,27 +1,18 @@
-<!-- Original exhaustion HTML : tidy5e-sheet.html:62 -->
+<!-- Original Inspo : tidy5e-sheet.html:62 -->
 <div
-  class="exhaustion-container level-{{system.attributes.exhaustion}} has-note"
-  data-tooltip="{{ @root.exhaustionTooltip }}"
+  class="inspiration has-note {{#if actor.system.attributes.inspiration}}inspiration-1{{else}}inspiration-0{{/if}}"
+  data-tooltip="{{ localize 'DND5E.Inspiration' }}"
 >
-  <div class="level-display">{{system.attributes.exhaustion}}</div>
-  <div class="exhaustion-wrap">
-    <div class="exhaustion-icon">
-      <i class="far fa-grin"></i>
-      <i class="far fa-smile"></i>
-      <i class="far fa-meh"></i>
-      <i class="far fa-frown"></i>
-      <i class="far fa-frown-open"></i>
-      <i class="far fa-tired"></i>
-      <i class="far fa-dizzy"></i>
-    </div>
-    <ul class="exhaust-level">
-      <li data-elvl="0">0</li>
-      <li data-elvl="1">1</li>
-      <li data-elvl="2">2</li>
-      <li data-elvl="3">3</li>
-      <li data-elvl="4">4</li>
-      <li data-elvl="5">5</li>
-      <li data-elvl="6">6</li>
-    </ul>
-  </div>
+  <input
+    id="{{@root/appId}}-inspiration"
+    type="checkbox"
+    name="system.attributes.inspiration"
+    data-dtype="Boolean"
+    {{checked
+    system.attributes.inspiration}}
+  />
+  <label for="{{@root/appId}}-inspiration">
+    <i class="inspiration-icon fas fa-dice-d20"></i>
+  </label>
+  <!-- <div class="note">{{ localize 'DND5E.Inspiration' }}</div> -->
 </div>

@@ -6,6 +6,8 @@
   } from 'src/foundry/foundry-adapter';
   import { SettingsProvider } from 'src/settings/settings';
   import type { SheetFunctions } from 'src/types/types';
+  import Exhaustion from './exhaustion.svelte';
+  import Inspiration from './inspiration.svelte';
 
   export let sheetFunctions: SheetFunctions;
   export let context: CharacterSheetContext;
@@ -117,66 +119,19 @@
     />
     <i class="fas fa-times" />
 
-    <!-- Exhaustion -->
-    <!-- TODO: Learn the full breadth of exhaustion features in Tidy 5e and reimplement -->
-    <div
-      class="exhaustion-container level-{context.system.attributes.exhaustion ??
-        0} has-note"
-    >
-      <div class="level-display">
-        {context.system.attributes.exhaustion}
-      </div>
-      <div class="exhaustion-wrap">
-        <div
-          class="exhaustion-icon"
-          data-tooltip={localize(
-            `T5EK.Exhaustion${context.system.attributes.exhaustion ?? 0}`
-          )}
-        >
-          <!-- <i
-          class="far"
-          class:fa-grin={context.system.attributes.exhaustion === 0}
-          class:fa-smile={context.system.attributes.exhaustion === 1}
-          class:fa-meh={context.system.attributes.exhaustion === 2}
-          class:fa-frown={context.system.attributes.exhaustion === 3}
-          class:fa-frown-open={context.system.attributes.exhaustion === 4}
-          class:fa-tired={context.system.attributes.exhaustion === 5}
-          class:fa-dizzy={context.system.attributes.exhaustion === 6}
-        /> -->
-          <!-- TODO: Simplify with a more direct approach -->
-          <i class="far fa-grin" />
-          <i class="far fa-smile" />
-          <i class="far fa-meh" />
-          <i class="far fa-frown" />
-          <i class="far fa-frown-open" />
-          <i class="far fa-tired" />
-          <i class="far fa-dizzy" />
-        </div>
-        <ul class="exhaust-level">
-          {#each [0, 1, 2, 3, 4, 5, 6] as level}
-            <li
-              data-tooltip={localize(`T5EK.Exhaustion${level}`)}
-              on:click={() => {
-                context.actor.update({ 'system.attributes.exhaustion': level });
-              }}
-            >
-              {level}
-            </li>
-          {/each}
-        </ul>
-      </div>
-    </div>
+    <Exhaustion
+      level={context.system.attributes.exhaustion}
+      radiusClass={useRoundedPortraitStyle ? 'rounded' : 'top-left'}
+      on:levelSelected={(event) =>
+        context.actor.update({
+          'system.attributes.exhaustion': event.detail.level,
+        })}
+    />
 
-    <!-- DMspiration -->
-    <label data-tooltip={localize('DND5E.Inspiration')}>
-      <input
-        type="checkbox"
-        name="system.attributes.inspiration"
-        data-dtype="Boolean"
-        checked={context.system.attributes.inspiration}
-      />
-      <i class="inspiration-icon fas fa-dice-d20" />
-    </label>
+    <Inspiration
+      inspired={context.actor.system.attributes.inspiration}
+      radiusClass={useRoundedPortraitStyle ? 'rounded' : 'top-right'}
+    />
 
     <!-- Short/Long Rest -->
     <div>

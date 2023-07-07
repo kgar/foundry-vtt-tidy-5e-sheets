@@ -19,4 +19,18 @@
     padding: 10px 16px 16px 16px;
     background: var(--t5e-header-background);
   }
+
+  .top-left,
+  .bottom-right {
+    border-radius: 5px 0 5px 0;
+  }
+
+  .top-right,
+  .bottom-left {
+    border-radius: 0 5px 0 5px;
+  }
+
+  .rounded {
+    border-radius: 50%;
+  }
 }

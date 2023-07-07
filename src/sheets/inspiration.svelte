@@ -1,4 +1,37 @@
-.inspiration {
+<script lang="ts">
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import { SettingsProvider } from 'src/settings/settings';
+  import type { PortraitCharmRadiusClass } from 'src/types/types';
+
+  export let inspired: boolean;
+  export let cssClass: string = '';
+  export let radiusClass: PortraitCharmRadiusClass;
+
+  const localize = FoundryAdapter.localize;
+  const disableAnimation =
+    SettingsProvider.settings.inspirationAnimationDisabled.get();
+</script>
+
+<div
+  class="inspiration has-note inspiration-{inspired ? 1 : 0} {cssClass}"
+  data-tooltip={localize('DND5E.Inspiration')}
+>
+  <label class:inspired class={radiusClass}>
+    <input
+      type="checkbox"
+      name="system.attributes.inspiration"
+      data-dtype="Boolean"
+      checked={inspired}
+    />
+    <i
+      class="inspiration-icon fas fa-dice-d20"
+      class:disable-animation={disableAnimation}
+    />
+  </label>
+</div>
+
+<style lang="scss">
+  .inspiration {
     position: absolute;
     right: 0;
     top: 0px;
@@ -17,7 +50,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 0 5px 0 5px;
     font-size: 24px;
     color: var(--t5e-icon-font);
     cursor: pointer;
@@ -26,7 +58,7 @@
     background: var(--t5e-icon-background);
   }
 
-  .roundPortrait .inspiration label {
+  .round-portrait .inspiration label {
     border-radius: 50%;
   }
 
@@ -46,18 +78,18 @@
     text-shadow: 0 0 5px rgba(118, 228, 255, 0.5);
   }
 
-  .inspiration input:checked + label {
+  .inspiration-1 label {
     color: rgba(255, 255, 255, 1);
     text-shadow: 0 0 10px rgba(118, 228, 255, 1);
     background: #999;
   }
 
-  .inspiration input:checked + label i {
+  .inspiration-1 label i {
     color: #ffffff;
     animation: glow 5s ease-in-out infinite alternate;
   }
 
-  .inspiration input:checked + label i.disable-animation {
+  i.disable-animation {
     animation: none;
   }
 
@@ -79,3 +111,4 @@
       text-shadow: 0 0 11px 7px #76e4ff;
     }
   }
+</style>

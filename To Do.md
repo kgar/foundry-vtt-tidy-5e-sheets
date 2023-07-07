@@ -1,5 +1,30 @@
 # To Do
 
+## Inspiration
+
+- [x] HTML
+- [x] SCSS
+- [ ] Implement the inspirationOnHover option
+- [ ] Implement the Disable Inspiration option
+- [ ] Implement the disable animation option
+
+## Exhaustion
+
+- [x] HTML
+- [x] SCSS
+- [ ] Implement the exhaustion on hover option
+- [ ] Add the custom exhaustion code
+- [ ] Ferret out / expand these todos
+
+## Dying / Death Saves
+
+- [ ] Hide all charms when dying
+- [ ] 
+
+## Portrait Charms Reorganization
+
+- [ ] Move the positioning styles to the portrait component or general styles, and apply them via cssClass to impose positioning that is relevant to the parent component (the portrait component)
+
 ## Step by step
 
 - [x] Make proof of concept with svelte
@@ -22,7 +47,7 @@
   - [x] Add "Save Changes" button with icon
   - [x] Changes should be instantaneously displayed on open sheets (might need to use a svelte store for this)
   - [ ] Stub out the main sheet header
-    - [ ] Make a component for the Ability Score Block and reuse
+    - [x] Make a component for the Ability Score Block and reuse
     - [x] Make it fully functional
     - [ ] Stub TS types and resolve TS errors
     - [ ] Encapsulate and organize
