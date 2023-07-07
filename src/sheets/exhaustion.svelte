@@ -23,18 +23,28 @@
     'far fa-tired',
     'far fa-dizzy',
   ];
+
+  const exhaustionIntensity = [
+    'intensity-0',
+    'intensity-1',
+    'intensity-1',
+    'intensity-2',
+    'intensity-2',
+    'intensity-3',
+    'intensity-3',
+  ];
 </script>
 
 <div
-  class="exhaustion-container level-{level} has-note {cssClass}"
+  class="exhaustion-container {exhaustionIntensity[level]} has-note {cssClass}"
   class:only-show-on-hover={onlyShowOnHover}
 >
-  <div class="level-display">
+  <div class="level-display" class:colorized={level > 0}>
     {level}
   </div>
   <div class="exhaustion-wrap {radiusClass}">
     <div
-      class="exhaustion-icon"
+      class="exhaustion-icon colorized"
       data-tooltip={localize(`T5EK.Exhaustion${level}`)}
     >
       <i class={exhaustionClasses[level] ?? ''} />
@@ -42,7 +52,7 @@
     <ul class="exhaust-level">
       {#each [0, 1, 2, 3, 4, 5, 6] as levelOption}
         <li
-          class:included={levelOption <= level}
+          class:colorized={levelOption <= level}
           data-tooltip={localize(`T5EK.Exhaustion${levelOption}`)}
           on:click={() => dispatch('levelSelected', { level: levelOption })}
         >
@@ -69,10 +79,6 @@
 
     &.only-show-on-hover:hover > * {
       visibility: visible;
-    }
-
-    &:is(.level-0) .included {
-      background: transparent;
     }
 
     .level-display {
@@ -134,7 +140,6 @@
           text-align: center;
           line-height: 34px;
           cursor: pointer;
-          background: var(--t5e-light-color);
 
           &:hover {
             background: var(--t5e-tertiary-color) !important;
@@ -144,21 +149,25 @@
       }
     }
 
-    &:is(.level-1, .level-2)
-      :is(.level-display, .exhaustion-icon, .exhaustion-wrap .included) {
-      color: var(--t5e-exhaustion-font);
+    .exhaust-level li:not(.colorized) {
+      background: var(--t5e-light-color);
+    }
+
+    &.intensity-0 .colorized {
+      background: transparent;
+    }
+
+    &.intensity-1 .colorized {
       background: var(--t5e-exhaustion-lvl1);
     }
 
-    &:is(.level-3, .level-4)
-      :is(.exhaustion-icon, .level-display, .exhaustion-wrap .included) {
+    &.intensity-2 .colorized {
       background: var(--t5e-exhaustion-lvl2);
       // TODO: Promote to --t5e-exhaustion-lvl2-foreground / or find a good contrasting color in the existing variables
       color: rgba(255, 255, 255, 0.7);
     }
 
-    &:is(.level-5, .level-6)
-      :is(.exhaustion-icon, .level-display, .exhaustion-wrap .included) {
+    &.intensity-3 .colorized {
       background: var(--t5e-exhaustion-lvl3);
       // TODO: Promote to --t5e-exhaustion-lvl3-foreground / or find a good contrasting color in the existing variables
       color: rgba(255, 255, 255, 0.7);

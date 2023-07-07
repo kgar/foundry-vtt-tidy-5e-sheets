@@ -6,7 +6,7 @@
   import { log } from 'src/utils/logging';
   import { SettingsProvider } from 'src/settings/settings';
   import Tidy5eActorOriginSummaryConfig from './tidy5e-actor-origin-summary-config';
-  import CharacterPortrait from './character-portrait.svelte';
+  import CharacterProfile from './character-profile.svelte';
   import TidyDropdownList from './tidy-dropdown-list.svelte';
   import AcShield from './ac-shield.svelte';
   import AttributeBlock from './attribute-block.svelte';
@@ -75,7 +75,7 @@
   <!-- Portrait -->
   <!-- FIXME: this hardcoded height is to make scroll position work while this form is unstyled.  -->
   <div class="flex-grow-0">
-    <CharacterPortrait {context} {sheetFunctions} />
+    <CharacterProfile {context} {sheetFunctions} />
   </div>
 
   <!-- Name -->
