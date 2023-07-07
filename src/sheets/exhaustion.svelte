@@ -42,6 +42,7 @@
     <ul class="exhaust-level">
       {#each [0, 1, 2, 3, 4, 5, 6] as levelOption}
         <li
+          class:included={levelOption <= level}
           data-tooltip={localize(`T5EK.Exhaustion${levelOption}`)}
           on:click={() => dispatch('levelSelected', { level: levelOption })}
         >
@@ -69,124 +70,98 @@
     &.only-show-on-hover:hover > * {
       visibility: visible;
     }
-  }
 
-  .exhaustion-container .level-display {
-    display: block;
-    width: 16px;
-    height: 16px;
-    line-height: 14px;
-    text-align: center;
-    font-size: 14px;
-    position: absolute;
-    background: var(--t5e-icon-background);
-    box-shadow: 0 0 8px var(--t5e-icon-shadow) inset;
-    border: 1px solid var(--t5e-icon-outline);
-    top: -2px;
-    left: -2px;
-    border-radius: 50%;
-    z-index: 1;
-    font-weight: 700;
-  }
+    &:is(.level-0) .included {
+      background: transparent;
+    }
 
-  .exhaustion-wrap {
-    height: 34px;
-    width: 34px;
-    overflow: hidden;
-    transition: width 0.3s ease;
-    background: var(--t5e-icon-background);
-    display: flex;
-    box-shadow: 0 0 10px var(--t5e-icon-shadow) inset;
-    border: 1px solid var(--t5e-icon-outline);
-  }
-
-  .exhaustion-wrap.rounded {
-    border-radius: 1.25rem;
-  }
-
-  .exhaustion-container:hover .exhaustion-wrap {
-    width: 10.875rem;
-  }
-
-  .exhaustion-wrap .exhaustion-icon {
-    display: block;
-    flex: 0 0 32px;
-    width: 32px;
-    height: 32px;
-    line-height: 34px;
-    text-align: center;
-    font-size: 24px;
-    position: relative;
-  }
-
-  .exhaustion-wrap .exhaust-level {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex: 1;
-  }
-
-  .exhaustion-wrap .exhaust-level li {
-    flex: 0 0 1.25rem;
-    text-align: center;
-    line-height: 34px;
-    cursor: pointer;
-    background: var(--t5e-light-color);
-  }
-
-  .exhaustion-wrap .exhaust-level li:hover {
-    background: var(--t5e-tertiary-color) !important;
-    color: var(--t5e-primary-font);
-  }
-
-  // # exhaustion color coding #
-
-  .exhaustion-container.level-0 .exhaust-level li:nth-of-type(1) {
-    background: transparent;
-  }
-
-  .exhaustion-container:not(.level-):not(.level-0) .exhaustion-icon {
-    color: var(--t5e-exhaustion-font);
-  }
-
-  .exhaustion-container:not(.level-):not(.level-0) .exhaustion-icon,
-  .exhaustion-container.level-1 .exhaust-level li:nth-of-type(-n + 2),
-  .exhaustion-container.level-2 .exhaust-level li:nth-of-type(-n + 3) {
-    color: var(--t5e-exhaustion-font);
-    background: var(--t5e-exhaustion-lvl1);
-  }
-
-  .exhaustion-container:not(.level-):not(.level-0):not(.level-1):not(.level-2)
-    .exhaustion-icon,
-  .exhaustion-container.level-3 .exhaust-level li:nth-of-type(-n + 4),
-  .exhaustion-container.level-4 .exhaust-level li:nth-of-type(-n + 5) {
-    background: var(--t5e-exhaustion-lvl2);
-  }
-
-  .exhaustion-container:not(.level-):not(.level-0):not(.level-1):not(
-      .level-2
-    ):not(.level-3):not(.level-4)
-    .exhaustion-icon,
-  .exhaustion-container.level-5 .exhaust-level li:nth-of-type(-n + 6),
-  .exhaustion-container.level-6 .exhaust-level li:nth-of-type(-n + 7) {
-    background: var(--t5e-exhaustion-lvl3);
-  }
-
-  .exhaustion-container:not(.level-):not(.level-0) .level-display {
-    color: var(--t5e-exhaustion-font);
-    background: var(--t5e-exhaustion-lvl1);
-  }
-
-  .exhaustion-container:not(.level-):not(.level-0):not(.level-1):not(.level-2)
     .level-display {
-    background: var(--t5e-exhaustion-lvl2);
-  }
+      display: block;
+      width: 16px;
+      height: 16px;
+      line-height: 14px;
+      text-align: center;
+      font-size: 14px;
+      position: absolute;
+      background: var(--t5e-icon-background);
+      box-shadow: 0 0 8px var(--t5e-icon-shadow) inset;
+      border: 1px solid var(--t5e-icon-outline);
+      top: -2px;
+      left: -2px;
+      border-radius: 50%;
+      z-index: 1;
+      font-weight: 700;
+    }
 
-  .exhaustion-container:not(.level-):not(.level-0):not(.level-1):not(
-      .level-2
-    ):not(.level-3):not(.level-4)
-    .level-display {
-    background: var(--t5e-exhaustion-lvl3);
+    &:hover .exhaustion-wrap {
+      width: 10.875rem;
+    }
+
+    .exhaustion-wrap {
+      height: 34px;
+      width: 34px;
+      overflow: hidden;
+      transition: width 0.3s ease;
+      background: var(--t5e-icon-background);
+      display: flex;
+      box-shadow: 0 0 10px var(--t5e-icon-shadow) inset;
+      border: 1px solid var(--t5e-icon-outline);
+
+      &.rounded {
+        border-radius: 1.25rem;
+      }
+
+      .exhaustion-icon {
+        display: block;
+        flex: 0 0 32px;
+        width: 32px;
+        height: 32px;
+        line-height: 34px;
+        text-align: center;
+        font-size: 24px;
+        position: relative;
+      }
+
+      .exhaust-level {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex: 1;
+
+        li {
+          flex: 0 0 1.25rem;
+          text-align: center;
+          line-height: 34px;
+          cursor: pointer;
+          background: var(--t5e-light-color);
+
+          &:hover {
+            background: var(--t5e-tertiary-color) !important;
+            color: var(--t5e-primary-font);
+          }
+        }
+      }
+    }
+
+    &:is(.level-1, .level-2)
+      :is(.level-display, .exhaustion-icon, .exhaustion-wrap .included) {
+      color: var(--t5e-exhaustion-font);
+      background: var(--t5e-exhaustion-lvl1);
+    }
+
+    &:is(.level-3, .level-4)
+      :is(.exhaustion-icon, .level-display, .exhaustion-wrap .included) {
+      background: var(--t5e-exhaustion-lvl2);
+      // TODO: Promote to --t5e-exhaustion-lvl2-foreground / or find a good contrasting color in the existing variables
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    &:is(.level-5, .level-6)
+      :is(.exhaustion-icon, .level-display, .exhaustion-wrap .included) {
+      background: var(--t5e-exhaustion-lvl3);
+      // TODO: Promote to --t5e-exhaustion-lvl3-foreground / or find a good contrasting color in the existing variables
+      color: rgba(255, 255, 255, 0.7);
+    }
   }
 </style>
