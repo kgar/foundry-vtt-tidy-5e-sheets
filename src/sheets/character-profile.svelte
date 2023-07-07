@@ -40,7 +40,9 @@
 
     <CharacterPortrait actor={context.actor} {sheetFunctions} />
 
-    <HpOverlay />
+    {#if !SettingsProvider.settings.hpOverlayDisabled.get()}
+      <HpOverlay {useRoundedPortraitStyle} actor={context.actor} />
+    {/if}
 
     {#if !SettingsProvider.settings.exhaustionDisabled.get()}
       <Exhaustion

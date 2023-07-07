@@ -1,20 +1,11 @@
 # To Do
 
-## Exhaustion
+## HP Overlay
 
 - [x] HTML
 - [x] SCSS
-- [x] exhaustion on hover option
-- [x] exhaustion hidden on 0 option
-- [ ] exhaustion note styles? 
-- [ ] Add the custom exhaustion code
-- [ ] Ferret out / expand these todos
-
-## HP Overlay
-
-- [ ] HTML
-- [ ] SCSS
-- [ ] Expand Option TODOs
+- [x] Implement Disable hp overlay game setting
+- [ ] Purge hpOverlayBorder game setting
 
 ## Dying / Death Saves
 
@@ -22,6 +13,34 @@
 - [ ] SCSS
 - [ ] Hide all charms when dying
 - [ ] Expand todos based on additional options here
+
+## Rest
+
+- [ ] HTML
+- [ ] SCSS
+- [ ] Special Settings?
+
+## HP
+
+- [ ] HTML
+- [ ] SCSS
+- [ ] Special Settings?
+
+## Hit Dice 
+
+- [ ] HTML
+- [ ] SCSS
+- [ ] Special Settings?
+
+## Exhaustion
+
+- [x] HTML
+- [x] SCSS
+- [x] exhaustion on hover option
+- [x] exhaustion hidden on 0 option
+- [x] exhaustion note styles? no longer a feature; remove vestiges
+- [ ] Add the custom exhaustion code; see [exhaustion script](./src/exhaustion.ts)
+- [ ] Ferret out / expand these todos
 
 ## Portrait Charms Reorganization
 
@@ -110,7 +129,7 @@
 
 ## Big Picture
 
-- [ ] Reimplement Tidy5e Sheets with svelte and using foundry/dnd5e API *
+- [ ] Reimplement Tidy5e Sheets with svelte and using foundry/dnd5e API \*
   - [ ] Sheet
     - [ ] GM
     - [ ] Unlimited
@@ -143,7 +162,7 @@
 - [ ] All open Tidy sheets should be re-rendered when options are updated
 - [ ] Exhaustion is a whole feature unto itself with hooks to integrate with midi QoL. Factor this integration back in.
 - [ ] Do I need `data-dtype`?
-- [ ] 
+- [ ]
 
 > \* Most recent breakages in Tidy5e sheets were related to magic HTML conventions that hook into invisible jquery wire-ups. You have to go read through the core HBS's for character sheets. Since you're already there, skip the limitations imposed by trying to recreate their sheet and instead use the public API. After all the public API provides deprecation notices, whereas the 5e sheet can just suddenly be structured differently on a new version. Not much they will do about that.
 
