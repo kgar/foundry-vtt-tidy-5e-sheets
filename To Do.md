@@ -1,25 +1,27 @@
 # To Do
 
-## Inspiration
-
-- [x] HTML
-- [x] SCSS
-- [ ] Implement the inspirationOnHover option
-- [ ] Implement the Disable Inspiration option
-- [ ] Implement the disable animation option
-
 ## Exhaustion
 
 - [x] HTML
 - [x] SCSS
-- [ ] Implement the exhaustion on hover option
+- [x] exhaustion on hover option
+- [x] exhaustion hidden on 0 option
+- [ ] exhaustion note styles? 
 - [ ] Add the custom exhaustion code
 - [ ] Ferret out / expand these todos
 
+## HP Overlay
+
+- [ ] HTML
+- [ ] SCSS
+- [ ] Expand Option TODOs
+
 ## Dying / Death Saves
 
+- [ ] HTML
+- [ ] SCSS
 - [ ] Hide all charms when dying
-- [ ] 
+- [ ] Expand todos based on additional options here
 
 ## Portrait Charms Reorganization
 
@@ -164,3 +166,11 @@
 - [ ] Import/Export custom color themes 💪
 - [ ] Sheet settings: Use non-Foundry-module color picker (Svelte has a nice one) for setting CSS colors
 - [ ] UI test idea - create automated walkthrough of the application which provides screenshots of relevant areas with relevant features toggled on and off. This should go into a markdown report with the screenshots. It should report any console errors as well.
+
+## Inspiration
+
+- [x] HTML
+- [x] SCSS
+- [x] Implement the inspirationOnHover option
+- [x] Implement the Disable Inspiration option
+- [x] Implement the disable animation option

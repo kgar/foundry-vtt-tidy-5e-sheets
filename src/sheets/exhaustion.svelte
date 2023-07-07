@@ -1,20 +1,28 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-    import type { PortraitCharmRadiusClass } from 'src/types/types';
+  import type { PortraitCharmRadiusClass } from 'src/types/types';
   import { createEventDispatcher } from 'svelte';
 
   export let cssClass: string = '';
   export let radiusClass: PortraitCharmRadiusClass;
   export let level: number;
+  export let onlyShowOnHover: boolean = false;
 
   const localize = FoundryAdapter.localize;
 
   const dispatch = createEventDispatcher<{
     levelSelected: { level: number };
   }>();
+
+  const exhaustionClasses = [
+    ''
+  ]
 </script>
 
-<div class="exhaustion-container level-{level} has-note {cssClass}">
+<div
+  class="exhaustion-container level-{level} has-note {cssClass}"
+  class:only-show-on-hover={onlyShowOnHover}
+>
   <div class="level-display">
     {level}
   </div>
@@ -64,6 +72,14 @@
     width: 34px;
     z-index: 50;
     color: var(--t5e-icon-font);
+
+    &.only-show-on-hover > * {
+      visibility: hidden;
+    }
+
+    &.only-show-on-hover:hover > * {
+      visibility: visible;
+    }
   }
 
   .exhaustion-container .level-display {
@@ -82,14 +98,6 @@
     border-radius: 50%;
     z-index: 1;
     font-weight: 700;
-  }
-
-  .exhaustion-container .note {
-    top: calc(100% + 0.5rem);
-    left: 0;
-    bottom: auto;
-    transform: translate(0, 0);
-    z-index: 1;
   }
 
   .exhaustion-wrap {
@@ -145,37 +153,8 @@
 
   // # exhaustion effect note #
 
-  .exhaustion-container .note p {
-    color: rgba(255, 255, 255, 1);
-    display: block;
-  }
-
   .exhaustion-container .exhaustion-icon i {
     display: none;
-  }
-
-  .profile.autohide .exhaustion-container.level-0,
-  .profile.autohide .inspiration.inspiration-0 {
-    display: none;
-  }
-
-  .profile.autohide:hover .exhaustion-container.level-0,
-  .profile.autohide:hover .inspiration.inspiration-0 {
-    display: block;
-  }
-
-  .exhaustion-container {
-    &.level-0 .note p:not(.lvl-0),
-    &.level- .note p:not(.lvl-0),
-    &.level-1 .note p:not(.lvl-1),
-    &.level-2 .note p:not(.lvl-2),
-    &.level-3 .note p:not(.lvl-3),
-    &.level-4 .note p:not(.lvl-4),
-    &.level-5 .note p:not(.lvl-5),
-    &.level-6 .note p:not(.lvl-6) {
-      color: rgba(255, 255, 255, 0.4);
-      display: none;
-    }
   }
 
   // # exhaustion color coding #

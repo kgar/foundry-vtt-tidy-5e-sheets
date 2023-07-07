@@ -126,12 +126,19 @@
         context.actor.update({
           'system.attributes.exhaustion': event.detail.level,
         })}
+      onlyShowOnHover={SettingsProvider.settings.exhaustionOnHover.get() ||
+        (SettingsProvider.settings.hideIfZero.get() &&
+          context.system.attributes.exhaustion === 0)}
     />
 
-    <Inspiration
-      inspired={context.actor.system.attributes.inspiration}
-      radiusClass={useRoundedPortraitStyle ? 'rounded' : 'top-right'}
-    />
+    {#if !SettingsProvider.settings.inspirationDisabled.get()}
+      <Inspiration
+        inspired={context.actor.system.attributes.inspiration}
+        radiusClass={useRoundedPortraitStyle ? 'rounded' : 'top-right'}
+        onlyShowOnHover={SettingsProvider.settings.inspirationOnHover.get()}
+        disableAnimation={SettingsProvider.settings.inspirationAnimationDisabled.get()}
+      />
+    {/if}
 
     <!-- Short/Long Rest -->
     <div>

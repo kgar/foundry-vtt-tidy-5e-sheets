@@ -1,19 +1,19 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { SettingsProvider } from 'src/settings/settings';
   import type { PortraitCharmRadiusClass } from 'src/types/types';
 
   export let inspired: boolean;
   export let cssClass: string = '';
   export let radiusClass: PortraitCharmRadiusClass;
+  export let onlyShowOnHover: boolean = false;
+  export let disableAnimation: boolean = true;
 
   const localize = FoundryAdapter.localize;
-  const disableAnimation =
-    SettingsProvider.settings.inspirationAnimationDisabled.get();
 </script>
 
 <div
   class="inspiration has-note inspiration-{inspired ? 1 : 0} {cssClass}"
+  class:only-show-on-hover={onlyShowOnHover}
   data-tooltip={localize('DND5E.Inspiration')}
 >
   <label class:inspired class={radiusClass}>
@@ -87,10 +87,10 @@
   .inspiration-1 label i {
     color: #ffffff;
     animation: glow 5s ease-in-out infinite alternate;
-  }
 
-  i.disable-animation {
-    animation: none;
+    &.disable-animation {
+      animation: none;
+    }
   }
 
   @keyframes glow {
@@ -109,6 +109,16 @@
     100% {
       transform: scale(1.1);
       text-shadow: 0 0 11px 7px #76e4ff;
+    }
+  }
+
+  .only-show-on-hover {
+    label {
+      visibility: hidden;
+    }
+
+    &:hover label {
+      visibility: visible;
     }
   }
 </style>
