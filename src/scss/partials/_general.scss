@@ -20,11 +20,42 @@ h4 {
   border: none;
 }
 
+.block-title {
+  position: relative;
+  font-family: var(--t5e-modesto);
+  font-size: 1.25rem;
+  line-height: 1;
+  margin: 0;
+  text-transform: capitalize;
+  text-align: center;
+
+  &::after {
+    display: block;
+    content: '';
+    height: 0;
+    width: 60%;
+    border-bottom: 1px solid var(--t5e-faint-color);
+    position: absolute;
+    left: 50%;
+    bottom: -1px;
+    transform: translate(-50%, 0);
+  }
+}
+
+.block-score {
+  font-size: 1.5rem;
+  margin: 0.125rem 0 0.1875rem 0;
+  padding: 0.125rem 0 0 0;
+  text-align: center;
+  font-family: var(--t5e-modesto);
+  font-weight: 700;
+  height: 1.4375rem;
+}
+
 .character-name,
 .level,
 .attribute-name,
 .header-attribute .value,
-.tidy-ability-name,
 .attribute-value {
   font-family: var(--t5e-modesto);
 }

@@ -11,9 +11,11 @@
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <!-- svelte-ignore a11y-missing-attribute -->
+<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
+<!-- svelte-ignore a11y-no-static-element-interactions -->
 <div class="wrapper">
   <h4
-    class="tidy-ability-name box-title rollable"
+    class="block-title rollable"
     data-tooltip={ability.label}
     on:click={(event) => actor.rollAbility(ability, { event })}
   >
@@ -23,7 +25,7 @@
     <input
       type="text"
       name="system.abilities.{abbreviation}.value"
-      class="tidy-ability-score"
+      class="block-score"
       value={ability.value}
       placeholder="10"
       data-dtype="Number"
@@ -92,37 +94,6 @@
       text-shadow: none;
     }
 
-    .tidy-ability-name {
-      position: relative;
-      font-size: 1.25rem;
-      line-height: 1;
-      margin: 0;
-      text-transform: capitalize;
-      text-align: center;
-
-      &::after {
-        display: block;
-        content: '';
-        height: 0;
-        width: 60%;
-        border-bottom: 1px solid var(--t5e-faint-color);
-        position: absolute;
-        left: 50%;
-        bottom: -1px;
-        transform: translate(-50%, 0);
-      }
-    }
-
-    .tidy-ability-score {
-      font-size: 1.25rem;
-      margin: 0.125rem 0 0.1875rem 0;
-      padding: 0.125rem 0 0 0;
-      text-align: center;
-      font-family: var(--t5e-modesto);
-      font-weight: 700;
-      height: 1.4375rem;
-    }
-
     .ability-modifiers {
       position: relative;
       display: flex;
@@ -173,13 +144,17 @@
 
       &.ability-mod-label {
         right: 1.5625rem; // This is far too precise; can we make this more relative to its target?
-        transform: translateX(-1.625rem); // This is far too precise; can we make this more relative to its target?
+        transform: translateX(
+          -1.625rem
+        ); // This is far too precise; can we make this more relative to its target?
         border-radius: 0.3125rem 0 0 0.3125rem;
       }
 
       &.save-mod-label {
         left: 1.5625rem; // This is far too precise; can we make this more relative to its target?
-        transform: translateX(1.625rem); // This is far too precise; can we make this more relative to its target?
+        transform: translateX(
+          1.625rem
+        ); // This is far too precise; can we make this more relative to its target?
         border-radius: 0 0.3125rem 0.3125rem 0;
       }
     }

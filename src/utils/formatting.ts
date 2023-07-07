@@ -1,3 +1,5 @@
+import { FoundryAdapter } from "src/foundry/foundry-adapter";
+
 /**
  * An Handlebars helper to format numbers
  *
@@ -19,5 +21,5 @@ export function formatAsModifier(value: string | number): string {
 }
 
 function toSignedNumberString(value: number) {
-  return value.toLocaleString(navigator.language, { signDisplay: 'always' });
+  return value.toLocaleString(FoundryAdapter.getCurrentLang(), { signDisplay: 'always' });
 }

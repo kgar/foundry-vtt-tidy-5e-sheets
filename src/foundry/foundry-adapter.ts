@@ -112,6 +112,9 @@ export const FoundryAdapter = {
 
     return entries;
   },
+  getCurrentLang() {
+    return game.i18n.lang;
+  }
 };
 
 /* ------------------------------------------------------
@@ -189,6 +192,7 @@ declare const game: {
   };
   i18n: {
     localize(value: string): string;
+    lang: string;
   };
 };
 declare const Actors: {
