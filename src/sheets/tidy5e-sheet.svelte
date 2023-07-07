@@ -6,11 +6,11 @@
   import { log } from 'src/utils/logging';
   import { SettingsProvider } from 'src/settings/settings';
   import Tidy5eActorOriginSummaryConfig from './tidy5e-actor-origin-summary-config';
-  import { formatAsModifier } from 'src/utils/formatting';
   import CharacterPortrait from './character-portrait.svelte';
   import TidyDropdownList from './tidy-dropdown-list.svelte';
   import AcShield from './ac-shield.svelte';
   import AttributeBlock from './attribute-block.svelte';
+  import InitiativeBlock from './initiative-block.svelte';
 
   export let debug: any = 'Put any debug information here, if ya need it.';
   export let sheetFunctions: SheetFunctions;
@@ -280,35 +280,10 @@
       />
       <!-- Initiative (mod, cog) , Str (rollable, score, mod, save, proficient, cog) thru Cha (rollable, score, mod, save, proficient, cog) -->
       <div>
-        <h4
-          title={localize('DND5E.Initiative')}
-          on:click={(event) => context.actor.rollInitiativeDialog({ event })}
-        >
-          {localize('TIDY5E.AbbrInitiative')}
-        </h4>
-        <div class="value">
-          <span>{formatAsModifier(context.system.attributes.init.total)}</span>
-        </div>
-        <label
-          >{localize('TIDY5E.AbbrMod')}
-          <input
-            name="system.attributes.init.bonus"
-            type="text"
-            placeholder="0"
-            data-dtype="Number"
-            value={context.system.attributes.init.bonus}
-            maxlength="2"
-          />
-        </label>
-        <a
-          data-tooltip={localize('DND5E.InitiativeConfig')}
-          on:click={() =>
-            new dnd5e.applications.actor.ActorInitiativeConfig(
-              context.actor
-            ).render(true)}
-        >
-          <i class="fas fa-cog" />
-        </a>
+        <InitiativeBlock
+          actor={context.actor}
+          initiative={context.system.attributes.init}
+        />
       </div>
       {#each abilities as [id, ability]}
         <div
