@@ -6,24 +6,11 @@
 - [ ] SCSS
 - [ ] Special Settings?
 
-## HP
-
-- [ ] HTML
-- [ ] SCSS
-- [ ] Special Settings?
-
 ## Hit Dice
 
 - [ ] HTML
 - [ ] SCSS
 - [ ] Special Settings?
-
-## HP Overlay
-
-- [x] HTML
-- [x] SCSS
-- [x] Implement Disable hp overlay game setting
-- [x] Purge hpOverlayBorder game setting
 
 ## Exhaustion
 
@@ -34,14 +21,6 @@
 - [x] exhaustion note styles? no longer a feature; remove vestiges
 - [ ] Add the custom exhaustion code; see [exhaustion script](./src/exhaustion.ts)
 - [ ] Ferret out / expand these todos
-
-## Dying / Death Saves
-
-- [x] HTML
-- [x] SCSS
-- [x] Hide all charms when dying
-- [x] Reimplement the functionality of checkDeathSaveStatus
-- [x] Expand todos based on additional options here
 
 ## Security
 
@@ -71,9 +50,10 @@
 - [ ] Review `applyLazyMoney()` and determine how this affects the player sheet
 - [ ] Review `applySpellClassFilterActorSheet()` and determine how this affects the player sheet
 
-## Portrait Charms Reorganization
+## Reorganization
 
 - [ ] Move the positioning styles to the portrait component or general styles, and apply them via cssClass to impose positioning that is relevant to the parent component (the portrait component)
+
 
 ## Step by step
 
@@ -222,3 +202,25 @@
 - [x] Implement the inspirationOnHover option
 - [x] Implement the Disable Inspiration option
 - [x] Implement the disable animation option
+
+## Dying / Death Saves
+
+- [x] HTML
+- [x] SCSS
+- [x] Hide all charms when dying
+- [x] Reimplement the functionality of checkDeathSaveStatus
+- [x] Expand todos based on additional options here
+
+## HP Overlay
+
+- [x] HTML
+- [x] SCSS
+- [x] Implement Disable hp overlay game setting
+- [x] Purge hpOverlayBorder game setting
+
+## HP
+
+- [x] HTML
+- [x] SCSS
+- [x] Enable Max HP Override
+- [x] Lock Max HP Override to GM

@@ -562,10 +562,6 @@
 		"name": "Allow Hp Max override on Character",
 		"hint": "If enable this module setting will let the GM to manually change the hp max  value on the character sheet."
 	},
-	"T5EK.Settings.AllowHpConfigOverride": {
-		"name": "Allow hp panel configuration override on Character",
-		"hint": "Usually you don't need this but if enable this module setting replace the hp configuration panel on the character sheet. THIS WILL OVERRIDE THE DEFAULT BEHAVIOR OF THE SYSTEM IS USEFUL FOR AVOID SOME NOT UNWANTED DEFAULT BEHAVIOR OF THE SYSTEM."
-	},
 	"T5EK.Settings.BetterAttackDialog": {
 		"name": "Enable Better Default Attack Buttons Highlight",
 		"hint": "The attack buttons do not show the suggested action very clearly. This adds a Green border for Advantage and Red for Disadvantage depending on which button is highlighted."

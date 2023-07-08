@@ -1,5 +1,8 @@
 <script lang="ts">
-  import { type CharacterSheetContext } from 'src/foundry/foundry-adapter';
+  import {
+    FoundryAdapter,
+    type CharacterSheetContext,
+  } from 'src/foundry/foundry-adapter';
   import { SettingsProvider } from 'src/settings/settings';
   import type { SheetFunctions } from 'src/types/types';
   import Exhaustion from './exhaustion.svelte';
@@ -31,7 +34,7 @@
   function showDeathSaves(): boolean {
     const isEnabledForAll =
       !SettingsProvider.settings.hiddenDeathSavesEnabled.get();
-    return incapacitated && (isEnabledForAll || game.user.isGM);
+    return incapacitated && (isEnabledForAll || FoundryAdapter.userIsGm());
   }
 </script>
 
@@ -76,6 +79,14 @@
       />
     {/if}
 
+    <HitPoints
+      value={context.system.attributes.hp.value}
+      max={context.system.attributes.hp.max}
+      actor={context.actor}
+      {useRoundedPortraitStyle}
+      {incapacitated}
+    />
+
     {#if !incapacitated}
       <Rest {sheetFunctions} />
     {/if}
@@ -87,12 +98,6 @@
         actor={context.actor}
       />
     {/if}
-
-    <HitPoints
-      value={context.system.attributes.hp.value}
-      max={context.system.attributes.hp.max}
-      actor={context.actor}
-    />
   </div>
 </div>
 

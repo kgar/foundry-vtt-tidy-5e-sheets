@@ -1401,26 +1401,6 @@ export function createSettings() {
         },
       },
 
-      allowHpConfigOverride: {
-        options: {
-          name: `${FoundryAdapter.localize(
-            'T5EK.Settings.AllowHpConfigOverride.name'
-          )}`,
-          hint: `${FoundryAdapter.localize(
-            'T5EK.Settings.AllowHpConfigOverride.hint'
-          )}`,
-          scope: 'world',
-          config: false,
-          default: false,
-          type: Boolean,
-        },
-        get() {
-          return FoundryAdapter.getGameSetting<boolean>(
-            'allowHpConfigOverride'
-          );
-        },
-      },
-
       betterAttackDialog: {
         options: {
           name: `${FoundryAdapter.localize(
