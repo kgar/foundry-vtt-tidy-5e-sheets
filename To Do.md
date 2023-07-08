@@ -179,8 +179,9 @@
   - [ ] Be able to do it live on the sheet in realtime and save as default or just for the current sheet
 - [ ] Explore how to test compatibility via [FoundryVTT Container](https://hub.docker.com/r/felddy/foundryvtt)
 - [ ] Explore how to perform Automated UI testing with something like [Cypress](https://www.cypress.io/app)
-- [ ] Explain levels of exhaustion effects for each individual exhaustion button
+- [x] Explain levels of exhaustion effects for each individual exhaustion button
 - [ ] Study a11y and apply it to the forms
+- [ ] Identify all remaining static color styles and extract them meaningfully into CSS variables
 - [ ] Import/Export custom color themes 💪
 - [ ] Sheet settings: Use non-Foundry-module color picker (Svelte has a nice one) for setting CSS colors
 - [ ] UI test idea - create automated walkthrough of the application which provides screenshots of relevant areas with relevant features toggled on and off. This should go into a markdown report with the screenshots. It should report any console errors as well.
