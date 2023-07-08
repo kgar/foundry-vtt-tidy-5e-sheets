@@ -103,9 +103,13 @@
     box-shadow: 0 0 5px var(--t5e-icon-shadow) inset;
     border: 1px solid var(--t5e-icon-outline);
 
+    &.widen-for-rounded-portrait {
+      width: 88px;
+    }
+
     &.incapacitated {
       border-radius: 5px;
-      width: 120px !important;
+      width: 120px;
     }
 
     .hp-bar {
@@ -117,10 +121,6 @@
       z-index: -1;
       background: rgba(0, 200, 0, 0.6);
     }
-  }
-
-  .portrait-hp.widen-for-rounded-portrait {
-    width: 88px;
   }
 
   .portrait-hp input,
