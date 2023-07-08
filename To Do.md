@@ -5,38 +5,44 @@
 - [x] Use existing or create new tab control | made a really rough tabs control with relative ease
 - [ ] Cannibalize `_sheet.scss` for all it's worth
 - [ ] Cannibalize `_tabs.scss`
-  - [ ] 
 - [ ] Implement the tabs
   - [ ] Attributes
+    - [ ] Make a component
     - [ ] Functionality
     - [ ] Settings
     - [ ] Styles
-      - [ ] _mainTab.scss
+      - [ ] `_mainTab.scss`
+    - [ ] Favorites...
   - [ ] Inventory
+    - [ ] Make a component
     - [ ] Functionality
     - [ ] Settings
     - [ ] Styles
   - [ ] Spellbook
+    - [ ] Make a component
     - [ ] Functionality
     - [ ] Settings
     - [ ] Styles
   - [ ] Features
+    - [ ] Make a component
     - [ ] Functionality
     - [ ] Settings
     - [ ] Styles
   - [ ] Effects
+    - [ ] Make a component
     - [ ] Functionality
     - [ ] Settings
     - [ ] Styles
   - [ ] Biography
+    - [ ] Make a component
     - [ ] Functionality
     - [ ] Settings
     - [ ] Styles
   - [ ] Journal
+    - [ ] Make a component
     - [ ] Functionality
     - [ ] Settings
     - [ ] Styles
-
 
 ## Exhaustion
 
@@ -81,7 +87,6 @@
 ## Reorganization
 
 - [ ] Move the positioning styles to the portrait component or general styles, and apply them via cssClass to impose positioning that is relevant to the parent component (the portrait component)
-
 
 ## Step by step
 
