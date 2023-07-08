@@ -3,8 +3,6 @@
 ## Character Tabs
 
 - [x] Use existing or create new tab control | made a really rough tabs control with relative ease
-- [ ] Cannibalize `_sheet.scss` for all it's worth
-- [ ] Cannibalize `_tabs.scss`
 - [ ] Implement the tabs
   - [ ] Attributes
     - [ ] Make a component
@@ -18,6 +16,8 @@
     - [ ] Functionality
     - [ ] Settings
     - [ ] Styles
+      - [ ] src_scss\partials_inventory-grid.scss
+      - [ ] src_scss\partials_inventory.scss
   - [ ] Spellbook
     - [ ] Make a component
     - [ ] Functionality
@@ -60,6 +60,13 @@
 - [ ] Port the functionality of `applyLocksNpcSheet()`
 - [ ] Port the functionality of `applyLocksVehicleSheet()`
 - [ ] Port the functionality of `applyLocksItemSheet()`
+
+## Modules
+
+Evaluate module integration and think about better (API-centric) ways to support other modules. Require the module developers to interface with Tidy if they wish to add things to the sheet. I will NOT match the structure of the D&D 5e default sheets.
+
+- [ ] src_scss_modules.scss
+- [ ] src_scss\dark_dark-modules.scss
 
 > **Note**
 > The system won't let the user actually make any changes to the character sheet when it's not editable to that user. This is only to help prevent frustration.
@@ -140,26 +147,35 @@
 - [ ] Use semantic HTML for the sheets (how do I utilize header, section, article, nav, etc.?)
 - [ ] ... next steps
 
+## Cross-Cutting
+
+- [ ] Implement info card
+  - [ ] src_scss\partials_item-info-card.scss
+  - [ ] Game Settings
+- [ ] Reimplement Favorites visualization - [ ] Psst: src_scss\partials_favorites.scss
+
 ## Big Picture
 
 - [ ] Reimplement Tidy5e Sheets with svelte and using foundry/dnd5e API
-  - [ ] Sheet
+  - [ ] Player Character
     - [ ] GM
     - [ ] Unlimited
     - [ ] Limited
-    - [ ] Favorites system
   - [ ] NPC
     - [ ] GM
     - [ ] Unlimited
     - [ ] Limited
     - [ ] Favorites system
+    - [ ] src_scss_npc.scss
   - [ ] Vehicle
     - [ ] GM
     - [ ] Unlimited
     - [ ] Limited
     - [ ] Favorites system
+    - [ ] src_scss_vehicle.scss
   - [ ] Item
     - [ ] Favorites system
+    - [ ] src_scss_items.scss (they import at top-level, and there's apparently a dedicated item sheet)
 - [ ] Reimplement the misc templates
   - [ ] Favorites
     - [ ] Item
@@ -175,7 +191,10 @@
 - [ ] All open Tidy sheets should be re-rendered when options are updated
 - [ ] Exhaustion is a whole feature unto itself with hooks to integrate with midi QoL. Factor this integration back in.
 - [ ] Do I need `data-dtype`?
-- [ ]
+- [ ] Evaluate and determine if there is still useful info in these files
+  - [ ] src_scss\tidy5e.scss
+  - [ ] src\css\tidy5e-dark.scss
+  - [ ] src_scss_sheet.scss
 
 > Most recent breakages in Tidy5e sheets were related to magic HTML conventions that hook into invisible jquery wire-ups. You have to go read through the core HBS's for character sheets. Since you're already there, skip the limitations imposed by trying to recreate their sheet and instead use the public API. After all the public API provides deprecation notices, whereas the 5e sheet can just suddenly be structured differently on a new version. Not much they will do about that.
 
@@ -240,3 +259,16 @@
 
 - [x] HTML
 - [x] SCSS
+
+## Unsorted
+
+- [ ] Review and make TODOs from these files
+  - [x] src_scss\partials_character-details.scss | completely replaced need
+  - [x] src_scss\partials_general.scss | imported directly
+  - [x] src_scss\partials_navigation.scss | imported and adjusted
+  - [x] src_scss\partials_portrait.scss | replaced by reimplementation
+  - [x] src_scss\partials_settings.scss | imported directly
+  - [x] src_scss\partials_tabs.scss | skipped; this will be implemented in the component(s) ✅
+  - [x] src_scss\partials_variables.scss | imported directly
+  - [x] src\css\tidy-icons.css | not in use / ignored
+  - [x] images folder | added to public

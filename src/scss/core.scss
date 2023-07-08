@@ -1,10 +1,12 @@
 @import './partials/sheet';
+@import './settings.scss';
 
 .tidy5e-kgar {
   @import './partials/general';
   @import './partials/layout';
   @import './partials/character-sheet';
   @import './partials/portrait';
+  @import './partials/navigation';
 
   .top-left,
   .bottom-right {

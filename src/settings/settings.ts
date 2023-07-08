@@ -816,7 +816,7 @@ export function createSettings() {
           scope: 'world',
           config: false,
           type: String,
-          default: 'modules/tidy5e-sheet/images/exhaustion.svg',
+          default: 'modules/tidy5e-sheet-kgar/dist/images/exhaustion.svg',
         },
         get() {
           return FoundryAdapter.getGameSetting<string>('exhaustionEffectIcon');

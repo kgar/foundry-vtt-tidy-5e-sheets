@@ -9,9 +9,7 @@
     }
   ],
   "esmodules": ["./dist/main.js"],
-  "styles": [
-    "./dist/style.css"
-  ],
+  "styles": ["./dist/style.css"],
   "languages": [
     {
       "lang": "en",

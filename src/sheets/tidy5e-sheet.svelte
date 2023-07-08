@@ -12,6 +12,13 @@
   import AttributeBlock from './attribute-block.svelte';
   import InitiativeBlock from './initiative-block.svelte';
   import ActorWarnings from './actor-warnings.svelte';
+  import AttributesTab from 'src/components/player-character/attributes-tab.svelte';
+  import InventoryTab from 'src/components/player-character/inventory-tab.svelte';
+  import SpellbookTab from 'src/components/player-character/spellbook-tab.svelte';
+  import FeaturesTab from 'src/components/player-character/features-tab.svelte';
+  import EffectsTab from 'src/components/player-character/effects-tab.svelte';
+  import BiographyTab from 'src/components/player-character/biography-tab.svelte';
+  import JournalTab from 'src/components/player-character/journal-tab.svelte';
 
   export let debug: any = 'Put any debug information here, if ya need it.';
   export let sheetFunctions: SheetFunctions;
@@ -375,192 +382,19 @@
 <!-- Lock -->
 <section class="sheet-body" bind:this={scrollView}>
   {#if selectedTab === 'attributes'}
-    <div class="tab attributes">Attributes tab</div>
-    <p>
-      Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ullam officiis
-      beatae asperiores sapiente dolore rerum quisquam, deserunt, eveniet, quam
-      qui quia. Reprehenderit magnam soluta saepe repellendus ipsum omnis
-      repellat amet. Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-      Est, suscipit. Sit suscipit natus ab unde repellat sequi recusandae
-      ratione sed, architecto tenetur, eaque necessitatibus, porro ex vel culpa
-      sint officiis? Lorem ipsum dolor sit amet consectetur adipisicing elit.
-      Iure, molestiae fuga! Quasi fugit, enim nihil labore modi reprehenderit a
-      sapiente possimus ad laudantium, molestias ipsum beatae dolorum nobis non
-      nemo? Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur
-      minima, tempore quasi odio eum veritatis corrupti cupiditate iste
-      excepturi voluptas, iure libero doloremque cum! Dignissimos debitis
-      accusantium impedit voluptatem eos. Lorem ipsum dolor sit amet consectetur
-      adipisicing elit. Exercitationem architecto deleniti animi ut veniam,
-      quisquam vel odio cumque libero maiores voluptatibus laboriosam. Esse,
-      dolor eum voluptate fugiat commodi modi saepe? Lorem ipsum dolor sit amet
-      consectetur, adipisicing elit. Consequuntur consectetur cum aspernatur
-      soluta dolorem id. Temporibus consectetur, fugiat, quidem exercitationem
-      sed libero, mollitia ipsam deleniti fugit incidunt repudiandae fuga
-      doloribus! Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ullam
-      officiis beatae asperiores sapiente dolore rerum quisquam, deserunt,
-      eveniet, quam qui quia. Reprehenderit magnam soluta saepe repellendus
-      ipsum omnis repellat amet. Lorem ipsum dolor sit, amet consectetur
-      adipisicing elit. Est, suscipit. Sit suscipit natus ab unde repellat sequi
-      recusandae ratione sed, architecto tenetur, eaque necessitatibus, porro ex
-      vel culpa sint officiis? Lorem ipsum dolor sit amet consectetur
-      adipisicing elit. Iure, molestiae fuga! Quasi fugit, enim nihil labore
-      modi reprehenderit a sapiente possimus ad laudantium, molestias ipsum
-      beatae dolorum nobis non nemo? Lorem ipsum dolor sit amet consectetur
-      adipisicing elit. Aspernatur minima, tempore quasi odio eum veritatis
-      corrupti cupiditate iste excepturi voluptas, iure libero doloremque cum!
-      Dignissimos debitis accusantium impedit voluptatem eos. Lorem ipsum dolor
-      sit amet consectetur adipisicing elit. Exercitationem architecto deleniti
-      animi ut veniam, quisquam vel odio cumque libero maiores voluptatibus
-      laboriosam. Esse, dolor eum voluptate fugiat commodi modi saepe? Lorem
-      ipsum dolor sit amet consectetur, adipisicing elit. Consequuntur
-      consectetur cum aspernatur soluta dolorem id. Temporibus consectetur,
-      fugiat, quidem exercitationem sed libero, mollitia ipsam deleniti fugit
-      incidunt repudiandae fuga doloribus! Lorem ipsum, dolor sit amet
-      consectetur adipisicing elit. Ullam officiis beatae asperiores sapiente
-      dolore rerum quisquam, deserunt, eveniet, quam qui quia. Reprehenderit
-      magnam soluta saepe repellendus ipsum omnis repellat amet. Lorem ipsum
-      dolor sit, amet consectetur adipisicing elit. Est, suscipit. Sit suscipit
-      natus ab unde repellat sequi recusandae ratione sed, architecto tenetur,
-      eaque necessitatibus, porro ex vel culpa sint officiis? Lorem ipsum dolor
-      sit amet consectetur adipisicing elit. Iure, molestiae fuga! Quasi fugit,
-      enim nihil labore modi reprehenderit a sapiente possimus ad laudantium,
-      molestias ipsum beatae dolorum nobis non nemo? Lorem ipsum dolor sit amet
-      consectetur adipisicing elit. Aspernatur minima, tempore quasi odio eum
-      veritatis corrupti cupiditate iste excepturi voluptas, iure libero
-      doloremque cum! Dignissimos debitis accusantium impedit voluptatem eos.
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem
-      architecto deleniti animi ut veniam, quisquam vel odio cumque libero
-      maiores voluptatibus laboriosam. Esse, dolor eum voluptate fugiat commodi
-      modi saepe? Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-      Consequuntur consectetur cum aspernatur soluta dolorem id. Temporibus
-      consectetur, fugiat, quidem exercitationem sed libero, mollitia ipsam
-      deleniti fugit incidunt repudiandae fuga doloribus! Lorem ipsum, dolor sit
-      amet consectetur adipisicing elit. Ullam officiis beatae asperiores
-      sapiente dolore rerum quisquam, deserunt, eveniet, quam qui quia.
-      Reprehenderit magnam soluta saepe repellendus ipsum omnis repellat amet.
-      Lorem ipsum dolor sit, amet consectetur adipisicing elit. Est, suscipit.
-      Sit suscipit natus ab unde repellat sequi recusandae ratione sed,
-      architecto tenetur, eaque necessitatibus, porro ex vel culpa sint
-      officiis? Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure,
-      molestiae fuga! Quasi fugit, enim nihil labore modi reprehenderit a
-      sapiente possimus ad laudantium, molestias ipsum beatae dolorum nobis non
-      nemo? Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur
-      minima, tempore quasi odio eum veritatis corrupti cupiditate iste
-      excepturi voluptas, iure libero doloremque cum! Dignissimos debitis
-      accusantium impedit voluptatem eos. Lorem ipsum dolor sit amet consectetur
-      adipisicing elit. Exercitationem architecto deleniti animi ut veniam,
-      quisquam vel odio cumque libero maiores voluptatibus laboriosam. Esse,
-      dolor eum voluptate fugiat commodi modi saepe? Lorem ipsum dolor sit amet
-      consectetur, adipisicing elit. Consequuntur consectetur cum aspernatur
-      soluta dolorem id. Temporibus consectetur, fugiat, quidem exercitationem
-      sed libero, mollitia ipsam deleniti fugit incidunt repudiandae fuga
-      doloribus! Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ullam
-      officiis beatae asperiores sapiente dolore rerum quisquam, deserunt,
-      eveniet, quam qui quia. Reprehenderit magnam soluta saepe repellendus
-      ipsum omnis repellat amet. Lorem ipsum dolor sit, amet consectetur
-      adipisicing elit. Est, suscipit. Sit suscipit natus ab unde repellat sequi
-      recusandae ratione sed, architecto tenetur, eaque necessitatibus, porro ex
-      vel culpa sint officiis? Lorem ipsum dolor sit amet consectetur
-      adipisicing elit. Iure, molestiae fuga! Quasi fugit, enim nihil labore
-      modi reprehenderit a sapiente possimus ad laudantium, molestias ipsum
-      beatae dolorum nobis non nemo? Lorem ipsum dolor sit amet consectetur
-      adipisicing elit. Aspernatur minima, tempore quasi odio eum veritatis
-      corrupti cupiditate iste excepturi voluptas, iure libero doloremque cum!
-      Dignissimos debitis accusantium impedit voluptatem eos. Lorem ipsum dolor
-      sit amet consectetur adipisicing elit. Exercitationem architecto deleniti
-      animi ut veniam, quisquam vel odio cumque libero maiores voluptatibus
-      laboriosam. Esse, dolor eum voluptate fugiat commodi modi saepe? Lorem
-      ipsum dolor sit amet consectetur, adipisicing elit. Consequuntur
-      consectetur cum aspernatur soluta dolorem id. Temporibus consectetur,
-      fugiat, quidem exercitationem sed libero, mollitia ipsam deleniti fugit
-      incidunt repudiandae fuga doloribus! Lorem ipsum, dolor sit amet
-      consectetur adipisicing elit. Ullam officiis beatae asperiores sapiente
-      dolore rerum quisquam, deserunt, eveniet, quam qui quia. Reprehenderit
-      magnam soluta saepe repellendus ipsum omnis repellat amet. Lorem ipsum
-      dolor sit, amet consectetur adipisicing elit. Est, suscipit. Sit suscipit
-      natus ab unde repellat sequi recusandae ratione sed, architecto tenetur,
-      eaque necessitatibus, porro ex vel culpa sint officiis? Lorem ipsum dolor
-      sit amet consectetur adipisicing elit. Iure, molestiae fuga! Quasi fugit,
-      enim nihil labore modi reprehenderit a sapiente possimus ad laudantium,
-      molestias ipsum beatae dolorum nobis non nemo? Lorem ipsum dolor sit amet
-      consectetur adipisicing elit. Aspernatur minima, tempore quasi odio eum
-      veritatis corrupti cupiditate iste excepturi voluptas, iure libero
-      doloremque cum! Dignissimos debitis accusantium impedit voluptatem eos.
-      Lorem ipsum dolor sit amet consectetur adipisicing elit. Exercitationem
-      architecto deleniti animi ut veniam, quisquam vel odio cumque libero
-      maiores voluptatibus laboriosam. Esse, dolor eum voluptate fugiat commodi
-      modi saepe? Lorem ipsum dolor sit amet consectetur, adipisicing elit.
-      Consequuntur consectetur cum aspernatur soluta dolorem id. Temporibus
-      consectetur, fugiat, quidem exercitationem sed libero, mollitia ipsam
-      deleniti fugit incidunt repudiandae fuga doloribus! Lorem ipsum, dolor sit
-      amet consectetur adipisicing elit. Ullam officiis beatae asperiores
-      sapiente dolore rerum quisquam, deserunt, eveniet, quam qui quia.
-      Reprehenderit magnam soluta saepe repellendus ipsum omnis repellat amet.
-      Lorem ipsum dolor sit, amet consectetur adipisicing elit. Est, suscipit.
-      Sit suscipit natus ab unde repellat sequi recusandae ratione sed,
-      architecto tenetur, eaque necessitatibus, porro ex vel culpa sint
-      officiis? Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure,
-      molestiae fuga! Quasi fugit, enim nihil labore modi reprehenderit a
-      sapiente possimus ad laudantium, molestias ipsum beatae dolorum nobis non
-      nemo? Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur
-      minima, tempore quasi odio eum veritatis corrupti cupiditate iste
-      excepturi voluptas, iure libero doloremque cum! Dignissimos debitis
-      accusantium impedit voluptatem eos. Lorem ipsum dolor sit amet consectetur
-      adipisicing elit. Exercitationem architecto deleniti animi ut veniam,
-      quisquam vel odio cumque libero maiores voluptatibus laboriosam. Esse,
-      dolor eum voluptate fugiat commodi modi saepe? Lorem ipsum dolor sit amet
-      consectetur, adipisicing elit. Consequuntur consectetur cum aspernatur
-      soluta dolorem id. Temporibus consectetur, fugiat, quidem exercitationem
-      sed libero, mollitia ipsam deleniti fugit incidunt repudiandae fuga
-      doloribus! Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ullam
-      officiis beatae asperiores sapiente dolore rerum quisquam, deserunt,
-      eveniet, quam qui quia. Reprehenderit magnam soluta saepe repellendus
-      ipsum omnis repellat amet. Lorem ipsum dolor sit, amet consectetur
-      adipisicing elit. Est, suscipit. Sit suscipit natus ab unde repellat sequi
-      recusandae ratione sed, architecto tenetur, eaque necessitatibus, porro ex
-      vel culpa sint officiis? Lorem ipsum dolor sit amet consectetur
-      adipisicing elit. Iure, molestiae fuga! Quasi fugit, enim nihil labore
-      modi reprehenderit a sapiente possimus ad laudantium, molestias ipsum
-      beatae dolorum nobis non nemo? Lorem ipsum dolor sit amet consectetur
-      adipisicing elit. Aspernatur minima, tempore quasi odio eum veritatis
-      corrupti cupiditate iste excepturi voluptas, iure libero doloremque cum!
-      Dignissimos debitis accusantium impedit voluptatem eos. Lorem ipsum dolor
-      sit amet consectetur adipisicing elit. Exercitationem architecto deleniti
-      animi ut veniam, quisquam vel odio cumque libero maiores voluptatibus
-      laboriosam. Esse, dolor eum voluptate fugiat commodi modi saepe? Lorem
-      ipsum dolor sit amet consectetur, adipisicing elit. Consequuntur
-      consectetur cum aspernatur soluta dolorem id. Temporibus consectetur,
-      fugiat, quidem exercitationem sed libero, mollitia ipsam deleniti fugit
-      incidunt repudiandae fuga doloribus!
-    </p>
-  {/if}
-  {#if selectedTab === 'inventory'}
-    <div
-      class="tab inventory"
-      class:grid={FoundryAdapter.tryGetFlag(context.actor, 'inventory-grid')}
-    >
-      Inventory tab
-    </div>
-  {/if}
-  {#if selectedTab === 'spellbook'}
-    <div
-      class="tab spellbook"
-      class:grid={FoundryAdapter.tryGetFlag(context.actor, 'spellbook-grid')}
-    >
-      Spellbook tab
-    </div>
-  {/if}
-  {#if selectedTab === 'features'}
-    <div class="tab features">Features tab</div>
-  {/if}
-  {#if selectedTab === 'effects'}
-    <div class="tab effects">Effects tab</div>
-  {/if}
-  {#if selectedTab === 'biography'}
-    <div class="tab biography">Biography tab</div>
-  {/if}
-  {#if selectedTab === 'journal'}
-    <div class="tab journal">Journal tab</div>
+    <AttributesTab />
+  {:else if selectedTab === 'inventory'}
+    <InventoryTab />
+  {:else if selectedTab === 'spellbook'}
+    <SpellbookTab />
+  {:else if selectedTab === 'features'}
+    <FeaturesTab />
+  {:else if selectedTab === 'effects'}
+    <EffectsTab />
+  {:else if selectedTab === 'biography'}
+    <BiographyTab />
+  {:else if selectedTab === 'journal'}
+    <JournalTab />
   {/if}
 </section>
 
@@ -638,122 +472,5 @@
     justify-content: center;
     padding: 10px 16px 16px 16px;
     background: var(--t5e-header-background);
-  }
-
-  .tidy5e-kgar-navigation {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: row;
-    flex-wrap: wrap;
-
-    .item {
-      padding: 5px 8px 0 8px;
-      background: var(--t5e-header-background);
-      border: 1px solid transparent;
-      border-bottom: 1px solid var(--t5e-header-border);
-      font-size: 13px;
-      text-align: left;
-      height: 26px;
-      flex: 1 1 auto;
-
-      &:first-child {
-        padding-left: 16px;
-      }
-
-      &:hover {
-        color: var(--t5e-primary-accent);
-      }
-    }
-
-    .item[data-tab='attributes'] i {
-      margin-right: 4px;
-      color: var(--t5e-tertiary-color);
-      position: relative;
-      top: 1px;
-    }
-
-    .item.active {
-      background: transparent;
-      border: 1px solid var(--t5e-light-color);
-      border-bottom-color: transparent;
-      font-weight: 700;
-      cursor: default;
-      text-shadow: none;
-
-      &:hover {
-        color: inherit;
-      }
-    }
-
-    .item:first-child.active {
-      border-left-color: transparent;
-    }
-
-    .toggle-allow-edit {
-      display: flex;
-      order: 2;
-      flex: 0;
-      align-items: center;
-      white-space: nowrap;
-      padding: 2px 1rem;
-      background: var(--t5e-header-background);
-      border: 1px solid transparent;
-      border-bottom: 1px solid var(--t5e-header-border);
-      font-size: 13px;
-      text-align: left;
-      height: 26px;
-
-      span {
-        cursor: pointer;
-        background: var(--t5e-safe-accent);
-        color: rgba(255, 255, 255, 0.6);
-        border-radius: 3px;
-
-        &:hover {
-          color: #fff;
-        }
-
-        i {
-          width: 100%;
-          text-align: center;
-          padding: 4px 6px;
-        }
-      }
-
-      .fa-lock-open {
-        display: none;
-      }
-    }
-  }
-
-  .tidy5e-kgar-navigation.allow-edit {
-    .toggle-allow-edit {
-      span {
-        background: var(--t5e-unsafe-accent);
-      }
-
-      .fa-lock-open {
-        display: inline-block;
-      }
-      .fa-lock {
-        display: none;
-      }
-    }
-    // Part of classicControlsEnabled game setting; shows an end column with icons like Favorite bookmark icon, edit icon, prepare spell icon, etc.
-    .items-header-controls {
-      min-width: 120px !important;
-      max-width: 120px !important;
-    }
-    .list-layout {
-      .items-list {
-        .item {
-          .item-controls:not(#context-menu) {
-            min-width: 120px !important;
-            max-width: 120px !important;
-          }
-        }
-      }
-    }
   }
 </style>
