@@ -39,6 +39,8 @@
 - [ ] Review `hideStandardEncumbranceBar()` and determine how this affects the player sheet
 - [ ] Review `applyLazyMoney()` and determine how this affects the player sheet
 - [ ] Review `applySpellClassFilterActorSheet()` and determine how this affects the player sheet
+- [ ] Figure out what game.modules.get("character-actions-list-5e") module is, and how do we leverage it here with graceful fallback?
+  - [ ] Moreover, how do we create a clear pipeline for supporting various modules?
 
 ## Reorganization
 
@@ -128,7 +130,7 @@
 
 ## Big Picture
 
-- [ ] Reimplement Tidy5e Sheets with svelte and using foundry/dnd5e API \*
+- [ ] Reimplement Tidy5e Sheets with svelte and using foundry/dnd5e API
   - [ ] Sheet
     - [ ] GM
     - [ ] Unlimited
@@ -163,7 +165,7 @@
 - [ ] Do I need `data-dtype`?
 - [ ]
 
-> \* Most recent breakages in Tidy5e sheets were related to magic HTML conventions that hook into invisible jquery wire-ups. You have to go read through the core HBS's for character sheets. Since you're already there, skip the limitations imposed by trying to recreate their sheet and instead use the public API. After all the public API provides deprecation notices, whereas the 5e sheet can just suddenly be structured differently on a new version. Not much they will do about that.
+> Most recent breakages in Tidy5e sheets were related to magic HTML conventions that hook into invisible jquery wire-ups. You have to go read through the core HBS's for character sheets. Since you're already there, skip the limitations imposed by trying to recreate their sheet and instead use the public API. After all the public API provides deprecation notices, whereas the 5e sheet can just suddenly be structured differently on a new version. Not much they will do about that.
 
 ## Stretch
 
