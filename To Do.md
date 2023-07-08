@@ -1,10 +1,6 @@
 # To Do
 
-## Hit Dice
 
-- [ ] HTML
-- [ ] SCSS
-- [ ] Special Settings?
 
 ## Exhaustion
 
@@ -224,3 +220,8 @@
 - [x] HTML
 - [x] SCSS
 - [x] Special Settings?
+
+## Hit Dice
+
+- [x] HTML
+- [x] SCSS

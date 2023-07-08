@@ -96,6 +96,7 @@
         hitDice={context.system.attributes.hd}
         actorLevel={context.system.details.level}
         actor={context.actor}
+        {useRoundedPortraitStyle}
       />
     {/if}
   </div>
