@@ -1,23 +1,12 @@
 &.sheet.actor.character {
-  > form {
-    display: grid;
-    grid-template-areas:
-      'header'
-      'tabs'
-      'tabContents';
-    grid-template-rows: auto auto 1fr;
+  form {
+    display: flex;
+    flex-direction: column;
 
-    .tidy5e-kgar-sheet-header {
-      grid-area: header;
-      background: var(--t5e-header-background);
-    }
-
-    .tidy5e-kgar-sheet-tabs {
-      grid-area: tabs;
-    }
-
-    .tidy5e-kgar-tab-contents {
-      grid-area: tabContents;
+    .sheet-body {
+      padding: 1rem 0.25rem 1rem 1rem;
+      flex: 1;
+      overflow: hidden;
     }
   }
 

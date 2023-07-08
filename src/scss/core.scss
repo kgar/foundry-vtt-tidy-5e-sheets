@@ -1,24 +1,10 @@
+@import './partials/sheet';
+
 .tidy5e-kgar {
   @import './partials/general';
   @import './partials/layout';
-  @import './partials/character-details';
+  @import './partials/character-sheet';
   @import './partials/portrait';
-
-  &.sheet.actor {
-    .window-content {
-      padding: 0;
-      margin: 0;
-      color: var(--t5e-primary-font);
-      font-family: var(--t5e-signika);
-    }
-  }
-
-  .tidy5e-kgar-sheet-header {
-    display: flex;
-    justify-content: center;
-    padding: 10px 16px 16px 16px;
-    background: var(--t5e-header-background);
-  }
 
   .top-left,
   .bottom-right {

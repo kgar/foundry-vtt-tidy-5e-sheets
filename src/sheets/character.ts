@@ -13,6 +13,14 @@ export class Tidy5eSheetKgar extends ActorSheet5eCharacter {
   }
 
   static get defaultOptions() {
+    // TODO: Figure out what this module is and why it is here...
+    // if (
+    //   !game.modules.get('character-actions-list-5e')?.active &&
+    //   SettingsProvider.settings.defaultActionsTab.get() == 'actions'
+    // ) {
+    //   defaultTab = 'attributes';
+    // }
+
     return FoundryAdapter.mergeObject(super.defaultOptions, {
       classes: ['tidy5e-kgar', 'sheet', 'actor', 'character'],
       height: 840,

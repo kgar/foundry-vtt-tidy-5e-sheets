@@ -1,0 +1,34 @@
+@font-face {
+  font-family: 'Signika';
+  src: url('../../../fonts/signika/signika-light.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Signika';
+  src: url('../../../fonts/signika/signika-semibold.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@import './_variables.scss';
+
+.tidy5e-kgar.sheet.actor {
+  min-width: 680px;
+  min-height: 210px;
+
+  .window-content {
+    padding: 0;
+    margin: 0;
+    color: var(--t5e-primary-font);
+    font-family: var(--t5e-signika);
+
+    form {
+      height: 100%;
+      overflow: hidden;
+    }
+  }
+
+  // etc.
+}
