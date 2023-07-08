@@ -1,5 +1,41 @@
 # To Do
 
+## Character Tabs
+
+- [x] Use existing or create new tab control | made a really rough tabs control with relative ease
+- [ ] Cannibalize `_sheet.scss` for all it's worth
+- [ ] Cannibalize `_tabs.scss`
+  - [ ] 
+- [ ] Implement the tabs
+  - [ ] Attributes
+    - [ ] Functionality
+    - [ ] Settings
+    - [ ] Styles
+      - [ ] _mainTab.scss
+  - [ ] Inventory
+    - [ ] Functionality
+    - [ ] Settings
+    - [ ] Styles
+  - [ ] Spellbook
+    - [ ] Functionality
+    - [ ] Settings
+    - [ ] Styles
+  - [ ] Features
+    - [ ] Functionality
+    - [ ] Settings
+    - [ ] Styles
+  - [ ] Effects
+    - [ ] Functionality
+    - [ ] Settings
+    - [ ] Styles
+  - [ ] Biography
+    - [ ] Functionality
+    - [ ] Settings
+    - [ ] Styles
+  - [ ] Journal
+    - [ ] Functionality
+    - [ ] Settings
+    - [ ] Styles
 
 
 ## Exhaustion
@@ -88,35 +124,6 @@
 - [ ] Create custom tab component
   - [ ] Use show/hide scheme so that scroll and state are remembered
   - [ ] Rethink how to emit scroll position to the sheet so that rerenders and submissions can feed the position back through
-- [ ] Implement the tabs
-  - [ ] Attributes
-    - [ ] Functionality
-    - [ ] Settings
-    - [ ] Styles
-  - [ ] Inventory
-    - [ ] Functionality
-    - [ ] Settings
-    - [ ] Styles
-  - [ ] Spellbook
-    - [ ] Functionality
-    - [ ] Settings
-    - [ ] Styles
-  - [ ] Features
-    - [ ] Functionality
-    - [ ] Settings
-    - [ ] Styles
-  - [ ] Effects
-    - [ ] Functionality
-    - [ ] Settings
-    - [ ] Styles
-  - [ ] Biography
-    - [ ] Functionality
-    - [ ] Settings
-    - [ ] Styles
-  - [ ] Journal
-    - [ ] Functionality
-    - [ ] Settings
-    - [ ] Styles
 - [ ] Update scroll position
   - [ ] Track locally to the current sheet instance; continue to pass through in the same manner as before
   - [ ] Remember the last selected tab and that tab's scroll position so that rerenders and submissions do not cause scroll jumping
