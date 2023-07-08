@@ -88,7 +88,7 @@
     />
 
     {#if !incapacitated}
-      <Rest {sheetFunctions} />
+      <Rest {sheetFunctions} {useRoundedPortraitStyle} />
     {/if}
 
     {#if !incapacitated}

@@ -1,11 +1,5 @@
 # To Do
 
-## Rest
-
-- [ ] HTML
-- [ ] SCSS
-- [ ] Special Settings?
-
 ## Hit Dice
 
 - [ ] HTML
@@ -224,3 +218,9 @@
 - [x] SCSS
 - [x] Enable Max HP Override
 - [x] Lock Max HP Override to GM
+
+## Rest
+
+- [x] HTML
+- [x] SCSS
+- [x] Special Settings?

@@ -1,5 +1,7 @@
 import type { ClassSummary, ItemStub } from 'src/types/types';
 import { CONSTANTS } from '../constants';
+import { warn } from 'src/utils/logging';
+import { Tidy5eKgarUserSettings } from 'src/settings/user-settings-form';
 
 export const FoundryAdapter = {
   getActorSheetClass() {
@@ -16,6 +18,11 @@ export const FoundryAdapter = {
   },
   onReady(func: Function) {
     Hooks.on('ready', func);
+  },
+  onActor5eSheetRender(func: (...args: any[]) => void) {
+    Hooks.on('renderActorSheet', (...args: any[]) => {
+      func(args);
+    });
   },
   registerCharacterSheet(
     sheet: typeof dnd5e.applications.actor.ActorSheet5eCharacter
@@ -114,7 +121,7 @@ export const FoundryAdapter = {
   },
   getCurrentLang() {
     return game.i18n.lang;
-  }
+  },
 };
 
 /* ------------------------------------------------------
