@@ -313,10 +313,6 @@
 		"none": "none",
 		"default": "none"
 	},
-	"T5EK.Settings.HpOverlayBorder": {
-		"name": "Offset hit point overlay.",
-		"hint": "Enter offset value to compensate for portrait frames and prevent tinting."
-	},
 	"T5EK.Settings.EditTotalLock": {
 		"name": "Lock down sensitive fields.",
 		"hint": "Enable to prevent accidentally changing sensible, mostly static values."

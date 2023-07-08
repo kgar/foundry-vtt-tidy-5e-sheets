@@ -1,19 +1,5 @@
 # To Do
 
-## HP Overlay
-
-- [x] HTML
-- [x] SCSS
-- [x] Implement Disable hp overlay game setting
-- [ ] Purge hpOverlayBorder game setting
-
-## Dying / Death Saves
-
-- [ ] HTML
-- [ ] SCSS
-- [ ] Hide all charms when dying
-- [ ] Expand todos based on additional options here
-
 ## Rest
 
 - [ ] HTML
@@ -26,11 +12,18 @@
 - [ ] SCSS
 - [ ] Special Settings?
 
-## Hit Dice 
+## Hit Dice
 
 - [ ] HTML
 - [ ] SCSS
 - [ ] Special Settings?
+
+## HP Overlay
+
+- [x] HTML
+- [x] SCSS
+- [x] Implement Disable hp overlay game setting
+- [x] Purge hpOverlayBorder game setting
 
 ## Exhaustion
 
@@ -41,6 +34,42 @@
 - [x] exhaustion note styles? no longer a feature; remove vestiges
 - [ ] Add the custom exhaustion code; see [exhaustion script](./src/exhaustion.ts)
 - [ ] Ferret out / expand these todos
+
+## Dying / Death Saves
+
+- [x] HTML
+- [x] SCSS
+- [x] Hide all charms when dying
+- [x] Reimplement the functionality of checkDeathSaveStatus
+- [x] Expand todos based on additional options here
+
+## Security
+
+- [ ] Port the functionality of `applyLocksCharacterSheet()`
+- [ ] Port the functionality of `applyLocksNpcSheet()`
+- [ ] Port the functionality of `applyLocksVehicleSheet()`
+- [ ] Port the functionality of `applyLocksItemSheet()`
+
+> **Note**
+> The system won't let the user actually make any changes to the character sheet when it's not editable to that user. This is only to help prevent frustration.
+
+## Misc for the main character sheet
+
+- [ ] Review `setSheetClasses()` and determine how this affects the player sheet
+- [ ] Review `editProtection()` and determine how this affects the player sheet
+- [ ] Review `addClassList()` and determine how this affects the player sheet
+- [ ] Review `toggleTraitsList()` and determine how this affects the player sheet
+- [ ] Review `checkDeathSaveStatus()` and determine how this affects the player sheet
+- [ ] Review `abbreviateCurrency()` and determine how this affects the player sheet
+- [ ] Review `spellAttackMod()` and determine how this affects the player sheet
+- [ ] Review `addFavorites(, position)` and determine how this affects the player sheet
+- [ ] Review `countAttunedItems()` and determine how this affects the player sheet
+- [ ] Review `countInventoryItems()` and determine how this affects the player sheet
+- [ ] Review `markActiveEffects()` and determine how this affects the player sheet
+- [ ] Review `spellSlotMarker()` and determine how this affects the player sheet
+- [ ] Review `hideStandardEncumbranceBar()` and determine how this affects the player sheet
+- [ ] Review `applyLazyMoney()` and determine how this affects the player sheet
+- [ ] Review `applySpellClassFilterActorSheet()` and determine how this affects the player sheet
 
 ## Portrait Charms Reorganization
 

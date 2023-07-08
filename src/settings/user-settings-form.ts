@@ -1,6 +1,7 @@
 import { CONSTANTS } from 'src/constants';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { log } from 'src/utils/logging';
+import { SettingsProvider } from './settings';
 
 export class Tidy5eKgarUserSettings extends FormApplication {
   // settings template
@@ -37,123 +38,9 @@ export class Tidy5eKgarUserSettings extends FormApplication {
   }
 
   getSettingsData() {
-    const settings = [
-      'ammoEquippedOnly',
-      'activeEffectsMarker',
-      'classListDisabled',
-      'contextRollButtons',
-      'defaultActionsTab',
-      'editGmAlwaysEnabled',
-      'editEffectsGmOnlyEnabled',
-      'editTotalLockEnabled',
-      'exhaustionEffectsEnabled',
-      'exhaustionEffectIcon',
-      'exhaustionEffectCustom',
-      'exhaustionEffectCustomTiers',
-      'exhaustionOnHover',
-      'exhaustionDisabled',
-      'expandedSheetEnabled',
-      'hideIfZero',
-      'hiddenDeathSavesEnabled',
-      'hideSpellSlotMarker',
-      'hideStandardEncumbranceBar',
-      'enableSpellLevelButtons',
-      'hpBarDisabled',
-      'hpBarDisabledNpc',
-      'hpBarDisabledVehicle',
-      'hpOverlayDisabled',
-      'hpOverlayDisabledNpc',
-      'hpOverlayDisabledVehicle',
-      'hpOverlayBorder',
-      'hpOverlayBorderNpc',
-      'hpOverlayBorderVehicle',
-      'inspirationAnimationDisabled',
-      'inspirationDisabled',
-      'inspirationOnHover',
-      'itemCardsAreFloating',
-      'itemCardsDelay',
-      'itemCardsFixKey',
-      'itemCardsForAllItems',
-      'journalTabDisabled',
-      'journalTabNPCDisabled',
-      'linkMarkerNpc',
-
-      'playerNameEnabled',
-      'portraitStyle',
-      'quantityAlwaysShownEnabled',
-      'restingForNpcsEnabled',
-      'restingForNpcsChatDisabled',
-      'rightClickDisabled',
-      'classicControlsEnabled',
-      'hideIconsNextToTheItemName',
-      'skillsAlwaysShownNpc',
-      'hideSpellbookTabNpc',
-
-      'playerSheetWidth',
-      'npsSheetWidth',
-      'vehicleSheetWidth',
-
-      'traitLabelsEnabled',
-      'traitsAlwaysShownNpc',
-      'traitsMovedBelowResource',
-      'traitsMovedBelowResourceNpc',
-      'traitsTogglePc',
-      // REMOVED 2.1.5 do the job now
-      // "lazyHpAndExpEnable",
-      // "lazyHpForceHpValueLimit1",
-      // "lazyHpForceHpValueLimit2",
-      'lazyMoneyEnable',
-      'lazyMoneyAddConvert',
-      'lazyMoneyIgnoreElectrum',
-      'lazyMoneyChatLog',
-
-      'enableSortFavoritesItemsAlphabetically',
-      'allowCantripToBePreparedOnContext',
-      'enableActionListOnFavoritePanel',
-      'spellClassFilterSelect',
-      'spellClassFilterIconReplace',
-      'spellClassFilterAdditionalClasses',
-      'allowHpMaxOverride',
-      'allowHpConfigOverride',
-      // "betterAttackDialog",
-
-      'lockMoneyChanges',
-      'lockExpChanges',
-      'lockHpMaxChanges',
-      'lockLevelSelector',
-      'lockConfigureSheet',
-      'lockItemQuantity',
-
-      'colorPickerEnabled',
-      'colorPickerEquipped',
-      'colorPickerEquippedOutline',
-      'colorPickerEquippedAccent',
-      'colorPickerPrepared',
-      'colorPickerPreparedOutline',
-      'colorPickerPreparedAccent',
-      'colorPickerPact',
-      'colorPickerPactOutline',
-      'colorPickerPactAccent',
-      'colorPickerAtWill',
-      'colorPickerAtWillOutline',
-      'colorPickerAtWillAccent',
-      'colorPickerInnate',
-      'colorPickerInnateOutline',
-      'colorPickerInnateAccent',
-      'colorPickerAlwaysPrepared',
-      'colorPickerAlwaysPreparedOutline',
-      'colorPickerAlwaysPreparedAccent',
-
-      'hbEnableUpcastFreeSpell',
-      'hbSetFeaturesForUpcastFreeSpell',
-
-      'debug',
-    ];
-
-    let data = {};
-    settings.forEach((setting) => {
+    let data: Record<string, unknown> = {};
+    Object.keys(SettingsProvider.settings).forEach((setting) => {
       data[setting] = { value: FoundryAdapter.getGameSetting(setting) };
-      // debug(data[setting]);
     });
     return data;
   }

@@ -18,11 +18,20 @@
   const useRoundedPortraitStyle = ['all', 'default', 'pc'].includes(
     portraitStyle
   );
+  const incapacitated =
+    (context.actor?.system?.attributes?.hp?.value ?? 0) <= 0 &&
+    context.actor?.system?.attributes?.hp?.max !== 0;
 
   function onLevelSelected(event: CustomEvent<{ level: number }>) {
     context.actor.update({
       'system.attributes.exhaustion': event.detail.level,
     });
+  }
+
+  function showDeathSaves(): boolean {
+    const isEnabledForAll =
+      !SettingsProvider.settings.hiddenDeathSavesEnabled.get();
+    return incapacitated && (isEnabledForAll || game.user.isGM);
   }
 </script>
 
@@ -31,20 +40,23 @@
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <div class="profile-wrap">
   <div class="profile" class:round-portrait={useRoundedPortraitStyle}>
-    <!-- <DeathSaves
-      successes={context.system.attributes.death.success}
-      failures={context.system.attributes.death.failure}
-      on:rollDeathSave={(event) =>
-        context.actor.rollDeathSave({ event: event.detail.mouseEvent })}
-    /> -->
-
     <CharacterPortrait actor={context.actor} {sheetFunctions} />
 
     {#if !SettingsProvider.settings.hpOverlayDisabled.get()}
       <HpOverlay {useRoundedPortraitStyle} actor={context.actor} />
     {/if}
 
-    {#if !SettingsProvider.settings.exhaustionDisabled.get()}
+    {#if showDeathSaves()}
+      <DeathSaves
+        successes={context.system.attributes.death.success}
+        failures={context.system.attributes.death.failure}
+        {useRoundedPortraitStyle}
+        on:rollDeathSave={(event) =>
+          context.actor.rollDeathSave({ event: event.detail.mouseEvent })}
+      />
+    {/if}
+
+    {#if !SettingsProvider.settings.exhaustionDisabled.get() && !incapacitated}
       <Exhaustion
         level={context.system.attributes.exhaustion}
         radiusClass={useRoundedPortraitStyle ? 'rounded' : 'top-left'}
@@ -55,7 +67,7 @@
       />
     {/if}
 
-    {#if !SettingsProvider.settings.inspirationDisabled.get()}
+    {#if !SettingsProvider.settings.inspirationDisabled.get() && !incapacitated}
       <Inspiration
         inspired={context.actor.system.attributes.inspiration}
         radiusClass={useRoundedPortraitStyle ? 'rounded' : 'top-right'}
@@ -64,13 +76,17 @@
       />
     {/if}
 
-    <Rest {sheetFunctions} />
+    {#if !incapacitated}
+      <Rest {sheetFunctions} />
+    {/if}
 
-    <HitDice
-      hitDice={context.system.attributes.hd}
-      actorLevel={context.system.details.level}
-      actor={context.actor}
-    />
+    {#if !incapacitated}
+      <HitDice
+        hitDice={context.system.attributes.hd}
+        actorLevel={context.system.details.level}
+        actor={context.actor}
+      />
+    {/if}
 
     <HitPoints
       value={context.system.attributes.hp.value}
