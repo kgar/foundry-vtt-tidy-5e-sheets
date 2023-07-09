@@ -82,6 +82,9 @@
     SettingsProvider.settings.defaultActionsTab.get() != 'default'
       ? SettingsProvider.settings.defaultActionsTab.get()
       : 'attributes';
+
+  const allowJournal =
+    context.owner && !SettingsProvider.settings.journalTabDisabled.get();
 </script>
 
 {#if context.warnings.length}
@@ -246,7 +249,7 @@
         {#if context.owner}
           <a
             class="config-button origin-summary-tidy"
-            data-tooltip={localize('TIDY5E.OriginSummaryConfig')}
+            data-tooltip={localize('T5EK.OriginSummaryConfig')}
             on:click={() =>
               new Tidy5eActorOriginSummaryConfig(context.actor).render(true)}
           >
@@ -354,11 +357,11 @@
     on:click={() => (selectedTab = 'biography')}
     >{localize('DND5E.Biography')}</a
   >
-  {#if context.owner && !SettingsProvider.settings.journalTabDisabled.get()}
+  {#if allowJournal}
     <a
       class="item"
       class:active={selectedTab === 'journal'}
-      on:click={() => (selectedTab = 'journal')}>{localize('TIDY5E.Journal')}</a
+      on:click={() => (selectedTab = 'journal')}>{localize('T5EK.Journal')}</a
     >
   {/if}
   {#if context.owner}
@@ -366,14 +369,10 @@
       <span
         ><i
           class="fas fa-lock"
-          title="{localize('TIDY5E.EnableEdit')} - {localize(
-            'TIDY5E.EditHint'
-          )}"
+          title="{localize('T5EK.EnableEdit')} - {localize('TIDY5E.EditHint')}"
         /><i
           class="fas fa-lock-open"
-          title="{localize('TIDY5E.DisableEdit')} - {localize(
-            'TIDY5E.EditHint'
-          )}"
+          title="{localize('T5EK.DisableEdit')} - {localize('TIDY5E.EditHint')}"
         /></span
       >
     </div>
@@ -383,90 +382,32 @@
 <!-- Tabs -->
 <!-- Lock -->
 <section class="sheet-body" bind:this={scrollView}>
-  {#if selectedTab === 'attributes'}
+  <div class="tab attributes" class:active={selectedTab === 'attributes'}>
     <AttributesTab />
-  {:else if selectedTab === 'inventory'}
+  </div>
+  <div class="tab inventory" class:active={selectedTab === 'inventory'}>
     <InventoryTab />
-  {:else if selectedTab === 'spellbook'}
+  </div>
+  <div class="tab spellbook" class:active={selectedTab === 'spellbook'}>
     <SpellbookTab />
-  {:else if selectedTab === 'features'}
+  </div>
+  <div class="tab features" class:active={selectedTab === 'features'}>
     <FeaturesTab />
-  {:else if selectedTab === 'effects'}
+  </div>
+  <div class="tab effects" class:active={selectedTab === 'effects'}>
     <EffectsTab />
-  {:else if selectedTab === 'biography'}
+  </div>
+  <div class="tab biography" class:active={selectedTab === 'biography'}>
     <BiographyTab />
-  {:else if selectedTab === 'journal' && !SettingsProvider.settings.journalTabDisabled.get()}
-    <JournalTab />
+  </div>
+  {#if allowJournal}
+    <div class="tab journal" class:active={selectedTab === 'journal'}>
+      <JournalTab {context} />
+    </div>
   {/if}
 </section>
 
 <!-- Cross-cutting: Item Info Card -->
-
-<!-- <article style="height: 200px;">
-  <div>Test: Background Editor</div>
-
-  <SheetEditor
-    content={context.system.details.background}
-    target="system.details.background"
-    editable={context.owner || FoundryAdapter.userIsGm()}
-  />
-</article>
-<article style="height: 200px;">
-  <div>Test: Bond Editor</div>
-  <SheetEditor
-    content={context.system.details.bond}
-    target="system.details.bond"
-    editable={context.owner || FoundryAdapter.userIsGm()}
-  />
-</article>
-<article style="height: 200px;">
-  <div>Test: Flaw Editor</div>
-  <SheetEditor
-    content={context.system.details.flaw}
-    target="system.details.flaw"
-    editable={context.owner || FoundryAdapter.userIsGm()}
-  />
-</article>
-
-<p>
-  Actor Name: {context.actor.name}<br />
-  Owner: {context.owner}
-</p>
-
-<p>
-  HP: {context.system.attributes.hp.value} / {context.system.attributes.hp
-    .max}
-</p>
-
-{#each actorReference.abilitiesList as ability}
-  <div style="display: flex;">
-    <button
-      on:click={(event) =>
-        context.actor.rollAbility(ability.abbreviation, { event })}
-      >{actorReference.abilities[ability.abbreviation].label}</button
-    >
-    <button
-      on:click={(event) =>
-        context.actor.rollAbilityTest(ability.abbreviation, { event })}
-      >Do a {actorReference.abilities[ability.abbreviation].label} roll!</button
-    >
-    <button
-      on:click={(event) =>
-        context.actor.rollAbilitySave(ability.abbreviation, { event })}
-      >Make a {actorReference.abilities[ability.abbreviation].label} save!</button
-    >
-  </div>
-{/each}
-<hr />
-<div style="display: grid; grid-template-columns: 1fr 1fr 1fr;">
-  {#each actorReference.skillsList as skill}
-    <button
-      on:click={(event) =>
-        context.actor.rollSkill(skill.abbreviation, { event })}
-      >{actorReference.skills[skill.abbreviation].label}</button
-    >
-  {/each}
-</div> -->
 
 <style lang="scss">
   .tidy5e-kgar-sheet-header {
@@ -474,5 +415,46 @@
     justify-content: center;
     padding: 10px 16px 16px 16px;
     background: var(--t5e-header-background);
+  }
+
+  .tab {
+    height: 100%;
+    flex-direction: column;
+    scrollbar-width: thin;
+    scrollbar-color: #782e22 #0000;
+    display: none;
+
+    &.active {
+      display: flex;
+    }
+
+    &.attributes,
+    &.biography,
+    &.journal {
+      align-items: flex-start;
+      flex-direction: row;
+      padding-right: 0.75rem;
+      overflow-y: scroll;
+      overflow-x: inherit;
+    }
+
+    &.biography,
+    &.journal {
+      font-size: 13px;
+    }
+
+    &.biography {
+      flex-wrap: wrap;
+    }
+
+    &.grid .toggle-grid,
+    .toggle-list {
+      display: none;
+    }
+
+    .toggle-grid,
+    &.grid .toggle-list {
+      display: inline-block;
+    }
   }
 </style>
