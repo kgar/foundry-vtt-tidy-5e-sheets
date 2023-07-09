@@ -1,48 +1,57 @@
 # To Do
 
+
 ## Character Tabs
+
+### Journal Tab
+
+- [ ] Journal
+    - [x] Make a component
+    - [ ] Functionality
+    - [ ] Settings
+    - [ ] Styles
+    - [ ] Implement game settings
+      - [ ] journalTabDisabled - 
+
+### Pile of TODOs
 
 - [x] Use existing or create new tab control | made a really rough tabs control with relative ease
 - [ ] Implement the tabs
   - [ ] Attributes
-    - [ ] Make a component
+    - [x] Make a component
     - [ ] Functionality
     - [ ] Settings
     - [ ] Styles
       - [ ] `_mainTab.scss`
     - [ ] Favorites...
   - [ ] Inventory
-    - [ ] Make a component
+    - [x] Make a component
     - [ ] Functionality
     - [ ] Settings
     - [ ] Styles
       - [ ] src_scss\partials_inventory-grid.scss
       - [ ] src_scss\partials_inventory.scss
   - [ ] Spellbook
-    - [ ] Make a component
+    - [x] Make a component
     - [ ] Functionality
     - [ ] Settings
     - [ ] Styles
   - [ ] Features
-    - [ ] Make a component
+    - [x] Make a component
     - [ ] Functionality
     - [ ] Settings
     - [ ] Styles
   - [ ] Effects
-    - [ ] Make a component
+    - [x] Make a component
     - [ ] Functionality
     - [ ] Settings
     - [ ] Styles
   - [ ] Biography
-    - [ ] Make a component
+    - [x] Make a component
     - [ ] Functionality
     - [ ] Settings
     - [ ] Styles
-  - [ ] Journal
-    - [ ] Make a component
-    - [ ] Functionality
-    - [ ] Settings
-    - [ ] Styles
+- [ ] Implement default tab
 
 ## Exhaustion
 

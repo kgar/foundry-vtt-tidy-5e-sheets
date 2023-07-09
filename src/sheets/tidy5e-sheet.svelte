@@ -354,12 +354,14 @@
     on:click={() => (selectedTab = 'biography')}
     >{localize('DND5E.Biography')}</a
   >
-  {#if context.owner}
+  {#if context.owner && !SettingsProvider.settings.journalTabDisabled.get()}
     <a
       class="item"
       class:active={selectedTab === 'journal'}
       on:click={() => (selectedTab = 'journal')}>{localize('TIDY5E.Journal')}</a
     >
+  {/if}
+  {#if context.owner}
     <div class="toggle-allow-edit">
       <span
         ><i
@@ -393,7 +395,7 @@
     <EffectsTab />
   {:else if selectedTab === 'biography'}
     <BiographyTab />
-  {:else if selectedTab === 'journal'}
+  {:else if selectedTab === 'journal' && !SettingsProvider.settings.journalTabDisabled.get()}
     <JournalTab />
   {/if}
 </section>
