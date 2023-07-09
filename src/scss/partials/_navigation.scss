@@ -80,10 +80,6 @@
         padding: 4px 6px;
       }
     }
-
-    .fa-lock-open {
-      display: none;
-    }
   }
 }
 
@@ -91,13 +87,6 @@
   .toggle-allow-edit {
     span {
       background: var(--t5e-unsafe-accent);
-    }
-
-    .fa-lock-open {
-      display: inline-block;
-    }
-    .fa-lock {
-      display: none;
     }
   }
   // Part of classicControlsEnabled game setting; shows an end column with icons like Favorite bookmark icon, edit icon, prepare spell icon, etc.

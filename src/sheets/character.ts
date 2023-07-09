@@ -65,14 +65,7 @@ export class Tidy5eSheetKgar extends ActorSheet5eCharacter {
       const scrollViewIndex = this.sheet.$$.props.scrollView;
       if (typeof scrollViewIndex === 'number') {
         const scrollView = this.sheet.$$.ctx[scrollViewIndex] as HTMLElement;
-        log('looking at scrollView', scrollView);
-        log('scrollTop', scrollView.scrollTop);
-        this.actor.setFlag(
-          CONSTANTS.MODULE_ID,
-          'scrollTop',
-          scrollView.scrollTop
-        );
-        this.actor.setFlag(CONSTANTS.MODULE_ID, 'tab', 'TODO: Implement');
+        FoundryAdapter.setFlag(this.actor, 'scrollTop', scrollView.scrollTop);
       }
     }
   }

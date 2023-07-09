@@ -85,6 +85,11 @@
 
   const allowJournal =
     context.owner && !SettingsProvider.settings.journalTabDisabled.get();
+
+  const allowEdit = FoundryAdapter.tryGetFlag(context.actor, 'allow-edit');
+  async function toggleLock() {
+    await FoundryAdapter.setFlag(context.actor, 'allow-edit', !allowEdit);
+  }
 </script>
 
 {#if context.warnings.length}
@@ -366,15 +371,23 @@
   {/if}
   {#if context.owner}
     <div class="toggle-allow-edit">
-      <span
-        ><i
-          class="fas fa-lock"
-          title="{localize('T5EK.EnableEdit')} - {localize('TIDY5E.EditHint')}"
-        /><i
-          class="fas fa-lock-open"
-          title="{localize('T5EK.DisableEdit')} - {localize('TIDY5E.EditHint')}"
-        /></span
-      >
+      <span on:click={() => toggleLock()}>
+        {#if allowEdit}
+          <i
+            class="fas fa-lock-open"
+            title="{localize('T5EK.DisableEdit')} - {localize(
+              'TIDY5E.EditHint'
+            )}"
+          />
+        {:else}
+          <i
+            class="fas fa-lock"
+            title="{localize('T5EK.EnableEdit')} - {localize(
+              'TIDY5E.EditHint'
+            )}"
+          />
+        {/if}
+      </span>
     </div>
   {/if}
 </nav>

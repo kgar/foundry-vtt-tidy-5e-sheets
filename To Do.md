@@ -3,15 +3,23 @@
 
 ## Character Tabs
 
+### Biography
+
+- [ ] Biography
+  - [x] Make a component
+  - [ ] Functionality
+  - [ ] Settings
+  - [ ] Styles
+
 ### Journal Tab
 
-- [ ] Journal
+- [x] Journal
     - [x] Make a component
-    - [ ] Functionality
-    - [ ] Settings
-    - [ ] Styles
-    - [ ] Implement game settings
-      - [ ] journalTabDisabled - 
+    - [x] Functionality
+    - [x] Settings
+    - [x] Styles
+    - [x] Implement game settings
+      - [x] journalTabDisabled 
 
 ### Pile of TODOs
 
@@ -42,11 +50,6 @@
     - [ ] Settings
     - [ ] Styles
   - [ ] Effects
-    - [x] Make a component
-    - [ ] Functionality
-    - [ ] Settings
-    - [ ] Styles
-  - [ ] Biography
     - [x] Make a component
     - [ ] Functionality
     - [ ] Settings
