@@ -3,13 +3,21 @@
 
 ## Character Tabs
 
-### Biography
+### Effects
 
-- [ ] Biography
+- [ ] Effects
   - [x] Make a component
   - [ ] Functionality
   - [ ] Settings
   - [ ] Styles
+
+### Biography
+
+- [x] Biography
+  - [x] Make a component
+  - [x] Functionality
+  - [x] Settings
+  - [x] Styles
 
 ### Journal Tab
 
@@ -49,12 +57,8 @@
     - [ ] Functionality
     - [ ] Settings
     - [ ] Styles
-  - [ ] Effects
-    - [x] Make a component
-    - [ ] Functionality
-    - [ ] Settings
-    - [ ] Styles
-- [ ] Implement default tab
+- [x] Implement default tab
+- [ ] Visual bug (existing): when any character detail field is too long in Biography top-notes for a PC, it will blow out the layout. Consider CSS grid as a replacement. Test carefully on all the major browsers. Also just consider inputs instead of contenteditable fields?
 
 ## Exhaustion
 

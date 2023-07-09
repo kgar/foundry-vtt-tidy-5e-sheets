@@ -51,4 +51,5 @@ when registering settings, those marked as `config: true` will appear in the con
 - [Foundry v10 API Documentation](https://foundryvtt.com/api/v10/)
 - Stuff for semantic HTML and Aria
   - https://stackoverflow.com/questions/19203501/semantic-mark-up-and-wai-aria-for-tabbed-section
-  - 
+- [STYLING CHILD COMPONENTS](https://svelte.dev/repl/765f182ddd75486a8f6cf0b3ba75f276?version=3.59.2)
+  - [Passing styles to children](https://svelte.dev/repl/c6b1e24a6f0844de8b032b0c23e928ee?version=3.17.3)

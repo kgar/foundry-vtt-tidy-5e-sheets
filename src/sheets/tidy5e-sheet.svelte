@@ -411,7 +411,7 @@
     <EffectsTab />
   </div>
   <div class="tab biography" class:active={selectedTab === 'biography'}>
-    <BiographyTab />
+    <BiographyTab {context} {sheetFunctions} />
   </div>
   {#if allowJournal}
     <div class="tab journal" class:active={selectedTab === 'journal'}>
