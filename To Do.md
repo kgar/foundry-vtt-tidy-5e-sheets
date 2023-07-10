@@ -162,6 +162,8 @@ Evaluate module integration and think about better (API-centric) ways to support
 - [ ] Properly lock down all gm-only settings
 - [ ] Use semantic HTML for the sheets (how do I utilize header, section, article, nav, etc.?)
 - [ ] ... next steps
+- [ ] Implement `editGmAlwaysEnabled`
+- [ ] Implement `editEffectsGmOnlyEnabled`
 
 ## Cross-Cutting
 

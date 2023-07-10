@@ -408,7 +408,7 @@
     <FeaturesTab />
   </div>
   <div class="tab effects" class:active={selectedTab === 'effects'}>
-    <EffectsTab />
+    <EffectsTab {context} />
   </div>
   <div class="tab biography" class:active={selectedTab === 'biography'}>
     <BiographyTab {context} {sheetFunctions} />

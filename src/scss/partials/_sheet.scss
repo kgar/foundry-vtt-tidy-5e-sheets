@@ -182,4 +182,7 @@
     min-height: 100px;
   }
   // etc.
+
+  @import "./_inventory.scss";
+	@import "./_inventory-grid.scss";
 }
