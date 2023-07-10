@@ -19,14 +19,16 @@
   import EffectsTab from 'src/components/player-character/effects-tab.svelte';
   import BiographyTab from 'src/components/player-character/biography-tab.svelte';
   import JournalTab from 'src/components/player-character/journal-tab.svelte';
+  import { debounce } from 'src/utils/debounce';
+  import type { SheetParameter } from 'src/utils/sheet-parameter';
 
   export let debug: any = 'Put any debug information here, if ya need it.';
   export let sheetFunctions: SheetFunctions;
-  export let scrollTop: number = 0;
+  export let currentTabParam: SheetParameter<string>;
+  export let tabToScrollTopMap: Map<string, number>;
   export let scrollView: HTMLElement | undefined = undefined;
   export let isEditable: boolean;
   export let context: CharacterSheetContext;
-  console.log(context);
 
   function submitWhenEnterKey(e: KeyboardEvent) {
     if (e.key == 'Enter') {
@@ -35,15 +37,9 @@
     }
   }
 
-  console.log('Tidy5e KGar', debug);
   const localize = FoundryAdapter.localize;
 
   onMount(() => {
-    if (scrollView) {
-      log('setting scroll top to ' + scrollTop);
-      scrollView.scrollTop = scrollTop;
-      // const tab = actor.getFlag(CONSTANTS.MODULE_ID, 'tab') ?? 0;
-    }
     sheetFunctions.activateListeners();
   });
 
@@ -78,11 +74,6 @@
     text: context.config.actorSizes[context.system.traits.size],
   };
 
-  let selectedTab: string =
-    SettingsProvider.settings.defaultActionsTab.get() != 'default'
-      ? SettingsProvider.settings.defaultActionsTab.get()
-      : 'attributes';
-
   const allowJournal =
     context.owner && !SettingsProvider.settings.journalTabDisabled.get();
 
@@ -90,6 +81,15 @@
   async function toggleLock() {
     await FoundryAdapter.setFlag(context.actor, 'allow-edit', !allowEdit);
   }
+
+  function tabSelected(tabName: string) {
+    currentTabParam.set(tabName);
+    currentTabParam = currentTabParam;
+  }
+
+  const scrollTopChanged = debounce((event: CustomEvent<{ top: number }>) => {
+    tabToScrollTopMap.set(currentTabParam.get(), event.detail.top);
+  });
 </script>
 
 {#if context.warnings.length}
@@ -330,43 +330,39 @@
 >
   <a
     class="item"
-    class:active={selectedTab === 'attributes'}
-    on:click={() => (selectedTab = 'attributes')}
-    >{localize('DND5E.Attributes')}</a
+    class:active={currentTabParam.get() === 'attributes'}
+    on:click={() => tabSelected('attributes')}>{localize('DND5E.Attributes')}</a
   >
   <a
     class="item"
-    class:active={selectedTab === 'inventory'}
-    on:click={() => (selectedTab = 'inventory')}
-    >{localize('DND5E.Inventory')}</a
+    class:active={currentTabParam.get() === 'inventory'}
+    on:click={() => tabSelected('inventory')}>{localize('DND5E.Inventory')}</a
   >
   <a
     class="item"
-    class:active={selectedTab === 'spellbook'}
-    on:click={() => (selectedTab = 'spellbook')}
-    >{localize('DND5E.Spellbook')}</a
+    class:active={currentTabParam.get() === 'spellbook'}
+    on:click={() => tabSelected('spellbook')}>{localize('DND5E.Spellbook')}</a
   >
   <a
     class="item"
-    class:active={selectedTab === 'features'}
-    on:click={() => (selectedTab = 'features')}>{localize('DND5E.Features')}</a
+    class:active={currentTabParam.get() === 'features'}
+    on:click={() => tabSelected('features')}>{localize('DND5E.Features')}</a
   >
   <a
     class="item"
-    class:active={selectedTab === 'effects'}
-    on:click={() => (selectedTab = 'effects')}>{localize('DND5E.Effects')}</a
+    class:active={currentTabParam.get() === 'effects'}
+    on:click={() => tabSelected('effects')}>{localize('DND5E.Effects')}</a
   >
   <a
     class="item"
-    class:active={selectedTab === 'biography'}
-    on:click={() => (selectedTab = 'biography')}
-    >{localize('DND5E.Biography')}</a
+    class:active={currentTabParam.get() === 'biography'}
+    on:click={() => tabSelected('biography')}>{localize('DND5E.Biography')}</a
   >
   {#if allowJournal}
     <a
       class="item"
-      class:active={selectedTab === 'journal'}
-      on:click={() => (selectedTab = 'journal')}>{localize('T5EK.Journal')}</a
+      class:active={currentTabParam.get() === 'journal'}
+      on:click={() => tabSelected('journal')}>{localize('T5EK.Journal')}</a
     >
   {/if}
   {#if context.owner}
@@ -395,26 +391,42 @@
 <!-- Tabs -->
 <!-- Lock -->
 <section class="sheet-body" bind:this={scrollView}>
-  <div class="tab attributes" class:active={selectedTab === 'attributes'}>
+  <div
+    class="tab attributes"
+    class:active={currentTabParam.get() === 'attributes'}
+  >
     <AttributesTab />
   </div>
-  <div class="tab inventory" class:active={selectedTab === 'inventory'}>
+  <div
+    class="tab inventory"
+    class:active={currentTabParam.get() === 'inventory'}
+  >
     <InventoryTab />
   </div>
-  <div class="tab spellbook" class:active={selectedTab === 'spellbook'}>
+  <div
+    class="tab spellbook"
+    class:active={currentTabParam.get() === 'spellbook'}
+  >
     <SpellbookTab />
   </div>
-  <div class="tab features" class:active={selectedTab === 'features'}>
+  <div class="tab features" class:active={currentTabParam.get() === 'features'}>
     <FeaturesTab />
   </div>
-  <div class="tab effects" class:active={selectedTab === 'effects'}>
-    <EffectsTab {context} />
+  <div class="tab effects" class:active={currentTabParam.get() === 'effects'}>
+    <EffectsTab
+      {context}
+      on:scrollTopChanged={scrollTopChanged}
+      scrollTop={tabToScrollTopMap.get('effects') ?? 0}
+    />
   </div>
-  <div class="tab biography" class:active={selectedTab === 'biography'}>
+  <div
+    class="tab biography"
+    class:active={currentTabParam.get() === 'biography'}
+  >
     <BiographyTab {context} {sheetFunctions} />
   </div>
   {#if allowJournal}
-    <div class="tab journal" class:active={selectedTab === 'journal'}>
+    <div class="tab journal" class:active={currentTabParam.get() === 'journal'}>
       <JournalTab {context} />
     </div>
   {/if}

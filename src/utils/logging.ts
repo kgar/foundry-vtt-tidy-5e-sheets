@@ -34,11 +34,6 @@ export function log(message, args = '') {
   }
   return message;
 }
-// export function log(message) {
-//   message = `${CONSTANTS.MODULE_ID} | ${message}`;
-//   console.log(message.replace('<br>', '\n'));
-//   return message;
-// }
 export function notify(message) {
   message = `${CONSTANTS.MODULE_ID} | ${message}`;
   ui.notifications?.notify(message);

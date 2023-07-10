@@ -1,5 +1,6 @@
 # To Do
 
+- [ ] Find an implementation of Signal<T> from Angular and replace SheetParameter.
 
 ## Character Tabs
 
@@ -59,6 +60,7 @@
     - [ ] Styles
 - [x] Implement default tab
 - [ ] Visual bug (existing): when any character detail field is too long in Biography top-notes for a PC, it will blow out the layout. Consider CSS grid as a replacement. Test carefully on all the major browsers. Also just consider inputs instead of contenteditable fields?
+- [ ] Consider consolidating sheet initial value / cacheable content into single objects to pass down to the target component. Values include things like scrollTop map, currentTab sheet parameter, and any other sheetparameters that need to be cached for maintaining visual integrity between submissions / sheet refreshes.
 
 ## Exhaustion
 

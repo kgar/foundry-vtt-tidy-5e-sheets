@@ -4,8 +4,10 @@
     type CharacterSheetContext,
   } from 'src/foundry/foundry-adapter';
   import { SettingsProvider } from 'src/settings/settings';
+  import { createEventDispatcher, onMount } from 'svelte';
 
   export let context: CharacterSheetContext;
+  export let scrollTop: number;
 
   const localize = FoundryAdapter.localize;
 
@@ -16,12 +18,25 @@
   );
   const classicControlsEnabled =
     SettingsProvider.settings.classicControlsEnabled.get();
+
+  const dispatcher = createEventDispatcher<{
+    scrollTopChanged: { top: number };
+  }>();
+
+  let scrollView: HTMLElement;
+
+  onMount(() => {
+    scrollView.scrollTop = scrollTop ?? 0;
+  });
 </script>
 
 <div class="list-layout">
   <ul
     class="items-list effects-list"
     class:unlocked={FoundryAdapter.tryGetFlag(context.actor, 'allow-edit')}
+    on:scroll={(event) =>
+      dispatcher('scrollTopChanged', { top: event.currentTarget.scrollTop })}
+    bind:this={scrollView}
   >
     {#each effectSections as section}
       {#if allowEdit || section.effects.length > 0}

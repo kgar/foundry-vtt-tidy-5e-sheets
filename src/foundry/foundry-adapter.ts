@@ -163,6 +163,7 @@ declare const dnd5e: {
   };
 };
 declare class ActorSheet5eCharacter {
+  constructor(...args: any[]);
   actor: Actor5e;
   activateListeners(html: { get: (index: number) => HTMLElement }): void;
   submit(): void;

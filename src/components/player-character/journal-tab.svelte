@@ -5,11 +5,8 @@
     type CharacterSheetContext,
   } from 'src/foundry/foundry-adapter';
   import SheetEditor from 'src/sheets/sheet-editor.svelte';
-  import { onMount } from 'svelte';
 
   export let context: CharacterSheetContext;
-
-  onMount(() => console.log('onMount: journal-tab'));
 
   const localize = FoundryAdapter.localize;
 </script>

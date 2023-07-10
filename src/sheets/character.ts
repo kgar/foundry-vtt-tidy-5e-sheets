@@ -1,12 +1,24 @@
-import { CONSTANTS } from 'src/constants';
 import { FoundryAdapter } from '../foundry/foundry-adapter';
 import Tidy5eSheet from './tidy5e-sheet.svelte';
 import { log } from 'src/utils/logging';
+import { SheetParameter } from 'src/utils/sheet-parameter';
+import { SettingsProvider } from 'src/settings/settings';
 
 const ActorSheet5eCharacter = FoundryAdapter.getActorSheetClass();
 
 export class Tidy5eSheetKgar extends ActorSheet5eCharacter {
   sheet?: Tidy5eSheet;
+  currentTabParam: SheetParameter<string>;
+  tabToScrollTopMap: Map<string, number> = new Map<string, number>();
+
+  constructor(...args: any[]) {
+    super(...args);
+    this.currentTabParam = new SheetParameter<string>(
+      SettingsProvider.settings.defaultActionsTab.get() != 'default'
+        ? SettingsProvider.settings.defaultActionsTab.get()
+        : 'attributes'
+    );
+  }
 
   get template() {
     return FoundryAdapter.getTemplate('tidy5e-sheet-kgar-template.hbs');
@@ -42,7 +54,8 @@ export class Tidy5eSheetKgar extends ActorSheet5eCharacter {
           onToggleAbilityProficiency:
             this._onToggleAbilityProficiency.bind(this),
         },
-        scrollTop: this.actor.flags[CONSTANTS.MODULE_ID]?.scrollTop ?? 0,
+        currentTabParam: this.currentTabParam,
+        tabToScrollTopMap: this.tabToScrollTopMap,
         isEditable: this.isEditable,
         context: await super.getData(this.options),
       },
