@@ -8,14 +8,41 @@
 
   - [ ] Features
     - [x] Make a component
+    - [ ] HTML
+      - [ ] Retool so that it is dedicated to player characters only. Svelte and related functions should step in and make it 
+      - [ ] Retool the logic so it is 4 different loops and get over it
+        - [x] Background
+        - [ ] Background Card on label click
+        - [ ] Classes
+        - [ ] Active
+        - [ ] Passive
+    - [ ] SCSS
     - [ ] Ensure context menu works
       - [ ] allow-edit true
       - [ ] allow-edit false
       - [ ] owner vs. not owner
       - [ ] limited?
     - [ ] Functionality
+      - [ ] Search
+      - [ ] Action Economy Filters
+      - [ ] Refinement: make search and filtering feature set unique to the user and not the actor.
+      - [ ] Refinement: implement sorting per section type ; it should not affect the actual order of the data, and it should be specific to the users
+      - [ ] Refinement: maintain scroll top between refreshes
+      - [ ] Refinement: maintain open/closed state of items between refreshes
+      - [ ] Refinement: Expand All / Collapse All
     - [ ] Settings
-    - [ ] Styles
+    - [ ] Secure it.
+      - [ ] Owner view
+      - [ ] Observer view
+      - [ ] Limited view
+      - [ ] No permissions
+    - [ ] gmEdit? Is GM settings?
+
+
+What is `gmEdit` class, and how does it affect features?
+
+What is `unlocked` class, and how does it affect features?
+
 
 ### Effects
 
@@ -244,8 +271,9 @@ html.find(".item-list .item .item-name").mousedown(async (event) => {
 - [ ] Focus is lost when the sheet submits, so you cannot tab through fields and make changes quickly. It would be nice if focus is maintained between submits. How would we accomplish that?
 - [ ] Like Gmail, make a "`You Deleted A thing [UNDO]`" notification. So, if someone deletes an effect on accident, they can hit UNDO and get it back. It cannot be intrusive, and it may need to be toggle-able.
 - [ ] When done with initial prototype: Replace ALL `cursor:pointer` instances with `role="button"` on the target element: https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/button_role
-  - [ ] 
+  - [ ] All things ".rollable"
   - [ ] Task them out
+- [ ] Leverage TypeScript to lock down and document all known flags for each type of flagged entity (actor, NPC, vehicle, Item)
 
 ## Exhaustion
 

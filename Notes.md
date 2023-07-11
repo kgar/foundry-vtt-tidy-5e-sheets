@@ -26,6 +26,13 @@ I can interop with handlebars helpers ✅
 
 This is the way.
 
+## Handlebars Helper
+
+- What is `iid`? 
+> It's an index on an each loop.
+
+
+
 ## Hooks
 
 it is advised to set `CONFIG.debug.hooks = true` when looking for hooks as this will print them to the console as they happen

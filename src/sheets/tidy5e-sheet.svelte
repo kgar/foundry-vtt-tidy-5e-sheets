@@ -90,6 +90,8 @@
   const scrollTopChanged = debounce((event: CustomEvent<{ top: number }>) => {
     tabToScrollTopMap.set(currentTabParam.get(), event.detail.top);
   });
+
+  console.log(context);
 </script>
 
 {#if context.warnings.length}
@@ -410,7 +412,7 @@
     <SpellbookTab />
   </div>
   <div class="tab features" class:active={currentTabParam.get() === 'features'}>
-    <FeaturesTab />
+    <FeaturesTab {context} scrollTop={tabToScrollTopMap.get('features') ?? 0} />
   </div>
   <div class="tab effects" class:active={currentTabParam.get() === 'effects'}>
     <EffectsTab
