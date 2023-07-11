@@ -4,9 +4,22 @@
 
 ## Character Tabs
 
+### Features
+
+  - [ ] Features
+    - [x] Make a component
+    - [ ] Ensure context menu works
+      - [ ] allow-edit true
+      - [ ] allow-edit false
+      - [ ] owner vs. not owner
+      - [ ] limited?
+    - [ ] Functionality
+    - [ ] Settings
+    - [ ] Styles
+
 ### Effects
 
-- [ ] Effects
+- [x] Effects
   - [x] Make a component
   - [x] Functionality
   - [x] Styles
@@ -15,11 +28,10 @@
     - [x] ? Answer these: where is default sheet setting stored? How can I tell if my sheet is the default? How can I tell if an actor is using my sheet, whether by default or by specific selection?
   - [x] Adjust class names to bypass existing context menus
     - [x] Do context menu yourself. See Notes.md for details on how it is targeting and how it is summoning context menu
-  - [ ] Implement middle click to edit
-  - [ ] Ensure the context menu code is shared so it can be used by NPCs and Items.
+  - [x] Implement middle click to edit
+  - [x] Ensure the context menu code is shared so it can be used by NPCs and Items.
   - [x] Settings
     - [x] Right Click Disabled (reimplement after removing magic context selectors)
-
 
 
 #### Context menu
@@ -226,16 +238,14 @@ html.find(".item-list .item .item-name").mousedown(async (event) => {
     - [ ] Functionality
     - [ ] Settings
     - [ ] Styles
-  - [ ] Features
-    - [x] Make a component
-    - [ ] Functionality
-    - [ ] Settings
-    - [ ] Styles
 - [x] Implement default tab
 - [ ] Visual bug (existing): when any character detail field is too long in Biography top-notes for a PC, it will blow out the layout. Consider CSS grid as a replacement. Test carefully on all the major browsers. Also just consider inputs instead of contenteditable fields?
 - [ ] Consider consolidating sheet initial value / cacheable content into single objects to pass down to the target component. Values include things like scrollTop map, currentTab sheet parameter, and any other sheetparameters that need to be cached for maintaining visual integrity between submissions / sheet refreshes.
 - [ ] Focus is lost when the sheet submits, so you cannot tab through fields and make changes quickly. It would be nice if focus is maintained between submits. How would we accomplish that?
 - [ ] Like Gmail, make a "`You Deleted A thing [UNDO]`" notification. So, if someone deletes an effect on accident, they can hit UNDO and get it back. It cannot be intrusive, and it may need to be toggle-able.
+- [ ] When done with initial prototype: Replace ALL `cursor:pointer` instances with `role="button"` on the target element: https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/button_role
+  - [ ] 
+  - [ ] Task them out
 
 ## Exhaustion
 

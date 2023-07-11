@@ -69,7 +69,12 @@
 
         <ul class="tidy5e-item-list">
           {#each section.effects as effect}
-            <li class="item effect" data-effect-id={effect.id}>
+            <li
+              class="item effect"
+              data-effect-id={effect.id}
+              on:mousedown={(event) =>
+                FoundryAdapter.editOnMiddleClick(event, effect)}
+            >
               <div class="item-name effect-name">
                 <img class="item-image" src={effect.icon} />
                 <h4>{effect.label}</h4>
@@ -102,13 +107,15 @@
                     >
                       <i class="fas fa-edit" />
                     </a>
-                    <a
-                      class="effect-control effect-delete"
-                      on:click={() => effect.delete()}
-                      title={localize('DND5E.EffectDelete')}
-                    >
-                      <i class="fas fa-trash" />
-                    </a>
+                    {#if allowEdit}
+                      <a
+                        class="effect-control effect-delete"
+                        on:click={() => effect.delete()}
+                        title={localize('DND5E.EffectDelete')}
+                      >
+                        <i class="fas fa-trash" />
+                      </a>
+                    {/if}
                   {/if}
                 </div>
               {/if}

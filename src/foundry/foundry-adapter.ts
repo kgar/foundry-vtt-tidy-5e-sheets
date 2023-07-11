@@ -128,6 +128,24 @@ export const FoundryAdapter = {
   getCurrentLang() {
     return game.i18n.lang;
   },
+  editOnMiddleClick(
+    event: MouseEvent,
+    entityWithSheet: {
+      sheet: { render: (force: boolean) => void; isEditable: boolean };
+    }
+  ) {
+    if (event.button !== CONSTANTS.MOUSE_BUTTON_AUXILIARY) {
+      return;
+    }
+
+    event.preventDefault();
+
+    if (!entityWithSheet.sheet.isEditable) {
+      return;
+    }
+
+    entityWithSheet.sheet.render(true);
+  },
 };
 
 /* ------------------------------------------------------

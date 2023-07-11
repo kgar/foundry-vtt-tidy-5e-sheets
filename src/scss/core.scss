@@ -25,4 +25,9 @@
   .t5ek-warning-color {
     color: var(--t5e-warning-accent);
   }
+
+  // TODO: Propagate this across the entire app
+  [role='button'] {
+    cursor: pointer;
+  }
 }
