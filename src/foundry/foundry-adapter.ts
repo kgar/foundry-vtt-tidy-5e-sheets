@@ -24,6 +24,9 @@ export const FoundryAdapter = {
       func(args);
     });
   },
+  onGetActiveEffectContextOptions(func: (...args: any[]) => void) {
+    Hooks.on('dnd5e.getActiveEffectContextOptions', func);
+  },
   registerCharacterSheet(
     sheet: typeof dnd5e.applications.actor.ActorSheet5eCharacter
   ) {

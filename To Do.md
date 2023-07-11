@@ -10,12 +10,16 @@
   - [x] Make a component
   - [x] Functionality
   - [ ] Adjust class names to bypass existing context menus
+    - [ ] Do context menu yourself. See Notes.md for details on how it is targeting and how it is summoning context menu
   - [ ] Settings
-  - [ ] Styles
-  - [ ] Implement context menu
-    - [ ] Ensure right-click handling is limited to the target actor / sheet and doesn't intercept everyone. You'll need also to use the Hook technique, but you should only call it once outside of any sheet, and then correlate / verify that the target sheet is using KGar Tidy 5e sheets: `actor.flags.core.sheetClass==="dnd5e.Tidy5eSheetKgar"` 
-    - [ ] ? Answer these: where is default sheet setting stored? How can I tell if my sheet is the default? How can I tell if an actor is using my sheet, whether by default or by specific selection?
+  - [x] Styles
+  - [x] Implement context menu
+    - [x] Ensure right-click handling is limited to the target actor / sheet and doesn't intercept everyone. You'll need also to use the Hook technique, but you should only call it once outside of any sheet, and then correlate / verify that the target sheet is using KGar Tidy 5e sheets: `actor.flags.core.sheetClass==="dnd5e.Tidy5eSheetKgar"`
+    - [x] ? Answer these: where is default sheet setting stored? How can I tell if my sheet is the default? How can I tell if an actor is using my sheet, whether by default or by specific selection?
   - [ ] Implement middle click to edit
+  - [ ] Ensure the context menu code is shared so it can be used by NPCs and Items.
+
+
 
 #### Context menu
 
