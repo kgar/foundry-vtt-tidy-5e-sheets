@@ -3,6 +3,7 @@ import Tidy5eSheet from './tidy5e-sheet.svelte';
 import { log } from 'src/utils/logging';
 import { SheetParameter } from 'src/utils/sheet-parameter';
 import { SettingsProvider } from 'src/settings/settings';
+import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
 
 const ActorSheet5eCharacter = FoundryAdapter.getActorSheetClass();
 
@@ -14,10 +15,18 @@ export class Tidy5eSheetKgar extends ActorSheet5eCharacter {
   constructor(...args: any[]) {
     super(...args);
     this.currentTabParam = new SheetParameter<string>(
-      SettingsProvider.settings.defaultActionsTab.get() != 'default'
+      SettingsProvider.settings.defaultActionsTab.get() !== 'default'
         ? SettingsProvider.settings.defaultActionsTab.get()
         : 'attributes'
     );
+
+    // TODO: Expose an API that will allow for including more tabs and content, and then generically handle missing default tabs through a data-driven manner.
+    if (
+      !game.modules.get('character-actions-list-5e')?.active &&
+      SettingsProvider.settings.defaultActionsTab.get() === 'actions'
+    ) {
+      this.currentTabParam.set('attributes');
+    }
   }
 
   get template() {
@@ -25,14 +34,6 @@ export class Tidy5eSheetKgar extends ActorSheet5eCharacter {
   }
 
   static get defaultOptions() {
-    // TODO: Figure out what this module is and why it is here...
-    // if (
-    //   !game.modules.get('character-actions-list-5e')?.active &&
-    //   SettingsProvider.settings.defaultActionsTab.get() == 'actions'
-    // ) {
-    //   defaultTab = 'attributes';
-    // }
-
     return FoundryAdapter.mergeObject(super.defaultOptions, {
       classes: ['tidy5e-kgar', 'sheet', 'actor', 'character'],
       height: 840,
@@ -60,6 +61,8 @@ export class Tidy5eSheetKgar extends ActorSheet5eCharacter {
         context: await super.getData(this.options),
       },
     });
+
+    initTidy5eContextMenu.call(this, html);
   }
 
   close(options: unknown = {}) {

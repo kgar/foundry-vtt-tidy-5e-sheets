@@ -517,7 +517,7 @@ export function applyColorPickerCustomization(html) {
       });
 
     html
-      .find('.tidy5e-sheet .grid-layout .item-list .item.equipped')
+      .find('.tidy5e-sheet .grid-layout .tidy5e-item-list .item.equipped')
       .each(function (index, element) {
         const curValue = $(element).css(`-webkit-box-shadow`);
         let newValue =
@@ -571,7 +571,7 @@ export function applyColorPickerCustomization(html) {
       });
 
     html
-      .find('.tidy5e-sheet .grid-layout .item-list .item.equipped .item-image')
+      .find('.tidy5e-sheet .grid-layout .tidy5e-item-list .item.equipped .item-image')
       .each(function (index, element) {
         const curValue = $(element).css(`-webkit-box-shadow`);
         let newValue =
@@ -685,7 +685,7 @@ export function applyColorPickerCustomization(html) {
       });
 
     html
-      .find('.tidy5e-sheet .grid-layout .item-list .item.prepared')
+      .find('.tidy5e-sheet .grid-layout .tidy5e-item-list .item.prepared')
       .each(function (index, element) {
         const curValue = element.style[`-webkit-box-shadow`];
         let newValue =
@@ -739,7 +739,7 @@ export function applyColorPickerCustomization(html) {
       });
 
     html
-      .find('.tidy5e-sheet .grid-layout .item-list .item.prepared .item-image')
+      .find('.tidy5e-sheet .grid-layout .tidy5e-item-list .item.prepared .item-image')
       .each(function (index, element) {
         const curValue = $(element).css(`-webkit-box-shadow`);
         let newValue =
@@ -841,7 +841,7 @@ export function applyColorPickerCustomization(html) {
       });
 
     html
-      .find('.tidy5e-sheet .grid-layout .item-list .item.pact')
+      .find('.tidy5e-sheet .grid-layout .tidy5e-item-list .item.pact')
       .each(function (index, element) {
         const curValue = $(element).css(`-webkit-box-shadow`);
         let newValue =
@@ -895,7 +895,7 @@ export function applyColorPickerCustomization(html) {
       });
 
     html
-      .find('.tidy5e-sheet .grid-layout .item-list .item.pact .item-image')
+      .find('.tidy5e-sheet .grid-layout .tidy5e-item-list .item.pact .item-image')
       .each(function (index, element) {
         const curValue = $(element).css(`-webkit-box-shadow`);
         let newValue =
@@ -1009,7 +1009,7 @@ export function applyColorPickerCustomization(html) {
       });
 
     html
-      .find('.tidy5e-sheet .grid-layout .item-list .item.atwill')
+      .find('.tidy5e-sheet .grid-layout .tidy5e-item-list .item.atwill')
       .each(function (index, element) {
         const curValue = $(element).css(`-webkit-box-shadow`);
         let newValue =
@@ -1063,7 +1063,7 @@ export function applyColorPickerCustomization(html) {
       });
 
     html
-      .find('.tidy5e-sheet .grid-layout .item-list .item.atwill .item-image')
+      .find('.tidy5e-sheet .grid-layout .tidy5e-item-list .item.atwill .item-image')
       .each(function (index, element) {
         const curValue = $(element).css(`-webkit-box-shadow`);
         let newValue =
@@ -1177,7 +1177,7 @@ export function applyColorPickerCustomization(html) {
       });
 
     html
-      .find('.tidy5e-sheet .grid-layout .item-list .item.innate')
+      .find('.tidy5e-sheet .grid-layout .tidy5e-item-list .item.innate')
       .each(function (index, element) {
         const curValue = $(element).css(`-webkit-box-shadow`);
         let newValue =
@@ -1231,7 +1231,7 @@ export function applyColorPickerCustomization(html) {
       });
 
     html
-      .find('.tidy5e-sheet .grid-layout .item-list .item.innate .item-image')
+      .find('.tidy5e-sheet .grid-layout .tidy5e-item-list .item.innate .item-image')
       .each(function (index, element) {
         const curValue = $(element).css(`-webkit-box-shadow`);
         let newValue =
@@ -1347,7 +1347,7 @@ export function applyColorPickerCustomization(html) {
       });
 
     html
-      .find('.tidy5e-sheet .grid-layout .item-list .item.alwaysprepared')
+      .find('.tidy5e-sheet .grid-layout .tidy5e-item-list .item.alwaysprepared')
       .each(function (index, element) {
         const curValue = $(element).css(`-webkit-box-shadow`);
         let newValue =
@@ -1402,7 +1402,7 @@ export function applyColorPickerCustomization(html) {
 
     html
       .find(
-        '.tidy5e-sheet .grid-layout .item-list .item.alwaysprepared .item-image'
+        '.tidy5e-sheet .grid-layout .tidy5e-item-list .item.alwaysprepared .item-image'
       )
       .each(function (index, element) {
         const curValue = $(element).css(`-webkit-box-shadow`);

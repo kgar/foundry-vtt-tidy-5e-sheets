@@ -9,15 +9,16 @@
 - [ ] Effects
   - [x] Make a component
   - [x] Functionality
-  - [ ] Adjust class names to bypass existing context menus
-    - [ ] Do context menu yourself. See Notes.md for details on how it is targeting and how it is summoning context menu
-  - [ ] Settings
   - [x] Styles
   - [x] Implement context menu
     - [x] Ensure right-click handling is limited to the target actor / sheet and doesn't intercept everyone. You'll need also to use the Hook technique, but you should only call it once outside of any sheet, and then correlate / verify that the target sheet is using KGar Tidy 5e sheets: `actor.flags.core.sheetClass==="dnd5e.Tidy5eSheetKgar"`
     - [x] ? Answer these: where is default sheet setting stored? How can I tell if my sheet is the default? How can I tell if an actor is using my sheet, whether by default or by specific selection?
+  - [x] Adjust class names to bypass existing context menus
+    - [x] Do context menu yourself. See Notes.md for details on how it is targeting and how it is summoning context menu
   - [ ] Implement middle click to edit
   - [ ] Ensure the context menu code is shared so it can be used by NPCs and Items.
+  - [x] Settings
+    - [x] Right Click Disabled (reimplement after removing magic context selectors)
 
 
 
@@ -286,6 +287,8 @@ Evaluate module integration and think about better (API-centric) ways to support
 ## Reorganization
 
 - [ ] Move the positioning styles to the portrait component or general styles, and apply them via cssClass to impose positioning that is relevant to the parent component (the portrait component)
+- [ ] Identify class trees that can be converted to components leveraging `:global()` selector for child components. 
+  - [ ] Do this for `_inventory.scss` as an example, and then task out others
 
 ## Step by step
 
@@ -340,6 +343,8 @@ Evaluate module integration and think about better (API-centric) ways to support
 - [ ] ... next steps
 - [ ] Implement `editGmAlwaysEnabled`
 - [ ] Implement `editEffectsGmOnlyEnabled`
+- [ ] Add game setting `showSheetOptionsOnWindowHeader` and limit `getActorSheetHeaderButtons` hook handler to when this setting is on.
+  - [ ] This fits better in the main module settings and not the sheet settings.
 
 ## Cross-Cutting
 

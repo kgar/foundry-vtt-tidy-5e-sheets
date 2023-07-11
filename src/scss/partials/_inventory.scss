@@ -305,12 +305,12 @@
 
 // Inventory Items
 
-.items-list {
+.tidy5e-items-list {
   flex: 1;
   padding: 0 9px 8px 0;
   overflow-y: scroll;
 
-  .item-list {
+  .tidy5e-item-list {
     padding: 0 0 0 8px;
     margin: 0;
   }
@@ -810,7 +810,7 @@
   flex: 1;
   overflow: hidden;
 
-  .items-list {
+  .tidy5e-items-list {
     &.classic-controls {
       .item-state-icon {
         display: none;
@@ -1085,25 +1085,25 @@
   line-height: 12px;
 }
 
-.items-list .item-weight {
+.tidy5e-items-list .item-weight {
   flex: 0 0 40px;
 }
 
-.items-list .item-charges,
-.items-list .item-uses {
+.tidy5e-items-list .item-charges,
+.tidy5e-items-list .item-uses {
   flex: 0 0 50px;
 }
 
-.items-list .item-level,
-.items-list .item-action,
-.items-list .effect-duration,
-.items-list .item-source,
-.items-list .item-requirements {
+.tidy5e-items-list .item-level,
+.tidy5e-items-list .item-action,
+.tidy5e-items-list .effect-duration,
+.tidy5e-items-list .item-source,
+.tidy5e-items-list .item-requirements {
   flex: 0 0 120px;
 }
 
-.item-list .player-class,
-.item-list .effect-source {
+.tidy5e-item-list .player-class,
+.tidy5e-item-list .effect-source {
   flex: 0 0 200px;
   overflow: hidden;
   padding: 0 0.5rem;
@@ -1139,19 +1139,19 @@
   }
 }
 /* Lazy Money */
-.tidy5e.sheet.actor .inventory-filters .currency input.lazymoney[type='text'] {
+.tidy5e-kgar.sheet.actor .inventory-filters .currency input.lazymoney[type='text'] {
   flex: 0 0 48px;
   text-align: center;
   margin-left: 8px;
   border-bottom: 2px groove #eeede0;
 }
 
-.tidy5e.sheet input.lazymoney[type='text'] {
+.tidy5e-kgar.sheet input.lazymoney[type='text'] {
   background: none;
   border: 1px solid transparent;
 }
 
-.tidy5e input.lazymoney[type='text'] {
+.tidy5e-kgar input.lazymoney[type='text'] {
   height: calc(100% - 2px);
   border: 1px solid #7a7971;
   background: rgba(0, 0, 0, 0.05);

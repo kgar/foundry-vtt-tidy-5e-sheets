@@ -44,7 +44,7 @@
 
 <div class="list-layout">
   <ul
-    class="items-list effects-list"
+    class="tidy5e-items-list effects-list"
     class:unlocked={FoundryAdapter.tryGetFlag(context.actor, 'allow-edit')}
     on:scroll={(event) =>
       dispatcher('scrollTopChanged', { top: event.currentTarget.scrollTop })}
@@ -67,7 +67,7 @@
           </div>
         </li>
 
-        <ul class="item-list">
+        <ul class="tidy5e-item-list">
           {#each section.effects as effect}
             <li class="item effect" data-effect-id={effect.id}>
               <div class="item-name effect-name">

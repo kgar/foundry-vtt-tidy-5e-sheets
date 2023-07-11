@@ -3,7 +3,7 @@
   flex: 1;
   overflow: hidden;
 
-  .items-list {
+  .tidy5e-items-list {
     padding-left: 2px;
 
     .items-header {
@@ -24,7 +24,7 @@
     }
   } //.items-list
 
-  .item-list {
+  .tidy5e-item-list {
     padding: 0;
     display: flex;
     flex-wrap: wrap;
@@ -265,5 +265,5 @@
     // .info-card {
     // 	display: none;
     // }
-  } //.item-list
+  } //.tidy5e-item-list
 } //.grid-layout
