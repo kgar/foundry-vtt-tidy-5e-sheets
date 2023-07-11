@@ -8,9 +8,11 @@
 
 - [ ] Effects
   - [x] Make a component
-  - [ ] Functionality
+  - [x] Functionality
+  - [ ] Adjust class names to bypass existing context menus
   - [ ] Settings
   - [ ] Styles
+  - [ ] Implement context menu
 
 ### Biography
 
