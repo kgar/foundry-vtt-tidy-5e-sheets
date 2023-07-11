@@ -28,6 +28,18 @@
   onMount(() => {
     scrollView.scrollTop = scrollTop ?? 0;
   });
+
+  function addEffect(effectType: string): any {
+    context.actor.createEmbeddedDocuments('ActiveEffect', [
+      {
+        label: game.i18n.localize('DND5E.EffectNew'),
+        icon: 'icons/svg/aura.svg',
+        origin: context.actor.uuid,
+        'duration.rounds': effectType === 'temporary' ? 1 : undefined,
+        disabled: effectType === 'inactive',
+      },
+    ]);
+  }
 </script>
 
 <div class="list-layout">
@@ -57,11 +69,7 @@
 
         <ul class="item-list">
           {#each section.effects as effect}
-            <li
-              class="item effect"
-              data-effect-id={effect.id}
-              data-effectId={effect.id}
-            >
+            <li class="item effect" data-effect-id={effect.id}>
               <div class="item-name effect-name">
                 <img class="item-image" src={effect.icon} />
                 <h4>{effect.label}</h4>
@@ -73,11 +81,12 @@
                 {effect.duration.label}
               </div>
               {#if context.owner && classicControlsEnabled}
-                <div class="item-controls effect-controls flexrow">
+                <div class="item-controls tidy5e-kgar-effect-controls flexrow">
                   {#if context.editable}
                     <a
                       class="effect-control"
-                      data-action="toggle"
+                      on:click={() =>
+                        effect.update({ disabled: !effect.disabled })}
                       title={effect.disabled
                         ? localize('DND5E.EffectEnable')
                         : localize('DND5E.EffectDisable')}
@@ -88,14 +97,14 @@
                     </a>
                     <a
                       class="effect-control effect-edit"
-                      data-action="edit"
+                      on:click={() => effect.sheet.render(true)}
                       title={localize('DND5E.EffectEdit')}
                     >
                       <i class="fas fa-edit" />
                     </a>
                     <a
                       class="effect-control effect-delete"
-                      data-action="delete"
+                      on:click={() => effect.delete()}
                       title={localize('DND5E.EffectDelete')}
                     >
                       <i class="fas fa-trash" />
@@ -107,7 +116,10 @@
           {/each}
           {#if allowEdit}
             <li class="items-footer" data-effect-type={section.type}>
-              <a class="effect-create effect-control" data-action="create">
+              <a
+                class="effect-create effect-control"
+                on:click={() => addEffect(section.type)}
+              >
                 <i class="fas fa-plus-circle" />
                 {localize('DND5E.Add')}
               </a>

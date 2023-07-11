@@ -61,6 +61,8 @@
 - [x] Implement default tab
 - [ ] Visual bug (existing): when any character detail field is too long in Biography top-notes for a PC, it will blow out the layout. Consider CSS grid as a replacement. Test carefully on all the major browsers. Also just consider inputs instead of contenteditable fields?
 - [ ] Consider consolidating sheet initial value / cacheable content into single objects to pass down to the target component. Values include things like scrollTop map, currentTab sheet parameter, and any other sheetparameters that need to be cached for maintaining visual integrity between submissions / sheet refreshes.
+- [ ] Focus is lost when the sheet submits, so you cannot tab through fields and make changes quickly. It would be nice if focus is maintained between submits. How would we accomplish that?
+- [ ] Like Gmail, make a "`You Deleted A thing [UNDO]`" notification. So, if someone deletes an effect on accident, they can hit UNDO and get it back. It cannot be intrusive, and it may need to be toggle-able.
 
 ## Exhaustion
 
