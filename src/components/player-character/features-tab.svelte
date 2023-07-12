@@ -5,7 +5,9 @@
   } from 'src/foundry/foundry-adapter';
   import { SettingsProvider } from 'src/settings/settings';
   import { mapDatasetToDataAttributes } from 'src/utils/mapping';
-  import { createEventDispatcher, onMount } from 'svelte';
+  import { onMount } from 'svelte';
+  import ItemSummary from '../shared/item-summary.svelte';
+  import { slide } from 'svelte/transition';
 
   // TODO: this is intended to be shared between characters, NPCs, and Vehicles; retype the context so it can be one of the three.
   export let context: CharacterSheetContext;
@@ -48,8 +50,34 @@
     }
   }
 
+  let backgroundItemExpansionsMap = new Map<
+    string,
+    { show: boolean; chatData: any }
+  >();
+  backgroundSection.items.forEach((i: any) =>
+    backgroundItemExpansionsMap.set(i.id, { show: false, chatData: undefined })
+  );
+
   const hideIconsNextToTheItemName =
     SettingsProvider.settings.hideIconsNextToTheItemName.get();
+
+  async function toggleItemSummary(event: MouseEvent, item: any) {
+    event.preventDefault();
+    let { show, chatData } = backgroundItemExpansionsMap.get(item.id) ?? {
+      show: false,
+      chatData: undefined,
+    };
+
+    show = !show;
+    chatData ??= await item.getChatData({ secrets: context.actor.isOwner });
+
+    backgroundItemExpansionsMap.set(item.id, {
+      show,
+      chatData,
+    });
+
+    backgroundItemExpansionsMap = backgroundItemExpansionsMap;
+  }
 </script>
 
 <div class="inventory-filters">
@@ -108,7 +136,10 @@
             >
               <i class="fa fa-dice-d20" />
             </div>
-            <div role="button">
+            <div
+              role="button"
+              on:click={(event) => toggleItemSummary(event, item)}
+            >
               <h4>
                 {item.name}
               </h4>
@@ -171,6 +202,14 @@
                   <i class="fas fa-trash fa-fw" />
                 </a>
               {/if}
+            </div>
+          {/if}
+
+          {#if backgroundItemExpansionsMap.get(item.id)?.show}
+            <div transition:slide={{ duration: 200 }}>
+              <ItemSummary
+                chatData={backgroundItemExpansionsMap.get(item.id)?.chatData}
+              />
             </div>
           {/if}
         </li>
