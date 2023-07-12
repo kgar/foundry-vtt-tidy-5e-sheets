@@ -4,10 +4,13 @@
     type CharacterSheetContext,
   } from 'src/foundry/foundry-adapter';
   import { SettingsProvider } from 'src/settings/settings';
-  import { mapDatasetToDataAttributes } from 'src/utils/mapping';
   import { onMount } from 'svelte';
   import ItemSummary from '../shared/item-summary.svelte';
   import { formatAsModifier } from 'src/utils/formatting';
+  import ItemEditControl from '../shared/item-edit-control.svelte';
+  import ItemDuplicateControl from '../shared/item-duplicate-control.svelte';
+  import ItemDeleteControl from '../shared/item-delete-control.svelte';
+  import ItemCreateButton from '../shared/item-create-button.svelte';
 
   // TODO: this is intended to be shared between characters, NPCs, and Vehicles; retype the context so it can be one of the three.
   export let context: CharacterSheetContext;
@@ -78,28 +81,6 @@
   function getAvailableLevels(id: string) {
     return context.itemContext[id]?.availableLevels ?? [];
   }
-
-  function createItem(dataset: any) {
-    if (
-      dataset.type === 'class' &&
-      context.actor.system.details.level + 1 > CONFIG.DND5E.maxLevel
-    ) {
-      const err = game.i18n.format('DND5E.MaxCharacterLevelExceededWarn', {
-        max: CONFIG.DND5E.maxLevel,
-      });
-      return ui.notifications.error(err);
-    }
-
-    const itemData = {
-      name: game.i18n.format('DND5E.ItemNew', {
-        type: game.i18n.localize(CONFIG.Item.typeLabels[dataset.type]),
-      }),
-      type: dataset.type,
-      system: foundry.utils.expandObject({ ...dataset }),
-    };
-    delete itemData.system.type;
-    return context.actor.createEmbeddedDocuments('Item', [itemData]);
-  }
 </script>
 
 <div class="inventory-filters">
@@ -143,7 +124,9 @@
           <div class="items-header-requirements">
             {localize('DND5E.Requirements')}
           </div>
-          <div class="items-header-controls" />
+          {#if classicControlsEnabled}
+            <div class="items-header-controls" />
+          {/if}
         </div>
       </li>
       <ul class="tidy5e-item-list">
@@ -162,6 +145,7 @@
               <div
                 role="button"
                 on:click={(event) => toggleItemSummary(event, item)}
+                tabindex="0"
               >
                 <h4>
                   {item.name}
@@ -185,36 +169,16 @@
                 >{item.system.requirements ?? ''}</span
               >
             </div>
-            {#if context.owner}
+
+            {#if context.owner && classicControlsEnabled}
               <div
                 class="item-controls flexrow"
                 class:hidden={!classicControlsEnabled}
               >
-                <a
-                  class="item-control item-edit"
-                  data-action="itemEdit"
-                  title={localize('DND5E.ItemEdit')}
-                  role="button"
-                >
-                  <i class="fas fa-edit fa-fw" />
-                </a>
+                <ItemEditControl {item} />
                 {#if allowEdit}
-                  <a
-                    class="item-control item-duplicate"
-                    data-action="itemDuplicate"
-                    title={localize('DND5E.ContextMenuActionDuplicate')}
-                    role="button"
-                  >
-                    <i class="fas fa-copy fa-fw" />
-                  </a>
-                  <a
-                    class="item-control item-delete"
-                    data-action="itemDelete"
-                    title={localize('DND5E.ItemDelete')}
-                    role="button"
-                  >
-                    <i class="fas fa-trash fa-fw" />
-                  </a>
+                  <ItemDuplicateControl {item} />
+                  <ItemDeleteControl {item} />
                 {/if}
               </div>
             {/if}
@@ -226,14 +190,10 @@
         {/each}
         {#if context.owner && allowEdit}
           <li class="items-footer">
-            <a
-              on:click={() => createItem(backgroundSection.dataset)}
-              title={localize('DND5E.FeatureAdd')}
-              role="button"
-            >
-              <i class="fas fa-plus-circle" />
-              {localize('DND5E.Add')}
-            </a>
+            <ItemCreateButton
+              dataset={backgroundSection.dataset}
+              actor={context.actor}
+            />
           </li>
         {/if}
       </ul>
@@ -243,34 +203,43 @@
     {#if allowEdit || classSection.items.length > 0}
       <li class="items-header features-header">
         <h3 class="item-name">{localize(classSection.label)}</h3>
-
         <div class="items-header-labels">
-          <!-- <div class="items-header-subclass">{{localize 'TIDY5E.Subclass'}}</div> -->
           <div class="items-header-feat-source">{localize('DND5E.Source')}</div>
           <div class="items-header-level">{localize('DND5E.Level')}</div>
-          <div class="items-header-controls" />
+          {#if classicControlsEnabled}
+            <div class="items-header-controls" />
+          {/if}
         </div>
       </li>
       <ul class="tidy5e-item-list">
         {#each classSection.items as item (item.id)}
           <li class="item" data-item-id={item.id}>
-            <div class="item-name rollable">
+            <div class="item-name">
               <div
+                role="button"
+                tabindex="0"
                 class="item-image"
                 style="background-image: url('{item.img}')"
+                on:click={(event) => item.use({}, { event })}
               >
                 <i class="fa fa-dice-d20" />
               </div>
-              <h4>
-                {#if item.type === 'subclass'}&rdsh;{/if}
-                {item.name}
-                {#if item.system.isOriginalClass}
-                  <i
-                    class="original-class fas fa-sun"
-                    title={localize('DND5E.ClassOriginal')}
-                  />
-                {/if}
-              </h4>
+              <div
+                role="button"
+                on:click={(event) => toggleItemSummary(event, item)}
+                tabindex="0"
+              >
+                <h4>
+                  {#if item.type === 'subclass'}&rdsh;{/if}
+                  {item.name}
+                  {#if item.system.isOriginalClass}
+                    <i
+                      class="original-class fas fa-sun"
+                      title={localize('DND5E.ClassOriginal')}
+                    />
+                  {/if}
+                </h4>
+              </div>
             </div>
 
             <div class="item-detail item-source">
@@ -300,52 +269,30 @@
               {/if}
             </div>
 
-            {#if context.owner}
+            {#if context.owner && classicControlsEnabled}
               <div
                 class="item-controls flexrow"
                 class:hidden={!classicControlsEnabled}
               >
-                <a
-                  class="item-control item-edit"
-                  data-action="itemEdit"
-                  title={localize('DND5E.ItemEdit')}
-                  role="button"
-                >
-                  <i class="fas fa-edit fa-fw" />
-                </a>
+                <ItemEditControl {item} />
                 {#if allowEdit}
-                  <a
-                    class="item-control item-duplicate"
-                    data-action="itemDuplicate"
-                    title={localize('DND5E.ContextMenuActionDuplicate')}
-                    role="button"
-                  >
-                    <i class="fas fa-copy fa-fw" />
-                  </a>
-                  <a
-                    class="item-control item-delete"
-                    data-action="itemDelete"
-                    title={localize('DND5E.ItemDelete')}
-                    role="button"
-                  >
-                    <i class="fas fa-trash fa-fw" />
-                  </a>
+                  <ItemDuplicateControl {item} />
+                  <ItemDeleteControl {item} />
                 {/if}
               </div>
+            {/if}
+
+            {#if expansionsMap.get(item.id)?.show}
+              <ItemSummary chatData={expansionsMap.get(item.id)?.chatData} />
             {/if}
           </li>
         {/each}
         {#if context.owner && allowEdit}
           <li class="items-footer">
-            <a
-              class="item-create"
-              title={localize('DND5E.FeatureAdd')}
-              role="button"
-              {...mapDatasetToDataAttributes(classSection.dataset)}
-            >
-              <i class="fas fa-plus-circle" />
-              {localize('DND5E.Add')}
-            </a>
+            <ItemCreateButton
+              dataset={classSection.dataset}
+              actor={context.actor}
+            />
           </li>
         {/if}
       </ul>

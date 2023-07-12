@@ -1,44 +1,43 @@
 ## To Do
 
-
 - [x] Make a component
 - [ ] HTML
-    - [ ] Retool so that it is dedicated to player characters only. Svelte and related functions should step in and make it 
-    - [ ] Retool the logic so it is 4 different loops and get over it
-    - [x] Background
-      - [x] Item summary
-      - [x] Card on label click
-    - [x] Classes
-      - [ ] Item Summary
-      - [ ] Card on label click
-    - [ ] Active
-      - [ ] Item Summary
-      - [ ] Card on label click
-    - [ ] Passive
-      - [ ] Item Summary
-      - [ ] Card on label click
+  - [ ] Retool so that it is dedicated to player characters only. Svelte and related functions should step in and make it
+  - [ ] Retool the logic so it is 4 different loops and get over it
+  - [x] Background
+    - [x] Item summary
+    - [x] Card on label click
+  - [x] Classes
+    - [x] Item Summary
+    - [x] Card on label click
+  - [ ] Active
+    - [ ] Item Summary
+    - [ ] Card on label click
+  - [ ] Passive
+    - [ ] Item Summary
+    - [ ] Card on label click
 - [x] SCSS
 - [ ] Handle Create click
 - [ ] Handle classic controls
 - [ ] Ensure context menu works
-    - [ ] allow-edit true
-    - [ ] allow-edit false
-    - [ ] owner vs. not owner
-    - [ ] limited?
+  - [ ] allow-edit true
+  - [ ] allow-edit false
+  - [ ] owner vs. not owner
+  - [ ] limited?
 - [ ] Functionality
-    - [ ] Search
-    - [ ] Action Economy Filters
-    - [ ] Refinement: make search and filtering feature set unique to the user and not the actor.
-    - [ ] Refinement: implement sorting per section type ; it should not affect the actual order of the data, and it should be specific to the users
-    - [ ] Refinement: maintain scroll top between refreshes
-    - [ ] Refinement: maintain open/closed state of items between refreshes
-    - [ ] Refinement: Expand All / Collapse All
+  - [ ] Search
+  - [ ] Action Economy Filters
+  - [ ] Refinement: make search and filtering feature set unique to the user and not the actor.
+  - [ ] Refinement: implement sorting per section type ; it should not affect the actual order of the data, and it should be specific to the users
+  - [ ] Refinement: maintain scroll top between refreshes
+  - [ ] Refinement: maintain open/closed state of items between refreshes
+  - [ ] Refinement: Expand All / Collapse All
 - [ ] Settings
 - [ ] Secure it.
-    - [ ] Owner view
-    - [ ] Observer view
-    - [ ] Limited view
-    - [ ] No permissions
+  - [ ] Owner view
+  - [ ] Observer view
+  - [ ] Limited view
+  - [ ] No permissions
 - [ ] gmEdit? Is GM settings?
 
 ## Implementing the Add Buttons
@@ -78,3 +77,28 @@ Original Impl
 What is `gmEdit` class, and how does it affect features?
 
 What is `unlocked` class, and how does it affect features?
+
+## Making the item grids more dynamic without being ridiculous to maintain
+
+Identify an object model:
+
+```
+table: {
+    columns: column[]
+    rows: row[]
+}
+
+column: {
+    id: string; // any unique string ID
+    content: string; // of HTML or plain text
+    baseWidth: string; // any valid flex-basis width value
+    cssClass: string; // optional class string to apply to the column "cell"
+}
+
+row: {
+    [columnId]: {
+        content: async () => Promise<HTMLElement | string>; // of HTML or plain text
+        cssClass?: string; // optional class to apply to the "cell"
+    }
+}
+```

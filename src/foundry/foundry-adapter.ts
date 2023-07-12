@@ -41,9 +41,7 @@ export const FoundryAdapter = {
   },
   localize(value: string, options?: Record<string, unknown>) {
     if (options) {
-      return HandlebarsHelpers.localize(value, {
-        hash: options,
-      });
+      return game.i18n.format(value, options);
     }
 
     return game.i18n.localize(value);
@@ -152,6 +150,27 @@ export const FoundryAdapter = {
 
     entityWithSheet.sheet.render(true);
   },
+  createItem(dataset: Record<string, unknown>, actor: Actor5e) {
+    if (
+      dataset.type === 'class' &&
+      actor.system.details.level + 1 > CONFIG.DND5E.maxLevel
+    ) {
+      const err = game.i18n.format('DND5E.MaxCharacterLevelExceededWarn', {
+        max: CONFIG.DND5E.maxLevel,
+      });
+      return ui.notifications.error(err);
+    }
+
+    const itemData = {
+      name: game.i18n.format('DND5E.ItemNew', {
+        type: game.i18n.localize(CONFIG.Item.typeLabels[dataset.type]),
+      }),
+      type: dataset.type,
+      system: foundry.utils.expandObject({ ...dataset }),
+    };
+    delete itemData.system.type;
+    return actor.createEmbeddedDocuments('Item', [itemData]);
+  },
 };
 
 /* ------------------------------------------------------
@@ -230,6 +249,7 @@ declare const game: {
   };
   i18n: {
     localize(value: string): string;
+    format(value: string, options: Record<string, unknown>): string;
     lang: string;
   };
 };
@@ -276,10 +296,6 @@ declare var HandlebarsHelpers: {
       hash: TextEditorOptions;
     }
   ) => string;
-  localize: (
-    value: any,
-    options: any
-  ) => string
 };
 
 type MergeObjectOptions = {
