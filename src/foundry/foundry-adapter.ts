@@ -39,7 +39,13 @@ export const FoundryAdapter = {
   getTemplate(templateName: string) {
     return `modules/${CONSTANTS.MODULE_ID}/templates/${templateName}`;
   },
-  localize(value: string) {
+  localize(value: string, options?: Record<string, unknown>) {
+    if (options) {
+      return HandlebarsHelpers.localize(value, {
+        hash: options,
+      });
+    }
+
     return game.i18n.localize(value);
   },
   /**
@@ -270,6 +276,10 @@ declare var HandlebarsHelpers: {
       hash: TextEditorOptions;
     }
   ) => string;
+  localize: (
+    value: any,
+    options: any
+  ) => string
 };
 
 type MergeObjectOptions = {

@@ -1,47 +1,11 @@
 # To Do
 
-- [ ] Find an implementation of Signal<T> from Angular and replace SheetParameter.
+- [ ] Ensure item summary functionality can be shared
+- [ ] 
 
 ## Character Tabs
 
-### Features
 
-  - [ ] Features
-    - [x] Make a component
-    - [ ] HTML
-      - [ ] Retool so that it is dedicated to player characters only. Svelte and related functions should step in and make it 
-      - [ ] Retool the logic so it is 4 different loops and get over it
-        - [x] Background
-        - [ ] Background Card on label click
-        - [ ] Classes
-        - [ ] Active
-        - [ ] Passive
-    - [ ] SCSS
-    - [ ] Ensure context menu works
-      - [ ] allow-edit true
-      - [ ] allow-edit false
-      - [ ] owner vs. not owner
-      - [ ] limited?
-    - [ ] Functionality
-      - [ ] Search
-      - [ ] Action Economy Filters
-      - [ ] Refinement: make search and filtering feature set unique to the user and not the actor.
-      - [ ] Refinement: implement sorting per section type ; it should not affect the actual order of the data, and it should be specific to the users
-      - [ ] Refinement: maintain scroll top between refreshes
-      - [ ] Refinement: maintain open/closed state of items between refreshes
-      - [ ] Refinement: Expand All / Collapse All
-    - [ ] Settings
-    - [ ] Secure it.
-      - [ ] Owner view
-      - [ ] Observer view
-      - [ ] Limited view
-      - [ ] No permissions
-    - [ ] gmEdit? Is GM settings?
-
-
-What is `gmEdit` class, and how does it affect features?
-
-What is `unlocked` class, and how does it affect features?
 
 
 ### Effects
