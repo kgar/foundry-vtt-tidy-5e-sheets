@@ -1,5 +1,20 @@
 ## To Do
 
+### Quick side project:
+
+- [ ] Identify a generic inventory / item component tree that will eliminate any guesswork and hopefully eliminate `_inventory.scss`.
+- [ ] Recreate the inventory table setup with this tree
+- [ ] Make it functional
+- [ ] Make it styled to match the original, but now it should bestow most of its core layout styles from the layout components rather than some file.
+
+Prototype here:
+https://github.com/kgar/svelte-code-sandbox
+
+The structure works as intended, thanks to slot props, which can surface smarter features of the item table layout components.
+
+
+### Features tab
+
 - [x] Make a component
 - [ ] HTML
   - [ ] Retool so that it is dedicated to player characters only. Svelte and related functions should step in and make it
