@@ -5,12 +5,12 @@
   } from 'src/foundry/foundry-adapter';
   import { SettingsProvider } from 'src/settings/settings';
   import { onMount } from 'svelte';
-  import ItemSummary from '../shared/item-summary.svelte';
+  import ItemSummary from '../shared/ItemSummary.svelte';
   import { formatAsModifier } from 'src/utils/formatting';
-  import ItemEditControl from '../shared/item-edit-control.svelte';
-  import ItemDuplicateControl from '../shared/item-duplicate-control.svelte';
-  import ItemDeleteControl from '../shared/item-delete-control.svelte';
-  import ItemCreateButton from '../shared/item-create-button.svelte';
+  import ItemEditControl from '../shared/ItemEditControl.svelte';
+  import ItemDuplicateControl from '../shared/ItemDuplicateControl.svelte';
+  import ItemDeleteControl from '../shared/ItemDeleteControl.svelte';
+  import ItemCreateButton from '../shared/ItemCreateButton.svelte';
 
   // TODO: this is intended to be shared between characters, NPCs, and Vehicles; retype the context so it can be one of the three.
   export let context: CharacterSheetContext;

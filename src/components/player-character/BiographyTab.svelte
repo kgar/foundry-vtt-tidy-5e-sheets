@@ -3,7 +3,7 @@
     FoundryAdapter,
     type CharacterSheetContext,
   } from 'src/foundry/foundry-adapter';
-  import SheetEditor from 'src/sheets/sheet-editor.svelte';
+  import SheetEditor from 'src/sheets/SheetEditor.svelte';
   import ContentEditableFormField from '../inputs/ContentEditableFormField.svelte';
   import type { SheetFunctions } from 'src/types/types';
 

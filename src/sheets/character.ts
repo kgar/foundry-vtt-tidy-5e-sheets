@@ -1,5 +1,5 @@
 import { FoundryAdapter } from '../foundry/foundry-adapter';
-import Tidy5eSheet from './tidy5e-sheet.svelte';
+import Tidy5eSheet from './Tidy5eSheet.svelte';
 import { log } from 'src/utils/logging';
 import { SheetParameter } from 'src/utils/sheet-parameter';
 import { SettingsProvider } from 'src/settings/settings';
@@ -30,7 +30,7 @@ export class Tidy5eSheetKgar extends ActorSheet5eCharacter {
   }
 
   get template() {
-    return FoundryAdapter.getTemplate('tidy5e-sheet-kgar-template.hbs');
+    return FoundryAdapter.getTemplate('empty-form-template.hbs');
   }
 
   static get defaultOptions() {

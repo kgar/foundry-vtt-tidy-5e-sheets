@@ -5,14 +5,14 @@
   } from 'src/foundry/foundry-adapter';
   import { SettingsProvider } from 'src/settings/settings';
   import type { SheetFunctions } from 'src/types/types';
-  import Exhaustion from './exhaustion.svelte';
-  import Inspiration from './inspiration.svelte';
-  import HpOverlay from './hp-overlay.svelte';
-  import DeathSaves from './death-saves.svelte';
-  import Rest from './rest.svelte';
-  import HitDice from './hit-dice.svelte';
-  import HitPoints from './hit-points.svelte';
-  import CharacterPortrait from './character-portrait.svelte';
+  import Exhaustion from './Exhaustion.svelte';
+  import Inspiration from './Inspiration.svelte';
+  import HpOverlay from './HpOverlay.svelte';
+  import DeathSaves from './DeathSaves.svelte';
+  import Rest from './Rest.svelte';
+  import HitDice from './HitDice.svelte';
+  import HitPoints from './HitPoints.svelte';
+  import CharacterPortrait from './CharacterPortrait.svelte';
 
   export let sheetFunctions: SheetFunctions;
   export let context: CharacterSheetContext;

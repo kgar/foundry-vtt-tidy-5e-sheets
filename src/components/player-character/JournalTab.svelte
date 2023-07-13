@@ -4,7 +4,7 @@
     FoundryAdapter,
     type CharacterSheetContext,
   } from 'src/foundry/foundry-adapter';
-  import SheetEditor from 'src/sheets/sheet-editor.svelte';
+  import SheetEditor from 'src/sheets/SheetEditor.svelte';
 
   export let context: CharacterSheetContext;
 
