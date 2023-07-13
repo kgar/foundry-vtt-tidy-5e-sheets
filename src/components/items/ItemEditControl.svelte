@@ -1,16 +1,14 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import ItemControl from './ItemControl.svelte';
 
   export let item: any;
 
   const localize = FoundryAdapter.localize;
 </script>
 
-<a
-  class="item-control"
-  on:click={() => item.sheet.render(true)}
+<ItemControl
+  iconCssClass="fas fa-edit fa-fw"
   title={localize('DND5E.ItemEdit')}
-  role="button"
->
-  <i class="fas fa-edit fa-fw" />
-</a>
+  on:click={() => item.sheet.render(true)}
+/>

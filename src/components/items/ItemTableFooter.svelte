@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { Actor5e } from 'src/foundry/foundry-adapter';
-  import ItemCreateButton from '../shared/ItemCreateButton.svelte';
+  import ItemCreateButton from '../items/ItemCreateButton.svelte';
 
   export let dataset: Record<string, unknown>;
   export let actor: Actor5e;
@@ -9,3 +9,13 @@
 <footer class="item-table-footer-row">
   <ItemCreateButton {dataset} {actor} />
 </footer>
+
+<style lang="scss">
+  .item-table-footer-row {
+    display: flex;
+    justify-content: flex-end;
+    flex: 1;
+    border-top: 0.0625rem solid var(--t5e-faint-color);
+    border-radius: 0 0 0.3125rem 0.3125rem;
+  }
+</style>

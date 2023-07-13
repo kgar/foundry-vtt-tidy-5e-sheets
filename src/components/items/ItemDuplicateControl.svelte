@@ -1,13 +1,14 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import ItemControl from './ItemControl.svelte';
 
   export let item: any;
 
   const localize = FoundryAdapter.localize;
 </script>
 
-<a
-  class="item-control"
+<ItemControl
+  iconCssClass="fas fa-copy fa-fw"
   on:click={() =>
     item.clone(
       {
@@ -18,7 +19,4 @@
       { save: true }
     )}
   title={localize('DND5E.ContextMenuActionDuplicate')}
-  role="button"
->
-  <i class="fas fa-copy fa-fw" />
-</a>
+/>

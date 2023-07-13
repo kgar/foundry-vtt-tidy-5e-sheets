@@ -6,7 +6,7 @@
   import { log } from 'src/utils/logging';
   import { SettingsProvider } from 'src/settings/settings';
   import Tidy5eActorOriginSummaryConfig from './tidy5e-actor-origin-summary-config';
-  import CharacterProfile from './character-profile.svelte';
+  import CharacterProfile from './CharacterProfile.svelte';
   import TidyDropdownList from './TidyDropdownList.svelte';
   import AcShield from './AcShield.svelte';
   import AttributeBlock from './AttributeBlock.svelte';

@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { Actor5e } from 'src/foundry/foundry-adapter';
-  import ItemSummary from '../shared/ItemSummary.svelte';
+  import ItemSummary from '../items/ItemSummary.svelte';
 
   export let item: any;
 
@@ -15,10 +15,21 @@
   }
 </script>
 
-<!-- svelte-ignore a11y-click-events-have-key-events -->
-<div class="item-table-row" tabindex="0" role="button">
+<div class="item-table-row">
   <slot {toggleSummary} />
+  {#if showSummary}
+    <ItemSummary {chatData} />
+  {/if}
 </div>
-{#if showSummary}
-  <ItemSummary {chatData} />
-{/if}
+
+<style lang="scss">
+  .item-table-row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    position: relative;
+    border-radius: 0.3125rem;
+    margin: 0.125rem 0 0.125rem 0.5rem;
+    background: var(--t5e-faintest-color);
+  }
+</style>

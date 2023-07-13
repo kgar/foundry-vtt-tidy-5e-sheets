@@ -5,17 +5,19 @@
   } from 'src/foundry/foundry-adapter';
   import { SettingsProvider } from 'src/settings/settings';
   import { onMount } from 'svelte';
-  import ItemSummary from '../shared/ItemSummary.svelte';
+  import ItemSummary from '../items/ItemSummary.svelte';
   import { formatAsModifier } from 'src/utils/formatting';
-  import ItemEditControl from '../shared/ItemEditControl.svelte';
-  import ItemDuplicateControl from '../shared/ItemDuplicateControl.svelte';
-  import ItemDeleteControl from '../shared/ItemDeleteControl.svelte';
-  import ItemCreateButton from '../shared/ItemCreateButton.svelte';
+  import ItemEditControl from '../items/ItemEditControl.svelte';
+  import ItemDuplicateControl from '../items/ItemDuplicateControl.svelte';
+  import ItemDeleteControl from '../items/ItemDeleteControl.svelte';
+  import ItemCreateButton from '../items/ItemCreateButton.svelte';
   import ItemTable from '../items/ItemTable.svelte';
   import ItemTableHeaderRow from '../items/ItemTableHeaderRow.svelte';
   import ItemTableRow from '../items/ItemTableRow.svelte';
   import ItemTableFooter from '../items/ItemTableFooter.svelte';
   import ItemTableCell from '../items/ItemTableCell.svelte';
+  import ItemTableColumn from '../items/ItemTableColumn.svelte';
+  import ItemUseButton from '../items/ItemUseButton.svelte';
 
   // TODO: this is intended to be shared between characters, NPCs, and Vehicles; retype the context so it can be one of the three.
   export let context: CharacterSheetContext;
@@ -312,39 +314,30 @@
 <div class="features-list">
   <ItemTable>
     <ItemTableHeaderRow>
-      <ItemTableCell primary={true}>
+      <ItemTableColumn primary={true}>
         {localize(backgroundSection.label)}
-      </ItemTableCell>
-      <ItemTableCell baseWidth="7.5rem">
+      </ItemTableColumn>
+      <ItemTableColumn baseWidth="7.5rem">
         {localize('DND5E.Source')}
-      </ItemTableCell>
-      <ItemTableCell baseWidth="7.5rem">
+      </ItemTableColumn>
+      <ItemTableColumn baseWidth="7.5rem">
         {localize('DND5E.Requirements')}
-      </ItemTableCell>
+      </ItemTableColumn>
       {#if context.owner && classicControlsEnabled}
-        <ItemTableCell baseWidth="5.3125rem" />
+        <ItemTableColumn baseWidth="5.3125rem" />
       {/if}
     </ItemTableHeaderRow>
     {#each backgroundSection.items as item (item.id)}
       <ItemTableRow {item} let:toggleSummary>
         <ItemTableCell primary={true}>
-          <div
-            role="button"
-            tabindex="0"
-            class="item-image"
-            style="background-image: url('{item.img}')"
-            on:click={(event) => item.use({}, { event })}
-          >
-            <i class="fa fa-dice-d20" />
-          </div>
+          <ItemUseButton {item} />
           <div
             role="button"
             on:click={(event) => toggleSummary(event, context.actor)}
             tabindex="0"
+            style="flex: 1 1 1px; display: flex; align-items: center;"
           >
-            <h4>
-              {item.name}
-            </h4>
+            <span>{item.name}</span>
           </div>
         </ItemTableCell>
 
@@ -368,7 +361,7 @@
 
         {#if context.owner && classicControlsEnabled}
           <ItemTableCell baseWidth="5.3125rem">
-            <div class="item-controls flexrow">
+            <div class="feature-controls flexrow">
               <ItemEditControl {item} />
               {#if allowEdit}
                 <ItemDuplicateControl {item} />
@@ -406,5 +399,18 @@
     flex: 1;
     padding: 0 9px 8px 0;
     overflow-y: scroll;
+  }
+
+  .feature-controls {
+    align-self: stretch;
+    display: flex;
+    justify-content: flex-end;
+    min-width: 5.3125rem;
+    font-size: 0.75rem;
+    padding: 0 0.125rem;
+
+    :global(> *) {
+      flex: 1;
+    }
   }
 </style>

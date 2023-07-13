@@ -1,4 +1,5 @@
 import { CONSTANTS } from 'src/constants';
+import { isItemFavorite } from 'src/favorites/favorites';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
 export function initTidy5eContextMenu(
