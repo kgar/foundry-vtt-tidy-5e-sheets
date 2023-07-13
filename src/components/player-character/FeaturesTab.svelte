@@ -11,6 +11,11 @@
   import ItemDuplicateControl from '../shared/ItemDuplicateControl.svelte';
   import ItemDeleteControl from '../shared/ItemDeleteControl.svelte';
   import ItemCreateButton from '../shared/ItemCreateButton.svelte';
+  import ItemTable from '../items/ItemTable.svelte';
+  import ItemTableHeaderRow from '../items/ItemTableHeaderRow.svelte';
+  import ItemTableRow from '../items/ItemTableRow.svelte';
+  import ItemTableFooter from '../items/ItemTableFooter.svelte';
+  import ItemTableCell from '../items/ItemTableCell.svelte';
 
   // TODO: this is intended to be shared between characters, NPCs, and Vehicles; retype the context so it can be one of the three.
   export let context: CharacterSheetContext;
@@ -303,6 +308,86 @@
     <!-- passive abilities -->
   </ul>
 </div>
+
+<div class="features-list">
+  <ItemTable>
+    <ItemTableHeaderRow>
+      <ItemTableCell primary={true}>
+        {localize(backgroundSection.label)}
+      </ItemTableCell>
+      <ItemTableCell baseWidth="7.5rem">
+        {localize('DND5E.Source')}
+      </ItemTableCell>
+      <ItemTableCell baseWidth="7.5rem">
+        {localize('DND5E.Requirements')}
+      </ItemTableCell>
+      {#if context.owner && classicControlsEnabled}
+        <ItemTableCell baseWidth="5.3125rem" />
+      {/if}
+    </ItemTableHeaderRow>
+    {#each backgroundSection.items as item (item.id)}
+      <ItemTableRow {item} let:toggleSummary>
+        <ItemTableCell primary={true}>
+          <div
+            role="button"
+            tabindex="0"
+            class="item-image"
+            style="background-image: url('{item.img}')"
+            on:click={(event) => item.use({}, { event })}
+          >
+            <i class="fa fa-dice-d20" />
+          </div>
+          <div
+            role="button"
+            on:click={(event) => toggleSummary(event, context.actor)}
+            tabindex="0"
+          >
+            <h4>
+              {item.name}
+            </h4>
+          </div>
+        </ItemTableCell>
+
+        <!-- TODO: Handle more gracefully -->
+        {#if !hideIconsNextToTheItemName && FoundryAdapter.tryGetFlag(item, 'favorite')}
+          <div class="item-state-icon" title="Favorite">
+            <i class="fas fa-bookmark icon-fav" />
+          </div>
+        {/if}
+
+        <ItemTableCell baseWidth="7.5rem">
+          <span class="truncate" title={item.system.source}
+            >{item.system.source}</span
+          >
+        </ItemTableCell>
+        <ItemTableCell baseWidth="7.5rem">
+          <span class="truncate" title={item.system.requirements ?? ''}
+            >{item.system.requirements ?? ''}</span
+          >
+        </ItemTableCell>
+
+        {#if context.owner && classicControlsEnabled}
+          <ItemTableCell baseWidth="5.3125rem">
+            <div class="item-controls flexrow">
+              <ItemEditControl {item} />
+              {#if allowEdit}
+                <ItemDuplicateControl {item} />
+                <ItemDeleteControl {item} />
+              {/if}
+            </div>
+          </ItemTableCell>
+        {/if}
+      </ItemTableRow>
+    {/each}
+    {#if context.owner && allowEdit}
+      <ItemTableFooter
+        dataset={backgroundSection.dataset}
+        actor={context.actor}
+      />
+    {/if}
+  </ItemTable>
+</div>
+
 <!-- TODO: Handle info card as a single element managed by the window as a whole -->
 <!-- <div class="info-card" data-item-id={item._id}>
   <p class="info-card-name">{item.name}</p>
@@ -315,3 +400,11 @@
   </div>
   <article class="mod-roll-buttons" />
 </div> -->
+
+<style lang="scss">
+  .features-list {
+    flex: 1;
+    padding: 0 9px 8px 0;
+    overflow-y: scroll;
+  }
+</style>

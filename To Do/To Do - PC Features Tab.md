@@ -2,9 +2,11 @@
 
 ### Quick side project:
 
-- [ ] Identify a generic inventory / item component tree that will eliminate any guesswork and hopefully eliminate `_inventory.scss`.
-- [ ] Recreate the inventory table setup with this tree
-- [ ] Make it functional
+- [x] Identify a generic inventory / item component tree that will eliminate any guesswork and hopefully eliminate `_inventory.scss`.
+- [x] Recreate the inventory table setup with this tree
+- [x] Make it functional
+- [ ] Refactor: Create table column component with primary:boolean field for the header row to use; trim unneeded stuff from the table cell component
+- [ ] Refactor: include column hint field in the table cell which can be put onto the resulting cell container for future testing but also for readability while scrolling through svelte code.
 - [ ] Make it styled to match the original, but now it should bestow most of its core layout styles from the layout components rather than some file.
 
 Prototype here:
