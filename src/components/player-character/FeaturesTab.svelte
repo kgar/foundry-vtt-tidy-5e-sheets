@@ -17,6 +17,7 @@
   import ItemTableColumn from '../items/ItemTableColumn.svelte';
   import ItemUseButton from '../items/ItemUseButton.svelte';
   import { CONSTANTS } from 'src/constants';
+  import ItemName from '../items/ItemName.svelte';
 
   // TODO: this is intended to be shared between characters, NPCs, and Vehicles; retype the context so it can be one of the three.
   export let context: CharacterSheetContext;
@@ -123,14 +124,11 @@
         >
           <ItemTableCell primary={true}>
             <ItemUseButton {item} />
-            <div
-              role="button"
-              on:click={(event) => toggleSummary(event, context.actor)}
-              tabindex="0"
-              class="fred"
+            <ItemName
+              on:click={(event) => toggleSummary(event.detail, context.actor)}
             >
               <span>{item.name}</span>
-            </div>
+            </ItemName>
           </ItemTableCell>
 
           <!-- TODO: Handle more gracefully -->
@@ -199,11 +197,8 @@
         >
           <ItemTableCell primary={true}>
             <ItemUseButton {item} />
-            <div
-              role="button"
-              on:click={(event) => toggleSummary(event, context.actor)}
-              tabindex="0"
-              class="fred"
+            <ItemName
+              on:click={(event) => toggleSummary(event.detail, context.actor)}
             >
               <span>
                 {#if item.type === 'subclass'}&rdsh;{/if}
@@ -215,7 +210,7 @@
                   />
                 {/if}
               </span>
-            </div>
+            </ItemName>
           </ItemTableCell>
 
           <!-- TODO: Handle more gracefully -->
@@ -309,11 +304,5 @@
     :global(> *) {
       flex: 1;
     }
-  }
-
-  .fred {
-    flex: 1 1 1px;
-    display: flex;
-    align-items: center;
   }
 </style>

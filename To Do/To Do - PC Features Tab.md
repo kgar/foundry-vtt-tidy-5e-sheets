@@ -3,10 +3,10 @@
 ### Features tab
 
 - [x] Make a component
-- [ ] FeaturesTab - deal with "fred" class; do I need a component for this first cell in item rows? It's pretty common...
+- [x] FeaturesTab - deal with "fred" class; do I need a component for this first cell in item rows? It's pretty common...
 - [ ] HTML
-  - [ ] Retool so that it is dedicated to player characters only. Svelte and related functions should step in and make it
-  - [ ] Retool the logic so it is 4 different loops and get over it
+  - [x] Retool so that it is dedicated to player characters only. Svelte and related functions should step in and make it
+  - [x] Retool the logic so it is 4 different loops and get over it
   - [x] Background
     - [x] Item summary
     - [x] Card on label click
@@ -20,17 +20,18 @@
     - [ ] Item Summary
     - [ ] Card on label click
 - [x] SCSS
-- [ ] Handle Create click
-- [ ] Handle classic controls
+- [x] Handle Create click
+- [x] Handle classic controls
 - [ ] Ensure context menu works
-  - [ ] allow-edit true
-  - [ ] allow-edit false
+  - [x] allow-edit true
+  - [x] allow-edit false
   - [ ] owner vs. not owner
   - [ ] limited?
 - [ ] Functionality
   - [ ] Search
   - [ ] Action Economy Filters
-  - [ ] Refinement: make search and filtering feature set unique to the user and not the actor.
+  - [ ] Refinement: make search unique to the current sheet and able to be rehydrated between submissions
+  - [ ] Refinement: make Action Economy filtering unique to the user and not the actor. Unfortunately, to keep track of this, we'll need to persist a large json object representing Actor -> Tab -> Filter Name, with a value of boolean at the leaf.
   - [ ] Refinement: implement sorting per section type ; it should not affect the actual order of the data, and it should be specific to the users
   - [ ] Refinement: maintain scroll top between refreshes
   - [ ] Refinement: maintain open/closed state of items between refreshes
