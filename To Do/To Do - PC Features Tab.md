@@ -2,6 +2,26 @@
 
 ### Features tab
 
+#### Active Abilities
+
+- [ ] Make the uses column functional
+  - [ ] Implement uses per day
+  - [ ] Implement roll to recharge
+    - [ ] View charged state
+    - [ ] View rollable state
+  - [ ] Implement Add Charges 
+- [ ] Style it
+  - [ ] Recharge
+  - [ ] Charged
+  - [ ] Uses
+  - [ ] Else
+- [ ] Ensure item summary
+- [ ] Add / Edit / Delete / Duplicate
+- [ ] Middle click to edit
+- [ ] Right click context menu
+- [ ] Fix issue where feature names are not truncating properly. This is something that really needs to be fixed as part of the item table cell component in-built styles.
+
+
 - [x] Make a component
 - [x] FeaturesTab - deal with "fred" class; do I need a component for this first cell in item rows? It's pretty common...
 - [ ] HTML
@@ -43,6 +63,41 @@
   - [ ] Limited view
   - [ ] No permissions
 - [ ] gmEdit? Is GM settings?
+
+## Usage Column impl
+
+```hbs
+<div class='item-detail item-charges'>
+  {{#if ctx.isOnCooldown}}
+    <a class='item-recharge rollable' title='{{item.labels.recharge}}'><i
+        class='fas fa-dice-six'
+      ></i>
+      {{item.system.recharge.value}}{{#if
+        (ne item.system.recharge.value 6)
+      }}+{{/if}}</a>
+  {{else if item.system.recharge.value}}
+    <i class='fas fa-bolt' title='{{localize "DND5E.Charged"}}'></i>
+
+  {{else if ctx.hasUses}}
+    <input
+      class='uses-value'
+      name='system.uses.value'
+      type='text'
+      value='{{item.system.uses.value}}'
+    />
+    /
+    <input
+      class='uses-max'
+      name='system.uses.max'
+      type='text'
+      value='{{item.system.uses.max}}'
+    />
+  {{else}}{{#unless @root.isNPC}}
+      <a class='addCharges' value='Add'>Add</a>
+    {{/unless}}
+  {{/if}}
+</div>
+```
 
 ## Implementing the Add Buttons
 

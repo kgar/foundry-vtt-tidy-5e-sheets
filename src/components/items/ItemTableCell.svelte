@@ -32,6 +32,7 @@
       flex: 1 1 1px;
       align-items: stretch; // e.g., provide plenty of room to tap / click the primary item cell to show summary.
       justify-content: initial;
+      color: var(--t5e-primary-color);
     }
 
     &:hover {

@@ -25,6 +25,7 @@
     context.actor,
     'allow-edit'
   );
+  const classicControlsBaseWidth = allowEdit ? '7.5rem' : '5.3125rem';
   const classicControlsEnabled =
     SettingsProvider.settings.classicControlsEnabled.get();
 
@@ -59,7 +60,7 @@
             {localize('DND5E.Duration')}
           </ItemTableColumn>
           {#if context.owner && classicControlsEnabled}
-            <ItemTableColumn baseWidth="5.3125rem" />
+            <ItemTableColumn baseWidth={classicControlsBaseWidth} />
           {/if}
         </ItemTableHeaderRow>
         {#each section.effects as effect}
@@ -83,7 +84,7 @@
             >
 
             {#if context.owner && classicControlsEnabled}
-              <ItemTableCell baseWidth="5.3125rem">
+              <ItemTableCell baseWidth={classicControlsBaseWidth}>
                 <div class="effect-controls">
                   <ItemControl
                     on:click={() =>

@@ -26,6 +26,7 @@
   const localize = FoundryAdapter.localize;
   const allowEdit = FoundryAdapter.tryGetFlag(context.actor, 'allow-edit');
   const featSearch = 'TODO: implement';
+  const classicControlsBaseWidth = allowEdit ? '7.5rem' : '5.3125rem';
 
   let scrollView: HTMLElement;
 
@@ -111,7 +112,7 @@
           {localize('DND5E.Requirements')}
         </ItemTableColumn>
         {#if context.owner && classicControlsEnabled}
-          <ItemTableColumn baseWidth="5.3125rem" />
+          <ItemTableColumn baseWidth={classicControlsBaseWidth} />
         {/if}
       </ItemTableHeaderRow>
       {#each backgroundSection.items as item (item.id)}
@@ -150,7 +151,7 @@
           </ItemTableCell>
 
           {#if context.owner && classicControlsEnabled}
-            <ItemTableCell baseWidth="5.3125rem">
+            <ItemTableCell baseWidth={classicControlsBaseWidth}>
               <div class="feature-controls flexrow">
                 <ItemEditControl {item} />
                 {#if allowEdit}
@@ -184,7 +185,7 @@
           {localize('DND5E.Level')}
         </ItemTableColumn>
         {#if context.owner && classicControlsEnabled && context.editable}
-          <ItemTableColumn baseWidth="5.3125rem" />
+          <ItemTableColumn baseWidth={classicControlsBaseWidth} />
         {/if}
       </ItemTableHeaderRow>
       {#each classSection.items as item (item.id)}
@@ -250,7 +251,7 @@
           </ItemTableCell>
 
           {#if context.owner && classicControlsEnabled && context.editable}
-            <ItemTableCell baseWidth="5.3125rem">
+            <ItemTableCell baseWidth={classicControlsBaseWidth}>
               <div class="feature-controls">
                 <ItemEditControl {item} />
                 {#if allowEdit}
@@ -264,6 +265,118 @@
       {/each}
       {#if context.owner && allowEdit && context.editable}
         <ItemTableFooter dataset={classSection.dataset} actor={context.actor} />
+      {/if}
+    </ItemTable>
+  {/if}
+
+  {#if allowEdit || activeAbilitiesSection.items.length > 0}
+    <ItemTable>
+      <ItemTableHeaderRow>
+        <ItemTableColumn primary={true}>
+          {localize(activeAbilitiesSection.label)}
+        </ItemTableColumn>
+        <ItemTableColumn baseWidth="3.125rem">
+          {localize('DND5E.Uses')}
+        </ItemTableColumn>
+        <ItemTableColumn baseWidth="7.5rem">
+          {localize('DND5E.Usage')}
+        </ItemTableColumn>
+        <ItemTableColumn baseWidth="7.5rem">
+          {localize('DND5E.Source')}
+        </ItemTableColumn>
+        <ItemTableColumn baseWidth="7.5rem">
+          {localize('DND5E.Requirements')}
+        </ItemTableColumn>
+        {#if context.owner && classicControlsEnabled}
+          <ItemTableColumn baseWidth={classicControlsBaseWidth} />
+        {/if}
+      </ItemTableHeaderRow>
+      {#each activeAbilitiesSection.items as item (item.id)}
+        <ItemTableRow
+          {item}
+          let:toggleSummary
+          on:mousedown={(event) =>
+            FoundryAdapter.editOnMiddleClick(event.detail, item)}
+          contextMenu={{ type: CONSTANTS.CONTEXT_MENU_TYPE_ITEMS, id: item.id }}
+        >
+          <ItemTableCell primary={true}>
+            <ItemUseButton {item} />
+            <ItemName
+              on:click={(event) => toggleSummary(event.detail, context.actor)}
+            >
+              <span>{item.name}</span>
+            </ItemName>
+          </ItemTableCell>
+
+          <!-- TODO: Handle more gracefully -->
+          {#if !hideIconsNextToTheItemName && FoundryAdapter.tryGetFlag(item, 'favorite')}
+            <div class="item-state-icon" title="Favorite">
+              <i class="fas fa-bookmark icon-fav" />
+            </div>
+          {/if}
+
+          <ItemTableCell baseWidth="3.125rem">
+            {#if item.isOnCooldown}
+              <a class="item-recharge rollable" title={item.labels.recharge}>
+                <i class="fas fa-dice-six" />
+                {item.system.recharge
+                  .value}{#if item.system.recharge.value !== 6}+{/if}</a
+              >
+            {:else if item.system.recharge.value}
+              <i class="fas fa-bolt" title={localize('DND5E.Charged')} />
+            {:else if item.hasUses}
+              <input
+                class="uses-value"
+                name="system.uses.value"
+                type="text"
+                value={item.system.uses.value}
+              />
+              /
+              <input
+                class="uses-max"
+                name="system.uses.max"
+                type="text"
+                value={item.system.uses.max}
+              />
+            {:else}
+              <!-- TODO: Add charges: look up <a class='addCharges' value='Add'>Add</a> -->
+              <a>Add</a>
+            {/if}
+          </ItemTableCell>
+          <ItemTableCell baseWidth="7.5rem">
+            {#if item.system.activation.type}
+              {item.labels.activation}
+            {/if}
+          </ItemTableCell>
+          <ItemTableCell baseWidth="7.5rem">
+            <span class="truncate" title={item.system.source}
+              >{item.system.source}</span
+            >
+          </ItemTableCell>
+          <ItemTableCell baseWidth="7.5rem">
+            <span class="truncate" title={item.system.requirements ?? ''}
+              >{item.system.requirements ?? ''}</span
+            >
+          </ItemTableCell>
+
+          {#if context.owner && classicControlsEnabled}
+            <ItemTableCell baseWidth={classicControlsBaseWidth}>
+              <div class="feature-controls flexrow">
+                <ItemEditControl {item} />
+                {#if allowEdit}
+                  <ItemDuplicateControl {item} />
+                  <ItemDeleteControl {item} />
+                {/if}
+              </div>
+            </ItemTableCell>
+          {/if}
+        </ItemTableRow>
+      {/each}
+      {#if context.owner && allowEdit}
+        <ItemTableFooter
+          dataset={activeAbilitiesSection.dataset}
+          actor={context.actor}
+        />
       {/if}
     </ItemTable>
   {/if}
