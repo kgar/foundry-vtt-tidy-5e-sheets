@@ -7,3 +7,7 @@ export function isRealNumber(inNumber: number | undefined | null): boolean {
     isFinite(inNumber)
   );
 }
+
+export function clamp<T extends number>(num: T, min: T, max: T) {
+  return Math.min(Math.max(num, min), max);
+}

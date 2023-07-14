@@ -18,6 +18,9 @@
   import ItemUseButton from '../items/ItemUseButton.svelte';
   import { CONSTANTS } from 'src/constants';
   import ItemName from '../items/ItemName.svelte';
+  import ItemContext from '../items/ItemContext.svelte';
+  import ItemUses from '../items/ItemUses.svelte';
+  import ItemAddUses from '../items/ItemAddUses.svelte';
 
   // TODO: this is intended to be shared between characters, NPCs, and Vehicles; retype the context so it can be one of the three.
   export let context: CharacterSheetContext;
@@ -316,32 +319,26 @@
           {/if}
 
           <ItemTableCell baseWidth="3.125rem">
-            {#if item.isOnCooldown}
-              <a class="item-recharge rollable" title={item.labels.recharge}>
-                <i class="fas fa-dice-six" />
-                {item.system.recharge
-                  .value}{#if item.system.recharge.value !== 6}+{/if}</a
-              >
-            {:else if item.system.recharge.value}
-              <i class="fas fa-bolt" title={localize('DND5E.Charged')} />
-            {:else if item.hasUses}
-              <input
-                class="uses-value"
-                name="system.uses.value"
-                type="text"
-                value={item.system.uses.value}
-              />
-              /
-              <input
-                class="uses-max"
-                name="system.uses.max"
-                type="text"
-                value={item.system.uses.max}
-              />
-            {:else}
-              <!-- TODO: Add charges: look up <a class='addCharges' value='Add'>Add</a> -->
-              <a>Add</a>
-            {/if}
+            <ItemContext {item} itemContext={context.itemContext} let:ctx>
+              {#if ctx?.isOnCooldown}
+                <a
+                  title={item.labels.recharge}
+                  role="button"
+                  tabindex="0"
+                  on:click={() => item.rollRecharge()}
+                >
+                  <i class="fas fa-dice-six" />
+                  {item.system.recharge
+                    .value}{#if item.system.recharge.value !== 6}+{/if}</a
+                >
+              {:else if item.system.recharge.value}
+                <i class="fas fa-bolt" title={localize('DND5E.Charged')} />
+              {:else if ctx?.hasUses}
+                <ItemUses {item} />
+              {:else}
+                <ItemAddUses {item} />
+              {/if}
+            </ItemContext>
           </ItemTableCell>
           <ItemTableCell baseWidth="7.5rem">
             {#if item.system.activation.type}

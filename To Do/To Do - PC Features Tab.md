@@ -5,20 +5,20 @@
 #### Active Abilities
 
 - [ ] Make the uses column functional
-  - [ ] Implement uses per day
-  - [ ] Implement roll to recharge
-    - [ ] View charged state
-    - [ ] View rollable state
-  - [ ] Implement Add Charges 
-- [ ] Style it
-  - [ ] Recharge
-  - [ ] Charged
-  - [ ] Uses
-  - [ ] Else
-- [ ] Ensure item summary
-- [ ] Add / Edit / Delete / Duplicate
-- [ ] Middle click to edit
-- [ ] Right click context menu
+  - [x] Implement uses per day
+  - [x] Implement roll to recharge
+    - [x] View charged state
+    - [x] View rollable state
+  - [x] Implement Add Charges 
+- [x] Style it
+  - [x] Recharge
+  - [x] Charged
+  - [x] Uses
+  - [x] Else
+- [x] Ensure item summary
+- [x] Add / Edit / Delete / Duplicate
+- [x] Middle click to edit
+- [x] Right click context menu
 - [ ] Fix issue where feature names are not truncating properly. This is something that really needs to be fixed as part of the item table cell component in-built styles.
 
 
