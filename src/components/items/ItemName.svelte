@@ -6,11 +6,11 @@
 
 <div
   role="button"
-  on:click={(event) => dispatcher('click', event)}
   tabindex="0"
+  on:click={(event) => dispatcher('click', event)}
   class="item-name"
 >
-  <slot />
+  <span class="truncate"><slot /></span>
 </div>
 
 <style lang="scss">
@@ -18,5 +18,6 @@
     flex: 1 1 1px;
     display: flex;
     align-items: center;
+    min-width: 0;
   }
 </style>

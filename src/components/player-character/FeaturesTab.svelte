@@ -131,7 +131,7 @@
             <ItemName
               on:click={(event) => toggleSummary(event.detail, context.actor)}
             >
-              <span>{item.name}</span>
+              {item.name}
             </ItemName>
           </ItemTableCell>
 
@@ -204,16 +204,14 @@
             <ItemName
               on:click={(event) => toggleSummary(event.detail, context.actor)}
             >
-              <span>
-                {#if item.type === 'subclass'}&rdsh;{/if}
-                {item.name}
-                {#if item.system.isOriginalClass}
-                  <i
-                    class="original-class fas fa-sun"
-                    title={localize('DND5E.ClassOriginal')}
-                  />
-                {/if}
-              </span>
+              {#if item.type === 'subclass'}&rdsh;{/if}
+              {item.name}
+              {#if item.system.isOriginalClass}
+                <i
+                  class="original-class fas fa-sun"
+                  title={localize('DND5E.ClassOriginal')}
+                />
+              {/if}
             </ItemName>
           </ItemTableCell>
 
@@ -307,7 +305,7 @@
             <ItemName
               on:click={(event) => toggleSummary(event.detail, context.actor)}
             >
-              <span>{item.name}</span>
+              {item.name}
             </ItemName>
           </ItemTableCell>
 
