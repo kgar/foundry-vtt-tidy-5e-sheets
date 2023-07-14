@@ -46,6 +46,17 @@ export const FoundryAdapter = {
 
     return game.i18n.localize(value);
   },
+  addEffect(effectType: string, actor: Actor5e) {
+    actor.createEmbeddedDocuments('ActiveEffect', [
+      {
+        label: game.i18n.localize('DND5E.EffectNew'),
+        icon: 'icons/svg/aura.svg',
+        origin: actor.uuid,
+        'duration.rounds': effectType === 'temporary' ? 1 : undefined,
+        disabled: effectType === 'inactive',
+      },
+    ]);
+  },
   /**
    *
    * @param content           - the editor content to include

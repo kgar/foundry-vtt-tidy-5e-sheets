@@ -196,7 +196,7 @@
         <ItemTableColumn baseWidth="7.5rem">
           {localize('DND5E.Level')}
         </ItemTableColumn>
-        {#if context.owner && classicControlsEnabled}
+        {#if context.owner && classicControlsEnabled && context.editable}
           <ItemTableColumn baseWidth="5.3125rem" />
         {/if}
       </ItemTableHeaderRow>
@@ -258,9 +258,9 @@
             {/if}
           </ItemTableCell>
 
-          {#if context.owner && classicControlsEnabled}
+          {#if context.owner && classicControlsEnabled && context.editable}
             <ItemTableCell baseWidth="5.3125rem">
-              <div class="feature-controls flexrow">
+              <div class="feature-controls">
                 <ItemEditControl {item} />
                 {#if allowEdit}
                   <ItemDuplicateControl {item} />
@@ -271,7 +271,7 @@
           {/if}
         </ItemTableRow>
       {/each}
-      {#if context.owner && allowEdit}
+      {#if context.owner && allowEdit && context.editable}
         <ItemTableFooter dataset={classSection.dataset} actor={context.actor} />
       {/if}
     </ItemTable>

@@ -3,17 +3,18 @@
 
   export let dataset: any;
   export let actor: Actor5e;
+  export let create: (() => void) | undefined = defaultCreateFunction;
 
   const localize = FoundryAdapter.localize;
 
-  function createItem() {
+  function defaultCreateFunction() {
     return FoundryAdapter.createItem(dataset, actor);
   }
 </script>
 
 <a
   class="item-create-button"
-  on:click={createItem}
+  on:click={create}
   title={localize('DND5E.FeatureAdd')}
   role="button"
 >

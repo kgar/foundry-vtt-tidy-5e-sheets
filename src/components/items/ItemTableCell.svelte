@@ -35,10 +35,10 @@
     }
 
     &:hover {
-      :global(.item-image) {
+      :global(.item-use-button) {
         background-image: none;
       }
-      :global(.item-image i) {
+      :global(.item-use-button i) {
         display: initial;
       }
     }

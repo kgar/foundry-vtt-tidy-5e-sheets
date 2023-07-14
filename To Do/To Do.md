@@ -1,12 +1,9 @@
 # To Do
 
 - [ ] Ensure item summary functionality can be shared
-- [ ] 
+- [ ]
 
 ## Character Tabs
-
-
-
 
 ### Effects
 
@@ -24,7 +21,6 @@
   - [x] Settings
     - [x] Right Click Disabled (reimplement after removing magic context selectors)
 
-
 #### Context menu
 
 Note: the tidy impl seems to override ALL context menus and not just the one for the target sheet 🤔. In the rewrite, ensure context menu override only applies to the target actor.
@@ -38,27 +34,27 @@ Tidy impl
 
 if (!sheet.getActiveEffectContextOptionsId) {
   sheet.getActiveEffectContextOptionsId = Hooks.on(
-    "dnd5e.getActiveEffectContextOptions",
+    'dnd5e.getActiveEffectContextOptions',
     (effect, contextOptions) => {
       const actor = effect.actor ? effect.actor : effect.parent;
       if (actor?.isOwner) {
         contextOptions = contextOptions.filter((obj) => {
           //check for default options and remove them.
           return ![
-            "DND5E.ContextMenuActionEdit",
-            "DND5E.ContextMenuActionDuplicate",
-            "DND5E.ContextMenuActionDelete",
-            "DND5E.ContextMenuActionEnable",
-            "DND5E.ContextMenuActionDisable",
-            "DND5E.ContextMenuActionUnattune",
-            "DND5E.ContextMenuActionAttune",
-            "DND5E.ContextMenuActionUnequip",
-            "DND5E.ContextMenuActionEquip",
-            "DND5E.ContextMenuActionUnprepare",
-            "DND5E.ContextMenuActionPrepare"
+            'DND5E.ContextMenuActionEdit',
+            'DND5E.ContextMenuActionDuplicate',
+            'DND5E.ContextMenuActionDelete',
+            'DND5E.ContextMenuActionEnable',
+            'DND5E.ContextMenuActionDisable',
+            'DND5E.ContextMenuActionUnattune',
+            'DND5E.ContextMenuActionAttune',
+            'DND5E.ContextMenuActionUnequip',
+            'DND5E.ContextMenuActionEquip',
+            'DND5E.ContextMenuActionUnprepare',
+            'DND5E.ContextMenuActionPrepare',
           ].includes(obj?.name);
         });
-        if (game.settings.get(CONSTANTS.MODULE_ID, "rightClickDisabled")) {
+        if (game.settings.get(CONSTANTS.MODULE_ID, 'rightClickDisabled')) {
           contextOptions = [];
         } else {
           let tidy5eContextOptions = _getActiveEffectContextOptions(effect);
@@ -71,52 +67,63 @@ if (!sheet.getActiveEffectContextOptionsId) {
 }
 
 if (!sheet.getItemContextOptionsId) {
-  sheet.getItemContextOptionsId = Hooks.on("dnd5e.getItemContextOptions", (item, contextOptions) => {
-    const actor = item.actor ? item.actor : item.parent;
-    if (actor?.isOwner) {
-      contextOptions = contextOptions.filter((obj) => {
-        //check for default options and remove them.
-        return ![
-          "DND5E.ContextMenuActionEdit",
-          "DND5E.ContextMenuActionDuplicate",
-          "DND5E.ContextMenuActionDelete",
-          "DND5E.ContextMenuActionEnable",
-          "DND5E.ContextMenuActionDisable",
-          "DND5E.ContextMenuActionUnattune",
-          "DND5E.ContextMenuActionAttune",
-          "DND5E.ContextMenuActionUnequip",
-          "DND5E.ContextMenuActionEquip",
-          "DND5E.ContextMenuActionUnprepare",
-          "DND5E.ContextMenuActionPrepare"
-        ].includes(obj?.name);
-      });
-      if (game.settings.get(CONSTANTS.MODULE_ID, "rightClickDisabled")) {
-        if (
-          item.type === "spell" &&
-          !item.actor.getFlag(CONSTANTS.MODULE_ID, "tidy5e-sheet.spellbook-grid")
-        ) {
-          contextOptions = [];
-        } else if (item.type !== "spell" && !item.actor.getFlag(CONSTANTS.MODULE_ID, "inventory-grid")) {
-          contextOptions = [];
+  sheet.getItemContextOptionsId = Hooks.on(
+    'dnd5e.getItemContextOptions',
+    (item, contextOptions) => {
+      const actor = item.actor ? item.actor : item.parent;
+      if (actor?.isOwner) {
+        contextOptions = contextOptions.filter((obj) => {
+          //check for default options and remove them.
+          return ![
+            'DND5E.ContextMenuActionEdit',
+            'DND5E.ContextMenuActionDuplicate',
+            'DND5E.ContextMenuActionDelete',
+            'DND5E.ContextMenuActionEnable',
+            'DND5E.ContextMenuActionDisable',
+            'DND5E.ContextMenuActionUnattune',
+            'DND5E.ContextMenuActionAttune',
+            'DND5E.ContextMenuActionUnequip',
+            'DND5E.ContextMenuActionEquip',
+            'DND5E.ContextMenuActionUnprepare',
+            'DND5E.ContextMenuActionPrepare',
+          ].includes(obj?.name);
+        });
+        if (game.settings.get(CONSTANTS.MODULE_ID, 'rightClickDisabled')) {
+          if (
+            item.type === 'spell' &&
+            !item.actor.getFlag(
+              CONSTANTS.MODULE_ID,
+              'tidy5e-sheet.spellbook-grid'
+            )
+          ) {
+            contextOptions = [];
+          } else if (
+            item.type !== 'spell' &&
+            !item.actor.getFlag(CONSTANTS.MODULE_ID, 'inventory-grid')
+          ) {
+            contextOptions = [];
+          } else {
+            //merge new options with tidy5e options
+            let tidy5eContextOptions = _getItemContextOptions(item);
+            contextOptions = tidy5eContextOptions.concat(contextOptions);
+          }
         } else {
           //merge new options with tidy5e options
           let tidy5eContextOptions = _getItemContextOptions(item);
           contextOptions = tidy5eContextOptions.concat(contextOptions);
         }
-      } else {
-        //merge new options with tidy5e options
-        let tidy5eContextOptions = _getItemContextOptions(item);
-        contextOptions = tidy5eContextOptions.concat(contextOptions);
+        ui.context.menuItems = contextOptions;
       }
-      ui.context.menuItems = contextOptions;
     }
-  });
+  );
 }
 
 if (!sheet.getItemAdvancementContextId) {
-  sheet.getItemAdvancementContextId = Hooks.on("dnd5e.getItemAdvancementContext", (html, contextOptions) => {
-    // TODO cannot recover the 'this' reference
-    /*
+  sheet.getItemAdvancementContextId = Hooks.on(
+    'dnd5e.getItemAdvancementContext',
+    (html, contextOptions) => {
+      // TODO cannot recover the 'this' reference
+      /*
   if ( actor?.isOwner ) {
 
   if(game.settings.get(CONSTANTS.MODULE_ID, "rightClickDisabled")){
@@ -127,7 +134,8 @@ if (!sheet.getItemAdvancementContextId) {
   ui.context.menuItems = contextOptions;
   }
   */
-  });
+    }
+  );
 }
 ```
 
@@ -137,14 +145,14 @@ Tidy Impl
 
 ```js
 // Manage Middle Click behavior
-html.find(".item-list .item .item-name").mousedown(async (event) => {
+html.find('.item-list .item .item-name').mousedown(async (event) => {
   if (event.which === 2) {
     debug(`tidy5eContextMenu | middle click`);
     // let target = event.target.class;
     // let item = event.currentTarget;
     // Middle mouse opens item editor
     event.preventDefault();
-    let li = $(event.target).parents(".item");
+    let li = $(event.target).parents('.item');
     if (li && li[0]) {
       /*
       if ($(li).find(".item-edit")) {
@@ -199,12 +207,12 @@ html.find(".item-list .item .item-name").mousedown(async (event) => {
 ### Journal Tab
 
 - [x] Journal
-    - [x] Make a component
-    - [x] Functionality
-    - [x] Settings
-    - [x] Styles
-    - [x] Implement game settings
-      - [x] journalTabDisabled 
+  - [x] Make a component
+  - [x] Functionality
+  - [x] Settings
+  - [x] Styles
+  - [x] Implement game settings
+    - [x] journalTabDisabled
 
 ### Pile of TODOs
 
@@ -289,7 +297,7 @@ Evaluate module integration and think about better (API-centric) ways to support
 ## Reorganization
 
 - [ ] Move the positioning styles to the portrait component or general styles, and apply them via cssClass to impose positioning that is relevant to the parent component (the portrait component)
-- [ ] Identify class trees that can be converted to components leveraging `:global()` selector for child components. 
+- [ ] Identify class trees that can be converted to components leveraging `:global()` selector for child components.
   - [ ] Do this for `_inventory.scss` as an example, and then task out others
 
 ## Step by step
@@ -398,6 +406,25 @@ Evaluate module integration and think about better (API-centric) ways to support
   - [ ] src_scss_sheet.scss
 
 > Most recent breakages in Tidy5e sheets were related to magic HTML conventions that hook into invisible jquery wire-ups. You have to go read through the core HBS's for character sheets. Since you're already there, skip the limitations imposed by trying to recreate their sheet and instead use the public API. After all the public API provides deprecation notices, whereas the 5e sheet can just suddenly be structured differently on a new version. Not much they will do about that.
+
+## Item Table side project:
+
+- [x] Identify a generic inventory / item component tree that will eliminate any guesswork and hopefully eliminate `_inventory.scss`.
+- [x] Recreate the inventory table setup with this tree
+- [x] Make it functional
+- [x] Refactor: Create table column component with primary:boolean field for the header row to use; trim unneeded stuff from the table cell component
+- [ ] Refactor: include column hint field in the table cell which can be put onto the resulting cell container for future testing but also for readability while scrolling through svelte code.
+- [x] Make it styled to match the original, but now it should bestow most of its core layout styles from the layout components rather than some file.
+- [ ] Resolve `TODO: Account for this, but do it in a svelte-ier way...`
+- [x] Replace Effects table
+- [x] Replace Background table
+- [x] Replace Classes table
+- [ ] Resume the features tab effort
+
+Prototype here:
+https://github.com/kgar/svelte-code-sandbox
+
+The structure works as intended, thanks to slot props, which can surface smarter features of the item table layout components.
 
 ## Stretch
 

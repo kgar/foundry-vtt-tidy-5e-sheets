@@ -1,13 +1,18 @@
 <script lang="ts">
   import type { Actor5e } from 'src/foundry/foundry-adapter';
   import ItemSummary from '../items/ItemSummary.svelte';
+  import { warn } from 'src/utils/logging';
 
-  export let item: any;
+  export let item: any | undefined = undefined;
 
   let showSummary = false;
   let chatData: any;
 
   async function toggleSummary(event: MouseEvent, actor: Actor5e) {
+    if (!item) {
+      warn('Unable to show summary. No item was provided.');
+    }
+
     event.preventDefault();
 
     chatData ??= await item.getChatData({ secrets: actor.isOwner });

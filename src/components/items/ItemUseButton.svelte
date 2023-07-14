@@ -5,7 +5,7 @@
 <div
   role="button"
   tabindex="0"
-  class="item-image"
+  class="item-use-button"
   style="--bg-image: url('/{item.img}')"
   on:click={(event) => item.use({}, { event })}
 >
@@ -13,10 +13,10 @@
 </div>
 
 <style lang="scss">
-  .item-image {
+  .item-use-button {
     flex: 0 0 1.5rem;
     height: 1.5rem;
-    border-radius: 5px 0px 0px 5px;
+    border-radius: 0.3125rem 0 0 0.3125rem;
     background-image: var(--bg-image);
     background-size: cover;
     display: flex;

@@ -4,10 +4,11 @@
 
   export let dataset: Record<string, unknown>;
   export let actor: Actor5e;
+  export let create: (() => void) | undefined = undefined;
 </script>
 
 <footer class="item-table-footer-row">
-  <ItemCreateButton {dataset} {actor} />
+  <ItemCreateButton {dataset} {actor} {create} />
 </footer>
 
 <style lang="scss">

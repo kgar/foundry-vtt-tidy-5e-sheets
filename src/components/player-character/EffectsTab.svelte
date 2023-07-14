@@ -5,6 +5,14 @@
   } from 'src/foundry/foundry-adapter';
   import { SettingsProvider } from 'src/settings/settings';
   import { createEventDispatcher, onMount } from 'svelte';
+  import ItemTable from '../items/ItemTable.svelte';
+  import ItemTableHeaderRow from '../items/ItemTableHeaderRow.svelte';
+  import ItemTableRow from '../items/ItemTableRow.svelte';
+  import ItemTableColumn from '../items/ItemTableColumn.svelte';
+  import ItemTableFooter from '../items/ItemTableFooter.svelte';
+  import ItemImage from '../items/ItemImage.svelte';
+  import ItemTableCell from '../items/ItemTableCell.svelte';
+  import ItemControl from '../items/ItemControl.svelte';
 
   export let context: CharacterSheetContext;
   export let scrollTop: number;
@@ -28,115 +36,104 @@
   onMount(() => {
     scrollView.scrollTop = scrollTop ?? 0;
   });
-
-  function addEffect(effectType: string): any {
-    context.actor.createEmbeddedDocuments('ActiveEffect', [
-      {
-        label: game.i18n.localize('DND5E.EffectNew'),
-        icon: 'icons/svg/aura.svg',
-        origin: context.actor.uuid,
-        'duration.rounds': effectType === 'temporary' ? 1 : undefined,
-        disabled: effectType === 'inactive',
-      },
-    ]);
-  }
 </script>
 
-<div class="list-layout">
-  <ul
-    class="tidy5e-items-list effects-list"
-    class:unlocked={FoundryAdapter.tryGetFlag(context.actor, 'allow-edit')}
-    on:scroll={(event) =>
-      dispatcher('scrollTopChanged', { top: event.currentTarget.scrollTop })}
-    bind:this={scrollView}
-  >
-    {#each effectSections as section}
-      {#if allowEdit || section.effects.length > 0}
-        <li class="items-header effects-header" data-effect-type={section.type}>
-          <h3 class="item-name effect-name">{localize(section.label)}</h3>
-          <div class="items-header-labels">
-            <div class="items-header-source">
-              <span>{localize('DND5E.Source')}</span>
-            </div>
-            <div class="items-header-duration">
-              {localize('DND5E.Duration')}
-            </div>
-            {#if classicControlsEnabled}
-              <div class="items-header-controls" />
-            {/if}
-          </div>
-        </li>
-
-        <ul class="tidy5e-item-list">
-          {#each section.effects as effect}
-            <li
-              class="item effect"
-              data-effect-id={effect.id}
-              on:mousedown={(event) =>
-                FoundryAdapter.editOnMiddleClick(event, effect)}
+<div
+  class="effect-list"
+  on:scroll={(event) =>
+    dispatcher('scrollTopChanged', { top: event.currentTarget.scrollTop })}
+  bind:this={scrollView}
+>
+  {#each effectSections as section}
+    {#if allowEdit || section.effects.length > 0}
+      <ItemTable>
+        <ItemTableHeaderRow>
+          <ItemTableColumn primary={true}>
+            {localize(section.label)}
+          </ItemTableColumn>
+          <ItemTableColumn baseWidth="12.5rem">
+            {localize('DND5E.Source')}
+          </ItemTableColumn>
+          <ItemTableColumn baseWidth="7.5rem">
+            {localize('DND5E.Duration')}
+          </ItemTableColumn>
+          {#if context.owner && classicControlsEnabled}
+            <ItemTableColumn baseWidth="5.3125rem" />
+          {/if}
+        </ItemTableHeaderRow>
+        {#each section.effects as effect}
+          <ItemTableRow>
+            <ItemTableCell primary={true}>
+              <ItemImage src={effect.icon} />
+              <span class="align-self-center">{effect.label}</span>
+            </ItemTableCell>
+            <ItemTableCell baseWidth="12.5rem"
+              >{effect.sourceName}</ItemTableCell
             >
-              <div class="item-name effect-name">
-                <img class="item-image" src={effect.icon} />
-                <h4>{effect.label}</h4>
-              </div>
-              <div class="item-detail effect-source" title={effect.sourceName}>
-                <span>{effect.sourceName}</span>
-              </div>
-              <div class="item-detail effect-duration">
-                {effect.duration.label}
-              </div>
-              {#if context.owner && classicControlsEnabled}
-                <div class="item-controls tidy5e-kgar-effect-controls flexrow">
-                  {#if context.editable}
-                    <a
-                      class="effect-control"
-                      on:click={() =>
-                        effect.update({ disabled: !effect.disabled })}
-                      title={effect.disabled
-                        ? localize('DND5E.EffectEnable')
-                        : localize('DND5E.EffectDisable')}
-                    >
-                      <i
-                        class="fas {effect.disabled ? 'fa-check' : 'fa-times'}"
-                      />
-                    </a>
-                    <a
-                      class="effect-control effect-edit"
-                      on:click={() => effect.sheet.render(true)}
-                      title={localize('DND5E.EffectEdit')}
-                    >
-                      <i class="fas fa-edit" />
-                    </a>
-                    {#if allowEdit}
-                      <a
-                        class="effect-control effect-delete"
-                        on:click={() => effect.delete()}
-                        title={localize('DND5E.EffectDelete')}
-                      >
-                        <i class="fas fa-trash" />
-                      </a>
-                    {/if}
+            <ItemTableCell baseWidth="7.5rem"
+              >{effect.duration.label}</ItemTableCell
+            >
+
+            {#if context.owner && classicControlsEnabled}
+              <ItemTableCell baseWidth="5.3125rem">
+                <div class="effect-controls">
+                  <ItemControl
+                    on:click={() =>
+                      effect.update({ disabled: !effect.disabled })}
+                    title={effect.disabled
+                      ? localize('DND5E.EffectEnable')
+                      : localize('DND5E.EffectDisable')}
+                    iconCssClass="fas {effect.disabled
+                      ? 'fa-check'
+                      : 'fa-times'}"
+                  />
+                  <ItemControl
+                    on:click={() => effect.sheet.render(true)}
+                    title={localize('DND5E.EffectEdit')}
+                    iconCssClass="fas fa-edit"
+                  />
+
+                  {#if allowEdit}
+                    <ItemControl
+                      on:click={() => effect.delete()}
+                      title={localize('DND5E.EffectDelete')}
+                      iconCssClass="fas fa-trash"
+                    />
                   {/if}
                 </div>
-              {/if}
-            </li>
-          {/each}
-          {#if allowEdit}
-            <li class="items-footer" data-effect-type={section.type}>
-              <a
-                class="effect-create effect-control"
-                on:click={() => addEffect(section.type)}
-              >
-                <i class="fas fa-plus-circle" />
-                {localize('DND5E.Add')}
-              </a>
-            </li>
-          {/if}
-        </ul>
-      {/if}
-    {/each}
-  </ul>
+              </ItemTableCell>
+            {/if}
+          </ItemTableRow>
+        {/each}
+        {#if context.owner && allowEdit && context.editable}
+          <ItemTableFooter
+            actor={context.actor}
+            dataset={section.dataset}
+            create={() => FoundryAdapter.addEffect(section.type, context.actor)}
+          />
+        {/if}
+      </ItemTable>
+    {/if}
+  {/each}
 </div>
 
 <style lang="scss">
+  .effect-list {
+    flex: 1;
+    padding: 0 9px 8px 0;
+    overflow-y: scroll;
+  }
+
+  .effect-controls {
+    align-self: stretch;
+    display: flex;
+    justify-content: flex-end;
+    min-width: 5.3125rem;
+    font-size: 0.75rem;
+    padding: 0 0.125rem;
+
+    :global(> *) {
+      flex: 1;
+    }
+  }
 </style>
