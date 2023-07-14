@@ -28,7 +28,6 @@
 
   const localize = FoundryAdapter.localize;
   const allowEdit = FoundryAdapter.tryGetFlag(context.actor, 'allow-edit');
-  const featSearch = 'TODO: implement';
   const classicControlsBaseWidth = allowEdit ? '7.5rem' : '5.3125rem';
 
   let scrollView: HTMLElement;
@@ -63,16 +62,38 @@
     }
   }
 
-  let expansionsMap = new Map<string, { show: boolean; chatData: any }>();
-  backgroundSection.items.forEach((i: any) =>
-    expansionsMap.set(i.id, { show: false, chatData: undefined })
-  );
-
   const hideIconsNextToTheItemName =
     SettingsProvider.settings.hideIconsNextToTheItemName.get();
 
   function getAvailableLevels(id: string) {
     return context.itemContext[id]?.availableLevels ?? [];
+  }
+
+  let searchCriteria: string =
+    FoundryAdapter.tryGetFlag<string>(context.actor, 'feat-search') ?? '';
+
+  $: filteredBackgroundItems = backgroundSection.items.filter((x: any) =>
+    x.name.toLowerCase().includes(searchCriteria.toLowerCase())
+  );
+
+  $: filteredClassItems = classSection.items.filter((x: any) =>
+    x.name.toLowerCase().includes(searchCriteria.toLowerCase())
+  );
+
+  $: filteredActiveAbilitiesItems = activeAbilitiesSection.items.filter(
+    (x: any) => x.name.toLowerCase().includes(searchCriteria.toLowerCase())
+  );
+
+  $: filteredPassiveAbilitiesItems = passiveAbilitiesSection.items.filter(
+    (x: any) => x.name.toLowerCase().includes(searchCriteria.toLowerCase())
+  );
+
+  async function rememberSearch() {
+    await FoundryAdapter.setFlag(context.actor, 'feat-search', searchCriteria);
+  }
+
+  async function clearSearch() {
+    await FoundryAdapter.setFlag(context.actor, 'feat-search', '');
   }
 </script>
 
@@ -86,8 +107,14 @@
         type="text"
         id="feat-search"
         placeholder={localize('TIDY5E.SearchFeat')}
-        value={featSearch}
-      /><span class="clear-search hidden" title={localize('TIDY5E.SearchClear')}
+        bind:value={searchCriteria}
+        on:blur|preventDefault|stopPropagation={() => rememberSearch()}
+      />
+      <span
+        class="clear-search"
+        title={localize('TIDY5E.SearchClear')}
+        style:display={searchCriteria === '' ? 'none' : undefined}
+        on:click|preventDefault|stopPropagation={() => clearSearch()}
         ><i class="fas fa-times-circle" /></span
       >
     </li>
@@ -102,7 +129,7 @@
 </div>
 
 <div class="features-list">
-  {#if allowEdit || backgroundSection.items.length > 0}
+  {#if (searchCriteria.trim() === '' && allowEdit) || filteredBackgroundItems.length > 0}
     <ItemTable>
       <ItemTableHeaderRow>
         <ItemTableColumn primary={true}>
@@ -118,7 +145,7 @@
           <ItemTableColumn baseWidth={classicControlsBaseWidth} />
         {/if}
       </ItemTableHeaderRow>
-      {#each backgroundSection.items as item (item.id)}
+      {#each filteredBackgroundItems as item (item.id)}
         <ItemTableRow
           {item}
           let:toggleSummary
@@ -175,7 +202,7 @@
     </ItemTable>
   {/if}
 
-  {#if allowEdit || classSection.items.length > 0}
+  {#if (searchCriteria.trim() === '' && allowEdit) || filteredClassItems.length > 0}
     <ItemTable>
       <ItemTableHeaderRow>
         <ItemTableColumn primary={true}>
@@ -191,7 +218,7 @@
           <ItemTableColumn baseWidth={classicControlsBaseWidth} />
         {/if}
       </ItemTableHeaderRow>
-      {#each classSection.items as item (item.id)}
+      {#each filteredClassItems as item (item.id)}
         <ItemTableRow
           {item}
           on:mousedown={(event) =>
@@ -270,7 +297,7 @@
     </ItemTable>
   {/if}
 
-  {#if allowEdit || activeAbilitiesSection.items.length > 0}
+  {#if (searchCriteria.trim() === '' && allowEdit) || filteredActiveAbilitiesItems.length > 0}
     <ItemTable>
       <ItemTableHeaderRow>
         <ItemTableColumn primary={true}>
@@ -292,7 +319,7 @@
           <ItemTableColumn baseWidth={classicControlsBaseWidth} />
         {/if}
       </ItemTableHeaderRow>
-      {#each activeAbilitiesSection.items as item (item.id)}
+      {#each filteredActiveAbilitiesItems as item (item.id)}
         <ItemTableRow
           {item}
           let:toggleSummary
@@ -375,11 +402,80 @@
       {/if}
     </ItemTable>
   {/if}
+
+  {#if (searchCriteria.trim() === '' && allowEdit) || filteredPassiveAbilitiesItems.length > 0}
+    <ItemTable>
+      <ItemTableHeaderRow>
+        <ItemTableColumn primary={true}>
+          {localize(passiveAbilitiesSection.label)}
+        </ItemTableColumn>
+        <ItemTableColumn baseWidth="7.5rem">
+          {localize('DND5E.Source')}
+        </ItemTableColumn>
+        <ItemTableColumn baseWidth="7.5rem">
+          {localize('DND5E.Requirements')}
+        </ItemTableColumn>
+        {#if context.owner && classicControlsEnabled}
+          <ItemTableColumn baseWidth={classicControlsBaseWidth} />
+        {/if}
+      </ItemTableHeaderRow>
+      {#each filteredPassiveAbilitiesItems as item (item.id)}
+        <ItemTableRow
+          {item}
+          let:toggleSummary
+          on:mousedown={(event) =>
+            FoundryAdapter.editOnMiddleClick(event.detail, item)}
+          contextMenu={{ type: CONSTANTS.CONTEXT_MENU_TYPE_ITEMS, id: item.id }}
+        >
+          <ItemTableCell primary={true}>
+            <ItemUseButton {item} />
+            <ItemName
+              on:click={(event) => toggleSummary(event.detail, context.actor)}
+            >
+              {item.name}
+            </ItemName>
+          </ItemTableCell>
+
+          <!-- TODO: Handle more gracefully -->
+          {#if !hideIconsNextToTheItemName && FoundryAdapter.tryGetFlag(item, 'favorite')}
+            <div class="item-state-icon" title="Favorite">
+              <i class="fas fa-bookmark icon-fav" />
+            </div>
+          {/if}
+
+          <ItemTableCell baseWidth="7.5rem">
+            <span class="truncate" title={item.system.source}
+              >{item.system.source}</span
+            >
+          </ItemTableCell>
+          <ItemTableCell baseWidth="7.5rem">
+            <span class="truncate" title={item.system.requirements ?? ''}
+              >{item.system.requirements ?? ''}</span
+            >
+          </ItemTableCell>
+
+          {#if context.owner && classicControlsEnabled}
+            <ItemTableCell baseWidth={classicControlsBaseWidth}>
+              <div class="feature-controls flexrow">
+                <ItemEditControl {item} />
+                {#if allowEdit}
+                  <ItemDuplicateControl {item} />
+                  <ItemDeleteControl {item} />
+                {/if}
+              </div>
+            </ItemTableCell>
+          {/if}
+        </ItemTableRow>
+      {/each}
+      {#if context.owner && allowEdit}
+        <ItemTableFooter
+          dataset={passiveAbilitiesSection.dataset}
+          actor={context.actor}
+        />
+      {/if}
+    </ItemTable>
+  {/if}
 </div>
-
-<!-- active abilities -->
-
-<!-- passive abilities -->
 
 <!-- TODO: Handle info card as a single element managed by the window as a whole -->
 <!-- <div class="info-card" data-item-id={item._id}>

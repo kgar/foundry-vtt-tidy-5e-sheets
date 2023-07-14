@@ -300,7 +300,7 @@ Evaluate module integration and think about better (API-centric) ways to support
 - [ ] Identify class trees that can be converted to components leveraging `:global()` selector for child components.
   - [ ] Do this for `_inventory.scss` as an example, and then task out others
 
-## Step by step
+## Pile of To Do's
 
 - [x] Make proof of concept with svelte
 - [x] Exercise some core functionality
@@ -355,6 +355,12 @@ Evaluate module integration and think about better (API-centric) ways to support
 - [ ] Implement `editEffectsGmOnlyEnabled`
 - [ ] Add game setting `showSheetOptionsOnWindowHeader` and limit `getActorSheetHeaderButtons` hook handler to when this setting is on.
   - [ ] This fits better in the main module settings and not the sheet settings.
+- [ ] Refinement: User-specific sheet flags | set up individual flags for each desired primitive value, and generate a key based on `${userId}-feature-name-here`
+- [ ] Refinement: make Action Economy filtering unique to the user and not the actor. Unfortunately, to keep track of this, we'll need to persist a large json object representing Actor -> Tab -> Filter Name, with a value of boolean at the leaf.
+- [ ] Refinement: implement sorting per section type ; it should not affect the actual order of the data, and it should be specific to the users
+- [ ] Refinement: maintain scroll top between refreshes
+- [ ] Refinement: maintain open/closed state of items between refreshes
+- [ ] Refinement: Expand All / Collapse All
 
 ## Cross-Cutting
 
@@ -419,7 +425,7 @@ Evaluate module integration and think about better (API-centric) ways to support
 - [x] Replace Effects table
 - [x] Replace Background table
 - [x] Replace Classes table
-- [ ] Resume the features tab effort
+- [x] Resume the features tab effort
 
 Prototype here:
 https://github.com/kgar/svelte-code-sandbox

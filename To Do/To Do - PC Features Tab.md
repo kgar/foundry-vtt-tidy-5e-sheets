@@ -2,9 +2,44 @@
 
 ### Features tab
 
+- [x] Make a component
+- [x] FeaturesTab - deal with "fred" class; do I need a component for this first cell in item rows? It's pretty common...
+- [ ] HTML
+  - [x] Retool so that it is dedicated to player characters only. Svelte and related functions should step in and make it
+  - [x] Retool the logic so it is 4 different loops and get over it
+  - [x] Background
+    - [x] Item summary
+    - [x] Card on label click
+  - [x] Classes
+    - [x] Item Summary
+    - [x] Card on label click
+  - [x] Active
+    - [x] Item Summary
+    - [x] Card on label click
+  - [x] Passive
+    - [x] Item Summary
+    - [x] Card on label click
+- [x] SCSS
+- [x] Handle Create click
+- [x] Handle classic controls
+- [ ] Ensure context menu works
+  - [x] allow-edit true
+  - [x] allow-edit false
+- [x] Functionality
+  - [x] Search
+  - [x] Action Economy Filters
+  - [x] Refinement: make search unique to the current sheet and able to be rehydrated between submissions
+- [ ] Settings
+- [ ] Secure it.
+  - [ ] Owner view
+  - [ ] Observer view
+  - [ ] Limited view
+  - [ ] No permissions
+- [ ] gmEdit? Is GM settings?
+
 #### Active Abilities
 
-- [ ] Make the uses column functional
+- [x] Make the uses column functional
   - [x] Implement uses per day
   - [x] Implement roll to recharge
     - [x] View charged state
@@ -19,50 +54,7 @@
 - [x] Add / Edit / Delete / Duplicate
 - [x] Middle click to edit
 - [x] Right click context menu
-- [ ] Fix issue where feature names are not truncating properly. This is something that really needs to be fixed as part of the item table cell component in-built styles.
-
-
-- [x] Make a component
-- [x] FeaturesTab - deal with "fred" class; do I need a component for this first cell in item rows? It's pretty common...
-- [ ] HTML
-  - [x] Retool so that it is dedicated to player characters only. Svelte and related functions should step in and make it
-  - [x] Retool the logic so it is 4 different loops and get over it
-  - [x] Background
-    - [x] Item summary
-    - [x] Card on label click
-  - [x] Classes
-    - [x] Item Summary
-    - [x] Card on label click
-  - [ ] Active
-    - [ ] Item Summary
-    - [ ] Card on label click
-  - [ ] Passive
-    - [ ] Item Summary
-    - [ ] Card on label click
-- [x] SCSS
-- [x] Handle Create click
-- [x] Handle classic controls
-- [ ] Ensure context menu works
-  - [x] allow-edit true
-  - [x] allow-edit false
-  - [ ] owner vs. not owner
-  - [ ] limited?
-- [ ] Functionality
-  - [ ] Search
-  - [ ] Action Economy Filters
-  - [ ] Refinement: make search unique to the current sheet and able to be rehydrated between submissions
-  - [ ] Refinement: make Action Economy filtering unique to the user and not the actor. Unfortunately, to keep track of this, we'll need to persist a large json object representing Actor -> Tab -> Filter Name, with a value of boolean at the leaf.
-  - [ ] Refinement: implement sorting per section type ; it should not affect the actual order of the data, and it should be specific to the users
-  - [ ] Refinement: maintain scroll top between refreshes
-  - [ ] Refinement: maintain open/closed state of items between refreshes
-  - [ ] Refinement: Expand All / Collapse All
-- [ ] Settings
-- [ ] Secure it.
-  - [ ] Owner view
-  - [ ] Observer view
-  - [ ] Limited view
-  - [ ] No permissions
-- [ ] gmEdit? Is GM settings?
+- [x] Fix issue where feature names are not truncating properly. This is something that really needs to be fixed as part of the item table cell component in-built styles.
 
 ## Usage Column impl
 
