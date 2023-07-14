@@ -13,6 +13,7 @@
   import ItemImage from '../items/ItemImage.svelte';
   import ItemTableCell from '../items/ItemTableCell.svelte';
   import ItemControl from '../items/ItemControl.svelte';
+  import { CONSTANTS } from 'src/constants';
 
   export let context: CharacterSheetContext;
   export let scrollTop: number;
@@ -62,7 +63,14 @@
           {/if}
         </ItemTableHeaderRow>
         {#each section.effects as effect}
-          <ItemTableRow>
+          <ItemTableRow
+            on:mousedown={(event) =>
+              FoundryAdapter.editOnMiddleClick(event.detail, effect)}
+            contextMenu={{
+              type: CONSTANTS.CONTEXT_MENU_TYPE_EFFECTS,
+              id: effect.id,
+            }}
+          >
             <ItemTableCell primary={true}>
               <ItemImage src={effect.icon} />
               <span class="align-self-center">{effect.label}</span>

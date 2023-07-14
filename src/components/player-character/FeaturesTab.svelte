@@ -16,6 +16,7 @@
   import ItemTableCell from '../items/ItemTableCell.svelte';
   import ItemTableColumn from '../items/ItemTableColumn.svelte';
   import ItemUseButton from '../items/ItemUseButton.svelte';
+  import { CONSTANTS } from 'src/constants';
 
   // TODO: this is intended to be shared between characters, NPCs, and Vehicles; retype the context so it can be one of the three.
   export let context: CharacterSheetContext;
@@ -65,24 +66,6 @@
   const hideIconsNextToTheItemName =
     SettingsProvider.settings.hideIconsNextToTheItemName.get();
 
-  async function toggleItemSummary(event: MouseEvent, item: any) {
-    event.preventDefault();
-    let { show, chatData } = expansionsMap.get(item.id) ?? {
-      show: false,
-      chatData: undefined,
-    };
-
-    show = !show;
-    chatData ??= await item.getChatData({ secrets: context.actor.isOwner });
-
-    expansionsMap.set(item.id, {
-      show,
-      chatData,
-    });
-
-    expansionsMap = expansionsMap;
-  }
-
   function getAvailableLevels(id: string) {
     return context.itemContext[id]?.availableLevels ?? [];
   }
@@ -131,14 +114,20 @@
         {/if}
       </ItemTableHeaderRow>
       {#each backgroundSection.items as item (item.id)}
-        <ItemTableRow {item} let:toggleSummary>
+        <ItemTableRow
+          {item}
+          let:toggleSummary
+          on:mousedown={(event) =>
+            FoundryAdapter.editOnMiddleClick(event.detail, item)}
+          contextMenu={{ type: CONSTANTS.CONTEXT_MENU_TYPE_ITEMS, id: item.id }}
+        >
           <ItemTableCell primary={true}>
             <ItemUseButton {item} />
             <div
               role="button"
               on:click={(event) => toggleSummary(event, context.actor)}
               tabindex="0"
-              style="flex: 1 1 1px; display: flex; align-items: center;"
+              class="fred"
             >
               <span>{item.name}</span>
             </div>
@@ -201,13 +190,20 @@
         {/if}
       </ItemTableHeaderRow>
       {#each classSection.items as item (item.id)}
-        <ItemTableRow {item} let:toggleSummary>
+        <ItemTableRow
+          {item}
+          on:mousedown={(event) =>
+            FoundryAdapter.editOnMiddleClick(event.detail, item)}
+          contextMenu={{ type: CONSTANTS.CONTEXT_MENU_TYPE_ITEMS, id: item.id }}
+          let:toggleSummary
+        >
           <ItemTableCell primary={true}>
             <ItemUseButton {item} />
             <div
               role="button"
-              on:click={(event) => toggleItemSummary(event, item)}
+              on:click={(event) => toggleSummary(event, context.actor)}
               tabindex="0"
+              class="fred"
             >
               <span>
                 {#if item.type === 'subclass'}&rdsh;{/if}
@@ -313,5 +309,11 @@
     :global(> *) {
       flex: 1;
     }
+  }
+
+  .fred {
+    flex: 1 1 1px;
+    display: flex;
+    align-items: center;
   }
 </style>

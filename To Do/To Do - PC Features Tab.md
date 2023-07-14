@@ -3,6 +3,7 @@
 ### Features tab
 
 - [x] Make a component
+- [ ] FeaturesTab - deal with "fred" class; do I need a component for this first cell in item rows? It's pretty common...
 - [ ] HTML
   - [ ] Retool so that it is dedicated to player characters only. Svelte and related functions should step in and make it
   - [ ] Retool the logic so it is 4 different loops and get over it

@@ -1,10 +1,11 @@
 import { CONSTANTS } from 'src/constants';
 import { isItemFavorite } from 'src/favorites/favorites';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+import { warn } from 'src/utils/logging';
 
 export function initTidy5eContextMenu(
   html: any,
-  contextMenuSelector: string = '.tidy5e-item-list .item'
+  contextMenuSelector: string = '[data-context-menu]'
 ) {
   new ContextMenu(html, contextMenuSelector, [], {
     onOpen: onItemContext.bind(this),
@@ -17,11 +18,17 @@ export function initTidy5eContextMenu(
  * @param {HTMLElement} element       The HTML element for which the context menu is activated
  * @protected
  */
-function onItemContext(element: any) {
+function onItemContext(element: HTMLElement) {
+  const contextMenuType = element.getAttribute('data-context-menu');
+  const id = element.getAttribute('data-context-menu-entity-id');
+
   // Active Effects
-  if (element.classList.contains('effect')) {
-    const effect = this.actor.effects.get(element.dataset.effectId);
-    if (!effect) return;
+  if (contextMenuType === CONSTANTS.CONTEXT_MENU_TYPE_EFFECTS) {
+    const effect = this.actor.effects.get(id);
+    if (!effect) {
+      return;
+    }
+
     ui.context.menuItems = getActiveEffectContextOptions(effect);
     Hooks.call(
       'dnd5e.getActiveEffectContextOptions',
@@ -31,11 +38,15 @@ function onItemContext(element: any) {
     );
   }
   // Items
-  else {
-    const item = this.actor.items.get(element.dataset.itemId);
+  else if (contextMenuType === CONSTANTS.CONTEXT_MENU_TYPE_ITEMS) {
+    const item = this.actor.items.get(id);
     if (!item) return;
     ui.context.menuItems = getItemContextOptions(item);
     Hooks.call('dnd5e.getItemContextOptions', item, ui.context.menuItems);
+  } else {
+    warn(
+      `Unable to show context menu. The menu type ${contextMenuType} is not supported. Put a [data-context-menu] attribute on the target entity and implement the handler where this warning appears.`
+    );
   }
 }
 
@@ -189,7 +200,6 @@ function getItemContextOptions(item) {
 
   // Toggle Prepared State
   if ('preparation' in item.system) {
-
     const isPrepared = item.system?.preparation?.prepared;
     if (allowCantripToBePreparedOnContext) {
       if (item.system.preparation.mode != 'always') {
