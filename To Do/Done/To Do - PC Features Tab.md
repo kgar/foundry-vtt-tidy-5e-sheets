@@ -29,13 +29,8 @@
   - [x] Search
   - [x] Action Economy Filters
   - [x] Refinement: make search unique to the current sheet and able to be rehydrated between submissions
-- [ ] Settings
-- [ ] Secure it.
-  - [ ] Owner view
-  - [ ] Observer view
-  - [ ] Limited view
-  - [ ] No permissions
-- [ ] gmEdit? Is GM settings?
+- [x] Settings
+
 
 #### Active Abilities
 
