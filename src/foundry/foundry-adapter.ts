@@ -171,6 +171,50 @@ export const FoundryAdapter = {
     delete itemData.system.type;
     return actor.createEmbeddedDocuments('Item', [itemData]);
   },
+  async onLevelChange(
+    event: Event & { currentTarget: EventTarget & HTMLSelectElement },
+    item: any,
+    actor: Actor5e
+  ) {
+    event.preventDefault();
+    const target = event.currentTarget;
+    if (!target?.value === undefined) {
+      return;
+    }
+
+    const delta = Number(event.currentTarget.value);
+    const classId = item.id;
+    if (!delta || !classId) {
+      return;
+    }
+
+    const classItem = actor.items.get(classId);
+
+    if (!game.settings.get('dnd5e', 'disableAdvancements')) {
+      const manager =
+        dnd5e.applications.advancement.AdvancementManager.forLevelChange(
+          actor,
+          classId,
+          delta
+        );
+      if (manager.steps.length) {
+        if (delta > 0) return manager.render(true);
+        try {
+          const shouldRemoveAdvancements =
+            await dnd5e.applications.advancement.AdvancementConfirmationDialog.forLevelDown(
+              classItem
+            );
+          if (shouldRemoveAdvancements) return manager.render(true);
+        } catch (err) {
+          return;
+        }
+      }
+    }
+
+    return classItem.update({
+      'system.levels': classItem.system.levels + delta,
+    });
+  },
 };
 
 /* ------------------------------------------------------
