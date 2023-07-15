@@ -15,6 +15,7 @@
   import ItemContext from '../items/ItemContext.svelte';
   import ListContainer from '../layout/ListContainer.svelte';
   import ItemTableFooter from '../items/ItemTableFooter.svelte';
+  import ItemControl from '../items/ItemControl.svelte';
   import ItemControls from '../items/ItemControls.svelte';
 
   export let context: any;
@@ -242,18 +243,14 @@
                 >
                   <ItemControls>
                     {#if section.canPrepare}
-                      <a
-                        class="item-control item-toggle"
-                        class:hidden={spell.system.preparation.mode ===
-                          'always'}
+                      <ItemControl
                         title={ctx.toggleTitle}
-                      >
-                        {#if spell.system.preparation.prepared}
-                          <i class="fas fa-book" />
-                        {:else}
-                          <i class="fas fa-book inactive" />
-                        {/if}
-                      </a>
+                        iconCssClass={spell.system.preparation.mode === 'always'
+                          ? ''
+                          : spell.system.preparation.prepared
+                          ? 'fas fa-book'
+                          : 'fas fa-book inactive'}
+                      />
                     {/if}
                     <ItemEditControl item={spell} />
                     {#if allowEdit}
