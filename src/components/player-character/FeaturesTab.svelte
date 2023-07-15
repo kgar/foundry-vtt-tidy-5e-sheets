@@ -22,6 +22,7 @@
   import ItemUses from '../items/ItemUses.svelte';
   import ItemAddUses from '../items/ItemAddUses.svelte';
   import ListContainer from '../layout/ListContainer.svelte';
+  import FilteredItems from '../items/FilteredItems.svelte';
 
   // TODO: this is intended to be shared between characters, NPCs, and Vehicles; retype the context so it can be one of the three.
   export let context: CharacterSheetContext;
@@ -73,22 +74,6 @@
   let searchCriteria: string =
     FoundryAdapter.tryGetFlag<string>(context.actor, 'feat-search') ?? '';
 
-  $: filteredBackgroundItems = backgroundSection.items.filter((x: any) =>
-    x.name.toLowerCase().includes(searchCriteria.toLowerCase())
-  );
-
-  $: filteredClassItems = classSection.items.filter((x: any) =>
-    x.name.toLowerCase().includes(searchCriteria.toLowerCase())
-  );
-
-  $: filteredActiveAbilitiesItems = activeAbilitiesSection.items.filter(
-    (x: any) => x.name.toLowerCase().includes(searchCriteria.toLowerCase())
-  );
-
-  $: filteredPassiveAbilitiesItems = passiveAbilitiesSection.items.filter(
-    (x: any) => x.name.toLowerCase().includes(searchCriteria.toLowerCase())
-  );
-
   async function rememberSearch() {
     await FoundryAdapter.setFlag(context.actor, 'feat-search', searchCriteria);
   }
@@ -111,6 +96,7 @@
         bind:value={searchCriteria}
         on:blur|preventDefault|stopPropagation={() => rememberSearch()}
       />
+      <!-- svelte-ignore a11y-click-events-have-key-events -->
       <span
         class="clear-search"
         title={localize('TIDY5E.SearchClear')}
@@ -130,352 +116,389 @@
 </div>
 
 <ListContainer>
-  {#if (searchCriteria.trim() === '' && allowEdit) || filteredBackgroundItems.length > 0}
-    <ItemTable>
-      <ItemTableHeaderRow>
-        <ItemTableColumn primary={true}>
-          {localize(backgroundSection.label)}
-        </ItemTableColumn>
-        <ItemTableColumn baseWidth="7.5rem">
-          {localize('DND5E.Source')}
-        </ItemTableColumn>
-        <ItemTableColumn baseWidth="7.5rem">
-          {localize('DND5E.Requirements')}
-        </ItemTableColumn>
-        {#if context.owner && classicControlsEnabled}
-          <ItemTableColumn baseWidth={classicControlsBaseWidth} />
-        {/if}
-      </ItemTableHeaderRow>
-      {#each filteredBackgroundItems as item (item.id)}
-        <ItemTableRow
-          {item}
-          let:toggleSummary
-          on:mousedown={(event) =>
-            FoundryAdapter.editOnMiddleClick(event.detail, item)}
-          contextMenu={{ type: CONSTANTS.CONTEXT_MENU_TYPE_ITEMS, id: item.id }}
-        >
-          <ItemTableCell primary={true}>
-            <ItemUseButton {item} />
-            <ItemName
-              on:click={(event) => toggleSummary(event.detail, context.actor)}
-            >
-              {item.name}
-            </ItemName>
-          </ItemTableCell>
-
-          <!-- TODO: Handle more gracefully -->
-          {#if !hideIconsNextToTheItemName && FoundryAdapter.tryGetFlag(item, 'favorite')}
-            <div class="item-state-icon" title="Favorite">
-              <i class="fas fa-bookmark icon-fav" />
-            </div>
-          {/if}
-
-          <ItemTableCell baseWidth="7.5rem">
-            <span class="truncate" title={item.system.source}
-              >{item.system.source}</span
-            >
-          </ItemTableCell>
-          <ItemTableCell baseWidth="7.5rem">
-            <span class="truncate" title={item.system.requirements ?? ''}
-              >{item.system.requirements ?? ''}</span
-            >
-          </ItemTableCell>
-
+  <FilteredItems
+    items={backgroundSection.items}
+    {searchCriteria}
+    let:filteredItems
+  >
+    {#if (searchCriteria.trim() === '' && allowEdit) || filteredItems.length > 0}
+      <ItemTable>
+        <ItemTableHeaderRow>
+          <ItemTableColumn primary={true}>
+            {localize(backgroundSection.label)}
+          </ItemTableColumn>
+          <ItemTableColumn baseWidth="7.5rem">
+            {localize('DND5E.Source')}
+          </ItemTableColumn>
+          <ItemTableColumn baseWidth="7.5rem">
+            {localize('DND5E.Requirements')}
+          </ItemTableColumn>
           {#if context.owner && classicControlsEnabled}
-            <ItemTableCell baseWidth={classicControlsBaseWidth}>
-              <div class="feature-controls flexrow">
-                <ItemEditControl {item} />
-                {#if allowEdit}
-                  <ItemDuplicateControl {item} />
-                  <ItemDeleteControl {item} />
-                {/if}
-              </div>
-            </ItemTableCell>
+            <ItemTableColumn baseWidth={classicControlsBaseWidth} />
           {/if}
-        </ItemTableRow>
-      {/each}
-      {#if context.owner && allowEdit}
-        <ItemTableFooter
-          dataset={backgroundSection.dataset}
-          actor={context.actor}
-        />
-      {/if}
-    </ItemTable>
-  {/if}
+        </ItemTableHeaderRow>
 
-  {#if (searchCriteria.trim() === '' && allowEdit) || filteredClassItems.length > 0}
-    <ItemTable>
-      <ItemTableHeaderRow>
-        <ItemTableColumn primary={true}>
-          {localize(classSection.label)}
-        </ItemTableColumn>
-        <ItemTableColumn baseWidth="7.5rem">
-          {localize('DND5E.Source')}
-        </ItemTableColumn>
-        <ItemTableColumn baseWidth="7.5rem">
-          {localize('DND5E.Level')}
-        </ItemTableColumn>
-        {#if context.owner && classicControlsEnabled && context.editable}
-          <ItemTableColumn baseWidth={classicControlsBaseWidth} />
-        {/if}
-      </ItemTableHeaderRow>
-      {#each filteredClassItems as item (item.id)}
-        <ItemTableRow
-          {item}
-          on:mousedown={(event) =>
-            FoundryAdapter.editOnMiddleClick(event.detail, item)}
-          contextMenu={{ type: CONSTANTS.CONTEXT_MENU_TYPE_ITEMS, id: item.id }}
-          let:toggleSummary
-        >
-          <ItemTableCell primary={true}>
-            <ItemUseButton {item} />
-            <ItemName
-              on:click={(event) => toggleSummary(event.detail, context.actor)}
-            >
-              {#if item.type === 'subclass'}&rdsh;{/if}
-              {item.name}
-              {#if item.system.isOriginalClass}
-                <i
-                  class="original-class fas fa-sun"
-                  title={localize('DND5E.ClassOriginal')}
-                />
-              {/if}
-            </ItemName>
-          </ItemTableCell>
-
-          <!-- TODO: Handle more gracefully -->
-          {#if !hideIconsNextToTheItemName && FoundryAdapter.tryGetFlag(item, 'favorite')}
-            <div class="item-state-icon" title="Favorite">
-              <i class="fas fa-bookmark icon-fav" />
-            </div>
-          {/if}
-
-          <ItemTableCell baseWidth="7.5rem">
-            <span class="truncate" title={item.system.source}
-              >{item.system.source}</span
-            >
-          </ItemTableCell>
-          <ItemTableCell baseWidth="7.5rem">
-            {#if item.type === 'class'}
-              <select
-                on:change={(event) =>
-                  FoundryAdapter.onLevelChange(event, item, context.actor)}
+        {#each filteredItems as item (item.id)}
+          <ItemTableRow
+            {item}
+            let:toggleSummary
+            on:mousedown={(event) =>
+              FoundryAdapter.editOnMiddleClick(event.detail, item)}
+            contextMenu={{
+              type: CONSTANTS.CONTEXT_MENU_TYPE_ITEMS,
+              id: item.id,
+            }}
+          >
+            <ItemTableCell primary={true}>
+              <ItemUseButton {item} />
+              <ItemName
+                on:click={(event) => toggleSummary(event.detail, context.actor)}
               >
-                {#each getAvailableLevels(item.id) as availableLevel}
-                  <option
-                    value={availableLevel.delta}
-                    disabled={availableLevel.disabled || undefined}
-                    selected={availableLevel.delta === 0}
-                  >
-                    {localize('DND5E.LevelNumber', {
-                      level: availableLevel.level,
-                    })}
-                    {#if availableLevel.delta}
-                      ({formatAsModifier(availableLevel.delta)})
-                    {/if}
-                  </option>
-                {/each}
-              </select>
-            {/if}
-          </ItemTableCell>
+                {item.name}
+              </ItemName>
+            </ItemTableCell>
 
+            <!-- TODO: Handle more gracefully -->
+            {#if !hideIconsNextToTheItemName && FoundryAdapter.tryGetFlag(item, 'favorite')}
+              <div class="item-state-icon" title="Favorite">
+                <i class="fas fa-bookmark icon-fav" />
+              </div>
+            {/if}
+
+            <ItemTableCell baseWidth="7.5rem">
+              <span class="truncate" title={item.system.source}
+                >{item.system.source}</span
+              >
+            </ItemTableCell>
+            <ItemTableCell baseWidth="7.5rem">
+              <span class="truncate" title={item.system.requirements ?? ''}
+                >{item.system.requirements ?? ''}</span
+              >
+            </ItemTableCell>
+
+            {#if context.owner && classicControlsEnabled}
+              <ItemTableCell baseWidth={classicControlsBaseWidth}>
+                <div class="feature-controls flexrow">
+                  <ItemEditControl {item} />
+                  {#if allowEdit}
+                    <ItemDuplicateControl {item} />
+                    <ItemDeleteControl {item} />
+                  {/if}
+                </div>
+              </ItemTableCell>
+            {/if}
+          </ItemTableRow>
+        {/each}
+
+        {#if context.owner && allowEdit}
+          <ItemTableFooter
+            dataset={backgroundSection.dataset}
+            actor={context.actor}
+          />
+        {/if}
+      </ItemTable>
+    {/if}
+  </FilteredItems>
+
+  <FilteredItems items={classSection.items} {searchCriteria} let:filteredItems>
+    {#if (searchCriteria.trim() === '' && allowEdit) || filteredItems.length > 0}
+      <ItemTable>
+        <ItemTableHeaderRow>
+          <ItemTableColumn primary={true}>
+            {localize(classSection.label)}
+          </ItemTableColumn>
+          <ItemTableColumn baseWidth="7.5rem">
+            {localize('DND5E.Source')}
+          </ItemTableColumn>
+          <ItemTableColumn baseWidth="7.5rem">
+            {localize('DND5E.Level')}
+          </ItemTableColumn>
           {#if context.owner && classicControlsEnabled && context.editable}
-            <ItemTableCell baseWidth={classicControlsBaseWidth}>
-              <div class="feature-controls">
-                <ItemEditControl {item} />
-                {#if allowEdit}
-                  <ItemDuplicateControl {item} />
-                  <ItemDeleteControl {item} />
+            <ItemTableColumn baseWidth={classicControlsBaseWidth} />
+          {/if}
+        </ItemTableHeaderRow>
+        {#each filteredItems as item (item.id)}
+          <ItemTableRow
+            {item}
+            on:mousedown={(event) =>
+              FoundryAdapter.editOnMiddleClick(event.detail, item)}
+            contextMenu={{
+              type: CONSTANTS.CONTEXT_MENU_TYPE_ITEMS,
+              id: item.id,
+            }}
+            let:toggleSummary
+          >
+            <ItemTableCell primary={true}>
+              <ItemUseButton {item} />
+              <ItemName
+                on:click={(event) => toggleSummary(event.detail, context.actor)}
+              >
+                {#if item.type === 'subclass'}&rdsh;{/if}
+                {item.name}
+                {#if item.system.isOriginalClass}
+                  <i
+                    class="original-class fas fa-sun"
+                    title={localize('DND5E.ClassOriginal')}
+                  />
                 {/if}
-              </div>
+              </ItemName>
             </ItemTableCell>
-          {/if}
-        </ItemTableRow>
-      {/each}
-      {#if context.owner && allowEdit && context.editable}
-        <ItemTableFooter dataset={classSection.dataset} actor={context.actor} />
-      {/if}
-    </ItemTable>
-  {/if}
 
-  {#if (searchCriteria.trim() === '' && allowEdit) || filteredActiveAbilitiesItems.length > 0}
-    <ItemTable>
-      <ItemTableHeaderRow>
-        <ItemTableColumn primary={true}>
-          {localize(activeAbilitiesSection.label)}
-        </ItemTableColumn>
-        <ItemTableColumn baseWidth="3.125rem">
-          {localize('DND5E.Uses')}
-        </ItemTableColumn>
-        <ItemTableColumn baseWidth="7.5rem">
-          {localize('DND5E.Usage')}
-        </ItemTableColumn>
-        <ItemTableColumn baseWidth="7.5rem">
-          {localize('DND5E.Source')}
-        </ItemTableColumn>
-        <ItemTableColumn baseWidth="7.5rem">
-          {localize('DND5E.Requirements')}
-        </ItemTableColumn>
-        {#if context.owner && classicControlsEnabled}
-          <ItemTableColumn baseWidth={classicControlsBaseWidth} />
-        {/if}
-      </ItemTableHeaderRow>
-      {#each filteredActiveAbilitiesItems as item (item.id)}
-        <ItemTableRow
-          {item}
-          let:toggleSummary
-          on:mousedown={(event) =>
-            FoundryAdapter.editOnMiddleClick(event.detail, item)}
-          contextMenu={{ type: CONSTANTS.CONTEXT_MENU_TYPE_ITEMS, id: item.id }}
-        >
-          <ItemTableCell primary={true}>
-            <ItemUseButton {item} />
-            <ItemName
-              on:click={(event) => toggleSummary(event.detail, context.actor)}
-            >
-              {item.name}
-            </ItemName>
-          </ItemTableCell>
-
-          <!-- TODO: Handle more gracefully -->
-          {#if !hideIconsNextToTheItemName && FoundryAdapter.tryGetFlag(item, 'favorite')}
-            <div class="item-state-icon" title="Favorite">
-              <i class="fas fa-bookmark icon-fav" />
-            </div>
-          {/if}
-
-          <ItemTableCell baseWidth="3.125rem">
-            <ItemContext {item} itemContext={context.itemContext} let:ctx>
-              {#if ctx?.isOnCooldown}
-                <a
-                  title={item.labels.recharge}
-                  role="button"
-                  tabindex="0"
-                  on:click={() => item.rollRecharge()}
-                >
-                  <i class="fas fa-dice-six" />
-                  {item.system.recharge
-                    .value}{#if item.system.recharge.value !== 6}+{/if}</a
-                >
-              {:else if item.system.recharge.value}
-                <i class="fas fa-bolt" title={localize('DND5E.Charged')} />
-              {:else if ctx?.hasUses}
-                <ItemUses {item} />
-              {:else}
-                <ItemAddUses {item} />
-              {/if}
-            </ItemContext>
-          </ItemTableCell>
-          <ItemTableCell baseWidth="7.5rem">
-            {#if item.system.activation.type}
-              {item.labels.activation}
+            <!-- TODO: Handle more gracefully -->
+            {#if !hideIconsNextToTheItemName && FoundryAdapter.tryGetFlag(item, 'favorite')}
+              <div class="item-state-icon" title="Favorite">
+                <i class="fas fa-bookmark icon-fav" />
+              </div>
             {/if}
-          </ItemTableCell>
-          <ItemTableCell baseWidth="7.5rem">
-            <span class="truncate" title={item.system.source}
-              >{item.system.source}</span
-            >
-          </ItemTableCell>
-          <ItemTableCell baseWidth="7.5rem">
-            <span class="truncate" title={item.system.requirements ?? ''}
-              >{item.system.requirements ?? ''}</span
-            >
-          </ItemTableCell>
 
-          {#if context.owner && classicControlsEnabled}
-            <ItemTableCell baseWidth={classicControlsBaseWidth}>
-              <div class="feature-controls flexrow">
-                <ItemEditControl {item} />
-                {#if allowEdit}
-                  <ItemDuplicateControl {item} />
-                  <ItemDeleteControl {item} />
-                {/if}
-              </div>
+            <ItemTableCell baseWidth="7.5rem">
+              <span class="truncate" title={item.system.source}
+                >{item.system.source}</span
+              >
             </ItemTableCell>
-          {/if}
-        </ItemTableRow>
-      {/each}
-      {#if context.owner && allowEdit}
-        <ItemTableFooter
-          dataset={activeAbilitiesSection.dataset}
-          actor={context.actor}
-        />
-      {/if}
-    </ItemTable>
-  {/if}
+            <ItemTableCell baseWidth="7.5rem">
+              {#if item.type === 'class'}
+                <select
+                  on:change={(event) =>
+                    FoundryAdapter.onLevelChange(event, item, context.actor)}
+                >
+                  {#each getAvailableLevels(item.id) as availableLevel}
+                    <option
+                      value={availableLevel.delta}
+                      disabled={availableLevel.disabled || undefined}
+                      selected={availableLevel.delta === 0}
+                    >
+                      {localize('DND5E.LevelNumber', {
+                        level: availableLevel.level,
+                      })}
+                      {#if availableLevel.delta}
+                        ({formatAsModifier(availableLevel.delta)})
+                      {/if}
+                    </option>
+                  {/each}
+                </select>
+              {/if}
+            </ItemTableCell>
 
-  {#if (searchCriteria.trim() === '' && allowEdit) || filteredPassiveAbilitiesItems.length > 0}
-    <ItemTable>
-      <ItemTableHeaderRow>
-        <ItemTableColumn primary={true}>
-          {localize(passiveAbilitiesSection.label)}
-        </ItemTableColumn>
-        <ItemTableColumn baseWidth="7.5rem">
-          {localize('DND5E.Source')}
-        </ItemTableColumn>
-        <ItemTableColumn baseWidth="7.5rem">
-          {localize('DND5E.Requirements')}
-        </ItemTableColumn>
-        {#if context.owner && classicControlsEnabled}
-          <ItemTableColumn baseWidth={classicControlsBaseWidth} />
+            {#if context.owner && classicControlsEnabled && context.editable}
+              <ItemTableCell baseWidth={classicControlsBaseWidth}>
+                <div class="feature-controls">
+                  <ItemEditControl {item} />
+                  {#if allowEdit}
+                    <ItemDuplicateControl {item} />
+                    <ItemDeleteControl {item} />
+                  {/if}
+                </div>
+              </ItemTableCell>
+            {/if}
+          </ItemTableRow>
+        {/each}
+        {#if context.owner && allowEdit && context.editable}
+          <ItemTableFooter
+            dataset={classSection.dataset}
+            actor={context.actor}
+          />
         {/if}
-      </ItemTableHeaderRow>
-      {#each filteredPassiveAbilitiesItems as item (item.id)}
-        <ItemTableRow
-          {item}
-          let:toggleSummary
-          on:mousedown={(event) =>
-            FoundryAdapter.editOnMiddleClick(event.detail, item)}
-          contextMenu={{ type: CONSTANTS.CONTEXT_MENU_TYPE_ITEMS, id: item.id }}
-        >
-          <ItemTableCell primary={true}>
-            <ItemUseButton {item} />
-            <ItemName
-              on:click={(event) => toggleSummary(event.detail, context.actor)}
-            >
-              {item.name}
-            </ItemName>
-          </ItemTableCell>
+      </ItemTable>
+    {/if}
+  </FilteredItems>
 
-          <!-- TODO: Handle more gracefully -->
-          {#if !hideIconsNextToTheItemName && FoundryAdapter.tryGetFlag(item, 'favorite')}
-            <div class="item-state-icon" title="Favorite">
-              <i class="fas fa-bookmark icon-fav" />
-            </div>
-          {/if}
-
-          <ItemTableCell baseWidth="7.5rem">
-            <span class="truncate" title={item.system.source}
-              >{item.system.source}</span
-            >
-          </ItemTableCell>
-          <ItemTableCell baseWidth="7.5rem">
-            <span class="truncate" title={item.system.requirements ?? ''}
-              >{item.system.requirements ?? ''}</span
-            >
-          </ItemTableCell>
-
+  <FilteredItems
+    items={activeAbilitiesSection.items}
+    {searchCriteria}
+    let:filteredItems
+  >
+    {#if (searchCriteria.trim() === '' && allowEdit) || filteredItems.length > 0}
+      <ItemTable>
+        <ItemTableHeaderRow>
+          <ItemTableColumn primary={true}>
+            {localize(activeAbilitiesSection.label)}
+          </ItemTableColumn>
+          <ItemTableColumn baseWidth="3.125rem">
+            {localize('DND5E.Uses')}
+          </ItemTableColumn>
+          <ItemTableColumn baseWidth="7.5rem">
+            {localize('DND5E.Usage')}
+          </ItemTableColumn>
+          <ItemTableColumn baseWidth="7.5rem">
+            {localize('DND5E.Source')}
+          </ItemTableColumn>
+          <ItemTableColumn baseWidth="7.5rem">
+            {localize('DND5E.Requirements')}
+          </ItemTableColumn>
           {#if context.owner && classicControlsEnabled}
-            <ItemTableCell baseWidth={classicControlsBaseWidth}>
-              <div class="feature-controls flexrow">
-                <ItemEditControl {item} />
-                {#if allowEdit}
-                  <ItemDuplicateControl {item} />
-                  <ItemDeleteControl {item} />
-                {/if}
-              </div>
-            </ItemTableCell>
+            <ItemTableColumn baseWidth={classicControlsBaseWidth} />
           {/if}
-        </ItemTableRow>
-      {/each}
-      {#if context.owner && allowEdit}
-        <ItemTableFooter
-          dataset={passiveAbilitiesSection.dataset}
-          actor={context.actor}
-        />
-      {/if}
-    </ItemTable>
-  {/if}
+        </ItemTableHeaderRow>
+        {#each filteredItems as item (item.id)}
+          <ItemTableRow
+            {item}
+            let:toggleSummary
+            on:mousedown={(event) =>
+              FoundryAdapter.editOnMiddleClick(event.detail, item)}
+            contextMenu={{
+              type: CONSTANTS.CONTEXT_MENU_TYPE_ITEMS,
+              id: item.id,
+            }}
+          >
+            <ItemTableCell primary={true}>
+              <ItemUseButton {item} />
+              <ItemName
+                on:click={(event) => toggleSummary(event.detail, context.actor)}
+              >
+                {item.name}
+              </ItemName>
+            </ItemTableCell>
+
+            <!-- TODO: Handle more gracefully -->
+            {#if !hideIconsNextToTheItemName && FoundryAdapter.tryGetFlag(item, 'favorite')}
+              <div class="item-state-icon" title="Favorite">
+                <i class="fas fa-bookmark icon-fav" />
+              </div>
+            {/if}
+
+            <ItemTableCell baseWidth="3.125rem">
+              <ItemContext {item} itemContext={context.itemContext} let:ctx>
+                {#if ctx?.isOnCooldown}
+                  <a
+                    title={item.labels.recharge}
+                    role="button"
+                    tabindex="0"
+                    on:click={() => item.rollRecharge()}
+                  >
+                    <i class="fas fa-dice-six" />
+                    {item.system.recharge
+                      .value}{#if item.system.recharge.value !== 6}+{/if}</a
+                  >
+                {:else if item.system.recharge.value}
+                  <i class="fas fa-bolt" title={localize('DND5E.Charged')} />
+                {:else if ctx?.hasUses}
+                  <ItemUses {item} />
+                {:else}
+                  <ItemAddUses {item} />
+                {/if}
+              </ItemContext>
+            </ItemTableCell>
+            <ItemTableCell baseWidth="7.5rem">
+              {#if item.system.activation.type}
+                {item.labels.activation}
+              {/if}
+            </ItemTableCell>
+            <ItemTableCell baseWidth="7.5rem">
+              <span class="truncate" title={item.system.source}
+                >{item.system.source}</span
+              >
+            </ItemTableCell>
+            <ItemTableCell baseWidth="7.5rem">
+              <span class="truncate" title={item.system.requirements ?? ''}
+                >{item.system.requirements ?? ''}</span
+              >
+            </ItemTableCell>
+
+            {#if context.owner && classicControlsEnabled}
+              <ItemTableCell baseWidth={classicControlsBaseWidth}>
+                <div class="feature-controls flexrow">
+                  <ItemEditControl {item} />
+                  {#if allowEdit}
+                    <ItemDuplicateControl {item} />
+                    <ItemDeleteControl {item} />
+                  {/if}
+                </div>
+              </ItemTableCell>
+            {/if}
+          </ItemTableRow>
+        {/each}
+        {#if context.owner && allowEdit}
+          <ItemTableFooter
+            dataset={activeAbilitiesSection.dataset}
+            actor={context.actor}
+          />
+        {/if}
+      </ItemTable>
+    {/if}
+  </FilteredItems>
+
+  <FilteredItems
+    items={passiveAbilitiesSection.items}
+    {searchCriteria}
+    let:filteredItems
+  >
+    {#if (searchCriteria.trim() === '' && allowEdit) || passiveAbilitiesSection.length > 0}
+      <ItemTable>
+        <ItemTableHeaderRow>
+          <ItemTableColumn primary={true}>
+            {localize(passiveAbilitiesSection.label)}
+          </ItemTableColumn>
+          <ItemTableColumn baseWidth="7.5rem">
+            {localize('DND5E.Source')}
+          </ItemTableColumn>
+          <ItemTableColumn baseWidth="7.5rem">
+            {localize('DND5E.Requirements')}
+          </ItemTableColumn>
+          {#if context.owner && classicControlsEnabled}
+            <ItemTableColumn baseWidth={classicControlsBaseWidth} />
+          {/if}
+        </ItemTableHeaderRow>
+        {#each filteredItems as item (item.id)}
+          <ItemTableRow
+            {item}
+            let:toggleSummary
+            on:mousedown={(event) =>
+              FoundryAdapter.editOnMiddleClick(event.detail, item)}
+            contextMenu={{
+              type: CONSTANTS.CONTEXT_MENU_TYPE_ITEMS,
+              id: item.id,
+            }}
+          >
+            <ItemTableCell primary={true}>
+              <ItemUseButton {item} />
+              <ItemName
+                on:click={(event) => toggleSummary(event.detail, context.actor)}
+              >
+                {item.name}
+              </ItemName>
+            </ItemTableCell>
+
+            <!-- TODO: Handle more gracefully -->
+            {#if !hideIconsNextToTheItemName && FoundryAdapter.tryGetFlag(item, 'favorite')}
+              <div class="item-state-icon" title="Favorite">
+                <i class="fas fa-bookmark icon-fav" />
+              </div>
+            {/if}
+
+            <ItemTableCell baseWidth="7.5rem">
+              <span class="truncate" title={item.system.source}
+                >{item.system.source}</span
+              >
+            </ItemTableCell>
+            <ItemTableCell baseWidth="7.5rem">
+              <span class="truncate" title={item.system.requirements ?? ''}
+                >{item.system.requirements ?? ''}</span
+              >
+            </ItemTableCell>
+
+            {#if context.owner && classicControlsEnabled}
+              <ItemTableCell baseWidth={classicControlsBaseWidth}>
+                <div class="feature-controls flexrow">
+                  <ItemEditControl {item} />
+                  {#if allowEdit}
+                    <ItemDuplicateControl {item} />
+                    <ItemDeleteControl {item} />
+                  {/if}
+                </div>
+              </ItemTableCell>
+            {/if}
+          </ItemTableRow>
+        {/each}
+        {#if context.owner && allowEdit}
+          <ItemTableFooter
+            dataset={passiveAbilitiesSection.dataset}
+            actor={context.actor}
+          />
+        {/if}
+      </ItemTable>
+    {/if}
+  </FilteredItems>
 </ListContainer>
 
 <!-- TODO: Handle info card as a single element managed by the window as a whole -->
