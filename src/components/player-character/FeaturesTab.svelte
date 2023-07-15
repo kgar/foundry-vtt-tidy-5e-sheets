@@ -21,6 +21,7 @@
   import ItemContext from '../items/ItemContext.svelte';
   import ItemUses from '../items/ItemUses.svelte';
   import ItemAddUses from '../items/ItemAddUses.svelte';
+  import ListContainer from '../layout/ListContainer.svelte';
 
   // TODO: this is intended to be shared between characters, NPCs, and Vehicles; retype the context so it can be one of the three.
   export let context: CharacterSheetContext;
@@ -128,7 +129,7 @@
   </ul>
 </div>
 
-<div class="features-list">
+<ListContainer>
   {#if (searchCriteria.trim() === '' && allowEdit) || filteredBackgroundItems.length > 0}
     <ItemTable>
       <ItemTableHeaderRow>
@@ -475,7 +476,7 @@
       {/if}
     </ItemTable>
   {/if}
-</div>
+</ListContainer>
 
 <!-- TODO: Handle info card as a single element managed by the window as a whole -->
 <!-- <div class="info-card" data-item-id={item._id}>
@@ -491,12 +492,6 @@
 </div> -->
 
 <style lang="scss">
-  .features-list {
-    flex: 1;
-    padding: 0 9px 8px 0;
-    overflow-y: scroll;
-  }
-
   .feature-controls {
     align-self: stretch;
     display: flex;

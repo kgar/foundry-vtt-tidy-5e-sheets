@@ -14,6 +14,7 @@
   import ItemTableCell from '../items/ItemTableCell.svelte';
   import ItemControl from '../items/ItemControl.svelte';
   import { CONSTANTS } from 'src/constants';
+  import ListContainer from '../layout/ListContainer.svelte';
 
   export let context: CharacterSheetContext;
   export let scrollTop: number;
@@ -40,12 +41,7 @@
   });
 </script>
 
-<div
-  class="effect-list"
-  on:scroll={(event) =>
-    dispatcher('scrollTopChanged', { top: event.currentTarget.scrollTop })}
-  bind:this={scrollView}
->
+<ListContainer>
   {#each effectSections as section}
     {#if allowEdit || section.effects.length > 0}
       <ItemTable>
@@ -124,15 +120,9 @@
       </ItemTable>
     {/if}
   {/each}
-</div>
+</ListContainer>
 
 <style lang="scss">
-  .effect-list {
-    flex: 1;
-    padding: 0 9px 8px 0;
-    overflow-y: scroll;
-  }
-
   .effect-controls {
     align-self: stretch;
     display: flex;

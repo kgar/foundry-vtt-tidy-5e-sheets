@@ -1,7 +1,5 @@
 import type { ClassSummary, ItemStub } from 'src/types/types';
 import { CONSTANTS } from '../constants';
-import { warn } from 'src/utils/logging';
-import { Tidy5eKgarUserSettings } from 'src/settings/user-settings-form';
 
 export const FoundryAdapter = {
   getActorSheetClass() {
@@ -226,6 +224,16 @@ export const FoundryAdapter = {
       'system.levels': classItem.system.levels + delta,
     });
   },
+  getSpellAbbreviationMap() {
+    const map = new Map<string, string>();
+    Object.values(CONFIG.DND5E.spellComponents).forEach(
+      (x: SpellComponentRef) => map.set(x.abbr, x.label)
+    );
+    Object.values(CONFIG.DND5E.spellTags).forEach((x: SpellTagRef) =>
+      map.set(x.abbr, x.label)
+    );
+    return map;
+  },
 };
 
 /* ------------------------------------------------------
@@ -316,7 +324,10 @@ declare const Actors: {
   ): unknown;
 };
 declare const CONFIG: {
-  DND5E: any;
+  DND5E: {
+    spellComponents: Record<string, SpellComponentRef>;
+    spellTags: Record<string, SpellTagRef>;
+  };
 };
 
 type AbilityReference = {
@@ -368,3 +379,6 @@ declare var mergeObject: <T>(
   other: Partial<T>,
   options?: Partial<MergeObjectOptions>
 ) => T;
+
+type SpellComponentRef = { label: string; abbr: string };
+type SpellTagRef = { label: string; abbr: string; tag: true };

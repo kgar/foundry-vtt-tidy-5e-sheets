@@ -3,7 +3,6 @@
   import { onMount } from 'svelte';
   import { FoundryAdapter } from '../foundry/foundry-adapter';
   import type { SheetFunctions, TidyDropdownOption } from 'src/types/types';
-  import { log } from 'src/utils/logging';
   import { SettingsProvider } from 'src/settings/settings';
   import Tidy5eActorOriginSummaryConfig from './tidy5e-actor-origin-summary-config';
   import CharacterProfile from './CharacterProfile.svelte';
@@ -409,7 +408,7 @@
     class="tab spellbook"
     class:active={currentTabParam.get() === 'spellbook'}
   >
-    <SpellbookTab />
+    <SpellbookTab {context} />
   </div>
   <div class="tab features" class:active={currentTabParam.get() === 'features'}>
     <FeaturesTab {context} scrollTop={tabToScrollTopMap.get('features') ?? 0} />

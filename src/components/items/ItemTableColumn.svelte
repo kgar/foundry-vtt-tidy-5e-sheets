@@ -1,9 +1,15 @@
 <script lang="ts">
   export let primary: boolean = false;
   export let baseWidth: string | undefined = undefined;
+  export let title: string | undefined = undefined;
 </script>
 
-<div class="item-table-column" class:primary style:flex-basis={baseWidth}>
+<div
+  class="item-table-column"
+  class:primary
+  style:flex-basis={baseWidth}
+  {title}
+>
   <slot />
 </div>
 

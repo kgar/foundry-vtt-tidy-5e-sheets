@@ -4,6 +4,9 @@
 
   export let dataset: Record<string, unknown>;
   export let actor: Actor5e;
+  /**
+   * Override for the underlying create button's `create()` function.
+   */
   export let create: (() => void) | undefined = undefined;
 </script>
 
