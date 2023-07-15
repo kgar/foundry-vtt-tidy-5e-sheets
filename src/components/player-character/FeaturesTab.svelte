@@ -23,6 +23,7 @@
   import ItemAddUses from '../items/ItemAddUses.svelte';
   import ListContainer from '../layout/ListContainer.svelte';
   import FilteredItems from '../items/FilteredItems.svelte';
+  import ItemControls from '../items/ItemControls.svelte';
 
   // TODO: this is intended to be shared between characters, NPCs, and Vehicles; retype the context so it can be one of the three.
   export let context: CharacterSheetContext;
@@ -178,13 +179,13 @@
 
             {#if context.owner && classicControlsEnabled}
               <ItemTableCell baseWidth={classicControlsBaseWidth}>
-                <div class="feature-controls flexrow">
+                <ItemControls>
                   <ItemEditControl {item} />
                   {#if allowEdit}
                     <ItemDuplicateControl {item} />
                     <ItemDeleteControl {item} />
                   {/if}
-                </div>
+                </ItemControls>
               </ItemTableCell>
             {/if}
           </ItemTableRow>
@@ -282,13 +283,13 @@
 
             {#if context.owner && classicControlsEnabled && context.editable}
               <ItemTableCell baseWidth={classicControlsBaseWidth}>
-                <div class="feature-controls">
+                <ItemControls>
                   <ItemEditControl {item} />
                   {#if allowEdit}
                     <ItemDuplicateControl {item} />
                     <ItemDeleteControl {item} />
                   {/if}
-                </div>
+                </ItemControls>
               </ItemTableCell>
             {/if}
           </ItemTableRow>
@@ -397,13 +398,13 @@
 
             {#if context.owner && classicControlsEnabled}
               <ItemTableCell baseWidth={classicControlsBaseWidth}>
-                <div class="feature-controls flexrow">
+                <ItemControls>
                   <ItemEditControl {item} />
                   {#if allowEdit}
                     <ItemDuplicateControl {item} />
                     <ItemDeleteControl {item} />
                   {/if}
-                </div>
+                </ItemControls>
               </ItemTableCell>
             {/if}
           </ItemTableRow>
@@ -479,13 +480,13 @@
 
             {#if context.owner && classicControlsEnabled}
               <ItemTableCell baseWidth={classicControlsBaseWidth}>
-                <div class="feature-controls flexrow">
+                <ItemControls>
                   <ItemEditControl {item} />
                   {#if allowEdit}
                     <ItemDuplicateControl {item} />
                     <ItemDeleteControl {item} />
                   {/if}
-                </div>
+                </ItemControls>
               </ItemTableCell>
             {/if}
           </ItemTableRow>
@@ -513,18 +514,3 @@
   </div>
   <article class="mod-roll-buttons" />
 </div> -->
-
-<style lang="scss">
-  .feature-controls {
-    align-self: stretch;
-    display: flex;
-    justify-content: flex-end;
-    min-width: 5.3125rem;
-    font-size: 0.75rem;
-    padding: 0 0.125rem;
-
-    :global(> *) {
-      flex: 1;
-    }
-  }
-</style>

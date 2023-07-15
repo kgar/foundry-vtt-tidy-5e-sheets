@@ -15,6 +15,7 @@
   import ItemContext from '../items/ItemContext.svelte';
   import ListContainer from '../layout/ListContainer.svelte';
   import ItemTableFooter from '../items/ItemTableFooter.svelte';
+  import ItemControls from '../items/ItemControls.svelte';
 
   export let context: any;
 
@@ -239,7 +240,7 @@
                   itemContext={context.itemContext}
                   let:ctx
                 >
-                  <div class="spell-controls flexrow">
+                  <ItemControls>
                     {#if section.canPrepare}
                       <a
                         class="item-control item-toggle"
@@ -259,7 +260,7 @@
                       <ItemDuplicateControl item={spell} />
                       <ItemDeleteControl item={spell} />
                     {/if}
-                  </div>
+                  </ItemControls>
                 </ItemContext>
               </ItemTableCell>
             {/if}

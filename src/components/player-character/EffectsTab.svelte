@@ -15,6 +15,7 @@
   import ItemControl from '../items/ItemControl.svelte';
   import { CONSTANTS } from 'src/constants';
   import ListContainer from '../layout/ListContainer.svelte';
+  import ItemControls from '../items/ItemControls.svelte';
 
   export let context: CharacterSheetContext;
   export let scrollTop: number;
@@ -81,7 +82,7 @@
 
             {#if context.owner && classicControlsEnabled}
               <ItemTableCell baseWidth={classicControlsBaseWidth}>
-                <div class="effect-controls">
+                <ItemControls>
                   <ItemControl
                     on:click={() =>
                       effect.update({ disabled: !effect.disabled })}
@@ -105,7 +106,7 @@
                       iconCssClass="fas fa-trash"
                     />
                   {/if}
-                </div>
+                </ItemControls>
               </ItemTableCell>
             {/if}
           </ItemTableRow>
@@ -121,18 +122,3 @@
     {/if}
   {/each}
 </ListContainer>
-
-<style lang="scss">
-  .effect-controls {
-    align-self: stretch;
-    display: flex;
-    justify-content: flex-end;
-    min-width: 5.3125rem;
-    font-size: 0.75rem;
-    padding: 0 0.125rem;
-
-    :global(> *) {
-      flex: 1;
-    }
-  }
-</style>
