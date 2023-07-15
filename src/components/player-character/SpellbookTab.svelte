@@ -59,7 +59,8 @@
     SettingsProvider.settings.hideIconsNextToTheItemName.get();
 </script>
 
-<div class="inventory-filters">
+<!-- Break some of this out into components -->
+<!-- <div class="inventory-filters">
   <ul class="filter-list" data-filter="features">
     <li class="filter-title" title={localize('DND5E.Filter')}>
       <i class="fas fa-filter" />
@@ -88,7 +89,7 @@
       {localize('DND5E.Reaction')}
     </li>
   </ul>
-</div>
+</div> -->
 
 <ListContainer>
   <div class="spellbook-list">
