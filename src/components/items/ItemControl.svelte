@@ -11,7 +11,7 @@
 <a
   class="item-control"
   class:inactive={!active}
-  on:click={() => dispatcher('click')}
+  on:click|preventDefault|stopPropagation={() => dispatcher('click')}
   {title}
   role="button"
 >

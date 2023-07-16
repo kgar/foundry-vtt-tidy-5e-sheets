@@ -18,13 +18,15 @@
     color: var(--t5e-tertiary-color);
     font-family: var(--t5e-signika);
     font-size: 0.75rem;
-    text-align: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
 
     &.primary {
       color: var(--t5e-primary-font);
       font-weight: 700;
       flex: 1;
-      text-align: left;
+      justify-content: flex-start;
     }
   }
 </style>

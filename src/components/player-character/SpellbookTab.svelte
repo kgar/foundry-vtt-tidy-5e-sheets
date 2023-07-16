@@ -15,8 +15,11 @@
   import ItemContext from '../items/ItemContext.svelte';
   import ListContainer from '../layout/ListContainer.svelte';
   import ItemTableFooter from '../items/ItemTableFooter.svelte';
-  import ItemControl from '../items/ItemControl.svelte';
   import ItemControls from '../items/ItemControls.svelte';
+  import ItemPrimaryColumnLabel from '../items/ItemPrimaryColumnLabel.svelte';
+  import SpellSlotUses from '../items/SpellSlotUses.svelte';
+  import ItemUses from '../items/ItemUses.svelte';
+  import SpellPrepareControl from '../items/SpellPrepareControl.svelte';
 
   export let context: any;
 
@@ -100,42 +103,23 @@
       <ItemTable>
         <ItemTableHeaderRow>
           <ItemTableColumn primary={true}>
-            {section.label}
+            <span class="spell-primary-column-label">
+              {section.label}
+            </span>
             {#if section.usesSlots}
               <!-- Spell slot markers here -->
-              <div class="spell-slot-markers">
-                {#each new Array(section.slots) as _, i}
-                  <span
-                    class="dot"
-                    class:empty={i >= section.uses}
-                    on:click={() => onSpellMarkerClick(section, i)}
-                  />
-                {/each}
-              </div>
-
-              <input
-                type="text"
-                name="system.spells.{section.prop}.value"
-                value={section.uses}
-                placeholder="0"
-                data-dtype="Number"
-              />
-              <span class="sep"> / </span>
-              <span
-                class="spell-max"
-                data-level={section.prop}
-                data-slots={section.slots}
-              >
-                {section.slots}
-              </span>
-              {#if context.editable}
-                <a
-                  class="slot-max-override"
-                  title={localize('DND5E.SpellProgOverride')}
-                >
-                  <i class="fas fa-pencil-alt" />
-                </a>
+              {#if !SettingsProvider.settings.hideSpellSlotMarker.get()}
+                <div class="spell-slot-markers">
+                  {#each new Array(section.slots) as _, i}
+                    <span
+                      class="dot"
+                      class:empty={i >= section.uses}
+                      on:click={() => onSpellMarkerClick(section, i)}
+                    />
+                  {/each}
+                </div>
               {/if}
+              <SpellSlotUses {context} {section} />
             {/if}
           </ItemTableColumn>
           <ItemTableColumn
@@ -192,19 +176,7 @@
             </ItemTableCell>
             {#if spell.system.uses.per}
               <ItemTableCell baseWidth="3.125rem">
-                <input
-                  class="uses-value"
-                  name="system.uses.value"
-                  type="text"
-                  value={spell.system.uses.value}
-                />
-                /
-                <input
-                  class="uses-max"
-                  name="system.uses.max"
-                  type="text"
-                  value={spell.system.uses.max}
-                />
+                <ItemUses item={spell} />
               </ItemTableCell>
             {/if}
             {#if !hideIconsNextToTheItemName && FoundryAdapter.tryGetFlag(spell, 'favorite')}
@@ -260,11 +232,7 @@
                     {#if spell.system.preparation?.mode === 'always'}
                       <span />
                     {:else if section.canPrepare}
-                      <ItemControl
-                        title={ctx.toggleTitle}
-                        iconCssClass="fas fa-book"
-                        active={spell.system.preparation.prepared}
-                      />
+                      <SpellPrepareControl {ctx} {spell} />
                     {/if}
                     <ItemEditControl item={spell} />
                     {#if allowEdit}
@@ -284,6 +252,13 @@
 </ListContainer>
 
 <style lang="scss">
+  .spell-primary-column-label {
+    font-size: 0.75rem;
+    line-height: 0.75rem;
+    flex: 0 0 3.75rem;
+    white-space: nowrap;
+  }
+
   .spellbook-list {
     :global(.prepared) {
       background-color: var(--t5e-equipped);
@@ -323,6 +298,7 @@
   .spell-slot-markers {
     display: flex;
     gap: 0.125rem;
+    margin-top: -0.125rem;
     align-items: center;
 
     .dot {

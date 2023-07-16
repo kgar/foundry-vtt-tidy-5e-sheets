@@ -234,6 +234,9 @@ export const FoundryAdapter = {
     );
     return map;
   },
+  getProperty(obj: any, path: string): unknown {
+    return foundry.utils.getProperty(obj, path);
+  },
 };
 
 /* ------------------------------------------------------

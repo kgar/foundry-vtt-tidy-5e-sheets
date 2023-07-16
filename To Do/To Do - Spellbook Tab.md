@@ -7,7 +7,8 @@
     - [x] HTML
     - [ ] Styles
     - [x] Functionality
-    - [ ] Refactor: extract to component?
+    - [ ] Refactor: extract to component
+    - [ ] Achieve the hover effect which visualizes the delta change to occur.
   - [ ] Styles
     - [ ] etc.
     - [ ] spell headers
@@ -42,6 +43,45 @@ _onToggleFilter(event) {
   else set.add(filter);
   return this.render();
 }
+```
+
+## Spell Preparation
+
+```js
+  /**
+   * Handle toggling the state of an Owned Item within the Actor.
+   * @param {Event} event        The triggering click event.
+   * @returns {Promise<Item5e>}  Item with the updates applied.
+   * @private
+   */
+  _onToggleItem(event) {
+    event.preventDefault();
+    const itemId = event.currentTarget.closest(".item").dataset.itemId;
+    const item = this.actor.items.get(itemId);
+    const attr = item.type === "spell" ? "system.preparation.prepared" : "system.equipped";
+    return item.update({[attr]: !foundry.utils.getProperty(item, attr)});
+  }
+```
+
+## Spell slot override
+
+```js
+  async _onSpellSlotOverride(event) {
+    const span = event.currentTarget.parentElement;
+    const level = span.dataset.level;
+    const override = this.actor.system.spells[level].override || span.dataset.slots;
+    const input = document.createElement("INPUT");
+    input.type = "text";
+    input.name = `system.spells.${level}.override`;
+    input.value = override;
+    input.placeholder = span.dataset.slots;
+    input.dataset.dtype = "Number";
+
+    // Replace the HTML
+    const parent = span.parentElement;
+    parent.removeChild(span);
+    parent.appendChild(input);
+  }
 ```
 
 ## Spell slot markers
