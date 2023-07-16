@@ -16,7 +16,6 @@
   import ListContainer from '../layout/ListContainer.svelte';
   import ItemTableFooter from '../items/ItemTableFooter.svelte';
   import ItemControls from '../items/ItemControls.svelte';
-  import ItemPrimaryColumnLabel from '../items/ItemPrimaryColumnLabel.svelte';
   import SpellSlotUses from '../items/SpellSlotUses.svelte';
   import ItemUses from '../items/ItemUses.svelte';
   import SpellPrepareControl from '../items/SpellPrepareControl.svelte';
@@ -152,7 +151,7 @@
           >
             {localize('DND5E.Usage')}
           </ItemTableColumn>
-          <ItemTableColumn baseWidth="7.5rem" />
+          <ItemTableColumn baseWidth={classicControlsBaseWidth} />
         </ItemTableHeaderRow>
         {#each section.spells as spell}
           <ItemTableRow
