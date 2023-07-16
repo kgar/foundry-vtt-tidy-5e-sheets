@@ -19,6 +19,7 @@
   import SpellSlotUses from '../items/SpellSlotUses.svelte';
   import ItemUses from '../items/ItemUses.svelte';
   import SpellPrepareControl from '../items/SpellPrepareControl.svelte';
+  import SpellSlotMarkers from '../items/SpellSlotMarkers.svelte';
 
   export let context: any;
 
@@ -52,16 +53,6 @@
 
   const hideIconsNextToTheItemName =
     SettingsProvider.settings.hideIconsNextToTheItemName.get();
-
-  function onSpellMarkerClick(section: any, markerIndex: number) {
-    let isEmpty = markerIndex >= section.uses;
-
-    let value = isEmpty ? markerIndex + 1 : markerIndex;
-
-    context.actor.update({
-      [`data.spells.${section.prop}.value`]: value,
-    });
-  }
 </script>
 
 <!-- Break some of this out into components -->
@@ -108,15 +99,7 @@
             {#if section.usesSlots}
               <!-- Spell slot markers here -->
               {#if !SettingsProvider.settings.hideSpellSlotMarker.get()}
-                <div class="spell-slot-markers">
-                  {#each new Array(section.slots) as _, i}
-                    <span
-                      class="dot"
-                      class:empty={i >= section.uses}
-                      on:click={() => onSpellMarkerClick(section, i)}
-                    />
-                  {/each}
-                </div>
+                <SpellSlotMarkers {context} {section} />
               {/if}
               <SpellSlotUses {context} {section} />
             {/if}
@@ -292,33 +275,5 @@
 
   .spellbook-list :global(.components) {
     gap: 0;
-  }
-
-  .spell-slot-markers {
-    display: flex;
-    gap: 0.125rem;
-    margin-top: -0.125rem;
-    align-items: center;
-
-    .dot {
-      width: 0.75rem;
-      height: 0.75rem;
-      border-radius: 50%;
-      background-color: var(--t5e-primary-accent);
-      border: 1px solid var(--t5e-primary-font);
-      &:hover,
-      &.change {
-        background-color: var(--t5e-warning-accent);
-      }
-
-      &.empty {
-        background-color: transparent;
-
-        &:hover,
-        &.change {
-          background-color: var(--t5e-prepared);
-        }
-      }
-    }
   }
 </style>

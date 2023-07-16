@@ -3,23 +3,26 @@
 - [x] Make a component
 - [ ] Implement in list mode
   - [x] HTML
-  - [ ] Spell slot markers
+  - [x] Spell slot markers
     - [x] HTML
-    - [ ] Styles
+    - [x] Styles
     - [x] Functionality
-    - [ ] Refactor: extract to component
-    - [ ] Achieve the hover effect which visualizes the delta change to occur.
-  - [ ] Styles
-    - [ ] etc.
-    - [ ] spell headers
+    - [x] Refactor: extract to component
+    - [x] Achieve the hover effect which visualizes the delta change to occur.
+  - [x] Styles
+    - [x] etc.
+    - [x] spell headers
   - [ ] Functionality
-- [ ] Implement ItemGrid family of components and support grid mode.
 - [ ] Implement search.
 - [ ] Implement action economy filters
+- [ ] Grid Toggle
+- [ ] Implement ItemGrid family of components and support grid mode.
+- [ ] Spellbook Footer
 - [ ] Settings
   - [ ] hideSpellSlotMarker
   - [ ] ...?
 - [ ] Styles
+- [ ] Put spell-related item components into their own spell-related directory
 - [ ] ...?
 
 ## Side quests
