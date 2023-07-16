@@ -1,5 +1,15 @@
 # Spellbook To Do's
 
+## Side quests
+
+- [ ] Make shared components for filter container and individual filters; individual filters can be made generic by filter name ("action", "bonus action", etc.) and set ("feature", "effect", etc.)
+- [ ] Make shared component for nav tabs and eliminate the separate stylesheet
+- [x] Make a component for the item controls container (the buttons on the far right) that can be generically used. It could even take `allowEdit` and toggle its own width accordingly.
+- [x] Make component for search so we can share
+- [x] Make the scrollable item table container a shared, generic component
+
+## Tab impl
+
 - [x] Make a component
 - [ ] Implement in list mode
   - [x] HTML
@@ -12,7 +22,7 @@
   - [x] Styles
     - [x] etc.
     - [x] spell headers
-  - [ ] Functionality
+  - [x] Functionality
 - [ ] Implement search.
 - [ ] Implement action economy filters
 - [ ] Grid Toggle
@@ -25,14 +35,6 @@
 - [ ] Put spell-related item components into their own spell-related directory
 - [ ] ...?
 
-## Side quests
-
-- [x] Make a component for the item controls container (the buttons on the far right) that can be generically used. It could even take `allowEdit` and toggle its own width accordingly.
-- [x] Make component for search so we can share
-- [x] Make the scrollable item table container a shared, generic component
-- [ ] Make shared components for filter container and individual filters; individual filters can be made generic by filter name ("action", "bonus action", etc.) and set ("feature", "effect", etc.)
-- [ ] Make shared component for nav tabs and eliminate the separate stylesheet
-- [ ]
 
 ## How Filter Toggling Works
 
