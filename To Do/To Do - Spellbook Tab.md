@@ -1,17 +1,9 @@
 # Spellbook To Do's
 
-## Side quests
-
-- [ ] Make shared components for filter container and individual filters; individual filters can be made generic by filter name ("action", "bonus action", etc.) and set ("feature", "effect", etc.)
-- [ ] Make shared component for nav tabs and eliminate the separate stylesheet
-- [x] Make a component for the item controls container (the buttons on the far right) that can be generically used. It could even take `allowEdit` and toggle its own width accordingly.
-- [x] Make component for search so we can share
-- [x] Make the scrollable item table container a shared, generic component
-
 ## Tab impl
 
 - [x] Make a component
-- [ ] Implement in list mode
+- [x] Implement in list mode
   - [x] HTML
   - [x] Spell slot markers
     - [x] HTML
@@ -23,10 +15,10 @@
     - [x] etc.
     - [x] spell headers
   - [x] Functionality
-- [ ] Implement search.
-- [ ] Implement action economy filters
-- [ ] Grid Toggle
-- [ ] Implement ItemGrid family of components and support grid mode.
+- [x] Implement search.
+- [x] Implement action economy filters
+- [ ] Grid Toggle with stub view (wasp wants to make this)
+  - ~~Hold off on this one: Implement ItemGrid family of components and support grid mode.~~
 - [ ] Spellbook Footer
 - [ ] Settings
   - [ ] hideSpellSlotMarker
@@ -34,6 +26,14 @@
 - [ ] Styles
 - [ ] Put spell-related item components into their own spell-related directory
 - [ ] ...?
+
+## Side quests
+
+- [ ] Make shared component for nav tabs and eliminate the separate stylesheet
+- [x] Make shared components for filter container and individual filters; individual filters can be made generic by filter name ("action", "bonus action", etc.) and set ("feature", "effect", etc.)
+- [x] Make a component for the item controls container (the buttons on the far right) that can be generically used. It could even take `allowEdit` and toggle its own width accordingly.
+- [x] Make component for search so we can share
+- [x] Make the scrollable item table container a shared, generic component
 
 
 ## How Filter Toggling Works

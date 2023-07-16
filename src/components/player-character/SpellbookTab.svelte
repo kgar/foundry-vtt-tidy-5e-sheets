@@ -61,6 +61,13 @@
   const hideIconsNextToTheItemName =
     SettingsProvider.settings.hideIconsNextToTheItemName.get();
   let searchCriteria: string = '';
+
+  const abilities = Object.entries(context.abilities).map(
+    (a: [string, { label: string }]) => ({
+      abbr: a[0],
+      ...a[1],
+    })
+  );
 </script>
 
 <ItemFilters>
@@ -244,6 +251,43 @@
     {/each}
   </div>
 </ListContainer>
+
+<div class="spellcasting-ability">
+  <h3 class="spell-dc spell-mod">
+    {localize('DND5E.SpellDC')}
+    {context.system.attributes.spelldc} / {localize('TIDY5E.SpellAttackMod')}:
+    <span class="spell-attack-mod" />
+  </h3>
+  <div class="max-prepared-spells">
+    <p>{localize('TIDY5E.PreparedSpells')}</p>
+    <span class="spells-prepared">{context.preparedSpells ?? 0}</span>
+    /
+    <input
+      class="max-preparation"
+      type="number"
+      name="flags.{CONSTANTS.MODULE_ID}.maxPreparedSpells"
+      value={FoundryAdapter.tryGetFlag(context.actor, 'maxPreparedSpells')}
+      data-dtype="Number"
+      placeholder="0"
+      data-tooltip={localize('TIDY5E.PreparedSpellsMax')}
+    />
+  </div>
+  <div class="spellcasting-attribute">
+    <p>{localize('DND5E.SpellAbility')}</p>
+    <select name="system.attributes.spellcasting" data-type="String">
+      <option value="" selected={!context.system.attributes.spellcasting}
+        >{localize('DND5E.None')}</option
+      >
+      {#each abilities as ability}
+        <option
+          value={ability.abbr}
+          selected={context.system.attributes.spellcasting === ability.abbr}
+          >{ability.label}</option
+        >
+      {/each}
+    </select>
+  </div>
+</div>
 
 <style lang="scss">
   .spell-primary-column-label {
