@@ -2,7 +2,7 @@
   import { FoundryAdapter, type Actor5e } from 'src/foundry/foundry-adapter';
   import { onMount } from 'svelte';
 
-  export let searchCriteria: string;
+  export let searchCriteria: string = '';
   export let actor: Actor5e;
   export let searchFlag: string;
 
