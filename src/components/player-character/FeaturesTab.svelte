@@ -4,7 +4,6 @@
     type CharacterSheetContext,
   } from 'src/foundry/foundry-adapter';
   import { SettingsProvider } from 'src/settings/settings';
-  import { onMount } from 'svelte';
   import { formatAsModifier } from 'src/utils/formatting';
   import ItemEditControl from '../items/ItemEditControl.svelte';
   import ItemDuplicateControl from '../items/ItemDuplicateControl.svelte';
@@ -27,17 +26,10 @@
 
   // TODO: this is intended to be shared between characters, NPCs, and Vehicles; retype the context so it can be one of the three.
   export let context: CharacterSheetContext;
-  export let scrollTop: number;
 
   const localize = FoundryAdapter.localize;
   const allowEdit = FoundryAdapter.tryGetFlag(context.actor, 'allow-edit');
   const classicControlsBaseWidth = allowEdit ? '7.5rem' : '5.3125rem';
-
-  let scrollView: HTMLElement;
-
-  onMount(() => {
-    scrollView.scrollTop = scrollTop ?? 0;
-  });
 
   const classicControlsEnabled =
     SettingsProvider.settings.classicControlsEnabled.get();
@@ -85,7 +77,7 @@
 </script>
 
 <div class="inventory-filters">
-  <ul class="filter-list" data-filter="features" bind:this={scrollView}>
+  <ul class="filter-list" data-filter="features">
     <li class="filter-title" title={localize('DND5E.Filter')}>
       <i class="fas fa-filter" />
     </li>

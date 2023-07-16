@@ -2,13 +2,22 @@
 
 - [x] Make a component
 - [ ] Implement in list mode
-  - [ ] HTML
+  - [x] HTML
+  - [ ] Spell slot markers
+    - [ ] HTML
+    - [ ] Styles
+    - [ ] Functionality
+    - [ ] Refactor: extract to component?
   - [ ] Styles
+    - [ ] etc.
+    - [ ] spell headers
   - [ ] Functionality
 - [ ] Implement ItemGrid family of components and support grid mode.
 - [ ] Implement search.
 - [ ] Implement action economy filters
 - [ ] Settings
+  - [ ] hideSpellSlotMarker
+  - [ ] ...?
 - [ ] Styles
 - [ ] ...?
 
@@ -19,6 +28,8 @@
 - [x] Make component for search so we can share
 - [x] Make the scrollable item table container a shared, generic component
 - [ ] Make shared components for filter container and individual filters; individual filters can be made generic by filter name ("action", "bonus action", etc.) and set ("feature", "effect", etc.)
+- [ ] Make shared component for nav tabs and eliminate the separate stylesheet
+- [ ] 
 
 
 ## How Filter Toggling Works

@@ -411,13 +411,11 @@
     <SpellbookTab {context} />
   </div>
   <div class="tab features" class:active={currentTabParam.get() === 'features'}>
-    <FeaturesTab {context} scrollTop={tabToScrollTopMap.get('features') ?? 0} />
+    <FeaturesTab {context} />
   </div>
   <div class="tab effects" class:active={currentTabParam.get() === 'effects'}>
     <EffectsTab
       {context}
-      on:scrollTopChanged={scrollTopChanged}
-      scrollTop={tabToScrollTopMap.get('effects') ?? 0}
     />
   </div>
   <div

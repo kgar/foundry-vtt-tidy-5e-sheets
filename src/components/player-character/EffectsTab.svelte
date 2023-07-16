@@ -4,7 +4,6 @@
     type CharacterSheetContext,
   } from 'src/foundry/foundry-adapter';
   import { SettingsProvider } from 'src/settings/settings';
-  import { createEventDispatcher, onMount } from 'svelte';
   import ItemTable from '../items/ItemTable.svelte';
   import ItemTableHeaderRow from '../items/ItemTableHeaderRow.svelte';
   import ItemTableRow from '../items/ItemTableRow.svelte';
@@ -18,7 +17,6 @@
   import ItemControls from '../items/ItemControls.svelte';
 
   export let context: CharacterSheetContext;
-  export let scrollTop: number;
 
   const localize = FoundryAdapter.localize;
 
@@ -30,16 +28,6 @@
   const classicControlsBaseWidth = allowEdit ? '7.5rem' : '5.3125rem';
   const classicControlsEnabled =
     SettingsProvider.settings.classicControlsEnabled.get();
-
-  const dispatcher = createEventDispatcher<{
-    scrollTopChanged: { top: number };
-  }>();
-
-  let scrollView: HTMLElement;
-
-  onMount(() => {
-    scrollView.scrollTop = scrollTop ?? 0;
-  });
 </script>
 
 <ListContainer>

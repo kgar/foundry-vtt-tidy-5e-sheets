@@ -243,14 +243,13 @@
                   let:ctx
                 >
                   <ItemControls>
-                    {#if section.canPrepare}
+                    {#if spell.system.preparation?.mode === 'always'}
+                      <span />
+                    {:else if section.canPrepare}
                       <ItemControl
                         title={ctx.toggleTitle}
-                        iconCssClass={spell.system.preparation.mode === 'always'
-                          ? ''
-                          : spell.system.preparation.prepared
-                          ? 'fas fa-book'
-                          : 'fas fa-book inactive'}
+                        iconCssClass="fas fa-book"
+                        active={spell.system.preparation.prepared}
                       />
                     {/if}
                     <ItemEditControl item={spell} />
