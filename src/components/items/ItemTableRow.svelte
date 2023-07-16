@@ -6,6 +6,7 @@
 
   export let item: any | undefined = undefined;
   export let contextMenu: { type: string; id: string } | undefined = undefined;
+  export let cssClass: string = '';
 
   let showSummary = false;
   let chatData: any;
@@ -25,7 +26,7 @@
 </script>
 
 <div
-  class="item-table-row"
+  class="item-table-row {cssClass}"
   data-context-menu={contextMenu?.type}
   data-context-menu-entity-id={contextMenu?.id}
   on:mousedown={(event) => dispatcher('mousedown', event)}
