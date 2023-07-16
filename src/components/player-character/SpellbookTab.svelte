@@ -26,13 +26,6 @@
   const allowEdit = FoundryAdapter.tryGetFlag(context.actor, 'allow-edit');
   const classicControlsBaseWidth = allowEdit ? '7.5rem' : '5.3125rem';
 
-  let searchCriteria: string =
-    FoundryAdapter.tryGetFlag<string>(context.actor, 'spell-search') ?? '';
-
-  function rememberSearch() {}
-
-  function clearSearch() {}
-
   const localize = FoundryAdapter.localize;
 
   function getSpellRowClasses(spell: any): string {
@@ -57,6 +50,16 @@
 
   const hideIconsNextToTheItemName =
     SettingsProvider.settings.hideIconsNextToTheItemName.get();
+
+  function onSpellMarkerClick(section: any, markerIndex: number) {
+    let isEmpty = markerIndex >= section.uses;
+
+    let value = isEmpty ? markerIndex + 1 : markerIndex;
+
+    context.actor.update({
+      [`data.spells.${section.prop}.value`]: value,
+    });
+  }
 </script>
 
 <!-- Break some of this out into components -->
@@ -99,6 +102,17 @@
           <ItemTableColumn primary={true}>
             {section.label}
             {#if section.usesSlots}
+              <!-- Spell slot markers here -->
+              <div class="spell-slot-markers">
+                {#each new Array(section.slots) as _, i}
+                  <span
+                    class="dot"
+                    class:empty={i >= section.uses}
+                    on:click={() => onSpellMarkerClick(section, i)}
+                  />
+                {/each}
+              </div>
+
               <input
                 type="text"
                 name="system.spells.{section.prop}.value"
@@ -304,5 +318,32 @@
 
   .spellbook-list :global(.components) {
     gap: 0;
+  }
+
+  .spell-slot-markers {
+    display: flex;
+    gap: 0.125rem;
+    align-items: center;
+
+    .dot {
+      width: 0.75rem;
+      height: 0.75rem;
+      border-radius: 50%;
+      background-color: var(--t5e-primary-accent);
+      border: 1px solid var(--t5e-primary-font);
+      &:hover,
+      &.change {
+        background-color: var(--t5e-warning-accent);
+      }
+
+      &.empty {
+        background-color: transparent;
+
+        &:hover,
+        &.change {
+          background-color: var(--t5e-prepared);
+        }
+      }
+    }
   }
 </style>
