@@ -2,9 +2,6 @@
 
 ## Top of Mind
 
-- [ ] Ensure item summary functionality can be shared
-
-
 
 ## Character Tabs
 
@@ -26,6 +23,9 @@
     - [ ] Styles
       - [ ] src_scss\partials_inventory-grid.scss
       - [ ] src_scss\partials_inventory.scss
+- [x] Ensure item summary functionality can be shared
+
+
 
 - [x] Implement default tab
 - [ ] Visual bug (existing): when any character detail field is too long in Biography top-notes for a PC, it will blow out the layout. Consider CSS grid as a replacement. Test carefully on all the major browsers. Also just consider inputs instead of contenteditable fields?
@@ -38,6 +38,13 @@
 - [ ] Leverage TypeScript to lock down and document all known flags for each type of flagged entity (actor, NPC, vehicle, Item)
 
 
+
+## Vehicle Sheet
+
+- [ ] Port the existing sheet
+- [ ] Get with SaltyJ to resolve issues
+- [ ] Resolve existing github issues with vehicles
+- [ ] Query the group for possible improvements
 
 ## Security
 

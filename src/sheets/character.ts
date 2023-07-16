@@ -1,6 +1,6 @@
 import { FoundryAdapter } from '../foundry/foundry-adapter';
 import Tidy5eSheet from './Tidy5eSheet.svelte';
-import { log } from 'src/utils/logging';
+import { error, log } from 'src/utils/logging';
 import { SheetParameter } from 'src/utils/sheet-parameter';
 import { SettingsProvider } from 'src/settings/settings';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
@@ -54,6 +54,8 @@ export class Tidy5eSheetKgar extends ActorSheet5eCharacter {
           onEditImage: this._onEditImage.bind(this),
           onToggleAbilityProficiency:
             this._onToggleAbilityProficiency.bind(this),
+          onToggleFilter: this.onToggleFilter.bind(this),
+          isFilterActive: this.isFilterActive.bind(this),
         },
         currentTabParam: this.currentTabParam,
         tabToScrollTopMap: this.tabToScrollTopMap,
@@ -84,5 +86,24 @@ export class Tidy5eSheetKgar extends ActorSheet5eCharacter {
         FoundryAdapter.setFlag(this.actor, 'scrollTop', scrollView.scrollTop);
       }
     }
+  }
+
+  onToggleFilter(setName: string, filterName: string) {
+    const set = this._filters[setName];
+    if (!set) {
+      error(`Unable to find filter set for '${setName}'. Filtering failed.`);
+      return;
+    }
+    if (set.has(filterName)) {
+      set.delete(filterName);
+    } else {
+      set.add(filterName);
+    }
+
+    return this.render();
+  }
+
+  isFilterActive(setName: string, filterName: string): boolean {
+    return this._filters[setName]?.has(filterName) === true;
   }
 }

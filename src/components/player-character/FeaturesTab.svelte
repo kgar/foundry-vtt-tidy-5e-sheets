@@ -23,9 +23,14 @@
   import ListContainer from '../layout/ListContainer.svelte';
   import FilteredItems from '../items/FilteredItems.svelte';
   import ItemControls from '../items/ItemControls.svelte';
+  import ItemFilters from '../items/ItemFilters.svelte';
+  import ItemFilterSearch from '../items/ItemFilterSearch.svelte';
+  import type { SheetFunctions } from 'src/types/types';
+  import ItemFilterOption from '../items/ItemFilterOption.svelte';
 
   // TODO: this is intended to be shared between characters, NPCs, and Vehicles; retype the context so it can be one of the three.
   export let context: CharacterSheetContext;
+  export let sheetFunctions: SheetFunctions;
 
   const localize = FoundryAdapter.localize;
   const allowEdit = FoundryAdapter.tryGetFlag(context.actor, 'allow-edit');
@@ -64,49 +69,25 @@
     return context.itemContext[id]?.availableLevels ?? [];
   }
 
-  let searchCriteria: string =
-    FoundryAdapter.tryGetFlag<string>(context.actor, 'feat-search') ?? '';
-
-  async function rememberSearch() {
-    await FoundryAdapter.setFlag(context.actor, 'feat-search', searchCriteria);
-  }
-
-  async function clearSearch() {
-    await FoundryAdapter.setFlag(context.actor, 'feat-search', '');
-  }
+  let searchCriteria: string = '';
 </script>
 
-<div class="inventory-filters">
-  <ul class="filter-list" data-filter="features">
-    <li class="filter-title" title={localize('DND5E.Filter')}>
-      <i class="fas fa-filter" />
-    </li>
-    <li class="filter-search" title={localize('TIDY5E.SearchHint')}>
-      <input
-        type="text"
-        id="feat-search"
-        placeholder={localize('TIDY5E.SearchFeat')}
-        bind:value={searchCriteria}
-        on:blur|preventDefault|stopPropagation={() => rememberSearch()}
-      />
-      <!-- svelte-ignore a11y-click-events-have-key-events -->
-      <span
-        class="clear-search"
-        title={localize('TIDY5E.SearchClear')}
-        style:display={searchCriteria === '' ? 'none' : undefined}
-        on:click|preventDefault|stopPropagation={() => clearSearch()}
-        ><i class="fas fa-times-circle" /></span
-      >
-    </li>
-    <li class="filter-item" data-filter="action">{localize('DND5E.Action')}</li>
-    <li class="filter-item" data-filter="bonus">
-      {localize('DND5E.BonusAction')}
-    </li>
-    <li class="filter-item" data-filter="reaction">
-      {localize('DND5E.Reaction')}
-    </li>
-  </ul>
-</div>
+<ItemFilters>
+  <ItemFilterSearch
+    bind:searchCriteria
+    actor={context.actor}
+    searchFlag="feat-search"
+  />
+  <ItemFilterOption setName="features" filterName="action" {sheetFunctions}>
+    {localize('DND5E.Action')}
+  </ItemFilterOption>
+  <ItemFilterOption setName="features" filterName="bonus" {sheetFunctions}>
+    {localize('DND5E.BonusAction')}
+  </ItemFilterOption>
+  <ItemFilterOption setName="features" filterName="reaction" {sheetFunctions}>
+    {localize('DND5E.Reaction')}
+  </ItemFilterOption>
+</ItemFilters>
 
 <ListContainer>
   <FilteredItems

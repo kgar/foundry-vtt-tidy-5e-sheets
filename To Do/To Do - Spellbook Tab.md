@@ -50,6 +50,22 @@ _onToggleFilter(event) {
 }
 ```
 
+```js
+  /**
+   * Track the set of item filters which are applied
+   * @type {Object<string, Set>}
+   * @protected
+   */
+  _filters = {
+    inventory: new Set(),
+    spellbook: new Set(),
+    features: new Set(),
+    effects: new Set()
+  };
+```
+
+
+
 ## Spell Preparation
 
 ```js

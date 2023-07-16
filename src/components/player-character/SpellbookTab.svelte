@@ -20,8 +20,15 @@
   import ItemUses from '../items/ItemUses.svelte';
   import SpellPrepareControl from '../items/SpellPrepareControl.svelte';
   import SpellSlotMarkers from '../items/SpellSlotMarkers.svelte';
+  import type { SheetFunctions } from 'src/types/types';
+  import ItemFilterSearch from '../items/ItemFilterSearch.svelte';
+  import ItemFilters from '../items/ItemFilters.svelte';
+  import ItemFilterOption from '../items/ItemFilterOption.svelte';
+  import FilteredItems from '../items/FilteredItems.svelte';
+  import ItemFilterLayoutToggle from '../items/ItemFilterLayoutToggle.svelte';
 
   export let context: any;
+  export let sheetFunctions: SheetFunctions;
 
   const spellAbbreviationMap = FoundryAdapter.getSpellAbbreviationMap();
   const classicControlsEnabled =
@@ -53,182 +60,187 @@
 
   const hideIconsNextToTheItemName =
     SettingsProvider.settings.hideIconsNextToTheItemName.get();
+  let searchCriteria: string = '';
 </script>
 
-<!-- Break some of this out into components -->
-<!-- <div class="inventory-filters">
-  <ul class="filter-list" data-filter="features">
-    <li class="filter-title" title={localize('DND5E.Filter')}>
-      <i class="fas fa-filter" />
-    </li>
-    <li class="filter-search" title={localize('TIDY5E.SearchHint')}>
-      <input
-        type="text"
-        id="feat-search"
-        placeholder={localize('TIDY5E.SearchFeat')}
-        bind:value={searchCriteria}
-        on:blur|preventDefault|stopPropagation={() => rememberSearch()}
-      />
-      <span
-        class="clear-search"
-        title={localize('TIDY5E.SearchClear')}
-        style:display={searchCriteria === '' ? 'none' : undefined}
-        on:click|preventDefault|stopPropagation={() => clearSearch()}
-        ><i class="fas fa-times-circle" /></span
-      >
-    </li>
-    <li class="filter-item" data-filter="action">{localize('DND5E.Action')}</li>
-    <li class="filter-item" data-filter="bonus">
-      {localize('DND5E.BonusAction')}
-    </li>
-    <li class="filter-item" data-filter="reaction">
-      {localize('DND5E.Reaction')}
-    </li>
-  </ul>
-</div> -->
+<ItemFilters>
+  <ItemFilterSearch
+    bind:searchCriteria
+    actor={context.actor}
+    searchFlag="spell-search"
+  />
+  <ItemFilterOption setName="spellbook" filterName="action" {sheetFunctions}>
+    {localize('DND5E.Action')}
+  </ItemFilterOption>
+  <ItemFilterOption setName="spellbook" filterName="bonus" {sheetFunctions}>
+    {localize('DND5E.BonusAction')}
+  </ItemFilterOption>
+  <ItemFilterOption setName="spellbook" filterName="reaction" {sheetFunctions}>
+    {localize('DND5E.Reaction')}
+  </ItemFilterOption>
+  <ItemFilterOption
+    setName="spellbook"
+    filterName="concentration"
+    {sheetFunctions}
+  >
+    {localize('DND5E.Concentration')}
+  </ItemFilterOption>
+  <ItemFilterOption setName="spellbook" filterName="ritual" {sheetFunctions}>
+    {localize('DND5E.Ritual')}
+  </ItemFilterOption>
+  <ItemFilterOption setName="spellbook" filterName="prepared" {sheetFunctions}>
+    {localize('DND5E.Prepared')}
+  </ItemFilterOption>
+  <ItemFilterLayoutToggle />
+</ItemFilters>
 
 <ListContainer>
   <div class="spellbook-list">
     {#each context.spellbook as section}
-      <ItemTable>
-        <ItemTableHeaderRow>
-          <ItemTableColumn primary={true}>
-            <span class="spell-primary-column-label">
-              {section.label}
-            </span>
-            {#if section.usesSlots}
-              <!-- Spell slot markers here -->
-              {#if !SettingsProvider.settings.hideSpellSlotMarker.get()}
-                <SpellSlotMarkers {context} {section} />
+      <FilteredItems {searchCriteria} items={section.spells} let:filteredItems>
+        <ItemTable>
+          <ItemTableHeaderRow>
+            <ItemTableColumn primary={true}>
+              <span class="spell-primary-column-label">
+                {section.label}
+              </span>
+              {#if section.usesSlots}
+                <!-- Spell slot markers here -->
+                {#if !SettingsProvider.settings.hideSpellSlotMarker.get()}
+                  <SpellSlotMarkers {context} {section} />
+                {/if}
+                <SpellSlotUses {context} {section} />
               {/if}
-              <SpellSlotUses {context} {section} />
-            {/if}
-          </ItemTableColumn>
-          <ItemTableColumn
-            baseWidth="4.375rem"
-            title={localize('DND5E.SpellComponents')}
-          >
-            <i class="fas fa-mortar-pestle" />
-          </ItemTableColumn>
-          <ItemTableColumn
-            baseWidth="5.625rem"
-            title={localize('DND5E.SpellSchool')}
-          >
-            <i class="fas fa-hat-wizard" />
-          </ItemTableColumn>
-          <ItemTableColumn
-            baseWidth="7.5rem"
-            title={localize('DND5E.SpellTarget')}
-          >
-            {localize('DND5E.Target')}
-          </ItemTableColumn>
-          <ItemTableColumn
-            baseWidth="4.375rem"
-            title={localize('DND5E.SpellRange')}
-          >
-            {localize('DND5E.Range')}
-          </ItemTableColumn>
-          <ItemTableColumn
-            title={localize('DND5E.SpellUsage')}
-            baseWidth="7.5rem"
-          >
-            {localize('DND5E.Usage')}
-          </ItemTableColumn>
-          <ItemTableColumn baseWidth={classicControlsBaseWidth} />
-        </ItemTableHeaderRow>
-        {#each section.spells as spell}
-          <ItemTableRow
-            item={spell}
-            on:mousedown={(event) =>
-              FoundryAdapter.editOnMiddleClick(event.detail, spell)}
-            contextMenu={{
-              type: CONSTANTS.CONTEXT_MENU_TYPE_ITEMS,
-              id: spell.id,
-            }}
-            let:toggleSummary
-            cssClass={getSpellRowClasses(spell)}
-          >
-            <ItemTableCell primary={true}>
-              <ItemUseButton item={spell} />
-              <ItemName
-                on:click={(event) => toggleSummary(event.detail, context.actor)}
-              >
-                {spell.name}
-              </ItemName>
-            </ItemTableCell>
-            {#if spell.system.uses.per}
-              <ItemTableCell baseWidth="3.125rem">
-                <ItemUses item={spell} />
-              </ItemTableCell>
-            {/if}
-            {#if !hideIconsNextToTheItemName && FoundryAdapter.tryGetFlag(spell, 'favorite')}
-              <div class="item-state-icon" title="Favorite">
-                <i class="fas fa-bookmark icon-fav" />
-              </div>
-            {/if}
-            <ItemTableCell baseWidth="4.375rem" cssClass="components">
-              {#each spell.labels.components.all as component}
-                <span
-                  class="spell-component {component.tag ? component.abbr : ''}"
-                  title={spellAbbreviationMap.get(component.abbr)}
-                  >{component.abbr}</span
-                >
-              {/each}
-            </ItemTableCell>
-            <ItemTableCell
-              baseWidth="5.625rem"
-              title="{localize('DND5E.SpellSchool')}: {spell.labels.school}"
-            >
-              <span class="truncate">{spell.labels.school}</span>
-            </ItemTableCell>
-            <ItemTableCell
-              baseWidth="7.5rem"
-              title="{localize('DND5E.Target')}: {spell.labels.target}"
-            >
-              {#if spell.labels.target}
-                {spell.labels.target}
-              {:else}
-                {localize('DND5E.None')}
-              {/if}
-            </ItemTableCell>
-            <ItemTableCell
+            </ItemTableColumn>
+            <ItemTableColumn
               baseWidth="4.375rem"
-              title="{localize('DND5E.Range')}: {spell.labels.range}"
+              title={localize('DND5E.SpellComponents')}
             >
-              {spell.labels.range}
-            </ItemTableCell>
-            <ItemTableCell
+              <i class="fas fa-mortar-pestle" />
+            </ItemTableColumn>
+            <ItemTableColumn
+              baseWidth="5.625rem"
+              title={localize('DND5E.SpellSchool')}
+            >
+              <i class="fas fa-hat-wizard" />
+            </ItemTableColumn>
+            <ItemTableColumn
               baseWidth="7.5rem"
-              title={localize('DND5E.SpellUsage')}
+              title={localize('DND5E.SpellTarget')}
             >
-              {spell.labels.activation}
-            </ItemTableCell>
-            {#if context.owner && classicControlsEnabled}
-              <ItemTableCell baseWidth={classicControlsBaseWidth}>
-                <ItemContext
-                  item={spell}
-                  itemContext={context.itemContext}
-                  let:ctx
+              {localize('DND5E.Target')}
+            </ItemTableColumn>
+            <ItemTableColumn
+              baseWidth="4.375rem"
+              title={localize('DND5E.SpellRange')}
+            >
+              {localize('DND5E.Range')}
+            </ItemTableColumn>
+            <ItemTableColumn
+              title={localize('DND5E.SpellUsage')}
+              baseWidth="7.5rem"
+            >
+              {localize('DND5E.Usage')}
+            </ItemTableColumn>
+            <ItemTableColumn baseWidth={classicControlsBaseWidth} />
+          </ItemTableHeaderRow>
+          {#each filteredItems as spell}
+            <ItemTableRow
+              item={spell}
+              on:mousedown={(event) =>
+                FoundryAdapter.editOnMiddleClick(event.detail, spell)}
+              contextMenu={{
+                type: CONSTANTS.CONTEXT_MENU_TYPE_ITEMS,
+                id: spell.id,
+              }}
+              let:toggleSummary
+              cssClass={getSpellRowClasses(spell)}
+            >
+              <ItemTableCell primary={true}>
+                <ItemUseButton item={spell} />
+                <ItemName
+                  on:click={(event) =>
+                    toggleSummary(event.detail, context.actor)}
                 >
-                  <ItemControls>
-                    {#if spell.system.preparation?.mode === 'always'}
-                      <span />
-                    {:else if section.canPrepare}
-                      <SpellPrepareControl {ctx} {spell} />
-                    {/if}
-                    <ItemEditControl item={spell} />
-                    {#if allowEdit}
-                      <ItemDuplicateControl item={spell} />
-                      <ItemDeleteControl item={spell} />
-                    {/if}
-                  </ItemControls>
-                </ItemContext>
+                  {spell.name}
+                </ItemName>
               </ItemTableCell>
-            {/if}
-          </ItemTableRow>
-        {/each}
-        <ItemTableFooter actor={context.actor} dataset={section.dataset} />
-      </ItemTable>
+              {#if spell.system.uses.per}
+                <ItemTableCell baseWidth="3.125rem">
+                  <ItemUses item={spell} />
+                </ItemTableCell>
+              {/if}
+              {#if !hideIconsNextToTheItemName && FoundryAdapter.tryGetFlag(spell, 'favorite')}
+                <div class="item-state-icon" title="Favorite">
+                  <i class="fas fa-bookmark icon-fav" />
+                </div>
+              {/if}
+              <ItemTableCell baseWidth="4.375rem" cssClass="components">
+                {#each spell.labels.components.all as component}
+                  <span
+                    class="spell-component {component.tag
+                      ? component.abbr
+                      : ''}"
+                    title={spellAbbreviationMap.get(component.abbr)}
+                    >{component.abbr}</span
+                  >
+                {/each}
+              </ItemTableCell>
+              <ItemTableCell
+                baseWidth="5.625rem"
+                title="{localize('DND5E.SpellSchool')}: {spell.labels.school}"
+              >
+                <span class="truncate">{spell.labels.school}</span>
+              </ItemTableCell>
+              <ItemTableCell
+                baseWidth="7.5rem"
+                title="{localize('DND5E.Target')}: {spell.labels.target}"
+              >
+                {#if spell.labels.target}
+                  {spell.labels.target}
+                {:else}
+                  {localize('DND5E.None')}
+                {/if}
+              </ItemTableCell>
+              <ItemTableCell
+                baseWidth="4.375rem"
+                title="{localize('DND5E.Range')}: {spell.labels.range}"
+              >
+                {spell.labels.range}
+              </ItemTableCell>
+              <ItemTableCell
+                baseWidth="7.5rem"
+                title={localize('DND5E.SpellUsage')}
+              >
+                {spell.labels.activation}
+              </ItemTableCell>
+              {#if context.owner && classicControlsEnabled}
+                <ItemTableCell baseWidth={classicControlsBaseWidth}>
+                  <ItemContext
+                    item={spell}
+                    itemContext={context.itemContext}
+                    let:ctx
+                  >
+                    <ItemControls>
+                      {#if spell.system.preparation?.mode === 'always'}
+                        <span />
+                      {:else if section.canPrepare}
+                        <SpellPrepareControl {ctx} {spell} />
+                      {/if}
+                      <ItemEditControl item={spell} />
+                      {#if allowEdit}
+                        <ItemDuplicateControl item={spell} />
+                        <ItemDeleteControl item={spell} />
+                      {/if}
+                    </ItemControls>
+                  </ItemContext>
+                </ItemTableCell>
+              {/if}
+            </ItemTableRow>
+          {/each}
+          <ItemTableFooter actor={context.actor} dataset={section.dataset} />
+        </ItemTable>
+      </FilteredItems>
     {/each}
   </div>
 </ListContainer>

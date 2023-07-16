@@ -408,15 +408,13 @@
     class="tab spellbook"
     class:active={currentTabParam.get() === 'spellbook'}
   >
-    <SpellbookTab {context} />
+    <SpellbookTab {context} {sheetFunctions} />
   </div>
   <div class="tab features" class:active={currentTabParam.get() === 'features'}>
-    <FeaturesTab {context} />
+    <FeaturesTab {context} {sheetFunctions} />
   </div>
   <div class="tab effects" class:active={currentTabParam.get() === 'effects'}>
-    <EffectsTab
-      {context}
-    />
+    <EffectsTab {context} />
   </div>
   <div
     class="tab biography"

@@ -6,6 +6,8 @@ export type SheetFunctions = {
   onLongRest: (event: Event) => void;
   onEditImage: (event: Event) => void;
   onToggleAbilityProficiency: (event: Event) => void;
+  onToggleFilter: (setName: string, filterName: string) => unknown;
+  isFilterActive(setName: string, filterName: string) => boolean;
 };
 
 export type ClassSummary = {
