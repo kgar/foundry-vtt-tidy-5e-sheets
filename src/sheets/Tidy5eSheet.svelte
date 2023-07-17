@@ -392,40 +392,49 @@
 <!-- Tabs -->
 <!-- Lock -->
 <section class="sheet-body" bind:this={scrollView}>
-  <div
+  <section
     class="tab attributes"
     class:active={currentTabParam.get() === 'attributes'}
   >
     <AttributesTab />
-  </div>
-  <div
+  </section>
+  <section
     class="tab inventory"
     class:active={currentTabParam.get() === 'inventory'}
   >
     <InventoryTab />
-  </div>
-  <div
+  </section>
+  <section
     class="tab spellbook"
     class:active={currentTabParam.get() === 'spellbook'}
   >
     <SpellbookTab {context} {sheetFunctions} />
-  </div>
-  <div class="tab features" class:active={currentTabParam.get() === 'features'}>
+  </section>
+  <section
+    class="tab features"
+    class:active={currentTabParam.get() === 'features'}
+  >
     <FeaturesTab {context} {sheetFunctions} />
-  </div>
-  <div class="tab effects" class:active={currentTabParam.get() === 'effects'}>
+  </section>
+  <section
+    class="tab effects"
+    class:active={currentTabParam.get() === 'effects'}
+  >
     <EffectsTab {context} />
-  </div>
-  <div
+  </section>
+  <section
     class="tab biography"
     class:active={currentTabParam.get() === 'biography'}
   >
     <BiographyTab {context} {sheetFunctions} />
-  </div>
+  </section>
   {#if allowJournal}
-    <div class="tab journal" class:active={currentTabParam.get() === 'journal'}>
+    <section
+      class="tab journal"
+      class:active={currentTabParam.get() === 'journal'}
+    >
       <JournalTab {context} />
-    </div>
+    </section>
   {/if}
 </section>
 

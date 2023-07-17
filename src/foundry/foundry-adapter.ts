@@ -1,5 +1,6 @@
 import type { ClassSummary, ItemStub } from 'src/types/types';
 import { CONSTANTS } from '../constants';
+import { error } from 'src/utils/logging';
 
 export const FoundryAdapter = {
   getActorSheetClass() {
@@ -236,6 +237,49 @@ export const FoundryAdapter = {
   },
   getProperty(obj: any, path: string): unknown {
     return foundry.utils.getProperty(obj, path);
+  },
+  getSpellRowClasses(spell: any): string {
+    const classes: string[] = [];
+    if (spell.system.preparation.prepared) {
+      classes.push('prepared');
+    }
+    if (spell.system.preparation.mode === 'always') {
+      classes.push('always-prepared');
+    }
+    if (spell.system.preparation.mode === 'pact') {
+      classes.push('pact');
+    }
+    if (spell.system.preparation.mode === 'atwill') {
+      classes.push('at-will');
+    }
+    if (spell.system.preparation.mode === 'innate') {
+      classes.push('innate');
+    }
+    return classes.join(' ');
+  },
+  getSpellAttackModAndTooltip(context: CharacterSheetContext) {
+    let actor = context.actor;
+    let formula = Roll.replaceFormulaData(
+      actor.system.bonuses.rsak.attack,
+      actor.getRollData(),
+      { missing: 0, warn: false }
+    );
+
+    let prof = actor.system.attributes.prof;
+    let spellAbility = context.system.attributes.spellcasting;
+    let abilityMod =
+      spellAbility != '' ? actor.system.abilities[spellAbility].mod : 0;
+    let spellAttackMod = prof + abilityMod;
+    let spellAttackText =
+      spellAttackMod > 0 ? '+' + spellAttackMod : spellAttackMod;
+
+    let spellAttackTextTooltip = `${prof} (prof.)+${abilityMod} (${spellAbility})`;
+
+    return {
+      mod: spellAttackText /* TODO: apply static bonuses; mention rolled bonuses without rolling them */,
+      bonus: formula,
+      modTooltip: spellAttackTextTooltip,
+    };
   },
 };
 

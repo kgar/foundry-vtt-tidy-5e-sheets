@@ -20,6 +20,9 @@
 - [ ] Grid Toggle with stub view (wasp wants to make this)
   - ~~Hold off on this one: Implement ItemGrid family of components and support grid mode.~~
 - [ ] Spellbook Footer
+  - [ ] the rest
+  - [ ] attack mod
+  - [ ] big calculation tooltip
 - [ ] Settings
   - [ ] hideSpellSlotMarker
   - [ ] ...?
@@ -35,6 +38,73 @@
 - [x] Make component for search so we can share
 - [x] Make the scrollable item table container a shared, generic component
 
+## Spell Attack Mod
+
+```js
+async function spellAttackMod(app, html, data) {
+  let actor = app.actor;
+
+  const rollData = actor.getRollData();
+  let formula = Roll.replaceFormulaData(
+    actor.system.bonuses.rsak.attack,
+    rollData,
+    { missing: 0, warn: false }
+  );
+  if (formula === '') {
+    formula = '0';
+  }
+
+  let spellBonus = 0;
+
+  try {
+    // Roll parser no longer accepts some expressions it used to so we will try and avoid using it
+    spellBonus = Roll.safeEval(formula);
+  } catch (err) {
+    // safeEval failed try a roll
+    try {
+      spellBonus = new Roll(formula).evaluate({ async: false }).total;
+    } catch (err) {
+      error('spell bonus calculation failed : ' + err?.message, true);
+    }
+  }
+
+  let prof = actor.system.attributes.prof;
+  let spellAbility = html
+    .find('.spellcasting-attribute select option:selected')
+    .val();
+  let abilityMod =
+    spellAbility != '' ? actor.system.abilities[spellAbility].mod : 0;
+  let spellAttackMod = prof + abilityMod;
+  let spellAttackModWihBonus = prof + abilityMod + spellBonus;
+  let spellAttackText =
+    spellAttackMod > 0 ? '+' + spellAttackMod : spellAttackMod;
+  let spellAttackTextWithBonus =
+    spellAttackModWihBonus > 0
+      ? '+' + spellAttackModWihBonus
+      : spellAttackModWihBonus;
+  let spellAttackTextTooltip = `${prof} (prof.)+${abilityMod} (${spellAbility})`;
+  let spellAttackTextTooltipWithBonus = `with bonus ${spellAttackTextWithBonus} = ${prof} (prof.)+${abilityMod} (${spellAbility})+${formula} (bonus 'actor.system.bonuses.rsak.attack')`;
+  spellAttackTextTooltipWithBonus = spellAttackTextTooltipWithBonus.replace(
+    '++',
+    '+'
+  );
+  debug(
+    `tidy5e-sheet | spellAttackMod | Prof: ${prof ?? ''} / Spell Ability: ${
+      spellAbility ?? ''
+    } / ability Mod: ${abilityMod ?? ''} / Spell Attack Mod: ${
+      spellAttackMod ?? ''
+    } / Spell Bonus : ${spellBonus ?? ''}`
+  );
+
+  html.find('.spell-mod .spell-attack-mod').html(spellAttackTextWithBonus);
+  html
+    .find('.spell-mod .spell-attack-mod')
+    .attr(
+      'data-tooltip',
+      `${spellAttackTextTooltip} [${spellAttackTextTooltipWithBonus}] `
+    );
+}
+```
 
 ## How Filter Toggling Works
 
@@ -51,20 +121,18 @@ _onToggleFilter(event) {
 ```
 
 ```js
-  /**
-   * Track the set of item filters which are applied
-   * @type {Object<string, Set>}
-   * @protected
-   */
-  _filters = {
-    inventory: new Set(),
-    spellbook: new Set(),
-    features: new Set(),
-    effects: new Set()
-  };
+/**
+ * Track the set of item filters which are applied
+ * @type {Object<string, Set>}
+ * @protected
+ */
+_filters = {
+  inventory: new Set(),
+  spellbook: new Set(),
+  features: new Set(),
+  effects: new Set(),
+};
 ```
-
-
 
 ## Spell Preparation
 

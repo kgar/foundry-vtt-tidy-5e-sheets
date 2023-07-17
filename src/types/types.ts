@@ -36,3 +36,5 @@ export type PortraitCharmRadiusClass =
   | 'bottom-left'
   | 'bottom-right'
   | 'rounded';
+
+export type ItemLayoutMode = 'grid' | 'list';

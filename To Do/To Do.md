@@ -35,6 +35,8 @@
 - [ ] When done with initial prototype: Replace ALL `cursor:pointer` instances with `role="button"` on the target element: https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/button_role
   - [ ] All things ".rollable"
   - [ ] Task them out
+- [ ] `<a>`, `<div>`, etc. tags with `[role="button"]` should be buttons
+- [ ] `<i>` tags with role=button should be changed so that a button surrounds the icon
 - [ ] Leverage TypeScript to lock down and document all known flags for each type of flagged entity (actor, NPC, vehicle, Item)
 
 
