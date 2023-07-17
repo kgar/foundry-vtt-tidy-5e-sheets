@@ -19,6 +19,7 @@
     display: flex;
     justify-content: flex-end;
     flex: 1;
+    margin-left: 0.5rem;
     border-top: 0.0625rem solid var(--t5e-faint-color);
     border-radius: 0 0 0.3125rem 0.3125rem;
   }
