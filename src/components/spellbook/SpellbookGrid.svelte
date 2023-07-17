@@ -7,7 +7,6 @@
   import { SettingsProvider } from 'src/settings/settings';
   import ItemTable from '../items/ItemTable.svelte';
   import ItemTableColumn from '../items/ItemTableColumn.svelte';
-  import ItemTableFooter from '../items/ItemTableFooter.svelte';
   import ItemTableHeaderRow from '../items/ItemTableHeaderRow.svelte';
   import SpellSlotMarkers from '../items/SpellSlotMarkers.svelte';
   import SpellSlotUses from '../items/SpellSlotUses.svelte';
