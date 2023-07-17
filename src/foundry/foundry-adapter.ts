@@ -94,6 +94,9 @@ export const FoundryAdapter = {
   setFlag(flagged: any, flagName: string, value: unknown): Promise<void> {
     return flagged.setFlag(CONSTANTS.MODULE_ID, flagName, value);
   },
+  unsetFlag(flagged: any, flagName: string): Promise<void> {
+    return flagged.unsetFlag(CONSTANTS.MODULE_ID, flagName);
+  },
   getClassAndSubclassSummaries(actor: Actor5e): Map<string, ClassSummary> {
     return actor.items.reduce(
       (map: Map<string, ClassSummary>, item: ItemStub) => {

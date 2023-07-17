@@ -1,6 +1,5 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { CONSTANTS } from 'src/constants';
   import ListContainer from '../layout/ListContainer.svelte';
   import type { ItemLayoutMode, SheetFunctions } from 'src/types/types';
   import ItemFilterSearch from '../items/ItemFilterSearch.svelte';
@@ -9,7 +8,8 @@
   import FilteredItems from '../items/FilteredItems.svelte';
   import ItemFilterLayoutToggle from '../items/ItemFilterLayoutToggle.svelte';
   import SpellbookList from '../spellbook/SpellbookList.svelte';
-    import SpellbookFooter from '../spellbook/SpellbookFooter.svelte';
+  import SpellbookFooter from '../spellbook/SpellbookFooter.svelte';
+  import SpellbookGrid from '../spellbook/SpellbookGrid.svelte';
 
   export let context: any;
   export let sheetFunctions: SheetFunctions;
@@ -31,6 +31,15 @@
   )
     ? 'grid'
     : 'list';
+
+  function toggleLayout() {
+    if (layoutMode === 'grid') {
+      FoundryAdapter.unsetFlag(context.actor, 'spellbook-grid');
+      return;
+    }
+
+    FoundryAdapter.setFlag(context.actor, 'spellbook-grid', true);
+  }
 </script>
 
 <ItemFilters>
@@ -60,8 +69,11 @@
   </ItemFilterOption>
   <ItemFilterOption setName="spellbook" filterName="prepared" {sheetFunctions}>
     {localize('DND5E.Prepared')}
+    {#if context.preparedSpells > 0}
+      ({context.preparedSpells})
+    {/if}
   </ItemFilterOption>
-  <ItemFilterLayoutToggle mode={layoutMode} />
+  <ItemFilterLayoutToggle mode={layoutMode} on:toggle={() => toggleLayout()} />
 </ItemFilters>
 
 <ListContainer>
@@ -70,11 +82,10 @@
       {#if layoutMode === 'list'}
         <SpellbookList spells={filteredItems} {section} {context} />
       {:else}
-        <em>To Do: wasp has plans for this grid 💪</em>
+        <SpellbookGrid spells={filteredItems} {section} {context} />
       {/if}
     </FilteredItems>
   {/each}
 </ListContainer>
 
 <SpellbookFooter {abilities} {context} />
-

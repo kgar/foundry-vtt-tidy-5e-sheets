@@ -37,7 +37,7 @@
     SettingsProvider.settings.hideIconsNextToTheItemName.get();
 </script>
 
-<section class="spellbook-section">
+<section class="spellbook-list-section">
   <ItemTable>
     <ItemTableHeaderRow>
       <ItemTableColumn primary={true}>
@@ -167,7 +167,7 @@
     white-space: nowrap;
   }
 
-  .spellbook-section {
+  .spellbook-list-section {
     :global(.prepared) {
       background-color: var(--t5e-equipped);
     }
