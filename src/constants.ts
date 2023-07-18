@@ -29,5 +29,5 @@ export const CONSTANTS = {
     warlock: 'TIDY5E.ClassWarlock',
     wizard: 'TIDY5E.ClassWizard',
     custom: 'TIDY5E.ClassCustom',
-  }
+  },
 } as const;

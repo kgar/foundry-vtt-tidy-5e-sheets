@@ -1,6 +1,8 @@
 import { SettingsProvider } from 'src/settings/settings';
 import { warn } from 'src/utils/logging';
 
+export const SPELL_LEVEL_RADIO_BUTTON_CLASS = 'spell-level-button-radio';
+
 export function useTidy5eSpellLevelButtons(app: any, html: any, options: any) {
   if (!SettingsProvider.settings.enableSpellLevelButtons.get()) {
     return;
@@ -19,10 +21,6 @@ export function useTidy5eSpellLevelButtons(app: any, html: any, options: any) {
   if (!dropdown) {
     return;
   }
-
-  const originalDialogHeight = parseInt(html.css('height'));
-  const heightOffset = 45;
-  html.height(originalDialogHeight + heightOffset);
 
   const selectedLevel = dropdown.val();
 
@@ -78,6 +76,8 @@ export function useTidy5eSpellLevelButtons(app: any, html: any, options: any) {
   );
 
   theButtonToClick.trigger('click');
+
+  app.setPosition({ height: 'auto' });
 }
 
 function tryGetAvailableSlots(text: string): number {
@@ -136,6 +136,7 @@ function createOption(
   let radioButton = `
         <input 
           type="radio" 
+          class="${SPELL_LEVEL_RADIO_BUTTON_CLASS}"
           id="${appId}lvl-btn-${buttonText}" 
           name="spell-level-button" 
           value="${value}" />`;
