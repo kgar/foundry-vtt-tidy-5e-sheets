@@ -5,6 +5,7 @@
   export let searchCriteria: string = '';
   export let actor: Actor5e;
   export let searchFlag: string;
+  export let cssClass: string = '';
 
   async function rememberSearch() {
     await FoundryAdapter.setFlag(actor, searchFlag, searchCriteria);
@@ -21,7 +22,7 @@
   });
 </script>
 
-<li class="filter-search" title={localize('TIDY5E.SearchHint')}>
+<li class="filter-search {cssClass}" title={localize('TIDY5E.SearchHint')}>
   <input
     type="text"
     id="feat-search"
