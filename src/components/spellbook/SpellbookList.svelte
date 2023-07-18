@@ -23,6 +23,7 @@
   import SpellPrepareControl from '../items/SpellPrepareControl.svelte';
   import SpellSlotMarkers from '../items/SpellSlotMarkers.svelte';
   import SpellSlotUses from '../items/SpellSlotUses.svelte';
+  import SpellImageProvider from '../providers/SpellImageProvider.svelte';
 
   export let context: CharacterSheetContext;
   export let section: any;
@@ -90,7 +91,12 @@
         cssClass={FoundryAdapter.getSpellRowClasses(spell)}
       >
         <ItemTableCell primary={true}>
-          <ItemUseButton item={spell} />
+          <SpellImageProvider {context} {spell} let:spellImg>
+            <ItemUseButton
+              item={spell}
+              imgUrlOverride={spellImg}
+            />
+          </SpellImageProvider>
           <ItemName
             on:click={(event) => toggleSummary(event.detail, context.actor)}
           >

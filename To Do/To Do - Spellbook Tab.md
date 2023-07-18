@@ -13,8 +13,8 @@
   - [x] hbEnableUpcastFreeSpell
     - [x] Revert spell level buttons to use dropdown invisibly
     - [x] plug in upcast checkbox feature
-  - [ ] hbSetFeaturesForUpcastFreeSpell?
-  - [ ] ...?
+  - [x] hbSetFeaturesForUpcastFreeSpell?
+  - [x] ...?
 - [x] Make a component
 - [x] Implement in list mode
   - [x] HTML
@@ -510,10 +510,14 @@ if (user_setting_filterSelect) {
 ```
 
 ```hbs
-<select name="flags.tidy5e-sheet.classFilter">
-	{{selectOptions SCF selected=scFlags.classFilter blank='TIDY5E.Spellbook' localize=true}}
+<select name='flags.tidy5e-sheet.classFilter'>
+  {{selectOptions
+    SCF
+    selected=scFlags.classFilter
+    blank='TIDY5E.Spellbook'
+    localize=true
+  }}
 </select>
-
 ```
 
 ## Homebrew Enable Upcast Free Spell
@@ -522,7 +526,7 @@ if (user_setting_filterSelect) {
 function getFeatureItemsFromActor(actor) {
   return actor.items
     .filter((item) => {
-      if (["feat"].includes(item.type)) {
+      if (['feat'].includes(item.type)) {
         return true;
       } else {
         return true;
@@ -542,9 +546,13 @@ function getFeatureNamesFromActor(actor) {
   return names;
 }
 
-export const tidy5eHBEnableUpcastFreeSpell = async function (app, html, options) {
-  if (game.settings.get(CONSTANTS.MODULE_ID, "hbEnableUpcastFreeSpell")) {
-    if (app?.item?.type != "spell") {
+export const tidy5eHBEnableUpcastFreeSpell = async function (
+  app,
+  html,
+  options
+) {
+  if (game.settings.get(CONSTANTS.MODULE_ID, 'hbEnableUpcastFreeSpell')) {
+    if (app?.item?.type != 'spell') {
       debug(`tidy5eHBEnableUpcastFreeSpell | Nevermind if this isn't a spell`);
       return; // Nevermind if this isn't a spell
     }
@@ -553,19 +561,35 @@ export const tidy5eHBEnableUpcastFreeSpell = async function (app, html, options)
       return; // Nevermind if this is a cantrip
     }
 
-    let tooltip = game.i18n.localize("TIDY5E.LevelBumpTooltip");
+    let tooltip = game.i18n.localize('TIDY5E.LevelBumpTooltip');
 
-    if (game.settings.get(CONSTANTS.MODULE_ID, "hbSetFeaturesForUpcastFreeSpell") && app.item?.actor) {
-      debug(`tidy5eHBEnableUpcastFreeSpell | hbSetFeaturesForUpcastFreeSpell check`);
+    if (
+      game.settings.get(
+        CONSTANTS.MODULE_ID,
+        'hbSetFeaturesForUpcastFreeSpell'
+      ) &&
+      app.item?.actor
+    ) {
+      debug(
+        `tidy5eHBEnableUpcastFreeSpell | hbSetFeaturesForUpcastFreeSpell check`
+      );
       const namesFeaturesToCheck =
-        game.settings.get(CONSTANTS.MODULE_ID, "hbSetFeaturesForUpcastFreeSpell").split("|") ?? [];
+        game.settings
+          .get(CONSTANTS.MODULE_ID, 'hbSetFeaturesForUpcastFreeSpell')
+          .split('|') ?? [];
       const namesFeatures = getFeatureNamesFromActor(app.item?.actor) ?? [];
-      const check = namesFeaturesToCheck.some((v) => namesFeatures.includes(v.toLowerCase()));
+      const check = namesFeaturesToCheck.some((v) =>
+        namesFeatures.includes(v.toLowerCase())
+      );
       if (!check) {
-        debug(`tidy5eHBEnableUpcastFreeSpell | hbSetFeaturesForUpcastFreeSpell check is failed`);
+        debug(
+          `tidy5eHBEnableUpcastFreeSpell | hbSetFeaturesForUpcastFreeSpell check is failed`
+        );
         return;
       }
-      tooltip = tooltip + ` Ty to one of these features '${namesFeaturesToCheck.join(",")}'`;
+      tooltip =
+        tooltip +
+        ` Ty to one of these features '${namesFeaturesToCheck.join(',')}'`;
     }
     // Add a new checkbox and insert it at the end of the list
     // let new_checkbox = $(`
@@ -576,38 +600,103 @@ export const tidy5eHBEnableUpcastFreeSpell = async function (app, html, options)
     let new_checkbox = $(`
       <div class="form-group spell-lvl-btn" data-tooltip="${tooltip}">
         <label class="checkbox spell-lvl-btn__label"><input type="checkbox" name="freeUpcast" />${game.i18n.localize(
-          "TIDY5E.LevelBump"
+          'TIDY5E.LevelBump'
         )}</label>
       </div>`);
-    new_checkbox.insertAfter(html.find(".form-group").last());
+    new_checkbox.insertAfter(html.find('.form-group').last());
     // Bind a change handler to the new checkbox to increment/decrement the options in the dropdown
     // This is so that dnd5e will scale the spell up under the hood as-if it's upcast
     new_checkbox.change((ev) => {
       if (ev.target.checked) {
-        Object.values(html.find('[name="consumeSpellLevel"] option')).map((o) => {
-          // Strange check
-          if (o.value) {
-            if (o.value === "pact") {
-              o.value = String(app.item.actor.system.spells.pact.level + 1);
-            } else {
-              o.value = String(parseInt(o.value) + 1);
+        Object.values(html.find('[name="consumeSpellLevel"] option')).map(
+          (o) => {
+            // Strange check
+            if (o.value) {
+              if (o.value === 'pact') {
+                o.value = String(app.item.actor.system.spells.pact.level + 1);
+              } else {
+                o.value = String(parseInt(o.value) + 1);
+              }
             }
           }
-        });
+        );
       } else {
-        Object.values(html.find('[name="consumeSpellLevel"] option')).map((o) => {
-          // Strange check
-          if (o.value) {
-            if (o.text?.includes("Pact")) {
-              o.value = "pact";
-            } else {
-              o.value = String(parseInt(o.value) - 1);
+        Object.values(html.find('[name="consumeSpellLevel"] option')).map(
+          (o) => {
+            // Strange check
+            if (o.value) {
+              if (o.text?.includes('Pact')) {
+                o.value = 'pact';
+              } else {
+                o.value = String(parseInt(o.value) - 1);
+              }
             }
           }
-        });
+        );
       }
     });
-    app.setPosition({ height: "auto" }); // Reset the height of the window to match the new content
+    app.setPosition({ height: 'auto' }); // Reset the height of the window to match the new content
   }
 };
+```
+
+## spellClassFilterIconReplace impl
+
+This feature requires that you tag spells with the class identifier. Once you've done this, the class image can be set up to override the regularly configured image.
+
+```js
+
+const user_setting_iconReplace = game.settings.get(
+  CONSTANTS.MODULE_ID,
+  'spellClassFilterIconReplace'
+);
+
+// collect some data to use later
+const actor = app.object;
+const type = actor.type;
+const flags = actor.flags;
+const actorSCFlags = flags[CONSTANTS.MODULE_ID];
+
+if (type == 'character') {
+  const spellbook = html.find('.tab.spellbook');
+  const filterList = spellbook.find('ul.filter-list');
+  const firstItem = filterList.children('li.filter-item:first');
+  // const itemData = actor.items
+  const actorItems = actor.items;
+
+  // Get a list of classes for the actor and store their img.
+  let classes = {};
+  for (let item of actorItems) {
+    if (item.type == 'class') {
+      let className = item.name.toLowerCase();
+      let classImg = item.img;
+      classes[className] = classImg;
+    }
+  }
+  // spellClassFilter.log(true, classes)
+  // Loop through some elements and get thier data
+  const spellList = spellbook.find('.inventory-list');
+  const items = spellList.find('.item');
+  items.each(function () {
+    let itemID = $(this).data('item-id');
+    let item = actorItems.get(itemID);
+    let itemFlags = item.flags;
+    let itemSCFlags = itemFlags[CONSTANTS.MODULE_ID]; //Should return undefined if doesn't exist.
+
+    if (user_setting_iconReplace) {
+      // Replace spell icon image
+      if (itemSCFlags) {
+        if (classes.hasOwnProperty(itemSCFlags.parentClass)) {
+          // spellClassFilter.log(false, $(this))
+          // $(this).css('background-image', 'url('+classes[itemSCFlags.parentClass]+')')
+          let imgdiv = $(this).find('.item-image');
+          imgdiv.css(
+            'background-image',
+            `url(${classes[itemSCFlags.parentClass]})`
+          );
+        }
+      }
+    }
+  });
+}
 ```

@@ -10,6 +10,7 @@
   import ItemTableHeaderRow from '../items/ItemTableHeaderRow.svelte';
   import SpellSlotMarkers from '../items/SpellSlotMarkers.svelte';
   import SpellSlotUses from '../items/SpellSlotUses.svelte';
+  import SpellImageProvider from '../providers/SpellImageProvider.svelte';
 
   export let context: CharacterSheetContext;
   export let section: any;
@@ -43,9 +44,14 @@
           on:click={(event) => spell.use({}, { event })}
         >
           <div class="spell-name" role="button">
-            <div class="spell-image" style="background-image: url({spell.img})">
-              <i class="fa fa-dice-d20" />
-            </div>
+            <SpellImageProvider {context} {spell} let:spellImg>
+              <div
+                class="spell-image"
+                style="background-image: url('/{spellImg}')"
+              >
+                <i class="fa fa-dice-d20" />
+              </div>
+            </SpellImageProvider>
           </div>
         </div>
       {/each}

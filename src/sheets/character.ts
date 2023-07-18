@@ -1,4 +1,4 @@
-import { FoundryAdapter } from '../foundry/foundry-adapter';
+import { FoundryAdapter, type Actor5e, type CharacterSheetContext } from '../foundry/foundry-adapter';
 import Tidy5eSheet from './Tidy5eSheet.svelte';
 import { error, log } from 'src/utils/logging';
 import { SheetParameter } from 'src/utils/sheet-parameter';
@@ -60,7 +60,10 @@ export class Tidy5eSheetKgar extends ActorSheet5eCharacter {
         currentTabParam: this.currentTabParam,
         tabToScrollTopMap: this.tabToScrollTopMap,
         isEditable: this.isEditable,
-        context: await super.getData(this.options),
+        context: {
+          ...(await super.getData(this.options)),
+          actorClassesToImages: getActorClassesToImages(this.actor),
+        },
       },
     });
 
@@ -106,4 +109,17 @@ export class Tidy5eSheetKgar extends ActorSheet5eCharacter {
   isFilterActive(setName: string, filterName: string): boolean {
     return this._filters[setName]?.has(filterName) === true;
   }
+}
+
+// TODO: Find a better home for this.
+function getActorClassesToImages(actor: Actor5e) {
+  let actorClassesToImages: Record<string, string> = {};
+  for (let item of actor.items) {
+    if (item.type == 'class') {
+      let className = item.name.toLowerCase();
+      let classImg = item.img;
+      actorClassesToImages[className] = classImg;
+    }
+  }
+  return actorClassesToImages;
 }

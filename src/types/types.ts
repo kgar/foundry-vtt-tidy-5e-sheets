@@ -24,6 +24,7 @@ export type ItemStub = {
     identifier: string;
     levels?: number;
   };
+  img: string;
 };
 
 export type RoundedPortaitStyleOptions = 'default' | 'pc' | 'npc' | 'all';

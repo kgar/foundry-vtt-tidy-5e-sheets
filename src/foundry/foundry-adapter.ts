@@ -345,7 +345,7 @@ export type Actor5e = {
       flaw: string;
     };
   };
-  items: Map<string, ItemStub>[] & ItemStub[];
+  items: Map<string, ItemStub> & ItemStub[];
   rollAbility(abbreviation: string, options: { event: Event }): void;
   rollAbilityTest(abbreviation: string, options: { event: Event }): void;
   rollAbilitySave(abbreviation: string, options: { event: Event }): void;

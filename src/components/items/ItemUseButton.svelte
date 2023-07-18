@@ -1,12 +1,13 @@
 <script lang="ts">
   export let item: any;
+  export let imgUrlOverride: string | undefined = undefined;
 </script>
 
 <div
   role="button"
   tabindex="0"
   class="item-use-button"
-  style="--bg-image: url('/{item.img}')"
+  style="--bg-image: url('/{imgUrlOverride ?? item.img}')"
   on:click={(event) => item.use({}, { event })}
 >
   <i class="fa fa-dice-d20" />
