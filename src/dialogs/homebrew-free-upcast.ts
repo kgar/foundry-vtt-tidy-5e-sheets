@@ -1,4 +1,4 @@
-import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+import { FoundryAdapter, type Actor5e } from 'src/foundry/foundry-adapter';
 import { SettingsProvider } from 'src/settings/settings';
 import { SPELL_LEVEL_RADIO_BUTTON_CLASS } from './spell-level-buttons';
 
@@ -15,6 +15,24 @@ export function useHombrewEnableUpcastFreeSpell(
     return;
   }
 
+  let tooltip = FoundryAdapter.localize('TIDY5E.LevelBumpTooltip');
+
+  const featuresThatSupportUpcast =
+    SettingsProvider.settings.hbSetFeaturesForUpcastFreeSpell.get();
+  if (featuresThatSupportUpcast && app.item?.actor) {
+    const namesFeaturesToCheck = featuresThatSupportUpcast.split('|') ?? [];
+    const namesFeatures = getFeatureNamesFromActor(app.item?.actor) ?? [];
+    const check = namesFeaturesToCheck.some((v) =>
+      namesFeatures.includes(v.toLowerCase())
+    );
+    if (!check) {
+      return;
+    }
+    tooltip =
+      tooltip +
+      ` Ty to one of these features '${namesFeaturesToCheck.join(',')}'`;
+  }
+
   const dropdown = html.find('select[name="consumeSpellLevel"]');
 
   if (dropdown.length == 0) {
@@ -22,10 +40,6 @@ export function useHombrewEnableUpcastFreeSpell(
   }
 
   const checkboxId = getUpcastId(app.appId);
-
-  let tooltip = FoundryAdapter.localize('TIDY5E.LevelBumpTooltip');
-
-  // TODO: Add hbSetFeaturesForUpcastFreeSpell augmentation here
 
   const newFormGroup = `
     <div class="form-group">
@@ -81,6 +95,23 @@ export function useHombrewEnableUpcastFreeSpell(
       });
     }
   });
+}
+
+function getFeatureNamesFromActor(actor: Actor5e) {
+  const features = getFeatureItemsFromActor(actor);
+  const names = [];
+  for (const feature of features) {
+    names.push(feature.name.toLowerCase());
+  }
+  return names;
+}
+
+function getFeatureItemsFromActor(actor: Actor5e) {
+  return actor.items
+    .filter((item: { type: string }) => ['feat'].includes(item.type))
+    .sort((a: { name: string }, b: { name: string }) => {
+      return a.name.localeCompare(b.name);
+    });
 }
 
 function getUpcastId(appId: string) {

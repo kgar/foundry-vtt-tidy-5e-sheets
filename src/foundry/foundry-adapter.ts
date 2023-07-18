@@ -1,6 +1,5 @@
 import type { ClassSummary, ItemStub } from 'src/types/types';
 import { CONSTANTS } from '../constants';
-import { error } from 'src/utils/logging';
 
 export const FoundryAdapter = {
   getActorSheetClass() {
@@ -346,6 +345,7 @@ export type Actor5e = {
       flaw: string;
     };
   };
+  items: Map<string, ItemStub>[] & ItemStub[];
   rollAbility(abbreviation: string, options: { event: Event }): void;
   rollAbilityTest(abbreviation: string, options: { event: Event }): void;
   rollAbilitySave(abbreviation: string, options: { event: Event }): void;

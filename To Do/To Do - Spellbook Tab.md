@@ -10,9 +10,9 @@
   - [ ] spellClassFilterIconReplace
   - [x] spellClassFilterAdditionalClasses
     - [x] A list of ids and friendly text which represent additional classes to include
-  - [ ] hbEnableUpcastFreeSpell
-    - [ ] Revert spell level buttons to use dropdown invisibly
-    - [ ] plug in upcast checkbox feature
+  - [x] hbEnableUpcastFreeSpell
+    - [x] Revert spell level buttons to use dropdown invisibly
+    - [x] plug in upcast checkbox feature
   - [ ] hbSetFeaturesForUpcastFreeSpell?
   - [ ] ...?
 - [x] Make a component
