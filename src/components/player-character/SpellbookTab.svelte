@@ -10,7 +10,8 @@
   import SpellbookList from '../spellbook/SpellbookList.svelte';
   import SpellbookFooter from '../spellbook/SpellbookFooter.svelte';
   import SpellbookGrid from '../spellbook/SpellbookGrid.svelte';
-    import { SettingsProvider } from 'src/settings/settings';
+  import { SettingsProvider } from 'src/settings/settings';
+  import SpellbookClassFilter from '../spellbook/SpellbookClassFilter.svelte';
 
   export let context: any;
   export let sheetFunctions: SheetFunctions;
@@ -41,6 +42,22 @@
 
     FoundryAdapter.setFlag(context.actor, 'spellbook-grid', true);
   }
+
+  const filterByClassesEnabled =
+    SettingsProvider.settings.spellClassFilterSelect.get();
+  const selectedClassFilter =
+    FoundryAdapter.tryGetFlag(context.actor, 'classFilter') ?? '';
+
+  function tryFilterByClass(spells: any[]) {
+    if (!filterByClassesEnabled || selectedClassFilter === '') {
+      return spells;
+    }
+
+    return spells.filter(
+      (spell) =>
+        FoundryAdapter.tryGetFlag(spell, 'parentClass') === selectedClassFilter
+    );
+  }
 </script>
 
 <ItemFilters>
@@ -48,16 +65,12 @@
     bind:searchCriteria
     actor={context.actor}
     searchFlag="spell-search"
+    cssClass="align-self-flex-end"
   />
-  {#if SettingsProvider.settings.spellClassFilterSelect.get()}
-    <!-- TODO: Refer to impl code samples and set up a shared component for generating this info. -->
-    <!-- Also, consider generating the list of classes, taking the author's original list and simply reading the actor class items to pull the appropriate filter values -->
-    <!-- 
-      Array.from(game.actors).reduce((map, actor) => {
-          Object.values(actor.classes).forEach(c => map.set(encodeURIComponent(c.name.toLowerCase()), c.name));
-          return map;
-      }, new Map())      
-     -->
+  {#if filterByClassesEnabled}
+    <li class="spellbook-class-filter">
+      <SpellbookClassFilter {context} />
+    </li>
   {/if}
   <ItemFilterOption setName="spellbook" filterName="action" {sheetFunctions}>
     {localize('DND5E.Action')}
@@ -73,7 +86,7 @@
     filterName="concentration"
     {sheetFunctions}
   >
-    {localize('DND5E.Concentration')}
+    {localize('DND5E.AbbreviationConc')}
   </ItemFilterOption>
   <ItemFilterOption setName="spellbook" filterName="ritual" {sheetFunctions}>
     {localize('DND5E.Ritual')}
@@ -89,7 +102,11 @@
 
 <ListContainer>
   {#each context.spellbook as section}
-    <FilteredItems {searchCriteria} items={section.spells} let:filteredItems>
+    <FilteredItems
+      {searchCriteria}
+      items={tryFilterByClass(section.spells)}
+      let:filteredItems
+    >
       {#if layoutMode === 'list'}
         <SpellbookList spells={filteredItems} {section} {context} />
       {:else}
@@ -100,3 +117,10 @@
 </ListContainer>
 
 <SpellbookFooter {abilities} {context} />
+
+<style lang="scss">
+  .spellbook-class-filter {
+    margin-left: 0.25rem;
+    margin-right: 0.25rem;
+  }
+</style>

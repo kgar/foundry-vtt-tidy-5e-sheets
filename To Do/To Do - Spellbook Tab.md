@@ -506,3 +506,10 @@ if (user_setting_filterSelect) {
   firstItem.before(actorClassFilter);
 }
 ```
+
+```hbs
+<select name="flags.tidy5e-sheet.classFilter">
+	{{selectOptions SCF selected=scFlags.classFilter blank='TIDY5E.Spellbook' localize=true}}
+</select>
+
+```

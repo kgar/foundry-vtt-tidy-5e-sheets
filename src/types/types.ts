@@ -38,3 +38,5 @@ export type PortraitCharmRadiusClass =
   | 'rounded';
 
 export type ItemLayoutMode = 'grid' | 'list';
+
+export type DropdownOption = { text: string; value: string };
