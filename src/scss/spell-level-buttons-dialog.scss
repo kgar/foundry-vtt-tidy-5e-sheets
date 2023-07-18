@@ -1,0 +1,67 @@
+form .form-group.spell-level-buttons {
+  justify-content: center;
+  flex-direction: column;
+  margin-bottom: 0.9375rem;
+
+  label {
+    text-align: center;
+  }
+
+  .form-fields {
+    margin: auto;
+
+    .spell-level-button-label {
+      padding: 0;
+      margin-right: 0.625rem;
+      position: relative;
+
+      &:last-child {
+        margin-right: 0;
+      }
+
+      .spell-level-button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 1.875rem;
+        height: 1.875rem;
+        background: rgba(0, 0, 0, 0.05);
+        border: 0.125rem groove #c9c7b8;
+        border-radius: 0.1875rem;
+        font-size: 1rem;
+        font-weight: 900;
+        user-select: none;
+      }
+
+      .spell-level-button:hover,
+      input[type='radio']:checked + .spell-level-button {
+        outline: none;
+        box-shadow: 0 0 0.3125rem var(--t5e-innate-outline);
+      }
+
+      input {
+        display: none;
+
+        &:checked + .spell-level-button {
+          box-shadow: 0 0 0.3125rem var(--t5e-innate-outline);
+        }
+      }
+
+      .available-slots {
+        position: absolute;
+        top: -4px;
+        right: -4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 0.9375rem;
+        height: 0.9375rem;
+        font-size: 0.6875rem;
+        line-height: 1;
+        border-radius: 50%;
+        background: var(--t5e-primary-accent);
+        color: rgba(255, 255, 255, 0.8);
+      }
+    }
+  }
+}

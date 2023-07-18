@@ -20,7 +20,7 @@
       >
       {#if spellAttackBonusInfo.bonus?.trim() !== ''}
         <i
-          class="fa-solid fa-dice-d4"
+          class="bonus-icon fa-solid fa-dice-d4"
           data-tooltip="{spellAttackBonusInfo.bonus}: bonus 'actor.system.bonuses.rsak.attack'"
         />
       {/if}
@@ -94,6 +94,10 @@
     input {
       width: 1.25rem;
       height: 1.25rem;
+    }
+
+    .bonus-icon {
+      font-size: 1rem;
     }
   }
 </style>

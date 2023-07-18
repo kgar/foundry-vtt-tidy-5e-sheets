@@ -4,7 +4,7 @@
 
 - [ ] Settings
   - [x] hideSpellSlotMarker
-  - [ ] enableSpellLevelButtons | currently almost done with this ♥
+  - [x] enableSpellLevelButtons
   - [ ] spellClassFilterSelect?
     - [ ] "name": "Enable Multiclass Spellbook filter", "hint": "If you don't need this for your character, disabling this option will allow you to reclaim the space and declutter your sheet."
   - [ ] spellClassFilterIconReplace?
@@ -297,6 +297,7 @@ export const tidy5eSpellLevelButtons = async function (app, html, options) {
           let availableSlots = availableSlotsFounded ? availableSlotsFounded[0] : 0;
           let availableSlotsBadge = "";
           let value = $(this).val();
+          
           let i;
 
           if (value == "pact") {
