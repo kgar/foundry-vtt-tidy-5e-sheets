@@ -5,10 +5,11 @@
 - [ ] Settings
   - [x] hideSpellSlotMarker
   - [x] enableSpellLevelButtons
-  - [ ] spellClassFilterSelect?
+  - [ ] spellClassFilterSelect
     - [ ] "name": "Enable Multiclass Spellbook filter", "hint": "If you don't need this for your character, disabling this option will allow you to reclaim the space and declutter your sheet."
-  - [ ] spellClassFilterIconReplace?
-  - [ ] spellClassFilterAdditionalClasses?
+  - [ ] spellClassFilterIconReplace
+  - [ ] spellClassFilterAdditionalClasses
+    - [ ] A list of ids and friendly text which represent additional classes to include
   - [ ] hbEnableUpcastFreeSpell?
   - [ ] hbSetFeaturesForUpcastFreeSpell?
   - [ ] ...?
@@ -220,15 +221,15 @@ _filters = {
 ## Spell Level Buttons Impl
 
 ```js
-// called from hook 
+// called from hook
 // Hooks.on('renderAbilityUseDialog', (app: any, html: any, options: any) => { ... }
 export const tidy5eSpellLevelButtons = async function (app, html, options) {
   if (
-    game.settings.get(CONSTANTS.MODULE_ID, "enableSpellLevelButtons") &&
+    game.settings.get(CONSTANTS.MODULE_ID, 'enableSpellLevelButtons') &&
     // The module already do the job so for avoid redundance...
-    !game.modules.get("spell-level-buttons-for-dnd5e")?.active
+    !game.modules.get('spell-level-buttons-for-dnd5e')?.active
   ) {
-    if (app?.item?.type != "spell") {
+    if (app?.item?.type != 'spell') {
       return; // Nevermind if this isn't a spell
     }
     if (html.find('[name="consumeSpellSlot"]').length == 0) {
@@ -236,25 +237,36 @@ export const tidy5eSpellLevelButtons = async function (app, html, options) {
     }
     const optionsApplication = app;
 
-    if ($('.dnd5e.dialog #ability-use-form select[name="consumeSpellLevel"]').length > 0) {
+    if (
+      $('.dnd5e.dialog #ability-use-form select[name="consumeSpellLevel"]')
+        .length > 0
+    ) {
       // If the dialog box has a option to select a spell level
 
       // Resize the window to fit the contents
-      let originalWindowHeight = parseInt($(optionsApplication._element[0]).css("height"));
+      let originalWindowHeight = parseInt(
+        $(optionsApplication._element[0]).css('height')
+      );
       let heightOffset = 42;
 
-      $(optionsApplication._element[0]).height(originalWindowHeight + heightOffset);
+      $(optionsApplication._element[0]).height(
+        originalWindowHeight + heightOffset
+      );
 
       // Find the label that says "Cast at level", and select it's parent parent (There's no specific class or ID for this wrapper)
       let levelSelectWrapper = $(optionsApplication._element[0])
-        .find(`.form-group label:contains("${game.i18n.localize(`DND5E.SpellCastUpcast`)}")`)
+        .find(
+          `.form-group label:contains("${game.i18n.localize(
+            `DND5E.SpellCastUpcast`
+          )}")`
+        )
         .parent();
-      let selectedLevel = levelSelectWrapper.find("select").val();
+      let selectedLevel = levelSelectWrapper.find('select').val();
 
       let appId = optionsApplication.appId;
 
       // Hide the default level select menu
-      levelSelectWrapper.css("display", "none");
+      levelSelectWrapper.css('display', 'none');
 
       // Append a container for the buttons
       levelSelectWrapper.after(`
@@ -273,7 +285,8 @@ export const tidy5eSpellLevelButtons = async function (app, html, options) {
             .match(/\(\d+\s\w+\)/);
           if (!availableTextSlotsFounded) {
             availableTextSlotsFounded = $(this).text().match(/\d+/g);
-            const lastMatch = availableTextSlotsFounded[availableTextSlotsFounded.length - 1];
+            const lastMatch =
+              availableTextSlotsFounded[availableTextSlotsFounded.length - 1];
             if (lastMatch) {
               availableTextSlotsFounded = lastMatch;
             }
@@ -286,7 +299,9 @@ export const tidy5eSpellLevelButtons = async function (app, html, options) {
               ).text()}' with ${/\(\d+\s\w+\)/}`
             );
           }
-          let availableSlotsFounded = availableTextSlotsFounded ? availableTextSlotsFounded[0].match(/\d+/) : undefined;
+          let availableSlotsFounded = availableTextSlotsFounded
+            ? availableTextSlotsFounded[0].match(/\d+/)
+            : undefined;
           if (!availableSlotsFounded) {
             warn(
               `tidy5e-spell-level-buttons | tidy5eSpellLevelButtons | Cannot find the spell slots on text '${$(
@@ -294,13 +309,15 @@ export const tidy5eSpellLevelButtons = async function (app, html, options) {
               ).text()}' with ${/\d+/}`
             );
           }
-          let availableSlots = availableSlotsFounded ? availableSlotsFounded[0] : 0;
-          let availableSlotsBadge = "";
+          let availableSlots = availableSlotsFounded
+            ? availableSlotsFounded[0]
+            : 0;
+          let availableSlotsBadge = '';
           let value = $(this).val();
-          
+
           let i;
 
-          if (value == "pact") {
+          if (value == 'pact') {
             // i = "p" + $(this).text().match(/\d/)[0]; // Get the pact slot level
             let availablePactSlotsFounded = $(this).text().match(/\d/);
             if (!availablePactSlotsFounded) {
@@ -311,9 +328,9 @@ export const tidy5eSpellLevelButtons = async function (app, html, options) {
               );
             }
             if (availablePactSlotsFounded) {
-              i = "p" + availablePactSlotsFounded[0]; // Get the pact slot level
+              i = 'p' + availablePactSlotsFounded[0]; // Get the pact slot level
             } else {
-              i = "p" + 0;
+              i = 'p' + 0;
             }
           } else {
             i = value;
@@ -323,8 +340,12 @@ export const tidy5eSpellLevelButtons = async function (app, html, options) {
             availableSlotsBadge = `<span class="available-slots">${availableSlots}</span>`;
           }
 
-          $(optionsApplication._element[0]).find(".spell-lvl-btn .form-fields").append(`
-                <label title="${$(this).text()}" class="spell-lvl-btn__label" for="${appId}lvl-btn-${i}">
+          $(optionsApplication._element[0]).find(
+            '.spell-lvl-btn .form-fields'
+          ).append(`
+                <label title="${$(
+                  this
+                ).text()}" class="spell-lvl-btn__label" for="${appId}lvl-btn-${i}">
                     <input type="radio" id="${appId}lvl-btn-${i}" name="lvl-btn" value="${value}">
                     <div class="spell-lvl-btn__btn">${i}</div>
                     ${availableSlotsBadge}
@@ -333,87 +354,155 @@ export const tidy5eSpellLevelButtons = async function (app, html, options) {
         });
 
       // Click on the button corresponding to the default value on the cast level dropdown menu
-      $(optionsApplication._element[0]).find(`#${appId}lvl-btn-${selectedLevel}`).trigger("click");
+      $(optionsApplication._element[0])
+        .find(`#${appId}lvl-btn-${selectedLevel}`)
+        .trigger('click');
 
       // Change the dropdown menu value when user clicks on a button
       $(optionsApplication._element[0])
-        .find(".spell-lvl-btn__label")
-        .on("click", function () {
-          levelSelectWrapper.find("select").val($(this).find("input").val());
+        .find('.spell-lvl-btn__label')
+        .on('click', function () {
+          levelSelectWrapper.find('select').val($(this).find('input').val());
         });
     }
   }
 };
-
 ```
 
 ```scss
 form .form-group.spell-lvl-btn {
-	justify-content: center;
-	flex-direction: column;
-	margin-bottom: 15px;
+  justify-content: center;
+  flex-direction: column;
+  margin-bottom: 15px;
 
-	label {
-		text-align: center;
-	}
+  label {
+    text-align: center;
+  }
 
-	.form-fields {
-		margin: auto;
+  .form-fields {
+    margin: auto;
 
-		.spell-lvl-btn__label {
-			padding: 0;
-			margin-right: 10px;
-			position: relative;
+    .spell-lvl-btn__label {
+      padding: 0;
+      margin-right: 10px;
+      position: relative;
 
-			&:last-child {
-				margin-right: 0;
-			}
+      &:last-child {
+        margin-right: 0;
+      }
 
-			.spell-lvl-btn__btn {
-				display: flex;
-				align-items: center;
-				justify-content: center;
-				width: 30px;
-				height: 30px;
-				background: rgba(0, 0, 0, 0.05);
-				border: 2px groove #c9c7b8;
-				border-radius: 3px;
-				font-size: 16px;
-				font-weight: 900;
-				user-select: none;
+      .spell-lvl-btn__btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 30px;
+        height: 30px;
+        background: rgba(0, 0, 0, 0.05);
+        border: 2px groove #c9c7b8;
+        border-radius: 3px;
+        font-size: 16px;
+        font-weight: 900;
+        user-select: none;
 
-				&:hover,
-				&:focus {
-					cursor: pointer;
-					outline: none;
-					box-shadow: 0 0 5px red;
-				}
-			}
+        &:hover,
+        &:focus {
+          cursor: pointer;
+          outline: none;
+          box-shadow: 0 0 5px red;
+        }
+      }
 
-			input {
-				display: none;
+      input {
+        display: none;
 
-				&:checked + .spell-lvl-btn__btn {
-					box-shadow: 0 0 5px red;
-				}
-			}
+        &:checked + .spell-lvl-btn__btn {
+          box-shadow: 0 0 5px red;
+        }
+      }
 
-			.available-slots {
-				position: absolute;
-				top: -4px;
-				right: -4px;
-				display: flex;
-				align-items: center;
-				justify-content: center;
-				width: 15px;
-				height: 15px;
-				font-size: 11px;
-				line-height: 1;
-				border-radius: 50%;
-				background: #ff6400;
-				color: rgba(255, 255, 255, 0.8);
-			}
-		}
-	}
+      .available-slots {
+        position: absolute;
+        top: -4px;
+        right: -4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 15px;
+        height: 15px;
+        font-size: 11px;
+        line-height: 1;
+        border-radius: 50%;
+        background: #ff6400;
+        color: rgba(255, 255, 255, 0.8);
+      }
+    }
+  }
+}
+```
+
+## Spell Class Filter Select impl
+
+```js
+const classesConfiguration = {
+  artificer: 'TIDY5E.ClassArtificer',
+  barbarian: 'TIDY5E.ClassBarbarian',
+  bard: 'TIDY5E.ClassBard',
+  cleric: 'TIDY5E.ClassCleric',
+  druid: 'TIDY5E.ClassDruid',
+  fighter: 'TIDY5E.ClassFighter',
+  monk: 'TIDY5E.ClassMonk',
+  paladin: 'TIDY5E.ClassPaladin',
+  ranger: 'TIDY5E.ClassRanger',
+  rogue: 'TIDY5E.ClassRogue',
+  sorcerer: 'TIDY5E.ClassSorcerer',
+  warlock: 'TIDY5E.ClassWarlock',
+  wizard: 'TIDY5E.ClassWizard',
+  custom: 'TIDY5E.ClassCustom',
+};
+
+const user_setting_filterSelect = game.settings.get(
+  CONSTANTS.MODULE_ID,
+  'spellClassFilterSelect'
+);
+
+const spellbook = html.find('.tab.spellbook');
+const filterList = spellbook.find('ul.filter-list');
+const firstItem = filterList.children('li.filter-item:first');
+// const itemData = actor.items
+const actorItems = actor.items;
+
+// Inject a simple dropdown menu.
+if (user_setting_filterSelect) {
+  classesConfigurationTmp = classesConfiguration;
+  const user_setting_addClasses = game.settings.get(
+    CONSTANTS.MODULE_ID,
+    'spellClassFilterAdditionalClasses'
+  );
+  if (user_setting_addClasses && user_setting_addClasses.includes('|')) {
+    let classes = [];
+    if (user_setting_addClasses.includes(',')) {
+      classes = user_setting_addClasses.split(',');
+    } else {
+      classes = [user_setting_addClasses];
+    }
+    for (let clazz of classes) {
+      const c = clazz.split('|');
+      const id = c[0];
+      const name = c[1];
+      if (id && name) {
+        classesConfigurationTmp[id] = name;
+      }
+    }
+  }
+  const actorClassFilter = await renderTemplate(
+    'modules/tidy5e-sheet/templates/actors/parts/tidy5e-spellbook-class-filter.html',
+    {
+      SCF: classesConfigurationTmp,
+      actor,
+      flags: flags,
+      scFlags: actor.flags[CONSTANTS.MODULE_ID],
+    }
+  );
+  firstItem.before(actorClassFilter);
 }
 ```

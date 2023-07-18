@@ -10,6 +10,7 @@
   import SpellbookList from '../spellbook/SpellbookList.svelte';
   import SpellbookFooter from '../spellbook/SpellbookFooter.svelte';
   import SpellbookGrid from '../spellbook/SpellbookGrid.svelte';
+    import { SettingsProvider } from 'src/settings/settings';
 
   export let context: any;
   export let sheetFunctions: SheetFunctions;
@@ -48,6 +49,16 @@
     actor={context.actor}
     searchFlag="spell-search"
   />
+  {#if SettingsProvider.settings.spellClassFilterSelect.get()}
+    <!-- TODO: Refer to impl code samples and set up a shared component for generating this info. -->
+    <!-- Also, consider generating the list of classes, taking the author's original list and simply reading the actor class items to pull the appropriate filter values -->
+    <!-- 
+      Array.from(game.actors).reduce((map, actor) => {
+          Object.values(actor.classes).forEach(c => map.set(encodeURIComponent(c.name.toLowerCase()), c.name));
+          return map;
+      }, new Map())      
+     -->
+  {/if}
   <ItemFilterOption setName="spellbook" filterName="action" {sheetFunctions}>
     {localize('DND5E.Action')}
   </ItemFilterOption>
