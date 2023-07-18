@@ -5,11 +5,11 @@
 - [ ] Settings
   - [x] hideSpellSlotMarker
   - [x] enableSpellLevelButtons
-  - [ ] spellClassFilterSelect
-    - [ ] "name": "Enable Multiclass Spellbook filter", "hint": "If you don't need this for your character, disabling this option will allow you to reclaim the space and declutter your sheet."
+  - [x] spellClassFilterSelect
+    - [x] "name": "Enable Multiclass Spellbook filter", "hint": "If you don't need this for your character, disabling this option will allow you to reclaim the space and declutter your sheet."
   - [ ] spellClassFilterIconReplace
-  - [ ] spellClassFilterAdditionalClasses
-    - [ ] A list of ids and friendly text which represent additional classes to include
+  - [x] spellClassFilterAdditionalClasses
+    - [x] A list of ids and friendly text which represent additional classes to include
   - [ ] hbEnableUpcastFreeSpell?
   - [ ] hbSetFeaturesForUpcastFreeSpell?
   - [ ] ...?
