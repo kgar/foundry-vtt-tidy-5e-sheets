@@ -21,7 +21,7 @@ export function useTidy5eSpellLevelButtons(app: any, html: any, options: any) {
   }
 
   const originalDialogHeight = parseInt(html.css('height'));
-  const heightOffset = 42;
+  const heightOffset = 45;
   html.height(originalDialogHeight + heightOffset);
 
   const selectedLevel = dropdown.val();
@@ -62,10 +62,21 @@ export function useTidy5eSpellLevelButtons(app: any, html: any, options: any) {
       </div>
     `;
 
-  html.find('.form-group').first().replaceWith(newFormGroup);
+  const dropdownFormGroup = dropdown.closest('.form-group');
+  dropdownFormGroup.after(newFormGroup);
+
+  $(html)
+    .find('.spell-level-button-label')
+    .on('click', function () {
+      dropdown.val($(this).find('input').val());
+    });
+
+  dropdownFormGroup.hide();
+
   const theButtonToClick = html.find(
     `#${getDivButtonId(selectedLevel, app.appId)}`
   );
+
   theButtonToClick.trigger('click');
 }
 
@@ -122,15 +133,12 @@ function createOption(
         ${buttonText}
     </div>`;
 
-  let selectedAttribute = selected ? ' selected="selected"' : '';
-
   let radioButton = `
         <input 
           type="radio" 
           id="${appId}lvl-btn-${buttonText}" 
-          name="consumeSpellLevel" 
-          value="${value}" 
-          ${selectedAttribute} />`;
+          name="spell-level-button" 
+          value="${value}" />`;
 
   let availableSlotsBadge =
     availableSlots > 0
