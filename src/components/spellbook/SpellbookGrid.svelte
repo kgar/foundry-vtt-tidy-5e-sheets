@@ -8,9 +8,9 @@
   import ItemTable from '../items/ItemTable.svelte';
   import ItemTableColumn from '../items/ItemTableColumn.svelte';
   import ItemTableHeaderRow from '../items/ItemTableHeaderRow.svelte';
-  import SpellSlotMarkers from '../items/SpellSlotMarkers.svelte';
-  import SpellSlotUses from '../items/SpellSlotUses.svelte';
-  import SpellImageProvider from '../providers/SpellImageProvider.svelte';
+  import SpellSlotMarkers from '../spellbook/SpellSlotMarkers.svelte';
+  import SpellSlotUses from '../spellbook/SpellSlotUses.svelte';
+  import SpellImageProvider from './SpellImageProvider.svelte';
 
   export let context: CharacterSheetContext;
   export let section: any;

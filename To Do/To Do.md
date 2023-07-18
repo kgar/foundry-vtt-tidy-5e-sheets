@@ -2,6 +2,7 @@
 
 ## Top of Mind
 
+- [ ] Make shared component for nav tabs and eliminate the separate stylesheet
 
 ## Character Tabs
 

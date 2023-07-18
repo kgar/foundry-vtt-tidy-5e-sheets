@@ -19,11 +19,11 @@
   import ItemTableRow from '../items/ItemTableRow.svelte';
   import ItemUseButton from '../items/ItemUseButton.svelte';
   import ItemUses from '../items/ItemUses.svelte';
-  import SpellComponents from '../items/SpellComponents.svelte';
-  import SpellPrepareControl from '../items/SpellPrepareControl.svelte';
-  import SpellSlotMarkers from '../items/SpellSlotMarkers.svelte';
-  import SpellSlotUses from '../items/SpellSlotUses.svelte';
-  import SpellImageProvider from '../providers/SpellImageProvider.svelte';
+  import SpellComponents from './SpellComponents.svelte';
+  import SpellPrepareControl from '../spellbook/SpellPrepareControl.svelte';
+  import SpellSlotMarkers from '../spellbook/SpellSlotMarkers.svelte';
+  import SpellSlotUses from '../spellbook/SpellSlotUses.svelte';
+  import SpellImageProvider from './SpellImageProvider.svelte';
 
   export let context: CharacterSheetContext;
   export let section: any;
