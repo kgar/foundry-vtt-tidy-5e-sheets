@@ -1,8 +1,6 @@
 <script lang="ts">
-  import {
-    FoundryAdapter,
-    type CharacterSheetContext,
-  } from 'src/foundry/foundry-adapter';
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import { type CharacterSheetContext } from 'src/types/types';
   import { SettingsProvider } from 'src/settings/settings';
   import { formatAsModifier } from 'src/utils/formatting';
   import ItemEditControl from '../items/ItemEditControl.svelte';

@@ -1,5 +1,11 @@
-import type { ClassSummary, ItemStub } from 'src/types/types';
+import type {
+  Actor5e,
+  CharacterSheetContext,
+  ClassSummary,
+  Item5e,
+} from 'src/types/types';
 import { CONSTANTS } from '../constants';
+import type { ActorSheet5eCharacter } from 'src/types/actor5e-sheet';
 
 export const FoundryAdapter = {
   getActorSheetClass() {
@@ -98,7 +104,7 @@ export const FoundryAdapter = {
   },
   getClassAndSubclassSummaries(actor: Actor5e): Map<string, ClassSummary> {
     return actor.items.reduce(
-      (map: Map<string, ClassSummary>, item: ItemStub) => {
+      (map: Map<string, ClassSummary>, item: Item5e) => {
         if (item.type === 'class') {
           const data: ClassSummary = map.get(item.system.identifier) ?? {};
           data.class = item.name;
@@ -267,10 +273,10 @@ export const FoundryAdapter = {
       { missing: 0, warn: false }
     );
 
-    let prof = actor.system.attributes.prof;
+    let prof = actor.system.attributes.prof ?? 0;
     let spellAbility = context.system.attributes.spellcasting;
     let abilityMod =
-      spellAbility != '' ? actor.system.abilities[spellAbility].mod : 0;
+      (spellAbility != '' ? actor.system.abilities[spellAbility].mod : 0) ?? 0;
     let spellAttackMod = prof + abilityMod;
     let spellAttackText =
       spellAttackMod > 0 ? '+' + spellAttackMod : spellAttackMod;
@@ -313,45 +319,9 @@ declare const Hooks: {
 type ConstructorOf<T> = new (...args: any) => T;
 
 declare const foundry: any;
-declare const dnd5e: {
-  applications: {
-    actor: {
-      ActorSheet5eCharacter: typeof ActorSheet5eCharacter;
-    };
-  };
-};
-declare class ActorSheet5eCharacter {
-  constructor(...args: any[]);
-  actor: Actor5e;
-  activateListeners(html: { get: (index: number) => HTMLElement }): void;
-  submit(): void;
-  static get defaultOptions(): Record<string, unknown>;
-  close(options: unknown): Promise<void>;
-}
-export type Actor5e = {
-  name: string;
-  limited: boolean;
-  isOwner: boolean;
-  system: {
-    attributes: {
-      hp: {
-        value: number | null;
-        max: number | null;
-      };
-    };
-    details: {
-      background: string;
-      bond: string;
-      flaw: string;
-    };
-  };
-  items: Map<string, ItemStub> & ItemStub[];
-  rollAbility(abbreviation: string, options: { event: Event }): void;
-  rollAbilityTest(abbreviation: string, options: { event: Event }): void;
-  rollAbilitySave(abbreviation: string, options: { event: Event }): void;
-  rollSkill(abbreviation: string, options: { event: Event }): void;
-};
-export type CharacterSheetContext = { actor: Actor5e } & Record<string, any>;
+
+
+
 declare const game: {
   user: {
     isGM: boolean;

@@ -1,6 +1,7 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
-  import { FoundryAdapter, type Actor5e } from 'src/foundry/foundry-adapter';
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import { type Actor5e } from 'src/types/actor';
   import type { SheetFunctions } from 'src/types/types';
 
   export let sheetFunctions: SheetFunctions;

@@ -1,9 +1,10 @@
-import { FoundryAdapter, type Actor5e, type CharacterSheetContext } from '../foundry/foundry-adapter';
+import { FoundryAdapter } from '../foundry/foundry-adapter';
 import Tidy5eSheet from './Tidy5eSheet.svelte';
 import { error, log } from 'src/utils/logging';
 import { SheetParameter } from 'src/utils/sheet-parameter';
 import { SettingsProvider } from 'src/settings/settings';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
+import type { Actor5e } from 'src/types/actor';
 
 const ActorSheet5eCharacter = FoundryAdapter.getActorSheetClass();
 

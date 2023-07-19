@@ -1,5 +1,6 @@
 <script lang="ts">
-  import { FoundryAdapter, type Actor5e } from 'src/foundry/foundry-adapter';
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import { type Actor5e } from 'src/types/actor';
   import { SettingsProvider } from 'src/settings/settings';
   import { isRealNumber } from 'src/utils/numbers';
 

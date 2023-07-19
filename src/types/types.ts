@@ -1,3 +1,5 @@
+import type { Actor5e } from "./actor";
+
 export type SheetFunctions = {
   activateListeners: () => void;
   submit: () => void;
@@ -7,7 +9,7 @@ export type SheetFunctions = {
   onEditImage: (event: Event) => void;
   onToggleAbilityProficiency: (event: Event) => void;
   onToggleFilter: (setName: string, filterName: string) => unknown;
-  isFilterActive(setName: string, filterName: string) => boolean;
+  isFilterActive: (setName: string, filterName: string) => boolean;
 };
 
 export type ClassSummary = {
@@ -16,18 +18,7 @@ export type ClassSummary = {
   level?: string;
 };
 
-export type ItemStub = {
-  id: string;
-  type: string;
-  name: string;
-  system: {
-    classIdentifier?: string;
-    identifier: string;
-    levels?: number;
-  };
-  img: string;
-  sheet: { render: (force: boolean) => void; isEditable: boolean }
-};
+export type CharacterSheetContext = { actor: Actor5e } & Record<string, any>;
 
 export type RoundedPortaitStyleOptions = 'default' | 'pc' | 'npc' | 'all';
 

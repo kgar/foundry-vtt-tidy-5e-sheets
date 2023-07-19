@@ -1,11 +1,8 @@
 <script lang="ts">
-  import {
-    FoundryAdapter,
-    type CharacterSheetContext,
-  } from 'src/foundry/foundry-adapter';
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import SheetEditor from 'src/sheets/SheetEditor.svelte';
   import ContentEditableFormField from '../inputs/ContentEditableFormField.svelte';
-  import type { SheetFunctions } from 'src/types/types';
+  import type { CharacterSheetContext, SheetFunctions } from 'src/types/types';
 
   export let context: CharacterSheetContext;
   export let sheetFunctions: SheetFunctions;

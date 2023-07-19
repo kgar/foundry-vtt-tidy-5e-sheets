@@ -1,9 +1,7 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
-  import {
-    FoundryAdapter,
-    type CharacterSheetContext,
-  } from 'src/foundry/foundry-adapter';
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import { type CharacterSheetContext } from 'src/types/types';
   import SheetEditor from 'src/sheets/SheetEditor.svelte';
 
   export let context: CharacterSheetContext;

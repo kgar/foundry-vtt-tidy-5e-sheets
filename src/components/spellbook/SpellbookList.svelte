@@ -1,9 +1,7 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
-  import {
-    FoundryAdapter,
-    type CharacterSheetContext,
-  } from 'src/foundry/foundry-adapter';
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import { type CharacterSheetContext } from 'src/types/types';
   import { SettingsProvider } from 'src/settings/settings';
   import ItemContext from '../items/ItemContext.svelte';
   import ItemControls from '../items/ItemControls.svelte';

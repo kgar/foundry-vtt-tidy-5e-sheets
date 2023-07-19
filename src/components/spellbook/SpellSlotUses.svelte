@@ -1,8 +1,6 @@
 <script lang="ts">
-  import {
-    FoundryAdapter,
-    type CharacterSheetContext,
-  } from 'src/foundry/foundry-adapter';
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import { type CharacterSheetContext } from 'src/types/types';
 
   export let section: any;
   export let context: CharacterSheetContext;

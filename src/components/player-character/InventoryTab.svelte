@@ -1,8 +1,6 @@
 <script lang="ts">
-  import {
-    FoundryAdapter,
-    type CharacterSheetContext,
-  } from 'src/foundry/foundry-adapter';
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import { type CharacterSheetContext } from 'src/types/types';
   import ItemFilters from '../items/ItemFilters.svelte';
   import ItemFilterSearch from '../items/ItemFilterSearch.svelte';
   import ItemFilterOption from '../items/ItemFilterOption.svelte';
@@ -41,7 +39,7 @@
 <ItemFilters>
   <ItemFilterSearch
     actor={context.actor}
-    {searchCriteria}
+    bind:searchCriteria
     searchFlag="item-search"
   />
   <ItemFilterOption filterName="action" setName="inventory" {sheetFunctions}>

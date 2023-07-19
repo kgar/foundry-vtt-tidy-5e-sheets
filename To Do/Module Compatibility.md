@@ -20,3 +20,28 @@ Similar to vaults in item piles
 
 > And keep in mind that this is a module for a vtt, not the cure for all diseases. Take it easy and enjoy yourself!
 
+
+## Officially Supported Modules
+
+These modules are known to be supported in Tidy 5e currently. They are often crammed into the core implementation of the sheets rather than bolted on after the fact.
+
+Dynamic Active Effects (ID: dynamiceffects) https://foundryvtt.com/packages/dae
+> 💪 Very important sibling module
+
+Midi Quality of Life Improvements (ID: midi-qol) https://gitlab.com/tposney/midi-qol
+> 💪 Very important sibling module
+
+Magic Items (ID: magicitems) https://foundryvtt.com/packages/magicitems/
+> ✏ Check this one out sometime. Is it important enough?
+
+Lazy Money (ID: lazymoney) https://github.com/p4535992/foundryvtt-lazymoney-dnd5e
+> ✏ This should be core functionality in Tidy 5e
+
+Character Sheet Favorites (ID: favorite-items) https://gitlab.com/mxzf/favorite-items
+> ❓ Tidy 5e generally replaces this functionality
+
+Favorite Item Tab (ID: favtab) https://foundryvtt.com/packages/favtab
+> 💀 Has fallen completely out of date. Last updated 2021
+
+Character Actions List dnd5e (ID: character-actions-list-5e ) https://github.com/ElfFriend-DnD/foundryvtt-dnd5eCharacterActions
+> ✅ Can most likely be grandfathered in via the API

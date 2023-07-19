@@ -1,13 +1,17 @@
-- [ ] Inventory
-  - [x] Make a component
-  - [ ] Functionality
-  - [ ] Styles
-  - [ ] Settings / features
-    - [ ] hideIconsNextToTheItemName : If enabled this setting hides the support icons present next to the object name (Favorite, Attunement, etc.), this is usually useful with the 'Use classic item controls in list view' setting enabled in order to avoid a redundancy of icons...
-    - [ ] ammoEquippedOnly : Enable to only show currently equipped ammunition in Weapon ammo selector.
-    - [ ] quantityAlwaysShownEnabled : Always show item quantity
-    - [ ]
-    - [ ] ...
+- [x] Make a component
+- [ ] Make types for `ui`, such as `ui.notifications`
+- [ ] Functionality
+  - [ ] ...
+  - [ ] ammo dropdown
+- [ ] Styles
+- [ ] Ok, now do the grid version
+- [ ] Determine what Stacks are and how they should work
+- [ ] Settings / features
+  - [ ] hideIconsNextToTheItemName : If enabled this setting hides the support icons present next to the object name (Favorite, Attunement, etc.), this is usually useful with the 'Use classic item controls in list view' setting enabled in order to avoid a redundancy of icons...
+  - [ ] ammoEquippedOnly : Enable to only show currently equipped ammunition in Weapon ammo selector.
+  - [ ] quantityAlwaysShownEnabled : Always show item quantity
+  - [ ]
+  - [ ] ...
 
 ## Inventory Impl
 

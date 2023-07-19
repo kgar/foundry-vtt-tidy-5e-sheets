@@ -1,13 +1,11 @@
 <script lang="ts">
-  import {
-    FoundryAdapter,
-    type CharacterSheetContext,
-  } from 'src/foundry/foundry-adapter';
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { SettingsProvider } from 'src/settings/settings';
-  import type { ItemStub } from 'src/types/types';
+  import type { Item5e } from 'src/types/item';
+  import type { CharacterSheetContext } from 'src/types/types';
 
   export let context: CharacterSheetContext;
-  export let spell: ItemStub;
+  export let spell: Item5e;
 
   function getSpellImageUrl(
     context: CharacterSheetContext,
