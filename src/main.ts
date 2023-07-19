@@ -11,8 +11,11 @@ import {
 
 FoundryAdapter.registerCharacterSheet(Tidy5eSheetKgar);
 
-FoundryAdapter.onReady(() => {
+FoundryAdapter.onReady(async () => {
   initSettings();
+
+  // TODO: Remove after debugging:
+  debugCompareSheets('tC0Wr0s3MhRUXpzA', 'pbGp2hNyyqtAo3h6');
 });
 
 Hooks.on('getActorSheetHeaderButtons', (sheet: any, buttons: any) => {
@@ -62,4 +65,47 @@ function isTidy5eKgarSheet(sheetClass: string | undefined) {
 
   return justTheClass === Tidy5eSheetKgar.name;
   // TODO: Check for more supported KGar sheets in this way.
+}
+
+function delay(ms: number) {
+  return new Promise<void>((resolve) => {
+    setTimeout(() => resolve(), ms);
+  });
+}
+
+async function debugCompareSheets(tidySheetId: string, kgarSheetId: string) {
+  const tidySheet = game.actors.get(tidySheetId)?.sheet;
+
+  if (!tidySheet) {
+    ui.notifications.warn('Tidy 5e sheet not found; update the ID');
+  }
+
+  tidySheet.render(true);
+  await delay(500);
+  tidySheet.setPosition({
+    width: 740,
+    height: 840,
+    left: 69,
+    top: 56.5,
+    scale: 1,
+    zIndex: 108,
+  });
+  await delay(150);
+
+  const kgarSheet = game.actors.get(kgarSheetId)?.sheet;
+
+  if (!kgarSheet) {
+    ui.notifications.warn('Kgar sheet not found; update the ID');
+  }
+
+  kgarSheet.render(true);
+  await delay(500);
+  kgarSheet.setPosition({
+    width: 720,
+    height: 840,
+    left: 814,
+    top: 53.5,
+    scale: 1,
+    zIndex: 109,
+  });
 }
