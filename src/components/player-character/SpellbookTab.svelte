@@ -47,6 +47,7 @@
     SettingsProvider.settings.spellClassFilterSelect.get();
   const selectedClassFilter =
     FoundryAdapter.tryGetFlag(context.actor, 'classFilter') ?? '';
+  const allowEdit = FoundryAdapter.tryGetFlag(context.actor, 'allow-edit');
 
   function tryFilterByClass(spells: any[]) {
     if (!filterByClassesEnabled || selectedClassFilter === '') {
@@ -107,10 +108,12 @@
       items={tryFilterByClass(section.spells)}
       let:filteredItems
     >
-      {#if layoutMode === 'list'}
-        <SpellbookList spells={filteredItems} {section} {context} />
-      {:else}
-        <SpellbookGrid spells={filteredItems} {section} {context} />
+      {#if (searchCriteria.trim() === '' && allowEdit) || filteredItems.length > 0}
+        {#if layoutMode === 'list'}
+          <SpellbookList spells={filteredItems} {section} {context} />
+        {:else}
+          <SpellbookGrid spells={filteredItems} {section} {context} />
+        {/if}
       {/if}
     </FilteredItems>
   {/each}

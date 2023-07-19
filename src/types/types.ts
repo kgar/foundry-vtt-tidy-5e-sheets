@@ -17,6 +17,7 @@ export type ClassSummary = {
 };
 
 export type ItemStub = {
+  id: string;
   type: string;
   name: string;
   system: {
@@ -25,6 +26,7 @@ export type ItemStub = {
     levels?: number;
   };
   img: string;
+  sheet: { render: (force: boolean) => void; isEditable: boolean }
 };
 
 export type RoundedPortaitStyleOptions = 'default' | 'pc' | 'npc' | 'all';

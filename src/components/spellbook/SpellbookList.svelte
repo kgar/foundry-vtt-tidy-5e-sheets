@@ -92,10 +92,7 @@
       >
         <ItemTableCell primary={true}>
           <SpellImageProvider {context} {spell} let:spellImg>
-            <ItemUseButton
-              item={spell}
-              imgUrlOverride={spellImg}
-            />
+            <ItemUseButton item={spell} imgUrlOverride={spellImg} />
           </SpellImageProvider>
           <ItemName
             on:click={(event) => toggleSummary(event.detail, context.actor)}
@@ -161,7 +158,9 @@
         {/if}
       </ItemTableRow>
     {/each}
-    <ItemTableFooter actor={context.actor} dataset={section.dataset} />
+    {#if context.owner && allowEdit}
+      <ItemTableFooter actor={context.actor} dataset={section.dataset} />
+    {/if}
   </ItemTable>
 </section>
 
@@ -193,6 +192,7 @@
     :global(.innate) {
       background-color: var(--t5e-innate);
     }
+    
     :global(.components) {
       gap: 0;
     }

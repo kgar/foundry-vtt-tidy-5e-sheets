@@ -402,7 +402,7 @@
     class="tab inventory"
     class:active={currentTabParam.get() === 'inventory'}
   >
-    <InventoryTab />
+    <InventoryTab {context} {sheetFunctions} />
   </section>
   <section
     class="tab spellbook"

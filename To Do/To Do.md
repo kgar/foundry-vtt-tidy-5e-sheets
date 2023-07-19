@@ -16,14 +16,9 @@
     - [ ] Settings
     - [ ] Styles
       - [ ] `_mainTab.scss`
-    - [ ] Favorites...
-  - [ ] Inventory
-    - [x] Make a component
-    - [ ] Functionality
-    - [ ] Settings
-    - [ ] Styles
-      - [ ] src_scss\partials_inventory-grid.scss
-      - [ ] src_scss\partials_inventory.scss
+- [ ] Implement Favorites
+  - [ ] Scope it out and make a plan
+  - [ ] ...
 - [x] Ensure item summary functionality can be shared
 
 
@@ -32,7 +27,6 @@
 - [ ] Visual bug (existing): when any character detail field is too long in Biography top-notes for a PC, it will blow out the layout. Consider CSS grid as a replacement. Test carefully on all the major browsers. Also just consider inputs instead of contenteditable fields?
 - [ ] Consider consolidating sheet initial value / cacheable content into single objects to pass down to the target component. Values include things like scrollTop map, currentTab sheet parameter, and any other sheetparameters that need to be cached for maintaining visual integrity between submissions / sheet refreshes.
 - [ ] Focus is lost when the sheet submits, so you cannot tab through fields and make changes quickly. It would be nice if focus is maintained between submits. How would we accomplish that?
-- [ ] Like Gmail, make a "`You Deleted A thing [UNDO]`" notification. So, if someone deletes an effect on accident, they can hit UNDO and get it back. It cannot be intrusive, and it may need to be toggle-able.
 - [ ] When done with initial prototype: Replace ALL `cursor:pointer` instances with `role="button"` on the target element: https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/button_role
   - [ ] All things ".rollable"
   - [ ] Task them out
@@ -156,9 +150,15 @@ Evaluate module integration and think about better (API-centric) ways to support
 
 ## Cross-Cutting
 
-- [ ] Implement info card
+- [ ] Implement Item Cards
   - [ ] src_scss\partials_item-info-card.scss
   - [ ] Game Settings
+    - [ ] Show item info cards in all layouts
+    - [ ] Show item info cards for NPCs/Vehicles
+    - [ ] Item info cards float next to cursor
+    - [ ] Delay showing info cards
+    - [ ] Key to hold for Item Card interaction
+    
 - [ ] Reimplement Favorites visualization - [ ] Psst: src_scss\partials_favorites.scss
 
 ## Big Picture
