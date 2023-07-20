@@ -11,17 +11,15 @@
     - [x] the rest
     - [x] hideStandardEncumbranceBar setting
 - [x] Make types for `ui`, such as `ui.notifications`
-- [ ] Styles
+- [x] Styles
   - [x] ... the rest
   - [x] item summary looks unfinished
-- [ ] Ok, now do the grid version
-- [ ] Determine what Stacks are and how they should work
+- [x] Ok, now do the grid version
+- [x] Determine what Stacks are and how they should work
 - [ ] Settings / features
   - [x] hideIconsNextToTheItemName : If enabled this setting hides the support icons present next to the object name (Favorite, Attunement, etc.), this is usually useful with the 'Use classic item controls in list view' setting enabled in order to avoid a redundancy of icons...
   - [ ] ammoEquippedOnly : Enable to only show currently equipped ammunition in Weapon ammo selector.
   - [x] quantityAlwaysShownEnabled : Always show item quantity
-  - [ ]
-  - [ ] ...
 - [x] The context menu has too many options. Is that because of tidy 5e module being on? Yes.
 - [ ] Test ammo switching on a synthetic token
 
@@ -590,4 +588,41 @@ async function _onQuantityChange(event) {
     border-top-color: var(--t5e-encumbrance-outline);
   }
 }
+```
+
+## Inventory grid stuff
+
+```hbs
+{{~#if ctx.attunement}}
+  <i class="fas fa-sun icon-attuned {{item.attunement.cls}}" title="{{localize item.attunement.title}}"></i>
+{{/if}}
+
+{{#if item.flags.tidy5e-sheet.favorite}}
+<i class="fas fa-bookmark icon-fav" title="{{localize 'TIDY5E.isFav'}}"></i>
+{{/if}}
+
+{{#if @root.owner}}
+<a class="item-control item-edit" style="display:none" data-action="itemEdit" data-tooltip="DND5E.ItemEdit">
+  <i class="fas fa-edit fa-fw"></i>
+</a>
+{{/if}}
+
+<div class="item-name rollable" >
+  <div class="item-image" style="background-image: url('{{item.img}}')">
+    <i class="fa fa-dice-d20"></i>
+  </div>
+</div>
+<div class="item-stats">
+
+  <span class="item-quantity{{#if item.isStack}} isStack{{/if}}" title="{{localize 'DND5E.Quantity'}}">
+    <input class="item-count" name="system.quantity" type="text" value="{{item.system.quantity}}" maxlength="2" >
+  </span>
+
+  <div class="item-detail item-uses" title="{{localize 'DND5E.Uses'}}: {{item.system.uses.value}}/{{item.system.uses.max}} ">
+    {{#if item.hasUses }}
+    <i class="fas fa-bolt"></i><input type="text" name="system.uses.value" value="{{item.system.uses.value}}" placeholder="0" maxlength="2" >
+    {{/if}}
+  </div>
+
+</div>
 ```

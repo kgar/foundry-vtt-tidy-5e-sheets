@@ -58,37 +58,18 @@
     SettingsProvider.settings.classicControlsEnabled.get();
 
   function getInventoryRowClasses(item: Item5e, section: any) {
-    const itemClasses: string[] = [];
-
-    if (section.css) {
-      itemClasses.push(section.css);
-    }
-
-    if (
-      /* Compatibility: Magic Items https://foundryvtt.com/packages/magicitems/ */
-      FoundryAdapter.getProperty(item, 'flags.magicitems.enabled') ||
-      FoundryAdapter.getProperty(item, 'system.properties.mgc')
-    ) {
-      itemClasses.push('magic-item');
-    }
-
-    const attunementClass = FoundryAdapter.getProperty(
-      context.actor,
-      'attunement.cls'
-    );
-    if (attunementClass && typeof attunementClass === 'string') {
-      itemClasses.push(attunementClass);
-    }
-
-    if (item?.system?.equipped) {
-      itemClasses.push('equipped');
-    }
+    const extras: string[] = [];
 
     if (!quantityAlwaysShownEnabled) {
-      itemClasses.push('show-item-count-on-hover');
+      extras.push('show-item-count-on-hover');
     }
 
-    return itemClasses.join(' ');
+    return FoundryAdapter.getInventoryRowClasses(
+      item,
+      section,
+      context.itemContext[item.id],
+      extras
+    );
   }
 
   function onAmmoChange(item: Item5e, ammoId: string) {

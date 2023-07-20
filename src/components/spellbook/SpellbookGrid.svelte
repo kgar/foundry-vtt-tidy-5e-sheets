@@ -9,10 +9,11 @@
   import SpellSlotMarkers from '../spellbook/SpellSlotMarkers.svelte';
   import SpellSlotUses from '../spellbook/SpellSlotUses.svelte';
   import SpellImageProvider from './SpellImageProvider.svelte';
+  import type { Item5e } from 'src/types/item';
 
   export let context: CharacterSheetContext;
   export let section: any;
-  export let spells: any[];
+  export let spells: Item5e[];
 
   const localize = FoundryAdapter.localize;
   const allowEdit = FoundryAdapter.tryGetFlag(context.actor, 'allow-edit');
@@ -36,6 +37,8 @@
     <div class="spells">
       {#each spells as spell}
         <div
+          role="button"
+          tabindex="0"
           class="spell {FoundryAdapter.getSpellRowClasses(spell)}"
           data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
           data-context-menu-entity-id={spell.id}
@@ -56,9 +59,10 @@
       {#if context.owner && allowEdit}
         <div class="spells-footer">
           <a
-            class="spell-create"
+            role="button"
+            tabindex="0"
             title={localize('DND5E.SpellCreate')}
-            on:click={() =>
+            on:click|stopPropagation|preventDefault={() =>
               FoundryAdapter.createItem(section.dataset, context.actor)}
           >
             <i class="fas fa-plus-circle" />
@@ -89,6 +93,10 @@
       margin: 0.1875rem;
       box-shadow: 0 0 0.0625rem 0.0625rem var(--t5e-light-color);
       border-radius: 0.3125rem;
+
+      &.context {
+        border: 1px solid var(--t5e-primary-accent);
+      }
 
       &.preparable {
         .spell-image {
@@ -178,17 +186,13 @@
         }
       }
 
-      .spell-name.rollable:hover .spell-image,
-      .spell-name:hover .spell-image {
+      &:not(.context) .spell-name.rollable:hover .spell-image,
+      &:not(.context) .spell-name:hover .spell-image {
         background-image: none !important;
       }
 
-      .spell-name:hover .spell-image i {
+      &:not(.context) .spell-name:hover .spell-image i {
         display: initial;
-      }
-
-      .spell-name:hover .spell-image:hover {
-        background-image: none !important;
       }
 
       .spell-name:hover .spell-image:hover i {
