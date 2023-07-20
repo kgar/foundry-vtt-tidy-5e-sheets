@@ -1,6 +1,6 @@
 - [x] Make a component
-- [ ] Functionality
-  - [ ] ...
+- [x] Functionality
+  - [x] ...
   - [x] Configure item count to update on blur
   - [x] Implement hover / static item count
   - [x] ammo dropdown

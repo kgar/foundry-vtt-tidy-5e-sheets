@@ -393,7 +393,7 @@
     class="tab attributes"
     class:active={currentTabParam.get() === 'attributes'}
   >
-    <AttributesTab />
+    <AttributesTab {context} {sheetFunctions} />
   </section>
   <section
     class="tab inventory"
@@ -454,6 +454,10 @@
 
     &.active {
       display: flex;
+    }
+
+    &.attributes {
+      gap: 1rem;
     }
 
     &.attributes,
