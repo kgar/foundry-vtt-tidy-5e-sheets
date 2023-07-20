@@ -16,9 +16,9 @@
   - [x] item summary looks unfinished
 - [x] Ok, now do the grid version
 - [x] Determine what Stacks are and how they should work
-- [ ] Settings / features
+- [x] Settings / features
   - [x] hideIconsNextToTheItemName : If enabled this setting hides the support icons present next to the object name (Favorite, Attunement, etc.), this is usually useful with the 'Use classic item controls in list view' setting enabled in order to avoid a redundancy of icons...
-  - [ ] ammoEquippedOnly : Enable to only show currently equipped ammunition in Weapon ammo selector.
+  - [x] ammoEquippedOnly : Enable to only show currently equipped ammunition in Weapon ammo selector.
   - [x] quantityAlwaysShownEnabled : Always show item quantity
 - [x] The context menu has too many options. Is that because of tidy 5e module being on? Yes.
 - [ ] Test ammo switching on a synthetic token
