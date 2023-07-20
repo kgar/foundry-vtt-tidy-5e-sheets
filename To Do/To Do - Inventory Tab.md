@@ -1,9 +1,20 @@
 - [x] Make a component
 - [ ] Functionality
   - [ ] ...
-  - [ ] Configure item count to update on blur
+  - [x] Configure item count to update on blur
   - [x] Implement hover / static item count
   - [x] ammo dropdown
+- [ ] Footer
+  - [ ] Attunement
+  - [ ] Money
+    - [ ] lazyMoneyEnable
+    - [ ] lazyMoneyIgnoreElectrum
+    - [ ] lazyMoneyChatLog
+    - [ ] lockMoneyChanges
+  - [ ] Money changing
+    - [ ] lazyMoneyAddConvert
+  - [ ] encumbrance
+    - [ ] hideStandardEncumbranceBar setting
 - [ ] Make types for `ui`, such as `ui.notifications`
 - [ ] Styles
   - [ ] ... the rest
@@ -11,7 +22,7 @@
 - [ ] Ok, now do the grid version
 - [ ] Determine what Stacks are and how they should work
 - [ ] Settings / features
-  - [ ] hideIconsNextToTheItemName : If enabled this setting hides the support icons present next to the object name (Favorite, Attunement, etc.), this is usually useful with the 'Use classic item controls in list view' setting enabled in order to avoid a redundancy of icons...
+  - [x] hideIconsNextToTheItemName : If enabled this setting hides the support icons present next to the object name (Favorite, Attunement, etc.), this is usually useful with the 'Use classic item controls in list view' setting enabled in order to avoid a redundancy of icons...
   - [ ] ammoEquippedOnly : Enable to only show currently equipped ammunition in Weapon ammo selector.
   - [x] quantityAlwaysShownEnabled : Always show item quantity
   - [ ]
