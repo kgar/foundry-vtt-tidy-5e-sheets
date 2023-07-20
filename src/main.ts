@@ -8,6 +8,16 @@ import {
   applyHombrewEnableUpcastFreeSpellToPreItemConsumption,
   useHombrewEnableUpcastFreeSpell,
 } from './dialogs/homebrew-free-upcast';
+import type { Dialog as ClientDialog } from './types/dialog';
+import type { globalThisUI } from './types/types';
+import type { globalThisDnd5e } from './types/dnd5e';
+
+declare global {
+  var Dialog: typeof ClientDialog;
+  var ui: globalThisUI;
+  var dnd5e: globalThisDnd5e;
+}
+
 
 FoundryAdapter.registerCharacterSheet(Tidy5eSheetKgar);
 
@@ -77,7 +87,9 @@ async function debugCompareSheets(tidySheetId: string, kgarSheetId: string) {
   const tidySheet = game.actors.get(tidySheetId)?.sheet;
 
   if (!tidySheet) {
-    ui.notifications.warn('KGAR TIDY 5E DEBUG | Tidy 5e sheet not found; update the ID');
+    ui.notifications.warn(
+      'KGAR TIDY 5E DEBUG | Tidy 5e sheet not found; update the ID'
+    );
   }
 
   tidySheet.render(true);
@@ -95,7 +107,9 @@ async function debugCompareSheets(tidySheetId: string, kgarSheetId: string) {
   const kgarSheet = game.actors.get(kgarSheetId)?.sheet;
 
   if (!kgarSheet) {
-    ui.notifications.warn('KGAR TIDY 5E DEBUG | Kgar sheet not found; update the ID');
+    ui.notifications.warn(
+      'KGAR TIDY 5E DEBUG | Kgar sheet not found; update the ID'
+    );
   }
 
   kgarSheet.render(true);

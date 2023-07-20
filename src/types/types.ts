@@ -35,9 +35,7 @@ export type ItemLayoutMode = 'grid' | 'list';
 
 export type DropdownOption = { text: string; value: string };
 
-export declare const ui: globalThisUI;
-
-type globalThisUI = {
+export type globalThisUI = {
   notifications: ClientNotifications;
 };
 

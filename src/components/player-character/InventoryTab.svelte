@@ -11,7 +11,7 @@
   import InventoryList from '../inventory/InventoryList.svelte';
   import InventoryGrid from '../inventory/InventoryGrid.svelte';
   import { SettingsProvider } from 'src/settings/settings';
-  import type { Dialog } from 'src/types/dialog';
+  
 
   export let context: CharacterSheetContext;
   export let sheetFunctions: SheetFunctions;

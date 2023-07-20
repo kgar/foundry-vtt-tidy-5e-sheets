@@ -1,9 +1,7 @@
 import type { ActorSheet5eCharacter } from './actor5e-sheet';
 import type { Flags } from './flags';
 
-export declare const dnd5e: globalThisDnd5e;
-
-type globalThisDnd5e = {
+export type globalThisDnd5e = {
   id: string;
   title: string;
   description: string;

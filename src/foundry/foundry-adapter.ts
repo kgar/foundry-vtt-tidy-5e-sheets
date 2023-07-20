@@ -1,11 +1,8 @@
-import type {
-  Actor5e,
-  CharacterSheetContext,
-  ClassSummary,
-  Item5e,
-} from 'src/types/types';
+import type { CharacterSheetContext, ClassSummary } from 'src/types/types';
 import { CONSTANTS } from '../constants';
 import type { ActorSheet5eCharacter } from 'src/types/actor5e-sheet';
+import type { Actor5e } from 'src/types/actor';
+import type { Item5e } from 'src/types/item';
 
 export const FoundryAdapter = {
   getActorSheetClass() {
@@ -319,8 +316,6 @@ declare const Hooks: {
 type ConstructorOf<T> = new (...args: any) => T;
 
 declare const foundry: any;
-
-
 
 declare const game: {
   user: {

@@ -1,5 +1,5 @@
 export declare class Dialog {
-  constructor(data: any, options: any);
+  constructor(data?: any, options?: any);
 
   options: DialogOptions;
   appId: number;
