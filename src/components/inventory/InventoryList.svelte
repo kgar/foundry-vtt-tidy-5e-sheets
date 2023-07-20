@@ -29,6 +29,25 @@
   const localize = FoundryAdapter.localize;
   const allowEdit = FoundryAdapter.tryGetFlag(context.actor, 'allow-edit');
   const classicControlsBaseWidth = allowEdit ? '7.5rem' : '5.3125rem';
+  const ammoEquippedOnly = SettingsProvider.settings.ammoEquippedOnly.get();
+  const ammos = [
+    {
+      text: '',
+      value: null,
+      ammo: null,
+    },
+    ...context.actor.items
+      .filter(
+        (x) =>
+          x.system.consumableType === 'ammo' &&
+          (!ammoEquippedOnly || x.system.equipped)
+      )
+      .map((x) => ({
+        text: `${x.name} (${x.system.quantity})`,
+        value: x.id,
+        ammo: x,
+      })),
+  ];
 
   const hideIconsNextToTheItemName =
     SettingsProvider.settings.hideIconsNextToTheItemName.get();
@@ -50,8 +69,12 @@
       itemClasses.push('magic-item');
     }
 
-    if (item?.attunement?.cls) {
-      itemClasses.push(item.attunement.cls);
+    const attunementClass = FoundryAdapter.getProperty(
+      context.actor,
+      'attunement.cls'
+    );
+    if (attunementClass && typeof attunementClass === 'string') {
+      itemClasses.push(attunementClass);
     }
 
     if (item?.system?.equipped) {
@@ -59,6 +82,24 @@
     }
 
     return itemClasses.join(' ');
+  }
+
+  function onAmmoChange(item: Item5e, ammoId: string) {
+    const ammo = item.actor?.items.find((i) => i.id === ammoId);
+
+    item.update({
+      system: {
+        consume: {
+          amount: !ammo
+            ? null
+            : !!item.system.consume?.amount
+            ? item.system.consume.amount
+            : 1,
+          target: !ammo ? '' : ammo.id,
+          type: !ammo ? '' : ammo.system.consumableType,
+        },
+      },
+    });
   }
 </script>
 
@@ -100,15 +141,43 @@
             <ItemName
               on:click={(event) => toggleSummary(event.detail, context.actor)}
             >
-              {item.name}
+              <div class="flexrow align-items-center extra-small-gap">
+                {item.name}
+                {#if item.system?.properties?.amm}
+                  <span class="ammo">
+                    <select
+                      on:change={(event) =>
+                        onAmmoChange(item, event.currentTarget.value)}
+                    >
+                      {#each ammos as ammo}
+                        <option
+                          value={ammo.value}
+                          selected={item.system.consume?.target === ammo.value}
+                          >{ammo.text}</option
+                        >
+                      {/each}
+                    </select>
+                  </span>
+                {/if}
+                <span class="item-quantity" class:isStack={item.isStack}>
+                  (<input
+                    class="item-count"
+                    name="system.quantity"
+                    type="text"
+                    value={item.system.quantity}
+                    maxlength="3"
+                    on:click|stopPropagation
+                  />)
+                </span>
+              </div>
+
+              <!-- 
+                Quantity (on hover by default; static by setting)  
+                <span class="item-quantity{{#if item.isStack}} isStack{{/if}}">
+                  (<input class="item-count" name="system.quantity" type="text" value="{{item.system.quantity}}" maxlength="3" >)
+                </span>
+              -->
             </ItemName>
-            <!-- AMMO <span class="ammo" data-id="{{item._id}}"></span>  -->
-            <!-- 
-              Quantity (on hover by default; static by setting)  
-              <span class="item-quantity{{#if item.isStack}} isStack{{/if}}">
-                (<input class="item-count" name="system.quantity" type="text" value="{{item.system.quantity}}" maxlength="3" >)
-              </span>
-            -->
           </ItemTableCell>
           {#if !hideIconsNextToTheItemName}
             <ItemTableCell>
@@ -197,6 +266,19 @@
       align-items: center;
       justify-content: center;
       padding: 0 0.25rem;
+    }
+  }
+
+  .item-quantity {
+    align-items: center;
+    display: flex;
+    margin-left: 0.25rem;
+    text-align: center;
+    transition: opacity 0.3s ease;
+
+    input {
+      width: 1.4375rem;
+      height: 100%;
     }
   }
 </style>
