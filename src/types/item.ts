@@ -1,4 +1,5 @@
 import type { Actor5e } from './actor';
+import type { ChatMessage } from './chat-message';
 import type { FoundryDocument } from './document';
 import type { Flags } from './flags';
 
@@ -99,6 +100,11 @@ export type Item5e = Item & {
     modifiedTime: any;
     lastModifiedBy: any;
   };
+
+  use(
+    config: Partial<ItemUseConfiguration>,
+    options?: Partial<ItemUseOptions>
+  ): Promise<ChatMessage>;
 };
 
 export interface Item5eProperties {
@@ -126,3 +132,22 @@ type Item = BaseItem & {};
 type BaseItem = FoundryDocument & {
   id: string;
 };
+
+interface ItemUseConfiguration {
+  createMeasuredTemplate: boolean;
+  consumeQuantity: boolean;
+  consumeRecharge: boolean;
+  consumeResource: boolean;
+  consumeSpellLevel: number | string | null;
+  consumeSpellSlot: boolean;
+  consumeUsage: boolean;
+  needsConfiguration: boolean;
+}
+
+interface ItemUseOptions {
+  configureDialog: boolean;
+  rollMode: string;
+  createMessage: boolean;
+  flags: object;
+  event: Event;
+}

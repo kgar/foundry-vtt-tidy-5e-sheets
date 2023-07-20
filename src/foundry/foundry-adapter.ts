@@ -177,8 +177,8 @@ export const FoundryAdapter = {
     }
 
     const itemData = {
-      name: game.i18n.format('DND5E.ItemNew', {
-        type: game.i18n.localize(CONFIG.Item.typeLabels[dataset.type]),
+      name: FoundryAdapter.localize('DND5E.ItemNew', {
+        type: FoundryAdapter.localize(CONFIG.Item.typeLabels[dataset.type]),
       }),
       type: dataset.type,
       system: foundry.utils.expandObject({ ...dataset }),
@@ -242,6 +242,40 @@ export const FoundryAdapter = {
   },
   getProperty(obj: any, path: string): unknown {
     return foundry.utils.getProperty(obj, path);
+  },
+  getInventoryRowClasses(
+    item: Item5e,
+    section: any,
+    ctx: any,
+    extras?: string[]
+  ): string {
+    const itemClasses: string[] = [];
+
+    if (section.css) {
+      itemClasses.push(section.css);
+    }
+
+    if (
+      /* Compatibility: Magic Items https://foundryvtt.com/packages/magicitems/ */
+      FoundryAdapter.getProperty(item, 'flags.magicitems.enabled') ||
+      FoundryAdapter.getProperty(item, 'system.properties.mgc')
+    ) {
+      itemClasses.push('magic-item');
+    }
+
+    if (ctx.attunement?.cls) {
+      itemClasses.push(ctx.attunement.cls);
+    }
+
+    if (item?.system?.equipped) {
+      itemClasses.push('equipped');
+    }
+
+    if (extras?.length) {
+      itemClasses.push(...extras);
+    }
+
+    return itemClasses.join(' ');
   },
   getSpellRowClasses(spell: any): string {
     const classes: string[] = [];
