@@ -49,6 +49,7 @@ export type Actor5e = Actor & {
   rollSkill(abbreviation: string, options: { event: Event }): void;
   rollDeathSave(options?: { event: Event }): void;
   getRollData(options?: { deterministic: boolean }): any;
+  convertCurrency: () => Promise<Actor5e>;
 };
 
 type Ability = {

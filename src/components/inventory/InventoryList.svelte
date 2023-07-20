@@ -182,7 +182,6 @@
                 <span class="item-quantity" class:isStack={ctx.isStack}>
                   (<input
                     class="item-count"
-                    name="system.quantity"
                     type="text"
                     value={item.system.quantity}
                     maxlength="3"

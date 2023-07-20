@@ -64,6 +64,7 @@ export class Tidy5eSheetKgar extends ActorSheet5eCharacter {
         context: {
           ...(await super.getData(this.options)),
           actorClassesToImages: getActorClassesToImages(this.actor),
+          appId: this.appId
         },
       },
     });

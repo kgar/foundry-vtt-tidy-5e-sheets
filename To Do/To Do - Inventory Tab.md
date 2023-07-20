@@ -4,8 +4,8 @@
   - [x] Configure item count to update on blur
   - [x] Implement hover / static item count
   - [x] ammo dropdown
-- [ ] Footer
-  - [ ] Attunement
+- [x] Footer
+  - [x] Attunement
   - [ ] Money
     - [ ] lazyMoneyEnable
     - [ ] lazyMoneyIgnoreElectrum
@@ -272,53 +272,70 @@
 
 ```js
 export const tidy5eAmmoSwitch = function (html, actor) {
-	html.find(".ammo").each(function () {
-		const element = $(this);
-		const itemId = element.attr("data-id");
-		const token = actor.token || null;
-		if (token) actor = actor.getActiveTokens(false, true).find((t) => t._id === token.id).actor; // get synthetic actor
-		const item = actor.items.get(itemId);
-		const equippedOnly = game.settings.get(CONSTANTS.MODULE_ID, "ammoEquippedOnly");
-		const ammoItems = actor.items.filter(
-			(x) => x.system.consumableType === "ammo" && (!equippedOnly || x.system.equipped)
-		);
-		debug(`tidy5e-ammo-switch | tidy5eAmmoSwitch | ammoItems: ${ammoItems}`);
-		const target = item.system.consume.target;
-		const ammoItemStrings = ['<option value=""></option>']
-			.concat(
-				ammoItems.map(
-					(x) =>
-						`<option value="${x.id}" ${x.id === target ? "selected" : ""}>${x.name} (${
-							x.system.quantity
-						})</option>`
-				)
-			)
-			.join("");
-		const selector = $(`<select class="ammo-switch">${ammoItemStrings}</select>`);
-		selector.attr("data-item", item.id);
-		selector.attr("data-actor", actor.id);
-		if (token) selector.attr("data-token", token.id);
-		selector.on("change", function () {
-			const element = $(this);
-			const val = element.val();
-			let actor = game.actors.get(selector.attr("data-actor"));
-			const token = selector.attr("data-token");
-			if (token) actor = actor.getActiveTokens(false, true).find((t) => t._id === token).actor; // get synthetic actor
-			const item = actor.items.get(selector.attr("data-item"));
-			const ammo = actor.items.get(val);
-			item.update({
-				system: {
-					consume: {
-						amount: !ammo ? null : !!item.system.consume.amount ? item.system.consume.amount : 1,
-						target: !ammo ? "" : val,
-						type: !ammo ? "" : ammo.system.consumableType
-					}
-				}
-			});
-		});
-		element.after(selector);
-		element.remove();
-	});
+  html.find('.ammo').each(function () {
+    const element = $(this);
+    const itemId = element.attr('data-id');
+    const token = actor.token || null;
+    if (token)
+      actor = actor
+        .getActiveTokens(false, true)
+        .find((t) => t._id === token.id).actor; // get synthetic actor
+    const item = actor.items.get(itemId);
+    const equippedOnly = game.settings.get(
+      CONSTANTS.MODULE_ID,
+      'ammoEquippedOnly'
+    );
+    const ammoItems = actor.items.filter(
+      (x) =>
+        x.system.consumableType === 'ammo' &&
+        (!equippedOnly || x.system.equipped)
+    );
+    debug(`tidy5e-ammo-switch | tidy5eAmmoSwitch | ammoItems: ${ammoItems}`);
+    const target = item.system.consume.target;
+    const ammoItemStrings = ['<option value=""></option>']
+      .concat(
+        ammoItems.map(
+          (x) =>
+            `<option value="${x.id}" ${x.id === target ? 'selected' : ''}>${
+              x.name
+            } (${x.system.quantity})</option>`
+        )
+      )
+      .join('');
+    const selector = $(
+      `<select class="ammo-switch">${ammoItemStrings}</select>`
+    );
+    selector.attr('data-item', item.id);
+    selector.attr('data-actor', actor.id);
+    if (token) selector.attr('data-token', token.id);
+    selector.on('change', function () {
+      const element = $(this);
+      const val = element.val();
+      let actor = game.actors.get(selector.attr('data-actor'));
+      const token = selector.attr('data-token');
+      if (token)
+        actor = actor
+          .getActiveTokens(false, true)
+          .find((t) => t._id === token).actor; // get synthetic actor
+      const item = actor.items.get(selector.attr('data-item'));
+      const ammo = actor.items.get(val);
+      item.update({
+        system: {
+          consume: {
+            amount: !ammo
+              ? null
+              : !!item.system.consume.amount
+              ? item.system.consume.amount
+              : 1,
+            target: !ammo ? '' : val,
+            type: !ammo ? '' : ammo.system.consumableType,
+          },
+        },
+      });
+    });
+    element.after(selector);
+    element.remove();
+  });
 };
 ```
 
@@ -326,11 +343,256 @@ export const tidy5eAmmoSwitch = function (html, actor) {
 
 ```js
 async function _onQuantityChange(event) {
-	event.preventDefault();
-	const itemId = event.currentTarget.closest(".item").dataset.itemId;
-	const item = this.actor.items.get(itemId);
-	const uses = parseInt(event.target.value ?? item.system.quantity);
-	event.target.value = uses;
-	return item.update({ "system.quantity": uses });
+  event.preventDefault();
+  const itemId = event.currentTarget.closest('.item').dataset.itemId;
+  const item = this.actor.items.get(itemId);
+  const uses = parseInt(event.target.value ?? item.system.quantity);
+  event.target.value = uses;
+  return item.update({ 'system.quantity': uses });
+}
+```
+
+## Footer Impl
+
+```hbs
+<div class="inventory-footer">
+	<div class="attuned-items-counter" title="{{localize 'DND5E.Attunement'}}">
+		<i class="fas fa-sun"></i>
+		<span class="attuned-items-current">{{system.attributes.attunement.value}}</span>
+		/
+		<span class="attuned-items-max">{{system.attributes.attunement.max}}</span>
+		<input type="number" class="attuned-items-max" name="system.attributes.attunement.max" value="{{system.attributes.attunement.max}}" placeholder="0" title="{{localize 'TIDY5E.AttunementMax'}}" />
+	</div>
+
+	<div class="inventory-currency">
+		<ol class="currency">
+			<!--
+        <h3>
+            {{localize "DND5E.Currency"}}
+            <a class="action-button currency-convert {{rollableClass}}" data-action="convertCurrency" data-tooltip="DND5E.CurrencyConvert">
+                <i class="fas fa-coins"></i>
+            </a>
+        </h3>
+        {{#each system.currency as |v k|}}
+        <label class="denomination {{k}}">{{ lookup ../labels.currencies k }}</label>
+        <input type="text" name="system.currency.{{k}}" value="{{v}}" data-dtype="Number">
+        {{/each}}
+        -->
+			<li class="currency-header" title="{{localize 'DND5E.Currency'}}">
+				<i class="fas fa-coins"></i>
+			</li>
+			{{#each system.currency as |v k|}}
+			<li class="currency-item {{k}}" title="{{ lookup ../labels.currencies k }}">
+				<input type="number" step="any" name="system.currency.{{k}}" id="{{@root/appId}}-system.currency.{{k}}" value="{{v}}" />
+				<label for="{{@root/appId}}-system.currency.{{k}}" class="denomination {{k}}" data-denom="{{k}}">{{ lookup ../label.currencies k }}</label>
+			</li>
+			{{/each}}
+			<li class="currency-item convert">
+				<a class="currency-convert rollable" data-action="convertCurrency" title="{{localize 'DND5E.CurrencyConvertHint'}}">
+					<i class="fas fa-funnel-dollar"></i>
+				</a>
+			</li>
+		</ol>
+	</div>
+</div>
+
+{{#with encumbrance}}
+<div class="encumbrance {{#if encumbered}}encumbered{{/if}}" title="{{localize 'TIDY5E.Encumbrance'}}">
+	<span class="encumbrance-bar" style="width:{{pct}}%"></span>
+	<span class="encumbrance-label">{{value}} / {{max}}</span>
+	<i class="encumbrance-breakpoint encumbrance-33 arrow-up"></i>
+	<i class="encumbrance-breakpoint encumbrance-33 arrow-down"></i>
+	<i class="encumbrance-breakpoint encumbrance-66 arrow-up"></i>
+	<i class="encumbrance-breakpoint encumbrance-66 arrow-down"></i>
+</div>
+{{/with}}
+```
+
+```scss
+.inventory-footer {
+  margin: 0rem 14px 0.5rem 0;
+  padding-top: 0.5rem;
+  display: flex;
+  flex: 0 0 30px;
+  border-top: 1px solid var(--t5e-light-color);
+}
+
+.attuned-items-counter {
+  display: flex;
+  align-items: center;
+  margin: 0 20px 0 3px;
+  padding: 0 0 0 10px;
+  border-radius: 5px;
+  background: var(--t5e-faint-color);
+  box-shadow: 0 0 5px var(--t5e-magic-accent) inset;
+  border: 1px solid var(--t5e-magic-accent);
+
+  &.overattuned {
+    background: var(--t5e-primary-accent);
+    box-shadow: 0 0 3px var(--t5e-primary-accent);
+    animation: attention 2s infinite alternate ease-in-out;
+    color: #fff;
+  }
+
+  span {
+    font-size: 16px;
+  }
+
+  i {
+    opacity: 0.6;
+    font-size: 20px;
+    margin-right: 5px;
+    margin-left: 1px;
+  }
+
+  .attuned-items-max {
+    width: 24px;
+  }
+
+  input {
+    display: none;
+    font-size: 16px;
+    font-family: var(--t5e-signika);
+  }
+
+  &.isGM input {
+    display: inline;
+  }
+
+  &.isGM span.attuned-items-max {
+    display: none;
+  }
+}
+
+@keyframes attention {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.4);
+  }
+}
+// Currency
+
+.inventory-currency {
+  .currency {
+    display: flex;
+    align-items: center;
+    list-style: none;
+  }
+
+  .currency-header {
+    flex: 0 0 13px;
+    text-align: center;
+    align-items: center;
+    margin-right: 0.5rem;
+
+    i {
+      font-size: 20px;
+    }
+  }
+
+  .currency-item {
+    display: flex;
+    align-items: center;
+    background: var(--t5e-faint-color);
+    border-radius: 5px;
+    padding: 0 0.5rem 0 0;
+    margin-right: 0.5rem;
+    line-height: 30px;
+
+    input {
+      text-align: right;
+      flex: 1;
+      padding-left: 0.5rem;
+    }
+
+    label {
+      margin-left: 0.25rem;
+      flex: unset;
+    }
+
+    &.convert {
+      margin-right: 0;
+      padding: 0;
+      flex: 0 0 1px;
+      text-align: center;
+      white-space: nowrap;
+    }
+
+    a {
+      display: block;
+      background: var(--t5e-tertiary-color);
+      color: var(--t5e-background);
+      border-radius: 5px;
+      padding: 0 6px;
+
+      &:hover {
+        background: var(--t5e-secondary-color);
+      }
+    } // a
+
+    .denomination {
+      text-transform: uppercase;
+    }
+  } // .currency-item
+} // .inventory-currency
+
+// encumbrance
+.encumbrance {
+  margin-right: 14px;
+  background: var(--t5e-light-color);
+  border-radius: 5px;
+  position: relative;
+  // overflow: hidden;
+  box-shadow: 0 0 0 1px var(--t5e-encumbrance-outline) inset;
+
+  .encumbrance-bar {
+    position: absolute;
+    top: 1px;
+    --count-font: rgba(0, 0, 0, 0.9);
+    left: 1px;
+    bottom: 1px;
+    max-width: calc(100% - 2px);
+    border: 1px solid var(--t5e-encumbrance-bar-outline);
+    background: var(--t5e-encumbrance-bar);
+    border-radius: 4px;
+  }
+
+  .encumbrance-label {
+    display: block;
+    position: relative;
+    width: 100%;
+    text-align: center;
+    font-weight: 700;
+    color: #eee;
+    text-shadow: 0 0 2px #000;
+  }
+
+  .encumbrance-breakpoint {
+    position: absolute;
+    width: 0;
+    height: 0;
+    transform: translateX(-50%);
+    border: 4px solid transparent;
+  }
+
+  .encumbrance-33 {
+    left: calc(100% / 3);
+  }
+
+  .encumbrance-66 {
+    left: calc((100% / 3) * 2);
+  }
+
+  .arrow-up {
+    bottom: 0;
+    border-bottom-color: var(--t5e-encumbrance-outline);
+  }
+
+  .arrow-down {
+    top: 0;
+    border-top-color: var(--t5e-encumbrance-outline);
+  }
 }
 ```
