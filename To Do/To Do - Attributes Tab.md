@@ -1,0 +1,21 @@
+## Attributes Tab To Do's
+
+- [x] Make a component
+- [ ] HTML
+  - [ ] Attributes
+  - [ ] Traits
+  - [ ] Resources
+  - [ ] Favorites - stub for now
+- [ ] Functionality
+  - [ ] configure skills
+  - [ ] roll skills / support modifier keys (CTRL, SHIFT, ALT)
+  - [ ] set skill proficiency
+  - [ ] edit traits
+  - [ ] configure special traits
+  - [ ] 
+- [ ] Settings
+  - [ ] traitsTogglePc : By default empty traits are always visible. Enable to add a toggle button.
+  - [ ] traitsMovedBelowResource : Enable to move traits from the left side below resources.
+  - [ ] 
+- [ ] Styles
+    - [ ] `_mainTab.scss`

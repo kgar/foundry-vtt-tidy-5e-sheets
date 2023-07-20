@@ -2,20 +2,13 @@
 
 ## Top of Mind
 
+- Implement "+Temp +Max" HP and config button cog on the character profile 😱
 - [ ] Make shared component for nav tabs and eliminate the separate stylesheet
 
-## Character Tabs
-
-### Pile of TODOs
+## Character Tabs Pile of TODOs
 
 - [x] Use existing or create new tab control | made a really rough tabs control with relative ease
 - [ ] Implement the tabs
-  - [ ] Attributes
-    - [x] Make a component
-    - [ ] Functionality
-    - [ ] Settings
-    - [ ] Styles
-      - [ ] `_mainTab.scss`
 - [ ] Implement Favorites
   - [ ] Scope it out and make a plan
   - [ ] ...
@@ -95,8 +88,8 @@ Evaluate module integration and think about better (API-centric) ways to support
 - [x] Global SCSS configured that is scoped to `.tidy5e-kgar`
 - [ ] Figure out how flags and settings work
   - [x] Reread this https://foundryvtt.wiki/en/development/guides/handling-data and compare it to Tidy5e's approach
-  - [ ] https://foundryvtt.wiki/en/development/api/flags
-  - [ ] https://foundryvtt.wiki/en/development/api/settings
+  - [x] https://foundryvtt.wiki/en/development/api/flags
+  - [x] https://foundryvtt.wiki/en/development/api/settings
 - [x] Can the svelte view leverage prosemirror? YES.
 - [x] Use context API to provide sheet functions: skipped this. Not enough pain yet to introduce context API.
 - [x] Set up project constants for handling T5EK flags
@@ -110,11 +103,11 @@ Evaluate module integration and think about better (API-centric) ways to support
   - [ ] Stub out the main sheet header
     - [x] Make a component for the Ability Score Block and reuse
     - [x] Make it fully functional
-    - [ ] Stub TS types and resolve TS errors
-    - [ ] Encapsulate and organize
+    - [x] Stub TS types and resolve TS errors
+    - [x] Encapsulate and organize
     - [ ] Account for TODOs about implementing things
-  - [ ] Apply styles to make the header look verbatim like the original
-  - [ ] Add existing CSS variables
+  - [x] Apply styles to make the header look verbatim like the original
+  - [x] Add existing CSS variables
   - [ ] Make dark mode a simple update to the variables, rather than a totally different class.
 - [x] Register all settings
 - [x] Fill out the main settings dialog
@@ -205,24 +198,7 @@ Evaluate module integration and think about better (API-centric) ways to support
 
 > Most recent breakages in Tidy5e sheets were related to magic HTML conventions that hook into invisible jquery wire-ups. You have to go read through the core HBS's for character sheets. Since you're already there, skip the limitations imposed by trying to recreate their sheet and instead use the public API. After all the public API provides deprecation notices, whereas the 5e sheet can just suddenly be structured differently on a new version. Not much they will do about that.
 
-## Item Table side project:
 
-- [x] Identify a generic inventory / item component tree that will eliminate any guesswork and hopefully eliminate `_inventory.scss`.
-- [x] Recreate the inventory table setup with this tree
-- [x] Make it functional
-- [x] Refactor: Create table column component with primary:boolean field for the header row to use; trim unneeded stuff from the table cell component
-- [ ] Refactor: include column hint field in the table cell which can be put onto the resulting cell container for future testing but also for readability while scrolling through svelte code.
-- [x] Make it styled to match the original, but now it should bestow most of its core layout styles from the layout components rather than some file.
-- [ ] Resolve `TODO: Account for this, but do it in a svelte-ier way...`
-- [x] Replace Effects table
-- [x] Replace Background table
-- [x] Replace Classes table
-- [x] Resume the features tab effort
-
-Prototype here:
-https://github.com/kgar/svelte-code-sandbox
-
-The structure works as intended, thanks to slot props, which can surface smarter features of the item table layout components.
 
 ## Stretch
 
@@ -245,50 +221,11 @@ The structure works as intended, thanks to slot props, which can surface smarter
 - [ ] Sheet settings: Use non-Foundry-module color picker (Svelte has a nice one) for setting CSS colors
 - [ ] UI test idea - create automated walkthrough of the application which provides screenshots of relevant areas with relevant features toggled on and off. This should go into a markdown report with the screenshots. It should report any console errors as well.
 
-## Inspiration
 
-- [x] HTML
-- [x] SCSS
-- [x] Implement the inspirationOnHover option
-- [x] Implement the Disable Inspiration option
-- [x] Implement the disable animation option
-
-## Dying / Death Saves
-
-- [x] HTML
-- [x] SCSS
-- [x] Hide all charms when dying
-- [x] Reimplement the functionality of checkDeathSaveStatus
-- [x] Expand todos based on additional options here
-
-## HP Overlay
-
-- [x] HTML
-- [x] SCSS
-- [x] Implement Disable hp overlay game setting
-- [x] Purge hpOverlayBorder game setting
-
-## HP
-
-- [x] HTML
-- [x] SCSS
-- [x] Enable Max HP Override
-- [x] Lock Max HP Override to GM
-
-## Rest
-
-- [x] HTML
-- [x] SCSS
-- [x] Special Settings?
-
-## Hit Dice
-
-- [x] HTML
-- [x] SCSS
 
 ## Unsorted
 
-- [ ] Review and make TODOs from these files
+- [x] Review and make TODOs from these files
   - [x] src_scss\partials_character-details.scss | completely replaced need
   - [x] src_scss\partials_general.scss | imported directly
   - [x] src_scss\partials_navigation.scss | imported and adjusted
