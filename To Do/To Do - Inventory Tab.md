@@ -10,10 +10,10 @@
   - [x] encumbrance
     - [x] the rest
     - [x] hideStandardEncumbranceBar setting
-- [ ] Make types for `ui`, such as `ui.notifications`
+- [x] Make types for `ui`, such as `ui.notifications`
 - [ ] Styles
   - [x] ... the rest
-  - [ ] item summary looks unfinished
+  - [x] item summary looks unfinished
 - [ ] Ok, now do the grid version
 - [ ] Determine what Stacks are and how they should work
 - [ ] Settings / features

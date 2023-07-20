@@ -1,4 +1,4 @@
-import type { Actor5e } from "./actor";
+import type { Actor5e } from './actor';
 
 export type SheetFunctions = {
   activateListeners: () => void;
@@ -34,3 +34,22 @@ export type PortraitCharmRadiusClass =
 export type ItemLayoutMode = 'grid' | 'list';
 
 export type DropdownOption = { text: string; value: string };
+
+export declare const ui: globalThisUI;
+
+type globalThisUI = {
+  notifications: ClientNotifications;
+};
+
+type ClientNotifications = {
+  error(message: string, options?: Partial<NotifyOptions>): void;
+  info(message: string, options?: Partial<NotifyOptions>): void;
+  warn(message: string, options?: Partial<NotifyOptions>): void;
+};
+
+type NotifyOptions = {
+  permanent: boolean;
+  localize: boolean;
+  console: boolean;
+};
+
