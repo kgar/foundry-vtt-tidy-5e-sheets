@@ -6,18 +6,13 @@
   - [x] ammo dropdown
 - [x] Footer
   - [x] Attunement
-  - [ ] Money
-    - [ ] lazyMoneyEnable
-    - [ ] lazyMoneyIgnoreElectrum
-    - [ ] lazyMoneyChatLog
-    - [ ] lockMoneyChanges
-  - [ ] Money changing
-    - [ ] lazyMoneyAddConvert
-  - [ ] encumbrance
-    - [ ] hideStandardEncumbranceBar setting
+  - [x] Money
+  - [x] encumbrance
+    - [x] the rest
+    - [x] hideStandardEncumbranceBar setting
 - [ ] Make types for `ui`, such as `ui.notifications`
 - [ ] Styles
-  - [ ] ... the rest
+  - [x] ... the rest
   - [ ] item summary looks unfinished
 - [ ] Ok, now do the grid version
 - [ ] Determine what Stacks are and how they should work

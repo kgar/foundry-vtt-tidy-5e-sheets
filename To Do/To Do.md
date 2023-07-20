@@ -298,3 +298,21 @@ The structure works as intended, thanks to slot props, which can surface smarter
   - [x] src_scss\partials_variables.scss | imported directly
   - [x] src\css\tidy-icons.css | not in use / ignored
   - [x] images folder | added to public
+- [ ] Implement these money settings (if able, fold Lazy Money into Tidy 5e; else, figure out what API hooks are needed and then let Lazy Money do the heavy lifting)
+    - [ ] lazyMoneyIgnoreElectrum
+    - [ ] lazyMoneyEnable
+    - [ ] lazyMoneyChatLog
+    - [ ] lockMoneyChanges
+    - [ ] lazyMoneyAddConvert
+
+## Special Requests
+
+### Character Actions 5e absorption
+
+https://discord.com/channels/732325252788387980/1116078321067892796/1131598564477370408
+
+gambit — Today at 9:48 AM
+I've got a request I'm hoping you can take a look at as well. I use Tidy in conjunction with Character Actions List 5e in order to have an Actions menu with Weapons, Spells, Features, etc in one place. Seems the original mod author is no longer maintaining that and 4535992 made a fork to get some css elements lining up correctly back in March, but it's pretty out of date at this point and the css is lacking. Any chance the actions list could be integrated into Tidy instead of relying on an outside authored module?
+
+kgar — Today at 10:41 AM
+I will definitely add it to the list to look into after I finish the base rewrite. I imagine we would want it to be Opt In via player settings, by default?

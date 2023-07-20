@@ -116,7 +116,7 @@
           name="system.attributes.attunement.max"
           value={context.system.attributes.attunement.max}
           placeholder="0"
-          title={localize('TIDY5E.AttunementMax')}
+          title={localize('T5EK.AttunementMax')}
         />
       {:else}
         <span class="attuned-items-max"
@@ -168,7 +168,7 @@
     <div
       class="encumbrance"
       class:encumbered={context.encumbrance.encumbered}
-      title={localize('TIDY5E.Encumbrance')}
+      title={localize('T5EK.Encumbrance')}
     >
       <span class="encumbrance-bar" style="width:{context.encumbrance.pct}%" />
       <span class="encumbrance-label"
