@@ -15,7 +15,7 @@ FoundryAdapter.onReady(async () => {
   initSettings();
 
   // TODO: Remove after debugging:
-  debugCompareSheets('tC0Wr0s3MhRUXpzA', 'pbGp2hNyyqtAo3h6');
+  debugCompareSheets('hUKk6rVxXIqCFr3Y', 'Yxj44COmG1avxj94');
 });
 
 Hooks.on('getActorSheetHeaderButtons', (sheet: any, buttons: any) => {
@@ -77,7 +77,7 @@ async function debugCompareSheets(tidySheetId: string, kgarSheetId: string) {
   const tidySheet = game.actors.get(tidySheetId)?.sheet;
 
   if (!tidySheet) {
-    ui.notifications.warn('Tidy 5e sheet not found; update the ID');
+    ui.notifications.warn('KGAR TIDY 5E DEBUG | Tidy 5e sheet not found; update the ID');
   }
 
   tidySheet.render(true);
@@ -95,7 +95,7 @@ async function debugCompareSheets(tidySheetId: string, kgarSheetId: string) {
   const kgarSheet = game.actors.get(kgarSheetId)?.sheet;
 
   if (!kgarSheet) {
-    ui.notifications.warn('Kgar sheet not found; update the ID');
+    ui.notifications.warn('KGAR TIDY 5E DEBUG | Kgar sheet not found; update the ID');
   }
 
   kgarSheet.render(true);

@@ -2,16 +2,18 @@
 - [ ] Functionality
   - [ ] ...
   - [ ] Configure item count to update on blur
-  - [ ] Implement hover / static item count
+  - [x] Implement hover / static item count
   - [x] ammo dropdown
 - [ ] Make types for `ui`, such as `ui.notifications`
 - [ ] Styles
+  - [ ] ... the rest
+  - [ ] item summary looks unfinished
 - [ ] Ok, now do the grid version
 - [ ] Determine what Stacks are and how they should work
 - [ ] Settings / features
   - [ ] hideIconsNextToTheItemName : If enabled this setting hides the support icons present next to the object name (Favorite, Attunement, etc.), this is usually useful with the 'Use classic item controls in list view' setting enabled in order to avoid a redundancy of icons...
   - [ ] ammoEquippedOnly : Enable to only show currently equipped ammunition in Weapon ammo selector.
-  - [ ] quantityAlwaysShownEnabled : Always show item quantity
+  - [x] quantityAlwaysShownEnabled : Always show item quantity
   - [ ]
   - [ ] ...
 - [ ] Test ammo switching on a synthetic token
@@ -306,4 +308,17 @@ export const tidy5eAmmoSwitch = function (html, actor) {
 		element.remove();
 	});
 };
+```
+
+## Item Quantity Change impl
+
+```js
+async function _onQuantityChange(event) {
+	event.preventDefault();
+	const itemId = event.currentTarget.closest(".item").dataset.itemId;
+	const item = this.actor.items.get(itemId);
+	const uses = parseInt(event.target.value ?? item.system.quantity);
+	event.target.value = uses;
+	return item.update({ "system.quantity": uses });
+}
 ```

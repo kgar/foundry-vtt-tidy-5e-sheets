@@ -30,6 +30,9 @@
   const allowEdit = FoundryAdapter.tryGetFlag(context.actor, 'allow-edit');
   const classicControlsBaseWidth = allowEdit ? '7.5rem' : '5.3125rem';
   const ammoEquippedOnly = SettingsProvider.settings.ammoEquippedOnly.get();
+  const quantityAlwaysShownEnabled =
+    SettingsProvider.settings.quantityAlwaysShownEnabled.get();
+
   const ammos = [
     {
       text: '',
@@ -81,6 +84,10 @@
       itemClasses.push('equipped');
     }
 
+    if (!quantityAlwaysShownEnabled) {
+      itemClasses.push('show-item-count-on-hover');
+    }
+
     return itemClasses.join(' ');
   }
 
@@ -100,6 +107,18 @@
         },
       },
     });
+  }
+
+  function updateItemQuantity(
+    event: FocusEvent & {
+      currentTarget: EventTarget & HTMLInputElement;
+    },
+    item: Item5e
+  ) {
+    const input = parseInt(event.currentTarget.value);
+    const uses = !isNaN(input) ? input : item.system.quantity;
+    event.currentTarget.value = uses.toString();
+    item.update({ 'system.quantity': uses });
   }
 </script>
 
@@ -146,6 +165,7 @@
                 {#if item.system?.properties?.amm}
                   <span class="ammo">
                     <select
+                      on:click|stopPropagation
                       on:change={(event) =>
                         onAmmoChange(item, event.currentTarget.value)}
                     >
@@ -159,7 +179,7 @@
                     </select>
                   </span>
                 {/if}
-                <span class="item-quantity" class:isStack={item.isStack}>
+                <span class="item-quantity" class:isStack={ctx.isStack}>
                   (<input
                     class="item-count"
                     name="system.quantity"
@@ -167,6 +187,7 @@
                     value={item.system.quantity}
                     maxlength="3"
                     on:click|stopPropagation
+                    on:blur={(event) => updateItemQuantity(event, item)}
                   />)
                 </span>
               </div>
@@ -267,12 +288,21 @@
       justify-content: center;
       padding: 0 0.25rem;
     }
+
+    :global(.show-item-count-on-hover .item-quantity) {
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    :global(.show-item-count-on-hover:hover .item-quantity),
+    :global(.show-item-count-on-hover .item-quantity:focus-within) {
+      opacity: 1;
+    }
   }
 
   .item-quantity {
     align-items: center;
     display: flex;
-    margin-left: 0.25rem;
     text-align: center;
     transition: opacity 0.3s ease;
 
