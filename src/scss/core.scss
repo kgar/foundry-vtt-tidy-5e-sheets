@@ -46,4 +46,8 @@
     overflow: hidden;
     text-overflow: ellipsis;
   }
+
+  i.not-attuned {
+    color: var(--t5e-attunement-required);
+  }
 }

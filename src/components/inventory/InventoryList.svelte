@@ -277,11 +277,6 @@
       box-shadow: 0 0 0 1px var(--t5e-faint-magic-accent) inset;
     }
 
-    // TODO: This style is generally applicable across the entire app.
-    .not-attuned {
-      color: var(--t5e-attunement-required);
-    }
-
     .item-detail.attunement {
       display: flex;
       align-items: center;
