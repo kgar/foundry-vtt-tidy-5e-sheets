@@ -16,8 +16,9 @@
 //  * and can be found at https://gitlab.com/mxzf/favorite-items.
 //  */
 
-import { CONSTANTS } from "src/constants";
-import { warn } from "src/utils/logging";
+import { CONSTANTS } from 'src/constants';
+import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+import { warn } from 'src/utils/logging';
 
 // import { tidy5eAmmoSwitch } from "./tidy5e-ammo-switch.js";
 // import { applyColorPickerCustomization } from "./tidy5e-color-picker.js";
@@ -27,30 +28,40 @@ import { warn } from "src/utils/logging";
 // import { debug, warn } from "./tidy5e-logger-util.js";
 
 export const isItemFavorite = function (item: any) {
-    warn('TO DO: Implement Favorites...')
-	if (!item) {
-		return false;
-	}
-	let isFav =
-		(game.modules.get("favtab")?.active && item.flags["favtab"]?.isFavorite) ||
-		(game.modules.get("favorite-items")?.active && item.flags["favorite-items"]?.favorite) ||
-		item.flags[CONSTANTS.MODULE_ID]?.favorite ||
-		false;
+  warn('TO DO: Implement Favorites...');
+  if (!item) {
+    return false;
+  }
+  let isFav =
+    (game.modules.get('favtab')?.active && item.flags['favtab']?.isFavorite) ||
+    (game.modules.get('favorite-items')?.active &&
+      item.flags['favorite-items']?.favorite) ||
+    item.flags[CONSTANTS.MODULE_ID]?.favorite ||
+    false;
 
-	const isAlreadyTidyFav = getProperty(item.flags[CONSTANTS.MODULE_ID], `favorite`);
-	// for retrocompatibility
-	const isAlreadyFabTab = getProperty(item.flags["favtab"], `isFavorite`);
-	if (String(isAlreadyFabTab) === "true" && String(isAlreadyFabTab) === "false") {
-		if (String(isAlreadyTidyFav) !== "true" && String(isAlreadyTidyFav) !== "false") {
-			isFav = item.flags["favtab"]?.isFavorite; // for retrocompatibility
-		}
-	}
+  const isAlreadyTidyFav = FoundryAdapter.getProperty(
+    item.flags[CONSTANTS.MODULE_ID],
+    `favorite`
+  );
+  // for retrocompatibility
+  const isAlreadyFabTab = FoundryAdapter.getProperty(item.flags['favtab'], `isFavorite`);
+  if (
+    String(isAlreadyFabTab) === 'true' &&
+    String(isAlreadyFabTab) === 'false'
+  ) {
+    if (
+      String(isAlreadyTidyFav) !== 'true' &&
+      String(isAlreadyTidyFav) !== 'false'
+    ) {
+      isFav = item.flags['favtab']?.isFavorite; // for retrocompatibility
+    }
+  }
 
-	// if(String(isAlreadyTidyFav) !== "true" && String(isAlreadyTidyFav) !== "false") {
-	// //   item.setFlag(CONSTANTS.MODULE_ID,"favorite",isFav);
-	// }
+  // if(String(isAlreadyTidyFav) !== "true" && String(isAlreadyTidyFav) !== "false") {
+  // //   item.setFlag(CONSTANTS.MODULE_ID,"favorite",isFav);
+  // }
 
-	return isFav;
+  return isFav;
 };
 
 // export const addFavorites = async function (app, html, data, position) {
@@ -197,7 +208,7 @@ export const isItemFavorite = function (item: any) {
 // 				let isFav = isItemFavorite(item);
 
 // 				item.update({
-// 					"flags.tidy5e-sheet.favorite": !isFav
+// 					[`flags.${CONSTANTS.MODULE_ID}.favorite`]: !isFav
 // 				});
 // 				// Sync favorite flag with module 'favorite-items'
 // 				if (game.modules.get("favorite-items")?.active) {
@@ -543,9 +554,9 @@ export const isItemFavorite = function (item: any) {
 // 			"allowCantripToBePreparedOnContext"
 // 		);
 
-// 		await loadTemplates(["modules/tidy5e-sheet/templates/favorites/tidy5e-favorite-item.html"]);
+// 		await loadTemplates([`modules/${CONSTANTS.MODULE_ID}/templates/favorites/tidy5e-favorite-item.html`]);
 // 		let favHtml = $(
-// 			await renderTemplate("modules/tidy5e-sheet/templates/favorites/tidy5e-favorite-template.html", context)
+// 			await renderTemplate(`modules/${CONSTANTS.MODULE_ID}/templates/favorites/tidy5e-favorite-template.html`, context)
 // 		);
 
 // 		// Activating favorite-list events
@@ -615,7 +626,7 @@ export const isItemFavorite = function (item: any) {
 // 				let isFav = isItemFavorite(item);
 
 // 				item.update({
-// 					"flags.tidy5e-sheet.favorite": !isFav
+// 					[`flags.${CONSTANTS.MODULE_ID}.favorite`]: !isFav
 // 				});
 // 				// Sync favorite flag with module 'favorite-items'
 // 				if (game.modules.get("favorite-items")?.active) {
@@ -710,7 +721,7 @@ export const isItemFavorite = function (item: any) {
 // 				const sortUpdates = SortingHelpers.performIntegerSort(dragSource, {
 // 					target: dragTarget,
 // 					siblings: siblings,
-// 					sortKey: "flags.tidy5e-sheet.sort"
+// 					sortKey: `flags.${CONSTANTS.MODULE_ID}.sort`
 // 				});
 // 				const updateData = sortUpdates.map((u) => {
 // 					const update = u.update;

@@ -459,7 +459,7 @@ export function applyColorPickerCustomization(html) {
     // Equipped
 
     html
-      .find('.tidy5e-sheet #item-info-container-content .info-card.equipped')
+      .find('.tidy5e-sheet-kgar #item-info-container-content .info-card.equipped')
       .each(function (index, element) {
         const curValue = $(element).css(`background`);
         let newValue =
@@ -488,7 +488,7 @@ export function applyColorPickerCustomization(html) {
       });
 
     html
-      .find('.tidy5e-sheet .items-list .item.equipped')
+      .find('.tidy5e-sheet-kgar .items-list .item.equipped')
       .each(function (index, element) {
         const curValue = $(element).css(`background`);
         let newValue =
@@ -517,7 +517,7 @@ export function applyColorPickerCustomization(html) {
       });
 
     html
-      .find('.tidy5e-sheet .grid-layout .tidy5e-item-list .item.equipped')
+      .find('.tidy5e-sheet-kgar .grid-layout .tidy5e-item-list .item.equipped')
       .each(function (index, element) {
         const curValue = $(element).css(`-webkit-box-shadow`);
         let newValue =
@@ -571,7 +571,7 @@ export function applyColorPickerCustomization(html) {
       });
 
     html
-      .find('.tidy5e-sheet .grid-layout .tidy5e-item-list .item.equipped .item-image')
+      .find('.tidy5e-sheet-kgar .grid-layout .tidy5e-item-list .item.equipped .item-image')
       .each(function (index, element) {
         const curValue = $(element).css(`-webkit-box-shadow`);
         let newValue =
@@ -627,7 +627,7 @@ export function applyColorPickerCustomization(html) {
     // Prepared
 
     html
-      .find('.tidy5e-sheet #item-info-container-content .info-card.prepared')
+      .find('.tidy5e-sheet-kgar #item-info-container-content .info-card.prepared')
       .each(function (index, element) {
         const curValue = $(element).css(`background`);
         let newValue =
@@ -656,7 +656,7 @@ export function applyColorPickerCustomization(html) {
       });
 
     html
-      .find('.tidy5e-sheet .items-list .item.prepared')
+      .find('.tidy5e-sheet-kgar .items-list .item.prepared')
       .each(function (index, element) {
         const curValue = $(element).css(`background`);
         let newValue =
@@ -685,7 +685,7 @@ export function applyColorPickerCustomization(html) {
       });
 
     html
-      .find('.tidy5e-sheet .grid-layout .tidy5e-item-list .item.prepared')
+      .find('.tidy5e-sheet-kgar .grid-layout .tidy5e-item-list .item.prepared')
       .each(function (index, element) {
         const curValue = element.style[`-webkit-box-shadow`];
         let newValue =
@@ -739,7 +739,7 @@ export function applyColorPickerCustomization(html) {
       });
 
     html
-      .find('.tidy5e-sheet .grid-layout .tidy5e-item-list .item.prepared .item-image')
+      .find('.tidy5e-sheet-kgar .grid-layout .tidy5e-item-list .item.prepared .item-image')
       .each(function (index, element) {
         const curValue = $(element).css(`-webkit-box-shadow`);
         let newValue =
@@ -795,7 +795,7 @@ export function applyColorPickerCustomization(html) {
     // Pact
 
     html
-      .find('.tidy5e-sheet #item-info-container-content .info-card.pact')
+      .find('.tidy5e-sheet-kgar #item-info-container-content .info-card.pact')
       .each(function (index, element) {
         const curValue = $(element).css(`background`);
         let newValue =
@@ -818,7 +818,7 @@ export function applyColorPickerCustomization(html) {
       });
 
     html
-      .find('.tidy5e-sheet .items-list .item.pact')
+      .find('.tidy5e-sheet-kgar .items-list .item.pact')
       .each(function (index, element) {
         const curValue = $(element).css(`background`);
         let newValue =
@@ -841,7 +841,7 @@ export function applyColorPickerCustomization(html) {
       });
 
     html
-      .find('.tidy5e-sheet .grid-layout .tidy5e-item-list .item.pact')
+      .find('.tidy5e-sheet-kgar .grid-layout .tidy5e-item-list .item.pact')
       .each(function (index, element) {
         const curValue = $(element).css(`-webkit-box-shadow`);
         let newValue =
@@ -895,7 +895,7 @@ export function applyColorPickerCustomization(html) {
       });
 
     html
-      .find('.tidy5e-sheet .grid-layout .tidy5e-item-list .item.pact .item-image')
+      .find('.tidy5e-sheet-kgar .grid-layout .tidy5e-item-list .item.pact .item-image')
       .each(function (index, element) {
         const curValue = $(element).css(`-webkit-box-shadow`);
         let newValue =
@@ -951,7 +951,7 @@ export function applyColorPickerCustomization(html) {
     // At Will
 
     html
-      .find('.tidy5e-sheet #item-info-container-content .info-card.atwill')
+      .find('.tidy5e-sheet-kgar #item-info-container-content .info-card.atwill')
       .each(function (index, element) {
         const curValue = $(element).css(`background`);
         let newValue =
@@ -980,7 +980,7 @@ export function applyColorPickerCustomization(html) {
       });
 
     html
-      .find('.tidy5e-sheet .items-list .item.atwill')
+      .find('.tidy5e-sheet-kgar .items-list .item.atwill')
       .each(function (index, element) {
         const curValue = $(element).css(`background`);
         let newValue =
@@ -1009,7 +1009,7 @@ export function applyColorPickerCustomization(html) {
       });
 
     html
-      .find('.tidy5e-sheet .grid-layout .tidy5e-item-list .item.atwill')
+      .find('.tidy5e-sheet-kgar .grid-layout .tidy5e-item-list .item.atwill')
       .each(function (index, element) {
         const curValue = $(element).css(`-webkit-box-shadow`);
         let newValue =
@@ -1063,7 +1063,7 @@ export function applyColorPickerCustomization(html) {
       });
 
     html
-      .find('.tidy5e-sheet .grid-layout .tidy5e-item-list .item.atwill .item-image')
+      .find('.tidy5e-sheet-kgar .grid-layout .tidy5e-item-list .item.atwill .item-image')
       .each(function (index, element) {
         const curValue = $(element).css(`-webkit-box-shadow`);
         let newValue =
@@ -1119,7 +1119,7 @@ export function applyColorPickerCustomization(html) {
     // Innate
 
     html
-      .find('.tidy5e-sheet #item-info-container-content .info-card.innate')
+      .find('.tidy5e-sheet-kgar #item-info-container-content .info-card.innate')
       .each(function (index, element) {
         const curValue = $(element).css(`background`);
         let newValue =
@@ -1148,7 +1148,7 @@ export function applyColorPickerCustomization(html) {
       });
 
     html
-      .find('.tidy5e-sheet .items-list .item.innate')
+      .find('.tidy5e-sheet-kgar .items-list .item.innate')
       .each(function (index, element) {
         const curValue = $(element).css(`background`);
         let newValue =
@@ -1177,7 +1177,7 @@ export function applyColorPickerCustomization(html) {
       });
 
     html
-      .find('.tidy5e-sheet .grid-layout .tidy5e-item-list .item.innate')
+      .find('.tidy5e-sheet-kgar .grid-layout .tidy5e-item-list .item.innate')
       .each(function (index, element) {
         const curValue = $(element).css(`-webkit-box-shadow`);
         let newValue =
@@ -1231,7 +1231,7 @@ export function applyColorPickerCustomization(html) {
       });
 
     html
-      .find('.tidy5e-sheet .grid-layout .tidy5e-item-list .item.innate .item-image')
+      .find('.tidy5e-sheet-kgar .grid-layout .tidy5e-item-list .item.innate .item-image')
       .each(function (index, element) {
         const curValue = $(element).css(`-webkit-box-shadow`);
         let newValue =
@@ -1288,7 +1288,7 @@ export function applyColorPickerCustomization(html) {
 
     html
       .find(
-        '.tidy5e-sheet #item-info-container-content .info-card.alwaysprepared'
+        '.tidy5e-sheet-kgar #item-info-container-content .info-card.alwaysprepared'
       )
       .each(function (index, element) {
         const curValue = $(element).css(`background`);
@@ -1318,7 +1318,7 @@ export function applyColorPickerCustomization(html) {
       });
 
     html
-      .find('.tidy5e-sheet .items-list .item.alwaysprepared')
+      .find('.tidy5e-sheet-kgar .items-list .item.alwaysprepared')
       .each(function (index, element) {
         const curValue = $(element).css(`background`);
         let newValue =
@@ -1347,7 +1347,7 @@ export function applyColorPickerCustomization(html) {
       });
 
     html
-      .find('.tidy5e-sheet .grid-layout .tidy5e-item-list .item.alwaysprepared')
+      .find('.tidy5e-sheet-kgar .grid-layout .tidy5e-item-list .item.alwaysprepared')
       .each(function (index, element) {
         const curValue = $(element).css(`-webkit-box-shadow`);
         let newValue =
@@ -1402,7 +1402,7 @@ export function applyColorPickerCustomization(html) {
 
     html
       .find(
-        '.tidy5e-sheet .grid-layout .tidy5e-item-list .item.alwaysprepared .item-image'
+        '.tidy5e-sheet-kgar .grid-layout .tidy5e-item-list .item.alwaysprepared .item-image'
       )
       .each(function (index, element) {
         const curValue = $(element).css(`-webkit-box-shadow`);

@@ -356,7 +356,7 @@
 //     } else if (actor.type === 'npc') {
 //       let exhaustion = actorEntity.flags[CONSTANTS.MODULE_ID].exhaustion;
 //       if (exhaustion > 0) {
-//         actor.update({ 'flags.tidy5e-sheet.exhaustion': exhaustion - 1 });
+//         actor.update({ [`flags.${CONSTANTS.MODULE_ID}.exhaustion`]: exhaustion - 1 });
 //       }
 //     } else {
 //       warn(`Long rest is not supported for actor ype '${actor.type}'`);
@@ -397,7 +397,7 @@
 //             'tidy5e-exhaustion | createActiveEffect | exhaustion = ' +
 //               exhaustion
 //           );
-//           actor.update({ 'flags.tidy5e-sheet.exhaustion': exhaustion });
+//           actor.update({ [`flags.${CONSTANTS.MODULE_ID}.exhaustion`]: exhaustion });
 //         }
 //       } else {
 //         warn(
@@ -455,8 +455,8 @@
 //           actor.update({ 'system.attributes.exhaustion': 0 });
 //         }
 //       } else if (actor.type === 'npc') {
-//         if (actor.flags.tidy5e - sheet.exhaustion != 0) {
-//           actor.update({ 'flags.tidy5e-sheet.exhaustion': 0 });
+//         if (actor.flags[CONSTANTS.MODULE_ID]?.exhaustion != 0) {
+//           actor.update({ `flags.${CONSTANTS.MODULE_ID}.exhaustion`]: 0 });
 //         }
 //       } else {
 //         warn(

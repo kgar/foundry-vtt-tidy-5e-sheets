@@ -3,6 +3,7 @@
   import SheetEditor from 'src/sheets/SheetEditor.svelte';
   import ContentEditableFormField from '../inputs/ContentEditableFormField.svelte';
   import type { CharacterSheetContext, SheetFunctions } from 'src/types/types';
+    import { CONSTANTS } from 'src/constants';
 
   export let context: CharacterSheetContext;
   export let sheetFunctions: SheetFunctions;
@@ -19,7 +20,7 @@
           <ContentEditableFormField
             element="span"
             editable={context.owner}
-            fieldName="flags.tidy5e-sheet-kgar.gender"
+            fieldName="flags.{CONSTANTS.MODULE_ID}.gender"
             value={FoundryAdapter.tryGetFlag(context.actor, 'gender') ?? ''}
             {sheetFunctions}
             cssClass="detail-input"
@@ -30,7 +31,7 @@
           <ContentEditableFormField
             element="span"
             editable={context.owner}
-            fieldName="flags.tidy5e-sheet-kgar.age"
+            fieldName="flags.{CONSTANTS.MODULE_ID}.age"
             value={FoundryAdapter.tryGetFlag(context.actor, 'age') ?? ''}
             {sheetFunctions}
             cssClass="detail-input"
@@ -42,7 +43,7 @@
           <ContentEditableFormField
             element="span"
             editable={context.owner}
-            fieldName="flags.tidy5e-sheet-kgar.height"
+            fieldName="flags.{CONSTANTS.MODULE_ID}.height"
             value={FoundryAdapter.tryGetFlag(context.actor, 'height') ?? ''}
             {sheetFunctions}
             cssClass="detail-input"
@@ -54,7 +55,7 @@
           <ContentEditableFormField
             element="span"
             editable={context.owner}
-            fieldName="flags.tidy5e-sheet-kgar.weight"
+            fieldName="flags.{CONSTANTS.MODULE_ID}.weight"
             value={FoundryAdapter.tryGetFlag(context.actor, 'weight') ?? ''}
             {sheetFunctions}
             cssClass="detail-input"
@@ -66,7 +67,7 @@
           <ContentEditableFormField
             element="span"
             editable={context.owner}
-            fieldName="flags.tidy5e-sheet-kgar.eyes"
+            fieldName="flags.{CONSTANTS.MODULE_ID}.eyes"
             value={FoundryAdapter.tryGetFlag(context.actor, 'eyes') ?? ''}
             {sheetFunctions}
             cssClass="detail-input"
@@ -78,7 +79,7 @@
           <ContentEditableFormField
             element="span"
             editable={context.owner}
-            fieldName="flags.tidy5e-sheet-kgar.skin"
+            fieldName="flags.{CONSTANTS.MODULE_ID}.skin"
             value={FoundryAdapter.tryGetFlag(context.actor, 'skin') ?? ''}
             {sheetFunctions}
             cssClass="detail-input"
@@ -90,7 +91,7 @@
           <ContentEditableFormField
             element="span"
             editable={context.owner}
-            fieldName="flags.tidy5e-sheet-kgar.hair"
+            fieldName="flags.{CONSTANTS.MODULE_ID}.hair"
             value={FoundryAdapter.tryGetFlag(context.actor, 'hair') ?? ''}
             {sheetFunctions}
             cssClass="detail-input"

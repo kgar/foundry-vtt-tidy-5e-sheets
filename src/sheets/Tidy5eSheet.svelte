@@ -20,6 +20,7 @@
   import JournalTab from 'src/components/player-character/JournalTab.svelte';
   import { debounce } from 'src/utils/debounce';
   import type { SheetParameter } from 'src/utils/sheet-parameter';
+  import { CONSTANTS } from 'src/constants';
 
   export let debug: any = 'Put any debug information here, if ya need it.';
   export let sheetFunctions: SheetFunctions;
@@ -185,7 +186,7 @@
       {#if SettingsProvider.settings.playerNameEnabled.get()}
         {#if context.owner}
           <input
-            name="flags.tidy5e-sheet-kgar.playerName"
+            name="flags.{CONSTANTS.MODULE_ID}.playerName"
             type="hidden"
             value={playerName}
             placeholder={localize('T5EK.PlayerName')}
@@ -372,16 +373,12 @@
         {#if allowEdit}
           <i
             class="fas fa-lock-open"
-            title="{localize('T5EK.DisableEdit')} - {localize(
-              'T5EK.EditHint'
-            )}"
+            title="{localize('T5EK.DisableEdit')} - {localize('T5EK.EditHint')}"
           />
         {:else}
           <i
             class="fas fa-lock"
-            title="{localize('T5EK.EnableEdit')} - {localize(
-              'T5EK.EditHint'
-            )}"
+            title="{localize('T5EK.EnableEdit')} - {localize('T5EK.EditHint')}"
           />
         {/if}
       </span>

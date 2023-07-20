@@ -254,7 +254,7 @@ function getItemContextOptions(item) {
         let isFav = isItemFavorite(item);
 
         item.update({
-          'flags.tidy5e-sheet.favorite': !isFav,
+          [`flags.${CONSTANTS.MODULE_ID}.favorite`]: !isFav,
         });
         // Sync favorite flag with module 'favorite-items'
         if (game.modules.get('favorite-items')?.active) {

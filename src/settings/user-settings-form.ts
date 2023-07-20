@@ -91,7 +91,7 @@ export class Tidy5eKgarUserSettings extends FormApplication {
     // html.find("input#exhaustionEffectIcon").on("change", function (e) {
     // 	// debug(e.target.value)
     // 	if (e.target.value == "" || e.target.value == null) {
-    // 		e.target.value = "modules/tidy5e-sheet/images/exhaustion.svg";
+    // 		e.target.value = `modules/${CONSTANTS.MODULE_ID}/images/exhaustion.svg`;
     // 	}
     // });
   }
