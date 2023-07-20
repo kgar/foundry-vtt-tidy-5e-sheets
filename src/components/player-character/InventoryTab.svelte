@@ -10,6 +10,7 @@
   import FilteredItems from '../items/FilteredItems.svelte';
   import InventoryList from '../inventory/InventoryList.svelte';
   import InventoryGrid from '../inventory/InventoryGrid.svelte';
+  import { SettingsProvider } from 'src/settings/settings';
 
   export let context: CharacterSheetContext;
   export let sheetFunctions: SheetFunctions;
@@ -163,20 +164,22 @@
     </div>
   </div>
 
-  <div
-    class="encumbrance"
-    class:encumbered={context.encumbrance.encumbered}
-    title={localize('TIDY5E.Encumbrance')}
-  >
-    <span class="encumbrance-bar" style="width:{context.encumbrance.pct}%" />
-    <span class="encumbrance-label"
-      >{context.encumbrance.value} / {context.encumbrance.max}</span
+  {#if !SettingsProvider.settings.hideStandardEncumbranceBar.get()}
+    <div
+      class="encumbrance"
+      class:encumbered={context.encumbrance.encumbered}
+      title={localize('TIDY5E.Encumbrance')}
     >
-    <i class="encumbrance-breakpoint encumbrance-33 arrow-up" />
-    <i class="encumbrance-breakpoint encumbrance-33 arrow-down" />
-    <i class="encumbrance-breakpoint encumbrance-66 arrow-up" />
-    <i class="encumbrance-breakpoint encumbrance-66 arrow-down" />
-  </div>
+      <span class="encumbrance-bar" style="width:{context.encumbrance.pct}%" />
+      <span class="encumbrance-label"
+        >{context.encumbrance.value} / {context.encumbrance.max}</span
+      >
+      <i class="encumbrance-breakpoint encumbrance-33 arrow-up" />
+      <i class="encumbrance-breakpoint encumbrance-33 arrow-down" />
+      <i class="encumbrance-breakpoint encumbrance-66 arrow-up" />
+      <i class="encumbrance-breakpoint encumbrance-66 arrow-down" />
+    </div>
+  {/if}
 </footer>
 
 <style lang="scss">
