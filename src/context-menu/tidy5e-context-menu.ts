@@ -169,7 +169,7 @@ function getItemContextOptions(item) {
     //   })
     // });
     options.push({
-      name: isAttuned ? 'TIDY5E.Deattune' : 'TIDY5E.Attune',
+      name: isAttuned ? 'T5EK.Deattune' : 'T5EK.Attune',
       icon: isAttuned
         ? "<i class='fas fa-sun fa-fw' style='color: rgba(255, 30, 0, 0.65);'></i>"
         : "<i class='fas fa-sun fa-fw'></i>",
@@ -190,7 +190,7 @@ function getItemContextOptions(item) {
     // });
     const isEquipped = item.system.equipped;
     options.push({
-      name: isEquipped ? 'TIDY5E.Unequip' : 'TIDY5E.Equip',
+      name: isEquipped ? 'T5EK.Unequip' : 'T5EK.Equip',
       icon: isEquipped
         ? "<i class='fas fa-user-alt fa-fw' style='color: rgba(255, 30, 0, 0.65);'></i> "
         : "<i class='fas fa-user-alt fa-fw'></i> ",
@@ -204,7 +204,7 @@ function getItemContextOptions(item) {
     if (allowCantripToBePreparedOnContext) {
       if (item.system.preparation.mode != 'always') {
         options.push({
-          name: isActive ? 'TIDY5E.Unprepare' : 'TIDY5E.Prepare',
+          name: isActive ? 'T5EK.Unprepare' : 'T5EK.Prepare',
           icon: isActive
             ? "<i class='fas fa-book fa-fw'></i>"
             : "<i class='fas fa-book fa-fw'></i>",
@@ -215,7 +215,7 @@ function getItemContextOptions(item) {
     } else {
       if (canPrepare && item.system.preparation.mode != 'always') {
         options.push({
-          name: isActive ? 'TIDY5E.Unprepare' : 'TIDY5E.Prepare',
+          name: isActive ? 'T5EK.Unprepare' : 'T5EK.Prepare',
           icon: isActive
             ? "<i class='fas fa-book fa-fw'></i>"
             : "<i class='fas fa-book fa-fw'></i>",
@@ -238,7 +238,7 @@ function getItemContextOptions(item) {
       favoriteColor = game.settings.get('favorite-items', 'favorite-color');
     }
     options.push({
-      name: isFav ? 'TIDY5E.RemoveFav' : 'TIDY5E.AddFav',
+      name: isFav ? 'T5EK.RemoveFav' : 'T5EK.AddFav',
       icon: isFav
         ? `<i class='fas ${favoriteIcon} fa-fw'></i>`
         : `<i class='fas ${favoriteIcon} fa-fw inactive'></i>`,
@@ -295,7 +295,7 @@ function getItemContextOptions(item) {
 
   if (item.type === 'spell') {
     options.push({
-      name: 'TIDY5E.EditSpell',
+      name: 'T5EK.EditSpell',
       icon: "<i class='fas fa-pencil-alt fa-fw'></i>",
       callback: () => item.sheet.render(true),
     });
@@ -312,7 +312,7 @@ function getItemContextOptions(item) {
           ),
       });
       options.push({
-        name: 'TIDY5E.DeleteSpell',
+        name: 'T5EK.DeleteSpell',
         icon: "<i class='fas fa-trash fa-fw' style='color: rgba(255, 30, 0, 0.65);'></i>",
         callback: () => item.deleteDialog(),
       });

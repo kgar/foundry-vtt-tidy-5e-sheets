@@ -13,7 +13,7 @@
   {#if mode === 'grid'}
     <i
       class="fas fa-th-large toggle-grid"
-      title={localize('TIDY5E.GridLayout')}
+      title={localize('T5EK.GridLayout')}
       on:click={() => dispatcher('toggle')}
       role="button"
       tabindex="0"
@@ -21,7 +21,7 @@
   {:else if mode === 'list'}
     <i
       class="fas fa-th-list toggle-list"
-      title={localize('TIDY5E.ListLayout')}
+      title={localize('T5EK.ListLayout')}
       on:click={() => dispatcher('toggle')}
       role="button"
       tabindex="0"

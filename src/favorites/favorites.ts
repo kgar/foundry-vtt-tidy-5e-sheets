@@ -180,11 +180,11 @@ export const isItemFavorite = function (item: any) {
 // 		if (app.options.editable) {
 // 			let favBtn = $(
 // 				`<a class="item-control item-fav ${isFav ? "active" : ""}" title="${
-// 					isFav ? game.i18n.localize("TIDY5E.RemoveFav") : game.i18n.localize("TIDY5E.AddFav")
+// 					isFav ? game.i18n.localize("T5EK.RemoveFav") : game.i18n.localize("T5EK.AddFav")
 // 				}" data-fav="${isFav}"><i class="${
 // 					isFav ? "fas fa-bookmark" : "fas fa-bookmark inactive"
 // 				}"></i> <span class="control-label">${
-// 					isFav ? game.i18n.localize("TIDY5E.RemoveFav") : game.i18n.localize("TIDY5E.AddFav")
+// 					isFav ? game.i18n.localize("T5EK.RemoveFav") : game.i18n.localize("T5EK.AddFav")
 // 				}</span></a>`
 // 			);
 // 			favBtn.click((ev) => {
@@ -594,7 +594,7 @@ export const isItemFavorite = function (item: any) {
 // 					if (app.actor.system.details.attunedItemsCount >= app.actor.system.details.attunedItemsMax) {
 // 						let count = actor.system.details.attunedItemsCount;
 // 						ui.notifications.warn(
-// 							`${game.i18n.format("TIDY5E.AttunementWarning", {
+// 							`${game.i18n.format("T5EK.AttunementWarning", {
 // 								number: count
 // 							})}`
 // 						);

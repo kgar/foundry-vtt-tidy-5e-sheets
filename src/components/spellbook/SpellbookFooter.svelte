@@ -13,7 +13,7 @@
 <footer class="spellcasting-ability">
   <h3 class="spell-dc spell-mod">
     {localize('DND5E.SpellDC')}
-    {context.system.attributes.spelldc} / {localize('TIDY5E.SpellAttackMod')}:
+    {context.system.attributes.spelldc} / {localize('T5EK.SpellAttackMod')}:
     <span class="spell-attack-mod">
       <span data-tooltip={spellAttackBonusInfo.modTooltip}
         >{spellAttackBonusInfo.mod}</span
@@ -27,7 +27,7 @@
     </span>
   </h3>
   <div class="max-prepared-spells">
-    <p>{localize('TIDY5E.PreparedSpells')}</p>
+    <p>{localize('T5EK.PreparedSpells')}</p>
     <span class="spells-prepared">{context.preparedSpells ?? 0}</span>
     /
     <input
@@ -37,7 +37,7 @@
       value={FoundryAdapter.tryGetFlag(context.actor, 'maxPreparedSpells')}
       data-dtype="Number"
       placeholder="0"
-      data-tooltip={localize('TIDY5E.PreparedSpellsMax')}
+      data-tooltip={localize('T5EK.PreparedSpellsMax')}
     />
   </div>
   <div class="spellcasting-attribute">

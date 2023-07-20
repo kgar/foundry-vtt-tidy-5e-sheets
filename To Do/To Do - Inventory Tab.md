@@ -16,6 +16,7 @@
   - [x] quantityAlwaysShownEnabled : Always show item quantity
   - [ ]
   - [ ] ...
+- [x] The context menu has too many options. Is that because of tidy 5e module being on? Yes.
 - [ ] Test ammo switching on a synthetic token
 
 ## Inventory Impl

@@ -16,7 +16,7 @@ export function useHombrewEnableUpcastFreeSpell(
     return;
   }
 
-  let tooltip = FoundryAdapter.localize('TIDY5E.LevelBumpTooltip');
+  let tooltip = FoundryAdapter.localize('T5EK.LevelBumpTooltip');
 
   const featuresThatSupportUpcast =
     SettingsProvider.settings.hbSetFeaturesForUpcastFreeSpell.get();
@@ -53,7 +53,7 @@ export function useHombrewEnableUpcastFreeSpell(
                 type="checkbox" 
                 class="homebrew-enable-upcast-free-spell"
                 name="freeUpcast" />
-                ${FoundryAdapter.localize('TIDY5E.LevelBump')}
+                ${FoundryAdapter.localize('T5EK.LevelBump')}
         </label>
     </div>
       `;

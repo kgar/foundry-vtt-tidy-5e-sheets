@@ -23,18 +23,18 @@
   });
 </script>
 
-<li class="filter-search {cssClass}" title={localize('TIDY5E.SearchHint')}>
+<li class="filter-search {cssClass}" title={localize('T5EK.SearchHint')}>
   <input
     type="text"
     id="feat-search"
-    placeholder={localize('TIDY5E.SearchFeat')}
+    placeholder={localize('T5EK.SearchFeat')}
     bind:value={searchCriteria}
     on:blur|preventDefault|stopPropagation={() => rememberSearch()}
   />
   <!-- svelte-ignore a11y-click-events-have-key-events -->
   <span
     class="clear-search"
-    title={localize('TIDY5E.SearchClear')}
+    title={localize('T5EK.SearchClear')}
     style:display={searchCriteria === '' ? 'none' : undefined}
     on:click|preventDefault|stopPropagation={() => clearSearch()}
     ><i class="fas fa-times-circle" /></span

@@ -32,7 +32,7 @@ export default class Tidy5eActorOriginSummaryConfig extends Tidy5eBaseConfigShee
 
   /** @inheritdoc */
   get title() {
-    return `${game.i18n.localize('TIDY5E.OriginSummaryConfig')}: ${
+    return `${game.i18n.localize('T5EK.OriginSummaryConfig')}: ${
       this.document.name
     }`;
   }

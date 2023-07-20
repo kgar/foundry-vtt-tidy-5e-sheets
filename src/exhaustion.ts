@@ -309,7 +309,7 @@
 //         if (index == -1) {
 //           ui.notifications.warn(
 //             `${game.i18n.localize(
-//               'TIDY5E.Settings.CustomExhaustionEffect.warning'
+//               'T5EK.Settings.CustomExhaustionEffect.warning'
 //             )}`
 //           );
 //           return;

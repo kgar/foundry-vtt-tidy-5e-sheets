@@ -75,9 +75,9 @@
       <i class="fas fa-cog" />
     </a>
   </div>
-  <span class="mod-label ability-mod-label">{localize('TIDY5E.AbbrMod')}</span>
+  <span class="mod-label ability-mod-label">{localize('T5EK.AbbrMod')}</span>
   <span class="mod-label save-mod-label"
-    >{localize('TIDY5E.AbbrSavingThrow')}</span
+    >{localize('T5EK.AbbrSavingThrow')}</span
   >
 </div>
 

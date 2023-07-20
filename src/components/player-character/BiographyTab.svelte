@@ -15,7 +15,7 @@
     <article>
       <ul class="character-details">
         <li>
-          <span>{localize('TIDY5E.Gender')}:</span>
+          <span>{localize('T5EK.Gender')}:</span>
           <ContentEditableFormField
             element="span"
             editable={context.owner}
@@ -26,7 +26,7 @@
           />
         </li>
         <li>
-          <span>{localize('TIDY5E.Age')}:</span>
+          <span>{localize('T5EK.Age')}:</span>
           <ContentEditableFormField
             element="span"
             editable={context.owner}
@@ -38,7 +38,7 @@
           />
         </li>
         <li>
-          <span>{localize('TIDY5E.Height')}:</span>
+          <span>{localize('T5EK.Height')}:</span>
           <ContentEditableFormField
             element="span"
             editable={context.owner}
@@ -50,7 +50,7 @@
           />
         </li>
         <li>
-          <span>{localize('TIDY5E.Weight')}:</span>
+          <span>{localize('T5EK.Weight')}:</span>
           <ContentEditableFormField
             element="span"
             editable={context.owner}
@@ -62,7 +62,7 @@
           />
         </li>
         <li>
-          <span>{localize('TIDY5E.Eyes')}:</span>
+          <span>{localize('T5EK.Eyes')}:</span>
           <ContentEditableFormField
             element="span"
             editable={context.owner}
@@ -74,7 +74,7 @@
           />
         </li>
         <li>
-          <span>{localize('TIDY5E.Skin')}:</span>
+          <span>{localize('T5EK.Skin')}:</span>
           <ContentEditableFormField
             element="span"
             editable={context.owner}
@@ -86,7 +86,7 @@
           />
         </li>
         <li>
-          <span>{localize('TIDY5E.Hair')}:</span>
+          <span>{localize('T5EK.Hair')}:</span>
           <ContentEditableFormField
             element="span"
             editable={context.owner}

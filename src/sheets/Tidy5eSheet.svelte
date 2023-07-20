@@ -373,14 +373,14 @@
           <i
             class="fas fa-lock-open"
             title="{localize('T5EK.DisableEdit')} - {localize(
-              'TIDY5E.EditHint'
+              'T5EK.EditHint'
             )}"
           />
         {:else}
           <i
             class="fas fa-lock"
             title="{localize('T5EK.EnableEdit')} - {localize(
-              'TIDY5E.EditHint'
+              'T5EK.EditHint'
             )}"
           />
         {/if}
