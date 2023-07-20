@@ -64,7 +64,7 @@ export class Tidy5eSheetKgar extends ActorSheet5eCharacter {
         context: {
           ...(await super.getData(this.options)),
           actorClassesToImages: getActorClassesToImages(this.actor),
-          appId: this.appId
+          appId: this.appId,
         },
       },
     });
@@ -74,23 +74,26 @@ export class Tidy5eSheetKgar extends ActorSheet5eCharacter {
 
   close(options: unknown = {}) {
     log('closing the sheet; wanna do something here?', this.sheet);
-    this.#trySaveScrollTop();
+    this.#saveViewState();
     return super.close(options);
   }
 
   override submit(): void {
-    this.#trySaveScrollTop();
+    this.#saveViewState();
     super.submit();
   }
 
-  #trySaveScrollTop() {
-    if (this.sheet) {
-      const scrollViewIndex = this.sheet.$$.props.scrollView;
-      if (typeof scrollViewIndex === 'number') {
-        const scrollView = this.sheet.$$.ctx[scrollViewIndex] as HTMLElement;
-        FoundryAdapter.setFlag(this.actor, 'scrollTop', scrollView.scrollTop);
-      }
-    }
+  #saveViewState() {
+    /*
+      TODO: Save any state that needs to be restored to this sheet instance for rehydration on refresh.
+      - Currently Selected Tab
+      - Scroll Top of all scrollable areas + the tab they represent
+      - Expanded entity IDs
+      - Focused input element
+
+      To do this save operation, use query selectors and data-attributes to target the appropriate things to save.
+      Can it be made general-purpose? Or should it be more bespoke?
+    */
   }
 
   onToggleFilter(setName: string, filterName: string) {
