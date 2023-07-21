@@ -13,7 +13,7 @@
     key: string;
     label: string;
     ability: string;
-    skill: ActorContextSkill;
+    skill: ActorContextSkill | null;
   };
 
   const skillRefs: SkillRef[] = Array.from(
@@ -34,13 +34,21 @@
     return null;
   }
 
-  function cycleProficiency(event: MouseEvent, skillRef: SkillRef) {
-    console.log('TODO: handle right click to cycle backward', event);
+  function cycleProficiency(
+    event: MouseEvent,
+    skillRef: SkillRef,
+    reverse: boolean = false
+  ) {
     // TODO: Check for active effects and prevent if applicable.
-    const value = skillRef.skill.value;
+    const value = skillRef.skill?.value;
+
+    if (value === null || value === undefined) {
+      return;
+    }
+
     const levels = [0, 1, 0.5, 2];
     const idx = levels.indexOf(value);
-    const next = idx + (event.type === 'contextmenu' ? 3 : 1);
+    const next = idx + (reverse ? 3 : 1);
     context.actor.update({
       [`system.skills.${skillRef.key}.value`]: levels[next % levels.length],
     });
@@ -66,6 +74,8 @@
           class="skill-proficiency-toggle"
           on:click|stopPropagation|preventDefault={(event) =>
             cycleProficiency(event, skillRef)}
+          on:contextmenu|stopPropagation|preventDefault={(event) =>
+            cycleProficiency(event, skillRef, true)}
           title={skillRef.skill.hover}>{@html skillRef.skill.icon}</a
         >
         <h4 class="skill-name rollable">{skillRef.skill.label}</h4>
