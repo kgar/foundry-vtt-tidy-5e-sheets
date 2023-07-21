@@ -78,7 +78,14 @@
             cycleProficiency(event, skillRef, true)}
           title={skillRef.skill.hover}>{@html skillRef.skill.icon}</a
         >
-        <h4 class="skill-name rollable">{skillRef.skill.label}</h4>
+        <h4
+          role="button"
+          class="tidy5e-skill-name"
+          on:click|stopPropagation={(event) =>
+            context.actor.rollSkill(skillRef.key, { event })}
+        >
+          {skillRef.skill.label}
+        </h4>
         <span class="skill-ability">{skillRef.skill.abbreviation}</span>
         <span class="skill-mod">{formatAsModifier(skillRef.skill.total)}</span>
         <span
@@ -117,7 +124,7 @@
         background: var(--t5e-faint-color);
       }
 
-      .skill-name {
+      .tidy5e-skill-name {
         font-size: 0.75rem;
         line-height: 0.875rem;
         white-space: nowrap;
@@ -135,7 +142,7 @@
         }
       }
 
-      &.proficient .skill-name {
+      &.proficient .tidy5e-skill-name {
         font-weight: 700;
       }
 
