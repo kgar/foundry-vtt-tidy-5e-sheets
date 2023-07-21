@@ -1,6 +1,6 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { type CharacterSheetContext } from 'src/types/types';
+  import { type ActorSheetContext } from 'src/types/types';
   import { SettingsProvider } from 'src/settings/settings';
   import { formatAsModifier } from 'src/utils/formatting';
   import ItemEditControl from '../items/ItemEditControl.svelte';
@@ -26,7 +26,7 @@
   import ItemFilterOption from '../items/ItemFilterOption.svelte';
 
   // TODO: this is intended to be shared between characters, NPCs, and Vehicles; retype the context so it can be one of the three.
-  export let context: CharacterSheetContext;
+  export let context: ActorSheetContext;
   export let sheetFunctions: SheetFunctions;
 
   const localize = FoundryAdapter.localize;

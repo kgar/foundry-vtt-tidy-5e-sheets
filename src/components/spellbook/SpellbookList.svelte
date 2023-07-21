@@ -1,7 +1,7 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { type CharacterSheetContext } from 'src/types/types';
+  import { type ActorSheetContext } from 'src/types/types';
   import { SettingsProvider } from 'src/settings/settings';
   import ItemControls from '../items/ItemControls.svelte';
   import ItemDeleteControl from '../items/ItemDeleteControl.svelte';
@@ -22,7 +22,7 @@
   import SpellSlotUses from '../spellbook/SpellSlotUses.svelte';
   import SpellImageProvider from './SpellImageProvider.svelte';
 
-  export let context: CharacterSheetContext;
+  export let context: ActorSheetContext;
   export let section: any;
   export let spells: any[];
 

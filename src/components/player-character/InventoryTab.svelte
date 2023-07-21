@@ -1,6 +1,6 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { type CharacterSheetContext } from 'src/types/types';
+  import { type ActorSheetContext } from 'src/types/types';
   import ItemFilters from '../items/ItemFilters.svelte';
   import ItemFilterSearch from '../items/ItemFilterSearch.svelte';
   import ItemFilterOption from '../items/ItemFilterOption.svelte';
@@ -13,7 +13,7 @@
   import { SettingsProvider } from 'src/settings/settings';
   
 
-  export let context: CharacterSheetContext;
+  export let context: ActorSheetContext;
   export let sheetFunctions: SheetFunctions;
 
   const localize = FoundryAdapter.localize;

@@ -1,4 +1,4 @@
-import type { CharacterSheetContext, ClassSummary } from 'src/types/types';
+import type { ActorSheetContext, ClassSummary } from 'src/types/types';
 import { CONSTANTS } from '../constants';
 import type { ActorSheet5eCharacter } from 'src/types/actor5e-sheet';
 import type { Actor5e } from 'src/types/actor';
@@ -296,7 +296,7 @@ export const FoundryAdapter = {
     }
     return classes.join(' ');
   },
-  getSpellAttackModAndTooltip(context: CharacterSheetContext) {
+  getSpellAttackModAndTooltip(context: ActorSheetContext) {
     let actor = context.actor;
     let formula = Roll.replaceFormulaData(
       actor.system.bonuses.rsak.attack,

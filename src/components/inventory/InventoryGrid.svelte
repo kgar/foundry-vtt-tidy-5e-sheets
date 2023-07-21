@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { CharacterSheetContext } from 'src/types/types';
+  import type { ActorSheetContext } from 'src/types/types';
   import type { Item5e } from 'src/types/item';
   import ItemTable from '../items/ItemTable.svelte';
   import ItemTableHeaderRow from '../items/ItemTableHeaderRow.svelte';
@@ -10,7 +10,7 @@
 
   export let section: any;
   export let items: Item5e[];
-  export let context: CharacterSheetContext;
+  export let context: ActorSheetContext;
 
   const localize = FoundryAdapter.localize;
   const allowEdit = FoundryAdapter.tryGetFlag(context.actor, 'allow-edit');

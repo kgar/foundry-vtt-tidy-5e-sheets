@@ -1,6 +1,6 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { type CharacterSheetContext } from 'src/types/types';
+  import { type ActorSheetContext } from 'src/types/types';
   import { SettingsProvider } from 'src/settings/settings';
   import ItemTable from '../items/ItemTable.svelte';
   import ItemTableHeaderRow from '../items/ItemTableHeaderRow.svelte';
@@ -14,7 +14,7 @@
   import ListContainer from '../layout/ListContainer.svelte';
   import ItemControls from '../items/ItemControls.svelte';
 
-  export let context: CharacterSheetContext;
+  export let context: ActorSheetContext;
 
   const localize = FoundryAdapter.localize;
 

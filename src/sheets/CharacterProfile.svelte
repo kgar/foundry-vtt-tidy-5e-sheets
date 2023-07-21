@@ -1,6 +1,6 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { type CharacterSheetContext } from 'src/types/types';
+  import { type ActorSheetContext } from 'src/types/types';
   import { SettingsProvider } from 'src/settings/settings';
   import type { SheetFunctions } from 'src/types/types';
   import Exhaustion from './Exhaustion.svelte';
@@ -13,7 +13,7 @@
   import CharacterPortrait from './CharacterPortrait.svelte';
 
   export let sheetFunctions: SheetFunctions;
-  export let context: CharacterSheetContext;
+  export let context: ActorSheetContext;
 
   const portraitStyle = SettingsProvider.settings.portraitStyle.get();
   const useRoundedPortraitStyle = ['all', 'default', 'pc'].includes(

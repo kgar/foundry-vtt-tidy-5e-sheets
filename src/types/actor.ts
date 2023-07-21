@@ -26,7 +26,7 @@ export type Actor5e = Actor & {
       cha: Ability;
     } & Record<string, Ability>;
     bonuses: Bonuses;
-    skills: Skills;
+    skills: ActorSkills;
     tools: Tools;
     spells: Spells;
     attributes: Attributes;
@@ -100,28 +100,28 @@ type SpellDc = {
   dc: string;
 };
 
-type Skills = {
-  acr: Skill;
-  ani: Skill;
-  arc: Skill;
-  ath: Skill;
-  dec: Skill;
-  his: Skill;
-  ins: Skill;
-  itm: Skill;
-  inv: Skill;
-  med: Skill;
-  nat: Skill;
-  prc: Skill;
-  prf: Skill;
-  per: Skill;
-  rel: Skill;
-  slt: Skill;
-  ste: Skill;
-  sur: Skill;
+export type ActorSkills = {
+  acr: ActorSkill;
+  ani: ActorSkill;
+  arc: ActorSkill;
+  ath: ActorSkill;
+  dec: ActorSkill;
+  his: ActorSkill;
+  ins: ActorSkill;
+  itm: ActorSkill;
+  inv: ActorSkill;
+  med: ActorSkill;
+  nat: ActorSkill;
+  prc: ActorSkill;
+  prf: ActorSkill;
+  per: ActorSkill;
+  rel: ActorSkill;
+  slt: ActorSkill;
+  ste: ActorSkill;
+  sur: ActorSkill;
 };
 
-type Skill = {
+export type ActorSkill = {
   value: number;
   ability: string;
   bonuses: SkillBonuses;

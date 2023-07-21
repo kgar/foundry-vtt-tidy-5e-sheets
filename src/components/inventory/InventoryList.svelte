@@ -19,11 +19,11 @@
   import ItemEditControl from '../items/ItemEditControl.svelte';
   import InventoryEquipControl from './InventoryEquipControl.svelte';
   import InventoryAttuneControl from './InventoryAttuneControl.svelte';
-  import type { CharacterSheetContext } from 'src/types/types';
+  import type { ActorSheetContext } from 'src/types/types';
 
   export let section: any;
   export let items: Item5e[];
-  export let context: CharacterSheetContext;
+  export let context: ActorSheetContext;
 
   const localize = FoundryAdapter.localize;
   const allowEdit = FoundryAdapter.tryGetFlag(context.actor, 'allow-edit');

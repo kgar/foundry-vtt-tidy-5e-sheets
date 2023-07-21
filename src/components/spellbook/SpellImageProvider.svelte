@@ -2,13 +2,13 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { SettingsProvider } from 'src/settings/settings';
   import type { Item5e } from 'src/types/item';
-  import type { CharacterSheetContext } from 'src/types/types';
+  import type { ActorSheetContext } from 'src/types/types';
 
-  export let context: CharacterSheetContext;
+  export let context: ActorSheetContext;
   export let spell: Item5e;
 
   function getSpellImageUrl(
-    context: CharacterSheetContext,
+    context: ActorSheetContext,
     spell: any
   ): string | undefined {
     if (!SettingsProvider.settings.spellClassFilterIconReplace.get()) {

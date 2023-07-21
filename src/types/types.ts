@@ -18,7 +18,56 @@ export type ClassSummary = {
   level?: string;
 };
 
-export type CharacterSheetContext = { actor: Actor5e } & Record<string, any>;
+export type ActorSheetContext = { actor: Actor5e, skills: ActorContextSkills } & Record<string, any>;
+
+export interface ActorContextSkills {
+  acr: ActorContextSkill
+  ani: ActorContextSkill
+  arc: ActorContextSkill
+  ath: ActorContextSkill
+  dec: ActorContextSkill
+  his: ActorContextSkill
+  ins: ActorContextSkill
+  itm: ActorContextSkill
+  inv: ActorContextSkill
+  med: ActorContextSkill
+  nat: ActorContextSkill
+  prc: ActorContextSkill
+  prf: ActorContextSkill
+  per: ActorContextSkill
+  rel: ActorContextSkill
+  slt: ActorContextSkill
+  ste: ActorContextSkill
+  sur: ActorContextSkill
+}
+
+export interface ActorContextSkill {
+  value: number
+  ability: string
+  bonuses: ActorContextSkillBonuses
+  bonus: number
+  mod: number
+  prof: ActorContextSkillProficiency
+  proficient: number
+  total: number
+  passive: number
+  abbreviation: string
+  icon: string
+  hover: string
+  label: string
+  baseValue: number
+}
+
+export interface ActorContextSkillBonuses {
+  check: string
+  passive: string
+}
+
+export interface ActorContextSkillProficiency {
+  _baseProficiency: number
+  multiplier: number
+  rounding: string
+}
 
 export type RoundedPortaitStyleOptions = 'default' | 'pc' | 'npc' | 'all';
 

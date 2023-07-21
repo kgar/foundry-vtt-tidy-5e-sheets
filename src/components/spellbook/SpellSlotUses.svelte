@@ -1,9 +1,9 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { type CharacterSheetContext } from 'src/types/types';
+  import { type ActorSheetContext } from 'src/types/types';
 
   export let section: any;
-  export let context: CharacterSheetContext;
+  export let context: ActorSheetContext;
 
   const localize = FoundryAdapter.localize;
 
