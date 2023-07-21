@@ -146,7 +146,7 @@
         font-weight: 700;
       }
 
-      .skill-proficiency {
+      .skill-proficiency-toggle {
         font-size: 0.625rem;
         color: var(--t5e-tertiary-color);
 
@@ -158,12 +158,13 @@
           vertical-align: baseline;
         }
 
-        &:not(.proficiency-toggle) {
-          cursor: default;
-          &:hover {
-            color: var(--t5e-tertiary-color);
-          }
-        }
+        // TODO: Is this for when the skill is unable to be toggled? Like when active effects are preventing?
+        // &:not(.proficiency-toggle) {
+        //   cursor: default;
+        //   &:hover {
+        //     color: var(--t5e-tertiary-color);
+        //   }
+        // }
       }
 
       .skill-mod,
