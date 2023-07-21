@@ -2,7 +2,7 @@
 
 - [x] Make a component
 - [ ] HTML
-  - [ ] Attributes
+  - [ ] Skills
   - [ ] Traits
   - [ ] Resources
   - [ ] Favorites - stub for now
@@ -820,4 +820,41 @@
     color: var(--t5e-primary-font);
   }
 } //.traits
+```
+
+## Skill cog button impl
+
+```js
+const skill = event.currentTarget.closest('[data-key]').dataset.key;
+app = new ProficiencyConfig(this.actor, { property: 'skills', key: skill });
+```
+
+## Cycle proficiency impl
+
+```js
+  /* -------------------------------------------- */
+
+  /**
+   * Handle cycling proficiency in a skill or tool.
+   * @param {Event} event     A click or contextmenu event which triggered this action.
+   * @returns {Promise|void}  Updated data for this actor after changes are applied.
+   * @protected
+   */
+  _onCycleProficiency(event) {
+    if ( event.currentTarget.classList.contains("disabled") ) return;
+    event.preventDefault();
+    const parent = event.currentTarget.closest(".proficiency-row");
+    const field = parent.querySelector('[name$=".value"]');
+    const {property, key} = parent.dataset;
+    const value = this.actor._source.system[property]?.[key]?.value ?? 0;
+
+    // Cycle to the next or previous skill level.
+    const levels = [0, 1, .5, 2];
+    const idx = levels.indexOf(value);
+    const next = idx + (event.type === "contextmenu" ? 3 : 1);
+    field.value = levels[next % levels.length];
+
+    // Update the field value and save the form.
+    return this._onSubmit(event);
+  }
 ```

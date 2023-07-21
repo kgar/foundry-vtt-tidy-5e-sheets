@@ -14,8 +14,6 @@
   - [ ] ...
 - [x] Ensure item summary functionality can be shared
 
-
-
 - [x] Implement default tab
 - [ ] Visual bug (existing): when any character detail field is too long in Biography top-notes for a PC, it will blow out the layout. Consider CSS grid as a replacement. Test carefully on all the major browsers. Also just consider inputs instead of contenteditable fields?
 - [ ] Consider consolidating sheet initial value / cacheable content into single objects to pass down to the target component. Values include things like scrollTop map, currentTab sheet parameter, and any other sheetparameters that need to be cached for maintaining visual integrity between submissions / sheet refreshes.
@@ -26,8 +24,6 @@
 - [ ] `<a>`, `<div>`, etc. tags with `[role="button"]` should be buttons
 - [ ] `<i>` tags with role=button should be changed so that a button surrounds the icon
 - [ ] Leverage TypeScript to lock down and document all known flags for each type of flagged entity (actor, NPC, vehicle, Item)
-
-
 
 ## Vehicle Sheet
 
@@ -151,7 +147,6 @@ Evaluate module integration and think about better (API-centric) ways to support
     - [ ] Item info cards float next to cursor
     - [ ] Delay showing info cards
     - [ ] Key to hold for Item Card interaction
-    
 - [ ] Reimplement Favorites visualization - [ ] Psst: src_scss\partials_favorites.scss
 
 ## Big Picture
@@ -198,8 +193,6 @@ Evaluate module integration and think about better (API-centric) ways to support
 
 > Most recent breakages in Tidy5e sheets were related to magic HTML conventions that hook into invisible jquery wire-ups. You have to go read through the core HBS's for character sheets. Since you're already there, skip the limitations imposed by trying to recreate their sheet and instead use the public API. After all the public API provides deprecation notices, whereas the 5e sheet can just suddenly be structured differently on a new version. Not much they will do about that.
 
-
-
 ## Stretch
 
 - [ ] Explore touch-friendly UX options
@@ -221,8 +214,6 @@ Evaluate module integration and think about better (API-centric) ways to support
 - [ ] Sheet settings: Use non-Foundry-module color picker (Svelte has a nice one) for setting CSS colors
 - [ ] UI test idea - create automated walkthrough of the application which provides screenshots of relevant areas with relevant features toggled on and off. This should go into a markdown report with the screenshots. It should report any console errors as well.
 
-
-
 ## Unsorted
 
 - [x] Review and make TODOs from these files
@@ -236,11 +227,54 @@ Evaluate module integration and think about better (API-centric) ways to support
   - [x] src\css\tidy-icons.css | not in use / ignored
   - [x] images folder | added to public
 - [ ] Implement these money settings (if able, fold Lazy Money into Tidy 5e; else, figure out what API hooks are needed and then let Lazy Money do the heavy lifting)
-    - [ ] lazyMoneyIgnoreElectrum
-    - [ ] lazyMoneyEnable
-    - [ ] lazyMoneyChatLog
-    - [ ] lockMoneyChanges
-    - [ ] lazyMoneyAddConvert
+  - [ ] lazyMoneyIgnoreElectrum
+  - [ ] lazyMoneyEnable
+  - [ ] lazyMoneyChatLog
+  - [ ] lockMoneyChanges
+  - [ ] lazyMoneyAddConvert
+
+## Not Just Tidy 5e settings... DND5e settings as well 😱
+
+- [ ] Ensure all stock DND5E hooks and features are accounted for.
+  - [ ] Review activateListeners() functions and ensure all cases are being accounted for.
+
+In `activateListeners()` of the actor sheet, this function is called which relies on certain `data-` attributes to be present, and I do not aim to provide them, because I refuse to be subject to their magic jquery as much as possible:
+
+```js
+  /**
+   * Disable any fields that are overridden by active effects and display an informative tooltip.
+   * @param {jQuery} html  The sheet's rendered HTML.
+   * @protected
+   */
+  _disableOverriddenFields(html) {
+    const proficiencyToggles = {
+      ability: /system\.abilities\.([^.]+)\.proficient/,
+      skill: /system\.skills\.([^.]+)\.value/,
+      tool: /system\.tools\.([^.]+)\.value/
+    };
+
+    for ( const override of Object.keys(foundry.utils.flattenObject(this.actor.overrides)) ) {
+      html.find(`input[name="${override}"],select[name="${override}"]`).each((i, el) => {
+        el.disabled = true;
+        el.dataset.tooltip = "DND5E.ActiveEffectOverrideWarning";
+      });
+
+      for ( const [key, regex] of Object.entries(proficiencyToggles) ) {
+        const [, match] = override.match(regex) || [];
+        if ( match ) {
+          const toggle = html.find(`li[data-${key}="${match}"] .proficiency-toggle`);
+          toggle.addClass("disabled");
+          toggle.attr("data-tooltip", "DND5E.ActiveEffectOverrideWarning");
+        }
+      }
+
+      const [, spell] = override.match(/system\.spells\.(spell\d)\.override/) || [];
+      if ( spell ) {
+        html.find(`.spell-max[data-level="${spell}"]`).attr("data-tooltip", "DND5E.ActiveEffectOverrideWarning");
+      }
+    }
+  }
+```
 
 ## Special Requests
 

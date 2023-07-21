@@ -456,11 +456,6 @@
       display: flex;
     }
 
-    &.attributes {
-      gap: 1rem;
-    }
-
-    &.attributes,
     &.biography,
     &.journal {
       align-items: flex-start;
@@ -472,7 +467,7 @@
 
     &.biography,
     &.journal {
-      font-size: 13px;
+      font-size: 0.8125rem;
     }
 
     &.biography {
