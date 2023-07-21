@@ -26,7 +26,12 @@ export default defineConfig({
     sourcemap: true,
     minify: 'terser',
     terserOptions: {
-      keep_classnames: true,
+      mangle: {
+        toplevel: true,
+        keep_classnames: true,
+      },
+      ecma: 2020,
+      module: true,
     },
   },
 });
