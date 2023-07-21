@@ -3,7 +3,6 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { type CharacterSheetContext } from 'src/types/types';
   import { SettingsProvider } from 'src/settings/settings';
-  import ItemContext from '../items/ItemContext.svelte';
   import ItemControls from '../items/ItemControls.svelte';
   import ItemDeleteControl from '../items/ItemDeleteControl.svelte';
   import ItemDuplicateControl from '../items/ItemDuplicateControl.svelte';
@@ -77,6 +76,7 @@
       <ItemTableColumn baseWidth={classicControlsBaseWidth} />
     </ItemTableHeaderRow>
     {#each spells as spell}
+      {@const ctx = context.itemContext[spell.id]}
       <ItemTableRow
         item={spell}
         on:mousedown={(event) =>
@@ -138,20 +138,18 @@
         </ItemTableCell>
         {#if context.owner && classicControlsEnabled}
           <ItemTableCell baseWidth={classicControlsBaseWidth}>
-            <ItemContext item={spell} itemContext={context.itemContext} let:ctx>
-              <ItemControls>
-                {#if spell.system.preparation?.mode === 'always'}
-                  <span />
-                {:else if section.canPrepare}
-                  <SpellPrepareControl {ctx} {spell} />
-                {/if}
-                <ItemEditControl item={spell} />
-                {#if allowEdit}
-                  <ItemDuplicateControl item={spell} />
-                  <ItemDeleteControl item={spell} />
-                {/if}
-              </ItemControls>
-            </ItemContext>
+            <ItemControls>
+              {#if spell.system.preparation?.mode === 'always'}
+                <span />
+              {:else if section.canPrepare}
+                <SpellPrepareControl {ctx} {spell} />
+              {/if}
+              <ItemEditControl item={spell} />
+              {#if allowEdit}
+                <ItemDuplicateControl item={spell} />
+                <ItemDeleteControl item={spell} />
+              {/if}
+            </ItemControls>
           </ItemTableCell>
         {/if}
       </ItemTableRow>
@@ -190,7 +188,7 @@
     :global(.innate) {
       background-color: var(--t5e-innate);
     }
-    
+
     :global(.components) {
       gap: 0;
     }

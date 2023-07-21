@@ -6,7 +6,6 @@
   import ItemTableColumn from '../items/ItemTableColumn.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { CONSTANTS } from 'src/constants';
-  import ItemContext from '../items/ItemContext.svelte';
   import { SettingsProvider } from 'src/settings/settings';
 
   export let section: any;
@@ -45,91 +44,88 @@
   </ItemTableHeaderRow>
   <div class="items">
     {#each items as item}
-      <ItemContext {item} itemContext={context.itemContext} let:ctx>
-        <div
-          role="button"
-          tabindex="0"
-          class="item {getInventoryRowClasses(item, section)}"
-          data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
-          data-context-menu-entity-id={item.id}
-          on:click={(event) => item.use({}, { event })}
-        >
-          {#if ctx.attunement}
-            <i
-              class="fas fa-sun icon-attuned {ctx.attunement?.cls ?? ''}"
-              title={localize(ctx.attunement?.title)}
-            />
-          {/if}
+      {@const ctx = context.itemContext[item.id]}
 
-          {#if FoundryAdapter.tryGetFlag(item, 'favorite')}
-            <i
-              class="fas fa-bookmark icon-fav"
-              title={localize('TIDY5E.isFav')}
-            />
-          {/if}
+      <div
+        role="button"
+        tabindex="0"
+        class="item {getInventoryRowClasses(item, section)}"
+        data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
+        data-context-menu-entity-id={item.id}
+        on:click={(event) => item.use({}, { event })}
+      >
+        {#if ctx.attunement}
+          <i
+            class="fas fa-sun icon-attuned {ctx.attunement?.cls ?? ''}"
+            title={localize(ctx.attunement?.title)}
+          />
+        {/if}
 
-          {#if context.owner}
-            <a
-              class="item-control item-edit"
-              style="display:none"
-              data-action="itemEdit"
-              data-tooltip="DND5E.ItemEdit"
-            >
-              <i class="fas fa-edit fa-fw" />
-            </a>
-          {/if}
+        {#if FoundryAdapter.tryGetFlag(item, 'favorite')}
+          <i
+            class="fas fa-bookmark icon-fav"
+            title={localize('TIDY5E.isFav')}
+          />
+        {/if}
 
-          <div class="item-name" role="button">
-            <div
-              class="item-image"
-              style="background-image: url('/{item.img}')"
-            >
-              <i class="fa fa-dice-d20" />
-            </div>
+        {#if context.owner}
+          <a
+            class="item-control item-edit"
+            style="display:none"
+            data-action="itemEdit"
+            data-tooltip="DND5E.ItemEdit"
+          >
+            <i class="fas fa-edit fa-fw" />
+          </a>
+        {/if}
+
+        <div class="item-name" role="button">
+          <div class="item-image" style="background-image: url('/{item.img}')">
+            <i class="fa fa-dice-d20" />
           </div>
+        </div>
 
-          <div class="item-stats">
-            <div
-              class="item-detail item-uses"
-              title="{localize('DND5E.Uses')}: {item.system.uses?.value}/{item
-                .system.uses?.max} "
-            >
-              {#if ctx.hasUses}
-                <i class="fas fa-bolt" />
-                <input
-                  type="text"
-                  name="system.uses.value"
-                  value={item.system.uses?.value}
-                  placeholder="0"
-                  maxlength="2"
-                  on:click|stopPropagation
-                  on:change|stopPropagation={(event) =>
-                    item.update({
-                      ['system.uses.value']: event.currentTarget.value,
-                    })}
-                />
-              {/if}
-            </div>
-            <span
-              class="item-quantity"
-              class:isStack={item.isStack}
-              title={localize('DND5E.Quantity')}
-            >
+        <div class="item-stats">
+          <div
+            class="item-detail item-uses"
+            title="{localize('DND5E.Uses')}: {item.system.uses?.value}/{item
+              .system.uses?.max} "
+          >
+            {#if ctx.hasUses}
+              <i class="fas fa-bolt" />
               <input
-                class="item-count"
                 type="text"
-                value={item.system.quantity}
+                name="system.uses.value"
+                value={item.system.uses?.value}
+                placeholder="0"
                 maxlength="2"
                 on:click|stopPropagation
                 on:change|stopPropagation={(event) =>
                   item.update({
-                    ['system.quantity']: event.currentTarget.value,
+                    ['system.uses.value']: event.currentTarget.value,
                   })}
               />
-            </span>
+            {/if}
           </div>
+          <span
+            class="item-quantity"
+            class:isStack={item.isStack}
+            title={localize('DND5E.Quantity')}
+          >
+            <input
+              class="item-count"
+              type="text"
+              value={item.system.quantity}
+              maxlength="2"
+              on:click|stopPropagation
+              on:change|stopPropagation={(event) =>
+                item.update({
+                  ['system.quantity']: event.currentTarget.value,
+                })}
+            />
+          </span>
         </div>
-      </ItemContext>
+      </div>
     {/each}
     {#if context.owner && allowEdit}
       <div class="items-footer">

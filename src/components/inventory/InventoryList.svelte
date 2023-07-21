@@ -6,7 +6,6 @@
   import ItemTableRow from '../items/ItemTableRow.svelte';
   import ItemTableFooter from '../items/ItemTableFooter.svelte';
   import ItemTableColumn from '../items/ItemTableColumn.svelte';
-  import ItemContext from '../items/ItemContext.svelte';
   import ItemTableCell from '../items/ItemTableCell.svelte';
   import ItemUseButton from '../items/ItemUseButton.svelte';
   import ItemName from '../items/ItemName.svelte';
@@ -124,122 +123,121 @@
       <ItemTableColumn baseWidth={classicControlsBaseWidth} />
     </ItemTableHeaderRow>
     {#each items as item}
-      <ItemContext {item} itemContext={context.itemContext} let:ctx>
-        <ItemTableRow
-          {item}
-          on:mousedown={(event) =>
-            FoundryAdapter.editOnMiddleClick(event.detail, item)}
-          contextMenu={{
-            type: CONSTANTS.CONTEXT_MENU_TYPE_ITEMS,
-            id: item.id,
-          }}
-          let:toggleSummary
-          cssClass={getInventoryRowClasses(item, section)}
-        >
-          <ItemTableCell primary={true} title={item.name}>
-            <ItemUseButton {item} />
-            <ItemName
-              on:click={(event) => toggleSummary(event.detail, context.actor)}
-            >
-              <div class="flexrow align-items-center extra-small-gap">
-                {item.name}
-                {#if item.system?.properties?.amm}
-                  <span class="ammo">
-                    <select
-                      on:click|stopPropagation
-                      on:change={(event) =>
-                        onAmmoChange(item, event.currentTarget.value)}
-                    >
-                      {#each ammos as ammo}
-                        <option
-                          value={ammo.value}
-                          selected={item.system.consume?.target === ammo.value}
-                          >{ammo.text}</option
-                        >
-                      {/each}
-                    </select>
-                  </span>
-                {/if}
-                <span class="item-quantity" class:isStack={ctx.isStack}>
-                  (<input
-                    class="item-count"
-                    type="text"
-                    value={item.system.quantity}
-                    maxlength="3"
+      {@const ctx = context.itemContext[item.id]}
+      <ItemTableRow
+        {item}
+        on:mousedown={(event) =>
+          FoundryAdapter.editOnMiddleClick(event.detail, item)}
+        contextMenu={{
+          type: CONSTANTS.CONTEXT_MENU_TYPE_ITEMS,
+          id: item.id,
+        }}
+        let:toggleSummary
+        cssClass={getInventoryRowClasses(item, section)}
+      >
+        <ItemTableCell primary={true} title={item.name}>
+          <ItemUseButton {item} />
+          <ItemName
+            on:click={(event) => toggleSummary(event.detail, context.actor)}
+          >
+            <div class="flexrow align-items-center extra-small-gap">
+              {item.name}
+              {#if item.system?.properties?.amm}
+                <span class="ammo">
+                  <select
                     on:click|stopPropagation
-                    on:blur={(event) => updateItemQuantity(event, item)}
-                  />)
+                    on:change={(event) =>
+                      onAmmoChange(item, event.currentTarget.value)}
+                  >
+                    {#each ammos as ammo}
+                      <option
+                        value={ammo.value}
+                        selected={item.system.consume?.target === ammo.value}
+                        >{ammo.text}</option
+                      >
+                    {/each}
+                  </select>
                 </span>
-              </div>
+              {/if}
+              <span class="item-quantity" class:isStack={ctx.isStack}>
+                (<input
+                  class="item-count"
+                  type="text"
+                  value={item.system.quantity}
+                  maxlength="3"
+                  on:click|stopPropagation
+                  on:blur={(event) => updateItemQuantity(event, item)}
+                />)
+              </span>
+            </div>
 
-              <!-- 
+            <!-- 
                 Quantity (on hover by default; static by setting)  
                 <span class="item-quantity{{#if item.isStack}} isStack{{/if}}">
                   (<input class="item-count" name="system.quantity" type="text" value="{{item.system.quantity}}" maxlength="3" >)
                 </span>
               -->
-            </ItemName>
-          </ItemTableCell>
-          {#if !hideIconsNextToTheItemName}
-            <ItemTableCell>
-              {#if ctx.attunement}
-                <div class="item-detail attunement">
-                  <i
-                    class="item-state-icon fas {ctx.attunement.icon} {ctx
-                      .attunement.cls}"
-                    title={localize(ctx.attunement.title)}
-                  />
-                </div>
-              {/if}
-            </ItemTableCell>
-            {#if FoundryAdapter.tryGetFlag(item, 'favorite')}
-              <div class="item-state-icon" title="Favorite">
-                <i class="fas fa-bookmark icon-fav" />
+          </ItemName>
+        </ItemTableCell>
+        {#if !hideIconsNextToTheItemName}
+          <ItemTableCell>
+            {#if ctx.attunement}
+              <div class="item-detail attunement">
+                <i
+                  class="item-state-icon fas {ctx.attunement.icon} {ctx
+                    .attunement.cls}"
+                  title={localize(ctx.attunement.title)}
+                />
               </div>
             {/if}
+          </ItemTableCell>
+          {#if FoundryAdapter.tryGetFlag(item, 'favorite')}
+            <div class="item-state-icon" title="Favorite">
+              <i class="fas fa-bookmark icon-fav" />
+            </div>
           {/if}
-          <ItemTableCell
-            baseWidth="2.5rem"
-            title="{localize('DND5E.Weight')}: {item.system
-              .weight} {context.weightUnit}"
-          >
-            {#if ctx.totalWeight}
-              {ctx.totalWeight} {context.weightUnit}
-            {:else}
-              {item.system.weight} {context.weightUnit}
-            {/if}
-          </ItemTableCell>
-          <ItemTableCell baseWidth="3.125rem" title={localize('DND5E.Uses')}>
-            {#if ctx?.hasUses}
-              <ItemUses {item} />
-            {:else}
-              <ItemAddUses {item} />
-            {/if}
-          </ItemTableCell>
-          <ItemTableCell baseWidth="7.5rem" title={localize('DND5E.Usage')}>
-            {#if item.system.activation?.type}
-              {item.labels.activation}
-            {/if}
-          </ItemTableCell>
-          {#if context.owner && classicControlsEnabled}
-            <ItemTableCell baseWidth={classicControlsBaseWidth}>
-              <ItemControls>
-                {#if ctx.attunement}
-                  <InventoryAttuneControl {item} {ctx} />
-                {:else}
-                  <!-- <span /> -->
-                {/if}
-                <InventoryEquipControl {item} {ctx} />
-                <ItemEditControl {item} />
-                {#if allowEdit}
-                  <ItemDuplicateControl {item} />
-                  <ItemDeleteControl {item} />
-                {/if}
-              </ItemControls>
-            </ItemTableCell>
+        {/if}
+        <ItemTableCell
+          baseWidth="2.5rem"
+          title="{localize('DND5E.Weight')}: {item.system
+            .weight} {context.weightUnit}"
+        >
+          {#if ctx.totalWeight}
+            {ctx.totalWeight} {context.weightUnit}
+          {:else}
+            {item.system.weight} {context.weightUnit}
           {/if}
-        </ItemTableRow>
-      </ItemContext>
+        </ItemTableCell>
+        <ItemTableCell baseWidth="3.125rem" title={localize('DND5E.Uses')}>
+          {#if ctx?.hasUses}
+            <ItemUses {item} />
+          {:else}
+            <ItemAddUses {item} />
+          {/if}
+        </ItemTableCell>
+        <ItemTableCell baseWidth="7.5rem" title={localize('DND5E.Usage')}>
+          {#if item.system.activation?.type}
+            {item.labels.activation}
+          {/if}
+        </ItemTableCell>
+        {#if context.owner && classicControlsEnabled}
+          <ItemTableCell baseWidth={classicControlsBaseWidth}>
+            <ItemControls>
+              {#if ctx.attunement}
+                <InventoryAttuneControl {item} {ctx} />
+              {:else}
+                <!-- <span /> -->
+              {/if}
+              <InventoryEquipControl {item} {ctx} />
+              <ItemEditControl {item} />
+              {#if allowEdit}
+                <ItemDuplicateControl {item} />
+                <ItemDeleteControl {item} />
+              {/if}
+            </ItemControls>
+          </ItemTableCell>
+        {/if}
+      </ItemTableRow>
     {/each}
     {#if context.owner && allowEdit}
       <ItemTableFooter actor={context.actor} dataset={section.dataset} />
