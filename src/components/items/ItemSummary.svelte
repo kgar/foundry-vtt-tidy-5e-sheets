@@ -5,7 +5,7 @@
 </script>
 
 <div
-  transition:slide={{ duration: 200, easing: quadInOut }}
+  transition:slide|global={{ duration: 200, easing: quadInOut }}
   class="item-summary"
 >
   {@html chatData.description.value}
