@@ -1,5 +1,6 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import { SettingsProvider } from 'src/settings/settings';
   import type { Tool } from 'src/types/actor';
   import type { ActorSheetContext } from 'src/types/types';
   import { createEventDispatcher } from 'svelte';
@@ -25,7 +26,9 @@
     <slot name="custom-icon" />
   </span>
   <div class="trait-label-and-list" {title}>
-    <span class="trait-label">{title}</span>
+    {#if SettingsProvider.settings.traitLabelsEnabled.get()}
+      <span class="trait-label">{title}</span>
+    {/if}
     <ul
       class="trait-list"
       class:tools={tools.length}
@@ -124,16 +127,15 @@
 
       .trait-label {
         font-size: 0.75rem;
-        line-height: 0.875rem;
         font-weight: 700;
         color: var(--t5e-secondary-color);
       }
 
       .trait-list {
-        line-height: 0.875rem;
         display: flex;
         flex-wrap: wrap;
         column-gap: 0.25rem;
+        padding-top: 0.125rem;
 
         &.tools {
           gap: 0.125rem;
