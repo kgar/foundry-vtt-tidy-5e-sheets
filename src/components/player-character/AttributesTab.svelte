@@ -1,15 +1,8 @@
 <script lang="ts">
-  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { Actor5e, ActorSkill, ActorSkills } from 'src/types/actor';
-  import type {
-    ActorContextSkill,
-    ActorContextSkills,
-    ActorSheetContext,
-    SheetFunctions,
-  } from 'src/types/types';
-  import { formatAsModifier } from 'src/utils/formatting';
+  import type { ActorSheetContext, SheetFunctions } from 'src/types/types';
   import ListContainer from '../layout/ListContainer.svelte';
   import SkillsList from '../attributes/skills-list.svelte';
+  import Traits from '../attributes/traits.svelte';
 
   export let context: ActorSheetContext;
   export let sheetFunctions: SheetFunctions;
@@ -18,6 +11,7 @@
 <ListContainer cssClass="attributes-tab-contents">
   <section class="side-panel">
     <SkillsList {context} />
+    <Traits {context} />
   </section>
   <section class="main-panel">Main panel</section>
 </ListContainer>

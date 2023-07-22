@@ -18,14 +18,13 @@ declare global {
   var dnd5e: globalThisDnd5e;
 }
 
-
 FoundryAdapter.registerCharacterSheet(Tidy5eSheetKgar);
 
 FoundryAdapter.onReady(async () => {
   initSettings();
 
   // TODO: Remove after debugging:
-  debugCompareSheets('tC0Wr0s3MhRUXpzA', 'pbGp2hNyyqtAo3h6');
+  debugCompareSheets('hUKk6rVxXIqCFr3Y', 'Yxj44COmG1avxj94');
 });
 
 Hooks.on('getActorSheetHeaderButtons', (sheet: any, buttons: any) => {
