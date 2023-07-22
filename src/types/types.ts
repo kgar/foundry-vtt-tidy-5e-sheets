@@ -18,7 +18,7 @@ export type ClassSummary = {
   level?: string;
 };
 
-export type ActorSheetContext = { actor: Actor5e, skills: ActorContextSkills } & Record<string, any>;
+export type ActorSheetContext = { actor: Actor5e, skills: ActorContextSkills, tools: ActorContextTools } & Record<string, any>;
 
 export interface ActorContextSkills {
   acr: ActorContextSkill
@@ -40,6 +40,8 @@ export interface ActorContextSkills {
   ste: ActorContextSkill
   sur: ActorContextSkill
 }
+
+export type ActorContextTools = Actor5e;
 
 export interface ActorContextSkill {
   value: number
@@ -100,3 +102,4 @@ type NotifyOptions = {
   console: boolean;
 };
 
+export type D20Roll = {};

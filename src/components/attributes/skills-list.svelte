@@ -1,5 +1,6 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import type { Actor5e } from 'src/types/actor';
   import type {
     ActorContextSkill,
     ActorContextSkills,
@@ -33,26 +34,6 @@
 
     return null;
   }
-
-  function cycleProficiency(
-    event: MouseEvent,
-    skillRef: SkillRef,
-    reverse: boolean = false
-  ) {
-    // TODO: Check for active effects and prevent if applicable.
-    const value = skillRef.skill?.value;
-
-    if (value === null || value === undefined) {
-      return;
-    }
-
-    const levels = [0, 1, 0.5, 2];
-    const idx = levels.indexOf(value);
-    const next = idx + (reverse ? 3 : 1);
-    context.actor.update({
-      [`system.skills.${skillRef.key}.value`]: levels[next % levels.length],
-    });
-  }
 </script>
 
 <ul class="skills-list">
@@ -73,14 +54,25 @@
         <a
           class="skill-proficiency-toggle"
           on:click|stopPropagation|preventDefault={(event) =>
-            cycleProficiency(event, skillRef)}
+            FoundryAdapter.cycleProficiency(
+              context.actor,
+              skillRef.key,
+              skillRef.skill?.value,
+              'skills'
+            )}
           on:contextmenu|stopPropagation|preventDefault={(event) =>
-            cycleProficiency(event, skillRef, true)}
+            FoundryAdapter.cycleProficiency(
+              context.actor,
+              skillRef.key,
+              skillRef.skill?.value,
+              'skills',
+              true
+            )}
           title={skillRef.skill.hover}>{@html skillRef.skill.icon}</a
         >
         <h4
           role="button"
-          class="tidy5e-skill-name"
+          class="tidy5e-skill-name rollable"
           on:click|stopPropagation={(event) =>
             context.actor.rollSkill(skillRef.key, { event })}
         >

@@ -1,6 +1,7 @@
 import type { FoundryDocument } from './document';
 import type { Flags } from './flags';
 import type { Item5e } from './item';
+import type { D20Roll } from './types';
 
 export type Actor5e = Actor & {
   limited: boolean;
@@ -50,6 +51,7 @@ export type Actor5e = Actor & {
   rollDeathSave(options?: { event: Event }): void;
   getRollData(options?: { deterministic: boolean }): any;
   convertCurrency: () => Promise<Actor5e>;
+  rollToolCheck(tool: string, options: {event: Event}): Promise<D20Roll>;
 };
 
 type Ability = {
@@ -132,7 +134,24 @@ type SkillBonuses = {
   passive: string;
 };
 
-type Tools = {};
+export type Tools = {
+  [key: string]: Tool;
+};
+
+export type Tool = {
+  value: number;
+  ability: string;
+  bonuses: { check: string };
+  bonus: number;
+  mod: number;
+  prof: { _baseProficiency: number; multiplier: number; rounding: string };
+  total: number;
+  abbreviation: string;
+  icon: string;
+  hover: string;
+  label: string;
+  baseValue: number;
+};
 
 type Spells = {
   spell1: SpellDc;

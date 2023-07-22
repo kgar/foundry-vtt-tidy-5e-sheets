@@ -24,7 +24,7 @@ FoundryAdapter.onReady(async () => {
   initSettings();
 
   // TODO: Remove after debugging:
-  debugCompareSheets('hUKk6rVxXIqCFr3Y', 'Yxj44COmG1avxj94');
+  debugCompareSheets('hUKk6rVxXIqCFr3Y', 'wyY5Dhe93KzUuan5');
 });
 
 Hooks.on('getActorSheetHeaderButtons', (sheet: any, buttons: any) => {

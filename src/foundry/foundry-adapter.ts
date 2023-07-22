@@ -3,6 +3,7 @@ import { CONSTANTS } from '../constants';
 import type { ActorSheet5eCharacter } from 'src/types/actor5e-sheet';
 import type { Actor5e } from 'src/types/actor';
 import type { Item5e } from 'src/types/item';
+import type { FoundryDocument } from 'src/types/document';
 
 export const FoundryAdapter = {
   getActorSheetClass() {
@@ -319,6 +320,26 @@ export const FoundryAdapter = {
       bonus: formula,
       modTooltip: spellAttackTextTooltip,
     };
+  },
+  cycleProficiency(
+    actor: Actor5e,
+    key: string,
+    currentValue: number | undefined,
+    systemFieldName: string,
+    reverse: boolean = false
+  ): Promise<FoundryDocument | undefined> {
+    // TODO: Check for active effects and prevent if applicable.
+
+    if (currentValue === null || currentValue === undefined) {
+      return Promise.resolve(undefined);
+    }
+
+    const levels = [0, 1, 0.5, 2];
+    const idx = levels.indexOf(currentValue);
+    const next = idx + (reverse ? 3 : 1);
+    return actor.update({
+      [`system.${systemFieldName}.${key}.value`]: levels[next % levels.length],
+    });
   },
 };
 

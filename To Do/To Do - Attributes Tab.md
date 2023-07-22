@@ -858,3 +858,70 @@ app = new ProficiencyConfig(this.actor, { property: 'skills', key: skill });
     return this._onSubmit(event);
   }
 ```
+
+## Config Button Handling
+
+```js
+_onConfigMenu(event) {
+  event.preventDefault();
+  event.stopPropagation();
+  const button = event.currentTarget;
+  let app;
+  switch ( button.dataset.action ) {
+    case "armor":
+      app = new ActorArmorConfig(this.actor);
+      break;
+    case "hit-dice":
+      app = new ActorHitDiceConfig(this.actor);
+      break;
+    case "hit-points":
+      app = new ActorHitPointsConfig(this.actor);
+      break;
+    case "initiative":
+      app = new ActorInitiativeConfig(this.actor);
+      break;
+    case "movement":
+      app = new ActorMovementConfig(this.actor);
+      break;
+    case "flags":
+      app = new ActorSheetFlags(this.actor);
+      break;
+    case "senses":
+      app = new ActorSensesConfig(this.actor);
+      break;
+    case "type":
+      app = new ActorTypeConfig(this.actor);
+      break;
+    case "ability": {
+      const ability = event.currentTarget.closest("[data-ability]").dataset.ability;
+      app = new ActorAbilityConfig(this.actor, null, ability);
+      break;
+    }
+    case "skill": {
+      const skill = event.currentTarget.closest("[data-key]").dataset.key;
+      app = new ProficiencyConfig(this.actor, {property: "skills", key: skill});
+      break;
+    }
+    case "tool": {
+      const tool = event.currentTarget.closest("[data-key]").dataset.key;
+      app = new ProficiencyConfig(this.actor, {property: "tools", key: tool});
+      break;
+    }
+  }
+  app?.render(true);
+}
+```
+```js
+  /**
+   * Handle spawning the TraitSelector application which allows a checkbox of multiple trait options.
+   * @param {Event} event      The click event which originated the selection.
+   * @returns {TraitSelector}  Newly displayed application.
+   * @private
+   */
+  _onTraitSelector(event) {
+    event.preventDefault();
+    const trait = event.currentTarget.dataset.trait;
+    if ( trait === "tool" ) return new ToolSelector(this.actor, trait).render(true);
+    return new TraitSelector(this.actor, trait).render(true);
+  }
+```
