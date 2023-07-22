@@ -135,7 +135,10 @@
         display: flex;
         flex-wrap: wrap;
         column-gap: 0.25rem;
-        padding-top: 0.125rem;
+
+        &:first-child {
+          padding-top: 0.125rem;
+        }
 
         &.tools {
           gap: 0.125rem;
