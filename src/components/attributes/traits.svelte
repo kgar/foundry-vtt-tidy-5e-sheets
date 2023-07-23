@@ -9,7 +9,9 @@
   const toggleTraits = SettingsProvider.settings.traitsTogglePc.get();
 
   const traitsExpanded =
-    !toggleTraits || FoundryAdapter.tryGetFlag(context.actor, 'traitsExpanded');
+    !toggleTraits ||
+    FoundryAdapter.tryGetFlag<boolean>(context.actor, 'traitsExpanded') ===
+      true;
 
   function toggleTraitsExpanded() {
     if (traitsExpanded) {
@@ -36,7 +38,7 @@
       new dnd5e.applications.actor.ActorSensesConfig(context.actor).render(
         true
       )}
-    hideIfEmpty={!traitsExpanded}
+    {traitsExpanded}
   />
 
   <TraitSection
@@ -53,7 +55,7 @@
         context.actor,
         'languages'
       ).render(true)}
-    hideIfEmpty={!traitsExpanded}
+    {traitsExpanded}
   />
 
   <TraitSection
@@ -69,7 +71,7 @@
       new dnd5e.applications.actor.TraitSelector(context.actor, 'di').render(
         true
       )}
-    hideIfEmpty={!traitsExpanded}
+    {traitsExpanded}
   />
 
   <TraitSection
@@ -85,7 +87,7 @@
       new dnd5e.applications.actor.TraitSelector(context.actor, 'dr').render(
         true
       )}
-    hideIfEmpty={!traitsExpanded}
+    {traitsExpanded}
   />
 
   <TraitSection
@@ -101,7 +103,7 @@
       new dnd5e.applications.actor.TraitSelector(context.actor, 'dv').render(
         true
       )}
-    hideIfEmpty={!traitsExpanded}
+    {traitsExpanded}
   />
 
   <TraitSection
@@ -117,7 +119,7 @@
       new dnd5e.applications.actor.TraitSelector(context.actor, 'ci').render(
         true
       )}
-    hideIfEmpty={!traitsExpanded}
+    {traitsExpanded}
   />
 
   <TraitSection
@@ -133,7 +135,7 @@
         context.actor,
         'weapon'
       ).render(true)}
-    hideIfEmpty={!traitsExpanded}
+    {traitsExpanded}
   >
     <svg
       slot="custom-icon"
@@ -165,7 +167,7 @@ c28,32.6,51.5,72.7,62,91.7c2.8,5,9.9,5.1,12.8,0.2c14-23.3,44.3-83.4,44.3-166.9C4
       new dnd5e.applications.actor.TraitSelector(context.actor, 'armor').render(
         true
       )}
-    hideIfEmpty={!traitsExpanded}
+    {traitsExpanded}
   >
     <svg
       slot="custom-icon"
@@ -197,7 +199,7 @@ c28,32.6,51.5,72.7,62,91.7c2.8,5,9.9,5.1,12.8,0.2c14-23.3,44.3-83.4,44.3-166.9C4
       new dnd5e.applications.actor.ToolSelector(context.actor, 'tool').render(
         true
       )}
-    hideIfEmpty={!traitsExpanded}
+    {traitsExpanded}
   />
 
   {#if SettingsProvider.settings.traitsTogglePc.get()}
@@ -214,16 +216,20 @@ c28,32.6,51.5,72.7,62,91.7c2.8,5,9.9,5.1,12.8,0.2c14-23.3,44.3-83.4,44.3-166.9C4
       {/if}
     </div>
   {/if}
-  <a
-    class="configure-special-traits"
-    title={localize('DND5E.TraitConfig', {
-      trait: localize('DND5E.SpecialTraits'),
-    })}
-    on:click|stopPropagation|preventDefault={() =>
-      new dnd5e.applications.actor.ActorSheetFlags(context.actor).render(true)}
-  >
-    <i class="fas fa-cog" />
-  </a>
+  {#if traitsExpanded}
+    <a
+      class="configure-special-traits"
+      title={localize('DND5E.TraitConfig', {
+        trait: localize('DND5E.SpecialTraits'),
+      })}
+      on:click|stopPropagation|preventDefault={() =>
+        new dnd5e.applications.actor.ActorSheetFlags(context.actor).render(
+          true
+        )}
+    >
+      <i class="fas fa-cog" />
+    </a>
+  {/if}
 </div>
 
 <style lang="scss">
@@ -232,6 +238,7 @@ c28,32.6,51.5,72.7,62,91.7c2.8,5,9.9,5.1,12.8,0.2c14-23.3,44.3-83.4,44.3-166.9C4
     border-radius: 0.3125rem 0.3125rem 0 0;
     overflow: visible;
     position: relative;
+    margin-bottom: 0.75rem; // Accounts for floating button to configure flags
 
     :global(.trait-form-group:nth-child(odd)) {
       background: none;

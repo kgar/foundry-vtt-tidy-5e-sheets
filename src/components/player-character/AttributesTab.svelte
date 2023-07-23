@@ -6,6 +6,7 @@
   import Favorites from '../attributes/favorites.svelte';
   import Resources from '../attributes/resources.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import { SettingsProvider } from 'src/settings/settings';
 
   export let context: ActorSheetContext;
   export let sheetFunctions: SheetFunctions;
@@ -19,16 +20,24 @@
     context.resources.some(
       (x) => x.value !== null || x.label !== '' || x.max !== null
     );
+
+  const traitsMovedBelowResource =
+    SettingsProvider.settings.traitsMovedBelowResource.get();
 </script>
 
 <ListContainer cssClass="attributes-tab-contents">
   <section class="side-panel">
     <SkillsList {context} />
-    <Traits {context} />
+    {#if !traitsMovedBelowResource}
+      <Traits {context} />
+    {/if}
   </section>
   <section class="main-panel">
     {#if showResources}
       <Resources {context} />
+    {/if}
+    {#if traitsMovedBelowResource}
+      <Traits {context} />
     {/if}
     <Favorites />
   </section>

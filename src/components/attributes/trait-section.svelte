@@ -12,13 +12,13 @@
   export let traitCssClass: string | undefined = '';
   export let tags: [key: string, value: string][] = [];
   export let tools: [key: string, value: Tool][] = [];
-  export let hideIfEmpty: boolean;
+  export let traitsExpanded: boolean;
 
   const dispatcher = createEventDispatcher<{
     onConfigureClicked: MouseEvent;
   }>();
 
-  const show = !hideIfEmpty || tags.length > 0 || tools.length > 0;
+  const show = traitsExpanded || tags.length > 0 || tools.length > 0;
 </script>
 
 {#if show}
@@ -73,21 +73,27 @@
             >
               {tool.label}
             </span>
-            <a
-              class="tool-proficiency-editor rollable"
-              data-tooltip="DND5E.ToolConfigure"
-              on:click|stopPropagation|preventDefault={() =>
-                new dnd5e.applications.actor.ProficiencyConfig(context.actor, {
-                  property: 'tools',
-                  key,
-                }).render(true)}
-            >
-              <i class="fas fa-cog" />
-            </a>
+            {#if traitsExpanded}
+              <a
+                class="tool-proficiency-editor rollable"
+                data-tooltip="DND5E.ToolConfigure"
+                on:click|stopPropagation|preventDefault={() =>
+                  new dnd5e.applications.actor.ProficiencyConfig(
+                    context.actor,
+                    {
+                      property: 'tools',
+                      key,
+                    }
+                  ).render(true)}
+              >
+                <i class="fas fa-cog" />
+              </a>
+            {/if}
           </li>
         {/each}
       </ul>
     </div>
+    {#if traitsExpanded}
     <a
       class="trait-editor"
       title={configureButtonTitle}
@@ -98,6 +104,7 @@
     >
       <i class="fas fa-pencil-alt" />
     </a>
+    {/if}
   </div>
 {/if}
 
