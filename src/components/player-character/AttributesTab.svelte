@@ -3,9 +3,22 @@
   import ListContainer from '../layout/ListContainer.svelte';
   import SkillsList from '../attributes/skills-list.svelte';
   import Traits from '../attributes/traits.svelte';
+  import Favorites from '../attributes/favorites.svelte';
+  import Resources from '../attributes/resources.svelte';
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
   export let context: ActorSheetContext;
   export let sheetFunctions: SheetFunctions;
+
+  const allowEdit = FoundryAdapter.tryGetFlag<boolean>(
+    context.actor,
+    'allow-edit'
+  );
+  const showResources =
+    allowEdit ||
+    context.resources.some(
+      (x) => x.value !== null || x.label !== '' || x.max !== null
+    );
 </script>
 
 <ListContainer cssClass="attributes-tab-contents">
@@ -13,15 +26,19 @@
     <SkillsList {context} />
     <Traits {context} />
   </section>
-  <section class="main-panel">Main panel</section>
+  <section class="main-panel">
+    {#if showResources}
+      <Resources {context} />
+    {/if}
+    <Favorites />
+  </section>
 </ListContainer>
 
 <style lang="scss">
   :global(.attributes-tab-contents) {
     display: flex;
     flex-direction: row;
-    align-items: flex-start;
-    gap: 0.5rem;
+    gap: 1rem;
   }
 
   .side-panel {
@@ -34,11 +51,12 @@
   .main-panel {
     display: flex;
     flex-direction: column;
+    gap: 0.5rem;
     flex: 1;
     overflow-y: initial;
     padding: 0;
     margin-left: 1rem;
     height: auto;
-    overflow-x: inherit;
+    overflow-x: auto;
   }
 </style>

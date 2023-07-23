@@ -18,57 +18,72 @@ export type ClassSummary = {
   level?: string;
 };
 
-export type ActorSheetContext = { actor: Actor5e, skills: ActorContextSkills, tools: ActorContextTools } & Record<string, any>;
+export type ActorSheetContext = {
+  actor: Actor5e;
+  resources: Resource[];
+  skills: ActorContextSkills;
+  tools: ActorContextTools;
+} & Record<string, any>;
+
+export interface Resource {
+  value: number;
+  max: number;
+  sr: boolean;
+  lr: boolean;
+  label: string;
+  name: string;
+  placeholder: string;
+}
 
 export interface ActorContextSkills {
-  acr: ActorContextSkill
-  ani: ActorContextSkill
-  arc: ActorContextSkill
-  ath: ActorContextSkill
-  dec: ActorContextSkill
-  his: ActorContextSkill
-  ins: ActorContextSkill
-  itm: ActorContextSkill
-  inv: ActorContextSkill
-  med: ActorContextSkill
-  nat: ActorContextSkill
-  prc: ActorContextSkill
-  prf: ActorContextSkill
-  per: ActorContextSkill
-  rel: ActorContextSkill
-  slt: ActorContextSkill
-  ste: ActorContextSkill
-  sur: ActorContextSkill
+  acr: ActorContextSkill;
+  ani: ActorContextSkill;
+  arc: ActorContextSkill;
+  ath: ActorContextSkill;
+  dec: ActorContextSkill;
+  his: ActorContextSkill;
+  ins: ActorContextSkill;
+  itm: ActorContextSkill;
+  inv: ActorContextSkill;
+  med: ActorContextSkill;
+  nat: ActorContextSkill;
+  prc: ActorContextSkill;
+  prf: ActorContextSkill;
+  per: ActorContextSkill;
+  rel: ActorContextSkill;
+  slt: ActorContextSkill;
+  ste: ActorContextSkill;
+  sur: ActorContextSkill;
 }
 
 export type ActorContextTools = Actor5e;
 
 export interface ActorContextSkill {
-  value: number
-  ability: string
-  bonuses: ActorContextSkillBonuses
-  bonus: number
-  mod: number
-  prof: ActorContextSkillProficiency
-  proficient: number
-  total: number
-  passive: number
-  abbreviation: string
-  icon: string
-  hover: string
-  label: string
-  baseValue: number
+  value: number;
+  ability: string;
+  bonuses: ActorContextSkillBonuses;
+  bonus: number;
+  mod: number;
+  prof: ActorContextSkillProficiency;
+  proficient: number;
+  total: number;
+  passive: number;
+  abbreviation: string;
+  icon: string;
+  hover: string;
+  label: string;
+  baseValue: number;
 }
 
 export interface ActorContextSkillBonuses {
-  check: string
-  passive: string
+  check: string;
+  passive: string;
 }
 
 export interface ActorContextSkillProficiency {
-  _baseProficiency: number
-  multiplier: number
-  rounding: string
+  _baseProficiency: number;
+  multiplier: number;
+  rounding: string;
 }
 
 export type RoundedPortaitStyleOptions = 'default' | 'pc' | 'npc' | 'all';
