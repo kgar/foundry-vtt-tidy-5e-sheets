@@ -17,7 +17,6 @@
 //  */
 
 import { CONSTANTS } from 'src/constants';
-import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { warn } from 'src/utils/logging';
 
 // import { tidy5eAmmoSwitch } from "./tidy5e-ammo-switch.js";
@@ -33,33 +32,10 @@ export const isItemFavorite = function (item: any) {
     return false;
   }
   let isFav =
-    (game.modules.get('favtab')?.active && item.flags['favtab']?.isFavorite) ||
     (game.modules.get('favorite-items')?.active &&
       item.flags['favorite-items']?.favorite) ||
     item.flags[CONSTANTS.MODULE_ID]?.favorite ||
     false;
-
-  const isAlreadyTidyFav = FoundryAdapter.getProperty(
-    item.flags[CONSTANTS.MODULE_ID],
-    `favorite`
-  );
-  // for retrocompatibility
-  const isAlreadyFabTab = FoundryAdapter.getProperty(item.flags['favtab'], `isFavorite`);
-  if (
-    String(isAlreadyFabTab) === 'true' &&
-    String(isAlreadyFabTab) === 'false'
-  ) {
-    if (
-      String(isAlreadyTidyFav) !== 'true' &&
-      String(isAlreadyTidyFav) !== 'false'
-    ) {
-      isFav = item.flags['favtab']?.isFavorite; // for retrocompatibility
-    }
-  }
-
-  // if(String(isAlreadyTidyFav) !== "true" && String(isAlreadyTidyFav) !== "false") {
-  // //   item.setFlag(CONSTANTS.MODULE_ID,"favorite",isFav);
-  // }
 
   return isFav;
 };

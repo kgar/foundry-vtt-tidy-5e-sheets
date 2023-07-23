@@ -20,6 +20,8 @@
   import InventoryEquipControl from './InventoryEquipControl.svelte';
   import InventoryAttuneControl from './InventoryAttuneControl.svelte';
   import type { ActorSheetContext } from 'src/types/types';
+  import InlineFavoriteIcon from '../shared/InlineFavoriteIcon.svelte';
+  import ItemFavoriteControl from '../items/ItemFavoriteControl.svelte';
 
   export let section: any;
   export let items: Item5e[];
@@ -192,9 +194,7 @@
             {/if}
           </ItemTableCell>
           {#if FoundryAdapter.tryGetFlag(item, 'favorite')}
-            <div class="item-state-icon" title="Favorite">
-              <i class="fas fa-bookmark icon-fav" />
-            </div>
+            <InlineFavoriteIcon />
           {/if}
         {/if}
         <ItemTableCell
@@ -228,7 +228,10 @@
               {:else}
                 <!-- <span /> -->
               {/if}
-              <InventoryEquipControl {item} {ctx} />
+              {#if ctx.canToggle}
+                <InventoryEquipControl {item} {ctx} />
+              {/if}
+              <ItemFavoriteControl {item} />
               <ItemEditControl {item} />
               {#if allowEdit}
                 <ItemDuplicateControl {item} />

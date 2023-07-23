@@ -4,6 +4,7 @@
 
 <style lang="scss">
   .tidy5e-item-controls {
+    flex: 1;
     align-self: stretch;
     display: flex;
     flex-direction: row;

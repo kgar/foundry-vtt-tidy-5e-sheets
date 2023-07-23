@@ -1,6 +1,7 @@
 import { CONSTANTS } from 'src/constants';
 import { isItemFavorite } from 'src/favorites/favorites';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+import type { Item5e } from 'src/types/item';
 import { warn } from 'src/utils/logging';
 
 export function initTidy5eContextMenu(
@@ -109,7 +110,7 @@ function getActiveEffectContextOptions(effect: any) {
  * @returns {ContextMenuEntry[]}          An array of context menu options offered for the Item
  * @protected
  */
-function getItemContextOptions(item) {
+function getItemContextOptions(item: Item5e) {
   const actor = item.actor ? item.actor : item.parent;
   if (!actor) {
     return;
@@ -260,12 +261,6 @@ function getItemContextOptions(item) {
         if (game.modules.get('favorite-items')?.active) {
           item.update({
             'flags.favorite-items.favorite': !isFav,
-          });
-        }
-        // Sync favorite flag with module 'favtab'
-        if (game.modules.get('favtab')?.active) {
-          item.update({
-            'flags.favtab.isFavorite': !isFav,
           });
         }
       },

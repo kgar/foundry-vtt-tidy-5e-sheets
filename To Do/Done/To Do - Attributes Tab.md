@@ -1,7 +1,7 @@
 ## Attributes Tab To Do's
 
 - [x] Make a component
-- [ ] HTML
+- [x] HTML
   - [x] Skills
   - [x] Traits
   - [x] Resources
@@ -14,7 +14,7 @@
   - [x] configure special traits
 - [ ] Settings
   - [x] traitsTogglePc : By default empty traits are always visible. Enable to add a toggle button.
-  - [ ] traitsMovedBelowResource : Enable to move traits from the left side below resources.
+  - [x] traitsMovedBelowResource : Enable to move traits from the left side below resources.
   - [x] traitLabelsEnabled : Disable to only show icons for PC/NPC traits
 - [x] Styles
   - [x] `_mainTab.scss`

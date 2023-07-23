@@ -24,6 +24,8 @@
   import ItemFilterSearch from '../items/ItemFilterSearch.svelte';
   import type { SheetFunctions } from 'src/types/types';
   import ItemFilterOption from '../items/ItemFilterOption.svelte';
+  import InlineFavoriteIcon from '../shared/InlineFavoriteIcon.svelte';
+  import ItemFavoriteControl from '../items/ItemFavoriteControl.svelte';
 
   // TODO: this is intended to be shared between characters, NPCs, and Vehicles; retype the context so it can be one of the three.
   export let context: ActorSheetContext;
@@ -131,9 +133,7 @@
 
             <!-- TODO: Handle more gracefully -->
             {#if !hideIconsNextToTheItemName && FoundryAdapter.tryGetFlag(item, 'favorite')}
-              <div class="item-state-icon" title="Favorite">
-                <i class="fas fa-bookmark icon-fav" />
-              </div>
+              <InlineFavoriteIcon />
             {/if}
 
             <ItemTableCell baseWidth="7.5rem">
@@ -150,6 +150,7 @@
             {#if context.owner && classicControlsEnabled}
               <ItemTableCell baseWidth={classicControlsBaseWidth}>
                 <ItemControls>
+                  <ItemFavoriteControl {item} />
                   <ItemEditControl {item} />
                   {#if allowEdit}
                     <ItemDuplicateControl {item} />
@@ -217,9 +218,7 @@
 
             <!-- TODO: Handle more gracefully -->
             {#if !hideIconsNextToTheItemName && FoundryAdapter.tryGetFlag(item, 'favorite')}
-              <div class="item-state-icon" title="Favorite">
-                <i class="fas fa-bookmark icon-fav" />
-              </div>
+              <InlineFavoriteIcon />
             {/if}
 
             <ItemTableCell baseWidth="7.5rem">
@@ -254,6 +253,9 @@
             {#if context.owner && classicControlsEnabled && context.editable}
               <ItemTableCell baseWidth={classicControlsBaseWidth}>
                 <ItemControls>
+                  {#if item.type !== 'class'}
+                    <ItemFavoriteControl {item} />
+                  {/if}
                   <ItemEditControl {item} />
                   {#if allowEdit}
                     <ItemDuplicateControl {item} />
@@ -324,9 +326,7 @@
 
             <!-- TODO: Handle more gracefully -->
             {#if !hideIconsNextToTheItemName && FoundryAdapter.tryGetFlag(item, 'favorite')}
-              <div class="item-state-icon" title="Favorite">
-                <i class="fas fa-bookmark icon-fav" />
-              </div>
+              <InlineFavoriteIcon />
             {/if}
 
             <ItemTableCell baseWidth="3.125rem">
@@ -368,6 +368,7 @@
             {#if context.owner && classicControlsEnabled}
               <ItemTableCell baseWidth={classicControlsBaseWidth}>
                 <ItemControls>
+                  <ItemFavoriteControl {item} />
                   <ItemEditControl {item} />
                   {#if allowEdit}
                     <ItemDuplicateControl {item} />
@@ -431,9 +432,7 @@
 
             <!-- TODO: Handle more gracefully -->
             {#if !hideIconsNextToTheItemName && FoundryAdapter.tryGetFlag(item, 'favorite')}
-              <div class="item-state-icon" title="Favorite">
-                <i class="fas fa-bookmark icon-fav" />
-              </div>
+              <InlineFavoriteIcon />
             {/if}
 
             <ItemTableCell baseWidth="7.5rem">
@@ -450,6 +449,7 @@
             {#if context.owner && classicControlsEnabled}
               <ItemTableCell baseWidth={classicControlsBaseWidth}>
                 <ItemControls>
+                  <ItemFavoriteControl {item} />
                   <ItemEditControl {item} />
                   {#if allowEdit}
                     <ItemDuplicateControl {item} />

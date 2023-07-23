@@ -10,6 +10,7 @@
   import SpellSlotUses from '../spellbook/SpellSlotUses.svelte';
   import SpellImageProvider from './SpellImageProvider.svelte';
   import type { Item5e } from 'src/types/item';
+  import GridPaneFavoriteIcon from '../shared/GridPaneFavoriteIcon.svelte';
 
   export let context: ActorSheetContext;
   export let section: any;
@@ -44,6 +45,10 @@
           data-context-menu-entity-id={spell.id}
           on:click={(event) => spell.use({}, { event })}
         >
+          {#if FoundryAdapter.tryGetFlag(spell, 'favorite')}
+            <GridPaneFavoriteIcon />
+          {/if}
+
           <div class="spell-name" role="button">
             <SpellImageProvider {context} {spell} let:spellImg>
               <div

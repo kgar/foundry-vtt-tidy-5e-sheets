@@ -21,6 +21,8 @@
   import SpellSlotMarkers from '../spellbook/SpellSlotMarkers.svelte';
   import SpellSlotUses from '../spellbook/SpellSlotUses.svelte';
   import SpellImageProvider from './SpellImageProvider.svelte';
+  import InlineFavoriteIcon from '../shared/InlineFavoriteIcon.svelte';
+  import ItemFavoriteControl from '../items/ItemFavoriteControl.svelte';
 
   export let context: ActorSheetContext;
   export let section: any;
@@ -104,9 +106,7 @@
           </ItemTableCell>
         {/if}
         {#if !hideIconsNextToTheItemName && FoundryAdapter.tryGetFlag(spell, 'favorite')}
-          <div class="item-state-icon" title="Favorite">
-            <i class="fas fa-bookmark icon-fav" />
-          </div>
+          <InlineFavoriteIcon />
         {/if}
         <ItemTableCell baseWidth="4.375rem" cssClass="components">
           <SpellComponents {spell} />
@@ -144,6 +144,7 @@
               {:else if section.canPrepare}
                 <SpellPrepareControl {ctx} {spell} />
               {/if}
+              <ItemFavoriteControl item={spell} />
               <ItemEditControl item={spell} />
               {#if allowEdit}
                 <ItemDuplicateControl item={spell} />

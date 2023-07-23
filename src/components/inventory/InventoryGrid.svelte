@@ -7,6 +7,7 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { CONSTANTS } from 'src/constants';
   import { SettingsProvider } from 'src/settings/settings';
+    import GridPaneFavoriteIcon from '../shared/GridPaneFavoriteIcon.svelte';
 
   export let section: any;
   export let items: Item5e[];
@@ -62,10 +63,7 @@
         {/if}
 
         {#if FoundryAdapter.tryGetFlag(item, 'favorite')}
-          <i
-            class="fas fa-bookmark icon-fav"
-            title={localize('TIDY5E.isFav')}
-          />
+          <GridPaneFavoriteIcon />
         {/if}
 
         {#if context.owner}
@@ -221,15 +219,6 @@
           background: var(--t5e-attunement-required);
           box-shadow: 0 0 0.1875rem 0.0625rem var(--t5e-attunement-required);
         }
-      }
-
-      .icon-fav {
-        position: absolute;
-        top: -0.125rem;
-        left: 0.25rem;
-        color: rgba(0, 200, 100, 1);
-        text-shadow: 0 0 0.125rem var(--t5e-primary-color);
-        font-size: 0.625rem;
       }
 
       .item-name {

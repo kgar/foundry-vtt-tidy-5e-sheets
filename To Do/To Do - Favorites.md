@@ -1,0 +1,15 @@
+- [x] Put the favorites toggle on
+  - [x] Features
+  - [x] Spellbook List
+  - [x] Inventory List
+- [x] Ensure correct visuals
+  - [x] Features
+  - [x] Spellbook List
+  - [x] Spellbook Grid
+  - [x] Inventory List
+  - [x] Inventory Grid
+- [ ] Implement Favorites View on Attributes Tab
+- [ ] Confirm context menu works as expected
+- [ ] Settings
+  - [ ] enableActionListOnFavoritePanel
+  - [ ] enableSortFavoritesItemsAlphabetically
