@@ -1,6 +1,8 @@
 ## Top of Mind - Inventory
 
 - [ ] Fix inventory truncation. Review how Tidy 5e does it. It looks good.
+- [ ] Maybe roll up features into an object to send into the inventory list component
+  - [ ] `{ columns: [], allowAddButton: boolean, etc... }`
 - [ ] Make it so you can specify what columns to include, with the default being all columns.
 - [ ] Allow specifying column labels
 - [ ] Use that when rendering the inventory, and only include
