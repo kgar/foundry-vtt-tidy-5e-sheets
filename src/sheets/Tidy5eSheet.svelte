@@ -459,12 +459,16 @@
       display: flex;
     }
 
+    &.attributes {
+      overflow-y: scroll;
+      padding-right: 0.75rem;
+    }
+
     &.biography,
     &.journal {
       align-items: flex-start;
       flex-direction: row;
       padding-right: 0.75rem;
-      overflow-y: scroll;
       overflow-x: inherit;
     }
 

@@ -2,6 +2,7 @@ import type { Actor5e } from './actor';
 import type { ChatMessage } from './chat-message';
 import type { FoundryDocument } from './document';
 import type { Flags } from './flags';
+import type { Roll } from './types';
 
 export type Item5e = Item & {
   img: string;
@@ -10,9 +11,7 @@ export type Item5e = Item & {
   name: string;
   type: string;
   _id: any;
-  labels: {
-    activation: string;
-  };
+  labels: Record<string, string>;
   isStack?: boolean;
   system: {
     classIdentifier?: string;
@@ -84,6 +83,7 @@ export type Item5e = Item & {
     };
     consumableType?: string;
     properties?: Item5eProperties;
+    recharge?: Item5eRecharge;
   };
   effects: any[];
   folder: any;
@@ -105,6 +105,13 @@ export type Item5e = Item & {
     config: Partial<ItemUseConfiguration>,
     options?: Partial<ItemUseOptions>
   ): Promise<ChatMessage>;
+
+  rollRecharge(): Promise<Roll>;
+};
+
+type Item5eRecharge = {
+  value: number | null;
+  charged: boolean;
 };
 
 export interface Item5eProperties {

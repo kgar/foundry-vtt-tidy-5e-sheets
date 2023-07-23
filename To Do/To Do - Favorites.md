@@ -1,7 +1,8 @@
-## Top of Mind - Inventory
+## Top of Mind
 
-- [ ] Fix inventory truncation. Review how Tidy 5e does it. It looks good.
-- [ ] Maybe roll up features into an object to send into the inventory list component
+- [x] Fix inventory truncation. Review how Tidy 5e does it. It looks good.
+- [x] Fix Feature truncation. Fixing inventory truncation broke it.
+- [ ] Create object model for specifying columns and their corresponding cell data. The model should allow for passing in svelte components and their props ⚡
   - [ ] `{ columns: [], allowAddButton: boolean, etc... }`
 - [ ] Make it so you can specify what columns to include, with the default being all columns.
 - [ ] Allow specifying column labels

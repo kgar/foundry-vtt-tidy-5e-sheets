@@ -3,6 +3,7 @@
   import type { ActorSheetContext } from 'src/types/types';
   import InventoryList from '../inventory/InventoryList.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import FavoriteFeaturesList from '../favorites/FavoriteFeaturesList.svelte';
 
   export let context: ActorSheetContext;
 
@@ -11,19 +12,24 @@
   const groups = getFavoritesGroups(context.actor);
 </script>
 
-{#each groups as [section, items]}
-  {#if section === 'inventory'}
-    <InventoryList
-      {context}
-      {items}
-      primaryColumnName={localize('DND5E.Inventory')}
-      lockControls={true}
-      allowFavoriteIconNextToName={false}
-      includeWeightColumn={false}
-    />
-  {/if}
+<div class="flexcol no-gap">
+  {#each groups as [section, items]}
+    {#if section === 'inventory'}
+      <InventoryList
+        {context}
+        {items}
+        primaryColumnName={localize('DND5E.Inventory')}
+        lockControls={true}
+        allowFavoriteIconNextToName={false}
+        includeWeightColumn={false}
+      />
+    {/if}
 
-  <!-- Features -->
+    <!-- Features -->
+    {#if section === 'features'}
+      <FavoriteFeaturesList {context} {items} />
+    {/if}
 
-  <!-- Spells ... ? -->
-{/each}
+    <!-- Spells ... ? -->
+  {/each}
+</div>

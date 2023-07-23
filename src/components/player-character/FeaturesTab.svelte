@@ -126,6 +126,7 @@
               <ItemUseButton {item} />
               <ItemName
                 on:click={(event) => toggleSummary(event.detail, context.actor)}
+                hasChildren={false}
               >
                 {item.name}
               </ItemName>
@@ -204,6 +205,7 @@
               <ItemUseButton {item} />
               <ItemName
                 on:click={(event) => toggleSummary(event.detail, context.actor)}
+                hasChildren={false}
               >
                 {#if item.type === 'subclass'}&rdsh;{/if}
                 {item.name}
@@ -319,6 +321,7 @@
               <ItemUseButton {item} />
               <ItemName
                 on:click={(event) => toggleSummary(event.detail, context.actor)}
+                hasChildren={false}
               >
                 {item.name}
               </ItemName>
@@ -425,6 +428,7 @@
               <ItemUseButton {item} />
               <ItemName
                 on:click={(event) => toggleSummary(event.detail, context.actor)}
+                hasChildren={false}
               >
                 {item.name}
               </ItemName>

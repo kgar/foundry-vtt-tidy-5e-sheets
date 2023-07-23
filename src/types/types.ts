@@ -117,4 +117,10 @@ type NotifyOptions = {
   console: boolean;
 };
 
-export type D20Roll = {};
+export type D20Roll = Roll & {
+  // TODO: Populate if needed
+};
+
+export type Roll = {
+  // TODO: Populate if needed
+};
