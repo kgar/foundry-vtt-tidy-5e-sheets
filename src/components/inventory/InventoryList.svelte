@@ -30,6 +30,7 @@
   export let dataset: Record<string, unknown> | undefined = undefined;
   export let lockControls: boolean = false;
   export let allowFavoriteIconNextToName: boolean = true;
+  export let includeWeightColumn: boolean = true;
 
   const localize = FoundryAdapter.localize;
   const allowEdit = FoundryAdapter.tryGetFlag(context.actor, 'allow-edit');
@@ -117,12 +118,14 @@
       <ItemTableColumn primary={true}>
         {primaryColumnName}
       </ItemTableColumn>
-      <ItemTableColumn
-        title="{localize('DND5E.Weight')} ({context.weightUnit})"
-        baseWidth="2.5rem"
-      >
-        <i class="fas fa-weight-hanging" />
-      </ItemTableColumn>
+      {#if includeWeightColumn}
+        <ItemTableColumn
+          title="{localize('DND5E.Weight')} ({context.weightUnit})"
+          baseWidth="2.5rem"
+        >
+          <i class="fas fa-weight-hanging" />
+        </ItemTableColumn>
+      {/if}
       <ItemTableColumn title={localize('DND5E.Charges')} baseWidth="3.125rem">
         <i class="fas fa-bolt" />
       </ItemTableColumn>
@@ -150,37 +153,36 @@
           <ItemUseButton {item} />
           <ItemName
             on:click={(event) => toggleSummary(event.detail, context.actor)}
+            cssClass="extra-small-gap"
           >
-            <div class="flexrow align-items-center extra-small-gap">
-              {item.name}
-              {#if item.system?.properties?.amm}
-                <span class="ammo">
-                  <select
-                    on:click|stopPropagation
-                    on:change={(event) =>
-                      onAmmoChange(item, event.currentTarget.value)}
-                  >
-                    {#each ammos as ammo}
-                      <option
-                        value={ammo.value}
-                        selected={item.system.consume?.target === ammo.value}
-                        >{ammo.text}</option
-                      >
-                    {/each}
-                  </select>
-                </span>
-              {/if}
-              <span class="item-quantity" class:isStack={ctx.isStack}>
-                (<input
-                  class="item-count"
-                  type="text"
-                  value={item.system.quantity}
-                  maxlength="3"
+            <span class="truncate">{item.name}</span>
+            {#if item.system?.properties?.amm}
+              <span class="ammo">
+                <select
                   on:click|stopPropagation
-                  on:blur={(event) => updateItemQuantity(event, item)}
-                />)
+                  on:change={(event) =>
+                    onAmmoChange(item, event.currentTarget.value)}
+                >
+                  {#each ammos as ammo}
+                    <option
+                      value={ammo.value}
+                      selected={item.system.consume?.target === ammo.value}
+                      >{ammo.text}</option
+                    >
+                  {/each}
+                </select>
               </span>
-            </div>
+            {/if}
+            <span class="item-quantity" class:isStack={ctx.isStack}>
+              (<input
+                class="item-count"
+                type="text"
+                value={item.system.quantity}
+                maxlength="3"
+                on:click|stopPropagation
+                on:blur={(event) => updateItemQuantity(event, item)}
+              />)
+            </span>
           </ItemName>
         </ItemTableCell>
         {#if !hideIconsNextToTheItemName}
@@ -199,17 +201,19 @@
             <InlineFavoriteIcon />
           {/if}
         {/if}
-        <ItemTableCell
-          baseWidth="2.5rem"
-          title="{localize('DND5E.Weight')}: {item.system
-            .weight} {context.weightUnit}"
-        >
-          {#if ctx.totalWeight}
-            {ctx.totalWeight} {context.weightUnit}
-          {:else}
-            {item.system.weight} {context.weightUnit}
-          {/if}
-        </ItemTableCell>
+        {#if includeWeightColumn}
+          <ItemTableCell
+            baseWidth="2.5rem"
+            title="{localize('DND5E.Weight')}: {item.system
+              .weight} {context.weightUnit}"
+          >
+            {#if ctx.totalWeight}
+              {ctx.totalWeight} {context.weightUnit}
+            {:else}
+              {item.system.weight} {context.weightUnit}
+            {/if}
+          </ItemTableCell>
+        {/if}
         <ItemTableCell baseWidth="3.125rem" title={localize('DND5E.Uses')}>
           {#if ctx?.hasUses}
             <ItemUses {item} />
@@ -261,12 +265,14 @@
 
     :global(.show-item-count-on-hover .item-quantity) {
       opacity: 0;
+      width: 0;
       transition: opacity 0.3s ease;
     }
 
     :global(.show-item-count-on-hover:hover .item-quantity),
     :global(.show-item-count-on-hover .item-quantity:focus-within) {
       opacity: 1;
+      width: unset;
     }
   }
 

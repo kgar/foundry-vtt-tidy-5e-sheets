@@ -19,6 +19,7 @@
       primaryColumnName={localize('DND5E.Inventory')}
       lockControls={true}
       allowFavoriteIconNextToName={false}
+      includeWeightColumn={false}
     />
   {/if}
 

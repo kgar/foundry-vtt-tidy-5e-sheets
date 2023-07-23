@@ -1,17 +1,19 @@
 <script lang="ts">
   import { createEventDispatcher } from 'svelte';
 
+  export let cssClass: string = '';
+
   const dispatcher = createEventDispatcher<{ click: MouseEvent }>();
 </script>
 
-<div
+<span
   role="button"
   tabindex="0"
   on:click={(event) => dispatcher('click', event)}
-  class="item-name"
+  class="item-name truncate {cssClass}"
 >
-  <span class="truncate"><slot /></span>
-</div>
+  <slot />
+</span>
 
 <style lang="scss">
   .item-name {

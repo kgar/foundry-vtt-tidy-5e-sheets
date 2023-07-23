@@ -7,7 +7,7 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { CONSTANTS } from 'src/constants';
   import { SettingsProvider } from 'src/settings/settings';
-    import GridPaneFavoriteIcon from '../shared/GridPaneFavoriteIcon.svelte';
+  import GridPaneFavoriteIcon from '../shared/GridPaneFavoriteIcon.svelte';
 
   export let section: any;
   export let items: Item5e[];
@@ -28,7 +28,6 @@
 
     return FoundryAdapter.getInventoryRowClasses(
       item,
-      section,
       context.itemContext[item.id],
       extras
     );

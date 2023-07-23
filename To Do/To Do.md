@@ -287,3 +287,17 @@ I've got a request I'm hoping you can take a look at as well. I use Tidy in conj
 
 kgar — Today at 10:41 AM
 I will definitely add it to the list to look into after I finish the base rewrite. I imagine we would want it to be Opt In via player settings, by default?
+
+### Grid Favorites / Collapsible sections
+
+https://discord.com/channels/732325252788387980/1116078321067892796/1132697983100657714
+
+Dreaming — Today at 10:35 AM
+I'm also quite interested in putting money in for the update and for a new feature requested by one of my players which would be the following:
+Option to have a grid layout for the favorites section, ability to create collapsible folders/sections within the favorites menu by the player for sorting purposes.
+
+kgar — Today at 10:56 AM
+If such a thing gets implemented, would players want the sheet's expanded/collapsed sections to be remembered between full page reloads?  That is, if they log in for game night, the sections they'd previously collapsed last session would still be in that same collapsed state.
+Also, if it gets implemented (very likely), we should include expand all / collapse all buttons (or icons) on each tab where relevant.
+Dreaming — Today at 11:11 AM
+I do think that would be ideal
