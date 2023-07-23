@@ -250,14 +250,6 @@
 
 <style lang="scss">
   .inventory-list-section {
-    :global(.equipped) {
-      background: var(--t5e-equipped);
-    }
-
-    :global(.magic-item) {
-      box-shadow: 0 0 0 1px var(--t5e-faint-magic-accent) inset;
-    }
-
     .item-detail.attunement {
       display: flex;
       align-items: center;

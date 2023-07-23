@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { Actor5e } from 'src/foundry/foundry-adapter';
+  import type { Actor5e } from 'src/types/actor';
   import ItemSummary from '../items/ItemSummary.svelte';
   import { warn } from 'src/utils/logging';
   import { createEventDispatcher } from 'svelte';
@@ -49,6 +49,34 @@
 
     &:global(.context) {
       box-shadow: 0 0 0.1875rem 0.0625rem var(--t5e-primary-accent) inset;
+    }
+
+    &.prepared {
+      background-color: var(--t5e-equipped);
+    }
+
+    &.always-prepared {
+      background-color: var(--t5e-alwaysprepared);
+    }
+
+    &.pact {
+      background-color: var(--t5e-pact);
+    }
+
+    &.at-will {
+      background-color: var(--t5e-atwill);
+    }
+
+    &.innate {
+      background-color: var(--t5e-innate);
+    }
+
+    &.equipped {
+      background: var(--t5e-equipped);
+    }
+
+    &.magic-item {
+      box-shadow: 0 0 0 1px var(--t5e-faint-magic-accent) inset;
     }
   }
 </style>

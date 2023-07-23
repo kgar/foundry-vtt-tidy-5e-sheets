@@ -91,6 +91,7 @@
         cssClass={FoundryAdapter.getSpellRowClasses(spell)}
       >
         <ItemTableCell primary={true}>
+          <!-- TODO: Convert to {@const spellImg = FoundryAdapter.getSpellImg(context, spell)} -->
           <SpellImageProvider {context} {spell} let:spellImg>
             <ItemUseButton item={spell} imgUrlOverride={spellImg} />
           </SpellImageProvider>
@@ -108,7 +109,7 @@
         {#if !hideIconsNextToTheItemName && FoundryAdapter.tryGetFlag(spell, 'favorite')}
           <InlineFavoriteIcon />
         {/if}
-        <ItemTableCell baseWidth="4.375rem" cssClass="components">
+        <ItemTableCell baseWidth="4.375rem" cssClass="no-gap">
           <SpellComponents {spell} />
         </ItemTableCell>
         <ItemTableCell
@@ -167,31 +168,5 @@
     line-height: 0.75rem;
     flex: 0 0 3.75rem;
     white-space: nowrap;
-  }
-
-  .spellbook-list-section {
-    :global(.prepared) {
-      background-color: var(--t5e-equipped);
-    }
-
-    :global(.always-prepared) {
-      background-color: var(--t5e-alwaysprepared);
-    }
-
-    :global(.pact) {
-      background-color: var(--t5e-pact);
-    }
-
-    :global(.at-will) {
-      background-color: var(--t5e-atwill);
-    }
-
-    :global(.innate) {
-      background-color: var(--t5e-innate);
-    }
-
-    :global(.components) {
-      gap: 0;
-    }
   }
 </style>
