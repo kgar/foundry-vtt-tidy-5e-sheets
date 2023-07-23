@@ -6,6 +6,19 @@
 
   export let context: ActorSheetContext;
 
+  const toggleTraits = SettingsProvider.settings.traitsTogglePc.get();
+
+  const traitsExpanded =
+    !toggleTraits || FoundryAdapter.tryGetFlag(context.actor, 'traitsExpanded');
+
+  function toggleTraitsExpanded() {
+    if (traitsExpanded) {
+      FoundryAdapter.unsetFlag(context.actor, 'traitsExpanded');
+    } else {
+      FoundryAdapter.setFlag(context.actor, 'traitsExpanded', true);
+    }
+  }
+
   const localize = FoundryAdapter.localize;
 </script>
 
@@ -23,6 +36,7 @@
       new dnd5e.applications.actor.ActorSensesConfig(context.actor).render(
         true
       )}
+    hideIfEmpty={!traitsExpanded}
   />
 
   <TraitSection
@@ -39,6 +53,7 @@
         context.actor,
         'languages'
       ).render(true)}
+    hideIfEmpty={!traitsExpanded}
   />
 
   <TraitSection
@@ -54,6 +69,7 @@
       new dnd5e.applications.actor.TraitSelector(context.actor, 'di').render(
         true
       )}
+    hideIfEmpty={!traitsExpanded}
   />
 
   <TraitSection
@@ -69,6 +85,7 @@
       new dnd5e.applications.actor.TraitSelector(context.actor, 'dr').render(
         true
       )}
+    hideIfEmpty={!traitsExpanded}
   />
 
   <TraitSection
@@ -84,6 +101,7 @@
       new dnd5e.applications.actor.TraitSelector(context.actor, 'dv').render(
         true
       )}
+    hideIfEmpty={!traitsExpanded}
   />
 
   <TraitSection
@@ -99,6 +117,7 @@
       new dnd5e.applications.actor.TraitSelector(context.actor, 'ci').render(
         true
       )}
+    hideIfEmpty={!traitsExpanded}
   />
 
   <TraitSection
@@ -114,6 +133,7 @@
         context.actor,
         'weapon'
       ).render(true)}
+    hideIfEmpty={!traitsExpanded}
   >
     <svg
       slot="custom-icon"
@@ -145,6 +165,7 @@ c28,32.6,51.5,72.7,62,91.7c2.8,5,9.9,5.1,12.8,0.2c14-23.3,44.3-83.4,44.3-166.9C4
       new dnd5e.applications.actor.TraitSelector(context.actor, 'armor').render(
         true
       )}
+    hideIfEmpty={!traitsExpanded}
   >
     <svg
       slot="custom-icon"
@@ -176,15 +197,21 @@ c28,32.6,51.5,72.7,62,91.7c2.8,5,9.9,5.1,12.8,0.2c14-23.3,44.3-83.4,44.3-166.9C4
       new dnd5e.applications.actor.ToolSelector(context.actor, 'tool').render(
         true
       )}
+    hideIfEmpty={!traitsExpanded}
   />
 
   {#if SettingsProvider.settings.traitsTogglePc.get()}
     <div
       class="toggle-traits"
-      data-show-traits={localize('TIDY5E.Show')}
-      data-hide-traits={localize('TIDY5E.Hide')}
+      role="button"
+      tabindex="0"
+      on:click|stopPropagation|preventDefault={() => toggleTraitsExpanded()}
     >
-      {localize('TIDY5E.TraitsEmpty')}
+      {#if traitsExpanded}
+        {localize('TIDY5E.Hide')} {localize('TIDY5E.TraitsEmpty')}
+      {:else}
+        {localize('TIDY5E.Show')} {localize('TIDY5E.TraitsEmpty')}
+      {/if}
     </div>
   {/if}
   <a
@@ -221,6 +248,24 @@ c28,32.6,51.5,72.7,62,91.7c2.8,5,9.9,5.1,12.8,0.2c14-23.3,44.3-83.4,44.3-166.9C4
       path {
         fill: var(--t5e-tertiary-color);
       }
+    }
+
+    .toggle-traits {
+      position: absolute;
+      display: inline-block;
+      top: calc(100% + 0.0625rem);
+      left: -0.0625rem;
+      border: 0.0625rem solid var(--t5e-faint-color);
+      border-top: 0;
+      border-radius: 0 0 0.1875rem 0.1875rem;
+      padding: 0.125rem 0.25rem;
+      width: auto;
+      font-size: 0.625rem;
+      color: var(--t5e-secondary-color);
+    }
+
+    .toggle-traits:hover {
+      color: var(--t5e-primary-font);
     }
 
     .configure-special-traits {

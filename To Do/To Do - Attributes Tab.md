@@ -4,20 +4,20 @@
 - [ ] HTML
   - [x] Skills
   - [x] Traits
-  - [ ] Resources
-  - [ ] Favorites - stub for now
+  - [x] Resources
+  - [x] Favorites - stub for now
 - [ ] Functionality
-  - [ ] configure skills
-  - [ ] roll skills / support modifier keys (CTRL, SHIFT, ALT)
-  - [ ] set skill proficiency
-  - [ ] edit traits
-  - [ ] configure special traits
+  - [x] configure skills
+  - [x] roll skills / support modifier keys (CTRL, SHIFT, ALT)
+  - [x] set skill proficiency
+  - [x] edit traits
+  - [x] configure special traits
 - [ ] Settings
-  - [ ] traitsTogglePc : By default empty traits are always visible. Enable to add a toggle button.
+  - [x] traitsTogglePc : By default empty traits are always visible. Enable to add a toggle button.
   - [ ] traitsMovedBelowResource : Enable to move traits from the left side below resources.
-  - [ ] traitLabelsEnabled : Disable to only show icons for PC/NPC traits
-- [ ] Styles
-  - [ ] `_mainTab.scss`
+  - [x] traitLabelsEnabled : Disable to only show icons for PC/NPC traits
+- [x] Styles
+  - [x] `_mainTab.scss`
 
 ## Skills impl
 
@@ -924,4 +924,16 @@ _onConfigMenu(event) {
     if ( trait === "tool" ) return new ToolSelector(this.actor, trait).render(true);
     return new TraitSelector(this.actor, trait).render(true);
   }
+```
+
+## Show/Hide Traits Wire-up
+
+```js
+html.find('.traits .toggle-traits').click(async (event) => {
+  if (actor.getFlag(CONSTANTS.MODULE_ID, 'traitsExpanded')) {
+    await actor.unsetFlag(CONSTANTS.MODULE_ID, 'traitsExpanded');
+  } else {
+    await actor.setFlag(CONSTANTS.MODULE_ID, 'traitsExpanded', true);
+  }
+});
 ```

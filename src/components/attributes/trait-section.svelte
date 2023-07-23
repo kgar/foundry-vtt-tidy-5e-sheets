@@ -12,90 +12,94 @@
   export let traitCssClass: string | undefined = '';
   export let tags: [key: string, value: string][] = [];
   export let tools: [key: string, value: Tool][] = [];
+  export let hideIfEmpty: boolean;
 
   const dispatcher = createEventDispatcher<{
     onConfigureClicked: MouseEvent;
   }>();
+
+  const show = !hideIfEmpty || tags.length > 0 || tools.length > 0;
 </script>
 
-<div class="trait-form-group {traitCssClass ?? ''}">
-  <span class="trait-icon" aria-label={title} {title}>
-    {#if iconCssClass !== undefined}
-      <i class={iconCssClass} />
-    {/if}
-    <slot name="custom-icon" />
-  </span>
-  <div class="trait-label-and-list">
-    {#if SettingsProvider.settings.traitLabelsEnabled.get()}
-      <span class="trait-label">{title}</span>
-    {/if}
-    <ul
-      class="trait-list"
-      class:tools={tools.length}
-      class:traits={tags.length}
+{#if show}
+  <div class="trait-form-group {traitCssClass ?? ''}">
+    <span class="trait-icon" aria-label={title} {title}>
+      {#if iconCssClass !== undefined}
+        <i class={iconCssClass} />
+      {/if}
+      <slot name="custom-icon" />
+    </span>
+    <div class="trait-label-and-list">
+      {#if SettingsProvider.settings.traitLabelsEnabled.get()}
+        <span class="trait-label">{title}</span>
+      {/if}
+      <ul
+        class="trait-list"
+        class:tools={tools.length}
+        class:traits={tags.length}
+      >
+        {#each tags as [key, value]}
+          <li class="tag {key}">{value}</li>
+        {/each}
+        {#each tools as [key, tool]}
+          <li class="tool">
+            <a
+              class="tool-proficiency-toggle"
+              data-tooltip={tool.hover}
+              role="button"
+              on:click|stopPropagation|preventDefault={(event) =>
+                FoundryAdapter.cycleProficiency(
+                  context.actor,
+                  key,
+                  tool.value,
+                  'tools'
+                )}
+              on:contextmenu|stopPropagation|preventDefault={(event) =>
+                FoundryAdapter.cycleProficiency(
+                  context.actor,
+                  key,
+                  tool.value,
+                  'tools',
+                  true
+                )}
+            >
+              {@html tool.icon}
+            </a>
+            <span
+              class="rollable"
+              role="button"
+              tabindex="0"
+              on:click={(event) => context.actor.rollToolCheck(key, { event })}
+            >
+              {tool.label}
+            </span>
+            <a
+              class="tool-proficiency-editor rollable"
+              data-tooltip="DND5E.ToolConfigure"
+              on:click|stopPropagation|preventDefault={() =>
+                new dnd5e.applications.actor.ProficiencyConfig(context.actor, {
+                  property: 'tools',
+                  key,
+                }).render(true)}
+            >
+              <i class="fas fa-cog" />
+            </a>
+          </li>
+        {/each}
+      </ul>
+    </div>
+    <a
+      class="trait-editor"
+      title={configureButtonTitle}
+      tabindex="0"
+      role="button"
+      on:click|stopPropagation|preventDefault={(event) =>
+        dispatcher('onConfigureClicked', event)}
     >
-      {#each tags as [key, value]}
-        <li class="tag {key}">{value}</li>
-      {/each}
-      {#each tools as [key, tool]}
-        <li class="tool">
-          <a
-            class="tool-proficiency-toggle"
-            data-tooltip={tool.hover}
-            role="button"
-            on:click|stopPropagation|preventDefault={(event) =>
-              FoundryAdapter.cycleProficiency(
-                context.actor,
-                key,
-                tool.value,
-                'tools'
-              )}
-            on:contextmenu|stopPropagation|preventDefault={(event) =>
-              FoundryAdapter.cycleProficiency(
-                context.actor,
-                key,
-                tool.value,
-                'tools',
-                true
-              )}
-          >
-            {@html tool.icon}
-          </a>
-          <span
-
-            class="rollable"
-            role="button"
-            tabindex="0"
-            on:click={(event) => context.actor.rollToolCheck(key, { event })}
-          >
-            {tool.label}
-          </span>
-          <a
-            class="tool-proficiency-editor rollable"
-            data-tooltip="DND5E.ToolConfigure"
-            on:click|stopPropagation|preventDefault={() =>
-              new dnd5e.applications.actor.ProficiencyConfig(context.actor, {
-                property: 'tools',
-                key,
-              }).render(true)}
-          >
-            <i class="fas fa-cog" />
-          </a>
-        </li>
-      {/each}
-    </ul>
+      <i class="fas fa-pencil-alt" />
+    </a>
   </div>
-  <a
-    class="trait-editor"
-    title={configureButtonTitle}
-    tabindex="0"
-    role="button"
-    on:click|stopPropagation|preventDefault={(event) =>
-      dispatcher('onConfigureClicked', event)}
-  >
-    <i class="fas fa-pencil-alt" />
-  </a>
-</div>
+{/if}
 
 <style lang="scss">
   .trait-form-group {
