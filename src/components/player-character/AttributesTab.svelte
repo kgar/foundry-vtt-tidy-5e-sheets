@@ -3,7 +3,7 @@
   import ListContainer from '../layout/ListContainer.svelte';
   import SkillsList from '../attributes/skills-list.svelte';
   import Traits from '../attributes/traits.svelte';
-  import Favorites from '../attributes/favorites.svelte';
+  import Favorites from '../attributes/Favorites.svelte';
   import Resources from '../attributes/resources.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { SettingsProvider } from 'src/settings/settings';
@@ -39,7 +39,7 @@
     {#if traitsMovedBelowResource}
       <Traits {context} />
     {/if}
-    <Favorites />
+    <Favorites {context} />
   </section>
 </ListContainer>
 

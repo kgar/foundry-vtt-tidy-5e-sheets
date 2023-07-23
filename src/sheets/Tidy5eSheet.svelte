@@ -1,8 +1,11 @@
 <script lang="ts">
-  import type { CharacterSheetContext } from '../foundry/foundry-adapter';
   import { onMount } from 'svelte';
   import { FoundryAdapter } from '../foundry/foundry-adapter';
-  import type { SheetFunctions, TidyDropdownOption } from 'src/types/types';
+  import type {
+    ActorSheetContext,
+    SheetFunctions,
+    TidyDropdownOption,
+  } from 'src/types/types';
   import { SettingsProvider } from 'src/settings/settings';
   import Tidy5eActorOriginSummaryConfig from './tidy5e-actor-origin-summary-config';
   import CharacterProfile from './CharacterProfile.svelte';
@@ -28,7 +31,7 @@
   export let tabToScrollTopMap: Map<string, number>;
   export let scrollView: HTMLElement | undefined = undefined;
   export let isEditable: boolean;
-  export let context: CharacterSheetContext;
+  export let context: ActorSheetContext;
 
   function submitWhenEnterKey(e: KeyboardEvent) {
     if (e.key == 'Enter') {

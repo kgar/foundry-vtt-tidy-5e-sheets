@@ -11,7 +11,6 @@
   import InventoryList from '../inventory/InventoryList.svelte';
   import InventoryGrid from '../inventory/InventoryGrid.svelte';
   import { SettingsProvider } from 'src/settings/settings';
-  
 
   export let context: ActorSheetContext;
   export let sheetFunctions: SheetFunctions;
@@ -88,7 +87,15 @@
     <FilteredItems {searchCriteria} items={section.items} let:filteredItems>
       {#if (searchCriteria.trim() === '' && allowEdit) || filteredItems.length > 0}
         {#if layoutMode === 'list'}
-          <InventoryList items={filteredItems} {section} {context} />
+          <InventoryList
+            primaryColumnName="{localize(
+              section.label
+            )} ({filteredItems.length})"
+            items={filteredItems}
+            {context}
+            extraInventoryRowClasses={section.css}
+            dataset={section.dataset}
+          />
         {:else}
           <InventoryGrid items={filteredItems} {section} {context} />
         {/if}

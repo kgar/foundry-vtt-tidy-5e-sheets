@@ -56,7 +56,6 @@
   }
 
   let dots = generateDots();
-  console.log(dots);
 </script>
 
 {#if section.slots > 0}

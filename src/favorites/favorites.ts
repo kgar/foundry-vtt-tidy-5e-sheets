@@ -17,6 +17,8 @@
 //  */
 
 import { CONSTANTS } from 'src/constants';
+import type { Actor5e } from 'src/types/actor';
+import type { Item5e } from 'src/types/item';
 import { warn } from 'src/utils/logging';
 
 // import { tidy5eAmmoSwitch } from "./tidy5e-ammo-switch.js";
@@ -26,8 +28,7 @@ import { warn } from 'src/utils/logging';
 // import { is_real_number } from "./tidy5e-helpers.js";
 // import { debug, warn } from "./tidy5e-logger-util.js";
 
-export const isItemFavorite = function (item: any) {
-  warn('TO DO: Implement Favorites...');
+export function isItemFavorite(item: any) {
   if (!item) {
     return false;
   }
@@ -38,7 +39,60 @@ export const isItemFavorite = function (item: any) {
     false;
 
   return isFav;
+}
+
+export type FavoriteContext = {};
+
+const spellTypes = ['spell'];
+
+type GroupSchematic = {
+  groupName: string;
+  isMemberOfGroup: (item: Item5e) => boolean;
 };
+
+const groupSchematics: GroupSchematic[] = [
+  {
+    groupName: 'inventory',
+    isMemberOfGroup: (item) =>
+      [
+        'weapon',
+        'equipment',
+        'consumable',
+        'tool',
+        'backpack',
+        'loot',
+      ].includes(item.type),
+  },
+  {
+    groupName: 'features',
+    isMemberOfGroup: (item) =>
+      ['feat', 'background', 'class', 'subclass'].includes(item.type),
+  },
+];
+
+export function getFavoritesGroups(actor: Actor5e) {
+  const favoriteGroupings = groupSchematics.reduce(
+    (map, schematic) => map.set(schematic.groupName, []),
+    new Map<string, Item5e[]>()
+  );
+
+  let favGroups = actor.items
+    .filter((i) => {
+      return isItemFavorite(i);
+    })
+    .reduce((map, item) => {
+      for (let s of groupSchematics) {
+        if (s.isMemberOfGroup(item)) {
+          map.get(s.groupName)?.push(item);
+          break;
+        }
+      }
+
+      return map;
+    }, favoriteGroupings);
+
+    return favGroups;
+}
 
 // export const addFavorites = async function (app, html, data, position) {
 // 	let favs = app.actor.items.filter((i) => {

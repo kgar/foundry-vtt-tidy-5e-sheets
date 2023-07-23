@@ -23,9 +23,13 @@
   import InlineFavoriteIcon from '../shared/InlineFavoriteIcon.svelte';
   import ItemFavoriteControl from '../items/ItemFavoriteControl.svelte';
 
-  export let section: any;
+  export let primaryColumnName: string;
   export let items: Item5e[];
   export let context: ActorSheetContext;
+  export let extraInventoryRowClasses: string = '';
+  export let dataset: Record<string, unknown> | undefined = undefined;
+  export let lockControls: boolean = false;
+  export let allowFavoriteIconNextToName: boolean = true;
 
   const localize = FoundryAdapter.localize;
   const allowEdit = FoundryAdapter.tryGetFlag(context.actor, 'allow-edit');
@@ -58,16 +62,19 @@
   const classicControlsEnabled =
     SettingsProvider.settings.classicControlsEnabled.get();
 
-  function getInventoryRowClasses(item: Item5e, section: any) {
+  function getInventoryRowClasses(item: Item5e) {
     const extras: string[] = [];
 
     if (!quantityAlwaysShownEnabled) {
       extras.push('show-item-count-on-hover');
     }
 
+    if (extraInventoryRowClasses) {
+      extras.push(extraInventoryRowClasses);
+    }
+
     return FoundryAdapter.getInventoryRowClasses(
       item,
-      section,
       context.itemContext[item.id],
       extras
     );
@@ -108,7 +115,7 @@
   <ItemTable>
     <ItemTableHeaderRow>
       <ItemTableColumn primary={true}>
-        {localize(section.label)} ({items.length})
+        {primaryColumnName}
       </ItemTableColumn>
       <ItemTableColumn
         title="{localize('DND5E.Weight')} ({context.weightUnit})"
@@ -122,7 +129,9 @@
       <ItemTableColumn baseWidth="7.5rem">
         {localize('DND5E.Usage')}
       </ItemTableColumn>
-      <ItemTableColumn baseWidth={classicControlsBaseWidth} />
+      {#if !lockControls}
+        <ItemTableColumn baseWidth={classicControlsBaseWidth} />
+      {/if}
     </ItemTableHeaderRow>
     {#each items as item}
       {@const ctx = context.itemContext[item.id]}
@@ -135,7 +144,7 @@
           id: item.id,
         }}
         let:toggleSummary
-        cssClass={getInventoryRowClasses(item, section)}
+        cssClass={getInventoryRowClasses(item)}
       >
         <ItemTableCell primary={true} title={item.name}>
           <ItemUseButton {item} />
@@ -172,17 +181,10 @@
                 />)
               </span>
             </div>
-
-            <!-- 
-                Quantity (on hover by default; static by setting)  
-                <span class="item-quantity{{#if item.isStack}} isStack{{/if}}">
-                  (<input class="item-count" name="system.quantity" type="text" value="{{item.system.quantity}}" maxlength="3" >)
-                </span>
-              -->
           </ItemName>
         </ItemTableCell>
         {#if !hideIconsNextToTheItemName}
-          <ItemTableCell>
+          <ItemTableCell cssClass="no-border">
             {#if ctx.attunement}
               <div class="item-detail attunement">
                 <i
@@ -193,7 +195,7 @@
               </div>
             {/if}
           </ItemTableCell>
-          {#if FoundryAdapter.tryGetFlag(item, 'favorite')}
+          {#if FoundryAdapter.tryGetFlag(item, 'favorite') && allowFavoriteIconNextToName}
             <InlineFavoriteIcon />
           {/if}
         {/if}
@@ -220,7 +222,7 @@
             {item.labels.activation}
           {/if}
         </ItemTableCell>
-        {#if context.owner && classicControlsEnabled}
+        {#if context.owner && classicControlsEnabled && !lockControls}
           <ItemTableCell baseWidth={classicControlsBaseWidth}>
             <ItemControls>
               {#if ctx.attunement}
@@ -242,8 +244,8 @@
         {/if}
       </ItemTableRow>
     {/each}
-    {#if context.owner && allowEdit}
-      <ItemTableFooter actor={context.actor} dataset={section.dataset} />
+    {#if context.owner && allowEdit && dataset}
+      <ItemTableFooter actor={context.actor} {dataset} />
     {/if}
   </ItemTable>
 </section>

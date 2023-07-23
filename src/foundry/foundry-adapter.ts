@@ -246,15 +246,10 @@ export const FoundryAdapter = {
   },
   getInventoryRowClasses(
     item: Item5e,
-    section: any,
     ctx: any,
     extras?: string[]
   ): string {
     const itemClasses: string[] = [];
-
-    if (section.css) {
-      itemClasses.push(section.css);
-    }
 
     if (
       /* Compatibility: Magic Items https://foundryvtt.com/packages/magicitems/ */
