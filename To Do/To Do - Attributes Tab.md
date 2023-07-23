@@ -2,8 +2,8 @@
 
 - [x] Make a component
 - [ ] HTML
-  - [ ] Skills
-  - [ ] Traits
+  - [x] Skills
+  - [x] Traits
   - [ ] Resources
   - [ ] Favorites - stub for now
 - [ ] Functionality
@@ -12,11 +12,10 @@
   - [ ] set skill proficiency
   - [ ] edit traits
   - [ ] configure special traits
-  - [ ]
 - [ ] Settings
   - [ ] traitsTogglePc : By default empty traits are always visible. Enable to add a toggle button.
   - [ ] traitsMovedBelowResource : Enable to move traits from the left side below resources.
-  - [ ]
+  - [ ] traitLabelsEnabled : Disable to only show icons for PC/NPC traits
 - [ ] Styles
   - [ ] `_mainTab.scss`
 
@@ -911,6 +910,7 @@ _onConfigMenu(event) {
   app?.render(true);
 }
 ```
+
 ```js
   /**
    * Handle spawning the TraitSelector application which allows a checkbox of multiple trait options.

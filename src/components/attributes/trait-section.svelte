@@ -25,7 +25,7 @@
     {/if}
     <slot name="custom-icon" />
   </span>
-  <div class="trait-label-and-list" {title}>
+  <div class="trait-label-and-list">
     {#if SettingsProvider.settings.traitLabelsEnabled.get()}
       <span class="trait-label">{title}</span>
     {/if}
@@ -61,14 +61,15 @@
           >
             {@html tool.icon}
           </a>
-          <h4
+          <span
+
             class="rollable"
             role="button"
             tabindex="0"
             on:click={(event) => context.actor.rollToolCheck(key, { event })}
           >
             {tool.label}
-          </h4>
+          </span>
           <a
             class="tool-proficiency-editor rollable"
             data-tooltip="DND5E.ToolConfigure"
