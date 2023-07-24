@@ -1,7 +1,8 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { PortraitCharmRadiusClass } from 'src/types/types';
+  import type { ActorSheetContext, PortraitCharmRadiusClass } from 'src/types/types';
 
+  export let context: ActorSheetContext;
   export let inspired: boolean;
   export let cssClass: string = '';
   export let radiusClass: PortraitCharmRadiusClass;

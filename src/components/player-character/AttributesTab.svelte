@@ -1,9 +1,9 @@
 <script lang="ts">
   import type { ActorSheetContext, SheetFunctions } from 'src/types/types';
-  import SkillsList from '../attributes/skills-list.svelte';
-  import Traits from '../attributes/traits.svelte';
+  import SkillsList from '../attributes/SkillsList.svelte';
+  import Traits from '../attributes/Traits.svelte';
   import Favorites from '../attributes/Favorites.svelte';
-  import Resources from '../attributes/resources.svelte';
+  import Resources from '../attributes/Resources.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { SettingsProvider } from 'src/settings/settings';
 

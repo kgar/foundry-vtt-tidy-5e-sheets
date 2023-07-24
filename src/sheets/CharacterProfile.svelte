@@ -70,6 +70,7 @@
 
     {#if !SettingsProvider.settings.inspirationDisabled.get() && !incapacitated}
       <Inspiration
+        {context}
         inspired={context.actor.system.attributes.inspiration}
         radiusClass={useRoundedPortraitStyle ? 'rounded' : 'top-right'}
         onlyShowOnHover={SettingsProvider.settings.inspirationOnHover.get()}
