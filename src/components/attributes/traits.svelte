@@ -2,7 +2,7 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { SettingsProvider } from 'src/settings/settings';
   import type { ActorSheetContext } from 'src/types/types';
-  import TraitSection from './trait-section.svelte';
+  import TraitSection from './TraitSection.svelte';
 
   export let context: ActorSheetContext;
 
