@@ -2,6 +2,9 @@
 
 - [x] Fix inventory truncation. Review how Tidy 5e does it. It looks good.
 - [x] Fix Feature truncation. Fixing inventory truncation broke it.
+- [ ] Form inputs cannot be repeated, or else they will become duplicated and comma-delimited upon submission. The only way around this for interactable / favorited content is to manually process changes to things like spell slot uses.
+  - [ ] Search for all inputs with names; replace the form name with a blur handler that performs the needed save operation.
+- [ ] Fix up the Spell favorite section titles to match the original, but ensure it is localization-friendly
 - [ ] Create object model for specifying columns and their corresponding cell data. The model should allow for passing in svelte components and their props ⚡
   - [ ] `{ columns: [], allowAddButton: boolean, etc... }`
 - [ ] Make it so you can specify what columns to include, with the default being all columns.

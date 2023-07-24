@@ -1,0 +1,92 @@
+<script lang="ts">
+  import { CONSTANTS } from 'src/constants';
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import { type ActorSheetContext } from 'src/types/types';
+  import ItemName from '../items/ItemName.svelte';
+  import ItemTable from '../items/ItemTable.svelte';
+  import ItemTableCell from '../items/ItemTableCell.svelte';
+  import ItemTableColumn from '../items/ItemTableColumn.svelte';
+  import ItemTableHeaderRow from '../items/ItemTableHeaderRow.svelte';
+  import ItemTableRow from '../items/ItemTableRow.svelte';
+  import ItemUseButton from '../items/ItemUseButton.svelte';
+  import ItemUses from '../items/ItemUses.svelte';
+  import SpellComponents from '../spellbook/SpellComponents.svelte';
+  import SpellSlotUses from '../spellbook/SpellSlotUses.svelte';
+  import SpellImageProvider from '../spellbook/SpellImageProvider.svelte';
+
+  export let context: ActorSheetContext;
+  export let section: any;
+  export let spells: any[];
+
+  const localize = FoundryAdapter.localize;
+</script>
+
+<section class="spellbook-list-section">
+  <ItemTable>
+    <ItemTableHeaderRow>
+      <ItemTableColumn primary={true}>
+        <span class="spell-primary-column-label">
+          {section.label}
+        </span>
+        {#if section.usesSlots}
+          <SpellSlotUses {context} {section} />
+        {/if}
+      </ItemTableColumn>
+      <ItemTableColumn
+        baseWidth="4.375rem"
+        title={localize('DND5E.SpellComponents')}
+      >
+        <i class="fas fa-mortar-pestle" />
+      </ItemTableColumn>
+      <ItemTableColumn title={localize('DND5E.SpellUsage')} baseWidth="7.5rem">
+        {localize('DND5E.Usage')}
+      </ItemTableColumn>
+    </ItemTableHeaderRow>
+    {#each spells as spell}
+      {@const ctx = context.itemContext[spell.id]}
+      <ItemTableRow
+        item={spell}
+        on:mousedown={(event) =>
+          FoundryAdapter.editOnMiddleClick(event.detail, spell)}
+        contextMenu={{
+          type: CONSTANTS.CONTEXT_MENU_TYPE_ITEMS,
+          id: spell.id,
+        }}
+        let:toggleSummary
+        cssClass={FoundryAdapter.getSpellRowClasses(spell)}
+      >
+        <ItemTableCell primary={true}>
+          <!-- TODO: Convert to {@const spellImg = FoundryAdapter.getSpellImg(context, spell)} -->
+          <SpellImageProvider {context} {spell} let:spellImg>
+            <ItemUseButton item={spell} imgUrlOverride={spellImg} />
+          </SpellImageProvider>
+          <ItemName
+            on:click={(event) => toggleSummary(event.detail, context.actor)}
+          >
+            {spell.name}
+          </ItemName>
+        </ItemTableCell>
+        {#if spell.system.uses.per}
+          <ItemTableCell baseWidth="3.125rem">
+            <ItemUses item={spell} />
+          </ItemTableCell>
+        {/if}
+        <ItemTableCell baseWidth="4.375rem" cssClass="no-gap">
+          <SpellComponents {spell} />
+        </ItemTableCell>
+        <ItemTableCell baseWidth="7.5rem" title={localize('DND5E.SpellUsage')}>
+          {spell.labels.activation}
+        </ItemTableCell>
+      </ItemTableRow>
+    {/each}
+  </ItemTable>
+</section>
+
+<style lang="scss">
+  .spell-primary-column-label {
+    font-size: 0.75rem;
+    line-height: 0.75rem;
+    flex: 0 0 3.75rem;
+    white-space: nowrap;
+  }
+</style>

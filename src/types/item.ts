@@ -13,78 +13,7 @@ export type Item5e = Item & {
   _id: any;
   labels: Record<string, string>;
   isStack?: boolean;
-  system: {
-    classIdentifier?: string;
-    identifier: string;
-    levels?: number;
-    attunement?: number;
-    description: {
-      value: string;
-      chat: string;
-      unidentified: string;
-    };
-    source: string;
-    quantity: number;
-    weight: number;
-    price: {
-      value: number;
-      denomination: string;
-    };
-    rarity: string;
-    identified: boolean;
-    equipped: boolean;
-    activation?: {
-      type: string;
-      cost: any;
-      condition: string;
-    };
-    duration?: {
-      value: string;
-      units: string;
-    };
-    cover?: any;
-    crewed?: boolean;
-    target?: {
-      value: any;
-      width: any;
-      units: string;
-      type: string;
-    };
-    range?: Range;
-    uses?: {
-      value: any;
-      max: string;
-      per: any;
-      recovery: string;
-      autoDestroy: boolean;
-    };
-    consume?: {
-      type: string;
-      target: any;
-      amount: any;
-    };
-    ability?: any;
-    actionType?: any;
-    attackBonus?: string;
-    chatFlavor?: string;
-    critical?: {
-      threshold: any;
-      damage: string;
-    };
-    damage?: {
-      parts: any[];
-      versatile: string;
-    };
-    formula?: string;
-    save?: {
-      ability: string;
-      dc: any;
-      scaling: string;
-    };
-    consumableType?: string;
-    properties?: Item5eProperties;
-    recharge?: Item5eRecharge;
-  };
+  system: Item5eSystem;
   effects: any[];
   folder: any;
   sort: number;
@@ -107,6 +36,85 @@ export type Item5e = Item & {
   ): Promise<ChatMessage>;
 
   rollRecharge(): Promise<Roll>;
+};
+
+type Item5eSystem = {
+  classIdentifier?: string;
+  identifier: string;
+  levels?: number;
+  attunement?: number;
+  description: {
+    value: string;
+    chat: string;
+    unidentified: string;
+  };
+  source: string;
+  quantity: number;
+  weight: number;
+  price: {
+    value: number;
+    denomination: string;
+  };
+  rarity: string;
+  identified: boolean;
+  equipped: boolean;
+  activation?: {
+    type: string;
+    cost: any;
+    condition: string;
+  };
+  duration?: {
+    value: string;
+    units: string;
+  };
+  cover?: any;
+  crewed?: boolean;
+  target?: {
+    value: any;
+    width: any;
+    units: string;
+    type: string;
+  };
+  range?: Range;
+  uses?: {
+    value: any;
+    max: string;
+    per: any;
+    recovery: string;
+    autoDestroy: boolean;
+  };
+  consume?: {
+    type: string;
+    target: any;
+    amount: any;
+  };
+  ability?: any;
+  actionType?: any;
+  attackBonus?: string;
+  chatFlavor?: string;
+  critical?: {
+    threshold: any;
+    damage: string;
+  };
+  damage?: {
+    parts: any[];
+    versatile: string;
+  };
+  formula?: string;
+  save?: {
+    ability: string;
+    dc: any;
+    scaling: string;
+  };
+  consumableType?: string;
+  properties?: Item5eProperties;
+  recharge?: Item5eRecharge;
+  preparation?: Item5ePreparation;
+};
+
+type Item5ePreparation = {
+  mode: string;
+  prepared: boolean;
 };
 
 type Item5eRecharge = {
