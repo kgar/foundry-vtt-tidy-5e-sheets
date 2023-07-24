@@ -8,6 +8,7 @@
   import { CONSTANTS } from 'src/constants';
   import { SettingsProvider } from 'src/settings/settings';
   import GridPaneFavoriteIcon from '../shared/GridPaneFavoriteIcon.svelte';
+  import { submitText } from 'src/sheets/form';
 
   export let section: any;
   export let items: Item5e[];
@@ -92,15 +93,13 @@
               <i class="fas fa-bolt" />
               <input
                 type="text"
-                name="system.uses.value"
                 value={item.system.uses?.value}
+                data-dtype="Number"
                 placeholder="0"
                 maxlength="2"
                 on:click|stopPropagation
                 on:change|stopPropagation={(event) =>
-                  item.update({
-                    ['system.uses.value']: event.currentTarget.value,
-                  })}
+                  submitText(event, item, 'system.uses.value')}
               />
             {/if}
           </div>
@@ -116,9 +115,7 @@
               maxlength="2"
               on:click|stopPropagation
               on:change|stopPropagation={(event) =>
-                item.update({
-                  ['system.quantity']: event.currentTarget.value,
-                })}
+                submitText(event, item, 'system.quantity')}
             />
           </span>
         </div>

@@ -51,7 +51,7 @@ export type Actor5e = Actor & {
   rollDeathSave(options?: { event: Event }): void;
   getRollData(options?: { deterministic: boolean }): any;
   convertCurrency: () => Promise<Actor5e>;
-  rollToolCheck(tool: string, options: {event: Event}): Promise<D20Roll>;
+  rollToolCheck(tool: string, options: { event: Event }): Promise<D20Roll>;
 };
 
 type Ability = {
@@ -154,16 +154,16 @@ export type Tool = {
 };
 
 type Spells = {
-  spell1: SpellDc;
-  spell2: SpellDc;
-  spell3: SpellDc;
-  spell4: SpellDc;
-  spell5: SpellDc;
-  spell6: SpellDc;
-  spell7: SpellDc;
-  spell8: SpellDc;
-  spell9: SpellDc;
-  pact: SpellDc;
+  spell1: Spell;
+  spell2: Spell;
+  spell3: Spell;
+  spell4: Spell;
+  spell5: Spell;
+  spell6: Spell;
+  spell7: Spell;
+  spell8: Spell;
+  spell9: Spell;
+  pact: Spell;
 };
 
 type Spell = {

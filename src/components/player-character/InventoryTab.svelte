@@ -11,6 +11,7 @@
   import InventoryList from '../inventory/InventoryList.svelte';
   import InventoryGrid from '../inventory/InventoryGrid.svelte';
   import { SettingsProvider } from 'src/settings/settings';
+  import { submitText } from 'src/sheets/form';
 
   export let context: ActorSheetContext;
   export let sheetFunctions: SheetFunctions;
@@ -121,10 +122,16 @@
         <input
           type="number"
           class="attuned-items-max"
-          name="system.attributes.attunement.max"
+          data-dtype="Number"
           value={context.system.attributes.attunement.max}
           placeholder="0"
           title={localize('T5EK.AttunementMax')}
+          on:change|stopPropagation|preventDefault={(event) =>
+            submitText(
+              event,
+              context.actor,
+              'system.attributes.attunement.max'
+            )}
         />
       {:else}
         <span class="attuned-items-max"
@@ -145,9 +152,14 @@
             <input
               type="number"
               step="any"
-              name="system.currency.{currency.key}"
               id="{context.appId}-system.currency.{currency.key}"
               value={currency.value}
+              on:change|stopPropagation|preventDefault={(event) =>
+                submitText(
+                  event,
+                  context.actor,
+                  `system.currency.${currency.key}`
+                )}
             />
             <label
               for="{context.appId}-system.currency.{currency.key}"

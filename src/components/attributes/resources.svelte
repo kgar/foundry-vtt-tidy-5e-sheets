@@ -1,5 +1,6 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import { submitText } from 'src/sheets/form';
   import type { ActorSheetContext } from 'src/types/types';
 
   export let context: ActorSheetContext;
@@ -46,31 +47,34 @@
       </header>
       <h4 class="resource-name">
         <input
-          name="system.resources.{res.name}.label"
           type="text"
           value={res.label}
           placeholder={res.placeholder}
+          on:change={(e) =>
+            submitText(e, context.actor, `system.resources.${res.name}.label`)}
         />
       </h4>
       <div class="resource-value multiple">
         <input
           class="resource-value"
           type="text"
-          name="system.resources.{res.name}.value"
-          value={res.value}
+          value={res.value ?? null}
           placeholder="0"
           data-dtype="Number"
           maxlength="3"
+          on:change={(e) =>
+            submitText(e, context.actor, `system.resources.${res.name}.value`)}
         />
         <span class="sep"> / </span>
         <input
           class="resource-max"
           type="text"
-          name="system.resources.{res.name}.max"
-          value={res.max}
+          value={res.max ?? null}
           placeholder="0"
           data-dtype="Number"
           maxlength="3"
+          on:change={(e) =>
+            submitText(e, context.actor, `system.resources.${res.name}.max`)}
         />
       </div>
     </li>

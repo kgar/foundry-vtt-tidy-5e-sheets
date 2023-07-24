@@ -1,5 +1,7 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import { submitText } from 'src/sheets/form';
+  import type { Actor5e } from 'src/types/actor';
   import { type ActorSheetContext } from 'src/types/types';
 
   export let section: any;
@@ -8,29 +10,32 @@
   const localize = FoundryAdapter.localize;
 
   let overrideMode = false;
-  const overrideValue =
-    context.actor.system.spells[`spell${section.dataset.level}`].override ||
-    section.slots;
 </script>
 
 <div class="spell-slots-detail">
   <input
     class="spell-slot-uses"
     type="text"
-    name="system.spells.{section.prop}.value"
     value={section.uses}
     placeholder="0"
     data-dtype="Number"
+    on:change|stopPropagation|preventDefault={(event) =>
+      submitText(event, context.actor, `system.spells.${section.prop}.value`)}
   />
   <span class="sep"> / </span>
   {#if overrideMode}
     <input
       class="spell-slot-override"
       type="text"
-      name="system.spells.{section.level}.override"
-      value={overrideValue}
+      value={section.override}
       placeholder={section.slots}
       data-dtype="Number"
+      on:change|stopPropagation|preventDefault={(event) =>
+        submitText(
+          event,
+          context.actor,
+          `system.spells.${section.prop}.override`
+        )}
     />
   {:else}
     <span
