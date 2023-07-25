@@ -15,6 +15,7 @@ export class Tidy5eSheetKgar extends ActorSheet5eCharacter {
 
   constructor(...args: any[]) {
     super(...args);
+
     this.currentTabParam = new SheetParameter<string>(
       SettingsProvider.settings.defaultActionsTab.get() !== 'default'
         ? SettingsProvider.settings.defaultActionsTab.get()
@@ -41,7 +42,7 @@ export class Tidy5eSheetKgar extends ActorSheet5eCharacter {
     });
   }
 
-  async activateListeners(html: { get: (index: number) => HTMLElement }) {
+  async activateListeners(html: { get: (index: 0) => HTMLElement }) {
     const node = html.get(0);
     this.sheet = new Tidy5eSheet({
       target: node,

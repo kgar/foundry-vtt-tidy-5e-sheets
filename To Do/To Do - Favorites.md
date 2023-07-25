@@ -1,23 +1,3 @@
-## Top of Mind
-
-- [x] Fix inventory truncation. Review how Tidy 5e does it. It looks good.
-- [x] Fix Feature truncation. Fixing inventory truncation broke it.
-- [x] Form inputs cannot be repeated, or else they will become duplicated and comma-delimited upon submission. The only way around this for interactable / favorited content is to manually process changes to things like spell slot uses.
-  - [x] Search for all inputs with names; replace the form name with a blur handler that performs the needed save operation.
-- [ ] Fix up the Spell favorite section titles to match the original, but ensure it is localization-friendly
-- [ ] Create object model for specifying columns and their corresponding cell data. The model should allow for passing in svelte components and their props ⚡
-  - [ ] `{ columns: [], allowAddButton: boolean, etc... }`
-- [ ] Make it so you can specify what columns to include, with the default being all columns.
-- [ ] Allow specifying column labels
-- [ ] Use that when rendering the inventory, and only include
-    - Primary column
-    - charges
-    - usage
-    - with Item Summary
-    - middle click to edit
-    - context menu
-
-
 ## To Do
 
 - [x] Put the favorites toggle on
@@ -35,6 +15,11 @@
 - [ ] Settings
   - [ ] enableActionListOnFavoritePanel
   - [ ] enableSortFavoritesItemsAlphabetically
+- [x] Fix inventory truncation. Review how Tidy 5e does it. It looks good.
+- [x] Fix Feature truncation. Fixing inventory truncation broke it.
+- [x] Form inputs cannot be repeated, or else they will become duplicated and comma-delimited upon submission. The only way around this for interactable / favorited content is to manually process changes to things like spell slot uses.
+  - [x] Search for all inputs with names; replace the form name with a blur handler that performs the needed save operation.
+- [x] Fix up the Spell favorite section titles to match the original, but ensure it is localization-friendly
 
 ## Implement Favorites View on Attributes tab
 
@@ -57,11 +42,28 @@
   - [ ] spell favorites by level
   - [ ] unsorted
 
+
 ## Stretch
 
 - [ ] create an API hook for adding new favorite groupings
 - [ ] Use the API / hooks to add the actions favorites, based on the legacy setting
 - [ ] Install the actions module and favorite some of the actions as an exercise to show that they feed into favorites accordingly
+
+
+## Shelved until further notice
+
+- [ ] Create object model for specifying columns and their corresponding cell data. The model should allow for passing in svelte components and their props ⚡
+  - [ ] `{ columns: [], allowAddButton: boolean, etc... }`
+- [ ] Make it so you can specify what columns to include, with the default being all columns.
+- [ ] Allow specifying column labels
+- [ ] Use that when rendering the inventory, and only include
+    - Primary column
+    - charges
+    - usage
+    - with Item Summary
+    - middle click to edit
+    - context menu
+
 
 ## Favorites single item template impl
 

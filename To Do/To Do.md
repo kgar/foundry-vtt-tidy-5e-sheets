@@ -2,8 +2,9 @@
 
 ## Top of Mind
 
-- Implement "+Temp +Max" HP and config button cog on the character profile 😱
+- [ ] Implement "+Temp +Max" HP and config button cog on the character profile 😱
 - [ ] Make shared component for nav tabs and eliminate the separate stylesheet
+- [ ] Task out Custom Item sheet and try out a new approach to the sheet, using the `TestApplication.ts` and `Experiment.svelte` as examples. Find the appropriate hooks via `CONFIG.debug.hooks = true`. Be sure that you subscribe to a hook when the application is to be initially rendered and then unsubscribe when it closes, to prevent excess processing and unforeseen issues.
 
 ## Character Tabs Pile of TODOs
 

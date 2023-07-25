@@ -11,6 +11,7 @@ import {
 import type { Dialog as ClientDialog } from './types/dialog';
 import type { globalThisUI } from './types/types';
 import type { globalThisDnd5e } from './types/dnd5e';
+import { TestApplication } from './reactivity-experiment/TestApplication';
 
 declare global {
   var Dialog: typeof ClientDialog;
@@ -23,8 +24,15 @@ FoundryAdapter.registerCharacterSheet(Tidy5eSheetKgar);
 FoundryAdapter.onReady(async () => {
   initSettings();
 
+  const tidy5eActorId = 'hUKk6rVxXIqCFr3Y';
+  const kgarActorId = 'wyY5Dhe93KzUuan5';
+
   // TODO: Remove after debugging:
-  debugCompareSheets('hUKk6rVxXIqCFr3Y', 'wyY5Dhe93KzUuan5');
+  debugCompareSheets(tidy5eActorId, kgarActorId);
+
+  // new TestApplication(game.actors.get('wyY5Dhe93KzUuan5'), {
+  //   editable: true,
+  // }).render(true);
 });
 
 Hooks.on('getActorSheetHeaderButtons', (sheet: any, buttons: any) => {
