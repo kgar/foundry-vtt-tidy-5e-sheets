@@ -4,6 +4,7 @@
   import type {
     ActorSheetContext,
     SheetFunctions,
+    Tab,
     TidyDropdownOption,
   } from 'src/types/types';
   import { SettingsProvider } from 'src/settings/settings';
@@ -25,6 +26,8 @@
   import type { SheetParameter } from 'src/utils/sheet-parameter';
   import { CONSTANTS } from 'src/constants';
   import { submitText } from './form';
+  import AllowEditLock from 'src/components/shared/AllowEditLock.svelte';
+  import Tabs from 'src/components/shared/Tabs.svelte';
 
   export let debug: any = 'Put any debug information here, if ya need it.';
   export let sheetFunctions: SheetFunctions;
@@ -83,19 +86,25 @@
   const allowJournal =
     context.owner && !SettingsProvider.settings.journalTabDisabled.get();
 
-  const allowEdit = FoundryAdapter.tryGetFlag(context.actor, 'allow-edit');
-  async function toggleLock() {
-    await FoundryAdapter.setFlag(context.actor, 'allow-edit', !allowEdit);
+  const tabs: Tab[] = [
+    { id: 'attributes', displayName: localize('DND5E.Attributes') },
+    { id: 'inventory', displayName: localize('DND5E.Inventory') },
+    { id: 'spellbook', displayName: localize('DND5E.Spellbook') },
+    { id: 'features', displayName: localize('DND5E.Features') },
+    { id: 'effects', displayName: localize('DND5E.Effects') },
+    { id: 'biography', displayName: localize('DND5E.Biography') },
+  ];
+
+  if (allowJournal) {
+    tabs.push({ id: 'journal', displayName: localize('T5EK.Journal') });
   }
 
-  function tabSelected(tabName: string) {
-    currentTabParam.set(tabName);
+  Hooks.call(CONSTANTS.HOOKS_RENDERING_CHARACTER_TABS, { tabs, context });
+
+  function tabSelected(tabId: string) {
+    currentTabParam.set(tabId);
     currentTabParam = currentTabParam;
   }
-
-  const scrollTopChanged = debounce((event: CustomEvent<{ top: number }>) => {
-    tabToScrollTopMap.set(currentTabParam.get(), event.detail.top);
-  });
 
   console.log(context);
 </script>
@@ -334,66 +343,17 @@
   </div>
 </header>
 <!-- TODO: To component? -->
-<nav
-  class="tidy5e-kgar-navigation tabs"
-  class:allow-edit={FoundryAdapter.tryGetFlag(context.actor, 'allow-edit') ??
-    false}
+<Tabs
+  {tabs}
+  selectedTabId={currentTabParam.get()}
+  on:tabSelected={(event) => tabSelected(event.detail.id)}
 >
-  <a
-    class="item"
-    class:active={currentTabParam.get() === 'attributes'}
-    on:click={() => tabSelected('attributes')}>{localize('DND5E.Attributes')}</a
-  >
-  <a
-    class="item"
-    class:active={currentTabParam.get() === 'inventory'}
-    on:click={() => tabSelected('inventory')}>{localize('DND5E.Inventory')}</a
-  >
-  <a
-    class="item"
-    class:active={currentTabParam.get() === 'spellbook'}
-    on:click={() => tabSelected('spellbook')}>{localize('DND5E.Spellbook')}</a
-  >
-  <a
-    class="item"
-    class:active={currentTabParam.get() === 'features'}
-    on:click={() => tabSelected('features')}>{localize('DND5E.Features')}</a
-  >
-  <a
-    class="item"
-    class:active={currentTabParam.get() === 'effects'}
-    on:click={() => tabSelected('effects')}>{localize('DND5E.Effects')}</a
-  >
-  <a
-    class="item"
-    class:active={currentTabParam.get() === 'biography'}
-    on:click={() => tabSelected('biography')}>{localize('DND5E.Biography')}</a
-  >
-  {#if allowJournal}
-    <a
-      class="item"
-      class:active={currentTabParam.get() === 'journal'}
-      on:click={() => tabSelected('journal')}>{localize('T5EK.Journal')}</a
-    >
-  {/if}
-  {#if context.owner}
-    <div class="toggle-allow-edit">
-      <span on:click={() => toggleLock()}>
-        {#if allowEdit}
-          <i
-            class="fas fa-lock-open"
-            title="{localize('T5EK.DisableEdit')} - {localize('T5EK.EditHint')}"
-          />
-        {:else}
-          <i
-            class="fas fa-lock"
-            title="{localize('T5EK.EnableEdit')} - {localize('T5EK.EditHint')}"
-          />
-        {/if}
-      </span>
-    </div>
-  {/if}
-</nav>
+  <svelte:fragment slot="tab-end">
+    {#if context.owner}
+      <AllowEditLock {context} />
+    {/if}
+  </svelte:fragment>
+</Tabs>
 
 <!-- Tabs -->
 <!-- Lock -->

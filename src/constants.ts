@@ -30,4 +30,5 @@ export const CONSTANTS = {
     wizard: 'T5EK.ClassWizard',
     custom: 'T5EK.ClassCustom',
   },
+  HOOKS_RENDERING_CHARACTER_TABS: 'renderTidy5eKgarCharacterTabs',
 } as const;

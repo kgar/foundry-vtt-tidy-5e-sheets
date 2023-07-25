@@ -2,12 +2,14 @@
 
 ## Top of Mind
 
-- [ ] Implement "+Temp +Max" HP and config button cog on the character profile 😱
-- [ ] Make shared component for nav tabs and eliminate the separate stylesheet
-- [ ] Task out Custom Item sheet and try out a new approach to the sheet, using the `TestApplication.ts` and `Experiment.svelte` as examples. Find the appropriate hooks via `CONFIG.debug.hooks = true`. 
+- [x] Make shared component for nav tabs and eliminate the separate stylesheet
+- [ ] Make a second pass at nav tabs and make sure it's ergonomic enough. Look at some other examples out there.
+- [ ] Consider adding a third prop to the Tabs type which allows for specifying a component and its props. Use this to make tabs fully data-driven 🤯
+- [ ] Task out Custom Item sheet and try out a new approach to the sheet, using the `TestApplication.ts` and `Experiment.svelte` as examples. Find the appropriate hooks via `CONFIG.debug.hooks = true`.
   - [ ] Be sure that you subscribe to a hook when the application is to be initially rendered and then unsubscribe when it closes, to prevent excess processing and unforeseen issues.
   - [ ] One thing to think about: try subscribing at the top level to the context and then passing it down and around, rather than passing the store everywhere.
   - [ ] The end result should be relatively easily portable to the old method if the new method doesn't work out. Just some rewiring at the top ✅
+- [x] Implement "+Temp +Max" HP and config button cog on the character profile 😱
 
 ## Character Tabs Pile of TODOs
 
@@ -303,7 +305,7 @@ I'm also quite interested in putting money in for the update and for a new featu
 Option to have a grid layout for the favorites section, ability to create collapsible folders/sections within the favorites menu by the player for sorting purposes.
 
 kgar — Today at 10:56 AM
-If such a thing gets implemented, would players want the sheet's expanded/collapsed sections to be remembered between full page reloads?  That is, if they log in for game night, the sections they'd previously collapsed last session would still be in that same collapsed state.
+If such a thing gets implemented, would players want the sheet's expanded/collapsed sections to be remembered between full page reloads? That is, if they log in for game night, the sections they'd previously collapsed last session would still be in that same collapsed state.
 Also, if it gets implemented (very likely), we should include expand all / collapse all buttons (or icons) on each tab where relevant.
 Dreaming — Today at 11:11 AM
 I do think that would be ideal

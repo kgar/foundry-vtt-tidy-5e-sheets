@@ -12,6 +12,11 @@ export type SheetFunctions = {
   isFilterActive: (setName: string, filterName: string) => boolean;
 };
 
+export type Tab = {
+  id: string;
+  displayName: string;
+}
+
 export type ClassSummary = {
   class?: string;
   subclass?: string;
