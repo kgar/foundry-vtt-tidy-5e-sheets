@@ -24,9 +24,15 @@
   <ItemTable>
     <ItemTableHeaderRow>
       <ItemTableColumn primary={true}>
-        <span class="spell-primary-column-label">
-          {section.label}
-        </span>
+        {#if section.dataset['preparation.mode'] === 'prepared' && section.dataset.level > 0}
+          {localize('T5EK.FavoriteSpellLevelLabel', {
+            number: section.dataset.level,
+          })}
+        {:else}
+          <span class="spell-primary-column-label">
+            {section.label}
+          </span>
+        {/if}
         {#if section.usesSlots}
           <SpellSlotUses {context} {section} />
         {/if}

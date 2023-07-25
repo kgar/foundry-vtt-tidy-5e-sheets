@@ -597,5 +597,6 @@
     "hint": "This setting work only with the module setting 'Enable upcast free spell' enabled, is a string of feature names separated by the character '|' , the search for such features is case unsensitive if found a 'valid' feature enables actors to use the feature upcast. IF LEFT EMPTY IT WILL BE IGNORED."
   },
 
-  "T5EK.WindowHeaderSheetSettingsTooltip": "Open Tidy 5e Sheet Settings"
+  "T5EK.WindowHeaderSheetSettingsTooltip": "Open Tidy 5e Sheet Settings",
+  "T5EK.FavoriteSpellLevelLabel": "Spell Level {number}"
 }
