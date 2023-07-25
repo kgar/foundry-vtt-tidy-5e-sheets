@@ -34,6 +34,7 @@ export type Actor5e = Actor & {
     details: Details;
     traits: Traits;
     resources: Resources;
+    hp: Actor5eHp;
   };
   prototypeToken: PrototypeToken;
   items: Map<string, Item5e> & Item5e[];
@@ -53,6 +54,19 @@ export type Actor5e = Actor & {
   convertCurrency: () => Promise<Actor5e>;
   rollToolCheck(tool: string, options: { event: Event }): Promise<D20Roll>;
 };
+
+export interface Actor5eHp {
+  value: number | null;
+  max: number | null;
+  temp: number | null;
+  tempmax: number | null;
+  bonuses: ActorSheetContextHpBonus;
+}
+
+export interface ActorSheetContextHpBonus {
+  level: string;
+  overall: string;
+}
 
 type Ability = {
   value: number;

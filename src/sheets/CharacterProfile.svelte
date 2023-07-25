@@ -11,6 +11,7 @@
   import HitDice from './HitDice.svelte';
   import HitPoints from './HitPoints.svelte';
   import CharacterPortrait from './CharacterPortrait.svelte';
+  import TempHp from './TempHp.svelte';
 
   export let sheetFunctions: SheetFunctions;
   export let context: ActorSheetContext;
@@ -101,6 +102,4 @@
     {/if}
   </div>
 </div>
-
-<style lang="scss">
-</style>
+<TempHp {context} />

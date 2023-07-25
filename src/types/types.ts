@@ -1,4 +1,4 @@
-import type { Actor5e } from './actor';
+import type { Actor5e, Actor5eHp } from './actor';
 
 export type SheetFunctions = {
   activateListeners: () => void;
@@ -23,6 +23,7 @@ export type ActorSheetContext = {
   resources: Resource[];
   skills: ActorContextSkills;
   tools: ActorContextTools;
+  hp: Actor5eHp;
 } & Record<string, any>;
 
 export interface Resource {
