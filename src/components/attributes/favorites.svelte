@@ -6,21 +6,35 @@
   import FavoriteFeaturesList from '../favorites/FavoriteFeaturesList.svelte';
   import type { Item5e } from 'src/types/item';
   import FavoriteSpellsList from 'src/components/favorites/FavoriteSpellsList.svelte';
+  import { SettingsProvider } from 'src/settings/settings';
 
   export let context: ActorSheetContext;
 
   const localize = FoundryAdapter.localize;
 
-  const favoriteInventory = context.inventory
-    .flatMap((x: { items: Item5e[] }) => x.items)
-    .filter(isItemFavorite);
+  const sortAlphabetically =
+    SettingsProvider.settings.enableSortFavoritesItemsAlphabetically.get();
 
-  const favoriteFeatures = context.features
-    .flatMap((x: { items: Item5e[] }) => x.items)
-    .filter(isItemFavorite);
+  let favoriteInventory = sortByNameIfConfigured(
+    context.inventory
+      .flatMap((x: { items: Item5e[] }) => x.items)
+      .filter(isItemFavorite)
+  );
+
+  let favoriteFeatures = sortByNameIfConfigured(
+    context.features
+      .flatMap((x: { items: Item5e[] }) => x.items)
+      .filter(isItemFavorite)
+  );
 
   function getFavoriteSpells(spells: Item5e[]): Item5e[] {
-    return spells.filter(isItemFavorite);
+    return sortByNameIfConfigured(spells.filter(isItemFavorite));
+  }
+
+  function sortByNameIfConfigured(items: Item5e[]): Item5e[] {
+    return sortAlphabetically
+      ? items.sort((a, b) => a.name.localeCompare(b.name))
+      : items;
   }
 </script>
 

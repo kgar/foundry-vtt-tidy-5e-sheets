@@ -1,5 +1,8 @@
 ## To Do
 
+- [ ] Settings
+  - [ ] enableActionListOnFavoritePanel - deferring until API approach is ironed out
+  - [x] enableSortFavoritesItemsAlphabetically
 - [x] Put the favorites toggle on
   - [x] Features
   - [x] Spellbook List
@@ -10,11 +13,8 @@
   - [x] Spellbook Grid
   - [x] Inventory List
   - [x] Inventory Grid
-- [ ] Implement Favorites View on Attributes Tab - See [dedicated to-do list](#implement-favorites-view-on-attributes-tab)
-- [ ] Confirm context menu works as expected
-- [ ] Settings
-  - [ ] enableActionListOnFavoritePanel
-  - [ ] enableSortFavoritesItemsAlphabetically
+- [x] Implement Favorites View on Attributes Tab - See [dedicated to-do list](#implement-favorites-view-on-attributes-tab)
+- [x] Confirm context menu works as expected
 - [x] Fix inventory truncation. Review how Tidy 5e does it. It looks good.
 - [x] Fix Feature truncation. Fixing inventory truncation broke it.
 - [x] Form inputs cannot be repeated, or else they will become duplicated and comma-delimited upon submission. The only way around this for interactable / favorited content is to manually process changes to things like spell slot uses.

@@ -28,6 +28,8 @@
 - [ ] `<a>`, `<div>`, etc. tags with `[role="button"]` should be buttons
 - [ ] `<i>` tags with role=button should be changed so that a button surrounds the icon
 - [ ] Leverage TypeScript to lock down and document all known flags for each type of flagged entity (actor, NPC, vehicle, Item)
+- [ ] Implement click-and-drag for manual sorting of items
+  - [ ] Consider disabling this for favorites when alphabetical sort is turned on, or issuing a warning.
 
 ## Vehicle Sheet
 
