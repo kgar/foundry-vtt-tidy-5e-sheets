@@ -12,7 +12,6 @@
   import ItemUses from '../items/ItemUses.svelte';
   import SpellComponents from '../spellbook/SpellComponents.svelte';
   import SpellSlotUses from '../spellbook/SpellSlotUses.svelte';
-  import SpellImageProvider from '../spellbook/SpellImageProvider.svelte';
 
   export let context: ActorSheetContext;
   export let section: any;
@@ -44,6 +43,7 @@
     </ItemTableHeaderRow>
     {#each spells as spell}
       {@const ctx = context.itemContext[spell.id]}
+      {@const spellImgUrl = FoundryAdapter.getSpellImageUrl(context, spell)}
       <ItemTableRow
         item={spell}
         on:mousedown={(event) =>
@@ -56,10 +56,7 @@
         cssClass={FoundryAdapter.getSpellRowClasses(spell)}
       >
         <ItemTableCell primary={true}>
-          <!-- TODO: Convert to {@const spellImg = FoundryAdapter.getSpellImg(context, spell)} -->
-          <SpellImageProvider {context} {spell} let:spellImg>
-            <ItemUseButton item={spell} imgUrlOverride={spellImg} />
-          </SpellImageProvider>
+          <ItemUseButton item={spell} imgUrlOverride={spellImgUrl} />
           <ItemName
             on:click={(event) => toggleSummary(event.detail, context.actor)}
           >

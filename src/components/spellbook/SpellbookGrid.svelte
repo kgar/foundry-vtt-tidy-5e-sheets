@@ -8,7 +8,6 @@
   import ItemTableHeaderRow from '../items/ItemTableHeaderRow.svelte';
   import SpellSlotMarkers from '../spellbook/SpellSlotMarkers.svelte';
   import SpellSlotUses from '../spellbook/SpellSlotUses.svelte';
-  import SpellImageProvider from './SpellImageProvider.svelte';
   import type { Item5e } from 'src/types/item';
   import GridPaneFavoriteIcon from '../shared/GridPaneFavoriteIcon.svelte';
 
@@ -37,6 +36,7 @@
     </ItemTableHeaderRow>
     <div class="spells">
       {#each spells as spell}
+      {@const spellImgUrl = FoundryAdapter.getSpellImageUrl(context, spell)}
         <div
           role="button"
           tabindex="0"
@@ -50,14 +50,12 @@
           {/if}
 
           <div class="spell-name" role="button">
-            <SpellImageProvider {context} {spell} let:spellImg>
               <div
                 class="spell-image"
-                style="background-image: url('/{spellImg}')"
+                style="background-image: url('/{spellImgUrl}')"
               >
                 <i class="fa fa-dice-d20" />
               </div>
-            </SpellImageProvider>
           </div>
         </div>
       {/each}

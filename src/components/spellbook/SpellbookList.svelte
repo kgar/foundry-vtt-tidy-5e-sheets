@@ -20,7 +20,6 @@
   import SpellPrepareControl from '../spellbook/SpellPrepareControl.svelte';
   import SpellSlotMarkers from '../spellbook/SpellSlotMarkers.svelte';
   import SpellSlotUses from '../spellbook/SpellSlotUses.svelte';
-  import SpellImageProvider from './SpellImageProvider.svelte';
   import InlineFavoriteIcon from '../shared/InlineFavoriteIcon.svelte';
   import ItemFavoriteControl from '../items/ItemFavoriteControl.svelte';
 
@@ -79,6 +78,7 @@
     </ItemTableHeaderRow>
     {#each spells as spell}
       {@const ctx = context.itemContext[spell.id]}
+      {@const spellImgUrl = FoundryAdapter.getSpellImageUrl(context, spell)}
       <ItemTableRow
         item={spell}
         on:mousedown={(event) =>
@@ -91,10 +91,7 @@
         cssClass={FoundryAdapter.getSpellRowClasses(spell)}
       >
         <ItemTableCell primary={true}>
-          <!-- TODO: Convert to {@const spellImg = FoundryAdapter.getSpellImg(context, spell)} -->
-          <SpellImageProvider {context} {spell} let:spellImg>
-            <ItemUseButton item={spell} imgUrlOverride={spellImg} />
-          </SpellImageProvider>
+          <ItemUseButton item={spell} imgUrlOverride={spellImgUrl} />
           <ItemName
             on:click={(event) => toggleSummary(event.detail, context.actor)}
           >

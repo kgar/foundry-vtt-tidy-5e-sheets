@@ -4,6 +4,7 @@ import type { ActorSheet5eCharacter } from 'src/types/actor5e-sheet';
 import type { Actor5e } from 'src/types/actor';
 import type { Item5e } from 'src/types/item';
 import type { FoundryDocument } from 'src/types/document';
+import { SettingsProvider } from 'src/settings/settings';
 
 export const FoundryAdapter = {
   getActorSheetClass() {
@@ -336,6 +337,22 @@ export const FoundryAdapter = {
       [`system.${systemFieldName}.${key}.value`]: levels[next % levels.length],
     });
   },
+  getSpellImageUrl(
+    context: ActorSheetContext,
+    spell: any
+  ): string | undefined {
+    if (!SettingsProvider.settings.spellClassFilterIconReplace.get()) {
+      return spell.img;
+    }
+
+    const parentClass = FoundryAdapter.tryGetFlag<string>(spell, 'parentClass');
+
+    const classImage = parentClass
+      ? context.actorClassesToImages[parentClass]
+      : undefined;
+
+    return classImage ?? spell.img;
+  }
 };
 
 /* ------------------------------------------------------
