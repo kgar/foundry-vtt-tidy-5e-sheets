@@ -1078,6 +1078,26 @@ export function createSettings() {
         },
       },
 
+      enablePermanentUnlockOnNPCIfYouAreGM: {
+        options: {
+          name: `${FoundryAdapter.localize(
+            'TIDY5E.Settings.EnablePermanentUnlockOnNPCIfYouAreGM.name'
+          )}`,
+          hint: FoundryAdapter.localize(
+            'TIDY5E.Settings.EnablePermanentUnlockOnNPCIfYouAreGM.hint'
+          ),
+          scope: 'world',
+          config: false,
+          default: false,
+          type: Boolean,
+        },
+        get() {
+          return FoundryAdapter.getGameSetting<boolean>(
+            'enablePermanentUnlockOnNPCIfYouAreGM'
+          );
+        },
+      },
+
       // Default width for vehicle sheet
 
       vehicleSheetWidth: {
@@ -1092,6 +1112,20 @@ export function createSettings() {
           return FoundryAdapter.getGameSetting<number>('vehicleSheetWidth');
         },
       },
+
+      enablePermanentUnlockOnVehicleIfYouAreGM: {
+        options:  {
+          name: `${game.i18n.localize("TIDY5E.Settings.EnablePermanentUnlockOnVehicleIfYouAreGM.name")}`,
+          hint: game.i18n.localize("TIDY5E.Settings.EnablePermanentUnlockOnVehicleIfYouAreGM.hint"),
+          scope: "world",
+          config: false,
+          default: false,
+          type: Boolean,
+        },
+        get() {
+          return FoundryAdapter.getGameSetting<boolean>('enablePermanentUnlockOnVehicleIfYouAreGM');
+        },
+      }
 
       // Lazy Money
 
@@ -1398,6 +1432,26 @@ export function createSettings() {
         },
         get() {
           return FoundryAdapter.getGameSetting<boolean>('allowHpMaxOverride');
+        },
+      },
+
+      allowHpConfigOverride: {
+        options: {
+          name: `${FoundryAdapter.localize(
+            'T5EK.Settings.AllowHpConfigOverride.name'
+          )}`,
+          hint: `${FoundryAdapter.localize(
+            'T5EK.Settings.AllowHpConfigOverride.hint'
+          )}`,
+          scope: 'world',
+          config: false,
+          default: false,
+          type: Boolean,
+        },
+        get() {
+          return FoundryAdapter.getGameSetting<boolean>(
+            'allowHpConfigOverride'
+          );
         },
       },
 

@@ -2,7 +2,8 @@
   import type { ActorSheetContext } from 'src/types/types';
   import { submitText } from './form';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-    import Tidy5eActorHitPointsConfig from 'src/dialogs/Tidy5eActorHitPointsConfig';
+  import Tidy5eActorHitPointsConfig from 'src/dialogs/Tidy5eActorHitPointsConfig';
+  import { SettingsProvider } from 'src/settings/settings';
 
   export let context: ActorSheetContext;
 
@@ -33,13 +34,11 @@
     data-dtype="Number"
     maxlength="5"
   />
-  {#if context.allowHpConfigOverride}
+  {#if SettingsProvider.settings.allowHpConfigOverride.get()}
     <a
       data-tooltip={localize('DND5E.HitPointsConfig')}
       on:click|stopPropagation|preventDefault={(event) =>
-        new Tidy5eActorHitPointsConfig(context.actor).render(
-          true
-        )}
+        new Tidy5eActorHitPointsConfig(context.actor).render(true)}
     >
       <i class="fas fa-cog" />
     </a>
