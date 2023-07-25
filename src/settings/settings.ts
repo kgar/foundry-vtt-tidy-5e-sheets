@@ -1114,18 +1114,24 @@ export function createSettings() {
       },
 
       enablePermanentUnlockOnVehicleIfYouAreGM: {
-        options:  {
-          name: `${game.i18n.localize("TIDY5E.Settings.EnablePermanentUnlockOnVehicleIfYouAreGM.name")}`,
-          hint: game.i18n.localize("TIDY5E.Settings.EnablePermanentUnlockOnVehicleIfYouAreGM.hint"),
-          scope: "world",
+        options: {
+          name: `${FoundryAdapter.localize(
+            'TIDY5E.Settings.EnablePermanentUnlockOnVehicleIfYouAreGM.name'
+          )}`,
+          hint: FoundryAdapter.localize(
+            'TIDY5E.Settings.EnablePermanentUnlockOnVehicleIfYouAreGM.hint'
+          ),
+          scope: 'world',
           config: false,
           default: false,
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getGameSetting<boolean>('enablePermanentUnlockOnVehicleIfYouAreGM');
+          return FoundryAdapter.getGameSetting<boolean>(
+            'enablePermanentUnlockOnVehicleIfYouAreGM'
+          );
         },
-      }
+      },
 
       // Lazy Money
 
