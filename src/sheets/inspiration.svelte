@@ -1,6 +1,9 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { ActorSheetContext, PortraitCharmRadiusClass } from 'src/types/types';
+  import type {
+    ActorSheetContext,
+    PortraitCharmRadiusClass,
+  } from 'src/types/types';
 
   export let context: ActorSheetContext;
   export let inspired: boolean;
@@ -20,9 +23,12 @@
   <label class:inspired class={radiusClass}>
     <input
       type="checkbox"
-      name="system.attributes.inspiration"
       data-dtype="Boolean"
       checked={inspired}
+      on:change|stopPropagation|preventDefault={(event) =>
+        context.actor.update({
+          'system.attributes.inspiration': event.currentTarget.checked,
+        })}
     />
     <i
       class="inspiration-icon fas fa-dice-d20"

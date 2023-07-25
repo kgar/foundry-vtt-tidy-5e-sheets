@@ -2,6 +2,7 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { type Actor5e } from 'src/types/actor';
   import { formatAsModifier } from 'src/utils/formatting';
+  import { submitText } from './form';
 
   export let initiative: { total: number; bonus: number };
   export let actor: Actor5e;
@@ -26,12 +27,13 @@
     <span>{localize('T5EK.AbbrMod')}</span>
     <input
       class="ini-mod"
-      name="system.attributes.init.bonus"
       type="text"
       placeholder="0"
       data-dtype="Number"
       value={initiative.bonus}
       maxlength="2"
+      on:change|stopPropagation|preventDefault={(event) =>
+        submitText(event, actor, 'system.attributes.init.bonus')}
     />
   </label>
   <a

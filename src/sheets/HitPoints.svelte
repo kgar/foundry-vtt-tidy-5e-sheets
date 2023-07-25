@@ -3,6 +3,7 @@
   import { type Actor5e } from 'src/types/actor';
   import { SettingsProvider } from 'src/settings/settings';
   import { isRealNumber } from 'src/utils/numbers';
+  import { submitText } from './form';
 
   export let value: number;
   export let max: number;
@@ -53,7 +54,6 @@
   {/if}
   <input
     class="hp-min"
-    name="system.attributes.hp.value"
     type="text"
     {value}
     placeholder="10"
@@ -61,12 +61,13 @@
     data-dtype="Number"
     maxlength="5"
     aria-describedby="tooltip"
+    on:change|stopPropagation|preventDefault={(event) =>
+      submitText(event, actor, 'system.attributes.hp.value')}
   />
   <span class="value-seperator sep"> / </span>
   {#if allowMaxHpOverride}
     <input
       class="hp-max"
-      name="system.attributes.hp.max"
       type="text"
       value={max}
       placeholder="10"
@@ -76,6 +77,8 @@
       data-dtype="Number"
       maxlength="5"
       aria-describedby="tooltip"
+      on:change|stopPropagation|preventDefault={(event) =>
+        submitText(event, actor, 'system.attributes.hp.max')}
     />
   {:else}
     <span

@@ -32,7 +32,7 @@
       maxlength="1"
       data-tooltip={localize('DND5E.DeathSave')}
       on:change|stopPropagation|preventDefault={(event) =>
-        submitText(event, context.actor, "system.attributes.death.success")}
+        submitText(event, context.actor, 'system.attributes.death.success')}
     />
     <div
       class="death-save rollable has-note"
@@ -42,11 +42,12 @@
     </div>
     <input
       type="text"
-      name="system.attributes.death.failure"
       data-dtype="Number"
       placeholder="0"
       value={failures}
       maxlength="1"
+      on:change|stopPropagation|preventDefault={(event) =>
+        submitText(event, context.actor, 'system.attributes.death.failure')}
     />
     <i class="fas fa-times" />
   </div>

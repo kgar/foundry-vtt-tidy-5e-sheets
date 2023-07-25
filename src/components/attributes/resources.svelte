@@ -19,9 +19,13 @@
           <h4>{localize('T5EK.RestoreOnRest')}</h4>
           <input
             id="{context.appId}-{res.name}.sr"
-            name="system.resources.{res.name}.sr"
             type="checkbox"
             checked={res.sr}
+            on:change|stopPropagation|preventDefault={(event) =>
+              context.actor.update({
+                [`system.resources.${res.name}.sr`]:
+                  event.currentTarget.checked,
+              })}
           />
           <label
             for="{context.appId}-{res.name}.sr"
@@ -32,9 +36,13 @@
           </label>
           <input
             id="{context.appId}-{res.name}.lr"
-            name="system.resources.{res.name}.lr"
             type="checkbox"
             checked={res.lr}
+            on:change|stopPropagation|preventDefault={(event) =>
+              context.actor.update({
+                [`system.resources.${res.name}.lr`]:
+                  event.currentTarget.checked,
+              })}
           />
           <label
             for="{context.appId}-{res.name}.lr"

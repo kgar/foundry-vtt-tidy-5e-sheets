@@ -24,6 +24,7 @@
   import { debounce } from 'src/utils/debounce';
   import type { SheetParameter } from 'src/utils/sheet-parameter';
   import { CONSTANTS } from 'src/constants';
+  import { submitText } from './form';
 
   export let debug: any = 'Put any debug information here, if ya need it.';
   export let sheetFunctions: SheetFunctions;
@@ -36,7 +37,8 @@
   function submitWhenEnterKey(e: KeyboardEvent) {
     if (e.key == 'Enter') {
       e.preventDefault();
-      sheetFunctions.submit();
+      e.stopPropagation();
+      context.actor.update({ name: characterName });
     }
   }
 
@@ -47,6 +49,7 @@
   });
 
   let playerName = FoundryAdapter.tryGetFlag(context.actor, 'playerName');
+  let characterName = context.actor.name;
 
   /*
   Loop through items
@@ -117,8 +120,11 @@
             spellcheck="false"
             data-placeholder={localize('DND5E.Name')}
             data-maxlength="40"
-            bind:textContent={context.actor.name}
-            on:blur={sheetFunctions.submit}
+            bind:textContent={characterName}
+            on:blur={(event) =>
+              context.actor.update({
+                name: characterName,
+              })}
             on:keypress={submitWhenEnterKey}
           />
         {:else}
@@ -126,13 +132,6 @@
             {context.actor.name}
           </h1>
         {/if}
-        <input
-          name="name"
-          type="hidden"
-          value={context.actor.name}
-          placeholder={localize('DND5E.Name')}
-          maxlength="40"
-        />
       </div>
 
       <div class="flex-row small-gap align-items-right">
@@ -143,22 +142,24 @@
               <input
                 class="current-xp"
                 type="text"
-                name="system.details.xp.value"
                 value={context.system.details.xp.value}
                 placeholder="0"
                 data-dtype="Number"
                 maxlength="7"
+                on:change|stopPropagation|preventDefault={(event) =>
+                  submitText(event, context.actor, 'system.details.xp.value')}
               />
               <span class="sep">/</span>
               {#if FoundryAdapter.userIsGm()}
                 <input
                   class="max-xp max"
                   type="text"
-                  name="system.details.xp.max"
                   value={context.system.details.xp.max}
                   placeholder="0"
                   data-dtype="Number"
                   maxlength="7"
+                  on:change|stopPropagation|preventDefault={(event) =>
+                    submitText(event, context.actor, 'system.details.xp.max')}
                 />
               {:else}
                 <span class="max">{context.system.details.xp.max}</span>
@@ -189,11 +190,16 @@
       {#if SettingsProvider.settings.playerNameEnabled.get()}
         {#if context.owner}
           <input
-            name="flags.{CONSTANTS.MODULE_ID}.playerName"
             type="hidden"
             value={playerName}
             placeholder={localize('T5EK.PlayerName')}
             maxlength="40"
+            on:change|stopPropagation|preventDefault={(event) =>
+              submitText(
+                event,
+                context.actor,
+                `flags.${CONSTANTS.MODULE_ID}.playerName`
+              )}
           />
           <span
             contenteditable="true"
