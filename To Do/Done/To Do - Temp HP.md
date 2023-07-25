@@ -1,11 +1,11 @@
 ## Temp HP To Do
 
-- [ ] HTML
-- [ ] SCSS
-- [ ] Functionality
-- [ ] Config Button
-- [ ] Settings?
-  - [ ] Allow Temp HP Override
+- [x] HTML
+- [x] SCSS
+- [x] Functionality
+- [x] Config Button
+- [x] Settings?
+  - [x] Allow Temp HP Override
 
 ## Temp HP impl
 
