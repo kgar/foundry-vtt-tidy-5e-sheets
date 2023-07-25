@@ -2,6 +2,7 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { type Actor5e } from 'src/types/actor';
   import { formatAsModifier } from 'src/utils/formatting';
+  import { submitText } from './form';
 
   export let abbreviation: string;
   export let ability: any;
@@ -25,11 +26,12 @@
   <div>
     <input
       type="text"
-      name="system.abilities.{abbreviation}.value"
       class="block-score"
       value={ability.value}
       placeholder="10"
       data-dtype="Number"
+      on:change|stopPropagation|preventDefault={(event) =>
+        submitText(event, actor, `system.abilities.${abbreviation}.value`)}
     />
   </div>
   <div class="ability-modifiers">
@@ -45,12 +47,6 @@
       on:click={(event) => actor.rollAbilitySave(abbreviation, { event })}
       >{formatAsModifier(ability.save)}</span
     >
-    <input
-      type="hidden"
-      name="system.abilities.{abbreviation}.proficient"
-      value={ability.proficient}
-      data-dtype="Number"
-    />
     <a
       title={localize('DND5E.Proficiency')}
       class="proficiency-toggle"

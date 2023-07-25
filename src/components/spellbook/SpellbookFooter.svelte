@@ -1,8 +1,10 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import { submitText } from 'src/sheets/form';
+  import type { ActorSheetContext } from 'src/types/types';
 
-  export let context: any;
+  export let context: ActorSheetContext;
   export let abilities: any[];
 
   const localize = FoundryAdapter.localize;
@@ -33,16 +35,26 @@
     <input
       class="max-preparation"
       type="number"
-      name="flags.{CONSTANTS.MODULE_ID}.maxPreparedSpells"
       value={FoundryAdapter.tryGetFlag(context.actor, 'maxPreparedSpells')}
       data-dtype="Number"
       placeholder="0"
       data-tooltip={localize('T5EK.PreparedSpellsMax')}
+      on:change|stopPropagation|preventDefault={(event) =>
+        submitText(
+          event,
+          context.actor,
+          `flags.${CONSTANTS.MODULE_ID}.maxPreparedSpells`
+        )}
     />
   </div>
   <div class="spellcasting-attribute">
     <p>{localize('DND5E.SpellAbility')}</p>
-    <select name="system.attributes.spellcasting" data-type="String">
+    <select
+      on:change|stopPropagation|preventDefault={(event) =>
+        context.actor.update({
+          'system.attributes.spellcasting': event.currentTarget.value,
+        })}
+    >
       <option value="" selected={!context.system.attributes.spellcasting}
         >{localize('DND5E.None')}</option
       >

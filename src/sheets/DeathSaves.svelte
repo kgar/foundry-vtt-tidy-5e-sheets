@@ -2,7 +2,10 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { SettingsProvider } from 'src/settings/settings';
   import { createEventDispatcher } from 'svelte';
+  import { submitText } from './form';
+  import type { ActorSheetContext } from 'src/types/types';
 
+  export let context: ActorSheetContext;
   export let successes: number;
   export let failures: number;
   export let useRoundedPortraitStyle: boolean;
@@ -23,12 +26,13 @@
     <i class="fas fa-check" />
     <input
       type="text"
-      name="system.attributes.death.success"
       data-dtype="Number"
       placeholder="0"
       value={successes}
       maxlength="1"
       data-tooltip={localize('DND5E.DeathSave')}
+      on:change|stopPropagation|preventDefault={(event) =>
+        submitText(event, context.actor, "system.attributes.death.success")}
     />
     <div
       class="death-save rollable has-note"

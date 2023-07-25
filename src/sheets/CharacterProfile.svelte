@@ -49,6 +49,7 @@
 
     {#if showDeathSaves()}
       <DeathSaves
+        {context}
         successes={context.system.attributes.death.success}
         failures={context.system.attributes.death.failure}
         {useRoundedPortraitStyle}
