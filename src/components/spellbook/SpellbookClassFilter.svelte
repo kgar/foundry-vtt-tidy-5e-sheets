@@ -45,7 +45,13 @@
     FoundryAdapter.tryGetFlag(context.actor, 'classFilter') ?? '';
 </script>
 
-<select class="class-filter" name="flags.{CONSTANTS.MODULE_ID}.classFilter">
+<select
+  class="class-filter"
+  on:change|stopPropagation|preventDefault={(event) =>
+    context.actor.update({
+      [`flags.${CONSTANTS.MODULE_ID}.classFilter`]: event.currentTarget.value,
+    })}
+>
   {#each allClasses as option}
     <option
       value={option.value}

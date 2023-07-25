@@ -3,6 +3,7 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { type ActorSheetContext } from 'src/types/types';
   import SheetEditor from 'src/sheets/SheetEditor.svelte';
+  import { submitText } from 'src/sheets/form';
 
   export let context: ActorSheetContext;
 
@@ -15,9 +16,14 @@
     <div class="section-titles">
       <input
         type="text"
-        name="flags.{CONSTANTS.MODULE_ID}.notes1.name"
         value={FoundryAdapter.tryGetFlag(context.actor, 'notes1.name') ?? ''}
         placeholder={localize('T5EK.JournalPoi')}
+        on:change|stopPropagation|preventDefault={(event) =>
+          submitText(
+            event,
+            context.actor,
+            `flags.${CONSTANTS.MODULE_ID}.notes1.name`
+          )}
       />
     </div>
     <SheetEditor
@@ -30,9 +36,14 @@
     <div class="section-titles">
       <input
         type="text"
-        name="flags.{CONSTANTS.MODULE_ID}.notes2.name"
         value={FoundryAdapter.tryGetFlag(context.actor, 'notes2.name') ?? ''}
         placeholder={localize('T5EK.JournalLoi')}
+        on:change|stopPropagation|preventDefault={(event) =>
+          submitText(
+            event,
+            context.actor,
+            `flags.${CONSTANTS.MODULE_ID}.notes2.name`
+          )}
       />
     </div>
     <SheetEditor
@@ -45,9 +56,14 @@
     <div class="section-titles">
       <input
         type="text"
-        name="flags.{CONSTANTS.MODULE_ID}.notes3.name"
         value={FoundryAdapter.tryGetFlag(context.actor, 'notes3.name') ?? ''}
         placeholder={localize('T5EK.JournalQuests')}
+        on:change|stopPropagation|preventDefault={(event) =>
+          submitText(
+            event,
+            context.actor,
+            `flags.${CONSTANTS.MODULE_ID}.notes3.name`
+          )}
       />
     </div>
     <SheetEditor
@@ -60,9 +76,14 @@
     <div class="section-titles">
       <input
         type="text"
-        name="flags.{CONSTANTS.MODULE_ID}.notes4.name"
         value={FoundryAdapter.tryGetFlag(context.actor, 'notes4.name') ?? ''}
         placeholder={localize('T5EK.JournalMisc')}
+        on:change|stopPropagation|preventDefault={(event) =>
+          submitText(
+            event,
+            context.actor,
+            `flags.${CONSTANTS.MODULE_ID}.notes4.name`
+          )}
       />
     </div>
     <SheetEditor
