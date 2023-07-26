@@ -138,3 +138,4 @@ export type D20Roll = Roll & {
 export type Roll = {
   // TODO: Populate if needed
 };
+

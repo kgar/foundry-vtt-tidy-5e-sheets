@@ -392,7 +392,7 @@
     </section>
   </div>
 </header>
-<!-- TODO: To component? -->
+
 <Tabs {tabs} bind:selectedTabId>
   <svelte:fragment slot="tab-end">
     {#if context.owner}
@@ -401,9 +401,7 @@
   </svelte:fragment>
 </Tabs>
 
-<!-- Tabs -->
-<!-- Lock -->
-<section class="sheet-body" bind:this={scrollView}>
+<section class="sheet-body">
   {#each tabs as tab (tab.id)}
     <section class="tab {tab.id}" class:active={selectedTabId === tab.id}>
       <svelte:component this={tab.content.component} {...tab.content.props} />

@@ -30,15 +30,6 @@ export const FoundryAdapter = {
   onGetActiveEffectContextOptions(func: (...args: any[]) => void) {
     Hooks.on('dnd5e.getActiveEffectContextOptions', func);
   },
-  registerCharacterSheet(
-    sheet: typeof dnd5e.applications.actor.ActorSheet5eCharacter
-  ) {
-    return Actors.registerSheet('dnd5e', sheet, {
-      types: ['character'],
-      makeDefault: true,
-      label: 'Tidy 5e kgar',
-    });
-  },
   getTemplate(templateName: string) {
     return `modules/${CONSTANTS.MODULE_ID}/templates/${templateName}`;
   },

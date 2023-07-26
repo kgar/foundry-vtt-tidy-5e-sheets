@@ -11,6 +11,7 @@ import {
 import type { Dialog as ClientDialog } from './types/dialog';
 import type { globalThisUI } from './types/types';
 import type { globalThisDnd5e } from './types/dnd5e';
+import { Tidy5eKgarItemSheet } from './sheets/item/Tidy5eKgarItemSheet';
 
 declare global {
   var Dialog: typeof ClientDialog;
@@ -18,22 +19,28 @@ declare global {
   var dnd5e: globalThisDnd5e;
 }
 
-FoundryAdapter.registerCharacterSheet(Tidy5eSheetKgar);
+Actors.registerSheet('dnd5e', Tidy5eSheetKgar, {
+  types: ['character'],
+  makeDefault: true,
+  label: 'T5EK.Tidy5eSheet',
+});
+
+Items.registerSheet('dnd5e', Tidy5eKgarItemSheet, {
+  makeDefault: true,
+  label: 'T5EK.Tidy5eItemSheet',
+});
 
 FoundryAdapter.onReady(async () => {
   initSettings();
 
   // TODO: Remove after debugging:
-  if (import.meta.env.VITE_COMPARE_SAMPLES) {
+  if (import.meta.env.VITE_COMPARE_SAMPLES === 'true') {
     debugCompareSheets(
       import.meta.env.VITE_TIDY5E_ACTOR_SAMPLE_ID,
       import.meta.env.VITE_KGAR_ACTOR_SAMPLE_ID
     );
   }
 
-  // new TestApplication(game.actors.get('wyY5Dhe93KzUuan5'), {
-  //   editable: true,
-  // }).render(true);
 });
 
 Hooks.on('getActorSheetHeaderButtons', (sheet: any, buttons: any) => {

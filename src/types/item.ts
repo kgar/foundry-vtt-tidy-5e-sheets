@@ -4,6 +4,8 @@ import type { FoundryDocument } from './document';
 import type { Flags } from './flags';
 import type { Roll } from './types';
 
+export type ItemSheetContext = any;
+
 export type Item5e = Item & {
   img: string;
   sheet: { render: (force: boolean) => void; isEditable: boolean };

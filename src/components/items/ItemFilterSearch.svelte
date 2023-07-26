@@ -26,7 +26,6 @@
 <li class="filter-search {cssClass}" title={localize('T5EK.SearchHint')}>
   <input
     type="text"
-    id="feat-search"
     placeholder={localize('T5EK.SearchFeat')}
     bind:value={searchCriteria}
     on:blur|preventDefault|stopPropagation={() => rememberSearch()}

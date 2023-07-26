@@ -6,6 +6,7 @@
   import Resources from '../attributes/Resources.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { SettingsProvider } from 'src/settings/settings';
+  import { isNil } from 'src/utils/data';
 
   export let context: ActorSheetContext;
   export let sheetFunctions: SheetFunctions;
@@ -17,7 +18,7 @@
   const showResources =
     allowEdit ||
     context.resources.some(
-      (x) => x.value !== null || x.label !== '' || x.max !== null
+      (x) => !isNil(x.value) || !isNil(x.value, '') || !isNil(x.max)
     );
 
   const traitsMovedBelowResource =
