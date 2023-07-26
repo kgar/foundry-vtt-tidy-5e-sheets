@@ -2,6 +2,7 @@
 
 - [x] Update character sheet to ambiently memoize selected tab ID
 - [ ] Update character sheet to Svelte Mode
+    - Progress: things wire up and render initially. Subsequent changes do not get visualized. Context is a nested object. This might be the reason. What is the svelte-y way to do this?
 - [ ] Put tab IDs in CONSTANTS and propagate across the system.
 
 ## To Do
