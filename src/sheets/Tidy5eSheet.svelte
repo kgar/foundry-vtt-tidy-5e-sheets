@@ -101,12 +101,13 @@
 
   Hooks.call(CONSTANTS.HOOKS_RENDERING_CHARACTER_TABS, { tabs, context });
 
-  function tabSelected(tabId: string) {
-    currentTabParam.set(tabId);
-    currentTabParam = currentTabParam;
-  }
-
   console.log(context);
+
+  let selectedTabId: string = currentTabParam.get();
+
+  $: {
+    currentTabParam.set(selectedTabId);
+  }
 </script>
 
 {#if context.warnings.length}
@@ -343,11 +344,7 @@
   </div>
 </header>
 <!-- TODO: To component? -->
-<Tabs
-  {tabs}
-  selectedTabId={currentTabParam.get()}
-  on:tabSelected={(event) => tabSelected(event.detail.id)}
->
+<Tabs {tabs} bind:selectedTabId>
   <svelte:fragment slot="tab-end">
     {#if context.owner}
       <AllowEditLock {context} />
@@ -358,47 +355,26 @@
 <!-- Tabs -->
 <!-- Lock -->
 <section class="sheet-body" bind:this={scrollView}>
-  <section
-    class="tab attributes"
-    class:active={currentTabParam.get() === 'attributes'}
-  >
+  <section class="tab attributes" class:active={selectedTabId === 'attributes'}>
     <AttributesTab {context} {sheetFunctions} />
   </section>
-  <section
-    class="tab inventory"
-    class:active={currentTabParam.get() === 'inventory'}
-  >
+  <section class="tab inventory" class:active={selectedTabId === 'inventory'}>
     <InventoryTab {context} {sheetFunctions} />
   </section>
-  <section
-    class="tab spellbook"
-    class:active={currentTabParam.get() === 'spellbook'}
-  >
+  <section class="tab spellbook" class:active={selectedTabId === 'spellbook'}>
     <SpellbookTab {context} {sheetFunctions} />
   </section>
-  <section
-    class="tab features"
-    class:active={currentTabParam.get() === 'features'}
-  >
+  <section class="tab features" class:active={selectedTabId === 'features'}>
     <FeaturesTab {context} {sheetFunctions} />
   </section>
-  <section
-    class="tab effects"
-    class:active={currentTabParam.get() === 'effects'}
-  >
+  <section class="tab effects" class:active={selectedTabId === 'effects'}>
     <EffectsTab {context} />
   </section>
-  <section
-    class="tab biography"
-    class:active={currentTabParam.get() === 'biography'}
-  >
+  <section class="tab biography" class:active={selectedTabId === 'biography'}>
     <BiographyTab {context} {sheetFunctions} />
   </section>
   {#if allowJournal}
-    <section
-      class="tab journal"
-      class:active={currentTabParam.get() === 'journal'}
-    >
+    <section class="tab journal" class:active={selectedTabId === 'journal'}>
       <JournalTab {context} />
     </section>
   {/if}
