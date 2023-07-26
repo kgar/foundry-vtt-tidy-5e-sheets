@@ -6,10 +6,14 @@ import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
 import type { Actor5e } from 'src/types/actor';
 import { isNil } from 'src/utils/data';
 import { CONSTANTS } from 'src/constants';
+import { writable } from 'svelte/store';
+import type { ActorSheetContext } from 'src/types/types';
+import { applyTitleToWindow } from 'src/utils/applications';
 
 const ActorSheet5eCharacter = FoundryAdapter.getActorSheetClass();
 
 export class Tidy5eCharacterSheet extends ActorSheet5eCharacter {
+  store = writable<ActorSheetContext>();
   selectedTabId: string | undefined = undefined;
 
   constructor(...args: any[]) {
@@ -29,6 +33,8 @@ export class Tidy5eCharacterSheet extends ActorSheet5eCharacter {
 
   async activateListeners(html: { get: (index: 0) => HTMLElement }) {
     const node = html.get(0);
+    const initialContext = await this.getContext();
+    this.store.set(initialContext);
 
     new Tidy5eCharacterSheetContent({
       target: node,
@@ -47,15 +53,19 @@ export class Tidy5eCharacterSheet extends ActorSheet5eCharacter {
         },
         selectedTabId: this.#getSelectedTabId(),
         isEditable: this.isEditable,
-        context: {
-          ...(await super.getData(this.options)),
-          actorClassesToImages: getActorClassesToImages(this.actor),
-          appId: this.appId,
-        },
+        store: this.store,
       },
     });
 
     initTidy5eContextMenu.call(this, html);
+  }
+
+  private async getContext(): Promise<ActorSheetContext> {
+    return {
+      ...(await super.getData(this.options)),
+      actorClassesToImages: getActorClassesToImages(this.actor),
+      appId: this.appId,
+    };
   }
 
   #getSelectedTabId(): string {
@@ -135,20 +145,14 @@ export class Tidy5eCharacterSheet extends ActorSheet5eCharacter {
   }
 
   async render(force: boolean, ...args: any[]) {
-    // if (force) {
-    //   super.render(force, options);
-    //   return;
-    // }
-
-    // let t = this.element.get(0).querySelector('.window-title');
-    // if (t.hasChildNodes()) t = t.childNodes[0];
-    // t.textContent = this.title;
-    // this.store.set(await this.getData());
-
-    if (!force) {
-      this.#cacheSelectedTabId();
+    if (force) {
+      super.render(force, ...args);
+      return;
     }
-    return super.render(force, ...args);
+
+    applyTitleToWindow(this.title, this.element.get(0));
+    const context = await this.getContext();
+    this.store.update(() => context);
   }
 }
 

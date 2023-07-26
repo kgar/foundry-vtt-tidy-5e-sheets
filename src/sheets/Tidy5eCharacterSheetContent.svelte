@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
+  import { onMount, setContext } from 'svelte';
   import { FoundryAdapter } from '../foundry/foundry-adapter';
   import type {
     ActorSheetContext,
@@ -22,24 +22,26 @@
   import EffectsTab from 'src/components/player-character/EffectsTab.svelte';
   import BiographyTab from 'src/components/player-character/BiographyTab.svelte';
   import JournalTab from 'src/components/player-character/JournalTab.svelte';
-  import type { SheetParameter } from 'src/utils/sheet-parameter';
   import { CONSTANTS } from 'src/constants';
   import { submitText } from './form';
   import AllowEditLock from 'src/components/shared/AllowEditLock.svelte';
   import Tabs from 'src/components/tabs/Tabs.svelte';
   import TabContents from 'src/components/tabs/TabContents.svelte';
+  import type { Readable } from 'svelte/store';
 
   export let debug: any = 'Put any debug information here, if ya need it.';
   export let sheetFunctions: SheetFunctions;
   export let selectedTabId: string;
   export let isEditable: boolean;
-  export let context: ActorSheetContext;
+  export let store: Readable<ActorSheetContext>;
+
+  const context = $store;
 
   function submitWhenEnterKey(e: KeyboardEvent) {
     if (e.key == 'Enter') {
       e.preventDefault();
       e.stopPropagation();
-      context.actor.update({ name: characterName });
+      $store.actor.update({ name: characterName });
     }
   }
 
@@ -49,8 +51,8 @@
     sheetFunctions.activateListeners();
   });
 
-  let playerName = FoundryAdapter.tryGetFlag(context.actor, 'playerName');
-  let characterName = context.actor.name;
+  let playerName = FoundryAdapter.tryGetFlag($store.actor, 'playerName');
+  let characterName = $store.actor.name;
 
   /*
   Loop through items
@@ -61,28 +63,28 @@
   */
 
   const classAndSubclassSummaries = Array.from(
-    FoundryAdapter.getClassAndSubclassSummaries(context.actor).values()
+    FoundryAdapter.getClassAndSubclassSummaries($store.actor).values()
   );
 
   const characterSummaryEntries =
-    FoundryAdapter.getActorCharacterSummaryEntries(context);
+    FoundryAdapter.getActorCharacterSummaryEntries($store);
 
-  $: abilities = Object.entries<any>(context.abilities);
+  $: abilities = Object.entries<any>($store.abilities);
 
   const sizes: TidyDropdownOption[] = Object.entries(
-    context.config.actorSizes
+    $store.config.actorSizes
   ).map(([abbreviation, size]) => ({
     value: abbreviation,
     text: size as string,
   }));
 
   const currentSize: TidyDropdownOption = {
-    value: context.system.traits.size,
-    text: context.config.actorSizes[context.system.traits.size],
+    value: $store.system.traits.size,
+    text: $store.config.actorSizes[$store.system.traits.size],
   };
 
   const allowJournal =
-    context.owner && !SettingsProvider.settings.journalTabDisabled.get();
+    $store.owner && !SettingsProvider.settings.journalTabDisabled.get();
 
   // TODO: Put this somewhere safe, and allow the Tidy 5e API to expose the base tab set for making changes to it.
   const tabs: Tab[] = [
@@ -91,7 +93,7 @@
       displayName: 'DND5E.Attributes',
       content: {
         component: AttributesTab,
-        props: { context, sheetFunctions },
+        props: { context: $store, sheetFunctions },
       },
     },
     {
@@ -99,7 +101,7 @@
       displayName: 'DND5E.Inventory',
       content: {
         component: InventoryTab,
-        props: { context, sheetFunctions },
+        props: { context: $store, sheetFunctions },
       },
     },
     {
@@ -107,7 +109,7 @@
       displayName: 'DND5E.Spellbook',
       content: {
         component: SpellbookTab,
-        props: { context, sheetFunctions },
+        props: { context: $store, sheetFunctions },
       },
     },
     {
@@ -115,7 +117,7 @@
       displayName: 'DND5E.Features',
       content: {
         component: FeaturesTab,
-        props: { context, sheetFunctions },
+        props: { context: $store, sheetFunctions },
       },
     },
     {
@@ -123,7 +125,7 @@
       displayName: 'DND5E.Effects',
       content: {
         component: EffectsTab,
-        props: { context, sheetFunctions },
+        props: { context: $store, sheetFunctions },
       },
     },
     {
@@ -131,7 +133,7 @@
       displayName: 'DND5E.Biography',
       content: {
         component: BiographyTab,
-        props: { context, sheetFunctions },
+        props: { context: $store, sheetFunctions },
       },
     },
   ];
@@ -142,14 +144,17 @@
       displayName: 'T5EK.Journal',
       content: {
         component: JournalTab,
-        props: { context },
+        props: { context: $store },
       },
     });
   }
 
-  Hooks.call(CONSTANTS.HOOKS_RENDERING_CHARACTER_TABS, { tabs, context });
+  Hooks.call(CONSTANTS.HOOKS_RENDERING_CHARACTER_TABS, {
+    tabs,
+    context: $store,
+  });
 
-  console.log(context);
+  console.log($store);
 </script>
 
 {#if context.warnings.length}
@@ -303,7 +308,9 @@
           options={sizes}
           selected={currentSize}
           on:optionClicked={(event) =>
-            context.actor.update({ 'system.traits.size': event.detail.value })}
+            context.actor.update({
+              'system.traits.size': event.detail.value,
+            })}
         />
         {#each characterSummaryEntries as entry}
           <span>&#8226;</span>
