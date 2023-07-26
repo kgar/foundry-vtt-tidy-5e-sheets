@@ -313,3 +313,27 @@ If such a thing gets implemented, would players want the sheet's expanded/collap
 Also, if it gets implemented (very likely), we should include expand all / collapse all buttons (or icons) on each tab where relevant.
 Dreaming — Today at 11:11 AM
 I do think that would be ideal
+
+
+### Default theme as world scope
+
+https://discord.com/channels/732325252788387980/1116078321067892796/1130574237833363486
+
+SaltyJ — 07/17/2023 1:57 PM
+haha
+One thing i would like, as a settings option, is to set the default mode for everyone (Light vs Dark) or even custom when/if implemented
+i actually tried doing that myself at one point, broke everything 🙂
+
+kgar — 07/17/2023 1:58 PM
+Ah, like a full-on game setting for "Default Dark" for a particular game world?
+
+SaltyJ — 07/17/2023 1:59 PM
+yeah. They can still change it to what they want, but it would be nice if i could set the default for new players
+Running 3 campaigns with a total of 18 players. gets tedious, especially when they clear cookies.
+
+kgar — 07/17/2023 1:59 PM
+Gotcha. I'll copy this idea down and add it to the list for when I get nearer to the finish line. I think it's doable.
+
+SaltyJ — 07/17/2023 1:59 PM
+insert "Why does the sheet blind me now" questions.
+Danke!
