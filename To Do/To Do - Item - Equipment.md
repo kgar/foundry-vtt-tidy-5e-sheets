@@ -1,3 +1,9 @@
+## Cleanup Side Quest
+
+- [x] Update character sheet to ambiently memoize selected tab ID
+- [ ] Update character sheet to Svelte Mode
+- [ ] Put tab IDs in CONSTANTS and propagate across the system.
+
 ## To Do
 
 - [ ] Create `ItemEquipment.svelte` to house the equipment view

@@ -31,7 +31,7 @@
 
   export let debug: any = 'Put any debug information here, if ya need it.';
   export let sheetFunctions: SheetFunctions;
-  export let currentTabParam: SheetParameter<string>;
+  export let selectedTabId: string;
   export let isEditable: boolean;
   export let context: ActorSheetContext;
 
@@ -150,12 +150,6 @@
   Hooks.call(CONSTANTS.HOOKS_RENDERING_CHARACTER_TABS, { tabs, context });
 
   console.log(context);
-
-  let selectedTabId: string = currentTabParam.get();
-
-  $: {
-    currentTabParam.set(selectedTabId);
-  }
 </script>
 
 {#if context.warnings.length}

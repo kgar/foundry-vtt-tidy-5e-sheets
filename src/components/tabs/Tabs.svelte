@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { Tab } from 'src/types/types';
   import { createEventDispatcher } from 'svelte';
@@ -20,9 +21,10 @@
 <nav class="tabs {cssClass}">
   {#each tabs as tab (tab.id)}
     <a
-      class="item"
+      class={CONSTANTS.TAB_OPTION_CLASS}
       class:active={tab.id === selectedTabId}
       class:no-border-on-last-tab={!$$slots['tab-end']}
+      data-tab-id={tab.id}
       on:click={() => selectTab(tab)}>{localize(tab.displayName)}</a
     >
   {/each}
@@ -37,7 +39,7 @@
     flex-direction: row;
     flex-wrap: wrap;
 
-    .item {
+    .tab-option {
       padding: 0.3125rem 0.5rem 0 0.5rem;
       background: var(--t5e-header-background);
       border: 0.0625rem solid transparent;
@@ -54,18 +56,18 @@
       &:hover {
         color: var(--t5e-primary-accent);
       }
-    }
 
-    .item.active {
-      background: transparent;
-      border: 0.0625rem solid var(--t5e-light-color);
-      border-bottom-color: transparent;
-      font-weight: 700;
-      cursor: default;
-      text-shadow: none;
+      &.active {
+        background: transparent;
+        border: 0.0625rem solid var(--t5e-light-color);
+        border-bottom-color: transparent;
+        font-weight: 700;
+        cursor: default;
+        text-shadow: none;
 
-      &:hover {
-        color: inherit;
+        &:hover {
+          color: inherit;
+        }
       }
     }
 

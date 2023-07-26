@@ -62,7 +62,7 @@ export class Tidy5eKgarItemSheet extends dnd5e.applications.item.ItemSheet5e {
       return;
     }
 
-    let t = this.element.find('.window-title')[0];
+    let t = this.element.get(0).querySelector('.window-title');
     if (t.hasChildNodes()) t = t.childNodes[0];
     t.textContent = this.title;
     this.store.set(await this.getData());

@@ -32,4 +32,5 @@ export const CONSTANTS = {
     custom: 'T5EK.ClassCustom',
   },
   HOOKS_RENDERING_CHARACTER_TABS: 'renderTidy5eKgarCharacterTabs',
+  TAB_OPTION_CLASS: 'tab-option',
 } as const;
