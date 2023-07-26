@@ -41,7 +41,7 @@
     if (e.key == 'Enter') {
       e.preventDefault();
       e.stopPropagation();
-      $store.actor.update({ name: characterName });
+      context.actor.update({ name: characterName });
     }
   }
 
@@ -51,8 +51,8 @@
     sheetFunctions.activateListeners();
   });
 
-  let playerName = FoundryAdapter.tryGetFlag($store.actor, 'playerName');
-  let characterName = $store.actor.name;
+  let playerName = FoundryAdapter.tryGetFlag(context.actor, 'playerName');
+  let characterName = context.actor.name;
 
   /*
   Loop through items
@@ -63,28 +63,28 @@
   */
 
   const classAndSubclassSummaries = Array.from(
-    FoundryAdapter.getClassAndSubclassSummaries($store.actor).values()
+    FoundryAdapter.getClassAndSubclassSummaries(context.actor).values()
   );
 
   const characterSummaryEntries =
-    FoundryAdapter.getActorCharacterSummaryEntries($store);
+    FoundryAdapter.getActorCharacterSummaryEntries(context);
 
-  $: abilities = Object.entries<any>($store.abilities);
+  $: abilities = Object.entries<any>(context.abilities);
 
   const sizes: TidyDropdownOption[] = Object.entries(
-    $store.config.actorSizes
+    context.config.actorSizes
   ).map(([abbreviation, size]) => ({
     value: abbreviation,
     text: size as string,
   }));
 
   const currentSize: TidyDropdownOption = {
-    value: $store.system.traits.size,
-    text: $store.config.actorSizes[$store.system.traits.size],
+    value: context.system.traits.size,
+    text: context.config.actorSizes[context.system.traits.size],
   };
 
   const allowJournal =
-    $store.owner && !SettingsProvider.settings.journalTabDisabled.get();
+    context.owner && !SettingsProvider.settings.journalTabDisabled.get();
 
   // TODO: Put this somewhere safe, and allow the Tidy 5e API to expose the base tab set for making changes to it.
   const tabs: Tab[] = [
@@ -93,7 +93,7 @@
       displayName: 'DND5E.Attributes',
       content: {
         component: AttributesTab,
-        props: { context: $store, sheetFunctions },
+        props: { context: context, sheetFunctions },
       },
     },
     {
@@ -101,7 +101,7 @@
       displayName: 'DND5E.Inventory',
       content: {
         component: InventoryTab,
-        props: { context: $store, sheetFunctions },
+        props: { context: context, sheetFunctions },
       },
     },
     {
@@ -109,7 +109,7 @@
       displayName: 'DND5E.Spellbook',
       content: {
         component: SpellbookTab,
-        props: { context: $store, sheetFunctions },
+        props: { context: context, sheetFunctions },
       },
     },
     {
@@ -117,7 +117,7 @@
       displayName: 'DND5E.Features',
       content: {
         component: FeaturesTab,
-        props: { context: $store, sheetFunctions },
+        props: { context: context, sheetFunctions },
       },
     },
     {
@@ -125,7 +125,7 @@
       displayName: 'DND5E.Effects',
       content: {
         component: EffectsTab,
-        props: { context: $store, sheetFunctions },
+        props: { context: context, sheetFunctions },
       },
     },
     {
@@ -133,7 +133,7 @@
       displayName: 'DND5E.Biography',
       content: {
         component: BiographyTab,
-        props: { context: $store, sheetFunctions },
+        props: { context: context, sheetFunctions },
       },
     },
   ];
@@ -144,17 +144,17 @@
       displayName: 'T5EK.Journal',
       content: {
         component: JournalTab,
-        props: { context: $store },
+        props: { context: context },
       },
     });
   }
 
   Hooks.call(CONSTANTS.HOOKS_RENDERING_CHARACTER_TABS, {
     tabs,
-    context: $store,
+    context: context,
   });
 
-  console.log($store);
+  console.log(context);
 </script>
 
 {#if context.warnings.length}
