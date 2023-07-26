@@ -76,7 +76,7 @@
       </ItemTableColumn>
       <ItemTableColumn baseWidth={classicControlsBaseWidth} />
     </ItemTableHeaderRow>
-    {#each spells as spell}
+    {#each spells as spell (spell.id)}
       {@const ctx = context.itemContext[spell.id]}
       {@const spellImgUrl = FoundryAdapter.getSpellImageUrl(context, spell)}
       <ItemTableRow

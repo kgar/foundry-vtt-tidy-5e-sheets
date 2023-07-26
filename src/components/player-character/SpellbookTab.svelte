@@ -102,7 +102,7 @@
 </ItemFilters>
 
 <ListContainer>
-  {#each context.spellbook as section}
+  {#each context.spellbook as section (section.label)}
     <FilteredItems
       {searchCriteria}
       items={tryFilterByClass(section.spells)}
