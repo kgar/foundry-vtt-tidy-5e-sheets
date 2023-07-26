@@ -1,5 +1,5 @@
 import { FoundryAdapter } from '../foundry/foundry-adapter';
-import Tidy5eSheet from './Tidy5eSheet.svelte';
+import Tidy5eCharacterSheetContent from './Tidy5eCharacterSheetContent.svelte';
 import { error, log } from 'src/utils/logging';
 import { SheetParameter } from 'src/utils/sheet-parameter';
 import { SettingsProvider } from 'src/settings/settings';
@@ -8,8 +8,7 @@ import type { Actor5e } from 'src/types/actor';
 
 const ActorSheet5eCharacter = FoundryAdapter.getActorSheetClass();
 
-export class Tidy5eSheetKgar extends ActorSheet5eCharacter {
-  sheet?: Tidy5eSheet;
+export class Tidy5eCharacterSheet extends ActorSheet5eCharacter {
   currentTabParam: SheetParameter<string>;
 
   constructor(...args: any[]) {
@@ -43,7 +42,7 @@ export class Tidy5eSheetKgar extends ActorSheet5eCharacter {
 
   async activateListeners(html: { get: (index: 0) => HTMLElement }) {
     const node = html.get(0);
-    this.sheet = new Tidy5eSheet({
+    new Tidy5eCharacterSheetContent({
       target: node,
       props: {
         sheetFunctions: {

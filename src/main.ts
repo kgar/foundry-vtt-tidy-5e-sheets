@@ -1,5 +1,5 @@
 import { FoundryAdapter } from './foundry/foundry-adapter';
-import { Tidy5eSheetKgar } from './sheets/character';
+import { Tidy5eCharacterSheet } from './sheets/Tidy5eCharacterSheet';
 import './scss/core.scss';
 import { initSettings } from './settings/settings';
 import { Tidy5eKgarUserSettings } from './settings/user-settings-form';
@@ -19,7 +19,7 @@ declare global {
   var dnd5e: globalThisDnd5e;
 }
 
-Actors.registerSheet('dnd5e', Tidy5eSheetKgar, {
+Actors.registerSheet('dnd5e', Tidy5eCharacterSheet, {
   types: ['character'],
   makeDefault: true,
   label: 'T5EK.Tidy5eSheet',
@@ -96,7 +96,7 @@ function isTidy5eKgarSheet(sheetClass: string | undefined) {
       .id?.replace('dnd5e.', '');
   }
 
-  return justTheClass === Tidy5eSheetKgar.name;
+  return justTheClass === Tidy5eCharacterSheet.name;
   // TODO: Check for more supported KGar sheets in this way.
 }
 
