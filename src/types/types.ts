@@ -13,11 +13,13 @@ export type SheetFunctions = {
   isFilterActive: (setName: string, filterName: string) => boolean;
 };
 
-export type Tab<T extends SvelteComponent<any, any, any> = any> = {
+// TODO: Make this generic in such a way that correct props are actually required and that an array of tabs can have hetergeneity of component types without a crazy TS type
+export type Tab<
+  T extends SvelteComponent<any, any, any> = SvelteComponent<any, any, any>
+> = {
   id: string;
   displayName: string;
   content: {
-    // TODO: Make this generic so that correct props are actually required
     component: ComponentType<T>;
     props: ComponentProps<T>;
   };
