@@ -26,13 +26,12 @@
   import { CONSTANTS } from 'src/constants';
   import { submitText } from './form';
   import AllowEditLock from 'src/components/shared/AllowEditLock.svelte';
-  import Tabs from 'src/components/shared/Tabs.svelte';
+  import Tabs from 'src/components/tabs/Tabs.svelte';
+  import TabContents from 'src/components/tabs/TabContents.svelte';
 
   export let debug: any = 'Put any debug information here, if ya need it.';
   export let sheetFunctions: SheetFunctions;
   export let currentTabParam: SheetParameter<string>;
-  export let tabToScrollTopMap: Map<string, number>;
-  export let scrollView: HTMLElement | undefined = undefined;
   export let isEditable: boolean;
   export let context: ActorSheetContext;
 
@@ -89,7 +88,7 @@
   const tabs: Tab[] = [
     {
       id: 'attributes',
-      displayName: localize('DND5E.Attributes'),
+      displayName: 'DND5E.Attributes',
       content: {
         component: AttributesTab,
         props: { context, sheetFunctions },
@@ -97,7 +96,7 @@
     },
     {
       id: 'inventory',
-      displayName: localize('DND5E.Inventory'),
+      displayName: 'DND5E.Inventory',
       content: {
         component: InventoryTab,
         props: { context, sheetFunctions },
@@ -105,7 +104,7 @@
     },
     {
       id: 'spellbook',
-      displayName: localize('DND5E.Spellbook'),
+      displayName: 'DND5E.Spellbook',
       content: {
         component: SpellbookTab,
         props: { context, sheetFunctions },
@@ -113,7 +112,7 @@
     },
     {
       id: 'features',
-      displayName: localize('DND5E.Features'),
+      displayName: 'DND5E.Features',
       content: {
         component: FeaturesTab,
         props: { context, sheetFunctions },
@@ -121,7 +120,7 @@
     },
     {
       id: 'effects',
-      displayName: localize('DND5E.Effects'),
+      displayName: 'DND5E.Effects',
       content: {
         component: EffectsTab,
         props: { context, sheetFunctions },
@@ -129,7 +128,7 @@
     },
     {
       id: 'biography',
-      displayName: localize('DND5E.Biography'),
+      displayName: 'DND5E.Biography',
       content: {
         component: BiographyTab,
         props: { context, sheetFunctions },
@@ -140,7 +139,7 @@
   if (allowJournal) {
     tabs.push({
       id: 'journal',
-      displayName: localize('T5EK.Journal'),
+      displayName: 'T5EK.Journal',
       content: {
         component: JournalTab,
         props: { context },
@@ -402,11 +401,7 @@
 </Tabs>
 
 <section class="sheet-body">
-  {#each tabs as tab (tab.id)}
-    <section class="tab {tab.id}" class:active={selectedTabId === tab.id}>
-      <svelte:component this={tab.content.component} {...tab.content.props} />
-    </section>
-  {/each}
+  <TabContents {tabs} {selectedTabId} />
 </section>
 
 <!-- Cross-cutting: Item Info Card -->
@@ -419,47 +414,25 @@
     background: var(--t5e-header-background);
   }
 
-  .tab {
-    height: 100%;
-    flex-direction: column;
-    scrollbar-width: thin;
-    scrollbar-color: #782e22 #0000;
-    display: none;
+  :global(.tab.attributes) {
+    overflow-y: scroll;
+    padding-right: 0.75rem;
+  }
 
-    &.active {
-      display: flex;
-    }
+  :global(.tab.biography),
+  :global(.tab.journal) {
+    align-items: flex-start;
+    flex-direction: row;
+    padding-right: 0.75rem;
+    overflow-x: inherit;
+  }
 
-    &.attributes {
-      overflow-y: scroll;
-      padding-right: 0.75rem;
-    }
+  :global(.tab.biography),
+  :global(.tab.journal) {
+    font-size: 0.8125rem;
+  }
 
-    &.biography,
-    &.journal {
-      align-items: flex-start;
-      flex-direction: row;
-      padding-right: 0.75rem;
-      overflow-x: inherit;
-    }
-
-    &.biography,
-    &.journal {
-      font-size: 0.8125rem;
-    }
-
-    &.biography {
-      flex-wrap: wrap;
-    }
-
-    &.grid .toggle-grid,
-    .toggle-list {
-      display: none;
-    }
-
-    .toggle-grid,
-    &.grid .toggle-list {
-      display: inline-block;
-    }
+  :global(.tab.biography) {
+    flex-wrap: wrap;
   }
 </style>

@@ -1,0 +1,49 @@
+&.item {
+  min-height: 31.25rem;
+
+  .window-content {
+    padding: 0;
+
+    form {
+      height: 100%;
+      overflow: hidden;
+    }
+  }
+
+  a:hover {
+    text-shadow: none;
+  }
+
+  input[type='checkbox'],
+  button,
+  select {
+    cursor: pointer;
+    font-family: var(--t5e-signika);
+  }
+
+  button,
+  select {
+    border: none;
+    color: var(--t5e-primary-font);
+  }
+
+  select {
+    padding: 0;
+  }
+
+  input[type='text'] {
+    border: none;
+    padding: 0 0.375rem;
+    color: var(--t5e-primary-font);
+  }
+
+  input[type='text']:hover,
+  input[type='text']:focus {
+    border: none;
+    box-shadow: 0 0 0 0.0625rem var(--t5e-primary-accent) inset;
+  }
+
+//   input[type='checkbox'] {
+//     margin: 0.125rem;
+//   }
+}

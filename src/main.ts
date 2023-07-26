@@ -34,13 +34,21 @@ FoundryAdapter.onReady(async () => {
   initSettings();
 
   // TODO: Remove after debugging:
-  if (import.meta.env.VITE_COMPARE_SAMPLES === 'true') {
-    debugCompareSheets(
+  const compareActorSamples = import.meta.env.VITE_COMPARE_SAMPLE_ACTORS;
+  if (compareActorSamples === 'true') {
+    debugCompareActorSheets(
       import.meta.env.VITE_TIDY5E_ACTOR_SAMPLE_ID,
       import.meta.env.VITE_KGAR_ACTOR_SAMPLE_ID
     );
   }
-
+  
+  const compareItemSamples = import.meta.env.VITE_COMPARE_SAMPLE_ITEMS;
+  if (compareItemSamples === 'true') {
+    debugCompareItemSheets(
+      import.meta.env.VITE_TIDY5E_ITEM_SAMPLE_ID,
+      import.meta.env.VITE_KGAR_ITEM_SAMPLE_ID
+    );
+  }
 });
 
 Hooks.on('getActorSheetHeaderButtons', (sheet: any, buttons: any) => {
@@ -98,7 +106,10 @@ function delay(ms: number) {
   });
 }
 
-async function debugCompareSheets(tidySheetId: string, kgarSheetId: string) {
+async function debugCompareActorSheets(
+  tidySheetId: string,
+  kgarSheetId: string
+) {
   const tidySheet = game.actors.get(tidySheetId)?.sheet;
 
   if (!tidySheet) {
@@ -108,16 +119,16 @@ async function debugCompareSheets(tidySheetId: string, kgarSheetId: string) {
   }
 
   tidySheet.render(true);
-  await delay(500);
-  tidySheet.setPosition({
-    width: 740,
-    height: 840,
-    left: 69,
-    top: 56.5,
-    scale: 1,
-    zIndex: 108,
+  delay(1000).then(() => {
+    tidySheet.setPosition({
+      width: 740,
+      height: 840,
+      left: 69,
+      top: 56.5,
+      scale: 1,
+      zIndex: 108,
+    });
   });
-  await delay(150);
 
   const kgarSheet = game.actors.get(kgarSheetId)?.sheet;
 
@@ -128,13 +139,55 @@ async function debugCompareSheets(tidySheetId: string, kgarSheetId: string) {
   }
 
   kgarSheet.render(true);
-  await delay(500);
-  kgarSheet.setPosition({
-    width: 720,
-    height: 840,
-    left: 814,
-    top: 53.5,
-    scale: 1,
-    zIndex: 109,
+  delay(1000).then(() => {
+    kgarSheet.setPosition({
+      width: 720,
+      height: 840,
+      left: 814,
+      top: 53.5,
+      scale: 1,
+      zIndex: 109,
+    });
+  });
+}
+
+async function debugCompareItemSheets(
+  tidySheetId: string,
+  kgarSheetId: string
+) {
+  const tidySheet = game.items.get(tidySheetId)?.sheet;
+
+  if (!tidySheet) {
+    ui.notifications.warn(
+      'KGAR TIDY 5E DEBUG | Tidy 5e sheet not found; update the ID'
+    );
+  }
+
+  tidySheet.render(true);
+  delay(500).then(() => {
+    tidySheet.setPosition({
+      left: 69,
+      top: 140,
+      scale: 1,
+      zIndex: 108,
+    });
+  });
+
+  const kgarSheet = game.items.get(kgarSheetId)?.sheet;
+
+  if (!kgarSheet) {
+    ui.notifications.warn(
+      'KGAR TIDY 5E DEBUG | Kgar sheet not found; update the ID'
+    );
+  }
+
+  kgarSheet.render(true);
+  delay(500).then(() => {
+    kgarSheet.setPosition({
+      left: 814,
+      top: 140,
+      scale: 1,
+      zIndex: 109,
+    });
   });
 }

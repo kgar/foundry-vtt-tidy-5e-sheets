@@ -11,7 +11,6 @@ const ActorSheet5eCharacter = FoundryAdapter.getActorSheetClass();
 export class Tidy5eSheetKgar extends ActorSheet5eCharacter {
   sheet?: Tidy5eSheet;
   currentTabParam: SheetParameter<string>;
-  tabToScrollTopMap: Map<string, number> = new Map<string, number>();
 
   constructor(...args: any[]) {
     super(...args);
@@ -60,7 +59,6 @@ export class Tidy5eSheetKgar extends ActorSheet5eCharacter {
           isFilterActive: this.isFilterActive.bind(this),
         },
         currentTabParam: this.currentTabParam,
-        tabToScrollTopMap: this.tabToScrollTopMap,
         isEditable: this.isEditable,
         context: {
           ...(await super.getData(this.options)),

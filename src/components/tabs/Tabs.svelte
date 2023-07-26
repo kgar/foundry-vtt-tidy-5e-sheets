@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { Tab } from 'src/types/types';
   import { createEventDispatcher } from 'svelte';
 
@@ -12,6 +13,8 @@
     selectedTabId = tab.id;
     dispatcher('tabSelected', tab);
   }
+
+  const localize = FoundryAdapter.localize;
 </script>
 
 <nav class="tabs {cssClass}">
@@ -19,7 +22,8 @@
     <a
       class="item"
       class:active={tab.id === selectedTabId}
-      on:click={() => selectTab(tab)}>{tab.displayName}</a
+      class:no-border-on-last-tab={!$$slots['tab-end']}
+      on:click={() => selectTab(tab)}>{localize(tab.displayName)}</a
     >
   {/each}
   <slot name="tab-end" />
@@ -67,6 +71,10 @@
 
     .item:first-child.active {
       border-left-color: transparent;
+    }
+
+    .item:last-child.no-border-on-last-tab.active {
+      border-right-color: transparent;
     }
   }
 </style>

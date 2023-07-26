@@ -1,5 +1,6 @@
 export const CONSTANTS = {
   MODULE_ID: 'tidy5e-sheet-kgar',
+  ITEM_TYPE_EQUIPMENT: 'equipment',
   /**
    * Main button pressed, usually the left button or the un-initialized state
    */

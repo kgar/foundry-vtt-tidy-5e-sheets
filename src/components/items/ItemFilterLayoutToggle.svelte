@@ -1,6 +1,6 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-    import type { ItemLayoutMode } from 'src/types/types';
+  import type { ItemLayoutMode } from 'src/types/types';
   import { createEventDispatcher } from 'svelte';
 
   export let mode: ItemLayoutMode;
@@ -12,22 +12,22 @@
 <li class="toggle-layout" title="todo: implement">
   {#if mode === 'grid'}
     <i
-      class="fas fa-th-large toggle-grid"
-      title={localize('T5EK.GridLayout')}
-      on:click={() => dispatcher('toggle')}
-      role="button"
-      tabindex="0"
-    />
-  {:else if mode === 'list'}
-    <i
       class="fas fa-th-list toggle-list"
       title={localize('T5EK.ListLayout')}
       on:click={() => dispatcher('toggle')}
       role="button"
       tabindex="0"
     />
+  {:else if mode === 'list'}
+    <i
+      class="fas fa-th-large toggle-grid"
+      title={localize('T5EK.GridLayout')}
+      on:click={() => dispatcher('toggle')}
+      role="button"
+      tabindex="0"
+    />
   {:else}
-    <span title="Grid mode not supported.">😞</span>
+    <span title="Layout mode not supported.">😞</span>
   {/if}
 </li>
 

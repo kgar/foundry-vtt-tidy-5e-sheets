@@ -1,18 +1,45 @@
 ## To Do
 
 - [ ] Create a subclass of Application with the empty article template
-- [ ] Scaffold
-  - [ ] Header
-  - [ ] Tabs
-    - [ ] Description
-    - [ ] Details
-    - [ ] Effects
-- [ ] Implement Description Tab
-- [ ] Implement Details Tab
-- [ ] Implement Effects tab
+- [ ] Create components for each known shared tab
+  - [ ] {{> "dnd5e.item-advancement"}}
+  - [ ] {{> "dnd5e.item-description"}}
+  - [ ] {{> "dnd5e.active-effects"}}
+  - [ ] {{> "dnd5e.item-advancement"}}
+- [ ] Create components for each item type, and scaffold their known tabs
+  - [ ] `background.hbs`
+  - [ ] `backpack.hbs`
+  - [ ] `class.hbs`
+  - [ ] `consumable.hbs`
+  - [ ] `equipment.hbs`
+  - [ ] `feat.hbs`
+  - [ ] `loot.hbs`
+  - [ ] `spell.hbs`
+  - [ ] `subclass.hbs`
+  - [ ] `tool.hbs`
+  - [ ] `weapon.hbs`
 - [ ] Implement auto-resize
 - [ ] Troubleshoot: I'm getting an error sometimes about a missing form tag. I may have to use the form tag template... or suppress the submit function
   - [ ] Put a debugger; tag on submit to see if I can prevent it from submitting.
+
+
+## How does it work?
+
+Item Sheet is actually a large switch-point to a variety of different sheets.
+
+Look at how they break it down into different templates, based on which item type it is:
+
+```js
+  get template() {
+    return `systems/dnd5e/templates/items/${this.item.type}.hbs`;
+  }
+```
+
+### What Should We Do?
+
+If I am going to the svelte-y way, then we would do a switch in `activateListeners()` on `item.type`.
+
+**What about the default case?** It would be a good idea to provide a view which explains that Tidy 5e has not implemented the target item type. Explain what the type is, provide a link to the repo to file an issue, etc.
 
 
 ## Tidy 5e Item Sheet impl
@@ -761,3 +788,2448 @@ export default class ItemSheet5e extends ItemSheet {
   }
 }
 ```
+
+## Impls of item types
+
+### background.hbs
+
+```hbs
+<form class="{{cssClass}} flexcol" autocomplete="off">
+
+  {{!-- Item Sheet Header --}}
+  <header class="sheet-header flexrow">
+    <img class="profile" src="{{item.img}}" data-tooltip="{{item.name}}" data-edit="img"/>
+
+    <div class="header-details flexrow">
+      <h1 class="charname">
+        <input name="name" type="text" value="{{item.name}}" placeholder="{{ localize 'DND5E.BackgroundName' }}"/>
+      </h1>
+
+      <div class="item-subtitle">
+        <h4 class="item-type">{{itemType}}</h4>
+        <span class="item-status">{{itemStatus}}</span>
+      </div>
+
+      <ul class="summary flexrow">
+        <li>
+          <input type="text" name="system.source" value="{{system.source}}" placeholder="{{ localize 'DND5E.Source' }}"/>
+        </li>
+      </ul>
+    </div>
+  </header>
+
+  {{!-- Item Sheet Navigation --}}
+  <nav class="sheet-navigation tabs" data-group="primary">
+      <a class="item active" data-tab="description">{{ localize "DND5E.Description" }}</a>
+      <a class="item" data-tab="advancement">{{ localize "DND5E.AdvancementTitle" }}</a>
+  </nav>
+
+  {{!-- Item Sheet Body --}}
+  <section class="sheet-body">
+
+    {{!-- Description Tab --}}
+    <div class="tab flexrow active" data-group="primary" data-tab="description">
+      {{editor descriptionHTML target="system.description.value" button=true editable=editable engine="prosemirror"
+               collaborate=false}}
+    </div>
+
+    {{!-- Advancement Tab --}}
+    {{> "dnd5e.item-advancement"}}
+  </section>
+</form>
+
+```
+
+### backpack.hbs
+
+```hbs
+<form class="{{cssClass}} flexcol" autocomplete="off">
+
+	{{!-- Item Sheet Header --}}
+	<header class="sheet-header flexrow">
+		<img class="profile" src="{{item.img}}" data-tooltip="{{item.name}}" data-edit="img"/>
+
+		<div class="header-details flexrow">
+			<h1 class="charname">
+				<input name="name" type="text" value="{{item.name}}" placeholder="{{ localize 'DND5E.ItemName' }}"/>
+			</h1>
+
+			<div class="item-subtitle">
+				<h4 class="item-type">{{itemType}}</h4>
+				<span class="item-status">{{itemStatus}}</span>
+			</div>
+
+			<ul class="summary flexrow">
+				<li>
+					<select name="system.rarity">
+						{{selectOptions config.itemRarity selected=system.rarity blank=""}}
+					</select>
+				</li>
+				<li>
+					<input type="text" name="system.source" value="{{system.source}}" placeholder="{{ localize 'DND5E.Source' }}"/>
+				</li>
+			</ul>
+		</div>
+	</header>
+
+	{{!-- Item Sheet Navigation --}}
+	<nav class="sheet-navigation tabs" data-group="primary">
+		<a class="item active" data-tab="description">{{ localize "DND5E.Description" }}</a>
+		<a class="item" data-tab="details">{{ localize "DND5E.Details" }}</a>
+	</nav>
+
+	{{!-- Item Sheet Body --}}
+	<section class="sheet-body">
+
+		{{!-- Description Tab --}}
+		{{> "dnd5e.item-description"}}
+
+		{{!-- Details Tab --}}
+		<div class="tab details" data-group="primary" data-tab="details">
+			<h3 class="form-header">{{localize 'DND5E.ItemContainerDetails'}}</h3>
+
+			<div class="form-group">
+				<label>{{localize 'DND5E.ItemContainerCapacity'}}</label>
+				<div class="form-fields">
+					{{numberInput system.capacity.value name="system.capacity.value" placeholder="&mdash;"}}
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label>{{localize 'DND5E.ItemContainerCapacityType'}}</label>
+				<select name="system.capacity.type">
+					{{selectOptions config.itemCapacityTypes selected=system.capacity.type}}
+				</select>
+			</div>
+
+			<div class="form-group stacked">
+				<label>{{localize 'DND5E.ItemContainerProperties'}}</label>
+				<label class="checkbox">
+					<input type="checkbox" name="system.capacity.weightless" {{checked system.capacity.weightless}}>
+					{{localize 'DND5E.ItemContainerWeightless'}}
+				</label>
+			</div>
+	</section>
+</form>
+
+```
+
+### class.hbs
+
+```hbs
+<form class="{{cssClass}} flexcol" autocomplete="off">
+
+    {{!-- Item Sheet Header --}}
+    <header class="sheet-header flexrow">
+        <img class="profile" src="{{item.img}}" data-tooltip="{{item.name}}" data-edit="img"/>
+
+        <div class="header-details flexrow">
+            <h1 class="charname">
+                <input name="name" type="text" value="{{item.name}}" placeholder="{{ localize 'DND5E.ClassName' }}"/>
+            </h1>
+
+            <div class="item-subtitle">
+                <h4 class="item-type">{{itemType}}</h4>
+                <span class="item-status">{{itemStatus}}</span>
+            </div>
+
+            <ul class="summary flexrow">
+                <li>
+                    <input type="text" name="system.source" value="{{system.source}}" placeholder="{{ localize 'DND5E.Source' }}"/>
+                </li>
+            </ul>
+        </div>
+    </header>
+
+    {{!-- Item Sheet Navigation --}}
+    <nav class="sheet-navigation tabs" data-group="primary">
+        <a class="item active" data-tab="description">{{ localize "DND5E.Description" }}</a>
+        <a class="item" data-tab="details">{{ localize "DND5E.Details" }}</a>
+        <a class="item" data-tab="advancement">{{ localize "DND5E.AdvancementTitle" }}</a>
+    </nav>
+
+    {{!-- Item Sheet Body --}}
+    <section class="sheet-body">
+
+        {{!-- Description Tab --}}
+        <div class="tab flexrow active" data-group="primary" data-tab="description">
+            {{editor descriptionHTML target="system.description.value" button=true editable=editable
+                     engine="prosemirror" collaborate=false}}
+        </div>
+
+        {{!-- Details Tab --}}
+        <div class="tab details" data-group="primary" data-tab="details">
+
+            {{!-- Identifier --}}
+            <div class="form-group">
+                <label>{{ localize "DND5E.Identifier" }}</label>
+                <div class="form-fields">
+                    <input type="text" name="system.identifier" value="{{system.identifier}}"
+                           placeholder="{{item.identifier}}">
+                </div>
+                <p class="hint">
+                    {{{localize "DND5E.ClassIdentifierHint" identifier=item.identifier}}}
+                </p>
+            </div>
+
+            {{!-- Class Hit Dice --}}
+            <div class="form-group">
+                <label>{{localize "DND5E.HitDice"}}</label>
+                <div class="form-fields">
+                    <select name="system.hitDice">
+                        {{#select system.hitDice}}
+                        {{#each config.hitDieTypes}}
+                        <option value="{{this}}">{{this}}</option>
+                        {{/each}}
+                        {{/select}}
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>{{localize "DND5E.HitDiceUsed"}}</label>
+                <div class="form-fields">
+                    {{numberInput system.hitDiceUsed name="system.hitDiceUsed" placeholder="0"}}
+                </div>
+            </div>
+
+            {{!-- Spellcasting --}}
+            <h3 class="form-header">{{localize "DND5E.Spellcasting"}}</h3>
+            {{> "dnd5e.item-spellcasting"}}
+
+            {{!-- Proficiencies --}}
+            <h3 class="form-header">{{localize "DND5E.Proficiency"}}</h3>
+            <div class="form-group">
+                <label>
+                    {{ localize "DND5E.ClassSaves" }}
+                    {{#if editable}}
+                    <a class="trait-selector class-saves" data-target="system.saves" data-options="saves">
+                        <i class="fas fa-edit"></i>
+                    </a>
+                    {{/if}}
+                </label>
+                <div class="form-fields">
+                    <ul class="traits-list">
+                        {{#each system.saves}}
+                            <li class="tag {{this}}">{{lookup (lookup ../config.abilities this) "label"}}</li>
+                        {{/each}}
+                    </ul>
+                </div>
+            </div>
+
+            {{!-- Level 1 skills --}}
+            <div class="form-group">
+                <label>{{localize "DND5E.ClassSkillsNumber"}}</label>
+                <div class="form-fields">
+                    {{numberInput system.skills.number name="system.skills.number" placeholder="0"}}
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>
+                    {{localize "DND5E.ClassSkillsEligible"}}
+                    {{#if editable}}
+                    <a class="trait-selector class-skills" data-target="system.skills.choices" data-options="skills.choices">
+                        <i class="fas fa-edit"></i>
+                    </a>
+                    {{/if}}
+                </label>
+                <div class="form-fields">
+                    <ul class="traits-list">
+                        {{#each system.skills.choices}}
+                        <li class="tag {{this}}">{{lookup (lookup ../config.skills this) "label"}}</li>
+                        {{/each}}
+                    </ul>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>
+                    {{localize "DND5E.ClassSkillsChosen"}}
+                    {{#if editable}}
+                    <a class="trait-selector class-skills" data-target="system.skills" data-options="skills">
+                        <i class="fas fa-edit"></i>
+                    </a>
+                    {{/if}}
+                </label>
+                <div class="form-fields">
+                    <ul class="traits-list">
+                        {{#each system.skills.value}}
+                            <li class="tag {{this}}">{{lookup (lookup ../config.skills this) "label"}}</li>
+                        {{/each}}
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        {{!-- Advancement Tab --}}
+        {{> "dnd5e.item-advancement"}}
+
+    </section>
+</form>
+```
+
+### consumables.hbs
+
+```hbs
+<form class="{{cssClass}} flexcol" autocomplete="off">
+
+    {{!-- Item Sheet Header --}}
+    <header class="sheet-header flexrow">
+        <img class="profile" src="{{item.img}}" data-tooltip="{{item.name}}" data-edit="img"/>
+
+        <div class="header-details flexrow">
+            <h1 class="charname">
+                <input name="name" type="text" value="{{item.name}}" placeholder="{{ localize 'DND5E.ItemName' }}"/>
+            </h1>
+
+            <div class="item-subtitle">
+                <h4 class="item-type">{{itemType}}</h4>
+                <span class="item-status">{{itemStatus}}</span>
+            </div>
+
+            <ul class="summary flexrow">
+                <li>
+                    {{lookup config.consumableTypes system.consumableType }}
+                </li>
+                <li>
+                    <select name="system.rarity">
+                        {{selectOptions config.itemRarity selected=system.rarity blank=""}}
+                    </select>
+                </li>
+                <li>
+                    <input type="text" name="system.source" value="{{system.source}}" placeholder="{{ localize 'DND5E.Source' }}"/>
+                </li>
+            </ul>
+        </div>
+    </header>
+
+    {{!-- Item Sheet Navigation --}}
+    <nav class="sheet-navigation tabs" data-group="primary">
+        <a class="item active" data-tab="description">{{ localize "DND5E.Description" }}</a>
+        <a class="item" data-tab="details">{{ localize "DND5E.Details" }}</a>
+        <a class="item" data-tab="effects">{{ localize "DND5E.Effects" }}</a>
+    </nav>
+
+    {{!-- Item Sheet Body --}}
+    <section class="sheet-body">
+
+        {{!-- Description Tab --}}
+        {{> "dnd5e.item-description"}}
+
+        {{!-- Details Tab --}}
+        <div class="tab details" data-group="primary" data-tab="details">
+            <h3 class="form-header">{{ localize "DND5E.ItemConsumableDetails" }}</h3>
+
+            {{!-- Consumable Type --}}
+            <div class="form-group">
+                <label>{{ localize "DND5E.ItemConsumableType" }}</label>
+                <select name="system.consumableType">
+                    {{selectOptions config.consumableTypes selected=system.consumableType}}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>{{localize "DND5E.Attunement"}}</label>
+                <select name="system.attunement" data-dtype="Number">
+                    {{selectOptions config.attunements selected=system.attunement}}
+                </select>
+            </div>
+
+            <div class="form-group stacked">
+                <label>{{ localize "DND5E.ItemConsumableStatus" }}</label>
+                <label class="checkbox">
+                    <input type="checkbox" name="system.equipped" {{checked system.equipped}}/> {{ localize "DND5E.Equipped" }}
+                </label>
+                <label class="checkbox">
+                    <input type="checkbox" name="system.identified" {{checked system.identified}}/> {{ localize "DND5E.Identified" }}
+                </label>
+            </div>
+
+            <h3 class="form-header">{{ localize "DND5E.ItemConsumableUsage" }}</h3>
+
+            {{!-- Item Activation Template --}}
+            {{> "dnd5e.item-activation"}}
+            {{#if system.activation.type}}
+            <div class="form-group">
+                <label class="checkbox">
+                    <input type="checkbox" name="system.uses.autoDestroy" {{checked system.uses.autoDestroy}}/> {{ localize "DND5E.ItemDestroyEmpty" }}
+                </label>
+            </div>
+            {{/if}}
+
+            <h3 class="form-header">{{ localize "DND5E.ItemConsumableActivation" }}</h3>
+
+            {{!-- Item Action Template --}}
+            {{> "dnd5e.item-action"}}
+        </div>
+
+        {{!-- Effects Tab --}}
+        <div class="tab effects flexcol" data-group="primary" data-tab="effects">
+            {{> "dnd5e.active-effects"}}
+        </div>
+    </section>
+</form>
+```
+
+### equipment.hbs
+
+```hbs
+<form class="{{cssClass}} flexcol" autocomplete="off">
+
+    {{!-- Item Sheet Header --}}
+    <header class="sheet-header flexrow">
+        <img class="profile" src="{{item.img}}" data-tooltip="{{item.name}}" data-edit="img"/>
+
+        <div class="header-details flexrow">
+            <h1 class="charname">
+                <input name="name" type="text" value="{{item.name}}" placeholder="{{ localize 'DND5E.ItemName' }}"/>
+            </h1>
+
+            <div class="item-subtitle">
+                <h4 class="item-type">{{itemType}}</h4>
+                <span class="item-status">{{itemStatus}}</span>
+            </div>
+
+            <ul class="summary flexrow">
+                <li>
+                    {{lookup config.equipmentTypes system.armor.type }}
+                </li>
+                <li>
+                    <select name="system.rarity">
+                        {{selectOptions config.itemRarity selected=system.rarity blank=""}}
+                    </select>
+                </li>
+                <li>
+                    <input type="text" name="system.source" value="{{system.source}}" placeholder="{{ localize 'DND5E.Source' }}"/>
+                </li>
+            </ul>
+        </div>
+    </header>
+
+    {{!-- Item Sheet Navigation --}}
+    <nav class="sheet-navigation tabs" data-group="primary">
+        <a class="item active" data-tab="description">{{ localize "DND5E.Description" }}</a>
+        <a class="item" data-tab="details">{{ localize "DND5E.Details" }}</a>
+        <a class="item" data-tab="effects">{{ localize "DND5E.Effects" }}</a>
+    </nav>
+
+    {{!-- Item Sheet Body --}}
+    <section class="sheet-body">
+
+        {{!-- Description Tab --}}
+        {{> "dnd5e.item-description"}}
+
+        {{!-- Details Tab --}}
+        <div class="tab details" data-group="primary" data-tab="details">
+            <h3 class="form-header">{{ localize "DND5E.ItemEquipmentDetails" }}</h3>
+
+            {{!-- Equipment Type --}}
+            <div class="form-group">
+                <label>{{ localize "DND5E.ItemEquipmentType" }}</label>
+                <select name="system.armor.type">
+                    <option value=""></option>
+                    <optgroup label="{{ localize "DND5E.Armor" }}">
+                        {{selectOptions config.armorTypes selected=system.armor.type}}
+                    </optgroup>
+                    {{selectOptions config.miscEquipmentTypes selected=system.armor.type}}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>{{ localize "DND5E.ItemEquipmentBase" }}</label>
+                <select name="system.baseItem">
+                    {{selectOptions baseItems selected=system.baseItem blank=""}}
+                </select>
+            </div>
+
+            {{#unless system.isMountable}}
+            <div class="form-group">
+                <label>{{localize "DND5E.Attunement"}}</label>
+                <select name="system.attunement" data-dtype="Number">
+                    {{selectOptions config.attunements selected=system.attunement}}
+                </select>
+            </div>
+
+            {{!-- Equipment Status --}}
+            <div class="form-group stacked">
+                <label>{{ localize "DND5E.ItemEquipmentStatus" }}</label>
+                <label class="checkbox">
+                    <input type="checkbox" name="system.proficient" {{checked system.proficient}}/> {{ localize "DND5E.Proficient" }}
+                </label>
+                <label class="checkbox">
+                    <input type="checkbox" name="system.equipped" {{checked system.equipped}}/> {{ localize "DND5E.Equipped" }}
+                </label>
+                <label class="checkbox">
+                    <input type="checkbox" name="system.identified" {{checked system.identified}}/> {{ localize "DND5E.Identified" }}
+                </label>
+            </div>
+            {{/unless}}
+
+            {{!-- Armor Class --}}
+            {{#if (or system.isArmor system.isMountable)}}
+            <div class="form-group">
+                <label>{{ localize "DND5E.ArmorClass" }}</label>
+                <div class="form-fields">
+                    {{numberInput system.armor.value name="system.armor.value"}}
+                </div>
+            </div>
+            {{/if}}
+
+            {{#if hasDexModifier}}
+            {{!-- Dexterity Modifier --}}
+            <div class="form-group">
+                <label>{{ localize "DND5E.ItemEquipmentDexMod" }}</label>
+                <div class="form-fields">
+                    {{numberInput system.armor.dex name="system.armor.dex" placeholder=(localize "DND5E.Unlimited")}}
+                </div>
+            </div>
+            {{/if}}
+
+            {{#if system.isArmor}}
+            {{!-- Required Strength --}}
+            <div class="form-group">
+                <label>{{ localize "DND5E.ItemRequiredStr" }}</label>
+                <div class="form-fields">
+                    {{numberInput system.strength name="system.strength" placeholder=(localize "DND5E.None")}}
+                </div>
+            </div>
+
+            {{!-- Stealth Disadvantage --}}
+            <div class="form-group">
+                <label>{{ localize "DND5E.ItemEquipmentStealthDisav" }}</label>
+                <input type="checkbox" name="system.stealth" {{checked system.stealth}}/>
+            </div>
+            {{/if}}
+
+            {{#if system.isMountable}}
+            {{> "dnd5e.item-mountable"}}
+            <div class="form-group">
+                <label>{{localize 'DND5E.Speed'}}</label>
+                <div class="form-fields">
+                    {{numberInput system.speed.value name="system.speed.value" placeholder="0"}}
+                    <span class="sep">{{localize 'DND5E.FeetAbbr'}}</span>
+                    <input type="text" name="system.speed.conditions"
+                           value="{{system.speed.conditions}}">
+                </div>
+            </div>
+            {{/if}}
+
+            <h3 class="form-header">{{ localize "DND5E.ItemEquipmentUsage" }}</h3>
+
+            {{!-- Item Activation Template --}}
+            {{> "dnd5e.item-activation"}}
+
+            <h3 class="form-header">{{ localize "DND5E.ItemEquipmentAction" }}</h3>
+
+            {{!-- Item Action Template --}}
+            {{> "dnd5e.item-action"}}
+        </div>
+
+        {{!-- Effects Tab --}}
+        <div class="tab effects flexcol" data-group="primary" data-tab="effects">
+            {{> "dnd5e.active-effects"}}
+        </div>
+    </section>
+</form>
+```
+
+### feat.hbs
+
+```hbs
+<form class="{{cssClass}} flexcol" autocomplete="off">
+
+    {{!-- Item Sheet Header --}}
+    <header class="sheet-header flexrow">
+        <img class="profile" src="{{item.img}}" data-tooltip="{{item.name}}" data-edit="img"/>
+
+        <div class="header-details flexrow">
+            <h1 class="charname">
+                <input name="name" type="text" value="{{item.name}}" placeholder="{{ localize 'DND5E.ItemName' }}"/>
+            </h1>
+
+            <div class="item-subtitle">
+                <h4 class="item-type">{{itemType}}</h4>
+                <span class="item-status">{{itemStatus}}</span>
+            </div>
+
+            <ul class="summary flexrow">
+                <li>
+                    {{labels.featType}}
+                </li>
+                <li>
+                    <input type="text" name="system.requirements" value="{{system.requirements}}" placeholder="{{ localize 'DND5E.Requirements' }}"/>
+                </li>
+                <li>
+                    <input type="text" name="system.source" value="{{system.source}}" placeholder="{{ localize 'DND5E.Source' }}"/>
+                </li>
+            </ul>
+        </div>
+    </header>
+
+    {{!-- Item Sheet Navigation --}}
+    <nav class="sheet-navigation tabs" data-group="primary">
+        <a class="item active" data-tab="description">{{ localize "DND5E.Description" }}</a>
+        <a class="item" data-tab="details">{{ localize "DND5E.Details" }}</a>
+        <a class="item" data-tab="effects">{{ localize "DND5E.Effects" }}</a>
+    </nav>
+
+    {{!-- Item Sheet Body --}}
+    <section class="sheet-body">
+
+        {{!-- Description Tab --}}
+        {{> "dnd5e.item-description"}}
+
+        {{!-- Details Tab --}}
+        <div class="tab details" data-group="primary" data-tab="details">
+            <h3 class="form-header">{{localize "DND5E.ItemFeatureDetails"}}</h3>
+
+            {{!-- Feature Type --}}
+            <div class="form-group">
+                <label>{{localize "DND5E.ItemFeatureType"}}</label>
+                <select name="system.type.value">
+                    {{selectOptions config.featureTypes selected=system.type.value blank="" labelAttr="label"}}
+                </select>
+            </div>
+
+            {{#if featureSubtypes}}
+            <div class="form-group">
+                <label>
+                    {{localize "DND5E.ItemFeatureSubtype"
+                        category=(lookup (lookup config.featureTypes system.type.value) "label")}}
+                </label>
+                <select name="system.type.subtype">
+                    {{selectOptions featureSubtypes selected=system.type.subtype blank=""}}
+                </select>
+            </div>
+            {{/if}}
+
+            <h3 class="form-header">{{ localize "DND5E.FeatureUsage" }}</h3>
+
+            {{!-- Item Activation Template --}}
+            {{> "dnd5e.item-activation"}}
+
+            {{!-- Recharge Requirement --}}
+            {{#if system.activation.type}}
+            <div class="form-group recharge">
+                <label>{{ localize "DND5E.FeatureActionRecharge" }}</label>
+                <div class="form-fields">
+                    <span>{{ localize "DND5E.FeatureRechargeOn" }}</span>
+                    {{numberInput system.recharge.value name="system.recharge.value"
+                        placeholder=(localize "DND5E.FeatureRechargeResult")}}
+                    <label class="checkbox">
+                        {{ localize "DND5E.Charged" }}
+                        <input type="checkbox" name="system.recharge.charged" {{checked system.recharge.charged}}/>
+                    </label>
+                </div>
+            </div>
+            {{/if}}
+
+            <h3 class="form-header">{{ localize "DND5E.FeatureAttack" }}</h3>
+
+            {{!-- Item Action Template --}}
+            {{> "dnd5e.item-action"}}
+        </div>
+
+        {{!-- Effects Tab --}}
+        <div class="tab effects flexcol" data-group="primary" data-tab="effects">
+            {{> "dnd5e.active-effects"}}
+        </div>
+    </section>
+</form>
+```
+
+### loot.hbs
+
+```hbs
+<form class="{{cssClass}} flexcol" autocomplete="off">
+
+    {{!-- Item Sheet Header --}}
+    <header class="sheet-header loot-header flexrow">
+        <img class="profile" src="{{item.img}}" data-tooltip="{{item.name}}" data-edit="img"/>
+
+        <div class="header-details flexrow">
+            <h1 class="charname">
+                <input name="name" type="text" value="{{item.name}}" placeholder="{{ localize 'DND5E.ItemName' }}"/>
+            </h1>
+
+            <div class="item-subtitle">
+                <h4 class="item-type">{{itemType}}</h4>
+                <span class="item-status">{{itemStatus}}</span>
+            </div>
+
+            <ul class="summary flexrow">
+                <li>
+                    <select name="system.rarity">
+                        {{selectOptions config.itemRarity selected=system.rarity blank=""}}
+                    </select>
+                </li>
+                <li>
+                    <input type="text" name="system.source" value="{{system.source}}" placeholder="{{ localize 'DND5E.Source' }}"/>
+                </li>
+            </ul>
+        </div>
+    </header>
+
+    {{!-- Item Sheet Body --}}
+    <section class="sheet-body">
+        {{> "dnd5e.item-description"}}
+    </section>
+</form>
+```
+
+### spell.hbs
+
+```hbs
+<form class="{{cssClass}} flexcol" autocomplete="off">
+
+    {{!-- Item Sheet Header --}}
+    <header class="sheet-header flexrow">
+        <img class="profile" src="{{item.img}}" data-tooltip="{{item.name}}" data-edit="img"/>
+
+        <div class="header-details flexrow">
+            <h1 class="charname">
+                <input name="name" type="text" value="{{item.name}}" placeholder="{{ localize 'DND5E.SpellName' }}"/>
+            </h1>
+
+            <div class="item-subtitle">
+                <h4 class="item-type">{{itemType}}</h4>
+                <span class="item-status">{{itemStatus}}</span>
+            </div>
+
+            <ul class="summary flexrow">
+                <li>
+                    {{labels.level}}
+                </li>
+                <li>
+                    {{labels.school}}
+                </li>
+                <li>
+                    <input type="text" name="system.source" value="{{system.source}}" placeholder="{{ localize 'DND5E.Source' }}"/>
+                </li>
+            </ul>
+        </div>
+    </header>
+
+    {{!-- Item Sheet Navigation --}}
+    <nav class="sheet-navigation tabs" data-group="primary">
+        <a class="item active" data-tab="description">{{ localize "DND5E.Description" }}</a>
+        <a class="item" data-tab="details">{{ localize "DND5E.Details" }}</a>
+        <a class="item" data-tab="effects">{{ localize "DND5E.Effects" }}</a>
+    </nav>
+
+    {{!-- Item Sheet Body --}}
+    <section class="sheet-body">
+
+        {{!-- Description Tab --}}
+        {{> "dnd5e.item-description"}}
+
+        {{!-- Details Tab --}}
+        <div class="tab details" data-group="primary" data-tab="details">
+            <h3 class="form-header">{{ localize "DND5E.SpellDetails" }}</h3>
+
+            {{!-- Spell Level --}}
+            <div class="form-group">
+                <label>{{ localize "DND5E.SpellLevel" }}</label>
+                <select name="system.level" data-dtype="Number">
+                    {{#select system.level}}
+                    {{#each config.spellLevels as |name lvl|}}
+                    <option value="{{lvl}}">{{name}}</option>
+                    {{/each}}
+                    {{/select}}
+                </select>
+            </div>
+
+            {{!-- Spell School --}}
+            <div class="form-group">
+                <label>{{ localize "DND5E.SpellSchool" }}</label>
+                <select name="system.school">
+                    {{selectOptions config.spellSchools selected=system.school blank=""}}
+                </select>
+            </div>
+
+            {{!-- Spell Components --}}
+            <div class="spell-components form-group stacked">
+                <label>{{ localize "DND5E.SpellComponents" }}</label>
+                {{#each spellComponents as |component key|}}
+                <label class="checkbox">
+                    <input type="checkbox" name="system.components.{{key}}" {{checked (lookup ../system.components key)}}>
+                    {{component.label}}
+                </label>
+                {{/each}}
+            </div>
+
+            {{!-- Material Components --}}
+            <div class="form-group stacked">
+                <label>{{ localize "DND5E.SpellMaterials" }}</label>
+                <input class="materials" type="text" name="system.materials.value" value="{{system.materials.value}}"/>
+                {{#if system.materials.value}}
+                <div class="spell-materials flexrow">
+                    <label>{{ localize "DND5E.Supply" }}</label>
+                    {{numberInput system.materials.supply name="system.materials.supply" placeholder="0"}}
+                    <label>{{ localize "DND5E.CostGP" }}</label>
+                    {{numberInput system.materials.cost name="system.materials.cost" placeholder="&mdash;"}}
+                    <label>{{ localize "DND5E.Consumed" }}</label>
+                    <input type="checkbox" name="system.materials.consumed" {{checked system.materials.consumed}}/>
+                </div>
+                {{/if}}
+            </div>
+
+            {{!-- Preparation Mode --}}
+            <div class="form-group input-select">
+                <label>{{ localize "DND5E.SpellPreparationMode" }}</label>
+                <div class="form-fields">
+                    <label class="checkbox prepared">
+                        {{ localize "DND5E.SpellPrepared" }} <input type="checkbox" name="system.preparation.prepared" {{checked system.preparation.prepared}}/>
+                    </label>
+                    <select name="system.preparation.mode">
+                        {{ selectOptions config.spellPreparationModes selected=system.preparation.mode }}
+                    </select>
+                </div>
+            </div>
+
+            <h3 class="form-header">{{ localize "DND5E.SpellCastingHeader" }}</h3>
+
+            {{!-- Item Activation Template --}}
+            {{> "dnd5e.item-activation"}}
+
+            <h3 class="form-header">{{ localize "DND5E.SpellEffects" }}</h3>
+
+            {{!-- Item Action Template --}}
+            {{> "dnd5e.item-action"}}
+
+            {{!-- Spell Level Scaling --}}
+            <div class="form-group">
+                <label>{{ localize "DND5E.LevelScaling" }}</label>
+                <div class="form-fields">
+                    <select name="system.scaling.mode">
+                        {{#select system.scaling.mode}}
+                        {{#each config.spellScalingModes as |name key|}}
+                        <option value="{{key}}">{{name}}</option>
+                        {{/each}}
+                        {{/select}}
+                    </select>
+                    <input type="text" name="system.scaling.formula" value="{{system.scaling.formula}}"
+                           placeholder="{{ localize 'DND5E.ScalingFormula' }}" data-formula-editor/>
+                </div>
+            </div>
+        </div>
+
+        {{!-- Effects Tab --}}
+        <div class="tab effects flexcol" data-group="primary" data-tab="effects">
+            {{> "dnd5e.active-effects"}}
+        </div>
+    </section>
+</form>
+```
+
+### subclass.hbs
+
+```hbs
+<form class="{{cssClass}} flexcol" autocomplete="off">
+
+  {{!-- Item Sheet Header --}}
+  <header class="sheet-header flexrow">
+    <img class="profile" src="{{item.img}}" data-tooltip="{{item.name}}" data-edit="img"/>
+
+    <div class="header-details flexrow">
+      <h1 class="charname">
+        <input name="name" type="text" value="{{item.name}}" placeholder="{{ localize 'DND5E.SubclassName' }}"/>
+      </h1>
+
+      <div class="item-subtitle">
+        <h4 class="item-type">{{itemType}}</h4>
+        <span class="item-status">{{itemStatus}}</span>
+      </div>
+
+      <ul class="summary flexrow">
+        <li>
+          <input type="text" name="system.source" value="{{system.source}}" placeholder="{{ localize 'DND5E.Source' }}"/>
+        </li>
+      </ul>
+    </div>
+  </header>
+
+  {{!-- Item Sheet Navigation --}}
+  <nav class="sheet-navigation tabs" data-group="primary">
+    <a class="item active" data-tab="description">{{localize "DND5E.Description"}}</a>
+    <a class="item" data-tab="details">{{localize "DND5E.Details"}}</a>
+    <a class="item" data-tab="advancement">{{localize "DND5E.AdvancementTitle"}}</a>
+  </nav>
+
+  {{!-- Item Sheet Body --}}
+  <section class="sheet-body">
+
+    {{!-- Description Tab --}}
+    <div class="tab flexrow active" data-group="primary" data-tab="description">
+      {{editor descriptionHTML target="system.description.value" button=true editable=editable engine="prosemirror"
+               collaborate=false}}
+    </div>
+
+    {{!-- Details Tab --}}
+    <div class="tab details" data-group="primary" data-tab="details">
+
+      {{!-- Identifier --}}
+      <div class="form-group">
+        <label>{{localize "DND5E.Identifier"}}</label>
+        <div class="form-fields">
+          <input type="text" name="system.identifier" value="{{system.identifier}}" placeholder="{{item.identifier}}">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>{{localize "DND5E.ClassIdentifier"}}</label>
+        <div class="form-fields">
+          <input type="text" name="system.classIdentifier" value="{{system.classIdentifier}}">
+        </div>
+        <p class="hint">
+            {{localize "DND5E.SubclassIdentifierHint"}}
+        </p>
+      </div>
+
+      {{!-- Spellcasting --}}
+      <h3 class="form-header">{{localize "DND5E.Spellcasting"}}</h3>
+      {{> "dnd5e.item-spellcasting"}}
+
+    </div>
+
+    {{!-- Advancement Tab --}}
+    {{> "dnd5e.item-advancement"}}
+
+  </section>
+</form>
+```
+
+### tool.hbs
+
+```hbs
+<form class="{{cssClass}} flexcol" autocomplete="off">
+
+    {{!-- Item Sheet Header --}}
+    <header class="sheet-header flexrow">
+        <img class="profile" src="{{item.img}}" data-tooltip="{{item.name}}" data-edit="img"/>
+
+        <div class="header-details flexrow">
+            <h1 class="charname">
+                <input name="name" type="text" value="{{item.name}}" placeholder="{{ localize 'DND5E.ItemName' }}"/>
+            </h1>
+
+            <div class="item-subtitle">
+                <h4 class="item-type">{{itemType}}</h4>
+                <span class="item-status">{{itemStatus}}</span>
+            </div>
+
+            <ul class="summary flexrow">
+                <li>
+                    {{#if system.toolType}}
+                      {{lookup config.toolTypes system.toolType}}
+                    {{else}}
+                      {{localize "ITEM.TypeTool"}}
+                    {{/if}}
+                </li>
+                <li>
+                    <select name="system.rarity">
+                        {{selectOptions config.itemRarity selected=system.rarity blank=""}}
+                    </select>
+                </li>
+                <li>
+                    <input type="text" name="system.source" value="{{system.source}}" placeholder="{{ localize 'DND5E.Source' }}"/>
+                </li>
+            </ul>
+        </div>
+    </header>
+
+    {{!-- Item Sheet Navigation --}}
+    <nav class="sheet-navigation tabs" data-group="primary">
+        <a class="item active" data-tab="description">{{ localize "DND5E.Description" }}</a>
+        <a class="item" data-tab="details">{{ localize "DND5E.Details" }}</a>
+        <a class="item" data-tab="effects">{{ localize "DND5E.Effects" }}</a>
+    </nav>
+
+    {{!-- Item Sheet Body --}}
+    <section class="sheet-body">
+
+        {{!-- Description Tab --}}
+        {{> "dnd5e.item-description"}}
+
+        {{!-- Details Tab --}}
+        <div class="tab details" data-group="primary" data-tab="details">
+
+            {{!-- Tool Type --}}
+            <div class="form-group">
+                <label>{{ localize "DND5E.ItemToolType" }}</label>
+                <select name="system.toolType">
+                    {{selectOptions config.toolTypes selected=system.toolType blank=""}}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>{{ localize "DND5E.ItemToolBase" }}</label>
+                <select name="system.baseItem">
+                    {{selectOptions baseItems selected=system.baseItem blank=""}}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>{{localize "DND5E.Attunement"}}</label>
+                <select name="system.attunement" data-dtype="Number">
+                    {{selectOptions config.attunements selected=system.attunement}}
+                </select>
+            </div>
+
+            {{!-- Tool Proficiency --}}
+            <div class="form-group">
+                <label>{{ localize "DND5E.ItemToolProficiency" }}</label>
+                <select name="system.proficient" data-dtype="Number">
+                    {{selectOptions config.proficiencyLevels selected=system.proficient}}
+                </select>
+            </div>
+
+            {{!-- Ability Check --}}
+            <div class="form-group">
+                <label>{{ localize "DND5E.DefaultAbilityCheck" }}</label>
+                <select name="system.ability">
+                    {{selectOptions config.abilities labelAttr="label" selected=system.ability
+                                    blank=(localize "DND5E.Default")}}
+                </select>
+            </div>
+
+            {{!-- Tool Bonus --}}
+            <div class="form-group">
+                <label>{{ localize "DND5E.ItemToolBonus" }}</label>
+                <input type="text" name="system.bonus" value="{{system.bonus}}" data-formula-editor/>
+            </div>
+
+            {{!-- Chat Message Flavor --}}
+            <div class="form-group stacked">
+                <label>{{ localize "DND5E.ChatFlavor" }}</label>
+                <input type="text" name="system.chatFlavor" value="{{system.chatFlavor}}"/>
+            </div>
+        </div>
+
+        {{!-- Effects Tab --}}
+        <div class="tab effects flexcol" data-group="primary" data-tab="effects">
+            {{> "dnd5e.active-effects"}}
+        </div>
+    </section>
+</form>
+```
+
+### weapon.hbs
+
+```hbs
+<form class="{{cssClass}} flexcol" autocomplete="off">
+
+    {{!-- Item Sheet Header --}}
+    <header class="sheet-header flexrow">
+        <img class="profile" src="{{item.img}}" data-tooltip="{{item.name}}" data-edit="img"/>
+
+        <div class="header-details flexrow">
+            <h1 class="charname">
+                <input name="name" type="text" value="{{item.name}}" placeholder="{{ localize 'DND5E.ItemName' }}"/>
+            </h1>
+
+            <div class="item-subtitle">
+                <h4 class="item-type">{{itemType}}</h4>
+                <span class="item-status">{{itemStatus}}</span>
+            </div>
+
+            <ul class="summary flexrow">
+                <li>
+                    {{lookup config.weaponTypes system.weaponType }}
+                </li>
+                <li>
+                    <select name="system.rarity">
+                        {{selectOptions config.itemRarity selected=system.rarity blank=""}}
+                    </select>
+                </li>
+                <li>
+                    <input type="text" name="system.source" value="{{system.source}}" placeholder="{{ localize 'DND5E.Source' }}"/>
+                </li>
+            </ul>
+        </div>
+    </header>
+
+    {{!-- Item Sheet Navigation --}}
+    <nav class="sheet-navigation tabs" data-group="primary">
+        <a class="item active" data-tab="description">{{ localize "DND5E.Description" }}</a>
+        <a class="item" data-tab="details">{{ localize "DND5E.Details" }}</a>
+        <a class="item" data-tab="effects">{{ localize "DND5E.Effects" }}</a>
+    </nav>
+
+    {{!-- Item Sheet Body --}}
+    <section class="sheet-body">
+
+        {{!-- Description Tab --}}
+        {{> "dnd5e.item-description"}}
+
+        {{!-- Details Tab --}}
+        <div class="tab details" data-group="primary" data-tab="details">
+            <h3 class="form-header">{{ localize "DND5E.ItemWeaponDetails" }}</h3>
+
+            {{!-- Weapon Type --}}
+            <div class="form-group">
+                <label>{{ localize "DND5E.ItemWeaponType" }}</label>
+                <select name="system.weaponType">
+                    {{selectOptions config.weaponTypes selected=system.weaponType}}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>{{ localize "DND5E.ItemWeaponBase" }}</label>
+                <select name="system.baseItem">
+                    {{selectOptions baseItems selected=system.baseItem blank=""}}
+                </select>
+            </div>
+
+            {{#unless system.isMountable}}
+            <div class="form-group">
+                <label>{{localize "DND5E.Attunement"}}</label>
+                <select name="system.attunement" data-dtype="Number">
+                    {{selectOptions config.attunements selected=system.attunement}}
+                </select>
+            </div>
+
+            {{!-- Weapon Status --}}
+            <div class="form-group stacked">
+                <label>{{ localize "DND5E.ItemWeaponStatus" }}</label>
+                <div class="form-fields">
+                    <label class="checkbox">
+                        <input type="checkbox" name="system.proficient" {{checked system.proficient}}/> {{ localize "DND5E.Proficient" }}
+                    </label>
+                    <label class="checkbox">
+                        <input type="checkbox" name="system.equipped" {{checked system.equipped}}/> {{ localize "DND5E.Equipped" }}
+                    </label>
+                    <label class="checkbox">
+                        <input type="checkbox" name="system.identified" {{checked system.identified}}/> {{ localize "DND5E.Identified" }}
+                    </label>
+                </div>
+            </div>
+            {{/unless}}
+
+            {{!-- Weapon Properties --}}
+            <div class="form-group stacked weapon-properties">
+                <label>{{ localize "DND5E.ItemWeaponProperties" }}</label>
+                {{#each config.weaponProperties as |name prop|}}
+                <label class="checkbox">
+                    <input type="checkbox" name="system.properties.{{prop}}" {{checked (lookup ../system.properties prop)}}/> {{ name }}
+                </label>
+                {{/each}}
+            </div>
+
+            {{#if system.isMountable}}
+            <div class="form-group">
+                <label>{{localize 'DND5E.ArmorClass'}}</label>
+                <div class="form-fields">
+                    {{numberInput system.armor.value name="system.armor.value"}}
+                </div>
+            </div>
+
+            {{> "dnd5e.item-mountable"}}
+            {{/if}}
+
+            <h3 class="form-header">{{ localize "DND5E.ItemWeaponUsage" }}</h3>
+
+            {{!-- Item Activation Template --}}
+            {{> "dnd5e.item-activation"}}
+
+            <h3 class="form-header">{{ localize "DND5E.ItemWeaponAttack" }}</h3>
+
+            {{!-- Item Action Template --}}
+            {{> "dnd5e.item-action"}}
+        </div>
+
+        {{!-- Effects Tab --}}
+        <div class="tab effects flexcol" data-group="primary" data-tab="effects">
+            {{> "dnd5e.active-effects"}}
+        </div>
+    </section>
+</form>
+```
+
+## Impls of item parts
+
+### item-action.hbs
+
+```hbs
+{{!-- Action Type --}}
+<div class="form-group select">
+    <label>{{ localize "DND5E.ItemActionType" }}</label>
+    <select name="system.actionType">
+        {{selectOptions config.itemActionTypes selected=system.actionType blank=""}}
+    </select>
+</div>
+{{#if system.actionType}}
+
+{{!-- Ability Modifier --}}
+<div class="form-group select">
+    <label>{{ localize "DND5E.AbilityModifier" }}</label>
+    <select name="system.ability">
+        {{selectOptions config.abilities selected=system.ability labelAttr="label" blank=(localize "DND5E.Default")}}
+    </select>
+</div>
+
+{{#if system.hasAttack}}
+{{!-- Attack Roll Bonus --}}
+<div class="form-group">
+    <label>{{ localize "DND5E.ItemAttackBonus" }}</label>
+    <div class="form-fields">
+        <input type="text" name="system.attackBonus" value="{{system.attackBonus}}" data-formula-editor/>
+    </div>
+</div>
+
+{{!-- Critical Hit Threshold --}}
+<div class="form-group">
+    <label>{{ localize "DND5E.ItemCritThreshold" }}</label>
+    <div class="form-fields">
+        {{numberInput system.critical.threshold name="system.critical.threshold" placeholder="20" max=20 min=1 step=1}}
+    </div>
+</div>
+
+{{!-- Critical Hit Damage --}}
+<div class="form-group">
+    <label>{{ localize "DND5E.ItemCritExtraDamage" }}</label>
+    <div class="form-fields">
+        <input type="text" name="system.critical.damage" value="{{system.critical.damage}}">
+    </div>
+</div>
+{{/if}}
+
+{{!-- Damage Formula --}}
+<h4 class="damage-header">
+    {{#unless isHealing}}{{ localize "DND5E.Damage" }}{{ else }}{{ localize "DND5E.Healing" }}{{/unless}}
+    {{ localize "DND5E.Formula" }}
+    <a class="damage-control add-damage"><i class="fas fa-plus"></i></a>
+</h4>
+<ol class="damage-parts form-group">
+    {{#each system.damage.parts as |part i| }}
+    <li class="damage-part flexrow" data-damage-part="{{i}}">
+        <input type="text" name="system.damage.parts.{{i}}.0" value="{{lookup this "0"}}" data-formula-editor/>
+        <select name="system.damage.parts.{{i}}.1">
+            {{#select (lookup this "1")}}
+                <option value="">{{ localize "DND5E.None" }}</option>
+                <optgroup label="{{localize 'DND5E.Damage'}}">
+                    {{selectOptions @root.config.damageTypes}}
+                </optgroup>
+                <optgroup label="{{localize 'DND5E.Healing'}}">
+                    {{selectOptions @root.config.healingTypes}}
+                </optgroup>
+            {{/select}}
+        </select>
+        <a class="damage-control delete-damage"><i class="fas fa-minus"></i></a>
+    </li>
+    {{/each}}
+</ol>
+
+{{!-- Versatile Damage --}}
+{{#if system.damage.parts.length }}
+<div class="form-group">
+    <label>{{ localize "DND5E.VersatileDamage" }}</label>
+    <div class="form-fields">
+        <input type="text" name="system.damage.versatile" value="{{system.damage.versatile}}"
+               placeholder="{{ localize 'DND5E.Formula' }}" data-formula-editor>
+    </div>
+</div>
+{{/if}}
+
+{{!-- Other Formula --}}
+<div class="form-group">
+    <label>{{ localize "DND5E.OtherFormula" }}</label>
+    <div class="form-fields">
+        <input type="text" name="system.formula" value="{{system.formula}}"
+               placeholder="{{ localize 'DND5E.Formula' }}" data-formula-editor>
+    </div>
+</div>
+
+{{!-- Saving Throw --}}
+<div class="form-group input-select">
+    <label>{{ localize "DND5E.ActionSave" }}</label>
+    <div class="form-fields">
+        <select name="system.save.ability">
+            {{selectOptions config.abilities selected=system.save.ability labelAttr="label" blank=""}}
+        </select>
+        <span>{{ localize "DND5E.VsDC" }}</span>
+        <input type="number" step="any" name="system.save.dc"
+            value="{{#if system.save.dc}}{{system.save.dc}}{{/if}}"
+            placeholder="{{ localize 'DND5E.AbbreviationDC' }}" {{#unless isFlatDC}}disabled{{/unless}}>
+        <select name="system.save.scaling">
+            {{#select system.save.scaling}}
+                <option value="spell">{{ localize "DND5E.Spellcasting" }}</option>
+                {{selectOptions config.abilities labelAttr="label"}}
+                <option value="flat">{{ localize "DND5E.Flat" }}</option>
+            {{/select}}
+        </select>
+    </div>
+</div>
+
+{{!-- Chat Message Flavor --}}
+<div class="form-group stacked">
+    <label>{{ localize "DND5E.ChatFlavor" }}</label>
+    <input type="text" name="system.chatFlavor" value="{{system.chatFlavor}}"/>
+</div>
+{{/if}}
+```
+
+### item-activation.hbs
+
+```hbs
+{{!-- Activation Cost --}}
+<div class="form-group input-select">
+    <label>{{ localize "DND5E.ItemActivationCost" }}</label>
+    <div class="form-fields">
+        {{#if system.activation.type}}
+            <input type="number" step="any" name="system.activation.cost"
+                   value="{{system.activation.cost}}" placeholder="&mdash;">
+        {{/if}}
+        <select name="system.activation.type" data-tooltip="DND5E.ItemActivationType">
+            {{selectOptions config.abilityActivationTypes selected=system.activation.type
+                blank=(localize "DND5E.None")}}
+        </select>
+    </div>
+</div>
+{{#if system.activation.type}}
+
+{{!-- Activation Condition --}}
+<div class="form-group">
+    <label>{{ localize "DND5E.ItemActivationCondition" }}</label>
+    <div class="form-fields">
+        <input type="text" name="system.activation.condition" value="{{system.activation.condition}}">
+    </div>
+</div>
+
+{{#if isCrewed}}
+<div class="form-group">
+    <label>{{ localize "DND5E.Cover" }}</label>
+    <div class="form-fields">
+        <select name="system.cover" data-dtype="Number">
+            {{selectOptions config.cover selected=system.cover blank=""}}
+        </select>
+    </div>
+</div>
+{{/if}}
+
+{{!-- Ability Target --}}
+<div class="form-group input-select-select">
+    <label>{{ localize "DND5E.Target" }}</label>
+    <div class="form-fields">
+        {{#if system.hasScalarTarget}}
+            <input type="number" step="any" name="system.target.value"
+                   value="{{system.target.value}}" placeholder="&mdash;">
+        {{/if}}
+        {{#if system.hasAreaTarget}}
+            <select name="system.target.units" data-tooltip="DND5E.TargetUnits">
+                {{selectOptions config.movementUnits selected=system.target.units blank=""}}
+            </select>
+        {{/if}}
+        <select name="system.target.type" data-tooltip="DND5E.TargetType">
+            {{#select system.target.type}}
+                 <option value="">{{localize "DND5E.None"}}</option>
+                 <optgroup label="{{localize 'DND5E.TargetTypeIndividual'}}">
+                     {{selectOptions config.individualTargetTypes}}
+                 </optgroup>
+                 <optgroup label="{{localize 'DND5E.TargetTypeArea'}}">
+                     {{selectOptions config.areaTargetTypes labelAttr="label"}}
+                 </optgroup>
+            {{/select}}
+        </select>
+    </div>
+</div>
+
+{{!-- Ability Target Width --}}
+{{#if isLine}}
+<div class="form-group input-select-select">
+    <label>{{ localize "DND5E.TargetWidth" }}</label>
+    <div class="form-fields">
+        <input type="number" step="any" name="system.target.width"
+            value="{{system.target.width}}" placeholder="&mdash;">
+    </div>
+</div>
+{{/if}}
+
+{{!-- Ability Range --}}
+<div class="form-group input-select">
+    <label>{{ localize "DND5E.Range" }}</label>
+    <div class="form-fields">
+        {{#if system.hasScalarRange}}
+            <input type="number" step="any" name="system.range.value" value="{{system.range.value}}"
+                   placeholder="{{localize 'DND5E.Normal'}}" data-tooltip="DND5E.RangeNormal">
+            <span class="sep">/</span>
+            <input type="number" step="any" name="system.range.long" value="{{system.range.long}}"
+                   placeholder="{{localize 'DND5E.Long'}}" data-tooltip="DND5E.RangeLong">
+        {{/if}}
+        <select name="system.range.units" data-tooltip="DND5E.RangeUnits">
+            {{#select system.range.units}}
+                <option value="">{{localize "DND5E.None"}}</option>
+                <optgroup label="{{localize 'DND5E.RangeDistance'}}">
+                    {{selectOptions config.movementUnits}}
+                </optgroup>
+                {{selectOptions config.rangeTypes}}
+            {{/select}}
+        </select>
+    </div>
+</div>
+
+{{!-- Effect Duration --}}
+<div class="form-group input-select">
+    <label>{{ localize "DND5E.Duration" }}</label>
+    <div class="form-fields">
+        {{#if system.hasScalarDuration}}
+            <input type="text" name="system.duration.value" value="{{source.duration.value}}"
+                   placeholder="&mdash;" data-tooltip="DND5E.DurationValue" data-formula-editor>
+        {{/if}}
+        <select name="system.duration.units" data-tooltip="DND5E.DurationType">
+            {{#select system.duration.units}}
+                <option value="">{{localize "DND5E.None"}}</option>
+                <optgroup label="{{localize 'DND5E.DurationTime'}}">
+                    {{selectOptions config.scalarTimePeriods}}
+                </optgroup>
+                <optgroup label="{{localize 'DND5E.DurationPermanent'}}">
+                    {{selectOptions config.permanentTimePeriods}}
+                </optgroup>
+                {{selectOptions config.specialTimePeriods}}
+            {{/select}}
+        </select>
+    </div>
+</div>
+
+{{!-- Limited Uses --}}
+<div class="form-group uses-per">
+    <label>{{ localize "DND5E.LimitedUses" }}</label>
+    <div class="form-fields">
+        <input type="number" step="any" name="system.uses.value"
+               value="{{system.uses.value}}" data-tooltip="DND5E.UsesAvailable">
+        <span class="sep">{{localize "DND5E.of"}}</span>
+        <input type="text" name="system.uses.max" value="{{source.uses.max}}"
+               data-tooltip="DND5E.UsesMax" data-formula-editor>
+        <span class="sep">{{localize "DND5E.per"}}</span>
+        <select name="system.uses.per" data-tooltip="DND5E.UsesPeriod">
+            {{selectOptions config.limitedUsePeriods selected=system.uses.per blank=""}}
+        </select>
+    </div>
+</div>
+
+{{#if (eq system.uses.per "charges")}}
+<div class="form-group">
+    <label>{{localize "DND5E.RecoveryFormula"}}</label>
+    <div class="form-fields">
+        <input type="text" name="system.uses.recovery" value="{{system.uses.recovery}}" data-formula-editor>
+    </div>
+</div>
+{{/if}}
+
+{{!-- Consumption --}}
+<div class="form-group consumption">
+    <label>{{ localize "DND5E.ConsumeTitle" }}</label>
+    <div class="form-fields">
+        {{#if system.consume.type}}
+            <input type="number" step="any" name="system.consume.amount"
+                   value="{{system.consume.amount}}" data-tooltip="DND5E.ConsumeQuanity">
+            <select name="system.consume.target" data-tooltip="DND5E.ConsumeTarget">
+                {{selectOptions abilityConsumptionTargets selected=system.consume.target blank=""}}
+            </select>
+        {{/if}}
+        <select name="system.consume.type" data-tooltip="DND5E.ConsumeType">
+            {{selectOptions config.abilityConsumptionTypes selected=system.consume.type blank=(localize "DND5E.None")}}
+        </select>
+    </div>
+</div>
+{{/if}}
+```
+
+### item-advancement.hbs
+
+```hbs
+<div class="tab details advancement" data-group="primary" data-tab="advancement">
+  <ol class="items-list">
+    {{#if editable}}
+      <li class="items-header flexrow main-controls">
+        <div class="item-controls flexrow configuration-mode-control">
+          {{#if isEmbedded}}
+            {{#if advancementEditable}}
+              <a class="item-control" data-action="toggle-configuration"
+                 data-tooltip="DND5E.AdvancementConfigurationActionDisable">
+                <i class="fas fa-lock-open"></i> {{localize "DND5E.AdvancementConfigurationModeEnabled"}}
+              </a>
+            {{else}}
+              <a class="item-control" data-action="toggle-configuration"
+                 data-tooltip="DND5E.AdvancementConfigurationActionEnable">
+                <i class="fas fa-lock"></i> {{localize "DND5E.AdvancementConfigurationModeDisabled"}}
+              </a>
+            {{/if}}
+          {{/if}}
+        </div>
+        {{#if advancementEditable}}
+          <div class="item-controls flexrow add-button">
+            <a class="item-control" data-action="add" data-tooltip="DND5E.AdvancementControlCreate">
+              <i class="fas fa-plus"></i>
+            </a>
+          </div>
+        {{/if}}
+      </li>
+    {{/if}}
+
+    {{#each advancement as |data level|}}
+      <li class="items-header flexrow" data-level="{{level}}">
+        <h3 class="item-name flexrow">
+          {{#if (eq level "0")}}
+            {{localize "DND5E.AdvancementLevelAnyHeader"}}
+          {{else if (eq level "unconfigured")}}
+            {{localize "DND5E.AdvancementLevelNoneHeader"}}
+          {{else}}
+            {{localize "DND5E.AdvancementLevelHeader" level=level}}
+          {{/if}}
+        </h3>
+
+        {{#if (and @root.editable data.configured (ne level "unconfigured"))}}
+          <div>
+            <a class="item-control" data-action="modify-choices">{{localize "DND5E.AdvancementModifyChoices"}}</a>
+          </div>
+        {{/if}}
+
+        {{#if (eq data.configured "full")}}
+          <div class="item-checkmark" data-tooltip="DND5E.AdvancementConfiguredComplete">
+            <i class="fas fa-check-circle"></i>
+          </div>
+        {{else if (eq data.configured "partial")}}
+          <div class="item-warning" data-tooltip="DND5E.AdvancementConfiguredIncomplete">
+            <i class="fas fa-exclamation-triangle"></i>
+          </div>
+        {{/if}}
+      </li>
+      <ol class="item-list">
+        {{#each data.items}}
+          <li class="advancement-item item flexrow" data-id="{{this.id}}">
+            <div class="item-name flexrow">
+              <div class="item-image" style="background-image: url('{{this.icon}}')"></div>
+              <h4>{{{this.title}}}</h4>
+            </div>
+            {{#if (or @root.advancementEditable (not @root.isEmbedded))}}
+              <div class="flexrow">
+                {{#if (eq this.classRestriction "primary")}}
+                  {{localize "DND5E.AdvancementClassRestrictionPrimary"}}
+                {{else if (eq this.classRestriction "secondary")}}
+                  {{localize "DND5E.AdvancementClassRestrictionSecondary"}}
+                {{/if}}
+              </div>
+            {{/if}}
+            {{#if @root.advancementEditable}}
+              <div class="item-controls flexrow">
+                  <a class="item-control" data-action="edit" data-tooltip="DND5E.AdvancementControlEdit">
+                    <i class="fas fa-edit"></i>
+                  </a>
+                  <a class="item-control" data-action="delete" data-tooltip="DND5E.AdvancementControlDelete">
+                    <i class="fas fa-trash"></i>
+                  </a>
+              </div>
+            {{/if}}
+            {{#if this.summary}}
+              <div class="item-summary">
+                {{{this.summary}}}
+              </div>
+            {{/if}}
+          </li>
+        {{/each}}
+      </ol>
+    {{/each}}
+
+  </ol>
+</div>
+
+```
+
+### item-description.hbs
+
+```hbs
+<div class="tab flexrow active" data-group="primary" data-tab="description">
+
+    <div class="item-properties">
+        {{#if isPhysical}}
+        <div class="form-group">
+            <label>{{ localize "DND5E.Quantity" }}</label>
+            {{numberInput system.quantity name="system.quantity"}}
+        </div>
+
+        <div class="form-group">
+            <label>{{ localize "DND5E.Weight" }}</label>
+            {{numberInput system.weight name="system.weight"}}
+        </div>
+
+        <div class="form-group">
+            <label>{{ localize "DND5E.Price" }}</label>
+            {{numberInput system.price.value name="system.price.value"}}
+            <select name="system.price.denomination">
+                {{selectOptions config.currencies selected=system.price.denomination labelAttr="abbreviation"}}
+            </select>
+        </div>
+        {{/if}}
+
+        {{#if (or labels.toHit labels.derivedDamage)}}
+        <h4 class="properties-header">{{localize "DND5E.Attack"}}/{{localize "DND5E.Damage"}}</h4>
+        <ol class="properties-list">
+            {{#if labels.save}}
+            <li>
+                {{labels.save}}
+            </li>
+            {{/if}}
+
+            {{#if labels.toHit}}
+            <li>
+                {{labels.toHit}} {{localize "DND5E.ToHit"}}
+            </li>
+            {{/if}}
+
+            {{#each labels.derivedDamage}}
+            <li>
+                {{label}}
+            </li>
+            {{/each}}
+        </ol>
+        {{/if}}
+
+        {{#if itemProperties.length}}
+        <h4 class="properties-header">{{localize "DND5E.Properties"}}</h4>
+        <ol class="properties-list">
+            {{#each itemProperties}}
+            <li>{{this}}</li>
+            {{/each}}
+        </ol>
+        {{/if}}
+    </div>
+
+    {{editor descriptionHTML target="system.description.value" button=true editable=editable engine="prosemirror"
+             collaborate=false}}
+</div>
+```
+
+### item-mountable.hbs
+
+```hbs
+<div class="form-group">
+    <label>{{localize 'DND5E.HitPoints'}}</label>
+    <div class="form-fields">
+        {{numberInput system.hp.value name="system.hp.value" placeholder="0"}}
+        <span class="sep">&sol;</span>
+        {{numberInput system.hp.max name="system.hp.max" placeholder="0"}}
+        {{numberInput system.hp.dt name="system.hp.dt" placeholder=(localize "DND5E.Threshold")}}
+    </div>
+</div>
+
+<div class="form-group">
+    <label>{{localize 'DND5E.HealthConditions'}}</label>
+    <div class="form-fields">
+        <input type="text" name="system.hp.conditions" value="{{system.hp.conditions}}">
+    </div>
+</div>
+```
+
+### item-spellcasting.hbs
+
+```hbs
+<div class="form-group">
+  <label>{{localize "DND5E.SpellProgression"}}</label>
+  <div class="form-fields">
+    <select name="system.spellcasting.progression">
+      {{selectOptions config.spellProgression selected=system.spellcasting.progression}}
+    </select>
+  </div>
+</div>
+
+<div class="form-group">
+  <label>{{localize "DND5E.SpellAbility"}}</label>
+  <div class="form-fields">
+    <select name="system.spellcasting.ability">
+      {{selectOptions config.abilities selected=system.spellcasting.ability labelAttr="label" blank=""}}
+    </select>
+  </div>
+</div>
+```
+
+### item-summary.hbs
+
+```hbs
+<div class="item-summary">
+  {{{description.value}}}
+  
+  <div class="item-properties">
+    {{#each properties}}<span class="tag">{{this}}</span>{{/each}}
+  </div>
+</div>
+```
+
+## Item SCSS
+
+```scss
+.tidy5e.sheet.item {
+    min-height: 500px;
+  
+    .window-content {
+      padding: 0;
+  
+      form {
+        height: 100%;
+        overflow: hidden;
+      }
+    }
+  
+    a:hover {
+      text-shadow: none;
+    }
+  
+    // Checkbox styling
+  
+    input[type="checkbox"],
+    button,
+    select {
+      cursor: pointer;
+      font-family: var(--t5e-signika);
+    }
+  
+    // input[type="checkbox"] {
+    // 	height: 20px;
+    // }
+  
+    button,
+    select {
+      border: none;
+      color: var(--t5e-primary-font);
+    }
+  
+    select {
+      padding: 0;
+    }
+  
+    input[type="text"] {
+      border: none;
+      padding: 0 6px;
+      color: var(--t5e-primary-font);
+    }
+  
+    input[type="text"]:hover,
+    input[type="text"]:focus {
+      border: none;
+      box-shadow: 0 0 0 1px var(--t5e-primary-accent) inset;
+    }
+  
+    input[type="checkbox"] {
+      margin: 2px;
+    }
+  
+    .sheet-header {
+      flex: 0 0 80px;
+      padding: 1rem;
+      background: var(--t5e-header-background);
+      align-items: flex-start;
+  
+      .item-image {
+        flex: 0 0 80px;
+        width: 80px;
+        height: 80px;
+        position: relative;
+  
+        .item-menu {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+  
+          &.hidden {
+            display: none;
+          }
+  
+          a {
+            background: var(--t5e-background);
+            color: var(--t5e-primary-font);
+            border: none;
+            margin: 1px 0;
+            padding: 4px 6px;
+            line-height: 1;
+            font-size: 12px;
+            border: 1px solid var(--t5e-light-color);
+            border-radius: 5px;
+            text-align: center;
+          }
+        }
+      }
+  
+      img.profile {
+        flex: 0 0 80px;
+        width: 80px;
+        height: 80px;
+        border-radius: 5px;
+        margin-right: 0;
+      }
+  
+      .header-details {
+        margin-left: 1rem;
+        align-items: center;
+      }
+  
+      .charname {
+        padding: 0;
+        height: 30px;
+        line-height: 18px;
+  
+        input {
+          margin: 0;
+          padding: 0;
+          font-size: 24px;
+          height: 100%;
+          width: 100%;
+          font-family: var(--t5e-modesto);
+          background: transparent;
+        }
+      }
+  
+      .item-subtitle {
+        padding: 2px 4px;
+        background: var(--t5e-faint-color);
+        border-radius: 5px;
+        color: var(--t5e-tertiary-color);
+        display: flex;
+        align-items: flex-end;
+        height: 20px;
+        margin-left: 1rem;
+        flex: 0 0 1px;
+        font-family: var(--t5e-modesto);
+  
+        .item-type {
+          margin: 0;
+          font-size: 20px;
+          line-height: 16px;
+          color: var(--t5e-secondary-color);
+        }
+  
+        .item-status {
+          font-size: 16px;
+          line-height: 14px;
+          margin-left: 4px;
+          color: var(--t5e-tertiary-color);
+          white-space: nowrap;
+        }
+      } //.item-subtitle
+  
+      .summary {
+        border: 1px solid var(--t5e-light-color);
+        border-left: none;
+        border-right: none;
+        display: flex;
+        font-size: 13px;
+        font-family: var(--t5e-signika);
+        height: 22px;
+        flex: 0 0 100%;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        width: 100%;
+  
+        li {
+          border-left: 1px solid var(--t5e-faint-color);
+          line-height: 20px;
+          font-weight: 600;
+  
+          input {
+            height: 20px;
+            background: transparent;
+            font-weight: 400;
+          }
+  
+          select {
+            width: 100%;
+            height: 20px;
+            text-transform: capitalize;
+          }
+  
+          &:first-child {
+            border: none;
+            padding-left: 0;
+          }
+  
+          &:last-child {
+            padding-right: 0;
+          }
+        } //li
+      } //.summary
+    } //.sheet-header
+  
+    // navigation
+  
+    .sheet-navigation {
+      display: flex;
+      flex: 0 0 1px;
+      align-items: center;
+      justify-content: center;
+      flex-direction: row;
+      flex-wrap: wrap;
+  
+      .item {
+        padding: 5px 1rem 0 1rem;
+        background: var(--t5e-header-background);
+        border: 1px solid transparent;
+        border-bottom: 1px solid var(--t5e-header-border);
+        font-size: 13px;
+        text-align: left;
+        height: 26px;
+        flex: 1 1 auto;
+  
+        &:hover {
+          color: var(--t5e-primary-accent);
+        }
+      }
+  
+      .item.active {
+        background: transparent;
+        border: 1px solid var(--t5e-header-border);
+        border-bottom-color: transparent;
+        font-weight: 700;
+        cursor: default;
+        text-shadow: none;
+  
+        &:hover {
+          color: inherit;
+        }
+      }
+  
+      .item:first-child.active {
+        border-left-color: transparent;
+      }
+  
+      .item:last-child.active {
+        border-right-color: transparent;
+      }
+    } //.sheet-navigation
+  
+    // item sheet body
+  
+    .sheet-body {
+      padding: 1rem;
+      padding-right: 0.25rem;
+      overflow: hidden;
+  
+      // item properties
+  
+      .item-properties {
+        flex: 0 0 120px;
+        margin: 0;
+        padding: 0 0.5rem 0 0;
+        border-right: 1px solid var(--t5e-faint-color);
+        height: 100%;
+  
+        .form-group {
+          margin: 0;
+          border-bottom: 1px solid var(--t5e-faint-color);
+          color: var(--t5e-secondary-color);
+          font-size: 13px;
+  
+          &:last-of-type {
+            border: none;
+          }
+  
+          label {
+            font-weight: 600;
+            line-height: 20px;
+          }
+  
+          input {
+            flex: 0 0 40px;
+            text-align: right;
+            background: none;
+            height: 16px;
+          }
+        }
+  
+        .properties-list {
+          margin-top: 0.25rem;
+          list-style: none;
+          margin: 0;
+          padding: 0;
+  
+          li {
+            margin: 0 0 2px 0;
+            border: 1px solid var(--t5e-faint-color);
+            border-radius: 5px;
+            font-size: 11px;
+            line-height: 16px;
+            padding: 0 2px;
+            background: rgba(0, 0, 0, 0.05);
+            text-align: center;
+          }
+        }
+  
+        .form-group + .properties-list {
+          margin-top: 0.5rem;
+        }
+      }
+  
+      // item sheet editor
+  
+      .editor {
+        margin-left: 0.5rem;
+        height: 100%;
+        font-size: 13px;
+        display: flex;
+        flex-direction: column;
+  
+        .details-headline {
+          font-weight: 600;
+          font-size: 13px;
+          line-height: 1;
+          margin-bottom: 0.5rem;
+          border: none;
+        }
+  
+        .editor-edit {
+          right: 0.75rem;
+          top: 0;
+          padding: 0;
+          border: none;
+          box-shadow: none;
+          background: transparent;
+  
+          i {
+            font-size: 1em;
+            position: absolute;
+            top: 0;
+            right: 5px;
+            cursor: pointer;
+            text-shadow: none;
+          }
+        } //.editor-edit
+  
+        .editor-content {
+          margin: 0;
+          padding: 0 0.75rem 0 0;
+  
+          p,
+          li {
+            line-height: 1.4;
+          }
+  
+          a.entity-link,
+          a.inline-roll {
+            padding: 1px 2px 0px 2px;
+            border-radius: 5px;
+            background: var(--t5e-faint-color);
+            color: var(--t5e-primary-font);
+          }
+        } //.editor-content
+  
+        .tox {
+          .tox-toolbar__group {
+            padding: 0;
+          }
+  
+          .tox-tbtn {
+            width: 24px;
+            height: 24px;
+          }
+  
+          &.tox-tinymce .tox-tbtn[title="Formats"],
+          &.tox-prosemirror .tox-tbtn[title="Formats"] {
+            width: 90px;
+          }
+  
+          .tox-tbtn--select {
+            width: auto;
+          }
+        } //.tox
+      } //.editor
+  
+      // tabs
+      .tab {
+        overflow: hidden auto;
+        height: 100%;
+        align-content: flex-start;
+        // 	padding: 0;
+  
+        &.item-betterRolls,
+        &.details,
+        &.advancement,
+        &.dynamiceffects,
+        &.magic-items {
+          padding-right: 0.75rem;
+  
+          .form-header {
+            margin: 8px 6px 4px 6px;
+            font-size: 18px;
+            line-height: 16px;
+            font-family: var(--t5e-modesto);
+            font-weight: 600;
+            color: var(--t5e-primary-font);
+  
+            &:first-child {
+              margin-top: 0;
+            }
+          }
+  
+          .form-group {
+            margin: 2px 0;
+            padding: 3px;
+            background: var(--t5e-faintest-color);
+            border-radius: 5px;
+  
+            .form-fields {
+              justify-content: flex-start;
+              gap: 1px;
+            }
+  
+            &.stacked {
+              display: flex;
+              flex-wrap: wrap;
+              gap: 1px;
+            }
+  
+            span {
+              text-align: center;
+            }
+  
+            label {
+              margin-left: 4px;
+              line-height: 20px;
+              font-size: 13px;
+              font-weight: 600;
+              color: var(--t5e-secondary-color);
+              white-space: nowrap;
+  
+              &.checkbox {
+                position: relative;
+                z-index: 1;
+                margin: 0;
+                padding: 1px;
+                display: flex;
+                border-radius: 3px;
+                overflow: hidden;
+                border: 1px solid var(--t5e-checkbox-outline);
+                background: var(--t5e-checkbox-checked);
+                height: 20px;
+                cursor: pointer;
+                color: var(--t5e-checkbox-font);
+                font-size: 13px;
+                line-height: 16px;
+                flex: 0 0 calc(100% / 4 - 1px);
+                font-weight: 400;
+  
+                &:hover {
+                  background: var(--t5e-checkbox-checked);
+                }
+  
+                &:hover input::after {
+                  background: var(--t5e-checkbox-checked);
+                }
+              }
+            }
+  
+            select,
+            input[type="text"],
+            button {
+              background: rgba(255, 255, 255, 0.3);
+              height: 20px;
+              font-size: 13px;
+  
+              &:hover {
+                background: rgba(255, 255, 255, 0.5);
+              }
+            }
+  
+            input:disabled {
+              background: transparent;
+              color: var(--t5e-secondary-color);
+  
+              &:hover {
+                border: none !important;
+              }
+            }
+  
+            .checkbox input {
+              position: static;
+              margin: 0;
+  
+              &::after {
+                content: "";
+                display: block;
+                position: absolute;
+                top: 0;
+                left: 0;
+                z-index: -1;
+                background: var(--t5e-checkbox-unchecked);
+                width: 100%;
+                height: 100%;
+                cursor: pointer;
+              }
+  
+              &:checked::after {
+                display: none;
+              }
+            }
+  
+            input[name="data.activation.cost"],
+            input[name="data.target.value"],
+            input[name="data.range.value"],
+            input[name="data.duration.value"],
+            input[name="data.uses.value"],
+            &.damage-parts input {
+              text-align: right;
+            }
+  
+            input[name="data.save.dc"] {
+              text-align: center;
+              flex: 0 0 30px;
+            }
+  
+            input[type="text"]:hover,
+            select:hover,
+            button:hover,
+            select:focus {
+              border: none;
+              box-shadow: 0 0 0 1px var(--t5e-primary-accent) inset;
+            }
+          } //.form-group
+  
+          .form-group label.prepared,
+          .form-group.recharge label {
+            flex: unset !important;
+            padding-right: 8px;
+            margin: 0 0.5rem 0 0;
+            flex-direction: row-reverse;
+  
+            input {
+              width: 20px;
+              height: 16px;
+              top: initial;
+              margin: 0 4px 0 0;
+            }
+          }
+  
+          .form-group.recharge label {
+            margin-right: 0;
+          }
+        } //.tab children
+  
+        &.item-betterRolls .form-group label.checkbox {
+          flex: 0 0 calc(100% / 3 - 1px);
+        }
+  
+        &.effects,
+        &.advancement {
+          .items-list {
+            flex: 1;
+            padding: 0 9px 8px 0;
+            margin: 0;
+            list-style: none;
+            overflow-y: scroll;
+  
+            .item-list {
+              padding: 0 0 0 8px;
+              margin: 0;
+            }
+  
+            .items-header {
+              align-items: center;
+              margin: 8px 0 2px 0;
+              padding: 4px 0 2px 6px;
+              line-height: 12px;
+              font-size: 12px;
+              background: var(--t5e-faint-color);
+              box-shadow: 0 0 3px inset var(--t5e-light-color);
+              border-radius: 5px;
+  
+              &:first-child {
+                margin-top: 0;
+              }
+  
+              h3 {
+                font-size: 12px;
+                line-height: 12px;
+                flex: 1 0 70px;
+                white-space: nowrap;
+                margin: 0;
+                font-weight: 600;
+              }
+  
+              div:not(.item-name) {
+                color: var(--t5e-tertiary-color);
+              }
+            }
+  
+            .effect-source,
+            .effect-duration {
+              flex: 0 0 120px;
+              text-align: center;
+              justify-content: center;
+            }
+  
+            .effect-controls {
+              flex: 0 0 61px;
+              text-align: center;
+              justify-content: center;
+            }
+  
+            .items-header .effect-controls i {
+              margin-right: 4px;
+            }
+  
+            .effect-control {
+              flex: 0 0 20px;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              color: var(--t5e-tertiary-color);
+  
+              .fas.fa-trash {
+                color: var(--t5e-unsafe-accent);
+              }
+  
+              &:hover {
+                color: var(--t5e-secondary-color);
+  
+                .fas.fa-trash {
+                  color: var(--t5e-unlinked-accent);
+                }
+              }
+            }
+  
+            //.items-header-label
+  
+            .item {
+              background: var(--t5e-faintest-color);
+              margin: 2px 0;
+              border-radius: 5px;
+              font-size: 12px;
+              color: var(--t5e-primary-font);
+  
+              div:not(.item-name) {
+                border-left: 1px solid var(--t5e-faint-color);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+              }
+  
+              div.item-summary {
+                flex: 100%;
+                justify-content: flex-start;
+                gap: 0.5em;
+                padding: 0.5em 2em;
+                border: none;
+              }
+  
+              .item-name {
+                align-items: center;
+  
+                h4 {
+                  margin: 0;
+                }
+              }
+  
+              .item-name .item-image {
+                flex: 0 0 24px;
+                height: 24px;
+                border-radius: 5px 0px 0px 5px;
+                margin-right: 4px;
+                border: none;
+                background-size: cover;
+  
+                i {
+                  color: var(--t5e-tertiary-color);
+                  display: none;
+                  text-align: center;
+                  font-size: 18px;
+                }
+              }
+            } //.item
+          } //.effects-list
+        } //.effects
+      } //.tab
+  
+      input[type="checkbox"] {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        background: none;
+        border: 1px solid var(--t5e-tertiary-color);
+        box-shadow: 0 0 2px var(--t5e-light-color) inset;
+        border-radius: 3px;
+        background-image: var(--t5e-check-default);
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 60%;
+      }
+  
+      label input[type="checkbox"] {
+        border: none;
+        box-shadow: none;
+        position: relative;
+      }
+  
+      input[type="checkbox"]:checked {
+        background: var(--t5e-secondary-color);
+        background-image: var(--t5e-check-checked);
+        background-size: 60%;
+        background-repeat: no-repeat;
+        background-position: center;
+      }
+  
+      .checkbox input[type="checkbox"]:checked {
+        background-image: var(--t5e-check-checked);
+      }
+  
+      label input[type="checkbox"]:checked {
+        background-color: transparent;
+      }
+    }
+  
+    .damage-header {
+      margin: 8px 4px 4px 6px;
+      font-weight: 600;
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--t5e-modesto);
+      font-size: 18px;
+    }
+  
+    .damage-control {
+      margin: 0 0.5rem;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      flex: 0 0 1px;
+      white-space: nowrap;
+      color: var(--t5e-tertiary-color);
+      font-family: var(--t5e-signika);
+      font-size: 13px;
+  
+      // &::after {
+      // 	display: inline-block;
+      // 	content: 'Add Formula';
+      // 	margin-left: .25rem;
+      //   font-size: 12px;
+      // }
+    }
+  
+    .damage-parts {
+      flex-direction: column;
+  
+      li {
+        margin-top: 2px;
+        width: 100%;
+        border-bottom: 1px solid var(--t5e-faint-color);
+        padding-bottom: 2px;
+  
+        &:first-child {
+          margin-top: 0;
+        }
+  
+        &:last-child {
+          border: none;
+          padding: 0;
+        }
+  
+        input {
+          margin-right: 4px;
+        }
+      }
+    }
+  }
+  ```

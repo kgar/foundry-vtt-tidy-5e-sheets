@@ -6,7 +6,7 @@
 - [x] Make a second pass at nav tabs and make sure it's ergonomic enough. Look at some other examples out there.
 - [x] Consider adding a third prop to the Tabs type which allows for specifying a component and its props. Use this to make tabs fully data-driven 🤯
 - [ ] Task out Custom Item sheet and try out a new approach to the sheet, using the `TestApplication.ts` and `Experiment.svelte` as examples. Find the appropriate hooks via `CONFIG.debug.hooks = true`.
-  - [ ] Be sure that you subscribe to a hook when the application is to be initially rendered and then unsubscribe when it closes, to prevent excess processing and unforeseen issues.
+  - [x] ~~Be sure that you subscribe to a hook when the application is to be initially rendered and then unsubscribe when it closes, to prevent excess processing and unforeseen issues.~~ Overriding the render() function did the trick. Preventing unforced renders and simply updating the window title and refreshing store made the magic happen.
   - [ ] One thing to think about: try subscribing at the top level to the context and then passing it down and around, rather than passing the store everywhere.
   - [ ] The end result should be relatively easily portable to the old method if the new method doesn't work out. Just some rewiring at the top ✅
 - [x] Implement "+Temp +Max" HP and config button cog on the character profile 😱
@@ -30,8 +30,12 @@
 - [ ] `<a>`, `<div>`, etc. tags with `[role="button"]` should be buttons
 - [ ] `<i>` tags with role=button should be changed so that a button surrounds the icon
 - [ ] Leverage TypeScript to lock down and document all known flags for each type of flagged entity (actor, NPC, vehicle, Item)
-- [ ] Implement click-and-drag for manual sorting of items
-  - [ ] Consider disabling this for favorites when alphabetical sort is turned on, or issuing a warning.
+- [ ] Implement click-and-drag 
+  - [ ] for manual sorting of items
+    - [ ] Consider disabling this for favorites when alphabetical sort is turned on, or issuing a warning.
+  - [ ] for dropping things onto the sheet
+  - [ ] for draging things from the sheet to drop somewhere else
+  - [ ] ... what else is missing from this list?
 
 ## Vehicle Sheet
 

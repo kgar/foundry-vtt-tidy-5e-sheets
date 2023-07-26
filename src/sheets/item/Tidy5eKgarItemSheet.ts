@@ -2,25 +2,24 @@ import { CONSTANTS } from 'src/constants';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type { Item5e, ItemSheetContext } from 'src/types/item';
 import { writable } from 'svelte/store';
-import Tidy5eKgarItemSheetComponent from './Tidy5eKgarItemSheetComponent.svelte';
+import ItemTypeNotFound from './ItemTypeNotFound.svelte';
+import ItemEquipment from './ItemEquipment.svelte';
 
 export class Tidy5eKgarItemSheet extends dnd5e.applications.item.ItemSheet5e {
-  _store = writable<ItemSheetContext>();
+  store = writable<ItemSheetContext>();
+  selectedTabId?: string | undefined;
 
   constructor(item: Item5e, ...args: any[]) {
     super(item, ...args);
-
-    console.log('Tidy5eItemSheet', { ...args });
-    this._itemSheet = new dnd5e.applications.item.ItemSheet5e(item, ...args);
   }
 
   get template() {
-    return FoundryAdapter.getTemplate('empty-article-template.hbs');
+    return FoundryAdapter.getTemplate('empty-form-template.hbs');
   }
 
   static get defaultOptions() {
     return FoundryAdapter.mergeObject(super.defaultOptions, {
-      classes: [CONSTANTS.MODULE_ID, 'sheet', 'item'],
+      classes: ['tidy5e-kgar', 'sheet', 'item', 'flexcol'],
       width: 700,
       height: 400,
       popOut: true,
@@ -31,15 +30,29 @@ export class Tidy5eKgarItemSheet extends dnd5e.applications.item.ItemSheet5e {
   }
 
   async activateListeners(html: { get: (index: 0) => HTMLElement }) {
-    this._store.set(await this._itemSheet.getData());
+    this.store.set(await this.getData());
 
     const node = html.get(0);
-    new Tidy5eKgarItemSheetComponent({
-      target: node,
-      props: {
-        store: this._store,
-      },
-    });
+
+    switch (this.item.type) {
+      case CONSTANTS.ITEM_TYPE_EQUIPMENT:
+        new ItemEquipment({
+          target: node,
+          props: {
+            store: this.store,
+            selectedTabId: this.selectedTabId ?? 'description',
+          },
+        });
+        break;
+      default:
+        new ItemTypeNotFound({
+          target: node,
+          props: {
+            store: this.store,
+          },
+        });
+        break;
+    }
   }
 
   // TODO: Extract this implementation somewhere. Or at least part of it.
@@ -52,6 +65,14 @@ export class Tidy5eKgarItemSheet extends dnd5e.applications.item.ItemSheet5e {
     let t = this.element.find('.window-title')[0];
     if (t.hasChildNodes()) t = t.childNodes[0];
     t.textContent = this.title;
-    this._store.set(await this.getData());
+    this.store.set(await this.getData());
+  }
+
+  close(...args: any[]) {
+    try {
+      console.log('Item sheet TODO: memoize the selected tab', this.element);
+    } finally {
+      super.close(...args);
+    }
   }
 }
