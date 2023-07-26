@@ -23,4 +23,10 @@
 - Automate actions like
   - Any of the user interactions with the sheets
   - ...?
-- 
+
+
+## To Do
+
+- [ ] Establish the API assignment in main
+- [ ] // TODO: Put this somewhere safe, and allow the Tidy 5e API to expose the base tab set for making changes to it.
+- [ ] 

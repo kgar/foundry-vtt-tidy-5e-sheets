@@ -1,3 +1,4 @@
+import type { ComponentProps, ComponentType, SvelteComponent } from 'svelte';
 import type { Actor5e, Actor5eHp } from './actor';
 
 export type SheetFunctions = {
@@ -12,10 +13,15 @@ export type SheetFunctions = {
   isFilterActive: (setName: string, filterName: string) => boolean;
 };
 
-export type Tab = {
+export type Tab<T extends SvelteComponent<any, any, any> = any> = {
   id: string;
   displayName: string;
-}
+  content: {
+    // TODO: Make this generic so that correct props are actually required
+    component: ComponentType<T>;
+    props: ComponentProps<T>;
+  };
+};
 
 export type ClassSummary = {
   class?: string;

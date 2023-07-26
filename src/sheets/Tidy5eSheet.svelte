@@ -22,7 +22,6 @@
   import EffectsTab from 'src/components/player-character/EffectsTab.svelte';
   import BiographyTab from 'src/components/player-character/BiographyTab.svelte';
   import JournalTab from 'src/components/player-character/JournalTab.svelte';
-  import { debounce } from 'src/utils/debounce';
   import type { SheetParameter } from 'src/utils/sheet-parameter';
   import { CONSTANTS } from 'src/constants';
   import { submitText } from './form';
@@ -86,17 +85,67 @@
   const allowJournal =
     context.owner && !SettingsProvider.settings.journalTabDisabled.get();
 
+  // TODO: Put this somewhere safe, and allow the Tidy 5e API to expose the base tab set for making changes to it.
   const tabs: Tab[] = [
-    { id: 'attributes', displayName: localize('DND5E.Attributes') },
-    { id: 'inventory', displayName: localize('DND5E.Inventory') },
-    { id: 'spellbook', displayName: localize('DND5E.Spellbook') },
-    { id: 'features', displayName: localize('DND5E.Features') },
-    { id: 'effects', displayName: localize('DND5E.Effects') },
-    { id: 'biography', displayName: localize('DND5E.Biography') },
+    {
+      id: 'attributes',
+      displayName: localize('DND5E.Attributes'),
+      content: {
+        component: AttributesTab,
+        props: { context, sheetFunctions },
+      },
+    },
+    {
+      id: 'inventory',
+      displayName: localize('DND5E.Inventory'),
+      content: {
+        component: InventoryTab,
+        props: { context, sheetFunctions },
+      },
+    },
+    {
+      id: 'spellbook',
+      displayName: localize('DND5E.Spellbook'),
+      content: {
+        component: SpellbookTab,
+        props: { context, sheetFunctions },
+      },
+    },
+    {
+      id: 'features',
+      displayName: localize('DND5E.Features'),
+      content: {
+        component: FeaturesTab,
+        props: { context, sheetFunctions },
+      },
+    },
+    {
+      id: 'effects',
+      displayName: localize('DND5E.Effects'),
+      content: {
+        component: EffectsTab,
+        props: { context, sheetFunctions },
+      },
+    },
+    {
+      id: 'biography',
+      displayName: localize('DND5E.Biography'),
+      content: {
+        component: BiographyTab,
+        props: { context, sheetFunctions },
+      },
+    },
   ];
 
   if (allowJournal) {
-    tabs.push({ id: 'journal', displayName: localize('T5EK.Journal') });
+    tabs.push({
+      id: 'journal',
+      displayName: localize('T5EK.Journal'),
+      content: {
+        component: JournalTab,
+        props: { context },
+      },
+    });
   }
 
   Hooks.call(CONSTANTS.HOOKS_RENDERING_CHARACTER_TABS, { tabs, context });
@@ -355,29 +404,11 @@
 <!-- Tabs -->
 <!-- Lock -->
 <section class="sheet-body" bind:this={scrollView}>
-  <section class="tab attributes" class:active={selectedTabId === 'attributes'}>
-    <AttributesTab {context} {sheetFunctions} />
-  </section>
-  <section class="tab inventory" class:active={selectedTabId === 'inventory'}>
-    <InventoryTab {context} {sheetFunctions} />
-  </section>
-  <section class="tab spellbook" class:active={selectedTabId === 'spellbook'}>
-    <SpellbookTab {context} {sheetFunctions} />
-  </section>
-  <section class="tab features" class:active={selectedTabId === 'features'}>
-    <FeaturesTab {context} {sheetFunctions} />
-  </section>
-  <section class="tab effects" class:active={selectedTabId === 'effects'}>
-    <EffectsTab {context} />
-  </section>
-  <section class="tab biography" class:active={selectedTabId === 'biography'}>
-    <BiographyTab {context} {sheetFunctions} />
-  </section>
-  {#if allowJournal}
-    <section class="tab journal" class:active={selectedTabId === 'journal'}>
-      <JournalTab {context} />
+  {#each tabs as tab (tab.id)}
+    <section class="tab {tab.id}" class:active={selectedTabId === tab.id}>
+      <svelte:component this={tab.content.component} {...tab.content.props} />
     </section>
-  {/if}
+  {/each}
 </section>
 
 <!-- Cross-cutting: Item Info Card -->
