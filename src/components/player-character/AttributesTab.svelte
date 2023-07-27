@@ -11,11 +11,11 @@
   export let context: ActorSheetContext;
   export let sheetFunctions: SheetFunctions;
 
-  const allowEdit = FoundryAdapter.tryGetFlag<boolean>(
+  $: allowEdit = FoundryAdapter.tryGetFlag<boolean>(
     context.actor,
     'allow-edit'
   );
-  const showResources =
+  $: showResources =
     allowEdit ||
     context.resources.some(
       (x) => !isNil(x.value) || !isNil(x.value, '') || !isNil(x.max)

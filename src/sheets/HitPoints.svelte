@@ -14,7 +14,7 @@
   const localize = FoundryAdapter.localize;
 
   // TODO: Break this down so it's simple for the reader
-  const hpBarCalculationCurrent =
+  $: hpBarCalculationCurrent =
     (100 /
       ((isRealNumber(actor.system?.attributes?.hp?.max)
         ? actor.system.attributes.hp.max

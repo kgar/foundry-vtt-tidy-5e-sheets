@@ -15,13 +15,13 @@
   const sortAlphabetically =
     SettingsProvider.settings.enableSortFavoritesItemsAlphabetically.get();
 
-  let favoriteInventory = sortByNameIfConfigured(
+  $: favoriteInventory = sortByNameIfConfigured(
     context.inventory
       .flatMap((x: { items: Item5e[] }) => x.items)
       .filter(isItemFavorite)
   );
 
-  let favoriteFeatures = sortByNameIfConfigured(
+  $: favoriteFeatures = sortByNameIfConfigured(
     context.features
       .flatMap((x: { items: Item5e[] }) => x.items)
       .filter(isItemFavorite)
@@ -41,7 +41,6 @@
 <div class="flexcol no-gap">
   {#if favoriteInventory.length}
     <InventoryList
-      {context}
       items={favoriteInventory}
       primaryColumnName={localize('DND5E.Inventory')}
       lockControls={true}

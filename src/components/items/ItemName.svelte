@@ -25,11 +25,10 @@
     &:not(.has-children) {
       align-self: center;
     }
-    
+
     &.has-children {
       display: flex;
       align-items: center;
     }
   }
-
 </style>

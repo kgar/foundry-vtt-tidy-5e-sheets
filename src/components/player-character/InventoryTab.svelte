@@ -7,37 +7,38 @@
   import type { ItemLayoutMode, SheetFunctions } from 'src/types/types';
   import ItemFilterLayoutToggle from '../items/ItemFilterLayoutToggle.svelte';
   import ListContainer from '../layout/ListContainer.svelte';
-  import FilteredItems from '../items/FilteredItems.svelte';
   import InventoryList from '../inventory/InventoryList.svelte';
   import InventoryGrid from '../inventory/InventoryGrid.svelte';
   import { SettingsProvider } from 'src/settings/settings';
   import { submitText } from 'src/sheets/form';
+  import { getContext } from 'svelte';
+  import type { Readable } from 'svelte/store';
+  import type { Item5e } from 'src/types/item';
 
-  export let context: ActorSheetContext;
-  export let sheetFunctions: SheetFunctions;
+  let store = getContext<Readable<ActorSheetContext>>('store');
+  let sheetFunctions = getContext<SheetFunctions>('sheetFunctions');
 
   const localize = FoundryAdapter.localize;
 
   let searchCriteria: string = '';
 
-  const layoutMode: ItemLayoutMode = FoundryAdapter.tryGetFlag(
-    context.actor,
-    'inventory-grid'
-  )
+  let layoutMode: ItemLayoutMode;
+  $: layoutMode = FoundryAdapter.tryGetFlag($store.actor, 'inventory-grid')
     ? 'grid'
     : 'list';
-  const allowEdit = FoundryAdapter.tryGetFlag(context.actor, 'allow-edit');
+
+  $: allowEdit = FoundryAdapter.tryGetFlag($store.actor, 'allow-edit');
 
   function toggleLayout() {
     if (layoutMode === 'grid') {
-      FoundryAdapter.unsetFlag(context.actor, 'inventory-grid');
+      FoundryAdapter.unsetFlag($store.actor, 'inventory-grid');
       return;
     }
 
-    FoundryAdapter.setFlag(context.actor, 'inventory-grid', true);
+    FoundryAdapter.setFlag($store.actor, 'inventory-grid', true);
   }
 
-  const currencies = Object.entries(context.system.currency).map((e) => ({
+  $: currencies = Object.entries($store.system.currency).map((e) => ({
     key: e[0],
     value: e[1],
   }));
@@ -46,7 +47,7 @@
     return Dialog.confirm({
       title: `${localize('DND5E.CurrencyConvert')}`,
       content: `<p>${localize('DND5E.CurrencyConvertHint')}</p>`,
-      yes: () => context.actor.convertCurrency(),
+      yes: () => $store.actor.convertCurrency(),
     });
   }
 
@@ -64,7 +65,7 @@
 
 <ItemFilters>
   <ItemFilterSearch
-    actor={context.actor}
+    actor={$store.actor}
     bind:searchCriteria
     searchFlag="item-search"
   />
@@ -84,24 +85,23 @@
 </ItemFilters>
 
 <ListContainer>
-  {#each context.inventory as section}
-    <FilteredItems {searchCriteria} items={section.items} let:filteredItems>
-      {#if (searchCriteria.trim() === '' && allowEdit) || filteredItems.length > 0}
-        {#if layoutMode === 'list'}
-          <InventoryList
-            primaryColumnName="{localize(
-              section.label
-            )} ({filteredItems.length})"
-            items={filteredItems}
-            {context}
-            extraInventoryRowClasses={section.css}
-            dataset={section.dataset}
-          />
-        {:else}
-          <InventoryGrid items={filteredItems} {section} {context} />
-        {/if}
+  {#each $store.inventory as section (section.label)}
+    {@const filteredItems = FoundryAdapter.getFilteredItems(
+      searchCriteria,
+      section.items
+    )}
+    {#if (searchCriteria.trim() === '' && allowEdit) || filteredItems.length > 0}
+      {#if layoutMode === 'list'}
+        <InventoryList
+          primaryColumnName="{localize(section.label)} ({filteredItems.length})"
+          items={filteredItems}
+          extraInventoryRowClasses={section.css}
+          dataset={section.dataset}
+        />
+      {:else}
+        <InventoryGrid items={filteredItems} {section} />
       {/if}
-    </FilteredItems>
+    {/if}
   {/each}
 </ListContainer>
 
@@ -109,13 +109,13 @@
   <div class="attunement-and-currency">
     <div
       class="attuned-items-counter"
-      class:overattuned={context.actor.system.attributes.attunement.value >
-        context.actor.system.attributes.attunement.max}
+      class:overattuned={$store.actor.system.attributes.attunement.value >
+        $store.actor.system.attributes.attunement.max}
       title={localize('DND5E.Attunement')}
     >
       <i class="fas fa-sun" />
       <span class="attuned-items-current"
-        >{context.system.attributes.attunement.value}</span
+        >{$store.system.attributes.attunement.value}</span
       >
       /
       {#if FoundryAdapter.userIsGm()}
@@ -123,19 +123,15 @@
           type="number"
           class="attuned-items-max"
           data-dtype="Number"
-          value={context.system.attributes.attunement.max}
+          value={$store.system.attributes.attunement.max}
           placeholder="0"
           title={localize('T5EK.AttunementMax')}
           on:change|stopPropagation|preventDefault={(event) =>
-            submitText(
-              event,
-              context.actor,
-              'system.attributes.attunement.max'
-            )}
+            submitText(event, $store.actor, 'system.attributes.attunement.max')}
         />
       {:else}
         <span class="attuned-items-max"
-          >{context.system.attributes.attunement.max}</span
+          >{$store.system.attributes.attunement.max}</span
         >
       {/if}
     </div>
@@ -147,22 +143,22 @@
         {#each currencies as currency}
           <li
             class="currency-item {currency.key}"
-            title={context.labels.currencies[currency.key]}
+            title={$store.labels.currencies[currency.key]}
           >
             <input
               type="number"
               step="any"
-              id="{context.appId}-system.currency.{currency.key}"
+              id="{$store.appId}-system.currency.{currency.key}"
               value={currency.value}
               on:change|stopPropagation|preventDefault={(event) =>
                 submitText(
                   event,
-                  context.actor,
+                  $store.actor,
                   `system.currency.${currency.key}`
                 )}
             />
             <label
-              for="{context.appId}-system.currency.{currency.key}"
+              for="{$store.appId}-system.currency.{currency.key}"
               class="denomination {currency.key}"
               data-denom={currency.key}
               >{abbreviateCurrency(currency.key)}</label
@@ -187,12 +183,12 @@
   {#if !SettingsProvider.settings.hideStandardEncumbranceBar.get()}
     <div
       class="encumbrance"
-      class:encumbered={context.encumbrance.encumbered}
+      class:encumbered={$store.encumbrance.encumbered}
       title={localize('T5EK.Encumbrance')}
     >
-      <span class="encumbrance-bar" style="width:{context.encumbrance.pct}%" />
+      <span class="encumbrance-bar" style="width:{$store.encumbrance.pct}%" />
       <span class="encumbrance-label"
-        >{context.encumbrance.value} / {context.encumbrance.max}</span
+        >{$store.encumbrance.value} / {$store.encumbrance.max}</span
       >
       <i class="encumbrance-breakpoint encumbrance-33 arrow-up" />
       <i class="encumbrance-breakpoint encumbrance-33 arrow-down" />

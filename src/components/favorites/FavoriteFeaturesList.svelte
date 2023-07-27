@@ -12,7 +12,7 @@
   import ItemName from '../items/ItemName.svelte';
   import ItemUseButton from '../items/ItemUseButton.svelte';
   import ItemUses from '../items/ItemUses.svelte';
-  
+
   export let context: ActorSheetContext;
   export let items: Item5e[] = [];
 

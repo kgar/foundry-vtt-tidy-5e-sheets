@@ -16,7 +16,7 @@
   export let spells: Item5e[];
 
   const localize = FoundryAdapter.localize;
-  const allowEdit = FoundryAdapter.tryGetFlag(context.actor, 'allow-edit');
+  $: allowEdit = FoundryAdapter.tryGetFlag(context.actor, 'allow-edit');
 </script>
 
 <section class="spellbook-grid">

@@ -30,8 +30,8 @@
   const localize = FoundryAdapter.localize;
   const classicControlsEnabled =
     SettingsProvider.settings.classicControlsEnabled.get();
-  const allowEdit = FoundryAdapter.tryGetFlag(context.actor, 'allow-edit');
-  const classicControlsBaseWidth = allowEdit ? '7.5rem' : '5.3125rem';
+  $: allowEdit = FoundryAdapter.tryGetFlag(context.actor, 'allow-edit');
+  $: classicControlsBaseWidth = allowEdit ? '7.5rem' : '5.3125rem';
   const hideIconsNextToTheItemName =
     SettingsProvider.settings.hideIconsNextToTheItemName.get();
 </script>

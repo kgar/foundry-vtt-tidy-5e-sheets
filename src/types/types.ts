@@ -21,7 +21,7 @@ export type Tab<
   displayName: string;
   content: {
     component: ComponentType<T>;
-    props: ComponentProps<T>;
+    props?: ComponentProps<T>;
   };
 };
 

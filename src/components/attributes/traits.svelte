@@ -8,7 +8,7 @@
 
   const toggleTraits = SettingsProvider.settings.traitsTogglePc.get();
 
-  const traitsExpanded =
+  $: traitsExpanded =
     !toggleTraits ||
     FoundryAdapter.tryGetFlag<boolean>(context.actor, 'traitsExpanded') ===
       true;

@@ -9,18 +9,20 @@
   import { SettingsProvider } from 'src/settings/settings';
   import GridPaneFavoriteIcon from '../shared/GridPaneFavoriteIcon.svelte';
   import { submitText } from 'src/sheets/form';
+  import { getContext } from 'svelte';
+  import type { Readable } from 'svelte/motion';
 
   export let section: any;
   export let items: Item5e[];
-  export let context: ActorSheetContext;
+  let store = getContext<Readable<ActorSheetContext>>('store');
 
   const localize = FoundryAdapter.localize;
-  const allowEdit = FoundryAdapter.tryGetFlag(context.actor, 'allow-edit');
+  $: allowEdit = FoundryAdapter.tryGetFlag($store.actor, 'allow-edit');
 
   const quantityAlwaysShownEnabled =
     SettingsProvider.settings.quantityAlwaysShownEnabled.get();
 
-  function getInventoryRowClasses(item: Item5e, section: any) {
+  function getInventoryRowClasses(item: Item5e) {
     const extras: string[] = [];
 
     if (!quantityAlwaysShownEnabled) {
@@ -29,7 +31,7 @@
 
     return FoundryAdapter.getInventoryRowClasses(
       item,
-      context.itemContext[item.id],
+      $store.itemContext[item.id],
       extras
     );
   }
@@ -44,13 +46,13 @@
     </ItemTableColumn>
   </ItemTableHeaderRow>
   <div class="items">
-    {#each items as item}
-      {@const ctx = context.itemContext[item.id]}
+    {#each items as item (item.id)}
+      {@const ctx = $store.itemContext[item.id]}
 
       <div
         role="button"
         tabindex="0"
-        class="item {getInventoryRowClasses(item, section)}"
+        class="item {getInventoryRowClasses(item)}"
         data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
         data-context-menu-entity-id={item.id}
         on:click={(event) => item.use({}, { event })}
@@ -66,7 +68,7 @@
           <GridPaneFavoriteIcon />
         {/if}
 
-        {#if context.owner}
+        {#if $store.owner}
           <a
             class="item-control item-edit"
             style="display:none"
@@ -121,7 +123,7 @@
         </div>
       </div>
     {/each}
-    {#if context.owner && allowEdit}
+    {#if $store.owner && allowEdit}
       <div class="items-footer">
         <a
           role="button"
@@ -134,7 +136,7 @@
                 action: 'itemCreate',
                 tooltip: 'DND5E.ItemCreate',
               },
-              context.actor
+              $store.actor
             )}
         >
           <i class="fas fa-plus-circle" />

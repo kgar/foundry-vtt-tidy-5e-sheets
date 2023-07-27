@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { Actor5e } from 'src/foundry/foundry-adapter';
+  import type { Actor5e } from 'src/types/actor';
   import ItemCreateButton from '../items/ItemCreateButton.svelte';
 
   export let dataset: Record<string, unknown>;

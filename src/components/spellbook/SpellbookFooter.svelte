@@ -8,7 +8,7 @@
   export let abilities: any[];
 
   const localize = FoundryAdapter.localize;
-  const spellAttackBonusInfo =
+  $: spellAttackBonusInfo =
     FoundryAdapter.getSpellAttackModAndTooltip(context);
 </script>
 

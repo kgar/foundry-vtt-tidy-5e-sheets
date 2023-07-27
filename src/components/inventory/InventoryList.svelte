@@ -19,33 +19,37 @@
   import ItemEditControl from '../items/ItemEditControl.svelte';
   import InventoryEquipControl from './InventoryEquipControl.svelte';
   import InventoryAttuneControl from './InventoryAttuneControl.svelte';
-  import type { ActorSheetContext } from 'src/types/types';
   import InlineFavoriteIcon from '../shared/InlineFavoriteIcon.svelte';
   import ItemFavoriteControl from '../items/ItemFavoriteControl.svelte';
+  import { getContext } from 'svelte';
+  import type { Readable } from 'svelte/store';
+  import type { ActorSheetContext } from 'src/types/types';
 
   export let primaryColumnName: string;
   export let items: Item5e[];
-  export let context: ActorSheetContext;
   export let extraInventoryRowClasses: string = '';
   export let dataset: Record<string, unknown> | undefined = undefined;
   export let lockControls: boolean = false;
   export let allowFavoriteIconNextToName: boolean = true;
   export let includeWeightColumn: boolean = true;
 
+  let store = getContext<Readable<ActorSheetContext>>('store');
+
   const localize = FoundryAdapter.localize;
-  const allowEdit = FoundryAdapter.tryGetFlag(context.actor, 'allow-edit');
-  const classicControlsBaseWidth = allowEdit ? '7.5rem' : '5.3125rem';
-  const ammoEquippedOnly = SettingsProvider.settings.ammoEquippedOnly.get();
-  const quantityAlwaysShownEnabled =
+  $: allowEdit = FoundryAdapter.tryGetFlag($store.actor, 'allow-edit');
+  $: classicControlsBaseWidth = allowEdit ? '7.5rem' : '5.3125rem';
+  $: ammoEquippedOnly = SettingsProvider.settings.ammoEquippedOnly.get();
+  $: quantityAlwaysShownEnabled =
     SettingsProvider.settings.quantityAlwaysShownEnabled.get();
 
-  const ammos = [
+  let ammos: { text: string; value: string | null; ammo: Item5e | null }[];
+  $: ammos = [
     {
       text: '',
       value: null,
       ammo: null,
     },
-    ...context.actor.items
+    ...$store.actor.items
       .filter(
         (x) =>
           x.system.consumableType === 'ammo' &&
@@ -58,9 +62,9 @@
       })),
   ];
 
-  const hideIconsNextToTheItemName =
+  $: hideIconsNextToTheItemName =
     SettingsProvider.settings.hideIconsNextToTheItemName.get();
-  const classicControlsEnabled =
+  $: classicControlsEnabled =
     SettingsProvider.settings.classicControlsEnabled.get();
 
   function getInventoryRowClasses(item: Item5e) {
@@ -76,7 +80,7 @@
 
     return FoundryAdapter.getInventoryRowClasses(
       item,
-      context.itemContext[item.id],
+      $store.itemContext[item.id],
       extras
     );
   }
@@ -120,7 +124,7 @@
       </ItemTableColumn>
       {#if includeWeightColumn}
         <ItemTableColumn
-          title="{localize('DND5E.Weight')} ({context.weightUnit})"
+          title="{localize('DND5E.Weight')} ({$store.weightUnit})"
           baseWidth="2.5rem"
         >
           <i class="fas fa-weight-hanging" />
@@ -136,8 +140,8 @@
         <ItemTableColumn baseWidth={classicControlsBaseWidth} />
       {/if}
     </ItemTableHeaderRow>
-    {#each items as item}
-      {@const ctx = context.itemContext[item.id]}
+    {#each items as item (item.id)}
+      {@const ctx = $store.itemContext[item.id]}
       <ItemTableRow
         {item}
         on:mousedown={(event) =>
@@ -152,7 +156,7 @@
         <ItemTableCell primary={true} title={item.name}>
           <ItemUseButton {item} />
           <ItemName
-            on:click={(event) => toggleSummary(event.detail, context.actor)}
+            on:click={(event) => toggleSummary(event.detail, $store.actor)}
             cssClass="extra-small-gap"
           >
             <span class="truncate">{item.name}</span>
@@ -205,12 +209,12 @@
           <ItemTableCell
             baseWidth="2.5rem"
             title="{localize('DND5E.Weight')}: {item.system
-              .weight} {context.weightUnit}"
+              .weight} {$store.weightUnit}"
           >
             {#if ctx.totalWeight}
-              {ctx.totalWeight} {context.weightUnit}
+              {ctx.totalWeight} {$store.weightUnit}
             {:else}
-              {item.system.weight} {context.weightUnit}
+              {item.system.weight} {$store.weightUnit}
             {/if}
           </ItemTableCell>
         {/if}
@@ -226,7 +230,7 @@
             {item.labels.activation}
           {/if}
         </ItemTableCell>
-        {#if context.owner && classicControlsEnabled && !lockControls}
+        {#if $store.owner && classicControlsEnabled && !lockControls}
           <ItemTableCell baseWidth={classicControlsBaseWidth}>
             <ItemControls>
               {#if ctx.attunement}
@@ -248,8 +252,8 @@
         {/if}
       </ItemTableRow>
     {/each}
-    {#if context.owner && allowEdit && dataset}
-      <ItemTableFooter actor={context.actor} {dataset} />
+    {#if $store.owner && allowEdit && dataset}
+      <ItemTableFooter actor={$store.actor} {dataset} />
     {/if}
   </ItemTable>
 </section>

@@ -18,7 +18,7 @@
     onConfigureClicked: MouseEvent;
   }>();
 
-  const show = traitsExpanded || tags.length > 0 || tools.length > 0;
+  $: show = traitsExpanded || tags.length > 0 || tools.length > 0;
 </script>
 
 {#if show}
@@ -94,16 +94,16 @@
       </ul>
     </div>
     {#if traitsExpanded}
-    <a
-      class="trait-editor"
-      title={configureButtonTitle}
-      tabindex="0"
-      role="button"
-      on:click|stopPropagation|preventDefault={(event) =>
-        dispatcher('onConfigureClicked', event)}
-    >
-      <i class="fas fa-pencil-alt" />
-    </a>
+      <a
+        class="trait-editor"
+        title={configureButtonTitle}
+        tabindex="0"
+        role="button"
+        on:click|stopPropagation|preventDefault={(event) =>
+          dispatcher('onConfigureClicked', event)}
+      >
+        <i class="fas fa-pencil-alt" />
+      </a>
     {/if}
   </div>
 {/if}

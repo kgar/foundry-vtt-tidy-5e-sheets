@@ -41,7 +41,7 @@
 
   const localize = FoundryAdapter.localize;
 
-  const selectedClassFilter =
+  $: selectedClassFilter =
     FoundryAdapter.tryGetFlag(context.actor, 'classFilter') ?? '';
 </script>
 

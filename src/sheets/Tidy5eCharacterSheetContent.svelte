@@ -35,13 +35,14 @@
   export let isEditable: boolean;
   export let store: Readable<ActorSheetContext>;
 
-  const context = $store;
+  setContext('store', store);
+  setContext('sheetFunctions', sheetFunctions);
 
   function submitWhenEnterKey(e: KeyboardEvent) {
     if (e.key == 'Enter') {
       e.preventDefault();
       e.stopPropagation();
-      context.actor.update({ name: characterName });
+      $store.actor.update({ name: characterName });
     }
   }
 
@@ -51,8 +52,8 @@
     sheetFunctions.activateListeners();
   });
 
-  let playerName = FoundryAdapter.tryGetFlag(context.actor, 'playerName');
-  let characterName = context.actor.name;
+  $: playerName = FoundryAdapter.tryGetFlag($store.actor, 'playerName');
+  $: characterName = $store.actor.name;
 
   /*
   Loop through items
@@ -62,38 +63,38 @@
 
   */
 
-  const classAndSubclassSummaries = Array.from(
-    FoundryAdapter.getClassAndSubclassSummaries(context.actor).values()
+  $: classAndSubclassSummaries = Array.from(
+    FoundryAdapter.getClassAndSubclassSummaries($store.actor).values()
   );
 
-  const characterSummaryEntries =
-    FoundryAdapter.getActorCharacterSummaryEntries(context);
+  $: characterSummaryEntries =
+    FoundryAdapter.getActorCharacterSummaryEntries($store);
 
-  $: abilities = Object.entries<any>(context.abilities);
+  $: abilities = Object.entries<any>($store.abilities);
 
-  const sizes: TidyDropdownOption[] = Object.entries(
-    context.config.actorSizes
-  ).map(([abbreviation, size]) => ({
-    value: abbreviation,
-    text: size as string,
-  }));
+  $: sizes = <TidyDropdownOption[]>Object.entries($store.config.actorSizes).map(
+    ([abbreviation, size]) => ({
+      value: abbreviation,
+      text: size as string,
+    })
+  );
 
-  const currentSize: TidyDropdownOption = {
-    value: context.system.traits.size,
-    text: context.config.actorSizes[context.system.traits.size],
+  $: currentSize = <TidyDropdownOption>{
+    value: $store.system.traits.size,
+    text: $store.config.actorSizes[$store.system.traits.size],
   };
 
-  const allowJournal =
-    context.owner && !SettingsProvider.settings.journalTabDisabled.get();
+  $: allowJournal =
+    $store.owner && !SettingsProvider.settings.journalTabDisabled.get();
 
-  // TODO: Put this somewhere safe, and allow the Tidy 5e API to expose the base tab set for making changes to it.
+  // TODO: Make this reactive?
   const tabs: Tab[] = [
     {
       id: 'attributes',
       displayName: 'DND5E.Attributes',
       content: {
         component: AttributesTab,
-        props: { context: context, sheetFunctions },
+        props: { context: $store, sheetFunctions },
       },
     },
     {
@@ -101,7 +102,6 @@
       displayName: 'DND5E.Inventory',
       content: {
         component: InventoryTab,
-        props: { context: context, sheetFunctions },
       },
     },
     {
@@ -109,7 +109,7 @@
       displayName: 'DND5E.Spellbook',
       content: {
         component: SpellbookTab,
-        props: { context: context, sheetFunctions },
+        props: { context: $store, sheetFunctions },
       },
     },
     {
@@ -117,7 +117,7 @@
       displayName: 'DND5E.Features',
       content: {
         component: FeaturesTab,
-        props: { context: context, sheetFunctions },
+        props: { context: $store, sheetFunctions },
       },
     },
     {
@@ -125,7 +125,7 @@
       displayName: 'DND5E.Effects',
       content: {
         component: EffectsTab,
-        props: { context: context, sheetFunctions },
+        props: { context: $store, sheetFunctions },
       },
     },
     {
@@ -133,7 +133,7 @@
       displayName: 'DND5E.Biography',
       content: {
         component: BiographyTab,
-        props: { context: context, sheetFunctions },
+        props: { context: $store, sheetFunctions },
       },
     },
   ];
@@ -144,34 +144,34 @@
       displayName: 'T5EK.Journal',
       content: {
         component: JournalTab,
-        props: { context: context },
+        props: { context: $store },
       },
     });
   }
 
   Hooks.call(CONSTANTS.HOOKS_RENDERING_CHARACTER_TABS, {
     tabs,
-    context: context,
+    context: $store,
   });
 
-  console.log(context);
+  console.log($store);
 </script>
 
-{#if context.warnings.length}
-  <ActorWarnings warnings={context.warnings} />
+{#if $store.warnings.length}
+  <ActorWarnings warnings={$store.warnings} />
 {/if}
 <header class="tidy5e-kgar-sheet-header flex-row">
   <!-- Portrait -->
   <!-- FIXME: this hardcoded height is to make scroll position work while this form is unstyled.  -->
   <div class="flex-grow-0">
-    <CharacterProfile {context} {sheetFunctions} />
+    <CharacterProfile context={$store} {sheetFunctions} />
   </div>
 
   <!-- Name -->
   <div class="flex-grow-1">
     <div class="flex-row justifty-content-space-between align-items-center">
       <div class="character-name">
-        {#if context.owner}
+        {#if $store.owner}
           <h1
             contenteditable="true"
             spellcheck="false"
@@ -179,14 +179,14 @@
             data-maxlength="40"
             bind:textContent={characterName}
             on:blur={(event) =>
-              context.actor.update({
+              $store.actor.update({
                 name: characterName,
               })}
             on:keypress={submitWhenEnterKey}
           />
         {:else}
           <h1>
-            {context.actor.name}
+            {$store.actor.name}
           </h1>
         {/if}
       </div>
@@ -199,34 +199,34 @@
               <input
                 class="current-xp"
                 type="text"
-                value={context.system.details.xp.value}
+                value={$store.system.details.xp.value}
                 placeholder="0"
                 data-dtype="Number"
                 maxlength="7"
                 on:change|stopPropagation|preventDefault={(event) =>
-                  submitText(event, context.actor, 'system.details.xp.value')}
+                  submitText(event, $store.actor, 'system.details.xp.value')}
               />
               <span class="sep">/</span>
               {#if FoundryAdapter.userIsGm()}
                 <input
                   class="max-xp max"
                   type="text"
-                  value={context.system.details.xp.max}
+                  value={$store.system.details.xp.max}
                   placeholder="0"
                   data-dtype="Number"
                   maxlength="7"
                   on:change|stopPropagation|preventDefault={(event) =>
-                    submitText(event, context.actor, 'system.details.xp.max')}
+                    submitText(event, $store.actor, 'system.details.xp.max')}
                 />
               {:else}
-                <span class="max">{context.system.details.xp.max}</span>
+                <span class="max">{$store.system.details.xp.max}</span>
               {/if}
             </div>
             <div class="xp-bar">
               <div class="xp-bar-total">
                 <span
                   class="xp-bar-current"
-                  style="width: {context.system.details.xp.pct}%"
+                  style="width: {$store.system.details.xp.pct}%"
                 />
               </div>
             </div>
@@ -236,7 +236,7 @@
         <div class="flex-grow-0">
           <h2 class="level">
             {localize('DND5E.AbbreviationLevel')}
-            {context.system.details.level}
+            {$store.system.details.level}
           </h2>
         </div>
       </div>
@@ -245,7 +245,7 @@
     <section class="class-list">
       <!-- Player Name -->
       {#if SettingsProvider.settings.playerNameEnabled.get()}
-        {#if context.owner}
+        {#if $store.owner}
           <input
             type="hidden"
             value={playerName}
@@ -254,7 +254,7 @@
             on:change|stopPropagation|preventDefault={(event) =>
               submitText(
                 event,
-                context.actor,
+                $store.actor,
                 `flags.${CONSTANTS.MODULE_ID}.playerName`
               )}
           />
@@ -308,7 +308,7 @@
           options={sizes}
           selected={currentSize}
           on:optionClicked={(event) =>
-            context.actor.update({
+            $store.actor.update({
               'system.traits.size': event.detail.value,
             })}
         />
@@ -319,9 +319,9 @@
       </span>
       <span class="flex-row align-items-center extra-small-gap">
         <b>
-          {localize('DND5E.Proficiency')}: {context.labels.proficiency}
+          {localize('DND5E.Proficiency')}: {$store.labels.proficiency}
         </b>
-        {#if context.owner}
+        {#if $store.owner}
           <a
             class="config-button origin-summary-tidy"
             data-tooltip={localize('T5EK.OriginSummaryConfig')}
@@ -336,33 +336,33 @@
     <!-- Speed , Configure Movement Speed Cog -->
     <section class="movement flex-row small-gap">
       <h4>{localize('DND5E.Speed')}</h4>
-      {#if context.movement.primary}
-        <span data-tooltip={context.movement.primary}
-          >{context.movement.primary}</span
+      {#if $store.movement.primary}
+        <span data-tooltip={$store.movement.primary}
+          >{$store.movement.primary}</span
         >
       {/if}
-      {#if context.movement.special}
+      {#if $store.movement.special}
         |
-        <span data-tooltip={context.movement.special}
-          >{context.movement.special}</span
+        <span data-tooltip={$store.movement.special}
+          >{$store.movement.special}</span
         >
       {/if}
       <a
         class="configure"
         data-tooltip={localize('DND5E.MovementConfig')}
         on:click={() =>
-          new dnd5e.applications.actor.ActorMovementConfig(
-            context.actor
-          ).render(true)}><i class="fas fa-cog" /></a
+          new dnd5e.applications.actor.ActorMovementConfig($store.actor).render(
+            true
+          )}><i class="fas fa-cog" /></a
       >
     </section>
     <!-- AC  -->
     <section class="character-stats">
       <!-- TODO: switch these back to unordered <li> -->
       <AcShield
-        ac={context.system.attributes.ac.value}
+        ac={$store.system.attributes.ac.value}
         on:click={() =>
-          new dnd5e.applications.actor.ActorArmorConfig(context.actor).render(
+          new dnd5e.applications.actor.ActorArmorConfig($store.actor).render(
             true
           )}
         cssClass="align-self-flex-start"
@@ -375,8 +375,8 @@
       <!-- Initiative (mod, cog) , Str (rollable, score, mod, save, proficient, cog) thru Cha (rollable, score, mod, save, proficient, cog) -->
       <div>
         <InitiativeBlock
-          actor={context.actor}
-          initiative={context.system.attributes.init}
+          actor={$store.actor}
+          initiative={$store.system.attributes.init}
         />
       </div>
       {#each abilities as [id, ability]}
@@ -386,7 +386,7 @@
           role="presentation"
         />
         <div>
-          <AttributeBlock abbreviation={id} {ability} actor={context.actor} />
+          <AttributeBlock abbreviation={id} {ability} actor={$store.actor} />
         </div>
       {/each}
     </section>
@@ -395,8 +395,8 @@
 
 <Tabs {tabs} bind:selectedTabId>
   <svelte:fragment slot="tab-end">
-    {#if context.owner}
-      <AllowEditLock {context} />
+    {#if $store.owner}
+      <AllowEditLock context={$store} />
     {/if}
   </svelte:fragment>
 </Tabs>

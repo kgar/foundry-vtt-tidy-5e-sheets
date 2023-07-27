@@ -3,7 +3,7 @@
   import SheetEditor from 'src/sheets/SheetEditor.svelte';
   import ContentEditableFormField from '../inputs/ContentEditableFormField.svelte';
   import type { ActorSheetContext, SheetFunctions } from 'src/types/types';
-    import { CONSTANTS } from 'src/constants';
+  import { CONSTANTS } from 'src/constants';
 
   export let context: ActorSheetContext;
   export let sheetFunctions: SheetFunctions;

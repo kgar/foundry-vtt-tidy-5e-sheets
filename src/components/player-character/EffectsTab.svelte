@@ -18,13 +18,13 @@
 
   const localize = FoundryAdapter.localize;
 
-  const effectSections = Object.values<any>(context.effects);
-  const allowEdit = FoundryAdapter.tryGetFlag<boolean>(
+  $: effectSections = Object.values<any>(context.effects);
+  $: allowEdit = FoundryAdapter.tryGetFlag<boolean>(
     context.actor,
     'allow-edit'
   );
-  const classicControlsBaseWidth = allowEdit ? '7.5rem' : '5.3125rem';
-  const classicControlsEnabled =
+  $: classicControlsBaseWidth = allowEdit ? '7.5rem' : '5.3125rem';
+  $: classicControlsEnabled =
     SettingsProvider.settings.classicControlsEnabled.get();
 </script>
 

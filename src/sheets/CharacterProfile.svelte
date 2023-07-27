@@ -20,7 +20,7 @@
   const useRoundedPortraitStyle = ['all', 'default', 'pc'].includes(
     portraitStyle
   );
-  const incapacitated =
+  $: incapacitated =
     (context.actor?.system?.attributes?.hp?.value ?? 0) <= 0 &&
     context.actor?.system?.attributes?.hp?.max !== 0;
 

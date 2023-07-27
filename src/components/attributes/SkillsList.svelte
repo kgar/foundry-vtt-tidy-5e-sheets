@@ -17,14 +17,15 @@
     skill: ActorContextSkill | null;
   };
 
-  const skillRefs: SkillRef[] = Array.from(
-    Object.entries(context.config.skills)
-  ).map((s: [key: string, value: any]) => ({
-    key: s[0],
-    label: s[1]['label'],
-    ability: s[1]['ability'],
-    skill: getSkill(s[0]),
-  }));
+  let skillRefs: SkillRef[];
+  $: skillRefs = Array.from(Object.entries(context.config.skills)).map(
+    (s: [key: string, value: any]) => ({
+      key: s[0],
+      label: s[1]['label'],
+      ability: s[1]['ability'],
+      skill: getSkill(s[0]),
+    })
+  );
   const localize = FoundryAdapter.localize;
 
   function getSkill(key: string): ActorContextSkill | null {

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { CharacterSheetContext } from 'src/foundry/foundry-adapter';
+  import type { ActorSheetContext } from 'src/types/types';
 
   type SpellSlotMarkerDot = {
     index: number;
@@ -7,7 +7,7 @@
     willChange: boolean;
   };
 
-  export let context: CharacterSheetContext;
+  export let context: ActorSheetContext;
   export let section: any;
 
   let targetedDotIndex: number | null = null;
@@ -55,7 +55,8 @@
     }));
   }
 
-  let dots = generateDots();
+  let dots: SpellSlotMarkerDot[];
+  $: section, (dots = generateDots());
 </script>
 
 {#if section.slots > 0}

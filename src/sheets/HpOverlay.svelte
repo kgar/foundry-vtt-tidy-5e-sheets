@@ -5,7 +5,7 @@
   export let useRoundedPortraitStyle: boolean;
   export let actor: Actor5e;
 
-  const hpOverlayCalculationCurrent =
+  $: hpOverlayCalculationCurrent =
     (100 /
       ((isRealNumber(actor.system?.attributes?.hp?.max)
         ? actor.system.attributes.hp.max

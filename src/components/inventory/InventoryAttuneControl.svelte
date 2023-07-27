@@ -6,7 +6,7 @@
   export let item: Item5e;
   export let ctx: any;
 
-  const isAttuned = item.system.attunement === 2;
+  $: isAttuned = item.system.attunement === 2;
 
   function toggleAttuned() {
     const actor = item.actor;

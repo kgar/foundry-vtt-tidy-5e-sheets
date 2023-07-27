@@ -1,7 +1,6 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { submitText } from 'src/sheets/form';
-  import type { Actor5e } from 'src/types/actor';
   import { type ActorSheetContext } from 'src/types/types';
 
   export let section: any;

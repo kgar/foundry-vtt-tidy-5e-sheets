@@ -10,7 +10,7 @@
     await FoundryAdapter.setFlag(context.actor, 'allow-edit', !allowEdit);
   }
 
-  const allowEdit = FoundryAdapter.tryGetFlag(context.actor, 'allow-edit');
+  $: allowEdit = FoundryAdapter.tryGetFlag(context.actor, 'allow-edit');
 </script>
 
 <div class="toggle-allow-edit">
