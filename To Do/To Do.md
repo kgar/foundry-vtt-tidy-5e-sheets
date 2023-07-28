@@ -2,14 +2,15 @@
 
 ## Top of Mind
 
-- [x] Make shared component for nav tabs and eliminate the separate stylesheet
-- [x] Make a second pass at nav tabs and make sure it's ergonomic enough. Look at some other examples out there.
-- [x] Consider adding a third prop to the Tabs type which allows for specifying a component and its props. Use this to make tabs fully data-driven 🤯
-- [ ] Task out Custom Item sheet and try out a new approach to the sheet, using the `TestApplication.ts` and `Experiment.svelte` as examples. Find the appropriate hooks via `CONFIG.debug.hooks = true`.
-  - [x] ~~Be sure that you subscribe to a hook when the application is to be initially rendered and then unsubscribe when it closes, to prevent excess processing and unforeseen issues.~~ Overriding the render() function did the trick. Preventing unforced renders and simply updating the window title and refreshing store made the magic happen.
-  - [ ] One thing to think about: try subscribing at the top level to the context and then passing it down and around, rather than passing the store everywhere.
-  - [ ] The end result should be relatively easily portable to the old method if the new method doesn't work out. Just some rewiring at the top ✅
-- [x] Implement "+Temp +Max" HP and config button cog on the character profile 😱
+### Module Compat Trials
+
+- [ ] Create a Module Compatibility Test Module for foundry. Store in a repo for reuse on multiple machines.
+- [ ] Feel out how to add custom HTML / CSS / vanilla JS with cave man reactivity (rerender / rewire on soft render)
+- [ ] Feel out how to add custom HTML / CSS / vanilla JS with targeted reactivity (manual diff checking on soft render)
+- [ ] Feel out how to add svelte-based content ; add a tab with a svelte component which builds a table with our item table components.
+  - [ ] Not sure if this actually works, but I am hopeful because svelte classes are actually real.
+- [ ] Feel out how to add vue-based content ; add a tab with an HTML mount point and allow vue to render from it and respond to changes
+  - [ ] Show this particular one to Mouse0270 if it works out in order to get some feedback.
 
 ## Character Tabs Pile of TODOs
 

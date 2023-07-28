@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { getContext, onMount, setContext } from 'svelte';
+  import { getContext, setContext } from 'svelte';
   import { FoundryAdapter } from '../foundry/foundry-adapter';
   import type {
     ActorSheetContext,
@@ -43,10 +43,6 @@
   }
 
   const localize = FoundryAdapter.localize;
-
-  onMount(() => {
-    // $store.activateJQueryListeners();
-  });
 
   let playerName = FoundryAdapter.tryGetFlag($store.actor, 'playerName');
   let characterName = $store.actor.name;

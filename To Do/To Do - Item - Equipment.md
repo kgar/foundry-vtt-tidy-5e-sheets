@@ -1,14 +1,17 @@
 ## To Do
 
-- [ ] Create `ItemEquipment.svelte` to house the equipment view
-- [ ] Create `ItemNoMatch.svelte` and put a generic "Item Type Template Not Found." message, etc.
-- [ ] Implement the item type switch for `activateListeners()`
-- [ ] Ensure equipment mounts the equipment component
-- [ ] Scaffold the tabs
-- [ ] Stub the shared stuff for now
-- [ ] Implement the non-shared stuff
-- [ ] Task out implementing the stubs
+- [x] Create `ItemEquipment.svelte` to house the equipment view
+- [x] Create `ItemNoMatch.svelte` and put a generic "Item Type Template Not Found." message, etc.
+- [x] Implement the item type switch for `activateListeners()`
+- [x] Ensure equipment mounts the equipment component
+- [x] Scaffold the tabs
+- [x] Stub the shared stuff for now
 - [ ] Implement the stubs
+  - [ ] Description (shared)
+  - [ ] Details
+  - [ ] Details > `ItemPartActivation` (shared)
+  - [ ] Details > `ItemPartAction` (shared)
+  - [ ] Effects (shared)
 - [ ] Ensure the window resizes when the size of the contents changes
 - [ ] Confirm that changes are saving appropriately
 - [ ] Confirm that outside changes affect this form appropriately

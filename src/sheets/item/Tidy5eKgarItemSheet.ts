@@ -4,10 +4,15 @@ import type { Item5e, ItemSheetContext } from 'src/types/item';
 import { writable } from 'svelte/store';
 import ItemTypeNotFound from './ItemTypeNotFound.svelte';
 import ItemEquipment from './ItemEquipment.svelte';
+import type { SheetStats } from 'src/types/types';
+import { applyTitleToWindow } from 'src/utils/applications';
 
 export class Tidy5eKgarItemSheet extends dnd5e.applications.item.ItemSheet5e {
   store = writable<ItemSheetContext>();
-  selectedTabId?: string | undefined;
+  stats = writable<SheetStats>({
+    lastSubmissionTime: null,
+  });
+  selectedTabId = 'description';
 
   constructor(item: Item5e, ...args: any[]) {
     super(item, ...args);
@@ -30,18 +35,23 @@ export class Tidy5eKgarItemSheet extends dnd5e.applications.item.ItemSheet5e {
   }
 
   async activateListeners(html: { get: (index: 0) => HTMLElement }) {
-    this.store.set(await this.getData());
+    this.store.set(await this.getContext());
 
     const node = html.get(0);
+
+    const stores = new Map<any, any>([
+      ['store', this.store],
+      ['stats', this.stats],
+    ]);
 
     switch (this.item.type) {
       case CONSTANTS.ITEM_TYPE_EQUIPMENT:
         new ItemEquipment({
           target: node,
           props: {
-            store: this.store,
             selectedTabId: this.selectedTabId ?? 'description',
           },
+          context: stores,
         });
         break;
       default:
@@ -50,6 +60,7 @@ export class Tidy5eKgarItemSheet extends dnd5e.applications.item.ItemSheet5e {
           props: {
             store: this.store,
           },
+          context: stores,
         });
         break;
     }
@@ -62,10 +73,26 @@ export class Tidy5eKgarItemSheet extends dnd5e.applications.item.ItemSheet5e {
       return;
     }
 
-    let t = this.element.get(0).querySelector('.window-title');
-    if (t.hasChildNodes()) t = t.childNodes[0];
-    t.textContent = this.title;
-    this.store.set(await this.getData());
+    applyTitleToWindow(this.title, this.element.get(0));
+    const context = await this.getContext();
+    this.store.update(() => context);
+  }
+
+  private async getContext(): Promise<ItemSheetContext> {
+    return {
+      ...(await super.getData(this.options)),
+      appId: this.appId,
+      activateFoundryJQueryListeners: (node: HTMLElement) =>
+        super.activateListeners($(node)),
+    };
+  }
+
+  async _onSubmit(...args: any[]) {
+    await super._onSubmit(...args);
+    this.stats.update((stats) => {
+      stats.lastSubmissionTime = new Date();
+      return stats;
+    });
   }
 
   close(...args: any[]) {

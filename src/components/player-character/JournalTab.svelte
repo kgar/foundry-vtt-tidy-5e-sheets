@@ -13,7 +13,7 @@
   const localize = FoundryAdapter.localize;
 
   function activateProseMirrorListeners(node: HTMLElement) {
-    $store.activateJQueryListener(node);
+    $store.activateFoundryJQueryListeners(node);
   }
 </script>
 

@@ -236,11 +236,7 @@ export const FoundryAdapter = {
   getProperty(obj: any, path: string): unknown {
     return foundry.utils.getProperty(obj, path);
   },
-  getInventoryRowClasses(
-    item: Item5e,
-    ctx: any,
-    extras?: string[]
-  ): string {
+  getInventoryRowClasses(item: Item5e, ctx: any, extras?: string[]): string {
     const itemClasses: string[] = [];
 
     if (
@@ -328,10 +324,7 @@ export const FoundryAdapter = {
       [`system.${systemFieldName}.${key}.value`]: levels[next % levels.length],
     });
   },
-  getSpellImageUrl(
-    context: ActorSheetContext,
-    spell: any
-  ): string | undefined {
+  getSpellImageUrl(context: ActorSheetContext, spell: any): string | undefined {
     if (!SettingsProvider.settings.spellClassFilterIconReplace.get()) {
       return spell.img;
     }
@@ -350,7 +343,7 @@ export const FoundryAdapter = {
         searchCriteria.trim() === '' ||
         x.name.toLowerCase().includes(searchCriteria.toLowerCase())
     );
-  }
+  },
 };
 
 /* ------------------------------------------------------

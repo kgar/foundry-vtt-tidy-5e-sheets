@@ -3,12 +3,14 @@
   import type { Tab } from 'src/types/types';
   import Tabs from 'src/components/tabs/Tabs.svelte';
   import type { Readable } from 'svelte/store';
-  import ItemDescription from './parts/item-description.svelte';
-  import ItemEquipmentDetails from './parts/item-equipment-details.svelte';
-  import ActiveEffects from './parts/active-effects.svelte';
+  import ItemDescription from './parts/ItemDescription.svelte';
+  import ItemEquipmentDetails from './parts/ItemEquipmentDetails.svelte';
+  import ActiveEffects from './parts/ActiveEffects.svelte';
   import TabContents from 'src/components/tabs/TabContents.svelte';
+  import { CONSTANTS } from 'src/constants';
+  import { getContext } from 'svelte';
 
-  export let store: Readable<ItemSheetContext>;
+  let store = getContext<Readable<ItemSheetContext>>('store');
 
   $: context = $store;
 
@@ -42,6 +44,11 @@
       },
     },
   ];
+
+  Hooks.call(CONSTANTS.HOOKS_RENDERING_ITEM_EQUIPMENT_TABS, {
+    tabs,
+    context: $store,
+  });
 </script>
 
 <header>Header here</header>

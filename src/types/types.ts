@@ -29,8 +29,7 @@ export type ActorSheetContext = {
   Record<string, any>;
 
 export type JQueryHooksSheetIntegration = {
-  activateJQueryListeners: () => Promise<void>;
-  activateJQueryListener: (html: HTMLElement) => Promise<void>;
+  activateFoundryJQueryListeners: (html: HTMLElement) => Promise<void>;
 };
 
 export interface Resource {
