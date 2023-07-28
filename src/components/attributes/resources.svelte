@@ -2,14 +2,16 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { submitText } from 'src/sheets/form';
   import type { ActorSheetContext } from 'src/types/types';
+  import { getContext } from 'svelte';
+  import type { Readable } from 'svelte/store';
 
-  export let context: ActorSheetContext;
+  let store = getContext<Readable<ActorSheetContext>>('store');
 
   const localize = FoundryAdapter.localize;
 </script>
 
 <ul class="resources">
-  {#each context.resources as res}
+  {#each $store.resources as res}
     <li class="resource">
       <header class="resource-header">
         <span class="resource-options">
@@ -18,34 +20,34 @@
         <div class="resource-rest">
           <h4>{localize('T5EK.RestoreOnRest')}</h4>
           <input
-            id="{context.appId}-{res.name}.sr"
+            id="{$store.appId}-{res.name}.sr"
             type="checkbox"
             checked={res.sr}
             on:change|stopPropagation|preventDefault={(event) =>
-              context.actor.update({
+              $store.actor.update({
                 [`system.resources.${res.name}.sr`]:
                   event.currentTarget.checked,
               })}
           />
           <label
-            for="{context.appId}-{res.name}.sr"
+            for="{$store.appId}-{res.name}.sr"
             class="checkbox"
             title={localize('TIDY5E.RestS')}
           >
             {localize('DND5E.RestS')}
           </label>
           <input
-            id="{context.appId}-{res.name}.lr"
+            id="{$store.appId}-{res.name}.lr"
             type="checkbox"
             checked={res.lr}
             on:change|stopPropagation|preventDefault={(event) =>
-              context.actor.update({
+              $store.actor.update({
                 [`system.resources.${res.name}.lr`]:
                   event.currentTarget.checked,
               })}
           />
           <label
-            for="{context.appId}-{res.name}.lr"
+            for="{$store.appId}-{res.name}.lr"
             class="checkbox"
             title={localize('TIDY5E.RestL')}
           >
@@ -59,7 +61,7 @@
           value={res.label}
           placeholder={res.placeholder}
           on:change={(e) =>
-            submitText(e, context.actor, `system.resources.${res.name}.label`)}
+            submitText(e, $store.actor, `system.resources.${res.name}.label`)}
         />
       </h4>
       <div class="resource-value multiple">
@@ -71,7 +73,7 @@
           data-dtype="Number"
           maxlength="3"
           on:change={(e) =>
-            submitText(e, context.actor, `system.resources.${res.name}.value`)}
+            submitText(e, $store.actor, `system.resources.${res.name}.value`)}
         />
         <span class="sep"> / </span>
         <input
@@ -82,7 +84,7 @@
           data-dtype="Number"
           maxlength="3"
           on:change={(e) =>
-            submitText(e, context.actor, `system.resources.${res.name}.max`)}
+            submitText(e, $store.actor, `system.resources.${res.name}.max`)}
         />
       </div>
     </li>

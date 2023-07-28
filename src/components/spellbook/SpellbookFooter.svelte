@@ -3,19 +3,20 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { submitText } from 'src/sheets/form';
   import type { ActorSheetContext } from 'src/types/types';
+  import { getContext } from 'svelte';
+  import type { Readable } from 'svelte/store';
 
-  export let context: ActorSheetContext;
+  let store = getContext<Readable<ActorSheetContext>>('store');
   export let abilities: any[];
 
   const localize = FoundryAdapter.localize;
-  $: spellAttackBonusInfo =
-    FoundryAdapter.getSpellAttackModAndTooltip(context);
+  $: spellAttackBonusInfo = FoundryAdapter.getSpellAttackModAndTooltip($store);
 </script>
 
 <footer class="spellcasting-ability">
   <h3 class="spell-dc spell-mod">
     {localize('DND5E.SpellDC')}
-    {context.system.attributes.spelldc} / {localize('T5EK.SpellAttackMod')}:
+    {$store.system.attributes.spelldc} / {localize('T5EK.SpellAttackMod')}:
     <span class="spell-attack-mod">
       <span data-tooltip={spellAttackBonusInfo.modTooltip}
         >{spellAttackBonusInfo.mod}</span
@@ -30,19 +31,19 @@
   </h3>
   <div class="max-prepared-spells">
     <p>{localize('T5EK.PreparedSpells')}</p>
-    <span class="spells-prepared">{context.preparedSpells ?? 0}</span>
+    <span class="spells-prepared">{$store.preparedSpells ?? 0}</span>
     /
     <input
       class="max-preparation"
       type="number"
-      value={FoundryAdapter.tryGetFlag(context.actor, 'maxPreparedSpells')}
+      value={FoundryAdapter.tryGetFlag($store.actor, 'maxPreparedSpells')}
       data-dtype="Number"
       placeholder="0"
       data-tooltip={localize('T5EK.PreparedSpellsMax')}
       on:change|stopPropagation|preventDefault={(event) =>
         submitText(
           event,
-          context.actor,
+          $store.actor,
           `flags.${CONSTANTS.MODULE_ID}.maxPreparedSpells`
         )}
     />
@@ -51,17 +52,17 @@
     <p>{localize('DND5E.SpellAbility')}</p>
     <select
       on:change|stopPropagation|preventDefault={(event) =>
-        context.actor.update({
+        $store.actor.update({
           'system.attributes.spellcasting': event.currentTarget.value,
         })}
     >
-      <option value="" selected={!context.system.attributes.spellcasting}
+      <option value="" selected={!$store.system.attributes.spellcasting}
         >{localize('DND5E.None')}</option
       >
       {#each abilities as ability}
         <option
           value={ability.abbr}
-          selected={context.system.attributes.spellcasting === ability.abbr}
+          selected={$store.system.attributes.spellcasting === ability.abbr}
           >{ability.label}</option
         >
       {/each}

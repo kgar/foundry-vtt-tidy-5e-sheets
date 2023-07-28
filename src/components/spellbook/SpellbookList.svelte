@@ -22,15 +22,17 @@
   import SpellSlotUses from '../spellbook/SpellSlotUses.svelte';
   import InlineFavoriteIcon from '../shared/InlineFavoriteIcon.svelte';
   import ItemFavoriteControl from '../items/ItemFavoriteControl.svelte';
+    import { getContext } from 'svelte';
+    import type { Readable } from 'svelte/store';
 
-  export let context: ActorSheetContext;
+  let store = getContext<Readable<ActorSheetContext>>('store');
   export let section: any;
   export let spells: any[];
 
   const localize = FoundryAdapter.localize;
   const classicControlsEnabled =
     SettingsProvider.settings.classicControlsEnabled.get();
-  $: allowEdit = FoundryAdapter.tryGetFlag(context.actor, 'allow-edit');
+  $: allowEdit = FoundryAdapter.tryGetFlag($store.actor, 'allow-edit');
   $: classicControlsBaseWidth = allowEdit ? '7.5rem' : '5.3125rem';
   const hideIconsNextToTheItemName =
     SettingsProvider.settings.hideIconsNextToTheItemName.get();
@@ -45,9 +47,9 @@
         </span>
         {#if section.usesSlots}
           {#if !SettingsProvider.settings.hideSpellSlotMarker.get()}
-            <SpellSlotMarkers {context} {section} />
+            <SpellSlotMarkers {section} />
           {/if}
-          <SpellSlotUses {context} {section} />
+          <SpellSlotUses {section} />
         {/if}
       </ItemTableColumn>
       <ItemTableColumn
@@ -77,8 +79,8 @@
       <ItemTableColumn baseWidth={classicControlsBaseWidth} />
     </ItemTableHeaderRow>
     {#each spells as spell (spell.id)}
-      {@const ctx = context.itemContext[spell.id]}
-      {@const spellImgUrl = FoundryAdapter.getSpellImageUrl(context, spell)}
+      {@const ctx = $store.itemContext[spell.id]}
+      {@const spellImgUrl = FoundryAdapter.getSpellImageUrl($store, spell)}
       <ItemTableRow
         item={spell}
         on:mousedown={(event) =>
@@ -93,7 +95,7 @@
         <ItemTableCell primary={true}>
           <ItemUseButton item={spell} imgUrlOverride={spellImgUrl} />
           <ItemName
-            on:click={(event) => toggleSummary(event.detail, context.actor)}
+            on:click={(event) => toggleSummary(event.detail, $store.actor)}
           >
             {spell.name}
           </ItemName>
@@ -134,7 +136,7 @@
         <ItemTableCell baseWidth="7.5rem" title={localize('DND5E.SpellUsage')}>
           {spell.labels.activation}
         </ItemTableCell>
-        {#if context.owner && classicControlsEnabled}
+        {#if $store.owner && classicControlsEnabled}
           <ItemTableCell baseWidth={classicControlsBaseWidth}>
             <ItemControls>
               {#if spell.system.preparation?.mode === 'always'}
@@ -153,8 +155,8 @@
         {/if}
       </ItemTableRow>
     {/each}
-    {#if context.owner && allowEdit}
-      <ItemTableFooter actor={context.actor} dataset={section.dataset} />
+    {#if $store.owner && allowEdit}
+      <ItemTableFooter actor={$store.actor} dataset={section.dataset} />
     {/if}
   </ItemTable>
 </section>

@@ -4,8 +4,10 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import Tidy5eActorHitPointsConfig from 'src/dialogs/Tidy5eActorHitPointsConfig';
   import { SettingsProvider } from 'src/settings/settings';
+  import { getContext } from 'svelte';
+  import type { Readable } from 'svelte/store';
 
-  export let context: ActorSheetContext;
+  let store = getContext<Readable<ActorSheetContext>>('store');
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -13,11 +15,11 @@
 <div class="profile-temp">
   <input
     on:change|stopPropagation|preventDefault={(event) =>
-      submitText(event, context.actor, 'system.attributes.hp.temp')}
+      submitText(event, $store.actor, 'system.attributes.hp.temp')}
     type="number"
     class="temphp"
     placeholder="+{localize('DND5E.Temp')}"
-    value={context.hp.temp || ''}
+    value={$store.hp.temp || ''}
     title={localize('DND5E.HitPointsTemp')}
     data-dtype="Number"
     maxlength="5"
@@ -25,11 +27,11 @@
 
   <input
     on:change|stopPropagation|preventDefault={(event) =>
-      submitText(event, context.actor, 'system.attributes.hp.tempmax')}
+      submitText(event, $store.actor, 'system.attributes.hp.tempmax')}
     type="number"
     class="max-temphp"
     placeholder="+{localize('DND5E.Max')}"
-    value={context.hp.tempmax || ''}
+    value={$store.hp.tempmax || ''}
     title={localize('DND5E.HitPointsTempMax')}
     data-dtype="Number"
     maxlength="5"
@@ -38,7 +40,7 @@
     <a
       data-tooltip={localize('DND5E.HitPointsConfig')}
       on:click|stopPropagation|preventDefault={(event) =>
-        new Tidy5eActorHitPointsConfig(context.actor).render(true)}
+        new Tidy5eActorHitPointsConfig($store.actor).render(true)}
     >
       <i class="fas fa-cog" />
     </a>
@@ -46,7 +48,7 @@
     <a
       data-tooltip={localize('DND5E.HitPointsConfig')}
       on:click|stopPropagation|preventDefault={(event) =>
-        new dnd5e.applications.actor.ActorHitPointsConfig(context.actor).render(
+        new dnd5e.applications.actor.ActorHitPointsConfig($store.actor).render(
           true
         )}
     >

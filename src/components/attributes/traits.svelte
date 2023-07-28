@@ -3,21 +3,22 @@
   import { SettingsProvider } from 'src/settings/settings';
   import type { ActorSheetContext } from 'src/types/types';
   import TraitSection from './TraitSection.svelte';
+  import { getContext } from 'svelte';
+  import type { Readable } from 'svelte/store';
 
-  export let context: ActorSheetContext;
+  let store = getContext<Readable<ActorSheetContext>>('store');
 
   const toggleTraits = SettingsProvider.settings.traitsTogglePc.get();
 
   $: traitsExpanded =
     !toggleTraits ||
-    FoundryAdapter.tryGetFlag<boolean>(context.actor, 'traitsExpanded') ===
-      true;
+    FoundryAdapter.tryGetFlag<boolean>($store.actor, 'traitsExpanded') === true;
 
   function toggleTraitsExpanded() {
     if (traitsExpanded) {
-      FoundryAdapter.unsetFlag(context.actor, 'traitsExpanded');
+      FoundryAdapter.unsetFlag($store.actor, 'traitsExpanded');
     } else {
-      FoundryAdapter.setFlag(context.actor, 'traitsExpanded', true);
+      FoundryAdapter.setFlag($store.actor, 'traitsExpanded', true);
     }
   }
 
@@ -26,115 +27,105 @@
 
 <div
   class="traits"
-  class:expanded={FoundryAdapter.tryGetFlag(context.actor, 'traitsExpanded')}
+  class:expanded={FoundryAdapter.tryGetFlag($store.actor, 'traitsExpanded')}
 >
   <TraitSection
-    {context}
     title={localize('DND5E.Senses')}
     iconCssClass="fas fa-eye"
-    tags={Object.entries(context.senses)}
+    tags={Object.entries($store.senses)}
     configureButtonTitle={localize('DND5E.SensesConfig')}
     on:onConfigureClicked={() =>
-      new dnd5e.applications.actor.ActorSensesConfig(context.actor).render(
-        true
-      )}
+      new dnd5e.applications.actor.ActorSensesConfig($store.actor).render(true)}
     {traitsExpanded}
   />
 
   <TraitSection
-    {context}
-    traitCssClass={context.traits?.traits?.languages?.cssClass ?? ''}
+    traitCssClass={$store.traits?.traits?.languages?.cssClass ?? ''}
     title={localize('DND5E.Languages')}
     iconCssClass="fas fa-comment"
-    tags={Object.entries(context.traits?.traits?.languages?.selected)}
+    tags={Object.entries($store.traits?.traits?.languages?.selected)}
     configureButtonTitle={localize('DND5e.TraitConfig', {
       trait: localize('DND5E.Languages'),
     })}
     on:onConfigureClicked={() =>
       new dnd5e.applications.actor.TraitSelector(
-        context.actor,
+        $store.actor,
         'languages'
       ).render(true)}
     {traitsExpanded}
   />
 
   <TraitSection
-    {context}
-    traitCssClass={context.traits.traits?.di?.cssClass ?? ''}
+    traitCssClass={$store.traits.traits?.di?.cssClass ?? ''}
     title={localize('DND5E.DamImm')}
     iconCssClass="fas fa-heart"
-    tags={Object.entries(context.traits.traits.di.selected)}
+    tags={Object.entries($store.traits.traits.di.selected)}
     configureButtonTitle={localize('DND5E.TraitConfig', {
       trait: localize('DND5E.DamImm'),
     })}
     on:onConfigureClicked={() =>
-      new dnd5e.applications.actor.TraitSelector(context.actor, 'di').render(
+      new dnd5e.applications.actor.TraitSelector($store.actor, 'di').render(
         true
       )}
     {traitsExpanded}
   />
 
   <TraitSection
-    {context}
-    traitCssClass={context.traits.traits?.dr?.cssClass ?? ''}
+    traitCssClass={$store.traits.traits?.dr?.cssClass ?? ''}
     title={localize('DND5E.DamRes')}
     iconCssClass="far fa-heart"
-    tags={Object.entries(context.traits.traits.dr.selected)}
+    tags={Object.entries($store.traits.traits.dr.selected)}
     configureButtonTitle={localize('DND5E.TraitConfig', {
       trait: localize('DND5E.DamRes'),
     })}
     on:onConfigureClicked={() =>
-      new dnd5e.applications.actor.TraitSelector(context.actor, 'dr').render(
+      new dnd5e.applications.actor.TraitSelector($store.actor, 'dr').render(
         true
       )}
     {traitsExpanded}
   />
 
   <TraitSection
-    {context}
-    traitCssClass={context.traits.traits?.dv?.cssClass ?? ''}
+    traitCssClass={$store.traits.traits?.dv?.cssClass ?? ''}
     title={localize('DND5E.DamVuln')}
     iconCssClass="far fa-heart-broken"
-    tags={Object.entries(context.traits.traits.dv.selected)}
+    tags={Object.entries($store.traits.traits.dv.selected)}
     configureButtonTitle={localize('DND5E.TraitConfig', {
       trait: localize('DND5E.DamVuln'),
     })}
     on:onConfigureClicked={() =>
-      new dnd5e.applications.actor.TraitSelector(context.actor, 'dv').render(
+      new dnd5e.applications.actor.TraitSelector($store.actor, 'dv').render(
         true
       )}
     {traitsExpanded}
   />
 
   <TraitSection
-    {context}
-    traitCssClass={context.traits.traits?.ci?.cssClass ?? ''}
+    traitCssClass={$store.traits.traits?.ci?.cssClass ?? ''}
     title={localize('DND5E.ConImm')}
     iconCssClass="fas fa-shield-virus"
-    tags={Object.entries(context.traits.traits.ci.selected)}
+    tags={Object.entries($store.traits.traits.ci.selected)}
     configureButtonTitle={localize('DND5E.TraitConfig', {
       trait: localize('DND5E.ConImm'),
     })}
     on:onConfigureClicked={() =>
-      new dnd5e.applications.actor.TraitSelector(context.actor, 'ci').render(
+      new dnd5e.applications.actor.TraitSelector($store.actor, 'ci').render(
         true
       )}
     {traitsExpanded}
   />
 
   <TraitSection
-    {context}
-    traitCssClass={context.traits.traits?.weaponProf?.cssClass ?? ''}
+    traitCssClass={$store.traits.traits?.weaponProf?.cssClass ?? ''}
     title={localize('DND5E.TraitWeaponProf')}
-    tags={Object.entries(context.traits.traits.weaponProf.selected)}
+    tags={Object.entries($store.traits.traits.weaponProf.selected)}
     configureButtonTitle={localize('DND5E.TraitConfig', {
       trait: localize('DND5E.TraitWeaponProf'),
     })}
     on:onConfigureClicked={() =>
-      new dnd5e.applications.actor.TraitSelector(
-        context.actor,
-        'weapon'
-      ).render(true)}
+      new dnd5e.applications.actor.TraitSelector($store.actor, 'weapon').render(
+        true
+      )}
     {traitsExpanded}
   >
     <svg
@@ -156,15 +147,14 @@ c28,32.6,51.5,72.7,62,91.7c2.8,5,9.9,5.1,12.8,0.2c14-23.3,44.3-83.4,44.3-166.9C4
   </TraitSection>
 
   <TraitSection
-    {context}
-    traitCssClass={context.traits.traits?.armorProf?.cssClass ?? ''}
+    traitCssClass={$store.traits.traits?.armorProf?.cssClass ?? ''}
     title={localize('DND5E.TraitArmorProf')}
-    tags={Object.entries(context.traits.traits.armorProf.selected)}
+    tags={Object.entries($store.traits.traits.armorProf.selected)}
     configureButtonTitle={localize('DND5E.TraitConfig', {
       trait: localize('DND5E.TraitArmorProf'),
     })}
     on:onConfigureClicked={() =>
-      new dnd5e.applications.actor.TraitSelector(context.actor, 'armor').render(
+      new dnd5e.applications.actor.TraitSelector($store.actor, 'armor').render(
         true
       )}
     {traitsExpanded}
@@ -187,16 +177,15 @@ c28,32.6,51.5,72.7,62,91.7c2.8,5,9.9,5.1,12.8,0.2c14-23.3,44.3-83.4,44.3-166.9C4
   </TraitSection>
 
   <TraitSection
-    {context}
-    traitCssClass={context.traits.traits?.toolProf?.cssClass ?? ''}
+    traitCssClass={$store.traits.traits?.toolProf?.cssClass ?? ''}
     title={localize('DND5E.TraitToolProf')}
     iconCssClass="fas fa-hammer"
-    tools={Object.entries(context.tools)}
+    tools={Object.entries($store.tools)}
     configureButtonTitle={localize('DND5E.TraitConfig', {
       trait: localize('DND5E.TraitToolProf'),
     })}
     on:onConfigureClicked={() =>
-      new dnd5e.applications.actor.ToolSelector(context.actor, 'tool').render(
+      new dnd5e.applications.actor.ToolSelector($store.actor, 'tool').render(
         true
       )}
     {traitsExpanded}
@@ -223,9 +212,7 @@ c28,32.6,51.5,72.7,62,91.7c2.8,5,9.9,5.1,12.8,0.2c14-23.3,44.3-83.4,44.3-166.9C4
         trait: localize('DND5E.SpecialTraits'),
       })}
       on:click|stopPropagation|preventDefault={() =>
-        new dnd5e.applications.actor.ActorSheetFlags(context.actor).render(
-          true
-        )}
+        new dnd5e.applications.actor.ActorSheetFlags($store.actor).render(true)}
     >
       <i class="fas fa-cog" />
     </a>

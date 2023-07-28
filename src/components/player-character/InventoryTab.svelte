@@ -4,7 +4,7 @@
   import ItemFilters from '../items/ItemFilters.svelte';
   import ItemFilterSearch from '../items/ItemFilterSearch.svelte';
   import ItemFilterOption from '../items/ItemFilterOption.svelte';
-  import type { ItemLayoutMode, SheetFunctions } from 'src/types/types';
+  import type { ItemLayoutMode } from 'src/types/types';
   import ItemFilterLayoutToggle from '../items/ItemFilterLayoutToggle.svelte';
   import ListContainer from '../layout/ListContainer.svelte';
   import InventoryList from '../inventory/InventoryList.svelte';
@@ -13,10 +13,8 @@
   import { submitText } from 'src/sheets/form';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
-  import type { Item5e } from 'src/types/item';
 
   let store = getContext<Readable<ActorSheetContext>>('store');
-  let sheetFunctions = getContext<SheetFunctions>('sheetFunctions');
 
   const localize = FoundryAdapter.localize;
 
@@ -69,16 +67,16 @@
     bind:searchCriteria
     searchFlag="item-search"
   />
-  <ItemFilterOption filterName="action" setName="inventory" {sheetFunctions}>
+  <ItemFilterOption filterName="action" setName="inventory">
     {localize('DND5E.Action')}
   </ItemFilterOption>
-  <ItemFilterOption filterName="bonus" setName="inventory" {sheetFunctions}>
+  <ItemFilterOption filterName="bonus" setName="inventory">
     {localize('DND5E.BonusAction')}
   </ItemFilterOption>
-  <ItemFilterOption filterName="reaction" setName="inventory" {sheetFunctions}>
+  <ItemFilterOption filterName="reaction" setName="inventory">
     {localize('DND5E.Reaction')}
   </ItemFilterOption>
-  <ItemFilterOption filterName="equipped" setName="inventory" {sheetFunctions}>
+  <ItemFilterOption filterName="equipped" setName="inventory">
     {localize('DND5E.Equipped')}
   </ItemFilterOption>
   <ItemFilterLayoutToggle mode={layoutMode} on:toggle={() => toggleLayout()} />

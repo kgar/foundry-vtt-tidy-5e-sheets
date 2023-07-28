@@ -4,8 +4,10 @@
   import { type ActorSheetContext } from 'src/types/types';
   import { SettingsProvider } from 'src/settings/settings';
   import type { DropdownOption } from 'src/types/types';
+  import { getContext } from 'svelte';
+  import type { Readable } from 'svelte/store';
 
-  export let context: ActorSheetContext;
+  let store = getContext<Readable<ActorSheetContext>>('store');
 
   const allClasses: DropdownOption[] = Object.entries(
     CONSTANTS.DND5E_CLASSES
@@ -42,13 +44,13 @@
   const localize = FoundryAdapter.localize;
 
   $: selectedClassFilter =
-    FoundryAdapter.tryGetFlag(context.actor, 'classFilter') ?? '';
+    FoundryAdapter.tryGetFlag($store.actor, 'classFilter') ?? '';
 </script>
 
 <select
   class="class-filter"
   on:change|stopPropagation|preventDefault={(event) =>
-    context.actor.update({
+    $store.actor.update({
       [`flags.${CONSTANTS.MODULE_ID}.classFilter`]: event.currentTarget.value,
     })}
 >

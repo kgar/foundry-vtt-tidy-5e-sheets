@@ -2,27 +2,32 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import SheetEditor from 'src/sheets/SheetEditor.svelte';
   import ContentEditableFormField from '../inputs/ContentEditableFormField.svelte';
-  import type { ActorSheetContext, SheetFunctions } from 'src/types/types';
+  import type { ActorSheetContext } from 'src/types/types';
   import { CONSTANTS } from 'src/constants';
+  import { getContext } from 'svelte';
+  import type { Readable } from 'svelte/store';
+  import RerenderAfterFormSubmission from '../shared/RerenderAfterFormSubmission.svelte';
 
-  export let context: ActorSheetContext;
-  export let sheetFunctions: SheetFunctions;
+  let store = getContext<Readable<ActorSheetContext>>('store');
 
   const localize = FoundryAdapter.localize;
+
+  function activateProseMirrorListeners(node: HTMLElement) {
+    $store.activateJQueryListener(node);
+  }
 </script>
 
 <div class="notes-container">
-  <div class="top-notes note-entries" class:limited={context.actor.limited}>
+  <div class="top-notes note-entries" class:limited={$store.actor.limited}>
     <article>
       <ul class="character-details">
         <li>
           <span>{localize('T5EK.Gender')}:</span>
           <ContentEditableFormField
             element="span"
-            editable={context.owner}
+            editable={$store.owner}
             fieldName="flags.{CONSTANTS.MODULE_ID}.gender"
-            value={FoundryAdapter.tryGetFlag(context.actor, 'gender') ?? ''}
-            {sheetFunctions}
+            value={FoundryAdapter.tryGetFlag($store.actor, 'gender') ?? ''}
             cssClass="detail-input"
           />
         </li>
@@ -30,10 +35,9 @@
           <span>{localize('T5EK.Age')}:</span>
           <ContentEditableFormField
             element="span"
-            editable={context.owner}
+            editable={$store.owner}
             fieldName="flags.{CONSTANTS.MODULE_ID}.age"
-            value={FoundryAdapter.tryGetFlag(context.actor, 'age') ?? ''}
-            {sheetFunctions}
+            value={FoundryAdapter.tryGetFlag($store.actor, 'age') ?? ''}
             cssClass="detail-input"
             dataMaxLength={5}
           />
@@ -42,10 +46,9 @@
           <span>{localize('T5EK.Height')}:</span>
           <ContentEditableFormField
             element="span"
-            editable={context.owner}
+            editable={$store.owner}
             fieldName="flags.{CONSTANTS.MODULE_ID}.height"
-            value={FoundryAdapter.tryGetFlag(context.actor, 'height') ?? ''}
-            {sheetFunctions}
+            value={FoundryAdapter.tryGetFlag($store.actor, 'height') ?? ''}
             cssClass="detail-input"
             dataMaxLength={20}
           />
@@ -54,10 +57,9 @@
           <span>{localize('T5EK.Weight')}:</span>
           <ContentEditableFormField
             element="span"
-            editable={context.owner}
+            editable={$store.owner}
             fieldName="flags.{CONSTANTS.MODULE_ID}.weight"
-            value={FoundryAdapter.tryGetFlag(context.actor, 'weight') ?? ''}
-            {sheetFunctions}
+            value={FoundryAdapter.tryGetFlag($store.actor, 'weight') ?? ''}
             cssClass="detail-input"
             dataMaxLength={20}
           />
@@ -66,10 +68,9 @@
           <span>{localize('T5EK.Eyes')}:</span>
           <ContentEditableFormField
             element="span"
-            editable={context.owner}
+            editable={$store.owner}
             fieldName="flags.{CONSTANTS.MODULE_ID}.eyes"
-            value={FoundryAdapter.tryGetFlag(context.actor, 'eyes') ?? ''}
-            {sheetFunctions}
+            value={FoundryAdapter.tryGetFlag($store.actor, 'eyes') ?? ''}
             cssClass="detail-input"
             dataMaxLength={40}
           />
@@ -78,10 +79,9 @@
           <span>{localize('T5EK.Skin')}:</span>
           <ContentEditableFormField
             element="span"
-            editable={context.owner}
+            editable={$store.owner}
             fieldName="flags.{CONSTANTS.MODULE_ID}.skin"
-            value={FoundryAdapter.tryGetFlag(context.actor, 'skin') ?? ''}
-            {sheetFunctions}
+            value={FoundryAdapter.tryGetFlag($store.actor, 'skin') ?? ''}
             cssClass="detail-input"
             dataMaxLength={40}
           />
@@ -90,10 +90,9 @@
           <span>{localize('T5EK.Hair')}:</span>
           <ContentEditableFormField
             element="span"
-            editable={context.owner}
+            editable={$store.owner}
             fieldName="flags.{CONSTANTS.MODULE_ID}.hair"
-            value={FoundryAdapter.tryGetFlag(context.actor, 'hair') ?? ''}
-            {sheetFunctions}
+            value={FoundryAdapter.tryGetFlag($store.actor, 'hair') ?? ''}
             cssClass="detail-input"
             dataMaxLength={40}
           />
@@ -101,65 +100,73 @@
       </ul>
     </article>
   </div>
-  <div class="main-notes">
-    <div class="left-notes note-entries" class:limited={context.actor.limited}>
-      <article>
-        <div class="section-titles biopage">
-          {localize('DND5E.PersonalityTraits')}
-        </div>
-        <SheetEditor
-          content={context.system.details.trait}
-          target="system.details.trait"
-          editable={context.editable}
-        />
-      </article>
-      <article>
-        <div class="section-titles biopage">{localize('DND5E.Ideals')}</div>
-        <SheetEditor
-          content={context.system.details.ideal}
-          target="system.details.ideal"
-          editable={context.editable}
-        />
-      </article>
-      <article>
-        <div class="section-titles biopage">{localize('DND5E.Bonds')}</div>
-        <SheetEditor
-          content={context.system.details.bond}
-          target="system.details.bond"
-          editable={context.editable}
-        />
-      </article>
-      <article>
-        <div class="section-titles biopage">{localize('DND5E.Flaws')}</div>
-        <SheetEditor
-          content={context.system.details.flaw}
-          target="system.details.flaw"
-          editable={context.editable}
-        />
-      </article>
-    </div>
+  <RerenderAfterFormSubmission>
+    <div class="main-notes" use:activateProseMirrorListeners>
+      <div class="left-notes note-entries" class:limited={$store.actor.limited}>
+        <article>
+          <div class="section-titles biopage">
+            {localize('DND5E.PersonalityTraits')}
+          </div>
+          <SheetEditor
+            content={$store.system.details.trait}
+            target="system.details.trait"
+            editable={$store.editable}
+          />
+        </article>
 
-    <div class="right-notes note-entries" class:limited={context.actor.limited}>
-      <article class="appearance-notes">
-        <div class="section-titles biopage">{localize('DND5E.Appearance')}</div>
-        <SheetEditor
-          content={context.system.details.appearance}
-          target="system.details.appearance"
-          editable={context.editable}
-        />
-      </article>
-      <article class="biography-notes">
-        <div class="section-titles">
-          {localize('DND5E.Background')}/{localize('DND5E.Biography')}
-        </div>
-        <SheetEditor
-          content={context.system.details.biography.value}
-          target="system.details.biography.value"
-          editable={context.editable}
-        />
-      </article>
+        <article>
+          <div class="section-titles biopage">{localize('DND5E.Ideals')}</div>
+          <SheetEditor
+            content={$store.system.details.ideal}
+            target="system.details.ideal"
+            editable={$store.editable}
+          />
+        </article>
+        <article>
+          <div class="section-titles biopage">{localize('DND5E.Bonds')}</div>
+          <SheetEditor
+            content={$store.system.details.bond}
+            target="system.details.bond"
+            editable={$store.editable}
+          />
+        </article>
+        <article>
+          <div class="section-titles biopage">{localize('DND5E.Flaws')}</div>
+          <SheetEditor
+            content={$store.system.details.flaw}
+            target="system.details.flaw"
+            editable={$store.editable}
+          />
+        </article>
+      </div>
+
+      <div
+        class="right-notes note-entries"
+        class:limited={$store.actor.limited}
+      >
+        <article class="appearance-notes">
+          <div class="section-titles biopage">
+            {localize('DND5E.Appearance')}
+          </div>
+          <SheetEditor
+            content={$store.system.details.appearance}
+            target="system.details.appearance"
+            editable={$store.editable}
+          />
+        </article>
+        <article class="biography-notes">
+          <div class="section-titles">
+            {localize('DND5E.Background')}/{localize('DND5E.Biography')}
+          </div>
+          <SheetEditor
+            content={$store.system.details.biography.value}
+            target="system.details.biography.value"
+            editable={$store.editable}
+          />
+        </article>
+      </div>
     </div>
-  </div>
+  </RerenderAfterFormSubmission>
 </div>
 
 <style lang="scss">

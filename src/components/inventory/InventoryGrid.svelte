@@ -10,7 +10,7 @@
   import GridPaneFavoriteIcon from '../shared/GridPaneFavoriteIcon.svelte';
   import { submitText } from 'src/sheets/form';
   import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/motion';
+  import type { Readable } from 'svelte/store';
 
   export let section: any;
   export let items: Item5e[];

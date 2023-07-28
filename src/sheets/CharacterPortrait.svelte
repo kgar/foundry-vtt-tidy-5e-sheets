@@ -2,9 +2,7 @@
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { type Actor5e } from 'src/types/actor';
-  import type { SheetFunctions } from 'src/types/types';
 
-  export let sheetFunctions: SheetFunctions;
   export let actor: Actor5e;
 
   let showPortraitMenu = false;
@@ -18,7 +16,7 @@
       current,
       callback: (path) => {
         target.src = path;
-        sheetFunctions.submit();
+        actor.sheet.submit();
         actor.update({ img: path });
       },
       top: rect.top + 40,

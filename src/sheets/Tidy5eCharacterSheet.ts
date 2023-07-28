@@ -7,13 +7,16 @@ import type { Actor5e } from 'src/types/actor';
 import { isNil } from 'src/utils/data';
 import { CONSTANTS } from 'src/constants';
 import { writable } from 'svelte/store';
-import type { ActorSheetContext } from 'src/types/types';
+import type { ActorSheetContext, SheetStats } from 'src/types/types';
 import { applyTitleToWindow } from 'src/utils/applications';
 
 const ActorSheet5eCharacter = FoundryAdapter.getActorSheetClass();
 
 export class Tidy5eCharacterSheet extends ActorSheet5eCharacter {
   store = writable<ActorSheetContext>();
+  stats = writable<SheetStats>({
+    lastSubmissionTime: null,
+  });
   selectedTabId: string | undefined = undefined;
 
   constructor(...args: any[]) {
@@ -39,25 +42,27 @@ export class Tidy5eCharacterSheet extends ActorSheet5eCharacter {
     new Tidy5eCharacterSheetContent({
       target: node,
       props: {
-        sheetFunctions: {
-          activateListeners: () => super.activateListeners(html),
-          submit: this.submit.bind(this),
-          render: this.render.bind(this),
-          onShortRest: this._onShortRest.bind(this),
-          onLongRest: this._onLongRest.bind(this),
-          onEditImage: this._onEditImage.bind(this),
-          onToggleAbilityProficiency:
-            this._onToggleAbilityProficiency.bind(this),
-          onToggleFilter: this.onToggleFilter.bind(this),
-          isFilterActive: this.isFilterActive.bind(this),
-        },
         selectedTabId: this.#getSelectedTabId(),
-        isEditable: this.isEditable,
-        store: this.store,
       },
+      context: new Map<any, any>([
+        ['store', this.store],
+        ['stats', this.stats],
+      ]),
     });
 
     initTidy5eContextMenu.call(this, html);
+  }
+
+  onToggleAbilityProficiency(event: Event) {
+    return this._onToggleAbilityProficiency(event);
+  }
+
+  onShortRest(event: Event) {
+    return this._onShortRest(event);
+  }
+
+  onLongRest(event: Event) {
+    return this._onLongRest(event);
   }
 
   private async getContext(): Promise<ActorSheetContext> {
@@ -65,6 +70,8 @@ export class Tidy5eCharacterSheet extends ActorSheet5eCharacter {
       ...(await super.getData(this.options)),
       actorClassesToImages: getActorClassesToImages(this.actor),
       appId: this.appId,
+      activateJQueryListeners: () => super.activateListeners($(this.form)),
+      activateJQueryListener: (node) => super.activateListeners($(node)),
     };
   }
 
@@ -96,7 +103,7 @@ export class Tidy5eCharacterSheet extends ActorSheet5eCharacter {
 
   close(options: unknown = {}) {
     try {
-      this.#saveViewState();
+      this._saveViewState();
     } catch (e) {
       debug(
         `Unable to save view state for ${Tidy5eCharacterSheet.name}. Ignoring.`
@@ -107,11 +114,19 @@ export class Tidy5eCharacterSheet extends ActorSheet5eCharacter {
   }
 
   override submit(): void {
-    this.#saveViewState();
+    this._saveViewState();
     super.submit();
   }
 
-  #saveViewState() {
+  async _onSubmit(...args: any[]) {
+    await super._onSubmit(...args);
+    this.stats.update((stats) => {
+      stats.lastSubmissionTime = new Date();
+      return stats;
+    });
+  }
+
+  protected _saveViewState() {
     /*
       TODO: Save any state that needs to be restored to this sheet instance for rehydration on refresh.
       - Currently Selected Tab
@@ -153,6 +168,7 @@ export class Tidy5eCharacterSheet extends ActorSheet5eCharacter {
     applyTitleToWindow(this.title, this.element.get(0));
     const context = await this.getContext();
     this.store.update(() => context);
+    // super.activateListeners($(this.form));
   }
 }
 

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { ActorSheetContext, SheetFunctions } from 'src/types/types';
+  import type { ActorSheetContext } from 'src/types/types';
   import SkillsList from '../attributes/SkillsList.svelte';
   import Traits from '../attributes/Traits.svelte';
   import Favorites from '../attributes/Favorites.svelte';
@@ -7,17 +7,15 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { SettingsProvider } from 'src/settings/settings';
   import { isNil } from 'src/utils/data';
+  import { getContext } from 'svelte';
+  import type { Readable } from 'svelte/store';
 
-  export let context: ActorSheetContext;
-  export let sheetFunctions: SheetFunctions;
+  let store = getContext<Readable<ActorSheetContext>>('store');
 
-  $: allowEdit = FoundryAdapter.tryGetFlag<boolean>(
-    context.actor,
-    'allow-edit'
-  );
+  $: allowEdit = FoundryAdapter.tryGetFlag<boolean>($store.actor, 'allow-edit');
   $: showResources =
     allowEdit ||
-    context.resources.some(
+    $store.resources.some(
       (x) => !isNil(x.value) || !isNil(x.value, '') || !isNil(x.max)
     );
 
@@ -27,19 +25,19 @@
 
 <div class="attributes-tab-contents">
   <section class="side-panel">
-    <SkillsList {context} />
+    <SkillsList />
     {#if !traitsMovedBelowResource}
-      <Traits {context} />
+      <Traits />
     {/if}
   </section>
   <section class="main-panel">
     {#if showResources}
-      <Resources {context} />
+      <Resources />
     {/if}
     {#if traitsMovedBelowResource}
-      <Traits {context} />
+      <Traits />
     {/if}
-    <Favorites {context} />
+    <Favorites />
   </section>
 </div>
 

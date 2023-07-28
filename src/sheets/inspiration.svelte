@@ -4,8 +4,11 @@
     ActorSheetContext,
     PortraitCharmRadiusClass,
   } from 'src/types/types';
+  import { getContext } from 'svelte';
+  import type { Readable } from 'svelte/store';
 
-  export let context: ActorSheetContext;
+  let store = getContext<Readable<ActorSheetContext>>('store');
+
   export let inspired: boolean;
   export let cssClass: string = '';
   export let radiusClass: PortraitCharmRadiusClass;
@@ -26,7 +29,7 @@
       data-dtype="Boolean"
       checked={inspired}
       on:change|stopPropagation|preventDefault={(event) =>
-        context.actor.update({
+        $store.actor.update({
           'system.attributes.inspiration': event.currentTarget.checked,
         })}
     />

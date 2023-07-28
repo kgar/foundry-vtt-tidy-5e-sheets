@@ -1,17 +1,21 @@
 <script lang="ts">
-  import type { SheetFunctions } from 'src/types/types';
+  import type { ActorSheetContext } from 'src/types/types';
+  import { getContext } from 'svelte';
+  import type { Readable } from 'svelte/store';
 
-  export let sheetFunctions: SheetFunctions;
   export let setName: string;
   export let filterName: string;
+  let store = getContext<Readable<ActorSheetContext>>('store');
+
+  $: isFilterActive = $store.actor.sheet.isFilterActive(setName, filterName);
 </script>
 
 <li
   role="button"
   class="filter-option"
-  class:active={sheetFunctions.isFilterActive(setName, filterName)}
+  class:active={isFilterActive}
   on:click|preventDefault|stopPropagation={() =>
-    sheetFunctions.onToggleFilter(setName, filterName)}
+    $store.actor.sheet.onToggleFilter(setName, filterName)}
 >
   <slot />
 </li>

@@ -2,9 +2,11 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { submitText } from 'src/sheets/form';
   import { type ActorSheetContext } from 'src/types/types';
+  import { getContext } from 'svelte';
+  import type { Readable } from 'svelte/store';
 
   export let section: any;
-  export let context: ActorSheetContext;
+  let store = getContext<Readable<ActorSheetContext>>('store');
 
   const localize = FoundryAdapter.localize;
 
@@ -19,7 +21,7 @@
     placeholder="0"
     data-dtype="Number"
     on:change|stopPropagation|preventDefault={(event) =>
-      submitText(event, context.actor, `system.spells.${section.prop}.value`)}
+      submitText(event, $store.actor, `system.spells.${section.prop}.value`)}
   />
   <span class="sep"> / </span>
   {#if overrideMode}
@@ -32,7 +34,7 @@
       on:change|stopPropagation|preventDefault={(event) =>
         submitText(
           event,
-          context.actor,
+          $store.actor,
           `system.spells.${section.prop}.override`
         )}
     />
@@ -44,7 +46,7 @@
     >
       {section.slots}
     </span>
-    {#if context.editable}
+    {#if $store.editable}
       <a
         class="spell-slot-max-override"
         title={localize('DND5E.SpellProgOverride')}

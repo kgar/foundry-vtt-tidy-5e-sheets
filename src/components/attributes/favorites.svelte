@@ -7,8 +7,10 @@
   import type { Item5e } from 'src/types/item';
   import FavoriteSpellsList from 'src/components/favorites/FavoriteSpellsList.svelte';
   import { SettingsProvider } from 'src/settings/settings';
+  import { getContext } from 'svelte';
+  import type { Readable } from 'svelte/store';
 
-  export let context: ActorSheetContext;
+  let store = getContext<Readable<ActorSheetContext>>('store');
 
   const localize = FoundryAdapter.localize;
 
@@ -16,13 +18,13 @@
     SettingsProvider.settings.enableSortFavoritesItemsAlphabetically.get();
 
   $: favoriteInventory = sortByNameIfConfigured(
-    context.inventory
+    $store.inventory
       .flatMap((x: { items: Item5e[] }) => x.items)
       .filter(isItemFavorite)
   );
 
   $: favoriteFeatures = sortByNameIfConfigured(
-    context.features
+    $store.features
       .flatMap((x: { items: Item5e[] }) => x.items)
       .filter(isItemFavorite)
   );
@@ -50,13 +52,13 @@
   {/if}
 
   {#if favoriteFeatures.length}
-    <FavoriteFeaturesList {context} items={favoriteFeatures} />
+    <FavoriteFeaturesList items={favoriteFeatures} />
   {/if}
 
-  {#each context.spellbook as section}
+  {#each $store.spellbook as section}
     {@const favoriteSpells = getFavoriteSpells(section.spells)}
     {#if favoriteSpells.length}
-      <FavoriteSpellsList {context} {section} spells={favoriteSpells} />
+      <FavoriteSpellsList {section} spells={favoriteSpells} />
     {/if}
   {/each}
 </div>

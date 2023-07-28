@@ -1,5 +1,7 @@
 <script lang="ts">
   import type { ActorSheetContext } from 'src/types/types';
+    import { getContext } from 'svelte';
+    import type { Readable } from 'svelte/store';
 
   type SpellSlotMarkerDot = {
     index: number;
@@ -7,7 +9,7 @@
     willChange: boolean;
   };
 
-  export let context: ActorSheetContext;
+  let store = getContext<Readable<ActorSheetContext>>('store');
   export let section: any;
 
   let targetedDotIndex: number | null = null;
@@ -17,7 +19,7 @@
 
     let value = isEmpty ? markerIndex + 1 : markerIndex;
 
-    context.actor.update({
+    $store.actor.update({
       [`data.spells.${section.prop}.value`]: value,
     });
   }

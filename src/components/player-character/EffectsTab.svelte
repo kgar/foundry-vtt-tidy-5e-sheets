@@ -13,14 +13,16 @@
   import { CONSTANTS } from 'src/constants';
   import ListContainer from '../layout/ListContainer.svelte';
   import ItemControls from '../items/ItemControls.svelte';
+  import { getContext } from 'svelte';
+  import type { Readable } from 'svelte/store';
 
-  export let context: ActorSheetContext;
+  let store = getContext<Readable<ActorSheetContext>>('store');
 
   const localize = FoundryAdapter.localize;
 
-  $: effectSections = Object.values<any>(context.effects);
+  $: effectSections = Object.values<any>($store.effects);
   $: allowEdit = FoundryAdapter.tryGetFlag<boolean>(
-    context.actor,
+    $store.actor,
     'allow-edit'
   );
   $: classicControlsBaseWidth = allowEdit ? '7.5rem' : '5.3125rem';
@@ -42,7 +44,7 @@
           <ItemTableColumn baseWidth="7.5rem">
             {localize('DND5E.Duration')}
           </ItemTableColumn>
-          {#if context.owner && classicControlsEnabled}
+          {#if $store.owner && classicControlsEnabled}
             <ItemTableColumn baseWidth={classicControlsBaseWidth} />
           {/if}
         </ItemTableHeaderRow>
@@ -66,7 +68,7 @@
               >{effect.duration.label}</ItemTableCell
             >
 
-            {#if context.owner && classicControlsEnabled}
+            {#if $store.owner && classicControlsEnabled}
               <ItemTableCell baseWidth={classicControlsBaseWidth}>
                 <ItemControls>
                   <ItemControl
@@ -97,11 +99,11 @@
             {/if}
           </ItemTableRow>
         {/each}
-        {#if context.owner && allowEdit && context.editable}
+        {#if $store.owner && allowEdit && $store.editable}
           <ItemTableFooter
-            actor={context.actor}
+            actor={$store.actor}
             dataset={section.dataset}
-            create={() => FoundryAdapter.addEffect(section.type, context.actor)}
+            create={() => FoundryAdapter.addEffect(section.type, $store.actor)}
           />
         {/if}
       </ItemTable>

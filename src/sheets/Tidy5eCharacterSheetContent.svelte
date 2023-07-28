@@ -1,9 +1,8 @@
 <script lang="ts">
-  import { onMount, setContext } from 'svelte';
+  import { getContext, onMount, setContext } from 'svelte';
   import { FoundryAdapter } from '../foundry/foundry-adapter';
   import type {
     ActorSheetContext,
-    SheetFunctions,
     Tab,
     TidyDropdownOption,
   } from 'src/types/types';
@@ -30,16 +29,13 @@
   import type { Readable } from 'svelte/store';
 
   export let debug: any = 'Put any debug information here, if ya need it.';
-  export let sheetFunctions: SheetFunctions;
   export let selectedTabId: string;
-  export let isEditable: boolean;
-  export let store: Readable<ActorSheetContext>;
+  let store = getContext<Readable<ActorSheetContext>>('store');
 
   setContext('store', store);
-  setContext('sheetFunctions', sheetFunctions);
 
   function submitWhenEnterKey(e: KeyboardEvent) {
-    if (e.key == 'Enter') {
+    if (e.key === 'Enter') {
       e.preventDefault();
       e.stopPropagation();
       $store.actor.update({ name: characterName });
@@ -49,11 +45,11 @@
   const localize = FoundryAdapter.localize;
 
   onMount(() => {
-    sheetFunctions.activateListeners();
+    // $store.activateJQueryListeners();
   });
 
-  $: playerName = FoundryAdapter.tryGetFlag($store.actor, 'playerName');
-  $: characterName = $store.actor.name;
+  let playerName = FoundryAdapter.tryGetFlag($store.actor, 'playerName');
+  let characterName = $store.actor.name;
 
   /*
   Loop through items
@@ -84,69 +80,66 @@
     text: $store.config.actorSizes[$store.system.traits.size],
   };
 
-  $: allowJournal =
-    $store.owner && !SettingsProvider.settings.journalTabDisabled.get();
+  let tabs: Tab[] = [];
+  $: {
+    const allowJournal =
+      $store.owner && !SettingsProvider.settings.journalTabDisabled.get();
 
-  // TODO: Make this reactive?
-  const tabs: Tab[] = [
-    {
-      id: 'attributes',
-      displayName: 'DND5E.Attributes',
-      content: {
-        component: AttributesTab,
-        props: { context: $store, sheetFunctions },
+    tabs = [
+      {
+        id: 'attributes',
+        displayName: 'DND5E.Attributes',
+        content: {
+          component: AttributesTab,
+        },
       },
-    },
-    {
-      id: 'inventory',
-      displayName: 'DND5E.Inventory',
-      content: {
-        component: InventoryTab,
+      {
+        id: 'inventory',
+        displayName: 'DND5E.Inventory',
+        content: {
+          component: InventoryTab,
+        },
       },
-    },
-    {
-      id: 'spellbook',
-      displayName: 'DND5E.Spellbook',
-      content: {
-        component: SpellbookTab,
-        props: { context: $store, sheetFunctions },
+      {
+        id: 'spellbook',
+        displayName: 'DND5E.Spellbook',
+        content: {
+          component: SpellbookTab,
+        },
       },
-    },
-    {
-      id: 'features',
-      displayName: 'DND5E.Features',
-      content: {
-        component: FeaturesTab,
-        props: { context: $store, sheetFunctions },
+      {
+        id: 'features',
+        displayName: 'DND5E.Features',
+        content: {
+          component: FeaturesTab,
+        },
       },
-    },
-    {
-      id: 'effects',
-      displayName: 'DND5E.Effects',
-      content: {
-        component: EffectsTab,
-        props: { context: $store, sheetFunctions },
+      {
+        id: 'effects',
+        displayName: 'DND5E.Effects',
+        content: {
+          component: EffectsTab,
+        },
       },
-    },
-    {
-      id: 'biography',
-      displayName: 'DND5E.Biography',
-      content: {
-        component: BiographyTab,
-        props: { context: $store, sheetFunctions },
+      {
+        id: 'biography',
+        displayName: 'DND5E.Biography',
+        content: {
+          component: BiographyTab,
+        },
       },
-    },
-  ];
+    ];
 
-  if (allowJournal) {
-    tabs.push({
-      id: 'journal',
-      displayName: 'T5EK.Journal',
-      content: {
-        component: JournalTab,
-        props: { context: $store },
-      },
-    });
+    if (allowJournal) {
+      tabs.push({
+        id: 'journal',
+        displayName: 'T5EK.Journal',
+        content: {
+          component: JournalTab,
+          props: { context: $store },
+        },
+      });
+    }
   }
 
   Hooks.call(CONSTANTS.HOOKS_RENDERING_CHARACTER_TABS, {
@@ -154,7 +147,9 @@
     context: $store,
   });
 
-  console.log($store);
+  $: {
+    console.log($store);
+  }
 </script>
 
 {#if $store.warnings.length}
@@ -164,7 +159,7 @@
   <!-- Portrait -->
   <!-- FIXME: this hardcoded height is to make scroll position work while this form is unstyled.  -->
   <div class="flex-grow-0">
-    <CharacterProfile context={$store} {sheetFunctions} />
+    <CharacterProfile />
   </div>
 
   <!-- Name -->
@@ -178,11 +173,11 @@
             data-placeholder={localize('DND5E.Name')}
             data-maxlength="40"
             bind:textContent={characterName}
-            on:blur={(event) =>
+            on:keypress={submitWhenEnterKey}
+            on:blur={() =>
               $store.actor.update({
                 name: characterName,
               })}
-            on:keypress={submitWhenEnterKey}
           />
         {:else}
           <h1>
@@ -265,7 +260,7 @@
             data-placeholder={localize('T5EK.PlayerName')}
             data-maxlength="40"
             bind:textContent={playerName}
-            on:blur={sheetFunctions.submit}
+            on:blur={() => $store.actor.update({ name: characterName })}
             on:keypress={submitWhenEnterKey}
           />
           <span>&#8226;</span>
@@ -278,7 +273,7 @@
       {/if}
 
       <!-- Class / Subclass -->
-      {#if isEditable}
+      {#if $store.editable}
         <span class="flex-row extra-small-gap">
           {#each classAndSubclassSummaries as summary, i}
             {#if i > 0}
@@ -326,7 +321,7 @@
             class="config-button origin-summary-tidy"
             data-tooltip={localize('T5EK.OriginSummaryConfig')}
             on:click={() =>
-              new Tidy5eActorOriginSummaryConfig(context.actor).render(true)}
+              new Tidy5eActorOriginSummaryConfig($store.actor).render(true)}
           >
             <i class="fas fa-cog" />
           </a>
@@ -396,7 +391,7 @@
 <Tabs {tabs} bind:selectedTabId>
   <svelte:fragment slot="tab-end">
     {#if $store.owner}
-      <AllowEditLock context={$store} />
+      <AllowEditLock />
     {/if}
   </svelte:fragment>
 </Tabs>

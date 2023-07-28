@@ -1,16 +1,18 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { ActorSheetContext } from 'src/types/types';
+  import { getContext } from 'svelte';
+  import type { Readable } from 'svelte/store';
 
-  export let context: ActorSheetContext;
+  let store = getContext<Readable<ActorSheetContext>>('store');
 
   const localize = FoundryAdapter.localize;
 
   async function toggleLock() {
-    await FoundryAdapter.setFlag(context.actor, 'allow-edit', !allowEdit);
+    await FoundryAdapter.setFlag($store.actor, 'allow-edit', !allowEdit);
   }
 
-  $: allowEdit = FoundryAdapter.tryGetFlag(context.actor, 'allow-edit');
+  $: allowEdit = FoundryAdapter.tryGetFlag($store.actor, 'allow-edit');
 </script>
 
 <div class="toggle-allow-edit">

@@ -10,13 +10,15 @@
   import SpellSlotUses from '../spellbook/SpellSlotUses.svelte';
   import type { Item5e } from 'src/types/item';
   import GridPaneFavoriteIcon from '../shared/GridPaneFavoriteIcon.svelte';
+  import { getContext } from 'svelte';
+  import type { Readable } from 'svelte/store';
 
-  export let context: ActorSheetContext;
+  let store = getContext<Readable<ActorSheetContext>>('store');
   export let section: any;
   export let spells: Item5e[];
 
   const localize = FoundryAdapter.localize;
-  $: allowEdit = FoundryAdapter.tryGetFlag(context.actor, 'allow-edit');
+  $: allowEdit = FoundryAdapter.tryGetFlag($store.actor, 'allow-edit');
 </script>
 
 <section class="spellbook-grid">
@@ -28,15 +30,15 @@
         </span>
         {#if section.usesSlots}
           {#if !SettingsProvider.settings.hideSpellSlotMarker.get()}
-            <SpellSlotMarkers {context} {section} />
+            <SpellSlotMarkers {section} />
           {/if}
-          <SpellSlotUses {context} {section} />
+          <SpellSlotUses {section} />
         {/if}
       </ItemTableColumn>
     </ItemTableHeaderRow>
     <div class="spells">
       {#each spells as spell}
-      {@const spellImgUrl = FoundryAdapter.getSpellImageUrl(context, spell)}
+        {@const spellImgUrl = FoundryAdapter.getSpellImageUrl($store, spell)}
         <div
           role="button"
           tabindex="0"
@@ -50,23 +52,23 @@
           {/if}
 
           <div class="spell-name" role="button">
-              <div
-                class="spell-image"
-                style="background-image: url('/{spellImgUrl}')"
-              >
-                <i class="fa fa-dice-d20" />
-              </div>
+            <div
+              class="spell-image"
+              style="background-image: url('/{spellImgUrl}')"
+            >
+              <i class="fa fa-dice-d20" />
+            </div>
           </div>
         </div>
       {/each}
-      {#if context.owner && allowEdit}
+      {#if $store.owner && allowEdit}
         <div class="spells-footer">
           <a
             role="button"
             tabindex="0"
             title={localize('DND5E.SpellCreate')}
             on:click|stopPropagation|preventDefault={() =>
-              FoundryAdapter.createItem(section.dataset, context.actor)}
+              FoundryAdapter.createItem(section.dataset, $store.actor)}
           >
             <i class="fas fa-plus-circle" />
           </a>

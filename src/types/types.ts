@@ -1,18 +1,6 @@
 import type { ComponentProps, ComponentType, SvelteComponent } from 'svelte';
 import type { Actor5e, Actor5eHp } from './actor';
 
-export type SheetFunctions = {
-  activateListeners: () => void;
-  submit: () => void;
-  render: (force: boolean) => void;
-  onShortRest: (event: Event) => void;
-  onLongRest: (event: Event) => void;
-  onEditImage: (event: Event) => void;
-  onToggleAbilityProficiency: (event: Event) => void;
-  onToggleFilter: (setName: string, filterName: string) => unknown;
-  isFilterActive: (setName: string, filterName: string) => boolean;
-};
-
 // TODO: Make this generic in such a way that correct props are actually required and that an array of tabs can have hetergeneity of component types without a crazy TS type
 export type Tab<
   T extends SvelteComponent<any, any, any> = SvelteComponent<any, any, any>
@@ -37,7 +25,13 @@ export type ActorSheetContext = {
   skills: ActorContextSkills;
   tools: ActorContextTools;
   hp: Actor5eHp;
-} & Record<string, any>;
+} & JQueryHooksSheetIntegration &
+  Record<string, any>;
+
+export type JQueryHooksSheetIntegration = {
+  activateJQueryListeners: () => Promise<void>;
+  activateJQueryListener: (html: HTMLElement) => Promise<void>;
+};
 
 export interface Resource {
   value: number;
@@ -139,3 +133,6 @@ export type Roll = {
   // TODO: Populate if needed
 };
 
+export type SheetStats = {
+  lastSubmissionTime: Date | null;
+}

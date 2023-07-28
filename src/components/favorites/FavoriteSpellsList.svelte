@@ -12,8 +12,10 @@
   import ItemUses from '../items/ItemUses.svelte';
   import SpellComponents from '../spellbook/SpellComponents.svelte';
   import SpellSlotUses from '../spellbook/SpellSlotUses.svelte';
+  import { getContext } from 'svelte';
+  import type { Readable } from 'svelte/store';
 
-  export let context: ActorSheetContext;
+  let store = getContext<Readable<ActorSheetContext>>('store');
   export let section: any;
   export let spells: any[];
 
@@ -34,7 +36,7 @@
           </span>
         {/if}
         {#if section.usesSlots}
-          <SpellSlotUses {context} {section} />
+          <SpellSlotUses {section} />
         {/if}
       </ItemTableColumn>
       <ItemTableColumn
@@ -48,8 +50,8 @@
       </ItemTableColumn>
     </ItemTableHeaderRow>
     {#each spells as spell}
-      {@const ctx = context.itemContext[spell.id]}
-      {@const spellImgUrl = FoundryAdapter.getSpellImageUrl(context, spell)}
+      {@const ctx = $store.itemContext[spell.id]}
+      {@const spellImgUrl = FoundryAdapter.getSpellImageUrl($store, spell)}
       <ItemTableRow
         item={spell}
         on:mousedown={(event) =>
@@ -64,7 +66,7 @@
         <ItemTableCell primary={true}>
           <ItemUseButton item={spell} imgUrlOverride={spellImgUrl} />
           <ItemName
-            on:click={(event) => toggleSummary(event.detail, context.actor)}
+            on:click={(event) => toggleSummary(event.detail, $store.actor)}
           >
             {spell.name}
           </ItemName>

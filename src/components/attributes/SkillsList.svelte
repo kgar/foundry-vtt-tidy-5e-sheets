@@ -1,14 +1,15 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { Actor5e } from 'src/types/actor';
   import type {
     ActorContextSkill,
     ActorContextSkills,
     ActorSheetContext,
   } from 'src/types/types';
   import { formatAsModifier } from 'src/utils/formatting';
+  import { getContext } from 'svelte';
+  import type { Readable } from 'svelte/store';
 
-  export let context: ActorSheetContext;
+  let store = getContext<Readable<ActorSheetContext>>('store');
 
   type SkillRef = {
     key: string;
@@ -18,7 +19,7 @@
   };
 
   let skillRefs: SkillRef[];
-  $: skillRefs = Array.from(Object.entries(context.config.skills)).map(
+  $: skillRefs = Array.from(Object.entries($store.config.skills)).map(
     (s: [key: string, value: any]) => ({
       key: s[0],
       label: s[1]['label'],
@@ -29,8 +30,8 @@
   const localize = FoundryAdapter.localize;
 
   function getSkill(key: string): ActorContextSkill | null {
-    if (key in context.actor.system.skills) {
-      return context.skills[key as keyof ActorContextSkills];
+    if (key in $store.actor.system.skills) {
+      return $store.skills[key as keyof ActorContextSkills];
     }
 
     return null;
@@ -44,7 +45,7 @@
         <a
           class="configure-proficiency"
           on:click|stopPropagation|preventDefault={() =>
-            new dnd5e.applications.actor.ProficiencyConfig(context.actor, {
+            new dnd5e.applications.actor.ProficiencyConfig($store.actor, {
               property: 'skills',
               key: skillRef.key,
             }).render(true)}
@@ -56,14 +57,14 @@
           class="skill-proficiency-toggle"
           on:click|stopPropagation|preventDefault={(event) =>
             FoundryAdapter.cycleProficiency(
-              context.actor,
+              $store.actor,
               skillRef.key,
               skillRef.skill?.value,
               'skills'
             )}
           on:contextmenu|stopPropagation|preventDefault={(event) =>
             FoundryAdapter.cycleProficiency(
-              context.actor,
+              $store.actor,
               skillRef.key,
               skillRef.skill?.value,
               'skills',
@@ -75,7 +76,7 @@
           role="button"
           class="tidy5e-skill-name rollable"
           on:click|stopPropagation={(event) =>
-            context.actor.rollSkill(skillRef.key, { event })}
+            $store.actor.rollSkill(skillRef.key, { event })}
         >
           {skillRef.skill.label}
         </h4>

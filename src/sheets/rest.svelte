@@ -1,8 +1,11 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { SheetFunctions } from 'src/types/types';
+    import type { ActorSheetContext } from 'src/types/types';
+    import { getContext } from 'svelte';
+    import type { Readable } from 'svelte/store';
 
-  export let sheetFunctions: SheetFunctions;
+  let store = getContext<Readable<ActorSheetContext>>('store');
+
   export let useRoundedPortraitStyle: boolean;
 
   const localize = FoundryAdapter.localize;
@@ -19,13 +22,13 @@
     <a
       class="rest"
       data-tooltip={localize('T5EK.RestS')}
-      on:click={(event) => sheetFunctions.onShortRest(event)}
+      on:click={(event) => $store.actor.sheet.onShortRest(event)}
       ><i class="fas fa-hourglass-half" /></a
     >
     <a
       class="rest"
       data-tooltip={localize('T5EK.RestL')}
-      on:click={(event) => sheetFunctions.onLongRest(event)}
+      on:click={(event) => $store.actor.sheet.onLongRest(event)}
       ><i class="fas fa-hourglass-end" /></a
     >
   </div>

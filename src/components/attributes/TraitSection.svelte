@@ -3,9 +3,10 @@
   import { SettingsProvider } from 'src/settings/settings';
   import type { Tool } from 'src/types/actor';
   import type { ActorSheetContext } from 'src/types/types';
-  import { createEventDispatcher } from 'svelte';
+  import { createEventDispatcher, getContext } from 'svelte';
+    import type { Readable } from 'svelte/store';
 
-  export let context: ActorSheetContext;
+  let store = getContext<Readable<ActorSheetContext>>('store');
   export let title: string;
   export let configureButtonTitle: string;
   export let iconCssClass: string | undefined = undefined;
@@ -49,14 +50,14 @@
               role="button"
               on:click|stopPropagation|preventDefault={(event) =>
                 FoundryAdapter.cycleProficiency(
-                  context.actor,
+                  $store.actor,
                   key,
                   tool.value,
                   'tools'
                 )}
               on:contextmenu|stopPropagation|preventDefault={(event) =>
                 FoundryAdapter.cycleProficiency(
-                  context.actor,
+                  $store.actor,
                   key,
                   tool.value,
                   'tools',
@@ -69,7 +70,7 @@
               class="rollable"
               role="button"
               tabindex="0"
-              on:click={(event) => context.actor.rollToolCheck(key, { event })}
+              on:click={(event) => $store.actor.rollToolCheck(key, { event })}
             >
               {tool.label}
             </span>
@@ -79,7 +80,7 @@
                 data-tooltip="DND5E.ToolConfigure"
                 on:click|stopPropagation|preventDefault={() =>
                   new dnd5e.applications.actor.ProficiencyConfig(
-                    context.actor,
+                    $store.actor,
                     {
                       property: 'tools',
                       key,

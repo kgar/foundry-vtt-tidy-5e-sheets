@@ -12,8 +12,10 @@
   import ItemName from '../items/ItemName.svelte';
   import ItemUseButton from '../items/ItemUseButton.svelte';
   import ItemUses from '../items/ItemUses.svelte';
+  import { getContext } from 'svelte';
+  import type { Readable } from 'svelte/store';
 
-  export let context: ActorSheetContext;
+  let store = getContext<Readable<ActorSheetContext>>('store');
   export let items: Item5e[] = [];
 
   const localize = FoundryAdapter.localize;
@@ -32,7 +34,7 @@
     </ItemTableColumn>
   </ItemTableHeaderRow>
   {#each items as item (item.id)}
-    {@const ctx = context.itemContext[item.id]}
+    {@const ctx = $store.itemContext[item.id]}
     <ItemTableRow
       {item}
       let:toggleSummary
@@ -46,7 +48,7 @@
       <ItemTableCell primary={true}>
         <ItemUseButton {item} />
         <ItemName
-          on:click={(event) => toggleSummary(event.detail, context.actor)}
+          on:click={(event) => toggleSummary(event.detail, $store.actor)}
           hasChildren={false}
         >
           {item.name}

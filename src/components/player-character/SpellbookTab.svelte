@@ -1,7 +1,7 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import ListContainer from '../layout/ListContainer.svelte';
-  import type { ItemLayoutMode, SheetFunctions } from 'src/types/types';
+  import type { ActorSheetContext, ItemLayoutMode } from 'src/types/types';
   import ItemFilterSearch from '../items/ItemFilterSearch.svelte';
   import ItemFilters from '../items/ItemFilters.svelte';
   import ItemFilterOption from '../items/ItemFilterOption.svelte';
@@ -11,15 +11,16 @@
   import SpellbookGrid from '../spellbook/SpellbookGrid.svelte';
   import { SettingsProvider } from 'src/settings/settings';
   import SpellbookClassFilter from '../spellbook/SpellbookClassFilter.svelte';
+  import { getContext } from 'svelte';
+  import type { Readable } from 'svelte/store';
 
-  export let context: any;
-  export let sheetFunctions: SheetFunctions;
+  let store = getContext<Readable<ActorSheetContext>>('store');
 
   const localize = FoundryAdapter.localize;
 
   let searchCriteria: string = '';
 
-  $: abilities = Object.entries(context.abilities).map(
+  $: abilities = Object.entries($store.abilities).map(
     (a: [string, { label: string }]) => ({
       abbr: a[0],
       ...a[1],
@@ -27,24 +28,24 @@
   );
 
   let layoutMode: ItemLayoutMode;
-  $: layoutMode = FoundryAdapter.tryGetFlag(context.actor, 'spellbook-grid')
+  $: layoutMode = FoundryAdapter.tryGetFlag($store.actor, 'spellbook-grid')
     ? 'grid'
     : 'list';
 
   function toggleLayout() {
     if (layoutMode === 'grid') {
-      FoundryAdapter.unsetFlag(context.actor, 'spellbook-grid');
+      FoundryAdapter.unsetFlag($store.actor, 'spellbook-grid');
       return;
     }
 
-    FoundryAdapter.setFlag(context.actor, 'spellbook-grid', true);
+    FoundryAdapter.setFlag($store.actor, 'spellbook-grid', true);
   }
 
   const filterByClassesEnabled =
     SettingsProvider.settings.spellClassFilterSelect.get();
   $: selectedClassFilter =
-    FoundryAdapter.tryGetFlag(context.actor, 'classFilter') ?? '';
-  $: allowEdit = FoundryAdapter.tryGetFlag(context.actor, 'allow-edit');
+    FoundryAdapter.tryGetFlag($store.actor, 'classFilter') ?? '';
+  $: allowEdit = FoundryAdapter.tryGetFlag($store.actor, 'allow-edit');
 
   function tryFilterByClass(spells: any[]) {
     if (!filterByClassesEnabled || selectedClassFilter === '') {
@@ -61,59 +62,55 @@
 <ItemFilters>
   <ItemFilterSearch
     bind:searchCriteria
-    actor={context.actor}
+    actor={$store.actor}
     searchFlag="spell-search"
     cssClass="align-self-flex-end"
   />
   {#if filterByClassesEnabled}
     <li class="spellbook-class-filter">
-      <SpellbookClassFilter {context} />
+      <SpellbookClassFilter $store={$store} />
     </li>
   {/if}
-  <ItemFilterOption setName="spellbook" filterName="action" {sheetFunctions}>
+  <ItemFilterOption setName="spellbook" filterName="action">
     {localize('DND5E.Action')}
   </ItemFilterOption>
-  <ItemFilterOption setName="spellbook" filterName="bonus" {sheetFunctions}>
+  <ItemFilterOption setName="spellbook" filterName="bonus">
     {localize('DND5E.BonusAction')}
   </ItemFilterOption>
-  <ItemFilterOption setName="spellbook" filterName="reaction" {sheetFunctions}>
+  <ItemFilterOption setName="spellbook" filterName="reaction">
     {localize('DND5E.Reaction')}
   </ItemFilterOption>
-  <ItemFilterOption
-    setName="spellbook"
-    filterName="concentration"
-    {sheetFunctions}
-  >
+  <ItemFilterOption setName="spellbook" filterName="concentration">
     {localize('DND5E.AbbreviationConc')}
   </ItemFilterOption>
-  <ItemFilterOption setName="spellbook" filterName="ritual" {sheetFunctions}>
+  <ItemFilterOption setName="spellbook" filterName="ritual">
     {localize('DND5E.Ritual')}
   </ItemFilterOption>
-  <ItemFilterOption setName="spellbook" filterName="prepared" {sheetFunctions}>
+  <ItemFilterOption setName="spellbook" filterName="prepared">
     {localize('DND5E.Prepared')}
-    {#if context.preparedSpells > 0}
-      ({context.preparedSpells})
+    {#if $store.preparedSpells > 0}
+      ({$store.preparedSpells})
     {/if}
   </ItemFilterOption>
   <ItemFilterLayoutToggle mode={layoutMode} on:toggle={() => toggleLayout()} />
 </ItemFilters>
 
 <ListContainer>
-  {#each context.spellbook as section (section.label)}
+  {#each $store.spellbook as section (section.label)}
     {@const filteredSpells = tryFilterByClass(
       FoundryAdapter.getFilteredItems(searchCriteria, section.spells)
     )}
     {#if (searchCriteria.trim() === '' && allowEdit) || filteredSpells.length > 0}
       {#if layoutMode === 'list'}
-        <SpellbookList spells={filteredSpells} {section} {context} />
+        <SpellbookList spells={filteredSpells} {section} context={$store} />
       {:else}
-        <SpellbookGrid spells={filteredSpells} {section} {context} />
+        <SpellbookGrid spells={filteredSpells} {section} $store={$store} />
       {/if}
     {/if}
   {/each}
 </ListContainer>
 
-<SpellbookFooter {abilities} {context} />
+<SpellbookFooter {abilities} $store={$store} />
 
 <style lang="scss">
   .spellbook-class-filter {
