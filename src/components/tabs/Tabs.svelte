@@ -19,11 +19,12 @@
 </script>
 
 <nav class="tabs {cssClass}">
-  {#each tabs as tab (tab.id)}
+  {#each tabs as tab, i (tab.id)}
     <a
       class={CONSTANTS.TAB_OPTION_CLASS}
       class:active={tab.id === selectedTabId}
-      class:no-border-on-last-tab={!$$slots['tab-end']}
+      class:first-tab={i === 0}
+      class:no-border-on-last-tab={!$$slots['tab-end'] && i === tabs.length - 1}
       data-tab-id={tab.id}
       on:click={() => selectTab(tab)}>{localize(tab.displayName)}</a
     >
@@ -71,11 +72,11 @@
       }
     }
 
-    .item:first-child.active {
+    .tab-option.first-tab.active {
       border-left-color: transparent;
     }
 
-    .item:last-child.no-border-on-last-tab.active {
+    .tab-option.no-border-on-last-tab.active {
       border-right-color: transparent;
     }
   }
