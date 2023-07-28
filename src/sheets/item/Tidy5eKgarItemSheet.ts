@@ -24,7 +24,7 @@ export class Tidy5eKgarItemSheet extends dnd5e.applications.item.ItemSheet5e {
 
   static get defaultOptions() {
     return FoundryAdapter.mergeObject(super.defaultOptions, {
-      classes: ['tidy5e-kgar', 'sheet', 'item', 'flexcol'],
+      classes: ['tidy5e-kgar', 'sheet', 'item'],
       width: 700,
       height: 400,
       popOut: true,

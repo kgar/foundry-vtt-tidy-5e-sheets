@@ -43,3 +43,9 @@
 .align-self-center {
   align-self: center;
 }
+
+.horizontal-separator {
+  background: var(--t5e-faint-color);
+  width: 0.0625rem;
+  flex: 0 0 auto;
+}
