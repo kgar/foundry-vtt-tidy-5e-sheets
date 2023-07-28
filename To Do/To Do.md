@@ -30,7 +30,7 @@
 - [ ] `<a>`, `<div>`, etc. tags with `[role="button"]` should be buttons
 - [ ] `<i>` tags with role=button should be changed so that a button surrounds the icon
 - [ ] Leverage TypeScript to lock down and document all known flags for each type of flagged entity (actor, NPC, vehicle, Item)
-- [ ] Implement click-and-drag 
+- [ ] Implement click-and-drag
   - [ ] for manual sorting of items
     - [ ] Consider disabling this for favorites when alphabetical sort is turned on, or issuing a warning.
   - [ ] for dropping things onto the sheet
@@ -244,6 +244,10 @@ Evaluate module integration and think about better (API-centric) ways to support
   - [ ] lazyMoneyChatLog
   - [ ] lockMoneyChanges
   - [ ] lazyMoneyAddConvert
+- [ ] Retest and find issues now that it's in svelte mode
+- [ ] Put tab IDs in CONSTANTS and propagate across the system.
+- [ ] Spellbook Grid - add charges to the bottom left of the grid panel
+- [ ] The XP bar's percentages seem way off. Try to get that fixed.
 
 ## Not Just Tidy 5e settings... DND5e settings as well 😱
 
@@ -313,7 +317,6 @@ If such a thing gets implemented, would players want the sheet's expanded/collap
 Also, if it gets implemented (very likely), we should include expand all / collapse all buttons (or icons) on each tab where relevant.
 Dreaming — Today at 11:11 AM
 I do think that would be ideal
-
 
 ### Default theme as world scope
 
