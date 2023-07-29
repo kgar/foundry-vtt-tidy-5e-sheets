@@ -157,7 +157,7 @@
     gap: 0.25rem;
     margin-top: 0.25rem;
 
-    > *:not(.horizontal-separator) {
+    > *:not(.vertical-line-separator) {
       flex: 1;
     }
   }

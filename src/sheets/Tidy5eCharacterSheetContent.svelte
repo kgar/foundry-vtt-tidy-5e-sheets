@@ -359,7 +359,7 @@
         cssClass="align-self-flex-start"
       />
       <div
-        class="horizontal-separator"
+        class="vertical-line-separator"
         aria-hidden="true"
         role="presentation"
       />
@@ -372,7 +372,7 @@
       </div>
       {#each abilities as [id, ability]}
         <div
-          class="horizontal-separator"
+          class="vertical-line-separator"
           aria-hidden="true"
           role="presentation"
         />

@@ -3,7 +3,10 @@
 @import './spell-level-buttons-dialog.scss';
 
 .tidy5e-kgar {
-  @import './partials/general';
+  &.actor {
+    @import './partials/actor';
+  }
+
   @import './partials/layout';
   @import './partials/character-sheet';
   @import './partials/portrait';

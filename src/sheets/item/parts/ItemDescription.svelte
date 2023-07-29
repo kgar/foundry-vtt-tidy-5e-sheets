@@ -16,7 +16,7 @@
 </script>
 
 <div class="item-description flexrow align-items-stretch small-gap">
-  <div class="item-properties">
+  <div class="item-properties flexcol">
     {#if $store.isPhysical}
       <div class="form-group">
         <label for="{$store.appId}-{$store.id}-quantity"
@@ -34,6 +34,12 @@
         />
       </div>
 
+      <div
+        aria-hidden="true"
+        role="presentation"
+        class="horizontal-line-separator"
+      />
+
       <div class="form-group">
         <label for="{$store.appId}-{$store.id}-weight"
           >{localize('DND5E.Weight')}</label
@@ -47,6 +53,12 @@
             $store.item.update({ 'system.weight': event.currentTarget.value })}
         />
       </div>
+
+      <div
+        aria-hidden="true"
+        role="presentation"
+        class="horizontal-line-separator"
+      />
 
       <div class="form-group">
         <label for="{$store.appId}-{$store.id}-price"
@@ -99,16 +111,18 @@
     {/if}
 
     {#if $store.itemProperties.length}
-      <h4 class="properties-header">{localize('DND5E.Properties')}</h4>
-      <ol class="properties-list">
-        {#each $store.itemProperties as prop}
-          <li>{prop}</li>
-        {/each}
-      </ol>
+      <section>
+        <h4 class="properties-header">{localize('DND5E.Properties')}</h4>
+        <ol class="properties-list">
+          {#each $store.itemProperties as prop}
+            <li>{prop}</li>
+          {/each}
+        </ol>
+      </section>
     {/if}
   </div>
 
-  <div class="horizontal-separator" />
+  <div aria-hidden="true" role="presentation" class="vertical-line-separator" />
 
   <RerenderAfterFormSubmission>
     <article use:activateProseMirrorListeners>
