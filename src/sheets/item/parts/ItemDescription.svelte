@@ -126,11 +126,11 @@
 
   <RerenderAfterFormSubmission>
     <article use:activateProseMirrorListeners>
-      <h2 class="details-headline">{localize('TIDY5E.ItemDetailsHeadline')}</h2>
       <SheetEditor
         content={$store.system.description.value}
         editable={$store.editable}
         target="system.description.value"
+        headerDetailsText={localize('TIDY5E.ItemDetailsHeadline')}
       />
     </article>
   </RerenderAfterFormSubmission>
