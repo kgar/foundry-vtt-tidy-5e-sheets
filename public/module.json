@@ -8,8 +8,8 @@
       "name": "_kgar"
     }
   ],
-  "esmodules": ["./dist/main.js"],
-  "styles": ["./dist/style.css"],
+  "esmodules": ["./main.js"],
+  "styles": ["./style.css"],
   "languages": [
     {
       "lang": "en",
