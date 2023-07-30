@@ -47,16 +47,33 @@
   //     margin: 0.125rem;
   //   }
 
+  .sheet-header {
+    flex: 0 0 5rem;
+    padding: 1rem;
+    background: var(--t5e-header-background);
+    align-items: flex-start;
+  }
+
+  .tabs {
+    flex: 0 0 auto;
+  }
+
   .tab {
     padding: 1rem;
     padding-right: 0.25rem;
     overflow: hidden;
   }
 
+  .item-description {
+    flex: 1;
+  }
+
   .item-properties {
     flex: 0 0 7.5rem;
     margin: 0;
     padding: 0;
+    display: flex; 
+    flex-direction: column;
 
     .form-group {
       margin: 0;
@@ -94,6 +111,77 @@
         padding: 0 2px;
         background: var(--t5e-faintest-color);
         text-align: center;
+      }
+    }
+  }
+
+  .editor {
+    height: 100%;
+    font-size: 0.8125rem;
+    display: flex;
+    flex-direction: column;
+
+    .details-headline {
+      font-weight: 600;
+      font-size: 0.8125rem;
+      line-height: 1;
+      margin-bottom: 0.5rem;
+      border: none;
+    }
+
+    .editor-edit {
+      right: 0.75rem;
+      top: 0;
+      padding: 0;
+      border: none;
+      box-shadow: none;
+      background: transparent;
+
+      i {
+        font-size: 1em;
+        position: absolute;
+        top: 0;
+        right: 0.3125rem;
+        cursor: pointer;
+        text-shadow: none;
+      }
+    }
+
+    .editor-content {
+      margin: 0;
+      padding: 0 0.75rem 0 0;
+
+      p,
+      li {
+        line-height: 1.4;
+      }
+
+      a.entity-link,
+      a.inline-roll {
+        padding: 0.0625rem 0.125rem 0 0.125rem;
+        border-radius: 0.3125rem;
+        background: var(--t5e-faint-color);
+        color: var(--t5e-primary-font);
+      }
+    }
+
+    .tox {
+      .tox-toolbar__group {
+        padding: 0;
+      }
+
+      .tox-tbtn {
+        width: 1.5rem;
+        height: 1.5rem;
+      }
+
+      &.tox-tinymce .tox-tbtn[title='Formats'],
+      &.tox-prosemirror .tox-tbtn[title='Formats'] {
+        width: 5.625rem;
+      }
+
+      .tox-tbtn--select {
+        width: auto;
       }
     }
   }

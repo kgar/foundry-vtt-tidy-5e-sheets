@@ -19,7 +19,7 @@ export class Tidy5eKgarItemSheet extends dnd5e.applications.item.ItemSheet5e {
   }
 
   get template() {
-    return FoundryAdapter.getTemplate('empty-form-template.hbs');
+    return FoundryAdapter.getTemplate('empty-form-template-for-items.hbs');
   }
 
   static get defaultOptions() {

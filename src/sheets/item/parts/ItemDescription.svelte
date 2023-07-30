@@ -16,7 +16,7 @@
 </script>
 
 <div class="item-description flexrow align-items-stretch small-gap">
-  <div class="item-properties flexcol">
+  <div class="item-properties">
     {#if $store.isPhysical}
       <div class="form-group">
         <label for="{$store.appId}-{$store.id}-quantity"
