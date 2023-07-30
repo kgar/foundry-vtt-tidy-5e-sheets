@@ -25,12 +25,6 @@ export class Tidy5eKgarItemSheet extends dnd5e.applications.item.ItemSheet5e {
   static get defaultOptions() {
     return FoundryAdapter.mergeObject(super.defaultOptions, {
       classes: ['tidy5e-kgar', 'sheet', 'item'],
-      width: 700,
-      height: 400,
-      popOut: true,
-      minimizable: true,
-      resizable: true,
-      submitOnChange: false,
     });
   }
 
@@ -89,9 +83,15 @@ export class Tidy5eKgarItemSheet extends dnd5e.applications.item.ItemSheet5e {
 
   async _onSubmit(...args: any[]) {
     await super._onSubmit(...args);
-    this.stats.update((stats) => {
-      stats.lastSubmissionTime = new Date();
-      return stats;
+
+    // TODO: Figure out why multiple render calls is trashing the prose editor.
+    // This setTimeout() is making it so the item prose editors don't go nonresponsive.
+    // I think it may have something to do with Save -> Trigger Component Refresh (onSubmit) -> Render -> Trash Prose Editor HTML -> Render again
+    setTimeout(() => {
+      this.stats.update((stats) => {
+        stats.lastSubmissionTime = new Date();
+        return stats;
+      });
     });
   }
 

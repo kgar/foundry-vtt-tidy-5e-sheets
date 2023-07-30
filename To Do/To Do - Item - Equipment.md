@@ -16,7 +16,6 @@
 - [ ] Confirm that changes are saving appropriately
 - [ ] Confirm that outside changes affect this form appropriately
 
-
 ### Stretch
 
 - [ ] Price - input + select: make a composite component that unifies these two input into a single, cohesive piece of UI ♥
