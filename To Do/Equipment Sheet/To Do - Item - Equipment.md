@@ -7,12 +7,24 @@
 - [x] Scaffold the tabs
 - [x] Stub the shared stuff for now
 - [ ] Implement the stubs
-  - [ ] Header
+  - [x] Header
+    - [x] HTML
+    - [x] SCSS
   - [x] Description (shared)
+    - [x] HTML
+    - [x] SCSS
   - [ ] Details
+    - [x] HTML
+    - [ ] SCSS
   - [ ] Details > `ItemPartActivation` (shared)
+    - [ ] HTML
+    - [ ] SCSS
   - [ ] Details > `ItemPartAction` (shared)
+    - [ ] HTML
+    - [ ] SCSS
   - [ ] Effects (shared)
+    - [ ] HTML
+    - [ ] SCSS
 - [ ] Ensure the window resizes when the size of the contents changes
 - [ ] Confirm that changes are saving appropriately
 - [ ] Confirm that outside changes affect this form appropriately
