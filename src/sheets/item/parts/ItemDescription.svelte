@@ -125,7 +125,7 @@
   <div aria-hidden="true" role="presentation" class="vertical-line-separator" />
 
   <RerenderAfterFormSubmission>
-    <article use:activateProseMirrorListeners>
+    <article class="editor-container" use:activateProseMirrorListeners>
       <SheetEditor
         content={$store.system.description.value}
         editable={$store.editable}

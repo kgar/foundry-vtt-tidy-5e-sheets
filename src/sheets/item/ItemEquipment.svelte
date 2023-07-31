@@ -54,4 +54,6 @@
 <header class="sheet-header flexrow">Header Here</header>
 <Tabs bind:selectedTabId {tabs} />
 <!-- To Do: Update Tab type to allow for cssClass specifically for the tab element, and then add flexrow for description tab -->
-<TabContents {tabs} {selectedTabId} />
+<div class="sheet-body">
+  <TabContents tabCssClass="flexrow" {tabs} {selectedTabId} />
+</div>

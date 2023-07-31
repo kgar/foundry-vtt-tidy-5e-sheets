@@ -54,25 +54,37 @@
     align-items: flex-start;
   }
 
-  .tabs {
-    flex: 0 0 auto;
-  }
-
-  .tab {
+  .sheet-body {
     padding: 1rem;
     padding-right: 0.25rem;
     overflow: hidden;
   }
 
+  .tabs {
+    flex: 0 0 auto;
+  }
+
+  .tab {
+    overflow: hidden auto;
+    height: 100%;
+    align-content: flex-start;
+  }
+
   .item-description {
     flex: 1;
+
+    .editor-container {
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
   }
 
   .item-properties {
     flex: 0 0 7.5rem;
     margin: 0;
     padding: 0;
-    display: flex; 
+    display: flex;
     flex-direction: column;
 
     .form-group {
