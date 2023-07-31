@@ -72,6 +72,7 @@
 
   .item-description {
     flex: 1;
+    height: 100%;
   }
 
   .item-properties {
@@ -122,6 +123,7 @@
   }
 
   .editor-container {
+    height: 100%;
     overflow: hidden;
     display: flex;
     flex-direction: column;
