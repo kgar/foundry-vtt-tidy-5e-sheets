@@ -72,12 +72,6 @@
 
   .item-description {
     flex: 1;
-
-    .editor-container {
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-    }
   }
 
   .item-properties {
@@ -127,12 +121,18 @@
     }
   }
 
-  .editor {
-    height: 100%;
-    font-size: 0.8125rem;
+  .editor-container {
+    overflow: hidden;
     display: flex;
     flex-direction: column;
+    position: relative;
 
+    &:hover .editor .editor-edit {
+      display: block;
+      padding: 0;
+      border: none;
+      box-shadow: none;
+    }
     .details-headline {
       font-weight: 600;
       font-size: 0.8125rem;
@@ -141,59 +141,67 @@
       border: none;
     }
 
-    .editor-edit {
-      right: 0.75rem;
-      top: 0;
-      padding: 0;
-      border: none;
-      box-shadow: none;
-      background: transparent;
+    .editor {
+      height: 100%;
+      font-size: 0.8125rem;
+      display: flex;
+      flex-direction: column;
+      position: static;
 
-      i {
-        font-size: 1em;
-        position: absolute;
+      .editor-edit {
+        right: 0.75rem;
         top: 0;
-        right: 0.3125rem;
-        cursor: pointer;
-        text-shadow: none;
-      }
-    }
-
-    .editor-content {
-      margin: 0;
-      padding: 0 0.75rem 0 0;
-
-      p,
-      li {
-        line-height: 1.4;
-      }
-
-      a.entity-link,
-      a.inline-roll {
-        padding: 0.0625rem 0.125rem 0 0.125rem;
-        border-radius: 0.3125rem;
-        background: var(--t5e-faint-color);
-        color: var(--t5e-primary-font);
-      }
-    }
-
-    .tox {
-      .tox-toolbar__group {
         padding: 0;
+        border: none;
+        box-shadow: none;
+        background: transparent;
+
+        i {
+          font-size: 1em;
+          position: absolute;
+          top: 0;
+          right: 0.3125rem;
+          cursor: pointer;
+          text-shadow: none;
+        }
       }
 
-      .tox-tbtn {
-        width: 1.5rem;
-        height: 1.5rem;
+      .editor-content {
+        margin: 0;
+        padding: 0 0.75rem 0 0;
+
+        p,
+        li {
+          line-height: 1.4;
+        }
+
+        a.entity-link,
+        a.inline-roll {
+          padding: 0.0625rem 0.125rem 0 0.125rem;
+          border-radius: 0.3125rem;
+          background: var(--t5e-faint-color);
+          color: var(--t5e-primary-font);
+        }
       }
 
-      &.tox-tinymce .tox-tbtn[title='Formats'],
-      &.tox-prosemirror .tox-tbtn[title='Formats'] {
-        width: 5.625rem;
-      }
+      .tox {
+        .tox-toolbar__group {
+          padding: 0;
+        }
 
-      .tox-tbtn--select {
-        width: auto;
+        .tox-tbtn {
+          width: 1.5rem;
+          height: 1.5rem;
+        }
+
+        &.tox-tinymce .tox-tbtn[title='Formats'],
+        &.tox-prosemirror .tox-tbtn[title='Formats'] {
+          width: 5.625rem;
+        }
+
+        .tox-tbtn--select {
+          width: auto;
+        }
       }
     }
   }
