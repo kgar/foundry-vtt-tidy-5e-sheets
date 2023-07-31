@@ -9,6 +9,7 @@
   import TabContents from 'src/components/tabs/TabContents.svelte';
   import { CONSTANTS } from 'src/constants';
   import { getContext } from 'svelte';
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
   let store = getContext<Readable<ItemSheetContext>>('store');
 
@@ -49,9 +50,59 @@
     tabs,
     context: $store,
   });
+
+  const localize = FoundryAdapter.localize;
 </script>
 
-<header class="sheet-header flexrow">Header Here</header>
+<header class="sheet-header flexrow gap">
+  <img
+    class="profile"
+    src={$store.item.img}
+    data-tooltip={$store.item.name}
+    alt={$store.item.name}
+  />
+  <div class="header-details flexrow">
+    <h1 class="charname">
+      <input
+        type="text"
+        value={$store.item.name}
+        placeholder={localize('DND5E.ItemName')}
+        on:change={(event) =>
+          $store.item.update({ name: event.currentTarget.value })}
+      />
+    </h1>
+
+    <div class="item-subtitle">
+      <h4 class="item-type">{$store.item.type}</h4>
+      <span class="item-status">{$store.itemStatus}</span>
+    </div>
+
+    <ul class="summary flexrow">
+      <li>{$store.config.equipmentTypes[$store.system.armor.type]}</li>
+      <li>
+        <select
+          on:change={(event) =>
+            $store.item.update({ 'system.rarity': event.currentTarget.value })}
+        >
+          {#each Object.entries($store.config.itemRarity) as [value, key]}
+            <option {value} selected={value === $store.system.rarity}>
+              {key}
+            </option>
+          {/each}
+        </select>
+      </li>
+      <li>
+        <input
+          type="text"
+          value={$store.system.source}
+          placeholder={localize('DND5E.Source')}
+          on:change={(event) =>
+            $store.item.update({ 'system.source': event.currentTarget.value })}
+        />
+      </li>
+    </ul>
+  </div>
+</header>
 <Tabs bind:selectedTabId {tabs} />
 <!-- To Do: Update Tab type to allow for cssClass specifically for the tab element, and then add flexrow for description tab -->
 <div class="sheet-body">

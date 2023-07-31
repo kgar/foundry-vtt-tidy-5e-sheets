@@ -52,6 +52,74 @@
     padding: 1rem;
     background: var(--t5e-header-background);
     align-items: flex-start;
+
+    // TODO: Determine if these styles are actually used. Delete otherwise
+    // .item-image {
+    //   flex: 0 0 5rem;
+    //   width: 5rem;
+    //   height: 5rem;
+    //   position: relative;
+
+    //   .item-menu {
+    //     position: absolute;
+    //     top: 50%;
+    //     left: 50%;
+    //     transform: translate(-50%, -50%);
+    //     display: flex;
+    //     flex-direction: column;
+    //     justify-content: center;
+    //     align-items: center;
+
+    //     &.hidden {
+    //       display: none;
+    //     }
+
+    //     a {
+    //       background: var(--t5e-background);
+    //       color: var(--t5e-primary-font);
+    //       border: none;
+    //       margin: 1px 0;
+    //       padding: 4px 6px;
+    //       line-height: 1;
+    //       font-size: 12px;
+    //       border: 1px solid var(--t5e-light-color);
+    //       border-radius: 5px;
+    //       text-align: center;
+    //     }
+    //   }
+    // }
+
+    img.profile {
+      flex: 0 0 5rem;
+      width: 5rem;
+      height: 5rem;
+      border-radius: 0.3125rem;
+      margin-right: 0;
+    }
+
+    .header-details {
+      align-items: center;
+    }
+
+    .charname {
+      height: 1.875rem;
+      line-height: 1.125rem;
+
+      input {
+        margin: 0;
+        padding: 0;
+        font-size: 1.5rem;
+        height: 100%;
+        width: 100%;
+        font-family: var(--t5e-modesto);
+        background: transparent;
+      }
+    }
+
+    .item-subtitle {
+      padding: 0.125rem 0.25rem;
+      
+    }
   }
 
   .sheet-body {

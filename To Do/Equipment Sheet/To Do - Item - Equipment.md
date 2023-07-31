@@ -7,7 +7,8 @@
 - [x] Scaffold the tabs
 - [x] Stub the shared stuff for now
 - [ ] Implement the stubs
-  - [ ] Description (shared)
+  - [ ] Header
+  - [x] Description (shared)
   - [ ] Details
   - [ ] Details > `ItemPartActivation` (shared)
   - [ ] Details > `ItemPartAction` (shared)
