@@ -10,6 +10,7 @@ export type Tab<
   content: {
     component: ComponentType<T>;
     props?: ComponentProps<T>;
+    cssClass?: string;
   };
 };
 

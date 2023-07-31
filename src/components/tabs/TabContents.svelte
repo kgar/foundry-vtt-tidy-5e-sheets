@@ -3,11 +3,14 @@
 
   export let tabs: Tab[];
   export let selectedTabId: string;
-  export let tabCssClass: string = '';
+  export let cssClass: string = '';
 </script>
 
 {#each tabs as tab (tab.id)}
-  <section class="tab {tab.id} {tabCssClass}" class:active={selectedTabId === tab.id}>
+  <section
+    class="tab {tab.id} {cssClass} {tab.content.cssClass ?? ''}"
+    class:active={selectedTabId === tab.id}
+  >
     <svelte:component this={tab.content.component} {...tab.content.props} />
   </section>
 {/each}

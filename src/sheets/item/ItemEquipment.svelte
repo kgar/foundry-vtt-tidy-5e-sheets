@@ -19,6 +19,9 @@
 
   export let selectedTabId: string;
 
+  // TODO: DEBUG REMOVE AFTER DETAILS ARE DONE
+  selectedTabId = 'details';
+
   const tabs: Tab[] = [
     {
       id: 'description',
@@ -34,6 +37,7 @@
       content: {
         component: ItemEquipmentDetails,
         props: {},
+        cssClass: 'detail-tab-contents',
       },
     },
     {
@@ -83,10 +87,11 @@
         <select
           on:change={(event) =>
             $store.item.update({ 'system.rarity': event.currentTarget.value })}
+          value={$store.system.rarity}
         >
-          {#each Object.entries($store.config.itemRarity) as [value, key]}
-            <option {value} selected={value === $store.system.rarity}>
-              {key}
+          {#each Object.entries($store.config.itemRarity) as [key, displayName]}
+            <option value={key}>
+              {displayName}
             </option>
           {/each}
         </select>
@@ -106,5 +111,5 @@
 <Tabs bind:selectedTabId {tabs} />
 <!-- To Do: Update Tab type to allow for cssClass specifically for the tab element, and then add flexrow for description tab -->
 <div class="sheet-body">
-  <TabContents tabCssClass="flexrow" {tabs} {selectedTabId} />
+  <TabContents cssClass="flexrow" {tabs} {selectedTabId} />
 </div>

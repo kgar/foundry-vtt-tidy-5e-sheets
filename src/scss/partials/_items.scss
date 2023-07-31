@@ -202,6 +202,14 @@
     overflow: hidden auto;
     height: 100%;
     align-content: flex-start;
+
+    &.detail-tab-contents {
+      padding-right: 0.75rem;
+
+      .form-header {
+        // TODO: Implement after laying out.
+      }
+    }
   }
 
   .item-description {

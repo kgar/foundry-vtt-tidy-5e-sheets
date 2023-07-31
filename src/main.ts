@@ -41,7 +41,7 @@ FoundryAdapter.onReady(async () => {
       import.meta.env.VITE_KGAR_ACTOR_SAMPLE_ID
     );
   }
-  
+
   const compareItemSamples = import.meta.env.VITE_COMPARE_SAMPLE_ITEMS;
   if (compareItemSamples === 'true') {
     debugCompareItemSheets(
@@ -165,6 +165,7 @@ async function debugCompareItemSheets(
 
   tidySheet.render(true);
   delay(500).then(() => {
+    document.querySelector('.tidy5e.item .tabs [data-tab=details]')?.click();
     tidySheet.setPosition({
       left: 69,
       top: 140,
