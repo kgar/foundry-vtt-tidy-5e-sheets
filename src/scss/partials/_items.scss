@@ -243,6 +243,7 @@
     .item-description {
       flex: 1;
       height: 100%;
+      width: 100%;
     }
 
     .editor-container {
@@ -358,10 +359,15 @@
       }
 
       .form-group {
-        margin: 0.125rem 0;
+        margin: 0;
+
+        & + .form-group {
+          margin-top: 0.125rem;
+        }
         padding: 0.1875rem;
         background: var(--t5e-faintest-color);
         border-radius: 0.3125rem;
+        
 
         .form-fields {
           justify-content: flex-start;

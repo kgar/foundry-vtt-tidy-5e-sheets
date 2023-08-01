@@ -10,19 +10,36 @@
   - [x] Header
     - [x] HTML
     - [x] SCSS
-    - [ ] Behaviors
+    - [x] Behaviors
   - [x] Description (shared)
     - [x] HTML
     - [x] SCSS
-    - [ ] Behaviors
+    - [x] Behaviors
   - [ ] Details
     - [x] HTML
     - [x] SCSS
     - [ ] Behaviors
+      - [ ] Damage Formula Add
+      - [ ] Damage Formula Delete
+    - [ ] Odds and ends
+      - [ ] Add ids wherever able
+        - [ ] Activation Cost -> Quantity Consumed field, or (figure out how this is supposed to work from Accessibility)
+        - [ ] Target -> dropdown
+        - [ ] Range -> dropdown
+        - [ ] Duration -> dropdown
+        - [ ] Limited Uses -> (figure out how this is supposed to work from Accessibility)
+        - [ ] Resource Consumption -> dropdown
+        - [ ] Action Type -> dropdown
+        - [ ] Saving Throw -> (figure out how this is supposed to work from Accessibility)
+      - [ ] When setting Critical Threshold, updating, and then deleting and updating, I get a validation error; the original Tidy form does not. Why?
   - [ ] Details > `ItemActivation` (shared)
     - [x] HTML
     - [x] SCSS
     - [ ] Behaviors
+      - [ ] Add
+      - [ ] Delete
+      - [ ] Activate
+      - [ ] Deactivate
   - [ ] Details > `ItemAction` (shared)
     - [x] HTML
     - [x] SCSS
@@ -36,8 +53,14 @@
 - [ ] Confirm that changes are saving appropriately
 - [ ] Confirm that outside changes affect this form appropriately
 
+
 ### Stretch
 
+- [ ] Effects tab - create prototype of grid components with collapsibility that can be remembered for the player for the given sheet
+  - [ ] Lay out the effects tab using the grid components approach
+  - [ ] Make it data-driven
+  - [ ] Publish a hook before mount and on mount
+  - [ ] Add TODO for API call to register effect column
 - [ ] Price - input + select: make a composite component that unifies these two input into a single, cohesive piece of UI ♥
 
 ### equipment.hbs
