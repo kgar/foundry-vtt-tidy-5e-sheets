@@ -1,1 +1,0 @@
-Active Effects contents here

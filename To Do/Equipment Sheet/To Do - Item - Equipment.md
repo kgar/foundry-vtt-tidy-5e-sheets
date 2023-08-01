@@ -23,7 +23,7 @@
     - [x] HTML
     - [ ] SCSS
   - [ ] Effects (shared)
-    - [ ] HTML
+    - [x] HTML
     - [ ] SCSS
 - [ ] Ensure the window resizes when the size of the contents changes
 - [ ] Confirm that changes are saving appropriately

@@ -5,7 +5,7 @@
   import type { Readable } from 'svelte/store';
   import ItemDescription from './parts/ItemDescription.svelte';
   import ItemEquipmentDetails from './parts/ItemEquipmentDetails.svelte';
-  import ActiveEffects from './parts/ActiveEffects.svelte';
+  import ActiveEffects from '../actor/parts/ActiveEffects.svelte';
   import TabContents from 'src/components/tabs/TabContents.svelte';
   import { CONSTANTS } from 'src/constants';
   import { getContext } from 'svelte';
