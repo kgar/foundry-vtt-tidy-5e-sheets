@@ -4,39 +4,40 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import type { ItemSheetContext } from 'src/types/item';
+  import NumericInput from 'src/components/sheet-inputs/NumericInput.svelte';
+  import Select from 'src/components/sheet-inputs/Select.svelte';
+  import TextInput from 'src/components/sheet-inputs/TextInput.svelte';
 
   let store = getContext<Readable<ItemSheetContext>>('store');
 
   const localize = FoundryAdapter.localize;
 </script>
 
-<ItemFormGroup labelText={localize('DND5E.ItemActivationCost')} cssClass="input-select">
+<ItemFormGroup
+  labelText={localize('DND5E.ItemActivationCost')}
+  cssClass="input-select"
+>
   <div class="form-fields">
     {#if $store.system.activation.type}
-      <input
-        type="number"
-        step="any"
+      <NumericInput
         value={$store.system.activation.cost}
+        tooltip="DND5E.ConsumeQuanity"
+        field="system.activation.cost"
         placeholder="&emdash;"
-        on:change={(event) =>
-          $store.item.update({
-            'system.activation.cost': event.currentTarget.value,
-          })}
+        document={$store.item}
       />
     {/if}
-    <select
-      value={$store.system.activation.type.toString()}
-      data-tooltip={localize('DND5E.ItemActivationType')}
-      on:change={(event) =>
-        $store.item.update({
-          'system.activation.type': event.currentTarget.value,
-        })}
+    <Select
+      value={$store.system.activation.type?.toString() ?? ''}
+      tooltip={localize('DND5E.ItemActivationType')}
+      document={$store.item}
+      field="system.activation.type"
     >
       <option value="">{localize('DND5E.None')}</option>
       {#each Object.entries($store.config.abilityActivationTypes) as [key, displayName]}
         <option value={key}>{displayName}</option>
       {/each}
-    </select>
+    </Select>
   </div>
 </ItemFormGroup>
 
@@ -47,14 +48,11 @@
     let:inputId
   >
     <div class="form-fields">
-      <input
+      <TextInput
         id={inputId}
-        type="text"
         value={$store.system.activation.condition}
-        on:change={(event) =>
-          $store.item.update({
-            'system.activation.condition': event.currentTarget.value,
-          })}
+        field="system.activation.condition"
+        document={$store.item}
       />
     </div>
   </ItemFormGroup>
@@ -66,229 +64,247 @@
       let:inputId
     >
       <div class="form-fields">
-        <select
+        <Select
           id={inputId}
-          data-dtype="Number"
+          dtype="Number"
           value={$store.system.cover}
-          on:change={(event) =>
-            $store.item.update({
-              'system.cover': event.currentTarget.value,
-            })}
+          tooltip={localize('DND5E.ItemActivationType')}
+          document={$store.item}
+          field="system.cover"
         >
           <option value="" />
           {#each Object.entries($store.config.cover) as [key, displayName]}
             <option value={key}>{displayName}</option>
           {/each}
-        </select>
+        </Select>
       </div>
     </ItemFormGroup>
   {/if}
 
-  <ItemFormGroup cssClass="input-select-select" labelText={localize ('DND5E.Target')}>
-    <div class='form-fields'>
+  <ItemFormGroup
+    cssClass="input-select-select"
+    labelText={localize('DND5E.Target')}
+  >
+    <div class="form-fields">
       {#if $store.system.hasScalarTarget}
-        <input
-          type='number'
-          step='any'
-          value='{$store.system.target.value}'
-          placeholder='&mdash;'
-          on:change={event => $store.item.update({
-            'system.target.value': event.currentTarget.value
-          })}
+        <NumericInput
+          value={$store.system.target.value}
+          placeholder="&mdash;"
+          field="system.target.value"
+          document={$store.item}
         />
       {/if}
-      {#if system.hasAreaTarget}
-        <select value={$store.system.target.units} 
-          data-tooltip='DND5E.TargetUnits'
-          on:change={event => $store.item.update({
-            'system.target.units': event.currentTarget.value
-          })}>
-          <option value=""></option>
+      {#if $store.system.hasAreaTarget}
+        <Select
+          value={$store.system.target.units}
+          tooltip="DND5E.TargetUnits"
+          field="system.target.units"
+          document={$store.item}
+        >
+          <option value="" />
           {#each Object.entries($store.config.movementUnits) as [key, displayName]}
-          <option value={key}>{displayName}</option>
-          {/each}
-        </select>
-      {/if}
-      <select value={$store.system.target.type} data-tooltip='DND5E.TargetType' on:change={event => $store.item.update({
-        'system.target.type': event.currentTarget.value
-      })}>
-          <option value=''>{localize ('DND5E.None')}</option>
-          <optgroup label='{localize ("DND5E.TargetTypeIndividual")}'>
-            {#each Object.entries($store.config.individualTargetTypes) as [key, displayName]}
-              <option value={key}>{displayName}</option>
-            {/each}
-          </optgroup>
-          <optgroup label='{localize ("DND5E.TargetTypeArea")}'>
-            {#each Object.entries($store.config.areaTargetTypes) as [key, type]}
-              <option value={key}>{type.label}</option>
-            {/each}
-          </optgroup>
-      </select>
-    </div>
-</ItemFormGroup>
-
-  {#if $store.isLine}
-  <ItemFormGroup cssClass="input-select-select" labelText={localize ('DND5E.TargetWidth')}>
-      <div class='form-fields'>
-        <input
-          type='number'
-          step='any'
-          value='{$store.system.target.width}'
-          placeholder='&mdash;'
-          on:change={event => $store.item.update({ 'system.target.width' : event.currentTarget.value})}
-          />
-      </div>
-    </ItemFormGroup>
-  {/if}
-
-  <ItemFormGroup cssClass="input-select" labelText={localize ('DND5E.Range')}>
-    <div class='form-fields'>
-      {#if $store.system.hasScalarRange}
-        <input
-          type='number'
-          step='any'
-          value='{$store.system.range.value}'
-          placeholder='{localize ("DND5E.Normal")}'
-          data-tooltip='DND5E.RangeNormal'
-          on:change={event => $store.item.update({
-            'system.range.value': event.currentTarget.value
-          })}
-        />
-        <span class='sep'>/</span>
-        <input
-          type='number'
-          step='any'
-          value='{$store.system.range.long}'
-          placeholder='{localize ("DND5E.Long")}'
-          data-tooltip='DND5E.RangeLong'
-          on:change={event => $store.item.update({
-           'system.range.long': event.currentTarget.value
-          })}
-        />
-      {/if}
-      <select value={$store.system.range.units} data-tooltip='DND5E.RangeUnits' on:change={event => $store.item.update({'system.range.units': event.currentTarget.value})}>
-          <option value=''>{localize ('DND5E.None')}</option>
-          <optgroup label='{localize ("DND5E.RangeDistance")}'>
-            {#each Object.entries($store.config.movementUnits) as [key, displayName]}
-              <option value={key}>{displayName}</option>
-            {/each}
-          </optgroup>
-          {#each Object.entries($store.config.rangeTypes) as [key, displayName]}
             <option value={key}>{displayName}</option>
           {/each}
-      </select>
+        </Select>
+      {/if}
+      <Select
+        value={$store.system.target.type}
+        tooltip="DND5E.TargetType"
+        field="system.target.type"
+        document={$store.item}
+      >
+        <option value="">{localize('DND5E.None')}</option>
+        <optgroup label={localize('DND5E.TargetTypeIndividual')}>
+          {#each Object.entries($store.config.individualTargetTypes) as [key, displayName]}
+            <option value={key}>{displayName}</option>
+          {/each}
+        </optgroup>
+        <optgroup label={localize('DND5E.TargetTypeArea')}>
+          {#each Object.entries($store.config.areaTargetTypes) as [key, type]}
+            <option value={key}>{type.label}</option>
+          {/each}
+        </optgroup>
+      </Select>
     </div>
-</ItemFormGroup>
+  </ItemFormGroup>
 
-<ItemFormGroup 
-cssClass="input-select" labelText={localize ('DND5E.Duration')}>
-    <div class='form-fields'>
+  {#if $store.isLine}
+    <ItemFormGroup
+      cssClass="input-select-select"
+      labelText={localize('DND5E.TargetWidth')}
+    >
+      <div class="form-fields">
+        <NumericInput
+          value={$store.system.target.width}
+          placeholder="&mdash;"
+          field="system.target.width"
+          document={$store.item}
+        />
+      </div>
+    </ItemFormGroup>
+  {/if}
+
+  <ItemFormGroup cssClass="input-select" labelText={localize('DND5E.Range')}>
+    <div class="form-fields">
+      {#if $store.system.hasScalarRange}
+        <NumericInput
+          value={$store.system.range.value}
+          placeholder={localize('DND5E.Normal')}
+          tooltip="DND5E.RangeNormal"
+          field="system.target.width"
+          document={$store.item}
+        />
+        <span class="sep">/</span>
+        <NumericInput
+          value={$store.system.range.long}
+          placeholder={localize('DND5E.Long')}
+          tooltip="DND5E.RangeLong"
+          field="system.range.long"
+          document={$store.item}
+        />
+      {/if}
+      <Select
+        value={$store.system.range.units}
+        tooltip="DND5E.RangeUnits"
+        document={$store.item}
+        field="system.range.units"
+      >
+        <option value="">{localize('DND5E.None')}</option>
+        <optgroup label={localize('DND5E.RangeDistance')}>
+          {#each Object.entries($store.config.movementUnits) as [key, displayName]}
+            <option value={key}>{displayName}</option>
+          {/each}
+        </optgroup>
+        {#each Object.entries($store.config.rangeTypes) as [key, displayName]}
+          <option value={key}>{displayName}</option>
+        {/each}
+      </Select>
+    </div>
+  </ItemFormGroup>
+
+  <ItemFormGroup cssClass="input-select" labelText={localize('DND5E.Duration')}>
+    <div class="form-fields">
       {#if $store.system.hasScalarDuration}
-      <!-- TODO: Figure out what data-formula-editor is doing and recreate -->
-        <input
-          type='text'
-          value='{$store.source.duration.value}'
-          placeholder='&mdash;'
-          data-tooltip='DND5E.DurationValue'
+        <!-- TODO: Figure out what data-formula-editor is doing and recreate -->
+        <TextInput
+          value={$store.source.duration.value}
+          placeholder="&mdash;"
+          tooltip="DND5E.DurationValue"
+          field="source.duration.value"
+          document={$store.item}
           data-formula-editor
         />
       {/if}
-      <select 
-        value={$store.system.duration.units} 
-        data-tooltip='DND5E.DurationType'
-        on:change={event => $store.item.update({'system.duration.units': event.currentTarget.value})}>
-          <option value=''>{localize ('DND5E.None')}</option>
-          <optgroup label='{localize ("DND5E.DurationTime")}'>
-            {#each Object.entries($store.config.scalarTimePeriods) as [key, displayName]}
-              <option value={key}>{displayName}</option>
-            {/each}
-          </optgroup>
-          <optgroup label='{localize ("DND5E.DurationPermanent")}'>
-            {#each Object.entries($store.config.permanentTimePeriods) as [key, displayName]}
-              <option value={key}>{displayName}</option>
-            {/each}
-          </optgroup>
-          {#each Object.entries($store.config.specialTimePeriods) as [key, displayName]}
-              <option value={key}>{displayName}</option>
-            {/each}
-      </select>
-    </div>
-</ItemFormGroup>
-
-<ItemFormGroup cssClass="uses-per" labelText={localize ('DND5E.LimitedUses')}>
-    <div class='form-fields'>
-      <input
-        type='number'
-        step='any'
-        value='{$store.system.uses.value}'
-        data-tooltip='DND5E.UsesAvailable'
-        on:change={event => $store.item.update({'system.uses.value': event.currentTarget.value})}
-      />
-      <span class='sep'>{localize ('DND5E.of')}</span>
-      <!-- TODO: Figure out what data-formula-editor is doing and recreate -->
-      <input
-        type='text'
-        value='{$store.source.uses.max}'
-        data-tooltip='DND5E.UsesMax'
-        data-formula-editor
-      />
-      <span class='sep'>{localize ('DND5E.per')}</span>
-      <select value={$store.system.uses.per} data-tooltip='DND5E.UsesPeriod' on:change={event => $store.item.udpate({'system.uses.per': event.currentTarget.value})}>
-        <option value=""></option>
-        {#each Object.entries($store.config.limitedUsePeriods) as [key, displayName]}
-        <option value={key}>{displayName}</option>
+      <Select
+        value={$store.system.duration.units}
+        tooltip="DND5E.DurationType"
+        document={$store.item}
+        field="system.duration.units"
+      >
+        <option value="">{localize('DND5E.None')}</option>
+        <optgroup label={localize('DND5E.DurationTime')}>
+          {#each Object.entries($store.config.scalarTimePeriods) as [key, displayName]}
+            <option value={key}>{displayName}</option>
+          {/each}
+        </optgroup>
+        <optgroup label={localize('DND5E.DurationPermanent')}>
+          {#each Object.entries($store.config.permanentTimePeriods) as [key, displayName]}
+            <option value={key}>{displayName}</option>
+          {/each}
+        </optgroup>
+        {#each Object.entries($store.config.specialTimePeriods) as [key, displayName]}
+          <option value={key}>{displayName}</option>
         {/each}
-      </select>
+      </Select>
     </div>
-</ItemFormGroup>
+  </ItemFormGroup>
 
-  {#if ($store.system.uses.per === 'charges')}
-  <ItemFormGroup labelText={localize ('DND5E.RecoveryFormula')} field="system.uses.recovery" let:inputId>
-      <div class='form-fields'>
-        <!-- TODO: Figure out what data-formula-editor is doing and recreate -->
-        <input
-        id={inputId}
-        type='text'
-        value='{$store.system.uses.recovery}'
+  <ItemFormGroup cssClass="uses-per" labelText={localize('DND5E.LimitedUses')}>
+    <div class="form-fields">
+      <NumericInput
+        value={$store.system.uses.value}
+        tooltip="DND5E.UsesAvailable"
+        field="system.uses.value"
+        document={$store.item}
+      />
+      <span class="sep">{localize('DND5E.of')}</span>
+      <!-- TODO: Figure out what data-formula-editor is doing and recreate -->
+      <TextInput
+        value={$store.source.uses.max}
+        tooltip="DND5E.UsesMax"
+        field="source.uses.max"
+        document={$store.item}
         data-formula-editor
+      />
+      <span class="sep">{localize('DND5E.per')}</span>
+      <Select
+        value={$store.system.uses.per}
+        tooltip="DND5E.UsesPeriod"
+        document={$store.item}
+        field="system.uses.per"
+      >
+        <option value="" />
+        {#each Object.entries($store.config.limitedUsePeriods) as [key, displayName]}
+          <option value={key}>{displayName}</option>
+        {/each}
+      </Select>
+    </div>
+  </ItemFormGroup>
+
+  {#if $store.system.uses.per === 'charges'}
+    <ItemFormGroup
+      labelText={localize('DND5E.RecoveryFormula')}
+      field="system.uses.recovery"
+      let:inputId
+    >
+      <div class="form-fields">
+        <!-- TODO: Figure out what data-formula-editor is doing and recreate -->
+        <TextInput
+          id={inputId}
+          value={$store.system.uses.recovery}
+          document={$store.item}
+          field="system.uses.recovery"
+          data-formula-editor
         />
       </div>
-  </ItemFormGroup>  
+    </ItemFormGroup>
   {/if}
 
-  <ItemFormGroup 
-    cssClass="consumption" 
-    labelText={localize ('DND5E.ConsumeTitle')}>
-    <div class='form-fields'>
+  <ItemFormGroup
+    cssClass="consumption"
+    labelText={localize('DND5E.ConsumeTitle')}
+  >
+    <div class="form-fields">
       {#if $store.system.consume.type}
-        <input
-          type='number'
-          step='any'
-          value='{$store.system.consume.amount}'
-          data-tooltip='DND5E.ConsumeQuanity'
-          on:change={event => $store.item.update({'system.consume.amount': event.currentTarget.value})}
+        <NumericInput
+          value={$store.system.consume.amount}
+          tooltip="DND5E.ConsumeQuanity"
+          field="system.consume.amount"
+          document={$store.item}
         />
-        <select 
-          value={$store.system.consume.target} 
-          data-tooltip='DND5E.ConsumeTarget'
-          on:change={event => $store.item.update({
-            'system.consume.target': event.currentTarget.value
-          })}
-          >
-          <option value=""></option>
+        <Select
+          value={$store.system.consume.target}
+          tooltip="DND5E.ConsumeTarget"
+          document={$store.item}
+          field="system.consume.target"
+        >
+          <option value="" />
           {#each Object.entries($store.abilityConsumptionTargets) as [key, displayName]}
-<option value={key}>{displayName}</option>
+            <option value={key}>{displayName}</option>
           {/each}
-        </select>
+        </Select>
       {/if}
-      <select name='system.consume.type' data-tooltip='DND5E.ConsumeType'>
-        {selectOptions
-          config.abilityConsumptionTypes
-          selected=system.consume.type
-          blank=(localize 'DND5E.None')
-        }
-      </select>
+      <Select
+        value={$store.system.consume.type}
+        tooltip="DND5E.ConsumeType"
+        document={$store.item}
+        field="system.consume.type"
+      >
+        <option value="">{localize('DND5E.None')}</option>
+        {#each Object.entries($store.config.abilityConsumptionTypes) as [key, displayName]}
+          <option value={key}>{displayName}</option>
+        {/each}
+      </Select>
     </div>
-
-  </ItemFormGroup> 
+  </ItemFormGroup>
 {/if}
