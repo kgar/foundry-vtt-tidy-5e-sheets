@@ -10,21 +10,28 @@
   - [x] Header
     - [x] HTML
     - [x] SCSS
+    - [ ] Behaviors
   - [x] Description (shared)
     - [x] HTML
     - [x] SCSS
+    - [ ] Behaviors
   - [ ] Details
     - [x] HTML
-    - [ ] SCSS
+    - [x] SCSS
+    - [ ] Behaviors
   - [ ] Details > `ItemActivation` (shared)
     - [x] HTML
-    - [ ] SCSS
+    - [x] SCSS
+    - [ ] Behaviors
   - [ ] Details > `ItemAction` (shared)
     - [x] HTML
-    - [ ] SCSS
+    - [x] SCSS
+    - [ ] Behaviors
   - [ ] Effects (shared)
     - [x] HTML
-    - [ ] SCSS
+    - [x] SCSS
+    - [ ] Behaviors
+- [x] Implement "Show Item Art" from reference script
 - [ ] Ensure the window resizes when the size of the contents changes
 - [ ] Confirm that changes are saving appropriately
 - [ ] Confirm that outside changes affect this form appropriately
