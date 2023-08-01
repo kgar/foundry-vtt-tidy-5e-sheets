@@ -12,6 +12,19 @@
   let store = getContext<Readable<ItemSheetContext>>('store');
 
   const localize = FoundryAdapter.localize;
+
+  function addDamageFormula() {
+    const damage = $store.item.system.damage;
+    return $store.item.update({
+      'system.damage.parts': damage.parts.concat([['', '']]),
+    });
+  }
+
+  function deleteDamageFormula(index: number) {
+    const damage = foundry.utils.deepClone(this.item.system.damage);
+    damage.parts.splice(index, 1);
+    return $store.item.update({ 'system.damage.parts': damage.parts });
+  }
 </script>
 
 <ItemFormGroup
@@ -109,7 +122,10 @@
       {localize('DND5E.Damage')}
     {/if}
     {localize('DND5E.Formula')}
-    <a class="damage-control add-damage"><i class="fas fa-plus" /></a>
+    <a
+      class="damage-formula-control add-damage"
+      on:click={() => addDamageFormula()}><i class="fas fa-plus" /></a
+    >
   </h4>
   <ol class="damage-parts form-group">
     {#each $store.system.damage.parts as [formula, damageType], i}
@@ -118,12 +134,12 @@
           value={formula}
           isFormulaEditor={true}
           document={$store.item}
-          field="system.damage.parts.${i}.0"
+          field="system.damage.parts.{i}.0"
         />
         <Select
           id="{$store.appId}-config-damageTypes"
           document={$store.item}
-          field="config.damageTypes"
+          field="system.damage.parts.{i}.1"
           value={damageType}
         >
           <option value="">{localize('DND5E.None')}</option>
@@ -134,7 +150,10 @@
             <SelectOptions data={$store.config.healingTypes} />
           </optgroup>
         </Select>
-        <a class="damage-control delete-damage"><i class="fas fa-minus" /></a>
+        <a
+          class="damage-formula-control delete-damage"
+          on:click={() => deleteDamageFormula(i)}><i class="fas fa-minus" /></a
+        >
       </li>
     {/each}
   </ol>

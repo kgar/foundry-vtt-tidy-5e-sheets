@@ -19,8 +19,9 @@
     - [x] HTML
     - [x] SCSS
     - [ ] Behaviors
-      - [ ] Damage Formula Add
+      - [x] Damage Formula Add
       - [ ] Damage Formula Delete
+      - [ ] Formula and damage type are overriding each other. They need to submit together. Figure that one out :/
     - [ ] Odds and ends
       - [ ] Add ids wherever able
         - [ ] Activation Cost -> Quantity Consumed field, or (figure out how this is supposed to work from Accessibility)
