@@ -1,5 +1,5 @@
 <script lang="ts">
-    import type { FoundryDocument } from "src/types/document";
+  import type { FoundryDocument } from 'src/types/document';
 
   export let value: number | null = null;
   export let placeholder: string | null = null;
@@ -7,6 +7,7 @@
   export let document: FoundryDocument;
   export let tooltip: string | null = null;
   export let id: string | null = null;
+  export let isFormulaEditor: boolean = false;
 
   function saveChange(
     event: Event & {
@@ -26,4 +27,5 @@
   {placeholder}
   on:change={saveChange}
   data-tooltip={tooltip}
+  data-formula-editor={isFormulaEditor || null}
 />

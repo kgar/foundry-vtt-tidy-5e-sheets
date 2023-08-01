@@ -20,7 +20,7 @@
     - [x] HTML
     - [ ] SCSS
   - [ ] Details > `ItemAction` (shared)
-    - [ ] HTML
+    - [x] HTML
     - [ ] SCSS
   - [ ] Effects (shared)
     - [ ] HTML

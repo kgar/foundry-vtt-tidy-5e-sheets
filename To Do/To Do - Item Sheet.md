@@ -19,6 +19,9 @@
   - [ ] `tool.hbs`
   - [ ] `weapon.hbs`
 - [ ] Implement auto-resize
+- [ ] Look for all the hidden jquery behaviors that wire during activateListeners; task out the ones we should keep
+  - [ ] dnd5e
+  - [ ] Tidy 5e
 - [ ] Troubleshoot: I'm getting an error sometimes about a missing form tag. I may have to use the form tag template... or suppress the submit function
   - [ ] Put a debugger; tag on submit to see if I can prevent it from submitting.
 

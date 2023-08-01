@@ -4,7 +4,7 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import type { ItemSheetContext } from 'src/types/item';
-  import NumericInput from 'src/components/form/NumericInput.svelte';
+  import NumberInput from 'src/components/form/NumberInput.svelte';
   import Select from 'src/components/form/Select.svelte';
   import TextInput from 'src/components/form/TextInput.svelte';
   import SelectOptions from 'src/components/form/SelectOptions.svelte';
@@ -20,7 +20,7 @@
 >
   <div class="form-fields">
     {#if $store.system.activation.type}
-      <NumericInput
+      <NumberInput
         value={$store.system.activation.cost}
         tooltip="DND5E.ConsumeQuanity"
         field="system.activation.cost"
@@ -84,7 +84,7 @@
   >
     <div class="form-fields">
       {#if $store.system.hasScalarTarget}
-        <NumericInput
+        <NumberInput
           value={$store.system.target.value}
           placeholder="&mdash;"
           field="system.target.value"
@@ -128,7 +128,7 @@
       labelText={localize('DND5E.TargetWidth')}
     >
       <div class="form-fields">
-        <NumericInput
+        <NumberInput
           value={$store.system.target.width}
           placeholder="&mdash;"
           field="system.target.width"
@@ -141,7 +141,7 @@
   <ItemFormGroup cssClass="input-select" labelText={localize('DND5E.Range')}>
     <div class="form-fields">
       {#if $store.system.hasScalarRange}
-        <NumericInput
+        <NumberInput
           value={$store.system.range.value}
           placeholder={localize('DND5E.Normal')}
           tooltip="DND5E.RangeNormal"
@@ -149,7 +149,7 @@
           document={$store.item}
         />
         <span class="sep">/</span>
-        <NumericInput
+        <NumberInput
           value={$store.system.range.long}
           placeholder={localize('DND5E.Long')}
           tooltip="DND5E.RangeLong"
@@ -175,14 +175,13 @@
   <ItemFormGroup cssClass="input-select" labelText={localize('DND5E.Duration')}>
     <div class="form-fields">
       {#if $store.system.hasScalarDuration}
-        <!-- TODO: Figure out what data-formula-editor is doing and recreate -->
         <TextInput
           value={$store.source.duration.value}
           placeholder="&mdash;"
           tooltip="DND5E.DurationValue"
           field="source.duration.value"
           document={$store.item}
-          data-formula-editor
+          isFormulaEditor={true}
         />
       {/if}
       <Select
@@ -205,20 +204,19 @@
 
   <ItemFormGroup cssClass="uses-per" labelText={localize('DND5E.LimitedUses')}>
     <div class="form-fields">
-      <NumericInput
+      <NumberInput
         value={$store.system.uses.value}
         tooltip="DND5E.UsesAvailable"
         field="system.uses.value"
         document={$store.item}
       />
       <span class="sep">{localize('DND5E.of')}</span>
-      <!-- TODO: Figure out what data-formula-editor is doing and recreate -->
       <TextInput
         value={$store.source.uses.max}
         tooltip="DND5E.UsesMax"
         field="source.uses.max"
         document={$store.item}
-        data-formula-editor
+        isFormulaEditor={true}
       />
       <span class="sep">{localize('DND5E.per')}</span>
       <Select
@@ -240,13 +238,12 @@
       let:inputId
     >
       <div class="form-fields">
-        <!-- TODO: Figure out what data-formula-editor is doing and recreate -->
         <TextInput
           id={inputId}
           value={$store.system.uses.recovery}
           document={$store.item}
           field="system.uses.recovery"
-          data-formula-editor
+          isFormulaEditor={true}
         />
       </div>
     </ItemFormGroup>
@@ -258,7 +255,7 @@
   >
     <div class="form-fields">
       {#if $store.system.consume.type}
-        <NumericInput
+        <NumberInput
           value={$store.system.consume.amount}
           tooltip="DND5E.ConsumeQuanity"
           field="system.consume.amount"
