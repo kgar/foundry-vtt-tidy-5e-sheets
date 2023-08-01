@@ -348,7 +348,7 @@
   },
   "T5EK.Settings.CustomExhaustionIcon": {
     "name": "Custom exhaustion effect icon.",
-    "hint": "Set your custom exhaustion effect icon by providing an image url. Only available when Exhaustion Effect is set to \"tidy 5e\" (e. g.: modules/T5EK-sheet/images/exhaustion.svg)."
+    "hint": "Set your custom exhaustion effect icon by providing an image url. Only available when Exhaustion Effect is set to \"tidy 5e\" (e. g.: /modules/tidy5e-sheet-kgar/images/exhaustion.svg)."
   },
   "T5EK.Settings.CustomExhaustionEffect": {
     "name": "Custom CUB exhaustion effect name.",
