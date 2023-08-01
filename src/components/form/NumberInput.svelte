@@ -17,8 +17,10 @@
       currentTarget: EventTarget & HTMLInputElement;
     }
   ) {
+    const value = parseFloat(event.currentTarget.value);
+
     document.update({
-      [field]: event.currentTarget.value,
+      [field]: !isNaN(value) ? value : null,
     });
   }
 </script>

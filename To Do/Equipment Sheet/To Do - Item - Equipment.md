@@ -40,6 +40,8 @@
       - [ ] Delete
       - [ ] Activate
       - [ ] Deactivate
+      - [ ] Edit
+      - [ ] Middle click to edit
   - [ ] Details > `ItemAction` (shared)
     - [x] HTML
     - [x] SCSS
