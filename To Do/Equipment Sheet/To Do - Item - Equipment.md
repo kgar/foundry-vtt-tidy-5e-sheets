@@ -16,10 +16,10 @@
   - [ ] Details
     - [x] HTML
     - [ ] SCSS
-  - [ ] Details > `ItemPartActivation` (shared)
-    - [ ] HTML
+  - [ ] Details > `ItemActivation` (shared)
+    - [x] HTML
     - [ ] SCSS
-  - [ ] Details > `ItemPartAction` (shared)
+  - [ ] Details > `ItemAction` (shared)
     - [ ] HTML
     - [ ] SCSS
   - [ ] Effects (shared)

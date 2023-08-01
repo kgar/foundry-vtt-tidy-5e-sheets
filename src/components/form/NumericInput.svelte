@@ -1,5 +1,5 @@
 <script lang="ts">
-    import type { FoundryDocument } from "src/types/document";
+  import type { FoundryDocument } from 'src/types/document';
 
   export let value: number | null = null;
   export let step: string = 'any';

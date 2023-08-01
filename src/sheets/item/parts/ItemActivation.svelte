@@ -4,9 +4,10 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import type { ItemSheetContext } from 'src/types/item';
-  import NumericInput from 'src/components/sheet-inputs/NumericInput.svelte';
-  import Select from 'src/components/sheet-inputs/Select.svelte';
-  import TextInput from 'src/components/sheet-inputs/TextInput.svelte';
+  import NumericInput from 'src/components/form/NumericInput.svelte';
+  import Select from 'src/components/form/Select.svelte';
+  import TextInput from 'src/components/form/TextInput.svelte';
+  import SelectOptions from 'src/components/form/SelectOptions.svelte';
 
   let store = getContext<Readable<ItemSheetContext>>('store');
 
@@ -23,7 +24,7 @@
         value={$store.system.activation.cost}
         tooltip="DND5E.ConsumeQuanity"
         field="system.activation.cost"
-        placeholder="&emdash;"
+        placeholder="&#8212;"
         document={$store.item}
       />
     {/if}
@@ -34,9 +35,7 @@
       field="system.activation.type"
     >
       <option value="">{localize('DND5E.None')}</option>
-      {#each Object.entries($store.config.abilityActivationTypes) as [key, displayName]}
-        <option value={key}>{displayName}</option>
-      {/each}
+      <SelectOptions data={$store.config.abilityActivationTypes} />
     </Select>
   </div>
 </ItemFormGroup>
@@ -73,9 +72,7 @@
           field="system.cover"
         >
           <option value="" />
-          {#each Object.entries($store.config.cover) as [key, displayName]}
-            <option value={key}>{displayName}</option>
-          {/each}
+          <SelectOptions data={$store.config.cover} />
         </Select>
       </div>
     </ItemFormGroup>
@@ -102,9 +99,7 @@
           document={$store.item}
         >
           <option value="" />
-          {#each Object.entries($store.config.movementUnits) as [key, displayName]}
-            <option value={key}>{displayName}</option>
-          {/each}
+          <SelectOptions data={$store.config.movementUnits} />
         </Select>
       {/if}
       <Select
@@ -115,14 +110,13 @@
       >
         <option value="">{localize('DND5E.None')}</option>
         <optgroup label={localize('DND5E.TargetTypeIndividual')}>
-          {#each Object.entries($store.config.individualTargetTypes) as [key, displayName]}
-            <option value={key}>{displayName}</option>
-          {/each}
+          <SelectOptions data={$store.config.individualTargetTypes} />
         </optgroup>
         <optgroup label={localize('DND5E.TargetTypeArea')}>
-          {#each Object.entries($store.config.areaTargetTypes) as [key, type]}
-            <option value={key}>{type.label}</option>
-          {/each}
+          <SelectOptions
+            data={$store.config.areaTargetTypes}
+            labelProp="label"
+          />
         </optgroup>
       </Select>
     </div>
@@ -171,13 +165,9 @@
       >
         <option value="">{localize('DND5E.None')}</option>
         <optgroup label={localize('DND5E.RangeDistance')}>
-          {#each Object.entries($store.config.movementUnits) as [key, displayName]}
-            <option value={key}>{displayName}</option>
-          {/each}
+          <SelectOptions data={$store.config.movementUnits} />
         </optgroup>
-        {#each Object.entries($store.config.rangeTypes) as [key, displayName]}
-          <option value={key}>{displayName}</option>
-        {/each}
+        <SelectOptions data={$store.config.rangeTypes} />
       </Select>
     </div>
   </ItemFormGroup>
@@ -203,18 +193,12 @@
       >
         <option value="">{localize('DND5E.None')}</option>
         <optgroup label={localize('DND5E.DurationTime')}>
-          {#each Object.entries($store.config.scalarTimePeriods) as [key, displayName]}
-            <option value={key}>{displayName}</option>
-          {/each}
+          <SelectOptions data={$store.config.scalarTimePeriods} />
         </optgroup>
         <optgroup label={localize('DND5E.DurationPermanent')}>
-          {#each Object.entries($store.config.permanentTimePeriods) as [key, displayName]}
-            <option value={key}>{displayName}</option>
-          {/each}
+          <SelectOptions data={$store.config.permanentTimePeriods} />
         </optgroup>
-        {#each Object.entries($store.config.specialTimePeriods) as [key, displayName]}
-          <option value={key}>{displayName}</option>
-        {/each}
+        <SelectOptions data={$store.config.specialTimePeriods} />
       </Select>
     </div>
   </ItemFormGroup>
@@ -244,9 +228,7 @@
         field="system.uses.per"
       >
         <option value="" />
-        {#each Object.entries($store.config.limitedUsePeriods) as [key, displayName]}
-          <option value={key}>{displayName}</option>
-        {/each}
+        <SelectOptions data={$store.config.limitedUsePeriods} />
       </Select>
     </div>
   </ItemFormGroup>
@@ -289,9 +271,7 @@
           field="system.consume.target"
         >
           <option value="" />
-          {#each Object.entries($store.abilityConsumptionTargets) as [key, displayName]}
-            <option value={key}>{displayName}</option>
-          {/each}
+          <SelectOptions data={$store.abilityConsumptionTargets} />
         </Select>
       {/if}
       <Select
@@ -301,9 +281,7 @@
         field="system.consume.type"
       >
         <option value="">{localize('DND5E.None')}</option>
-        {#each Object.entries($store.config.abilityConsumptionTypes) as [key, displayName]}
-          <option value={key}>{displayName}</option>
-        {/each}
+        <SelectOptions data={$store.config.abilityConsumptionTypes} />
       </Select>
     </div>
   </ItemFormGroup>
