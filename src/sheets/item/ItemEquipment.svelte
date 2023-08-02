@@ -21,7 +21,7 @@
 
   const tabs: Tab[] = [
     {
-      id: 'description',
+      id: CONSTANTS.TAB_ITEM_DESCRIPTION_ID,
       displayName: 'DND5E.Description',
       content: {
         component: ItemDescription,
@@ -30,7 +30,7 @@
       },
     },
     {
-      id: 'details',
+      id: CONSTANTS.TAB_ITEM_DETAILS_ID,
       displayName: 'DND5E.Details',
       content: {
         component: ItemEquipmentDetails,

@@ -50,9 +50,9 @@
       - [x] Activate
       - [x] Deactivate
       - [x] Edit
-      - [ ] Middle click to edit
+      - [x] Middle click to edit
 - [x] Implement "Show Item Art" from reference script
-- [ ] Ensure the window resizes when the size of the contents changes
+- [x] Ensure the window resizes whenever details tab is selected and/or anything changes in details tab
 - [ ] Confirm that changes are saving appropriately
 - [ ] Confirm that outside changes affect this form appropriately
 - [ ] PopOut! for fun

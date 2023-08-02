@@ -34,4 +34,6 @@ export const CONSTANTS = {
   HOOKS_RENDERING_CHARACTER_TABS: 'renderTidy5eKgarCharacterTabs',
   HOOKS_RENDERING_ITEM_EQUIPMENT_TABS: 'renderTidy5eKgarItemEquipmentTabs',
   TAB_OPTION_CLASS: 'tab-option',
+  TAB_ITEM_DESCRIPTION_ID: 'description',
+  TAB_ITEM_DETAILS_ID: 'details',
 } as const;

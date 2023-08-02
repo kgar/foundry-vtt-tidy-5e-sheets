@@ -6,16 +6,25 @@ import ItemTypeNotFound from './ItemTypeNotFound.svelte';
 import ItemEquipment from './ItemEquipment.svelte';
 import type { SheetStats } from 'src/types/types';
 import { applyTitleToWindow } from 'src/utils/applications';
+import { debug } from 'src/utils/logging';
+import { isNil } from 'src/utils/data';
 
 export class Tidy5eKgarItemSheet extends dnd5e.applications.item.ItemSheet5e {
   store = writable<ItemSheetContext>();
   stats = writable<SheetStats>({
     lastSubmissionTime: null,
   });
-  selectedTabId = 'description';
+  selectedTabId = CONSTANTS.TAB_ITEM_DESCRIPTION_ID;
 
   constructor(item: Item5e, ...args: any[]) {
     super(item, ...args);
+
+    if (this.object.type === 'class') {
+      this.options.width = this.position.width = 600;
+      this.options.height = this.position.height = 680;
+    } else if (this.object.type === 'subclass') {
+      this.options.height = this.position.height = 540;
+    }
   }
 
   get template() {
@@ -58,18 +67,43 @@ export class Tidy5eKgarItemSheet extends dnd5e.applications.item.ItemSheet5e {
         });
         break;
     }
+
+    node
+      .querySelectorAll<HTMLElement>(`.${CONSTANTS.TAB_OPTION_CLASS}`)
+      .forEach((tab) => {
+        tab.addEventListener(
+          'click',
+          (event: MouseEvent & { currentTarget: HTMLElement }) => {
+            const tabId = event.currentTarget.dataset.tabId;
+            this.makeWindowAutoHeightForDetailsTab(tabId);
+            this.#cacheSelectedTabId();
+          }
+        );
+      });
+  }
+
+  private makeWindowAutoHeightForDetailsTab(tabId: string | undefined) {
+    if (tabId === CONSTANTS.TAB_ITEM_DETAILS_ID) {
+      this.setPosition({
+        height: 'auto',
+      });
+    }
   }
 
   // TODO: Extract this implementation somewhere. Or at least part of it.
   async render(force = false, options = {}) {
     if (force) {
       super.render(force, options);
+      this.makeWindowAutoHeightForDetailsTab(this.selectedTabId);
       return;
     }
 
     applyTitleToWindow(this.title, this.element.get(0));
     const context = await this.getContext();
     this.store.update(() => context);
+    setTimeout(() => {
+      this.makeWindowAutoHeightForDetailsTab(this.selectedTabId);
+    });
   }
 
   private async getContext(): Promise<ItemSheetContext> {
@@ -97,9 +131,37 @@ export class Tidy5eKgarItemSheet extends dnd5e.applications.item.ItemSheet5e {
 
   close(...args: any[]) {
     try {
-      console.log('Item sheet TODO: memoize the selected tab', this.element);
+      this._saveViewState();
+    } catch (e) {
+      debug(
+        `Unable to save view state for ${Tidy5eKgarItemSheet.name}. Ignoring.`
+      );
     } finally {
-      super.close(...args);
+      return super.close(...args);
+    }
+  }
+
+  protected _saveViewState() {
+    /*
+      TODO: Save any state that needs to be restored to this sheet instance for rehydration on refresh.
+      - Currently Selected Tab
+      - Scroll Top of all scrollable areas + the tab they represent
+      - Expanded entity IDs
+      - Focused input element
+
+      To do this save operation, use query selectors and data-attributes to target the appropriate things to save.
+      Can it be made general-purpose? Or should it be more bespoke?
+    */
+    this.#cacheSelectedTabId();
+  }
+
+  #cacheSelectedTabId() {
+    const selectedTabId = this.element
+      ?.get(0)
+      ?.querySelector(`.${CONSTANTS.TAB_OPTION_CLASS}.active`)?.dataset?.tabId;
+
+    if (!isNil(selectedTabId, '')) {
+      this.selectedTabId = selectedTabId;
     }
   }
 }
