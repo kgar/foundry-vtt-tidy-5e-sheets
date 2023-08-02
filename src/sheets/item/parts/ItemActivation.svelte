@@ -17,10 +17,13 @@
 <ItemFormGroup
   labelText={localize('DND5E.ItemActivationCost')}
   cssClass="input-select"
+  field="system.activation.cost"
+  let:inputId
 >
   <div class="form-fields">
     {#if $store.system.activation.type}
       <NumberInput
+        id={inputId}
         value={$store.system.activation.cost}
         tooltip="DND5E.ConsumeQuanity"
         field="system.activation.cost"
@@ -29,6 +32,7 @@
       />
     {/if}
     <Select
+      id="{$store.appId}-system-activation-type"
       value={$store.system.activation.type?.toString() ?? ''}
       tooltip={localize('DND5E.ItemActivationType')}
       document={$store.item}
@@ -81,10 +85,13 @@
   <ItemFormGroup
     cssClass="input-select-select"
     labelText={localize('DND5E.Target')}
+    field="system.target.type"
+    let:inputId
   >
     <div class="form-fields">
       {#if $store.system.hasScalarTarget}
         <NumberInput
+          id="{$store.appId}-system-target-value"
           value={$store.system.target.value}
           placeholder="&mdash;"
           field="system.target.value"
@@ -93,6 +100,7 @@
       {/if}
       {#if $store.system.hasAreaTarget}
         <Select
+          id="{$store.appId}-system-target-units"
           value={$store.system.target.units}
           tooltip="DND5E.TargetUnits"
           field="system.target.units"
@@ -103,6 +111,7 @@
         </Select>
       {/if}
       <Select
+        id={inputId}
         value={$store.system.target.type}
         tooltip="DND5E.TargetType"
         field="system.target.type"
@@ -126,9 +135,12 @@
     <ItemFormGroup
       cssClass="input-select-select"
       labelText={localize('DND5E.TargetWidth')}
+      field="system.target.width"
+      let:inputId
     >
       <div class="form-fields">
         <NumberInput
+          id={inputId}
           value={$store.system.target.width}
           placeholder="&mdash;"
           field="system.target.width"
@@ -138,10 +150,16 @@
     </ItemFormGroup>
   {/if}
 
-  <ItemFormGroup cssClass="input-select" labelText={localize('DND5E.Range')}>
+  <ItemFormGroup
+    cssClass="input-select"
+    labelText={localize('DND5E.Range')}
+    field="system.range.units"
+    let:inputId
+  >
     <div class="form-fields">
       {#if $store.system.hasScalarRange}
         <NumberInput
+          id="{$store.appId}-system-target-width"
           value={$store.system.range.value}
           placeholder={localize('DND5E.Normal')}
           tooltip="DND5E.RangeNormal"
@@ -150,6 +168,7 @@
         />
         <span class="sep">/</span>
         <NumberInput
+          id="{$store.appId}-system-range-long"
           value={$store.system.range.long}
           placeholder={localize('DND5E.Long')}
           tooltip="DND5E.RangeLong"
@@ -158,6 +177,7 @@
         />
       {/if}
       <Select
+        id={inputId}
         value={$store.system.range.units}
         tooltip="DND5E.RangeUnits"
         document={$store.item}
@@ -172,10 +192,16 @@
     </div>
   </ItemFormGroup>
 
-  <ItemFormGroup cssClass="input-select" labelText={localize('DND5E.Duration')}>
+  <ItemFormGroup
+    cssClass="input-select"
+    labelText={localize('DND5E.Duration')}
+    field="system.duration.units"
+    let:inputId
+  >
     <div class="form-fields">
       {#if $store.system.hasScalarDuration}
         <TextInput
+          id="{$store.appId}-source-duration-value"
           value={$store.source.duration.value}
           placeholder="&mdash;"
           tooltip="DND5E.DurationValue"
@@ -185,6 +211,7 @@
         />
       {/if}
       <Select
+        id={inputId}
         value={$store.system.duration.units}
         tooltip="DND5E.DurationType"
         document={$store.item}
@@ -202,9 +229,15 @@
     </div>
   </ItemFormGroup>
 
-  <ItemFormGroup cssClass="uses-per" labelText={localize('DND5E.LimitedUses')}>
+  <ItemFormGroup
+    cssClass="uses-per"
+    labelText={localize('DND5E.LimitedUses')}
+    field="system.uses.value"
+    let:inputId
+  >
     <div class="form-fields">
       <NumberInput
+        id={inputId}
         value={$store.system.uses.value}
         tooltip="DND5E.UsesAvailable"
         field="system.uses.value"
@@ -212,14 +245,16 @@
       />
       <span class="sep">{localize('DND5E.of')}</span>
       <TextInput
+        id="{$store.appId}-system-uses-max"
         value={$store.source.uses.max}
         tooltip="DND5E.UsesMax"
-        field="source.uses.max"
+        field="system.uses.max"
         document={$store.item}
         isFormulaEditor={true}
       />
       <span class="sep">{localize('DND5E.per')}</span>
       <Select
+        id="{$store.appId}-system.uses.per"
         value={$store.system.uses.per}
         tooltip="DND5E.UsesPeriod"
         document={$store.item}
@@ -252,16 +287,20 @@
   <ItemFormGroup
     cssClass="consumption"
     labelText={localize('DND5E.ConsumeTitle')}
+    field="system.consume.type"
+    let:inputId
   >
     <div class="form-fields">
       {#if $store.system.consume.type}
         <NumberInput
+          id="{$store.appId}-system-consume-amount"
           value={$store.system.consume.amount}
           tooltip="DND5E.ConsumeQuanity"
           field="system.consume.amount"
           document={$store.item}
         />
         <Select
+          id="{$store.appId}-system-consume-target"
           value={$store.system.consume.target}
           tooltip="DND5E.ConsumeTarget"
           document={$store.item}
@@ -272,6 +311,7 @@
         </Select>
       {/if}
       <Select
+        id={inputId}
         value={$store.system.consume.type}
         tooltip="DND5E.ConsumeType"
         document={$store.item}

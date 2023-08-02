@@ -18,21 +18,21 @@
   - [ ] Details
     - [x] HTML
     - [x] SCSS
-    - [ ] Behaviors
+    - [x] Behaviors
       - [x] Damage Formula Add
-      - [ ] Damage Formula Delete
-      - [ ] Formula and damage type are overriding each other. They need to submit together. Figure that one out :/
-    - [ ] Odds and ends
-      - [ ] Add ids wherever able
-        - [ ] Activation Cost -> Quantity Consumed field, or (figure out how this is supposed to work from Accessibility)
-        - [ ] Target -> dropdown
-        - [ ] Range -> dropdown
-        - [ ] Duration -> dropdown
-        - [ ] Limited Uses -> (figure out how this is supposed to work from Accessibility)
-        - [ ] Resource Consumption -> dropdown
-        - [ ] Action Type -> dropdown
-        - [ ] Saving Throw -> (figure out how this is supposed to work from Accessibility)
-      - [ ] When setting Critical Threshold, updating, and then deleting and updating, I get a validation error; the original Tidy form does not. Why?
+      - [x] Damage Formula Delete
+      - [x] Formula and damage type are overriding each other. They need to submit together. Figure that one out :/
+    - [x] Odds and ends
+      - [x] Add ids wherever able
+        - [x] Activation Cost -> Quantity Consumed field, or (figure out how this is supposed to work from Accessibility)
+        - [x] Target -> dropdown
+        - [x] Range -> dropdown
+        - [x] Duration -> dropdown
+        - [x] Limited Uses -> (figure out how this is supposed to work from Accessibility)
+        - [x] Resource Consumption -> dropdown
+        - [x] Action Type -> dropdown
+        - [x] Saving Throw -> (figure out how this is supposed to work from Accessibility)
+      - [x] When setting Critical Threshold, updating, and then deleting and updating, I get a validation error; the original Tidy form does not. Why?
   - [ ] Details > `ItemActivation` (shared)
     - [x] HTML
     - [x] SCSS
@@ -43,18 +43,19 @@
       - [ ] Deactivate
       - [ ] Edit
       - [ ] Middle click to edit
-  - [ ] Details > `ItemAction` (shared)
+  - [x] Details > `ItemAction` (shared)
     - [x] HTML
     - [x] SCSS
-    - [ ] Behaviors
-  - [ ] Effects (shared)
+    - [x] Behaviors
+  - [x] Effects (shared)
     - [x] HTML
     - [x] SCSS
-    - [ ] Behaviors
+    - [x] Behaviors
 - [x] Implement "Show Item Art" from reference script
 - [ ] Ensure the window resizes when the size of the contents changes
 - [ ] Confirm that changes are saving appropriately
 - [ ] Confirm that outside changes affect this form appropriately
+- [ ] PopOut! for fun
 
 
 ### Stretch

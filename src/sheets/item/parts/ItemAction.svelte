@@ -139,13 +139,14 @@
     {#each damageParts as [formula, damageType], i}
       <li class="damage-part flexrow">
         <input
+          id="{$store.appId}-system-damage-part-{i}-0"
           type="text"
           bind:value={formula}
           data-formula-editor
           on:change={() => saveDamageFormulae()}
         />
         <select
-          id="{$store.appId}-config-damageTypes"
+          id="{$store.appId}-system-damage-part-{i}-1"
           bind:value={damageType}
           data-formula-editor
           on:change={() => saveDamageFormulae()}
@@ -205,9 +206,12 @@
   <ItemFormGroup
     cssClass="input-select"
     labelText={localize('DND5E.ActionSave')}
+    field="system.save.ability"
+    let:inputId
   >
     <div class="form-fields">
       <Select
+        id={inputId}
         value={$store.system.save.ability}
         document={$store.item}
         field="system.save.ability"
@@ -220,6 +224,7 @@
       </Select>
       <span>{localize('DND5E.VsDC')}</span>
       <NumberInput
+        id="{$store.appId}-system-save-dc"
         step="any"
         document={$store.item}
         field="system.save.dc"
@@ -228,6 +233,7 @@
         disabled={!$store.isFlatDC}
       />
       <Select
+        id="{$store.appId}-system-save-scaling"
         document={$store.item}
         field="system.save.scaling"
         value={$store.system.save.scaling}
