@@ -15,7 +15,7 @@
     - [x] HTML
     - [x] SCSS
     - [x] Behaviors
-  - [ ] Details
+  - [x] Details
     - [x] HTML
     - [x] SCSS
     - [x] Behaviors
@@ -33,16 +33,10 @@
         - [x] Action Type -> dropdown
         - [x] Saving Throw -> (figure out how this is supposed to work from Accessibility)
       - [x] When setting Critical Threshold, updating, and then deleting and updating, I get a validation error; the original Tidy form does not. Why?
-  - [ ] Details > `ItemActivation` (shared)
+  - [x] Details > `ItemActivation` (shared)
     - [x] HTML
     - [x] SCSS
-    - [ ] Behaviors
-      - [ ] Add
-      - [ ] Delete
-      - [ ] Activate
-      - [ ] Deactivate
-      - [ ] Edit
-      - [ ] Middle click to edit
+    - [x] Behaviors
   - [x] Details > `ItemAction` (shared)
     - [x] HTML
     - [x] SCSS
@@ -50,7 +44,13 @@
   - [x] Effects (shared)
     - [x] HTML
     - [x] SCSS
-    - [x] Behaviors
+    - [ ] Behaviors
+      - [x] Add
+      - [x] Delete
+      - [x] Activate
+      - [x] Deactivate
+      - [x] Edit
+      - [ ] Middle click to edit
 - [x] Implement "Show Item Art" from reference script
 - [ ] Ensure the window resizes when the size of the contents changes
 - [ ] Confirm that changes are saving appropriately

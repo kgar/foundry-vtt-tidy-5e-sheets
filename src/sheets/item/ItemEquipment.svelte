@@ -20,7 +20,7 @@
   export let selectedTabId: string;
 
   // TODO: DEBUG REMOVE AFTER DETAILS ARE DONE
-  selectedTabId = 'details';
+  selectedTabId = 'effects';
 
   const tabs: Tab[] = [
     {

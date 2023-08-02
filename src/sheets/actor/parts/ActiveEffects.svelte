@@ -9,6 +9,26 @@
     getContext<Readable<ItemSheetContext | ActorSheetContext>>('store');
 
   const localize = FoundryAdapter.localize;
+
+  function onAddClicked(section: any) {
+    const unsupported = game.dnd5e.isV10 && $store.item.isOwned;
+    if (unsupported)
+      return ui.notifications.warn(
+        'Managing Active Effects within an Owned Item is not currently supported and will be added in a subsequent update.'
+      );
+
+    const owner = $store.item;
+
+    return owner.createEmbeddedDocuments('ActiveEffect', [
+      {
+        label: game.i18n.localize('DND5E.EffectNew'),
+        icon: 'icons/svg/aura.svg',
+        origin: owner.uuid,
+        'duration.rounds': section.type === 'temporary' ? 1 : undefined,
+        disabled: section.type === 'inactive',
+      },
+    ]);
+  }
 </script>
 
 <ol class="items-list effects-list">
@@ -18,12 +38,12 @@
         <h3 class="item-name effect-name flexrow">{localize(section.label)}</h3>
         <div class="effect-source">{localize('DND5E.Source')}</div>
         <div class="effect-source">{localize('DND5E.Duration')}</div>
-        <div class="item-controls effect-controls flexrow">
+        <div class="item-controls active-effect-controls flexrow">
           {#if $store.editable}
             <a
-              class="effect-control"
-              data-action="create"
+              class="active-effect-control"
               data-tooltip="DND5E.EffectCreate"
+              on:click={(event) => onAddClicked(section)}
             >
               <i class="fas fa-plus" />
               {localize('DND5E.Add')}
@@ -49,14 +69,14 @@
             </div>
             <div class="effect-source">{effect.sourceName}</div>
             <div class="effect-duration">{effect.duration.label}</div>
-            <div class="item-controls effect-controls flexrow">
+            <div class="item-controls active-effect-controls flexrow">
               {#if $store.editable}
                 <a
-                  class="effect-control"
-                  data-action="toggle"
+                  class="active-effect-control"
                   data-tooltip={effect.disabled
                     ? 'DND5E.EffectEnable'
                     : 'DND5E.EffectDisable'}
+                  on:click={() => effect.update({ disabled: !effect.disabled })}
                 >
                   <i
                     class="fas"
@@ -65,16 +85,16 @@
                   />
                 </a>
                 <a
-                  class="effect-control"
-                  data-action="edit"
+                  class="active-effect-control"
                   data-tooltip="DND5E.EffectEdit"
+                  on:click={() => effect.sheet.render(true)}
                 >
                   <i class="fas fa-edit" />
                 </a>
                 <a
-                  class="effect-control"
-                  data-action="delete"
+                  class="active-effect-control"
                   data-tooltip="DND5E.EffectDelete"
+                  on:click={() => effect.delete()}
                 >
                   <i class="fas fa-trash" />
                 </a>
