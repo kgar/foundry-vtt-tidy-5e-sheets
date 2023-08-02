@@ -25,6 +25,14 @@
     damage.parts.splice(index, 1);
     return $store.item.update({ 'system.damage.parts': damage.parts });
   }
+
+  $: damageParts = [...$store.system.damage.parts];
+
+  function saveDamageFormulae() {
+    $store.item.update({
+      'system.damage.parts': damageParts,
+    });
+  }
 </script>
 
 <ItemFormGroup
@@ -128,22 +136,19 @@
     >
   </h4>
   <ol class="damage-parts form-group">
-    <!-- TODO: Figure out a better way to deal with persisting an array of arrays -->
-    {#each $store.system.damage.parts as [formula, damageType], i}
+    {#each damageParts as [formula, damageType], i}
       <li class="damage-part flexrow">
         <input
           type="text"
-          value={formula}
+          bind:value={formula}
           data-formula-editor
-          name="system.damage.parts.{i}.0"
-          on:change={() => $store.item.sheet.submit()}
+          on:change={() => saveDamageFormulae()}
         />
         <select
           id="{$store.appId}-config-damageTypes"
-          name="system.damage.parts.{i}.1"
-          value={damageType}
+          bind:value={damageType}
           data-formula-editor
-          on:change={() => $store.item.sheet.submit()}
+          on:change={() => saveDamageFormulae()}
         >
           <option value="">{localize('DND5E.None')}</option>
           <optgroup label={localize('DND5E.Damage')}>
