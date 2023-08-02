@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { ItemSheetContext } from 'src/types/item';
   import type { ActorSheetContext } from 'src/types/types';
@@ -28,6 +29,12 @@
         disabled: section.type === 'inactive',
       },
     ]);
+  }
+
+  function handleMiddleClickToEdit(event: MouseEvent, effect: any) {
+    if (event.button === CONSTANTS.MOUSE_BUTTON_AUXILIARY) {
+      effect.sheet.render(true);
+    }
   }
 </script>
 
@@ -62,7 +69,11 @@
 
       <ol class="item-list">
         {#each section.effects as effect}
-          <li class="item effect flexrow" data-effect-id={effect.id}>
+          <li
+            class="item effect flexrow"
+            data-effect-id={effect.id}
+            on:mousedown={(event) => handleMiddleClickToEdit(event, effect)}
+          >
             <div class="item-name effect-name flexrow">
               <img class="item-image" src={effect.icon} />
               <h4>{effect.label}</h4>
