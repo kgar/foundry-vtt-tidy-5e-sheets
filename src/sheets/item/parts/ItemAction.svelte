@@ -21,7 +21,7 @@
   }
 
   function deleteDamageFormula(index: number) {
-    const damage = foundry.utils.deepClone(this.item.system.damage);
+    const damage = foundry.utils.deepClone($store.item.system.damage);
     damage.parts.splice(index, 1);
     return $store.item.update({ 'system.damage.parts': damage.parts });
   }
