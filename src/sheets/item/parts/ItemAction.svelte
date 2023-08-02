@@ -128,19 +128,22 @@
     >
   </h4>
   <ol class="damage-parts form-group">
+    <!-- TODO: Figure out a better way to deal with persisting an array of arrays -->
     {#each $store.system.damage.parts as [formula, damageType], i}
       <li class="damage-part flexrow">
-        <TextInput
+        <input
+          type="text"
           value={formula}
-          isFormulaEditor={true}
-          document={$store.item}
-          field="system.damage.parts.{i}.0"
+          data-formula-editor
+          name="system.damage.parts.{i}.0"
+          on:change={() => $store.item.sheet.submit()}
         />
-        <Select
+        <select
           id="{$store.appId}-config-damageTypes"
-          document={$store.item}
-          field="system.damage.parts.{i}.1"
+          name="system.damage.parts.{i}.1"
           value={damageType}
+          data-formula-editor
+          on:change={() => $store.item.sheet.submit()}
         >
           <option value="">{localize('DND5E.None')}</option>
           <optgroup label={localize('DND5E.Damage')}>
@@ -149,7 +152,7 @@
           <optgroup label={localize('DND5E.Healing')}>
             <SelectOptions data={$store.config.healingTypes} />
           </optgroup>
-        </Select>
+        </select>
         <a
           class="damage-formula-control delete-damage"
           on:click={() => deleteDamageFormula(i)}><i class="fas fa-minus" /></a
