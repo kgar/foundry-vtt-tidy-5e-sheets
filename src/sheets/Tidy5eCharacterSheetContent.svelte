@@ -132,7 +132,6 @@
         displayName: 'T5EK.Journal',
         content: {
           component: JournalTab,
-          props: { context: $store },
         },
       });
     }

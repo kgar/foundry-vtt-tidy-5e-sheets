@@ -44,7 +44,7 @@
       <li class="proficiency-row skill" class:proficient={skillRef.skill.value}>
         <a
           class="configure-proficiency"
-          on:click|stopPropagation|preventDefault={() =>
+          on:click={() =>
             new dnd5e.applications.actor.ProficiencyConfig($store.actor, {
               property: 'skills',
               key: skillRef.key,
@@ -55,14 +55,14 @@
         </a>
         <a
           class="skill-proficiency-toggle"
-          on:click|stopPropagation|preventDefault={(event) =>
+          on:click={(event) =>
             FoundryAdapter.cycleProficiency(
               $store.actor,
               skillRef.key,
               skillRef.skill?.value,
               'skills'
             )}
-          on:contextmenu|stopPropagation|preventDefault={(event) =>
+          on:contextmenu={(event) =>
             FoundryAdapter.cycleProficiency(
               $store.actor,
               skillRef.key,
@@ -75,7 +75,7 @@
         <h4
           role="button"
           class="tidy5e-skill-name rollable"
-          on:click|stopPropagation={(event) =>
+          on:click={(event) =>
             $store.actor.rollSkill(skillRef.key, { event })}
         >
           {skillRef.skill.label}

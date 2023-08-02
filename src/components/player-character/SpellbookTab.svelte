@@ -102,15 +102,15 @@
     )}
     {#if (searchCriteria.trim() === '' && allowEdit) || filteredSpells.length > 0}
       {#if layoutMode === 'list'}
-        <SpellbookList spells={filteredSpells} {section} context={$store} />
+        <SpellbookList spells={filteredSpells} {section} />
       {:else}
-        <SpellbookGrid spells={filteredSpells} {section} $store={$store} />
+        <SpellbookGrid spells={filteredSpells} {section} />
       {/if}
     {/if}
   {/each}
 </ListContainer>
 
-<SpellbookFooter {abilities} $store={$store} />
+<SpellbookFooter {abilities} />
 
 <style lang="scss">
   .spellbook-class-filter {

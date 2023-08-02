@@ -249,6 +249,8 @@ Evaluate module integration and think about better (API-centric) ways to support
 - [ ] Put tab IDs in CONSTANTS and propagate across the system.
 - [ ] Spellbook Grid - add charges to the bottom left of the grid panel
 - [ ] The XP bar's percentages seem way off. Try to get that fixed.
+- [ ] PopOut! Compatibility - ensure that events are not being stopped from popagation and than defaults are prevented only when necessary.
+  - [ ] ...
 
 ## Not Just Tidy 5e settings... DND5e settings as well 😱
 
@@ -341,3 +343,30 @@ Gotcha. I'll copy this idea down and add it to the list for when I get nearer to
 SaltyJ — 07/17/2023 1:59 PM
 insert "Why does the sheet blind me now" questions.
 Danke!
+
+### Compatibility with popOut!
+
+https://discord.com/channels/732325252788387980/1116078321067892796/1136092315337887836
+
+Fallayn — Today at 7:25 PM
+Hey! Reading this all it's fantastic to see this being worked on. I also want to chip in some $ if that helps in any way, just let me know where. This is the single most critical 5E module for me.
+
+One concern I want to mention re: Svelte - one pain point I have seen with other (system) sheets that use more custom JS tech is that it often ends up incompatible with Popout for one reason or another. Would be great if the new Tidy5E would still work with the Popout module.
+
+kgar — Today at 8:30 PM
+I will add this to the list.
+
+To help me with knowing what to look for, what kind of breakages occur with popOut! Is it functionality, styles, and/or other?
+
+Fallayn — Today at 8:33 PM
+
+Failure modes I've seen:
+
+1. Popout does not work at all, i.e., when pressing the PopOut! button in a actor sheet's title bar, either nothing happens or the opened popout window is obviously broken (styling etc)
+2. Sheet modifications either do not work, or only work in the UI, but are not persisted (so changing HP, adding an item or something either does not work, or "works" but if you close the popout window and check the actor in Foundry, the changes were not saved)
+3. Rolls do not work (either not at all, dice simply aren't rolled, or the roll popup windows does not show in the first place)
+4. When closing the popout or "popping it back in", data goes awry or rolls made while popped out are repeated (this is a weird one I've only seen in one system)
+
+So basically either popping out is broken, popping in is broken, or saving data is broken. Besides that, if/once those actually work, it seems to behave like the normal sheet window, I haven't seen much PopOut specific styling issues or such.
+
+> I have done some tests so far. It appears that some functionality works, but not all. Things like ability checks pop a dialog in the main window and are not moved to the popped out window. I will need to determine what things are missing in order to make this work properly.
