@@ -83,7 +83,7 @@
           document={$store.item}
           field="system.attackBonus"
           value={$store.system.attackBonus}
-          isFormulaEditor={true}
+          dataset={{ formulaEditor: true }}
         />
       </div>
     </ItemFormGroup>
@@ -178,7 +178,7 @@
           id={inputId}
           value={$store.system.damage.versatile}
           placeholder={localize('DND5E.Formula')}
-          isFormulaEditor={true}
+          dataset={{ formulaEditor: true }}
           document={$store.item}
           field="system.damage.versatile"
         />
@@ -198,7 +198,7 @@
         field="system.formula"
         value={$store.system.formula}
         placeholder={localize('DND5E.Formula')}
-        isFormulaEditor={true}
+        dataset={{ formulaEditor: true }}
       />
     </div>
   </ItemFormGroup>

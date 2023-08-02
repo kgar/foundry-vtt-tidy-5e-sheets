@@ -642,8 +642,8 @@
   }
 
   input[type='checkbox']:checked {
-    background: var(--t5e-secondary-color);
-    background-image: var(--t5e-check-checked);
+    background: var(--t5e-checkbox-checked);
+    background-image:  var(--t5e-check-checked);
     background-size: 60%;
     background-repeat: no-repeat;
     background-position: center;

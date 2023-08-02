@@ -1,5 +1,6 @@
 <script lang="ts">
   import type { FoundryDocument } from 'src/types/document';
+  import { buildDataset } from 'src/utils/data';
 
   export let value: unknown;
   export let tooltip: string | null = null;
@@ -7,14 +8,19 @@
   export let document: FoundryDocument;
   export let dtype: string | null = null;
   export let id: string | null = null;
+  export let dataset: Record<string, unknown> | null = null;
+
+  $: datasetAttributes = buildDataset(dataset);
 
   function saveChange(
     event: Event & {
       currentTarget: EventTarget & HTMLSelectElement;
     }
   ) {
+    const targetValue = event.currentTarget.value;
+
     document.update({
-      [field]: event.currentTarget.value,
+      [field]: targetValue !== '' ? targetValue : null,
     });
   }
 </script>
@@ -25,6 +31,7 @@
   {value}
   data-tooltip={tooltip}
   on:change={document && saveChange}
+  {...datasetAttributes}
 >
   <slot />
 </select>

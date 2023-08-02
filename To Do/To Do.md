@@ -2,6 +2,15 @@
 
 ## Top of Mind
 
+### Side Quest
+
+- [ ] Effects tab - create prototype of grid components with collapsibility that can be remembered for the player for the given sheet
+  - [ ] Lay out the effects tab using the grid components approach
+  - [ ] Make it data-driven
+  - [ ] Publish a hook before mount and on mount
+  - [ ] Add TODO for API call to register effect column
+- [ ] Price - input + select: make a composite component that unifies these two input into a single, cohesive piece of UI ♥
+
 ### Module Compat Trials
 
 - [ ] Create a Module Compatibility Test Module for foundry. Store in a repo for reuse on multiple machines.

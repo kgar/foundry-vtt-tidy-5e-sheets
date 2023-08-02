@@ -53,19 +53,13 @@
       - [x] Middle click to edit
 - [x] Implement "Show Item Art" from reference script
 - [x] Ensure the window resizes whenever details tab is selected and/or anything changes in details tab
-- [ ] Confirm that changes are saving appropriately
-- [ ] Confirm that outside changes affect this form appropriately
-- [ ] PopOut! for fun
+- [x] Confirm that changes are saving appropriately
+  - [x] Description
+  - [x] Details
+  - [x] Effects
+- [x] ~~Confirm that outside changes affect this form appropriately~~ Not something I should even be trying to accomplish. That's built into the form applications.
+- [x] PopOut! for fun
 
-
-### Stretch
-
-- [ ] Effects tab - create prototype of grid components with collapsibility that can be remembered for the player for the given sheet
-  - [ ] Lay out the effects tab using the grid components approach
-  - [ ] Make it data-driven
-  - [ ] Publish a hook before mount and on mount
-  - [ ] Add TODO for API call to register effect column
-- [ ] Price - input + select: make a composite component that unifies these two input into a single, cohesive piece of UI ♥
 
 ### equipment.hbs
 

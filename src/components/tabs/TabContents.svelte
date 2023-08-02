@@ -10,6 +10,7 @@
   <section
     class="tab {tab.id} {cssClass} {tab.content.cssClass ?? ''}"
     class:active={selectedTabId === tab.id}
+    data-tab-contents-for={tab.id}
   >
     <svelte:component this={tab.content.component} {...tab.content.props} />
   </section>

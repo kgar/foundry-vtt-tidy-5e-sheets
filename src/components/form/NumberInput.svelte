@@ -1,5 +1,6 @@
 <script lang="ts">
   import type { FoundryDocument } from 'src/types/document';
+    import { buildDataset } from 'src/utils/data';
 
   export let value: number | null = null;
   export let step: string = 'any';
@@ -11,6 +12,9 @@
   export let max: string | number | null | undefined = null;
   export let id: string | null = null;
   export let disabled: boolean | null = null;
+  export let dataset: Record<string, unknown> | null = null;
+
+  $: datasetAttributes = buildDataset(dataset);
 
   function saveChange(
     event: Event & {
@@ -36,4 +40,5 @@
   on:change={saveChange}
   data-tooltip={tooltip}
   {disabled}
+  {...datasetAttributes}
 />

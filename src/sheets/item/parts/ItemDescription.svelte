@@ -1,4 +1,7 @@
 <script lang="ts">
+  import NumberInput from 'src/components/form/NumberInput.svelte';
+    import Select from 'src/components/form/Select.svelte';
+    import SelectOptions from 'src/components/form/SelectOptions.svelte';
   import RerenderAfterFormSubmission from 'src/components/shared/RerenderAfterFormSubmission.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import SheetEditor from 'src/sheets/SheetEditor.svelte';
@@ -22,15 +25,12 @@
         <label for="{$store.appId}-{$store.id}-quantity"
           >{localize('DND5E.Quantity')}</label
         >
-        <input
+        <NumberInput
           id="{$store.appId}-{$store.id}-quantity"
-          type="number"
           value={$store.system.quantity}
+          field="system.quantity"
+          document={$store.item}
           step="1"
-          on:change={(event) =>
-            $store.item.update({
-              'system.quantity': event.currentTarget.value,
-            })}
         />
       </div>
 
@@ -44,13 +44,12 @@
         <label for="{$store.appId}-{$store.id}-weight"
           >{localize('DND5E.Weight')}</label
         >
-        <input
+        <NumberInput
           id="{$store.appId}-{$store.id}-weight"
-          type="number"
           value={$store.system.weight}
           step="any"
-          on:change={(event) =>
-            $store.item.update({ 'system.weight': event.currentTarget.value })}
+          field="system.weight"
+          document={$store.item}
         />
       </div>
 
@@ -64,23 +63,17 @@
         <label for="{$store.appId}-{$store.id}-price"
           >{localize('DND5E.Price')}</label
         >
-        <input
+        <NumberInput
           id="{$store.appId}-{$store.id}-price"
-          type="number"
           value={$store.system.price.value}
           step="any"
-          on:change={(event) =>
-            $store.item.update({
-              'system.price.value': event.currentTarget.value,
-            })}
+          field="system.price.value"
+          document={$store.item}
         />
-        <select name="system.price.denomination">
-          {#each Object.values($store.config.currencies) as currency}
-            <option value={currency.abbreviation}
-              >{currency.abbreviation}</option
-            >
-          {/each}
-        </select>
+        <Select value={$store.system.price.denomination} field="system.price.denomination" document={$store.item}>
+          <SelectOptions data={$store.config.currencies} valueProp="abbreviation" labelProp="abbreviation" />
+          
+        </Select>
       </div>
     {/if}
 
@@ -102,9 +95,9 @@
           </li>
         {/if}
 
-        {#each $store.labels.derivedDamage as label}
+        {#each $store.labels.derivedDamage ?? [] as label}
           <li>
-            {$store.label}
+            {label}
           </li>
         {/each}
       </ol>

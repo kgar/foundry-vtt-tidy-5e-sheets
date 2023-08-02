@@ -70,13 +70,12 @@
         <Select
           id={inputId}
           dtype="Number"
-          value={$store.system.cover}
+          value={$store.system.cover?.toString()}
           tooltip={localize('DND5E.ItemActivationType')}
           document={$store.item}
           field="system.cover"
         >
-          <option value="" />
-          <SelectOptions data={$store.config.cover} />
+          <SelectOptions data={$store.config.cover} blank="" />
         </Select>
       </div>
     </ItemFormGroup>
@@ -163,7 +162,7 @@
           value={$store.system.range.value}
           placeholder={localize('DND5E.Normal')}
           tooltip="DND5E.RangeNormal"
-          field="system.target.width"
+          field="system.range.value"
           document={$store.item}
         />
         <span class="sep">/</span>
@@ -207,7 +206,7 @@
           tooltip="DND5E.DurationValue"
           field="source.duration.value"
           document={$store.item}
-          isFormulaEditor={true}
+          dataset={{ formulaEditor: true }}
         />
       {/if}
       <Select
@@ -250,7 +249,7 @@
         tooltip="DND5E.UsesMax"
         field="system.uses.max"
         document={$store.item}
-        isFormulaEditor={true}
+        dataset={{ formulaEditor: true }}
       />
       <span class="sep">{localize('DND5E.per')}</span>
       <Select
@@ -278,7 +277,7 @@
           value={$store.system.uses.recovery}
           document={$store.item}
           field="system.uses.recovery"
-          isFormulaEditor={true}
+          dataset={{ formulaEditor: true }}
         />
       </div>
     </ItemFormGroup>

@@ -84,9 +84,24 @@ export class Tidy5eKgarItemSheet extends dnd5e.applications.item.ItemSheet5e {
 
   private makeWindowAutoHeightForDetailsTab(tabId: string | undefined) {
     if (tabId === CONSTANTS.TAB_ITEM_DETAILS_ID) {
+      const scrollTop = this.element
+        ?.get(0)
+        ?.querySelector(
+          `[data-tab-contents-for="${CONSTANTS.TAB_ITEM_DETAILS_ID}"]`
+        )?.scrollTop;
       this.setPosition({
         height: 'auto',
       });
+      if (scrollTop) {
+        const adjustedApplication = this.element
+          ?.get(0)
+          ?.querySelector(
+            `[data-tab-contents-for="${CONSTANTS.TAB_ITEM_DETAILS_ID}"]`
+          );
+        if (adjustedApplication) {
+          adjustedApplication.scrollTop = scrollTop;
+        }
+      }
     }
   }
 
