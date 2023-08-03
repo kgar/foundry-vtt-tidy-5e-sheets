@@ -16,6 +16,7 @@ export class Tidy5eKgarItemSheet extends dnd5e.applications.item.ItemSheet5e {
     lastSubmissionTime: null,
   });
   selectedTabId: string;
+  advancementConfigurationMode = false;
 
   constructor(item: Item5e, ...args: any[]) {
     super(item, ...args);
@@ -124,11 +125,15 @@ export class Tidy5eKgarItemSheet extends dnd5e.applications.item.ItemSheet5e {
     }
 
     applyTitleToWindow(this.title, this.element.get(0));
-    const context = await this.getContext();
-    this.store.update(() => context);
+    await this.updateContext();
     setTimeout(() => {
       this.makeWindowAutoHeightForDetailsTab(this.selectedTabId);
     });
+  }
+
+  private async updateContext() {
+    const context = await this.getContext();
+    this.store.update(() => context);
   }
 
   private async getContext(): Promise<ItemSheetContext> {
@@ -137,6 +142,7 @@ export class Tidy5eKgarItemSheet extends dnd5e.applications.item.ItemSheet5e {
       appId: this.appId,
       activateFoundryJQueryListeners: (node: HTMLElement) =>
         super.activateListeners($(node)),
+      toggleAdvancementLock: this.toggleAdvancementLock.bind(this),
     };
   }
 
@@ -188,5 +194,10 @@ export class Tidy5eKgarItemSheet extends dnd5e.applications.item.ItemSheet5e {
     if (!isNil(selectedTabId, '')) {
       this.selectedTabId = selectedTabId;
     }
+  }
+
+  async toggleAdvancementLock() {
+    this.advancementConfigurationMode = !this.advancementConfigurationMode;
+    await this.updateContext();
   }
 }

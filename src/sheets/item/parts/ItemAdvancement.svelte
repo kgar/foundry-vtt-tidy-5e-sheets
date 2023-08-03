@@ -27,6 +27,10 @@
     }
     return item.deleteAdvancement(advancementItemId);
   }
+
+  function toggleAdvancementLock(item: Item5e) {
+    $store.toggleAdvancementLock();
+  }
 </script>
 
 <ol class="items-list">
@@ -36,8 +40,7 @@
         {#if $store.isEmbedded}
           {#if $store.advancementEditable}
             <a
-              class="item-control"
-              data-action="toggle-configuration"
+              on:click={() => toggleAdvancementLock($store.item)}
               data-tooltip="DND5E.AdvancementConfigurationActionDisable"
             >
               <i class="fas fa-lock-open" />
@@ -45,8 +48,7 @@
             </a>
           {:else}
             <a
-              class="item-control"
-              data-action="toggle-configuration"
+              on:click={() => toggleAdvancementLock($store.item)}
               data-tooltip="DND5E.AdvancementConfigurationActionEnable"
             >
               <i class="fas fa-lock" />
