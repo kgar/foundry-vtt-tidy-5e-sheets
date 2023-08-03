@@ -1,6 +1,8 @@
-- [ ] Look into sharing background description tab. It looks identical to class tab's description.
-- [ ] Create ItemClass.svelte
-- [ ] Wire up to Item Sheet
+- [x] Look into sharing background description tab. It looks identical to class tab's description.
+- [x] Create ItemClass.svelte
+- [x] Wire up to Item Sheet
+- [ ] Create ItemClassDetails component
+- [ ] Ensure description is either shared or created
 - [ ] Scaffold page with header, tabs, content
 - [ ] Implement header
 - [ ] Implement description tab

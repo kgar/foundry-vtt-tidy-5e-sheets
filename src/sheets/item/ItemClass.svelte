@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { Item5e, ItemSheetContext } from 'src/types/item';
+  import type { ItemSheetContext } from 'src/types/item';
   import type { Tab } from 'src/types/types';
   import Tabs from 'src/components/tabs/Tabs.svelte';
   import type { Readable } from 'svelte/store';
@@ -11,6 +11,7 @@
   import ItemTypeNotFound from './ItemTypeNotFound.svelte';
   import ItemAdvancement from './parts/ItemAdvancement.svelte';
   import TextInput from 'src/components/form/TextInput.svelte';
+  import ItemDescription from './parts/ItemDescription.svelte';
 
   let store = getContext<Readable<ItemSheetContext>>('store');
 
@@ -25,16 +26,16 @@
       id: CONSTANTS.TAB_ITEM_DESCRIPTION_ID,
       displayName: 'DND5E.Description',
       content: {
-        component: ItemTypeNotFound, // todo
+        component: ItemDescription,
         props: {},
-        cssClass: 'flexrow',
+        cssClass: 'flexcol',
       },
     },
     {
       id: CONSTANTS.TAB_ITEM_DETAILS_ID,
       displayName: 'DND5E.Details',
       content: {
-        component: ItemTypeNotFound, // todo
+        component: ItemTypeNotFound,
         props: {},
         cssClass: 'detail-tab-contents',
       },

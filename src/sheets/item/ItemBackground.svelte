@@ -3,7 +3,7 @@
   import Tabs from 'src/components/tabs/Tabs.svelte';
   import { CONSTANTS } from 'src/constants';
   import type { Tab } from 'src/types/types';
-  import ItemBackgroundDescription from './parts/ItemBackgroundDescription.svelte';
+  import ItemDescription from './parts/ItemDescription.svelte';
   import ItemAdvancement from './parts/ItemAdvancement.svelte';
   import ItemProfilePicture from './parts/ItemProfilePicture.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
@@ -21,7 +21,7 @@
       id: CONSTANTS.TAB_ITEM_DESCRIPTION_ID,
       displayName: 'DND5E.Description',
       content: {
-        component: ItemBackgroundDescription,
+        component: ItemDescription,
         cssClass: 'flexcol',
       },
     },

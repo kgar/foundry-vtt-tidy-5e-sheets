@@ -1,21 +1,16 @@
 <script lang="ts">
   import NumberInput from 'src/components/form/NumberInput.svelte';
-    import Select from 'src/components/form/Select.svelte';
-    import SelectOptions from 'src/components/form/SelectOptions.svelte';
-  import RerenderAfterFormSubmission from 'src/components/shared/RerenderAfterFormSubmission.svelte';
+  import Select from 'src/components/form/Select.svelte';
+  import SelectOptions from 'src/components/form/SelectOptions.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import SheetEditor from 'src/sheets/SheetEditor.svelte';
   import type { ItemSheetContext } from 'src/types/item';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
+  import ItemDescription from './ItemDescription.svelte';
 
   let store = getContext<Readable<ItemSheetContext>>('store');
 
   const localize = FoundryAdapter.localize;
-
-  function activateProseMirrorListeners(node: HTMLElement) {
-    $store.activateFoundryJQueryListeners(node);
-  }
 </script>
 
 <div class="item-description flexrow align-items-stretch small-gap">
@@ -70,9 +65,16 @@
           field="system.price.value"
           document={$store.item}
         />
-        <Select value={$store.system.price.denomination} field="system.price.denomination" document={$store.item}>
-          <SelectOptions data={$store.config.currencies} valueProp="abbreviation" labelProp="abbreviation" />
-          
+        <Select
+          value={$store.system.price.denomination}
+          field="system.price.denomination"
+          document={$store.item}
+        >
+          <SelectOptions
+            data={$store.config.currencies}
+            valueProp="abbreviation"
+            labelProp="abbreviation"
+          />
         </Select>
       </div>
     {/if}
@@ -117,16 +119,7 @@
 
   <div aria-hidden="true" role="presentation" class="vertical-line-separator" />
 
-  <RerenderAfterFormSubmission>
-    <article class="editor-container" use:activateProseMirrorListeners>
-      <h2 class="details-headline">{localize('TIDY5E.ItemDetailsHeadline')}</h2>
-      <SheetEditor
-        content={$store.descriptionHTML}
-        editable={$store.editable}
-        target="system.description.value"
-      />
-    </article>
-  </RerenderAfterFormSubmission>
+  <ItemDescription />
 </div>
 
 <style lang="scss">
