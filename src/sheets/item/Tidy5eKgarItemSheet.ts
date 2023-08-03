@@ -7,6 +7,7 @@ import ItemEquipment from './ItemEquipment.svelte';
 import ItemBackpack from './ItemBackpack.svelte';
 import ItemBackground from './ItemBackground.svelte';
 import ItemClass from './ItemClass.svelte';
+import ItemConsumable from './ItemConsumable.svelte';
 import type { SheetStats } from 'src/types/types';
 import { applyTitleToWindow } from 'src/utils/applications';
 import { debug } from 'src/utils/logging';
@@ -81,6 +82,15 @@ export class Tidy5eKgarItemSheet extends dnd5e.applications.item.ItemSheet5e {
         break;
       case CONSTANTS.ITEM_TYPE_CLASS:
         new ItemClass({
+          target: node,
+          props: {
+            selectedTabId: this.selectedTabId ?? 'description',
+          },
+          context: stores,
+        });
+        break;
+      case CONSTANTS.ITEM_TYPE_CONSUMABLE:
+        new ItemConsumable({
           target: node,
           props: {
             selectedTabId: this.selectedTabId ?? 'description',

@@ -4,7 +4,7 @@
   import Tabs from 'src/components/tabs/Tabs.svelte';
   import type { Readable } from 'svelte/store';
   import ItemDescriptionWithSidebar from './parts/ItemDescriptionWithSidebar.svelte';
-  import ItemEquipmentDetails from './parts/ItemEquipmentDetails.svelte';
+  import ItemConsumableDetails from './parts/ItemConsumableDetails.svelte';
   import ActiveEffects from '../actor/parts/ActiveEffects.svelte';
   import TabContents from 'src/components/tabs/TabContents.svelte';
   import { CONSTANTS } from 'src/constants';
@@ -34,7 +34,7 @@
       id: CONSTANTS.TAB_ITEM_DETAILS_ID,
       displayName: 'DND5E.Details',
       content: {
-        component: ItemEquipmentDetails,
+        component: ItemConsumableDetails,
         props: {},
         cssClass: 'detail-tab-contents',
       },
@@ -50,7 +50,7 @@
     },
   ];
 
-  Hooks.call(CONSTANTS.HOOKS_RENDERING_ITEM_EQUIPMENT_TABS, {
+  Hooks.call(CONSTANTS.HOOKS_RENDERING_ITEM_CONSUMABLE_TABS, {
     tabs,
     context: $store,
   });
@@ -59,56 +59,56 @@
 </script>
 
 <header class="sheet-header flexrow gap">
-  <ItemProfilePicture />
-
-  <div class="header-details flexrow">
-    <h1 class="charname">
-      <input
-        type="text"
-        value={$store.item.name}
-        placeholder={localize('DND5E.ItemName')}
-        on:change={(event) =>
-          $store.item.update({ name: event.currentTarget.value })}
-      />
-    </h1>
-
-    <div class="item-subtitle">
-      <h4 class="item-type">{$store.item.type}</h4>
-      <span class="item-status">{$store.itemStatus}</span>
-    </div>
-
-    <ul class="summary flexrow">
-      <li>{$store.config.equipmentTypes[$store.system.armor.type]}</li>
-      <li>
-        <select
-          on:change={(event) =>
-            $store.item.update({
-              'system.rarity': event.currentTarget.value,
-            })}
-          value={$store.system.rarity}
-        >
-          {#each Object.entries($store.config.itemRarity) as [key, displayName]}
-            <option value={key}>
-              {displayName}
-            </option>
-          {/each}
-        </select>
-      </li>
-      <li>
+    <ItemProfilePicture />
+  
+    <div class="header-details flexrow">
+      <h1 class="charname">
         <input
           type="text"
-          value={$store.system.source}
-          placeholder={localize('DND5E.Source')}
+          value={$store.item.name}
+          placeholder={localize('DND5E.ItemName')}
           on:change={(event) =>
-            $store.item.update({
-              'system.source': event.currentTarget.value,
-            })}
+            $store.item.update({ name: event.currentTarget.value })}
         />
-      </li>
-    </ul>
-  </div>
-</header>
-<Tabs bind:selectedTabId {tabs} />
+      </h1>
+  
+      <div class="item-subtitle">
+        <h4 class="item-type">{$store.item.type}</h4>
+        <span class="item-status">{$store.itemStatus}</span>
+      </div>
+  
+      <ul class="summary flexrow">
+        <li>{$store.config.consumableTypes[$store.system.consumableType]}</li>
+        <li>
+          <select
+            on:change={(event) =>
+              $store.item.update({
+                'system.rarity': event.currentTarget.value,
+              })}
+            value={$store.system.rarity}
+          >
+            {#each Object.entries($store.config.itemRarity) as [key, displayName]}
+              <option value={key}>
+                {displayName}
+              </option>
+            {/each}
+          </select>
+        </li>
+        <li>
+          <input
+            type="text"
+            value={$store.system.source}
+            placeholder={localize('DND5E.Source')}
+            on:change={(event) =>
+              $store.item.update({
+                'system.source': event.currentTarget.value,
+              })}
+          />
+        </li>
+      </ul>
+    </div>
+  </header>
+  <Tabs bind:selectedTabId {tabs} />
 <div class="sheet-body">
   <TabContents {tabs} {selectedTabId} />
 </div>
