@@ -30,7 +30,7 @@
       displayName: 'DND5E.AdvancementTitle',
       content: {
         component: ItemAdvancement,
-        cssClass: 'details',
+        cssClass: 'detail-tab-contents items-list-container',
       },
     },
   ];
