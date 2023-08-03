@@ -17,6 +17,6 @@
       - [x] Edit button
       - [x] Delete button
     - [ ] Embedded
-      - [ ] toggle-configuration
+      - [x] toggle-configuration
       - [ ] modify-choices - you've already banked the feature and made a choice; now swap them
 - [ ] 
