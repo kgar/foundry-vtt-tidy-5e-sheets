@@ -20,7 +20,7 @@
       displayName: 'DND5E.Description',
       content: {
         component: ItemBackgroundDescription,
-        cssClass: 'flexrow',
+        cssClass: 'flexcol',
       },
     },
     {

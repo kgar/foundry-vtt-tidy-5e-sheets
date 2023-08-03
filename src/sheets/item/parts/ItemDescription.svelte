@@ -121,7 +121,7 @@
     <article class="editor-container" use:activateProseMirrorListeners>
       <h2 class="details-headline">{localize('TIDY5E.ItemDetailsHeadline')}</h2>
       <SheetEditor
-        content={$store.system.description.value}
+        content={$store.descriptionHTML}
         editable={$store.editable}
         target="system.description.value"
       />

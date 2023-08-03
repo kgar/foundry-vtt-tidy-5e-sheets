@@ -4,12 +4,36 @@
 
 ### Side Quest
 
+- [ ] Text Editors not all enriching HTML
+  - [ ] See [examples](#enriching-html) from original dnd5e system.
+  - [ ] Recreate this but have it supported on all text editors via optional enrichment prop (think of decent name)
 - [ ] Effects tab - create prototype of grid components with collapsibility that can be remembered for the player for the given sheet
   - [ ] Lay out the effects tab using the grid components approach
   - [ ] Make it data-driven
   - [ ] Publish a hook before mount and on mount
   - [ ] Add TODO for API call to register effect column
 - [ ] Price - input + select: make a composite component that unifies these two input into a single, cohesive piece of UI ♥
+
+#### Enriching HTML
+
+````js
+// For item descriptions
+context.descriptionHTML = await TextEditor.enrichHTML(item.system.description.value, {
+  secrets: item.isOwner,
+  async: true,
+  relativeTo: this.item,
+  rollData: context.rollData
+});
+
+// For base sheet biography
+context.biographyHTML = await TextEditor.enrichHTML(context.system.details.biography.value, {
+  secrets: this.actor.isOwner,
+  rollData: context.rollData,
+  async: true,
+  relativeTo: this.actor
+});
+
+    ```
 
 ### Module Compat Trials
 
@@ -302,7 +326,7 @@ In `activateListeners()` of the actor sheet, this function is called which relie
       }
     }
   }
-```
+````
 
 ## Special Requests
 
