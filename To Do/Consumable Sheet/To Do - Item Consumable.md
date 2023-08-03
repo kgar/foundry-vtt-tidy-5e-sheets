@@ -1,0 +1,9 @@
+- [ ] Create ItemConsumable component
+- [ ] Wire ItemConsumable into Item Sheet
+- [ ] Create ItemConsumableDetails component
+- [ ] Scaffold ItemConsumable header, tabs, tab contents
+- [ ] Share ItemDescriptionWithSidebar to description tab
+- [ ] Implement ItemConsumableDetails tab
+- [ ] Share ActiveEffects tab
+- [ ] Test Standalone
+- [ ] Test Embedded

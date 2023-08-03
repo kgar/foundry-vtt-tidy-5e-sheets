@@ -15,5 +15,5 @@
   - [x] HTML
   - [x] SCSS
   - [x] Behaviors
-- [ ] Test in standalone
-- [ ] Test embedded
+- [x] Test in standalone
+- [x] Test embedded

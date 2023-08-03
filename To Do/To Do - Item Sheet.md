@@ -1,14 +1,14 @@
 ## To Do
 
-- [ ] Create a subclass of Application with the empty article template
-- [ ] Create components for each known shared tab
-  - [ ] {{> "dnd5e.item-advancement"}}
+- [x] ~~Create a subclass of Application with the empty article template~~ nah, it expects a form, and a form should be there for module devs who want to use form elements with `name`.
+- [x] Create components for each known shared tab
+  - [x] {{> "dnd5e.item-advancement"}}
   - [x] {{> "dnd5e.item-description"}}
   - [x] {{> "dnd5e.active-effects"}}
 - [ ] Create components for each item type, and scaffold their known tabs
   - [x] `background.hbs`
   - [x] `backpack.hbs`
-  - [ ] `class.hbs`
+  - [x] `class.hbs`
   - [ ] `consumable.hbs`
   - [x] `equipment.hbs`
   - [ ] `feat.hbs`
