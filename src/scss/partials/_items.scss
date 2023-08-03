@@ -43,9 +43,9 @@
     box-shadow: 0 0 0 0.0625rem var(--t5e-primary-accent) inset;
   }
 
-  //   input[type='checkbox'] {
-  //     margin: 0.125rem;
-  //   }
+    input[type='checkbox'] {
+      margin: 0.125rem;
+    }
 
   .sheet-header {
     flex: 0 0 5rem;
@@ -53,7 +53,6 @@
     background: var(--t5e-header-background);
     align-items: flex-start;
 
-    // TODO: Determine if these styles are actually used. Delete otherwise
     .item-image {
       flex: 0 0 5rem;
       width: 5rem;
@@ -491,9 +490,6 @@
     }
   }
 
-  // TODO: Be on the lookout for advancement tab; ensure it gets this alternate class which is not locked to tab ID
-  // &.effects,
-  // &.advancement {
   .tab.items-list-container {
     .items-list {
       flex: 1;
