@@ -6,33 +6,44 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import type { ItemSheetContext } from 'src/types/item';
+  import ItemFormGroup from '../form/ItemFormGroup.svelte';
+  import TextInput from 'src/components/form/TextInput.svelte';
 
   let store = getContext<Readable<ItemSheetContext>>('store');
 
   const localize = FoundryAdapter.localize;
 </script>
 
-<div class="form-group">
-  <label>{localize('DND5E.Identifier')}</label>
+<ItemFormGroup
+  labelText={localize('DND5E.Identifier')}
+  field="system.identifier"
+  let:inputId
+>
   <div class="form-fields">
-    <input
-      type="text"
-      name="system.identifier"
+    <TextInput
+      id={inputId}
+      document={$store.item}
+      field="system.identifier"
       value={$store.system.identifier}
       placeholder={$store.item.identifier}
     />
+    <input type="text" />
   </div>
   <p class="hint">
     {@html localize('DND5E.ClassIdentifierHint', {
       identifier: $store.item.identifier,
     })}
   </p>
-</div>
+</ItemFormGroup>
 
-<div class="form-group">
-  <label>{localize('DND5E.HitDice')}</label>
+<ItemFormGroup
+  labelText={localize('DND5E.HitDice')}
+  field="system.hitDice"
+  let:inputId
+>
   <div class="form-fields">
     <Select
+      id={inputId}
       document={$store.item}
       field="system.hitDice"
       value={$store.system.hitDice}
@@ -42,19 +53,23 @@
       {/each}
     </Select>
   </div>
-</div>
+</ItemFormGroup>
 
-<div class="form-group">
-  <label>{localize('DND5E.HitDiceUsed')}</label>
+<ItemFormGroup
+  labelText={localize('DND5E.HitDiceUsed')}
+  field="system.hitDiceUsed"
+  let:inputId
+>
   <div class="form-fields">
     <NumberInput
+      id={inputId}
       document={$store.item}
       field="system.hitDiceUsed"
       value={$store.system.hitDiceUsed}
       placeholder="0"
     />
   </div>
-</div>
+</ItemFormGroup>
 
 <h3 class="form-header">{localize('DND5E.Spellcasting')}</h3>
 <ItemSpellcasting />
@@ -83,20 +98,24 @@
   </div>
 </div>
 
-<div class="form-group">
-  <label>{localize('DND5E.ClassSkillsNumber')}</label>
+<ItemFormGroup
+  labelText={localize('DND5E.ClassSkillsNumber')}
+  field="system.skills.number"
+  let:inputId
+>
   <div class="form-fields">
     <NumberInput
+      id={inputId}
       document={$store.item}
       field="system.skills.number"
       placeholder="0"
+      value={$store.system.skills.number}
     />
   </div>
-</div>
+</ItemFormGroup>
 
-<div class="form-group">
-  <label>
-    {localize('DND5E.ClassSkillsEligible')}
+<ItemFormGroup labelText={localize('DND5E.ClassSkillsEligible')}>
+  <svelte:fragment slot="inside-after-label">
     {#if $store.editable}
       <a
         class="trait-selector class-skills"
@@ -106,7 +125,8 @@
         <i class="fas fa-edit" />
       </a>
     {/if}
-  </label>
+  </svelte:fragment>
+
   <div class="form-fields">
     <ul class="traits-list">
       {#each $store.system.skills.choices as choice}
@@ -115,11 +135,10 @@
       {/each}
     </ul>
   </div>
-</div>
+</ItemFormGroup>
 
-<div class="form-group">
-  <label>
-    {localize('DND5E.ClassSkillsChosen')}
+<ItemFormGroup labelText={localize('DND5E.ClassSkillsChosen')}>
+  <svelte:fragment slot="inside-after-label">
     {#if $store.editable}
       <a
         class="trait-selector class-skills"
@@ -129,7 +148,8 @@
         <i class="fas fa-edit" />
       </a>
     {/if}
-  </label>
+  </svelte:fragment>
+
   <div class="form-fields">
     <ul class="traits-list">
       {#each $store.system.skills.value as skillValue}
@@ -138,4 +158,4 @@
       {/each}
     </ul>
   </div>
-</div>
+</ItemFormGroup>

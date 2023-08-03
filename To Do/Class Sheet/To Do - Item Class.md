@@ -7,7 +7,13 @@
 - [x] Implement header
 - [x] Implement description tab
 - [ ] Implement details tab
+  - [ ] HTML
+  - [x] SCSS
+  - [ ] Behaviors
 - [x] Implement advancement tab
 - [ ] Implement item spellcasting part
+  - [x] HTML
+  - [x] SCSS
+  - [x] Behaviors
 - [ ] Test in standalone
 - [ ] Test embedded

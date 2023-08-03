@@ -14,6 +14,6 @@
 </script>
 
 <div class="form-group {cssClass}">
-  <label for={inputId}>{labelText}</label>
+  <label for={inputId}>{labelText} <slot name="inside-after-label" /></label>
   <slot {inputId} />
 </div>
