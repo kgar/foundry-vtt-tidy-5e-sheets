@@ -1,0 +1,10 @@
+- [ ] Create ItemBackpack.svelte
+- [ ] Wire up to item sheet
+- [ ] Create ItemBackpackDetails.svelte item part component
+- [ ] Scaffold the main sheet with header, tabs, and content area
+- [ ] Implement header
+- [ ] Implement description (it uses item-description)
+- [ ] Implement details component
+- [ ] Test standalone item
+- [ ] Test embedded bag of holding
+- [ ] Test potion bandolier?

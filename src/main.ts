@@ -165,7 +165,6 @@ async function debugCompareItemSheets(
 
   tidySheet.render(true);
   delay(500).then(() => {
-    document.querySelector('.tidy5e.item .tabs [data-tab=details]')?.click();
     tidySheet.setPosition({
       left: 69,
       top: 140,

@@ -4,6 +4,7 @@ import type { Item5e, ItemSheetContext } from 'src/types/item';
 import { writable } from 'svelte/store';
 import ItemTypeNotFound from './ItemTypeNotFound.svelte';
 import ItemEquipment from './ItemEquipment.svelte';
+import ItemBackpack from './ItemBackpack.svelte';
 import ItemBackground from './ItemBackground.svelte';
 import type { SheetStats } from 'src/types/types';
 import { applyTitleToWindow } from 'src/utils/applications';
@@ -61,6 +62,15 @@ export class Tidy5eKgarItemSheet extends dnd5e.applications.item.ItemSheet5e {
         break;
       case CONSTANTS.ITEM_TYPE_BACKGROUND:
         new ItemBackground({
+          target: node,
+          props: {
+            selectedTabId: this.selectedTabId ?? 'description',
+          },
+          context: stores,
+        });
+        break;
+      case CONSTANTS.ITEM_TYPE_BACKPACK:
+        new ItemBackpack({
           target: node,
           props: {
             selectedTabId: this.selectedTabId ?? 'description',

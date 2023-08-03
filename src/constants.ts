@@ -2,6 +2,7 @@ export const CONSTANTS = {
   MODULE_ID: 'tidy5e-sheet-kgar',
   ITEM_TYPE_EQUIPMENT: 'equipment',
   ITEM_TYPE_BACKGROUND: 'background',
+  ITEM_TYPE_BACKPACK: 'backpack',
   /**
    * Main button pressed, usually the left button or the un-initialized state
    */
@@ -34,6 +35,8 @@ export const CONSTANTS = {
   },
   HOOKS_RENDERING_CHARACTER_TABS: 'renderTidy5eKgarCharacterTabs',
   HOOKS_RENDERING_ITEM_EQUIPMENT_TABS: 'renderTidy5eKgarItemEquipmentTabs',
+  HOOKS_RENDERING_ITEM_BACKGROUND_TABS: 'renderTidy5eKgarItemBackgroundTabs',
+  HOOKS_RENDERING_ITEM_BACKPACK_TABS: 'renderTidy5eKgarItemBackpackTabs',
   TAB_OPTION_CLASS: 'tab-option',
   TAB_ITEM_DESCRIPTION_ID: 'description',
   TAB_ITEM_DETAILS_ID: 'details',

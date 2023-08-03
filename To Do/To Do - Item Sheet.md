@@ -6,7 +6,7 @@
   - [x] {{> "dnd5e.item-description"}}
   - [x] {{> "dnd5e.active-effects"}}
 - [ ] Create components for each item type, and scaffold their known tabs
-  - [ ] `background.hbs`
+  - [x] `background.hbs`
   - [ ] `backpack.hbs`
   - [ ] `class.hbs`
   - [ ] `consumable.hbs`
