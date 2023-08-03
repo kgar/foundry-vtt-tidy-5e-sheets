@@ -1,13 +1,13 @@
 - [x] Create component `ItemBackground.svelte`
 - [x] Wire into item sheet
-- [ ] Scaffold the main view with tabs
-  - [ ] Create Item Background Description component and wire in
-  - [ ] Create Item Advancement shared component and wire in
-- [ ] Make the Item Equipment profile img shared and share it with backgrounds
-- [ ] Implement description tab
-  - [ ] HTML
-  - [ ] SCSS
-  - [ ] Behaviors 
+- [x] Scaffold the main view with tabs
+  - [x] Create Item Background Description component and wire in
+  - [x] Create Item Advancement shared component and wire in
+- [x] Make the Item Equipment profile img shared and share it with backgrounds
+- [x] Implement description tab
+  - [x] HTML
+  - [x] SCSS
+  - [x] Behaviors 
 - [ ] Implement advancement tab
   - [ ] HTML
   - [ ] SCSS
