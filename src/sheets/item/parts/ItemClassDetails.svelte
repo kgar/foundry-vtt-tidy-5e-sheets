@@ -12,6 +12,49 @@
   let store = getContext<Readable<ItemSheetContext>>('store');
 
   const localize = FoundryAdapter.localize;
+
+  function selectTraits(
+    target: string,
+    title: string,
+    trait: 'saves' | 'skills.choices' | 'skills'
+  ) {
+    const options: Record<string, unknown> = {
+      name: target,
+      title,
+      choices: [],
+      allowCustom: false,
+      suppressWarning: true,
+    };
+    switch (trait) {
+      case 'saves':
+        options.choices = CONFIG.DND5E.abilities;
+        options.valueKey = null;
+        options.labelKey = 'label';
+        break;
+      case 'skills.choices':
+        options.choices = CONFIG.DND5E.skills;
+        options.valueKey = null;
+        options.labelKey = 'label';
+        break;
+      case 'skills':
+        const skills = $store.item.system.skills;
+        const choices = skills.choices?.length
+          ? skills.choices
+          : Object.keys(CONFIG.DND5E.skills);
+        options.choices = Object.fromEntries(
+          Object.entries(CONFIG.DND5E.skills).filter(([s]) =>
+            choices.includes(s)
+          )
+        );
+        options.maximum = skills.number;
+        options.labelKey = 'label';
+        break;
+    }
+
+    new game.dnd5e.applications.TraitSelector($store.item, options).render(
+      true
+    );
+  }
 </script>
 
 <ItemFormGroup
@@ -75,19 +118,18 @@
 <ItemSpellcasting />
 
 <h3 class="form-header">{localize('DND5E.Proficiency')}</h3>
-<div class="form-group">
-  <label>
-    {localize('DND5E.ClassSaves')}
+<ItemFormGroup labelText={localize('DND5E.ClassSaves')}>
+  <svelte:fragment slot="inside-after-label">
     {#if $store.editable}
       <a
         class="trait-selector class-saves"
-        data-target="system.saves"
-        data-options="saves"
+        on:click={() =>
+          selectTraits('system.saves', localize('DND5E.ClassSaves'), 'saves')}
       >
         <i class="fas fa-edit" />
       </a>
     {/if}
-  </label>
+  </svelte:fragment>
   <div class="form-fields">
     <ul class="traits-list">
       {#each $store.system.saves as save}
@@ -96,7 +138,7 @@
       {/each}
     </ul>
   </div>
-</div>
+</ItemFormGroup>
 
 <ItemFormGroup
   labelText={localize('DND5E.ClassSkillsNumber')}
@@ -119,8 +161,12 @@
     {#if $store.editable}
       <a
         class="trait-selector class-skills"
-        data-target="system.skills.choices"
-        data-options="skills.choices"
+        on:click={() =>
+          selectTraits(
+            'system.skills.choices',
+            localize('DND5E.ClassSkillsEligible'),
+            'skills.choices'
+          )}
       >
         <i class="fas fa-edit" />
       </a>
@@ -142,8 +188,12 @@
     {#if $store.editable}
       <a
         class="trait-selector class-skills"
-        data-target="system.skills"
-        data-options="skills"
+        on:click={() =>
+          selectTraits(
+            'system.skills',
+            localize('DND5E.ClassSkillsChosen'),
+            'skills'
+          )}
       >
         <i class="fas fa-edit" />
       </a>

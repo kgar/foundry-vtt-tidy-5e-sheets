@@ -6,12 +6,12 @@
 - [x] Scaffold page with header, tabs, content
 - [x] Implement header
 - [x] Implement description tab
-- [ ] Implement details tab
-  - [ ] HTML
+- [x] Implement details tab
+  - [x] HTML
   - [x] SCSS
-  - [ ] Behaviors
+  - [x] Behaviors
 - [x] Implement advancement tab
-- [ ] Implement item spellcasting part
+- [x] Implement item spellcasting part
   - [x] HTML
   - [x] SCSS
   - [x] Behaviors
