@@ -101,9 +101,6 @@ export class Tidy5eKgarItemSheet extends dnd5e.applications.item.ItemSheet5e {
       default:
         new ItemTypeNotFound({
           target: node,
-          props: {
-            store: this.store,
-          },
           context: stores,
         });
         break;

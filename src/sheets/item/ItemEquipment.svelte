@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { Item5e, ItemSheetContext } from 'src/types/item';
+  import type { ItemSheetContext } from 'src/types/item';
   import type { Tab } from 'src/types/types';
   import Tabs from 'src/components/tabs/Tabs.svelte';
   import type { Readable } from 'svelte/store';
@@ -11,6 +11,9 @@
   import { getContext } from 'svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import ItemProfilePicture from './parts/ItemProfilePicture.svelte';
+  import TextInput from 'src/components/form/TextInput.svelte';
+  import Select from 'src/components/form/Select.svelte';
+  import SelectOptions from 'src/components/form/SelectOptions.svelte';
 
   let store = getContext<Readable<ItemSheetContext>>('store');
 
@@ -63,12 +66,11 @@
 
   <div class="header-details flexrow">
     <h1 class="charname">
-      <input
-        type="text"
+      <TextInput
+        document={$store.item}
+        field="item.name"
         value={$store.item.name}
         placeholder={localize('DND5E.ItemName')}
-        on:change={(event) =>
-          $store.item.update({ name: event.currentTarget.value })}
       />
     </h1>
 
@@ -80,29 +82,20 @@
     <ul class="summary flexrow">
       <li>{$store.config.equipmentTypes[$store.system.armor.type]}</li>
       <li>
-        <select
-          on:change={(event) =>
-            $store.item.update({
-              'system.rarity': event.currentTarget.value,
-            })}
+        <Select
+          document={$store.item}
+          field="system.rarity"
           value={$store.system.rarity}
         >
-          {#each Object.entries($store.config.itemRarity) as [key, displayName]}
-            <option value={key}>
-              {displayName}
-            </option>
-          {/each}
-        </select>
+          <SelectOptions data={$store.config.itemRarity} />
+        </Select>
       </li>
       <li>
-        <input
-          type="text"
+        <TextInput
+          document={$store.item}
+          field="system.source"
           value={$store.system.source}
           placeholder={localize('DND5E.Source')}
-          on:change={(event) =>
-            $store.item.update({
-              'system.source': event.currentTarget.value,
-            })}
         />
       </li>
     </ul>

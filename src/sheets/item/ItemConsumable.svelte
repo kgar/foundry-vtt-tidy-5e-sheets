@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { Item5e, ItemSheetContext } from 'src/types/item';
+  import type { ItemSheetContext } from 'src/types/item';
   import type { Tab } from 'src/types/types';
   import Tabs from 'src/components/tabs/Tabs.svelte';
   import type { Readable } from 'svelte/store';
@@ -11,6 +11,9 @@
   import { getContext } from 'svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import ItemProfilePicture from './parts/ItemProfilePicture.svelte';
+  import Select from 'src/components/form/Select.svelte';
+  import SelectOptions from 'src/components/form/SelectOptions.svelte';
+  import TextInput from 'src/components/form/TextInput.svelte';
 
   let store = getContext<Readable<ItemSheetContext>>('store');
 
@@ -59,56 +62,46 @@
 </script>
 
 <header class="sheet-header flexrow gap">
-    <ItemProfilePicture />
-  
-    <div class="header-details flexrow">
-      <h1 class="charname">
-        <input
-          type="text"
-          value={$store.item.name}
-          placeholder={localize('DND5E.ItemName')}
-          on:change={(event) =>
-            $store.item.update({ name: event.currentTarget.value })}
-        />
-      </h1>
-  
-      <div class="item-subtitle">
-        <h4 class="item-type">{$store.item.type}</h4>
-        <span class="item-status">{$store.itemStatus}</span>
-      </div>
-  
-      <ul class="summary flexrow">
-        <li>{$store.config.consumableTypes[$store.system.consumableType]}</li>
-        <li>
-          <select
-            on:change={(event) =>
-              $store.item.update({
-                'system.rarity': event.currentTarget.value,
-              })}
-            value={$store.system.rarity}
-          >
-            {#each Object.entries($store.config.itemRarity) as [key, displayName]}
-              <option value={key}>
-                {displayName}
-              </option>
-            {/each}
-          </select>
-        </li>
-        <li>
-          <input
-            type="text"
-            value={$store.system.source}
-            placeholder={localize('DND5E.Source')}
-            on:change={(event) =>
-              $store.item.update({
-                'system.source': event.currentTarget.value,
-              })}
-          />
-        </li>
-      </ul>
+  <ItemProfilePicture />
+
+  <div class="header-details flexrow">
+    <h1 class="charname">
+      <TextInput
+        document={$store.item}
+        field="item.name"
+        value={$store.item.name}
+        placeholder={localize('DND5E.ItemName')}
+      />
+    </h1>
+
+    <div class="item-subtitle">
+      <h4 class="item-type">{$store.item.type}</h4>
+      <span class="item-status">{$store.itemStatus}</span>
     </div>
-  </header>
-  <Tabs bind:selectedTabId {tabs} />
+
+    <ul class="summary flexrow">
+      <li>{$store.config.consumableTypes[$store.system.consumableType]}</li>
+      <li>
+        <Select
+          document={$store.item}
+          field="system.rarity"
+          value={$store.system.rarity}
+        >
+          <SelectOptions data={$store.config.itemRarity} />
+        </Select>
+      </li>
+      <li>
+        <TextInput
+          document={$store.item}
+          field="system.source"
+          value={$store.system.source}
+          placeholder={localize('DND5E.Source')}
+        />
+      </li>
+    </ul>
+  </div>
+</header>
+<Tabs bind:selectedTabId {tabs} />
 <div class="sheet-body">
   <TabContents {tabs} {selectedTabId} />
 </div>
