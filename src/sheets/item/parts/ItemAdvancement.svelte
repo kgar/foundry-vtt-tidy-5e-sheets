@@ -1,12 +1,32 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { ItemSheetContext } from 'src/types/item';
+  import type { Item5e, ItemSheetContext } from 'src/types/item';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
 
   let store = getContext<Readable<ItemSheetContext>>('store');
 
   const localize = FoundryAdapter.localize;
+
+  function editAdvancement(advancementItemId: string, item: Item5e) {
+    const advancement = item.advancement.byId[advancementItemId];
+
+    return new advancement.constructor.metadata.apps.config(advancement).render(
+      true
+    );
+  }
+
+  function deleteAdvancement(advancementItemId: string, item: Item5e) {
+    if (item.isEmbedded && !game.settings.get('dnd5e', 'disableAdvancements')) {
+      let manager = AdvancementManager.forDeletedAdvancement(
+        item.actor,
+        item.id,
+        advancementItemId
+      );
+      if (manager.steps.length) return manager.render(true);
+    }
+    return item.deleteAdvancement(advancementItemId);
+  }
 </script>
 
 <ol class="items-list">
@@ -38,9 +58,11 @@
       {#if $store.advancementEditable}
         <div class="item-controls flexrow add-button">
           <a
-            class="item-control"
-            data-action="add"
             data-tooltip="DND5E.AdvancementControlCreate"
+            on:click={() =>
+              game.dnd5e.applications.advancement.AdvancementSelection.createDialog(
+                $store.item
+              )}
           >
             <i class="fas fa-plus" />
           </a>
@@ -86,20 +108,20 @@
       {/if}
     </li>
     <ol class="item-list">
-      {#each data.items as item}
-        <li class="advancement-item item flexrow" data-id={item.id}>
+      {#each data.items as advancementItem}
+        <li class="advancement-item item flexrow" data-id={advancementItem.id}>
           <div class="item-name flexrow">
             <div
               class="item-image"
-              style="background-image: url('{item.icon}')"
+              style="background-image: url('{advancementItem.icon}')"
             />
-            <h4>{item.title}</h4>
+            <h4>{@html advancementItem.title}</h4>
           </div>
           {#if $store.advancementEditable || !$store.isEmbedded}
             <div class="flexrow">
-              {#if item.classRestriction === 'primary'}
+              {#if advancementItem.classRestriction === 'primary'}
                 {localize('DND5E.AdvancementClassRestrictionPrimary')}
-              {:else if item.classRestriction === 'secondary'}
+              {:else if advancementItem.classRestriction === 'secondary'}
                 {localize('DND5E.AdvancementClassRestrictionSecondary')}
               {/if}
             </div>
@@ -107,24 +129,24 @@
           {#if $store.advancementEditable}
             <div class="item-controls flexrow">
               <a
-                class="item-control"
-                data-action="edit"
                 data-tooltip="DND5E.AdvancementControlEdit"
+                on:click={() =>
+                  editAdvancement(advancementItem.id, $store.item)}
               >
                 <i class="fas fa-edit" />
               </a>
               <a
-                class="item-control"
-                data-action="delete"
                 data-tooltip="DND5E.AdvancementControlDelete"
+                on:click={() =>
+                  deleteAdvancement(advancementItem.id, $store.item)}
               >
                 <i class="fas fa-trash" />
               </a>
             </div>
           {/if}
-          {#if item.summary}
+          {#if advancementItem.summary}
             <div class="item-summary">
-              {@html item.summary}
+              {@html advancementItem.summary}
             </div>
           {/if}
         </li>

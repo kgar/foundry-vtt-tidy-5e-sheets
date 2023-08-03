@@ -9,7 +9,14 @@
   - [x] SCSS
   - [x] Behaviors 
 - [ ] Implement advancement tab
-  - [ ] HTML
-  - [ ] SCSS
+  - [x] HTML
+  - [x] SCSS
   - [ ] Behaviors
+    - [x] Standalone
+      - [x] Add button
+      - [x] Edit button
+      - [x] Delete button
+    - [ ] Embedded
+      - [ ] toggle-configuration
+      - [ ] modify-choices - you've already banked the feature and made a choice; now swap them
 - [ ] 
