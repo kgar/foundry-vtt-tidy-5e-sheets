@@ -417,6 +417,11 @@
               background: var(--t5e-checkbox-checked);
             }
           }
+
+          &.checkbox.container-property {
+            padding-right: 0.625rem;
+            flex-basis: auto;
+          }
         }
 
         select,
