@@ -3,7 +3,7 @@
   import type { Tab } from 'src/types/types';
   import Tabs from 'src/components/tabs/Tabs.svelte';
   import type { Readable } from 'svelte/store';
-  import ItemDescription from './parts/ItemDescription.svelte';
+  import ItemDescriptionWithSidebar from './parts/ItemDescriptionWithSidebar.svelte';
   import ItemEquipmentDetails from './parts/ItemEquipmentDetails.svelte';
   import ActiveEffects from '../actor/parts/ActiveEffects.svelte';
   import TabContents from 'src/components/tabs/TabContents.svelte';
@@ -25,7 +25,7 @@
       id: CONSTANTS.TAB_ITEM_DESCRIPTION_ID,
       displayName: 'DND5E.Description',
       content: {
-        component: ItemDescription,
+        component: ItemDescriptionWithSidebar,
         props: {},
         cssClass: 'flexrow',
       },

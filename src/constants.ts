@@ -3,6 +3,7 @@ export const CONSTANTS = {
   ITEM_TYPE_EQUIPMENT: 'equipment',
   ITEM_TYPE_BACKGROUND: 'background',
   ITEM_TYPE_BACKPACK: 'backpack',
+  ITEM_TYPE_CLASS: 'class',
   /**
    * Main button pressed, usually the left button or the un-initialized state
    */
@@ -37,6 +38,7 @@ export const CONSTANTS = {
   HOOKS_RENDERING_ITEM_EQUIPMENT_TABS: 'renderTidy5eKgarItemEquipmentTabs',
   HOOKS_RENDERING_ITEM_BACKGROUND_TABS: 'renderTidy5eKgarItemBackgroundTabs',
   HOOKS_RENDERING_ITEM_BACKPACK_TABS: 'renderTidy5eKgarItemBackpackTabs',
+  HOOKS_RENDERING_ITEM_CLASS_TABS: 'renderTidy5eKgarItemClassTabs',
   TAB_OPTION_CLASS: 'tab-option',
   TAB_ITEM_DESCRIPTION_ID: 'description',
   TAB_ITEM_DETAILS_ID: 'details',

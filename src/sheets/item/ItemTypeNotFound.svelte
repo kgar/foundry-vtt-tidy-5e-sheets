@@ -1,8 +1,9 @@
 <script lang="ts">
   import type { ItemSheetContext } from 'src/types/item';
+  import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
 
-  export let store: Readable<ItemSheetContext>;
+  let store = getContext<Readable<ItemSheetContext>>('store');
 
   $: context = $store;
 
