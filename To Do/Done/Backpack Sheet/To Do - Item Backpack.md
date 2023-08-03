@@ -5,6 +5,6 @@
 - [x] Implement header
 - [x] Implement description (it uses item-description)
 - [x] Implement details component
-- [ ] Test standalone item
-- [ ] Test embedded bag of holding
-- [ ] Test potion bandolier?
+- [x] Test standalone item
+- [x] Test embedded bag of holding
+- [x] Test potion bandolier?

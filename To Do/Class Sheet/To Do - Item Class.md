@@ -1,0 +1,10 @@
+- [ ] Look into sharing background description tab. It looks identical to class tab's description.
+- [ ] Create ItemClass.svelte
+- [ ] Wire up to Item Sheet
+- [ ] Scaffold page with header, tabs, content
+- [ ] Implement header
+- [ ] Implement description tab
+- [ ] Implement details tab
+- [ ] Implement advancement tab
+- [ ] Test in standalone
+- [ ] Test embedded
