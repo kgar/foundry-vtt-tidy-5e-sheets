@@ -12,6 +12,7 @@
   import ItemAdvancement from './parts/ItemAdvancement.svelte';
   import TextInput from 'src/components/form/TextInput.svelte';
   import ItemDescription from './parts/ItemDescription.svelte';
+  import ItemClassDetails from './parts/ItemClassDetails.svelte';
 
   let store = getContext<Readable<ItemSheetContext>>('store');
 
@@ -35,7 +36,7 @@
       id: CONSTANTS.TAB_ITEM_DETAILS_ID,
       displayName: 'DND5E.Details',
       content: {
-        component: ItemTypeNotFound,
+        component: ItemClassDetails,
         props: {},
         cssClass: 'detail-tab-contents',
       },
