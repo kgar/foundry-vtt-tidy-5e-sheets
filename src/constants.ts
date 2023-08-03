@@ -1,6 +1,7 @@
 export const CONSTANTS = {
   MODULE_ID: 'tidy5e-sheet-kgar',
   ITEM_TYPE_EQUIPMENT: 'equipment',
+  ITEM_TYPE_BACKGROUND: 'background',
   /**
    * Main button pressed, usually the left button or the un-initialized state
    */
@@ -36,4 +37,5 @@ export const CONSTANTS = {
   TAB_OPTION_CLASS: 'tab-option',
   TAB_ITEM_DESCRIPTION_ID: 'description',
   TAB_ITEM_DETAILS_ID: 'details',
+  TAB_ITEM_ADVANCEMENT_ID: 'advancement',
 } as const;

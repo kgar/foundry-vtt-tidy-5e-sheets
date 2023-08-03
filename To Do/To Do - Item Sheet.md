@@ -3,28 +3,26 @@
 - [ ] Create a subclass of Application with the empty article template
 - [ ] Create components for each known shared tab
   - [ ] {{> "dnd5e.item-advancement"}}
-  - [ ] {{> "dnd5e.item-description"}}
-  - [ ] {{> "dnd5e.active-effects"}}
-  - [ ] {{> "dnd5e.item-advancement"}}
+  - [x] {{> "dnd5e.item-description"}}
+  - [x] {{> "dnd5e.active-effects"}}
 - [ ] Create components for each item type, and scaffold their known tabs
   - [ ] `background.hbs`
   - [ ] `backpack.hbs`
   - [ ] `class.hbs`
   - [ ] `consumable.hbs`
-  - [ ] `equipment.hbs`
+  - [x] `equipment.hbs`
   - [ ] `feat.hbs`
   - [ ] `loot.hbs`
   - [ ] `spell.hbs`
   - [ ] `subclass.hbs`
   - [ ] `tool.hbs`
   - [ ] `weapon.hbs`
-- [ ] Implement auto-resize
+- [x] Implement auto-resize
 - [ ] Look for all the hidden jquery behaviors that wire during activateListeners; task out the ones we should keep
   - [ ] dnd5e
   - [ ] Tidy 5e
-- [ ] Troubleshoot: I'm getting an error sometimes about a missing form tag. I may have to use the form tag template... or suppress the submit function
-  - [ ] Put a debugger; tag on submit to see if I can prevent it from submitting.
-
+- [x] Troubleshoot: I'm getting an error sometimes about a missing form tag. I may have to use the form tag template... or suppress the submit function
+  - [x] Put a debugger; tag on submit to see if I can prevent it from submitting.
 
 ## How does it work?
 
@@ -44,42 +42,45 @@ If I am going to the svelte-y way, then we would do a switch in `activateListene
 
 **What about the default case?** It would be a good idea to provide a view which explains that Tidy 5e has not implemented the target item type. Explain what the type is, provide a link to the repo to file an issue, etc.
 
-
 ## Tidy 5e Item Sheet impl
 
 ```js
 export class Tidy5eItemSheet extends dnd5e.applications.item.ItemSheet5e {
-	static get defaultOptions() {
-		return mergeObject(super.defaultOptions, {
-			classes: ["tidy5e", "dnd5ebak", "sheet", "item"]
-		});
-	}
+  static get defaultOptions() {
+    return mergeObject(super.defaultOptions, {
+      classes: ['tidy5e', 'dnd5ebak', 'sheet', 'item'],
+    });
+  }
 
-	activateListeners(html) {
-		super.activateListeners(html);
+  activateListeners(html) {
+    super.activateListeners(html);
 
-		let item = this.item;
-		debug(`tidy5e-item | activateListeners | item: ${item}`);
+    let item = this.item;
+    debug(`tidy5e-item | activateListeners | item: ${item}`);
 
-		tidy5eShowItemArt(html, item);
-	}
+    tidy5eShowItemArt(html, item);
+  }
 }
 
 async function addEditorHeadline(app, html, data) {
-	html.find(".tab[data-tab=description] .editor").prepend(
-		`<h2 class="details-headline">${game.i18n.localize("TIDY5E.ItemDetailsHeadline")}</h2>`
-	);
+  html
+    .find('.tab[data-tab=description] .editor')
+    .prepend(
+      `<h2 class="details-headline">${game.i18n.localize(
+        'TIDY5E.ItemDetailsHeadline'
+      )}</h2>`
+    );
 }
 
 // Register Tidy5e Item Sheet and make default
-Items.registerSheet("dnd5e", Tidy5eItemSheet, { makeDefault: true });
+Items.registerSheet('dnd5e', Tidy5eItemSheet, { makeDefault: true });
 
-Hooks.on("renderTidy5eItemSheet", (app, html, data) => {
-	addEditorHeadline(app, html, data);
-	applySpellClassFilterItemSheet(app, html, data);
+Hooks.on('renderTidy5eItemSheet', (app, html, data) => {
+  addEditorHeadline(app, html, data);
+  applySpellClassFilterItemSheet(app, html, data);
 
-	// NOTE LOCKS ARE THE LAST THING TO SET
-	applyLocksItemSheet(app, html, data);
+  // NOTE LOCKS ARE THE LAST THING TO SET
+  applyLocksItemSheet(app, html, data);
 });
 ```
 
@@ -94,11 +95,10 @@ export default class ItemSheet5e extends ItemSheet {
     super(...args);
 
     // Expand the default size of the class sheet
-    if ( this.object.type === "class" ) {
+    if (this.object.type === 'class') {
       this.options.width = this.position.width = 600;
       this.options.height = this.position.height = 680;
-    }
-    else if ( this.object.type === "subclass" ) {
+    } else if (this.object.type === 'subclass') {
       this.options.height = this.position.height = 540;
     }
   }
@@ -110,14 +110,20 @@ export default class ItemSheet5e extends ItemSheet {
     return foundry.utils.mergeObject(super.defaultOptions, {
       width: 560,
       height: 400,
-      classes: ["dnd5e", "sheet", "item"],
+      classes: ['dnd5e', 'sheet', 'item'],
       resizable: true,
-      scrollY: [".tab.details"],
-      tabs: [{navSelector: ".tabs", contentSelector: ".sheet-body", initial: "description"}],
+      scrollY: ['.tab.details'],
+      tabs: [
+        {
+          navSelector: '.tabs',
+          contentSelector: '.sheet-body',
+          initial: 'description',
+        },
+      ],
       dragDrop: [
-        {dragSelector: "[data-effect-id]", dropSelector: ".effects-list"},
-        {dragSelector: ".advancement-item", dropSelector: ".advancement"}
-      ]
+        { dragSelector: '[data-effect-id]', dropSelector: '.effects-list' },
+        { dragSelector: '.advancement-item', dropSelector: '.advancement' },
+      ],
     });
   }
 
@@ -155,7 +161,9 @@ export default class ItemSheet5e extends ItemSheet {
       system: item.system,
       labels: item.labels,
       isEmbedded: item.isEmbedded,
-      advancementEditable: (this.advancementConfigurationMode || !item.isEmbedded) && context.editable,
+      advancementEditable:
+        (this.advancementConfigurationMode || !item.isEmbedded) &&
+        context.editable,
       rollData: this.item.getRollData(),
 
       // Item Type, Status, and Details
@@ -163,48 +171,54 @@ export default class ItemSheet5e extends ItemSheet {
       itemStatus: this._getItemStatus(),
       itemProperties: this._getItemProperties(),
       baseItems: await this._getItemBaseTypes(),
-      isPhysical: item.system.hasOwnProperty("quantity"),
+      isPhysical: item.system.hasOwnProperty('quantity'),
 
       // Action Details
-      isHealing: item.system.actionType === "heal",
-      isFlatDC: item.system.save?.scaling === "flat",
-      isLine: ["line", "wall"].includes(item.system.target?.type),
+      isHealing: item.system.actionType === 'heal',
+      isFlatDC: item.system.save?.scaling === 'flat',
+      isLine: ['line', 'wall'].includes(item.system.target?.type),
 
       // Vehicles
-      isCrewed: item.system.activation?.type === "crew",
+      isCrewed: item.system.activation?.type === 'crew',
 
       // Armor Class
-      hasDexModifier: item.isArmor && (item.system.armor?.type !== "shield"),
+      hasDexModifier: item.isArmor && item.system.armor?.type !== 'shield',
 
       // Advancement
       advancement: this._getItemAdvancement(item),
 
       // Prepare Active Effects
-      effects: ActiveEffect5e.prepareActiveEffectCategories(item.effects)
+      effects: ActiveEffect5e.prepareActiveEffectCategories(item.effects),
     });
     context.abilityConsumptionTargets = this._getItemConsumptionTargets();
 
     // Special handling for specific item types
-    switch ( item.type ) {
-      case "feat":
+    switch (item.type) {
+      case 'feat':
         const featureType = CONFIG.DND5E.featureTypes[item.system.type?.value];
-        if ( featureType ) {
+        if (featureType) {
           context.itemType = featureType.label;
           context.featureSubtypes = featureType.subtypes;
         }
         break;
-      case "spell":
-        context.spellComponents = {...CONFIG.DND5E.spellComponents, ...CONFIG.DND5E.spellTags};
+      case 'spell':
+        context.spellComponents = {
+          ...CONFIG.DND5E.spellComponents,
+          ...CONFIG.DND5E.spellTags,
+        };
         break;
     }
 
     // Enrich HTML description
-    context.descriptionHTML = await TextEditor.enrichHTML(item.system.description.value, {
-      secrets: item.isOwner,
-      async: true,
-      relativeTo: this.item,
-      rollData: context.rollData
-    });
+    context.descriptionHTML = await TextEditor.enrichHTML(
+      item.system.description.value,
+      {
+        secrets: item.isOwner,
+        async: true,
+        relativeTo: this.item,
+        rollData: context.rollData,
+      }
+    );
     return context;
   }
 
@@ -216,43 +230,55 @@ export default class ItemSheet5e extends ItemSheet {
    * @returns {object}     Object with advancement data grouped by levels.
    */
   _getItemAdvancement(item) {
-    if ( !item.system.advancement ) return {};
+    if (!item.system.advancement) return {};
     const advancement = {};
     const configMode = !item.parent || this.advancementConfigurationMode;
     const maxLevel = !configMode
-      ? (item.system.levels ?? item.class?.system.levels ?? item.parent.system.details?.level ?? -1) : -1;
+      ? item.system.levels ??
+        item.class?.system.levels ??
+        item.parent.system.details?.level ??
+        -1
+      : -1;
 
     // Improperly configured advancements
-    if ( item.advancement.needingConfiguration.length ) {
+    if (item.advancement.needingConfiguration.length) {
       advancement.unconfigured = {
-        items: item.advancement.needingConfiguration.map(a => ({
+        items: item.advancement.needingConfiguration.map((a) => ({
           id: a.id,
           order: a.constructor.order,
           title: a.title,
           icon: a.icon,
           classRestriction: a.classRestriction,
-          configured: false
+          configured: false,
         })),
-        configured: "partial"
+        configured: 'partial',
       };
     }
 
     // All other advancements by level
-    for ( let [level, advancements] of Object.entries(item.advancement.byLevel) ) {
-      if ( !configMode ) advancements = advancements.filter(a => a.appliesToClass);
-      const items = advancements.map(advancement => ({
+    for (let [level, advancements] of Object.entries(
+      item.advancement.byLevel
+    )) {
+      if (!configMode)
+        advancements = advancements.filter((a) => a.appliesToClass);
+      const items = advancements.map((advancement) => ({
         id: advancement.id,
         order: advancement.sortingValueForLevel(level),
         title: advancement.titleForLevel(level, { configMode }),
         icon: advancement.icon,
         classRestriction: advancement.classRestriction,
         summary: advancement.summaryForLevel(level, { configMode }),
-        configured: advancement.configuredForLevel(level)
+        configured: advancement.configuredForLevel(level),
       }));
-      if ( !items.length ) continue;
+      if (!items.length) continue;
       advancement[level] = {
         items: items.sort((a, b) => a.order.localeCompare(b.order)),
-        configured: (level > maxLevel) ? false : items.some(a => !a.configured) ? "partial" : "full"
+        configured:
+          level > maxLevel
+            ? false
+            : items.some((a) => !a.configured)
+            ? 'partial'
+            : 'full',
       };
     }
     return advancement;
@@ -266,20 +292,25 @@ export default class ItemSheet5e extends ItemSheet {
    * @protected
    */
   async _getItemBaseTypes() {
-    const type = this.item.type === "equipment" ? "armor" : this.item.type;
+    const type = this.item.type === 'equipment' ? 'armor' : this.item.type;
     const baseIds = CONFIG.DND5E[`${type}Ids`];
-    if ( baseIds === undefined ) return {};
+    if (baseIds === undefined) return {};
 
-    const typeProperty = type === "armor" ? "armor.type" : `${type}Type`;
+    const typeProperty = type === 'armor' ? 'armor.type' : `${type}Type`;
     const baseType = foundry.utils.getProperty(this.item.system, typeProperty);
 
     const items = {};
-    for ( const [name, id] of Object.entries(baseIds) ) {
+    for (const [name, id] of Object.entries(baseIds)) {
       const baseItem = await Trait.getBaseItem(id);
-      if ( baseType !== foundry.utils.getProperty(baseItem?.system, typeProperty) ) continue;
+      if (
+        baseType !== foundry.utils.getProperty(baseItem?.system, typeProperty)
+      )
+        continue;
       items[name] = baseItem.name;
     }
-    return Object.fromEntries(Object.entries(items).sort((lhs, rhs) => lhs[1].localeCompare(rhs[1])));
+    return Object.fromEntries(
+      Object.entries(items).sort((lhs, rhs) => lhs[1].localeCompare(rhs[1]))
+    );
   }
 
   /* -------------------------------------------- */
@@ -291,43 +322,48 @@ export default class ItemSheet5e extends ItemSheet {
    */
   _getItemConsumptionTargets() {
     const consume = this.item.system.consume || {};
-    if ( !consume.type ) return [];
+    if (!consume.type) return [];
     const actor = this.item.actor;
-    if ( !actor ) return {};
+    if (!actor) return {};
 
     // Ammunition
-    if ( consume.type === "ammo" ) {
+    if (consume.type === 'ammo') {
       return actor.itemTypes.consumable.reduce((ammo, i) => {
-        if ( i.system.consumableType === "ammo" ) ammo[i.id] = `${i.name} (${i.system.quantity})`;
+        if (i.system.consumableType === 'ammo')
+          ammo[i.id] = `${i.name} (${i.system.quantity})`;
         return ammo;
       }, {});
     }
 
     // Attributes
-    else if ( consume.type === "attribute" ) {
+    else if (consume.type === 'attribute') {
       const attrData = game.dnd5e.isV10 ? actor.system : actor.type;
-      const attributes = TokenDocument.implementation.getConsumedAttributes(attrData);
-      attributes.bar.forEach(a => a.push("value"));
+      const attributes =
+        TokenDocument.implementation.getConsumedAttributes(attrData);
+      attributes.bar.forEach((a) => a.push('value'));
       return attributes.bar.concat(attributes.value).reduce((obj, a) => {
-        let k = a.join(".");
+        let k = a.join('.');
         obj[k] = k;
         return obj;
       }, {});
     }
 
     // Hit Dice
-    else if ( consume.type === "hitDice" ) {
+    else if (consume.type === 'hitDice') {
       return {
-        smallest: game.i18n.localize("DND5E.ConsumeHitDiceSmallest"),
-        ...CONFIG.DND5E.hitDieTypes.reduce((obj, hd) => { obj[hd] = hd; return obj; }, {}),
-        largest: game.i18n.localize("DND5E.ConsumeHitDiceLargest")
+        smallest: game.i18n.localize('DND5E.ConsumeHitDiceSmallest'),
+        ...CONFIG.DND5E.hitDieTypes.reduce((obj, hd) => {
+          obj[hd] = hd;
+          return obj;
+        }, {}),
+        largest: game.i18n.localize('DND5E.ConsumeHitDiceLargest'),
       };
     }
 
     // Materials
-    else if ( consume.type === "material" ) {
+    else if (consume.type === 'material') {
       return actor.items.reduce((obj, i) => {
-        if ( ["consumable", "loot"].includes(i.type) && !i.system.activation ) {
+        if (['consumable', 'loot'].includes(i.type) && !i.system.activation) {
           obj[i.id] = `${i.name} (${i.system.quantity})`;
         }
         return obj;
@@ -335,25 +371,30 @@ export default class ItemSheet5e extends ItemSheet {
     }
 
     // Charges
-    else if ( consume.type === "charges" ) {
+    else if (consume.type === 'charges') {
       return actor.items.reduce((obj, i) => {
-
         // Limited-use items
         const uses = i.system.uses || {};
-        if ( uses.per && uses.max ) {
-          const label = uses.per === "charges"
-            ? ` (${game.i18n.format("DND5E.AbilityUseChargesLabel", {value: uses.value})})`
-            : ` (${game.i18n.format("DND5E.AbilityUseConsumableLabel", {max: uses.max, per: uses.per})})`;
+        if (uses.per && uses.max) {
+          const label =
+            uses.per === 'charges'
+              ? ` (${game.i18n.format('DND5E.AbilityUseChargesLabel', {
+                  value: uses.value,
+                })})`
+              : ` (${game.i18n.format('DND5E.AbilityUseConsumableLabel', {
+                  max: uses.max,
+                  per: uses.per,
+                })})`;
           obj[i.id] = i.name + label;
         }
 
         // Recharging items
         const recharge = i.system.recharge || {};
-        if ( recharge.value ) obj[i.id] = `${i.name} (${game.i18n.format("DND5E.Recharge")})`;
+        if (recharge.value)
+          obj[i.id] = `${i.name} (${game.i18n.format('DND5E.Recharge')})`;
         return obj;
       }, {});
-    }
-    else return {};
+    } else return {};
   }
 
   /* -------------------------------------------- */
@@ -364,20 +405,30 @@ export default class ItemSheet5e extends ItemSheet {
    * @protected
    */
   _getItemStatus() {
-    switch ( this.item.type ) {
-      case "class":
-        return game.i18n.format("DND5E.LevelCount", {ordinal: this.item.system.levels.ordinalString()});
-      case "equipment":
-      case "weapon":
-        return game.i18n.localize(this.item.system.equipped ? "DND5E.Equipped" : "DND5E.Unequipped");
-      case "feat":
-        const typeConfig = CONFIG.DND5E.featureTypes[this.item.system.type.value];
-        if ( typeConfig?.subtypes ) return typeConfig.subtypes[this.item.system.type.subtype] ?? null;
+    switch (this.item.type) {
+      case 'class':
+        return game.i18n.format('DND5E.LevelCount', {
+          ordinal: this.item.system.levels.ordinalString(),
+        });
+      case 'equipment':
+      case 'weapon':
+        return game.i18n.localize(
+          this.item.system.equipped ? 'DND5E.Equipped' : 'DND5E.Unequipped'
+        );
+      case 'feat':
+        const typeConfig =
+          CONFIG.DND5E.featureTypes[this.item.system.type.value];
+        if (typeConfig?.subtypes)
+          return typeConfig.subtypes[this.item.system.type.subtype] ?? null;
         break;
-      case "spell":
+      case 'spell':
         return CONFIG.DND5E.spellPreparationModes[this.item.system.preparation];
-      case "tool":
-        return game.i18n.localize(this.item.system.proficient ? "DND5E.Proficient" : "DND5E.NotProficient");
+      case 'tool':
+        return game.i18n.localize(
+          this.item.system.proficient
+            ? 'DND5E.Proficient'
+            : 'DND5E.NotProficient'
+        );
     }
     return null;
   }
@@ -392,42 +443,58 @@ export default class ItemSheet5e extends ItemSheet {
   _getItemProperties() {
     const props = [];
     const labels = this.item.labels;
-    switch ( this.item.type ) {
-      case "equipment":
+    switch (this.item.type) {
+      case 'equipment':
         props.push(CONFIG.DND5E.equipmentTypes[this.item.system.armor.type]);
-        if ( this.item.isArmor || this.item.isMountable ) props.push(labels.armor);
+        if (this.item.isArmor || this.item.isMountable)
+          props.push(labels.armor);
         break;
-      case "feat":
+      case 'feat':
         props.push(labels.featType);
         break;
-      case "spell":
-        props.push(labels.components.vsm, labels.materials, ...labels.components.tags);
+      case 'spell':
+        props.push(
+          labels.components.vsm,
+          labels.materials,
+          ...labels.components.tags
+        );
         break;
-      case "weapon":
-        for ( const [k, v] of Object.entries(this.item.system.properties) ) {
-          if ( v === true ) props.push(CONFIG.DND5E.weaponProperties[k]);
+      case 'weapon':
+        for (const [k, v] of Object.entries(this.item.system.properties)) {
+          if (v === true) props.push(CONFIG.DND5E.weaponProperties[k]);
         }
         break;
     }
 
     // Action type
-    if ( this.item.system.actionType ) {
+    if (this.item.system.actionType) {
       props.push(CONFIG.DND5E.itemActionTypes[this.item.system.actionType]);
     }
 
     // Action usage
-    if ( (this.item.type !== "weapon") && !foundry.utils.isEmpty(this.item.system.activation) ) {
-      props.push(labels.activation, labels.range, labels.target, labels.duration);
+    if (
+      this.item.type !== 'weapon' &&
+      !foundry.utils.isEmpty(this.item.system.activation)
+    ) {
+      props.push(
+        labels.activation,
+        labels.range,
+        labels.target,
+        labels.duration
+      );
     }
-    return props.filter(p => !!p);
+    return props.filter((p) => !!p);
   }
 
   /* -------------------------------------------- */
 
   /** @inheritDoc */
-  setPosition(position={}) {
-    if ( !(this._minimized || position.height) ) {
-      position.height = (this._tabs[0].active === "details") ? "auto" : Math.max(this.height, this.options.height);
+  setPosition(position = {}) {
+    if (!(this._minimized || position.height)) {
+      position.height =
+        this._tabs[0].active === 'details'
+          ? 'auto'
+          : Math.max(this.height, this.options.height);
     }
     return super.setPosition(position);
   }
@@ -435,14 +502,14 @@ export default class ItemSheet5e extends ItemSheet {
   /* -------------------------------------------- */
 
   /** @inheritdoc */
-  async activateEditor(name, options={}, initialContent="") {
+  async activateEditor(name, options = {}, initialContent = '') {
     options.relativeLinks = true;
     options.plugins = {
       menu: ProseMirror.ProseMirrorMenu.build(ProseMirror.defaultSchema, {
         compact: true,
         destroyOnSave: true,
-        onSave: () => this.saveEditor(name, {remove: true})
-      })
+        onSave: () => this.saveEditor(name, { remove: true }),
+      }),
     };
     return super.activateEditor(name, options, initialContent);
   }
@@ -452,44 +519,62 @@ export default class ItemSheet5e extends ItemSheet {
   /* -------------------------------------------- */
 
   /** @inheritDoc */
-  _getSubmitData(updateData={}) {
-    const formData = foundry.utils.expandObject(super._getSubmitData(updateData));
+  _getSubmitData(updateData = {}) {
+    const formData = foundry.utils.expandObject(
+      super._getSubmitData(updateData)
+    );
 
     // Handle Damage array
     const damage = formData.system?.damage;
-    if ( damage ) damage.parts = Object.values(damage?.parts || {}).map(d => [d[0] || "", d[1] || ""]);
+    if (damage)
+      damage.parts = Object.values(damage?.parts || {}).map((d) => [
+        d[0] || '',
+        d[1] || '',
+      ]);
 
     // Check max uses formula
     const uses = formData.system?.uses;
-    if ( uses?.max ) {
+    if (uses?.max) {
       const maxRoll = new Roll(uses.max);
-      if ( !maxRoll.isDeterministic ) {
+      if (!maxRoll.isDeterministic) {
         uses.max = this.item._source.system.uses.max;
-        this.form.querySelector("input[name='system.uses.max']").value = uses.max;
-        return ui.notifications.error(game.i18n.format("DND5E.FormulaCannotContainDiceError", {
-          name: game.i18n.localize("DND5E.LimitedUses")
-        }));
+        this.form.querySelector("input[name='system.uses.max']").value =
+          uses.max;
+        return ui.notifications.error(
+          game.i18n.format('DND5E.FormulaCannotContainDiceError', {
+            name: game.i18n.localize('DND5E.LimitedUses'),
+          })
+        );
       }
     }
 
     // Check duration value formula
     const duration = formData.system?.duration;
-    if ( duration?.value ) {
+    if (duration?.value) {
       const durationRoll = new Roll(duration.value);
-      if ( !durationRoll.isDeterministic ) {
+      if (!durationRoll.isDeterministic) {
         duration.value = this.item._source.system.duration.value;
-        this.form.querySelector("input[name='system.duration.value']").value = duration.value;
-        return ui.notifications.error(game.i18n.format("DND5E.FormulaCannotContainDiceError", {
-          name: game.i18n.localize("DND5E.Duration")
-        }));
+        this.form.querySelector("input[name='system.duration.value']").value =
+          duration.value;
+        return ui.notifications.error(
+          game.i18n.format('DND5E.FormulaCannotContainDiceError', {
+            name: game.i18n.localize('DND5E.Duration'),
+          })
+        );
       }
     }
 
     // Check class identifier
-    if ( formData.system?.identifier && !dnd5e.utils.validators.isValidIdentifier(formData.system.identifier) ) {
+    if (
+      formData.system?.identifier &&
+      !dnd5e.utils.validators.isValidIdentifier(formData.system.identifier)
+    ) {
       formData.system.identifier = this.item._source.system.identifier;
-      this.form.querySelector("input[name='system.identifier']").value = formData.system.identifier;
-      return ui.notifications.error(game.i18n.localize("DND5E.IdentifierError"));
+      this.form.querySelector("input[name='system.identifier']").value =
+        formData.system.identifier;
+      return ui.notifications.error(
+        game.i18n.localize('DND5E.IdentifierError')
+      );
     }
 
     // Return the flattened submission data
@@ -501,17 +586,20 @@ export default class ItemSheet5e extends ItemSheet {
   /** @inheritDoc */
   activateListeners(html) {
     super.activateListeners(html);
-    if ( this.isEditable ) {
-      html.find(".damage-control").click(this._onDamageControl.bind(this));
-      html.find(".trait-selector").click(this._onConfigureTraits.bind(this));
-      html.find(".effect-control").click(ev => {
+    if (this.isEditable) {
+      html.find('.damage-control').click(this._onDamageControl.bind(this));
+      html.find('.trait-selector').click(this._onConfigureTraits.bind(this));
+      html.find('.effect-control').click((ev) => {
         const unsupported = game.dnd5e.isV10 && this.item.isOwned;
-        if ( unsupported ) return ui.notifications.warn("Managing Active Effects within an Owned Item is not currently supported and will be added in a subsequent update.");
+        if (unsupported)
+          return ui.notifications.warn(
+            'Managing Active Effects within an Owned Item is not currently supported and will be added in a subsequent update.'
+          );
         ActiveEffect5e.onManageActiveEffect(ev, this.item);
       });
-      html.find(".advancement .item-control").click(event => {
+      html.find('.advancement .item-control').click((event) => {
         const t = event.currentTarget;
-        if ( t.dataset.action ) this._onAdvancementAction(t, t.dataset.action);
+        if (t.dataset.action) this._onAdvancementAction(t, t.dataset.action);
       });
     }
 
@@ -524,8 +612,9 @@ export default class ItemSheet5e extends ItemSheet {
      * @param {jQuery} html                      The HTML element to which the context options are attached.
      * @param {ContextMenuEntry[]} entryOptions  The context menu entries.
      */
-    Hooks.call("dnd5e.getItemAdvancementContext", html, contextOptions);
-    if ( contextOptions ) new ContextMenu(html, ".advancement-item", contextOptions);
+    Hooks.call('dnd5e.getItemAdvancementContext', html, contextOptions);
+    if (contextOptions)
+      new ContextMenu(html, '.advancement-item', contextOptions);
   }
 
   /* -------------------------------------------- */
@@ -536,30 +625,35 @@ export default class ItemSheet5e extends ItemSheet {
    * @protected
    */
   _getAdvancementContextMenuOptions() {
-    const condition = li => (this.advancementConfigurationMode || !this.isEmbedded) && this.isEditable;
+    const condition = (li) =>
+      (this.advancementConfigurationMode || !this.isEmbedded) &&
+      this.isEditable;
     return [
       {
-        name: "DND5E.AdvancementControlEdit",
+        name: 'DND5E.AdvancementControlEdit',
         icon: "<i class='fas fa-edit fa-fw'></i>",
         condition,
-        callback: li => this._onAdvancementAction(li[0], "edit")
+        callback: (li) => this._onAdvancementAction(li[0], 'edit'),
       },
       {
-        name: "DND5E.AdvancementControlDuplicate",
+        name: 'DND5E.AdvancementControlDuplicate',
         icon: "<i class='fas fa-copy fa-fw'></i>",
-        condition: li => {
-          const id = li[0].closest(".advancement-item")?.dataset.id;
+        condition: (li) => {
+          const id = li[0].closest('.advancement-item')?.dataset.id;
           const advancement = this.item.advancement.byId[id];
-          return condition(li) && advancement?.constructor.availableForItem(this.item);
+          return (
+            condition(li) &&
+            advancement?.constructor.availableForItem(this.item)
+          );
         },
-        callback: li => this._onAdvancementAction(li[0], "duplicate")
+        callback: (li) => this._onAdvancementAction(li[0], 'duplicate'),
       },
       {
-        name: "DND5E.AdvancementControlDelete",
+        name: 'DND5E.AdvancementControlDelete',
         icon: "<i class='fas fa-trash fa-fw' style='color: rgb(255, 65, 65);'></i>",
         condition,
-        callback: li => this._onAdvancementAction(li[0], "delete")
-      }
+        callback: (li) => this._onAdvancementAction(li[0], 'delete'),
+      },
     ];
   }
 
@@ -576,19 +670,21 @@ export default class ItemSheet5e extends ItemSheet {
     const a = event.currentTarget;
 
     // Add new damage component
-    if ( a.classList.contains("add-damage") ) {
-      await this._onSubmit(event);  // Submit any unsaved changes
+    if (a.classList.contains('add-damage')) {
+      await this._onSubmit(event); // Submit any unsaved changes
       const damage = this.item.system.damage;
-      return this.item.update({"system.damage.parts": damage.parts.concat([["", ""]])});
+      return this.item.update({
+        'system.damage.parts': damage.parts.concat([['', '']]),
+      });
     }
 
     // Remove a damage component
-    if ( a.classList.contains("delete-damage") ) {
-      await this._onSubmit(event);  // Submit any unsaved changes
-      const li = a.closest(".damage-part");
+    if (a.classList.contains('delete-damage')) {
+      await this._onSubmit(event); // Submit any unsaved changes
+      const li = a.closest('.damage-part');
       const damage = foundry.utils.deepClone(this.item.system.damage);
       damage.parts.splice(Number(li.dataset.damagePart), 1);
-      return this.item.update({"system.damage.parts": damage.parts});
+      return this.item.update({ 'system.damage.parts': damage.parts });
     }
   }
   /* -------------------------------------------- */
@@ -596,23 +692,23 @@ export default class ItemSheet5e extends ItemSheet {
   /** @inheritdoc */
   _onDragStart(event) {
     const li = event.currentTarget;
-    if ( event.target.classList.contains("content-link") ) return;
+    if (event.target.classList.contains('content-link')) return;
 
     // Create drag data
     let dragData;
 
     // Active Effect
-    if ( li.dataset.effectId ) {
+    if (li.dataset.effectId) {
       const effect = this.item.effects.get(li.dataset.effectId);
       dragData = effect.toDragData();
-    } else if ( li.classList.contains("advancement-item") ) {
+    } else if (li.classList.contains('advancement-item')) {
       dragData = this.item.advancement.byId[li.dataset.id]?.toDragData();
     }
 
-    if ( !dragData ) return;
+    if (!dragData) return;
 
     // Set data transfer
-    event.dataTransfer.setData("text/plain", JSON.stringify(dragData));
+    event.dataTransfer.setData('text/plain', JSON.stringify(dragData));
   }
 
   /* -------------------------------------------- */
@@ -631,14 +727,14 @@ export default class ItemSheet5e extends ItemSheet {
      * @param {object} data                  The data that has been dropped onto the sheet
      * @returns {boolean}                    Explicitly return `false` to prevent normal drop handling.
      */
-    const allowed = Hooks.call("dnd5e.dropItemSheetData", item, this, data);
-    if ( allowed === false ) return;
+    const allowed = Hooks.call('dnd5e.dropItemSheetData', item, this, data);
+    if (allowed === false) return;
 
-    switch ( data.type ) {
-      case "ActiveEffect":
+    switch (data.type) {
+      case 'ActiveEffect':
         return this._onDropActiveEffect(event, data);
-      case "Advancement":
-      case "Item":
+      case 'Advancement':
+      case 'Item':
         return this._onDropAdvancement(event, data);
     }
   }
@@ -654,12 +750,19 @@ export default class ItemSheet5e extends ItemSheet {
    */
   async _onDropActiveEffect(event, data) {
     const effect = await ActiveEffect.implementation.fromDropData(data);
-    if ( !this.item.isOwner || !effect ) return false;
-    if ( (this.item.uuid === effect.parent.uuid) || (this.item.uuid === effect.origin) ) return false;
-    return ActiveEffect.create({
-      ...effect.toObject(),
-      origin: this.item.uuid
-    }, {parent: this.item});
+    if (!this.item.isOwner || !effect) return false;
+    if (
+      this.item.uuid === effect.parent.uuid ||
+      this.item.uuid === effect.origin
+    )
+      return false;
+    return ActiveEffect.create(
+      {
+        ...effect.toObject(),
+        origin: this.item.uuid,
+      },
+      { parent: this.item }
+    );
   }
 
   /* -------------------------------------------- */
@@ -672,41 +775,55 @@ export default class ItemSheet5e extends ItemSheet {
   async _onDropAdvancement(event, data) {
     let advancements;
     let showDialog = false;
-    if ( data.type === "Advancement" ) {
+    if (data.type === 'Advancement') {
       advancements = [await fromUuid(data.uuid)];
-    } else if ( data.type === "Item" ) {
+    } else if (data.type === 'Item') {
       const item = await Item.implementation.fromDropData(data);
-      if ( !item ) return false;
+      if (!item) return false;
       advancements = Object.values(item.advancement.byId);
       showDialog = true;
     } else {
       return false;
     }
-    advancements = advancements.filter(a => {
-      return !this.item.advancement.byId[a.id]
-        && a.constructor.metadata.validItemTypes.has(this.item.type)
-        && a.constructor.availableForItem(this.item);
+    advancements = advancements.filter((a) => {
+      return (
+        !this.item.advancement.byId[a.id] &&
+        a.constructor.metadata.validItemTypes.has(this.item.type) &&
+        a.constructor.availableForItem(this.item)
+      );
     });
 
     // Display dialog prompting for which advancements to add
-    if ( showDialog ) {
+    if (showDialog) {
       try {
-        advancements = await AdvancementMigrationDialog.createDialog(this.item, advancements);
-      } catch(err) {
+        advancements = await AdvancementMigrationDialog.createDialog(
+          this.item,
+          advancements
+        );
+      } catch (err) {
         return false;
       }
     }
 
-    if ( !advancements.length ) return false;
-    if ( this.item.isEmbedded && !game.settings.get("dnd5e", "disableAdvancements") ) {
-      const manager = AdvancementManager.forNewAdvancement(this.item.actor, this.item.id, advancements);
-      if ( manager.steps.length ) return manager.render(true);
+    if (!advancements.length) return false;
+    if (
+      this.item.isEmbedded &&
+      !game.settings.get('dnd5e', 'disableAdvancements')
+    ) {
+      const manager = AdvancementManager.forNewAdvancement(
+        this.item.actor,
+        this.item.id,
+        advancements
+      );
+      if (manager.steps.length) return manager.render(true);
     }
 
     // If no advancements need to be applied, just add them to the item
-    const advancementArray = foundry.utils.deepClone(this.item.system.advancement);
-    advancementArray.push(...advancements.map(a => a.toObject()));
-    this.item.update({"system.advancement": advancementArray});
+    const advancementArray = foundry.utils.deepClone(
+      this.item.system.advancement
+    );
+    advancementArray.push(...advancements.map((a) => a.toObject()));
+    this.item.update({ 'system.advancement': advancementArray });
   }
 
   /* -------------------------------------------- */
@@ -724,25 +841,31 @@ export default class ItemSheet5e extends ItemSheet {
       title: a.parentElement.innerText,
       choices: [],
       allowCustom: false,
-      suppressWarning: true
+      suppressWarning: true,
     };
     switch (a.dataset.options) {
-      case "saves":
+      case 'saves':
         options.choices = CONFIG.DND5E.abilities;
         options.valueKey = null;
-        options.labelKey = "label";
+        options.labelKey = 'label';
         break;
-      case "skills.choices":
+      case 'skills.choices':
         options.choices = CONFIG.DND5E.skills;
         options.valueKey = null;
-        options.labelKey = "label";
+        options.labelKey = 'label';
         break;
-      case "skills":
+      case 'skills':
         const skills = this.item.system.skills;
-        const choices = skills.choices?.length ? skills.choices : Object.keys(CONFIG.DND5E.skills);
-        options.choices = Object.fromEntries(Object.entries(CONFIG.DND5E.skills).filter(([s]) => choices.includes(s)));
+        const choices = skills.choices?.length
+          ? skills.choices
+          : Object.keys(CONFIG.DND5E.skills);
+        options.choices = Object.fromEntries(
+          Object.entries(CONFIG.DND5E.skills).filter(([s]) =>
+            choices.includes(s)
+          )
+        );
         options.maximum = skills.number;
-        options.labelKey = "label";
+        options.labelKey = 'label';
         break;
     }
     new TraitSelector(this.item, options).render(true);
@@ -757,26 +880,45 @@ export default class ItemSheet5e extends ItemSheet {
    * @returns {Promise|void}
    */
   _onAdvancementAction(target, action) {
-    const id = target.closest(".advancement-item")?.dataset.id;
+    const id = target.closest('.advancement-item')?.dataset.id;
     const advancement = this.item.advancement.byId[id];
     let manager;
-    if ( ["edit", "delete", "duplicate"].includes(action) && !advancement ) return;
+    if (['edit', 'delete', 'duplicate'].includes(action) && !advancement)
+      return;
     switch (action) {
-      case "add": return game.dnd5e.applications.advancement.AdvancementSelection.createDialog(this.item);
-      case "edit": return new advancement.constructor.metadata.apps.config(advancement).render(true);
-      case "delete":
-        if ( this.item.isEmbedded && !game.settings.get("dnd5e", "disableAdvancements") ) {
-          manager = AdvancementManager.forDeletedAdvancement(this.item.actor, this.item.id, id);
-          if ( manager.steps.length ) return manager.render(true);
+      case 'add':
+        return game.dnd5e.applications.advancement.AdvancementSelection.createDialog(
+          this.item
+        );
+      case 'edit':
+        return new advancement.constructor.metadata.apps.config(
+          advancement
+        ).render(true);
+      case 'delete':
+        if (
+          this.item.isEmbedded &&
+          !game.settings.get('dnd5e', 'disableAdvancements')
+        ) {
+          manager = AdvancementManager.forDeletedAdvancement(
+            this.item.actor,
+            this.item.id,
+            id
+          );
+          if (manager.steps.length) return manager.render(true);
         }
         return this.item.deleteAdvancement(id);
-      case "duplicate": return this.item.duplicateAdvancement(id);
-      case "modify-choices":
-        const level = target.closest("li")?.dataset.level;
-        manager = AdvancementManager.forModifyChoices(this.item.actor, this.item.id, Number(level));
-        if ( manager.steps.length ) manager.render(true);
+      case 'duplicate':
+        return this.item.duplicateAdvancement(id);
+      case 'modify-choices':
+        const level = target.closest('li')?.dataset.level;
+        manager = AdvancementManager.forModifyChoices(
+          this.item.actor,
+          this.item.id,
+          Number(level)
+        );
+        if (manager.steps.length) manager.render(true);
         return;
-      case "toggle-configuration":
+      case 'toggle-configuration':
         this.advancementConfigurationMode = !this.advancementConfigurationMode;
         return this.render();
     }
@@ -786,7 +928,7 @@ export default class ItemSheet5e extends ItemSheet {
 
   /** @inheritdoc */
   async _onSubmit(...args) {
-    if ( this._tabs[0].active === "details" ) this.position.height = "auto";
+    if (this._tabs[0].active === 'details') this.position.height = 'auto';
     await super._onSubmit(...args);
   }
 }
@@ -2076,195 +2218,290 @@ export default class ItemSheet5e extends ItemSheet {
 ### item-activation.hbs
 
 ```hbs
-{{!-- Activation Cost --}}
-<div class="form-group input-select">
-    <label>{{ localize "DND5E.ItemActivationCost" }}</label>
-    <div class="form-fields">
-        {{#if system.activation.type}}
-            <input type="number" step="any" name="system.activation.cost"
-                   value="{{system.activation.cost}}" placeholder="&mdash;">
-        {{/if}}
-        <select name="system.activation.type" data-tooltip="DND5E.ItemActivationType">
-            {{selectOptions config.abilityActivationTypes selected=system.activation.type
-                blank=(localize "DND5E.None")}}
-        </select>
-    </div>
+{{! Activation Cost }}
+<div class='form-group input-select'>
+  <label>{{localize 'DND5E.ItemActivationCost'}}</label>
+  <div class='form-fields'>
+    {{#if system.activation.type}}
+      <input
+        type='number'
+        step='any'
+        name='system.activation.cost'
+        value='{{system.activation.cost}}'
+        placeholder='&mdash;'
+      />
+    {{/if}}
+    <select
+      name='system.activation.type'
+      data-tooltip='DND5E.ItemActivationType'
+    >
+      {{selectOptions
+        config.abilityActivationTypes
+        selected=system.activation.type
+        blank=(localize 'DND5E.None')
+      }}
+    </select>
+  </div>
 </div>
 {{#if system.activation.type}}
 
-{{!-- Activation Condition --}}
-<div class="form-group">
-    <label>{{ localize "DND5E.ItemActivationCondition" }}</label>
-    <div class="form-fields">
-        <input type="text" name="system.activation.condition" value="{{system.activation.condition}}">
+  {{! Activation Condition }}
+  <div class='form-group'>
+    <label>{{localize 'DND5E.ItemActivationCondition'}}</label>
+    <div class='form-fields'>
+      <input
+        type='text'
+        name='system.activation.condition'
+        value='{{system.activation.condition}}'
+      />
     </div>
-</div>
+  </div>
 
-{{#if isCrewed}}
-<div class="form-group">
-    <label>{{ localize "DND5E.Cover" }}</label>
-    <div class="form-fields">
-        <select name="system.cover" data-dtype="Number">
-            {{selectOptions config.cover selected=system.cover blank=""}}
+  {{#if isCrewed}}
+    <div class='form-group'>
+      <label>{{localize 'DND5E.Cover'}}</label>
+      <div class='form-fields'>
+        <select name='system.cover' data-dtype='Number'>
+          {{selectOptions config.cover selected=system.cover blank=''}}
         </select>
+      </div>
     </div>
-</div>
-{{/if}}
+  {{/if}}
 
-{{!-- Ability Target --}}
-<div class="form-group input-select-select">
-    <label>{{ localize "DND5E.Target" }}</label>
-    <div class="form-fields">
-        {{#if system.hasScalarTarget}}
-            <input type="number" step="any" name="system.target.value"
-                   value="{{system.target.value}}" placeholder="&mdash;">
-        {{/if}}
-        {{#if system.hasAreaTarget}}
-            <select name="system.target.units" data-tooltip="DND5E.TargetUnits">
-                {{selectOptions config.movementUnits selected=system.target.units blank=""}}
-            </select>
-        {{/if}}
-        <select name="system.target.type" data-tooltip="DND5E.TargetType">
-            {{#select system.target.type}}
-                 <option value="">{{localize "DND5E.None"}}</option>
-                 <optgroup label="{{localize 'DND5E.TargetTypeIndividual'}}">
-                     {{selectOptions config.individualTargetTypes}}
-                 </optgroup>
-                 <optgroup label="{{localize 'DND5E.TargetTypeArea'}}">
-                     {{selectOptions config.areaTargetTypes labelAttr="label"}}
-                 </optgroup>
-            {{/select}}
+  {{! Ability Target }}
+  <div class='form-group input-select-select'>
+    <label>{{localize 'DND5E.Target'}}</label>
+    <div class='form-fields'>
+      {{#if system.hasScalarTarget}}
+        <input
+          type='number'
+          step='any'
+          name='system.target.value'
+          value='{{system.target.value}}'
+          placeholder='&mdash;'
+        />
+      {{/if}}
+      {{#if system.hasAreaTarget}}
+        <select name='system.target.units' data-tooltip='DND5E.TargetUnits'>
+          {{selectOptions
+            config.movementUnits
+            selected=system.target.units
+            blank=''
+          }}
         </select>
+      {{/if}}
+      <select name='system.target.type' data-tooltip='DND5E.TargetType'>
+        {{#select system.target.type}}
+          <option value=''>{{localize 'DND5E.None'}}</option>
+          <optgroup label='{{localize "DND5E.TargetTypeIndividual"}}'>
+            {{selectOptions config.individualTargetTypes}}
+          </optgroup>
+          <optgroup label='{{localize "DND5E.TargetTypeArea"}}'>
+            {{selectOptions config.areaTargetTypes labelAttr='label'}}
+          </optgroup>
+        {{/select}}
+      </select>
     </div>
-</div>
+  </div>
 
-{{!-- Ability Target Width --}}
-{{#if isLine}}
-<div class="form-group input-select-select">
-    <label>{{ localize "DND5E.TargetWidth" }}</label>
-    <div class="form-fields">
-        <input type="number" step="any" name="system.target.width"
-            value="{{system.target.width}}" placeholder="&mdash;">
+  {{! Ability Target Width }}
+  {{#if isLine}}
+    <div class='form-group input-select-select'>
+      <label>{{localize 'DND5E.TargetWidth'}}</label>
+      <div class='form-fields'>
+        <input
+          type='number'
+          step='any'
+          name='system.target.width'
+          value='{{system.target.width}}'
+          placeholder='&mdash;'
+        />
+      </div>
     </div>
-</div>
-{{/if}}
+  {{/if}}
 
-{{!-- Ability Range --}}
-<div class="form-group input-select">
-    <label>{{ localize "DND5E.Range" }}</label>
-    <div class="form-fields">
-        {{#if system.hasScalarRange}}
-            <input type="number" step="any" name="system.range.value" value="{{system.range.value}}"
-                   placeholder="{{localize 'DND5E.Normal'}}" data-tooltip="DND5E.RangeNormal">
-            <span class="sep">/</span>
-            <input type="number" step="any" name="system.range.long" value="{{system.range.long}}"
-                   placeholder="{{localize 'DND5E.Long'}}" data-tooltip="DND5E.RangeLong">
-        {{/if}}
-        <select name="system.range.units" data-tooltip="DND5E.RangeUnits">
-            {{#select system.range.units}}
-                <option value="">{{localize "DND5E.None"}}</option>
-                <optgroup label="{{localize 'DND5E.RangeDistance'}}">
-                    {{selectOptions config.movementUnits}}
-                </optgroup>
-                {{selectOptions config.rangeTypes}}
-            {{/select}}
+  {{! Ability Range }}
+  <div class='form-group input-select'>
+    <label>{{localize 'DND5E.Range'}}</label>
+    <div class='form-fields'>
+      {{#if system.hasScalarRange}}
+        <input
+          type='number'
+          step='any'
+          name='system.range.value'
+          value='{{system.range.value}}'
+          placeholder='{{localize "DND5E.Normal"}}'
+          data-tooltip='DND5E.RangeNormal'
+        />
+        <span class='sep'>/</span>
+        <input
+          type='number'
+          step='any'
+          name='system.range.long'
+          value='{{system.range.long}}'
+          placeholder='{{localize "DND5E.Long"}}'
+          data-tooltip='DND5E.RangeLong'
+        />
+      {{/if}}
+      <select name='system.range.units' data-tooltip='DND5E.RangeUnits'>
+        {{#select system.range.units}}
+          <option value=''>{{localize 'DND5E.None'}}</option>
+          <optgroup label='{{localize "DND5E.RangeDistance"}}'>
+            {{selectOptions config.movementUnits}}
+          </optgroup>
+          {{selectOptions config.rangeTypes}}
+        {{/select}}
+      </select>
+    </div>
+  </div>
+
+  {{! Effect Duration }}
+  <div class='form-group input-select'>
+    <label>{{localize 'DND5E.Duration'}}</label>
+    <div class='form-fields'>
+      {{#if system.hasScalarDuration}}
+        <input
+          type='text'
+          name='system.duration.value'
+          value='{{source.duration.value}}'
+          placeholder='&mdash;'
+          data-tooltip='DND5E.DurationValue'
+          data-formula-editor
+        />
+      {{/if}}
+      <select name='system.duration.units' data-tooltip='DND5E.DurationType'>
+        {{#select system.duration.units}}
+          <option value=''>{{localize 'DND5E.None'}}</option>
+          <optgroup label='{{localize "DND5E.DurationTime"}}'>
+            {{selectOptions config.scalarTimePeriods}}
+          </optgroup>
+          <optgroup label='{{localize "DND5E.DurationPermanent"}}'>
+            {{selectOptions config.permanentTimePeriods}}
+          </optgroup>
+          {{selectOptions config.specialTimePeriods}}
+        {{/select}}
+      </select>
+    </div>
+  </div>
+
+  {{! Limited Uses }}
+  <div class='form-group uses-per'>
+    <label>{{localize 'DND5E.LimitedUses'}}</label>
+    <div class='form-fields'>
+      <input
+        type='number'
+        step='any'
+        name='system.uses.value'
+        value='{{system.uses.value}}'
+        data-tooltip='DND5E.UsesAvailable'
+      />
+      <span class='sep'>{{localize 'DND5E.of'}}</span>
+      <input
+        type='text'
+        name='system.uses.max'
+        value='{{source.uses.max}}'
+        data-tooltip='DND5E.UsesMax'
+        data-formula-editor
+      />
+      <span class='sep'>{{localize 'DND5E.per'}}</span>
+      <select name='system.uses.per' data-tooltip='DND5E.UsesPeriod'>
+        {{selectOptions
+          config.limitedUsePeriods
+          selected=system.uses.per
+          blank=''
+        }}
+      </select>
+    </div>
+  </div>
+
+  {{#if (eq system.uses.per 'charges')}}
+    <div class='form-group'>
+      <label>{{localize 'DND5E.RecoveryFormula'}}</label>
+      <div class='form-fields'>
+        <input
+          type='text'
+          name='system.uses.recovery'
+          value='{{system.uses.recovery}}'
+          data-formula-editor
+        />
+      </div>
+    </div>
+  {{/if}}
+
+  {{! Consumption }}
+  <div class='form-group consumption'>
+    <label>{{localize 'DND5E.ConsumeTitle'}}</label>
+    <div class='form-fields'>
+      {{#if system.consume.type}}
+        <input
+          type='number'
+          step='any'
+          name='system.consume.amount'
+          value='{{system.consume.amount}}'
+          data-tooltip='DND5E.ConsumeQuanity'
+        />
+        <select name='system.consume.target' data-tooltip='DND5E.ConsumeTarget'>
+          {{selectOptions
+            abilityConsumptionTargets
+            selected=system.consume.target
+            blank=''
+          }}
         </select>
+      {{/if}}
+      <select name='system.consume.type' data-tooltip='DND5E.ConsumeType'>
+        {{selectOptions
+          config.abilityConsumptionTypes
+          selected=system.consume.type
+          blank=(localize 'DND5E.None')
+        }}
+      </select>
     </div>
-</div>
-
-{{!-- Effect Duration --}}
-<div class="form-group input-select">
-    <label>{{ localize "DND5E.Duration" }}</label>
-    <div class="form-fields">
-        {{#if system.hasScalarDuration}}
-            <input type="text" name="system.duration.value" value="{{source.duration.value}}"
-                   placeholder="&mdash;" data-tooltip="DND5E.DurationValue" data-formula-editor>
-        {{/if}}
-        <select name="system.duration.units" data-tooltip="DND5E.DurationType">
-            {{#select system.duration.units}}
-                <option value="">{{localize "DND5E.None"}}</option>
-                <optgroup label="{{localize 'DND5E.DurationTime'}}">
-                    {{selectOptions config.scalarTimePeriods}}
-                </optgroup>
-                <optgroup label="{{localize 'DND5E.DurationPermanent'}}">
-                    {{selectOptions config.permanentTimePeriods}}
-                </optgroup>
-                {{selectOptions config.specialTimePeriods}}
-            {{/select}}
-        </select>
-    </div>
-</div>
-
-{{!-- Limited Uses --}}
-<div class="form-group uses-per">
-    <label>{{ localize "DND5E.LimitedUses" }}</label>
-    <div class="form-fields">
-        <input type="number" step="any" name="system.uses.value"
-               value="{{system.uses.value}}" data-tooltip="DND5E.UsesAvailable">
-        <span class="sep">{{localize "DND5E.of"}}</span>
-        <input type="text" name="system.uses.max" value="{{source.uses.max}}"
-               data-tooltip="DND5E.UsesMax" data-formula-editor>
-        <span class="sep">{{localize "DND5E.per"}}</span>
-        <select name="system.uses.per" data-tooltip="DND5E.UsesPeriod">
-            {{selectOptions config.limitedUsePeriods selected=system.uses.per blank=""}}
-        </select>
-    </div>
-</div>
-
-{{#if (eq system.uses.per "charges")}}
-<div class="form-group">
-    <label>{{localize "DND5E.RecoveryFormula"}}</label>
-    <div class="form-fields">
-        <input type="text" name="system.uses.recovery" value="{{system.uses.recovery}}" data-formula-editor>
-    </div>
-</div>
-{{/if}}
-
-{{!-- Consumption --}}
-<div class="form-group consumption">
-    <label>{{ localize "DND5E.ConsumeTitle" }}</label>
-    <div class="form-fields">
-        {{#if system.consume.type}}
-            <input type="number" step="any" name="system.consume.amount"
-                   value="{{system.consume.amount}}" data-tooltip="DND5E.ConsumeQuanity">
-            <select name="system.consume.target" data-tooltip="DND5E.ConsumeTarget">
-                {{selectOptions abilityConsumptionTargets selected=system.consume.target blank=""}}
-            </select>
-        {{/if}}
-        <select name="system.consume.type" data-tooltip="DND5E.ConsumeType">
-            {{selectOptions config.abilityConsumptionTypes selected=system.consume.type blank=(localize "DND5E.None")}}
-        </select>
-    </div>
-</div>
+  </div>
 {{/if}}
 ```
 
 ### item-advancement.hbs
 
 ```hbs
-<div class="tab details advancement" data-group="primary" data-tab="advancement">
-  <ol class="items-list">
+<div
+  class='tab details advancement'
+  data-group='primary'
+  data-tab='advancement'
+>
+  <ol class='items-list'>
     {{#if editable}}
-      <li class="items-header flexrow main-controls">
-        <div class="item-controls flexrow configuration-mode-control">
+      <li class='items-header flexrow main-controls'>
+        <div class='item-controls flexrow configuration-mode-control'>
           {{#if isEmbedded}}
             {{#if advancementEditable}}
-              <a class="item-control" data-action="toggle-configuration"
-                 data-tooltip="DND5E.AdvancementConfigurationActionDisable">
-                <i class="fas fa-lock-open"></i> {{localize "DND5E.AdvancementConfigurationModeEnabled"}}
+              <a
+                class='item-control'
+                data-action='toggle-configuration'
+                data-tooltip='DND5E.AdvancementConfigurationActionDisable'
+              >
+                <i class='fas fa-lock-open'></i>
+                {{localize 'DND5E.AdvancementConfigurationModeEnabled'}}
               </a>
             {{else}}
-              <a class="item-control" data-action="toggle-configuration"
-                 data-tooltip="DND5E.AdvancementConfigurationActionEnable">
-                <i class="fas fa-lock"></i> {{localize "DND5E.AdvancementConfigurationModeDisabled"}}
+              <a
+                class='item-control'
+                data-action='toggle-configuration'
+                data-tooltip='DND5E.AdvancementConfigurationActionEnable'
+              >
+                <i class='fas fa-lock'></i>
+                {{localize 'DND5E.AdvancementConfigurationModeDisabled'}}
               </a>
             {{/if}}
           {{/if}}
         </div>
         {{#if advancementEditable}}
-          <div class="item-controls flexrow add-button">
-            <a class="item-control" data-action="add" data-tooltip="DND5E.AdvancementControlCreate">
-              <i class="fas fa-plus"></i>
+          <div class='item-controls flexrow add-button'>
+            <a
+              class='item-control'
+              data-action='add'
+              data-tooltip='DND5E.AdvancementControlCreate'
+            >
+              <i class='fas fa-plus'></i>
             </a>
           </div>
         {{/if}}
@@ -2272,61 +2509,80 @@ export default class ItemSheet5e extends ItemSheet {
     {{/if}}
 
     {{#each advancement as |data level|}}
-      <li class="items-header flexrow" data-level="{{level}}">
-        <h3 class="item-name flexrow">
-          {{#if (eq level "0")}}
-            {{localize "DND5E.AdvancementLevelAnyHeader"}}
-          {{else if (eq level "unconfigured")}}
-            {{localize "DND5E.AdvancementLevelNoneHeader"}}
+      <li class='items-header flexrow' data-level='{{level}}'>
+        <h3 class='item-name flexrow'>
+          {{#if (eq level '0')}}
+            {{localize 'DND5E.AdvancementLevelAnyHeader'}}
+          {{else if (eq level 'unconfigured')}}
+            {{localize 'DND5E.AdvancementLevelNoneHeader'}}
           {{else}}
-            {{localize "DND5E.AdvancementLevelHeader" level=level}}
+            {{localize 'DND5E.AdvancementLevelHeader' level=level}}
           {{/if}}
         </h3>
 
-        {{#if (and @root.editable data.configured (ne level "unconfigured"))}}
+        {{#if (and @root.editable data.configured (ne level 'unconfigured'))}}
           <div>
-            <a class="item-control" data-action="modify-choices">{{localize "DND5E.AdvancementModifyChoices"}}</a>
+            <a class='item-control' data-action='modify-choices'>{{localize
+                'DND5E.AdvancementModifyChoices'
+              }}</a>
           </div>
         {{/if}}
 
-        {{#if (eq data.configured "full")}}
-          <div class="item-checkmark" data-tooltip="DND5E.AdvancementConfiguredComplete">
-            <i class="fas fa-check-circle"></i>
+        {{#if (eq data.configured 'full')}}
+          <div
+            class='item-checkmark'
+            data-tooltip='DND5E.AdvancementConfiguredComplete'
+          >
+            <i class='fas fa-check-circle'></i>
           </div>
-        {{else if (eq data.configured "partial")}}
-          <div class="item-warning" data-tooltip="DND5E.AdvancementConfiguredIncomplete">
-            <i class="fas fa-exclamation-triangle"></i>
+        {{else if (eq data.configured 'partial')}}
+          <div
+            class='item-warning'
+            data-tooltip='DND5E.AdvancementConfiguredIncomplete'
+          >
+            <i class='fas fa-exclamation-triangle'></i>
           </div>
         {{/if}}
       </li>
-      <ol class="item-list">
+      <ol class='item-list'>
         {{#each data.items}}
-          <li class="advancement-item item flexrow" data-id="{{this.id}}">
-            <div class="item-name flexrow">
-              <div class="item-image" style="background-image: url('{{this.icon}}')"></div>
+          <li class='advancement-item item flexrow' data-id='{{this.id}}'>
+            <div class='item-name flexrow'>
+              <div
+                class='item-image'
+                style="background-image: url('{{this.icon}}')"
+              ></div>
               <h4>{{{this.title}}}</h4>
             </div>
             {{#if (or @root.advancementEditable (not @root.isEmbedded))}}
-              <div class="flexrow">
-                {{#if (eq this.classRestriction "primary")}}
-                  {{localize "DND5E.AdvancementClassRestrictionPrimary"}}
-                {{else if (eq this.classRestriction "secondary")}}
-                  {{localize "DND5E.AdvancementClassRestrictionSecondary"}}
+              <div class='flexrow'>
+                {{#if (eq this.classRestriction 'primary')}}
+                  {{localize 'DND5E.AdvancementClassRestrictionPrimary'}}
+                {{else if (eq this.classRestriction 'secondary')}}
+                  {{localize 'DND5E.AdvancementClassRestrictionSecondary'}}
                 {{/if}}
               </div>
             {{/if}}
             {{#if @root.advancementEditable}}
-              <div class="item-controls flexrow">
-                  <a class="item-control" data-action="edit" data-tooltip="DND5E.AdvancementControlEdit">
-                    <i class="fas fa-edit"></i>
-                  </a>
-                  <a class="item-control" data-action="delete" data-tooltip="DND5E.AdvancementControlDelete">
-                    <i class="fas fa-trash"></i>
-                  </a>
+              <div class='item-controls flexrow'>
+                <a
+                  class='item-control'
+                  data-action='edit'
+                  data-tooltip='DND5E.AdvancementControlEdit'
+                >
+                  <i class='fas fa-edit'></i>
+                </a>
+                <a
+                  class='item-control'
+                  data-action='delete'
+                  data-tooltip='DND5E.AdvancementControlDelete'
+                >
+                  <i class='fas fa-trash'></i>
+                </a>
               </div>
             {{/if}}
             {{#if this.summary}}
-              <div class="item-summary">
+              <div class='item-summary'>
                 {{{this.summary}}}
               </div>
             {{/if}}
@@ -2337,111 +2593,139 @@ export default class ItemSheet5e extends ItemSheet {
 
   </ol>
 </div>
-
 ```
 
 ### item-description.hbs
 
 ```hbs
-<div class="tab flexrow active" data-group="primary" data-tab="description">
+<div class='tab flexrow active' data-group='primary' data-tab='description'>
 
-    <div class="item-properties">
-        {{#if isPhysical}}
-        <div class="form-group">
-            <label>{{ localize "DND5E.Quantity" }}</label>
-            {{numberInput system.quantity name="system.quantity"}}
-        </div>
+  <div class='item-properties'>
+    {{#if isPhysical}}
+      <div class='form-group'>
+        <label>{{localize 'DND5E.Quantity'}}</label>
+        {{numberInput system.quantity name='system.quantity'}}
+      </div>
 
-        <div class="form-group">
-            <label>{{ localize "DND5E.Weight" }}</label>
-            {{numberInput system.weight name="system.weight"}}
-        </div>
+      <div class='form-group'>
+        <label>{{localize 'DND5E.Weight'}}</label>
+        {{numberInput system.weight name='system.weight'}}
+      </div>
 
-        <div class="form-group">
-            <label>{{ localize "DND5E.Price" }}</label>
-            {{numberInput system.price.value name="system.price.value"}}
-            <select name="system.price.denomination">
-                {{selectOptions config.currencies selected=system.price.denomination labelAttr="abbreviation"}}
-            </select>
-        </div>
+      <div class='form-group'>
+        <label>{{localize 'DND5E.Price'}}</label>
+        {{numberInput system.price.value name='system.price.value'}}
+        <select name='system.price.denomination'>
+          {{selectOptions
+            config.currencies
+            selected=system.price.denomination
+            labelAttr='abbreviation'
+          }}
+        </select>
+      </div>
+    {{/if}}
+
+    {{#if (or labels.toHit labels.derivedDamage)}}
+      <h4 class='properties-header'>{{localize 'DND5E.Attack'}}/{{localize
+          'DND5E.Damage'
+        }}</h4>
+      <ol class='properties-list'>
+        {{#if labels.save}}
+          <li>
+            {{labels.save}}
+          </li>
         {{/if}}
 
-        {{#if (or labels.toHit labels.derivedDamage)}}
-        <h4 class="properties-header">{{localize "DND5E.Attack"}}/{{localize "DND5E.Damage"}}</h4>
-        <ol class="properties-list">
-            {{#if labels.save}}
-            <li>
-                {{labels.save}}
-            </li>
-            {{/if}}
-
-            {{#if labels.toHit}}
-            <li>
-                {{labels.toHit}} {{localize "DND5E.ToHit"}}
-            </li>
-            {{/if}}
-
-            {{#each labels.derivedDamage}}
-            <li>
-                {{label}}
-            </li>
-            {{/each}}
-        </ol>
+        {{#if labels.toHit}}
+          <li>
+            {{labels.toHit}}
+            {{localize 'DND5E.ToHit'}}
+          </li>
         {{/if}}
 
-        {{#if itemProperties.length}}
-        <h4 class="properties-header">{{localize "DND5E.Properties"}}</h4>
-        <ol class="properties-list">
-            {{#each itemProperties}}
-            <li>{{this}}</li>
-            {{/each}}
-        </ol>
-        {{/if}}
-    </div>
+        {{#each labels.derivedDamage}}
+          <li>
+            {{label}}
+          </li>
+        {{/each}}
+      </ol>
+    {{/if}}
 
-    {{editor descriptionHTML target="system.description.value" button=true editable=editable engine="prosemirror"
-             collaborate=false}}
+    {{#if itemProperties.length}}
+      <h4 class='properties-header'>{{localize 'DND5E.Properties'}}</h4>
+      <ol class='properties-list'>
+        {{#each itemProperties}}
+          <li>{{this}}</li>
+        {{/each}}
+      </ol>
+    {{/if}}
+  </div>
+
+  {{editor
+    descriptionHTML
+    target='system.description.value'
+    button=true
+    editable=editable
+    engine='prosemirror'
+    collaborate=false
+  }}
 </div>
 ```
 
 ### item-mountable.hbs
 
 ```hbs
-<div class="form-group">
-    <label>{{localize 'DND5E.HitPoints'}}</label>
-    <div class="form-fields">
-        {{numberInput system.hp.value name="system.hp.value" placeholder="0"}}
-        <span class="sep">&sol;</span>
-        {{numberInput system.hp.max name="system.hp.max" placeholder="0"}}
-        {{numberInput system.hp.dt name="system.hp.dt" placeholder=(localize "DND5E.Threshold")}}
-    </div>
+<div class='form-group'>
+  <label>{{localize 'DND5E.HitPoints'}}</label>
+  <div class='form-fields'>
+    {{numberInput system.hp.value name='system.hp.value' placeholder='0'}}
+    <span class='sep'>&sol;</span>
+    {{numberInput system.hp.max name='system.hp.max' placeholder='0'}}
+    {{numberInput
+      system.hp.dt
+      name='system.hp.dt'
+      placeholder=(localize 'DND5E.Threshold')
+    }}
+  </div>
 </div>
 
-<div class="form-group">
-    <label>{{localize 'DND5E.HealthConditions'}}</label>
-    <div class="form-fields">
-        <input type="text" name="system.hp.conditions" value="{{system.hp.conditions}}">
-    </div>
+<div class='form-group'>
+  <label>{{localize 'DND5E.HealthConditions'}}</label>
+  <div class='form-fields'>
+    <input
+      type='text'
+      name='system.hp.conditions'
+      value='{{system.hp.conditions}}'
+    />
+  </div>
 </div>
 ```
 
 ### item-spellcasting.hbs
 
 ```hbs
-<div class="form-group">
-  <label>{{localize "DND5E.SpellProgression"}}</label>
-  <div class="form-fields">
-    <select name="system.spellcasting.progression">
-      {{selectOptions config.spellProgression selected=system.spellcasting.progression}}
+<div class='form-group'>
+  <label>{{localize 'DND5E.SpellProgression'}}</label>
+  <div class='form-fields'>
+    <select name='system.spellcasting.progression'>
+      {{selectOptions
+        config.spellProgression
+        selected=system.spellcasting.progression
+      }}
     </select>
   </div>
 </div>
 
-<div class="form-group">
-  <label>{{localize "DND5E.SpellAbility"}}</label>
-  <div class="form-fields">
-    <select name="system.spellcasting.ability">
-      {{selectOptions config.abilities selected=system.spellcasting.ability labelAttr="label" blank=""}}
+<div class='form-group'>
+  <label>{{localize 'DND5E.SpellAbility'}}</label>
+  <div class='form-fields'>
+    <select name='system.spellcasting.ability'>
+      {{selectOptions
+        config.abilities
+        selected=system.spellcasting.ability
+        labelAttr='label'
+        blank=''
+      }}
     </select>
   </div>
 </div>
@@ -2450,11 +2734,11 @@ export default class ItemSheet5e extends ItemSheet {
 ### item-summary.hbs
 
 ```hbs
-<div class="item-summary">
+<div class='item-summary'>
   {{{description.value}}}
-  
-  <div class="item-properties">
-    {{#each properties}}<span class="tag">{{this}}</span>{{/each}}
+
+  <div class='item-properties'>
+    {{#each properties}}<span class='tag'>{{this}}</span>{{/each}}
   </div>
 </div>
 ```
@@ -2463,776 +2747,776 @@ export default class ItemSheet5e extends ItemSheet {
 
 ```scss
 .tidy5e.sheet.item {
-    min-height: 500px;
-  
-    .window-content {
-      padding: 0;
-  
-      form {
-        height: 100%;
-        overflow: hidden;
-      }
+  min-height: 500px;
+
+  .window-content {
+    padding: 0;
+
+    form {
+      height: 100%;
+      overflow: hidden;
     }
-  
-    a:hover {
-      text-shadow: none;
-    }
-  
-    // Checkbox styling
-  
-    input[type="checkbox"],
-    button,
-    select {
-      cursor: pointer;
-      font-family: var(--t5e-signika);
-    }
-  
-    // input[type="checkbox"] {
-    // 	height: 20px;
-    // }
-  
-    button,
-    select {
-      border: none;
-      color: var(--t5e-primary-font);
-    }
-  
-    select {
-      padding: 0;
-    }
-  
-    input[type="text"] {
-      border: none;
-      padding: 0 6px;
-      color: var(--t5e-primary-font);
-    }
-  
-    input[type="text"]:hover,
-    input[type="text"]:focus {
-      border: none;
-      box-shadow: 0 0 0 1px var(--t5e-primary-accent) inset;
-    }
-  
-    input[type="checkbox"] {
-      margin: 2px;
-    }
-  
-    .sheet-header {
+  }
+
+  a:hover {
+    text-shadow: none;
+  }
+
+  // Checkbox styling
+
+  input[type='checkbox'],
+  button,
+  select {
+    cursor: pointer;
+    font-family: var(--t5e-signika);
+  }
+
+  // input[type="checkbox"] {
+  // 	height: 20px;
+  // }
+
+  button,
+  select {
+    border: none;
+    color: var(--t5e-primary-font);
+  }
+
+  select {
+    padding: 0;
+  }
+
+  input[type='text'] {
+    border: none;
+    padding: 0 6px;
+    color: var(--t5e-primary-font);
+  }
+
+  input[type='text']:hover,
+  input[type='text']:focus {
+    border: none;
+    box-shadow: 0 0 0 1px var(--t5e-primary-accent) inset;
+  }
+
+  input[type='checkbox'] {
+    margin: 2px;
+  }
+
+  .sheet-header {
+    flex: 0 0 80px;
+    padding: 1rem;
+    background: var(--t5e-header-background);
+    align-items: flex-start;
+
+    .item-image {
       flex: 0 0 80px;
-      padding: 1rem;
-      background: var(--t5e-header-background);
-      align-items: flex-start;
-  
-      .item-image {
-        flex: 0 0 80px;
-        width: 80px;
-        height: 80px;
-        position: relative;
-  
-        .item-menu {
-          position: absolute;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-  
-          &.hidden {
-            display: none;
-          }
-  
-          a {
-            background: var(--t5e-background);
-            color: var(--t5e-primary-font);
-            border: none;
-            margin: 1px 0;
-            padding: 4px 6px;
-            line-height: 1;
-            font-size: 12px;
-            border: 1px solid var(--t5e-light-color);
-            border-radius: 5px;
-            text-align: center;
-          }
-        }
-      }
-  
-      img.profile {
-        flex: 0 0 80px;
-        width: 80px;
-        height: 80px;
-        border-radius: 5px;
-        margin-right: 0;
-      }
-  
-      .header-details {
-        margin-left: 1rem;
+      width: 80px;
+      height: 80px;
+      position: relative;
+
+      .item-menu {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
         align-items: center;
+
+        &.hidden {
+          display: none;
+        }
+
+        a {
+          background: var(--t5e-background);
+          color: var(--t5e-primary-font);
+          border: none;
+          margin: 1px 0;
+          padding: 4px 6px;
+          line-height: 1;
+          font-size: 12px;
+          border: 1px solid var(--t5e-light-color);
+          border-radius: 5px;
+          text-align: center;
+        }
       }
-  
-      .charname {
+    }
+
+    img.profile {
+      flex: 0 0 80px;
+      width: 80px;
+      height: 80px;
+      border-radius: 5px;
+      margin-right: 0;
+    }
+
+    .header-details {
+      margin-left: 1rem;
+      align-items: center;
+    }
+
+    .charname {
+      padding: 0;
+      height: 30px;
+      line-height: 18px;
+
+      input {
+        margin: 0;
         padding: 0;
-        height: 30px;
-        line-height: 18px;
-  
+        font-size: 24px;
+        height: 100%;
+        width: 100%;
+        font-family: var(--t5e-modesto);
+        background: transparent;
+      }
+    }
+
+    .item-subtitle {
+      padding: 2px 4px;
+      background: var(--t5e-faint-color);
+      border-radius: 5px;
+      color: var(--t5e-tertiary-color);
+      display: flex;
+      align-items: flex-end;
+      height: 20px;
+      margin-left: 1rem;
+      flex: 0 0 1px;
+      font-family: var(--t5e-modesto);
+
+      .item-type {
+        margin: 0;
+        font-size: 20px;
+        line-height: 16px;
+        color: var(--t5e-secondary-color);
+      }
+
+      .item-status {
+        font-size: 16px;
+        line-height: 14px;
+        margin-left: 4px;
+        color: var(--t5e-tertiary-color);
+        white-space: nowrap;
+      }
+    } //.item-subtitle
+
+    .summary {
+      border: 1px solid var(--t5e-light-color);
+      border-left: none;
+      border-right: none;
+      display: flex;
+      font-size: 13px;
+      font-family: var(--t5e-signika);
+      height: 22px;
+      flex: 0 0 100%;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      width: 100%;
+
+      li {
+        border-left: 1px solid var(--t5e-faint-color);
+        line-height: 20px;
+        font-weight: 600;
+
         input {
-          margin: 0;
-          padding: 0;
-          font-size: 24px;
-          height: 100%;
-          width: 100%;
-          font-family: var(--t5e-modesto);
+          height: 20px;
           background: transparent;
+          font-weight: 400;
+        }
+
+        select {
+          width: 100%;
+          height: 20px;
+          text-transform: capitalize;
+        }
+
+        &:first-child {
+          border: none;
+          padding-left: 0;
+        }
+
+        &:last-child {
+          padding-right: 0;
+        }
+      } //li
+    } //.summary
+  } //.sheet-header
+
+  // navigation
+
+  .sheet-navigation {
+    display: flex;
+    flex: 0 0 1px;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    .item {
+      padding: 5px 1rem 0 1rem;
+      background: var(--t5e-header-background);
+      border: 1px solid transparent;
+      border-bottom: 1px solid var(--t5e-header-border);
+      font-size: 13px;
+      text-align: left;
+      height: 26px;
+      flex: 1 1 auto;
+
+      &:hover {
+        color: var(--t5e-primary-accent);
+      }
+    }
+
+    .item.active {
+      background: transparent;
+      border: 1px solid var(--t5e-header-border);
+      border-bottom-color: transparent;
+      font-weight: 700;
+      cursor: default;
+      text-shadow: none;
+
+      &:hover {
+        color: inherit;
+      }
+    }
+
+    .item:first-child.active {
+      border-left-color: transparent;
+    }
+
+    .item:last-child.active {
+      border-right-color: transparent;
+    }
+  } //.sheet-navigation
+
+  // item sheet body
+
+  .sheet-body {
+    padding: 1rem;
+    padding-right: 0.25rem;
+    overflow: hidden;
+
+    // item properties
+
+    .item-properties {
+      flex: 0 0 120px;
+      margin: 0;
+      padding: 0 0.5rem 0 0;
+      border-right: 1px solid var(--t5e-faint-color);
+      height: 100%;
+
+      .form-group {
+        margin: 0;
+        border-bottom: 1px solid var(--t5e-faint-color);
+        color: var(--t5e-secondary-color);
+        font-size: 13px;
+
+        &:last-of-type {
+          border: none;
+        }
+
+        label {
+          font-weight: 600;
+          line-height: 20px;
+        }
+
+        input {
+          flex: 0 0 40px;
+          text-align: right;
+          background: none;
+          height: 16px;
         }
       }
-  
-      .item-subtitle {
-        padding: 2px 4px;
-        background: var(--t5e-faint-color);
-        border-radius: 5px;
-        color: var(--t5e-tertiary-color);
-        display: flex;
-        align-items: flex-end;
-        height: 20px;
-        margin-left: 1rem;
-        flex: 0 0 1px;
-        font-family: var(--t5e-modesto);
-  
-        .item-type {
-          margin: 0;
-          font-size: 20px;
-          line-height: 16px;
-          color: var(--t5e-secondary-color);
-        }
-  
-        .item-status {
-          font-size: 16px;
-          line-height: 14px;
-          margin-left: 4px;
-          color: var(--t5e-tertiary-color);
-          white-space: nowrap;
-        }
-      } //.item-subtitle
-  
-      .summary {
-        border: 1px solid var(--t5e-light-color);
-        border-left: none;
-        border-right: none;
-        display: flex;
-        font-size: 13px;
-        font-family: var(--t5e-signika);
-        height: 22px;
-        flex: 0 0 100%;
+
+      .properties-list {
+        margin-top: 0.25rem;
         list-style: none;
         margin: 0;
         padding: 0;
-        width: 100%;
-  
+
         li {
-          border-left: 1px solid var(--t5e-faint-color);
-          line-height: 20px;
-          font-weight: 600;
-  
-          input {
-            height: 20px;
-            background: transparent;
-            font-weight: 400;
-          }
-  
-          select {
-            width: 100%;
-            height: 20px;
-            text-transform: capitalize;
-          }
-  
-          &:first-child {
-            border: none;
-            padding-left: 0;
-          }
-  
-          &:last-child {
-            padding-right: 0;
-          }
-        } //li
-      } //.summary
-    } //.sheet-header
-  
-    // navigation
-  
-    .sheet-navigation {
+          margin: 0 0 2px 0;
+          border: 1px solid var(--t5e-faint-color);
+          border-radius: 5px;
+          font-size: 11px;
+          line-height: 16px;
+          padding: 0 2px;
+          background: rgba(0, 0, 0, 0.05);
+          text-align: center;
+        }
+      }
+
+      .form-group + .properties-list {
+        margin-top: 0.5rem;
+      }
+    }
+
+    // item sheet editor
+
+    .editor {
+      margin-left: 0.5rem;
+      height: 100%;
+      font-size: 13px;
       display: flex;
-      flex: 0 0 1px;
-      align-items: center;
-      justify-content: center;
-      flex-direction: row;
-      flex-wrap: wrap;
-  
-      .item {
-        padding: 5px 1rem 0 1rem;
-        background: var(--t5e-header-background);
-        border: 1px solid transparent;
-        border-bottom: 1px solid var(--t5e-header-border);
+      flex-direction: column;
+
+      .details-headline {
+        font-weight: 600;
         font-size: 13px;
-        text-align: left;
-        height: 26px;
-        flex: 1 1 auto;
-  
-        &:hover {
-          color: var(--t5e-primary-accent);
-        }
+        line-height: 1;
+        margin-bottom: 0.5rem;
+        border: none;
       }
-  
-      .item.active {
+
+      .editor-edit {
+        right: 0.75rem;
+        top: 0;
+        padding: 0;
+        border: none;
+        box-shadow: none;
         background: transparent;
-        border: 1px solid var(--t5e-header-border);
-        border-bottom-color: transparent;
-        font-weight: 700;
-        cursor: default;
-        text-shadow: none;
-  
-        &:hover {
-          color: inherit;
+
+        i {
+          font-size: 1em;
+          position: absolute;
+          top: 0;
+          right: 5px;
+          cursor: pointer;
+          text-shadow: none;
         }
-      }
-  
-      .item:first-child.active {
-        border-left-color: transparent;
-      }
-  
-      .item:last-child.active {
-        border-right-color: transparent;
-      }
-    } //.sheet-navigation
-  
-    // item sheet body
-  
-    .sheet-body {
-      padding: 1rem;
-      padding-right: 0.25rem;
-      overflow: hidden;
-  
-      // item properties
-  
-      .item-properties {
-        flex: 0 0 120px;
+      } //.editor-edit
+
+      .editor-content {
         margin: 0;
-        padding: 0 0.5rem 0 0;
-        border-right: 1px solid var(--t5e-faint-color);
-        height: 100%;
-  
-        .form-group {
-          margin: 0;
-          border-bottom: 1px solid var(--t5e-faint-color);
-          color: var(--t5e-secondary-color);
-          font-size: 13px;
-  
-          &:last-of-type {
-            border: none;
-          }
-  
-          label {
-            font-weight: 600;
-            line-height: 20px;
-          }
-  
-          input {
-            flex: 0 0 40px;
-            text-align: right;
-            background: none;
-            height: 16px;
+        padding: 0 0.75rem 0 0;
+
+        p,
+        li {
+          line-height: 1.4;
+        }
+
+        a.entity-link,
+        a.inline-roll {
+          padding: 1px 2px 0px 2px;
+          border-radius: 5px;
+          background: var(--t5e-faint-color);
+          color: var(--t5e-primary-font);
+        }
+      } //.editor-content
+
+      .tox {
+        .tox-toolbar__group {
+          padding: 0;
+        }
+
+        .tox-tbtn {
+          width: 24px;
+          height: 24px;
+        }
+
+        &.tox-tinymce .tox-tbtn[title='Formats'],
+        &.tox-prosemirror .tox-tbtn[title='Formats'] {
+          width: 90px;
+        }
+
+        .tox-tbtn--select {
+          width: auto;
+        }
+      } //.tox
+    } //.editor
+
+    // tabs
+    .tab {
+      overflow: hidden auto;
+      height: 100%;
+      align-content: flex-start;
+      // 	padding: 0;
+
+      &.item-betterRolls,
+      &.details,
+      &.advancement,
+      &.dynamiceffects,
+      &.magic-items {
+        padding-right: 0.75rem;
+
+        .form-header {
+          margin: 8px 6px 4px 6px;
+          font-size: 18px;
+          line-height: 16px;
+          font-family: var(--t5e-modesto);
+          font-weight: 600;
+          color: var(--t5e-primary-font);
+
+          &:first-child {
+            margin-top: 0;
           }
         }
-  
-        .properties-list {
-          margin-top: 0.25rem;
-          list-style: none;
-          margin: 0;
-          padding: 0;
-  
-          li {
-            margin: 0 0 2px 0;
-            border: 1px solid var(--t5e-faint-color);
-            border-radius: 5px;
-            font-size: 11px;
-            line-height: 16px;
-            padding: 0 2px;
-            background: rgba(0, 0, 0, 0.05);
+
+        .form-group {
+          margin: 2px 0;
+          padding: 3px;
+          background: var(--t5e-faintest-color);
+          border-radius: 5px;
+
+          .form-fields {
+            justify-content: flex-start;
+            gap: 1px;
+          }
+
+          &.stacked {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1px;
+          }
+
+          span {
             text-align: center;
           }
-        }
-  
-        .form-group + .properties-list {
-          margin-top: 0.5rem;
-        }
-      }
-  
-      // item sheet editor
-  
-      .editor {
-        margin-left: 0.5rem;
-        height: 100%;
-        font-size: 13px;
-        display: flex;
-        flex-direction: column;
-  
-        .details-headline {
-          font-weight: 600;
-          font-size: 13px;
-          line-height: 1;
-          margin-bottom: 0.5rem;
-          border: none;
-        }
-  
-        .editor-edit {
-          right: 0.75rem;
-          top: 0;
-          padding: 0;
-          border: none;
-          box-shadow: none;
-          background: transparent;
-  
-          i {
-            font-size: 1em;
-            position: absolute;
-            top: 0;
-            right: 5px;
-            cursor: pointer;
-            text-shadow: none;
-          }
-        } //.editor-edit
-  
-        .editor-content {
-          margin: 0;
-          padding: 0 0.75rem 0 0;
-  
-          p,
-          li {
-            line-height: 1.4;
-          }
-  
-          a.entity-link,
-          a.inline-roll {
-            padding: 1px 2px 0px 2px;
-            border-radius: 5px;
-            background: var(--t5e-faint-color);
-            color: var(--t5e-primary-font);
-          }
-        } //.editor-content
-  
-        .tox {
-          .tox-toolbar__group {
-            padding: 0;
-          }
-  
-          .tox-tbtn {
-            width: 24px;
-            height: 24px;
-          }
-  
-          &.tox-tinymce .tox-tbtn[title="Formats"],
-          &.tox-prosemirror .tox-tbtn[title="Formats"] {
-            width: 90px;
-          }
-  
-          .tox-tbtn--select {
-            width: auto;
-          }
-        } //.tox
-      } //.editor
-  
-      // tabs
-      .tab {
-        overflow: hidden auto;
-        height: 100%;
-        align-content: flex-start;
-        // 	padding: 0;
-  
-        &.item-betterRolls,
-        &.details,
-        &.advancement,
-        &.dynamiceffects,
-        &.magic-items {
-          padding-right: 0.75rem;
-  
-          .form-header {
-            margin: 8px 6px 4px 6px;
-            font-size: 18px;
-            line-height: 16px;
-            font-family: var(--t5e-modesto);
+
+          label {
+            margin-left: 4px;
+            line-height: 20px;
+            font-size: 13px;
             font-weight: 600;
-            color: var(--t5e-primary-font);
-  
+            color: var(--t5e-secondary-color);
+            white-space: nowrap;
+
+            &.checkbox {
+              position: relative;
+              z-index: 1;
+              margin: 0;
+              padding: 1px;
+              display: flex;
+              border-radius: 3px;
+              overflow: hidden;
+              border: 1px solid var(--t5e-checkbox-outline);
+              background: var(--t5e-checkbox-checked);
+              height: 20px;
+              cursor: pointer;
+              color: var(--t5e-checkbox-font);
+              font-size: 13px;
+              line-height: 16px;
+              flex: 0 0 calc(100% / 4 - 1px);
+              font-weight: 400;
+
+              &:hover {
+                background: var(--t5e-checkbox-checked);
+              }
+
+              &:hover input::after {
+                background: var(--t5e-checkbox-checked);
+              }
+            }
+          }
+
+          select,
+          input[type='text'],
+          button {
+            background: rgba(255, 255, 255, 0.3);
+            height: 20px;
+            font-size: 13px;
+
+            &:hover {
+              background: rgba(255, 255, 255, 0.5);
+            }
+          }
+
+          input:disabled {
+            background: transparent;
+            color: var(--t5e-secondary-color);
+
+            &:hover {
+              border: none !important;
+            }
+          }
+
+          .checkbox input {
+            position: static;
+            margin: 0;
+
+            &::after {
+              content: '';
+              display: block;
+              position: absolute;
+              top: 0;
+              left: 0;
+              z-index: -1;
+              background: var(--t5e-checkbox-unchecked);
+              width: 100%;
+              height: 100%;
+              cursor: pointer;
+            }
+
+            &:checked::after {
+              display: none;
+            }
+          }
+
+          input[name='data.activation.cost'],
+          input[name='data.target.value'],
+          input[name='data.range.value'],
+          input[name='data.duration.value'],
+          input[name='data.uses.value'],
+          &.damage-parts input {
+            text-align: right;
+          }
+
+          input[name='data.save.dc'] {
+            text-align: center;
+            flex: 0 0 30px;
+          }
+
+          input[type='text']:hover,
+          select:hover,
+          button:hover,
+          select:focus {
+            border: none;
+            box-shadow: 0 0 0 1px var(--t5e-primary-accent) inset;
+          }
+        } //.form-group
+
+        .form-group label.prepared,
+        .form-group.recharge label {
+          flex: unset !important;
+          padding-right: 8px;
+          margin: 0 0.5rem 0 0;
+          flex-direction: row-reverse;
+
+          input {
+            width: 20px;
+            height: 16px;
+            top: initial;
+            margin: 0 4px 0 0;
+          }
+        }
+
+        .form-group.recharge label {
+          margin-right: 0;
+        }
+      } //.tab children
+
+      &.item-betterRolls .form-group label.checkbox {
+        flex: 0 0 calc(100% / 3 - 1px);
+      }
+
+      &.effects,
+      &.advancement {
+        .items-list {
+          flex: 1;
+          padding: 0 9px 8px 0;
+          margin: 0;
+          list-style: none;
+          overflow-y: scroll;
+
+          .item-list {
+            padding: 0 0 0 8px;
+            margin: 0;
+          }
+
+          .items-header {
+            align-items: center;
+            margin: 8px 0 2px 0;
+            padding: 4px 0 2px 6px;
+            line-height: 12px;
+            font-size: 12px;
+            background: var(--t5e-faint-color);
+            box-shadow: 0 0 3px inset var(--t5e-light-color);
+            border-radius: 5px;
+
             &:first-child {
               margin-top: 0;
             }
-          }
-  
-          .form-group {
-            margin: 2px 0;
-            padding: 3px;
-            background: var(--t5e-faintest-color);
-            border-radius: 5px;
-  
-            .form-fields {
-              justify-content: flex-start;
-              gap: 1px;
-            }
-  
-            &.stacked {
-              display: flex;
-              flex-wrap: wrap;
-              gap: 1px;
-            }
-  
-            span {
-              text-align: center;
-            }
-  
-            label {
-              margin-left: 4px;
-              line-height: 20px;
-              font-size: 13px;
-              font-weight: 600;
-              color: var(--t5e-secondary-color);
-              white-space: nowrap;
-  
-              &.checkbox {
-                position: relative;
-                z-index: 1;
-                margin: 0;
-                padding: 1px;
-                display: flex;
-                border-radius: 3px;
-                overflow: hidden;
-                border: 1px solid var(--t5e-checkbox-outline);
-                background: var(--t5e-checkbox-checked);
-                height: 20px;
-                cursor: pointer;
-                color: var(--t5e-checkbox-font);
-                font-size: 13px;
-                line-height: 16px;
-                flex: 0 0 calc(100% / 4 - 1px);
-                font-weight: 400;
-  
-                &:hover {
-                  background: var(--t5e-checkbox-checked);
-                }
-  
-                &:hover input::after {
-                  background: var(--t5e-checkbox-checked);
-                }
-              }
-            }
-  
-            select,
-            input[type="text"],
-            button {
-              background: rgba(255, 255, 255, 0.3);
-              height: 20px;
-              font-size: 13px;
-  
-              &:hover {
-                background: rgba(255, 255, 255, 0.5);
-              }
-            }
-  
-            input:disabled {
-              background: transparent;
-              color: var(--t5e-secondary-color);
-  
-              &:hover {
-                border: none !important;
-              }
-            }
-  
-            .checkbox input {
-              position: static;
-              margin: 0;
-  
-              &::after {
-                content: "";
-                display: block;
-                position: absolute;
-                top: 0;
-                left: 0;
-                z-index: -1;
-                background: var(--t5e-checkbox-unchecked);
-                width: 100%;
-                height: 100%;
-                cursor: pointer;
-              }
-  
-              &:checked::after {
-                display: none;
-              }
-            }
-  
-            input[name="data.activation.cost"],
-            input[name="data.target.value"],
-            input[name="data.range.value"],
-            input[name="data.duration.value"],
-            input[name="data.uses.value"],
-            &.damage-parts input {
-              text-align: right;
-            }
-  
-            input[name="data.save.dc"] {
-              text-align: center;
-              flex: 0 0 30px;
-            }
-  
-            input[type="text"]:hover,
-            select:hover,
-            button:hover,
-            select:focus {
-              border: none;
-              box-shadow: 0 0 0 1px var(--t5e-primary-accent) inset;
-            }
-          } //.form-group
-  
-          .form-group label.prepared,
-          .form-group.recharge label {
-            flex: unset !important;
-            padding-right: 8px;
-            margin: 0 0.5rem 0 0;
-            flex-direction: row-reverse;
-  
-            input {
-              width: 20px;
-              height: 16px;
-              top: initial;
-              margin: 0 4px 0 0;
-            }
-          }
-  
-          .form-group.recharge label {
-            margin-right: 0;
-          }
-        } //.tab children
-  
-        &.item-betterRolls .form-group label.checkbox {
-          flex: 0 0 calc(100% / 3 - 1px);
-        }
-  
-        &.effects,
-        &.advancement {
-          .items-list {
-            flex: 1;
-            padding: 0 9px 8px 0;
-            margin: 0;
-            list-style: none;
-            overflow-y: scroll;
-  
-            .item-list {
-              padding: 0 0 0 8px;
-              margin: 0;
-            }
-  
-            .items-header {
-              align-items: center;
-              margin: 8px 0 2px 0;
-              padding: 4px 0 2px 6px;
+
+            h3 {
+              font-size: 12px;
               line-height: 12px;
-              font-size: 12px;
-              background: var(--t5e-faint-color);
-              box-shadow: 0 0 3px inset var(--t5e-light-color);
-              border-radius: 5px;
-  
-              &:first-child {
-                margin-top: 0;
-              }
-  
-              h3 {
-                font-size: 12px;
-                line-height: 12px;
-                flex: 1 0 70px;
-                white-space: nowrap;
-                margin: 0;
-                font-weight: 600;
-              }
-  
-              div:not(.item-name) {
-                color: var(--t5e-tertiary-color);
-              }
+              flex: 1 0 70px;
+              white-space: nowrap;
+              margin: 0;
+              font-weight: 600;
             }
-  
-            .effect-source,
-            .effect-duration {
-              flex: 0 0 120px;
-              text-align: center;
-              justify-content: center;
-            }
-  
-            .effect-controls {
-              flex: 0 0 61px;
-              text-align: center;
-              justify-content: center;
-            }
-  
-            .items-header .effect-controls i {
-              margin-right: 4px;
-            }
-  
-            .effect-control {
-              flex: 0 0 20px;
-              display: flex;
-              justify-content: center;
-              align-items: center;
+
+            div:not(.item-name) {
               color: var(--t5e-tertiary-color);
-  
+            }
+          }
+
+          .effect-source,
+          .effect-duration {
+            flex: 0 0 120px;
+            text-align: center;
+            justify-content: center;
+          }
+
+          .effect-controls {
+            flex: 0 0 61px;
+            text-align: center;
+            justify-content: center;
+          }
+
+          .items-header .effect-controls i {
+            margin-right: 4px;
+          }
+
+          .effect-control {
+            flex: 0 0 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--t5e-tertiary-color);
+
+            .fas.fa-trash {
+              color: var(--t5e-unsafe-accent);
+            }
+
+            &:hover {
+              color: var(--t5e-secondary-color);
+
               .fas.fa-trash {
-                color: var(--t5e-unsafe-accent);
-              }
-  
-              &:hover {
-                color: var(--t5e-secondary-color);
-  
-                .fas.fa-trash {
-                  color: var(--t5e-unlinked-accent);
-                }
+                color: var(--t5e-unlinked-accent);
               }
             }
-  
-            //.items-header-label
-  
-            .item {
-              background: var(--t5e-faintest-color);
-              margin: 2px 0;
-              border-radius: 5px;
-              font-size: 12px;
-              color: var(--t5e-primary-font);
-  
-              div:not(.item-name) {
-                border-left: 1px solid var(--t5e-faint-color);
-                display: flex;
-                align-items: center;
-                justify-content: center;
+          }
+
+          //.items-header-label
+
+          .item {
+            background: var(--t5e-faintest-color);
+            margin: 2px 0;
+            border-radius: 5px;
+            font-size: 12px;
+            color: var(--t5e-primary-font);
+
+            div:not(.item-name) {
+              border-left: 1px solid var(--t5e-faint-color);
+              display: flex;
+              align-items: center;
+              justify-content: center;
+            }
+
+            div.item-summary {
+              flex: 100%;
+              justify-content: flex-start;
+              gap: 0.5em;
+              padding: 0.5em 2em;
+              border: none;
+            }
+
+            .item-name {
+              align-items: center;
+
+              h4 {
+                margin: 0;
               }
-  
-              div.item-summary {
-                flex: 100%;
-                justify-content: flex-start;
-                gap: 0.5em;
-                padding: 0.5em 2em;
-                border: none;
+            }
+
+            .item-name .item-image {
+              flex: 0 0 24px;
+              height: 24px;
+              border-radius: 5px 0px 0px 5px;
+              margin-right: 4px;
+              border: none;
+              background-size: cover;
+
+              i {
+                color: var(--t5e-tertiary-color);
+                display: none;
+                text-align: center;
+                font-size: 18px;
               }
-  
-              .item-name {
-                align-items: center;
-  
-                h4 {
-                  margin: 0;
-                }
-              }
-  
-              .item-name .item-image {
-                flex: 0 0 24px;
-                height: 24px;
-                border-radius: 5px 0px 0px 5px;
-                margin-right: 4px;
-                border: none;
-                background-size: cover;
-  
-                i {
-                  color: var(--t5e-tertiary-color);
-                  display: none;
-                  text-align: center;
-                  font-size: 18px;
-                }
-              }
-            } //.item
-          } //.effects-list
-        } //.effects
-      } //.tab
-  
-      input[type="checkbox"] {
-        -webkit-appearance: none;
-        -moz-appearance: none;
-        appearance: none;
-        background: none;
-        border: 1px solid var(--t5e-tertiary-color);
-        box-shadow: 0 0 2px var(--t5e-light-color) inset;
-        border-radius: 3px;
-        background-image: var(--t5e-check-default);
-        background-repeat: no-repeat;
-        background-position: center;
-        background-size: 60%;
+            }
+          } //.item
+        } //.effects-list
+      } //.effects
+    } //.tab
+
+    input[type='checkbox'] {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      background: none;
+      border: 1px solid var(--t5e-tertiary-color);
+      box-shadow: 0 0 2px var(--t5e-light-color) inset;
+      border-radius: 3px;
+      background-image: var(--t5e-check-default);
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: 60%;
+    }
+
+    label input[type='checkbox'] {
+      border: none;
+      box-shadow: none;
+      position: relative;
+    }
+
+    input[type='checkbox']:checked {
+      background: var(--t5e-secondary-color);
+      background-image: var(--t5e-check-checked);
+      background-size: 60%;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+
+    .checkbox input[type='checkbox']:checked {
+      background-image: var(--t5e-check-checked);
+    }
+
+    label input[type='checkbox']:checked {
+      background-color: transparent;
+    }
+  }
+
+  .damage-header {
+    margin: 8px 4px 4px 6px;
+    font-weight: 600;
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--t5e-modesto);
+    font-size: 18px;
+  }
+
+  .damage-control {
+    margin: 0 0.5rem;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    flex: 0 0 1px;
+    white-space: nowrap;
+    color: var(--t5e-tertiary-color);
+    font-family: var(--t5e-signika);
+    font-size: 13px;
+
+    // &::after {
+    // 	display: inline-block;
+    // 	content: 'Add Formula';
+    // 	margin-left: .25rem;
+    //   font-size: 12px;
+    // }
+  }
+
+  .damage-parts {
+    flex-direction: column;
+
+    li {
+      margin-top: 2px;
+      width: 100%;
+      border-bottom: 1px solid var(--t5e-faint-color);
+      padding-bottom: 2px;
+
+      &:first-child {
+        margin-top: 0;
       }
-  
-      label input[type="checkbox"] {
+
+      &:last-child {
         border: none;
-        box-shadow: none;
-        position: relative;
+        padding: 0;
       }
-  
-      input[type="checkbox"]:checked {
-        background: var(--t5e-secondary-color);
-        background-image: var(--t5e-check-checked);
-        background-size: 60%;
-        background-repeat: no-repeat;
-        background-position: center;
-      }
-  
-      .checkbox input[type="checkbox"]:checked {
-        background-image: var(--t5e-check-checked);
-      }
-  
-      label input[type="checkbox"]:checked {
-        background-color: transparent;
-      }
-    }
-  
-    .damage-header {
-      margin: 8px 4px 4px 6px;
-      font-weight: 600;
-      display: flex;
-      justify-content: space-between;
-      font-family: var(--t5e-modesto);
-      font-size: 18px;
-    }
-  
-    .damage-control {
-      margin: 0 0.5rem;
-      text-align: center;
-      display: flex;
-      align-items: center;
-      flex: 0 0 1px;
-      white-space: nowrap;
-      color: var(--t5e-tertiary-color);
-      font-family: var(--t5e-signika);
-      font-size: 13px;
-  
-      // &::after {
-      // 	display: inline-block;
-      // 	content: 'Add Formula';
-      // 	margin-left: .25rem;
-      //   font-size: 12px;
-      // }
-    }
-  
-    .damage-parts {
-      flex-direction: column;
-  
-      li {
-        margin-top: 2px;
-        width: 100%;
-        border-bottom: 1px solid var(--t5e-faint-color);
-        padding-bottom: 2px;
-  
-        &:first-child {
-          margin-top: 0;
-        }
-  
-        &:last-child {
-          border: none;
-          padding: 0;
-        }
-  
-        input {
-          margin-right: 4px;
-        }
+
+      input {
+        margin-right: 4px;
       }
     }
   }
-  ```
+}
+```

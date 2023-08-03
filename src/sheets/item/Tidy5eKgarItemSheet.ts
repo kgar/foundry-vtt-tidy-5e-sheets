@@ -4,6 +4,7 @@ import type { Item5e, ItemSheetContext } from 'src/types/item';
 import { writable } from 'svelte/store';
 import ItemTypeNotFound from './ItemTypeNotFound.svelte';
 import ItemEquipment from './ItemEquipment.svelte';
+import ItemBackground from './ItemBackground.svelte';
 import type { SheetStats } from 'src/types/types';
 import { applyTitleToWindow } from 'src/utils/applications';
 import { debug } from 'src/utils/logging';
@@ -14,7 +15,7 @@ export class Tidy5eKgarItemSheet extends dnd5e.applications.item.ItemSheet5e {
   stats = writable<SheetStats>({
     lastSubmissionTime: null,
   });
-  selectedTabId = CONSTANTS.TAB_ITEM_DESCRIPTION_ID;
+  selectedTabId: string;
 
   constructor(item: Item5e, ...args: any[]) {
     super(item, ...args);
@@ -50,6 +51,15 @@ export class Tidy5eKgarItemSheet extends dnd5e.applications.item.ItemSheet5e {
     switch (this.item.type) {
       case CONSTANTS.ITEM_TYPE_EQUIPMENT:
         new ItemEquipment({
+          target: node,
+          props: {
+            selectedTabId: this.selectedTabId ?? 'description',
+          },
+          context: stores,
+        });
+        break;
+      case CONSTANTS.ITEM_TYPE_BACKGROUND:
+        new ItemBackground({
           target: node,
           props: {
             selectedTabId: this.selectedTabId ?? 'description',
