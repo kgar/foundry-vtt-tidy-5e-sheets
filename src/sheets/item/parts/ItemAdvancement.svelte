@@ -18,11 +18,12 @@
 
   function deleteAdvancement(advancementItemId: string, item: Item5e) {
     if (item.isEmbedded && !game.settings.get('dnd5e', 'disableAdvancements')) {
-      let manager = AdvancementManager.forDeletedAdvancement(
-        item.actor,
-        item.id,
-        advancementItemId
-      );
+      let manager =
+        dnd5e.applications.advancement.AdvancementManager.forDeletedAdvancement(
+          item.actor,
+          item.id,
+          advancementItemId
+        );
       if (manager.steps.length) return manager.render(true);
     }
     return item.deleteAdvancement(advancementItemId);
@@ -30,6 +31,19 @@
 
   function toggleAdvancementLock(item: Item5e) {
     $store.toggleAdvancementLock();
+  }
+
+  function modifyChoices(advancementLevel: string, item: Item5e) {
+    let manager =
+      dnd5e.applications.advancement.AdvancementManager.forModifyChoices(
+        item.actor,
+        item.id,
+        Number(advancementLevel)
+      );
+
+    if (manager.steps.length) {
+      manager.render(true);
+    }
   }
 </script>
 
@@ -87,7 +101,7 @@
 
       {#if $store.editable && data.configured && level !== 'unconfigured'}
         <div>
-          <a class="item-control" data-action="modify-choices"
+          <a on:click={() => modifyChoices(level, $store.item)}
             >{localize('DND5E.AdvancementModifyChoices')}</a
           >
         </div>

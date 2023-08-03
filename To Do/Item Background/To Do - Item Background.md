@@ -11,12 +11,11 @@
 - [ ] Implement advancement tab
   - [x] HTML
   - [x] SCSS
-  - [ ] Behaviors
+  - [x] Behaviors
     - [x] Standalone
       - [x] Add button
       - [x] Edit button
       - [x] Delete button
-    - [ ] Embedded
+    - [x] Embedded
       - [x] toggle-configuration
-      - [ ] modify-choices - you've already banked the feature and made a choice; now swap them
-- [ ] 
+      - [x] modify-choices - you've already banked the feature and made a choice; now swap them
