@@ -14,6 +14,8 @@
 
   let store = getContext<Readable<ItemSheetContext>>('store');
 
+  $: console.log($store);
+
   const tabs: Tab[] = [
     {
       id: CONSTANTS.TAB_ITEM_DESCRIPTION_ID,
