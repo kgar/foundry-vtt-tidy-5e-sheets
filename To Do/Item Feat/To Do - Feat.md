@@ -1,6 +1,7 @@
 ## Top of mind
 
 - [x] Fix the Reveal/Hide button in secret blocks on editors. It looks bad in Kgar mode.
+- [ ] Centralize the jquery listener helper function and provide some code comments and JSDoc comments
 
 ## Resume mission
 
