@@ -4,7 +4,7 @@
   import type { Readable } from 'svelte/store';
 
   export let field: string | null = null;
-  export let labelText: string;
+  export let labelText: string | null = null;
   export let cssClass: string = '';
 
   $: inputId =
@@ -14,6 +14,8 @@
 </script>
 
 <div class="form-group {cssClass}">
-  <label for={inputId}>{labelText} <slot name="inside-after-label" /></label>
+  {#if labelText !== null}
+    <label for={inputId}>{labelText} <slot name="inside-after-label" /></label>
+  {/if}
   <slot {inputId} />
 </div>
