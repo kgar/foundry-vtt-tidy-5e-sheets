@@ -30,7 +30,7 @@
     },
   ];
 
-  Hooks.call(CONSTANTS.HOOKS_RENDERING_ITEM_FEAT_TABS, {
+  Hooks.call(CONSTANTS.HOOKS_RENDERING_ITEM_LOOT_TABS, {
     tabs,
     context: $store,
   });

@@ -1,0 +1,8 @@
+- [x] Create / wire / CONSTANTize ItemTool
+- [x] Create ItemToolDetails component
+- [x] Scaffold header, tabs, contents
+- [x] Implement Description with sidebar
+- [ ] Implement details
+- [x] Implement advancement
+- [ ] Test standalone
+- [ ] Test embedded
