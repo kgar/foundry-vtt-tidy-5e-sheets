@@ -28,7 +28,7 @@
 <select
   {id}
   data-dtype={dtype}
-  {value}
+  value={value?.toString()}
   data-tooltip={tooltip}
   on:change={document && saveChange}
   {...datasetAttributes}
