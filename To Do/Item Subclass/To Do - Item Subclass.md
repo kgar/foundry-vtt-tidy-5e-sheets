@@ -1,8 +1,0 @@
-- [ ] Create / wire / CONSTANTize ItemSubclass
-- [ ] Create ItemSubclassDetails component
-- [ ] Scaffold header, tabs, contents
-- [ ] Implement Description without sidebar
-- [ ] Implement details
-- [ ] Implement advancement
-- [ ] Test standalone
-- [ ] Test embedded

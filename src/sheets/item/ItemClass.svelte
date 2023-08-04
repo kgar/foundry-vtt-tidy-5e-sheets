@@ -8,7 +8,6 @@
   import { getContext } from 'svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import ItemProfilePicture from './parts/ItemProfilePicture.svelte';
-  import ItemTypeNotFound from './ItemTypeNotFound.svelte';
   import ItemAdvancement from './parts/ItemAdvancement.svelte';
   import TextInput from 'src/components/form/TextInput.svelte';
   import ItemDescription from './parts/ItemDescription.svelte';
@@ -16,9 +15,7 @@
 
   let store = getContext<Readable<ItemSheetContext>>('store');
 
-  $: context = $store;
-
-  $: context, console.log(context);
+  $: console.log($store);
 
   export let selectedTabId: string;
 
