@@ -68,7 +68,7 @@
     <h1 class="charname">
       <TextInput
         document={$store.item}
-        field="item.name"
+        field="name"
         value={$store.item.name}
         placeholder={localize('DND5E.ItemName')}
       />
@@ -76,7 +76,7 @@
 
     <div class="item-subtitle">
       <h4 class="item-type">{$store.item.type}</h4>
-      <span class="item-status">{$store.itemStatus}</span>
+      <span class="item-status">{$store.itemStatus ?? ''}</span>
     </div>
 
     <ul class="summary flexrow">

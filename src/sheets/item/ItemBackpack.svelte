@@ -56,7 +56,7 @@
   <div class="header-details flexrow">
     <h1 class="charname">
       <TextInput
-        field="item.name"
+        field="name"
         document={$store.item}
         value={$store.item.name}
         placeholder={localize('DND5E.ItemName')}
