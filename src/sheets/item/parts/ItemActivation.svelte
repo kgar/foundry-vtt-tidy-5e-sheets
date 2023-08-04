@@ -204,7 +204,7 @@
           value={$store.source.duration.value}
           placeholder="&mdash;"
           tooltip="DND5E.DurationValue"
-          field="source.duration.value"
+          field="system.duration.value"
           document={$store.item}
           dataset={{ formulaEditor: true }}
         />

@@ -68,7 +68,7 @@
     <h1 class="charname">
       <TextInput
         document={$store.item}
-        field="item.name"
+        field="name"
         value={$store.item.name}
         placeholder={localize('DND5E.ItemName')}
       />
