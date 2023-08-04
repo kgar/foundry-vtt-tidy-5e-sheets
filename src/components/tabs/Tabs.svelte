@@ -19,16 +19,19 @@
 </script>
 
 <nav class="tabs {cssClass}">
-  {#each tabs as tab, i (tab.id)}
-    <a
-      class={CONSTANTS.TAB_OPTION_CLASS}
-      class:active={tab.id === selectedTabId}
-      class:first-tab={i === 0}
-      class:no-border-on-last-tab={!$$slots['tab-end'] && i === tabs.length - 1}
-      data-tab-id={tab.id}
-      on:click={() => selectTab(tab)}>{localize(tab.displayName)}</a
-    >
-  {/each}
+  {#if tabs.length > 1}
+    {#each tabs as tab, i (tab.id)}
+      <a
+        class={CONSTANTS.TAB_OPTION_CLASS}
+        class:active={tab.id === selectedTabId}
+        class:first-tab={i === 0}
+        class:no-border-on-last-tab={!$$slots['tab-end'] &&
+          i === tabs.length - 1}
+        data-tab-id={tab.id}
+        on:click={() => selectTab(tab)}>{localize(tab.displayName)}</a
+      >
+    {/each}
+  {/if}
   <slot name="tab-end" />
 </nav>
 

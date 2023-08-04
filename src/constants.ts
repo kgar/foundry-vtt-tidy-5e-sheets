@@ -6,6 +6,7 @@ export const CONSTANTS = {
   ITEM_TYPE_CLASS: 'class',
   ITEM_TYPE_CONSUMABLE: 'consumable',
   ITEM_TYPE_FEAT: 'feat',
+  ITEM_TYPE_LOOT: 'loot',
   /**
    * Main button pressed, usually the left button or the un-initialized state
    */
@@ -43,6 +44,7 @@ export const CONSTANTS = {
   HOOKS_RENDERING_ITEM_CLASS_TABS: 'renderTidy5eKgarItemClassTabs',
   HOOKS_RENDERING_ITEM_CONSUMABLE_TABS: 'renderTidy5eKgarItemConsumableTabs',
   HOOKS_RENDERING_ITEM_FEAT_TABS: 'renderTidy5eKgarItemFeatTabs',
+  HOOKS_RENDERING_ITEM_LOOT_TABS: 'renderTidy5eKgarItemLootTabs',
   TAB_OPTION_CLASS: 'tab-option',
   TAB_ITEM_DESCRIPTION_ID: 'description',
   TAB_ITEM_DETAILS_ID: 'details',

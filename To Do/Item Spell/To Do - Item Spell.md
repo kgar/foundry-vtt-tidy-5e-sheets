@@ -1,0 +1,8 @@
+- [ ] Create component and wire up / make constants / etc.
+- [ ] Create ItemSpellDetails component
+- [ ] Scaffold ItemSpell header, tabs, contents
+- [ ] Implement description
+- [ ] Implement details
+- [ ] Implement effects
+- [ ] Test standlone
+- [ ] Test embedded

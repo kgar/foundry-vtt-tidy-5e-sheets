@@ -12,7 +12,7 @@
   - [x] `consumable.hbs`
   - [x] `equipment.hbs`
   - [x] `feat.hbs`
-  - [ ] `loot.hbs`
+  - [x] `loot.hbs`
   - [ ] `spell.hbs`
   - [ ] `subclass.hbs`
   - [ ] `tool.hbs`

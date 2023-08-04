@@ -1,0 +1,6 @@
+- [x] Create and wire up
+- [x] Configure header
+- [x] Use description with sidebar (no tabs!?)
+- [x] Test standalone
+- [x] Test embedded
+- [x] For fun: test reveal / hide
