@@ -372,6 +372,10 @@
         .form-fields {
           justify-content: flex-start;
           gap: 0.0625rem;
+
+          &.spell-preparation-mode {
+            gap: 0.5rem;
+          }
         }
 
         &.stacked {

@@ -10,6 +10,7 @@
   import NumberInput from 'src/components/form/NumberInput.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import ItemAction from './ItemAction.svelte';
+  import ItemFormGroup from '../form/ItemFormGroup.svelte';
 
   let store = getContext<Readable<ItemSheetContext>>('store');
 
@@ -20,9 +21,13 @@
 
 <h3 class="form-header">{localize('DND5E.SpellDetails')}</h3>
 
-<div class="form-group">
-  <label>{localize('DND5E.SpellLevel')}</label>
+<ItemFormGroup
+  labelText={localize('DND5E.SpellLevel')}
+  field="system.level"
+  let:inputId
+>
   <Select
+    id={inputId}
     document={$store.item}
     field="system.level"
     value={$store.system.level}
@@ -30,24 +35,31 @@
   >
     <SelectOptions data={$store.config.spellLevels} />
   </Select>
-</div>
+</ItemFormGroup>
 
-<div class="form-group">
-  <label>{localize('DND5E.SpellSchool')}</label>
+<ItemFormGroup
+  labelText={localize('DND5E.SpellSchool')}
+  field="system.school"
+  let:inputId
+>
   <Select
+    id={inputId}
     document={$store.item}
     field="system.school"
     value={$store.system.school}
   >
     <SelectOptions data={$store.config.spellSchools} blank="" />
   </Select>
-</div>
+</ItemFormGroup>
 
-<div class="spell-components form-group stacked">
-  <label>{localize('DND5E.SpellComponents')}</label>
+<ItemFormGroup
+  cssClass="spell-components stacked"
+  labelText={localize('DND5E.SpellComponents')}
+>
   {#each Object.entries($store.spellComponents) as [key, component]}
     {@const checked = $store.system.components[key]}
     <Checkbox
+      id="{$store.appId}-system-components-{key}"
       labelCssClass="checkbox"
       document={$store.item}
       field="system.components.{key}"
@@ -56,55 +68,74 @@
       {component.label}
     </Checkbox>
   {/each}
-</div>
+</ItemFormGroup>
 
-<div class="form-group stacked">
-  <label>{localize('DND5E.SpellMaterials')}</label>
+<ItemFormGroup
+  cssClass="stacked"
+  labelText={localize('DND5E.SpellMaterials')}
+  field=""
+  let:inputId
+>
   <TextInput
+    id={inputId}
     cssClass="materials"
     document={$store.item}
     field="system.materials.value"
     value={$store.system.materials.value}
   />
   {#if $store.system.materials.value}
-    <div class="spell-materials flexrow">
-      <label>{localize('DND5E.Supply')}</label>
+    <div class="spell-materials flexrow align-items-center small-gap">
+      <label for="{$store.appId}-system-materials-supply"
+        >{localize('DND5E.Supply')}</label
+      >
       <NumberInput
+        id="{$store.appId}-system-materials-supply"
         document={$store.item}
         field="system.materials.supply"
         value={$store.system.materials.supply}
         placeholder="0"
       />
 
-      <label>{localize('DND5E.CostGP')}</label>
+      <label for="{$store.appId}-system-materials-cost"
+        >{localize('DND5E.CostGP')}</label
+      >
       <NumberInput
+        id="{$store.appId}-system-materials-cost"
         document={$store.item}
         field="system.materials.cost"
         value={$store.system.materials.cost}
         placeholder="&mdash;"
       />
-      <label>{localize('DND5E.Consumed')}</label>
+
       <Checkbox
+        id="{$store.appId}-system-materials-consumed"
+        labelCssClass="checkbox"
         document={$store.item}
         field="system.materials.consumed"
         checked={$store.system.materials.consumed}
-      />
+      >
+        {localize('DND5E.Consumed')}
+      </Checkbox>
     </div>
   {/if}
-</div>
+</ItemFormGroup>
 
-<div class="form-group input-select">
-  <label>{localize('DND5E.SpellPreparationMode')}</label>
-  <div class="form-fields">
-    <label class="checkbox prepared">
+<ItemFormGroup
+  cssClass="input-select"
+  labelText={localize('DND5E.SpellPreparationMode')}
+>
+  <div class="form-fields spell-preparation-mode">
+    <Checkbox
+      id="{$store.appId}-system-preparation-prepared"
+      labelCssClass="checkbox prepared"
+      document={$store.item}
+      field="system.preparation.prepared"
+      checked={$store.system.preparation.prepared}
+    >
       {localize('DND5E.SpellPrepared')}
-      <Checkbox
-        document={$store.item}
-        field="system.preparation.prepared"
-        checked={$store.system.preparation.prepared}
-      />
-    </label>
+    </Checkbox>
     <Select
+      id="{$store.appId}-system-preparation-mode"
       document={$store.item}
       field="system.preparation.mode"
       value={$store.system.preparation.mode}
@@ -112,7 +143,7 @@
       <SelectOptions data={$store.config.spellPreparationModes} />
     </Select>
   </div>
-</div>
+</ItemFormGroup>
 
 <h3 class="form-header">{localize('DND5E.SpellCastingHeader')}</h3>
 
@@ -122,10 +153,14 @@
 
 <ItemAction />
 
-<div class="form-group">
-  <label>{localize('DND5E.LevelScaling')}</label>
+<ItemFormGroup
+  labelText={localize('DND5E.LevelScaling')}
+  field="system.scaling.mode"
+  let:inputId
+>
   <div class="form-fields">
     <Select
+      id={inputId}
       document={$store.item}
       field="system.scaling.mode"
       value={$store.system.scaling.mode}
@@ -133,6 +168,7 @@
       <SelectOptions data={$store.config.spellScalingModes} />
     </Select>
     <TextInput
+      id="{$store.appId}-system-scaling-formula"
       document={$store.item}
       field="system.scaling.formula"
       value={$store.system.scaling.formula}
@@ -140,4 +176,4 @@
       dataset={{ formulaEditor: true }}
     />
   </div>
-</div>
+</ItemFormGroup>
