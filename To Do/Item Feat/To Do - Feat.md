@@ -1,6 +1,6 @@
 ## Top of mind
 
-- [ ] Fix the Reveal/Hide button in secret blocks on editors. It looks bad in Kgar mode.
+- [x] Fix the Reveal/Hide button in secret blocks on editors. It looks bad in Kgar mode.
 
 ## Resume mission
 
