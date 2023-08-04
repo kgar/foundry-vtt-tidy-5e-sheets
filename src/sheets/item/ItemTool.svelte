@@ -55,48 +55,55 @@
 
   const localize = FoundryAdapter.localize;
 </script>
+
 <header class="sheet-header flexrow gap">
-    <ItemProfilePicture />
-  
-    <div class="header-details flexrow">
-      <h1 class="charname">
+  <ItemProfilePicture />
+
+  <div class="header-details flexrow">
+    <h1 class="charname">
+      <TextInput
+        document={$store.item}
+        field="name"
+        value={$store.item.name}
+        placeholder={localize('DND5E.ItemName')}
+      />
+    </h1>
+
+    <div class="item-subtitle">
+      <h4 class="item-type">{$store.itemType}</h4>
+      <span class="item-status">{$store.itemStatus ?? ''}</span>
+    </div>
+
+    <ul class="summary flexrow">
+      <li>
+        {#if $store.system.toolType}
+          {@const toolType = $store.config.toolTypes[$store.system.toolType]}
+          {toolType}
+        {:else}
+          {localize('ITEM.TypeTool')}
+        {/if}
+      </li>
+      <li>
+        <Select
+          document={$store.item}
+          field="system.rarity"
+          value={$store.system.rarity}
+        >
+          <SelectOptions data={$store.config.itemRarity} />
+        </Select>
+      </li>
+      <li>
         <TextInput
           document={$store.item}
-          field="name"
-          value={$store.item.name}
-          placeholder={localize('DND5E.ItemName')}
+          field="system.source"
+          value={$store.system.source}
+          placeholder={localize('DND5E.Source')}
         />
-      </h1>
-  
-      <div class="item-subtitle">
-        <h4 class="item-type">{$store.itemType}</h4>
-        <span class="item-status">{$store.itemStatus ?? ''}</span>
-      </div>
-  
-      <ul class="summary flexrow">
-        <li>{$store.config.toolTypes[$store.system.toolTypes]}</li>
-        <li>
-          <Select
-            document={$store.item}
-            field="system.rarity"
-            value={$store.system.rarity}
-          >
-            <SelectOptions data={$store.config.itemRarity} />
-          </Select>
-        </li>
-        <li>
-          <TextInput
-            document={$store.item}
-            field="system.source"
-            value={$store.system.source}
-            placeholder={localize('DND5E.Source')}
-          />
-        </li>
-      </ul>
-    </div>
-  </header>
-  <Tabs bind:selectedTabId {tabs} />
-  <div class="sheet-body">
-    <TabContents {tabs} {selectedTabId} />
+      </li>
+    </ul>
   </div>
-  
+</header>
+<Tabs bind:selectedTabId {tabs} />
+<div class="sheet-body">
+  <TabContents {tabs} {selectedTabId} />
+</div>

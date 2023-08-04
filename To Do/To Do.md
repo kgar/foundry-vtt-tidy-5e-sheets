@@ -2,6 +2,14 @@
 
 ## Top of Mind
 
+### SCSS Revolution
+
+- [ ] Identify all components which are using styles
+- [ ] Transplant those styles to partial stylesheets that are scoped to the appropriate sheet or context
+- [ ] Put more specific stuff (item-quantity inputs) below the generic stuff (all character sheet inputs in general)
+- [ ] Eliminate all local styles and keep specificity as low as possible so that module devs can override more easily
+- [ ] While in there, poke around for `!important` tags and try to kill 'em.
+
 ### Side Quest
 
 - [ ] Text Editors not all enriching HTML
@@ -18,20 +26,26 @@
 
 ```js
 // For item descriptions
-context.descriptionHTML = await TextEditor.enrichHTML(item.system.description.value, {
-  secrets: item.isOwner,
-  async: true,
-  relativeTo: this.item,
-  rollData: context.rollData
-});
+context.descriptionHTML = await TextEditor.enrichHTML(
+  item.system.description.value,
+  {
+    secrets: item.isOwner,
+    async: true,
+    relativeTo: this.item,
+    rollData: context.rollData,
+  }
+);
 
 // For base sheet biography
-context.biographyHTML = await TextEditor.enrichHTML(context.system.details.biography.value, {
-  secrets: this.actor.isOwner,
-  rollData: context.rollData,
-  async: true,
-  relativeTo: this.actor
-});
+context.biographyHTML = await TextEditor.enrichHTML(
+  context.system.details.biography.value,
+  {
+    secrets: this.actor.isOwner,
+    rollData: context.rollData,
+    async: true,
+    relativeTo: this.actor,
+  }
+);
 ```
 
 ### Module Compat Trials

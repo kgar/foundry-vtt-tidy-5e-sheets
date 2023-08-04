@@ -2,7 +2,9 @@
 - [x] Create ItemToolDetails component
 - [x] Scaffold header, tabs, contents
 - [x] Implement Description with sidebar
-- [ ] Implement details
+- [x] Implement details
+  - [x] The rest
+  - [x] Wire up details behaviors (show/hide dropdowns)
 - [x] Implement advancement
-- [ ] Test standalone
-- [ ] Test embedded
+- [x] Test standalone
+- [x] Test embedded
