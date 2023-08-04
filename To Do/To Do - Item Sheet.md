@@ -13,7 +13,7 @@
   - [x] `equipment.hbs`
   - [x] `feat.hbs`
   - [x] `loot.hbs`
-  - [ ] `spell.hbs`
+  - [x] `spell.hbs`
   - [ ] `subclass.hbs`
   - [ ] `tool.hbs`
   - [ ] `weapon.hbs`

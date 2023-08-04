@@ -69,7 +69,7 @@
 
     <div class="item-subtitle">
       <h4 class="item-type">{$store.itemType}</h4>
-      <span class="item-status">{$store.itemStatus}</span>
+      <span class="item-status">{$store.itemStatus ?? ''}</span>
     </div>
 
     <ul class="summary flexrow">
