@@ -9,7 +9,7 @@
   - [x] `background.hbs`
   - [x] `backpack.hbs`
   - [x] `class.hbs`
-  - [ ] `consumable.hbs`
+  - [x] `consumable.hbs`
   - [x] `equipment.hbs`
   - [ ] `feat.hbs`
   - [ ] `loot.hbs`

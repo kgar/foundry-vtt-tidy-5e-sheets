@@ -3,7 +3,7 @@
 - [x] Create ItemConsumableDetails component
 - [x] Scaffold ItemConsumable header, tabs, tab contents
 - [x] Share ItemDescriptionWithSidebar to description tab
-- [ ] Implement ItemConsumableDetails tab
+- [x] Implement ItemConsumableDetails tab
 - [x] Share ActiveEffects tab
-- [ ] Test Standalone
-- [ ] Test Embedded
+- [x] Test Standalone
+- [x] Test Embedded

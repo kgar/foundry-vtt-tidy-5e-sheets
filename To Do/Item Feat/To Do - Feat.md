@@ -1,0 +1,9 @@
+- [ ] Create ItemFeat.svelte
+- [ ] Wire into item sheet
+- [ ] Create ItemFeatDetails.svelte
+- [ ] Scaffold ItemFeat header, tabs, tab content
+- [ ] Implement description
+- [ ] Implement details
+- [ ] Implement effects
+- [ ] Test standalone
+- [ ] Test embedded
