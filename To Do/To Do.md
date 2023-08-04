@@ -16,7 +16,7 @@
 
 #### Enriching HTML
 
-````js
+```js
 // For item descriptions
 context.descriptionHTML = await TextEditor.enrichHTML(item.system.description.value, {
   secrets: item.isOwner,
@@ -32,8 +32,7 @@ context.biographyHTML = await TextEditor.enrichHTML(context.system.details.biogr
   async: true,
   relativeTo: this.actor
 });
-
-    ```
+```
 
 ### Module Compat Trials
 
@@ -284,6 +283,7 @@ Evaluate module integration and think about better (API-centric) ways to support
 - [ ] The XP bar's percentages seem way off. Try to get that fixed.
 - [ ] PopOut! Compatibility - ensure that events are not being stopped from popagation and than defaults are prevented only when necessary.
   - [ ] ...
+- [ ] Look at "Blessed Healer" description. In Tidy 5e, there is a "Reveal" / "Hide" button for secret content. Can we somehow bake this into our prose mirror integration?
 
 ## Not Just Tidy 5e settings... DND5e settings as well 😱
 
@@ -326,7 +326,7 @@ In `activateListeners()` of the actor sheet, this function is called which relie
       }
     }
   }
-````
+```
 
 ## Special Requests
 

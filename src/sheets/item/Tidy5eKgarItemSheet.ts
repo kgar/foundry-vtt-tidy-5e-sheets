@@ -8,6 +8,7 @@ import ItemBackpack from './ItemBackpack.svelte';
 import ItemBackground from './ItemBackground.svelte';
 import ItemClass from './ItemClass.svelte';
 import ItemConsumable from './ItemConsumable.svelte';
+import ItemFeat from './ItemFeat.svelte';
 import type { SheetStats } from 'src/types/types';
 import { applyTitleToWindow } from 'src/utils/applications';
 import { debug } from 'src/utils/logging';
@@ -98,6 +99,15 @@ export class Tidy5eKgarItemSheet extends dnd5e.applications.item.ItemSheet5e {
           context: stores,
         });
         break;
+      case CONSTANTS.ITEM_TYPE_FEAT:
+        new ItemFeat({
+          target: node,
+          props: {
+            selectedTabId: this.selectedTabId ?? 'description',
+          },
+          context: stores,
+        });
+        break;
       default:
         new ItemTypeNotFound({
           target: node,
@@ -167,8 +177,10 @@ export class Tidy5eKgarItemSheet extends dnd5e.applications.item.ItemSheet5e {
     return {
       ...(await super.getData(this.options)),
       appId: this.appId,
-      activateFoundryJQueryListeners: (node: HTMLElement) =>
-        super.activateListeners($(node)),
+      activateFoundryJQueryListeners: (node: HTMLElement) => {
+        this._activateCoreListeners($(node));
+        super.activateListeners($(node));
+      },
       toggleAdvancementLock: this.toggleAdvancementLock.bind(this),
     };
   }

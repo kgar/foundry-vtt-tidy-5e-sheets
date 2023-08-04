@@ -1,18 +1,16 @@
 <script lang="ts">
   import type { ItemSheetContext } from 'src/types/item';
   import type { Tab } from 'src/types/types';
-  import Tabs from 'src/components/tabs/Tabs.svelte';
   import type { Readable } from 'svelte/store';
-  import ItemDescriptionWithSidebar from './parts/ItemDescriptionWithSidebar.svelte';
-  import ItemConsumableDetails from './parts/ItemConsumableDetails.svelte';
-  import ActiveEffects from '../actor/parts/ActiveEffects.svelte';
-  import TabContents from 'src/components/tabs/TabContents.svelte';
   import { CONSTANTS } from 'src/constants';
   import { getContext } from 'svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import Tabs from 'src/components/tabs/Tabs.svelte';
+  import TabContents from 'src/components/tabs/TabContents.svelte';
+  import ItemDescriptionWithSidebar from './parts/ItemDescriptionWithSidebar.svelte';
+  import ItemFeatDetails from './parts/ItemFeatDetails.svelte';
+  import ActiveEffects from '../actor/parts/ActiveEffects.svelte';
   import ItemProfilePicture from './parts/ItemProfilePicture.svelte';
-  import Select from 'src/components/form/Select.svelte';
-  import SelectOptions from 'src/components/form/SelectOptions.svelte';
   import TextInput from 'src/components/form/TextInput.svelte';
 
   let store = getContext<Readable<ItemSheetContext>>('store');
@@ -29,7 +27,6 @@
       displayName: 'DND5E.Description',
       content: {
         component: ItemDescriptionWithSidebar,
-        props: {},
         cssClass: 'flexrow',
       },
     },
@@ -37,8 +34,7 @@
       id: CONSTANTS.TAB_ITEM_DETAILS_ID,
       displayName: 'DND5E.Details',
       content: {
-        component: ItemConsumableDetails,
-        props: {},
+        component: ItemFeatDetails,
         cssClass: 'detail-tab-contents',
       },
     },
@@ -47,13 +43,13 @@
       displayName: 'DND5E.Effects',
       content: {
         component: ActiveEffects,
-        props: {},
         cssClass: 'flexcol items-list-container',
       },
     },
+    // TODO
   ];
 
-  Hooks.call(CONSTANTS.HOOKS_RENDERING_ITEM_CONSUMABLE_TABS, {
+  Hooks.call(CONSTANTS.HOOKS_RENDERING_ITEM_FEAT_TABS, {
     tabs,
     context: $store,
   });
@@ -69,8 +65,8 @@
       <TextInput
         document={$store.item}
         field="name"
-        value={$store.item.name}
         placeholder={localize('DND5E.ItemName')}
+        value={$store.item.name}
       />
     </h1>
 
@@ -80,15 +76,16 @@
     </div>
 
     <ul class="summary flexrow">
-      <li>{$store.config.consumableTypes[$store.system.consumableType]}</li>
       <li>
-        <Select
+        {$store.labels.featType}
+      </li>
+      <li>
+        <TextInput
           document={$store.item}
-          field="system.rarity"
-          value={$store.system.rarity}
-        >
-          <SelectOptions data={$store.config.itemRarity} />
-        </Select>
+          field="system.requirements"
+          value={$store.system.requirements}
+          placeholder={localize('DND5E.Requirements')}
+        />
       </li>
       <li>
         <TextInput

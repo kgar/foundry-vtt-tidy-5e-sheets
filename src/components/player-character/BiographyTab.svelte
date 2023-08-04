@@ -100,10 +100,12 @@
       </ul>
     </article>
   </div>
-  <RerenderAfterFormSubmission>
-    <div class="main-notes" use:activateProseMirrorListeners>
-      <div class="left-notes note-entries" class:limited={$store.actor.limited}>
-        <article>
+  <div class="main-notes">
+    <div class="left-notes note-entries" class:limited={$store.actor.limited}>
+      <RerenderAfterFormSubmission
+        andOnValueChange={$store.system.details.trait}
+      >
+        <article use:activateProseMirrorListeners>
           <div class="section-titles biopage">
             {localize('DND5E.PersonalityTraits')}
           </div>
@@ -113,8 +115,12 @@
             editable={$store.editable}
           />
         </article>
+      </RerenderAfterFormSubmission>
 
-        <article>
+      <RerenderAfterFormSubmission
+        andOnValueChange={$store.system.details.ideal}
+      >
+        <article use:activateProseMirrorListeners>
           <div class="section-titles biopage">{localize('DND5E.Ideals')}</div>
           <SheetEditor
             content={$store.system.details.ideal}
@@ -122,7 +128,11 @@
             editable={$store.editable}
           />
         </article>
-        <article>
+      </RerenderAfterFormSubmission>
+      <RerenderAfterFormSubmission
+        andOnValueChange={$store.system.details.bond}
+      >
+        <article use:activateProseMirrorListeners>
           <div class="section-titles biopage">{localize('DND5E.Bonds')}</div>
           <SheetEditor
             content={$store.system.details.bond}
@@ -130,7 +140,11 @@
             editable={$store.editable}
           />
         </article>
-        <article>
+      </RerenderAfterFormSubmission>
+      <RerenderAfterFormSubmission
+        andOnValueChange={$store.system.details.flaw}
+      >
+        <article use:activateProseMirrorListeners>
           <div class="section-titles biopage">{localize('DND5E.Flaws')}</div>
           <SheetEditor
             content={$store.system.details.flaw}
@@ -138,13 +152,14 @@
             editable={$store.editable}
           />
         </article>
-      </div>
+      </RerenderAfterFormSubmission>
+    </div>
 
-      <div
-        class="right-notes note-entries"
-        class:limited={$store.actor.limited}
+    <div class="right-notes note-entries" class:limited={$store.actor.limited}>
+      <RerenderAfterFormSubmission
+        andOnValueChange={$store.system.details.appearance}
       >
-        <article class="appearance-notes">
+        <article class="appearance-notes" use:activateProseMirrorListeners>
           <div class="section-titles biopage">
             {localize('DND5E.Appearance')}
           </div>
@@ -154,7 +169,11 @@
             editable={$store.editable}
           />
         </article>
-        <article class="biography-notes">
+      </RerenderAfterFormSubmission>
+      <RerenderAfterFormSubmission
+        andOnValueChange={$store.system.details.biography.value}
+      >
+        <article class="biography-notes" use:activateProseMirrorListeners>
           <div class="section-titles">
             {localize('DND5E.Background')}/{localize('DND5E.Biography')}
           </div>
@@ -164,9 +183,9 @@
             editable={$store.editable}
           />
         </article>
-      </div>
+      </RerenderAfterFormSubmission>
     </div>
-  </RerenderAfterFormSubmission>
+  </div>
 </div>
 
 <style lang="scss">

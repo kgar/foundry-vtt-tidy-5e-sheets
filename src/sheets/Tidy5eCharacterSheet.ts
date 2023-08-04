@@ -70,8 +70,10 @@ export class Tidy5eCharacterSheet extends ActorSheet5eCharacter {
       ...(await super.getData(this.options)),
       actorClassesToImages: getActorClassesToImages(this.actor),
       appId: this.appId,
-      activateFoundryJQueryListeners: (node: HTMLElement) =>
-        super.activateListeners($(node)),
+      activateFoundryJQueryListeners: (node: HTMLElement) => {
+        this._activateCoreListeners($(node));
+        super.activateListeners($(node));
+      },
     };
   }
 

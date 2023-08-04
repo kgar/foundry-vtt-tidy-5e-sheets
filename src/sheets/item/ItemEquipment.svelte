@@ -29,7 +29,6 @@
       displayName: 'DND5E.Description',
       content: {
         component: ItemDescriptionWithSidebar,
-        props: {},
         cssClass: 'flexrow',
       },
     },
@@ -38,7 +37,6 @@
       displayName: 'DND5E.Details',
       content: {
         component: ItemEquipmentDetails,
-        props: {},
         cssClass: 'detail-tab-contents',
       },
     },
@@ -47,7 +45,6 @@
       displayName: 'DND5E.Effects',
       content: {
         component: ActiveEffects,
-        props: {},
         cssClass: 'flexcol items-list-container',
       },
     },
@@ -75,7 +72,7 @@
     </h1>
 
     <div class="item-subtitle">
-      <h4 class="item-type">{$store.item.type}</h4>
+      <h4 class="item-type">{$store.itemType}</h4>
       <span class="item-status">{$store.itemStatus}</span>
     </div>
 

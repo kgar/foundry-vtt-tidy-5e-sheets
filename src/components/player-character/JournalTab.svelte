@@ -17,13 +17,15 @@
   }
 </script>
 
-<RerenderAfterFormSubmission>
-  <div
-    use:activateProseMirrorListeners
-    class="left-notes note-entries"
-    class:limited={$store.actor.limited}
+<div
+  class="left-notes note-entries"
+  class:limited={$store.actor.limited}
+>
+  <RerenderAfterFormSubmission
+    andOnValueChange={FoundryAdapter.tryGetFlag($store.actor, 'notes1.value') ??
+      ''}
   >
-    <article>
+    <article use:activateProseMirrorListeners>
       <div class="section-titles">
         <input
           type="text"
@@ -43,7 +45,12 @@
         editable={$store.owner || FoundryAdapter.userIsGm()}
       />
     </article>
-    <article>
+  </RerenderAfterFormSubmission>
+  <RerenderAfterFormSubmission
+    andOnValueChange={FoundryAdapter.tryGetFlag($store.actor, 'notes2.value') ??
+      ''}
+  >
+    <article use:activateProseMirrorListeners>
       <div class="section-titles">
         <input
           type="text"
@@ -63,7 +70,12 @@
         editable={$store.owner || FoundryAdapter.userIsGm()}
       />
     </article>
-    <article>
+  </RerenderAfterFormSubmission>
+  <RerenderAfterFormSubmission
+    andOnValueChange={FoundryAdapter.tryGetFlag($store.actor, 'notes3.value') ??
+      ''}
+  >
+    <article use:activateProseMirrorListeners>
       <div class="section-titles">
         <input
           type="text"
@@ -83,7 +95,12 @@
         editable={$store.owner || FoundryAdapter.userIsGm()}
       />
     </article>
-    <article>
+  </RerenderAfterFormSubmission>
+  <RerenderAfterFormSubmission
+    andOnValueChange={FoundryAdapter.tryGetFlag($store.actor, 'notes4.value') ??
+      ''}
+  >
+    <article use:activateProseMirrorListeners>
       <div class="section-titles">
         <input
           type="text"
@@ -103,13 +120,17 @@
         editable={$store.owner || FoundryAdapter.userIsGm()}
       />
     </article>
-  </div>
-  <div
-    use:activateProseMirrorListeners
-    class="right-notes note-entries"
-    class:limited={$store.actor.limited}
+  </RerenderAfterFormSubmission>
+</div>
+<div
+  class="right-notes note-entries"
+  class:limited={$store.actor.limited}
+>
+  <RerenderAfterFormSubmission
+    andOnValueChange={FoundryAdapter.tryGetFlag($store.actor, 'notes.value') ??
+      ''}
   >
-    <article class="journal-notes">
+    <article class="journal-notes" use:activateProseMirrorListeners>
       <div class="section-titles">{localize('T5EK.JournalEntries')}</div>
       <SheetEditor
         content={FoundryAdapter.tryGetFlag($store.actor, 'notes.value') ?? ''}
@@ -117,8 +138,8 @@
         editable={$store.owner || FoundryAdapter.userIsGm()}
       />
     </article>
-  </div>
-</RerenderAfterFormSubmission>
+  </RerenderAfterFormSubmission>
+</div>
 
 <style lang="scss">
   .left-notes,

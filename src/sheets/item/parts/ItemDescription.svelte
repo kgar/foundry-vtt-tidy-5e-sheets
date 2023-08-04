@@ -15,7 +15,7 @@
   }
 </script>
 
-<RerenderAfterFormSubmission>
+<RerenderAfterFormSubmission andOnValueChange={$store.descriptionHTML}>
   <article class="editor-container" use:activateProseMirrorListeners>
     <h2 class="details-headline">{localize('TIDY5E.ItemDetailsHeadline')}</h2>
     <SheetEditor
