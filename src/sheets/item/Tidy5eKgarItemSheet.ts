@@ -10,6 +10,7 @@ import ItemClass from './ItemClass.svelte';
 import ItemConsumable from './ItemConsumable.svelte';
 import ItemFeat from './ItemFeat.svelte';
 import ItemLoot from './ItemLoot.svelte';
+import ItemSpell from './ItemSpell.svelte';
 import type { SheetStats } from 'src/types/types';
 import { applyTitleToWindow } from 'src/utils/applications';
 import { debug } from 'src/utils/logging';
@@ -111,6 +112,15 @@ export class Tidy5eKgarItemSheet extends dnd5e.applications.item.ItemSheet5e {
         break;
       case CONSTANTS.ITEM_TYPE_LOOT:
         new ItemLoot({
+          target: node,
+          props: {
+            selectedTabId: this.selectedTabId ?? 'description',
+          },
+          context: stores,
+        });
+        break;
+      case CONSTANTS.ITEM_TYPE_SPELL:
+        new ItemSpell({
           target: node,
           props: {
             selectedTabId: this.selectedTabId ?? 'description',
