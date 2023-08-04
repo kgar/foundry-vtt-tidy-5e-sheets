@@ -28,7 +28,6 @@
       displayName: 'DND5E.Description',
       content: {
         component: ItemDescription,
-        props: {},
         cssClass: 'flexcol',
       },
     },
@@ -37,16 +36,14 @@
       displayName: 'DND5E.Details',
       content: {
         component: ItemClassDetails,
-        props: {},
         cssClass: 'detail-tab-contents',
       },
     },
     {
-      id: 'effects',
-      displayName: 'DND5E.Effects',
+      id: CONSTANTS.TAB_ITEM_ADVANCEMENT_ID,
+      displayName: 'DND5E.AdvancementTitle',
       content: {
         component: ItemAdvancement,
-        props: {},
         cssClass: 'detail-tab-contents items-list-container',
       },
     },

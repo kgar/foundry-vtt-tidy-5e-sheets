@@ -43,7 +43,7 @@
       },
     },
     {
-      id: 'effects',
+      id: CONSTANTS.TAB_ITEM_EFFECTS_ID,
       displayName: 'DND5E.Effects',
       content: {
         component: ActiveEffects,

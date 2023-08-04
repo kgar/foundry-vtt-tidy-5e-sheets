@@ -8,6 +8,7 @@ export const CONSTANTS = {
   ITEM_TYPE_FEAT: 'feat',
   ITEM_TYPE_LOOT: 'loot',
   ITEM_TYPE_SPELL: 'spell',
+  ITEM_TYPE_SUBCLASS: 'subclass',
   /**
    * Main button pressed, usually the left button or the un-initialized state
    */
@@ -47,8 +48,10 @@ export const CONSTANTS = {
   HOOKS_RENDERING_ITEM_FEAT_TABS: 'renderTidy5eKgarItemFeatTabs',
   HOOKS_RENDERING_ITEM_LOOT_TABS: 'renderTidy5eKgarItemLootTabs',
   HOOKS_RENDERING_ITEM_SPELL_TABS: 'renderTidy5eKgarItemSpellTabs',
+  HOOKS_RENDERING_ITEM_SUBCLASS_TABS: 'renderTidy5eKgarItemSubclassTabs',
   TAB_OPTION_CLASS: 'tab-option',
   TAB_ITEM_DESCRIPTION_ID: 'description',
   TAB_ITEM_DETAILS_ID: 'details',
   TAB_ITEM_ADVANCEMENT_ID: 'advancement',
+  TAB_ITEM_EFFECTS_ID: 'effects',
 } as const;
