@@ -10,7 +10,7 @@
 - [x] Create ItemFeatDetails.svelte
 - [x] Scaffold ItemFeat header, tabs, tab content
 - [x] Implement description
-- [ ] Implement details
+- [x] Implement details
 - [x] Implement effects
-- [ ] Test standalone
-- [ ] Test embedded
+- [x] Test standalone
+- [x] Test embedded

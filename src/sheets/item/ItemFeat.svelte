@@ -1,8 +1,8 @@
 <script lang="ts">
-  import type { ItemSheetContext } from 'src/types/item';
   import type { Tab } from 'src/types/types';
-  import type { Readable } from 'svelte/store';
   import { CONSTANTS } from 'src/constants';
+  import type { ItemSheetContext } from 'src/types/item';
+  import type { Readable } from 'svelte/store';
   import { getContext } from 'svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import Tabs from 'src/components/tabs/Tabs.svelte';
@@ -46,7 +46,6 @@
         cssClass: 'flexcol items-list-container',
       },
     },
-    // TODO
   ];
 
   Hooks.call(CONSTANTS.HOOKS_RENDERING_ITEM_FEAT_TABS, {

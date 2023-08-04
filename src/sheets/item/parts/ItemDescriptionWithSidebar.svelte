@@ -97,7 +97,8 @@
           </li>
         {/if}
 
-        {#each $store.labels.derivedDamage ?? [] as label}
+        {#each $store.labels.derivedDamage ?? [] as derivedDamage}
+          {@const label = derivedDamage.label}
           <li>
             {label}
           </li>
