@@ -13,6 +13,7 @@ import ItemLoot from './ItemLoot.svelte';
 import ItemSpell from './ItemSpell.svelte';
 import ItemSubclass from './ItemSubclass.svelte';
 import ItemTool from './ItemTool.svelte';
+import ItemWeapon from './ItemWeapon.svelte';
 import type { SheetStats } from 'src/types/types';
 import { applyTitleToWindow } from 'src/utils/applications';
 import { debug } from 'src/utils/logging';
@@ -139,8 +140,17 @@ export class Tidy5eKgarItemSheet extends dnd5e.applications.item.ItemSheet5e {
           context: stores,
         });
         break;
-        case CONSTANTS.ITEM_TYPE_TOOL:
+      case CONSTANTS.ITEM_TYPE_TOOL:
         new ItemTool({
+          target: node,
+          props: {
+            selectedTabId: this.selectedTabId ?? 'description',
+          },
+          context: stores,
+        });
+        break;
+      case CONSTANTS.ITEM_TYPE_WEAPON:
+        new ItemWeapon({
           target: node,
           props: {
             selectedTabId: this.selectedTabId ?? 'description',
