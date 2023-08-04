@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { FoundryDocument } from 'src/types/document';
-    import { buildDataset } from 'src/utils/data';
+  import { buildDataset } from 'src/utils/data';
 
   export let value: number | null = null;
   export let placeholder: string | null = null;
@@ -9,6 +9,7 @@
   export let tooltip: string | null = null;
   export let id: string | null = null;
   export let dataset: Record<string, unknown> | null = null;
+  export let cssClass: string | null = null;
 
   $: actualDataset = buildDataset(dataset);
 
@@ -31,4 +32,5 @@
   on:change={saveChange}
   data-tooltip={tooltip}
   {...actualDataset}
+  class={cssClass}
 />
