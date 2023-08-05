@@ -1,8 +1,0 @@
-- [ ] Create / wire / CONSTANTize ItemTool
-- [ ] Create ItemToolDetails component
-- [ ] Scaffold header, tabs, contents
-- [ ] Implement Description with sidebar
-- [ ] Implement details
-- [ ] Implement advancement
-- [ ] Test standalone
-- [ ] Test embedded

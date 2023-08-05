@@ -16,7 +16,7 @@
   - [x] `spell.hbs`
   - [x] `subclass.hbs`
   - [x] `tool.hbs`
-  - [ ] `weapon.hbs`
+  - [x] `weapon.hbs`
 - [x] Implement auto-resize
 - [ ] Look for all the hidden jquery behaviors that wire during activateListeners; task out the ones we should keep
   - [ ] dnd5e
