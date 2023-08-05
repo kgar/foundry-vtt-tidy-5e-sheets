@@ -5,7 +5,7 @@
   - [x] {{> "dnd5e.item-advancement"}}
   - [x] {{> "dnd5e.item-description"}}
   - [x] {{> "dnd5e.active-effects"}}
-- [ ] Create components for each item type, and scaffold their known tabs
+- [x] Create components for each item type, and scaffold their known tabs
   - [x] `background.hbs`
   - [x] `backpack.hbs`
   - [x] `class.hbs`
@@ -21,12 +21,336 @@
 - [ ] Look for all the hidden jquery behaviors that wire during activateListeners; task out the ones we should keep
   - [ ] dnd5e
     - [x] Secret block Reveal/Hide buttons (this was more universal than just item sheets, but I fixed it here 💪)
+    - [ ] Advancement Context Menu Options
   - [ ] Tidy 5e
     - [ ] Implement Spell Class in the ItemSpell sheet. It only appears when spellbook filtering is turned on.
+    - [ ] Apply Item Locks
 - [x] Troubleshoot: I'm getting an error sometimes about a missing form tag. I may have to use the form tag template... or suppress the submit function
   - [x] Put a debugger; tag on submit to see if I can prevent it from submitting.
 - [ ] Consider taking all stock tabs and making either a function or a statically available version of them that can be cloned into a tab list. This will allow me to make changes to tabcontent classes, for example, in one place instead of everywhere that the tab is used.
-- [ ] Rename the `item` folder to `items`. Rename the individual item sheet components to remove the `Item` prefix, so `ItemSpell` should be just `Spell`.
+- [ ] Rename the `item` folder to `items`. Rename the individual item sheet components to remove the `Item` prefix and suffix with `Sheet`, so `ItemSpell` should be `SpellSheet`.
+
+## Spell Class Filter Options impl
+
+```js
+import CONSTANTS from "./constants.js";
+
+const classesConfiguration = {
+	artificer: "TIDY5E.ClassArtificer",
+	barbarian: "TIDY5E.ClassBarbarian",
+	bard: "TIDY5E.ClassBard",
+	cleric: "TIDY5E.ClassCleric",
+	druid: "TIDY5E.ClassDruid",
+	fighter: "TIDY5E.ClassFighter",
+	monk: "TIDY5E.ClassMonk",
+	paladin: "TIDY5E.ClassPaladin",
+	ranger: "TIDY5E.ClassRanger",
+	rogue: "TIDY5E.ClassRogue",
+	sorcerer: "TIDY5E.ClassSorcerer",
+	warlock: "TIDY5E.ClassWarlock",
+	wizard: "TIDY5E.ClassWizard",
+	custom: "TIDY5E.ClassCustom"
+};
+
+let classesConfigurationTmp = {};
+
+export async function applySpellClassFilterItemSheet(app, html, itemData) {
+	if (!game.settings.get(CONSTANTS.MODULE_ID, "spellClassFilterSelect")) {
+		return;
+	}
+	// The module already do the job so for avoid redundance...
+	if (game.modules.get("spell-class-filter-for-5e")?.active) {
+		return;
+	}
+	// collect relevant settings first
+	const user_setting_filterSelect = game.settings.get(CONSTANTS.MODULE_ID, "spellClassFilterSelect");
+	const user_setting_iconReplace = game.settings.get(CONSTANTS.MODULE_ID, "spellClassFilterIconReplace");
+
+	const item = app.object;
+	const type = item.type;
+
+	// If this is a spell construct the HTML and inject it onto the page.
+	if (type == "spell") {
+		classesConfigurationTmp = classesConfiguration;
+		const user_setting_addClasses = game.settings.get(CONSTANTS.MODULE_ID, "spellClassFilterAdditionalClasses");
+		if (user_setting_addClasses && user_setting_addClasses.includes("|")) {
+			let classes = [];
+			if (user_setting_addClasses.includes(",")) {
+				classes = user_setting_addClasses.split(",");
+			} else {
+				classes = [user_setting_addClasses];
+			}
+			for (let clazz of classes) {
+				const c = clazz.split("|");
+				const id = c[0];
+				const name = c[1];
+				if (id && name) {
+					classesConfigurationTmp[id] = name;
+				}
+			}
+		}
+
+		const spellDetailsDiv = html.find(".tab.details");
+		const firstChild = spellDetailsDiv.children("h3:first");
+		const spellClassForm = await renderTemplate(
+			"modules/tidy5e-sheet/templates/items/tidy5e-spell-class-filter-form.html",
+			{
+				SCF: classesConfigurationTmp,
+				item,
+				flags: item.flags
+			}
+		);
+		// Under the first header in the details tab.
+		firstChild.after(spellClassForm);
+	}
+}
+
+// Any time an actor sheet is rendered check if it is a player character.  If so add the option to set the filter.
+// Then hide elements that do not match the filter.
+export async function applySpellClassFilterActorSheet(app, html, actorData) {
+	if (!game.settings.get(CONSTANTS.MODULE_ID, "spellClassFilterSelect")) {
+		return;
+	}
+	// The module already do the job so for avoid redundance...
+	if (game.modules.get("spell-class-filter-for-5e")?.active) {
+		return;
+	}
+	// collect relevant settings first
+	const user_setting_filterSelect = game.settings.get(CONSTANTS.MODULE_ID, "spellClassFilterSelect");
+	const user_setting_iconReplace = game.settings.get(CONSTANTS.MODULE_ID, "spellClassFilterIconReplace");
+
+	// collect some data to use later
+	const actor = app.object;
+	const type = actor.type;
+	const flags = actor.flags;
+	const actorSCFlags = flags[CONSTANTS.MODULE_ID];
+
+	if (type == "character") {
+		const spellbook = html.find(".tab.spellbook");
+		const filterList = spellbook.find("ul.filter-list");
+		const firstItem = filterList.children("li.filter-item:first");
+		// const itemData = actor.items
+		const actorItems = actor.items;
+
+		// Inject a simple dropdown menu.
+		if (user_setting_filterSelect) {
+			classesConfigurationTmp = classesConfiguration;
+			const user_setting_addClasses = game.settings.get(CONSTANTS.MODULE_ID, "spellClassFilterAdditionalClasses");
+			if (user_setting_addClasses && user_setting_addClasses.includes("|")) {
+				let classes = [];
+				if (user_setting_addClasses.includes(",")) {
+					classes = user_setting_addClasses.split(",");
+				} else {
+					classes = [user_setting_addClasses];
+				}
+				for (let clazz of classes) {
+					const c = clazz.split("|");
+					const id = c[0];
+					const name = c[1];
+					if (id && name) {
+						classesConfigurationTmp[id] = name;
+					}
+				}
+			}
+			const actorClassFilter = await renderTemplate(
+				"modules/tidy5e-sheet/templates/actors/parts/tidy5e-spellbook-class-filter.html",
+				{
+					SCF: classesConfigurationTmp,
+					actor,
+					flags: flags,
+					scFlags: actor.flags[CONSTANTS.MODULE_ID]
+				}
+			);
+			firstItem.before(actorClassFilter);
+		}
+
+		// Get a list of classes for the actor and store their img.
+		let classes = {};
+		for (let item of actorItems) {
+			if (item.type == "class") {
+				let className = item.name.toLowerCase();
+				let classImg = item.img;
+				classes[className] = classImg;
+			}
+		}
+		// spellClassFilter.log(true, classes)
+		// Loop through some elements and get thier data
+		const spellList = spellbook.find(".inventory-list");
+		const items = spellList.find(".item");
+		items.each(function () {
+			let itemID = $(this).data("item-id");
+			let item = actorItems.get(itemID);
+			let itemFlags = item.flags;
+			let itemSCFlags = itemFlags[CONSTANTS.MODULE_ID]; //Should return undefined if doesn't exist.
+
+			if (user_setting_iconReplace) {
+				// Replace spell icon image
+				if (itemSCFlags) {
+					if (classes.hasOwnProperty(itemSCFlags.parentClass)) {
+						// spellClassFilter.log(false, $(this))
+						// $(this).css('background-image', 'url('+classes[itemSCFlags.parentClass]+')')
+						let imgdiv = $(this).find(".item-image");
+						imgdiv.css("background-image", `url(${classes[itemSCFlags.parentClass]})`);
+					}
+				}
+			}
+
+			if (user_setting_filterSelect) {
+				if (hasProperty(actorSCFlags, "classFilter")) {
+					// Hide each element that doesn't match. Or don't hide anything if nothing is selected.
+					if (actorSCFlags.classFilter != "") {
+						if (itemSCFlags) {
+							if (!(itemSCFlags.parentClass == actorSCFlags.classFilter)) {
+								$(this).hide();
+							}
+						} else {
+							$(this).hide();
+						}
+					}
+				}
+			}
+		});
+	} //end if character
+} //end actorsheet hook
+```
+
+```hbs
+<div class="form-group">
+	<label>{{ localize "TIDY5E.SpellClass" }}</label>
+	<select name="flags.tidy5e-sheet.parentClass">
+		{{#select flags.tidy5e-sheet.parentClass}}
+		<option value="">---</option>
+		{{#each SCF as |name key|}}
+		<option value="{{key}}">{{ localize name}}</option>
+		{{/each}} {{/select}}
+	</select>
+</div>
+
+```
+
+## Apply Item Locks
+
+```js
+export function applyLocksItemSheet(app, html, actorData) {
+	if (game.user.isGM) {
+		return;
+	}
+	if (game.settings.get(CONSTANTS.MODULE_ID, "lockItemQuantity")) {
+		// for (const elem of html.find("input[data-path^='system.quantity']")) {
+		// 	elem.setAttribute("readonly", true);
+		// }
+		for (const elem of html.find("input[name^='system.quantity']")) {
+			elem.setAttribute("readonly", true);
+		}
+	}
+	if (game.settings.get(CONSTANTS.MODULE_ID, "lockConfigureSheet")) {
+		for (const elem of html.find("a[class$='configure-sheet']")) {
+			elem.style.pointerEvents = "none";
+			elem.style.cursor = "default";
+			elem.style.display = "none";
+		}
+	}
+}
+```
+
+## Advancement Context Menu options
+
+```js
+  /** @inheritDoc */
+  activateListeners(html) {
+    super.activateListeners(html);
+    if ( this.isEditable ) {
+      html.find(".damage-control").click(this._onDamageControl.bind(this));
+      html.find(".trait-selector").click(this._onConfigureTraits.bind(this));
+      html.find(".effect-control").click(ev => {
+        const unsupported = game.dnd5e.isV10 && this.item.isOwned;
+        if ( unsupported ) return ui.notifications.warn("Managing Active Effects within an Owned Item is not currently supported and will be added in a subsequent update.");
+        ActiveEffect5e.onManageActiveEffect(ev, this.item);
+      });
+      html.find(".advancement .item-control").click(event => {
+        const t = event.currentTarget;
+        if ( t.dataset.action ) this._onAdvancementAction(t, t.dataset.action);
+      });
+    }
+
+    // Advancement context menu
+    const contextOptions = this._getAdvancementContextMenuOptions();
+    /**
+     * A hook event that fires when the context menu for the advancements list is constructed.
+     * @function dnd5e.getItemAdvancementContext
+     * @memberof hookEvents
+     * @param {jQuery} html                      The HTML element to which the context options are attached.
+     * @param {ContextMenuEntry[]} entryOptions  The context menu entries.
+     */
+    Hooks.call("dnd5e.getItemAdvancementContext", html, contextOptions);
+    if ( contextOptions ) new ContextMenu(html, ".advancement-item", contextOptions);
+  }
+
+    /**
+   * Get the set of ContextMenu options which should be applied for advancement entries.
+   * @returns {ContextMenuEntry[]}  Context menu entries.
+   * @protected
+   */
+  _getAdvancementContextMenuOptions() {
+    const condition = li => (this.advancementConfigurationMode || !this.isEmbedded) && this.isEditable;
+    return [
+      {
+        name: "DND5E.AdvancementControlEdit",
+        icon: "<i class='fas fa-edit fa-fw'></i>",
+        condition,
+        callback: li => this._onAdvancementAction(li[0], "edit")
+      },
+      {
+        name: "DND5E.AdvancementControlDuplicate",
+        icon: "<i class='fas fa-copy fa-fw'></i>",
+        condition: li => {
+          const id = li[0].closest(".advancement-item")?.dataset.id;
+          const advancement = this.item.advancement.byId[id];
+          return condition() && advancement?.constructor.availableForItem(this.item);
+        },
+        callback: li => this._onAdvancementAction(li[0], "duplicate")
+      },
+      {
+        name: "DND5E.AdvancementControlDelete",
+        icon: "<i class='fas fa-trash fa-fw' style='color: rgb(255, 65, 65);'></i>",
+        condition,
+        callback: li => this._onAdvancementAction(li[0], "delete")
+      }
+    ];
+  }
+
+    /**
+   * Handle one of the advancement actions from the buttons or context menu.
+   * @param {Element} target  Button or context menu entry that triggered this action.
+   * @param {string} action   Action being triggered.
+   * @returns {Promise|void}
+   */
+  _onAdvancementAction(target, action) {
+    const id = target.closest(".advancement-item")?.dataset.id;
+    const advancement = this.item.advancement.byId[id];
+    let manager;
+    if ( ["edit", "delete", "duplicate"].includes(action) && !advancement ) return;
+    switch (action) {
+      case "add": return game.dnd5e.applications.advancement.AdvancementSelection.createDialog(this.item);
+      case "edit": return new advancement.constructor.metadata.apps.config(advancement).render(true);
+      case "delete":
+        if ( this.item.isEmbedded && !game.settings.get("dnd5e", "disableAdvancements") ) {
+          manager = AdvancementManager.forDeletedAdvancement(this.item.actor, this.item.id, id);
+          if ( manager.steps.length ) return manager.render(true);
+        }
+        return this.item.deleteAdvancement(id);
+      case "duplicate": return this.item.duplicateAdvancement(id);
+      case "modify-choices":
+        const level = target.closest("li")?.dataset.level;
+        manager = AdvancementManager.forModifyChoices(this.item.actor, this.item.id, Number(level));
+        if ( manager.steps.length ) manager.render(true);
+        return;
+      case "toggle-configuration":
+        this.advancementConfigurationMode = !this.advancementConfigurationMode;
+        return this.render();
+    }
+  }
+```
 
 ## How does it work?
 
