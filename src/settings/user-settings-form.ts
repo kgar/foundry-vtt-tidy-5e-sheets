@@ -97,9 +97,20 @@ export class Tidy5eKgarUserSettings extends FormApplication {
   }
 
   redrawOpenSheets() {
+    // Redraw open global actor sheets
     game.actors
       .filter((a) => a.sheet.rendered)
       .forEach((a) => a.sheet.render(true));
+
+    // Redraw open global item sheets
+    game.items
+      .filter((a) => a.sheet.rendered)
+      .forEach((a) => a.sheet.render(true));
+
+    // Redraw open embedded item sheets
+    game.actors.forEach((a) =>
+      a.items.filter((i) => i.sheet.rendered).forEach((s) => s.render(true))
+    );
   }
 
   async _updateObject(ev, formData) {
