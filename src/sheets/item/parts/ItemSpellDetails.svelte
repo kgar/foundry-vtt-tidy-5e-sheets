@@ -11,15 +11,37 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import ItemAction from './ItemAction.svelte';
   import ItemFormGroup from '../form/ItemFormGroup.svelte';
+  import { SettingsProvider } from 'src/settings/settings';
+    import { CONSTANTS } from 'src/constants';
 
   let store = getContext<Readable<ItemSheetContext>>('store');
 
-  $: console.log($store);
+  const allClasses = FoundryAdapter.getAllClassesDropdownOptions();
 
   const localize = FoundryAdapter.localize;
 </script>
 
 <h3 class="form-header">{localize('DND5E.SpellDetails')}</h3>
+
+{#if SettingsProvider.settings.spellClassFilterSelect.get()}
+  <ItemFormGroup
+    labelText="{localize('T5EK.SpellClass')}}"
+    field="flags.{CONSTANTS.MODULE_ID}.parentClass"
+    let:inputId
+  >
+    <Select
+      id={inputId}
+      document={$store.item}
+      field="flags.{CONSTANTS.MODULE_ID}.parentClass"
+      value={FoundryAdapter.tryGetFlag($store.item, 'parentClass') ?? ''}
+    >
+      <option value="">&mdash;</option>
+      {#each allClasses as { text, value }}
+        <option {value}>{localize(text)}</option>
+      {/each}
+    </Select>
+  </ItemFormGroup>
+{/if}
 
 <ItemFormGroup
   labelText={localize('DND5E.SpellLevel')}
