@@ -68,7 +68,7 @@
   />
   {#if filterByClassesEnabled}
     <li class="spellbook-class-filter">
-      <SpellbookClassFilter $store={$store} />
+      <SpellbookClassFilter />
     </li>
   {/if}
   <ItemFilterOption setName="spellbook" filterName="action">
