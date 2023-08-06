@@ -10,8 +10,6 @@
 
   let store = getContext<Readable<ItemSheetContext>>('store');
 
-  $: console.log($store);
-
   const localize = FoundryAdapter.localize;
 </script>
 
