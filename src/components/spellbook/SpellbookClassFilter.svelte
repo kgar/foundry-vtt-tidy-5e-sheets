@@ -9,35 +9,7 @@
 
   let store = getContext<Readable<ActorSheetContext>>('store');
 
-  const allClasses: DropdownOption[] = Object.entries(
-    CONSTANTS.DND5E_CLASSES
-  ).map((x) => ({
-    value: x[0],
-    text: x[1],
-  }));
-
-  const additionalClassText =
-    SettingsProvider.settings.spellClassFilterAdditionalClasses.get() ?? '';
-
-  if (additionalClassText?.trim() !== '') {
-    const additionalClasses = additionalClassText
-      .split(',')
-      .reduce((arr: DropdownOption[], x: string) => {
-        const pieces = x.split('|');
-        if (pieces.length !== 2) {
-          return arr;
-        }
-        arr.push({
-          value: pieces[0],
-          text: pieces[1],
-        });
-        return arr;
-      }, []);
-
-    allClasses.push(...additionalClasses);
-  }
-
-  allClasses.sort((a, b) => a.text.localeCompare(b.text));
+  const allClasses = FoundryAdapter.getAllClassesDropdownOptions();
 
   allClasses.unshift({ text: 'DND5E.Spellbook', value: '' });
 
