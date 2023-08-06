@@ -185,6 +185,7 @@
                 maxlength="3"
                 on:click|stopPropagation
                 on:blur={(event) => updateItemQuantity(event, item)}
+                readonly={!FoundryAdapter.userIsGm() && SettingsProvider.settings.lockItemQuantity.get()}
               />)
             </span>
           </ItemName>

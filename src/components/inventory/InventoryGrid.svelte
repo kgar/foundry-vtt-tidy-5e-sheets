@@ -118,6 +118,7 @@
               on:click|stopPropagation
               on:change|stopPropagation={(event) =>
                 submitText(event, item, 'system.quantity')}
+              readonly={!FoundryAdapter.userIsGm() && SettingsProvider.settings.lockItemQuantity.get()}
             />
           </span>
         </div>

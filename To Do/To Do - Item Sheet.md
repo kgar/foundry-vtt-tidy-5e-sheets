@@ -22,9 +22,9 @@
   - [ ] dnd5e
     - [x] Secret block Reveal/Hide buttons (this was more universal than just item sheets, but I fixed it here 💪)
     - [ ] Advancement Context Menu Options
-  - [ ] Tidy 5e
-    - [ ] Implement Spell Class in the ItemSpell sheet. It only appears when spellbook filtering is turned on.
-    - [ ] Apply Item Locks
+  - [x] Tidy 5e
+    - [x] Implement Spell Class in the ItemSpell sheet. It only appears when spellbook filtering is turned on.
+    - [x] Apply Item Locks
 - [x] Troubleshoot: I'm getting an error sometimes about a missing form tag. I may have to use the form tag template... or suppress the submit function
   - [x] Put a debugger; tag on submit to see if I can prevent it from submitting.
 - [ ] Consider taking all stock tabs and making either a function or a statically available version of them that can be cloned into a tab list. This will allow me to make changes to tabcontent classes, for example, in one place instead of everywhere that the tab is used.

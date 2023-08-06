@@ -1,4 +1,8 @@
-import type { ActorSheetContext, ClassSummary, DropdownOption } from 'src/types/types';
+import type {
+  ActorSheetContext,
+  ClassSummary,
+  DropdownOption,
+} from 'src/types/types';
 import { CONSTANTS } from '../constants';
 import type { ActorSheet5eCharacter } from 'src/types/actor5e-sheet';
 import type { Actor5e } from 'src/types/actor';
@@ -376,6 +380,23 @@ export const FoundryAdapter = {
     allClasses.sort((a, b) => a.text.localeCompare(b.text));
 
     return allClasses;
+  },
+  removeConfigureSettingsButtonWhenLockedForNonGm(buttons: any[]) {
+    if (FoundryAdapter.userIsGm()) {
+      return buttons;
+    }
+
+    if (SettingsProvider.settings.lockConfigureSheet.get()) {
+      const configureSheetButtonIndex = buttons.findIndex((b) =>
+        b.class.includes('configure-sheet')
+      );
+      if (configureSheetButtonIndex >= 0) {
+        console.warn('removing configure-sheet button!');
+        buttons.splice(configureSheetButtonIndex, 1);
+      }
+    }
+
+    return buttons;
   },
 };
 

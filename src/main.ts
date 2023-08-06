@@ -2,7 +2,6 @@ import { FoundryAdapter } from './foundry/foundry-adapter';
 import { Tidy5eCharacterSheet } from './sheets/Tidy5eCharacterSheet';
 import './scss/core.scss';
 import { initSettings } from './settings/settings';
-import { Tidy5eKgarUserSettings } from './settings/user-settings-form';
 import { useTidy5eSpellLevelButtons } from './dialogs/spell-level-buttons';
 import {
   applyHombrewEnableUpcastFreeSpellToPreItemConsumption,
@@ -49,22 +48,6 @@ FoundryAdapter.onReady(async () => {
       import.meta.env.VITE_KGAR_ITEM_SAMPLE_ID
     );
   }
-});
-
-Hooks.on('getActorSheetHeaderButtons', (sheet: any, buttons: any) => {
-  // TODO: Limit this to a setting showSheetOptionsOnWindowHeader
-  if (!isTidy5eKgarSheet(sheet.actor?.flags?.core?.sheetClass)) {
-    return;
-  }
-
-  buttons.unshift({
-    class: 'configure-tidy5e',
-    icon: 'far fa-newspaper',
-    label: 'Tidy5e',
-    onclick: () => {
-      return new Tidy5eKgarUserSettings({}, undefined).render(true);
-    },
-  });
 });
 
 Hooks.on('renderAbilityUseDialog', (app: any, html: any, options: any) => {

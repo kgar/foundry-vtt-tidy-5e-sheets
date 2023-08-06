@@ -13,6 +13,7 @@
   export let id: string | null = null;
   export let disabled: boolean | null = null;
   export let dataset: Record<string, unknown> | null = null;
+  export let readonly: boolean | null = null;
 
   $: datasetAttributes = buildDataset(dataset);
 
@@ -40,5 +41,6 @@
   on:change={saveChange}
   data-tooltip={tooltip}
   {disabled}
+  {readonly}
   {...datasetAttributes}
 />

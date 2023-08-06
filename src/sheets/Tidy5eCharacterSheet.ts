@@ -9,6 +9,7 @@ import { CONSTANTS } from 'src/constants';
 import { writable } from 'svelte/store';
 import type { ActorSheetContext, SheetStats } from 'src/types/types';
 import { applyTitleToWindow } from 'src/utils/applications';
+import { Tidy5eKgarUserSettings } from 'src/settings/user-settings-form';
 
 const ActorSheet5eCharacter = FoundryAdapter.getActorSheetClass();
 
@@ -171,6 +172,23 @@ export class Tidy5eCharacterSheet extends ActorSheet5eCharacter {
     const context = await this.getContext();
     this.store.update(() => context);
     // super.activateListeners($(this.form));
+  }
+
+  _getHeaderButtons() {
+    const buttons = super._getHeaderButtons();
+
+    buttons.unshift({
+      class: 'configure-tidy5e',
+      icon: 'far fa-newspaper',
+      label: 'Tidy5e',
+      onclick: () => {
+        return new Tidy5eKgarUserSettings({}, undefined).render(true);
+      },
+    });
+
+    return FoundryAdapter.removeConfigureSettingsButtonWhenLockedForNonGm(
+      buttons
+    );
   }
 }
 

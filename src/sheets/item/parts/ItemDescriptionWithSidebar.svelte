@@ -7,6 +7,7 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import ItemDescription from './ItemDescription.svelte';
+  import { SettingsProvider } from 'src/settings/settings';
 
   let store = getContext<Readable<ItemSheetContext>>('store');
 
@@ -26,6 +27,7 @@
           field="system.quantity"
           document={$store.item}
           step="1"
+          readonly={!FoundryAdapter.userIsGm() && SettingsProvider.settings.lockItemQuantity.get()}
         />
       </div>
 
