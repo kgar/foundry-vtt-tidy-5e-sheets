@@ -49,14 +49,14 @@
     class="profile"
     src={$store.item.img}
     alt={$store.item.name}
-    data-tooltip="{localize('TIDY5E.EditActorImage')} / {localize(
-      'TIDY5E.ShowItemImage'
+    data-tooltip="{localize('T5EK.EditActorImage')} / {localize(
+      'T5EK.ShowItemImage'
     )}"
     on:mousedown={(event) => handleClick(event)}
   />
   <div class="item-menu" class:hidden={hideImageMenu}>
     <a class="showItemArt" on:click={() => showItemArt($store.item)}
-      >{localize('TIDY5E.ShowItemArt')}</a
+      >{localize('T5EK.ShowItemArt')}</a
     >
   </div>
 </div>

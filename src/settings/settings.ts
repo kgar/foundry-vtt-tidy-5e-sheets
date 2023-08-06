@@ -1081,10 +1081,10 @@ export function createSettings() {
       enablePermanentUnlockOnNPCIfYouAreGM: {
         options: {
           name: `${FoundryAdapter.localize(
-            'TIDY5E.Settings.EnablePermanentUnlockOnNPCIfYouAreGM.name'
+            'T5EK.Settings.EnablePermanentUnlockOnNPCIfYouAreGM.name'
           )}`,
           hint: FoundryAdapter.localize(
-            'TIDY5E.Settings.EnablePermanentUnlockOnNPCIfYouAreGM.hint'
+            'T5EK.Settings.EnablePermanentUnlockOnNPCIfYouAreGM.hint'
           ),
           scope: 'world',
           config: false,
@@ -1116,10 +1116,10 @@ export function createSettings() {
       enablePermanentUnlockOnVehicleIfYouAreGM: {
         options: {
           name: `${FoundryAdapter.localize(
-            'TIDY5E.Settings.EnablePermanentUnlockOnVehicleIfYouAreGM.name'
+            'T5EK.Settings.EnablePermanentUnlockOnVehicleIfYouAreGM.name'
           )}`,
           hint: FoundryAdapter.localize(
-            'TIDY5E.Settings.EnablePermanentUnlockOnVehicleIfYouAreGM.hint'
+            'T5EK.Settings.EnablePermanentUnlockOnVehicleIfYouAreGM.hint'
           ),
           scope: 'world',
           config: false,

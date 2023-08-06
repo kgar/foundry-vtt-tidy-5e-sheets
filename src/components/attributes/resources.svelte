@@ -32,7 +32,7 @@
           <label
             for="{$store.appId}-{res.name}.sr"
             class="checkbox"
-            title={localize('TIDY5E.RestS')}
+            title={localize('T5EK.RestS')}
           >
             {localize('DND5E.RestS')}
           </label>
@@ -49,7 +49,7 @@
           <label
             for="{$store.appId}-{res.name}.lr"
             class="checkbox"
-            title={localize('TIDY5E.RestL')}
+            title={localize('T5EK.RestL')}
           >
             {localize('DND5E.RestL')}
           </label>
