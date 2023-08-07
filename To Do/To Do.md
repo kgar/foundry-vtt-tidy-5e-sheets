@@ -302,7 +302,20 @@ Evaluate module integration and think about better (API-centric) ways to support
 - [ ] The XP bar's percentages seem way off. Try to get that fixed.
 - [ ] PopOut! Compatibility - ensure that events are not being stopped from popagation and than defaults are prevented only when necessary.
   - [ ] ...
-- [ ] Look at "Blessed Healer" description. In Tidy 5e, there is a "Reveal" / "Hide" button for secret content. Can we somehow bake this into our prose mirror integration?
+- [x] Look at "Blessed Healer" description. In Tidy 5e, there is a "Reveal" / "Hide" button for secret content. Can we somehow bake this into our prose mirror integration?
+- [ ] Find a way to allow module devs to define their own item sheet types and even override the ones that are there. 
+  - [ ] It should allow for 
+    - [ ] Vue, 
+    - [ ] Svelte, 
+    - [ ] handlebars, 
+    - [ ] raw HTML, 
+    - [ ] a jquery set, 
+    - [ ] or void (updating the HTML directly)
+  - **important**: This will open the door to custom Tidy 5e item sheets from module developers.
+  - [ ] Add an API call for registering a new item type; 
+    - [ ] specifying an existing one will put an override in place that will prevent the original from rendering and will instead render the override
+  - [ ] Add an API call for updating an existing item type's various tabs / parts
+
 
 ## Not Just Tidy 5e settings... DND5e settings as well 😱
 

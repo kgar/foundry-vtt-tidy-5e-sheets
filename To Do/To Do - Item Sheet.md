@@ -29,8 +29,7 @@
   - [x] Put a debugger; tag on submit to see if I can prevent it from submitting.
 - [x] Consider taking all stock tabs and making either a function or a statically available version of them that can be cloned into a tab list. This will allow me to make changes to tabcontent classes, for example, in one place instead of everywhere that the tab is used.
 - [x] Rename the `item` folder to `items`. Rename the individual item sheet components to remove the `Item` prefix and suffix with `Sheet`, so `ItemSpell` should be `SpellSheet`.
-- [ ] Create a map from item type to sheet and eliminate the big giant switch?
-  - **important**: This will open the door to custom Tidy 5e item sheets from module developers.
+
 
 ## Spell Class Filter Options impl
 
