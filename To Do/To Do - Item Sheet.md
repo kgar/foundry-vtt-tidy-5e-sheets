@@ -18,10 +18,10 @@
   - [x] `tool.hbs`
   - [x] `weapon.hbs`
 - [x] Implement auto-resize
-- [ ] Look for all the hidden jquery behaviors that wire during activateListeners; task out the ones we should keep
-  - [ ] dnd5e
+- [x] Look for all the hidden jquery behaviors that wire during activateListeners; task out the ones we should keep
+  - [x] dnd5e
     - [x] Secret block Reveal/Hide buttons (this was more universal than just item sheets, but I fixed it here 💪)
-    - [ ] Advancement Context Menu Options
+    - [x] Advancement Context Menu Options
   - [x] Tidy 5e
     - [x] Implement Spell Class in the ItemSpell sheet. It only appears when spellbook filtering is turned on.
     - [x] Apply Item Locks
