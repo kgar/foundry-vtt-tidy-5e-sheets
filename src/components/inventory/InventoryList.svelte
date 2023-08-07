@@ -277,7 +277,6 @@
     :global(.show-item-count-on-hover:hover .item-quantity),
     :global(.show-item-count-on-hover .item-quantity:focus-within) {
       opacity: 1;
-      width: unset;
     }
   }
 
