@@ -2,13 +2,7 @@
 
 ## Top of Mind
 
-### SCSS Revolution
-
-- [ ] Identify all components which are using styles
-- [ ] Transplant those styles to partial stylesheets that are scoped to the appropriate sheet or context
-- [ ] Put more specific stuff (item-quantity inputs) below the generic stuff (all character sheet inputs in general)
-- [ ] Eliminate all local styles and keep specificity as low as possible so that module devs can override more easily
-- [ ] While in there, poke around for `!important` tags and try to kill 'em.
+- [ ] Task out NPC implementation.
 
 ### Side Quest
 
@@ -61,12 +55,11 @@ context.biographyHTML = await TextEditor.enrichHTML(
 ## Character Tabs Pile of TODOs
 
 - [x] Use existing or create new tab control | made a really rough tabs control with relative ease
-- [ ] Implement the tabs
-- [ ] Implement Favorites
-  - [ ] Scope it out and make a plan
-  - [ ] ...
+- [x] Implement the tabs
+- [x] Implement Favorites
+  - [x] Scope it out and make a plan
+  - [x] ...
 - [x] Ensure item summary functionality can be shared
-
 - [x] Implement default tab
 - [ ] Visual bug (existing): when any character detail field is too long in Biography top-notes for a PC, it will blow out the layout. Consider CSS grid as a replacement. Test carefully on all the major browsers. Also just consider inputs instead of contenteditable fields?
 - [ ] Consider consolidating sheet initial value / cacheable content into single objects to pass down to the target component. Values include things like scrollTop map, currentTab sheet parameter, and any other sheetparameters that need to be cached for maintaining visual integrity between submissions / sheet refreshes.
@@ -316,6 +309,14 @@ Evaluate module integration and think about better (API-centric) ways to support
     - [ ] specifying an existing one will put an override in place that will prevent the original from rendering and will instead render the override
   - [ ] Add an API call for updating an existing item type's various tabs / parts
 
+
+## (Deferred for later; might solve itself) SCSS Revolution
+
+- [ ] Identify all components which are using styles
+- [ ] Transplant those styles to partial stylesheets that are scoped to the appropriate sheet or context
+- [ ] Put more specific stuff (item-quantity inputs) below the generic stuff (all character sheet inputs in general)
+- [ ] Eliminate all local styles and keep specificity as low as possible so that module devs can override more easily
+- [ ] While in there, poke around for `!important` tags and try to kill 'em.
 
 ## Not Just Tidy 5e settings... DND5e settings as well 😱
 
