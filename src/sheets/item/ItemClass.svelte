@@ -8,10 +8,8 @@
   import { getContext } from 'svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import ItemProfilePicture from './parts/ItemProfilePicture.svelte';
-  import ItemAdvancement from './parts/ItemAdvancement.svelte';
   import TextInput from 'src/components/form/TextInput.svelte';
-  import ItemDescription from './parts/ItemDescription.svelte';
-  import ItemClassDetails from './parts/ItemClassDetails.svelte';
+  import itemSheetTabs from './itemSheetTabs';
 
   let store = getContext<Readable<ItemSheetContext>>('store');
 
@@ -20,30 +18,9 @@
   export let selectedTabId: string;
 
   const tabs: Tab[] = [
-    {
-      id: CONSTANTS.TAB_ITEM_DESCRIPTION_ID,
-      displayName: 'DND5E.Description',
-      content: {
-        component: ItemDescription,
-        cssClass: 'flexcol',
-      },
-    },
-    {
-      id: CONSTANTS.TAB_ITEM_DETAILS_ID,
-      displayName: 'DND5E.Details',
-      content: {
-        component: ItemClassDetails,
-        cssClass: 'detail-tab-contents',
-      },
-    },
-    {
-      id: CONSTANTS.TAB_ITEM_ADVANCEMENT_ID,
-      displayName: 'DND5E.AdvancementTitle',
-      content: {
-        component: ItemAdvancement,
-        cssClass: 'detail-tab-contents items-list-container',
-      },
-    },
+    itemSheetTabs.description,
+    itemSheetTabs.classDetails,
+    itemSheetTabs.advancement,
   ];
 
   Hooks.call(CONSTANTS.HOOKS_RENDERING_ITEM_CLASS_TABS, {

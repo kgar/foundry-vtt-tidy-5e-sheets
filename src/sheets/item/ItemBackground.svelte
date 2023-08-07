@@ -3,37 +3,19 @@
   import Tabs from 'src/components/tabs/Tabs.svelte';
   import { CONSTANTS } from 'src/constants';
   import type { Tab } from 'src/types/types';
-  import ItemDescription from './parts/ItemDescription.svelte';
-  import ItemAdvancement from './parts/ItemAdvancement.svelte';
   import ItemProfilePicture from './parts/ItemProfilePicture.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import type { ItemSheetContext } from 'src/types/item';
   import TextInput from 'src/components/form/TextInput.svelte';
+  import itemSheetTabs from './itemSheetTabs';
 
   let store = getContext<Readable<ItemSheetContext>>('store');
 
   $: console.log($store);
 
-  const tabs: Tab[] = [
-    {
-      id: CONSTANTS.TAB_ITEM_DESCRIPTION_ID,
-      displayName: 'DND5E.Description',
-      content: {
-        component: ItemDescription,
-        cssClass: 'flexcol',
-      },
-    },
-    {
-      id: CONSTANTS.TAB_ITEM_ADVANCEMENT_ID,
-      displayName: 'DND5E.AdvancementTitle',
-      content: {
-        component: ItemAdvancement,
-        cssClass: 'detail-tab-contents items-list-container',
-      },
-    },
-  ];
+  const tabs: Tab[] = [itemSheetTabs.description, itemSheetTabs.advancement];
 
   export let selectedTabId: string = 'description';
 
@@ -41,7 +23,7 @@
     tabs,
     context: $store,
   });
-  
+
   const localize = FoundryAdapter.localize;
 </script>
 

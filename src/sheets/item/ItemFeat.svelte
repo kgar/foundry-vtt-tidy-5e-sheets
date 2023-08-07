@@ -7,11 +7,9 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import Tabs from 'src/components/tabs/Tabs.svelte';
   import TabContents from 'src/components/tabs/TabContents.svelte';
-  import ItemDescriptionWithSidebar from './parts/ItemDescriptionWithSidebar.svelte';
-  import ItemFeatDetails from './parts/ItemFeatDetails.svelte';
-  import ActiveEffects from '../actor/parts/ActiveEffects.svelte';
   import ItemProfilePicture from './parts/ItemProfilePicture.svelte';
   import TextInput from 'src/components/form/TextInput.svelte';
+  import itemSheetTabs from './itemSheetTabs';
 
   let store = getContext<Readable<ItemSheetContext>>('store');
 
@@ -22,30 +20,9 @@
   export let selectedTabId: string;
 
   const tabs: Tab[] = [
-    {
-      id: CONSTANTS.TAB_ITEM_DESCRIPTION_ID,
-      displayName: 'DND5E.Description',
-      content: {
-        component: ItemDescriptionWithSidebar,
-        cssClass: 'flexrow',
-      },
-    },
-    {
-      id: CONSTANTS.TAB_ITEM_DETAILS_ID,
-      displayName: 'DND5E.Details',
-      content: {
-        component: ItemFeatDetails,
-        cssClass: 'detail-tab-contents',
-      },
-    },
-    {
-      id: CONSTANTS.TAB_ITEM_EFFECTS_ID,
-      displayName: 'DND5E.Effects',
-      content: {
-        component: ActiveEffects,
-        cssClass: 'flexcol items-list-container',
-      },
-    },
+    itemSheetTabs.descriptionWithSidebar,
+    itemSheetTabs.featDetails,
+    itemSheetTabs.effects,
   ];
 
   Hooks.call(CONSTANTS.HOOKS_RENDERING_ITEM_FEAT_TABS, {

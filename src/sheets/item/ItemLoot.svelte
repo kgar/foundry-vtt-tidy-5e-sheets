@@ -1,6 +1,5 @@
 <script lang="ts">
   import ItemProfilePicture from './parts/ItemProfilePicture.svelte';
-  import ItemDescriptionWithSidebar from './parts/ItemDescriptionWithSidebar.svelte';
   import type { ItemSheetContext } from 'src/types/item';
   import type { Readable } from 'svelte/store';
   import { getContext } from 'svelte';
@@ -12,6 +11,7 @@
   import SelectOptions from 'src/components/form/SelectOptions.svelte';
   import Tabs from 'src/components/tabs/Tabs.svelte';
   import TabContents from 'src/components/tabs/TabContents.svelte';
+  import itemSheetTabs from './itemSheetTabs';
 
   let store = getContext<Readable<ItemSheetContext>>('store');
 
@@ -19,16 +19,7 @@
 
   export let selectedTabId: string;
 
-  let tabs: Tab[] = [
-    {
-      id: CONSTANTS.TAB_ITEM_DESCRIPTION_ID,
-      displayName: 'DND5E.Description',
-      content: {
-        component: ItemDescriptionWithSidebar,
-        cssClass: 'flexrow',
-      },
-    },
-  ];
+  let tabs: Tab[] = [itemSheetTabs.descriptionWithSidebar];
 
   Hooks.call(CONSTANTS.HOOKS_RENDERING_ITEM_LOOT_TABS, {
     tabs,
