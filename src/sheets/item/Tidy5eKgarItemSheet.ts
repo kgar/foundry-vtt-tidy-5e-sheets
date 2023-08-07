@@ -2,18 +2,18 @@ import { CONSTANTS } from 'src/constants';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type { Item5e, ItemSheetContext } from 'src/types/item';
 import { writable } from 'svelte/store';
-import ItemTypeNotFound from './ItemTypeNotFound.svelte';
-import ItemEquipment from './ItemEquipment.svelte';
-import ItemBackpack from './ItemBackpack.svelte';
-import ItemBackground from './ItemBackground.svelte';
-import ItemClass from './ItemClass.svelte';
-import ItemConsumable from './ItemConsumable.svelte';
-import ItemFeat from './ItemFeat.svelte';
-import ItemLoot from './ItemLoot.svelte';
-import ItemSpell from './ItemSpell.svelte';
-import ItemSubclass from './ItemSubclass.svelte';
-import ItemTool from './ItemTool.svelte';
-import ItemWeapon from './ItemWeapon.svelte';
+import TypeNotFoundSheet from './TypeNotFoundSheet.svelte';
+import EquipmentSheet from './EquipmentSheet.svelte';
+import BackpackSheet from './BackpackSheet.svelte';
+import BackgroundSheet from './BackgroundSheet.svelte';
+import ClassSheet from './ClassSheet.svelte';
+import ConsumableSheet from './ConsumableSheet.svelte';
+import FeatSheet from './FeatSheet.svelte';
+import LootSheet from './LootSheet.svelte';
+import SpellSheet from './SpellSheet.svelte';
+import SubclassSheet from './SubclassSheet.svelte';
+import ToolSheet from './ToolSheet.svelte';
+import WeaponSheet from './WeaponSheet.svelte';
 import type { SheetStats } from 'src/types/types';
 import { applyTitleToWindow } from 'src/utils/applications';
 import { debug } from 'src/utils/logging';
@@ -61,7 +61,7 @@ export class Tidy5eKgarItemSheet extends dnd5e.applications.item.ItemSheet5e {
 
     switch (this.item.type) {
       case CONSTANTS.ITEM_TYPE_EQUIPMENT:
-        new ItemEquipment({
+        new EquipmentSheet({
           target: node,
           props: {
             selectedTabId: this.selectedTabId ?? 'description',
@@ -70,7 +70,7 @@ export class Tidy5eKgarItemSheet extends dnd5e.applications.item.ItemSheet5e {
         });
         break;
       case CONSTANTS.ITEM_TYPE_BACKGROUND:
-        new ItemBackground({
+        new BackgroundSheet({
           target: node,
           props: {
             selectedTabId: this.selectedTabId ?? 'description',
@@ -79,7 +79,7 @@ export class Tidy5eKgarItemSheet extends dnd5e.applications.item.ItemSheet5e {
         });
         break;
       case CONSTANTS.ITEM_TYPE_BACKPACK:
-        new ItemBackpack({
+        new BackpackSheet({
           target: node,
           props: {
             selectedTabId: this.selectedTabId ?? 'description',
@@ -88,7 +88,7 @@ export class Tidy5eKgarItemSheet extends dnd5e.applications.item.ItemSheet5e {
         });
         break;
       case CONSTANTS.ITEM_TYPE_CLASS:
-        new ItemClass({
+        new ClassSheet({
           target: node,
           props: {
             selectedTabId: this.selectedTabId ?? 'description',
@@ -97,7 +97,7 @@ export class Tidy5eKgarItemSheet extends dnd5e.applications.item.ItemSheet5e {
         });
         break;
       case CONSTANTS.ITEM_TYPE_CONSUMABLE:
-        new ItemConsumable({
+        new ConsumableSheet({
           target: node,
           props: {
             selectedTabId: this.selectedTabId ?? 'description',
@@ -106,7 +106,7 @@ export class Tidy5eKgarItemSheet extends dnd5e.applications.item.ItemSheet5e {
         });
         break;
       case CONSTANTS.ITEM_TYPE_FEAT:
-        new ItemFeat({
+        new FeatSheet({
           target: node,
           props: {
             selectedTabId: this.selectedTabId ?? 'description',
@@ -115,7 +115,7 @@ export class Tidy5eKgarItemSheet extends dnd5e.applications.item.ItemSheet5e {
         });
         break;
       case CONSTANTS.ITEM_TYPE_LOOT:
-        new ItemLoot({
+        new LootSheet({
           target: node,
           props: {
             selectedTabId: this.selectedTabId ?? 'description',
@@ -124,7 +124,7 @@ export class Tidy5eKgarItemSheet extends dnd5e.applications.item.ItemSheet5e {
         });
         break;
       case CONSTANTS.ITEM_TYPE_SPELL:
-        new ItemSpell({
+        new SpellSheet({
           target: node,
           props: {
             selectedTabId: this.selectedTabId ?? 'description',
@@ -133,7 +133,7 @@ export class Tidy5eKgarItemSheet extends dnd5e.applications.item.ItemSheet5e {
         });
         break;
       case CONSTANTS.ITEM_TYPE_SUBCLASS:
-        new ItemSubclass({
+        new SubclassSheet({
           target: node,
           props: {
             selectedTabId: this.selectedTabId ?? 'description',
@@ -142,7 +142,7 @@ export class Tidy5eKgarItemSheet extends dnd5e.applications.item.ItemSheet5e {
         });
         break;
       case CONSTANTS.ITEM_TYPE_TOOL:
-        new ItemTool({
+        new ToolSheet({
           target: node,
           props: {
             selectedTabId: this.selectedTabId ?? 'description',
@@ -151,7 +151,7 @@ export class Tidy5eKgarItemSheet extends dnd5e.applications.item.ItemSheet5e {
         });
         break;
       case CONSTANTS.ITEM_TYPE_WEAPON:
-        new ItemWeapon({
+        new WeaponSheet({
           target: node,
           props: {
             selectedTabId: this.selectedTabId ?? 'description',
@@ -160,7 +160,7 @@ export class Tidy5eKgarItemSheet extends dnd5e.applications.item.ItemSheet5e {
         });
         break;
       default:
-        new ItemTypeNotFound({
+        new TypeNotFoundSheet({
           target: node,
           context: stores,
         });
