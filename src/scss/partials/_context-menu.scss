@@ -57,7 +57,8 @@
     &:hover {
       box-shadow: 0 0 2px var(--t5e-tertiary-color),
         0 0 0 1px var(--t5e-tertiary-color) inset;
-      color: var(--t5e-primary-font);
+      color: var(--t5e-primary-accent);
+      text-shadow: none;
     }
 
     i {

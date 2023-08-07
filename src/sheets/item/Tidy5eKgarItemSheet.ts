@@ -179,6 +179,19 @@ export class Tidy5eKgarItemSheet extends dnd5e.applications.item.ItemSheet5e {
           }
         );
       });
+
+    // Advancement context menu
+    const contextOptions = this._getAdvancementContextMenuOptions();
+    /**
+     * A hook event that fires when the context menu for the advancements list is constructed.
+     * @function dnd5e.getItemAdvancementContext
+     * @memberof hookEvents
+     * @param {jQuery} html                      The HTML element to which the context options are attached.
+     * @param {ContextMenuEntry[]} entryOptions  The context menu entries.
+     */
+    Hooks.call('dnd5e.getItemAdvancementContext', html, contextOptions);
+    if (contextOptions)
+      new ContextMenu(html, '.advancement-item', contextOptions);
   }
 
   private makeWindowAutoHeightForDetailsTab(tabId: string | undefined) {
