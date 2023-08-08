@@ -2,15 +2,15 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { type ActorSheetContext } from 'src/types/types';
   import { SettingsProvider } from 'src/settings/settings';
-  import Exhaustion from './Exhaustion.svelte';
-  import Inspiration from './Inspiration.svelte';
-  import HpOverlay from './HpOverlay.svelte';
-  import DeathSaves from './DeathSaves.svelte';
-  import Rest from './Rest.svelte';
-  import HitDice from './HitDice.svelte';
-  import HitPoints from './HitPoints.svelte';
-  import CharacterPortrait from './CharacterPortrait.svelte';
-  import TempHp from './TempHp.svelte';
+  import Exhaustion from '../../Exhaustion.svelte';
+  import Inspiration from '../../Inspiration.svelte';
+  import HpOverlay from '../../HpOverlay.svelte';
+  import DeathSaves from '../../DeathSaves.svelte';
+  import Rest from '../../Rest.svelte';
+  import HitDice from '../../HitDice.svelte';
+  import CharacterHitPoints from './CharacterHitPoints.svelte';
+  import ActorPortrait from './ActorPortrait.svelte';
+  import TempHp from '../../TempHp.svelte';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
 
@@ -42,7 +42,7 @@
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <div class="profile-wrap">
   <div class="profile" class:round-portrait={useRoundedPortraitStyle}>
-    <CharacterPortrait actor={$store.actor} />
+    <ActorPortrait actor={$store.actor} />
 
     {#if !SettingsProvider.settings.hpOverlayDisabled.get()}
       <HpOverlay {useRoundedPortraitStyle} actor={$store.actor} />
@@ -78,7 +78,7 @@
       />
     {/if}
 
-    <HitPoints
+    <CharacterHitPoints
       value={$store.system.attributes.hp.value}
       max={$store.system.attributes.hp.max}
       actor={$store.actor}

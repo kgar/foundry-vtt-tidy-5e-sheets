@@ -8,7 +8,7 @@
   } from 'src/types/types';
   import { SettingsProvider } from 'src/settings/settings';
   import Tidy5eActorOriginSummaryConfig from '../tidy5e-actor-origin-summary-config';
-  import CharacterProfile from '../CharacterProfile.svelte';
+  import CharacterProfile from './parts/CharacterProfile.svelte';
   import TidyDropdownList from '../TidyDropdownList.svelte';
   import AcShield from '../actor/AcShield.svelte';
   import AttributeBlock from '../AttributeBlock.svelte';

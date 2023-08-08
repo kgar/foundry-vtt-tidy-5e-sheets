@@ -3,7 +3,7 @@
   import { type Actor5e } from 'src/types/actor';
   import { SettingsProvider } from 'src/settings/settings';
   import { isRealNumber } from 'src/utils/numbers';
-  import { submitText } from './form';
+  import { submitText } from '../../form';
 
   export let value: number;
   export let max: number;

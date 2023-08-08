@@ -4,6 +4,11 @@
 - [ ] Implement
   - [ ] Full NPC
     - [ ] Header
+      - [ ] HTML
+        - [ ] Profile
+        - [x] Header Stats / INfo
+      - [ ] SCSS
+      - [ ] Behaviors
     - [ ] Tab nav and stub/share components
       - [ ] Attributes
       - [ ] Spellbook
