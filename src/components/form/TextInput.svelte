@@ -10,6 +10,7 @@
   export let id: string | null = null;
   export let dataset: Record<string, unknown> | null = null;
   export let cssClass: string | null = null;
+  export let maxlength: number | null = null;
 
   $: actualDataset = buildDataset(dataset);
 
@@ -33,4 +34,5 @@
   data-tooltip={tooltip}
   {...actualDataset}
   class={cssClass}
+  {maxlength}
 />

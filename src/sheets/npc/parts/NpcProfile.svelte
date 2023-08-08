@@ -1,15 +1,69 @@
 <script lang="ts">
-  import CharacterPortrait from 'src/sheets/CharacterPortrait.svelte';
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import { SettingsProvider } from 'src/settings/settings';
+  import CharacterPortrait from 'src/sheets/character/parts/ActorPortrait.svelte';
+  import DeathSaves from 'src/sheets/DeathSaves.svelte';
+  import Exhaustion from 'src/sheets/Exhaustion.svelte';
+  import HpOverlay from 'src/sheets/HpOverlay.svelte';
   import type { NpcSheetContext } from 'src/types/types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
+  import NpcHitPoints from './NpcHitPoints.svelte';
 
   let store = getContext<Readable<NpcSheetContext>>('store');
+
+  const portraitStyle = SettingsProvider.settings.portraitStyle.get();
+  const useRoundedPortraitStyle = ['all', 'default', 'npc'].includes(
+    portraitStyle
+  );
+
+  $: incapacitated =
+    ($store.actor?.system?.attributes?.hp?.value ?? 0) <= 0 &&
+    $store.actor?.system?.attributes?.hp?.max !== 0;
+
+  function onLevelSelected(event: CustomEvent<{ level: number }>) {
+    $store.actor.update({
+      'system.attributes.exhaustion': event.detail.level,
+    });
+  }
+
+  function showDeathSaves(): boolean {
+    const isEnabledForAll =
+      !SettingsProvider.settings.hiddenDeathSavesEnabled.get();
+    return incapacitated && (isEnabledForAll || FoundryAdapter.userIsGm());
+  }
 </script>
 
-<!-- Exhaustion -->
-<CharacterPortrait actor={$store.actor} />
-<!-- HP overlay -->
-<!-- Optional REST? -->
-<!-- Custom NPC HP -->
-<!-- Temp/Map HP Boost? -->
+<div class="profile-wrap">
+  <CharacterPortrait actor={$store.actor} />
+
+  {#if !SettingsProvider.settings.hpOverlayDisabled.get()}
+    <HpOverlay {useRoundedPortraitStyle} actor={$store.actor} />
+  {/if}
+
+  {#if showDeathSaves()}
+    <DeathSaves
+      successes={$store.system.attributes.death.success}
+      failures={$store.system.attributes.death.failure}
+      {useRoundedPortraitStyle}
+      on:rollDeathSave={(event) =>
+        $store.actor.rollDeathSave({ event: event.detail.mouseEvent })}
+    />
+  {/if}
+
+  {#if !SettingsProvider.settings.exhaustionDisabled.get() && !incapacitated}
+    <Exhaustion
+      level={$store.system.attributes.exhaustion}
+      radiusClass={useRoundedPortraitStyle ? 'rounded' : 'top-left'}
+      on:levelSelected={onLevelSelected}
+      onlyShowOnHover={SettingsProvider.settings.exhaustionOnHover.get() ||
+        (SettingsProvider.settings.hideIfZero.get() &&
+          $store.system.attributes.exhaustion === 0)}
+    />
+  {/if}
+
+  <!-- Optional REST? -->
+  <!-- Custom NPC HP -->
+  <NpcHitPoints />
+  <!-- Temp/Map HP Boost? -->
+</div>
