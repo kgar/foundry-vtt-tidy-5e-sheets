@@ -10,7 +10,7 @@
   import Tidy5eActorOriginSummaryConfig from '../tidy5e-actor-origin-summary-config';
   import CharacterProfile from '../CharacterProfile.svelte';
   import TidyDropdownList from '../TidyDropdownList.svelte';
-  import AcShield from '../AcShield.svelte';
+  import AcShield from '../actor/AcShield.svelte';
   import AttributeBlock from '../AttributeBlock.svelte';
   import InitiativeBlock from '../InitiativeBlock.svelte';
   import ActorWarnings from '../ActorWarnings.svelte';
@@ -27,6 +27,7 @@
   import Tabs from 'src/components/tabs/Tabs.svelte';
   import TabContents from 'src/components/tabs/TabContents.svelte';
   import type { Readable } from 'svelte/store';
+  import ContentEditableFormField from 'src/components/inputs/ContentEditableFormField.svelte';
 
   export let debug: any = 'Put any debug information here, if ya need it.';
   export let selectedTabId: string;
@@ -160,25 +161,16 @@
   <!-- Name -->
   <div class="flex-grow-1">
     <div class="flex-row justifty-content-space-between align-items-center">
-      <div class="character-name">
-        {#if $store.owner}
-          <h1
-            contenteditable="true"
-            spellcheck="false"
-            data-placeholder={localize('DND5E.Name')}
-            data-maxlength="40"
-            bind:textContent={characterName}
-            on:keypress={submitWhenEnterKey}
-            on:blur={() =>
-              $store.actor.update({
-                name: characterName,
-              })}
-          />
-        {:else}
-          <h1>
-            {$store.actor.name}
-          </h1>
-        {/if}
+      <div class="actor-name">
+        <ContentEditableFormField
+          element="h1"
+          editable={$store.owner}
+          spellcheck={false}
+          placeholder={localize('DND5E.Name')}
+          dataMaxLength={40}
+          value={characterName}
+          fieldName="name"
+        />
       </div>
 
       <div class="flex-row small-gap align-items-right">
@@ -347,7 +339,7 @@
       >
     </section>
     <!-- AC  -->
-    <section class="character-stats">
+    <section class="actor-stats">
       <!-- TODO: switch these back to unordered <li> -->
       <AcShield
         ac={$store.system.attributes.ac.value}
@@ -362,7 +354,6 @@
         aria-hidden="true"
         role="presentation"
       />
-      <!-- Initiative (mod, cog) , Str (rollable, score, mod, save, proficient, cog) thru Cha (rollable, score, mod, save, proficient, cog) -->
       <div>
         <InitiativeBlock
           actor={$store.actor}

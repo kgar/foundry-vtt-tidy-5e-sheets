@@ -170,7 +170,16 @@
               </li>
             </ul>
             <span class="creature-type" title="{{labels.type}}">
-              <a class="config-button" data-action="type" title="{{localize 'DND5E.CreatureTypeConfig'}}">{{#if (or (eq labels.type '') (eq labels.type none))}} {{localize 'DND5E.CreatureType'}} {{else}} {{labels.type}} {{/if}}</a>
+              <a 
+                class="config-button" 
+                data-action="type" 
+                title="{{localize 'DND5E.CreatureTypeConfig'}}">
+                {{#if (or (eq labels.type '') (eq labels.type none))}} 
+                  {{localize 'DND5E.CreatureType'}} 
+                {{else}} 
+                  {{labels.type}} 
+                {{/if}}
+              </a>
             </span>
             <span class="environment">
                 <i class="fas fa-tree"></i>
@@ -212,7 +221,7 @@
           </ul>
         </section>
 
-        <section class="character-stats">
+        <section class="actor-stats">
           {{!-- Header Attributes --}}
           <ul class="header-attributes">
             <li class="header-attribute ac-display">

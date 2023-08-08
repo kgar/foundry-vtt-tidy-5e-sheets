@@ -52,7 +52,7 @@ h4 {
   height: 1.4375rem;
 }
 
-.character-name,
+.actor-name,
 .level,
 .attribute-name,
 .header-attribute .value,
@@ -71,23 +71,7 @@ h4 {
   color: var(--t5e-primary-accent);
 }
 
-[contenteditable] {
-  border: none;
-  outline: none;
-  border-radius: 3px;
-  -moz-user-select: text;
-  -khtml-user-select: text;
-  -webkit-user-select: text;
-  -o-user-select: text;
-  user-select: text;
 
-  &:empty::before {
-    content: attr(data-placeholder);
-    pointer-events: none;
-    display: block; // For Firefox
-    color: var(--t5e-tertiary-color);
-  }
-}
 
 .window-content a:hover {
   text-shadow: none;
@@ -159,4 +143,24 @@ ul {
   margin: 0;
   padding: 0;
   scrollbar-width: thin;
+}
+
+.actor-name {
+  flex: 1;
+  word-break: break-word;
+  h1 {
+    font-size: 1.5rem;
+    padding: 0 0.25rem;
+  }
+}
+
+.actor-stats {
+  display: flex;
+  flex-direction: row;
+  gap: 0.25rem;
+  margin-top: 0.25rem;
+
+  > *:not(.vertical-line-separator) {
+    flex: 1;
+  }
 }
