@@ -1,19 +1,19 @@
 <script lang="ts">
   import { getContext, setContext } from 'svelte';
-  import { FoundryAdapter } from '../foundry/foundry-adapter';
+  import { FoundryAdapter } from '../../foundry/foundry-adapter';
   import type {
     ActorSheetContext,
     Tab,
     TidyDropdownOption,
   } from 'src/types/types';
   import { SettingsProvider } from 'src/settings/settings';
-  import Tidy5eActorOriginSummaryConfig from './tidy5e-actor-origin-summary-config';
-  import CharacterProfile from './CharacterProfile.svelte';
-  import TidyDropdownList from './TidyDropdownList.svelte';
-  import AcShield from './AcShield.svelte';
-  import AttributeBlock from './AttributeBlock.svelte';
-  import InitiativeBlock from './InitiativeBlock.svelte';
-  import ActorWarnings from './ActorWarnings.svelte';
+  import Tidy5eActorOriginSummaryConfig from '../tidy5e-actor-origin-summary-config';
+  import CharacterProfile from '../CharacterProfile.svelte';
+  import TidyDropdownList from '../TidyDropdownList.svelte';
+  import AcShield from '../AcShield.svelte';
+  import AttributeBlock from '../AttributeBlock.svelte';
+  import InitiativeBlock from '../InitiativeBlock.svelte';
+  import ActorWarnings from '../ActorWarnings.svelte';
   import AttributesTab from 'src/components/player-character/AttributesTab.svelte';
   import InventoryTab from 'src/components/player-character/InventoryTab.svelte';
   import SpellbookTab from 'src/components/player-character/SpellbookTab.svelte';
@@ -22,7 +22,7 @@
   import BiographyTab from 'src/components/player-character/BiographyTab.svelte';
   import JournalTab from 'src/components/player-character/JournalTab.svelte';
   import { CONSTANTS } from 'src/constants';
-  import { submitText } from './form';
+  import { submitText } from '../form';
   import AllowEditLock from 'src/components/shared/AllowEditLock.svelte';
   import Tabs from 'src/components/tabs/Tabs.svelte';
   import TabContents from 'src/components/tabs/TabContents.svelte';
@@ -78,9 +78,6 @@
 
   let tabs: Tab[] = [];
   $: {
-    const allowJournal =
-      $store.owner && !SettingsProvider.settings.journalTabDisabled.get();
-
     tabs = [
       {
         id: 'attributes',
@@ -125,6 +122,9 @@
         },
       },
     ];
+
+    const allowJournal =
+      $store.owner && !SettingsProvider.settings.journalTabDisabled.get();
 
     if (allowJournal) {
       tabs.push({
@@ -401,7 +401,7 @@
   .tidy5e-kgar-sheet-header {
     display: flex;
     justify-content: center;
-    padding: 10px 16px 16px 16px;
+    padding: 0.625rem 1rem 1rem 1rem;
     background: var(--t5e-header-background);
   }
 

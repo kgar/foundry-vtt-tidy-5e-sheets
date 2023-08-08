@@ -1,0 +1,24 @@
+- Register the sheet as a child of the original
+- [ ] Fill out the sheet stuff for svelte mode
+  - [ ] Do we want to use a base sheet for all actors?
+- [ ] Implement
+  - [ ] Full NPC
+    - [ ] Header
+    - [ ] Tab nav and stub/share components
+      - [ ] Attributes
+      - [ ] Spellbook
+      - [ ] Effects
+      - [ ] Biography
+      - [ ] Journal
+      - [ ] Toggle Lock
+    - [ ] Tab Contents
+      - [ ] Attributes
+      - [ ] Spellbook
+      - [ ] Effects
+      - [ ] Biography
+      - [ ] Journal
+  - [ ] Ltd NPC
+    - [ ] Configure to appear when user is NOT GM and actor is limited
+    - [ ] Biography
+- [ ] Settings
+  - [ ] ...

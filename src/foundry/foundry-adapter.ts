@@ -14,6 +14,9 @@ export const FoundryAdapter = {
   getActorSheetClass() {
     return dnd5e.applications.actor.ActorSheet5eCharacter;
   },
+  getActorSheetNpcClass() {
+    return dnd5e.applications.actor.ActorSheet5eNPC;
+  },
   userIsGm() {
     return game.user.isGM;
   },

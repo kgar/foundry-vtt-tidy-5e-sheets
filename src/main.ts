@@ -1,5 +1,5 @@
 import { FoundryAdapter } from './foundry/foundry-adapter';
-import { Tidy5eCharacterSheet } from './sheets/Tidy5eCharacterSheet';
+import { Tidy5eCharacterSheet } from './sheets/character/Tidy5eCharacterSheet';
 import './scss/core.scss';
 import { initSettings } from './settings/settings';
 import { useTidy5eSpellLevelButtons } from './dialogs/spell-level-buttons';
@@ -11,6 +11,7 @@ import type { Dialog as ClientDialog } from './types/dialog';
 import type { globalThisUI } from './types/types';
 import type { globalThisDnd5e } from './types/dnd5e';
 import { Tidy5eKgarItemSheet } from './sheets/item/Tidy5eKgarItemSheet';
+import { Tidy5eNpcSheet } from './sheets/npc/Tidy5eNpcSheet';
 
 declare global {
   var Dialog: typeof ClientDialog;
@@ -22,6 +23,12 @@ Actors.registerSheet('dnd5e', Tidy5eCharacterSheet, {
   types: ['character'],
   makeDefault: true,
   label: 'T5EK.Tidy5eSheet',
+});
+
+Actors.registerSheet('dnd5e', Tidy5eNpcSheet, {
+  types: ['npc'],
+  makeDefault: true,
+  label: 'T5EK.Tidy5eNPC',
 });
 
 Items.registerSheet('dnd5e', Tidy5eKgarItemSheet, {

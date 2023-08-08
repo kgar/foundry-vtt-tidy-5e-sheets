@@ -29,6 +29,11 @@ export type ActorSheetContext = {
 } & JQueryHooksSheetIntegration &
   Record<string, any>;
 
+export type NpcSheetContext = {
+  actor: Actor5e;
+} & JQueryHooksSheetIntegration &
+  Record<string, any>;
+
 export type JQueryHooksSheetIntegration = {
   activateFoundryJQueryListeners: (html: HTMLElement) => Promise<void>;
 };
@@ -135,4 +140,4 @@ export type Roll = {
 
 export type SheetStats = {
   lastSubmissionTime: Date | null;
-}
+};

@@ -1,5 +1,5 @@
-import { FoundryAdapter } from '../foundry/foundry-adapter';
-import Tidy5eCharacterSheetContent from './Tidy5eCharacterSheetContent.svelte';
+import { FoundryAdapter } from '../../foundry/foundry-adapter';
+import Tidy5eCharacterSheetContent from './CharacterSheet.svelte';
 import { debug, error } from 'src/utils/logging';
 import { SettingsProvider } from 'src/settings/settings';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
@@ -171,7 +171,6 @@ export class Tidy5eCharacterSheet extends ActorSheet5eCharacter {
     applyTitleToWindow(this.title, this.element.get(0));
     const context = await this.getContext();
     this.store.update(() => context);
-    // super.activateListeners($(this.form));
   }
 
   _getHeaderButtons() {
