@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { FoundryDocument } from 'src/types/document';
-    import { buildDataset } from 'src/utils/data';
+  import { buildDataset } from 'src/utils/data';
 
   export let value: number | null = null;
   export let step: string = 'any';
@@ -14,6 +14,8 @@
   export let disabled: boolean | null = null;
   export let dataset: Record<string, unknown> | null = null;
   export let readonly: boolean | null = null;
+  export let cssClass: string | null = null;
+  export let maxlength: HTMLInputElement['maxLength'] | null;
 
   $: datasetAttributes = buildDataset(dataset);
 
@@ -42,5 +44,7 @@
   data-tooltip={tooltip}
   {disabled}
   {readonly}
+  class={cssClass}
+  {maxlength}
   {...datasetAttributes}
 />
