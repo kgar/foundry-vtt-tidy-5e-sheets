@@ -13,10 +13,18 @@
   // TODO: Break this down so it's simple for the reader
   $: hpBarCalculationCurrent =
     (100 /
-      ((isRealNumber($store.hp?.max) ? $store.hp.max! : 1) +
-        (isRealNumber($store.hp?.tempmax) ? $store.hp.tempmax! : 0))) *
-      (isRealNumber($store.hp?.value) ? $store.hp.value! : 0) +
-    (isRealNumber($store.hp?.temp) ? $store.hp.temp! : 0);
+      ((isRealNumber($store.actor.system?.attributes?.hp?.max)
+        ? $store.actor.system.attributes.hp.max
+        : 1) +
+        (isRealNumber($store.actor.system?.attributes?.hp?.tempmax)
+          ? $store.actor.system.attributes.hp.tempmax
+          : 0))) *
+      (isRealNumber($store.actor.system?.attributes?.hp?.value)
+        ? $store.actor.system.attributes.hp.value
+        : 0) +
+    (isRealNumber($store.actor.system?.attributes?.hp?.temp)
+      ? $store.actor.system.attributes.hp.temp
+      : 0);
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -29,11 +37,11 @@
   <div
     class="hp-bar"
     style="background: linear-gradient(
-                        -90deg,
-                        transparent 0%,
-                        transparent calc(100% -  {hpBarCalculationCurrent}),
-                             rgba(0, 200, 0, 0.5) calc(100% - {hpBarCalculationCurrent}),
-                             rgba(0, 200, 0, 0.5) 100%);"
+      -90deg,
+      transparent 0%,
+      transparent calc(100% -  {hpBarCalculationCurrent}%),
+            rgba(0, 200, 0, 0.5) calc(100% - {hpBarCalculationCurrent}%),
+            rgba(0, 200, 0, 0.5) 100%);"
   />
   <TextInput
     cssClass="hp-min"
