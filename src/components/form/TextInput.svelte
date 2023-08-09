@@ -8,9 +8,11 @@
   export let document: FoundryDocument;
   export let tooltip: string | null = null;
   export let id: string | null = null;
+  export let dtype: string | null = null;
   export let dataset: Record<string, unknown> | null = null;
   export let cssClass: string | null = null;
   export let maxlength: number | null = null;
+  export let ariaDescribedBy: string | null = null;
 
   $: actualDataset = buildDataset(dataset);
 
@@ -35,4 +37,6 @@
   {...actualDataset}
   class={cssClass}
   {maxlength}
+  data-dtype={dtype}
+  aria-describedby={ariaDescribedBy}
 />

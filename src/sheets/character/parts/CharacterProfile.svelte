@@ -17,9 +17,7 @@
   let store = getContext<Readable<ActorSheetContext>>('store');
 
   const portraitStyle = SettingsProvider.settings.portraitStyle.get();
-  const useRoundedPortraitStyle = ['all', 'default', 'pc'].includes(
-    portraitStyle
-  );
+  const useRoundedPortraitStyle = ['all', 'pc'].includes(portraitStyle);
   $: incapacitated =
     ($store.actor?.system?.attributes?.hp?.value ?? 0) <= 0 &&
     $store.actor?.system?.attributes?.hp?.max !== 0;

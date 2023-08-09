@@ -28,8 +28,8 @@
         "id": "dnd5e",
         "manifest": "https://raw.githubusercontent.com/foundryvtt/dnd5e/master/system.json",
         "compatibility": {
-          "minimum": "2.1.2",
-          "verified": "2.2.1"
+          "minimum": "2.3.0",
+          "verified": "2.3.0"
         }
       },
       {

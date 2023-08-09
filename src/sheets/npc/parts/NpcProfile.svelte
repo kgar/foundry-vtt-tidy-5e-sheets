@@ -13,9 +13,7 @@
   let store = getContext<Readable<NpcSheetContext>>('store');
 
   const portraitStyle = SettingsProvider.settings.portraitStyle.get();
-  const useRoundedPortraitStyle = ['all', 'default', 'npc'].includes(
-    portraitStyle
-  );
+  const useRoundedPortraitStyle = ['all', 'npc'].includes(portraitStyle);
 
   $: incapacitated =
     ($store.actor?.system?.attributes?.hp?.value ?? 0) <= 0 &&
@@ -64,6 +62,6 @@
 
   <!-- Optional REST? -->
   <!-- Custom NPC HP -->
-  <NpcHitPoints />
+  <NpcHitPoints {useRoundedPortraitStyle} />
   <!-- Temp/Map HP Boost? -->
 </div>
