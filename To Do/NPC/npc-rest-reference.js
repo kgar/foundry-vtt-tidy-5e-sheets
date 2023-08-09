@@ -1,153 +1,12 @@
-import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-import type { ActorSheetContext, SheetStats } from 'src/types/types';
-import { writable } from 'svelte/store';
-import Tidy5eNpcSheetComponent from './NpcSheet.svelte';
-import { CONSTANTS } from 'src/constants';
-import { Tidy5eKgarUserSettings } from 'src/settings/user-settings-form';
-import { applyTitleToWindow } from 'src/utils/applications';
-import { error } from 'src/utils/logging';
-import { SettingsProvider } from 'src/settings/settings';
-
-const ActorSheet5eNpc = FoundryAdapter.getActorSheetNpcClass();
-
-export class Tidy5eNpcSheet extends ActorSheet5eNpc {
-  store = writable<ActorSheetContext>();
-  stats = writable<SheetStats>({
-    lastSubmissionTime: null,
-  });
-  selectedTabId: string | undefined = undefined;
-
-  constructor(...args: any[]) {
-    super(...args);
-  }
-
-  get template() {
-    return FoundryAdapter.getTemplate('empty-form-template.hbs');
-  }
-
-  static get defaultOptions() {
-    return FoundryAdapter.mergeObject(super.defaultOptions, {
-      classes: ['tidy5e-kgar', 'sheet', 'actor', 'npc'],
-      height: 840,
-    });
-  }
-
-  async activateListeners(html: { get: (index: 0) => HTMLElement }) {
-    const node = html.get(0);
-    const initialContext = await this.getContext();
-    this.store.set(initialContext);
-
-    new Tidy5eNpcSheetComponent({
-      target: node,
-      props: {
-        selectedTabId: this.selectedTabId ?? CONSTANTS.TAB_NPC_ABILITIES,
-      },
-      context: new Map<any, any>([
-        ['store', this.store],
-        ['stats', this.stats],
-      ]),
-    });
-
-    // initTidy5eContextMenu.call(this, html);
-  }
-
-  onToggleAbilityProficiency(event: Event) {
-    return this._onToggleAbilityProficiency(event);
-  }
-
-  private async getContext(): Promise<ActorSheetContext> {
-    return {
-      ...(await super.getData(this.options)),
-      appId: this.appId,
-      activateFoundryJQueryListeners: (node: HTMLElement) => {
-        this._activateCoreListeners($(node));
-        super.activateListeners($(node));
-      },
-      shortRest: this._onShortRest.bind(this),
-      longRest: this._onLongRest.bind(this),
-    };
-  }
-
-  protected _saveViewState() {
-    /*
-      TODO: Save any state that needs to be restored to this sheet instance for rehydration on refresh.
-      - Currently Selected Tab
-      - Scroll Top of all scrollable areas + the tab they represent
-      - Expanded entity IDs
-      - Focused input element
-
-      To do this save operation, use query selectors and data-attributes to target the appropriate things to save.
-      Can it be made general-purpose? Or should it be more bespoke?
-    */
-    this.#cacheSelectedTabId();
-  }
-
-  #cacheSelectedTabId() {
-    const selectedTabId = this.element
-      ?.get(0)
-      ?.querySelector(`.${CONSTANTS.TAB_OPTION_CLASS}.active`)?.dataset?.tabId;
-
-    if (!isNil(selectedTabId, '')) {
-      this.selectedTabId = selectedTabId;
-    }
-  }
-
-  onToggleFilter(setName: string, filterName: string) {
-    const set = this._filters[setName];
-    if (!set) {
-      error(`Unable to find filter set for '${setName}'. Filtering failed.`);
-      return;
-    }
-    if (set.has(filterName)) {
-      set.delete(filterName);
-    } else {
-      set.add(filterName);
-    }
-
-    return this.render();
-  }
-
-  isFilterActive(setName: string, filterName: string): boolean {
-    return this._filters[setName]?.has(filterName) === true;
-  }
-
-  async render(force: boolean, ...args: any[]) {
-    if (force) {
-      super.render(force, ...args);
-      return;
-    }
-
-    applyTitleToWindow(this.title, this.element.get(0));
-    const context = await this.getContext();
-    this.store.update(() => context);
-  }
-
-  _getHeaderButtons() {
-    const buttons = super._getHeaderButtons();
-
-    buttons.unshift({
-      class: 'configure-tidy5e',
-      icon: 'far fa-newspaper',
-      label: 'Tidy5e',
-      onclick: () => {
-        return new Tidy5eKgarUserSettings({}, undefined).render(true);
-      },
-    });
-
-    return FoundryAdapter.removeConfigureSettingsButtonWhenLockedForNonGm(
-      buttons
-    );
-  }
-
   /**
    * Take a short rest, calling the relevant function on the Actor instance
    * @param {Event} event   The triggering click event
    * @private
    */
-  async _onShortRest(event: Event) {
+  async _onShortRest(event) {
     event.preventDefault();
     await this._onSubmit(event);
-    if (SettingsProvider.settings.restingForNpcsChatDisabled.get()) {
+    if (game.settings.get(CONSTANTS.MODULE_ID, "restingForNpcsChatDisabled")) {
       let obj = {
         dialog: true,
         chat: false,
@@ -157,15 +16,17 @@ export class Tidy5eNpcSheet extends ActorSheet5eNpc {
     return this.shortRest();
   }
 
+  /* -------------------------------------------- */
+
   /**
    * Take a long rest, calling the relevant function on the Actor instance
    * @param {Event} event   The triggering click event
    * @private
    */
-  async _onLongRest(event: Event) {
+  async _onLongRest(event) {
     event.preventDefault();
     await this._onSubmit(event);
-    if (SettingsProvider.settings.restingForNpcsChatDisabled.get()) {
+    if (game.settings.get(CONSTANTS.MODULE_ID, "restingForNpcsChatDisabled")) {
       let obj = {
         dialog: true,
         chat: false,
@@ -174,6 +35,8 @@ export class Tidy5eNpcSheet extends ActorSheet5eNpc {
     }
     return this.longRest();
   }
+
+  /* -------------------------------------------- */
 
   /**
    * Take a short rest, possibly spending hit dice and recovering resources, item uses, and pact slots.
@@ -200,7 +63,7 @@ export class Tidy5eNpcSheet extends ActorSheet5eNpc {
      * @param {RestConfiguration} config  Configuration options for the rest.
      * @returns {boolean}                 Explicitly return `false` to prevent the rest from being started.
      */
-    if (Hooks.call('dnd5e.preShortRest', this.actor, config) === false) return;
+    if (Hooks.call("dnd5e.preShortRest", this.actor, config) === false) return;
 
     // Take note of the initial hit points and number of hit dice the Actor has
     const hd0 = isLessThanOneIsOne(this.actor.system.details.cr); // this.actor.system.attributes.hd;
@@ -209,10 +72,7 @@ export class Tidy5eNpcSheet extends ActorSheet5eNpc {
     // Display a Dialog for rolling hit dice
     if (config.dialog) {
       try {
-        config.newDay = await ShortRestDialog.shortRestDialog({
-          actor: this.actor,
-          canRoll: hd0 > 0,
-        });
+        config.newDay = await ShortRestDialog.shortRestDialog({ actor: this.actor, canRoll: hd0 > 0 });
       } catch (err) {
         // error(err?.message, true);
         return;
@@ -220,8 +80,7 @@ export class Tidy5eNpcSheet extends ActorSheet5eNpc {
     }
 
     // Automatically spend hit dice
-    else if (config.autoHD)
-      await this.autoSpendHitDice({ threshold: config.autoHDThreshold });
+    else if (config.autoHD) await this.autoSpendHitDice({ threshold: config.autoHDThreshold });
 
     // Return the rest result
     const dhd = hd0; // this.system.attributes.hd - hd0;
@@ -254,13 +113,11 @@ export class Tidy5eNpcSheet extends ActorSheet5eNpc {
      * @param {RestConfiguration} config  Configuration options for the rest.
      * @returns {boolean}                 Explicitly return `false` to prevent the rest from being started.
      */
-    if (Hooks.call('dnd5e.preLongRest', this.actor, config) === false) return;
+    if (Hooks.call("dnd5e.preLongRest", this.actor, config) === false) return;
 
     if (config.dialog) {
       try {
-        config.newDay = await LongRestDialog.longRestDialog({
-          actor: this.actor,
-        });
+        config.newDay = await LongRestDialog.longRestDialog({ actor: this.actor });
       } catch (err) {
         // error(err?.message, true);
         return;
@@ -286,33 +143,23 @@ export class Tidy5eNpcSheet extends ActorSheet5eNpc {
   async _rest(chat, newDay, longRest, dhd = 0, dhp = 0) {
     // Recover hit points & hit dice on long rest
     if (longRest || newDay) {
-      this.actor.update({
-        'system.attributes.hp.value': Number(
-          this.actor.system.attributes.hp.max ?? 0
-        ),
-      });
+      this.actor.update({ "system.attributes.hp.value": Number(this.actor.system.attributes.hp.max ?? 0) });
       // Patch for NPC
       if (this.actor.flags[CONSTANTS.MODULE_ID].exhaustion > 0) {
         const exhaustion = this.actor.flags[CONSTANTS.MODULE_ID].exhaustion;
-        debug('tidy5e-npc | _rest | exhaustion = ' + exhaustion);
-        await this.actor.update({
-          'flags.tidy5e-sheet.exhaustion': exhaustion - 1,
-        });
+        debug("tidy5e-npc | _rest | exhaustion = " + exhaustion);
+        await this.actor.update({ "flags.tidy5e-sheet.exhaustion": exhaustion - 1 });
         await updateExhaustion(this.actor);
       }
     } else {
       const rollData = this.actor.getRollData();
-      const roll_value = await new Roll(
-        isLessThanOneIsOne(dhd) + 'd6',
-        rollData
-      ).roll();
+      const roll_value = await new Roll(isLessThanOneIsOne(dhd) + "d6", rollData).roll();
       const value = roll_value.total;
-      let newHpValue =
-        this.actor.system.attributes.hp.value + Number(value ?? 0);
+      let newHpValue = this.actor.system.attributes.hp.value + Number(value ?? 0);
       if (newHpValue > this.actor.system.attributes.hp.max) {
         newHpValue = this.actor.system.attributes.hp.max;
       }
-      await this.actor.update({ 'system.attributes.hp.value': newHpValue });
+      await this.actor.update({ "system.attributes.hp.value": newHpValue });
     }
     // TODO for some reason doen't work...i copy and paste the code from the system
     // return this.actor._rest(chat, newDay, longRest, dhd, dhp);
@@ -324,10 +171,8 @@ export class Tidy5eNpcSheet extends ActorSheet5eNpc {
 
     // Recover hit points & hit dice on long rest
     if (longRest) {
-      ({ updates: hitPointUpdates, hitPointsRecovered } =
-        this.actor._getRestHitPointRecovery());
-      ({ updates: hitDiceUpdates, hitDiceRecovered } =
-        this.actor._getRestHitDiceRecovery());
+      ({ updates: hitPointUpdates, hitPointsRecovered } = this.actor._getRestHitPointRecovery());
+      ({ updates: hitDiceUpdates, hitDiceRecovered } = this.actor._getRestHitDiceRecovery());
     }
 
     // Figure out the rest of the changes
@@ -363,12 +208,11 @@ export class Tidy5eNpcSheet extends ActorSheet5eNpc {
      * @param {RestResult} result  Details on the rest to be completed.
      * @returns {boolean}          Explicitly return `false` to prevent the rest updates from being performed.
      */
-    if (Hooks.call('dnd5e.preRestCompleted', this.actor, result) === false)
-      return result;
+    if (Hooks.call("dnd5e.preRestCompleted", this.actor, result) === false) return result;
 
     // Perform updates
     await this.actor.update(result.updateData);
-    await this.actor.updateEmbeddedDocuments('Item', result.updateItems);
+    await this.actor.updateEmbeddedDocuments("Item", result.updateItems);
 
     // Display a Chat Message summarizing the rest effects
     if (chat) await this.actor._displayRestResultMessage(result, longRest);
@@ -380,9 +224,8 @@ export class Tidy5eNpcSheet extends ActorSheet5eNpc {
      * @param {Actor5e} actor      The actor that just completed resting.
      * @param {RestResult} result  Details on the rest completed.
      */
-    Hooks.callAll('dnd5e.restCompleted', this.actor, result);
+    Hooks.callAll("dnd5e.restCompleted", this.actor, result);
 
     // Return data summarizing the rest effects
     return result;
   }
-}
