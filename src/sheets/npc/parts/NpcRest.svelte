@@ -1,0 +1,102 @@
+<script lang="ts">
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import type { NpcSheetContext } from 'src/types/types';
+  import { getContext } from 'svelte';
+  import type { Readable } from 'svelte/store';
+
+  let store = getContext<Readable<NpcSheetContext>>('store');
+
+  export let useRoundedPortraitStyle: boolean;
+
+  const localize = FoundryAdapter.localize;
+</script>
+
+<div
+  class="rest-container"
+  class:has-rounded-portrait={useRoundedPortraitStyle}
+  data-tooltip={localize('T5EK.RestHint')}
+>
+  <div class="resting">
+    <span class="resting-icon">
+      <i class="rest-icon fas fa-bed" />
+    </span>
+    <a
+      class="rest short-rest"
+      title={localize('T5EK.RestS')}
+      on:click={(ev) => $store.shortRest(ev)}
+    >
+      <i class="fas fa-hourglass-half" />
+    </a>
+    <a
+      class="rest long-rest"
+      title={localize('T5EK.RestL')}
+      on:click={(ev) => $store.longRest(ev)}
+    >
+      <i class="fas fa-hourglass-end" />
+    </a>
+  </div>
+</div>
+
+<style lang="scss">
+  .rest-container {
+    display: block;
+  }
+
+  .resting {
+    width: 1.5rem;
+    height: 1.25rem;
+    border-radius: 0 0 0 5px;
+
+    &:hover {
+      width: 94px;
+    }
+
+    .rest {
+      flex: 0 0 1.875rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 1.875rem;
+      height: 1.125rem;
+      border-radius: 50%;
+      cursor: pointer;
+      border: none;
+      color: var(--t5e-tertiary-color);
+      padding: 0;
+      font-size: 0.75rem;
+      line-height: 1.125rem;
+      font-family: var(--t5e-signika);
+      font-weight: 700;
+
+      &:hover {
+        color: var(--t5e-primary-font);
+      }
+    }
+
+    .resting-icon {
+      flex: 0 0 1.5rem;
+      width: 1.5rem;
+      height: 1.125rem;
+      margin-right: 0.5rem;
+      border-radius: 0;
+      font-size: 0.75rem;
+      color: var(--t5e-primary-font);
+    }
+  }
+
+  .rest-container.has-rounded-portrait {
+    left: 0.4375rem;
+    bottom: 0;
+
+    .resting {
+      border-radius: 0.3125rem 0 0 0.3125rem;
+      transition: all 0.3s ease;
+    }
+
+    .resting:not(:hover) {
+      background: transparent;
+      box-shadow: none;
+      border-color: transparent;
+    }
+  }
+</style>

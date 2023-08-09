@@ -4,10 +4,20 @@
 - [ ] Implement
   - [ ] Full NPC
     - [ ] Header
-      - [ ] HTML
-        - [ ] Profile
+      - [x] HTML
+        - [x] Profile
         - [x] Header Stats / INfo
       - [ ] SCSS
+        - [x] Exhaustion Rounded
+        - [x] Exhaustion Squared
+        - [ ] Rest Rounded
+        - [ ] Rest Squared
+        - [x] Hit Dice Rounded
+        - [ ] Hit Dice Squared
+        - [ ] Name row
+        - [ ] size / origin row
+        - [ ] speed row
+        - [ ] 
       - [ ] Behaviors
     - [ ] Tab nav and stub/share components
       - [ ] Attributes
