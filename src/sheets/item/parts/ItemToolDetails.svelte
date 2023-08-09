@@ -17,6 +17,7 @@
 <ItemFormGroup cssClass="stacked" labelText={localize('DND5E.ItemToolStatus')}>
   <div class="form-fields">
     <Checkbox
+    labelCssClass="checkbox"
       document={$store.item}
       field="system.equipped"
       checked={$store.system.equipped}
