@@ -28,8 +28,14 @@
 - [ ] Settings
   - [ ] ...
 
-## Refine
+## Refactor and Refine
 
 - [ ] Extract a universal portait container that directs rounded styles and anything else that can be shareable
   - [ ] Cannibalize the global styles which are shared by NPC and Character profiles
+- [ ] Consider converting `tooltip` to just `title` on text inputs
+- [ ] Add prop obj `inputProps` on `TextInput`; move all input props that have direct equivalents in input elements out of the main component and into the inputProps obj and spread that on the underlying input
+  - [ ] Ditto on `Select`
+  - [ ] Ditto on `NumberInput`
+- [ ] Have `TextInput` respect dtype "Number" and perform deltas as expected. The functionality currently lives in `submitText()`.
+  - [ ] Consider refactoring so that callers of `submitText()` are adjusted to use `TextInput` or `NumberInput` as necessary.
 - [ ] 
