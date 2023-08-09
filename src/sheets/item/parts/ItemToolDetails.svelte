@@ -71,7 +71,10 @@
     dtype="Number"
     value={$store.system.proficient}
   >
-    <SelectOptions data={$store.config.proficiencyLevels} />
+    <SelectOptions
+      data={$store.config.proficiencyLevels}
+      blank={localize('DND5E.Automatic')}
+    />
   </Select>
 </ItemFormGroup>
 
