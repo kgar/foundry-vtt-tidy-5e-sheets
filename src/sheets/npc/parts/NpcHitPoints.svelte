@@ -8,8 +8,6 @@
 
   let store = getContext<Readable<ActorSheetContext>>('store');
 
-  export let useRoundedPortraitStyle: boolean;
-
   // TODO: Break this down so it's simple for the reader
   $: hpBarCalculationCurrent =
     (100 /
@@ -32,7 +30,6 @@
 <div
   class="portrait-hp"
   title={localize('DND5E.HitPoints')}
-  class:rounded-portrait-style={useRoundedPortraitStyle}
 >
   <div
     class="hp-bar"
@@ -70,9 +67,7 @@
 
 <style lang="scss">
   .portrait-hp {
-    &.rounded-portrait-style {
-      border-radius: 0.3125rem;
-    }
+    border-radius: 0.3125rem;
 
     position: absolute;
     width: 8.5rem;

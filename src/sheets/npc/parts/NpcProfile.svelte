@@ -59,9 +59,8 @@
       />
     {/if}
 
+    <NpcHitPoints  />
     <NpcRest {useRoundedPortraitStyle} />
-    <NpcHitPoints {useRoundedPortraitStyle} />
-
     <NpcHealthFormula />
   </div>
 </div>

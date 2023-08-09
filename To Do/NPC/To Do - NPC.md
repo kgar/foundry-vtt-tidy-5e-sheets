@@ -10,14 +10,14 @@
       - [ ] SCSS
         - [x] Exhaustion Rounded
         - [x] Exhaustion Squared
-        - [ ] Rest Rounded
-        - [ ] Rest Squared
+        - [x] Rest Rounded
+        - [x] Rest Squared
         - [x] Hit Dice Rounded
-        - [ ] Hit Dice Squared
+        - [x] Hit Dice Squared
         - [ ] Name row
         - [ ] size / origin row
         - [ ] speed row
-        - [ ] 
+        - [ ] Abilities row
       - [ ] Behaviors
     - [ ] Tab nav and stub/share components
       - [ ] Attributes

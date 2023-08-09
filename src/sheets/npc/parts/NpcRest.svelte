@@ -40,15 +40,26 @@
 <style lang="scss">
   .rest-container {
     display: block;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    z-index: 25;
   }
 
   .resting {
     width: 1.5rem;
     height: 1.25rem;
-    border-radius: 0 0 0 5px;
+    border-radius: 0 0 0 0.3125rem;
+    overflow: hidden;
+    transition: width 0.3s ease;
+    background: var(--t5e-icon-background);
+    display: flex;
+    box-shadow: 0 0 0.625rem var(--t5e-icon-shadow) inset;
+    border: 0.0625rem solid var(--t5e-icon-outline);
+    color: var(--t5e-icon-font);
 
     &:hover {
-      width: 94px;
+      width: 5.875rem;
     }
 
     .rest {
@@ -67,6 +78,7 @@
       line-height: 1.125rem;
       font-family: var(--t5e-signika);
       font-weight: 700;
+      transition: color 0.3s ease, transform 0.3s ease;
 
       &:hover {
         color: var(--t5e-primary-font);
@@ -75,9 +87,13 @@
 
     .resting-icon {
       flex: 0 0 1.5rem;
+      display: flex;
+
       width: 1.5rem;
       height: 1.125rem;
       margin-right: 0.5rem;
+      justify-content: center;
+      align-items: center;
       border-radius: 0;
       font-size: 0.75rem;
       color: var(--t5e-primary-font);

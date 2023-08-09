@@ -436,3 +436,17 @@ Failure modes I've seen:
 So basically either popping out is broken, popping in is broken, or saving data is broken. Besides that, if/once those actually work, it seems to behave like the normal sheet window, I haven't seen much PopOut specific styling issues or such.
 
 > I have done some tests so far. It appears that some functionality works, but not all. Things like ability checks pop a dialog in the main window and are not moved to the popped out window. I will need to determine what things are missing in order to make this work properly.
+
+### Aura's Info Idea
+
+https://discord.com/channels/732325252788387980/1116078321067892796/1138959970705100960
+
+Aura — Today at 5:20 PM
+odd question considering you are re-building the tidey 5e sheets,  i wonder if you can add [Crl+I] (information)to certain eliments and allow us to link in setting a journal and page so that we can have relivant rules pop up for the players. for example Insperation, long rest, shot rest? 
+
+kgar — Today at 5:24 PM
+Are there examples I can look at?
+
+Aura — Today at 5:25 PM
+not to my knowledge, sorry, i thought it up when i was playing with players earlier today. just thought it would be a usefull improvment 
+

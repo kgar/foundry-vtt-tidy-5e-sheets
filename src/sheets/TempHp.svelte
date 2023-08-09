@@ -15,7 +15,7 @@
 </script>
 
 <div class="profile-temp">
-  <NumberInput
+  <TextInput
     document={$store.actor}
     field="system.attributes.hp.temp"
     cssClass="temphp"
@@ -25,7 +25,7 @@
     maxlength={5}
     tooltip={localize('DND5E.HitPointsTemp')}
   />
-  <NumberInput
+  <TextInput
     document={$store.actor}
     field="system.attributes.hp.tempmax"
     cssClass="max-temphp"
