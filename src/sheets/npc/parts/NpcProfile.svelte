@@ -9,6 +9,7 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import NpcHitPoints from './NpcHitPoints.svelte';
+  import TempHp from 'src/sheets/TempHp.svelte';
 
   let store = getContext<Readable<NpcSheetContext>>('store');
 
@@ -34,7 +35,7 @@
 
 <div class="profile-wrap">
   <div class="profile" class:round-portrait={useRoundedPortraitStyle}>
-    <CharacterPortrait actor={$store.actor}  />
+    <CharacterPortrait actor={$store.actor} />
     {#if !SettingsProvider.settings.hpOverlayDisabled.get()}
       <HpOverlay {useRoundedPortraitStyle} actor={$store.actor} />
     {/if}
@@ -63,3 +64,4 @@
     <!-- Temp/Map HP Boost? -->
   </div>
 </div>
+<TempHp />
