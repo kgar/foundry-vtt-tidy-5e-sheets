@@ -27,3 +27,9 @@
     - [ ] Biography
 - [ ] Settings
   - [ ] ...
+
+## Refine
+
+- [ ] Extract a universal portait container that directs rounded styles and anything else that can be shareable
+  - [ ] Cannibalize the global styles which are shared by NPC and Character profiles
+- [ ] 

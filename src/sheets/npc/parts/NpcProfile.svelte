@@ -33,35 +33,33 @@
 </script>
 
 <div class="profile-wrap">
-  <CharacterPortrait actor={$store.actor} />
-
-  {#if !SettingsProvider.settings.hpOverlayDisabled.get()}
-    <HpOverlay {useRoundedPortraitStyle} actor={$store.actor} />
-  {/if}
-
-  {#if showDeathSaves()}
-    <DeathSaves
-      successes={$store.system.attributes.death.success}
-      failures={$store.system.attributes.death.failure}
-      {useRoundedPortraitStyle}
-      on:rollDeathSave={(event) =>
-        $store.actor.rollDeathSave({ event: event.detail.mouseEvent })}
-    />
-  {/if}
-
-  {#if !SettingsProvider.settings.exhaustionDisabled.get() && !incapacitated}
-    <Exhaustion
-      level={$store.system.attributes.exhaustion}
-      radiusClass={useRoundedPortraitStyle ? 'rounded' : 'top-left'}
-      on:levelSelected={onLevelSelected}
-      onlyShowOnHover={SettingsProvider.settings.exhaustionOnHover.get() ||
-        (SettingsProvider.settings.hideIfZero.get() &&
-          $store.system.attributes.exhaustion === 0)}
-    />
-  {/if}
-
-  <!-- Optional REST? -->
-  <!-- Custom NPC HP -->
-  <NpcHitPoints {useRoundedPortraitStyle} />
-  <!-- Temp/Map HP Boost? -->
+  <div class="profile" class:round-portrait={useRoundedPortraitStyle}>
+    <CharacterPortrait actor={$store.actor}  />
+    {#if !SettingsProvider.settings.hpOverlayDisabled.get()}
+      <HpOverlay {useRoundedPortraitStyle} actor={$store.actor} />
+    {/if}
+    {#if showDeathSaves()}
+      <DeathSaves
+        successes={$store.system.attributes.death.success}
+        failures={$store.system.attributes.death.failure}
+        {useRoundedPortraitStyle}
+        on:rollDeathSave={(event) =>
+          $store.actor.rollDeathSave({ event: event.detail.mouseEvent })}
+      />
+    {/if}
+    {#if !SettingsProvider.settings.exhaustionDisabled.get() && !incapacitated}
+      <Exhaustion
+        level={$store.system.attributes.exhaustion}
+        radiusClass={useRoundedPortraitStyle ? 'rounded' : 'top-left'}
+        on:levelSelected={onLevelSelected}
+        onlyShowOnHover={SettingsProvider.settings.exhaustionOnHover.get() ||
+          (SettingsProvider.settings.hideIfZero.get() &&
+            $store.system.attributes.exhaustion === 0)}
+      />
+    {/if}
+    <!-- Optional REST? -->
+    <!-- Custom NPC HP -->
+    <NpcHitPoints {useRoundedPortraitStyle} />
+    <!-- Temp/Map HP Boost? -->
+  </div>
 </div>
