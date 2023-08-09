@@ -71,13 +71,32 @@
   </Checkbox>
 </ItemFormGroup>
 
+{#if $store.system.consumableType === 'ammo'}
+  <ItemFormGroup
+    cssClass="stacked weapon-properties"
+    labelText={localize('DND5E.ItemAmmoProperties')}
+  >
+    {#each Object.entries($store.config.physicalWeaponProperties) as [prop, name]}
+      {@const checked = $store.system.properties[prop]}
+      <Checkbox
+        labelCssClass="checkbox"
+        document={$store.item}
+        field="system.properties.{prop}"
+        {checked}
+      >
+        {name}
+      </Checkbox>
+    {/each}
+  </ItemFormGroup>
+{/if}
+
 <h3 class="form-header">{localize('DND5E.ItemConsumableUsage')}</h3>
 
 <ItemActivation />
 {#if $store.system.activation.type}
   <ItemFormGroup>
     <Checkbox
-        labelCssClass="checkbox"
+      labelCssClass="checkbox"
       document={$store.item}
       field="system.uses.autoDestroy"
       checked={$store.system.uses.autoDestroy}

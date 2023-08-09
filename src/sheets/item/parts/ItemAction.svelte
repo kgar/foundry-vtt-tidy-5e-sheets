@@ -63,11 +63,11 @@
       document={$store.item}
       field="system.ability"
     >
-      <SelectOptions
-        data={$store.config.abilities}
-        labelProp="label"
-        blank={localize('DND5E.Default')}
-      />
+      <option value="">{localize('DND5E.Default')}</option>
+      <option value="none">{localize('DND5E.None')}</option>
+      <optgroup label={localize('DND5E.Ability')}>
+        <SelectOptions data={$store.config.abilities} labelProp="label" />
+      </optgroup>
     </Select>
   </ItemFormGroup>
 

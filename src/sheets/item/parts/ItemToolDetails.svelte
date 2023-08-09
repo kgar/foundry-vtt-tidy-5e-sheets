@@ -7,11 +7,24 @@
   import Select from 'src/components/form/Select.svelte';
   import TextInput from 'src/components/form/TextInput.svelte';
   import ItemFormGroup from '../form/ItemFormGroup.svelte';
+  import Checkbox from 'src/components/form/Checkbox.svelte';
 
   let store = getContext<Readable<ItemSheetContext>>('store');
 
   const localize = FoundryAdapter.localize;
 </script>
+
+<ItemFormGroup cssClass="stacked" labelText={localize('DND5E.ItemToolStatus')}>
+  <div class="form-fields">
+    <Checkbox
+      document={$store.item}
+      field="system.equipped"
+      checked={$store.system.equipped}
+    >
+      {localize('DND5E.Equipped')}
+    </Checkbox>
+  </div>
+</ItemFormGroup>
 
 <ItemFormGroup
   labelText={localize('DND5E.ItemToolType')}

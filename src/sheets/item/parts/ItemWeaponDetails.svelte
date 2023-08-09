@@ -66,20 +66,25 @@
     </Select>
   </ItemFormGroup>
 
+  <ItemFormGroup labelText={localize('DND5E.Proficiency')}>
+    <Select
+      document={$store.item}
+      field="system.proficient"
+      value={$store.system.proficient}
+      dtype="Number"
+    >
+      <SelectOptions
+        data={$store.config.weaponAndArmorProficiencyLevels}
+        blank={localize('DND5E.Automatic')}
+      />
+    </Select>
+  </ItemFormGroup>
+
   <ItemFormGroup
     cssClass="stacked"
     labelText={localize('DND5E.ItemWeaponStatus')}
   >
     <div class="form-fields">
-      <Checkbox
-        labelCssClass="checkbox"
-        document={$store.item}
-        field="system.proficient"
-        checked={$store.system.proficient}
-      >
-        {localize('DND5E.Proficient')}</Checkbox
-      >
-
       <Checkbox
         labelCssClass="checkbox"
         document={$store.item}
