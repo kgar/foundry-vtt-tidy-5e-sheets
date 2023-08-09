@@ -23,9 +23,7 @@
     $store.actor?.system?.attributes?.hp?.max !== 0;
 
   function onLevelSelected(event: CustomEvent<{ level: number }>) {
-    $store.actor.update({
-      'system.attributes.exhaustion': event.detail.level,
-    });
+    FoundryAdapter.setFlag($store.actor, 'exhaustion', event.detail.level);
   }
 
   function showDeathSaves(): boolean {
@@ -115,7 +113,7 @@
     {/if}
     {#if !SettingsProvider.settings.exhaustionDisabled.get() && !incapacitated}
       <Exhaustion
-        level={$store.system.attributes.exhaustion}
+        level={FoundryAdapter.tryGetFlag($store.actor, 'exhaustion') ?? 0}
         radiusClass={useRoundedPortraitStyle ? 'rounded' : 'top-left'}
         on:levelSelected={onLevelSelected}
         onlyShowOnHover={SettingsProvider.settings.exhaustionOnHover.get() ||
