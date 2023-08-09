@@ -6,6 +6,8 @@
   import { SettingsProvider } from 'src/settings/settings';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
+  import TextInput from 'src/components/form/TextInput.svelte';
+  import NumberInput from 'src/components/form/NumberInput.svelte';
 
   let store = getContext<Readable<ActorSheetContext>>('store');
 
@@ -13,28 +15,25 @@
 </script>
 
 <div class="profile-temp">
-  <input
-    on:change|stopPropagation|preventDefault={(event) =>
-      submitText(event, $store.actor, 'system.attributes.hp.temp')}
-    type="number"
-    class="temphp"
+  <NumberInput
+    document={$store.actor}
+    field="system.attributes.hp.temp"
+    cssClass="temphp"
     placeholder="+{localize('DND5E.Temp')}"
-    value={$store.hp.temp || ''}
-    title={localize('DND5E.HitPointsTemp')}
-    data-dtype="Number"
-    maxlength="5"
+    value={$store.hp.temp || null}
+    dataset={{ dtype: 'Number' }}
+    maxlength={5}
+    tooltip={localize('DND5E.HitPointsTemp')}
   />
-
-  <input
-    on:change|stopPropagation|preventDefault={(event) =>
-      submitText(event, $store.actor, 'system.attributes.hp.tempmax')}
-    type="number"
-    class="max-temphp"
+  <NumberInput
+    document={$store.actor}
+    field="system.attributes.hp.tempmax"
+    cssClass="max-temphp"
     placeholder="+{localize('DND5E.Max')}"
-    value={$store.hp.tempmax || ''}
-    title={localize('DND5E.HitPointsTempMax')}
-    data-dtype="Number"
-    maxlength="5"
+    value={$store.hp.tempmax || null}
+    dataset={{ dtype: 'Number' }}
+    maxlength={5}
+    tooltip={localize('DND5E.HitPointsTempMax')}
   />
   {#if SettingsProvider.settings.allowHpConfigOverride.get()}
     <a
@@ -61,22 +60,22 @@
   .profile-temp {
     display: flex;
     justify-content: center;
-  }
 
-  .profile-temp input {
-    flex: 0 0 2.1875rem; // Or hard width
-    display: flex;
-    font-size: 0.75rem;
-    line-height: 0.75rem;
-    height: 0.875rem;
-    padding: 0.0625rem 0;
-  }
+    :global(input) {
+      flex: 0 0 2.1875rem; // Or hard width
+      display: flex;
+      font-size: 0.75rem;
+      line-height: 0.75rem;
+      height: 0.875rem;
+      padding: 0.0625rem 0;
+    }
 
-  input.temphp {
-    text-align: center;
-  }
+    :global(input.temphp) {
+      text-align: center;
+    }
 
-  input.max-temphp {
-    text-align: center;
+    :global(input.max-temphp) {
+      text-align: center;
+    }
   }
 </style>
