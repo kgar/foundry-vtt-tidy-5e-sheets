@@ -26,7 +26,8 @@
           <ContentEditableFormField
             element="span"
             editable={$store.owner}
-            fieldName="flags.{CONSTANTS.MODULE_ID}.gender"
+            document={$store.actor}
+            field="flags.{CONSTANTS.MODULE_ID}.gender"
             value={FoundryAdapter.tryGetFlag($store.actor, 'gender') ?? ''}
             cssClass="detail-input"
           />
@@ -36,7 +37,8 @@
           <ContentEditableFormField
             element="span"
             editable={$store.owner}
-            fieldName="flags.{CONSTANTS.MODULE_ID}.age"
+            document={$store.actor}
+            field="flags.{CONSTANTS.MODULE_ID}.age"
             value={FoundryAdapter.tryGetFlag($store.actor, 'age') ?? ''}
             cssClass="detail-input"
             dataMaxLength={5}
@@ -47,7 +49,8 @@
           <ContentEditableFormField
             element="span"
             editable={$store.owner}
-            fieldName="flags.{CONSTANTS.MODULE_ID}.height"
+            document={$store.actor}
+            field="flags.{CONSTANTS.MODULE_ID}.height"
             value={FoundryAdapter.tryGetFlag($store.actor, 'height') ?? ''}
             cssClass="detail-input"
             dataMaxLength={20}
@@ -58,7 +61,8 @@
           <ContentEditableFormField
             element="span"
             editable={$store.owner}
-            fieldName="flags.{CONSTANTS.MODULE_ID}.weight"
+            document={$store.actor}
+            field="flags.{CONSTANTS.MODULE_ID}.weight"
             value={FoundryAdapter.tryGetFlag($store.actor, 'weight') ?? ''}
             cssClass="detail-input"
             dataMaxLength={20}
@@ -69,7 +73,8 @@
           <ContentEditableFormField
             element="span"
             editable={$store.owner}
-            fieldName="flags.{CONSTANTS.MODULE_ID}.eyes"
+            document={$store.actor}
+            field="flags.{CONSTANTS.MODULE_ID}.eyes"
             value={FoundryAdapter.tryGetFlag($store.actor, 'eyes') ?? ''}
             cssClass="detail-input"
             dataMaxLength={40}
@@ -80,7 +85,8 @@
           <ContentEditableFormField
             element="span"
             editable={$store.owner}
-            fieldName="flags.{CONSTANTS.MODULE_ID}.skin"
+            document={$store.actor}
+            field="flags.{CONSTANTS.MODULE_ID}.skin"
             value={FoundryAdapter.tryGetFlag($store.actor, 'skin') ?? ''}
             cssClass="detail-input"
             dataMaxLength={40}
@@ -91,7 +97,8 @@
           <ContentEditableFormField
             element="span"
             editable={$store.owner}
-            fieldName="flags.{CONSTANTS.MODULE_ID}.hair"
+            document={$store.actor}
+            field="flags.{CONSTANTS.MODULE_ID}.hair"
             value={FoundryAdapter.tryGetFlag($store.actor, 'hair') ?? ''}
             cssClass="detail-input"
             dataMaxLength={40}

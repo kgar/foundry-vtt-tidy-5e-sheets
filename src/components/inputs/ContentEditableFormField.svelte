@@ -1,10 +1,12 @@
 <script lang="ts">
+  import type { FoundryDocument } from 'src/types/document';
   import type { ActorSheetContext } from 'src/types/types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
 
   export let element: keyof HTMLElementTagNameMap;
-  export let fieldName: string;
+  export let document: FoundryDocument;
+  export let field: string;
   export let value: string;
   export let editable: boolean;
   export let cssClass: string = '';
@@ -15,7 +17,7 @@
   let store = getContext<Readable<ActorSheetContext>>('store');
 
   function update() {
-    $store.actor.update({ [fieldName]: value });
+    document.update({ [field]: value });
   }
 
   function submitWhenEnterKey(e: KeyboardEvent) {

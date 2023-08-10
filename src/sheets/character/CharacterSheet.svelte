@@ -33,8 +33,6 @@
   export let selectedTabId: string;
   let store = getContext<Readable<ActorSheetContext>>('store');
 
-  setContext('store', store);
-
   function submitWhenEnterKey(e: KeyboardEvent) {
     if (e.key === 'Enter') {
       e.preventDefault();
@@ -164,12 +162,13 @@
       <div class="actor-name">
         <ContentEditableFormField
           element="h1"
+          document={$store.actor}
           editable={$store.owner}
           spellcheck={false}
           placeholder={localize('DND5E.Name')}
           dataMaxLength={40}
           value={characterName}
-          fieldName="name"
+          field="name"
         />
       </div>
 

@@ -96,7 +96,8 @@
       <div class="actor-name">
         <ContentEditableFormField
           element="h1"
-          fieldName="name"
+          document={$store.actor}
+          field="name"
           value={$store.actor.name}
           editable={$store.owner}
           spellcheck={false}
@@ -113,7 +114,8 @@
           <ContentEditableFormField
             element="span"
             editable={true}
-            fieldName="system.details.cr"
+            document={$store.actor}
+            field="system.details.cr"
             placeholder="0"
             dataMaxLength={4}
             value={$store.labels.cr}
