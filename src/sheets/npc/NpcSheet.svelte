@@ -20,11 +20,15 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import TidyDropdownList from '../TidyDropdownList.svelte';
   import { isNil } from 'src/utils/data';
-  import { formatAsModifier } from 'src/utils/formatting';
+  import { coalesce, formatAsModifier } from 'src/utils/formatting';
   import Tidy5eActorOriginSummaryConfig from '../tidy5e-actor-origin-summary-config';
   import AcShield from '../actor/AcShield.svelte';
   import InitiativeBlock from '../InitiativeBlock.svelte';
   import AttributeBlock from '../AttributeBlock.svelte';
+  import DelimitedTruncatedContent from 'src/components/layout/DelimitedTruncatedContent.svelte';
+  import HorizontalLineSeparator from 'src/components/layout/HorizontalLineSeparator.svelte';
+  import ActorMovementRow from '../actor/ActorMovementRow.svelte';
+  import ActorHeaderStats from '../actor/ActorHeaderStats.svelte';
 
   export let selectedTabId: string;
 
@@ -124,11 +128,9 @@
         </div>
       </div>
     </div>
-    <section>
-      <!-- Make NPC version of origin-points, 
-        which does that magical balanced 
-        truncation effect -->
-      <span class="origin-points">
+    <HorizontalLineSeparator borderStyle="light" />
+    <div class="origin-summary">
+      <div class="flex-row extra-small-gap">
         <TidyDropdownList
           options={sizes}
           selected={currentSize}
@@ -136,120 +138,75 @@
             $store.actor.update({
               'system.traits.size': event.detail.value,
             })}
-        /> <span>&#8226;</span>
-        <span class="creature-type" title={$store.labels.type}>
-          <!-- TODO: Accent color on hover -->
-          <a
-            on:click={() =>
-              new dnd5e.applications.actor.ActorTypeConfig($store.actor).render(
-                true
-              )}
-            title={localize('DND5E.CreatureTypeConfig')}
-            >{#if isNil($store.labels.type, '')}
-              {localize('DND5E.CreatureType')}
-            {:else}
-              {$store.labels.type}
-            {/if}</a
-          >
-        </span>
-        <span class="environment">
-          <i class="fas fa-tree" />
-          <span class="environment-label">
-            <!-- TODO: 
-                .origin-summary .environment style makes this 
-                into a homegrown tooltip... neat! 
-                Let's make it an actual component instead ;) -->
-            <span data-placeholder={localize('TIDY5E.Environment')}
-              >{$store.system.details.environment}</span
+        />
+        <span>&#8226;</span>
+        <DelimitedTruncatedContent cssClass="flex-grow-1">
+          <span class="creature-type">
+            <!-- TODO: Accent color on hover -->
+            <a
+              on:click={() =>
+                new dnd5e.applications.actor.ActorTypeConfig(
+                  $store.actor
+                ).render(true)}
+              data-tooltip="{$store.labels.type} ({localize(
+                'DND5E.CreatureTypeConfig'
+              )})"
+              >{#if isNil($store.labels.type, '')}
+                {localize('DND5E.CreatureType')}
+              {:else}
+                {$store.labels.type}
+              {/if}</a
             >
+            <span
+              class="environment"
+              data-tooltip="{localize('TIDY5E.Environment')}: {$store.system
+                .details.environment}"
+            >
+              <i class="fas fa-tree" />
+            </span>
           </span>
-        </span>
-        <span>&#8226;</span>
-        <span
-          class="origin-summary-text"
-          data-tooltip={$store.system.details.alignment}
-          >{$store.system.details.alignment}</span
-        >
-        <span>&#8226;</span>
-        <span
-          class="origin-summary-text source source-info"
-          data-tooltip={$store.system.details.source}
-          >{$store.system.details.source}</span
-        >
-      </span>
 
-      <span class="proficiency">
-        {localize('DND5E.Proficiency')}: {formatAsModifier(
-          $store.system.attributes.prof
-        )}
-      </span>
-      {#if $store.owner}
-        <span class="origin-summary-config">
-          <a
-            on:click={() =>
-              new Tidy5eActorOriginSummaryConfig($store.actor).render(true)}
-            class="origin-summary-tidy"
-            data-tooltip={localize('TIDY5E.OriginSummaryConfig')}
+          <span
+            class="origin-summary-text"
+            data-tooltip={$store.system.details.alignment}
+            >{$store.system.details.alignment}</span
           >
-            <i class="fas fa-cog" />
-          </a>
-        </span>
-      {/if}
-    </section>
-    <section class="movement flex-row small-gap">
-      <h4>{localize('DND5E.Speed')}</h4>
-      {#if $store.movement.primary}
-        <span data-tooltip={$store.movement.primary}
-          >{$store.movement.primary}</span
-        >
-      {/if}
-      {#if $store.movement.special}
-        |
-        <span data-tooltip={$store.movement.special}
-          >{$store.movement.special}</span
-        >
-      {/if}
-      <a
-        class="configure"
-        data-tooltip={localize('DND5E.MovementConfig')}
-        on:click={() =>
-          new dnd5e.applications.actor.ActorMovementConfig($store.actor).render(
-            true
-          )}><i class="fas fa-cog" /></a
-      >
-    </section>
-    <section class="actor-stats">
-      <!-- TODO: switch these back to unordered <li> -->
-      <AcShield
-        ac={$store.system.attributes.ac.value}
-        on:click={() =>
-          new dnd5e.applications.actor.ActorArmorConfig($store.actor).render(
-            true
-          )}
-        cssClass="align-self-flex-start"
-      />
-      <div
-        class="vertical-line-separator"
-        aria-hidden="true"
-        role="presentation"
-      />
-      <div>
-        <InitiativeBlock
-          actor={$store.actor}
-          initiative={$store.system.attributes.init}
-        />
+          <span
+            class="origin-summary-text source source-info"
+            data-tooltip={$store.system.details.source}
+            >{$store.system.details.source}</span
+          >
+        </DelimitedTruncatedContent>
       </div>
-      {#each abilities as [id, ability]}
-        <div
-          class="vertical-line-separator"
-          aria-hidden="true"
-          role="presentation"
-        />
-        <div>
-          <AttributeBlock abbreviation={id} {ability} actor={$store.actor} />
-        </div>
-      {/each}
-    </section>
+      <div class="proficiency-and-origin-settings">
+        <span class="proficiency">
+          {localize('DND5E.Proficiency')}: {formatAsModifier(
+            $store.system.attributes.prof
+          )}
+        </span>
+        {#if $store.owner}
+          <span class="origin-summary-config">
+            <a
+              on:click={() =>
+                new Tidy5eActorOriginSummaryConfig($store.actor).render(true)}
+              class="origin-summary-tidy"
+              data-tooltip={localize('TIDY5E.OriginSummaryConfig')}
+            >
+              <i class="fas fa-cog" />
+            </a>
+          </span>
+        {/if}
+      </div>
+    </div>
+    <HorizontalLineSeparator borderStyle="light" />
+    <ActorMovementRow actor={$store.actor} movement={$store.movement} />
+    <HorizontalLineSeparator borderStyle="light" />
+    <ActorHeaderStats
+      {abilities}
+      ac={$store.system.attributes.ac}
+      init={$store.system.attributes.init}
+      actor={$store.actor}
+    />
   </div>
 </header>
 <Tabs {tabs} bind:selectedTabId>
@@ -320,6 +277,23 @@
     }
     :global(.level [contenteditable]) {
       color: var(--t5e-secondary-color);
+    }
+  }
+
+  .origin-summary {
+    font-size: 0.75rem;
+    display: flex;
+    gap: 0.5rem;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .proficiency-and-origin-settings {
+    flex: 0 0 auto;
+    display: flex;
+    gap: 0.5rem;
+    > * {
+      flex: 0 0 auto;
     }
   }
 </style>

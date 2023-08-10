@@ -15,7 +15,7 @@
   export let dataset: Record<string, unknown> | null = null;
   export let readonly: boolean | null = null;
   export let cssClass: string | null = null;
-  export let maxlength: HTMLInputElement['maxLength'] | null;
+  export let maxlength: HTMLInputElement['maxLength'] | null = null;
 
   $: datasetAttributes = buildDataset(dataset);
 

@@ -1,4 +1,6 @@
 <script lang="ts">
+  import type { Actor5e } from 'src/types/actor';
+
   /**
    * The Armor Class value.
    */
@@ -8,6 +10,11 @@
    * Optional CSS class list string to apply to the AC Shield container element.
    */
   export let cssClass: string = '';
+
+  /**
+   * The actor to whom this AC shield refers.
+   */
+  export let actor: Actor5e;
 </script>
 
 <div class="ac-display {cssClass}">
@@ -26,7 +33,10 @@
     </svg>
   </div>
   <a
-    on:click
+    on:click={() =>
+      new dnd5e.applications.actor.ActorArmorConfig(actor).render(true)}
+    cssClass="align-self-flex-start"
+    on:mouseover={(ev) => actor.sheet._onPropertyAttribution(ev)}
     class="config-button attribute-value"
     data-attribution="attributes.ac"
     data-attribution-caption="DND5E.ArmorClass"

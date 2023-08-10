@@ -1,4 +1,5 @@
 import { FoundryAdapter } from "src/foundry/foundry-adapter";
+import { isNil } from "./data";
 
 /**
  * An Handlebars helper to format numbers
@@ -22,4 +23,14 @@ export function formatAsModifier(value: string | number): string {
 
 function toSignedNumberString(value: number) {
   return value.toLocaleString(FoundryAdapter.getCurrentLang(), { signDisplay: 'always' });
+}
+
+export function coalesce(...values: string[]) {
+  for (let value of values) {
+    if (!isNil(value?.trim(), '')) {
+      return value;
+    }
+  }
+
+  return '';
 }

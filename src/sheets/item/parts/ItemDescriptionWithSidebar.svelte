@@ -8,6 +8,7 @@
   import type { Readable } from 'svelte/store';
   import ItemDescription from './ItemDescription.svelte';
   import { SettingsProvider } from 'src/settings/settings';
+    import HorizontalLineSeparator from 'src/components/layout/HorizontalLineSeparator.svelte';
 
   let store = getContext<Readable<ItemSheetContext>>('store');
 
@@ -31,11 +32,7 @@
         />
       </div>
 
-      <div
-        aria-hidden="true"
-        role="presentation"
-        class="horizontal-line-separator"
-      />
+      <HorizontalLineSeparator />
 
       <div class="form-group">
         <label for="{$store.appId}-{$store.id}-weight"
@@ -50,11 +47,7 @@
         />
       </div>
 
-      <div
-        aria-hidden="true"
-        role="presentation"
-        class="horizontal-line-separator"
-      />
+      <HorizontalLineSeparator />
 
       <div class="form-group">
         <label for="{$store.appId}-{$store.id}-price"

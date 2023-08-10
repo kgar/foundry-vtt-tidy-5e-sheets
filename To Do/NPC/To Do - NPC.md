@@ -42,7 +42,7 @@
 
 ## Refactor and Refine
 
-- [ ] Do we want to use a base sheet for all actors?
+- [x] Do we want to use a base sheet for all actors? No, because they all use different context from established sheets.
 - [ ] Extract a universal portait container that directs rounded styles and anything else that can be shareable
   - [ ] Cannibalize the global styles which are shared by NPC and Character profiles
 - [ ] Consider converting `tooltip` to just `title` on text inputs

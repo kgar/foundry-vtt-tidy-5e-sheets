@@ -28,6 +28,9 @@
   import TabContents from 'src/components/tabs/TabContents.svelte';
   import type { Readable } from 'svelte/store';
   import ContentEditableFormField from 'src/components/inputs/ContentEditableFormField.svelte';
+  import ActorMovementRow from '../actor/ActorMovementRow.svelte';
+  import ActorHeaderStats from '../actor/ActorHeaderStats.svelte';
+  import HorizontalLineSeparator from 'src/components/layout/HorizontalLineSeparator.svelte';
 
   export let debug: any = 'Put any debug information here, if ya need it.';
   export let selectedTabId: string;
@@ -314,62 +317,15 @@
         {/if}
       </span>
     </section>
-    <!-- Speed , Configure Movement Speed Cog -->
-    <section class="movement flex-row small-gap">
-      <h4>{localize('DND5E.Speed')}</h4>
-      {#if $store.movement.primary}
-        <span data-tooltip={$store.movement.primary}
-          >{$store.movement.primary}</span
-        >
-      {/if}
-      {#if $store.movement.special}
-        |
-        <span data-tooltip={$store.movement.special}
-          >{$store.movement.special}</span
-        >
-      {/if}
-      <a
-        class="configure"
-        data-tooltip={localize('DND5E.MovementConfig')}
-        on:click={() =>
-          new dnd5e.applications.actor.ActorMovementConfig($store.actor).render(
-            true
-          )}><i class="fas fa-cog" /></a
-      >
-    </section>
+    <ActorMovementRow actor={$store.actor} movement={$store.movement} />
+    <HorizontalLineSeparator borderStyle="light" />
     <!-- AC  -->
-    <section class="actor-stats">
-      <!-- TODO: switch these back to unordered <li> -->
-      <AcShield
-        ac={$store.system.attributes.ac.value}
-        on:click={() =>
-          new dnd5e.applications.actor.ActorArmorConfig($store.actor).render(
-            true
-          )}
-        cssClass="align-self-flex-start"
-      />
-      <div
-        class="vertical-line-separator"
-        aria-hidden="true"
-        role="presentation"
-      />
-      <div>
-        <InitiativeBlock
-          actor={$store.actor}
-          initiative={$store.system.attributes.init}
-        />
-      </div>
-      {#each abilities as [id, ability]}
-        <div
-          class="vertical-line-separator"
-          aria-hidden="true"
-          role="presentation"
-        />
-        <div>
-          <AttributeBlock abbreviation={id} {ability} actor={$store.actor} />
-        </div>
-      {/each}
-    </section>
+    <ActorHeaderStats
+      {abilities}
+      ac={$store.system.attributes.ac}
+      init={$store.system.attributes.init}
+      actor={$store.actor}
+    />
   </div>
 </header>
 

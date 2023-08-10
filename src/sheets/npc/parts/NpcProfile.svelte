@@ -1,7 +1,7 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { SettingsProvider } from 'src/settings/settings';
-  import CharacterPortrait from 'src/sheets/character/parts/ActorPortrait.svelte';
+  import CharacterPortrait from 'src/sheets/actor/ActorPortrait.svelte';
   import DeathSaves from 'src/sheets/DeathSaves.svelte';
   import Exhaustion from 'src/sheets/Exhaustion.svelte';
   import HpOverlay from 'src/sheets/HpOverlay.svelte';

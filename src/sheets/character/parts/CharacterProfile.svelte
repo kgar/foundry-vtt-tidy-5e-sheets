@@ -9,7 +9,7 @@
   import Rest from '../../Rest.svelte';
   import HitDice from '../../HitDice.svelte';
   import CharacterHitPoints from './CharacterHitPoints.svelte';
-  import ActorPortrait from './ActorPortrait.svelte';
+  import ActorPortrait from '../../actor/ActorPortrait.svelte';
   import TempHp from '../../TempHp.svelte';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
