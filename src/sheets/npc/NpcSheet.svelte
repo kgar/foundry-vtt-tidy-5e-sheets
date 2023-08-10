@@ -105,7 +105,7 @@
           dataMaxLength={40}
         />
       </div>
-      <div class="flex-row align-items-center">
+      <div class="level-information">
         <div class="xp">
           <span>{$store.system.details.xp.value} XP</span>
         </div>
@@ -119,6 +119,7 @@
             placeholder="0"
             dataMaxLength={4}
             value={$store.labels.cr}
+            saveAs="number"
           />
         </div>
       </div>
@@ -290,5 +291,35 @@
 
   :global(.tab.biography) {
     flex-wrap: wrap;
+  }
+
+  .level-information {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    font-family: var(--t5e-modesto);
+    font-weight: 700;
+
+    .xp {
+      font-size: 1rem;
+      margin-right: 0.25rem;
+      color: var(--t5e-secondary-color);
+    }
+    .level {
+      padding: 0.25rem 0.375rem;
+      border-radius: 0.1875rem;
+      background: var(--t5e-faint-color);
+      color: var(--t5e-secondary-color);
+      font-size: 1.25rem;
+      line-height: 1;
+      height: 1.5rem;
+
+      :global(span) {
+        display: inline-block;
+      }
+    }
+    :global(.level [contenteditable]) {
+      color: var(--t5e-secondary-color);
+    }
   }
 </style>

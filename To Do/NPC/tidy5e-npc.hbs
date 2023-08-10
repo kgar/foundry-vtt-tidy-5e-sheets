@@ -151,7 +151,11 @@
               <span>{{system.details.xp.value}} XP</span>
             </div>
             <div class="level">
-              <input data-input="{{actor._id}}-cr" name="system.details.cr" type="hidden" value="{{labels.cr}}" placeholder="0" maxlength="4">
+              <input 
+                data-input="{{actor._id}}-cr" 
+                name="system.details.cr" 
+                type="hidden" 
+                value="{{labels.cr}}" placeholder="0" maxlength="4">
               <div>{{ localize "DND5E.AbbreviationCR" }} <span contenteditable="true" data-target="{{actor._id}}-cr" data-placeholder="0" data-maxlength="4">{{labels.cr}}</span></div>
             </div>
           </div>

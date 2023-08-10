@@ -1,6 +1,8 @@
-- Register the sheet as a child of the original
-- [ ] Fill out the sheet stuff for svelte mode
-  - [ ] Do we want to use a base sheet for all actors?
+## To Do
+
+
+- [x] Register the sheet as a child of the original 5e sheet
+- [x] Fill out the sheet stuff for svelte mode
 - [ ] Implement
   - [ ] Full NPC
     - [ ] Header
@@ -14,7 +16,7 @@
         - [x] Rest Squared
         - [x] Hit Dice Rounded
         - [x] Hit Dice Squared
-        - [ ] Name row
+        - [x] Name row
         - [ ] size / origin row
         - [ ] speed row
         - [ ] Abilities row
@@ -40,6 +42,7 @@
 
 ## Refactor and Refine
 
+- [ ] Do we want to use a base sheet for all actors?
 - [ ] Extract a universal portait container that directs rounded styles and anything else that can be shareable
   - [ ] Cannibalize the global styles which are shared by NPC and Character profiles
 - [ ] Consider converting `tooltip` to just `title` on text inputs
@@ -48,4 +51,9 @@
   - [ ] Ditto on `NumberInput`
 - [ ] Have `TextInput` respect dtype "Number" and perform deltas as expected. The functionality currently lives in `submitText()`.
   - [ ] Consider refactoring so that callers of `submitText()` are adjusted to use `TextInput` or `NumberInput` as necessary.
-- [ ] 
+- [ ] When an update operation fails, revert to the original value.
+  - [x] Contenteditable
+  - [ ] Textinput
+  - [ ] Numberinput
+  - [ ] Select
+  - [ ] Checkbox

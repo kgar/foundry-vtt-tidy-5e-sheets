@@ -1,8 +1,6 @@
 <script lang="ts">
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { FoundryDocument } from 'src/types/document';
-  import type { ActorSheetContext } from 'src/types/types';
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
 
   export let element: keyof HTMLElementTagNameMap;
   export let document: FoundryDocument;
@@ -13,11 +11,22 @@
   export let spellcheck: boolean = false;
   export let dataMaxLength: number = 40;
   export let placeholder: string | null = null;
+  export let saveAs: 'string' | 'number' = 'string';
 
-  let store = getContext<Readable<ActorSheetContext>>('store');
+  let draftValue: string = value;
 
-  function update() {
-    document.update({ [field]: value });
+  async function update() {
+    if (draftValue.length > dataMaxLength) {
+      draftValue = draftValue.substring(0, dataMaxLength);
+    }
+
+    const valueToSave = saveAs === 'number' ? toNumber(draftValue) : draftValue;
+
+    const result = await document.update({ [field]: valueToSave });
+
+    if (!result) {
+      draftValue = value;
+    }
   }
 
   function submitWhenEnterKey(e: KeyboardEvent) {
@@ -25,6 +34,14 @@
       e.preventDefault();
       update();
     }
+  }
+
+  function toNumber(str: string) {
+    if (str.includes('/')) {
+      const pieces = str.split('/');
+      return parseInt(pieces[0]) / parseInt(pieces[1]);
+    }
+    return +str;
   }
 
   let _el: HTMLElement;
@@ -44,7 +61,7 @@
     bind:this={_el}
     contenteditable="true"
     class={cssClass}
-    bind:innerHTML={value}
+    bind:innerHTML={draftValue}
     on:blur={update}
     on:keypress={submitWhenEnterKey}
     on:paste={handlePaste}
@@ -55,7 +72,7 @@
     data-placeholder={placeholder}
   />
 {:else}
-  <svelte:element this={element} class={cssClass} />
+  <svelte:element this={element} class={cssClass}>{value}</svelte:element>
 {/if}
 
 <style lang="scss">
