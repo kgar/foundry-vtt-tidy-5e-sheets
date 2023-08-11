@@ -20,6 +20,7 @@ export type ClassSummary = {
   level?: string;
 };
 
+// TODO: Extract shared ActorSheetContext and make this CharacterSheetContext
 export type ActorSheetContext = {
   actor: Actor5e;
   resources: Resource[];

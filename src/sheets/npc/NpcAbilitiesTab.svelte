@@ -5,6 +5,7 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import type { NpcSheetContext } from 'src/types/types';
+  import Currency from '../actor/Currency.svelte';
 
   let store = getContext<Readable<NpcSheetContext>>('store');
 </script>
@@ -21,7 +22,9 @@
   </div>
   <div class="main-panel">Favorites</div>
 </section>
-<footer>The footer</footer>
+<footer>
+  <Currency actor={$store.actor} />
+</footer>
 
 <style lang="scss">
   .npc-abilities-content {
@@ -45,6 +48,20 @@
       padding: 0;
       height: auto;
       overflow-x: auto;
+    }
+  }
+
+  footer {
+    background-color: var(--t5e-header-background);
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    box-shadow: 0 0 0.1875rem 0 var(--t5e-tertiary-color);
+
+    margin: 0 -0.25rem -1rem -1rem;
+
+    :global(> *) {
+      flex-basis: 30rem;
     }
   }
 </style>
