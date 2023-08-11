@@ -13,7 +13,7 @@
 
     const formula = $store.actor.system.attributes.hp.formula;
     if (!formula) return;
-    const roll_hp = await new Roll(formula).roll();
+    const roll_hp = await new Roll(formula).evaluate({ async: true });
     const hp = roll_hp.total;
     AudioHelper.play({ src: CONFIG.sounds.dice });
     $store.actor.update({
