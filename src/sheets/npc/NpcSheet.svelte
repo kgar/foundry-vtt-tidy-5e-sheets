@@ -96,7 +96,9 @@
     <NpcProfile />
   </div>
   <div class="flex-grow-1">
-    <div class="flex-row justifty-content-space-between align-items-center">
+    <div
+      class="actor-name-row flex-row justifty-content-space-between align-items-center"
+    >
       <div class="actor-name">
         <ContentEditableFormField
           element="h1"
@@ -141,9 +143,11 @@
         />
         <span>&#8226;</span>
         <DelimitedTruncatedContent cssClass="flex-grow-1">
-          <span class="creature-type">
+          <span class="flex-row extra-small-gap align-items-center">
             <!-- TODO: Accent color on hover -->
             <a
+              class="highlight-on-hover"
+              role="button"
               on:click={() =>
                 new dnd5e.applications.actor.ActorTypeConfig(
                   $store.actor
@@ -178,23 +182,21 @@
           >
         </DelimitedTruncatedContent>
       </div>
-      <div class="proficiency-and-origin-settings">
-        <span class="proficiency">
+      <div class="flex-row align-items-center extra-small-gap">
+        <b class="proficiency">
           {localize('DND5E.Proficiency')}: {formatAsModifier(
             $store.system.attributes.prof
           )}
-        </span>
+        </b>
         {#if $store.owner}
-          <span class="origin-summary-config">
-            <a
-              on:click={() =>
-                new Tidy5eActorOriginSummaryConfig($store.actor).render(true)}
-              class="origin-summary-tidy"
-              data-tooltip={localize('TIDY5E.OriginSummaryConfig')}
-            >
-              <i class="fas fa-cog" />
-            </a>
-          </span>
+          <a
+            on:click={() =>
+              new Tidy5eActorOriginSummaryConfig($store.actor).render(true)}
+            class="origin-summary-tidy"
+            data-tooltip={localize('TIDY5E.OriginSummaryConfig')}
+          >
+            <i class="fas fa-cog" />
+          </a>
         {/if}
       </div>
     </div>
@@ -281,19 +283,21 @@
   }
 
   .origin-summary {
-    font-size: 0.75rem;
+    margin-left: 0.25rem;
     display: flex;
-    gap: 0.5rem;
     justify-content: space-between;
     align-items: center;
+    gap: 0.25rem;
+    font-size: 0.75rem;
+    line-height: 1;
+    padding: 0.1875rem 0 0.125rem 0;
   }
 
-  .proficiency-and-origin-settings {
-    flex: 0 0 auto;
-    display: flex;
-    gap: 0.5rem;
-    > * {
-      flex: 0 0 auto;
-    }
+  .actor-name-row {
+    margin-bottom: 0.125rem;
+  }
+
+  .proficiency {
+    white-space: nowrap;
   }
 </style>

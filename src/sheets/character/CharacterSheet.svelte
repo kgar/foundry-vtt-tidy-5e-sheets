@@ -307,7 +307,7 @@
         </b>
         {#if $store.owner}
           <a
-            class="config-button origin-summary-tidy"
+            class="origin-summary-tidy"
             data-tooltip={localize('T5EK.OriginSummaryConfig')}
             on:click={() =>
               new Tidy5eActorOriginSummaryConfig($store.actor).render(true)}

@@ -41,6 +41,10 @@
     cursor: pointer;
   }
 
+  .highlight-on-hover:hover {
+    color: var(--t5e-primary-accent)
+  }
+
   select {
     height: auto;
   }
