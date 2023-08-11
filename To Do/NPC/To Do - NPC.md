@@ -23,6 +23,9 @@
       - [x] Behaviors
     - [ ] Tab nav and stub/share components
       - [ ] Abilities
+        - [ ] Side bar
+        - [ ] Footer (money)
+        - [ ] Main content area
       - [ ] Spellbook
       - [ ] Effects
       - [ ] Biography

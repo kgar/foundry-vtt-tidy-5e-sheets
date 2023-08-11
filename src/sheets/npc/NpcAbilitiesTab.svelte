@@ -1,12 +1,20 @@
-<script>
+<script lang="ts">
   import SkillsList from 'src/components/attributes/SkillsList.svelte';
   import Traits from '../actor/Traits.svelte';
   import { SettingsProvider } from 'src/settings/settings';
+  import { getContext } from 'svelte';
+  import type { Readable } from 'svelte/store';
+  import type { NpcSheetContext } from 'src/types/types';
+
+  let store = getContext<Readable<NpcSheetContext>>('store');
 </script>
 
 <section class="npc-abilities-content">
   <div class="side-panel">
-    <SkillsList />
+    <SkillsList
+      actor={$store.actor}
+      toggleable={!SettingsProvider.settings.skillsAlwaysShownNpc.get()}
+    />
     <Traits
       toggleable={!SettingsProvider.settings.traitsAlwaysShownNpc.get()}
     />

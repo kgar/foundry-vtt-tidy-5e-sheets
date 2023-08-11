@@ -1,5 +1,6 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import type { Actor5e } from 'src/types/actor';
   import type {
     ActorContextSkill,
     ActorContextSkills,
@@ -8,6 +9,12 @@
   import { formatAsModifier } from 'src/utils/formatting';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
+
+  export let toggleable: boolean = false;
+  export let actor: Actor5e;
+
+  $: showAllSkills =
+    !toggleable || FoundryAdapter.tryGetFlag(actor, 'npcSkillsExpanded');
 
   let store = getContext<Readable<ActorSheetContext>>('store');
 
@@ -36,61 +43,87 @@
 
     return null;
   }
+
+  function toggleShowAllSkills() {
+    const npcSkillsExpanded = FoundryAdapter.tryGetFlag(
+      actor,
+      'npcSkillsExpanded'
+    );
+    FoundryAdapter.setFlag(actor, 'npcSkillsExpanded', !npcSkillsExpanded);
+  }
 </script>
 
-<ul class="skills-list">
-  {#each skillRefs as skillRef}
-    {#if skillRef.skill}
-      <li class="proficiency-row skill" class:proficient={skillRef.skill.value}>
-        <a
-          class="configure-proficiency"
-          on:click={() =>
-            new dnd5e.applications.actor.ProficiencyConfig($store.actor, {
-              property: 'skills',
-              key: skillRef.key,
-            }).render(true)}
-          data-tooltip={localize('DND5E.SkillConfigure')}
+<div class="skills-list-container">
+  <ul class="skills-list">
+    {#each skillRefs as skillRef (skillRef.key)}
+      {#if skillRef.skill && (showAllSkills || skillRef.skill.value > 0)}
+        <li
+          class="proficiency-row skill"
+          class:proficient={skillRef.skill.value}
         >
-          <i class="fas fa-cog" />
-        </a>
-        <a
-          class="skill-proficiency-toggle"
-          on:click={(event) =>
-            FoundryAdapter.cycleProficiency(
-              $store.actor,
-              skillRef.key,
-              skillRef.skill?.value,
-              'skills'
-            )}
-          on:contextmenu={(event) =>
-            FoundryAdapter.cycleProficiency(
-              $store.actor,
-              skillRef.key,
-              skillRef.skill?.value,
-              'skills',
-              true
-            )}
-          title={skillRef.skill.hover}>{@html skillRef.skill.icon}</a
-        >
-        <h4
-          role="button"
-          class="tidy5e-skill-name rollable"
-          on:click={(event) =>
-            $store.actor.rollSkill(skillRef.key, { event })}
-        >
-          {skillRef.skill.label}
-        </h4>
-        <span class="skill-ability">{skillRef.skill.abbreviation}</span>
-        <span class="skill-mod">{formatAsModifier(skillRef.skill.total)}</span>
-        <span
-          class="skill-passive"
-          title="{skillRef.skill.label} ({localize('DND5E.Passive')})"
-          >({skillRef.skill.passive})</span
-        >
-      </li>
-    {/if}
-  {/each}
-</ul>
+          <a
+            class="configure-proficiency"
+            on:click={() =>
+              new dnd5e.applications.actor.ProficiencyConfig($store.actor, {
+                property: 'skills',
+                key: skillRef.key,
+              }).render(true)}
+            data-tooltip={localize('DND5E.SkillConfigure')}
+          >
+            <i class="fas fa-cog" />
+          </a>
+          <a
+            class="skill-proficiency-toggle"
+            on:click={(event) =>
+              FoundryAdapter.cycleProficiency(
+                $store.actor,
+                skillRef.key,
+                skillRef.skill?.value,
+                'skills'
+              )}
+            on:contextmenu={(event) =>
+              FoundryAdapter.cycleProficiency(
+                $store.actor,
+                skillRef.key,
+                skillRef.skill?.value,
+                'skills',
+                true
+              )}
+            title={skillRef.skill.hover}>{@html skillRef.skill.icon}</a
+          >
+          <h4
+            role="button"
+            class="tidy5e-skill-name rollable"
+            on:click={(event) =>
+              $store.actor.rollSkill(skillRef.key, { event })}
+          >
+            {skillRef.skill.label}
+          </h4>
+          <span class="skill-ability">{skillRef.skill.abbreviation}</span>
+          <span class="skill-mod">{formatAsModifier(skillRef.skill.total)}</span
+          >
+          <span
+            class="skill-passive"
+            title="{skillRef.skill.label} ({localize('DND5E.Passive')})"
+            >({skillRef.skill.passive})</span
+          >
+        </li>
+      {/if}
+    {/each}
+  </ul>
+  {#if toggleable}
+    <div style="text-align:center;">
+      <a class="toggle-proficient" on:click={toggleShowAllSkills}>
+        {#if showAllSkills}
+          {localize('TIDY5E.Hide')}
+        {:else}
+          {localize('TIDY5E.Show')}
+        {/if}
+        {localize('DND5E.NotProficient')}</a
+      >
+    </div>
+  {/if}
+</div>
 
 <style lang="scss">
   .skills-list {
@@ -176,6 +209,22 @@
         text-transform: capitalize;
       }
       ///
+    }
+  }
+
+  .toggle-proficient {
+    font-size: 0.625rem;
+    text-transform: capitalize;
+    border: 0.0625rem solid var(--t5e-faint-color);
+    border-top: none;
+    padding: 0.125rem 0.5rem;
+    border-radius: 0 0 0.3125rem 0.3125rem;
+    cursor: pointer;
+    color: var(--t5e-secondary-color);
+    white-space: nowrap;
+
+    &:hover {
+      color: var(--t5e-primary-font);
     }
   }
 </style>

@@ -25,7 +25,7 @@
 
 <div class="attributes-tab-contents">
   <section class="side-panel">
-    <SkillsList />
+    <SkillsList actor={$store.actor} />
     {#if !traitsMovedBelowResource}
       <Traits toggleable={SettingsProvider.settings.traitsTogglePc.get()} />
     {/if}

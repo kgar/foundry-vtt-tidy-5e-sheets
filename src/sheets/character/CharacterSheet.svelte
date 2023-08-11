@@ -14,13 +14,13 @@
   import AttributeBlock from '../AttributeBlock.svelte';
   import InitiativeBlock from '../InitiativeBlock.svelte';
   import ActorWarnings from '../ActorWarnings.svelte';
-  import AttributesTab from 'src/components/player-character/AttributesTab.svelte';
-  import InventoryTab from 'src/components/player-character/InventoryTab.svelte';
-  import SpellbookTab from 'src/components/player-character/SpellbookTab.svelte';
-  import FeaturesTab from 'src/components/player-character/FeaturesTab.svelte';
-  import EffectsTab from 'src/components/player-character/EffectsTab.svelte';
-  import BiographyTab from 'src/components/player-character/BiographyTab.svelte';
-  import JournalTab from 'src/components/player-character/JournalTab.svelte';
+  import CharacterAttributesTab from 'src/components/player-character/CharacterAttributesTab.svelte';
+  import CharacterInventoryTab from 'src/components/player-character/CharacterInventoryTab.svelte';
+  import CharacterSpellbookTab from 'src/components/player-character/CharacterSpellbookTab.svelte';
+  import CharacterFeaturesTab from 'src/components/player-character/CharacterFeaturesTab.svelte';
+  import CharacterEffectsTab from 'src/components/player-character/CharacterEffectsTab.svelte';
+  import CharacterBiographyTab from 'src/components/player-character/BiographyTab.svelte';
+  import CharacterJournalTab from 'src/components/player-character/CharacterJournalTab.svelte';
   import { CONSTANTS } from 'src/constants';
   import { submitText } from '../form';
   import AllowEditLock from 'src/components/shared/AllowEditLock.svelte';
@@ -85,42 +85,42 @@
         id: 'attributes',
         displayName: 'DND5E.Attributes',
         content: {
-          component: AttributesTab,
+          component: CharacterAttributesTab,
         },
       },
       {
         id: 'inventory',
         displayName: 'DND5E.Inventory',
         content: {
-          component: InventoryTab,
+          component: CharacterInventoryTab,
         },
       },
       {
         id: 'spellbook',
         displayName: 'DND5E.Spellbook',
         content: {
-          component: SpellbookTab,
+          component: CharacterSpellbookTab,
         },
       },
       {
         id: 'features',
         displayName: 'DND5E.Features',
         content: {
-          component: FeaturesTab,
+          component: CharacterFeaturesTab,
         },
       },
       {
         id: 'effects',
         displayName: 'DND5E.Effects',
         content: {
-          component: EffectsTab,
+          component: CharacterEffectsTab,
         },
       },
       {
         id: 'biography',
         displayName: 'DND5E.Biography',
         content: {
-          component: BiographyTab,
+          component: CharacterBiographyTab,
         },
       },
     ];
@@ -133,7 +133,7 @@
         id: 'journal',
         displayName: 'T5EK.Journal',
         content: {
-          component: JournalTab,
+          component: CharacterJournalTab,
         },
       });
     }
