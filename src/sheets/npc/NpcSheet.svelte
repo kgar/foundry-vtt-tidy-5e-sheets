@@ -231,7 +231,6 @@
   }
 
   :global(.tab.abilities) {
-    padding-right: 0.75rem;
     display: flex;
     flex-direction: column;
   }

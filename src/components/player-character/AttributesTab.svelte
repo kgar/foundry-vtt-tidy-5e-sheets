@@ -27,7 +27,7 @@
   <section class="side-panel">
     <SkillsList />
     {#if !traitsMovedBelowResource}
-      <Traits />
+      <Traits toggleable={SettingsProvider.settings.traitsTogglePc.get()} />
     {/if}
   </section>
   <section class="main-panel">
@@ -35,7 +35,7 @@
       <Resources />
     {/if}
     {#if traitsMovedBelowResource}
-      <Traits />
+      <Traits toggleable={SettingsProvider.settings.traitsTogglePc.get()} />
     {/if}
     <Favorites />
   </section>
