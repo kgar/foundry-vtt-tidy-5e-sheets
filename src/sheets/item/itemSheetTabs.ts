@@ -3,7 +3,7 @@ import ItemDescription from './parts/ItemDescription.svelte';
 import ItemDescriptionWithSidebar from './parts/ItemDescriptionWithSidebar.svelte';
 import ItemAdvancement from './parts/ItemAdvancement.svelte';
 import ItemWeaponDetails from './parts/ItemWeaponDetails.svelte';
-import ActiveEffects from '../actor/parts/ActiveEffects.svelte';
+import ActiveEffects from './parts/ActiveEffects.svelte';
 import ItemToolDetails from './parts/ItemToolDetails.svelte';
 import ItemSubclassDetails from './parts/ItemSubclassDetails.svelte';
 import ItemSpellDetails from './parts/ItemSpellDetails.svelte';

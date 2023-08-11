@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { ActorSheetContext } from 'src/types/types';
   import SkillsList from '../attributes/SkillsList.svelte';
-  import Traits from '../attributes/Traits.svelte';
+  import Traits from '../../sheets/actor/Traits.svelte';
   import Favorites from '../attributes/Favorites.svelte';
   import Resources from '../attributes/Resources.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
@@ -45,7 +45,7 @@
   .attributes-tab-contents {
     display: flex;
     flex-direction: row;
-    gap: 1rem;
+    gap: 1.5rem;
   }
 
   .side-panel {
@@ -61,7 +61,6 @@
     gap: 0.5rem;
     flex: 1;
     padding: 0;
-    margin-left: 1rem;
     height: auto;
     overflow-x: auto;
   }

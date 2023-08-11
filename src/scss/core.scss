@@ -1,18 +1,43 @@
-@import './partials/sheet';
-@import './settings.scss';
-@import './spell-level-buttons-dialog.scss';
+@font-face {
+  font-family: 'Signika';
+  src: url('../../../fonts/signika/signika-light.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Signika';
+  src: url('../../../fonts/signika/signika-semibold.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@import './partials/variables';
+@import './settings';
+@import './spell-level-buttons-dialog';
 
 .tidy5e-kgar {
-  &.sheet.actor {
-    @import './partials/actor';
+  &.sheet {
+    &.actor {
+      @import './partials/actor';
+    }
+
+    &.character {
+      @import './partials/character-sheet';
+    }
+
+    &.npc {
+      @import './partials/npc-sheet';
+    }
+
+    &.item {
+      @import './partials/items';
+    }
   }
 
   @import './partials/layout';
-  @import './partials/character-sheet';
   @import './partials/portrait';
-  // @import './partials/navigation';
   @import './partials/context-menu';
-  @import './partials/items';
 
   .top-left,
   .bottom-right {
@@ -42,7 +67,7 @@
   }
 
   .highlight-on-hover:hover {
-    color: var(--t5e-primary-accent)
+    color: var(--t5e-primary-accent);
   }
 
   select {

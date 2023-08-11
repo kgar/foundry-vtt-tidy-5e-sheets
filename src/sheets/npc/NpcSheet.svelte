@@ -231,8 +231,16 @@
   }
 
   :global(.tab.abilities) {
-    overflow-y: scroll;
     padding-right: 0.75rem;
+    display: flex;
+    flex-direction: column;
+  }
+  :global(.tab.abilities > section) {
+    flex: 1;
+  }
+
+  :global(.tab.abilities > footer) {
+    flex: 0;
   }
 
   :global(.tab.biography),

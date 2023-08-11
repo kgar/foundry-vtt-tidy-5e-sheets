@@ -43,6 +43,8 @@
 ## Refactor and Refine
 
 - [x] Do we want to use a base sheet for all actors? No, because they all use different context from established sheets.
+- [ ] Move `_inventory` and `_inventory-grid` styles to where they should go in the components
+- [ ] Cannibalize as many `_character-sheet` styles as possible to where they should go in the components
 - [ ] Extract a universal portait container that directs rounded styles and anything else that can be shareable
   - [ ] Cannibalize the global styles which are shared by NPC and Character profiles
 - [ ] Consider converting `tooltip` to just `title` on text inputs
