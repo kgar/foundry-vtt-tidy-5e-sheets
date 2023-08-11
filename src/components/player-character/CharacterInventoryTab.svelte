@@ -13,6 +13,7 @@
   import { submitText } from 'src/sheets/form';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
+  import Currency from 'src/sheets/actor/Currency.svelte';
 
   let store = getContext<Readable<ActorSheetContext>>('store');
 
@@ -133,49 +134,7 @@
         >
       {/if}
     </div>
-    <div class="inventory-currency">
-      <ol class="currency">
-        <li class="currency-header" title={localize('DND5E.Currency')}>
-          <i class="fas fa-coins" />
-        </li>
-        {#each currencies as currency}
-          <li
-            class="currency-item {currency.key}"
-            title={$store.labels.currencies[currency.key]}
-          >
-            <input
-              type="number"
-              step="any"
-              id="{$store.appId}-system.currency.{currency.key}"
-              value={currency.value}
-              on:change|stopPropagation|preventDefault={(event) =>
-                submitText(
-                  event,
-                  $store.actor,
-                  `system.currency.${currency.key}`
-                )}
-            />
-            <label
-              for="{$store.appId}-system.currency.{currency.key}"
-              class="denomination {currency.key}"
-              data-denom={currency.key}
-              >{abbreviateCurrency(currency.key)}</label
-            >
-          </li>
-        {/each}
-        <li class="currency-item convert">
-          <a
-            class="currency-convert"
-            role="button"
-            title={localize('DND5E.CurrencyConvertHint')}
-            on:click|stopPropagation|preventDefault={() =>
-              confirmConvertCurrency()}
-          >
-            <i class="fas fa-funnel-dollar" />
-          </a>
-        </li>
-      </ol>
-    </div>
+    <Currency actor={$store.actor} />
   </div>
 
   {#if !SettingsProvider.settings.hideStandardEncumbranceBar.get()}
@@ -254,67 +213,6 @@
         input {
           font-size: 1rem;
           font-family: var(--t5e-signika);
-        }
-      }
-
-      .inventory-currency {
-        .currency {
-          display: flex;
-          align-items: center;
-          list-style: none;
-          gap: 0.5rem;
-
-          .currency-header {
-            flex: 0 0 0.8125rem;
-            text-align: center;
-
-            i {
-              font-size: 1.25rem;
-            }
-          }
-
-          .currency-item {
-            display: flex;
-            align-items: center;
-            background: var(--t5e-faint-color);
-            border-radius: 0.3125rem;
-            line-height: 1.875rem;
-            padding-right: 0.5rem;
-
-            input {
-              text-align: right;
-              flex: 1;
-              padding-left: 0.5rem;
-            }
-
-            label {
-              margin-left: 0.25rem;
-              flex: 0 0 auto;
-            }
-
-            &.convert {
-              padding: 0;
-              flex: 0 0 0.0625rem;
-              text-align: center;
-              white-space: nowrap;
-            }
-
-            a {
-              // display: block;
-              background: var(--t5e-tertiary-color);
-              color: var(--t5e-background);
-              border-radius: 0.3125rem;
-              padding: 0 0.375rem;
-
-              &:hover {
-                background: var(--t5e-secondary-color);
-              }
-            }
-
-            .denomination {
-              text-transform: uppercase;
-            }
-          }
         }
       }
     }
