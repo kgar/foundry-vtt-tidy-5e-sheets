@@ -5,11 +5,11 @@
 - [x] Fill out the sheet stuff for svelte mode
 - [ ] Implement
   - [ ] Full NPC
-    - [ ] Header
+    - [x] Header
       - [x] HTML
         - [x] Profile
         - [x] Header Stats / INfo
-      - [ ] SCSS
+      - [x] SCSS
         - [x] Exhaustion Rounded
         - [x] Exhaustion Squared
         - [x] Rest Rounded
@@ -17,19 +17,19 @@
         - [x] Hit Dice Rounded
         - [x] Hit Dice Squared
         - [x] Name row
-        - [ ] size / origin row
-        - [ ] speed row
-        - [ ] Abilities row
-      - [ ] Behaviors
+        - [x] size / origin row
+        - [x] speed row
+        - [x] Abilities row
+      - [x] Behaviors
     - [ ] Tab nav and stub/share components
-      - [ ] Attributes
+      - [ ] Abilities
       - [ ] Spellbook
       - [ ] Effects
       - [ ] Biography
       - [ ] Journal
       - [ ] Toggle Lock
     - [ ] Tab Contents
-      - [ ] Attributes
+      - [ ] Abilities
       - [ ] Spellbook
       - [ ] Effects
       - [ ] Biography

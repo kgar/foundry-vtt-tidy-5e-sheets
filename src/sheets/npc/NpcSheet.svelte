@@ -146,7 +146,7 @@
           <span class="flex-row extra-small-gap align-items-center">
             <!-- TODO: Accent color on hover -->
             <a
-              class="highlight-on-hover"
+              class="truncate highlight-on-hover"
               role="button"
               on:click={() =>
                 new dnd5e.applications.actor.ActorTypeConfig(
