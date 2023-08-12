@@ -230,7 +230,7 @@
     background: var(--t5e-header-background);
   }
 
-  :global(.tab.abilities) {
+  :global(.tab.abilities.active) {
     display: flex;
     flex-direction: column;
   }
@@ -242,8 +242,8 @@
     flex: 0;
   }
 
-  :global(.tab.biography),
-  :global(.tab.journal) {
+  :global(.tab.biography.active),
+  :global(.tab.journal.active) {
     align-items: flex-start;
     flex-direction: row;
     padding-right: 0.75rem;
