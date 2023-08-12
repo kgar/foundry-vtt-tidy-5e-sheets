@@ -198,7 +198,7 @@ c28,32.6,51.5,72.7,62,91.7c2.8,5,9.9,5.1,12.8,0.2c14-23.3,44.3-83.4,44.3-166.9C4
     />
   {/if}
 
-  {#if SettingsProvider.settings.traitsTogglePc.get()}
+  {#if toggleable}
     <div
       class="toggle-traits"
       role="button"
