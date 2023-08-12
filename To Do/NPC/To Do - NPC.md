@@ -26,6 +26,19 @@
         - [x] Side bar
         - [x] Footer (money)
         - [ ] Main content area
+          - [ ] Legendary actions
+            - [ ] HTML
+            - [ ] SCSS
+            - [ ] Behaviors (lock/unlock/show/hide)
+          - [ ] Features(?): Return to tidy5e-features.html to harvest the setup specifically tailored for NPC
+            - [ ] HTML
+            - [ ] SCSS
+            - [ ] Behaviors
+          - [ ] Settings
+            - [ ] hideSpellbookTabNpc
+              - [ ] when on: include equivalent of tidy5e-npc-spellbook template
+              - [ ] note: give this one a look before completely committing to the currency footer I made
+            - [ ] alt trait position : just below legendary actions
       - [ ] Spellbook
       - [ ] Effects
       - [ ] Biography
