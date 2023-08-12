@@ -230,35 +230,37 @@
     background: var(--t5e-header-background);
   }
 
-  :global(.tab.abilities.active) {
-    display: flex;
-    flex-direction: column;
-  }
-  :global(.tab.abilities > section) {
-    flex: 1;
-  }
+  .sheet-body {
+    :global(.tab.abilities.active) {
+      display: flex;
+      flex-direction: column;
+    }
+    :global(.tab.abilities > section) {
+      flex: 1;
+    }
 
-  :global(.tab.abilities > footer) {
-    flex: 0;
-  }
+    :global(.tab.abilities > footer) {
+      flex: 0;
+    }
 
-  :global(.tab.biography.active),
-  :global(.tab.journal.active) {
-    align-items: flex-start;
-    flex-direction: row;
-    padding-right: 0.75rem;
-    overflow-x: inherit;
-  }
+    :global(.tab.biography.active),
+    :global(.tab.journal.active) {
+      align-items: flex-start;
+      flex-direction: row;
+      padding-right: 0.75rem;
+      overflow-x: inherit;
+    }
 
-  :global(.tab.biography),
-  :global(.tab.journal) {
-    font-size: 0.8125rem;
-  }
+    :global(.tab.biography),
+    :global(.tab.journal) {
+      font-size: 0.8125rem;
+    }
 
-  :global(.tab.biography) {
-    flex-wrap: wrap;
+    :global(.tab.biography) {
+      flex-wrap: wrap;
+    }
   }
-
+  
   .level-information {
     display: flex;
     flex-direction: row;
