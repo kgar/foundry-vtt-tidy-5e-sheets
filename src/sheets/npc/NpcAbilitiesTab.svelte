@@ -24,6 +24,7 @@
   import ItemControls from 'src/components/items/ItemControls.svelte';
   import ItemTableFooter from 'src/components/items/ItemTableFooter.svelte';
   import NpcLegendaryActions from './parts/NpcLegendaryActions.svelte';
+  import NpcSpellbook from './parts/NpcSpellbook.svelte';
 
   let store = getContext<Readable<NpcSheetContext>>('store');
 
@@ -37,6 +38,8 @@
 
   $: traitAlwaysShownNpc = SettingsProvider.settings.traitsAlwaysShownNpc.get();
 
+  $: showSpellsInAbilitiesTab =
+    SettingsProvider.settings.hideSpellbookTabNpc.get();
   const localize = FoundryAdapter.localize;
 </script>
 
@@ -144,6 +147,13 @@
         </ItemTable>
       {/if}
     {/each}
+    {#if showSpellsInAbilitiesTab}
+      <div>
+        If no spells, then spellbook show/hide header with default to closed.
+        Else, just show spellbook header without toggle option
+      </div>
+      <NpcSpellbook />
+    {/if}
   </div>
 </section>
 <footer>

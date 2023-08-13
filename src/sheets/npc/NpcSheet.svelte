@@ -20,16 +20,13 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import TidyDropdownList from '../TidyDropdownList.svelte';
   import { isNil } from 'src/utils/data';
-  import { coalesce, formatAsModifier } from 'src/utils/formatting';
+  import { formatAsModifier } from 'src/utils/formatting';
   import Tidy5eActorOriginSummaryConfig from '../tidy5e-actor-origin-summary-config';
-  import AcShield from '../actor/AcShield.svelte';
-  import InitiativeBlock from '../InitiativeBlock.svelte';
-  import AttributeBlock from '../AttributeBlock.svelte';
   import DelimitedTruncatedContent from 'src/components/layout/DelimitedTruncatedContent.svelte';
   import HorizontalLineSeparator from 'src/components/layout/HorizontalLineSeparator.svelte';
   import ActorMovementRow from '../actor/ActorMovementRow.svelte';
   import ActorHeaderStats from '../actor/ActorHeaderStats.svelte';
-
+  
   export let selectedTabId: string;
 
   let store = getContext<Readable<NpcSheetContext>>('store');
