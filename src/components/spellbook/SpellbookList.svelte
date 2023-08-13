@@ -22,12 +22,13 @@
   import SpellSlotUses from '../spellbook/SpellSlotUses.svelte';
   import InlineFavoriteIcon from '../shared/InlineFavoriteIcon.svelte';
   import ItemFavoriteControl from '../items/ItemFavoriteControl.svelte';
-    import { getContext } from 'svelte';
-    import type { Readable } from 'svelte/store';
+  import { getContext } from 'svelte';
+  import type { Readable } from 'svelte/store';
 
   let store = getContext<Readable<ActorSheetContext>>('store');
   export let section: any;
   export let spells: any[];
+  export let allowFavorites: boolean = true;
 
   const localize = FoundryAdapter.localize;
   const classicControlsEnabled =
@@ -105,7 +106,7 @@
             <ItemUses item={spell} />
           </ItemTableCell>
         {/if}
-        {#if !hideIconsNextToTheItemName && FoundryAdapter.tryGetFlag(spell, 'favorite')}
+        {#if allowFavorites && !hideIconsNextToTheItemName && FoundryAdapter.tryGetFlag(spell, 'favorite')}
           <InlineFavoriteIcon />
         {/if}
         <ItemTableCell baseWidth="4.375rem" cssClass="no-gap">
@@ -139,12 +140,16 @@
         {#if $store.owner && classicControlsEnabled}
           <ItemTableCell baseWidth={classicControlsBaseWidth}>
             <ItemControls>
-              {#if spell.system.preparation?.mode === 'always'}
-                <span />
-              {:else if section.canPrepare}
-                <SpellPrepareControl {ctx} {spell} />
+              {#if section.canPrepare}
+                {#if spell.system.preparation?.mode === 'always'}
+                  <span />
+                {:else}
+                  <SpellPrepareControl {ctx} {spell} />
+                {/if}
               {/if}
-              <ItemFavoriteControl item={spell} />
+              {#if allowFavorites}
+                <ItemFavoriteControl item={spell} />
+              {/if}
               <ItemEditControl item={spell} />
               {#if allowEdit}
                 <ItemDuplicateControl item={spell} />

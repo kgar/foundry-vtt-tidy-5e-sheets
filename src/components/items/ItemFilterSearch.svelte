@@ -14,6 +14,7 @@
 
   async function clearSearch() {
     await FoundryAdapter.setFlag(actor, searchFlag, '');
+    searchCriteria = '';
   }
 
   const localize = FoundryAdapter.localize;

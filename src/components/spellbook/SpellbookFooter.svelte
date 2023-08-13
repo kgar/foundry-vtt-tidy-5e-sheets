@@ -68,22 +68,39 @@
       {/each}
     </select>
   </div>
+  {#if $store.isNPC}
+    <div class="flex-row extra-small-gap" style="flex: 0">
+      <h3 class="truncate">{localize('DND5E.SpellcasterLevel')}</h3>
+      <input
+        class="spellcasting-level"
+        type="text"
+        name="system.details.spellLevel"
+        value={$store.system.details.spellLevel}
+        data-dtype="Number"
+        placeholder="0"
+        min="0"
+        step="1"
+      />
+    </div>
+  {/if}
 </footer>
 
 <style lang="scss">
   .spellcasting-ability {
     display: flex;
     justify-content: space-between;
-    margin: 0rem 14px 0 0;
+    margin: 0rem 0.875rem 0 0;
     padding-top: 0.5rem;
-    border-top: 2px solid var(--t5e-light-color);
+    border-top: 0.125rem solid var(--t5e-light-color);
     align-items: center;
+    gap: 0.25rem;
 
     .max-prepared-spells,
     .spellcasting-attribute {
+      flex: 0;
       display: flex;
       align-items: center;
-      font-size: 12px;
+      font-size: 0.75rem;
     }
 
     h3 {
@@ -107,6 +124,7 @@
     input {
       width: 1.25rem;
       height: 1.25rem;
+      flex: 0;
     }
 
     .bonus-icon {

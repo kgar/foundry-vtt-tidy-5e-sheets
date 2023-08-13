@@ -52,12 +52,21 @@
               - [x] Show Add button on unlocked
         - [ ] Settings
           - [ ] hideSpellbookTabNpc
-            - [ ] STUB IT
             - [ ] when on: include equivalent of tidy5e-npc-spellbook template
+              - [x] HTML
+              - [x] SCSS
+              - [x] Behaviors
+              - [ ] Configure No Spellcaster levels notice while locked
+                - [ ] While unlocked, also include Create Button itemtablefooter
+                - [ ] Ensure this same applies to both List and Grid in their own ways.
             - [x] note: give this one a look before completely committing to the currency footer I made
           - [x] alt trait position : just below legendary actions
       - [ ] Spellbook
-        - [ ] HTML
+        - [ ] HTML : this is the exact same spellbook tab as the PC; try your best to reuse verbatim, including all supporting features like filtering and grid layout.
+          - [ ] The Differences
+            - [ ] NPC: No preparation button
+            - [ ] NPC: No favorites button
+            - [ ] NPC: Add Spellcaster Level
         - [ ] SCSS
         - [ ] Behaviors
         - [ ] Settings

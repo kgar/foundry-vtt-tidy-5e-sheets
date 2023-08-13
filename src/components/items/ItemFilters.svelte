@@ -15,7 +15,7 @@
 
 <style lang="scss">
   .item-filters {
-    margin: 0 0.875rem 1rem 0;
+    margin: 0 0.875rem 0 0;
     flex: 0 0 1.1875rem;
     border-bottom: 1px solid var(--t5e-light-color);
 
