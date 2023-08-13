@@ -55,7 +55,7 @@
             - [ ] STUB IT
             - [ ] when on: include equivalent of tidy5e-npc-spellbook template
             - [x] note: give this one a look before completely committing to the currency footer I made
-          - [ ] alt trait position : just below legendary actions
+          - [x] alt trait position : just below legendary actions
       - [ ] Spellbook
         - [ ] HTML
         - [ ] SCSS

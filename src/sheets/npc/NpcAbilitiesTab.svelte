@@ -32,6 +32,11 @@
   $: classicControlsEnabled =
     SettingsProvider.settings.classicControlsEnabled.get();
 
+  $: traitsMovedBelowResourceNpc =
+    SettingsProvider.settings.traitsMovedBelowResourceNpc.get();
+
+  $: traitAlwaysShownNpc = SettingsProvider.settings.traitsAlwaysShownNpc.get();
+
   const localize = FoundryAdapter.localize;
 </script>
 
@@ -41,12 +46,15 @@
       actor={$store.actor}
       toggleable={!SettingsProvider.settings.skillsAlwaysShownNpc.get()}
     />
-    <Traits
-      toggleable={!SettingsProvider.settings.traitsAlwaysShownNpc.get()}
-    />
+    {#if !traitsMovedBelowResourceNpc}
+      <Traits toggleable={!traitAlwaysShownNpc} />
+    {/if}
   </div>
   <div class="main-panel">
     <NpcLegendaryActions />
+    {#if traitsMovedBelowResourceNpc}
+      <Traits toggleable={!traitAlwaysShownNpc} />
+    {/if}
     {#each $store.features as section}
       {#if allowEdit || section.items.length}
         <ItemTable>
