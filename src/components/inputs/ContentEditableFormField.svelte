@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { FoundryDocument } from 'src/types/document';
+  import { toNumber } from 'src/utils/numbers';
 
   export let element: keyof HTMLElementTagNameMap;
   export let document: FoundryDocument;
@@ -34,14 +34,6 @@
       e.preventDefault();
       update();
     }
-  }
-
-  function toNumber(str: string) {
-    if (str.includes('/')) {
-      const pieces = str.split('/');
-      return parseInt(pieces[0]) / parseInt(pieces[1]);
-    }
-    return +str;
   }
 
   let _el: HTMLElement;

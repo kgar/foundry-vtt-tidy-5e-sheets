@@ -11,6 +11,7 @@
   export let disabled: boolean | null = null;
   export let dataset: Record<string, unknown> | null = null;
   export let labelCssClass: string | null = null;
+  export let dtype: string | null = null;
 
   $: datasetAttributes = buildDataset(dataset);
 
@@ -37,6 +38,7 @@
       data-tooltip={tooltip}
       {disabled}
       {...datasetAttributes}
+      data-dtype={dtype}
     />
     <slot />
   </label>
@@ -50,5 +52,6 @@
     data-tooltip={tooltip}
     {disabled}
     {...datasetAttributes}
+    data-dtype={dtype}
   />
 {/if}

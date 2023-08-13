@@ -79,3 +79,4 @@
   - [ ] Numberinput
   - [ ] Select
   - [ ] Checkbox
+- [ ] `dtype` fields: formalize these as features of the input components, rather than just receiving them. Give the props names.

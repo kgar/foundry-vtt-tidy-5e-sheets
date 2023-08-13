@@ -232,7 +232,6 @@
 
   .sheet-body {
     :global(.tab.abilities) {
-      padding-right: 0.75rem;
     }
     :global(.tab.abilities.active) {
       display: flex;

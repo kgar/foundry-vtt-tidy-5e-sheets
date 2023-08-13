@@ -13,6 +13,7 @@
   export let cssClass: string | null = null;
   export let maxlength: number | null = null;
   export let ariaDescribedBy: string | null = null;
+  export let selectOnFocus: boolean = false;
 
   $: actualDataset = buildDataset(dataset);
 
@@ -30,7 +31,7 @@
 <input
   type="text"
   {id}
-  {value}
+  value={value?.toString()}
   {placeholder}
   on:change={saveChange}
   data-tooltip={tooltip}
@@ -39,4 +40,5 @@
   {maxlength}
   data-dtype={dtype}
   aria-describedby={ariaDescribedBy}
+  on:focus={(ev) => selectOnFocus && ev.currentTarget.select()}
 />

@@ -23,6 +23,7 @@
   import ItemUses from 'src/components/items/ItemUses.svelte';
   import ItemControls from 'src/components/items/ItemControls.svelte';
   import ItemTableFooter from 'src/components/items/ItemTableFooter.svelte';
+  import NpcLegendaryActions from './parts/NpcLegendaryActions.svelte';
 
   let store = getContext<Readable<NpcSheetContext>>('store');
 
@@ -45,6 +46,7 @@
     />
   </div>
   <div class="main-panel">
+    <NpcLegendaryActions />
     {#each $store.features as section}
       {#if allowEdit || section.items.length}
         <ItemTable>
@@ -145,6 +147,7 @@
     display: flex;
     flex-direction: row;
     gap: 1.5rem;
+    padding-right: 0.75rem;
     overflow-y: scroll;
 
     > .side-panel {
@@ -157,11 +160,9 @@
     > .main-panel {
       display: flex;
       flex-direction: column;
-      gap: 0.5rem;
       flex: 1;
       padding: 0;
       height: auto;
-      overflow-x: auto;
     }
   }
 
@@ -172,7 +173,7 @@
     justify-content: center;
     box-shadow: 0 0 0.1875rem 0 var(--t5e-tertiary-color);
 
-    margin: 0 -1rem -1rem -1rem;
+    margin: 0 -0.25rem -1rem -1rem;
 
     :global(> *) {
       flex-basis: 30rem;

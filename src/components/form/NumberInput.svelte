@@ -16,6 +16,8 @@
   export let readonly: boolean | null = null;
   export let cssClass: string | null = null;
   export let maxlength: HTMLInputElement['maxLength'] | null = null;
+  export let dtype: string | null = null;
+  export let selectOnFocus: boolean = false;
 
   $: datasetAttributes = buildDataset(dataset);
 
@@ -47,4 +49,6 @@
   class={cssClass}
   {maxlength}
   {...datasetAttributes}
+  data-dtype={dtype}
+  on:focus={(ev) => selectOnFocus && ev.currentTarget.select()}
 />

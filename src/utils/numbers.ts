@@ -11,3 +11,11 @@ export function isRealNumber(inNumber: number | undefined | null): boolean {
 export function clamp<T extends number>(num: T, min: T, max: T) {
   return Math.min(Math.max(num, min), max);
 }
+
+export function toNumber(str: string) {
+  if (str.includes('/')) {
+    const pieces = str.split('/');
+    return parseInt(pieces[0]) / parseInt(pieces[1]);
+  }
+  return +str;
+}
