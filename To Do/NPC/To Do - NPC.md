@@ -38,7 +38,7 @@
         - [x] Side bar
         - [x] Footer (money)
         - [ ] Main content area
-          - [ ] Legendary actions
+          - [x] Legendary actions
             - [x] HTML
             - [x] SCSS
             - [x] Behaviors (lock/unlock/show/hide)
