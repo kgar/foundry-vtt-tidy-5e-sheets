@@ -70,10 +70,6 @@
   function getInventoryRowClasses(item: Item5e) {
     const extras: string[] = [];
 
-    if (!quantityAlwaysShownEnabled) {
-      extras.push('show-item-count-on-hover');
-    }
-
     if (extraInventoryRowClasses) {
       extras.push(extraInventoryRowClasses);
     }
@@ -152,6 +148,7 @@
         }}
         let:toggleSummary
         cssClass={getInventoryRowClasses(item)}
+        alwaysShowQuantity={quantityAlwaysShownEnabled}
       >
         <ItemTableCell primary={true} title={item.name}>
           <ItemUseButton {item} />
@@ -277,18 +274,6 @@
     :global(.show-item-count-on-hover:hover .item-quantity),
     :global(.show-item-count-on-hover .item-quantity:focus-within) {
       opacity: 1;
-    }
-  }
-
-  .item-quantity {
-    align-items: center;
-    display: flex;
-    text-align: center;
-    transition: opacity 0.3s ease;
-
-    input {
-      width: 1.4375rem;
-      height: 100%;
     }
   }
 </style>

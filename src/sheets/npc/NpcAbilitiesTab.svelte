@@ -15,6 +15,7 @@
   import { CONSTANTS } from 'src/constants';
   import ItemUseButton from 'src/components/items/ItemUseButton.svelte';
   import ItemName from 'src/components/items/ItemName.svelte';
+  import ListItemQuantity from '../actor/ListItemQuantity.svelte';
 
   let store = getContext<Readable<NpcSheetContext>>('store');
 
@@ -57,58 +58,79 @@
     />
   </div>
   <div class="main-panel">
-    <!-- Attacks -->
-    <ItemTable>
-      <ItemTableHeaderRow>
-        <ItemTableColumn primary={true}>
-          {localize(attacksSection.label)}
-        </ItemTableColumn>
-        <ItemTableColumn baseWidth="3.125rem">
-          {localize('DND5E.Uses')}
-        </ItemTableColumn>
-        <ItemTableColumn baseWidth="7.5rem">
-          {localize('DND5E.Usage')}
-        </ItemTableColumn>
-        <ItemTableColumn baseWidth="7.5rem" />
-      </ItemTableHeaderRow>
-      {#each attacksSection.items as item}
-      {@const ctx = $store.itemContext}
-        <ItemTableRow
-          let:toggleSummary
-          on:mousedown={(event) =>
-            FoundryAdapter.editOnMiddleClick(event.detail, item)}
-          contextMenu={{
-            type: CONSTANTS.CONTEXT_MENU_TYPE_ITEMS,
-            id: item.id,
-          }}
-        >
-          <ItemTableCell primary={true}>
-            <ItemUseButton {item} />
-            <ItemName
-              on:click={(event) => toggleSummary(event.detail, $store.actor)}
-              hasChildren={false}
-            >
-              {item.name}
-            </ItemName>
-          </ItemTableCell>
-          {#if item.hasUses}
-            <ItemTableCell baseWidth="3.125rem">
-              <!-- Uses, if any -->
-            </ItemTableCell>
+    {#each $store.features as section}
+      <ItemTable>
+        <ItemTableHeaderRow>
+          <ItemTableColumn primary={true}>
+            {localize(section.label)}
+          </ItemTableColumn>
+          {#if section.hasActions}
+            <ItemTableColumn baseWidth="3.125rem">
+              {localize('DND5E.Uses')}
+            </ItemTableColumn>
+            <ItemTableColumn baseWidth="7.5rem">
+              {localize('DND5E.Usage')}
+            </ItemTableColumn>
           {/if}
-          <ItemTableCell baseWidth="7.5rem">
-            <!-- Usage -->
-          </ItemTableCell>
-          <ItemTableCell baseWidth="7.5rem">
-            <!-- Controles -->
-          </ItemTableCell>
-        </ItemTableRow>
-      {/each}
-    </ItemTable>
-    <!-- Actions -->
-    <!-- Features -->
-    <!-- Inventory -->
-    <!-- To Do: Handle others? -->
+          <ItemTableColumn baseWidth="7.5rem" />
+        </ItemTableHeaderRow>
+        {#each section.items as item}
+          {@const ctx = $store.itemContext}
+          <ItemTableRow
+            let:toggleSummary
+            on:mousedown={(event) =>
+              FoundryAdapter.editOnMiddleClick(event.detail, item)}
+            contextMenu={{
+              type: CONSTANTS.CONTEXT_MENU_TYPE_ITEMS,
+              id: item.id,
+            }}
+            {item}
+            cssClass={FoundryAdapter.getInventoryRowClasses(item, ctx)}
+          >
+            <ItemTableCell primary={true}>
+              <ItemUseButton {item} />
+              <ItemName
+                on:click={(event) => toggleSummary(event.detail, $store.actor)}
+                cssClass="extra-small-gap"
+              >
+                <span class="truncate">{item.name}</span>
+                <ListItemQuantity {item} {ctx} />
+              </ItemName>
+            </ItemTableCell>
+            {#if section.hasActions}
+              {#if item.hasUses}
+                <ItemTableCell baseWidth="3.125rem">
+                  {#if ctx?.isOnCooldown}
+                    <a
+                      title={item.labels.recharge}
+                      role="button"
+                      tabindex="0"
+                      on:click={() => item.rollRecharge()}
+                    >
+                      <i class="fas fa-dice-six" />
+                      {item.system.recharge
+                        .value}{#if item.system.recharge.value !== 6}+{/if}</a
+                    >
+                  {:else if item.system.recharge.value}
+                    <i class="fas fa-bolt" title={localize('DND5E.Charged')} />
+                  {:else if ctx?.hasUses}
+                    <ItemUses {item} />
+                  {:else}
+                    <ItemAddUses {item} />
+                  {/if}
+                </ItemTableCell>
+              {/if}
+              <ItemTableCell baseWidth="7.5rem">
+                <!-- Usage -->
+              </ItemTableCell>
+            {/if}
+            <ItemTableCell baseWidth="7.5rem">
+              <!-- Controles -->
+            </ItemTableCell>
+          </ItemTableRow>
+        {/each}
+      </ItemTable>
+    {/each}
   </div>
 </section>
 <footer>

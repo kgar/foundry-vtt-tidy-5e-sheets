@@ -7,6 +7,7 @@
   export let item: any | undefined = undefined;
   export let contextMenu: { type: string; id: string } | undefined = undefined;
   export let cssClass: string = '';
+  export let alwaysShowQuantity: boolean = false;
 
   let showSummary = false;
   let chatData: any;
@@ -27,6 +28,7 @@
 
 <div
   class="item-table-row {cssClass}"
+  class:show-item-count-on-hover={!alwaysShowQuantity}
   data-context-menu={contextMenu?.type}
   data-context-menu-entity-id={contextMenu?.id}
   on:mousedown={(event) => dispatcher('mousedown', event)}
@@ -77,6 +79,17 @@
 
     &.magic-item {
       box-shadow: 0 0 0 1px var(--t5e-faint-magic-accent) inset;
+    }
+
+    &.show-item-count-on-hover :global(.item-quantity) {
+      opacity: 0;
+      width: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    &.show-item-count-on-hover:hover :global(.item-quantity),
+    &.show-item-count-on-hover :global(.item-quantity:focus-within) {
+      opacity: 1;
     }
   }
 </style>

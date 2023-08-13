@@ -36,30 +36,6 @@
 
     FoundryAdapter.setFlag($store.actor, 'inventory-grid', true);
   }
-
-  $: currencies = Object.entries($store.system.currency).map((e) => ({
-    key: e[0],
-    value: e[1],
-  }));
-
-  function confirmConvertCurrency() {
-    return Dialog.confirm({
-      title: `${localize('DND5E.CurrencyConvert')}`,
-      content: `<p>${localize('DND5E.CurrencyConvertHint')}</p>`,
-      yes: () => $store.actor.convertCurrency(),
-    });
-  }
-
-  function abbreviateCurrency(currencyKey: string) {
-    let currency = currencyKey.toUpperCase();
-
-    let abbr = localize(`DND5E.CurrencyAbbr${currency}`);
-    if (abbr == `DND5E.CurrencyAbbr${currency}`) {
-      abbr = currency;
-    }
-
-    return abbr;
-  }
 </script>
 
 <ItemFilters>

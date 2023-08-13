@@ -7,6 +7,7 @@ import { Tidy5eKgarUserSettings } from 'src/settings/user-settings-form';
 import { applyTitleToWindow } from 'src/utils/applications';
 import { error } from 'src/utils/logging';
 import { SettingsProvider } from 'src/settings/settings';
+import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
 
 const ActorSheet5eNpc = FoundryAdapter.getActorSheetNpcClass();
 
@@ -48,7 +49,7 @@ export class Tidy5eNpcSheet extends ActorSheet5eNpc {
       ]),
     });
 
-    // initTidy5eContextMenu.call(this, html);
+    initTidy5eContextMenu.call(this, html);
   }
 
   onToggleAbilityProficiency(event: Event) {
