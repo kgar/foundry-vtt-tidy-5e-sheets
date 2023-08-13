@@ -2,7 +2,7 @@
   import type { FoundryDocument } from 'src/types/document';
   import { buildDataset } from 'src/utils/data';
 
-  export let value: number | null = null;
+  export let value: string | number | null = null;
   export let placeholder: string | null = null;
   export let field: string;
   export let document: FoundryDocument;

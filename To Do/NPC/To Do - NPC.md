@@ -1,3 +1,15 @@
+## Top of Mind
+
+- [ ] Lair Action Initiative input is not allowing me to clear it out. It always sets it to 0. Fix that.
+- [ ] "TIDY5E.EmptySection" / "This section is empty. Unlock the sheet to edit." banner should show in the player character sheet Inventory tab when allow-edit is false and there are no inventory sections shown
+- [ ] PC spellbook tab
+  - [ ] "DND5E.NoSpellLevels": "This character has no spellcaster levels, but you may add spells manually." if `filters.spellbook.size` is false / 0
+  - [ ] "TIDY5E.EmptySection" / "This section is empty. Unlock the sheet to edit." if allow-edit is false and there are no spells
+- [ ] PC features tab
+  - [ ] "TIDY5E.EmptySection" / "This section is empty. Unlock the sheet to edit." if allow-edit is false and there are no features and it's locked
+- [ ] Ditto PC effects tab
+
+
 ## To Do
 
 
@@ -27,10 +39,10 @@
         - [x] Footer (money)
         - [ ] Main content area
           - [ ] Legendary actions
-            - [ ] HTML
-            - [ ] SCSS
-            - [ ] Behaviors (lock/unlock/show/hide)
-          - [ ] Features(?): Return to tidy5e-features.html to harvest the setup specifically tailored for NPC
+            - [x] HTML
+            - [x] SCSS
+            - [x] Behaviors (lock/unlock/show/hide)
+          - [x] Features(?): Return to tidy5e-features.html to harvest the setup specifically tailored for NPC
             - [x] HTML
             - [x] SCSS
             - [x] Behaviors
@@ -40,10 +52,18 @@
               - [x] Show Add button on unlocked
           - [ ] Settings
             - [ ] hideSpellbookTabNpc
+              - [ ] STUB IT
               - [ ] when on: include equivalent of tidy5e-npc-spellbook template
-              - [ ] note: give this one a look before completely committing to the currency footer I made
+              - [x] note: give this one a look before completely committing to the currency footer I made
             - [ ] alt trait position : just below legendary actions
       - [ ] Spellbook
+        - [ ] HTML
+        - [ ] SCSS
+        - [ ] Behaviors
+        - [ ] Settings
+            - [ ] hideSpellbookTabNpc
+              - [ ] when on: hide the spellbook tab altogether
+              - [ ] now that this exists, go back and include the spells list in the abilities tab when on
       - [ ] Effects
       - [ ] Biography
       - [ ] Journal
@@ -80,3 +100,5 @@
   - [ ] Select
   - [ ] Checkbox
 - [ ] `dtype` fields: formalize these as features of the input components, rather than just receiving them. Give the props names.
+  - [ ] One way to go about this would be to have a universal function for preparing data for saving. It could take things like dtype, which would be set to known values.
+  - [ ] Also figure out how to do the `draftValue` reversion on failed save approach without having to copy/paste it everywhere.
