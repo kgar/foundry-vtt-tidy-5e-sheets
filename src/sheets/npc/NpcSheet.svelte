@@ -26,7 +26,8 @@
   import HorizontalLineSeparator from 'src/components/layout/HorizontalLineSeparator.svelte';
   import ActorMovementRow from '../actor/ActorMovementRow.svelte';
   import ActorHeaderStats from '../actor/ActorHeaderStats.svelte';
-  
+  import { SettingsProvider } from 'src/settings/settings';
+
   export let selectedTabId: string;
 
   let store = getContext<Readable<NpcSheetContext>>('store');
@@ -41,13 +42,19 @@
         component: NpcAbilitiesTab,
       },
     },
-    {
+  ];
+
+  if (!SettingsProvider.settings.hideSpellbookTabNpc.get()) {
+    tabs.push({
       id: CONSTANTS.TAB_NPC_SPELLBOOK,
       displayName: 'DND5E.Spellbook',
       content: {
         component: NpcSpellbookTab,
       },
-    },
+    });
+  }
+
+  tabs.push(
     {
       id: CONSTANTS.TAB_NPC_EFFECTS,
       displayName: 'DND5E.Effects',
@@ -68,8 +75,8 @@
       content: {
         component: NpcJournalTab,
       },
-    },
-  ];
+    }
+  );
 
   $: sizes = <TidyDropdownOption[]>Object.entries($store.config.actorSizes).map(
     ([abbreviation, size]) => ({
