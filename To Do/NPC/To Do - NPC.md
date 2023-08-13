@@ -37,7 +37,7 @@
       - [ ] Abilities
         - [x] Side bar
         - [x] Footer (money)
-        - [ ] Main content area
+        - [x] Main content area
           - [x] Legendary actions
             - [x] HTML
             - [x] SCSS
@@ -50,12 +50,12 @@
               - [x] Edit / Dupe / Delete on Unlocked
               - [x] Hide empty section on locked
               - [x] Show Add button on unlocked
-          - [ ] Settings
-            - [ ] hideSpellbookTabNpc
-              - [ ] STUB IT
-              - [ ] when on: include equivalent of tidy5e-npc-spellbook template
-              - [x] note: give this one a look before completely committing to the currency footer I made
-            - [ ] alt trait position : just below legendary actions
+        - [ ] Settings
+          - [ ] hideSpellbookTabNpc
+            - [ ] STUB IT
+            - [ ] when on: include equivalent of tidy5e-npc-spellbook template
+            - [x] note: give this one a look before completely committing to the currency footer I made
+          - [ ] alt trait position : just below legendary actions
       - [ ] Spellbook
         - [ ] HTML
         - [ ] SCSS
