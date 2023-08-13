@@ -16,33 +16,20 @@
   import ItemUseButton from 'src/components/items/ItemUseButton.svelte';
   import ItemName from 'src/components/items/ItemName.svelte';
   import ListItemQuantity from '../actor/ListItemQuantity.svelte';
+  import ItemAddUses from 'src/components/items/ItemAddUses.svelte';
+  import ItemDeleteControl from 'src/components/items/ItemDeleteControl.svelte';
+  import ItemDuplicateControl from 'src/components/items/ItemDuplicateControl.svelte';
+  import ItemEditControl from 'src/components/items/ItemEditControl.svelte';
+  import ItemUses from 'src/components/items/ItemUses.svelte';
+  import ItemControls from 'src/components/items/ItemControls.svelte';
+  import ItemTableFooter from 'src/components/items/ItemTableFooter.svelte';
 
   let store = getContext<Readable<NpcSheetContext>>('store');
 
-  let attacksSection: any,
-    actionsSection: any,
-    featuresSection: any,
-    inventorySection: any;
+  $: allowEdit = FoundryAdapter.tryGetFlag($store.actor, 'allow-edit');
 
-  $: {
-    for (let section of $store.features) {
-      switch (section.dataset?.type) {
-        case 'weapon':
-          attacksSection = section;
-          break;
-        case 'feat':
-          if (section.dataset['activation.type'] === 'action') {
-            actionsSection = section;
-          } else {
-            featuresSection = section;
-          }
-          break;
-        case 'loot':
-          inventorySection = section;
-          break;
-      }
-    }
-  }
+  $: classicControlsEnabled =
+    SettingsProvider.settings.classicControlsEnabled.get();
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -59,46 +46,49 @@
   </div>
   <div class="main-panel">
     {#each $store.features as section}
-      <ItemTable>
-        <ItemTableHeaderRow>
-          <ItemTableColumn primary={true}>
-            {localize(section.label)}
-          </ItemTableColumn>
-          {#if section.hasActions}
-            <ItemTableColumn baseWidth="3.125rem">
-              {localize('DND5E.Uses')}
+      {#if allowEdit || section.items.length}
+        <ItemTable>
+          <ItemTableHeaderRow>
+            <ItemTableColumn primary={true}>
+              {localize(section.label)}
             </ItemTableColumn>
-            <ItemTableColumn baseWidth="7.5rem">
-              {localize('DND5E.Usage')}
-            </ItemTableColumn>
-          {/if}
-          <ItemTableColumn baseWidth="7.5rem" />
-        </ItemTableHeaderRow>
-        {#each section.items as item}
-          {@const ctx = $store.itemContext}
-          <ItemTableRow
-            let:toggleSummary
-            on:mousedown={(event) =>
-              FoundryAdapter.editOnMiddleClick(event.detail, item)}
-            contextMenu={{
-              type: CONSTANTS.CONTEXT_MENU_TYPE_ITEMS,
-              id: item.id,
-            }}
-            {item}
-            cssClass={FoundryAdapter.getInventoryRowClasses(item, ctx)}
-          >
-            <ItemTableCell primary={true}>
-              <ItemUseButton {item} />
-              <ItemName
-                on:click={(event) => toggleSummary(event.detail, $store.actor)}
-                cssClass="extra-small-gap"
-              >
-                <span class="truncate">{item.name}</span>
-                <ListItemQuantity {item} {ctx} />
-              </ItemName>
-            </ItemTableCell>
             {#if section.hasActions}
-              {#if item.hasUses}
+              <ItemTableColumn baseWidth="3.125rem">
+                {localize('DND5E.Uses')}
+              </ItemTableColumn>
+              <ItemTableColumn baseWidth="7.5rem">
+                {localize('DND5E.Usage')}
+              </ItemTableColumn>
+            {/if}
+            {#if $store.owner}
+              <ItemTableColumn baseWidth="7.5rem" />
+            {/if}
+          </ItemTableHeaderRow>
+          {#each section.items as item}
+            {@const ctx = $store.itemContext[item.id]}
+            <ItemTableRow
+              let:toggleSummary
+              on:mousedown={(event) =>
+                FoundryAdapter.editOnMiddleClick(event.detail, item)}
+              contextMenu={{
+                type: CONSTANTS.CONTEXT_MENU_TYPE_ITEMS,
+                id: item.id,
+              }}
+              {item}
+              cssClass={FoundryAdapter.getInventoryRowClasses(item, ctx)}
+            >
+              <ItemTableCell primary={true}>
+                <ItemUseButton {item} />
+                <ItemName
+                  on:click={(event) =>
+                    toggleSummary(event.detail, $store.actor)}
+                  cssClass="extra-small-gap"
+                >
+                  <span class="truncate">{item.name}</span>
+                  <ListItemQuantity {item} {ctx} />
+                </ItemName>
+              </ItemTableCell>
+              {#if section.hasActions}
                 <ItemTableCell baseWidth="3.125rem">
                   {#if ctx?.isOnCooldown}
                     <a
@@ -109,9 +99,9 @@
                     >
                       <i class="fas fa-dice-six" />
                       {item.system.recharge
-                        .value}{#if item.system.recharge.value !== 6}+{/if}</a
+                        .value}{#if item.system.recharge?.value !== 6}+{/if}</a
                     >
-                  {:else if item.system.recharge.value}
+                  {:else if item.system.recharge?.value}
                     <i class="fas fa-bolt" title={localize('DND5E.Charged')} />
                   {:else if ctx?.hasUses}
                     <ItemUses {item} />
@@ -119,17 +109,30 @@
                     <ItemAddUses {item} />
                   {/if}
                 </ItemTableCell>
+                <ItemTableCell baseWidth="7.5rem">
+                  {#if item.system.activation.type}
+                    {item.labels.activation}
+                  {/if}
+                </ItemTableCell>
               {/if}
-              <ItemTableCell baseWidth="7.5rem">
-                <!-- Usage -->
-              </ItemTableCell>
-            {/if}
-            <ItemTableCell baseWidth="7.5rem">
-              <!-- Controles -->
-            </ItemTableCell>
-          </ItemTableRow>
-        {/each}
-      </ItemTable>
+              {#if $store.owner && classicControlsEnabled}
+                <ItemTableCell baseWidth="7.5rem">
+                  <ItemControls>
+                    <ItemEditControl {item} />
+                    {#if allowEdit}
+                      <ItemDuplicateControl {item} />
+                      <ItemDeleteControl {item} />
+                    {/if}
+                  </ItemControls>
+                </ItemTableCell>
+              {/if}
+            </ItemTableRow>
+          {/each}
+          {#if $store.owner && allowEdit && section.dataset}
+            <ItemTableFooter actor={$store.actor} dataset={section.dataset} />
+          {/if}
+        </ItemTable>
+      {/if}
     {/each}
   </div>
 </section>
@@ -169,7 +172,7 @@
     justify-content: center;
     box-shadow: 0 0 0.1875rem 0 var(--t5e-tertiary-color);
 
-    margin: 0 -0.25rem -1rem -1rem;
+    margin: 0 -1rem -1rem -1rem;
 
     :global(> *) {
       flex-basis: 30rem;

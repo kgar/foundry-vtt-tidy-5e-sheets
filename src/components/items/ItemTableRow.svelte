@@ -89,6 +89,7 @@
 
     &.show-item-count-on-hover:hover :global(.item-quantity),
     &.show-item-count-on-hover :global(.item-quantity:focus-within) {
+      width: auto;
       opacity: 1;
     }
   }

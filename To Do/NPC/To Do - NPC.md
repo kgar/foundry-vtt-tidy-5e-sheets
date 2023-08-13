@@ -31,9 +31,13 @@
             - [ ] SCSS
             - [ ] Behaviors (lock/unlock/show/hide)
           - [ ] Features(?): Return to tidy5e-features.html to harvest the setup specifically tailored for NPC
-            - [ ] HTML
-            - [ ] SCSS
-            - [ ] Behaviors
+            - [x] HTML
+            - [x] SCSS
+            - [x] Behaviors
+              - [x] Edit on Locked
+              - [x] Edit / Dupe / Delete on Unlocked
+              - [x] Hide empty section on locked
+              - [x] Show Add button on unlocked
           - [ ] Settings
             - [ ] hideSpellbookTabNpc
               - [ ] when on: include equivalent of tidy5e-npc-spellbook template

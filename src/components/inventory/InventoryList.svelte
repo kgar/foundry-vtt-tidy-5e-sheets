@@ -24,6 +24,7 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import type { ActorSheetContext } from 'src/types/types';
+  import ListItemQuantity from 'src/sheets/actor/ListItemQuantity.svelte';
 
   export let primaryColumnName: string;
   export let items: Item5e[];
@@ -132,7 +133,7 @@
       <ItemTableColumn baseWidth="7.5rem">
         {localize('DND5E.Usage')}
       </ItemTableColumn>
-      {#if !lockControls}
+      {#if $store.owner && !lockControls}
         <ItemTableColumn baseWidth={classicControlsBaseWidth} />
       {/if}
     </ItemTableHeaderRow>
@@ -174,17 +175,7 @@
                 </select>
               </span>
             {/if}
-            <span class="item-quantity" class:isStack={ctx.isStack}>
-              (<input
-                class="item-count"
-                type="text"
-                value={item.system.quantity}
-                maxlength="3"
-                on:click|stopPropagation
-                on:blur={(event) => updateItemQuantity(event, item)}
-                readonly={!FoundryAdapter.userIsGm() && SettingsProvider.settings.lockItemQuantity.get()}
-              />)
-            </span>
+            <ListItemQuantity {item} {ctx} />
           </ItemName>
         </ItemTableCell>
         {#if !hideIconsNextToTheItemName}
@@ -263,17 +254,6 @@
       align-items: center;
       justify-content: center;
       padding: 0 0.25rem;
-    }
-
-    :global(.show-item-count-on-hover .item-quantity) {
-      opacity: 0;
-      width: 0;
-      transition: opacity 0.3s ease;
-    }
-
-    :global(.show-item-count-on-hover:hover .item-quantity),
-    :global(.show-item-count-on-hover .item-quantity:focus-within) {
-      opacity: 1;
     }
   }
 </style>

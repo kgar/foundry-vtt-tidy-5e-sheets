@@ -231,6 +231,9 @@
   }
 
   .sheet-body {
+    :global(.tab.abilities) {
+      padding-right: 0.75rem;
+    }
     :global(.tab.abilities.active) {
       display: flex;
       flex-direction: column;
@@ -238,7 +241,6 @@
     :global(.tab.abilities > section) {
       flex: 1;
     }
-
     :global(.tab.abilities > footer) {
       flex: 0;
     }
@@ -260,7 +262,7 @@
       flex-wrap: wrap;
     }
   }
-  
+
   .level-information {
     display: flex;
     flex-direction: row;

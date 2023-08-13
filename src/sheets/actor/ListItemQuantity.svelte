@@ -36,8 +36,9 @@
 
 <style lang="scss">
   .item-quantity {
-    align-items: center;
+    flex: 0;
     display: flex;
+    align-items: center;
     text-align: center;
     transition: opacity 0.3s ease;
 
