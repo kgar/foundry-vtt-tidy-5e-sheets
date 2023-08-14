@@ -31,7 +31,7 @@
 <input
   type="text"
   {id}
-  value={value?.toString()}
+  value={value?.toString() ?? ''}
   {placeholder}
   on:change={saveChange}
   data-tooltip={tooltip}

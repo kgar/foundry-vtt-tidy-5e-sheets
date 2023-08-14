@@ -4,8 +4,6 @@
   import ItemFilterSearch from 'src/components/items/ItemFilterSearch.svelte';
   import ItemFilters from 'src/components/items/ItemFilters.svelte';
   import ListContainer from 'src/components/layout/ListContainer.svelte';
-  import CharacterSpellbookTab from 'src/components/player-character/CharacterSpellbookTab.svelte';
-  import SpellbookClassFilter from 'src/components/spellbook/SpellbookClassFilter.svelte';
   import SpellbookFooter from 'src/components/spellbook/SpellbookFooter.svelte';
   import SpellbookGrid from 'src/components/spellbook/SpellbookGrid.svelte';
   import SpellbookList from 'src/components/spellbook/SpellbookList.svelte';
@@ -13,6 +11,7 @@
   import type { ActorSheetContext, ItemLayoutMode } from 'src/types/types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
+  import NoSpells from '../actor/NoSpells.svelte';
 
   let store = getContext<Readable<ActorSheetContext>>('store');
 
@@ -41,7 +40,10 @@
     FoundryAdapter.setFlag($store.actor, 'spellbook-grid', true);
   }
 
-  $: allowEdit = FoundryAdapter.tryGetFlag($store.actor, 'allow-edit');
+  $: allowEdit =
+    FoundryAdapter.tryGetFlag<boolean>($store.actor, 'allow-edit') === true;
+
+  $: noSpellLevels = !$store.spellbook.length;
 </script>
 
 <ItemFilters>
@@ -74,25 +76,27 @@
   </ItemFilterOption>
   <ItemFilterLayoutToggle mode={layoutMode} on:toggle={() => toggleLayout()} />
 </ItemFilters>
-
 <ListContainer>
-  {#each $store.spellbook as section (section.label)}
-    {@const filteredSpells = FoundryAdapter.getFilteredItems(
-      searchCriteria,
-      section.spells
-    )}
-    {#if (searchCriteria.trim() === '' && allowEdit) || filteredSpells.length > 0}
-      {#if layoutMode === 'list'}
-        <SpellbookList
-          allowFavorites={false}
-          spells={filteredSpells}
-          {section}
-        />
-      {:else}
-        <SpellbookGrid spells={filteredSpells} {section} />
+  {#if noSpellLevels}
+    <NoSpells {allowEdit} />
+  {:else}
+    {#each $store.spellbook as section (section.label)}
+      {@const filteredSpells = FoundryAdapter.getFilteredItems(
+        searchCriteria,
+        section.spells
+      )}
+      {#if (searchCriteria.trim() === '' && allowEdit) || filteredSpells.length > 0}
+        {#if layoutMode === 'list'}
+          <SpellbookList
+            allowFavorites={false}
+            spells={filteredSpells}
+            {section}
+          />
+        {:else}
+          <SpellbookGrid spells={filteredSpells} {section} />
+        {/if}
       {/if}
-    {/if}
-  {/each}
+    {/each}
+  {/if}
 </ListContainer>
-
 <SpellbookFooter {abilities} />

@@ -13,6 +13,8 @@
   import SpellbookClassFilter from '../spellbook/SpellbookClassFilter.svelte';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
+  import NoSpells from 'src/sheets/actor/NoSpells.svelte';
+  import Notice from '../shared/Notice.svelte';
 
   let store = getContext<Readable<ActorSheetContext>>('store');
 
@@ -45,7 +47,7 @@
     SettingsProvider.settings.spellClassFilterSelect.get();
   $: selectedClassFilter =
     FoundryAdapter.tryGetFlag($store.actor, 'classFilter') ?? '';
-  $: allowEdit = FoundryAdapter.tryGetFlag($store.actor, 'allow-edit');
+  $: allowEdit = FoundryAdapter.tryGetFlag($store.actor, 'allow-edit') === true;
 
   function tryFilterByClass(spells: any[]) {
     if (!filterByClassesEnabled || selectedClassFilter === '') {
@@ -57,6 +59,14 @@
         FoundryAdapter.tryGetFlag(spell, 'parentClass') === selectedClassFilter
     );
   }
+
+  $: noSpellLevels = !$store.spellbook.length;
+
+  $: noSpells =
+    $store.spellbook.reduce(
+      (count: number, section: any) => count + section.spells.length,
+      0
+    ) === 0;
 </script>
 
 <ItemFilters>
@@ -95,19 +105,27 @@
   <ItemFilterLayoutToggle mode={layoutMode} on:toggle={() => toggleLayout()} />
 </ItemFilters>
 
-<ListContainer>
-  {#each $store.spellbook as section (section.label)}
-    {@const filteredSpells = tryFilterByClass(
-      FoundryAdapter.getFilteredItems(searchCriteria, section.spells)
-    )}
-    {#if (searchCriteria.trim() === '' && allowEdit) || filteredSpells.length > 0}
-      {#if layoutMode === 'list'}
-        <SpellbookList spells={filteredSpells} {section} />
-      {:else}
-        <SpellbookGrid spells={filteredSpells} {section} />
+<ListContainer cssClass="flex-column small-gap">
+  {#if noSpellLevels}
+    <NoSpells {allowEdit} />
+  {:else}
+    {#each $store.spellbook as section (section.label)}
+      {@const filteredSpells = tryFilterByClass(
+        FoundryAdapter.getFilteredItems(searchCriteria, section.spells)
+      )}
+      {#if (searchCriteria.trim() === '' && allowEdit) || filteredSpells.length > 0}
+        {#if layoutMode === 'list'}
+          <SpellbookList spells={filteredSpells} {section} />
+        {:else}
+          <SpellbookGrid spells={filteredSpells} {section} />
+        {/if}
       {/if}
-    {/if}
-  {/each}
+    {/each}
+  {/if}
+
+  {#if noSpells && !allowEdit}
+    <Notice>{localize('TIDY5E.EmptySection')}</Notice>
+  {/if}
 </ListContainer>
 
 <SpellbookFooter {abilities} />

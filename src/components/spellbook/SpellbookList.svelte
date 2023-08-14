@@ -116,7 +116,7 @@
           baseWidth="5.625rem"
           title="{localize('DND5E.SpellSchool')}: {spell.labels.school}"
         >
-          <span class="truncate">{spell.labels.school}</span>
+          <span class="truncate">{spell.labels.school ?? ''}</span>
         </ItemTableCell>
         <ItemTableCell
           baseWidth="7.5rem"
