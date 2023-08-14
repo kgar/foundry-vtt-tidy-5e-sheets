@@ -66,7 +66,7 @@
             - [x] when on: hide the spellbook tab altogether
       - [x] Effects
       - [x] Biography
-      - [ ] Journal
+      - [x] Journal
       - [x] Toggle Lock
   - [ ] Ltd NPC
     - [ ] Configure to appear when user is NOT GM and actor is limited

@@ -17,7 +17,7 @@
   import CharacterFeaturesTab from 'src/components/player-character/CharacterFeaturesTab.svelte';
   import ActorEffectsTab from 'src/sheets/actor/ActorEffectsTab.svelte';
   import CharacterBiographyTab from 'src/components/player-character/CharacterBiographyTab.svelte';
-  import CharacterJournalTab from 'src/components/player-character/CharacterJournalTab.svelte';
+  import ActorJournalTab from 'src/components/player-character/ActorJournalTab.svelte';
   import { CONSTANTS } from 'src/constants';
   import { submitText } from '../form';
   import AllowEditLock from 'src/components/shared/AllowEditLock.svelte';
@@ -130,7 +130,7 @@
         id: 'journal',
         displayName: 'T5EK.Journal',
         content: {
-          component: CharacterJournalTab,
+          component: ActorJournalTab,
         },
       });
     }

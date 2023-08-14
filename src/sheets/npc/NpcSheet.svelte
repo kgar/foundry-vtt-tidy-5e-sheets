@@ -13,7 +13,6 @@
   import NpcAbilitiesTab from './NpcAbilitiesTab.svelte';
   import NpcSpellbookTab from './NpcSpellbookTab.svelte';
   import NpcBiographyTab from './NpcBiographyTab.svelte';
-  import NpcJournalTab from './NpcJournalTab.svelte';
   import NpcProfile from './parts/NpcProfile.svelte';
   import ContentEditableFormField from 'src/components/inputs/ContentEditableFormField.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
@@ -27,6 +26,7 @@
   import ActorEffectsTab from '../actor/ActorEffectsTab.svelte';
   import ActorHeaderStats from '../actor/ActorHeaderStats.svelte';
   import { SettingsProvider } from 'src/settings/settings';
+  import ActorJournalTab from 'src/components/player-character/ActorJournalTab.svelte';
 
   export let selectedTabId: string;
 
@@ -73,7 +73,7 @@
       id: CONSTANTS.TAB_NPC_JOURNAL,
       displayName: 'TIDY5E.Journal',
       content: {
-        component: NpcJournalTab,
+        component: ActorJournalTab,
       },
     }
   );
