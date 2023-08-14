@@ -238,12 +238,12 @@
       display: flex;
       flex: 0 0 calc(100% / 3 - 4px);
 
-      span {
+      :global(span) {
         flex: 1;
-        margin: 0 8px 0 4px;
+        margin: 0 0.5rem 0 0.25rem;
       }
 
-      span:first-child {
+      :global(span:first-child) {
         flex: 0 0 1px;
         font-weight: 600;
         margin: 0;
