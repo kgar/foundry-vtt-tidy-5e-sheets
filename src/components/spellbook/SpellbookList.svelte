@@ -30,11 +30,22 @@
   export let spells: any[];
   export let allowFavorites: boolean = true;
 
+  // TODO: replace this with column specification array default and then allow the caller to customize the table.
+  export let includeSchool: boolean = true;
+  export let includeRange: boolean = true;
+  export let spellComponentsBaseWidth: string = '4.375rem';
+  export let targetBaseWidth: string = '7.5rem';
+  export let usageBaseWidth: string = '7.5rem';
+  export let controlsBaseWidthLocked: string = '5.3125rem';
+  export let controlsBaseWidthUnlocked: string = '7.5rem';
+
   const localize = FoundryAdapter.localize;
   const classicControlsEnabled =
     SettingsProvider.settings.classicControlsEnabled.get();
   $: allowEdit = FoundryAdapter.tryGetFlag($store.actor, 'allow-edit');
-  $: classicControlsBaseWidth = allowEdit ? '7.5rem' : '5.3125rem';
+  $: classicControlsBaseWidth = allowEdit
+    ? controlsBaseWidthUnlocked
+    : controlsBaseWidthLocked;
   const hideIconsNextToTheItemName =
     SettingsProvider.settings.hideIconsNextToTheItemName.get();
 </script>
@@ -54,27 +65,37 @@
         {/if}
       </ItemTableColumn>
       <ItemTableColumn
-        baseWidth="4.375rem"
+        baseWidth={spellComponentsBaseWidth}
         title={localize('DND5E.SpellComponents')}
       >
         <i class="fas fa-mortar-pestle" />
       </ItemTableColumn>
+      {#if includeSchool}
+        <ItemTableColumn
+          baseWidth="5.625rem"
+          title={localize('DND5E.SpellSchool')}
+        >
+          <i class="fas fa-hat-wizard" />
+        </ItemTableColumn>
+      {/if}
       <ItemTableColumn
-        baseWidth="5.625rem"
-        title={localize('DND5E.SpellSchool')}
+        baseWidth={targetBaseWidth}
+        title={localize('DND5E.SpellTarget')}
       >
-        <i class="fas fa-hat-wizard" />
-      </ItemTableColumn>
-      <ItemTableColumn baseWidth="7.5rem" title={localize('DND5E.SpellTarget')}>
         {localize('DND5E.Target')}
       </ItemTableColumn>
+      {#if includeRange}
+        <ItemTableColumn
+          baseWidth="4.375rem"
+          title={localize('DND5E.SpellRange')}
+        >
+          {localize('DND5E.Range')}
+        </ItemTableColumn>
+      {/if}
       <ItemTableColumn
-        baseWidth="4.375rem"
-        title={localize('DND5E.SpellRange')}
+        title={localize('DND5E.SpellUsage')}
+        baseWidth={usageBaseWidth}
       >
-        {localize('DND5E.Range')}
-      </ItemTableColumn>
-      <ItemTableColumn title={localize('DND5E.SpellUsage')} baseWidth="7.5rem">
         {localize('DND5E.Usage')}
       </ItemTableColumn>
       <ItemTableColumn baseWidth={classicControlsBaseWidth} />
@@ -98,7 +119,7 @@
           <ItemName
             on:click={(event) => toggleSummary(event.detail, $store.actor)}
           >
-            {spell.name}
+            <span class="truncate">{spell.name}</span>
           </ItemName>
         </ItemTableCell>
         {#if spell.system.uses.per}
@@ -109,17 +130,19 @@
         {#if allowFavorites && !hideIconsNextToTheItemName && FoundryAdapter.tryGetFlag(spell, 'favorite')}
           <InlineFavoriteIcon />
         {/if}
-        <ItemTableCell baseWidth="4.375rem" cssClass="no-gap">
+        <ItemTableCell baseWidth={spellComponentsBaseWidth} cssClass="no-gap">
           <SpellComponents {spell} />
         </ItemTableCell>
+        {#if includeSchool}
+          <ItemTableCell
+            baseWidth="5.625rem"
+            title="{localize('DND5E.SpellSchool')}: {spell.labels.school}"
+          >
+            <span class="truncate">{spell.labels.school ?? ''}</span>
+          </ItemTableCell>
+        {/if}
         <ItemTableCell
-          baseWidth="5.625rem"
-          title="{localize('DND5E.SpellSchool')}: {spell.labels.school}"
-        >
-          <span class="truncate">{spell.labels.school ?? ''}</span>
-        </ItemTableCell>
-        <ItemTableCell
-          baseWidth="7.5rem"
+          baseWidth={targetBaseWidth}
           title="{localize('DND5E.Target')}: {spell.labels.target}"
         >
           {#if spell.labels.target}
@@ -128,13 +151,18 @@
             {localize('DND5E.None')}
           {/if}
         </ItemTableCell>
+        {#if includeRange}
+          <ItemTableCell
+            baseWidth="4.375rem"
+            title="{localize('DND5E.Range')}: {spell.labels.range}"
+          >
+            {spell.labels.range}
+          </ItemTableCell>
+        {/if}
         <ItemTableCell
-          baseWidth="4.375rem"
-          title="{localize('DND5E.Range')}: {spell.labels.range}"
+          baseWidth={usageBaseWidth}
+          title={localize('DND5E.SpellUsage')}
         >
-          {spell.labels.range}
-        </ItemTableCell>
-        <ItemTableCell baseWidth="7.5rem" title={localize('DND5E.SpellUsage')}>
           {spell.labels.activation}
         </ItemTableCell>
         {#if $store.owner && classicControlsEnabled}

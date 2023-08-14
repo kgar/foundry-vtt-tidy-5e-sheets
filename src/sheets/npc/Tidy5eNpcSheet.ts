@@ -30,6 +30,7 @@ export class Tidy5eNpcSheet extends ActorSheet5eNpc {
     return FoundryAdapter.mergeObject(super.defaultOptions, {
       classes: ['tidy5e-kgar', 'sheet', 'actor', 'npc'],
       height: 840,
+      width: SettingsProvider.settings.npsSheetWidth.get(),
     });
   }
 

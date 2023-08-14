@@ -25,10 +25,15 @@
   import ItemTableFooter from 'src/components/items/ItemTableFooter.svelte';
   import NpcLegendaryActions from './parts/NpcLegendaryActions.svelte';
   import NpcSpellbook from './parts/NpcSpellbook.svelte';
+  import SpellbookList from 'src/components/spellbook/SpellbookList.svelte';
+  import ListContainer from 'src/components/layout/ListContainer.svelte';
+  import Notice from 'src/components/shared/Notice.svelte';
+  import SpellbookGrid from 'src/components/spellbook/SpellbookGrid.svelte';
+  import NoSpells from '../actor/NoSpells.svelte';
 
   let store = getContext<Readable<NpcSheetContext>>('store');
 
-  $: allowEdit = FoundryAdapter.tryGetFlag($store.actor, 'allow-edit');
+  $: allowEdit = FoundryAdapter.tryGetFlag($store.actor, 'allow-edit') === true;
 
   $: classicControlsEnabled =
     SettingsProvider.settings.classicControlsEnabled.get();
@@ -40,6 +45,9 @@
 
   $: showSpellsInAbilitiesTab =
     SettingsProvider.settings.hideSpellbookTabNpc.get();
+
+  $: noSpellLevels = !$store.spellbook.length;
+  let showNoSpellsView = false;
   const localize = FoundryAdapter.localize;
 </script>
 
@@ -148,11 +156,42 @@
       {/if}
     {/each}
     {#if showSpellsInAbilitiesTab}
-      <div>
-        If no spells, then spellbook show/hide header with default to closed.
-        Else, just show spellbook header without toggle option
-      </div>
-      <NpcSpellbook />
+      {#if noSpellLevels}
+        <h2
+          class="spellbook-title toggle-spellbook"
+          on:click={() => (showNoSpellsView = !showNoSpellsView)}
+        >
+          {localize('DND5E.Spellbook')}
+          {#if showNoSpellsView}
+            <i class="fas fa-caret-up" />
+          {:else}
+            <i class="fas fa-caret-down" />
+          {/if}
+        </h2>
+      {:else}
+        <h2 class="spellbook-title">
+          {localize('DND5E.Spellbook')}
+        </h2>
+      {/if}
+
+      {#if !noSpellLevels || showNoSpellsView}
+        {#if noSpellLevels}
+          <NoSpells {allowEdit} />
+        {:else}
+          {#each $store.spellbook as section (section.label)}
+            <SpellbookList
+              spells={section.spells}
+              {section}
+              allowFavorites={false}
+              includeRange={false}
+              includeSchool={false}
+              spellComponentsBaseWidth="3.125rem"
+              targetBaseWidth="5.625rem"
+              usageBaseWidth="5.625rem"
+            />
+          {/each}
+        {/if}
+      {/if}
     {/if}
   </div>
 </section>
@@ -181,6 +220,30 @@
       flex: 1;
       padding: 0;
       height: auto;
+    }
+
+    .spellbook-title {
+      display: flex;
+      justify-content: space-between;
+      padding: 0 0.25rem 0.125rem 0;
+      margin: 0.25rem 0;
+      line-height: 1;
+      border: 0.0625rem solid var(--t5e-light-color);
+      border-left: none;
+      border-right: none;
+      font-family: var(--t5e-modesto);
+      font-weight: 700;
+      font-size: 1.125rem;
+
+      &.toggle-spellbook {
+        opacity: 0.4;
+        transition: opacity 0.3s ease;
+        cursor: pointer;
+
+        &:hover {
+          opacity: 1;
+        }
+      }
     }
   }
 
