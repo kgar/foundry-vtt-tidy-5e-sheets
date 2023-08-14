@@ -42,7 +42,7 @@ export class Tidy5eNpcSheet extends ActorSheet5eNpc {
     new Tidy5eNpcSheetComponent({
       target: node,
       props: {
-        selectedTabId: this.selectedTabId ?? CONSTANTS.TAB_NPC_ABILITIES,
+        selectedTabId: this.#getSelectedTabId(),
       },
       context: new Map<any, any>([
         ['store', this.store],
@@ -51,6 +51,22 @@ export class Tidy5eNpcSheet extends ActorSheet5eNpc {
     });
 
     initTidy5eContextMenu.call(this, html);
+  }
+
+  #getSelectedTabId(): string {
+    if (
+      !game.modules.get('character-actions-list-5e')?.active &&
+      SettingsProvider.settings.defaultActionsTab.get() === 'actions'
+    ) {
+      return CONSTANTS.TAB_NPC_ABILITIES;
+    }
+
+    return (
+      this.selectedTabId ??
+      (SettingsProvider.settings.defaultActionsTab.get() !== 'default'
+        ? SettingsProvider.settings.defaultActionsTab.get()
+        : CONSTANTS.TAB_NPC_ABILITIES)
+    );
   }
 
   onToggleAbilityProficiency(event: Event) {
