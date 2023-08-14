@@ -53,26 +53,25 @@
         - [ ] Settings
           - [ ] hideSpellbookTabNpc
             - [ ] when on: include equivalent of tidy5e-npc-spellbook template
-              - [x] HTML
-              - [x] SCSS
-              - [x] Behaviors
+              - [ ] HTML : whole spellbook, unlocked, columns (Name, Components, Target, Usage, Classic Controls), another spell footer with less stuff (spell dc, caster level, spellcasting ability)
+              - [ ] SCSS
+              - [ ] Behaviors : context menu, add button, No-spell-levels view, dots, 
               - [ ] Configure No Spellcaster levels notice while locked
                 - [ ] While unlocked, also include Create Button itemtablefooter
                 - [ ] Ensure this same applies to both List and Grid in their own ways.
             - [x] note: give this one a look before completely committing to the currency footer I made
           - [x] alt trait position : just below legendary actions
-      - [ ] Spellbook
-        - [ ] HTML : this is the exact same spellbook tab as the PC; try your best to reuse verbatim, including all supporting features like filtering and grid layout.
-          - [ ] The Differences
-            - [ ] NPC: No preparation button
-            - [ ] NPC: No favorites button
-            - [ ] NPC: Add Spellcaster Level
-        - [ ] SCSS
-        - [ ] Behaviors
-        - [ ] Settings
-            - [ ] hideSpellbookTabNpc
-              - [ ] when on: hide the spellbook tab altogether
-              - [ ] now that this exists, go back and include the spells list in the abilities tab when on
+      - [x] Spellbook
+        - [x] HTML : this is the exact same spellbook tab as the PC; try your best to reuse verbatim, including all supporting features like filtering and grid layout.
+          - [x] The Differences
+            - [x] NPC: No preparation button
+            - [x] NPC: No favorites button
+            - [x] NPC: Add Spellcaster Level
+        - [x] SCSS
+        - [x] Behaviors
+        - [x] Settings
+            - [x] hideSpellbookTabNpc
+              - [x] when on: hide the spellbook tab altogether
       - [ ] Effects
       - [ ] Biography
       - [ ] Journal
