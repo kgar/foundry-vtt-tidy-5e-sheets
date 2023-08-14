@@ -1,6 +1,5 @@
 ## To Do
 
-
 - [x] Register the sheet as a child of the original 5e sheet
 - [x] Fill out the sheet stuff for svelte mode
 - [ ] Implement
@@ -21,7 +20,7 @@
         - [x] speed row
         - [x] Abilities row
       - [x] Behaviors
-    - [ ] Tab nav and stub/share components
+    - [ ] Implement tabs and contents
       - [x] Abilities
         - [x] Side bar
         - [x] Footer (money)
@@ -47,7 +46,7 @@
               - [x] SCSS
                 - [x] The footer
                 - [x] The rest
-              - [x] Behaviors : context menu, add button, No-spell-levels view, dots, 
+              - [x] Behaviors : context menu, add button, No-spell-levels view, dots,
               - [x] Configure No Spellcaster levels notice while locked
                 - [x] While unlocked, also include Create Button itemtablefooter
                 - [x] Ensure this same applies to both List and Grid in their own ways.
@@ -63,18 +62,12 @@
         - [x] SCSS
         - [x] Behaviors
         - [x] Settings
-            - [x] hideSpellbookTabNpc
-              - [x] when on: hide the spellbook tab altogether
+          - [x] hideSpellbookTabNpc
+            - [x] when on: hide the spellbook tab altogether
       - [x] Effects
-      - [ ] Biography
+      - [x] Biography
       - [ ] Journal
-      - [ ] Toggle Lock
-    - [ ] Tab Contents
-      - [ ] Abilities
-      - [ ] Spellbook
-      - [ ] Effects
-      - [ ] Biography
-      - [ ] Journal
+      - [x] Toggle Lock
   - [ ] Ltd NPC
     - [ ] Configure to appear when user is NOT GM and actor is limited
     - [ ] Biography
@@ -103,7 +96,7 @@
 - [ ] `dtype` fields: formalize these as features of the input components, rather than just receiving them. Give the props names.
   - [ ] One way to go about this would be to have a universal function for preparing data for saving. It could take things like dtype, which would be set to known values.
   - [ ] Also figure out how to do the `draftValue` reversion on failed save approach without having to copy/paste it everywhere.
-- [x] Default Tab applies to NPCs as well as PCs and Vehicles. 
+- [x] Default Tab applies to NPCs as well as PCs and Vehicles.
   - [x] Wire up for NPC
   - [x] Wire up for Vehicle
 - [x] Lair Action Initiative input is not allowing me to clear it out. It always sets it to 0. Fix that.

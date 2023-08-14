@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { getContext, setContext } from 'svelte';
+  import { getContext } from 'svelte';
   import { FoundryAdapter } from '../../foundry/foundry-adapter';
   import type {
     ActorSheetContext,
@@ -16,7 +16,7 @@
   import CharacterSpellbookTab from 'src/components/player-character/CharacterSpellbookTab.svelte';
   import CharacterFeaturesTab from 'src/components/player-character/CharacterFeaturesTab.svelte';
   import ActorEffectsTab from 'src/sheets/actor/ActorEffectsTab.svelte';
-  import CharacterBiographyTab from 'src/components/player-character/BiographyTab.svelte';
+  import CharacterBiographyTab from 'src/components/player-character/CharacterBiographyTab.svelte';
   import CharacterJournalTab from 'src/components/player-character/CharacterJournalTab.svelte';
   import { CONSTANTS } from 'src/constants';
   import { submitText } from '../form';
