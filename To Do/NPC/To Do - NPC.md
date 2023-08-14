@@ -54,12 +54,17 @@
           - [ ] hideSpellbookTabNpc
             - [ ] when on: include equivalent of tidy5e-npc-spellbook template
               - [ ] HTML : whole spellbook, unlocked, columns (Name, Components, Target, Usage, Classic Controls), another spell footer with less stuff (spell dc, caster level, spellcasting ability)
+                - [ ] The footer
+                - [x] The rest
               - [ ] SCSS
-              - [ ] Behaviors : context menu, add button, No-spell-levels view, dots, 
-              - [ ] Configure No Spellcaster levels notice while locked
-                - [ ] While unlocked, also include Create Button itemtablefooter
-                - [ ] Ensure this same applies to both List and Grid in their own ways.
+                - [ ] The footer
+                - [x] The rest
+              - [x] Behaviors : context menu, add button, No-spell-levels view, dots, 
+              - [x] Configure No Spellcaster levels notice while locked
+                - [x] While unlocked, also include Create Button itemtablefooter
+                - [x] Ensure this same applies to both List and Grid in their own ways.
             - [x] note: give this one a look before completely committing to the currency footer I made
+            - [ ] Support Grid layout and add Layout Toggle to the Spellbook Title header
           - [x] alt trait position : just below legendary actions
       - [x] Spellbook
         - [x] HTML : this is the exact same spellbook tab as the PC; try your best to reuse verbatim, including all supporting features like filtering and grid layout.
