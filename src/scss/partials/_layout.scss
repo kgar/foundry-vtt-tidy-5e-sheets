@@ -14,6 +14,10 @@
   flex-grow: 1;
 }
 
+.flex-1 {
+  flex: 1;
+}
+
 .gap {
   gap: 1rem;
 }
@@ -62,4 +66,12 @@
 
 .text-align-right {
   text-align: right;
+}
+
+.with-scrollbar-margin {
+  margin-right: 0.75rem;
+}
+
+.small-padding-bottom {
+  padding-bottom: 0.5rem;
 }

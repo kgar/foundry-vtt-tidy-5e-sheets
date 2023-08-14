@@ -24,12 +24,9 @@
   import ItemControls from 'src/components/items/ItemControls.svelte';
   import ItemTableFooter from 'src/components/items/ItemTableFooter.svelte';
   import NpcLegendaryActions from './parts/NpcLegendaryActions.svelte';
-  import NpcSpellbook from './parts/NpcSpellbook.svelte';
   import SpellbookList from 'src/components/spellbook/SpellbookList.svelte';
-  import ListContainer from 'src/components/layout/ListContainer.svelte';
-  import Notice from 'src/components/shared/Notice.svelte';
-  import SpellbookGrid from 'src/components/spellbook/SpellbookGrid.svelte';
   import NoSpells from '../actor/NoSpells.svelte';
+  import SpellbookFooter from 'src/components/spellbook/SpellbookFooter.svelte';
 
   let store = getContext<Readable<NpcSheetContext>>('store');
 
@@ -175,22 +172,30 @@
       {/if}
 
       {#if !noSpellLevels || showNoSpellsView}
-        {#if noSpellLevels}
-          <NoSpells {allowEdit} />
-        {:else}
-          {#each $store.spellbook as section (section.label)}
-            <SpellbookList
-              spells={section.spells}
-              {section}
-              allowFavorites={false}
-              includeRange={false}
-              includeSchool={false}
-              spellComponentsBaseWidth="3.125rem"
-              targetBaseWidth="5.625rem"
-              usageBaseWidth="5.625rem"
-            />
-          {/each}
-        {/if}
+        <div class="flex-1 flex-column small-padding-bottom">
+          {#if noSpellLevels}
+            <NoSpells cssClass="flex-1" {allowEdit} />
+          {:else}
+            {#each $store.spellbook as section (section.label)}
+              <SpellbookList
+                cssClass="flex-1"
+                spells={section.spells}
+                {section}
+                allowFavorites={false}
+                includeRange={false}
+                includeSchool={false}
+                spellComponentsBaseWidth="3.125rem"
+                targetBaseWidth="5.625rem"
+                usageBaseWidth="5.625rem"
+              />
+            {/each}
+          {/if}
+
+          <SpellbookFooter
+            includeAttackMod={false}
+            includePreparedSpells={false}
+          />
+        </div>
       {/if}
     {/if}
   </div>

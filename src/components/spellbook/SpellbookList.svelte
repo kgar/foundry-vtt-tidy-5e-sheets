@@ -29,6 +29,7 @@
   export let section: any;
   export let spells: any[];
   export let allowFavorites: boolean = true;
+  export let cssClass: string | null = null;
 
   // TODO: replace this with column specification array default and then allow the caller to customize the table.
   export let includeSchool: boolean = true;
@@ -50,7 +51,7 @@
     SettingsProvider.settings.hideIconsNextToTheItemName.get();
 </script>
 
-<section class="spellbook-list-section">
+<section class="spellbook-list-section {cssClass}">
   <ItemTable>
     <ItemTableHeaderRow>
       <ItemTableColumn primary={true}>

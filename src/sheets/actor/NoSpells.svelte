@@ -6,13 +6,14 @@
   import type { Readable } from 'svelte/store';
 
   export let allowEdit: boolean;
+  export let cssClass: string | null = null;
 
   let store = getContext<Readable<ActorSheetContext>>('store');
 
   const localize = FoundryAdapter.localize;
 </script>
 
-<div class="no-spells-container">
+<div class="no-spells-container {cssClass}">
   <Notice>{localize('DND5E.NoSpellLevels')}</Notice>
   {#if allowEdit}
     <button

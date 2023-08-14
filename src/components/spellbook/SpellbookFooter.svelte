@@ -7,47 +7,62 @@
   import type { Readable } from 'svelte/store';
 
   let store = getContext<Readable<ActorSheetContext>>('store');
-  export let abilities: any[];
+  export let cssClass: string | null = null;
+  export let includeAttackMod: boolean = true;
+  export let includePreparedSpells: boolean = true;
 
   const localize = FoundryAdapter.localize;
   $: spellAttackBonusInfo = FoundryAdapter.getSpellAttackModAndTooltip($store);
+  
+  $: abilities = Object.entries($store.abilities).map(
+    (a: [string, { label: string }]) => ({
+      abbr: a[0],
+      ...a[1],
+    })
+  );
 </script>
 
-<footer class="spellcasting-ability">
+<footer class="spellcasting-ability {cssClass}">
   <h3 class="spell-dc spell-mod">
     {localize('DND5E.SpellDC')}
-    {$store.system.attributes.spelldc} / {localize('T5EK.SpellAttackMod')}:
-    <span class="spell-attack-mod">
-      <span data-tooltip={spellAttackBonusInfo.modTooltip}
-        >{spellAttackBonusInfo.mod}</span
-      >
-      {#if spellAttackBonusInfo.bonus?.trim() !== ''}
-        <i
-          class="bonus-icon fa-solid fa-dice-d4"
-          data-tooltip="{spellAttackBonusInfo.bonus}: bonus 'actor.system.bonuses.rsak.attack'"
-        />
-      {/if}
-    </span>
+    {$store.system.attributes.spelldc}
+
+    {#if includeAttackMod}
+      / {localize('T5EK.SpellAttackMod')}:
+      <span class="spell-attack-mod">
+        <span data-tooltip={spellAttackBonusInfo.modTooltip}
+          >{spellAttackBonusInfo.mod}</span
+        >
+        {#if spellAttackBonusInfo.bonus?.trim() !== ''}
+          <i
+            class="bonus-icon fa-solid fa-dice-d4"
+            data-tooltip="{spellAttackBonusInfo.bonus}: bonus 'actor.system.bonuses.rsak.attack'"
+          />
+        {/if}
+      </span>
+    {/if}
   </h3>
-  <div class="max-prepared-spells">
-    <p>{localize('T5EK.PreparedSpells')}</p>
-    <span class="spells-prepared">{$store.preparedSpells ?? 0}</span>
-    /
-    <input
-      class="max-preparation"
-      type="number"
-      value={FoundryAdapter.tryGetFlag($store.actor, 'maxPreparedSpells')}
-      data-dtype="Number"
-      placeholder="0"
-      data-tooltip={localize('T5EK.PreparedSpellsMax')}
-      on:change|stopPropagation|preventDefault={(event) =>
-        submitText(
-          event,
-          $store.actor,
-          `flags.${CONSTANTS.MODULE_ID}.maxPreparedSpells`
-        )}
-    />
-  </div>
+  {#if includePreparedSpells}
+    <div class="max-prepared-spells">
+      <p>{localize('T5EK.PreparedSpells')}</p>
+      <span class="spells-prepared">{$store.preparedSpells ?? 0}</span>
+      /
+      <input
+        class="max-preparation"
+        type="number"
+        value={FoundryAdapter.tryGetFlag($store.actor, 'maxPreparedSpells')}
+        data-dtype="Number"
+        placeholder="0"
+        data-tooltip={localize('T5EK.PreparedSpellsMax')}
+        on:change|stopPropagation|preventDefault={(event) =>
+          submitText(
+            event,
+            $store.actor,
+            `flags.${CONSTANTS.MODULE_ID}.maxPreparedSpells`
+          )}
+      />
+    </div>
+  {/if}
   <div class="spellcasting-attribute">
     <p>{localize('DND5E.SpellAbility')}</p>
     <select
@@ -89,7 +104,6 @@
   .spellcasting-ability {
     display: flex;
     justify-content: space-between;
-    margin: 0rem 0.875rem 0 0;
     padding-top: 0.5rem;
     border-top: 0.125rem solid var(--t5e-light-color);
     align-items: center;

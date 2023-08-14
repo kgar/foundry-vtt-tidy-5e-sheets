@@ -128,7 +128,7 @@
   {/if}
 </ListContainer>
 
-<SpellbookFooter {abilities} />
+<SpellbookFooter cssClass="with-scrollbar-margin" />
 
 <style lang="scss">
   .spellbook-class-filter {

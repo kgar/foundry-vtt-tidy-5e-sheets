@@ -99,4 +99,4 @@
     {/each}
   {/if}
 </ListContainer>
-<SpellbookFooter {abilities} />
+<SpellbookFooter />
