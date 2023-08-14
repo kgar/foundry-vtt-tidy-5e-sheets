@@ -16,12 +16,13 @@
   let store = getContext<Readable<ActorSheetContext>>('store');
   export let section: any;
   export let spells: Item5e[];
+  export let cssClass: string | null = null;
 
   const localize = FoundryAdapter.localize;
   $: allowEdit = FoundryAdapter.tryGetFlag($store.actor, 'allow-edit');
 </script>
 
-<section class="spellbook-grid">
+<section class="spellbook-grid {cssClass}">
   <ItemTable>
     <ItemTableHeaderRow>
       <ItemTableColumn primary={true}>

@@ -4,12 +4,13 @@
   import { createEventDispatcher } from 'svelte';
 
   export let mode: ItemLayoutMode;
+  export let element: HTMLElement['tagName'] = 'li';
 
   const localize = FoundryAdapter.localize;
   const dispatcher = createEventDispatcher<{ toggle: void }>();
 </script>
 
-<li class="toggle-layout" title="todo: implement">
+<svelte:element this={element} class="toggle-layout" title="todo: implement">
   {#if mode === 'grid'}
     <i
       class="fas fa-th-list toggle-list"
@@ -29,7 +30,7 @@
   {:else}
     <span title="Layout mode not supported.">😞</span>
   {/if}
-</li>
+</svelte:element>
 
 <style lang="scss">
   .toggle-layout {

@@ -4,7 +4,7 @@
   import { SettingsProvider } from 'src/settings/settings';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
-  import type { NpcSheetContext } from 'src/types/types';
+  import type { ItemLayoutMode, NpcSheetContext } from 'src/types/types';
   import Currency from '../actor/Currency.svelte';
   import ItemTableHeaderRow from 'src/components/items/ItemTableHeaderRow.svelte';
   import ItemTable from 'src/components/items/ItemTable.svelte';
@@ -27,6 +27,8 @@
   import SpellbookList from 'src/components/spellbook/SpellbookList.svelte';
   import NoSpells from '../actor/NoSpells.svelte';
   import SpellbookFooter from 'src/components/spellbook/SpellbookFooter.svelte';
+  import ItemFilterLayoutToggle from 'src/components/items/ItemFilterLayoutToggle.svelte';
+  import SpellbookGrid from 'src/components/spellbook/SpellbookGrid.svelte';
 
   let store = getContext<Readable<NpcSheetContext>>('store');
 
@@ -44,6 +46,21 @@
     SettingsProvider.settings.hideSpellbookTabNpc.get();
 
   $: noSpellLevels = !$store.spellbook.length;
+
+  function toggleLayout() {
+    if (layoutMode === 'grid') {
+      FoundryAdapter.unsetFlag($store.actor, 'spellbook-grid');
+      return;
+    }
+
+    FoundryAdapter.setFlag($store.actor, 'spellbook-grid', true);
+  }
+
+  let layoutMode: ItemLayoutMode;
+  $: layoutMode = FoundryAdapter.tryGetFlag($store.actor, 'spellbook-grid')
+    ? 'grid'
+    : 'list';
+
   let showNoSpellsView = false;
   const localize = FoundryAdapter.localize;
 </script>
@@ -167,28 +184,38 @@
         </h2>
       {:else}
         <h2 class="spellbook-title">
-          {localize('DND5E.Spellbook')}
+          <span>{localize('DND5E.Spellbook')}</span>
+          <ItemFilterLayoutToggle
+            mode={layoutMode}
+            element="span"
+            on:toggle={() => toggleLayout()}
+          />
         </h2>
       {/if}
 
       {#if !noSpellLevels || showNoSpellsView}
-        <div class="flex-1 flex-column small-padding-bottom">
+        <div class="flex-1 flex-column small-padding-bottom no-gap">
           {#if noSpellLevels}
             <NoSpells cssClass="flex-1" {allowEdit} />
           {:else}
-            {#each $store.spellbook as section (section.label)}
-              <SpellbookList
-                cssClass="flex-1"
-                spells={section.spells}
-                {section}
-                allowFavorites={false}
-                includeRange={false}
-                includeSchool={false}
-                spellComponentsBaseWidth="3.125rem"
-                targetBaseWidth="5.625rem"
-                usageBaseWidth="5.625rem"
-              />
-            {/each}
+            <div class="flex-1 small-padding-bottom">
+              {#each $store.spellbook as section (section.label)}
+                {#if layoutMode === 'list'}
+                  <SpellbookList
+                    spells={section.spells}
+                    {section}
+                    allowFavorites={false}
+                    includeRange={false}
+                    includeSchool={false}
+                    spellComponentsBaseWidth="3.125rem"
+                    targetBaseWidth="5.625rem"
+                    usageBaseWidth="5.625rem"
+                  />
+                {:else}
+                  <SpellbookGrid spells={section.spells} {section} />
+                {/if}
+              {/each}
+            </div>
           {/if}
 
           <SpellbookFooter
@@ -200,7 +227,7 @@
     {/if}
   </div>
 </section>
-<footer>
+<footer class="abilities-tab-footer">
   <Currency actor={$store.actor} />
 </footer>
 
@@ -230,8 +257,9 @@
     .spellbook-title {
       display: flex;
       justify-content: space-between;
+      align-items: center;
       padding: 0 0.25rem 0.125rem 0;
-      margin: 0.25rem 0;
+      margin-top: 0.5rem;
       line-height: 1;
       border: 0.0625rem solid var(--t5e-light-color);
       border-left: none;
@@ -249,10 +277,19 @@
           opacity: 1;
         }
       }
+
+      :global(.toggle-layout) {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        padding-top: 0.125rem;
+        line-height: 0.75;
+        font-size: 0.875rem;
+      }
     }
   }
 
-  footer {
+  .abilities-tab-footer {
     background-color: var(--t5e-header-background);
     display: flex;
     flex-direction: row;
