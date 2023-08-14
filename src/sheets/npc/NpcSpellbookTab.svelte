@@ -99,4 +99,4 @@
     {/each}
   {/if}
 </ListContainer>
-<SpellbookFooter />
+<SpellbookFooter cssClass="with-scrollbar-margin" />

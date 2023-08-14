@@ -280,7 +280,9 @@ input[type='number'] {
 [contenteditable='true']:hover,
 [contenteditable='true']:focus,
 input[type='text']:hover,
-input[type='text']:focus {
+input[type='text']:focus,
+input[type='number']:hover,
+input[type='number']:focus {
   box-shadow: 0px 0px 0px 1px var(--t5e-primary-accent) inset;
 }
 

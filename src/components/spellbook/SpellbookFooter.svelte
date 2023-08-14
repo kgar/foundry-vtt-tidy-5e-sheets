@@ -5,6 +5,8 @@
   import type { ActorSheetContext } from 'src/types/types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
+  import NumberInput from '../form/NumberInput.svelte';
+  import Select from '../form/Select.svelte';
 
   let store = getContext<Readable<ActorSheetContext>>('store');
   export let cssClass: string | null = null;
@@ -13,7 +15,7 @@
 
   const localize = FoundryAdapter.localize;
   $: spellAttackBonusInfo = FoundryAdapter.getSpellAttackModAndTooltip($store);
-  
+
   $: abilities = Object.entries($store.abilities).map(
     (a: [string, { label: string }]) => ({
       abbr: a[0],
@@ -65,33 +67,27 @@
   {/if}
   <div class="spellcasting-attribute">
     <p>{localize('DND5E.SpellAbility')}</p>
-    <select
-      on:change|stopPropagation|preventDefault={(event) =>
-        $store.actor.update({
-          'system.attributes.spellcasting': event.currentTarget.value,
-        })}
+    <Select
+      document={$store.actor}
+      field="system.attributes.spellcasting"
+      value={$store.system.attributes.spellcasting}
     >
       <option value="" selected={!$store.system.attributes.spellcasting}
         >{localize('DND5E.None')}</option
       >
       {#each abilities as ability}
-        <option
-          value={ability.abbr}
-          selected={$store.system.attributes.spellcasting === ability.abbr}
-          >{ability.label}</option
-        >
+        <option value={ability.abbr}>{ability.label}</option>
       {/each}
-    </select>
+    </Select>
   </div>
   {#if $store.isNPC}
     <div class="flex-row extra-small-gap" style="flex: 0">
       <h3 class="truncate">{localize('DND5E.SpellcasterLevel')}</h3>
-      <input
-        class="spellcasting-level"
-        type="text"
-        name="system.details.spellLevel"
+      <NumberInput
+        cssClass="spellcasting-level"
+        document={$store.actor}
+        field="system.details.spellLevel"
         value={$store.system.details.spellLevel}
-        data-dtype="Number"
         placeholder="0"
         min="0"
         step="1"
@@ -129,13 +125,13 @@
       white-space: nowrap;
     }
 
-    select {
+    :global(select) {
       height: 1.1875rem;
       font-size: 0.75rem;
       font-family: var(--t5e-signika);
     }
 
-    input {
+    :global(input) {
       width: 1.25rem;
       height: 1.25rem;
       flex: 0;
