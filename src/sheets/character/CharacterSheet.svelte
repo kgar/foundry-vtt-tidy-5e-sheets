@@ -10,15 +10,12 @@
   import Tidy5eActorOriginSummaryConfig from '../tidy5e-actor-origin-summary-config';
   import CharacterProfile from './parts/CharacterProfile.svelte';
   import TidyDropdownList from '../TidyDropdownList.svelte';
-  import AcShield from '../actor/AcShield.svelte';
-  import AttributeBlock from '../AttributeBlock.svelte';
-  import InitiativeBlock from '../InitiativeBlock.svelte';
   import ActorWarnings from '../ActorWarnings.svelte';
   import CharacterAttributesTab from 'src/components/player-character/CharacterAttributesTab.svelte';
   import CharacterInventoryTab from 'src/components/player-character/CharacterInventoryTab.svelte';
   import CharacterSpellbookTab from 'src/components/player-character/CharacterSpellbookTab.svelte';
   import CharacterFeaturesTab from 'src/components/player-character/CharacterFeaturesTab.svelte';
-  import CharacterEffectsTab from 'src/components/player-character/CharacterEffectsTab.svelte';
+  import ActorEffectsTab from 'src/sheets/actor/ActorEffectsTab.svelte';
   import CharacterBiographyTab from 'src/components/player-character/BiographyTab.svelte';
   import CharacterJournalTab from 'src/components/player-character/CharacterJournalTab.svelte';
   import { CONSTANTS } from 'src/constants';
@@ -113,7 +110,7 @@
         id: 'effects',
         displayName: 'DND5E.Effects',
         content: {
-          component: CharacterEffectsTab,
+          component: ActorEffectsTab,
         },
       },
       {

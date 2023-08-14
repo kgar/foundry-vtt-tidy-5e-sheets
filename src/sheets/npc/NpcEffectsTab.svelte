@@ -1,1 +1,0 @@
-Implement effects tab

@@ -12,7 +12,6 @@
   import type { Readable } from 'svelte/store';
   import NpcAbilitiesTab from './NpcAbilitiesTab.svelte';
   import NpcSpellbookTab from './NpcSpellbookTab.svelte';
-  import NpcEffectsTab from './NpcEffectsTab.svelte';
   import NpcBiographyTab from './NpcBiographyTab.svelte';
   import NpcJournalTab from './NpcJournalTab.svelte';
   import NpcProfile from './parts/NpcProfile.svelte';
@@ -25,6 +24,7 @@
   import DelimitedTruncatedContent from 'src/components/layout/DelimitedTruncatedContent.svelte';
   import HorizontalLineSeparator from 'src/components/layout/HorizontalLineSeparator.svelte';
   import ActorMovementRow from '../actor/ActorMovementRow.svelte';
+  import ActorEffectsTab from '../actor/ActorEffectsTab.svelte';
   import ActorHeaderStats from '../actor/ActorHeaderStats.svelte';
   import { SettingsProvider } from 'src/settings/settings';
 
@@ -59,7 +59,7 @@
       id: CONSTANTS.TAB_NPC_EFFECTS,
       displayName: 'DND5E.Effects',
       content: {
-        component: NpcEffectsTab,
+        component: ActorEffectsTab,
       },
     },
     {

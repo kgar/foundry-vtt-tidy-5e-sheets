@@ -2,17 +2,17 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { type ActorSheetContext } from 'src/types/types';
   import { SettingsProvider } from 'src/settings/settings';
-  import ItemTable from '../items/ItemTable.svelte';
-  import ItemTableHeaderRow from '../items/ItemTableHeaderRow.svelte';
-  import ItemTableRow from '../items/ItemTableRow.svelte';
-  import ItemTableColumn from '../items/ItemTableColumn.svelte';
-  import ItemTableFooter from '../items/ItemTableFooter.svelte';
-  import ItemImage from '../items/ItemImage.svelte';
-  import ItemTableCell from '../items/ItemTableCell.svelte';
-  import ItemControl from '../items/ItemControl.svelte';
+  import ItemTable from '../../components/items/ItemTable.svelte';
+  import ItemTableHeaderRow from '../../components/items/ItemTableHeaderRow.svelte';
+  import ItemTableRow from '../../components/items/ItemTableRow.svelte';
+  import ItemTableColumn from '../../components/items/ItemTableColumn.svelte';
+  import ItemTableFooter from '../../components/items/ItemTableFooter.svelte';
+  import ItemImage from '../../components/items/ItemImage.svelte';
+  import ItemTableCell from '../../components/items/ItemTableCell.svelte';
+  import ItemControl from '../../components/items/ItemControl.svelte';
   import { CONSTANTS } from 'src/constants';
-  import ListContainer from '../layout/ListContainer.svelte';
-  import ItemControls from '../items/ItemControls.svelte';
+  import ListContainer from '../../components/layout/ListContainer.svelte';
+  import ItemControls from '../../components/items/ItemControls.svelte';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
 
