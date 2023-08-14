@@ -1,8 +1,8 @@
 ## Top of Mind
 
-- [ ] Default Tab applies to NPCs as well as PCs and Vehicles. 
+- [x] Default Tab applies to NPCs as well as PCs and Vehicles. 
   - [x] Wire up for NPC
-  - [ ] Wire up for Vehicle
+  - [x] Wire up for Vehicle
 - [ ] Lair Action Initiative input is not allowing me to clear it out. It always sets it to 0. Fix that.
 - [ ] "TIDY5E.EmptySection" / "This section is empty. Unlock the sheet to edit." banner should show in the player character sheet Inventory tab when allow-edit is false and there are no inventory sections shown
 - [ ] PC spellbook tab
