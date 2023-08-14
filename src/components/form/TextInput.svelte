@@ -14,6 +14,7 @@
   export let maxlength: number | null = null;
   export let ariaDescribedBy: string | null = null;
   export let selectOnFocus: boolean = false;
+  export let saveEmptyAsNull: boolean = false;
 
   $: actualDataset = buildDataset(dataset);
 
@@ -22,8 +23,13 @@
       currentTarget: EventTarget & HTMLInputElement;
     }
   ) {
+    const valueToSave =
+      saveEmptyAsNull && event.currentTarget.value === ''
+        ? null
+        : event.currentTarget.value;
+
     document.update({
-      [field]: event.currentTarget.value,
+      [field]: valueToSave,
     });
   }
 </script>

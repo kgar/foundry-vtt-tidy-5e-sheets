@@ -1,4 +1,8 @@
-<div class="notice">
+<script lang="ts">
+  export let cssClass: string | null = null;
+</script>
+
+<div class="notice {cssClass}">
   <slot />
 </div>
 

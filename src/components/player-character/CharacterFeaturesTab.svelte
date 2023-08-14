@@ -26,6 +26,7 @@
   import ItemFavoriteControl from '../items/ItemFavoriteControl.svelte';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
+  import Notice from '../shared/Notice.svelte';
 
   let store = getContext<Readable<ActorSheetContext>>('store');
 
@@ -60,6 +61,9 @@
       }
     }
   }
+
+  $: noFeatures =
+    $store.features.some((section: any) => section.items.length > 0) === false;
 
   const hideIconsNextToTheItemName =
     SettingsProvider.settings.hideIconsNextToTheItemName.get();
@@ -106,366 +110,375 @@
     passiveAbilitiesSection.items
   )}
 
-  {#if (searchCriteria.trim() === '' && allowEdit) || filteredBackgrounds.length > 0}
-    <ItemTable>
-      <ItemTableHeaderRow>
-        <ItemTableColumn primary={true}>
-          {localize(backgroundSection.label)}
-        </ItemTableColumn>
-        <ItemTableColumn baseWidth="7.5rem">
-          {localize('DND5E.Source')}
-        </ItemTableColumn>
-        <ItemTableColumn baseWidth="7.5rem">
-          {localize('DND5E.Requirements')}
-        </ItemTableColumn>
-        {#if $store.owner && classicControlsEnabled}
-          <ItemTableColumn baseWidth={classicControlsBaseWidth} />
-        {/if}
-      </ItemTableHeaderRow>
-
-      {#each filteredBackgrounds as item (item.id)}
-        <ItemTableRow
-          {item}
-          let:toggleSummary
-          on:mousedown={(event) =>
-            FoundryAdapter.editOnMiddleClick(event.detail, item)}
-          contextMenu={{
-            type: CONSTANTS.CONTEXT_MENU_TYPE_ITEMS,
-            id: item.id,
-          }}
-        >
-          <ItemTableCell primary={true}>
-            <ItemUseButton {item} />
-            <ItemName
-              on:click={(event) => toggleSummary(event.detail, $store.actor)}
-              hasChildren={false}
-            >
-              {item.name}
-            </ItemName>
-          </ItemTableCell>
-
-          <!-- TODO: Handle more gracefully -->
-          {#if !hideIconsNextToTheItemName && FoundryAdapter.tryGetFlag(item, 'favorite')}
-            <InlineFavoriteIcon />
-          {/if}
-
-          <ItemTableCell baseWidth="7.5rem">
-            <span class="truncate" title={item.system.source}
-              >{item.system.source}</span
-            >
-          </ItemTableCell>
-          <ItemTableCell baseWidth="7.5rem">
-            <span class="truncate" title={item.system.requirements ?? ''}
-              >{item.system.requirements ?? ''}</span
-            >
-          </ItemTableCell>
-
+  {#if noFeatures && !allowEdit}
+    <Notice cssClass="small-margin-top"
+      >{localize('TIDY5E.EmptySection')}</Notice
+    >
+  {:else}
+    {#if (searchCriteria.trim() === '' && allowEdit) || filteredBackgrounds.length > 0}
+      <ItemTable>
+        <ItemTableHeaderRow>
+          <ItemTableColumn primary={true}>
+            {localize(backgroundSection.label)}
+          </ItemTableColumn>
+          <ItemTableColumn baseWidth="7.5rem">
+            {localize('DND5E.Source')}
+          </ItemTableColumn>
+          <ItemTableColumn baseWidth="7.5rem">
+            {localize('DND5E.Requirements')}
+          </ItemTableColumn>
           {#if $store.owner && classicControlsEnabled}
-            <ItemTableCell baseWidth={classicControlsBaseWidth}>
-              <ItemControls>
-                <ItemFavoriteControl {item} />
-                <ItemEditControl {item} />
-                {#if allowEdit}
-                  <ItemDuplicateControl {item} />
-                  <ItemDeleteControl {item} />
-                {/if}
-              </ItemControls>
-            </ItemTableCell>
+            <ItemTableColumn baseWidth={classicControlsBaseWidth} />
           {/if}
-        </ItemTableRow>
-      {/each}
+        </ItemTableHeaderRow>
 
-      {#if $store.owner && allowEdit}
-        <ItemTableFooter
-          dataset={backgroundSection.dataset}
-          actor={$store.actor}
-        />
-      {/if}
-    </ItemTable>
-  {/if}
-
-  {#if (searchCriteria.trim() === '' && allowEdit) || filteredClasses.length > 0}
-    <ItemTable>
-      <ItemTableHeaderRow>
-        <ItemTableColumn primary={true}>
-          {localize(classSection.label)}
-        </ItemTableColumn>
-        <ItemTableColumn baseWidth="7.5rem">
-          {localize('DND5E.Source')}
-        </ItemTableColumn>
-        <ItemTableColumn baseWidth="7.5rem">
-          {localize('DND5E.Level')}
-        </ItemTableColumn>
-        {#if $store.owner && classicControlsEnabled && $store.editable}
-          <ItemTableColumn baseWidth={classicControlsBaseWidth} />
-        {/if}
-      </ItemTableHeaderRow>
-      {#each filteredClasses as item (item.id)}
-        <ItemTableRow
-          {item}
-          on:mousedown={(event) =>
-            FoundryAdapter.editOnMiddleClick(event.detail, item)}
-          contextMenu={{
-            type: CONSTANTS.CONTEXT_MENU_TYPE_ITEMS,
-            id: item.id,
-          }}
-          let:toggleSummary
-        >
-          <ItemTableCell primary={true}>
-            <ItemUseButton {item} />
-            <ItemName
-              on:click={(event) => toggleSummary(event.detail, $store.actor)}
-              hasChildren={false}
-            >
-              {#if item.type === 'subclass'}&rdsh;{/if}
-              {item.name}
-              {#if item.system.isOriginalClass}
-                <i
-                  class="original-class fas fa-sun"
-                  title={localize('DND5E.ClassOriginal')}
-                />
-              {/if}
-            </ItemName>
-          </ItemTableCell>
-
-          <!-- TODO: Handle more gracefully -->
-          {#if !hideIconsNextToTheItemName && FoundryAdapter.tryGetFlag(item, 'favorite')}
-            <InlineFavoriteIcon />
-          {/if}
-
-          <ItemTableCell baseWidth="7.5rem">
-            <span class="truncate" title={item.system.source}
-              >{item.system.source}</span
-            >
-          </ItemTableCell>
-          <ItemTableCell baseWidth="7.5rem">
-            {#if item.type === 'class'}
-              <select
-                on:change={(event) =>
-                  FoundryAdapter.onLevelChange(event, item, $store.actor)}
+        {#each filteredBackgrounds as item (item.id)}
+          <ItemTableRow
+            {item}
+            let:toggleSummary
+            on:mousedown={(event) =>
+              FoundryAdapter.editOnMiddleClick(event.detail, item)}
+            contextMenu={{
+              type: CONSTANTS.CONTEXT_MENU_TYPE_ITEMS,
+              id: item.id,
+            }}
+          >
+            <ItemTableCell primary={true}>
+              <ItemUseButton {item} />
+              <ItemName
+                on:click={(event) => toggleSummary(event.detail, $store.actor)}
+                hasChildren={false}
               >
-                {#each getAvailableLevels(item.id) as availableLevel}
-                  <option
-                    value={availableLevel.delta}
-                    disabled={availableLevel.disabled || undefined}
-                    selected={availableLevel.delta === 0}
-                  >
-                    {localize('DND5E.LevelNumber', {
-                      level: availableLevel.level,
-                    })}
-                    {#if availableLevel.delta}
-                      ({formatAsModifier(availableLevel.delta)})
-                    {/if}
-                  </option>
-                {/each}
-              </select>
-            {/if}
-          </ItemTableCell>
+                {item.name}
+              </ItemName>
+            </ItemTableCell>
 
-          {#if $store.owner && classicControlsEnabled && $store.editable}
-            <ItemTableCell baseWidth={classicControlsBaseWidth}>
-              <ItemControls>
-                {#if item.type !== 'class'}
+            <!-- TODO: Handle more gracefully -->
+            {#if !hideIconsNextToTheItemName && FoundryAdapter.tryGetFlag(item, 'favorite')}
+              <InlineFavoriteIcon />
+            {/if}
+
+            <ItemTableCell baseWidth="7.5rem">
+              <span class="truncate" title={item.system.source}
+                >{item.system.source}</span
+              >
+            </ItemTableCell>
+            <ItemTableCell baseWidth="7.5rem">
+              <span class="truncate" title={item.system.requirements ?? ''}
+                >{item.system.requirements ?? ''}</span
+              >
+            </ItemTableCell>
+
+            {#if $store.owner && classicControlsEnabled}
+              <ItemTableCell baseWidth={classicControlsBaseWidth}>
+                <ItemControls>
                   <ItemFavoriteControl {item} />
-                {/if}
-                <ItemEditControl {item} />
-                {#if allowEdit}
-                  <ItemDuplicateControl {item} />
-                  <ItemDeleteControl {item} />
-                {/if}
-              </ItemControls>
-            </ItemTableCell>
-          {/if}
-        </ItemTableRow>
-      {/each}
-      {#if $store.owner && allowEdit && $store.editable}
-        <ItemTableFooter dataset={classSection.dataset} actor={$store.actor} />
-      {/if}
-    </ItemTable>
-  {/if}
-
-  {#if (searchCriteria.trim() === '' && allowEdit) || filteredActiveAbilities.length > 0}
-    <ItemTable>
-      <ItemTableHeaderRow>
-        <ItemTableColumn primary={true}>
-          {localize(activeAbilitiesSection.label)}
-        </ItemTableColumn>
-        <ItemTableColumn baseWidth="3.125rem">
-          {localize('DND5E.Uses')}
-        </ItemTableColumn>
-        <ItemTableColumn baseWidth="7.5rem">
-          {localize('DND5E.Usage')}
-        </ItemTableColumn>
-        <ItemTableColumn baseWidth="7.5rem">
-          {localize('DND5E.Source')}
-        </ItemTableColumn>
-        <ItemTableColumn baseWidth="7.5rem">
-          {localize('DND5E.Requirements')}
-        </ItemTableColumn>
-        {#if $store.owner && classicControlsEnabled}
-          <ItemTableColumn baseWidth={classicControlsBaseWidth} />
-        {/if}
-      </ItemTableHeaderRow>
-      {#each filteredActiveAbilities as item (item.id)}
-        {@const ctx = $store.itemContext[item.id]}
-        <ItemTableRow
-          {item}
-          let:toggleSummary
-          on:mousedown={(event) =>
-            FoundryAdapter.editOnMiddleClick(event.detail, item)}
-          contextMenu={{
-            type: CONSTANTS.CONTEXT_MENU_TYPE_ITEMS,
-            id: item.id,
-          }}
-        >
-          <ItemTableCell primary={true}>
-            <ItemUseButton {item} />
-            <ItemName
-              on:click={(event) => toggleSummary(event.detail, $store.actor)}
-              hasChildren={false}
-            >
-              {item.name}
-            </ItemName>
-          </ItemTableCell>
-
-          <!-- TODO: Handle more gracefully -->
-          {#if !hideIconsNextToTheItemName && FoundryAdapter.tryGetFlag(item, 'favorite')}
-            <InlineFavoriteIcon />
-          {/if}
-
-          <ItemTableCell baseWidth="3.125rem">
-            {#if ctx?.isOnCooldown}
-              <a
-                title={item.labels.recharge}
-                role="button"
-                tabindex="0"
-                on:click={() => item.rollRecharge()}
-              >
-                <i class="fas fa-dice-six" />
-                {item.system.recharge
-                  .value}{#if item.system.recharge.value !== 6}+{/if}</a
-              >
-            {:else if item.system.recharge.value}
-              <i class="fas fa-bolt" title={localize('DND5E.Charged')} />
-            {:else if ctx?.hasUses}
-              <ItemUses {item} />
-            {:else}
-              <ItemAddUses {item} />
+                  <ItemEditControl {item} />
+                  {#if allowEdit}
+                    <ItemDuplicateControl {item} />
+                    <ItemDeleteControl {item} />
+                  {/if}
+                </ItemControls>
+              </ItemTableCell>
             {/if}
-          </ItemTableCell>
-          <ItemTableCell baseWidth="7.5rem">
-            {#if item.system.activation.type}
-              {item.labels.activation}
-            {/if}
-          </ItemTableCell>
-          <ItemTableCell baseWidth="7.5rem">
-            <span class="truncate" title={item.system.source}
-              >{item.system.source}</span
-            >
-          </ItemTableCell>
-          <ItemTableCell baseWidth="7.5rem">
-            <span class="truncate" title={item.system.requirements ?? ''}
-              >{item.system.requirements ?? ''}</span
-            >
-          </ItemTableCell>
+          </ItemTableRow>
+        {/each}
 
-          {#if $store.owner && classicControlsEnabled}
-            <ItemTableCell baseWidth={classicControlsBaseWidth}>
-              <ItemControls>
-                <ItemFavoriteControl {item} />
-                <ItemEditControl {item} />
-                {#if allowEdit}
-                  <ItemDuplicateControl {item} />
-                  <ItemDeleteControl {item} />
-                {/if}
-              </ItemControls>
-            </ItemTableCell>
-          {/if}
-        </ItemTableRow>
-      {/each}
-      {#if $store.owner && allowEdit}
-        <ItemTableFooter
-          dataset={activeAbilitiesSection.dataset}
-          actor={$store.actor}
-        />
-      {/if}
-    </ItemTable>
-  {/if}
-
-  {#if (searchCriteria.trim() === '' && allowEdit) || filteredPassiveAbilities.length > 0}
-    <ItemTable>
-      <ItemTableHeaderRow>
-        <ItemTableColumn primary={true}>
-          {localize(passiveAbilitiesSection.label)}
-        </ItemTableColumn>
-        <ItemTableColumn baseWidth="7.5rem">
-          {localize('DND5E.Source')}
-        </ItemTableColumn>
-        <ItemTableColumn baseWidth="7.5rem">
-          {localize('DND5E.Requirements')}
-        </ItemTableColumn>
-        {#if $store.owner && classicControlsEnabled}
-          <ItemTableColumn baseWidth={classicControlsBaseWidth} />
+        {#if $store.owner && allowEdit}
+          <ItemTableFooter
+            dataset={backgroundSection.dataset}
+            actor={$store.actor}
+          />
         {/if}
-      </ItemTableHeaderRow>
-      {#each filteredPassiveAbilities as item (item.id)}
-        <ItemTableRow
-          {item}
-          let:toggleSummary
-          on:mousedown={(event) =>
-            FoundryAdapter.editOnMiddleClick(event.detail, item)}
-          contextMenu={{
-            type: CONSTANTS.CONTEXT_MENU_TYPE_ITEMS,
-            id: item.id,
-          }}
-        >
-          <ItemTableCell primary={true}>
-            <ItemUseButton {item} />
-            <ItemName
-              on:click={(event) => toggleSummary(event.detail, $store.actor)}
-              hasChildren={false}
-            >
-              {item.name}
-            </ItemName>
-          </ItemTableCell>
+      </ItemTable>
+    {/if}
 
-          <!-- TODO: Handle more gracefully -->
-          {#if !hideIconsNextToTheItemName && FoundryAdapter.tryGetFlag(item, 'favorite')}
-            <InlineFavoriteIcon />
+    {#if (searchCriteria.trim() === '' && allowEdit) || filteredClasses.length > 0}
+      <ItemTable>
+        <ItemTableHeaderRow>
+          <ItemTableColumn primary={true}>
+            {localize(classSection.label)}
+          </ItemTableColumn>
+          <ItemTableColumn baseWidth="7.5rem">
+            {localize('DND5E.Source')}
+          </ItemTableColumn>
+          <ItemTableColumn baseWidth="7.5rem">
+            {localize('DND5E.Level')}
+          </ItemTableColumn>
+          {#if $store.owner && classicControlsEnabled && $store.editable}
+            <ItemTableColumn baseWidth={classicControlsBaseWidth} />
           {/if}
-
-          <ItemTableCell baseWidth="7.5rem">
-            <span class="truncate" title={item.system.source}
-              >{item.system.source}</span
-            >
-          </ItemTableCell>
-          <ItemTableCell baseWidth="7.5rem">
-            <span class="truncate" title={item.system.requirements ?? ''}
-              >{item.system.requirements ?? ''}</span
-            >
-          </ItemTableCell>
-
-          {#if $store.owner && classicControlsEnabled}
-            <ItemTableCell baseWidth={classicControlsBaseWidth}>
-              <ItemControls>
-                <ItemFavoriteControl {item} />
-                <ItemEditControl {item} />
-                {#if allowEdit}
-                  <ItemDuplicateControl {item} />
-                  <ItemDeleteControl {item} />
+        </ItemTableHeaderRow>
+        {#each filteredClasses as item (item.id)}
+          <ItemTableRow
+            {item}
+            on:mousedown={(event) =>
+              FoundryAdapter.editOnMiddleClick(event.detail, item)}
+            contextMenu={{
+              type: CONSTANTS.CONTEXT_MENU_TYPE_ITEMS,
+              id: item.id,
+            }}
+            let:toggleSummary
+          >
+            <ItemTableCell primary={true}>
+              <ItemUseButton {item} />
+              <ItemName
+                on:click={(event) => toggleSummary(event.detail, $store.actor)}
+                hasChildren={false}
+              >
+                {#if item.type === 'subclass'}&rdsh;{/if}
+                {item.name}
+                {#if item.system.isOriginalClass}
+                  <i
+                    class="original-class fas fa-sun"
+                    title={localize('DND5E.ClassOriginal')}
+                  />
                 {/if}
-              </ItemControls>
+              </ItemName>
             </ItemTableCell>
+
+            <!-- TODO: Handle more gracefully -->
+            {#if !hideIconsNextToTheItemName && FoundryAdapter.tryGetFlag(item, 'favorite')}
+              <InlineFavoriteIcon />
+            {/if}
+
+            <ItemTableCell baseWidth="7.5rem">
+              <span class="truncate" title={item.system.source}
+                >{item.system.source}</span
+              >
+            </ItemTableCell>
+            <ItemTableCell baseWidth="7.5rem">
+              {#if item.type === 'class'}
+                <select
+                  on:change={(event) =>
+                    FoundryAdapter.onLevelChange(event, item, $store.actor)}
+                >
+                  {#each getAvailableLevels(item.id) as availableLevel}
+                    <option
+                      value={availableLevel.delta}
+                      disabled={availableLevel.disabled || undefined}
+                      selected={availableLevel.delta === 0}
+                    >
+                      {localize('DND5E.LevelNumber', {
+                        level: availableLevel.level,
+                      })}
+                      {#if availableLevel.delta}
+                        ({formatAsModifier(availableLevel.delta)})
+                      {/if}
+                    </option>
+                  {/each}
+                </select>
+              {/if}
+            </ItemTableCell>
+
+            {#if $store.owner && classicControlsEnabled && $store.editable}
+              <ItemTableCell baseWidth={classicControlsBaseWidth}>
+                <ItemControls>
+                  {#if item.type !== 'class'}
+                    <ItemFavoriteControl {item} />
+                  {/if}
+                  <ItemEditControl {item} />
+                  {#if allowEdit}
+                    <ItemDuplicateControl {item} />
+                    <ItemDeleteControl {item} />
+                  {/if}
+                </ItemControls>
+              </ItemTableCell>
+            {/if}
+          </ItemTableRow>
+        {/each}
+        {#if $store.owner && allowEdit && $store.editable}
+          <ItemTableFooter
+            dataset={classSection.dataset}
+            actor={$store.actor}
+          />
+        {/if}
+      </ItemTable>
+    {/if}
+
+    {#if (searchCriteria.trim() === '' && allowEdit) || filteredActiveAbilities.length > 0}
+      <ItemTable>
+        <ItemTableHeaderRow>
+          <ItemTableColumn primary={true}>
+            {localize(activeAbilitiesSection.label)}
+          </ItemTableColumn>
+          <ItemTableColumn baseWidth="3.125rem">
+            {localize('DND5E.Uses')}
+          </ItemTableColumn>
+          <ItemTableColumn baseWidth="7.5rem">
+            {localize('DND5E.Usage')}
+          </ItemTableColumn>
+          <ItemTableColumn baseWidth="7.5rem">
+            {localize('DND5E.Source')}
+          </ItemTableColumn>
+          <ItemTableColumn baseWidth="7.5rem">
+            {localize('DND5E.Requirements')}
+          </ItemTableColumn>
+          {#if $store.owner && classicControlsEnabled}
+            <ItemTableColumn baseWidth={classicControlsBaseWidth} />
           {/if}
-        </ItemTableRow>
-      {/each}
-      {#if $store.owner && allowEdit}
-        <ItemTableFooter
-          dataset={passiveAbilitiesSection.dataset}
-          actor={$store.actor}
-        />
-      {/if}
-    </ItemTable>
+        </ItemTableHeaderRow>
+        {#each filteredActiveAbilities as item (item.id)}
+          {@const ctx = $store.itemContext[item.id]}
+          <ItemTableRow
+            {item}
+            let:toggleSummary
+            on:mousedown={(event) =>
+              FoundryAdapter.editOnMiddleClick(event.detail, item)}
+            contextMenu={{
+              type: CONSTANTS.CONTEXT_MENU_TYPE_ITEMS,
+              id: item.id,
+            }}
+          >
+            <ItemTableCell primary={true}>
+              <ItemUseButton {item} />
+              <ItemName
+                on:click={(event) => toggleSummary(event.detail, $store.actor)}
+                hasChildren={false}
+              >
+                {item.name}
+              </ItemName>
+            </ItemTableCell>
+
+            <!-- TODO: Handle more gracefully -->
+            {#if !hideIconsNextToTheItemName && FoundryAdapter.tryGetFlag(item, 'favorite')}
+              <InlineFavoriteIcon />
+            {/if}
+
+            <ItemTableCell baseWidth="3.125rem">
+              {#if ctx?.isOnCooldown}
+                <a
+                  title={item.labels.recharge}
+                  role="button"
+                  tabindex="0"
+                  on:click={() => item.rollRecharge()}
+                >
+                  <i class="fas fa-dice-six" />
+                  {item.system.recharge
+                    .value}{#if item.system.recharge.value !== 6}+{/if}</a
+                >
+              {:else if item.system.recharge.value}
+                <i class="fas fa-bolt" title={localize('DND5E.Charged')} />
+              {:else if ctx?.hasUses}
+                <ItemUses {item} />
+              {:else}
+                <ItemAddUses {item} />
+              {/if}
+            </ItemTableCell>
+            <ItemTableCell baseWidth="7.5rem">
+              {#if item.system.activation.type}
+                {item.labels.activation}
+              {/if}
+            </ItemTableCell>
+            <ItemTableCell baseWidth="7.5rem">
+              <span class="truncate" title={item.system.source}
+                >{item.system.source}</span
+              >
+            </ItemTableCell>
+            <ItemTableCell baseWidth="7.5rem">
+              <span class="truncate" title={item.system.requirements ?? ''}
+                >{item.system.requirements ?? ''}</span
+              >
+            </ItemTableCell>
+
+            {#if $store.owner && classicControlsEnabled}
+              <ItemTableCell baseWidth={classicControlsBaseWidth}>
+                <ItemControls>
+                  <ItemFavoriteControl {item} />
+                  <ItemEditControl {item} />
+                  {#if allowEdit}
+                    <ItemDuplicateControl {item} />
+                    <ItemDeleteControl {item} />
+                  {/if}
+                </ItemControls>
+              </ItemTableCell>
+            {/if}
+          </ItemTableRow>
+        {/each}
+        {#if $store.owner && allowEdit}
+          <ItemTableFooter
+            dataset={activeAbilitiesSection.dataset}
+            actor={$store.actor}
+          />
+        {/if}
+      </ItemTable>
+    {/if}
+
+    {#if (searchCriteria.trim() === '' && allowEdit) || filteredPassiveAbilities.length > 0}
+      <ItemTable>
+        <ItemTableHeaderRow>
+          <ItemTableColumn primary={true}>
+            {localize(passiveAbilitiesSection.label)}
+          </ItemTableColumn>
+          <ItemTableColumn baseWidth="7.5rem">
+            {localize('DND5E.Source')}
+          </ItemTableColumn>
+          <ItemTableColumn baseWidth="7.5rem">
+            {localize('DND5E.Requirements')}
+          </ItemTableColumn>
+          {#if $store.owner && classicControlsEnabled}
+            <ItemTableColumn baseWidth={classicControlsBaseWidth} />
+          {/if}
+        </ItemTableHeaderRow>
+        {#each filteredPassiveAbilities as item (item.id)}
+          <ItemTableRow
+            {item}
+            let:toggleSummary
+            on:mousedown={(event) =>
+              FoundryAdapter.editOnMiddleClick(event.detail, item)}
+            contextMenu={{
+              type: CONSTANTS.CONTEXT_MENU_TYPE_ITEMS,
+              id: item.id,
+            }}
+          >
+            <ItemTableCell primary={true}>
+              <ItemUseButton {item} />
+              <ItemName
+                on:click={(event) => toggleSummary(event.detail, $store.actor)}
+                hasChildren={false}
+              >
+                {item.name}
+              </ItemName>
+            </ItemTableCell>
+
+            <!-- TODO: Handle more gracefully -->
+            {#if !hideIconsNextToTheItemName && FoundryAdapter.tryGetFlag(item, 'favorite')}
+              <InlineFavoriteIcon />
+            {/if}
+
+            <ItemTableCell baseWidth="7.5rem">
+              <span class="truncate" title={item.system.source}
+                >{item.system.source}</span
+              >
+            </ItemTableCell>
+            <ItemTableCell baseWidth="7.5rem">
+              <span class="truncate" title={item.system.requirements ?? ''}
+                >{item.system.requirements ?? ''}</span
+              >
+            </ItemTableCell>
+
+            {#if $store.owner && classicControlsEnabled}
+              <ItemTableCell baseWidth={classicControlsBaseWidth}>
+                <ItemControls>
+                  <ItemFavoriteControl {item} />
+                  <ItemEditControl {item} />
+                  {#if allowEdit}
+                    <ItemDuplicateControl {item} />
+                    <ItemDeleteControl {item} />
+                  {/if}
+                </ItemControls>
+              </ItemTableCell>
+            {/if}
+          </ItemTableRow>
+        {/each}
+        {#if $store.owner && allowEdit}
+          <ItemTableFooter
+            dataset={passiveAbilitiesSection.dataset}
+            actor={$store.actor}
+          />
+        {/if}
+      </ItemTable>
+    {/if}
   {/if}
 </ListContainer>
 

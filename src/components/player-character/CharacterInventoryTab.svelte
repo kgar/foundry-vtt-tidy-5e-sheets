@@ -14,6 +14,7 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import Currency from 'src/sheets/actor/Currency.svelte';
+  import Notice from '../shared/Notice.svelte';
 
   let store = getContext<Readable<ActorSheetContext>>('store');
 
@@ -36,6 +37,9 @@
 
     FoundryAdapter.setFlag($store.actor, 'inventory-grid', true);
   }
+
+  $: noItems =
+    $store.inventory.some((section: any) => section.items.length > 0) === false;
 </script>
 
 <ItemFilters>
@@ -60,24 +64,32 @@
 </ItemFilters>
 
 <ListContainer>
-  {#each $store.inventory as section (section.label)}
-    {@const filteredItems = FoundryAdapter.getFilteredItems(
-      searchCriteria,
-      section.items
-    )}
-    {#if (searchCriteria.trim() === '' && allowEdit) || filteredItems.length > 0}
-      {#if layoutMode === 'list'}
-        <InventoryList
-          primaryColumnName="{localize(section.label)} ({filteredItems.length})"
-          items={filteredItems}
-          extraInventoryRowClasses={section.css}
-          dataset={section.dataset}
-        />
-      {:else}
-        <InventoryGrid items={filteredItems} {section} />
+  {#if noItems && !allowEdit}
+    <Notice cssClass="small-margin-top"
+      >{localize('TIDY5E.EmptySection')}</Notice
+    >
+  {:else}
+    {#each $store.inventory as section (section.label)}
+      {@const filteredItems = FoundryAdapter.getFilteredItems(
+        searchCriteria,
+        section.items
+      )}
+      {#if (searchCriteria.trim() === '' && allowEdit) || filteredItems.length > 0}
+        {#if layoutMode === 'list'}
+          <InventoryList
+            primaryColumnName="{localize(
+              section.label
+            )} ({filteredItems.length})"
+            items={filteredItems}
+            extraInventoryRowClasses={section.css}
+            dataset={section.dataset}
+          />
+        {:else}
+          <InventoryGrid items={filteredItems} {section} />
+        {/if}
       {/if}
-    {/if}
-  {/each}
+    {/each}
+  {/if}
 </ListContainer>
 
 <footer class="inventory-footer">

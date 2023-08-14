@@ -1,18 +1,3 @@
-## Top of Mind
-
-- [x] Default Tab applies to NPCs as well as PCs and Vehicles. 
-  - [x] Wire up for NPC
-  - [x] Wire up for Vehicle
-- [ ] Lair Action Initiative input is not allowing me to clear it out. It always sets it to 0. Fix that.
-- [ ] "TIDY5E.EmptySection" / "This section is empty. Unlock the sheet to edit." banner should show in the player character sheet Inventory tab when allow-edit is false and there are no inventory sections shown
-- [ ] PC spellbook tab
-  - [ ] "DND5E.NoSpellLevels": "This character has no spellcaster levels, but you may add spells manually." if `filters.spellbook.size` is false / 0
-  - [ ] "TIDY5E.EmptySection" / "This section is empty. Unlock the sheet to edit." if allow-edit is false and there are no spells
-- [ ] PC features tab
-  - [ ] "TIDY5E.EmptySection" / "This section is empty. Unlock the sheet to edit." if allow-edit is false and there are no features and it's locked
-- [ ] Ditto PC effects tab
-
-
 ## To Do
 
 
@@ -80,7 +65,7 @@
         - [x] Settings
             - [x] hideSpellbookTabNpc
               - [x] when on: hide the spellbook tab altogether
-      - [ ] Effects
+      - [x] Effects
       - [ ] Biography
       - [ ] Journal
       - [ ] Toggle Lock
@@ -118,3 +103,14 @@
 - [ ] `dtype` fields: formalize these as features of the input components, rather than just receiving them. Give the props names.
   - [ ] One way to go about this would be to have a universal function for preparing data for saving. It could take things like dtype, which would be set to known values.
   - [ ] Also figure out how to do the `draftValue` reversion on failed save approach without having to copy/paste it everywhere.
+- [x] Default Tab applies to NPCs as well as PCs and Vehicles. 
+  - [x] Wire up for NPC
+  - [x] Wire up for Vehicle
+- [x] Lair Action Initiative input is not allowing me to clear it out. It always sets it to 0. Fix that.
+- [x] "TIDY5E.EmptySection" / "This section is empty. Unlock the sheet to edit." banner should show in the player character sheet Inventory tab when allow-edit is false and there are no inventory sections shown
+- [x] PC spellbook tab
+  - [x] "DND5E.NoSpellLevels": "This character has no spellcaster levels, but you may add spells manually." if `filters.spellbook.size` is false / 0
+  - [x] "TIDY5E.EmptySection" / "This section is empty. Unlock the sheet to edit." if allow-edit is false and there are no spells
+- [x] PC features tab
+  - [x] "TIDY5E.EmptySection" / "This section is empty. Unlock the sheet to edit." if allow-edit is false and there are no features and it's locked
+- [x] Ditto PC effects tab

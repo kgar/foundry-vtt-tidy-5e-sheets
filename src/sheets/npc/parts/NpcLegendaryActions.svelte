@@ -1,7 +1,7 @@
 <script lang="ts">
   import Checkbox from 'src/components/form/Checkbox.svelte';
   import NumberInput from 'src/components/form/NumberInput.svelte';
-    import TextInput from 'src/components/form/TextInput.svelte';
+  import TextInput from 'src/components/form/TextInput.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { NpcSheetContext } from 'src/types/types';
   import { getContext } from 'svelte';
@@ -89,6 +89,7 @@
           dtype="Number"
           placeholder="Init."
           selectOnFocus={true}
+          saveEmptyAsNull={true}
         />
       </div>
     </div>
