@@ -9,6 +9,9 @@ import { applyTitleToWindow } from 'src/utils/applications';
 import { error } from 'src/utils/logging';
 import { SettingsProvider } from 'src/settings/settings';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
+import { isLessThanOneIsOne } from 'src/utils/numbers';
+import NpcShortRestDialog from 'src/dialogs/NpcShortRestDialog';
+import LongRestDialog from 'src/dialogs/NpcLongRestDialog';
 
 const ActorSheet5eNpc = FoundryAdapter.getActorSheetNpcClass();
 
@@ -239,7 +242,7 @@ export class Tidy5eNpcSheet extends ActorSheet5eNpc {
     // Display a Dialog for rolling hit dice
     if (config.dialog) {
       try {
-        config.newDay = await ShortRestDialog.shortRestDialog({
+        config.newDay = await NpcShortRestDialog.shortRestDialog({
           actor: this.actor,
           canRoll: hd0 > 0,
         });
@@ -292,7 +295,7 @@ export class Tidy5eNpcSheet extends ActorSheet5eNpc {
           actor: this.actor,
         });
       } catch (err) {
-        // error(err?.message, true);
+        error(err?.message, true);
         return;
       }
     }

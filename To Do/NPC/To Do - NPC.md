@@ -73,8 +73,8 @@
     - [x] Biography
 - [ ] Settings
   - [x] Hide NPC Journal
-  - [ ] Resting for NPCs
-  - [ ] Hide chat card for NPC rest
+  - [x] Resting for NPCs
+  - [x] Hide chat card for NPC rest
   - [ ] Mark linked/unlinked NPCs
   - [ ] Disable health bar
   - [ ] Hide hit point overlay
@@ -117,3 +117,4 @@
   - [x] "TIDY5E.EmptySection" / "This section is empty. Unlock the sheet to edit." if allow-edit is false and there are no features and it's locked
 - [x] Ditto PC effects tab
 - [ ] Some Player settings are applying to NPCs because of sharing actor components. Identify all SettingsProvider calls within shared components and parameterize them out to the parent components to resolve; example: "Show exhaustion tracker only on hover" applies to both but should only apply to PCs.
+- [ ] Cannibalize `_portrait.scss` styles

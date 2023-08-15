@@ -59,4 +59,8 @@
 .player-image {
   background: var(--t5e-icon-background);
   box-shadow: 0 0 10px var(--t5e-icon-shadow) inset;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
 }

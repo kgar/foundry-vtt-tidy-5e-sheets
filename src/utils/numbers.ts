@@ -19,3 +19,7 @@ export function toNumber(str: string) {
   }
   return +str;
 }
+
+export function isLessThanOneIsOne(inNumber: number) {
+  return inNumber < 1 ? 1 : inNumber;
+}
