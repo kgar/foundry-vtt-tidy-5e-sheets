@@ -76,12 +76,17 @@
   - [x] Resting for NPCs
   - [x] Hide chat card for NPC rest
   - [ ] Mark linked/unlinked NPCs
-  - [ ] Disable health bar
-  - [ ] Hide hit point overlay
-  - [ ] Always show traits
-  - [ ] Move traits below resources
+    - This feature puts an unlinked symbol by the player name when they pull up a sheet that is not linked to the original actor when the option is "unlinked" or "both".
+    - It supposedly puts a different symbol there when linked to the original actor when the option is "both".
+    - It supposedly puts a different symbol still when there is no token but "both" or "unlinked" is selected.
+      - ⚠ The prop accessing logic looks like it has become outdated for determining which token we're looking at. Review this with the debugger on when you are back on your computer with hardware acceleration turned on.
+    - [ ] Consider packing this information into context when building it ♥
+  - [x] Disable health bar
+  - [x] Hide hit point overlay
+  - [x] Always show traits
+  - [x] Move traits below resources
   - [x] Hide Spellbook tab on NPC
-  - [ ] Default NPC sheet width
+  - [x] Default NPC sheet width
 
 ## Refactor and Refine
 
@@ -118,3 +123,4 @@
 - [x] Ditto PC effects tab
 - [ ] Some Player settings are applying to NPCs because of sharing actor components. Identify all SettingsProvider calls within shared components and parameterize them out to the parent components to resolve; example: "Show exhaustion tracker only on hover" applies to both but should only apply to PCs.
 - [ ] Cannibalize `_portrait.scss` styles
+- [ ] Convert `src\sheets\character\parts\CharacterHitPoints.svelte` inputs to use the input components and `selectOnFocus={true}`

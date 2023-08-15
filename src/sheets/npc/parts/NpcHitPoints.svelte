@@ -1,6 +1,7 @@
 <script lang="ts">
   import TextInput from 'src/components/form/TextInput.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import { SettingsProvider } from 'src/settings/settings';
   import type { ActorSheetContext } from 'src/types/types';
   import { isRealNumber } from 'src/utils/numbers';
   import { getContext } from 'svelte';
@@ -27,19 +28,18 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-<div
-  class="portrait-hp"
-  title={localize('DND5E.HitPoints')}
->
-  <div
-    class="hp-bar"
-    style="background: linear-gradient(
+<div class="portrait-hp" title={localize('DND5E.HitPoints')}>
+  {#if !SettingsProvider.settings.hpBarDisabledNpc.get()}
+    <div
+      class="hp-bar"
+      style="background: linear-gradient(
       -90deg,
       transparent 0%,
       transparent calc(100% -  {hpBarCalculationCurrent}%),
             rgba(0, 200, 0, 0.5) calc(100% - {hpBarCalculationCurrent}%),
             rgba(0, 200, 0, 0.5) 100%);"
-  />
+    />
+  {/if}
   <TextInput
     cssClass="hp-min"
     document={$store.actor}
@@ -50,6 +50,7 @@
     dtype="Number"
     maxlength={5}
     ariaDescribedBy="tooltip"
+    selectOnFocus={true}
   />
   <span class="value-seperator sep"> / </span>
   <TextInput
@@ -62,6 +63,7 @@
     dtype="Number"
     maxlength={5}
     ariaDescribedBy="tooltip"
+    selectOnFocus={true}
   />
 </div>
 

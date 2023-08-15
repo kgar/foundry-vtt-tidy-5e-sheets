@@ -36,7 +36,7 @@
 <div class="profile-wrap">
   <div class="profile" class:round-portrait={useRoundedPortraitStyle}>
     <CharacterPortrait actor={$store.actor} />
-    {#if !SettingsProvider.settings.hpOverlayDisabled.get()}
+    {#if !SettingsProvider.settings.hpOverlayDisabledNpc.get()}
       <HpOverlay {useRoundedPortraitStyle} actor={$store.actor} />
     {/if}
     {#if showDeathSaves()}
