@@ -19,7 +19,7 @@ export class Tidy5eKgarUserSettings extends FormApplication {
           initial: 'Players',
         },
       ],
-      submitOnClose: true,
+      submitOnClose: false,
     };
   }
 
@@ -52,6 +52,10 @@ export class Tidy5eKgarUserSettings extends FormApplication {
   }
 
   activateListeners(html: any) {
+    html.find('.apply-changes-btn').click((ev: MouseEvent) => {
+      const formData = this._getSubmitData();
+      this._updateObject(ev, formData);
+    });
     // TODO: DO IT IN SVELTE
     // super.activateListeners(html);
     // // debug('Listeners Active!')

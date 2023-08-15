@@ -2,7 +2,7 @@
 
 - [x] Register the sheet as a child of the original 5e sheet
 - [x] Fill out the sheet stuff for svelte mode
-- [ ] Implement
+- [x] Implement
   - [x] Full NPC
     - [x] Header
       - [x] HTML
@@ -68,11 +68,20 @@
       - [x] Biography
       - [x] Journal
       - [x] Toggle Lock
-  - [ ] Ltd NPC
-    - [ ] Configure to appear when user is NOT GM and actor is limited
-    - [ ] Biography
+  - [x] Ltd NPC
+    - [x] Configure to appear when user is NOT GM and actor is limited
+    - [x] Biography
 - [ ] Settings
-  - [ ] ...
+  - [x] Hide NPC Journal
+  - [ ] Resting for NPCs
+  - [ ] Hide chat card for NPC rest
+  - [ ] Mark linked/unlinked NPCs
+  - [ ] Disable health bar
+  - [ ] Hide hit point overlay
+  - [ ] Always show traits
+  - [ ] Move traits below resources
+  - [x] Hide Spellbook tab on NPC
+  - [ ] Default NPC sheet width
 
 ## Refactor and Refine
 
@@ -107,3 +116,4 @@
 - [x] PC features tab
   - [x] "TIDY5E.EmptySection" / "This section is empty. Unlock the sheet to edit." if allow-edit is false and there are no features and it's locked
 - [x] Ditto PC effects tab
+- [ ] Some Player settings are applying to NPCs because of sharing actor components. Identify all SettingsProvider calls within shared components and parameterize them out to the parent components to resolve; example: "Show exhaustion tracker only on hover" applies to both but should only apply to PCs.

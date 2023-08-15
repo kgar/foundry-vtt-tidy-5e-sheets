@@ -614,5 +614,7 @@
   },
 
   "T5EK.WindowHeaderSheetSettingsTooltip": "Open Tidy 5e Sheet Settings",
-  "T5EK.FavoriteSpellLevelLabel": "Spell Level {number}"
+  "T5EK.FavoriteSpellLevelLabel": "Spell Level {number}",
+  "T5EK.ApplyChanges": "Apply Changes",
+  "T5EK.SaveChanges": "Save Changes"
 }

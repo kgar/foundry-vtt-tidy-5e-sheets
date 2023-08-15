@@ -68,15 +68,18 @@
       content: {
         component: NpcBiographyTab,
       },
-    },
-    {
+    }
+  );
+
+  if (!SettingsProvider.settings.journalTabNPCDisabled.get()) {
+    tabs.push({
       id: CONSTANTS.TAB_NPC_JOURNAL,
       displayName: 'TIDY5E.Journal',
       content: {
         component: ActorJournalTab,
       },
-    }
-  );
+    });
+  }
 
   if (!tabs.some((tab) => tab.id === selectedTabId)) {
     selectedTabId = tabs[0]?.id;

@@ -8,6 +8,8 @@
 
 - [ ] Text Editors not all enriching HTML
   - [ ] See [examples](#enriching-html) from original dnd5e system.
+  - [ ] Also see Tidy 5e approach in `tidy5e-npc.js` `getData()` function (around line 211) for adding the enriched HTML version of a field to context. There is no reason not to enrich all HTML.
+  - [ ] ⚠ If the HTML is not enriched, then secrets will be visible to limited / non-GM viewers.
   - [ ] Recreate this but have it supported on all text editors via optional enrichment prop (think of decent name)
 - [ ] Effects tab - create prototype of grid components with collapsibility that can be remembered for the player for the given sheet
   - [ ] Lay out the effects tab using the grid components approach

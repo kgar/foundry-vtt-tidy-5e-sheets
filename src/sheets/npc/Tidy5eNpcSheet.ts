@@ -1,7 +1,8 @@
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type { ActorSheetContext, SheetStats } from 'src/types/types';
 import { writable } from 'svelte/store';
-import Tidy5eNpcSheetComponent from './NpcSheet.svelte';
+import NpcSheet from './NpcSheet.svelte';
+import NpcSheetLimited from './NpcSheetLimited.svelte';
 import { CONSTANTS } from 'src/constants';
 import { Tidy5eKgarUserSettings } from 'src/settings/user-settings-form';
 import { applyTitleToWindow } from 'src/utils/applications';
@@ -39,16 +40,26 @@ export class Tidy5eNpcSheet extends ActorSheet5eNpc {
     const initialContext = await this.getContext();
     this.store.set(initialContext);
 
-    new Tidy5eNpcSheetComponent({
-      target: node,
-      props: {
-        selectedTabId: this.#getSelectedTabId(),
-      },
-      context: new Map<any, any>([
-        ['store', this.store],
-        ['stats', this.stats],
-      ]),
-    });
+    if (!game.user.isGM && this.actor.limited) {
+      new NpcSheetLimited({
+        target: node,
+        context: new Map<any, any>([
+          ['store', this.store],
+          ['stats', this.stats],
+        ]),
+      });
+    } else {
+      new NpcSheet({
+        target: node,
+        props: {
+          selectedTabId: this.#getSelectedTabId(),
+        },
+        context: new Map<any, any>([
+          ['store', this.store],
+          ['stats', this.stats],
+        ]),
+      });
+    }
 
     initTidy5eContextMenu.call(this, html);
   }
@@ -56,7 +67,8 @@ export class Tidy5eNpcSheet extends ActorSheet5eNpc {
   #getSelectedTabId(): string {
     if (
       !game.modules.get('character-actions-list-5e')?.active &&
-      SettingsProvider.settings.defaultActionsTab.get() === CONSTANTS.TAB_NPC_ACTIONS
+      SettingsProvider.settings.defaultActionsTab.get() ===
+        CONSTANTS.TAB_NPC_ACTIONS
     ) {
       return CONSTANTS.TAB_NPC_ABILITIES;
     }
