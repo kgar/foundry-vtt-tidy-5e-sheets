@@ -14,7 +14,7 @@
 <!-- svelte-ignore a11y-missing-attribute -->
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <div
-  class="portrait-hd has-note"
+  class="portrait-hd"
   class:rounded={useRoundedPortraitStyle}
   data-tooltip="{localize(
     'DND5E.HitDice'

@@ -36,7 +36,7 @@
 </script>
 
 <div
-  class="exhaustion-container {exhaustionIntensity[level]} has-note {cssClass}"
+  class="exhaustion-container {exhaustionIntensity[level]} {cssClass}"
   class:only-show-on-hover={onlyShowOnHover}
 >
   <div class="level-display" class:colorized={level > 0}>

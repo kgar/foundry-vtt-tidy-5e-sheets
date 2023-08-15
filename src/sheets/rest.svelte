@@ -14,7 +14,7 @@
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <!-- svelte-ignore a11y-missing-attribute -->
-<div class="rest-container has-note" class:rounded={useRoundedPortraitStyle}>
+<div class="rest-container" class:rounded={useRoundedPortraitStyle}>
   <div class="resting">
     <span class="resting-icon" data-tooltip={localize('T5EK.RestHint')}
       ><i class="rest-icon fas fa-bed" /></span

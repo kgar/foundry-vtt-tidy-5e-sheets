@@ -88,13 +88,44 @@
   - [x] Hide Spellbook tab on NPC
   - [x] Default NPC sheet width
 
+### Linked/Unlinked Tokens implementation
+
+I think this might not work anymore... Not completely...:
+
+```js
+// In the NPC Sheet class
+async function setSheetClasses(app, html, data) {
+  const { token } = app;
+
+  // ...
+
+  if (
+    token &&
+    token.actor.prototypeToken.actorLink &&
+    game.settings.get(CONSTANTS.MODULE_ID, 'linkMarkerNpc') == 'both'
+  ) {
+    html.find('.tidy5e-sheet.tidy5e-npc').addClass('linked');
+  }
+  if (
+    token &&
+    !token.actor.prototypeToken.actorLink &&
+    (game.settings.get(CONSTANTS.MODULE_ID, 'linkMarkerNpc') == 'unlinked' ||
+      game.settings.get(CONSTANTS.MODULE_ID, 'linkMarkerNpc') == 'both')
+  ) {
+    html.find('.tidy5e-sheet.tidy5e-npc').addClass('unlinked');
+  }
+  if (
+    !token &&
+    (game.settings.get(CONSTANTS.MODULE_ID, 'linkMarkerNpc') == 'unlinked' ||
+      game.settings.get(CONSTANTS.MODULE_ID, 'linkMarkerNpc') == 'both')
+  ) {
+    html.find('.tidy5e-sheet.tidy5e-npc').addClass('original');
+  }
+}
+```
+
 ## Refactor and Refine
 
-- [x] Do we want to use a base sheet for all actors? No, because they all use different context from established sheets.
-- [ ] Move `_inventory` and `_inventory-grid` styles to where they should go in the components
-- [ ] Cannibalize as many `_character-sheet` styles as possible to where they should go in the components
-- [ ] Extract a universal portait container that directs rounded styles and anything else that can be shareable
-  - [ ] Cannibalize the global styles which are shared by NPC and Character profiles
 - [ ] Consider converting `tooltip` to just `title` on text inputs
 - [ ] Add prop obj `inputProps` on `TextInput`; move all input props that have direct equivalents in input elements out of the main component and into the inputProps obj and spread that on the underlying input
   - [ ] Ditto on `Select`
@@ -109,6 +140,13 @@
   - [ ] Checkbox
 - [ ] `dtype` fields: formalize these as features of the input components, rather than just receiving them. Give the props names.
   - [ ] One way to go about this would be to have a universal function for preparing data for saving. It could take things like dtype, which would be set to known values.
+- [ ] Some Player settings are applying to NPCs because of sharing actor components. Identify all SettingsProvider calls within shared components and parameterize them out to the parent components to resolve; example: "Show exhaustion tracker only on hover" applies to both but should only apply to PCs.
+- [ ] Convert `src\sheets\character\parts\CharacterHitPoints.svelte` inputs to use the input components and `selectOnFocus={true}`
+- [x] Do we want to use a base sheet for all actors? No, because they all use different context from established sheets.
+- [x] Move `_inventory` and `_inventory-grid` styles to where they should go in the components
+- [x] Cannibalize as many `_character-sheet` styles as possible to where they should go in the components
+- [x] Extract a universal portait container that directs rounded styles and anything else that can be shareable
+  - [x] Cannibalize the global styles which are shared by NPC and Character profiles
   - [ ] Also figure out how to do the `draftValue` reversion on failed save approach without having to copy/paste it everywhere.
 - [x] Default Tab applies to NPCs as well as PCs and Vehicles.
   - [x] Wire up for NPC
@@ -121,6 +159,4 @@
 - [x] PC features tab
   - [x] "TIDY5E.EmptySection" / "This section is empty. Unlock the sheet to edit." if allow-edit is false and there are no features and it's locked
 - [x] Ditto PC effects tab
-- [ ] Some Player settings are applying to NPCs because of sharing actor components. Identify all SettingsProvider calls within shared components and parameterize them out to the parent components to resolve; example: "Show exhaustion tracker only on hover" applies to both but should only apply to PCs.
-- [ ] Cannibalize `_portrait.scss` styles
-- [ ] Convert `src\sheets\character\parts\CharacterHitPoints.svelte` inputs to use the input components and `selectOnFocus={true}`
+- [x] Cannibalize `_portrait.scss` styles

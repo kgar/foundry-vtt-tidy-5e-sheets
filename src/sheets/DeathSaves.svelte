@@ -37,7 +37,7 @@
         submitText(event, $store.actor, 'system.attributes.death.success')}
     />
     <div
-      class="death-save rollable has-note"
+      class="death-save rollable"
       on:click={(event) => dispatcher('rollDeathSave', { mouseEvent: event })}
     >
       <i class="fas fa-skull" />

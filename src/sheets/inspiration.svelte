@@ -19,12 +19,13 @@
 </script>
 
 <div
-  class="inspiration has-note inspiration-{inspired ? 1 : 0} {cssClass}"
+  class="inspiration inspiration-{inspired ? 1 : 0} {cssClass}"
   class:only-show-on-hover={onlyShowOnHover}
   data-tooltip={localize('DND5E.Inspiration')}
 >
   <label class:inspired class={radiusClass}>
     <input
+      class="inspiration-toggle"
       type="checkbox"
       data-dtype="Boolean"
       checked={inspired}
@@ -50,7 +51,7 @@
     z-index: 5;
   }
 
-  .inspiration input {
+  .inspiration input.inspiration-toggle {
     display: none;
   }
 

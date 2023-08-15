@@ -13,6 +13,7 @@
   import TempHp from '../../TempHp.svelte';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
+  import ActorProfile from 'src/sheets/actor/ActorProfile.svelte';
 
   let store = getContext<Readable<ActorSheetContext>>('store');
 
@@ -38,64 +39,60 @@
 <!-- TODO: Resolve linting comments after done re-styling -->
 <!-- svelte-ignore a11y-missing-attribute -->
 <!-- svelte-ignore a11y-click-events-have-key-events -->
-<div class="profile-wrap">
-  <div class="profile" class:round-portrait={useRoundedPortraitStyle}>
-    <ActorPortrait actor={$store.actor} />
+<ActorProfile {useRoundedPortraitStyle}>
+  {#if !SettingsProvider.settings.hpOverlayDisabled.get()}
+    <HpOverlay {useRoundedPortraitStyle} actor={$store.actor} />
+  {/if}
 
-    {#if !SettingsProvider.settings.hpOverlayDisabled.get()}
-      <HpOverlay {useRoundedPortraitStyle} actor={$store.actor} />
-    {/if}
+  {#if showDeathSaves()}
+    <DeathSaves
+      successes={$store.system.attributes.death.success}
+      failures={$store.system.attributes.death.failure}
+      {useRoundedPortraitStyle}
+      on:rollDeathSave={(event) =>
+        $store.actor.rollDeathSave({ event: event.detail.mouseEvent })}
+    />
+  {/if}
 
-    {#if showDeathSaves()}
-      <DeathSaves
-        successes={$store.system.attributes.death.success}
-        failures={$store.system.attributes.death.failure}
-        {useRoundedPortraitStyle}
-        on:rollDeathSave={(event) =>
-          $store.actor.rollDeathSave({ event: event.detail.mouseEvent })}
-      />
-    {/if}
+  {#if !SettingsProvider.settings.exhaustionDisabled.get() && !incapacitated}
+    <Exhaustion
+      level={$store.system.attributes.exhaustion}
+      radiusClass={useRoundedPortraitStyle ? 'rounded' : 'top-left'}
+      on:levelSelected={onLevelSelected}
+      onlyShowOnHover={SettingsProvider.settings.exhaustionOnHover.get() ||
+        (SettingsProvider.settings.hideIfZero.get() &&
+          $store.system.attributes.exhaustion === 0)}
+    />
+  {/if}
 
-    {#if !SettingsProvider.settings.exhaustionDisabled.get() && !incapacitated}
-      <Exhaustion
-        level={$store.system.attributes.exhaustion}
-        radiusClass={useRoundedPortraitStyle ? 'rounded' : 'top-left'}
-        on:levelSelected={onLevelSelected}
-        onlyShowOnHover={SettingsProvider.settings.exhaustionOnHover.get() ||
-          (SettingsProvider.settings.hideIfZero.get() &&
-            $store.system.attributes.exhaustion === 0)}
-      />
-    {/if}
+  {#if !SettingsProvider.settings.inspirationDisabled.get() && !incapacitated}
+    <Inspiration
+      inspired={$store.actor.system.attributes.inspiration}
+      radiusClass={useRoundedPortraitStyle ? 'rounded' : 'top-right'}
+      onlyShowOnHover={SettingsProvider.settings.inspirationOnHover.get()}
+      disableAnimation={SettingsProvider.settings.inspirationAnimationDisabled.get()}
+    />
+  {/if}
 
-    {#if !SettingsProvider.settings.inspirationDisabled.get() && !incapacitated}
-      <Inspiration
-        inspired={$store.actor.system.attributes.inspiration}
-        radiusClass={useRoundedPortraitStyle ? 'rounded' : 'top-right'}
-        onlyShowOnHover={SettingsProvider.settings.inspirationOnHover.get()}
-        disableAnimation={SettingsProvider.settings.inspirationAnimationDisabled.get()}
-      />
-    {/if}
+  <CharacterHitPoints
+    value={$store.system.attributes.hp.value}
+    max={$store.system.attributes.hp.max}
+    actor={$store.actor}
+    {useRoundedPortraitStyle}
+    {incapacitated}
+  />
 
-    <CharacterHitPoints
-      value={$store.system.attributes.hp.value}
-      max={$store.system.attributes.hp.max}
+  {#if !incapacitated}
+    <Rest {useRoundedPortraitStyle} />
+  {/if}
+
+  {#if !incapacitated}
+    <HitDice
+      hitDice={$store.system.attributes.hd}
+      actorLevel={$store.system.details.level}
       actor={$store.actor}
       {useRoundedPortraitStyle}
-      {incapacitated}
     />
-
-    {#if !incapacitated}
-      <Rest {useRoundedPortraitStyle} />
-    {/if}
-
-    {#if !incapacitated}
-      <HitDice
-        hitDice={$store.system.attributes.hd}
-        actorLevel={$store.system.details.level}
-        actor={$store.actor}
-        {useRoundedPortraitStyle}
-      />
-    {/if}
-  </div>
-</div>
+  {/if}
+</ActorProfile>
 <TempHp />

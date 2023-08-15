@@ -1,7 +1,7 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { SettingsProvider } from 'src/settings/settings';
-  import CharacterPortrait from 'src/sheets/actor/ActorPortrait.svelte';
+  import ActorPortrait from 'src/sheets/actor/ActorPortrait.svelte';
   import DeathSaves from 'src/sheets/DeathSaves.svelte';
   import Exhaustion from 'src/sheets/Exhaustion.svelte';
   import HpOverlay from 'src/sheets/HpOverlay.svelte';
@@ -12,6 +12,7 @@
   import TempHp from 'src/sheets/TempHp.svelte';
   import NpcRest from './NpcRest.svelte';
   import NpcHealthFormula from './NpcHealthFormula.svelte';
+  import ActorProfile from 'src/sheets/actor/ActorProfile.svelte';
 
   let store = getContext<Readable<NpcSheetContext>>('store');
 
@@ -33,37 +34,34 @@
   }
 </script>
 
-<div class="profile-wrap">
-  <div class="profile" class:round-portrait={useRoundedPortraitStyle}>
-    <CharacterPortrait actor={$store.actor} />
-    {#if !SettingsProvider.settings.hpOverlayDisabledNpc.get()}
-      <HpOverlay {useRoundedPortraitStyle} actor={$store.actor} />
-    {/if}
-    {#if showDeathSaves()}
-      <DeathSaves
-        successes={$store.system.attributes.death.success}
-        failures={$store.system.attributes.death.failure}
-        {useRoundedPortraitStyle}
-        on:rollDeathSave={(event) =>
-          $store.actor.rollDeathSave({ event: event.detail.mouseEvent })}
-      />
-    {/if}
-    {#if !SettingsProvider.settings.exhaustionDisabled.get() && !incapacitated}
-      <Exhaustion
-        level={FoundryAdapter.tryGetFlag($store.actor, 'exhaustion') ?? 0}
-        radiusClass={useRoundedPortraitStyle ? 'rounded' : 'top-left'}
-        on:levelSelected={onLevelSelected}
-        onlyShowOnHover={SettingsProvider.settings.exhaustionOnHover.get() ||
-          (SettingsProvider.settings.hideIfZero.get() &&
-            $store.system.attributes.exhaustion === 0)}
-      />
-    {/if}
+<ActorProfile {useRoundedPortraitStyle}>
+  {#if !SettingsProvider.settings.hpOverlayDisabledNpc.get()}
+    <HpOverlay {useRoundedPortraitStyle} actor={$store.actor} />
+  {/if}
+  {#if showDeathSaves()}
+    <DeathSaves
+      successes={$store.system.attributes.death.success}
+      failures={$store.system.attributes.death.failure}
+      {useRoundedPortraitStyle}
+      on:rollDeathSave={(event) =>
+        $store.actor.rollDeathSave({ event: event.detail.mouseEvent })}
+    />
+  {/if}
+  {#if !SettingsProvider.settings.exhaustionDisabled.get() && !incapacitated}
+    <Exhaustion
+      level={FoundryAdapter.tryGetFlag($store.actor, 'exhaustion') ?? 0}
+      radiusClass={useRoundedPortraitStyle ? 'rounded' : 'top-left'}
+      on:levelSelected={onLevelSelected}
+      onlyShowOnHover={SettingsProvider.settings.exhaustionOnHover.get() ||
+        (SettingsProvider.settings.hideIfZero.get() &&
+          $store.system.attributes.exhaustion === 0)}
+    />
+  {/if}
 
-    <NpcHitPoints />
-    {#if SettingsProvider.settings.restingForNpcsEnabled.get()}
-      <NpcRest {useRoundedPortraitStyle} />
-    {/if}
-    <NpcHealthFormula />
-  </div>
-</div>
+  <NpcHitPoints />
+  {#if SettingsProvider.settings.restingForNpcsEnabled.get()}
+    <NpcRest {useRoundedPortraitStyle} />
+  {/if}
+  <NpcHealthFormula />
+</ActorProfile>
 <TempHp />

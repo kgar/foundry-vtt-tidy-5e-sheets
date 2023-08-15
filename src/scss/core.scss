@@ -23,7 +23,16 @@
     }
 
     &.character {
-      @import './partials/character-sheet';
+      form {
+        display: flex;
+        flex-direction: column;
+
+        .sheet-body {
+          padding: 1rem 0.25rem 1rem 1rem;
+          flex: 1;
+          overflow: hidden;
+        }
+      }
     }
 
     &.npc {
@@ -36,7 +45,6 @@
   }
 
   @import './partials/layout';
-  @import './partials/portrait';
   @import './partials/context-menu';
 
   .top-left,

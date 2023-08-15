@@ -371,4 +371,101 @@
       flex-wrap: wrap;
     }
   }
+
+  .current-xp {
+    height: 1rem;
+    width: calc(10.5ch + 0.3rem);
+    text-align: right;
+    padding: 0 0.25rem;
+  }
+
+  .max-xp {
+    height: 1rem;
+    width: calc(10.5ch + 0.3rem);
+    text-align: left;
+    padding: 0 0.25rem;
+  }
+
+  .xp-tracker {
+    max-width: 7rem;
+  }
+
+  .xp-bar-total {
+    width: 100%;
+    height: 5px;
+    border: 1px solid var(--t5e-tertiary-color);
+    border-radius: 2px;
+    background: var(--t5e-light-color);
+    position: relative;
+  }
+
+  .xp-bar-current {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    max-width: 100%;
+    background: var(--t5e-xp-bar);
+    transition: width 0.3s ease;
+  }
+
+  .level {
+    padding: 0.25rem 0.375rem;
+    border-radius: 0.1875rem;
+    background: var(--t5e-faint-color);
+    color: var(--t5e-secondary-color);
+    font-size: 1.25rem;
+    line-height: 1;
+    height: 1.5rem;
+  }
+
+  .class-list {
+    font-size: 0.75rem;
+    margin: 0;
+    padding: 0.1875rem 0 0 0;
+    color: var(--t5e-secondary-color);
+    margin-left: 0.25rem;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+
+  .origin-summary {
+    margin-left: 0.25rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.25rem;
+    border-bottom: 1px solid var(--t5e-light-color);
+    border-top: 1px solid var(--t5e-light-color);
+    font-size: 0.75rem;
+    line-height: 1;
+    padding: 0.1875rem 0 0.125rem 0;
+    margin-top: 0.125rem;
+
+    .origin-points {
+      flex: 1;
+      display: grid;
+      grid-template-columns:
+        min-content /* Size */
+        min-content /* Bullet */
+        minmax(auto, min-content) /* Species */
+        min-content /* Bullet */
+        minmax(auto, min-content) /* Background */
+        min-content /* Bullet */
+        minmax(auto, min-content) /* Alignment */;
+      gap: 0.25rem;
+      align-items: center;
+    }
+  }
+
+  .player-name {
+    display: inline-block;
+    font-weight: 600;
+    margin: -0.25rem;
+    min-width: 3.125rem;
+    padding: 0px 0.25rem;
+    white-space: nowrap;
+  }
 </style>
