@@ -3,7 +3,7 @@
 - [x] Register the sheet as a child of the original 5e sheet
 - [x] Fill out the sheet stuff for svelte mode
 - [ ] Implement
-  - [ ] Full NPC
+  - [x] Full NPC
     - [x] Header
       - [x] HTML
         - [x] Profile
@@ -20,7 +20,7 @@
         - [x] speed row
         - [x] Abilities row
       - [x] Behaviors
-    - [ ] Implement tabs and contents
+    - [x] Implement tabs and contents
       - [x] Abilities
         - [x] Side bar
         - [x] Footer (money)

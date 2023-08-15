@@ -59,6 +59,7 @@ export const CONSTANTS = {
   TAB_ITEM_DETAILS_ID: 'details',
   TAB_ITEM_ADVANCEMENT_ID: 'advancement',
   TAB_ITEM_EFFECTS_ID: 'effects',
+  TAB_NPC_ACTIONS: 'actions',
   TAB_NPC_ABILITIES: 'attributes',
   TAB_NPC_SPELLBOOK: 'spellbook',
   TAB_NPC_EFFECTS: 'effects',

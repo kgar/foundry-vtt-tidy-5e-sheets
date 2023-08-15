@@ -56,7 +56,7 @@ export class Tidy5eNpcSheet extends ActorSheet5eNpc {
   #getSelectedTabId(): string {
     if (
       !game.modules.get('character-actions-list-5e')?.active &&
-      SettingsProvider.settings.defaultActionsTab.get() === 'actions'
+      SettingsProvider.settings.defaultActionsTab.get() === CONSTANTS.TAB_NPC_ACTIONS
     ) {
       return CONSTANTS.TAB_NPC_ABILITIES;
     }

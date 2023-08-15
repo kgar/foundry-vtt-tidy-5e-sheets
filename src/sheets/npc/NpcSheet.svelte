@@ -78,6 +78,10 @@
     }
   );
 
+  if (!tabs.some((tab) => tab.id === selectedTabId)) {
+    selectedTabId = tabs[0]?.id;
+  }
+
   $: sizes = <TidyDropdownOption[]>Object.entries($store.config.actorSizes).map(
     ([abbreviation, size]) => ({
       value: abbreviation,
@@ -235,16 +239,14 @@
   }
 
   .sheet-body {
-    :global(.tab.abilities) {
-    }
-    :global(.tab.abilities.active) {
+    :global(.tab.attributes.active) {
       display: flex;
       flex-direction: column;
     }
-    :global(.tab.abilities > section) {
+    :global(.tab.attributes > section) {
       flex: 1;
     }
-    :global(.tab.abilities > footer) {
+    :global(.tab.attributes > footer) {
       flex: 0;
     }
 
