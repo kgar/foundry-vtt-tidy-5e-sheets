@@ -59,8 +59,10 @@
       />
     {/if}
 
-    <NpcHitPoints  />
-    <NpcRest {useRoundedPortraitStyle} />
+    <NpcHitPoints />
+    {#if SettingsProvider.settings.restingForNpcsEnabled.get()}
+      <NpcRest {useRoundedPortraitStyle} />
+    {/if}
     <NpcHealthFormula />
   </div>
 </div>
