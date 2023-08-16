@@ -1,9 +1,9 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { submitText } from 'src/sheets/form';
   import { type ActorSheetContext } from 'src/types/types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
+  import TextInput from '../form/TextInput.svelte';
 
   export let section: any;
   let store = getContext<Readable<ActorSheetContext>>('store');
@@ -14,29 +14,27 @@
 </script>
 
 <div class="spell-slots-detail">
-  <input
-    class="spell-slot-uses"
-    type="text"
+  <TextInput
+    document={$store.actor}
+    field="system.spells.{section.prop}.value"
+    cssClass="spell-slot-uses"
     value={section.uses}
     placeholder="0"
-    data-dtype="Number"
-    on:change|stopPropagation|preventDefault={(event) =>
-      submitText(event, $store.actor, `system.spells.${section.prop}.value`)}
+    dtype="Number"
+    selectOnFocus={true}
+    allowDeltaChanges={true}
   />
   <span class="sep"> / </span>
   {#if overrideMode}
-    <input
-      class="spell-slot-override"
-      type="text"
+    <TextInput
+      document={$store.actor}
+      field="system.spells.{section.prop}.override"
+      cssClass="spell-slot-override"
       value={section.override}
       placeholder={section.slots}
-      data-dtype="Number"
-      on:change|stopPropagation|preventDefault={(event) =>
-        submitText(
-          event,
-          $store.actor,
-          `system.spells.${section.prop}.override`
-        )}
+      dtype="Number"
+      selectOnFocus={true}
+      allowDeltaChanges={true}
     />
   {:else}
     <span
@@ -67,14 +65,14 @@
     border-radius: 0.3125rem;
     padding: 0 0.3125rem;
 
-    input {
+    :global(input) {
       text-align: right;
       height: 0.8125rem;
       margin-top: -0.0625rem;
       min-width: 1rem;
     }
 
-    .spell-slot-override {
+    :global(.spell-slot-override) {
       text-align: left;
     }
 

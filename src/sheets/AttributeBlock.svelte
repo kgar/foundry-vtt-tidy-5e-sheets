@@ -2,7 +2,9 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { type Actor5e } from 'src/types/actor';
   import { formatAsModifier } from 'src/utils/formatting';
-  import { submitText } from './form';
+  import TextInput from 'src/components/form/TextInput.svelte';
+  import BlockTitle from './BlockTitle.svelte';
+  import BlockScore from './BlockScore.svelte';
 
   export let abbreviation: string;
   export let ability: any;
@@ -16,24 +18,22 @@
 <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <div class="wrapper">
-  <h4
-    class="block-title rollable"
+  <BlockTitle
     title={ability.label}
+    text={abbreviation}
     on:click={(event) => actor.rollAbility(ability, { event })}
-  >
-    {abbreviation}
-  </h4>
-  <div>
-    <input
-      type="text"
-      class="block-score"
+  />
+  <BlockScore>
+    <TextInput
+      document={actor}
+      field="system.abilities.{abbreviation}.value"
       value={ability.value}
       placeholder="10"
-      data-dtype="Number"
-      on:change|stopPropagation|preventDefault={(event) =>
-        submitText(event, actor, `system.abilities.${abbreviation}.value`)}
+      dtype="Number"
+      selectOnFocus={true}
+      allowDeltaChanges={true}
     />
-  </div>
+  </BlockScore>
   <div class="ability-modifiers">
     <span
       class="ability-mod rollable"

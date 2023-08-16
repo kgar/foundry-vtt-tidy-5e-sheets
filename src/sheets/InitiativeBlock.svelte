@@ -3,6 +3,8 @@
   import { type Actor5e } from 'src/types/actor';
   import { formatAsModifier } from 'src/utils/formatting';
   import { submitText } from './form';
+  import BlockTitle from './BlockTitle.svelte';
+  import BlockScore from './BlockScore.svelte';
 
   export let initiative: { total: number; bonus: number };
   export let actor: Actor5e;
@@ -13,16 +15,14 @@
 <!-- svelte-ignore a11y-missing-content -->
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <div class="wrapper">
-  <h4
-    class="attribute-name block-title rollable"
+  <BlockTitle
     title={localize('DND5E.Initiative')}
+    text={localize('T5EK.AbbrInitiative')}
     on:click={(event) => actor.rollInitiativeDialog({ event })}
-  >
-    {localize('T5EK.AbbrInitiative')}
-  </h4>
-  <div class="block-score">
+  />
+  <BlockScore>
     <span>{formatAsModifier(initiative.total)}</span>
-  </div>
+  </BlockScore>
   <label class="ini-bonus">
     <span>{localize('T5EK.AbbrMod')}</span>
     <input
@@ -52,12 +52,9 @@
     display: flex;
     flex-direction: column;
 
-    .block-score {
-      margin: 0.125rem 0 0.125rem 0;
-      padding: 0;
-      display: flex;
-      justify-content: center;
-      height: auto;
+    :global(.block-score) {
+      margin-top: 0.0625rem;
+      margin-bottom: 0.1875rem;
     }
 
     .ini-bonus {
