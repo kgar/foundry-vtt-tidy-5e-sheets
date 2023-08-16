@@ -55,7 +55,7 @@
           {#if $store.advancementEditable}
             <a
               on:click={() => toggleAdvancementLock($store.item)}
-              data-tooltip="DND5E.AdvancementConfigurationActionDisable"
+              title="DND5E.AdvancementConfigurationActionDisable"
             >
               <i class="fas fa-lock-open" />
               {localize('DND5E.AdvancementConfigurationModeEnabled')}
@@ -63,7 +63,7 @@
           {:else}
             <a
               on:click={() => toggleAdvancementLock($store.item)}
-              data-tooltip="DND5E.AdvancementConfigurationActionEnable"
+              title="DND5E.AdvancementConfigurationActionEnable"
             >
               <i class="fas fa-lock" />
               {localize('DND5E.AdvancementConfigurationModeDisabled')}
@@ -74,7 +74,7 @@
       {#if $store.advancementEditable}
         <div class="item-controls flexrow add-button">
           <a
-            data-tooltip="DND5E.AdvancementControlCreate"
+            title="DND5E.AdvancementControlCreate"
             on:click={() =>
               game.dnd5e.applications.advancement.AdvancementSelection.createDialog(
                 $store.item
@@ -110,14 +110,14 @@
       {#if data.configured === 'full'}
         <div
           class="item-checkmark"
-          data-tooltip="DND5E.AdvancementConfiguredComplete"
+          title="DND5E.AdvancementConfiguredComplete"
         >
           <i class="fas fa-check-circle" />
         </div>
       {:else if data.configured === 'partial'}
         <div
           class="item-warning"
-          data-tooltip="DND5E.AdvancementConfiguredIncomplete"
+          title="DND5E.AdvancementConfiguredIncomplete"
         >
           <i class="fas fa-exclamation-triangle" />
         </div>
@@ -145,14 +145,14 @@
           {#if $store.advancementEditable}
             <div class="item-controls flexrow">
               <a
-                data-tooltip="DND5E.AdvancementControlEdit"
+                title="DND5E.AdvancementControlEdit"
                 on:click={() =>
                   editAdvancement(advancementItem.id, $store.item)}
               >
                 <i class="fas fa-edit" />
               </a>
               <a
-                data-tooltip="DND5E.AdvancementControlDelete"
+                title="DND5E.AdvancementControlDelete"
                 on:click={() =>
                   deleteAdvancement(advancementItem.id, $store.item)}
               >

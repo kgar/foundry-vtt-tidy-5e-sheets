@@ -49,7 +49,7 @@
     class="profile"
     src={$store.item.img}
     alt={$store.item.name}
-    data-tooltip="{localize('T5EK.EditActorImage')} / {localize(
+    title="{localize('T5EK.EditActorImage')} / {localize(
       'T5EK.ShowItemImage'
     )}"
     on:mousedown={(event) => handleClick(event)}

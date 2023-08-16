@@ -25,7 +25,7 @@
       <NumberInput
         id={inputId}
         value={$store.system.activation.cost}
-        tooltip="DND5E.ConsumeQuanity"
+        title="DND5E.ConsumeQuanity"
         field="system.activation.cost"
         placeholder="&#8212;"
         document={$store.item}
@@ -34,7 +34,7 @@
     <Select
       id="{$store.appId}-system-activation-type"
       value={$store.system.activation.type?.toString() ?? ''}
-      tooltip={localize('DND5E.ItemActivationType')}
+      title={localize('DND5E.ItemActivationType')}
       document={$store.item}
       field="system.activation.type"
     >
@@ -71,7 +71,7 @@
           id={inputId}
           dtype="Number"
           value={$store.system.cover?.toString()}
-          tooltip={localize('DND5E.ItemActivationType')}
+          title={localize('DND5E.ItemActivationType')}
           document={$store.item}
           field="system.cover"
         >
@@ -101,7 +101,7 @@
         <Select
           id="{$store.appId}-system-target-units"
           value={$store.system.target.units}
-          tooltip="DND5E.TargetUnits"
+          title="DND5E.TargetUnits"
           field="system.target.units"
           document={$store.item}
         >
@@ -112,7 +112,7 @@
       <Select
         id={inputId}
         value={$store.system.target.type}
-        tooltip="DND5E.TargetType"
+        title="DND5E.TargetType"
         field="system.target.type"
         document={$store.item}
       >
@@ -161,7 +161,7 @@
           id="{$store.appId}-system-target-width"
           value={$store.system.range.value}
           placeholder={localize('DND5E.Normal')}
-          tooltip="DND5E.RangeNormal"
+          title="DND5E.RangeNormal"
           field="system.range.value"
           document={$store.item}
         />
@@ -170,7 +170,7 @@
           id="{$store.appId}-system-range-long"
           value={$store.system.range.long}
           placeholder={localize('DND5E.Long')}
-          tooltip="DND5E.RangeLong"
+          title="DND5E.RangeLong"
           field="system.range.long"
           document={$store.item}
         />
@@ -178,7 +178,7 @@
       <Select
         id={inputId}
         value={$store.system.range.units}
-        tooltip="DND5E.RangeUnits"
+        title="DND5E.RangeUnits"
         document={$store.item}
         field="system.range.units"
       >
@@ -203,7 +203,7 @@
           id="{$store.appId}-source-duration-value"
           value={$store.source.duration.value}
           placeholder="&mdash;"
-          tooltip="DND5E.DurationValue"
+          title="DND5E.DurationValue"
           field="system.duration.value"
           document={$store.item}
           dataset={{ formulaEditor: true }}
@@ -212,7 +212,7 @@
       <Select
         id={inputId}
         value={$store.system.duration.units}
-        tooltip="DND5E.DurationType"
+        title="DND5E.DurationType"
         document={$store.item}
         field="system.duration.units"
       >
@@ -238,7 +238,7 @@
       <NumberInput
         id={inputId}
         value={$store.system.uses.value}
-        tooltip="DND5E.UsesAvailable"
+        title="DND5E.UsesAvailable"
         field="system.uses.value"
         document={$store.item}
       />
@@ -246,7 +246,7 @@
       <TextInput
         id="{$store.appId}-system-uses-max"
         value={$store.source.uses.max}
-        tooltip="DND5E.UsesMax"
+        title="DND5E.UsesMax"
         field="system.uses.max"
         document={$store.item}
         dataset={{ formulaEditor: true }}
@@ -255,7 +255,7 @@
       <Select
         id="{$store.appId}-system.uses.per"
         value={$store.system.uses.per}
-        tooltip="DND5E.UsesPeriod"
+        title="DND5E.UsesPeriod"
         document={$store.item}
         field="system.uses.per"
       >
@@ -294,14 +294,14 @@
         <NumberInput
           id="{$store.appId}-system-consume-amount"
           value={$store.system.consume.amount}
-          tooltip="DND5E.ConsumeQuanity"
+          title="DND5E.ConsumeQuanity"
           field="system.consume.amount"
           document={$store.item}
         />
         <Select
           id="{$store.appId}-system-consume-target"
           value={$store.system.consume.target}
-          tooltip="DND5E.ConsumeTarget"
+          title="DND5E.ConsumeTarget"
           document={$store.item}
           field="system.consume.target"
         >
@@ -312,7 +312,7 @@
       <Select
         id={inputId}
         value={$store.system.consume.type}
-        tooltip="DND5E.ConsumeType"
+        title="DND5E.ConsumeType"
         document={$store.item}
         field="system.consume.type"
       >

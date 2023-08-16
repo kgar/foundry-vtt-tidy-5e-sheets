@@ -57,7 +57,7 @@
     type="text"
     {value}
     placeholder="10"
-    data-tooltip={localize('DND5E.HitPointsCurrent')}
+    title={localize('DND5E.HitPointsCurrent')}
     data-dtype="Number"
     maxlength="5"
     aria-describedby="tooltip"
@@ -71,7 +71,7 @@
       type="text"
       value={max}
       placeholder="10"
-      data-tooltip={localize(
+      title={localize(
         max ? 'DND5E.HitPointsOverride' : 'DND5E.HitPointsMax'
       )}
       data-dtype="Number"
@@ -83,7 +83,7 @@
   {:else}
     <span
       class="hp-max"
-      data-tooltip={localize(
+      title={localize(
         max ? 'DND5E.HitPointsOverride' : 'DND5E.HitPointsMax'
       )}>{max}</span
     >

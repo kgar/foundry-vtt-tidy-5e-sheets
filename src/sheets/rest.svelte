@@ -16,18 +16,18 @@
 <!-- svelte-ignore a11y-missing-attribute -->
 <div class="rest-container" class:rounded={useRoundedPortraitStyle}>
   <div class="resting">
-    <span class="resting-icon" data-tooltip={localize('T5EK.RestHint')}
+    <span class="resting-icon" title={localize('T5EK.RestHint')}
       ><i class="rest-icon fas fa-bed" /></span
     >
     <a
       class="rest"
-      data-tooltip={localize('T5EK.RestS')}
+      title={localize('T5EK.RestS')}
       on:click={(event) => $store.actor.sheet.onShortRest(event)}
       ><i class="fas fa-hourglass-half" /></a
     >
     <a
       class="rest"
-      data-tooltip={localize('T5EK.RestL')}
+      title={localize('T5EK.RestL')}
       on:click={(event) => $store.actor.sheet.onLongRest(event)}
       ><i class="fas fa-hourglass-end" /></a
     >

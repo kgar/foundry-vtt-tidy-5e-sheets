@@ -90,7 +90,7 @@
       placeholder={localize('DND5E.HPFormula')}
       value={$store.system.attributes.hp.formula}
       maxlength={12}
-      tooltip="{localize('DND5E.HPFormula')}: {$store.system.attributes.hp
+      title="{localize('DND5E.HPFormula')}: {$store.system.attributes.hp
         .formula}"
     />
   </div>

@@ -18,6 +18,7 @@
   export let maxlength: HTMLInputElement['maxLength'] | null = null;
   export let dtype: string | null = null;
   export let selectOnFocus: boolean = false;
+  export let title: string | null = null;
 
   $: datasetAttributes = buildDataset(dataset);
 
@@ -51,4 +52,5 @@
   {...datasetAttributes}
   data-dtype={dtype}
   on:focus={(ev) => selectOnFocus && ev.currentTarget.select()}
+  {title}
 />

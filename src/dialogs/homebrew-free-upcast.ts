@@ -47,7 +47,7 @@ export function useHombrewEnableUpcastFreeSpell(
         <label 
             class="checkbox" 
             for="${checkboxId}"
-            data-tooltip="${tooltip}">
+            title="${tooltip}">
             <input 
                 id="${checkboxId}" 
                 type="checkbox" 

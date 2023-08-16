@@ -46,8 +46,9 @@
     field="system.attributes.hp.value"
     value={$store.system.attributes.hp.value}
     placeholder="10"
-    tooltip={localize('DND5E.HitPointsCurrent')}
+    title={localize('DND5E.HitPointsCurrent')}
     dtype="Number"
+    allowDeltaChanges={true}
     maxlength={5}
     ariaDescribedBy="tooltip"
     selectOnFocus={true}
@@ -59,8 +60,9 @@
     field="system.attributes.hp.max"
     value={$store.system.attributes.hp.max}
     placeholder="10"
-    tooltip={localize('DND5E.HitPointsMax')}
+    title={localize('DND5E.HitPointsMax')}
     dtype="Number"
+    allowDeltaChanges={true}
     maxlength={5}
     ariaDescribedBy="tooltip"
     selectOnFocus={true}

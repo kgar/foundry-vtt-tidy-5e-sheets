@@ -104,7 +104,7 @@
 
 <div class="token-link-wrapper {$store.tokenState}">
   <header class="tidy5e-kgar-sheet-header flex-row">
-    <div class="flex-grow-0">
+    <div class="flex-0">
       <NpcProfile />
     </div>
     <div class="flex-grow-1">
@@ -168,7 +168,6 @@
           <span>&#8226;</span>
           <DelimitedTruncatedContent cssClass="flex-grow-1">
             <span class="flex-row extra-small-gap align-items-center">
-              <!-- TODO: Accent color on hover -->
               <a
                 class="truncate highlight-on-hover"
                 role="button"
@@ -176,7 +175,7 @@
                   new dnd5e.applications.actor.ActorTypeConfig(
                     $store.actor
                   ).render(true)}
-                data-tooltip="{$store.labels.type} ({localize(
+                title="{$store.labels.type} ({localize(
                   'DND5E.CreatureTypeConfig'
                 )})"
                 >{#if isNil($store.labels.type, '')}
@@ -187,7 +186,7 @@
               >
               <span
                 class="environment"
-                data-tooltip="{localize('TIDY5E.Environment')}: {$store.system
+                title="{localize('TIDY5E.Environment')}: {$store.system
                   .details.environment}"
               >
                 <i class="fas fa-tree" />
@@ -196,12 +195,12 @@
 
             <span
               class="origin-summary-text"
-              data-tooltip={$store.system.details.alignment}
+              title={$store.system.details.alignment}
               >{$store.system.details.alignment}</span
             >
             <span
               class="origin-summary-text source source-info"
-              data-tooltip={$store.system.details.source}
+              title={$store.system.details.source}
               >{$store.system.details.source}</span
             >
           </DelimitedTruncatedContent>
@@ -217,7 +216,7 @@
               on:click={() =>
                 new Tidy5eActorOriginSummaryConfig($store.actor).render(true)}
               class="origin-summary-tidy"
-              data-tooltip={localize('TIDY5E.OriginSummaryConfig')}
+              title={localize('TIDY5E.OriginSummaryConfig')}
             >
               <i class="fas fa-cog" />
             </a>

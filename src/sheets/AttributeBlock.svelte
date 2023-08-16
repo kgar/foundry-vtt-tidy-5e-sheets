@@ -18,7 +18,7 @@
 <div class="wrapper">
   <h4
     class="block-title rollable"
-    data-tooltip={ability.label}
+    title={ability.label}
     on:click={(event) => actor.rollAbility(ability, { event })}
   >
     {abbreviation}
@@ -37,13 +37,13 @@
   <div class="ability-modifiers">
     <span
       class="ability-mod rollable"
-      data-tooltip={localize('DND5E.AbilityModifier')}
+      title={localize('DND5E.AbilityModifier')}
       on:click={(event) => actor.rollAbilityTest(abbreviation, { event })}
       >{formatAsModifier(ability.mod)}</span
     >
     <span
       class="ability-save rollable"
-      data-tooltip={localize('DND5E.ActionSave')}
+      title={localize('DND5E.ActionSave')}
       on:click={(event) => actor.rollAbilitySave(abbreviation, { event })}
       >{formatAsModifier(ability.save)}</span
     >
@@ -60,7 +60,7 @@
     </a>
     <a
       class="config-button"
-      data-tooltip={localize('DND5E.AbilityConfigure')}
+      title={localize('DND5E.AbilityConfigure')}
       on:click={() =>
         new dnd5e.applications.actor.ActorAbilityConfig(
           actor,

@@ -65,7 +65,7 @@
     <Select
       id={inputId}
       value={$store.system.attunement?.toString() ?? ''}
-      dataset={{ dtype: 'Number' }}
+      dtype="Number"
       field="system.attunement"
       document={$store.item}
     >

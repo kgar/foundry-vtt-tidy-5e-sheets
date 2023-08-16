@@ -55,7 +55,7 @@
         value={FoundryAdapter.tryGetFlag($store.actor, 'maxPreparedSpells')}
         data-dtype="Number"
         placeholder="0"
-        data-tooltip={localize('T5EK.PreparedSpellsMax')}
+        title={localize('T5EK.PreparedSpellsMax')}
         on:change|stopPropagation|preventDefault={(event) =>
           submitText(
             event,

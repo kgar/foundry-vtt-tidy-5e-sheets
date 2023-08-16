@@ -45,7 +45,7 @@
   <div class="exhaustion-wrap {radiusClass}">
     <div
       class="exhaustion-icon colorized"
-      data-tooltip={`${localize('DND5E.Exhaustion')} ${localize(
+      title={`${localize('DND5E.Exhaustion')} ${localize(
         'DND5E.AbbreviationLevel'
       )} ${level}, ${localize('T5EK.Exhaustion' + level)}`}
     >
@@ -55,7 +55,7 @@
       {#each [0, 1, 2, 3, 4, 5, 6] as levelOption}
         <li
           class:colorized={levelOption <= level}
-          data-tooltip={`${localize('DND5E.Exhaustion')} ${localize(
+          title={`${localize('DND5E.Exhaustion')} ${localize(
             'DND5E.AbbreviationLevel'
           )} ${levelOption}, ${localize('T5EK.Exhaustion' + levelOption)}`}
           on:click={() => dispatch('levelSelected', { level: levelOption })}

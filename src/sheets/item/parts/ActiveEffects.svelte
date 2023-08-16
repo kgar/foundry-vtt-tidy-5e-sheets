@@ -49,7 +49,7 @@
           {#if $store.editable}
             <a
               class="active-effect-control"
-              data-tooltip="DND5E.EffectCreate"
+              title="DND5E.EffectCreate"
               on:click={(event) => onAddClicked(section)}
             >
               <i class="fas fa-plus" />
@@ -84,7 +84,7 @@
               {#if $store.editable}
                 <a
                   class="active-effect-control"
-                  data-tooltip={effect.disabled
+                  title={effect.disabled
                     ? 'DND5E.EffectEnable'
                     : 'DND5E.EffectDisable'}
                   on:click={() => effect.update({ disabled: !effect.disabled })}
@@ -97,14 +97,14 @@
                 </a>
                 <a
                   class="active-effect-control"
-                  data-tooltip="DND5E.EffectEdit"
+                  title="DND5E.EffectEdit"
                   on:click={() => effect.sheet.render(true)}
                 >
                   <i class="fas fa-edit" />
                 </a>
                 <a
                   class="active-effect-control"
-                  data-tooltip="DND5E.EffectDelete"
+                  title="DND5E.EffectDelete"
                   on:click={() => effect.delete()}
                 >
                   <i class="fas fa-trash" />

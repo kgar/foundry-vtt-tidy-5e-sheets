@@ -68,7 +68,7 @@
                 property: 'skills',
                 key: skillRef.key,
               }).render(true)}
-            data-tooltip={localize('DND5E.SkillConfigure')}
+            title={localize('DND5E.SkillConfigure')}
           >
             <i class="fas fa-cog" />
           </a>

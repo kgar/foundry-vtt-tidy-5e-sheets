@@ -32,7 +32,7 @@
       placeholder="0"
       value={successes}
       maxlength="1"
-      data-tooltip={localize('DND5E.DeathSave')}
+      title={localize('DND5E.DeathSave')}
       on:change|stopPropagation|preventDefault={(event) =>
         submitText(event, $store.actor, 'system.attributes.death.success')}
     />

@@ -38,7 +38,7 @@
   </label>
   <a
     class="config-button"
-    data-tooltip={localize('DND5E.InitiativeConfig')}
+    title={localize('DND5E.InitiativeConfig')}
     on:click={() =>
       new dnd5e.applications.actor.ActorInitiativeConfig(actor).render(true)}
   >

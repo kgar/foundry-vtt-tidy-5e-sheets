@@ -14,7 +14,7 @@
 <div
   class="rest-container"
   class:has-rounded-portrait={useRoundedPortraitStyle}
-  data-tooltip={localize('T5EK.RestHint')}
+  title={localize('T5EK.RestHint')}
 >
   <div class="resting">
     <span class="resting-icon">

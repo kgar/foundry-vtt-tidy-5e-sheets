@@ -30,7 +30,7 @@
           value={$store.system.resources.legact.value}
           step="any"
           placeholder="0"
-          tooltip={localize('DND5E.LegActRemaining')}
+          title={localize('DND5E.LegActRemaining')}
           dataset={{
             dtype: 'Number',
           }}
@@ -57,7 +57,7 @@
           value={$store.system.resources.legres.value}
           step="any"
           placeholder="0"
-          tooltip={localize('DND5E.LegResRemaining')}
+          title={localize('DND5E.LegResRemaining')}
           dtype="Number"
           selectOnFocus={true}
         />
@@ -88,6 +88,7 @@
           value={$store.system.resources.lair.initiative}
           dtype="Number"
           placeholder="Init."
+          allowDeltaChanges={true}
           selectOnFocus={true}
           saveEmptyAsNull={true}
         />

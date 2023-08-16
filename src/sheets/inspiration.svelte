@@ -21,7 +21,7 @@
 <div
   class="inspiration inspiration-{inspired ? 1 : 0} {cssClass}"
   class:only-show-on-hover={onlyShowOnHover}
-  data-tooltip={localize('DND5E.Inspiration')}
+  title={localize('DND5E.Inspiration')}
 >
   <label class:inspired class={radiusClass}>
     <input

@@ -126,13 +126,8 @@ async function setSheetClasses(app, html, data) {
 
 ## Refactor and Refine
 
-- [ ] Consider converting `tooltip` to just `title` on text inputs
-- [ ] Add prop obj `inputProps` on `TextInput`; move all input props that have direct equivalents in input elements out of the main component and into the inputProps obj and spread that on the underlying input
-  - [ ] Ditto on `Select`
-  - [ ] Ditto on `NumberInput`
-- [ ] Have `TextInput` respect dtype "Number" and perform deltas as expected. The functionality currently lives in `submitText()`.
-  - [ ] Consider refactoring so that callers of `submitText()` are adjusted to use `TextInput` or `NumberInput` as necessary.
-- [ ] When an update operation fails, revert to the original value.
+- [ ] Consider refactoring so that callers of `submitText()` are adjusted to use `TextInput` or `NumberInput` as necessary.
+- [ ] When an update operation fails, revert to the original value (even easier, use getProperty to do it with document/field)
   - [x] Contenteditable
   - [ ] Textinput
   - [ ] Numberinput
@@ -141,6 +136,8 @@ async function setSheetClasses(app, html, data) {
 - [ ] `dtype` fields: formalize these as features of the input components, rather than just receiving them. Give the props names.
   - [ ] One way to go about this would be to have a universal function for preparing data for saving. It could take things like dtype, which would be set to known values.
 - [ ] Some Player settings are applying to NPCs because of sharing actor components. Identify all SettingsProvider calls within shared components and parameterize them out to the parent components to resolve; example: "Show exhaustion tracker only on hover" applies to both but should only apply to PCs.
+- [x] Have `TextInput` respect dtype "Number" and perform deltas as expected. The functionality currently lives in `submitText()`.
+- [x] Consider converting `tooltip` to just `title` on text inputs
 - [ ] Convert `src\sheets\character\parts\CharacterHitPoints.svelte` inputs to use the input components and `selectOnFocus={true}`
 - [x] Do we want to use a base sheet for all actors? No, because they all use different context from established sheets.
 - [x] Move `_inventory` and `_inventory-grid` styles to where they should go in the components

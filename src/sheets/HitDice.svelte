@@ -16,7 +16,7 @@
 <div
   class="portrait-hd"
   class:rounded={useRoundedPortraitStyle}
-  data-tooltip="{localize(
+  title="{localize(
     'DND5E.HitDice'
   )}: {hitDice}/{actorLevel}&#10;{localize('DND5E.HitDiceConfig')}"
 >

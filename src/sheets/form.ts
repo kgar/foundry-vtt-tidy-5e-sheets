@@ -1,7 +1,7 @@
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { warn } from 'src/utils/logging';
 
-function processInputChangeDelta(
+export function processInputChangeDelta(
   event: Event & { currentTarget: HTMLInputElement },
   entity: unknown,
   field: string

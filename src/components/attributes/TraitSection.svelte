@@ -46,7 +46,7 @@
           <li class="tool">
             <a
               class="tool-proficiency-toggle"
-              data-tooltip={tool.hover}
+              title={tool.hover}
               role="button"
               on:click|stopPropagation|preventDefault={(event) =>
                 FoundryAdapter.cycleProficiency(
@@ -77,7 +77,7 @@
             {#if traitsExpanded}
               <a
                 class="tool-proficiency-editor rollable"
-                data-tooltip="DND5E.ToolConfigure"
+                title="DND5E.ToolConfigure"
                 on:click|stopPropagation|preventDefault={() =>
                   new dnd5e.applications.actor.ProficiencyConfig(
                     $store.actor,

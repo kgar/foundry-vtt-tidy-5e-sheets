@@ -73,7 +73,7 @@
             class="item-control item-edit"
             style="display:none"
             data-action="itemEdit"
-            data-tooltip="DND5E.ItemEdit"
+            title="DND5E.ItemEdit"
           >
             <i class="fas fa-edit fa-fw" />
           </a>

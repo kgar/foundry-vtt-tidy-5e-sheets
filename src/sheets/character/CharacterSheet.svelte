@@ -150,13 +150,10 @@
   <ActorWarnings warnings={$store.warnings} />
 {/if}
 <header class="tidy5e-kgar-sheet-header flex-row">
-  <!-- Portrait -->
-  <!-- FIXME: this hardcoded height is to make scroll position work while this form is unstyled.  -->
-  <div class="flex-grow-0">
+  <div class="flex-0">
     <CharacterProfile />
   </div>
 
-  <!-- Name -->
   <div class="flex-grow-1">
     <div class="flex-row justifty-content-space-between align-items-center">
       <div class="actor-name">
@@ -213,13 +210,10 @@
             </div>
           </div>
         {/if}
-        <!-- Level -->
-        <div class="flex-grow-0">
-          <h2 class="level">
-            {localize('DND5E.AbbreviationLevel')}
-            {$store.system.details.level}
-          </h2>
-        </div>
+        <h2 class="level">
+          {localize('DND5E.AbbreviationLevel')}
+          {$store.system.details.level}
+        </h2>
       </div>
     </div>
 
@@ -266,12 +260,12 @@
               <span class="flex-no-grow">/</span>
             {/if}
             <span class="flex-no-grow">
-              <span data-tooltip="{summary.class} {summary.level ?? '0'}"
+              <span title="{summary.class} {summary.level ?? '0'}"
                 >{summary.class}
                 {summary.level ?? '0'}
               </span>
               {#if summary.subclass}
-                <span data-tooltip={summary.subclass} class="flex-no-grow"
+                <span title={summary.subclass} class="flex-no-grow"
                   >{summary.subclass}</span
                 >
               {/if}
@@ -295,7 +289,7 @@
         />
         {#each characterSummaryEntries as entry}
           <span>&#8226;</span>
-          <span data-tooltip={entry} class="truncate">{entry}</span>
+          <span title={entry} class="truncate">{entry}</span>
         {/each}
       </span>
       <span class="flex-row align-items-center extra-small-gap">
@@ -305,7 +299,7 @@
         {#if $store.owner}
           <a
             class="origin-summary-tidy"
-            data-tooltip={localize('T5EK.OriginSummaryConfig')}
+            title={localize('T5EK.OriginSummaryConfig')}
             on:click={() =>
               new Tidy5eActorOriginSummaryConfig($store.actor).render(true)}
           >

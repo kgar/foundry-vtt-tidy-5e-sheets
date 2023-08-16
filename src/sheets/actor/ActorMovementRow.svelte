@@ -11,15 +11,15 @@
 <section class="movement flex-row small-gap">
   <h4>{localize('DND5E.Speed')}</h4>
   {#if movement.primary}
-    <span data-tooltip={movement.primary}>{movement.primary}</span>
+    <span title={movement.primary}>{movement.primary}</span>
   {/if}
   {#if movement.special}
     |
-    <span data-tooltip={movement.special}>{movement.special}</span>
+    <span title={movement.special}>{movement.special}</span>
   {/if}
   <a
     class="configure"
-    data-tooltip={localize('DND5E.MovementConfig')}
+    title={localize('DND5E.MovementConfig')}
     on:click={() =>
       new dnd5e.applications.actor.ActorMovementConfig(actor).render(true)}
     ><i class="fas fa-cog" /></a

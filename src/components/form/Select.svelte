@@ -9,6 +9,7 @@
   export let dtype: string | null = null;
   export let id: string | null = null;
   export let dataset: Record<string, unknown> | null = null;
+  export let title: string | null = null;
 
   $: datasetAttributes = buildDataset(dataset);
 
@@ -31,6 +32,7 @@
   value={value?.toString() ?? ''}
   data-tooltip={tooltip}
   on:change={document && saveChange}
+  {title}
   {...datasetAttributes}
 >
   <slot />

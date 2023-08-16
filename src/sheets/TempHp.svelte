@@ -1,13 +1,11 @@
 <script lang="ts">
   import type { ActorSheetContext } from 'src/types/types';
-  import { submitText } from './form';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import Tidy5eActorHitPointsConfig from 'src/dialogs/Tidy5eActorHitPointsConfig';
   import { SettingsProvider } from 'src/settings/settings';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import TextInput from 'src/components/form/TextInput.svelte';
-  import NumberInput from 'src/components/form/NumberInput.svelte';
 
   let store = getContext<Readable<ActorSheetContext>>('store');
 
@@ -21,9 +19,10 @@
     cssClass="temphp"
     placeholder="+{localize('DND5E.Temp')}"
     value={$store.hp.temp || null}
-    dataset={{ dtype: 'Number' }}
+    dtype="Number"
+    allowDeltaChanges={true}
     maxlength={5}
-    tooltip={localize('DND5E.HitPointsTemp')}
+    title={localize('DND5E.HitPointsTemp')}
   />
   <TextInput
     document={$store.actor}
@@ -31,13 +30,14 @@
     cssClass="max-temphp"
     placeholder="+{localize('DND5E.Max')}"
     value={$store.hp.tempmax || null}
-    dataset={{ dtype: 'Number' }}
+    dtype="Number"
+    allowDeltaChanges={true}
     maxlength={5}
-    tooltip={localize('DND5E.HitPointsTempMax')}
+    title={localize('DND5E.HitPointsTempMax')}
   />
   {#if SettingsProvider.settings.allowHpConfigOverride.get()}
     <a
-      data-tooltip={localize('DND5E.HitPointsConfig')}
+      title={localize('DND5E.HitPointsConfig')}
       on:click|stopPropagation|preventDefault={(event) =>
         new Tidy5eActorHitPointsConfig($store.actor).render(true)}
     >
@@ -45,7 +45,7 @@
     </a>
   {:else}
     <a
-      data-tooltip={localize('DND5E.HitPointsConfig')}
+      title={localize('DND5E.HitPointsConfig')}
       on:click|stopPropagation|preventDefault={(event) =>
         new dnd5e.applications.actor.ActorHitPointsConfig($store.actor).render(
           true

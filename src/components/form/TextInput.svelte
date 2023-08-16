@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { processInputChangeDelta } from 'src/sheets/form';
   import type { FoundryDocument } from 'src/types/document';
   import { buildDataset } from 'src/utils/data';
 
@@ -15,6 +16,8 @@
   export let ariaDescribedBy: string | null = null;
   export let selectOnFocus: boolean = false;
   export let saveEmptyAsNull: boolean = false;
+  export let title: string | null = null;
+  export let allowDeltaChanges: boolean = false;
 
   $: actualDataset = buildDataset(dataset);
 
@@ -23,9 +26,11 @@
       currentTarget: EventTarget & HTMLInputElement;
     }
   ) {
-    const valueToSave =
+    let valueToSave =
       saveEmptyAsNull && event.currentTarget.value === ''
         ? null
+        : !isNaN(parseInt(event.currentTarget.value)) && allowDeltaChanges
+        ? processInputChangeDelta(event, document, field)
         : event.currentTarget.value;
 
     document.update({
@@ -47,4 +52,5 @@
   data-dtype={dtype}
   aria-describedby={ariaDescribedBy}
   on:focus={(ev) => selectOnFocus && ev.currentTarget.select()}
+  {title}
 />
