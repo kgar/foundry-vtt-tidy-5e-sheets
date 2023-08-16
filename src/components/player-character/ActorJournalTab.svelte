@@ -3,10 +3,10 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { type ActorSheetContext } from 'src/types/types';
   import SheetEditor from 'src/sheets/SheetEditor.svelte';
-  import { submitText } from 'src/sheets/form';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import RerenderAfterFormSubmission from '../shared/RerenderAfterFormSubmission.svelte';
+  import TextInput from '../form/TextInput.svelte';
 
   let store = getContext<Readable<ActorSheetContext>>('store');
 
@@ -17,26 +17,20 @@
   }
 </script>
 
-<div
-  class="left-notes note-entries"
-  class:limited={$store.actor.limited}
->
+<div class="left-notes note-entries" class:limited={$store.actor.limited}>
   <RerenderAfterFormSubmission
     andOnValueChange={FoundryAdapter.tryGetFlag($store.actor, 'notes1.value') ??
       ''}
   >
     <article use:activateProseMirrorListeners>
       <div class="section-titles">
-        <input
-          type="text"
+        <TextInput
+          document={$store.actor}
+          field="flags.{CONSTANTS.MODULE_ID}.notes1.name"
           value={FoundryAdapter.tryGetFlag($store.actor, 'notes1.name') ?? ''}
           placeholder={localize('T5EK.JournalPoi')}
-          on:change|stopPropagation|preventDefault={(event) =>
-            submitText(
-              event,
-              $store.actor,
-              `flags.${CONSTANTS.MODULE_ID}.notes1.name`
-            )}
+          selectOnFocus={true}
+          stopChangePropagation={true}
         />
       </div>
       <SheetEditor
@@ -52,16 +46,13 @@
   >
     <article use:activateProseMirrorListeners>
       <div class="section-titles">
-        <input
-          type="text"
+        <TextInput
+          document={$store.actor}
+          field="flags.{CONSTANTS.MODULE_ID}.notes2.name"
           value={FoundryAdapter.tryGetFlag($store.actor, 'notes2.name') ?? ''}
           placeholder={localize('T5EK.JournalLoi')}
-          on:change|stopPropagation|preventDefault={(event) =>
-            submitText(
-              event,
-              $store.actor,
-              `flags.${CONSTANTS.MODULE_ID}.notes2.name`
-            )}
+          selectOnFocus={true}
+          stopChangePropagation={true}
         />
       </div>
       <SheetEditor
@@ -77,16 +68,13 @@
   >
     <article use:activateProseMirrorListeners>
       <div class="section-titles">
-        <input
-          type="text"
+        <TextInput
+          document={$store.actor}
+          field="flags.{CONSTANTS.MODULE_ID}.notes3.name"
           value={FoundryAdapter.tryGetFlag($store.actor, 'notes3.name') ?? ''}
           placeholder={localize('T5EK.JournalQuests')}
-          on:change|stopPropagation|preventDefault={(event) =>
-            submitText(
-              event,
-              $store.actor,
-              `flags.${CONSTANTS.MODULE_ID}.notes3.name`
-            )}
+          selectOnFocus={true}
+          stopChangePropagation={true}
         />
       </div>
       <SheetEditor
@@ -102,16 +90,13 @@
   >
     <article use:activateProseMirrorListeners>
       <div class="section-titles">
-        <input
-          type="text"
+        <TextInput
+          document={$store.actor}
+          field="flags.{CONSTANTS.MODULE_ID}.notes4.name"
           value={FoundryAdapter.tryGetFlag($store.actor, 'notes4.name') ?? ''}
           placeholder={localize('T5EK.JournalMisc')}
-          on:change|stopPropagation|preventDefault={(event) =>
-            submitText(
-              event,
-              $store.actor,
-              `flags.${CONSTANTS.MODULE_ID}.notes4.name`
-            )}
+          selectOnFocus={true}
+          stopChangePropagation={true}
         />
       </div>
       <SheetEditor
@@ -122,10 +107,7 @@
     </article>
   </RerenderAfterFormSubmission>
 </div>
-<div
-  class="right-notes note-entries"
-  class:limited={$store.actor.limited}
->
+<div class="right-notes note-entries" class:limited={$store.actor.limited}>
   <RerenderAfterFormSubmission
     andOnValueChange={FoundryAdapter.tryGetFlag($store.actor, 'notes.value') ??
       ''}

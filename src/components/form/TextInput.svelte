@@ -19,6 +19,14 @@
   export let title: string | null = null;
   export let allowDeltaChanges: boolean = false;
   export let readonly: boolean = false;
+  /**
+   * Stops propagation on input change event.
+   * Useful for cases when outside listeners like
+   * the FormApplication are clearing an input
+   * during a change event, since these inputs
+   * do not use the `[name]` attribute.
+   */
+  export let stopChangePropagation: boolean = false;
 
   $: actualDataset = buildDataset(dataset);
 
@@ -27,6 +35,8 @@
       currentTarget: EventTarget & HTMLInputElement;
     }
   ) {
+    stopChangePropagation && event.stopPropagation();
+
     let valueToSave =
       saveEmptyAsNull && event.currentTarget.value === ''
         ? null
