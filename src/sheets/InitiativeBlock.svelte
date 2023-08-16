@@ -2,9 +2,9 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { type Actor5e } from 'src/types/actor';
   import { formatAsModifier } from 'src/utils/formatting';
-  import { submitText } from './form';
   import BlockTitle from './BlockTitle.svelte';
   import BlockScore from './BlockScore.svelte';
+  import TextInput from 'src/components/form/TextInput.svelte';
 
   export let initiative: { total: number; bonus: number };
   export let actor: Actor5e;
@@ -25,15 +25,16 @@
   </BlockScore>
   <label class="ini-bonus">
     <span>{localize('T5EK.AbbrMod')}</span>
-    <input
-      class="ini-mod"
-      type="text"
+    <TextInput
+      document={actor}
+      field="system.attributes.init.bonus"
+      cssClass="ini-mod"
       placeholder="0"
-      data-dtype="Number"
+      dtype="Number"
+      selectOnFocus={true}
+      allowDeltaChanges={true}
       value={initiative.bonus}
-      maxlength="2"
-      on:change|stopPropagation|preventDefault={(event) =>
-        submitText(event, actor, 'system.attributes.init.bonus')}
+      maxlength={2}
     />
   </label>
   <a
@@ -64,7 +65,7 @@
       font-size: 0.75rem;
       line-height: 0.875rem;
 
-      .ini-mod {
+      :global(.ini-mod) {
         flex: 0 1 1px;
         line-height: 0.875rem;
         height: 0.875rem;
