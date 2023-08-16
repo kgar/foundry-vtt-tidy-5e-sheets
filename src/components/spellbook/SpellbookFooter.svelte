@@ -49,19 +49,14 @@
       <p>{localize('T5EK.PreparedSpells')}</p>
       <span class="spells-prepared">{$store.preparedSpells ?? 0}</span>
       /
-      <input
-        class="max-preparation"
-        type="number"
+      <NumberInput
+        document={$store.actor}
+        field="flags.{CONSTANTS.MODULE_ID}.maxPreparedSpells"
+        cssClass="max-preparation"
         value={FoundryAdapter.tryGetFlag($store.actor, 'maxPreparedSpells')}
-        data-dtype="Number"
+        dtype="Number"
         placeholder="0"
         title={localize('T5EK.PreparedSpellsMax')}
-        on:change|stopPropagation|preventDefault={(event) =>
-          submitText(
-            event,
-            $store.actor,
-            `flags.${CONSTANTS.MODULE_ID}.maxPreparedSpells`
-          )}
       />
     </div>
   {/if}

@@ -10,11 +10,11 @@
   import InventoryList from '../inventory/InventoryList.svelte';
   import InventoryGrid from '../inventory/InventoryGrid.svelte';
   import { SettingsProvider } from 'src/settings/settings';
-  import { submitText } from 'src/sheets/form';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import Currency from 'src/sheets/actor/Currency.svelte';
   import Notice from '../shared/Notice.svelte';
+  import NumberInput from '../form/NumberInput.svelte';
 
   let store = getContext<Readable<ActorSheetContext>>('store');
 
@@ -106,15 +106,14 @@
       >
       /
       {#if FoundryAdapter.userIsGm()}
-        <input
-          type="number"
-          class="attuned-items-max"
-          data-dtype="Number"
+        <NumberInput
+          document={$store.actor}
+          field="system.attributes.attunement.max"
+          cssClass="attuned-items-max"
+          dtype="Number"
           value={$store.system.attributes.attunement.max}
           placeholder="0"
           title={localize('T5EK.AttunementMax')}
-          on:change|stopPropagation|preventDefault={(event) =>
-            submitText(event, $store.actor, 'system.attributes.attunement.max')}
         />
       {:else}
         <span class="attuned-items-max"
@@ -194,11 +193,11 @@
           margin-left: 0.0625rem;
         }
 
-        .attuned-items-max {
+        :global(.attuned-items-max) {
           width: 1.5rem;
         }
 
-        input {
+        :global(input) {
           font-size: 1rem;
           font-family: var(--t5e-signika);
         }
