@@ -1,4 +1,5 @@
 <script lang="ts">
+  import Checkbox from 'src/components/form/Checkbox.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type {
     ActorSheetContext,
@@ -23,22 +24,19 @@
   class:only-show-on-hover={onlyShowOnHover}
   title={localize('DND5E.Inspiration')}
 >
-  <label class:inspired class={radiusClass}>
-    <input
-      class="inspiration-toggle"
-      type="checkbox"
-      data-dtype="Boolean"
-      checked={inspired}
-      on:change|stopPropagation|preventDefault={(event) =>
-        $store.actor.update({
-          'system.attributes.inspiration': event.currentTarget.checked,
-        })}
-    />
+  <Checkbox
+    checkboxCssClass="inspiration-toggle"
+    labelCssClass="{inspired ? 'inspired' : ''} {radiusClass}"
+    document={$store.actor}
+    field="system.attributes.inspiration"
+    dtype="Boolean"
+    checked={inspired}
+  >
     <i
       class="inspiration-icon fas fa-dice-d20"
       class:disable-animation={disableAnimation}
     />
-  </label>
+  </Checkbox>
 </div>
 
 <style lang="scss">
@@ -51,20 +49,20 @@
     z-index: 5;
 
     &.only-show-on-hover {
-      label {
+      :global(label) {
         visibility: hidden;
       }
 
-      &:hover label {
+      &:hover :global(label) {
         visibility: visible;
       }
     }
 
-    input.inspiration-toggle {
+    :global(input.inspiration-toggle) {
       display: none;
     }
 
-    label {
+    :global(label) {
       width: 100%;
       height: 100%;
       display: flex;
@@ -78,7 +76,7 @@
       background: var(--t5e-icon-background);
     }
 
-    label i {
+    :global(label i) {
       position: absolute;
       top: 0;
       left: 0;
@@ -89,26 +87,26 @@
       line-height: 2.125rem;
     }
 
-    label:hover {
+    :global(label:hover) {
       color: var(--t5e-inspiration-color-hover);
       text-shadow: 0 0 0.3125rem var(--t5e-inspiration-text-shadow-hover);
     }
   }
 
   .inspiration-1 {
-    label {
+    :global(label) {
       color: var(--t5e-white);
       text-shadow: 0 0 0.625rem var(--t5e-inspiration-inspired-text-shadow);
       background: var(--t5e-inspiration-inspired-background);
+    }
 
-      i {
-        color: var(--t5e-white);
-        animation: glow 5s ease-in-out infinite alternate;
+    :global(label i) {
+      color: var(--t5e-white);
+      animation: glow 5s ease-in-out infinite alternate;
+    }
 
-        &.disable-animation {
-          animation: none;
-        }
-      }
+    :global(label i.disable-animation) {
+      animation: none;
     }
   }
 

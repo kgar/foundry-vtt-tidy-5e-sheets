@@ -11,6 +11,7 @@
   export let disabled: boolean | null = null;
   export let dataset: Record<string, unknown> | null = null;
   export let labelCssClass: string | null = null;
+  export let checkboxCssClass: string | null = null;
   export let dtype: string | null = null;
 
   $: datasetAttributes = buildDataset(dataset);
@@ -39,6 +40,7 @@
       {disabled}
       {...datasetAttributes}
       data-dtype={dtype}
+      class={checkboxCssClass}
     />
     <slot />
   </label>
@@ -53,5 +55,6 @@
     {disabled}
     {...datasetAttributes}
     data-dtype={dtype}
+    class={checkboxCssClass}
   />
 {/if}
