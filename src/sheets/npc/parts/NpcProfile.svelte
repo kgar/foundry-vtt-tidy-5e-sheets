@@ -13,6 +13,7 @@
   import NpcRest from './NpcRest.svelte';
   import NpcHealthFormula from './NpcHealthFormula.svelte';
   import ActorProfile from 'src/sheets/actor/ActorProfile.svelte';
+  import { CONSTANTS } from 'src/constants';
 
   let store = getContext<Readable<NpcSheetContext>>('store');
 
@@ -26,25 +27,21 @@
   function onLevelSelected(event: CustomEvent<{ level: number }>) {
     FoundryAdapter.setFlag($store.actor, 'exhaustion', event.detail.level);
   }
-
-  function showDeathSaves(): boolean {
-    const isEnabledForAll =
-      !SettingsProvider.settings.hiddenDeathSavesEnabled.get();
-    return incapacitated && (isEnabledForAll || FoundryAdapter.userIsGm());
-  }
 </script>
 
 <ActorProfile {useRoundedPortraitStyle}>
   {#if !SettingsProvider.settings.hpOverlayDisabledNpc.get()}
     <HpOverlay {useRoundedPortraitStyle} actor={$store.actor} />
   {/if}
-  {#if showDeathSaves()}
+  {#if incapacitated && (!SettingsProvider.settings.hiddenDeathSavesEnabled.get() || FoundryAdapter.userIsGm())}
     <DeathSaves
-      successes={$store.system.attributes.death.success}
-      failures={$store.system.attributes.death.failure}
+      successes={FoundryAdapter.tryGetFlag($store.actor, 'death')?.success ?? 0}
+      failures={FoundryAdapter.tryGetFlag($store.actor, 'death')?.failure ?? 0}
+      successesField="flags.{CONSTANTS.MODULE_ID}.death.success"
+      failuresField="flags.{CONSTANTS.MODULE_ID}.death.failure"
       {useRoundedPortraitStyle}
       on:rollDeathSave={(event) =>
-        $store.actor.rollDeathSave({ event: event.detail.mouseEvent })}
+        $store.rollDeathSave({ event: event.detail.mouseEvent })}
     />
   {/if}
   {#if !SettingsProvider.settings.exhaustionDisabled.get() && !incapacitated}

@@ -28,12 +28,6 @@
       'system.attributes.exhaustion': event.detail.level,
     });
   }
-
-  function showDeathSaves(): boolean {
-    const isEnabledForAll =
-      !SettingsProvider.settings.hiddenDeathSavesEnabled.get();
-    return incapacitated && (isEnabledForAll || FoundryAdapter.userIsGm());
-  }
 </script>
 
 <!-- TODO: Resolve linting comments after done re-styling -->
@@ -44,11 +38,13 @@
     <HpOverlay {useRoundedPortraitStyle} actor={$store.actor} />
   {/if}
 
-  {#if showDeathSaves()}
+  {#if incapacitated && (!SettingsProvider.settings.hiddenDeathSavesEnabled.get() || FoundryAdapter.userIsGm())}
     <DeathSaves
+      {useRoundedPortraitStyle}
       successes={$store.system.attributes.death.success}
       failures={$store.system.attributes.death.failure}
-      {useRoundedPortraitStyle}
+      successesField="system.attributes.death.success"
+      failuresField="system.attributes.death.failure"
       on:rollDeathSave={(event) =>
         $store.actor.rollDeathSave({ event: event.detail.mouseEvent })}
     />

@@ -11,6 +11,8 @@
   export let successes: number;
   export let failures: number;
   export let useRoundedPortraitStyle: boolean;
+  export let successesField: string;
+  export let failuresField: string;
 
   const localize = FoundryAdapter.localize;
   const hpOverlayDisabled = SettingsProvider.settings.hpOverlayDisabled.get();
@@ -27,6 +29,7 @@
   <div class="counter-value" class:show-backdrop={hpOverlayDisabled}>
     <i class="fas fa-check" />
     <input
+      class="death-save-result"
       type="text"
       data-dtype="Number"
       placeholder="0"
@@ -34,7 +37,7 @@
       maxlength="1"
       title={localize('DND5E.DeathSave')}
       on:change|stopPropagation|preventDefault={(event) =>
-        submitText(event, $store.actor, 'system.attributes.death.success')}
+        submitText(event, $store.actor, successesField)}
     />
     <div
       class="death-save rollable"
@@ -43,13 +46,14 @@
       <i class="fas fa-skull" />
     </div>
     <input
+      class="death-save-result"
       type="text"
       data-dtype="Number"
       placeholder="0"
       value={failures}
       maxlength="1"
       on:change|stopPropagation|preventDefault={(event) =>
-        submitText(event, $store.actor, 'system.attributes.death.failure')}
+        submitText(event, $store.actor, failuresField)}
     />
     <i class="fas fa-times" />
   </div>
@@ -86,8 +90,8 @@
       border-radius: 5px;
     }
 
-    input {
-      color: #fff;
+    :global(input[type='text'].death-save-result) {
+      color: var(--t5e-white);
       font-weight: 700;
       font-size: 16px;
       height: 19px;
@@ -95,22 +99,22 @@
       min-width: unset;
       text-align: center;
       width: 18px;
-
-      &:hover {
-        border-color: #fff;
-      }
     }
 
-    .death-save {
+    :global(input:hover) {
+      border-color: #fff;
+    }
+
+    :global(.death-save) {
       position: relative;
       margin: 0 0.25rem;
       color: rgba(255, 255, 255, 0.75);
       font-size: 30px;
       transition: color 0.3s ease;
+    }
 
-      &:hover {
-        color: #fff;
-      }
+    :global(.death-save:hover) {
+      color: #fff;
     }
   }
 </style>

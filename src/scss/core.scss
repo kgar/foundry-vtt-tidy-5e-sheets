@@ -18,9 +18,9 @@
 
 .tidy5e-kgar {
   &.sheet {
-    &.actor {
-      @import './partials/actor';
-    }
+    @import './partials/inputs';
+
+    @import './partials/actor';
 
     &.character {
       form {

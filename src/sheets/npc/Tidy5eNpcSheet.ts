@@ -6,12 +6,13 @@ import NpcSheetLimited from './NpcSheetLimited.svelte';
 import { CONSTANTS } from 'src/constants';
 import { Tidy5eKgarUserSettings } from 'src/settings/user-settings-form';
 import { applyTitleToWindow } from 'src/utils/applications';
-import { error } from 'src/utils/logging';
+import { debug, error } from 'src/utils/logging';
 import { SettingsProvider } from 'src/settings/settings';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
 import { isLessThanOneIsOne } from 'src/utils/numbers';
 import NpcShortRestDialog from 'src/dialogs/NpcShortRestDialog';
 import LongRestDialog from 'src/dialogs/NpcLongRestDialog';
+import { d20Roll } from 'src/utils/rolls';
 
 const ActorSheet5eNpc = FoundryAdapter.getActorSheetNpcClass();
 
@@ -98,6 +99,7 @@ export class Tidy5eNpcSheet extends ActorSheet5eNpc {
       },
       shortRest: this._onShortRest.bind(this),
       longRest: this._onLongRest.bind(this),
+      rollDeathSave: this._rollDeathSave.bind(this),
       tokenState: this.#getTokenState(),
     };
   }
@@ -110,7 +112,7 @@ export class Tidy5eNpcSheet extends ActorSheet5eNpc {
     if (!token) {
       return null;
     }
-    
+
     if (token.actorLink && linkMarkerNpc == 'both') {
       return 'linked';
     }
@@ -353,9 +355,10 @@ export class Tidy5eNpcSheet extends ActorSheet5eNpc {
         const exhaustion = this.actor.flags[CONSTANTS.MODULE_ID].exhaustion;
         debug('tidy5e-npc | _rest | exhaustion = ' + exhaustion);
         await this.actor.update({
-          'flags.tidy5e-sheet.exhaustion': exhaustion - 1,
+          [`flags.${CONSTANTS.MODULE_ID}.exhaustion`]: exhaustion - 1,
         });
-        await updateExhaustion(this.actor);
+        // TODO: Implement:
+        // await updateExhaustion(this.actor);
       }
     } else {
       const rollData = this.actor.getRollData();
@@ -441,5 +444,134 @@ export class Tidy5eNpcSheet extends ActorSheet5eNpc {
 
     // Return data summarizing the rest effects
     return result;
+  }
+
+  /**
+   * Perform a death saving throw, rolling a d20 plus any global save bonuses
+   * @param {object} options          Additional options which modify the roll
+   * @returns {Promise<D20Roll|null>} A Promise which resolves to the Roll instance
+   */
+  async _rollDeathSave(options = {}) {
+    const death = this.actor.flags[CONSTANTS.MODULE_ID].death ?? {};
+
+    // Display a warning if we are not at zero HP or if we already have reached 3
+    if (
+      this.actor.system.attributes.hp.value > 0 ||
+      death.failure >= 3 ||
+      death.success >= 3
+    ) {
+      ui.notifications.warn(game.i18n.localize('DND5E.DeathSaveUnnecessary'));
+      return null;
+    }
+
+    // Evaluate a global saving throw bonus
+    const speaker = options.speaker || ChatMessage.getSpeaker({ actor: this });
+    const globalBonuses = this.actor.system.bonuses?.abilities ?? {};
+    const parts = [];
+    const data = this.actor.getRollData();
+
+    // Diamond Soul adds proficiency
+    if (this.actor.getFlag('dnd5e', 'diamondSoul')) {
+      parts.push('@prof');
+      data.prof = new Proficiency(this.actor.system.attributes.prof, 1).term;
+    }
+
+    // Include a global actor ability save bonus
+    if (globalBonuses.save) {
+      parts.push('@saveBonus');
+      data.saveBonus = Roll.replaceFormulaData(globalBonuses.save, data);
+    }
+
+    // Evaluate the roll
+    const flavor = game.i18n.localize('DND5E.DeathSavingThrow');
+    const rollData = foundry.utils.mergeObject(
+      {
+        data,
+        title: `${flavor}: ${this.actor.name}`,
+        flavor,
+        halflingLucky: this.actor.getFlag('dnd5e', 'halflingLucky'),
+        targetValue: 10,
+        messageData: {
+          speaker: speaker,
+          'flags.dnd5e.roll': { type: 'death' },
+        },
+      },
+      options
+    );
+    rollData.parts = parts.concat(options.parts ?? []);
+
+    const roll = await d20Roll(rollData);
+    if (!roll) return null;
+
+    // Take action depending on the result
+    const details = {};
+
+    // Save success
+    if (roll.total >= (roll.options.targetValue ?? 10)) {
+      let successes = (death.success || 0) + 1;
+
+      // Critical Success = revive with 1hp
+      if (roll.isCritical) {
+        details.updates = {
+          [`flags.${CONSTANTS.MODULE_ID}.death.success`]: 0,
+          [`flags.${CONSTANTS.MODULE_ID}.death.failure`]: 0,
+          'system.attributes.hp.value': 1,
+        };
+        details.chatString = 'DND5E.DeathSaveCriticalSuccess';
+      }
+
+      // 3 Successes = survive and reset checks
+      else if (successes === 3) {
+        details.updates = {
+          [`flags.${CONSTANTS.MODULE_ID}.death.success`]: 0,
+          [`flags.${CONSTANTS.MODULE_ID}.death.failure`]: 0,
+        };
+        details.chatString = 'DND5E.DeathSaveSuccess';
+      }
+
+      // Increment successes
+      else
+        details.updates = {
+          [`flags.${CONSTANTS.MODULE_ID}.death.success`]: Math.clamped(
+            successes,
+            0,
+            3
+          ),
+        };
+    }
+
+    // Save failure
+    else {
+      let failures = (death.failure || 0) + (roll.isFumble ? 2 : 1);
+      details.updates = {
+        [`flags.${CONSTANTS.MODULE_ID}.death.failure`]: Math.clamped(
+          failures,
+          0,
+          3
+        ),
+      };
+      if (failures >= 3) {
+        // 3 Failures = death
+        details.chatString = 'DND5E.DeathSaveFailure';
+      }
+    }
+
+    if (!foundry.utils.isEmpty(details.updates))
+      await this.actor.update(details.updates);
+
+    // Display success/failure chat message
+    if (details.chatString) {
+      let chatData = {
+        content: game.i18n.format(details.chatString, {
+          name: this.actor.name,
+        }),
+        speaker,
+      };
+      ChatMessage.applyRollMode(chatData, roll.options.rollMode);
+      await ChatMessage.create(chatData);
+    }
+
+    // Return the rolled result
+    return roll;
   }
 }

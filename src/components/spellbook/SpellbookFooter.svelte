@@ -75,7 +75,7 @@
     </Select>
   </div>
   {#if $store.isNPC}
-    <div class="flex-row extra-small-gap" style="flex: 0">
+    <div class="flex-row extra-small-gap flex-0 align-items-center">
       <h3 class="truncate">{localize('DND5E.SpellcasterLevel')}</h3>
       <NumberInput
         cssClass="spellcasting-level"
@@ -108,7 +108,6 @@
     }
 
     h3 {
-      margin-right: 0.625rem;
       font-size: 1.25rem;
       font-family: var(--t5e-modesto);
     }
