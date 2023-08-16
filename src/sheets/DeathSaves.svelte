@@ -2,9 +2,9 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { SettingsProvider } from 'src/settings/settings';
   import { createEventDispatcher, getContext } from 'svelte';
-  import { submitText } from './form';
   import type { ActorSheetContext } from 'src/types/types';
   import type { Readable } from 'svelte/store';
+  import TextInput from 'src/components/form/TextInput.svelte';
 
   let store = getContext<Readable<ActorSheetContext>>('store');
 
@@ -28,16 +28,17 @@
 <div class="death-saves" class:rounded={useRoundedPortraitStyle}>
   <div class="counter-value" class:show-backdrop={hpOverlayDisabled}>
     <i class="fas fa-check" />
-    <input
-      class="death-save-result"
-      type="text"
-      data-dtype="Number"
+    <TextInput
+      document={$store.actor}
+      field={successesField}
+      cssClass="death-save-result"
+      dtype="Number"
+      selectOnFocus={true}
+      allowDeltaChanges={true}
       placeholder="0"
       value={successes}
-      maxlength="1"
+      maxlength={1}
       title={localize('DND5E.DeathSave')}
-      on:change|stopPropagation|preventDefault={(event) =>
-        submitText(event, $store.actor, successesField)}
     />
     <div
       class="death-save rollable"
@@ -45,15 +46,16 @@
     >
       <i class="fas fa-skull" />
     </div>
-    <input
-      class="death-save-result"
-      type="text"
-      data-dtype="Number"
+    <TextInput
+      document={$store.actor}
+      field={failuresField}
+      cssClass="death-save-result"
+      dtype="Number"
+      selectOnFocus={true}
+      allowDeltaChanges={true}
       placeholder="0"
       value={failures}
-      maxlength="1"
-      on:change|stopPropagation|preventDefault={(event) =>
-        submitText(event, $store.actor, failuresField)}
+      maxlength={1}
     />
     <i class="fas fa-times" />
   </div>
@@ -102,19 +104,19 @@
     }
 
     :global(input:hover) {
-      border-color: #fff;
+      border-color: var(--t5e-white);
     }
 
     :global(.death-save) {
       position: relative;
       margin: 0 0.25rem;
-      color: rgba(255, 255, 255, 0.75);
+      color: var(--t5e-death-save-color);
       font-size: 30px;
       transition: color 0.3s ease;
     }
 
     :global(.death-save:hover) {
-      color: #fff;
+      color: var(--t5e-white);
     }
   }
 </style>

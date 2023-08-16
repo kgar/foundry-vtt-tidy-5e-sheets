@@ -46,90 +46,84 @@
     position: absolute;
     right: 0;
     top: 0px;
-    width: 34px;
-    height: 34px;
+    width: 2.125rem;
+    height: 2.125rem;
     z-index: 5;
+
+    &.only-show-on-hover {
+      label {
+        visibility: hidden;
+      }
+
+      &:hover label {
+        visibility: visible;
+      }
+    }
+
+    input.inspiration-toggle {
+      display: none;
+    }
+
+    label {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.5rem;
+      color: var(--t5e-icon-font);
+      cursor: pointer;
+      box-shadow: 0 0 0.625rem var(--t5e-icon-shadow) inset;
+      border: 1px solid var(--t5e-icon-outline);
+      background: var(--t5e-icon-background);
+    }
+
+    label i {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      text-align: center;
+      line-height: 2.125rem;
+    }
+
+    label:hover {
+      color: var(--t5e-inspiration-color-hover);
+      text-shadow: 0 0 0.3125rem var(--t5e-inspiration-text-shadow-hover);
+    }
   }
 
-  .inspiration input.inspiration-toggle {
-    display: none;
-  }
+  .inspiration-1 {
+    label {
+      color: var(--t5e-white);
+      text-shadow: 0 0 0.625rem var(--t5e-inspiration-inspired-text-shadow);
+      background: var(--t5e-inspiration-inspired-background);
 
-  .inspiration label {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 24px;
-    color: var(--t5e-icon-font);
-    cursor: pointer;
-    box-shadow: 0 0 10px var(--t5e-icon-shadow) inset;
-    border: 1px solid var(--t5e-icon-outline);
-    background: var(--t5e-icon-background);
-  }
+      i {
+        color: var(--t5e-white);
+        animation: glow 5s ease-in-out infinite alternate;
 
-  .round-portrait .inspiration label {
-    border-radius: 50%;
-  }
-
-  .inspiration label i {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    text-align: center;
-    line-height: 34px;
-  }
-
-  .inspiration label:hover {
-    color: rgba(255, 255, 255, 0.75);
-    text-shadow: 0 0 5px rgba(118, 228, 255, 0.5);
-  }
-
-  .inspiration-1 label {
-    color: rgba(255, 255, 255, 1);
-    text-shadow: 0 0 10px rgba(118, 228, 255, 1);
-    background: #999;
-  }
-
-  .inspiration-1 label i {
-    color: #ffffff;
-    animation: glow 5s ease-in-out infinite alternate;
-
-    &.disable-animation {
-      animation: none;
+        &.disable-animation {
+          animation: none;
+        }
+      }
     }
   }
 
   @keyframes glow {
     0% {
       transform: scale(1);
-      text-shadow: 0 0 10px 6px #76e4ff;
     }
     25% {
       transform: scale(1.2);
-      text-shadow: 0 0 12px 8px #76e4ff;
     }
     60% {
       transform: scale(1);
-      text-shadow: 0 0 8px 4px #76e4ff;
     }
     100% {
       transform: scale(1.1);
-      text-shadow: 0 0 11px 7px #76e4ff;
-    }
-  }
-
-  .only-show-on-hover {
-    label {
-      visibility: hidden;
-    }
-
-    &:hover label {
-      visibility: visible;
     }
   }
 </style>
