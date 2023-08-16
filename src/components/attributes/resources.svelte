@@ -1,9 +1,9 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { submitText } from 'src/sheets/form';
   import type { ActorSheetContext } from 'src/types/types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
+  import TextInput from '../form/TextInput.svelte';
 
   let store = getContext<Readable<ActorSheetContext>>('store');
 
@@ -56,35 +56,37 @@
         </div>
       </header>
       <h4 class="resource-name">
-        <input
-          type="text"
+        <TextInput
+          document={$store.actor}
+          field="system.resources.{res.name}.label"
           value={res.label}
           placeholder={res.placeholder}
-          on:change={(e) =>
-            submitText(e, $store.actor, `system.resources.${res.name}.label`)}
+          selectOnFocus={true}
         />
       </h4>
       <div class="resource-value multiple">
-        <input
-          class="resource-value"
-          type="text"
+        <TextInput
+          cssClass="resource-value"
+          document={$store.actor}
+          field="system.resources.{res.name}.value"
           value={res.value ?? null}
           placeholder="0"
-          data-dtype="Number"
-          maxlength="3"
-          on:change={(e) =>
-            submitText(e, $store.actor, `system.resources.${res.name}.value`)}
+          dtype="Number"
+          allowDeltaChanges={true}
+          maxlength={3}
+          selectOnFocus={true}
         />
         <span class="sep"> / </span>
-        <input
-          class="resource-max"
-          type="text"
+        <TextInput
+          document={$store.actor}
+          field="system.resources.{res.name}.max"
+          cssClass="resource-max"
           value={res.max ?? null}
           placeholder="0"
-          data-dtype="Number"
-          maxlength="3"
-          on:change={(e) =>
-            submitText(e, $store.actor, `system.resources.${res.name}.max`)}
+          dtype="Number"
+          allowDeltaChanges={true}
+          maxlength={3}
+          selectOnFocus={true}
         />
       </div>
     </li>
@@ -202,7 +204,7 @@
       }
 
       .resource-name {
-        input {
+        :global(input) {
           font-family: var(--t5e-modesto);
           font-weight: 700;
           font-size: 1rem;
@@ -227,7 +229,7 @@
       }
 
       .resource-value.multiple {
-        input {
+        :global(input) {
           font-size: 1.375rem;
           max-width: 3.5ch;
           height: 1.375rem;
@@ -239,11 +241,11 @@
           opacity: 0.5;
         }
 
-        .resource-value {
+        :global(.resource-value) {
           text-align: right;
         }
 
-        .resource-max {
+        :global(.resource-max) {
           text-align: left;
         }
       }
