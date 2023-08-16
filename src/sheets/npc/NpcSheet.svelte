@@ -102,138 +102,181 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-<header class="tidy5e-kgar-sheet-header flex-row">
-  <div class="flex-grow-0">
-    <NpcProfile />
-  </div>
-  <div class="flex-grow-1">
-    <div
-      class="actor-name-row flex-row justifty-content-space-between align-items-center"
-    >
-      <div class="actor-name">
-        <ContentEditableFormField
-          element="h1"
-          document={$store.actor}
-          field="name"
-          value={$store.actor.name}
-          editable={$store.owner}
-          spellcheck={false}
-          placeholder={localize('DND5E.Name')}
-          dataMaxLength={40}
-        />
-      </div>
-      <div class="level-information">
-        <div class="xp">
-          <span>{$store.system.details.xp.value} XP</span>
-        </div>
-        <div class="level">
-          {localize('DND5E.AbbreviationCR')}
+<div class="token-link-wrapper {$store.tokenState}">
+  <header class="tidy5e-kgar-sheet-header flex-row">
+    <div class="flex-grow-0">
+      <NpcProfile />
+    </div>
+    <div class="flex-grow-1">
+      <div
+        class="actor-name-row flex-row justifty-content-space-between align-items-center extra-small-gap"
+      >
+        {#if $store.tokenState === 'linked'}
+          <i
+            class="link-state fas fa-link"
+            title={localize('TIDY5E.TokenLinked')}
+          />
+        {:else if $store.tokenState === 'unlinked'}
+          <i
+            class="link-state fas fa-unlink"
+            title={localize('TIDY5E.TokenUnlinked')}
+          />
+        {/if}
+
+        <div class="actor-name">
           <ContentEditableFormField
-            element="span"
-            editable={true}
+            element="h1"
             document={$store.actor}
-            field="system.details.cr"
-            placeholder="0"
-            dataMaxLength={4}
-            value={$store.labels.cr}
-            saveAs="number"
+            field="name"
+            value={$store.actor.name}
+            editable={$store.owner}
+            spellcheck={false}
+            placeholder={localize('DND5E.Name')}
+            dataMaxLength={40}
           />
         </div>
+        <div class="level-information">
+          <div class="xp">
+            <span>{$store.system.details.xp.value} XP</span>
+          </div>
+          <div class="level">
+            {localize('DND5E.AbbreviationCR')}
+            <ContentEditableFormField
+              element="span"
+              editable={true}
+              document={$store.actor}
+              field="system.details.cr"
+              placeholder="0"
+              dataMaxLength={4}
+              value={$store.labels.cr}
+              saveAs="number"
+            />
+          </div>
+        </div>
       </div>
-    </div>
-    <HorizontalLineSeparator borderStyle="light" />
-    <div class="origin-summary">
-      <div class="flex-row extra-small-gap">
-        <TidyDropdownList
-          options={sizes}
-          selected={currentSize}
-          on:optionClicked={(event) =>
-            $store.actor.update({
-              'system.traits.size': event.detail.value,
-            })}
-        />
-        <span>&#8226;</span>
-        <DelimitedTruncatedContent cssClass="flex-grow-1">
-          <span class="flex-row extra-small-gap align-items-center">
-            <!-- TODO: Accent color on hover -->
-            <a
-              class="truncate highlight-on-hover"
-              role="button"
-              on:click={() =>
-                new dnd5e.applications.actor.ActorTypeConfig(
-                  $store.actor
-                ).render(true)}
-              data-tooltip="{$store.labels.type} ({localize(
-                'DND5E.CreatureTypeConfig'
-              )})"
-              >{#if isNil($store.labels.type, '')}
-                {localize('DND5E.CreatureType')}
-              {:else}
-                {$store.labels.type}
-              {/if}</a
+      <HorizontalLineSeparator borderStyle="light" />
+      <div class="origin-summary">
+        <div class="flex-row extra-small-gap">
+          <TidyDropdownList
+            options={sizes}
+            selected={currentSize}
+            on:optionClicked={(event) =>
+              $store.actor.update({
+                'system.traits.size': event.detail.value,
+              })}
+          />
+          <span>&#8226;</span>
+          <DelimitedTruncatedContent cssClass="flex-grow-1">
+            <span class="flex-row extra-small-gap align-items-center">
+              <!-- TODO: Accent color on hover -->
+              <a
+                class="truncate highlight-on-hover"
+                role="button"
+                on:click={() =>
+                  new dnd5e.applications.actor.ActorTypeConfig(
+                    $store.actor
+                  ).render(true)}
+                data-tooltip="{$store.labels.type} ({localize(
+                  'DND5E.CreatureTypeConfig'
+                )})"
+                >{#if isNil($store.labels.type, '')}
+                  {localize('DND5E.CreatureType')}
+                {:else}
+                  {$store.labels.type}
+                {/if}</a
+              >
+              <span
+                class="environment"
+                data-tooltip="{localize('TIDY5E.Environment')}: {$store.system
+                  .details.environment}"
+              >
+                <i class="fas fa-tree" />
+              </span>
+            </span>
+
+            <span
+              class="origin-summary-text"
+              data-tooltip={$store.system.details.alignment}
+              >{$store.system.details.alignment}</span
             >
             <span
-              class="environment"
-              data-tooltip="{localize('TIDY5E.Environment')}: {$store.system
-                .details.environment}"
+              class="origin-summary-text source source-info"
+              data-tooltip={$store.system.details.source}
+              >{$store.system.details.source}</span
             >
-              <i class="fas fa-tree" />
-            </span>
-          </span>
-
-          <span
-            class="origin-summary-text"
-            data-tooltip={$store.system.details.alignment}
-            >{$store.system.details.alignment}</span
-          >
-          <span
-            class="origin-summary-text source source-info"
-            data-tooltip={$store.system.details.source}
-            >{$store.system.details.source}</span
-          >
-        </DelimitedTruncatedContent>
+          </DelimitedTruncatedContent>
+        </div>
+        <div class="flex-row align-items-center extra-small-gap">
+          <b class="proficiency">
+            {localize('DND5E.Proficiency')}: {formatAsModifier(
+              $store.system.attributes.prof
+            )}
+          </b>
+          {#if $store.owner}
+            <a
+              on:click={() =>
+                new Tidy5eActorOriginSummaryConfig($store.actor).render(true)}
+              class="origin-summary-tidy"
+              data-tooltip={localize('TIDY5E.OriginSummaryConfig')}
+            >
+              <i class="fas fa-cog" />
+            </a>
+          {/if}
+        </div>
       </div>
-      <div class="flex-row align-items-center extra-small-gap">
-        <b class="proficiency">
-          {localize('DND5E.Proficiency')}: {formatAsModifier(
-            $store.system.attributes.prof
-          )}
-        </b>
-        {#if $store.owner}
-          <a
-            on:click={() =>
-              new Tidy5eActorOriginSummaryConfig($store.actor).render(true)}
-            class="origin-summary-tidy"
-            data-tooltip={localize('TIDY5E.OriginSummaryConfig')}
-          >
-            <i class="fas fa-cog" />
-          </a>
-        {/if}
-      </div>
+      <HorizontalLineSeparator borderStyle="light" />
+      <ActorMovementRow actor={$store.actor} movement={$store.movement} />
+      <HorizontalLineSeparator borderStyle="light" />
+      <ActorHeaderStats
+        {abilities}
+        ac={$store.system.attributes.ac}
+        init={$store.system.attributes.init}
+        actor={$store.actor}
+      />
     </div>
-    <HorizontalLineSeparator borderStyle="light" />
-    <ActorMovementRow actor={$store.actor} movement={$store.movement} />
-    <HorizontalLineSeparator borderStyle="light" />
-    <ActorHeaderStats
-      {abilities}
-      ac={$store.system.attributes.ac}
-      init={$store.system.attributes.init}
-      actor={$store.actor}
-    />
-  </div>
-</header>
-<Tabs {tabs} bind:selectedTabId>
-  <svelte:fragment slot="tab-end">
-    {#if $store.owner}
-      <AllowEditLock />
-    {/if}
-  </svelte:fragment>
-</Tabs>
-<section class="sheet-body">
-  <TabContents {tabs} {selectedTabId} />
-</section>
+  </header>
+  <Tabs {tabs} bind:selectedTabId>
+    <svelte:fragment slot="tab-end">
+      {#if $store.owner}
+        <AllowEditLock />
+      {/if}
+    </svelte:fragment>
+  </Tabs>
+  <section class="sheet-body">
+    <TabContents {tabs} {selectedTabId} />
+  </section>
+</div>
 
 <style lang="scss">
+  .token-link-wrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+
+    .link-state {
+      padding: 0.25rem 0.1875rem 0.1875rem 0.25rem;
+      margin-top: -0.0625rem;
+      border-radius: 0.3125rem;
+    }
+
+    
+    &.linked {
+      box-shadow: 0 0 0.25rem 0.125rem var(--t5e-linked-accent) inset;
+      
+      .link-state.fa-link {
+        background: var(--t5e-linked-light);
+      }
+    }
+    
+    &.unlinked {
+      box-shadow: 0 0 0.25rem 0.125rem var(--t5e-unlinked-accent) inset;
+      
+      .link-state.fa-unlink {
+        background: var(--t5e-unlinked-light);
+      }
+    }
+  }
+
   .tidy5e-kgar-sheet-header {
     display: flex;
     justify-content: center;

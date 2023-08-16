@@ -958,7 +958,9 @@ export function createSettings() {
           default: 'default',
         },
         get() {
-          return FoundryAdapter.getGameSetting<string>('linkMarkerNpc');
+          return FoundryAdapter.getGameSetting<'default' | 'unlinked' | 'both'>(
+            'linkMarkerNpc'
+          );
         },
       },
 

@@ -98,7 +98,31 @@ export class Tidy5eNpcSheet extends ActorSheet5eNpc {
       },
       shortRest: this._onShortRest.bind(this),
       longRest: this._onLongRest.bind(this),
+      tokenState: this.#getTokenState(),
     };
+  }
+
+  #getTokenState(): 'linked' | 'unlinked' | null {
+    const { token } = this;
+
+    const linkMarkerNpc = SettingsProvider.settings.linkMarkerNpc.get();
+
+    if (!token) {
+      return null;
+    }
+    
+    if (token.actorLink && linkMarkerNpc == 'both') {
+      return 'linked';
+    }
+
+    if (
+      !token.actorLink &&
+      (linkMarkerNpc == 'unlinked' || linkMarkerNpc == 'both')
+    ) {
+      return 'unlinked';
+    }
+
+    return null;
   }
 
   protected _saveViewState() {
