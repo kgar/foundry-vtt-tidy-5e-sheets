@@ -3,7 +3,7 @@
   import { type Actor5e } from 'src/types/actor';
   import { SettingsProvider } from 'src/settings/settings';
   import { isRealNumber } from 'src/utils/numbers';
-  import { submitText } from '../../form';
+  import TextInput from 'src/components/form/TextInput.svelte';
 
   export let value: number;
   export let max: number;
@@ -52,40 +52,39 @@
          rgba(0, 200, 0, 0.5) 100%);"
     />
   {/if}
-  <input
-    class="hp-min"
-    type="text"
+  <TextInput
+    cssClass="hp-min"
+    document={actor}
+    field="system.attributes.hp.value"
     {value}
     placeholder="10"
     title={localize('DND5E.HitPointsCurrent')}
-    data-dtype="Number"
-    maxlength="5"
-    aria-describedby="tooltip"
-    on:change|stopPropagation|preventDefault={(event) =>
-      submitText(event, actor, 'system.attributes.hp.value')}
+    dtype="Number"
+    selectOnFocus={true}
+    allowDeltaChanges={true}
+    maxlength={5}
+    ariaDescribedBy="tooltip"
   />
   <span class="value-seperator sep"> / </span>
   {#if allowMaxHpOverride}
-    <input
-      class="hp-max"
-      type="text"
+    <TextInput
+      cssClass="hp-max"
+      document={actor}
+      field="system.attributes.hp.max"
       value={max}
       placeholder="10"
-      title={localize(
-        max ? 'DND5E.HitPointsOverride' : 'DND5E.HitPointsMax'
-      )}
-      data-dtype="Number"
-      maxlength="5"
-      aria-describedby="tooltip"
-      on:change|stopPropagation|preventDefault={(event) =>
-        submitText(event, actor, 'system.attributes.hp.max')}
+      title={localize(max ? 'DND5E.HitPointsOverride' : 'DND5E.HitPointsMax')}
+      dtype="Number"
+      selectOnFocus={true}
+      allowDeltaChanges={true}
+      maxlength={5}
+      ariaDescribedBy="tooltip"
     />
   {:else}
     <span
       class="hp-max"
-      title={localize(
-        max ? 'DND5E.HitPointsOverride' : 'DND5E.HitPointsMax'
-      )}>{max}</span
+      title={localize(max ? 'DND5E.HitPointsOverride' : 'DND5E.HitPointsMax')}
+      >{max}</span
     >
   {/if}
 </div>
@@ -125,25 +124,25 @@
       z-index: -1;
       background: rgba(0, 200, 0, 0.6);
     }
-  }
 
-  .portrait-hp input,
-  .portrait-hp span {
-    font-family: var(--t5e-modesto);
-    font-weight: 700;
-  }
+    :global(input),
+    span {
+      font-family: var(--t5e-modesto);
+      font-weight: 700;
+    }
 
-  input.hp-min {
-    text-align: right;
-  }
+    :global(input.hp-min) {
+      text-align: right;
+    }
 
-  input.hp-max,
-  span.hp-max {
-    text-align: left;
-  }
+    :global(input.hp-max),
+    span.hp-max {
+      text-align: left;
+    }
 
-  input.hp-max,
-  span.hp-max {
-    width: 100%;
+    :global(input.hp-max),
+    span.hp-max {
+      width: 100%;
+    }
   }
 </style>
