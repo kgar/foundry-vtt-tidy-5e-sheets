@@ -83,7 +83,6 @@
       pointer-events: none;
       display: block; // For Firefox
       color: var(--t5e-tertiary-color);
-      color: rebeccapurple;
     }
   }
 </style>
