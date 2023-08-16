@@ -71,16 +71,16 @@
   - [x] Ltd NPC
     - [x] Configure to appear when user is NOT GM and actor is limited
     - [x] Biography
-- [ ] Settings
+- [x] Settings
   - [x] Hide NPC Journal
   - [x] Resting for NPCs
   - [x] Hide chat card for NPC rest
-  - [ ] Mark linked/unlinked NPCs
+  - [x] Mark linked/unlinked NPCs
     - This feature puts an unlinked symbol by the player name when they pull up a sheet that is not linked to the original actor when the option is "unlinked" or "both".
     - It supposedly puts a different symbol there when linked to the original actor when the option is "both".
     - It supposedly puts a different symbol still when there is no token but "both" or "unlinked" is selected.
       - ⚠ The prop accessing logic looks like it has become outdated for determining which token we're looking at. Review this with the debugger on when you are back on your computer with hardware acceleration turned on.
-    - [ ] Consider packing this information into context when building it ♥
+    - [x] Consider packing this information into context when building it ♥
   - [x] Disable health bar
   - [x] Hide hit point overlay
   - [x] Always show traits
