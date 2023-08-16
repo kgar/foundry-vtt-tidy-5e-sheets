@@ -388,7 +388,7 @@
       :global(.player-name) {
         display: inline-block;
         font-weight: 600;
-        margin: -0.25rem;
+        margin-left: -0.25rem;
         margin-right: 0.25rem;
         min-width: 3.125rem;
         padding: 0 0.25rem;
