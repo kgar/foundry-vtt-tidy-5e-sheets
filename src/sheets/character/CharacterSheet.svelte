@@ -19,7 +19,6 @@
   import CharacterBiographyTab from 'src/components/player-character/CharacterBiographyTab.svelte';
   import ActorJournalTab from 'src/components/player-character/ActorJournalTab.svelte';
   import { CONSTANTS } from 'src/constants';
-  import { submitText } from '../form';
   import AllowEditLock from 'src/components/shared/AllowEditLock.svelte';
   import Tabs from 'src/components/tabs/Tabs.svelte';
   import TabContents from 'src/components/tabs/TabContents.svelte';
