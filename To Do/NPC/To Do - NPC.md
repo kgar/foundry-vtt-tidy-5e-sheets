@@ -126,9 +126,8 @@ async function setSheetClasses(app, html, data) {
 
 ## Refactor and Refine
 
-- [ ] Implement NPC Death Saves
+- [x] Implement NPC Death Saves
   - flags.tidy5e-sheet.death.success / flags.tidy5e-sheet.death.failure
-  - 
 - [ ] Consider refactoring so that callers of `submitText()` are adjusted to use `TextInput` or `NumberInput` as necessary.
 - [ ] When an update operation fails, revert to the original value (even easier, use getProperty to do it with document/field)
   - [x] Contenteditable

@@ -144,12 +144,14 @@
 
 <style lang="scss">
   .inventory-footer {
-    padding-top: 0.5rem;
-    margin-right: 0.875rem;
+    background-color: var(--t5e-header-background);
+    box-shadow: 0 0 0.1875rem 0 var(--t5e-tertiary-color);
+    padding: 0.25rem 1.5rem 0.5rem 0.75rem;
+    margin: 0 -0.25rem -1rem -1rem;
     border-top: 0.0625rem solid var(--t5e-light-color);
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 0.25rem;
 
     .attunement-and-currency {
       display: flex;
@@ -163,8 +165,8 @@
         padding-left: 0.625rem;
         border-radius: 0.3125rem;
         background: var(--t5e-faint-color);
-        box-shadow: 0 0 5px var(--t5e-magic-accent) inset;
-        border: 1px solid var(--t5e-magic-accent);
+        box-shadow: 0 0 0.3125rem var(--t5e-magic-accent) inset;
+        border: 0.0625rem solid var(--t5e-magic-accent);
 
         &.overattuned {
           background: var(--t5e-primary-accent);
@@ -178,7 +180,7 @@
             transform: scale(1);
           }
           100% {
-            transform: scale(1.4);
+            transform: scale(1.1);
           }
         }
 

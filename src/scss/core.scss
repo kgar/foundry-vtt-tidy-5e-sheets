@@ -17,31 +17,29 @@
 @import './spell-level-buttons-dialog';
 
 .tidy5e-kgar {
-  &.sheet {
-    @import './partials/inputs';
-
+  &.actor {
     @import './partials/actor';
+  }
 
-    &.character {
-      form {
-        display: flex;
-        flex-direction: column;
+  &.character {
+    form {
+      display: flex;
+      flex-direction: column;
 
-        .sheet-body {
-          padding: 1rem 0.25rem 1rem 1rem;
-          flex: 1;
-          overflow: hidden;
-        }
+      .sheet-body {
+        padding: 1rem 0.25rem 1rem 1rem;
+        flex: 1;
+        overflow: hidden;
       }
     }
+  }
 
-    &.npc {
-      @import './partials/npc-sheet';
-    }
+  &.npc {
+    @import './partials/npc-sheet';
+  }
 
-    &.item {
-      @import './partials/items';
-    }
+  &.item {
+    @import './partials/items';
   }
 
   @import './partials/layout';
