@@ -8,9 +8,9 @@
   import { CONSTANTS } from 'src/constants';
   import { SettingsProvider } from 'src/settings/settings';
   import GridPaneFavoriteIcon from '../shared/GridPaneFavoriteIcon.svelte';
-  import { submitText } from 'src/sheets/form';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
+  import TextInput from '../form/TextInput.svelte';
 
   export let section: any;
   export let items: Item5e[];
@@ -35,6 +35,10 @@
       extras
     );
   }
+
+  function preventUseItemEvent(ev: Event) {
+    ev.stopPropagation();
+  }
 </script>
 
 <ItemTable>
@@ -49,6 +53,7 @@
     {#each items as item (item.id)}
       {@const ctx = $store.itemContext[item.id]}
 
+      <!-- svelte-ignore a11y-click-events-have-key-events -->
       <div
         role="button"
         tabindex="0"
@@ -93,15 +98,16 @@
           >
             {#if ctx.hasUses}
               <i class="fas fa-bolt" />
-              <input
-                type="text"
+              <TextInput
+                document={item}
+                field="system.uses.value"
                 value={item.system.uses?.value}
-                data-dtype="Number"
+                dtype="Number"
                 placeholder="0"
-                maxlength="2"
-                on:click|stopPropagation
-                on:change|stopPropagation={(event) =>
-                  submitText(event, item, 'system.uses.value')}
+                maxlength={2}
+                allowDeltaChanges={true}
+                selectOnFocus={true}
+                on:click={preventUseItemEvent}
               />
             {/if}
           </div>
@@ -110,15 +116,18 @@
             class:isStack={item.isStack}
             title={localize('DND5E.Quantity')}
           >
-            <input
-              class="item-count"
-              type="text"
+            <TextInput
+              document={item}
+              field="system.quantity"
+              cssClass="item-count"
               value={item.system.quantity}
-              maxlength="2"
-              on:click|stopPropagation
-              on:change|stopPropagation={(event) =>
-                submitText(event, item, 'system.quantity')}
-              readonly={!FoundryAdapter.userIsGm() && SettingsProvider.settings.lockItemQuantity.get()}
+              maxlength={2}
+              readonly={!FoundryAdapter.userIsGm() &&
+                SettingsProvider.settings.lockItemQuantity.get()}
+              dtype="Number"
+              allowDeltaChanges={true}
+              selectOnFocus={true}
+              on:click={preventUseItemEvent}
             />
           </span>
         </div>
@@ -293,7 +302,7 @@
           font-size: 0.75rem;
           color: var(--t5e-stat-font);
 
-          input {
+          :global(input) {
             height: 0.875rem;
             text-shadow: 0 0 0.3125rem rgba(0, 0, 0, 1);
             color: var(--t5e-stat-font);
@@ -309,7 +318,7 @@
           display: flex;
           align-items: center;
 
-          input {
+          :global(input) {
             text-align: left;
           }
 

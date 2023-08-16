@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { processInputChangeDelta } from 'src/sheets/form';
+  import { processInputChangeDelta } from 'src/sheets/form';
   import type { FoundryDocument } from 'src/types/document';
   import { buildDataset } from 'src/utils/data';
 
@@ -18,6 +18,7 @@
   export let saveEmptyAsNull: boolean = false;
   export let title: string | null = null;
   export let allowDeltaChanges: boolean = false;
+  export let readonly: boolean = false;
 
   $: actualDataset = buildDataset(dataset);
 
@@ -44,13 +45,15 @@
   {id}
   value={value?.toString() ?? ''}
   {placeholder}
-  on:change={saveChange}
   data-tooltip={tooltip}
   {...actualDataset}
   class={cssClass}
   {maxlength}
   data-dtype={dtype}
   aria-describedby={ariaDescribedBy}
-  on:focus={(ev) => selectOnFocus && ev.currentTarget.select()}
   {title}
+  {readonly}
+  on:change={saveChange}
+  on:click
+  on:focus={(ev) => selectOnFocus && ev.currentTarget.select()}
 />
