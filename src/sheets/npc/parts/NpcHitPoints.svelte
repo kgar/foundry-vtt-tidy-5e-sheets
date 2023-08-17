@@ -2,6 +2,7 @@
   import TextInput from 'src/components/form/TextInput.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { SettingsProvider } from 'src/settings/settings';
+  import HpBar from 'src/sheets/actor/HpBar.svelte';
   import type { ActorSheetContext } from 'src/types/types';
   import { isRealNumber } from 'src/utils/numbers';
   import { getContext } from 'svelte';
@@ -30,15 +31,7 @@
 
 <div class="portrait-hp" title={localize('DND5E.HitPoints')}>
   {#if !SettingsProvider.settings.hpBarDisabledNpc.get()}
-    <div
-      class="hp-bar"
-      style="background: linear-gradient(
-      -90deg,
-      transparent 0%,
-      transparent calc(100% -  {hpBarCalculationCurrent}%),
-            rgba(0, 200, 0, 0.5) calc(100% - {hpBarCalculationCurrent}%),
-            rgba(0, 200, 0, 0.5) 100%);"
-    />
+    <HpBar actor={$store.actor} />
   {/if}
   <TextInput
     cssClass="hp-min"
@@ -87,16 +80,6 @@
     background: var(--t5e-icon-background);
     box-shadow: 0 0 0.3125rem var(--t5e-icon-shadow) inset;
     border: 1px solid var(--t5e-icon-outline);
-
-    .hp-bar {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -1;
-      background: rgba(0, 200, 0, 0.6);
-    }
 
     :global(input.hp-min) {
       text-align: right;

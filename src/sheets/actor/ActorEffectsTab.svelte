@@ -1,7 +1,6 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { type ActorSheetContext } from 'src/types/types';
-  import { SettingsProvider } from 'src/settings/settings';
   import ItemTable from '../../components/items/ItemTable.svelte';
   import ItemTableHeaderRow from '../../components/items/ItemTableHeaderRow.svelte';
   import ItemTableRow from '../../components/items/ItemTableRow.svelte';
@@ -17,6 +16,8 @@
   import type { Readable } from 'svelte/store';
   import Notice from 'src/components/shared/Notice.svelte';
 
+  export let classicControlsEnabled: boolean;
+
   let store = getContext<Readable<ActorSheetContext>>('store');
 
   const localize = FoundryAdapter.localize;
@@ -24,8 +25,6 @@
   $: effectSections = Object.values<any>($store.effects);
   $: allowEdit = FoundryAdapter.tryGetFlag<boolean>($store.actor, 'allow-edit');
   $: classicControlsBaseWidth = allowEdit ? '7.5rem' : '5.3125rem';
-  $: classicControlsEnabled =
-    SettingsProvider.settings.classicControlsEnabled.get();
 
   $: noEffects =
     effectSections.some((section: any) => section.effects.length > 0) === false;

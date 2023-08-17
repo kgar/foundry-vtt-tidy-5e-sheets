@@ -28,6 +28,7 @@
   let store = getContext<Readable<ActorSheetContext>>('store');
   export let section: any;
   export let spells: any[];
+  export let classicControlsEnabled: boolean;
   export let allowFavorites: boolean = true;
   export let cssClass: string | null = null;
 
@@ -41,8 +42,7 @@
   export let controlsBaseWidthUnlocked: string = '7.5rem';
 
   const localize = FoundryAdapter.localize;
-  const classicControlsEnabled =
-    SettingsProvider.settings.classicControlsEnabled.get();
+
   $: allowEdit = FoundryAdapter.tryGetFlag($store.actor, 'allow-edit');
   $: classicControlsBaseWidth = allowEdit
     ? controlsBaseWidthUnlocked
@@ -99,7 +99,9 @@
       >
         {localize('DND5E.Usage')}
       </ItemTableColumn>
-      <ItemTableColumn baseWidth={classicControlsBaseWidth} />
+      {#if classicControlsEnabled}
+        <ItemTableColumn baseWidth={classicControlsBaseWidth} />
+      {/if}
     </ItemTableHeaderRow>
     {#each spells as spell (spell.id)}
       {@const ctx = $store.itemContext[spell.id]}

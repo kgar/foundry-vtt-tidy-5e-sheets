@@ -332,7 +332,7 @@ export const FoundryAdapter = {
     });
   },
   getSpellImageUrl(context: ActorSheetContext, spell: any): string | undefined {
-    if (!SettingsProvider.settings.spellClassFilterIconReplace.get()) {
+    if (!SettingsProvider.settings.spellClassFilterIconReplace.get() || context.isNPC) {
       return spell.img;
     }
 

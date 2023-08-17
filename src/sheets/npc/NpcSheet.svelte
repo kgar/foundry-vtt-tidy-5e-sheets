@@ -60,6 +60,9 @@
       displayName: 'DND5E.Effects',
       content: {
         component: ActorEffectsTab,
+        props: {
+          classicControlsEnabled: true,
+        },
       },
     },
     {
@@ -186,8 +189,8 @@
               >
               <span
                 class="environment"
-                title="{localize('TIDY5E.Environment')}: {$store.system
-                  .details.environment}"
+                title="{localize('TIDY5E.Environment')}: {$store.system.details
+                  .environment}"
               >
                 <i class="fas fa-tree" />
               </span>
@@ -251,6 +254,7 @@
     flex: 1;
     display: flex;
     flex-direction: column;
+    height: 100%;
 
     .link-state {
       padding: 0.25rem 0.1875rem 0.1875rem 0.25rem;
@@ -258,18 +262,17 @@
       border-radius: 0.3125rem;
     }
 
-    
     &.linked {
       box-shadow: 0 0 0.25rem 0.125rem var(--t5e-linked-accent) inset;
-      
+
       .link-state.fa-link {
         background: var(--t5e-linked-light);
       }
     }
-    
+
     &.unlinked {
       box-shadow: 0 0 0.25rem 0.125rem var(--t5e-unlinked-accent) inset;
-      
+
       .link-state.fa-unlink {
         background: var(--t5e-unlinked-light);
       }

@@ -42,6 +42,7 @@
       {useRoundedPortraitStyle}
       on:rollDeathSave={(event) =>
         $store.rollDeathSave({ event: event.detail.mouseEvent })}
+      hpOverlayDisabled={SettingsProvider.settings.hpOverlayDisabledNpc.get()}
     />
   {/if}
   {#if !SettingsProvider.settings.exhaustionDisabled.get() && !incapacitated}
@@ -49,9 +50,6 @@
       level={FoundryAdapter.tryGetFlag($store.actor, 'exhaustion') ?? 0}
       radiusClass={useRoundedPortraitStyle ? 'rounded' : 'top-left'}
       on:levelSelected={onLevelSelected}
-      onlyShowOnHover={SettingsProvider.settings.exhaustionOnHover.get() ||
-        (SettingsProvider.settings.hideIfZero.get() &&
-          $store.system.attributes.exhaustion === 0)}
     />
   {/if}
 

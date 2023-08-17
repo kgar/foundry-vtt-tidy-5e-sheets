@@ -22,12 +22,8 @@
 
   let searchCriteria: string = '';
 
-  $: abilities = Object.entries($store.abilities).map(
-    (a: [string, { label: string }]) => ({
-      abbr: a[0],
-      ...a[1],
-    })
-  );
+  const classicControlsEnabled =
+    SettingsProvider.settings.classicControlsEnabled.get();
 
   let layoutMode: ItemLayoutMode;
   $: layoutMode = FoundryAdapter.tryGetFlag($store.actor, 'spellbook-grid')
@@ -115,7 +111,11 @@
       )}
       {#if (searchCriteria.trim() === '' && allowEdit) || filteredSpells.length > 0}
         {#if layoutMode === 'list'}
-          <SpellbookList spells={filteredSpells} {section} />
+          <SpellbookList
+            spells={filteredSpells}
+            {section}
+            {classicControlsEnabled}
+          />
         {:else}
           <SpellbookGrid spells={filteredSpells} {section} />
         {/if}

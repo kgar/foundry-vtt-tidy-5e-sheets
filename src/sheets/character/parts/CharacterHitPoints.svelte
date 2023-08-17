@@ -2,8 +2,9 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { type Actor5e } from 'src/types/actor';
   import { SettingsProvider } from 'src/settings/settings';
-  import { isRealNumber } from 'src/utils/numbers';
+  import { clamp, isRealNumber } from 'src/utils/numbers';
   import TextInput from 'src/components/form/TextInput.svelte';
+  import HpBar from 'src/sheets/actor/HpBar.svelte';
 
   export let value: number;
   export let max: number;
@@ -12,22 +13,6 @@
   export let incapacitated: boolean;
 
   const localize = FoundryAdapter.localize;
-
-  // TODO: Break this down so it's simple for the reader
-  $: hpBarCalculationCurrent =
-    (100 /
-      ((isRealNumber(actor.system?.attributes?.hp?.max)
-        ? actor.system.attributes.hp.max
-        : 1) +
-        (isRealNumber(actor.system?.attributes?.hp?.tempmax)
-          ? actor.system.attributes.hp.tempmax
-          : 0))) *
-      (isRealNumber(actor.system?.attributes?.hp?.value)
-        ? actor.system.attributes.hp.value!
-        : 0) +
-    (isRealNumber(actor.system?.attributes?.hp?.temp)
-      ? actor.system.attributes.hp.temp
-      : 0);
 
   const allowMaxHpOverride =
     SettingsProvider.settings.allowHpMaxOverride.get() &&
@@ -42,15 +27,7 @@
   title={localize('DND5E.HitPoints')}
 >
   {#if !SettingsProvider.settings.hpBarDisabled.get()}
-    <div
-      class="hp-bar"
-      style="background: linear-gradient(
-      -90deg,
-      transparent 0%,
-      transparent calc(100% - {hpBarCalculationCurrent}%),
-         rgba(0, 200, 0, 0.5) calc(100% - {hpBarCalculationCurrent}%),
-         rgba(0, 200, 0, 0.5) 100%);"
-    />
+    <HpBar {actor} />
   {/if}
   <TextInput
     cssClass="hp-min"
@@ -113,16 +90,6 @@
     &.incapacitated {
       border-radius: 5px;
       width: 120px;
-    }
-
-    .hp-bar {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: -1;
-      background: rgba(0, 200, 0, 0.6);
     }
 
     :global(input),

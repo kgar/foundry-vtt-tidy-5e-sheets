@@ -34,9 +34,6 @@
 
   $: allowEdit = FoundryAdapter.tryGetFlag($store.actor, 'allow-edit') === true;
 
-  $: classicControlsEnabled =
-    SettingsProvider.settings.classicControlsEnabled.get();
-
   $: traitsMovedBelowResourceNpc =
     SettingsProvider.settings.traitsMovedBelowResourceNpc.get();
 
@@ -150,7 +147,7 @@
                   {/if}
                 </ItemTableCell>
               {/if}
-              {#if $store.owner && classicControlsEnabled}
+              {#if $store.owner}
                 <ItemTableCell baseWidth="7.5rem">
                   <ItemControls>
                     <ItemEditControl {item} />
@@ -210,6 +207,7 @@
                     spellComponentsBaseWidth="3.125rem"
                     targetBaseWidth="5.625rem"
                     usageBaseWidth="5.625rem"
+                    classicControlsEnabled={true}
                   />
                 {:else}
                   <SpellbookGrid spells={section.spells} {section} />

@@ -47,6 +47,7 @@
       failuresField="system.attributes.death.failure"
       on:rollDeathSave={(event) =>
         $store.actor.rollDeathSave({ event: event.detail.mouseEvent })}
+      hpOverlayDisabled={SettingsProvider.settings.hpOverlayDisabled.get()}
     />
   {/if}
 

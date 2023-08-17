@@ -234,6 +234,14 @@ export class Tidy5eNpcSheet extends ActorSheet5eNpc {
     return this.longRest();
   }
 
+  async _onSubmit(...args: any[]) {
+    await super._onSubmit(...args);
+    this.stats.update((stats) => {
+      stats.lastSubmissionTime = new Date();
+      return stats;
+    });
+  }
+
   /**
    * Take a short rest, possibly spending hit dice and recovering resources, item uses, and pact slots.
    * @param {RestConfiguration} [config]  Configuration options for a short rest.

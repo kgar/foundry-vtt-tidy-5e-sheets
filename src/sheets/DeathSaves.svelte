@@ -1,6 +1,5 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { SettingsProvider } from 'src/settings/settings';
   import { createEventDispatcher, getContext } from 'svelte';
   import type { ActorSheetContext } from 'src/types/types';
   import type { Readable } from 'svelte/store';
@@ -13,9 +12,9 @@
   export let useRoundedPortraitStyle: boolean;
   export let successesField: string;
   export let failuresField: string;
+  export let hpOverlayDisabled: boolean;
 
   const localize = FoundryAdapter.localize;
-  const hpOverlayDisabled = SettingsProvider.settings.hpOverlayDisabled.get();
 
   const dispatcher = createEventDispatcher<{
     rollDeathSave: { mouseEvent: MouseEvent };
@@ -68,12 +67,12 @@
     left: 0;
     width: 100%;
     height: 100%;
-    border-radius: 5px;
+    border-radius: 0.3125rem;
     z-index: 20;
     display: flex;
     justify-content: center;
     align-items: center;
-    text-shadow: 0 0 5px 1px #222;
+    text-shadow: 0 0 0.3125rem 0.0625rem var(--t5e-death-save-text-shadow);
   }
 
   .rounded {
@@ -84,23 +83,23 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    color: #fff;
+    color: var(--t5e-white);
 
     &.show-backdrop {
-      background: rgba(255, 0, 0, 0.5);
+      background: var(--t5e-death-save-backdrop-background);
       padding: 0 0.5rem;
-      border-radius: 5px;
+      border-radius: 0.3125rem;
     }
 
     :global(input[type='text'].death-save-result) {
       color: var(--t5e-white);
       font-weight: 700;
-      font-size: 16px;
-      height: 19px;
-      padding: 5px 4px 4px 4px;
+      font-size: 1rem;
+      height: 1.1875rem;
+      padding: 0.3125rem 0.25rem 0.25rem 0.25rem;
       min-width: unset;
       text-align: center;
-      width: 18px;
+      width: 1.125rem;
     }
 
     :global(input:hover) {
@@ -111,7 +110,7 @@
       position: relative;
       margin: 0 0.25rem;
       color: var(--t5e-death-save-color);
-      font-size: 30px;
+      font-size: 1.875rem;
       transition: color 0.3s ease;
     }
 

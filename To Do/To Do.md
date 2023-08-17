@@ -310,7 +310,14 @@ Evaluate module integration and think about better (API-centric) ways to support
   - [ ] Add an API call for registering a new item type; 
     - [ ] specifying an existing one will put an override in place that will prevent the original from rendering and will instead render the override
   - [ ] Add an API call for updating an existing item type's various tabs / parts
-
+- [ ] When an update operation fails, revert to the original value (even easier, use getProperty to do it with document/field)
+  - [x] Contenteditable
+  - [ ] Textinput
+  - [ ] Numberinput
+  - [ ] Select
+  - [ ] Checkbox
+- [ ] `dtype` fields: formalize these as features of the input components, rather than just receiving them. Give the props names.
+  - [ ] One way to go about this would be to have a universal function for preparing data for saving. It could take things like dtype, which would be set to known values.
 
 ## (Deferred for later; might solve itself) SCSS Revolution
 

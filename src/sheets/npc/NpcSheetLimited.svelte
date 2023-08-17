@@ -50,15 +50,25 @@
     display: flex;
     flex-direction: column;
   }
-  
+
   header {
     display: flex;
     justify-content: center;
-    padding: 10px 16px 16px 16px;
+    padding: 0.625rem 1rem 1rem 1rem;
     background: var(--t5e-header-background);
   }
 
+  .profile {
+    width: 9.375rem;
+    height: 9.375rem;
+  }
+
   .portrait {
+    width: 100%;
+    height: 100%;
+    border-radius: 5px;
+    overflow: hidden;
+    border: 1px solid var(--t5e-icon-outline);
     mix-blend-mode: normal;
   }
 
@@ -67,11 +77,11 @@
     margin-right: 1rem;
 
     .note-entries {
-        height: 100%;
+      height: 100%;
 
-        .biography-notes {
-            height: 100%;
-        }
+      .biography-notes {
+        height: 100%;
+      }
     }
   }
 </style>
