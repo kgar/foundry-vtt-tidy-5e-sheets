@@ -12,6 +12,7 @@ import type { globalThisUI } from './types/types';
 import type { globalThisDnd5e } from './types/dnd5e';
 import { Tidy5eKgarItemSheet } from './sheets/item/Tidy5eKgarItemSheet';
 import { Tidy5eNpcSheet } from './sheets/npc/Tidy5eNpcSheet';
+import { Tidy5eVehicleSheet } from './sheets/vehicle/Tidy5eKgarVehicleSheet';
 
 declare global {
   var Dialog: typeof ClientDialog;
@@ -31,6 +32,12 @@ Actors.registerSheet('dnd5e', Tidy5eNpcSheet, {
   label: 'T5EK.Tidy5eNPC',
 });
 
+Actors.registerSheet('dnd5e', Tidy5eVehicleSheet, {
+  types: ['vehicle'],
+  makeDefault: true,
+  label: 'T5EK.Tidy5eVehicle',
+});
+
 Items.registerSheet('dnd5e', Tidy5eKgarItemSheet, {
   makeDefault: true,
   label: 'T5EK.Tidy5eItemSheet',
@@ -43,8 +50,8 @@ FoundryAdapter.onReady(async () => {
   const compareActorSamples = import.meta.env.VITE_COMPARE_SAMPLE_ACTORS;
   if (compareActorSamples === 'true') {
     debugCompareActorSheets(
-      import.meta.env.VITE_TIDY5E_ACTOR_SAMPLE_ID,
-      import.meta.env.VITE_KGAR_ACTOR_SAMPLE_ID
+      import.meta.env.VITE_ACTOR_LEFT_ID,
+      import.meta.env.VITE_ACTOR_RIGHT_ID
     );
   }
 

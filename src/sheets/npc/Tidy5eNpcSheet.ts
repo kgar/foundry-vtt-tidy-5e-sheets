@@ -13,6 +13,7 @@ import { isLessThanOneIsOne } from 'src/utils/numbers';
 import NpcShortRestDialog from 'src/dialogs/NpcShortRestDialog';
 import LongRestDialog from 'src/dialogs/NpcLongRestDialog';
 import { d20Roll } from 'src/utils/rolls';
+import { isNil } from 'src/utils/data';
 
 const ActorSheet5eNpc = FoundryAdapter.getActorSheetNpcClass();
 
@@ -72,14 +73,15 @@ export class Tidy5eNpcSheet extends ActorSheet5eNpc {
     if (
       !game.modules.get('character-actions-list-5e')?.active &&
       SettingsProvider.settings.defaultActionsTab.get() ===
-        CONSTANTS.TAB_NPC_ACTIONS
+        CONSTANTS.TAB_ALL_ACTIONS
     ) {
       return CONSTANTS.TAB_NPC_ABILITIES;
     }
 
     return (
       this.selectedTabId ??
-      (SettingsProvider.settings.defaultActionsTab.get() !== 'default'
+      (SettingsProvider.settings.defaultActionsTab.get() !==
+      CONSTANTS.TAB_ALL_DEFAULT
         ? SettingsProvider.settings.defaultActionsTab.get()
         : CONSTANTS.TAB_NPC_ABILITIES)
     );

@@ -35,6 +35,11 @@ export type NpcSheetContext = {
 } & JQueryHooksSheetIntegration &
   Record<string, any>;
 
+export type VehicleSheetContext = {
+  actor: Actor5e;
+} & JQueryHooksSheetIntegration &
+  Record<string, any>;
+
 export type JQueryHooksSheetIntegration = {
   activateFoundryJQueryListeners: (html: HTMLElement) => Promise<void>;
 };
