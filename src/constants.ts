@@ -68,5 +68,5 @@ export const CONSTANTS = {
   TAB_NPC_JOURNAL: 'journal',
   TAB_VEHICLE_ATTRIBUTES: 'attributes',
   TAB_VEHICLE_CARGO_AND_CREW: 'cargo',
-  TAB_VEHICLE_DESCRIPTION: 'description',
+  TAB_VEHICLE_DESCRIPTION: 'biography',
 } as const;

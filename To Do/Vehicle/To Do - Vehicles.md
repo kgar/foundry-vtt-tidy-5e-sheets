@@ -1,15 +1,15 @@
-- [ ] Create form application class
-- [ ] Hook in template
-- [ ] Create svelte sheet component and hook into activate listeners
-- [ ] Curate sheet for Svelte mode
-  - [ ] store store
-  - [ ] stats store
-  - [ ] etc. the works
-- [ ] Scaffold the tabs and their requisite components
-  - [ ] "attributes" : "Attributes"
-  - [ ] "cargo" : "Cargo & Crew"
-  - [ ] "biography" : "Description"
-- [ ] Add "allow-edit" lock
+- [x] Create form application class
+- [x] Hook in template
+- [x] Create svelte sheet component and hook into activate listeners
+- [x] Curate sheet for Svelte mode
+  - [x] store store
+  - [x] stats store
+  - [x] etc. the works
+- [x] Scaffold the tabs and their requisite components
+  - [x] "attributes" : "Attributes"
+  - [x] "cargo" : "Cargo & Crew"
+  - [x] "biography" : "Description"
+- [x] Add "allow-edit" lock
 - [ ] Implement sheet body sections
   - [ ] Attributes
   - [ ] Cargo & Crew
