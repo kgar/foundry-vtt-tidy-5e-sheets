@@ -54,3 +54,4 @@ A ship can have 1-3 actions, and certain sample vehicles will always put the hig
 ## Bonus To Dos
 
 - [ ] Incapacitated calculation for NPCs and PCs: is it taking temp HP into account?
+- [ ] Inventory-Grid: Equipped Background is not showing for KGar edition. Fixit.

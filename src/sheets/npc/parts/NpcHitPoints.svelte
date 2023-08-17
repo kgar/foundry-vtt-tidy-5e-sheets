@@ -21,7 +21,7 @@
     document={$store.actor}
     field="system.attributes.hp.value"
     value={$store.system.attributes.hp.value}
-    placeholder="10"
+    placeholder="0"
     title={localize('DND5E.HitPointsCurrent')}
     dtype="Number"
     allowDeltaChanges={true}
@@ -35,7 +35,7 @@
     document={$store.actor}
     field="system.attributes.hp.max"
     value={$store.system.attributes.hp.max}
-    placeholder="10"
+    placeholder="0"
     title={localize('DND5E.HitPointsMax')}
     dtype="Number"
     allowDeltaChanges={true}

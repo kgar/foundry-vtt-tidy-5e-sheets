@@ -34,7 +34,7 @@
     document={actor}
     field="system.attributes.hp.value"
     {value}
-    placeholder="10"
+    placeholder="0"
     title={localize('DND5E.HitPointsCurrent')}
     dtype="Number"
     selectOnFocus={true}
@@ -49,7 +49,7 @@
       document={actor}
       field="system.attributes.hp.max"
       value={max}
-      placeholder="10"
+      placeholder="0"
       title={localize(max ? 'DND5E.HitPointsOverride' : 'DND5E.HitPointsMax')}
       dtype="Number"
       selectOnFocus={true}

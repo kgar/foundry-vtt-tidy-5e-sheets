@@ -21,20 +21,12 @@
       : 0);
 </script>
 
-<div
-  class="hp-overlay-wrapper"
-  class:rounded={useRoundedPortraitStyle}
-  data-border="0px"
->
+<div class="hp-overlay-wrapper" class:rounded={useRoundedPortraitStyle}>
   <div
     class="hp-overlay"
-    style="background: linear-gradient(
-            0deg,
-            rgba(255, 0, 0, 1) 0%,
-            rgba(255, 0, 0, 1) calc(100% - {hpOverlayCalculationCurrent}%),
-             rgba(255, 255, 255, 1) calc(100% - {hpOverlayCalculationCurrent}%),
-             rgba(255, 255, 255, 1) 100%);"
+    style="height: calc(100% - {hpOverlayCalculationCurrent}%)"
   />
+  <div class="hp-bar-spacer" />
 </div>
 
 <style lang="scss">
@@ -44,30 +36,25 @@
     left: 0;
     width: 100%;
     height: 100%;
-    border-radius: 5px;
+    border-radius: 0.3125rem;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
 
-    &::before {
-      content: '';
-      display: block;
-      background: transparent;
-      position: absolute;
-      top: 0;
-      right: 0;
-      left: 0;
-      bottom: 0;
+    &.rounded {
       border-radius: 50%;
-      border: 0px solid #fff;
-      border-width: var(--t5e-pc-border);
-      z-index: 1;
     }
 
     .hp-overlay {
-      height: calc(100% - 20px);
+      position: relative;
+      bottom: 0;
+      background: var(--t5e-hp-overlay-background);
+      transition: height 0.5s ease-in-out;
     }
-  }
 
-  .rounded {
-    border-radius: 50%;
+    .hp-bar-spacer {
+      flex: 0 0 1.25rem;
+    }
   }
 </style>
