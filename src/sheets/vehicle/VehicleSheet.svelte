@@ -9,6 +9,7 @@
   import type { Readable } from 'svelte/store';
   import AllowEditLock from 'src/components/shared/AllowEditLock.svelte';
   import TabContents from 'src/components/tabs/TabContents.svelte';
+  import VehicleProfile from './parts/VehicleProfile.svelte';
 
   export let selectedTabId: string;
 
@@ -46,7 +47,9 @@
 </script>
 
 <header class="tidy5e-kgar-sheet-header flex-row">
-  <div class="flex-0">Vehicle Profile Here</div>
+  <div class="flex-0">
+    <VehicleProfile />
+  </div>
   <div class="flex-grow-1">Vehicle Main Header Contents Here</div>
 </header>
 <Tabs {tabs} bind:selectedTabId>
@@ -59,3 +62,18 @@
 <section class="sheet-body">
   <TabContents {tabs} {selectedTabId} />
 </section>
+
+<style lang="scss">
+  header {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    justify-content: center;
+    padding: 0.625rem 1rem 1rem 1rem;
+    background: var(--t5e-header-background);
+  }
+
+  .sheet-body {
+    // TODO: Tab-specific styles here.
+  }
+</style>

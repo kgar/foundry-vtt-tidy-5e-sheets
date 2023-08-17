@@ -10,6 +10,12 @@
   - [x] "cargo" : "Cargo & Crew"
   - [x] "biography" : "Description"
 - [x] Add "allow-edit" lock
+- [ ] Implement the Header
+  - [ ] Profile
+  - [ ] Name
+  - [ ] Origin Summary section
+  - [ ] Movement
+  - [ ] AC Shield and Abilities
 - [ ] Implement sheet body sections
   - [ ] Attributes
   - [ ] Cargo & Crew
@@ -44,3 +50,7 @@ There has to be a better way to visualize this. Maybe there are some clever pape
 
 A ship can have 1-3 actions, and certain sample vehicles will always put the highest number on the far right field, even when there are only 1 or 2 actions.
 
+
+## Bonus To Dos
+
+- [ ] Incapacitated calculation for NPCs and PCs: is it taking temp HP into account?

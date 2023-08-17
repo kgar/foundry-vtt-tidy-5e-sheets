@@ -106,7 +106,7 @@
 </script>
 
 <div class="token-link-wrapper {$store.tokenState}">
-  <header class="tidy5e-kgar-sheet-header flex-row">
+  <header>
     <div class="flex-0">
       <NpcProfile />
     </div>
@@ -279,8 +279,10 @@
     }
   }
 
-  .tidy5e-kgar-sheet-header {
+  header {
     display: flex;
+    flex-direction: row;
+    gap: 1rem;
     justify-content: center;
     padding: 0.625rem 1rem 1rem 1rem;
     background: var(--t5e-header-background);
