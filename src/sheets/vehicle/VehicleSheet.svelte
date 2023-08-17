@@ -10,6 +10,7 @@
   import AllowEditLock from 'src/components/shared/AllowEditLock.svelte';
   import TabContents from 'src/components/tabs/TabContents.svelte';
   import VehicleProfile from './parts/VehicleProfile.svelte';
+  import ActorEffectsTab from '../actor/ActorEffectsTab.svelte';
 
   export let selectedTabId: string;
 
@@ -33,6 +34,16 @@
       },
     },
     {
+      id: CONSTANTS.TAB_NPC_EFFECTS,
+      displayName: 'DND5E.Effects',
+      content: {
+        component: ActorEffectsTab,
+        props: {
+          classicControlsEnabled: true,
+        },
+      },
+    },
+    {
       id: CONSTANTS.TAB_VEHICLE_DESCRIPTION,
       displayName: 'DND5E.Description',
       content: {
@@ -46,11 +57,11 @@
   }
 </script>
 
-<header class="tidy5e-kgar-sheet-header flex-row">
+<header>
   <div class="flex-0">
     <VehicleProfile />
   </div>
-  <div class="flex-grow-1">Vehicle Main Header Contents Here</div>
+  <div class="flex-grow-1" />
 </header>
 <Tabs {tabs} bind:selectedTabId>
   <svelte:fragment slot="tab-end">

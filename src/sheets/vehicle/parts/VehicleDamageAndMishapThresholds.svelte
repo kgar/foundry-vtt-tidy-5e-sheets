@@ -31,7 +31,7 @@
     dtype="Number"
     allowDeltaChanges={true}
     maxlength={5}
-    title={localize('DND5E.VehicleMishap')}
+    title={localize('DND5E.VehicleMishapThreshold')}
   />
 </div>
 
