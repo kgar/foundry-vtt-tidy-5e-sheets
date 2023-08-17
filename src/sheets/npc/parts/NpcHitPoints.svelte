@@ -3,28 +3,11 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { SettingsProvider } from 'src/settings/settings';
   import HpBar from 'src/sheets/actor/HpBar.svelte';
-  import type { ActorSheetContext } from 'src/types/types';
-  import { isRealNumber } from 'src/utils/numbers';
+  import type { NpcSheetContext } from 'src/types/types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
 
-  let store = getContext<Readable<ActorSheetContext>>('store');
-
-  // TODO: Break this down so it's simple for the reader
-  $: hpBarCalculationCurrent =
-    (100 /
-      ((isRealNumber($store.actor.system?.attributes?.hp?.max)
-        ? $store.actor.system.attributes.hp.max
-        : 1) +
-        (isRealNumber($store.actor.system?.attributes?.hp?.tempmax)
-          ? $store.actor.system.attributes.hp.tempmax
-          : 0))) *
-      (isRealNumber($store.actor.system?.attributes?.hp?.value)
-        ? $store.actor.system.attributes.hp.value
-        : 0) +
-    (isRealNumber($store.actor.system?.attributes?.hp?.temp)
-      ? $store.actor.system.attributes.hp.temp
-      : 0);
+  let store = getContext<Readable<NpcSheetContext>>('store');
 
   const localize = FoundryAdapter.localize;
 </script>
