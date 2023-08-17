@@ -28,3 +28,19 @@
 From "Galley" in GoS:
 
 > On its turn, the galley can take **3 actions**, choosing from the options below. It can take only **2 actions if it has fewer than forty crew** and only **1 action if it has fewer than twenty**. It can't take these actions if it has **fewer than three crew**.
+
+So that is
+
+`< 3 < 20 < 40`
+
+It translates to
+
+0 actions when < 3
+1 action when < 20
+2 actions when < 40
+3 actions when >= 40
+
+There has to be a better way to visualize this. Maybe there are some clever paper vehicle sheets out there in the wild?
+
+A ship can have 1-3 actions, and certain sample vehicles will always put the highest number on the far right field, even when there are only 1 or 2 actions.
+
