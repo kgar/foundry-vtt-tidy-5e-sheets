@@ -12,9 +12,9 @@
 - [x] Add "allow-edit" lock
 - [ ] Implement the Header
   - [x] Profile
-  - [ ] Name
-  - [ ] Origin Summary section
-  - [ ] Movement
+  - [x] Name
+  - [x] Origin Summary section
+  - [x] Movement
   - [ ] AC Shield and Abilities
     - [ ] AC Shield is a little different; it has AC while motionless and AC while in motion.
     - [ ] Allow for ability check/save single click like with PCs and NPCs

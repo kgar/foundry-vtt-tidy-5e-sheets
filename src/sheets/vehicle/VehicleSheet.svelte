@@ -1,5 +1,9 @@
 <script lang="ts">
-  import type { NpcSheetContext, Tab } from 'src/types/types';
+  import type {
+    NpcSheetContext,
+    Tab,
+    TidyDropdownOption,
+  } from 'src/types/types';
   import Tabs from 'src/components/tabs/Tabs.svelte';
   import VehicleAttributesTab from './VehicleAttributesTab.svelte';
   import { CONSTANTS } from 'src/constants';
@@ -11,6 +15,14 @@
   import TabContents from 'src/components/tabs/TabContents.svelte';
   import VehicleProfile from './parts/VehicleProfile.svelte';
   import ActorEffectsTab from '../actor/ActorEffectsTab.svelte';
+  import ContentEditableFormField from 'src/components/inputs/ContentEditableFormField.svelte';
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import HorizontalLineSeparator from 'src/components/layout/HorizontalLineSeparator.svelte';
+  import DelimitedTruncatedContent from 'src/components/layout/DelimitedTruncatedContent.svelte';
+  import TidyDropdownList from '../TidyDropdownList.svelte';
+  import Tidy5eActorOriginSummaryConfig from '../tidy5e-actor-origin-summary-config';
+  import { isNil } from 'src/utils/data';
+  import ActorMovementRow from '../actor/ActorMovementRow.svelte';
 
   export let selectedTabId: string;
 
@@ -55,13 +67,104 @@
   if (!tabs.some((tab) => tab.id === selectedTabId)) {
     selectedTabId = tabs[0]?.id;
   }
+
+  $: sizes = <TidyDropdownOption[]>Object.entries($store.config.actorSizes).map(
+    ([abbreviation, size]) => ({
+      value: abbreviation,
+      text: size as string,
+    })
+  );
+
+  $: currentSize = <TidyDropdownOption>{
+    value: $store.system.traits.size,
+    text: $store.config.actorSizes[$store.system.traits.size],
+  };
+
+  $: abilities = Object.entries<any>($store.abilities);
+
+  const localize = FoundryAdapter.localize;
 </script>
 
 <header>
   <div class="flex-0">
     <VehicleProfile />
   </div>
-  <div class="flex-grow-1" />
+  <div class="flex-grow-1">
+    <div
+      class="actor-name-row flex-row justifty-content-space-between align-items-center extra-small-gap"
+    >
+      <div class="actor-name">
+        <ContentEditableFormField
+          element="h1"
+          document={$store.actor}
+          field="name"
+          value={$store.actor.name}
+          editable={$store.owner}
+          spellcheck={false}
+          placeholder={localize('DND5E.Name')}
+          dataMaxLength={40}
+        />
+      </div>
+    </div>
+    <HorizontalLineSeparator borderStyle="light" />
+    <div class="origin-summary">
+      <div class="flex-row extra-small-gap">
+        <TidyDropdownList
+          options={sizes}
+          selected={currentSize}
+          on:optionClicked={(event) =>
+            $store.actor.update({
+              'system.traits.size': event.detail.value,
+            })}
+        />
+      </div>
+      <span>&#8226;</span>
+      <DelimitedTruncatedContent cssClass="flex-1">
+        <span class="flex-row extra-small-gap align-items-center">
+          <span>{localize('DND5E.Vehicle')}</span>
+        </span>
+
+        <ContentEditableFormField
+          element="span"
+          document={$store.actor}
+          field="system.traits.dimensions"
+          value={$store.system.traits.dimensions}
+          title={$store.system.traits.dimensions}
+          editable={$store.owner}
+          placeholder={localize('DND5E.Dimensions')}
+        />
+        <ContentEditableFormField
+          element="span"
+          document={$store.actor}
+          field="system.details.source"
+          value={$store.system.details.source}
+          editable={$store.owner}
+          placeholder={localize('DND5E.Source')}
+          title="{localize('DND5E.Source')} {!isNil(
+            $store.system.details.source,
+            ''
+          )
+            ? '| ' + $store.system.details.source
+            : ''}"
+        />
+      </DelimitedTruncatedContent>
+      <div class="flex-row align-items-center extra-small-gap">
+        {#if $store.owner}
+          <a
+            on:click={() =>
+              new Tidy5eActorOriginSummaryConfig($store.actor).render(true)}
+            class="origin-summary-tidy"
+            title={localize('TIDY5E.OriginSummaryConfig')}
+          >
+            <i class="fas fa-cog" />
+          </a>
+        {/if}
+      </div>
+    </div>
+    <HorizontalLineSeparator borderStyle="light" />
+    <ActorMovementRow actor={$store.actor} movement={$store.movement} />
+    <HorizontalLineSeparator borderStyle="light" />
+  </div>
 </header>
 <Tabs {tabs} bind:selectedTabId>
   <svelte:fragment slot="tab-end">
@@ -82,6 +185,21 @@
     justify-content: center;
     padding: 0.625rem 1rem 1rem 1rem;
     background: var(--t5e-header-background);
+
+    .actor-name-row {
+      margin-bottom: 0.125rem;
+    }
+
+    .origin-summary {
+      margin-left: 0.25rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.25rem;
+      font-size: 0.75rem;
+      line-height: 1;
+      padding: 0.1875rem 0 0.125rem 0;
+    }
   }
 
   .sheet-body {

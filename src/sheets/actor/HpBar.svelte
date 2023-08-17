@@ -31,6 +31,6 @@
     height: 100%;
     z-index: -1;
     background: var(--t5e-hp-bar-color);
-    transition: width 0.3s ease;
+    transition: width 0.5s ease;
   }
 </style>

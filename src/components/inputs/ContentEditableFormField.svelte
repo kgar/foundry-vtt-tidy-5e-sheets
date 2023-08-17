@@ -12,8 +12,9 @@
   export let dataMaxLength: number = 40;
   export let placeholder: string | null = null;
   export let saveAs: 'string' | 'number' = 'string';
+  export let title: string | null = null;
 
-  let draftValue: string = value;
+  $: draftValue = value;
 
   async function update() {
     if (draftValue.length > dataMaxLength) {
@@ -62,9 +63,12 @@
     {spellcheck}
     data-max-length={dataMaxLength}
     data-placeholder={placeholder}
+    {title}
   />
 {:else}
-  <svelte:element this={element} class={cssClass}>{value}</svelte:element>
+  <svelte:element this={element} class={cssClass} {title}
+    >{value}</svelte:element
+  >
 {/if}
 
 <style lang="scss">
