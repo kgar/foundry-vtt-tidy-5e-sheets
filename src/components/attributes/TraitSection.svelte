@@ -4,7 +4,7 @@
   import type { Tool } from 'src/types/actor';
   import type { ActorSheetContext } from 'src/types/types';
   import { createEventDispatcher, getContext } from 'svelte';
-    import type { Readable } from 'svelte/store';
+  import type { Readable } from 'svelte/store';
 
   let store = getContext<Readable<ActorSheetContext>>('store');
   export let title: string;
@@ -79,13 +79,10 @@
                 class="tool-proficiency-editor rollable"
                 title="DND5E.ToolConfigure"
                 on:click|stopPropagation|preventDefault={() =>
-                  new dnd5e.applications.actor.ProficiencyConfig(
-                    $store.actor,
-                    {
-                      property: 'tools',
-                      key,
-                    }
-                  ).render(true)}
+                  new dnd5e.applications.actor.ProficiencyConfig($store.actor, {
+                    property: 'tools',
+                    key,
+                  }).render(true)}
               >
                 <i class="fas fa-cog" />
               </a>

@@ -33,27 +33,10 @@
   export let selectedTabId: string;
   let store = getContext<Readable<ActorSheetContext>>('store');
 
-  function submitWhenEnterKey(e: KeyboardEvent) {
-    if (e.key === 'Enter') {
-      e.preventDefault();
-      e.stopPropagation();
-      $store.actor.update({ name: characterName });
-    }
-  }
-
   const localize = FoundryAdapter.localize;
 
   $: playerName =
     FoundryAdapter.tryGetFlag<string>($store.actor, 'playerName') ?? '';
-  let characterName = $store.actor.name;
-
-  /*
-  Loop through items
-  When item.type === 'class', get item.name and item.system.levels (number)
-  -> then classMap.set(item.system.identifier, {...(classMap.get(item.system.identifier) ?? {}), className, levels})
-  When item.type === 'subclass', get item.name
-
-  */
 
   $: classAndSubclassSummaries = Array.from(
     FoundryAdapter.getClassAndSubclassSummaries($store.actor).values()
@@ -169,7 +152,7 @@
           spellcheck={false}
           placeholder={localize('DND5E.Name')}
           dataMaxLength={40}
-          value={characterName}
+          value={$store.actor.name}
           field="name"
         />
       </div>
