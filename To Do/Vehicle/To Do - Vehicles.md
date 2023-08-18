@@ -10,18 +10,19 @@
   - [x] "cargo" : "Cargo & Crew"
   - [x] "biography" : "Description"
 - [x] Add "allow-edit" lock
-- [ ] Implement the Header
+- [x] Implement the Header
   - [x] Profile
   - [x] Name
   - [x] Origin Summary section
   - [x] Movement
-  - [ ] AC Shield and Abilities
-    - [ ] AC Shield is a little different; it has AC while motionless and AC while in motion.
-    - [ ] Allow for ability check/save single click like with PCs and NPCs
-    - [ ] the rest
+  - [x] AC Shield and Abilities
+    - [x] AC Shield is a little different; it has AC while motionless and AC while in motion.
+    - [x] Allow for ability check/save single click like with PCs and NPCs
+    - [x] the rest
 - [ ] Implement sheet body sections
   - [ ] Attributes
   - [ ] Cargo & Crew
+  - [x] Effects
   - [ ] Description
 - [ ] Identify problems with the current sheet that make it difficult to understand/use and fix them.
   - [ ] Problem: There aren't dedicated buttons for Ability Check and Saving Throw; I don't care if the vehicle cannot be proficient, we want buttons!

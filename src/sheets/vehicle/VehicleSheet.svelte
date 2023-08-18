@@ -23,6 +23,9 @@
   import Tidy5eActorOriginSummaryConfig from '../tidy5e-actor-origin-summary-config';
   import { isNil } from 'src/utils/data';
   import ActorMovementRow from '../actor/ActorMovementRow.svelte';
+  import AcShieldVehicle from '../actor/AcShieldVehicle.svelte';
+  import VerticalLineSeparator from 'src/components/layout/VerticalLineSeparator.svelte';
+  import AttributeBlock from '../AttributeBlock.svelte';
 
   export let selectedTabId: string;
 
@@ -164,6 +167,21 @@
     <HorizontalLineSeparator borderStyle="light" />
     <ActorMovementRow actor={$store.actor} movement={$store.movement} />
     <HorizontalLineSeparator borderStyle="light" />
+    <section class="actor-stats">
+      <AcShieldVehicle />
+      {#each abilities as [id, ability]}
+        <VerticalLineSeparator />
+        <div>
+          <AttributeBlock
+            abbreviation={id}
+            {ability}
+            actor={$store.actor}
+            useConfigurationOption={false}
+            useSavingThrowProficiency={false}
+          />
+        </div>
+      {/each}
+    </section>
   </div>
 </header>
 <Tabs {tabs} bind:selectedTabId>

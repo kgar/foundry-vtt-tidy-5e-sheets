@@ -8,7 +8,8 @@
   import type { Readable } from 'svelte/store';
   import ItemDescription from './ItemDescription.svelte';
   import { SettingsProvider } from 'src/settings/settings';
-    import HorizontalLineSeparator from 'src/components/layout/HorizontalLineSeparator.svelte';
+  import HorizontalLineSeparator from 'src/components/layout/HorizontalLineSeparator.svelte';
+  import VerticalLineSeparator from 'src/components/layout/VerticalLineSeparator.svelte';
 
   let store = getContext<Readable<ItemSheetContext>>('store');
 
@@ -28,7 +29,8 @@
           field="system.quantity"
           document={$store.item}
           step="1"
-          readonly={!FoundryAdapter.userIsGm() && SettingsProvider.settings.lockItemQuantity.get()}
+          readonly={!FoundryAdapter.userIsGm() &&
+            SettingsProvider.settings.lockItemQuantity.get()}
         />
       </div>
 
@@ -113,7 +115,7 @@
     {/if}
   </div>
 
-  <div aria-hidden="true" role="presentation" class="vertical-line-separator" />
+  <VerticalLineSeparator />
 
   <ItemDescription />
 </div>

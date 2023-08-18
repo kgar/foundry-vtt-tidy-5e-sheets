@@ -9,6 +9,8 @@
   export let abbreviation: string;
   export let ability: any;
   export let actor: Actor5e;
+  export let useSavingThrowProficiency: boolean;
+  export let useConfigurationOption: boolean;
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -47,6 +49,7 @@
       on:click={(event) => actor.rollAbilitySave(abbreviation, { event })}
       >{formatAsModifier(ability.save)}</span
     >
+    {#if useSavingThrowProficiency}
     <a
       title={localize('DND5E.Proficiency')}
       class="proficiency-toggle"
@@ -58,6 +61,8 @@
     >
       {@html ability.icon}
     </a>
+    {/if}
+    {#if useConfigurationOption}
     <a
       class="config-button"
       title={localize('DND5E.AbilityConfigure')}
@@ -70,6 +75,7 @@
     >
       <i class="fas fa-cog" />
     </a>
+    {/if}
   </div>
   <span class="mod-label ability-mod-label">{localize('T5EK.AbbrMod')}</span>
   <span class="mod-label save-mod-label"
