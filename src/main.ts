@@ -58,8 +58,8 @@ FoundryAdapter.onReady(async () => {
   const compareItemSamples = import.meta.env.VITE_COMPARE_SAMPLE_ITEMS;
   if (compareItemSamples === 'true') {
     debugCompareItemSheets(
-      import.meta.env.VITE_TIDY5E_ITEM_SAMPLE_ID,
-      import.meta.env.VITE_KGAR_ITEM_SAMPLE_ID
+      import.meta.env.VITE_ITEM_LEFT_ID,
+      import.meta.env.VITE_ITEM_RIGHT_ID
     );
   }
 });
