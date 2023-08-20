@@ -1,35 +1,25 @@
 <script lang="ts">
+  import NumberInput from 'src/components/form/NumberInput.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { SettingsProvider } from 'src/settings/settings';
   import type { Item5e } from 'src/types/item';
 
   export let item: Item5e;
   export let ctx: any;
-
-  function updateItemQuantity(
-    event: FocusEvent & {
-      currentTarget: EventTarget & HTMLInputElement;
-    },
-    item: Item5e
-  ) {
-    const input = parseInt(event.currentTarget.value);
-    const uses = !isNaN(input) ? input : item.system.quantity;
-    event.currentTarget.value = uses.toString();
-    item.update({ 'system.quantity': uses });
-  }
 </script>
 
 {#if item.system.quantity}
   <span class="item-quantity" class:isStack={ctx.isStack}>
-    (<input
-      class="item-count"
-      type="text"
+    (<NumberInput
+      cssClass="item-count"
+      document={item}
+      field="system.quantity"
       value={item.system.quantity}
-      maxlength="3"
-      on:click|stopPropagation
-      on:blur={(event) => updateItemQuantity(event, item)}
+      maxlength={3}
       readonly={!FoundryAdapter.userIsGm() &&
         SettingsProvider.settings.lockItemQuantity.get()}
+      selectOnFocus={true}
+      on:click={(ev) => ev.stopPropagation()}
     />)
   </span>
 {/if}
@@ -42,7 +32,7 @@
     text-align: center;
     transition: opacity 0.3s ease;
 
-    input {
+    :global(input) {
       width: 1.4375rem;
       height: 100%;
     }
