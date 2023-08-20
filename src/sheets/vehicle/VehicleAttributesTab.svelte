@@ -12,7 +12,9 @@
       enableSpecialTraitsConfiguration={false}
     />
   </div>
-  <div class="main-panel">Center</div>
+  <div class="main-panel">
+    
+  </div>
 </div>
 
 <style lang="scss">
