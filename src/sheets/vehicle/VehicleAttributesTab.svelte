@@ -28,7 +28,7 @@
 
   $: allowEdit = FoundryAdapter.tryGetFlag($store.actor, 'allow-edit') === true;
 
-  let baseWidths = {
+  let baseWidths: Record<string, string> = {
     cover: '3.125rem',
     'system.quantity': '4.375rem',
     'system.armor.value': '2.5rem',
