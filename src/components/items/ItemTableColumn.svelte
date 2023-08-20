@@ -1,11 +1,12 @@
 <script lang="ts">
   export let primary: boolean = false;
-  export let baseWidth: string | undefined = undefined;
-  export let title: string | undefined = undefined;
+  export let baseWidth: string | null = null;
+  export let title: string | null = null;
+  export let cssClass: string | null = null;
 </script>
 
 <div
-  class="item-table-column"
+  class="item-table-column {cssClass}"
   class:primary
   style:flex-basis={baseWidth}
   {title}

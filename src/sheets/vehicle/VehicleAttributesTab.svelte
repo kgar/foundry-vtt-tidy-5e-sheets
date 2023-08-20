@@ -14,11 +14,36 @@
   import ItemName from 'src/components/items/ItemName.svelte';
   import ItemUseButton from 'src/components/items/ItemUseButton.svelte';
   import ListItemQuantity from '../actor/ListItemQuantity.svelte';
-    import ItemTableFooter from 'src/components/items/ItemTableFooter.svelte';
+  import ItemTableFooter from 'src/components/items/ItemTableFooter.svelte';
+  import ItemUses from 'src/components/items/ItemUses.svelte';
+  import ItemAddUses from 'src/components/items/ItemAddUses.svelte';
+  import TextInput from 'src/components/form/TextInput.svelte';
+  import ItemControls from 'src/components/items/ItemControls.svelte';
+  import ItemDuplicateControl from 'src/components/items/ItemDuplicateControl.svelte';
+  import ItemDeleteControl from 'src/components/items/ItemDeleteControl.svelte';
+  import ItemEditControl from 'src/components/items/ItemEditControl.svelte';
+  import ItemControl from 'src/components/items/ItemControl.svelte';
 
   let store = getContext<Readable<VehicleSheetContext>>('store');
 
   $: allowEdit = FoundryAdapter.tryGetFlag($store.actor, 'allow-edit') === true;
+
+  let baseWidths = {
+    cover: '3.125rem',
+    'system.quantity': '4.375rem',
+    'system.armor.value': '2.5rem',
+    'system.hp.value': '2.5rem',
+    threshold: '4.375rem',
+  };
+
+  let columnsToSkip = ['system.quantity'];
+
+  const controlsBaseWidthLocked: string = '5.3125rem';
+  const controlsBaseWidthUnlocked: string = '7.5rem';
+
+  $: classicControlsBaseWidth = allowEdit
+    ? controlsBaseWidthUnlocked
+    : controlsBaseWidthLocked;
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -40,8 +65,31 @@
             <ItemTableColumn primary={true}>
               {localize(section.label)}
             </ItemTableColumn>
+            {#if section.hasActions}
+              <ItemTableColumn baseWidth="3.125rem">
+                {localize('DND5E.Uses')}
+              </ItemTableColumn>
+              <ItemTableColumn baseWidth="7.5rem">
+                {localize('DND5E.Usage')}
+              </ItemTableColumn>
+            {/if}
+            {#if section.columns}
+              {#each section.columns as column}
+                {#if !columnsToSkip.includes(column.property)}
+                  <ItemTableColumn
+                    cssClass="items-header-{column.css}"
+                    baseWidth={baseWidths[column.property] ?? '3.125rem'}
+                  >
+                    {column.label}
+                  </ItemTableColumn>
+                {/if}
+              {/each}
+            {/if}
+            {#if $store.owner}
+              <ItemTableColumn baseWidth={classicControlsBaseWidth} />
+            {/if}
           </ItemTableHeaderRow>
-          {#each section.items as item}
+          {#each section.items as item (item.id)}
             {@const ctx = $store.itemContext[item.id]}
             <ItemTableRow
               let:toggleSummary
@@ -52,6 +100,7 @@
                 id: item.id,
               }}
               {item}
+              cssClass={FoundryAdapter.getInventoryRowClasses(item, ctx)}
             >
               <ItemTableCell primary={true}>
                 <ItemUseButton {item} />
@@ -64,6 +113,87 @@
                   <ListItemQuantity {item} {ctx} />
                 </ItemName>
               </ItemTableCell>
+              {#if section.hasActions}
+                <ItemTableCell baseWidth="3.125rem">
+                  {#if ctx?.isOnCooldown}
+                    <a
+                      title={item.labels.recharge}
+                      role="button"
+                      tabindex="0"
+                      on:click={() => item.rollRecharge()}
+                    >
+                      <i class="fas fa-dice-six" />
+                      {item.system.recharge
+                        .value}{#if item.system.recharge?.value !== 6}+{/if}</a
+                    >
+                  {:else if item.system.recharge?.value}
+                    <i class="fas fa-bolt" title={localize('DND5E.Charged')} />
+                  {:else if ctx?.hasUses}
+                    <ItemUses {item} />
+                  {:else}
+                    <ItemAddUses {item} />
+                  {/if}
+                </ItemTableCell>
+                <ItemTableCell baseWidth="7.5rem">
+                  {#if item.system.activation.type}
+                    <span>{item.labels.activation}</span>
+                  {/if}
+                </ItemTableCell>
+              {/if}
+              {#if section.columns}
+                {#each section.columns as column}
+                  {#if !columnsToSkip.includes(column.property)}
+                    {@const isNumber = column.editable === 'Number'}
+                    {@const fallback = isNumber ? '0' : ''}
+                    {@const value =
+                      FoundryAdapter.getProperty(
+                        item,
+                        column.property
+                      )?.toString() ??
+                      FoundryAdapter.getProperty(
+                        ctx,
+                        column.property
+                      )?.toString() ??
+                      fallback}
+                    <ItemTableCell
+                      baseWidth={baseWidths[column.property] ?? '3.125rem'}
+                    >
+                      {#if column.editable}
+                        <TextInput
+                          document={item}
+                          field={column.property}
+                          dtype={column.editable}
+                          allowDeltaChanges={isNumber}
+                          selectOnFocus={true}
+                          {value}
+                        />
+                      {:else}
+                        {FoundryAdapter.getProperty(item, column.property) ??
+                          FoundryAdapter.getProperty(ctx, column.property) ??
+                          fallback}
+                      {/if}
+                    </ItemTableCell>
+                  {/if}
+                {/each}
+              {/if}
+              {#if $store.owner}
+                <ItemTableCell baseWidth={classicControlsBaseWidth}>
+                  <ItemControls>
+                    <ItemControl
+                      iconCssClass="fas fa-user-alt {ctx.toggleClass}"
+                      title={ctx.toggleTitle}
+                      active={ctx.toggleClass === 'active'}
+                      on:click={(ev) =>
+                        item.update({ ['system.crewed']: !item.system.crewed })}
+                    />
+                    <ItemEditControl {item} />
+                    {#if allowEdit}
+                      <ItemDuplicateControl {item} />
+                      <ItemDeleteControl {item} />
+                    {/if}
+                  </ItemControls>
+                </ItemTableCell>
+              {/if}
             </ItemTableRow>
           {/each}
           {#if $store.owner && allowEdit && section.dataset}

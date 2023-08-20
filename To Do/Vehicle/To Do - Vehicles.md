@@ -1,3 +1,5 @@
+## To Do
+
 - [x] Create form application class
 - [x] Hook in template
 - [x] Create svelte sheet component and hook into activate listeners
@@ -20,7 +22,7 @@
     - [x] Allow for ability check/save single click like with PCs and NPCs
     - [x] the rest
 - [ ] Implement sheet body sections
-  - [ ] Attributes
+  - [x] Attributes
   - [ ] Cargo & Crew
   - [x] Effects
   - [ ] Description
@@ -33,6 +35,11 @@
   - [ ] Mishap
 - [ ] Add vehicular exhaustion in the style of NPC exhaustion. It will need certain adjustments to the exhaustion level text that will require some localization.
 - [ ] Add vehicular movement in the style of DMspiration, a simple checkbox charm at the top right of the vehicle sheet.
+- [ ] Resolve SaltyJ Issues
+  - [ ] Effects tab missing
+  - [ ] Adding Crew and passengers
+  - [ ] Headers are not inline with columns
+  - [ ] Spacing inconsistent and sad
 
 ### Action Thresholds
 
@@ -79,10 +86,16 @@ And considering the ships have sheets, the crew on deck have sheets, even the mi
 (KGar Note: This will take some thought about where Tidy 5e fits into the mix with this particular issue. Of course, there's a great deal that could be done to provide functionality like this, but veering too far from the core data into homebrew territory may multiply complexity of maintaining the sheet. Perhaps a separate module that leverages the API?)
 
 
-## Bonus To Dos
+## Refine and Bonus To Do's
 
+- [ ] Remove margin top from ItemTableHeaderRow and require calling components to provide their own gap / spacing between tables.
 - [ ] Incapacitated calculation for NPCs and PCs: is it taking temp HP into account?
 - [ ] Inventory-Grid: Equipped Background is not showing for KGar edition. Fixit.
 - [ ] Submit dnd5e system request (and quite possibly, a PR) for vehicular exhaustion to be added to vehicle data and to the vehicle sheet.
   - https://github.com/foundryvtt/dnd5e/blob/7ab8cc38e0a7a21969dcb4bb19a1816d99d5e19a/CONTRIBUTING.md
 - [ ] Ditto dnd5e system vehicle data field for "isMoving", "moving", "movement", "inMotion", or some other more appropriate name
+- [ ] Evolve HP column
+  - [ ] Should show current / max
+  - [ ] Have HP Bar that transition animates width
+  - [ ] Allow current and max to be edited as inline inputs
+- [ ] Make AC editable
