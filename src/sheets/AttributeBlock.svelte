@@ -50,31 +50,31 @@
       >{formatAsModifier(ability.save)}</span
     >
     {#if useSavingThrowProficiency}
-    <a
-      title={localize('DND5E.Proficiency')}
-      class="proficiency-toggle"
-      on:click={() =>
-        actor.update({
-          [`system.abilities.${abbreviation}.proficient`]:
-            1 - parseInt(ability.proficient),
-        })}
-    >
-      {@html ability.icon}
-    </a>
+      <a
+        title={localize('DND5E.Proficiency')}
+        class="proficiency-toggle"
+        on:click={() =>
+          actor.update({
+            [`system.abilities.${abbreviation}.proficient`]:
+              1 - parseInt(ability.proficient),
+          })}
+      >
+        {@html ability.icon}
+      </a>
     {/if}
     {#if useConfigurationOption}
-    <a
-      class="config-button"
-      title={localize('DND5E.AbilityConfigure')}
-      on:click={() =>
-        new dnd5e.applications.actor.ActorAbilityConfig(
-          actor,
-          null,
-          abbreviation
-        ).render(true)}
-    >
-      <i class="fas fa-cog" />
-    </a>
+      <a
+        class="config-button"
+        title={localize('DND5E.AbilityConfigure')}
+        on:click={() =>
+          new dnd5e.applications.actor.ActorAbilityConfig(
+            actor,
+            null,
+            abbreviation
+          ).render(true)}
+      >
+        <i class="fas fa-cog" />
+      </a>
     {/if}
   </div>
   <span class="mod-label ability-mod-label">{localize('T5EK.AbbrMod')}</span>

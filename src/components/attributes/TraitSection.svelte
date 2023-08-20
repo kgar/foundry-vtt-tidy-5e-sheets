@@ -4,7 +4,9 @@
   import type { Tool } from 'src/types/actor';
   import type { ActorSheetContext } from 'src/types/types';
   import { createEventDispatcher, getContext } from 'svelte';
+  import { quadInOut } from 'svelte/easing';
   import type { Readable } from 'svelte/store';
+  import { slide } from 'svelte/transition';
 
   let store = getContext<Readable<ActorSheetContext>>('store');
   export let title: string;
@@ -23,7 +25,10 @@
 </script>
 
 {#if show}
-  <div class="trait-form-group {traitCssClass ?? ''}">
+  <div
+    class="trait-form-group {traitCssClass ?? ''}"
+    transition:slide|global={{ duration: 200, easing: quadInOut }}
+  >
     <span class="trait-icon" aria-label={title} {title}>
       {#if iconCssClass !== undefined}
         <i class={iconCssClass} />
