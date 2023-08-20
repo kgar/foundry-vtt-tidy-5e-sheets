@@ -98,4 +98,3 @@ And considering the ships have sheets, the crew on deck have sheets, even the mi
   - [ ] Should show current / max
   - [ ] Have HP Bar that transition animates width
   - [ ] Allow current and max to be edited as inline inputs
-- [ ] Make AC editable
