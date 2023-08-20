@@ -8,6 +8,8 @@ import { writable } from 'svelte/store';
 import VehicleSheet from './VehicleSheet.svelte';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
 import { applyTitleToWindow } from 'src/utils/applications';
+import type { SvelteComponent } from 'svelte';
+import { debug } from 'src/utils/logging';
 
 const ActorSheet5eVehicle = FoundryAdapter.getActorSheetVehicleClass();
 
@@ -34,12 +36,13 @@ export class Tidy5eVehicleSheet extends ActorSheet5eVehicle {
     });
   }
 
+  component: SvelteComponent | undefined;
   async activateListeners(html: { get: (index: 0) => HTMLElement }) {
     const node = html.get(0);
     const initialContext = await this.getContext();
     this.store.set(initialContext);
 
-    new VehicleSheet({
+    this.component = new VehicleSheet({
       target: node,
       props: {
         selectedTabId: this.#getSelectedTabId(),
@@ -108,6 +111,7 @@ export class Tidy5eVehicleSheet extends ActorSheet5eVehicle {
 
   async render(force: boolean, ...args: any[]) {
     if (force) {
+      this.component?.$destroy();
       super.render(force, ...args);
       return;
     }
@@ -130,5 +134,18 @@ export class Tidy5eVehicleSheet extends ActorSheet5eVehicle {
     return FoundryAdapter.removeConfigureSettingsButtonWhenLockedForNonGm(
       buttons
     );
+  }
+
+  close(options: unknown = {}) {
+    try {
+      this._saveViewState();
+    } catch (e) {
+      debug(
+        `Unable to save view state for ${Tidy5eVehicleSheet.name}. Ignoring.`
+      );
+    } finally {
+      this.component?.$destroy();
+      return super.close(options);
+    }
   }
 }

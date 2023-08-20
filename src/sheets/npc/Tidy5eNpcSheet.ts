@@ -14,6 +14,7 @@ import NpcShortRestDialog from 'src/dialogs/NpcShortRestDialog';
 import LongRestDialog from 'src/dialogs/NpcLongRestDialog';
 import { d20Roll } from 'src/utils/rolls';
 import { isNil } from 'src/utils/data';
+import type { SvelteComponent } from 'svelte';
 
 const ActorSheet5eNpc = FoundryAdapter.getActorSheetNpcClass();
 
@@ -40,13 +41,14 @@ export class Tidy5eNpcSheet extends ActorSheet5eNpc {
     });
   }
 
+  component: SvelteComponent | undefined;
   async activateListeners(html: { get: (index: 0) => HTMLElement }) {
     const node = html.get(0);
     const initialContext = await this.getContext();
     this.store.set(initialContext);
 
     if (!game.user.isGM && this.actor.limited) {
-      new NpcSheetLimited({
+      this.component = new NpcSheetLimited({
         target: node,
         context: new Map<any, any>([
           ['store', this.store],
@@ -54,7 +56,7 @@ export class Tidy5eNpcSheet extends ActorSheet5eNpc {
         ]),
       });
     } else {
-      new NpcSheet({
+      this.component = new NpcSheet({
         target: node,
         props: {
           selectedTabId: this.#getSelectedTabId(),
@@ -174,6 +176,7 @@ export class Tidy5eNpcSheet extends ActorSheet5eNpc {
 
   async render(force: boolean, ...args: any[]) {
     if (force) {
+      this.component?.$destroy();
       super.render(force, ...args);
       return;
     }
@@ -583,5 +586,16 @@ export class Tidy5eNpcSheet extends ActorSheet5eNpc {
 
     // Return the rolled result
     return roll;
+  }
+
+  close(options: unknown = {}) {
+    try {
+      this._saveViewState();
+    } catch (e) {
+      debug(`Unable to save view state for ${Tidy5eNpcSheet.name}. Ignoring.`);
+    } finally {
+      this.component?.$destroy();
+      return super.close(options);
+    }
   }
 }

@@ -10,6 +10,7 @@ import { writable } from 'svelte/store';
 import type { ActorSheetContext, SheetStats } from 'src/types/types';
 import { applyTitleToWindow } from 'src/utils/applications';
 import { Tidy5eKgarUserSettings } from 'src/settings/user-settings-form';
+import type { SvelteComponent } from 'svelte';
 
 const ActorSheet5eCharacter = FoundryAdapter.getActorSheetClass();
 
@@ -35,12 +36,13 @@ export class Tidy5eCharacterSheet extends ActorSheet5eCharacter {
     });
   }
 
+  component: SvelteComponent | undefined;
   async activateListeners(html: { get: (index: 0) => HTMLElement }) {
     const node = html.get(0);
     const initialContext = await this.getContext();
     this.store.set(initialContext);
 
-    new Tidy5eCharacterSheetContent({
+    this.component = new Tidy5eCharacterSheetContent({
       target: node,
       props: {
         selectedTabId: this.#getSelectedTabId(),
@@ -112,6 +114,7 @@ export class Tidy5eCharacterSheet extends ActorSheet5eCharacter {
         `Unable to save view state for ${Tidy5eCharacterSheet.name}. Ignoring.`
       );
     } finally {
+      this.component?.$destroy();
       return super.close(options);
     }
   }
@@ -164,6 +167,7 @@ export class Tidy5eCharacterSheet extends ActorSheet5eCharacter {
 
   async render(force: boolean, ...args: any[]) {
     if (force) {
+      this.component?.$destroy();
       super.render(force, ...args);
       return;
     }

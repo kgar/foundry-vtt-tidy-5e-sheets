@@ -19,6 +19,7 @@ import { applyTitleToWindow } from 'src/utils/applications';
 import { debug } from 'src/utils/logging';
 import { isNil } from 'src/utils/data';
 import { Tidy5eKgarUserSettings } from 'src/settings/user-settings-form';
+import type { SvelteComponent } from 'svelte';
 
 export class Tidy5eKgarItemSheet extends dnd5e.applications.item.ItemSheet5e {
   store = writable<ItemSheetContext>();
@@ -49,6 +50,7 @@ export class Tidy5eKgarItemSheet extends dnd5e.applications.item.ItemSheet5e {
     });
   }
 
+  component: SvelteComponent | undefined;
   async activateListeners(html: { get: (index: 0) => HTMLElement }) {
     this.store.set(await this.getContext());
 
@@ -61,7 +63,7 @@ export class Tidy5eKgarItemSheet extends dnd5e.applications.item.ItemSheet5e {
 
     switch (this.item.type) {
       case CONSTANTS.ITEM_TYPE_EQUIPMENT:
-        new EquipmentSheet({
+        this.component = new EquipmentSheet({
           target: node,
           props: {
             selectedTabId: this.selectedTabId ?? 'description',
@@ -70,7 +72,7 @@ export class Tidy5eKgarItemSheet extends dnd5e.applications.item.ItemSheet5e {
         });
         break;
       case CONSTANTS.ITEM_TYPE_BACKGROUND:
-        new BackgroundSheet({
+        this.component = new BackgroundSheet({
           target: node,
           props: {
             selectedTabId: this.selectedTabId ?? 'description',
@@ -79,7 +81,7 @@ export class Tidy5eKgarItemSheet extends dnd5e.applications.item.ItemSheet5e {
         });
         break;
       case CONSTANTS.ITEM_TYPE_BACKPACK:
-        new BackpackSheet({
+        this.component = new BackpackSheet({
           target: node,
           props: {
             selectedTabId: this.selectedTabId ?? 'description',
@@ -88,7 +90,7 @@ export class Tidy5eKgarItemSheet extends dnd5e.applications.item.ItemSheet5e {
         });
         break;
       case CONSTANTS.ITEM_TYPE_CLASS:
-        new ClassSheet({
+        this.component = new ClassSheet({
           target: node,
           props: {
             selectedTabId: this.selectedTabId ?? 'description',
@@ -97,7 +99,7 @@ export class Tidy5eKgarItemSheet extends dnd5e.applications.item.ItemSheet5e {
         });
         break;
       case CONSTANTS.ITEM_TYPE_CONSUMABLE:
-        new ConsumableSheet({
+        this.component = new ConsumableSheet({
           target: node,
           props: {
             selectedTabId: this.selectedTabId ?? 'description',
@@ -106,7 +108,7 @@ export class Tidy5eKgarItemSheet extends dnd5e.applications.item.ItemSheet5e {
         });
         break;
       case CONSTANTS.ITEM_TYPE_FEAT:
-        new FeatSheet({
+        this.component = new FeatSheet({
           target: node,
           props: {
             selectedTabId: this.selectedTabId ?? 'description',
@@ -115,7 +117,7 @@ export class Tidy5eKgarItemSheet extends dnd5e.applications.item.ItemSheet5e {
         });
         break;
       case CONSTANTS.ITEM_TYPE_LOOT:
-        new LootSheet({
+        this.component = new LootSheet({
           target: node,
           props: {
             selectedTabId: this.selectedTabId ?? 'description',
@@ -124,7 +126,7 @@ export class Tidy5eKgarItemSheet extends dnd5e.applications.item.ItemSheet5e {
         });
         break;
       case CONSTANTS.ITEM_TYPE_SPELL:
-        new SpellSheet({
+        this.component = new SpellSheet({
           target: node,
           props: {
             selectedTabId: this.selectedTabId ?? 'description',
@@ -133,7 +135,7 @@ export class Tidy5eKgarItemSheet extends dnd5e.applications.item.ItemSheet5e {
         });
         break;
       case CONSTANTS.ITEM_TYPE_SUBCLASS:
-        new SubclassSheet({
+        this.component = new SubclassSheet({
           target: node,
           props: {
             selectedTabId: this.selectedTabId ?? 'description',
@@ -142,7 +144,7 @@ export class Tidy5eKgarItemSheet extends dnd5e.applications.item.ItemSheet5e {
         });
         break;
       case CONSTANTS.ITEM_TYPE_TOOL:
-        new ToolSheet({
+        this.component = new ToolSheet({
           target: node,
           props: {
             selectedTabId: this.selectedTabId ?? 'description',
@@ -151,7 +153,7 @@ export class Tidy5eKgarItemSheet extends dnd5e.applications.item.ItemSheet5e {
         });
         break;
       case CONSTANTS.ITEM_TYPE_WEAPON:
-        new WeaponSheet({
+        this.component = new WeaponSheet({
           target: node,
           props: {
             selectedTabId: this.selectedTabId ?? 'description',
@@ -160,7 +162,7 @@ export class Tidy5eKgarItemSheet extends dnd5e.applications.item.ItemSheet5e {
         });
         break;
       default:
-        new TypeNotFoundSheet({
+        this.component = new TypeNotFoundSheet({
           target: node,
           context: stores,
         });
@@ -220,6 +222,7 @@ export class Tidy5eKgarItemSheet extends dnd5e.applications.item.ItemSheet5e {
   // TODO: Extract this implementation somewhere. Or at least part of it.
   async render(force = false, options = {}) {
     if (force) {
+      this.component?.$destroy();
       super.render(force, options);
       this.makeWindowAutoHeightForDetailsTab(this.selectedTabId);
       return;
@@ -271,6 +274,7 @@ export class Tidy5eKgarItemSheet extends dnd5e.applications.item.ItemSheet5e {
         `Unable to save view state for ${Tidy5eKgarItemSheet.name}. Ignoring.`
       );
     } finally {
+      this.component?.$destroy();
       return super.close(...args);
     }
   }
