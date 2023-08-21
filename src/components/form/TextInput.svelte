@@ -3,6 +3,12 @@
   import type { FoundryDocument } from 'src/types/document';
   import { buildDataset } from 'src/utils/data';
 
+  type OnSaveChangeFn = (
+    event: Event & {
+      currentTarget: EventTarget & HTMLInputElement;
+    }
+  ) => boolean;
+
   export let value: string | number | null = null;
   export let placeholder: string | null = null;
   export let field: string;
@@ -19,6 +25,7 @@
   export let title: string | null = null;
   export let allowDeltaChanges: boolean = false;
   export let readonly: boolean = false;
+  export let onSaveChange: OnSaveChangeFn = () => true;
   /**
    * Stops propagation on input change event.
    * Useful for cases when outside listeners like
@@ -63,7 +70,7 @@
   aria-describedby={ariaDescribedBy}
   {title}
   {readonly}
-  on:change={saveChange}
+  on:change={(ev) => onSaveChange(ev) && saveChange(ev)}
   on:click
   on:focus={(ev) => selectOnFocus && ev.currentTarget.select()}
 />

@@ -147,3 +147,5 @@ export type Roll = {
 export type SheetStats = {
   lastSubmissionTime: Date | null;
 };
+
+export type CargoOrCrewItem = { name: string; quantity: number };

@@ -6,6 +6,7 @@
   import type { Readable } from 'svelte/store';
   import NumberInput from '../form/NumberInput.svelte';
   import Select from '../form/Select.svelte';
+  import TabFooter from 'src/sheets/actor/TabFooter.svelte';
 
   let store = getContext<Readable<ActorSheetContext>>('store');
   export let cssClass: string | null = null;
@@ -23,7 +24,7 @@
   );
 </script>
 
-<footer class="spellcasting-ability {cssClass}">
+<TabFooter cssClass="{cssClass} spellbook-footer" mode="horizontal">
   <h3 class="spell-dc spell-mod">
     {localize('DND5E.SpellDC')}
     {$store.system.attributes.spelldc}
@@ -56,6 +57,7 @@
         dtype="Number"
         placeholder="0"
         title={localize('T5EK.PreparedSpellsMax')}
+        selectOnFocus={true}
       />
     </div>
   {/if}
@@ -75,7 +77,9 @@
     </Select>
   </div>
   {#if $store.isNPC}
-    <div class="flex-row extra-small-gap flex-0 align-items-center">
+    <div
+      class="spellcasting-level-container flex-row extra-small-gap flex-0 align-items-center"
+    >
       <h3 class="truncate">{localize('DND5E.SpellcasterLevel')}</h3>
       <NumberInput
         cssClass="spellcasting-level"
@@ -85,53 +89,46 @@
         placeholder="0"
         min="0"
         step="1"
+        selectOnFocus={true}
       />
     </div>
   {/if}
-</footer>
+</TabFooter>
 
 <style lang="scss">
-  .spellcasting-ability {
+  .max-prepared-spells,
+  .spellcasting-attribute {
+    flex: 0;
     display: flex;
-    justify-content: space-between;
-    padding-top: 0.5rem;
-    border-top: 0.125rem solid var(--t5e-light-color);
     align-items: center;
-    gap: 0.25rem;
+    font-size: 0.75rem;
+  }
 
-    .max-prepared-spells,
-    .spellcasting-attribute {
-      flex: 0;
-      display: flex;
-      align-items: center;
-      font-size: 0.75rem;
-    }
+  h3 {
+    font-size: 1.25rem;
+    font-family: var(--t5e-modesto);
+  }
 
-    h3 {
-      font-size: 1.25rem;
-      font-family: var(--t5e-modesto);
-    }
+  p {
+    font-weight: 700;
+    margin: 0 0.25rem 0 0;
+    white-space: nowrap;
+  }
 
-    p {
-      font-weight: 700;
-      margin: 0 0.25rem 0 0;
-      white-space: nowrap;
-    }
+  .spellcasting-attribute :global(select) {
+    height: 1.1875rem;
+    font-size: 0.75rem;
+    font-family: var(--t5e-signika);
+  }
 
-    :global(select) {
-      height: 1.1875rem;
-      font-size: 0.75rem;
-      font-family: var(--t5e-signika);
-    }
+  .spellcasting-level-container :global(.spellcasting-level) {
+    width: 1.25rem;
+    height: 1.25rem;
+    flex: 0;
+    text-align: center;
+  }
 
-    :global(input) {
-      width: 1.25rem;
-      height: 1.25rem;
-      flex: 0;
-    }
-
-    .bonus-icon {
-      font-size: 1rem;
-    }
+  .bonus-icon {
+    font-size: 1rem;
   }
 </style>

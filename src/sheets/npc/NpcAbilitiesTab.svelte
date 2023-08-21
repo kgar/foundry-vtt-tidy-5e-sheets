@@ -219,6 +219,7 @@
           <SpellbookFooter
             includeAttackMod={false}
             includePreparedSpells={false}
+            cssClass="npc-abilities-spellbook-footer"
           />
         </div>
       {/if}
@@ -284,6 +285,17 @@
         line-height: 0.75;
         font-size: 0.875rem;
       }
+    }
+
+    :global(.npc-abilities-spellbook-footer) {
+      margin: 0 0 -0.5rem 0;
+      padding: 0.375rem 0.25rem;
+    }
+    :global(.npc-abilities-spellbook-footer h3) {
+      font-size: 1.125rem;
+    }
+    :global(.npc-abilities-spellbook-footer input) {
+      height: 1.125rem;
     }
   }
 

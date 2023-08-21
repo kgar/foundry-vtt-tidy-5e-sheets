@@ -4,8 +4,8 @@
   import { warn } from 'src/utils/logging';
   import { createEventDispatcher } from 'svelte';
 
-  export let item: any | undefined = undefined;
-  export let contextMenu: { type: string; id: string } | undefined = undefined;
+  export let item: any | null = null;
+  export let contextMenu: { type: string; id: string } | null = null;
   export let cssClass: string = '';
   export let alwaysShowQuantity: boolean = false;
 

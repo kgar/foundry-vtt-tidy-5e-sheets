@@ -221,6 +221,12 @@
   }
 
   .sheet-body {
-    // TODO: Tab-specific styles here.
+    :global(.item-table-cell:not(.primary) input) {
+      text-align: center;
+    }
+
+    :global(.item-table-cell input) {
+      height: 1.5rem;
+    }
   }
 </style>
