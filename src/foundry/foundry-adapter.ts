@@ -246,18 +246,14 @@ export const FoundryAdapter = {
   getProperty(obj: any, path: string): unknown {
     return foundry.utils.getProperty(obj, path);
   },
-  getInventoryRowClasses(item: Item5e, ctx: any, extras?: string[]): string {
+  getInventoryRowClasses(item: Item5e, ctx?: any, extras?: string[]): string {
     const itemClasses: string[] = [];
 
-    if (
-      /* Compatibility: Magic Items https://foundryvtt.com/packages/magicitems/ */
-      FoundryAdapter.getProperty(item, 'flags.magicitems.enabled') ||
-      FoundryAdapter.getProperty(item, 'system.properties.mgc')
-    ) {
+    if (FoundryAdapter.getProperty(item, 'system.properties.mgc')) {
       itemClasses.push('magic-item');
     }
 
-    if (ctx.attunement?.cls) {
+    if (ctx?.attunement?.cls) {
       itemClasses.push(ctx.attunement.cls);
     }
 
@@ -335,7 +331,10 @@ export const FoundryAdapter = {
     });
   },
   getSpellImageUrl(context: ActorSheetContext, spell: any): string | undefined {
-    if (!SettingsProvider.settings.spellClassFilterIconReplace.get() || context.isNPC) {
+    if (
+      !SettingsProvider.settings.spellClassFilterIconReplace.get() ||
+      context.isNPC
+    ) {
       return spell.img;
     }
 
@@ -403,6 +402,9 @@ export const FoundryAdapter = {
     }
 
     return buttons;
+  },
+  getNewCargo() {
+    return { name: '', quantity: 1 };
   },
 };
 

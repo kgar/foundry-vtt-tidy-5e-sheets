@@ -49,14 +49,14 @@ From "Galley" in GoS:
 
 So that is
 
-`< 3 < 20 < 40`
+`< 40 < 20 < 3`
 
 It translates to
 
-0 actions when < 3
-1 action when < 20
-2 actions when < 40
-3 actions when >= 40
+3 actions when >= 40 : the full crew complement
+2 actions when < 40 : mid crew complement
+1 action when < 20 : minimum crew complement
+0 actions when < 3 : insufficient crew
 
 There has to be a better way to visualize this. Maybe there are some clever paper vehicle sheets out there in the wild?
 

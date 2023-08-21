@@ -210,6 +210,8 @@
     display: flex;
     flex-direction: row;
     gap: 1rem;
+    padding-right: 0.75rem;
+    overflow-y: scroll;
   }
 
   .side-panel {
