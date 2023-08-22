@@ -1,5 +1,5 @@
 <script lang="ts">
-  import NumberInput from 'src/components/form/NumberInput.svelte';
+  import TextInput from 'src/components/form/TextInput.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { Actor5e } from 'src/types/actor';
   import type { ActorSheetContext, NpcSheetContext } from 'src/types/types';
@@ -48,12 +48,14 @@
         class="currency-item {currency.key}"
         title={$store.labels.currencies[currency.key]}
       >
-        <NumberInput
+        <TextInput
           document={actor}
           field="system.currency.{currency.key}"
-          step="any"
           id="{$store.appId}-system.currency.{currency.key}"
           value={currency.value}
+          allowDeltaChanges={true}
+          selectOnFocus={true}
+          dtype="Number"
         />
         <label
           for="{$store.appId}-system.currency.{currency.key}"

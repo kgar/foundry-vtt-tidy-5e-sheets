@@ -19,23 +19,30 @@
   export let dtype: string | null = null;
   export let selectOnFocus: boolean = false;
   export let title: string | null = null;
+  export let stopClickPropagation: boolean = false;
 
   $: datasetAttributes = buildDataset(dataset);
+  let theInput: HTMLInputElement | undefined;
 
-  function saveChange(
+  async function saveChange(
     event: Event & {
       currentTarget: EventTarget & HTMLInputElement;
     }
   ) {
     const value = parseFloat(event.currentTarget.value);
 
-    document.update({
+    await document.update({
       [field]: !isNaN(value) ? value : null,
     });
+
+    if (selectOnFocus && theInput === window.document.activeElement) {
+      theInput.select();
+    }
   }
 </script>
 
 <input
+  bind:this={theInput}
   type="number"
   {id}
   {step}
@@ -52,5 +59,6 @@
   {...datasetAttributes}
   data-dtype={dtype}
   on:focus={(ev) => selectOnFocus && ev.currentTarget.select()}
+  on:click={(ev) => stopClickPropagation && ev.stopPropagation()}
   {title}
 />

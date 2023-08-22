@@ -36,8 +36,9 @@
   export let stopChangePropagation: boolean = false;
 
   $: actualDataset = buildDataset(dataset);
+  let theInput: HTMLInputElement | undefined;
 
-  function saveChange(
+  async function saveChange(
     event: Event & {
       currentTarget: EventTarget & HTMLInputElement;
     }
@@ -51,13 +52,18 @@
         ? processInputChangeDelta(event, document, field)
         : event.currentTarget.value;
 
-    document.update({
+    await document.update({
       [field]: valueToSave,
     });
+
+    if (selectOnFocus && theInput === window.document.activeElement) {
+      theInput.select();
+    }
   }
 </script>
 
 <input
+  bind:this={theInput}
   type="text"
   {id}
   value={value?.toString() ?? ''}

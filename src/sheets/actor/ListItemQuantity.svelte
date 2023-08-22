@@ -19,7 +19,7 @@
       readonly={!FoundryAdapter.userIsGm() &&
         SettingsProvider.settings.lockItemQuantity.get()}
       selectOnFocus={true}
-      on:click={(ev) => ev.stopPropagation()}
+      stopClickPropagation={true}
     />)
   </span>
 {/if}
