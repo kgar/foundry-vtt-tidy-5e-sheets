@@ -20,6 +20,10 @@
   import { SettingsProvider } from 'src/settings/settings';
   import EncumbranceBar from '../actor/EncumbranceBar.svelte';
   import TabFooter from '../actor/TabFooter.svelte';
+  import ItemDeleteControl from 'src/components/items/ItemDeleteControl.svelte';
+  import ItemDuplicateControl from 'src/components/items/ItemDuplicateControl.svelte';
+  import ItemEditControl from 'src/components/items/ItemEditControl.svelte';
+  import ItemControls from 'src/components/items/ItemControls.svelte';
 
   let store = getContext<Readable<VehicleSheetContext>>('store');
 
@@ -75,6 +79,21 @@
 
     return false;
   }
+
+  $: classicControlsBaseWidth = allowEdit ? '7.5rem' : '4.375rem';
+  $: classicControlsEditableRowBaseWidth = '4.375rem';
+
+  function deleteCrewOrPassenger(section: any, index: number) {
+    const cargo = foundry.utils
+      .deepClone($store.actor.system.cargo[section.dataset.type])
+      .filter((_: unknown, i: number) => i !== index);
+
+    $store.actor.update({
+      [`system.cargo.${section.dataset.type}`]: cargo,
+    });
+
+    return false;
+  }
 </script>
 
 {#if noCargoOrCrew && !allowEdit}
@@ -101,6 +120,13 @@
               </ItemTableColumn>
             {/if}
           {/each}
+          {#if $store.owner && (!section.editableName || (allowEdit && section.editableName))}
+            <ItemTableColumn
+              baseWidth={section.editableName
+                ? classicControlsEditableRowBaseWidth
+                : classicControlsBaseWidth}
+            />
+          {/if}
         </ItemTableHeaderRow>
         {#each section.items as item, index (item.id ?? index)}
           {@const ctx = $store.itemContext[item.id]}
@@ -175,6 +201,32 @@
                   </ItemTableCell>
                 {/if}
               {/each}
+            {/if}
+            {#if $store.owner && (!section.editableName || (allowEdit && section.editableName))}
+              <ItemTableCell
+                baseWidth={section.editableName
+                  ? classicControlsEditableRowBaseWidth
+                  : classicControlsBaseWidth}
+              >
+                <ItemControls>
+                  {#if !section.editableName}
+                    <ItemEditControl {item} />
+                  {/if}
+
+                  {#if allowEdit && !section.editableName}
+                    <ItemDuplicateControl {item} />
+                  {/if}
+
+                  {#if allowEdit}
+                    <ItemDeleteControl
+                      onDelete={() =>
+                        !section.editableName ||
+                        deleteCrewOrPassenger(section, index)}
+                      {item}
+                    />
+                  {/if}
+                </ItemControls>
+              </ItemTableCell>
             {/if}
           </ItemTableRow>
         {/each}
