@@ -28,6 +28,7 @@
       placeholder="&mdash;"
       title={localize('DND5E.ArmorClass')}
       cssClass="armor-class-flat"
+      selectOnFocus={true}
     />
     <TextInput
       document={$store.actor}
@@ -36,6 +37,7 @@
       placeholder="&mdash;"
       title={localize('DND5E.ArmorClassMotionless')}
       cssClass="armor-class-motionless"
+      selectOnFocus={true}
     />
   </AcShieldBase>
 </div>
