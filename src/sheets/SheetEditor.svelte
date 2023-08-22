@@ -1,6 +1,5 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { onMount } from 'svelte';
 
   /**
    * The HTML to render or to edit.

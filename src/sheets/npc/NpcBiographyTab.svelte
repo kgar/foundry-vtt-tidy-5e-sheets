@@ -251,7 +251,7 @@
 
   .left-notes {
     margin-right: 1rem;
-    max-width: 350px;
+    max-width: 21.875rem;
   }
 
   .top-notes {
@@ -262,7 +262,7 @@
       margin: 0;
       padding: 0;
       display: flex;
-      gap: 4px;
+      gap: 0.25rem;
       flex-wrap: wrap;
     }
 
@@ -276,7 +276,7 @@
       }
 
       :global(span:first-child) {
-        flex: 0 0 1px;
+        flex: 0 0 0.0625rem;
         font-weight: 600;
         margin: 0;
       }
@@ -285,7 +285,7 @@
 
   .character-details :global(.detail-input) {
     flex: 1;
-    margin: 0 8px 0 4px;
+    margin: 0 0.5rem 0 0.25rem;
   }
 
   .toggle-personality-info {

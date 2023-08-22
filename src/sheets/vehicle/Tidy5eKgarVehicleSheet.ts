@@ -107,6 +107,13 @@ export class Tidy5eVehicleSheet extends ActorSheet5eVehicle {
     if (!isNil(selectedTabId, '')) {
       this.selectedTabId = selectedTabId;
     }
+
+    /* 
+      While Tidy 5e does its own thing with tabs, 
+      this active tab assignment is required in order 
+      to make item dropping tab-aware. 
+    */
+    this._tabs[0].active = this.selectedTabId;
   }
 
   async render(force: boolean, ...args: any[]) {
@@ -134,6 +141,11 @@ export class Tidy5eVehicleSheet extends ActorSheet5eVehicle {
     return FoundryAdapter.removeConfigureSettingsButtonWhenLockedForNonGm(
       buttons
     );
+  }
+
+  async _onDropSingleItem(...args: any[]) {
+    this.#cacheSelectedTabId();
+    return super._onDropSingleItem(...args);
   }
 
   close(options: unknown = {}) {

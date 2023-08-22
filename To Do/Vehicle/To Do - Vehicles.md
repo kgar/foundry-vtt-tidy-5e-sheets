@@ -21,25 +21,23 @@
     - [x] AC Shield is a little different; it has AC while motionless and AC while in motion.
     - [x] Allow for ability check/save single click like with PCs and NPCs
     - [x] the rest
-- [ ] Implement sheet body sections
+- [x] Implement sheet body sections
   - [x] Attributes
-  - [ ] Cargo & Crew
+  - [x] Cargo & Crew
   - [x] Effects
-  - [ ] Description
-- [ ] Identify problems with the current sheet that make it difficult to understand/use and fix them.
-  - [ ] Problem: There aren't dedicated buttons for Ability Check and Saving Throw; I don't care if the vehicle cannot be proficient, we want buttons!
-- [ ] Research the following and note them here:
-  - [ ] Actions : Ghosts of Saltmarsh
-  - [ ] Action Stations : Descent into Avernus
-  - [ ] Action Thresholds : Ghosts of Saltmarsh
-  - [ ] Mishap
-- [ ] Add vehicular exhaustion in the style of NPC exhaustion. It will need certain adjustments to the exhaustion level text that will require some localization.
-- [ ] Add vehicular movement in the style of DMspiration, a simple checkbox charm at the top right of the vehicle sheet.
-- [ ] Resolve SaltyJ Issues
-  - [ ] Effects tab missing
-  - [ ] Adding Crew and passengers
-  - [ ] Headers are not inline with columns
-  - [ ] Spacing inconsistent and sad
+  - [x] Description
+- [x] Identify problems with the current sheet that make it difficult to understand/use and fix them.
+  - [x] Problem: There aren't dedicated buttons for Ability Check and Saving Throw; I don't care if the vehicle cannot be proficient, we want buttons!
+- [x] Research the following and note them here:
+  - [x] Actions : Ghosts of Saltmarsh
+  - [x] Action Stations : Descent into Avernus
+  - [x] Action Thresholds : Ghosts of Saltmarsh
+  - [x] Mishap
+- [x] Resolve SaltyJ Issues
+  - [x] Effects tab missing
+  - [x] Adding Crew and passengers
+  - [x] Headers are not inline with columns
+  - [x] Spacing inconsistent and sad
 
 ### Action Thresholds
 
@@ -80,14 +78,28 @@ Feature Request: AC has a value for when moving, and when stationary. A toggle h
 Side Rant: There is one thing i have been struggling with, and this is not sheet specific, sort of a side rant.
 In my naval system, The crew can do actions on the ships turn, with trained skills etc using ship stats.
 But on the players turn, they can get on stations like Decent into Avernus style.
-Unfortunately there is no way that i know of to automate using their bonuses with vehicle sheet weapons in an automated fasion. 
+Unfortunately there is no way that i know of to automate using their bonuses with vehicle sheet weapons in an automated fasion.
 Again, not for you to even really think about, but its my current roadblock. ATM we switch to full zero automation for player turns during naval combat..
 And considering the ships have sheets, the crew on deck have sheets, even the mines have sheets.....
 (KGar Note: This will take some thought about where Tidy 5e fits into the mix with this particular issue. Of course, there's a great deal that could be done to provide functionality like this, but veering too far from the core data into homebrew territory may multiply complexity of maintaining the sheet. Perhaps a separate module that leverages the API?)
 
-
 ## Refine and Bonus To Do's
 
+- [ ] Add vehicular exhaustion in the style of NPC exhaustion. It will need certain adjustments to the exhaustion level text that will require some localization.
+- [ ] Consider restoring Cargo tab item quantity and removing the quantity column for items without an editablename. It breaks too much with Tidy's style, and wouldn't it be nice to keep the column space open?
+- [ ] Use HP bars on the HP column for the vehicle Attributes Tab, and add the juice when adjusting HP amount; make HP tab longer to compensate for Current/Max values (double the current width); consider compressing Threshold tab by making it an icon column with a title that says the actual title, to provide the space needed
+- [ ] Update all HP bars to use color severity like the group sheet in a branch and float it to the commission
+- [ ] Add vehicular movement in the style of DMspiration, a simple checkbox charm at the top right of the vehicle sheet.
+- [ ] Consider embedding Action calculation into the Action Threshold tooltip
+  - [ ] For 0 / null / undefined actions -> Full Complement: 0 Actions, Mid Complement: 0 Actions, Minimum Complement: 0 Actions
+  - [ ] For 1 action -> Full Complement: 1 Action, Mid Complement: 0 Actions, Minimum Complement: 0 Actions
+  - [ ] For 2 actions -> Full Complement: 2 Actions, Mid Complement: 1 Action, Minimum Complement: 0 Actions
+  - [ ] For 3 actions -> Full Complement: 3 Actions, Mid Complement: 2 Actions, Minimum Complement: 1 Action
+  - [ ] etc., it should be dynamic
+- [ ] Show current crew count and number of available actions below the threshold settings as the visual
+  > Crew Action(s)
+  > 42 3 (pretty icon when full complement) (title that reads "Full Complement", "Mid Complement", or "Minimum Complement" when hovering over the label/value container)
+- [ ] Ensure the action threshold calculations can safely coalesce to 0 when data is not available
 - [ ] Remove margin top from ItemTableHeaderRow and require calling components to provide their own gap / spacing between tables.
 - [ ] Incapacitated calculation for NPCs and PCs: is it taking temp HP into account?
 - [ ] Inventory-Grid: Equipped Background is not showing for KGar edition. Fixit.

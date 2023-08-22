@@ -38,8 +38,6 @@
     weight: '3.75rem',
   };
 
-  let readonlyColumnsToSkip = ['quantity'];
-
   const localize = FoundryAdapter.localize;
 
   async function onItemCreate(type: string) {
@@ -94,6 +92,10 @@
 
     return false;
   }
+
+  function hasQuantityColumn(section: any) {
+    return section.columns.some((x: any) => x.property === 'system.quantity');
+  }
 </script>
 
 {#if noCargoOrCrew && !allowEdit}
@@ -104,6 +106,8 @@
 
 <ListContainer>
   {#each $store.cargo as section}
+    {@const sectionHasQuantityColumn = hasQuantityColumn(section)}
+
     {#if allowEdit || section.items.length}
       <ItemTable>
         <ItemTableHeaderRow>
@@ -111,7 +115,7 @@
             {localize(section.label)}
           </ItemTableColumn>
           {#each section.columns as column}
-            {#if column.editable || !readonlyColumnsToSkip.includes(column.property)}
+            {#if column.editable}
               <ItemTableColumn
                 cssClass="items-header-{column.css}"
                 baseWidth={baseWidths[column.property] ?? '3.125rem'}
@@ -160,7 +164,9 @@
                   cssClass="extra-small-gap"
                 >
                   <span class="truncate">{item.name}</span>
-                  <ListItemQuantity {item} {ctx} />
+                  {#if !sectionHasQuantityColumn}
+                    <ListItemQuantity {item} {ctx} />
+                  {/if}
                 </ItemName>
               {/if}
             </ItemTableCell>

@@ -301,6 +301,18 @@ export class Tidy5eKgarItemSheet extends dnd5e.applications.item.ItemSheet5e {
     if (!isNil(selectedTabId, '')) {
       this.selectedTabId = selectedTabId;
     }
+
+    /* 
+      While Tidy 5e does its own thing with tabs, 
+      this active tab assignment is required in order 
+      to make item dropping tab-aware.
+    */
+    this._tabs[0].active = this.selectedTabId;
+  }
+
+  async _onDropSingleItem(...args: any[]) {
+    this.#cacheSelectedTabId();
+    return super._onDropSingleItem(...args);
   }
 
   async toggleAdvancementLock() {

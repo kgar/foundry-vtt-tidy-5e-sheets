@@ -1,1 +1,35 @@
-Description tab here
+<script lang="ts">
+  import SheetEditor from '../SheetEditor.svelte';
+  import { getContext } from 'svelte';
+  import type { Readable } from 'svelte/store';
+  import type { VehicleSheetContext } from 'src/types/types';
+  import RerenderAfterFormSubmission from 'src/components/shared/RerenderAfterFormSubmission.svelte';
+
+  let store = getContext<Readable<VehicleSheetContext>>('store');
+
+  function activateProseMirrorListeners(node: HTMLElement) {
+    $store.activateFoundryJQueryListeners(node);
+  }
+</script>
+
+<div class="note-entries">
+  <RerenderAfterFormSubmission
+    andOnValueChange={$store.system.details.biography.value}
+  >
+    <article class="biography-notes" use:activateProseMirrorListeners>
+      <SheetEditor
+        content={$store.biographyHTML}
+        target="system.details.biography.value"
+        editable={$store.editable}
+      />
+    </article>
+  </RerenderAfterFormSubmission>
+</div>
+
+<style lang="scss">
+  .note-entries {
+    flex: 1;
+    overflow-y: scroll;
+    padding-right: 0.75rem;
+  }
+</style>
