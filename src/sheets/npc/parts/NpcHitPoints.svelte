@@ -2,7 +2,7 @@
   import TextInput from 'src/components/form/TextInput.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { SettingsProvider } from 'src/settings/settings';
-  import HpBar from 'src/sheets/actor/HpBar.svelte';
+  import ActorHpBar from 'src/sheets/actor/ActorHpBar.svelte';
   import type { NpcSheetContext } from 'src/types/types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
@@ -14,7 +14,7 @@
 
 <div class="portrait-hp" title={localize('DND5E.HitPoints')}>
   {#if !SettingsProvider.settings.hpBarDisabledNpc.get()}
-    <HpBar actor={$store.actor} />
+    <ActorHpBar actor={$store.actor} />
   {/if}
   <TextInput
     cssClass="hp-min"

@@ -4,7 +4,7 @@
   import { SettingsProvider } from 'src/settings/settings';
   import { clamp, isRealNumber } from 'src/utils/numbers';
   import TextInput from 'src/components/form/TextInput.svelte';
-  import HpBar from 'src/sheets/actor/HpBar.svelte';
+  import ActorHpBar from 'src/sheets/actor/ActorHpBar.svelte';
 
   export let value: number;
   export let max: number;
@@ -27,7 +27,7 @@
   title={localize('DND5E.HitPoints')}
 >
   {#if !SettingsProvider.settings.hpBarDisabled.get()}
-    <HpBar {actor} />
+    <ActorHpBar {actor} />
   {/if}
   <TextInput
     cssClass="hp-min"
