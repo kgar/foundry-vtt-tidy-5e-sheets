@@ -207,6 +207,7 @@
 
 <style lang="scss">
   .attributes-tab-contents {
+    flex: 1;
     display: flex;
     flex-direction: row;
     gap: 1rem;
