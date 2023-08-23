@@ -99,18 +99,6 @@
       },
     });
   }
-
-  function updateItemQuantity(
-    event: FocusEvent & {
-      currentTarget: EventTarget & HTMLInputElement;
-    },
-    item: Item5e
-  ) {
-    const input = parseInt(event.currentTarget.value);
-    const uses = !isNaN(input) ? input : item.system.quantity;
-    event.currentTarget.value = uses.toString();
-    item.update({ 'system.quantity': uses });
-  }
 </script>
 
 <section class="inventory-list-section">

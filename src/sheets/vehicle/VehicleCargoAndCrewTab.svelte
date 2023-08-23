@@ -33,10 +33,11 @@
     $store.cargo.some((section: any) => section.items.length > 0) === false;
 
   let baseWidths: Record<string, string> = {
-    quantity: '4.375rem',
     price: '4.375rem',
     weight: '3.75rem',
   };
+
+  let columnsToSkipForClickableRows = ['system.quantity'];
 
   const localize = FoundryAdapter.localize;
 
@@ -92,10 +93,6 @@
 
     return false;
   }
-
-  function hasQuantityColumn(section: any) {
-    return section.columns.some((x: any) => x.property === 'system.quantity');
-  }
 </script>
 
 {#if noCargoOrCrew && !allowEdit}
@@ -106,8 +103,6 @@
 
 <ListContainer>
   {#each $store.cargo as section}
-    {@const sectionHasQuantityColumn = hasQuantityColumn(section)}
-
     {#if allowEdit || section.items.length}
       <ItemTable>
         <ItemTableHeaderRow>
@@ -115,7 +110,7 @@
             {localize(section.label)}
           </ItemTableColumn>
           {#each section.columns as column}
-            {#if column.editable}
+            {#if section.editableName || !columnsToSkipForClickableRows.includes(column.property)}
               <ItemTableColumn
                 cssClass="items-header-{column.css}"
                 baseWidth={baseWidths[column.property] ?? '3.125rem'}
@@ -164,15 +159,13 @@
                   cssClass="extra-small-gap"
                 >
                   <span class="truncate">{item.name}</span>
-                  {#if !sectionHasQuantityColumn}
-                    <ListItemQuantity {item} {ctx} />
-                  {/if}
+                  <ListItemQuantity {item} {ctx} />
                 </ItemName>
               {/if}
             </ItemTableCell>
             {#if section.columns}
               {#each section.columns as column}
-                {#if column.editable || !readonlyColumnsToSkip.includes(column.property)}
+                {#if section.editableName || !columnsToSkipForClickableRows.includes(column.property)}
                   {@const isNumber = column.editable === 'Number'}
                   {@const fallback = isNumber ? '0' : ''}
                   {@const value =
