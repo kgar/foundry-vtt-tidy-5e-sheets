@@ -110,3 +110,4 @@ And considering the ships have sheets, the crew on deck have sheets, even the mi
   - [ ] Should show current / max
   - [ ] Have HP Bar that transition animates width
   - [ ] Allow current and max to be edited as inline inputs
+- [ ] Allow arrow and mouse scroll stepping on a Number-dtype text input. Rules: stepping is ignored if the current value is not numeric, and the event passes through.
