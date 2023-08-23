@@ -102,12 +102,14 @@ And considering the ships have sheets, the crew on deck have sheets, even the mi
 - [ ] Ensure the action threshold calculations can safely coalesce to 0 when data is not available
 - [ ] Remove margin top from ItemTableHeaderRow and require calling components to provide their own gap / spacing between tables.
 - [ ] Incapacitated calculation for NPCs and PCs: is it taking temp HP into account?
-- [ ] Inventory-Grid: Equipped Background is not showing for KGar edition. Fixit.
-- [ ] Submit dnd5e system request (and quite possibly, a PR) for vehicular exhaustion to be added to vehicle data and to the vehicle sheet.
+- [x] Submit dnd5e system request (and quite possibly, a PR) for vehicular exhaustion to be added to vehicle data and to the vehicle sheet.
   - https://github.com/foundryvtt/dnd5e/blob/7ab8cc38e0a7a21969dcb4bb19a1816d99d5e19a/CONTRIBUTING.md
-- [ ] Ditto dnd5e system vehicle data field for "isMoving", "moving", "movement", "inMotion", or some other more appropriate name
-- [ ] Evolve HP column
-  - [ ] Should show current / max
-  - [ ] Have HP Bar that transition animates width
-  - [ ] Allow current and max to be edited as inline inputs
+- [ ] Do a PR for vehicular exhaustion
+- [x] Ditto dnd5e system vehicle data field for "isMoving", "moving", "movement", "inMotion", or some other more appropriate name
+- [ ] Do a PR for the `moving` field.
 - [ ] Allow arrow and mouse scroll stepping on a Number-dtype text input. Rules: stepping is ignored if the current value is not numeric, and the event passes through.
+- [x] Inventory-Grid: Equipped Background is not showing for KGar edition. Fixit.
+- [x] Evolve HP column
+  - [x] Should show current / max
+  - [x] Have HP Bar that transition animates width
+  - [x] Allow current and max to be edited as inline inputs

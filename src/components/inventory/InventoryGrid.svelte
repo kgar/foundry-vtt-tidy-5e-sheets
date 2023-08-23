@@ -183,6 +183,7 @@
 
       &.equipped {
         box-shadow: 0 0 0 0.125rem var(--t5e-equipped-outline);
+        background: var(--t5e-equipped);
 
         .item-image {
           box-shadow: 0 0 0.0625rem 0.0625rem inset var(--t5e-equipped-accent);
@@ -304,7 +305,8 @@
 
           :global(input) {
             height: 0.875rem;
-            text-shadow: 0 0 0.3125rem rgba(0, 0, 0, 1);
+            text-shadow: 0 0 0.3125rem
+              var(--t5e-inventory-grid-image-contrast-text-shadow);
             color: var(--t5e-stat-font);
             text-align: right;
             min-width: 0;
@@ -325,9 +327,16 @@
           .fa-bolt {
             font-size: 0.5rem;
             margin-right: 0.0625rem;
-            text-shadow: 0 0 0.3125rem rgba(0, 0, 0, 1);
+            text-shadow: 0 0 0.3125rem
+              var(--t5e-inventory-grid-image-contrast-text-shadow);
           }
         }
+      }
+
+      .item-name:hover ~ .item-stats :global(input) {
+        color: var(--t5e-primary-font);
+        text-shadow: 0 0 0.3125rem
+          var(--t5e-inventory-grid-hover-use-item-contrast-text-shadow);
       }
     }
 
