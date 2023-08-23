@@ -87,7 +87,6 @@ And considering the ships have sheets, the crew on deck have sheets, even the mi
 
 - [ ] Add vehicular exhaustion in the style of NPC exhaustion. It will need certain adjustments to the exhaustion level text that will require some localization.
 - [ ] Consider restoring Cargo tab item quantity and removing the quantity column for items without an editablename. It breaks too much with Tidy's style, and wouldn't it be nice to keep the column space open?
-- [ ] Use HP bars on the HP column for the vehicle Attributes Tab, and add the juice when adjusting HP amount; make HP tab longer to compensate for Current/Max values (double the current width); consider compressing Threshold tab by making it an icon column with a title that says the actual title, to provide the space needed
 - [ ] Update all HP bars to use color severity like the group sheet in a branch and float it to the commission
 - [ ] Add vehicular movement in the style of DMspiration, a simple checkbox charm at the top right of the vehicle sheet.
 - [ ] Consider embedding Action calculation into the Action Threshold tooltip
@@ -108,8 +107,245 @@ And considering the ships have sheets, the crew on deck have sheets, even the mi
 - [x] Ditto dnd5e system vehicle data field for "isMoving", "moving", "movement", "inMotion", or some other more appropriate name
 - [ ] Do a PR for the `moving` field.
 - [ ] Allow arrow and mouse scroll stepping on a Number-dtype text input. Rules: stepping is ignored if the current value is not numeric, and the event passes through.
+- [x] Use HP bars on the HP column for the vehicle Attributes Tab, and add the juice when adjusting HP amount; make HP tab longer to compensate for Current/Max values (double the current width); consider compressing Threshold tab by making it an icon column with a title that says the actual title, to provide the space needed
 - [x] Inventory-Grid: Equipped Background is not showing for KGar edition. Fixit.
 - [x] Evolve HP column
   - [x] Should show current / max
   - [x] Have HP Bar that transition animates width
   - [x] Allow current and max to be edited as inline inputs
+
+
+### Color Severity...
+
+This one is tricky. The calculation is:
+
+```js
+static getHPColor(current, max) {
+  const pct = Math.clamped(current, 0, max) / max;
+  return Color.fromRGB([(1-(pct/2)), pct, 0]);
+}
+```
+
+This is basically setting this color spectrum in stone. Can I allow the caller to set a CSS variable that specifies HSL for altering this spectrum?
+
+Yes, it is possible to make an HSL offset: https://stackoverflow.com/questions/17433015/change-the-hue-of-a-rgb-color-in-javascript
+
+Tidy HSLA for green bar:       hsla(120, 100%, 39%, 0.6)
+Default 5e HSLA for green bar: hsla(90,  100%, 50%, 1) 
+
+a difference of (+30, 0, -11, -0.4)
+
+Can I generate an offset using the current HP bar color and then use that offset against the stock 5e HP color calculation?
+
+I'm sure it can be done. It would just have to be worth it.
+
+Update:
+I did some trials using this svelte demo:
+```svelte
+<script>
+	let name = 'world';
+
+	// Changes the RGB/HEX temporarily to a HSL-Value, modifies that value 
+// and changes it back to RGB/HEX.
+
+function changeHsl(baseColor, hueShift, saturationShift, luminanceShift) {
+    var hsl = rgbToHSL(baseColor);
+	let hslBefore = {...hsl};
+    hsl.h += hueShift;
+    if (hsl.h > 360) {
+        hsl.h -= 360;
+    }
+    else if (hsl.h < 0) {
+        hsl.h += 360;
+    }
+
+	let s = hsl.s * 100;
+		s += saturationShift;
+		if (s > 100) {
+        s -= 100;
+    }
+    else if (s < 0) {
+        s += 100;
+    }
+	hsl.s = s / 100;
+
+	let l = hsl.l * 100;
+	l += luminanceShift;
+	if (l > 100) {
+        l -= 100;
+    }
+    else if (l < 0) {
+        l += 100;
+    }
+	hsl.l = l / 100;
+		console.log({
+			baseColor,
+			hueShift,
+			saturationShift,
+			luminanceShift,
+			hslBefore,
+			hsl
+		})
+	
+    return hslToRGB(hsl);
+}
+
+// exepcts a string and returns an object
+function rgbToHSL(rgb) {
+    // strip the leading # if it's there
+    rgb = rgb.replace(/^\s*#|\s*$/g, '');
+
+    // convert 3 char codes --> 6, e.g. `E0F` --> `EE00FF`
+    if(rgb.length == 3){
+        rgb = rgb.replace(/(.)/g, '$1$1');
+    }
+
+    var r = parseInt(rgb.substr(0, 2), 16) / 255,
+        g = parseInt(rgb.substr(2, 2), 16) / 255,
+        b = parseInt(rgb.substr(4, 2), 16) / 255,
+        cMax = Math.max(r, g, b),
+        cMin = Math.min(r, g, b),
+        delta = cMax - cMin,
+        l = (cMax + cMin) / 2,
+        h = 0,
+        s = 0;
+
+    if (delta == 0) {
+        h = 0;
+    }
+    else if (cMax == r) {
+        h = 60 * (((g - b) / delta) % 6);
+    }
+    else if (cMax == g) {
+        h = 60 * (((b - r) / delta) + 2);
+    }
+    else {
+        h = 60 * (((r - g) / delta) + 4);
+    }
+
+    if (delta == 0) {
+        s = 0;
+    }
+    else {
+        s = (delta/(1-Math.abs(2*l - 1)))
+    }
+
+    return {
+        h: h,
+        s: s,
+        l: l
+    }
+}
+
+// expects an object and returns a string
+function hslToRGB(hsl) {
+    var h = hsl.h,
+        s = hsl.s,
+        l = hsl.l,
+        c = (1 - Math.abs(2*l - 1)) * s,
+        x = c * ( 1 - Math.abs((h / 60 ) % 2 - 1 )),
+        m = l - c/ 2,
+        r, g, b;
+
+    if (h < 60) {
+        r = c;
+        g = x;
+        b = 0;
+    }
+    else if (h < 120) {
+        r = x;
+        g = c;
+        b = 0;
+    }
+    else if (h < 180) {
+        r = 0;
+        g = c;
+        b = x;
+    }
+    else if (h < 240) {
+        r = 0;
+        g = x;
+        b = c;
+    }
+    else if (h < 300) {
+        r = x;
+        g = 0;
+        b = c;
+    }
+    else {
+        r = c;
+        g = 0;
+        b = x;
+    }
+
+    r = normalize_rgb_value(r, m);
+    g = normalize_rgb_value(g, m);
+    b = normalize_rgb_value(b, m);
+
+    return rgbToHex(r,g,b);
+}
+
+function normalize_rgb_value(color, m) {
+    color = Math.floor((color + m) * 255);
+    if (color < 0) {
+        color = 0;
+    }
+    return color;
+}
+
+function rgbToHex(r, g, b) {
+    return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+}
+
+	let baseColor = '#7fff00';
+	let targetColor = '#007800';
+
+	let baseColorHsl = rgbToHSL(baseColor);
+	let targetColorHsl = rgbToHSL(targetColor);
+		let diffHsl = {
+			h: targetColorHsl.h - baseColorHsl.h, 
+			s: targetColorHsl.s - baseColorHsl.s, 
+			l: targetColorHsl.l - baseColorHsl.l 
+		};
+
+	function shiftHslFromDiff(rgbColor) {
+		// TODO: Implement this
+	}
+
+	// TODO: calculate the current color from 0-100, using the Foundry HP color function
+
+	// TODO: show the calculated color at baseColor
+	// TODO: diff the base color and show target color
+	
+</script>
+
+<h2>Diff HSL</h2>
+{JSON.stringify(diffHsl)}
+
+<h2>Base Color</h2>
+<div style="width: 300px; height: 150px; background: {baseColor}"></div>
+HSL: {JSON.stringify(rgbToHSL(baseColor))}
+
+<h2>Hue Shift</h2>
+<input type="number" bind:value={hueShift} />
+<h2>Saturation Shift</h2>
+<input type="number" bind:value={saturationShift} />
+<h2>Luminance Shift</h2>
+<input type="number" bind:value={luminanceShift} />
+
+<h2>Shifted</h2>
+<div style="width: 300px; height: 150px; background: {changeHsl(baseColor, hueShift, saturationShift, luminanceShift)}"></div>
+HSL: {JSON.stringify(rgbToHSL(changeHsl(baseColor, hueShift, saturationShift, luminanceShift)))}
+
+<h2>Target</h2>
+<div style="width: 300px; height: 150px; background: #007800"></div>
+HSL: {JSON.stringify(rgbToHSL("#007800"))}
+```
+
+I determined that the actual offset is:
+
+H: 30, S: 0, L: -26
+
+Unfortunately, that means it's a bit less obvious how to calculate the HSL offset.
+
+Next, I should make a demo where I use the HP color equation and apply the known good offset to it, to see the various colors.
