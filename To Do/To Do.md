@@ -318,6 +318,10 @@ Evaluate module integration and think about better (API-centric) ways to support
   - [ ] Checkbox
 - [ ] `dtype` fields: formalize these as features of the input components, rather than just receiving them. Give the props names.
   - [ ] One way to go about this would be to have a universal function for preparing data for saving. It could take things like dtype, which would be set to known values.
+- [ ] Update all HP bars to use color severity like the group sheet in a branch and float it to the commission. This will require taking an HSL diff between max HP color calculation on the default bar and the configured Tidy 5e HP bar color. Then, each time we adjust the HP bar, we calc the color, convert to HSL, apply the HSL diffs, and apply the changed HSL(+ A) to the HP bar. This is pretty fancy, and I don't know if it will actually translate to a pleasing color palette.
+  - Alternatively, we can take the max health color and the min health color, convert them to HSL, and then spread the Hue difference over the 100% spectrum. This will result in prettier colors and side-step muddied brown sections.
+  - Consider focusing on how to tween two colors in HSLA
+
 
 ## (Deferred for later; might solve itself) SCSS Revolution
 

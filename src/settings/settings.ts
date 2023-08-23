@@ -32,7 +32,7 @@ export function createSettings() {
       // Color Theme
       colorScheme: {
         options: {
-          name: `${FoundryAdapter.localize('T5EK.Settings.SheetTheme.name')}`,
+          name: FoundryAdapter.localize('T5EK.Settings.SheetTheme.name'),
           hint: FoundryAdapter.localize('T5EK.Settings.SheetTheme.hint'),
           scope: 'client',
           config: true,
@@ -220,7 +220,7 @@ export function createSettings() {
       //Show trait labels
       traitLabelsEnabled: {
         options: {
-          name: `${FoundryAdapter.localize('T5EK.Settings.TraitLabels.name')}`,
+          name: FoundryAdapter.localize('T5EK.Settings.TraitLabels.name'),
           hint: FoundryAdapter.localize('T5EK.Settings.TraitLabels.hint'),
           scope: 'world',
           config: false,
@@ -237,7 +237,7 @@ export function createSettings() {
       // PC Sheet Settings
       journalTabDisabled: {
         options: {
-          name: `${FoundryAdapter.localize('T5EK.Settings.JournalTab.name')}`,
+          name: FoundryAdapter.localize('T5EK.Settings.JournalTab.name'),
           hint: FoundryAdapter.localize('T5EK.Settings.JournalTab.hint'),
           scope: 'client',
           config: false,
@@ -271,7 +271,7 @@ export function createSettings() {
 
       classListDisabled: {
         options: {
-          name: `${FoundryAdapter.localize('T5EK.Settings.ClassList.name')}`,
+          name: FoundryAdapter.localize('T5EK.Settings.ClassList.name'),
           hint: FoundryAdapter.localize('T5EK.Settings.ClassList.hint'),
           scope: 'client',
           config: false,
@@ -305,7 +305,7 @@ export function createSettings() {
 
       hideIfZero: {
         options: {
-          name: `${FoundryAdapter.localize('T5EK.Settings.HideIfZero.name')}`,
+          name: FoundryAdapter.localize('T5EK.Settings.HideIfZero.name'),
           hint: FoundryAdapter.localize('T5EK.Settings.HideIfZero.hint'),
           scope: 'client',
           config: false,
@@ -353,7 +353,7 @@ export function createSettings() {
 
       hpBarDisabled: {
         options: {
-          name: `${FoundryAdapter.localize('T5EK.Settings.HpBar.name')}`,
+          name: FoundryAdapter.localize('T5EK.Settings.HpBar.name'),
           hint: FoundryAdapter.localize('T5EK.Settings.HpBar.hint'),
           scope: 'client',
           config: false,
@@ -367,7 +367,7 @@ export function createSettings() {
 
       hpOverlayDisabled: {
         options: {
-          name: `${FoundryAdapter.localize('T5EK.Settings.HpOverlay.name')}`,
+          name: FoundryAdapter.localize('T5EK.Settings.HpOverlay.name'),
           hint: FoundryAdapter.localize('T5EK.Settings.HpOverlay.hint'),
           scope: 'client',
           config: false,
@@ -455,7 +455,7 @@ export function createSettings() {
 
       hpBarDisabledNpc: {
         options: {
-          name: `${FoundryAdapter.localize('T5EK.Settings.HpBar.name')}`,
+          name: FoundryAdapter.localize('T5EK.Settings.HpBar.name'),
           hint: FoundryAdapter.localize('T5EK.Settings.HpBar.hint'),
           scope: 'client',
           config: false,
@@ -469,7 +469,7 @@ export function createSettings() {
 
       hpOverlayDisabledNpc: {
         options: {
-          name: `${FoundryAdapter.localize('T5EK.Settings.HpOverlay.name')}`,
+          name: FoundryAdapter.localize('T5EK.Settings.HpOverlay.name'),
           hint: FoundryAdapter.localize('T5EK.Settings.HpOverlay.hint'),
           scope: 'client',
           config: false,
@@ -533,7 +533,7 @@ export function createSettings() {
 
       hpBarDisabledVehicle: {
         options: {
-          name: `${FoundryAdapter.localize('T5EK.Settings.HpBar.name')}`,
+          name: FoundryAdapter.localize('T5EK.Settings.HpBar.name'),
           hint: FoundryAdapter.localize('T5EK.Settings.HpBar.hint'),
           scope: 'client',
           config: false,
@@ -547,7 +547,7 @@ export function createSettings() {
 
       hpOverlayDisabledVehicle: {
         options: {
-          name: `${FoundryAdapter.localize('T5EK.Settings.HpOverlay.name')}`,
+          name: FoundryAdapter.localize('T5EK.Settings.HpOverlay.name'),
           hint: FoundryAdapter.localize('T5EK.Settings.HpOverlay.hint'),
           scope: 'client',
           config: false,
@@ -567,7 +567,7 @@ export function createSettings() {
       // Show Player Name
       playerNameEnabled: {
         options: {
-          name: `${FoundryAdapter.localize('T5EK.Settings.PlayerName.name')}`,
+          name: FoundryAdapter.localize('T5EK.Settings.PlayerName.name'),
           hint: FoundryAdapter.localize('T5EK.Settings.PlayerName.hint'),
           scope: 'world',
           config: false,
@@ -643,7 +643,7 @@ export function createSettings() {
 
       editGmAlwaysEnabled: {
         options: {
-          name: `${FoundryAdapter.localize('T5EK.Settings.EditGmAlways.name')}`,
+          name: FoundryAdapter.localize('T5EK.Settings.EditGmAlways.name'),
           hint: FoundryAdapter.localize('T5EK.Settings.EditGmAlways.hint'),
           scope: 'world',
           config: false,
@@ -899,6 +899,26 @@ export function createSettings() {
         },
       },
 
+      vehicleMotionDisabled: {
+        options: {
+          name: FoundryAdapter.localize(
+            'T5EK.Settings.VehicleMotionDisabled.name'
+          ),
+          hint: FoundryAdapter.localize(
+            'T5EK.Settings.VehicleMotionDisabled.hint'
+          ),
+          scope: 'world',
+          config: false,
+          default: false,
+          type: Boolean,
+        },
+        get() {
+          return FoundryAdapter.getGameSetting<boolean>(
+            'vehicleMotionDisabled'
+          );
+        },
+      },
+
       // NPC Resting
       restingForNpcsEnabled: {
         options: {
@@ -941,7 +961,7 @@ export function createSettings() {
       // Link Marker
       linkMarkerNpc: {
         options: {
-          name: `${FoundryAdapter.localize('T5EK.Settings.LinkMarker.name')}`,
+          name: FoundryAdapter.localize('T5EK.Settings.LinkMarker.name'),
           hint: FoundryAdapter.localize('T5EK.Settings.LinkMarker.hint'),
           scope: 'world',
           config: false,
@@ -1054,7 +1074,7 @@ export function createSettings() {
 
       playerSheetWidth: {
         options: {
-          name: `${FoundryAdapter.localize('T5EK.Settings.playerSheetWidth')}`,
+          name: FoundryAdapter.localize('T5EK.Settings.playerSheetWidth'),
           scope: 'client',
           config: false,
           type: Number,
@@ -1069,7 +1089,7 @@ export function createSettings() {
 
       npsSheetWidth: {
         options: {
-          name: `${FoundryAdapter.localize('T5EK.Settings.npsSheetWidth')}`,
+          name: FoundryAdapter.localize('T5EK.Settings.npsSheetWidth'),
           scope: 'client',
           config: false,
           type: Number,
@@ -1104,7 +1124,7 @@ export function createSettings() {
 
       vehicleSheetWidth: {
         options: {
-          name: `${FoundryAdapter.localize('T5EK.Settings.vehicleSheetWidth')}`,
+          name: FoundryAdapter.localize('T5EK.Settings.vehicleSheetWidth'),
           scope: 'client',
           config: false,
           type: Number,

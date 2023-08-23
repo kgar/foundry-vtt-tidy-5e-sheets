@@ -337,6 +337,10 @@
     "name": "Disable inspiration tracker.",
     "hint": "If your campaign doesn't use inspiration you can disable the tracker completely."
   },
+  "T5EK.Settings.VehicleMotionDisabled": {
+    "name": "Disable vehicle motion tracker.",
+    "hint": "If your campaign doesn't use vehicle motion you can disable the tracker completely."
+  },
   "T5EK.Settings.ExhaustionEffects": {
     "name": "Auto Exhaustion effects.",
     "hint": "Choose how to apply exhaustion effects corresponding to tiers (requires midiQol for disadvantage rolls)",
@@ -623,5 +627,7 @@
   "T5EK.VehicleExhaustion3": "Disadvantage on Attack rolls and Saving Throws",
   "T5EK.VehicleExhaustion4": "Hit point maximum halved",
   "T5EK.VehicleExhaustion5": "Speed reduced to 0",
-  "T5EK.VehicleExhaustion6": "Hit points drop to 0 and the vehicle breaks down"
+  "T5EK.VehicleExhaustion6": "Hit points drop to 0 and the vehicle breaks down",
+  "T5EK.VehicleInMotion": "Vehicle is in motion",
+  "T5EK.VehicleMotionless": "Vehicle is motionless"
 }

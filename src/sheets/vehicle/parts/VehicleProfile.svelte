@@ -9,6 +9,7 @@
   import VehicleDamageAndMishapThresholds from './VehicleDamageAndMishapThresholds.svelte';
   import Exhaustion from 'src/sheets/Exhaustion.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import VehicleMovement from './VehicleMovement.svelte';
 
   let store = getContext<Readable<VehicleSheetContext>>('store');
 
@@ -35,6 +36,13 @@
       radiusClass={useRoundedPortraitStyle ? 'rounded' : 'top-left'}
       on:levelSelected={onLevelSelected}
       exhaustionLocalizationPrefix="T5EK.VehicleExhaustion"
+    />
+  {/if}
+  {#if !SettingsProvider.settings.vehicleMotionDisabled.get()}
+    <VehicleMovement
+      motion={FoundryAdapter.tryGetFlag($store.actor, 'motion') === true}
+      radiusClass={useRoundedPortraitStyle ? 'rounded' : 'top-right'}
+      disableAnimation={false}
     />
   {/if}
   <VehicleHitPoints />

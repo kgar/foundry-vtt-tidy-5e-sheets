@@ -1262,6 +1262,23 @@
           }}</p>
       </div>
     </article>
+    <article class='setting'>
+      <input
+        type='checkbox'
+        data-dtype='boolean'
+        name='vehicleMotionDisabled'
+        id='vehicleMotionDisabled'
+        {{checked settings.vehicleMotionDisabled.value}}
+      />
+      <div class='description'>
+        <label for='vehicleMotionDisabled'>{{localize
+            'T5EK.Settings.VehicleMotionDisabled.name'
+          }}</label>
+        <p class='notes'>{{localize
+            'T5EK.Settings.VehicleMotionDisabled.hint'
+          }}</p>
+      </div>
+    </article>
     <article class='setting group'>
       <section>
         <!-- <input type="checkbox" data-dtype='boolean' name='exhaustionEffectsEnabled' id='exhaustionEffectsEnabled' {{checked settings.exhaustionEffectsEnabled.value}}> -->

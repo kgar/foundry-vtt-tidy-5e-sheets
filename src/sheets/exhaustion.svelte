@@ -56,11 +56,7 @@
       {#each [0, 1, 2, 3, 4, 5, 6] as levelOption}
         <li
           class:colorized={levelOption <= level}
-          title={`${localize('DND5E.Exhaustion')} ${localize(
-            'DND5E.AbbreviationLevel'
-          )} ${levelOption}, ${localize(
-            exhaustionLocalizationPrefix + levelOption
-          )}`}
+          title={localize(exhaustionLocalizationPrefix + levelOption)}
           on:click={() => dispatch('levelSelected', { level: levelOption })}
         >
           {levelOption}
