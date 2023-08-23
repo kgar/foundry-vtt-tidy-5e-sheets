@@ -85,7 +85,6 @@ And considering the ships have sheets, the crew on deck have sheets, even the mi
 
 ## Refine and Bonus To Do's
 
-- [ ] Add vehicular exhaustion in the style of NPC exhaustion. It will need certain adjustments to the exhaustion level text that will require some localization.
 - [ ] Consider restoring Cargo tab item quantity and removing the quantity column for items without an editablename. It breaks too much with Tidy's style, and wouldn't it be nice to keep the column space open?
 - [ ] Update all HP bars to use color severity like the group sheet in a branch and float it to the commission
 - [ ] Add vehicular movement in the style of DMspiration, a simple checkbox charm at the top right of the vehicle sheet.
@@ -107,6 +106,7 @@ And considering the ships have sheets, the crew on deck have sheets, even the mi
 - [x] Ditto dnd5e system vehicle data field for "isMoving", "moving", "movement", "inMotion", or some other more appropriate name
 - [ ] Do a PR for the `moving` field.
 - [ ] Allow arrow and mouse scroll stepping on a Number-dtype text input. Rules: stepping is ignored if the current value is not numeric, and the event passes through.
+- [x] Add vehicular exhaustion in the style of NPC exhaustion. It will need certain adjustments to the exhaustion level text that will require some localization.
 - [x] Use HP bars on the HP column for the vehicle Attributes Tab, and add the juice when adjusting HP amount; make HP tab longer to compensate for Current/Max values (double the current width); consider compressing Threshold tab by making it an icon column with a title that says the actual title, to provide the space needed
 - [x] Inventory-Grid: Equipped Background is not showing for KGar edition. Fixit.
 - [x] Evolve HP column

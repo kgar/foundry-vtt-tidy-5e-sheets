@@ -617,11 +617,11 @@
   "T5EK.FavoriteSpellLevelLabel": "Spell Level {number}",
   "T5EK.ApplyChanges": "Apply Changes",
   "T5EK.SaveChanges": "Save Changes",
-  "T5EK.VechicleExhaustion0": "No negative effects",
-  "T5EK.VechicleExhaustion1": "Disadvantage on Ability Checks",
-  "T5EK.VechicleExhaustion2": "Speed halved",
-  "T5EK.VechicleExhaustion3": "Disadvantage on Attack rolls and Saving Throws",
-  "T5EK.VechicleExhaustion4": "Hit point maximum halved",
-  "T5EK.VechicleExhaustion5": "Speed reduced to 0",
-  "T5EK.VechicleExhaustion6": "Hit points drop to 0, and the vehicle breaks down"
+  "T5EK.VehicleExhaustion0": "No negative effects",
+  "T5EK.VehicleExhaustion1": "Disadvantage on Ability Checks",
+  "T5EK.VehicleExhaustion2": "Speed halved",
+  "T5EK.VehicleExhaustion3": "Disadvantage on Attack rolls and Saving Throws",
+  "T5EK.VehicleExhaustion4": "Hit point maximum halved",
+  "T5EK.VehicleExhaustion5": "Speed reduced to 0",
+  "T5EK.VehicleExhaustion6": "Hit points drop to 0 and the vehicle breaks down"
 }

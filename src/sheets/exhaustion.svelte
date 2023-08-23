@@ -7,6 +7,7 @@
   export let radiusClass: PortraitCharmRadiusClass;
   export let level: number;
   export let onlyShowOnHover: boolean = false;
+  export let exhaustionLocalizationPrefix: string = 'T5EK.Exhaustion';
 
   const localize = FoundryAdapter.localize;
 
@@ -47,7 +48,7 @@
       class="exhaustion-icon colorized"
       title={`${localize('DND5E.Exhaustion')} ${localize(
         'DND5E.AbbreviationLevel'
-      )} ${level}, ${localize('T5EK.Exhaustion' + level)}`}
+      )} ${level}, ${localize(exhaustionLocalizationPrefix + level)}`}
     >
       <i class={exhaustionClasses[level] ?? ''} />
     </div>
@@ -57,7 +58,9 @@
           class:colorized={levelOption <= level}
           title={`${localize('DND5E.Exhaustion')} ${localize(
             'DND5E.AbbreviationLevel'
-          )} ${levelOption}, ${localize('T5EK.Exhaustion' + levelOption)}`}
+          )} ${levelOption}, ${localize(
+            exhaustionLocalizationPrefix + levelOption
+          )}`}
           on:click={() => dispatch('levelSelected', { level: levelOption })}
         >
           {levelOption}

@@ -7,8 +7,18 @@
   import type { Readable } from 'svelte/store';
   import VehicleHitPoints from './VehicleHitPoints.svelte';
   import VehicleDamageAndMishapThresholds from './VehicleDamageAndMishapThresholds.svelte';
+  import Exhaustion from 'src/sheets/Exhaustion.svelte';
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
   let store = getContext<Readable<VehicleSheetContext>>('store');
+
+  $: incapacitated =
+    ($store.actor?.system?.attributes?.hp?.value ?? 0) <= 0 &&
+    $store.actor?.system?.attributes?.hp?.max !== 0;
+
+  function onLevelSelected(event: CustomEvent<{ level: number }>) {
+    FoundryAdapter.setFlag($store.actor, 'exhaustion', event.detail.level);
+  }
 
   const portraitStyle = SettingsProvider.settings.portraitStyle.get();
   const useRoundedPortraitStyle = ['all', 'vehicle'].includes(portraitStyle);
@@ -17,6 +27,15 @@
 <ActorProfile {useRoundedPortraitStyle}>
   {#if !SettingsProvider.settings.hpOverlayDisabledVehicle.get()}
     <HpOverlay {useRoundedPortraitStyle} actor={$store.actor} />
+  {/if}
+
+  {#if !SettingsProvider.settings.exhaustionDisabled.get() && !incapacitated}
+    <Exhaustion
+      level={FoundryAdapter.tryGetFlag($store.actor, 'exhaustion') ?? 0}
+      radiusClass={useRoundedPortraitStyle ? 'rounded' : 'top-left'}
+      on:levelSelected={onLevelSelected}
+      exhaustionLocalizationPrefix="T5EK.VehicleExhaustion"
+    />
   {/if}
   <VehicleHitPoints />
 </ActorProfile>
