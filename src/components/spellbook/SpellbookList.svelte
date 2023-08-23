@@ -86,10 +86,7 @@
         {localize('DND5E.Target')}
       </ItemTableColumn>
       {#if includeRange}
-        <ItemTableColumn
-          baseWidth="4.375rem"
-          title={localize('DND5E.SpellRange')}
-        >
+        <ItemTableColumn baseWidth="4.375rem" title={localize('DND5E.Range')}>
           {localize('DND5E.Range')}
         </ItemTableColumn>
       {/if}

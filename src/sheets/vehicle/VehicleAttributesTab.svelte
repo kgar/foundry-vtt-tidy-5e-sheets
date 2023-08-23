@@ -24,20 +24,29 @@
   import ItemEditControl from 'src/components/items/ItemEditControl.svelte';
   import ItemControl from 'src/components/items/ItemControl.svelte';
   import Notice from 'src/components/shared/Notice.svelte';
+  import ItemHpBar from '../item/parts/ItemHpBar.svelte';
 
   let store = getContext<Readable<VehicleSheetContext>>('store');
 
   $: allowEdit = FoundryAdapter.tryGetFlag($store.actor, 'allow-edit') === true;
 
+  const localize = FoundryAdapter.localize;
+
   let baseWidths: Record<string, string> = {
     cover: '3.125rem',
     'system.quantity': '4.375rem',
     'system.armor.value': '2.5rem',
-    'system.hp.value': '2.5rem',
-    threshold: '4.375rem',
+    'system.hp.value': '4.375rem',
+    threshold: '2.5rem',
   };
 
   let columnsToSkip = ['system.quantity'];
+
+  let alternateColumnHeaderContent: Record<string, string> = {
+    threshold: `<i class="fas fa-heart-crack" title="${localize(
+      'DND5E.Threshold'
+    )}"></i>`,
+  };
 
   const controlsBaseWidthLocked: string = '5.3125rem';
   const controlsBaseWidthUnlocked: string = '7.5rem';
@@ -47,8 +56,6 @@
     : controlsBaseWidthLocked;
 
   $: noFeatures = !$store.features.some((section: any) => section.items.length);
-
-  const localize = FoundryAdapter.localize;
 </script>
 
 <div class="attributes-tab-contents">
@@ -88,7 +95,11 @@
                       cssClass="items-header-{column.css}"
                       baseWidth={baseWidths[column.property] ?? '3.125rem'}
                     >
-                      {column.label}
+                      {#if alternateColumnHeaderContent[column.property]}
+                        {@html alternateColumnHeaderContent[column.property]}
+                      {:else}
+                        {column.label}
+                      {/if}
                     </ItemTableColumn>
                   {/if}
                 {/each}
@@ -153,7 +164,46 @@
                 {/if}
                 {#if section.columns}
                   {#each section.columns as column}
-                    {#if !columnsToSkip.includes(column.property)}
+                    {#if column.property === 'system.hp.value'}
+                      <!-- TODO: Extract to its own component; formalize this feature of overriding specific columns based on property matching -->
+                      <ItemTableCell baseWidth="4.375rem">
+                        <div
+                          class="item-hp"
+                          title={localize('DND5E.HitPoints')}
+                        >
+                          <ItemHpBar {item} />
+                          <TextInput
+                            cssClass="hp-min"
+                            document={item}
+                            field="system.hp.value"
+                            value={item.system.hp.value}
+                            placeholder="0"
+                            title={localize('DND5E.HitPointsCurrent')}
+                            dtype="Number"
+                            allowDeltaChanges={true}
+                            maxlength={5}
+                            ariaDescribedBy="tooltip"
+                            selectOnFocus={true}
+                            readonly={!$store.editable}
+                          />
+                          <span class="value-seperator sep"> / </span>
+                          <TextInput
+                            cssClass="hp-max"
+                            document={item}
+                            field="system.hp.max"
+                            value={item.system.hp.max}
+                            placeholder="0"
+                            title={localize('DND5E.HitPointsMax')}
+                            dtype="Number"
+                            allowDeltaChanges={true}
+                            maxlength={5}
+                            ariaDescribedBy="tooltip"
+                            selectOnFocus={true}
+                            readonly={!$store.editable}
+                          />
+                        </div>
+                      </ItemTableCell>
+                    {:else if !columnsToSkip.includes(column.property)}
                       {@const isNumber = column.editable === 'Number'}
                       {@const fallback = isNumber ? '0' : ''}
                       {@const value =
@@ -227,16 +277,55 @@
     gap: 1rem;
     padding-right: 0.75rem;
     overflow-y: scroll;
-  }
+    .side-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      width: 13.75rem;
+    }
 
-  .side-panel {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    width: 13.75rem;
-  }
+    .main-panel {
+      flex: 1;
+    }
 
-  .main-panel {
-    flex: 1;
+    :global(.items-header-item-threshold) {
+      align-self: flex-start;
+    }
+
+    :global(.item-table-cell .hp-min) {
+      text-align: right;
+    }
+
+    :global(.item-table-cell .hp-max) {
+      text-align: left;
+    }
+
+    .item-hp {
+      align-self: center;
+      position: relative;
+      width: calc(100% - 0.25rem);
+      margin-left: 0.125rem;
+      margin-right: 0.125rem;
+      height: 1.325rem;
+      z-index: 20;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: var(--t5e-icon-background);
+      box-shadow: 0 0 0.3125rem var(--t5e-icon-shadow) inset;
+      border: 1px solid var(--t5e-icon-outline);
+
+      :global(input.hp-min) {
+        text-align: right;
+      }
+
+      :global(input.hp-max) {
+        text-align: left;
+      }
+
+      :global(input.hp-max) {
+        width: 100%;
+      }
+    }
   }
 </style>
