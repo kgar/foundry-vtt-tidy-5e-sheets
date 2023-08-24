@@ -33,6 +33,7 @@
     $store.cargo.some((section: any) => section.items.length > 0) === false;
 
   let baseWidths: Record<string, string> = {
+    quantity: '5rem',
     price: '4.375rem',
     weight: '3.75rem',
   };
@@ -150,6 +151,7 @@
                   selectOnFocus={true}
                   onSaveChange={(ev) => saveSection(ev, index, 'name', section)}
                   value={item.name}
+                  cssClass="editable-name"
                 />
               {:else}
                 <ItemUseButton {item} />
@@ -250,3 +252,9 @@
     <EncumbranceBar />
   {/if}
 </TabFooter>
+
+<style lang="scss">
+  :global(.tidy5e-kgar.vehicle input.editable-name) {
+    padding: 0 0.25rem;
+  }
+</style>

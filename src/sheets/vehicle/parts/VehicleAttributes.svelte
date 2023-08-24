@@ -12,6 +12,28 @@
 
   let store = getContext<Readable<VehicleSheetContext>>('store');
 
+  $: totalCrew = $store.system.cargo.crew.reduce(
+    (count: number, c: { quantity: number }) => count + c.quantity,
+    0
+  );
+  $: totalActions = $store.system.attributes.actions.value ?? 0;
+  $: actionsPerTurn =
+    totalCrew >= $store.system.attributes.actions.thresholds[2]
+      ? totalActions
+      : totalCrew >= $store.system.attributes.actions.thresholds[1]
+      ? Math.max(totalActions - 1, 0)
+      : totalCrew >= $store.system.attributes.actions.thresholds[0]
+      ? Math.max(totalActions - 2, 0)
+      : 0;
+  $: crewTallyDescription =
+    actionsPerTurn === totalActions
+      ? localize('DND5E.VehicleActionThresholdsFull')
+      : actionsPerTurn === totalActions - 1
+      ? localize('DND5E.VehicleActionThresholdsMid')
+      : actionsPerTurn === totalActions - 2
+      ? localize('DND5E.VehicleActionThresholdsMin')
+      : null;
+
   const localize = FoundryAdapter.localize;
 </script>
 
@@ -117,6 +139,20 @@
             title={localize('DND5E.VehicleActionThresholdsMin')}
             selectOnFocus={true}
           />
+        </div>
+      </div>
+      <HorizontalLineSeparator />
+      <div class="counter action-summary">
+        <h4>{localize('T5EK.TotalCrewCount')}</h4>
+        <div class="counter-value" title={crewTallyDescription}>
+          {totalCrew}
+        </div>
+      </div>
+      <HorizontalLineSeparator />
+      <div class="counter action-summary">
+        <h4>{localize('T5EK.ActionsPerTurn')}</h4>
+        <div class="counter-value">
+          {actionsPerTurn}
         </div>
       </div>
     </div>

@@ -629,5 +629,7 @@
   "T5EK.VehicleExhaustion5": "Speed reduced to 0",
   "T5EK.VehicleExhaustion6": "Hit points drop to 0 and the vehicle breaks down",
   "T5EK.VehicleInMotion": "Vehicle is in motion",
-  "T5EK.VehicleMotionless": "Vehicle is motionless"
+  "T5EK.VehicleMotionless": "Vehicle is motionless",
+  "T5EK.TotalCrewCount": "Total Crew",
+  "T5EK.ActionsPerTurn": "Actions Per Turn"
 }
