@@ -6,6 +6,7 @@ import type { SheetStats, VehicleSheetContext } from 'src/types/types';
 import { isNil } from 'src/utils/data';
 import { writable } from 'svelte/store';
 import VehicleSheet from './VehicleSheet.svelte';
+import VehicleSheetLimited from './VehicleSheetLimited.svelte';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
 import { applyTitleToWindow } from 'src/utils/applications';
 import type { SvelteComponent } from 'svelte';
@@ -42,16 +43,26 @@ export class Tidy5eVehicleSheet extends ActorSheet5eVehicle {
     const initialContext = await this.getContext();
     this.store.set(initialContext);
 
-    this.component = new VehicleSheet({
-      target: node,
-      props: {
-        selectedTabId: this.#getSelectedTabId(),
-      },
-      context: new Map<any, any>([
-        ['store', this.store],
-        ['stats', this.stats],
-      ]),
-    });
+    if (!game.user.isGM && this.actor.limited) {
+      this.component = new VehicleSheetLimited({
+        target: node,
+        context: new Map<any, any>([
+          ['store', this.store],
+          ['stats', this.stats],
+        ]),
+      });
+    } else {
+      this.component = new VehicleSheet({
+        target: node,
+        props: {
+          selectedTabId: this.#getSelectedTabId(),
+        },
+        context: new Map<any, any>([
+          ['store', this.store],
+          ['stats', this.stats],
+        ]),
+      });
+    }
 
     initTidy5eContextMenu.call(this, html);
   }
@@ -159,5 +170,13 @@ export class Tidy5eVehicleSheet extends ActorSheet5eVehicle {
       this.component?.$destroy();
       return super.close(options);
     }
+  }
+
+  async _onSubmit(...args: any[]) {
+    await super._onSubmit(...args);
+    this.stats.update((stats) => {
+      stats.lastSubmissionTime = new Date();
+      return stats;
+    });
   }
 }

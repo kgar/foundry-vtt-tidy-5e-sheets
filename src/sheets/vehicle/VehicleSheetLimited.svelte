@@ -12,14 +12,14 @@
   const localize = FoundryAdapter.localize;
 
   $: portraitStyle = SettingsProvider.settings.portraitStyle.get();
-  $: useRoundedPortraitStyle = ['all', 'npc'].includes(portraitStyle);
+  $: useRoundedPortraitStyle = ['all', 'vehicle'].includes(portraitStyle);
 
   function activateProseMirrorListeners(node: HTMLElement) {
     $store.activateFoundryJQueryListeners(node);
   }
 </script>
 
-<div class="limited-character">
+<div class="limited-vehicle">
   <header>
     <div class="profile">
       <div class="portrait" class:rounded={useRoundedPortraitStyle}>
@@ -33,19 +33,9 @@
       <RerenderAfterFormSubmission
         andOnValueChange={$store.system.details.biography.value}
       >
-        <article class="appearance-notes" use:activateProseMirrorListeners>
-          <div class="section-titles biopage">
-            {localize('DND5E.Appearance')}
-          </div>
-          <SheetEditor
-            content={$store.system.details.appearance}
-            target="system.details.appearance"
-            editable={$store.editable}
-          />
-        </article>
         <article class="biography-notes" use:activateProseMirrorListeners>
           <div class="section-titles">
-            {localize('DND5E.Background')}/{localize('DND5E.Biography')}
+            {localize('DND5E.Description')}
           </div>
           <SheetEditor
             content={$store.biographyHTML}
@@ -59,11 +49,11 @@
 </div>
 
 <style lang="scss">
-  .limited-character {
-    height: 100%;
+  .limited-vehicle {
     flex: 1;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
   }
 
   header {
@@ -94,17 +84,12 @@
   .sheet-body {
     flex: 1;
     margin-right: 1rem;
+    display: flex;
 
     .note-entries {
       height: 100%;
       display: flex;
       flex-direction: row;
-      gap: 0.5rem;
-
-      > * {
-        flex: 1;
-        min-width: 0;
-      }
     }
   }
 </style>

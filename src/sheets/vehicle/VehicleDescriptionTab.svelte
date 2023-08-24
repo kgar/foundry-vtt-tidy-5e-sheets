@@ -31,5 +31,12 @@
     flex: 1;
     overflow-y: scroll;
     padding-right: 0.75rem;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+
+    :global(.editor) {
+      height: unset;
+    }
   }
 </style>

@@ -3,7 +3,8 @@
 ## Progress
 
 - [x] Limited Character Sheet
-- [ ] Limited Vehicle Sheet
+- [x] Limited Vehicle Sheet
+- [ ] Refactor: Make all limited sheets do like the dnd5e limited sheet
 - [ ] Item Card
 - [ ] Dark Mode
 - [ ] Settings Dialog Overhaul
