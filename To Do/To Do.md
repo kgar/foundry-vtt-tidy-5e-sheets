@@ -1,8 +1,38 @@
 # To Do
 
-## Top of Mind
+## Progress
 
-- [ ] Task out NPC implementation.
+- [ ] Limited Character Sheet
+- [ ] Limited Vehicle Sheet
+- [ ] Item Card
+- [ ] Dark Mode
+- [ ] Settings Dialog Overhaul
+- [ ] Implement All Settings
+- [ ] Tackle Misc To Do's
+  - [ ] Drag and drop
+  - [ ] New context menu?
+  - [ ] Revisit character sheet now that we've got all this experience
+  - [ ] Typescriptify Tidy 5e flags
+  - [ ] FoundryAdapter cleanup project and types purge
+  - [ ] HTML enrichment
+  - [ ] getData() / Context enrichment : pull back all calculations from the various components into the context when getting context data in the sheet. If necessary, pull further back into Foundry Adapter for each sheet type.
+  - [ ] etc.
+- [ ] 
+
+### Foundry Adapter Cleanup
+
+We really don't need to be trying to create minimal types for Foundry or the 5e system. There should be an `any` cutoff within the FoundryAdapter for all the things we need.
+
+- [ ] Purge Foundry types
+- [ ] Purge dnd5e types
+
+Foundry Adapter should be reorganized so that functions can be broken out for actors, characters, NPCs, vehicles, items, all entities, and maybe more than this.
+
+- [ ] Review the current state of FoundryAdapter and task out work
+- [ ] Find all instances of global foundry / 5e usages in svelte and pull back into the Adapter.
+- [ ] Begin eliminating all TS errors
+- [ ] ...etc.
+
 
 ### Side Quest
 
@@ -65,7 +95,7 @@ context.biographyHTML = await TextEditor.enrichHTML(
 - [x] Implement default tab
 - [ ] Visual bug (existing): when any character detail field is too long in Biography top-notes for a PC, it will blow out the layout. Consider CSS grid as a replacement. Test carefully on all the major browsers. Also just consider inputs instead of contenteditable fields?
 - [ ] Consider consolidating sheet initial value / cacheable content into single objects to pass down to the target component. Values include things like scrollTop map, currentTab sheet parameter, and any other sheetparameters that need to be cached for maintaining visual integrity between submissions / sheet refreshes.
-- [ ] Focus is lost when the sheet submits, so you cannot tab through fields and make changes quickly. It would be nice if focus is maintained between submits. How would we accomplish that?
+- [x] Focus is lost when the sheet submits, so you cannot tab through fields and make changes quickly. It would be nice if focus is maintained between submits. How would we accomplish that? Svelte.
 - [ ] When done with initial prototype: Replace ALL `cursor:pointer` instances with `role="button"` on the target element: https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/Roles/button_role
   - [ ] All things ".rollable"
   - [ ] Task them out
@@ -321,6 +351,14 @@ Evaluate module integration and think about better (API-centric) ways to support
 - [ ] Update all HP bars to use color severity like the group sheet in a branch and float it to the commission. This will require taking an HSL diff between max HP color calculation on the default bar and the configured Tidy 5e HP bar color. Then, each time we adjust the HP bar, we calc the color, convert to HSL, apply the HSL diffs, and apply the changed HSL(+ A) to the HP bar. This is pretty fancy, and I don't know if it will actually translate to a pleasing color palette.
   - Alternatively, we can take the max health color and the min health color, convert them to HSL, and then spread the Hue difference over the 100% spectrum. This will result in prettier colors and side-step muddied brown sections.
   - Consider focusing on how to tween two colors in HSLA
+- [ ] Incapacitated calculation for NPCs and PCs: is it taking temp HP into account?
+- [x] Submit dnd5e system request (and quite possibly, a PR) for vehicular exhaustion to be added to vehicle data and to the vehicle sheet.
+  - https://github.com/foundryvtt/dnd5e/blob/7ab8cc38e0a7a21969dcb4bb19a1816d99d5e19a/CONTRIBUTING.md
+- [ ] Do a PR for vehicular exhaustion
+- [x] Ditto dnd5e system vehicle data field for "isMoving", "moving", "movement", "inMotion", or some other more appropriate name
+- [ ] Do a PR for the `moving` field.
+- [ ] Allow arrow and mouse scroll stepping on a Number-dtype text input. Rules: stepping is ignored if the current value is not numeric, and the event passes through.
+
 
 
 ## (Deferred for later; might solve itself) SCSS Revolution

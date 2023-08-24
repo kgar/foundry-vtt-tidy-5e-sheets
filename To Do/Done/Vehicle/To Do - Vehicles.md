@@ -85,9 +85,6 @@ And considering the ships have sheets, the crew on deck have sheets, even the mi
 
 ## Refine and Bonus To Do's
 
-- [ ] Remove margin top from ItemTableHeaderRow and require calling components to provide their own gap / spacing between tables.
-- [ ] Incapacitated calculation for NPCs and PCs: is it taking temp HP into account?
-- [ ] Allow arrow and mouse scroll stepping on a Number-dtype text input. Rules: stepping is ignored if the current value is not numeric, and the event passes through.
 - [x] Ensure the action threshold calculations can safely coalesce to 0 when data is not available
 - [x] Show current crew count and number of available actions below the threshold settings as the visual
   > Crew Action(s)
@@ -107,11 +104,7 @@ And considering the ships have sheets, the crew on deck have sheets, even the mi
   - [x] Should show current / max
   - [x] Have HP Bar that transition animates width
   - [x] Allow current and max to be edited as inline inputs
-- [x] Submit dnd5e system request (and quite possibly, a PR) for vehicular exhaustion to be added to vehicle data and to the vehicle sheet.
-  - https://github.com/foundryvtt/dnd5e/blob/7ab8cc38e0a7a21969dcb4bb19a1816d99d5e19a/CONTRIBUTING.md
-- [ ] Do a PR for vehicular exhaustion
-- [x] Ditto dnd5e system vehicle data field for "isMoving", "moving", "movement", "inMotion", or some other more appropriate name
-- [ ] Do a PR for the `moving` field.
+- [x] Remove margin top from ItemTableHeaderRow and require calling components to provide their own gap / spacing between tables.
 
 
 ### Color Severity...
