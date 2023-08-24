@@ -62,6 +62,7 @@
         value={$store.system.attributes.capacity.cargo}
         min="0"
         placeholder="0"
+        selectOnFocus={true}
       />
     </div>
   </div>
@@ -96,6 +97,7 @@
             min="0"
             placeholder="0"
             title={localize('DND5E.VehicleActionsHint')}
+            selectOnFocus={true}
           />
         </div>
       </div>
