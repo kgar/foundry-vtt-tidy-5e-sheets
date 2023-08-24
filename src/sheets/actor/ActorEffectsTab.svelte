@@ -30,11 +30,9 @@
     effectSections.some((section: any) => section.effects.length > 0) === false;
 </script>
 
-<ListContainer>
+<ListContainer cssClass="flex-column small-gap">
   {#if noEffects && !allowEdit}
-    <Notice cssClass="small-margin-top"
-      >{localize('TIDY5E.EmptySection')}</Notice
-    >
+    <Notice>{localize('TIDY5E.EmptySection')}</Notice>
   {:else}
     {#each effectSections as section}
       {#if allowEdit || section.effects.length > 0}

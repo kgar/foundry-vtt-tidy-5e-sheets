@@ -67,9 +67,9 @@
       enableSpecialTraitsConfiguration={false}
     />
   </div>
-  <div class="main-panel">
+  <div class="main-panel flex-column small-gap">
     {#if noFeatures && !allowEdit}
-      <Notice cssClass="small-margin-top">
+      <Notice>
         {localize('TIDY5E.EmptySection')}
       </Notice>
     {:else}

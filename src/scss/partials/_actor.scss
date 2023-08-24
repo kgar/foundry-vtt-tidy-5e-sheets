@@ -1,6 +1,6 @@
 & {
-  min-width: 680px;
-  min-height: 210px;
+  min-width: 42.5rem;
+  min-height: 13.125rem;
 }
 
 .window-content {
@@ -17,9 +17,8 @@
 
 .note-entries article {
   background: var(--t5e-faintest-color);
-  border-radius: 5px;
-  padding: 8px;
-  margin-bottom: 1rem;
+  border-radius: 0.3125rem;
+  padding: 0.5rem;
   position: relative;
   flex: 1;
   display: flex;
@@ -42,14 +41,14 @@
 
   .section-titles {
     font-weight: 700;
-    border-bottom: 1px solid var(--t5e-light-color);
+    border-bottom: 0.0625rem solid var(--t5e-light-color);
     padding-bottom: 0.25rem;
     margin-bottom: 0.5rem;
-    flex: 0 0 1px;
+    flex: 0 0 0.0625rem;
 
     input {
-      height: 16px;
-      width: calc(100% - 26px);
+      height: 1rem;
+      width: calc(100% - 1.625rem);
       font-weight: 700;
     }
   }
@@ -61,13 +60,13 @@
   }
 
   .editor .tox .tox-tbtn {
-    width: 24px;
-    height: 24px;
+    width: 1.5rem;
+    height: 1.5rem;
   }
 
   .editor .tox.tox-tinymce .tox-tbtn[title='Formats'],
   .editor .tox.tox-prosemirror .tox-tbtn[title='Formats'] {
-    width: 90px;
+    width: 5.625rem;
   }
 
   .editor .tox .tox-tbtn--select {
@@ -76,7 +75,7 @@
 
   .editor .editor-content ul {
     list-style: disc;
-    padding-left: 20px;
+    padding-left: 1.25rem;
   }
 
   .editor .editor-content,
@@ -104,7 +103,7 @@
     margin: 0;
 
     &:last-child {
-      margin-left: 8px;
+      margin-left: 0.5rem;
     }
   }
 }
@@ -125,14 +124,14 @@
 .editor {
   display: flex;
   flex-direction: column;
-  height: calc(100% - 21px);
+  height: calc(100% - 1.3125rem);
 
   .editor-edit {
     background: transparent;
   }
 
   .tox-editor-header {
-    border-bottom: 1px solid var(--t5e-faint-color);
+    border-bottom: 0.0625rem solid var(--t5e-faint-color);
   }
 
   .tox-toolbar-overlord,
@@ -152,8 +151,8 @@
 
     a.entity-link,
     a.inline-roll {
-      padding: 1px 2px 0px 2px;
-      border-radius: 5px;
+      padding: 0.0625rem 0.125rem 0 0.125rem;
+      border-radius: 0.3125rem;
       background: var(--t5e-faint-color);
       color: var(--t5e-primary-font);
     }
@@ -164,18 +163,18 @@
 .tox.tox-prosemirror {
   border: none;
   flex: 1;
-  min-height: 100px;
+  min-height: 6.25rem;
 }
 
 .ae-marker {
   display: inline-block;
-  padding: 1px 3px 0 3px;
-  font-size: 12px;
-  line-height: 15px;
+  padding: 0.0625rem 0.1875rem 0 0.1875rem;
+  font-size: 0.75rem;
+  line-height: 0.9375rem;
   font-weight: 600;
   background: var(--t5e-warning-accent);
   color: var(--t5e-secondary-color);
-  border-radius: 3px;
+  border-radius: 0.1875rem;
 }
 
 h1,
@@ -248,8 +247,8 @@ input {
   display: block;
   padding: 0;
   width: 100%;
-  border: 1px solid transparent;
-  border-radius: 3px;
+  border: 0.0625rem solid transparent;
+  border-radius: 0.1875rem;
   background: none;
   transition: background 0.3s ease, border-color 0.3s ease;
 }
@@ -267,7 +266,7 @@ select {
 [contenteditable],
 input[type='text'],
 input[type='number'] {
-  box-shadow: 0px 0px 0 3px transparent inset;
+  box-shadow: 0 0 0 0.1875rem transparent inset;
   transition: box-shadow 0.3s ease;
   color: var(--t5e-primary-font);
 }
@@ -278,7 +277,7 @@ input[type='text']:hover,
 input[type='text']:focus,
 input[type='number']:hover,
 input[type='number']:focus {
-  box-shadow: 0px 0px 0px 1px var(--t5e-primary-accent) inset;
+  box-shadow: 0 0 0 0.0625rem var(--t5e-primary-accent) inset;
 }
 
 input[disabled],

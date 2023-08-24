@@ -92,7 +92,7 @@
   </ItemFilterOption>
 </ItemFilters>
 
-<ListContainer>
+<ListContainer cssClass="flex-column small-gap">
   {@const filteredBackgrounds = FoundryAdapter.getFilteredItems(
     searchCriteria,
     backgroundSection.items
@@ -111,9 +111,7 @@
   )}
 
   {#if noFeatures && !allowEdit}
-    <Notice cssClass="small-margin-top"
-      >{localize('TIDY5E.EmptySection')}</Notice
-    >
+    <Notice>{localize('TIDY5E.EmptySection')}</Notice>
   {:else}
     {#if (searchCriteria.trim() === '' && allowEdit) || filteredBackgrounds.length > 0}
       <ItemTable>

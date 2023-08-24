@@ -65,11 +65,9 @@
   <ItemFilterLayoutToggle mode={layoutMode} on:toggle={() => toggleLayout()} />
 </ItemFilters>
 
-<ListContainer>
+<ListContainer cssClass="flex-column small-gap">
   {#if noItems && !allowEdit}
-    <Notice cssClass="small-margin-top"
-      >{localize('TIDY5E.EmptySection')}</Notice
-    >
+    <Notice>{localize('TIDY5E.EmptySection')}</Notice>
   {:else}
     {#each $store.inventory as section (section.label)}
       {@const filteredItems = FoundryAdapter.getFilteredItems(

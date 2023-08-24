@@ -201,11 +201,13 @@
     flex: 1;
     flex-direction: column;
     height: 100%;
+    gap: 1rem;
   }
 
   .main-notes {
     display: flex;
     flex: 1;
+    gap: 1rem;
   }
 
   .left-notes,
@@ -214,29 +216,28 @@
     height: 100%;
     display: flex;
     flex-direction: column;
+    gap: 1rem;
   }
 
   .left-notes {
-    margin-right: 1rem;
-    max-width: 350px;
+    max-width: 21.875rem;
   }
 
   .top-notes {
     // flex: 0 0 1px;
     width: 100%;
-    margin-bottom: 1rem;
 
     .character-details {
       margin: 0;
       padding: 0;
       display: flex;
-      gap: 4px;
+      gap: 0.25rem;
       flex-wrap: wrap;
     }
 
     li {
       display: flex;
-      flex: 0 0 calc(100% / 3 - 4px);
+      flex: 0 0 calc(100% / 3 - 0.25rem);
 
       :global(span) {
         flex: 1;
@@ -244,7 +245,7 @@
       }
 
       :global(span:first-child) {
-        flex: 0 0 1px;
+        flex: 0 0 0.0625rem;
         font-weight: 600;
         margin: 0;
       }
@@ -253,6 +254,6 @@
 
   .character-details :global(.detail-input) {
     flex: 1;
-    margin: 0 8px 0 4px;
+    margin: 0 0.5rem 0 0.25rem;
   }
 </style>

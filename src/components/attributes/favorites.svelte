@@ -40,7 +40,7 @@
   }
 </script>
 
-<div class="flexcol no-gap">
+<div class="flex-column small-gap">
   {#if favoriteInventory.length}
     <InventoryList
       items={favoriteInventory}

@@ -119,7 +119,7 @@
       </ul>
     </article>
   </div>
-  <div class="main-notes">
+  <div class="flex-row extra-small-gap full-height">
     <div
       on:click={togglePersonalityInfo}
       class="toggle-personality-info"
@@ -131,99 +131,115 @@
         <i class="fas fa-angle-double-right" />
       {/if}
     </div>
-    {#if showNpcPersonalityInfo}
-      <div class="left-notes note-entries" class:limited={$store.actor.limited}>
-        <RerenderAfterFormSubmission
-          andOnValueChange={FoundryAdapter.tryGetFlag($store.actor, 'trait') ??
-            ''}
+    <div class="main-notes">
+      {#if showNpcPersonalityInfo}
+        <div
+          class="left-notes note-entries"
+          class:limited={$store.actor.limited}
         >
-          <article use:activateProseMirrorListeners>
+          <RerenderAfterFormSubmission
+            andOnValueChange={FoundryAdapter.tryGetFlag(
+              $store.actor,
+              'trait'
+            ) ?? ''}
+          >
+            <article use:activateProseMirrorListeners>
+              <div class="section-titles biopage">
+                {localize('DND5E.PersonalityTraits')}
+              </div>
+              <SheetEditor
+                content={FoundryAdapter.tryGetFlag($store.actor, 'trait') ?? ''}
+                target="flags.{CONSTANTS.MODULE_ID}.trait"
+                editable={$store.editable}
+              />
+            </article>
+          </RerenderAfterFormSubmission>
+          <RerenderAfterFormSubmission
+            andOnValueChange={FoundryAdapter.tryGetFlag(
+              $store.actor,
+              'ideal'
+            ) ?? ''}
+          >
+            <article use:activateProseMirrorListeners>
+              <div class="section-titles biopage">
+                {localize('DND5E.Ideals')}
+              </div>
+              <SheetEditor
+                content={FoundryAdapter.tryGetFlag($store.actor, 'ideal') ?? ''}
+                target="flags.{CONSTANTS.MODULE_ID}.ideal"
+                editable={$store.editable}
+              />
+            </article>
+          </RerenderAfterFormSubmission>
+          <RerenderAfterFormSubmission
+            andOnValueChange={FoundryAdapter.tryGetFlag($store.actor, 'bond') ??
+              ''}
+          >
+            <article use:activateProseMirrorListeners>
+              <div class="section-titles biopage">
+                {localize('DND5E.Bonds')}
+              </div>
+              <SheetEditor
+                content={FoundryAdapter.tryGetFlag($store.actor, 'bond') ?? ''}
+                target="flags.{CONSTANTS.MODULE_ID}.bond"
+                editable={$store.editable}
+              />
+            </article>
+          </RerenderAfterFormSubmission>
+          <RerenderAfterFormSubmission
+            andOnValueChange={FoundryAdapter.tryGetFlag($store.actor, 'flaw') ??
+              ''}
+          >
+            <article use:activateProseMirrorListeners>
+              <div class="section-titles biopage">
+                {localize('DND5E.Flaws')}
+              </div>
+              <SheetEditor
+                content={FoundryAdapter.tryGetFlag($store.actor, 'flaw') ?? ''}
+                target="flags.{CONSTANTS.MODULE_ID}.flaw"
+                editable={$store.editable}
+              />
+            </article>
+          </RerenderAfterFormSubmission>
+        </div>
+      {/if}
+      <div
+        class="right-notes note-entries"
+        class:limited={$store.actor.limited}
+      >
+        <RerenderAfterFormSubmission
+          andOnValueChange={FoundryAdapter.tryGetFlag(
+            $store.actor,
+            'appearance'
+          ) ?? ''}
+        >
+          <article class="appearance-notes" use:activateProseMirrorListeners>
             <div class="section-titles biopage">
-              {localize('DND5E.PersonalityTraits')}
+              {localize('DND5E.Appearance')}
             </div>
             <SheetEditor
-              content={FoundryAdapter.tryGetFlag($store.actor, 'trait') ?? ''}
-              target="flags.{CONSTANTS.MODULE_ID}.trait"
-              editable={$store.editable}
-            />
-          </article>
-        </RerenderAfterFormSubmission>
-
-        <RerenderAfterFormSubmission
-          andOnValueChange={FoundryAdapter.tryGetFlag($store.actor, 'ideal') ??
-            ''}
-        >
-          <article use:activateProseMirrorListeners>
-            <div class="section-titles biopage">{localize('DND5E.Ideals')}</div>
-            <SheetEditor
-              content={FoundryAdapter.tryGetFlag($store.actor, 'ideal') ?? ''}
-              target="flags.{CONSTANTS.MODULE_ID}.ideal"
+              content={FoundryAdapter.tryGetFlag($store.actor, 'appearance') ??
+                ''}
+              target="flags.{CONSTANTS.MODULE_ID}.appearance"
               editable={$store.editable}
             />
           </article>
         </RerenderAfterFormSubmission>
         <RerenderAfterFormSubmission
-          andOnValueChange={FoundryAdapter.tryGetFlag($store.actor, 'bond') ??
-            ''}
+          andOnValueChange={$store.system.details.biography.value}
         >
-          <article use:activateProseMirrorListeners>
-            <div class="section-titles biopage">{localize('DND5E.Bonds')}</div>
+          <article class="biography-notes" use:activateProseMirrorListeners>
+            <div class="section-titles">
+              {localize('DND5E.Background')}/{localize('DND5E.Biography')}
+            </div>
             <SheetEditor
-              content={FoundryAdapter.tryGetFlag($store.actor, 'bond') ?? ''}
-              target="flags.{CONSTANTS.MODULE_ID}.bond"
-              editable={$store.editable}
-            />
-          </article>
-        </RerenderAfterFormSubmission>
-        <RerenderAfterFormSubmission
-          andOnValueChange={FoundryAdapter.tryGetFlag($store.actor, 'flaw') ??
-            ''}
-        >
-          <article use:activateProseMirrorListeners>
-            <div class="section-titles biopage">{localize('DND5E.Flaws')}</div>
-            <SheetEditor
-              content={FoundryAdapter.tryGetFlag($store.actor, 'flaw') ?? ''}
-              target="flags.{CONSTANTS.MODULE_ID}.flaw"
+              content={$store.system.details.biography.value}
+              target="system.details.biography.value"
               editable={$store.editable}
             />
           </article>
         </RerenderAfterFormSubmission>
       </div>
-    {/if}
-
-    <div class="right-notes note-entries" class:limited={$store.actor.limited}>
-      <RerenderAfterFormSubmission
-        andOnValueChange={FoundryAdapter.tryGetFlag(
-          $store.actor,
-          'appearance'
-        ) ?? ''}
-      >
-        <article class="appearance-notes" use:activateProseMirrorListeners>
-          <div class="section-titles biopage">
-            {localize('DND5E.Appearance')}
-          </div>
-          <SheetEditor
-            content={FoundryAdapter.tryGetFlag($store.actor, 'appearance') ??
-              ''}
-            target="flags.{CONSTANTS.MODULE_ID}.appearance"
-            editable={$store.editable}
-          />
-        </article>
-      </RerenderAfterFormSubmission>
-      <RerenderAfterFormSubmission
-        andOnValueChange={$store.system.details.biography.value}
-      >
-        <article class="biography-notes" use:activateProseMirrorListeners>
-          <div class="section-titles">
-            {localize('DND5E.Background')}/{localize('DND5E.Biography')}
-          </div>
-          <SheetEditor
-            content={$store.system.details.biography.value}
-            target="system.details.biography.value"
-            editable={$store.editable}
-          />
-        </article>
-      </RerenderAfterFormSubmission>
     </div>
   </div>
 </div>
@@ -239,6 +255,7 @@
   .main-notes {
     display: flex;
     flex: 1;
+    gap: 1rem;
   }
 
   .left-notes,
@@ -247,10 +264,10 @@
     height: 100%;
     display: flex;
     flex-direction: column;
+    gap: 1rem;
   }
 
   .left-notes {
-    margin-right: 1rem;
     max-width: 21.875rem;
   }
 

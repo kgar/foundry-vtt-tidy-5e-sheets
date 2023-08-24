@@ -76,7 +76,7 @@
   </ItemFilterOption>
   <ItemFilterLayoutToggle mode={layoutMode} on:toggle={() => toggleLayout()} />
 </ItemFilters>
-<ListContainer>
+<ListContainer cssClass="flex-column small-gap">
   {#if noSpellLevels}
     <NoSpells {allowEdit} />
   {:else}

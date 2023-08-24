@@ -130,10 +130,10 @@
     height: 100%;
     display: flex;
     flex-direction: column;
+    gap: 1rem;
   }
 
   .left-notes {
-    margin-right: 1rem;
     max-width: 21.875rem;
   }
 </style>

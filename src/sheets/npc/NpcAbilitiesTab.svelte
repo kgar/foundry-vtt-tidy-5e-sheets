@@ -195,7 +195,7 @@
           {#if noSpellLevels}
             <NoSpells cssClass="flex-1" {allowEdit} />
           {:else}
-            <div class="flex-1 small-padding-bottom">
+            <div class="flex-1 small-padding-bottom flex-column small-gap">
               {#each $store.spellbook as section (section.label)}
                 {#if layoutMode === 'list'}
                   <SpellbookList
@@ -251,6 +251,7 @@
       flex: 1;
       padding: 0;
       height: auto;
+      gap: 0.5rem;
     }
 
     .spellbook-title {

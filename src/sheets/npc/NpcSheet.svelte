@@ -308,6 +308,10 @@
       overflow-x: inherit;
     }
 
+    :global(.tab.journal) {
+      gap: 1rem;
+    }
+
     :global(.tab.biography),
     :global(.tab.journal) {
       font-size: 0.8125rem;

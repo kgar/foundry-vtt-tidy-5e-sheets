@@ -97,12 +97,12 @@
 </script>
 
 {#if noCargoOrCrew && !allowEdit}
-  <Notice cssClass="small-margin-top">
+  <Notice>
     {localize('TIDY5E.EmptySection')}
   </Notice>
 {/if}
 
-<ListContainer>
+<ListContainer cssClass="flex-column small-gap">
   {#each $store.cargo as section}
     {#if allowEdit || section.items.length}
       <ItemTable>

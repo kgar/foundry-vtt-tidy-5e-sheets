@@ -32,7 +32,6 @@
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-    padding-top: 0.5rem;
 
     .create-spell-btn {
       text-align: center;

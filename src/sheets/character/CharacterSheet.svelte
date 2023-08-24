@@ -424,6 +424,7 @@
       flex-direction: row;
       padding-right: 0.75rem;
       overflow-x: inherit;
+      gap: 1rem;
     }
 
     :global(.tab.biography),

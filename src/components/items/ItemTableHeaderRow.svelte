@@ -7,12 +7,12 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 8px 0 2px;
-    padding: 4px 0 2px 6px;
-    line-height: 12px;
-    font-size: 12px;
+    margin-bottom: 0.125rem;
+    padding: 0.25rem 0 0.125rem 6px;
+    line-height: 0.75rem;
+    font-size: 0.75rem;
     background: var(--t5e-faint-color);
-    box-shadow: 0 0 3px inset var(--t5e-light-color);
+    box-shadow: 0 0 0.1875rem inset var(--t5e-light-color);
     border-radius: 0.3125rem;
   }
 </style>
