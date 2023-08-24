@@ -9,7 +9,7 @@
 <style lang="scss">
   .list-container {
     flex: 1;
-    padding: 0 0.5625rem 0.5rem 0;
+    padding: 0 0.75rem 0.5rem 0;
     overflow-y: scroll;
   }
 </style>
