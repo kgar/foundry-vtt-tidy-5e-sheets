@@ -4,8 +4,8 @@
 
 - [x] Limited Character Sheet
 - [x] Limited Vehicle Sheet
-- [ ] Refactor: Make all limited sheets do like the dnd5e limited sheet
-  - [ ] Share a standard header based on the draft from VehicleSheetLimited
+- [x] Refactor: Make all limited sheets do like the dnd5e limited sheet
+  - [x] Share a standard header based on the draft from VehicleSheetLimited
 - [ ] Item Card
 - [ ] Dark Mode
 - [ ] Settings Dialog Overhaul
@@ -19,7 +19,7 @@
   - [ ] HTML enrichment
   - [ ] getData() / Context enrichment : pull back all calculations from the various components into the context when getting context data in the sheet. If necessary, pull further back into Foundry Adapter for each sheet type.
   - [ ] etc.
-- [ ] 
+- [ ]
 
 ### Foundry Adapter Cleanup
 
@@ -34,7 +34,6 @@ Foundry Adapter should be reorganized so that functions can be broken out for ac
 - [ ] Find all instances of global foundry / 5e usages in svelte and pull back into the Adapter.
 - [ ] Begin eliminating all TS errors
 - [ ] ...etc.
-
 
 ### Side Quest
 
@@ -330,16 +329,16 @@ Evaluate module integration and think about better (API-centric) ways to support
 - [ ] PopOut! Compatibility - ensure that events are not being stopped from popagation and than defaults are prevented only when necessary.
   - [ ] ...
 - [x] Look at "Blessed Healer" description. In Tidy 5e, there is a "Reveal" / "Hide" button for secret content. Can we somehow bake this into our prose mirror integration?
-- [ ] Find a way to allow module devs to define their own item sheet types and even override the ones that are there. 
-  - [ ] It should allow for 
-    - [ ] Vue, 
-    - [ ] Svelte, 
-    - [ ] handlebars, 
-    - [ ] raw HTML, 
-    - [ ] a jquery set, 
+- [ ] Find a way to allow module devs to define their own item sheet types and even override the ones that are there.
+  - [ ] It should allow for
+    - [ ] Vue,
+    - [ ] Svelte,
+    - [ ] handlebars,
+    - [ ] raw HTML,
+    - [ ] a jquery set,
     - [ ] or void (updating the HTML directly)
   - **important**: This will open the door to custom Tidy 5e item sheets from module developers.
-  - [ ] Add an API call for registering a new item type; 
+  - [ ] Add an API call for registering a new item type;
     - [ ] specifying an existing one will put an override in place that will prevent the original from rendering and will instead render the override
   - [ ] Add an API call for updating an existing item type's various tabs / parts
 - [ ] When an update operation fails, revert to the original value (even easier, use getProperty to do it with document/field)
@@ -360,8 +359,6 @@ Evaluate module integration and think about better (API-centric) ways to support
 - [x] Ditto dnd5e system vehicle data field for "isMoving", "moving", "movement", "inMotion", or some other more appropriate name
 - [ ] Do a PR for the `moving` field.
 - [ ] Allow arrow and mouse scroll stepping on a Number-dtype text input. Rules: stepping is ignored if the current value is not numeric, and the event passes through.
-
-
 
 ## (Deferred for later; might solve itself) SCSS Revolution
 
@@ -495,11 +492,10 @@ So basically either popping out is broken, popping in is broken, or saving data 
 https://discord.com/channels/732325252788387980/1116078321067892796/1138959970705100960
 
 Aura — Today at 5:20 PM
-odd question considering you are re-building the tidey 5e sheets,  i wonder if you can add [Crl+I] (information)to certain eliments and allow us to link in setting a journal and page so that we can have relivant rules pop up for the players. for example Insperation, long rest, shot rest? 
+odd question considering you are re-building the tidey 5e sheets, i wonder if you can add [Crl+I] (information)to certain eliments and allow us to link in setting a journal and page so that we can have relivant rules pop up for the players. for example Insperation, long rest, shot rest?
 
 kgar — Today at 5:24 PM
 Are there examples I can look at?
 
 Aura — Today at 5:25 PM
-not to my knowledge, sorry, i thought it up when i was playing with players earlier today. just thought it would be a usefull improvment 
-
+not to my knowledge, sorry, i thought it up when i was playing with players earlier today. just thought it would be a usefull improvment

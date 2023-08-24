@@ -6,6 +6,7 @@
   import type { Readable } from 'svelte/store';
   import SheetEditor from '../SheetEditor.svelte';
   import { SettingsProvider } from 'src/settings/settings';
+  import LimitedHeader from '../actor/LimitedHeader.svelte';
 
   let store = getContext<Readable<NpcSheetContext>>('store');
 
@@ -20,14 +21,7 @@
 </script>
 
 <div class="limited-character">
-  <header>
-    <div class="profile">
-      <div class="portrait" class:rounded={useRoundedPortraitStyle}>
-        <img src={$store.actor.img} alt={$store.actor.name} data-edit="img" />
-      </div>
-    </div>
-  </header>
-
+  <LimitedHeader rounded={useRoundedPortraitStyle} />
   <section class="sheet-body">
     <div class="note-entries">
       <RerenderAfterFormSubmission
@@ -64,31 +58,6 @@
     flex: 1;
     display: flex;
     flex-direction: column;
-  }
-
-  header {
-    display: flex;
-    justify-content: center;
-    padding: 0.625rem 1rem 1rem 1rem;
-    background: var(--t5e-header-background);
-  }
-
-  .profile {
-    width: 9.375rem;
-    height: 9.375rem;
-  }
-
-  .portrait {
-    width: 100%;
-    height: 100%;
-    border-radius: 0.3125rem;
-    overflow: hidden;
-    border: 1px solid var(--t5e-icon-outline);
-    mix-blend-mode: normal;
-
-    &.rounded {
-      border-radius: 50%;
-    }
   }
 
   .sheet-body {
