@@ -6,7 +6,6 @@
   import type { Readable } from 'svelte/store';
   import SheetEditor from '../SheetEditor.svelte';
   import { SettingsProvider } from 'src/settings/settings';
-  import { CONSTANTS } from 'src/constants';
 
   let store = getContext<Readable<NpcSheetContext>>('store');
 
@@ -20,7 +19,7 @@
   }
 </script>
 
-<div class="limited-npc">
+<div class="limited-character">
   <header>
     <div class="profile">
       <div class="portrait" class:rounded={useRoundedPortraitStyle}>
@@ -39,9 +38,8 @@
             {localize('DND5E.Appearance')}
           </div>
           <SheetEditor
-            content={FoundryAdapter.tryGetFlag($store.actor, 'appearance') ??
-              ''}
-            target="flags.{CONSTANTS.MODULE_ID}.appearance"
+            content={$store.system.details.appearance}
+            target="system.details.appearance"
             editable={$store.editable}
           />
         </article>
@@ -61,7 +59,7 @@
 </div>
 
 <style lang="scss">
-  .limited-npc {
+  .limited-character {
     flex: 1;
     display: flex;
     flex-direction: column;

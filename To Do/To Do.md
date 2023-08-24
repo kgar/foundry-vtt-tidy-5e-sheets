@@ -2,7 +2,7 @@
 
 ## Progress
 
-- [ ] Limited Character Sheet
+- [x] Limited Character Sheet
 - [ ] Limited Vehicle Sheet
 - [ ] Item Card
 - [ ] Dark Mode

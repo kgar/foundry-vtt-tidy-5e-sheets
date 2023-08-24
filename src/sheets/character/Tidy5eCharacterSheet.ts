@@ -1,5 +1,6 @@
 import { FoundryAdapter } from '../../foundry/foundry-adapter';
-import Tidy5eCharacterSheetContent from './CharacterSheet.svelte';
+import CharacterSheet from './CharacterSheet.svelte';
+import CharacterSheetLimited from './CharacterSheetLimited.svelte';
 import { debug, error } from 'src/utils/logging';
 import { SettingsProvider } from 'src/settings/settings';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
@@ -42,16 +43,26 @@ export class Tidy5eCharacterSheet extends ActorSheet5eCharacter {
     const initialContext = await this.getContext();
     this.store.set(initialContext);
 
-    this.component = new Tidy5eCharacterSheetContent({
-      target: node,
-      props: {
-        selectedTabId: this.#getSelectedTabId(),
-      },
-      context: new Map<any, any>([
-        ['store', this.store],
-        ['stats', this.stats],
-      ]),
-    });
+    if (!game.user.isGM && this.actor.limited) {
+      this.component = new CharacterSheetLimited({
+        target: node,
+        context: new Map<any, any>([
+          ['store', this.store],
+          ['stats', this.stats],
+        ]),
+      });
+    } else {
+      this.component = new CharacterSheet({
+        target: node,
+        props: {
+          selectedTabId: this.#getSelectedTabId(),
+        },
+        context: new Map<any, any>([
+          ['store', this.store],
+          ['stats', this.stats],
+        ]),
+      });
+    }
 
     initTidy5eContextMenu.call(this, html);
   }
