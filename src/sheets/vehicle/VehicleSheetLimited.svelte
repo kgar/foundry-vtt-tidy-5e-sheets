@@ -1,13 +1,14 @@
 <script lang="ts">
   import RerenderAfterFormSubmission from 'src/components/shared/RerenderAfterFormSubmission.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { NpcSheetContext } from 'src/types/types';
+  import type { VehicleSheetContext } from 'src/types/types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import SheetEditor from '../SheetEditor.svelte';
   import { SettingsProvider } from 'src/settings/settings';
+    import VerticalLineSeparator from 'src/components/layout/VerticalLineSeparator.svelte';
 
-  let store = getContext<Readable<NpcSheetContext>>('store');
+  let store = getContext<Readable<VehicleSheetContext>>('store');
 
   const localize = FoundryAdapter.localize;
 
@@ -26,6 +27,7 @@
         <img src={$store.actor.img} alt={$store.actor.name} data-edit="img" />
       </div>
     </div>
+    <h1>{$store.actor.name}</h1>
   </header>
 
   <section class="sheet-body">
@@ -58,14 +60,17 @@
 
   header {
     display: flex;
-    justify-content: center;
-    padding: 0.625rem 1rem 1rem 1rem;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 0.625rem;
+    padding: 0.625rem 1rem;
     background: var(--t5e-header-background);
   }
 
   .profile {
     width: 9.375rem;
     height: 9.375rem;
+    flex: 0 0 auto;
   }
 
   .portrait {

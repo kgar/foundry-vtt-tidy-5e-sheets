@@ -5,6 +5,7 @@
 - [x] Limited Character Sheet
 - [x] Limited Vehicle Sheet
 - [ ] Refactor: Make all limited sheets do like the dnd5e limited sheet
+  - [ ] Share a standard header based on the draft from VehicleSheetLimited
 - [ ] Item Card
 - [ ] Dark Mode
 - [ ] Settings Dialog Overhaul
