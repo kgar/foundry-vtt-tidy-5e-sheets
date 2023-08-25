@@ -8,7 +8,11 @@ import type { Actor5e } from 'src/types/actor';
 import { isNil } from 'src/utils/data';
 import { CONSTANTS } from 'src/constants';
 import { writable } from 'svelte/store';
-import type { ActorSheetContext, SheetStats } from 'src/types/types';
+import {
+  type ItemCardStore,
+  type ActorSheetContext,
+  type SheetStats,
+} from 'src/types/types';
 import { applyTitleToWindow } from 'src/utils/applications';
 import { Tidy5eKgarUserSettings } from 'src/settings/user-settings-form';
 import type { SvelteComponent } from 'svelte';
@@ -19,6 +23,9 @@ export class Tidy5eCharacterSheet extends ActorSheet5eCharacter {
   store = writable<ActorSheetContext>();
   stats = writable<SheetStats>({
     lastSubmissionTime: null,
+  });
+  card = writable<ItemCardStore>({
+    show: false,
   });
   selectedTabId: string | undefined = undefined;
 
@@ -60,6 +67,7 @@ export class Tidy5eCharacterSheet extends ActorSheet5eCharacter {
         context: new Map<any, any>([
           ['store', this.store],
           ['stats', this.stats],
+          ['card', this.card],
         ]),
       });
     }

@@ -2,13 +2,16 @@
   import type { Actor5e } from 'src/types/actor';
   import ItemSummary from '../items/ItemSummary.svelte';
   import { warn } from 'src/utils/logging';
-  import { createEventDispatcher } from 'svelte';
+  import { createEventDispatcher, getContext } from 'svelte';
+  import type { ItemCardStore } from 'src/types/types';
+  import type { Writable } from 'svelte/store';
 
   export let item: any | null = null;
   export let contextMenu: { type: string; id: string } | null = null;
   export let cssClass: string = '';
   export let alwaysShowQuantity: boolean = false;
 
+  let card = getContext<Writable<ItemCardStore>>('card');
   let showSummary = false;
   let chatData: any;
 
@@ -23,6 +26,20 @@
     showSummary = !showSummary;
   }
 
+  async function onMouseEnter(event: MouseEvent) {
+    card.update((theCard) => {
+      theCard.show = true;
+      return theCard;
+    });
+  }
+
+  async function onMouseLeave(event: MouseEvent) {
+    card.update((theCard) => {
+      theCard.show = false;
+      return theCard;
+    });
+  }
+
   const dispatcher = createEventDispatcher<{ mousedown: MouseEvent }>();
 </script>
 
@@ -32,6 +49,8 @@
   data-context-menu={contextMenu?.type}
   data-context-menu-entity-id={contextMenu?.id}
   on:mousedown={(event) => dispatcher('mousedown', event)}
+  on:mouseenter={onMouseEnter}
+  on:mouseleave={onMouseLeave}
 >
   <slot {toggleSummary} />
   {#if showSummary}

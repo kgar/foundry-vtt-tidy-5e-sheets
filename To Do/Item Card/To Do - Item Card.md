@@ -1,12 +1,47 @@
 ## To Do - Item Card
 
 - [x] Learn how the existing one works
-- [ ] Determine if a svelte-y plan would work
-- [ ] Implement without animation first
-- [ ] Add animation
-- [ ] Support hotkey options
-- [ ] Support Item Card placement settings
+- [x] Determine if a svelte-y plan would work
+- [x] Add base card to Character Sheet
+- [x] Style it
+- [x] Get it to show/hide when mousing in and out of item table rows
+- [ ] Populate it with stock item chat message data when showing
+- [ ] Implement custom content (Inventory Grid has a special template for item card content)
+- [ ] Implement freeze key
+- [ ] Implement floating
+- [ ] Test with popout!
+- [ ] Test with Window Tabs
+- [ ] Ponder how one might add custom content to these cards... such as mod buttons
 - [ ] Etc.
+
+## Refine
+
+- [ ] The show/hide is not as deterministic as the original. The original always allows the card to fully dismiss before applying changes. Do we need a throttle of some sort? Buffering to allow close to finish? This may become clearer after implementing more of the card.
+- [ ] Add hook subscribe to catch changes to tidy 5e kgar main settings changes and then rerender sheets the same way that it works for sheet settings.
+- [ ] 
+
+## Rewriting Item Cards
+
+One approach:
+
+- Each sheet gets its own reusable item-card
+- Create a writable store that contains the state for managing the item card
+  - Show/Hide
+  - ~~Delay~~ this will be in settings and can be directly in the card component
+  - ~~Floating~~ this will be in settings and can be directly in the card component
+  - item-card content html (or component)
+- Let CSS do the heavy lifting as it has for the original Tidy 5e sheets
+- Use mouseenter / mouseleave on the ItemTableRow components can pull the writable store from context and interact with it
+  - mouseenter
+    - Pull chat message data and/or (?) use custom card content provided by the particular item table row in question
+    - When everything is ready, apply it to the store and call `show.set(true)`
+  - mouseleave
+    - call `show.set(false)`
+- From the item card's perspective
+  - when `show` becomes `true`
+    - use similar logic as the original to prepare to show the card, handling things like a monitored/cancellable delay timeout, positioning based on whether we are floating, Freeze key handling
+  - when `show` becomes `false`
+    - ditto to show true
 
 ## Notes - How Item Cards Currently Work
 
@@ -14,23 +49,23 @@ Each sheet has a `section.item-info-container`.
 The container template is the same for all, with a few comment- and formatting-related differences.
 
 ```hbs
-<section id="item-info-container">
-    <div class="info-wrap">
-        <article id="item-info-container-content">
-            <!-- Info Card here -->
-        </article>
+<section id='item-info-container'>
+  <div class='info-wrap'>
+    <article id='item-info-container-content'>
+      <!-- Info Card here -->
+    </article>
 
-        <article class="info-card-hint">
-            <p>
-                <span class="key">X</span>
-                {{localize "TIDY5E.ItemCardsKeyHint"}}
-            </p>
-            <p>
-                <i class="fas fa-mouse"></i>
-                {{localize "TIDY5E.ItemCardsMouseHint"}}
-            </p>
-        </article>
-    </div>
+    <article class='info-card-hint'>
+      <p>
+        <span class='key'>X</span>
+        {{localize 'TIDY5E.ItemCardsKeyHint'}}
+      </p>
+      <p>
+        <i class='fas fa-mouse'></i>
+        {{localize 'TIDY5E.ItemCardsMouseHint'}}
+      </p>
+    </article>
+  </div>
 </section>
 ```
 
@@ -38,7 +73,7 @@ There is a dedicated script `tidy5e-itemcard.js` which is invoked during the `ac
 
 ### getBounds()
 
-It tries to account for PopOut! It kinda works when the Item Card is set to show beside the mouse cursor. However, holding "X" doesn't work like it should when popped out. 
+It tries to account for PopOut! It kinda works when the Item Card is set to show beside the mouse cursor. However, holding "X" doesn't work like it should when popped out.
 
 ### setCardPosition()
 
@@ -120,11 +155,9 @@ Find the item info container background and show it (why?).
 
 Within the info container content, find the `.info-card` and remove it. This is the custom content to be found within the item card from the chat message data.
 
-
 ### hideContainer()
 
 Simply removes the `open` class from infoContainer.
-
 
 ### Handling `.button` clicks?
 

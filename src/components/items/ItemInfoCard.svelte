@@ -1,6 +1,25 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { SettingsProvider } from 'src/settings/settings';
+  import type { ItemCardStore } from 'src/types/types';
+  import { getContext } from 'svelte';
+  import type { Writable } from 'svelte/store';
+
+  const card = getContext<Writable<ItemCardStore>>('card');
+  $: delay = SettingsProvider.settings.itemCardsDelay.get() ?? 0;
+  let open = false;
+
+  $: {
+    if ($card.show) {
+      setTimeout(() => {
+        open = $card.show;
+      }, delay);
+    } else {
+      open = $card.show;
+    }
+    // TODO: introduce optional show delay
+    // TODO: task out the rest
+  }
 
   const freezeKey = SettingsProvider.settings.itemCardsFixKey
     .get()
@@ -9,7 +28,7 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-<section class="item-info-container open">
+<section class="item-info-container" class:open>
   <div class="info-wrap">
     <article class="item-info-container-content">Hello Item Card 👋</article>
 
