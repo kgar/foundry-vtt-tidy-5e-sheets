@@ -28,7 +28,7 @@
   import ActorHeaderStats from '../actor/ActorHeaderStats.svelte';
   import HorizontalLineSeparator from 'src/components/layout/HorizontalLineSeparator.svelte';
   import TextInput from 'src/components/form/TextInput.svelte';
-  import ItemInfoCard from 'src/components/items/ItemInfoCard.svelte';
+  import ItemInfoCard from 'src/components/item-info-card/ItemInfoCard.svelte';
 
   export let debug: any = 'Put any debug information here, if ya need it.';
   export let selectedTabId: string;

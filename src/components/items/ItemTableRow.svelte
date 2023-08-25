@@ -5,19 +5,22 @@
   import { createEventDispatcher, getContext } from 'svelte';
   import type { ItemCardStore } from 'src/types/types';
   import type { Writable } from 'svelte/store';
+  import type { Item5e, ItemChatData } from 'src/types/item';
 
-  export let item: any | null = null;
+  export let item: Item5e | null = null;
   export let contextMenu: { type: string; id: string } | null = null;
   export let cssClass: string = '';
   export let alwaysShowQuantity: boolean = false;
 
   let card = getContext<Writable<ItemCardStore>>('card');
   let showSummary = false;
-  let chatData: any;
+  let chatData: ItemChatData;
 
   async function toggleSummary(event: MouseEvent, actor: Actor5e) {
     if (!item) {
       warn('Unable to show summary. No item was provided.');
+      showSummary = false;
+      return;
     }
 
     event.preventDefault();
@@ -26,16 +29,16 @@
     showSummary = !showSummary;
   }
 
-  async function onMouseEnter(event: MouseEvent) {
+  async function onMouseEnter() {
     card.update((theCard) => {
-      theCard.show = true;
+      theCard.item = item;
       return theCard;
     });
   }
 
-  async function onMouseLeave(event: MouseEvent) {
+  async function onMouseLeave() {
     card.update((theCard) => {
-      theCard.show = false;
+      theCard.item = null;
       return theCard;
     });
   }

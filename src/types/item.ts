@@ -1,3 +1,4 @@
+import type { ComponentType, SvelteComponent } from 'svelte';
 import type { Actor5e } from './actor';
 import type { ChatMessage } from './chat-message';
 import type { FoundryDocument } from './document';
@@ -38,7 +39,25 @@ export type Item5e = Item & {
   ): Promise<ChatMessage>;
 
   rollRecharge(): Promise<Roll>;
+
+  getChatData(htmlOptions: { secrets?: boolean }): Promise<ItemChatData>;
 };
+
+export type ItemChatData = {
+  description: { value: string };
+  properties: string[];
+};
+
+export type ItemCardContentComponent = ComponentType<
+  SvelteComponent<
+    {
+      item: Item5e;
+      chatData: ItemChatData;
+    },
+    any,
+    any
+  >
+>;
 
 type Item5eSystem = {
   classIdentifier?: string;

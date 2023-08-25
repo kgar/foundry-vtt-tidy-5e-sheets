@@ -1,24 +1,60 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { SettingsProvider } from 'src/settings/settings';
+  import type {
+    Item5e,
+    ItemCardContentComponent,
+    ItemChatData,
+  } from 'src/types/item';
   import type { ItemCardStore } from 'src/types/types';
   import { getContext } from 'svelte';
   import type { Writable } from 'svelte/store';
+  import DefaultItemCardContentTemplate from './DefaultItemCardContentTemplate.svelte';
 
   const card = getContext<Writable<ItemCardStore>>('card');
-  $: delay = SettingsProvider.settings.itemCardsDelay.get() ?? 0;
+  $: delayMs = SettingsProvider.settings.itemCardsDelay.get() ?? 0;
   let open = false;
+  let timer: any;
+  const defaultContentTemplate: ItemCardContentComponent =
+    DefaultItemCardContentTemplate;
+  let infoContentTemplate: ItemCardContentComponent | undefined;
+  let item: Item5e | undefined;
+  let chatData: ItemChatData | undefined;
 
-  $: {
-    if ($card.show) {
-      setTimeout(() => {
-        open = $card.show;
-      }, delay);
-    } else {
-      open = $card.show;
+  $: $card,
+    (async () => {
+      open = false;
+      clearTimeout(timer);
+
+      const item = $card.item;
+
+      if (!item) {
+        return;
+      }
+
+      timer = setTimeout(() => showCard(), delayMs);
+    })();
+
+  async function showCard() {
+    if (!$card.item) {
+      return;
     }
-    // TODO: introduce optional show delay
-    // TODO: task out the rest
+
+    chatData = await $card.item.getChatData({
+      secrets: $card.item.actor?.isOwner,
+    });
+
+    /* 
+      now that time has passed, 
+      check the most current version of the card item, 
+      in case the user has moused away. 
+    */
+    if ($card.item) {
+      // TODO: Pull this from $card and coalesce to default then not available
+      infoContentTemplate = defaultContentTemplate;
+      item = $card.item;
+      open = true;
+    }
   }
 
   const freezeKey = SettingsProvider.settings.itemCardsFixKey
@@ -30,7 +66,13 @@
 
 <section class="item-info-container" class:open>
   <div class="info-wrap">
-    <article class="item-info-container-content">Hello Item Card 👋</article>
+    <article class="item-info-container-content">
+      {#if !!infoContentTemplate && !!item && !!chatData}
+        <svelte:component this={infoContentTemplate} {item} {chatData} />
+      {:else}
+        <h2>😢 Unable to show item card contents</h2>
+      {/if}
+    </article>
 
     <article class="info-card-hint">
       <p>
