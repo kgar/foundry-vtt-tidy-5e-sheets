@@ -85,21 +85,6 @@
       padding: 0 0.25rem;
     }
 
-    .item-info-container-background {
-      font-size: 9.375rem;
-      color: var(--t5e-faintest-color);
-      position: absolute;
-      top: 0;
-      left: 0;
-      height: 100%;
-      width: 17.4375rem;
-      overflow: hidden;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: -1;
-    }
-
     .info-wrap {
       display: flex;
       height: 100%;

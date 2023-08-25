@@ -51,6 +51,8 @@
   on:mousedown={(event) => dispatcher('mousedown', event)}
   on:mouseenter={onMouseEnter}
   on:mouseleave={onMouseLeave}
+  role="row"
+  tabindex="0"
 >
   <slot {toggleSummary} />
   {#if showSummary}
