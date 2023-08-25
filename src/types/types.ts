@@ -20,6 +20,15 @@ export type ClassSummary = {
   level?: string;
 };
 
+export type ItemCardStore = {
+  show: boolean;
+  contentHtml?: string;
+  component?: {
+    component: SvelteComponent;
+    props?: any;
+  };
+};
+
 // TODO: Extract shared ActorSheetContext and make this CharacterSheetContext
 export type ActorSheetContext = {
   actor: Actor5e;
