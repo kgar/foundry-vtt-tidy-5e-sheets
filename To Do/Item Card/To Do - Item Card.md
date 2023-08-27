@@ -6,6 +6,7 @@
 - [x] Style it
 - [x] Get it to show/hide when mousing in and out of item table rows
 - [ ] Set up default item-card template component ; this is bare bones and provides the most basic groundwork. Any future items default to this until they get their own component
+- [ ] Consider pulling actor context from store rather than weaving `ctx` everywhere. It is absolutely available, but it will have to be the union of PC / NPC / Vechicle context, so everything related to `ctx` and `store` should be treated as potentially null / undefined.
 - [ ] Implement Inventory template ; all items that are not spells, based on inventory-grid version from tidy
 - [ ] Implement Spellbook template ; spells, based on spellbook-grid version from tidy
 - [ ] Implement Feature template
@@ -17,7 +18,7 @@
 - [ ] Test with popout!
 - [ ] Test with Window Tabs
 - [ ] Ponder how one might add custom content to these cards... such as mod buttons
-- [ ] Etc.
+- [ ] Upgrade cards to support longer names. Particularly, eliminate the faded gradient in favor of a more direct coloration of the header name section.
 
 ## Refine
 
