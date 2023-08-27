@@ -80,23 +80,6 @@ Hooks.on(
   }
 );
 
-function isTidy5eKgarSheet(sheetClass: string | undefined) {
-  if (sheetClass === undefined) {
-    return false;
-  }
-
-  const justTheClass = sheetClass.replace('dnd5e.', '');
-
-  if (sheetClass === '') {
-    sheetClass = Object.values(CONFIG.Actor.sheetClasses.character)
-      .find((x) => x.default)
-      .id?.replace('dnd5e.', '');
-  }
-
-  return justTheClass === Tidy5eCharacterSheet.name;
-  // TODO: Check for more supported KGar sheets in this way.
-}
-
 function delay(ms: number) {
   return new Promise<void>((resolve) => {
     setTimeout(() => resolve(), ms);
@@ -104,20 +87,20 @@ function delay(ms: number) {
 }
 
 async function debugCompareActorSheets(
-  tidySheetId: string,
-  kgarSheetId: string
+  leftSheetId: string,
+  rightSheetId: string
 ) {
-  const tidySheet = game.actors.get(tidySheetId)?.sheet;
+  const leftSheet = game.actors.get(leftSheetId)?.sheet;
 
-  if (!tidySheet) {
+  if (!leftSheet) {
     ui.notifications.warn(
       'KGAR TIDY 5E DEBUG | Tidy 5e sheet not found; update the ID'
     );
   }
 
-  tidySheet.render(true);
+  leftSheet?.render(true);
   delay(1000).then(() => {
-    tidySheet.setPosition({
+    leftSheet?.setPosition({
       width: 740,
       height: 840,
       left: 69,
@@ -127,17 +110,17 @@ async function debugCompareActorSheets(
     });
   });
 
-  const kgarSheet = game.actors.get(kgarSheetId)?.sheet;
+  const rightSheet = game.actors.get(rightSheetId)?.sheet;
 
-  if (!kgarSheet) {
+  if (!rightSheet) {
     ui.notifications.warn(
       'KGAR TIDY 5E DEBUG | Kgar sheet not found; update the ID'
     );
   }
 
-  kgarSheet.render(true);
+  rightSheet?.render(true);
   delay(1000).then(() => {
-    kgarSheet.setPosition({
+    rightSheet?.setPosition({
       width: 720,
       height: 840,
       left: 814,

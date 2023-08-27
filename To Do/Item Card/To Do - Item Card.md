@@ -6,8 +6,8 @@
 - [x] Style it
 - [x] Get it to show/hide when mousing in and out of item table rows
 - [ ] Set up default item-card template component ; this is bare bones and provides the most basic groundwork. Any future items default to this until they get their own component
-- [ ] Implement Inventory template ; all items that are not spells
-- [ ] Implement Spellbook template ; spells
+- [ ] Implement Inventory template ; all items that are not spells, based on inventory-grid version from tidy
+- [ ] Implement Spellbook template ; spells, based on spellbook-grid version from tidy
 - [ ] Implement Feature template
 - [ ] Determine if the component can be given parameters in order to avoid making a bunch of individual templates
 - [ ] Wire up item chat data fetch within item info card component, and get the template from the card store, else use the default

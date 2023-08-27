@@ -109,7 +109,7 @@
         />
       </div>
     </div>
-    <HorizontalLineSeparator borderStyle="light" />
+    <HorizontalLineSeparator borderColor="light" />
     <div class="origin-summary">
       <div class="flex-row extra-small-gap">
         <TidyDropdownList
@@ -164,9 +164,9 @@
         {/if}
       </div>
     </div>
-    <HorizontalLineSeparator borderStyle="light" />
+    <HorizontalLineSeparator borderColor="light" />
     <ActorMovementRow actor={$store.actor} movement={$store.movement} />
-    <HorizontalLineSeparator borderStyle="light" />
+    <HorizontalLineSeparator borderColor="light" />
     <section class="actor-stats">
       <AcShieldVehicle />
       {#each abilities as [id, ability]}

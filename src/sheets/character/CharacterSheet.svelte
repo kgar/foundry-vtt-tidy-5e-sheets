@@ -283,7 +283,7 @@
       </span>
     </section>
     <ActorMovementRow actor={$store.actor} movement={$store.movement} />
-    <HorizontalLineSeparator borderStyle="light" />
+    <HorizontalLineSeparator borderColor="light" />
     <!-- AC  -->
     <ActorHeaderStats
       {abilities}

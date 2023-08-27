@@ -1,11 +1,12 @@
 <script lang="ts">
-  export let borderStyle: 'faint' | 'light' = 'faint';
+  export let borderColor: 'faint' | 'light' = 'faint';
+  export let cssClass: string | null = null;
 </script>
 
 <div
   aria-hidden="true"
   role="presentation"
-  class="horizontal-line-separator {borderStyle}"
+  class="horizontal-line-separator {borderColor} {cssClass}"
 />
 
 <style lang="scss">

@@ -19,6 +19,7 @@
 .tidy5e-kgar {
   &.actor {
     @import './partials/actor';
+    @import './partials/item-card';
   }
 
   &:is(.character, .npc, .vehicle) form {
