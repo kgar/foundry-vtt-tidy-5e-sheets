@@ -35,7 +35,9 @@
   <p class="info-card-name">{item.name}</p>
   {#if item.system.properties?.amm}
     <span class="ammo" data-id={item._id}>TODO: Render Ammo</span>
+    <HorizontalLineSeparator borderColor="faint" cssClass="margin-to-edge" />
   {/if}
+  <!-- Need some conditional here -->
   <div class="info-card-states">
     {#if item.system.properties?.mgc}<span
         ><i class="fas fa-magic" />Magic Item</span
@@ -55,7 +57,7 @@
         {item.system.uses.value}/{item.system.uses.max}</span
       >
     </div>
-    <HorizontalLineSeparator borderColor="light" cssClass="margin-to-edge" />
+    <HorizontalLineSeparator borderColor="faint" cssClass="margin-to-edge" />
   {/if}
   {#if item.system.weight || item.system.quantity}
     <div class="info-card-amount">
@@ -69,7 +71,7 @@
         {item.system.quantity}</span
       >
     </div>
-    <HorizontalLineSeparator borderColor="light" cssClass="margin-to-edge" />
+    <HorizontalLineSeparator borderColor="faint" cssClass="margin-to-edge" />
   {/if}
   <div class="description-wrap">
     <div class="info-card-description">

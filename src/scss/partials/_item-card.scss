@@ -97,7 +97,7 @@
     font-size: 0.75rem;
     display: flex;
     justify-content: space-between;
-    border-top: 0.0625rem solid var(--t5e-faint-color);
+    // border-top: 0.0625rem solid var(--t5e-faint-color);
 
     span {
       padding: 0.25rem 0;
@@ -177,7 +177,7 @@
       gap: 0.125rem;
       margin-top: 0.25rem;
       padding-top: 0.25rem;
-      border-top: 0.0625rem solid var(--t5e-light-color);
+      // border-top: 0.0625rem solid var(--t5e-light-color);
 
       .button {
         background: var(--t5e-secondary-color);

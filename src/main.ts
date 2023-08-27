@@ -90,45 +90,49 @@ async function debugCompareActorSheets(
   leftSheetId: string,
   rightSheetId: string
 ) {
-  const leftSheet = game.actors.get(leftSheetId)?.sheet;
+  if (!!leftSheetId) {
+    const leftSheet = game.actors.get(leftSheetId)?.sheet;
 
-  if (!leftSheet) {
-    ui.notifications.warn(
-      'KGAR TIDY 5E DEBUG | Tidy 5e sheet not found; update the ID'
-    );
+    if (!leftSheet) {
+      ui.notifications.warn(
+        'KGAR TIDY 5E DEBUG | Tidy 5e sheet not found; update the ID'
+      );
+    }
+
+    leftSheet?.render(true);
+    delay(1000).then(() => {
+      leftSheet?.setPosition({
+        width: 740,
+        height: 840,
+        left: 69,
+        top: 56.5,
+        scale: 1,
+        zIndex: 108,
+      });
+    });
   }
 
-  leftSheet?.render(true);
-  delay(1000).then(() => {
-    leftSheet?.setPosition({
-      width: 740,
-      height: 840,
-      left: 69,
-      top: 56.5,
-      scale: 1,
-      zIndex: 108,
+  if (!!rightSheetId) {
+    const rightSheet = game.actors.get(rightSheetId)?.sheet;
+
+    if (!rightSheet) {
+      ui.notifications.warn(
+        'KGAR TIDY 5E DEBUG | Kgar sheet not found; update the ID'
+      );
+    }
+
+    rightSheet?.render(true);
+    delay(1000).then(() => {
+      rightSheet?.setPosition({
+        width: 720,
+        height: 840,
+        left: 814,
+        top: 53.5,
+        scale: 1,
+        zIndex: 109,
+      });
     });
-  });
-
-  const rightSheet = game.actors.get(rightSheetId)?.sheet;
-
-  if (!rightSheet) {
-    ui.notifications.warn(
-      'KGAR TIDY 5E DEBUG | Kgar sheet not found; update the ID'
-    );
   }
-
-  rightSheet?.render(true);
-  delay(1000).then(() => {
-    rightSheet?.setPosition({
-      width: 720,
-      height: 840,
-      left: 814,
-      top: 53.5,
-      scale: 1,
-      zIndex: 109,
-    });
-  });
 }
 
 async function debugCompareItemSheets(
