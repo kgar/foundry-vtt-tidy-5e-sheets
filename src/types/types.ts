@@ -24,6 +24,7 @@ export type ClassSummary = {
 export type ItemCardStore = {
   item: Item5e | null;
   itemCardContentTemplate: ItemCardContentComponent | null;
+  sheet: HTMLElement;
 };
 
 // TODO: Extract shared ActorSheetContext and make this CharacterSheetContext

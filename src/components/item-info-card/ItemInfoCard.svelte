@@ -7,24 +7,121 @@
     ItemChatData,
   } from 'src/types/item';
   import type { ItemCardStore } from 'src/types/types';
-  import { getContext } from 'svelte';
+  import { getContext, onDestroy, onMount } from 'svelte';
   import type { Writable } from 'svelte/store';
   import DefaultItemCardContentTemplate from './DefaultItemCardContentTemplate.svelte';
   import HorizontalLineSeparator from '../layout/HorizontalLineSeparator.svelte';
+  import { warn } from 'src/utils/logging';
 
-  const card = getContext<Writable<ItemCardStore>>('card');
-  $: delayMs = SettingsProvider.settings.itemCardsDelay.get() ?? 0;
+  // Freeze
+  let frozen: boolean = false;
+  $: freezeKey = SettingsProvider.settings.itemCardsFixKey.get()?.toUpperCase();
+
+  function detectFreezeStart(ev: KeyboardEvent) {
+    if (frozen) {
+      return;
+    }
+
+    frozen = ev.key?.toUpperCase() === freezeKey;
+  }
+
+  function detectFreezeStop(ev: KeyboardEvent) {
+    if (ev.key?.toUpperCase() === freezeKey) {
+      frozen = false;
+    }
+  }
+
+  // Floating
+  $: floating = SettingsProvider.settings.itemCardsAreFloating.get();
+  let lastMouseEvent: { clientX: number; clientY: number } | null = null;
+  let floatingTop: string | null = null;
+  let floatingLeft: string | null = null;
+  let sheetBorderRight: number = 0;
+  let sheetBorderBottom: number = 0;
+  let itemCardNode: HTMLElement;
+  let sheetObserver: IntersectionObserver = new IntersectionObserver(
+    ([sheet]) => {
+      sheetBorderRight = sheet.boundingClientRect.right;
+      sheetBorderBottom = sheet.boundingClientRect.bottom;
+    }
+  );
+
+  // TODO: Replace pixel perfection with more relative measurements
+  function onMouseMove(args: { clientX: number; clientY: number }) {
+    lastMouseEvent = args;
+
+    if (!floating || !open || frozen) {
+      return;
+    }
+
+    positionFloatingCard();
+  }
+
+  function positionFloatingCard() {
+    console.log(lastMouseEvent);
+
+    if (!lastMouseEvent) {
+      return;
+    }
+
+    let mousePos = { x: lastMouseEvent.clientX, y: lastMouseEvent.clientY };
+    let top = `${mousePos.y - 230}px`;
+    let left = `${mousePos.x + 24}px`;
+
+    if (mousePos.x + 304 > sheetBorderRight) {
+      left = `${mousePos.x - 304}px`;
+    }
+
+    if (mousePos.y + 230 > sheetBorderBottom) {
+      let diff = sheetBorderBottom - (mousePos.y + 230);
+      top = `${mousePos.y - 230 + diff}px`;
+    }
+
+    floatingTop = top;
+    floatingLeft = left;
+  }
+
+  // Show/Hide
   let open = false;
-  let debug = true;
+  let debug = false;
   let timer: any;
   const defaultContentTemplate: ItemCardContentComponent =
     DefaultItemCardContentTemplate;
   let infoContentTemplate: ItemCardContentComponent | undefined;
+  $: delayMs = SettingsProvider.settings.itemCardsDelay.get() ?? 0;
+
+  async function showCard() {
+    if (!$card.item) {
+      return;
+    }
+
+    chatData = await $card.item.getChatData({
+      secrets: $card.item.actor?.isOwner,
+    });
+
+    /* 
+      now that time has passed, 
+      check the most current version of the card item, 
+      in case the user has moused away. 
+    */
+    if ($card.item) {
+      infoContentTemplate =
+        $card.itemCardContentTemplate ?? defaultContentTemplate;
+      item = $card.item;
+
+      if (floating) {
+        positionFloatingCard();
+      }
+
+      open = true;
+    }
+  }
+
+  // Content
+  const card = getContext<Writable<ItemCardStore>>('card');
   let item: Item5e | undefined;
   let chatData: ItemChatData | undefined;
   $: itemProps = chatData?.properties ?? [];
-  let frozen: boolean = false;
-
   $: $card,
     (async () => {
       if (frozen) {
@@ -47,56 +144,41 @@
       timer = setTimeout(() => showCard(), delayMs);
     })();
 
-  async function showCard() {
-    if (!$card.item) {
-      return;
+  // Lifecycle
+  onMount(() => {
+    console.warn('mounting');
+    let sheet = itemCardNode.closest('.sheet');
+    if (sheet) {
+      sheetObserver.observe(sheet);
+    } else {
+      warn(
+        'Item Card parent sheet not found. Unable to support floating item card.'
+      );
     }
+  });
 
-    chatData = await $card.item.getChatData({
-      secrets: $card.item.actor?.isOwner,
-    });
-
-    /* 
-      now that time has passed, 
-      check the most current version of the card item, 
-      in case the user has moused away. 
-    */
-    if ($card.item) {
-      infoContentTemplate =
-        $card.itemCardContentTemplate ?? defaultContentTemplate;
-      item = $card.item;
-      open = true;
-    }
-  }
-
-  const freezeKey = SettingsProvider.settings.itemCardsFixKey
-    .get()
-    ?.toUpperCase();
+  onDestroy(() => {
+    sheetObserver.disconnect();
+  });
 
   const localize = FoundryAdapter.localize;
-
-  function detectFreezeStart(ev: KeyboardEvent) {
-    if (frozen) {
-      return;
-    }
-
-    frozen = ev.key?.toUpperCase() === freezeKey;
-  }
-
-  function detectFreezeStop(ev: KeyboardEvent) {
-    if (ev.key?.toUpperCase() === freezeKey) {
-      frozen = false;
-    }
-  }
 </script>
 
 <svelte:window
   on:keydown={detectFreezeStart}
   on:keyup={detectFreezeStop}
+  on:mousemove={onMouseMove}
   on:blur={() => (frozen = false)}
 />
 
-<section class="item-info-container" class:open={debug || open}>
+<section
+  bind:this={itemCardNode}
+  class="item-info-container"
+  class:open={debug || open}
+  class:floating
+  style:top={floatingTop}
+  style:left={floatingLeft}
+>
   <div class="info-wrap">
     <article class="item-info-container-content">
       {#if !!infoContentTemplate && !!item && !!chatData}

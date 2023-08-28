@@ -18,7 +18,11 @@
   - [x] Subscribe to document on item info card component (clean up?)
   - [x] Let go of freeze on target Key Up OR when the user removes focus from the browser tab
   - [x] Provide visual indicator that freeze key is being held
-- [ ] Implement floating
+- [x] Implement floating
+  - [x] Apply class when setting is set
+  - [x] Create function for getting top/left
+  - [x] Set top/left 
+  - [x] Listen to mousemove and retarget top/left while open and not frozen
 - [ ] Test/compare for PC
 - [ ] Test/compare for NPC
 - [ ] Test/compare for Vehicle
@@ -34,6 +38,8 @@
 - [ ] Upgrade cards to support longer names. Particularly, eliminate the faded gradient in favor of a more direct coloration of the header name section.
 - [ ]
 - [x] The show/hide is not as deterministic as the original. The original always allows the card to fully dismiss before applying changes. Do we need a throttle of some sort? Buffering to allow close to finish? This may become clearer after implementing more of the card.
+- [ ] // TODO: Replace pixel perfection with more relative measurements
+- [ ] Figure out how to mix in the various item card features. They're all layered onto the one component, and it's getting pretty crowded.
 
 ## Rewriting Item Cards
 
