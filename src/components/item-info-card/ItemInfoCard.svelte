@@ -23,15 +23,24 @@
   let item: Item5e | undefined;
   let chatData: ItemChatData | undefined;
   $: itemProps = chatData?.properties ?? [];
+  let frozen: boolean = false;
 
   $: $card,
     (async () => {
+      if (frozen) {
+        return;
+      }
+
+      if ($card.item?.id === item?.id && open) {
+        return;
+      }
+
       open = false;
       clearTimeout(timer);
 
-      const item = $card.item;
+      const newItem = $card.item;
 
-      if (!item) {
+      if (!newItem) {
         return;
       }
 
@@ -65,7 +74,27 @@
     ?.toUpperCase();
 
   const localize = FoundryAdapter.localize;
+
+  function detectFreezeStart(ev: KeyboardEvent) {
+    if (frozen) {
+      return;
+    }
+
+    frozen = ev.key?.toUpperCase() === freezeKey;
+  }
+
+  function detectFreezeStop(ev: KeyboardEvent) {
+    if (ev.key?.toUpperCase() === freezeKey) {
+      frozen = false;
+    }
+  }
 </script>
+
+<svelte:window
+  on:keydown={detectFreezeStart}
+  on:keyup={detectFreezeStop}
+  on:blur={() => (frozen = false)}
+/>
 
 <section class="item-info-container" class:open={debug || open}>
   <div class="info-wrap">
@@ -90,7 +119,7 @@
     <HorizontalLineSeparator />
 
     <article class="info-card-hint">
-      <p>
+      <p class:frozen>
         <span class="key">{freezeKey}</span>
         {localize('TIDY5E.ItemCardsKeyHint')}
       </p>
@@ -154,6 +183,10 @@
       font-size: 0.75rem;
       padding: 0.25rem 0.5rem 0 0.5rem;
       font-style: italic;
+
+      .frozen .key {
+        background: var(--t5e-primary-accent);
+      }
 
       .key {
         display: inline-block;

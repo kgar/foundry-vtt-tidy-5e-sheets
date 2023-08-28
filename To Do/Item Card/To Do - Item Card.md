@@ -14,10 +14,14 @@
 - [x] Implement Feature template ; it's the default template ✅
 - [x] Wire up item chat data fetch within item info card component, and get the template from the card store, else use the default
 - [x] Implement custom content (Inventory Grid has a special template for item card content)
-- [ ] Implement freeze key
-  - [ ] Subscribe to document on item info card component (clean up?)
-  - [ ] Let go of freeze on target Key Up OR when the user removes focus from the browser tab
+- [x] Implement freeze key
+  - [x] Subscribe to document on item info card component (clean up?)
+  - [x] Let go of freeze on target Key Up OR when the user removes focus from the browser tab
+  - [x] Provide visual indicator that freeze key is being held
 - [ ] Implement floating
+- [ ] Test/compare for PC
+- [ ] Test/compare for NPC
+- [ ] Test/compare for Vehicle
 - [ ] Test with popout!
 - [ ] Test with Window Tabs
 - [ ] Ponder how one might add custom content to these cards... such as mod buttons
@@ -28,7 +32,7 @@
 - [ ] Review item card implementation and simplify / streamline if able
 - [ ] Add hook subscribe to catch changes to tidy 5e kgar main settings changes and then rerender sheets the same way that it works for sheet settings.
 - [ ] Upgrade cards to support longer names. Particularly, eliminate the faded gradient in favor of a more direct coloration of the header name section.
-- [ ] 
+- [ ]
 - [x] The show/hide is not as deterministic as the original. The original always allows the card to fully dismiss before applying changes. Do we need a throttle of some sort? Buffering to allow close to finish? This may become clearer after implementing more of the card.
 
 ## Rewriting Item Cards
