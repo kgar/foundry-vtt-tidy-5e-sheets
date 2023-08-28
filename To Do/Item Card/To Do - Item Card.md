@@ -11,24 +11,25 @@
   - [x] Try to slot the additional content into the default template
   - [x] ~~Maybe refashion the default template as a base card template?~~ Different plan
 - [x] Implement Spellbook template ; spells, based on spellbook-grid version from tidy
-- [ ] Implement Feature template
-- [ ] Determine if the component can be given parameters in order to avoid making a bunch of individual templates
-- [ ] Wire up item chat data fetch within item info card component, and get the template from the card store, else use the default
-- [ ] Implement custom content (Inventory Grid has a special template for item card content)
+- [x] Implement Feature template ; it's the default template ✅
+- [x] Wire up item chat data fetch within item info card component, and get the template from the card store, else use the default
+- [x] Implement custom content (Inventory Grid has a special template for item card content)
 - [ ] Implement freeze key
+  - [ ] Subscribe to document on item info card component (clean up?)
+  - [ ] Let go of freeze on target Key Up OR when the user removes focus from the browser tab
 - [ ] Implement floating
 - [ ] Test with popout!
 - [ ] Test with Window Tabs
 - [ ] Ponder how one might add custom content to these cards... such as mod buttons
-- [ ] Upgrade cards to support longer names. Particularly, eliminate the faded gradient in favor of a more direct coloration of the header name section.
 
 ## Refine
 
 - [ ] Extract common grid layout button and wire in the item card functionality so that it's shared
 - [ ] Review item card implementation and simplify / streamline if able
 - [ ] Add hook subscribe to catch changes to tidy 5e kgar main settings changes and then rerender sheets the same way that it works for sheet settings.
-- [x] The show/hide is not as deterministic as the original. The original always allows the card to fully dismiss before applying changes. Do we need a throttle of some sort? Buffering to allow close to finish? This may become clearer after implementing more of the card.
+- [ ] Upgrade cards to support longer names. Particularly, eliminate the faded gradient in favor of a more direct coloration of the header name section.
 - [ ] 
+- [x] The show/hide is not as deterministic as the original. The original always allows the card to fully dismiss before applying changes. Do we need a throttle of some sort? Buffering to allow close to finish? This may become clearer after implementing more of the card.
 
 ## Rewriting Item Cards
 

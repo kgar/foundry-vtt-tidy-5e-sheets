@@ -69,7 +69,7 @@
     </span>
   </div>
   <HorizontalLineSeparator borderColor="faint" cssClass="margin-to-edge" />
-  {#if ctx.hasUses}
+  {#if ctx?.hasUses}
     <div class="info-card-amount">
       <span
         ><i class="fas fa-bolt" /><b>{localize('DND5E.Charges')}:</b>
