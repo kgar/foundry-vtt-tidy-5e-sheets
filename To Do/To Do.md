@@ -499,3 +499,37 @@ Are there examples I can look at?
 
 Aura — Today at 5:25 PM
 not to my knowledge, sorry, i thought it up when i was playing with players earlier today. just thought it would be a usefull improvment
+
+### Fallayn feature requests and brainstorming
+
+https://discord.com/channels/732325252788387980/1116078321067892796/1145493173234323556
+
+Fallayn — Today at 6:00 PM
+Feature wishlist: display ability score derived stats somewhere for NPCs and PCs, like jump length/height, max drawing/pushing weight etc (I have a manual note about the latter on all monsters that are used as mounts, but ugh) - not sure where, maybe a tooltip when hovering strength? 
+
+Fallayn — Today at 6:09 PM
+Also, and this is more brainstorm-y: I have been adding all general actions to PC sheets ("Disengage", "Sprint", "Dodge" etc)
+
+This serves multiple purposes:
+It serves as a reminder to players that these exist and they can use them
+It serves as a rules helper, because each action has the exact description of how it works
+It can integrate with modules, i.e when you use Dodge, you get an active effect for a round reminding you and every attacker that you are dodging
+
+
+But it also adds a lot of noise to the sheet, and I do not want to add them to all the NPCs too manually.
+
+But maybe we could have a optional collapsed by default category for   "general actions/features" that just shows whatever is in a compendium you set?
+
+Open to other ideas how to implement this 
+
+### Zanderaf - More Bars, bars for resources and features, etc.
+
+https://discord.com/channels/732325252788387980/1116078321067892796/1145296768200872036
+
+Zanderaf — Today at 4:56 AM
+Oh I love the hp bars for those items, makes me tempted to ask if something like that would be possible on character sheets for feature charges like Ki Points or Rage amounts
+
+Love what you're doing with tidy! I havnt used it much since the base sheet kinda suits me, but Im tempted to use it more and more with all this stuff
+
+kgar — Today at 12:35 PM
+It is very easy to do. It comes at the cost of some screen real estate, but when column selection is a thing, we might as well make item/feature/resource usage consumption optionally use a bar. I would think that alternate color(s) would be appropriate to distinguish from health bars
