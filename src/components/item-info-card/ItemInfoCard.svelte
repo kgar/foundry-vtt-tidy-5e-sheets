@@ -10,6 +10,7 @@
   import { getContext } from 'svelte';
   import type { Writable } from 'svelte/store';
   import DefaultItemCardContentTemplate from './DefaultItemCardContentTemplate.svelte';
+  import HorizontalLineSeparator from '../layout/HorizontalLineSeparator.svelte';
 
   const card = getContext<Writable<ItemCardStore>>('card');
   $: delayMs = SettingsProvider.settings.itemCardsDelay.get() ?? 0;
@@ -21,6 +22,7 @@
   let infoContentTemplate: ItemCardContentComponent | undefined;
   let item: Item5e | undefined;
   let chatData: ItemChatData | undefined;
+  $: itemProps = chatData?.properties ?? [];
 
   $: $card,
     (async () => {
@@ -69,11 +71,23 @@
   <div class="info-wrap">
     <article class="item-info-container-content">
       {#if !!infoContentTemplate && !!item && !!chatData}
-        <svelte:component this={infoContentTemplate} {item} {chatData} />
+        <svelte:component this={infoContentTemplate} {item} {chatData}>
+          {#if itemProps.length}
+            <HorizontalLineSeparator cssClass="margin-to-edge" />
+            <div class="item-properties">
+              {#each itemProps as prop}
+                <span class="tag">{prop}</span>
+              {/each}
+            </div>
+          {/if}
+
+          <article class="mod-roll-buttons" />
+        </svelte:component>
       {:else}
         <h2>😢 Unable to show item card contents</h2>
       {/if}
     </article>
+    <HorizontalLineSeparator />
 
     <article class="info-card-hint">
       <p>
@@ -138,7 +152,6 @@
     .info-card-hint {
       width: 17.4375rem;
       font-size: 0.75rem;
-      border-top: 0.0625rem solid var(--t5e-faint-color);
       padding: 0.25rem 0.5rem 0 0.5rem;
       font-style: italic;
 

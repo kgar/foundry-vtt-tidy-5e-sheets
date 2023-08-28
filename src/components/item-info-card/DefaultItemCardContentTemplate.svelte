@@ -1,7 +1,7 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { Item5e, ItemChatData } from 'src/types/item';
-    import HorizontalLineSeparator from '../layout/HorizontalLineSeparator.svelte';
+  import HorizontalLineSeparator from '../layout/HorizontalLineSeparator.svelte';
 
   export let item: Item5e;
   export let chatData: ItemChatData;
@@ -16,7 +16,7 @@
   data-item-id={item._id}
 >
   <p class="info-card-name">{item.name}</p>
-  <HorizontalLineSeparator borderColor='faint' cssClass="margin-to-edge" />
+  <HorizontalLineSeparator borderColor="faint" cssClass="margin-to-edge" />
   {#if item.hasUses}
     <div class="info-card-amount">
       <span
@@ -31,4 +31,6 @@
     </div>
   </div>
   <article class="mod-roll-buttons" />
+
+  <slot />
 </div>

@@ -26,6 +26,7 @@
   import type { ActorSheetContext } from 'src/types/types';
   import ListItemQuantity from 'src/sheets/actor/ListItemQuantity.svelte';
   import CharacterInventoryItemCardContent from '../item-info-card/CharacterInventoryItemCardContent.svelte';
+  import InventoryAmmoSelector from './InventoryAmmoSelector.svelte';
 
   export let primaryColumnName: string;
   export let items: Item5e[];
@@ -150,19 +151,7 @@
             <span class="truncate">{item.name}</span>
             {#if item.system?.properties?.amm}
               <span class="ammo">
-                <select
-                  on:click|stopPropagation
-                  on:change={(event) =>
-                    onAmmoChange(item, event.currentTarget.value)}
-                >
-                  {#each ammos as ammo}
-                    <option
-                      value={ammo.value}
-                      selected={item.system.consume?.target === ammo.value}
-                      >{ammo.text}</option
-                    >
-                  {/each}
-                </select>
+                <InventoryAmmoSelector {item} />
               </span>
             {/if}
             <ListItemQuantity {item} {ctx} />

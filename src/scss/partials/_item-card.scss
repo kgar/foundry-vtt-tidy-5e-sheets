@@ -84,10 +84,12 @@
 
   .ammo-switch {
     height: unset;
-    margin-left: 0;
-    margin-bottom: 0.25rem;
     font-size: 0.75rem;
     font-family: 'Signika';
+
+    select {
+      width: 100%;
+    }
   }
 
   .info-card-states,
@@ -106,7 +108,6 @@
     i {
       width: 0.8125rem;
       text-align: center;
-      margin-right: 0.25rem;
       vertical-align: middle;
     }
 

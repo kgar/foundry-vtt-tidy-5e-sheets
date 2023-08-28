@@ -9,6 +9,7 @@
     NpcSheetContext,
     VehicleSheetContext,
   } from 'src/types/types';
+  import InventoryAmmoSelector from '../inventory/InventoryAmmoSelector.svelte';
 
   export let item: Item5e;
   export let chatData: ItemChatData;
@@ -18,11 +19,9 @@
       Readable<ActorSheetContext | NpcSheetContext | VehicleSheetContext>
     >('store');
 
-  let ctx = $store.itemContext?.[item.id];
+  $: ctx = $store.itemContext?.[item.id];
 
   const localize = FoundryAdapter.localize;
-
-  $: console.log({ what: 'item-info-card', $store, item, ctx });
 </script>
 
 <div
@@ -32,23 +31,35 @@
   data-item-id={item._id}
   data-item-index={item._id}
 >
-  <p class="info-card-name">{item.name}</p>
-  {#if item.system.properties?.amm}
-    <span class="ammo" data-id={item._id}>TODO: Render Ammo</span>
+  <p class="info-card-name">
+    {item.name}
+    {#if item.system.properties?.amm}
+      <span class="ammo-switch" data-id={item._id}>
+        <InventoryAmmoSelector {item} />
+      </span>
+    {/if}
+  </p>
+
+  <HorizontalLineSeparator borderColor="faint" cssClass="margin-to-edge" />
+  {#if item.system.properties?.mgc || ctx?.attunement}
+    <div class="info-card-states">
+      {#if item.system.properties?.mgc}
+        <span class="flex-row extra-small-gap align-items-center"
+          ><i class="fas fa-magic" />Magic Item</span
+        >
+      {/if}
+      {#if ctx?.attunement}
+        <span
+          class="flex-row extra-small-gap align-items-center info-attuned {ctx
+            .attunement.cls ?? ''}"
+        >
+          <i class="fas fa-sun" />
+          {localize(ctx.attunement.title)}
+        </span>
+      {/if}
+    </div>
     <HorizontalLineSeparator borderColor="faint" cssClass="margin-to-edge" />
   {/if}
-  <div class="info-card-states">
-    {#if item.system.properties?.mgc}<span
-        ><i class="fas fa-magic" />Magic Item</span
-      >
-    {/if}
-    {#if item.system.attunement && ctx.attunement}
-      <span class="info-attuned {ctx.attunement.cls ?? ''}">
-        <i class="fas fa-sun" />{localize(ctx.attunement.title)}</span
-      >
-    {/if}
-  </div>
-  <HorizontalLineSeparator borderColor="faint" cssClass="margin-to-edge" />
   {#if item.hasUses}
     <div class="info-card-amount">
       <span
@@ -66,8 +77,12 @@
     >
     <span class="info-quantity"
       ><b>{localize('DND5E.Quantity')}:</b>
-      {item.system.quantity}</span
-    >
+      {item.system.quantity}
+      {#if item.system.price.value}
+        &times; {item.system.price.value}
+        {item.system.price.denomination}
+      {/if}
+    </span>
   </div>
   <HorizontalLineSeparator borderColor="faint" cssClass="margin-to-edge" />
   <div class="description-wrap">
@@ -75,5 +90,6 @@
       {@html chatData.description.value}
     </div>
   </div>
-  <article class="mod-roll-buttons" />
+
+  <slot />
 </div>
