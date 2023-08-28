@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { ActorSheetContext } from 'src/types/types';
+  import type { ActorSheetContext, ItemCardStore } from 'src/types/types';
   import type { Item5e } from 'src/types/item';
   import ItemTable from '../items/ItemTable.svelte';
   import ItemTableHeaderRow from '../items/ItemTableHeaderRow.svelte';
@@ -9,12 +9,15 @@
   import { SettingsProvider } from 'src/settings/settings';
   import GridPaneFavoriteIcon from '../shared/GridPaneFavoriteIcon.svelte';
   import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
+  import type { Readable, Writable } from 'svelte/store';
   import TextInput from '../form/TextInput.svelte';
+  import CharacterInventoryItemCardContent from '../item-info-card/CharacterInventoryItemCardContent.svelte';
 
   export let section: any;
   export let items: Item5e[];
+
   let store = getContext<Readable<ActorSheetContext>>('store');
+  let card = getContext<Writable<ItemCardStore>>('card');
 
   const localize = FoundryAdapter.localize;
   $: allowEdit = FoundryAdapter.tryGetFlag($store.actor, 'allow-edit');
@@ -39,6 +42,20 @@
   function preventUseItemEvent(ev: Event) {
     ev.stopPropagation();
   }
+
+  async function onMouseEnter(item: Item5e) {
+    card.set({
+      item,
+      itemCardContentTemplate: CharacterInventoryItemCardContent,
+    });
+  }
+
+  async function onMouseLeave(item: Item5e) {
+    card.set({
+      item: null,
+      itemCardContentTemplate: CharacterInventoryItemCardContent,
+    });
+  }
 </script>
 
 <ItemTable>
@@ -61,6 +78,8 @@
         data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
         data-context-menu-entity-id={item.id}
         on:click={(event) => item.use({}, { event })}
+        on:mouseenter={() => onMouseEnter(item)}
+        on:mouseleave={() => onMouseLeave(item)}
       >
         {#if ctx.attunement}
           <i

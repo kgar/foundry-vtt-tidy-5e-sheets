@@ -41,29 +41,8 @@
   const localize = FoundryAdapter.localize;
   $: allowEdit = FoundryAdapter.tryGetFlag($store.actor, 'allow-edit');
   $: classicControlsBaseWidth = allowEdit ? '7.5rem' : '5.3125rem';
-  $: ammoEquippedOnly = SettingsProvider.settings.ammoEquippedOnly.get();
   $: quantityAlwaysShownEnabled =
     SettingsProvider.settings.quantityAlwaysShownEnabled.get();
-
-  let ammos: { text: string; value: string | null; ammo: Item5e | null }[];
-  $: ammos = [
-    {
-      text: '',
-      value: null,
-      ammo: null,
-    },
-    ...$store.actor.items
-      .filter(
-        (x) =>
-          x.system.consumableType === 'ammo' &&
-          (!ammoEquippedOnly || x.system.equipped)
-      )
-      .map((x) => ({
-        text: `${x.name} (${x.system.quantity})`,
-        value: x.id,
-        ammo: x,
-      })),
-  ];
 
   $: hideIconsNextToTheItemName =
     SettingsProvider.settings.hideIconsNextToTheItemName.get();
@@ -82,24 +61,6 @@
       $store.itemContext[item.id],
       extras
     );
-  }
-
-  function onAmmoChange(item: Item5e, ammoId: string) {
-    const ammo = item.actor?.items.find((i) => i.id === ammoId);
-
-    item.update({
-      system: {
-        consume: {
-          amount: !ammo
-            ? null
-            : !!item.system.consume?.amount
-            ? item.system.consume.amount
-            : 1,
-          target: !ammo ? '' : ammo.id,
-          type: !ammo ? '' : ammo.system.consumableType,
-        },
-      },
-    });
   }
 </script>
 
@@ -203,8 +164,6 @@
             <ItemControls>
               {#if ctx.attunement}
                 <InventoryAttuneControl {item} {ctx} />
-              {:else}
-                <!-- <span /> -->
               {/if}
               {#if ctx.canToggle}
                 <InventoryEquipControl {item} {ctx} />
