@@ -10,7 +10,7 @@
 - [x] Implement Inventory template ; all items that are not spells, based on inventory-grid version from tidy
   - [x] Try to slot the additional content into the default template
   - [x] ~~Maybe refashion the default template as a base card template?~~ Different plan
-- [ ] Implement Spellbook template ; spells, based on spellbook-grid version from tidy
+- [x] Implement Spellbook template ; spells, based on spellbook-grid version from tidy
 - [ ] Implement Feature template
 - [ ] Determine if the component can be given parameters in order to avoid making a bunch of individual templates
 - [ ] Wire up item chat data fetch within item info card component, and get the template from the card store, else use the default
@@ -24,10 +24,10 @@
 
 ## Refine
 
-- [x] The show/hide is not as deterministic as the original. The original always allows the card to fully dismiss before applying changes. Do we need a throttle of some sort? Buffering to allow close to finish? This may become clearer after implementing more of the card.
 - [ ] Extract common grid layout button and wire in the item card functionality so that it's shared
 - [ ] Review item card implementation and simplify / streamline if able
 - [ ] Add hook subscribe to catch changes to tidy 5e kgar main settings changes and then rerender sheets the same way that it works for sheet settings.
+- [x] The show/hide is not as deterministic as the original. The original always allows the card to fully dismiss before applying changes. Do we need a throttle of some sort? Buffering to allow close to finish? This may become clearer after implementing more of the card.
 - [ ] 
 
 ## Rewriting Item Cards

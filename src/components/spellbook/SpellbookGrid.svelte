@@ -1,7 +1,7 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { type ActorSheetContext } from 'src/types/types';
+  import { type ActorSheetContext, type ItemCardStore } from 'src/types/types';
   import { SettingsProvider } from 'src/settings/settings';
   import ItemTable from '../items/ItemTable.svelte';
   import ItemTableColumn from '../items/ItemTableColumn.svelte';
@@ -11,15 +11,32 @@
   import type { Item5e } from 'src/types/item';
   import GridPaneFavoriteIcon from '../shared/GridPaneFavoriteIcon.svelte';
   import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
+  import type { Readable, Writable } from 'svelte/store';
+  import SpellbookItemCardContent from '../item-info-card/SpellbookItemCardContent.svelte';
 
-  let store = getContext<Readable<ActorSheetContext>>('store');
   export let section: any;
   export let spells: Item5e[];
   export let cssClass: string | null = null;
 
+  let store = getContext<Readable<ActorSheetContext>>('store');
+  let card = getContext<Writable<ItemCardStore>>('card');
+
   const localize = FoundryAdapter.localize;
   $: allowEdit = FoundryAdapter.tryGetFlag($store.actor, 'allow-edit');
+
+  async function onMouseEnter(item: Item5e) {
+    card.set({
+      item,
+      itemCardContentTemplate: SpellbookItemCardContent,
+    });
+  }
+
+  async function onMouseLeave(item: Item5e) {
+    card.set({
+      item: null,
+      itemCardContentTemplate: SpellbookItemCardContent,
+    });
+  }
 </script>
 
 <section class="spellbook-grid {cssClass}">
@@ -47,6 +64,8 @@
           data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
           data-context-menu-entity-id={spell.id}
           on:click={(event) => spell.use({}, { event })}
+          on:mouseenter={() => onMouseEnter(spell)}
+          on:mouseleave={() => onMouseLeave(spell)}
         >
           {#if FoundryAdapter.tryGetFlag(spell, 'favorite')}
             <GridPaneFavoriteIcon />

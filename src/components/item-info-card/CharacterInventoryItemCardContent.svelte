@@ -4,20 +4,13 @@
   import HorizontalLineSeparator from '../layout/HorizontalLineSeparator.svelte';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
-  import type {
-    ActorSheetContext,
-    NpcSheetContext,
-    VehicleSheetContext,
-  } from 'src/types/types';
+  import type { ActorSheetContext } from 'src/types/types';
   import InventoryAmmoSelector from '../inventory/InventoryAmmoSelector.svelte';
 
   export let item: Item5e;
   export let chatData: ItemChatData;
 
-  let store =
-    getContext<
-      Readable<ActorSheetContext | NpcSheetContext | VehicleSheetContext>
-    >('store');
+  let store = getContext<Readable<ActorSheetContext>>('store');
 
   $: ctx = $store.itemContext?.[item.id];
 
@@ -60,15 +53,6 @@
     </div>
     <HorizontalLineSeparator borderColor="faint" cssClass="margin-to-edge" />
   {/if}
-  {#if item.hasUses}
-    <div class="info-card-amount">
-      <span
-        ><i class="fas fa-bolt" /><b>{localize('DND5E.Charges')}:</b>
-        {item.system.uses.value}/{item.system.uses.max}</span
-      >
-    </div>
-    <HorizontalLineSeparator borderColor="faint" cssClass="margin-to-edge" />
-  {/if}
   <div class="info-card-amount">
     <span class="info-weight"
       ><b>{localize('DND5E.Weight')}:</b>
@@ -85,6 +69,15 @@
     </span>
   </div>
   <HorizontalLineSeparator borderColor="faint" cssClass="margin-to-edge" />
+  {#if ctx.hasUses}
+    <div class="info-card-amount">
+      <span
+        ><i class="fas fa-bolt" /><b>{localize('DND5E.Charges')}:</b>
+        {item.system.uses.value}/{item.system.uses.max}</span
+      >
+    </div>
+    <HorizontalLineSeparator borderColor="faint" cssClass="margin-to-edge" />
+  {/if}
   <div class="description-wrap">
     <div class="info-card-description">
       {@html chatData.description.value}

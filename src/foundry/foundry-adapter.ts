@@ -61,6 +61,13 @@ export const FoundryAdapter = {
       },
     ]);
   },
+  canPrepareSpell(actor: Actor5e, item: Item5e) {
+    return (
+      actor.type === 'character' &&
+      (item.system.level >= 1 ||
+        SettingsProvider.settings.allowCantripToBePreparedOnContext.get())
+    );
+  },
   /**
    *
    * @param content           - the editor content to include
