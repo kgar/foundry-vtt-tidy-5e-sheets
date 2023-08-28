@@ -5,9 +5,11 @@
 - [x] Add base card to Character Sheet
 - [x] Style it
 - [x] Get it to show/hide when mousing in and out of item table rows
-- [ ] Set up default item-card template component ; this is bare bones and provides the most basic groundwork. Any future items default to this until they get their own component
-- [ ] Consider pulling actor context from store rather than weaving `ctx` everywhere. It is absolutely available, but it will have to be the union of PC / NPC / Vechicle context, so everything related to `ctx` and `store` should be treated as potentially null / undefined.
+- [x] Set up default item-card template component ; this is bare bones and provides the most basic groundwork. Any future items default to this until they get their own component
+- [x] Consider pulling actor context from store rather than weaving `ctx` everywhere. It is absolutely available, but it will have to be the union of PC / NPC / Vechicle context, so everything related to `ctx` and `store` should be treated as potentially null / undefined.
 - [ ] Implement Inventory template ; all items that are not spells, based on inventory-grid version from tidy
+  - [ ] Try to slot the additional content into the default template
+  - [ ] Maybe refashion the default template as a base card template?
 - [ ] Implement Spellbook template ; spells, based on spellbook-grid version from tidy
 - [ ] Implement Feature template
 - [ ] Determine if the component can be given parameters in order to avoid making a bunch of individual templates
