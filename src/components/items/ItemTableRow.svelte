@@ -5,12 +5,17 @@
   import { createEventDispatcher, getContext } from 'svelte';
   import type { ItemCardStore } from 'src/types/types';
   import type { Writable } from 'svelte/store';
-  import type { Item5e, ItemChatData } from 'src/types/item';
+  import type {
+    Item5e,
+    ItemCardContentComponent,
+    ItemChatData,
+  } from 'src/types/item';
 
   export let item: Item5e | null = null;
   export let contextMenu: { type: string; id: string } | null = null;
   export let cssClass: string = '';
   export let alwaysShowQuantity: boolean = false;
+  export let itemCardContentTemplate: ItemCardContentComponent | null = null;
 
   let card = getContext<Writable<ItemCardStore>>('card');
   let showSummary = false;
@@ -30,16 +35,16 @@
   }
 
   async function onMouseEnter() {
-    card.update((theCard) => {
-      theCard.item = item;
-      return theCard;
+    card.set({
+      item,
+      itemCardContentTemplate,
     });
   }
 
   async function onMouseLeave() {
-    card.update((theCard) => {
-      theCard.item = null;
-      return theCard;
+    card.set({
+      item: null,
+      itemCardContentTemplate: null,
     });
   }
 

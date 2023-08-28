@@ -51,8 +51,8 @@
       in case the user has moused away. 
     */
     if ($card.item) {
-      // TODO: Pull this from $card and coalesce to default then not available
-      infoContentTemplate = defaultContentTemplate;
+      infoContentTemplate =
+        $card.itemCardContentTemplate ?? defaultContentTemplate;
       item = $card.item;
       open = true;
     }

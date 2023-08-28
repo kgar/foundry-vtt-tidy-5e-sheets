@@ -25,6 +25,7 @@
   import type { Readable } from 'svelte/store';
   import type { ActorSheetContext } from 'src/types/types';
   import ListItemQuantity from 'src/sheets/actor/ListItemQuantity.svelte';
+  import CharacterInventoryItemCardContent from '../item-info-card/CharacterInventoryItemCardContent.svelte';
 
   export let primaryColumnName: string;
   export let items: Item5e[];
@@ -138,6 +139,7 @@
         let:toggleSummary
         cssClass={getInventoryRowClasses(item)}
         alwaysShowQuantity={quantityAlwaysShownEnabled}
+        itemCardContentTemplate={CharacterInventoryItemCardContent}
       >
         <ItemTableCell primary={true} title={item.name}>
           <ItemUseButton {item} />

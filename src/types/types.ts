@@ -1,6 +1,6 @@
 import type { ComponentProps, ComponentType, SvelteComponent } from 'svelte';
 import type { Actor5e, Actor5eHp } from './actor';
-import type { Item5e } from './item';
+import type { Item5e, ItemCardContentComponent } from './item';
 
 // TODO: Make this generic in such a way that correct props are actually required and that an array of tabs can have hetergeneity of component types without a crazy TS type
 export type Tab<
@@ -23,6 +23,7 @@ export type ClassSummary = {
 
 export type ItemCardStore = {
   item: Item5e | null;
+  itemCardContentTemplate: ItemCardContentComponent | null;
 };
 
 // TODO: Extract shared ActorSheetContext and make this CharacterSheetContext
