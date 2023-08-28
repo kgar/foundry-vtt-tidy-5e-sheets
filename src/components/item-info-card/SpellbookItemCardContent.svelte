@@ -30,7 +30,7 @@
   <HorizontalLineSeparator borderColor="faint" cssClass="margin-to-edge" />
   {#if item.labels.school || ($store.owner && canPrepare)}
     <div class="info-card-states">
-      <span>{item.labels.school}</span>
+      <span>{item.labels.school ?? ''}</span>
       {#if $store.owner}
         {#if canPrepare}
           <span>{ctx.toggleTitle}</span>

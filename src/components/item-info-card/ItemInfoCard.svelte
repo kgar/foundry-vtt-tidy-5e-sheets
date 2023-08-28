@@ -39,12 +39,7 @@
   let sheetBorderRight: number = 0;
   let sheetBorderBottom: number = 0;
   let itemCardNode: HTMLElement;
-  let sheetObserver: IntersectionObserver = new IntersectionObserver(
-    ([sheet]) => {
-      sheetBorderRight = sheet.boundingClientRect.right;
-      sheetBorderBottom = sheet.boundingClientRect.bottom;
-    }
-  );
+  let sheet: HTMLElement | null = null;
 
   // TODO: Replace pixel perfection with more relative measurements
   function onMouseMove(args: { clientX: number; clientY: number }) {
@@ -58,8 +53,6 @@
   }
 
   function positionFloatingCard() {
-    console.log(lastMouseEvent);
-
     if (!lastMouseEvent) {
       return;
     }
@@ -93,6 +86,12 @@
   async function showCard() {
     if (!$card.item) {
       return;
+    }
+
+    const boundingClientRect = sheet?.getBoundingClientRect();
+    if (boundingClientRect) {
+      sheetBorderRight = boundingClientRect.right;
+      sheetBorderBottom = boundingClientRect.bottom;
     }
 
     chatData = await $card.item.getChatData({
@@ -146,19 +145,14 @@
 
   // Lifecycle
   onMount(() => {
-    console.warn('mounting');
-    let sheet = itemCardNode.closest('.sheet');
+    sheet = itemCardNode.closest<HTMLElement>('.sheet');
     if (sheet) {
-      sheetObserver.observe(sheet);
+      sheet.addEventListener('mousemove', onMouseMove);
     } else {
       warn(
         'Item Card parent sheet not found. Unable to support floating item card.'
       );
     }
-  });
-
-  onDestroy(() => {
-    sheetObserver.disconnect();
   });
 
   const localize = FoundryAdapter.localize;

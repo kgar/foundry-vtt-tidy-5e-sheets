@@ -15,9 +15,7 @@
 
   let store = getContext<Readable<ItemSheetContext>>('store');
 
-  $: context = $store;
-
-  $: context, console.log(context);
+  $: console.log($store.context);
 
   export let selectedTabId: string;
 

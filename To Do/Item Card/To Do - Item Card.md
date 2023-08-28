@@ -23,7 +23,8 @@
   - [x] Create function for getting top/left
   - [x] Set top/left 
   - [x] Listen to mousemove and retarget top/left while open and not frozen
-- [ ] Test/compare for PC
+- [x] Implement `overflowing` feature which applies some padding against the scrollbar. Accomplished this by eliminating the feature and always having some padding in place.
+- [x] Test/compare for PC
 - [ ] Test/compare for NPC
 - [ ] Test/compare for Vehicle
 - [ ] Test with popout!
