@@ -24,9 +24,7 @@ export class Tidy5eCharacterSheet extends ActorSheet5eCharacter {
   stats = writable<SheetStats>({
     lastSubmissionTime: null,
   });
-  card = writable<ItemCardStore>({
-    show: false,
-  });
+  card = writable<ItemCardStore>();
   selectedTabId: string | undefined = undefined;
 
   constructor(...args: any[]) {
@@ -47,6 +45,7 @@ export class Tidy5eCharacterSheet extends ActorSheet5eCharacter {
   component: SvelteComponent | undefined;
   async activateListeners(html: { get: (index: 0) => HTMLElement }) {
     const node = html.get(0);
+    this.card.set({ sheet: node, item: null, itemCardContentTemplate: null });
     const initialContext = await this.getContext();
     this.store.set(initialContext);
 

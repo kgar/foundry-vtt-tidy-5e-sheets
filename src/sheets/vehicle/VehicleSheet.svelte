@@ -26,6 +26,7 @@
   import AcShieldVehicle from '../actor/AcShieldVehicle.svelte';
   import VerticalLineSeparator from 'src/components/layout/VerticalLineSeparator.svelte';
   import AttributeBlock from '../AttributeBlock.svelte';
+    import ItemInfoCard from 'src/components/item-info-card/ItemInfoCard.svelte';
 
   export let selectedTabId: string;
 
@@ -87,6 +88,8 @@
 
   const localize = FoundryAdapter.localize;
 </script>
+
+<ItemInfoCard />
 
 <header>
   <div class="flex-0">

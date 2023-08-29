@@ -27,6 +27,7 @@
   import ActorHeaderStats from '../actor/ActorHeaderStats.svelte';
   import { SettingsProvider } from 'src/settings/settings';
   import ActorJournalTab from 'src/components/player-character/ActorJournalTab.svelte';
+  import ItemInfoCard from 'src/components/item-info-card/ItemInfoCard.svelte';
 
   export let selectedTabId: string;
 
@@ -104,6 +105,8 @@
 
   const localize = FoundryAdapter.localize;
 </script>
+
+<ItemInfoCard />
 
 <div class="token-link-wrapper {$store.tokenState}">
   <header>

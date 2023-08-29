@@ -25,7 +25,7 @@
   import type { Readable } from 'svelte/store';
   import type { ActorSheetContext } from 'src/types/types';
   import ListItemQuantity from 'src/sheets/actor/ListItemQuantity.svelte';
-  import CharacterInventoryItemCardContent from '../item-info-card/CharacterInventoryItemCardContent.svelte';
+  import InventoryItemCardContent from '../item-info-card/InventoryItemCardContent.svelte';
   import InventoryAmmoSelector from './InventoryAmmoSelector.svelte';
 
   export let primaryColumnName: string;
@@ -39,6 +39,7 @@
   let store = getContext<Readable<ActorSheetContext>>('store');
 
   const localize = FoundryAdapter.localize;
+  const weightUnit = FoundryAdapter.getWeightUnit();
   $: allowEdit = FoundryAdapter.tryGetFlag($store.actor, 'allow-edit');
   $: classicControlsBaseWidth = allowEdit ? '7.5rem' : '5.3125rem';
   $: quantityAlwaysShownEnabled =
@@ -72,7 +73,7 @@
       </ItemTableColumn>
       {#if includeWeightColumn}
         <ItemTableColumn
-          title="{localize('DND5E.Weight')} ({$store.weightUnit})"
+          title="{localize('DND5E.Weight')} ({weightUnit})"
           baseWidth="2.5rem"
         >
           <i class="fas fa-weight-hanging" />
@@ -101,7 +102,7 @@
         let:toggleSummary
         cssClass={getInventoryRowClasses(item)}
         alwaysShowQuantity={quantityAlwaysShownEnabled}
-        itemCardContentTemplate={CharacterInventoryItemCardContent}
+        itemCardContentTemplate={InventoryItemCardContent}
       >
         <ItemTableCell primary={true} title={item.name}>
           <ItemUseButton {item} />
@@ -138,12 +139,12 @@
           <ItemTableCell
             baseWidth="2.5rem"
             title="{localize('DND5E.Weight')}: {item.system
-              .weight} {$store.weightUnit}"
+              .weight} {weightUnit}"
           >
             {#if ctx.totalWeight}
-              {ctx.totalWeight} {$store.weightUnit}
+              {ctx.totalWeight} {weightUnit}
             {:else}
-              {item.system.weight} {$store.weightUnit}
+              {item.system.weight} {weightUnit}
             {/if}
           </ItemTableCell>
         {/if}

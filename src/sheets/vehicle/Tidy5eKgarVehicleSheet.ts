@@ -2,7 +2,11 @@ import { CONSTANTS } from 'src/constants';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { SettingsProvider } from 'src/settings/settings';
 import { Tidy5eKgarUserSettings } from 'src/settings/user-settings-form';
-import type { SheetStats, VehicleSheetContext } from 'src/types/types';
+import type {
+  ItemCardStore,
+  SheetStats,
+  VehicleSheetContext,
+} from 'src/types/types';
 import { isNil } from 'src/utils/data';
 import { writable } from 'svelte/store';
 import VehicleSheet from './VehicleSheet.svelte';
@@ -19,6 +23,7 @@ export class Tidy5eVehicleSheet extends ActorSheet5eVehicle {
   stats = writable<SheetStats>({
     lastSubmissionTime: null,
   });
+  card = writable<ItemCardStore>();
   selectedTabId: string | undefined = undefined;
 
   constructor(...args: any[]) {
@@ -40,6 +45,7 @@ export class Tidy5eVehicleSheet extends ActorSheet5eVehicle {
   component: SvelteComponent | undefined;
   async activateListeners(html: { get: (index: 0) => HTMLElement }) {
     const node = html.get(0);
+    this.card.set({ sheet: node, item: null, itemCardContentTemplate: null });
     const initialContext = await this.getContext();
     this.store.set(initialContext);
 
@@ -60,6 +66,7 @@ export class Tidy5eVehicleSheet extends ActorSheet5eVehicle {
         context: new Map<any, any>([
           ['store', this.store],
           ['stats', this.stats],
+          ['card', this.card],
         ]),
       });
     }

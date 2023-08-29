@@ -415,6 +415,13 @@ export const FoundryAdapter = {
   getNewCargo() {
     return { name: '', quantity: 1 };
   },
+  getWeightUnit() {
+    return FoundryAdapter.localize(
+      `DND5E.Abbreviation${
+        game.settings.get('dnd5e', 'metricWeightUnits') ? 'Kg' : 'Lbs'
+      }`
+    );
+  },
 };
 
 /* ------------------------------------------------------

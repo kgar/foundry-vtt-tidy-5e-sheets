@@ -12,7 +12,7 @@
 - [ ] Implement All Settings
 - [ ] Tackle Misc To Do's
   - [ ] Drag and drop
-  - [ ] New context menu?
+  - [ ] New context menu? Custom global context menu that leverages a global store
   - [ ] Revisit character sheet now that we've got all this experience
   - [ ] Typescriptify Tidy 5e flags
   - [ ] FoundryAdapter cleanup project and types purge
@@ -360,6 +360,7 @@ Evaluate module integration and think about better (API-centric) ways to support
 - [ ] Do a PR for the `moving` field.
 - [ ] Allow arrow and mouse scroll stepping on a Number-dtype text input. Rules: stepping is ignored if the current value is not numeric, and the event passes through.
 
+
 ## (Deferred for later; might solve itself) SCSS Revolution
 
 - [ ] Identify all components which are using styles
@@ -533,3 +534,9 @@ Love what you're doing with tidy! I havnt used it much since the base sheet kind
 
 kgar — Today at 12:35 PM
 It is very easy to do. It comes at the cost of some screen real estate, but when column selection is a thing, we might as well make item/feature/resource usage consumption optionally use a bar. I would think that alternate color(s) would be appropriate to distinguish from health bars
+
+### 's idea for dark mode as a libthemer function
+
+https://discord.com/channels/732325252788387980/1116078321067892796/1146085509177819307
+
+https://discord.com/channels/732325252788387980/1142084814623748157/1142090937812664450

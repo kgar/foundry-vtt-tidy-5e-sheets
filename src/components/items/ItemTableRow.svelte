@@ -35,16 +35,18 @@
   }
 
   async function onMouseEnter() {
-    card.set({
-      item,
-      itemCardContentTemplate,
+    card.update((card) => {
+      card.item = item;
+      card.itemCardContentTemplate = itemCardContentTemplate;
+      return card;
     });
   }
 
   async function onMouseLeave() {
-    card.set({
-      item: null,
-      itemCardContentTemplate: null,
+    card.update((card) => {
+      card.item = null;
+      card.itemCardContentTemplate = null;
+      return card;
     });
   }
 

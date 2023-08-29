@@ -11,7 +11,7 @@
   import { getContext } from 'svelte';
   import type { Readable, Writable } from 'svelte/store';
   import TextInput from '../form/TextInput.svelte';
-  import CharacterInventoryItemCardContent from '../item-info-card/CharacterInventoryItemCardContent.svelte';
+  import InventoryItemCardContent from '../item-info-card/InventoryItemCardContent.svelte';
 
   export let section: any;
   export let items: Item5e[];
@@ -44,16 +44,18 @@
   }
 
   async function onMouseEnter(item: Item5e) {
-    card.set({
-      item,
-      itemCardContentTemplate: CharacterInventoryItemCardContent,
+    card.update((card) => {
+      card.item = item;
+      card.itemCardContentTemplate = InventoryItemCardContent;
+      return card;
     });
   }
 
-  async function onMouseLeave(item: Item5e) {
-    card.set({
-      item: null,
-      itemCardContentTemplate: CharacterInventoryItemCardContent,
+  async function onMouseLeave() {
+    card.update((card) => {
+      card.item = null;
+      card.itemCardContentTemplate = null;
+      return card;
     });
   }
 </script>
@@ -78,8 +80,9 @@
         data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
         data-context-menu-entity-id={item.id}
         on:click={(event) => item.use({}, { event })}
+        on:mousedown={(event) => FoundryAdapter.editOnMiddleClick(event, item)}
         on:mouseenter={() => onMouseEnter(item)}
-        on:mouseleave={() => onMouseLeave(item)}
+        on:mouseleave={onMouseLeave}
       >
         {#if ctx.attunement}
           <i

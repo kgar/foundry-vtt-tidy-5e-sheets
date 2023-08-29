@@ -29,6 +29,8 @@
   import SpellbookFooter from 'src/components/spellbook/SpellbookFooter.svelte';
   import ItemFilterLayoutToggle from 'src/components/items/ItemFilterLayoutToggle.svelte';
   import SpellbookGrid from 'src/components/spellbook/SpellbookGrid.svelte';
+  import type { ItemCardContentComponent } from 'src/types/item';
+  import InventoryItemCardContent from 'src/components/item-info-card/InventoryItemCardContent.svelte';
 
   let store = getContext<Readable<NpcSheetContext>>('store');
 
@@ -60,6 +62,13 @@
 
   let showNoSpellsView = false;
   const localize = FoundryAdapter.localize;
+
+  function getInfoCardTemplate(section: any): ItemCardContentComponent | null {
+    if (['weapon', 'loot'].includes(section.dataset.type)) {
+      return InventoryItemCardContent;
+    }
+    return null;
+  }
 </script>
 
 <section class="npc-abilities-content">
@@ -108,6 +117,7 @@
               }}
               {item}
               cssClass={FoundryAdapter.getInventoryRowClasses(item, ctx)}
+              itemCardContentTemplate={getInfoCardTemplate(section)}
             >
               <ItemTableCell primary={true}>
                 <ItemUseButton {item} />

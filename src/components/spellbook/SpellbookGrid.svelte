@@ -25,16 +25,18 @@
   $: allowEdit = FoundryAdapter.tryGetFlag($store.actor, 'allow-edit');
 
   async function onMouseEnter(item: Item5e) {
-    card.set({
-      item,
-      itemCardContentTemplate: SpellbookItemCardContent,
+    card.update((card) => {
+      card.item = item;
+      card.itemCardContentTemplate = SpellbookItemCardContent;
+      return card;
     });
   }
 
-  async function onMouseLeave(item: Item5e) {
-    card.set({
-      item: null,
-      itemCardContentTemplate: SpellbookItemCardContent,
+  async function onMouseLeave() {
+    card.update((card) => {
+      card.item = null;
+      card.itemCardContentTemplate = null;
+      return card;
     });
   }
 </script>
@@ -64,8 +66,10 @@
           data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
           data-context-menu-entity-id={spell.id}
           on:click={(event) => spell.use({}, { event })}
+          on:mousedown={(event) =>
+            FoundryAdapter.editOnMiddleClick(event, spell)}
           on:mouseenter={() => onMouseEnter(spell)}
-          on:mouseleave={() => onMouseLeave(spell)}
+          on:mouseleave={onMouseLeave}
         >
           {#if FoundryAdapter.tryGetFlag(spell, 'favorite')}
             <GridPaneFavoriteIcon />

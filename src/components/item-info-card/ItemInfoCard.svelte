@@ -145,7 +145,7 @@
 
   // Lifecycle
   onMount(() => {
-    sheet = itemCardNode.closest<HTMLElement>('.sheet');
+    sheet = $card.sheet;
     if (sheet) {
       sheet.addEventListener('mousemove', onMouseMove);
     } else {

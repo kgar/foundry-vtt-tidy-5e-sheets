@@ -25,11 +25,13 @@
   - [x] Listen to mousemove and retarget top/left while open and not frozen
 - [x] Implement `overflowing` feature which applies some padding against the scrollbar. Accomplished this by eliminating the feature and always having some padding in place.
 - [x] Test/compare for PC
-- [ ] Test/compare for NPC
+- [x] Test/compare for NPC
 - [ ] Test/compare for Vehicle
 - [ ] Test with popout!
 - [ ] Test with Window Tabs
 - [ ] Ponder how one might add custom content to these cards... such as mod buttons
+- [ ] Implement setting: Disable item cards for NPCs/Vehicles
+- [ ] 
 
 ## Refine
 

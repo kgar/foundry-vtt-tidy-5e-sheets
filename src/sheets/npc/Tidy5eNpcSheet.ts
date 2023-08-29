@@ -1,5 +1,9 @@
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-import type { ActorSheetContext, SheetStats } from 'src/types/types';
+import type {
+  ActorSheetContext,
+  ItemCardStore,
+  SheetStats,
+} from 'src/types/types';
 import { writable } from 'svelte/store';
 import NpcSheet from './NpcSheet.svelte';
 import NpcSheetLimited from './NpcSheetLimited.svelte';
@@ -23,6 +27,7 @@ export class Tidy5eNpcSheet extends ActorSheet5eNpc {
   stats = writable<SheetStats>({
     lastSubmissionTime: null,
   });
+  card = writable<ItemCardStore>();
   selectedTabId: string | undefined = undefined;
 
   constructor(...args: any[]) {
@@ -44,6 +49,7 @@ export class Tidy5eNpcSheet extends ActorSheet5eNpc {
   component: SvelteComponent | undefined;
   async activateListeners(html: { get: (index: 0) => HTMLElement }) {
     const node = html.get(0);
+    this.card.set({ sheet: node, item: null, itemCardContentTemplate: null });
     const initialContext = await this.getContext();
     this.store.set(initialContext);
 
@@ -64,6 +70,7 @@ export class Tidy5eNpcSheet extends ActorSheet5eNpc {
         context: new Map<any, any>([
           ['store', this.store],
           ['stats', this.stats],
+          ['card', this.card],
         ]),
       });
     }

@@ -15,6 +15,7 @@
   $: ctx = $store.itemContext?.[item.id];
 
   const localize = FoundryAdapter.localize;
+  const weightUnit = FoundryAdapter.getWeightUnit();
 </script>
 
 <div
@@ -57,7 +58,7 @@
     <span class="info-weight"
       ><b>{localize('DND5E.Weight')}:</b>
       {item.system.weight}
-      {$store.weightUnit}</span
+      {weightUnit}</span
     >
     <span class="info-quantity"
       ><b>{localize('DND5E.Quantity')}:</b>
