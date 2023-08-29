@@ -57,17 +57,22 @@
       return;
     }
 
-    let mousePos = { x: lastMouseEvent.clientX, y: lastMouseEvent.clientY };
-    let top = `${mousePos.y - 230}px`;
-    let left = `${mousePos.x + 24}px`;
+    const cardWidthPx = rootFontSizePx * cardWidthRem;
+    const cardHeightPx = rootFontSizePx * cardHeightRem;
+    const cardHalfHeightPx = cardHeightPx / 2;
+    const mouseCursorCardGapPx = rootFontSizePx * mouseCursorCardGapRem;
 
-    if (mousePos.x + 304 > sheetBorderRight) {
-      left = `${mousePos.x - 304}px`;
+    let mousePos = { x: lastMouseEvent.clientX, y: lastMouseEvent.clientY };
+    let top = `${mousePos.y - cardHalfHeightPx}px`;
+    let left = `${mousePos.x + mouseCursorCardGapPx}px`;
+
+    if (mousePos.x + cardWidthPx > sheetBorderRight) {
+      left = `${mousePos.x - cardWidthPx - mouseCursorCardGapPx}px`;
     }
 
-    if (mousePos.y + 230 > sheetBorderBottom) {
-      let diff = sheetBorderBottom - (mousePos.y + 230);
-      top = `${mousePos.y - 230 + diff}px`;
+    if (mousePos.y + cardHalfHeightPx > sheetBorderBottom) {
+      let diff = sheetBorderBottom - (mousePos.y + cardHalfHeightPx);
+      top = `${mousePos.y - cardHalfHeightPx + diff}px`;
     }
 
     floatingTop = top;
@@ -88,12 +93,6 @@
       return;
     }
 
-    const boundingClientRect = sheet?.getBoundingClientRect();
-    if (boundingClientRect) {
-      sheetBorderRight = boundingClientRect.right;
-      sheetBorderBottom = boundingClientRect.bottom;
-    }
-
     chatData = await $card.item.getChatData({
       secrets: $card.item.actor?.isOwner,
     });
@@ -109,6 +108,14 @@
       item = $card.item;
 
       if (floating) {
+        rootFontSizePx = getRootFontSizePx();
+
+        const boundingClientRect = sheet?.getBoundingClientRect();
+        if (boundingClientRect) {
+          sheetBorderRight = boundingClientRect.right;
+          sheetBorderBottom = boundingClientRect.bottom;
+        }
+
         positionFloatingCard();
       }
 
@@ -118,6 +125,10 @@
 
   // Content
   const card = getContext<Writable<ItemCardStore>>('card');
+  const cardWidthRem: number = 17.5;
+  const cardHeightRem: number = 28.75;
+  const mouseCursorCardGapRem = 1.5;
+  let rootFontSizePx = getRootFontSizePx();
   let item: Item5e | undefined;
   let chatData: ItemChatData | undefined;
   $: itemProps = chatData?.properties ?? [];
@@ -155,6 +166,12 @@
     }
   });
 
+  function getRootFontSizePx(): number {
+    return document.documentElement.style.fontSize !== ''
+      ? parseFloat(document.documentElement.style.fontSize)
+      : parseFloat(getComputedStyle(document.documentElement).fontSize);
+  }
+
   const localize = FoundryAdapter.localize;
 </script>
 
@@ -172,6 +189,8 @@
   class:floating
   style:top={floatingTop}
   style:left={floatingLeft}
+  style:--card-width="{cardWidthRem}rem"
+  style:--card-height="{cardHeightRem}rem"
 >
   <div class="info-wrap">
     <article class="item-info-container-content">
@@ -185,7 +204,6 @@
               {/each}
             </div>
           {/if}
-
         </svelte:component>
       {:else}
         <h2>😢 Unable to show item card contents</h2>
@@ -210,7 +228,7 @@
     right: calc(100%);
     transform: translateY(-50%);
     width: 0;
-    height: 28.75rem;
+    height: var(--card-height);
     background: url('../../../ui/parchment.jpg');
     border-radius: 0.3125rem 0 0 0.3125rem;
     z-index: -10;
@@ -219,7 +237,7 @@
     overflow: hidden;
 
     &.open {
-      width: 17.5rem;
+      width: var(--card-width);
     }
 
     &.floating {
