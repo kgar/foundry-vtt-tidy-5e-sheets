@@ -39,18 +39,11 @@
 
 ## Refine
 
-- [ ] Review item card implementation and simplify / streamline if able
+- [x] ~~Review item card implementation and simplify / streamline if able~~ There are probably some ways to simplify this, but at a glance, I do not see a big win here that merits stopping forward momentum.
 - [x] Figure out how to mix in the various item card features. They're all layered onto the one component, and it's getting pretty crowded.
 - [x] The show/hide is not as deterministic as the original. The original always allows the card to fully dismiss before applying changes. Do we need a throttle of some sort? Buffering to allow close to finish? This may become clearer after implementing more of the card.
-
-## Stretch (else, defer to Unsorted future goals)
-
 - [x] Add selectOnFocus for content editable fields
-- [ ] Extract common grid layout button and wire in the item card functionality so that it's shared
-  - [ ] Shared content
-    - [ ] Image / src / useitem on click / middle click to edit
-    - [ ] Classlist on the grid tile for custom decoration
-    - [ ] optional toolbar at the bottom for charges, quantity, etc.
+
 
 ## Cross-Cutting
 

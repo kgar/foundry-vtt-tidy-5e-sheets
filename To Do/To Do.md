@@ -347,6 +347,11 @@ Evaluate module integration and think about better (API-centric) ways to support
 - [x] Ditto dnd5e system vehicle data field for "isMoving", "moving", "movement", "inMotion", or some other more appropriate name
 - [ ] Do a PR for the `moving` field.
 - [ ] Allow arrow and mouse scroll stepping on a Number-dtype text input. Rules: stepping is ignored if the current value is not numeric, and the event passes through.
+- [ ] Extract common grid layout button and wire in the item card functionality so that it's shared
+  - [ ] Shared content
+    - [ ] Image / src / useitem on click / middle click to edit
+    - [ ] Classlist on the grid tile for custom decoration
+    - [ ] optional toolbar at the bottom for charges, quantity, etc.
 
 
 ## (Deferred for later; might solve itself) SCSS Revolution
