@@ -186,7 +186,6 @@
             </div>
           {/if}
 
-          <article class="mod-roll-buttons" />
         </svelte:component>
       {:else}
         <h2>😢 Unable to show item card contents</h2>

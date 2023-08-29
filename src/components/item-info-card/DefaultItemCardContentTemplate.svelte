@@ -45,7 +45,6 @@
       {@html chatData.description.value}
     </div>
   </div>
-  <article class="mod-roll-buttons" />
 
   <slot />
 </div>

@@ -479,16 +479,3 @@
     {/if}
   {/if}
 </ListContainer>
-
-<!-- TODO: Handle info card as a single element managed by the window as a whole -->
-<!-- <div class="info-card" data-item-id={item._id}>
-  <p class="info-card-name">{item.name}</p>
-  <div class="description-wrap">
-    <div class="info-card-description">
-      {#await item.getChatData( { secrets: context.actor.isOwner } ) then chatData}
-        {@html chatData}
-      {/await}
-    </div>
-  </div>
-  <article class="mod-roll-buttons" />
-</div> -->

@@ -175,24 +175,4 @@
       white-space: pre-wrap;
     }
   }
-
-  .mod-roll-buttons {
-    .item-buttons {
-      display: flex;
-      white-space: nowrap;
-      flex-wrap: wrap;
-      gap: 0.125rem;
-      margin-top: 0.25rem;
-      padding-top: 0.25rem;
-      // border-top: 0.0625rem solid var(--t5e-light-color);
-
-      .button {
-        background: var(--t5e-secondary-color);
-        font-size: 0.75rem;
-        padding: 0.125rem 0.25rem 0.0625rem 0.25rem;
-        border-radius: 0.1875rem;
-        color: var(--t5e-background);
-      }
-    }
-  }
 }

@@ -21,17 +21,15 @@
 - [x] Implement floating
   - [x] Apply class when setting is set
   - [x] Create function for getting top/left
-  - [x] Set top/left 
+  - [x] Set top/left
   - [x] Listen to mousemove and retarget top/left while open and not frozen
 - [x] Implement `overflowing` feature which applies some padding against the scrollbar. Accomplished this by eliminating the feature and always having some padding in place.
 - [x] Test/compare for PC
 - [x] Test/compare for NPC
 - [x] Test/compare for Vehicle
 - [x] Test with popout!
-- [ ] Test with Window Tabs
-- [ ] Ponder how one might add custom content to these cards... such as mod buttons
+- [x] ~~Ponder how one might add custom content to these cards... such as mod buttons~~ deferred to later during the module compatibility trials
 - [ ] Implement setting: Disable item cards for NPCs/Vehicles
-- [ ] 
 
 ## Refine
 
@@ -43,6 +41,7 @@
 - [x] The show/hide is not as deterministic as the original. The original always allows the card to fully dismiss before applying changes. Do we need a throttle of some sort? Buffering to allow close to finish? This may become clearer after implementing more of the card.
 - [ ] // TODO: Replace pixel perfection with more relative measurements
 - [ ] Figure out how to mix in the various item card features. They're all layered onto the one component, and it's getting pretty crowded.
+- [ ] Work with Mouse on how to deal with the window tabs incompatibility
 
 ## Rewriting Item Cards
 
