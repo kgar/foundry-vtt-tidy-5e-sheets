@@ -35,6 +35,10 @@
   }
 
   async function onMouseEnter() {
+    if (!item?.getChatData) {
+      return;
+    }
+
     card.update((card) => {
       card.item = item;
       card.itemCardContentTemplate = itemCardContentTemplate;

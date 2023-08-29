@@ -24,6 +24,8 @@
   import ItemDuplicateControl from 'src/components/items/ItemDuplicateControl.svelte';
   import ItemEditControl from 'src/components/items/ItemEditControl.svelte';
   import ItemControls from 'src/components/items/ItemControls.svelte';
+  import type { ItemCardContentComponent } from 'src/types/item';
+  import InventoryItemCardContent from 'src/components/item-info-card/InventoryItemCardContent.svelte';
 
   let store = getContext<Readable<VehicleSheetContext>>('store');
 
@@ -94,6 +96,10 @@
 
     return false;
   }
+
+  const itemCardTemplates: Record<string, ItemCardContentComponent> = {
+    loot: InventoryItemCardContent,
+  };
 </script>
 
 {#if noCargoOrCrew && !allowEdit}
@@ -104,6 +110,7 @@
 
 <ListContainer cssClass="flex-column small-gap">
   {#each $store.cargo as section}
+    {@const cardTemplate = itemCardTemplates[section.dataset.type] ?? null}
     {#if allowEdit || section.items.length}
       <ItemTable>
         <ItemTableHeaderRow>
@@ -142,6 +149,7 @@
                 }}
             {item}
             cssClass={FoundryAdapter.getInventoryRowClasses(item, ctx)}
+            itemCardContentTemplate={cardTemplate}
           >
             <ItemTableCell primary={true}>
               {#if section.editableName}
