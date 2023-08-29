@@ -29,7 +29,11 @@
 - [x] Test/compare for Vehicle
 - [x] Test with popout!
 - [x] ~~Ponder how one might add custom content to these cards... such as mod buttons~~ deferred to later during the module compatibility trials
-- [ ] Implement setting: Disable item cards for NPCs/Vehicles
+- [x] Implement setting: ItemCardsForAllItems
+- [x] Implement setting: ItemCardsForNpcs
+- [x] Implement setting: ItemCardsAreFloating
+- [x] Implement setting: ItemCardsDelay
+- [x] Implement setting: ItemCardsFixKey
 
 ## Refine
 
@@ -42,6 +46,8 @@
 - [ ] // TODO: Replace pixel perfection with more relative measurements
 - [ ] Figure out how to mix in the various item card features. They're all layered onto the one component, and it's getting pretty crowded.
 - [ ] Work with Mouse on how to deal with the window tabs incompatibility
+- [ ] Add selectOnFocus for content editable fields
+- [ ] Get all Tidy 5e settings and add them to the svelte context going into modules. This can be soft-rerendered on config changes, etc., without the need to fully rerendering the sheets.
 
 ## Rewriting Item Cards
 

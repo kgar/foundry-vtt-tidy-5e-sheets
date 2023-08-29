@@ -10,6 +10,7 @@
     ItemCardContentComponent,
     ItemChatData,
   } from 'src/types/item';
+  import { SettingsProvider } from 'src/settings/settings';
 
   export let item: Item5e | null = null;
   export let contextMenu: { type: string; id: string } | null = null;
@@ -20,6 +21,9 @@
   let card = getContext<Writable<ItemCardStore>>('card');
   let showSummary = false;
   let chatData: ItemChatData;
+
+  $: itemCardsForAllItems =
+    SettingsProvider.settings.itemCardsForAllItems.get();
 
   async function toggleSummary(event: MouseEvent, actor: Actor5e) {
     if (!item) {
@@ -35,7 +39,7 @@
   }
 
   async function onMouseEnter() {
-    if (!item?.getChatData) {
+    if (!item?.getChatData || !itemCardsForAllItems) {
       return;
     }
 

@@ -103,10 +103,14 @@
 
   $: abilities = Object.entries<any>($store.abilities);
 
+  $: itemCardsForNpcs = SettingsProvider.settings.itemCardsForNpcs.get();
+
   const localize = FoundryAdapter.localize;
 </script>
 
-<ItemInfoCard />
+{#if itemCardsForNpcs}
+  <ItemInfoCard />
+{/if}
 
 <div class="token-link-wrapper {$store.tokenState}">
   <header>
