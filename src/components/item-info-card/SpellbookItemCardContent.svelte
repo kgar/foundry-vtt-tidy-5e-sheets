@@ -27,7 +27,6 @@
 
 <div class="info-card {spellRowClasses}" data-item-id={item._id}>
   <p class="info-card-name">{item.name}</p>
-  <HorizontalLineSeparator borderColor="faint" cssClass="margin-to-edge" />
   {#if item.labels.school || ($store.owner && canPrepare)}
     <div class="info-card-states">
       <span>{item.labels.school ?? ''}</span>
@@ -37,7 +36,7 @@
         {/if}
       {/if}
     </div>
-    <HorizontalLineSeparator borderColor="faint" cssClass="margin-to-edge" />
+    <HorizontalLineSeparator borderColor="faint" />
   {/if}
   {#if ctx?.hasUses}
     <div class="info-card-amount">
@@ -46,7 +45,7 @@
         {item.system.uses.value}/{item.system.uses.max}</span
       >
     </div>
-    <HorizontalLineSeparator borderColor="faint" cssClass="margin-to-edge" />
+    <HorizontalLineSeparator borderColor="faint" />
   {/if}
   <div class="description-wrap">
     <div class="info-card-description">

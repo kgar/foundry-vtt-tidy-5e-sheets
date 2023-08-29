@@ -27,14 +27,14 @@
 >
   <p class="info-card-name">
     {item.name}
-    {#if item.system.properties?.amm}
-      <span class="ammo-switch" data-id={item._id}>
-        <InventoryAmmoSelector {item} />
-      </span>
-    {/if}
   </p>
+  {#if item.system.properties?.amm}
+    <p class="ammo-switch" data-id={item._id}>
+      <InventoryAmmoSelector {item} />
+    </p>
+    <HorizontalLineSeparator borderColor="faint" />
+  {/if}
 
-  <HorizontalLineSeparator borderColor="faint" cssClass="margin-to-edge" />
   {#if item.system.properties?.mgc || ctx?.attunement}
     <div class="info-card-states">
       {#if item.system.properties?.mgc}
@@ -52,7 +52,7 @@
         </span>
       {/if}
     </div>
-    <HorizontalLineSeparator borderColor="faint" cssClass="margin-to-edge" />
+    <HorizontalLineSeparator borderColor="faint" />
   {/if}
   <div class="info-card-amount">
     <span class="info-weight"
@@ -69,7 +69,7 @@
       {/if}
     </span>
   </div>
-  <HorizontalLineSeparator borderColor="faint" cssClass="margin-to-edge" />
+  <HorizontalLineSeparator borderColor="faint" />
   {#if ctx?.hasUses}
     <div class="info-card-amount">
       <span
@@ -77,7 +77,7 @@
         {item.system.uses.value}/{item.system.uses.max}</span
       >
     </div>
-    <HorizontalLineSeparator borderColor="faint" cssClass="margin-to-edge" />
+    <HorizontalLineSeparator borderColor="faint" />
   {/if}
   <div class="description-wrap">
     <div class="info-card-description">

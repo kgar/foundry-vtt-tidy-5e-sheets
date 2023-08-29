@@ -35,19 +35,21 @@
 - [x] Implement setting: ItemCardsDelay
 - [x] Implement setting: ItemCardsFixKey
 - [x] // TODO: Replace pixel perfection with more relative measurements ; this is required in order to scale the UI properly. It is currently hardcoded to a width that is relative to 16px root font size
+- [x] Upgrade cards to support longer names. Particularly, eliminate the faded gradient in favor of a more direct coloration of the header name section.
 
 ## Refine
 
-- [ ] Extract common grid layout button and wire in the item card functionality so that it's shared
 - [ ] Review item card implementation and simplify / streamline if able
-- [ ] Upgrade cards to support longer names. Particularly, eliminate the faded gradient in favor of a more direct coloration of the header name section.
-- [ ]
-- [ ] Figure out how to mix in the various item card features. They're all layered onto the one component, and it's getting pretty crowded.
 - [ ] Work with Mouse on how to deal with the window tabs incompatibility
+- [x] Figure out how to mix in the various item card features. They're all layered onto the one component, and it's getting pretty crowded.
+- [x] The show/hide is not as deterministic as the original. The original always allows the card to fully dismiss before applying changes. Do we need a throttle of some sort? Buffering to allow close to finish? This may become clearer after implementing more of the card.
+
+## Stretch (else, defer to Unsorted future goals)
+
+- [ ] Extract common grid layout button and wire in the item card functionality so that it's shared
 - [ ] Add selectOnFocus for content editable fields
 - [ ] Add hook subscribe to catch changes to tidy 5e kgar main settings changes and then rerender sheets the same way that it works for sheet settings.
 - [ ] Get all Tidy 5e settings and add them to the svelte context going into modules. This can be soft-rerendered on config changes, etc., without the need to fully rerendering the sheets.
-- [x] The show/hide is not as deterministic as the original. The original always allows the card to fully dismiss before applying changes. Do we need a throttle of some sort? Buffering to allow close to finish? This may become clearer after implementing more of the card.
 
 ## Rewriting Item Cards
 

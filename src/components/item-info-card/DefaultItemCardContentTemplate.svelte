@@ -30,7 +30,6 @@
   data-item-id={item._id}
 >
   <p class="info-card-name">{item.name}</p>
-  <HorizontalLineSeparator borderColor="faint" cssClass="margin-to-edge" />
   {#if ctx?.hasUses}
     <div class="info-card-amount">
       <span
@@ -38,7 +37,7 @@
         {item.system.uses.value}/{item.system.uses.max}</span
       >
     </div>
-    <HorizontalLineSeparator borderColor="faint" cssClass="margin-to-edge" />
+    <HorizontalLineSeparator borderColor="faint" />
   {/if}
   <div class="description-wrap">
     <div class="info-card-description">

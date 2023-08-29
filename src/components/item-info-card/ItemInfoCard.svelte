@@ -197,7 +197,7 @@
       {#if !!infoContentTemplate && !!item && !!chatData}
         <svelte:component this={infoContentTemplate} {item} {chatData}>
           {#if itemProps.length}
-            <HorizontalLineSeparator cssClass="margin-to-edge" />
+            <HorizontalLineSeparator />
             <div class="item-properties">
               {#each itemProps as prop}
                 <span class="tag">{prop}</span>
