@@ -1,12 +1,15 @@
+Progress:
 :white_check_mark: Character Sheet (and laying the foundation)
 :white_check_mark: All Item Sheets (11 sheets? this list would look more impressive if this were expanded out, but I'd rather go to bed, hahaha) 
 :white_check_mark: Updating for dnd5e 2.3.0
 :white_check_mark: NPC Sheet
 :white_check_mark: Limited NPC sheet
 :white_check_mark: Vehicles
-:orange_square: Limited Character sheet
-:white_large_square: Limited Vehicle sheet
+:white_check_mark: Limited Character sheet
+:white_check_mark: Limited Vehicle sheet
+:orange_square: Item Info Card
 :white_large_square: Dark Mode
+:white_large_square: account for dnd5e 2.3.0-2.3.1 differences
 :white_large_square: Settings Dialog Overhaul
 :white_large_square: Implement All Settings
 :white_large_square: Miscellaneous To-Do's which have piled up during this rewrite
