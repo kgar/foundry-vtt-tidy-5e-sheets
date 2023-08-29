@@ -40,16 +40,30 @@
 ## Refine
 
 - [ ] Review item card implementation and simplify / streamline if able
-- [ ] Work with Mouse on how to deal with the window tabs incompatibility
 - [x] Figure out how to mix in the various item card features. They're all layered onto the one component, and it's getting pretty crowded.
 - [x] The show/hide is not as deterministic as the original. The original always allows the card to fully dismiss before applying changes. Do we need a throttle of some sort? Buffering to allow close to finish? This may become clearer after implementing more of the card.
 
 ## Stretch (else, defer to Unsorted future goals)
 
+- [x] Add selectOnFocus for content editable fields
 - [ ] Extract common grid layout button and wire in the item card functionality so that it's shared
-- [ ] Add selectOnFocus for content editable fields
-- [ ] Add hook subscribe to catch changes to tidy 5e kgar main settings changes and then rerender sheets the same way that it works for sheet settings.
-- [ ] Get all Tidy 5e settings and add them to the svelte context going into modules. This can be soft-rerendered on config changes, etc., without the need to fully rerendering the sheets.
+  - [ ] Shared content
+    - [ ] Image / src / useitem on click / middle click to edit
+    - [ ] Classlist on the grid tile for custom decoration
+    - [ ] optional toolbar at the bottom for charges, quantity, etc.
+
+## Cross-Cutting
+
+- [x] Implement Item Cards
+  - [x] src_scss\partials_item-info-card.scss
+  - [x] Game Settings
+    - [x] Show item info cards in all layouts
+    - [x] Show item info cards for NPCs/Vehicles
+    - [x] Item info cards float next to cursor
+    - [x] Delay showing info cards
+    - [x] Key to hold for Item Card interaction
+- [x] Reimplement Favorites visualization 
+  - Psst: src_scss\partials_favorites.scss
 
 ## Rewriting Item Cards
 

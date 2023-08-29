@@ -160,6 +160,7 @@
               dataMaxLength={4}
               value={$store.labels.cr}
               saveAs="number"
+              selectOnFocus={true}
             />
           </div>
         </div>

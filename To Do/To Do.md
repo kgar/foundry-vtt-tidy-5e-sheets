@@ -6,7 +6,7 @@
 - [x] Limited Vehicle Sheet
 - [x] Refactor: Make all limited sheets do like the dnd5e limited sheet
   - [x] Share a standard header based on the draft from VehicleSheetLimited
-- [ ] Item Card
+- [x] Item Card
 - [ ] Dark Mode
 - [ ] Settings Dialog Overhaul
 - [ ] Implement All Settings
@@ -84,6 +84,7 @@ context.biographyHTML = await TextEditor.enrichHTML(
   - [ ] Not sure if this actually works, but I am hopeful because svelte classes are actually real.
 - [ ] Feel out how to add vue-based content ; add a tab with an HTML mount point and allow vue to render from it and respond to changes
   - [ ] Show this particular one to Mouse0270 if it works out in order to get some feedback.
+- [ ] Work with Mouse0270 on how to deal with the window tabs incompatibility; there is a matrix3d transform being placed on the sheet div which is resetting the container block to the sheet itself, and this is causing the fixed position of the item card to position left and top based on the sheet's location and not the viewport.
 
 ## Character Tabs Pile of TODOs
 
@@ -167,7 +168,7 @@ Evaluate module integration and think about better (API-centric) ways to support
   - [x] Rolling
   - [x] Editing data and having it persist
 - [x] Global SCSS configured that is scoped to `.tidy5e-kgar`
-- [ ] Figure out how flags and settings work
+- [x] Figure out how flags and settings work
   - [x] Reread this https://foundryvtt.wiki/en/development/guides/handling-data and compare it to Tidy5e's approach
   - [x] https://foundryvtt.wiki/en/development/api/flags
   - [x] https://foundryvtt.wiki/en/development/api/settings
@@ -213,8 +214,6 @@ Evaluate module integration and think about better (API-centric) ways to support
 - [ ] ... next steps
 - [ ] Implement `editGmAlwaysEnabled`
 - [ ] Implement `editEffectsGmOnlyEnabled`
-- [ ] Add game setting `showSheetOptionsOnWindowHeader` and limit `getActorSheetHeaderButtons` hook handler to when this setting is on.
-  - [ ] This fits better in the main module settings and not the sheet settings.
 - [ ] Refinement: User-specific sheet flags | set up individual flags for each desired primitive value, and generate a key based on `${userId}-feature-name-here`
 - [ ] Refinement: make Action Economy filtering unique to the user and not the actor. Unfortunately, to keep track of this, we'll need to persist a large json object representing Actor -> Tab -> Filter Name, with a value of boolean at the leaf.
 - [ ] Refinement: implement sorting per section type ; it should not affect the actual order of the data, and it should be specific to the users
@@ -222,17 +221,6 @@ Evaluate module integration and think about better (API-centric) ways to support
 - [ ] Refinement: maintain open/closed state of items between refreshes
 - [ ] Refinement: Expand All / Collapse All
 
-## Cross-Cutting
-
-- [ ] Implement Item Cards
-  - [ ] src_scss\partials_item-info-card.scss
-  - [ ] Game Settings
-    - [ ] Show item info cards in all layouts
-    - [ ] Show item info cards for NPCs/Vehicles
-    - [ ] Item info cards float next to cursor
-    - [ ] Delay showing info cards
-    - [ ] Key to hold for Item Card interaction
-- [ ] Reimplement Favorites visualization - [ ] Psst: src_scss\partials_favorites.scss
 
 ## Big Picture
 

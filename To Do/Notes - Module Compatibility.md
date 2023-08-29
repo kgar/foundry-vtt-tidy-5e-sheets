@@ -56,3 +56,11 @@ Character Actions List dnd5e (ID: character-actions-list-5e ) https://github.com
 World Currency 5e (ID: world-currency-5e) https://foundryvtt.com/packages/world-currency-5e
 
 > ⚠ Integrated uncomfortably closely with lazy money integration in Tidy 5e. Uncomfortably, so. This should be reimagined with the API
+
+Popout!
+
+> Requested by Fallayn in the commission thread, and they are intending to contribute financially.
+
+Window Tabs
+
+> Hasn't been requested by anyone on the commission, but it would be good to support.

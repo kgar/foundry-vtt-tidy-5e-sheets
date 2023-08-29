@@ -143,6 +143,7 @@
           title={$store.system.traits.dimensions}
           editable={$store.owner}
           placeholder={localize('DND5E.Dimensions')}
+          selectOnFocus={true}
         />
         <ContentEditableFormField
           element="span"
@@ -157,6 +158,7 @@
           )
             ? '| ' + $store.system.details.source
             : ''}"
+          selectOnFocus={true}
         />
       </DelimitedTruncatedContent>
       <div class="flex-row align-items-center extra-small-gap">

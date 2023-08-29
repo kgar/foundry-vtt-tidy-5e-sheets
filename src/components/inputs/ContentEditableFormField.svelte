@@ -13,6 +13,7 @@
   export let placeholder: string | null = null;
   export let saveAs: 'string' | 'number' = 'string';
   export let title: string | null = null;
+  export let selectOnFocus: boolean = false;
 
   $: draftValue = value;
 
@@ -46,6 +47,16 @@
       value = _el.textContent ?? '';
     }, 0);
   }
+
+  function onFocus(ev: Event & { currentTarget: HTMLElement }) {
+    if (selectOnFocus && window.getSelection) {
+      const selection = window.getSelection();
+      const range = window.document.createRange();
+      range.selectNodeContents(ev.currentTarget);
+      selection?.removeAllRanges();
+      selection?.addRange(range);
+    }
+  }
 </script>
 
 {#if editable}
@@ -58,6 +69,7 @@
     on:blur={update}
     on:keypress={submitWhenEnterKey}
     on:paste={handlePaste}
+    on:focus={onFocus}
     role="textbox"
     tabindex="0"
     {spellcheck}
