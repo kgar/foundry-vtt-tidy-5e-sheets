@@ -44,6 +44,9 @@
 
 ## Refine
 
+- [ ] Finally fix the multiply tinting / darkening issue with profile pictures and HP overlays
+  - inspo: https://www.youtube.com/watch?v=TAA89nkEuhw&ab_channel=KevinPowell
+  - inspo: https://codepen.io/kevinpowell/pen/OJpYKNR/3cf5d075a29e2d702c02ee7387d516c2
 - [ ] Reduce duplication of colors in the themes, if possible. Allow specialized colors to reference other variables; think of how Kendo will create variables for specific things but will point them to more generic variables
 - [ ] Refine: rename the font-family-specific variables to something more geared to their purpose and not to the font family itself.
 - [ ] Refine: setting properties directly on root is not very Tidy of me. Consider using a template stylesheet in which I can replace all the contents each time with the new theme ruleset. See https://developer.mozilla.org/en-US/docs/Web/API/CSSStyleSheet/replace
