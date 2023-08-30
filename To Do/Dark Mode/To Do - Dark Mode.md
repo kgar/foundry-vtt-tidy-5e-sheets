@@ -38,6 +38,9 @@
 - [ ] Compare Items
 - [ ] Celebraaaaate! 🎉🎊
 
+## Oops
+
+- [x] PC tool proficiencies are missing? Put them back - I think it was from a recent dnd5e update; thankfully, this will be covered in my automated tests later, so catching this stuff will be a breeze
 
 ## Refine
 

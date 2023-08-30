@@ -3,7 +3,7 @@ import type { Tidy5eTheme } from 'src/types/theme';
 export const defaultLightTheme: Tidy5eTheme = {
   name: 'light',
   version: 1,
-  id: 'tidy5e-kgar-defualt-light',
+  id: 'tidy5e-kgar-default-light',
   description: 'The default Tidy 5e Light theme',
   variables: {
     '--t5ek-modesto': "'Modesto Condensed', 'Palatino Linotype', serif",
@@ -100,5 +100,10 @@ export const defaultLightTheme: Tidy5eTheme = {
     '--t5ek-inventory-grid-image-contrast-text-shadow': 'rgba(0, 0, 0, 1)',
     '--t5ek-inventory-grid-hover-use-item-contrast-text-shadow':
       'rgba(255, 255, 255, 1)',
+    '--t5ek-item-info-card-bg': "url('../../../ui/parchment.jpg')",
+    '--t5ek-content-entity-link-color': 'var(--t5ek-primary-font)',
+    '--t5ek-content-entity-link-hover-color': 'var(--t5ek-white)',
+    '--t5ek-content-entity-link-bg': 'var(--t5ek-faintest-color)',
+    '--t5ek-content-entity-link-hover-bg': 'var(--t5ek-primary-accent)',
   },
 };

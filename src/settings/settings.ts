@@ -1985,7 +1985,9 @@ export function initSettings() {
     game.settings.register(CONSTANTS.MODULE_ID, setting[0], setting[1].options);
   }
 
-  applyTheme(defaultLightTheme);
+  SettingsProvider.settings.colorScheme.options.onChange(
+    SettingsProvider.settings.colorScheme.get()
+  );
 }
 
 function setDnd5eCssVariable(

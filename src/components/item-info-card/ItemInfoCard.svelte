@@ -229,7 +229,7 @@
     transform: translateY(-50%);
     width: 0;
     height: var(--card-height);
-    background: url('../../../ui/parchment.jpg');
+    background: var(--t5ek-item-info-card-bg);
     border-radius: 0.3125rem 0 0 0.3125rem;
     z-index: -10;
     box-shadow: 0 0 0.3125rem rgba(0, 0, 0, 0.5);
@@ -255,13 +255,6 @@
       .info-wrap {
         border: none;
       }
-    }
-
-    a.entity-link,
-    a.inline-roll {
-      font-size: 0.8125rem;
-      border-radius: 0.3125rem;
-      padding: 0 0.25rem;
     }
 
     .info-wrap {

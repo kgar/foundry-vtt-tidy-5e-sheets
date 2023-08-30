@@ -46,7 +46,7 @@
     padding: 0.25rem 0.5rem;
     line-height: 1;
 
-    background: var(--t5ek-background);
+    background: var(--t5ek-header-background);
   }
 
   .ammo-switch {
@@ -131,5 +131,11 @@
     .tag {
       white-space: pre-wrap;
     }
+  }
+
+  a.entity-link,
+  a.content-link,
+  a.inline-roll {
+    font-size: 0.8125rem;
   }
 }

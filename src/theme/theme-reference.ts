@@ -363,4 +363,32 @@ export const themeVariables = {
     type: 'todo',
     group: 'todo',
   },
+  '--t5ek-sheet-background': {
+    type: 'todo',
+    group: 'todo',
+  },
+  '--t5ek-select-option-color': {
+    type: 'todo',
+    group: 'todo',
+  },
+  '--t5ek-item-info-card-bg': {
+    type: 'todo',
+    group: 'todo,',
+  },
+  '--t5ek-content-entity-link-color': {
+    type: 'todo',
+    group: 'todo',
+  },
+  '--t5ek-content-entity-link-hover-color': {
+    type: 'todo',
+    group: 'todo',
+  },
+  '--t5ek-content-entity-link-bg': {
+    type: 'todo',
+    group: 'todo',
+  },
+  '--t5ek-content-entity-link-hover-bg': {
+    type: 'todo',
+    group: 'todo',
+  },
 };

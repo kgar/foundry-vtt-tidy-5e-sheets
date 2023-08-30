@@ -16,6 +16,41 @@
 @import './spell-level-buttons-dialog';
 
 .tidy5e-kgar {
+  a.entity-link,
+  a.content-link,
+  a.inline-roll {
+    padding: 0.125rem 0.25rem;
+    border-radius: 0.3125rem;
+    background: var(--t5ek-content-entity-link-bg);
+    color: var(--t5ek-content-entity-link-color);
+
+    i {
+      color: var(--t5ek-content-entity-link-color);
+    }
+
+    &:hover {
+      color: var(--t5ek-content-entity-link-hover-color);
+      background: var(--t5ek-content-entity-link-hover-bg);
+
+      i {
+        color: var(--t5ek-content-entity-link-hover-color);
+      }
+    }
+  }
+
+  &.sheet form {
+    background: var(--t5ek-sheet-background);
+
+    select option {
+      color: var(--t5ek-select-option-color);
+    }
+  }
+
+  // TODO: After settings overhaul, support dark mode on sheet settings screen(s)
+  // .window-content {
+  //   background: var(--t5ek-sheet-background);
+  // }
+
   &.actor {
     @import './partials/actor';
     @import './partials/item-card';
