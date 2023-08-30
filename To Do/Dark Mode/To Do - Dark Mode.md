@@ -48,6 +48,37 @@
 - [ ] Refine: rename the font-family-specific variables to something more geared to their purpose and not to the font family itself.
 - [ ] Refine: setting properties directly on root is not very Tidy of me. Consider using a template stylesheet in which I can replace all the contents each time with the new theme ruleset. See https://developer.mozilla.org/en-US/docs/Web/API/CSSStyleSheet/replace
 - [ ] Document it: add a readme to the theme folder that explains how to add new variables, remove variables, etc.
+- [ ] Import in Tidy 5e-ified TinyMCE styles
+  - [ ] Compare PCs in light mode
+  - [ ] Compare PCs in dark mode
+- [ ] inline the Class Advancement SVGs
+  - [ ] create a component called InlineSvg that takes a url
+  - [ ] fetch the content via the url in the component
+  - [ ] render the return value on the screen
+  - [ ] if error, then attempt to put it to an `img[src]`
+- [ ] set the class advancement SVG fills to our `--t5ek-primary-font` value 💪
+- [ ] set the width/height of the SVG images appropriately
+- [ ] leave the image filter variable intact as a fallback, and have the styles support it
+
+
+### Tiny MCE Styles
+
+```css
+```
+
+### Tiny MCE Dark Mode Styles
+
+```css
+/* This is TinyMCE */
+.tox .tox-toolbar-overlord button {
+  color: #222;
+}
+
+.tox-sidebar-wrap {
+  padding: 8px;
+  background: var(--t5e-secondary-color);
+}
+```
 
 ## Current Setup
 

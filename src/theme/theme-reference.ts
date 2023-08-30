@@ -367,10 +367,6 @@ export const themeVariables = {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-select-option-color': {
-    type: 'todo',
-    group: 'todo',
-  },
   '--t5ek-item-info-card-bg': {
     type: 'todo',
     group: 'todo,',
@@ -388,6 +384,14 @@ export const themeVariables = {
     group: 'todo',
   },
   '--t5ek-content-entity-link-hover-bg': {
+    type: 'todo',
+    group: 'todo',
+  },
+  '--t5ek-item-hint-text-color': {
+    type: 'todo',
+    group: 'todo',
+  },
+  '--t5ek-advancement-image-filter': {
     type: 'todo',
     group: 'todo',
   },

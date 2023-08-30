@@ -108,17 +108,11 @@
       {/if}
 
       {#if data.configured === 'full'}
-        <div
-          class="item-checkmark"
-          title="DND5E.AdvancementConfiguredComplete"
-        >
+        <div class="item-checkmark" title="DND5E.AdvancementConfiguredComplete">
           <i class="fas fa-check-circle" />
         </div>
       {:else if data.configured === 'partial'}
-        <div
-          class="item-warning"
-          title="DND5E.AdvancementConfiguredIncomplete"
-        >
+        <div class="item-warning" title="DND5E.AdvancementConfiguredIncomplete">
           <i class="fas fa-exclamation-triangle" />
         </div>
       {/if}

@@ -16,6 +16,16 @@
 @import './spell-level-buttons-dialog';
 
 .tidy5e-kgar {
+  &.sheet form {
+    color: var(--t5e-primary-font);
+    background: var(--t5ek-sheet-background);
+  }
+
+  select option {
+    color: var(--t5ek-primary-font);
+    background: var(--t5ek-background);
+  }
+
   a.entity-link,
   a.content-link,
   a.inline-roll {
@@ -35,14 +45,6 @@
       i {
         color: var(--t5ek-content-entity-link-hover-color);
       }
-    }
-  }
-
-  &.sheet form {
-    background: var(--t5ek-sheet-background);
-
-    select option {
-      color: var(--t5ek-select-option-color);
     }
   }
 

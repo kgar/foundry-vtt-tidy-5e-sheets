@@ -101,11 +101,16 @@ export const defaultDarkTheme: Tidy5eTheme = {
     '--t5ek-inventory-grid-hover-use-item-contrast-text-shadow':
       'rgba(255, 255, 255, 1)',
     '--t5ek-sheet-background': 'var(--t5ek-background)',
-    '--t5ek-select-option-color': 'var(--t5ek-background)',
     '--t5ek-item-info-card-bg': 'var(--t5ek-background)',
     '--t5ek-content-entity-link-color': 'var(--t5ek-primary-font)',
     '--t5ek-content-entity-link-hover-color': 'var(--t5ek-primary-font)',
     '--t5ek-content-entity-link-bg': 'var(--t5ek-faint-color)',
     '--t5ek-content-entity-link-hover-bg': 'var(--t5ek-primary-accent)',
+    /* 
+      For a more comprehensive conversion from a hex color to an image filter, see these links:
+      - https://stackoverflow.com/questions/22252472/how-can-i-change-the-color-of-an-svg-element
+      - https://codepen.io/sosuke/pen/Pjoqqp
+    */
+    '--t5ek-advancement-image-filter': 'invert(1)',
   },
 };

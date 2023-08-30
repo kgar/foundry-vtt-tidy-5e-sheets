@@ -70,7 +70,6 @@
       value={$store.system.identifier}
       placeholder={$store.item.identifier}
     />
-    <input type="text" />
   </div>
   <p class="hint">
     {@html localize('DND5E.ClassIdentifierHint', {

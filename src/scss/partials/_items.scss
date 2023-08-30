@@ -8,6 +8,10 @@
   form {
     height: 100%;
     overflow: hidden;
+
+    .hint {
+      color: var(--t5ek-secondary-color);
+    }
   }
 }
 
@@ -608,12 +612,7 @@ input[type='checkbox'] {
         border: none;
         background-size: cover;
 
-        i {
-          color: var(--t5ek-tertiary-color);
-          display: none;
-          text-align: center;
-          font-size: 1.125rem;
-        }
+        filter: var(--t5ek-advancement-image-filter);
       }
     }
   }
