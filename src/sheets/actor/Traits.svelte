@@ -250,7 +250,7 @@ c28,32.6,51.5,72.7,62,91.7c2.8,5,9.9,5.1,12.8,0.2c14-23.3,44.3-83.4,44.3-166.9C4
 
 <style lang="scss">
   .traits {
-    border: 0.0625rem solid var(--t5e-faint-color);
+    border: 0.0625rem solid var(--t5ek-faint-color);
     border-radius: 0.3125rem 0.3125rem 0 0;
     overflow: visible;
     position: relative;
@@ -261,7 +261,7 @@ c28,32.6,51.5,72.7,62,91.7c2.8,5,9.9,5.1,12.8,0.2c14-23.3,44.3-83.4,44.3-166.9C4
     }
 
     :global(.trait-form-group:nth-child(even)) {
-      background: var(--t5e-faint-color);
+      background: var(--t5ek-faint-color);
     }
 
     svg {
@@ -269,7 +269,7 @@ c28,32.6,51.5,72.7,62,91.7c2.8,5,9.9,5.1,12.8,0.2c14-23.3,44.3-83.4,44.3-166.9C4
       width: 0.875rem;
 
       path {
-        fill: var(--t5e-tertiary-color);
+        fill: var(--t5ek-tertiary-color);
       }
     }
 
@@ -278,17 +278,17 @@ c28,32.6,51.5,72.7,62,91.7c2.8,5,9.9,5.1,12.8,0.2c14-23.3,44.3-83.4,44.3-166.9C4
       display: inline-block;
       top: calc(100% + 0.0625rem);
       left: -0.0625rem;
-      border: 0.0625rem solid var(--t5e-faint-color);
+      border: 0.0625rem solid var(--t5ek-faint-color);
       border-top: 0;
       border-radius: 0 0 0.1875rem 0.1875rem;
       padding: 0.125rem 0.25rem;
       width: auto;
       font-size: 0.625rem;
-      color: var(--t5e-secondary-color);
+      color: var(--t5ek-secondary-color);
     }
 
     .toggle-traits:hover {
-      color: var(--t5e-primary-font);
+      color: var(--t5ek-primary-font);
     }
 
     .configure-special-traits {
@@ -297,24 +297,24 @@ c28,32.6,51.5,72.7,62,91.7c2.8,5,9.9,5.1,12.8,0.2c14-23.3,44.3-83.4,44.3-166.9C4
       display: inline-block;
       top: calc(100% + 0.0625rem);
       right: -0.0625rem;
-      border: 0.0625rem solid var(--t5e-faint-color);
+      border: 0.0625rem solid var(--t5ek-faint-color);
       border-top: 0;
       border-radius: 0 0 0.1875rem 0.1875rem;
       padding: 0.125rem 0.25rem;
       width: auto;
       font-size: 0.625rem;
-      color: var(--t5e-secondary-color);
+      color: var(--t5ek-secondary-color);
     }
 
     .configure-special-traits i.fas {
       line-height: 0.625rem;
       vertical-align: baseline;
-      color: var(--t5e-tertiary-color);
+      color: var(--t5ek-tertiary-color);
     }
 
     .configure-special-traits:hover,
     .configure-special-traits:hover i.fas {
-      color: var(--t5e-primary-font);
+      color: var(--t5ek-primary-font);
     }
   }
 </style>

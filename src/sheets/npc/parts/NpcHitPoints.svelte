@@ -60,9 +60,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background: var(--t5e-icon-background);
-    box-shadow: 0 0 0.3125rem var(--t5e-icon-shadow) inset;
-    border: 1px solid var(--t5e-icon-outline);
+    background: var(--t5ek-icon-background);
+    box-shadow: 0 0 0.3125rem var(--t5ek-icon-shadow) inset;
+    border: 1px solid var(--t5ek-icon-outline);
 
     :global(input.hp-min) {
       text-align: right;
@@ -79,7 +79,7 @@
     }
     :global(input),
     :global(span) {
-      font-family: var(--t5e-modesto);
+      font-family: var(--t5ek-modesto);
       font-weight: 700;
     }
   }

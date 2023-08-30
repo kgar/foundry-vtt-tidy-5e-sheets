@@ -60,11 +60,11 @@
     overflow: hidden;
     border-radius: 0 5px 0 5px;
     transition: width 0.3s ease;
-    background: var(--t5e-icon-background);
+    background: var(--t5ek-icon-background);
     display: flex;
-    box-shadow: 0 0 10px var(--t5e-icon-shadow) inset;
-    border: 1px solid var(--t5e-icon-outline);
-    color: var(--t5e-icon-font);
+    box-shadow: 0 0 10px var(--t5ek-icon-shadow) inset;
+    border: 1px solid var(--t5ek-icon-outline);
+    color: var(--t5ek-icon-font);
 
     .resting-icon {
       flex: 0 0 32px;
@@ -91,12 +91,12 @@
       padding: 0;
       font-size: 18px;
       line-height: 32px;
-      font-family: var(--t5e-signika);
+      font-family: var(--t5ek-signika);
       font-weight: 700;
       transition: color 0.3s ease, transform 0.3s ease;
 
       &:hover {
-        color: var(--t5e-icon-hover);
+        color: var(--t5ek-icon-hover);
       }
     }
   }

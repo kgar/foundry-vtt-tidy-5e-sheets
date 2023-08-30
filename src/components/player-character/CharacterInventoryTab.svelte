@@ -141,15 +141,15 @@
       margin-left: 0.1875rem;
       padding-left: 0.625rem;
       border-radius: 0.3125rem;
-      background: var(--t5e-faint-color);
-      box-shadow: 0 0 0.3125rem var(--t5e-magic-accent) inset;
-      border: 0.0625rem solid var(--t5e-magic-accent);
+      background: var(--t5ek-faint-color);
+      box-shadow: 0 0 0.3125rem var(--t5ek-magic-accent) inset;
+      border: 0.0625rem solid var(--t5ek-magic-accent);
 
       &.overattuned {
-        background: var(--t5e-primary-accent);
-        box-shadow: 0 0 0.1875rem var(--t5e-primary-accent);
+        background: var(--t5ek-primary-accent);
+        box-shadow: 0 0 0.1875rem var(--t5ek-primary-accent);
         animation: attention 2s infinite alternate ease-in-out;
-        color: var(--t5e-white);
+        color: var(--t5ek-white);
       }
 
       @keyframes attention {
@@ -178,7 +178,7 @@
 
       :global(input) {
         font-size: 1rem;
-        font-family: var(--t5e-signika);
+        font-family: var(--t5ek-signika);
       }
     }
   }

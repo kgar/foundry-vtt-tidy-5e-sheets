@@ -313,7 +313,7 @@
     display: flex;
     justify-content: center;
     padding: 0.625rem 1rem 1rem 1rem;
-    background: var(--t5e-header-background);
+    background: var(--t5ek-header-background);
 
     :global(.current-xp) {
       height: 1rem;
@@ -336,9 +336,9 @@
     .xp-bar-total {
       width: 100%;
       height: 5px;
-      border: 1px solid var(--t5e-tertiary-color);
+      border: 1px solid var(--t5ek-tertiary-color);
       border-radius: 2px;
-      background: var(--t5e-light-color);
+      background: var(--t5ek-light-color);
       position: relative;
     }
 
@@ -348,15 +348,15 @@
       left: 0;
       height: 100%;
       max-width: 100%;
-      background: var(--t5e-xp-bar);
+      background: var(--t5ek-xp-bar);
       transition: width 0.3s ease;
     }
 
     .level {
       padding: 0.25rem 0.375rem;
       border-radius: 0.1875rem;
-      background: var(--t5e-faint-color);
-      color: var(--t5e-secondary-color);
+      background: var(--t5ek-faint-color);
+      color: var(--t5ek-secondary-color);
       font-size: 1.25rem;
       line-height: 1;
       height: 1.5rem;
@@ -366,7 +366,7 @@
       font-size: 0.75rem;
       margin: 0;
       padding: 0.1875rem 0 0 0;
-      color: var(--t5e-secondary-color);
+      color: var(--t5ek-secondary-color);
       margin-left: 0.25rem;
       line-height: 1;
       display: flex;
@@ -391,8 +391,8 @@
       justify-content: space-between;
       align-items: center;
       gap: 0.25rem;
-      border-bottom: 1px solid var(--t5e-light-color);
-      border-top: 1px solid var(--t5e-light-color);
+      border-bottom: 1px solid var(--t5ek-light-color);
+      border-top: 1px solid var(--t5ek-light-color);
       font-size: 0.75rem;
       line-height: 1;
       padding: 0.1875rem 0 0.125rem 0;

@@ -268,7 +268,7 @@
       display: flex;
       height: 100%;
       flex-direction: column;
-      border-right: 0.0625rem solid var(--t5e-light-color);
+      border-right: 0.0625rem solid var(--t5ek-light-color);
     }
 
     .info-card-hint {
@@ -278,13 +278,13 @@
       font-style: italic;
 
       .frozen .key {
-        background: var(--t5e-primary-accent);
+        background: var(--t5ek-primary-accent);
       }
 
       .key {
         display: inline-block;
-        background: var(--t5e-primary-font);
-        color: var(--t5e-background);
+        background: var(--t5ek-primary-font);
+        color: var(--t5ek-background);
         border-radius: 0.1875rem;
         font-style: normal;
         padding: 0 0.25rem;

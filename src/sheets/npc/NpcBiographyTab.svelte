@@ -308,14 +308,14 @@
   .toggle-personality-info {
     align-self: flex-start;
     padding: 1.25rem 0.25rem;
-    background: var(--t5e-faint-color);
+    background: var(--t5ek-faint-color);
     border-radius: 0.1875rem;
     margin-right: 0.25rem;
-    color: var(--t5e-tertiary-color);
+    color: var(--t5ek-tertiary-color);
     cursor: pointer;
 
     &:hover {
-      color: var(--t5e-secondary-color);
+      color: var(--t5ek-secondary-color);
     }
   }
 </style>

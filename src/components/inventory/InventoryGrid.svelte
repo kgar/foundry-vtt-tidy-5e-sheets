@@ -196,19 +196,19 @@
       height: 3.125rem;
       position: relative;
       margin: 0.1875rem;
-      box-shadow: 0 0 0.0625rem 0.0625rem var(--t5e-light-color);
+      box-shadow: 0 0 0.0625rem 0.0625rem var(--t5ek-light-color);
       border-radius: 0.3125rem;
 
       &.context {
-        border: 0.0625rem solid var(--t5e-primary-accent);
+        border: 0.0625rem solid var(--t5ek-primary-accent);
       }
 
       &.equipped {
-        box-shadow: 0 0 0 0.125rem var(--t5e-equipped-outline);
-        background: var(--t5e-equipped);
+        box-shadow: 0 0 0 0.125rem var(--t5ek-equipped-outline);
+        background: var(--t5ek-equipped);
 
         .item-image {
-          box-shadow: 0 0 0.0625rem 0.0625rem inset var(--t5e-equipped-accent);
+          box-shadow: 0 0 0.0625rem 0.0625rem inset var(--t5ek-equipped-accent);
           border-radius: 0.3125rem;
         }
       }
@@ -216,16 +216,16 @@
       // TODO: Determine the best longterm way to support this...
       &.magic-item {
         .item-image {
-          box-shadow: 0 0 0 0.0625rem var(--t5e-magic-accent) inset,
-            0 0 0.1875rem 0.125rem var(--t5e-magic-accent) inset;
+          box-shadow: 0 0 0 0.0625rem var(--t5ek-magic-accent) inset,
+            0 0 0.1875rem 0.125rem var(--t5ek-magic-accent) inset;
           border-radius: 0.3125rem;
         }
 
         &.equipped .item-image {
           background-image: url('systems/dnd5e/icons/items/inventory/pearl.jpg');
-          box-shadow: 0 0 0rem 0.0625rem var(--t5e-magic-outline) inset,
-            0 0 0 0.0625rem var(--t5e-magic-accent) inset,
-            0 0 0.1875rem 0.125rem var(--t5e-magic-accent) inset;
+          box-shadow: 0 0 0rem 0.0625rem var(--t5ek-magic-outline) inset,
+            0 0 0 0.0625rem var(--t5ek-magic-accent) inset,
+            0 0 0.1875rem 0.125rem var(--t5ek-magic-accent) inset;
           border: none;
         }
       }
@@ -236,19 +236,19 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        color: var(--t5e-icon-attuned);
+        color: var(--t5ek-icon-attuned);
         width: 0.8125rem;
         height: 0.8125rem;
-        background: var(--t5e-magic-accent);
+        background: var(--t5ek-magic-accent);
         position: absolute;
         top: -0.0625rem;
         right: -0.0625rem;
         border-radius: 50%;
-        box-shadow: 0 0 0.1875rem 0.0625rem var(--t5e-magic-accent);
+        box-shadow: 0 0 0.1875rem 0.0625rem var(--t5ek-magic-accent);
 
         &.not-attuned {
-          background: var(--t5e-attunement-required);
-          box-shadow: 0 0 0.1875rem 0.0625rem var(--t5e-attunement-required);
+          background: var(--t5ek-attunement-required);
+          box-shadow: 0 0 0.1875rem 0.0625rem var(--t5ek-attunement-required);
         }
       }
 
@@ -273,7 +273,7 @@
         background-size: cover;
 
         i {
-          color: var(--t5e-tertiary-color);
+          color: var(--t5ek-tertiary-color);
           text-align: center;
           font-size: 1.125rem;
 
@@ -293,7 +293,7 @@
       }
 
       .item-name:hover .item-image:hover i {
-        color: var(--t5e-primary-font);
+        color: var(--t5ek-primary-font);
       }
 
       &:global(.show-item-count-on-hover :is(.item-uses, .item-quantity)) {
@@ -323,13 +323,13 @@
         .item-uses {
           border: none;
           font-size: 0.75rem;
-          color: var(--t5e-stat-font);
+          color: var(--t5ek-stat-font);
 
           :global(input) {
             height: 0.875rem;
             text-shadow: 0 0 0.3125rem
-              var(--t5e-inventory-grid-image-contrast-text-shadow);
-            color: var(--t5e-stat-font);
+              var(--t5ek-inventory-grid-image-contrast-text-shadow);
+            color: var(--t5ek-stat-font);
             text-align: right;
             min-width: 0;
             width: 1rem;
@@ -350,15 +350,15 @@
             font-size: 0.5rem;
             margin-right: 0.0625rem;
             text-shadow: 0 0 0.3125rem
-              var(--t5e-inventory-grid-image-contrast-text-shadow);
+              var(--t5ek-inventory-grid-image-contrast-text-shadow);
           }
         }
       }
 
       .item-name:hover ~ .item-stats :global(input) {
-        color: var(--t5e-primary-font);
+        color: var(--t5ek-primary-font);
         text-shadow: 0 0 0.3125rem
-          var(--t5e-inventory-grid-hover-use-item-contrast-text-shadow);
+          var(--t5ek-inventory-grid-hover-use-item-contrast-text-shadow);
       }
     }
 
@@ -374,10 +374,10 @@
         white-space: nowrap;
         height: 100%;
         font-size: 1.5rem;
-        color: var(--t5e-faint-color);
+        color: var(--t5ek-faint-color);
 
         &:hover {
-          color: var(--t5e-tertiary-color);
+          color: var(--t5ek-tertiary-color);
         }
       }
     }

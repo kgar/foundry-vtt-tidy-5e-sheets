@@ -41,13 +41,13 @@
 
     .configure i {
       font-size: 0.75rem;
-      color: var(--t5e-tertiary-color);
+      color: var(--t5ek-tertiary-color);
       transition: color 0.3s ease;
       cursor: pointer;
     }
 
     .configure:hover i {
-      color: var(--t5e-secondary-color);
+      color: var(--t5ek-secondary-color);
     }
   }
 </style>

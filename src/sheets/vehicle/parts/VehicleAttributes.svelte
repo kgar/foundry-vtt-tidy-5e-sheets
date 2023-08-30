@@ -169,7 +169,7 @@
   }
 
   .counters {
-    background: var(--t5e-faint-color);
+    background: var(--t5ek-faint-color);
     border-radius: 5px;
     padding: 4px 8px;
     font-size: 12px;

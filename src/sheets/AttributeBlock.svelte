@@ -109,12 +109,12 @@
       padding: 0;
       opacity: initial;
       font-size: 0.625rem;
-      box-shadow: 0 0 0 1px var(--t5e-tertiary-color);
+      box-shadow: 0 0 0 1px var(--t5ek-tertiary-color);
       border-radius: 0.3125rem;
 
       &:hover {
         border-radius: 0;
-        box-shadow: 0 0 0 1px var(--t5e-note-background);
+        box-shadow: 0 0 0 1px var(--t5ek-note-background);
         z-index: 10;
       }
 
@@ -128,7 +128,7 @@
       }
 
       .ability-mod {
-        background: var(--t5e-ability-accent);
+        background: var(--t5ek-ability-accent);
         color: #fff; // TODO: Find appropriate color variable
         border-radius: 0.3125rem 0 0 0.3125rem;
       }
@@ -138,7 +138,7 @@
       position: absolute;
       top: 2.9375rem; // This is far too precise; can we make this more relative to its target?
       display: none;
-      background: var(--t5e-note-background);
+      background: var(--t5ek-note-background);
       color: #fff; // TODO: Find appropriate color variable
       font-size: 0.625rem;
       height: 1.0625rem; // This is far too precise; can we make this more relative to its target?
@@ -173,14 +173,14 @@
     }
 
     .ability-mod {
-      background: var(--t5e-ability-accent);
+      background: var(--t5ek-ability-accent);
       color: #fff; // TODO: Find appropriate color variable
       border-radius: 0.3125rem 0 0 0.3125rem;
     }
 
     .ability-mod:hover,
     .ability-save:hover {
-      background: var(--t5e-primary-accent);
+      background: var(--t5ek-primary-accent);
       color: #fff; // TODO: Find appropriate color variable
     }
 
@@ -212,10 +212,10 @@
       bottom: -0.9375rem;
       right: calc(50% - 0.75rem);
       font-size: 0.625rem;
-      color: var(--t5e-tertiary-color);
+      color: var(--t5ek-tertiary-color);
 
       &:hover {
-        color: var(--t5e-primary-color);
+        color: var(--t5ek-primary-color);
       }
     }
   }

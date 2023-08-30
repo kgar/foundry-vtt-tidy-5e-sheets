@@ -38,7 +38,7 @@
     padding: 0 2px;
 
     &:hover {
-      color: var(--t5e-primary-accent);
+      color: var(--t5ek-primary-accent);
     }
   }
 </style>

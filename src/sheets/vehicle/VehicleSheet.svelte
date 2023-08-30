@@ -212,7 +212,7 @@
     gap: 1rem;
     justify-content: center;
     padding: 0.625rem 1rem 1rem 1rem;
-    background: var(--t5e-header-background);
+    background: var(--t5ek-header-background);
 
     .actor-name-row {
       margin-bottom: 0.125rem;

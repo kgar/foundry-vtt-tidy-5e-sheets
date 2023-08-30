@@ -10,10 +10,10 @@
 <style lang="scss">
   .notice {
     display: block;
-    background: var(--t5e-warning-accent);
+    background: var(--t5ek-warning-accent);
     padding: 10px;
     font-size: 12px;
-    color: var(--t5e-background);
+    color: var(--t5ek-background);
     border-radius: 5px;
     margin-bottom: 8px;
   }

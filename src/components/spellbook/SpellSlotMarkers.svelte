@@ -87,11 +87,11 @@
       width: 0.75rem;
       height: 0.75rem;
       border-radius: 50%;
-      background-color: var(--t5e-primary-accent);
-      border: 1px solid var(--t5e-primary-font);
+      background-color: var(--t5ek-primary-accent);
+      border: 1px solid var(--t5ek-primary-font);
       &:hover,
       &.change {
-        background-color: var(--t5e-warning-accent);
+        background-color: var(--t5ek-warning-accent);
       }
 
       &.empty {
@@ -99,7 +99,7 @@
 
         &:hover,
         &.change {
-          background-color: var(--t5e-prepared);
+          background-color: var(--t5ek-prepared);
         }
       }
     }

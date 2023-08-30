@@ -74,7 +74,7 @@
     height: 34px;
     width: 34px;
     z-index: 50;
-    color: var(--t5e-icon-font);
+    color: var(--t5ek-icon-font);
 
     &.only-show-on-hover > * {
       visibility: hidden;
@@ -92,9 +92,9 @@
       text-align: center;
       font-size: 14px;
       position: absolute;
-      background: var(--t5e-icon-background);
-      box-shadow: 0 0 8px var(--t5e-icon-shadow) inset;
-      border: 1px solid var(--t5e-icon-outline);
+      background: var(--t5ek-icon-background);
+      box-shadow: 0 0 8px var(--t5ek-icon-shadow) inset;
+      border: 1px solid var(--t5ek-icon-outline);
       top: -2px;
       left: -2px;
       border-radius: 50%;
@@ -111,10 +111,10 @@
       width: 34px;
       overflow: hidden;
       transition: width 0.3s ease;
-      background: var(--t5e-icon-background);
+      background: var(--t5ek-icon-background);
       display: flex;
-      box-shadow: 0 0 10px var(--t5e-icon-shadow) inset;
-      border: 1px solid var(--t5e-icon-outline);
+      box-shadow: 0 0 10px var(--t5ek-icon-shadow) inset;
+      border: 1px solid var(--t5ek-icon-outline);
 
       &.rounded {
         border-radius: 1.25rem;
@@ -145,15 +145,15 @@
           cursor: pointer;
 
           &:hover {
-            background: var(--t5e-tertiary-color) !important;
-            color: var(--t5e-primary-font);
+            background: var(--t5ek-tertiary-color) !important;
+            color: var(--t5ek-primary-font);
           }
         }
       }
     }
 
     .exhaust-level li:not(.colorized) {
-      background: var(--t5e-light-color);
+      background: var(--t5ek-light-color);
     }
 
     &.intensity-0 .colorized {
@@ -161,18 +161,18 @@
     }
 
     &.intensity-1 .colorized {
-      background: var(--t5e-exhaustion-lvl1);
+      background: var(--t5ek-exhaustion-lvl1);
     }
 
     &.intensity-2 .colorized {
-      background: var(--t5e-exhaustion-lvl2);
-      // TODO: Promote to --t5e-exhaustion-lvl2-foreground / or find a good contrasting color in the existing variables
+      background: var(--t5ek-exhaustion-lvl2);
+      // TODO: Promote to --t5ek-exhaustion-lvl2-foreground / or find a good contrasting color in the existing variables
       color: rgba(255, 255, 255, 0.7);
     }
 
     &.intensity-3 .colorized {
-      background: var(--t5e-exhaustion-lvl3);
-      // TODO: Promote to --t5e-exhaustion-lvl3-foreground / or find a good contrasting color in the existing variables
+      background: var(--t5ek-exhaustion-lvl3);
+      // TODO: Promote to --t5ek-exhaustion-lvl3-foreground / or find a good contrasting color in the existing variables
       color: rgba(255, 255, 255, 0.7);
     }
   }

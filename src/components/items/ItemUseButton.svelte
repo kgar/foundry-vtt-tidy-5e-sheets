@@ -27,13 +27,13 @@
     gap: 0.25rem;
 
     i {
-      color: var(--t5e-tertiary-color);
+      color: var(--t5ek-tertiary-color);
       font-size: 1.125rem;
       display: none;
     }
 
     &:hover i {
-      color: var(--t5e-primary-font);
+      color: var(--t5ek-primary-font);
     }
   }
 </style>

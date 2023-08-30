@@ -41,21 +41,21 @@
     justify-content: center;
     white-space: nowrap;
     // padding: 0.125rem 1rem;
-    background: var(--t5e-header-background);
+    background: var(--t5ek-header-background);
     border: 0.0625rem solid transparent;
-    border-bottom: 0.0625rem solid var(--t5e-header-border);
+    border-bottom: 0.0625rem solid var(--t5ek-header-border);
     font-size: 0.8125rem;
     text-align: left;
     height: 1.625rem;
 
     span {
       cursor: pointer;
-      background: var(--t5e-safe-accent);
+      background: var(--t5ek-safe-accent);
       color: rgba(255, 255, 255, 0.6);
       border-radius: 0.1875rem;
 
       &.editing-enabled {
-        background: var(--t5e-unsafe-accent);
+        background: var(--t5ek-unsafe-accent);
       }
 
       &:hover {

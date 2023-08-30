@@ -120,67 +120,67 @@
       height: 3.125rem;
       position: relative;
       margin: 0.1875rem;
-      box-shadow: 0 0 0.0625rem 0.0625rem var(--t5e-light-color);
+      box-shadow: 0 0 0.0625rem 0.0625rem var(--t5ek-light-color);
       border-radius: 0.3125rem;
 
       &.context {
-        border: 1px solid var(--t5e-primary-accent);
+        border: 1px solid var(--t5ek-primary-accent);
       }
 
       &.preparable {
         .spell-image {
-          box-shadow: 0 0 0 0.125rem inset var(--t5e-prepareable);
+          box-shadow: 0 0 0 0.125rem inset var(--t5ek-prepareable);
           border-radius: 0.3125rem;
         }
       }
 
       &.prepared {
-        box-shadow: 0 0 0 0.125rem var(--t5e-prepared-outline);
-        background-color: var(--t5e-equipped);
+        box-shadow: 0 0 0 0.125rem var(--t5ek-prepared-outline);
+        background-color: var(--t5ek-equipped);
 
         .spell-image {
-          box-shadow: 0 0 0.0625rem 0.0625rem inset var(--t5e-prepared-accent);
+          box-shadow: 0 0 0.0625rem 0.0625rem inset var(--t5ek-prepared-accent);
           border-radius: 0.3125rem;
         }
       }
 
       &.pact {
-        box-shadow: 0 0 0 0.125rem var(--t5e-pact-outline);
-        background-color: var(--t5e-pact);
+        box-shadow: 0 0 0 0.125rem var(--t5ek-pact-outline);
+        background-color: var(--t5ek-pact);
 
         .spell-image {
-          box-shadow: 0 0 0.0625rem 0.0625rem inset var(--t5e-pact-accent);
+          box-shadow: 0 0 0.0625rem 0.0625rem inset var(--t5ek-pact-accent);
           border-radius: 0.3125rem;
         }
       }
 
       &.at-will {
-        box-shadow: 0 0 0 0.125rem var(--t5e-atwill-outline);
-        background-color: var(--t5e-atwill);
+        box-shadow: 0 0 0 0.125rem var(--t5ek-atwill-outline);
+        background-color: var(--t5ek-atwill);
 
         .spell-image {
-          box-shadow: 0 0 0.0625rem 0.0625rem inset var(--t5e-atwill-accent);
+          box-shadow: 0 0 0.0625rem 0.0625rem inset var(--t5ek-atwill-accent);
           border-radius: 0.3125rem;
         }
       }
 
       &.innate {
-        box-shadow: 0 0 0 0.125rem var(--t5e-innate-outline);
-        background-color: var(--t5e-innate);
+        box-shadow: 0 0 0 0.125rem var(--t5ek-innate-outline);
+        background-color: var(--t5ek-innate);
 
         .spell-image {
-          box-shadow: 0 0 0.0625rem 0.0625rem inset var(--t5e-innate-accent);
+          box-shadow: 0 0 0.0625rem 0.0625rem inset var(--t5ek-innate-accent);
           border-radius: 0.3125rem;
         }
       }
 
       &.always-prepared {
-        box-shadow: 0 0 0 0.125rem var(--t5e-alwaysprepared-outline);
-        background-color: var(--t5e-alwaysprepared);
+        box-shadow: 0 0 0 0.125rem var(--t5ek-alwaysprepared-outline);
+        background-color: var(--t5ek-alwaysprepared);
 
         .spell-image {
           box-shadow: 0 0 0.0625rem 0.0625rem inset
-            var(--t5e-alwaysprepared-accent);
+            var(--t5ek-alwaysprepared-accent);
         }
       }
 
@@ -205,7 +205,7 @@
         background-size: cover;
 
         i {
-          color: var(--t5e-tertiary-color);
+          color: var(--t5ek-tertiary-color);
           text-align: center;
           font-size: 1.125rem;
 
@@ -225,7 +225,7 @@
       }
 
       .spell-name:hover .spell-image:hover i {
-        color: var(--t5e-primary-font);
+        color: var(--t5ek-primary-font);
       }
     }
     .spells-footer {
@@ -240,10 +240,10 @@
         white-space: nowrap;
         height: 100%;
         font-size: 1.5rem;
-        color: var(--t5e-faint-color);
+        color: var(--t5ek-faint-color);
 
         &:hover {
-          color: var(--t5e-tertiary-color);
+          color: var(--t5ek-tertiary-color);
         }
       }
     }

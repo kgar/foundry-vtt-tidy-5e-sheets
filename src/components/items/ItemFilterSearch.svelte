@@ -44,7 +44,7 @@
 <style lang="scss">
   .filter-search {
     display: flex;
-    border: 0.0625rem solid var(--t5e-light-color);
+    border: 0.0625rem solid var(--t5ek-light-color);
     border-bottom: none;
     border-radius: 0.1875rem 0.1875rem 0 0;
     margin: -0.125rem 0 0 0.25rem;
@@ -60,10 +60,10 @@
       align-items: center;
       margin: 0 0.1875rem 0 0;
       cursor: pointer;
-      color: var(--t5e-tertiary-color);
+      color: var(--t5ek-tertiary-color);
 
       &:hover {
-        color: var(--t5e-secondary-color);
+        color: var(--t5ek-secondary-color);
       }
     }
   }

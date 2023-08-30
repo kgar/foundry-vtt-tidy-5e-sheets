@@ -86,7 +86,7 @@
     height: 100%;
     border-radius: 5px;
     overflow: hidden;
-    border: 1px solid var(--t5e-icon-outline);
+    border: 1px solid var(--t5ek-icon-outline);
     position: relative;
     mix-blend-mode: multiply;
     z-index: 2;
@@ -103,28 +103,28 @@
       flex-direction: column;
 
       .portrait-menu-item {
-        background: var(--t5e-background);
-        color: var(--t5e-primary-font);
+        background: var(--t5ek-background);
+        color: var(--t5ek-primary-font);
         border: none;
         margin: 1px 0;
         padding: 4px 6px;
         line-height: 1;
         font-size: 12px;
-        border: 1px solid var(--t5e-light-color);
+        border: 1px solid var(--t5ek-light-color);
         border-radius: 5px;
         text-align: center;
 
         &:hover {
-          background: var(--t5e-background);
-          color: var(--t5e-primary-accent);
+          background: var(--t5ek-background);
+          color: var(--t5ek-primary-accent);
         }
       }
     }
   }
 
   .player-image {
-    background: var(--t5e-icon-background);
-    box-shadow: 0 0 10px var(--t5e-icon-shadow) inset;
+    background: var(--t5ek-icon-background);
+    box-shadow: 0 0 10px var(--t5ek-icon-shadow) inset;
     width: 100%;
     height: 100%;
     object-fit: cover;

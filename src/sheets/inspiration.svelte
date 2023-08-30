@@ -69,11 +69,11 @@
       justify-content: center;
       align-items: center;
       font-size: 1.5rem;
-      color: var(--t5e-icon-font);
+      color: var(--t5ek-icon-font);
       cursor: pointer;
-      box-shadow: 0 0 0.625rem var(--t5e-icon-shadow) inset;
-      border: 1px solid var(--t5e-icon-outline);
-      background: var(--t5e-icon-background);
+      box-shadow: 0 0 0.625rem var(--t5ek-icon-shadow) inset;
+      border: 1px solid var(--t5ek-icon-outline);
+      background: var(--t5ek-icon-background);
     }
 
     :global(label i) {
@@ -88,20 +88,20 @@
     }
 
     :global(label:hover) {
-      color: var(--t5e-inspiration-color-hover);
-      text-shadow: 0 0 0.3125rem var(--t5e-inspiration-text-shadow-hover);
+      color: var(--t5ek-inspiration-color-hover);
+      text-shadow: 0 0 0.3125rem var(--t5ek-inspiration-text-shadow-hover);
     }
   }
 
   .inspiration-1 {
     :global(label) {
-      color: var(--t5e-white);
-      text-shadow: 0 0 0.625rem var(--t5e-inspiration-inspired-text-shadow);
-      background: var(--t5e-inspiration-inspired-background);
+      color: var(--t5ek-white);
+      text-shadow: 0 0 0.625rem var(--t5ek-inspiration-inspired-text-shadow);
+      background: var(--t5ek-inspiration-inspired-background);
     }
 
     :global(label i) {
-      color: var(--t5e-white);
+      color: var(--t5ek-white);
       animation: glow 5s ease-in-out infinite alternate;
     }
 

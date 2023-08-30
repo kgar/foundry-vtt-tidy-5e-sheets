@@ -43,11 +43,11 @@
       width: auto;
       padding: 0.125rem 1.5rem;
       border: none;
-      color: var(--t5e-secondary-color);
-      background-color: var(--t5e-faintest-color);
+      color: var(--t5ek-secondary-color);
+      background-color: var(--t5ek-faintest-color);
 
       &:hover {
-        background-color: var(--t5e-light-color);
+        background-color: var(--t5ek-light-color);
       }
     }
   }

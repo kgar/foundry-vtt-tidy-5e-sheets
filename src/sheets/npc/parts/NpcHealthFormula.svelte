@@ -113,9 +113,9 @@
     }
 
     .formula-edit {
-      background: var(--t5e-icon-background);
-      box-shadow: 0 0 10px var(--t5e-icon-shadow) inset;
-      border: 1px solid var(--t5e-icon-outline);
+      background: var(--t5ek-icon-background);
+      box-shadow: 0 0 10px var(--t5ek-icon-shadow) inset;
+      border: 1px solid var(--t5ek-icon-outline);
       display: none;
       justify-content: center;
       align-items: center;

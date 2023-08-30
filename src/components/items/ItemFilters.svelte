@@ -17,7 +17,7 @@
   .item-filters {
     margin: 0 0.875rem 0.5rem 0;
     flex: 0 0 1.1875rem;
-    border-bottom: 1px solid var(--t5e-light-color);
+    border-bottom: 1px solid var(--t5ek-light-color);
 
     .filter-list {
       max-width: initial;
@@ -27,7 +27,7 @@
       .filter-title {
         font-size: 0.75rem;
         line-height: 1.125rem;
-        color: var(--t5e-secondary-color);
+        color: var(--t5ek-secondary-color);
       }
     }
   }

@@ -5,16 +5,16 @@
   min-width: 180px;
   max-width: 180px;
   left: 0;
-  color: var(--t5e-primary-font);
+  color: var(--t5ek-primary-font);
   max-height: 203px;
-  background: var(--t5e-background);
-  border: 1px solid var(--t5e-context-outline);
+  background: var(--t5ek-background);
+  border: 1px solid var(--t5ek-context-outline);
   position: absolute;
   z-index: 100;
   border-radius: 5px;
   padding: 1px 2px;
   overflow-y: auto;
-  box-shadow: 0 0 5px var(--t5e-context-shadow);
+  box-shadow: 0 0 5px var(--t5ek-context-shadow);
 
   a,
   li {
@@ -36,10 +36,10 @@
     }
 
     &.active {
-      color: var(--t5e-attunement-required);
+      color: var(--t5ek-attunement-required);
 
       &:hover {
-        background: var(--t5e-warning-accent);
+        background: var(--t5ek-warning-accent);
         color: rgba(255, 255, 255, 0.8);
       }
     }
@@ -55,9 +55,9 @@
     }
 
     &:hover {
-      box-shadow: 0 0 2px var(--t5e-tertiary-color),
-        0 0 0 1px var(--t5e-tertiary-color) inset;
-      color: var(--t5e-primary-accent);
+      box-shadow: 0 0 2px var(--t5ek-tertiary-color),
+        0 0 0 1px var(--t5ek-tertiary-color) inset;
+      color: var(--t5ek-primary-accent);
       text-shadow: none;
     }
 
@@ -68,11 +68,11 @@
     }
 
     &.warning {
-      background: var(--t5e-warning-accent);
+      background: var(--t5ek-warning-accent);
       color: rgba(255, 255, 255, 0.6);
 
       &:hover {
-        background: var(--t5e-warning-accent);
+        background: var(--t5ek-warning-accent);
         color: rgba(255, 255, 255, 0.8);
       }
     }
@@ -80,7 +80,7 @@
 
   .context-divider {
     margin: 1px 0 0 0;
-    border-top: 1px solid var(--t5e-light-color);
+    border-top: 1px solid var(--t5ek-light-color);
     border-bottom: none;
 
     + .context-divider {
@@ -97,8 +97,8 @@
     .button {
       border: none;
       border-radius: 0;
-      background: var(--t5e-tertiary-color);
-      color: var(--t5e-background);
+      background: var(--t5ek-tertiary-color);
+      color: var(--t5ek-background);
       display: flex;
       align-items: center;
       padding: 4px 8px 4px 6px;
@@ -109,7 +109,7 @@
       font-size: 12px;
 
       &:hover {
-        background: var(--t5e-secondary-color);
+        background: var(--t5ek-secondary-color);
       }
 
       i {

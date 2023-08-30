@@ -1,7 +1,7 @@
 # To Do - Dark Mode
 
 - [x] Learn how the current dark mode implementation works
-- [ ] Task out the new version
+- [x] Task out the new version
 - [ ] Rename the css variables to distinguish them from Tidy 5e until the rewrite is done: `--t5e-...` to `--t5ek-...`
 - [ ] Extract the light theme variables into a `light.tidy5e-theme` file; it'll just be json with the exact mappings
 - [ ] Find the appropriate hook / timing to apply the initial CSS variables for the currently-selected theme

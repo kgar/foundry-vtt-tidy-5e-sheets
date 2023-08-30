@@ -98,7 +98,7 @@
       .currency-item {
         display: flex;
         align-items: center;
-        background: var(--t5e-faint-color);
+        background: var(--t5ek-faint-color);
         border-radius: 0.3125rem;
         line-height: 1.875rem;
         padding-right: 0.5rem;
@@ -122,13 +122,13 @@
         }
 
         a {
-          background: var(--t5e-tertiary-color);
-          color: var(--t5e-background);
+          background: var(--t5ek-tertiary-color);
+          color: var(--t5ek-background);
           border-radius: 0.3125rem;
           padding: 0 0.375rem;
 
           &:hover {
-            background: var(--t5e-secondary-color);
+            background: var(--t5ek-secondary-color);
           }
         }
 

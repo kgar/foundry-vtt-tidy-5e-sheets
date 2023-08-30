@@ -19,10 +19,10 @@
     flex-grow: 0;
     flex-shrink: 0;
     font-size: 0.75rem;
-    font-family: var(--t5e-signika);
+    font-family: var(--t5ek-signika);
     height: 1.5rem;
-    border-left: 0.0625rem solid var(--t5e-faintest-color);
-    color: var(--t5e-secondary-color);
+    border-left: 0.0625rem solid var(--t5ek-faintest-color);
+    color: var(--t5ek-secondary-color);
     overflow: hidden;
     display: flex;
     flex-direction: row;
@@ -34,7 +34,7 @@
       flex: 1 1 1px;
       align-items: stretch; // e.g., provide plenty of room to tap / click the primary item cell to show summary.
       justify-content: initial;
-      color: var(--t5e-primary-color);
+      color: var(--t5ek-primary-color);
     }
 
     &:hover {

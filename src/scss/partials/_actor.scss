@@ -6,8 +6,8 @@
 .window-content {
   padding: 0;
   margin: 0;
-  color: var(--t5e-primary-font);
-  font-family: var(--t5e-signika);
+  color: var(--t5ek-primary-font);
+  font-family: var(--t5ek-signika);
 
   form {
     height: 100%;
@@ -16,7 +16,7 @@
 }
 
 .note-entries article {
-  background: var(--t5e-faintest-color);
+  background: var(--t5ek-faintest-color);
   border-radius: 0.3125rem;
   padding: 0.5rem;
   position: relative;
@@ -41,7 +41,7 @@
 
   .section-titles {
     font-weight: 700;
-    border-bottom: 0.0625rem solid var(--t5e-light-color);
+    border-bottom: 0.0625rem solid var(--t5ek-light-color);
     padding-bottom: 0.25rem;
     margin-bottom: 0.5rem;
     flex: 0 0 0.0625rem;
@@ -131,7 +131,7 @@
   }
 
   .tox-editor-header {
-    border-bottom: 0.0625rem solid var(--t5e-faint-color);
+    border-bottom: 0.0625rem solid var(--t5ek-faint-color);
   }
 
   .tox-toolbar-overlord,
@@ -153,8 +153,8 @@
     a.inline-roll {
       padding: 0.0625rem 0.125rem 0 0.125rem;
       border-radius: 0.3125rem;
-      background: var(--t5e-faint-color);
-      color: var(--t5e-primary-font);
+      background: var(--t5ek-faint-color);
+      color: var(--t5ek-primary-font);
     }
   }
 }
@@ -172,8 +172,8 @@
   font-size: 0.75rem;
   line-height: 0.9375rem;
   font-weight: 600;
-  background: var(--t5e-warning-accent);
-  color: var(--t5e-secondary-color);
+  background: var(--t5ek-warning-accent);
+  color: var(--t5ek-secondary-color);
   border-radius: 0.1875rem;
 }
 
@@ -191,7 +191,7 @@ h4 {
 .attribute-name,
 .header-attribute .value,
 .attribute-value {
-  font-family: var(--t5e-modesto);
+  font-family: var(--t5ek-modesto);
 }
 
 // general elements
@@ -202,7 +202,7 @@ h4 {
 
 .rollable:hover {
   text-shadow: none;
-  color: var(--t5e-primary-accent);
+  color: var(--t5ek-primary-accent);
 }
 
 .window-content a:hover {
@@ -260,7 +260,7 @@ button,
 select {
   cursor: pointer;
   box-shadow: none;
-  color: var(--t5e-primary-font);
+  color: var(--t5ek-primary-font);
 }
 
 [contenteditable],
@@ -268,7 +268,7 @@ input[type='text'],
 input[type='number'] {
   box-shadow: 0 0 0 0.1875rem transparent inset;
   transition: box-shadow 0.3s ease;
-  color: var(--t5e-primary-font);
+  color: var(--t5ek-primary-font);
 }
 
 [contenteditable='true']:hover,
@@ -277,7 +277,7 @@ input[type='text']:hover,
 input[type='text']:focus,
 input[type='number']:hover,
 input[type='number']:focus {
-  box-shadow: 0 0 0 0.0625rem var(--t5e-primary-accent) inset;
+  box-shadow: 0 0 0 0.0625rem var(--t5ek-primary-accent) inset;
 }
 
 input[disabled],
@@ -291,10 +291,10 @@ input[disabled]:hover,
 }
 
 input[type='text']::placeholder {
-  color: var(--t5e-tertiary-color);
+  color: var(--t5ek-tertiary-color);
 }
 
 button:hover,
 select:hover {
-  background: var(--t5e-faint-color);
+  background: var(--t5ek-faint-color);
 }

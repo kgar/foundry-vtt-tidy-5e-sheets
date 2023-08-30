@@ -27,14 +27,14 @@
     margin-left: 0.125rem;
     flex: unset;
     cursor: pointer;
-    border-bottom: 0.1875rem solid var(--t5e-light-color);
+    border-bottom: 0.1875rem solid var(--t5ek-light-color);
 
     &:hover {
-      border-bottom: 0.1875rem solid var(--t5e-tertiary-color);
+      border-bottom: 0.1875rem solid var(--t5ek-tertiary-color);
     }
 
     &.active {
-      border-bottom: 0.1875rem solid var(--t5e-primary-color);
+      border-bottom: 0.1875rem solid var(--t5ek-primary-color);
     }
   }
 </style>

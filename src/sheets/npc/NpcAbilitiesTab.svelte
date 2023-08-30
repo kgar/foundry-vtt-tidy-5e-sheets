@@ -271,10 +271,10 @@
       padding: 0 0.25rem 0.125rem 0;
       margin-top: 0.5rem;
       line-height: 1;
-      border: 0.0625rem solid var(--t5e-light-color);
+      border: 0.0625rem solid var(--t5ek-light-color);
       border-left: none;
       border-right: none;
-      font-family: var(--t5e-modesto);
+      font-family: var(--t5ek-modesto);
       font-weight: 700;
       font-size: 1.125rem;
 
@@ -311,11 +311,11 @@
   }
 
   .abilities-tab-footer {
-    background-color: var(--t5e-header-background);
+    background-color: var(--t5ek-header-background);
     display: flex;
     flex-direction: row;
     justify-content: center;
-    box-shadow: 0 0 0.1875rem 0 var(--t5e-tertiary-color);
+    box-shadow: 0 0 0.1875rem 0 var(--t5ek-tertiary-color);
 
     margin: 0 -0.25rem -1rem -1rem;
 

@@ -24,18 +24,18 @@
     justify-content: center;
     align-items: center;
     align-self: stretch;
-    color: var(--t5e-secondary-color);
+    color: var(--t5ek-secondary-color);
 
     &.inactive {
-      color: var(--t5e-light-color);
+      color: var(--t5ek-light-color);
 
       &:hover {
-        color: var(--t5e-primary-color);
+        color: var(--t5ek-primary-color);
       }
     }
 
     &:hover {
-      color: var(--t5e-primary-color);
+      color: var(--t5ek-primary-color);
     }
   }
 </style>

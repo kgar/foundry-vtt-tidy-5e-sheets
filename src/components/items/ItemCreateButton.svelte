@@ -29,14 +29,14 @@
     padding: 0.125rem 1.25rem 0;
     font-size: 0.75rem;
     text-align: center;
-    background: var(--t5e-faintest-color);
-    color: var(--t5e-secondary-color);
+    background: var(--t5ek-faintest-color);
+    color: var(--t5ek-secondary-color);
     border-radius: 0 0 0.3125rem 0.3125rem;
     font-weight: 400;
     line-height: 1.125rem;
 
     &:hover {
-      background: var(--t5e-light-color);
+      background: var(--t5ek-light-color);
     }
   }
 </style>

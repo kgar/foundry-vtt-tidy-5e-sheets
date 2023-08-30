@@ -103,7 +103,7 @@
     flex: none;
     padding: 0;
     border-bottom: none;
-    border: 0.0625rem solid var(--t5e-faint-color);
+    border: 0.0625rem solid var(--t5ek-faint-color);
     border-radius: 0.3125rem;
 
     .counter {

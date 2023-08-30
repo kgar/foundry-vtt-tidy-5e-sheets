@@ -16,8 +16,8 @@
 <style lang="scss">
   .spell-component.C,
   .spell-component.R {
-    color: var(--t5e-background);
-    background: var(--t5e-tertiary-color);
+    color: var(--t5ek-background);
+    background: var(--t5ek-tertiary-color);
     border-radius: 2px;
     padding: 1px 1px 0 1px;
     margin: 0px 0 0 1px;

@@ -45,9 +45,9 @@
 
     .tab-option {
       padding: 0.3125rem 0.5rem 0 0.5rem;
-      background: var(--t5e-header-background);
+      background: var(--t5ek-header-background);
       border: 0.0625rem solid transparent;
-      border-bottom: 0.0625rem solid var(--t5e-header-border);
+      border-bottom: 0.0625rem solid var(--t5ek-header-border);
       font-size: 0.8125rem;
       text-align: left;
       height: 1.625rem;
@@ -58,12 +58,12 @@
       }
 
       &:hover {
-        color: var(--t5e-primary-accent);
+        color: var(--t5ek-primary-accent);
       }
 
       &.active {
         background: transparent;
-        border: 0.0625rem solid var(--t5e-light-color);
+        border: 0.0625rem solid var(--t5ek-light-color);
         border-bottom-color: transparent;
         font-weight: 700;
         cursor: default;

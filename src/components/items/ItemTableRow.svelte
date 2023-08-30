@@ -86,38 +86,38 @@
     position: relative;
     border-radius: 0.3125rem;
     margin: 0.125rem 0 0.125rem 0.5rem;
-    background: var(--t5e-faintest-color);
+    background: var(--t5ek-faintest-color);
 
     &:global(.context) {
-      box-shadow: 0 0 0.1875rem 0.0625rem var(--t5e-primary-accent) inset;
+      box-shadow: 0 0 0.1875rem 0.0625rem var(--t5ek-primary-accent) inset;
     }
 
     &.prepared {
-      background-color: var(--t5e-equipped);
+      background-color: var(--t5ek-equipped);
     }
 
     &.always-prepared {
-      background-color: var(--t5e-alwaysprepared);
+      background-color: var(--t5ek-alwaysprepared);
     }
 
     &.pact {
-      background-color: var(--t5e-pact);
+      background-color: var(--t5ek-pact);
     }
 
     &.at-will {
-      background-color: var(--t5e-atwill);
+      background-color: var(--t5ek-atwill);
     }
 
     &.innate {
-      background-color: var(--t5e-innate);
+      background-color: var(--t5ek-innate);
     }
 
     &.equipped {
-      background: var(--t5e-equipped);
+      background: var(--t5ek-equipped);
     }
 
     &.magic-item {
-      box-shadow: 0 0 0 1px var(--t5e-faint-magic-accent) inset;
+      box-shadow: 0 0 0 1px var(--t5ek-faint-magic-accent) inset;
     }
 
     &.show-item-count-on-hover :global(.item-quantity) {

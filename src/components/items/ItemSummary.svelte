@@ -19,7 +19,7 @@
   .item-summary {
     flex: 0 0 100%;
     padding: 0.5rem;
-    border-top: 0.0625rem solid var(--t5e-faint-color);
+    border-top: 0.0625rem solid var(--t5ek-faint-color);
     font-size: 0.75rem;
 
     :global(p:not(:first-child)) {

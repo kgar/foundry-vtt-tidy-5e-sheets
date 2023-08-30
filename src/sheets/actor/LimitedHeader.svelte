@@ -26,7 +26,7 @@
     align-items: center;
     gap: 0.625rem;
     padding: 0.625rem 1rem;
-    background: var(--t5e-header-background);
+    background: var(--t5ek-header-background);
 
     .profile {
       width: 9.375rem;
@@ -38,7 +38,7 @@
         height: 100%;
         border-radius: 0.3125rem;
         overflow: hidden;
-        border: 1px solid var(--t5e-icon-outline);
+        border: 1px solid var(--t5ek-icon-outline);
         mix-blend-mode: normal;
 
         &.rounded {

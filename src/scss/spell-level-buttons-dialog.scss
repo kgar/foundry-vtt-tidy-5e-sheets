@@ -36,14 +36,14 @@ form .form-group.spell-level-buttons {
       .spell-level-button:hover,
       input[type='radio']:checked + .spell-level-button {
         outline: none;
-        box-shadow: 0 0 0.3125rem var(--t5e-innate-outline);
+        box-shadow: 0 0 0.3125rem var(--t5ek-innate-outline);
       }
 
       input {
         display: none;
 
         &:checked + .spell-level-button {
-          box-shadow: 0 0 0.3125rem var(--t5e-innate-outline);
+          box-shadow: 0 0 0.3125rem var(--t5ek-innate-outline);
         }
       }
 
@@ -59,7 +59,7 @@ form .form-group.spell-level-buttons {
         font-size: 0.6875rem;
         line-height: 1;
         border-radius: 50%;
-        background: var(--t5e-primary-accent);
+        background: var(--t5ek-primary-accent);
         color: rgba(255, 255, 255, 0.8);
       }
     }

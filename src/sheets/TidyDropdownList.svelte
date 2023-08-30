@@ -45,8 +45,8 @@
     position: absolute;
     top: 100%;
     left: 0;
-    background: var(--t5e-secondary-color);
-    color: var(--t5e-background);
+    background: var(--t5ek-secondary-color);
+    color: var(--t5ek-background);
     border-radius: 3px;
     overflow: hidden;
     display: none;
@@ -60,21 +60,21 @@
     padding: 2px 4px;
 
     &:hover {
-      background: var(--t5e-primary-color);
+      background: var(--t5ek-primary-color);
     }
 
     .selected {
-      background: var(--t5e-primary-accent);
+      background: var(--t5ek-primary-accent);
     }
   }
 
   .options-list .selected {
-    background: var(--t5e-primary-accent);
+    background: var(--t5ek-primary-accent);
   }
 
   .selected-option:hover,
   .selected-option.active {
-    color: var(--t5e-primary-accent);
+    color: var(--t5ek-primary-accent);
     cursor: pointer;
   }
 </style>

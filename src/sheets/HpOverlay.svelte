@@ -49,7 +49,7 @@
     .hp-overlay {
       position: relative;
       bottom: 0;
-      background: var(--t5e-hp-overlay-background);
+      background: var(--t5ek-hp-overlay-background);
       transition: height 0.5s ease-in-out;
     }
 

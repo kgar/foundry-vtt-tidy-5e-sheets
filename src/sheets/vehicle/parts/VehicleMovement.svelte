@@ -68,11 +68,11 @@
       justify-content: center;
       align-items: center;
       font-size: 1.25rem;
-      color: var(--t5e-icon-font);
+      color: var(--t5ek-icon-font);
       cursor: pointer;
-      box-shadow: 0 0 0.625rem var(--t5e-icon-shadow) inset;
-      border: 1px solid var(--t5e-icon-outline);
-      background: var(--t5e-icon-background);
+      box-shadow: 0 0 0.625rem var(--t5ek-icon-shadow) inset;
+      border: 1px solid var(--t5ek-icon-outline);
+      background: var(--t5ek-icon-background);
     }
 
     :global(label i) {
@@ -87,20 +87,20 @@
     }
 
     :global(label:hover) {
-      color: var(--t5e-motion-color-hover);
-      text-shadow: 0 0 0.3125rem var(--t5e-motion-text-shadow-hover);
+      color: var(--t5ek-motion-color-hover);
+      text-shadow: 0 0 0.3125rem var(--t5ek-motion-text-shadow-hover);
     }
   }
 
   .motion-1 {
     :global(label) {
-      color: var(--t5e-white);
-      text-shadow: 0 0 0.625rem var(--t5e-motion-in-motion-text-shadow);
-      background: var(--t5e-motion-in-motion-background);
+      color: var(--t5ek-white);
+      text-shadow: 0 0 0.625rem var(--t5ek-motion-in-motion-text-shadow);
+      background: var(--t5ek-motion-in-motion-background);
     }
 
     :global(label i) {
-      color: var(--t5e-white);
+      color: var(--t5ek-white);
       animation: boat 5s linear infinite;
     }
 

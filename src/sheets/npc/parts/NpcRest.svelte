@@ -52,11 +52,11 @@
     border-radius: 0 0 0 0.3125rem;
     overflow: hidden;
     transition: width 0.3s ease;
-    background: var(--t5e-icon-background);
+    background: var(--t5ek-icon-background);
     display: flex;
-    box-shadow: 0 0 0.625rem var(--t5e-icon-shadow) inset;
-    border: 0.0625rem solid var(--t5e-icon-outline);
-    color: var(--t5e-icon-font);
+    box-shadow: 0 0 0.625rem var(--t5ek-icon-shadow) inset;
+    border: 0.0625rem solid var(--t5ek-icon-outline);
+    color: var(--t5ek-icon-font);
 
     &:hover {
       width: 5.875rem;
@@ -72,16 +72,16 @@
       border-radius: 50%;
       cursor: pointer;
       border: none;
-      color: var(--t5e-tertiary-color);
+      color: var(--t5ek-tertiary-color);
       padding: 0;
       font-size: 0.75rem;
       line-height: 1.125rem;
-      font-family: var(--t5e-signika);
+      font-family: var(--t5ek-signika);
       font-weight: 700;
       transition: color 0.3s ease, transform 0.3s ease;
 
       &:hover {
-        color: var(--t5e-primary-font);
+        color: var(--t5ek-primary-font);
       }
     }
 
@@ -96,7 +96,7 @@
       align-items: center;
       border-radius: 0;
       font-size: 0.75rem;
-      color: var(--t5e-primary-font);
+      color: var(--t5ek-primary-font);
     }
   }
 

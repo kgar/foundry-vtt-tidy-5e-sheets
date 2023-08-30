@@ -8,7 +8,7 @@
     margin: 0.125rem 0 0.1875rem 0;
     padding: 0.125rem 0 0 0;
     text-align: center;
-    font-family: var(--t5e-modesto);
+    font-family: var(--t5ek-modesto);
     font-weight: 700;
     height: 1.4375rem;
   }
