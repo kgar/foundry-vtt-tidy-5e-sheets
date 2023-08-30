@@ -1,0 +1,66 @@
+.tidy5eDark {
+  .tidy5e.sheet.item {
+
+    .tab.advancement .items-list {
+      .items-header div.item-checkmark {
+        flex: 0 0 44px;
+        color: var(--t5e-prepared);
+      }
+      .item .item-name {
+        .item-image {
+          filter: invert(1);
+        }
+      }
+    }
+
+    .tab.effects {
+      h3 {
+        border: none;
+      }
+    }
+
+    input {
+      color: var(--t5e-primary-font);
+
+      &::placeholder {
+        color: var(--t5e-tertiary-color);
+      }
+    }
+  }
+
+  .tidy5e.sheet.actor {
+    .tox-toolbar-overlord,
+    .tox-toolbar__primary {
+      background: #fff;
+      background-color: #fff;
+    }
+
+    .tox .tox-toolbar-overlord button {
+      color: #222;
+    }
+
+    .tox-sidebar-wrap {
+      padding: 8px;
+      background: var(--t5e-secondary-color);
+    }
+  }
+
+  .tidy5e.sheet .prosemirror menu {
+    button:hover {
+      background: rgba(100, 100, 100, 1);
+    }
+    .pm-dropdown {
+      background: rgba(100, 100, 100, 1);
+
+      ul {
+        background: rgba(100, 100, 100, 1);
+      }
+
+      li:hover {
+        background: rgba(50, 50, 50, 1);
+      }
+    }
+  }
+}
+
+@import "_dark-modules.scss";
