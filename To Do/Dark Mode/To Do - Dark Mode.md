@@ -27,13 +27,13 @@
 - [ ] Compare NPCs
 - [ ] Compare Vehicles
 - [ ] Compare Items
-- [ ] Celebraaaaate!
+- [ ] Celebraaaaate! 🎉🎊
 
 
 ## Refine
 
 - [ ] Reduce duplication of colors in the themes, if possible. Allow specialized colors to reference other variables; think of how Kendo will create variables for specific things but will point them to more generic variables
-- [ ] 
+- [ ] ..
 
 
 ## Current Setup
