@@ -3,7 +3,7 @@
 - [x] Learn how the current dark mode implementation works
 - [x] Task out the new version
 - [x] Rename the css variables to distinguish them from Tidy 5e until the rewrite is done: `--t5e-...` to `--t5ek-...`
-- [ ] Extract the light theme variables into a `light.tidy5e-theme` file; it'll just be json with the exact mappings
+- [x] Extract the light theme variables into a `light.tidy5e-theme` file; it'll just be json with the exact mappings
 - [ ] Find the appropriate hook / timing to apply the initial CSS variables for the currently-selected theme
 - [ ] Apply the currently-selected theme variables to the root element
   - [ ] at the earliest reasonable init time (the hook or timing thing mentioned above)
@@ -11,6 +11,7 @@
 - [ ] Review the dark theme stylesheet and ensure that all of its mappings are accounted for in flat variable bindings; right now, there are some additional styles that are not accounted for
   - [ ] For cases where dark theme has a variable and light theme does not, allow the theme to be blank and unset
 - [ ] Create a master list of variables in the form of a TS type and make the light and dark themes adhere to this type; all variables are optional
+- [ ] Trim all unused variables
 - [ ] Ensure that changing theme causes the entire master list of variables to be reviewed; when the selected theme has specified something for that variable, set it, else clear that variable from the root element. No one gets left behind. Full reset. This is why we'll have the master list of theme colors.
   - [ ] Also ensure that unset variables are not applied to the root element
 - [ ] Add setting for Default Theme which determines what the "default" option maps to
@@ -21,6 +22,11 @@
   - [ ] name - the theme's pretty name which will appear in the dropdown and theme buidler
   - [ ] id - we can generate this, or the user can if they wish
   - [ ] description - some editor-enabled text to talk up this theme
+  - [ ] version - a number to represent the evolving theme file format, incremented by 1, provided by Tidy 5e on export; should be used when migrating to more current versions of the theme
+  - [ ] variables - the JSON object containing the variable names and their values
+    - [ ] value - the value of the variable
+    - [ ] ??? Maybe consider putting some kind of MDN-friendly type text here that would guide in what kind UI to present
+    - [ ] group - a logical grouping to put the variable in when rendering the UI
 - [ ] Ensure that this list has the default light and dark themes included
 - [ ] Update the theme selector and default theme selector configs to point to this collection of themes when preparing to present their options
 - [ ] Compare PCs
@@ -33,7 +39,7 @@
 ## Refine
 
 - [ ] Reduce duplication of colors in the themes, if possible. Allow specialized colors to reference other variables; think of how Kendo will create variables for specific things but will point them to more generic variables
-- [ ] ..
+- [ ] Refine: rename the font-family-specific variables to something more geared to their purpose and not to the font family itself.
 
 
 ## Current Setup
