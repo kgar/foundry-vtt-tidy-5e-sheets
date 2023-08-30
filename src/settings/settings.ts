@@ -4,6 +4,9 @@ import { Tidy5eKgarUserSettings } from './user-settings-form';
 import { RGBAToHexAFromColor } from '../utils/tidy5e-color-picker';
 import { ResetSettingsDialog } from './ResetSettingsDialog';
 import type { RoundedPortaitStyleOptions } from 'src/types/types';
+import { applyTheme } from 'src/theme/theme';
+import { defaultLightTheme } from 'src/theme/default-light-theme';
+import { defaultDarkTheme } from 'src/theme/default-dark-theme';
 
 export function createSettings() {
   return {
@@ -45,11 +48,18 @@ export function createSettings() {
           },
           default: 'default',
           onChange: (data: string) => {
-            data === 'dark'
-              ? document.querySelector('html')?.classList.add('tidy5eKGarDark')
-              : document
-                  .querySelector('html')
-                  ?.classList.remove('tidy5eKGarDark');
+            const theme =
+              data === 'default'
+                ? defaultLightTheme
+                : data === 'dark'
+                ? defaultDarkTheme
+                : null;
+
+            if (theme) {
+              applyTheme(theme);
+            } else {
+              ui.notifications.warn(`Tidy 5e Theme "${data}" not found.`);
+            }
           },
         },
         get() {
@@ -1974,6 +1984,8 @@ export function initSettings() {
     // TODO: Need some way to notify when new settings are not configured correctly; doesn't have to be perfect
     game.settings.register(CONSTANTS.MODULE_ID, setting[0], setting[1].options);
   }
+
+  applyTheme(defaultLightTheme);
 }
 
 function setDnd5eCssVariable(
