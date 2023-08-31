@@ -540,7 +540,7 @@ input[type='checkbox'] {
         font-weight: 600;
       }
 
-      div:not(.item-name) {
+      div:not(.item-name, .item-checkmark) {
         color: var(--t5ek-tertiary-color);
       }
     }
@@ -712,4 +712,9 @@ label input[type='checkbox']:checked {
       margin-right: 0.25rem;
     }
   }
+}
+
+.advancement .items-header .item-checkmark {
+  flex: 0 0 44px;
+  color: var(--t5ek-prepared);
 }

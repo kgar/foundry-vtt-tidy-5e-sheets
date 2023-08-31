@@ -17,18 +17,17 @@
   - inspo: https://www.youtube.com/watch?v=TAA89nkEuhw&ab_channel=KevinPowell
   - inspo: https://codepen.io/kevinpowell/pen/OJpYKNR/3cf5d075a29e2d702c02ee7387d516c2
   - inspo for rounded images: https://codepen.io/jh3y/pen/mMbOEQ
-- [ ] Review the dark theme stylesheet and ensure that all of its mappings are accounted for in flat variable bindings; right now, there are some additional styles that are not accounted for
+- [x] Review the dark theme stylesheet and ensure that all of its mappings are accounted for in flat variable bindings; right now, there are some additional styles that are not accounted for
   - [x] For cases where dark theme has a variable and light theme does not, allow the theme to be blank and unset
 - [x] Fix death saves icon and input colors
 - [x] Fix item input colors
 - [x] Fix item input placeholder color
-- [ ] Make new custom variables as needed
-- [ ] 
+- [x] Make new custom variables as needed
   - [x] `--t5ek-activated-profile-toggle-color`; dark mode is `--t5ek-primary-font` ; light mode is `--t5ek-white`
   - [x] Review the exhaustion font colors. Need more contrast on Yellow exhaustion.
-- [ ] Create a master list of variables in the form of a TS type and make the light and dark themes adhere to this type; all variables are optional
-- [ ] Trim all unused variables
-  - [ ] Also ensure that unset variables are not applied to the root element
+- [x] Create a master list of variables in the form of a TS type and make the light and dark themes adhere to this type; all variables are optional
+- [x] Trim all unused variables
+  - [x] Also ensure that unset variables are not applied to the root element
 - [ ] Add setting for Default Theme which determines what the "default" option maps to
   - [ ] first available options: Light, Dark
   - [ ] Float with commission whether it would be good to default to the OS choice when a default has not been selected yet
@@ -46,7 +45,8 @@
 - [x] Compare PCs
 - [x] Compare NPCs
 - [x] Compare Vehicles
-- [ ] Compare Items
+- [x] Compare Items
+- [ ] Test linked / unlinked NPC tokens/sheets
 - [ ] Celebraaaaate! 🎉🎊
 
 ## Oops
@@ -72,6 +72,9 @@
 - [ ] leave the image filter variable intact as a fallback, and have the styles support it
 - [ ] item tables in dark mode have a little sliver of border-left on the rows
 
+## ANd Also
+
+- [ ] Remove the PC, NPC, and Vehicle Border PX options / localization from settings
 
 ### Tiny MCE Styles
 

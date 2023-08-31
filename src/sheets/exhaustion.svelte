@@ -161,17 +161,17 @@
     }
 
     &.intensity-1 .colorized {
-      background: var(--t5ek-exhaustion-lvl1);
+      background: var(--t5ek-exhaustion-intensity1-bg);
       color: var(--t5ek-exhaustion-intensity1-color);
     }
 
     &.intensity-2 .colorized {
-      background: var(--t5ek-exhaustion-lvl2);
+      background: var(--t5ek-exhaustion-intensity2-bg);
       color: var(--t5ek-exhaustion-intensity2-color);
     }
 
     &.intensity-3 .colorized {
-      background: var(--t5ek-exhaustion-lvl3);
+      background: var(--t5ek-exhaustion-intensity3-bg);
       color: var(--t5ek-exhaustion-intensity3-color);
     }
   }

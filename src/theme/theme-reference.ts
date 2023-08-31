@@ -219,23 +219,7 @@ export const themeVariables = {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-exhaustion-font': {
-    type: 'todo',
-    group: 'todo',
-  },
   '--t5ek-icon-hover': {
-    type: 'todo',
-    group: 'todo',
-  },
-  '--t5ek-pc-border': {
-    type: 'todo',
-    group: 'todo',
-  },
-  '--t5ek-npc-border': {
-    type: 'todo',
-    group: 'todo',
-  },
-  '--t5ek-vehicle-border': {
     type: 'todo',
     group: 'todo',
   },
@@ -243,15 +227,15 @@ export const themeVariables = {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-exhaustion-lvl1': {
+  '--t5ek-exhaustion-intensity1-bg': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-exhaustion-lvl2': {
+  '--t5ek-exhaustion-intensity2-bg': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-exhaustion-lvl3': {
+  '--t5ek-exhaustion-intensity3-bg': {
     type: 'todo',
     group: 'todo',
   },
@@ -387,10 +371,6 @@ export const themeVariables = {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-item-hint-text-color': {
-    type: 'todo',
-    group: 'todo',
-  },
   '--t5ek-advancement-image-filter': {
     type: 'todo',
     group: 'todo',
@@ -412,6 +392,26 @@ export const themeVariables = {
     group: 'todo',
   },
   '--t5ek-death-save-text-color': {
+    type: 'todo',
+    group: 'todo',
+  },
+  '--t5ek-tinymce-toolbar-bg': {
+    type: 'todo',
+    group: 'todo',
+  },
+  '--t5ek-tinymce-sidebar-bg': {
+    type: 'todo',
+    group: 'todo',
+  },
+  '--t5ek-tinyme-toolbar-button-color': {
+    type: 'todo',
+    group: 'todo',
+  },
+  '--t5ek-prosemirror-button-color': {
+    type: 'todo',
+    group: 'todo',
+  },
+  '--t5ek-prosemirror-dropdown-item-hover-color': {
     type: 'todo',
     group: 'todo',
   },

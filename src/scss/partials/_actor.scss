@@ -136,8 +136,12 @@
 
   .tox-toolbar-overlord,
   .tox-toolbar__primary {
-    background: transparent;
-    background-color: transparent;
+    background: var(--t5ek-tinymce-toolbar-bg);
+    background-color: var(--t5ek-tinymce-toolbar-bg);
+  }
+
+  .tox .tox-overlord button {
+    color: var(--t5ek-tinyme-toolbar-button-color);
   }
 
   .editor-content {
@@ -156,6 +160,33 @@
   border: none;
   flex: 1;
   min-height: 6.25rem;
+}
+
+.tox-sidebar-wrap {
+  padding: 0.5rem;
+  background: var(--t5ek-tinymce-sidebar-bg);
+}
+
+.prosemirror menu {
+  button:hover {
+    background: var(--t5ek-prosemirror-button-color);
+  }
+  .pm-dropdown {
+    background: var(--t5ek-prosemirror-button-color);
+
+    ul {
+      background: var(--t5ek-prosemirror-button-color);
+    }
+
+    li:hover {
+      background: var(--t5ek-prosemirror-dropdown-item-hover-color);
+    }
+  }
+}
+
+.prosemirror menu button:hover,
+.prosemirror menu button.active {
+  color: var(--t5ek-primary-font);
 }
 
 .ae-marker {
