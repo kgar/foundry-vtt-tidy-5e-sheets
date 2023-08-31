@@ -112,5 +112,6 @@ export const defaultDarkTheme: Tidy5eTheme = {
       - https://codepen.io/sosuke/pen/Pjoqqp
     */
     '--t5ek-advancement-image-filter': 'invert(1)',
+    '--t5ek-activated-profile-toggle-color': 'var(--t5ek-primary-font)'
   },
 };

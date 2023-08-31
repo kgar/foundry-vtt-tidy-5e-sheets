@@ -94,13 +94,13 @@
 
   .motion-1 {
     :global(label) {
-      color: var(--t5ek-white);
+      color: var(--t5ek-activated-profile-toggle-color);
       text-shadow: 0 0 0.625rem var(--t5ek-motion-in-motion-text-shadow);
       background: var(--t5ek-motion-in-motion-background);
     }
 
     :global(label i) {
-      color: var(--t5ek-white);
+      color: var(--t5ek-activated-profile-toggle-color);
       animation: boat 5s linear infinite;
     }
 

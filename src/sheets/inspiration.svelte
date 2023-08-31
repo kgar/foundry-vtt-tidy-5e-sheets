@@ -95,13 +95,13 @@
 
   .inspiration-1 {
     :global(label) {
-      color: var(--t5ek-white);
+      color: var(--t5ek-activated-profile-toggle-color);
       text-shadow: 0 0 0.625rem var(--t5ek-inspiration-inspired-text-shadow);
       background: var(--t5ek-inspiration-inspired-background);
     }
 
     :global(label i) {
-      color: var(--t5ek-white);
+      color: var(--t5ek-activated-profile-toggle-color);
       animation: glow 5s ease-in-out infinite alternate;
     }
 

@@ -395,4 +395,8 @@ export const themeVariables = {
     type: 'todo',
     group: 'todo',
   },
+  '--t5ek-activated-profile-toggle-color': {
+    type: 'todo',
+    group: 'todo',
+  },
 };

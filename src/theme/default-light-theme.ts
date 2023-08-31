@@ -105,5 +105,6 @@ export const defaultLightTheme: Tidy5eTheme = {
     '--t5ek-content-entity-link-hover-color': 'var(--t5ek-white)',
     '--t5ek-content-entity-link-bg': 'var(--t5ek-faintest-color)',
     '--t5ek-content-entity-link-hover-bg': 'var(--t5ek-primary-accent)',
+    '--t5ek-activated-profile-toggle-color': 'var(--t5ek-white)',
   },
 };
