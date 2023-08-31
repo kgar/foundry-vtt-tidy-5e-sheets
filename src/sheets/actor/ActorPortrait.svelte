@@ -71,7 +71,7 @@
   <div
     class="actor-image-wrap"
     class:overlay={useHpOverlay}
-    style="--overlay-height: calc(100% - {hpOverlayCalculationCurrent}% - 1.25rem)"
+    style="--overlay-height: calc(100% - {hpOverlayCalculationCurrent}%)"
   >
     <img
       class="actor-image"
@@ -128,7 +128,7 @@
     content: '';
     position: absolute;
     left: 0;
-    bottom: 1.25rem;
+    bottom: 0;
     width: 100%;
     background: var(--t5ek-hp-overlay-background);
     transition: height 0.5s ease-in-out;
