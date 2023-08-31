@@ -18,6 +18,7 @@
 - [ ] Finally fix the multiply tinting / darkening issue with profile pictures and HP overlays
   - inspo: https://www.youtube.com/watch?v=TAA89nkEuhw&ab_channel=KevinPowell
   - inspo: https://codepen.io/kevinpowell/pen/OJpYKNR/3cf5d075a29e2d702c02ee7387d516c2
+  - inspo for rounded images: https://codepen.io/jh3y/pen/mMbOEQ
 - [ ] Make new custom variables as needed
   - [ ] `--t5ek-inspiration-icon-color`; dark mode is `--t5ek-primary-font` ; light mode is `--t5ek-white`
   - [ ] Review the exhaustion font colors. Need more contrast on Yellow exhaustion.
@@ -105,3 +106,51 @@ Color Picker Customization is not directly related to the initial dark mode impl
 
 It would be best to avoid using this code, if possible.
 
+
+## Candidate for overlay redux
+
+Try it at https://svelte.dev/repl/
+
+
+```svelte
+<section class="demo">
+	<div class="img-container">
+		<img src="https://i.pinimg.com/564x/55/b2/3c/55b23c9f184706ed6d7f3b38b2eeeb44.jpg" alt="" />
+	</div>
+</section>
+
+
+<style>
+	*,
+	*::before,
+	*::after {
+	  box-sizing: border-box;
+	}
+
+	img {
+		width: 150px;
+		height: 150px;
+		border-radius: 50%;
+		object-fit: contain;
+	}
+	
+	.img-container {
+		border-radius: 50%;
+		width: 150px;
+		height: 150px;
+		position: relative;
+		overflow: hidden;
+	}
+
+	.img-container::after {
+		content: "";
+		position: absolute;
+		left: 0;
+		bottom: 0;
+		width: 100%;
+		height: 65%;
+		background: rgba(255, 0, 0, 1);
+		mix-blend-mode: multiply;
+	}
+</style>
+```
