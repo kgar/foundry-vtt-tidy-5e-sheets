@@ -13,13 +13,17 @@
   - [x] Value
     - [x] type - maybe consider putting some kind of MDN-friendly type text here that would guide in what kind UI to present
     - [x] group - a logical grouping to put the variable in when rendering the UI
-- [ ] Review the dark theme stylesheet and ensure that all of its mappings are accounted for in flat variable bindings; right now, there are some additional styles that are not accounted for
-  - [x] For cases where dark theme has a variable and light theme does not, allow the theme to be blank and unset
 - [x] Finally fix the multiply tinting / darkening issue with profile pictures and HP overlays
   - inspo: https://www.youtube.com/watch?v=TAA89nkEuhw&ab_channel=KevinPowell
   - inspo: https://codepen.io/kevinpowell/pen/OJpYKNR/3cf5d075a29e2d702c02ee7387d516c2
   - inspo for rounded images: https://codepen.io/jh3y/pen/mMbOEQ
+- [ ] Review the dark theme stylesheet and ensure that all of its mappings are accounted for in flat variable bindings; right now, there are some additional styles that are not accounted for
+  - [x] For cases where dark theme has a variable and light theme does not, allow the theme to be blank and unset
+- [x] Fix death saves icon and input colors
+- [x] Fix item input colors
+- [x] Fix item input placeholder color
 - [ ] Make new custom variables as needed
+- [ ] 
   - [x] `--t5ek-activated-profile-toggle-color`; dark mode is `--t5ek-primary-font` ; light mode is `--t5ek-white`
   - [x] Review the exhaustion font colors. Need more contrast on Yellow exhaustion.
 - [ ] Create a master list of variables in the form of a TS type and make the light and dark themes adhere to this type; all variables are optional
@@ -39,9 +43,9 @@
 - [ ] Ensure that this list has the default light and dark themes included
 - [ ] Update the theme selector and default theme selector configs to point to this collection of themes when preparing to present their options
 - [ ] Update English localization for the light/dark options to exclude the notion that Light is the default theme.
-- [ ] Compare PCs
-- [ ] Compare NPCs
-- [ ] Compare Vehicles
+- [x] Compare PCs
+- [x] Compare NPCs
+- [x] Compare Vehicles
 - [ ] Compare Items
 - [ ] Celebraaaaate! 🎉🎊
 

@@ -39,7 +39,15 @@ select {
 input[type='text'] {
   border: none;
   padding: 0 0.375rem;
+}
+
+input[type='text'],
+input[type='number'] {
   color: var(--t5ek-primary-font);
+}
+
+:is(input[type='text'], input[type='number'])::placeholder {
+  color: var(--t5ek-secondary-color);
 }
 
 input[type='text']:hover,

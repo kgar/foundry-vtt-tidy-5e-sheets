@@ -282,8 +282,8 @@ input[disabled]:hover,
   cursor: default;
 }
 
-input[type='text']::placeholder {
-  color: var(--t5ek-tertiary-color);
+:is(input[type='text'], input[type='number'])::placeholder {
+  color: var(--t5ek-secondary-color);
 }
 
 button:hover,

@@ -59,7 +59,7 @@
           field="system.rarity"
           value={$store.system.rarity}
         >
-          <SelectOptions data={$store.config.itemRarity} />
+          <SelectOptions data={$store.config.itemRarity} blank="" />
         </Select>
       </li>
       <li>

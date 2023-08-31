@@ -303,7 +303,7 @@ export const themeVariables = {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-death-save-color': {
+  '--t5ek-death-save-icon-color': {
     type: 'todo',
     group: 'todo',
   },
@@ -411,5 +411,8 @@ export const themeVariables = {
     type: 'todo',
     group: 'todo',
   },
-  
+  '--t5ek-death-save-text-color': {
+    type: 'todo',
+    group: 'todo',
+  },
 };
