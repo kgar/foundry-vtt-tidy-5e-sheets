@@ -48,6 +48,7 @@ Foundry Adapter should be reorganized so that functions can be broken out for ac
   - [ ] Publish a hook before mount and on mount
   - [ ] Add TODO for API call to register effect column
 - [ ] Price - input + select: make a composite component that unifies these two input into a single, cohesive piece of UI ♥
+- [ ] Explore the idea of using a library like socketlib for allowing a GM to emphasize parts of the character sheet for a player: https://foundryvtt.wiki/en/development/api/sockets
 
 #### Enriching HTML
 
