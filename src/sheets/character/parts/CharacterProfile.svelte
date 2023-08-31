@@ -4,12 +4,10 @@
   import { SettingsProvider } from 'src/settings/settings';
   import Exhaustion from '../../Exhaustion.svelte';
   import Inspiration from '../../Inspiration.svelte';
-  import HpOverlay from '../../HpOverlay.svelte';
   import DeathSaves from '../../DeathSaves.svelte';
   import Rest from '../../Rest.svelte';
   import HitDice from '../../HitDice.svelte';
   import CharacterHitPoints from './CharacterHitPoints.svelte';
-  import ActorPortrait from '../../actor/ActorPortrait.svelte';
   import TempHp from '../../TempHp.svelte';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
@@ -19,6 +17,8 @@
 
   const portraitStyle = SettingsProvider.settings.portraitStyle.get();
   const useRoundedPortraitStyle = ['all', 'pc'].includes(portraitStyle);
+  const useHpOverlay = !SettingsProvider.settings.hpOverlayDisabled.get();
+
   $: incapacitated =
     ($store.actor?.system?.attributes?.hp?.value ?? 0) <= 0 &&
     $store.actor?.system?.attributes?.hp?.max !== 0;
@@ -33,11 +33,7 @@
 <!-- TODO: Resolve linting comments after done re-styling -->
 <!-- svelte-ignore a11y-missing-attribute -->
 <!-- svelte-ignore a11y-click-events-have-key-events -->
-<ActorProfile {useRoundedPortraitStyle}>
-  {#if !SettingsProvider.settings.hpOverlayDisabled.get()}
-    <HpOverlay {useRoundedPortraitStyle} actor={$store.actor} />
-  {/if}
-
+<ActorProfile {useRoundedPortraitStyle} {useHpOverlay}>
   {#if incapacitated && (!SettingsProvider.settings.hiddenDeathSavesEnabled.get() || FoundryAdapter.userIsGm())}
     <DeathSaves
       {useRoundedPortraitStyle}

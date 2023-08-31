@@ -7,12 +7,11 @@
   export let rounded: boolean;
 
   let store = getContext<Readable<VehicleSheetContext>>('store');
-    
 </script>
 
 <header>
   <div class="profile">
-    <div class="portrait" class:rounded={rounded}>
+    <div class="portrait" class:rounded>
       <img src={$store.actor.img} alt={$store.actor.name} data-edit="img" />
     </div>
   </div>
@@ -32,17 +31,20 @@
       width: 9.375rem;
       height: 9.375rem;
       flex: 0 0 auto;
-      
+
       .portrait {
         width: 100%;
         height: 100%;
         border-radius: 0.3125rem;
         overflow: hidden;
         border: 1px solid var(--t5ek-icon-outline);
-        mix-blend-mode: normal;
 
         &.rounded {
           border-radius: 50%;
+        }
+
+        img {
+          background: var(--t5ek-icon-background);
         }
       }
     }

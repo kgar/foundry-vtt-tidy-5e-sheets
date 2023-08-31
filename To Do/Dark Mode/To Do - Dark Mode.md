@@ -15,7 +15,7 @@
     - [x] group - a logical grouping to put the variable in when rendering the UI
 - [ ] Review the dark theme stylesheet and ensure that all of its mappings are accounted for in flat variable bindings; right now, there are some additional styles that are not accounted for
   - [x] For cases where dark theme has a variable and light theme does not, allow the theme to be blank and unset
-- [ ] Finally fix the multiply tinting / darkening issue with profile pictures and HP overlays
+- [x] Finally fix the multiply tinting / darkening issue with profile pictures and HP overlays
   - inspo: https://www.youtube.com/watch?v=TAA89nkEuhw&ab_channel=KevinPowell
   - inspo: https://codepen.io/kevinpowell/pen/OJpYKNR/3cf5d075a29e2d702c02ee7387d516c2
   - inspo for rounded images: https://codepen.io/jh3y/pen/mMbOEQ

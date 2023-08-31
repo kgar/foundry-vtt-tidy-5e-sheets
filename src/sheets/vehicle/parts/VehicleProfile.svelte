@@ -1,6 +1,5 @@
 <script lang="ts">
   import { SettingsProvider } from 'src/settings/settings';
-  import HpOverlay from 'src/sheets/HpOverlay.svelte';
   import ActorProfile from 'src/sheets/actor/ActorProfile.svelte';
   import type { VehicleSheetContext } from 'src/types/types';
   import { getContext } from 'svelte';
@@ -23,13 +22,11 @@
 
   const portraitStyle = SettingsProvider.settings.portraitStyle.get();
   const useRoundedPortraitStyle = ['all', 'vehicle'].includes(portraitStyle);
+  const useHpOverlay =
+    !SettingsProvider.settings.hpOverlayDisabledVehicle.get();
 </script>
 
-<ActorProfile {useRoundedPortraitStyle}>
-  {#if !SettingsProvider.settings.hpOverlayDisabledVehicle.get()}
-    <HpOverlay {useRoundedPortraitStyle} actor={$store.actor} />
-  {/if}
-
+<ActorProfile {useRoundedPortraitStyle} {useHpOverlay}>
   {#if !SettingsProvider.settings.exhaustionDisabled.get() && !incapacitated}
     <Exhaustion
       level={FoundryAdapter.tryGetFlag($store.actor, 'exhaustion') ?? 0}

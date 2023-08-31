@@ -1,10 +1,8 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { SettingsProvider } from 'src/settings/settings';
-  
   import DeathSaves from 'src/sheets/DeathSaves.svelte';
   import Exhaustion from 'src/sheets/Exhaustion.svelte';
-  import HpOverlay from 'src/sheets/HpOverlay.svelte';
   import type { NpcSheetContext } from 'src/types/types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
@@ -19,6 +17,7 @@
 
   const portraitStyle = SettingsProvider.settings.portraitStyle.get();
   const useRoundedPortraitStyle = ['all', 'npc'].includes(portraitStyle);
+  const useHpOverlay = !SettingsProvider.settings.hpOverlayDisabledNpc.get();
 
   $: incapacitated =
     ($store.actor?.system?.attributes?.hp?.value ?? 0) <= 0 &&
@@ -29,10 +28,7 @@
   }
 </script>
 
-<ActorProfile {useRoundedPortraitStyle}>
-  {#if !SettingsProvider.settings.hpOverlayDisabledNpc.get()}
-    <HpOverlay {useRoundedPortraitStyle} actor={$store.actor} />
-  {/if}
+<ActorProfile {useRoundedPortraitStyle} {useHpOverlay}>
   {#if incapacitated && (!SettingsProvider.settings.hiddenDeathSavesEnabled.get() || FoundryAdapter.userIsGm())}
     <DeathSaves
       successes={FoundryAdapter.tryGetFlag($store.actor, 'death')?.success ?? 0}

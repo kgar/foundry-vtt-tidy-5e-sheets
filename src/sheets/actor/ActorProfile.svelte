@@ -5,13 +5,14 @@
   import type { Actor5e } from 'src/types/actor';
 
   export let useRoundedPortraitStyle: boolean;
+  export let useHpOverlay: boolean;
 
   let store = getContext<Readable<{ actor: Actor5e }>>('store');
 </script>
 
 <div class="profile-wrap">
   <div class="profile" class:round-portrait={useRoundedPortraitStyle}>
-    <ActorPortrait actor={$store.actor} {useRoundedPortraitStyle} />
+    <ActorPortrait actor={$store.actor} {useRoundedPortraitStyle} {useHpOverlay} />
     <slot />
   </div>
 </div>
