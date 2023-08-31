@@ -112,6 +112,9 @@ export const defaultDarkTheme: Tidy5eTheme = {
       - https://codepen.io/sosuke/pen/Pjoqqp
     */
     '--t5ek-advancement-image-filter': 'invert(1)',
-    '--t5ek-activated-profile-toggle-color': 'var(--t5ek-primary-font)'
+    '--t5ek-activated-profile-toggle-color': 'var(--t5ek-primary-font)',
+    '--t5ek-exhaustion-intensity1-color': 'var(--t5ek-icon-outline)',
+    '--t5ek-exhaustion-intensity2-color': 'rgba(255, 255, 255, 0.7)',
+    '--t5ek-exhaustion-intensity3-color': 'rgba(255, 255, 255, 0.7)',
   },
 };

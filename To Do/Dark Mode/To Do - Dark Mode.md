@@ -21,7 +21,7 @@
   - inspo for rounded images: https://codepen.io/jh3y/pen/mMbOEQ
 - [ ] Make new custom variables as needed
   - [x] `--t5ek-activated-profile-toggle-color`; dark mode is `--t5ek-primary-font` ; light mode is `--t5ek-white`
-  - [ ] Review the exhaustion font colors. Need more contrast on Yellow exhaustion.
+  - [x] Review the exhaustion font colors. Need more contrast on Yellow exhaustion.
 - [ ] Create a master list of variables in the form of a TS type and make the light and dark themes adhere to this type; all variables are optional
 - [ ] Trim all unused variables
   - [ ] Also ensure that unset variables are not applied to the root element

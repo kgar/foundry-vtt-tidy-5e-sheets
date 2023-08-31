@@ -106,5 +106,8 @@ export const defaultLightTheme: Tidy5eTheme = {
     '--t5ek-content-entity-link-bg': 'var(--t5ek-faintest-color)',
     '--t5ek-content-entity-link-hover-bg': 'var(--t5ek-primary-accent)',
     '--t5ek-activated-profile-toggle-color': 'var(--t5ek-white)',
+    '--t5ek-exhaustion-intensity1-color': 'var(--t5ek-icon-font)',
+    '--t5ek-exhaustion-intensity2-color': 'rgba(255, 255, 255, 0.7)',
+    '--t5ek-exhaustion-intensity3-color': 'rgba(255, 255, 255, 0.7)',
   },
 };

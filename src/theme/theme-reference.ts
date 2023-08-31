@@ -399,4 +399,17 @@ export const themeVariables = {
     type: 'todo',
     group: 'todo',
   },
+  '--t5ek-exhaustion-intensity1-color': {
+    type: 'todo',
+    group: 'todo',
+  },
+  '--t5ek-exhaustion-intensity2-color': {
+    type: 'todo',
+    group: 'todo',
+  },
+  '--t5ek-exhaustion-intensity3-color': {
+    type: 'todo',
+    group: 'todo',
+  },
+  
 };

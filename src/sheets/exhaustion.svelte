@@ -162,18 +162,17 @@
 
     &.intensity-1 .colorized {
       background: var(--t5ek-exhaustion-lvl1);
+      color: var(--t5ek-exhaustion-intensity1-color);
     }
 
     &.intensity-2 .colorized {
       background: var(--t5ek-exhaustion-lvl2);
-      // TODO: Promote to --t5ek-exhaustion-lvl2-foreground / or find a good contrasting color in the existing variables
-      color: rgba(255, 255, 255, 0.7);
+      color: var(--t5ek-exhaustion-intensity2-color);
     }
 
     &.intensity-3 .colorized {
       background: var(--t5ek-exhaustion-lvl3);
-      // TODO: Promote to --t5ek-exhaustion-lvl3-foreground / or find a good contrasting color in the existing variables
-      color: rgba(255, 255, 255, 0.7);
+      color: var(--t5ek-exhaustion-intensity3-color);
     }
   }
 </style>
