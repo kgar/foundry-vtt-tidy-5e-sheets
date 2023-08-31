@@ -14,7 +14,13 @@
     - [x] type - maybe consider putting some kind of MDN-friendly type text here that would guide in what kind UI to present
     - [x] group - a logical grouping to put the variable in when rendering the UI
 - [ ] Review the dark theme stylesheet and ensure that all of its mappings are accounted for in flat variable bindings; right now, there are some additional styles that are not accounted for
-  - [ ] For cases where dark theme has a variable and light theme does not, allow the theme to be blank and unset
+  - [x] For cases where dark theme has a variable and light theme does not, allow the theme to be blank and unset
+- [ ] Finally fix the multiply tinting / darkening issue with profile pictures and HP overlays
+  - inspo: https://www.youtube.com/watch?v=TAA89nkEuhw&ab_channel=KevinPowell
+  - inspo: https://codepen.io/kevinpowell/pen/OJpYKNR/3cf5d075a29e2d702c02ee7387d516c2
+- [ ] Make new custom variables as needed
+  - [ ] `--t5ek-inspiration-icon-color`; dark mode is `--t5ek-primary-font` ; light mode is `--t5ek-white`
+  - [ ] Review the exhaustion font colors. Need more contrast on Yellow exhaustion.
 - [ ] Create a master list of variables in the form of a TS type and make the light and dark themes adhere to this type; all variables are optional
 - [ ] Trim all unused variables
   - [ ] Also ensure that unset variables are not applied to the root element
@@ -44,9 +50,6 @@
 
 ## Refine
 
-- [ ] Finally fix the multiply tinting / darkening issue with profile pictures and HP overlays
-  - inspo: https://www.youtube.com/watch?v=TAA89nkEuhw&ab_channel=KevinPowell
-  - inspo: https://codepen.io/kevinpowell/pen/OJpYKNR/3cf5d075a29e2d702c02ee7387d516c2
 - [ ] Reduce duplication of colors in the themes, if possible. Allow specialized colors to reference other variables; think of how Kendo will create variables for specific things but will point them to more generic variables
 - [ ] Refine: rename the font-family-specific variables to something more geared to their purpose and not to the font family itself.
 - [ ] Refine: setting properties directly on root is not very Tidy of me. Consider using a template stylesheet in which I can replace all the contents each time with the new theme ruleset. See https://developer.mozilla.org/en-US/docs/Web/API/CSSStyleSheet/replace
@@ -62,6 +65,7 @@
 - [ ] set the class advancement SVG fills to our `--t5ek-primary-font` value 💪
 - [ ] set the width/height of the SVG images appropriately
 - [ ] leave the image filter variable intact as a fallback, and have the styles support it
+- [ ] item tables in dark mode have a little sliver of border-left on the rows
 
 
 ### Tiny MCE Styles
