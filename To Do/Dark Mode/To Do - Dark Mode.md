@@ -71,6 +71,7 @@
 - [ ] set the width/height of the SVG images appropriately
 - [ ] leave the image filter variable intact as a fallback, and have the styles support it
 - [ ] item tables in dark mode have a little sliver of border-left on the rows
+- [ ] review variable names and standardize; there are many cases where there are two or more pieces to a given set of variables, such as bg, color, outline, hover-color, etc. Need a solid naming convention that is consistent.
 
 ## ANd Also
 
