@@ -7,7 +7,7 @@
     ItemChatData,
   } from 'src/types/item';
   import type { ItemCardStore } from 'src/types/types';
-  import { getContext, onDestroy, onMount } from 'svelte';
+  import { getContext, onMount } from 'svelte';
   import type { Writable } from 'svelte/store';
   import DefaultItemCardContentTemplate from './DefaultItemCardContentTemplate.svelte';
   import HorizontalLineSeparator from '../layout/HorizontalLineSeparator.svelte';
@@ -97,6 +97,8 @@
       secrets: $card.item.actor?.isOwner,
     });
 
+    // console.log({ chatData, item: $card.item });
+
     /* 
       now that time has passed, 
       check the most current version of the card item, 
@@ -131,6 +133,9 @@
   let rootFontSizePx = getRootFontSizePx();
   let item: Item5e | undefined;
   let chatData: ItemChatData | undefined;
+  // TODO: Decide on the layout and then clean up
+  $: allProps = getAllProperties($card.item, chatData?.properties);
+  $: specialProps = getSpecialProperties($card.item);
   $: itemProps = chatData?.properties ?? [];
   $: $card,
     (async () => {
@@ -172,6 +177,35 @@
       : parseFloat(getComputedStyle(document.documentElement).fontSize);
   }
 
+  function getAllProperties(
+    item: Item5e | null,
+    chatProps: string[] | undefined
+  ) {
+    chatProps ??= [];
+
+    return [...getSpecialProperties(item), ...chatProps];
+  }
+
+  function getSpecialProperties(item: Item5e | null): string[] {
+    const props: string[] = [];
+
+    if (item?.labels?.toHit) {
+      props.push(item.labels.toHit.replace('+ ', '+').replace('- ', '-'));
+    }
+    if (item?.labels?.damage && item.labels?.derivedDamage?.length > 0) {
+      props.push(
+        item.labels.derivedDamage[0].label
+          .replace(' + ', '+')
+          .replace(' - ', '-')
+      );
+    }
+    if (item?.labels?.save) {
+      props.push(item.labels.save);
+    }
+
+    return props;
+  }
+
   const localize = FoundryAdapter.localize;
 </script>
 
@@ -196,13 +230,39 @@
     <article class="item-info-container-content">
       {#if !!infoContentTemplate && !!item && !!chatData}
         <svelte:component this={infoContentTemplate} {item} {chatData}>
-          {#if itemProps.length}
+          {#if allProps.length}
+            <HorizontalLineSeparator />
+            <!-- Option 1 -->
+            <!-- <div class="item-properties">
+              {#each allProps as prop}
+              <span class="tag">{prop}</span>
+              {/each}
+            </div> -->
+            
+            <!-- Option 2 -->
+            <div class="item-properties">
+              {#each specialProps as prop}
+              <span class="tag">{prop}</span>
+              {/each}
+            </div>
             <HorizontalLineSeparator />
             <div class="item-properties">
               {#each itemProps as prop}
                 <span class="tag">{prop}</span>
               {/each}
             </div>
+
+            <!-- Option 3 -->
+            <!-- <div class="item-properties">
+              {#each specialProps as prop}
+              <span class="tag">{prop}</span>
+              {/each}
+            </div>
+            <div class="item-properties">
+              {#each itemProps as prop}
+                <span class="tag">{prop}</span>
+              {/each}
+            </div> -->
           {/if}
         </svelte:component>
       {:else}

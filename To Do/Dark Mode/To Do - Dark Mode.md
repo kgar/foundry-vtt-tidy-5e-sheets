@@ -29,19 +29,19 @@
 - [x] Trim all unused variables
   - [x] Also ensure that unset variables are not applied to the root element
 - [ ] Add setting for Default Theme which determines what the "default" option maps to
-  - [ ] first available options: Light, Dark
-  - [ ] Float with commission whether it would be good to default to the OS choice when a default has not been selected yet
-  - [ ] plan for the future to allow any of the custom themes that have been imported to be used
-- [ ] Upgrade themes so that there is a special collection in player settings that represents the themes
+  - [x] first available options: Light, Dark
+  - [x] ~~Float with commission whether it would be good to default to the OS choice when a default has not been selected yet~~ - perhaps down the line, when I'm doing a full-fledged theme builder project
+  - [x] plan for the future to allow any of the custom themes that have been imported to be used
+- [x] Upgrade themes so that there is a special collection in player settings that represents the themes
   - [x] name - the theme's pretty name which will appear in the dropdown and theme buidler
   - [x] id - we can generate this, or the user can if they wish
   - [x] description - some editor-enabled text to talk up this theme
   - [x] version - a number to represent the evolving theme file format, incremented by 1, provided by Tidy 5e on export; should be used when migrating to more current versions of the theme
   - [x] variables - the JSON object containing the variable names and their values
-  - [ ] ...?
-- [ ] Ensure that this list has the default light and dark themes included
-- [ ] Update the theme selector and default theme selector configs to point to this collection of themes when preparing to present their options
-- [ ] Update English localization for the light/dark options to exclude the notion that Light is the default theme.
+  - [x] ...?
+- [x] Ensure that this list has the default light and dark themes included
+- [x] Update the theme selector and default theme selector configs to point to this collection of themes when preparing to present their options
+- [x] Update English localization for the light/dark options to exclude the notion that Light is the default theme.
 - [x] Compare PCs
 - [x] Compare NPCs
 - [x] Compare Vehicles
@@ -78,6 +78,15 @@ if (typeof libWrapper === "function") {
 
 So basically, instead of just putting Item.getChatData() in the footer, you'd prepend Item.labels.toHit//.labels.derivedDamage/.labels.save if they exists/aren't empty
 ```
+
+KGar:
+Localized text:
+DND5E.ToHit - To Hit
+DND5E.Damage - Damage
+DND5E.VersatileDamage - Versatile Damage
+
+
+Add to front of tags
 
 ## Oops
 
