@@ -1,10 +1,10 @@
 import type { Tidy5eTheme } from 'src/types/theme';
 
 export const defaultLightTheme: Tidy5eTheme = {
-  name: 'light',
+  name: 'T5EK.Settings.SheetTheme.light',
   version: 1,
-  id: 'tidy5e-kgar-default-light',
-  description: 'The default Tidy 5e Light theme',
+  id: 'light',
+  description: 'The default Tidy 5e Light theme.',
   variables: {
     '--t5ek-modesto': "'Modesto Condensed', 'Palatino Linotype', serif",
     '--t5ek-signika': "'Signika', sans-serif",

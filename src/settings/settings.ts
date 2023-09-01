@@ -7,6 +7,7 @@ import type { RoundedPortaitStyleOptions } from 'src/types/types';
 import { applyTheme } from 'src/theme/theme';
 import { defaultLightTheme } from 'src/theme/default-light-theme';
 import { defaultDarkTheme } from 'src/theme/default-dark-theme';
+import { getCoreThemes } from 'src/theme/theme-reference';
 
 export function createSettings() {
   return {
@@ -32,6 +33,36 @@ export function createSettings() {
       },
     },
     settings: {
+      defaultTheme: {
+        options: {
+          name: FoundryAdapter.localize('T5EK.Settings.DefaultTheme.name'),
+          hint: FoundryAdapter.localize('T5EK.Settings.DefaultTheme.hint'),
+          scope: 'world',
+          config: true,
+          type: String,
+          choices: () => getCoreThemes(false),
+          default: 'light',
+          onChange: (data: string) => {
+            const theme =
+              data === 'light'
+                ? defaultLightTheme
+                : data === 'dark'
+                ? defaultDarkTheme
+                : null;
+
+            const colorScheme = SettingsProvider.settings.colorScheme.get();
+
+            if (theme && colorScheme === 'default') {
+              applyTheme(theme);
+            } else {
+              ui.notifications.warn(`Tidy 5e Theme "${data}" not found.`);
+            }
+          },
+        },
+        get() {
+          return FoundryAdapter.getGameSetting<string>('defaultTheme');
+        },
+      },
       // Color Theme
       colorScheme: {
         options: {
@@ -40,25 +71,30 @@ export function createSettings() {
           scope: 'client',
           config: true,
           type: String,
-          choices: {
-            default: FoundryAdapter.localize(
-              'T5EK.Settings.SheetTheme.default'
-            ),
-            dark: FoundryAdapter.localize('T5EK.Settings.SheetTheme.dark'),
-          },
+          choices: () => getCoreThemes(true),
           default: 'default',
           onChange: (data: string) => {
             const theme =
-              data === 'default'
+              data === 'light'
                 ? defaultLightTheme
                 : data === 'dark'
                 ? defaultDarkTheme
                 : null;
 
-            if (theme) {
-              applyTheme(theme);
+            if (theme === null) {
+              const defaultThemeSetting =
+                SettingsProvider.settings.defaultTheme.get();
+
+              const defaultTheme =
+                defaultThemeSetting === 'light'
+                  ? defaultLightTheme
+                  : defaultThemeSetting === 'dark'
+                  ? defaultDarkTheme
+                  : null;
+
+              defaultTheme && applyTheme(defaultTheme);
             } else {
-              ui.notifications.warn(`Tidy 5e Theme "${data}" not found.`);
+              applyTheme(theme);
             }
           },
         },

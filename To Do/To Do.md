@@ -353,6 +353,7 @@ Evaluate module integration and think about better (API-centric) ways to support
     - [ ] Image / src / useitem on click / middle click to edit
     - [ ] Classlist on the grid tile for custom decoration
     - [ ] optional toolbar at the bottom for charges, quantity, etc.
+- [ ] T5EK.Settings.SheetTheme.default : for all localizations except English, it needs to be remapped to T5EK.Settings.SheetTheme.light
 
 
 ## (Deferred for later; might solve itself) SCSS Revolution

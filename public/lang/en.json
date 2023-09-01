@@ -206,11 +206,17 @@
     "hint": "Enter a key (e.g.: x) to use for item card interaction. Can be any key except function keys (ctrl, alt, etc.)"
   },
 
+  "T5EK.Settings.DefaultTheme": {
+    "name": "T5EK default color theme",
+    "hint": "The default theme for all users who do not have a specific theme selected."
+  },
+
   "T5EK.Settings.SheetTheme": {
-    "name": "T5EK color theme.",
-    "hint": "Use either the default light or alternate dark color theme of T5EK.",
-    "default": "Default (light)",
-    "dark": "Alternate (dark)"
+    "name": "T5EK color theme",
+    "hint": "The theme for your sheets.",
+    "default": "Default",
+    "light": "Light",
+    "dark": "Dark"
   },
 
   "T5EK.Settings.ClassicControls": {

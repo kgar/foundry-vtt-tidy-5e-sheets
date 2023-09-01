@@ -1,3 +1,19 @@
+import { defaultDarkTheme } from "./default-dark-theme";
+import { defaultLightTheme } from "./default-light-theme";
+
+export function getCoreThemes(includeDefault: boolean) {
+  let themes: Record<string, string> = {};
+
+  if (includeDefault) {
+    themes['default'] = 'T5EK.Settings.SheetTheme.default';
+  }
+
+  themes['light'] = defaultLightTheme.name;
+  themes['dark'] = defaultDarkTheme.name;
+
+  return themes;
+}
+
 export const themeVariables = {
   '--t5ek-modesto': {
     type: 'todo',
