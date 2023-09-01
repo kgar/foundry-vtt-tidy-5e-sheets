@@ -49,6 +49,36 @@
 - [ ] Test linked / unlinked NPC tokens/sheets
 - [ ] Celebraaaaate! 🎉🎊
 
+## Item Card Side Quest
+
+- [ ] Update Item Info Card Footer to include saving throw and damage information
+
+From Fallayn:
+```
+The "normal" flyout behaviour does not work with Popout at all. However, there is a Tidy option to instead have them as hover tooltips instead of flyouts, like in RPG inventories. Those work in Popout, so I use that option.
+
+Also if I may: the item footer at the bottom has those details, populated by calling Item5e.getChatData(). However, the most important thing IMO is missing there by default: the item's saving throw and damage information, if any. Currently, I'm patching Item5e.getChatData() to add those in, so it shows up in the sheet, but it would be super cool and way less invasive if the sheet template instead added those manually to the item display, should be only a few lines of code.
+
+// Add weapon details in item footer
+if (typeof libWrapper === "function") {
+  libWrapper.register("advanced-macros", "dnd5e.documents.Item5e.prototype.getChatData", async function (wrapped, ...args) {
+    var ret = await wrapped(...args);
+    if (this.labels?.toHit) {
+      ret.properties.push(this.labels.toHit.replace("+ ", "+").replace("- ", "-"));
+    }
+    if (this.labels?.damage && this.labels?.derivedDamage?.length > 0) {
+      ret.properties.push(this.labels.derivedDamage[0].label.replace(" + ", "+").replace(" - ", "-"));
+    }
+    if (this.labels?.save) {
+      ret.properties.push(this.labels.save);
+    }
+    return ret;
+  }, "WRAPPER");
+}
+
+So basically, instead of just putting Item.getChatData() in the footer, you'd prepend Item.labels.toHit//.labels.derivedDamage/.labels.save if they exists/aren't empty
+```
+
 ## Oops
 
 - [x] PC tool proficiencies are missing? Put them back - I think it was from a recent dnd5e update; thankfully, this will be covered in my automated tests later, so catching this stuff will be a breeze
