@@ -354,7 +354,9 @@ Evaluate module integration and think about better (API-centric) ways to support
     - [ ] Classlist on the grid tile for custom decoration
     - [ ] optional toolbar at the bottom for charges, quantity, etc.
 - [ ] T5EK.Settings.SheetTheme.default : for all localizations except English, it needs to be remapped to T5EK.Settings.SheetTheme.light
-
+- [ ] Import in Tidy 5e-ified TinyMCE styles - should probably be done in v11
+  - [ ] Compare PCs in light mode
+  - [ ] Compare PCs in dark mode
 
 ## (Deferred for later; might solve itself) SCSS Revolution
 

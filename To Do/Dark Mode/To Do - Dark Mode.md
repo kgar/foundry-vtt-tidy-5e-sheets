@@ -100,10 +100,7 @@ Add to front of tags
 - [x] Refine: setting properties directly on root is not very Tidy of me.
   - Using a constructed stylesheet works for the main page but not for popout.
   - [x] Consider applying theme by setting a style tag in the head element.
-- [ ] Document it: add a readme to the theme folder that explains how to add new variables, remove variables, etc.
-- [ ] Import in Tidy 5e-ified TinyMCE styles - should probably be done in v11
-  - [ ] Compare PCs in light mode
-  - [ ] Compare PCs in dark mode
+- [x] Document it: add a readme to the theme folder that explains how to add new variables, remove variables, etc.
 - [ ] inline the Class Advancement SVGs
   - [ ] create a component called InlineSvg that takes a url
   - [ ] fetch the content via the url in the component
