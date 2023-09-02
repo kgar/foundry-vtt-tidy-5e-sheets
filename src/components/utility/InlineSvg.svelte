@@ -1,6 +1,8 @@
 <script lang="ts">
+  import { error } from 'src/utils/logging';
+
   export let svgUrl: string;
-  export let removeWidthAndHeightStyles: boolean = true;
+  export let removeInlineStyles: boolean = true;
 
   let svgHtml: string = '';
   $: {
@@ -9,24 +11,20 @@
         return;
       }
 
-      const response = await fetch(svgUrl);
-      if (response.ok) {
-        svgHtml = await response.text();
+      try {
+        const response = await fetch(svgUrl);
+        if (response.ok) {
+          svgHtml = await response.text();
+        }
+      } catch (e) {
+        error(e);
+        svgHtml = `<img src="${svgUrl}" alt="" />`;
       }
     })();
   }
 
   function preprocessSvg(node: HTMLElement) {
-    if (removeWidthAndHeightStyles) {
-      const svg = node.querySelector('svg');
-      if (svg?.style.width) {
-        svg.style.width = '';
-      }
-      if (svg?.style.height) {
-        svg.style.height = '';
-      }
-      console.log(svg);
-    }
+    removeInlineStyles && node.querySelector('svg')?.removeAttribute('style');
   }
 </script>
 

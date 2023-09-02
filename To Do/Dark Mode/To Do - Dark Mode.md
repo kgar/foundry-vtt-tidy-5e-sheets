@@ -101,23 +101,23 @@ Add to front of tags
   - Using a constructed stylesheet works for the main page but not for popout.
   - [x] Consider applying theme by setting a style tag in the head element.
 - [x] Document it: add a readme to the theme folder that explains how to add new variables, remove variables, etc.
-- [ ] inline the Class Advancement SVGs
-  - [ ] create a component called InlineSvg that takes a url
-  - [ ] fetch the content via the url in the component
-  - [ ] render the return value on the screen
-  - [ ] if error, then attempt to put it to an `img[src]`
-  - [ ] set the class advancement SVG fills to our `--t5ek-primary-font` value 💪
-  - [ ] set the width/height of the SVG images appropriately
-  - [ ] leave the image filter variable intact as a fallback, and have the styles support it
+- [x] inline the Class Advancement SVGs
+  - [x] create a component called InlineSvg that takes a url
+  - [x] fetch the content via the url in the component
+  - [x] render the return value on the screen
+  - [x] if error, then attempt to put it to an `img[src]`
+  - [x] set the class advancement SVG fills to our `--t5ek-primary-font` value 💪
+  - [x] set the width/height of the SVG images appropriately
+  - [x] ~~leave the image filter variable intact as a fallback, and have the styles support it~~ nah
 - [ ] item tables in dark mode have a little sliver of border-left on the rows
 - [ ] review variable names and standardize; there are many cases where there are two or more pieces to a given set of variables, such as bg, color, outline, hover-color, etc. Need a solid naming convention that is consistent.
 - [ ] Revisit settings.ts and look for FoundryAdapter.localize(). There's no need to do that during setting registration.
 - [ ] Review the variables
   - [ ] Can they be better named?
   - [ ] Can any repetition / redundancy be reasonably eliminated?Reduce duplication of colors in the themes, if possible. Allow specialized colors to reference other variables; think of how Kendo will create variables for specific things but will point them to more generic variables
-- [ ] // TODO: Decide on the layout and then clean up
+- [x] // TODO: Decide on the layout and then clean up
 
-## ANd Also
+## And Also
 
 - [x] Remove the PC, NPC, and Vehicle Border PX options / localization from settings
 

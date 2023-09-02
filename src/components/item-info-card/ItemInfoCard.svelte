@@ -41,7 +41,6 @@
   let itemCardNode: HTMLElement;
   let sheet: HTMLElement | null = null;
 
-  // TODO: Replace pixel perfection with more relative measurements
   function onMouseMove(args: { clientX: number; clientY: number }) {
     lastMouseEvent = args;
 
@@ -133,8 +132,6 @@
   let rootFontSizePx = getRootFontSizePx();
   let item: Item5e | undefined;
   let chatData: ItemChatData | undefined;
-  // TODO: Decide on the layout and then clean up
-  $: allProps = getAllProperties(item, chatData?.properties);
   $: specialProps = getSpecialProperties(item);
   $: itemProps = chatData?.properties ?? [];
   $: $card,
@@ -230,41 +227,22 @@
     <article class="item-info-container-content">
       {#if !!infoContentTemplate && !!item && !!chatData}
         <svelte:component this={infoContentTemplate} {item} {chatData}>
-          {#if allProps.length}
+          {#if specialProps.length || itemProps.length}
             <HorizontalLineSeparator />
-            <!-- Option 1 -->
-            <!-- <div class="item-properties">
-              {#each allProps as prop}
-              <span class="tag">{prop}</span>
-              {/each}
-            </div> -->
-            
-            <!-- Option 2 -->
             {#if specialProps.length}
-            <div class="item-properties">
-              {#each specialProps as prop}
-              <span class="tag">{prop}</span>
-              {/each}
-            </div>
-            <!-- <HorizontalLineSeparator /> -->
+              <div class="item-properties">
+                {#each specialProps as prop}
+                  <span class="tag">{prop}</span>
+                {/each}
+              </div>
             {/if}
-            <div class="item-properties">
-              {#each itemProps as prop}
-                <span class="tag">{prop}</span>
-              {/each}
-            </div>
-
-            <!-- Option 3 -->
-            <!-- <div class="item-properties">
-              {#each specialProps as prop}
-              <span class="tag">{prop}</span>
-              {/each}
-            </div>
-            <div class="item-properties">
-              {#each itemProps as prop}
-                <span class="tag">{prop}</span>
-              {/each}
-            </div> -->
+            {#if itemProps.length}
+              <div class="item-properties">
+                {#each itemProps as prop}
+                  <span class="tag">{prop}</span>
+                {/each}
+              </div>
+            {/if}
           {/if}
         </svelte:component>
       {:else}
