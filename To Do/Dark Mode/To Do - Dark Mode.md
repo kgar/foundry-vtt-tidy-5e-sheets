@@ -101,7 +101,7 @@ Add to front of tags
   - Using a constructed stylesheet works for the main page but not for popout.
   - [x] Consider applying theme by setting a style tag in the head element.
 - [ ] Document it: add a readme to the theme folder that explains how to add new variables, remove variables, etc.
-- [ ] Import in Tidy 5e-ified TinyMCE styles
+- [ ] Import in Tidy 5e-ified TinyMCE styles - should probably be done in v11
   - [ ] Compare PCs in light mode
   - [ ] Compare PCs in dark mode
 - [ ] inline the Class Advancement SVGs
@@ -109,9 +109,9 @@ Add to front of tags
   - [ ] fetch the content via the url in the component
   - [ ] render the return value on the screen
   - [ ] if error, then attempt to put it to an `img[src]`
-- [ ] set the class advancement SVG fills to our `--t5ek-primary-font` value 💪
-- [ ] set the width/height of the SVG images appropriately
-- [ ] leave the image filter variable intact as a fallback, and have the styles support it
+  - [ ] set the class advancement SVG fills to our `--t5ek-primary-font` value 💪
+  - [ ] set the width/height of the SVG images appropriately
+  - [ ] leave the image filter variable intact as a fallback, and have the styles support it
 - [ ] item tables in dark mode have a little sliver of border-left on the rows
 - [ ] review variable names and standardize; there are many cases where there are two or more pieces to a given set of variables, such as bg, color, outline, hover-color, etc. Need a solid naming convention that is consistent.
 - [ ] Revisit settings.ts and look for FoundryAdapter.localize(). There's no need to do that during setting registration.
@@ -122,7 +122,7 @@ Add to front of tags
 
 ## ANd Also
 
-- [ ] Remove the PC, NPC, and Vehicle Border PX options / localization from settings
+- [x] Remove the PC, NPC, and Vehicle Border PX options / localization from settings
 
 ### Tiny MCE Styles
 
