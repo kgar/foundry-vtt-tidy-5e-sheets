@@ -7,7 +7,7 @@
   padding: 0;
   margin: 0;
   color: var(--t5ek-primary-font);
-  font-family: var(--t5ek-signika);
+  font-family: var(--t5ek-body-font-family);
 
   form {
     height: 100%;
@@ -214,7 +214,7 @@ h4 {
 .attribute-name,
 .header-attribute .value,
 .attribute-value {
-  font-family: var(--t5ek-modesto);
+  font-family: var(--t5ek-title-font-family);
 }
 
 // general elements

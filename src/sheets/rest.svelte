@@ -91,7 +91,7 @@
       padding: 0;
       font-size: 18px;
       line-height: 32px;
-      font-family: var(--t5ek-signika);
+      font-family: var(--t5ek-body-font-family);
       font-weight: 700;
       transition: color 0.3s ease, transform 0.3s ease;
 

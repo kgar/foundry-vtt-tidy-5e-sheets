@@ -106,7 +106,7 @@
 
   h3 {
     font-size: 1.25rem;
-    font-family: var(--t5ek-modesto);
+    font-family: var(--t5ek-title-font-family);
   }
 
   p {
@@ -118,7 +118,7 @@
   .spellcasting-attribute :global(select) {
     height: 1.1875rem;
     font-size: 0.75rem;
-    font-family: var(--t5ek-signika);
+    font-family: var(--t5ek-body-font-family);
   }
 
   .spellcasting-level-container :global(.spellcasting-level) {

@@ -6,8 +6,8 @@ export const defaultLightTheme: Tidy5eTheme = {
   id: 'light',
   description: 'The default Tidy 5e Light theme.',
   variables: {
-    '--t5ek-modesto': "'Modesto Condensed', 'Palatino Linotype', serif",
-    '--t5ek-signika': "'Signika', sans-serif",
+    '--t5ek-title-font-family': "'Modesto Condensed', 'Palatino Linotype', serif",
+    '--t5ek-body-font-family': "'Signika', sans-serif",
     '--t5ek-primary-font': 'rgba(0, 0, 0, 0.9)',
     '--t5ek-background': 'rgba(236, 233, 223, 1)',
     '--t5ek-faintest-color': 'rgba(0, 0, 0, 0.05)',

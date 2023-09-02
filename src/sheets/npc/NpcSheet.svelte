@@ -334,7 +334,7 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    font-family: var(--t5ek-modesto);
+    font-family: var(--t5ek-title-font-family);
     font-weight: 700;
 
     .xp {

@@ -78,7 +78,7 @@
     }
     :global(input),
     :global(span) {
-      font-family: var(--t5ek-modesto);
+      font-family: var(--t5ek-title-font-family);
       font-weight: 700;
     }
   }

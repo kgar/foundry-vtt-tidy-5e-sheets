@@ -10,7 +10,7 @@
 <style lang="scss">
   .block-title {
     position: relative;
-    font-family: var(--t5ek-modesto);
+    font-family: var(--t5ek-title-font-family);
     font-size: 1.25rem;
     line-height: 1;
     margin: 0;

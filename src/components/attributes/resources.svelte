@@ -205,7 +205,7 @@
 
       .resource-name {
         :global(input) {
-          font-family: var(--t5ek-modesto);
+          font-family: var(--t5ek-title-font-family);
           font-weight: 700;
           font-size: 1rem;
           text-align: center;
@@ -219,7 +219,7 @@
         align-items: center;
         height: 1.375rem;
         line-height: 1.5625rem;
-        font-family: var(--t5ek-modesto);
+        font-family: var(--t5ek-title-font-family);
       }
 
       .attribute-name input[type='text'] {

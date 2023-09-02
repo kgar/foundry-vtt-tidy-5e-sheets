@@ -15,11 +15,11 @@ export function getCoreThemes(includeDefault: boolean) {
 }
 
 export const themeVariables = {
-  '--t5ek-modesto': {
+  '--t5ek-title-font-family': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-signika': {
+  '--t5ek-body-font-family': {
     type: 'todo',
     group: 'todo',
   },

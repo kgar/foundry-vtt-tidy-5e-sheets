@@ -178,7 +178,7 @@
 
       :global(input) {
         font-size: 1rem;
-        font-family: var(--t5ek-signika);
+        font-family: var(--t5ek-body-font-family);
       }
     }
   }

@@ -6,8 +6,8 @@ export const defaultDarkTheme: Tidy5eTheme = {
   id: 'dark',
   description: 'The default Tidy 5e Dark theme.',
   variables: {
-    '--t5ek-modesto': "'Modesto Condensed', 'Palatino Linotype', serif",
-    '--t5ek-signika': "'Signika', sans-serif",
+    '--t5ek-title-font-family': "'Modesto Condensed', 'Palatino Linotype', serif",
+    '--t5ek-body-font-family': "'Signika', sans-serif",
     '--t5ek-primary-font': 'rgba(255, 255, 255, 0.8)',
     '--t5ek-background': 'rgba(30, 30, 30, 1)',
     '--t5ek-faintest-color': 'rgba(255, 255, 255, 0.05)',

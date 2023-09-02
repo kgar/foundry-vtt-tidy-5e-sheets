@@ -274,7 +274,7 @@
       border: 0.0625rem solid var(--t5ek-light-color);
       border-left: none;
       border-right: none;
-      font-family: var(--t5ek-modesto);
+      font-family: var(--t5ek-title-font-family);
       font-weight: 700;
       font-size: 1.125rem;
 

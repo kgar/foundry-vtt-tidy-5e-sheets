@@ -48,7 +48,7 @@
 
     :global(.armor-class-flat) {
       flex: 3;
-      font-family: var(--t5ek-modesto);
+      font-family: var(--t5ek-title-font-family);
       position: absolute;
       top: 40%;
       left: 50%;

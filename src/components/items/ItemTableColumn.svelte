@@ -17,7 +17,7 @@
 <style lang="scss">
   .item-table-column {
     color: var(--t5ek-tertiary-color);
-    font-family: var(--t5ek-signika);
+    font-family: var(--t5ek-body-font-family);
     font-size: 0.75rem;
     display: flex;
     flex-direction: row;

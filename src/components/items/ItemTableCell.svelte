@@ -19,7 +19,7 @@
     flex-grow: 0;
     flex-shrink: 0;
     font-size: 0.75rem;
-    font-family: var(--t5ek-signika);
+    font-family: var(--t5ek-body-font-family);
     height: 1.5rem;
     border-left: 0.0625rem solid var(--t5ek-faintest-color);
     color: var(--t5ek-secondary-color);

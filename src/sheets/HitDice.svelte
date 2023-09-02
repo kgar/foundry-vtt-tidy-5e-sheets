@@ -52,7 +52,7 @@
       justify-content: center;
       align-items: center;
       height: 100%;
-      font-family: var(--t5ek-modesto);
+      font-family: var(--t5ek-title-font-family);
       font-size: 20px;
       font-weight: 700;
       padding: 2px 0 0 0;

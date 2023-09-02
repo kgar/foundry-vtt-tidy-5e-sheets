@@ -76,7 +76,7 @@
       padding: 0;
       font-size: 0.75rem;
       line-height: 1.125rem;
-      font-family: var(--t5ek-signika);
+      font-family: var(--t5ek-body-font-family);
       font-weight: 700;
       transition: color 0.3s ease, transform 0.3s ease;
 
