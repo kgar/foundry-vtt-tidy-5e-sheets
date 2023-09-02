@@ -97,9 +97,9 @@ Add to front of tags
 ## Refine
 
 - [x] Refine: rename the font-family-specific variables to something more geared to their purpose and not to the font family itself.
-- [ ] Refine: setting properties directly on root is not very Tidy of me.
+- [x] Refine: setting properties directly on root is not very Tidy of me.
   - Using a constructed stylesheet works for the main page but not for popout.
-  - [ ] Consider applying theme by setting a style tag in the head element.
+  - [x] Consider applying theme by setting a style tag in the head element.
 - [ ] Document it: add a readme to the theme folder that explains how to add new variables, remove variables, etc.
 - [ ] Import in Tidy 5e-ified TinyMCE styles
   - [ ] Compare PCs in light mode
