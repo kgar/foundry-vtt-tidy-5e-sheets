@@ -103,12 +103,6 @@ export const defaultDarkTheme: Tidy5eTheme = {
     '--t5ek-content-entity-link-hover-color': 'var(--t5ek-primary-font-color)',
     '--t5ek-content-entity-link-bg': 'var(--t5ek-faint-color)',
     '--t5ek-content-entity-link-hover-bg': 'var(--t5ek-primary-accent)',
-    /* 
-      For a more comprehensive conversion from a hex color to an image filter, see these links:
-      - https://stackoverflow.com/questions/22252472/how-can-i-change-the-color-of-an-svg-element
-      - https://codepen.io/sosuke/pen/Pjoqqp
-    */
-    '--t5ek-advancement-image-filter': 'invert(1)',
     '--t5ek-activated-profile-toggle-color': 'var(--t5ek-primary-font-color)',
     '--t5ek-exhaustion-intensity1-color': 'var(--t5ek-icon-outline)',
     '--t5ek-exhaustion-intensity2-color': 'rgba(255, 255, 255, 0.7)',

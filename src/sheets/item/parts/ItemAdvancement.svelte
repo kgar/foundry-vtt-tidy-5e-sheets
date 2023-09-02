@@ -1,4 +1,5 @@
 <script lang="ts">
+  import InlineSvg from 'src/components/utility/InlineSvg.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { Item5e, ItemSheetContext } from 'src/types/item';
   import { getContext } from 'svelte';
@@ -121,10 +122,9 @@
       {#each data.items as advancementItem}
         <li class="advancement-item item flexrow" data-id={advancementItem.id}>
           <div class="item-name flexrow">
-            <div
-              class="item-image"
-              style="background-image: url('{advancementItem.icon}')"
-            />
+            <div class="item-image">
+              <InlineSvg svgUrl={advancementItem.icon} />
+            </div>
             <h4>{@html advancementItem.title}</h4>
           </div>
           {#if $store.advancementEditable || !$store.isEmbedded}

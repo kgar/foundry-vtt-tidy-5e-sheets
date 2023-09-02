@@ -1,5 +1,5 @@
-import { defaultDarkTheme } from "./default-dark-theme";
-import { defaultLightTheme } from "./default-light-theme";
+import { defaultDarkTheme } from './default-dark-theme';
+import { defaultLightTheme } from './default-light-theme';
 
 export function getCoreThemes(includeDefault: boolean) {
   let themes: Record<string, string> = {};
@@ -384,10 +384,6 @@ export const themeVariables = {
     group: 'todo',
   },
   '--t5ek-content-entity-link-hover-bg': {
-    type: 'todo',
-    group: 'todo',
-  },
-  '--t5ek-advancement-image-filter': {
     type: 'todo',
     group: 'todo',
   },

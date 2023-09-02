@@ -618,9 +618,16 @@ input[type='checkbox'] {
         border-radius: 0.3125rem 0 0 0.3125rem;
         margin-right: 0.25rem;
         border: none;
-        background-size: cover;
 
-        filter: var(--t5ek-advancement-image-filter);
+        * {
+          color: var(--t5ek-primary-font-color);
+          fill: var(--t5ek-primary-font-color);
+        }
+
+        svg {
+          width: 1.5rem;
+          height: 1.5rem;
+        }
       }
     }
   }
