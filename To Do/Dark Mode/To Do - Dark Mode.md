@@ -1,5 +1,7 @@
 # To Do - Dark Mode
 
+## Main List
+
 - [x] Learn how the current dark mode implementation works
 - [x] Task out the new version
 - [x] Rename the css variables to distinguish them from Tidy 5e until the rewrite is done: `--t5e-...` to `--t5ek-...`
@@ -28,7 +30,7 @@
 - [x] Create a master list of variables in the form of a TS type and make the light and dark themes adhere to this type; all variables are optional
 - [x] Trim all unused variables
   - [x] Also ensure that unset variables are not applied to the root element
-- [ ] Add setting for Default Theme which determines what the "default" option maps to
+- [x] Add setting for Default Theme which determines what the "default" option maps to
   - [x] first available options: Light, Dark
   - [x] ~~Float with commission whether it would be good to default to the OS choice when a default has not been selected yet~~ - perhaps down the line, when I'm doing a full-fledged theme builder project
   - [x] plan for the future to allow any of the custom themes that have been imported to be used
@@ -46,12 +48,12 @@
 - [x] Compare NPCs
 - [x] Compare Vehicles
 - [x] Compare Items
-- [ ] Test linked / unlinked NPC tokens/sheets
+- [x] Test linked / unlinked NPC tokens/sheets
 - [ ] Celebraaaaate! 🎉🎊
 
 ## Item Card Side Quest
 
-- [ ] Update Item Info Card Footer to include saving throw and damage information
+- [x] Update Item Info Card Footer to include saving throw and damage information
 
 From Fallayn:
 ```
@@ -94,7 +96,6 @@ Add to front of tags
 
 ## Refine
 
-- [ ] Reduce duplication of colors in the themes, if possible. Allow specialized colors to reference other variables; think of how Kendo will create variables for specific things but will point them to more generic variables
 - [ ] Refine: rename the font-family-specific variables to something more geared to their purpose and not to the font family itself.
 - [ ] Refine: setting properties directly on root is not very Tidy of me. Consider using a template stylesheet in which I can replace all the contents each time with the new theme ruleset. See https://developer.mozilla.org/en-US/docs/Web/API/CSSStyleSheet/replace
 - [ ] Document it: add a readme to the theme folder that explains how to add new variables, remove variables, etc.
@@ -112,6 +113,10 @@ Add to front of tags
 - [ ] item tables in dark mode have a little sliver of border-left on the rows
 - [ ] review variable names and standardize; there are many cases where there are two or more pieces to a given set of variables, such as bg, color, outline, hover-color, etc. Need a solid naming convention that is consistent.
 - [ ] Revisit settings.ts and look for FoundryAdapter.localize(). There's no need to do that during setting registration.
+- [ ] Review the variables
+  - [ ] Can they be better named?
+  - [ ] Can any repetition / redundancy be reasonably eliminated?Reduce duplication of colors in the themes, if possible. Allow specialized colors to reference other variables; think of how Kendo will create variables for specific things but will point them to more generic variables
+- [ ] // TODO: Decide on the layout and then clean up
 
 ## ANd Also
 

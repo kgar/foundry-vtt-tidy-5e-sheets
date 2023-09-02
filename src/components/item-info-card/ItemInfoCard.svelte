@@ -134,8 +134,8 @@
   let item: Item5e | undefined;
   let chatData: ItemChatData | undefined;
   // TODO: Decide on the layout and then clean up
-  $: allProps = getAllProperties($card.item, chatData?.properties);
-  $: specialProps = getSpecialProperties($card.item);
+  $: allProps = getAllProperties(item, chatData?.properties);
+  $: specialProps = getSpecialProperties(item);
   $: itemProps = chatData?.properties ?? [];
   $: $card,
     (async () => {
@@ -178,7 +178,7 @@
   }
 
   function getAllProperties(
-    item: Item5e | null,
+    item: Item5e | undefined,
     chatProps: string[] | undefined
   ) {
     chatProps ??= [];
@@ -186,7 +186,7 @@
     return [...getSpecialProperties(item), ...chatProps];
   }
 
-  function getSpecialProperties(item: Item5e | null): string[] {
+  function getSpecialProperties(item: Item5e | undefined): string[] {
     const props: string[] = [];
 
     if (item?.labels?.toHit) {
@@ -240,12 +240,14 @@
             </div> -->
             
             <!-- Option 2 -->
+            {#if specialProps.length}
             <div class="item-properties">
               {#each specialProps as prop}
               <span class="tag">{prop}</span>
               {/each}
             </div>
-            <HorizontalLineSeparator />
+            <!-- <HorizontalLineSeparator /> -->
+            {/if}
             <div class="item-properties">
               {#each itemProps as prop}
                 <span class="tag">{prop}</span>
