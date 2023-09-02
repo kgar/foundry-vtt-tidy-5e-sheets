@@ -338,7 +338,7 @@
 
       .key {
         display: inline-block;
-        background: var(--t5ek-primary-font);
+        background: var(--t5ek-primary-font-color);
         color: var(--t5ek-background);
         border-radius: 0.1875rem;
         font-style: normal;

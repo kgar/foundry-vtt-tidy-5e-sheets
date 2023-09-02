@@ -23,7 +23,7 @@ export const themeVariables = {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-primary-font': {
+  '--t5ek-primary-font-color': {
     type: 'todo',
     group: 'todo',
   },

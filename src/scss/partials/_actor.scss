@@ -6,7 +6,7 @@
 .window-content {
   padding: 0;
   margin: 0;
-  color: var(--t5ek-primary-font);
+  color: var(--t5ek-primary-font-color);
   font-family: var(--t5ek-body-font-family);
 
   form {
@@ -186,7 +186,7 @@
 
 .prosemirror menu button:hover,
 .prosemirror menu button.active {
-  color: var(--t5ek-primary-font);
+  color: var(--t5ek-primary-font-color);
 }
 
 .ae-marker {
@@ -283,7 +283,7 @@ button,
 select {
   cursor: pointer;
   box-shadow: none;
-  color: var(--t5ek-primary-font);
+  color: var(--t5ek-primary-font-color);
 }
 
 [contenteditable],
@@ -291,7 +291,7 @@ input[type='text'],
 input[type='number'] {
   box-shadow: 0 0 0 0.1875rem transparent inset;
   transition: box-shadow 0.3s ease;
-  color: var(--t5ek-primary-font);
+  color: var(--t5ek-primary-font-color);
 }
 
 [contenteditable='true']:hover,

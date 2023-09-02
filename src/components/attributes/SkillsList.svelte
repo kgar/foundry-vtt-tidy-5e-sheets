@@ -178,7 +178,7 @@
         color: var(--t5ek-tertiary-color);
 
         &:hover {
-          color: var(--t5ek-primary-font);
+          color: var(--t5ek-primary-font-color);
         }
 
         i {
@@ -224,7 +224,7 @@
     white-space: nowrap;
 
     &:hover {
-      color: var(--t5ek-primary-font);
+      color: var(--t5ek-primary-font-color);
     }
   }
 </style>

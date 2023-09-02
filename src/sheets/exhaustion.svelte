@@ -146,7 +146,7 @@
 
           &:hover {
             background: var(--t5ek-tertiary-color) !important;
-            color: var(--t5ek-primary-font);
+            color: var(--t5ek-primary-font-color);
           }
         }
       }

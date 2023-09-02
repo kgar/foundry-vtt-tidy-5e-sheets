@@ -8,7 +8,7 @@ export const defaultDarkTheme: Tidy5eTheme = {
   variables: {
     '--t5ek-title-font-family': "'Modesto Condensed', 'Palatino Linotype', serif",
     '--t5ek-body-font-family': "'Signika', sans-serif",
-    '--t5ek-primary-font': 'rgba(255, 255, 255, 0.8)',
+    '--t5ek-primary-font-color': 'rgba(255, 255, 255, 0.8)',
     '--t5ek-background': 'rgba(30, 30, 30, 1)',
     '--t5ek-faintest-color': 'rgba(255, 255, 255, 0.05)',
     '--t5ek-faint-color': 'rgba(255, 255, 255, 0.1)',
@@ -99,8 +99,8 @@ export const defaultDarkTheme: Tidy5eTheme = {
       'rgba(255, 255, 255, 1)',
     '--t5ek-sheet-background': 'var(--t5ek-background)',
     '--t5ek-item-info-card-bg': 'var(--t5ek-background)',
-    '--t5ek-content-entity-link-color': 'var(--t5ek-primary-font)',
-    '--t5ek-content-entity-link-hover-color': 'var(--t5ek-primary-font)',
+    '--t5ek-content-entity-link-color': 'var(--t5ek-primary-font-color)',
+    '--t5ek-content-entity-link-hover-color': 'var(--t5ek-primary-font-color)',
     '--t5ek-content-entity-link-bg': 'var(--t5ek-faint-color)',
     '--t5ek-content-entity-link-hover-bg': 'var(--t5ek-primary-accent)',
     /* 
@@ -109,7 +109,7 @@ export const defaultDarkTheme: Tidy5eTheme = {
       - https://codepen.io/sosuke/pen/Pjoqqp
     */
     '--t5ek-advancement-image-filter': 'invert(1)',
-    '--t5ek-activated-profile-toggle-color': 'var(--t5ek-primary-font)',
+    '--t5ek-activated-profile-toggle-color': 'var(--t5ek-primary-font-color)',
     '--t5ek-exhaustion-intensity1-color': 'var(--t5ek-icon-outline)',
     '--t5ek-exhaustion-intensity2-color': 'rgba(255, 255, 255, 0.7)',
     '--t5ek-exhaustion-intensity3-color': 'rgba(255, 255, 255, 0.7)',

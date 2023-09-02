@@ -225,7 +225,7 @@
       }
 
       .spell-name:hover .spell-image:hover i {
-        color: var(--t5ek-primary-font);
+        color: var(--t5ek-primary-font-color);
       }
     }
     .spells-footer {

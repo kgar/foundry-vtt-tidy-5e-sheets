@@ -81,7 +81,7 @@
       transition: color 0.3s ease, transform 0.3s ease;
 
       &:hover {
-        color: var(--t5ek-primary-font);
+        color: var(--t5ek-primary-font-color);
       }
     }
 
@@ -96,7 +96,7 @@
       align-items: center;
       border-radius: 0;
       font-size: 0.75rem;
-      color: var(--t5ek-primary-font);
+      color: var(--t5ek-primary-font-color);
     }
   }
 

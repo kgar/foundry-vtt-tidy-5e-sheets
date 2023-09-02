@@ -293,7 +293,7 @@
       }
 
       .item-name:hover .item-image:hover i {
-        color: var(--t5ek-primary-font);
+        color: var(--t5ek-primary-font-color);
       }
 
       &:global(.show-item-count-on-hover :is(.item-uses, .item-quantity)) {
@@ -356,7 +356,7 @@
       }
 
       .item-name:hover ~ .item-stats :global(input) {
-        color: var(--t5ek-primary-font);
+        color: var(--t5ek-primary-font-color);
         text-shadow: 0 0 0.3125rem
           var(--t5ek-inventory-grid-hover-use-item-contrast-text-shadow);
       }

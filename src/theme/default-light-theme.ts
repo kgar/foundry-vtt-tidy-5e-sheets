@@ -8,7 +8,7 @@ export const defaultLightTheme: Tidy5eTheme = {
   variables: {
     '--t5ek-title-font-family': "'Modesto Condensed', 'Palatino Linotype', serif",
     '--t5ek-body-font-family': "'Signika', sans-serif",
-    '--t5ek-primary-font': 'rgba(0, 0, 0, 0.9)',
+    '--t5ek-primary-font-color': 'rgba(0, 0, 0, 0.9)',
     '--t5ek-background': 'rgba(236, 233, 223, 1)',
     '--t5ek-faintest-color': 'rgba(0, 0, 0, 0.05)',
     '--t5ek-faint-color': 'rgba(0, 0, 0, 0.1)',
@@ -98,7 +98,7 @@ export const defaultLightTheme: Tidy5eTheme = {
     '--t5ek-inventory-grid-hover-use-item-contrast-text-shadow':
       'rgba(255, 255, 255, 1)',
     '--t5ek-item-info-card-bg': "url('../../../ui/parchment.jpg')",
-    '--t5ek-content-entity-link-color': 'var(--t5ek-primary-font)',
+    '--t5ek-content-entity-link-color': 'var(--t5ek-primary-font-color)',
     '--t5ek-content-entity-link-hover-color': 'var(--t5ek-white)',
     '--t5ek-content-entity-link-bg': 'var(--t5ek-faintest-color)',
     '--t5ek-content-entity-link-hover-bg': 'var(--t5ek-primary-accent)',

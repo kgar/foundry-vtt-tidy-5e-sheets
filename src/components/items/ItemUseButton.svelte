@@ -33,7 +33,7 @@
     }
 
     &:hover i {
-      color: var(--t5ek-primary-font);
+      color: var(--t5ek-primary-font-color);
     }
   }
 </style>

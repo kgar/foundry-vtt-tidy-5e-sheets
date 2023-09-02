@@ -170,7 +170,7 @@
 
     .portrait-menu-item {
       background: var(--t5ek-background);
-      color: var(--t5ek-primary-font);
+      color: var(--t5ek-primary-font-color);
       border: none;
       margin: 1px 0;
       padding: 4px 6px;

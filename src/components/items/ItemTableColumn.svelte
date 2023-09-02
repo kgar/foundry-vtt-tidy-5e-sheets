@@ -29,7 +29,7 @@
     }
 
     &.primary {
-      color: var(--t5ek-primary-font);
+      color: var(--t5ek-primary-font-color);
       font-weight: 700;
       font-size: 0.75rem;
       flex: 1;

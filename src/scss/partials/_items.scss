@@ -29,7 +29,7 @@ select {
 button,
 select {
   border: none;
-  color: var(--t5ek-primary-font);
+  color: var(--t5ek-primary-font-color);
 }
 
 select {
@@ -43,7 +43,7 @@ input[type='text'] {
 
 input[type='text'],
 input[type='number'] {
-  color: var(--t5ek-primary-font);
+  color: var(--t5ek-primary-font-color);
 }
 
 :is(input[type='text'], input[type='number'])::placeholder {
@@ -88,7 +88,7 @@ input[type='checkbox'] {
 
       a {
         background: var(--t5ek-background);
-        color: var(--t5ek-primary-font);
+        color: var(--t5ek-primary-font-color);
         border: none;
         margin: 0.0625rem 0;
         padding: 0.25rem 0.375rem;
@@ -356,7 +356,7 @@ input[type='checkbox'] {
       line-height: 1rem;
       font-family: var(--t5ek-title-font-family);
       font-weight: 600;
-      color: var(--t5ek-primary-font);
+      color: var(--t5ek-primary-font-color);
 
       &:first-child {
         margin-top: 0;
@@ -587,7 +587,7 @@ input[type='checkbox'] {
       margin: 0.125rem 0;
       border-radius: 0.3125rem;
       font-size: 0.75rem;
-      color: var(--t5ek-primary-font);
+      color: var(--t5ek-primary-font-color);
 
       div:not(.item-name) {
         border-left: 0.0625rem solid var(--t5ek-faint-color);
