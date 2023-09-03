@@ -357,6 +357,11 @@ Evaluate module integration and think about better (API-centric) ways to support
 - [ ] Import in Tidy 5e-ified TinyMCE styles - should probably be done in v11
   - [ ] Compare PCs in light mode
   - [ ] Compare PCs in dark mode
+- [ ] Tidy 5e Design Legos - come up with a library of Tidy 5e components that can be exposed in the module API and consumed by any caller. 
+  - [ ] Provide convenience functions for generating such content and ensure that while the API remains stable, any major design changes to Tidy 5e carry content forward without breakage.
+  - [ ] Review the Tidy 5e sheets and fathom the kinds of building blocks that would make the sheets
+  - [ ] Revamp the entire module with these lego components
+  - [ ] Create/upgrade alt sheets with these lego components, also
 
 ## (Deferred for later; might solve itself) SCSS Revolution
 
