@@ -109,7 +109,7 @@ Add to front of tags
   - [x] set the class advancement SVG fills to our `--t5ek-primary-font` value 💪
   - [x] set the width/height of the SVG images appropriately
   - [x] ~~leave the image filter variable intact as a fallback, and have the styles support it~~ nah
-- [ ] item tables in dark mode have a little sliver of border-left on the rows
+- [x] item tables in dark mode have a little sliver of border-left on the rows
 - [ ] Revisit settings.ts and look for FoundryAdapter.localize(). There's no need to do that during setting registration.
 - [ ] Review the variables
   - [ ] Can they be better named? there are many cases where there are two or more pieces to a given set of variables, such as bg, color, outline, hover-color, etc. Need a solid naming convention that is consistent
