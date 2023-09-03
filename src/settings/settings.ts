@@ -35,8 +35,8 @@ export function createSettings() {
     settings: {
       defaultTheme: {
         options: {
-          name: FoundryAdapter.localize('T5EK.Settings.DefaultTheme.name'),
-          hint: FoundryAdapter.localize('T5EK.Settings.DefaultTheme.hint'),
+          name: 'T5EK.Settings.DefaultTheme.name',
+          hint: 'T5EK.Settings.DefaultTheme.hint',
           scope: 'world',
           config: true,
           type: String,
@@ -66,8 +66,8 @@ export function createSettings() {
       // Color Theme
       colorScheme: {
         options: {
-          name: FoundryAdapter.localize('T5EK.Settings.SheetTheme.name'),
-          hint: FoundryAdapter.localize('T5EK.Settings.SheetTheme.hint'),
+          name: 'T5EK.Settings.SheetTheme.name',
+          hint: 'T5EK.Settings.SheetTheme.hint',
           scope: 'client',
           config: true,
           type: String,
@@ -106,12 +106,8 @@ export function createSettings() {
       // Disable Right Click
       rightClickDisabled: {
         options: {
-          name: `${FoundryAdapter.localize(
-            'T5EK.Settings.RightClickDisabled.name'
-          )}`,
-          hint: FoundryAdapter.localize(
-            'T5EK.Settings.RightClickDisabled.hint'
-          ),
+          name: 'T5EK.Settings.RightClickDisabled.name',
+          hint: 'T5EK.Settings.RightClickDisabled.hint',
           scope: 'client',
           config: false,
           default: false,
@@ -125,10 +121,8 @@ export function createSettings() {
       // Classic Item Controls
       classicControlsEnabled: {
         options: {
-          name: `${FoundryAdapter.localize(
-            'T5EK.Settings.ClassicControls.name'
-          )}`,
-          hint: FoundryAdapter.localize('T5EK.Settings.ClassicControls.hint'),
+          name: 'T5EK.Settings.ClassicControls.name',
+          hint: 'T5EK.Settings.ClassicControls.hint',
           scope: 'client',
           config: false,
           default: true,
@@ -143,12 +137,8 @@ export function createSettings() {
 
       hideIconsNextToTheItemName: {
         options: {
-          name: `${FoundryAdapter.localize(
-            'T5EK.Settings.HideIconsNextToTheItemName.name'
-          )}`,
-          hint: FoundryAdapter.localize(
-            'T5EK.Settings.HideIconsNextToTheItemName.hint'
-          ),
+          name: 'T5EK.Settings.HideIconsNextToTheItemName.name',
+          hint: 'T5EK.Settings.HideIconsNextToTheItemName.hint',
           scope: 'client',
           config: false,
           default: false,
@@ -164,12 +154,8 @@ export function createSettings() {
       // Item Info Cards
       itemCardsForAllItems: {
         options: {
-          name: `${FoundryAdapter.localize(
-            'T5EK.Settings.ItemCardsForAllItems.name'
-          )}`,
-          hint: FoundryAdapter.localize(
-            'T5EK.Settings.ItemCardsForAllItems.hint'
-          ),
+          name: 'T5EK.Settings.ItemCardsForAllItems.name',
+          hint: 'T5EK.Settings.ItemCardsForAllItems.hint',
           scope: 'client',
           config: true,
           default: true,
@@ -182,10 +168,8 @@ export function createSettings() {
 
       itemCardsForNpcs: {
         options: {
-          name: `${FoundryAdapter.localize(
-            'T5EK.Settings.ItemCardsForNpcs.name'
-          )}`,
-          hint: FoundryAdapter.localize('T5EK.Settings.ItemCardsForNpcs.hint'),
+          name: 'T5EK.Settings.ItemCardsForNpcs.name',
+          hint: 'T5EK.Settings.ItemCardsForNpcs.hint',
           scope: 'world',
           config: true,
           default: true,
@@ -198,12 +182,8 @@ export function createSettings() {
 
       itemCardsAreFloating: {
         options: {
-          name: `${FoundryAdapter.localize(
-            'T5EK.Settings.ItemCardsAreFloating.name'
-          )}`,
-          hint: FoundryAdapter.localize(
-            'T5EK.Settings.ItemCardsAreFloating.hint'
-          ),
+          name: 'T5EK.Settings.ItemCardsAreFloating.name',
+          hint: 'T5EK.Settings.ItemCardsAreFloating.hint',
           scope: 'client',
           config: true,
           default: false,
@@ -216,10 +196,8 @@ export function createSettings() {
 
       itemCardsDelay: {
         options: {
-          name: `${FoundryAdapter.localize(
-            'T5EK.Settings.ItemCardsDelay.name'
-          )}`,
-          hint: FoundryAdapter.localize('T5EK.Settings.ItemCardsDelay.hint'),
+          name: 'T5EK.Settings.ItemCardsDelay.name',
+          hint: 'T5EK.Settings.ItemCardsDelay.hint',
           scope: 'client',
           config: true,
           default: 300,
@@ -232,10 +210,8 @@ export function createSettings() {
 
       itemCardsFixKey: {
         options: {
-          name: `${FoundryAdapter.localize(
-            'T5EK.Settings.ItemCardsFixKey.name'
-          )}`,
-          hint: FoundryAdapter.localize('T5EK.Settings.ItemCardsFixKey.hint'),
+          name: 'T5EK.Settings.ItemCardsFixKey.name',
+          hint: 'T5EK.Settings.ItemCardsFixKey.hint',
           scope: 'world',
           config: false,
           default: 'x',
@@ -249,10 +225,8 @@ export function createSettings() {
       // Show Roll buttons in context Menu
       contextRollButtons: {
         options: {
-          name: `${FoundryAdapter.localize(
-            'T5EK.Settings.RollButtonsToCard.name'
-          )}`,
-          hint: FoundryAdapter.localize('T5EK.Settings.RollButtonsToCard.hint'),
+          name: 'T5EK.Settings.RollButtonsToCard.name',
+          hint: 'T5EK.Settings.RollButtonsToCard.hint',
           scope: 'world',
           config: false,
           default: false,
@@ -266,8 +240,8 @@ export function createSettings() {
       //Show trait labels
       traitLabelsEnabled: {
         options: {
-          name: FoundryAdapter.localize('T5EK.Settings.TraitLabels.name'),
-          hint: FoundryAdapter.localize('T5EK.Settings.TraitLabels.hint'),
+          name: 'T5EK.Settings.TraitLabels.name',
+          hint: 'T5EK.Settings.TraitLabels.hint',
           scope: 'world',
           config: false,
           default: true,
@@ -283,8 +257,8 @@ export function createSettings() {
       // PC Sheet Settings
       journalTabDisabled: {
         options: {
-          name: FoundryAdapter.localize('T5EK.Settings.JournalTab.name'),
-          hint: FoundryAdapter.localize('T5EK.Settings.JournalTab.hint'),
+          name: 'T5EK.Settings.JournalTab.name',
+          hint: 'T5EK.Settings.JournalTab.hint',
           scope: 'client',
           config: false,
           default: false,
@@ -297,12 +271,8 @@ export function createSettings() {
 
       journalTabNPCDisabled: {
         options: {
-          name: `${FoundryAdapter.localize(
-            'T5EK.Settings.JournalTabNPCDisabled.name'
-          )}`,
-          hint: FoundryAdapter.localize(
-            'T5EK.Settings.JournalTabNPCDisabled.hint'
-          ),
+          name: 'T5EK.Settings.JournalTabNPCDisabled.name',
+          hint: 'T5EK.Settings.JournalTabNPCDisabled.hint',
           scope: 'client',
           config: false,
           default: false,
@@ -317,8 +287,8 @@ export function createSettings() {
 
       classListDisabled: {
         options: {
-          name: FoundryAdapter.localize('T5EK.Settings.ClassList.name'),
-          hint: FoundryAdapter.localize('T5EK.Settings.ClassList.hint'),
+          name: 'T5EK.Settings.ClassList.name',
+          hint: 'T5EK.Settings.ClassList.hint',
           scope: 'client',
           config: false,
           default: false,
@@ -331,12 +301,8 @@ export function createSettings() {
 
       inspirationAnimationDisabled: {
         options: {
-          name: `${FoundryAdapter.localize(
-            'T5EK.Settings.InspirationAnimation.name'
-          )}`,
-          hint: FoundryAdapter.localize(
-            'T5EK.Settings.InspirationAnimation.hint'
-          ),
+          name: 'T5EK.Settings.InspirationAnimation.name',
+          hint: 'T5EK.Settings.InspirationAnimation.hint',
           scope: 'client',
           config: false,
           default: false,
@@ -351,8 +317,8 @@ export function createSettings() {
 
       hideIfZero: {
         options: {
-          name: FoundryAdapter.localize('T5EK.Settings.HideIfZero.name'),
-          hint: FoundryAdapter.localize('T5EK.Settings.HideIfZero.hint'),
+          name: 'T5EK.Settings.HideIfZero.name',
+          hint: 'T5EK.Settings.HideIfZero.hint',
           scope: 'client',
           config: false,
           default: false,
@@ -365,12 +331,8 @@ export function createSettings() {
 
       inspirationOnHover: {
         options: {
-          name: `${FoundryAdapter.localize(
-            'T5EK.Settings.InspirationOnHover.name'
-          )}`,
-          hint: FoundryAdapter.localize(
-            'T5EK.Settings.InspirationOnHover.hint'
-          ),
+          name: 'T5EK.Settings.InspirationOnHover.name',
+          hint: 'T5EK.Settings.InspirationOnHover.hint',
           scope: 'client',
           config: false,
           default: false,
@@ -383,10 +345,8 @@ export function createSettings() {
 
       exhaustionOnHover: {
         options: {
-          name: `${FoundryAdapter.localize(
-            'T5EK.Settings.ExhaustionOnHover.name'
-          )}`,
-          hint: FoundryAdapter.localize('T5EK.Settings.ExhaustionOnHover.hint'),
+          name: 'T5EK.Settings.ExhaustionOnHover.name',
+          hint: 'T5EK.Settings.ExhaustionOnHover.hint',
           scope: 'client',
           config: false,
           default: false,
@@ -399,8 +359,8 @@ export function createSettings() {
 
       hpBarDisabled: {
         options: {
-          name: FoundryAdapter.localize('T5EK.Settings.HpBar.name'),
-          hint: FoundryAdapter.localize('T5EK.Settings.HpBar.hint'),
+          name: 'T5EK.Settings.HpBar.name',
+          hint: 'T5EK.Settings.HpBar.hint',
           scope: 'client',
           config: false,
           default: false,
@@ -413,8 +373,8 @@ export function createSettings() {
 
       hpOverlayDisabled: {
         options: {
-          name: FoundryAdapter.localize('T5EK.Settings.HpOverlay.name'),
-          hint: FoundryAdapter.localize('T5EK.Settings.HpOverlay.hint'),
+          name: 'T5EK.Settings.HpOverlay.name',
+          hint: 'T5EK.Settings.HpOverlay.hint',
           scope: 'client',
           config: false,
           default: false,
@@ -427,10 +387,8 @@ export function createSettings() {
 
       traitsTogglePc: {
         options: {
-          name: `${FoundryAdapter.localize(
-            'T5EK.Settings.TraitsTogglePc.name'
-          )}`,
-          hint: FoundryAdapter.localize('T5EK.Settings.TraitsTogglePc.hint'),
+          name: 'T5EK.Settings.TraitsTogglePc.name',
+          hint: 'T5EK.Settings.TraitsTogglePc.hint',
           scope: 'client',
           config: false,
           default: false,
@@ -443,12 +401,8 @@ export function createSettings() {
 
       traitsMovedBelowResource: {
         options: {
-          name: `${FoundryAdapter.localize(
-            'T5EK.Settings.TraitsMovedBelowResource.name'
-          )}`,
-          hint: FoundryAdapter.localize(
-            'T5EK.Settings.TraitsMovedBelowResource.hint'
-          ),
+          name: 'T5EK.Settings.TraitsMovedBelowResource.name',
+          hint: 'T5EK.Settings.TraitsMovedBelowResource.hint',
           scope: 'client',
           config: false,
           default: false,
@@ -463,10 +417,8 @@ export function createSettings() {
 
       ammoEquippedOnly: {
         options: {
-          name: `${FoundryAdapter.localize(
-            'T5EK.Settings.AmmoEquippedOnly.name'
-          )}`,
-          hint: FoundryAdapter.localize('T5EK.Settings.AmmoEquippedOnly.hint'),
+          name: 'T5EK.Settings.AmmoEquippedOnly.name',
+          hint: 'T5EK.Settings.AmmoEquippedOnly.hint',
           scope: 'client',
           config: false,
           default: false,
@@ -481,12 +433,8 @@ export function createSettings() {
 
       traitsMovedBelowResourceNpc: {
         options: {
-          name: `${FoundryAdapter.localize(
-            'T5EK.Settings.TraitsMovedBelowResource.name'
-          )}`,
-          hint: FoundryAdapter.localize(
-            'T5EK.Settings.TraitsMovedBelowResource.hint'
-          ),
+          name: 'T5EK.Settings.TraitsMovedBelowResource.name',
+          hint: 'T5EK.Settings.TraitsMovedBelowResource.hint',
           scope: 'client',
           config: false,
           default: false,
@@ -501,8 +449,8 @@ export function createSettings() {
 
       hpBarDisabledNpc: {
         options: {
-          name: FoundryAdapter.localize('T5EK.Settings.HpBar.name'),
-          hint: FoundryAdapter.localize('T5EK.Settings.HpBar.hint'),
+          name: 'T5EK.Settings.HpBar.name',
+          hint: 'T5EK.Settings.HpBar.hint',
           scope: 'client',
           config: false,
           default: false,
@@ -515,8 +463,8 @@ export function createSettings() {
 
       hpOverlayDisabledNpc: {
         options: {
-          name: FoundryAdapter.localize('T5EK.Settings.HpOverlay.name'),
-          hint: FoundryAdapter.localize('T5EK.Settings.HpOverlay.hint'),
+          name: 'T5EK.Settings.HpOverlay.name',
+          hint: 'T5EK.Settings.HpOverlay.hint',
           scope: 'client',
           config: false,
           default: false,
@@ -529,10 +477,8 @@ export function createSettings() {
 
       traitsAlwaysShownNpc: {
         options: {
-          name: `${FoundryAdapter.localize(
-            'T5EK.Settings.TraitsAlwaysShown.name'
-          )}`,
-          hint: FoundryAdapter.localize('T5EK.Settings.TraitsAlwaysShown.hint'),
+          name: 'T5EK.Settings.TraitsAlwaysShown.name',
+          hint: 'T5EK.Settings.TraitsAlwaysShown.hint',
           scope: 'client',
           config: false,
           default: false,
@@ -545,10 +491,8 @@ export function createSettings() {
 
       skillsAlwaysShownNpc: {
         options: {
-          name: `${FoundryAdapter.localize(
-            'T5EK.Settings.SkillsAlwaysShown.name'
-          )}`,
-          hint: FoundryAdapter.localize('T5EK.Settings.SkillsAlwaysShown.hint'),
+          name: 'T5EK.Settings.SkillsAlwaysShown.name',
+          hint: 'T5EK.Settings.SkillsAlwaysShown.hint',
           scope: 'client',
           config: false,
           default: false,
@@ -561,10 +505,8 @@ export function createSettings() {
 
       hideSpellbookTabNpc: {
         options: {
-          name: `${FoundryAdapter.localize(
-            'T5EK.Settings.SkillsAlwaysShown.name'
-          )}`,
-          hint: FoundryAdapter.localize('T5EK.Settings.SkillsAlwaysShown.hint'),
+          name: 'T5EK.Settings.SkillsAlwaysShown.name',
+          hint: 'T5EK.Settings.SkillsAlwaysShown.hint',
           scope: 'client',
           config: false,
           default: false,
@@ -579,8 +521,8 @@ export function createSettings() {
 
       hpBarDisabledVehicle: {
         options: {
-          name: FoundryAdapter.localize('T5EK.Settings.HpBar.name'),
-          hint: FoundryAdapter.localize('T5EK.Settings.HpBar.hint'),
+          name: 'T5EK.Settings.HpBar.name',
+          hint: 'T5EK.Settings.HpBar.hint',
           scope: 'client',
           config: false,
           default: false,
@@ -593,8 +535,8 @@ export function createSettings() {
 
       hpOverlayDisabledVehicle: {
         options: {
-          name: FoundryAdapter.localize('T5EK.Settings.HpOverlay.name'),
-          hint: FoundryAdapter.localize('T5EK.Settings.HpOverlay.hint'),
+          name: 'T5EK.Settings.HpOverlay.name',
+          hint: 'T5EK.Settings.HpOverlay.hint',
           scope: 'client',
           config: false,
           default: false,
@@ -613,8 +555,8 @@ export function createSettings() {
       // Show Player Name
       playerNameEnabled: {
         options: {
-          name: FoundryAdapter.localize('T5EK.Settings.PlayerName.name'),
-          hint: FoundryAdapter.localize('T5EK.Settings.PlayerName.hint'),
+          name: 'T5EK.Settings.PlayerName.name',
+          hint: 'T5EK.Settings.PlayerName.hint',
           scope: 'world',
           config: false,
           default: false,
@@ -628,10 +570,8 @@ export function createSettings() {
       // Expanded Sheet
       expandedSheetEnabled: {
         options: {
-          name: `${FoundryAdapter.localize(
-            'T5EK.Settings.ExpandedSheet.name'
-          )}`,
-          hint: FoundryAdapter.localize('T5EK.Settings.ExpandedSheet.hint'),
+          name: 'T5EK.Settings.ExpandedSheet.name',
+          hint: 'T5EK.Settings.ExpandedSheet.hint',
           scope: 'world',
           config: false,
           default: false,
@@ -646,20 +586,16 @@ export function createSettings() {
       // Portrait Style
       portraitStyle: {
         options: {
-          name: `${FoundryAdapter.localize(
-            'T5EK.Settings.PortraitStyle.name'
-          )}`,
-          hint: FoundryAdapter.localize('T5EK.Settings.PortraitStyle.hint'),
+          name: 'T5EK.Settings.PortraitStyle.name',
+          hint: 'T5EK.Settings.PortraitStyle.hint',
           scope: 'world',
           config: false,
           type: String,
           choices: {
-            default: FoundryAdapter.localize(
-              'T5EK.Settings.PortraitStyle.default'
-            ),
-            pc: FoundryAdapter.localize('T5EK.Settings.PortraitStyle.pc'),
-            npc: FoundryAdapter.localize('T5EK.Settings.PortraitStyle.npc'),
-            all: FoundryAdapter.localize('T5EK.Settings.PortraitStyle.all'),
+            default: 'T5EK.Settings.PortraitStyle.default',
+            pc: 'T5EK.Settings.PortraitStyle.pc',
+            npc: 'T5EK.Settings.PortraitStyle.npc',
+            all: 'T5EK.Settings.PortraitStyle.all',
           },
           default: 'all',
         },
@@ -673,10 +609,8 @@ export function createSettings() {
       // Total Edit Lock
       editTotalLockEnabled: {
         options: {
-          name: `${FoundryAdapter.localize(
-            'T5EK.Settings.EditTotalLock.name'
-          )}`,
-          hint: FoundryAdapter.localize('T5EK.Settings.EditTotalLock.hint'),
+          name: 'T5EK.Settings.EditTotalLock.name',
+          hint: 'T5EK.Settings.EditTotalLock.hint',
           scope: 'world',
           config: false,
           default: false,
@@ -689,8 +623,8 @@ export function createSettings() {
 
       editGmAlwaysEnabled: {
         options: {
-          name: FoundryAdapter.localize('T5EK.Settings.EditGmAlways.name'),
-          hint: FoundryAdapter.localize('T5EK.Settings.EditGmAlways.hint'),
+          name: 'T5EK.Settings.EditGmAlways.name',
+          hint: 'T5EK.Settings.EditGmAlways.hint',
           scope: 'world',
           config: false,
           default: false,
@@ -703,10 +637,8 @@ export function createSettings() {
 
       editEffectsGmOnlyEnabled: {
         options: {
-          name: `${FoundryAdapter.localize(
-            'T5EK.Settings.EditEffectsGmOnly.name'
-          )}`,
-          hint: FoundryAdapter.localize('T5EK.Settings.EditEffectsGmOnly.hint'),
+          name: 'T5EK.Settings.EditEffectsGmOnly.name',
+          hint: 'T5EK.Settings.EditEffectsGmOnly.hint',
           scope: 'world',
           config: false,
           default: false,
@@ -722,10 +654,8 @@ export function createSettings() {
       // Hidden Death Saves
       hiddenDeathSavesEnabled: {
         options: {
-          name: `${FoundryAdapter.localize(
-            'T5EK.Settings.HiddenDeathSaves.name'
-          )}`,
-          hint: FoundryAdapter.localize('T5EK.Settings.HiddenDeathSaves.hint'),
+          name: 'T5EK.Settings.HiddenDeathSaves.name',
+          hint: 'T5EK.Settings.HiddenDeathSaves.hint',
           scope: 'world',
           config: false,
           default: false,
@@ -741,12 +671,8 @@ export function createSettings() {
       // Hide marker spell slot
       hideSpellSlotMarker: {
         options: {
-          name: `${FoundryAdapter.localize(
-            'T5EK.Settings.HideSpellSlotMarker.name'
-          )}`,
-          hint: FoundryAdapter.localize(
-            'T5EK.Settings.HideSpellSlotMarker.hint'
-          ),
+          name: 'T5EK.Settings.HideSpellSlotMarker.name',
+          hint: 'T5EK.Settings.HideSpellSlotMarker.hint',
           scope: 'world',
           config: false,
           default: false,
@@ -760,12 +686,8 @@ export function createSettings() {
       // Enable Spell Level Buttons
       enableSpellLevelButtons: {
         options: {
-          name: `${FoundryAdapter.localize(
-            'T5EK.Settings.EnableSpellLevelButtons.name'
-          )}`,
-          hint: `${FoundryAdapter.localize(
-            'T5EK.Settings.EnableSpellLevelButtons.hint'
-          )}`,
+          name: 'T5EK.Settings.EnableSpellLevelButtons.name',
+          hint: 'T5EK.Settings.EnableSpellLevelButtons.hint',
           scope: 'world',
           config: false,
           default: true,
@@ -781,12 +703,8 @@ export function createSettings() {
       // Hide Standard Encumbrance Bar
       hideStandardEncumbranceBar: {
         options: {
-          name: `${FoundryAdapter.localize(
-            'T5EK.Settings.HideStandardEncumbranceBar.name'
-          )}`,
-          hint: `${FoundryAdapter.localize(
-            'T5EK.Settings.HideStandardEncumbranceBar.hint'
-          )}`,
+          name: 'T5EK.Settings.HideStandardEncumbranceBar.name',
+          hint: 'T5EK.Settings.HideStandardEncumbranceBar.hint',
           scope: 'world',
           config: false,
           default: false,
@@ -802,12 +720,8 @@ export function createSettings() {
       // Item quantity
       quantityAlwaysShownEnabled: {
         options: {
-          name: `${FoundryAdapter.localize(
-            'T5EK.Settings.QuantityAlwaysShown.name'
-          )}`,
-          hint: FoundryAdapter.localize(
-            'T5EK.Settings.QuantityAlwaysShown.hint'
-          ),
+          name: 'T5EK.Settings.QuantityAlwaysShown.name',
+          hint: 'T5EK.Settings.QuantityAlwaysShown.hint',
           scope: 'world',
           config: false,
           default: false,
@@ -823,23 +737,15 @@ export function createSettings() {
       // Tracker Settings
       exhaustionEffectsEnabled: {
         options: {
-          name: `${FoundryAdapter.localize(
-            'T5EK.Settings.ExhaustionEffects.name'
-          )}`,
-          hint: FoundryAdapter.localize('T5EK.Settings.ExhaustionEffects.hint'),
+          name: 'T5EK.Settings.ExhaustionEffects.name',
+          hint: 'T5EK.Settings.ExhaustionEffects.hint',
           scope: 'world',
           config: false,
           choices: {
-            default: FoundryAdapter.localize(
-              'T5EK.Settings.ExhaustionEffects.default'
-            ),
-            tidy5e: FoundryAdapter.localize(
-              'T5EK.Settings.ExhaustionEffects.default'
-            ),
-            dfredce: FoundryAdapter.localize(
-              'T5EK.Settings.ExhaustionEffects.dfredce'
-            ),
-            cub: FoundryAdapter.localize('T5EK.Settings.ExhaustionEffects.cub'),
+            default: 'T5EK.Settings.ExhaustionEffects.default',
+            tidy5e: 'T5EK.Settings.ExhaustionEffects.default',
+            dfredce: 'T5EK.Settings.ExhaustionEffects.dfredce',
+            cub: 'T5EK.Settings.ExhaustionEffects.cub',
           },
           type: String,
           default: 'default',
@@ -853,12 +759,8 @@ export function createSettings() {
 
       exhaustionEffectIcon: {
         options: {
-          name: `${FoundryAdapter.localize(
-            'T5EK.Settings.CustomExhaustionIcon.name'
-          )}`,
-          hint: FoundryAdapter.localize(
-            'T5EK.Settings.CustomExhaustionIcon.hint'
-          ),
+          name: 'T5EK.Settings.CustomExhaustionIcon.name',
+          hint: 'T5EK.Settings.CustomExhaustionIcon.hint',
           scope: 'world',
           config: false,
           type: String,
@@ -871,12 +773,8 @@ export function createSettings() {
 
       exhaustionEffectCustom: {
         options: {
-          name: `${FoundryAdapter.localize(
-            'T5EK.Settings.CustomExhaustionEffect.name'
-          )}`,
-          hint: FoundryAdapter.localize(
-            'T5EK.Settings.CustomExhaustionEffect.hint'
-          ),
+          name: 'T5EK.Settings.CustomExhaustionEffect.name',
+          hint: 'T5EK.Settings.CustomExhaustionEffect.hint',
           scope: 'world',
           config: false,
           default: 'Exhaustion',
@@ -891,12 +789,8 @@ export function createSettings() {
 
       exhaustionEffectCustomTiers: {
         options: {
-          name: `${FoundryAdapter.localize(
-            'T5EK.Settings.CustomExhaustionEffect.tiers'
-          )}`,
-          hint: FoundryAdapter.localize(
-            'T5EK.Settings.CustomExhaustionEffect.hint'
-          ),
+          name: 'T5EK.Settings.CustomExhaustionEffect.tiers',
+          hint: 'T5EK.Settings.CustomExhaustionEffect.hint',
           scope: 'world',
           config: false,
           default: 5,
@@ -911,12 +805,8 @@ export function createSettings() {
 
       exhaustionDisabled: {
         options: {
-          name: `${FoundryAdapter.localize(
-            'T5EK.Settings.ExhaustionDisabled.name'
-          )}`,
-          hint: FoundryAdapter.localize(
-            'T5EK.Settings.ExhaustionDisabled.hint'
-          ),
+          name: 'T5EK.Settings.ExhaustionDisabled.name',
+          hint: 'T5EK.Settings.ExhaustionDisabled.hint',
           scope: 'world',
           config: false,
           default: false,
@@ -929,12 +819,8 @@ export function createSettings() {
 
       inspirationDisabled: {
         options: {
-          name: `${FoundryAdapter.localize(
-            'T5EK.Settings.InspirationDisabled.name'
-          )}`,
-          hint: FoundryAdapter.localize(
-            'T5EK.Settings.InspirationDisabled.hint'
-          ),
+          name: 'T5EK.Settings.InspirationDisabled.name',
+          hint: 'T5EK.Settings.InspirationDisabled.hint',
           scope: 'world',
           config: false,
           default: false,
@@ -947,12 +833,8 @@ export function createSettings() {
 
       vehicleMotionDisabled: {
         options: {
-          name: FoundryAdapter.localize(
-            'T5EK.Settings.VehicleMotionDisabled.name'
-          ),
-          hint: FoundryAdapter.localize(
-            'T5EK.Settings.VehicleMotionDisabled.hint'
-          ),
+          name: 'T5EK.Settings.VehicleMotionDisabled.name',
+          hint: 'T5EK.Settings.VehicleMotionDisabled.hint',
           scope: 'world',
           config: false,
           default: false,
@@ -968,10 +850,8 @@ export function createSettings() {
       // NPC Resting
       restingForNpcsEnabled: {
         options: {
-          name: `${FoundryAdapter.localize(
-            'T5EK.Settings.RestingForNpcs.name'
-          )}`,
-          hint: FoundryAdapter.localize('T5EK.Settings.RestingForNpcs.hint'),
+          name: 'T5EK.Settings.RestingForNpcs.name',
+          hint: 'T5EK.Settings.RestingForNpcs.hint',
           scope: 'world',
           config: false,
           default: false,
@@ -986,12 +866,8 @@ export function createSettings() {
 
       restingForNpcsChatDisabled: {
         options: {
-          name: `${FoundryAdapter.localize(
-            'T5EK.Settings.RestingForNpcsChat.name'
-          )}`,
-          hint: FoundryAdapter.localize(
-            'T5EK.Settings.RestingForNpcsChat.hint'
-          ),
+          name: 'T5EK.Settings.RestingForNpcsChat.name',
+          hint: 'T5EK.Settings.RestingForNpcsChat.hint',
           scope: 'world',
           config: false,
           default: false,
@@ -1007,19 +883,15 @@ export function createSettings() {
       // Link Marker
       linkMarkerNpc: {
         options: {
-          name: FoundryAdapter.localize('T5EK.Settings.LinkMarker.name'),
-          hint: FoundryAdapter.localize('T5EK.Settings.LinkMarker.hint'),
+          name: 'T5EK.Settings.LinkMarker.name',
+          hint: 'T5EK.Settings.LinkMarker.hint',
           scope: 'world',
           config: false,
           type: String,
           choices: {
-            default: FoundryAdapter.localize(
-              'T5EK.Settings.LinkMarker.default'
-            ),
-            unlinked: FoundryAdapter.localize(
-              'T5EK.Settings.LinkMarker.unlinked'
-            ),
-            both: FoundryAdapter.localize('T5EK.Settings.LinkMarker.both'),
+            default: 'T5EK.Settings.LinkMarker.default',
+            unlinked: 'T5EK.Settings.LinkMarker.unlinked',
+            both: 'T5EK.Settings.LinkMarker.both',
           },
           default: 'default',
         },
@@ -1033,12 +905,8 @@ export function createSettings() {
       // Show if item has active effects
       activeEffectsMarker: {
         options: {
-          name: `${FoundryAdapter.localize(
-            'T5EK.Settings.ActiveEffectsMarker.name'
-          )}`,
-          hint: FoundryAdapter.localize(
-            'T5EK.Settings.ActiveEffectsMarker.hint'
-          ),
+          name: 'T5EK.Settings.ActiveEffectsMarker.name',
+          hint: 'T5EK.Settings.ActiveEffectsMarker.hint',
           scope: 'world',
           config: false,
           default: false,
@@ -1053,12 +921,8 @@ export function createSettings() {
 
       enableActionListOnFavoritePanel: {
         options: {
-          name: `${FoundryAdapter.localize(
-            'T5EK.Settings.EnableActionListOnFavoritePanel.name'
-          )}`,
-          hint: FoundryAdapter.localize(
-            'T5EK.Settings.EnableActionListOnFavoritePanel.hint'
-          ),
+          name: 'T5EK.Settings.EnableActionListOnFavoritePanel.name',
+          hint: 'T5EK.Settings.EnableActionListOnFavoritePanel.hint',
           scope: 'client',
           config: false,
           default: false,
@@ -1073,41 +937,21 @@ export function createSettings() {
 
       defaultActionsTab: {
         options: {
-          name: `${FoundryAdapter.localize(
-            'T5EK.Settings.defaultActionsTab.name'
-          )}`,
-          hint: FoundryAdapter.localize('T5EK.Settings.defaultActionsTab.hint'),
+          name: 'T5EK.Settings.defaultActionsTab.name',
+          hint: 'T5EK.Settings.defaultActionsTab.hint',
           scope: 'world',
           config: false,
           type: String,
           choices: {
-            default: FoundryAdapter.localize(
-              'T5EK.Settings.defaultActionsTab.default'
-            ),
-            attributes: FoundryAdapter.localize(
-              'T5EK.Settings.defaultActionsTab.attributes'
-            ),
-            inventory: FoundryAdapter.localize(
-              'T5EK.Settings.defaultActionsTab.inventory'
-            ),
-            spellbook: FoundryAdapter.localize(
-              'T5EK.Settings.defaultActionsTab.spellbook'
-            ),
-            features: FoundryAdapter.localize(
-              'T5EK.Settings.defaultActionsTab.features'
-            ),
-            effects: FoundryAdapter.localize(
-              'T5EK.Settings.defaultActionsTab.effects'
-            ),
-            biography: FoundryAdapter.localize(
-              'T5EK.Settings.defaultActionsTab.biography'
-            ),
-            journal: FoundryAdapter.localize(
-              'T5EK.Settings.defaultActionsTab.journal'
-            ),
-            actions: FoundryAdapter.localize(
-              'T5EK.Settings.defaultActionsTab.actions'
-            ),
+            default: 'T5EK.Settings.defaultActionsTab.default',
+            attributes: 'T5EK.Settings.defaultActionsTab.attributes',
+            inventory: 'T5EK.Settings.defaultActionsTab.inventory',
+            spellbook: 'T5EK.Settings.defaultActionsTab.spellbook',
+            features: 'T5EK.Settings.defaultActionsTab.features',
+            effects: 'T5EK.Settings.defaultActionsTab.effects',
+            biography: 'T5EK.Settings.defaultActionsTab.biography',
+            journal: 'T5EK.Settings.defaultActionsTab.journal',
+            actions: 'T5EK.Settings.defaultActionsTab.actions',
           },
           default: 'default',
         },
@@ -1120,7 +964,7 @@ export function createSettings() {
 
       playerSheetWidth: {
         options: {
-          name: FoundryAdapter.localize('T5EK.Settings.playerSheetWidth'),
+          name: 'T5EK.Settings.playerSheetWidth',
           scope: 'client',
           config: false,
           type: Number,
@@ -1135,7 +979,7 @@ export function createSettings() {
 
       npsSheetWidth: {
         options: {
-          name: FoundryAdapter.localize('T5EK.Settings.npsSheetWidth'),
+          name: 'T5EK.Settings.npsSheetWidth',
           scope: 'client',
           config: false,
           type: Number,
@@ -1148,12 +992,8 @@ export function createSettings() {
 
       enablePermanentUnlockOnNPCIfYouAreGM: {
         options: {
-          name: `${FoundryAdapter.localize(
-            'T5EK.Settings.EnablePermanentUnlockOnNPCIfYouAreGM.name'
-          )}`,
-          hint: FoundryAdapter.localize(
-            'T5EK.Settings.EnablePermanentUnlockOnNPCIfYouAreGM.hint'
-          ),
+          name: 'T5EK.Settings.EnablePermanentUnlockOnNPCIfYouAreGM.name',
+          hint: 'T5EK.Settings.EnablePermanentUnlockOnNPCIfYouAreGM.hint',
           scope: 'world',
           config: false,
           default: false,
@@ -1170,7 +1010,7 @@ export function createSettings() {
 
       vehicleSheetWidth: {
         options: {
-          name: FoundryAdapter.localize('T5EK.Settings.vehicleSheetWidth'),
+          name: 'T5EK.Settings.vehicleSheetWidth',
           scope: 'client',
           config: false,
           type: Number,
@@ -1183,12 +1023,8 @@ export function createSettings() {
 
       enablePermanentUnlockOnVehicleIfYouAreGM: {
         options: {
-          name: `${FoundryAdapter.localize(
-            'T5EK.Settings.EnablePermanentUnlockOnVehicleIfYouAreGM.name'
-          )}`,
-          hint: FoundryAdapter.localize(
-            'T5EK.Settings.EnablePermanentUnlockOnVehicleIfYouAreGM.hint'
-          ),
+          name: 'T5EK.Settings.EnablePermanentUnlockOnVehicleIfYouAreGM.name',
+          hint: 'T5EK.Settings.EnablePermanentUnlockOnVehicleIfYouAreGM.hint',
           scope: 'world',
           config: false,
           default: false,
@@ -1205,12 +1041,8 @@ export function createSettings() {
 
       lazyMoneyEnable: {
         options: {
-          name: `${FoundryAdapter.localize(
-            'T5EK.Settings.LazyMoneyEnable.name'
-          )}`,
-          hint: `${FoundryAdapter.localize(
-            'T5EK.Settings.LazyMoneyEnable.hint'
-          )}`,
+          name: 'T5EK.Settings.LazyMoneyEnable.name',
+          hint: 'T5EK.Settings.LazyMoneyEnable.hint',
           scope: 'world',
           config: false,
           default: false,
@@ -1223,12 +1055,8 @@ export function createSettings() {
 
       lazyMoneyAddConvert: {
         options: {
-          name: `${FoundryAdapter.localize(
-            'T5EK.Settings.LazyMoneyAddConvert.name'
-          )}`,
-          hint: `${FoundryAdapter.localize(
-            'T5EK.Settings.LazyMoneyAddConvert.hint'
-          )}`,
+          name: 'T5EK.Settings.LazyMoneyAddConvert.name',
+          hint: 'T5EK.Settings.LazyMoneyAddConvert.hint',
           scope: 'world',
           config: false,
           default: false,
@@ -1241,12 +1069,8 @@ export function createSettings() {
 
       lazyMoneyIgnoreElectrum: {
         options: {
-          name: `${FoundryAdapter.localize(
-            'T5EK.Settings.LazyMoneyIgnoreElectrum.name'
-          )}`,
-          hint: `${FoundryAdapter.localize(
-            'T5EK.Settings.LazyMoneyIgnoreElectrum.hint'
-          )}`,
+          name: 'T5EK.Settings.LazyMoneyIgnoreElectrum.name',
+          hint: 'T5EK.Settings.LazyMoneyIgnoreElectrum.hint',
           scope: 'world',
           config: false,
           default: true,
@@ -1261,12 +1085,8 @@ export function createSettings() {
 
       lazyMoneyChatLog: {
         options: {
-          name: `${FoundryAdapter.localize(
-            'T5EK.Settings.LazyMoneyChatLog.name'
-          )}`,
-          hint: `${FoundryAdapter.localize(
-            'T5EK.Settings.LazyMoneyChatLog.hint'
-          )}`,
+          name: 'T5EK.Settings.LazyMoneyChatLog.name',
+          hint: 'T5EK.Settings.LazyMoneyChatLog.hint',
           scope: 'world',
           config: false,
           default: false,
@@ -1281,12 +1101,8 @@ export function createSettings() {
 
       enableSortFavoritesItemsAlphabetically: {
         options: {
-          name: `${FoundryAdapter.localize(
-            'T5EK.Settings.EnableSortFavoritesItemsAlphabetically.name'
-          )}`,
-          hint: `${FoundryAdapter.localize(
-            'T5EK.Settings.EnableSortFavoritesItemsAlphabetically.hint'
-          )}`,
+          name: 'T5EK.Settings.EnableSortFavoritesItemsAlphabetically.name',
+          hint: 'T5EK.Settings.EnableSortFavoritesItemsAlphabetically.hint',
           scope: 'world',
           config: false,
           default: false,
@@ -1303,12 +1119,8 @@ export function createSettings() {
 
       lockMoneyChanges: {
         options: {
-          name: `${FoundryAdapter.localize(
-            'T5EK.Settings.LockMoneyChanges.name'
-          )}`,
-          hint: `${FoundryAdapter.localize(
-            'T5EK.Settings.LockMoneyChanges.hint'
-          )}`,
+          name: 'T5EK.Settings.LockMoneyChanges.name',
+          hint: 'T5EK.Settings.LockMoneyChanges.hint',
           scope: 'world',
           config: false,
           default: false,
@@ -1321,12 +1133,8 @@ export function createSettings() {
 
       lockExpChanges: {
         options: {
-          name: `${FoundryAdapter.localize(
-            'T5EK.Settings.LockExpChanges.name'
-          )}`,
-          hint: `${FoundryAdapter.localize(
-            'T5EK.Settings.LockExpChanges.hint'
-          )}`,
+          name: 'T5EK.Settings.LockExpChanges.name',
+          hint: 'T5EK.Settings.LockExpChanges.hint',
           scope: 'world',
           config: false,
           default: false,
@@ -1339,12 +1147,8 @@ export function createSettings() {
 
       lockHpMaxChanges: {
         options: {
-          name: `${FoundryAdapter.localize(
-            'T5EK.Settings.LockHpMaxChanges.name'
-          )}`,
-          hint: `${FoundryAdapter.localize(
-            'T5EK.Settings.LockHpMaxChanges.hint'
-          )}`,
+          name: 'T5EK.Settings.LockHpMaxChanges.name',
+          hint: 'T5EK.Settings.LockHpMaxChanges.hint',
           scope: 'world',
           config: false,
           default: false,
@@ -1357,12 +1161,8 @@ export function createSettings() {
 
       lockLevelSelector: {
         options: {
-          name: `${FoundryAdapter.localize(
-            'T5EK.Settings.LockLevelSelector.name'
-          )}`,
-          hint: `${FoundryAdapter.localize(
-            'T5EK.Settings.LockLevelSelector.hint'
-          )}`,
+          name: 'T5EK.Settings.LockLevelSelector.name',
+          hint: 'T5EK.Settings.LockLevelSelector.hint',
           scope: 'world',
           config: false,
           default: false,
@@ -1375,12 +1175,8 @@ export function createSettings() {
 
       lockConfigureSheet: {
         options: {
-          name: `${FoundryAdapter.localize(
-            'T5EK.Settings.LockConfigureSheet.name'
-          )}`,
-          hint: `${FoundryAdapter.localize(
-            'T5EK.Settings.LockConfigureSheet.hint'
-          )}`,
+          name: 'T5EK.Settings.LockConfigureSheet.name',
+          hint: 'T5EK.Settings.LockConfigureSheet.hint',
           scope: 'world',
           config: false,
           default: false,
@@ -1393,12 +1189,8 @@ export function createSettings() {
 
       lockItemQuantity: {
         options: {
-          name: `${FoundryAdapter.localize(
-            'T5EK.Settings.LockItemQuantity.name'
-          )}`,
-          hint: `${FoundryAdapter.localize(
-            'T5EK.Settings.LockItemQuantity.hint'
-          )}`,
+          name: 'T5EK.Settings.LockItemQuantity.name',
+          hint: 'T5EK.Settings.LockItemQuantity.hint',
           scope: 'world',
           config: false,
           default: false,
@@ -1413,12 +1205,8 @@ export function createSettings() {
 
       allowCantripToBePreparedOnContext: {
         options: {
-          name: `${FoundryAdapter.localize(
-            'T5EK.Settings.AllowCantripToBePreparedOnContext.name'
-          )}`,
-          hint: `${FoundryAdapter.localize(
-            'T5EK.Settings.AllowCantripToBePreparedOnContext.hint'
-          )}`,
+          name: 'T5EK.Settings.AllowCantripToBePreparedOnContext.name',
+          hint: 'T5EK.Settings.AllowCantripToBePreparedOnContext.hint',
           scope: 'world',
           config: false,
           default: false,
@@ -1433,12 +1221,8 @@ export function createSettings() {
 
       spellClassFilterSelect: {
         options: {
-          name: `${FoundryAdapter.localize(
-            'T5EK.Settings.SpellClassFilterSelect.name'
-          )}`,
-          hint: `${FoundryAdapter.localize(
-            'T5EK.Settings.SpellClassFilterSelect.hint'
-          )}`,
+          name: 'T5EK.Settings.SpellClassFilterSelect.name',
+          hint: 'T5EK.Settings.SpellClassFilterSelect.hint',
           scope: 'client',
           config: false,
           default: false,
@@ -1453,12 +1237,8 @@ export function createSettings() {
 
       spellClassFilterIconReplace: {
         options: {
-          name: `${FoundryAdapter.localize(
-            'T5EK.Settings.SpellClassFilterIconReplace.name'
-          )}`,
-          hint: `${FoundryAdapter.localize(
-            'T5EK.Settings.SpellClassFilterIconReplace.hint'
-          )}`,
+          name: 'T5EK.Settings.SpellClassFilterIconReplace.name',
+          hint: 'T5EK.Settings.SpellClassFilterIconReplace.hint',
           scope: 'client',
           config: false,
           default: false,
@@ -1473,12 +1253,8 @@ export function createSettings() {
 
       spellClassFilterAdditionalClasses: {
         options: {
-          name: `${FoundryAdapter.localize(
-            'T5EK.Settings.SpellClassFilterAdditionalClasses.name'
-          )}`,
-          hint: `${FoundryAdapter.localize(
-            'T5EK.Settings.SpellClassFilterAdditionalClasses.hint'
-          )}`,
+          name: 'T5EK.Settings.SpellClassFilterAdditionalClasses.name',
+          hint: 'T5EK.Settings.SpellClassFilterAdditionalClasses.hint',
           scope: 'client',
           config: false,
           default: '',
@@ -1493,12 +1269,8 @@ export function createSettings() {
 
       allowHpMaxOverride: {
         options: {
-          name: `${FoundryAdapter.localize(
-            'T5EK.Settings.AllowHpMaxOverride.name'
-          )}`,
-          hint: `${FoundryAdapter.localize(
-            'T5EK.Settings.AllowHpMaxOverride.hint'
-          )}`,
+          name: 'T5EK.Settings.AllowHpMaxOverride.name',
+          hint: 'T5EK.Settings.AllowHpMaxOverride.hint',
           scope: 'world',
           config: false,
           default: false,
@@ -1511,12 +1283,8 @@ export function createSettings() {
 
       allowHpConfigOverride: {
         options: {
-          name: `${FoundryAdapter.localize(
-            'T5EK.Settings.AllowHpConfigOverride.name'
-          )}`,
-          hint: `${FoundryAdapter.localize(
-            'T5EK.Settings.AllowHpConfigOverride.hint'
-          )}`,
+          name: 'T5EK.Settings.AllowHpConfigOverride.name',
+          hint: 'T5EK.Settings.AllowHpConfigOverride.hint',
           scope: 'world',
           config: false,
           default: false,
@@ -1531,12 +1299,8 @@ export function createSettings() {
 
       betterAttackDialog: {
         options: {
-          name: `${FoundryAdapter.localize(
-            'T5EK.Settings.BetterAttackDialog.name'
-          )}`,
-          hint: `${FoundryAdapter.localize(
-            'T5EK.Settings.BetterAttackDialog.hint'
-          )}`,
+          name: 'T5EK.Settings.BetterAttackDialog.name',
+          hint: 'T5EK.Settings.BetterAttackDialog.hint',
           scope: 'world',
           config: false,
           default: true,
@@ -1568,12 +1332,8 @@ export function createSettings() {
 
       colorPickerEnabled: {
         options: {
-          name: `${FoundryAdapter.localize(
-            'T5EK.Settings.ColorPickerEnabled.name'
-          )}`,
-          hint: `${FoundryAdapter.localize(
-            'T5EK.Settings.ColorPickerEnabled.hint'
-          )}`,
+          name: 'T5EK.Settings.ColorPickerEnabled.name',
+          hint: 'T5EK.Settings.ColorPickerEnabled.hint',
           scope: 'client',
           type: Boolean,
           default: false,
@@ -1590,12 +1350,8 @@ export function createSettings() {
 
       colorPickerEquipped: {
         options: {
-          name: `${FoundryAdapter.localize(
-            'T5EK.Settings.ColorPickerEquipped.name'
-          )}`,
-          hint: `${FoundryAdapter.localize(
-            'T5EK.Settings.ColorPickerEquipped.hint'
-          )}`,
+          name: 'T5EK.Settings.ColorPickerEquipped.name',
+          hint: 'T5EK.Settings.ColorPickerEquipped.hint',
           scope: 'client',
           type: String,
           default: RGBAToHexAFromColor(50, 205, 50, 0.3),
@@ -1607,12 +1363,8 @@ export function createSettings() {
       },
       colorPickerEquippedOutline: {
         options: {
-          name: `${FoundryAdapter.localize(
-            'T5EK.Settings.ColorPickerEquippedOutline.name'
-          )}`,
-          hint: `${FoundryAdapter.localize(
-            'T5EK.Settings.ColorPickerEquippedOutline.hint'
-          )}`,
+          name: 'T5EK.Settings.ColorPickerEquippedOutline.name',
+          hint: 'T5EK.Settings.ColorPickerEquippedOutline.hint',
           scope: 'client',
           type: String,
           default: RGBAToHexAFromColor(50, 205, 50, 1),
@@ -1626,12 +1378,8 @@ export function createSettings() {
       },
       colorPickerEquippedAccent: {
         options: {
-          name: `${FoundryAdapter.localize(
-            'T5EK.Settings.ColorPickerEquippedAccent.name'
-          )}`,
-          hint: `${FoundryAdapter.localize(
-            'T5EK.Settings.ColorPickerEquippedAccent.hint'
-          )}`,
+          name: 'T5EK.Settings.ColorPickerEquippedAccent.name',
+          hint: 'T5EK.Settings.ColorPickerEquippedAccent.hint',
           scope: 'client',
           type: String,
           default: RGBAToHexAFromColor(173, 255, 47, 1),
@@ -1650,12 +1398,8 @@ export function createSettings() {
 
       colorPickerPrepared: {
         options: {
-          name: `${FoundryAdapter.localize(
-            'T5EK.Settings.ColorPickerPrepared.name'
-          )}`,
-          hint: `${FoundryAdapter.localize(
-            'T5EK.Settings.ColorPickerPrepared.hint'
-          )}`,
+          name: 'T5EK.Settings.ColorPickerPrepared.name',
+          hint: 'T5EK.Settings.ColorPickerPrepared.hint',
           scope: 'client',
           type: String,
           default: RGBAToHexAFromColor(50, 205, 50, 0.3),
@@ -1667,12 +1411,8 @@ export function createSettings() {
       },
       colorPickerPreparedOutline: {
         options: {
-          name: `${FoundryAdapter.localize(
-            'T5EK.Settings.ColorPickerPreparedOutline.name'
-          )}`,
-          hint: `${FoundryAdapter.localize(
-            'T5EK.Settings.ColorPickerPreparedOutline.hint'
-          )}`,
+          name: 'T5EK.Settings.ColorPickerPreparedOutline.name',
+          hint: 'T5EK.Settings.ColorPickerPreparedOutline.hint',
           scope: 'client',
           type: String,
           default: RGBAToHexAFromColor(50, 205, 50, 1),
@@ -1686,12 +1426,8 @@ export function createSettings() {
       },
       colorPickerPreparedAccent: {
         options: {
-          name: `${FoundryAdapter.localize(
-            'T5EK.Settings.ColorPickerPreparedAccent.name'
-          )}`,
-          hint: `${FoundryAdapter.localize(
-            'T5EK.Settings.ColorPickerPreparedAccent.hint'
-          )}`,
+          name: 'T5EK.Settings.ColorPickerPreparedAccent.name',
+          hint: 'T5EK.Settings.ColorPickerPreparedAccent.hint',
           scope: 'client',
           type: String,
           default: RGBAToHexAFromColor(173, 255, 47, 1),
@@ -1710,12 +1446,8 @@ export function createSettings() {
 
       colorPickerPact: {
         options: {
-          name: `${FoundryAdapter.localize(
-            'T5EK.Settings.ColorPickerPact.name'
-          )}`,
-          hint: `${FoundryAdapter.localize(
-            'T5EK.Settings.ColorPickerPact.hint'
-          )}`,
+          name: 'T5EK.Settings.ColorPickerPact.name',
+          hint: 'T5EK.Settings.ColorPickerPact.hint',
           scope: 'client',
           type: String,
           default: RGBAToHexAFromColor(250, 0, 180, 0.3),
@@ -1727,12 +1459,8 @@ export function createSettings() {
       },
       colorPickerPactOutline: {
         options: {
-          name: `${FoundryAdapter.localize(
-            'T5EK.Settings.ColorPickerPactOutline.name'
-          )}`,
-          hint: `${FoundryAdapter.localize(
-            'T5EK.Settings.ColorPickerPactOutline.hint'
-          )}`,
+          name: 'T5EK.Settings.ColorPickerPactOutline.name',
+          hint: 'T5EK.Settings.ColorPickerPactOutline.hint',
           scope: 'client',
           type: String,
           default: RGBAToHexAFromColor(250, 50, 213, 1),
@@ -1746,12 +1474,8 @@ export function createSettings() {
       },
       colorPickerPactAccent: {
         options: {
-          name: `${FoundryAdapter.localize(
-            'T5EK.Settings.ColorPickerPactAccent.name'
-          )}`,
-          hint: `${FoundryAdapter.localize(
-            'T5EK.Settings.ColorPickerPactAccent.hint'
-          )}`,
+          name: 'T5EK.Settings.ColorPickerPactAccent.name',
+          hint: 'T5EK.Settings.ColorPickerPactAccent.hint',
           scope: 'client',
           type: String,
           default: RGBAToHexAFromColor(198, 119, 193, 1),
@@ -1768,12 +1492,8 @@ export function createSettings() {
 
       colorPickerAtWill: {
         options: {
-          name: `${FoundryAdapter.localize(
-            'T5EK.Settings.ColorPickerAtWill.name'
-          )}`,
-          hint: `${FoundryAdapter.localize(
-            'T5EK.Settings.ColorPickerAtWill.hint'
-          )}`,
+          name: 'T5EK.Settings.ColorPickerAtWill.name',
+          hint: 'T5EK.Settings.ColorPickerAtWill.hint',
           scope: 'client',
           type: String,
           default: RGBAToHexAFromColor(226, 246, 4, 0.3),
@@ -1785,12 +1505,8 @@ export function createSettings() {
       },
       colorPickerAtWillOutline: {
         options: {
-          name: `${FoundryAdapter.localize(
-            'T5EK.Settings.ColorPickerAtWillOutline.name'
-          )}`,
-          hint: `${FoundryAdapter.localize(
-            'T5EK.Settings.ColorPickerAtWillOutline.hint'
-          )}`,
+          name: 'T5EK.Settings.ColorPickerAtWillOutline.name',
+          hint: 'T5EK.Settings.ColorPickerAtWillOutline.hint',
           scope: 'client',
           type: String,
           default: RGBAToHexAFromColor(163, 165, 50, 1),
@@ -1804,12 +1520,8 @@ export function createSettings() {
       },
       colorPickerAtWillAccent: {
         options: {
-          name: `${FoundryAdapter.localize(
-            'T5EK.Settings.ColorPickerAtWillAccent.name'
-          )}`,
-          hint: `${FoundryAdapter.localize(
-            'T5EK.Settings.ColorPickerAtWillAccent.hint'
-          )}`,
+          name: 'T5EK.Settings.ColorPickerAtWillAccent.name',
+          hint: 'T5EK.Settings.ColorPickerAtWillAccent.hint',
           scope: 'client',
           type: String,
           default: RGBAToHexAFromColor(255, 242, 0, 1),
@@ -1828,12 +1540,8 @@ export function createSettings() {
 
       colorPickerInnate: {
         options: {
-          name: `${FoundryAdapter.localize(
-            'T5EK.Settings.ColorPickerInnate.name'
-          )}`,
-          hint: `${FoundryAdapter.localize(
-            'T5EK.Settings.ColorPickerInnate.hint'
-          )}`,
+          name: 'T5EK.Settings.ColorPickerInnate.name',
+          hint: 'T5EK.Settings.ColorPickerInnate.hint',
           scope: 'client',
           type: String,
           default: RGBAToHexAFromColor(255, 0, 0, 0.3),
@@ -1845,12 +1553,8 @@ export function createSettings() {
       },
       colorPickerInnateOutline: {
         options: {
-          name: `${FoundryAdapter.localize(
-            'T5EK.Settings.ColorPickerInnateOutline.name'
-          )}`,
-          hint: `${FoundryAdapter.localize(
-            'T5EK.Settings.ColorPickerInnateOutline.hint'
-          )}`,
+          name: 'T5EK.Settings.ColorPickerInnateOutline.name',
+          hint: 'T5EK.Settings.ColorPickerInnateOutline.hint',
           scope: 'client',
           type: String,
           default: RGBAToHexAFromColor(231, 23, 23, 1),
@@ -1864,12 +1568,8 @@ export function createSettings() {
       },
       colorPickerInnateAccent: {
         options: {
-          name: `${FoundryAdapter.localize(
-            'T5EK.Settings.ColorPickerInnateAccent.name'
-          )}`,
-          hint: `${FoundryAdapter.localize(
-            'T5EK.Settings.ColorPickerInnateAccent.hint'
-          )}`,
+          name: 'T5EK.Settings.ColorPickerInnateAccent.name',
+          hint: 'T5EK.Settings.ColorPickerInnateAccent.hint',
           scope: 'client',
           type: String,
           default: RGBAToHexAFromColor(195, 69, 69, 1),
@@ -1888,12 +1588,8 @@ export function createSettings() {
 
       colorPickerAlwaysPrepared: {
         options: {
-          name: `${FoundryAdapter.localize(
-            'T5EK.Settings.ColorPickerAlwaysPrepared.name'
-          )}`,
-          hint: `${FoundryAdapter.localize(
-            'T5EK.Settings.ColorPickerAlwaysPrepared.hint'
-          )}`,
+          name: 'T5EK.Settings.ColorPickerAlwaysPrepared.name',
+          hint: 'T5EK.Settings.ColorPickerAlwaysPrepared.hint',
           scope: 'client',
           type: String,
           default: RGBAToHexAFromColor(0, 0, 255, 0.15),
@@ -1907,12 +1603,8 @@ export function createSettings() {
       },
       colorPickerAlwaysPreparedOutline: {
         options: {
-          name: `${FoundryAdapter.localize(
-            'T5EK.Settings.ColorPickerAlwaysPreparedOutline.name'
-          )}`,
-          hint: `${FoundryAdapter.localize(
-            'T5EK.Settings.ColorPickerAlwaysPreparedOutline.hint'
-          )}`,
+          name: 'T5EK.Settings.ColorPickerAlwaysPreparedOutline.name',
+          hint: 'T5EK.Settings.ColorPickerAlwaysPreparedOutline.hint',
           scope: 'client',
           type: String,
           default: RGBAToHexAFromColor(65, 105, 225, 1),
@@ -1926,12 +1618,8 @@ export function createSettings() {
       },
       colorPickerAlwaysPreparedAccent: {
         options: {
-          name: `${FoundryAdapter.localize(
-            'T5EK.Settings.ColorPickerAlwaysPreparedAccent.name'
-          )}`,
-          hint: `${FoundryAdapter.localize(
-            'T5EK.Settings.ColorPickerAlwaysPreparedAccent.hint'
-          )}`,
+          name: 'T5EK.Settings.ColorPickerAlwaysPreparedAccent.name',
+          hint: 'T5EK.Settings.ColorPickerAlwaysPreparedAccent.hint',
           scope: 'client',
           type: String,
           default: RGBAToHexAFromColor(0, 191, 255, 1),
@@ -1950,12 +1638,8 @@ export function createSettings() {
 
       hbEnableUpcastFreeSpell: {
         options: {
-          name: `${FoundryAdapter.localize(
-            'T5EK.Settings.HBEnableUpcastFreeSpell.name'
-          )}`,
-          hint: `${FoundryAdapter.localize(
-            'T5EK.Settings.HBEnableUpcastFreeSpell.hint'
-          )}`,
+          name: 'T5EK.Settings.HBEnableUpcastFreeSpell.name',
+          hint: 'T5EK.Settings.HBEnableUpcastFreeSpell.hint',
           scope: 'world',
           config: false,
           default: false,
@@ -1970,12 +1654,8 @@ export function createSettings() {
 
       hbSetFeaturesForUpcastFreeSpell: {
         options: {
-          name: `${FoundryAdapter.localize(
-            'T5EK.Settings.HBSetFeaturesForUpcastFreeSpell.name'
-          )}`,
-          hint: `${FoundryAdapter.localize(
-            'T5EK.Settings.HBSetFeaturesForUpcastFreeSpell.hint'
-          )}`,
+          name: 'T5EK.Settings.HBSetFeaturesForUpcastFreeSpell.name',
+          hint: 'T5EK.Settings.HBSetFeaturesForUpcastFreeSpell.hint',
           scope: 'world',
           config: false,
           default: '',
