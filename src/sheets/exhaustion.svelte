@@ -74,7 +74,7 @@
     height: 34px;
     width: 34px;
     z-index: 50;
-    color: var(--t5ek-icon-font);
+    color: var(--t5ek-icon-font-color);
 
     &.only-show-on-hover > * {
       visibility: hidden;
@@ -93,8 +93,8 @@
       font-size: 14px;
       position: absolute;
       background: var(--t5ek-icon-background);
-      box-shadow: 0 0 8px var(--t5ek-icon-shadow) inset;
-      border: 1px solid var(--t5ek-icon-outline);
+      box-shadow: 0 0 8px var(--t5ek-icon-shadow-color) inset;
+      border: 1px solid var(--t5ek-icon-outline-color);
       top: -2px;
       left: -2px;
       border-radius: 50%;
@@ -113,8 +113,8 @@
       transition: width 0.3s ease;
       background: var(--t5ek-icon-background);
       display: flex;
-      box-shadow: 0 0 10px var(--t5ek-icon-shadow) inset;
-      border: 1px solid var(--t5ek-icon-outline);
+      box-shadow: 0 0 10px var(--t5ek-icon-shadow-color) inset;
+      border: 1px solid var(--t5ek-icon-outline-color);
 
       &.rounded {
         border-radius: 1.25rem;
@@ -161,17 +161,17 @@
     }
 
     &.intensity-1 .colorized {
-      background: var(--t5ek-exhaustion-intensity1-bg);
+      background: var(--t5ek-exhaustion-intensity1-background);
       color: var(--t5ek-exhaustion-intensity1-color);
     }
 
     &.intensity-2 .colorized {
-      background: var(--t5ek-exhaustion-intensity2-bg);
+      background: var(--t5ek-exhaustion-intensity2-background);
       color: var(--t5ek-exhaustion-intensity2-color);
     }
 
     &.intensity-3 .colorized {
-      background: var(--t5ek-exhaustion-intensity3-bg);
+      background: var(--t5ek-exhaustion-intensity3-background);
       color: var(--t5ek-exhaustion-intensity3-color);
     }
   }

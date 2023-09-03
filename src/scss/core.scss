@@ -31,7 +31,7 @@
   a.inline-roll {
     padding: 0.125rem 0.25rem;
     border-radius: 0.3125rem;
-    background: var(--t5ek-content-entity-link-bg);
+    background: var(--t5ek-content-entity-link-background);
     color: var(--t5ek-content-entity-link-color);
 
     i {
@@ -40,7 +40,7 @@
 
     &:hover {
       color: var(--t5ek-content-entity-link-hover-color);
-      background: var(--t5ek-content-entity-link-hover-bg);
+      background: var(--t5ek-content-entity-link-hover-background);
 
       i {
         color: var(--t5ek-content-entity-link-hover-color);
@@ -91,7 +91,7 @@
   }
 
   .t5ek-warning-color {
-    color: var(--t5ek-warning-accent);
+    color: var(--t5ek-warning-accent-color);
   }
 
   .hidden {
@@ -118,7 +118,7 @@
   }
 
   i.not-attuned {
-    color: var(--t5ek-attunement-required);
+    color: var(--t5ek-attunement-required-color);
   }
 
   .item-properties {

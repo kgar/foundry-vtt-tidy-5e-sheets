@@ -93,31 +93,31 @@
     }
 
     &.prepared {
-      background-color: var(--t5ek-equipped);
+      background-color: var(--t5ek-equipped-background);
     }
 
     &.always-prepared {
-      background-color: var(--t5ek-alwaysprepared);
+      background-color: var(--t5ek-alwaysprepared-background);
     }
 
     &.pact {
-      background-color: var(--t5ek-pact);
+      background-color: var(--t5ek-pact-background);
     }
 
     &.at-will {
-      background-color: var(--t5ek-atwill);
+      background-color: var(--t5ek-atwill-background);
     }
 
     &.innate {
-      background-color: var(--t5ek-innate);
+      background-color: var(--t5ek-innate-background);
     }
 
     &.equipped {
-      background: var(--t5ek-equipped);
+      background: var(--t5ek-equipped-background);
     }
 
     &.magic-item {
-      box-shadow: 0 0 0 1px var(--t5ek-faint-magic-accent) inset;
+      box-shadow: 0 0 0 0.0625rem var(--t5ek-faint-magic-item-list-row-accent-color) inset;
     }
 
     &.show-item-count-on-hover :global(.item-quantity) {

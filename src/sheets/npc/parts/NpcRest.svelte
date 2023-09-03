@@ -54,9 +54,9 @@
     transition: width 0.3s ease;
     background: var(--t5ek-icon-background);
     display: flex;
-    box-shadow: 0 0 0.625rem var(--t5ek-icon-shadow) inset;
-    border: 0.0625rem solid var(--t5ek-icon-outline);
-    color: var(--t5ek-icon-font);
+    box-shadow: 0 0 0.625rem var(--t5ek-icon-shadow-color) inset;
+    border: 0.0625rem solid var(--t5ek-icon-outline-color);
+    color: var(--t5ek-icon-font-color);
 
     &:hover {
       width: 5.875rem;

@@ -69,10 +69,10 @@
 <style lang="scss">
   .portrait-hp {
     position: absolute;
-    width: 84px;
+    width: 5.25rem;
     left: 50%;
-    height: 20px;
-    font-size: 18px;
+    height: 1.25rem;
+    font-size: 1.125rem;
     transform: translateX(-50%);
     bottom: 0;
     z-index: 20;
@@ -80,16 +80,16 @@
     justify-content: center;
     align-items: center;
     background: var(--t5ek-icon-background);
-    box-shadow: 0 0 5px var(--t5ek-icon-shadow) inset;
-    border: 1px solid var(--t5ek-icon-outline);
+    box-shadow: 0 0 0.3125rem var(--t5ek-icon-shadow-color) inset;
+    border: 0.0625rem solid var(--t5ek-icon-outline-color);
 
     &.widen-for-rounded-portrait {
       width: 88px;
     }
 
     &.incapacitated {
-      border-radius: 5px;
-      width: 120px;
+      border-radius: 0.3125rem;
+      width: 7.5rem;
     }
 
     :global(input),

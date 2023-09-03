@@ -204,11 +204,11 @@
       }
 
       &.equipped {
-        box-shadow: 0 0 0 0.125rem var(--t5ek-equipped-outline);
-        background: var(--t5ek-equipped);
+        box-shadow: 0 0 0 0.125rem var(--t5ek-equipped-item-grid-tile-outline-color);
+        background: var(--t5ek-equipped-background);
 
         .item-image {
-          box-shadow: 0 0 0.0625rem 0.0625rem inset var(--t5ek-equipped-accent);
+          box-shadow: 0 0 0.0625rem 0.0625rem inset var(--t5ek-equipped-item-grid-tile-accent-color);
           border-radius: 0.3125rem;
         }
       }
@@ -216,16 +216,16 @@
       // TODO: Determine the best longterm way to support this...
       &.magic-item {
         .item-image {
-          box-shadow: 0 0 0 0.0625rem var(--t5ek-magic-accent) inset,
-            0 0 0.1875rem 0.125rem var(--t5ek-magic-accent) inset;
+          box-shadow: 0 0 0 0.0625rem var(--t5ek-magic-accent-color) inset,
+            0 0 0.1875rem 0.125rem var(--t5ek-magic-accent-color) inset;
           border-radius: 0.3125rem;
         }
 
         &.equipped .item-image {
           background-image: url('systems/dnd5e/icons/items/inventory/pearl.jpg');
-          box-shadow: 0 0 0rem 0.0625rem var(--t5ek-magic-outline) inset,
-            0 0 0 0.0625rem var(--t5ek-magic-accent) inset,
-            0 0 0.1875rem 0.125rem var(--t5ek-magic-accent) inset;
+          box-shadow: 0 0 0rem 0.0625rem var(--t5ek-magic-item-grid-tile-outline-color) inset,
+            0 0 0 0.0625rem var(--t5ek-magic-accent-color) inset,
+            0 0 0.1875rem 0.125rem var(--t5ek-magic-accent-color) inset;
           border: none;
         }
       }
@@ -236,19 +236,19 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        color: var(--t5ek-icon-attuned);
+        color: var(--t5ek-attuned-item-grid-icon-color);
         width: 0.8125rem;
         height: 0.8125rem;
-        background: var(--t5ek-magic-accent);
+        background: var(--t5ek-magic-accent-color);
         position: absolute;
         top: -0.0625rem;
         right: -0.0625rem;
         border-radius: 50%;
-        box-shadow: 0 0 0.1875rem 0.0625rem var(--t5ek-magic-accent);
+        box-shadow: 0 0 0.1875rem 0.0625rem var(--t5ek-magic-accent-color);
 
         &.not-attuned {
-          background: var(--t5ek-attunement-required);
-          box-shadow: 0 0 0.1875rem 0.0625rem var(--t5ek-attunement-required);
+          background: var(--t5ek-attunement-required-color);
+          box-shadow: 0 0 0.1875rem 0.0625rem var(--t5ek-attunement-required-color);
         }
       }
 
@@ -327,7 +327,7 @@
           :global(input) {
             height: 0.875rem;
             text-shadow: 0 0 0.3125rem
-              var(--t5ek-inventory-grid-image-contrast-text-shadow);
+              var(--t5ek-inventory-grid-image-contrast-text-shadow-color);
             text-align: right;
             min-width: 0;
             width: 1rem;
@@ -348,7 +348,7 @@
             font-size: 0.5rem;
             margin-right: 0.0625rem;
             text-shadow: 0 0 0.3125rem
-              var(--t5ek-inventory-grid-image-contrast-text-shadow);
+              var(--t5ek-inventory-grid-image-contrast-text-shadow-color);
           }
         }
       }
@@ -356,7 +356,7 @@
       .item-name:hover ~ .item-stats :global(input) {
         color: var(--t5ek-primary-font-color);
         text-shadow: 0 0 0.3125rem
-          var(--t5ek-inventory-grid-hover-use-item-contrast-text-shadow);
+          var(--t5ek-inventory-grid-hover-use-item-contrast-text-shadow-color);
       }
     }
 

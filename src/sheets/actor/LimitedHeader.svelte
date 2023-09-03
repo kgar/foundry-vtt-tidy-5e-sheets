@@ -37,7 +37,7 @@
         height: 100%;
         border-radius: 0.3125rem;
         overflow: hidden;
-        border: 1px solid var(--t5ek-icon-outline);
+        border: 0.0625rem solid var(--t5ek-icon-outline-color);
 
         &.rounded {
           border-radius: 50%;

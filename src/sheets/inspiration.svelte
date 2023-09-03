@@ -69,10 +69,10 @@
       justify-content: center;
       align-items: center;
       font-size: 1.5rem;
-      color: var(--t5ek-icon-font);
+      color: var(--t5ek-icon-font-color);
       cursor: pointer;
-      box-shadow: 0 0 0.625rem var(--t5ek-icon-shadow) inset;
-      border: 1px solid var(--t5ek-icon-outline);
+      box-shadow: 0 0 0.625rem var(--t5ek-icon-shadow-color) inset;
+      border: 0.0625rem solid var(--t5ek-icon-outline-color);
       background: var(--t5ek-icon-background);
     }
 
@@ -88,15 +88,15 @@
     }
 
     :global(label:hover) {
-      color: var(--t5ek-inspiration-color-hover);
-      text-shadow: 0 0 0.3125rem var(--t5ek-inspiration-text-shadow-hover);
+      color: var(--t5ek-inspiration-hover-color);
+      text-shadow: 0 0 0.3125rem var(--t5ek-inspiration-text-shadow-hover-color);
     }
   }
 
   .inspiration-1 {
     :global(label) {
       color: var(--t5ek-activated-profile-toggle-color);
-      text-shadow: 0 0 0.625rem var(--t5ek-inspiration-inspired-text-shadow);
+      text-shadow: 0 0 0.625rem var(--t5ek-inspiration-inspired-text-shadow-color);
       background: var(--t5ek-inspiration-inspired-background);
     }
 

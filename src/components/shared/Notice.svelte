@@ -9,7 +9,7 @@
 <style lang="scss">
   .notice {
     display: block;
-    background: var(--t5ek-warning-accent);
+    background: var(--t5ek-warning-accent-color);
     padding: 0.625rem;
     font-size: 0.75rem;
     color: var(--t5ek-background);

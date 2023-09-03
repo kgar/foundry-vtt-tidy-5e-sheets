@@ -142,8 +142,8 @@
       padding-left: 0.625rem;
       border-radius: 0.3125rem;
       background: var(--t5ek-faint-color);
-      box-shadow: 0 0 0.3125rem var(--t5ek-magic-accent) inset;
-      border: 0.0625rem solid var(--t5ek-magic-accent);
+      box-shadow: 0 0 0.3125rem var(--t5ek-magic-accent-color) inset;
+      border: 0.0625rem solid var(--t5ek-magic-accent-color);
 
       &.overattuned {
         background: var(--t5ek-primary-accent-color);

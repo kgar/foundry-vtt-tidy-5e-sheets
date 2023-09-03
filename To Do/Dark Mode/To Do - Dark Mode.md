@@ -111,9 +111,11 @@ Add to front of tags
   - [x] ~~leave the image filter variable intact as a fallback, and have the styles support it~~ nah
 - [x] item tables in dark mode have a little sliver of border-left on the rows
 - [x] Revisit settings.ts and look for FoundryAdapter.localize(). There's no need to do that during setting registration.
+- [ ] Sweep the code base for rgba(), rgb(), hsla(), hsl(), `#(\d){3,6,8}`, and extract or reuse colors
 - [ ] Review the variables
-  - [ ] Can they be better named? there are many cases where there are two or more pieces to a given set of variables, such as bg, color, outline, hover-color, etc. Need a solid naming convention that is consistent
-  - [ ] Can any repetition / redundancy be reasonably eliminated?Reduce duplication of colors in the themes, if possible. Allow specialized colors to reference other variables; think of how Kendo will create variables for specific things but will point them to more generic variables
+  - [x] Can they be better named? there are many cases where there are two or more pieces to a given set of variables, such as bg, color, outline, hover-color, etc. Need a solid naming convention that is consistent
+  - [ ] Can any repetition / redundancy be reasonably eliminated? Reduce duplication of colors in the themes, if possible. Allow specialized colors to reference other variables; think of how Kendo will create variables for specific things but will point them to more generic variables
+  - [ ] Document the naming conventions in the readme
 - [x] // TODO: Decide on the layout and then clean up
 
 ## And Also

@@ -72,7 +72,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    text-shadow: 0 0 0.3125rem 0.0625rem var(--t5ek-death-save-text-shadow);
+    text-shadow: 0 0 0.3125rem 0.0625rem var(--t5ek-death-save-text-shadow-color);
     
     .counter-value {
       display: flex;

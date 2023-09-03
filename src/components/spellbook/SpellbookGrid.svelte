@@ -129,44 +129,44 @@
 
       &.preparable {
         .spell-image {
-          box-shadow: 0 0 0 0.125rem inset var(--t5ek-prepareable);
+          box-shadow: 0 0 0 0.125rem inset var(--t5ek-prepareable-color);
           border-radius: 0.3125rem;
         }
       }
 
       &.prepared {
-        box-shadow: 0 0 0 0.125rem var(--t5ek-prepared-outline);
-        background-color: var(--t5ek-equipped);
+        box-shadow: 0 0 0 0.125rem var(--t5ek-prepared-item-grid-tile-outline-color);
+        background-color: var(--t5ek-equipped-background);
 
         .spell-image {
-          box-shadow: 0 0 0.0625rem 0.0625rem inset var(--t5ek-prepared-accent);
+          box-shadow: 0 0 0.0625rem 0.0625rem inset var(--t5ek-prepared-item-grid-tile-accent-color);
           border-radius: 0.3125rem;
         }
       }
 
       &.pact {
-        box-shadow: 0 0 0 0.125rem var(--t5ek-pact-outline);
-        background-color: var(--t5ek-pact);
+        box-shadow: 0 0 0 0.125rem var(--t5ek-pact-outline-color);
+        background-color: var(--t5ek-pact-background);
 
         .spell-image {
-          box-shadow: 0 0 0.0625rem 0.0625rem inset var(--t5ek-pact-accent);
+          box-shadow: 0 0 0.0625rem 0.0625rem inset var(--t5ek-pact-accent-color);
           border-radius: 0.3125rem;
         }
       }
 
       &.at-will {
-        box-shadow: 0 0 0 0.125rem var(--t5ek-atwill-outline);
-        background-color: var(--t5ek-atwill);
+        box-shadow: 0 0 0 0.125rem var(--t5ek-atwill-outline-color);
+        background-color: var(--t5ek-atwill-background);
 
         .spell-image {
-          box-shadow: 0 0 0.0625rem 0.0625rem inset var(--t5ek-atwill-accent);
+          box-shadow: 0 0 0.0625rem 0.0625rem inset var(--t5ek-atwill-accent-color);
           border-radius: 0.3125rem;
         }
       }
 
       &.innate {
         box-shadow: 0 0 0 0.125rem var(--t5ek-innate-outline);
-        background-color: var(--t5ek-innate);
+        background-color: var(--t5ek-innate-background);
 
         .spell-image {
           box-shadow: 0 0 0.0625rem 0.0625rem inset var(--t5ek-innate-accent);
@@ -175,12 +175,12 @@
       }
 
       &.always-prepared {
-        box-shadow: 0 0 0 0.125rem var(--t5ek-alwaysprepared-outline);
-        background-color: var(--t5ek-alwaysprepared);
+        box-shadow: 0 0 0 0.125rem var(--t5ek-alwaysprepared-outline-color);
+        background-color: var(--t5ek-alwaysprepared-background);
 
         .spell-image {
           box-shadow: 0 0 0.0625rem 0.0625rem inset
-            var(--t5ek-alwaysprepared-accent);
+            var(--t5ek-alwaysprepared-accent-color);
         }
       }
 

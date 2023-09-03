@@ -12,31 +12,31 @@
   }
 
   &.equipped .info-card-name {
-    background: var(--t5ek-equipped);
+    background: var(--t5ek-equipped-background);
   }
 
   &.prepared .info-card-name {
-    background: var(--t5ek-prepared);
+    background: var(--t5ek-prepared-background);
   }
 
   &.pact .info-card-name {
-    background: var(--t5ek-pact);
+    background: var(--t5ek-pact-background);
   }
 
   &.at-will .info-card-name {
-    background: var(--t5ek-atwill);
+    background: var(--t5ek-atwill-background);
   }
 
   &.innate .info-card-name {
-    background: var(--t5ek-innate);
+    background: var(--t5ek-innate-background);
   }
 
   &.always-prepared .info-card-name {
-    background: var(--t5ek-alwaysprepared);
+    background: var(--t5ek-alwaysprepared-background);
   }
 
   &.magic-item {
-    box-shadow: 0 0 0.375rem 0.125rem var(--t5ek-magic-accent) inset;
+    box-shadow: 0 0 0.375rem 0.125rem var(--t5ek-magic-accent-color) inset;
   }
 
   .info-card-name {

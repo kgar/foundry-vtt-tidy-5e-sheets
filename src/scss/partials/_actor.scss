@@ -136,8 +136,8 @@
 
   .tox-toolbar-overlord,
   .tox-toolbar__primary {
-    background: var(--t5ek-tinymce-toolbar-bg);
-    background-color: var(--t5ek-tinymce-toolbar-bg);
+    background: var(--t5ek-tinymce-toolbar-background);
+    background-color: var(--t5ek-tinymce-toolbar-background);
   }
 
   .tox .tox-overlord button {
@@ -164,7 +164,7 @@
 
 .tox-sidebar-wrap {
   padding: 0.5rem;
-  background: var(--t5ek-tinymce-sidebar-bg);
+  background: var(--t5ek-tinymce-sidebar-background);
 }
 
 .prosemirror menu {
@@ -195,7 +195,7 @@
   font-size: 0.75rem;
   line-height: 0.9375rem;
   font-weight: 600;
-  background: var(--t5ek-warning-accent);
+  background: var(--t5ek-warning-accent-color);
   color: var(--t5ek-secondary-color);
   border-radius: 0.1875rem;
 }

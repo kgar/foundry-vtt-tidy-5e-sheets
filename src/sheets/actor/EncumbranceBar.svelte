@@ -29,7 +29,7 @@
     background: var(--t5ek-light-color);
     border-radius: 0.3125rem;
     position: relative;
-    box-shadow: 0 0 0 0.0625rem var(--t5ek-encumbrance-outline) inset;
+    box-shadow: 0 0 0 0.0625rem var(--t5ek-encumbrance-outline-color) inset;
 
     .encumbrance-bar {
       position: absolute;
@@ -38,8 +38,8 @@
       left: 0.0625rem;
       bottom: 0.0625rem;
       max-width: calc(100% - 0.125rem);
-      border: 0.0625rem solid var(--t5ek-encumbrance-bar-outline);
-      background: var(--t5ek-encumbrance-bar);
+      border: 0.0625rem solid var(--t5ek-encumbrance-bar-outline-color);
+      background: var(--t5ek-encumbrance-bar-background);
       border-radius: 0.25rem;
     }
 
@@ -49,7 +49,7 @@
       width: 100%;
       text-align: center;
       font-weight: 700;
-      color: var(--t5ek-encumbrance-text);
+      color: var(--t5ek-encumbrance-text-color);
       text-shadow: 0 0 0.125rem #000;
     }
 
@@ -71,12 +71,12 @@
 
     .arrow-up {
       bottom: 0;
-      border-bottom-color: var(--t5ek-encumbrance-outline);
+      border-bottom-color: var(--t5ek-encumbrance-outline-color);
     }
 
     .arrow-down {
       top: 0;
-      border-top-color: var(--t5ek-encumbrance-outline);
+      border-top-color: var(--t5ek-encumbrance-outline-color);
     }
   }
 </style>

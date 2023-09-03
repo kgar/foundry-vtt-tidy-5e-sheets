@@ -55,48 +55,48 @@
   }
 
   .resting {
-    width: 34px;
-    height: 34px;
+    width: 2.125rem;
+    height: 2.125rem;
     overflow: hidden;
-    border-radius: 0 5px 0 5px;
+    border-radius: 0 0.3125rem 0 0.3125rem;
     transition: width 0.3s ease;
     background: var(--t5ek-icon-background);
     display: flex;
-    box-shadow: 0 0 10px var(--t5ek-icon-shadow) inset;
-    border: 1px solid var(--t5ek-icon-outline);
-    color: var(--t5ek-icon-font);
+    box-shadow: 0 0 0.625rem var(--t5ek-icon-shadow-color) inset;
+    border: 0.0625rem solid var(--t5ek-icon-outline-color);
+    color: var(--t5ek-icon-font-color);
 
     .resting-icon {
-      flex: 0 0 32px;
+      flex: 0 0 2rem;
       display: flex;
-      width: 32px;
-      height: 32px;
-      margin-right: 8px;
+      width: 2rem;
+      height: 2rem;
+      margin-right: 0.5rem;
       justify-content: center;
       align-items: center;
       border-radius: 50%;
-      font-size: 16px;
+      font-size: 1rem;
     }
 
     .rest {
-      flex: 0 0 32px;
+      flex: 0 0 2rem;
       display: flex;
       justify-content: center;
       align-items: center;
-      width: 32px;
-      height: 32px;
+      width: 2rem;
+      height: 2rem;
       border-radius: 50%;
       cursor: pointer;
       border: none;
       padding: 0;
-      font-size: 18px;
-      line-height: 32px;
+      font-size: 1.125rem;
+      line-height: 2rem;
       font-family: var(--t5ek-body-font-family);
       font-weight: 700;
       transition: color 0.3s ease, transform 0.3s ease;
 
       &:hover {
-        color: var(--t5ek-icon-hover);
+        color: var(--t5ek-icon-hover-color);
       }
     }
   }

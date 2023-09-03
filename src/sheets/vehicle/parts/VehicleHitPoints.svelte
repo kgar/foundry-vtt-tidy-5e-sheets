@@ -60,8 +60,8 @@
     justify-content: center;
     align-items: center;
     background: var(--t5ek-icon-background);
-    box-shadow: 0 0 0.3125rem var(--t5ek-icon-shadow) inset;
-    border: 1px solid var(--t5ek-icon-outline);
+    box-shadow: 0 0 0.3125rem var(--t5ek-icon-shadow-color) inset;
+    border: 0.0625rem solid var(--t5ek-icon-outline-color);
 
     :global(input.hp-min) {
       text-align: right;

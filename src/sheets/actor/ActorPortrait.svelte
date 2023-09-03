@@ -138,7 +138,7 @@
 
   .actor-image {
     background: var(--t5ek-icon-background);
-    box-shadow: 0 0 0.625rem var(--t5ek-icon-shadow) inset;
+    box-shadow: 0 0 0.625rem var(--t5ek-icon-shadow-color) inset;
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -162,7 +162,7 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-size: 12px;
+    font-size: 0.75rem;
     line-height: 1;
     white-space: nowrap;
     display: flex;
@@ -172,12 +172,12 @@
       background: var(--t5ek-background);
       color: var(--t5ek-primary-font-color);
       border: none;
-      margin: 1px 0;
-      padding: 4px 6px;
+      margin: 0.0625rem 0;
+      padding: 0.25rem 0.375rem;
       line-height: 1;
-      font-size: 12px;
-      border: 1px solid var(--t5ek-light-color);
-      border-radius: 5px;
+      font-size: 0.75rem;
+      border: 0.0625rem solid var(--t5ek-light-color);
+      border-radius: 0.3125rem;
       text-align: center;
 
       &:hover {

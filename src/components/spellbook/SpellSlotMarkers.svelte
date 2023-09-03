@@ -91,7 +91,7 @@
       border: 1px solid var(--t5ek-primary-font-color);
       &:hover,
       &.change {
-        background-color: var(--t5ek-warning-accent);
+        background-color: var(--t5ek-warning-accent-color);
       }
 
       &.empty {
@@ -99,7 +99,7 @@
 
         &:hover,
         &.change {
-          background-color: var(--t5ek-prepared);
+          background-color: var(--t5ek-prepared-background);
         }
       }
     }

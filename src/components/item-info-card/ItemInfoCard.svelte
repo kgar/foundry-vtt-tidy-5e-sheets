@@ -269,7 +269,7 @@
     transform: translateY(-50%);
     width: 0;
     height: var(--card-height);
-    background: var(--t5ek-item-info-card-bg);
+    background: var(--t5ek-item-info-card-background);
     border-radius: 0.3125rem 0 0 0.3125rem;
     z-index: -10;
     box-shadow: 0 0 0.3125rem rgba(0, 0, 0, 0.5);

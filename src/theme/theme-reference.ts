@@ -99,59 +99,59 @@ export const themeVariables = {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-prepareable': {
+  '--t5ek-prepareable-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-equipped': {
+  '--t5ek-equipped-background': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-equipped-outline': {
+  '--t5ek-equipped-item-grid-tile-outline-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-equipped-accent': {
+  '--t5ek-equipped-item-grid-tile-accent-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-prepared': {
+  '--t5ek-prepared-background': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-prepared-outline': {
+  '--t5ek-prepared-item-grid-tile-outline-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-prepared-accent': {
+  '--t5ek-prepared-item-grid-tile-accent-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-pact': {
+  '--t5ek-pact-background': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-pact-outline': {
+  '--t5ek-pact-outline-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-pact-accent': {
+  '--t5ek-pact-accent-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-atwill': {
+  '--t5ek-atwill-background': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-atwill-outline': {
+  '--t5ek-atwill-outline-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-atwill-accent': {
+  '--t5ek-atwill-accent-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-innate': {
+  '--t5ek-innate-background': {
     type: 'todo',
     group: 'todo',
   },
@@ -163,55 +163,55 @@ export const themeVariables = {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-alwaysprepared': {
+  '--t5ek-alwaysprepared-background': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-alwaysprepared-outline': {
+  '--t5ek-alwaysprepared-outline-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-alwaysprepared-accent': {
+  '--t5ek-alwaysprepared-accent-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-magic-accent': {
+  '--t5ek-magic-accent-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-faint-magic-accent': {
+  '--t5ek-faint-magic-item-list-row-accent-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-magic-outline': {
+  '--t5ek-magic-item-grid-tile-outline-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-attunement-required': {
+  '--t5ek-attunement-required-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-icon-attuned': {
+  '--t5ek-attuned-item-grid-icon-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-xp-bar': {
+  '--t5ek-xp-bar-background': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-encumbrance-bar': {
+  '--t5ek-encumbrance-bar-background': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-encumbrance-bar-outline': {
+  '--t5ek-encumbrance-bar-outline-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-encumbrance-outline': {
+  '--t5ek-encumbrance-outline-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-warning-accent': {
+  '--t5ek-warning-accent-color': {
     type: 'todo',
     group: 'todo',
   },
@@ -219,71 +219,71 @@ export const themeVariables = {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-icon-shadow': {
+  '--t5ek-icon-shadow-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-icon-outline': {
+  '--t5ek-icon-outline-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-icon-font': {
+  '--t5ek-icon-font-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-icon-hover': {
+  '--t5ek-icon-hover-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-note-background': {
+  '--t5ek-ability-modifiers-hover-label-background': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-exhaustion-intensity1-bg': {
+  '--t5ek-exhaustion-intensity1-background': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-exhaustion-intensity2-bg': {
+  '--t5ek-exhaustion-intensity2-background': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-exhaustion-intensity3-bg': {
+  '--t5ek-exhaustion-intensity3-background': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-ability-accent': {
+  '--t5ek-ability-accent-background': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-context-outline': {
+  '--t5ek-context-outline-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-context-shadow': {
+  '--t5ek-context-shadow-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-check-default': {
+  '--t5ek-check-default-background-image': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-check-checked': {
+  '--t5ek-check-checked-background-image': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-checkbox-font': {
+  '--t5ek-checkbox-font-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-checkbox-outline': {
+  '--t5ek-checkbox-outline-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-checkbox-unchecked': {
+  '--t5ek-checkbox-unchecked-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-checkbox-checked': {
+  '--t5ek-checkbox-checked-color': {
     type: 'todo',
     group: 'todo',
   },
@@ -291,11 +291,11 @@ export const themeVariables = {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-item-input-background-hover': {
+  '--t5ek-item-input-hover-background': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-encumbrance-text': {
+  '--t5ek-encumbrance-text-color': {
     type: 'todo',
     group: 'todo',
   },
@@ -303,15 +303,15 @@ export const themeVariables = {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-inspiration-color-hover': {
+  '--t5ek-inspiration-hover-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-inspiration-text-shadow-hover': {
+  '--t5ek-inspiration-text-shadow-hover-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-inspiration-inspired-text-shadow': {
+  '--t5ek-inspiration-inspired-text-shadow-color': {
     type: 'todo',
     group: 'todo',
   },
@@ -319,19 +319,19 @@ export const themeVariables = {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-motion-color-hover': {
+  '--t5ek-vehicle-motion-hover-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-motion-text-shadow-hover': {
+  '--t5ek-vehicle-motion-text-shadow-hover-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-motion-in-motion-text-shadow': {
+  '--t5ek-vehicle-in-motion-text-shadow-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-motion-in-motion-background': {
+  '--t5ek-vehicle-in-motion-background': {
     type: 'todo',
     group: 'todo',
   },
@@ -343,7 +343,7 @@ export const themeVariables = {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-death-save-text-shadow': {
+  '--t5ek-death-save-text-shadow-color': {
     type: 'todo',
     group: 'todo',
   },
@@ -351,11 +351,11 @@ export const themeVariables = {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-inventory-grid-image-contrast-text-shadow': {
+  '--t5ek-inventory-grid-image-contrast-text-shadow-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-inventory-grid-hover-use-item-contrast-text-shadow': {
+  '--t5ek-inventory-grid-hover-use-item-contrast-text-shadow-color': {
     type: 'todo',
     group: 'todo',
   },
@@ -363,7 +363,7 @@ export const themeVariables = {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-item-info-card-bg': {
+  '--t5ek-item-info-card-background': {
     type: 'todo',
     group: 'todo,',
   },
@@ -375,11 +375,11 @@ export const themeVariables = {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-content-entity-link-bg': {
+  '--t5ek-content-entity-link-background': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-content-entity-link-hover-bg': {
+  '--t5ek-content-entity-link-hover-background': {
     type: 'todo',
     group: 'todo',
   },
@@ -403,11 +403,11 @@ export const themeVariables = {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-tinymce-toolbar-bg': {
+  '--t5ek-tinymce-toolbar-background': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-tinymce-sidebar-bg': {
+  '--t5ek-tinymce-sidebar-background': {
     type: 'todo',
     group: 'todo',
   },

@@ -408,22 +408,22 @@ input[type='checkbox'] {
           display: flex;
           border-radius: 0.1875rem;
           overflow: hidden;
-          border: 0.0625rem solid var(--t5ek-checkbox-outline);
-          background: var(--t5ek-checkbox-checked);
+          border: 0.0625rem solid var(--t5ek-checkbox-outline-color);
+          background: var(--t5ek-checkbox-checked-color);
           height: 1.25rem;
           cursor: pointer;
-          color: var(--t5ek-checkbox-font);
+          color: var(--t5ek-checkbox-font-color);
           font-size: 0.8125rem;
           line-height: 1rem;
           flex: 0 0 calc(100% / 4 - 0.0625rem);
           font-weight: 400;
 
           &:hover {
-            background: var(--t5ek-checkbox-checked);
+            background: var(--t5ek-checkbox-checked-color);
           }
 
           &:hover input::after {
-            background: var(--t5ek-checkbox-checked);
+            background: var(--t5ek-checkbox-checked-color);
           }
         }
 
@@ -441,7 +441,7 @@ input[type='checkbox'] {
         font-size: 0.8125rem;
 
         &:hover {
-          background: var(--t5ek-item-input-background-hover);
+          background: var(--t5ek-item-input-hover-background);
         }
       }
 
@@ -465,7 +465,7 @@ input[type='checkbox'] {
           top: 0;
           left: 0;
           z-index: -1;
-          background: var(--t5ek-checkbox-unchecked);
+          background: var(--t5ek-checkbox-unchecked-color);
           width: 100%;
           height: 100%;
           cursor: pointer;
@@ -633,7 +633,7 @@ input[type='checkbox'] {
   border: 0.0625rem solid var(--t5ek-tertiary-color);
   box-shadow: 0 0 0.125rem var(--t5ek-light-color) inset;
   border-radius: 0.1875rem;
-  background-image: var(--t5ek-check-default);
+  background-image: var(--t5ek-check-default-background-image);
   background-repeat: no-repeat;
   background-position: center;
   background-size: 60%;
@@ -646,15 +646,15 @@ label input[type='checkbox'] {
 }
 
 input[type='checkbox']:checked {
-  background: var(--t5ek-checkbox-checked);
-  background-image: var(--t5ek-check-checked);
+  background: var(--t5ek-checkbox-checked-color);
+  background-image: var(--t5ek-check-checked-background-image);
   background-size: 60%;
   background-repeat: no-repeat;
   background-position: center;
 }
 
 .checkbox input[type='checkbox']:checked {
-  background-image: var(--t5ek-check-checked);
+  background-image: var(--t5ek-check-checked-background-image);
 }
 
 label input[type='checkbox']:checked {
@@ -715,5 +715,5 @@ label input[type='checkbox']:checked {
 
 .advancement .items-header .item-checkmark {
   flex: 0 0 44px;
-  color: var(--t5ek-prepared);
+  color: var(--t5ek-prepared-background);
 }

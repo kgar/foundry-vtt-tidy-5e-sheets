@@ -37,10 +37,10 @@
     width: 34px;
     height: 34px;
     background: var(--t5ek-icon-background);
-    box-shadow: 0 0 10px var(--t5ek-icon-shadow) inset;
-    border: 1px solid var(--t5ek-icon-outline);
+    box-shadow: 0 0 10px var(--t5ek-icon-shadow-color) inset;
+    border: 1px solid var(--t5ek-icon-outline-color);
     border-radius: 5px 0 5px 0px;
-    color: var(--t5ek-icon-font);
+    color: var(--t5ek-icon-font-color);
 
     &.rounded {
       bottom: -7px;

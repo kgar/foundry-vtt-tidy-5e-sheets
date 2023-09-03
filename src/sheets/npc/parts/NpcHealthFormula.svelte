@@ -109,22 +109,22 @@
       align-items: center;
       height: 1.25rem;
       width: 1.375rem;
-      border-radius: 0 5px 5px 0;
+      border-radius: 0 0.3125rem 0.3125rem 0;
     }
 
     .formula-edit {
       background: var(--t5ek-icon-background);
-      box-shadow: 0 0 10px var(--t5ek-icon-shadow) inset;
-      border: 1px solid var(--t5ek-icon-outline);
+      box-shadow: 0 0 0.625rem var(--t5ek-icon-shadow-color) inset;
+      border: 0.0625rem solid var(--t5ek-icon-outline-color);
       display: none;
       justify-content: center;
       align-items: center;
       position: absolute;
       bottom: 100%;
       right: 0;
-      width: 136px;
-      height: 20px;
-      border-radius: 5px;
+      width: 8.5rem;
+      height: 1.25rem;
+      border-radius: 0.3125rem;
     }
 
     &:hover .formula-edit,
