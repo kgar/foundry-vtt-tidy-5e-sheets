@@ -146,8 +146,8 @@
       border: 0.0625rem solid var(--t5ek-magic-accent);
 
       &.overattuned {
-        background: var(--t5ek-primary-accent);
-        box-shadow: 0 0 0.1875rem var(--t5ek-primary-accent);
+        background: var(--t5ek-primary-accent-color);
+        box-shadow: 0 0 0.1875rem var(--t5ek-primary-accent-color);
         animation: attention 2s infinite alternate ease-in-out;
         color: var(--t5ek-white);
       }

@@ -87,7 +87,7 @@
       width: 0.75rem;
       height: 0.75rem;
       border-radius: 50%;
-      background-color: var(--t5ek-primary-accent);
+      background-color: var(--t5ek-primary-accent-color);
       border: 1px solid var(--t5ek-primary-font-color);
       &:hover,
       &.change {

@@ -47,7 +47,7 @@
       padding: 0.3125rem 0.5rem 0 0.5rem;
       background: var(--t5ek-header-background);
       border: 0.0625rem solid transparent;
-      border-bottom: 0.0625rem solid var(--t5ek-header-border);
+      border-bottom: 0.0625rem solid var(--t5ek-header-border-color);
       font-size: 0.8125rem;
       text-align: left;
       height: 1.625rem;
@@ -58,7 +58,7 @@
       }
 
       &:hover {
-        color: var(--t5ek-primary-accent);
+        color: var(--t5ek-primary-accent-color);
       }
 
       &.active {

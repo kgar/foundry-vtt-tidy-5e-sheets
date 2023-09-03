@@ -271,18 +271,18 @@
     }
 
     &.linked {
-      box-shadow: 0 0 0.25rem 0.125rem var(--t5ek-linked-accent) inset;
+      box-shadow: 0 0 0.25rem 0.125rem var(--t5ek-linked-accent-color) inset;
 
       .link-state.fa-link {
-        background: var(--t5ek-linked-light);
+        background: var(--t5ek-linked-light-color);
       }
     }
 
     &.unlinked {
-      box-shadow: 0 0 0.25rem 0.125rem var(--t5ek-unlinked-accent) inset;
+      box-shadow: 0 0 0.25rem 0.125rem var(--t5ek-unlinked-accent-color) inset;
 
       .link-state.fa-unlink {
-        background: var(--t5ek-unlinked-light);
+        background: var(--t5ek-unlinked-light-color);
       }
     }
   }

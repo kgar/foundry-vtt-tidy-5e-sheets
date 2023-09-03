@@ -180,7 +180,7 @@
 
     .ability-mod:hover,
     .ability-save:hover {
-      background: var(--t5ek-primary-accent);
+      background: var(--t5ek-primary-accent-color);
       color: #fff; // TODO: Find appropriate color variable
     }
 

@@ -53,7 +53,7 @@ input[type='number'] {
 input[type='text']:hover,
 input[type='text']:focus {
   border: none;
-  box-shadow: 0 0 0 0.0625rem var(--t5ek-primary-accent) inset;
+  box-shadow: 0 0 0 0.0625rem var(--t5ek-primary-accent-color) inset;
 }
 
 input[type='checkbox'] {
@@ -498,7 +498,7 @@ input[type='checkbox'] {
       button:hover,
       select:focus {
         border: none;
-        box-shadow: 0 0 0 0.0625rem var(--t5ek-primary-accent) inset;
+        box-shadow: 0 0 0 0.0625rem var(--t5ek-primary-accent-color) inset;
       }
     }
   }
@@ -569,16 +569,8 @@ input[type='checkbox'] {
       align-items: center;
       color: var(--t5ek-tertiary-color);
 
-      .fas.fa-trash {
-        color: var(--t5ek-unsafe-accent);
-      }
-
       &:hover {
         color: var(--t5ek-secondary-color);
-
-        .fas.fa-trash {
-          color: var(--t5ek-unlinked-accent);
-        }
       }
     }
 

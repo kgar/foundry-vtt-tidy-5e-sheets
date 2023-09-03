@@ -362,6 +362,7 @@ Evaluate module integration and think about better (API-centric) ways to support
   - [ ] Review the Tidy 5e sheets and fathom the kinds of building blocks that would make the sheets
   - [ ] Revamp the entire module with these lego components
   - [ ] Create/upgrade alt sheets with these lego components, also
+- [ ] Finally start using Foundry in docker to hotswap between supported version: https://hub.docker.com/r/felddy/foundryvtt
 
 ## (Deferred for later; might solve itself) SCSS Revolution
 

@@ -182,7 +182,7 @@
 
       &:hover {
         background: var(--t5ek-background);
-        color: var(--t5ek-primary-accent);
+        color: var(--t5ek-primary-accent-color);
       }
     }
   }

@@ -225,7 +225,7 @@ h4 {
 
 .rollable:hover {
   text-shadow: none;
-  color: var(--t5ek-primary-accent);
+  color: var(--t5ek-primary-accent-color);
 }
 
 .window-content a:hover {
@@ -300,7 +300,7 @@ input[type='text']:hover,
 input[type='text']:focus,
 input[type='number']:hover,
 input[type='number']:focus {
-  box-shadow: 0 0 0 0.0625rem var(--t5ek-primary-accent) inset;
+  box-shadow: 0 0 0 0.0625rem var(--t5ek-primary-accent-color) inset;
 }
 
 input[disabled],

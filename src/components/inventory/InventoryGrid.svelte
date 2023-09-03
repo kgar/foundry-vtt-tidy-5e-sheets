@@ -200,7 +200,7 @@
       border-radius: 0.3125rem;
 
       &.context {
-        border: 0.0625rem solid var(--t5ek-primary-accent);
+        border: 0.0625rem solid var(--t5ek-primary-accent-color);
       }
 
       &.equipped {
@@ -323,13 +323,11 @@
         .item-uses {
           border: none;
           font-size: 0.75rem;
-          color: var(--t5ek-stat-font);
 
           :global(input) {
             height: 0.875rem;
             text-shadow: 0 0 0.3125rem
               var(--t5ek-inventory-grid-image-contrast-text-shadow);
-            color: var(--t5ek-stat-font);
             text-align: right;
             min-width: 0;
             width: 1rem;

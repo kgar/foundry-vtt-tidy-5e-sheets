@@ -89,7 +89,7 @@
     background: var(--t5ek-faintest-color);
 
     &:global(.context) {
-      box-shadow: 0 0 0.1875rem 0.0625rem var(--t5ek-primary-accent) inset;
+      box-shadow: 0 0 0.1875rem 0.0625rem var(--t5ek-primary-accent-color) inset;
     }
 
     &.prepared {

@@ -55,7 +55,7 @@ export const themeVariables = {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-primary-accent': {
+  '--t5ek-primary-accent-color': {
     type: 'todo',
     group: 'todo',
   },
@@ -67,27 +67,27 @@ export const themeVariables = {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-linked-accent': {
+  '--t5ek-linked-accent-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-unlinked-accent': {
+  '--t5ek-unlinked-accent-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-linked-light': {
+  '--t5ek-linked-light-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-unlinked-light': {
+  '--t5ek-unlinked-light-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-safe-accent': {
+  '--t5ek-sheet-unlocked-icon-background': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-unsafe-accent': {
+  '--t5ek-sheet-locked-icon-background': {
     type: 'todo',
     group: 'todo',
   },
@@ -95,11 +95,7 @@ export const themeVariables = {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-header-border': {
-    type: 'todo',
-    group: 'todo',
-  },
-  '--t5ek-stat-font': {
+  '--t5ek-header-border-color': {
     type: 'todo',
     group: 'todo',
   },

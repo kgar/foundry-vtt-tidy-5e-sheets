@@ -64,17 +64,17 @@
     }
 
     .selected {
-      background: var(--t5ek-primary-accent);
+      background: var(--t5ek-primary-accent-color);
     }
   }
 
   .options-list .selected {
-    background: var(--t5ek-primary-accent);
+    background: var(--t5ek-primary-accent-color);
   }
 
   .selected-option:hover,
   .selected-option.active {
-    color: var(--t5ek-primary-accent);
+    color: var(--t5ek-primary-accent-color);
     cursor: pointer;
   }
 </style>

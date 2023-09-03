@@ -311,7 +311,7 @@
       font-style: italic;
 
       .frozen .key {
-        background: var(--t5ek-primary-accent);
+        background: var(--t5ek-primary-accent-color);
       }
 
       .key {
