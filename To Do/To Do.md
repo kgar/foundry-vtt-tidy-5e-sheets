@@ -7,7 +7,7 @@
 - [x] Refactor: Make all limited sheets do like the dnd5e limited sheet
   - [x] Share a standard header based on the draft from VehicleSheetLimited
 - [x] Item Card
-- [ ] Dark Mode
+- [x] Dark Mode
 - [ ] Settings Dialog Overhaul
 - [ ] Implement All Settings
 - [ ] Tackle Misc To Do's
@@ -17,9 +17,12 @@
   - [ ] Typescriptify Tidy 5e flags
   - [ ] FoundryAdapter cleanup project and types purge
   - [ ] HTML enrichment
-  - [ ] getData() / Context enrichment : pull back all calculations from the various components into the context when getting context data in the sheet. If necessary, pull further back into Foundry Adapter for each sheet type.
+  - [ ] getData() / Context curation : pull back all calculations from the various components into the context when getting context data in the sheet. If necessary, pull further back into Foundry Adapter for each sheet type. If using Zod, validate the final Character context, NPC context, Vehicle context, Item Sheet context
   - [ ] etc.
-- [ ]
+- [ ] Tab selection and ordering 
+  - validation: at least one is required
+  - when determining selected tab ID when the indicated one in settings is not available, pick first from ordered list
+- [ ] Re-integrate Actions Tab or make native
 
 ### Foundry Adapter Cleanup
 
@@ -33,6 +36,9 @@ Foundry Adapter should be reorganized so that functions can be broken out for ac
 - [ ] Review the current state of FoundryAdapter and task out work
 - [ ] Find all instances of global foundry / 5e usages in svelte and pull back into the Adapter.
 - [ ] Begin eliminating all TS errors
+- [ ] Build own curated context object for each sheet type which validates the shape before sending to svelte
+  - [ ] Consider using Zod to validate context object so that validation errors are clear for testing / debugging / upgrade purposes
+- [ ] 
 - [ ] ...etc.
 
 ### Side Quest
