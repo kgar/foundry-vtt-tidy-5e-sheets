@@ -51,7 +51,7 @@
     span {
       cursor: pointer;
       background: var(--t5ek-sheet-unlocked-icon-background);
-      color: var(--fred-2);
+      color: var(--t5ek-sheet-lock-icon-color);
       border-radius: 0.1875rem;
 
       &.editing-enabled {
@@ -59,7 +59,7 @@
       }
 
       &:hover {
-        color: var(--fred-12);
+        color: var(--t5ek-sheet-lock-icon-hover-color);
       }
 
       i {

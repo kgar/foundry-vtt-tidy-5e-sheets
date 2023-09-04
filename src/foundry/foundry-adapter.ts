@@ -422,6 +422,18 @@ export const FoundryAdapter = {
       }`
     );
   },
+  isItemFavorite(item: any) {
+    if (!item) {
+      return false;
+    }
+    let isFav =
+      (game.modules.get('favorite-items')?.active &&
+        item.flags['favorite-items']?.favorite) ||
+      item.flags[CONSTANTS.MODULE_ID]?.favorite ||
+      false;
+
+    return isFav;
+  },
 };
 
 /* ------------------------------------------------------

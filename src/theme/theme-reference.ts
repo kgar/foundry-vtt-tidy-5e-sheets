@@ -423,51 +423,27 @@ export const themeVariables = {
     type: 'todo',
     group: 'todo',
   },
-  '--fred-1': {
+  '--t5ek-item-info-card-box-shadow-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--fred-2': {
+  '--t5ek-sheet-lock-icon-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--fred-3': {
+  '--t5ek-grid-pane-favorite-icon-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--fred-4': {
+  '--t5ek-settings-dialog-box-shadow-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--fred-5': {
+  '--t5ek-spell-level-button-background': {
     type: 'todo',
     group: 'todo',
   },
-  '--fred-6': {
-    type: 'todo',
-    group: 'todo',
-  },
-  '--fred-7': {
-    type: 'todo',
-    group: 'todo',
-  },
-  '--fred-8': {
-    type: 'todo',
-    group: 'todo',
-  },
-  '--fred-9': {
-    type: 'todo',
-    group: 'todo',
-  },
-  '--fred-10': {
-    type: 'todo',
-    group: 'todo',
-  },
-  '--fred-11': {
-    type: 'todo',
-    group: 'todo',
-  },
-  '--fred-12': {
+  '--t5ek-sheet-lock-icon-hover-color': {
     type: 'todo',
     group: 'todo',
   },
@@ -479,35 +455,27 @@ export const themeVariables = {
     type: 'todo',
     group: 'todo',
   },
-  '--fred-13': {
+  '--t5ek-settings-dialog-border-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--fred-14': {
+  '--t5ek-spell-level-button-border-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--fred-15': {
+  '--t5ek-ability-modifiers-label-text-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--fred-16': {
+  '--t5ek-ability-mod-text-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--fred-17': {
+  '--t5ek-ability-mod-save-text-hover-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--fred-18': {
-    type: 'todo',
-    group: 'todo',
-  },
-  '--fred-19': {
-    type: 'todo',
-    group: 'todo',
-  },
-  '--fred-20': {
+  '--t5ek-encumbrance-bar-text-shadow-color': {
     type: 'todo',
     group: 'todo',
   },

@@ -1,9 +1,9 @@
 .app.window-app.tidy5e-kgar.settings {
-  border: 2px solid var(--fred-13);
-  border-radius: 5px;
+  border: 0.125rem solid var(--t5ek-settings-dialog-border-color);
+  border-radius: 0.3125rem;
   overflow: hidden;
-  box-shadow: 0 0 10px var(--fred-4);
-  max-height: 500px;
+  box-shadow: 0 0 0.625rem var(--t5ek-settings-dialog-box-shadow-color);
+  max-height: 31.25rem;
 
   .window-content {
     padding: 0;
@@ -18,9 +18,9 @@
 
   .sheet-tabs {
     flex: 0;
-    padding: 4px 0;
-    margin-bottom: 8px;
-    border-bottom: 0.0625rem solid var(--fred-14);
+    padding: 0.25rem 0;
+    margin-bottom: 0.5rem;
+    border-bottom: 0.0625rem solid var(--t5ek-header-border-color);
 
     .item {
       flex: 0;
@@ -49,19 +49,19 @@
   }
 
   .sheet-footer {
-    padding: 8px;
+    padding: 0.5rem;
     flex: 0;
   }
 
   .setting {
     display: flex;
     background: var(--t5ek-faintest-color);
-    border-radius: 5px;
-    margin: 2px 0;
-    padding: 4px;
+    border-radius: 0.3125rem;
+    margin: 0.125rem 0;
+    padding: 0.25rem;
 
     &.group {
-      padding-left: 24px;
+      padding-left: 1.5rem;
     }
 
     section {
@@ -73,7 +73,7 @@
     }
 
     .description {
-      margin-left: 8px;
+      margin-left: 0.5rem;
 
       label {
         font-weight: 600;
@@ -81,16 +81,16 @@
     }
 
     .settings-group {
-      margin-left: 8px;
+      margin-left: 0.5rem;
 
       article {
-        margin: 4px 0;
+        margin: 0.25rem 0;
       }
 
       label {
-        font-size: 12px;
+        font-size: 0.75rem;
         font-weight: 600;
-        padding: 0 4px 8px 4px;
+        padding: 0 0.25rem 0.5rem 0.25rem;
       }
     }
   }

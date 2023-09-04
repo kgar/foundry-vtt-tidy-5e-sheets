@@ -25,8 +25,8 @@ form .form-group.spell-level-buttons {
         justify-content: center;
         width: 1.875rem;
         height: 1.875rem;
-        background: var(--fred-5);
-        border: 0.125rem groove var(--fred-15);
+        background: var(--t5ek-spell-level-button-background);
+        border: 0.125rem groove var(--t5ek-spell-level-button-border-color);
         border-radius: 0.1875rem;
         font-size: 1rem;
         font-weight: 900;
@@ -49,8 +49,8 @@ form .form-group.spell-level-buttons {
 
       .available-slots {
         position: absolute;
-        top: -4px;
-        right: -4px;
+        top: -0.25rem;
+        right: -0.25rem;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -60,7 +60,7 @@ form .form-group.spell-level-buttons {
         line-height: 1;
         border-radius: 50%;
         background: var(--t5ek-primary-accent-color);
-        color: var(--fred-6);
+        color: var(--t5ek-primary-font-color);
       }
     }
   }

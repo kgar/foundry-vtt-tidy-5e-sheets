@@ -11,7 +11,7 @@
     position: absolute;
     top: -0.125rem;
     left: 0.25rem;
-    color: var(--fred-3);
+    color: var(--t5ek-grid-pane-favorite-icon-color);
     text-shadow: 0 0 0.125rem var(--t5ek-primary-color);
     font-size: 0.625rem;
   }

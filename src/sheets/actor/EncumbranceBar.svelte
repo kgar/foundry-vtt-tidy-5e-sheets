@@ -49,7 +49,7 @@
       text-align: center;
       font-weight: 700;
       color: var(--t5ek-encumbrance-text-color);
-      text-shadow: 0 0 0.125rem var(--fred-20);
+      text-shadow: 0 0 0.125rem var(--t5ek-encumbrance-bar-text-shadow-color);
     }
 
     .encumbrance-breakpoint {

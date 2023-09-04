@@ -1,5 +1,4 @@
 import { CONSTANTS } from 'src/constants';
-import { isItemFavorite } from 'src/favorites/favorites';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type { Item5e } from 'src/types/item';
 import { warn } from 'src/utils/logging';
@@ -172,7 +171,7 @@ function getItemContextOptions(item: Item5e) {
     options.push({
       name: isAttuned ? 'T5EK.Deattune' : 'T5EK.Attune',
       icon: isAttuned
-        ? "<i class='fas fa-sun fa-fw' style='color: var(--fred-10);'></i>"
+        ? "<i class='fas fa-sun fa-fw' style='color: var(--t5ek-warning-accent-color);'></i>"
         : "<i class='fas fa-sun fa-fw'></i>",
       callback: () =>
         item.update({
@@ -193,7 +192,7 @@ function getItemContextOptions(item: Item5e) {
     options.push({
       name: isEquipped ? 'T5EK.Unequip' : 'T5EK.Equip',
       icon: isEquipped
-        ? "<i class='fas fa-user-alt fa-fw' style='color: var(--fred-10);'></i> "
+        ? "<i class='fas fa-user-alt fa-fw' style='color: var(--t5ek-warning-accent-color);'></i> "
         : "<i class='fas fa-user-alt fa-fw'></i> ",
       callback: () => item.update({ 'system.equipped': !isEquipped }),
     });
@@ -230,14 +229,10 @@ function getItemContextOptions(item: Item5e) {
   // TODO SUPPORT FAVORITE ON NPC ?
   if (isCharacter) {
     // Add favorites to context menu
-    let isFav = isItemFavorite(item);
-
-    let favoriteColor = 'var(--fred-11)'; //Standard black
+    let isFav = FoundryAdapter.isItemFavorite(item);
+    
     let favoriteIcon = 'fa-bookmark';
-    if (game.modules.get('favorite-items')?.active) {
-      favoriteIcon = game.settings.get('favorite-items', 'favorite-icon');
-      favoriteColor = game.settings.get('favorite-items', 'favorite-color');
-    }
+    
     options.push({
       name: isFav ? 'T5EK.RemoveFav' : 'T5EK.AddFav',
       icon: isFav
@@ -252,7 +247,7 @@ function getItemContextOptions(item: Item5e) {
           );
           return;
         }
-        let isFav = isItemFavorite(item);
+        let isFav = FoundryAdapter.isItemFavorite(item);
 
         item.update({
           [`flags.${CONSTANTS.MODULE_ID}.favorite`]: !isFav,
@@ -308,7 +303,7 @@ function getItemContextOptions(item: Item5e) {
       });
       options.push({
         name: 'T5EK.DeleteSpell',
-        icon: "<i class='fas fa-trash fa-fw' style='color: var(--fred-10);'></i>",
+        icon: "<i class='fas fa-trash fa-fw' style='color: var(--t5ek-warning-accent-color);'></i>",
         callback: () => item.deleteDialog(),
       });
     }
@@ -333,7 +328,7 @@ function getItemContextOptions(item: Item5e) {
       });
       options.push({
         name: 'DND5E.ContextMenuActionDelete',
-        icon: "<i class='fas fa-trash fa-fw' style='color: var(--fred-10);'></i>",
+        icon: "<i class='fas fa-trash fa-fw' style='color: var(--t5ek-warning-accent-color);'></i>",
         callback: () => item.deleteDialog(),
       });
     }

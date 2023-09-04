@@ -91,12 +91,6 @@
     width: 3.125rem;
     margin: 0 auto;
 
-    &:hover .ability-mod,
-    &:hover .ability-save {
-      opacity: 1;
-      text-shadow: none;
-    }
-
     .ability-modifiers {
       position: relative;
       display: flex;
@@ -114,7 +108,8 @@
 
       &:hover {
         border-radius: 0;
-        box-shadow: 0 0 0 0.0625rem var(--t5ek-ability-modifiers-hover-label-background);
+        box-shadow: 0 0 0 0.0625rem
+          var(--t5ek-ability-modifiers-hover-label-background);
         z-index: 10;
       }
 
@@ -126,12 +121,36 @@
       &:hover .ability-mod {
         border-radius: 0;
       }
+    }
 
-      .ability-mod {
-        background: var(--t5ek-ability-accent-background);
-        color: var(--fred-17); // TODO: Find appropriate color variable
-        border-radius: 0.3125rem 0 0 0.3125rem;
-      }
+    .ability-mod {
+      background: var(--t5ek-ability-accent-background);
+      color: var(--t5ek-ability-mod-text-color);
+      border-radius: 0.3125rem 0 0 0.3125rem;
+    }
+
+    .ability-mod,
+    .ability-save {
+      flex: 1;
+      text-align: center;
+      font-size: 0.75rem;
+      opacity: 0.4;
+      transition: opacity 0.3s ease;
+      cursor: pointer;
+    }
+
+    .ability-mod:hover,
+    .ability-save:hover {
+      background: var(--t5ek-primary-accent-color);
+      color: var(
+        --t5ek-ability-mod-save-text-hover-color
+      ); // TODO: Find appropriate color variable
+    }
+
+    &:hover .ability-mod,
+    &:hover .ability-save {
+      opacity: 1;
+      text-shadow: none;
     }
 
     .mod-label {
@@ -139,7 +158,7 @@
       top: 2.9375rem; // This is far too precise; can we make this more relative to its target?
       display: none;
       background: var(--t5ek-ability-modifiers-hover-label-background);
-      color: var(--fred-16); // TODO: Find appropriate color variable
+      color: var(--t5ek-ability-modifiers-label-text-color); // TODO: Find appropriate color variable
       font-size: 0.625rem;
       height: 1.0625rem; // This is far too precise; can we make this more relative to its target?
       padding: 0.1875rem 0.25rem 0.125rem 0.25rem; // this padding is providing the positioning of the text. Can we do this in flexbox?
@@ -162,28 +181,6 @@
       }
     }
 
-    .ability-mod,
-    .ability-save {
-      flex: 1;
-      text-align: center;
-      font-size: 0.75rem;
-      opacity: 0.4;
-      transition: opacity 0.3s ease;
-      cursor: pointer;
-    }
-
-    .ability-mod {
-      background: var(--t5ek-ability-accent-background);
-      color: var(--fred-18); // TODO: Find appropriate color variable
-      border-radius: 0.3125rem 0 0 0.3125rem;
-    }
-
-    .ability-mod:hover,
-    .ability-save:hover {
-      background: var(--t5ek-primary-accent-color);
-      color: var(--fred-19); // TODO: Find appropriate color variable
-    }
-
     .proficiency-toggle {
       position: absolute;
       font-size: 0.625rem;
@@ -191,16 +188,7 @@
       transition: opacity 0.3s ease;
       left: calc(50% - 0.75rem);
       bottom: -0.875rem;
-    }
-
-    .ability-modifiers .proficiency-toggle {
       line-height: 0.625rem;
-    }
-
-    &:hover .ability-mod,
-    &:hover .ability-save {
-      opacity: 1;
-      text-shadow: none;
     }
 
     &:hover .proficiency-toggle {

@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { isItemFavorite } from 'src/favorites/favorites';
   import type { ActorSheetContext } from 'src/types/types';
   import InventoryList from '../inventory/InventoryList.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
@@ -20,17 +19,17 @@
   $: favoriteInventory = sortByNameIfConfigured(
     $store.inventory
       .flatMap((x: { items: Item5e[] }) => x.items)
-      .filter(isItemFavorite)
+      .filter(FoundryAdapter.isItemFavorite)
   );
 
   $: favoriteFeatures = sortByNameIfConfigured(
     $store.features
       .flatMap((x: { items: Item5e[] }) => x.items)
-      .filter(isItemFavorite)
+      .filter(FoundryAdapter.isItemFavorite)
   );
 
   function getFavoriteSpells(spells: Item5e[]): Item5e[] {
-    return sortByNameIfConfigured(spells.filter(isItemFavorite));
+    return sortByNameIfConfigured(spells.filter(FoundryAdapter.isItemFavorite));
   }
 
   function sortByNameIfConfigured(items: Item5e[]): Item5e[] {
