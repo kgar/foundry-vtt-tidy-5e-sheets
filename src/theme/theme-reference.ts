@@ -423,4 +423,92 @@ export const themeVariables = {
     type: 'todo',
     group: 'todo',
   },
+  '--fred-1': {
+    type: 'todo',
+    group: 'todo',
+  },
+  '--fred-2': {
+    type: 'todo',
+    group: 'todo',
+  },
+  '--fred-3': {
+    type: 'todo',
+    group: 'todo',
+  },
+  '--fred-4': {
+    type: 'todo',
+    group: 'todo',
+  },
+  '--fred-5': {
+    type: 'todo',
+    group: 'todo',
+  },
+  '--fred-6': {
+    type: 'todo',
+    group: 'todo',
+  },
+  '--fred-7': {
+    type: 'todo',
+    group: 'todo',
+  },
+  '--fred-8': {
+    type: 'todo',
+    group: 'todo',
+  },
+  '--fred-9': {
+    type: 'todo',
+    group: 'todo',
+  },
+  '--fred-10': {
+    type: 'todo',
+    group: 'todo',
+  },
+  '--fred-11': {
+    type: 'todo',
+    group: 'todo',
+  },
+  '--fred-12': {
+    type: 'todo',
+    group: 'todo',
+  },
+  '--t5ek-scrollbar-thumb': {
+    type: 'todo',
+    group: 'todo',
+  },
+  '--t5ek-scrollbar-track': {
+    type: 'todo',
+    group: 'todo',
+  },
+  '--fred-13': {
+    type: 'todo',
+    group: 'todo',
+  },
+  '--fred-14': {
+    type: 'todo',
+    group: 'todo',
+  },
+  '--fred-15': {
+    type: 'todo',
+    group: 'todo',
+  },
+  '--fred-16': {
+    type: 'todo',
+    group: 'todo',
+  },
+  '--fred-17': {
+    type: 'todo',
+    group: 'todo',
+  },
+  '--fred-18': {
+    type: 'todo',
+    group: 'todo',
+  },
+  '--fred-19': {
+    type: 'todo',
+    group: 'todo',
+  },
+  '--fred-20': {
+    type: 'todo',
+    group: 'todo',
+  },
 };
