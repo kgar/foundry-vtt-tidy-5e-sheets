@@ -363,6 +363,7 @@ Evaluate module integration and think about better (API-centric) ways to support
   - [ ] Revamp the entire module with these lego components
   - [ ] Create/upgrade alt sheets with these lego components, also
 - [ ] Finally start using Foundry in docker to hotswap between supported version: https://hub.docker.com/r/felddy/foundryvtt
+- [ ] Fix Bug: Spellbook, filter by Action / Bonus Action / etc., the Prepared spells calculation changes with the visible spells. It should always show the actual total of prepared spells.
 
 ## (Deferred for later; might solve itself) SCSS Revolution
 
