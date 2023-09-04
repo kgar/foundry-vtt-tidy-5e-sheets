@@ -128,31 +128,6 @@ Add to front of tags
 - [ ] Make sure spell level configuration dialog is light-mode-enabled
 - [ ] Extract inline styles on context menu script / replace with appropriate classes
 
-### Captured harcoded colors
-
-- --fred-1: rgba(0, 0, 0, 0.5)
-- --fred-2: rgba(255, 255, 255, 0.6)
-- --fred-3: rgba(0, 200, 100, 1)
-- --fred-4: rgba(0, 0, 0, 0.75)
-- --fred-5: rgba(0, 0, 0, 0.05)
-- --fred-6: rgba(255, 255, 255, 0.8)
-- --fred-7: rgba(255, 255, 255, 0.8)
-- --fred-8: rgba(255, 255, 255, 0.6)
-- --fred-9: rgba(255, 255, 255, 0.8)
-- --fred-10: rgba(255, 30, 0, 0.65)
-- --fred-11: rgba(0, 0, 0, 0.65)
-- --fred-12: #fff
-- --t5ek-scrollbar-thumb: #782e22
-- --t5ek-scrollbar-track: #0000
-- --fred-13: #ff6400
-- --fred-14: #222
-- --fred-15: #c9c7b8
-- --fred-16: #fff
-- --fred-17: #fff
-- --fred-18: #fff
-- --fred-19: #fff
-- --fred-20: #000
-
 ## And Also
 
 - [x] Remove the PC, NPC, and Vehicle Border PX options / localization from settings
