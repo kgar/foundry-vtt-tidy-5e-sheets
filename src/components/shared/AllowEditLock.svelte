@@ -51,7 +51,7 @@
     span {
       cursor: pointer;
       background: var(--t5ek-sheet-unlocked-icon-background);
-      color: rgba(255, 255, 255, 0.6);
+      color: var(--fred-2);
       border-radius: 0.1875rem;
 
       &.editing-enabled {
@@ -59,7 +59,7 @@
       }
 
       &:hover {
-        color: #fff;
+        color: var(--fred-12);
       }
 
       i {

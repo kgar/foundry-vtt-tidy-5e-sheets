@@ -34,7 +34,6 @@
     .encumbrance-bar {
       position: absolute;
       top: 0.0625rem;
-      --count-font: rgba(0, 0, 0, 0.9);
       left: 0.0625rem;
       bottom: 0.0625rem;
       max-width: calc(100% - 0.125rem);
@@ -50,7 +49,7 @@
       text-align: center;
       font-weight: 700;
       color: var(--t5ek-encumbrance-text-color);
-      text-shadow: 0 0 0.125rem #000;
+      text-shadow: 0 0 0.125rem var(--fred-20);
     }
 
     .encumbrance-breakpoint {

@@ -1344,10 +1344,6 @@ export function createSettings() {
         },
       },
 
-      // --t5e-equipped: 					rgba(50, 205, 50, 0.3);
-      // --t5e-equipped-outline: 			rgba(50, 205, 50, 1);
-      // --t5e-equipped-accent: 			rgba(173, 255, 47, 1);
-
       colorPickerEquipped: {
         options: {
           name: 'T5EK.Settings.ColorPickerEquipped.name',
@@ -1391,10 +1387,6 @@ export function createSettings() {
           );
         },
       },
-
-      // --t5e-prepared: 					rgba(50, 205, 50, 0.3);
-      // --t5e-prepared-outline: 			rgba(50, 205, 50, 1);
-      // --t5e-prepared-accent: 			rgba(173, 255, 47, 1);
 
       colorPickerPrepared: {
         options: {
@@ -1440,10 +1432,6 @@ export function createSettings() {
         },
       },
 
-      // --t5e-pact:					    rgba(250, 0, 180, 0.3);
-      // --t5e-pact-outline: 			    rgba(250, 50, 213, 1);
-      // --t5e-pact-accent: 				rgba(198, 119, 193, 1);
-
       colorPickerPact: {
         options: {
           name: 'T5EK.Settings.ColorPickerPact.name',
@@ -1485,10 +1473,6 @@ export function createSettings() {
           return FoundryAdapter.getGameSetting<string>('colorPickerPactAccent');
         },
       },
-
-      // --t5e-atwill: 					rgba(226, 246, 4, 0.3);
-      // --t5e-atwill-outline: 			rgba(163, 165, 50, 1);
-      // --t5e-atwill-accent: 		    rgba(255, 242, 0, 1);
 
       colorPickerAtWill: {
         options: {
@@ -1534,10 +1518,6 @@ export function createSettings() {
         },
       },
 
-      // --t5e-innate: 					rgba(255, 0, 0, 0.3);
-      // --t5e-innate-outline: 			rgba(231, 23, 23, 1);
-      // --t5e-innate-accent: 			rgba(195, 69, 69, 1);
-
       colorPickerInnate: {
         options: {
           name: 'T5EK.Settings.ColorPickerInnate.name',
@@ -1581,10 +1561,6 @@ export function createSettings() {
           );
         },
       },
-
-      // --t5e-alwaysprepared: 			rgba(0, 0, 255, 0.15);
-      // --t5e-alwaysprepared-outline: 	rgba(65, 105, 225, 1);
-      // --t5e-alwaysprepared-accent: 	rgba(0, 191, 255, 1);
 
       colorPickerAlwaysPrepared: {
         options: {

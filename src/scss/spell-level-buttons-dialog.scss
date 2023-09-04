@@ -25,8 +25,8 @@ form .form-group.spell-level-buttons {
         justify-content: center;
         width: 1.875rem;
         height: 1.875rem;
-        background: rgba(0, 0, 0, 0.05);
-        border: 0.125rem groove #c9c7b8;
+        background: var(--fred-5);
+        border: 0.125rem groove var(--fred-15);
         border-radius: 0.1875rem;
         font-size: 1rem;
         font-weight: 900;
@@ -60,7 +60,7 @@ form .form-group.spell-level-buttons {
         line-height: 1;
         border-radius: 50%;
         background: var(--t5ek-primary-accent-color);
-        color: rgba(255, 255, 255, 0.8);
+        color: var(--fred-6);
       }
     }
   }

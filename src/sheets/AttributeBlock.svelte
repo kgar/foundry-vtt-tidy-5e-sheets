@@ -129,7 +129,7 @@
 
       .ability-mod {
         background: var(--t5ek-ability-accent-background);
-        color: #fff; // TODO: Find appropriate color variable
+        color: var(--fred-17); // TODO: Find appropriate color variable
         border-radius: 0.3125rem 0 0 0.3125rem;
       }
     }
@@ -139,7 +139,7 @@
       top: 2.9375rem; // This is far too precise; can we make this more relative to its target?
       display: none;
       background: var(--t5ek-ability-modifiers-hover-label-background);
-      color: #fff; // TODO: Find appropriate color variable
+      color: var(--fred-16); // TODO: Find appropriate color variable
       font-size: 0.625rem;
       height: 1.0625rem; // This is far too precise; can we make this more relative to its target?
       padding: 0.1875rem 0.25rem 0.125rem 0.25rem; // this padding is providing the positioning of the text. Can we do this in flexbox?
@@ -174,14 +174,14 @@
 
     .ability-mod {
       background: var(--t5ek-ability-accent-background);
-      color: #fff; // TODO: Find appropriate color variable
+      color: var(--fred-18); // TODO: Find appropriate color variable
       border-radius: 0.3125rem 0 0 0.3125rem;
     }
 
     .ability-mod:hover,
     .ability-save:hover {
       background: var(--t5ek-primary-accent-color);
-      color: #fff; // TODO: Find appropriate color variable
+      color: var(--fred-19); // TODO: Find appropriate color variable
     }
 
     .proficiency-toggle {

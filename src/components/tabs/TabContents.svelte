@@ -21,7 +21,7 @@
     height: 100%;
     flex-direction: column;
     scrollbar-width: thin;
-    scrollbar-color: #782e22 #0000;
+    scrollbar-color: var(--t5ek-scrollbar-thumb) var(--t5ek-scrollbar-track);
     display: none;
 
     &.active {

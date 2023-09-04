@@ -272,7 +272,7 @@
     background: var(--t5ek-item-info-card-background);
     border-radius: 0.3125rem 0 0 0.3125rem;
     z-index: -10;
-    box-shadow: 0 0 0.3125rem rgba(0, 0, 0, 0.5);
+    box-shadow: 0 0 0.3125rem var(--fred-1);
     transition: width 0.2s ease;
     overflow: hidden;
 
