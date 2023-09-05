@@ -1,66 +1,84 @@
-form .form-group.spell-level-buttons {
-  justify-content: center;
-  flex-direction: column;
-  margin-bottom: 0.9375rem;
+.tidy5e-sheet-kgar.spell-level-dialog .window-content {
+  background: var(--t5ek-background);
+  color: var(--t5ek-primary-font-color);
 
-  label {
-    text-align: center;
+  label,
+  button {
+    color: var(--t5ek-primary-font-color);
   }
 
-  .form-fields {
-    margin: auto;
+  button {
+    box-shadow: none;
+    background: var(--t5ek-faint-color);
 
-    .spell-level-button-label {
-      padding: 0;
-      margin-right: 0.625rem;
-      position: relative;
+    &:hover {
+      background: var(--t5ek-faintest-color);
+    }
+  }
 
-      &:last-child {
-        margin-right: 0;
-      }
+  form .form-group.spell-level-buttons {
+    justify-content: center;
+    flex-direction: column;
+    margin-bottom: 0.9375rem;
 
-      .spell-level-button {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 1.875rem;
-        height: 1.875rem;
-        background: var(--t5ek-spell-level-button-background);
-        border: 0.125rem groove var(--t5ek-spell-level-button-border-color);
-        border-radius: 0.1875rem;
-        font-size: 1rem;
-        font-weight: 900;
-        user-select: none;
-      }
+    label {
+      text-align: center;
+    }
 
-      .spell-level-button:hover,
-      input[type='radio']:checked + .spell-level-button {
-        outline: none;
-        box-shadow: 0 0 0.3125rem var(--t5ek-innate-outline);
-      }
+    .form-fields {
+      margin: auto;
 
-      input {
-        display: none;
+      .spell-level-button-label {
+        padding: 0;
+        margin-right: 0.625rem;
+        position: relative;
 
-        &:checked + .spell-level-button {
-          box-shadow: 0 0 0.3125rem var(--t5ek-innate-outline);
+        &:last-child {
+          margin-right: 0;
         }
-      }
 
-      .available-slots {
-        position: absolute;
-        top: -0.25rem;
-        right: -0.25rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 0.9375rem;
-        height: 0.9375rem;
-        font-size: 0.6875rem;
-        line-height: 1;
-        border-radius: 50%;
-        background: var(--t5ek-primary-accent-color);
-        color: var(--t5ek-primary-font-color);
+        .spell-level-button {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 1.875rem;
+          height: 1.875rem;
+          background: var(--t5ek-faint-color);
+          border: 0.125rem groove var(--t5ek-spell-level-button-border-color);
+          border-radius: 0.1875rem;
+          font-size: 1rem;
+          font-weight: 900;
+          user-select: none;
+        }
+
+        .spell-level-button:hover,
+        input[type='radio']:checked + .spell-level-button {
+          background: var(--t5ek-faintest-color);
+        }
+
+        input {
+          display: none;
+
+          &:checked + .spell-level-button {
+            outline: 0.125rem solid var(--t5ek-primary-accent-color);
+          }
+        }
+
+        .available-slots {
+          position: absolute;
+          top: -0.25rem;
+          right: -0.25rem;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 0.9375rem;
+          height: 0.9375rem;
+          font-size: 0.6875rem;
+          line-height: 1;
+          border-radius: 50%;
+          background: var(--t5ek-primary-accent-color);
+          color: var(--spell-level-button-available-slots-text-color);
+        }
       }
     }
   }

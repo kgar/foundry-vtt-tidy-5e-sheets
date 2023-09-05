@@ -124,9 +124,8 @@ Add to front of tags
   - [ ] Can any repetition / redundancy be reasonably eliminated? Reduce duplication of colors in the themes, if possible. Allow specialized colors to reference other variables; think of how Kendo will create variables for specific things but will point them to more generic variables
   - [ ] Document the naming conventions in the readme
 - [x] // TODO: Decide on the layout and then clean up
-- [ ] Make sure spell level configuration dialog is dark-mode-enabled
-- [ ] Make sure spell level configuration dialog is light-mode-enabled
-- [ ] Extract inline styles on context menu script / replace with appropriate classes
+- [x] Make sure spell level configuration dialog is dark-mode-enabled
+- [x] Make sure spell level configuration dialog is light-mode-enabled
 - [x] Get Freeze Key working for floating item card while popped out
 
 

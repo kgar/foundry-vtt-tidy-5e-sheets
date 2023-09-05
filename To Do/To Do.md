@@ -12,7 +12,6 @@
 - [ ] Implement All Settings
 - [ ] Tackle Misc To Do's
   - [ ] Drag and drop
-  - [ ] New context menu? Custom global context menu that leverages a global store
   - [ ] Revisit character sheet now that we've got all this experience
   - [ ] Typescriptify Tidy 5e flags
   - [ ] FoundryAdapter cleanup project and types purge
@@ -22,6 +21,10 @@
 - [ ] Tab selection and ordering 
   - validation: at least one is required
   - when determining selected tab ID when the indicated one in settings is not available, pick first from ordered list
+- [ ] New context menu? Custom global context menu that leverages a global store
+  - Current context menu uses inline styles and gets picked up unintentionally by original Tidy 5e's context menu handling.
+  - Should work with popout!
+  - ... etc.
 - [ ] Re-integrate Actions Tab or make native
 
 ### Foundry Adapter Cleanup

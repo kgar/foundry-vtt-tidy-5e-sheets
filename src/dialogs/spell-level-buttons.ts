@@ -1,3 +1,4 @@
+import { CONSTANTS } from 'src/constants';
 import { SettingsProvider } from 'src/settings/settings';
 import { warn } from 'src/utils/logging';
 
@@ -21,6 +22,9 @@ export function useTidy5eSpellLevelButtons(app: any, html: any, options: any) {
   if (!dropdown) {
     return;
   }
+
+  html.get(0).classList.add(CONSTANTS.MODULE_ID);
+  html.get(0).classList.add('spell-level-dialog');
 
   const selectedLevel = dropdown.val();
 

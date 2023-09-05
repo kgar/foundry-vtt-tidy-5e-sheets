@@ -59,6 +59,10 @@ export const themeVariables = {
     type: 'todo',
     group: 'todo',
   },
+  '--spell-level-button-available-slots-text-color': {
+    type: 'todo',
+    group: 'todo',
+  },
   '--t5ek-white': {
     type: 'todo',
     group: 'todo',
@@ -436,10 +440,6 @@ export const themeVariables = {
     group: 'todo',
   },
   '--t5ek-settings-dialog-box-shadow-color': {
-    type: 'todo',
-    group: 'todo',
-  },
-  '--t5ek-spell-level-button-background': {
     type: 'todo',
     group: 'todo',
   },
