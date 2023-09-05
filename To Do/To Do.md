@@ -8,6 +8,7 @@
   - [x] Share a standard header based on the draft from VehicleSheetLimited
 - [x] Item Card
 - [x] Dark Mode
+- [x] account for dnd5e 2.3.0-2.3.1 differences
 - [ ] Settings Dialog Overhaul
 - [ ] Implement All Settings
 - [ ] Tackle Misc To Do's
