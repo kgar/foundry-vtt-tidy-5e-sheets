@@ -7,7 +7,7 @@
     ItemChatData,
   } from 'src/types/item';
   import type { ItemCardStore } from 'src/types/types';
-  import { getContext, onMount } from 'svelte';
+  import { getContext, onDestroy, onMount } from 'svelte';
   import type { Writable } from 'svelte/store';
   import DefaultItemCardContentTemplate from './DefaultItemCardContentTemplate.svelte';
   import HorizontalLineSeparator from '../layout/HorizontalLineSeparator.svelte';
@@ -80,6 +80,24 @@
 
   // Show/Hide
   let open = false;
+  $: {
+    const body = itemCardNode?.ownerDocument?.body;
+    if (body && open) {
+      listenForBodyEvents(body);
+    } else if (body && !open) {
+      stopListeningForBodyEvents(body);
+    }
+  }
+  function listenForBodyEvents(body: HTMLElement) {
+    body.addEventListener('keydown', detectFreezeStart);
+    body.addEventListener('keyup', detectFreezeStop);
+    body.addEventListener('mousemove', onMouseMove);
+  }
+  function stopListeningForBodyEvents(body: HTMLElement) {
+    body.addEventListener('keydown', detectFreezeStart);
+    body.addEventListener('keyup', detectFreezeStop);
+    body.addEventListener('mousemove', onMouseMove);
+  }
   let debug = false;
   let timer: any;
   const defaultContentTemplate: ItemCardContentComponent =
@@ -168,19 +186,15 @@
     }
   });
 
+  onDestroy(() => {
+    const body = itemCardNode.ownerDocument.body;
+    body && stopListeningForBodyEvents(body);
+  });
+
   function getRootFontSizePx(): number {
     return document.documentElement.style.fontSize !== ''
       ? parseFloat(document.documentElement.style.fontSize)
       : parseFloat(getComputedStyle(document.documentElement).fontSize);
-  }
-
-  function getAllProperties(
-    item: Item5e | undefined,
-    chatProps: string[] | undefined
-  ) {
-    chatProps ??= [];
-
-    return [...getSpecialProperties(item), ...chatProps];
   }
 
   function getSpecialProperties(item: Item5e | undefined): string[] {
@@ -205,13 +219,6 @@
 
   const localize = FoundryAdapter.localize;
 </script>
-
-<svelte:window
-  on:keydown={detectFreezeStart}
-  on:keyup={detectFreezeStop}
-  on:mousemove={onMouseMove}
-  on:blur={() => (frozen = false)}
-/>
 
 <section
   bind:this={itemCardNode}
