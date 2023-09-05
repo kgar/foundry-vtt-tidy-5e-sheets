@@ -58,6 +58,15 @@
     });
   }
 
+  function handleDragStart(event: DragEvent) {
+    if (!item) {
+      return;
+    }
+
+    const dragData = item.toDragData();
+    event.dataTransfer.setData('text/plain', JSON.stringify(dragData));
+  }
+
   const dispatcher = createEventDispatcher<{ mousedown: MouseEvent }>();
 </script>
 
@@ -71,6 +80,9 @@
   on:mouseleave={onMouseLeave}
   role="row"
   tabindex="0"
+  draggable={!!item}
+  on:dragstart={handleDragStart}
+  data-item-id={item?.id}
 >
   <slot {toggleSummary} />
   {#if showSummary}
@@ -117,7 +129,8 @@
     }
 
     &.magic-item {
-      box-shadow: 0 0 0 0.0625rem var(--t5ek-faint-magic-item-list-row-accent-color) inset;
+      box-shadow: 0 0 0 0.0625rem
+        var(--t5ek-faint-magic-item-list-row-accent-color) inset;
     }
 
     &.show-item-count-on-hover :global(.item-quantity) {
