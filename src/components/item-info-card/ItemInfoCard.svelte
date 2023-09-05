@@ -235,6 +235,7 @@
                   <span class="tag">{prop}</span>
                 {/each}
               </div>
+              <HorizontalLineSeparator cssClass="prop-separator" />
             {/if}
             {#if itemProps.length}
               <div class="item-properties">

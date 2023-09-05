@@ -127,6 +127,8 @@ Add to front of tags
 - [ ] Make sure spell level configuration dialog is dark-mode-enabled
 - [ ] Make sure spell level configuration dialog is light-mode-enabled
 - [ ] Extract inline styles on context menu script / replace with appropriate classes
+- [ ] Get Freeze Key working for floating item card while popped out
+
 
 ## And Also
 

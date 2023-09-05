@@ -1,22 +1,24 @@
+
+
 Progress:
-:white_check_mark: Character Sheet (and laying the foundation)
-:white_check_mark: All Item Sheets (11 sheets? this list would look more impressive if this were expanded out, but I'd rather go to bed, hahaha) 
-:white_check_mark: Updating for dnd5e 2.3.0
-:white_check_mark: NPC Sheet
-:white_check_mark: Limited NPC sheet
-:white_check_mark: Vehicles
-:white_check_mark: Limited Character sheet
-:white_check_mark: Limited Vehicle sheet
-:orange_square: Item Info Card
-:white_large_square: Dark Mode
-:white_large_square: account for dnd5e 2.3.0-2.3.1 differences
-:white_large_square: Settings Dialog Overhaul
-:white_large_square: Implement All Settings
-:white_large_square: Miscellaneous To-Do's which have piled up during this rewrite
-:white_large_square: Making the repo public and allowing for alpha testing
-:white_large_square: API and module compatibility updates
-:white_large_square: Automated testing
-:white_large_square: Reviewing, reorganizing, streamlining, simplifying; by this point, I will have a full picture of what the svelte-powered version of this module looks like, and I'll want to make the kinds of changes that will help me keep making changes in the future
-:white_large_square: Review and task out feature upgrade requests
-:white_large_square: Review and revise English localization
-:white_large_square: Start discussing whether this rewrite will become the new Tidy 5e sheet
+✅ Character Sheet (and laying the foundation)
+✅ All Item Sheets (11 sheets? this list would look more impressive if this were expanded out, but I'd rather go to bed, hahaha) 
+✅ Updating for dnd5e 2.3.0
+✅ NPC Sheet
+✅ Limited NPC sheet
+✅ Vehicles
+✅ Limited Character sheet
+✅ Limited Vehicle sheet
+✅ Item Info Card
+🟧 Dark Mode
+⬜ account for dnd5e 2.3.0-2.3.1 differences
+⬜ Settings Dialog Overhaul
+⬜ Implement All Settings
+⬜ Miscellaneous To-Do's which have piled up during this rewrite
+⬜ Making the repo public and allowing for alpha testing
+⬜ API and module compatibility updates
+⬜ Automated testing
+⬜ Reviewing, reorganizing, streamlining, simplifying; by this point, I will have a full picture of what the svelte-powered version of this module looks like, and I'll want to make the kinds of changes that will help me keep making changes in the future
+⬜ Review and task out feature upgrade requests
+⬜ Review and revise English localization
+⬜ Start discussing whether this rewrite will become the new Tidy 5e sheet
