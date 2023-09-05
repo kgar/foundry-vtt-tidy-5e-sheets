@@ -29,6 +29,7 @@
   import HorizontalLineSeparator from 'src/components/layout/HorizontalLineSeparator.svelte';
   import TextInput from 'src/components/form/TextInput.svelte';
   import ItemInfoCard from 'src/components/item-info-card/ItemInfoCard.svelte';
+  import SheetSettingsButton from '../actor/SheetSettingsButton.svelte';
 
   export let debug: any = 'Put any debug information here, if ya need it.';
   export let selectedTabId: string;
@@ -160,7 +161,7 @@
         />
       </div>
 
-      <div class="flex-row small-gap align-items-right">
+      <div class="flex-row extra-small-gap align-items-right">
         {#if !game.settings.get('dnd5e', 'disableExperienceTracking')}
           <!-- XP / XP To Next Level -->
           <div class="xp-tracker">
@@ -207,6 +208,7 @@
           {localize('DND5E.AbbreviationLevel')}
           {$store.system.details.level}
         </h2>
+        <SheetSettingsButton />
       </div>
     </div>
 
@@ -360,6 +362,7 @@
       font-size: 1.25rem;
       line-height: 1;
       height: 1.5rem;
+      white-space: nowrap;
     }
 
     .class-list {
