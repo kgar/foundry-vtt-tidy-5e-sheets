@@ -11,14 +11,14 @@
 - [x] account for dnd5e 2.3.0-2.3.1 differences
 - [ ] Settings Dialog Overhaul
 - [ ] Implement All Settings
-- [ ] Tackle Misc To Do's
-  - [ ] Drag and drop
-  - [ ] Revisit character sheet now that we've got all this experience
-  - [ ] Typescriptify Tidy 5e flags
-  - [ ] FoundryAdapter cleanup project and types purge
-  - [ ] HTML enrichment
-  - [ ] getData() / Context curation : pull back all calculations from the various components into the context when getting context data in the sheet. If necessary, pull further back into Foundry Adapter for each sheet type. If using Zod, validate the final Character context, NPC context, Vehicle context, Item Sheet context
-  - [ ] etc.
+- [ ] Exhaustion management? Can it be configured for a custom number of levels with custom descriptions? Are any hooks needed, or does 5e handle that already?
+- [ ] Drag and drop
+- [ ] Revisit character sheet now that we've got all this experience
+- [ ] Typescriptify Tidy 5e flags (use the settings approach with a const object that satisfies a type definition)
+- [ ] FoundryAdapter cleanup project and types purge
+- [ ] HTML enrichment
+- [ ] getData() / Context curation : pull back all calculations from the various components into the context when getting context data in the sheet. If necessary, pull further back into Foundry Adapter for each sheet type. If using Zod, validate the final Character context, NPC context, Vehicle context, Item Sheet context
+- [ ] etc.
 - [ ] Tab selection and ordering 
   - validation: at least one is required
   - when determining selected tab ID when the indicated one in settings is not available, pick first from ordered list
@@ -541,6 +541,15 @@ But it also adds a lot of noise to the sheet, and I do not want to add them to a
 But maybe we could have a optional collapsed by default category for   "general actions/features" that just shows whatever is in a compendium you set?
 
 Open to other ideas how to implement this 
+
+---
+
+https://discord.com/channels/732325252788387980/1116078321067892796/1149058125886926959
+
+Fallayn — Today at 2:06 PM
+Having a way to manipulate the exhaustion counter easily (and extend it to 10) would be nice for modules/world scripts modifying exhaustion
+Like an API to set/get the current level of exhaustion
+(I haven't checked whether current Tidy5E has that exposed)
 
 ### Zanderaf - More Bars, bars for resources and features, etc.
 

@@ -9,6 +9,57 @@ import { defaultLightTheme } from 'src/theme/default-light-theme';
 import { defaultDarkTheme } from 'src/theme/default-dark-theme';
 import { getCoreThemes } from 'src/theme/theme-reference';
 
+export type Tidy5eSettings = {
+  [settingKey: string]: Tidy5eSetting;
+};
+
+export type Tidy5eSetting = {
+  options: {
+    /**
+     * The human-readable name
+     */
+    name: string;
+    /**
+     * An additional human readable hint
+     */
+    hint?: string;
+    /**
+     * The scope the Setting is stored in, either World or Client
+     */
+    scope: 'world' | 'client';
+    /**
+     * Indicates if this Setting should render in the Config application
+     */
+    config: boolean;
+    /**
+     * The JS Type that the Setting is storing
+     */
+    type: any;
+    /**
+     * For string Types, defines the allowable values
+     */
+    choices?: any;
+    /**
+     * For numeric Types, defines the allowable range
+     */
+    range?: {
+      min: number;
+      max: number;
+      step: number;
+    };
+    /**
+     * The default value
+     */
+    default: any;
+    /**
+     * Executes when the value of this Setting changes
+     * @param data the new value
+     */
+    onChange?: (data: any) => void;
+  };
+  get: () => any;
+};
+
 export function createSettings() {
   return {
     menus: {
@@ -1658,7 +1709,7 @@ export function createSettings() {
           return FoundryAdapter.getGameSetting<boolean>('debug');
         },
       },
-    },
+    } satisfies Tidy5eSettings,
   } as const;
 }
 
