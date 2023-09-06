@@ -378,6 +378,7 @@ Evaluate module integration and think about better (API-centric) ways to support
   - [ ] As part of this research, explore the prospect of building my own context type by taking the existing one from 5e's sheet and funneling it through zod validation so that the fields I expect to have are indeed there
   - [ ] https://www.totaltypescript.com/tutorials/zod
   - [ ] https://www.youtube.com/watch?v=rY_XqfSHock&ab_channel=JackHerrington
+- [ ] Szefo09 — Just adding my 2 cents about QoL Improvements - Currently, actors that have 0 HP have the death overlay on their artwork, which disables previewing/changing their token/actor image. Also, exhaustion counter is not displayed in that state. https://discord.com/channels/732325252788387980/1116078321067892796/1148997425428705310
 
 ## (Deferred for later; might solve itself) SCSS Revolution
 

@@ -7,6 +7,7 @@
   export let tabs: Tab[];
   export let selectedTabId: string | undefined = undefined;
   export let cssClass: string = '';
+  export let orientation: 'horizontal' | 'vertical' = 'horizontal';
 
   const dispatcher = createEventDispatcher<{ tabSelected: Tab }>();
 
@@ -18,7 +19,7 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-<nav class="tabs {cssClass}">
+<nav class="tabs {cssClass}" class:vertical={orientation === 'vertical'}>
   {#if tabs.length > 1}
     {#each tabs as tab, i (tab.id)}
       <a
@@ -44,18 +45,13 @@
     flex-wrap: wrap;
 
     .tab-option {
-      padding: 0.3125rem 0.5rem 0 0.5rem;
       background: var(--t5ek-header-background);
       border: 0.0625rem solid transparent;
       border-bottom: 0.0625rem solid var(--t5ek-header-border-color);
       font-size: 0.8125rem;
       text-align: left;
-      height: 1.625rem;
-      flex: 1 1 auto;
 
-      &:first-child {
-        padding-left: 1rem;
-      }
+      flex: 1 1 auto;
 
       &:hover {
         color: var(--t5ek-primary-accent-color);
@@ -73,14 +69,54 @@
           color: inherit;
         }
       }
+
+      text-shadow: none;
     }
 
-    .tab-option.first-tab.active {
-      border-left-color: transparent;
+    &:not(.vertical) {
+      .tab-option {
+        height: 1.625rem;
+        padding: 0.3125rem 0.5rem 0 0.5rem;
+
+        &.first-tab.active {
+          border-left-color: transparent;
+        }
+
+        &.no-border-on-last-tab.active {
+          border-right-color: transparent;
+        }
+
+        &:first-child {
+          padding-left: 1rem;
+        }
+      }
     }
 
-    .tab-option.no-border-on-last-tab.active {
-      border-right-color: transparent;
+    &.vertical {
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: stretch;
+
+      > * {
+        flex: 0;
+        padding: 0.5rem;
+      }
+
+      .tab-option {
+        border: 0.0625rem solid transparent;
+        border-right: 0.0625rem solid var(--t5ek-header-border-color);
+        transition: border-left-width 0.125s;
+
+        &.first-tab.active {
+          border-top-color: transparent;
+        }
+
+        &.active {
+          border: 0.0625rem solid var(--t5ek-light-color);
+          border-right-color: transparent;
+          border-left-width: 0.25rem;
+        }
+      }
     }
   }
 </style>
