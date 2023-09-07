@@ -95,4 +95,8 @@
     flex: 1;
     background-color: var(--t5ek-header-background);
   }
+
+  .sheet-body {
+    flex-grow: 1;
+  }
 </style>

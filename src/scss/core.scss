@@ -16,7 +16,8 @@
 @import './spell-level-buttons-dialog';
 
 .tidy5e-kgar {
-  &.sheet form {
+  &.sheet form,
+  &.settings .window-content {
     color: var(--t5ek-primary-font-color);
     background: var(--t5ek-sheet-background);
   }
