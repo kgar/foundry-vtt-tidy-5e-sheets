@@ -13,6 +13,8 @@ export type Tidy5eSettings = {
   [settingKey: string]: Tidy5eSetting;
 };
 
+export type Tidy5eSettingKeys = keyof (typeof SettingsProvider)['settings'];
+
 export type Tidy5eSetting = {
   options: {
     /**

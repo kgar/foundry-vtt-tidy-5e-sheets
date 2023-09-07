@@ -16,10 +16,18 @@
 @import './spell-level-buttons-dialog';
 
 .tidy5e-kgar {
-  &.sheet form,
-  &.settings .window-content {
+  &.sheet form {
     color: var(--t5ek-primary-font-color);
     background: var(--t5ek-sheet-background);
+  }
+
+  &.settings .window-content {
+    padding: 0;
+
+    > * {
+      color: var(--t5ek-primary-font-color);
+      background: var(--t5ek-sheet-background);
+    }
   }
 
   select option {
