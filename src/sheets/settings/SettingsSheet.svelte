@@ -11,14 +11,15 @@
   import LockSettingsTab from './LockSettingsTab.svelte';
   import InfoTab from './InfoTab.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { getCurrentSettings } from 'src/settings/settings';
-  import { setContext } from 'svelte';
-  import { writable } from 'svelte/store';
+  import { getContext, setContext } from 'svelte';
+  import type {
+    SettingsSheetFunctions,
+    SettingsSheetStore,
+  } from './Tidy5eKgarSettingsSheet';
 
   export let selectedTabId: string;
-
-  let store = writable(getCurrentSettings());
-
+  let store = getContext<SettingsSheetStore>('store');
+  let functions = getContext<SettingsSheetFunctions>('functions');
   setContext('store', store);
 
   let tabs: Tab[] = [];
@@ -98,6 +99,28 @@
 
   selectedTabId ??= tabs[0].id;
 
+  let applyingChanges = false;
+
+  async function save() {
+    applyingChanges = true;
+
+    try {
+      await functions.save($store);
+    } finally {
+      applyingChanges = false;
+    }
+  }
+
+  async function apply() {
+    applyingChanges = true;
+
+    try {
+      await functions.apply($store);
+    } finally {
+      applyingChanges = false;
+    }
+  }
+
   const localize = FoundryAdapter.localize;
 </script>
 
@@ -111,11 +134,23 @@
   </section>
 
   <div class="button-bar">
-    <button type="button" name="save" class="save-changes-btn">
+    <button
+      type="button"
+      name="save"
+      class="save-changes-btn"
+      on:click={save}
+      disabled={applyingChanges}
+    >
       <i class="fas fa-save" />
       {localize('T5EK.SaveChanges')}
     </button>
-    <button type="button" name="apply" class="apply-changes-btn">
+    <button
+      type="button"
+      name="apply"
+      class="apply-changes-btn"
+      on:click={apply}
+      disabled={applyingChanges}
+    >
       <i class="fas fa-check" />
       {localize('T5EK.ApplyChanges')}
     </button>
