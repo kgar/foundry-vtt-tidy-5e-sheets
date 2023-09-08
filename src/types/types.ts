@@ -156,3 +156,9 @@ export type SheetStats = {
 };
 
 export type CargoOrCrewItem = { name: string; quantity: number };
+
+export type GetFunctionReturnType<T> = T extends {
+  get: () => infer V;
+}
+  ? V
+  : never;

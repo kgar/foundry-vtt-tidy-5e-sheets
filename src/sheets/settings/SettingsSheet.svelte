@@ -11,26 +11,13 @@
   import LockSettingsTab from './LockSettingsTab.svelte';
   import InfoTab from './InfoTab.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import {
-    SettingsProvider,
-    type Tidy5eSettingKeys,
-    type Tidy5eSettings,
-  } from 'src/settings/settings';
+  import { getCurrentSettings } from 'src/settings/settings';
   import { setContext } from 'svelte';
   import { writable } from 'svelte/store';
 
   export let selectedTabId: string;
 
-  const keys = Object.keys(
-    SettingsProvider.settings
-  ) as (keyof (typeof SettingsProvider)['settings'])[];
-
-  let settingToValue = keys.reduce<Record<string, any>>((obj, key) => {
-    obj[key] = SettingsProvider.settings[key].get();
-    return obj;
-  }, {}) as Record<Tidy5eSettingKeys, any>;
-
-  let store = writable(settingToValue);
+  let store = writable(getCurrentSettings());
 
   setContext('store', store);
 
@@ -110,33 +97,69 @@
   });
 
   selectedTabId ??= tabs[0].id;
+
+  const localize = FoundryAdapter.localize;
 </script>
 
-<div class="full-height flex-row extra-small-gap">
-  <div class="vertical-tab-container flex-column no-gap">
+<div class="settings-form">
+  <div role="presentation" class="vertical-tab-container flex-column no-gap">
     <Tabs {tabs} bind:selectedTabId orientation="vertical" />
-    <div class="remaining-vertical-space" />
+    <div role="presentation" class="remaining-vertical-space" />
   </div>
-
   <section class="sheet-body">
     <TabContents {tabs} {selectedTabId} />
   </section>
 
-  <button on:click={() => console.log($store.playerSheetWidth)}>Check it out</button>
+  <div class="button-bar">
+    <button type="button" name="save" class="save-changes-btn">
+      <i class="fas fa-save" />
+      {localize('T5EK.SaveChanges')}
+    </button>
+    <button type="button" name="apply" class="apply-changes-btn">
+      <i class="fas fa-check" />
+      {localize('T5EK.ApplyChanges')}
+    </button>
+  </div>
 </div>
 
 <style lang="scss">
-  .vertical-tab-container {
-    width: 15rem;
+  .settings-form {
+    height: 100%;
+    display: grid;
+    grid-template-areas:
+      'nav    body'
+      'nav    buttons';
+    grid-template-rows: 1fr auto;
+    grid-template-columns: 15rem 1fr;
+    gap: 0.5rem;
+
+    .vertical-tab-container {
+      grid-area: nav;
+    }
+
+    .sheet-body {
+      grid-area: body;
+      overflow-y: scroll;
+      padding-top: 0.5rem;
+      padding-right: 1rem;
+      flex: 1;
+    }
+
+    .button-bar {
+      grid-area: buttons;
+    }
+  }
+
+  .button-bar {
+    flex: 0;
+    display: flex;
+    padding-right: 1.5rem;
+    padding-bottom: 0.25rem;
   }
 
   .remaining-vertical-space {
-    border-right: 1px solid var(--t5ek-light-color);
+    border-right: 0.0625rem solid var(--t5ek-light-color);
     flex: 1;
     background-color: var(--t5ek-header-background);
-  }
-
-  .sheet-body {
-    flex-grow: 1;
   }
 </style>

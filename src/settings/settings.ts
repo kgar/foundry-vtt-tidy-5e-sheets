@@ -3,7 +3,7 @@ import { FoundryAdapter } from '../foundry/foundry-adapter';
 import { Tidy5eKgarUserSettings } from './user-settings-form';
 import { RGBAToHexAFromColor } from '../utils/tidy5e-color-picker';
 import { ResetSettingsDialog } from './ResetSettingsDialog';
-import type { RoundedPortaitStyleOptions } from 'src/types/types';
+import type { GetFunctionReturnType, RoundedPortaitStyleOptions } from 'src/types/types';
 import { applyTheme } from 'src/theme/theme';
 import { defaultLightTheme } from 'src/theme/default-light-theme';
 import { defaultDarkTheme } from 'src/theme/default-dark-theme';
@@ -14,6 +14,26 @@ export type Tidy5eSettings = {
 };
 
 export type Tidy5eSettingKeys = keyof (typeof SettingsProvider)['settings'];
+
+/**
+ * A simple object-to-value mapping of all settings at a given point in time.
+ */
+export type CurrentSettings = {
+  [K in Tidy5eSettingKeys]: GetFunctionReturnType<
+    (typeof SettingsProvider.settings)[K]
+  >;
+};
+
+export function getCurrentSettings(): CurrentSettings {
+  const keys = Object.keys(
+    SettingsProvider.settings
+  ) as (keyof (typeof SettingsProvider)['settings'])[];
+
+  return keys.reduce<Record<string, any>>((obj, key) => {
+    obj[key] = SettingsProvider.settings[key].get();
+    return obj;
+  }, {}) as CurrentSettings;
+}
 
 export type Tidy5eSetting = {
   options: {
