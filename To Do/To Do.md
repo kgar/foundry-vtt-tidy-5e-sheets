@@ -379,6 +379,11 @@ Evaluate module integration and think about better (API-centric) ways to support
   - [ ] https://www.totaltypescript.com/tutorials/zod
   - [ ] https://www.youtube.com/watch?v=rY_XqfSHock&ab_channel=JackHerrington
 - [ ] Szefo09 — Just adding my 2 cents about QoL Improvements - Currently, actors that have 0 HP have the death overlay on their artwork, which disables previewing/changing their token/actor image. Also, exhaustion counter is not displayed in that state. https://discord.com/channels/732325252788387980/1116078321067892796/1148997425428705310
+- [ ] Gambet - https://discord.com/channels/732325252788387980/1116078321067892796/1149939031937925150 - Is it is EXTREMELY EASY for players to accidentally give themselves Proficiency/Expertise in skills by clicking on the checkmark/circle instead of the word, and they don't realize they do it. I have a player who just clicks his mouse as a nervous habit and almost every session he winds up giving himself expertise in one or more skills unintentionally. Right now Tidy5e lets you lock a character sheet down which does prevent that, but it also gets rid of the check marks so there's no super clear way of knowing if you have Proficiency or Expertise or nothing in a skill unless you're gonna do math.
+  - I would expect the icon to always be present, with a helpful tooltip, even when locked
+  - What if there were three options: Unlocked, Locked, Confirm with Dialog
+- [ ] Gambet - https://discord.com/channels/732325252788387980/1116078321067892796/1149940337570217994 - Only other thing and this might be personal preference, but I can't tell you how many times I ask for an Intelligence check and my players accidentally roll Initiative instead. I don't know if there's any way to make it clearer. Maybe making the line between Ini and Str a bit thicker or something.
+- [ ] 
 
 ## (Deferred for later; might solve itself) SCSS Revolution
 
