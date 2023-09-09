@@ -13,6 +13,7 @@ import { Tidy5eCharacterSheet } from '../character/Tidy5eCharacterSheet';
 import { Tidy5eKgarItemSheet } from '../item/Tidy5eKgarItemSheet';
 import { Tidy5eNpcSheet } from '../npc/Tidy5eNpcSheet';
 import { Tidy5eVehicleSheet } from '../vehicle/Tidy5eKgarVehicleSheet';
+import { CONSTANTS } from 'src/constants';
 
 export type SettingsSheetFunctions = {
   save(settings: CurrentSettings): Promise<unknown>;
@@ -24,8 +25,11 @@ export type SettingsSheetStore = Writable<CurrentSettings>;
 declare var Application: any;
 
 export class Tidy5eKgarSettingsSheet extends Application {
-  constructor(...args: any[]) {
+  initialTabId: string;
+
+  constructor(initialTabId: string, ...args: any[]) {
     super(...args);
+    this.initialTabId = initialTabId ?? CONSTANTS.TAB_SETTINGS_PLAYERS;
   }
 
   static get defaultOptions() {
@@ -53,7 +57,7 @@ export class Tidy5eKgarSettingsSheet extends Application {
     this.component = new SettingsSheet({
       target: node,
       props: {
-        selectedTabId: 'player',
+        selectedTabId: this.initialTabId,
       },
       context: new Map<any, any>([
         ['store', writable(getCurrentSettings()) satisfies SettingsSheetStore],
