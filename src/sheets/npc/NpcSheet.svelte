@@ -28,6 +28,7 @@
   import { SettingsProvider } from 'src/settings/settings';
   import ActorJournalTab from 'src/components/player-character/ActorJournalTab.svelte';
   import ItemInfoCard from 'src/components/item-info-card/ItemInfoCard.svelte';
+  import SheetSettingsButton from '../actor/SheetSettingsButton.svelte';
 
   export let selectedTabId: string;
 
@@ -163,6 +164,7 @@
               selectOnFocus={true}
             />
           </div>
+          <SheetSettingsButton initialTabId={CONSTANTS.TAB_SETTINGS_NPCS} />
         </div>
       </div>
       <HorizontalLineSeparator borderColor="light" />
@@ -333,7 +335,8 @@
   .level-information {
     display: flex;
     flex-direction: row;
-    align-items: center;
+    gap: 0.25rem;
+    align-items: stretch;
     font-family: var(--t5ek-title-font-family);
     font-weight: 700;
 
@@ -341,6 +344,8 @@
       font-size: 1rem;
       margin-right: 0.25rem;
       color: var(--t5ek-secondary-color);
+      white-space: nowrap;
+      align-self: center;
     }
     .level {
       padding: 0.25rem 0.375rem;
@@ -350,6 +355,7 @@
       font-size: 1.25rem;
       line-height: 1;
       height: 1.5rem;
+      white-space: nowrap;
 
       :global(span) {
         display: inline-block;

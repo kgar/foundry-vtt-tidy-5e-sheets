@@ -28,6 +28,7 @@
   import AttributeBlock from '../AttributeBlock.svelte';
   import ItemInfoCard from 'src/components/item-info-card/ItemInfoCard.svelte';
   import { SettingsProvider } from 'src/settings/settings';
+  import SheetSettingsButton from '../actor/SheetSettingsButton.svelte';
 
   export let selectedTabId: string;
 
@@ -116,6 +117,7 @@
           dataMaxLength={40}
         />
       </div>
+      <SheetSettingsButton initialTabId={CONSTANTS.TAB_SETTINGS_VEHICLES} />
     </div>
     <HorizontalLineSeparator borderColor="light" />
     <div class="origin-summary">

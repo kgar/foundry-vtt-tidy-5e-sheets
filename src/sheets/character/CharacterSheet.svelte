@@ -161,7 +161,7 @@
         />
       </div>
 
-      <div class="flex-row extra-small-gap align-items-right">
+      <div class="flex-row extra-small-gap align-items-stretch">
         {#if !game.settings.get('dnd5e', 'disableExperienceTracking')}
           <!-- XP / XP To Next Level -->
           <div class="xp-tracker">
@@ -208,7 +208,7 @@
           {localize('DND5E.AbbreviationLevel')}
           {$store.system.details.level}
         </h2>
-        <SheetSettingsButton />
+        <SheetSettingsButton initialTabId={CONSTANTS.TAB_SETTINGS_PLAYERS} />
       </div>
     </div>
 

@@ -16,6 +16,7 @@
     SettingsSheetFunctions,
     SettingsSheetStore,
   } from './Tidy5eKgarSettingsSheet';
+  import { CONSTANTS } from 'src/constants';
 
   export let selectedTabId: string;
   let store = getContext<SettingsSheetStore>('store');
@@ -26,27 +27,24 @@
 
   tabs = [
     {
-      id: 'players',
+      id: CONSTANTS.TAB_SETTINGS_PLAYERS,
       displayName: 'T5EK.Settings.TabPlayers.tabLabel',
       content: {
         component: PlayerSettingsTab,
-        props: { name: 'buddy' },
       },
     },
     {
-      id: 'npcs',
+      id: CONSTANTS.TAB_SETTINGS_NPCS,
       displayName: 'T5EK.Settings.NPCs.tabLabel',
       content: {
         component: NpcSettingsTab,
-        props: { name: 'ol pal' },
       },
     },
     {
-      id: 'vehicles',
+      id: CONSTANTS.TAB_SETTINGS_VEHICLES,
       displayName: 'T5EK.Settings.Vehicles.tabLabel',
       content: {
         component: VehicleSettingsTab,
-        props: { name: 'friend' },
       },
     },
   ];
@@ -54,42 +52,38 @@
   if (FoundryAdapter.userIsGm()) {
     tabs.push(
       {
-        id: 'gm',
+        id: CONSTANTS.TAB_SETTINGS_GM,
         displayName: 'T5EK.Settings.TabGM.tabLabel',
         content: {
           component: GmOptionsSettingsTab,
-          props: { name: 'buddy' },
         },
       },
       {
-        id: 'modules',
+        id: CONSTANTS.TAB_SETTINGS_MODULES,
         displayName: 'T5EK.Settings.TabModules.tabLabel',
         content: {
           component: ModuleSettingsTab,
-          props: { name: 'buddy' },
         },
       },
       {
-        id: 'homebrew',
+        id: CONSTANTS.TAB_SETTINGS_HOMEBREW,
         displayName: 'T5EK.Settings.TabHomebrewRules.tabLabel',
         content: {
           component: HomebrewSettingsTab,
-          props: { name: 'buddy' },
         },
       },
       {
-        id: 'locks',
+        id: CONSTANTS.TAB_SETTINGS_LOCKS,
         displayName: 'T5EK.Settings.TabLocks.tabLabel',
         content: {
           component: LockSettingsTab,
-          props: { name: 'buddy' },
         },
       }
     );
   }
 
   tabs.push({
-    id: 'info',
+    id: CONSTANTS.TAB_SETTINGS_INFO,
     displayName: 'T5EK.Settings.TabInfo.tabLabel',
     content: {
       component: InfoTab,
