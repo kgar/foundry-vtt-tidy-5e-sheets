@@ -70,4 +70,12 @@ export const CONSTANTS = {
   TAB_VEHICLE_CARGO_AND_CREW: 'cargo',
   TAB_VEHICLE_EFFECTS: 'effects',
   TAB_VEHICLE_DESCRIPTION: 'biography',
+  TAB_SETTINGS_PLAYERS: 'players',
+  TAB_SETTINGS_NPCS: 'npcs',
+  TAB_SETTINGS_VEHICLES: 'vehicles',
+  TAB_SETTINGS_GM: 'gm',
+  TAB_SETTINGS_MODULES: 'modules',
+  TAB_SETTINGS_HOMEBREW: 'homebrew',
+  TAB_SETTINGS_LOCKS: 'locks',
+  TAB_SETTINGS_INFO: 'info',
 } as const;
