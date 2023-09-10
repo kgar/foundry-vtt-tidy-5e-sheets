@@ -86,6 +86,7 @@
     <div class="portrait-menu">
       <a
         class="portrait-menu-item"
+        on:mousedown={ev => ev.stopImmediatePropagation()}
         on:click={() =>
           new ImagePopout(actor.img, {
             title: 'Portrait: ' + actor.name,
@@ -95,6 +96,7 @@
       >
       <a
         class="portrait-menu-item"
+        on:mousedown={ev => ev.stopImmediatePropagation()}
         on:click={() =>
           new ImagePopout(actor.prototypeToken.texture.src, {
             title: 'Portrait: ' + actor.name,

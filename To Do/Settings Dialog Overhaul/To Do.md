@@ -53,3 +53,8 @@ For the new setup, I would like the following to be true:
 - [ ] Consider what to do about the info section
   - It could be an opportunity to put my author info, github repo links (submit an issue, suggest a feature, contribute), credits, ko-fi / patreon, etc.
 - [ ] Ensure that non-client-level options are not available to regular users, GM-only
+
+
+## Fix stuff
+
+- [x] Actor Profile show portrait / show token options are not working anymore; instead, it just opens the image selection menu.
