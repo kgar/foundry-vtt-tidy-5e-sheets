@@ -12,7 +12,7 @@
   font-style: normal;
 }
 
-@import './settings';
+@import './partials/legacy-settings';
 @import './spell-level-buttons-dialog';
 
 .tidy5e-kgar {
@@ -20,14 +20,9 @@
     color: var(--t5ek-primary-font-color);
     background: var(--t5ek-sheet-background);
   }
-
-  &.settings .window-content {
-    padding: 0;
-
-    > * {
-      color: var(--t5ek-primary-font-color);
-      background: var(--t5ek-sheet-background);
-    }
+  
+  &.settings {
+    @import './partials/settings';
   }
 
   select option {

@@ -35,14 +35,14 @@
     },
     {
       id: CONSTANTS.TAB_SETTINGS_NPCS,
-      displayName: 'T5EK.Settings.NPCs.tabLabel',
+      displayName: 'T5EK.Settings.TabNPCs.tabLabel',
       content: {
         component: NpcSettingsTab,
       },
     },
     {
       id: CONSTANTS.TAB_SETTINGS_VEHICLES,
-      displayName: 'T5EK.Settings.Vehicles.tabLabel',
+      displayName: 'T5EK.Settings.TabVehicles.tabLabel',
       content: {
         component: VehicleSettingsTab,
       },
@@ -123,10 +123,8 @@
     <Tabs {tabs} bind:selectedTabId orientation="vertical" />
     <div role="presentation" class="remaining-vertical-space" />
   </div>
-  <section class="sheet-body">
-    <TabContents {tabs} {selectedTabId} />
-  </section>
-
+  
+  <TabContents {tabs} {selectedTabId} cssClass="sheet-body" />
   <div class="button-bar">
     <button
       type="button"
@@ -166,7 +164,7 @@
       grid-area: nav;
     }
 
-    .sheet-body {
+    :global(.sheet-body) {
       grid-area: body;
       overflow-y: scroll;
       padding-top: 0.5rem;

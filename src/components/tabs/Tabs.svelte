@@ -115,6 +115,7 @@
           border: 0.0625rem solid var(--t5ek-light-color);
           border-right-color: transparent;
           border-left-width: 0.25rem;
+          border-left-color: var(--t5ek-primary-accent-color);
         }
       }
     }

@@ -1,0 +1,70 @@
+input, select {
+  color: var(--t5ek-primary-font-color);
+}
+
+.window-content {
+  padding: 0;
+
+  > * {
+    color: var(--t5ek-primary-font-color);
+    background: var(--t5ek-sheet-background);
+    height: 100%;
+  }
+
+  h2 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin: 0 0 0.5rem;
+    padding: 0 0 0.25rem;
+    border-bottom: 0.0625rem solid var(--t5ek-light-color);
+  }
+
+  h3 {
+    font-weight: 600;
+    margin: 0.5rem 0;
+    border-bottom: 0.0625rem solid var(--t5ek-light-color);
+  }
+
+  .setting {
+    display: flex;
+    background: var(--t5ek-faintest-color);
+    border-radius: 0.3125rem;
+    margin: 0.125rem 0;
+    padding: 0.25rem;
+
+    &.group {
+      padding-left: 1.5rem;
+    }
+
+    section {
+      width: 100%;
+    }
+
+    input[type='checkbox'] {
+      margin: 0;
+    }
+
+    .description {
+      margin-left: 0.5rem;
+      overflow-wrap: anywhere;
+
+      label {
+        font-weight: 600;
+      }
+    }
+
+    .settings-group {
+      margin-left: 0.5rem;
+
+      article {
+        margin: 0.25rem 0;
+      }
+
+      label {
+        font-size: 0.75rem;
+        font-weight: 600;
+        padding: 0 0.25rem 0.5rem 0.25rem;
+      }
+    }
+  }
+}

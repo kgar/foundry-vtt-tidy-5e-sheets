@@ -1698,7 +1698,7 @@ export function createSettings() {
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getGameSetting<string>(
+          return FoundryAdapter.getGameSetting<boolean>(
             'hbEnableUpcastFreeSpell'
           );
         },
