@@ -1,10 +1,15 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import { getContext } from 'svelte';
 
   export let value: string;
   export let name: string;
   export let hint: string;
   export let id: string;
+
+  const appId = getContext<string>('appId');
+
+  $: calculatedId = `${id}-${appId}`;
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -12,12 +17,12 @@
 <article class="setting group">
   <div>
     <div class="description">
-      <label for={id}>{localize(name)}</label>
+      <label for={calculatedId}>{localize(name)}</label>
       <p class="notes">{localize(hint)}</p>
     </div>
     <div class="settings-group">
       <article>
-        <input type="text" {id} bind:value />
+        <input type="text" id={calculatedId} bind:value />
       </article>
     </div>
   </div>

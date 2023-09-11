@@ -6,6 +6,7 @@
   import type { CurrentSettings } from 'src/settings/settings';
 
   let store = getContext<Writable<CurrentSettings>>('store');
+  const appId = getContext<string>('appId');
 
   const userIsGm = FoundryAdapter.userIsGm();
   const localize = FoundryAdapter.localize;
@@ -18,15 +19,14 @@
   <article class="setting group">
     <section>
       <div class="description">
-        <label for="defaultActionsTab">
+        <label for="defaultActionsTab-{appId}">
           {localize('T5EK.Settings.DefaultActionsTab.name')}
         </label>
         <p class="notes">{localize('T5EK.Settings.DefaultActionsTab.hint')}</p>
       </div>
       <div class="settings-group">
         <select
-          name="defaultActionsTab"
-          id="defaultActionsTab"
+          id="defaultActionsTab-{appId}"
           bind:value={$store.defaultActionsTab}
         >
           <option value="default">

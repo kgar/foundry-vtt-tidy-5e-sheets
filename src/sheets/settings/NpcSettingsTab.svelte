@@ -7,6 +7,7 @@
   import type { CurrentSettings } from 'src/settings/settings';
 
   let store = getContext<Writable<CurrentSettings>>('store');
+  const appId = getContext<string>('appId');
 
   const userIsGm = FoundryAdapter.userIsGm();
   const localize = FoundryAdapter.localize;
@@ -38,17 +39,13 @@
   <article class="setting group">
     <div>
       <div class="description">
-        <label for="linkMarkerNpc"
+        <label for="linkMarkerNpc-{appId}"
           >{localize('T5EK.Settings.LinkMarker.name')}</label
         >
         <p class="notes">{localize('T5EK.Settings.LinkMarker.hint')}</p>
       </div>
       <div class="settings-group">
-        <select
-          name="linkMarkerNpc"
-          id="linkMarkerNpc"
-          bind:value={$store.linkMarkerNpc}
-        >
+        <select id="linkMarkerNpc-{appId}" bind:value={$store.linkMarkerNpc}>
           <option value="default"
             >{localize('T5EK.Settings.LinkMarker.default')}</option
           >

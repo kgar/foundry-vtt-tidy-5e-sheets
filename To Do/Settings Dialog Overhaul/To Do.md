@@ -37,7 +37,8 @@ For the new setup, I would like the following to be true:
   - [x] Homebrew
   - [x] Locks
   - [ ] Info
-- [ ] Make the input IDs unique, because users can open multiple instances of the settings window; use context to provide the app ID
+- [x] Make the input IDs unique, because users can open multiple instances of the settings window; use context to provide the app ID
+- [ ] Per the current maintainer of Tidy 5e, remove the Lazy Money integration settings: https://discord.com/channels/732325252788387980/1116078321067892796/1150857702252232714
 - [ ] Componentize group inputs
 - [ ] Componentize select input
 - [ ] Review and streamline; consider maybe data-driving it
@@ -53,7 +54,6 @@ For the new setup, I would like the following to be true:
 - [ ] Consider what to do about the info section
   - It could be an opportunity to put my author info, github repo links (submit an issue, suggest a feature, contribute), credits, ko-fi / patreon, etc.
 - [ ] Ensure that non-client-level options are not available to regular users, GM-only
-- [ ] Per the current maintainer of Tidy 5e, remove the Lazy Money integration settings: https://discord.com/channels/732325252788387980/1116078321067892796/1150857702252232714
 
 ## Fix stuff
 

@@ -7,6 +7,7 @@
   import TextInputSetting from './parts/TextInputSetting.svelte';
 
   let store = getContext<Writable<CurrentSettings>>('store');
+  const appId = getContext<string>('appId');
 
   const userIsGm = FoundryAdapter.userIsGm();
   const localize = FoundryAdapter.localize;
@@ -67,15 +68,14 @@
   <article class="setting group">
     <section>
       <div class="description">
-        <label for="portraitStyle"
+        <label for="portraitStyle-{appId}"
           >{localize('T5EK.Settings.PortraitStyle.name')}</label
         >
         <p class="notes">{localize('T5EK.Settings.PortraitStyle.hint')}</p>
       </div>
       <div class="settings-group">
         <select
-          name="portraitStyle"
-          id="portraitStyle"
+          id="portraitStyle-{appId}"
           bind:value={$store.portraitStyle}
         >
           <option value="default"
@@ -133,15 +133,14 @@
   <article class="setting group">
     <section>
       <div class="description">
-        <label for="exhaustionEffectsEnabled"
+        <label for="exhaustionEffectsEnabled-{appId}"
           >{localize('T5EK.Settings.ExhaustionEffects.name')}</label
         >
         <p class="notes">{localize('T5EK.Settings.ExhaustionEffects.hint')}</p>
       </div>
       <div class="settings-group">
         <select
-          name="exhaustionEffectsEnabled"
-          id="exhaustionEffectsEnabled"
+          id="exhaustionEffectsEnabled-{appId}"
           bind:value={$store.exhaustionEffectsEnabled}
         >
           <option value="default"
@@ -171,7 +170,7 @@
   <article class="setting group">
     <section>
       <div class="description">
-        <label for="exhaustionEffectCustom"
+        <label for="exhaustionEffectCustom-{appId}"
           >{localize('T5EK.Settings.CustomExhaustionEffect.name')}</label
         >
         <p class="notes">
@@ -183,8 +182,7 @@
           <input
             type="text"
             data-dtype="string"
-            name="exhaustionEffectCustom"
-            id="exhaustionEffectCustom"
+            id="exhaustionEffectCustom-{appId}"
             value={$store.exhaustionEffectCustom}
           />
         </article>

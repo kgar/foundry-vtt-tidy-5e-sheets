@@ -68,6 +68,7 @@ export class Tidy5eKgarSettingsSheet extends Application {
             apply: this.applyChangedSettings.bind(this),
           } satisfies SettingsSheetFunctions,
         ],
+        ['appId', this.appId]
       ]),
     });
   }
