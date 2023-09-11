@@ -16,9 +16,8 @@ import {
 import { applyTitleToWindow } from 'src/utils/applications';
 import type { SvelteComponent } from 'svelte';
 
-const ActorSheet5eCharacter = FoundryAdapter.getActorSheetClass();
-
-export class Tidy5eCharacterSheet extends ActorSheet5eCharacter {
+export class Tidy5eCharacterSheet extends dnd5e.applications.actor
+  .ActorSheet5eCharacter {
   store = writable<ActorSheetContext>();
   stats = writable<SheetStats>({
     lastSubmissionTime: null,

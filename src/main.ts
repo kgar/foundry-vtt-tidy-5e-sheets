@@ -13,7 +13,6 @@ import type { globalThisDnd5e } from './types/dnd5e';
 import { Tidy5eKgarItemSheet } from './sheets/item/Tidy5eKgarItemSheet';
 import { Tidy5eNpcSheet } from './sheets/npc/Tidy5eNpcSheet';
 import { Tidy5eVehicleSheet } from './sheets/vehicle/Tidy5eKgarVehicleSheet';
-import { CONSTANTS } from './constants';
 
 declare global {
   var Dialog: typeof ClientDialog;

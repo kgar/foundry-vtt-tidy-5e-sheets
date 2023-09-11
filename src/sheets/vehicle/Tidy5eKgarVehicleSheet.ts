@@ -1,7 +1,6 @@
 import { CONSTANTS } from 'src/constants';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { SettingsProvider } from 'src/settings/settings';
-import { Tidy5eKgarUserSettings } from 'src/settings/user-settings-form';
 import type {
   ItemCardStore,
   SheetStats,
@@ -16,9 +15,7 @@ import { applyTitleToWindow } from 'src/utils/applications';
 import type { SvelteComponent } from 'svelte';
 import { debug } from 'src/utils/logging';
 
-const ActorSheet5eVehicle = FoundryAdapter.getActorSheetVehicleClass();
-
-export class Tidy5eVehicleSheet extends ActorSheet5eVehicle {
+export class Tidy5eVehicleSheet extends dnd5e.applications.actor.ActorSheet5eVehicle {
   store = writable<VehicleSheetContext>();
   stats = writable<SheetStats>({
     lastSubmissionTime: null,
@@ -148,14 +145,6 @@ export class Tidy5eVehicleSheet extends ActorSheet5eVehicle {
 
   _getHeaderButtons() {
     const buttons = super._getHeaderButtons();
-    buttons.unshift({
-      class: 'configure-tidy5e',
-      icon: 'far fa-newspaper',
-      label: 'Tidy5e',
-      onclick: () => {
-        return new Tidy5eKgarUserSettings({}, undefined).render(true);
-      },
-    });
     return FoundryAdapter.removeConfigureSettingsButtonWhenLockedForNonGm(
       buttons
     );

@@ -18,7 +18,6 @@ import type { SheetStats } from 'src/types/types';
 import { applyTitleToWindow } from 'src/utils/applications';
 import { debug } from 'src/utils/logging';
 import { isNil } from 'src/utils/data';
-import { Tidy5eKgarUserSettings } from 'src/settings/user-settings-form';
 import type { SvelteComponent } from 'svelte';
 
 export class Tidy5eKgarItemSheet extends dnd5e.applications.item.ItemSheet5e {
@@ -322,15 +321,6 @@ export class Tidy5eKgarItemSheet extends dnd5e.applications.item.ItemSheet5e {
 
   _getHeaderButtons() {
     const buttons = super._getHeaderButtons();
-
-    buttons.unshift({
-      class: 'configure-tidy5e',
-      icon: 'far fa-newspaper',
-      label: 'Tidy5e',
-      onclick: () => {
-        return new Tidy5eKgarUserSettings({}, undefined).render(true);
-      },
-    });
 
     return FoundryAdapter.removeConfigureSettingsButtonWhenLockedForNonGm(
       buttons

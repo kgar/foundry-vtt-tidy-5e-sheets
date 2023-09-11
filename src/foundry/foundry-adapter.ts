@@ -11,15 +11,6 @@ import type { FoundryDocument } from 'src/types/document';
 import { SettingsProvider } from 'src/settings/settings';
 
 export const FoundryAdapter = {
-  getActorSheetClass() {
-    return dnd5e.applications.actor.ActorSheet5eCharacter;
-  },
-  getActorSheetNpcClass() {
-    return dnd5e.applications.actor.ActorSheet5eNPC;
-  },
-  getActorSheetVehicleClass() {
-    return dnd5e.applications.actor.ActorSheet5eVehicle;
-  },
   userIsGm() {
     return game.user.isGM;
   },

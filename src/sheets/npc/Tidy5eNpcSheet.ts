@@ -8,7 +8,6 @@ import { writable } from 'svelte/store';
 import NpcSheet from './NpcSheet.svelte';
 import NpcSheetLimited from './NpcSheetLimited.svelte';
 import { CONSTANTS } from 'src/constants';
-import { Tidy5eKgarUserSettings } from 'src/settings/user-settings-form';
 import { applyTitleToWindow } from 'src/utils/applications';
 import { debug, error } from 'src/utils/logging';
 import { SettingsProvider } from 'src/settings/settings';
@@ -20,9 +19,7 @@ import { d20Roll } from 'src/utils/rolls';
 import { isNil } from 'src/utils/data';
 import type { SvelteComponent } from 'svelte';
 
-const ActorSheet5eNpc = FoundryAdapter.getActorSheetNpcClass();
-
-export class Tidy5eNpcSheet extends ActorSheet5eNpc {
+export class Tidy5eNpcSheet extends dnd5e.applications.actor.ActorSheet5eNPC {
   store = writable<ActorSheetContext>();
   stats = writable<SheetStats>({
     lastSubmissionTime: null,
@@ -207,15 +204,6 @@ export class Tidy5eNpcSheet extends ActorSheet5eNpc {
 
   _getHeaderButtons() {
     const buttons = super._getHeaderButtons();
-
-    buttons.unshift({
-      class: 'configure-tidy5e',
-      icon: 'far fa-newspaper',
-      label: 'Tidy5e',
-      onclick: () => {
-        return new Tidy5eKgarUserSettings({}, undefined).render(true);
-      },
-    });
 
     return FoundryAdapter.removeConfigureSettingsButtonWhenLockedForNonGm(
       buttons

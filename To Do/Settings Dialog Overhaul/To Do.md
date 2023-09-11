@@ -62,3 +62,4 @@ For the new setup, I would like the following to be true:
 ## Fix stuff
 
 - [x] Actor Profile show portrait / show token options are not working anymore; instead, it just opens the image selection menu.
+- [ ] Fix startup failure. The settings dialog must be a FormApplication or subclass in order to be opened from the main config dialog.
