@@ -24,6 +24,7 @@
       <article>
         <input type="text" id={calculatedId} bind:value />
       </article>
+      <slot name="additional-inputs" />
     </div>
   </div>
 </article>

@@ -25,6 +25,7 @@
       <article>
         <input type="number" id="{id}-{appId}" bind:value {min} {max} {step} />
       </article>
+      <slot name="additional-inputs" />
     </div>
   </div>
 </article>

@@ -24,6 +24,7 @@
       <select id="{id}-{appId}" bind:value>
         <SelectOptions data={options} />
       </select>
+      <slot name="additional-inputs" />
     </div>
   </section>
 </article>

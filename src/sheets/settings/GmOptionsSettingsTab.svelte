@@ -134,40 +134,27 @@
     id="exhaustionEffectIcon"
   />
 
-  <article class="setting group">
-    <section>
-      <div class="description">
-        <label for="exhaustionEffectCustom-{appId}"
-          >{localize('T5EK.Settings.CustomExhaustionEffect.name')}</label
-        >
+  <TextInputSetting
+    bind:value={$store.exhaustionEffectCustom}
+    name={'T5EK.Settings.CustomExhaustionEffect.name'}
+    hint={'T5EK.Settings.CustomExhaustionEffect.hint'}
+    id="exhaustionEffectCustom"
+  >
+    <svelte:fragment slot="additional-inputs">
+      <article>
         <p class="notes">
-          {localize('T5EK.Settings.CustomExhaustionEffect.hint')}
+          {localize('T5EK.Settings.CustomExhaustionEffect.tiers')}
         </p>
-      </div>
-      <div class="settings-group">
-        <article>
-          <input
-            type="text"
-            data-dtype="string"
-            id="exhaustionEffectCustom-{appId}"
-            value={$store.exhaustionEffectCustom}
-          />
-        </article>
-        <article>
-          <p class="notes">
-            {localize('T5EK.Settings.CustomExhaustionEffect.tiers')}
-          </p>
-          <input
-            type="text"
-            data-dtype="string"
-            name="exhaustionEffectCustomTiers"
-            id="exhaustionEffectCustomTiers"
-            value={$store.exhaustionEffectCustomTiers}
-          />
-        </article>
-      </div>
-    </section>
-  </article>
+        <input
+          type="text"
+          data-dtype="string"
+          name="exhaustionEffectCustomTiers"
+          id="exhaustionEffectCustomTiers-{appId}"
+          bind:value={$store.exhaustionEffectCustomTiers}
+        />
+      </article>
+    </svelte:fragment>
+  </TextInputSetting>
 
   <CheckboxSetting
     bind:value={$store.exhaustionDisabled}

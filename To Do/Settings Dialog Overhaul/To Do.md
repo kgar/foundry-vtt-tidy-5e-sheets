@@ -39,7 +39,7 @@ For the new setup, I would like the following to be true:
   - [ ] Info
 - [x] Make the input IDs unique, because users can open multiple instances of the settings window; use context to provide the app ID
 - [x] Per the current maintainer of Tidy 5e, remove the Lazy Money integration settings: https://discord.com/channels/732325252788387980/1116078321067892796/1150857702252232714
-- [ ] Componentize group inputs
+- [x] Componentize group inputs
 - [x] Componentize select input
 - [ ] Review and streamline; consider maybe data-driving it
 - [ ] Locks Tab opening notes are a bit jarring to look at now in dark mode. Adjust that.
