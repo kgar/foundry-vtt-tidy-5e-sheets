@@ -1113,66 +1113,6 @@ export function createSettings() {
         },
       },
 
-      // Lazy Money
-
-      lazyMoneyEnable: {
-        options: {
-          name: 'T5EK.Settings.LazyMoneyEnable.name',
-          hint: 'T5EK.Settings.LazyMoneyEnable.hint',
-          scope: 'world',
-          config: false,
-          default: false,
-          type: Boolean,
-        },
-        get() {
-          return FoundryAdapter.getGameSetting<boolean>('lazyMoneyEnable');
-        },
-      },
-
-      lazyMoneyAddConvert: {
-        options: {
-          name: 'T5EK.Settings.LazyMoneyAddConvert.name',
-          hint: 'T5EK.Settings.LazyMoneyAddConvert.hint',
-          scope: 'world',
-          config: false,
-          default: false,
-          type: Boolean,
-        },
-        get() {
-          return FoundryAdapter.getGameSetting<boolean>('lazyMoneyAddConvert');
-        },
-      },
-
-      lazyMoneyIgnoreElectrum: {
-        options: {
-          name: 'T5EK.Settings.LazyMoneyIgnoreElectrum.name',
-          hint: 'T5EK.Settings.LazyMoneyIgnoreElectrum.hint',
-          scope: 'world',
-          config: false,
-          default: true,
-          type: Boolean,
-        },
-        get() {
-          return FoundryAdapter.getGameSetting<boolean>(
-            'lazyMoneyIgnoreElectrum'
-          );
-        },
-      },
-
-      lazyMoneyChatLog: {
-        options: {
-          name: 'T5EK.Settings.LazyMoneyChatLog.name',
-          hint: 'T5EK.Settings.LazyMoneyChatLog.hint',
-          scope: 'world',
-          config: false,
-          default: false,
-          type: Boolean,
-        },
-        get() {
-          return FoundryAdapter.getGameSetting<boolean>('lazyMoneyChatLog');
-        },
-      },
-
       // Favorites
 
       enableSortFavoritesItemsAlphabetically: {

@@ -76,34 +76,4 @@
     hint={'T5EK.Settings.ActiveEffectsMarker.hint'}
     id="activeEffectsMarker"
   />
-
-  <h3>{localize('T5EK.Settings.TabModules.labelLazyMoney')}</h3>
-
-  <CheckboxSetting
-    bind:value={$store.lazyMoneyEnable}
-    name={'T5EK.Settings.LazyMoneyEnable.name'}
-    hint={'T5EK.Settings.LazyMoneyEnable.hint'}
-    id="lazyMoneyEnable"
-  />
-
-  <CheckboxSetting
-    bind:value={$store.lazyMoneyAddConvert}
-    name={'T5EK.Settings.LazyMoneyAddConvert.name'}
-    hint={'T5EK.Settings.LazyMoneyAddConvert.hint'}
-    id="lazyMoneyAddConvert"
-  />
-
-  <CheckboxSetting
-    bind:value={$store.lazyMoneyIgnoreElectrum}
-    name={'T5EK.Settings.LazyMoneyIgnoreElectrum.name'}
-    hint={'T5EK.Settings.LazyMoneyIgnoreElectrum.hint'}
-    id="lazyMoneyIgnoreElectrum"
-  />
-
-  <CheckboxSetting
-    bind:value={$store.lazyMoneyChatLog}
-    name={'T5EK.Settings.LazyMoneyChatLog.name'}
-    hint={'T5EK.Settings.LazyMoneyChatLog.hint'}
-    id="lazyMoneyChatLog"
-  />
 {/if}

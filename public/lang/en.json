@@ -169,8 +169,7 @@
     "tabLabel": "Modules",
     "header": "Module Options",
     "labelActionsFavorites": "Actor Actions/Favorites",
-    "labelMidiQoL": "Midi Qol",
-    "labelLazyMoney": "Lazy Money"
+    "labelMidiQoL": "Midi Qol"
   },
   "T5EK.Settings.TabLocks": {
     "tabLabel": "Locks",
@@ -438,34 +437,6 @@
   "T5EK.Settings.SpellClassFilterAdditionalClasses": {
     "name": "Add additional classes for 'Multiclass Spellbook filter'",
     "hint": "Add additional homebrewed classes to the dropdown with this syntax 'id1|name1,id2|name2' e.g. 'occultist|Occultist,alchemist|Alchemist'"
-  },
-  "T5EK.Settings.LazyHpAndExpEnable": {
-    "name": "Enable Lazy Hp and Exp",
-    "hint": "Easily add or remove HP and Experience with automatic conversion and no overdraft. It will allow inputs like '+10', '-10', '=10', '010'"
-  },
-  "T5EK.Settings.LazyHpForceHpValueLimit1": {
-    "name": "Force (ONLY on the sheet side) to not to exceed the current hp max value + hp max temp (hp.value <= hp.max + hp.tempmax)",
-    "hint": "This setting forces if enabled ensure that current 'hp.value <= (hp.max + hp.tempmax)'."
-  },
-  "T5EK.Settings.LazyHpForceHpValueLimit2": {
-    "name": "Force (ONLY on the sheet side) to not to exceed the current hp max value, but instead add temporary hit points (hp.value <= hp.max && hp.temp <= hp.tempmax)",
-    "hint": "This setting forces the logic of calculating the addition of temporary life points by forcing the user to fill the temporary life point field (hp.temp) instead of increasing the current life point field (hp.value), but for avoid controversy by default it is disabled to respect the behavior of the standard sheet. If enabled ensure that current 'hp.value <= hp.max' increasing the temporary hit points 'hp.temp' accordingly if 'hp.value > hp.max', but always with 'hp.temp <= hp.tempmax'."
-  },
-  "T5EK.Settings.LazyMoneyEnable": {
-    "name": "Enable Lazy Money",
-    "hint": "Easily add or remove currency with automatic conversion and no overdraft. It will allow inputs like '+10', '-10', '=10', '010'"
-  },
-  "T5EK.Settings.LazyMoneyAddConvert": {
-    "name": "Convert when adding money",
-    "hint": "Automatically convert currency to higher denominations when adding money instead of the default behaviour of preserving the denominations you receive."
-  },
-  "T5EK.Settings.LazyMoneyIgnoreElectrum": {
-    "name": "Ignore electrum",
-    "hint": "When converting, ignore electrum. This won't affect directly adding or removing it, except in the case when \"Convert when adding money\" is also enabled."
-  },
-  "T5EK.Settings.LazyMoneyChatLog": {
-    "name": "Chat log",
-    "hint": "Whisper any currency changes to the GM."
   },
   "T5EK.Settings.AllowCantripToBePreparedOnContext": {
     "name": "Allow cantrips to be 'prepared' via right-click",

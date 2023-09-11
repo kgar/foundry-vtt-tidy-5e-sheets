@@ -37,9 +37,9 @@ Magic Items (ID: magicitems) https://foundryvtt.com/packages/magicitems/
 
 > ✏ Check this one out sometime. Is it important enough?
 
-Lazy Money (ID: lazymoney) https://github.com/p4535992/foundryvtt-lazymoney-dnd5e
+~~Lazy Money (ID: lazymoney) https://github.com/p4535992/foundryvtt-lazymoney-dnd5e~~
 
-> ✏ This should be core functionality in Tidy 5e
+~~> ✏ This should be core functionality in Tidy 5e~~
 
 Character Sheet Favorites (ID: favorite-items) https://gitlab.com/mxzf/favorite-items
 

@@ -161,7 +161,7 @@ Evaluate module integration and think about better (API-centric) ways to support
 - [ ] Review `markActiveEffects()` and determine how this affects the player sheet
 - [ ] Review `spellSlotMarker()` and determine how this affects the player sheet
 - [ ] Review `hideStandardEncumbranceBar()` and determine how this affects the player sheet
-- [ ] Review `applyLazyMoney()` and determine how this affects the player sheet
+- [x] ~~Review `applyLazyMoney()` and determine how this affects the player sheet~~ No longer directly maintaining this integration
 - [ ] Review `applySpellClassFilterActorSheet()` and determine how this affects the player sheet
 - [ ] Figure out what game.modules.get("character-actions-list-5e") module is, and how do we leverage it here with graceful fallback?
   - [ ] Moreover, how do we create a clear pipeline for supporting various modules?
@@ -315,12 +315,12 @@ Evaluate module integration and think about better (API-centric) ways to support
   - [x] src_scss\partials_variables.scss | imported directly
   - [x] src\css\tidy-icons.css | not in use / ignored
   - [x] images folder | added to public
-- [ ] Implement these money settings (if able, fold Lazy Money into Tidy 5e; else, figure out what API hooks are needed and then let Lazy Money do the heavy lifting)
-  - [ ] lazyMoneyIgnoreElectrum
-  - [ ] lazyMoneyEnable
-  - [ ] lazyMoneyChatLog
-  - [ ] lockMoneyChanges
-  - [ ] lazyMoneyAddConvert
+- [x] ~~Implement these money settings (if able, fold Lazy Money into Tidy 5e; else, figure out what API hooks are needed and then let Lazy Money do the heavy lifting)~~ No longer maintaining integration with lazy money. The maintainer plans to do it from their module.
+  - [x] lazyMoneyIgnoreElectrum
+  - [x] lazyMoneyEnable
+  - [x] lazyMoneyChatLog
+  - [x] lockMoneyChanges
+  - [x] lazyMoneyAddConvert
 - [ ] Retest and find issues now that it's in svelte mode
 - [ ] Put tab IDs in CONSTANTS and propagate across the system.
 - [ ] Spellbook Grid - add charges to the bottom left of the grid panel
