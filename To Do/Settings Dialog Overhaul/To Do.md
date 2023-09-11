@@ -42,7 +42,6 @@ For the new setup, I would like the following to be true:
 - [x] Componentize group inputs
 - [x] Componentize select input
 - [x] Locks Tab opening notes are a bit jarring to look at now in dark mode. Adjust that.
-- [ ] Review and streamline; consider maybe data-driving it
 - [ ] Relocate/slightly refine theme management
   - [ ] Ensure the theme application code takes color picker fields into account
   - [ ] Include the primary accent color in color picker settings
@@ -57,6 +56,7 @@ For the new setup, I would like the following to be true:
 
 ## Stretch
 
+- [ ] Review and streamline; consider data-driving settings much like Foundry does
 - [ ] Add settings-wide, case-insensitive, includes-based filter text input above the tabs
 
 ## Fix stuff
