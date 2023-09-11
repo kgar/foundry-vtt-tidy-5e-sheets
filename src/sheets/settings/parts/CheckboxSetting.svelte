@@ -9,8 +9,6 @@
 
   const appId = getContext<string>('appId');
 
-  $: calculatedId = `${id}-${appId}`;
-
   const localize = FoundryAdapter.localize;
 </script>
 
@@ -18,11 +16,11 @@
   <input
     type="checkbox"
     data-dtype="boolean"
-    id={calculatedId}
+    id="{id}-{appId}"
     bind:checked={value}
   />
   <div class="description">
-    <label for={calculatedId}>{localize(name)}</label>
+    <label for="{id}-{appId}">{localize(name)}</label>
     <p class="notes">{localize(hint)}</p>
   </div>
 </article>

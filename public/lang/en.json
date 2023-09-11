@@ -150,10 +150,14 @@
     "tabLabel": "Players",
     "header": "Player Character Sheets"
   },
-  "T5EK.Settings.TabNPCsVehicles": {
-    "tabLabel": "NPCs/Vehicles",
-    "header": "NPC/Vehicle Sheets",
-    "labelNPCs": "NPCs",
+  "T5EK.Settings.TabNPCs": {
+    "tabLabel": "NPCs",
+    "header": "NPC Sheets",
+    "labelNPCs": "NPCs"
+  },
+  "T5EK.Settings.TabVehicles": {
+    "tabLabel": "Vehicles",
+    "header": "Vehicle Sheets",
     "labelVehicles": "Vehicles"
   },
   "T5EK.Settings.TabGM": {
@@ -350,7 +354,7 @@
     "name": "Auto Exhaustion effects.",
     "hint": "Choose how to apply exhaustion effects corresponding to tiers (requires midiQol for disadvantage rolls)",
     "default": "No automatic exhaustion effects",
-    "T5EK": "T5EK - Apply integrated effects (uses Active Effects)",
+    "tidy5e": "T5EK - Apply integrated effects (uses Active Effects)",
     "dfredce": "DFreds Convenient Effects - Use your own effects",
     "cub": "CUB - Use your own effects",
     "custom": "Custom - Use your own effects (requires CUB)"

@@ -5,6 +5,7 @@
   import { getContext } from 'svelte';
   import type { Writable } from 'svelte/store';
   import type { CurrentSettings } from 'src/settings/settings';
+  import SelectSetting from './parts/SelectSetting.svelte';
 
   let store = getContext<Writable<CurrentSettings>>('store');
   const appId = getContext<string>('appId');
@@ -36,29 +37,17 @@
     id="restingForNpcsChatDisabled"
   />
 
-  <article class="setting group">
-    <div>
-      <div class="description">
-        <label for="linkMarkerNpc-{appId}"
-          >{localize('T5EK.Settings.LinkMarker.name')}</label
-        >
-        <p class="notes">{localize('T5EK.Settings.LinkMarker.hint')}</p>
-      </div>
-      <div class="settings-group">
-        <select id="linkMarkerNpc-{appId}" bind:value={$store.linkMarkerNpc}>
-          <option value="default"
-            >{localize('T5EK.Settings.LinkMarker.default')}</option
-          >
-          <option value="unlinked"
-            >{localize('T5EK.Settings.LinkMarker.unlinked')}</option
-          >
-          <option value="both"
-            >{localize('T5EK.Settings.LinkMarker.both')}</option
-          >
-        </select>
-      </div>
-    </div>
-  </article>
+  <SelectSetting
+    options={{
+      default: 'T5EK.Settings.LinkMarker.default',
+      unlinked: 'T5EK.Settings.LinkMarker.unlinked',
+      both: 'T5EK.Settings.LinkMarker.both',
+    }}
+    bind:value={$store.linkMarkerNpc}
+    name="T5EK.Settings.LinkMarker.name"
+    hint="T5EK.Settings.LinkMarker.hint"
+    id="linkMarkerNpc"
+  />
 {/if}
 
 <CheckboxSetting

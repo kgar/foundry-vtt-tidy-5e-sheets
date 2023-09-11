@@ -5,6 +5,7 @@
   import type { Writable } from 'svelte/store';
   import type { CurrentSettings } from 'src/settings/settings';
   import TextInputSetting from './parts/TextInputSetting.svelte';
+  import SelectSetting from './parts/SelectSetting.svelte';
 
   let store = getContext<Writable<CurrentSettings>>('store');
   const appId = getContext<string>('appId');
@@ -65,35 +66,18 @@
     id="itemCardsFixKey"
   />
 
-  <article class="setting group">
-    <section>
-      <div class="description">
-        <label for="portraitStyle-{appId}"
-          >{localize('T5EK.Settings.PortraitStyle.name')}</label
-        >
-        <p class="notes">{localize('T5EK.Settings.PortraitStyle.hint')}</p>
-      </div>
-      <div class="settings-group">
-        <select
-          id="portraitStyle-{appId}"
-          bind:value={$store.portraitStyle}
-        >
-          <option value="default"
-            >{localize('T5EK.Settings.PortraitStyle.default')}</option
-          >
-          <option value="pc"
-            >{localize('T5EK.Settings.PortraitStyle.pc')}</option
-          >
-          <option value="npc"
-            >{localize('T5EK.Settings.PortraitStyle.npc')}</option
-          >
-          <option value="all"
-            >{localize('T5EK.Settings.PortraitStyle.all')}</option
-          >
-        </select>
-      </div>
-    </section>
-  </article>
+  <SelectSetting
+    options={{
+      default: 'T5EK.Settings.PortraitStyle.default',
+      pc: 'T5EK.Settings.PortraitStyle.pc',
+      npc: 'T5EK.Settings.PortraitStyle.npc',
+      all: 'T5EK.Settings.PortraitStyle.all',
+    }}
+    bind:value={$store.portraitStyle}
+    name={'T5EK.Settings.PortraitStyle.name'}
+    hint={'T5EK.Settings.PortraitStyle.hint'}
+    id="portraitStyle"
+  />
 
   <CheckboxSetting
     bind:value={$store.editGmAlwaysEnabled}
@@ -130,35 +114,18 @@
     id="vehicleMotionDisabled"
   />
 
-  <article class="setting group">
-    <section>
-      <div class="description">
-        <label for="exhaustionEffectsEnabled-{appId}"
-          >{localize('T5EK.Settings.ExhaustionEffects.name')}</label
-        >
-        <p class="notes">{localize('T5EK.Settings.ExhaustionEffects.hint')}</p>
-      </div>
-      <div class="settings-group">
-        <select
-          id="exhaustionEffectsEnabled-{appId}"
-          bind:value={$store.exhaustionEffectsEnabled}
-        >
-          <option value="default"
-            >{localize('T5EK.Settings.ExhaustionEffects.default')}</option
-          >
-          <option value="tidy5e"
-            >{localize('T5EK.Settings.ExhaustionEffects.tidy5e')}</option
-          >
-          <option value="dfredce"
-            >{localize('T5EK.Settings.ExhaustionEffects.dfredce')}</option
-          >
-          <option value="cub"
-            >{localize('T5EK.Settings.ExhaustionEffects.cub')}</option
-          >
-        </select>
-      </div>
-    </section>
-  </article>
+  <SelectSetting
+    options={{
+      default: 'T5EK.Settings.ExhaustionEffects.default',
+      tidy5e: 'T5EK.Settings.ExhaustionEffects.tidy5e',
+      dfredce: 'T5EK.Settings.ExhaustionEffects.dfredce',
+      cub: 'T5EK.Settings.ExhaustionEffects.cub',
+    }}
+    bind:value={$store.exhaustionEffectsEnabled}
+    name={'T5EK.Settings.ExhaustionEffects.name'}
+    hint={'T5EK.Settings.ExhaustionEffects.hint'}
+    id="exhaustionEffectsEnabled"
+  />
 
   <TextInputSetting
     bind:value={$store.exhaustionEffectIcon}

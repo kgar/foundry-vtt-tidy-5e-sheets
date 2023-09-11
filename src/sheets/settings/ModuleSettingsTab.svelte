@@ -4,6 +4,7 @@
   import { getContext } from 'svelte';
   import type { Writable } from 'svelte/store';
   import type { CurrentSettings } from 'src/settings/settings';
+  import SelectSetting from './parts/SelectSetting.svelte';
 
   let store = getContext<Writable<CurrentSettings>>('store');
   const appId = getContext<string>('appId');
@@ -16,50 +17,24 @@
   <h2>{localize('T5EK.Settings.TabModules.header')}</h2>
 
   <h3>{localize('T5EK.Settings.TabModules.labelActionsFavorites')}</h3>
-  <article class="setting group">
-    <section>
-      <div class="description">
-        <label for="defaultActionsTab-{appId}">
-          {localize('T5EK.Settings.DefaultActionsTab.name')}
-        </label>
-        <p class="notes">{localize('T5EK.Settings.DefaultActionsTab.hint')}</p>
-      </div>
-      <div class="settings-group">
-        <select
-          id="defaultActionsTab-{appId}"
-          bind:value={$store.defaultActionsTab}
-        >
-          <option value="default">
-            {localize('T5EK.Settings.DefaultActionsTab.default')}
-          </option>
-          <option value="attributes">
-            {localize('T5EK.Settings.DefaultActionsTab.attributes')}
-          </option>
-          <option value="inventory">
-            {localize('T5EK.Settings.DefaultActionsTab.inventory')}
-          </option>
-          <option value="spellbook">
-            {localize('T5EK.Settings.DefaultActionsTab.spellbook')}
-          </option>
-          <option value="features">
-            {localize('T5EK.Settings.DefaultActionsTab.features')}
-          </option>
-          <option value="effects">
-            {localize('T5EK.Settings.DefaultActionsTab.effects')}
-          </option>
-          <option value="biography">
-            {localize('T5EK.Settings.DefaultActionsTab.biography')}
-          </option>
-          <option value="journal">
-            {localize('T5EK.Settings.DefaultActionsTab.journal')}
-          </option>
-          <option value="actions">
-            {localize('T5EK.Settings.DefaultActionsTab.actions')}
-          </option>
-        </select>
-      </div>
-    </section>
-  </article>
+
+  <SelectSetting
+    options={{
+      default: 'T5EK.Settings.DefaultActionsTab.default',
+      attributes: 'T5EK.Settings.DefaultActionsTab.attributes',
+      inventory: 'T5EK.Settings.DefaultActionsTab.inventory',
+      spellbook: 'T5EK.Settings.DefaultActionsTab.spellbook',
+      features: 'T5EK.Settings.DefaultActionsTab.features',
+      effects: 'T5EK.Settings.DefaultActionsTab.effects',
+      biography: 'T5EK.Settings.DefaultActionsTab.biography',
+      journal: 'T5EK.Settings.DefaultActionsTab.journal',
+      actions: 'T5EK.Settings.DefaultActionsTab.actions',
+    }}
+    bind:value={$store.defaultActionsTab}
+    name="T5EK.Settings.DefaultActionsTab.name"
+    hint="T5EK.Settings.DefaultActionsTab.hint"
+    id="defaultActionsTab"
+  />
 
   <h3>{localize('T5EK.Settings.TabModules.labelMidiQoL')}</h3>
 
