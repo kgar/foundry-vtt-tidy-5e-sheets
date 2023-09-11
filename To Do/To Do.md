@@ -568,8 +568,15 @@ Love what you're doing with tidy! I havnt used it much since the base sheet kind
 kgar — Today at 12:35 PM
 It is very easy to do. It comes at the cost of some screen real estate, but when column selection is a thing, we might as well make item/feature/resource usage consumption optionally use a bar. I would think that alternate color(s) would be appropriate to distinguish from health bars
 
-### 's idea for dark mode as a libthemer function
+### 4535992's idea for dark mode as a libthemer function
 
 https://discord.com/channels/732325252788387980/1116078321067892796/1146085509177819307
 
 https://discord.com/channels/732325252788387980/1142084814623748157/1142090937812664450
+
+### Zanderaf - consolidate race / class / subclass grids
+
+https://discord.com/channels/732325252788387980/1116078321067892796/1150877443826122822
+
+it might be a bit out of scope for this, but are there any plans to do something like this https://github.com/foundryvtt/dnd5e/issues/2342 ? I know that The default sheet is going to be a bit cramped with background, race, and then class/subclass all in the features tab taking up real estate- are there any plans for anything similar on tidysheet?
+
