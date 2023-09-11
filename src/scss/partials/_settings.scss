@@ -1,4 +1,5 @@
-input, select {
+input,
+select {
   color: var(--t5ek-primary-font-color);
 }
 
@@ -67,4 +68,11 @@ input, select {
       }
     }
   }
+}
+
+p.tab-notes {
+  margin-top: 0;
+
+  margin-left: 0.25rem;
+  margin-right: 0.25rem;
 }

@@ -41,8 +41,8 @@ For the new setup, I would like the following to be true:
 - [x] Per the current maintainer of Tidy 5e, remove the Lazy Money integration settings: https://discord.com/channels/732325252788387980/1116078321067892796/1150857702252232714
 - [x] Componentize group inputs
 - [x] Componentize select input
+- [x] Locks Tab opening notes are a bit jarring to look at now in dark mode. Adjust that.
 - [ ] Review and streamline; consider maybe data-driving it
-- [ ] Locks Tab opening notes are a bit jarring to look at now in dark mode. Adjust that.
 - [ ] Relocate/slightly refine theme management
   - [ ] Ensure the theme application code takes color picker fields into account
   - [ ] Include the primary accent color in color picker settings
@@ -50,10 +50,14 @@ For the new setup, I would like the following to be true:
   - [ ] Move themes to their own settings menu button and dedicated dialog - include cancel and save button, and live-update the CSS variable colors as the user makes changes
   - [ ] Use a non-foundry color picker that can bundle with this module and not require another foundry module dependency
   - [ ] Allow for referencing other variables (and support drag'n'drop if possible) when selecting colors
-- [ ] Allow the user to view the full suite of options from Configure Settings / Sheet Options menu button
+- [x] Allow the user to view the full suite of options from Configure Settings / Sheet Options menu button
 - [ ] Consider what to do about the info section
   - It could be an opportunity to put my author info, github repo links (submit an issue, suggest a feature, contribute), credits, ko-fi / patreon, etc.
 - [ ] Ensure that non-client-level options are not available to regular users, GM-only
+
+## Stretch
+
+- [ ] Add settings-wide, case-insensitive, includes-based filter text input above the tabs
 
 ## Fix stuff
 

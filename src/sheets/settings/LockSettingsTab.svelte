@@ -13,8 +13,8 @@
 
 {#if userIsGm}
   <h2>{localize('T5EK.Settings.TabLocks.header')}</h2>
-  <p class="notes">{localize('T5EK.Settings.TabLocks.hint')}</p>
-  <p class="notes">{localize('T5EK.Settings.TabLocks.hint2')}</p>
+  <p class="tab-notes">{localize('T5EK.Settings.TabLocks.hint')}</p>
+  <p class="tab-notes">{localize('T5EK.Settings.TabLocks.hint2')}</p>
 
   <CheckboxSetting
     bind:value={$store.editTotalLockEnabled}
