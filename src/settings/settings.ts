@@ -11,6 +11,7 @@ import { defaultLightTheme } from 'src/theme/default-light-theme';
 import { defaultDarkTheme } from 'src/theme/default-dark-theme';
 import { getCoreThemes } from 'src/theme/theme-reference';
 import { Tidy5eKgarSettingsSheet } from 'src/sheets/settings/Tidy5eKgarSettingsSheet';
+import { Tidy5eKgarThemeSettingsSheet } from 'src/theme/Tidy5eKgarThemeSettingsSheet';
 
 export type Tidy5eSettings = {
   [settingKey: string]: Tidy5eSetting;
@@ -95,6 +96,16 @@ export function createSettings() {
           hint: `T5EK.Settings.SheetMenu.hint`,
           icon: 'fas fa-cog',
           type: Tidy5eKgarSettingsSheet,
+          restricted: false,
+        },
+      },
+      theme: {
+        options: {
+          name: `T5EK.ThemeSettings.SheetMenu.name`,
+          label: 'T5EK.ThemeSettings.SheetMenu.label',
+          hint: `T5EK.ThemeSettings.SheetMenu.hint`,
+          icon: 'fas fa-palette',
+          type: Tidy5eKgarThemeSettingsSheet,
           restricted: false,
         },
       },

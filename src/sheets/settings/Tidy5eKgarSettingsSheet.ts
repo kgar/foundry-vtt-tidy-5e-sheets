@@ -36,7 +36,7 @@ export class Tidy5eKgarSettingsSheet extends FormApplication {
     return {
       ...super.defaultOptions,
       height: 750,
-      title: FoundryAdapter.localize('T5EK.Settings.SheetMenu.title'),
+      title: 'T5EK.Settings.SheetMenu.title',
       width: 750,
       classes: ['tidy5e-kgar', 'settings'],
       submitOnClose: false,
