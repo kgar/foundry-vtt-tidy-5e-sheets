@@ -1,4 +1,12 @@
-<p>Paragraph about the author</p>
-<p>Paragraph(s) about reporting issues.</p>
+<script lang="ts">
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+
+  const localize = FoundryAdapter.localize;
+</script>
+
+<h2>{localize('T5EK.Settings.TabInfo.header')}</h2>
+<p>Tidy 5e Sheets are maintained by <b>kgar</b></p>
 <p>Github link here</p>
-<p>TODO: Support links / Ko-Fi, Patreon</p>
+<p>Ko-Fi link here</p>
+<p>Patreon link here</p>
+<p>League Discord here</p>
