@@ -85,7 +85,7 @@
       <ItemTableColumn baseWidth="7.5rem">
         {localize('DND5E.Usage')}
       </ItemTableColumn>
-      {#if $store.owner && classicControlsEnabled}
+      {#if $store.owner && classicControlsEnabled && !lockControls}
         <ItemTableColumn baseWidth={classicControlsBaseWidth} />
       {/if}
     </ItemTableHeaderRow>
