@@ -5,7 +5,6 @@ import { writable, type Writable } from 'svelte/store';
 import {
   getCurrentSettings,
   type CurrentSettings,
-  SettingsProvider,
   type Tidy5eSettingKey,
 } from 'src/settings/settings';
 import { debug } from 'src/utils/logging';
@@ -26,6 +25,7 @@ declare var FormApplication: any;
 
 export class Tidy5eKgarSettingsSheet extends FormApplication {
   initialTabId: string;
+  unchangedSettings: CurrentSettings;
 
   constructor(initialTabId: string, ...args: any[]) {
     super(...args);
@@ -54,13 +54,16 @@ export class Tidy5eKgarSettingsSheet extends FormApplication {
   activateListeners(html: any) {
     const node = html.get(0);
 
+    const currentSettings = getCurrentSettings();
+
+    this.cacheSettingsForChangeTracking(currentSettings);
     this.component = new SettingsSheet({
       target: node,
       props: {
         selectedTabId: this.initialTabId,
       },
       context: new Map<any, any>([
-        ['store', writable(getCurrentSettings()) satisfies SettingsSheetStore],
+        ['store', writable(currentSettings) satisfies SettingsSheetStore],
         [
           'functions',
           {
@@ -68,9 +71,21 @@ export class Tidy5eKgarSettingsSheet extends FormApplication {
             apply: this.applyChangedSettings.bind(this),
           } satisfies SettingsSheetFunctions,
         ],
-        ['appId', this.appId]
+        ['appId', this.appId],
       ]),
     });
+  }
+
+  /**
+    Detect settings drift from the point in time when the sheet was opened,
+    rather than differences with the live settings upon saving/applying changes.
+    This ensures that the only settings which are update are those that
+    the user actually changed during editing this form.
+    Otherwise, for example, a user could open this form, change the color scheme from another form,
+    and then save this form, causing the color scheme to revert back.
+  */
+  private cacheSettingsForChangeTracking(currentSettings: CurrentSettings) {
+    this.unchangedSettings = structuredClone(currentSettings);
   }
 
   close(options: unknown = {}) {
@@ -89,10 +104,10 @@ export class Tidy5eKgarSettingsSheet extends FormApplication {
   }
 
   async applyChangedSettings(newSettings: CurrentSettings) {
-    const keys = Object.keys(SettingsProvider.settings) as Tidy5eSettingKey[];
+    const keys = Object.keys(this.unchangedSettings) as Tidy5eSettingKey[];
     let settingsUpdated = false;
     for (let key of keys) {
-      const currentValue = SettingsProvider.settings[key].get();
+      const currentValue = this.unchangedSettings[key];
       const newValue = newSettings[key];
       if (currentValue !== newValue) {
         await FoundryAdapter.setGameSetting(key, newValue);
@@ -106,6 +121,8 @@ export class Tidy5eKgarSettingsSheet extends FormApplication {
         this.redrawOpenSheetsTidy5eSheets();
       }, 200);
     }
+
+    this.cacheSettingsForChangeTracking(newSettings);
   }
 
   async saveChangedSettings(newSettings: CurrentSettings) {
