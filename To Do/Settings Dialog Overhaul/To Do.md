@@ -44,7 +44,7 @@ For the new setup, I would like the following to be true:
 - [x] Componentize select input
 - [x] Locks Tab opening notes are a bit jarring to look at now in dark mode. Adjust that.
 - [x] Allow the user to view the full suite of options from Configure Settings / Sheet Options menu button
-- [ ] Ensure that non-client-level options are not available to regular users, GM-only
+- [x] Ensure that non-client-level options are not available to regular users, GM-only
 
 ## Stretch
 
