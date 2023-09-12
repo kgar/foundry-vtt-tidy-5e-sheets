@@ -1,9 +1,30 @@
 ## To Do
 
 - [x] Relocate theme management to its own config menu
+- [ ] Add primary accent color to color picker settings
+- [ ] Implement the existing color picker settings, plus primary accent color, using minimal layout and focusing entirely on functionality
+- [ ] Make them live-update the page via setting props on the HTML node
+- [ ] Add ability to save changes
+- [ ] When closing the dialog, remove all tidy css variables from the HTML node
+- [ ] Allow hex, hex-alpha, rgb, rgba, hsl, hsla
+- [ ] Get a non-foundry-module color picker and leverage it
+  - [ ] Summon the color picker by clicking a button beside the input
+  - [ ] Try to populate the picker with the currently-selected color, else default to black
+  - [ ] When the picker is ready, trigger change on the appropriate field, and then forward any changes to the target store prop
+- [ ] Visualize the selected color to the right of the picker in the form of a rectangle
+- [ ] Apply a pretty layout for color picker settings once it is fully functional
+
+
+## Stretch
+
+Upgrade so that we have world themes set by the GM, user themes set by individual users, import/export functionality, and access to all relevant CSS variables in our theme setup. Variables should be grouped and prioritized so that the most important / widest-reaching stuff is near the top. For colors, valid values should include all the usual color strings, as well as references to other variables. There should be the ability to reference either the color picker or a variable picker which knows all the existing color variables, excluding self, of course.
+
+etc.
+
 - [ ] Add a config setting which represents the configurable theme(s)
-  - client-scoped, config false, default null
-  - when null on init, migrate theme settings v1
+  - make clientCustomThemes client-scoped, config false, default null
+  - make worldCustomThemes client-scoped, config false, default null
+  - coalesce null themes to empty set when getting setting
 - [ ] Bump the legacy (null version) color picker settings to a legacy settings file to be invoked during settings registration
 - [ ] Lay out the color picker settings
   - This includes only the currently supported variables, plus the primary accent color
@@ -21,22 +42,6 @@
 - [ ] Upgrade color picker inputs to allow for using a color picker
 - [ ] Upgrade color picker inputs to allow for selecting another CSS variable from the collection
   - options include only the currently-changeable CSS variables
-
-## Config Setting - customThemes
-
-Add a config setting, client-scoped, config false, default null.
-When the setting is null, it should migrate the current colorpicker settings in as the array-of-1 themes for the initial version.
-This will be the initial mapping from
-
-```ts
-type CustomThemes = {
-  version: number;
-  themes: Tidy5eTheme[];
-};
-```
-
-## Stretch
-
 - [ ] Add import/export buttons
   - Export a Tidy5eTheme with `version: number` based on the current version number
   - Import a Tidy5eTheme with `version: number` included to hint at what migrations, if any, are needed
@@ -52,3 +57,62 @@ type CustomThemes = {
   - [ ] GM only, include radio buttons or exclusive button group to indicate scope
   - [ ] GM only, include column on the theme table indicating scope (world icon with "Everyone" | person icon with "Me")
 - [ ] Task out this project as a separate effort: expand theming out to all variables; apply grouping and sectioning
+
+
+## Config Setting - customThemes
+
+Add a config setting, client-scoped, config false, default null.
+When the setting is null, it should migrate the current colorpicker settings in as the array-of-1 themes for the initial version.
+This will be the initial mapping from
+
+```ts
+// theme.ts / the types file
+type CustomThemes = {
+  version: number;
+  themes: Tidy5eTheme[];
+};
+
+// theme.ts / where we keep applyTheme function
+export function getDefaultCustomThemesSetting(): CustomThemes {
+  return { version: 1, themes: [] };
+}
+
+// settings.ts
+// Theme Building
+clientCustomThemes: {
+  options: {
+    name: 'T5EK.ThemeSettings.MyThemes.Name',
+    hint: 'T5EK.ThemeSettings.MyThemes.Hint',
+    scope: 'client',
+    config: false,
+    default: null,
+    type: Object,
+  },
+  get() {
+    return (
+      FoundryAdapter.getGameSetting<CustomThemes | null>(
+        'clientCustomThemes'
+      ) ?? getDefaultCustomThemesSetting()
+    );
+  },
+},
+
+worldCustomThemes: {
+  options: {
+    name: 'T5EK.ThemeSettings.ThemesForEveryone.Name',
+    hint: 'T5EK.ThemeSettings.ThemesForEveryone.Hint',
+    scope: 'world',
+    config: false,
+    default: null,
+    type: Object,
+  },
+  get() {
+    return (
+      FoundryAdapter.getGameSetting<CustomThemes | null>(
+        'worldCustomThemes'
+      ) ?? getDefaultCustomThemesSetting()
+    );
+  },
+},
+
+```
