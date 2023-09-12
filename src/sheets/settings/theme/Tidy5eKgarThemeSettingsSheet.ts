@@ -1,6 +1,8 @@
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type { SvelteComponent } from 'svelte';
 import ThemeSettingsSheet from './ThemeSettingsSheet.svelte';
+import { getCurrentSettings } from 'src/settings/settings';
+import { writable } from 'svelte/store';
 
 declare var FormApplication: any;
 
@@ -30,7 +32,10 @@ export class Tidy5eKgarThemeSettingsSheet extends FormApplication {
     this.component = new ThemeSettingsSheet({
       target: node,
       props: {},
-      context: new Map<any, any>([['appId', this.appId]]),
+      context: new Map<any, any>([
+        ['store', writable(getCurrentSettings())],
+        ['appId', this.appId],
+      ]),
     });
   }
 }

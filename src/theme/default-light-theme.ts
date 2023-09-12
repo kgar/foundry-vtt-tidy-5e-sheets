@@ -2,7 +2,6 @@ import type { Tidy5eTheme } from 'src/types/theme';
 
 export const defaultLightTheme: Tidy5eTheme = {
   name: 'T5EK.Settings.SheetTheme.light',
-  version: 1,
   id: 'light',
   description: 'The default Tidy 5e Light theme.',
   variables: {

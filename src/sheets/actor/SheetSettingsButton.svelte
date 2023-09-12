@@ -1,6 +1,6 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { Tidy5eKgarSettingsSheet } from '../settings/Tidy5eKgarSettingsSheet';
+  import { Tidy5eKgarSettingsSheet } from 'src/sheets/settings/sheet/Tidy5eKgarSettingsSheet';
   import { CONSTANTS } from 'src/constants';
 
   export let initialTabId: string = CONSTANTS.TAB_SETTINGS_PLAYERS;

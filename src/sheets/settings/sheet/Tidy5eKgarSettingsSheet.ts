@@ -8,10 +8,10 @@ import {
   type Tidy5eSettingKey,
 } from 'src/settings/settings';
 import { debug } from 'src/utils/logging';
-import { Tidy5eCharacterSheet } from '../character/Tidy5eCharacterSheet';
-import { Tidy5eKgarItemSheet } from '../item/Tidy5eKgarItemSheet';
-import { Tidy5eNpcSheet } from '../npc/Tidy5eNpcSheet';
-import { Tidy5eVehicleSheet } from '../vehicle/Tidy5eKgarVehicleSheet';
+import { Tidy5eCharacterSheet } from 'src/sheets/character/Tidy5eCharacterSheet';
+import { Tidy5eKgarItemSheet } from 'src/sheets/item/Tidy5eKgarItemSheet';
+import { Tidy5eNpcSheet } from 'src/sheets/npc/Tidy5eNpcSheet';
+import { Tidy5eVehicleSheet } from 'src/sheets/vehicle/Tidy5eKgarVehicleSheet';
 import { CONSTANTS } from 'src/constants';
 
 export type SettingsSheetFunctions = {
@@ -118,7 +118,7 @@ export class Tidy5eKgarSettingsSheet extends FormApplication {
 
     if (settingsUpdated) {
       setTimeout(() => {
-        this.redrawOpenSheetsTidy5eSheets();
+        this.redrawOpenTidy5eSheets();
       }, 200);
     }
 
@@ -130,7 +130,7 @@ export class Tidy5eKgarSettingsSheet extends FormApplication {
     this.close();
   }
 
-  async redrawOpenSheetsTidy5eSheets() {
+  async redrawOpenTidy5eSheets() {
     game.actors
       .filter(
         (a: any) =>

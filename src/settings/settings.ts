@@ -10,8 +10,8 @@ import { applyTheme } from 'src/theme/theme';
 import { defaultLightTheme } from 'src/theme/default-light-theme';
 import { defaultDarkTheme } from 'src/theme/default-dark-theme';
 import { getCoreThemes } from 'src/theme/theme-reference';
-import { Tidy5eKgarSettingsSheet } from 'src/sheets/settings/Tidy5eKgarSettingsSheet';
-import { Tidy5eKgarThemeSettingsSheet } from 'src/theme/Tidy5eKgarThemeSettingsSheet';
+import { Tidy5eKgarSettingsSheet } from 'src/sheets/settings/sheet/Tidy5eKgarSettingsSheet';
+import { Tidy5eKgarThemeSettingsSheet } from 'src/sheets/settings/theme/Tidy5eKgarThemeSettingsSheet';
 
 export type Tidy5eSettings = {
   [settingKey: string]: Tidy5eSetting;

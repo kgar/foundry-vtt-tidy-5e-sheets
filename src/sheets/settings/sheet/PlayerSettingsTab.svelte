@@ -3,9 +3,9 @@
   import type { CurrentSettings } from 'src/settings/settings';
   import { getContext } from 'svelte';
   import type { Writable } from 'svelte/store';
-  import CheckboxSetting from './parts/CheckboxSetting.svelte';
-  import NumberInputSetting from './parts/NumberInputSetting.svelte';
-  import TextInputSetting from './parts/TextInputSetting.svelte';
+  import CheckboxSetting from 'src/sheets/settings/parts/CheckboxSetting.svelte';
+  import NumberInputSetting from 'src/sheets/settings/parts/NumberInputSetting.svelte';
+  import TextInputSetting from 'src/sheets/settings/parts/TextInputSetting.svelte';
 
   let store = getContext<Writable<CurrentSettings>>('store');
 
