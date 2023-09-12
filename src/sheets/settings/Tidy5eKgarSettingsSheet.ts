@@ -22,9 +22,9 @@ export type SettingsSheetFunctions = {
 
 export type SettingsSheetStore = Writable<CurrentSettings>;
 
-declare var Application: any;
+declare var FormApplication: any;
 
-export class Tidy5eKgarSettingsSheet extends Application {
+export class Tidy5eKgarSettingsSheet extends FormApplication {
   initialTabId: string;
 
   constructor(initialTabId: string, ...args: any[]) {
@@ -47,7 +47,7 @@ export class Tidy5eKgarSettingsSheet extends Application {
   }
 
   get template() {
-    return FoundryAdapter.getTemplate('empty-div-template.hbs');
+    return FoundryAdapter.getTemplate('empty-form-template.hbs');
   }
 
   component: SvelteComponent | undefined;

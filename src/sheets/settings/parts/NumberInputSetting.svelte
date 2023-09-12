@@ -19,7 +19,7 @@
   <div>
     <div class="description">
       <label for="{id}-{appId}">{localize(name)}</label>
-      <p class="notes">{localize(hint)}</p>
+      <p class="tidy5e-notes">{localize(hint)}</p>
     </div>
     <div class="settings-group">
       <article>

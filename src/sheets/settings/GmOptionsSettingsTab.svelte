@@ -142,7 +142,7 @@
   >
     <svelte:fragment slot="additional-inputs">
       <article>
-        <p class="notes">
+        <p class="tidy5e-notes">
           {localize('T5EK.Settings.CustomExhaustionEffect.tiers')}
         </p>
         <input

@@ -58,8 +58,10 @@ For the new setup, I would like the following to be true:
 
 - [ ] Review and streamline; consider data-driving settings much like Foundry does
 - [ ] Add settings-wide, case-insensitive, includes-based filter text input above the tabs
+- [ ] Standardize/componentize inputs to be used between Items and Settings UI. Ensure they look the same.
 
 ## Fix stuff
 
 - [x] Actor Profile show portrait / show token options are not working anymore; instead, it just opens the image selection menu.
-- [ ] Fix startup failure. The settings dialog must be a FormApplication or subclass in order to be opened from the main config dialog.
+- [x] Fix startup failure. The settings dialog must be a FormApplication or subclass in order to be opened from the main config dialog.
+- [ ] When opening the settings form, clone the current settings at that point in time. Use that as the point of comparison in order to track changes to the data set. This will prevent the form from undoing changes to settings which may have happened outside of the form, such as to the main Configuration dialog for color scheme.
