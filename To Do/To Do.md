@@ -383,7 +383,11 @@ Evaluate module integration and think about better (API-centric) ways to support
   - I would expect the icon to always be present, with a helpful tooltip, even when locked
   - What if there were three options: Unlocked, Locked, Confirm with Dialog
 - [ ] Gambet - https://discord.com/channels/732325252788387980/1116078321067892796/1149940337570217994 - Only other thing and this might be personal preference, but I can't tell you how many times I ask for an Intelligence check and my players accidentally roll Initiative instead. I don't know if there's any way to make it clearer. Maybe making the line between Ini and Str a bit thicker or something.
-- [ ] 
+- [ ] Task out some settings projects
+  - [ ] Review and streamline; consider data-driving settings much like Foundry does
+  - [ ] Add settings-wide, case-insensitive, includes-based filter text input above the tabs
+- [ ] Standardize/componentize inputs to be used between Items and Settings UI. Ensure they look the same.
+
 
 ## (Deferred for later; might solve itself) SCSS Revolution
 

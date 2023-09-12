@@ -1,6 +1,7 @@
 ## Notes
 
 The settings dialog
+
 - is too small
 - does not adhere to Tidy 5e theming
 - requires too many clicks to get to essential settings
@@ -15,6 +16,7 @@ The settings dialog
 ## To Do
 
 For the new setup, I would like the following to be true:
+
 - [x] Create svelte-based form application for viewing settings
   - [x] Be able to populate this form with content that is tabbed ~~and ordered in a data-driven way~~
 - [x] The settings dialog window defaults to a large surface area and provides ample room to look around
@@ -36,8 +38,7 @@ For the new setup, I would like the following to be true:
   - [x] Modules
   - [x] Homebrew
   - [x] Locks
-  - [ ] Info
-    - It could be an opportunity to put my author info, github repo links (submit an issue, suggest a feature, contribute), credits, ko-fi / patreon, etc.
+  - [x] Info
 - [x] Make the input IDs unique, because users can open multiple instances of the settings window; use context to provide the app ID
 - [x] Per the current maintainer of Tidy 5e, remove the Lazy Money integration settings: https://discord.com/channels/732325252788387980/1116078321067892796/1150857702252232714
 - [x] Componentize group inputs
@@ -46,11 +47,6 @@ For the new setup, I would like the following to be true:
 - [x] Allow the user to view the full suite of options from Configure Settings / Sheet Options menu button
 - [x] Ensure that non-client-level options are not available to regular users, GM-only
 
-## Stretch
-
-- [ ] Review and streamline; consider data-driving settings much like Foundry does
-- [ ] Add settings-wide, case-insensitive, includes-based filter text input above the tabs
-- [ ] Standardize/componentize inputs to be used between Items and Settings UI. Ensure they look the same.
 
 ## Fix stuff
 
