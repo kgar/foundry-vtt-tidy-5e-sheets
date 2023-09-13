@@ -309,11 +309,11 @@
       display: flex;
       height: 100%;
       flex-direction: column;
-      border-right: 0.0625rem solid var(--t5ek-light-color);
+      border-right: 0.0625rem solid var(--t5ek-faint-color);
     }
 
     .info-card-hint {
-      width: 17.4375rem;
+      width: var(--card-width);
       font-size: 0.75rem;
       padding: 0.25rem 0.5rem 0 0.5rem;
       font-style: italic;

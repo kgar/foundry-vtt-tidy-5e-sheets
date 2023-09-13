@@ -14,6 +14,7 @@
   import SpellSlotUses from '../spellbook/SpellSlotUses.svelte';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
+  import SpellbookItemCardContent from '../item-info-card/SpellbookItemCardContent.svelte';
 
   let store = getContext<Readable<ActorSheetContext>>('store');
   export let section: any;
@@ -62,6 +63,7 @@
         }}
         let:toggleSummary
         cssClass={FoundryAdapter.getSpellRowClasses(spell)}
+        itemCardContentTemplate={SpellbookItemCardContent}
       >
         <ItemTableCell primary={true}>
           <ItemUseButton item={spell} imgUrlOverride={spellImgUrl} />

@@ -1,8 +1,9 @@
 ## Fix this first
 
-- [ ] PC: The card header colors in Favorites are sometimes wrong, especially for pact spells
+- [x] PC: The card header colors in Favorites are sometimes wrong, especially for pact spells
+- [x] The item info card is not just hiding content when animating open or closed. Ensure that it's not squishing content and instead just hiding it.
 - [ ] Vehicle: the Description tab has 2 scrollbars
-- [ ] The item card has a weird white right border when flying out to the left in dark mode
+- [x] The item card has a weird white right border when flying out to the left in dark mode
 
 ## To Do
 
