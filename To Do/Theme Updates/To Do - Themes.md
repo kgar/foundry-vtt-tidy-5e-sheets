@@ -1,3 +1,9 @@
+## Fix this first
+
+- [ ] PC: The card header colors in Favorites are sometimes wrong, especially for pact spells
+- [ ] Vehicle: the Description tab has 2 scrollbars
+- [ ] The item card has a weird white right border when flying out to the left in dark mode
+
 ## To Do
 
 - [x] Relocate theme management to its own config menu
