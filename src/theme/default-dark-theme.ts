@@ -119,8 +119,6 @@ export const defaultDarkTheme: Tidy5eTheme = {
     '--t5ek-grid-pane-favorite-icon-color': 'rgba(0, 200, 100, 1)',
     '--t5ek-settings-dialog-box-shadow-color': 'rgba(0, 0, 0, 0.75)',
     '--t5ek-sheet-lock-icon-hover-color': '#fff',
-    '--t5ek-scrollbar-thumb': '#782e22',
-    '--t5ek-scrollbar-track': '#0000',
     '--t5ek-settings-dialog-border-color': '#ff6400',
     '--t5ek-spell-level-button-border-color': '#c9c7b8',
     '--t5ek-ability-modifiers-label-text-color': '#fff',

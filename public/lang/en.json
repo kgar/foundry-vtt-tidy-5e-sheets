@@ -475,6 +475,10 @@
     "name": "Enable Color Picker",
     "hint": "Enable/Disable the coloration picker"
   },
+  "T5EK.Settings.ColorPickerPrimaryAccent": {
+    "name": "Color Picker for 'Primary Accent'",
+    "hint": "Select what color you want to use for 'Primary Accent'. The transparency value '#00000000' is equivalent to disabling the color for the current context."
+  },
   "T5EK.Settings.ColorPickerEquipped": {
     "name": "Color Picker for 'Equipped'",
     "hint": "Select what color you want to use for 'Equipped'. The transparency value '#00000000' is equivalent to disabling the color for the current context."

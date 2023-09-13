@@ -447,14 +447,6 @@ export const themeVariables = {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-scrollbar-thumb': {
-    type: 'todo',
-    group: 'todo',
-  },
-  '--t5ek-scrollbar-track': {
-    type: 'todo',
-    group: 'todo',
-  },
   '--t5ek-settings-dialog-border-color': {
     type: 'todo',
     group: 'todo',

@@ -38,4 +38,9 @@ export class Tidy5eKgarThemeSettingsSheet extends FormApplication {
       ]),
     });
   }
+
+  close(...args: any[]) {
+    this.component?.$destroy();
+    return super.close(...args);
+  }
 }

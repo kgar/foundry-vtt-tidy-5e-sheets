@@ -1,25 +1,27 @@
-## Fix this first
-
-- [x] PC: The card header colors in Favorites are sometimes wrong, especially for pact spells
-- [x] The item info card is not just hiding content when animating open or closed. Ensure that it's not squishing content and instead just hiding it.
-- [ ] Vehicle: the Description tab has 2 scrollbars
-- [x] The item card has a weird white right border when flying out to the left in dark mode
-
 ## To Do
 
 - [x] Relocate theme management to its own config menu
-- [ ] Add primary accent color to color picker settings
-- [ ] Implement the existing color picker settings, plus primary accent color, using minimal layout and focusing entirely on functionality
-- [ ] Make them live-update the page via setting props on the HTML node
+- [x] Add primary accent color to color picker settings
+- [x] Implement the existing color picker settings, plus primary accent color, using minimal layout and focusing entirely on functionality
+- [x] Make them live-update the page via setting props on the HTML node
 - [ ] Add ability to save changes
+- [ ] Apply theme overrides when applying the theme, if the box is checked. Put a TODO comment there about how this feature is temporary and will be replaced by full-fledged alternate themes.
 - [ ] When closing the dialog, remove all tidy css variables from the HTML node
 - [ ] Allow hex, hex-alpha, rgb, rgba, hsl, hsla
 - [ ] Get a non-foundry-module color picker and leverage it
   - [ ] Summon the color picker by clicking a button beside the input
   - [ ] Try to populate the picker with the currently-selected color, else default to black
   - [ ] When the picker is ready, trigger change on the appropriate field, and then forward any changes to the target store prop
-- [ ] Visualize the selected color to the right of the picker in the form of a rectangle
 - [ ] Apply a pretty layout for color picker settings once it is fully functional
+  - [ ] Visualize the selected color to the right of the picker in the form of a rectangle
+  - [ ] the rest
+
+## Fixit
+
+- [x] PC: The card header colors in Favorites are sometimes wrong, especially for pact spells
+- [x] The item info card is not just hiding content when animating open or closed. Ensure that it's not squishing content and instead just hiding it.
+- [x] Vehicle: the Description tab has 2 scrollbars
+- [x] The item card has a weird white right border when flying out to the left in dark mode
 
 
 ## Stretch

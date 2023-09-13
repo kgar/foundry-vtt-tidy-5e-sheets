@@ -1371,6 +1371,19 @@ export function createSettings() {
         },
       },
 
+      colorPickerPrimaryAccent: {
+        options: {
+          name: 'T5EK.Settings.ColorPickerPrimaryAccent.name',
+          hint: 'T5EK.Settings.ColorPickerPrimaryAccent.hint',
+          scope: 'client',
+          type: String,
+          default: RGBAToHexAFromColor(255, 100, 0, 1),
+          config: false,
+        },
+        get() {
+          return FoundryAdapter.getGameSetting<string>('colorPickerEquipped');
+        },
+      },
       colorPickerEquipped: {
         options: {
           name: 'T5EK.Settings.ColorPickerEquipped.name',
