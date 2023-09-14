@@ -9,7 +9,7 @@ import type {
 import { applyTheme } from 'src/theme/theme';
 import { defaultLightTheme } from 'src/theme/default-light-theme';
 import { defaultDarkTheme } from 'src/theme/default-dark-theme';
-import { getCoreThemes } from 'src/theme/theme-reference';
+import { getCoreThemes, themeVariables } from 'src/theme/theme-reference';
 import { Tidy5eKgarSettingsSheet } from 'src/sheets/settings/sheet/Tidy5eKgarSettingsSheet';
 import { Tidy5eKgarThemeSettingsSheet } from 'src/sheets/settings/theme/Tidy5eKgarThemeSettingsSheet';
 
@@ -84,6 +84,7 @@ export type Tidy5eSetting = {
     onChange?: (data: any) => void;
   };
   get: () => any;
+  representsCssVariable?: keyof typeof themeVariables;
 };
 
 export function createSettings() {
@@ -1383,6 +1384,7 @@ export function createSettings() {
         get() {
           return FoundryAdapter.getGameSetting<string>('colorPickerEquipped');
         },
+        representsCssVariable: '--t5ek-primary-accent-color',
       },
       colorPickerEquipped: {
         options: {
@@ -1396,6 +1398,7 @@ export function createSettings() {
         get() {
           return FoundryAdapter.getGameSetting<string>('colorPickerEquipped');
         },
+        representsCssVariable: '--t5ek-equipped-background',
       },
       colorPickerEquippedOutline: {
         options: {
@@ -1411,6 +1414,7 @@ export function createSettings() {
             'colorPickerEquippedOutline'
           );
         },
+        representsCssVariable: '--t5ek-equipped-item-grid-tile-accent-color',
       },
       colorPickerEquippedAccent: {
         options: {
@@ -1426,6 +1430,7 @@ export function createSettings() {
             'colorPickerEquippedAccent'
           );
         },
+        representsCssVariable: '--t5ek-equipped-item-grid-tile-accent-color',
       },
 
       colorPickerPrepared: {
@@ -1440,6 +1445,7 @@ export function createSettings() {
         get() {
           return FoundryAdapter.getGameSetting<string>('colorPickerPrepared');
         },
+        representsCssVariable: '--t5ek-prepared-background',
       },
       colorPickerPreparedOutline: {
         options: {
@@ -1455,6 +1461,7 @@ export function createSettings() {
             'colorPickerPreparedOutline'
           );
         },
+        representsCssVariable: '--t5ek-prepared-item-grid-tile-outline-color',
       },
       colorPickerPreparedAccent: {
         options: {
@@ -1470,6 +1477,7 @@ export function createSettings() {
             'colorPickerPreparedAccent'
           );
         },
+        representsCssVariable: '--t5ek-prepared-item-grid-tile-accent-color',
       },
 
       colorPickerPact: {
@@ -1484,6 +1492,7 @@ export function createSettings() {
         get() {
           return FoundryAdapter.getGameSetting<string>('colorPickerPact');
         },
+        representsCssVariable: '--t5ek-pact-background',
       },
       colorPickerPactOutline: {
         options: {
@@ -1499,6 +1508,7 @@ export function createSettings() {
             'colorPickerPactOutline'
           );
         },
+        representsCssVariable: '--t5ek-pact-outline-color',
       },
       colorPickerPactAccent: {
         options: {
@@ -1512,6 +1522,7 @@ export function createSettings() {
         get() {
           return FoundryAdapter.getGameSetting<string>('colorPickerPactAccent');
         },
+        representsCssVariable: '--t5ek-pact-accent-color',
       },
 
       colorPickerAtWill: {
@@ -1526,6 +1537,7 @@ export function createSettings() {
         get() {
           return FoundryAdapter.getGameSetting<string>('colorPickerAtWill');
         },
+        representsCssVariable: '--t5ek-atwill-background',
       },
       colorPickerAtWillOutline: {
         options: {
@@ -1541,6 +1553,7 @@ export function createSettings() {
             'colorPickerAtWillOutline'
           );
         },
+        representsCssVariable: '--t5ek-atwill-outline-color',
       },
       colorPickerAtWillAccent: {
         options: {
@@ -1556,6 +1569,7 @@ export function createSettings() {
             'colorPickerAtWillAccent'
           );
         },
+        representsCssVariable: '--t5ek-atwill-accent-color',
       },
 
       colorPickerInnate: {
@@ -1570,6 +1584,7 @@ export function createSettings() {
         get() {
           return FoundryAdapter.getGameSetting<string>('colorPickerInnate');
         },
+        representsCssVariable: '--t5ek-innate-background',
       },
       colorPickerInnateOutline: {
         options: {
@@ -1585,6 +1600,7 @@ export function createSettings() {
             'colorPickerInnateOutline'
           );
         },
+        representsCssVariable: '--t5ek-innate-outline',
       },
       colorPickerInnateAccent: {
         options: {
@@ -1600,6 +1616,7 @@ export function createSettings() {
             'colorPickerInnateAccent'
           );
         },
+        representsCssVariable: '--t5ek-innate-accent',
       },
 
       colorPickerAlwaysPrepared: {
@@ -1616,6 +1633,7 @@ export function createSettings() {
             'colorPickerAlwaysPrepared'
           );
         },
+        representsCssVariable: '--t5ek-alwaysprepared-background',
       },
       colorPickerAlwaysPreparedOutline: {
         options: {
@@ -1631,6 +1649,7 @@ export function createSettings() {
             'colorPickerAlwaysPreparedOutline'
           );
         },
+        representsCssVariable: '--t5ek-alwaysprepared-outline-color',
       },
       colorPickerAlwaysPreparedAccent: {
         options: {
@@ -1646,6 +1665,7 @@ export function createSettings() {
             'colorPickerAlwaysPreparedAccent'
           );
         },
+        representsCssVariable: '--t5ek-alwaysprepared-accent-color',
       },
 
       // ===============================

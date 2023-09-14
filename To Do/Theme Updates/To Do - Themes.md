@@ -5,9 +5,8 @@
 - [x] Implement the existing color picker settings, plus primary accent color, using minimal layout and focusing entirely on functionality
 - [x] Make them live-update the page via setting props on the HTML node
 - [x] Add ability to save changes
-- [ ] Apply theme overrides when applying the theme, if the box is checked. Put a TODO comment there about how this feature is temporary and will be replaced by full-fledged alternate themes.
-- [ ] When closing the dialog, remove all tidy css variables from the HTML node
-- [ ] Allow hex, hex-alpha, rgb, rgba, hsl, hsla
+- [x] Apply theme overrides when applying the theme, if the box is checked. Put a TODO comment there about how this feature is temporary and will be replaced by full-fledged alternate themes.
+- [x] When closing the dialog, remove all tidy css variables from the HTML node
 - [ ] Get a non-foundry-module color picker and leverage it
   - [ ] Summon the color picker by clicking a button beside the input
   - [ ] Try to populate the picker with the currently-selected color, else default to black
@@ -19,6 +18,8 @@
 ## Refine
 
 - [ ] Pull css variable knowledge into the setting provider. For the type, use `keyof` or a similar thing to track actual theme reference variables
+- [ ] Move setting (and theme types, if any are still lingering) out of script files and into dedicated type files to help prevent circular dependencies and allow FoundryAdapter to take some more responsibility over Foundry API stuff.
+- [ ] Extract the sheet redrawing function to FoundryAdapter
 
 ## Fixit
 
@@ -33,6 +34,8 @@ Upgrade so that we have world themes set by the GM, user themes set by individua
 
 etc.
 
+- [ ] Allow hex, hex-alpha, rgb, rgba, hsl, hsla
+  - [ ] Validate fields?
 - [ ] Add a config setting which represents the configurable theme(s)
   - make clientCustomThemes client-scoped, config false, default null
   - make worldCustomThemes client-scoped, config false, default null
