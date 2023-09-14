@@ -4,7 +4,7 @@
 - [x] Add primary accent color to color picker settings
 - [x] Implement the existing color picker settings, plus primary accent color, using minimal layout and focusing entirely on functionality
 - [x] Make them live-update the page via setting props on the HTML node
-- [ ] Add ability to save changes
+- [x] Add ability to save changes
 - [ ] Apply theme overrides when applying the theme, if the box is checked. Put a TODO comment there about how this feature is temporary and will be replaced by full-fledged alternate themes.
 - [ ] When closing the dialog, remove all tidy css variables from the HTML node
 - [ ] Allow hex, hex-alpha, rgb, rgba, hsl, hsla
@@ -16,13 +16,16 @@
   - [ ] Visualize the selected color to the right of the picker in the form of a rectangle
   - [ ] the rest
 
+## Refine
+
+- [ ] Pull css variable knowledge into the setting provider. For the type, use `keyof` or a similar thing to track actual theme reference variables
+
 ## Fixit
 
 - [x] PC: The card header colors in Favorites are sometimes wrong, especially for pact spells
 - [x] The item info card is not just hiding content when animating open or closed. Ensure that it's not squishing content and instead just hiding it.
 - [x] Vehicle: the Description tab has 2 scrollbars
 - [x] The item card has a weird white right border when flying out to the left in dark mode
-
 
 ## Stretch
 
@@ -66,7 +69,6 @@ etc.
   - [ ] GM only, include radio buttons or exclusive button group to indicate scope
   - [ ] GM only, include column on the theme table indicating scope (world icon with "Everyone" | person icon with "Me")
 - [ ] Task out this project as a separate effort: expand theming out to all variables; apply grouping and sectioning
-
 
 ## Config Setting - customThemes
 
