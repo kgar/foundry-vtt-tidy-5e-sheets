@@ -7,10 +7,10 @@
 - [x] Add ability to save changes
 - [x] Apply theme overrides when applying the theme, if the box is checked. Put a TODO comment there about how this feature is temporary and will be replaced by full-fledged alternate themes.
 - [x] When closing the dialog, remove all tidy css variables from the HTML node
-- [ ] Get a non-foundry-module color picker and leverage it
-  - [ ] Summon the color picker by clicking a button beside the input
-  - [ ] Try to populate the picker with the currently-selected color, else default to black
-  - [ ] When the picker is ready, trigger change on the appropriate field, and then forward any changes to the target store prop
+- [x] Get a non-foundry-module color picker and leverage it
+  - [x] Summon the color picker by clicking a button beside the input
+  - [x] Try to populate the picker with the currently-selected color, else default
+  - [x] When the picker is ready, trigger change on the appropriate field, and then forward any changes to the target store prop
 - [ ] Apply a pretty layout for color picker settings once it is fully functional
   - [ ] Visualize the selected color to the right of the picker in the form of a rectangle
   - [ ] the rest
@@ -18,8 +18,13 @@
 ## Refine
 
 - [x] Pull css variable knowledge into the setting provider. For the type, use `keyof` or a similar thing to track actual theme reference variables
+- [ ] Don't change user input for them when they are in the middle of typing a color. This is happening indirectly because of trying to parse to the color picker, and the color picker is reciprocating the input event.
 - [ ] Move setting (and theme types, if any are still lingering) out of script files and into dedicated type files to help prevent circular dependencies and allow FoundryAdapter to take some more responsibility over Foundry API stuff.
 - [ ] Extract the sheet redrawing function to FoundryAdapter
+- [ ] Upgrade the Cog button for Sheet Settings on the sheet to instead feature vertical dots and show a menu
+  - [ ] Theme dropdown (apply theme on change)
+  - [ ] Sheet Settings option
+  - [ ] Theme Settings option
 
 ## Fixit
 
@@ -27,6 +32,29 @@
 - [x] The item info card is not just hiding content when animating open or closed. Ensure that it's not squishing content and instead just hiding it.
 - [x] Vehicle: the Description tab has 2 scrollbars
 - [x] The item card has a weird white right border when flying out to the left in dark mode
+- [ ] Fix error related to needing to provide an _updateObject implementation in the theme settings form.
+- [ ] The color picker doesn't respond well to dark mode.
+
+### update object error
+
+```
+foundry.js:5919 Error: A subclass of the FormApplication must implement the _updateObject method.
+    at Tidy5eKgarThemeSettingsSheet._updateObject (foundry.js:6018:11)
+    at Tidy5eKgarThemeSettingsSheet._onSubmit (foundry.js:5916:18)
+
+
+// Offending code
+  /**
+   * This method is called upon form submission after form data is validated
+   * @param {Event} event       The initial triggering submission event
+   * @param {object} formData   The object of validated form data with which to update the object
+   * @returns {Promise}         A Promise which resolves once the update operation has completed
+   * @abstract
+   */
+  async _updateObject(event, formData) {
+    throw new Error("A subclass of the FormApplication must implement the _updateObject method.");
+  }
+```
 
 ## Stretch
 

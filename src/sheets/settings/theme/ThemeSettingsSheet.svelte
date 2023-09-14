@@ -6,6 +6,8 @@
   import type { Writable } from 'svelte/store';
   import type { ThemeSettingsSheetFunctions } from './Tidy5eKgarThemeSettingsSheet';
   import type { ThemeColorSetting } from 'src/types/theme';
+  import ColorPicker from 'svelte-awesome-color-picker';
+  import { Colord } from 'colord';
 
   let store = getContext<Writable<CurrentSettings>>('store');
   let appId = getContext<string>('appId');
@@ -49,6 +51,18 @@
     clearCssVariables();
   });
 
+  function settingValueToHexaString(value: unknown | undefined) {
+    return colorToHexaString(new Colord(value?.toString() ?? ''));
+  }
+
+  function colorToHexaString(color: Colord | undefined): string {
+    if (color?.isValid()) {
+      return color.toHex();
+    }
+
+    return '';
+  }
+
   const localize = FoundryAdapter.localize;
 </script>
 
@@ -70,16 +84,26 @@
 
 {#each themeableColors as colorToConfigure}
   <div>
-    <label for="{colorToConfigure.key}-{appId}">
-      {localize(colorToConfigure.name)}
-    </label>
-    <input
-      type="text"
-      id="{colorToConfigure.key}-{appId}"
-      bind:value={$store[colorToConfigure.key]}
-      on:change={(ev) =>
-        setProperty(colorToConfigure.cssVariable, ev.currentTarget.value)}
-    />
+    <div>
+      <ColorPicker
+        label={localize(colorToConfigure.name)}
+        hex={settingValueToHexaString($store[colorToConfigure.key])}
+        on:input={(ev) =>
+          store.update((settings) => {
+            return {
+              ...settings,
+              [colorToConfigure.key]: colorToHexaString(ev.detail.color),
+            };
+          })}
+      />
+      <input
+        type="text"
+        id="{colorToConfigure.key}-{appId}"
+        bind:value={$store[colorToConfigure.key]}
+        on:change={(ev) =>
+          setProperty(colorToConfigure.cssVariable, ev.currentTarget.value)}
+      />
+    </div>
     {localize(colorToConfigure.hint)}
   </div>
 {/each}

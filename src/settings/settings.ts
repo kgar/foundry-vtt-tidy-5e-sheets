@@ -1385,7 +1385,9 @@ export function createSettings() {
           config: false,
         },
         get() {
-          return FoundryAdapter.getGameSetting<string>('colorPickerEquipped');
+          return FoundryAdapter.getGameSetting<string>(
+            'colorPickerPrimaryAccent'
+          );
         },
         representsCssVariable: '--t5ek-primary-accent-color',
       },
