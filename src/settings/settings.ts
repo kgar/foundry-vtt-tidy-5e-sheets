@@ -84,6 +84,9 @@ export type Tidy5eSetting = {
     onChange?: (data: any) => void;
   };
   get: () => any;
+  /**
+   * Denotes which CSS Variable is represented by the target setting. Used for color picking.
+   */
   representsCssVariable?: keyof typeof themeVariables;
 };
 
