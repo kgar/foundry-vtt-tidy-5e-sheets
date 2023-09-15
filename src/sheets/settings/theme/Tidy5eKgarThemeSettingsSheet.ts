@@ -23,7 +23,7 @@ export class Tidy5eKgarThemeSettingsSheet extends FormApplication {
     return {
       ...super.defaultOptions,
       height: 750,
-      title: FoundryAdapter.localize('T5EK.ThemeSettings.SheetMenu.title'),
+      title: 'T5EK.ThemeSettings.SheetMenu.title',
       width: 750,
       classes: ['tidy5e-kgar', 'settings'],
       submitOnClose: false,

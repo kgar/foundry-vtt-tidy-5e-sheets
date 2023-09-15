@@ -106,7 +106,7 @@ export function createSettings() {
       theme: {
         options: {
           name: `T5EK.ThemeSettings.SheetMenu.name`,
-          label: 'T5EK.ThemeSettings.SheetMenu.label',
+          label: 'T5EK.ThemeSettings.SheetMenu.buttonLabel',
           hint: `T5EK.ThemeSettings.SheetMenu.hint`,
           icon: 'fas fa-palette',
           type: Tidy5eKgarThemeSettingsSheet,

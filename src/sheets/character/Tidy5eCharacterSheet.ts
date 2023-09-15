@@ -193,16 +193,18 @@ export class Tidy5eCharacterSheet extends dnd5e.applications.actor
     return this._filters[setName]?.has(filterName) === true;
   }
 
-  async render(force: boolean, ...args: any[]) {
+  render(force = false, ...args: any[]) {
     if (force) {
       this.component?.$destroy();
       super.render(force, ...args);
-      return;
+      return this;
     }
 
     applyTitleToWindow(this.title, this.element.get(0));
-    const context = await this.getContext();
-    this.store.update(() => context);
+    this.getContext().then((context) => {
+      this.store.update(() => context);
+    });
+    return this;
   }
 
   _getHeaderButtons() {

@@ -219,19 +219,21 @@ export class Tidy5eKgarItemSheet extends dnd5e.applications.item.ItemSheet5e {
   }
 
   // TODO: Extract this implementation somewhere. Or at least part of it.
-  async render(force = false, options = {}) {
+  render(force = false, options = {}) {
     if (force) {
       this.component?.$destroy();
       super.render(force, options);
       this.makeWindowAutoHeightForDetailsTab(this.selectedTabId);
-      return;
+      return this;
     }
 
     applyTitleToWindow(this.title, this.element.get(0));
-    await this.updateContext();
-    setTimeout(() => {
-      this.makeWindowAutoHeightForDetailsTab(this.selectedTabId);
+    this.updateContext().then(() => {
+      setTimeout(() => {
+        this.makeWindowAutoHeightForDetailsTab(this.selectedTabId);
+      });
     });
+    return this;
   }
 
   private async updateContext() {

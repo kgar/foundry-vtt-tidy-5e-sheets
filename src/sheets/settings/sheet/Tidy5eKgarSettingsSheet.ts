@@ -93,14 +93,15 @@ export class Tidy5eKgarSettingsSheet extends FormApplication {
     return super.close(options);
   }
 
-  async render(force: boolean, ...args: any[]) {
+  render(force = false, ...args: any[]) {
     if (force) {
       this.component?.$destroy();
       super.render(force, ...args);
-      return;
+      return this;
     }
 
     // TODO: If there's context to refresh, do it here
+    return this;
   }
 
   async applyChangedSettings(newSettings: CurrentSettings) {

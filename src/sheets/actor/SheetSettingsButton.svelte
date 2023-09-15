@@ -2,18 +2,19 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { Tidy5eKgarSettingsSheet } from 'src/sheets/settings/sheet/Tidy5eKgarSettingsSheet';
   import { CONSTANTS } from 'src/constants';
+  import { getApi } from 'src/api/api';
 
   export let initialTabId: string = CONSTANTS.TAB_SETTINGS_PLAYERS;
 
   const localize = FoundryAdapter.localize;
+  const api = getApi();
 </script>
 
 <button
   type="button"
   class="sheet-settings-btn"
   title={localize('T5EK.Settings.SheetMenu.label')}
-  on:click={() =>
-    new Tidy5eKgarSettingsSheet(initialTabId, undefined).render(true)}
+  on:click={() => api.openSheetSettings(initialTabId)}
   ><i class="fas fa-cog" /></button
 >
 

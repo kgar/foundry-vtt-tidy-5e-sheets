@@ -31,6 +31,7 @@ export const FoundryAdapter = {
   onGetActiveEffectContextOptions(func: (...args: any[]) => void) {
     Hooks.on('dnd5e.getActiveEffectContextOptions', func);
   },
+  // TODO: to the API, rename as getTidy5eTemplate
   getTemplate(templateName: string) {
     return `modules/${CONSTANTS.MODULE_ID}/templates/${templateName}`;
   },

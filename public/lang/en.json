@@ -601,6 +601,14 @@
     "name": "Permanently enable unlock on Vehicle Sheet if you are a GM",
     "hint": "Shouldn't the GM be able to edit Vehicle sheets even when locked ? If it's not a bug then is it possible to have Vehicle sheets unlocked by default ? Having to unlocked Vehicle sheets to just delete active effects or items every time has become tedious"
   },
+  "T5EK.ThemeSettings": {
+    "SheetMenu": {
+      "name": "Theme",
+      "buttonLabel": "Theme Settings",
+      "hint": "Customize the colors of Tidy 5e Sheets.",
+      "title": "Theme Settings"
+    }
+  },
 
   "T5EK.WindowHeaderSheetSettingsTooltip": "Open Tidy 5e Sheet Settings",
   "T5EK.FavoriteSpellLevelLabel": "Spell Level {number}",

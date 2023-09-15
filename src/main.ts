@@ -13,6 +13,8 @@ import type { globalThisDnd5e } from './types/dnd5e';
 import { Tidy5eKgarItemSheet } from './sheets/item/Tidy5eKgarItemSheet';
 import { Tidy5eNpcSheet } from './sheets/npc/Tidy5eNpcSheet';
 import { Tidy5eVehicleSheet } from './sheets/vehicle/Tidy5eKgarVehicleSheet';
+import { CONSTANTS } from './constants';
+import { getApi } from './api/api';
 
 declare global {
   var Dialog: typeof ClientDialog;
@@ -46,6 +48,8 @@ Items.registerSheet('dnd5e', Tidy5eKgarItemSheet, {
 FoundryAdapter.onReady(async () => {
   initSettings();
 
+  game.modules.get(CONSTANTS.MODULE_ID).API = getApi();
+
   // TODO: Remove after debugging:
   const compareActorSamples = import.meta.env.VITE_COMPARE_SAMPLE_ACTORS;
   if (compareActorSamples === 'true') {
@@ -61,6 +65,10 @@ FoundryAdapter.onReady(async () => {
       import.meta.env.VITE_ITEM_LEFT_ID,
       import.meta.env.VITE_ITEM_RIGHT_ID
     );
+  }
+
+  if (import.meta.env.VITE_OPEN_THEME_SETTINGS_ON_START === 'true') {
+    getApi().openThemeSettings();
   }
 });
 

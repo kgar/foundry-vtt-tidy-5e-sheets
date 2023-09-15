@@ -131,7 +131,7 @@ export class Tidy5eVehicleSheet extends dnd5e.applications.actor.ActorSheet5eVeh
     this._tabs[0].active = this.selectedTabId;
   }
 
-  async render(force: boolean, ...args: any[]) {
+  async render(force = false, ...args: any[]) {
     if (force) {
       this.component?.$destroy();
       super.render(force, ...args);
