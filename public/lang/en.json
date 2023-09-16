@@ -138,7 +138,6 @@
   "T5EK.Settings.NpcLabel": "NPCs",
   "T5EK.Settings.VehicleLabel": "Vehicles",
   "T5EK.Settings.MulticlassSpellbookFilterLabel": "Multiclass Spellbook Filter",
-  "T5EK.Settings.ColorPickerLabel": "Customize the color (It's advisable to install the module 'Color Settings')",
 
   "T5EK.Settings.SheetMenu": {
     "name": "Tidy Sheet Settings",
@@ -606,7 +605,10 @@
       "name": "Theme",
       "buttonLabel": "Theme Settings",
       "hint": "Customize the colors of Tidy 5e Sheets.",
-      "title": "Theme Settings"
+    },
+    "Sheet": {
+      "title": "Theme Settings",
+      "header": "Custom Theme Colors"
     }
   },
 

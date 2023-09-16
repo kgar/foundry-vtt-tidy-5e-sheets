@@ -16,15 +16,14 @@ export type ThemeSettingsSheetFunctions = {
 };
 
 export class Tidy5eKgarThemeSettingsSheet extends FormApplication {
-  unchangedSettings: CurrentSettings;
   themeableColors: ThemeColorSetting[] = getThemeableColors();
 
   static get defaultOptions() {
     return {
       ...super.defaultOptions,
       height: 750,
-      title: 'T5EK.ThemeSettings.SheetMenu.title',
-      width: 750,
+      title: 'T5EK.ThemeSettings.Sheet.title',
+      width: 400,
       classes: ['tidy5e-kgar', 'settings'],
       submitOnClose: false,
       minimizable: true,

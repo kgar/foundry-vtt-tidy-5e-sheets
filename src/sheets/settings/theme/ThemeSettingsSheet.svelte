@@ -66,49 +66,89 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-<!-- TODO: npm i svelte-awesome-color-picker -->
+<section class="fred">
+  <div class="fred-2">
+    <h2>{localize('T5EK.ThemeSettings.Sheet.header')}</h2>
 
-<h3>{localize('TIDY5E.Settings.ColorPickerLabel')}</h3>
-
-<div>
-  <input
-    type="checkbox"
-    data-dtype="boolean"
-    id="colorPickerEnabled-{appId}"
-    bind:checked={$store.colorPickerEnabled}
-  />
-
-  {localize('TIDY5E.Settings.ColorPickerEnabled.name')}
-  {localize('TIDY5E.Settings.ColorPickerEnabled.hint')}
-</div>
-
-{#each themeableColors as colorToConfigure}
-  <div>
     <div>
-      <ColorPicker
-        label={localize(colorToConfigure.name)}
-        hex={settingValueToHexaString($store[colorToConfigure.key])}
-        on:input={(ev) =>
-          store.update((settings) => {
-            return {
-              ...settings,
-              [colorToConfigure.key]: colorToHexaString(ev.detail.color),
-            };
-          })}
-      />
       <input
-        type="text"
-        id="{colorToConfigure.key}-{appId}"
-        bind:value={$store[colorToConfigure.key]}
-        on:change={(ev) =>
-          setProperty(colorToConfigure.cssVariable, ev.currentTarget.value)}
+        type="checkbox"
+        data-dtype="boolean"
+        id="colorPickerEnabled-{appId}"
+        bind:checked={$store.colorPickerEnabled}
       />
-    </div>
-    {localize(colorToConfigure.hint)}
-  </div>
-{/each}
 
-<button type="button" name="save" class="save-changes-btn" on:click={save}>
-  <i class="fas fa-save" />
-  {localize('T5EK.SaveChanges')}
-</button>
+      <label for="colorPickerEnabled-{appId}">
+        {localize('TIDY5E.Settings.ColorPickerEnabled.name')}
+      </label>
+    </div>
+
+    <div class="fred-4">
+      {#each themeableColors as colorToConfigure}
+        <div>
+          <label for="{colorToConfigure.key}-{appId}">
+            {localize(colorToConfigure.name)}
+          </label>
+          <div class="flex-row align-items-center extra-small-gap">
+            <input
+              type="text"
+              id="{colorToConfigure.key}-{appId}"
+              bind:value={$store[colorToConfigure.key]}
+              on:change={(ev) =>
+                setProperty(
+                  colorToConfigure.cssVariable,
+                  ev.currentTarget.value
+                )}
+              style="flex-basis: 8rem"
+            />
+            <ColorPicker
+              label=""
+              hex={settingValueToHexaString($store[colorToConfigure.key])}
+              on:input={(ev) =>
+                store.update((settings) => {
+                  return {
+                    ...settings,
+                    [colorToConfigure.key]: colorToHexaString(ev.detail.color),
+                  };
+                })}
+            />
+          </div>
+        </div>
+      {/each}
+    </div>
+  </div>
+  <div class="fred-3">
+    <button type="button" name="save" class="save-changes-btn" on:click={save}>
+      <i class="fas fa-save" />
+      {localize('T5EK.SaveChanges')}
+    </button>
+  </div>
+</section>
+
+<style lang="scss">
+  .fred {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    height: 100%;
+    padding: 0.5rem 0 0.5rem 0.5rem;
+  }
+
+  .fred-2 {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .fred-3 {
+    flex: 0;
+  }
+
+  .fred-4 {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 1rem;
+  }
+</style>
