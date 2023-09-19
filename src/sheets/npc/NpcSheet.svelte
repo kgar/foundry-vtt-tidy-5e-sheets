@@ -79,7 +79,7 @@
   if (!SettingsProvider.settings.journalTabNPCDisabled.get()) {
     tabs.push({
       id: CONSTANTS.TAB_NPC_JOURNAL,
-      displayName: 'TIDY5E.Journal',
+      displayName: 'T5EK.Journal',
       content: {
         component: ActorJournalTab,
       },
@@ -125,12 +125,12 @@
         {#if $store.tokenState === 'linked'}
           <i
             class="link-state fas fa-link"
-            title={localize('TIDY5E.TokenLinked')}
+            title={localize('T5EK.TokenLinked')}
           />
         {:else if $store.tokenState === 'unlinked'}
           <i
             class="link-state fas fa-unlink"
-            title={localize('TIDY5E.TokenUnlinked')}
+            title={localize('T5EK.TokenUnlinked')}
           />
         {/if}
 
@@ -199,7 +199,7 @@
               >
               <span
                 class="environment"
-                title="{localize('TIDY5E.Environment')}: {$store.system.details
+                title="{localize('T5EK.Environment')}: {$store.system.details
                   .environment}"
               >
                 <i class="fas fa-tree" />
@@ -229,7 +229,7 @@
               on:click={() =>
                 new Tidy5eActorOriginSummaryConfig($store.actor).render(true)}
               class="origin-summary-tidy"
-              title={localize('TIDY5E.OriginSummaryConfig')}
+              title={localize('T5EK.OriginSummaryConfig')}
             >
               <i class="fas fa-cog" />
             </a>

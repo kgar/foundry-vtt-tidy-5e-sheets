@@ -15,18 +15,23 @@
 
   export let themeableColors: ThemeColorSetting[];
 
+  const eyeDropperEnabled = 'EyeDropper' in window;
+
   $: {
     if ($store.colorPickerEnabled) {
       themeableColors.forEach((color) =>
-        setProperty(color.cssVariable, $store[color.key]?.toString())
+        trySetCssVariable(color.cssVariable, $store[color.key]?.toString())
       );
     } else {
+      // Apply Current Theme but override the colorPickerEnabled feature to be off
       clearCssVariables();
     }
   }
 
-  function setProperty(cssVariable: string, value: string) {
-    document.documentElement.style.setProperty(cssVariable, value);
+  function trySetCssVariable(cssVariable: string, value: string) {
+    if ($store.colorPickerEnabled) {
+      document.documentElement.style.setProperty(cssVariable, value);
+    }
   }
 
   function clearCssVariables() {
@@ -52,7 +57,20 @@
   });
 
   function settingValueToHexaString(value: unknown | undefined) {
-    return colorToHexaString(new Colord(value?.toString() ?? ''));
+    const result = colorToHexaString(new Colord(value?.toString() ?? ''));
+
+    if (result !== '') {
+      return result;
+    }
+
+    debugger;
+    var ctx = document.createElement('canvas').getContext('2d');
+    if (ctx) {
+      ctx.fillStyle = value?.toString() ?? '';
+      return ctx.fillStyle;
+    }
+
+    return '';
   }
 
   function colorToHexaString(color: Colord | undefined): string {
@@ -63,61 +81,90 @@
     return '';
   }
 
+  function activateEyeDropper(colorToConfigure: ThemeColorSetting) {
+    if ('EyeDropper' in window) {
+      const EyeDropper = window.EyeDropper as any;
+      const eyeDropper = new EyeDropper();
+      eyeDropper.open().then(({ sRGBHex }: { sRGBHex: string }) => {
+        onColorSelected(colorToConfigure, sRGBHex);
+      });
+    }
+  }
+
+  function onColorSelected(colorToConfigure: ThemeColorSetting, value: string) {
+    trySetCssVariable(colorToConfigure.cssVariable, value);
+    $store = {
+      ...$store,
+      [colorToConfigure.key]: value,
+    };
+  }
+
   const localize = FoundryAdapter.localize;
 </script>
 
-<section class="fred">
-  <div class="fred-2">
+<section class="wrapper">
+  <div class="theme-settings-form">
     <h2>{localize('T5EK.ThemeSettings.Sheet.header')}</h2>
 
     <div>
-      <input
-        type="checkbox"
-        data-dtype="boolean"
-        id="colorPickerEnabled-{appId}"
-        bind:checked={$store.colorPickerEnabled}
-      />
-
-      <label for="colorPickerEnabled-{appId}">
-        {localize('TIDY5E.Settings.ColorPickerEnabled.name')}
+      <label
+        for="colorPickerEnabled-{appId}"
+        class="flex-row align-items-center extra-small-gap"
+      >
+        <input
+          type="checkbox"
+          data-dtype="boolean"
+          id="colorPickerEnabled-{appId}"
+          bind:checked={$store.colorPickerEnabled}
+        />
+        {localize('T5EK.Settings.ColorPickerEnabled.name')}
       </label>
     </div>
 
-    <div class="fred-4">
+    <div class="color-pickers">
       {#each themeableColors as colorToConfigure}
-        <div>
-          <label for="{colorToConfigure.key}-{appId}">
-            {localize(colorToConfigure.name)}
-          </label>
-          <div class="flex-row align-items-center extra-small-gap">
-            <input
-              type="text"
-              id="{colorToConfigure.key}-{appId}"
-              bind:value={$store[colorToConfigure.key]}
-              on:change={(ev) =>
-                setProperty(
-                  colorToConfigure.cssVariable,
-                  ev.currentTarget.value
-                )}
-              style="flex-basis: 8rem"
-            />
-            <ColorPicker
-              label=""
-              hex={settingValueToHexaString($store[colorToConfigure.key])}
-              on:input={(ev) =>
-                store.update((settings) => {
-                  return {
-                    ...settings,
-                    [colorToConfigure.key]: colorToHexaString(ev.detail.color),
-                  };
-                })}
-            />
+        <article class="setting group">
+          <div>
+            <div class="description">
+              <label for="{colorToConfigure.key}-{appId}">
+                {localize(colorToConfigure.name)}
+              </label>
+            </div>
+            <div
+              class="settings-group flex-row align-items-center extra-small-gap"
+            >
+              <ColorPicker
+                isPopup={true}
+                label=""
+                hex={settingValueToHexaString($store[colorToConfigure.key])}
+                on:input={(ev) =>
+                  onColorSelected(
+                    colorToConfigure,
+                    colorToHexaString(ev.detail.color)
+                  )}
+              />
+              <input
+                type="text"
+                id="{colorToConfigure.key}-{appId}"
+                value={$store[colorToConfigure.key]}
+                on:blur={(ev) =>
+                  onColorSelected(colorToConfigure, ev.currentTarget.value)}
+                style="flex-basis: 8rem"
+              />
+              {#if eyeDropperEnabled}
+                <button
+                  class="eye-dropper"
+                  on:click={() => activateEyeDropper(colorToConfigure)}
+                  ><i class="fas fa-eye-dropper" /></button
+                >
+              {/if}
+            </div>
           </div>
-        </div>
+        </article>
       {/each}
     </div>
   </div>
-  <div class="fred-3">
+  <div class="button-bar">
     <button type="button" name="save" class="save-changes-btn" on:click={save}>
       <i class="fas fa-save" />
       {localize('T5EK.SaveChanges')}
@@ -126,7 +173,7 @@
 </section>
 
 <style lang="scss">
-  .fred {
+  .wrapper {
     display: flex;
     flex-direction: column;
     gap: 0.25rem;
@@ -134,21 +181,26 @@
     padding: 0.5rem 0 0.5rem 0.5rem;
   }
 
-  .fred-2 {
+  .theme-settings-form {
     flex: 1;
     overflow-y: auto;
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+    padding-right: 0.5rem;
   }
 
-  .fred-3 {
+  .button-bar {
+    padding-right: 1rem;
+  }
+
+  .settings-group {
+    height: 3rem;
+  }
+
+  .eye-dropper {
     flex: 0;
-  }
-
-  .fred-4 {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    gap: 1rem;
+    line-height: 1.25;
+    padding: 0.25rem 0.375rem;
   }
 </style>

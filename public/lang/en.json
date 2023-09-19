@@ -471,8 +471,8 @@
   },
 
   "T5EK.Settings.ColorPickerEnabled": {
-    "name": "Enable Color Picker",
-    "hint": "Enable/Disable the coloration picker"
+    "name": "Enable Custom Theme Colors",
+    "hint": "Enable/Disable custom theme colors"
   },
   "T5EK.Settings.ColorPickerPrimaryAccent": {
     "name": "Color Picker for 'Primary Accent'",
@@ -602,9 +602,9 @@
   },
   "T5EK.ThemeSettings": {
     "SheetMenu": {
-      "name": "Theme",
+      "name": "Tidy Theme Settings",
       "buttonLabel": "Theme Settings",
-      "hint": "Customize the colors of Tidy 5e Sheets.",
+      "hint": "Customize the colors of Tidy 5e Sheets."
     },
     "Sheet": {
       "title": "Theme Settings",

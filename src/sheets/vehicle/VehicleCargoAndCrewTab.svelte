@@ -104,7 +104,7 @@
 
 {#if noCargoOrCrew && !allowEdit}
   <Notice>
-    {localize('TIDY5E.EmptySection')}
+    {localize('T5EK.EmptySection')}
   </Notice>
 {/if}
 

@@ -67,7 +67,7 @@
 
 <ListContainer cssClass="flex-column small-gap">
   {#if noItems && !allowEdit}
-    <Notice>{localize('TIDY5E.EmptySection')}</Notice>
+    <Notice>{localize('T5EK.EmptySection')}</Notice>
   {:else}
     {#each $store.inventory as section (section.label)}
       {@const filteredItems = FoundryAdapter.getFilteredItems(

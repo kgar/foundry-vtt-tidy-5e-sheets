@@ -111,7 +111,7 @@
   )}
 
   {#if noFeatures && !allowEdit}
-    <Notice>{localize('TIDY5E.EmptySection')}</Notice>
+    <Notice>{localize('T5EK.EmptySection')}</Notice>
   {:else}
     {#if (searchCriteria.trim() === '' && allowEdit) || filteredBackgrounds.length > 0}
       <ItemTable>

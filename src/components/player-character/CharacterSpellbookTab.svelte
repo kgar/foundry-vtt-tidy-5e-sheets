@@ -124,7 +124,7 @@
   {/if}
 
   {#if noSpells && !allowEdit}
-    <Notice>{localize('TIDY5E.EmptySection')}</Notice>
+    <Notice>{localize('T5EK.EmptySection')}</Notice>
   {/if}
 </ListContainer>
 

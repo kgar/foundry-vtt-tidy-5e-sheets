@@ -70,7 +70,7 @@
   <div class="main-panel flex-column small-gap">
     {#if noFeatures && !allowEdit}
       <Notice>
-        {localize('TIDY5E.EmptySection')}
+        {localize('T5EK.EmptySection')}
       </Notice>
     {:else}
       {#each $store.features as section}

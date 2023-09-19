@@ -262,9 +262,9 @@
     <article class="info-card-hint">
       <p class:frozen>
         <span class="key">{freezeKey}</span>
-        {localize('TIDY5E.ItemCardsKeyHint')}
+        {localize('T5EK.ItemCardsKeyHint')}
       </p>
-      <p><i class="fas fa-mouse" /> {localize('TIDY5E.ItemCardsMouseHint')}</p>
+      <p><i class="fas fa-mouse" /> {localize('T5EK.ItemCardsMouseHint')}</p>
     </article>
   </div>
 </section>

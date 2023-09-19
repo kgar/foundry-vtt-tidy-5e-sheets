@@ -115,9 +115,9 @@
     <div style="text-align:center;">
       <a class="toggle-proficient" on:click={toggleShowAllSkills}>
         {#if showAllSkills}
-          {localize('TIDY5E.Hide')}
+          {localize('T5EK.Hide')}
         {:else}
-          {localize('TIDY5E.Show')}
+          {localize('T5EK.Show')}
         {/if}
         {localize('DND5E.NotProficient')}</a
       >
@@ -138,7 +138,6 @@
     .skill {
       flex: 0 0 1.125rem;
       display: flex;
-      //   justify-content: space-between;
       gap: 0.25rem;
       font-size: 0.75rem;
       line-height: 0.875rem;

@@ -75,7 +75,7 @@
   <span
     class="rollable"
     title="{localize('DND5E.HitDiceRoll')}/{localize(
-      'TIDY5E.HitDiceRollAverage'
+      'T5EK.HitDiceRollAverage'
     )}"
     on:click={rollNpcHp}
     on:contextmenu={calcAverageHitDie}

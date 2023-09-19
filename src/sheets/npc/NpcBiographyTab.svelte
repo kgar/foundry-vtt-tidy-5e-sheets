@@ -123,7 +123,7 @@
     <div
       on:click={togglePersonalityInfo}
       class="toggle-personality-info"
-      title={localize('TIDY5E.TogglePersonalityInfo')}
+      title={localize('T5EK.TogglePersonalityInfo')}
     >
       {#if showNpcPersonalityInfo}
         <i class="fas fa-angle-double-left" />

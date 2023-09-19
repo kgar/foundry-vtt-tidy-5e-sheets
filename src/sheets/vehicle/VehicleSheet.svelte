@@ -169,7 +169,7 @@
             on:click={() =>
               new Tidy5eActorOriginSummaryConfig($store.actor).render(true)}
             class="origin-summary-tidy"
-            title={localize('TIDY5E.OriginSummaryConfig')}
+            title={localize('T5EK.OriginSummaryConfig')}
           >
             <i class="fas fa-cog" />
           </a>

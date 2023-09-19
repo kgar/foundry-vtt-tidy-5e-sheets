@@ -11,20 +11,22 @@
   - [x] Summon the color picker by clicking a button beside the input
   - [x] Try to populate the picker with the currently-selected color, else default
   - [x] When the picker is ready, trigger change on the appropriate field, and then forward any changes to the target store prop
-- [ ] Apply a pretty layout for color picker settings once it is fully functional
-  - [ ] Visualize the selected color to the right of the picker in the form of a rectangle
-  - [ ] the rest
+- [x] Apply a pretty layout for color picker settings once it is fully functional
+  - [x] Visualize the selected color to the right of the picker in the form of a rectangle
+  - [x] the rest
 
 ## Refine
 
 - [x] Pull css variable knowledge into the setting provider. For the type, use `keyof` or a similar thing to track actual theme reference variables
-- [ ] Don't change user input for them when they are in the middle of typing a color. This is happening indirectly because of trying to parse to the color picker, and the color picker is reciprocating the input event.
-- [ ] Move setting (and theme types, if any are still lingering) out of script files and into dedicated type files to help prevent circular dependencies and allow FoundryAdapter to take some more responsibility over Foundry API stuff.
-- [ ] Extract the sheet redrawing function to FoundryAdapter
+- [x] Don't change user input for them when they are in the middle of typing a color. This is happening indirectly because of trying to parse to the color picker, and the color picker is reciprocating the input event.
+- [ ] Convert Sheet Redrawing so that there is a global store specifically for housing current settings. Whenever settings are adjusted by conventional means, or when a sheet is opened, or any other scenario that makes sense, update the store.
+  - [ ] Update all SettingProvider callers to instead use the store
+  - [ ] Remove the sheet redrawing feature so that t5ek sheets only update the pieces that changed
 - [ ] Upgrade the Cog button for Sheet Settings on the sheet to instead feature vertical dots and show a menu
   - [ ] Theme dropdown (apply theme on change)
   - [ ] Sheet Settings option
   - [ ] Theme Settings option
+- [ ] Move setting (and theme types, if any are still lingering) out of script files and into dedicated type files to help prevent circular dependencies and allow FoundryAdapter to take some more responsibility over Foundry API stuff.
 
 ## Fixit
 
