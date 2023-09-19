@@ -8,6 +8,7 @@
   import type { ThemeColorSetting } from 'src/types/theme';
   import ColorPicker from 'svelte-awesome-color-picker';
   import { Colord } from 'colord';
+  import { applyCurrentTheme } from 'src/theme/theme';
 
   let store = getContext<Writable<CurrentSettings>>('store');
   let appId = getContext<string>('appId');
@@ -23,8 +24,8 @@
         trySetCssVariable(color.cssVariable, $store[color.key]?.toString())
       );
     } else {
-      // Apply Current Theme but override the colorPickerEnabled feature to be off
       clearCssVariables();
+      applyCurrentTheme(false);
     }
   }
 
@@ -63,7 +64,6 @@
       return result;
     }
 
-    debugger;
     var ctx = document.createElement('canvas').getContext('2d');
     if (ctx) {
       ctx.fillStyle = value?.toString() ?? '';
@@ -92,6 +92,10 @@
   }
 
   function onColorSelected(colorToConfigure: ThemeColorSetting, value: string) {
+    const parsedColor = settingValueToHexaString(value);
+    if (!parsedColor) {
+      return;
+    }
     trySetCssVariable(colorToConfigure.cssVariable, value);
     $store = {
       ...$store,
@@ -147,12 +151,13 @@
                 type="text"
                 id="{colorToConfigure.key}-{appId}"
                 value={$store[colorToConfigure.key]}
-                on:blur={(ev) =>
+                class="theme-color-textbox"
+                on:change={(ev) =>
                   onColorSelected(colorToConfigure, ev.currentTarget.value)}
-                style="flex-basis: 8rem"
               />
               {#if eyeDropperEnabled}
                 <button
+                  type="button"
                   class="eye-dropper"
                   on:click={() => activateEyeDropper(colorToConfigure)}
                   ><i class="fas fa-eye-dropper" /></button
@@ -165,7 +170,7 @@
     </div>
   </div>
   <div class="button-bar">
-    <button type="button" name="save" class="save-changes-btn" on:click={save}>
+    <button type="submit" class="save-changes-btn" on:click={save}>
       <i class="fas fa-save" />
       {localize('T5EK.SaveChanges')}
     </button>
@@ -202,5 +207,9 @@
     flex: 0;
     line-height: 1.25;
     padding: 0.25rem 0.375rem;
+  }
+
+  .theme-color-textbox {
+    flex-basis: 8rem;
   }
 </style>

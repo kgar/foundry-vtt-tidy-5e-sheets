@@ -14,11 +14,17 @@
 - [x] Apply a pretty layout for color picker settings once it is fully functional
   - [x] Visualize the selected color to the right of the picker in the form of a rectangle
   - [x] the rest
+- [ ] Update the form to use the default Light colors rather than their hardcoded values
+- [ ] Add "Use Default Colors" button which will update the form to have the default colors for the relevant settings
+- [ ] Add "Import Theme Colors" button
+- [ ] Add "Export Theme Colors" button
 
 ## Refine
 
 - [x] Pull css variable knowledge into the setting provider. For the type, use `keyof` or a similar thing to track actual theme reference variables
 - [x] Don't change user input for them when they are in the middle of typing a color. This is happening indirectly because of trying to parse to the color picker, and the color picker is reciprocating the input event.
+- [ ] Figure out how to keep the named color rather than converting it to hexa when the user provides it. Only put the named color to hexa for the color picker to use, allowing the user to riff on a named color
+- [ ] ...?
 - [ ] Convert Sheet Redrawing so that there is a global store specifically for housing current settings. Whenever settings are adjusted by conventional means, or when a sheet is opened, or any other scenario that makes sense, update the store.
   - [ ] Update all SettingProvider callers to instead use the store
   - [ ] Remove the sheet redrawing feature so that t5ek sheets only update the pieces that changed

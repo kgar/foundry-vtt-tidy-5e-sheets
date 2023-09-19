@@ -164,7 +164,7 @@ export function createSettings() {
           type: String,
           choices: () => getCoreThemes(true),
           default: 'default',
-          onChange: (data: string) => {
+          onChange: (data: string, colorPickerEnabledOverride: boolean | null = null) => {
             const theme =
               data === 'light'
                 ? defaultLightTheme
@@ -183,7 +183,7 @@ export function createSettings() {
                   ? defaultDarkTheme
                   : null;
 
-              defaultTheme && applyTheme(defaultTheme);
+              defaultTheme && applyTheme(defaultTheme, colorPickerEnabledOverride);
             } else {
               applyTheme(theme);
             }

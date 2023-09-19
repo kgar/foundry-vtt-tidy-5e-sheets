@@ -7,7 +7,10 @@ import { debug } from 'src/utils/logging';
 import { SettingsProvider } from 'src/settings/settings';
 import { KeyedObjectEntries as getKeyedObjectEntries } from 'src/utils/iteration';
 
-export function applyTheme(theme: Tidy5eTheme) {
+export function applyTheme(
+  theme: Tidy5eTheme,
+  colorPickerEnabledOverride: boolean | null = null
+) {
   try {
     const styleTagId = 'tidy5e-sheet-kgar-theme';
     let existingThemeStyle = document.getElementById(styleTagId);
@@ -17,7 +20,12 @@ export function applyTheme(theme: Tidy5eTheme) {
     }
 
     // Temporary measure for applying color overrides. Larger theme overhaul coming later.
-    if (SettingsProvider.settings.colorPickerEnabled.get()) {
+    const overrideBaseTheme =
+      (colorPickerEnabledOverride === null &&
+        SettingsProvider.settings.colorPickerEnabled.get()) ||
+      colorPickerEnabledOverride;
+      
+    if (overrideBaseTheme) {
       theme = overrideColorPickerSettings(theme);
     }
 
@@ -63,9 +71,14 @@ function overrideColorPickerSettings(theme: Tidy5eTheme) {
   return overriddenTheme;
 }
 
-export function applyCurrentTheme() {
+export function applyCurrentTheme(
+  colorPickerEnabledOverride: boolean | null = null
+) {
   const currentTheme = SettingsProvider.settings.colorScheme.get();
-  SettingsProvider.settings.colorScheme.options.onChange(currentTheme);
+  SettingsProvider.settings.colorScheme.options.onChange(
+    currentTheme,
+    colorPickerEnabledOverride
+  );
 }
 
 export function getThemeableColors(): ThemeColorSetting[] {

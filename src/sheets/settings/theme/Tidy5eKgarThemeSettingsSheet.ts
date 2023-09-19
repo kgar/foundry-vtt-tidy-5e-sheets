@@ -5,7 +5,7 @@ import {
   getCurrentSettings,
   type CurrentSettings,
 } from 'src/settings/settings';
-import { writable } from 'svelte/store';
+import { writable, type Writable } from 'svelte/store';
 import { applyCurrentTheme, getThemeableColors } from 'src/theme/theme';
 import type { ThemeColorSetting } from 'src/types/theme';
 
@@ -17,6 +17,7 @@ export type ThemeSettingsSheetFunctions = {
 
 export class Tidy5eKgarThemeSettingsSheet extends FormApplication {
   themeableColors: ThemeColorSetting[] = getThemeableColors();
+  store: Writable<CurrentSettings>;
 
   static get defaultOptions() {
     return {
@@ -40,13 +41,15 @@ export class Tidy5eKgarThemeSettingsSheet extends FormApplication {
   activateListeners(html: any) {
     const node = html.get(0);
 
+    this.store = writable(getCurrentSettings());
+
     this.component = new ThemeSettingsSheet({
       target: node,
       props: {
         themeableColors: this.themeableColors,
       },
       context: new Map<any, any>([
-        ['store', writable(getCurrentSettings())],
+        ['store', this.store],
         [
           'functions',
           {
@@ -73,8 +76,26 @@ export class Tidy5eKgarThemeSettingsSheet extends FormApplication {
     this.close();
   }
 
+  render(force = false, ...args: any[]) {
+    if (force) {
+      this.component?.$destroy();
+      super.render(force, ...args);
+      return this;
+    }
+
+    // TODO: If there's context to refresh, do it here
+    return this;
+  }
+
   close(...args: any[]) {
     this.component?.$destroy();
     return super.close(...args);
+  }
+
+  async _updateObject() {
+    const unsubscribeFn = this.store.subscribe(async (settings) => {
+      await this.saveChangedSettings(settings);
+    });
+    unsubscribeFn();
   }
 }
