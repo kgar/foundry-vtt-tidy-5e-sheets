@@ -40,8 +40,8 @@
 - [x] The item info card is not just hiding content when animating open or closed. Ensure that it's not squishing content and instead just hiding it.
 - [x] Vehicle: the Description tab has 2 scrollbars
 - [x] The item card has a weird white right border when flying out to the left in dark mode
-- [ ] Fix error related to needing to provide an _updateObject implementation in the theme settings form.
-- [ ] The color picker doesn't respond well to dark mode.
+- [x] Fix error related to needing to provide an _updateObject implementation in the theme settings form.
+- [x] The color picker doesn't respond well to dark mode.
 
 ### update object error
 

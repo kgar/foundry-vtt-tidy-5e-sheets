@@ -5,7 +5,7 @@ import type {
 import { themeVariables } from './theme-reference';
 import { debug } from 'src/utils/logging';
 import { SettingsProvider } from 'src/settings/settings';
-import { KeyedObjectEntries as getKeyedObjectEntries } from 'src/utils/iteration';
+import { getKeyedObjectEntries as getKeyedObjectEntries } from 'src/utils/iteration';
 
 export function applyTheme(
   theme: Tidy5eTheme,
@@ -24,7 +24,7 @@ export function applyTheme(
       (colorPickerEnabledOverride === null &&
         SettingsProvider.settings.colorPickerEnabled.get()) ||
       colorPickerEnabledOverride;
-      
+
     if (overrideBaseTheme) {
       theme = overrideColorPickerSettings(theme);
     }
