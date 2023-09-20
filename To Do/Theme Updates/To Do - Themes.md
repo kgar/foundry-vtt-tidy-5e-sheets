@@ -18,14 +18,12 @@
 - [x] Add "Use Default Colors" button which will update the form to have the default colors for the relevant settings
 - [x] Spec out v1 ".tidy5e-theme" file
 - [ ] Add "Import Theme Colors" button
-  - [ ] Can I just have a hidden File input and manage that? If not, then proceed with the other stuff
-  - [ ] Add dialog for uploading an import file and limit to ".tidy5e-theme" files (they are JSON under the hood)
-  - [ ] Validate whether a file is present and prevent submission otherwise
-  - [ ] On submit,
-    - [ ] Read the file
-    - [ ] Validate it
-    - [ ] Apply the values to the form store
-  - [ ] Add drop-zone support for the file, if not already enabled by the file input
+  - [x] Can I just have a hidden File input and manage that? If not, then proceed with the other stuff
+  - [x] On submit,
+    - [x] Read the file
+    - [x] Validate it
+    - [x] Apply the values to the form store
+  - [x] Add drop-zone support for the file, if not already enabled by the file input
 - [x] Add "Export Theme Colors" button
   - [x] On click, create a v1 ".tidy5e-theme" file and issue download to user
 
@@ -33,16 +31,23 @@
 
 - [x] Pull css variable knowledge into the setting provider. For the type, use `keyof` or a similar thing to track actual theme reference variables
 - [x] Don't change user input for them when they are in the middle of typing a color. This is happening indirectly because of trying to parse to the color picker, and the color picker is reciprocating the input event.
-- [ ] Figure out how to keep the named color rather than converting it to hexa when the user provides it. Only put the named color to hexa for the color picker to use, allowing the user to riff on a named color
 - [ ] ...?
-- [ ] Convert Sheet Redrawing so that there is a global store specifically for housing current settings. Whenever settings are adjusted by conventional means, or when a sheet is opened, or any other scenario that makes sense, update the store.
-  - [ ] Update all SettingProvider callers to instead use the store
-  - [ ] Remove the sheet redrawing feature so that t5ek sheets only update the pieces that changed
 - [ ] Upgrade the Cog button for Sheet Settings on the sheet to instead feature vertical dots and show a menu
-  - [ ] Theme dropdown (apply theme on change)
+  - [ ] Theme dropdown (change theme setting on select / apply theme on change)
   - [ ] Sheet Settings option
   - [ ] Theme Settings option
 - [ ] Move setting (and theme types, if any are still lingering) out of script files and into dedicated type files to help prevent circular dependencies and allow FoundryAdapter to take some more responsibility over Foundry API stuff.
+- [ ] Extract file processing code to util-oriented location
+- [ ] Extract theme validation / parsing to theme.ts
+- [ ] Split "Use Default Colors" to "☀ Default Light" and "🌙 Default Dark" and map accordingly
+- [ ] Consider using the new menu and putting these options to the right of the checkbox in a menu button such as "🔽 Menu"
+- [ ] Figure out how to keep the named color rather than converting it to hexa when the user provides it. Only put the named color to hexa for the color picker to use, allowing the user to riff on a named color
+- [ ] Convert Sheet Redrawing so that there is a global store specifically for housing current settings. Whenever settings are adjusted by conventional means, or when a sheet is opened, or any other scenario that makes sense, update the store.
+  - [ ] Update all SettingProvider callers to instead use the store
+  - [ ] Remove the sheet redrawing feature so that t5ek sheets only update the pieces that changed
+- [ ] Add drag UI overlay to theme settings form that clearly denotes that it is a drop zone
+- [ ] Add explanatory paragraph to Theme Settings which explains how to use the form, including the hint about being able to drag and drop a file to import settings.
+- [ ] If possible, support theme-based drops onto all tidy sheets; rather than set colors on the form, this instead sets the variables in the player's game settings and then applies the current theme
 
 ## Fixit
 

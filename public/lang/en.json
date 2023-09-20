@@ -611,7 +611,9 @@
       "header": "Custom Theme Colors",
       "useDefaultColors": "Use Default Colors",
       "export": "Export",
-      "import": "Import"
+      "import": "Import",
+      "importError": "Theme import failed. See console for more details.",
+      "importSuccess": "Theme imported successfully!"
     }
   },
 

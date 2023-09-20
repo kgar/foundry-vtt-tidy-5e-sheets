@@ -5,10 +5,12 @@
   import { getContext, onDestroy } from 'svelte';
   import type { Writable } from 'svelte/store';
   import type { ThemeSettingsSheetFunctions } from './Tidy5eKgarThemeSettingsSheet';
-  import type { ThemeColorSetting } from 'src/types/theme';
+  import type { ThemeColorSetting, Tidy5eThemeDataV1 } from 'src/types/theme';
   import ColorPicker from 'svelte-awesome-color-picker';
   import { Colord } from 'colord';
   import { applyCurrentTheme } from 'src/theme/theme';
+  import { CONSTANTS } from 'src/constants';
+  import { error } from 'src/utils/logging';
 
   let store = getContext<Writable<CurrentSettings>>('store');
   let appId = getContext<string>('appId');
@@ -103,10 +105,99 @@
     };
   }
 
+  function processFile(file: File) {
+    const fileReader = new FileReader();
+    fileReader.addEventListener('load', (event) => {
+      console.log(event);
+
+      try {
+        const result = event.target?.result?.toString();
+        if (!result) {
+          throw new Error('File does not contain any text.');
+        }
+        const theme = JSON.parse(result) as Tidy5eThemeDataV1;
+
+        const isValid =
+          theme.version === 1 && typeof theme.variables === 'object';
+        if (!isValid) {
+          throw new Error(`Theme file ${file.name} is in an invalid format.`);
+        }
+
+        const storeUpdateData = Object.keys(theme.variables).reduce<
+          Record<string, string>
+        >((prev, key) => {
+          const themeableColor = themeableColors.find(
+            (c) => c.cssVariable === key
+          );
+          if (themeableColor) {
+            prev[themeableColor.key] = theme.variables[key];
+          }
+
+          return prev;
+        }, {});
+
+        store.update((settings) => ({
+          ...settings,
+          ...storeUpdateData,
+        }));
+
+        ui.notifications.info(
+          localize('T5EK.ThemeSettings.Sheet.importSuccess')
+        );
+      } catch (e) {
+        ui.notifications.error(
+          localize('T5EK.ThemeSettings.Sheet.importError')
+        );
+        error(e.toString());
+      }
+    });
+
+    fileReader.readAsText(file);
+  }
+
+  function onFileChanged(
+    ev: Event & {
+      currentTarget: EventTarget & HTMLInputElement;
+    }
+  ) {
+    const file = ev.currentTarget.files?.[0];
+
+    ev.currentTarget.value = '';
+
+    if (!file) {
+      return;
+    }
+
+    processFile(file);
+  }
+
+  function onDrop(
+    ev: DragEvent & {
+      currentTarget: EventTarget & HTMLElement;
+    }
+  ) {
+    console.log('File(s) dropped');
+
+    ev.preventDefault();
+
+    let file: File | null = null;
+    if (ev.dataTransfer?.items) {
+      file = ev.dataTransfer.items[0]?.getAsFile();
+    } else if (ev.dataTransfer?.files) {
+      file = ev.dataTransfer.files[0];
+    }
+
+    if (file) {
+      processFile(file);
+    }
+  }
+
+  let fileImportInput: HTMLInputElement;
+
   const localize = FoundryAdapter.localize;
 </script>
 
-<section class="wrapper">
+<section class="wrapper" on:drop={onDrop} aria-label="dropzone">
   <div class="theme-settings-form">
     <h2>{localize('T5EK.ThemeSettings.Sheet.header')}</h2>
 
@@ -169,10 +260,17 @@
   </div>
   <div class="button-bar">
     <div class="commands flex-row extra-small-gap">
-      <button type="button" on:click={() => alert('Implement meeeee!')}>
+      <button type="button" on:click={() => fileImportInput.click()}>
         <i class="fas fa-file-import" />
         {localize('T5EK.ThemeSettings.Sheet.import')}
       </button>
+      <input
+        class="theme-import-input"
+        type="file"
+        accept={CONSTANTS.THEME_EXTENSION_WITH_DOT}
+        on:change={onFileChanged}
+        bind:this={fileImportInput}
+      />
       <button type="button" on:click={() => functions.exportTheme($store)}>
         <i class="fas fa-file-export" />
         {localize('T5EK.ThemeSettings.Sheet.export')}
@@ -252,6 +350,10 @@
         > * {
           flex: 1;
           white-space: nowrap;
+        }
+
+        .theme-import-input {
+          display: none;
         }
       }
     }
