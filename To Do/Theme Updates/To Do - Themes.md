@@ -31,7 +31,6 @@
 
 - [x] Pull css variable knowledge into the setting provider. For the type, use `keyof` or a similar thing to track actual theme reference variables
 - [x] Don't change user input for them when they are in the middle of typing a color. This is happening indirectly because of trying to parse to the color picker, and the color picker is reciprocating the input event.
-- [ ] ...?
 - [ ] Upgrade the Cog button for Sheet Settings on the sheet to instead feature vertical dots and show a menu
   - [ ] Theme dropdown (change theme setting on select / apply theme on change)
   - [ ] Sheet Settings option
@@ -48,6 +47,41 @@
 - [ ] Add drag UI overlay to theme settings form that clearly denotes that it is a drop zone
 - [ ] Add explanatory paragraph to Theme Settings which explains how to use the form, including the hint about being able to drag and drop a file to import settings.
 - [ ] If possible, support theme-based drops onto all tidy sheets; rather than set colors on the form, this instead sets the variables in the player's game settings and then applies the current theme
+- [ ] ...?
+
+## Svelte Button Menu
+
+> [!todo] Goal
+> Build a button-based menu which supports
+> - button-based options
+> - options which are containers for other HTML, such as select inputs, checkboxes, etc.
+> - dividers
+> - slot-based composition with 
+>   - `<ButtonMenuButton>` - the button which manages the menu; takes slot content for its inner HTML
+>   - `<ButtonMenu>` - the container which houses the menu; takes slot content for its children
+>   - `<ButtonMenuCommand>` - a button menu item which functions as a button and exposes a click event
+>   - `<ButtonMenuItem>` - a generic menu item which can house anything
+>   - `<ButtonMenuDivider>` - a presentational divider (has to be a compatible HTML element, like a `li`, `ol`, or `ul`; probably gonna be a presentational `li`)
+> - props
+>   - open
+>   - ...?
+> 
+> 
+> Ensure all of the appropriate accessibility features are built in
+
+- [x] Create components
+- [ ] Implement bare bones version without styles on a standalone svelte instance for speed of development
+- [ ] Bring into foundry
+- [ ] Style the components based on CSS variables and theme
+  - [ ] colors
+  - [ ] spacing
+  - [ ] roundness
+  - [ ] open/closed state for target button
+  - [ ] font
+- [ ] Test in popout!
+- [ ] Test in window tabs
+- [ ] Handle automatic positioning if possible
+- [ ] If able, make the menu fixed and outside of its parent window; this might need some creativity...
 
 ## Fixit
 
