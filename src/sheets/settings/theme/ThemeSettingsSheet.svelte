@@ -134,7 +134,7 @@
             </label>
           </div>
           <div
-            class="settings-group flex-row align-items-center extra-small-gap"
+            class="theme-settings-group flex-row align-items-center extra-small-gap"
           >
             <ColorPicker
               isPopup={true}
@@ -196,64 +196,64 @@
     gap: 0.25rem;
     height: 100%;
     padding: 0.5rem 0 0.5rem 0.5rem;
-  }
 
-  .theme-settings-form {
-    flex: 1;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    padding-right: 0.5rem;
-  }
-
-  .button-bar {
-    padding-right: 1rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-
-    button {
-      margin: 0;
-    }
-  }
-
-  .settings-group {
-    height: 3rem;
-  }
-
-  .eye-dropper {
-    flex: 0;
-    line-height: 1.25;
-    padding: 0.25rem 0.375rem;
-  }
-
-  .theme-color-textbox {
-    flex-basis: 10rem;
-    flex: 1;
-  }
-
-  article {
-    background: var(--t5ek-faintest-color);
-    border-radius: 0.3125rem;
-    margin: 0.125rem 0;
-    padding: 0.25rem;
-
-    label {
-      font-weight: 600;
-      padding-left: 0.25rem;
-    }
-  }
-
-  .commands {
-    display: flex;
-    flex-direction: row;
-    gap: 0.25rem;
-    flex-wrap: wrap;
-
-    > * {
+    .theme-settings-form {
       flex: 1;
-      white-space: nowrap;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      padding-right: 0.5rem;
+
+      article {
+        background: var(--t5ek-faintest-color);
+        border-radius: 0.3125rem;
+        margin: 0.125rem 0;
+        padding: 0.25rem;
+
+        label {
+          font-weight: 600;
+          padding-left: 0.25rem;
+        }
+
+        .theme-settings-group {
+          height: 3rem;
+
+          .theme-color-textbox {
+            flex-basis: 10rem;
+            flex: 1;
+          }
+
+          .eye-dropper {
+            flex: 0;
+            line-height: 1.25;
+            padding: 0.25rem 0.375rem;
+          }
+        }
+      }
+    }
+
+    .button-bar {
+      padding-right: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+
+      button {
+        margin: 0;
+      }
+
+      .commands {
+        display: flex;
+        flex-direction: row;
+        gap: 0.25rem;
+        flex-wrap: wrap;
+
+        > * {
+          flex: 1;
+          white-space: nowrap;
+        }
+      }
     }
   }
 </style>
