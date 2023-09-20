@@ -125,57 +125,63 @@
       </label>
     </div>
 
-    <div>
-      <button type="button" on:click={() => functions.useDefaultColors()}>
-        <i class="fas fa-database" /> Use Default Colors
-      </button>
-    </div>
-
     <div class="color-pickers">
       {#each themeableColors as colorToConfigure}
-        <article class="setting group">
-          <div>
-            <div class="description">
-              <label for="{colorToConfigure.key}-{appId}">
-                {localize(colorToConfigure.name)}
-              </label>
-            </div>
-            <div
-              class="settings-group flex-row align-items-center extra-small-gap"
-            >
-              <ColorPicker
-                isPopup={true}
-                label=""
-                hex={settingValueToHexaString($store[colorToConfigure.key])}
-                on:input={(ev) =>
-                  onColorSelected(
-                    colorToConfigure,
-                    colorToHexaString(ev.detail.color)
-                  )}
-              />
-              <input
-                type="text"
-                id="{colorToConfigure.key}-{appId}"
-                value={$store[colorToConfigure.key]}
-                class="theme-color-textbox"
-                on:change={(ev) =>
-                  onColorSelected(colorToConfigure, ev.currentTarget.value)}
-              />
-              {#if eyeDropperEnabled}
-                <button
-                  type="button"
-                  class="eye-dropper"
-                  on:click={() => activateEyeDropper(colorToConfigure)}
-                  ><i class="fas fa-eye-dropper" /></button
-                >
-              {/if}
-            </div>
+        <article>
+          <div class="description">
+            <label for="{colorToConfigure.key}-{appId}">
+              {localize(colorToConfigure.name)}
+            </label>
+          </div>
+          <div
+            class="settings-group flex-row align-items-center extra-small-gap"
+          >
+            <ColorPicker
+              isPopup={true}
+              label=""
+              hex={settingValueToHexaString($store[colorToConfigure.key])}
+              on:input={(ev) =>
+                onColorSelected(
+                  colorToConfigure,
+                  colorToHexaString(ev.detail.color)
+                )}
+            />
+            <input
+              type="text"
+              id="{colorToConfigure.key}-{appId}"
+              value={$store[colorToConfigure.key]}
+              class="theme-color-textbox"
+              on:change={(ev) =>
+                onColorSelected(colorToConfigure, ev.currentTarget.value)}
+            />
+            {#if eyeDropperEnabled}
+              <button
+                type="button"
+                class="eye-dropper"
+                on:click={() => activateEyeDropper(colorToConfigure)}
+                ><i class="fas fa-eye-dropper" /></button
+              >
+            {/if}
           </div>
         </article>
       {/each}
     </div>
   </div>
   <div class="button-bar">
+    <div class="commands flex-row extra-small-gap">
+      <button type="button" on:click={() => alert('Implement meeeee!')}>
+        <i class="fas fa-file-import" />
+        {localize('T5EK.ThemeSettings.Sheet.import')}
+      </button>
+      <button type="button" on:click={() => functions.exportTheme($store)}>
+        <i class="fas fa-file-export" />
+        {localize('T5EK.ThemeSettings.Sheet.export')}
+      </button>
+      <button type="button" on:click={() => functions.useDefaultColors()}>
+        <i class="fas fa-database" />
+        {localize('T5EK.ThemeSettings.Sheet.useDefaultColors')}
+      </button>
+    </div>
     <button type="submit" class="save-changes-btn" on:click={save}>
       <i class="fas fa-save" />
       {localize('T5EK.SaveChanges')}
@@ -203,6 +209,13 @@
 
   .button-bar {
     padding-right: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+
+    button {
+      margin: 0;
+    }
   }
 
   .settings-group {
@@ -217,5 +230,30 @@
 
   .theme-color-textbox {
     flex-basis: 10rem;
+    flex: 1;
+  }
+
+  article {
+    background: var(--t5ek-faintest-color);
+    border-radius: 0.3125rem;
+    margin: 0.125rem 0;
+    padding: 0.25rem;
+
+    label {
+      font-weight: 600;
+      padding-left: 0.25rem;
+    }
+  }
+
+  .commands {
+    display: flex;
+    flex-direction: row;
+    gap: 0.25rem;
+    flex-wrap: wrap;
+
+    > * {
+      flex: 1;
+      white-space: nowrap;
+    }
   }
 </style>

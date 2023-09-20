@@ -13,3 +13,8 @@ export type ThemeColorSetting = {
   key: keyof CurrentSettings;
   cssVariable: string;
 };
+
+export type Tidy5eThemeDataV1 = {
+  version: 1;
+  variables: Record<string, string>;
+};

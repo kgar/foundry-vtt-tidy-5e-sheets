@@ -16,8 +16,18 @@
   - [x] the rest
 - [x] Update the form to use the default Light colors rather than their hardcoded values
 - [x] Add "Use Default Colors" button which will update the form to have the default colors for the relevant settings
+- [x] Spec out v1 ".tidy5e-theme" file
 - [ ] Add "Import Theme Colors" button
-- [ ] Add "Export Theme Colors" button
+  - [ ] Can I just have a hidden File input and manage that? If not, then proceed with the other stuff
+  - [ ] Add dialog for uploading an import file and limit to ".tidy5e-theme" files (they are JSON under the hood)
+  - [ ] Validate whether a file is present and prevent submission otherwise
+  - [ ] On submit,
+    - [ ] Read the file
+    - [ ] Validate it
+    - [ ] Apply the values to the form store
+  - [ ] Add drop-zone support for the file, if not already enabled by the file input
+- [x] Add "Export Theme Colors" button
+  - [x] On click, create a v1 ".tidy5e-theme" file and issue download to user
 
 ## Refine
 

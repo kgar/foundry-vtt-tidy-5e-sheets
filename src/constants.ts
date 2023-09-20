@@ -78,4 +78,5 @@ export const CONSTANTS = {
   TAB_SETTINGS_HOMEBREW: 'homebrew',
   TAB_SETTINGS_LOCKS: 'locks',
   TAB_SETTINGS_INFO: 'info',
+  THEME_EXTENSION_WITH_DOT: '.tidy5e-theme',
 } as const;

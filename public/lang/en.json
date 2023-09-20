@@ -608,7 +608,10 @@
     },
     "Sheet": {
       "title": "Theme Settings",
-      "header": "Custom Theme Colors"
+      "header": "Custom Theme Colors",
+      "useDefaultColors": "Use Default Colors",
+      "export": "Export",
+      "import": "Import"
     }
   },
 

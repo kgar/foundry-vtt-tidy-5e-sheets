@@ -8,13 +8,16 @@ import {
 } from 'src/settings/settings';
 import { writable, type Writable } from 'svelte/store';
 import { applyCurrentTheme, getThemeableColors } from 'src/theme/theme';
-import type { ThemeColorSetting } from 'src/types/theme';
+import type { ThemeColorSetting, Tidy5eThemeDataV1 } from 'src/types/theme';
+import { downloadTextFile } from 'src/utils/file';
+import { CONSTANTS } from 'src/constants';
 
 declare var FormApplication: any;
 
 export type ThemeSettingsSheetFunctions = {
   save(settings: CurrentSettings): Promise<unknown>;
   useDefaultColors(): void;
+  exportTheme(settings: CurrentSettings): void;
 };
 
 export class Tidy5eKgarThemeSettingsSheet extends FormApplication {
@@ -57,6 +60,7 @@ export class Tidy5eKgarThemeSettingsSheet extends FormApplication {
           {
             save: this.saveChangedSettings.bind(this),
             useDefaultColors: this.useDefaultColors.bind(this),
+            exportTheme: this.exportTheme.bind(this),
           } satisfies ThemeSettingsSheetFunctions,
         ],
         ['appId', this.appId],
@@ -117,5 +121,25 @@ export class Tidy5eKgarThemeSettingsSheet extends FormApplication {
         ...colorsToUpdate,
       };
     });
+  }
+
+  exportTheme(settings: CurrentSettings) {
+    const variables = this.themeableColors.reduce<Record<string, string>>(
+      (prev, curr) => {
+        prev[curr.cssVariable] = settings[curr.key]?.toString();
+        return prev;
+      },
+      {}
+    );
+
+    const exportData: Tidy5eThemeDataV1 = {
+      version: 1,
+      variables,
+    };
+
+    downloadTextFile(
+      'theme' + CONSTANTS.THEME_EXTENSION_WITH_DOT,
+      JSON.stringify(exportData, null, ' ')
+    );
   }
 }
