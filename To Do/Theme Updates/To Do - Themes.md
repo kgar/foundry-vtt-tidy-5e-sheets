@@ -14,8 +14,8 @@
 - [x] Apply a pretty layout for color picker settings once it is fully functional
   - [x] Visualize the selected color to the right of the picker in the form of a rectangle
   - [x] the rest
-- [ ] Update the form to use the default Light colors rather than their hardcoded values
-- [ ] Add "Use Default Colors" button which will update the form to have the default colors for the relevant settings
+- [x] Update the form to use the default Light colors rather than their hardcoded values
+- [x] Add "Use Default Colors" button which will update the form to have the default colors for the relevant settings
 - [ ] Add "Import Theme Colors" button
 - [ ] Add "Export Theme Colors" button
 
