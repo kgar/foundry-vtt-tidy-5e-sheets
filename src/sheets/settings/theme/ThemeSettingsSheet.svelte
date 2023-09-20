@@ -125,6 +125,12 @@
       </label>
     </div>
 
+    <div>
+      <button type="button" on:click={() => functions.useDefaultColors()}>
+        <i class="fas fa-database" /> Use Default Colors
+      </button>
+    </div>
+
     <div class="color-pickers">
       {#each themeableColors as colorToConfigure}
         <article class="setting group">
@@ -210,6 +216,6 @@
   }
 
   .theme-color-textbox {
-    flex-basis: 8rem;
+    flex-basis: 10rem;
   }
 </style>

@@ -164,7 +164,10 @@ export function createSettings() {
           type: String,
           choices: () => getCoreThemes(true),
           default: 'default',
-          onChange: (data: string, colorPickerEnabledOverride: boolean | null = null) => {
+          onChange: (
+            data: string,
+            colorPickerEnabledOverride: boolean | null = null
+          ) => {
             const theme =
               data === 'light'
                 ? defaultLightTheme
@@ -183,9 +186,10 @@ export function createSettings() {
                   ? defaultDarkTheme
                   : null;
 
-              defaultTheme && applyTheme(defaultTheme, colorPickerEnabledOverride);
+              defaultTheme &&
+                applyTheme(defaultTheme, colorPickerEnabledOverride);
             } else {
-              applyTheme(theme);
+              applyTheme(theme, colorPickerEnabledOverride);
             }
           },
         },
@@ -1381,7 +1385,7 @@ export function createSettings() {
           hint: 'T5EK.Settings.ColorPickerPrimaryAccent.hint',
           scope: 'client',
           type: String,
-          default: RGBAToHexAFromColor(255, 100, 0, 1),
+          default: defaultLightTheme.variables['--t5ek-primary-accent-color'],
           config: false,
         },
         get() {
@@ -1397,7 +1401,7 @@ export function createSettings() {
           hint: 'T5EK.Settings.ColorPickerEquipped.hint',
           scope: 'client',
           type: String,
-          default: RGBAToHexAFromColor(50, 205, 50, 0.3),
+          default: defaultLightTheme.variables['--t5ek-equipped-background'],
           config: false,
         },
         get() {
@@ -1411,7 +1415,10 @@ export function createSettings() {
           hint: 'T5EK.Settings.ColorPickerEquippedOutline.hint',
           scope: 'client',
           type: String,
-          default: RGBAToHexAFromColor(50, 205, 50, 1),
+          default:
+            defaultLightTheme.variables[
+              '--t5ek-equipped-item-grid-tile-accent-color'
+            ],
           config: false,
         },
         get() {
@@ -1427,7 +1434,10 @@ export function createSettings() {
           hint: 'T5EK.Settings.ColorPickerEquippedAccent.hint',
           scope: 'client',
           type: String,
-          default: RGBAToHexAFromColor(173, 255, 47, 1),
+          default:
+            defaultLightTheme.variables[
+              '--t5ek-equipped-item-grid-tile-accent-color'
+            ],
           config: false,
         },
         get() {
@@ -1444,7 +1454,7 @@ export function createSettings() {
           hint: 'T5EK.Settings.ColorPickerPrepared.hint',
           scope: 'client',
           type: String,
-          default: RGBAToHexAFromColor(50, 205, 50, 0.3),
+          default: defaultLightTheme.variables['--t5ek-prepared-background'],
           config: false,
         },
         get() {
@@ -1458,7 +1468,10 @@ export function createSettings() {
           hint: 'T5EK.Settings.ColorPickerPreparedOutline.hint',
           scope: 'client',
           type: String,
-          default: RGBAToHexAFromColor(50, 205, 50, 1),
+          default:
+            defaultLightTheme.variables[
+              '--t5ek-prepared-item-grid-tile-outline-color'
+            ],
           config: false,
         },
         get() {
@@ -1474,7 +1487,10 @@ export function createSettings() {
           hint: 'T5EK.Settings.ColorPickerPreparedAccent.hint',
           scope: 'client',
           type: String,
-          default: RGBAToHexAFromColor(173, 255, 47, 1),
+          default:
+            defaultLightTheme.variables[
+              '--t5ek-prepared-item-grid-tile-accent-color'
+            ],
           config: false,
         },
         get() {
@@ -1491,7 +1507,7 @@ export function createSettings() {
           hint: 'T5EK.Settings.ColorPickerPact.hint',
           scope: 'client',
           type: String,
-          default: RGBAToHexAFromColor(250, 0, 180, 0.3),
+          default: defaultLightTheme.variables['--t5ek-pact-background'],
           config: false,
         },
         get() {
@@ -1505,7 +1521,7 @@ export function createSettings() {
           hint: 'T5EK.Settings.ColorPickerPactOutline.hint',
           scope: 'client',
           type: String,
-          default: RGBAToHexAFromColor(250, 50, 213, 1),
+          default: defaultLightTheme.variables['--t5ek-pact-outline-color'],
           config: false,
         },
         get() {
@@ -1521,7 +1537,7 @@ export function createSettings() {
           hint: 'T5EK.Settings.ColorPickerPactAccent.hint',
           scope: 'client',
           type: String,
-          default: RGBAToHexAFromColor(198, 119, 193, 1),
+          default: defaultLightTheme.variables['--t5ek-pact-accent-color'],
           config: false,
         },
         get() {
@@ -1536,7 +1552,7 @@ export function createSettings() {
           hint: 'T5EK.Settings.ColorPickerAtWill.hint',
           scope: 'client',
           type: String,
-          default: RGBAToHexAFromColor(226, 246, 4, 0.3),
+          default: defaultLightTheme.variables['--t5ek-atwill-background'],
           config: false,
         },
         get() {
@@ -1550,7 +1566,7 @@ export function createSettings() {
           hint: 'T5EK.Settings.ColorPickerAtWillOutline.hint',
           scope: 'client',
           type: String,
-          default: RGBAToHexAFromColor(163, 165, 50, 1),
+          default: defaultLightTheme.variables['--t5ek-atwill-outline-color'],
           config: false,
         },
         get() {
@@ -1566,7 +1582,7 @@ export function createSettings() {
           hint: 'T5EK.Settings.ColorPickerAtWillAccent.hint',
           scope: 'client',
           type: String,
-          default: RGBAToHexAFromColor(255, 242, 0, 1),
+          default: defaultLightTheme.variables['--t5ek-atwill-accent-color'],
           config: false,
         },
         get() {
@@ -1583,7 +1599,7 @@ export function createSettings() {
           hint: 'T5EK.Settings.ColorPickerInnate.hint',
           scope: 'client',
           type: String,
-          default: RGBAToHexAFromColor(255, 0, 0, 0.3),
+          default: defaultLightTheme.variables['--t5ek-innate-background'],
           config: false,
         },
         get() {
@@ -1597,7 +1613,7 @@ export function createSettings() {
           hint: 'T5EK.Settings.ColorPickerInnateOutline.hint',
           scope: 'client',
           type: String,
-          default: RGBAToHexAFromColor(231, 23, 23, 1),
+          default: defaultLightTheme.variables['--t5ek-innate-outline'],
           config: false,
         },
         get() {
@@ -1613,7 +1629,7 @@ export function createSettings() {
           hint: 'T5EK.Settings.ColorPickerInnateAccent.hint',
           scope: 'client',
           type: String,
-          default: RGBAToHexAFromColor(195, 69, 69, 1),
+          default: defaultLightTheme.variables['--t5ek-innate-accent'],
           config: false,
         },
         get() {
@@ -1630,7 +1646,8 @@ export function createSettings() {
           hint: 'T5EK.Settings.ColorPickerAlwaysPrepared.hint',
           scope: 'client',
           type: String,
-          default: RGBAToHexAFromColor(0, 0, 255, 0.15),
+          default:
+            defaultLightTheme.variables['--t5ek-alwaysprepared-background'],
           config: false,
         },
         get() {
@@ -1646,7 +1663,8 @@ export function createSettings() {
           hint: 'T5EK.Settings.ColorPickerAlwaysPreparedOutline.hint',
           scope: 'client',
           type: String,
-          default: RGBAToHexAFromColor(65, 105, 225, 1),
+          default:
+            defaultLightTheme.variables['--t5ek-alwaysprepared-outline-color'],
           config: false,
         },
         get() {
@@ -1662,7 +1680,8 @@ export function createSettings() {
           hint: 'T5EK.Settings.ColorPickerAlwaysPreparedAccent.hint',
           scope: 'client',
           type: String,
-          default: RGBAToHexAFromColor(0, 191, 255, 1),
+          default:
+            defaultLightTheme.variables['--t5ek-alwaysprepared-accent-color'],
           config: false,
         },
         get() {

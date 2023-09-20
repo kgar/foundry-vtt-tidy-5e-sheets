@@ -4,6 +4,7 @@ import ThemeSettingsSheet from './ThemeSettingsSheet.svelte';
 import {
   getCurrentSettings,
   type CurrentSettings,
+  SettingsProvider,
 } from 'src/settings/settings';
 import { writable, type Writable } from 'svelte/store';
 import { applyCurrentTheme, getThemeableColors } from 'src/theme/theme';
@@ -13,6 +14,7 @@ declare var FormApplication: any;
 
 export type ThemeSettingsSheetFunctions = {
   save(settings: CurrentSettings): Promise<unknown>;
+  useDefaultColors(): void;
 };
 
 export class Tidy5eKgarThemeSettingsSheet extends FormApplication {
@@ -54,6 +56,7 @@ export class Tidy5eKgarThemeSettingsSheet extends FormApplication {
           'functions',
           {
             save: this.saveChangedSettings.bind(this),
+            useDefaultColors: this.useDefaultColors.bind(this),
           } satisfies ThemeSettingsSheetFunctions,
         ],
         ['appId', this.appId],
@@ -97,5 +100,22 @@ export class Tidy5eKgarThemeSettingsSheet extends FormApplication {
       await this.saveChangedSettings(settings);
     });
     unsubscribeFn();
+  }
+
+  useDefaultColors() {
+    const colorsToUpdate = this.themeableColors.reduce<Record<string, unknown>>(
+      (prev, color) => {
+        prev[color.key] = SettingsProvider.settings[color.key].options.default;
+        return prev;
+      },
+      {}
+    );
+
+    this.store.update((current) => {
+      return {
+        ...current,
+        ...colorsToUpdate,
+      };
+    });
   }
 }
