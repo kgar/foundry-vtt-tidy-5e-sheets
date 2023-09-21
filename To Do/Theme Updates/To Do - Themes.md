@@ -70,7 +70,7 @@
 > Ensure all of the appropriate accessibility features are built in
 
 - [x] Create components
-- [ ] Implement bare bones version without styles on a standalone svelte instance for speed of development
+- [x] Implement bare bones version without styles on a standalone svelte instance for speed of development
 - [ ] Bring into foundry
 - [ ] Style the components based on CSS variables and theme
   - [ ] colors
@@ -80,7 +80,7 @@
   - [ ] font
 - [ ] Test in popout!
 - [ ] Test in window tabs
-- [ ] Handle automatic positioning if possible
+- [x] Handle automatic positioning if possible
 - [ ] If able, make the menu fixed and outside of its parent window; this might need some creativity...
 
 > Scratch pad repo : git@github.com:kgar/svelte-button-menu.git
