@@ -83,6 +83,8 @@
 - [ ] Handle automatic positioning if possible
 - [ ] If able, make the menu fixed and outside of its parent window; this might need some creativity...
 
+> Scratch pad repo : git@github.com:kgar/svelte-button-menu.git
+
 ## Fixit
 
 - [x] PC: The card header colors in Favorites are sometimes wrong, especially for pact spells
