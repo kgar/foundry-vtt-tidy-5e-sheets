@@ -31,9 +31,9 @@
   }
 </script>
 
-<div class="wrapper">
+<div class="button-menu-wrapper">
   <button
-    on:click={() => (open = true)}
+    on:click={() => (open = !open)}
     aria-label={ariaLabel}
     bind:this={openerEl}
     {title}

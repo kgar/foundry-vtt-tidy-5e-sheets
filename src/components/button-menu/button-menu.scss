@@ -1,69 +1,66 @@
-.wrapper {
+.button-menu-wrapper {
   position: relative;
   display: flex;
-}
 
-.button-menu-list {
-  position: absolute;
-  z-index: 1;
-  box-shadow: 0 0 0.3125rem var(--t5ek-context-shadow-color);
-}
+  .button-menu-opener {
+    min-width: 1.25rem;
+    line-height: initial;
+    padding: 0.125rem 0.25rem;
+    border-radius: 0.1875rem;
+    color: var(--t5ek-secondary-color);
+    border: none;
+    text-align: center;
+    background: var(--t5ek-faint-color);
 
-.button-menu-list {
-  display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
-  background: var(--t5ek-button-menu-background);
-  border-radius: 0.3125rem;
-  margin: 0;
-  padding: 0.5rem 0;
-  list-style: none;
-}
+    &:hover {
+      color: var(--t5ek-primary-color);
+    }
 
-.button-menu-item:not(.button-menu-command-li) {
-  padding: 0 0.5rem;
-}
-
-.button-menu-divider {
-  background: linear-gradient(
-    90deg,
-    var(--t5ek-button-menu-divider-color),
-    transparent
-  );
-  background: var(--t5ek-button-menu-divider-color);
-  height: 0.0625rem;
-  border-radius: 0.0625rem;
-}
-
-.button-menu-command {
-  background: transparent;
-  border: 0;
-  display: block;
-  width: 100%;
-  text-align: left;
-  padding: 0.25rem 0.5rem;
-  white-space: nowrap;
-}
-
-.button-menu-command:hover {
-  background: var(--t5ek-button-menu-hover-color);
-}
-
-.button-menu-opener {
-  min-width: 1.25rem;
-  line-height: initial;
-  padding: 0.125rem 0.25rem;
-  border-radius: 0.1875rem;
-  color: var(--t5ek-secondary-color);
-  border: none;
-  text-align: center;
-  background: var(--t5ek-faint-color);
-
-  &:hover {
-    color: var(--t5ek-primary-color);
+    i {
+      margin: 0;
+    }
   }
 
-  i {
+  .button-menu-list {
+    position: absolute;
+    z-index: 1;
+    box-shadow: 0 0 0.3125rem var(--t5ek-context-shadow-color);
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    background: var(--t5ek-button-menu-background);
+    border-radius: 0.3125rem;
     margin: 0;
+    padding: 0.5rem 0;
+    list-style: none;
+  }
+
+  .button-menu-item:not(.button-menu-command-li) {
+    padding: 0.5rem;
+  }
+
+  .button-menu-divider {
+    background: linear-gradient(
+      90deg,
+      var(--t5ek-button-menu-divider-color),
+      transparent
+    );
+    background: var(--t5ek-button-menu-divider-color);
+    height: 0.0625rem;
+    border-radius: 0.0625rem;
+  }
+
+  .button-menu-command {
+    background: transparent;
+    border: 0;
+    display: block;
+    width: 100%;
+    text-align: left;
+    padding: 0.25rem 0.5rem;
+    white-space: nowrap;
+
+    &:hover {
+      background: var(--t5ek-button-menu-hover-color);
+    }
   }
 }
