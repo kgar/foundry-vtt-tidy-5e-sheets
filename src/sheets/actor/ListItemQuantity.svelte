@@ -1,7 +1,7 @@
 <script lang="ts">
   import NumberInput from 'src/components/form/NumberInput.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { SettingsProvider } from 'src/settings/settings';
+  import { currentSettings } from 'src/settings/settings';
   import type { Item5e } from 'src/types/item';
 
   export let item: Item5e;
@@ -16,8 +16,7 @@
       field="system.quantity"
       value={item.system.quantity}
       maxlength={3}
-      readonly={!FoundryAdapter.userIsGm() &&
-        SettingsProvider.settings.lockItemQuantity.get()}
+      readonly={!FoundryAdapter.userIsGm() && $currentSettings.lockItemQuantity}
       selectOnFocus={true}
       stopClickPropagation={true}
     />)

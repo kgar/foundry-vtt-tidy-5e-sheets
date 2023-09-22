@@ -5,16 +5,13 @@
   import FavoriteFeaturesList from '../favorites/FavoriteFeaturesList.svelte';
   import type { Item5e } from 'src/types/item';
   import FavoriteSpellsList from 'src/components/favorites/FavoriteSpellsList.svelte';
-  import { SettingsProvider } from 'src/settings/settings';
+  import { currentSettings } from 'src/settings/settings';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
 
   let store = getContext<Readable<ActorSheetContext>>('store');
 
   const localize = FoundryAdapter.localize;
-
-  const sortAlphabetically =
-    SettingsProvider.settings.enableSortFavoritesItemsAlphabetically.get();
 
   $: favoriteInventory = sortByNameIfConfigured(
     $store.inventory
@@ -33,7 +30,7 @@
   }
 
   function sortByNameIfConfigured(items: Item5e[]): Item5e[] {
-    return sortAlphabetically
+    return $currentSettings.enableSortFavoritesItemsAlphabetically
       ? items.sort((a, b) => a.name.localeCompare(b.name))
       : items;
   }

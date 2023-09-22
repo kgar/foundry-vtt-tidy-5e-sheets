@@ -12,7 +12,6 @@
   import { CONSTANTS } from 'src/constants';
   import ItemUses from '../items/ItemUses.svelte';
   import ItemAddUses from '../items/ItemAddUses.svelte';
-  import { SettingsProvider } from 'src/settings/settings';
   import ItemControls from '../items/ItemControls.svelte';
   import ItemDuplicateControl from '../items/ItemDuplicateControl.svelte';
   import ItemDeleteControl from '../items/ItemDeleteControl.svelte';
@@ -27,6 +26,7 @@
   import ListItemQuantity from 'src/sheets/actor/ListItemQuantity.svelte';
   import InventoryItemCardContent from '../item-info-card/InventoryItemCardContent.svelte';
   import InventoryAmmoSelector from './InventoryAmmoSelector.svelte';
+  import { currentSettings } from 'src/settings/settings';
 
   export let primaryColumnName: string;
   export let items: Item5e[];
@@ -42,13 +42,6 @@
   const weightUnit = FoundryAdapter.getWeightUnit();
   $: allowEdit = FoundryAdapter.tryGetFlag($store.actor, 'allow-edit');
   $: classicControlsBaseWidth = allowEdit ? '7.5rem' : '5.3125rem';
-  $: quantityAlwaysShownEnabled =
-    SettingsProvider.settings.quantityAlwaysShownEnabled.get();
-
-  $: hideIconsNextToTheItemName =
-    SettingsProvider.settings.hideIconsNextToTheItemName.get();
-  $: classicControlsEnabled =
-    SettingsProvider.settings.classicControlsEnabled.get();
 
   function getInventoryRowClasses(item: Item5e) {
     const extras: string[] = [];
@@ -85,7 +78,7 @@
       <ItemTableColumn baseWidth="7.5rem">
         {localize('DND5E.Usage')}
       </ItemTableColumn>
-      {#if $store.owner && classicControlsEnabled && !lockControls}
+      {#if $store.owner && $currentSettings.classicControlsEnabled && !lockControls}
         <ItemTableColumn baseWidth={classicControlsBaseWidth} />
       {/if}
     </ItemTableHeaderRow>
@@ -101,7 +94,7 @@
         }}
         let:toggleSummary
         cssClass={getInventoryRowClasses(item)}
-        alwaysShowQuantity={quantityAlwaysShownEnabled}
+        alwaysShowQuantity={$currentSettings.quantityAlwaysShownEnabled}
         itemCardContentTemplate={InventoryItemCardContent}
       >
         <ItemTableCell primary={true} title={item.name}>
@@ -119,7 +112,7 @@
             <ListItemQuantity {item} {ctx} />
           </ItemName>
         </ItemTableCell>
-        {#if !hideIconsNextToTheItemName}
+        {#if !$currentSettings.hideIconsNextToTheItemName}
           <ItemTableCell cssClass="no-border">
             {#if ctx.attunement}
               <div class="item-detail attunement">
@@ -160,7 +153,7 @@
             {item.labels.activation}
           {/if}
         </ItemTableCell>
-        {#if $store.owner && classicControlsEnabled && !lockControls}
+        {#if $store.owner && $currentSettings.classicControlsEnabled && !lockControls}
           <ItemTableCell baseWidth={classicControlsBaseWidth}>
             <ItemControls>
               {#if ctx.attunement}

@@ -1,6 +1,5 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { SettingsProvider } from 'src/settings/settings';
   import type {
     Item5e,
     ItemCardContentComponent,
@@ -12,10 +11,11 @@
   import DefaultItemCardContentTemplate from './DefaultItemCardContentTemplate.svelte';
   import HorizontalLineSeparator from '../layout/HorizontalLineSeparator.svelte';
   import { warn } from 'src/utils/logging';
+  import { currentSettings } from 'src/settings/settings';
 
   // Freeze
   let frozen: boolean = false;
-  $: freezeKey = SettingsProvider.settings.itemCardsFixKey.get()?.toUpperCase();
+  $: freezeKey = $currentSettings.itemCardsFixKey?.toUpperCase();
 
   function detectFreezeStart(ev: KeyboardEvent) {
     if (frozen) {
@@ -32,7 +32,6 @@
   }
 
   // Floating
-  $: floating = SettingsProvider.settings.itemCardsAreFloating.get();
   let lastMouseEvent: { clientX: number; clientY: number } | null = null;
   let floatingTop: string | null = null;
   let floatingLeft: string | null = null;
@@ -44,7 +43,7 @@
   function onMouseMove(args: { clientX: number; clientY: number }) {
     lastMouseEvent = args;
 
-    if (!floating || !open || frozen) {
+    if (!$currentSettings.itemCardsAreFloating || !open || frozen) {
       return;
     }
 
@@ -103,7 +102,7 @@
   const defaultContentTemplate: ItemCardContentComponent =
     DefaultItemCardContentTemplate;
   let infoContentTemplate: ItemCardContentComponent | undefined;
-  $: delayMs = SettingsProvider.settings.itemCardsDelay.get() ?? 0;
+  $: delayMs = $currentSettings.itemCardsDelay ?? 0;
 
   async function showCard() {
     if (!$card.item) {
@@ -126,7 +125,7 @@
         $card.itemCardContentTemplate ?? defaultContentTemplate;
       item = $card.item;
 
-      if (floating) {
+      if ($currentSettings.itemCardsAreFloating) {
         rootFontSizePx = getRootFontSizePx();
 
         const boundingClientRect = sheet?.getBoundingClientRect();
@@ -224,7 +223,7 @@
   bind:this={itemCardNode}
   class="item-info-container"
   class:open={debug || open}
-  class:floating
+  class:floating={$currentSettings.itemCardsAreFloating}
   style:top={floatingTop}
   style:left={floatingLeft}
   style:--card-width="{cardWidthRem}rem"

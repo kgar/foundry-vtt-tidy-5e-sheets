@@ -1,6 +1,5 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { SettingsProvider } from 'src/settings/settings';
   import DeathSaves from 'src/sheets/DeathSaves.svelte';
   import Exhaustion from 'src/sheets/Exhaustion.svelte';
   import type { NpcSheetContext } from 'src/types/types';
@@ -12,12 +11,14 @@
   import NpcHealthFormula from './NpcHealthFormula.svelte';
   import ActorProfile from 'src/sheets/actor/ActorProfile.svelte';
   import { CONSTANTS } from 'src/constants';
+  import { currentSettings } from 'src/settings/settings';
 
   let store = getContext<Readable<NpcSheetContext>>('store');
 
-  const portraitStyle = SettingsProvider.settings.portraitStyle.get();
-  const useRoundedPortraitStyle = ['all', 'npc'].includes(portraitStyle);
-  const useHpOverlay = !SettingsProvider.settings.hpOverlayDisabledNpc.get();
+  const useRoundedPortraitStyle = ['all', 'npc'].includes(
+    $currentSettings.portraitStyle
+  );
+  const useHpOverlay = !$currentSettings.hpOverlayDisabledNpc;
 
   $: incapacitated =
     ($store.actor?.system?.attributes?.hp?.value ?? 0) <= 0 &&
@@ -29,7 +30,7 @@
 </script>
 
 <ActorProfile {useRoundedPortraitStyle} {useHpOverlay}>
-  {#if incapacitated && (!SettingsProvider.settings.hiddenDeathSavesEnabled.get() || FoundryAdapter.userIsGm())}
+  {#if incapacitated && (!$currentSettings.hiddenDeathSavesEnabled || FoundryAdapter.userIsGm())}
     <DeathSaves
       successes={FoundryAdapter.tryGetFlag($store.actor, 'death')?.success ?? 0}
       failures={FoundryAdapter.tryGetFlag($store.actor, 'death')?.failure ?? 0}
@@ -38,10 +39,10 @@
       {useRoundedPortraitStyle}
       on:rollDeathSave={(event) =>
         $store.rollDeathSave({ event: event.detail.mouseEvent })}
-      hpOverlayDisabled={SettingsProvider.settings.hpOverlayDisabledNpc.get()}
+      hpOverlayDisabled={$currentSettings.hpOverlayDisabledNpc}
     />
   {/if}
-  {#if !SettingsProvider.settings.exhaustionDisabled.get() && !incapacitated}
+  {#if !$currentSettings.exhaustionDisabled && !incapacitated}
     <Exhaustion
       level={FoundryAdapter.tryGetFlag($store.actor, 'exhaustion') ?? 0}
       radiusClass={useRoundedPortraitStyle ? 'rounded' : 'top-left'}
@@ -50,7 +51,7 @@
   {/if}
 
   <NpcHitPoints />
-  {#if SettingsProvider.settings.restingForNpcsEnabled.get()}
+  {#if $currentSettings.restingForNpcsEnabled}
     <NpcRest {useRoundedPortraitStyle} />
   {/if}
   <NpcHealthFormula />

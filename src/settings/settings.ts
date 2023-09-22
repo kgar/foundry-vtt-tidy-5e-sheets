@@ -10,6 +10,7 @@ import { defaultLightTheme } from 'src/theme/default-light-theme';
 import { getCoreThemes, themeVariables } from 'src/theme/theme-reference';
 import { Tidy5eKgarSettingsSheet } from 'src/sheets/settings/sheet/Tidy5eKgarSettingsSheet';
 import { Tidy5eKgarThemeSettingsSheet } from 'src/sheets/settings/theme/Tidy5eKgarThemeSettingsSheet';
+import { writable, type Writable } from 'svelte/store';
 
 export type Tidy5eSettings = {
   [settingKey: string]: Tidy5eSetting;
@@ -87,6 +88,8 @@ export type Tidy5eSetting = {
    */
   representsCssVariable?: keyof typeof themeVariables;
 };
+
+export let currentSettings: Writable<CurrentSettings>;
 
 export function createSettings() {
   return {
@@ -1747,6 +1750,12 @@ export function initSettings() {
   SettingsProvider.settings.colorScheme.options.onChange(
     SettingsProvider.settings.colorScheme.get()
   );
+
+  currentSettings = writable(getCurrentSettings());
+
+  Hooks.on('closeSettingsConfig', () => {
+    currentSettings.set(getCurrentSettings());
+  });
 }
 
 function setDnd5eCssVariable(

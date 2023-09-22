@@ -1,7 +1,7 @@
 <script lang="ts">
   import ButtonMenuItem from 'src/components/button-menu/ButtonMenuItem.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { SettingsProvider } from 'src/settings/settings';
+  import { currentSettings } from 'src/settings/settings';
   import { getCoreThemes } from 'src/theme/theme-reference';
 
   const themes = Object.entries(getCoreThemes(true));
@@ -11,8 +11,6 @@
   function setTheme(value: string) {
     FoundryAdapter.setGameSetting('colorScheme', value);
   }
-
-  const currentTheme = SettingsProvider.settings.colorScheme.get();
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -24,7 +22,7 @@
   <select
     id="sheet-menu-{idSuffix}"
     on:change={(ev) => setTheme(ev.currentTarget.value)}
-    value={currentTheme}
+    value={$currentSettings.colorScheme}
   >
     {#each themes as [key, value]}
       <option value={key}>{localize(value)}</option>

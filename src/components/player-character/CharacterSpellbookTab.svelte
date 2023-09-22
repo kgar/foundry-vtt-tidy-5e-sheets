@@ -9,21 +9,18 @@
   import SpellbookList from '../spellbook/SpellbookList.svelte';
   import SpellbookFooter from '../spellbook/SpellbookFooter.svelte';
   import SpellbookGrid from '../spellbook/SpellbookGrid.svelte';
-  import { SettingsProvider } from 'src/settings/settings';
   import SpellbookClassFilter from '../spellbook/SpellbookClassFilter.svelte';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import NoSpells from 'src/sheets/actor/NoSpells.svelte';
   import Notice from '../shared/Notice.svelte';
+  import { currentSettings } from 'src/settings/settings';
 
   let store = getContext<Readable<ActorSheetContext>>('store');
 
   const localize = FoundryAdapter.localize;
 
   let searchCriteria: string = '';
-
-  const classicControlsEnabled =
-    SettingsProvider.settings.classicControlsEnabled.get();
 
   let layoutMode: ItemLayoutMode;
   $: layoutMode = FoundryAdapter.tryGetFlag($store.actor, 'spellbook-grid')
@@ -39,14 +36,15 @@
     FoundryAdapter.setFlag($store.actor, 'spellbook-grid', true);
   }
 
-  const filterByClassesEnabled =
-    SettingsProvider.settings.spellClassFilterSelect.get();
   $: selectedClassFilter =
     FoundryAdapter.tryGetFlag($store.actor, 'classFilter') ?? '';
   $: allowEdit = FoundryAdapter.tryGetFlag($store.actor, 'allow-edit') === true;
 
   function tryFilterByClass(spells: any[]) {
-    if (!filterByClassesEnabled || selectedClassFilter === '') {
+    if (
+      !$currentSettings.spellClassFilterSelect ||
+      selectedClassFilter === ''
+    ) {
       return spells;
     }
 
@@ -72,7 +70,7 @@
     searchFlag="spell-search"
     cssClass="align-self-flex-end"
   />
-  {#if filterByClassesEnabled}
+  {#if $currentSettings.spellClassFilterSelect}
     <li class="spellbook-class-filter">
       <SpellbookClassFilter />
     </li>
@@ -114,7 +112,7 @@
           <SpellbookList
             spells={filteredSpells}
             {section}
-            {classicControlsEnabled}
+            classicControlsEnabled={$currentSettings.classicControlsEnabled}
           />
         {:else}
           <SpellbookGrid spells={filteredSpells} {section} />

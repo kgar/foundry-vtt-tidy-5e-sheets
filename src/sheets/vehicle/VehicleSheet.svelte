@@ -27,8 +27,8 @@
   import VerticalLineSeparator from 'src/components/layout/VerticalLineSeparator.svelte';
   import AttributeBlock from '../AttributeBlock.svelte';
   import ItemInfoCard from 'src/components/item-info-card/ItemInfoCard.svelte';
-  import { SettingsProvider } from 'src/settings/settings';
   import SheetMenu from '../actor/SheetMenu.svelte';
+  import { currentSettings } from 'src/settings/settings';
 
   export let selectedTabId: string;
 
@@ -88,12 +88,10 @@
 
   $: abilities = Object.entries<any>($store.abilities);
 
-  $: itemCardsForNpcs = SettingsProvider.settings.itemCardsForNpcs.get();
-
   const localize = FoundryAdapter.localize;
 </script>
 
-{#if itemCardsForNpcs}
+{#if $currentSettings.itemCardsForNpcs}
   <ItemInfoCard />
 {/if}
 

@@ -25,10 +25,10 @@
   import ActorMovementRow from '../actor/ActorMovementRow.svelte';
   import ActorEffectsTab from '../actor/ActorEffectsTab.svelte';
   import ActorHeaderStats from '../actor/ActorHeaderStats.svelte';
-  import { SettingsProvider } from 'src/settings/settings';
   import ActorJournalTab from 'src/components/player-character/ActorJournalTab.svelte';
   import ItemInfoCard from 'src/components/item-info-card/ItemInfoCard.svelte';
   import SheetMenu from '../actor/SheetMenu.svelte';
+  import { currentSettings } from 'src/settings/settings';
 
   export let selectedTabId: string;
 
@@ -36,58 +36,62 @@
 
   $: console.log($store);
 
-  let tabs: Tab[] = [
-    {
-      id: CONSTANTS.TAB_NPC_ABILITIES,
-      displayName: 'T5EK.Abilities',
-      content: {
-        component: NpcAbilitiesTab,
-      },
-    },
-  ];
+  let tabs: Tab[];
 
-  if (!SettingsProvider.settings.hideSpellbookTabNpc.get()) {
-    tabs.push({
-      id: CONSTANTS.TAB_NPC_SPELLBOOK,
-      displayName: 'DND5E.Spellbook',
-      content: {
-        component: NpcSpellbookTab,
-      },
-    });
-  }
-
-  tabs.push(
-    {
-      id: CONSTANTS.TAB_NPC_EFFECTS,
-      displayName: 'DND5E.Effects',
-      content: {
-        component: ActorEffectsTab,
-        props: {
-          classicControlsEnabled: true,
+  $: {
+    tabs = [
+      {
+        id: CONSTANTS.TAB_NPC_ABILITIES,
+        displayName: 'T5EK.Abilities',
+        content: {
+          component: NpcAbilitiesTab,
         },
       },
-    },
-    {
-      id: CONSTANTS.TAB_NPC_BIOGRAPHY,
-      displayName: 'DND5E.Biography',
-      content: {
-        component: NpcBiographyTab,
-      },
+    ];
+
+    if (!$currentSettings.hideSpellbookTabNpc) {
+      tabs.push({
+        id: CONSTANTS.TAB_NPC_SPELLBOOK,
+        displayName: 'DND5E.Spellbook',
+        content: {
+          component: NpcSpellbookTab,
+        },
+      });
     }
-  );
 
-  if (!SettingsProvider.settings.journalTabNPCDisabled.get()) {
-    tabs.push({
-      id: CONSTANTS.TAB_NPC_JOURNAL,
-      displayName: 'T5EK.Journal',
-      content: {
-        component: ActorJournalTab,
+    tabs.push(
+      {
+        id: CONSTANTS.TAB_NPC_EFFECTS,
+        displayName: 'DND5E.Effects',
+        content: {
+          component: ActorEffectsTab,
+          props: {
+            classicControlsEnabled: true,
+          },
+        },
       },
-    });
-  }
+      {
+        id: CONSTANTS.TAB_NPC_BIOGRAPHY,
+        displayName: 'DND5E.Biography',
+        content: {
+          component: NpcBiographyTab,
+        },
+      }
+    );
 
-  if (!tabs.some((tab) => tab.id === selectedTabId)) {
-    selectedTabId = tabs[0]?.id;
+    if (!$currentSettings.journalTabNPCDisabled) {
+      tabs.push({
+        id: CONSTANTS.TAB_NPC_JOURNAL,
+        displayName: 'T5EK.Journal',
+        content: {
+          component: ActorJournalTab,
+        },
+      });
+    }
+
+    if (!tabs.some((tab) => tab.id === selectedTabId)) {
+      selectedTabId = tabs[0]?.id;
+    }
   }
 
   $: sizes = <TidyDropdownOption[]>Object.entries($store.config.actorSizes).map(
@@ -104,12 +108,10 @@
 
   $: abilities = Object.entries<any>($store.abilities);
 
-  $: itemCardsForNpcs = SettingsProvider.settings.itemCardsForNpcs.get();
-
   const localize = FoundryAdapter.localize;
 </script>
 
-{#if itemCardsForNpcs}
+{#if $currentSettings.itemCardsForNpcs}
   <ItemInfoCard />
 {/if}
 

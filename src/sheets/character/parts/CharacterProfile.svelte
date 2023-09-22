@@ -1,7 +1,6 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { type ActorSheetContext } from 'src/types/types';
-  import { SettingsProvider } from 'src/settings/settings';
   import Exhaustion from '../../Exhaustion.svelte';
   import Inspiration from '../../Inspiration.svelte';
   import DeathSaves from '../../DeathSaves.svelte';
@@ -12,12 +11,13 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import ActorProfile from 'src/sheets/actor/ActorProfile.svelte';
+  import { currentSettings } from 'src/settings/settings';
 
   let store = getContext<Readable<ActorSheetContext>>('store');
 
-  const portraitStyle = SettingsProvider.settings.portraitStyle.get();
+  const portraitStyle = $currentSettings.portraitStyle;
   const useRoundedPortraitStyle = ['all', 'pc'].includes(portraitStyle);
-  const useHpOverlay = !SettingsProvider.settings.hpOverlayDisabled.get();
+  const useHpOverlay = !$currentSettings.hpOverlayDisabled;
 
   $: incapacitated =
     ($store.actor?.system?.attributes?.hp?.value ?? 0) <= 0 &&
@@ -34,7 +34,7 @@
 <!-- svelte-ignore a11y-missing-attribute -->
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <ActorProfile {useRoundedPortraitStyle} {useHpOverlay}>
-  {#if incapacitated && (!SettingsProvider.settings.hiddenDeathSavesEnabled.get() || FoundryAdapter.userIsGm())}
+  {#if incapacitated && (!$currentSettings.hiddenDeathSavesEnabled || FoundryAdapter.userIsGm())}
     <DeathSaves
       {useRoundedPortraitStyle}
       successes={$store.system.attributes.death.success}
@@ -43,27 +43,27 @@
       failuresField="system.attributes.death.failure"
       on:rollDeathSave={(event) =>
         $store.actor.rollDeathSave({ event: event.detail.mouseEvent })}
-      hpOverlayDisabled={SettingsProvider.settings.hpOverlayDisabled.get()}
+      hpOverlayDisabled={$currentSettings.hpOverlayDisabled}
     />
   {/if}
 
-  {#if !SettingsProvider.settings.exhaustionDisabled.get() && !incapacitated}
+  {#if !$currentSettings.exhaustionDisabled && !incapacitated}
     <Exhaustion
       level={$store.system.attributes.exhaustion}
       radiusClass={useRoundedPortraitStyle ? 'rounded' : 'top-left'}
       on:levelSelected={onLevelSelected}
-      onlyShowOnHover={SettingsProvider.settings.exhaustionOnHover.get() ||
-        (SettingsProvider.settings.hideIfZero.get() &&
+      onlyShowOnHover={$currentSettings.exhaustionOnHover ||
+        ($currentSettings.hideIfZero &&
           $store.system.attributes.exhaustion === 0)}
     />
   {/if}
 
-  {#if !SettingsProvider.settings.inspirationDisabled.get() && !incapacitated}
+  {#if !$currentSettings.inspirationDisabled && !incapacitated}
     <Inspiration
       inspired={$store.actor.system.attributes.inspiration}
       radiusClass={useRoundedPortraitStyle ? 'rounded' : 'top-right'}
-      onlyShowOnHover={SettingsProvider.settings.inspirationOnHover.get()}
-      disableAnimation={SettingsProvider.settings.inspirationAnimationDisabled.get()}
+      onlyShowOnHover={$currentSettings.inspirationOnHover}
+      disableAnimation={$currentSettings.inspirationAnimationDisabled}
     />
   {/if}
 

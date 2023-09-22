@@ -6,7 +6,6 @@
     Tab,
     TidyDropdownOption,
   } from 'src/types/types';
-  import { SettingsProvider } from 'src/settings/settings';
   import Tidy5eActorOriginSummaryConfig from '../tidy5e-actor-origin-summary-config';
   import CharacterProfile from './parts/CharacterProfile.svelte';
   import TidyDropdownList from '../TidyDropdownList.svelte';
@@ -30,6 +29,7 @@
   import TextInput from 'src/components/form/TextInput.svelte';
   import ItemInfoCard from 'src/components/item-info-card/ItemInfoCard.svelte';
   import SheetMenu from '../actor/SheetMenu.svelte';
+  import { currentSettings } from 'src/settings/settings';
 
   export let debug: any = 'Put any debug information here, if ya need it.';
   export let selectedTabId: string;
@@ -98,8 +98,7 @@
         content: {
           component: ActorEffectsTab,
           props: {
-            classicControlsEnabled:
-              SettingsProvider.settings.classicControlsEnabled.get(),
+            classicControlsEnabled: $currentSettings.classicControlsEnabled,
           },
         },
       },
@@ -112,8 +111,7 @@
       },
     ];
 
-    const allowJournal =
-      $store.owner && !SettingsProvider.settings.journalTabDisabled.get();
+    const allowJournal = $store.owner && !$currentSettings.journalTabDisabled;
 
     if (allowJournal) {
       tabs.push({
@@ -214,7 +212,7 @@
 
     <section class="class-list">
       <!-- Player Name -->
-      {#if SettingsProvider.settings.playerNameEnabled.get()}
+      {#if $currentSettings.playerNameEnabled}
         <ContentEditableFormField
           element="span"
           document={$store.actor}

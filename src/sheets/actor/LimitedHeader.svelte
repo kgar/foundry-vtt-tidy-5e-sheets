@@ -2,7 +2,6 @@
   import type { VehicleSheetContext } from 'src/types/types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
-  import { SettingsProvider } from 'src/settings/settings';
 
   export let rounded: boolean;
 

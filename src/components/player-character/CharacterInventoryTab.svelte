@@ -9,7 +9,6 @@
   import ListContainer from '../layout/ListContainer.svelte';
   import InventoryList from '../inventory/InventoryList.svelte';
   import InventoryGrid from '../inventory/InventoryGrid.svelte';
-  import { SettingsProvider } from 'src/settings/settings';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import Currency from 'src/sheets/actor/Currency.svelte';
@@ -17,6 +16,7 @@
   import NumberInput from '../form/NumberInput.svelte';
   import EncumbranceBar from 'src/sheets/actor/EncumbranceBar.svelte';
   import TabFooter from 'src/sheets/actor/TabFooter.svelte';
+    import { currentSettings } from 'src/settings/settings';
 
   let store = getContext<Readable<ActorSheetContext>>('store');
 
@@ -124,7 +124,7 @@
     <Currency actor={$store.actor} />
   </div>
 
-  {#if !SettingsProvider.settings.hideStandardEncumbranceBar.get()}
+  {#if !$currentSettings.hideStandardEncumbranceBar}
     <EncumbranceBar />
   {/if}
 </TabFooter>

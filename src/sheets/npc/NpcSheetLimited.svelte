@@ -5,16 +5,17 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import SheetEditor from '../SheetEditor.svelte';
-  import { SettingsProvider } from 'src/settings/settings';
   import { CONSTANTS } from 'src/constants';
   import LimitedHeader from '../actor/LimitedHeader.svelte';
+  import { currentSettings } from 'src/settings/settings';
 
   let store = getContext<Readable<NpcSheetContext>>('store');
 
   const localize = FoundryAdapter.localize;
 
-  $: portraitStyle = SettingsProvider.settings.portraitStyle.get();
-  $: useRoundedPortraitStyle = ['all', 'npc'].includes(portraitStyle);
+  $: useRoundedPortraitStyle = ['all', 'npc'].includes(
+    $currentSettings.portraitStyle
+  );
 
   function activateProseMirrorListeners(node: HTMLElement) {
     $store.activateFoundryJQueryListeners(node);

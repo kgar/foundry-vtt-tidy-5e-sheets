@@ -2,7 +2,6 @@
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { type ActorSheetContext, type ItemCardStore } from 'src/types/types';
-  import { SettingsProvider } from 'src/settings/settings';
   import ItemTable from '../items/ItemTable.svelte';
   import ItemTableColumn from '../items/ItemTableColumn.svelte';
   import ItemTableHeaderRow from '../items/ItemTableHeaderRow.svelte';
@@ -13,6 +12,7 @@
   import { getContext } from 'svelte';
   import type { Readable, Writable } from 'svelte/store';
   import SpellbookItemCardContent from '../item-info-card/SpellbookItemCardContent.svelte';
+  import { currentSettings } from 'src/settings/settings';
 
   export let section: any;
   export let spells: Item5e[];
@@ -49,7 +49,7 @@
           {section.label}
         </span>
         {#if section.usesSlots}
-          {#if !SettingsProvider.settings.hideSpellSlotMarker.get()}
+          {#if !$currentSettings.hideSpellSlotMarker}
             <SpellSlotMarkers {section} />
           {/if}
           <SpellSlotUses {section} />
@@ -135,11 +135,13 @@
       }
 
       &.prepared {
-        box-shadow: 0 0 0 0.125rem var(--t5ek-prepared-item-grid-tile-outline-color);
+        box-shadow: 0 0 0 0.125rem
+          var(--t5ek-prepared-item-grid-tile-outline-color);
         background-color: var(--t5ek-equipped-background);
 
         .spell-image {
-          box-shadow: 0 0 0.0625rem 0.0625rem inset var(--t5ek-prepared-item-grid-tile-accent-color);
+          box-shadow: 0 0 0.0625rem 0.0625rem inset
+            var(--t5ek-prepared-item-grid-tile-accent-color);
           border-radius: 0.3125rem;
         }
       }
@@ -149,7 +151,8 @@
         background-color: var(--t5ek-pact-background);
 
         .spell-image {
-          box-shadow: 0 0 0.0625rem 0.0625rem inset var(--t5ek-pact-accent-color);
+          box-shadow: 0 0 0.0625rem 0.0625rem inset
+            var(--t5ek-pact-accent-color);
           border-radius: 0.3125rem;
         }
       }
@@ -159,7 +162,8 @@
         background-color: var(--t5ek-atwill-background);
 
         .spell-image {
-          box-shadow: 0 0 0.0625rem 0.0625rem inset var(--t5ek-atwill-accent-color);
+          box-shadow: 0 0 0.0625rem 0.0625rem inset
+            var(--t5ek-atwill-accent-color);
           border-radius: 0.3125rem;
         }
       }

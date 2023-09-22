@@ -41,9 +41,10 @@
 - [x] Figure out how to keep the named color rather than converting it to hexa when the user provides it. Only put the named color to hexa for the color picker to use, allowing the user to riff on a named color
 - [x] Extract file processing code to util-oriented location
 - [x] Extract theme validation / parsing to theme.ts
-- [ ] Convert Sheet Redrawing so that there is a global store specifically for housing current settings. Whenever settings are adjusted by conventional means, or when a sheet is opened, or any other scenario that makes sense, update the store.
-  - [ ] Update all SettingProvider callers to instead use the store
-  - [ ] Remove the sheet redrawing feature so that t5ek sheets only update the pieces that changed
+- [x] Convert Sheet Redrawing so that there is a global store specifically for housing current settings. Whenever settings are adjusted by conventional means, or when a sheet is opened, or any other scenario that makes sense, update the store.
+  - [x] Remove the sheet redrawing feature so that t5ek sheets only update the pieces that changed
+  - [x] Update all SettingProvider callers to instead use the store
+- [ ] Refactor / monkey patch onChange() for all settings. If a setting changes, debounce a call to update the settings store. 👏👏👏
 - [ ] Add drag UI overlay to theme settings form that clearly denotes that it is a drop zone
 - [ ] Add explanatory paragraph to Theme Settings which explains how to use the form, including the hint about being able to drag and drop a file to import settings.
 - [ ] If possible, support theme-based drops onto all tidy sheets; rather than set colors on the form, this instead sets the variables in the player's game settings and then applies the current theme

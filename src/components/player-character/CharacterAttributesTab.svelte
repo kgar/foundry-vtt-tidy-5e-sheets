@@ -5,10 +5,10 @@
   import Favorites from '../attributes/Favorites.svelte';
   import Resources from '../attributes/Resources.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { SettingsProvider } from 'src/settings/settings';
   import { isNil } from 'src/utils/data';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
+  import { currentSettings } from 'src/settings/settings';
 
   let store = getContext<Readable<ActorSheetContext>>('store');
 
@@ -19,15 +19,14 @@
       (x) => !isNil(x.value) || !isNil(x.value, '') || !isNil(x.max)
     );
 
-  const traitsMovedBelowResource =
-    SettingsProvider.settings.traitsMovedBelowResource.get();
+  const traitsMovedBelowResource = $currentSettings.traitsMovedBelowResource;
 </script>
 
 <div class="attributes-tab-contents">
   <section class="side-panel">
     <SkillsList actor={$store.actor} />
     {#if !traitsMovedBelowResource}
-      <Traits toggleable={SettingsProvider.settings.traitsTogglePc.get()} />
+      <Traits toggleable={$currentSettings.traitsTogglePc} />
     {/if}
   </section>
   <section class="main-panel">
@@ -35,7 +34,7 @@
       <Resources />
     {/if}
     {#if traitsMovedBelowResource}
-      <Traits toggleable={SettingsProvider.settings.traitsTogglePc.get()} />
+      <Traits toggleable={$currentSettings.traitsTogglePc} />
     {/if}
     <Favorites />
   </section>

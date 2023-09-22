@@ -5,15 +5,16 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import SheetEditor from '../SheetEditor.svelte';
-  import { SettingsProvider } from 'src/settings/settings';
   import LimitedHeader from '../actor/LimitedHeader.svelte';
+  import { currentSettings } from 'src/settings/settings';
 
   let store = getContext<Readable<VehicleSheetContext>>('store');
 
   const localize = FoundryAdapter.localize;
 
-  $: portraitStyle = SettingsProvider.settings.portraitStyle.get();
-  $: useRoundedPortraitStyle = ['all', 'vehicle'].includes(portraitStyle);
+  $: useRoundedPortraitStyle = ['all', 'vehicle'].includes(
+    $currentSettings.portraitStyle
+  );
 
   function activateProseMirrorListeners(node: HTMLElement) {
     $store.activateFoundryJQueryListeners(node);

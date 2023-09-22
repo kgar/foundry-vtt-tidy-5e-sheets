@@ -1,10 +1,9 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { type Actor5e } from 'src/types/actor';
-  import { SettingsProvider } from 'src/settings/settings';
-  import { clamp, isRealNumber } from 'src/utils/numbers';
   import TextInput from 'src/components/form/TextInput.svelte';
   import ActorHpBar from 'src/sheets/actor/ActorHpBar.svelte';
+  import { currentSettings } from 'src/settings/settings';
 
   export let value: number;
   export let max: number;
@@ -15,9 +14,8 @@
   const localize = FoundryAdapter.localize;
 
   const allowMaxHpOverride =
-    SettingsProvider.settings.allowHpMaxOverride.get() &&
-    (!SettingsProvider.settings.lockHpMaxChanges.get() ||
-      FoundryAdapter.userIsGm());
+    $currentSettings.allowHpMaxOverride &&
+    (!$currentSettings.lockHpMaxChanges || FoundryAdapter.userIsGm());
 </script>
 
 <div
@@ -26,7 +24,7 @@
   class:widen-for-rounded-portrait={useRoundedPortraitStyle}
   title={localize('DND5E.HitPoints')}
 >
-  {#if !SettingsProvider.settings.hpBarDisabled.get()}
+  {#if !$currentSettings.hpBarDisabled}
     <ActorHpBar {actor} />
   {/if}
   <TextInput

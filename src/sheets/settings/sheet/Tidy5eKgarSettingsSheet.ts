@@ -6,6 +6,7 @@ import {
   getCurrentSettings,
   type CurrentSettings,
   type Tidy5eSettingKey,
+  currentSettings,
 } from 'src/settings/settings';
 import { debug } from 'src/utils/logging';
 import { Tidy5eCharacterSheet } from 'src/sheets/character/Tidy5eCharacterSheet';
@@ -118,9 +119,7 @@ export class Tidy5eKgarSettingsSheet extends FormApplication {
     }
 
     if (settingsUpdated) {
-      setTimeout(() => {
-        this.redrawOpenTidy5eSheets();
-      }, 200);
+      currentSettings.set(getCurrentSettings());
     }
 
     this.cacheSettingsForChangeTracking(newSettings);

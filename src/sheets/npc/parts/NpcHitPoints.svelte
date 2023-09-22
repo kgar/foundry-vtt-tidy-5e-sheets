@@ -1,7 +1,7 @@
 <script lang="ts">
   import TextInput from 'src/components/form/TextInput.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { SettingsProvider } from 'src/settings/settings';
+  import { currentSettings } from 'src/settings/settings';
   import ActorHpBar from 'src/sheets/actor/ActorHpBar.svelte';
   import type { NpcSheetContext } from 'src/types/types';
   import { getContext } from 'svelte';
@@ -13,7 +13,7 @@
 </script>
 
 <div class="portrait-hp" title={localize('DND5E.HitPoints')}>
-  {#if !SettingsProvider.settings.hpBarDisabledNpc.get()}
+  {#if !$currentSettings.hpBarDisabledNpc}
     <ActorHpBar actor={$store.actor} />
   {/if}
   <TextInput

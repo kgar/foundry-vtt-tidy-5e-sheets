@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { SettingsProvider } from 'src/settings/settings';
+  import { currentSettings } from 'src/settings/settings';
   import type { Item5e } from 'src/types/item';
   import type {
     ActorSheetContext,
@@ -16,8 +16,6 @@
       Readable<ActorSheetContext | NpcSheetContext | VehicleSheetContext>
     >('store');
 
-  $: ammoEquippedOnly = SettingsProvider.settings.ammoEquippedOnly.get();
-
   let ammos: { text: string; value: string | null; ammo: Item5e | null }[];
   $: ammos = [
     {
@@ -29,7 +27,7 @@
       .filter(
         (x) =>
           x.system.consumableType === 'ammo' &&
-          (!ammoEquippedOnly || x.system.equipped)
+          (!$currentSettings.ammoEquippedOnly || x.system.equipped)
       )
       .map((x) => ({
         text: `${x.name} (${x.system.quantity})`,

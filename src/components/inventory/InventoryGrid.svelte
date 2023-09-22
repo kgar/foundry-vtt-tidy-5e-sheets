@@ -6,12 +6,12 @@
   import ItemTableColumn from '../items/ItemTableColumn.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { CONSTANTS } from 'src/constants';
-  import { SettingsProvider } from 'src/settings/settings';
   import GridPaneFavoriteIcon from '../shared/GridPaneFavoriteIcon.svelte';
   import { getContext } from 'svelte';
   import type { Readable, Writable } from 'svelte/store';
   import TextInput from '../form/TextInput.svelte';
   import InventoryItemCardContent from '../item-info-card/InventoryItemCardContent.svelte';
+  import { currentSettings } from 'src/settings/settings';
 
   export let section: any;
   export let items: Item5e[];
@@ -22,13 +22,10 @@
   const localize = FoundryAdapter.localize;
   $: allowEdit = FoundryAdapter.tryGetFlag($store.actor, 'allow-edit');
 
-  const quantityAlwaysShownEnabled =
-    SettingsProvider.settings.quantityAlwaysShownEnabled.get();
-
   function getInventoryRowClasses(item: Item5e) {
     const extras: string[] = [];
 
-    if (!quantityAlwaysShownEnabled) {
+    if (!$currentSettings.quantityAlwaysShownEnabled) {
       extras.push('show-item-count-on-hover');
     }
 
@@ -145,7 +142,7 @@
               value={item.system.quantity}
               maxlength={2}
               readonly={!FoundryAdapter.userIsGm() &&
-                SettingsProvider.settings.lockItemQuantity.get()}
+                $currentSettings.lockItemQuantity}
               dtype="Number"
               allowDeltaChanges={true}
               selectOnFocus={true}
@@ -204,11 +201,13 @@
       }
 
       &.equipped {
-        box-shadow: 0 0 0 0.125rem var(--t5ek-equipped-item-grid-tile-outline-color);
+        box-shadow: 0 0 0 0.125rem
+          var(--t5ek-equipped-item-grid-tile-outline-color);
         background: var(--t5ek-equipped-background);
 
         .item-image {
-          box-shadow: 0 0 0.0625rem 0.0625rem inset var(--t5ek-equipped-item-grid-tile-accent-color);
+          box-shadow: 0 0 0.0625rem 0.0625rem inset
+            var(--t5ek-equipped-item-grid-tile-accent-color);
           border-radius: 0.3125rem;
         }
       }
@@ -223,7 +222,8 @@
 
         &.equipped .item-image {
           background-image: url('systems/dnd5e/icons/items/inventory/pearl.jpg');
-          box-shadow: 0 0 0rem 0.0625rem var(--t5ek-magic-item-grid-tile-outline-color) inset,
+          box-shadow: 0 0 0rem 0.0625rem
+              var(--t5ek-magic-item-grid-tile-outline-color) inset,
             0 0 0 0.0625rem var(--t5ek-magic-accent-color) inset,
             0 0 0.1875rem 0.125rem var(--t5ek-magic-accent-color) inset;
           border: none;
@@ -248,7 +248,8 @@
 
         &.not-attuned {
           background: var(--t5ek-attunement-required-color);
-          box-shadow: 0 0 0.1875rem 0.0625rem var(--t5ek-attunement-required-color);
+          box-shadow: 0 0 0.1875rem 0.0625rem
+            var(--t5ek-attunement-required-color);
         }
       }
 

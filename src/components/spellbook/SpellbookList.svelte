@@ -2,7 +2,6 @@
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { type ActorSheetContext } from 'src/types/types';
-  import { SettingsProvider } from 'src/settings/settings';
   import ItemControls from '../items/ItemControls.svelte';
   import ItemDeleteControl from '../items/ItemDeleteControl.svelte';
   import ItemDuplicateControl from '../items/ItemDuplicateControl.svelte';
@@ -25,6 +24,7 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import SpellbookItemCardContent from '../item-info-card/SpellbookItemCardContent.svelte';
+  import { currentSettings } from 'src/settings/settings';
 
   let store = getContext<Readable<ActorSheetContext>>('store');
   export let section: any;
@@ -48,8 +48,6 @@
   $: classicControlsBaseWidth = allowEdit
     ? controlsBaseWidthUnlocked
     : controlsBaseWidthLocked;
-  const hideIconsNextToTheItemName =
-    SettingsProvider.settings.hideIconsNextToTheItemName.get();
 </script>
 
 <section class="spellbook-list-section {cssClass}">
@@ -60,7 +58,7 @@
           {section.label}
         </span>
         {#if section.usesSlots}
-          {#if !SettingsProvider.settings.hideSpellSlotMarker.get()}
+          {#if !$currentSettings.hideSpellSlotMarker}
             <SpellSlotMarkers {section} />
           {/if}
           <SpellSlotUses {section} />
@@ -129,7 +127,7 @@
             <ItemUses item={spell} />
           </ItemTableCell>
         {/if}
-        {#if allowFavorites && !hideIconsNextToTheItemName && FoundryAdapter.tryGetFlag(spell, 'favorite')}
+        {#if allowFavorites && !$currentSettings.hideIconsNextToTheItemName && FoundryAdapter.tryGetFlag(spell, 'favorite')}
           <InlineFavoriteIcon />
         {/if}
         <ItemTableCell baseWidth={spellComponentsBaseWidth} cssClass="no-gap">

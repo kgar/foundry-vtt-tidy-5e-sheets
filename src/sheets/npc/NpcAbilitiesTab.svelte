@@ -1,7 +1,6 @@
 <script lang="ts">
   import SkillsList from 'src/components/attributes/SkillsList.svelte';
   import Traits from '../actor/Traits.svelte';
-  import { SettingsProvider } from 'src/settings/settings';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import type { ItemLayoutMode, NpcSheetContext } from 'src/types/types';
@@ -31,18 +30,11 @@
   import SpellbookGrid from 'src/components/spellbook/SpellbookGrid.svelte';
   import type { ItemCardContentComponent } from 'src/types/item';
   import InventoryItemCardContent from 'src/components/item-info-card/InventoryItemCardContent.svelte';
+  import { currentSettings } from 'src/settings/settings';
 
   let store = getContext<Readable<NpcSheetContext>>('store');
 
   $: allowEdit = FoundryAdapter.tryGetFlag($store.actor, 'allow-edit') === true;
-
-  $: traitsMovedBelowResourceNpc =
-    SettingsProvider.settings.traitsMovedBelowResourceNpc.get();
-
-  $: traitAlwaysShownNpc = SettingsProvider.settings.traitsAlwaysShownNpc.get();
-
-  $: showSpellsInAbilitiesTab =
-    SettingsProvider.settings.hideSpellbookTabNpc.get();
 
   $: noSpellLevels = !$store.spellbook.length;
 
@@ -75,16 +67,16 @@
   <div class="side-panel">
     <SkillsList
       actor={$store.actor}
-      toggleable={!SettingsProvider.settings.skillsAlwaysShownNpc.get()}
+      toggleable={!$currentSettings.skillsAlwaysShownNpc}
     />
-    {#if !traitsMovedBelowResourceNpc}
-      <Traits toggleable={!traitAlwaysShownNpc} />
+    {#if !$currentSettings.traitsMovedBelowResourceNpc}
+      <Traits toggleable={!$currentSettings.traitsAlwaysShownNpc} />
     {/if}
   </div>
   <div class="main-panel">
     <NpcLegendaryActions />
-    {#if traitsMovedBelowResourceNpc}
-      <Traits toggleable={!traitAlwaysShownNpc} />
+    {#if $currentSettings.traitsMovedBelowResourceNpc}
+      <Traits toggleable={!$currentSettings.traitsAlwaysShownNpc} />
     {/if}
     {#each $store.features as section}
       {#if allowEdit || section.items.length}
@@ -176,7 +168,7 @@
         </ItemTable>
       {/if}
     {/each}
-    {#if showSpellsInAbilitiesTab}
+    {#if $currentSettings.hideSpellbookTabNpc}
       {#if noSpellLevels}
         <h2
           class="spellbook-title toggle-spellbook"
