@@ -15,7 +15,9 @@ export class Tidy5eSheetsApi {
    * Opens the Theme Settings dialog.
    */
   openThemeSettings(): Tidy5eKgarThemeSettingsSheet {
-    return this.#themeSettings.render(true);
+    const rendered = this.#themeSettings.render(true);
+    setTimeout(() => this.#themeSettings.bringToTop(), 150);
+    return rendered;
   }
 
   openSheetSettings(initialTab?: string): Tidy5eKgarSettingsSheet {
