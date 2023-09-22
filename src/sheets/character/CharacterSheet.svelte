@@ -29,13 +29,7 @@
   import HorizontalLineSeparator from 'src/components/layout/HorizontalLineSeparator.svelte';
   import TextInput from 'src/components/form/TextInput.svelte';
   import ItemInfoCard from 'src/components/item-info-card/ItemInfoCard.svelte';
-  import SheetSettingsButton from '../actor/SheetSettingsButton.svelte';
-  import ButtonMenu from 'src/components/button-menu/ButtonMenu.svelte';
-  import ButtonMenuCommand from 'src/components/button-menu/ButtonMenuCommand.svelte';
-  import { getApi } from 'src/api/api';
-  import ButtonMenuItem from 'src/components/button-menu/ButtonMenuItem.svelte';
-  import ButtonMenuDivider from 'src/components/button-menu/ButtonMenuDivider.svelte';
-    import { getCoreThemes } from 'src/theme/theme-reference';
+  import SheetMenu from '../actor/SheetMenu.svelte';
 
   export let debug: any = 'Put any debug information here, if ya need it.';
   export let selectedTabId: string;
@@ -140,14 +134,6 @@
   $: {
     console.log($store);
   }
-
-  const api = getApi();
-
-  const themes = Object.entries(getCoreThemes(true));
-
-  function setTheme(value: string) {
-    FoundryAdapter.setGameSetting('colorScheme', value);
-  }
 </script>
 
 <ItemInfoCard />
@@ -222,34 +208,7 @@
           {localize('DND5E.AbbreviationLevel')}
           {$store.system.details.level}
         </h2>
-        <!-- <SheetSettingsButton initialTabId={CONSTANTS.TAB_SETTINGS_PLAYERS} /> -->
-        <ButtonMenu
-          position="bottom"
-          anchor="right"
-          ariaLabel={localize(localize('T5EK.Settings.SheetMenu.label'))}
-          title={localize(localize('T5EK.Settings.SheetMenu.label'))}
-          iconClass="fas fa-ellipsis-vertical"
-        >
-          <ButtonMenuCommand
-            on:click={() =>
-              api.openSheetSettings(CONSTANTS.TAB_SETTINGS_PLAYERS)}
-          >
-            <i class="fas fa-cog" />
-            {localize('T5EK.Settings.SheetMenu.label')}
-          </ButtonMenuCommand>
-          <ButtonMenuCommand on:click={() => api.openThemeSettings()}>
-            <i class="fas fa-palette" />
-            {localize('T5EK.ThemeSettings.Sheet.title')}
-          </ButtonMenuCommand>
-          <ButtonMenuDivider />
-          <ButtonMenuItem cssClass="flex-row">
-            <select class="flex-1" on:change={ev => setTheme(ev.currentTarget.value)}>
-              {#each themes as [key, value]}
-                <option value={key}>{localize(value)}</option>
-              {/each}
-            </select>
-          </ButtonMenuItem>
-        </ButtonMenu>
+        <SheetMenu defaultSettingsTab={CONSTANTS.TAB_SETTINGS_PLAYERS} />
       </div>
     </div>
 
@@ -348,8 +307,6 @@
 <section class="sheet-body">
   <TabContents {tabs} {selectedTabId} />
 </section>
-
-<!-- Cross-cutting: Item Info Card -->
 
 <style lang="scss">
   .tidy5e-kgar-sheet-header {

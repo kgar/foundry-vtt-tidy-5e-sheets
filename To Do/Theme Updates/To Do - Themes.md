@@ -31,10 +31,10 @@
 
 - [x] Pull css variable knowledge into the setting provider. For the type, use `keyof` or a similar thing to track actual theme reference variables
 - [x] Don't change user input for them when they are in the middle of typing a color. This is happening indirectly because of trying to parse to the color picker, and the color picker is reciprocating the input event.
-- [ ] Upgrade the Cog button for Sheet Settings on the sheet to instead feature vertical dots and show a menu
-  - [ ] Theme dropdown (change theme setting on select / apply theme on change)
-  - [ ] Sheet Settings option
-  - [ ] Theme Settings option
+- [x] Upgrade the Cog button for Sheet Settings on the sheet to instead feature vertical dots and show a menu
+  - [x] Theme dropdown (change theme setting on select / apply theme on change)
+  - [x] Sheet Settings option
+  - [x] Theme Settings option
 - [ ] Move setting (and theme types, if any are still lingering) out of script files and into dedicated type files to help prevent circular dependencies and allow FoundryAdapter to take some more responsibility over Foundry API stuff.
 - [ ] Extract file processing code to util-oriented location
 - [ ] Extract theme validation / parsing to theme.ts
@@ -71,19 +71,23 @@
 
 - [x] Create components
 - [x] Implement bare bones version without styles on a standalone svelte instance for speed of development
-- [ ] Bring into foundry
-- [ ] Style the components based on CSS variables and theme
-  - [ ] colors
-  - [ ] spacing
-  - [ ] roundness
-  - [ ] open/closed state for target button
-  - [ ] font
-- [ ] Test in popout!
-- [ ] Test in window tabs
+- [x] Bring into foundry
+- [x] Style the components based on CSS variables and theme
+  - [x] colors
+  - [x] spacing
+  - [x] roundness
+  - [x] open/closed state for target button
+  - [x] font
+- [x] Test in popout!
+- [x] Test in window tabs
 - [x] Handle automatic positioning if possible
-- [ ] If able, make the menu fixed and outside of its parent window; this might need some creativity...
+- [x] ~~If able, make the menu fixed and outside of its parent window; this might need some creativity...~~ nah
+- [ ] Rename SettingsMenu - SheetMenu
+- [ ] Delete SettingsButton and replace with SettingsMenu
 
 > Scratch pad repo : git@github.com:kgar/svelte-button-menu.git
+
+> Notes: It mostly works in popout! The main problem is that I rely on "click outside functionality". Should I try an invisible overlay? Or should I just accept that popout! has that limitation? For now, I think the latter. It can be closed by clicking the menu button again.
 
 ## Fixit
 
