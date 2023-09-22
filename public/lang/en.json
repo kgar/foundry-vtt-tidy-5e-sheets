@@ -609,7 +609,8 @@
     "Sheet": {
       "title": "Theme Settings",
       "header": "Custom Theme Colors",
-      "useDefaultColors": "Use Default Colors",
+      "useDefaultLightColors": "Default Light",
+      "useDefaultDarkColors": "Default Dark",
       "export": "Export",
       "import": "Import",
       "importError": "Theme import failed. See console for more details.",

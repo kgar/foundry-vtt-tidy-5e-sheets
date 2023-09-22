@@ -1,14 +1,12 @@
 import { CONSTANTS } from '../constants';
 import { FoundryAdapter } from '../foundry/foundry-adapter';
-import { RGBAToHexAFromColor } from '../utils/tidy5e-color-picker';
 import { ResetSettingsDialog } from './ResetSettingsDialog';
 import type {
   GetFunctionReturnType,
   RoundedPortaitStyleOptions,
 } from 'src/types/types';
-import { applyTheme } from 'src/theme/theme';
+import { applyTheme, getTheme } from 'src/theme/theme';
 import { defaultLightTheme } from 'src/theme/default-light-theme';
-import { defaultDarkTheme } from 'src/theme/default-dark-theme';
 import { getCoreThemes, themeVariables } from 'src/theme/theme-reference';
 import { Tidy5eKgarSettingsSheet } from 'src/sheets/settings/sheet/Tidy5eKgarSettingsSheet';
 import { Tidy5eKgarThemeSettingsSheet } from 'src/sheets/settings/theme/Tidy5eKgarThemeSettingsSheet';
@@ -134,12 +132,7 @@ export function createSettings() {
           choices: () => getCoreThemes(false),
           default: 'light',
           onChange: (data: string) => {
-            const theme =
-              data === 'light'
-                ? defaultLightTheme
-                : data === 'dark'
-                ? defaultDarkTheme
-                : null;
+            const theme = getTheme(data) ?? null;
 
             const colorScheme = SettingsProvider.settings.colorScheme.get();
 
@@ -168,23 +161,13 @@ export function createSettings() {
             data: string,
             colorPickerEnabledOverride: boolean | null = null
           ) => {
-            const theme =
-              data === 'light'
-                ? defaultLightTheme
-                : data === 'dark'
-                ? defaultDarkTheme
-                : null;
+            const theme = getTheme(data) ?? null;
 
             if (theme === null) {
-              const defaultThemeSetting =
+              const defaultThemeId =
                 SettingsProvider.settings.defaultTheme.get();
 
-              const defaultTheme =
-                defaultThemeSetting === 'light'
-                  ? defaultLightTheme
-                  : defaultThemeSetting === 'dark'
-                  ? defaultDarkTheme
-                  : null;
+              const defaultTheme = getTheme(defaultThemeId) ?? null;
 
               defaultTheme &&
                 applyTheme(defaultTheme, colorPickerEnabledOverride);

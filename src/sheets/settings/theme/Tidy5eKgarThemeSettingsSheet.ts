@@ -4,10 +4,13 @@ import ThemeSettingsSheet from './ThemeSettingsSheet.svelte';
 import {
   getCurrentSettings,
   type CurrentSettings,
-  SettingsProvider,
 } from 'src/settings/settings';
 import { writable, type Writable } from 'svelte/store';
-import { applyCurrentTheme, getThemeableColors } from 'src/theme/theme';
+import {
+  applyCurrentTheme,
+  getTheme,
+  getThemeableColors,
+} from 'src/theme/theme';
 import type { ThemeColorSetting, Tidy5eThemeDataV1 } from 'src/types/theme';
 import { downloadTextFile } from 'src/utils/file';
 import { CONSTANTS } from 'src/constants';
@@ -16,13 +19,13 @@ declare var FormApplication: any;
 
 export type ThemeSettingsSheetFunctions = {
   save(settings: CurrentSettings): Promise<unknown>;
-  useDefaultColors(): void;
+  useExistingThemeColors(themeId: string): void;
   exportTheme(settings: CurrentSettings): void;
 };
 
 export class Tidy5eKgarThemeSettingsSheet extends FormApplication {
   themeableColors: ThemeColorSetting[] = getThemeableColors();
-  store: Writable<CurrentSettings>;
+  store: Writable<CurrentSettings> = writable(getCurrentSettings());
 
   static get defaultOptions() {
     return {
@@ -59,7 +62,7 @@ export class Tidy5eKgarThemeSettingsSheet extends FormApplication {
           'functions',
           {
             save: this.saveChangedSettings.bind(this),
-            useDefaultColors: this.useDefaultColors.bind(this),
+            useExistingThemeColors: this.useExistingThemeColors.bind(this),
             exportTheme: this.exportTheme.bind(this),
           } satisfies ThemeSettingsSheetFunctions,
         ],
@@ -106,10 +109,12 @@ export class Tidy5eKgarThemeSettingsSheet extends FormApplication {
     unsubscribeFn();
   }
 
-  useDefaultColors() {
+  useExistingThemeColors(themeId: string) {
+    const targetTheme = getTheme(themeId);
+
     const colorsToUpdate = this.themeableColors.reduce<Record<string, unknown>>(
       (prev, color) => {
-        prev[color.key] = SettingsProvider.settings[color.key].options.default;
+        prev[color.key] = targetTheme.variables[color.cssVariable];
         return prev;
       },
       {}

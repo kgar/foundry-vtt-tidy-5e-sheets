@@ -148,7 +148,10 @@
         ui.notifications.error(
           localize('T5EK.ThemeSettings.Sheet.importError')
         );
-        error(e.toString());
+        error(
+          e?.toString() ??
+            'An error occurred while attempting to import a theme file.'
+        );
       }
     });
 
@@ -275,9 +278,19 @@
         <i class="fas fa-file-export" />
         {localize('T5EK.ThemeSettings.Sheet.export')}
       </button>
-      <button type="button" on:click={() => functions.useDefaultColors()}>
-        <i class="fas fa-database" />
-        {localize('T5EK.ThemeSettings.Sheet.useDefaultColors')}
+      <button
+        type="button"
+        on:click={() => functions.useExistingThemeColors('light')}
+      >
+        <i class="fas fa-sun" />
+        {localize('T5EK.ThemeSettings.Sheet.useDefaultLightColors')}
+      </button>
+      <button
+        type="button"
+        on:click={() => functions.useExistingThemeColors('dark')}
+      >
+        <i class="fas fa-moon" />
+        {localize('T5EK.ThemeSettings.Sheet.useDefaultDarkColors')}
       </button>
     </div>
     <button type="submit" class="save-changes-btn" on:click={save}>
