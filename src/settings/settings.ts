@@ -1744,7 +1744,18 @@ export function initSettings() {
 
   for (let setting of Object.entries(SettingsProvider.settings)) {
     // TODO: Need some way to notify when new settings are not configured correctly; doesn't have to be perfect
-    game.settings.register(CONSTANTS.MODULE_ID, setting[0], setting[1].options);
+    const options = {
+      ...setting[1].options,
+      onChange: (...args: any[]) => {
+        // TODO: to foundry adapter
+        foundry.utils.debounce(() => {
+          currentSettings.set(getCurrentSettings());
+        }, 100);
+
+        (setting[1].options as any).onChange?.(...args);
+      },
+    };
+    game.settings.register(CONSTANTS.MODULE_ID, setting[0], options);
   }
 
   SettingsProvider.settings.colorScheme.options.onChange(

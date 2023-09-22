@@ -45,6 +45,9 @@
   - [x] Remove the sheet redrawing feature so that t5ek sheets only update the pieces that changed
   - [x] Update all SettingProvider callers to instead use the store
 - [ ] Refactor / monkey patch onChange() for all settings. If a setting changes, debounce a call to update the settings store. 👏👏👏
+  - [ ] It almost works. Check on floating/flyout cards in settings.
+  - [ ] Test sheet settings changes / save and apply
+  - [ ] Rename `currentSettings` to `settingsStore`
 - [ ] Add drag UI overlay to theme settings form that clearly denotes that it is a drop zone
 - [ ] Add explanatory paragraph to Theme Settings which explains how to use the form, including the hint about being able to drag and drop a file to import settings.
 - [ ] If possible, support theme-based drops onto all tidy sheets; rather than set colors on the form, this instead sets the variables in the player's game settings and then applies the current theme
@@ -55,10 +58,11 @@
 
 > [!todo] Goal
 > Build a button-based menu which supports
+>
 > - button-based options
 > - options which are containers for other HTML, such as select inputs, checkboxes, etc.
 > - dividers
-> - slot-based composition with 
+> - slot-based composition with
 >   - `<ButtonMenuButton>` - the button which manages the menu; takes slot content for its inner HTML
 >   - `<ButtonMenu>` - the container which houses the menu; takes slot content for its children
 >   - `<ButtonMenuCommand>` - a button menu item which functions as a button and exposes a click event
@@ -67,8 +71,7 @@
 > - props
 >   - open
 >   - ...?
-> 
-> 
+>
 > Ensure all of the appropriate accessibility features are built in
 
 - [x] Create components
@@ -97,7 +100,7 @@
 - [x] The item info card is not just hiding content when animating open or closed. Ensure that it's not squishing content and instead just hiding it.
 - [x] Vehicle: the Description tab has 2 scrollbars
 - [x] The item card has a weird white right border when flying out to the left in dark mode
-- [x] Fix error related to needing to provide an _updateObject implementation in the theme settings form.
+- [x] Fix error related to needing to provide an \_updateObject implementation in the theme settings form.
 - [x] The color picker doesn't respond well to dark mode.
 
 ### update object error

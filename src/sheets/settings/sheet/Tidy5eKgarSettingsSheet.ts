@@ -118,10 +118,6 @@ export class Tidy5eKgarSettingsSheet extends FormApplication {
       }
     }
 
-    if (settingsUpdated) {
-      currentSettings.set(getCurrentSettings());
-    }
-
     this.cacheSettingsForChangeTracking(newSettings);
   }
 
