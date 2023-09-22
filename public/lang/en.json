@@ -475,80 +475,61 @@
     "hint": "Enable/Disable custom theme colors"
   },
   "T5EK.Settings.ColorPickerPrimaryAccent": {
-    "name": "Color Picker for 'Primary Accent'",
-    "hint": "Select what color you want to use for 'Primary Accent'. The transparency value '#00000000' is equivalent to disabling the color for the current context."
+    "name": "Primary Accent"
   },
   "T5EK.Settings.ColorPickerEquipped": {
-    "name": "Color Picker for 'Equipped'",
-    "hint": "Select what color you want to use for 'Equipped'. The transparency value '#00000000' is equivalent to disabling the color for the current context."
+    "name": "Equipped"
   },
   "T5EK.Settings.ColorPickerEquippedOutline": {
-    "name": "Color Picker for 'Equipped Outline'",
-    "hint": "Select what color you want to use for 'Equipped Outline'. The transparency value '#00000000' is equivalent to disabling the color for the current context."
+    "name": "Equipped Outline"
   },
   "T5EK.Settings.ColorPickerEquippedAccent": {
-    "name": "Color Picker for 'Equipped Accent'",
-    "hint": "Select what color you want to use for 'Equipped Accent'. The transparency value '#00000000' is equivalent to disabling the color for the current context."
+    "name": "Equipped Accent"
   },
   "T5EK.Settings.ColorPickerPrepared": {
-    "name": "Color Picker for 'Prepared'",
-    "hint": "Select what color you want to use for 'Prepared'. The transparency value '#00000000' is equivalent to disabling the color for the current context."
+    "name": "Prepared"
   },
   "T5EK.Settings.ColorPickerPreparedOutline": {
-    "name": "Color Picker for 'Prepared Outline'",
-    "hint": "Select what color you want to use for 'Prepared Outline'. The transparency value '#00000000' is equivalent to disabling the color for the current context."
+    "name": "Prepared Outline"
   },
   "T5EK.Settings.ColorPickerPreparedAccent": {
-    "name": "Color Picker for 'Prepared Accent'",
-    "hint": "Select what color you want to use for 'Prepared Accent'. The transparency value '#00000000' is equivalent to disabling the color for the current context."
+    "name": "Prepared Accent"
   },
   "T5EK.Settings.ColorPickerPact": {
-    "name": "Color Picker for 'Pact'",
-    "hint": "Select what color you want to use for 'Pact'. The transparency value '#00000000' is equivalent to disabling the color for the current context."
+    "name": "Pact"
   },
   "T5EK.Settings.ColorPickerPactOutline": {
-    "name": "Color Picker for 'PactOutline'",
-    "hint": "Select what color you want to use for 'PactOutline'. The transparency value '#00000000' is equivalent to disabling the color for the current context."
+    "name": "PactOutline"
   },
   "T5EK.Settings.ColorPickerPactAccent": {
-    "name": "Color Picker for 'PactAccent'",
-    "hint": "Select what color you want to use for 'PactAccent'. The transparency value '#00000000' is equivalent to disabling the color for the current context."
+    "name": "PactAccent"
   },
   "T5EK.Settings.ColorPickerAtWill": {
-    "name": "Color Picker for 'At Will'",
-    "hint": "Select what color you want to use for 'At Will'. The transparency value '#00000000' is equivalent to disabling the color for the current context."
+    "name": "At Will"
   },
   "T5EK.Settings.ColorPickerAtWillOutline": {
-    "name": "Color Picker for 'At Will Outline'",
-    "hint": "Select what color you want to use for 'At Will Outline'. The transparency value '#00000000' is equivalent to disabling the color for the current context."
+    "name": "At Will Outline"
   },
   "T5EK.Settings.ColorPickerAtWillAccent": {
-    "name": "Color Picker for 'At Will Accent'",
-    "hint": "Select what color you want to use for 'At Will Accent'. The transparency value '#00000000' is equivalent to disabling the color for the current context."
+    "name": "At Will Accent"
   },
   "T5EK.Settings.ColorPickerInnate": {
-    "name": "Color Picker for 'Innate'",
-    "hint": "Select what color you want to use for 'Innate'. The transparency value '#00000000' is equivalent to disabling the color for the current context."
+    "name": "Innate"
   },
   "T5EK.Settings.ColorPickerInnateOutline": {
-    "name": "Color Picker for 'Innate Outline'",
-    "hint": "Select what color you want to use for 'Innate Outline'. The transparency value '#00000000' is equivalent to disabling the color for the current context."
+    "name": "Innate Outline"
   },
   "T5EK.Settings.ColorPickerInnateAccent": {
-    "name": "Color Picker for 'Innate Accent'",
-    "hint": "Select what color you want to use for 'Innate Accent'. The transparency value '#00000000' is equivalent to disabling the color for the current context."
+    "name": "Innate Accent"
   },
   "T5EK.Settings.ColorPickerAlwaysPrepared": {
-    "name": "Color Picker for 'Always Prepared'",
-    "hint": "Select what color you want to use for 'Always Prepared'. The transparency value '#00000000' is equivalent to disabling the color for the current context."
+    "name": "Always Prepared"
   },
   "T5EK.Settings.ColorPickerAlwaysPreparedOutline": {
-    "name": "Color Picker for 'Always Prepared Outline'",
-    "hint": "Select what color you want to use for 'Always Prepared Outline'. The transparency value '#00000000' is equivalent to disabling the color for the current context."
+    "name": "Always Prepared Outline"
   },
   "T5EK.Settings.ColorPickerAlwaysPreparedAccent": {
-    "name": "Color Picker for 'Always Prepared Accent'",
-    "hint": "Select what color you want to use for 'Always Prepared Accent'. The transparency value '#00000000' is equivalent to disabling the color for the current context."
+    "name": "Always Prepared Accent"
   },
   "T5EK.Settings.AllowHpMaxOverride": {
     "name": "Allow Hp Max override on Character",
@@ -613,8 +594,11 @@
       "useDefaultDarkColors": "Default Dark",
       "export": "Export",
       "import": "Import",
+      "importDropHint": "Hint: You can drag a \".tidy5e-theme\" file onto this form to import it.",
       "importError": "Theme import failed. See console for more details.",
-      "importSuccess": "Theme imported successfully!"
+      "importSuccess": "Theme imported successfully!",
+      "menuLabel": "Menu",
+      "explanation": "Select what color you wish to use for each option. The value \"#00000000\" is equivalent to disabling the color."
     }
   },
 

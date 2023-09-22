@@ -36,8 +36,8 @@
   - [x] Sheet Settings option
   - [x] Theme Settings option
 - [x] Split "Use Default Colors" to "☀ Default Light" and "🌙 Default Dark" and map accordingly
-- [ ] Consider using the new menu and putting these options to the right of the checkbox in a menu button such as "🔽 Actions" or simple vertical dots. Poll the gang about it.
-- [ ] Move setting (and theme types, if any are still lingering) out of script files and into dedicated type files to help prevent circular dependencies and allow FoundryAdapter to take some more responsibility over Foundry API stuff.
+- [x] Consider using the new menu and putting these options to the right of the checkbox in a menu button such as "🔽 Actions" or simple vertical dots. Poll the gang about it.
+- [ ] Button Menu - upgrade the button menu commands to allow for a dedicated section for icons that is a fixed flex-basis, whether or not there's an icon present. Update all callers to use the component rather than feeding in their own inner contents.
 - [ ] Figure out how to keep the named color rather than converting it to hexa when the user provides it. Only put the named color to hexa for the color picker to use, allowing the user to riff on a named color
 - [ ] Extract file processing code to util-oriented location
 - [ ] Extract theme validation / parsing to theme.ts
@@ -47,6 +47,7 @@
 - [ ] Add drag UI overlay to theme settings form that clearly denotes that it is a drop zone
 - [ ] Add explanatory paragraph to Theme Settings which explains how to use the form, including the hint about being able to drag and drop a file to import settings.
 - [ ] If possible, support theme-based drops onto all tidy sheets; rather than set colors on the form, this instead sets the variables in the player's game settings and then applies the current theme
+- [ ] Move setting (and theme types, if any are still lingering) out of script files and into dedicated type files to help prevent circular dependencies and allow FoundryAdapter to take some more responsibility over Foundry API stuff.
 - [ ] ...?
 
 ## Svelte Button Menu

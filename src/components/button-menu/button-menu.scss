@@ -33,10 +33,26 @@
     margin: 0;
     padding: 0.5rem 0;
     list-style: none;
-  }
 
-  .button-menu-item:not(.button-menu-command-li) {
-    padding: 0.5rem;
+    .button-menu-item {
+      &:not(.button-menu-command-li) {
+        padding: 0.5rem;
+      }
+
+      .button-menu-command {
+        background: transparent;
+        border: 0;
+        display: block;
+        width: 100%;
+        text-align: left;
+        padding: 0.25rem 0.5rem;
+        white-space: nowrap;
+
+        &:hover {
+          background: var(--t5ek-button-menu-hover-color);
+        }
+      }
+    }
   }
 
   .button-menu-divider {
@@ -48,19 +64,5 @@
     background: var(--t5ek-button-menu-divider-color);
     height: 0.0625rem;
     border-radius: 0.0625rem;
-  }
-
-  .button-menu-command {
-    background: transparent;
-    border: 0;
-    display: block;
-    width: 100%;
-    text-align: left;
-    padding: 0.25rem 0.5rem;
-    white-space: nowrap;
-
-    &:hover {
-      background: var(--t5ek-button-menu-hover-color);
-    }
   }
 }

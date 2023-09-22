@@ -120,7 +120,7 @@
     </div>
     <div class="flex-grow-1">
       <div
-        class="actor-name-row flex-row justifty-content-space-between align-items-center extra-small-gap"
+        class="actor-name-row flex-row justify-content-space-between align-items-center extra-small-gap"
       >
         {#if $store.tokenState === 'linked'}
           <i

@@ -19,7 +19,7 @@
 </script>
 
 <ButtonMenuItem cssClass="button-menu-command-li">
-  <button class="button-menu-command" on:click={handleClick}>
+  <button type="button" class="button-menu-command" on:click={handleClick}>
     <slot />
   </button>
 </ButtonMenuItem>

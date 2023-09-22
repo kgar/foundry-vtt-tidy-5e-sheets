@@ -9,8 +9,8 @@
   import ColorPicker from 'svelte-awesome-color-picker';
   import { Colord } from 'colord';
   import { applyCurrentTheme } from 'src/theme/theme';
-  import { CONSTANTS } from 'src/constants';
   import { error } from 'src/utils/logging';
+  import ThemeSettingSheetMenu from './ThemeSettingSheetMenu.svelte';
 
   let store = getContext<Writable<CurrentSettings>>('store');
   let appId = getContext<string>('appId');
@@ -158,22 +158,6 @@
     fileReader.readAsText(file);
   }
 
-  function onFileChanged(
-    ev: Event & {
-      currentTarget: EventTarget & HTMLInputElement;
-    }
-  ) {
-    const file = ev.currentTarget.files?.[0];
-
-    ev.currentTarget.value = '';
-
-    if (!file) {
-      return;
-    }
-
-    processFile(file);
-  }
-
   function onDrop(
     ev: DragEvent & {
       currentTarget: EventTarget & HTMLElement;
@@ -195,29 +179,31 @@
     }
   }
 
-  let fileImportInput: HTMLInputElement;
-
   const localize = FoundryAdapter.localize;
 </script>
 
-<section class="wrapper" on:drop={onDrop} aria-label="dropzone">
+<section class="theme-settings-wrapper" on:drop={onDrop} aria-label="dropzone">
   <div class="theme-settings-form">
     <h2>{localize('T5EK.ThemeSettings.Sheet.header')}</h2>
 
-    <div>
-      <label
-        for="colorPickerEnabled-{appId}"
-        class="flex-row align-items-center extra-small-gap"
-      >
-        <input
-          type="checkbox"
-          data-dtype="boolean"
-          id="colorPickerEnabled-{appId}"
-          bind:checked={$store.colorPickerEnabled}
-        />
-        {localize('T5EK.Settings.ColorPickerEnabled.name')}
-      </label>
+    <div class="flex-row small-gap">
+      <div class="flex-1">
+        <label
+          for="colorPickerEnabled-{appId}"
+          class="flex-row align-items-center extra-small-gap"
+        >
+          <input
+            type="checkbox"
+            data-dtype="boolean"
+            id="colorPickerEnabled-{appId}"
+            bind:checked={$store.colorPickerEnabled}
+          />
+          {localize('T5EK.Settings.ColorPickerEnabled.name')}
+        </label>
+      </div>
+      <ThemeSettingSheetMenu on:selectFile={(ev) => processFile(ev.detail)} />
     </div>
+    <p class="explanation">{localize('T5EK.ThemeSettings.Sheet.explanation')}</p>
 
     <div class="color-pickers">
       {#each themeableColors as colorToConfigure}
@@ -262,37 +248,6 @@
     </div>
   </div>
   <div class="button-bar">
-    <div class="commands flex-row extra-small-gap">
-      <button type="button" on:click={() => fileImportInput.click()}>
-        <i class="fas fa-file-import" />
-        {localize('T5EK.ThemeSettings.Sheet.import')}
-      </button>
-      <input
-        class="theme-import-input"
-        type="file"
-        accept={CONSTANTS.THEME_EXTENSION_WITH_DOT}
-        on:change={onFileChanged}
-        bind:this={fileImportInput}
-      />
-      <button type="button" on:click={() => functions.exportTheme($store)}>
-        <i class="fas fa-file-export" />
-        {localize('T5EK.ThemeSettings.Sheet.export')}
-      </button>
-      <button
-        type="button"
-        on:click={() => functions.useExistingThemeColors('light')}
-      >
-        <i class="fas fa-sun" />
-        {localize('T5EK.ThemeSettings.Sheet.useDefaultLightColors')}
-      </button>
-      <button
-        type="button"
-        on:click={() => functions.useExistingThemeColors('dark')}
-      >
-        <i class="fas fa-moon" />
-        {localize('T5EK.ThemeSettings.Sheet.useDefaultDarkColors')}
-      </button>
-    </div>
     <button type="submit" class="save-changes-btn" on:click={save}>
       <i class="fas fa-save" />
       {localize('T5EK.SaveChanges')}
@@ -301,7 +256,7 @@
 </section>
 
 <style lang="scss">
-  .wrapper {
+  .theme-settings-wrapper {
     display: flex;
     flex-direction: column;
     gap: 0.25rem;
@@ -352,22 +307,6 @@
 
       button {
         margin: 0;
-      }
-
-      .commands {
-        display: flex;
-        flex-direction: row;
-        gap: 0.25rem;
-        flex-wrap: wrap;
-
-        > * {
-          flex: 1;
-          white-space: nowrap;
-        }
-
-        .theme-import-input {
-          display: none;
-        }
       }
     }
   }

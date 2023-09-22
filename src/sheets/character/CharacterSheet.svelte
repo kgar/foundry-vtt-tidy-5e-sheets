@@ -147,7 +147,7 @@
   </div>
 
   <div class="flex-grow-1">
-    <div class="flex-row justifty-content-space-between align-items-center">
+    <div class="flex-row justify-content-space-between align-items-center">
       <div class="actor-name">
         <ContentEditableFormField
           element="h1"
