@@ -23,8 +23,8 @@
 <ButtonMenu
   position="bottom"
   anchor="right"
-  ariaLabel={localize('T5EK.Settings.SheetMenu.label')}
-  title={localize('T5EK.Settings.SheetMenu.label')}
+  ariaLabel={localize('T5EK.SheetMenu.label')}
+  title={localize('T5EK.SheetMenu.label')}
   iconClass="fas fa-ellipsis-vertical"
 >
   <ButtonMenuItem cssClass="flex-column extra-small-gap">
