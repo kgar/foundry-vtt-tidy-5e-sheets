@@ -37,10 +37,10 @@
   - [x] Theme Settings option
 - [x] Split "Use Default Colors" to "☀ Default Light" and "🌙 Default Dark" and map accordingly
 - [x] Consider using the new menu and putting these options to the right of the checkbox in a menu button such as "🔽 Actions" or simple vertical dots. Poll the gang about it.
-- [ ] Button Menu - upgrade the button menu commands to allow for a dedicated section for icons that is a fixed flex-basis, whether or not there's an icon present. Update all callers to use the component rather than feeding in their own inner contents.
-- [ ] Figure out how to keep the named color rather than converting it to hexa when the user provides it. Only put the named color to hexa for the color picker to use, allowing the user to riff on a named color
-- [ ] Extract file processing code to util-oriented location
-- [ ] Extract theme validation / parsing to theme.ts
+- [x] Button Menu - upgrade the button menu commands to allow for a dedicated section for icons that is a fixed flex-basis, whether or not there's an icon present. Update all callers to use the component rather than feeding in their own inner contents.
+- [x] Figure out how to keep the named color rather than converting it to hexa when the user provides it. Only put the named color to hexa for the color picker to use, allowing the user to riff on a named color
+- [x] Extract file processing code to util-oriented location
+- [x] Extract theme validation / parsing to theme.ts
 - [ ] Convert Sheet Redrawing so that there is a global store specifically for housing current settings. Whenever settings are adjusted by conventional means, or when a sheet is opened, or any other scenario that makes sense, update the store.
   - [ ] Update all SettingProvider callers to instead use the store
   - [ ] Remove the sheet redrawing feature so that t5ek sheets only update the pieces that changed

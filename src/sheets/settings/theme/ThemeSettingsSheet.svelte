@@ -1,161 +1,73 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { CurrentSettings } from 'src/settings/settings';
-  import { themeVariables } from 'src/theme/theme-reference';
   import { getContext, onDestroy } from 'svelte';
   import type { Writable } from 'svelte/store';
   import type { ThemeSettingsSheetFunctions } from './Tidy5eKgarThemeSettingsSheet';
   import type { ThemeColorSetting, Tidy5eThemeDataV1 } from 'src/types/theme';
-  import ColorPicker from 'svelte-awesome-color-picker';
-  import { Colord } from 'colord';
   import { applyCurrentTheme } from 'src/theme/theme';
   import { error } from 'src/utils/logging';
   import ThemeSettingSheetMenu from './ThemeSettingSheetMenu.svelte';
-
-  let store = getContext<Writable<CurrentSettings>>('store');
-  let appId = getContext<string>('appId');
-  let functions = getContext<ThemeSettingsSheetFunctions>('functions');
+  import ThemeSettingColorArticle from './ThemeSettingColorArticle.svelte';
+  import {
+    clearTidy5eRootCssVariables,
+    extractSettingsUpdateDeltaFromTheme,
+    trySetRootCssVariable,
+    validateImportFile,
+  } from 'src/theme/theme';
+  import { getSingleFileFromDropEvent, readFileAsText } from 'src/utils/file';
 
   export let themeableColors: ThemeColorSetting[];
-
-  const eyeDropperEnabled = 'EyeDropper' in window;
-
   $: {
     if ($store.colorPickerEnabled) {
       themeableColors.forEach((color) =>
-        trySetCssVariable(color.cssVariable, $store[color.key]?.toString())
+        trySetRootCssVariable(
+          color.cssVariable,
+          $store[color.key]?.toString(),
+          $store.colorPickerEnabled
+        )
       );
     } else {
-      clearCssVariables();
+      clearTidy5eRootCssVariables();
       applyCurrentTheme(false);
     }
   }
 
-  function trySetCssVariable(cssVariable: string, value: string) {
-    if ($store.colorPickerEnabled) {
-      document.documentElement.style.setProperty(cssVariable, value);
-    }
-  }
+  let store = getContext<Writable<CurrentSettings>>('store');
+  let appId = getContext<string>('appId');
+  let functions = getContext<ThemeSettingsSheetFunctions>('functions');
+  const localize = FoundryAdapter.localize;
 
-  function clearCssVariables() {
-    Object.keys(themeVariables).forEach((key) =>
-      document.documentElement.style.removeProperty(key)
-    );
-  }
-
-  let applyingChanges = false;
-
-  async function save() {
-    applyingChanges = true;
-
+  async function processImportFile(file: File) {
     try {
-      await functions.save($store);
-    } finally {
-      applyingChanges = false;
-    }
-  }
+      const result = await readFileAsText(file);
 
-  onDestroy(() => {
-    clearCssVariables();
-  });
+      const theme = JSON.parse(result) as Tidy5eThemeDataV1;
 
-  function settingValueToHexaString(value: unknown | undefined) {
-    const result = colorToHexaString(new Colord(value?.toString() ?? ''));
+      const isValid = validateImportFile(theme);
 
-    if (result !== '') {
-      return result;
-    }
-
-    var ctx = document.createElement('canvas').getContext('2d');
-    if (ctx) {
-      ctx.fillStyle = value?.toString() ?? '';
-      return ctx.fillStyle;
-    }
-
-    return '';
-  }
-
-  function colorToHexaString(color: Colord | undefined): string {
-    if (color?.isValid()) {
-      return color.toHex();
-    }
-
-    return '';
-  }
-
-  function activateEyeDropper(colorToConfigure: ThemeColorSetting) {
-    if ('EyeDropper' in window) {
-      const EyeDropper = window.EyeDropper as any;
-      const eyeDropper = new EyeDropper();
-      eyeDropper.open().then(({ sRGBHex }: { sRGBHex: string }) => {
-        onColorSelected(colorToConfigure, sRGBHex);
-      });
-    }
-  }
-
-  function onColorSelected(colorToConfigure: ThemeColorSetting, value: string) {
-    const parsedColor = settingValueToHexaString(value);
-    if (!parsedColor) {
-      return;
-    }
-    trySetCssVariable(colorToConfigure.cssVariable, value);
-    $store = {
-      ...$store,
-      [colorToConfigure.key]: value,
-    };
-  }
-
-  function processFile(file: File) {
-    const fileReader = new FileReader();
-    fileReader.addEventListener('load', (event) => {
-      console.log(event);
-
-      try {
-        const result = event.target?.result?.toString();
-        if (!result) {
-          throw new Error('File does not contain any text.');
-        }
-        const theme = JSON.parse(result) as Tidy5eThemeDataV1;
-
-        const isValid =
-          theme.version === 1 && typeof theme.variables === 'object';
-        if (!isValid) {
-          throw new Error(`Theme file ${file.name} is in an invalid format.`);
-        }
-
-        const storeUpdateData = Object.keys(theme.variables).reduce<
-          Record<string, string>
-        >((prev, key) => {
-          const themeableColor = themeableColors.find(
-            (c) => c.cssVariable === key
-          );
-          if (themeableColor) {
-            prev[themeableColor.key] = theme.variables[key];
-          }
-
-          return prev;
-        }, {});
-
-        store.update((settings) => ({
-          ...settings,
-          ...storeUpdateData,
-        }));
-
-        ui.notifications.info(
-          localize('T5EK.ThemeSettings.Sheet.importSuccess')
-        );
-      } catch (e) {
-        ui.notifications.error(
-          localize('T5EK.ThemeSettings.Sheet.importError')
-        );
-        error(
-          e?.toString() ??
-            'An error occurred while attempting to import a theme file.'
-        );
+      if (!isValid) {
+        throw new Error(`Theme file ${file.name} is in an invalid format.`);
       }
-    });
 
-    fileReader.readAsText(file);
+      const storeUpdateData = extractSettingsUpdateDeltaFromTheme(
+        theme,
+        themeableColors
+      );
+
+      store.update((settings) => ({
+        ...settings,
+        ...storeUpdateData,
+      }));
+
+      ui.notifications.info(localize('T5EK.ThemeSettings.Sheet.importSuccess'));
+    } catch (e) {
+      ui.notifications.error(localize('T5EK.ThemeSettings.Sheet.importError'));
+      error(
+        e?.toString() ??
+          'An error occurred while attempting to import a theme file.'
+      );
+    }
   }
 
   function onDrop(
@@ -163,32 +75,26 @@
       currentTarget: EventTarget & HTMLElement;
     }
   ) {
-    console.log('File(s) dropped');
-
-    ev.preventDefault();
-
-    let file: File | null = null;
-    if (ev.dataTransfer?.items) {
-      file = ev.dataTransfer.items[0]?.getAsFile();
-    } else if (ev.dataTransfer?.files) {
-      file = ev.dataTransfer.files[0];
-    }
+    let file = getSingleFileFromDropEvent(ev);
 
     if (file) {
-      processFile(file);
+      processImportFile(file);
     }
   }
 
-  const localize = FoundryAdapter.localize;
+  onDestroy(() => {
+    clearTidy5eRootCssVariables();
+  });
 </script>
 
 <section class="theme-settings-wrapper" on:drop={onDrop} aria-label="dropzone">
   <div class="theme-settings-form">
-    <h2 class="header flex-row justify-content-space-between">{localize('T5EK.ThemeSettings.Sheet.header')} <ThemeSettingSheetMenu on:selectFile={(ev) => processFile(ev.detail)} /></h2>
-
-    <p class="explanation drop-hint">
-      {localize('T5EK.ThemeSettings.Sheet.importDropHint')}
-    </p>
+    <h2 class="header flex-row justify-content-space-between">
+      {localize('T5EK.ThemeSettings.Sheet.header')}
+      <ThemeSettingSheetMenu
+        on:selectFile={(ev) => processImportFile(ev.detail)}
+      />
+    </h2>
 
     <div>
       <label
@@ -209,50 +115,22 @@
       {localize('T5EK.ThemeSettings.Sheet.explanation')}
     </p>
 
+    <p class="explanation drop-hint">
+      {localize('T5EK.ThemeSettings.Sheet.importDropHint')}
+    </p>
+
     <div class="color-pickers">
       {#each themeableColors as colorToConfigure}
-        <article>
-          <div class="description">
-            <label for="{colorToConfigure.key}-{appId}">
-              {localize(colorToConfigure.name)}
-            </label>
-          </div>
-          <div
-            class="theme-settings-group flex-row align-items-center extra-small-gap"
-          >
-            <ColorPicker
-              isPopup={true}
-              label=""
-              hex={settingValueToHexaString($store[colorToConfigure.key])}
-              on:input={(ev) =>
-                onColorSelected(
-                  colorToConfigure,
-                  colorToHexaString(ev.detail.color)
-                )}
-            />
-            <input
-              type="text"
-              id="{colorToConfigure.key}-{appId}"
-              value={$store[colorToConfigure.key]}
-              class="theme-color-textbox"
-              on:change={(ev) =>
-                onColorSelected(colorToConfigure, ev.currentTarget.value)}
-            />
-            {#if eyeDropperEnabled}
-              <button
-                type="button"
-                class="eye-dropper"
-                on:click={() => activateEyeDropper(colorToConfigure)}
-                ><i class="fas fa-eye-dropper" /></button
-              >
-            {/if}
-          </div>
-        </article>
+        <ThemeSettingColorArticle {colorToConfigure} />
       {/each}
     </div>
   </div>
   <div class="button-bar">
-    <button type="submit" class="save-changes-btn" on:click={save}>
+    <button
+      type="submit"
+      class="save-changes-btn"
+      on:click={() => functions.save($store)}
+    >
       <i class="fas fa-save" />
       {localize('T5EK.SaveChanges')}
     </button>
@@ -287,33 +165,6 @@
       flex-direction: column;
       gap: 0.5rem;
       padding-right: 0.5rem;
-
-      article {
-        background: var(--t5ek-faintest-color);
-        border-radius: 0.3125rem;
-        margin: 0.125rem 0;
-        padding: 0.25rem;
-
-        label {
-          font-weight: 600;
-          padding-left: 0.25rem;
-        }
-
-        .theme-settings-group {
-          height: 3rem;
-
-          .theme-color-textbox {
-            flex-basis: 10rem;
-            flex: 1;
-          }
-
-          .eye-dropper {
-            flex: 0;
-            line-height: 1.25;
-            padding: 0.25rem 0.375rem;
-          }
-        }
-      }
     }
 
     .button-bar {
