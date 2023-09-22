@@ -82,8 +82,8 @@
 - [x] Test in window tabs
 - [x] Handle automatic positioning if possible
 - [x] ~~If able, make the menu fixed and outside of its parent window; this might need some creativity...~~ nah
-- [ ] Rename SettingsMenu - SheetMenu
-- [ ] Delete SettingsButton and replace with SettingsMenu
+- [x] Rename SettingsMenu - SheetMenu
+- [x] Delete SettingsButton and replace with SettingsMenu
 
 > Scratch pad repo : git@github.com:kgar/svelte-button-menu.git
 

@@ -28,7 +28,7 @@
   import { SettingsProvider } from 'src/settings/settings';
   import ActorJournalTab from 'src/components/player-character/ActorJournalTab.svelte';
   import ItemInfoCard from 'src/components/item-info-card/ItemInfoCard.svelte';
-  import SheetSettingsButton from '../actor/SheetSettingsButton.svelte';
+  import SheetMenu from '../actor/SheetMenu.svelte';
 
   export let selectedTabId: string;
 
@@ -164,7 +164,7 @@
               selectOnFocus={true}
             />
           </div>
-          <SheetSettingsButton initialTabId={CONSTANTS.TAB_SETTINGS_NPCS} />
+          <SheetMenu defaultSettingsTab={CONSTANTS.TAB_SETTINGS_NPCS} />
         </div>
       </div>
       <HorizontalLineSeparator borderColor="light" />

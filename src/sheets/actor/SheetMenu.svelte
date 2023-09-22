@@ -6,6 +6,7 @@
   import ButtonMenuDivider from 'src/components/button-menu/ButtonMenuDivider.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getCoreThemes } from 'src/theme/theme-reference';
+  import { SettingsProvider } from 'src/settings/settings';
 
   export let defaultSettingsTab: string | undefined = undefined;
 
@@ -18,6 +19,8 @@
   function setTheme(value: string) {
     FoundryAdapter.setGameSetting('colorScheme', value);
   }
+
+  const currentTheme = SettingsProvider.settings.colorScheme.get();
 </script>
 
 <ButtonMenu
@@ -32,6 +35,7 @@
     <select
       id="sheet-menu-{sheetMenuIdSuffix}"
       on:change={(ev) => setTheme(ev.currentTarget.value)}
+      value={currentTheme}
     >
       {#each themes as [key, value]}
         <option value={key}>{localize(value)}</option>
