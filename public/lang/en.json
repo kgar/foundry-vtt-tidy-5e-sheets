@@ -631,5 +631,8 @@
   "T5EK.VehicleInMotion": "Vehicle is in motion",
   "T5EK.VehicleMotionless": "Vehicle is motionless",
   "T5EK.TotalCrewCount": "Total Crew",
-  "T5EK.ActionsPerTurn": "Actions Per Turn"
+  "T5EK.ActionsPerTurn": "Actions Per Turn",
+  "T5EK.SheetMenu": {
+    "label": "Menu"
+  }
 }

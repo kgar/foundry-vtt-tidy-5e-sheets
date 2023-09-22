@@ -125,5 +125,8 @@ export const defaultDarkTheme: Tidy5eTheme = {
     '--t5ek-ability-mod-text-color': '#fff',
     '--t5ek-ability-mod-save-text-hover-color': '#fff',
     '--t5ek-encumbrance-bar-text-shadow-color': '#000',
+    '--t5ek-button-menu-background': 'var(--t5ek-sheet-background)',
+    '--t5ek-button-menu-hover-color': 'var(--t5ek-faintest-color)',
+    '--t5ek-button-menu-divider-color': 'var(--t5ek-primary-font-color)',
   },
 };

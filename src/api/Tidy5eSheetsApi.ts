@@ -23,6 +23,8 @@ export class Tidy5eSheetsApi {
       this.#sheetSettings.initialTabId = initialTab;
     }
 
-    return this.#sheetSettings.render(true);
+    const rendered = this.#sheetSettings.render(true);
+    setTimeout(() => this.#sheetSettings.bringToTop(), 150);
+    return rendered;
   }
 }

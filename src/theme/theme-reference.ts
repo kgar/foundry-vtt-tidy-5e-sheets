@@ -471,4 +471,16 @@ export const themeVariables = {
     type: 'todo',
     group: 'todo',
   },
+  '--t5ek-button-menu-background': {
+    type: 'todo',
+    group: 'todo',
+  },
+  '--t5ek-button-menu-hover-color': {
+    type: 'todo',
+    group: 'todo',
+  },
+  '--t5ek-button-menu-divider-color': {
+    type: 'todo',
+    group: 'todo',
+  },
 };
