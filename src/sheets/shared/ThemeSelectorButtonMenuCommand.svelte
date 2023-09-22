@@ -1,0 +1,45 @@
+<script lang="ts">
+  import ButtonMenuItem from 'src/components/button-menu/ButtonMenuItem.svelte';
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import { SettingsProvider } from 'src/settings/settings';
+  import { getCoreThemes } from 'src/theme/theme-reference';
+
+  const themes = Object.entries(getCoreThemes(true));
+
+  const idSuffix = Date.now().toString();
+
+  function setTheme(value: string) {
+    FoundryAdapter.setGameSetting('colorScheme', value);
+  }
+
+  const currentTheme = SettingsProvider.settings.colorScheme.get();
+
+  const localize = FoundryAdapter.localize;
+</script>
+
+<ButtonMenuItem cssClass="flex-column extra-small-gap">
+  <label class="theme-label" for="sheet-menu-{idSuffix}">
+    {localize('T5EK.SheetMenu.themeLabel')}
+  </label>
+  <select
+    id="sheet-menu-{idSuffix}"
+    on:change={(ev) => setTheme(ev.currentTarget.value)}
+    value={currentTheme}
+  >
+    {#each themes as [key, value]}
+      <option value={key}>{localize(value)}</option>
+    {/each}
+  </select>
+</ButtonMenuItem>
+
+<style lang="scss">
+  .theme-label {
+    font-weight: 600;
+    margin-top: -0.5rem;
+    font-size: 0.875rem;
+  }
+
+  select {
+    font-size: 0.875rem;
+  }
+</style>

@@ -184,26 +184,30 @@
 
 <section class="theme-settings-wrapper" on:drop={onDrop} aria-label="dropzone">
   <div class="theme-settings-form">
-    <h2>{localize('T5EK.ThemeSettings.Sheet.header')}</h2>
+    <h2 class="header flex-row justify-content-space-between">{localize('T5EK.ThemeSettings.Sheet.header')} <ThemeSettingSheetMenu on:selectFile={(ev) => processFile(ev.detail)} /></h2>
 
-    <div class="flex-row small-gap">
-      <div class="flex-1">
-        <label
-          for="colorPickerEnabled-{appId}"
-          class="flex-row align-items-center extra-small-gap"
-        >
-          <input
-            type="checkbox"
-            data-dtype="boolean"
-            id="colorPickerEnabled-{appId}"
-            bind:checked={$store.colorPickerEnabled}
-          />
-          {localize('T5EK.Settings.ColorPickerEnabled.name')}
-        </label>
-      </div>
-      <ThemeSettingSheetMenu on:selectFile={(ev) => processFile(ev.detail)} />
+    <p class="explanation drop-hint">
+      {localize('T5EK.ThemeSettings.Sheet.importDropHint')}
+    </p>
+
+    <div>
+      <label
+        for="colorPickerEnabled-{appId}"
+        class="flex-row align-items-center extra-small-gap"
+      >
+        <input
+          type="checkbox"
+          data-dtype="boolean"
+          id="colorPickerEnabled-{appId}"
+          bind:checked={$store.colorPickerEnabled}
+        />
+        {localize('T5EK.Settings.ColorPickerEnabled.name')}
+      </label>
     </div>
-    <p class="explanation">{localize('T5EK.ThemeSettings.Sheet.explanation')}</p>
+
+    <p class="explanation">
+      {localize('T5EK.ThemeSettings.Sheet.explanation')}
+    </p>
 
     <div class="color-pickers">
       {#each themeableColors as colorToConfigure}
@@ -262,6 +266,19 @@
     gap: 0.25rem;
     height: 100%;
     padding: 0.5rem 0 0.5rem 0.5rem;
+
+    .header {
+      margin: 0;
+    }
+
+    .explanation {
+      margin: 0 0.5rem;
+    }
+
+    .drop-hint {
+      font-size: 0.75rem;
+      color: var(--t5ek-secondary-color);
+    }
 
     .theme-settings-form {
       flex: 1;

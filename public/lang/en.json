@@ -601,7 +601,6 @@
       "explanation": "Select what color you wish to use for each option. The value \"#00000000\" is equivalent to disabling the color."
     }
   },
-
   "T5EK.WindowHeaderSheetSettingsTooltip": "Open Tidy 5e Sheet Settings",
   "T5EK.FavoriteSpellLevelLabel": "Spell Level {number}",
   "T5EK.ApplyChanges": "Apply Changes",
@@ -618,6 +617,7 @@
   "T5EK.TotalCrewCount": "Total Crew",
   "T5EK.ActionsPerTurn": "Actions Per Turn",
   "T5EK.SheetMenu": {
-    "label": "Menu"
+    "label": "Menu",
+    "themeLabel": "Theme"
   }
 }
