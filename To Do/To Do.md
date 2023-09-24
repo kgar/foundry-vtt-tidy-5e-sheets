@@ -387,7 +387,7 @@ Evaluate module integration and think about better (API-centric) ways to support
   - [ ] Review and streamline; consider data-driving settings much like Foundry does
   - [ ] Add settings-wide, case-insensitive, includes-based filter text input above the tabs
 - [ ] Standardize/componentize inputs to be used between Items and Settings UI. Ensure they look the same.
-
+- [ ] Move setting (and theme types, if any are still lingering) out of script files and into dedicated type files to help prevent circular dependencies and allow FoundryAdapter to take some more responsibility over Foundry API stuff.
 
 ## (Deferred for later; might solve itself) SCSS Revolution
 

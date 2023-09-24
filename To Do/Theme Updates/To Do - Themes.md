@@ -48,13 +48,9 @@
   - [x] It almost works. Check on floating/flyout cards in settings.
   - [x] Tab changes like showing/hiding the Journal aren't working for player characters when changing settings. Fixit!
   - [x] Move Traits Below Resources is not working reactively on change. Fixit.
-  - [ ] Test sheet settings changes / save and apply
   - [ ] Rename `currentSettings` to `settingsStore`
-- [ ] Add drag UI overlay to theme settings form that clearly denotes that it is a drop zone
-- [ ] Add explanatory paragraph to Theme Settings which explains how to use the form, including the hint about being able to drag and drop a file to import settings.
-- [ ] If possible, support theme-based drops onto all tidy sheets; rather than set colors on the form, this instead sets the variables in the player's game settings and then applies the current theme
-- [ ] Move setting (and theme types, if any are still lingering) out of script files and into dedicated type files to help prevent circular dependencies and allow FoundryAdapter to take some more responsibility over Foundry API stuff.
-- [ ] ...?
+- [x] Add explanatory paragraph to Theme Settings which explains how to use the form, including the hint about being able to drag and drop a file to import settings.
+
 
 ## Svelte Button Menu
 
@@ -132,6 +128,8 @@ Upgrade so that we have world themes set by the GM, user themes set by individua
 
 etc.
 
+- [ ] Add drag UI overlay to theme settings form that clearly denotes that it is a drop zone
+- [ ] If possible, support theme-based drops onto all tidy sheets; rather than set colors on the form, this instead sets the variables in the player's game settings and then applies the current theme
 - [ ] Allow hex, hex-alpha, rgb, rgba, hsl, hsla
   - [ ] Validate fields?
 - [ ] Add a config setting which represents the configurable theme(s)
