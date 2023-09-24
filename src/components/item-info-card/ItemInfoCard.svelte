@@ -224,8 +224,8 @@
   class="item-info-container"
   class:open={debug || open}
   class:floating={$currentSettings.itemCardsAreFloating}
-  style:top={floatingTop}
-  style:left={floatingLeft}
+  style:top={$currentSettings.itemCardsAreFloating ? floatingTop : undefined}
+  style:left={$currentSettings.itemCardsAreFloating ? floatingLeft : undefined}
   style:--card-width="{cardWidthRem}rem"
   style:--card-height="{cardHeightRem}rem"
 >
