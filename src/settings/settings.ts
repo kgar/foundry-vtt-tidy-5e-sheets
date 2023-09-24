@@ -11,6 +11,7 @@ import { getCoreThemes, themeVariables } from 'src/theme/theme-reference';
 import { Tidy5eKgarSettingsSheet } from 'src/sheets/settings/sheet/Tidy5eKgarSettingsSheet';
 import { Tidy5eKgarThemeSettingsSheet } from 'src/sheets/settings/theme/Tidy5eKgarThemeSettingsSheet';
 import { writable, type Writable } from 'svelte/store';
+import { debug } from 'src/utils/logging';
 
 export type Tidy5eSettings = {
   [settingKey: string]: Tidy5eSetting;
@@ -1742,15 +1743,19 @@ export function initSettings() {
     game.settings.registerMenu(CONSTANTS.MODULE_ID, menu[0], menu[1].options);
   }
 
+  const debouncedSettingStoreRefresh = foundry.utils.debounce(() => {
+    debug('refreshing settings store');
+    currentSettings.set(getCurrentSettings());
+  }, 100);
+
   for (let setting of Object.entries(SettingsProvider.settings)) {
     // TODO: Need some way to notify when new settings are not configured correctly; doesn't have to be perfect
     const options = {
       ...setting[1].options,
       onChange: (...args: any[]) => {
         // TODO: to foundry adapter
-        foundry.utils.debounce(() => {
-          currentSettings.set(getCurrentSettings());
-        }, 100);
+        debug('change detected! Preparing to refresh setting store...');
+        debouncedSettingStoreRefresh();
 
         (setting[1].options as any).onChange?.(...args);
       },

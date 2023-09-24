@@ -46,7 +46,8 @@
   - [x] Update all SettingProvider callers to instead use the store
 - [ ] Refactor / monkey patch onChange() for all settings. If a setting changes, debounce a call to update the settings store. 👏👏👏
   - [x] It almost works. Check on floating/flyout cards in settings.
-  - [ ] Tab changes like showing/hiding the Journal aren't working for player characters when changing settings. Fixit!
+  - [x] Tab changes like showing/hiding the Journal aren't working for player characters when changing settings. Fixit!
+  - [x] Move Traits Below Resources is not working reactively on change. Fixit.
   - [ ] Test sheet settings changes / save and apply
   - [ ] Rename `currentSettings` to `settingsStore`
 - [ ] Add drag UI overlay to theme settings form that clearly denotes that it is a drop zone

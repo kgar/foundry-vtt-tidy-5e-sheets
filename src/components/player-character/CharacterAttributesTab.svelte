@@ -18,14 +18,12 @@
     $store.resources.some(
       (x) => !isNil(x.value) || !isNil(x.value, '') || !isNil(x.max)
     );
-
-  const traitsMovedBelowResource = $currentSettings.traitsMovedBelowResource;
 </script>
 
 <div class="attributes-tab-contents">
   <section class="side-panel">
     <SkillsList actor={$store.actor} />
-    {#if !traitsMovedBelowResource}
+    {#if !$currentSettings.traitsMovedBelowResource}
       <Traits toggleable={$currentSettings.traitsTogglePc} />
     {/if}
   </section>
@@ -33,7 +31,7 @@
     {#if showResources}
       <Resources />
     {/if}
-    {#if traitsMovedBelowResource}
+    {#if $currentSettings.traitsMovedBelowResource}
       <Traits toggleable={$currentSettings.traitsTogglePc} />
     {/if}
     <Favorites />
