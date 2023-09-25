@@ -1,5 +1,6 @@
 import { CONSTANTS } from 'src/constants';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+import { SettingsProvider } from 'src/settings/settings';
 import type { Item5e } from 'src/types/item';
 import { warn } from 'src/utils/logging';
 
@@ -29,20 +30,16 @@ function onItemContext(element: HTMLElement) {
       return;
     }
 
+    // TODO: Leverage the API to aggregate any registered context menu options; pass in the context of the current item for reference.
     ui.context.menuItems = getActiveEffectContextOptions(effect);
-    Hooks.call(
-      'dnd5e.getActiveEffectContextOptions',
-      effect,
-      ui.context.menuItems,
-      { source: CONSTANTS.MODULE_ID }
-    );
   }
   // Items
   else if (contextMenuType === CONSTANTS.CONTEXT_MENU_TYPE_ITEMS) {
     const item = this.actor.items.get(id);
     if (!item) return;
+
+    // TODO: Leverage the API to aggregate any registered context menu options; pass in the context of the current item for reference.
     ui.context.menuItems = getItemContextOptions(item);
-    Hooks.call('dnd5e.getItemContextOptions', item, ui.context.menuItems);
   } else {
     warn(
       `Unable to show context menu. The menu type ${contextMenuType} is not supported. Put a [data-context-menu] attribute on the target entity and implement the handler where this warning appears.`
@@ -52,55 +49,51 @@ function onItemContext(element: HTMLElement) {
 
 function getActiveEffectContextOptions(effect: any) {
   const actor = effect.actor ? effect.actor : effect.parent;
-  if (!actor?.isOwner) {
-    return;
-  }
-
-  if (FoundryAdapter.getGameSetting('rightClickDisabled')) {
+  if (!actor?.isOwner || SettingsProvider.settings.rightClickDisabled.get()) {
     return [];
-  } else {
-    let tidy5eKgarContextOptions = [
-      {
-        name: effect.disabled
-          ? 'DND5E.ContextMenuActionEnable'
-          : 'DND5E.ContextMenuActionDisable',
-        icon: effect.disabled
-          ? "<i class='fas fa-check fa-fw'></i>"
-          : "<i class='fas fa-times fa-fw'></i>",
-        callback: () => effect.update({ disabled: !effect.disabled }),
-      },
-      {
-        name: 'DND5E.ContextMenuActionEdit',
-        icon: "<i class='fas fas fa-pencil-alt fa-fw'></i>",
-        callback: () => effect.sheet.render(true),
-      },
-    ];
-
-    if (FoundryAdapter.tryGetFlag(actor, 'allow-edit')) {
-      tidy5eKgarContextOptions = tidy5eKgarContextOptions.concat([
-        {
-          name: 'DND5E.ContextMenuActionDuplicate',
-          icon: "<i class='fas fa-copy fa-fw'></i>",
-          callback: () =>
-            effect.clone(
-              {
-                label: game.i18n.format('DOCUMENT.CopyOf', {
-                  name: effect.label,
-                }),
-              },
-              { save: true }
-            ),
-        },
-        {
-          name: 'DND5E.ContextMenuActionDelete',
-          icon: `<i class="fas fa-trash fa-fw t5ek-warning-color"></i>`,
-          callback: () => effect.deleteDialog(),
-        },
-      ]);
-    }
-
-    return tidy5eKgarContextOptions;
   }
+
+  let tidy5eKgarContextOptions = [
+    {
+      name: effect.disabled
+        ? 'DND5E.ContextMenuActionEnable'
+        : 'DND5E.ContextMenuActionDisable',
+      icon: effect.disabled
+        ? "<i class='fas fa-check fa-fw'></i>"
+        : "<i class='fas fa-times fa-fw'></i>",
+      callback: () => effect.update({ disabled: !effect.disabled }),
+    },
+    {
+      name: 'DND5E.ContextMenuActionEdit',
+      icon: "<i class='fas fas fa-pencil-alt fa-fw'></i>",
+      callback: () => effect.sheet.render(true),
+    },
+  ];
+
+  if (FoundryAdapter.tryGetFlag(actor, 'allow-edit')) {
+    tidy5eKgarContextOptions = tidy5eKgarContextOptions.concat([
+      {
+        name: 'DND5E.ContextMenuActionDuplicate',
+        icon: "<i class='fas fa-copy fa-fw'></i>",
+        callback: () =>
+          effect.clone(
+            {
+              label: game.i18n.format('DOCUMENT.CopyOf', {
+                name: effect.label,
+              }),
+            },
+            { save: true }
+          ),
+      },
+      {
+        name: 'DND5E.ContextMenuActionDelete',
+        icon: `<i class="fas fa-trash fa-fw t5ek-warning-color"></i>`,
+        callback: () => effect.deleteDialog(),
+      },
+    ]);
+  }
+
+  return tidy5eKgarContextOptions;
 }
 
 /**
@@ -111,9 +104,10 @@ function getActiveEffectContextOptions(effect: any) {
  */
 function getItemContextOptions(item: Item5e) {
   const actor = item.actor ? item.actor : item.parent;
-  if (!actor) {
-    return;
+  if (!actor || SettingsProvider.settings.rightClickDisabled.get()) {
+    return [];
   }
+
   let options = [];
 
   const isCharacter = actor.type === 'character';
@@ -230,9 +224,9 @@ function getItemContextOptions(item: Item5e) {
   if (isCharacter) {
     // Add favorites to context menu
     let isFav = FoundryAdapter.isItemFavorite(item);
-    
+
     let favoriteIcon = 'fa-bookmark';
-    
+
     options.push({
       name: isFav ? 'T5EK.RemoveFav' : 'T5EK.AddFav',
       icon: isFav
