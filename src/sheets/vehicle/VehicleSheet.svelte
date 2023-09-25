@@ -28,7 +28,7 @@
   import AttributeBlock from '../AttributeBlock.svelte';
   import ItemInfoCard from 'src/components/item-info-card/ItemInfoCard.svelte';
   import SheetMenu from '../actor/SheetMenu.svelte';
-  import { currentSettings } from 'src/settings/settings';
+  import { settingStore } from 'src/settings/settings';
 
   export let selectedTabId: string;
 
@@ -91,7 +91,7 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-{#if $currentSettings.itemCardsForNpcs}
+{#if $settingStore.itemCardsForNpcs}
   <ItemInfoCard />
 {/if}
 

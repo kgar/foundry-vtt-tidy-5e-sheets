@@ -6,14 +6,14 @@
   import type { Readable } from 'svelte/store';
   import SheetEditor from '../SheetEditor.svelte';
   import LimitedHeader from '../actor/LimitedHeader.svelte';
-  import { currentSettings } from 'src/settings/settings';
+  import { settingStore } from 'src/settings/settings';
 
   let store = getContext<Readable<NpcSheetContext>>('store');
 
   const localize = FoundryAdapter.localize;
 
   $: useRoundedPortraitStyle = ['all', 'npc'].includes(
-    $currentSettings.portraitStyle
+    $settingStore.portraitStyle
   );
 
   function activateProseMirrorListeners(node: HTMLElement) {

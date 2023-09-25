@@ -14,7 +14,7 @@
   import type { Readable } from 'svelte/store';
   import NoSpells from 'src/sheets/actor/NoSpells.svelte';
   import Notice from '../shared/Notice.svelte';
-  import { currentSettings } from 'src/settings/settings';
+  import { settingStore } from 'src/settings/settings';
 
   let store = getContext<Readable<ActorSheetContext>>('store');
 
@@ -42,7 +42,7 @@
 
   function tryFilterByClass(spells: any[]) {
     if (
-      !$currentSettings.spellClassFilterSelect ||
+      !$settingStore.spellClassFilterSelect ||
       selectedClassFilter === ''
     ) {
       return spells;
@@ -70,7 +70,7 @@
     searchFlag="spell-search"
     cssClass="align-self-flex-end"
   />
-  {#if $currentSettings.spellClassFilterSelect}
+  {#if $settingStore.spellClassFilterSelect}
     <li class="spellbook-class-filter">
       <SpellbookClassFilter />
     </li>
@@ -112,7 +112,7 @@
           <SpellbookList
             spells={filteredSpells}
             {section}
-            classicControlsEnabled={$currentSettings.classicControlsEnabled}
+            classicControlsEnabled={$settingStore.classicControlsEnabled}
           />
         {:else}
           <SpellbookGrid spells={filteredSpells} {section} />

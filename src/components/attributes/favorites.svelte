@@ -5,7 +5,7 @@
   import FavoriteFeaturesList from '../favorites/FavoriteFeaturesList.svelte';
   import type { Item5e } from 'src/types/item';
   import FavoriteSpellsList from 'src/components/favorites/FavoriteSpellsList.svelte';
-  import { currentSettings } from 'src/settings/settings';
+  import { settingStore } from 'src/settings/settings';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
 
@@ -30,7 +30,7 @@
   }
 
   function sortByNameIfConfigured(items: Item5e[]): Item5e[] {
-    return $currentSettings.enableSortFavoritesItemsAlphabetically
+    return $settingStore.enableSortFavoritesItemsAlphabetically
       ? items.sort((a, b) => a.name.localeCompare(b.name))
       : items;
   }

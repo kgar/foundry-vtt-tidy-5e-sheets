@@ -11,13 +11,13 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import ActorProfile from 'src/sheets/actor/ActorProfile.svelte';
-  import { currentSettings } from 'src/settings/settings';
+  import { settingStore } from 'src/settings/settings';
 
   let store = getContext<Readable<ActorSheetContext>>('store');
 
-  const portraitStyle = $currentSettings.portraitStyle;
+  const portraitStyle = $settingStore.portraitStyle;
   const useRoundedPortraitStyle = ['all', 'pc'].includes(portraitStyle);
-  const useHpOverlay = !$currentSettings.hpOverlayDisabled;
+  const useHpOverlay = !$settingStore.hpOverlayDisabled;
 
   $: incapacitated =
     ($store.actor?.system?.attributes?.hp?.value ?? 0) <= 0 &&
@@ -34,7 +34,7 @@
 <!-- svelte-ignore a11y-missing-attribute -->
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <ActorProfile {useRoundedPortraitStyle} {useHpOverlay}>
-  {#if incapacitated && (!$currentSettings.hiddenDeathSavesEnabled || FoundryAdapter.userIsGm())}
+  {#if incapacitated && (!$settingStore.hiddenDeathSavesEnabled || FoundryAdapter.userIsGm())}
     <DeathSaves
       {useRoundedPortraitStyle}
       successes={$store.system.attributes.death.success}
@@ -43,27 +43,27 @@
       failuresField="system.attributes.death.failure"
       on:rollDeathSave={(event) =>
         $store.actor.rollDeathSave({ event: event.detail.mouseEvent })}
-      hpOverlayDisabled={$currentSettings.hpOverlayDisabled}
+      hpOverlayDisabled={$settingStore.hpOverlayDisabled}
     />
   {/if}
 
-  {#if !$currentSettings.exhaustionDisabled && !incapacitated}
+  {#if !$settingStore.exhaustionDisabled && !incapacitated}
     <Exhaustion
       level={$store.system.attributes.exhaustion}
       radiusClass={useRoundedPortraitStyle ? 'rounded' : 'top-left'}
       on:levelSelected={onLevelSelected}
-      onlyShowOnHover={$currentSettings.exhaustionOnHover ||
-        ($currentSettings.hideIfZero &&
+      onlyShowOnHover={$settingStore.exhaustionOnHover ||
+        ($settingStore.hideIfZero &&
           $store.system.attributes.exhaustion === 0)}
     />
   {/if}
 
-  {#if !$currentSettings.inspirationDisabled && !incapacitated}
+  {#if !$settingStore.inspirationDisabled && !incapacitated}
     <Inspiration
       inspired={$store.actor.system.attributes.inspiration}
       radiusClass={useRoundedPortraitStyle ? 'rounded' : 'top-right'}
-      onlyShowOnHover={$currentSettings.inspirationOnHover}
-      disableAnimation={$currentSettings.inspirationAnimationDisabled}
+      onlyShowOnHover={$settingStore.inspirationOnHover}
+      disableAnimation={$settingStore.inspirationAnimationDisabled}
     />
   {/if}
 

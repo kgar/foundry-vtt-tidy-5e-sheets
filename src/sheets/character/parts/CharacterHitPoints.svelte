@@ -3,7 +3,7 @@
   import { type Actor5e } from 'src/types/actor';
   import TextInput from 'src/components/form/TextInput.svelte';
   import ActorHpBar from 'src/sheets/actor/ActorHpBar.svelte';
-  import { currentSettings } from 'src/settings/settings';
+  import { settingStore } from 'src/settings/settings';
 
   export let value: number;
   export let max: number;
@@ -14,8 +14,8 @@
   const localize = FoundryAdapter.localize;
 
   const allowMaxHpOverride =
-    $currentSettings.allowHpMaxOverride &&
-    (!$currentSettings.lockHpMaxChanges || FoundryAdapter.userIsGm());
+    $settingStore.allowHpMaxOverride &&
+    (!$settingStore.lockHpMaxChanges || FoundryAdapter.userIsGm());
 </script>
 
 <div
@@ -24,7 +24,7 @@
   class:widen-for-rounded-portrait={useRoundedPortraitStyle}
   title={localize('DND5E.HitPoints')}
 >
-  {#if !$currentSettings.hpBarDisabled}
+  {#if !$settingStore.hpBarDisabled}
     <ActorHpBar {actor} />
   {/if}
   <TextInput

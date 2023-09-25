@@ -11,7 +11,7 @@
   import type { Readable, Writable } from 'svelte/store';
   import TextInput from '../form/TextInput.svelte';
   import InventoryItemCardContent from '../item-info-card/InventoryItemCardContent.svelte';
-  import { currentSettings } from 'src/settings/settings';
+  import { settingStore } from 'src/settings/settings';
 
   export let section: any;
   export let items: Item5e[];
@@ -25,7 +25,7 @@
   function getInventoryRowClasses(item: Item5e) {
     const extras: string[] = [];
 
-    if (!$currentSettings.quantityAlwaysShownEnabled) {
+    if (!$settingStore.quantityAlwaysShownEnabled) {
       extras.push('show-item-count-on-hover');
     }
 
@@ -142,7 +142,7 @@
               value={item.system.quantity}
               maxlength={2}
               readonly={!FoundryAdapter.userIsGm() &&
-                $currentSettings.lockItemQuantity}
+                $settingStore.lockItemQuantity}
               dtype="Number"
               allowDeltaChanges={true}
               selectOnFocus={true}

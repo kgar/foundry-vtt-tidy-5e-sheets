@@ -26,7 +26,7 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import Notice from '../shared/Notice.svelte';
-  import { currentSettings } from 'src/settings/settings';
+  import { settingStore } from 'src/settings/settings';
 
   let store = getContext<Readable<ActorSheetContext>>('store');
 
@@ -119,7 +119,7 @@
           <ItemTableColumn baseWidth="7.5rem">
             {localize('DND5E.Requirements')}
           </ItemTableColumn>
-          {#if $store.owner && $currentSettings.classicControlsEnabled}
+          {#if $store.owner && $settingStore.classicControlsEnabled}
             <ItemTableColumn baseWidth={classicControlsBaseWidth} />
           {/if}
         </ItemTableHeaderRow>
@@ -146,7 +146,7 @@
             </ItemTableCell>
 
             <!-- TODO: Handle more gracefully -->
-            {#if !$currentSettings.hideIconsNextToTheItemName && FoundryAdapter.tryGetFlag(item, 'favorite')}
+            {#if !$settingStore.hideIconsNextToTheItemName && FoundryAdapter.tryGetFlag(item, 'favorite')}
               <InlineFavoriteIcon />
             {/if}
 
@@ -161,7 +161,7 @@
               >
             </ItemTableCell>
 
-            {#if $store.owner && $currentSettings.classicControlsEnabled}
+            {#if $store.owner && $settingStore.classicControlsEnabled}
               <ItemTableCell baseWidth={classicControlsBaseWidth}>
                 <ItemControls>
                   <ItemFavoriteControl {item} />
@@ -197,7 +197,7 @@
           <ItemTableColumn baseWidth="7.5rem">
             {localize('DND5E.Level')}
           </ItemTableColumn>
-          {#if $store.owner && $currentSettings.classicControlsEnabled && $store.editable}
+          {#if $store.owner && $settingStore.classicControlsEnabled && $store.editable}
             <ItemTableColumn baseWidth={classicControlsBaseWidth} />
           {/if}
         </ItemTableHeaderRow>
@@ -230,7 +230,7 @@
             </ItemTableCell>
 
             <!-- TODO: Handle more gracefully -->
-            {#if !$currentSettings.hideIconsNextToTheItemName && FoundryAdapter.tryGetFlag(item, 'favorite')}
+            {#if !$settingStore.hideIconsNextToTheItemName && FoundryAdapter.tryGetFlag(item, 'favorite')}
               <InlineFavoriteIcon />
             {/if}
 
@@ -263,7 +263,7 @@
               {/if}
             </ItemTableCell>
 
-            {#if $store.owner && $currentSettings.classicControlsEnabled && $store.editable}
+            {#if $store.owner && $settingStore.classicControlsEnabled && $store.editable}
               <ItemTableCell baseWidth={classicControlsBaseWidth}>
                 <ItemControls>
                   {#if item.type !== 'class'}
@@ -306,7 +306,7 @@
           <ItemTableColumn baseWidth="7.5rem">
             {localize('DND5E.Requirements')}
           </ItemTableColumn>
-          {#if $store.owner && $currentSettings.classicControlsEnabled}
+          {#if $store.owner && $settingStore.classicControlsEnabled}
             <ItemTableColumn baseWidth={classicControlsBaseWidth} />
           {/if}
         </ItemTableHeaderRow>
@@ -333,7 +333,7 @@
             </ItemTableCell>
 
             <!-- TODO: Handle more gracefully -->
-            {#if !$currentSettings.hideIconsNextToTheItemName && FoundryAdapter.tryGetFlag(item, 'favorite')}
+            {#if !$settingStore.hideIconsNextToTheItemName && FoundryAdapter.tryGetFlag(item, 'favorite')}
               <InlineFavoriteIcon />
             {/if}
 
@@ -373,7 +373,7 @@
               >
             </ItemTableCell>
 
-            {#if $store.owner && $currentSettings.classicControlsEnabled}
+            {#if $store.owner && $settingStore.classicControlsEnabled}
               <ItemTableCell baseWidth={classicControlsBaseWidth}>
                 <ItemControls>
                   <ItemFavoriteControl {item} />
@@ -408,7 +408,7 @@
           <ItemTableColumn baseWidth="7.5rem">
             {localize('DND5E.Requirements')}
           </ItemTableColumn>
-          {#if $store.owner && $currentSettings.classicControlsEnabled}
+          {#if $store.owner && $settingStore.classicControlsEnabled}
             <ItemTableColumn baseWidth={classicControlsBaseWidth} />
           {/if}
         </ItemTableHeaderRow>
@@ -434,7 +434,7 @@
             </ItemTableCell>
 
             <!-- TODO: Handle more gracefully -->
-            {#if !$currentSettings.hideIconsNextToTheItemName && FoundryAdapter.tryGetFlag(item, 'favorite')}
+            {#if !$settingStore.hideIconsNextToTheItemName && FoundryAdapter.tryGetFlag(item, 'favorite')}
               <InlineFavoriteIcon />
             {/if}
 
@@ -449,7 +449,7 @@
               >
             </ItemTableCell>
 
-            {#if $store.owner && $currentSettings.classicControlsEnabled}
+            {#if $store.owner && $settingStore.classicControlsEnabled}
               <ItemTableCell baseWidth={classicControlsBaseWidth}>
                 <ItemControls>
                   <ItemFavoriteControl {item} />

@@ -90,7 +90,10 @@ export type Tidy5eSetting = {
   representsCssVariable?: keyof typeof themeVariables;
 };
 
-export let currentSettings: Writable<CurrentSettings>;
+/**
+ * The current Tidy 5e settings.
+ */
+export let settingStore: Writable<CurrentSettings>;
 
 export function createSettings() {
   return {
@@ -1745,7 +1748,7 @@ export function initSettings() {
 
   const debouncedSettingStoreRefresh = foundry.utils.debounce(() => {
     debug('refreshing settings store');
-    currentSettings.set(getCurrentSettings());
+    settingStore.set(getCurrentSettings());
   }, 100);
 
   for (let setting of Object.entries(SettingsProvider.settings)) {
@@ -1767,10 +1770,10 @@ export function initSettings() {
     SettingsProvider.settings.colorScheme.get()
   );
 
-  currentSettings = writable(getCurrentSettings());
+  settingStore = writable(getCurrentSettings());
 
   Hooks.on('closeSettingsConfig', () => {
-    currentSettings.set(getCurrentSettings());
+    settingStore.set(getCurrentSettings());
   });
 }
 

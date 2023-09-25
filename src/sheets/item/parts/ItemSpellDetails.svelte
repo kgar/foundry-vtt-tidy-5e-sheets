@@ -12,7 +12,7 @@
   import ItemAction from './ItemAction.svelte';
   import ItemFormGroup from '../form/ItemFormGroup.svelte';
   import { CONSTANTS } from 'src/constants';
-  import { currentSettings } from 'src/settings/settings';
+  import { settingStore } from 'src/settings/settings';
 
   let store = getContext<Readable<ItemSheetContext>>('store');
 
@@ -23,7 +23,7 @@
 
 <h3 class="form-header">{localize('DND5E.SpellDetails')}</h3>
 
-{#if $currentSettings.spellClassFilterSelect}
+{#if $settingStore.spellClassFilterSelect}
   <ItemFormGroup
     labelText="{localize('T5EK.SpellClass')}}"
     field="flags.{CONSTANTS.MODULE_ID}.parentClass"

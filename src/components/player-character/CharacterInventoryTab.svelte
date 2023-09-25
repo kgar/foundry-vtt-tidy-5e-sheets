@@ -16,7 +16,7 @@
   import NumberInput from '../form/NumberInput.svelte';
   import EncumbranceBar from 'src/sheets/actor/EncumbranceBar.svelte';
   import TabFooter from 'src/sheets/actor/TabFooter.svelte';
-    import { currentSettings } from 'src/settings/settings';
+    import { settingStore } from 'src/settings/settings';
 
   let store = getContext<Readable<ActorSheetContext>>('store');
 
@@ -124,7 +124,7 @@
     <Currency actor={$store.actor} />
   </div>
 
-  {#if !$currentSettings.hideStandardEncumbranceBar}
+  {#if !$settingStore.hideStandardEncumbranceBar}
     <EncumbranceBar />
   {/if}
 </TabFooter>

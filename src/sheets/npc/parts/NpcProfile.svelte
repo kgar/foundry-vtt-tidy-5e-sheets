@@ -11,14 +11,14 @@
   import NpcHealthFormula from './NpcHealthFormula.svelte';
   import ActorProfile from 'src/sheets/actor/ActorProfile.svelte';
   import { CONSTANTS } from 'src/constants';
-  import { currentSettings } from 'src/settings/settings';
+  import { settingStore } from 'src/settings/settings';
 
   let store = getContext<Readable<NpcSheetContext>>('store');
 
   const useRoundedPortraitStyle = ['all', 'npc'].includes(
-    $currentSettings.portraitStyle
+    $settingStore.portraitStyle
   );
-  const useHpOverlay = !$currentSettings.hpOverlayDisabledNpc;
+  const useHpOverlay = !$settingStore.hpOverlayDisabledNpc;
 
   $: incapacitated =
     ($store.actor?.system?.attributes?.hp?.value ?? 0) <= 0 &&
@@ -30,7 +30,7 @@
 </script>
 
 <ActorProfile {useRoundedPortraitStyle} {useHpOverlay}>
-  {#if incapacitated && (!$currentSettings.hiddenDeathSavesEnabled || FoundryAdapter.userIsGm())}
+  {#if incapacitated && (!$settingStore.hiddenDeathSavesEnabled || FoundryAdapter.userIsGm())}
     <DeathSaves
       successes={FoundryAdapter.tryGetFlag($store.actor, 'death')?.success ?? 0}
       failures={FoundryAdapter.tryGetFlag($store.actor, 'death')?.failure ?? 0}
@@ -39,10 +39,10 @@
       {useRoundedPortraitStyle}
       on:rollDeathSave={(event) =>
         $store.rollDeathSave({ event: event.detail.mouseEvent })}
-      hpOverlayDisabled={$currentSettings.hpOverlayDisabledNpc}
+      hpOverlayDisabled={$settingStore.hpOverlayDisabledNpc}
     />
   {/if}
-  {#if !$currentSettings.exhaustionDisabled && !incapacitated}
+  {#if !$settingStore.exhaustionDisabled && !incapacitated}
     <Exhaustion
       level={FoundryAdapter.tryGetFlag($store.actor, 'exhaustion') ?? 0}
       radiusClass={useRoundedPortraitStyle ? 'rounded' : 'top-left'}
@@ -51,7 +51,7 @@
   {/if}
 
   <NpcHitPoints />
-  {#if $currentSettings.restingForNpcsEnabled}
+  {#if $settingStore.restingForNpcsEnabled}
     <NpcRest {useRoundedPortraitStyle} />
   {/if}
   <NpcHealthFormula />

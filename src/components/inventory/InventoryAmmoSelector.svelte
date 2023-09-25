@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { currentSettings } from 'src/settings/settings';
+  import { settingStore } from 'src/settings/settings';
   import type { Item5e } from 'src/types/item';
   import type {
     ActorSheetContext,
@@ -27,7 +27,7 @@
       .filter(
         (x) =>
           x.system.consumableType === 'ammo' &&
-          (!$currentSettings.ammoEquippedOnly || x.system.equipped)
+          (!$settingStore.ammoEquippedOnly || x.system.equipped)
       )
       .map((x) => ({
         text: `${x.name} (${x.system.quantity})`,

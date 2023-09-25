@@ -25,7 +25,7 @@
   import ItemControls from 'src/components/items/ItemControls.svelte';
   import type { ItemCardContentComponent } from 'src/types/item';
   import InventoryItemCardContent from 'src/components/item-info-card/InventoryItemCardContent.svelte';
-  import { currentSettings } from 'src/settings/settings';
+  import { settingStore } from 'src/settings/settings';
 
   let store = getContext<Readable<VehicleSheetContext>>('store');
 
@@ -256,7 +256,7 @@
     <Currency actor={$store.actor} />
   </div>
 
-  {#if !$currentSettings.hideStandardEncumbranceBar}
+  {#if !$settingStore.hideStandardEncumbranceBar}
     <EncumbranceBar />
   {/if}
 </TabFooter>

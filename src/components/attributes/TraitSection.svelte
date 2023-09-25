@@ -1,6 +1,6 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { currentSettings } from 'src/settings/settings';
+  import { settingStore } from 'src/settings/settings';
   import type { Tool } from 'src/types/actor';
   import type { ActorSheetContext } from 'src/types/types';
   import { createEventDispatcher, getContext } from 'svelte';
@@ -36,7 +36,7 @@
       <slot name="custom-icon" />
     </span>
     <div class="trait-label-and-list">
-      {#if $currentSettings.traitLabelsEnabled}
+      {#if $settingStore.traitLabelsEnabled}
         <span class="trait-label">{title}</span>
       {/if}
       <ul

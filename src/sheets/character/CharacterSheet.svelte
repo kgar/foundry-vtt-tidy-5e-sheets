@@ -29,7 +29,7 @@
   import TextInput from 'src/components/form/TextInput.svelte';
   import ItemInfoCard from 'src/components/item-info-card/ItemInfoCard.svelte';
   import SheetMenu from '../actor/SheetMenu.svelte';
-  import { currentSettings } from 'src/settings/settings';
+  import { settingStore } from 'src/settings/settings';
 
   export let debug: any = 'Put any debug information here, if ya need it.';
   export let selectedTabId: string;
@@ -98,7 +98,7 @@
         content: {
           component: ActorEffectsTab,
           props: {
-            classicControlsEnabled: $currentSettings.classicControlsEnabled,
+            classicControlsEnabled: $settingStore.classicControlsEnabled,
           },
         },
       },
@@ -111,7 +111,7 @@
       },
     ];
 
-    const allowJournal = $store.owner && !$currentSettings.journalTabDisabled;
+    const allowJournal = $store.owner && !$settingStore.journalTabDisabled;
 
     if (allowJournal) {
       tabs.push({
@@ -212,7 +212,7 @@
 
     <section class="class-list">
       <!-- Player Name -->
-      {#if $currentSettings.playerNameEnabled}
+      {#if $settingStore.playerNameEnabled}
         <ContentEditableFormField
           element="span"
           document={$store.actor}

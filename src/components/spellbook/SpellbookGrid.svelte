@@ -12,7 +12,7 @@
   import { getContext } from 'svelte';
   import type { Readable, Writable } from 'svelte/store';
   import SpellbookItemCardContent from '../item-info-card/SpellbookItemCardContent.svelte';
-  import { currentSettings } from 'src/settings/settings';
+  import { settingStore } from 'src/settings/settings';
 
   export let section: any;
   export let spells: Item5e[];
@@ -49,7 +49,7 @@
           {section.label}
         </span>
         {#if section.usesSlots}
-          {#if !$currentSettings.hideSpellSlotMarker}
+          {#if !$settingStore.hideSpellSlotMarker}
             <SpellSlotMarkers {section} />
           {/if}
           <SpellSlotUses {section} />

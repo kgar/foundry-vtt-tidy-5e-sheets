@@ -30,7 +30,7 @@
   import SpellbookGrid from 'src/components/spellbook/SpellbookGrid.svelte';
   import type { ItemCardContentComponent } from 'src/types/item';
   import InventoryItemCardContent from 'src/components/item-info-card/InventoryItemCardContent.svelte';
-  import { currentSettings } from 'src/settings/settings';
+  import { settingStore } from 'src/settings/settings';
 
   let store = getContext<Readable<NpcSheetContext>>('store');
 
@@ -67,16 +67,16 @@
   <div class="side-panel">
     <SkillsList
       actor={$store.actor}
-      toggleable={!$currentSettings.skillsAlwaysShownNpc}
+      toggleable={!$settingStore.skillsAlwaysShownNpc}
     />
-    {#if !$currentSettings.traitsMovedBelowResourceNpc}
-      <Traits toggleable={!$currentSettings.traitsAlwaysShownNpc} />
+    {#if !$settingStore.traitsMovedBelowResourceNpc}
+      <Traits toggleable={!$settingStore.traitsAlwaysShownNpc} />
     {/if}
   </div>
   <div class="main-panel">
     <NpcLegendaryActions />
-    {#if $currentSettings.traitsMovedBelowResourceNpc}
-      <Traits toggleable={!$currentSettings.traitsAlwaysShownNpc} />
+    {#if $settingStore.traitsMovedBelowResourceNpc}
+      <Traits toggleable={!$settingStore.traitsAlwaysShownNpc} />
     {/if}
     {#each $store.features as section}
       {#if allowEdit || section.items.length}
@@ -168,7 +168,7 @@
         </ItemTable>
       {/if}
     {/each}
-    {#if $currentSettings.hideSpellbookTabNpc}
+    {#if $settingStore.hideSpellbookTabNpc}
       {#if noSpellLevels}
         <h2
           class="spellbook-title toggle-spellbook"

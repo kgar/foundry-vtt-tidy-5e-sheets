@@ -6,7 +6,7 @@ import {
   getCurrentSettings,
   type CurrentSettings,
   type Tidy5eSettingKey,
-  currentSettings,
+  settingStore,
 } from 'src/settings/settings';
 import { debug } from 'src/utils/logging';
 import { Tidy5eCharacterSheet } from 'src/sheets/character/Tidy5eCharacterSheet';

@@ -24,7 +24,7 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import SpellbookItemCardContent from '../item-info-card/SpellbookItemCardContent.svelte';
-  import { currentSettings } from 'src/settings/settings';
+  import { settingStore } from 'src/settings/settings';
 
   let store = getContext<Readable<ActorSheetContext>>('store');
   export let section: any;
@@ -58,7 +58,7 @@
           {section.label}
         </span>
         {#if section.usesSlots}
-          {#if !$currentSettings.hideSpellSlotMarker}
+          {#if !$settingStore.hideSpellSlotMarker}
             <SpellSlotMarkers {section} />
           {/if}
           <SpellSlotUses {section} />
@@ -127,7 +127,7 @@
             <ItemUses item={spell} />
           </ItemTableCell>
         {/if}
-        {#if allowFavorites && !$currentSettings.hideIconsNextToTheItemName && FoundryAdapter.tryGetFlag(spell, 'favorite')}
+        {#if allowFavorites && !$settingStore.hideIconsNextToTheItemName && FoundryAdapter.tryGetFlag(spell, 'favorite')}
           <InlineFavoriteIcon />
         {/if}
         <ItemTableCell baseWidth={spellComponentsBaseWidth} cssClass="no-gap">

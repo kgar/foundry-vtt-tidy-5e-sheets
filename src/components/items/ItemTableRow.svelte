@@ -10,7 +10,7 @@
     ItemCardContentComponent,
     ItemChatData,
   } from 'src/types/item';
-  import { currentSettings } from 'src/settings/settings';
+  import { settingStore } from 'src/settings/settings';
 
   export let item: Item5e | null = null;
   export let contextMenu: { type: string; id: string } | null = null;
@@ -36,7 +36,7 @@
   }
 
   async function onMouseEnter() {
-    if (!item?.getChatData || !$currentSettings.itemCardsForAllItems) {
+    if (!item?.getChatData || !$settingStore.itemCardsForAllItems) {
       return;
     }
 

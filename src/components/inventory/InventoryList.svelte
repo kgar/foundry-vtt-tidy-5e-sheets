@@ -26,7 +26,7 @@
   import ListItemQuantity from 'src/sheets/actor/ListItemQuantity.svelte';
   import InventoryItemCardContent from '../item-info-card/InventoryItemCardContent.svelte';
   import InventoryAmmoSelector from './InventoryAmmoSelector.svelte';
-  import { currentSettings } from 'src/settings/settings';
+  import { settingStore } from 'src/settings/settings';
 
   export let primaryColumnName: string;
   export let items: Item5e[];
@@ -78,7 +78,7 @@
       <ItemTableColumn baseWidth="7.5rem">
         {localize('DND5E.Usage')}
       </ItemTableColumn>
-      {#if $store.owner && $currentSettings.classicControlsEnabled && !lockControls}
+      {#if $store.owner && $settingStore.classicControlsEnabled && !lockControls}
         <ItemTableColumn baseWidth={classicControlsBaseWidth} />
       {/if}
     </ItemTableHeaderRow>
@@ -94,7 +94,7 @@
         }}
         let:toggleSummary
         cssClass={getInventoryRowClasses(item)}
-        alwaysShowQuantity={$currentSettings.quantityAlwaysShownEnabled}
+        alwaysShowQuantity={$settingStore.quantityAlwaysShownEnabled}
         itemCardContentTemplate={InventoryItemCardContent}
       >
         <ItemTableCell primary={true} title={item.name}>
@@ -112,7 +112,7 @@
             <ListItemQuantity {item} {ctx} />
           </ItemName>
         </ItemTableCell>
-        {#if !$currentSettings.hideIconsNextToTheItemName}
+        {#if !$settingStore.hideIconsNextToTheItemName}
           <ItemTableCell cssClass="no-border">
             {#if ctx.attunement}
               <div class="item-detail attunement">
@@ -153,7 +153,7 @@
             {item.labels.activation}
           {/if}
         </ItemTableCell>
-        {#if $store.owner && $currentSettings.classicControlsEnabled && !lockControls}
+        {#if $store.owner && $settingStore.classicControlsEnabled && !lockControls}
           <ItemTableCell baseWidth={classicControlsBaseWidth}>
             <ItemControls>
               {#if ctx.attunement}

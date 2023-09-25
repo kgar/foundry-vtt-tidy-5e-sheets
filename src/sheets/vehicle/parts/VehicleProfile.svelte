@@ -8,7 +8,7 @@
   import Exhaustion from 'src/sheets/Exhaustion.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import VehicleMovement from './VehicleMovement.svelte';
-  import { currentSettings } from 'src/settings/settings';
+  import { settingStore } from 'src/settings/settings';
 
   let store = getContext<Readable<VehicleSheetContext>>('store');
 
@@ -21,15 +21,15 @@
   }
 
   const useRoundedPortraitStyle = ['all', 'vehicle'].includes(
-    $currentSettings.portraitStyle
+    $settingStore.portraitStyle
   );
 </script>
 
 <ActorProfile
   {useRoundedPortraitStyle}
-  useHpOverlay={!$currentSettings.hpOverlayDisabledVehicle}
+  useHpOverlay={!$settingStore.hpOverlayDisabledVehicle}
 >
-  {#if !$currentSettings.exhaustionDisabled && !incapacitated}
+  {#if !$settingStore.exhaustionDisabled && !incapacitated}
     <Exhaustion
       level={FoundryAdapter.tryGetFlag($store.actor, 'exhaustion') ?? 0}
       radiusClass={useRoundedPortraitStyle ? 'rounded' : 'top-left'}
@@ -37,7 +37,7 @@
       exhaustionLocalizationPrefix="T5EK.VehicleExhaustion"
     />
   {/if}
-  {#if !$currentSettings.vehicleMotionDisabled}
+  {#if !$settingStore.vehicleMotionDisabled}
     <VehicleMovement
       motion={FoundryAdapter.tryGetFlag($store.actor, 'motion') === true}
       radiusClass={useRoundedPortraitStyle ? 'rounded' : 'top-right'}

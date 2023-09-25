@@ -9,7 +9,7 @@
   import ItemDescription from './ItemDescription.svelte';
   import HorizontalLineSeparator from 'src/components/layout/HorizontalLineSeparator.svelte';
   import VerticalLineSeparator from 'src/components/layout/VerticalLineSeparator.svelte';
-  import { currentSettings } from 'src/settings/settings';
+  import { settingStore } from 'src/settings/settings';
 
   let store = getContext<Readable<ItemSheetContext>>('store');
 
@@ -30,7 +30,7 @@
           document={$store.item}
           step="1"
           readonly={!FoundryAdapter.userIsGm() &&
-            $currentSettings.lockItemQuantity}
+            $settingStore.lockItemQuantity}
         />
       </div>
 

@@ -28,7 +28,7 @@
   import ActorJournalTab from 'src/components/player-character/ActorJournalTab.svelte';
   import ItemInfoCard from 'src/components/item-info-card/ItemInfoCard.svelte';
   import SheetMenu from '../actor/SheetMenu.svelte';
-  import { currentSettings } from 'src/settings/settings';
+  import { settingStore } from 'src/settings/settings';
 
   export let selectedTabId: string;
 
@@ -49,7 +49,7 @@
       },
     ];
 
-    if (!$currentSettings.hideSpellbookTabNpc) {
+    if (!$settingStore.hideSpellbookTabNpc) {
       tabs.push({
         id: CONSTANTS.TAB_NPC_SPELLBOOK,
         displayName: 'DND5E.Spellbook',
@@ -79,7 +79,7 @@
       }
     );
 
-    if (!$currentSettings.journalTabNPCDisabled) {
+    if (!$settingStore.journalTabNPCDisabled) {
       tabs.push({
         id: CONSTANTS.TAB_NPC_JOURNAL,
         displayName: 'T5EK.Journal',
@@ -111,7 +111,7 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-{#if $currentSettings.itemCardsForNpcs}
+{#if $settingStore.itemCardsForNpcs}
   <ItemInfoCard />
 {/if}
 

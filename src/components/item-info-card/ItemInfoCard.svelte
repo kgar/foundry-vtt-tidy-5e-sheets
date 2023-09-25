@@ -11,11 +11,11 @@
   import DefaultItemCardContentTemplate from './DefaultItemCardContentTemplate.svelte';
   import HorizontalLineSeparator from '../layout/HorizontalLineSeparator.svelte';
   import { warn } from 'src/utils/logging';
-  import { currentSettings } from 'src/settings/settings';
+  import { settingStore } from 'src/settings/settings';
 
   // Freeze
   let frozen: boolean = false;
-  $: freezeKey = $currentSettings.itemCardsFixKey?.toUpperCase();
+  $: freezeKey = $settingStore.itemCardsFixKey?.toUpperCase();
 
   function detectFreezeStart(ev: KeyboardEvent) {
     if (frozen) {
@@ -43,7 +43,7 @@
   function onMouseMove(args: { clientX: number; clientY: number }) {
     lastMouseEvent = args;
 
-    if (!$currentSettings.itemCardsAreFloating || !open || frozen) {
+    if (!$settingStore.itemCardsAreFloating || !open || frozen) {
       return;
     }
 
@@ -102,7 +102,7 @@
   const defaultContentTemplate: ItemCardContentComponent =
     DefaultItemCardContentTemplate;
   let infoContentTemplate: ItemCardContentComponent | undefined;
-  $: delayMs = $currentSettings.itemCardsDelay ?? 0;
+  $: delayMs = $settingStore.itemCardsDelay ?? 0;
 
   async function showCard() {
     if (!$card.item) {
@@ -125,7 +125,7 @@
         $card.itemCardContentTemplate ?? defaultContentTemplate;
       item = $card.item;
 
-      if ($currentSettings.itemCardsAreFloating) {
+      if ($settingStore.itemCardsAreFloating) {
         rootFontSizePx = getRootFontSizePx();
 
         const boundingClientRect = sheet?.getBoundingClientRect();
@@ -223,9 +223,9 @@
   bind:this={itemCardNode}
   class="item-info-container"
   class:open={debug || open}
-  class:floating={$currentSettings.itemCardsAreFloating}
-  style:top={$currentSettings.itemCardsAreFloating ? floatingTop : undefined}
-  style:left={$currentSettings.itemCardsAreFloating ? floatingLeft : undefined}
+  class:floating={$settingStore.itemCardsAreFloating}
+  style:top={$settingStore.itemCardsAreFloating ? floatingTop : undefined}
+  style:left={$settingStore.itemCardsAreFloating ? floatingLeft : undefined}
   style:--card-width="{cardWidthRem}rem"
   style:--card-height="{cardHeightRem}rem"
 >

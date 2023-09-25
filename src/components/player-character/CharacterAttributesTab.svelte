@@ -8,7 +8,7 @@
   import { isNil } from 'src/utils/data';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
-  import { currentSettings } from 'src/settings/settings';
+  import { settingStore } from 'src/settings/settings';
 
   let store = getContext<Readable<ActorSheetContext>>('store');
 
@@ -23,16 +23,16 @@
 <div class="attributes-tab-contents">
   <section class="side-panel">
     <SkillsList actor={$store.actor} />
-    {#if !$currentSettings.traitsMovedBelowResource}
-      <Traits toggleable={$currentSettings.traitsTogglePc} />
+    {#if !$settingStore.traitsMovedBelowResource}
+      <Traits toggleable={$settingStore.traitsTogglePc} />
     {/if}
   </section>
   <section class="main-panel">
     {#if showResources}
       <Resources />
     {/if}
-    {#if $currentSettings.traitsMovedBelowResource}
-      <Traits toggleable={$currentSettings.traitsTogglePc} />
+    {#if $settingStore.traitsMovedBelowResource}
+      <Traits toggleable={$settingStore.traitsTogglePc} />
     {/if}
     <Favorites />
   </section>

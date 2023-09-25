@@ -5,7 +5,7 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import TextInput from 'src/components/form/TextInput.svelte';
-  import { currentSettings } from 'src/settings/settings';
+  import { settingStore } from 'src/settings/settings';
 
   let store =
     getContext<Readable<ActorSheetContext | NpcSheetContext>>('store');
@@ -36,7 +36,7 @@
     maxlength={5}
     title={localize('DND5E.HitPointsTempMax')}
   />
-  {#if $currentSettings.allowHpConfigOverride}
+  {#if $settingStore.allowHpConfigOverride}
     <a
       title={localize('DND5E.HitPointsConfig')}
       on:click|stopPropagation|preventDefault={(event) =>
