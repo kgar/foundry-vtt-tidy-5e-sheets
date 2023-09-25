@@ -1,3 +1,4 @@
+import { CONSTANTS } from 'src/constants';
 import { defaultDarkTheme } from './default-dark-theme';
 import { defaultLightTheme } from './default-light-theme';
 
@@ -5,11 +6,11 @@ export function getCoreThemes(includeDefault: boolean) {
   let themes: Record<string, string> = {};
 
   if (includeDefault) {
-    themes['default'] = 'T5EK.Settings.SheetTheme.default';
+    themes[CONSTANTS.THEME_ID_DEFAULT] = 'T5EK.Settings.SheetTheme.default';
   }
 
-  themes['light'] = defaultLightTheme.name;
-  themes['dark'] = defaultDarkTheme.name;
+  themes[CONSTANTS.THEME_ID_DEFAULT_LIGHT] = defaultLightTheme.name;
+  themes[CONSTANTS.THEME_ID_DEFAULT_DARK] = defaultDarkTheme.name;
 
   return themes;
 }

@@ -8,7 +8,7 @@
   import type { Writable } from 'svelte/store';
   import type { CurrentSettings } from 'src/settings/settings';
   import ThemeSelectorButtonMenuCommand from 'src/sheets/shared/ThemeSelectorButtonMenuCommand.svelte';
-    import ButtonMenuDivider from 'src/components/button-menu/ButtonMenuDivider.svelte';
+  import ButtonMenuDivider from 'src/components/button-menu/ButtonMenuDivider.svelte';
 
   let functions = getContext<ThemeSettingsSheetFunctions>('functions');
   let store = getContext<Writable<CurrentSettings>>('store');
@@ -62,13 +62,15 @@
     {localize('T5EK.ThemeSettings.Sheet.export')}
   </ButtonMenuCommand>
   <ButtonMenuCommand
-    on:click={() => functions.useExistingThemeColors('light')}
+    on:click={() =>
+      functions.useExistingThemeColors(CONSTANTS.THEME_ID_DEFAULT_LIGHT)}
     iconClass="fas fa-sun"
   >
     {localize('T5EK.ThemeSettings.Sheet.useDefaultLightColors')}
   </ButtonMenuCommand>
   <ButtonMenuCommand
-    on:click={() => functions.useExistingThemeColors('dark')}
+    on:click={() =>
+      functions.useExistingThemeColors(CONSTANTS.THEME_ID_DEFAULT_DARK)}
     iconClass="fas fa-moon"
   >
     {localize('T5EK.ThemeSettings.Sheet.useDefaultDarkColors')}

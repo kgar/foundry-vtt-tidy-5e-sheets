@@ -137,16 +137,14 @@ export function createSettings() {
           config: true,
           type: String,
           choices: () => getCoreThemes(false),
-          default: 'light',
+          default: CONSTANTS.THEME_ID_DEFAULT_LIGHT,
           onChange: (data: string) => {
             const theme = getTheme(data) ?? null;
 
             const colorScheme = SettingsProvider.settings.colorScheme.get();
 
-            if (theme && colorScheme === 'default') {
+            if (theme && colorScheme === CONSTANTS.THEME_ID_DEFAULT) {
               applyTheme(theme);
-            } else {
-              ui.notifications.warn(`Tidy 5e Theme "${data}" not found.`);
             }
           },
         },
@@ -163,7 +161,7 @@ export function createSettings() {
           config: true,
           type: String,
           choices: () => getCoreThemes(true),
-          default: 'default',
+          default: CONSTANTS.THEME_ID_DEFAULT,
           onChange: (
             data: string,
             colorPickerEnabledOverride: boolean | null = null

@@ -79,4 +79,7 @@ export const CONSTANTS = {
   TAB_SETTINGS_LOCKS: 'locks',
   TAB_SETTINGS_INFO: 'info',
   THEME_EXTENSION_WITH_DOT: '.tidy5e-theme',
+  THEME_ID_DEFAULT_LIGHT: 'light',
+  THEME_ID_DEFAULT_DARK: 'dark',
+  THEME_ID_DEFAULT: 'default',
 } as const;
