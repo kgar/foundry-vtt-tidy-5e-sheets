@@ -102,7 +102,7 @@
     }
 
     &.prepared {
-      background-color: var(--t5ek-equipped-background);
+      background-color: var(--t5ek-prepared-background);
     }
 
     &.always-prepared {
