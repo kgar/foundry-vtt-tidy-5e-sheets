@@ -1745,7 +1745,6 @@ export function initSettings() {
   }
 
   const debouncedSettingStoreRefresh = foundry.utils.debounce(() => {
-    debug('refreshing settings store');
     settingStore.set(getCurrentSettings());
   }, 100);
 
@@ -1754,8 +1753,6 @@ export function initSettings() {
     const options = {
       ...setting[1].options,
       onChange: (...args: any[]) => {
-        // TODO: to foundry adapter
-        debug('change detected! Preparing to refresh setting store...');
         debouncedSettingStoreRefresh();
 
         (setting[1].options as any).onChange?.(...args);

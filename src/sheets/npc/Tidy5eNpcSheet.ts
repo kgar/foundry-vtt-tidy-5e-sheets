@@ -343,7 +343,7 @@ export class Tidy5eNpcSheet extends dnd5e.applications.actor.ActorSheet5eNPC {
           actor: this.actor,
         });
       } catch (err) {
-        error(err?.message, true);
+        error('An error occurred while attempting a long rest for the NPC. See devtool console for more information.', true, err);
         return;
       }
     }

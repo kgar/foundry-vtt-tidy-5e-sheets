@@ -17,7 +17,11 @@
           svgHtml = await response.text();
         }
       } catch (e) {
-        error(e);
+        error(
+          'An error occurred while getting SVG images. See devtools console for more details.',
+          true,
+          e
+        );
         svgHtml = `<img src="${svgUrl}" alt="" />`;
       }
     })();

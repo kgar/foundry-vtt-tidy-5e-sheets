@@ -440,6 +440,22 @@ In `activateListeners()` of the actor sheet, this function is called which relie
   }
 ```
 
+## Reported Issues to Resolve
+
+- [ ] Initiative Bonus keeps clearing out non-numeric bonuses; ruins "Dread Ambusher" ini bonus
+
+https://discord.com/channels/170995199584108546/670336046164213761/1154309373011697747
+https://discord.com/channels/170995199584108546/670336046164213761/1154307012482568213
+https://discord.com/channels/170995199584108546/670336046164213761/1154305345808764978
+
+"Dread Ambusher" feature, setting initiative bonus to `@abilities.wis.mod`, the field keeps getting reset back to 0.
+
+Ideas so far:
+- [ ] Default Ini Bonus box to a client setting that is turned off
+- [ ] Look at Ini Bonus box to see why it might be clearing stuff out and resolve that also
+- [ ] ... (diagnose and task)
+
+
 ## Special Requests
 
 ### Character Actions 5e absorption

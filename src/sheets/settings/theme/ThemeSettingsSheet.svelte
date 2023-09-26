@@ -64,8 +64,9 @@
     } catch (e) {
       ui.notifications.error(localize('T5EK.ThemeSettings.Sheet.importError'));
       error(
-        e?.toString() ??
-          'An error occurred while attempting to import a theme file.'
+        'An error occurred while attempting to import a theme file. See the devtools console for more details.',
+        true,
+        e
       );
     }
   }

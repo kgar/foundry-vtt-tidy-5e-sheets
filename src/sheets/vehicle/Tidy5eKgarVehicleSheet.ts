@@ -15,7 +15,8 @@ import { applyTitleToWindow } from 'src/utils/applications';
 import type { SvelteComponent } from 'svelte';
 import { debug } from 'src/utils/logging';
 
-export class Tidy5eVehicleSheet extends dnd5e.applications.actor.ActorSheet5eVehicle {
+export class Tidy5eVehicleSheet extends dnd5e.applications.actor
+  .ActorSheet5eVehicle {
   store = writable<VehicleSheetContext>();
   stats = writable<SheetStats>({
     lastSubmissionTime: null,
@@ -72,7 +73,7 @@ export class Tidy5eVehicleSheet extends dnd5e.applications.actor.ActorSheet5eVeh
   }
 
   private async getContext(): Promise<VehicleSheetContext> {
-    return {
+    const context = {
       ...(await super.getData(this.options)),
       appId: this.appId,
       activateFoundryJQueryListeners: (node: HTMLElement) => {
@@ -80,6 +81,10 @@ export class Tidy5eVehicleSheet extends dnd5e.applications.actor.ActorSheet5eVeh
         super.activateListeners($(node));
       },
     };
+
+    debug('Vehicle Sheet context data', context);
+
+    return context;
   }
 
   protected _saveViewState() {

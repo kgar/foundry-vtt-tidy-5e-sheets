@@ -13,8 +13,6 @@
 
   let store = getContext<Readable<ItemSheetContext>>('store');
 
-  $: console.log($store);
-
   const tabs: Tab[] = [itemSheetTabs.description, itemSheetTabs.advancement];
 
   export let selectedTabId: string = 'description';

@@ -242,7 +242,7 @@ export class Tidy5eKgarItemSheet extends dnd5e.applications.item.ItemSheet5e {
   }
 
   private async getContext(): Promise<ItemSheetContext> {
-    return {
+    const context = {
       ...(await super.getData(this.options)),
       appId: this.appId,
       activateFoundryJQueryListeners: (node: HTMLElement) => {
@@ -251,6 +251,10 @@ export class Tidy5eKgarItemSheet extends dnd5e.applications.item.ItemSheet5e {
       },
       toggleAdvancementLock: this.toggleAdvancementLock.bind(this),
     };
+
+    debug(`${this.item?.type ?? 'Unknown Item Type'} context data`, context);
+
+    return context;
   }
 
   async _onSubmit(...args: any[]) {

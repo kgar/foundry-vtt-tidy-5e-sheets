@@ -13,10 +13,6 @@
 
   let store = getContext<Readable<ItemSheetContext>>('store');
 
-  $: context = $store;
-
-  $: context, console.log(context);
-
   export let selectedTabId: string;
 
   const tabs: Tab[] = [

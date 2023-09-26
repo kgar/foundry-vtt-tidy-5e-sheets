@@ -113,8 +113,6 @@
       secrets: $card.item.actor?.isOwner,
     });
 
-    // console.log({ chatData, item: $card.item });
-
     /* 
       now that time has passed, 
       check the most current version of the card item, 

@@ -85,7 +85,7 @@ export class Tidy5eCharacterSheet extends dnd5e.applications.actor
   }
 
   private async getContext(): Promise<ActorSheetContext> {
-    return {
+    const context = {
       ...(await super.getData(this.options)),
       actorClassesToImages: getActorClassesToImages(this.actor),
       appId: this.appId,
@@ -94,6 +94,10 @@ export class Tidy5eCharacterSheet extends dnd5e.applications.actor
         super.activateListeners($(node));
       },
     };
+
+    debug('Character Sheet context data', context);
+
+    return context;
   }
 
   #getSelectedTabId(): string {

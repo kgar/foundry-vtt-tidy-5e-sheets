@@ -34,8 +34,6 @@
 
   let store = getContext<Readable<NpcSheetContext>>('store');
 
-  $: console.log($store);
-
   let tabs: Tab[];
 
   $: {

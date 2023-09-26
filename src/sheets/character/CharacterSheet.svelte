@@ -30,8 +30,8 @@
   import ItemInfoCard from 'src/components/item-info-card/ItemInfoCard.svelte';
   import SheetMenu from '../actor/SheetMenu.svelte';
   import { settingStore } from 'src/settings/settings';
+  import { debug } from 'src/utils/logging';
 
-  export let debug: any = 'Put any debug information here, if ya need it.';
   export let selectedTabId: string;
   let store = getContext<Readable<ActorSheetContext>>('store');
 
@@ -128,10 +128,6 @@
     tabs,
     context: $store,
   });
-
-  $: {
-    console.log($store);
-  }
 </script>
 
 <ItemInfoCard />
