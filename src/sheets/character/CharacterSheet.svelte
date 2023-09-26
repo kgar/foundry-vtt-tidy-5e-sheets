@@ -122,6 +122,10 @@
         },
       });
     }
+
+    if (!tabs.some((tab) => tab.id === selectedTabId)) {
+      selectedTabId = tabs[0]?.id;
+    }
   }
 
   Hooks.call(CONSTANTS.HOOKS_RENDERING_CHARACTER_TABS, {

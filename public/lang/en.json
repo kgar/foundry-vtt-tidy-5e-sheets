@@ -235,7 +235,7 @@
   },
   "T5EK.Settings.TraitLabels": {
     "name": "Show Trait Labels.",
-    "hint": "Disable to only show icons for PC/NPC traits."
+    "hint": "Enable to show labels for PC, NPC, and Vehicle traits. Disable to show only icons."
   },
 
   "T5EK.Settings.PlayerName": {

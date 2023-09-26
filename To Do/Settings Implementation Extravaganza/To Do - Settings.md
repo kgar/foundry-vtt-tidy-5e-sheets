@@ -26,10 +26,9 @@ Refine and improve any settings that compromise visual feedback and information 
 - [x] "itemCardsDelay"
 - [x] "itemCardsFixKey"
   - [x] Make it so the Tidy 5e version cannot change my Fix Key UI.
-- [ ] "contextRollButtons"
-- [ ] "traitLabelsEnabled"
-- [ ] "journalTabDisabled"
-- [ ] "journalTabNPCDisabled"
+- [x] "traitLabelsEnabled"
+- [x] "journalTabDisabled"
+- [x] "journalTabNPCDisabled"
 - [ ] "classListDisabled"
 - [ ] "inspirationAnimationDisabled"
 - [ ] "hideIfZero"
@@ -114,3 +113,5 @@ Refine and improve any settings that compromise visual feedback and information 
 - [ ] "hbEnableUpcastFreeSpell"
 - [ ] "hbSetFeaturesForUpcastFreeSpell"
 - [x] "debug"
+- [ ] "contextRollButtons"
+  - Seems unused. Will confirm.
