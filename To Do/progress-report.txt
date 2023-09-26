@@ -12,13 +12,14 @@ Progress:
 ✅ Item Info Card
 ✅ Dark Mode
 ✅ account for dnd5e 2.3.0-2.3.1 differences
-🟧 Settings Dialog Overhaul
-⬜ Implement All Settings
+✅ Settings Dialog Overhaul
+✅ New Theme Interface with live updates
+🟧 Implement All Settings
 ⬜ Miscellaneous To-Do's which have piled up during this rewrite
 ⬜ Making the repo public and allowing for alpha testing
 ⬜ API and module compatibility updates
 ⬜ Automated testing
-⬜ Reviewing, reorganizing, streamlining, simplifying; by this point, I will have a full picture of what the svelte-powered version of this module looks like, and I'll want to make the kinds of changes that will help me keep making changes in the future
+⬜ Reviewing, reorganizing, streamlining, simplifying
 ⬜ Review and task out feature upgrade requests
 ⬜ Review and revise English localization
 ⬜ Start discussing whether this rewrite will become the new Tidy 5e sheet

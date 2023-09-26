@@ -1405,7 +1405,7 @@ export function createSettings() {
           type: String,
           default:
             defaultLightTheme.variables[
-              '--t5ek-equipped-item-grid-tile-accent-color'
+              '--t5ek-equipped-item-grid-tile-outline-color'
             ],
           config: false,
         },
@@ -1414,7 +1414,7 @@ export function createSettings() {
             'colorPickerEquippedOutline'
           );
         },
-        representsCssVariable: '--t5ek-equipped-item-grid-tile-accent-color',
+        representsCssVariable: '--t5ek-equipped-item-grid-tile-outline-color',
       },
       colorPickerEquippedAccent: {
         options: {
