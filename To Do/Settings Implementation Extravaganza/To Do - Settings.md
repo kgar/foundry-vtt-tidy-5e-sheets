@@ -24,7 +24,8 @@ Refine and improve any settings that compromise visual feedback and information 
 - [x] "itemCardsForNpcs"
 - [x] "itemCardsAreFloating"
 - [x] "itemCardsDelay"
-- [ ] "itemCardsFixKey"
+- [x] "itemCardsFixKey"
+  - [x] Make it so the Tidy 5e version cannot change my Fix Key UI.
 - [ ] "contextRollButtons"
 - [ ] "traitLabelsEnabled"
 - [ ] "journalTabDisabled"

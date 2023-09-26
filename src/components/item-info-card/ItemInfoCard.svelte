@@ -256,7 +256,7 @@
     </article>
     <HorizontalLineSeparator />
 
-    <article class="info-card-hint">
+    <article class="item-info-card-hints">
       <p class:frozen>
         <span class="key">{freezeKey}</span>
         {localize('T5EK.ItemCardsKeyHint')}
@@ -309,7 +309,7 @@
       border-right: 0.0625rem solid var(--t5ek-faint-color);
     }
 
-    .info-card-hint {
+    .item-info-card-hints {
       width: var(--card-width);
       font-size: 0.75rem;
       padding: 0.25rem 0.5rem 0 0.5rem;
