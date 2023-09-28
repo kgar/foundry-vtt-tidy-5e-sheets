@@ -71,14 +71,13 @@ Refine and improve any settings that compromise visual feedback and information 
 - [ ] "restingForNpcsChatDisabled"
 - [ ] "linkMarkerNpc"
 - [ ] "activeEffectsMarker"
-- [ ] "enableActionListOnFavoritePanel"
-- [ ] "defaultActionsTab"
 - [ ] "playerSheetWidth"
 - [ ] "npsSheetWidth"
 - [ ] "enablePermanentUnlockOnNPCIfYouAreGM"
 - [ ] "vehicleSheetWidth"
 - [ ] "enablePermanentUnlockOnVehicleIfYouAreGM"
 - [ ] "enableSortFavoritesItemsAlphabetically"
+  - It works, but it's not reactive yet.
 - [ ] "lockMoneyChanges"
 - [ ] "lockExpChanges"
 - [ ] "lockHpMaxChanges"
@@ -88,7 +87,9 @@ Refine and improve any settings that compromise visual feedback and information 
 - [ ] "allowCantripToBePreparedOnContext"
 - [ ] "spellClassFilterSelect"
 - [ ] "spellClassFilterIconReplace"
+  - Works, but not reactive
 - [ ] "spellClassFilterAdditionalClasses"
+  - Works, but not reactive
 - [ ] "allowHpMaxOverride"
 - [ ] "allowHpConfigOverride"
 - [ ] "betterAttackDialog"
@@ -112,8 +113,17 @@ Refine and improve any settings that compromise visual feedback and information 
 - [ ] "colorPickerAlwaysPrepared"
 - [ ] "colorPickerAlwaysPreparedOutline"
 - [ ] "colorPickerAlwaysPreparedAccent"
+- [x] "debug"
+
+
+## Review and determine next steps
+
+- [ ] "enableActionListOnFavoritePanel"
 - [ ] "hbEnableUpcastFreeSpell"
 - [ ] "hbSetFeaturesForUpcastFreeSpell"
-- [x] "debug"
+- [ ] "defaultActionsTab"
+
+## Settings to Purge
+
 - [ ] "contextRollButtons"
-  - Seems unused. Will confirm.
+  - Purpose unknown. Current maintainer doesn't know what it does.
