@@ -1,12 +1,25 @@
 ## "editTotalLockEnabled" reference
 
 - [ ] List out all of the fields which should be locked down and then task it out
+  - [ ] Universal
+    - [ ] When the padlock is locked (allow-edit === false)
+      - [ ] Remove the config button
+      - [ ] Make proficiency toggle button read-only
+      - [ ] Disable attribute textinput (str, int, wis, etc.)
+      - [ ] Make ability save proficiency readonly
+      - [ ] Remove ability config button
+      - [ ] Disable INI mod input
+      - [ ] Remove INI config button
+      - [ ] Disable HP Max
+    - [ ] 
   - [ ] PCs
     - [ ] ...
   - [ ] NPCs
     - [ ] ...
   - [ ] Vehicles
-    - [ ] ...
+    - [ ] When the padlock is locked (allow-edit === false)
+      - [ ] Disable AC While Motionless
+      - [ ] 
 
 ```
 "TIDY5E.Settings.EditTotalLock": {
@@ -26,6 +39,7 @@ if (!app.actor?.getFlag(CONSTANTS.MODULE_ID, "allow-edit")) {
 			html.find(".ac-display input").prop("disabled", true);
 			html.find(".initiative input").prop("disabled", true);
 			html.find(".hp-max").prop("disabled", true);
+			// Resume here
 			html.find(".resource-name input").prop("disabled", true);
 			html.find(".res-max").prop("disabled", true);
 			html.find(".res-options").remove();
