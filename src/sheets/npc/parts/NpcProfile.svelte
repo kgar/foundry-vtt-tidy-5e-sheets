@@ -15,10 +15,9 @@
 
   let store = getContext<Readable<NpcSheetContext>>('store');
 
-  const useRoundedPortraitStyle = ['all', 'npc'].includes(
+  $: useRoundedPortraitStyle = ['all', 'npc'].includes(
     $settingStore.portraitStyle
   );
-  const useHpOverlay = !$settingStore.hpOverlayDisabledNpc;
 
   $: incapacitated =
     ($store.actor?.system?.attributes?.hp?.value ?? 0) <= 0 &&
@@ -29,7 +28,7 @@
   }
 </script>
 
-<ActorProfile {useRoundedPortraitStyle} {useHpOverlay}>
+<ActorProfile {useRoundedPortraitStyle} useHpOverlay={!$settingStore.hpOverlayDisabledNpc}>
   {#if incapacitated && (!$settingStore.hiddenDeathSavesEnabled || FoundryAdapter.userIsGm())}
     <DeathSaves
       successes={FoundryAdapter.tryGetFlag($store.actor, 'death')?.success ?? 0}
