@@ -29,7 +29,7 @@ Refine and improve any settings that compromise visual feedback and information 
 - [x] "traitLabelsEnabled"
 - [x] "journalTabDisabled"
 - [x] "journalTabNPCDisabled"
-- [ ] "classListDisabled"
+- [x] "classListDisabled"
 - [ ] "inspirationAnimationDisabled"
 - [ ] "hideIfZero"
 - [ ] "inspirationOnHover"
