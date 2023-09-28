@@ -76,14 +76,6 @@
     z-index: 50;
     color: var(--t5ek-icon-font-color);
 
-    &.only-show-on-hover > * {
-      visibility: hidden;
-    }
-
-    &.only-show-on-hover:hover > * {
-      visibility: visible;
-    }
-
     .level-display {
       display: block;
       width: 16px;

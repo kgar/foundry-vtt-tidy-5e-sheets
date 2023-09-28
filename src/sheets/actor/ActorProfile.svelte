@@ -12,7 +12,11 @@
 
 <div class="profile-wrap">
   <div class="profile" class:round-portrait={useRoundedPortraitStyle}>
-    <ActorPortrait actor={$store.actor} {useRoundedPortraitStyle} {useHpOverlay} />
+    <ActorPortrait
+      actor={$store.actor}
+      {useRoundedPortraitStyle}
+      {useHpOverlay}
+    />
     <slot />
   </div>
 </div>
@@ -21,6 +25,14 @@
   .profile-wrap {
     width: 9.375rem;
     position: relative;
+
+    :global(.only-show-on-hover) {
+      visibility: hidden;
+    }
+
+    &:hover :global(.only-show-on-hover) {
+      visibility: visible;
+    }
   }
 
   .profile {

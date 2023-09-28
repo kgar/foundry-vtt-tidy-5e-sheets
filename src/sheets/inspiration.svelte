@@ -48,16 +48,6 @@
     height: 2.125rem;
     z-index: 5;
 
-    &.only-show-on-hover {
-      :global(label) {
-        visibility: hidden;
-      }
-
-      &:hover :global(label) {
-        visibility: visible;
-      }
-    }
-
     :global(input.inspiration-toggle) {
       display: none;
     }

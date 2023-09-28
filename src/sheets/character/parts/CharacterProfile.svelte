@@ -15,9 +15,8 @@
 
   let store = getContext<Readable<ActorSheetContext>>('store');
 
-  const portraitStyle = $settingStore.portraitStyle;
-  const useRoundedPortraitStyle = ['all', 'pc'].includes(portraitStyle);
-  const useHpOverlay = !$settingStore.hpOverlayDisabled;
+  $: portraitStyle = $settingStore.portraitStyle;
+  $: useRoundedPortraitStyle = ['all', 'pc'].includes(portraitStyle);
 
   $: incapacitated =
     ($store.actor?.system?.attributes?.hp?.value ?? 0) <= 0 &&
@@ -33,7 +32,10 @@
 <!-- TODO: Resolve linting comments after done re-styling -->
 <!-- svelte-ignore a11y-missing-attribute -->
 <!-- svelte-ignore a11y-click-events-have-key-events -->
-<ActorProfile {useRoundedPortraitStyle} {useHpOverlay}>
+<ActorProfile
+  {useRoundedPortraitStyle}
+  useHpOverlay={!$settingStore.hpOverlayDisabled}
+>
   {#if incapacitated && (!$settingStore.hiddenDeathSavesEnabled || FoundryAdapter.userIsGm())}
     <DeathSaves
       {useRoundedPortraitStyle}
@@ -53,8 +55,7 @@
       radiusClass={useRoundedPortraitStyle ? 'rounded' : 'top-left'}
       on:levelSelected={onLevelSelected}
       onlyShowOnHover={$settingStore.exhaustionOnHover ||
-        ($settingStore.hideIfZero &&
-          $store.system.attributes.exhaustion === 0)}
+        ($settingStore.hideIfZero && $store.system.attributes.exhaustion === 0)}
     />
   {/if}
 
@@ -62,7 +63,9 @@
     <Inspiration
       inspired={$store.actor.system.attributes.inspiration}
       radiusClass={useRoundedPortraitStyle ? 'rounded' : 'top-right'}
-      onlyShowOnHover={$settingStore.inspirationOnHover}
+      onlyShowOnHover={$settingStore.inspirationOnHover ||
+        ($settingStore.hideIfZero &&
+          !$store.actor.system.attributes.inspiration)}
       disableAnimation={$settingStore.inspirationAnimationDisabled}
     />
   {/if}
