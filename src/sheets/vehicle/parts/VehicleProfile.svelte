@@ -20,7 +20,7 @@
     FoundryAdapter.setFlag($store.actor, 'exhaustion', event.detail.level);
   }
 
-  const useRoundedPortraitStyle = ['all', 'vehicle'].includes(
+  $: useRoundedPortraitStyle = ['all', 'npc'].includes(
     $settingStore.portraitStyle
   );
 </script>

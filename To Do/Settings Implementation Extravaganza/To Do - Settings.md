@@ -49,9 +49,8 @@ Refine and improve any settings that compromise visual feedback and information 
 - [x] "hideSpellbookTabNpc"
 - [x] "hpBarDisabledVehicle"
 - [x] "hpOverlayDisabledVehicle"
-- [ ] "playerNameEnabled"
-- [ ] "expandedSheetEnabled"
-- [ ] "portraitStyle"
+- [x] "playerNameEnabled"
+- [x] "portraitStyle"
 - [ ] "editTotalLockEnabled"
 - [ ] "editGmAlwaysEnabled"
 - [ ] "editEffectsGmOnlyEnabled"
@@ -113,6 +112,8 @@ Refine and improve any settings that compromise visual feedback and information 
 - [ ] "colorPickerAlwaysPrepared"
 - [ ] "colorPickerAlwaysPreparedOutline"
 - [ ] "colorPickerAlwaysPreparedAccent"
+- [ ] "expandedSheetEnabled"
+  - Will require some more attention / effort.
 - [x] "debug"
 
 
