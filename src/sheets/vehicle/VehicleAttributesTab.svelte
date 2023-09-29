@@ -184,7 +184,7 @@
                             maxlength={5}
                             ariaDescribedBy="tooltip"
                             selectOnFocus={true}
-                            readonly={!$store.editable}
+                            disabled={!$store.editable}
                           />
                           <span class="value-seperator sep"> / </span>
                           <TextInput
@@ -199,7 +199,7 @@
                             maxlength={5}
                             ariaDescribedBy="tooltip"
                             selectOnFocus={true}
-                            readonly={!$store.editable}
+                            disabled={!$store.editable}
                           />
                         </div>
                       </ItemTableCell>

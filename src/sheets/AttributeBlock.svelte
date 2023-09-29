@@ -11,14 +11,11 @@
   export let actor: Actor5e;
   export let useSavingThrowProficiency: boolean;
   export let useConfigurationOption: boolean;
+  export let readonly: boolean = true;
 
   const localize = FoundryAdapter.localize;
 </script>
 
-<!-- svelte-ignore a11y-click-events-have-key-events -->
-<!-- svelte-ignore a11y-missing-attribute -->
-<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
-<!-- svelte-ignore a11y-no-static-element-interactions -->
 <div class="wrapper">
   <BlockTitle
     title={ability.label}
@@ -34,6 +31,7 @@
       dtype="Number"
       selectOnFocus={true}
       allowDeltaChanges={true}
+      disabled={readonly}
     />
   </BlockScore>
   <div class="ability-modifiers">
@@ -144,7 +142,7 @@
       background: var(--t5ek-primary-accent-color);
       color: var(
         --t5ek-ability-mod-save-text-hover-color
-      ); // TODO: Find appropriate color variable
+      );
     }
 
     &:hover .ability-mod,
@@ -158,7 +156,9 @@
       top: 2.9375rem; // This is far too precise; can we make this more relative to its target?
       display: none;
       background: var(--t5ek-ability-modifiers-hover-label-background);
-      color: var(--t5ek-ability-modifiers-label-text-color); // TODO: Find appropriate color variable
+      color: var(
+        --t5ek-ability-modifiers-label-text-color
+      );
       font-size: 0.625rem;
       height: 1.0625rem; // This is far too precise; can we make this more relative to its target?
       padding: 0.1875rem 0.25rem 0.125rem 0.25rem; // this padding is providing the positioning of the text. Can we do this in flexbox?

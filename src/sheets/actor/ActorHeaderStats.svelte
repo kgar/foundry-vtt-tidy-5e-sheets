@@ -4,6 +4,11 @@
   import InitiativeBlock from '../InitiativeBlock.svelte';
   import AcShield from './AcShield.svelte';
   import VerticalLineSeparator from 'src/components/layout/VerticalLineSeparator.svelte';
+  import type { ActorSheetContext } from 'src/types/types';
+  import { getContext } from 'svelte';
+  import type { Readable } from 'svelte/store';
+
+  let store = getContext<Readable<ActorSheetContext>>('store');
 
   export let actor: Actor5e;
   export let ac: any;
@@ -26,6 +31,7 @@
         {actor}
         useSavingThrowProficiency={true}
         useConfigurationOption={true}
+        readonly={$store.lockSensitiveFields}
       />
     </div>
   {/each}

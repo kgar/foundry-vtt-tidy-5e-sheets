@@ -3,9 +3,9 @@
 - [ ] List out all of the fields which should be locked down and then task it out
   - [ ] Universal
     - [ ] When the padlock is locked (allow-edit === false)
-      - [ ] Remove the skill config button
-      - [ ] Make proficiency toggle button read-only
-      - [ ] Disable attribute textinput (str, int, wis, etc.)
+      - [x] Remove the skill config button
+      - [x] Make proficiency toggle button read-only
+      - [x] Disable attribute textinput (str, int, wis, etc.)
       - [ ] Make ability save proficiency readonly
       - [ ] Remove ability config button
       - [ ] Disable INI mod input

@@ -10,7 +10,7 @@ import NpcSheetLimited from './NpcSheetLimited.svelte';
 import { CONSTANTS } from 'src/constants';
 import { applyTitleToWindow } from 'src/utils/applications';
 import { debug, error } from 'src/utils/logging';
-import { SettingsProvider } from 'src/settings/settings';
+import { SettingsProvider, settingStore } from 'src/settings/settings';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
 import { isLessThanOneIsOne } from 'src/utils/numbers';
 import NpcShortRestDialog from 'src/dialogs/NpcShortRestDialog';
@@ -29,6 +29,10 @@ export class Tidy5eNpcSheet extends dnd5e.applications.actor.ActorSheet5eNPC {
 
   constructor(...args: any[]) {
     super(...args);
+
+    settingStore.subscribe(() => {
+      this.getContext().then((context) => this.store.set(context));
+    });
   }
 
   get template() {
@@ -109,6 +113,9 @@ export class Tidy5eNpcSheet extends dnd5e.applications.actor.ActorSheet5eNPC {
       longRest: this._onLongRest.bind(this),
       rollDeathSave: this._rollDeathSave.bind(this),
       tokenState: this.#getTokenState(),
+      lockSensitiveFields:
+        !FoundryAdapter.tryGetFlag(this.actor, 'allow-edit') &&
+        SettingsProvider.settings.editTotalLockEnabled.get(),
     };
   }
 
@@ -343,7 +350,11 @@ export class Tidy5eNpcSheet extends dnd5e.applications.actor.ActorSheet5eNPC {
           actor: this.actor,
         });
       } catch (err) {
-        error('An error occurred while attempting a long rest for the NPC. See devtool console for more information.', true, err);
+        error(
+          'An error occurred while attempting a long rest for the NPC. See devtool console for more information.',
+          true,
+          err
+        );
         return;
       }
     }

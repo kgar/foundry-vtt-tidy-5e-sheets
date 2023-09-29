@@ -2,7 +2,7 @@ import { FoundryAdapter } from '../../foundry/foundry-adapter';
 import CharacterSheet from './CharacterSheet.svelte';
 import CharacterSheetLimited from './CharacterSheetLimited.svelte';
 import { debug, error } from 'src/utils/logging';
-import { SettingsProvider } from 'src/settings/settings';
+import { SettingsProvider, settingStore } from 'src/settings/settings';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
 import type { Actor5e } from 'src/types/actor';
 import { isNil } from 'src/utils/data';
@@ -27,6 +27,10 @@ export class Tidy5eCharacterSheet extends dnd5e.applications.actor
 
   constructor(...args: any[]) {
     super(...args);
+
+    settingStore.subscribe(() => {
+      this.getContext().then((context) => this.store.set(context));
+    });
   }
 
   get template() {
@@ -93,6 +97,9 @@ export class Tidy5eCharacterSheet extends dnd5e.applications.actor
         this._activateCoreListeners($(node));
         super.activateListeners($(node));
       },
+      lockSensitiveFields:
+        !FoundryAdapter.tryGetFlag(this.actor, 'allow-edit') &&
+        SettingsProvider.settings.editTotalLockEnabled.get(),
     };
 
     debug('Character Sheet context data', context);

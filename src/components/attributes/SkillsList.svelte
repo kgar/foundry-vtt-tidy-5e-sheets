@@ -61,36 +61,44 @@
           class="proficiency-row skill"
           class:proficient={skillRef.skill.value}
         >
-          <a
-            class="configure-proficiency"
-            on:click={() =>
-              new dnd5e.applications.actor.ProficiencyConfig($store.actor, {
-                property: 'skills',
-                key: skillRef.key,
-              }).render(true)}
-            title={localize('DND5E.SkillConfigure')}
-          >
-            <i class="fas fa-cog" />
-          </a>
-          <a
-            class="skill-proficiency-toggle"
-            on:click={(event) =>
-              FoundryAdapter.cycleProficiency(
-                $store.actor,
-                skillRef.key,
-                skillRef.skill?.value,
-                'skills'
-              )}
-            on:contextmenu={(event) =>
-              FoundryAdapter.cycleProficiency(
-                $store.actor,
-                skillRef.key,
-                skillRef.skill?.value,
-                'skills',
-                true
-              )}
-            title={skillRef.skill.hover}>{@html skillRef.skill.icon}</a
-          >
+          {#if !$store.lockSensitiveFields}
+            <a
+              class="configure-proficiency"
+              on:click={() =>
+                new dnd5e.applications.actor.ProficiencyConfig($store.actor, {
+                  property: 'skills',
+                  key: skillRef.key,
+                }).render(true)}
+              title={localize('DND5E.SkillConfigure')}
+            >
+              <i class="fas fa-cog" />
+            </a>
+          {/if}
+          {#if $store.lockSensitiveFields}
+            <span class="skill-proficiency" title={skillRef.skill.hover}
+              >{@html skillRef.skill.icon}</span
+            >
+          {:else}
+            <a
+              class="skill-proficiency-toggle"
+              on:click={() =>
+                FoundryAdapter.cycleProficiency(
+                  $store.actor,
+                  skillRef.key,
+                  skillRef.skill?.value,
+                  'skills'
+                )}
+              on:contextmenu={() =>
+                FoundryAdapter.cycleProficiency(
+                  $store.actor,
+                  skillRef.key,
+                  skillRef.skill?.value,
+                  'skills',
+                  true
+                )}
+              title={skillRef.skill.hover}>{@html skillRef.skill.icon}</a
+            >
+          {/if}
           <h4
             role="button"
             class="tidy5e-skill-name rollable"
@@ -170,6 +178,11 @@
 
       &.proficient .tidy5e-skill-name {
         font-weight: 700;
+      }
+
+      .skill-proficiency {
+        font-size: 0.625rem;
+        color: var(--t5ek-tertiary-color);
       }
 
       .skill-proficiency-toggle {

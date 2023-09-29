@@ -141,7 +141,7 @@
               cssClass="item-count"
               value={item.system.quantity}
               maxlength={2}
-              readonly={!FoundryAdapter.userIsGm() &&
+              disabled={!FoundryAdapter.userIsGm() &&
                 $settingStore.lockItemQuantity}
               dtype="Number"
               allowDeltaChanges={true}

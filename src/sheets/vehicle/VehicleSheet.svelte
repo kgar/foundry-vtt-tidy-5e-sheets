@@ -1,8 +1,8 @@
 <script lang="ts">
   import type {
-    NpcSheetContext,
     Tab,
     TidyDropdownOption,
+    VehicleSheetContext,
   } from 'src/types/types';
   import Tabs from 'src/components/tabs/Tabs.svelte';
   import VehicleAttributesTab from './VehicleAttributesTab.svelte';
@@ -32,7 +32,7 @@
 
   export let selectedTabId: string;
 
-  let store = getContext<Readable<NpcSheetContext>>('store');
+  let store = getContext<Readable<VehicleSheetContext>>('store');
 
   let tabs: Tab[] = [
     {
@@ -186,6 +186,7 @@
             actor={$store.actor}
             useConfigurationOption={false}
             useSavingThrowProficiency={false}
+            readonly={$store.lockSensitiveFields}
           />
         </div>
       {/each}

@@ -24,7 +24,7 @@
   export let saveEmptyAsNull: boolean = false;
   export let title: string | null = null;
   export let allowDeltaChanges: boolean = false;
-  export let readonly: boolean = false;
+  export let disabled: boolean = false;
   export let onSaveChange: OnSaveChangeFn = () => true;
   /**
    * Stops propagation on input change event.
@@ -75,7 +75,7 @@
   data-dtype={dtype}
   aria-describedby={ariaDescribedBy}
   {title}
-  {readonly}
+  {disabled}
   on:change={(ev) => onSaveChange(ev) && saveChange(ev)}
   on:click
   on:focus={(ev) => selectOnFocus && ev.currentTarget.select()}

@@ -1,6 +1,6 @@
 import { CONSTANTS } from 'src/constants';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-import { SettingsProvider } from 'src/settings/settings';
+import { SettingsProvider, settingStore } from 'src/settings/settings';
 import type {
   ItemCardStore,
   SheetStats,
@@ -26,6 +26,10 @@ export class Tidy5eVehicleSheet extends dnd5e.applications.actor
 
   constructor(...args: any[]) {
     super(...args);
+
+    settingStore.subscribe(() => {
+      this.getContext().then((context) => this.store.set(context));
+    });
   }
 
   get template() {
@@ -80,6 +84,9 @@ export class Tidy5eVehicleSheet extends dnd5e.applications.actor
         this._activateCoreListeners($(node));
         super.activateListeners($(node));
       },
+      lockSensitiveFields:
+        !FoundryAdapter.tryGetFlag(this.actor, 'allow-edit') &&
+        SettingsProvider.settings.editTotalLockEnabled.get(),
     };
 
     debug('Vehicle Sheet context data', context);
