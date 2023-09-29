@@ -4,12 +4,17 @@
   import TextInput from 'src/components/form/TextInput.svelte';
   import ActorHpBar from 'src/sheets/actor/ActorHpBar.svelte';
   import { settingStore } from 'src/settings/settings';
+  import { getContext } from 'svelte';
+  import type { Readable } from 'svelte/store';
+  import type { ActorSheetContext } from 'src/types/types';
 
   export let value: number;
   export let max: number;
   export let actor: Actor5e;
   export let useRoundedPortraitStyle: boolean;
   export let incapacitated: boolean;
+
+  let store = getContext<Readable<ActorSheetContext>>('store');
 
   const localize = FoundryAdapter.localize;
 
@@ -54,6 +59,7 @@
       allowDeltaChanges={true}
       maxlength={5}
       ariaDescribedBy="tooltip"
+      disabled={$store.lockSensitiveFields}
     />
   {:else}
     <span

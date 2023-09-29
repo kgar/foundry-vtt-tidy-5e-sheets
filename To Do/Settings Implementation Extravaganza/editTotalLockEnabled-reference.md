@@ -8,11 +8,11 @@
       - [x] Disable attribute textinput (str, int, wis, etc.)
       - [x] Make ability save proficiency readonly
       - [x] Remove ability config button
-      - [ ] Disable INI mod input
-      - [ ] Remove INI config button
-      - [ ] Disable HP Max
-      - [ ] Make Ability Proficiency Toggle read-only
-      - [ ] Remove the Ability Config Button
+      - [x] Disable INI mod input
+      - [x] Remove INI config button
+      - [x] Disable HP Max
+      - [x] Make Ability Proficiency Toggle read-only
+      - [x] Remove the Ability Config Button
       - [ ] Remove Traits Config Button
       - [ ] Remove Traits Edit Button
       - [ ] Make Tools Proficiency Selector read-only
@@ -35,6 +35,7 @@
       - [ ] Remove Spellbook tab / Spellbook section in Attr tab when there are no spells in the spellbook
   - [ ] Vehicles
     - [ ] When the padlock is locked (allow-edit === false)
+      - [ ] Disable AC While In Motion
       - [ ] Disable AC While Motionless
 - [ ] Now that you have a feel for it, review it all again and see what else might could benefit from being locked down.
 

@@ -8,6 +8,7 @@
 
   export let initiative: { total: number; bonus: number };
   export let actor: Actor5e;
+  export let readonly: boolean;
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -35,16 +36,28 @@
       allowDeltaChanges={true}
       value={initiative.bonus}
       maxlength={2}
+      disabled={readonly}
     />
   </label>
-  <a
-    class="config-button"
-    title={localize('DND5E.InitiativeConfig')}
-    on:click={() =>
-      new dnd5e.applications.actor.ActorInitiativeConfig(actor).render(true)}
-  >
-    <i class="fas fa-cog" />
-  </a>
+
+  {#if !readonly}
+    <a
+      class="config-button"
+      title={localize('DND5E.InitiativeConfig')}
+      on:click={() =>
+        new dnd5e.applications.actor.ActorInitiativeConfig(actor).render(true)}
+    >
+      <i class="fas fa-cog" />
+    </a>
+  {:else}
+    <span
+      class="config-button invisible"
+      title={localize('DND5E.InitiativeConfig')}
+      role="presentation"
+    >
+      <i class="fas fa-cog" />
+    </span>
+  {/if}
 </div>
 
 <style lang="scss">
@@ -80,6 +93,10 @@
       justify-content: center;
       align-items: flex-end;
       min-height: 0.75rem;
+    }
+
+    .invisible {
+      visibility: hidden;
     }
   }
 </style>

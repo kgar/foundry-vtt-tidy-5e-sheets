@@ -20,7 +20,11 @@
   <AcShield ac={ac.value} {actor} />
   <VerticalLineSeparator />
   <div>
-    <InitiativeBlock {actor} initiative={init} />
+    <InitiativeBlock
+      {actor}
+      initiative={init}
+      readonly={$store.lockSensitiveFields}
+    />
   </div>
   {#each abilities as [id, ability]}
     <VerticalLineSeparator />
