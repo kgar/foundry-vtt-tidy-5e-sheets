@@ -199,7 +199,8 @@
                             maxlength={5}
                             ariaDescribedBy="tooltip"
                             selectOnFocus={true}
-                            disabled={!$store.editable}
+                            disabled={!$store.editable ||
+                              $store.lockSensitiveFields}
                           />
                         </div>
                       </ItemTableCell>

@@ -107,7 +107,7 @@
           document={$store.actor}
           field="name"
           value={$store.actor.name}
-          editable={$store.owner}
+          editable={$store.owner && !$store.lockSensitiveFields}
           spellcheck={false}
           placeholder={localize('DND5E.Name')}
           dataMaxLength={40}
@@ -128,39 +128,41 @@
         />
       </div>
       <span>&#8226;</span>
-      <DelimitedTruncatedContent cssClass="flex-1">
-        <span class="flex-row extra-small-gap align-items-center">
-          <span>{localize('DND5E.Vehicle')}</span>
-        </span>
+      {#key $store.lockSensitiveFields}
+        <DelimitedTruncatedContent cssClass="flex-1">
+          <span class="flex-row extra-small-gap align-items-center">
+            <span>{localize('DND5E.Vehicle')}</span>
+          </span>
 
-        <ContentEditableFormField
-          element="span"
-          document={$store.actor}
-          field="system.traits.dimensions"
-          value={$store.system.traits.dimensions}
-          title={$store.system.traits.dimensions}
-          editable={$store.owner}
-          placeholder={localize('DND5E.Dimensions')}
-          selectOnFocus={true}
-        />
-        <ContentEditableFormField
-          element="span"
-          document={$store.actor}
-          field="system.details.source"
-          value={$store.system.details.source}
-          editable={$store.owner}
-          placeholder={localize('DND5E.Source')}
-          title="{localize('DND5E.Source')} {!isNil(
-            $store.system.details.source,
-            ''
-          )
-            ? '| ' + $store.system.details.source
-            : ''}"
-          selectOnFocus={true}
-        />
-      </DelimitedTruncatedContent>
+          <ContentEditableFormField
+            element="span"
+            document={$store.actor}
+            field="system.traits.dimensions"
+            value={$store.system.traits.dimensions}
+            title={$store.system.traits.dimensions}
+            editable={$store.owner && !$store.lockSensitiveFields}
+            placeholder={localize('DND5E.Dimensions')}
+            selectOnFocus={true}
+          />
+          <ContentEditableFormField
+            element="span"
+            document={$store.actor}
+            field="system.details.source"
+            value={$store.system.details.source}
+            editable={$store.owner && !$store.lockSensitiveFields}
+            placeholder={localize('DND5E.Source')}
+            title="{localize('DND5E.Source')} {!isNil(
+              $store.system.details.source,
+              ''
+            )
+              ? '| ' + $store.system.details.source
+              : ''}"
+            selectOnFocus={true}
+          />
+        </DelimitedTruncatedContent>
+      {/key}
       <div class="flex-row align-items-center extra-small-gap">
-        {#if $store.owner}
+        {#if $store.owner && !$store.lockSensitiveFields}
           <a
             on:click={() =>
               new Tidy5eActorOriginSummaryConfig($store.actor).render(true)}

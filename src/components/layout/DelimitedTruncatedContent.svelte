@@ -4,7 +4,7 @@
 
   let dynamicStyles: string = '';
 
-  function test(node: HTMLElement) {
+  function contentWithGridStyles(node: HTMLElement) {
     const childrenEntries = Array.from(node.children).entries();
 
     for (let [index, el] of childrenEntries) {
@@ -40,7 +40,7 @@
 
 <div
   class="delimited-truncated-content {cssClass}"
-  use:test
+  use:contentWithGridStyles
   style={dynamicStyles}
 >
   <slot />

@@ -150,7 +150,7 @@
         <ContentEditableFormField
           element="h1"
           document={$store.actor}
-          editable={$store.owner}
+          editable={$store.owner && !$store.lockSensitiveFields}
           spellcheck={false}
           placeholder={localize('DND5E.Name')}
           dataMaxLength={40}
@@ -221,7 +221,7 @@
           cssClass="player-name"
           placeholder={localize('T5EK.PlayerName')}
           dataMaxLength={40}
-          editable={$store.owner}
+          editable={$store.owner && !$store.lockSensitiveFields}
         />
         <!-- <span>&#8226;</span> -->
       {/if}
@@ -270,7 +270,7 @@
         <b>
           {localize('DND5E.Proficiency')}: {$store.labels.proficiency}
         </b>
-        {#if $store.owner}
+        {#if $store.owner && !$store.lockSensitiveFields}
           <a
             class="origin-summary-tidy"
             title={localize('T5EK.OriginSummaryConfig')}
@@ -381,6 +381,7 @@
         min-width: 3.125rem;
         padding: 0 0.25rem;
         white-space: nowrap;
+        color: var(--t5ek-primary-font-color);
       }
     }
 

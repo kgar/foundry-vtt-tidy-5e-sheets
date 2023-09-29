@@ -25,7 +25,7 @@
           <span>{localize('T5EK.Gender')}:</span>
           <ContentEditableFormField
             element="span"
-            editable={$store.owner}
+            editable={$store.owner && !$store.lockSensitiveFields}
             document={$store.actor}
             field="flags.{CONSTANTS.MODULE_ID}.gender"
             value={FoundryAdapter.tryGetFlag($store.actor, 'gender') ?? ''}
@@ -36,7 +36,7 @@
           <span>{localize('T5EK.Age')}:</span>
           <ContentEditableFormField
             element="span"
-            editable={$store.owner}
+            editable={$store.owner && !$store.lockSensitiveFields}
             document={$store.actor}
             field="flags.{CONSTANTS.MODULE_ID}.age"
             value={FoundryAdapter.tryGetFlag($store.actor, 'age') ?? ''}
@@ -48,7 +48,7 @@
           <span>{localize('T5EK.Height')}:</span>
           <ContentEditableFormField
             element="span"
-            editable={$store.owner}
+            editable={$store.owner && !$store.lockSensitiveFields}
             document={$store.actor}
             field="flags.{CONSTANTS.MODULE_ID}.height"
             value={FoundryAdapter.tryGetFlag($store.actor, 'height') ?? ''}
@@ -60,7 +60,7 @@
           <span>{localize('T5EK.Weight')}:</span>
           <ContentEditableFormField
             element="span"
-            editable={$store.owner}
+            editable={$store.owner && !$store.lockSensitiveFields}
             document={$store.actor}
             field="flags.{CONSTANTS.MODULE_ID}.weight"
             value={FoundryAdapter.tryGetFlag($store.actor, 'weight') ?? ''}
@@ -72,7 +72,7 @@
           <span>{localize('T5EK.Eyes')}:</span>
           <ContentEditableFormField
             element="span"
-            editable={$store.owner}
+            editable={$store.owner && !$store.lockSensitiveFields}
             document={$store.actor}
             field="flags.{CONSTANTS.MODULE_ID}.eyes"
             value={FoundryAdapter.tryGetFlag($store.actor, 'eyes') ?? ''}
@@ -84,7 +84,7 @@
           <span>{localize('T5EK.Skin')}:</span>
           <ContentEditableFormField
             element="span"
-            editable={$store.owner}
+            editable={$store.owner && !$store.lockSensitiveFields}
             document={$store.actor}
             field="flags.{CONSTANTS.MODULE_ID}.skin"
             value={FoundryAdapter.tryGetFlag($store.actor, 'skin') ?? ''}
@@ -96,7 +96,7 @@
           <span>{localize('T5EK.Hair')}:</span>
           <ContentEditableFormField
             element="span"
-            editable={$store.owner}
+            editable={$store.owner && !$store.lockSensitiveFields}
             document={$store.actor}
             field="flags.{CONSTANTS.MODULE_ID}.hair"
             value={FoundryAdapter.tryGetFlag($store.actor, 'hair') ?? ''}

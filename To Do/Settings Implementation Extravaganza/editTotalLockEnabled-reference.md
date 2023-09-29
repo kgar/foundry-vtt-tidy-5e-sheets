@@ -1,8 +1,8 @@
 ## "editTotalLockEnabled" reference
 
-- [ ] List out all of the fields which should be locked down and then task it out
-  - [ ] Universal
-    - [ ] When the padlock is locked (allow-edit === false)
+- [x] List out all of the fields which should be locked down and then task it out
+  - [x] Universal
+    - [x] When the padlock is locked (allow-edit === false)
       - [x] Remove the skill config button
       - [x] Make proficiency toggle button read-only
       - [x] Disable attribute textinput (str, int, wis, etc.)
@@ -20,7 +20,7 @@
       - [x] Make Spellcasting Ability either read-only or swap altogether with some text
       - [x] Make Max Prepared Spells read-only
       - [x] Remove max spell slot override pencil and editability / make sure the max spell slots field is read-only
-      - [ ] Make all contenteditable fields read-only (📝 Let's do this on a case-by-case basis)
+      - [x] Make all contenteditable fields read-only (📝 Let's do this on a case-by-case basis)
   - [x] PCs
     - [x] Disable Resource Name Input
     - [x] Disable Resource Max Input
@@ -37,7 +37,7 @@
     - [x] When the padlock is locked (allow-edit === false)
       - [x] Disable AC While In Motion
       - [x] Disable AC While Motionless
-- [ ] Now that you have a feel for it, review it all again and see what else might could benefit from being locked down.
+- [x] Now that you have a feel for it, review it all again and see what else might could benefit from being locked down.
 
 ```
 "TIDY5E.Settings.EditTotalLock": {

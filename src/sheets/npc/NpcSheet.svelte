@@ -36,7 +36,8 @@
 
   let tabs: Tab[];
 
-  $: hideEmptySpellbook = $store.lockSensitiveFields && $store.spellbook.length === 0;
+  $: hideEmptySpellbook =
+    $store.lockSensitiveFields && $store.spellbook.length === 0;
 
   $: {
     tabs = [
@@ -142,7 +143,7 @@
             document={$store.actor}
             field="name"
             value={$store.actor.name}
-            editable={$store.owner}
+            editable={$store.owner && !$store.lockSensitiveFields}
             spellcheck={false}
             placeholder={localize('DND5E.Name')}
             dataMaxLength={40}
@@ -156,7 +157,7 @@
             {localize('DND5E.AbbreviationCR')}
             <ContentEditableFormField
               element="span"
-              editable={true}
+              editable={!$store.lockSensitiveFields}
               document={$store.actor}
               field="system.details.cr"
               placeholder="0"
@@ -181,44 +182,46 @@
               })}
           />
           <span>&#8226;</span>
-          <DelimitedTruncatedContent cssClass="flex-grow-1">
-            <span class="flex-row extra-small-gap align-items-center">
-              <a
-                class="truncate highlight-on-hover"
-                role="button"
-                on:click={() =>
-                  new dnd5e.applications.actor.ActorTypeConfig(
-                    $store.actor
-                  ).render(true)}
-                title="{$store.labels.type} ({localize(
-                  'DND5E.CreatureTypeConfig'
-                )})"
-                >{#if isNil($store.labels.type, '')}
-                  {localize('DND5E.CreatureType')}
-                {:else}
-                  {$store.labels.type}
-                {/if}</a
+          {#key $store.lockSensitiveFields}
+            <DelimitedTruncatedContent cssClass="flex-grow-1">
+              <span class="flex-row extra-small-gap align-items-center">
+                <a
+                  class="truncate highlight-on-hover"
+                  role="button"
+                  on:click={() =>
+                    new dnd5e.applications.actor.ActorTypeConfig(
+                      $store.actor
+                    ).render(true)}
+                  title="{$store.labels.type} ({localize(
+                    'DND5E.CreatureTypeConfig'
+                  )})"
+                  >{#if isNil($store.labels.type, '')}
+                    {localize('DND5E.CreatureType')}
+                  {:else}
+                    {$store.labels.type}
+                  {/if}</a
+                >
+                <span
+                  class="environment"
+                  title="{localize('T5EK.Environment')}: {$store.system.details
+                    .environment}"
+                >
+                  <i class="fas fa-tree" />
+                </span>
+              </span>
+
+              <span
+                class="origin-summary-text"
+                title={$store.system.details.alignment}
+                >{$store.system.details.alignment}</span
               >
               <span
-                class="environment"
-                title="{localize('T5EK.Environment')}: {$store.system.details
-                  .environment}"
+                class="origin-summary-text source source-info"
+                title={$store.system.details.source}
+                >{$store.system.details.source}</span
               >
-                <i class="fas fa-tree" />
-              </span>
-            </span>
-
-            <span
-              class="origin-summary-text"
-              title={$store.system.details.alignment}
-              >{$store.system.details.alignment}</span
-            >
-            <span
-              class="origin-summary-text source source-info"
-              title={$store.system.details.source}
-              >{$store.system.details.source}</span
-            >
-          </DelimitedTruncatedContent>
+            </DelimitedTruncatedContent>
+          {/key}
         </div>
         <div class="flex-row align-items-center extra-small-gap">
           <b class="proficiency">
@@ -226,7 +229,7 @@
               $store.system.attributes.prof
             )}
           </b>
-          {#if $store.owner}
+          {#if $store.owner && !$store.lockSensitiveFields}
             <a
               on:click={() =>
                 new Tidy5eActorOriginSummaryConfig($store.actor).render(true)}

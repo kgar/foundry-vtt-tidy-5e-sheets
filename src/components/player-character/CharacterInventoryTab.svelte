@@ -16,7 +16,7 @@
   import NumberInput from '../form/NumberInput.svelte';
   import EncumbranceBar from 'src/sheets/actor/EncumbranceBar.svelte';
   import TabFooter from 'src/sheets/actor/TabFooter.svelte';
-    import { settingStore } from 'src/settings/settings';
+  import { settingStore } from 'src/settings/settings';
 
   let store = getContext<Readable<ActorSheetContext>>('store');
 
@@ -107,6 +107,7 @@
       /
       {#if FoundryAdapter.userIsGm()}
         <NumberInput
+          selectOnFocus={true}
           document={$store.actor}
           field="system.attributes.attunement.max"
           cssClass="attuned-items-max"
@@ -114,6 +115,7 @@
           value={$store.system.attributes.attunement.max}
           placeholder="0"
           title={localize('T5EK.AttunementMax')}
+          disabled={$store.lockSensitiveFields}
         />
       {:else}
         <span class="attuned-items-max"

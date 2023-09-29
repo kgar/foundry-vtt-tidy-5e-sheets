@@ -1,9 +1,21 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { Actor5e } from 'src/types/actor';
+  import type {
+    ActorSheetContext,
+    NpcSheetContext,
+    VehicleSheetContext,
+  } from 'src/types/types';
+  import { getContext } from 'svelte';
+  import type { Readable } from 'svelte/store';
 
   export let movement: any;
   export let actor: Actor5e;
+
+  let store =
+    getContext<
+      Readable<ActorSheetContext | NpcSheetContext | VehicleSheetContext>
+    >('store');
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -17,13 +29,15 @@
     |
     <span title={movement.special}>{movement.special}</span>
   {/if}
-  <a
-    class="configure"
-    title={localize('DND5E.MovementConfig')}
-    on:click={() =>
-      new dnd5e.applications.actor.ActorMovementConfig(actor).render(true)}
-    ><i class="fas fa-cog" /></a
-  >
+  {#if !$store.lockSensitiveFields}
+    <a
+      class="configure"
+      title={localize('DND5E.MovementConfig')}
+      on:click={() =>
+        new dnd5e.applications.actor.ActorMovementConfig(actor).render(true)}
+      ><i class="fas fa-cog" /></a
+    >
+  {/if}
 </section>
 
 <style lang="scss">
