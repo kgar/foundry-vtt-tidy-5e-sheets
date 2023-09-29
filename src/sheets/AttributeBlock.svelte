@@ -48,19 +48,25 @@
       >{formatAsModifier(ability.save)}</span
     >
     {#if useSavingThrowProficiency}
-      <a
-        title={localize('DND5E.Proficiency')}
-        class="proficiency-toggle"
-        on:click={() =>
-          actor.update({
-            [`system.abilities.${abbreviation}.proficient`]:
-              1 - parseInt(ability.proficient),
-          })}
-      >
-        {@html ability.icon}
-      </a>
+      {#if !readonly}
+        <a
+          title={ability.hover}
+          class="proficiency-toggle"
+          on:click={() =>
+            actor.update({
+              [`system.abilities.${abbreviation}.proficient`]:
+                1 - parseInt(ability.proficient),
+            })}
+        >
+          {@html ability.icon}
+        </a>
+      {:else}
+        <span title={ability.hover} class="proficiency-toggle-readonly"
+          >{@html ability.icon}</span
+        >
+      {/if}
     {/if}
-    {#if useConfigurationOption}
+    {#if useConfigurationOption && !readonly}
       <a
         class="config-button"
         title={localize('DND5E.AbilityConfigure')}
@@ -140,9 +146,7 @@
     .ability-mod:hover,
     .ability-save:hover {
       background: var(--t5ek-primary-accent-color);
-      color: var(
-        --t5ek-ability-mod-save-text-hover-color
-      );
+      color: var(--t5ek-ability-mod-save-text-hover-color);
     }
 
     &:hover .ability-mod,
@@ -156,9 +160,7 @@
       top: 2.9375rem; // This is far too precise; can we make this more relative to its target?
       display: none;
       background: var(--t5ek-ability-modifiers-hover-label-background);
-      color: var(
-        --t5ek-ability-modifiers-label-text-color
-      );
+      color: var(--t5ek-ability-modifiers-label-text-color);
       font-size: 0.625rem;
       height: 1.0625rem; // This is far too precise; can we make this more relative to its target?
       padding: 0.1875rem 0.25rem 0.125rem 0.25rem; // this padding is providing the positioning of the text. Can we do this in flexbox?
@@ -181,7 +183,8 @@
       }
     }
 
-    .proficiency-toggle {
+    .proficiency-toggle,
+    .proficiency-toggle-readonly {
       position: absolute;
       font-size: 0.625rem;
       opacity: 0.4;
@@ -189,6 +192,11 @@
       left: calc(50% - 0.75rem);
       bottom: -0.875rem;
       line-height: 0.625rem;
+    }
+
+    .proficiency-toggle-readonly {
+      left: 0;
+      right: 0;
     }
 
     &:hover .proficiency-toggle {

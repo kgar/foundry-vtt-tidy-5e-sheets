@@ -6,8 +6,8 @@
       - [x] Remove the skill config button
       - [x] Make proficiency toggle button read-only
       - [x] Disable attribute textinput (str, int, wis, etc.)
-      - [ ] Make ability save proficiency readonly
-      - [ ] Remove ability config button
+      - [x] Make ability save proficiency readonly
+      - [x] Remove ability config button
       - [ ] Disable INI mod input
       - [ ] Remove INI config button
       - [ ] Disable HP Max
