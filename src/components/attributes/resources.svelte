@@ -14,9 +14,11 @@
   {#each $store.resources as res}
     <li class="resource">
       <header class="resource-header">
-        <span class="resource-options">
-          <i class="fas fa-cog" />
-        </span>
+        {#if !$store.lockSensitiveFields}
+          <span class="resource-options">
+            <i class="fas fa-cog" />
+          </span>
+        {/if}
         <div class="resource-rest">
           <h4>{localize('T5EK.RestoreOnRest')}</h4>
           <input
@@ -62,6 +64,7 @@
           value={res.label}
           placeholder={res.placeholder}
           selectOnFocus={true}
+          disabled={$store.lockSensitiveFields}
         />
       </h4>
       <div class="resource-value multiple">
@@ -87,6 +90,7 @@
           allowDeltaChanges={true}
           maxlength={3}
           selectOnFocus={true}
+          disabled={$store.lockSensitiveFields}
         />
       </div>
     </li>

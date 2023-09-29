@@ -13,30 +13,30 @@
       - [x] Disable HP Max
       - [x] Make Ability Proficiency Toggle read-only
       - [x] Remove the Ability Config Button
-      - [ ] Remove Traits Config Button
-      - [ ] Remove Traits Edit Button
-      - [ ] Make Tools Proficiency Selector read-only
-      - [ ] Remove Tools config button
+      - [x] Remove Traits Config Button
+      - [x] Remove Traits Edit Button
+      - [x] Make Tools Proficiency Selector read-only
+      - [x] Remove Tools config button
+      - [x] Make Spellcasting Ability either read-only or swap altogether with some text
+      - [x] Make Max Prepared Spells read-only
+      - [x] Remove max spell slot override pencil and editability / make sure the max spell slots field is read-only
       - [ ] Make all contenteditable fields read-only (📝 Let's do this on a case-by-case basis)
-      - [ ] Make Spellcasting Ability either read-only or swap altogether with some text
-      - [ ] Make Max Prepared Spells read-only
-      - [ ] Remove max spell slot override pencil and editability / make sure the max spell slots field is read-only
-  - [ ] PCs
-    - [ ] Disable Resource Name Input
-    - [ ] Disable Resource Max Input
-    - [ ] Remove Resource Config Button and functionality
-  - [ ] NPCs
-    - [ ] When allow-edit === false
-      - [ ] Spellcaster level: read-only
-      - [ ] Legendary action max: read-only
-      - [ ] Legendary resistance max: read-only
-      - [ ] Lair Action Checkbox: read-only
-      - [ ] Lair Action Ini: read-only 
-      - [ ] Remove Spellbook tab / Spellbook section in Attr tab when there are no spells in the spellbook
-  - [ ] Vehicles
-    - [ ] When the padlock is locked (allow-edit === false)
-      - [ ] Disable AC While In Motion
-      - [ ] Disable AC While Motionless
+  - [x] PCs
+    - [x] Disable Resource Name Input
+    - [x] Disable Resource Max Input
+    - [x] Remove Resource Config Button and functionality
+  - [x] NPCs
+    - [x] When allow-edit === false
+      - [x] Spellcaster level: read-only
+      - [x] Legendary action max: read-only
+      - [x] Legendary resistance max: read-only
+      - [x] Lair Action Checkbox: read-only
+      - [x] Lair Action Ini: read-only 
+      - [x] Remove Spellbook tab / Spellbook section in Attr tab when there are no spells in the spellbook
+  - [x] Vehicles
+    - [x] When the padlock is locked (allow-edit === false)
+      - [x] Disable AC While In Motion
+      - [x] Disable AC While Motionless
 - [ ] Now that you have a feel for it, review it all again and see what else might could benefit from being locked down.
 
 ```

@@ -1,12 +1,16 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { type ActorSheetContext } from 'src/types/types';
+  import {
+    type ActorSheetContext,
+    type NpcSheetContext,
+  } from 'src/types/types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import TextInput from '../form/TextInput.svelte';
 
   export let section: any;
-  let store = getContext<Readable<ActorSheetContext>>('store');
+  let store =
+    getContext<Readable<ActorSheetContext | NpcSheetContext>>('store');
 
   const localize = FoundryAdapter.localize;
 
@@ -35,6 +39,7 @@
       dtype="Number"
       selectOnFocus={true}
       allowDeltaChanges={true}
+      disabled={$store.lockSensitiveFields}
     />
   {:else}
     <span
@@ -44,7 +49,7 @@
     >
       {section.slots}
     </span>
-    {#if $store.editable}
+    {#if $store.editable && !$store.lockSensitiveFields}
       <a
         class="spell-slot-max-override"
         title={localize('DND5E.SpellProgOverride')}

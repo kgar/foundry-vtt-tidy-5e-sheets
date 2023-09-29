@@ -1,14 +1,15 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { ActorSheetContext } from 'src/types/types';
+  import type { ActorSheetContext, NpcSheetContext } from 'src/types/types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import NumberInput from '../form/NumberInput.svelte';
   import Select from '../form/Select.svelte';
   import TabFooter from 'src/sheets/actor/TabFooter.svelte';
 
-  let store = getContext<Readable<ActorSheetContext>>('store');
+  let store =
+    getContext<Readable<ActorSheetContext | NpcSheetContext>>('store');
   export let cssClass: string | null = null;
   export let includeAttackMod: boolean = true;
   export let includePreparedSpells: boolean = true;
@@ -58,6 +59,7 @@
         placeholder="0"
         title={localize('T5EK.PreparedSpellsMax')}
         selectOnFocus={true}
+        disabled={$store.lockSensitiveFields}
       />
     </div>
   {/if}
@@ -67,6 +69,7 @@
       document={$store.actor}
       field="system.attributes.spellcasting"
       value={$store.system.attributes.spellcasting}
+      disabled={$store.lockSensitiveFields}
     >
       <option value="" selected={!$store.system.attributes.spellcasting}
         >{localize('DND5E.None')}</option
@@ -90,6 +93,7 @@
         min="0"
         step="1"
         selectOnFocus={true}
+        disabled={$store.lockSensitiveFields}
       />
     </div>
   {/if}

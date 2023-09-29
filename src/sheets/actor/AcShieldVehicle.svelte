@@ -29,6 +29,7 @@
       title={localize('DND5E.ArmorClass')}
       cssClass="armor-class-flat"
       selectOnFocus={true}
+      disabled={$store.lockSensitiveFields}
     />
     <TextInput
       document={$store.actor}
@@ -38,6 +39,7 @@
       title={localize('DND5E.ArmorClassMotionless')}
       cssClass="armor-class-motionless"
       selectOnFocus={true}
+      disabled={$store.lockSensitiveFields}
     />
   </AcShieldBase>
 </div>

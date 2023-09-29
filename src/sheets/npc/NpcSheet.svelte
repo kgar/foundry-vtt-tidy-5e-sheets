@@ -36,6 +36,8 @@
 
   let tabs: Tab[];
 
+  $: hideEmptySpellbook = $store.lockSensitiveFields && $store.spellbook.length === 0;
+
   $: {
     tabs = [
       {
@@ -47,7 +49,7 @@
       },
     ];
 
-    if (!$settingStore.hideSpellbookTabNpc) {
+    if (!$settingStore.hideSpellbookTabNpc && !hideEmptySpellbook) {
       tabs.push({
         id: CONSTANTS.TAB_NPC_SPELLBOOK,
         displayName: 'DND5E.Spellbook',

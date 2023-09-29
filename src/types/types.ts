@@ -34,16 +34,19 @@ export type ActorSheetContext = {
   skills: ActorContextSkills;
   tools: ActorContextTools;
   hp: Actor5eHp;
+  lockSensitiveFields: boolean;
 } & JQueryHooksSheetIntegration &
   Record<string, any>;
 
 export type NpcSheetContext = {
   actor: Actor5e;
+  lockSensitiveFields: boolean;
 } & JQueryHooksSheetIntegration &
   Record<string, any>;
 
 export type VehicleSheetContext = {
   actor: Actor5e;
+  lockSensitiveFields: boolean;
 } & JQueryHooksSheetIntegration &
   Record<string, any>;
 

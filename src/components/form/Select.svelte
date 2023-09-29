@@ -10,6 +10,7 @@
   export let id: string | null = null;
   export let dataset: Record<string, unknown> | null = null;
   export let title: string | null = null;
+  export let disabled: boolean = false;
 
   $: datasetAttributes = buildDataset(dataset);
 
@@ -34,6 +35,7 @@
   on:change={document && saveChange}
   {title}
   {...datasetAttributes}
+  {disabled}
 >
   <slot />
 </select>

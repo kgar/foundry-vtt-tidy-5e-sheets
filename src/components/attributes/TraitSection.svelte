@@ -2,13 +2,20 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { settingStore } from 'src/settings/settings';
   import type { Tool } from 'src/types/actor';
-  import type { ActorSheetContext } from 'src/types/types';
+  import type {
+    ActorSheetContext,
+    NpcSheetContext,
+    VehicleSheetContext,
+  } from 'src/types/types';
   import { createEventDispatcher, getContext } from 'svelte';
   import { quadInOut } from 'svelte/easing';
   import type { Readable } from 'svelte/store';
   import { slide } from 'svelte/transition';
 
-  let store = getContext<Readable<ActorSheetContext>>('store');
+  let store =
+    getContext<
+      Readable<ActorSheetContext | VehicleSheetContext | NpcSheetContext>
+    >('store');
   export let title: string;
   export let configureButtonTitle: string;
   export let iconCssClass: string | undefined = undefined;
@@ -49,28 +56,34 @@
         {/each}
         {#each tools as [key, tool]}
           <li class="tool">
-            <a
-              class="tool-proficiency-toggle"
-              title={tool.hover}
-              role="button"
-              on:click|stopPropagation|preventDefault={(event) =>
-                FoundryAdapter.cycleProficiency(
-                  $store.actor,
-                  key,
-                  tool.value,
-                  'tools'
-                )}
-              on:contextmenu|stopPropagation|preventDefault={(event) =>
-                FoundryAdapter.cycleProficiency(
-                  $store.actor,
-                  key,
-                  tool.value,
-                  'tools',
-                  true
-                )}
-            >
-              {@html tool.icon}
-            </a>
+            {#if !$store.lockSensitiveFields}
+              <a
+                class="tool-proficiency-toggle"
+                title={tool.hover}
+                role="button"
+                on:click|stopPropagation|preventDefault={(event) =>
+                  FoundryAdapter.cycleProficiency(
+                    $store.actor,
+                    key,
+                    tool.value,
+                    'tools'
+                  )}
+                on:contextmenu|stopPropagation|preventDefault={(event) =>
+                  FoundryAdapter.cycleProficiency(
+                    $store.actor,
+                    key,
+                    tool.value,
+                    'tools',
+                    true
+                  )}
+              >
+                {@html tool.icon}
+              </a>
+            {:else}
+              <span title={tool.hover} class="tool-proficiency-readonly"
+                >{@html tool.icon}</span
+              >
+            {/if}
             <span
               class="rollable"
               role="button"
@@ -79,7 +92,7 @@
             >
               {tool.label}
             </span>
-            {#if traitsExpanded}
+            {#if traitsExpanded && !$store.lockSensitiveFields}
               <a
                 class="tool-proficiency-editor rollable"
                 title="DND5E.ToolConfigure"
@@ -96,7 +109,7 @@
         {/each}
       </ul>
     </div>
-    {#if traitsExpanded}
+    {#if traitsExpanded && !$store.lockSensitiveFields}
       <a
         class="trait-editor"
         title={configureButtonTitle}
