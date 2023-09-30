@@ -53,7 +53,11 @@ Refine and improve any settings that compromise visual feedback and information 
 - [x] "portraitStyle"
 - [x] "editTotalLockEnabled"
 - [ ] "editGmAlwaysEnabled"
+  - At a glance, it's not doing anything different for GMs or players when toggling back and forth. The edit button is always available in Classic Controls Mode, locked or unlocked. Will have to trace the code and do a more in-depth analysis.
 - [ ] "editEffectsGmOnlyEnabled"
+  - Removes classic controls altogether for the player on the effects tab
+  - When unlocked, shows red banner "Only your GM can edit this section." 
+  - Missed a spot: right click menu still provides options. That would also need to be handled.
 - [ ] "hiddenDeathSavesEnabled"
 - [ ] "hideSpellSlotMarker"
 - [ ] "enableSpellLevelButtons"
