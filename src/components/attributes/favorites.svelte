@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { ActorSheetContext } from 'src/types/types';
+  import type { CharacterSheetContext } from 'src/types/types';
   import InventoryList from '../inventory/InventoryList.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import FavoriteFeaturesList from '../favorites/FavoriteFeaturesList.svelte';
@@ -9,7 +9,7 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
 
-  let store = getContext<Readable<ActorSheetContext>>('store');
+  let store = getContext<Readable<CharacterSheetContext>>('store');
 
   const localize = FoundryAdapter.localize;
 

@@ -1,7 +1,7 @@
 <script lang="ts">
-  import type { ActorSheetContext } from 'src/types/types';
-    import { getContext } from 'svelte';
-    import type { Readable } from 'svelte/store';
+  import type { CharacterSheetContext, NpcSheetContext } from 'src/types/types';
+  import { getContext } from 'svelte';
+  import type { Readable } from 'svelte/store';
 
   type SpellSlotMarkerDot = {
     index: number;
@@ -9,7 +9,8 @@
     willChange: boolean;
   };
 
-  let store = getContext<Readable<ActorSheetContext>>('store');
+  let store =
+    getContext<Readable<CharacterSheetContext | NpcSheetContext>>('store');
   export let section: any;
 
   let targetedDotIndex: number | null = null;

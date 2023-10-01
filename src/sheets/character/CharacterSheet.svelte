@@ -2,7 +2,7 @@
   import { getContext } from 'svelte';
   import { FoundryAdapter } from '../../foundry/foundry-adapter';
   import type {
-    ActorSheetContext,
+    CharacterSheetContext,
     Tab,
     TidyDropdownOption,
   } from 'src/types/types';
@@ -33,7 +33,7 @@
   import { debug } from 'src/utils/logging';
 
   export let selectedTabId: string;
-  let store = getContext<Readable<ActorSheetContext>>('store');
+  let store = getContext<Readable<CharacterSheetContext>>('store');
 
   const localize = FoundryAdapter.localize;
 

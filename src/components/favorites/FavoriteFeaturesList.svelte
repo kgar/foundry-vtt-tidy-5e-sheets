@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { Item5e } from 'src/types/item';
-  import type { ActorSheetContext } from 'src/types/types';
+  import type { CharacterSheetContext } from 'src/types/types';
   import ItemTable from '../items/ItemTable.svelte';
   import ItemTableHeaderRow from '../items/ItemTableHeaderRow.svelte';
   import ItemTableColumn from '../items/ItemTableColumn.svelte';
@@ -15,7 +15,7 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
 
-  let store = getContext<Readable<ActorSheetContext>>('store');
+  let store = getContext<Readable<CharacterSheetContext>>('store');
   export let items: Item5e[] = [];
 
   const localize = FoundryAdapter.localize;

@@ -1,11 +1,11 @@
 <script lang="ts">
-  import type { ActorSheetContext } from 'src/types/types';
+  import type { CharacterSheetContext } from 'src/types/types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
 
   export let setName: string;
   export let filterName: string;
-  let store = getContext<Readable<ActorSheetContext>>('store');
+  let store = getContext<Readable<CharacterSheetContext>>('store');
 
   $: isFilterActive = $store.actor.sheet.isFilterActive(setName, filterName);
 </script>

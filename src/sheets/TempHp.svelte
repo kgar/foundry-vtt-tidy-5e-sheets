@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { ActorSheetContext, NpcSheetContext } from 'src/types/types';
+  import type { CharacterSheetContext, NpcSheetContext } from 'src/types/types';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import Tidy5eActorHitPointsConfig from 'src/dialogs/Tidy5eActorHitPointsConfig';
   import { getContext } from 'svelte';
@@ -8,7 +8,7 @@
   import { settingStore } from 'src/settings/settings';
 
   let store =
-    getContext<Readable<ActorSheetContext | NpcSheetContext>>('store');
+    getContext<Readable<CharacterSheetContext | NpcSheetContext>>('store');
 
   const localize = FoundryAdapter.localize;
 </script>

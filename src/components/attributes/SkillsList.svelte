@@ -4,7 +4,8 @@
   import type {
     ActorContextSkill,
     ActorContextSkills,
-    ActorSheetContext,
+    CharacterSheetContext,
+    NpcSheetContext,
   } from 'src/types/types';
   import { formatAsModifier } from 'src/utils/formatting';
   import { getContext } from 'svelte';
@@ -16,7 +17,8 @@
   $: showAllSkills =
     !toggleable || FoundryAdapter.tryGetFlag(actor, 'npcSkillsExpanded');
 
-  let store = getContext<Readable<ActorSheetContext>>('store');
+  let store =
+    getContext<Readable<CharacterSheetContext | NpcSheetContext>>('store');
 
   type SkillRef = {
     key: string;

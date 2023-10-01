@@ -1,11 +1,12 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { createEventDispatcher, getContext } from 'svelte';
-  import type { ActorSheetContext } from 'src/types/types';
+  import type { CharacterSheetContext, NpcSheetContext } from 'src/types/types';
   import type { Readable } from 'svelte/store';
   import TextInput from 'src/components/form/TextInput.svelte';
 
-  let store = getContext<Readable<ActorSheetContext>>('store');
+  let store =
+    getContext<Readable<CharacterSheetContext | NpcSheetContext>>('store');
 
   export let successes: number;
   export let failures: number;
@@ -72,20 +73,21 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    text-shadow: 0 0 0.3125rem 0.0625rem var(--t5ek-death-save-text-shadow-color);
-    
+    text-shadow: 0 0 0.3125rem 0.0625rem
+      var(--t5ek-death-save-text-shadow-color);
+
     .counter-value {
       display: flex;
       justify-content: center;
       align-items: center;
       color: var(--t5ek-death-save-text-color);
-  
+
       &.show-backdrop {
         background: var(--t5ek-death-save-backdrop-background);
         padding: 0 0.5rem;
         border-radius: 0.3125rem;
       }
-  
+
       :global(input[type='text'].death-save-result) {
         color: var(--t5ek-death-save-text-color);
         font-weight: 700;
@@ -96,11 +98,11 @@
         text-align: center;
         width: 1.125rem;
       }
-  
+
       :global(input:hover) {
         border-color: var(--t5ek-death-save-text-color);
       }
-  
+
       :global(.death-save) {
         position: relative;
         margin: 0 0.25rem;
@@ -108,7 +110,7 @@
         font-size: 1.875rem;
         transition: color 0.3s ease;
       }
-  
+
       :global(.death-save:hover) {
         color: var(--t5ek-death-save-text-color);
       }
@@ -118,5 +120,4 @@
   .rounded {
     border-radius: 50%;
   }
-
 </style>

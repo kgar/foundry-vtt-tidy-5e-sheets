@@ -2,14 +2,14 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import SheetEditor from 'src/sheets/SheetEditor.svelte';
 
-  import type { ActorSheetContext } from 'src/types/types';
+  import type { NpcSheetContext } from 'src/types/types';
   import { CONSTANTS } from 'src/constants';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import ContentEditableFormField from 'src/components/inputs/ContentEditableFormField.svelte';
   import RerenderAfterFormSubmission from 'src/components/shared/RerenderAfterFormSubmission.svelte';
 
-  let store = getContext<Readable<ActorSheetContext>>('store');
+  let store = getContext<Readable<NpcSheetContext>>('store');
 
   const localize = FoundryAdapter.localize;
 

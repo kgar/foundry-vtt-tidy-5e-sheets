@@ -1,6 +1,6 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { type ActorSheetContext } from 'src/types/types';
+  import { type CharacterSheetContext } from 'src/types/types';
   import { formatAsModifier } from 'src/utils/formatting';
   import ItemEditControl from '../items/ItemEditControl.svelte';
   import ItemDuplicateControl from '../items/ItemDuplicateControl.svelte';
@@ -28,7 +28,7 @@
   import Notice from '../shared/Notice.svelte';
   import { settingStore } from 'src/settings/settings';
 
-  let store = getContext<Readable<ActorSheetContext>>('store');
+  let store = getContext<Readable<CharacterSheetContext>>('store');
 
   const localize = FoundryAdapter.localize;
   $: allowEdit = FoundryAdapter.tryGetFlag($store.actor, 'allow-edit');

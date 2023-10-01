@@ -1,7 +1,7 @@
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type {
-  ActorSheetContext,
   ItemCardStore,
+  NpcSheetContext,
   SheetStats,
 } from 'src/types/types';
 import { writable } from 'svelte/store';
@@ -20,7 +20,7 @@ import { isNil } from 'src/utils/data';
 import type { SvelteComponent } from 'svelte';
 
 export class Tidy5eNpcSheet extends dnd5e.applications.actor.ActorSheet5eNPC {
-  store = writable<ActorSheetContext>();
+  store = writable<NpcSheetContext>();
   stats = writable<SheetStats>({
     lastSubmissionTime: null,
   });
@@ -101,7 +101,7 @@ export class Tidy5eNpcSheet extends dnd5e.applications.actor.ActorSheet5eNPC {
     return this._onToggleAbilityProficiency(event);
   }
 
-  private async getContext(): Promise<ActorSheetContext> {
+  private async getContext(): Promise<NpcSheetContext> {
     return {
       ...(await super.getData(this.options)),
       appId: this.appId,

@@ -1,7 +1,7 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { type ActorSheetContext } from 'src/types/types';
+  import { type CharacterSheetContext } from 'src/types/types';
   import ItemName from '../items/ItemName.svelte';
   import ItemTable from '../items/ItemTable.svelte';
   import ItemTableCell from '../items/ItemTableCell.svelte';
@@ -16,7 +16,7 @@
   import type { Readable } from 'svelte/store';
   import SpellbookItemCardContent from '../item-info-card/SpellbookItemCardContent.svelte';
 
-  let store = getContext<Readable<ActorSheetContext>>('store');
+  let store = getContext<Readable<CharacterSheetContext>>('store');
   export let section: any;
   export let spells: any[];
 

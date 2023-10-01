@@ -1,7 +1,10 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { type ActorSheetContext } from 'src/types/types';
+  import {
+    type CharacterSheetContext,
+    type NpcSheetContext,
+  } from 'src/types/types';
   import ItemControls from '../items/ItemControls.svelte';
   import ItemDeleteControl from '../items/ItemDeleteControl.svelte';
   import ItemDuplicateControl from '../items/ItemDuplicateControl.svelte';
@@ -26,7 +29,8 @@
   import SpellbookItemCardContent from '../item-info-card/SpellbookItemCardContent.svelte';
   import { settingStore } from 'src/settings/settings';
 
-  let store = getContext<Readable<ActorSheetContext>>('store');
+  let store =
+    getContext<Readable<CharacterSheetContext | NpcSheetContext>>('store');
   export let section: any;
   export let spells: any[];
   export let classicControlsEnabled: boolean;

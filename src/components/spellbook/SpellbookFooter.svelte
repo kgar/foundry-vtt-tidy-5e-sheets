@@ -1,7 +1,7 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { ActorSheetContext, NpcSheetContext } from 'src/types/types';
+  import type { CharacterSheetContext, NpcSheetContext } from 'src/types/types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import NumberInput from '../form/NumberInput.svelte';
@@ -9,7 +9,7 @@
   import TabFooter from 'src/sheets/actor/TabFooter.svelte';
 
   let store =
-    getContext<Readable<ActorSheetContext | NpcSheetContext>>('store');
+    getContext<Readable<CharacterSheetContext | NpcSheetContext>>('store');
   export let cssClass: string | null = null;
   export let includeAttackMod: boolean = true;
   export let includePreparedSpells: boolean = true;

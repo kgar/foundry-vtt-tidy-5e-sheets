@@ -10,7 +10,7 @@ import { CONSTANTS } from 'src/constants';
 import { writable } from 'svelte/store';
 import {
   type ItemCardStore,
-  type ActorSheetContext,
+  type CharacterSheetContext,
   type SheetStats,
 } from 'src/types/types';
 import { applyTitleToWindow } from 'src/utils/applications';
@@ -18,7 +18,7 @@ import type { SvelteComponent } from 'svelte';
 
 export class Tidy5eCharacterSheet extends dnd5e.applications.actor
   .ActorSheet5eCharacter {
-  store = writable<ActorSheetContext>();
+  store = writable<CharacterSheetContext>();
   stats = writable<SheetStats>({
     lastSubmissionTime: null,
   });
@@ -88,7 +88,7 @@ export class Tidy5eCharacterSheet extends dnd5e.applications.actor
     return this._onLongRest(event);
   }
 
-  private async getContext(): Promise<ActorSheetContext> {
+  private async getContext(): Promise<CharacterSheetContext> {
     const context = {
       ...(await super.getData(this.options)),
       actorClassesToImages: getActorClassesToImages(this.actor),

@@ -1,6 +1,10 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { type ActorSheetContext } from 'src/types/types';
+  import {
+    type CharacterSheetContext,
+    type NpcSheetContext,
+    type VehicleSheetContext,
+  } from 'src/types/types';
   import ItemTable from '../../components/items/ItemTable.svelte';
   import ItemTableHeaderRow from '../../components/items/ItemTableHeaderRow.svelte';
   import ItemTableRow from '../../components/items/ItemTableRow.svelte';
@@ -18,7 +22,10 @@
 
   export let classicControlsEnabled: boolean;
 
-  let store = getContext<Readable<ActorSheetContext>>('store');
+  let store =
+    getContext<
+      Readable<CharacterSheetContext | NpcSheetContext | VehicleSheetContext>
+    >('store');
 
   const localize = FoundryAdapter.localize;
 

@@ -1,6 +1,6 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { type ActorSheetContext } from 'src/types/types';
+  import { type CharacterSheetContext } from 'src/types/types';
   import ItemFilters from '../items/ItemFilters.svelte';
   import ItemFilterSearch from '../items/ItemFilterSearch.svelte';
   import ItemFilterOption from '../items/ItemFilterOption.svelte';
@@ -18,7 +18,7 @@
   import TabFooter from 'src/sheets/actor/TabFooter.svelte';
   import { settingStore } from 'src/settings/settings';
 
-  let store = getContext<Readable<ActorSheetContext>>('store');
+  let store = getContext<Readable<CharacterSheetContext>>('store');
 
   const localize = FoundryAdapter.localize;
 

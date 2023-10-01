@@ -27,8 +27,7 @@ export type ItemCardStore = {
   sheet: HTMLElement;
 };
 
-// TODO: Extract shared ActorSheetContext and make this CharacterSheetContext
-export type ActorSheetContext = {
+export type CharacterSheetContext = {
   actor: Actor5e;
   resources: Resource[];
   skills: ActorContextSkills;

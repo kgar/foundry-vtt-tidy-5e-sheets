@@ -1,14 +1,15 @@
 <script lang="ts">
   import Notice from 'src/components/shared/Notice.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { ActorSheetContext } from 'src/types/types';
+  import type { CharacterSheetContext, NpcSheetContext } from 'src/types/types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
 
   export let allowEdit: boolean;
   export let cssClass: string | null = null;
 
-  let store = getContext<Readable<ActorSheetContext>>('store');
+  let store =
+    getContext<Readable<CharacterSheetContext | NpcSheetContext>>('store');
 
   const localize = FoundryAdapter.localize;
 </script>

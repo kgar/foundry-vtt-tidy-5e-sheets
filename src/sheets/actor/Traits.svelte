@@ -1,7 +1,7 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type {
-    ActorSheetContext,
+    CharacterSheetContext,
     NpcSheetContext,
     VehicleSheetContext,
   } from 'src/types/types';
@@ -11,7 +11,7 @@
 
   let store =
     getContext<
-      Readable<ActorSheetContext | VehicleSheetContext | NpcSheetContext>
+      Readable<CharacterSheetContext | VehicleSheetContext | NpcSheetContext>
     >('store');
   export let toggleable: boolean;
   export let useSenses: boolean = true;

@@ -8,12 +8,12 @@
   import SpellbookGrid from 'src/components/spellbook/SpellbookGrid.svelte';
   import SpellbookList from 'src/components/spellbook/SpellbookList.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { ActorSheetContext, ItemLayoutMode } from 'src/types/types';
+  import type { ItemLayoutMode, NpcSheetContext } from 'src/types/types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import NoSpells from '../actor/NoSpells.svelte';
 
-  let store = getContext<Readable<ActorSheetContext>>('store');
+  let store = getContext<Readable<NpcSheetContext>>('store');
 
   const localize = FoundryAdapter.localize;
 

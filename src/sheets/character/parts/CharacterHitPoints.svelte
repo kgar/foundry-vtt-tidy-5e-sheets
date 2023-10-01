@@ -6,7 +6,7 @@
   import { settingStore } from 'src/settings/settings';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
-  import type { ActorSheetContext } from 'src/types/types';
+  import type { CharacterSheetContext } from 'src/types/types';
 
   export let value: number;
   export let max: number;
@@ -14,7 +14,7 @@
   export let useRoundedPortraitStyle: boolean;
   export let incapacitated: boolean;
 
-  let store = getContext<Readable<ActorSheetContext>>('store');
+  let store = getContext<Readable<CharacterSheetContext>>('store');
 
   const localize = FoundryAdapter.localize;
 

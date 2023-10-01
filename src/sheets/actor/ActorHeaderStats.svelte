@@ -4,11 +4,18 @@
   import InitiativeBlock from '../InitiativeBlock.svelte';
   import AcShield from './AcShield.svelte';
   import VerticalLineSeparator from 'src/components/layout/VerticalLineSeparator.svelte';
-  import type { ActorSheetContext } from 'src/types/types';
+  import type {
+    CharacterSheetContext,
+    NpcSheetContext,
+    VehicleSheetContext,
+  } from 'src/types/types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
 
-  let store = getContext<Readable<ActorSheetContext>>('store');
+  let store =
+    getContext<
+      Readable<CharacterSheetContext | NpcSheetContext | VehicleSheetContext>
+    >('store');
 
   export let actor: Actor5e;
   export let ac: any;

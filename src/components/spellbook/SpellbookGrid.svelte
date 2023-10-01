@@ -1,7 +1,11 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { type ActorSheetContext, type ItemCardStore } from 'src/types/types';
+  import {
+    type CharacterSheetContext,
+    type ItemCardStore,
+    type NpcSheetContext,
+  } from 'src/types/types';
   import ItemTable from '../items/ItemTable.svelte';
   import ItemTableColumn from '../items/ItemTableColumn.svelte';
   import ItemTableHeaderRow from '../items/ItemTableHeaderRow.svelte';
@@ -18,7 +22,8 @@
   export let spells: Item5e[];
   export let cssClass: string | null = null;
 
-  let store = getContext<Readable<ActorSheetContext>>('store');
+  let store =
+    getContext<Readable<CharacterSheetContext | NpcSheetContext>>('store');
   let card = getContext<Writable<ItemCardStore>>('card');
 
   const localize = FoundryAdapter.localize;

@@ -1,7 +1,7 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import {
-    type ActorSheetContext,
+    type CharacterSheetContext,
     type NpcSheetContext,
   } from 'src/types/types';
   import { getContext } from 'svelte';
@@ -10,7 +10,7 @@
 
   export let section: any;
   let store =
-    getContext<Readable<ActorSheetContext | NpcSheetContext>>('store');
+    getContext<Readable<CharacterSheetContext | NpcSheetContext>>('store');
 
   const localize = FoundryAdapter.localize;
 

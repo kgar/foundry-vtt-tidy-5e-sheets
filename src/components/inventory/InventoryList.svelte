@@ -22,7 +22,7 @@
   import ItemFavoriteControl from '../items/ItemFavoriteControl.svelte';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
-  import type { ActorSheetContext } from 'src/types/types';
+  import type { CharacterSheetContext } from 'src/types/types';
   import ListItemQuantity from 'src/sheets/actor/ListItemQuantity.svelte';
   import InventoryItemCardContent from '../item-info-card/InventoryItemCardContent.svelte';
   import InventoryAmmoSelector from './InventoryAmmoSelector.svelte';
@@ -36,7 +36,7 @@
   export let allowFavoriteIconNextToName: boolean = true;
   export let includeWeightColumn: boolean = true;
 
-  let store = getContext<Readable<ActorSheetContext>>('store');
+  let store = getContext<Readable<CharacterSheetContext>>('store');
 
   const localize = FoundryAdapter.localize;
   const weightUnit = FoundryAdapter.getWeightUnit();

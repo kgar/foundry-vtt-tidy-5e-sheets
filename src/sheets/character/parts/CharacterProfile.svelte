@@ -1,6 +1,6 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { type ActorSheetContext } from 'src/types/types';
+  import { type CharacterSheetContext } from 'src/types/types';
   import Exhaustion from '../../Exhaustion.svelte';
   import Inspiration from '../../Inspiration.svelte';
   import DeathSaves from '../../DeathSaves.svelte';
@@ -13,7 +13,7 @@
   import ActorProfile from 'src/sheets/actor/ActorProfile.svelte';
   import { settingStore } from 'src/settings/settings';
 
-  let store = getContext<Readable<ActorSheetContext>>('store');
+  let store = getContext<Readable<CharacterSheetContext>>('store');
 
   $: portraitStyle = $settingStore.portraitStyle;
   $: useRoundedPortraitStyle = ['all', 'pc'].includes(portraitStyle);

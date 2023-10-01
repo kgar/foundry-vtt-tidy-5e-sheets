@@ -2,7 +2,7 @@
   import { settingStore } from 'src/settings/settings';
   import type { Item5e } from 'src/types/item';
   import type {
-    ActorSheetContext,
+    CharacterSheetContext,
     NpcSheetContext,
     VehicleSheetContext,
   } from 'src/types/types';
@@ -13,7 +13,7 @@
 
   let store =
     getContext<
-      Readable<ActorSheetContext | NpcSheetContext | VehicleSheetContext>
+      Readable<CharacterSheetContext | NpcSheetContext | VehicleSheetContext>
     >('store');
 
   let ammos: { text: string; value: string | null; ammo: Item5e | null }[];

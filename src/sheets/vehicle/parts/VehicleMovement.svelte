@@ -3,13 +3,13 @@
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type {
-    ActorSheetContext,
     PortraitCharmRadiusClass,
+    VehicleSheetContext,
   } from 'src/types/types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
 
-  let store = getContext<Readable<ActorSheetContext>>('store');
+  let store = getContext<Readable<VehicleSheetContext>>('store');
 
   export let motion: boolean;
   export let cssClass: string = '';
@@ -88,7 +88,8 @@
 
     :global(label:hover) {
       color: var(--t5ek-vehicle-motion-hover-color);
-      text-shadow: 0 0 0.3125rem var(--t5ek-vehicle-motion-text-shadow-hover-color);
+      text-shadow: 0 0 0.3125rem
+        var(--t5ek-vehicle-motion-text-shadow-hover-color);
     }
   }
 

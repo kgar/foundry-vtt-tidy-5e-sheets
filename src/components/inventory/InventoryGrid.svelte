@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { ActorSheetContext, ItemCardStore } from 'src/types/types';
+  import type { CharacterSheetContext, ItemCardStore } from 'src/types/types';
   import type { Item5e } from 'src/types/item';
   import ItemTable from '../items/ItemTable.svelte';
   import ItemTableHeaderRow from '../items/ItemTableHeaderRow.svelte';
@@ -16,7 +16,7 @@
   export let section: any;
   export let items: Item5e[];
 
-  let store = getContext<Readable<ActorSheetContext>>('store');
+  let store = getContext<Readable<CharacterSheetContext>>('store');
   let card = getContext<Writable<ItemCardStore>>('card');
 
   const localize = FoundryAdapter.localize;

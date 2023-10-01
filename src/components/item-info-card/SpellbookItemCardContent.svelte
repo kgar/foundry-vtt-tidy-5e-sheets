@@ -5,7 +5,7 @@
   import type { Readable } from 'svelte/store';
   import { getContext } from 'svelte';
   import type {
-    ActorSheetContext,
+    CharacterSheetContext,
     NpcSheetContext,
     VehicleSheetContext,
   } from 'src/types/types';
@@ -15,7 +15,7 @@
 
   let store =
     getContext<
-      Readable<ActorSheetContext | NpcSheetContext | VehicleSheetContext>
+      Readable<CharacterSheetContext | NpcSheetContext | VehicleSheetContext>
     >('store');
 
   const localize = FoundryAdapter.localize;

@@ -1,5 +1,5 @@
 import type {
-  ActorSheetContext,
+  CharacterSheetContext,
   ClassSummary,
   DropdownOption,
 } from 'src/types/types';
@@ -287,7 +287,7 @@ export const FoundryAdapter = {
     }
     return classes.join(' ');
   },
-  getSpellAttackModAndTooltip(context: ActorSheetContext) {
+  getSpellAttackModAndTooltip(context: CharacterSheetContext) {
     let actor = context.actor;
     let formula = Roll.replaceFormulaData(
       actor.system.bonuses.rsak.attack,
@@ -331,7 +331,7 @@ export const FoundryAdapter = {
       [`system.${systemFieldName}.${key}.value`]: levels[next % levels.length],
     });
   },
-  getSpellImageUrl(context: ActorSheetContext, spell: any): string | undefined {
+  getSpellImageUrl(context: CharacterSheetContext, spell: any): string | undefined {
     if (
       !SettingsProvider.settings.spellClassFilterIconReplace.get() ||
       context.isNPC

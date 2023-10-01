@@ -1,14 +1,14 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { type ActorSheetContext } from 'src/types/types';
+  import { type CharacterSheetContext } from 'src/types/types';
   import SheetEditor from 'src/sheets/SheetEditor.svelte';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import RerenderAfterFormSubmission from '../shared/RerenderAfterFormSubmission.svelte';
   import TextInput from '../form/TextInput.svelte';
 
-  let store = getContext<Readable<ActorSheetContext>>('store');
+  let store = getContext<Readable<CharacterSheetContext>>('store');
 
   const localize = FoundryAdapter.localize;
 

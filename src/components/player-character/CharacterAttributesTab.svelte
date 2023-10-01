@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { ActorSheetContext } from 'src/types/types';
+  import type { CharacterSheetContext } from 'src/types/types';
   import SkillsList from '../attributes/SkillsList.svelte';
   import Traits from '../../sheets/actor/Traits.svelte';
   import Favorites from '../attributes/Favorites.svelte';
@@ -10,7 +10,7 @@
   import type { Readable } from 'svelte/store';
   import { settingStore } from 'src/settings/settings';
 
-  let store = getContext<Readable<ActorSheetContext>>('store');
+  let store = getContext<Readable<CharacterSheetContext>>('store');
 
   $: allowEdit = FoundryAdapter.tryGetFlag<boolean>($store.actor, 'allow-edit');
   $: showResources =

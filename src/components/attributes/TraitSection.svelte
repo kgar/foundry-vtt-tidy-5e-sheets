@@ -3,7 +3,7 @@
   import { settingStore } from 'src/settings/settings';
   import type { Tool } from 'src/types/actor';
   import type {
-    ActorSheetContext,
+    CharacterSheetContext,
     NpcSheetContext,
     VehicleSheetContext,
   } from 'src/types/types';
@@ -14,7 +14,7 @@
 
   let store =
     getContext<
-      Readable<ActorSheetContext | VehicleSheetContext | NpcSheetContext>
+      Readable<CharacterSheetContext | VehicleSheetContext | NpcSheetContext>
     >('store');
   export let title: string;
   export let configureButtonTitle: string;
