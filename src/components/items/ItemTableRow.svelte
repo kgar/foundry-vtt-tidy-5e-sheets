@@ -15,7 +15,6 @@
   export let item: Item5e | null = null;
   export let contextMenu: { type: string; id: string } | null = null;
   export let cssClass: string = '';
-  export let alwaysShowQuantity: boolean = false;
   export let itemCardContentTemplate: ItemCardContentComponent | null = null;
 
   let card = getContext<Writable<ItemCardStore>>('card');
@@ -69,7 +68,7 @@
 
 <div
   class="item-table-row {cssClass}"
-  class:show-item-count-on-hover={!alwaysShowQuantity}
+  class:show-item-count-on-hover={!$settingStore.quantityAlwaysShownEnabled}
   data-context-menu={contextMenu?.type}
   data-context-menu-entity-id={contextMenu?.id}
   on:mousedown={(event) => dispatcher('mousedown', event)}

@@ -25,10 +25,6 @@
   function getInventoryRowClasses(item: Item5e) {
     const extras: string[] = [];
 
-    if (!$settingStore.quantityAlwaysShownEnabled) {
-      extras.push('show-item-count-on-hover');
-    }
-
     return FoundryAdapter.getInventoryRowClasses(
       item,
       $store.itemContext[item.id],
@@ -74,6 +70,7 @@
         role="button"
         tabindex="0"
         class="item {getInventoryRowClasses(item)}"
+        class:show-item-count-on-hover={!$settingStore.quantityAlwaysShownEnabled}
         data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
         data-context-menu-entity-id={item.id}
         on:click={(event) => item.use({}, { event })}

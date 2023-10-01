@@ -1,3 +1,17 @@
+## Refine
+
+- [ ] Carve out a shared base type for all sheet contexts which contains universal settings
+  - allowEdit
+  - lockSensitiveFields
+  - ...?
+- [ ] Replace unioned sheet context types which reference all three sheet types with the base context, where able.
+- [ ] Add the NPM watch script for enforcing resolving type errors
+  - [ ] Begin the process of pulling all data for sheets into their context types
+    - [ ] PC
+    - [ ] NPC
+    - [ ] Vehicle
+- [ ] 
+
 ## Implement ALL the Settings! 👏
 
 Test and verify that each setting is correctly configured. It must work on load and adjust reactively on change when settings are adjusted.
@@ -65,9 +79,10 @@ Refine and improve any settings that compromise visual feedback and information 
 - [x] "hideSpellSlotMarker"
 - [x] "enableSpellLevelButtons"
 - [x] "hideStandardEncumbranceBar"
-- [ ] "quantityAlwaysShownEnabled"
+- [x] "quantityAlwaysShownEnabled"
   - Need to implement for NPCs
   - Need to implement for vehicles
+- [x] Move "quantityAlwaysShownEnabled" down into the ItemTableRow itself
 - [ ] "exhaustionEffectsEnabled"
 - [ ] "exhaustionEffectIcon"
 - [ ] "exhaustionEffectCustom"

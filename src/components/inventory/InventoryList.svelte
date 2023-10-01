@@ -94,7 +94,6 @@
         }}
         let:toggleSummary
         cssClass={getInventoryRowClasses(item)}
-        alwaysShowQuantity={$settingStore.quantityAlwaysShownEnabled}
         itemCardContentTemplate={InventoryItemCardContent}
       >
         <ItemTableCell primary={true} title={item.name}>
