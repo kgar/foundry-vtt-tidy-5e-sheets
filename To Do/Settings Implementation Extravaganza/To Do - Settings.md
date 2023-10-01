@@ -53,16 +53,21 @@ Refine and improve any settings that compromise visual feedback and information 
 - [x] "portraitStyle"
 - [x] "editTotalLockEnabled"
 - [ ] "editGmAlwaysEnabled"
-  - At a glance, it's not doing anything different for GMs or players when toggling back and forth. The edit button is always available in Classic Controls Mode, locked or unlocked. Will have to trace the code and do a more in-depth analysis.
+  - If a GM and setting turned on, always show classic controls
+    - To accomplish this in an elegant way, use a specific boolean setting on the ActorSheetContext (to be renamed CharacterSheetContext) for `showAllEditOptions`, to be combined with `classicControlsEnabled` to determine if classic controls are shown at all and whether the full set of options is shown.
+  - Missed a spot: right click menu doesn't provide all the options. That would also need to be handled.
+    - Check for whether the user is a GM and, if so, override allow-edit if the option is enabled
 - [ ] "editEffectsGmOnlyEnabled"
   - Removes classic controls altogether for the player on the effects tab
   - When unlocked, shows red banner "Only your GM can edit this section." 
   - Missed a spot: right click menu still provides options. That would also need to be handled.
-- [ ] "hiddenDeathSavesEnabled"
-- [ ] "hideSpellSlotMarker"
-- [ ] "enableSpellLevelButtons"
-- [ ] "hideStandardEncumbranceBar"
+- [x] "hiddenDeathSavesEnabled"
+- [x] "hideSpellSlotMarker"
+- [x] "enableSpellLevelButtons"
+- [x] "hideStandardEncumbranceBar"
 - [ ] "quantityAlwaysShownEnabled"
+  - Need to implement for NPCs
+  - Need to implement for vehicles
 - [ ] "exhaustionEffectsEnabled"
 - [ ] "exhaustionEffectIcon"
 - [ ] "exhaustionEffectCustom"
