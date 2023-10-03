@@ -826,7 +826,7 @@ export function createSettings() {
           config: false,
           choices: {
             default: 'T5EK.Settings.ExhaustionEffects.default',
-            tidy5e: 'T5EK.Settings.ExhaustionEffects.default',
+            tidy5e: 'T5EK.Settings.ExhaustionEffects.tidy5e',
             dfredce: 'T5EK.Settings.ExhaustionEffects.dfredce',
             cub: 'T5EK.Settings.ExhaustionEffects.cub',
           },

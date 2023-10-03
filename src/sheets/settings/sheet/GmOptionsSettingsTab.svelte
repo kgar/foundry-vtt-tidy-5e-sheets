@@ -3,7 +3,10 @@
   import CheckboxSetting from 'src/sheets/settings/parts/CheckboxSetting.svelte';
   import { getContext } from 'svelte';
   import type { Writable } from 'svelte/store';
-  import type { CurrentSettings } from 'src/settings/settings';
+  import {
+    SettingsProvider,
+    type CurrentSettings,
+  } from 'src/settings/settings';
   import TextInputSetting from 'src/sheets/settings/parts/TextInputSetting.svelte';
   import SelectSetting from 'src/sheets/settings/parts/SelectSetting.svelte';
 
@@ -67,12 +70,7 @@
   />
 
   <SelectSetting
-    options={{
-      default: 'T5EK.Settings.PortraitStyle.default',
-      pc: 'T5EK.Settings.PortraitStyle.pc',
-      npc: 'T5EK.Settings.PortraitStyle.npc',
-      all: 'T5EK.Settings.PortraitStyle.all',
-    }}
+    options={SettingsProvider.settings.portraitStyle.options.choices}
     bind:value={$store.portraitStyle}
     name={'T5EK.Settings.PortraitStyle.name'}
     hint={'T5EK.Settings.PortraitStyle.hint'}
@@ -115,12 +113,7 @@
   />
 
   <SelectSetting
-    options={{
-      default: 'T5EK.Settings.ExhaustionEffects.default',
-      tidy5e: 'T5EK.Settings.ExhaustionEffects.tidy5e',
-      dfredce: 'T5EK.Settings.ExhaustionEffects.dfredce',
-      cub: 'T5EK.Settings.ExhaustionEffects.cub',
-    }}
+    options={SettingsProvider.settings.exhaustionEffectsEnabled.options.choices}
     bind:value={$store.exhaustionEffectsEnabled}
     name={'T5EK.Settings.ExhaustionEffects.name'}
     hint={'T5EK.Settings.ExhaustionEffects.hint'}
