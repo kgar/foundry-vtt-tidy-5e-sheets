@@ -349,25 +349,6 @@
     "name": "Disable vehicle motion tracker.",
     "hint": "If your campaign doesn't use vehicle motion you can disable the tracker completely."
   },
-  "T5EK.Settings.ExhaustionEffects": {
-    "name": "Auto Exhaustion effects.",
-    "hint": "Choose how to apply exhaustion effects corresponding to tiers (requires midiQol for disadvantage rolls)",
-    "default": "No automatic exhaustion effects",
-    "tidy5e": "T5EK - Apply integrated effects (uses Active Effects)",
-    "dfredce": "DFreds Convenient Effects - Use your own effects",
-    "cub": "CUB - Use your own effects",
-    "custom": "Custom - Use your own effects (requires CUB)"
-  },
-  "T5EK.Settings.CustomExhaustionIcon": {
-    "name": "Custom exhaustion effect icon.",
-    "hint": "Set your custom exhaustion effect icon by providing an image url. Only available when Exhaustion Effect is set to \"tidy 5e\" (e. g.: /modules/tidy5e-sheet-kgar/images/exhaustion.svg)."
-  },
-  "T5EK.Settings.CustomExhaustionEffect": {
-    "name": "Custom CUB exhaustion effect name.",
-    "hint": "Set the name for your custom Exhaustion Effect - must be the same as defined in CUB but WITHOUT tier number. (e. g. \"Exhaustion\")",
-    "tiers": "Number of custom CUB exhaustion tiers. Default = 5",
-    "warning": "Can't find actor token to apply exhaustion effect to!"
-  },
   "T5EK.Settings.ExhaustionDisabled": {
     "name": "Disable exhaustion tracker.",
     "hint": "If your campaign doesn't use exhaustion you can disable the tracker completely."

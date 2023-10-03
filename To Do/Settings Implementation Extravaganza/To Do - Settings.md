@@ -1,5 +1,6 @@
 ## Refine
 
+- [ ] HP Overlay - set pointer-events to none on `.death-saves`; set pointer-events to auto on `.death-saves > *`
 - [ ] Carve out a shared base type for all sheet contexts which contains universal settings
   - allowEdit
   - lockSensitiveFields
@@ -66,6 +67,19 @@ Refine and improve any settings that compromise visual feedback and information 
 - [x] "playerNameEnabled"
 - [x] "portraitStyle"
 - [x] "editTotalLockEnabled"
+- [x] "hiddenDeathSavesEnabled"
+- [x] "hideSpellSlotMarker"
+- [x] "enableSpellLevelButtons"
+- [x] "hideStandardEncumbranceBar"
+- [x] "quantityAlwaysShownEnabled"
+  - Need to implement for NPCs
+  - Need to implement for vehicles
+- [x] Move "quantityAlwaysShownEnabled" down into the ItemTableRow itself
+- [x] "exhaustionEffectsEnabled" - removed
+- [x] "exhaustionEffectIcon" - removed
+- [x] "exhaustionEffectCustom" - removed
+- [x] "exhaustionEffectCustomTiers" - removed
+- [x] "exhaustionDisabled"
 - [ ] "editGmAlwaysEnabled"
   - If a GM and setting turned on, always show classic controls
     - To accomplish this in an elegant way, use a specific boolean setting on the ActorSheetContext (to be renamed CharacterSheetContext) for `showAllEditOptions`, to be combined with `classicControlsEnabled` to determine if classic controls are shown at all and whether the full set of options is shown.
@@ -75,19 +89,6 @@ Refine and improve any settings that compromise visual feedback and information 
   - Removes classic controls altogether for the player on the effects tab
   - When unlocked, shows red banner "Only your GM can edit this section." 
   - Missed a spot: right click menu still provides options. That would also need to be handled.
-- [x] "hiddenDeathSavesEnabled"
-- [x] "hideSpellSlotMarker"
-- [x] "enableSpellLevelButtons"
-- [x] "hideStandardEncumbranceBar"
-- [x] "quantityAlwaysShownEnabled"
-  - Need to implement for NPCs
-  - Need to implement for vehicles
-- [x] Move "quantityAlwaysShownEnabled" down into the ItemTableRow itself
-- [ ] "exhaustionEffectsEnabled"
-- [ ] "exhaustionEffectIcon"
-- [ ] "exhaustionEffectCustom"
-- [ ] "exhaustionEffectCustomTiers"
-- [ ] "exhaustionDisabled"
 - [ ] "inspirationDisabled"
 - [ ] "vehicleMotionDisabled"
 - [ ] "restingForNpcsEnabled"

@@ -112,43 +112,6 @@
     id="vehicleMotionDisabled"
   />
 
-  <SelectSetting
-    options={SettingsProvider.settings.exhaustionEffectsEnabled.options.choices}
-    bind:value={$store.exhaustionEffectsEnabled}
-    name={'T5EK.Settings.ExhaustionEffects.name'}
-    hint={'T5EK.Settings.ExhaustionEffects.hint'}
-    id="exhaustionEffectsEnabled"
-  />
-
-  <TextInputSetting
-    bind:value={$store.exhaustionEffectIcon}
-    name={'T5EK.Settings.CustomExhaustionIcon.name'}
-    hint={'T5EK.Settings.CustomExhaustionIcon.hint'}
-    id="exhaustionEffectIcon"
-  />
-
-  <TextInputSetting
-    bind:value={$store.exhaustionEffectCustom}
-    name={'T5EK.Settings.CustomExhaustionEffect.name'}
-    hint={'T5EK.Settings.CustomExhaustionEffect.hint'}
-    id="exhaustionEffectCustom"
-  >
-    <svelte:fragment slot="additional-inputs">
-      <article>
-        <p class="tidy5e-notes">
-          {localize('T5EK.Settings.CustomExhaustionEffect.tiers')}
-        </p>
-        <input
-          type="text"
-          data-dtype="string"
-          name="exhaustionEffectCustomTiers"
-          id="exhaustionEffectCustomTiers-{appId}"
-          bind:value={$store.exhaustionEffectCustomTiers}
-        />
-      </article>
-    </svelte:fragment>
-  </TextInputSetting>
-
   <CheckboxSetting
     bind:value={$store.exhaustionDisabled}
     name={'T5EK.Settings.ExhaustionDisabled.name'}
