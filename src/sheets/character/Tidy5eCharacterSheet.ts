@@ -89,6 +89,11 @@ export class Tidy5eCharacterSheet extends dnd5e.applications.actor
   }
 
   private async getContext(): Promise<CharacterSheetContext> {
+    const allowEdit = FoundryAdapter.tryGetFlag<boolean>(
+      this.actor,
+      'allow-edit'
+    );
+
     const context = {
       ...(await super.getData(this.options)),
       actorClassesToImages: getActorClassesToImages(this.actor),
@@ -100,6 +105,9 @@ export class Tidy5eCharacterSheet extends dnd5e.applications.actor
       lockSensitiveFields:
         !FoundryAdapter.tryGetFlag(this.actor, 'allow-edit') &&
         SettingsProvider.settings.editTotalLockEnabled.get(),
+      allowEdit,
+      showAllEditOptions:
+        allowEdit || SettingsProvider.settings.editGmAlwaysEnabled.get(),
     };
 
     debug('Character Sheet context data', context);

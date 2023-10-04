@@ -33,21 +33,27 @@ export type CharacterSheetContext = {
   skills: ActorContextSkills;
   tools: ActorContextTools;
   hp: Actor5eHp;
-  lockSensitiveFields: boolean;
-} & JQueryHooksSheetIntegration &
+  showAllEditOptions: boolean;
+} & ActorSheetContext &
+  JQueryHooksSheetIntegration &
   Record<string, any>;
 
 export type NpcSheetContext = {
   actor: Actor5e;
-  lockSensitiveFields: boolean;
-} & JQueryHooksSheetIntegration &
+} & ActorSheetContext &
+  JQueryHooksSheetIntegration &
   Record<string, any>;
 
 export type VehicleSheetContext = {
   actor: Actor5e;
-  lockSensitiveFields: boolean;
-} & JQueryHooksSheetIntegration &
+} & ActorSheetContext &
+  JQueryHooksSheetIntegration &
   Record<string, any>;
+
+export type ActorSheetContext = {
+  lockSensitiveFields: boolean;
+  allowEdit: boolean;
+};
 
 export type JQueryHooksSheetIntegration = {
   activateFoundryJQueryListeners: (html: HTMLElement) => Promise<void>;
