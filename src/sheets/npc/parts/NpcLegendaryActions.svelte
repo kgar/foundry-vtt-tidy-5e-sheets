@@ -15,11 +15,9 @@
     $store.actor.system.resources.lair.value ||
     $store.actor.system.resources.legact.max > 0 ||
     $store.actor.system.resources.legres.max > 0;
-
-  $: allowEdit = FoundryAdapter.tryGetFlag($store.actor, 'allow-edit');
 </script>
 
-{#if allowEdit || showCounters}
+{#if $store.allowEdit || showCounters}
   <div class="counters">
     <div class="counter legendary">
       <h4>{localize('DND5E.LegAct')}</h4>

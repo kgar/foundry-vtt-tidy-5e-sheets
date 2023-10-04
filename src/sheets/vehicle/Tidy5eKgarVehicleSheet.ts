@@ -77,7 +77,7 @@ export class Tidy5eVehicleSheet extends dnd5e.applications.actor
   }
 
   private async getContext(): Promise<VehicleSheetContext> {
-    const allowEdit = FoundryAdapter.tryGetFlag(this.actor, 'allow-edit');
+    const allowEdit = FoundryAdapter.canEditActor(this.actor);
 
     const context = {
       ...(await super.getData(this.options)),
@@ -87,8 +87,7 @@ export class Tidy5eVehicleSheet extends dnd5e.applications.actor
         super.activateListeners($(node));
       },
       lockSensitiveFields:
-        !FoundryAdapter.tryGetFlag(this.actor, 'allow-edit') &&
-        SettingsProvider.settings.editTotalLockEnabled.get(),
+        !allowEdit && SettingsProvider.settings.editTotalLockEnabled.get(),
       allowEdit,
     };
 

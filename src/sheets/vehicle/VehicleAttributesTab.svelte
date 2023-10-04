@@ -28,8 +28,6 @@
 
   let store = getContext<Readable<VehicleSheetContext>>('store');
 
-  $: allowEdit = FoundryAdapter.tryGetFlag($store.actor, 'allow-edit') === true;
-
   const localize = FoundryAdapter.localize;
 
   let baseWidths: Record<string, string> = {
@@ -51,7 +49,7 @@
   const controlsBaseWidthLocked: string = '5.3125rem';
   const controlsBaseWidthUnlocked: string = '7.5rem';
 
-  $: classicControlsBaseWidth = allowEdit
+  $: classicControlsBaseWidth = $store.allowEdit
     ? controlsBaseWidthUnlocked
     : controlsBaseWidthLocked;
 
@@ -68,13 +66,13 @@
     />
   </div>
   <div class="main-panel flex-column small-gap">
-    {#if noFeatures && !allowEdit}
+    {#if noFeatures && !$store.allowEdit}
       <Notice>
         {localize('T5EK.EmptySection')}
       </Notice>
     {:else}
       {#each $store.features as section}
-        {#if allowEdit || section.items.length}
+        {#if $store.allowEdit || section.items.length}
           <ItemTable>
             <ItemTableHeaderRow>
               <ItemTableColumn primary={true}>
@@ -251,7 +249,7 @@
                           })}
                       />
                       <ItemEditControl {item} />
-                      {#if allowEdit}
+                      {#if $store.allowEdit}
                         <ItemDuplicateControl {item} />
                         <ItemDeleteControl {item} />
                       {/if}
@@ -260,7 +258,7 @@
                 {/if}
               </ItemTableRow>
             {/each}
-            {#if $store.owner && allowEdit && section.dataset}
+            {#if $store.owner && $store.allowEdit && section.dataset}
               <ItemTableFooter actor={$store.actor} dataset={section.dataset} />
             {/if}
           </ItemTable>

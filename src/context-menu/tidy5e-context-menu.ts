@@ -70,7 +70,7 @@ function getActiveEffectContextOptions(effect: any) {
     },
   ];
 
-  if (FoundryAdapter.tryGetFlag(actor, 'allow-edit')) {
+  if (canEditEffect(effect)) {
     tidy5eKgarContextOptions = tidy5eKgarContextOptions.concat([
       {
         name: 'DND5E.ContextMenuActionDuplicate',
@@ -94,6 +94,11 @@ function getActiveEffectContextOptions(effect: any) {
   }
 
   return tidy5eKgarContextOptions;
+}
+
+function canEditEffect(effect: any) {
+  const actor = effect.actor ? effect.actor : effect.parent;
+  return FoundryAdapter.canEditActor(actor);
 }
 
 /**
@@ -283,7 +288,7 @@ function getItemContextOptions(item: Item5e) {
       icon: "<i class='fas fa-pencil-alt fa-fw'></i>",
       callback: () => item.sheet.render(true),
     });
-    if (actor.getFlag(CONSTANTS.MODULE_ID, 'allow-edit')) {
+    if (FoundryAdapter.canEditActor(actor)) {
       options.push({
         name: 'DND5E.ContextMenuActionDuplicate',
         icon: "<i class='fas fa-copy fa-fw'></i>",
@@ -308,7 +313,7 @@ function getItemContextOptions(item: Item5e) {
       callback: () => item.sheet.render(true),
     });
 
-    if (actor.getFlag(CONSTANTS.MODULE_ID, 'allow-edit')) {
+    if (FoundryAdapter.canEditActor(actor)) {
       options.push({
         name: 'DND5E.ContextMenuActionDuplicate',
         icon: "<i class='fas fa-copy fa-fw'></i>",

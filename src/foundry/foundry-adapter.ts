@@ -2,6 +2,7 @@ import type {
   CharacterSheetContext,
   ClassSummary,
   DropdownOption,
+  NpcSheetContext,
 } from 'src/types/types';
 import { CONSTANTS } from '../constants';
 import type { ActorSheet5eCharacter } from 'src/types/actor5e-sheet';
@@ -331,7 +332,10 @@ export const FoundryAdapter = {
       [`system.${systemFieldName}.${key}.value`]: levels[next % levels.length],
     });
   },
-  getSpellImageUrl(context: CharacterSheetContext, spell: any): string | undefined {
+  getSpellImageUrl(
+    context: CharacterSheetContext | NpcSheetContext,
+    spell: any
+  ): string | undefined {
     if (
       !SettingsProvider.settings.spellClassFilterIconReplace.get() ||
       context.isNPC
@@ -425,6 +429,15 @@ export const FoundryAdapter = {
       false;
 
     return isFav;
+  },
+  canEditActor(actor: any) {
+    const allowEdit = FoundryAdapter.tryGetFlag(actor, 'allow-edit');
+    return (
+      (actor.isOwner && allowEdit) ||
+      (FoundryAdapter.userIsGm() &&
+        SettingsProvider.settings.editGmAlwaysEnabled.get() &&
+        actor.type === 'character')
+    );
   },
 };
 

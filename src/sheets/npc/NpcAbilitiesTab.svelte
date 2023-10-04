@@ -34,8 +34,6 @@
 
   let store = getContext<Readable<NpcSheetContext>>('store');
 
-  $: allowEdit = FoundryAdapter.tryGetFlag($store.actor, 'allow-edit') === true;
-
   $: noSpellLevels = !$store.spellbook.length;
 
   function toggleLayout() {
@@ -79,7 +77,7 @@
       <Traits toggleable={!$settingStore.traitsAlwaysShownNpc} />
     {/if}
     {#each $store.features as section}
-      {#if allowEdit || section.items.length}
+      {#if $store.allowEdit || section.items.length}
         <ItemTable>
           <ItemTableHeaderRow>
             <ItemTableColumn primary={true}>
@@ -153,7 +151,7 @@
                 <ItemTableCell baseWidth="7.5rem">
                   <ItemControls>
                     <ItemEditControl {item} />
-                    {#if allowEdit}
+                    {#if $store.allowEdit}
                       <ItemDuplicateControl {item} />
                       <ItemDeleteControl {item} />
                     {/if}
@@ -162,7 +160,7 @@
               {/if}
             </ItemTableRow>
           {/each}
-          {#if $store.owner && allowEdit && section.dataset}
+          {#if $store.owner && $store.allowEdit && section.dataset}
             <ItemTableFooter actor={$store.actor} dataset={section.dataset} />
           {/if}
         </ItemTable>
@@ -195,7 +193,7 @@
       {#if !noSpellLevels || showNoSpellsView}
         <div class="flex-1 flex-column small-padding-bottom no-gap">
           {#if noSpellLevels}
-            <NoSpells cssClass="flex-1" {allowEdit} />
+            <NoSpells cssClass="flex-1" allowEdit={$store.allowEdit} />
           {:else}
             <div class="flex-1 small-padding-bottom flex-column small-gap">
               {#each $store.spellbook as section (section.label)}

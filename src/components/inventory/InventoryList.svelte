@@ -40,8 +40,8 @@
 
   const localize = FoundryAdapter.localize;
   const weightUnit = FoundryAdapter.getWeightUnit();
-  $: allowEdit = FoundryAdapter.tryGetFlag($store.actor, 'allow-edit');
-  $: classicControlsBaseWidth = allowEdit ? '7.5rem' : '5.3125rem';
+
+  $: classicControlsBaseWidth = $store.allowEdit ? '7.5rem' : '5.3125rem';
 
   function getInventoryRowClasses(item: Item5e) {
     const extras: string[] = [];
@@ -163,7 +163,7 @@
               {/if}
               <ItemFavoriteControl {item} />
               <ItemEditControl {item} />
-              {#if allowEdit}
+              {#if $store.allowEdit}
                 <ItemDuplicateControl {item} />
                 <ItemDeleteControl {item} />
               {/if}
@@ -172,7 +172,7 @@
         {/if}
       </ItemTableRow>
     {/each}
-    {#if $store.owner && allowEdit && dataset}
+    {#if $store.owner && $store.allowEdit && dataset}
       <ItemTableFooter actor={$store.actor} {dataset} />
     {/if}
   </ItemTable>

@@ -19,13 +19,6 @@
 
   let searchCriteria: string = '';
 
-  $: abilities = Object.entries($store.abilities).map(
-    (a: [string, { label: string }]) => ({
-      abbr: a[0],
-      ...a[1],
-    })
-  );
-
   let layoutMode: ItemLayoutMode;
   $: layoutMode = FoundryAdapter.tryGetFlag($store.actor, 'spellbook-grid')
     ? 'grid'
@@ -39,9 +32,6 @@
 
     FoundryAdapter.setFlag($store.actor, 'spellbook-grid', true);
   }
-
-  $: allowEdit =
-    FoundryAdapter.tryGetFlag<boolean>($store.actor, 'allow-edit') === true;
 
   $: noSpellLevels = !$store.spellbook.length;
 </script>
@@ -78,14 +68,14 @@
 </ItemFilters>
 <ListContainer cssClass="flex-column small-gap">
   {#if noSpellLevels}
-    <NoSpells {allowEdit} />
+    <NoSpells allowEdit={$store.allowEdit} />
   {:else}
     {#each $store.spellbook as section (section.label)}
       {@const filteredSpells = FoundryAdapter.getFilteredItems(
         searchCriteria,
         section.spells
       )}
-      {#if (searchCriteria.trim() === '' && allowEdit) || filteredSpells.length > 0}
+      {#if (searchCriteria.trim() === '' && $store.allowEdit) || filteredSpells.length > 0}
         {#if layoutMode === 'list'}
           <SpellbookList
             allowFavorites={false}

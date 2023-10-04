@@ -41,13 +41,11 @@
 <style lang="scss">
   .toggle-allow-edit {
     display: flex;
-    // order: 2;
     flex: 0;
     flex-basis: 3rem;
     align-items: center;
     justify-content: center;
     white-space: nowrap;
-    // padding: 0.125rem 1rem;
     background: var(--t5ek-header-background);
     border: 0.0625rem solid transparent;
     border-bottom: 0.0625rem solid var(--t5ek-header-border-color);

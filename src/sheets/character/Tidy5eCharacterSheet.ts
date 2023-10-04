@@ -89,10 +89,7 @@ export class Tidy5eCharacterSheet extends dnd5e.applications.actor
   }
 
   private async getContext(): Promise<CharacterSheetContext> {
-    const allowEdit = FoundryAdapter.tryGetFlag<boolean>(
-      this.actor,
-      'allow-edit'
-    );
+    const allowEdit = FoundryAdapter.canEditActor(this.actor);
 
     const context = {
       ...(await super.getData(this.options)),
@@ -103,11 +100,8 @@ export class Tidy5eCharacterSheet extends dnd5e.applications.actor
         super.activateListeners($(node));
       },
       lockSensitiveFields:
-        !FoundryAdapter.tryGetFlag(this.actor, 'allow-edit') &&
-        SettingsProvider.settings.editTotalLockEnabled.get(),
+        !allowEdit && SettingsProvider.settings.editTotalLockEnabled.get(),
       allowEdit,
-      showAllEditOptions:
-        allowEdit || SettingsProvider.settings.editGmAlwaysEnabled.get(),
     };
 
     debug('Character Sheet context data', context);

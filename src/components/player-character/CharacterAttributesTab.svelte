@@ -4,7 +4,6 @@
   import Traits from '../../sheets/actor/Traits.svelte';
   import Favorites from '../attributes/Favorites.svelte';
   import Resources from '../attributes/Resources.svelte';
-  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { isNil } from 'src/utils/data';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
@@ -12,9 +11,8 @@
 
   let store = getContext<Readable<CharacterSheetContext>>('store');
 
-  $: allowEdit = FoundryAdapter.tryGetFlag<boolean>($store.actor, 'allow-edit');
   $: showResources =
-    allowEdit ||
+    $store.allowEdit ||
     $store.resources.some(
       (x) => !isNil(x.value) || !isNil(x.value, '') || !isNil(x.max)
     );

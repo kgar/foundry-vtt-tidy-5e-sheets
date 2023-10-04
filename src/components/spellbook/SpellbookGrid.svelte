@@ -27,7 +27,6 @@
   let card = getContext<Writable<ItemCardStore>>('card');
 
   const localize = FoundryAdapter.localize;
-  $: allowEdit = FoundryAdapter.tryGetFlag($store.actor, 'allow-edit');
 
   async function onMouseEnter(item: Item5e) {
     card.update((card) => {
@@ -90,7 +89,7 @@
           </div>
         </div>
       {/each}
-      {#if $store.owner && allowEdit}
+      {#if $store.owner && $store.allowEdit}
         <div class="spells-footer">
           <a
             role="button"

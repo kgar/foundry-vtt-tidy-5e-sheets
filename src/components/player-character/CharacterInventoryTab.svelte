@@ -29,8 +29,6 @@
     ? 'grid'
     : 'list';
 
-  $: allowEdit = FoundryAdapter.tryGetFlag($store.actor, 'allow-edit');
-
   function toggleLayout() {
     if (layoutMode === 'grid') {
       FoundryAdapter.unsetFlag($store.actor, 'inventory-grid');
@@ -66,7 +64,7 @@
 </ItemFilters>
 
 <ListContainer cssClass="flex-column small-gap">
-  {#if noItems && !allowEdit}
+  {#if noItems && !$store.allowEdit}
     <Notice>{localize('T5EK.EmptySection')}</Notice>
   {:else}
     {#each $store.inventory as section (section.label)}
@@ -74,7 +72,7 @@
         searchCriteria,
         section.items
       )}
-      {#if (searchCriteria.trim() === '' && allowEdit) || filteredItems.length > 0}
+      {#if (searchCriteria.trim() === '' && $store.allowEdit) || filteredItems.length > 0}
         {#if layoutMode === 'list'}
           <InventoryList
             primaryColumnName="{localize(

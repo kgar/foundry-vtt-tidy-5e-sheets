@@ -26,7 +26,7 @@
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <div class="death-saves" class:rounded={useRoundedPortraitStyle}>
-  <div class="counter-value" class:show-backdrop={hpOverlayDisabled}>
+  <div class="death-save-counters" class:show-backdrop={hpOverlayDisabled}>
     <i class="fas fa-check" />
     <TextInput
       document={$store.actor}
@@ -75,8 +75,10 @@
     align-items: center;
     text-shadow: 0 0 0.3125rem 0.0625rem
       var(--t5ek-death-save-text-shadow-color);
+    pointer-events: none;
 
-    .counter-value {
+    .death-save-counters {
+      pointer-events: auto;
       display: flex;
       justify-content: center;
       align-items: center;

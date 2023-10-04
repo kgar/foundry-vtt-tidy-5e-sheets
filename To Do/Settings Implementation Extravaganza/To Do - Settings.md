@@ -1,17 +1,19 @@
 ## Refine
 
-- [ ] HP Overlay - set pointer-events to none on `.death-saves`; set pointer-events to auto on `.death-saves > *`
+- [x] HP Overlay - set pointer-events to none on `.death-saves`; set pointer-events to auto on `.death-saves > *`
 - [ ] Carve out a shared base type for all sheet contexts which contains universal settings
-  - allowEdit
-  - lockSensitiveFields
-  - ...?
+  - [x] allowEdit
+  - [x] lockSensitiveFields
+  - [ ] editable - this should combine the composite allowEdit and the "editable" field provided by dnd5e context
+  - [ ] ...?
 - [ ] Replace unioned sheet context types which reference all three sheet types with the base context, where able.
 - [ ] Add the NPM watch script for enforcing resolving type errors
   - [ ] Begin the process of pulling all data for sheets into their context types
     - [ ] PC
     - [ ] NPC
     - [ ] Vehicle
-- [ ] 
+- [ ] Begin the arduous process of actually creating a flattened type for each sheet context which contains the needed data
+- [ ] Figure out how to centralize and make testable the property strings that appear on all the various sheet inputs. It might be as simple as adding more constants...
 
 ## Implement ALL the Settings! 👏
 
@@ -80,7 +82,7 @@ Refine and improve any settings that compromise visual feedback and information 
 - [x] "exhaustionEffectCustom" - removed
 - [x] "exhaustionEffectCustomTiers" - removed
 - [x] "exhaustionDisabled"
-- [ ] "editGmAlwaysEnabled"
+- [x] "editGmAlwaysEnabled"
   - If a GM and setting turned on, always show classic controls
     - To accomplish this in an elegant way, use a specific boolean setting on the ActorSheetContext (to be renamed CharacterSheetContext) for `showAllEditOptions`, to be combined with `classicControlsEnabled` to determine if classic controls are shown at all and whether the full set of options is shown.
   - Missed a spot: right click menu doesn't provide all the options. That would also need to be handled.

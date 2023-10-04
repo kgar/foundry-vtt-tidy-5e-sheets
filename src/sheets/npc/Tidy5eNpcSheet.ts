@@ -102,7 +102,7 @@ export class Tidy5eNpcSheet extends dnd5e.applications.actor.ActorSheet5eNPC {
   }
 
   private async getContext(): Promise<NpcSheetContext> {
-    const allowEdit = FoundryAdapter.tryGetFlag(this.actor, 'allow-edit');
+    const allowEdit = FoundryAdapter.canEditActor(this.actor);
 
     return {
       ...(await super.getData(this.options)),

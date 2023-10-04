@@ -20,8 +20,7 @@
   let card = getContext<Writable<ItemCardStore>>('card');
 
   const localize = FoundryAdapter.localize;
-  $: allowEdit = FoundryAdapter.tryGetFlag($store.actor, 'allow-edit');
-
+  
   function getInventoryRowClasses(item: Item5e) {
     const extras: string[] = [];
 
@@ -149,7 +148,7 @@
         </div>
       </div>
     {/each}
-    {#if $store.owner && allowEdit}
+    {#if $store.owner && $store.allowEdit}
       <div class="items-footer">
         <a
           role="button"

@@ -33,7 +33,6 @@ export type CharacterSheetContext = {
   skills: ActorContextSkills;
   tools: ActorContextTools;
   hp: Actor5eHp;
-  showAllEditOptions: boolean;
 } & ActorSheetContext &
   JQueryHooksSheetIntegration &
   Record<string, any>;
