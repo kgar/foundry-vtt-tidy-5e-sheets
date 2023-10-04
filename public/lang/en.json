@@ -601,5 +601,5 @@
     "label": "Menu",
     "themeLabel": "Theme"
   },
-  "T5EK.ActiveEffectsMarkerHint": "This item has active effects"
+  "T5EK.ActiveEffectsMarkerTitle": "This item has active effects"
 }
