@@ -93,8 +93,8 @@
 />
 
 <NumberInputSetting
-  bind:value={$store.npsSheetWidth}
-  name={'T5EK.Settings.npsSheetWidth.name'}
-  hint={'T5EK.Settings.npsSheetWidth.hint'}
-  id="npsSheetWidth"
+  bind:value={$store.npcSheetWidth}
+  name={'T5EK.Settings.npcSheetWidth.name'}
+  hint={'T5EK.Settings.npcSheetWidth.hint'}
+  id="npcSheetWidth"
 />

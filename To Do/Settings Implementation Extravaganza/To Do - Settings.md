@@ -108,10 +108,10 @@ Refine and improve any settings that compromise visual feedback and information 
   - [x] Somehow make this generic and extend it to all sheet types
     - [x] It should happen in the universal item row table rendering, if possible
     - [x] Place the marker after the item name h4 element (or rewritten equivalent)
-- [ ] "playerSheetWidth"
-- [ ] "npsSheetWidth"
+- [x] "playerSheetWidth"
+- [x] "npsSheetWidth" => "npcSheetWidth"
+- [x] "vehicleSheetWidth"
 - [ ] "enablePermanentUnlockOnNPCIfYouAreGM"
-- [ ] "vehicleSheetWidth"
 - [ ] "enablePermanentUnlockOnVehicleIfYouAreGM"
 - [ ] "enableSortFavoritesItemsAlphabetically"
   - It works, but it's not reactive yet.
@@ -206,4 +206,3 @@ function markActiveEffects(app, html, data) {
   border-radius: 3px;
 }
 ```
-

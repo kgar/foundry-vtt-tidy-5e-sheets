@@ -11,7 +11,6 @@ import { getCoreThemes, themeVariables } from 'src/theme/theme-reference';
 import { Tidy5eKgarSettingsSheet } from 'src/sheets/settings/sheet/Tidy5eKgarSettingsSheet';
 import { Tidy5eKgarThemeSettingsSheet } from 'src/sheets/settings/theme/Tidy5eKgarThemeSettingsSheet';
 import { writable, type Writable } from 'svelte/store';
-import { debug } from 'src/utils/logging';
 
 export type Tidy5eSettings = {
   [settingKey: string]: Tidy5eSetting;
@@ -991,16 +990,16 @@ export function createSettings() {
 
       // Default width for NPC sheet
 
-      npsSheetWidth: {
+      npcSheetWidth: {
         options: {
-          name: 'T5EK.Settings.npsSheetWidth',
+          name: 'T5EK.Settings.npcSheetWidth',
           scope: 'client',
           config: false,
           type: Number,
           default: 740,
         },
         get() {
-          return FoundryAdapter.getGameSetting<number>('npsSheetWidth');
+          return FoundryAdapter.getGameSetting<number>('npcSheetWidth');
         },
       },
 

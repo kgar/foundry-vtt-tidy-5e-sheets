@@ -41,6 +41,7 @@ export class Tidy5eCharacterSheet extends dnd5e.applications.actor
     return FoundryAdapter.mergeObject(super.defaultOptions, {
       classes: ['tidy5e-kgar', 'sheet', 'actor', 'character'],
       height: 840,
+      width: SettingsProvider.settings.playerSheetWidth.get(),
     });
   }
 
@@ -102,7 +103,9 @@ export class Tidy5eCharacterSheet extends dnd5e.applications.actor
       lockSensitiveFields:
         !editable && SettingsProvider.settings.editTotalLockEnabled.get(),
       editable,
-      allowEffectsManagement: FoundryAdapter.allowCharacterEffectsManagement(this.actor),
+      allowEffectsManagement: FoundryAdapter.allowCharacterEffectsManagement(
+        this.actor
+      ),
     };
 
     debug('Character Sheet context data', context);
