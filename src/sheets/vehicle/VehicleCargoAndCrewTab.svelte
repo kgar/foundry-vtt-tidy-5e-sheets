@@ -165,6 +165,7 @@
                   on:click={(event) =>
                     toggleSummary(event.detail, $store.actor)}
                   cssClass="extra-small-gap"
+                  {item}
                 >
                   <span class="truncate">{item.name}</span>
                   <ListItemQuantity {item} {ctx} />

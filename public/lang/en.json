@@ -600,5 +600,6 @@
   "T5EK.SheetMenu": {
     "label": "Menu",
     "themeLabel": "Theme"
-  }
+  },
+  "T5EK.ActiveEffectsMarkerHint": "This item has active effects"
 }

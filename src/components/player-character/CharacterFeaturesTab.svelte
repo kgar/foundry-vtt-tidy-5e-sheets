@@ -139,6 +139,7 @@
               <ItemName
                 on:click={(event) => toggleSummary(event.detail, $store.actor)}
                 hasChildren={false}
+                {item}
               >
                 {item.name}
               </ItemName>
@@ -216,6 +217,7 @@
               <ItemName
                 on:click={(event) => toggleSummary(event.detail, $store.actor)}
                 hasChildren={false}
+                {item}
               >
                 {#if item.type === 'subclass'}&rdsh;{/if}
                 {item.name}
@@ -326,6 +328,7 @@
               <ItemName
                 on:click={(event) => toggleSummary(event.detail, $store.actor)}
                 hasChildren={false}
+                {item}
               >
                 {item.name}
               </ItemName>
@@ -427,6 +430,7 @@
               <ItemName
                 on:click={(event) => toggleSummary(event.detail, $store.actor)}
                 hasChildren={false}
+                {item}
               >
                 {item.name}
               </ItemName>

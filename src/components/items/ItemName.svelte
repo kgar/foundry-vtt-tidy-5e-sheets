@@ -1,8 +1,15 @@
 <script lang="ts">
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import { settingStore } from 'src/settings/settings';
+  import type { Item5e } from 'src/types/item';
   import { createEventDispatcher } from 'svelte';
+  import ActiveEffectsMarker from './ActiveEffectsMarker.svelte';
 
   export let cssClass: string = '';
   export let hasChildren = true;
+  export let item: Item5e;
+
+  $: hasActiveEffects = !!item.effects?.size;
 
   const dispatcher = createEventDispatcher<{ click: MouseEvent }>();
 </script>
@@ -16,10 +23,13 @@
 >
   <slot />
 </span>
+{#if $settingStore.activeEffectsMarker && hasActiveEffects}
+  <ActiveEffectsMarker />
+{/if}
 
 <style lang="scss">
   .item-name {
-    flex: 1 1 1px;
+    flex: 1 1 0.0625rem;
     min-width: 0;
 
     &:not(.has-children) {

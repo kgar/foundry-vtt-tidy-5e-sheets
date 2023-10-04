@@ -44,11 +44,4 @@
     hint={'T5EK.Settings.RollButtonsToCard.hint'}
     id="contextRollButtons"
   />
-
-  <CheckboxSetting
-    bind:value={$store.activeEffectsMarker}
-    name={'T5EK.Settings.ActiveEffectsMarker.name'}
-    hint={'T5EK.Settings.ActiveEffectsMarker.hint'}
-    id="activeEffectsMarker"
-  />
 {/if}

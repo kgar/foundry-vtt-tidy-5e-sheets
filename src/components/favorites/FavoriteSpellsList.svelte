@@ -69,6 +69,7 @@
           <ItemUseButton item={spell} imgUrlOverride={spellImgUrl} />
           <ItemName
             on:click={(event) => toggleSummary(event.detail, $store.actor)}
+            item={spell}
           >
             {spell.name}
           </ItemName>

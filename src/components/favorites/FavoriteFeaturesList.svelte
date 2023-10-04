@@ -50,6 +50,7 @@
         <ItemName
           on:click={(event) => toggleSummary(event.detail, $store.actor)}
           hasChildren={false}
+          {item}
         >
           {item.name}
         </ItemName>

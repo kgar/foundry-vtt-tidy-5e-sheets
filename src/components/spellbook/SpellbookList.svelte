@@ -121,6 +121,7 @@
           <ItemUseButton item={spell} imgUrlOverride={spellImgUrl} />
           <ItemName
             on:click={(event) => toggleSummary(event.detail, $store.actor)}
+            item={spell}
           >
             <span class="truncate">{spell.name}</span>
           </ItemName>

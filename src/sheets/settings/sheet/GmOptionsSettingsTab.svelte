@@ -11,7 +11,6 @@
   import SelectSetting from 'src/sheets/settings/parts/SelectSetting.svelte';
 
   let store = getContext<Writable<CurrentSettings>>('store');
-  const appId = getContext<string>('appId');
 
   const userIsGm = FoundryAdapter.userIsGm();
   const localize = FoundryAdapter.localize;
@@ -166,5 +165,12 @@
     name={'T5EK.Settings.EnablePermanentUnlockOnVehicleIfYouAreGM.name'}
     hint={'T5EK.Settings.EnablePermanentUnlockOnVehicleIfYouAreGM.hint'}
     id="enablePermanentUnlockOnVehicleIfYouAreGM"
+  />
+
+  <CheckboxSetting
+    bind:value={$store.activeEffectsMarker}
+    name={'T5EK.Settings.ActiveEffectsMarker.name'}
+    hint={'T5EK.Settings.ActiveEffectsMarker.hint'}
+    id="activeEffectsMarker"
   />
 {/if}

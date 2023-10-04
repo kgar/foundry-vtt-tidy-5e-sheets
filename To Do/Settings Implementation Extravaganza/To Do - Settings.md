@@ -91,16 +91,23 @@ Refine and improve any settings that compromise visual feedback and information 
     - Check for whether the user is a GM and, if so, override allow-edit if the option is enabled
 - [x] "editEffectsGmOnlyEnabled"
   - Removes classic controls altogether for the player on the effects tab
-  - When unlocked, shows red banner "Only your GM can edit this section." 
+  - When unlocked, shows red banner "Only your GM can edit this section."
     - T5EK.GmOnlyEdit
-  - Missed a spot: right click menu still provides options. That would also need to be handled. 
+  - Missed a spot: right click menu still provides options. That would also need to be handled.
   - [x] Consolidate the boolean function logic to FoundryAdapter as `allowEffectsEditing`
 - [x] "inspirationDisabled"
 - [x] "vehicleMotionDisabled"
 - [x] "restingForNpcsEnabled"
 - [x] "restingForNpcsChatDisabled"
 - [x] "linkMarkerNpc"
-- [ ] "activeEffectsMarker"
+- [x] "activeEffectsMarker"
+  - [x] Review how this looks in Tidy 5e original
+    - https://cdn.discordapp.com/attachments/1116078321067892796/1159218983254380645/image.png?ex=653039ce&is=651dc4ce&hm=f9188fc6784539cf8ca765c09dab8902a981af5f1cb821b3350cf5e2ae9d7e4e&
+    - https://discord.com/channels/732325252788387980/1116078321067892796/1159218984168718336
+  - [x] Implement this with the trigger condition defaulted to True for evaluation purposes
+  - [x] Somehow make this generic and extend it to all sheet types
+    - [x] It should happen in the universal item row table rendering, if possible
+    - [x] Place the marker after the item name h4 element (or rewritten equivalent)
 - [ ] "playerSheetWidth"
 - [ ] "npsSheetWidth"
 - [ ] "enablePermanentUnlockOnNPCIfYouAreGM"
@@ -147,7 +154,6 @@ Refine and improve any settings that compromise visual feedback and information 
   - Will require some more attention / effort.
 - [x] "debug"
 
-
 ## Review and determine next steps
 
 - [ ] "enableActionListOnFavoritePanel"
@@ -159,3 +165,45 @@ Refine and improve any settings that compromise visual feedback and information 
 
 - [ ] "contextRollButtons"
   - Purpose unknown. Current maintainer doesn't know what it does.
+
+## Specific setting notes
+
+### `activeEffectsMarker`:
+
+- For PCs only, look at all items for the PC (inventory, spells, ...?)
+  - If the item has 1 or more effects a la `actor.items[...].effects.length`, then append this marker: `<span class="ae-marker" title="Item has active effects">Æ</span>`
+    - Note: need to localize the title, bud
+
+Original impl:
+
+```js
+function markActiveEffects(app, html, data) {
+  if (game.settings.get(CONSTANTS.MODULE_ID, 'activeEffectsMarker')) {
+    let actor = app.actor;
+    let items = data.actor.items;
+    let marker = `<span class="ae-marker" title="Item has active effects">Æ</span>`;
+    for (let item of items) {
+      debug(`tidy5e-sheet | markActiveEffects | item: ${item}`);
+      if (item.effects.length > 0) {
+        let id = item._id;
+        debug(`tidy5e-sheet | markActiveEffects | itemId: ${id}`);
+        html.find(`.item[data-item-id="${id}"] .item-name h4`).append(marker);
+      }
+    }
+  }
+}
+```
+
+```scss
+.ae-marker {
+  display: inline-block;
+  padding: 1px 3px 0 3px;
+  font-size: 12px;
+  line-height: 15px;
+  font-weight: 600;
+  background: var(--t5e-warning-accent);
+  color: var(--t5e-secondary-color);
+  border-radius: 3px;
+}
+```
+
