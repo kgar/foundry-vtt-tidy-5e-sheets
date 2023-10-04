@@ -37,11 +37,15 @@
 </script>
 
 <ListContainer cssClass="flex-column small-gap">
-  {#if noEffects && !$store.editable}
+  {#if !$store.allowEffectsManagement && $store.editable}
+    <Notice>{localize('T5EK.GmOnlyEdit')}</Notice>
+  {/if}
+
+  {#if noEffects && !$store.editable && $store.allowEffectsManagement}
     <Notice>{localize('T5EK.EmptySection')}</Notice>
   {:else}
     {#each effectSections as section}
-      {#if $store.editable || section.effects.length > 0}
+      {#if ($store.editable && $store.allowEffectsManagement) || section.effects.length > 0}
         <ItemTable>
           <ItemTableHeaderRow>
             <ItemTableColumn primary={true}>
@@ -53,7 +57,7 @@
             <ItemTableColumn baseWidth="7.5rem">
               {localize('DND5E.Duration')}
             </ItemTableColumn>
-            {#if $store.owner && classicControlsEnabled}
+            {#if $store.owner && classicControlsEnabled && $store.allowEffectsManagement}
               <ItemTableColumn baseWidth={classicControlsBaseWidth} />
             {/if}
           </ItemTableHeaderRow>
@@ -77,7 +81,7 @@
                 >{effect.duration.label}</ItemTableCell
               >
 
-              {#if $store.owner && classicControlsEnabled}
+              {#if $store.owner && classicControlsEnabled && $store.allowEffectsManagement}
                 <ItemTableCell baseWidth={classicControlsBaseWidth}>
                   <ItemControls>
                     <ItemControl
@@ -108,7 +112,7 @@
               {/if}
             </ItemTableRow>
           {/each}
-          {#if $store.editable}
+          {#if $store.owner && $store.editable && $store.allowEffectsManagement}
             <ItemTableFooter
               actor={$store.actor}
               dataset={section.dataset}

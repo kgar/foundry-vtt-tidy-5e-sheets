@@ -439,6 +439,14 @@ export const FoundryAdapter = {
         actor.type === 'character')
     );
   },
+  allowCharacterEffectsManagement(actor: any) {
+    return (
+      (SettingsProvider.settings.editEffectsGmOnlyEnabled.get() &&
+        FoundryAdapter.userIsGm()) ||
+      (!SettingsProvider.settings.editEffectsGmOnlyEnabled.get() &&
+        actor.isOwner)
+    );
+  },
 };
 
 /* ------------------------------------------------------

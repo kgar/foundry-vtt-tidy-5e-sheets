@@ -89,10 +89,12 @@ Refine and improve any settings that compromise visual feedback and information 
     - To accomplish this in an elegant way, use a specific boolean setting on the ActorSheetContext (to be renamed CharacterSheetContext) for `showAllEditOptions`, to be combined with `classicControlsEnabled` to determine if classic controls are shown at all and whether the full set of options is shown.
   - Missed a spot: right click menu doesn't provide all the options. That would also need to be handled.
     - Check for whether the user is a GM and, if so, override allow-edit if the option is enabled
-- [ ] "editEffectsGmOnlyEnabled"
+- [x] "editEffectsGmOnlyEnabled"
   - Removes classic controls altogether for the player on the effects tab
   - When unlocked, shows red banner "Only your GM can edit this section." 
-  - Missed a spot: right click menu still provides options. That would also need to be handled.
+    - T5EK.GmOnlyEdit
+  - Missed a spot: right click menu still provides options. That would also need to be handled. 
+  - [x] Consolidate the boolean function logic to FoundryAdapter as `allowEffectsEditing`
 - [ ] "inspirationDisabled"
 - [ ] "vehicleMotionDisabled"
 - [ ] "restingForNpcsEnabled"

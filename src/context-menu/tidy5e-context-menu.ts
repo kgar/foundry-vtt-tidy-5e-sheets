@@ -53,6 +53,13 @@ function getActiveEffectContextOptions(effect: any) {
     return [];
   }
 
+  if (
+    actor.type === 'character' &&
+    !FoundryAdapter.allowCharacterEffectsManagement(actor)
+  ) {
+    return [];
+  }
+
   let tidy5eKgarContextOptions = [
     {
       name: effect.disabled

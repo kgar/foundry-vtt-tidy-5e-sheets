@@ -91,7 +91,7 @@ export class Tidy5eCharacterSheet extends dnd5e.applications.actor
   private async getContext(): Promise<CharacterSheetContext> {
     const editable = FoundryAdapter.canEditActor(this.actor) && this.isEditable;
 
-    const context = {
+    const context: CharacterSheetContext = {
       ...(await super.getData(this.options)),
       actorClassesToImages: getActorClassesToImages(this.actor),
       appId: this.appId,
@@ -102,6 +102,7 @@ export class Tidy5eCharacterSheet extends dnd5e.applications.actor
       lockSensitiveFields:
         !editable && SettingsProvider.settings.editTotalLockEnabled.get(),
       editable,
+      allowEffectsManagement: FoundryAdapter.allowCharacterEffectsManagement(this.actor),
     };
 
     debug('Character Sheet context data', context);

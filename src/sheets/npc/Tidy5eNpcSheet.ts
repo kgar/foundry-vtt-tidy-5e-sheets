@@ -118,6 +118,7 @@ export class Tidy5eNpcSheet extends dnd5e.applications.actor.ActorSheet5eNPC {
       lockSensitiveFields:
         !editable && SettingsProvider.settings.editTotalLockEnabled.get(),
       editable,
+      allowEffectsManagement: true,
     };
   }
 

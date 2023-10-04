@@ -52,6 +52,7 @@ export type VehicleSheetContext = {
 export type ActorSheetContext = {
   lockSensitiveFields: boolean;
   editable: boolean;
+  allowEffectsManagement: boolean;
 };
 
 export type JQueryHooksSheetIntegration = {

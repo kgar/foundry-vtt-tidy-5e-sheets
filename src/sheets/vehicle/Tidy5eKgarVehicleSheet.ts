@@ -89,6 +89,7 @@ export class Tidy5eVehicleSheet extends dnd5e.applications.actor
       lockSensitiveFields:
         !editable && SettingsProvider.settings.editTotalLockEnabled.get(),
       editable,
+      allowEffectsManagement: true,
     };
 
     debug('Vehicle Sheet context data', context);
