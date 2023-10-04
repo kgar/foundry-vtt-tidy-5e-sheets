@@ -329,10 +329,6 @@
     "name": "Lock down sensitive fields.",
     "hint": "Enable to prevent accidentally changing sensible, mostly static values."
   },
-  "T5EK.Settings.EditGmAlways": {
-    "name": "GM can always edit PC sheets.",
-    "hint": "Enable to allow GMs to edit PC sheets without toggling the sheet lock."
-  },
   "T5EK.Settings.EditEffectsGmOnly": {
     "name": "Only GM can edit active effects.",
     "hint": "Enable to deny players to edit active effects on their sheets. They will still see applied effects."
@@ -554,13 +550,20 @@
     "name": "Set features for upcast free spell",
     "hint": "This setting work only with the module setting 'Enable upcast free spell' enabled, is a string of feature names separated by the character '|' , the search for such features is case unsensitive if found a 'valid' feature enables actors to use the feature upcast. IF LEFT EMPTY IT WILL BE IGNORED."
   },
+  "T5EK.Settings.EnablePermanentUnlockOnCharacterIfYouAreGM": {
+    "name": "Character Sheet: permanently enable unlock if you are a GM",
+    "hint": "Treat the character sheet as though it were always unlocked, regardless of the lock setting. The GM can always edit the character, but they can also toggle lock/unlock for a player who also owns the character.",
+    "title": "This sheet is always unlocked for the GM, regardless of the lock setting."
+  },
   "T5EK.Settings.EnablePermanentUnlockOnNPCIfYouAreGM": {
-    "name": "Permanently enable unlock on NPC Sheet if you are a GM",
-    "hint": "Shouldn't the GM be able to edit NPC sheets even when locked ? If it's not a bug then is it possible to have NPC sheets unlocked by default ? Having to unlocked NPC sheets to just delete active effects or items every time has become tedious"
+    "name": "NPC Sheet: permanently enable unlock if you are a GM",
+    "hint": "Treat the NPC sheet as though it were always unlocked, regardless of the lock setting. The GM can always edit the NPC, but they can also toggle lock/unlock for a player who also owns the NPC.",
+    "title": "This sheet is always unlocked for the GM, regardless of the lock setting."
   },
   "T5EK.Settings.EnablePermanentUnlockOnVehicleIfYouAreGM": {
-    "name": "Permanently enable unlock on Vehicle Sheet if you are a GM",
-    "hint": "Shouldn't the GM be able to edit Vehicle sheets even when locked ? If it's not a bug then is it possible to have Vehicle sheets unlocked by default ? Having to unlocked Vehicle sheets to just delete active effects or items every time has become tedious"
+    "name": "Vehicle Sheet: permanently enable unlock if you are a GM",
+    "hint": "Treat the vehicle sheet as though it were always unlocked, regardless of the lock setting. The GM can always edit the vehicle, but they can also toggle lock/unlock for a player who also owns the vehicle.",
+    "title": "This sheet is always unlocked for the GM, regardless of the lock setting."
   },
   "T5EK.ThemeSettings": {
     "SheetMenu": {

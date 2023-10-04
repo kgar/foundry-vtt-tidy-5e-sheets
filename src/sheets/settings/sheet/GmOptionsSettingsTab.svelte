@@ -77,10 +77,24 @@
   />
 
   <CheckboxSetting
-    bind:value={$store.editGmAlwaysEnabled}
-    name={'T5EK.Settings.EditGmAlways.name'}
-    hint={'T5EK.Settings.EditGmAlways.hint'}
-    id="editGmAlwaysEnabled"
+    bind:value={$store.enablePermanentUnlockOnCharacterIfYouAreGM}
+    name={'T5EK.Settings.EnablePermanentUnlockOnCharacterIfYouAreGM.name'}
+    hint={'T5EK.Settings.EnablePermanentUnlockOnCharacterIfYouAreGM.hint'}
+    id="enablePermanentUnlockOnCharacterIfYouAreGM"
+  />
+
+  <CheckboxSetting
+    bind:value={$store.enablePermanentUnlockOnNPCIfYouAreGM}
+    name={'T5EK.Settings.EnablePermanentUnlockOnNPCIfYouAreGM.name'}
+    hint={'T5EK.Settings.EnablePermanentUnlockOnNPCIfYouAreGM.hint'}
+    id="enablePermanentUnlockOnNPCIfYouAreGM"
+  />
+
+  <CheckboxSetting
+    bind:value={$store.enablePermanentUnlockOnVehicleIfYouAreGM}
+    name={'T5EK.Settings.EnablePermanentUnlockOnVehicleIfYouAreGM.name'}
+    hint={'T5EK.Settings.EnablePermanentUnlockOnVehicleIfYouAreGM.hint'}
+    id="enablePermanentUnlockOnVehicleIfYouAreGM"
   />
 
   <CheckboxSetting
@@ -151,20 +165,6 @@
     name={'T5EK.Settings.BetterAttackDialog.name'}
     hint={'T5EK.Settings.BetterAttackDialog.hint'}
     id="betterAttackDialog"
-  />
-
-  <CheckboxSetting
-    bind:value={$store.enablePermanentUnlockOnNPCIfYouAreGM}
-    name={'T5EK.Settings.EnablePermanentUnlockOnNPCIfYouAreGM.name'}
-    hint={'T5EK.Settings.EnablePermanentUnlockOnNPCIfYouAreGM.hint'}
-    id="enablePermanentUnlockOnNPCIfYouAreGM"
-  />
-
-  <CheckboxSetting
-    bind:value={$store.enablePermanentUnlockOnVehicleIfYouAreGM}
-    name={'T5EK.Settings.EnablePermanentUnlockOnVehicleIfYouAreGM.name'}
-    hint={'T5EK.Settings.EnablePermanentUnlockOnVehicleIfYouAreGM.hint'}
-    id="enablePermanentUnlockOnVehicleIfYouAreGM"
   />
 
   <CheckboxSetting

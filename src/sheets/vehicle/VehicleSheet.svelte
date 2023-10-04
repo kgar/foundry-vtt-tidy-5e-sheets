@@ -198,7 +198,14 @@
 <Tabs {tabs} bind:selectedTabId>
   <svelte:fragment slot="tab-end">
     {#if $store.owner}
-      <AllowEditLock />
+      <AllowEditLock
+        hint={$settingStore.enablePermanentUnlockOnVehicleIfYouAreGM &&
+        FoundryAdapter.userIsGm()
+          ? localize(
+              'T5EK.Settings.EnablePermanentUnlockOnVehicleIfYouAreGM.title'
+            )
+          : null}
+      />
     {/if}
   </svelte:fragment>
 </Tabs>

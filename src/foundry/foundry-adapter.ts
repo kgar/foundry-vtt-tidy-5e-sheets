@@ -435,8 +435,14 @@ export const FoundryAdapter = {
     return (
       (actor.isOwner && allowEdit) ||
       (FoundryAdapter.userIsGm() &&
-        SettingsProvider.settings.editGmAlwaysEnabled.get() &&
-        actor.type === 'character')
+        SettingsProvider.settings.enablePermanentUnlockOnCharacterIfYouAreGM.get() &&
+        actor.type === 'character') ||
+      (FoundryAdapter.userIsGm() &&
+        SettingsProvider.settings.enablePermanentUnlockOnNPCIfYouAreGM.get() &&
+        actor.type === 'npc') ||
+      (FoundryAdapter.userIsGm() &&
+        SettingsProvider.settings.enablePermanentUnlockOnVehicleIfYouAreGM.get() &&
+        actor.type === 'vehicle')
     );
   },
   allowCharacterEffectsManagement(actor: any) {

@@ -8,18 +8,20 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
 
+  export let hint: string | null = null;
+
   let store =
     getContext<
       Readable<CharacterSheetContext | NpcSheetContext | VehicleSheetContext>
     >('store');
-
-  const localize = FoundryAdapter.localize;
 
   async function toggleLock() {
     await FoundryAdapter.setFlag($store.actor, 'allow-edit', !allowEdit);
   }
 
   $: allowEdit = FoundryAdapter.tryGetFlag($store.actor, 'allow-edit');
+
+  const localize = FoundryAdapter.localize;
 </script>
 
 <div class="toggle-allow-edit">
@@ -27,12 +29,14 @@
     {#if allowEdit}
       <i
         class="fas fa-lock-open"
-        title="{localize('T5EK.DisableEdit')} - {localize('T5EK.EditHint')}"
+        title="{localize('T5EK.DisableEdit')} - {hint ??
+          localize('T5EK.EditHint')}"
       />
     {:else}
       <i
         class="fas fa-lock"
-        title="{localize('T5EK.EnableEdit')} - {localize('T5EK.EditHint')}"
+        title="{localize('T5EK.EnableEdit')} - {hint ??
+          localize('T5EK.EditHint')}"
       />
     {/if}
   </span>

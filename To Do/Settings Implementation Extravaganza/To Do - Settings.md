@@ -84,7 +84,7 @@ Refine and improve any settings that compromise visual feedback and information 
 - [x] "exhaustionEffectCustom" - removed
 - [x] "exhaustionEffectCustomTiers" - removed
 - [x] "exhaustionDisabled"
-- [x] "editGmAlwaysEnabled"
+- [x] "editGmAlwaysEnabled" => "enablePermanentUnlockOnCharacterIfYouAreGM"
   - If a GM and setting turned on, always show classic controls
     - To accomplish this in an elegant way, use a specific boolean setting on the ActorSheetContext (to be renamed CharacterSheetContext) for `showAllEditOptions`, to be combined with `classicControlsEnabled` to determine if classic controls are shown at all and whether the full set of options is shown.
   - Missed a spot: right click menu doesn't provide all the options. That would also need to be handled.
@@ -111,8 +111,8 @@ Refine and improve any settings that compromise visual feedback and information 
 - [x] "playerSheetWidth"
 - [x] "npsSheetWidth" => "npcSheetWidth"
 - [x] "vehicleSheetWidth"
-- [ ] "enablePermanentUnlockOnNPCIfYouAreGM"
-- [ ] "enablePermanentUnlockOnVehicleIfYouAreGM"
+- [x] "enablePermanentUnlockOnNPCIfYouAreGM"
+- [x] "enablePermanentUnlockOnVehicleIfYouAreGM"
 - [ ] "enableSortFavoritesItemsAlphabetically"
   - It works, but it's not reactive yet.
 - [ ] "lockMoneyChanges"

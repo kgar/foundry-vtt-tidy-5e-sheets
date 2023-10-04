@@ -703,17 +703,17 @@ export function createSettings() {
         },
       },
 
-      editGmAlwaysEnabled: {
+      enablePermanentUnlockOnCharacterIfYouAreGM: {
         options: {
-          name: 'T5EK.Settings.EditGmAlways.name',
-          hint: 'T5EK.Settings.EditGmAlways.hint',
+          name: 'T5EK.Settings.EnablePermanentUnlockOnCharacterIfYouAreGM.name',
+          hint: 'T5EK.Settings.EnablePermanentUnlockOnCharacterIfYouAreGM.hint',
           scope: 'world',
           config: false,
           default: false,
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getGameSetting<boolean>('editGmAlwaysEnabled');
+          return FoundryAdapter.getGameSetting<boolean>('enablePermanentUnlockOnCharacterIfYouAreGM');
         },
       },
 
