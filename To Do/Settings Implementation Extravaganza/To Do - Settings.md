@@ -99,7 +99,7 @@ Refine and improve any settings that compromise visual feedback and information 
 - [x] "vehicleMotionDisabled"
 - [x] "restingForNpcsEnabled"
 - [x] "restingForNpcsChatDisabled"
-- [ ] "linkMarkerNpc"
+- [x] "linkMarkerNpc"
 - [ ] "activeEffectsMarker"
 - [ ] "playerSheetWidth"
 - [ ] "npsSheetWidth"
