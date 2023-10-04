@@ -95,10 +95,10 @@ Refine and improve any settings that compromise visual feedback and information 
     - T5EK.GmOnlyEdit
   - Missed a spot: right click menu still provides options. That would also need to be handled. 
   - [x] Consolidate the boolean function logic to FoundryAdapter as `allowEffectsEditing`
-- [ ] "inspirationDisabled"
-- [ ] "vehicleMotionDisabled"
-- [ ] "restingForNpcsEnabled"
-- [ ] "restingForNpcsChatDisabled"
+- [x] "inspirationDisabled"
+- [x] "vehicleMotionDisabled"
+- [x] "restingForNpcsEnabled"
+- [x] "restingForNpcsChatDisabled"
 - [ ] "linkMarkerNpc"
 - [ ] "activeEffectsMarker"
 - [ ] "playerSheetWidth"
