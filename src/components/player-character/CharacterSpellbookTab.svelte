@@ -40,10 +40,7 @@
     FoundryAdapter.tryGetFlag($store.actor, 'classFilter') ?? '';
 
   function tryFilterByClass(spells: any[]) {
-    if (
-      !$settingStore.spellClassFilterSelect ||
-      selectedClassFilter === ''
-    ) {
+    if (!$settingStore.spellClassFilterSelect || selectedClassFilter === '') {
       return spells;
     }
 
@@ -100,13 +97,13 @@
 
 <ListContainer cssClass="flex-column small-gap">
   {#if noSpellLevels}
-    <NoSpells allowEdit={$store.allowEdit} />
+    <NoSpells editable={$store.editable} />
   {:else}
     {#each $store.spellbook as section (section.label)}
       {@const filteredSpells = tryFilterByClass(
         FoundryAdapter.getFilteredItems(searchCriteria, section.spells)
       )}
-      {#if (searchCriteria.trim() === '' && $store.allowEdit) || filteredSpells.length > 0}
+      {#if (searchCriteria.trim() === '' && $store.editable) || filteredSpells.length > 0}
         {#if layoutMode === 'list'}
           <SpellbookList
             spells={filteredSpells}
@@ -120,7 +117,7 @@
     {/each}
   {/if}
 
-  {#if noSpells && !$store.allowEdit}
+  {#if noSpells && !$store.editable}
     <Notice>{localize('T5EK.EmptySection')}</Notice>
   {/if}
 </ListContainer>

@@ -77,7 +77,7 @@
       <Traits toggleable={!$settingStore.traitsAlwaysShownNpc} />
     {/if}
     {#each $store.features as section}
-      {#if $store.allowEdit || section.items.length}
+      {#if $store.editable || section.items.length}
         <ItemTable>
           <ItemTableHeaderRow>
             <ItemTableColumn primary={true}>
@@ -151,7 +151,7 @@
                 <ItemTableCell baseWidth="7.5rem">
                   <ItemControls>
                     <ItemEditControl {item} />
-                    {#if $store.allowEdit}
+                    {#if $store.editable}
                       <ItemDuplicateControl {item} />
                       <ItemDeleteControl {item} />
                     {/if}
@@ -160,7 +160,7 @@
               {/if}
             </ItemTableRow>
           {/each}
-          {#if $store.owner && $store.allowEdit && section.dataset}
+          {#if $store.editable && section.dataset}
             <ItemTableFooter actor={$store.actor} dataset={section.dataset} />
           {/if}
         </ItemTable>
@@ -193,7 +193,7 @@
       {#if !noSpellLevels || showNoSpellsView}
         <div class="flex-1 flex-column small-padding-bottom no-gap">
           {#if noSpellLevels}
-            <NoSpells cssClass="flex-1" allowEdit={$store.allowEdit} />
+            <NoSpells cssClass="flex-1" editable={$store.editable} />
           {:else}
             <div class="flex-1 small-padding-bottom flex-column small-gap">
               {#each $store.spellbook as section (section.label)}

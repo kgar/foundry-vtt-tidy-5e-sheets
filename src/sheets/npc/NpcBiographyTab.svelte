@@ -150,7 +150,7 @@
               <SheetEditor
                 content={FoundryAdapter.tryGetFlag($store.actor, 'trait') ?? ''}
                 target="flags.{CONSTANTS.MODULE_ID}.trait"
-                editable={$store.editable}
+                editable={$store.owner || FoundryAdapter.userIsGm()}
               />
             </article>
           </RerenderAfterFormSubmission>
@@ -167,7 +167,7 @@
               <SheetEditor
                 content={FoundryAdapter.tryGetFlag($store.actor, 'ideal') ?? ''}
                 target="flags.{CONSTANTS.MODULE_ID}.ideal"
-                editable={$store.editable}
+                editable={$store.owner || FoundryAdapter.userIsGm()}
               />
             </article>
           </RerenderAfterFormSubmission>
@@ -182,7 +182,7 @@
               <SheetEditor
                 content={FoundryAdapter.tryGetFlag($store.actor, 'bond') ?? ''}
                 target="flags.{CONSTANTS.MODULE_ID}.bond"
-                editable={$store.editable}
+                editable={$store.owner || FoundryAdapter.userIsGm()}
               />
             </article>
           </RerenderAfterFormSubmission>
@@ -197,7 +197,7 @@
               <SheetEditor
                 content={FoundryAdapter.tryGetFlag($store.actor, 'flaw') ?? ''}
                 target="flags.{CONSTANTS.MODULE_ID}.flaw"
-                editable={$store.editable}
+                editable={$store.owner || FoundryAdapter.userIsGm()}
               />
             </article>
           </RerenderAfterFormSubmission>
@@ -221,7 +221,7 @@
               content={FoundryAdapter.tryGetFlag($store.actor, 'appearance') ??
                 ''}
               target="flags.{CONSTANTS.MODULE_ID}.appearance"
-              editable={$store.editable}
+              editable={$store.owner || FoundryAdapter.userIsGm()}
             />
           </article>
         </RerenderAfterFormSubmission>
@@ -235,7 +235,7 @@
             <SheetEditor
               content={$store.system.details.biography.value}
               target="system.details.biography.value"
-              editable={$store.editable}
+              editable={$store.owner || FoundryAdapter.userIsGm()}
             />
           </article>
         </RerenderAfterFormSubmission>

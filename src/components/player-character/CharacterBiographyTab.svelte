@@ -119,7 +119,7 @@
           <SheetEditor
             content={$store.system.details.trait}
             target="system.details.trait"
-            editable={$store.editable}
+            editable={$store.owner || FoundryAdapter.userIsGm()}
           />
         </article>
       </RerenderAfterFormSubmission>
@@ -132,7 +132,7 @@
           <SheetEditor
             content={$store.system.details.ideal}
             target="system.details.ideal"
-            editable={$store.editable}
+            editable={$store.owner || FoundryAdapter.userIsGm()}
           />
         </article>
       </RerenderAfterFormSubmission>
@@ -144,7 +144,7 @@
           <SheetEditor
             content={$store.system.details.bond}
             target="system.details.bond"
-            editable={$store.editable}
+            editable={$store.owner || FoundryAdapter.userIsGm()}
           />
         </article>
       </RerenderAfterFormSubmission>
@@ -156,7 +156,7 @@
           <SheetEditor
             content={$store.system.details.flaw}
             target="system.details.flaw"
-            editable={$store.editable}
+            editable={$store.owner || FoundryAdapter.userIsGm()}
           />
         </article>
       </RerenderAfterFormSubmission>
@@ -173,7 +173,7 @@
           <SheetEditor
             content={$store.system.details.appearance}
             target="system.details.appearance"
-            editable={$store.editable}
+            editable={$store.owner || FoundryAdapter.userIsGm()}
           />
         </article>
       </RerenderAfterFormSubmission>
@@ -187,7 +187,7 @@
           <SheetEditor
             content={$store.system.details.biography.value}
             target="system.details.biography.value"
-            editable={$store.editable}
+            editable={$store.owner || FoundryAdapter.userIsGm()}
           />
         </article>
       </RerenderAfterFormSubmission>

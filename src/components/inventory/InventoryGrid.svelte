@@ -148,7 +148,7 @@
         </div>
       </div>
     {/each}
-    {#if $store.owner && $store.allowEdit}
+    {#if $store.editable}
       <div class="items-footer">
         <a
           role="button"

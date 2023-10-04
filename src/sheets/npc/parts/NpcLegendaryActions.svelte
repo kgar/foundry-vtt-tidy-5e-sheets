@@ -17,7 +17,7 @@
     $store.actor.system.resources.legres.max > 0;
 </script>
 
-{#if $store.allowEdit || showCounters}
+{#if $store.editable || showCounters}
   <div class="counters">
     <div class="counter legendary">
       <h4>{localize('DND5E.LegAct')}</h4>

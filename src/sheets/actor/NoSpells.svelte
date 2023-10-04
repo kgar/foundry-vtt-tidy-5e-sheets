@@ -5,7 +5,7 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
 
-  export let allowEdit: boolean;
+  export let editable: boolean;
   export let cssClass: string | null = null;
 
   let store =
@@ -16,7 +16,7 @@
 
 <div class="no-spells-container {cssClass}">
   <Notice>{localize('DND5E.NoSpellLevels')}</Notice>
-  {#if allowEdit}
+  {#if editable}
     <button
       class="create-spell-btn flex-row align-items-center no-gap"
       on:click={() =>

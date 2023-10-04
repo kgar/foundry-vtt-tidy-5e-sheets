@@ -4,6 +4,7 @@
   import type { Readable } from 'svelte/store';
   import type { VehicleSheetContext } from 'src/types/types';
   import RerenderAfterFormSubmission from 'src/components/shared/RerenderAfterFormSubmission.svelte';
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
   let store = getContext<Readable<VehicleSheetContext>>('store');
 
@@ -20,7 +21,7 @@
       <SheetEditor
         content={$store.biographyHTML}
         target="system.details.biography.value"
-        editable={$store.editable}
+        editable={$store.owner || FoundryAdapter.userIsGm()}
       />
     </article>
   </RerenderAfterFormSubmission>

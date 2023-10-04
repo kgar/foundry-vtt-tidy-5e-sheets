@@ -64,7 +64,7 @@
 </ItemFilters>
 
 <ListContainer cssClass="flex-column small-gap">
-  {#if noItems && !$store.allowEdit}
+  {#if noItems && !$store.editable}
     <Notice>{localize('T5EK.EmptySection')}</Notice>
   {:else}
     {#each $store.inventory as section (section.label)}
@@ -72,7 +72,7 @@
         searchCriteria,
         section.items
       )}
-      {#if (searchCriteria.trim() === '' && $store.allowEdit) || filteredItems.length > 0}
+      {#if (searchCriteria.trim() === '' && $store.editable) || filteredItems.length > 0}
         {#if layoutMode === 'list'}
           <InventoryList
             primaryColumnName="{localize(

@@ -49,7 +49,7 @@
   const controlsBaseWidthLocked: string = '5.3125rem';
   const controlsBaseWidthUnlocked: string = '7.5rem';
 
-  $: classicControlsBaseWidth = $store.allowEdit
+  $: classicControlsBaseWidth = $store.editable
     ? controlsBaseWidthUnlocked
     : controlsBaseWidthLocked;
 
@@ -66,13 +66,13 @@
     />
   </div>
   <div class="main-panel flex-column small-gap">
-    {#if noFeatures && !$store.allowEdit}
+    {#if noFeatures && !$store.editable}
       <Notice>
         {localize('T5EK.EmptySection')}
       </Notice>
     {:else}
       {#each $store.features as section}
-        {#if $store.allowEdit || section.items.length}
+        {#if $store.editable || section.items.length}
           <ItemTable>
             <ItemTableHeaderRow>
               <ItemTableColumn primary={true}>
@@ -249,7 +249,7 @@
                           })}
                       />
                       <ItemEditControl {item} />
-                      {#if $store.allowEdit}
+                      {#if $store.editable}
                         <ItemDuplicateControl {item} />
                         <ItemDeleteControl {item} />
                       {/if}
@@ -258,7 +258,7 @@
                 {/if}
               </ItemTableRow>
             {/each}
-            {#if $store.owner && $store.allowEdit && section.dataset}
+            {#if $store.editable && section.dataset}
               <ItemTableFooter actor={$store.actor} dataset={section.dataset} />
             {/if}
           </ItemTable>

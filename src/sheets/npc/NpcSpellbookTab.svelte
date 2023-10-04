@@ -68,14 +68,14 @@
 </ItemFilters>
 <ListContainer cssClass="flex-column small-gap">
   {#if noSpellLevels}
-    <NoSpells allowEdit={$store.allowEdit} />
+    <NoSpells editable={$store.editable} />
   {:else}
     {#each $store.spellbook as section (section.label)}
       {@const filteredSpells = FoundryAdapter.getFilteredItems(
         searchCriteria,
         section.spells
       )}
-      {#if (searchCriteria.trim() === '' && $store.allowEdit) || filteredSpells.length > 0}
+      {#if (searchCriteria.trim() === '' && $store.editable) || filteredSpells.length > 0}
         {#if layoutMode === 'list'}
           <SpellbookList
             allowFavorites={false}

@@ -35,7 +35,7 @@
           <SheetEditor
             content={$store.system.details.appearance}
             target="system.details.appearance"
-            editable={$store.editable}
+            editable={$store.owner || FoundryAdapter.userIsGm()}
           />
         </article>
         <article class="biography-notes" use:activateProseMirrorListeners>
@@ -45,7 +45,7 @@
           <SheetEditor
             content={$store.biographyHTML}
             target="system.details.biography.value"
-            editable={$store.editable}
+            editable={$store.owner || FoundryAdapter.userIsGm()}
           />
         </article>
       </RerenderAfterFormSubmission>

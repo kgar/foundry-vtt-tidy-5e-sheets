@@ -37,7 +37,7 @@
             content={FoundryAdapter.tryGetFlag($store.actor, 'appearance') ??
               ''}
             target="flags.{CONSTANTS.MODULE_ID}.appearance"
-            editable={$store.editable}
+            editable={$store.owner || FoundryAdapter.userIsGm()}
           />
         </article>
         <article class="biography-notes" use:activateProseMirrorListeners>
@@ -47,7 +47,7 @@
           <SheetEditor
             content={$store.biographyHTML}
             target="system.details.biography.value"
-            editable={$store.editable}
+            editable={$store.owner || FoundryAdapter.userIsGm()}
           />
         </article>
       </RerenderAfterFormSubmission>

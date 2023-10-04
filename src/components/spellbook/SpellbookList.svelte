@@ -48,7 +48,7 @@
 
   const localize = FoundryAdapter.localize;
 
-  $: classicControlsBaseWidth = $store.allowEdit
+  $: classicControlsBaseWidth = $store.editable
     ? controlsBaseWidthUnlocked
     : controlsBaseWidthLocked;
 </script>
@@ -182,7 +182,7 @@
                 <ItemFavoriteControl item={spell} />
               {/if}
               <ItemEditControl item={spell} />
-              {#if $store.allowEdit}
+              {#if $store.editable}
                 <ItemDuplicateControl item={spell} />
                 <ItemDeleteControl item={spell} />
               {/if}
@@ -191,7 +191,7 @@
         {/if}
       </ItemTableRow>
     {/each}
-    {#if $store.owner && $store.allowEdit}
+    {#if $store.editable}
       <ItemTableFooter actor={$store.actor} dataset={section.dataset} />
     {/if}
   </ItemTable>

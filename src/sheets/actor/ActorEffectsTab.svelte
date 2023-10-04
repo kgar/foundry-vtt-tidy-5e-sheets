@@ -30,18 +30,18 @@
   const localize = FoundryAdapter.localize;
 
   $: effectSections = Object.values<any>($store.effects);
-  $: classicControlsBaseWidth = $store.allowEdit ? '7.5rem' : '5.3125rem';
+  $: classicControlsBaseWidth = $store.editable ? '7.5rem' : '5.3125rem';
 
   $: noEffects =
     effectSections.some((section: any) => section.effects.length > 0) === false;
 </script>
 
 <ListContainer cssClass="flex-column small-gap">
-  {#if noEffects && !$store.allowEdit}
+  {#if noEffects && !$store.editable}
     <Notice>{localize('T5EK.EmptySection')}</Notice>
   {:else}
     {#each effectSections as section}
-      {#if $store.allowEdit || section.effects.length > 0}
+      {#if $store.editable || section.effects.length > 0}
         <ItemTable>
           <ItemTableHeaderRow>
             <ItemTableColumn primary={true}>
@@ -96,7 +96,7 @@
                       iconCssClass="fas fa-edit"
                     />
 
-                    {#if $store.allowEdit}
+                    {#if $store.editable}
                       <ItemControl
                         on:click={() => effect.delete()}
                         title={localize('DND5E.EffectDelete')}
@@ -108,7 +108,7 @@
               {/if}
             </ItemTableRow>
           {/each}
-          {#if $store.owner && $store.allowEdit && $store.editable}
+          {#if $store.editable}
             <ItemTableFooter
               actor={$store.actor}
               dataset={section.dataset}

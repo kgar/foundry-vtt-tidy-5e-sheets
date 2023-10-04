@@ -12,7 +12,7 @@
   let store = getContext<Readable<CharacterSheetContext>>('store');
 
   $: showResources =
-    $store.allowEdit ||
+    $store.editable ||
     $store.resources.some(
       (x) => !isNil(x.value) || !isNil(x.value, '') || !isNil(x.max)
     );

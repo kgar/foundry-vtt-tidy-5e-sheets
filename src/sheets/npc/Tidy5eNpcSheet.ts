@@ -102,7 +102,7 @@ export class Tidy5eNpcSheet extends dnd5e.applications.actor.ActorSheet5eNPC {
   }
 
   private async getContext(): Promise<NpcSheetContext> {
-    const allowEdit = FoundryAdapter.canEditActor(this.actor);
+    const editable = FoundryAdapter.canEditActor(this.actor) && this.isEditable;
 
     return {
       ...(await super.getData(this.options)),
@@ -116,8 +116,8 @@ export class Tidy5eNpcSheet extends dnd5e.applications.actor.ActorSheet5eNPC {
       rollDeathSave: this._rollDeathSave.bind(this),
       tokenState: this.#getTokenState(),
       lockSensitiveFields:
-        !allowEdit && SettingsProvider.settings.editTotalLockEnabled.get(),
-      allowEdit,
+        !editable && SettingsProvider.settings.editTotalLockEnabled.get(),
+      editable,
     };
   }
 

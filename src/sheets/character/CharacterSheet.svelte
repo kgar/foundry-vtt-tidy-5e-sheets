@@ -227,7 +227,7 @@
       {/if}
 
       <!-- Class / Subclass -->
-      {#if $store.editable && !$settingStore.classListDisabled}
+      {#if $store.owner && !$settingStore.classListDisabled}
         <span class="flex-row extra-small-gap">
           {#each classAndSubclassSummaries as summary, i}
             {#if i > 0}

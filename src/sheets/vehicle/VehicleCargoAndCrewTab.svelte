@@ -29,8 +29,6 @@
 
   let store = getContext<Readable<VehicleSheetContext>>('store');
 
-  $: allowEdit = FoundryAdapter.tryGetFlag($store.actor, 'allow-edit') === true;
-
   $: noCargoOrCrew =
     $store.cargo.some((section: any) => section.items.length > 0) === false;
 
@@ -82,7 +80,7 @@
     return false;
   }
 
-  $: classicControlsBaseWidth = allowEdit ? '7.5rem' : '4.375rem';
+  $: classicControlsBaseWidth = $store.editable ? '7.5rem' : '4.375rem';
   $: classicControlsEditableRowBaseWidth = '4.375rem';
 
   function deleteCrewOrPassenger(section: any, index: number) {
@@ -102,7 +100,7 @@
   };
 </script>
 
-{#if noCargoOrCrew && !allowEdit}
+{#if noCargoOrCrew && !$store.editable}
   <Notice>
     {localize('T5EK.EmptySection')}
   </Notice>
@@ -111,7 +109,7 @@
 <ListContainer cssClass="flex-column small-gap">
   {#each $store.cargo as section}
     {@const cardTemplate = itemCardTemplates[section.dataset.type] ?? null}
-    {#if allowEdit || section.items.length}
+    {#if $store.editable || section.items.length}
       <ItemTable>
         <ItemTableHeaderRow>
           <ItemTableColumn primary={true}>
@@ -127,7 +125,7 @@
               </ItemTableColumn>
             {/if}
           {/each}
-          {#if $store.owner && (!section.editableName || (allowEdit && section.editableName))}
+          {#if $store.owner && (!section.editableName || ($store.editable && section.editableName))}
             <ItemTableColumn
               baseWidth={section.editableName
                 ? classicControlsEditableRowBaseWidth
@@ -211,7 +209,7 @@
                 {/if}
               {/each}
             {/if}
-            {#if $store.owner && (!section.editableName || (allowEdit && section.editableName))}
+            {#if $store.owner && (!section.editableName || ($store.editable && section.editableName))}
               <ItemTableCell
                 baseWidth={section.editableName
                   ? classicControlsEditableRowBaseWidth
@@ -222,11 +220,11 @@
                     <ItemEditControl {item} />
                   {/if}
 
-                  {#if allowEdit && !section.editableName}
+                  {#if $store.editable && !section.editableName}
                     <ItemDuplicateControl {item} />
                   {/if}
 
-                  {#if allowEdit}
+                  {#if $store.editable}
                     <ItemDeleteControl
                       onDelete={() =>
                         !section.editableName ||
@@ -239,7 +237,7 @@
             {/if}
           </ItemTableRow>
         {/each}
-        {#if $store.owner && allowEdit && section.dataset}
+        {#if $store.editable && section.dataset}
           <ItemTableFooter
             actor={$store.actor}
             dataset={section.dataset}

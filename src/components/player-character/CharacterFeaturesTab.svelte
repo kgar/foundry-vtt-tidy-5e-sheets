@@ -31,7 +31,7 @@
   let store = getContext<Readable<CharacterSheetContext>>('store');
 
   const localize = FoundryAdapter.localize;
-  $: classicControlsBaseWidth = $store.allowEdit ? '7.5rem' : '5.3125rem';
+  $: classicControlsBaseWidth = $store.editable ? '7.5rem' : '5.3125rem';
 
   let backgroundSection: any,
     classSection: any,
@@ -103,10 +103,10 @@
     passiveAbilitiesSection.items
   )}
 
-  {#if noFeatures && !$store.allowEdit}
+  {#if noFeatures && !$store.editable}
     <Notice>{localize('T5EK.EmptySection')}</Notice>
   {:else}
-    {#if (searchCriteria.trim() === '' && $store.allowEdit) || filteredBackgrounds.length > 0}
+    {#if (searchCriteria.trim() === '' && $store.editable) || filteredBackgrounds.length > 0}
       <ItemTable>
         <ItemTableHeaderRow>
           <ItemTableColumn primary={true}>
@@ -165,7 +165,7 @@
                 <ItemControls>
                   <ItemFavoriteControl {item} />
                   <ItemEditControl {item} />
-                  {#if $store.allowEdit}
+                  {#if $store.editable}
                     <ItemDuplicateControl {item} />
                     <ItemDeleteControl {item} />
                   {/if}
@@ -175,7 +175,7 @@
           </ItemTableRow>
         {/each}
 
-        {#if $store.owner && $store.allowEdit}
+        {#if $store.editable}
           <ItemTableFooter
             dataset={backgroundSection.dataset}
             actor={$store.actor}
@@ -184,7 +184,7 @@
       </ItemTable>
     {/if}
 
-    {#if (searchCriteria.trim() === '' && $store.allowEdit) || filteredClasses.length > 0}
+    {#if (searchCriteria.trim() === '' && $store.editable) || filteredClasses.length > 0}
       <ItemTable>
         <ItemTableHeaderRow>
           <ItemTableColumn primary={true}>
@@ -269,7 +269,7 @@
                     <ItemFavoriteControl {item} />
                   {/if}
                   <ItemEditControl {item} />
-                  {#if $store.allowEdit}
+                  {#if $store.editable}
                     <ItemDuplicateControl {item} />
                     <ItemDeleteControl {item} />
                   {/if}
@@ -278,7 +278,7 @@
             {/if}
           </ItemTableRow>
         {/each}
-        {#if $store.owner && $store.allowEdit && $store.editable}
+        {#if $store.editable}
           <ItemTableFooter
             dataset={classSection.dataset}
             actor={$store.actor}
@@ -287,7 +287,7 @@
       </ItemTable>
     {/if}
 
-    {#if (searchCriteria.trim() === '' && $store.allowEdit) || filteredActiveAbilities.length > 0}
+    {#if (searchCriteria.trim() === '' && $store.editable) || filteredActiveAbilities.length > 0}
       <ItemTable>
         <ItemTableHeaderRow>
           <ItemTableColumn primary={true}>
@@ -377,7 +377,7 @@
                 <ItemControls>
                   <ItemFavoriteControl {item} />
                   <ItemEditControl {item} />
-                  {#if $store.allowEdit}
+                  {#if $store.editable}
                     <ItemDuplicateControl {item} />
                     <ItemDeleteControl {item} />
                   {/if}
@@ -386,7 +386,7 @@
             {/if}
           </ItemTableRow>
         {/each}
-        {#if $store.owner && $store.allowEdit}
+        {#if $store.editable}
           <ItemTableFooter
             dataset={activeAbilitiesSection.dataset}
             actor={$store.actor}
@@ -395,7 +395,7 @@
       </ItemTable>
     {/if}
 
-    {#if (searchCriteria.trim() === '' && $store.allowEdit) || filteredPassiveAbilities.length > 0}
+    {#if (searchCriteria.trim() === '' && $store.editable) || filteredPassiveAbilities.length > 0}
       <ItemTable>
         <ItemTableHeaderRow>
           <ItemTableColumn primary={true}>
@@ -453,7 +453,7 @@
                 <ItemControls>
                   <ItemFavoriteControl {item} />
                   <ItemEditControl {item} />
-                  {#if $store.allowEdit}
+                  {#if $store.editable}
                     <ItemDuplicateControl {item} />
                     <ItemDeleteControl {item} />
                   {/if}
@@ -462,7 +462,7 @@
             {/if}
           </ItemTableRow>
         {/each}
-        {#if $store.owner && $store.allowEdit}
+        {#if $store.editable}
           <ItemTableFooter
             dataset={passiveAbilitiesSection.dataset}
             actor={$store.actor}

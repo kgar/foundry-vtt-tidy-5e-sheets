@@ -2,9 +2,10 @@
 
 - [x] HP Overlay - set pointer-events to none on `.death-saves`; set pointer-events to auto on `.death-saves > *`
 - [ ] Carve out a shared base type for all sheet contexts which contains universal settings
-  - [x] allowEdit
+  - [x] ~~allowEdit~~ now rolled into editable
   - [x] lockSensitiveFields
-  - [ ] editable - this should combine the composite allowEdit and the "editable" field provided by dnd5e context
+  - [x] editable - this should combine the composite allowEdit and the "editable" field provided by dnd5e context
+    - ... or should it replace allowEdit altogether?
   - [ ] ...?
 - [ ] Replace unioned sheet context types which reference all three sheet types with the base context, where able.
 - [ ] Add the NPM watch script for enforcing resolving type errors
@@ -14,6 +15,7 @@
     - [ ] Vehicle
 - [ ] Begin the arduous process of actually creating a flattened type for each sheet context which contains the needed data
 - [ ] Figure out how to centralize and make testable the property strings that appear on all the various sheet inputs. It might be as simple as adding more constants...
+- [ ] Observers / Limited users should not be allowed to click configure buttons or make rolls.
 
 ## Implement ALL the Settings! 👏
 
