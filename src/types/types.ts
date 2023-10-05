@@ -28,7 +28,6 @@ export type ItemCardStore = {
 };
 
 export type CharacterSheetContext = {
-  actor: Actor5e;
   resources: Resource[];
   skills: ActorContextSkills;
   tools: ActorContextTools;
@@ -37,22 +36,27 @@ export type CharacterSheetContext = {
   JQueryHooksSheetIntegration &
   Record<string, any>;
 
-export type NpcSheetContext = {
-  actor: Actor5e;
-} & ActorSheetContext &
+export type NpcSheetContext = {} & ActorSheetContext &
   JQueryHooksSheetIntegration &
   Record<string, any>;
 
-export type VehicleSheetContext = {
-  actor: Actor5e;
-} & ActorSheetContext &
+export type VehicleSheetContext = {} & ActorSheetContext &
   JQueryHooksSheetIntegration &
   Record<string, any>;
 
 export type ActorSheetContext = {
+  appId: string;
+  actor: Actor5e;
   lockSensitiveFields: boolean;
   editable: boolean;
   allowEffectsManagement: boolean;
+  lockMoneyChanges: boolean;
+  lockExpChanges: boolean;
+  lockHpMaxChanges: boolean;
+  lockLevelSelector: boolean;
+  lockConfigureSheet: boolean;
+  lockItemQuantity: boolean;
+  owner: boolean;
 };
 
 export type JQueryHooksSheetIntegration = {

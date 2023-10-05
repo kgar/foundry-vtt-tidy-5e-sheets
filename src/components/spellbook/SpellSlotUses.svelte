@@ -49,7 +49,7 @@
     >
       {section.slots}
     </span>
-    {#if $store.editable && !$store.lockSensitiveFields}
+    {#if $store.owner && !$store.lockSensitiveFields}
       <a
         class="spell-slot-max-override"
         title={localize('DND5E.SpellProgOverride')}

@@ -2,14 +2,13 @@
   import TextInput from 'src/components/form/TextInput.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { Actor5e } from 'src/types/actor';
-  import type { CharacterSheetContext, NpcSheetContext } from 'src/types/types';
+  import type { ActorSheetContext } from 'src/types/types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
 
   export let actor: Actor5e;
 
-  let store =
-    getContext<Readable<CharacterSheetContext | NpcSheetContext>>('store');
+  let store = getContext<Readable<ActorSheetContext>>('store');
 
   $: currencies = Object.entries(actor.system.currency).map((e) => ({
     key: e[0],
@@ -56,6 +55,7 @@
           allowDeltaChanges={true}
           selectOnFocus={true}
           dtype="Number"
+          disabled={!$store.owner || $store.lockMoneyChanges}
         />
         <label
           for="{$store.appId}-system.currency.{currency.key}"

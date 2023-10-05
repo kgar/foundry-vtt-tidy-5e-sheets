@@ -453,6 +453,42 @@ export const FoundryAdapter = {
         actor.isOwner)
     );
   },
+  shouldLockMoneyChanges() {
+    return (
+      !FoundryAdapter.userIsGm() &&
+      SettingsProvider.settings.lockMoneyChanges.get()
+    );
+  },
+  shouldLockExpChanges() {
+    return (
+      !FoundryAdapter.userIsGm() &&
+      SettingsProvider.settings.lockExpChanges.get()
+    );
+  },
+  shouldLockHpMaxChanges() {
+    return (
+      !FoundryAdapter.userIsGm() &&
+      SettingsProvider.settings.lockHpMaxChanges.get()
+    );
+  },
+  shouldLockLevelSelector() {
+    return (
+      !FoundryAdapter.userIsGm() &&
+      SettingsProvider.settings.lockLevelSelector.get()
+    );
+  },
+  shouldLockConfigureSheet() {
+    return (
+      !FoundryAdapter.userIsGm() &&
+      SettingsProvider.settings.lockConfigureSheet.get()
+    );
+  },
+  shouldLockItemQuantity() {
+    return (
+      !FoundryAdapter.userIsGm() &&
+      SettingsProvider.settings.lockItemQuantity.get()
+    );
+  },
 };
 
 /* ------------------------------------------------------

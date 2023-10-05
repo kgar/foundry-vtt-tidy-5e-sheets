@@ -90,6 +90,13 @@ export class Tidy5eVehicleSheet extends dnd5e.applications.actor
         !editable && SettingsProvider.settings.editTotalLockEnabled.get(),
       editable,
       allowEffectsManagement: true,
+      lockMoneyChanges: FoundryAdapter.shouldLockMoneyChanges(),
+      lockExpChanges: FoundryAdapter.shouldLockExpChanges(),
+      lockHpMaxChanges: FoundryAdapter.shouldLockHpMaxChanges(),
+      lockLevelSelector: FoundryAdapter.shouldLockLevelSelector(),
+      lockConfigureSheet: FoundryAdapter.shouldLockConfigureSheet(),
+      lockItemQuantity: FoundryAdapter.shouldLockItemQuantity(),
+      owner: this.actor.isOwner,
     };
 
     debug('Vehicle Sheet context data', context);

@@ -183,7 +183,7 @@
                             maxlength={5}
                             ariaDescribedBy="tooltip"
                             selectOnFocus={true}
-                            disabled={!$store.editable}
+                            disabled={!$store.owner}
                           />
                           <span class="value-seperator sep"> / </span>
                           <TextInput
@@ -198,7 +198,7 @@
                             maxlength={5}
                             ariaDescribedBy="tooltip"
                             selectOnFocus={true}
-                            disabled={!$store.editable ||
+                            disabled={!$store.owner ||
                               $store.lockSensitiveFields}
                           />
                         </div>
