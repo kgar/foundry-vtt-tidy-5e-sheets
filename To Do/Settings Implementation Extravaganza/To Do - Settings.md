@@ -113,8 +113,8 @@ Refine and improve any settings that compromise visual feedback and information 
 - [x] "vehicleSheetWidth"
 - [x] "enablePermanentUnlockOnNPCIfYouAreGM"
 - [x] "enablePermanentUnlockOnVehicleIfYouAreGM"
-- [ ] "enableSortFavoritesItemsAlphabetically"
-  - It works, but it's not reactive yet.
+- [x] "enableSortFavoritesItemsAlphabetically"
+  - [x] It works, but it's not reactive yet.
 - [ ] "lockMoneyChanges"
 - [ ] "lockExpChanges"
 - [ ] "lockHpMaxChanges"

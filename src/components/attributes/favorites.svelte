@@ -14,23 +14,34 @@
   const localize = FoundryAdapter.localize;
 
   $: favoriteInventory = sortByNameIfConfigured(
+    $settingStore.enableSortFavoritesItemsAlphabetically,
     $store.inventory
       .flatMap((x: { items: Item5e[] }) => x.items)
       .filter(FoundryAdapter.isItemFavorite)
   );
 
   $: favoriteFeatures = sortByNameIfConfigured(
+    $settingStore.enableSortFavoritesItemsAlphabetically,
     $store.features
       .flatMap((x: { items: Item5e[] }) => x.items)
       .filter(FoundryAdapter.isItemFavorite)
   );
 
-  function getFavoriteSpells(spells: Item5e[]): Item5e[] {
-    return sortByNameIfConfigured(spells.filter(FoundryAdapter.isItemFavorite));
+  function getFavoriteSpells(
+    sortFavoritesItemsAlphabetically: boolean,
+    spells: Item5e[]
+  ): Item5e[] {
+    return sortByNameIfConfigured(
+      sortFavoritesItemsAlphabetically,
+      spells.filter(FoundryAdapter.isItemFavorite)
+    );
   }
 
-  function sortByNameIfConfigured(items: Item5e[]): Item5e[] {
-    return $settingStore.enableSortFavoritesItemsAlphabetically
+  function sortByNameIfConfigured(
+    sortAlphabetically: boolean,
+    items: Item5e[]
+  ): Item5e[] {
+    return sortAlphabetically
       ? items.sort((a, b) => a.name.localeCompare(b.name))
       : items;
   }
@@ -52,7 +63,10 @@
   {/if}
 
   {#each $store.spellbook as section}
-    {@const favoriteSpells = getFavoriteSpells(section.spells)}
+    {@const favoriteSpells = getFavoriteSpells(
+      $settingStore.enableSortFavoritesItemsAlphabetically,
+      section.spells
+    )}
     {#if favoriteSpells.length}
       <FavoriteSpellsList {section} spells={favoriteSpells} />
     {/if}
