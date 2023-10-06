@@ -119,7 +119,7 @@ Refine and improve any settings that compromise visual feedback and information 
 - [ ] "lockExpChanges"
 - [ ] "lockHpMaxChanges"
 - [ ] "lockLevelSelector"
-- [ ] "lockConfigureSheet"
+- [x] "lockConfigureSheet"
 - [ ] "lockItemQuantity"
 - [ ] "allowCantripToBePreparedOnContext"
 - [ ] "spellClassFilterSelect"

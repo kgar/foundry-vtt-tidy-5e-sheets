@@ -392,11 +392,7 @@ export const FoundryAdapter = {
     return allClasses;
   },
   removeConfigureSettingsButtonWhenLockedForNonGm(buttons: any[]) {
-    if (FoundryAdapter.userIsGm()) {
-      return buttons;
-    }
-
-    if (SettingsProvider.settings.lockConfigureSheet.get()) {
+    if (FoundryAdapter.shouldLockConfigureSheet()) {
       const configureSheetButtonIndex = buttons.findIndex((b) =>
         b.class.includes('configure-sheet')
       );

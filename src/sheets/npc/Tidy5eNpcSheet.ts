@@ -123,7 +123,6 @@ export class Tidy5eNpcSheet extends dnd5e.applications.actor.ActorSheet5eNPC {
       lockExpChanges: FoundryAdapter.shouldLockExpChanges(),
       lockHpMaxChanges: FoundryAdapter.shouldLockHpMaxChanges(),
       lockLevelSelector: FoundryAdapter.shouldLockLevelSelector(),
-      lockConfigureSheet: FoundryAdapter.shouldLockConfigureSheet(),
       lockItemQuantity: FoundryAdapter.shouldLockItemQuantity(),
       owner: this.actor.isOwner,
     };

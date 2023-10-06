@@ -54,8 +54,13 @@ export type ActorSheetContext = {
   lockExpChanges: boolean;
   lockHpMaxChanges: boolean;
   lockLevelSelector: boolean;
-  lockConfigureSheet: boolean;
+  /**
+   * Item Quantity should be uneditable.
+   */
   lockItemQuantity: boolean;
+  /**
+   * The current user owns the actor.
+   */
   owner: boolean;
 };
 
