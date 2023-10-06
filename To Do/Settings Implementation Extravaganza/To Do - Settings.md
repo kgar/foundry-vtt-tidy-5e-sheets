@@ -122,6 +122,11 @@ Refine and improve any settings that compromise visual feedback and information 
 - [x] "lockConfigureSheet"
 - [x] "lockItemQuantity"
 - [ ] "allowCantripToBePreparedOnContext"
+  - [ ] Make `canPrepareSpell()` available for all actors
+  - [ ] Reuse `canPrepareSpell()` for context menu
+  - [ ] Reuse `canPrepareSpell()` for NPC classic controls
+  - [ ] Reuse the Prepare Spell button on classic controls for cantrips when setting is enabled
+    - [ ] Extend to allow specifying the target field
 - [ ] "spellClassFilterSelect"
 - [ ] "spellClassFilterIconReplace"
   - Works, but not reactive
