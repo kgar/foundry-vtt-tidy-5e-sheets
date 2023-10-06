@@ -137,8 +137,7 @@
               cssClass="item-count"
               value={item.system.quantity}
               maxlength={2}
-              disabled={!FoundryAdapter.userIsGm() &&
-                $settingStore.lockItemQuantity}
+              disabled={!$store.owner || $store.lockItemQuantity}
               dtype="Number"
               allowDeltaChanges={true}
               selectOnFocus={true}

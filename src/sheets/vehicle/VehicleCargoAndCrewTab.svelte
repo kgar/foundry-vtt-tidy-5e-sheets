@@ -200,6 +200,9 @@
                         {value}
                         onSaveChange={(ev) =>
                           saveSection(ev, index, column.property, section)}
+                        disabled={!$store.owner ||
+                          (column.property === 'quantity' &&
+                            $store.lockItemQuantity)}
                       />
                     {:else}
                       {FoundryAdapter.getProperty(item, column.property) ??

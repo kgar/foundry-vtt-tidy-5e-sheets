@@ -5,7 +5,9 @@ import type { FoundryDocument } from './document';
 import type { Flags } from './flags';
 import type { Roll } from './types';
 
-export type ItemSheetContext = any;
+export type ItemSheetContext = {
+  lockItemQuantity: boolean;
+} & Record<string, any>;
 
 export type Item5e = Item & {
   img: string;

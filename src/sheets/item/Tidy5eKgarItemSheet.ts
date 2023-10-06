@@ -250,6 +250,7 @@ export class Tidy5eKgarItemSheet extends dnd5e.applications.item.ItemSheet5e {
         super.activateListeners($(node));
       },
       toggleAdvancementLock: this.toggleAdvancementLock.bind(this),
+      lockItemQuantity: FoundryAdapter.shouldLockItemQuantity(),
     };
 
     debug(`${this.item?.type ?? 'Unknown Item Type'} context data`, context);

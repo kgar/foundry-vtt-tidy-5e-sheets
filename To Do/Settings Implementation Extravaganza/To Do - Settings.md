@@ -120,7 +120,7 @@ Refine and improve any settings that compromise visual feedback and information 
 - [x] "lockHpMaxChanges"
 - [x] "lockLevelSelector"
 - [x] "lockConfigureSheet"
-- [ ] "lockItemQuantity"
+- [x] "lockItemQuantity"
 - [ ] "allowCantripToBePreparedOnContext"
 - [ ] "spellClassFilterSelect"
 - [ ] "spellClassFilterIconReplace"

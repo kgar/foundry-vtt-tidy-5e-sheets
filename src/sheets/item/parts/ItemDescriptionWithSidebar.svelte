@@ -29,8 +29,7 @@
           field="system.quantity"
           document={$store.item}
           step="1"
-          readonly={!FoundryAdapter.userIsGm() &&
-            $settingStore.lockItemQuantity}
+          readonly={!$store.owner || $store.lockItemQuantity}
         />
       </div>
 
