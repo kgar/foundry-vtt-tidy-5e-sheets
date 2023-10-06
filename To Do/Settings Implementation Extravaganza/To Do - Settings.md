@@ -118,7 +118,7 @@ Refine and improve any settings that compromise visual feedback and information 
 - [x] "lockMoneyChanges"
 - [x] "lockExpChanges"
 - [x] "lockHpMaxChanges"
-- [ ] "lockLevelSelector"
+- [x] "lockLevelSelector"
 - [x] "lockConfigureSheet"
 - [ ] "lockItemQuantity"
 - [ ] "allowCantripToBePreparedOnContext"

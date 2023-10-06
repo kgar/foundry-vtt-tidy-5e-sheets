@@ -245,6 +245,7 @@
                 <select
                   on:change={(event) =>
                     FoundryAdapter.onLevelChange(event, item, $store.actor)}
+                  disabled={!$store.owner || $store.lockLevelSelector}
                 >
                   {#each getAvailableLevels(item.id) as availableLevel}
                     <option
