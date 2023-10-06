@@ -174,6 +174,7 @@
                 selectOnFocus={true}
                 allowDeltaChanges={true}
                 maxlength={7}
+                disabled={$store.lockExpChanges}
               />
               <span class="sep">/</span>
               {#if FoundryAdapter.userIsGm()}

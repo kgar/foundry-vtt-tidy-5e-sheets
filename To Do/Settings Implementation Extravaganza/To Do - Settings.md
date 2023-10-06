@@ -116,7 +116,7 @@ Refine and improve any settings that compromise visual feedback and information 
 - [x] "enableSortFavoritesItemsAlphabetically"
   - [x] It works, but it's not reactive yet.
 - [x] "lockMoneyChanges"
-- [ ] "lockExpChanges"
+- [x] "lockExpChanges"
 - [ ] "lockHpMaxChanges"
 - [ ] "lockLevelSelector"
 - [x] "lockConfigureSheet"
