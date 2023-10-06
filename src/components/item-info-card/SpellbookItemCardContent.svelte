@@ -22,7 +22,7 @@
 
   $: spellRowClasses = FoundryAdapter.getSpellRowClasses(item);
   $: ctx = $store.itemContext[item.id];
-  $: canPrepare = FoundryAdapter.canPrepareSpell($store.actor, item);
+  $: canPrepare = FoundryAdapter.canPrepareSpell(item);
 </script>
 
 <div class="info-card {spellRowClasses}" data-item-id={item._id}>

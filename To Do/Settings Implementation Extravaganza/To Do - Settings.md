@@ -1,12 +1,17 @@
 ## Refine
 
 - [x] HP Overlay - set pointer-events to none on `.death-saves`; set pointer-events to auto on `.death-saves > *`
-- [ ] Carve out a shared base type for all sheet contexts which contains universal settings
+- [x] Carve out a shared base type for all sheet contexts which contains universal settings
   - [x] ~~allowEdit~~ now rolled into editable
   - [x] lockSensitiveFields
   - [x] editable - this should combine the composite allowEdit and the "editable" field provided by dnd5e context
     - ... or should it replace allowEdit altogether?
   - [ ] ...?
+- [ ] 🐞 Update Search Filters
+  - [ ] The placeholder text should match the tab name
+  - [ ] The placeholder text should user the faded / secondary color, while the text should use the primary font color.
+- [ ] Make SHEET_TYPE_CHARACTER, SHEET_TYPE_NPC, and SHEET_TYPE_VEHICLE constants and update all usages.
+- [ ] Make SPELL_PREPARATION_MODE_XYZ constants and update all usages.
 - [ ] Replace unioned sheet context types which reference all three sheet types with the base context, where able.
 - [ ] Add the NPM watch script for enforcing resolving type errors
   - [ ] Begin the process of pulling all data for sheets into their context types
@@ -16,6 +21,8 @@
 - [ ] Begin the arduous process of actually creating a flattened type for each sheet context which contains the needed data
 - [ ] Figure out how to centralize and make testable the property strings that appear on all the various sheet inputs. It might be as simple as adding more constants...
 - [ ] Observers / Limited users should not be allowed to click configure buttons or make rolls.
+- [ ] Honor game setting "Disable Experience Tracking" on our sheets
+
 
 ## Implement ALL the Settings! 👏
 
@@ -121,12 +128,12 @@ Refine and improve any settings that compromise visual feedback and information 
 - [x] "lockLevelSelector"
 - [x] "lockConfigureSheet"
 - [x] "lockItemQuantity"
-- [ ] "allowCantripToBePreparedOnContext"
-  - [ ] Make `canPrepareSpell()` available for all actors
-  - [ ] Reuse `canPrepareSpell()` for context menu
-  - [ ] Reuse `canPrepareSpell()` for NPC classic controls
-  - [ ] Reuse the Prepare Spell button on classic controls for cantrips when setting is enabled
-    - [ ] Extend to allow specifying the target field
+- [x] "allowCantripToBePreparedOnContext"
+  - [x] Make `canPrepareSpell()` available for all actors
+  - [x] Reuse `canPrepareSpell()` for context menu
+  - [x] Reuse `canPrepareSpell()` for PC classic controls
+  - [x] Reuse `canPrepareSpell()` for NPC classic controls
+  - [x] Reuse the Prepare Spell button on classic controls for cantrips when setting is enabled
 - [ ] "spellClassFilterSelect"
 - [ ] "spellClassFilterIconReplace"
   - Works, but not reactive

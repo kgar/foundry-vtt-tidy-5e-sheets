@@ -126,11 +126,6 @@ function getItemContextOptions(item: Item5e) {
   const isNPC = actor.type === 'npc';
   const isVehicle = actor.type === 'vehicle';
 
-  const allowCantripToBePreparedOnContext = game.settings.get(
-    CONSTANTS.MODULE_ID,
-    'allowCantripToBePreparedOnContext'
-  );
-  let toggleClass = '';
   let toggleTitle = '';
   let canToggle = false;
   let isActive = false;
@@ -141,8 +136,6 @@ function getItemContextOptions(item: Item5e) {
     const isAlways = prep.mode === 'always';
     const isPrepared = !!prep.prepared;
     isActive = isPrepared;
-    toggleClass = isPrepared ? 'active' : '';
-    if (isAlways) toggleClass = 'fixed';
     if (isAlways) toggleTitle = CONFIG.DND5E.spellPreparationModes.always;
     else if (isPrepared)
       toggleTitle = CONFIG.DND5E.spellPreparationModes.prepared;
@@ -151,7 +144,6 @@ function getItemContextOptions(item: Item5e) {
     canPrepare = item.system.level >= 1;
   } else {
     isActive = !!item.system.equipped;
-    toggleClass = isActive ? 'active' : '';
     toggleTitle = game.i18n.localize(
       isActive ? 'DND5E.Equipped' : 'DND5E.Unequipped'
     );
@@ -206,29 +198,16 @@ function getItemContextOptions(item: Item5e) {
 
   // Toggle Prepared State
   if ('preparation' in item.system) {
-    const isPrepared = item.system?.preparation?.prepared;
-    if (allowCantripToBePreparedOnContext) {
-      if (item.system.preparation.mode != 'always') {
-        options.push({
-          name: isActive ? 'T5EK.Unprepare' : 'T5EK.Prepare',
-          icon: isActive
-            ? "<i class='fas fa-book fa-fw'></i>"
-            : "<i class='fas fa-book fa-fw'></i>",
-          callback: () =>
-            item.update({ 'system.preparation.prepared': !isPrepared }),
-        });
-      }
-    } else {
-      if (canPrepare && item.system.preparation.mode != 'always') {
-        options.push({
-          name: isActive ? 'T5EK.Unprepare' : 'T5EK.Prepare',
-          icon: isActive
-            ? "<i class='fas fa-book fa-fw'></i>"
-            : "<i class='fas fa-book fa-fw'></i>",
-          callback: () =>
-            item.update({ 'system.preparation.prepared': !isPrepared }),
-        });
-      }
+    if (FoundryAdapter.canPrepareSpell(item)) {
+      const isPrepared = item.system?.preparation?.prepared === true;
+      options.push({
+        name: isActive ? 'T5EK.Unprepare' : 'T5EK.Prepare',
+        icon: isActive
+          ? "<i class='fas fa-book fa-fw'></i>"
+          : "<i class='fas fa-book fa-fw'></i>",
+        callback: () =>
+          item.update({ 'system.preparation.prepared': !isPrepared }),
+      });
     }
   }
 

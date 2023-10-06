@@ -172,12 +172,10 @@
         {#if $store.owner && classicControlsEnabled}
           <ItemTableCell baseWidth={classicControlsBaseWidth}>
             <ItemControls>
-              {#if section.canPrepare}
-                {#if spell.system.preparation?.mode === 'always'}
-                  <span />
-                {:else}
-                  <SpellPrepareControl {ctx} {spell} />
-                {/if}
+              {#if FoundryAdapter.canPrepareSpell(spell)}
+                <SpellPrepareControl {ctx} {spell} />
+              {:else}
+                <span />
               {/if}
               {#if allowFavorites}
                 <ItemFavoriteControl item={spell} />

@@ -600,3 +600,141 @@ https://discord.com/channels/732325252788387980/1116078321067892796/115087744382
 
 it might be a bit out of scope for this, but are there any plans to do something like this https://github.com/foundryvtt/dnd5e/issues/2342 ? I know that The default sheet is going to be a bit cramped with background, race, and then class/subclass all in the features tab taking up real estate- are there any plans for anything similar on tidysheet?
 
+### Zanderaf - Sheet Lock Feature Toggle
+
+https://discord.com/channels/732325252788387980/1116078321067892796/1159269001298448516
+
+Zanderaf — 10/04/2023 6:21 PM
+could there maybe be an option to have the lock / unlock disabled?
+
+kgar — 10/04/2023 6:21 PM
+There are options at present for Always Unlocked for the GM, one for each type of sheet.
+I don’t think there’s an option for non-GMs yet
+It is possible to have an option where we don’t lock anything. It’d need some details worked out
+
+Zanderaf — 10/04/2023 6:45 PM
+like an option where unlock lock is absent?
+that would honestly be a good feature, no sure how others think
+
+kgar — 10/04/2023 6:48 PM
+Yes, that definitely can be done. I’ll put it on the list of features to discuss after go-live.
+
+
+### kgar - Redo tab filters
+
+Tab filters have a hard dependency on the sheet class itself, but because of how the sheet is set up with svelte, the sheet could do far less work in this regard.
+Additionally, because we offer Cantrip preparation, the "Prepared (#)" filter
+- does not account for prepared cantrips
+- does not filter unprepared cantrips
+
+- [ ] Upgrade filter sets so that the actual filter choices are remembered by the sheet, but no more than that; we should simply capture whether a filter is set to Include
+- [ ] Upgrade filter sets to support Include / Exclude / Off, where exclude uses a warning / error color for the indicator
+  - [ ] Allow for cycling through Include / Exclude / Off, but also provide a quick way to turn off that doesn't require cycling (like an X icon on the filter, or a hover-aside X icon button or something)
+  - [ ] Allow for reverse cycling with right click
+- [ ] Upgrade the relevant sheet tabs so that they filter data reactively based on these filter settings
+- [ ] On filter setting changes, have the relevant sheet update its filter properties accordingly
+
+
+### kgar - Dyanmic User-based Flags
+
+Sometimes, the DM needs to interact with a sheet while the user is also interacting with it.
+When there are flat flags for things like Search and Spellbook Class Filter, then a DM and a player could trip over each other during a game.
+Alternatively, this flat flag approach allows for a DM to locate something for a player, but this benefit is not really clear or direct. A future feature for pinging something on the sheet would honestly be a better bet, which would free the sheet to be more collaboration-friendly in nature.
+
+
+
+One way to make sheets accessible to multiple concurrent people while also remembering user preferences on sheet 
+
+
+### kgar - Search Feature Adjustments
+
+Upgrade tab search so that it does not involve a flat flag.
+Options for alternate storage:
+- transient sheet instance state, similar to how the sheet remembers the current tab, scroll top, and filters
+- a dynamic user sheet flag
+
+Making the search transient or user dynamic user sheet flags means a DM and a player can both search a tab without messing each other up.
+
+Transient state: on page refresh, the search is gone.
+Dynamic user sheet flag: on page refresh, the search is still there from last time.
+
+### kgar - 👁 Show to Players
+
+Copy the "Show to Players" header menu button feature from "The Module Which Shall Not Be Named."
+Include things like the permissions dialog that it uses.
+Ensure the relevant tab is presented upon showing.
+
+
+### kgar - Sheet Ping
+
+As a DM, I would like to be able to ping basically any identifiable element on a character sheet.
+When I ping, for all users who have the sheet open, it should
+- Select the appropriate tab
+- Find the appropriate element
+- Scroll the element into view
+- Animate the element with some attention-grabbing indicator for a few seconds for all
+
+Options for how to ping:
+- An activate-able ping mode
+  - use a hotkey or press a conveniently-located button to put the sheet in Ping mode
+  - allows me to hover over any identifiable element and click it to ping
+  - once pinged, ping mode disabled
+- ⭐ Long-press / long-click
+  - any time the user long-presses or mouses down for a long enough time anywhere on the sheet, we look for the nearest containing element marked as pingable
+  - trigger a ping for that element
+
+
+Long-press / long-click is nice, because it jives with the canvas ping settings.
+We might even consider using the user-specified ping settings from foundry at large to drive tidy's pinging.
+
+#### What I sent to the commission
+
+**🎯 Sheet Ping**
+- Allow a permitted user to draw attention to a section of a Tidy 5e sheet using a Ping
+- Sheets will designate pingable content (items, spells, tabs, buttons, text, etc.)
+- When doing the non-shift-ping (a regular ping), we use Tidy 5e theme coloring to perform a brief outline-based animation for the benefit of anyone currently using the sheet
+- On a Shift-Ping (whatever that is officially called), we also tab and scroll where relevant so that other people using the sheet are taken to the thing which was pinged; then, it just plays the same ping animation as it would for the other case
+
+For how to actually ping, my thought is that it should mirror how pinging works and is configured in Foundry VTT at large.
+
+I'm not entirely sure on the specifics of making this work quite yet, but I would definitely want it for my table.
+There would be more details to work out, like permissions (and those pesky implementation details), so I would want to put this on that growing list of features to discuss after the initial release, and we can vote on which ones to prioritize.
+
+#### Some thoughts from others in the commission
+
+https://discord.com/channels/732325252788387980/1116078321067892796/1159905819358404618
+
+ArlosMolten — Today at 12:31 PM
+A feature where you open your sheet on another user, on a specific tab isn't enough?
+When one of my players want to show/ask something about his sheet, just saying and pointing is enough. Having the sheet open on that tab would be a good qol, but this is just my experience. 
+
+kgar — Today at 12:39 PM
+Does that already exist? Or are you saying opening the sheet for another user on a specific tab would be enough if we were going to make some kind of feature like this?
+
+ArlosMolten — Today at 12:45 PM
+I've always though this was a tidy5e feature 😄
+
+
+https://discord.com/channels/732325252788387980/1116078321067892796/1159919498397225000
+
+No Name — Today at 1:25 PM
+I like the concept, especially considering how... messily Foundry stores abilities. Tbh, I'd rather features be split into class racial and other, but that may be too much, so pinging is a great thing imo
+In terms of items and spells, I think the active tab does a good enough job
+
+
+### kgar - Revised Layout for Spell Slots
+
+Currently, spell slot dots and `#/# ✏` UI is applied to the primary column header for spells.
+This doesn't make a lot of sense because of the limited space for primary column content. It is further exacerbated by longer primary column names like "Pact Magic - Nth Level Spells".
+Consider a UI / layout adjustment as follows:
+
+```
+[(x) ( )   1/2 ✏]
+Pact Magic - 1st Level | 🥣 | 🎩 | ...
+```
+
+Imagine it like a tab that sits above the column header and assumes the same color. It is not limited to the primary column. It can span the entire length of the spell list.
+
+This would free up a great deal of space and make 20th-level wizard spell slots wreak less havoc on the sheets.
+
+The main downside is imposing a bit more vertical spacing to accomodate the spell slot tab.

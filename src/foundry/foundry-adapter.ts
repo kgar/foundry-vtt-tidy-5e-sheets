@@ -54,11 +54,11 @@ export const FoundryAdapter = {
       },
     ]);
   },
-  canPrepareSpell(actor: Actor5e, item: Item5e) {
+  canPrepareSpell(item: Item5e) {
     return (
-      actor.type === 'character' &&
       item.system.preparation?.mode !== 'atwill' &&
       item.system.preparation?.mode !== 'innate' &&
+      item.system.preparation?.mode !== 'always' &&
       (item.system.level !== 0 ||
         SettingsProvider.settings.allowCantripToBePreparedOnContext.get())
     );
