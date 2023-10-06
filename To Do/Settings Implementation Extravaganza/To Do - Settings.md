@@ -117,7 +117,7 @@ Refine and improve any settings that compromise visual feedback and information 
   - [x] It works, but it's not reactive yet.
 - [x] "lockMoneyChanges"
 - [x] "lockExpChanges"
-- [ ] "lockHpMaxChanges"
+- [x] "lockHpMaxChanges"
 - [ ] "lockLevelSelector"
 - [x] "lockConfigureSheet"
 - [ ] "lockItemQuantity"

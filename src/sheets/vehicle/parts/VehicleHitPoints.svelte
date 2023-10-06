@@ -41,7 +41,7 @@
     maxlength={5}
     ariaDescribedBy="tooltip"
     selectOnFocus={true}
-    disabled={$store.lockSensitiveFields}
+    disabled={$store.lockHpMaxChanges || $store.lockSensitiveFields}
   />
 </div>
 

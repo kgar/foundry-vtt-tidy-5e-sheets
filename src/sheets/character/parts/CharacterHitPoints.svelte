@@ -59,7 +59,7 @@
       allowDeltaChanges={true}
       maxlength={5}
       ariaDescribedBy="tooltip"
-      disabled={$store.lockSensitiveFields}
+      disabled={$store.lockHpMaxChanges || $store.lockSensitiveFields}
     />
   {:else}
     <span
