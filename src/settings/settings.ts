@@ -1236,40 +1236,6 @@ export function createSettings() {
         },
       },
 
-      betterAttackDialog: {
-        options: {
-          name: 'T5EK.Settings.BetterAttackDialog.name',
-          hint: 'T5EK.Settings.BetterAttackDialog.hint',
-          scope: 'world',
-          config: false,
-          default: true,
-          type: Boolean,
-          // TODO: Suspected to be dead feature.
-          onChange: (newValue) => {
-            const styleElement = document.querySelectorAll(
-              '#tidy5e-sheet-better-attack'
-            );
-            if (styleElement.length == 0 && newValue) {
-              const style = `
-              <style id="tidy5e-better-attack">
-                .dialog-button.default.advantage {
-                border: 2px groove green !important;
-                }
-                .dialog-button.default.disadvantage {
-                border: 2px groove red !important;
-                }
-              </style>`;
-              document.head.insertAdjacentHTML('beforeend', style);
-            } else if (styleElement.length != 0 && !newValue) {
-              styleElement.forEach((s) => s.remove());
-            }
-          },
-        },
-        get() {
-          return FoundryAdapter.getGameSetting<boolean>('betterAttackDialog');
-        },
-      },
-
       // Color customization
 
       colorPickerEnabled: {

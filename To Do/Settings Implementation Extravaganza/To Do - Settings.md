@@ -141,8 +141,8 @@ Refine and improve any settings that compromise visual feedback and information 
   - ~~Works, but not reactive~~
 - [x] "allowHpMaxOverride"
 - [x] "allowHpConfigOverride" - removed it
-- [ ] "betterAttackDialog"
-  - [ ] Pending removal unless someone has a strong case for it.
+- [x] "betterAttackDialog" - removed it
+  - [x] Pending removal unless someone has a strong case for it.
 - [ ] "colorPickerEnabled"
 - [ ] "colorPickerPrimaryAccent"
 - [ ] "colorPickerEquipped"
