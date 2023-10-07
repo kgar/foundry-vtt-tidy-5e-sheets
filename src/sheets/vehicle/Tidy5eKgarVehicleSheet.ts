@@ -9,7 +9,6 @@ import type {
 import { isNil } from 'src/utils/data';
 import { writable } from 'svelte/store';
 import VehicleSheet from './VehicleSheet.svelte';
-import VehicleSheetLimited from './VehicleSheetLimited.svelte';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
 import { applyTitleToWindow } from 'src/utils/applications';
 import type { SvelteComponent } from 'svelte';
@@ -51,27 +50,17 @@ export class Tidy5eVehicleSheet extends dnd5e.applications.actor
     const initialContext = await this.getContext();
     this.store.set(initialContext);
 
-    if (!game.user.isGM && this.actor.limited) {
-      this.component = new VehicleSheetLimited({
-        target: node,
-        context: new Map<any, any>([
-          ['store', this.store],
-          ['stats', this.stats],
-        ]),
-      });
-    } else {
-      this.component = new VehicleSheet({
-        target: node,
-        props: {
-          selectedTabId: this.#getSelectedTabId(),
-        },
-        context: new Map<any, any>([
-          ['store', this.store],
-          ['stats', this.stats],
-          ['card', this.card],
-        ]),
-      });
-    }
+    this.component = new VehicleSheet({
+      target: node,
+      props: {
+        selectedTabId: this.#getSelectedTabId(),
+      },
+      context: new Map<any, any>([
+        ['store', this.store],
+        ['stats', this.stats],
+        ['card', this.card],
+      ]),
+    });
 
     initTidy5eContextMenu.call(this, html);
   }
@@ -96,6 +85,7 @@ export class Tidy5eVehicleSheet extends dnd5e.applications.actor
       lockLevelSelector: FoundryAdapter.shouldLockLevelSelector(),
       lockItemQuantity: FoundryAdapter.shouldLockItemQuantity(),
       owner: this.actor.isOwner,
+      showLimitedSheet: FoundryAdapter.showLimitedSheet(this.actor),
     };
 
     debug('Vehicle Sheet context data', context);

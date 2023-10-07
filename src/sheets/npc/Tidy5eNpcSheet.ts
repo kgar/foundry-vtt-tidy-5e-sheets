@@ -6,7 +6,6 @@ import type {
 } from 'src/types/types';
 import { writable } from 'svelte/store';
 import NpcSheet from './NpcSheet.svelte';
-import NpcSheetLimited from './NpcSheetLimited.svelte';
 import { CONSTANTS } from 'src/constants';
 import { applyTitleToWindow } from 'src/utils/applications';
 import { debug, error } from 'src/utils/logging';
@@ -54,27 +53,17 @@ export class Tidy5eNpcSheet extends dnd5e.applications.actor.ActorSheet5eNPC {
     const initialContext = await this.getContext();
     this.store.set(initialContext);
 
-    if (!game.user.isGM && this.actor.limited) {
-      this.component = new NpcSheetLimited({
-        target: node,
-        context: new Map<any, any>([
-          ['store', this.store],
-          ['stats', this.stats],
-        ]),
-      });
-    } else {
-      this.component = new NpcSheet({
-        target: node,
-        props: {
-          selectedTabId: this.#getSelectedTabId(),
-        },
-        context: new Map<any, any>([
-          ['store', this.store],
-          ['stats', this.stats],
-          ['card', this.card],
-        ]),
-      });
-    }
+    this.component = new NpcSheet({
+      target: node,
+      props: {
+        selectedTabId: this.#getSelectedTabId(),
+      },
+      context: new Map<any, any>([
+        ['store', this.store],
+        ['stats', this.stats],
+        ['card', this.card],
+      ]),
+    });
 
     initTidy5eContextMenu.call(this, html);
   }
@@ -125,6 +114,7 @@ export class Tidy5eNpcSheet extends dnd5e.applications.actor.ActorSheet5eNPC {
       lockLevelSelector: FoundryAdapter.shouldLockLevelSelector(),
       lockItemQuantity: FoundryAdapter.shouldLockItemQuantity(),
       owner: this.actor.isOwner,
+      showLimitedSheet: FoundryAdapter.showLimitedSheet(this.actor),
     };
   }
 

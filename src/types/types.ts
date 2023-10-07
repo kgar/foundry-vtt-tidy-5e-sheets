@@ -63,6 +63,7 @@ export type ActorSheetContext = {
    * The current user owns the actor.
    */
   owner: boolean;
+  showLimitedSheet: boolean;
 };
 
 export type JQueryHooksSheetIntegration = {

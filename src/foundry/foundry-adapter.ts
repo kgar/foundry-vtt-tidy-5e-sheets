@@ -484,6 +484,16 @@ export const FoundryAdapter = {
       SettingsProvider.settings.lockItemQuantity.get()
     );
   },
+  showLimitedSheet(actor: any): boolean {
+    const showLimitedSheet = !FoundryAdapter.userIsGm() && this.actor.limited;
+    if (actor.type === 'character') {
+      return (
+        showLimitedSheet &&
+        !SettingsProvider.settings.expandedSheetEnabled.get()
+      );
+    }
+    return showLimitedSheet;
+  },
 };
 
 /* ------------------------------------------------------

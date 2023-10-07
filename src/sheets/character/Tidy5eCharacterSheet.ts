@@ -1,5 +1,5 @@
 import { FoundryAdapter } from '../../foundry/foundry-adapter';
-import CharacterSheet from './CharacterSheet.svelte';
+import CharacterSheetFull from './CharacterSheetFull.svelte';
 import CharacterSheetLimited from './CharacterSheetLimited.svelte';
 import { debug, error } from 'src/utils/logging';
 import { SettingsProvider, settingStore } from 'src/settings/settings';
@@ -52,27 +52,17 @@ export class Tidy5eCharacterSheet extends dnd5e.applications.actor
     const initialContext = await this.getContext();
     this.store.set(initialContext);
 
-    if (!game.user.isGM && this.actor.limited) {
-      this.component = new CharacterSheetLimited({
-        target: node,
-        context: new Map<any, any>([
-          ['store', this.store],
-          ['stats', this.stats],
-        ]),
-      });
-    } else {
-      this.component = new CharacterSheet({
-        target: node,
-        props: {
-          selectedTabId: this.#getSelectedTabId(),
-        },
-        context: new Map<any, any>([
-          ['store', this.store],
-          ['stats', this.stats],
-          ['card', this.card],
-        ]),
-      });
-    }
+    this.component = new CharacterSheet({
+      target: node,
+      props: {
+        selectedTabId: this.#getSelectedTabId(),
+      },
+      context: new Map<any, any>([
+        ['store', this.store],
+        ['stats', this.stats],
+        ['card', this.card],
+      ]),
+    });
 
     initTidy5eContextMenu.call(this, html);
   }
@@ -116,6 +106,7 @@ export class Tidy5eCharacterSheet extends dnd5e.applications.actor
         SettingsProvider.settings.allowHpMaxOverride.get() &&
         (!SettingsProvider.settings.lockHpMaxChanges.get() ||
           FoundryAdapter.userIsGm()),
+      showLimitedSheet: FoundryAdapter.showLimitedSheet(this.actor),
     };
 
     debug('Character Sheet context data', context);

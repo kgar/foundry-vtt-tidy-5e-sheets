@@ -166,7 +166,10 @@ Refine and improve any settings that compromise visual feedback and information 
 - [x] "contextRollButtons" - removed
   - Purpose unknown. Current maintainer doesn't know what it does.
 - [ ] "expandedSheetEnabled"
-  - Will require some more attention / effort.
+  - [x] Choose the regular sheet for non-GM / non-Owner when this is enabled
+  - [x] Figure out how to refresh the sheet fully when this changes. As of now, thinking of moving the sheet switch logic into a base character sheet component.
+  - [ ] Ensure all inputs and editable fields require ownership or GM status to edit
+  - [ ] Test it
 
 ## Review and determine next steps
 
@@ -175,8 +178,14 @@ Refine and improve any settings that compromise visual feedback and information 
   - Looking rough right now in the original module
   - Probably going to remove and then return to it when implementing Actions tab natively
 - [ ] "hbEnableUpcastFreeSpell"
+  - Based on discussion with the commission, remove this.
 - [ ] "hbSetFeaturesForUpcastFreeSpell"
+  - Based on discussion with the commission, remove this.
 - [ ] "defaultActionsTab"
+  - [ ] Restyle as simply the Default Character Sheet Tab and put in Character settings
+  - [ ] Add similar settings to NPC and Vehicles
+  - [ ] Upgrade tabs to be fully data-driven for this
+
 
 ## Specific setting notes
 
