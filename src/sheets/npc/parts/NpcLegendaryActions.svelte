@@ -33,6 +33,7 @@
             dtype: 'Number',
           }}
           selectOnFocus={true}
+          disabled={!$store.owner}
         />
         <span class="sep">/</span>
         <NumberInput
@@ -43,7 +44,7 @@
           step="1"
           placeholder="0"
           selectOnFocus={true}
-          disabled={$store.lockSensitiveFields}
+          disabled={!$store.owner || $store.lockSensitiveFields}
         />
       </div>
     </div>
@@ -69,7 +70,7 @@
           step="1"
           placeholder="0"
           selectOnFocus={true}
-          disabled={$store.lockSensitiveFields}
+          disabled={!$store.owner || $store.lockSensitiveFields}
         />
       </div>
     </div>
@@ -81,7 +82,7 @@
           field="system.resources.lair.value"
           checked={$store.system.resources.lair.value}
           dtype="Boolean"
-          disabled={$store.lockSensitiveFields}
+          disabled={!$store.owner || $store.lockSensitiveFields}
         />
         <TextInput
           document={$store.actor}
@@ -92,7 +93,7 @@
           allowDeltaChanges={true}
           selectOnFocus={true}
           saveEmptyAsNull={true}
-          disabled={$store.lockSensitiveFields}
+          disabled={!$store.owner || $store.lockSensitiveFields}
         />
       </div>
     </div>

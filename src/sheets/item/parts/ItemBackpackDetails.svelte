@@ -25,7 +25,8 @@
     document={$store.item}
     field="system.equipped"
     checked={$store.system.equipped}
-  >
+    disabled={!$store.owner}
+    >
     {localize('DND5E.Equipped')}
   </Checkbox>
 </ItemFormGroup>
@@ -42,7 +43,8 @@
       field="system.capacity.value"
       placeholder="&mdash;"
       value={$store.system.capacity.value}
-    />
+      disabled={!$store.owner}
+      />
   </div>
 </ItemFormGroup>
 
@@ -56,7 +58,8 @@
     document={$store.item}
     field="system.capacity.type"
     value={$store.system.capacity.type}
-  >
+    disabled={!$store.owner}
+    >
     <SelectOptions data={$store.config.itemCapacityTypes} />
   </Select>
 </ItemFormGroup>
@@ -67,7 +70,8 @@
     field="system.attunement"
     dtype="Number"
     value={$store.system.attunement}
-  >
+    disabled={!$store.owner}
+    >
     <SelectOptions data={$store.config.attunements} />
   </Select>
 </ItemFormGroup>
@@ -81,7 +85,8 @@
     field="system.capacity.weightless"
     document={$store.item}
     labelCssClass="checkbox container-property"
-  >
+    disabled={!$store.owner}
+    >
     {localize('DND5E.ItemContainerWeightless')}
   </Checkbox>
 </ItemFormGroup>

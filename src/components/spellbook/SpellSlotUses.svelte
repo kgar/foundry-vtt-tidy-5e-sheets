@@ -27,7 +27,8 @@
     dtype="Number"
     selectOnFocus={true}
     allowDeltaChanges={true}
-  />
+    disabled={!$store.owner}
+    />
   <span class="sep"> / </span>
   {#if overrideMode}
     <TextInput
@@ -39,7 +40,7 @@
       dtype="Number"
       selectOnFocus={true}
       allowDeltaChanges={true}
-      disabled={$store.lockSensitiveFields}
+      disabled={!$store.owner || $store.lockSensitiveFields}
     />
   {:else}
     <span

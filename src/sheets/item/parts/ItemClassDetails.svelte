@@ -69,7 +69,8 @@
       field="system.identifier"
       value={$store.system.identifier}
       placeholder={$store.item.identifier}
-    />
+      disabled={!$store.owner}
+      />
   </div>
   <p class="hint">
     {@html localize('DND5E.ClassIdentifierHint', {
@@ -89,7 +90,8 @@
       document={$store.item}
       field="system.hitDice"
       value={$store.system.hitDice}
-    >
+      disabled={!$store.owner}
+      >
       {#each $store.config.hitDieTypes as type}
         <option value={type}>{type}</option>
       {/each}
@@ -109,7 +111,8 @@
       field="system.hitDiceUsed"
       value={$store.system.hitDiceUsed}
       placeholder="0"
-    />
+      disabled={!$store.owner}
+      />
   </div>
 </ItemFormGroup>
 
@@ -151,7 +154,8 @@
       field="system.skills.number"
       placeholder="0"
       value={$store.system.skills.number}
-    />
+      disabled={!$store.owner}
+      />
   </div>
 </ItemFormGroup>
 

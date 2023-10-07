@@ -227,6 +227,7 @@
                             allowDeltaChanges={isNumber}
                             selectOnFocus={true}
                             {value}
+                            disabled={!$store.owner}
                           />
                         {:else}
                           {FoundryAdapter.getProperty(item, column.property) ??

@@ -45,6 +45,7 @@
     value={$store.system.actionType}
     document={$store.item}
     field="system.actionType"
+    disabled={!$store.owner}
   >
     <SelectOptions data={$store.config.itemActionTypes} blank="" />
   </Select>
@@ -62,6 +63,7 @@
       value={$store.system.ability}
       document={$store.item}
       field="system.ability"
+      disabled={!$store.owner}
     >
       <option value="">{localize('DND5E.Default')}</option>
       <option value="none">{localize('DND5E.None')}</option>
@@ -84,6 +86,7 @@
           field="system.attackBonus"
           value={$store.system.attackBonus}
           dataset={{ formulaEditor: true }}
+          disabled={!$store.owner}
         />
       </div>
     </ItemFormGroup>
@@ -103,6 +106,7 @@
           max="20"
           min="1"
           step="1"
+          disabled={!$store.owner}
         />
       </div>
     </ItemFormGroup>
@@ -118,6 +122,7 @@
           document={$store.item}
           field="system.critical.damage"
           value={$store.system.critical.damage}
+          disabled={!$store.owner}
         />
       </div>
     </ItemFormGroup>
@@ -144,12 +149,14 @@
           bind:value={formula}
           data-formula-editor
           on:change={() => saveDamageFormulae()}
+          disabled={!$store.owner}
         />
         <select
           id="{$store.appId}-system-damage-part-{i}-1"
           bind:value={damageType}
           data-formula-editor
           on:change={() => saveDamageFormulae()}
+          disabled={!$store.owner}
         >
           <option value="">{localize('DND5E.None')}</option>
           <optgroup label={localize('DND5E.Damage')}>
@@ -181,6 +188,7 @@
           dataset={{ formulaEditor: true }}
           document={$store.item}
           field="system.damage.versatile"
+          disabled={!$store.owner}
         />
       </div>
     </ItemFormGroup>
@@ -199,7 +207,8 @@
         value={$store.system.formula}
         placeholder={localize('DND5E.Formula')}
         dataset={{ formulaEditor: true }}
-      />
+        disabled={!$store.owner}
+        />
     </div>
   </ItemFormGroup>
 
@@ -215,6 +224,7 @@
         value={$store.system.save.ability}
         document={$store.item}
         field="system.save.ability"
+        disabled={!$store.owner}
       >
         <SelectOptions
           data={$store.config.abilities}
@@ -230,13 +240,14 @@
         field="system.save.dc"
         value={$store.system.save.dc ?? null}
         placeholder={localize('DND5E.AbbreviationDC')}
-        disabled={!$store.isFlatDC}
+        disabled={!$store.owner || !$store.isFlatDC}
       />
       <Select
         id="{$store.appId}-system-save-scaling"
         document={$store.item}
         field="system.save.scaling"
         value={$store.system.save.scaling}
+        disabled={!$store.owner}
       >
         <option value="spell">{localize('DND5E.Spellcasting')}</option>
         <SelectOptions data={$store.config.abilities} labelProp="label" />
@@ -256,6 +267,7 @@
       document={$store.item}
       field="system.chatFlavor"
       value={$store.system.chatFlavor}
-    />
+      disabled={!$store.owner}
+      />
   </ItemFormGroup>
 {/if}

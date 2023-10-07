@@ -22,7 +22,8 @@
     allowDeltaChanges={true}
     maxlength={5}
     title={localize('DND5E.HitPointsTemp')}
-  />
+    disabled={!$store.owner}
+    />
   <TextInput
     document={$store.actor}
     field="system.attributes.hp.tempmax"
@@ -33,7 +34,8 @@
     allowDeltaChanges={true}
     maxlength={5}
     title={localize('DND5E.HitPointsTempMax')}
-  />
+    disabled={!$store.owner}
+    />
   <a
     title={localize('DND5E.HitPointsConfig')}
     on:click|stopPropagation|preventDefault={(event) =>

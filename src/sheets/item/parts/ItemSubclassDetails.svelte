@@ -24,7 +24,8 @@
       field="system.identifier"
       value={$store.system.identifier}
       placeholder={$store.item.identifier}
-    />
+      disabled={!$store.owner}
+      />
   </div>
 </ItemFormGroup>
 
@@ -39,7 +40,8 @@
       document={$store.item}
       field="system.classIdentifier"
       value={$store.system.classIdentifier}
-    />
+      disabled={!$store.owner}
+      />
   </div>
   <p class="hint">
     {localize('DND5E.SubclassIdentifierHint')}

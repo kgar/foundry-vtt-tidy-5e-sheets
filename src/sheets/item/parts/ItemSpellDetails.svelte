@@ -36,7 +36,8 @@
       document={$store.item}
       field="flags.{CONSTANTS.MODULE_ID}.parentClass"
       value={FoundryAdapter.tryGetFlag($store.item, 'parentClass') ?? ''}
-    >
+      disabled={!$store.owner}
+      >
       <option value="">&mdash;</option>
       {#each allClasses as { text, value }}
         <option {value}>{localize(text)}</option>
@@ -56,7 +57,8 @@
     field="system.level"
     value={$store.system.level}
     dtype="Number"
-  >
+    disabled={!$store.owner}
+    >
     <SelectOptions data={$store.config.spellLevels} />
   </Select>
 </ItemFormGroup>
@@ -71,7 +73,8 @@
     document={$store.item}
     field="system.school"
     value={$store.system.school}
-  >
+    disabled={!$store.owner}
+    >
     <SelectOptions data={$store.config.spellSchools} blank="" />
   </Select>
 </ItemFormGroup>
@@ -88,7 +91,8 @@
       document={$store.item}
       field="system.components.{key}"
       {checked}
-    >
+      disabled={!$store.owner}
+      >
       {component.label}
     </Checkbox>
   {/each}
@@ -106,7 +110,8 @@
     document={$store.item}
     field="system.materials.value"
     value={$store.system.materials.value}
-  />
+    disabled={!$store.owner}
+    />
   {#if $store.system.materials.value}
     <div class="spell-materials flexrow align-items-center small-gap">
       <label for="{$store.appId}-system-materials-supply"
@@ -118,7 +123,8 @@
         field="system.materials.supply"
         value={$store.system.materials.supply}
         placeholder="0"
-      />
+        disabled={!$store.owner}
+        />
 
       <label for="{$store.appId}-system-materials-cost"
         >{localize('DND5E.CostGP')}</label
@@ -129,7 +135,8 @@
         field="system.materials.cost"
         value={$store.system.materials.cost}
         placeholder="&mdash;"
-      />
+        disabled={!$store.owner}
+        />
 
       <Checkbox
         id="{$store.appId}-system-materials-consumed"
@@ -137,7 +144,8 @@
         document={$store.item}
         field="system.materials.consumed"
         checked={$store.system.materials.consumed}
-      >
+        disabled={!$store.owner}
+        >
         {localize('DND5E.Consumed')}
       </Checkbox>
     </div>
@@ -155,7 +163,8 @@
       document={$store.item}
       field="system.preparation.prepared"
       checked={$store.system.preparation.prepared}
-    >
+      disabled={!$store.owner}
+      >
       {localize('DND5E.SpellPrepared')}
     </Checkbox>
     <Select
@@ -163,7 +172,8 @@
       document={$store.item}
       field="system.preparation.mode"
       value={$store.system.preparation.mode}
-    >
+      disabled={!$store.owner}
+      >
       <SelectOptions data={$store.config.spellPreparationModes} />
     </Select>
   </div>
@@ -188,7 +198,8 @@
       document={$store.item}
       field="system.scaling.mode"
       value={$store.system.scaling.mode}
-    >
+      disabled={!$store.owner}
+      >
       <SelectOptions data={$store.config.spellScalingModes} />
     </Select>
     <TextInput
@@ -198,6 +209,7 @@
       value={$store.system.scaling.formula}
       placeholder={localize('DND5E.ScalingFormula')}
       dataset={{ formulaEditor: true }}
-    />
+      disabled={!$store.owner}
+      />
   </div>
 </ItemFormGroup>

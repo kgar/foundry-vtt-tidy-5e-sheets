@@ -168,7 +168,15 @@ Refine and improve any settings that compromise visual feedback and information 
 - [ ] "expandedSheetEnabled"
   - [x] Choose the regular sheet for non-GM / non-Owner when this is enabled
   - [x] Figure out how to refresh the sheet fully when this changes. As of now, thinking of moving the sheet switch logic into a base character sheet component.
-  - [ ] Ensure all inputs and editable fields require ownership or GM status to edit
+  - [x] Ensure all inputs and editable fields require ownership or GM status to edit
+    - [x] input
+    - [x] select
+    - [x] textarea - ain't got none
+    - [x] Checkbox.svelte
+    - [x] NumberInput.svelte 
+    - [x] Select.svelte 
+    - [x] SelectOptions.svelte - no need 
+    - [x] TextInput.svelte
   - [ ] Test it
 
 ## Review and determine next steps

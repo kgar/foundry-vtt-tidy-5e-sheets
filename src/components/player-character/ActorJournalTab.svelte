@@ -31,6 +31,7 @@
           placeholder={localize('T5EK.JournalPoi')}
           selectOnFocus={true}
           stopChangePropagation={true}
+          disabled={!$store.owner}
         />
       </div>
       <SheetEditor
@@ -53,6 +54,7 @@
           placeholder={localize('T5EK.JournalLoi')}
           selectOnFocus={true}
           stopChangePropagation={true}
+          disabled={!$store.owner}
         />
       </div>
       <SheetEditor
@@ -75,6 +77,7 @@
           placeholder={localize('T5EK.JournalQuests')}
           selectOnFocus={true}
           stopChangePropagation={true}
+          disabled={!$store.owner}
         />
       </div>
       <SheetEditor
@@ -97,6 +100,7 @@
           placeholder={localize('T5EK.JournalMisc')}
           selectOnFocus={true}
           stopChangePropagation={true}
+          disabled={!$store.owner}
         />
       </div>
       <SheetEditor

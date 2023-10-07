@@ -59,7 +59,7 @@
         placeholder="0"
         title={localize('T5EK.PreparedSpellsMax')}
         selectOnFocus={true}
-        disabled={$store.lockSensitiveFields}
+        disabled={!$store.owner || $store.lockSensitiveFields}
       />
     </div>
   {/if}
@@ -69,7 +69,7 @@
       document={$store.actor}
       field="system.attributes.spellcasting"
       value={$store.system.attributes.spellcasting}
-      disabled={$store.lockSensitiveFields}
+      disabled={!$store.owner || $store.lockSensitiveFields}
     >
       <option value="" selected={!$store.system.attributes.spellcasting}
         >{localize('DND5E.None')}</option
@@ -93,7 +93,7 @@
         min="0"
         step="1"
         selectOnFocus={true}
-        disabled={$store.lockSensitiveFields}
+        disabled={!$store.owner || $store.lockSensitiveFields}
       />
     </div>
   {/if}

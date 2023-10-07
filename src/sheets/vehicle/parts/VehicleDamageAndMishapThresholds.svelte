@@ -21,7 +21,7 @@
     allowDeltaChanges={true}
     maxlength={5}
     title={localize('DND5E.DamageThreshold')}
-    disabled={$store.lockSensitiveFields}
+    disabled={!$store.owner || $store.lockSensitiveFields}
   />
   <TextInput
     document={$store.actor}
@@ -33,7 +33,7 @@
     allowDeltaChanges={true}
     maxlength={5}
     title={localize('DND5E.VehicleMishapThreshold')}
-    disabled={$store.lockSensitiveFields}
+    disabled={!$store.owner || $store.lockSensitiveFields}
   />
 </div>
 

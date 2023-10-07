@@ -31,7 +31,8 @@
     field="system.attributes.inspiration"
     dtype="Boolean"
     checked={inspired}
-  >
+    disabled={!$store.owner}
+    >
     <i
       class="inspiration-icon fas fa-dice-d20"
       class:disable-animation={disableAnimation}

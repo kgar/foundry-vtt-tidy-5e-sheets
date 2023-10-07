@@ -20,7 +20,7 @@
   let card = getContext<Writable<ItemCardStore>>('card');
 
   const localize = FoundryAdapter.localize;
-  
+
   function getInventoryRowClasses(item: Item5e) {
     const extras: string[] = [];
 
@@ -123,6 +123,7 @@
                 allowDeltaChanges={true}
                 selectOnFocus={true}
                 on:click={preventUseItemEvent}
+                disabled={!$store.owner}
               />
             {/if}
           </div>
@@ -142,7 +143,7 @@
               allowDeltaChanges={true}
               selectOnFocus={true}
               on:click={preventUseItemEvent}
-            />
+          />
           </span>
         </div>
       </div>

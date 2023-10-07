@@ -40,7 +40,8 @@
     allowDeltaChanges={true}
     maxlength={5}
     ariaDescribedBy="tooltip"
-  />
+    disabled={!$store.owner}
+    />
   <span class="value-seperator sep"> / </span>
   {#if $store.allowMaxHpOverride}
     <TextInput
@@ -55,7 +56,7 @@
       allowDeltaChanges={true}
       maxlength={5}
       ariaDescribedBy="tooltip"
-      disabled={$store.lockHpMaxChanges || $store.lockSensitiveFields}
+      disabled={!$store.owner || $store.lockHpMaxChanges || $store.lockSensitiveFields}
     />
   {:else}
     <span

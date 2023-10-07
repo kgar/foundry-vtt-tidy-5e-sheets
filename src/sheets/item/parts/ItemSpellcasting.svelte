@@ -23,7 +23,8 @@
       document={$store.item}
       field="system.spellcasting.progression"
       value={$store.system.spellcasting.progression}
-    >
+      disabled={!$store.owner}
+      >
       <SelectOptions data={$store.config.spellProgression} />
     </Select>
   </div>
@@ -40,7 +41,8 @@
       document={$store.item}
       field="system.spellcasting.ability"
       value={$store.system.spellcasting.ability}
-    >
+      disabled={!$store.owner}
+      >
       <SelectOptions
         data={$store.config.abilities}
         labelProp="label"

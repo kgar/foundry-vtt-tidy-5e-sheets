@@ -39,7 +39,8 @@
         document={$store.item}
         value={$store.item.name}
         placeholder={localize('DND5E.ItemName')}
-      />
+        disabled={!$store.owner}
+        />
     </h1>
 
     <div class="item-subtitle">
@@ -53,6 +54,7 @@
           field="system.rarity"
           document={$store.item}
           value={$store.item.system.rarity}
+          disabled={!$store.owner}
         >
           <SelectOptions data={$store.config.itemRarity} blank="" />
         </Select>
@@ -63,6 +65,7 @@
           document={$store.item}
           value={$store.system.source}
           placeholder={localize('DND5E.Source')}
+          disabled={!$store.owner}
         />
       </li>
     </ul>

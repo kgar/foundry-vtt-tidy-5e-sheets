@@ -33,6 +33,7 @@
     $store.actor.update({
       [`flags.${CONSTANTS.MODULE_ID}.classFilter`]: event.currentTarget.value,
     })}
+  disabled={!$store.owner}
 >
   {#each allClasses as option}
     <option

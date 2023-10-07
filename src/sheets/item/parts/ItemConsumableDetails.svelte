@@ -27,7 +27,8 @@
     document={$store.item}
     field="system.consumableType"
     value={$store.system.consumableType}
-  >
+    disabled={!$store.owner}
+    >
     <SelectOptions data={$store.config.consumableTypes} />
   </Select>
 </ItemFormGroup>
@@ -43,7 +44,8 @@
     field="system.attunement"
     dtype="Number"
     value={$store.system.attunement}
-  >
+    disabled={!$store.owner}
+    >
     <SelectOptions data={$store.config.attunements} />
   </Select>
 </ItemFormGroup>
@@ -57,7 +59,8 @@
     document={$store.item}
     field="system.equipped"
     checked={$store.system.equipped}
-  >
+    disabled={!$store.owner}
+    >
     {localize('DND5E.Equipped')}
   </Checkbox>
 
@@ -66,7 +69,8 @@
     document={$store.item}
     field="system.identified"
     checked={$store.system.identified}
-  >
+    disabled={!$store.owner}
+    >
     {localize('DND5E.Identified')}
   </Checkbox>
 </ItemFormGroup>
@@ -83,7 +87,8 @@
         document={$store.item}
         field="system.properties.{prop}"
         {checked}
-      >
+        disabled={!$store.owner}
+        >
         {name}
       </Checkbox>
     {/each}
@@ -100,7 +105,8 @@
       document={$store.item}
       field="system.uses.autoDestroy"
       checked={$store.system.uses.autoDestroy}
-    >
+      disabled={!$store.owner}
+      >
       {localize('DND5E.ItemDestroyEmpty')}
     </Checkbox>
   </ItemFormGroup>

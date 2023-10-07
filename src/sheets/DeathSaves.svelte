@@ -39,7 +39,8 @@
       value={successes}
       maxlength={1}
       title={localize('DND5E.DeathSave')}
-    />
+      disabled={!$store.owner}
+      />
     <div
       class="death-save rollable"
       on:click={(event) => dispatcher('rollDeathSave', { mouseEvent: event })}
@@ -56,7 +57,8 @@
       placeholder="0"
       value={failures}
       maxlength={1}
-    />
+      disabled={!$store.owner}
+      />
     <i class="fas fa-times" />
   </div>
 </div>

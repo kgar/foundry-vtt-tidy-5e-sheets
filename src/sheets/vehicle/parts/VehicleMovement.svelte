@@ -30,7 +30,8 @@
     field="flags.{CONSTANTS.MODULE_ID}.motion"
     dtype="Boolean"
     checked={motion}
-  >
+    disabled={!$store.owner}
+    >
     <i
       class="motion-icon fas fa-sailboat"
       class:disable-animation={disableAnimation}

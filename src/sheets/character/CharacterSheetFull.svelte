@@ -188,7 +188,8 @@
                   selectOnFocus={true}
                   allowDeltaChanges={true}
                   maxlength={7}
-                />
+          disabled={!$store.owner}
+          />
               {:else}
                 <span class="max">{$store.system.details.xp.max}</span>
               {/if}

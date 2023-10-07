@@ -32,7 +32,8 @@
     value={$store.system.armor.type}
     field="system.armor.type"
     document={$store.item}
-  >
+    disabled={!$store.owner}
+    >
     <option value="" />
     <optgroup label={localize('DND5E.Armor')}>
       <SelectOptions data={$store.config.armorTypes} />
@@ -51,7 +52,8 @@
     value={$store.system.baseItem}
     field="system.baseItem"
     document={$store.item}
-  >
+    disabled={!$store.owner}
+    >
     <SelectOptions data={$store.baseItems} blank="" />
   </Select>
 </ItemFormGroup>
@@ -68,7 +70,8 @@
       dtype="Number"
       field="system.attunement"
       document={$store.item}
-    >
+      disabled={!$store.owner}
+      >
       <SelectOptions data={$store.config.attunements} />
     </Select>
   </ItemFormGroup>
@@ -80,7 +83,8 @@
     field="system.proficient"
     value={$store.system.proficient}
     dtype="Number"
-  >
+    disabled={!$store.owner}
+    >
     <SelectOptions
       data={$store.config.weaponAndArmorProficiencyLevels}
       blank={localize('DND5E.Automatic')}
@@ -97,7 +101,8 @@
     labelCssClass="checkbox"
     field="system.equipped"
     document={$store.item}
-  >
+    disabled={!$store.owner}
+    >
     {localize('DND5E.Equipped')}
   </Checkbox>
 
@@ -106,7 +111,8 @@
     labelCssClass="checkbox"
     field="system.identified"
     document={$store.item}
-  >
+    disabled={!$store.owner}
+    >
     {localize('DND5E.Identified')}
   </Checkbox>
 </ItemFormGroup>
@@ -123,7 +129,8 @@
       step="1"
       field="system.armor.value"
       document={$store.item}
-    />
+      disabled={!$store.owner}
+      />
   </ItemFormGroup>
 {/if}
 
@@ -140,7 +147,8 @@
       field="system.armor.dex"
       document={$store.item}
       value={$store.system.armor.dex}
-    />
+      disabled={!$store.owner}
+      />
   </ItemFormGroup>
 {/if}
 
@@ -157,7 +165,8 @@
       field="system.strength"
       document={$store.item}
       value={$store.system.strength}
-    />
+      disabled={!$store.owner}
+      />
   </ItemFormGroup>
 
   <ItemFormGroup
@@ -170,7 +179,8 @@
       field="system.stealth"
       document={$store.item}
       checked={$store.system.stealth}
-    />
+      disabled={!$store.owner}
+      />
   </ItemFormGroup>
 {/if}
 
@@ -183,13 +193,15 @@
         value={$store.system.speed.value}
         field="system.speed.value"
         document={$store.item}
-      />
+        disabled={!$store.owner}
+        />
       <span class="sep">{localize('DND5E.FeetAbbr')}</span>
       <TextInput
         field="system.speed.conditions"
         document={$store.item}
         value={$store.system.speed.conditions}
-      />
+        disabled={!$store.owner}
+        />
     </div>
   </ItemFormGroup>
 {/if}

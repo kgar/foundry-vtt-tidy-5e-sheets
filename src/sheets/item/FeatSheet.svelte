@@ -39,7 +39,8 @@
         field="name"
         placeholder={localize('DND5E.ItemName')}
         value={$store.item.name}
-      />
+        disabled={!$store.owner}
+        />
     </h1>
 
     <div class="item-subtitle">
@@ -57,6 +58,7 @@
           field="system.requirements"
           value={$store.system.requirements}
           placeholder={localize('DND5E.Requirements')}
+          disabled={!$store.owner}
         />
       </li>
       <li>
@@ -65,6 +67,7 @@
           field="system.source"
           value={$store.system.source}
           placeholder={localize('DND5E.Source')}
+          disabled={!$store.owner}
         />
       </li>
     </ul>

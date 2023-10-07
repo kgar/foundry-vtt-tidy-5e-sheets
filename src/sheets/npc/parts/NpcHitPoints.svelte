@@ -28,7 +28,8 @@
     maxlength={5}
     ariaDescribedBy="tooltip"
     selectOnFocus={true}
-  />
+    disabled={!$store.owner}
+    />
   <span class="value-seperator sep"> / </span>
   <TextInput
     cssClass="hp-max"
@@ -42,7 +43,7 @@
     maxlength={5}
     ariaDescribedBy="tooltip"
     selectOnFocus={true}
-    disabled={$store.lockHpMaxChanges || $store.lockSensitiveFields}
+    disabled={!$store.owner || $store.lockHpMaxChanges || $store.lockSensitiveFields}
   />
 </div>
 

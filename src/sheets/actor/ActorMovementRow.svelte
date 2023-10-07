@@ -29,7 +29,7 @@
     |
     <span title={movement.special}>{movement.special}</span>
   {/if}
-  {#if !$store.lockSensitiveFields}
+  {#if $store.owner && !$store.lockSensitiveFields}
     <a
       class="configure"
       title={localize('DND5E.MovementConfig')}

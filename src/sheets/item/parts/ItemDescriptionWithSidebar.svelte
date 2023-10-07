@@ -29,7 +29,7 @@
           field="system.quantity"
           document={$store.item}
           step="1"
-          readonly={!$store.owner || $store.lockItemQuantity}
+          disabled={!$store.owner || $store.lockItemQuantity}
         />
       </div>
 
@@ -45,6 +45,7 @@
           step="any"
           field="system.weight"
           document={$store.item}
+          disabled={!$store.owner}
         />
       </div>
 
@@ -60,11 +61,13 @@
           step="any"
           field="system.price.value"
           document={$store.item}
+          disabled={!$store.owner}
         />
         <Select
           value={$store.system.price.denomination}
           field="system.price.denomination"
           document={$store.item}
+          disabled={!$store.owner}
         >
           <SelectOptions
             data={$store.config.currencies}

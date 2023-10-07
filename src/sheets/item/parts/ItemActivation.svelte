@@ -29,7 +29,8 @@
         field="system.activation.cost"
         placeholder="&#8212;"
         document={$store.item}
-      />
+        disabled={!$store.owner}
+        />
     {/if}
     <Select
       id="{$store.appId}-system-activation-type"
@@ -37,6 +38,7 @@
       title={localize('DND5E.ItemActivationType')}
       document={$store.item}
       field="system.activation.type"
+      disabled={!$store.owner}
     >
       <option value="">{localize('DND5E.None')}</option>
       <SelectOptions data={$store.config.abilityActivationTypes} />
@@ -56,7 +58,8 @@
         value={$store.system.activation.condition}
         field="system.activation.condition"
         document={$store.item}
-      />
+        disabled={!$store.owner}
+        />
     </div>
   </ItemFormGroup>
 
@@ -74,6 +77,7 @@
           title={localize('DND5E.ItemActivationType')}
           document={$store.item}
           field="system.cover"
+          disabled={!$store.owner}
         >
           <SelectOptions data={$store.config.cover} blank="" />
         </Select>
@@ -95,6 +99,7 @@
           placeholder="&mdash;"
           field="system.target.value"
           document={$store.item}
+          disabled={!$store.owner}
         />
       {/if}
       {#if $store.system.hasAreaTarget}
@@ -104,6 +109,7 @@
           title="DND5E.TargetUnits"
           field="system.target.units"
           document={$store.item}
+          disabled={!$store.owner}
         >
           <option value="" />
           <SelectOptions data={$store.config.movementUnits} />
@@ -115,6 +121,7 @@
         title="DND5E.TargetType"
         field="system.target.type"
         document={$store.item}
+        disabled={!$store.owner}
       >
         <option value="">{localize('DND5E.None')}</option>
         <optgroup label={localize('DND5E.TargetTypeIndividual')}>
@@ -144,6 +151,7 @@
           placeholder="&mdash;"
           field="system.target.width"
           document={$store.item}
+          disabled={!$store.owner}
         />
       </div>
     </ItemFormGroup>
@@ -164,6 +172,7 @@
           title="DND5E.RangeNormal"
           field="system.range.value"
           document={$store.item}
+          disabled={!$store.owner}
         />
         <span class="sep">/</span>
         <NumberInput
@@ -173,6 +182,7 @@
           title="DND5E.RangeLong"
           field="system.range.long"
           document={$store.item}
+          disabled={!$store.owner}
         />
       {/if}
       <Select
@@ -181,6 +191,7 @@
         title="DND5E.RangeUnits"
         document={$store.item}
         field="system.range.units"
+        disabled={!$store.owner}
       >
         <option value="">{localize('DND5E.None')}</option>
         <optgroup label={localize('DND5E.RangeDistance')}>
@@ -207,6 +218,7 @@
           field="system.duration.value"
           document={$store.item}
           dataset={{ formulaEditor: true }}
+          disabled={!$store.owner}
         />
       {/if}
       <Select
@@ -215,6 +227,7 @@
         title="DND5E.DurationType"
         document={$store.item}
         field="system.duration.units"
+        disabled={!$store.owner}
       >
         <option value="">{localize('DND5E.None')}</option>
         <optgroup label={localize('DND5E.DurationTime')}>
@@ -250,7 +263,8 @@
         field="system.uses.max"
         document={$store.item}
         dataset={{ formulaEditor: true }}
-      />
+        disabled={!$store.owner}
+        />
       <span class="sep">{localize('DND5E.per')}</span>
       <Select
         id="{$store.appId}-system.uses.per"
@@ -258,6 +272,7 @@
         title="DND5E.UsesPeriod"
         document={$store.item}
         field="system.uses.per"
+        disabled={!$store.owner}
       >
         <option value="" />
         <SelectOptions data={$store.config.limitedUsePeriods} />
@@ -278,6 +293,7 @@
           document={$store.item}
           field="system.uses.recovery"
           dataset={{ formulaEditor: true }}
+          disabled={!$store.owner}
         />
       </div>
     </ItemFormGroup>
@@ -297,6 +313,7 @@
           title="DND5E.ConsumeQuanity"
           field="system.consume.amount"
           document={$store.item}
+          disabled={!$store.owner}
         />
         <Select
           id="{$store.appId}-system-consume-target"
@@ -304,6 +321,7 @@
           title="DND5E.ConsumeTarget"
           document={$store.item}
           field="system.consume.target"
+          disabled={!$store.owner}
         >
           <option value="" />
           <SelectOptions data={$store.abilityConsumptionTargets} />
@@ -315,6 +333,7 @@
         title="DND5E.ConsumeType"
         document={$store.item}
         field="system.consume.type"
+        disabled={!$store.owner}
       >
         <option value="">{localize('DND5E.None')}</option>
         <SelectOptions data={$store.config.abilityConsumptionTypes} />

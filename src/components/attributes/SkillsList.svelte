@@ -63,7 +63,7 @@
           class="proficiency-row skill"
           class:proficient={skillRef.skill.value}
         >
-          {#if !$store.lockSensitiveFields}
+          {#if $store.owner && !$store.lockSensitiveFields}
             <a
               class="configure-proficiency"
               on:click={() =>
@@ -76,7 +76,7 @@
               <i class="fas fa-cog" />
             </a>
           {/if}
-          {#if $store.lockSensitiveFields}
+          {#if $store.owner && $store.lockSensitiveFields}
             <span class="skill-proficiency" title={skillRef.skill.hover}
               >{@html skillRef.skill.icon}</span
             >

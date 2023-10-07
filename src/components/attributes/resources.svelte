@@ -14,7 +14,7 @@
   {#each $store.resources as res}
     <li class="resource">
       <header class="resource-header">
-        {#if !$store.lockSensitiveFields}
+        {#if $store.owner && !$store.lockSensitiveFields}
           <span class="resource-options">
             <i class="fas fa-cog" />
           </span>
@@ -30,6 +30,7 @@
                 [`system.resources.${res.name}.sr`]:
                   event.currentTarget.checked,
               })}
+            disabled={!$store.owner || $store.lockSensitiveFields}
           />
           <label
             for="{$store.appId}-{res.name}.sr"
@@ -47,7 +48,8 @@
                 [`system.resources.${res.name}.lr`]:
                   event.currentTarget.checked,
               })}
-          />
+            disabled={!$store.owner || $store.lockSensitiveFields}
+            />
           <label
             for="{$store.appId}-{res.name}.lr"
             class="checkbox"
@@ -64,7 +66,7 @@
           value={res.label}
           placeholder={res.placeholder}
           selectOnFocus={true}
-          disabled={$store.lockSensitiveFields}
+          disabled={!$store.owner || $store.lockSensitiveFields}
         />
       </h4>
       <div class="resource-value multiple">
@@ -78,6 +80,7 @@
           allowDeltaChanges={true}
           maxlength={3}
           selectOnFocus={true}
+          disabled={!$store.owner}
         />
         <span class="sep"> / </span>
         <TextInput
@@ -90,7 +93,7 @@
           allowDeltaChanges={true}
           maxlength={3}
           selectOnFocus={true}
-          disabled={$store.lockSensitiveFields}
+          disabled={!$store.owner || $store.lockSensitiveFields}
         />
       </div>
     </li>

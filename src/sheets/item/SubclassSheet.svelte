@@ -38,7 +38,8 @@
         document={$store.item}
         value={$store.item.name}
         placeholder={localize('DND5E.SubclassName')}
-      />
+        disabled={!$store.owner}
+        />
     </h1>
 
     <div class="item-subtitle">
@@ -53,6 +54,7 @@
           document={$store.item}
           value={$store.system.source}
           placeholder={localize('DND5E.Source')}
+          disabled={!$store.owner}
         />
       </li>
     </ul>

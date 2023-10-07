@@ -58,6 +58,7 @@
 <select
   on:click|stopPropagation
   on:change={(event) => onAmmoChange(item, event.currentTarget.value)}
+  disabled={!$store.owner}
 >
   {#each ammos as ammo}
     <option

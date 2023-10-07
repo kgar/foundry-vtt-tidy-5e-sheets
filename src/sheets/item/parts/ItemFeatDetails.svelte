@@ -28,7 +28,8 @@
     document={$store.item}
     field="system.type.value"
     value={$store.system.type.value}
-  >
+    disabled={!$store.owner}
+    >
     <SelectOptions
       data={$store.config.featureTypes}
       labelProp="label"
@@ -50,7 +51,8 @@
       document={$store.item}
       field="system.type.subtype"
       value={$store.system.type.subtype}
-    >
+      disabled={!$store.owner}
+      >
       <SelectOptions data={$store.featureSubtypes} blank="" />
     </Select>
   </ItemFormGroup>
@@ -75,7 +77,8 @@
         field="system.recharge.value"
         placeholder={localize('DND5E.FeatureRechargeResult')}
         value={$store.system.recharge.value}
-      />
+        disabled={!$store.owner}
+        />
 
       <Checkbox
         id="{$store.appId}-system-recharge-charged"
@@ -83,7 +86,8 @@
         document={$store.item}
         field="system.recharge.charged"
         checked={$store.system.recharge.charged}
-      >
+        disabled={!$store.owner}
+        >
         {localize('DND5E.Charged')}
       </Checkbox>
     </div>

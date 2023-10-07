@@ -21,7 +21,8 @@
       document={$store.item}
       field="system.equipped"
       checked={$store.system.equipped}
-    >
+      disabled={!$store.owner}
+      >
       {localize('DND5E.Equipped')}
     </Checkbox>
   </div>
@@ -37,7 +38,8 @@
     document={$store.item}
     field="system.toolType"
     value={$store.system.toolType}
-  >
+    disabled={!$store.owner}
+    >
     <SelectOptions data={$store.config.toolTypes} blank="" />
   </Select>
 </ItemFormGroup>
@@ -52,7 +54,8 @@
     document={$store.item}
     field="system.baseItem"
     value={$store.system.baseItem}
-  >
+    disabled={!$store.owner}
+    >
     <SelectOptions data={$store.baseItems} blank="" />
   </Select>
 </ItemFormGroup>
@@ -68,7 +71,8 @@
     field="system.attunement"
     dtype="Number"
     value={$store.system.attunement}
-  >
+    disabled={!$store.owner}
+    >
     <SelectOptions data={$store.config.attunements} />
   </Select>
 </ItemFormGroup>
@@ -84,7 +88,8 @@
     field="system.proficient"
     dtype="Number"
     value={$store.system.proficient}
-  >
+    disabled={!$store.owner}
+    >
     <SelectOptions
       data={$store.config.proficiencyLevels}
       blank={localize('DND5E.Automatic')}
@@ -102,7 +107,8 @@
     document={$store.item}
     field="system.ability"
     value={$store.system.ability}
-  >
+    disabled={!$store.owner}
+    >
     <SelectOptions
       data={$store.config.abilities}
       labelProp="label"
@@ -122,7 +128,8 @@
     field="system.bonus"
     value={$store.system.bonus}
     dataset={{ formulaEditor: true }}
-  />
+    disabled={!$store.owner}
+    />
 </ItemFormGroup>
 
 <ItemFormGroup
@@ -136,5 +143,6 @@
     document={$store.item}
     field="system.chatFlavor"
     value={$store.system.chatFlavor}
-  />
+    disabled={!$store.owner}
+    />
 </ItemFormGroup>

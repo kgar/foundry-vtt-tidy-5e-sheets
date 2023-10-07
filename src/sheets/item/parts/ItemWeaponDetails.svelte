@@ -29,7 +29,8 @@
     document={$store.item}
     field="system.weaponType"
     value={$store.system.weaponType}
-  >
+    disabled={!$store.owner}
+    >
     <SelectOptions data={$store.config.weaponTypes} />
   </Select>
 </ItemFormGroup>
@@ -44,7 +45,8 @@
     document={$store.item}
     field="system.baseItem"
     value={$store.system.baseItem}
-  >
+    disabled={!$store.owner}
+    >
     <SelectOptions data={$store.baseItems} blank="" />
   </Select>
 </ItemFormGroup>
@@ -61,7 +63,8 @@
       field="system.attunement"
       dtype="Number"
       value={$store.system.attunement}
-    >
+      disabled={!$store.owner}
+      >
       <SelectOptions data={$store.config.attunements} />
     </Select>
   </ItemFormGroup>
@@ -72,7 +75,8 @@
       field="system.proficient"
       value={$store.system.proficient}
       dtype="Number"
-    >
+      disabled={!$store.owner}
+      >
       <SelectOptions
         data={$store.config.weaponAndArmorProficiencyLevels}
         blank={localize('DND5E.Automatic')}
@@ -90,7 +94,8 @@
         document={$store.item}
         field="system.equipped"
         checked={$store.system.equipped}
-      >
+        disabled={!$store.owner}
+        >
         {localize('DND5E.Equipped')}</Checkbox
       >
 
@@ -99,7 +104,8 @@
         document={$store.item}
         field="system.identified"
         checked={$store.system.identified}
-      >
+        disabled={!$store.owner}
+        >
         {localize('DND5E.Identified')}
       </Checkbox>
     </div>
@@ -117,7 +123,8 @@
       document={$store.item}
       field="system.properties.{prop}"
       {checked}
-    >
+      disabled={!$store.owner}
+      >
       {name}
     </Checkbox>
   {/each}
@@ -135,7 +142,8 @@
         document={$store.item}
         field="system.armor.value"
         value={$store.system.armor.value}
-      />
+        disabled={!$store.owner}
+        />
     </div>
   </ItemFormGroup>
 

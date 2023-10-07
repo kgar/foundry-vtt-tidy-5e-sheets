@@ -63,7 +63,7 @@
         min="0"
         placeholder="0"
         selectOnFocus={true}
-        disabled={$store.lockSensitiveFields}
+        disabled={!$store.owner || $store.lockSensitiveFields}
       />
     </div>
   </div>
@@ -76,7 +76,7 @@
         dtype="Boolean"
         checked={$store.system.attributes.actions.stations}
         labelCssClass="action-stations-label"
-        disabled={$store.lockSensitiveFields}
+        disabled={!$store.owner || $store.lockSensitiveFields}
       >
         <span>{localize('DND5E.VehicleActionStations')}</span>
       </Checkbox>
@@ -100,7 +100,7 @@
             placeholder="0"
             title={localize('DND5E.VehicleActionsHint')}
             selectOnFocus={true}
-            disabled={$store.lockSensitiveFields}
+            disabled={!$store.owner || $store.lockSensitiveFields}
           />
         </div>
       </div>
@@ -119,7 +119,7 @@
             placeholder="&mdash;"
             title={localize('DND5E.VehicleActionThresholdsFull')}
             selectOnFocus={true}
-            disabled={$store.lockSensitiveFields}
+            disabled={!$store.owner || $store.lockSensitiveFields}
           />
 
           <span class="sep">&lt;</span>
@@ -132,7 +132,7 @@
             placeholder="&mdash;"
             title={localize('DND5E.VehicleActionThresholdsMid')}
             selectOnFocus={true}
-            disabled={$store.lockSensitiveFields}
+            disabled={!$store.owner || $store.lockSensitiveFields}
           />
 
           <span class="sep">&lt;</span>
@@ -145,7 +145,7 @@
             placeholder="&mdash;"
             title={localize('DND5E.VehicleActionThresholdsMin')}
             selectOnFocus={true}
-            disabled={$store.lockSensitiveFields}
+            disabled={!$store.owner || $store.lockSensitiveFields}
           />
         </div>
       </div>

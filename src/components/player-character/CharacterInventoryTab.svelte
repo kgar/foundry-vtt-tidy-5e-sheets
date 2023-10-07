@@ -113,7 +113,7 @@
           value={$store.system.attributes.attunement.max}
           placeholder="0"
           title={localize('T5EK.AttunementMax')}
-          disabled={$store.lockSensitiveFields}
+          disabled={!$store.owner || $store.lockSensitiveFields}
         />
       {:else}
         <span class="attuned-items-max"

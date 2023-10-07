@@ -56,7 +56,7 @@
         {/each}
         {#each tools as [key, tool]}
           <li class="tool">
-            {#if !$store.lockSensitiveFields}
+            {#if $store.owner && !$store.lockSensitiveFields}
               <a
                 class="tool-proficiency-toggle"
                 title={tool.hover}
@@ -92,7 +92,7 @@
             >
               {tool.label}
             </span>
-            {#if traitsExpanded && !$store.lockSensitiveFields}
+            {#if traitsExpanded && $store.owner && !$store.lockSensitiveFields}
               <a
                 class="tool-proficiency-editor rollable"
                 title="DND5E.ToolConfigure"
@@ -109,7 +109,7 @@
         {/each}
       </ul>
     </div>
-    {#if traitsExpanded && !$store.lockSensitiveFields}
+    {#if traitsExpanded && $store.owner && !$store.lockSensitiveFields}
       <a
         class="trait-editor"
         title={configureButtonTitle}

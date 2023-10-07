@@ -92,7 +92,8 @@
       maxlength={12}
       title="{localize('DND5E.HPFormula')}: {$store.system.attributes.hp
         .formula}"
-    />
+          disabled={!$store.owner}
+          />
   </div>
 </div>
 
