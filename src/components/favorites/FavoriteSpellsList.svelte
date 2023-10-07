@@ -51,7 +51,6 @@
       </ItemTableColumn>
     </ItemTableHeaderRow>
     {#each spells as spell}
-      {@const ctx = $store.itemContext[spell.id]}
       {@const spellImgUrl = FoundryAdapter.getSpellImageUrl($store, spell)}
       <ItemTableRow
         item={spell}

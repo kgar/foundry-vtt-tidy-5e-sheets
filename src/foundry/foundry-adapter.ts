@@ -358,7 +358,9 @@ export const FoundryAdapter = {
         x.name.toLowerCase().includes(searchCriteria.toLowerCase())
     );
   },
-  getAllClassesDropdownOptions() {
+  getAllClassesDropdownOptions(
+    spellClassFilterAdditionalClassesText: string = ''
+  ) {
     const allClasses: DropdownOption[] = Object.entries(
       CONSTANTS.DND5E_CLASSES
     ).map((x) => ({
@@ -366,11 +368,8 @@ export const FoundryAdapter = {
       text: x[1],
     }));
 
-    const additionalClassText =
-      SettingsProvider.settings.spellClassFilterAdditionalClasses.get() ?? '';
-
-    if (additionalClassText?.trim() !== '') {
-      const additionalClasses = additionalClassText
+    if (spellClassFilterAdditionalClassesText?.trim() !== '') {
+      const additionalClasses = spellClassFilterAdditionalClassesText
         .split(',')
         .reduce((arr: DropdownOption[], x: string) => {
           const pieces = x.split('|');

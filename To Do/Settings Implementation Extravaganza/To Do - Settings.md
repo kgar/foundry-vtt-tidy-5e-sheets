@@ -134,11 +134,11 @@ Refine and improve any settings that compromise visual feedback and information 
   - [x] Reuse `canPrepareSpell()` for PC classic controls
   - [x] Reuse `canPrepareSpell()` for NPC classic controls
   - [x] Reuse the Prepare Spell button on classic controls for cantrips when setting is enabled
-- [ ] "spellClassFilterSelect"
-- [ ] "spellClassFilterIconReplace"
-  - Works, but not reactive
-- [ ] "spellClassFilterAdditionalClasses"
-  - Works, but not reactive
+- [x] "spellClassFilterSelect"
+- [x] "spellClassFilterIconReplace"
+  - ~~Works, but not reactive~~
+- [x] "spellClassFilterAdditionalClasses"
+  - ~~Works, but not reactive~~
 - [ ] "allowHpMaxOverride"
 - [ ] "allowHpConfigOverride"
 - [ ] "betterAttackDialog"

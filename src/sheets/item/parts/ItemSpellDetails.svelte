@@ -16,7 +16,9 @@
 
   let store = getContext<Readable<ItemSheetContext>>('store');
 
-  const allClasses = FoundryAdapter.getAllClassesDropdownOptions();
+  const allClasses = FoundryAdapter.getAllClassesDropdownOptions(
+    $settingStore.spellClassFilterAdditionalClasses
+  );
 
   const localize = FoundryAdapter.localize;
 </script>
