@@ -112,6 +112,10 @@ export class Tidy5eCharacterSheet extends dnd5e.applications.actor
       lockLevelSelector: FoundryAdapter.shouldLockLevelSelector(),
       lockItemQuantity: FoundryAdapter.shouldLockItemQuantity(),
       owner: this.actor.isOwner,
+      allowMaxHpOverride:
+        SettingsProvider.settings.allowHpMaxOverride.get() &&
+        (!SettingsProvider.settings.lockHpMaxChanges.get() ||
+          FoundryAdapter.userIsGm()),
     };
 
     debug('Character Sheet context data', context);

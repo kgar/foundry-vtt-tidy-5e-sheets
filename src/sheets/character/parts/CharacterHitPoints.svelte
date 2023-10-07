@@ -17,10 +17,6 @@
   let store = getContext<Readable<CharacterSheetContext>>('store');
 
   const localize = FoundryAdapter.localize;
-
-  const allowMaxHpOverride =
-    $settingStore.allowHpMaxOverride &&
-    (!$settingStore.lockHpMaxChanges || FoundryAdapter.userIsGm());
 </script>
 
 <div
@@ -46,7 +42,7 @@
     ariaDescribedBy="tooltip"
   />
   <span class="value-seperator sep"> / </span>
-  {#if allowMaxHpOverride}
+  {#if $store.allowMaxHpOverride}
     <TextInput
       cssClass="hp-max"
       document={actor}

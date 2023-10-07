@@ -139,7 +139,7 @@ Refine and improve any settings that compromise visual feedback and information 
   - ~~Works, but not reactive~~
 - [x] "spellClassFilterAdditionalClasses"
   - ~~Works, but not reactive~~
-- [ ] "allowHpMaxOverride"
+- [x] "allowHpMaxOverride"
 - [ ] "allowHpConfigOverride"
 - [ ] "betterAttackDialog"
 - [ ] "colorPickerEnabled"

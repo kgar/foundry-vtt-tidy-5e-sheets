@@ -32,6 +32,7 @@ export type CharacterSheetContext = {
   skills: ActorContextSkills;
   tools: ActorContextTools;
   hp: Actor5eHp;
+  allowMaxHpOverride: boolean;
 } & ActorSheetContext &
   JQueryHooksSheetIntegration &
   Record<string, any>;
