@@ -304,21 +304,6 @@ export function createSettings() {
         },
       },
 
-      // Show Roll buttons in context Menu
-      contextRollButtons: {
-        options: {
-          name: 'T5EK.Settings.RollButtonsToCard.name',
-          hint: 'T5EK.Settings.RollButtonsToCard.hint',
-          scope: 'world',
-          config: false,
-          default: false,
-          type: Boolean,
-        },
-        get() {
-          return FoundryAdapter.getGameSetting<boolean>('contextRollButtons');
-        },
-      },
-
       //Show trait labels
       traitLabelsEnabled: {
         options: {

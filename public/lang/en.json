@@ -229,10 +229,6 @@
     "name": "Hide icons next to the item name",
     "hint": "If enabled this setting hides the support icons present next to the object name (Favorite, Attunement, etc.), this is usually useful with the 'Use classic item controls in list view' setting enabled in order to avoid a redundancy of icons..."
   },
-  "T5EK.Settings.RollButtonsToCard": {
-    "name": "Show midiQol Item Buttons in item's info card",
-    "hint": "Per default roll buttons appear in the item's description. Enable to move them to the item's info card. Works in all layout modes."
-  },
   "T5EK.Settings.TraitLabels": {
     "name": "Show Trait Labels.",
     "hint": "Enable to show labels for PC, NPC, and Vehicle traits. Disable to show only icons."

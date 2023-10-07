@@ -1,13 +1,11 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import CheckboxSetting from 'src/sheets/settings/parts/CheckboxSetting.svelte';
   import { getContext } from 'svelte';
   import type { Writable } from 'svelte/store';
   import type { CurrentSettings } from 'src/settings/settings';
   import SelectSetting from 'src/sheets/settings/parts/SelectSetting.svelte';
 
   let store = getContext<Writable<CurrentSettings>>('store');
-  const appId = getContext<string>('appId');
 
   const userIsGm = FoundryAdapter.userIsGm();
   const localize = FoundryAdapter.localize;
@@ -34,14 +32,5 @@
     name="T5EK.Settings.DefaultActionsTab.name"
     hint="T5EK.Settings.DefaultActionsTab.hint"
     id="defaultActionsTab"
-  />
-
-  <h3>{localize('T5EK.Settings.TabModules.labelMidiQoL')}</h3>
-
-  <CheckboxSetting
-    bind:value={$store.contextRollButtons}
-    name={'T5EK.Settings.RollButtonsToCard.name'}
-    hint={'T5EK.Settings.RollButtonsToCard.hint'}
-    id="contextRollButtons"
   />
 {/if}

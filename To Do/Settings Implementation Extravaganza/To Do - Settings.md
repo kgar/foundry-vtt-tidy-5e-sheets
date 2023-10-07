@@ -23,7 +23,6 @@
 - [ ] Observers / Limited users should not be allowed to click configure buttons or make rolls.
 - [ ] Honor game setting "Disable Experience Tracking" on our sheets
 
-
 ## Implement ALL the Settings! 👏
 
 Test and verify that each setting is correctly configured. It must work on load and adjust reactively on change when settings are adjusted.
@@ -143,41 +142,41 @@ Refine and improve any settings that compromise visual feedback and information 
 - [x] "allowHpConfigOverride" - removed it
 - [x] "betterAttackDialog" - removed it
   - [x] Pending removal unless someone has a strong case for it.
-- [ ] "colorPickerEnabled"
-- [ ] "colorPickerPrimaryAccent"
-- [ ] "colorPickerEquipped"
-- [ ] "colorPickerEquippedOutline"
-- [ ] "colorPickerEquippedAccent"
-- [ ] "colorPickerPrepared"
-- [ ] "colorPickerPreparedOutline"
-- [ ] "colorPickerPreparedAccent"
-- [ ] "colorPickerPact"
-- [ ] "colorPickerPactOutline"
-- [ ] "colorPickerPactAccent"
-- [ ] "colorPickerAtWill"
-- [ ] "colorPickerAtWillOutline"
-- [ ] "colorPickerAtWillAccent"
-- [ ] "colorPickerInnate"
-- [ ] "colorPickerInnateOutline"
-- [ ] "colorPickerInnateAccent"
-- [ ] "colorPickerAlwaysPrepared"
-- [ ] "colorPickerAlwaysPreparedOutline"
-- [ ] "colorPickerAlwaysPreparedAccent"
+- [x] "colorPickerEnabled"
+- [x] "colorPickerPrimaryAccent"
+- [x] "colorPickerEquipped"
+- [x] "colorPickerEquippedOutline"
+- [x] "colorPickerEquippedAccent"
+- [x] "colorPickerPrepared"
+- [x] "colorPickerPreparedOutline"
+- [x] "colorPickerPreparedAccent"
+- [x] "colorPickerPact"
+- [x] "colorPickerPactOutline"
+- [x] "colorPickerPactAccent"
+- [x] "colorPickerAtWill"
+- [x] "colorPickerAtWillOutline"
+- [x] "colorPickerAtWillAccent"
+- [x] "colorPickerInnate"
+- [x] "colorPickerInnateOutline"
+- [x] "colorPickerInnateAccent"
+- [x] "colorPickerAlwaysPrepared"
+- [x] "colorPickerAlwaysPreparedOutline"
+- [x] "colorPickerAlwaysPreparedAccent"
+- [x] "debug"
+- [x] "contextRollButtons" - removed
+  - Purpose unknown. Current maintainer doesn't know what it does.
 - [ ] "expandedSheetEnabled"
   - Will require some more attention / effort.
-- [x] "debug"
 
 ## Review and determine next steps
 
 - [ ] "enableActionListOnFavoritePanel"
+  - Renders Action List from API and plunks it into Favorites area above favorites
+  - Looking rough right now in the original module
+  - Probably going to remove and then return to it when implementing Actions tab natively
 - [ ] "hbEnableUpcastFreeSpell"
 - [ ] "hbSetFeaturesForUpcastFreeSpell"
 - [ ] "defaultActionsTab"
-
-## Settings to Purge
-
-- [ ] "contextRollButtons"
-  - Purpose unknown. Current maintainer doesn't know what it does.
 
 ## Specific setting notes
 

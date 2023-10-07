@@ -26,7 +26,6 @@
   - Current context menu uses inline styles and gets picked up unintentionally by original Tidy 5e's context menu handling.
   - Should work with popout!
   - ... etc.
-- [ ] Re-integrate Actions Tab or make native
 
 ### Foundry Adapter Cleanup
 
@@ -747,3 +746,27 @@ Imagine it like a tab that sits above the column header and assumes the same col
 This would free up a great deal of space and make 20th-level wizard spell slots wreak less havoc on the sheets.
 
 The main downside is imposing a bit more vertical spacing to accomodate the spell slot tab.
+
+
+### kgar - Implement Native Actions List / Actions Tab / Actions Icon setup
+
+Basically redo the Actions feature specifically for Tidy 5e Sheets.
+Make it toggle-able as a feature in its entirety. Default false.
+Reimplement "enableActionListOnFavoritePanel" setting, but this time, it should be worded more toward "Include Actions List in Attributes Tab"
+Include option to have an Actions tab or not; this could also be accomplished with custom tab selection and ordering.
+Include in list of default starting tabs in settings.
+
+
+### kgar - New Setting: "Enable Favorites Feature"
+
+Default true.
+Encapsulates the entire Favorites feature and allows you to completely remove it from your sheets if you don't use it.
+Use Case: someone likes Actions and would prefer to put those in their Attributes tab rather than Favorites.
+
+### kgar - Setting Presets
+
+Imagine curated loadouts of settings which provide various cohesive Tidy 5e setups which make sense for different play styles.
+For example
+- Lockdown - a setup where sensitive field locking is set up
+- Action-oriented - completely replaces Favorites with Actions in Attributes tab and excludes Action tab
+- Kitchen Sink - enable all the features (Favorites, Actions List, Locking/Unlocking, etc.)
