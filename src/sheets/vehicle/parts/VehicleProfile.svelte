@@ -9,6 +9,7 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import VehicleMovement from './VehicleMovement.svelte';
   import { settingStore } from 'src/settings/settings';
+  import { CONSTANTS } from 'src/constants';
 
   let store = getContext<Readable<VehicleSheetContext>>('store');
 
@@ -20,7 +21,7 @@
     FoundryAdapter.setFlag($store.actor, 'exhaustion', event.detail.level);
   }
 
-  $: useRoundedPortraitStyle = ['all', 'npc'].includes(
+  $: useRoundedPortraitStyle = ['all', CONSTANTS.SHEET_TYPE_NPC].includes(
     $settingStore.portraitStyle
   );
 </script>

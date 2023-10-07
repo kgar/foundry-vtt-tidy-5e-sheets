@@ -1,3 +1,4 @@
+import { CONSTANTS } from 'src/constants';
 import Tidy5eBaseConfigSheet from './tidy5e-base-config-sheet';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
@@ -49,9 +50,9 @@ export default class Tidy5eActorOriginSummaryConfig extends Tidy5eBaseConfigShee
       source: this.clone.system.details.source,
       dimensions: this.clone.system.traits.dimensions,
 
-      isCharacter: this.document.type === 'character',
-      isNPC: this.document.type === 'npc',
-      isVehicle: this.document.type === 'vehicle',
+      isCharacter: this.document.type === CONSTANTS.SHEET_TYPE_CHARACTER,
+      isNPC: this.document.type === CONSTANTS.SHEET_TYPE_NPC,
+      isVehicle: this.document.type === CONSTANTS.SHEET_TYPE_VEHICLE,
     };
   }
 
@@ -76,9 +77,9 @@ export default class Tidy5eActorOriginSummaryConfig extends Tidy5eBaseConfigShee
 
     const dimensions = foundry.utils.expandObject(formData).dimensions;
 
-    const isCharacter = this.document.type === 'character';
-    const isNPC = this.document.type === 'npc';
-    const isVehicle = this.document.type === 'vehicle';
+    const isCharacter = this.document.type === CONSTANTS.SHEET_TYPE_CHARACTER;
+    const isNPC = this.document.type === CONSTANTS.SHEET_TYPE_NPC;
+    const isVehicle = this.document.type === CONSTANTS.SHEET_TYPE_VEHICLE;
 
     if (isCharacter) {
       // this.clone.updateSource({

@@ -431,13 +431,13 @@ export const FoundryAdapter = {
       (actor.isOwner && allowEdit) ||
       (FoundryAdapter.userIsGm() &&
         SettingsProvider.settings.enablePermanentUnlockOnCharacterIfYouAreGM.get() &&
-        actor.type === 'character') ||
+        actor.type === CONSTANTS.SHEET_TYPE_CHARACTER) ||
       (FoundryAdapter.userIsGm() &&
         SettingsProvider.settings.enablePermanentUnlockOnNPCIfYouAreGM.get() &&
-        actor.type === 'npc') ||
+        actor.type === CONSTANTS.SHEET_TYPE_NPC) ||
       (FoundryAdapter.userIsGm() &&
         SettingsProvider.settings.enablePermanentUnlockOnVehicleIfYouAreGM.get() &&
-        actor.type === 'vehicle')
+        actor.type === CONSTANTS.SHEET_TYPE_VEHICLE)
     );
   },
   allowCharacterEffectsManagement(actor: any) {
@@ -486,7 +486,7 @@ export const FoundryAdapter = {
   },
   showLimitedSheet(actor: any): boolean {
     const showLimitedSheet = !FoundryAdapter.userIsGm() && this.actor.limited;
-    if (actor.type === 'character') {
+    if (actor.type === CONSTANTS.SHEET_TYPE_CHARACTER) {
       return (
         showLimitedSheet &&
         !SettingsProvider.settings.expandedSheetEnabled.get()

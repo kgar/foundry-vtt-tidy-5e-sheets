@@ -7,12 +7,13 @@
   import SheetEditor from '../SheetEditor.svelte';
   import LimitedHeader from '../actor/LimitedHeader.svelte';
   import { settingStore } from 'src/settings/settings';
+    import { CONSTANTS } from 'src/constants';
 
   let store = getContext<Readable<NpcSheetContext>>('store');
 
   const localize = FoundryAdapter.localize;
 
-  $: useRoundedPortraitStyle = ['all', 'npc'].includes(
+  $: useRoundedPortraitStyle = ['all', CONSTANTS.SHEET_TYPE_NPC].includes(
     $settingStore.portraitStyle
   );
 

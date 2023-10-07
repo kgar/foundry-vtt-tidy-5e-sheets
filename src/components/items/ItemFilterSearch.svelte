@@ -3,10 +3,13 @@
   import { type Actor5e } from 'src/types/actor';
   import { onMount } from 'svelte';
 
+  const localize = FoundryAdapter.localize;
+
   export let searchCriteria: string = '';
   export let actor: Actor5e;
   export let searchFlag: string;
   export let cssClass: string = '';
+  export let placeholder: string;
 
   async function rememberSearch() {
     await FoundryAdapter.setFlag(actor, searchFlag, searchCriteria);
@@ -17,8 +20,6 @@
     searchCriteria = '';
   }
 
-  const localize = FoundryAdapter.localize;
-
   onMount(() => {
     searchCriteria = FoundryAdapter.tryGetFlag(actor, searchFlag) ?? '';
   });
@@ -27,7 +28,7 @@
 <li class="filter-search {cssClass}" title={localize('T5EK.SearchHint')}>
   <input
     type="text"
-    placeholder={localize('T5EK.SearchFeat')}
+    {placeholder}
     bind:value={searchCriteria}
     on:blur|preventDefault|stopPropagation={() => rememberSearch()}
   />
@@ -53,6 +54,9 @@
     input {
       padding: 0 0.25rem 0.125rem 0.25rem;
       width: 8.75rem;
+      &::placeholder {
+        color: var(--t5ek-secondary-color);
+      }
     }
 
     .clear-search {

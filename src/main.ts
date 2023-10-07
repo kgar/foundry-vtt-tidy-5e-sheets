@@ -18,19 +18,19 @@ declare global {
 }
 
 Actors.registerSheet('dnd5e', Tidy5eCharacterSheet, {
-  types: ['character'],
+  types: [CONSTANTS.SHEET_TYPE_CHARACTER],
   makeDefault: true,
   label: 'T5EK.Tidy5eSheet',
 });
 
 Actors.registerSheet('dnd5e', Tidy5eNpcSheet, {
-  types: ['npc'],
+  types: [CONSTANTS.SHEET_TYPE_NPC],
   makeDefault: true,
   label: 'T5EK.Tidy5eNPC',
 });
 
 Actors.registerSheet('dnd5e', Tidy5eVehicleSheet, {
-  types: ['vehicle'],
+  types: [CONSTANTS.SHEET_TYPE_VEHICLE],
   makeDefault: true,
   label: 'T5EK.Tidy5eVehicle',
 });

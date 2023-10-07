@@ -37,7 +37,7 @@ export class Tidy5eVehicleSheet extends dnd5e.applications.actor
 
   static get defaultOptions() {
     return FoundryAdapter.mergeObject(super.defaultOptions, {
-      classes: ['tidy5e-kgar', 'sheet', 'actor', 'vehicle'],
+      classes: ['tidy5e-kgar', 'sheet', 'actor', CONSTANTS.SHEET_TYPE_VEHICLE],
       height: 840,
       width: SettingsProvider.settings.vehicleSheetWidth.get(),
     });

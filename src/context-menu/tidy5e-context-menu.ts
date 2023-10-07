@@ -54,7 +54,7 @@ function getActiveEffectContextOptions(effect: any) {
   }
 
   if (
-    actor.type === 'character' &&
+    actor.type === CONSTANTS.SHEET_TYPE_CHARACTER &&
     !FoundryAdapter.allowCharacterEffectsManagement(actor)
   ) {
     return [];
@@ -122,9 +122,7 @@ function getItemContextOptions(item: Item5e) {
 
   let options = [];
 
-  const isCharacter = actor.type === 'character';
-  const isNPC = actor.type === 'npc';
-  const isVehicle = actor.type === 'vehicle';
+  const isCharacter = actor.type === CONSTANTS.SHEET_TYPE_CHARACTER;
 
   let toggleTitle = '';
   let canToggle = false;

@@ -42,6 +42,7 @@
     actor={$store.actor}
     searchFlag="spell-search"
     cssClass="align-self-flex-end"
+    placeholder={localize('T5EK.SearchSpell')}
   />
   <ItemFilterOption setName="spellbook" filterName="action">
     {localize('DND5E.Action')}

@@ -82,4 +82,7 @@ export const CONSTANTS = {
   THEME_ID_DEFAULT_LIGHT: 'light',
   THEME_ID_DEFAULT_DARK: 'dark',
   THEME_ID_DEFAULT: 'default',
+  SHEET_TYPE_CHARACTER: 'character',
+  SHEET_TYPE_NPC: 'npc',
+  SHEET_TYPE_VEHICLE: 'vehicle',
 } as const;

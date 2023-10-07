@@ -8,9 +8,11 @@
     - ... or should it replace allowEdit altogether?
 - [x] 🐞 Click Str > Click Ability Check > Click Normal - notice that the chat message doesn't tell what kind of ability it is.
 - [ ] 🐞 Update Search Filters
-  - [ ] The placeholder text should match the tab name
-  - [ ] The placeholder text should user the faded / secondary color, while the text should use the primary font color.
-- [ ] Make SHEET_TYPE_CHARACTER, SHEET_TYPE_NPC, and SHEET_TYPE_VEHICLE constants and update all usages.
+  - [x] The placeholder text should match the tab name
+  - [x] The placeholder text should user the faded / secondary color, while the text should use the primary font color.
+  - [ ] Test it
+- [x] Make SHEET_TYPE_CHARACTER, SHEET_TYPE_NPC, and SHEET_TYPE_VEHICLE constants and update all usages.
+- [ ] Extract "useRoundedPortraitStyle" to ActorSheetContext
 - [ ] Make SPELL_PREPARATION_MODE_XYZ constants and update all usages.
 - [ ] Replace unioned sheet context types which reference all three sheet types with the base context, where able.
 - [ ] Add the NPM watch script for enforcing resolving type errors

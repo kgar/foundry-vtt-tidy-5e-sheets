@@ -13,7 +13,7 @@
 
   const localize = FoundryAdapter.localize;
 
-  $: useRoundedPortraitStyle = ['all', 'npc'].includes(
+  $: useRoundedPortraitStyle = ['all', CONSTANTS.SHEET_TYPE_NPC].includes(
     $settingStore.portraitStyle
   );
 

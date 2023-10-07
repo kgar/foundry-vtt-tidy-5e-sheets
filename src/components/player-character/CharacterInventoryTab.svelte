@@ -47,6 +47,7 @@
     actor={$store.actor}
     bind:searchCriteria
     searchFlag="item-search"
+    placeholder={localize('T5EK.SearchItem')}
   />
   <ItemFilterOption filterName="action" setName="inventory">
     {localize('DND5E.Action')}

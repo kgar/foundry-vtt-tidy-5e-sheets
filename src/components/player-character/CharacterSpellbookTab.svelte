@@ -65,6 +65,7 @@
     actor={$store.actor}
     searchFlag="spell-search"
     cssClass="align-self-flex-end"
+    placeholder={localize('T5EK.SearchSpell')}
   />
   {#if $settingStore.spellClassFilterSelect}
     <li class="spellbook-class-filter">

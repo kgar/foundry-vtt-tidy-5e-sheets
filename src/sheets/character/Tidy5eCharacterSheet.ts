@@ -39,7 +39,7 @@ export class Tidy5eCharacterSheet extends dnd5e.applications.actor
 
   static get defaultOptions() {
     return FoundryAdapter.mergeObject(super.defaultOptions, {
-      classes: ['tidy5e-kgar', 'sheet', 'actor', 'character'],
+      classes: ['tidy5e-kgar', 'sheet', 'actor', CONSTANTS.SHEET_TYPE_CHARACTER],
       height: 840,
       width: SettingsProvider.settings.playerSheetWidth.get(),
     });

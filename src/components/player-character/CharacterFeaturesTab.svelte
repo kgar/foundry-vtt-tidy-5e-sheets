@@ -73,6 +73,7 @@
     bind:searchCriteria
     actor={$store.actor}
     searchFlag="feat-search"
+    placeholder={localize('T5EK.SearchFeat')}
   />
   <ItemFilterOption setName="features" filterName="action">
     {localize('DND5E.Action')}
