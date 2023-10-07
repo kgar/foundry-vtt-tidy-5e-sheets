@@ -721,6 +721,15 @@ No Name — Today at 1:25 PM
 I like the concept, especially considering how... messily Foundry stores abilities. Tbh, I'd rather features be split into class racial and other, but that may be too much, so pinging is a great thing imo
 In terms of items and spells, I think the active tab does a good enough job
 
+https://discord.com/channels/732325252788387980/1116078321067892796/1160078804480426155
+
+Gambet — Today at 11:59 PM
+If it's possible to ping a sheet that would genuinely be useful as I tend to play with a lot of players who are new to D&D and Foundry. Although I would wonder how it would work. Would both the GM and the player have to have the same character sheet open at the same time? What if one has the Prototype Sheet open and the other has the Token Sheet open? What if I have a different sheet open entirely?
+
+On the Shift-Ping front where it like, lets players ping a sheet in a way that would cause the DM or other players to have their tabs swapped.... I would caution against this. I think it might be a bit too much power that could cause confusion and maybe some mistakes. Like maybe I'm about to click a spell but someone pings and I get swapped to the Inventory tab and now I've swung a sword instead.
+
+Personally I think this is a feature that should be as unobtrusive as possible, and used sparingly. In the rare cases where it would be used, I'm sure I could trust my player to let me know which tab to switch to.
+
 
 ### kgar - Revised Layout for Spell Slots
 

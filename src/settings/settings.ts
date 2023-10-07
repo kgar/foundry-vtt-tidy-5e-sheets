@@ -713,7 +713,9 @@ export function createSettings() {
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getGameSetting<boolean>('enablePermanentUnlockOnCharacterIfYouAreGM');
+          return FoundryAdapter.getGameSetting<boolean>(
+            'enablePermanentUnlockOnCharacterIfYouAreGM'
+          );
         },
       },
 
@@ -1234,22 +1236,6 @@ export function createSettings() {
         },
       },
 
-      allowHpConfigOverride: {
-        options: {
-          name: 'T5EK.Settings.AllowHpConfigOverride.name',
-          hint: 'T5EK.Settings.AllowHpConfigOverride.hint',
-          scope: 'world',
-          config: false,
-          default: false,
-          type: Boolean,
-        },
-        get() {
-          return FoundryAdapter.getGameSetting<boolean>(
-            'allowHpConfigOverride'
-          );
-        },
-      },
-
       betterAttackDialog: {
         options: {
           name: 'T5EK.Settings.BetterAttackDialog.name',
@@ -1259,22 +1245,25 @@ export function createSettings() {
           default: true,
           type: Boolean,
           // TODO: Suspected to be dead feature.
-          // onChange: (newValue) => {
-          // const style = `<style id="tidy5e-better-attack">
-          // .dialog-button.default.advantage {
-          // border: 2px groove green !important;
-          // }
-          // .dialog-button.default.disadvantage {
-          // border: 2px groove red !important;
-          // }
-          // </style>`;
-          // const styleElement = $('#tidy5e-sheet-better-attack');
-          // if (styleElement.length == 0 && newValue) {
-          //   $('body').append(style);
-          // } else if (styleElement.length != 0 && !newValue) {
-          //   styleElement.remove();
-          // }
-          // },
+          onChange: (newValue) => {
+            const styleElement = document.querySelectorAll(
+              '#tidy5e-sheet-better-attack'
+            );
+            if (styleElement.length == 0 && newValue) {
+              const style = `
+              <style id="tidy5e-better-attack">
+                .dialog-button.default.advantage {
+                border: 2px groove green !important;
+                }
+                .dialog-button.default.disadvantage {
+                border: 2px groove red !important;
+                }
+              </style>`;
+              document.head.insertAdjacentHTML('beforeend', style);
+            } else if (styleElement.length != 0 && !newValue) {
+              styleElement.forEach((s) => s.remove());
+            }
+          },
         },
         get() {
           return FoundryAdapter.getGameSetting<boolean>('betterAttackDialog');

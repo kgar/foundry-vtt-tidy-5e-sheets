@@ -6,7 +6,7 @@
   - [x] lockSensitiveFields
   - [x] editable - this should combine the composite allowEdit and the "editable" field provided by dnd5e context
     - ... or should it replace allowEdit altogether?
-  - [ ] ...?
+- [x] 🐞 Click Str > Click Ability Check > Click Normal - notice that the chat message doesn't tell what kind of ability it is.
 - [ ] 🐞 Update Search Filters
   - [ ] The placeholder text should match the tab name
   - [ ] The placeholder text should user the faded / secondary color, while the text should use the primary font color.
@@ -140,8 +140,9 @@ Refine and improve any settings that compromise visual feedback and information 
 - [x] "spellClassFilterAdditionalClasses"
   - ~~Works, but not reactive~~
 - [x] "allowHpMaxOverride"
-- [ ] "allowHpConfigOverride"
+- [x] "allowHpConfigOverride" - removed it
 - [ ] "betterAttackDialog"
+  - [ ] Pending removal unless someone has a strong case for it.
 - [ ] "colorPickerEnabled"
 - [ ] "colorPickerPrimaryAccent"
 - [ ] "colorPickerEquipped"

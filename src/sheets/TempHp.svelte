@@ -1,11 +1,9 @@
 <script lang="ts">
   import type { CharacterSheetContext, NpcSheetContext } from 'src/types/types';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import Tidy5eActorHitPointsConfig from 'src/dialogs/Tidy5eActorHitPointsConfig';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import TextInput from 'src/components/form/TextInput.svelte';
-  import { settingStore } from 'src/settings/settings';
 
   let store =
     getContext<Readable<CharacterSheetContext | NpcSheetContext>>('store');
@@ -36,25 +34,15 @@
     maxlength={5}
     title={localize('DND5E.HitPointsTempMax')}
   />
-  {#if $settingStore.allowHpConfigOverride}
-    <a
-      title={localize('DND5E.HitPointsConfig')}
-      on:click|stopPropagation|preventDefault={(event) =>
-        new Tidy5eActorHitPointsConfig($store.actor).render(true)}
-    >
-      <i class="fas fa-cog" />
-    </a>
-  {:else}
-    <a
-      title={localize('DND5E.HitPointsConfig')}
-      on:click|stopPropagation|preventDefault={(event) =>
-        new dnd5e.applications.actor.ActorHitPointsConfig($store.actor).render(
-          true
-        )}
-    >
-      <i class="fas fa-cog" />
-    </a>
-  {/if}
+  <a
+    title={localize('DND5E.HitPointsConfig')}
+    on:click|stopPropagation|preventDefault={(event) =>
+      new dnd5e.applications.actor.ActorHitPointsConfig($store.actor).render(
+        true
+      )}
+  >
+    <i class="fas fa-cog" />
+  </a>
 </div>
 
 <style lang="scss">

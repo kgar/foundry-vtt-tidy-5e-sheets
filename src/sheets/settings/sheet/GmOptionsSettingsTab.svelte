@@ -154,13 +154,6 @@
   />
 
   <CheckboxSetting
-    bind:value={$store.allowHpConfigOverride}
-    name={'T5EK.Settings.AllowHpConfigOverride.name'}
-    hint={'T5EK.Settings.AllowHpConfigOverride.hint'}
-    id="allowHpConfigOverride"
-  />
-
-  <CheckboxSetting
     bind:value={$store.betterAttackDialog}
     name={'T5EK.Settings.BetterAttackDialog.name'}
     hint={'T5EK.Settings.BetterAttackDialog.hint'}

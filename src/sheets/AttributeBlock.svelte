@@ -20,7 +20,7 @@
   <BlockTitle
     title={ability.label}
     text={abbreviation}
-    on:click={(event) => actor.rollAbility(ability, { event })}
+    on:click={(event) => actor.rollAbility(abbreviation, { event })}
   />
   <BlockScore>
     <TextInput
