@@ -752,23 +752,6 @@ export function createSettings() {
         },
       },
 
-      // Enable Spell Level Buttons
-      enableSpellLevelButtons: {
-        options: {
-          name: 'T5EK.Settings.EnableSpellLevelButtons.name',
-          hint: 'T5EK.Settings.EnableSpellLevelButtons.hint',
-          scope: 'world',
-          config: false,
-          default: true,
-          type: Boolean,
-        },
-        get() {
-          return FoundryAdapter.getGameSetting<boolean>(
-            'enableSpellLevelButtons'
-          );
-        },
-      },
-
       // Hide Standard Encumbrance Bar
       hideStandardEncumbranceBar: {
         options: {
@@ -914,24 +897,6 @@ export function createSettings() {
         },
         get() {
           return FoundryAdapter.getGameSetting<boolean>('activeEffectsMarker');
-        },
-      },
-
-      // Set default Tab for character actions list
-
-      enableActionListOnFavoritePanel: {
-        options: {
-          name: 'T5EK.Settings.EnableActionListOnFavoritePanel.name',
-          hint: 'T5EK.Settings.EnableActionListOnFavoritePanel.hint',
-          scope: 'client',
-          config: false,
-          default: false,
-          type: Boolean,
-        },
-        get() {
-          return FoundryAdapter.getGameSetting<boolean>(
-            'enableActionListOnFavoritePanel'
-          );
         },
       },
 
@@ -1550,43 +1515,6 @@ export function createSettings() {
         representsCssVariable: '--t5ek-alwaysprepared-accent-color',
       },
 
-      // ===============================
-      // Homebrew Rules
-      // ===============================
-
-      hbEnableUpcastFreeSpell: {
-        options: {
-          name: 'T5EK.Settings.HBEnableUpcastFreeSpell.name',
-          hint: 'T5EK.Settings.HBEnableUpcastFreeSpell.hint',
-          scope: 'world',
-          config: false,
-          default: false,
-          type: Boolean,
-        },
-        get() {
-          return FoundryAdapter.getGameSetting<boolean>(
-            'hbEnableUpcastFreeSpell'
-          );
-        },
-      },
-
-      hbSetFeaturesForUpcastFreeSpell: {
-        options: {
-          name: 'T5EK.Settings.HBSetFeaturesForUpcastFreeSpell.name',
-          hint: 'T5EK.Settings.HBSetFeaturesForUpcastFreeSpell.hint',
-          scope: 'world',
-          config: false,
-          default: '',
-          type: String,
-        },
-        get() {
-          return FoundryAdapter.getGameSetting<string>(
-            'hbSetFeaturesForUpcastFreeSpell'
-          );
-        },
-      },
-
-      // ========================================================================
       debug: {
         options: {
           name: `T5EK.Settings.Debug.name`,

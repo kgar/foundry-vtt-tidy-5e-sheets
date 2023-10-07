@@ -1,7 +1,7 @@
 ## To Do
 
-- [ ] Settings
-  - [ ] enableActionListOnFavoritePanel - deferring until API approach is ironed out
+- [x] Settings
+  - [x] enableActionListOnFavoritePanel - deferring until API approach is ironed out
   - [x] enableSortFavoritesItemsAlphabetically
 - [x] Put the favorites toggle on
   - [x] Features

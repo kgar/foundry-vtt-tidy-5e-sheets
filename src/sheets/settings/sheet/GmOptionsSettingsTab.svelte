@@ -34,13 +34,6 @@
   />
 
   <CheckboxSetting
-    bind:value={$store.enableSpellLevelButtons}
-    name={'T5EK.Settings.EnableSpellLevelButtons.name'}
-    hint={'T5EK.Settings.EnableSpellLevelButtons.hint'}
-    id="enableSpellLevelButtons"
-  />
-
-  <CheckboxSetting
     bind:value={$store.hideStandardEncumbranceBar}
     name={'T5EK.Settings.HideStandardEncumbranceBar.name'}
     hint={'T5EK.Settings.HideStandardEncumbranceBar.hint'}

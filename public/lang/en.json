@@ -382,10 +382,6 @@
     "name": "Hide Spell Slot Marker on sheet.",
     "hint": "Enable to hide the colored spell slot marker, this is usually useful when the spell points variant rule is use."
   },
-  "T5EK.Settings.EnableSpellLevelButtons": {
-    "name": "Enable Spell Level Buttons.",
-    "hint": "Enable to replaces the spell level select dropdown menu with buttons."
-  },
   "T5EK.Settings.HideStandardEncumbranceBar": {
     "name": "Remove/Hide standard encumbrance bar from the character sheet",
     "hint": "If enabled it will hide the standard bar of encumbrance, if you are using 'Variant Encumbrance' module you probably DO NOT NEED THIS"
@@ -525,18 +521,6 @@
   "T5EK.Settings.EnableSortFavoritesItemsAlphabetically": {
     "name": "Enable Sort Favorites Alphabetically",
     "hint": "It enabled this setting will sort the items, features, spells alphabetically on the favorites html template"
-  },
-  "T5EK.Settings.EnableActionListOnFavoritePanel": {
-    "name": "Enable Action List On Favorite Panel",
-    "hint": "Show favorites item grouped for Action, Bonus Action, Reaction. YOU NEED THE MODULE 'Character Actions 5e Variant forked by p4535992 (https://github.com/p4535992/foundryvtt-character-actions-dnd5e)'"
-  },
-  "T5EK.Settings.HBEnableUpcastFreeSpell": {
-    "name": "Enable upcast free spell.",
-    "hint": "Add an additional button when you are casting a spell for cast it one level higher. This is a homebrew rule. Ty to @mxfz on discord for the macro code and to @thundershield on for the idea, you can find more details here https://discord.com/channels/170995199584108546/699750150674972743/1055686421198946465"
-  },
-  "T5EK.Settings.HBSetFeaturesForUpcastFreeSpell": {
-    "name": "Set features for upcast free spell",
-    "hint": "This setting work only with the module setting 'Enable upcast free spell' enabled, is a string of feature names separated by the character '|' , the search for such features is case unsensitive if found a 'valid' feature enables actors to use the feature upcast. IF LEFT EMPTY IT WILL BE IGNORED."
   },
   "T5EK.Settings.EnablePermanentUnlockOnCharacterIfYouAreGM": {
     "name": "Character Sheet: permanently enable unlock if you are a GM",

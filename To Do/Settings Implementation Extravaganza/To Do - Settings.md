@@ -79,7 +79,7 @@ Refine and improve any settings that compromise visual feedback and information 
 - [x] "editTotalLockEnabled"
 - [x] "hiddenDeathSavesEnabled"
 - [x] "hideSpellSlotMarker"
-- [x] "enableSpellLevelButtons"
+- [x] "enableSpellLevelButtons" - removed
 - [x] "hideStandardEncumbranceBar"
 - [x] "quantityAlwaysShownEnabled"
   - Need to implement for NPCs
@@ -173,13 +173,13 @@ Refine and improve any settings that compromise visual feedback and information 
 
 ## Review and determine next steps
 
-- [ ] "enableActionListOnFavoritePanel"
+- [x] "enableActionListOnFavoritePanel" - removed
   - Renders Action List from API and plunks it into Favorites area above favorites
   - Looking rough right now in the original module
   - Probably going to remove and then return to it when implementing Actions tab natively
-- [ ] "hbEnableUpcastFreeSpell"
+- [x] "hbEnableUpcastFreeSpell" - removed
   - Based on discussion with the commission, remove this.
-- [ ] "hbSetFeaturesForUpcastFreeSpell"
+- [x] "hbSetFeaturesForUpcastFreeSpell" - removed
   - Based on discussion with the commission, remove this.
 - [ ] "defaultActionsTab"
   - [ ] Restyle as simply the Default Character Sheet Tab and put in Character settings

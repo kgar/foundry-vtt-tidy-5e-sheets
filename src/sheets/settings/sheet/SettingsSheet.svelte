@@ -7,7 +7,6 @@
   import VehicleSettingsTab from './VehicleSettingsTab.svelte';
   import GmOptionsSettingsTab from './GmOptionsSettingsTab.svelte';
   import ModuleSettingsTab from './ModuleSettingsTab.svelte';
-  import HomebrewSettingsTab from './HomebrewSettingsTab.svelte';
   import LockSettingsTab from './LockSettingsTab.svelte';
   import InfoTab from './InfoTab.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
@@ -66,13 +65,6 @@
         },
       },
       {
-        id: CONSTANTS.TAB_SETTINGS_HOMEBREW,
-        displayName: 'T5EK.Settings.TabHomebrewRules.tabLabel',
-        content: {
-          component: HomebrewSettingsTab,
-        },
-      },
-      {
         id: CONSTANTS.TAB_SETTINGS_LOCKS,
         displayName: 'T5EK.Settings.TabLocks.tabLabel',
         content: {
@@ -123,7 +115,7 @@
     <Tabs {tabs} bind:selectedTabId orientation="vertical" />
     <div role="presentation" class="remaining-vertical-space" />
   </div>
-  
+
   <TabContents {tabs} {selectedTabId} cssClass="sheet-body" />
   <div class="button-bar">
     <button

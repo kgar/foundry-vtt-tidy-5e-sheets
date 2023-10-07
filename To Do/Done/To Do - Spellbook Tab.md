@@ -2,12 +2,12 @@
 
 ## Tab impl
 
-- [ ] Settings
+- [x] Settings
   - [x] hideSpellSlotMarker
   - [x] enableSpellLevelButtons
   - [x] spellClassFilterSelect
     - [x] "name": "Enable Multiclass Spellbook filter", "hint": "If you don't need this for your character, disabling this option will allow you to reclaim the space and declutter your sheet."
-  - [ ] spellClassFilterIconReplace
+  - [x] spellClassFilterIconReplace
   - [x] spellClassFilterAdditionalClasses
     - [x] A list of ids and friendly text which represent additional classes to include
   - [x] hbEnableUpcastFreeSpell

@@ -126,13 +126,6 @@
   id="enableSortFavoritesItemsAlphabetically"
 />
 
-<CheckboxSetting
-  bind:value={$store.enableActionListOnFavoritePanel}
-  name={'T5EK.Settings.EnableActionListOnFavoritePanel.name'}
-  hint={'T5EK.Settings.EnableActionListOnFavoritePanel.hint'}
-  id="enableActionListOnFavoritePanel"
-/>
-
 <h3>{localize('T5EK.Settings.MulticlassSpellbookFilterLabel')}</h3>
 
 <CheckboxSetting

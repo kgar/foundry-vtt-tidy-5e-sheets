@@ -2,11 +2,6 @@ import { FoundryAdapter } from './foundry/foundry-adapter';
 import { Tidy5eCharacterSheet } from './sheets/character/Tidy5eCharacterSheet';
 import './scss/core.scss';
 import { initSettings } from './settings/settings';
-import { useTidy5eSpellLevelButtons } from './dialogs/spell-level-buttons';
-import {
-  applyHombrewEnableUpcastFreeSpellToPreItemConsumption,
-  useHombrewEnableUpcastFreeSpell,
-} from './dialogs/homebrew-free-upcast';
 import type { Dialog as ClientDialog } from './types/dialog';
 import type { globalThisUI } from './types/types';
 import type { globalThisDnd5e } from './types/dnd5e';
@@ -71,22 +66,6 @@ FoundryAdapter.onReady(async () => {
     getApi().openThemeSettings();
   }
 });
-
-Hooks.on('renderAbilityUseDialog', (app: any, html: any, options: any) => {
-  useTidy5eSpellLevelButtons(app, html, options);
-  useHombrewEnableUpcastFreeSpell(app, html, options);
-});
-
-Hooks.on(
-  'dnd5e.preItemUsageConsumption',
-  (item: any, config: any, options: any) => {
-    applyHombrewEnableUpcastFreeSpellToPreItemConsumption(
-      item,
-      config,
-      options
-    );
-  }
-);
 
 function delay(ms: number) {
   return new Promise<void>((resolve) => {
