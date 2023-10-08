@@ -131,7 +131,7 @@ function getItemContextOptions(item: Item5e) {
 
   if (item.type === 'spell') {
     const prep = item.system.preparation || {};
-    const isAlways = prep.mode === 'always';
+    const isAlways = prep.mode === CONSTANTS.SPELL_PREPARATION_MODE_ALWAYS;
     const isPrepared = !!prep.prepared;
     isActive = isPrepared;
     if (isAlways) toggleTitle = CONFIG.DND5E.spellPreparationModes.always;

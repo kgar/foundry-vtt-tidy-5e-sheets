@@ -56,9 +56,9 @@ export const FoundryAdapter = {
   },
   canPrepareSpell(item: Item5e) {
     return (
-      item.system.preparation?.mode !== 'atwill' &&
-      item.system.preparation?.mode !== 'innate' &&
-      item.system.preparation?.mode !== 'always' &&
+      item.system.preparation?.mode !== CONSTANTS.SPELL_PREPARATION_MODE_ATWILL &&
+      item.system.preparation?.mode !== CONSTANTS.SPELL_PREPARATION_MODE_INNATE &&
+      item.system.preparation?.mode !== CONSTANTS.SPELL_PREPARATION_MODE_ALWAYS &&
       (item.system.level !== 0 ||
         SettingsProvider.settings.allowCantripToBePreparedOnContext.get())
     );
@@ -274,16 +274,16 @@ export const FoundryAdapter = {
     if (spell.system.preparation.prepared) {
       classes.push('prepared');
     }
-    if (spell.system.preparation.mode === 'always') {
+    if (spell.system.preparation.mode === CONSTANTS.SPELL_PREPARATION_MODE_ALWAYS) {
       classes.push('always-prepared');
     }
-    if (spell.system.preparation.mode === 'pact') {
+    if (spell.system.preparation.mode === CONSTANTS.SPELL_PREPARATION_MODE_PACT) {
       classes.push('pact');
     }
-    if (spell.system.preparation.mode === 'atwill') {
+    if (spell.system.preparation.mode === CONSTANTS.SPELL_PREPARATION_MODE_ATWILL) {
       classes.push('at-will');
     }
-    if (spell.system.preparation.mode === 'innate') {
+    if (spell.system.preparation.mode === CONSTANTS.SPELL_PREPARATION_MODE_INNATE) {
       classes.push('innate');
     }
     return classes.join(' ');
