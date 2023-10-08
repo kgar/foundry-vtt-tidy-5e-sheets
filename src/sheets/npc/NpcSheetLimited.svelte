@@ -7,15 +7,10 @@
   import SheetEditor from '../SheetEditor.svelte';
   import { CONSTANTS } from 'src/constants';
   import LimitedHeader from '../actor/LimitedHeader.svelte';
-  import { settingStore } from 'src/settings/settings';
 
   let store = getContext<Readable<NpcSheetContext>>('store');
 
   const localize = FoundryAdapter.localize;
-
-  $: useRoundedPortraitStyle = ['all', CONSTANTS.SHEET_TYPE_NPC].includes(
-    $settingStore.portraitStyle
-  );
 
   function activateProseMirrorListeners(node: HTMLElement) {
     $store.activateFoundryJQueryListeners(node);
@@ -23,7 +18,7 @@
 </script>
 
 <div class="limited-npc">
-  <LimitedHeader rounded={useRoundedPortraitStyle} />
+  <LimitedHeader rounded={$store.useRoundedPortraitStyle} />
   <section class="sheet-body">
     <div class="note-entries">
       <RerenderAfterFormSubmission

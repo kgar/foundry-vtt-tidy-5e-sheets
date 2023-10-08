@@ -1,10 +1,7 @@
 import { CONSTANTS } from '../constants';
 import { FoundryAdapter } from '../foundry/foundry-adapter';
 import { ResetSettingsDialog } from './ResetSettingsDialog';
-import type {
-  GetFunctionReturnType,
-  RoundedPortaitStyleOptions,
-} from 'src/types/types';
+import type { GetFunctionReturnType } from 'src/types/types';
 import { applyTheme, getTheme } from 'src/theme/theme';
 import { defaultLightTheme } from 'src/theme/default-light-theme';
 import { getCoreThemes, themeVariables } from 'src/theme/theme-reference';
@@ -659,17 +656,19 @@ export function createSettings() {
           config: false,
           type: String,
           choices: {
-            default: 'T5EK.Settings.PortraitStyle.default',
-            pc: 'T5EK.Settings.PortraitStyle.pc',
-            npc: 'T5EK.Settings.PortraitStyle.npc',
-            all: 'T5EK.Settings.PortraitStyle.all',
+            [CONSTANTS.ROUNDED_PORTRAIT_OPTION_NONE]:
+              'T5EK.Settings.PortraitStyle.default',
+            [CONSTANTS.ROUNDED_PORTRAIT_OPTION_CHARACTER]:
+              'T5EK.Settings.PortraitStyle.pc',
+            [CONSTANTS.ROUNDED_PORTRAIT_OPTION_NPCVEHICLE]:
+              'T5EK.Settings.PortraitStyle.npc',
+            [CONSTANTS.ROUNDED_PORTRAIT_OPTION_ALL]:
+              'T5EK.Settings.PortraitStyle.all',
           },
-          default: 'all',
+          default: CONSTANTS.ROUNDED_PORTRAIT_OPTION_ALL,
         },
-        get(): RoundedPortaitStyleOptions {
-          return FoundryAdapter.getGameSetting<RoundedPortaitStyleOptions>(
-            'portraitStyle'
-          );
+        get(): string {
+          return FoundryAdapter.getGameSetting<string>('portraitStyle');
         },
       },
 

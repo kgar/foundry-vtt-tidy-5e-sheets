@@ -13,17 +13,13 @@
 
   const localize = FoundryAdapter.localize;
 
-  $: useRoundedPortraitStyle = ['all', CONSTANTS.SHEET_TYPE_NPC].includes(
-    $settingStore.portraitStyle
-  );
-
   function activateProseMirrorListeners(node: HTMLElement) {
     $store.activateFoundryJQueryListeners(node);
   }
 </script>
 
 <div class="limited-character">
-  <LimitedHeader rounded={useRoundedPortraitStyle} />
+  <LimitedHeader rounded={$store.useRoundedPortraitStyle} />
   <section class="sheet-body">
     <div class="note-entries">
       <RerenderAfterFormSubmission

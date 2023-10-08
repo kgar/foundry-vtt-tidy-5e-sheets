@@ -10,7 +10,6 @@
 
   export let successes: number;
   export let failures: number;
-  export let useRoundedPortraitStyle: boolean;
   export let successesField: string;
   export let failuresField: string;
   export let hpOverlayDisabled: boolean;
@@ -25,7 +24,7 @@
 <!-- Death Saves -->
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <!-- svelte-ignore a11y-click-events-have-key-events -->
-<div class="death-saves" class:rounded={useRoundedPortraitStyle}>
+<div class="death-saves" class:rounded={$store.useRoundedPortraitStyle}>
   <div class="death-save-counters" class:show-backdrop={hpOverlayDisabled}>
     <i class="fas fa-check" />
     <TextInput

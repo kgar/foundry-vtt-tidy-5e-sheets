@@ -11,7 +11,6 @@
   export let value: number;
   export let max: number;
   export let actor: Actor5e;
-  export let useRoundedPortraitStyle: boolean;
   export let incapacitated: boolean;
 
   let store = getContext<Readable<CharacterSheetContext>>('store');
@@ -22,7 +21,7 @@
 <div
   class="portrait-hp"
   class:incapacitated
-  class:widen-for-rounded-portrait={useRoundedPortraitStyle}
+  class:widen-for-rounded-portrait={$store.useRoundedPortraitStyle}
   title={localize('DND5E.HitPoints')}
 >
   {#if !$settingStore.hpBarDisabled}

@@ -2,21 +2,16 @@
   import { getContext } from 'svelte';
   import ActorPortrait from './ActorPortrait.svelte';
   import type { Readable } from 'svelte/store';
-  import type { Actor5e } from 'src/types/actor';
+  import type { ActorSheetContext } from 'src/types/types';
 
-  export let useRoundedPortraitStyle: boolean;
   export let useHpOverlay: boolean;
 
-  let store = getContext<Readable<{ actor: Actor5e }>>('store');
+  let store = getContext<Readable<ActorSheetContext>>('store');
 </script>
 
 <div class="profile-wrap">
-  <div class="profile" class:round-portrait={useRoundedPortraitStyle}>
-    <ActorPortrait
-      actor={$store.actor}
-      {useRoundedPortraitStyle}
-      {useHpOverlay}
-    />
+  <div class="profile" class:round-portrait={$store.useRoundedPortraitStyle}>
+    <ActorPortrait actor={$store.actor} {useHpOverlay} />
     <slot />
   </div>
 </div>

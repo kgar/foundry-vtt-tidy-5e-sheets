@@ -115,6 +115,10 @@ export class Tidy5eNpcSheet extends dnd5e.applications.actor.ActorSheet5eNPC {
       lockItemQuantity: FoundryAdapter.shouldLockItemQuantity(),
       owner: this.actor.isOwner,
       showLimitedSheet: FoundryAdapter.showLimitedSheet(this.actor),
+      useRoundedPortraitStyle: [
+        CONSTANTS.ROUNDED_PORTRAIT_OPTION_ALL as string,
+        CONSTANTS.ROUNDED_PORTRAIT_OPTION_NPCVEHICLE as string,
+      ].includes(SettingsProvider.settings.portraitStyle.get()),
     };
   }
 

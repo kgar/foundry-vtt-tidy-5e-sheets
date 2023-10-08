@@ -39,7 +39,12 @@ export class Tidy5eCharacterSheet extends dnd5e.applications.actor
 
   static get defaultOptions() {
     return FoundryAdapter.mergeObject(super.defaultOptions, {
-      classes: ['tidy5e-kgar', 'sheet', 'actor', CONSTANTS.SHEET_TYPE_CHARACTER],
+      classes: [
+        'tidy5e-kgar',
+        'sheet',
+        'actor',
+        CONSTANTS.SHEET_TYPE_CHARACTER,
+      ],
       height: 840,
       width: SettingsProvider.settings.playerSheetWidth.get(),
     });
@@ -107,6 +112,10 @@ export class Tidy5eCharacterSheet extends dnd5e.applications.actor
         (!SettingsProvider.settings.lockHpMaxChanges.get() ||
           FoundryAdapter.userIsGm()),
       showLimitedSheet: FoundryAdapter.showLimitedSheet(this.actor),
+      useRoundedPortraitStyle: [
+        CONSTANTS.ROUNDED_PORTRAIT_OPTION_ALL as string,
+        CONSTANTS.ROUNDED_PORTRAIT_OPTION_CHARACTER as string,
+      ].includes(SettingsProvider.settings.portraitStyle.get()),
     };
 
     debug('Character Sheet context data', context);

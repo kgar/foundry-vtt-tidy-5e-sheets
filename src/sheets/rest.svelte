@@ -6,15 +6,13 @@
 
   let store = getContext<Readable<CharacterSheetContext>>('store');
 
-  export let useRoundedPortraitStyle: boolean;
-
   const localize = FoundryAdapter.localize;
 </script>
 
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <!-- svelte-ignore a11y-missing-attribute -->
-<div class="rest-container" class:rounded={useRoundedPortraitStyle}>
+<div class="rest-container" class:rounded={$store.useRoundedPortraitStyle}>
   <div class="resting">
     <span class="resting-icon" title={localize('T5EK.RestHint')}
       ><i class="rest-icon fas fa-bed" /></span

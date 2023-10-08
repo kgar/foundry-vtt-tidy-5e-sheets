@@ -6,14 +6,12 @@
 
   let store = getContext<Readable<NpcSheetContext>>('store');
 
-  export let useRoundedPortraitStyle: boolean;
-
   const localize = FoundryAdapter.localize;
 </script>
 
 <div
   class="rest-container"
-  class:has-rounded-portrait={useRoundedPortraitStyle}
+  class:has-rounded-portrait={$store.useRoundedPortraitStyle}
   title={localize('T5EK.RestHint')}
 >
   <div class="resting">

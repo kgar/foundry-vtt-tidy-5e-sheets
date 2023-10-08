@@ -2,11 +2,15 @@
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { type Actor5e } from 'src/types/actor';
+  import type { ActorSheetContext } from 'src/types/types';
   import { isRealNumber } from 'src/utils/numbers';
+  import { getContext } from 'svelte';
+  import type { Readable } from 'svelte/store';
 
   export let actor: Actor5e;
-  export let useRoundedPortraitStyle: boolean;
   export let useHpOverlay: boolean;
+
+  let store = getContext<Readable<ActorSheetContext>>('store');
 
   let showPortraitMenu = false;
   const localize = FoundryAdapter.localize;
@@ -26,15 +30,13 @@
       ? actor.system.attributes.hp.temp
       : 0);
 
-  function openPortraitPicker(target: HTMLImageElement) {
+  function openPortraitPicker(target: HTMLElement) {
     const rect = target.getBoundingClientRect();
     const current = actor.img;
     const fp = new FilePicker({
       type: 'image',
       current,
-      callback: (path) => {
-        target.src = path;
-        actor.sheet.submit();
+      callback: (path: string) => {
         actor.update({ img: path });
       },
       top: rect.top + 40,
@@ -44,7 +46,7 @@
   }
 
   function onPortraitClick(
-    event: MouseEvent & { currentTarget: EventTarget & HTMLImageElement }
+    event: MouseEvent & { currentTarget: EventTarget & HTMLElement }
   ) {
     switch (event.button) {
       case CONSTANTS.MOUSE_BUTTON_MAIN:
@@ -65,7 +67,7 @@
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <div
   class="portrait"
-  class:round-portrait={useRoundedPortraitStyle}
+  class:round-portrait={$store.useRoundedPortraitStyle}
   on:mousedown={onPortraitClick}
 >
   <div
@@ -86,7 +88,7 @@
     <div class="portrait-menu">
       <a
         class="portrait-menu-item"
-        on:mousedown={ev => ev.stopImmediatePropagation()}
+        on:mousedown={(ev) => ev.stopImmediatePropagation()}
         on:click={() =>
           new ImagePopout(actor.img, {
             title: 'Portrait: ' + actor.name,
@@ -96,7 +98,7 @@
       >
       <a
         class="portrait-menu-item"
-        on:mousedown={ev => ev.stopImmediatePropagation()}
+        on:mousedown={(ev) => ev.stopImmediatePropagation()}
         on:click={() =>
           new ImagePopout(actor.prototypeToken.texture.src, {
             title: 'Portrait: ' + actor.name,

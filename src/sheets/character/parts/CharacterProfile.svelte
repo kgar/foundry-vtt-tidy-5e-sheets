@@ -16,7 +16,6 @@
   let store = getContext<Readable<CharacterSheetContext>>('store');
 
   $: portraitStyle = $settingStore.portraitStyle;
-  $: useRoundedPortraitStyle = ['all', 'pc'].includes(portraitStyle);
 
   $: incapacitated =
     ($store.actor?.system?.attributes?.hp?.value ?? 0) <= 0 &&
@@ -33,12 +32,10 @@
 <!-- svelte-ignore a11y-missing-attribute -->
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <ActorProfile
-  {useRoundedPortraitStyle}
   useHpOverlay={!$settingStore.hpOverlayDisabled}
 >
   {#if incapacitated && (!$settingStore.hiddenDeathSavesEnabled || FoundryAdapter.userIsGm())}
     <DeathSaves
-      {useRoundedPortraitStyle}
       successes={$store.system.attributes.death.success}
       failures={$store.system.attributes.death.failure}
       successesField="system.attributes.death.success"
@@ -52,7 +49,7 @@
   {#if !$settingStore.exhaustionDisabled && !incapacitated}
     <Exhaustion
       level={$store.system.attributes.exhaustion}
-      radiusClass={useRoundedPortraitStyle ? 'rounded' : 'top-left'}
+      radiusClass={$store.useRoundedPortraitStyle ? 'rounded' : 'top-left'}
       on:levelSelected={onLevelSelected}
       onlyShowOnHover={$settingStore.exhaustionOnHover ||
         ($settingStore.hideIfZero && $store.system.attributes.exhaustion === 0)}
@@ -62,7 +59,7 @@
   {#if !$settingStore.inspirationDisabled && !incapacitated}
     <Inspiration
       inspired={$store.actor.system.attributes.inspiration}
-      radiusClass={useRoundedPortraitStyle ? 'rounded' : 'top-right'}
+      radiusClass={$store.useRoundedPortraitStyle ? 'rounded' : 'top-right'}
       onlyShowOnHover={$settingStore.inspirationOnHover ||
         ($settingStore.hideIfZero &&
           !$store.actor.system.attributes.inspiration)}
@@ -74,12 +71,11 @@
     value={$store.system.attributes.hp.value}
     max={$store.system.attributes.hp.max}
     actor={$store.actor}
-    {useRoundedPortraitStyle}
     {incapacitated}
   />
 
   {#if !incapacitated}
-    <Rest {useRoundedPortraitStyle} />
+    <Rest />
   {/if}
 
   {#if !incapacitated}
@@ -87,7 +83,6 @@
       hitDice={$store.system.attributes.hd}
       actorLevel={$store.system.details.level}
       actor={$store.actor}
-      {useRoundedPortraitStyle}
     />
   {/if}
 </ActorProfile>

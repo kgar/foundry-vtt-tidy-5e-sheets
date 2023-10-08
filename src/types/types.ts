@@ -64,6 +64,7 @@ export type ActorSheetContext = {
    */
   owner: boolean;
   showLimitedSheet: boolean;
+  useRoundedPortraitStyle: boolean;
 };
 
 export type JQueryHooksSheetIntegration = {
@@ -130,8 +131,6 @@ export interface ActorContextSkillProficiency {
   multiplier: number;
   rounding: string;
 }
-
-export type RoundedPortaitStyleOptions = 'default' | 'pc' | 'npc' | 'all';
 
 export type TidyDropdownOption = { value: any; text: string };
 

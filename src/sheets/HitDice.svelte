@@ -1,11 +1,15 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { type Actor5e } from 'src/types/actor';
+  import type { ActorSheetContext } from 'src/types/types';
+  import { getContext } from 'svelte';
+  import type { Readable } from 'svelte/store';
 
   export let hitDice: number;
   export let actorLevel: number;
   export let actor: Actor5e;
-  export let useRoundedPortraitStyle: boolean;
+
+  let store = getContext<Readable<ActorSheetContext>>('store');
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -15,10 +19,10 @@
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <div
   class="portrait-hd"
-  class:rounded={useRoundedPortraitStyle}
-  title="{localize(
-    'DND5E.HitDice'
-  )}: {hitDice}/{actorLevel}&#10;{localize('DND5E.HitDiceConfig')}"
+  class:rounded={$store.useRoundedPortraitStyle}
+  title="{localize('DND5E.HitDice')}: {hitDice}/{actorLevel}&#10;{localize(
+    'DND5E.HitDiceConfig'
+  )}"
 >
   <a
     class="current-hd config-button"

@@ -15,10 +15,6 @@
 
   let store = getContext<Readable<NpcSheetContext>>('store');
 
-  $: useRoundedPortraitStyle = ['all', CONSTANTS.SHEET_TYPE_NPC].includes(
-    $settingStore.portraitStyle
-  );
-
   $: incapacitated =
     ($store.actor?.system?.attributes?.hp?.value ?? 0) <= 0 &&
     $store.actor?.system?.attributes?.hp?.max !== 0;
@@ -28,14 +24,13 @@
   }
 </script>
 
-<ActorProfile {useRoundedPortraitStyle} useHpOverlay={!$settingStore.hpOverlayDisabledNpc}>
+<ActorProfile useHpOverlay={!$settingStore.hpOverlayDisabledNpc}>
   {#if incapacitated && (!$settingStore.hiddenDeathSavesEnabled || FoundryAdapter.userIsGm())}
     <DeathSaves
       successes={FoundryAdapter.tryGetFlag($store.actor, 'death')?.success ?? 0}
       failures={FoundryAdapter.tryGetFlag($store.actor, 'death')?.failure ?? 0}
       successesField="flags.{CONSTANTS.MODULE_ID}.death.success"
       failuresField="flags.{CONSTANTS.MODULE_ID}.death.failure"
-      {useRoundedPortraitStyle}
       on:rollDeathSave={(event) =>
         $store.rollDeathSave({ event: event.detail.mouseEvent })}
       hpOverlayDisabled={$settingStore.hpOverlayDisabledNpc}
@@ -44,14 +39,14 @@
   {#if !$settingStore.exhaustionDisabled && !incapacitated}
     <Exhaustion
       level={FoundryAdapter.tryGetFlag($store.actor, 'exhaustion') ?? 0}
-      radiusClass={useRoundedPortraitStyle ? 'rounded' : 'top-left'}
+      radiusClass={$store.useRoundedPortraitStyle ? 'rounded' : 'top-left'}
       on:levelSelected={onLevelSelected}
     />
   {/if}
 
   <NpcHitPoints />
   {#if $settingStore.restingForNpcsEnabled}
-    <NpcRest {useRoundedPortraitStyle} />
+    <NpcRest />
   {/if}
   <NpcHealthFormula />
 </ActorProfile>
