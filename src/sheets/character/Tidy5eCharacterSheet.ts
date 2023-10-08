@@ -1,6 +1,5 @@
 import { FoundryAdapter } from '../../foundry/foundry-adapter';
-import CharacterSheetFull from './CharacterSheetFull.svelte';
-import CharacterSheetLimited from './CharacterSheetLimited.svelte';
+import CharacterSheet from './CharacterSheet.svelte';
 import { debug, error } from 'src/utils/logging';
 import { SettingsProvider, settingStore } from 'src/settings/settings';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
