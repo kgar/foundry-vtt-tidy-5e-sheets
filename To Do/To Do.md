@@ -19,7 +19,7 @@
 - [ ] HTML enrichment
 - [ ] getData() / Context curation : pull back all calculations from the various components into the context when getting context data in the sheet. If necessary, pull further back into Foundry Adapter for each sheet type. If using Zod, validate the final Character context, NPC context, Vehicle context, Item Sheet context
 - [ ] etc.
-- [ ] Tab selection and ordering 
+- [ ] Tab selection and ordering
   - validation: at least one is required
   - when determining selected tab ID when the indicated one in settings is not available, pick first from ordered list
 - [ ] New context menu? Custom global context menu that leverages a global store
@@ -41,7 +41,7 @@ Foundry Adapter should be reorganized so that functions can be broken out for ac
 - [ ] Begin eliminating all TS errors
 - [ ] Build own curated context object for each sheet type which validates the shape before sending to svelte
   - [ ] Consider using Zod to validate context object so that validation errors are clear for testing / debugging / upgrade purposes
-- [ ] 
+- [ ]
 - [ ] ...etc.
 
 ### Side Quest
@@ -231,7 +231,6 @@ Evaluate module integration and think about better (API-centric) ways to support
 - [ ] Refinement: maintain open/closed state of items between refreshes
 - [ ] Refinement: Expand All / Collapse All
 
-
 ## Big Picture
 
 - [ ] Reimplement Tidy5e Sheets with svelte and using foundry/dnd5e API
@@ -366,7 +365,7 @@ Evaluate module integration and think about better (API-centric) ways to support
 - [ ] Import in Tidy 5e-ified TinyMCE styles - should probably be done in v11
   - [ ] Compare PCs in light mode
   - [ ] Compare PCs in dark mode
-- [ ] Tidy 5e Design Legos - come up with a library of Tidy 5e components that can be exposed in the module API and consumed by any caller. 
+- [ ] Tidy 5e Design Legos - come up with a library of Tidy 5e components that can be exposed in the module API and consumed by any caller.
   - [ ] Provide convenience functions for generating such content and ensure that while the API remains stable, any major design changes to Tidy 5e carry content forward without breakage.
   - [ ] Review the Tidy 5e sheets and fathom the kinds of building blocks that would make the sheets
   - [ ] Revamp the entire module with these lego components
@@ -450,10 +449,10 @@ https://discord.com/channels/170995199584108546/670336046164213761/1154305345808
 "Dread Ambusher" feature, setting initiative bonus to `@abilities.wis.mod`, the field keeps getting reset back to 0.
 
 Ideas so far:
+
 - [ ] Default Ini Bonus box to a client setting that is turned off
 - [ ] Look at Ini Bonus box to see why it might be clearing stuff out and resolve that also
 - [ ] ... (diagnose and task)
-
 
 ## Special Requests
 
@@ -549,7 +548,7 @@ not to my knowledge, sorry, i thought it up when i was playing with players earl
 https://discord.com/channels/732325252788387980/1116078321067892796/1145493173234323556
 
 Fallayn — Today at 6:00 PM
-Feature wishlist: display ability score derived stats somewhere for NPCs and PCs, like jump length/height, max drawing/pushing weight etc (I have a manual note about the latter on all monsters that are used as mounts, but ugh) - not sure where, maybe a tooltip when hovering strength? 
+Feature wishlist: display ability score derived stats somewhere for NPCs and PCs, like jump length/height, max drawing/pushing weight etc (I have a manual note about the latter on all monsters that are used as mounts, but ugh) - not sure where, maybe a tooltip when hovering strength?
 
 Fallayn — Today at 6:09 PM
 Also, and this is more brainstorm-y: I have been adding all general actions to PC sheets ("Disengage", "Sprint", "Dodge" etc)
@@ -559,12 +558,11 @@ It serves as a reminder to players that these exist and they can use them
 It serves as a rules helper, because each action has the exact description of how it works
 It can integrate with modules, i.e when you use Dodge, you get an active effect for a round reminding you and every attacker that you are dodging
 
-
 But it also adds a lot of noise to the sheet, and I do not want to add them to all the NPCs too manually.
 
-But maybe we could have a optional collapsed by default category for   "general actions/features" that just shows whatever is in a compendium you set?
+But maybe we could have a optional collapsed by default category for "general actions/features" that just shows whatever is in a compendium you set?
 
-Open to other ideas how to implement this 
+Open to other ideas how to implement this
 
 ---
 
@@ -618,11 +616,11 @@ that would honestly be a good feature, no sure how others think
 kgar — 10/04/2023 6:48 PM
 Yes, that definitely can be done. I’ll put it on the list of features to discuss after go-live.
 
-
 ### kgar - Redo tab filters
 
 Tab filters have a hard dependency on the sheet class itself, but because of how the sheet is set up with svelte, the sheet could do far less work in this regard.
 Additionally, because we offer Cantrip preparation, the "Prepared (#)" filter
+
 - does not account for prepared cantrips
 - does not filter unprepared cantrips
 
@@ -633,22 +631,19 @@ Additionally, because we offer Cantrip preparation, the "Prepared (#)" filter
 - [ ] Upgrade the relevant sheet tabs so that they filter data reactively based on these filter settings
 - [ ] On filter setting changes, have the relevant sheet update its filter properties accordingly
 
-
 ### kgar - Dyanmic User-based Flags
 
 Sometimes, the DM needs to interact with a sheet while the user is also interacting with it.
 When there are flat flags for things like Search and Spellbook Class Filter, then a DM and a player could trip over each other during a game.
 Alternatively, this flat flag approach allows for a DM to locate something for a player, but this benefit is not really clear or direct. A future feature for pinging something on the sheet would honestly be a better bet, which would free the sheet to be more collaboration-friendly in nature.
 
-
-
-One way to make sheets accessible to multiple concurrent people while also remembering user preferences on sheet 
-
+One way to make sheets accessible to multiple concurrent people while also remembering user preferences on sheet
 
 ### kgar - Search Feature Adjustments
 
 Upgrade tab search so that it does not involve a flat flag.
 Options for alternate storage:
+
 - transient sheet instance state, similar to how the sheet remembers the current tab, scroll top, and filters
 - a dynamic user sheet flag
 
@@ -663,17 +658,18 @@ Copy the "Show to Players" header menu button feature from "The Module Which Sha
 Include things like the permissions dialog that it uses.
 Ensure the relevant tab is presented upon showing.
 
-
 ### kgar - Sheet Ping
 
 As a DM, I would like to be able to ping basically any identifiable element on a character sheet.
 When I ping, for all users who have the sheet open, it should
+
 - Select the appropriate tab
 - Find the appropriate element
 - Scroll the element into view
 - Animate the element with some attention-grabbing indicator for a few seconds for all
 
 Options for how to ping:
+
 - An activate-able ping mode
   - use a hotkey or press a conveniently-located button to put the sheet in Ping mode
   - allows me to hover over any identifiable element and click it to ping
@@ -682,13 +678,13 @@ Options for how to ping:
   - any time the user long-presses or mouses down for a long enough time anywhere on the sheet, we look for the nearest containing element marked as pingable
   - trigger a ping for that element
 
-
 Long-press / long-click is nice, because it jives with the canvas ping settings.
 We might even consider using the user-specified ping settings from foundry at large to drive tidy's pinging.
 
 #### What I sent to the commission
 
 **🎯 Sheet Ping**
+
 - Allow a permitted user to draw attention to a section of a Tidy 5e sheet using a Ping
 - Sheets will designate pingable content (items, spells, tabs, buttons, text, etc.)
 - When doing the non-shift-ping (a regular ping), we use Tidy 5e theme coloring to perform a brief outline-based animation for the benefit of anyone currently using the sheet
@@ -705,14 +701,13 @@ https://discord.com/channels/732325252788387980/1116078321067892796/115990581935
 
 ArlosMolten — Today at 12:31 PM
 A feature where you open your sheet on another user, on a specific tab isn't enough?
-When one of my players want to show/ask something about his sheet, just saying and pointing is enough. Having the sheet open on that tab would be a good qol, but this is just my experience. 
+When one of my players want to show/ask something about his sheet, just saying and pointing is enough. Having the sheet open on that tab would be a good qol, but this is just my experience.
 
 kgar — Today at 12:39 PM
 Does that already exist? Or are you saying opening the sheet for another user on a specific tab would be enough if we were going to make some kind of feature like this?
 
 ArlosMolten — Today at 12:45 PM
 I've always though this was a tidy5e feature 😄
-
 
 https://discord.com/channels/732325252788387980/1116078321067892796/1159919498397225000
 
@@ -728,7 +723,6 @@ If it's possible to ping a sheet that would genuinely be useful as I tend to pla
 On the Shift-Ping front where it like, lets players ping a sheet in a way that would cause the DM or other players to have their tabs swapped.... I would caution against this. I think it might be a bit too much power that could cause confusion and maybe some mistakes. Like maybe I'm about to click a spell but someone pings and I get swapped to the Inventory tab and now I've swung a sword instead.
 
 Personally I think this is a feature that should be as unobtrusive as possible, and used sparingly. In the rare cases where it would be used, I'm sure I could trust my player to let me know which tab to switch to.
-
 
 ### kgar - Revised Layout for Spell Slots
 
@@ -747,7 +741,6 @@ This would free up a great deal of space and make 20th-level wizard spell slots 
 
 The main downside is imposing a bit more vertical spacing to accomodate the spell slot tab.
 
-
 ### kgar - Implement Native Actions List / Actions Tab / Actions Icon setup
 
 Basically redo the Actions feature specifically for Tidy 5e Sheets.
@@ -755,7 +748,6 @@ Make it toggle-able as a feature in its entirety. Default false.
 Reimplement "enableActionListOnFavoritePanel" setting, but this time, it should be worded more toward "Include Actions List in Attributes Tab"
 Include option to have an Actions tab or not; this could also be accomplished with custom tab selection and ordering.
 Include in list of default starting tabs in settings.
-
 
 ### kgar - New Setting: "Enable Favorites Feature"
 
@@ -767,10 +759,10 @@ Use Case: someone likes Actions and would prefer to put those in their Attribute
 
 Imagine curated loadouts of settings which provide various cohesive Tidy 5e setups which make sense for different play styles.
 For example
+
 - Lockdown - a setup where sensitive field locking is set up
 - Action-oriented - completely replaces Favorites with Actions in Attributes tab and excludes Action tab
 - Kitchen Sink - enable all the features (Favorites, Actions List, Locking/Unlocking, etc.)
-
 
 ### fallayn - Accessibility issues with font-size changes
 
@@ -782,12 +774,13 @@ btw my players with worse eyesight just noted that some parts of the sheet break
 
 > Use SessionStorage to persist GUI state for things like Search, Filters, Expanded/Collapsed fields, scroll top, ...
 > Use a hierarchy of identifiers
+>
 > - `{CONSTANT.MODULE_ID}-actor-{actorId}-fieldName: {value}`
 >
 > Look into how to leverage a store which can persist and read data from the SessionStorage API when the user is making changes and when they need the data.
 >
 > Make sure you can fall back to not using session storage when it's not available:
-> 
+
 ```js
 const isSessionStorageEnabled = () => {
   try {
@@ -800,6 +793,26 @@ const isSessionStorageEnabled = () => {
   }
 };
 ```
+
+Video with example of working the storage API into a store: https://www.youtube.com/watch?v=a65aPLz18IM&ab_channel=SvelteSociety
+
+```js
+// Example from video.
+export const persistStore = (key, initial) => {
+  const persist = sessionStorage.getitem(key);
+  const data = persist ? JSON.parse(persist) : initial;
+
+  const store = writable(data, () => {
+    const unsubscribe = store.subscribe((value) => {
+      sessionStorage.setItem(key, JSON.stringify(value));
+    });
+    return unsubscribe;
+  });
+};
+```
+
+Consider debouncing the storage set operation.
+Should I persist the entire sheet GUI element state as an object, or do it primitive by primitive? I'll start with storing JSON representing a whole particular theme, such as Actor GUI element state for a given sheet.
 
 https://discord.com/channels/732325252788387980/1116078321067892796/1160623357667049593
 
