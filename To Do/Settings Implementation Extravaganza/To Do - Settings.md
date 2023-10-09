@@ -14,16 +14,11 @@
 - [x] Make SHEET_TYPE_CHARACTER, SHEET_TYPE_NPC, and SHEET_TYPE_VEHICLE constants and update all usages.
 - [x] Extract "useRoundedPortraitStyle" to ActorSheetContext
 - [x] Make SPELL_PREPARATION_MODE_XYZ constants and update all usages.
-- [ ] Replace unioned sheet context types which reference all three sheet types with the base context, where able.
-- [ ] Add the NPM watch script for enforcing resolving type errors
-  - [ ] Begin the process of pulling all data for sheets into their context types
-    - [ ] PC
-    - [ ] NPC
-    - [ ] Vehicle
-- [ ] Begin the arduous process of actually creating a flattened type for each sheet context which contains the needed data
-- [ ] Figure out how to centralize and make testable the property strings that appear on all the various sheet inputs. It might be as simple as adding more constants...
+- [x] Honor game setting "Disable Experience Tracking" on our sheets
 - [ ] Observers / Limited users should not be allowed to click configure buttons or make rolls.
-- [ ] Honor game setting "Disable Experience Tracking" on our sheets
+- [ ] 🐞 When changing sheet permissions from observer/owner to limited, half the sheet changes while the other half with the header and tab strip remain intact. It should refresh the entire sheet.
+- [ ] 
+
 
 ## Implement ALL the Settings! 👏
 

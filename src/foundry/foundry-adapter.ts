@@ -56,9 +56,12 @@ export const FoundryAdapter = {
   },
   canPrepareSpell(item: Item5e) {
     return (
-      item.system.preparation?.mode !== CONSTANTS.SPELL_PREPARATION_MODE_ATWILL &&
-      item.system.preparation?.mode !== CONSTANTS.SPELL_PREPARATION_MODE_INNATE &&
-      item.system.preparation?.mode !== CONSTANTS.SPELL_PREPARATION_MODE_ALWAYS &&
+      item.system.preparation?.mode !==
+        CONSTANTS.SPELL_PREPARATION_MODE_ATWILL &&
+      item.system.preparation?.mode !==
+        CONSTANTS.SPELL_PREPARATION_MODE_INNATE &&
+      item.system.preparation?.mode !==
+        CONSTANTS.SPELL_PREPARATION_MODE_ALWAYS &&
       (item.system.level !== 0 ||
         SettingsProvider.settings.allowCantripToBePreparedOnContext.get())
     );
@@ -274,16 +277,24 @@ export const FoundryAdapter = {
     if (spell.system.preparation.prepared) {
       classes.push('prepared');
     }
-    if (spell.system.preparation.mode === CONSTANTS.SPELL_PREPARATION_MODE_ALWAYS) {
+    if (
+      spell.system.preparation.mode === CONSTANTS.SPELL_PREPARATION_MODE_ALWAYS
+    ) {
       classes.push('always-prepared');
     }
-    if (spell.system.preparation.mode === CONSTANTS.SPELL_PREPARATION_MODE_PACT) {
+    if (
+      spell.system.preparation.mode === CONSTANTS.SPELL_PREPARATION_MODE_PACT
+    ) {
       classes.push('pact');
     }
-    if (spell.system.preparation.mode === CONSTANTS.SPELL_PREPARATION_MODE_ATWILL) {
+    if (
+      spell.system.preparation.mode === CONSTANTS.SPELL_PREPARATION_MODE_ATWILL
+    ) {
       classes.push('at-will');
     }
-    if (spell.system.preparation.mode === CONSTANTS.SPELL_PREPARATION_MODE_INNATE) {
+    if (
+      spell.system.preparation.mode === CONSTANTS.SPELL_PREPARATION_MODE_INNATE
+    ) {
       classes.push('innate');
     }
     return classes.join(' ');
@@ -485,7 +496,7 @@ export const FoundryAdapter = {
     );
   },
   showLimitedSheet(actor: any): boolean {
-    const showLimitedSheet = !FoundryAdapter.userIsGm() && this.actor.limited;
+    const showLimitedSheet = !FoundryAdapter.userIsGm() && actor.limited;
     if (actor.type === CONSTANTS.SHEET_TYPE_CHARACTER) {
       return (
         showLimitedSheet &&

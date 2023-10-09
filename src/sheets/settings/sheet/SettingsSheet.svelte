@@ -79,7 +79,6 @@
     displayName: 'T5EK.Settings.TabInfo.tabLabel',
     content: {
       component: InfoTab,
-      props: { name: 'buddy' },
     },
   });
 

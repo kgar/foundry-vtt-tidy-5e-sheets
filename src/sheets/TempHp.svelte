@@ -23,7 +23,7 @@
     maxlength={5}
     title={localize('DND5E.HitPointsTemp')}
     disabled={!$store.owner}
-    />
+  />
   <TextInput
     document={$store.actor}
     field="system.attributes.hp.tempmax"
@@ -35,16 +35,18 @@
     maxlength={5}
     title={localize('DND5E.HitPointsTempMax')}
     disabled={!$store.owner}
-    />
-  <a
-    title={localize('DND5E.HitPointsConfig')}
-    on:click|stopPropagation|preventDefault={(event) =>
-      new dnd5e.applications.actor.ActorHitPointsConfig($store.actor).render(
-        true
-      )}
-  >
-    <i class="fas fa-cog" />
-  </a>
+  />
+  {#if $store.owner}
+    <a
+      title={localize('DND5E.HitPointsConfig')}
+      on:click|stopPropagation|preventDefault={(event) =>
+        new dnd5e.applications.actor.ActorHitPointsConfig($store.actor).render(
+          true
+        )}
+    >
+      <i class="fas fa-cog" />
+    </a>
+  {/if}
 </div>
 
 <style lang="scss">
