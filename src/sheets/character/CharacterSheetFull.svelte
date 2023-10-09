@@ -30,7 +30,6 @@
   import ItemInfoCard from 'src/components/item-info-card/ItemInfoCard.svelte';
   import SheetMenu from '../actor/SheetMenu.svelte';
   import { settingStore } from 'src/settings/settings';
-  import { debug } from 'src/utils/logging';
 
   export let selectedTabId: string;
   let store = getContext<Readable<CharacterSheetContext>>('store');
@@ -188,8 +187,8 @@
                   selectOnFocus={true}
                   allowDeltaChanges={true}
                   maxlength={7}
-          disabled={!$store.owner}
-          />
+                  disabled={!$store.owner}
+                />
               {:else}
                 <span class="max">{$store.system.details.xp.max}</span>
               {/if}
@@ -255,14 +254,19 @@
     <section class="origin-summary">
       <span class="origin-points">
         <!-- TODO: Consider implementing the hidden select that the original sheet has, or figure out a way to format this select in such a way that it agrees with the rest of the layout instead of undermining it. -->
-        <TidyDropdownList
-          options={sizes}
-          selected={currentSize}
-          on:optionClicked={(event) =>
-            $store.actor.update({
-              'system.traits.size': event.detail.value,
-            })}
-        />
+        {#if $store.owner}
+          <TidyDropdownList
+            options={sizes}
+            selected={currentSize}
+            on:optionClicked={(event) =>
+              $store.actor.update({
+                'system.traits.size': event.detail.value,
+              })}
+            title={localize('DND5E.Size')}
+          />
+        {:else}
+          <span title={localize('DND5E.Size')}>{currentSize.text}</span>
+        {/if}
         {#each characterSummaryEntries as entry}
           <span>&#8226;</span>
           <span title={entry} class="truncate">{entry}</span>
@@ -291,7 +295,6 @@
       {abilities}
       ac={$store.system.attributes.ac}
       init={$store.system.attributes.init}
-      actor={$store.actor}
     />
   </div>
 </header>

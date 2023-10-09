@@ -1,0 +1,27 @@
+.icon-button {
+  line-height: normal;
+  font-family: var(--t5ek-body-font-family);
+  border: none;
+  color: var(--t5ek-icon-font-color);
+  background: transparent;
+  padding: 0;
+  margin: 0;
+  transition: color 0.3s ease, transform 0.3s ease;
+
+  &:hover {
+    background: transparent;
+    color: var(--t5ek-icon-hover-color);
+  }
+}
+
+.transparent-button {
+  line-height: normal;
+  border: none;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+
+  &:hover {
+    background: transparent;
+  }
+}

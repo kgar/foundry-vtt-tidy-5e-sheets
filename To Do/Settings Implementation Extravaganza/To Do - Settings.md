@@ -17,8 +17,11 @@
 - [x] Honor game setting "Disable Experience Tracking" on our sheets
 - [ ] Observers / Limited users should not be allowed to click configure buttons or make rolls.
 - [ ] 🐞 When changing sheet permissions from observer/owner to limited, half the sheet changes while the other half with the header and tab strip remain intact. It should refresh the entire sheet.
-- [ ] 
-
+- [ ] Find anchor-tag-based icon buttons; replace with actual buttons
+  - [ ] Make a component IconButton which uses `color: var(--t5ek-icon-font-color);` and on hover: `background: inherit; color: var(--t5ek-icon-hover-color);`
+  - [ ] Replace each one and test
+  - [ ] Ensure disable logic is honored
+- [ ] Convert all `<BlockTitle />` elements to contain buttons. Should the h4 be a button, or should it be an h4? Can an h4 contain a button and it be meaningful to a screen reader?
 
 ## Implement ALL the Settings! 👏
 
@@ -162,7 +165,7 @@ Refine and improve any settings that compromise visual feedback and information 
 - [x] "debug"
 - [x] "contextRollButtons" - removed
   - Purpose unknown. Current maintainer doesn't know what it does.
-- [ ] "expandedSheetEnabled"
+- [x] "expandedSheetEnabled"
   - [x] Choose the regular sheet for non-GM / non-Owner when this is enabled
   - [x] Figure out how to refresh the sheet fully when this changes. As of now, thinking of moving the sheet switch logic into a base character sheet component.
   - [x] Ensure all inputs and editable fields require ownership or GM status to edit
@@ -170,11 +173,11 @@ Refine and improve any settings that compromise visual feedback and information 
     - [x] select
     - [x] textarea - ain't got none
     - [x] Checkbox.svelte
-    - [x] NumberInput.svelte 
-    - [x] Select.svelte 
-    - [x] SelectOptions.svelte - no need 
+    - [x] NumberInput.svelte
+    - [x] Select.svelte
+    - [x] SelectOptions.svelte - no need
     - [x] TextInput.svelte
-  - [ ] Test it
+  - [x] Test it
 
 ## Review and determine next steps
 
@@ -190,7 +193,6 @@ Refine and improve any settings that compromise visual feedback and information 
   - [ ] Restyle as simply the Default Character Sheet Tab and put in Character settings
   - [ ] Add similar settings to NPC and Vehicles
   - [ ] Upgrade tabs to be fully data-driven for this
-
 
 ## Specific setting notes
 

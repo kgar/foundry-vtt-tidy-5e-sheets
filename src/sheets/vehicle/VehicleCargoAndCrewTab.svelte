@@ -158,8 +158,8 @@
                   onSaveChange={(ev) => saveSection(ev, index, 'name', section)}
                   value={item.name}
                   cssClass="editable-name"
-          disabled={!$store.owner}
-          />
+                  disabled={!$store.owner}
+                />
               {:else}
                 <ItemUseButton {item} />
                 <ItemName

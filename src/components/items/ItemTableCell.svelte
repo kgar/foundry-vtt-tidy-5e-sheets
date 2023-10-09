@@ -1,8 +1,23 @@
 <script lang="ts">
+  import { CONSTANTS } from 'src/constants';
+  import { setContext } from 'svelte';
+  import { writable } from 'svelte/store';
+
   export let baseWidth: string | undefined = undefined;
   export let primary: boolean = false;
   export let cssClass: string = '';
   export let title: string | undefined = undefined;
+
+  const isHovering = writable<boolean>(false);
+  setContext(CONSTANTS.CONTEXT_GRID_CELL_HOVER, isHovering);
+
+  function mouseEnter(ev: MouseEvent) {
+    isHovering.set(true);
+  }
+
+  function mouseLeave(ev: MouseEvent) {
+    isHovering.set(false);
+  }
 </script>
 
 <div
@@ -10,6 +25,10 @@
   class:primary
   style:flex-basis={baseWidth}
   {title}
+  on:mouseenter={mouseEnter}
+  on:mouseleave={mouseLeave}
+  role="gridcell"
+  tabindex="0"
 >
   <slot />
 </div>
@@ -36,14 +55,14 @@
       color: var(--t5ek-primary-color);
     }
 
-    &:hover {
-      :global(.item-use-button) {
-        background-image: none;
-      }
-      :global(.item-use-button i) {
-        display: initial;
-      }
-    }
+    // &:hover {
+    //   :global(.item-use-button-image) {
+    //     background-image: none;
+    //   }
+    //   :global(.item-use-button i) {
+    //     display: initial;
+    //   }
+    // }
 
     &:not(.primary) {
       border-left: 0.0625rem solid var(--t5ek-faintest-color);

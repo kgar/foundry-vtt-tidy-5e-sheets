@@ -173,14 +173,19 @@
       <HorizontalLineSeparator borderColor="light" />
       <div class="origin-summary">
         <div class="flex-row extra-small-gap">
-          <TidyDropdownList
-            options={sizes}
-            selected={currentSize}
-            on:optionClicked={(event) =>
-              $store.actor.update({
-                'system.traits.size': event.detail.value,
-              })}
-          />
+          {#if $store.owner}
+            <TidyDropdownList
+              options={sizes}
+              selected={currentSize}
+              on:optionClicked={(event) =>
+                $store.actor.update({
+                  'system.traits.size': event.detail.value,
+                })}
+              title={localize('DND5E.Size')}
+            />
+          {:else}
+            <span title={localize('DND5E.Size')}>{currentSize.text}</span>
+          {/if}
           <span>&#8226;</span>
           {#key $store.lockSensitiveFields}
             <DelimitedTruncatedContent cssClass="flex-grow-1">
@@ -248,7 +253,6 @@
         {abilities}
         ac={$store.system.attributes.ac}
         init={$store.system.attributes.init}
-        actor={$store.actor}
       />
     </div>
   </header>
@@ -256,8 +260,11 @@
     <svelte:fragment slot="tab-end">
       {#if $store.owner}
         <AllowEditLock
-          hint={$settingStore.enablePermanentUnlockOnNPCIfYouAreGM && FoundryAdapter.userIsGm()
-            ? localize('T5EK.Settings.EnablePermanentUnlockOnNPCIfYouAreGM.title')
+          hint={$settingStore.enablePermanentUnlockOnNPCIfYouAreGM &&
+          FoundryAdapter.userIsGm()
+            ? localize(
+                'T5EK.Settings.EnablePermanentUnlockOnNPCIfYouAreGM.title'
+              )
             : null}
         />
       {/if}

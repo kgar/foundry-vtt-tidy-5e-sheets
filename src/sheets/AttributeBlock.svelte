@@ -1,59 +1,69 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { type Actor5e } from 'src/types/actor';
   import { formatAsModifier } from 'src/utils/formatting';
   import TextInput from 'src/components/form/TextInput.svelte';
-  import BlockTitle from './BlockTitle.svelte';
+  import BlockTitle from './RollableBlockTitle.svelte';
   import BlockScore from './BlockScore.svelte';
+  import { getContext } from 'svelte';
+  import type { Readable } from 'svelte/store';
+  import type { ActorSheetContext } from 'src/types/types';
 
   export let abbreviation: string;
   export let ability: any;
-  export let actor: Actor5e;
   export let useSavingThrowProficiency: boolean;
   export let useConfigurationOption: boolean;
-  export let readonly: boolean = true;
+
+  let store = getContext<Readable<ActorSheetContext>>('store');
 
   const localize = FoundryAdapter.localize;
 </script>
 
+<!-- svelte-ignore a11y-no-static-element-interactions -->
+<!-- svelte-ignore a11y-missing-attribute -->
+<!-- svelte-ignore a11y-click-events-have-key-events -->
 <div class="wrapper">
   <BlockTitle
     title={ability.label}
     text={abbreviation}
-    on:click={(event) => actor.rollAbility(abbreviation, { event })}
+    on:roll={(event) =>
+      $store.actor.rollAbility(abbreviation, { event: event.detail })}
   />
   <BlockScore>
     <TextInput
-      document={actor}
+      document={$store.actor}
       field="system.abilities.{abbreviation}.value"
       value={ability.value}
       placeholder="10"
       dtype="Number"
       selectOnFocus={true}
       allowDeltaChanges={true}
-      disabled={readonly}
+      disabled={$store.lockSensitiveFields}
     />
   </BlockScore>
   <div class="ability-modifiers">
     <span
-      class="ability-mod rollable"
+      class="ability-mod"
+      class:rollable={$store.owner}
       title={localize('DND5E.AbilityModifier')}
-      on:click={(event) => actor.rollAbilityTest(abbreviation, { event })}
+      on:click={(event) =>
+        $store.owner && $store.actor.rollAbilityTest(abbreviation, { event })}
       >{formatAsModifier(ability.mod)}</span
     >
     <span
-      class="ability-save rollable"
+      class="ability-save"
+      class:rollable={$store.owner}
       title={localize('DND5E.ActionSave')}
-      on:click={(event) => actor.rollAbilitySave(abbreviation, { event })}
+      on:click={(event) =>
+        $store.owner && $store.actor.rollAbilitySave(abbreviation, { event })}
       >{formatAsModifier(ability.save)}</span
     >
     {#if useSavingThrowProficiency}
-      {#if !readonly}
+      {#if !$store.lockSensitiveFields}
         <a
           title={ability.hover}
           class="proficiency-toggle"
           on:click={() =>
-            actor.update({
+            $store.actor.update({
               [`system.abilities.${abbreviation}.proficient`]:
                 1 - parseInt(ability.proficient),
             })}
@@ -66,13 +76,13 @@
         >
       {/if}
     {/if}
-    {#if useConfigurationOption && !readonly}
+    {#if useConfigurationOption && !$store.lockSensitiveFields}
       <a
         class="config-button"
         title={localize('DND5E.AbilityConfigure')}
         on:click={() =>
           new dnd5e.applications.actor.ActorAbilityConfig(
-            actor,
+            $store.actor,
             null,
             abbreviation
           ).render(true)}
@@ -140,7 +150,6 @@
       font-size: 0.75rem;
       opacity: 0.4;
       transition: opacity 0.3s ease;
-      cursor: pointer;
     }
 
     .ability-mod:hover,

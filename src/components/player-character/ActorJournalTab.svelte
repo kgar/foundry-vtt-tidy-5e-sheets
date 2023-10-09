@@ -17,7 +17,7 @@
   }
 </script>
 
-<div class="left-notes note-entries" class:limited={$store.actor.limited}>
+<div class="left-notes note-entries" class:limited={$store.showLimitedSheet}>
   <RerenderAfterFormSubmission
     andOnValueChange={FoundryAdapter.tryGetFlag($store.actor, 'notes1.value') ??
       ''}
@@ -111,7 +111,7 @@
     </article>
   </RerenderAfterFormSubmission>
 </div>
-<div class="right-notes note-entries" class:limited={$store.actor.limited}>
+<div class="right-notes note-entries" class:limited={$store.showLimitedSheet}>
   <RerenderAfterFormSubmission
     andOnValueChange={FoundryAdapter.tryGetFlag($store.actor, 'notes.value') ??
       ''}

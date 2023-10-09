@@ -65,17 +65,17 @@
       {@const ctx = $store.itemContext[item.id]}
 
       <!-- svelte-ignore a11y-click-events-have-key-events -->
-      <div
-        role="button"
-        tabindex="0"
-        class="item {getInventoryRowClasses(item)}"
+      <button
+        type="button"
+        class="item {getInventoryRowClasses(item)} transparent-button"
         class:show-item-count-on-hover={!$settingStore.quantityAlwaysShownEnabled}
         data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
         data-context-menu-entity-id={item.id}
-        on:click={(event) => item.use({}, { event })}
+        on:click={(event) => $store.owner && item.use({}, { event })}
         on:mousedown={(event) => FoundryAdapter.editOnMiddleClick(event, item)}
         on:mouseenter={() => onMouseEnter(item)}
         on:mouseleave={onMouseLeave}
+        disabled={!$store.owner}
       >
         {#if ctx.attunement}
           <i
@@ -89,18 +89,18 @@
         {/if}
 
         {#if $store.owner}
-          <a
+          <button
             class="item-control item-edit"
             style="display:none"
             data-action="itemEdit"
             title="DND5E.ItemEdit"
           >
             <i class="fas fa-edit fa-fw" />
-          </a>
+          </button>
         {/if}
 
-        <div class="item-name" role="button">
-          <div class="item-image" style="background-image: url('/{item.img}')">
+        <div class="item-name">
+          <div class="item-image" style="--bg-image: url('/{item.img}');">
             <i class="fa fa-dice-d20" />
           </div>
         </div>
@@ -143,16 +143,16 @@
               allowDeltaChanges={true}
               selectOnFocus={true}
               on:click={preventUseItemEvent}
-          />
+            />
           </span>
         </div>
-      </div>
+      </button>
     {/each}
     {#if $store.editable}
       <div class="items-footer">
-        <a
-          role="button"
-          tabindex="0"
+        <button
+          type="button"
+          class="item-create icon-button"
           title={localize('DND5E.ItemCreate')}
           on:click|stopPropagation|preventDefault={() =>
             FoundryAdapter.createItem(
@@ -165,7 +165,7 @@
             )}
         >
           <i class="fas fa-plus-circle" />
-        </a>
+        </button>
       </div>
     {/if}
   </div>
@@ -217,7 +217,6 @@
         }
 
         &.equipped .item-image {
-          background-image: url('systems/dnd5e/icons/items/inventory/pearl.jpg');
           box-shadow: 0 0 0rem 0.0625rem
               var(--t5ek-magic-item-grid-tile-outline-color) inset,
             0 0 0 0.0625rem var(--t5ek-magic-accent-color) inset,
@@ -266,6 +265,7 @@
         height: 100%;
         margin: 0;
         border-radius: 0;
+        background-image: var(--bg-image);
         background-repeat: no-repeat;
         background-size: cover;
 
@@ -273,20 +273,16 @@
           color: var(--t5ek-tertiary-color);
           text-align: center;
           font-size: 1.125rem;
-
-          &:not(:hover) {
-            display: none;
-          }
+          display: none;
         }
       }
 
-      &:not(.context) .item-name.rollable:hover .item-image,
-      &:not(.context) .item-name:hover .item-image {
-        background-image: none !important;
-      }
+      &:not([disabled]):hover .item-name .item-image {
+        background-image: none;
 
-      &:not(.context) .item-name:hover .item-image i {
-        display: initial;
+        i {
+          display: initial;
+        }
       }
 
       .item-name:hover .item-image:hover i {
@@ -362,7 +358,7 @@
       height: 3.125rem;
       margin: 0.125rem;
 
-      a {
+      .item-create {
         display: flex;
         justify-content: center;
         align-items: center;

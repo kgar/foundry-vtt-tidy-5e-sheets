@@ -1,7 +1,11 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { PortraitCharmRadiusClass } from 'src/types/types';
-  import { createEventDispatcher } from 'svelte';
+  import type {
+    ActorSheetContext,
+    PortraitCharmRadiusClass,
+  } from 'src/types/types';
+  import { createEventDispatcher, getContext } from 'svelte';
+  import type { Readable } from 'svelte/store';
 
   export let cssClass: string = '';
   export let radiusClass: PortraitCharmRadiusClass;
@@ -10,6 +14,8 @@
   export let exhaustionLocalizationPrefix: string = 'T5EK.Exhaustion';
 
   const localize = FoundryAdapter.localize;
+
+  let store = getContext<Readable<ActorSheetContext>>('store');
 
   const dispatch = createEventDispatcher<{
     levelSelected: { level: number };
@@ -52,14 +58,20 @@
     >
       <i class={exhaustionClasses[level] ?? ''} />
     </div>
-    <ul class="exhaust-level">
+    <ul class="exhaustion-levels">
       {#each [0, 1, 2, 3, 4, 5, 6] as levelOption}
-        <li
-          class:colorized={levelOption <= level}
-          title={localize(exhaustionLocalizationPrefix + levelOption)}
-          on:click={() => dispatch('levelSelected', { level: levelOption })}
-        >
-          {levelOption}
+        <li>
+          <button
+            type="button"
+            class="exhaustion-level-option transparent-button"
+            class:colorized={levelOption <= level}
+            title={localize(exhaustionLocalizationPrefix + levelOption)}
+            on:click={() =>
+              $store.owner && dispatch('levelSelected', { level: levelOption })}
+            disabled={!$store.owner}
+          >
+            {levelOption}
+          </button>
         </li>
       {/each}
     </ul>
@@ -123,7 +135,7 @@
         position: relative;
       }
 
-      .exhaust-level {
+      .exhaustion-levels {
         list-style: none;
         margin: 0;
         padding: 0;
@@ -134,17 +146,21 @@
           flex: 0 0 1.25rem;
           text-align: center;
           line-height: 34px;
-          cursor: pointer;
+          display: flex;
 
-          &:hover {
-            background: var(--t5ek-tertiary-color) !important;
-            color: var(--t5ek-primary-font-color);
+          .exhaustion-level-option {
+            border-radius: 0;
+
+            &:hover {
+              background: var(--t5ek-tertiary-color);
+              color: var(--t5ek-primary-font-color);
+            }
           }
         }
       }
     }
 
-    .exhaust-level li:not(.colorized) {
+    .exhaustion-levels .exhaustion-level-option:not(.colorized) {
       background: var(--t5ek-light-color);
     }
 

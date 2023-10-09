@@ -1,6 +1,8 @@
 <script lang="ts">
-  import type { Actor5e } from 'src/types/actor';
   import AcShieldBase from './AcShieldBase.svelte';
+  import { getContext } from 'svelte';
+  import type { Readable } from 'svelte/store';
+  import type { ActorSheetContext } from 'src/types/types';
 
   /**
    * The Armor Class value.
@@ -12,22 +14,24 @@
    */
   export let cssClass: string = '';
 
-  /**
-   * The actor to whom this AC shield refers.
-   */
-  export let actor: Actor5e;
+  let store = getContext<Readable<ActorSheetContext>>('store');
 </script>
 
 <AcShieldBase {cssClass}>
-  <a
+  <button
+    type="button"
     on:click={() =>
-      new dnd5e.applications.actor.ActorArmorConfig(actor).render(true)}
-    on:mouseover={(ev) => actor.sheet._onPropertyAttribution(ev)}
-    class="config-button attribute-value"
+      new dnd5e.applications.actor.ActorArmorConfig($store.actor).render(true)}
+    on:mouseover={(ev) => $store.actor.sheet._onPropertyAttribution(ev)}
+    on:focus
+    class="config-button attribute-value transparent-button"
     data-attribution="attributes.ac"
     data-attribution-caption="DND5E.ArmorClass"
-    data-tooltip-direction="DOWN">{ac}</a
+    data-tooltip-direction="DOWN"
+    disabled={!$store.owner}
   >
+    {ac}
+  </button>
 </AcShieldBase>
 
 <style lang="scss">

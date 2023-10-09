@@ -221,10 +221,9 @@ c28,32.6,51.5,72.7,62,91.7c2.8,5,9.9,5.1,12.8,0.2c14-23.3,44.3-83.4,44.3-166.9C4
   {/if}
 
   {#if toggleable}
-    <div
-      class="toggle-traits"
-      role="button"
-      tabindex="0"
+    <button
+      type="button"
+      class="toggle-traits transparent-button"
       on:click|stopPropagation|preventDefault={() => toggleTraitsExpanded()}
     >
       {#if traitsExpanded}
@@ -232,11 +231,12 @@ c28,32.6,51.5,72.7,62,91.7c2.8,5,9.9,5.1,12.8,0.2c14-23.3,44.3-83.4,44.3-166.9C4
       {:else}
         {localize('T5EK.Show')} {localize('T5EK.TraitsEmpty')}
       {/if}
-    </div>
+    </button>
   {/if}
   {#if traitsExpanded && enableSpecialTraitsConfiguration && !$store.lockSensitiveFields}
-    <a
-      class="configure-special-traits"
+    <button
+      type="button"
+      class="configure-special-traits icon-button"
       title={localize('DND5E.TraitConfig', {
         trait: localize('DND5E.SpecialTraits'),
       })}
@@ -244,7 +244,7 @@ c28,32.6,51.5,72.7,62,91.7c2.8,5,9.9,5.1,12.8,0.2c14-23.3,44.3-83.4,44.3-166.9C4
         new dnd5e.applications.actor.ActorSheetFlags($store.actor).render(true)}
     >
       <i class="fas fa-cog" />
-    </a>
+    </button>
   {/if}
 </div>
 

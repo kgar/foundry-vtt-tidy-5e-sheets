@@ -7,6 +7,7 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import RerenderAfterFormSubmission from '../shared/RerenderAfterFormSubmission.svelte';
+    import { settingStore } from 'src/settings/settings';
 
   let store = getContext<Readable<CharacterSheetContext>>('store');
 
@@ -18,7 +19,7 @@
 </script>
 
 <div class="notes-container">
-  <div class="top-notes note-entries" class:limited={$store.actor.limited}>
+  <div class="top-notes note-entries" class:limited={$store.showLimitedSheet}>
     <article>
       <ul class="character-details">
         <li>
@@ -108,7 +109,7 @@
     </article>
   </div>
   <div class="main-notes">
-    <div class="left-notes note-entries" class:limited={$store.actor.limited}>
+    <div class="left-notes note-entries" class:limited={$store.showLimitedSheet}>
       <RerenderAfterFormSubmission
         andOnValueChange={$store.system.details.trait}
       >
@@ -162,7 +163,7 @@
       </RerenderAfterFormSubmission>
     </div>
 
-    <div class="right-notes note-entries" class:limited={$store.actor.limited}>
+    <div class="right-notes note-entries" class:limited={$store.showLimitedSheet}>
       <RerenderAfterFormSubmission
         andOnValueChange={$store.system.details.appearance}
       >

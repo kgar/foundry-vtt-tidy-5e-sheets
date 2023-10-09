@@ -5,6 +5,7 @@
   export let options: TidyDropdownOption[];
   export let selected: TidyDropdownOption;
   export let isOpen = false;
+  export let title: string | null = null;
 
   const dispatch = createEventDispatcher<{
     optionClicked: TidyDropdownOption;
@@ -20,6 +21,7 @@
   <span
     class="selected-option"
     class:active={isOpen}
+    {title}
     on:click={() => (isOpen = !isOpen)}>{selected.text}</span
   >
   <ul class="options-list" class:active={isOpen}>

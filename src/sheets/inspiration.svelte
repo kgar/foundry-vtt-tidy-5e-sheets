@@ -26,13 +26,15 @@
 >
   <Checkbox
     checkboxCssClass="inspiration-toggle"
-    labelCssClass="{inspired ? 'inspired' : ''} {radiusClass}"
+    labelCssClass="{inspired ? 'inspired' : ''} {radiusClass} {$store.owner
+      ? 'pointer'
+      : ''}"
     document={$store.actor}
     field="system.attributes.inspiration"
     dtype="Boolean"
     checked={inspired}
     disabled={!$store.owner}
-    >
+  >
     <i
       class="inspiration-icon fas fa-dice-d20"
       class:disable-animation={disableAnimation}
@@ -61,7 +63,6 @@
       align-items: center;
       font-size: 1.5rem;
       color: var(--t5ek-icon-font-color);
-      cursor: pointer;
       box-shadow: 0 0 0.625rem var(--t5ek-icon-shadow-color) inset;
       border: 0.0625rem solid var(--t5ek-icon-outline-color);
       background: var(--t5ek-icon-background);
@@ -87,7 +88,8 @@
   .inspiration-1 {
     :global(label) {
       color: var(--t5ek-activated-profile-toggle-color);
-      text-shadow: 0 0 0.625rem var(--t5ek-inspiration-inspired-text-shadow-color);
+      text-shadow: 0 0 0.625rem
+        var(--t5ek-inspiration-inspired-text-shadow-color);
       background: var(--t5ek-inspiration-inspired-background);
     }
 

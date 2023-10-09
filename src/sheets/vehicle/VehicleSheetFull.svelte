@@ -118,14 +118,19 @@
     <HorizontalLineSeparator borderColor="light" />
     <div class="origin-summary">
       <div class="flex-row extra-small-gap">
-        <TidyDropdownList
-          options={sizes}
-          selected={currentSize}
-          on:optionClicked={(event) =>
-            $store.actor.update({
-              'system.traits.size': event.detail.value,
-            })}
-        />
+        {#if $store.owner}
+          <TidyDropdownList
+            options={sizes}
+            selected={currentSize}
+            on:optionClicked={(event) =>
+              $store.actor.update({
+                'system.traits.size': event.detail.value,
+              })}
+            title={localize('DND5E.Size')}
+          />
+        {:else}
+          <span title={localize('DND5E.Size')}>{currentSize.text}</span>
+        {/if}
       </div>
       <span>&#8226;</span>
       {#key $store.lockSensitiveFields}
@@ -185,10 +190,8 @@
           <AttributeBlock
             abbreviation={id}
             {ability}
-            actor={$store.actor}
             useConfigurationOption={false}
             useSavingThrowProficiency={false}
-            readonly={$store.lockSensitiveFields}
           />
         </div>
       {/each}

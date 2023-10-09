@@ -63,43 +63,40 @@
     <div class="spells">
       {#each spells as spell}
         {@const spellImgUrl = FoundryAdapter.getSpellImageUrl($store, spell)}
-        <div
-          role="button"
-          tabindex="0"
-          class="spell {FoundryAdapter.getSpellRowClasses(spell)}"
+        <button
+          type="button"
+          class="spell {FoundryAdapter.getSpellRowClasses(spell)} icon-button"
           data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
           data-context-menu-entity-id={spell.id}
-          on:click={(event) => spell.use({}, { event })}
+          on:click={(event) => $store.owner && spell.use({}, { event })}
           on:mousedown={(event) =>
             FoundryAdapter.editOnMiddleClick(event, spell)}
           on:mouseenter={() => onMouseEnter(spell)}
           on:mouseleave={onMouseLeave}
+          disabled={!$store.owner}
         >
           {#if FoundryAdapter.tryGetFlag(spell, 'favorite')}
             <GridPaneFavoriteIcon />
           {/if}
 
-          <div class="spell-name" role="button">
-            <div
-              class="spell-image"
-              style="background-image: url('/{spellImgUrl}')"
-            >
+          <div class="spell-name">
+            <div class="spell-image" style="--bg-image: url('/{spellImgUrl}');">
               <i class="fa fa-dice-d20" />
             </div>
           </div>
-        </div>
+        </button>
       {/each}
       {#if $store.editable}
         <div class="spells-footer">
-          <a
-            role="button"
-            tabindex="0"
+          <button
+            type="button"
+            class="item-create icon-button"
             title={localize('DND5E.SpellCreate')}
             on:click|stopPropagation|preventDefault={() =>
               FoundryAdapter.createItem(section.dataset, $store.actor)}
           >
             <i class="fas fa-plus-circle" />
-          </a>
+          </button>
         </div>
       {/if}
     </div>
@@ -209,6 +206,7 @@
         height: 100%;
         margin: 0;
         border-radius: 0;
+        background-image: var(--bg-image);
         background-repeat: no-repeat;
         background-size: cover;
 
@@ -216,20 +214,16 @@
           color: var(--t5ek-tertiary-color);
           text-align: center;
           font-size: 1.125rem;
-
-          &:not(:hover) {
-            display: none;
-          }
+          display: none;
         }
       }
 
-      &:not(.context) .spell-name.rollable:hover .spell-image,
-      &:not(.context) .spell-name:hover .spell-image {
-        background-image: none !important;
-      }
+      &:not([disabled]):hover .spell-name .spell-image {
+        background-image: none;
 
-      &:not(.context) .spell-name:hover .spell-image i {
-        display: initial;
+        i {
+          display: initial;
+        }
       }
 
       .spell-name:hover .spell-image:hover i {
@@ -241,7 +235,7 @@
       height: 3.125rem;
       margin: 0.125rem;
 
-      a {
+      .item-create {
         display: flex;
         justify-content: center;
         align-items: center;

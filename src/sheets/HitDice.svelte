@@ -14,9 +14,6 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-<!-- svelte-ignore a11y-click-events-have-key-events -->
-<!-- svelte-ignore a11y-missing-attribute -->
-<!-- svelte-ignore a11y-no-static-element-interactions -->
 <div
   class="portrait-hd"
   class:rounded={$store.useRoundedPortraitStyle}
@@ -24,11 +21,11 @@
     'DND5E.HitDiceConfig'
   )}"
 >
-  <a
-    class="current-hd config-button"
-    on:click={new dnd5e.applications.actor.ActorHitDiceConfig(actor).render(
-      true
-    )}>{hitDice}</a
+  <button
+    class="current-hd config-button transparent-button"
+    on:click={$store.owner &&
+      new dnd5e.applications.actor.ActorHitDiceConfig(actor).render(true)}
+    disabled={!$store.owner}>{hitDice}</button
   >
 </div>
 
@@ -57,9 +54,10 @@
       align-items: center;
       height: 100%;
       font-family: var(--t5ek-title-font-family);
-      font-size: 20px;
+      font-size: 1.25rem;
       font-weight: 700;
-      padding: 2px 0 0 0;
+      border-radius: 50%;
+      color: var(--t5ek-icon-font-color);
     }
   }
 </style>

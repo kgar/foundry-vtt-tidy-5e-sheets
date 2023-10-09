@@ -1,33 +1,34 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { type Actor5e } from 'src/types/actor';
   import { formatAsModifier } from 'src/utils/formatting';
-  import BlockTitle from './BlockTitle.svelte';
+  import BlockTitle from './RollableBlockTitle.svelte';
   import BlockScore from './BlockScore.svelte';
   import TextInput from 'src/components/form/TextInput.svelte';
+  import type { ActorSheetContext } from 'src/types/types';
+  import { getContext } from 'svelte';
+  import type { Readable } from 'svelte/store';
 
   export let initiative: { total: number; bonus: number };
-  export let actor: Actor5e;
-  export let readonly: boolean;
+
+  let store = getContext<Readable<ActorSheetContext>>('store');
 
   const localize = FoundryAdapter.localize;
 </script>
 
-<!-- svelte-ignore a11y-missing-content -->
-<!-- svelte-ignore a11y-click-events-have-key-events -->
 <div class="wrapper">
   <BlockTitle
     title={localize('DND5E.Initiative')}
     text={localize('T5EK.AbbrInitiative')}
-    on:click={(event) => actor.rollInitiativeDialog({ event })}
+    on:roll={(event) =>
+      $store.actor.rollInitiativeDialog({ event: event.detail })}
   />
   <BlockScore>
     <span>{formatAsModifier(initiative.total)}</span>
   </BlockScore>
-  <label class="ini-bonus">
+  <label class="ini-bonus" for="{$store.appId}-initiative-mod">
     <span>{localize('T5EK.AbbrMod')}</span>
     <TextInput
-      document={actor}
+      document={$store.actor}
       field="system.attributes.init.bonus"
       cssClass="ini-mod"
       placeholder="0"
@@ -36,19 +37,23 @@
       allowDeltaChanges={true}
       value={initiative.bonus}
       maxlength={2}
-      disabled={readonly}
+      disabled={!$store.owner || $store.lockSensitiveFields}
+      id="{$store.appId}-initiative-mod"
     />
   </label>
 
-  {#if !readonly}
-    <a
-      class="config-button"
+  {#if $store.owner && !$store.lockSensitiveFields}
+    <button
+      type="button"
+      class="config-button icon-button"
       title={localize('DND5E.InitiativeConfig')}
       on:click={() =>
-        new dnd5e.applications.actor.ActorInitiativeConfig(actor).render(true)}
+        new dnd5e.applications.actor.ActorInitiativeConfig($store.actor).render(
+          true
+        )}
     >
       <i class="fas fa-cog" />
-    </a>
+    </button>
   {:else}
     <span
       class="config-button invisible"

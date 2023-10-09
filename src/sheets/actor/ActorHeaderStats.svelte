@@ -1,37 +1,19 @@
 <script lang="ts">
-  import type { Actor5e } from 'src/types/actor';
   import AttributeBlock from '../AttributeBlock.svelte';
   import InitiativeBlock from '../InitiativeBlock.svelte';
   import AcShield from './AcShield.svelte';
   import VerticalLineSeparator from 'src/components/layout/VerticalLineSeparator.svelte';
-  import type {
-    CharacterSheetContext,
-    NpcSheetContext,
-    VehicleSheetContext,
-  } from 'src/types/types';
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
 
-  let store =
-    getContext<
-      Readable<CharacterSheetContext | NpcSheetContext | VehicleSheetContext>
-    >('store');
-
-  export let actor: Actor5e;
   export let ac: any;
   export let init: any;
   export let abilities: any[];
 </script>
 
 <section class="actor-stats">
-  <AcShield ac={ac.value} {actor} />
+  <AcShield ac={ac.value} />
   <VerticalLineSeparator />
   <div>
-    <InitiativeBlock
-      {actor}
-      initiative={init}
-      readonly={$store.lockSensitiveFields}
-    />
+    <InitiativeBlock initiative={init} />
   </div>
   {#each abilities as [id, ability]}
     <VerticalLineSeparator />
@@ -39,10 +21,8 @@
       <AttributeBlock
         abbreviation={id}
         {ability}
-        {actor}
         useSavingThrowProficiency={true}
         useConfigurationOption={true}
-        readonly={$store.lockSensitiveFields}
       />
     </div>
   {/each}

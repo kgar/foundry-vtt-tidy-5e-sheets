@@ -106,6 +106,10 @@
     cursor: pointer;
   }
 
+  button > i {
+    margin: unset;
+  }
+
   .highlight-on-hover:hover {
     color: var(--t5ek-primary-accent-color);
   }
@@ -147,5 +151,10 @@
     border: none;
   }
 
+  // Components
   @import '../components/button-menu/button-menu.scss';
+
+  &.sheet form {
+    @import './partials/buttons';
+  }
 }

@@ -1,9 +1,22 @@
 <script lang="ts">
+  import type { ActorSheetContext } from 'src/types/types';
+  import { createEventDispatcher, getContext } from 'svelte';
+  import type { Readable } from 'svelte/store';
+
   export let title: string | null = null;
   export let text: string;
+
+  const dispatcher = createEventDispatcher<{ roll: MouseEvent }>();
+
+  let store = getContext<Readable<ActorSheetContext>>('store');
 </script>
 
-<h4 class="block-title rollable" {title} on:click>
+<h4
+  class:rollable={$store.owner}
+  class="block-title"
+  {title}
+  on:click={(ev) => $store.owner && dispatcher('roll', ev)}
+>
   {text}
 </h4>
 

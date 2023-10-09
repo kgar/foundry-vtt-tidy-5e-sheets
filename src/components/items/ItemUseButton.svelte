@@ -1,35 +1,54 @@
 <script lang="ts">
+  import { CONSTANTS } from 'src/constants';
+  import { getContext } from 'svelte';
+  import type { Readable } from 'svelte/store';
+
   export let item: any;
   export let imgUrlOverride: string | undefined = undefined;
+
+  const showRoll = getContext<Readable<boolean>>(
+    CONSTANTS.CONTEXT_GRID_CELL_HOVER
+  );
 </script>
 
 <div
-  role="button"
-  tabindex="0"
-  class="item-use-button"
+  class="item-image"
   style="--bg-image: url('/{imgUrlOverride ?? item.img}')"
-  on:click={(event) => item.use({}, { event })}
+  class:show-roll={item.isOwner && $showRoll}
 >
-  <i class="fa fa-dice-d20" />
+  {#if item.isOwner && $showRoll}
+    <button
+      class="item-use-button icon-button"
+      type="button"
+      on:click={(event) => item.use({}, { event })}
+    >
+      <i class="fa fa-dice-d20" />
+    </button>
+  {/if}
 </div>
 
 <style lang="scss">
-  .item-use-button {
+  .item-image {
     flex: 0 0 1.5rem;
     height: 1.5rem;
-    border-radius: 0.3125rem 0 0 0.3125rem;
     background-image: var(--bg-image);
     background-size: cover;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
+    border-radius: 0.3125rem 0 0 0.3125rem;
     gap: 0.25rem;
 
+    &.show-roll {
+      background-image: none;
+    }
+  }
+
+  .item-use-button {
     i {
       color: var(--t5ek-tertiary-color);
       font-size: 1.125rem;
-      display: none;
     }
 
     &:hover i {

@@ -1,8 +1,8 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-    import type { CharacterSheetContext } from 'src/types/types';
-    import { getContext } from 'svelte';
-    import type { Readable } from 'svelte/store';
+  import type { CharacterSheetContext } from 'src/types/types';
+  import { getContext } from 'svelte';
+  import type { Readable } from 'svelte/store';
 
   let store = getContext<Readable<CharacterSheetContext>>('store');
 
@@ -17,18 +17,22 @@
     <span class="resting-icon" title={localize('T5EK.RestHint')}
       ><i class="rest-icon fas fa-bed" /></span
     >
-    <a
-      class="rest"
+    <button
+      type="button"
+      class="rest icon-button"
       title={localize('T5EK.RestS')}
       on:click={(event) => $store.actor.sheet.onShortRest(event)}
-      ><i class="fas fa-hourglass-half" /></a
     >
-    <a
-      class="rest"
+      <i class="fas fa-hourglass-half" />
+    </button>
+    <button
+      type="button"
+      class="rest icon-button"
       title={localize('T5EK.RestL')}
       on:click={(event) => $store.actor.sheet.onLongRest(event)}
-      ><i class="fas fa-hourglass-end" /></a
     >
+      <i class="fas fa-hourglass-end" />
+    </button>
   </div>
 </div>
 
@@ -84,18 +88,9 @@
       width: 2rem;
       height: 2rem;
       border-radius: 50%;
-      cursor: pointer;
-      border: none;
-      padding: 0;
       font-size: 1.125rem;
       line-height: 2rem;
-      font-family: var(--t5ek-body-font-family);
       font-weight: 700;
-      transition: color 0.3s ease, transform 0.3s ease;
-
-      &:hover {
-        color: var(--t5ek-icon-hover-color);
-      }
     }
   }
 </style>

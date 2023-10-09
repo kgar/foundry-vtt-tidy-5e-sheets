@@ -64,8 +64,9 @@
           class:proficient={skillRef.skill.value}
         >
           {#if $store.owner && !$store.lockSensitiveFields}
-            <a
-              class="configure-proficiency"
+            <button
+              type="button"
+              class="configure-proficiency icon-button"
               on:click={() =>
                 new dnd5e.applications.actor.ProficiencyConfig($store.actor, {
                   property: 'skills',
@@ -74,15 +75,16 @@
               title={localize('DND5E.SkillConfigure')}
             >
               <i class="fas fa-cog" />
-            </a>
+            </button>
           {/if}
           {#if $store.owner && $store.lockSensitiveFields}
             <span class="skill-proficiency" title={skillRef.skill.hover}
               >{@html skillRef.skill.icon}</span
             >
           {:else}
-            <a
-              class="skill-proficiency-toggle"
+            <button
+              type="button"
+              class="skill-proficiency-toggle icon-button"
               on:click={() =>
                 FoundryAdapter.cycleProficiency(
                   $store.actor,
@@ -98,17 +100,19 @@
                   'skills',
                   true
                 )}
-              title={skillRef.skill.hover}>{@html skillRef.skill.icon}</a
+              title={skillRef.skill.hover}>{@html skillRef.skill.icon}</button
             >
           {/if}
-          <h4
-            role="button"
-            class="tidy5e-skill-name rollable"
+          <button
+            type="button"
+            class="tidy5e-skill-name transparent-button"
+            class:rollable={$store.owner}
             on:click={(event) =>
               $store.actor.rollSkill(skillRef.key, { event })}
+            disabled={!$store.owner}
           >
             {skillRef.skill.label}
-          </h4>
+          </button>
           <span class="skill-ability">{skillRef.skill.abbreviation}</span>
           <span class="skill-mod">{formatAsModifier(skillRef.skill.total)}</span
           >
@@ -123,13 +127,17 @@
   </ul>
   {#if toggleable}
     <div style="text-align:center;">
-      <a class="toggle-proficient" on:click={toggleShowAllSkills}>
+      <button
+        type="button"
+        class="toggle-proficient transparent-button"
+        on:click={toggleShowAllSkills}
+      >
         {#if showAllSkills}
           {localize('T5EK.Hide')}
         {:else}
           {localize('T5EK.Show')}
         {/if}
-        {localize('DND5E.NotProficient')}</a
+        {localize('DND5E.NotProficient')}</button
       >
     </div>
   {/if}
@@ -166,11 +174,14 @@
         white-space: nowrap;
         text-overflow: ellipsis;
         flex: 1;
-        margin: 0 0.25rem;
+        text-align: left;
         font-weight: 400;
       }
 
       .configure-proficiency {
+        width: auto;
+        margin: 0;
+        padding: 0;
         font-size: 0.625rem;
         color: var(--t5ek-tertiary-color);
         &:hover {
@@ -188,6 +199,7 @@
       }
 
       .skill-proficiency-toggle {
+        width: auto;
         font-size: 0.625rem;
         color: var(--t5ek-tertiary-color);
 
@@ -198,14 +210,6 @@
         i {
           vertical-align: baseline;
         }
-
-        // TODO: Is this for when the skill is unable to be toggled? Like when active effects are preventing?
-        // &:not(.proficiency-toggle) {
-        //   cursor: default;
-        //   &:hover {
-        //     color: var(--t5ek-tertiary-color);
-        //   }
-        // }
       }
 
       .skill-mod,
@@ -222,11 +226,11 @@
         flex: 0 0 1.5rem;
         text-transform: capitalize;
       }
-      ///
     }
   }
 
-  .toggle-proficient {
+  .skills-list-container .toggle-proficient {
+    width: auto;
     font-size: 0.625rem;
     text-transform: capitalize;
     border: 0.0625rem solid var(--t5ek-faint-color);

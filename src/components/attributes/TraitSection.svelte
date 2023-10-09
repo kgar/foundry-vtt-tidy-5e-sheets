@@ -57,10 +57,9 @@
         {#each tools as [key, tool]}
           <li class="tool">
             {#if $store.owner && !$store.lockSensitiveFields}
-              <a
-                class="tool-proficiency-toggle"
+              <button
+                class="tool-proficiency-toggle transparent-button"
                 title={tool.hover}
-                role="button"
                 on:click|stopPropagation|preventDefault={(event) =>
                   FoundryAdapter.cycleProficiency(
                     $store.actor,
@@ -78,23 +77,23 @@
                   )}
               >
                 {@html tool.icon}
-              </a>
+              </button>
             {:else}
               <span title={tool.hover} class="tool-proficiency-readonly"
                 >{@html tool.icon}</span
               >
             {/if}
-            <span
-              class="rollable"
-              role="button"
-              tabindex="0"
+            <button
+              class="tool-check-roller transparent-button"
+              class:rollable={$store.owner}
               on:click={(event) => $store.actor.rollToolCheck(key, { event })}
+              disabled={!$store.owner}
             >
               {tool.label}
-            </span>
+            </button>
             {#if traitsExpanded && $store.owner && !$store.lockSensitiveFields}
-              <a
-                class="tool-proficiency-editor rollable"
+              <button
+                class="tool-proficiency-editor icon-button"
                 title="DND5E.ToolConfigure"
                 on:click|stopPropagation|preventDefault={() =>
                   new dnd5e.applications.actor.ProficiencyConfig($store.actor, {
@@ -103,23 +102,21 @@
                   }).render(true)}
               >
                 <i class="fas fa-cog" />
-              </a>
+              </button>
             {/if}
           </li>
         {/each}
       </ul>
     </div>
     {#if traitsExpanded && $store.owner && !$store.lockSensitiveFields}
-      <a
-        class="trait-editor"
+      <button
+        class="trait-editor icon-button"
         title={configureButtonTitle}
-        tabindex="0"
-        role="button"
         on:click|stopPropagation|preventDefault={(event) =>
           dispatcher('onConfigureClicked', event)}
       >
         <i class="fas fa-pencil-alt" />
-      </a>
+      </button>
     {/if}
   </div>
 {/if}
@@ -141,6 +138,11 @@
       font-size: 0.75rem;
       padding: 0.125rem 0 0 0;
       text-align: center;
+    }
+
+    button {
+      width: auto;
+      font-size: 0.75rem;
     }
 
     .trait-editor:hover i,

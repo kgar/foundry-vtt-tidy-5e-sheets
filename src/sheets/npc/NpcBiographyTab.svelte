@@ -30,7 +30,7 @@
 </script>
 
 <div class="notes-container">
-  <div class="top-notes note-entries" class:limited={$store.actor.limited}>
+  <div class="top-notes note-entries" class:limited={$store.showLimitedSheet}>
     <article>
       <ul class="character-details">
         <li>
@@ -135,7 +135,7 @@
       {#if showNpcPersonalityInfo}
         <div
           class="left-notes note-entries"
-          class:limited={$store.actor.limited}
+          class:limited={$store.showLimitedSheet}
         >
           <RerenderAfterFormSubmission
             andOnValueChange={FoundryAdapter.tryGetFlag(
@@ -205,7 +205,7 @@
       {/if}
       <div
         class="right-notes note-entries"
-        class:limited={$store.actor.limited}
+        class:limited={$store.showLimitedSheet}
       >
         <RerenderAfterFormSubmission
           andOnValueChange={FoundryAdapter.tryGetFlag(

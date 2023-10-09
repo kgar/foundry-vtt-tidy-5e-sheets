@@ -94,4 +94,5 @@ export const CONSTANTS = {
   SPELL_PREPARATION_MODE_ALWAYS: 'always',
   SPELL_PREPARATION_MODE_PACT: 'pact',
   SPELL_PREPARATION_MODE_ATWILL: 'atwill',
+  CONTEXT_GRID_CELL_HOVER: 'grid-cell-hover',
 } as const;
