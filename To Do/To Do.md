@@ -770,3 +770,54 @@ For example
 - Lockdown - a setup where sensitive field locking is set up
 - Action-oriented - completely replaces Favorites with Actions in Attributes tab and excludes Action tab
 - Kitchen Sink - enable all the features (Favorites, Actions List, Locking/Unlocking, etc.)
+
+
+### fallayn - Accessibility issues with font-size changes
+
+https://discord.com/channels/732325252788387980/1116078321067892796/1160617084955394088
+
+btw my players with worse eyesight just noted that some parts of the sheet break pretty badly if you increase the font sizes in Foundry's settings (like the currency section)
+
+### fallayn - Search filter change and issue
+
+> Use SessionStorage to persist GUI state for things like Search, Filters, Expanded/Collapsed fields, scroll top, ...
+> Use a hierarchy of identifiers
+> - `{CONSTANT.MODULE_ID}-actor-{actorId}-fieldName: {value}`
+>
+> Look into how to leverage a store which can persist and read data from the SessionStorage API when the user is making changes and when they need the data.
+>
+> Make sure you can fall back to not using session storage when it's not available:
+> 
+```js
+const isSessionStorageEnabled = () => {
+  try {
+    const key = `__storage__test`;
+    window.sessionStorage.setItem(key, null);
+    window.sessionStorage.removeItem(key);
+    return true;
+  } catch (e) {
+    return false;
+  }
+};
+```
+
+https://discord.com/channels/732325252788387980/1116078321067892796/1160623357667049593
+
+also the search filter is global, not per client, so if a player enters something there, the list is filtered for the DM too and the other way around; should probably per client. also does not work if the actor is in a compendium
+
+kgar:
+I'm still thinking through how exactly to do it, but this is a problem I'd really like to solve.
+
+As a DM, I have been tripped up by this issue mid-game, as have my players. A player could be doing their thing and looking over spells while I also am looking through the spellbook for something, and we trip over each other if one of us does a search or filters the spellbook by class.
+
+I have been thinking about a solution to this problem. Right now, the search filter is a flat Actor flag which says "here's what was typed in search, for anyone who looks at this sheet." I have been entertaining the idea of dynamic / user-specific actor flags for things like search filtering. This would make it so your last search is remembered upon reload, but it doesn't interfere with someone else's use of the sheet.
+
+I am leaning toward user-specific actor flags because of other feature ideas, like being able to sort by any column in the list view, remember your list filters (Concentration, Prepared, etc.) between page loads, remember which spells you have expanded / collapsed between page reloads, etc. I just haven't prototyped it yet, and I'm still learning Foundry (after all these months on this project 😅).
+
+Something to consider, `game.user.id` is probably a stable field to lean on for user-specific flags.
+
+Wasp — Today at 7:03 PM
+I reckon it should just be in the local storage of the browser - no point storing the collapsed sections in actual foundry, right?
+
+TyphonJS (Michael) [UTC-7] — Today at 10:04 PM
+Yes... Session storage is actually what you want to use between page loads. It stays active for as long as the tab is open. Local storage is not the best for GUI element state as that persists potentially for a very long time. If you ever got around to TRL ehem there is indeed a bunch of utilities for using the various web storage / searching / filtering and such, but I gather you are still rolling your own solutions. 😉
