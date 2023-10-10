@@ -135,9 +135,9 @@
       {localize('DND5E.Damage')}
     {/if}
     {localize('DND5E.Formula')}
-    <a
+    <button
       class="damage-formula-control add-damage"
-      on:click={() => addDamageFormula()}><i class="fas fa-plus" /></a
+      on:click={() => addDamageFormula()}><i class="fas fa-plus" /></button
     >
   </h4>
   <ol class="damage-parts form-group">
@@ -166,10 +166,12 @@
             <SelectOptions data={$store.config.healingTypes} />
           </optgroup>
         </select>
-        <a
+        <button
           class="damage-formula-control delete-damage"
-          on:click={() => deleteDamageFormula(i)}><i class="fas fa-minus" /></a
+          on:click={() => deleteDamageFormula(i)}
         >
+          <i class="fas fa-minus" />
+        </button>
       </li>
     {/each}
   </ol>
@@ -208,7 +210,7 @@
         placeholder={localize('DND5E.Formula')}
         dataset={{ formulaEditor: true }}
         disabled={!$store.owner}
-        />
+      />
     </div>
   </ItemFormGroup>
 
@@ -268,6 +270,6 @@
       field="system.chatFlavor"
       value={$store.system.chatFlavor}
       disabled={!$store.owner}
-      />
+    />
   </ItemFormGroup>
 {/if}

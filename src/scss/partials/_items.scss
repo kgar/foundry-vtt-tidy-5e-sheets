@@ -19,6 +19,13 @@ a:hover {
   text-shadow: none;
 }
 
+button {
+  &:hover,
+  &:focus {
+    box-shadow: none;
+  }
+}
+
 input[type='checkbox'],
 button,
 select {
@@ -434,8 +441,7 @@ input[type='checkbox'] {
       }
 
       select,
-      input[type='text'],
-      button {
+      input[type='text'] {
         background: var(--t5ek-item-input-background);
         height: 1.25rem;
         font-size: 0.8125rem;
@@ -494,8 +500,8 @@ input[type='checkbox'] {
 
       // TODO: After completing Item Sheets, reevaluate this style. Is it actually doing anything?
       input[type='text']:hover,
+      input[type='number']:hover,
       select:hover,
-      button:hover,
       select:focus {
         border: none;
         box-shadow: 0 0 0 0.0625rem var(--t5ek-primary-accent-color) inset;
@@ -677,6 +683,8 @@ label input[type='checkbox']:checked {
   align-items: center;
   flex: 0 0 0.0625rem;
   white-space: nowrap;
+  background: none;
+  padding: 0;
   color: var(--t5ek-tertiary-color);
   font-family: var(--t5ek-body-font-family);
   font-size: 0.8125rem;
