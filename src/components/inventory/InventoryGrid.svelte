@@ -90,6 +90,7 @@
 
         {#if $store.owner}
           <button
+            type="button"
             class="item-control item-edit"
             style="display:none"
             data-action="itemEdit"

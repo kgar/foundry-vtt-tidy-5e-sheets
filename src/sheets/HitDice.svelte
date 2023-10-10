@@ -22,6 +22,7 @@
   )}"
 >
   <button
+    type="button"
     class="current-hd config-button transparent-button"
     on:click={$store.owner &&
       new dnd5e.applications.actor.ActorHitDiceConfig(actor).render(true)}

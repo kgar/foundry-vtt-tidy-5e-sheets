@@ -53,13 +53,13 @@
 
 <div class="button-menu-wrapper {wrapperClass}">
   <button
+    type="button"
     on:click={() => (open = !open)}
     aria-label={ariaLabel}
     bind:this={openerEl}
     {title}
     class="button-menu-opener"
     style:padding={openerPadding}
-    type="button"
   >
     {#if iconClass}
       <i class={actualIconClass} />

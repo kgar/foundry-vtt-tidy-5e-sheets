@@ -18,8 +18,8 @@
 >
   {#if item.isOwner && $showRoll}
     <button
-      class="item-use-button icon-button"
       type="button"
+      class="item-use-button icon-button"
       on:click={(event) => item.use({}, { event })}
     >
       <i class="fa fa-dice-d20" />

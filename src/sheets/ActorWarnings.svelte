@@ -13,6 +13,7 @@
     <li class="notification {warning.type}">
       {#if warning.link}
         <button
+          type="button"
           class="inline-transparent-button"
           on:click={(ev) => $store.actor.sheet._onWarningLink(ev)}
           data-target={warning.link}>{warning.message}</button

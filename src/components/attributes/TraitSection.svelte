@@ -58,6 +58,7 @@
           <li class="tool">
             {#if $store.owner && !$store.lockSensitiveFields}
               <button
+                type="button"
                 class="tool-proficiency-toggle inline-transparent-button"
                 title={tool.hover}
                 on:click|stopPropagation|preventDefault={(event) =>
@@ -84,6 +85,7 @@
               >
             {/if}
             <button
+              type="button"
               class="tool-check-roller inline-transparent-button"
               class:rollable={$store.owner}
               on:click={(event) => $store.actor.rollToolCheck(key, { event })}
@@ -93,6 +95,7 @@
             </button>
             {#if traitsExpanded && $store.owner && !$store.lockSensitiveFields}
               <button
+                type="button"
                 class="tool-proficiency-editor inline-icon-button"
                 title="DND5E.ToolConfigure"
                 on:click|stopPropagation|preventDefault={() =>
@@ -110,6 +113,7 @@
     </div>
     {#if traitsExpanded && $store.owner && !$store.lockSensitiveFields}
       <button
+        type="button"
         class="trait-editor inline-icon-button"
         title={configureButtonTitle}
         on:click|stopPropagation|preventDefault={(event) =>

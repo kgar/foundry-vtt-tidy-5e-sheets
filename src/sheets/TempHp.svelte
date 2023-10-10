@@ -38,6 +38,7 @@
   />
   {#if $store.owner}
     <button
+      type="button"
       class="inline-icon-button"
       title={localize('DND5E.HitPointsConfig')}
       on:click|stopPropagation|preventDefault={(event) =>
