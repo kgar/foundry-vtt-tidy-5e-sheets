@@ -343,15 +343,16 @@
 
             <ItemTableCell baseWidth="3.125rem">
               {#if ctx?.isOnCooldown}
-                <a
+                <button
+                  type="button"
+                  class="item-list-button"
                   title={item.labels.recharge}
-                  role="button"
-                  tabindex="0"
                   on:click={() => item.rollRecharge()}
+                  disabled={!$store.owner}
                 >
                   <i class="fas fa-dice-six" />
                   {item.system.recharge
-                    .value}{#if item.system.recharge.value !== 6}+{/if}</a
+                    .value}{#if item.system.recharge.value !== 6}+{/if}</button
                 >
               {:else if item.system.recharge.value}
                 <i class="fas fa-bolt" title={localize('DND5E.Charged')} />
