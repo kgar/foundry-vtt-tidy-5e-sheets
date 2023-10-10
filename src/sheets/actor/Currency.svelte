@@ -65,20 +65,22 @@
       </li>
     {/each}
     <li class="currency-item convert">
-      <a
+      <button
+        type="button"
         class="currency-convert"
-        role="button"
         title={localize('DND5E.CurrencyConvertHint')}
         on:click|stopPropagation|preventDefault={() => confirmConvertCurrency()}
       >
         <i class="fas fa-funnel-dollar" />
-      </a>
+      </button>
     </li>
   </ol>
 </div>
 
 <style lang="scss">
   .inventory-currency {
+    --currency-line-height: 1.875rem;
+
     .currency {
       display: flex;
       align-items: center;
@@ -100,7 +102,7 @@
         align-items: center;
         background: var(--t5ek-faint-color);
         border-radius: 0.3125rem;
-        line-height: 1.875rem;
+        line-height: var(--currency-line-height);
         padding-right: 0.5rem;
 
         :global(input) {
@@ -121,7 +123,9 @@
           white-space: nowrap;
         }
 
-        a {
+        .currency-convert {
+          line-height: var(--currency-line-height);
+          border: none;
           background: var(--t5ek-tertiary-color);
           color: var(--t5ek-background);
           border-radius: 0.3125rem;
