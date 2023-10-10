@@ -15,10 +15,11 @@
 - [x] Extract "useRoundedPortraitStyle" to ActorSheetContext
 - [x] Make SPELL_PREPARATION_MODE_XYZ constants and update all usages.
 - [x] Honor game setting "Disable Experience Tracking" on our sheets
-- [ ] Observers / Limited users should not be allowed to click configure buttons or make rolls.
+- [x] Observers / Limited users should not be allowed to click configure buttons or make rolls.
 - [ ] 🐞 When changing sheet permissions from observer/owner to limited, half the sheet changes while the other half with the header and tab strip remain intact. It should refresh the entire sheet.
 - [ ] Find anchor-tag-based icon buttons; replace with actual buttons
-  - [ ] Make a component IconButton which uses `color: var(--t5ek-icon-font-color);` and on hover: `background: inherit; color: var(--t5ek-icon-hover-color);`
+  - `.icon-button` is for icon buttons
+  - `.transparent-button` is for buttons that just want the button content and not the button background, border, etc.
   - [ ] Replace each one and test
   - [ ] Ensure disable logic is honored
 - [ ] Convert all `<BlockTitle />` elements to contain buttons. Should the h4 be a button, or should it be an h4? Can an h4 contain a button and it be meaningful to a screen reader?

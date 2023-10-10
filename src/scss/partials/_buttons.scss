@@ -1,27 +1,36 @@
-.icon-button {
+@mixin transparent-button-base {
   line-height: normal;
-  font-family: var(--t5ek-body-font-family);
   border: none;
-  color: var(--t5ek-icon-font-color);
-  background: transparent;
-  padding: 0;
   margin: 0;
+  padding: 0;
+  background: transparent;
   transition: color 0.3s ease, transform 0.3s ease;
 
   &:hover {
     background: transparent;
-    color: var(--t5ek-icon-hover-color);
   }
 }
 
 .transparent-button {
-  line-height: normal;
-  border: none;
-  margin: 0;
-  padding: 0;
-  background: transparent;
+  @include transparent-button-base();
+}
+
+.item-list-button {
+  @include transparent-button-base();
+  font-size: 0.75rem;
+  color: var(--t5ek-secondary-color);
 
   &:hover {
-    background: transparent;
+    color: var(--t5ek-primary-font-color);
+  }
+}
+
+.icon-button {
+  @include transparent-button-base();
+
+  color: var(--t5ek-icon-font-color);
+
+  &:hover {
+    color: var(--t5ek-icon-hover-color);
   }
 }
