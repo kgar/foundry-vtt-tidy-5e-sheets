@@ -28,7 +28,7 @@
     selectOnFocus={true}
     allowDeltaChanges={true}
     disabled={!$store.owner}
-    />
+  />
   <span class="sep"> / </span>
   {#if overrideMode}
     <TextInput
@@ -51,13 +51,14 @@
       {section.slots}
     </span>
     {#if $store.owner && !$store.lockSensitiveFields}
-      <a
-        class="spell-slot-max-override"
+      <button
+        type="button"
+        class="spell-slot-max-override icon-button"
         title={localize('DND5E.SpellProgOverride')}
         on:click={() => (overrideMode = true)}
       >
         <i class="fas fa-pencil-alt" />
-      </a>
+      </button>
     {/if}
   {/if}
 </div>
