@@ -47,14 +47,15 @@
         <div class="effect-source">{localize('DND5E.Duration')}</div>
         <div class="item-controls active-effect-controls flexrow">
           {#if $store.editable}
-            <a
-              class="active-effect-control"
+            <button
+              type="button"
+              class="active-effect-control inline-icon-button"
               title="DND5E.EffectCreate"
               on:click={(event) => onAddClicked(section)}
             >
               <i class="fas fa-plus" />
               {localize('DND5E.Add')}
-            </a>
+            </button>
           {/if}
         </div>
       </li>
@@ -73,17 +74,24 @@
             class="item effect flexrow"
             data-effect-id={effect.id}
             on:mousedown={(event) => handleMiddleClickToEdit(event, effect)}
+            role="row"
           >
-            <div class="item-name effect-name flexrow">
-              <img class="item-image" src={effect.icon} />
+            <div class="item-name effect-name flexrow" role="cell">
+              <img class="item-image" src={effect.icon} alt={effect.label} />
               <h4>{effect.label}</h4>
             </div>
-            <div class="effect-source">{effect.sourceName}</div>
-            <div class="effect-duration">{effect.duration.label}</div>
-            <div class="item-controls active-effect-controls flexrow">
+            <div class="effect-source" role="cell">{effect.sourceName}</div>
+            <div class="effect-duration" role="cell">
+              {effect.duration.label}
+            </div>
+            <div
+              class="item-controls active-effect-controls flexrow"
+              role="cell"
+            >
               {#if $store.editable}
-                <a
-                  class="active-effect-control"
+                <button
+                  type="button"
+                  class="active-effect-control inline-transparent-button"
                   title={effect.disabled
                     ? 'DND5E.EffectEnable'
                     : 'DND5E.EffectDisable'}
@@ -94,21 +102,23 @@
                     class:fa-check={effect.disabled}
                     class:fa-times={!effect.disabled}
                   />
-                </a>
-                <a
-                  class="active-effect-control"
+                </button>
+                <button
+                  type="button"
+                  class="active-effect-control inline-transparent-button"
                   title="DND5E.EffectEdit"
                   on:click={() => effect.sheet.render(true)}
                 >
                   <i class="fas fa-edit" />
-                </a>
-                <a
-                  class="active-effect-control"
+                </button>
+                <button
+                  type="button"
+                  class="active-effect-control inline-transparent-button"
                   title="DND5E.EffectDelete"
                   on:click={() => effect.delete()}
                 >
                   <i class="fas fa-trash" />
-                </a>
+                </button>
               {/if}
             </div>
           </li>
