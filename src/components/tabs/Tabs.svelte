@@ -16,21 +16,53 @@
     dispatcher('tabSelected', tab);
   }
 
+  function onKeyDown(ev: KeyboardEvent, i: number) {
+    switch (ev.key) {
+      case 'ArrowRight':
+      case 'ArrowDown':
+        const nextTab = tabs[(i + 1) % tabs.length];
+        selectTab(nextTab);
+        setTimeout(() => {
+          document
+            .querySelector<HTMLElement>(`[data-tab-id='${nextTab.id}']`)
+            ?.focus();
+        });
+        break;
+      case 'ArrowLeft':
+      case 'ArrowUp':
+        const previousTab = tabs.at(i - 1);
+        if (previousTab) {
+          selectTab(previousTab);
+          setTimeout(() => {
+            document
+              .querySelector<HTMLElement>(`[data-tab-id='${previousTab.id}']`)
+              ?.focus();
+          });
+        }
+        break;
+    }
+  }
+
   const localize = FoundryAdapter.localize;
 </script>
 
 <nav class="tabs {cssClass}" class:vertical={orientation === 'vertical'}>
   {#if tabs.length > 1}
     {#each tabs as tab, i (tab.id)}
-      <a
-        class={CONSTANTS.TAB_OPTION_CLASS}
+      <button
+        type="button"
+        class="{CONSTANTS.TAB_OPTION_CLASS} transparent-button"
         class:active={tab.id === selectedTabId}
         class:first-tab={i === 0}
         class:no-border-on-last-tab={!$$slots['tab-end'] &&
           i === tabs.length - 1}
         data-tab-id={tab.id}
-        on:click={() => selectTab(tab)}>{localize(tab.displayName)}</a
+        role="tab"
+        on:click={() => selectTab(tab)}
+        on:keydown={(ev) => onKeyDown(ev, i)}
       >
+        {localize(tab.displayName)}
+      </button>
     {/each}
   {/if}
   <slot name="tab-end" />
@@ -50,10 +82,11 @@
       border-bottom: 0.0625rem solid var(--t5ek-header-border-color);
       font-size: 0.8125rem;
       text-align: left;
-
       flex: 1 1 auto;
+      width: auto;
 
       &:hover {
+        background: var(--t5ek-header-background);
         color: var(--t5ek-primary-accent-color);
       }
 
