@@ -1,41 +1,24 @@
 <script lang="ts">
-  import { createEventDispatcher } from 'svelte';
-
   export let iconCssClass: string;
   export let title: string | undefined = undefined;
   export let active = true;
-
-  const dispatcher = createEventDispatcher();
 </script>
 
-<a
-  class="item-control"
+<button
+  type="button"
+  class="item-list-button"
   class:inactive={!active}
-  on:click|preventDefault|stopPropagation={() => dispatcher('click')}
+  on:click
   {title}
-  role="button"
 >
   <i class={iconCssClass} />
-</a>
+</button>
 
 <style lang="scss">
-  .item-control {
+  .item-list-button {
     display: flex;
     justify-content: center;
     align-items: center;
     align-self: stretch;
-    color: var(--t5ek-secondary-color);
-
-    &.inactive {
-      color: var(--t5ek-light-color);
-
-      &:hover {
-        color: var(--t5ek-primary-color);
-      }
-    }
-
-    &:hover {
-      color: var(--t5ek-primary-color);
-    }
   }
 </style>

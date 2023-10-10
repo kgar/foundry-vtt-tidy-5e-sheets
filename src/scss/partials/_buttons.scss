@@ -20,6 +20,10 @@
   font-size: 0.75rem;
   color: var(--t5ek-secondary-color);
 
+  &.inactive {
+    color: var(--t5ek-light-color);
+  }
+
   &:hover {
     color: var(--t5ek-primary-font-color);
   }
