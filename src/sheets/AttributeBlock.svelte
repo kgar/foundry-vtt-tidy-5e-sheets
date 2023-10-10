@@ -18,9 +18,6 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-<!-- svelte-ignore a11y-no-static-element-interactions -->
-<!-- svelte-ignore a11y-missing-attribute -->
-<!-- svelte-ignore a11y-click-events-have-key-events -->
 <div class="wrapper">
   <BlockTitle
     title={ability.label}
@@ -41,27 +38,32 @@
     />
   </BlockScore>
   <div class="ability-modifiers">
-    <span
-      class="ability-mod"
+    <button
+      type="button"
+      class="ability-mod transparent-button"
       class:rollable={$store.owner}
       title={localize('DND5E.AbilityModifier')}
       on:click={(event) =>
         $store.owner && $store.actor.rollAbilityTest(abbreviation, { event })}
-      >{formatAsModifier(ability.mod)}</span
     >
-    <span
-      class="ability-save"
+      {formatAsModifier(ability.mod)}
+    </button>
+    <button
+      type="button"
+      class="ability-save transparent-button"
       class:rollable={$store.owner}
       title={localize('DND5E.ActionSave')}
       on:click={(event) =>
         $store.owner && $store.actor.rollAbilitySave(abbreviation, { event })}
-      >{formatAsModifier(ability.save)}</span
     >
+      {formatAsModifier(ability.save)}
+    </button>
     {#if useSavingThrowProficiency}
       {#if !$store.lockSensitiveFields}
-        <a
+        <button
+          type="button"
           title={ability.hover}
-          class="proficiency-toggle"
+          class="proficiency-toggle icon-button"
           on:click={() =>
             $store.actor.update({
               [`system.abilities.${abbreviation}.proficient`]:
@@ -69,7 +71,7 @@
             })}
         >
           {@html ability.icon}
-        </a>
+        </button>
       {:else}
         <span title={ability.hover} class="proficiency-toggle-readonly"
           >{@html ability.icon}</span
@@ -77,8 +79,9 @@
       {/if}
     {/if}
     {#if useConfigurationOption && !$store.lockSensitiveFields}
-      <a
-        class="config-button"
+      <button
+        type="button"
+        class="config-button icon-button"
         title={localize('DND5E.AbilityConfigure')}
         on:click={() =>
           new dnd5e.applications.actor.ActorAbilityConfig(
@@ -88,7 +91,7 @@
           ).render(true)}
       >
         <i class="fas fa-cog" />
-      </a>
+      </button>
     {/if}
   </div>
   <span class="mod-label ability-mod-label">{localize('T5EK.AbbrMod')}</span>
@@ -194,6 +197,7 @@
 
     .proficiency-toggle,
     .proficiency-toggle-readonly {
+      width: auto;
       position: absolute;
       font-size: 0.625rem;
       opacity: 0.4;
@@ -213,6 +217,7 @@
     }
 
     .config-button {
+      width: auto;
       position: absolute;
       bottom: -0.9375rem;
       right: calc(50% - 0.75rem);
