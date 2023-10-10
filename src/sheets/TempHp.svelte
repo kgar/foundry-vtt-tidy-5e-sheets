@@ -37,7 +37,8 @@
     disabled={!$store.owner}
   />
   {#if $store.owner}
-    <a
+    <button
+      class="icon-button"
       title={localize('DND5E.HitPointsConfig')}
       on:click|stopPropagation|preventDefault={(event) =>
         new dnd5e.applications.actor.ActorHitPointsConfig($store.actor).render(
@@ -45,7 +46,7 @@
         )}
     >
       <i class="fas fa-cog" />
-    </a>
+    </button>
   {/if}
 </div>
 
@@ -69,6 +70,10 @@
 
     :global(input.max-temphp) {
       text-align: center;
+    }
+
+    .icon-button {
+      width: auto;
     }
   }
 </style>
