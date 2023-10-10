@@ -30,12 +30,12 @@
     <span title={movement.special}>{movement.special}</span>
   {/if}
   {#if $store.owner && !$store.lockSensitiveFields}
-    <a
-      class="configure"
+    <button
+      class="configure icon-button"
       title={localize('DND5E.MovementConfig')}
       on:click={() =>
         new dnd5e.applications.actor.ActorMovementConfig(actor).render(true)}
-      ><i class="fas fa-cog" /></a
+      ><i class="fas fa-cog" /></button
     >
   {/if}
 </section>
@@ -53,15 +53,9 @@
       opacity: 0;
     }
 
-    .configure i {
+    .configure {
       font-size: 0.75rem;
-      color: var(--t5ek-tertiary-color);
-      transition: color 0.3s ease;
-      cursor: pointer;
-    }
-
-    .configure:hover i {
-      color: var(--t5ek-secondary-color);
+      width: auto;
     }
   }
 </style>
