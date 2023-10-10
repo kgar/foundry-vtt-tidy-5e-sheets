@@ -29,6 +29,7 @@
   import ItemInfoCard from 'src/components/item-info-card/ItemInfoCard.svelte';
   import SheetMenu from '../actor/SheetMenu.svelte';
   import { settingStore } from 'src/settings/settings';
+  import ActorWarnings from '../ActorWarnings.svelte';
 
   export let selectedTabId: string;
 
@@ -93,6 +94,9 @@
   <ItemInfoCard />
 {/if}
 
+{#if $store.warnings.length}
+  <ActorWarnings warnings={$store.warnings} />
+{/if}
 <header>
   <div class="flex-0">
     <VehicleProfile />

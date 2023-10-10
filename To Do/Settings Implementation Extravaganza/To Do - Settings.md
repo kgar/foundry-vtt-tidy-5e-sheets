@@ -17,6 +17,9 @@
 - [x] Honor game setting "Disable Experience Tracking" on our sheets
 - [x] Observers / Limited users should not be allowed to click configure buttons or make rolls.
 - [x] Convert all `<BlockTitle />` elements to contain buttons. Should the h4 be a button, or should it be an h4? Can an h4 contain a button and it be meaningful to a screen reader?
+- [x] Configure PC Actor Warning to use the `_onWarningLink` of the base sheet
+- [x] Add Actor Warning component to NPC
+- [x] Add Actor Warning to Vehicle
 - [ ] Find anchor-tag-based icon buttons; replace with actual buttons
   - `.icon-button` is for icon buttons
   - `.transparent-button` is for buttons that just want the button content and not the button background, border, etc.
@@ -24,9 +27,6 @@
   - [ ] Replace each one and test
   - [ ] Ensure disable logic is honored
 - [ ] 🐞 When changing sheet permissions from observer/owner to limited, half the sheet changes while the other half with the header and tab strip remain intact. It should refresh the entire sheet.
-- [ ] Configure PC Actor Warning to use the `_onWarningLink` of the base sheet
-- [ ] Add Actor Warning component to NPC
-- [ ] Add Actor Warning to Vehicle
 
 ## Implement ALL the Settings! 👏
 
