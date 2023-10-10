@@ -10,14 +10,14 @@
   }
 </script>
 
-<a
-  class="item-add-uses"
-  role="button"
-  tabindex="0"
-  on:click|preventDefault|stopPropagation={() => onAddUses()}
+<button
+  type="button"
+  class="item-add-uses item-list-button"
+  on:click={() => onAddUses()}
+  disabled={!item.isOwner}
 >
   Add
-</a>
+</button>
 
 <style lang="scss">
   .item-add-uses {

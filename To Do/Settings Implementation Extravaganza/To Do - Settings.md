@@ -22,7 +22,7 @@
   - `.transparent-button` is for buttons that just want the button content and not the button background, border, etc.
   - [ ] Replace each one and test
   - [ ] Ensure disable logic is honored
-- [ ] Convert all `<BlockTitle />` elements to contain buttons. Should the h4 be a button, or should it be an h4? Can an h4 contain a button and it be meaningful to a screen reader?
+- [x] Convert all `<BlockTitle />` elements to contain buttons. Should the h4 be a button, or should it be an h4? Can an h4 contain a button and it be meaningful to a screen reader?
 
 ## Implement ALL the Settings! 👏
 
