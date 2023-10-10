@@ -86,7 +86,8 @@
   </div>
   {#if showPortraitMenu}
     <div class="portrait-menu">
-      <a
+      <button
+        type="button"
         class="portrait-menu-item"
         on:mousedown={(ev) => ev.stopImmediatePropagation()}
         on:click={() =>
@@ -94,9 +95,10 @@
             title: 'Portrait: ' + actor.name,
             shareable: true,
             uuid: actor.uuid,
-          }).render(true)}>{localize('T5EK.ShowPortraitArt')}</a
+          }).render(true)}>{localize('T5EK.ShowPortraitArt')}</button
       >
-      <a
+      <button
+        type="button"
         class="portrait-menu-item"
         on:mousedown={(ev) => ev.stopImmediatePropagation()}
         on:click={() =>
@@ -104,7 +106,7 @@
             title: 'Portrait: ' + actor.name,
             shareable: true,
             uuid: actor.uuid,
-          }).render(true)}>{localize('T5EK.ShowTokenArt')}</a
+          }).render(true)}>{localize('T5EK.ShowTokenArt')}</button
       >
     </div>
   {/if}

@@ -31,6 +31,7 @@
   {/if}
   {#if $store.owner && !$store.lockSensitiveFields}
     <button
+      type="button"
       class="configure icon-button"
       title={localize('DND5E.MovementConfig')}
       on:click={() =>
