@@ -223,7 +223,7 @@ c28,32.6,51.5,72.7,62,91.7c2.8,5,9.9,5.1,12.8,0.2c14-23.3,44.3-83.4,44.3-166.9C4
   {#if toggleable}
     <button
       type="button"
-      class="toggle-traits transparent-button"
+      class="toggle-traits inline-transparent-button"
       on:click|stopPropagation|preventDefault={() => toggleTraitsExpanded()}
     >
       {#if traitsExpanded}
@@ -236,7 +236,7 @@ c28,32.6,51.5,72.7,62,91.7c2.8,5,9.9,5.1,12.8,0.2c14-23.3,44.3-83.4,44.3-166.9C4
   {#if traitsExpanded && enableSpecialTraitsConfiguration && !$store.lockSensitiveFields}
     <button
       type="button"
-      class="configure-special-traits icon-button"
+      class="configure-special-traits inline-icon-button"
       title={localize('DND5E.TraitConfig', {
         trait: localize('DND5E.SpecialTraits'),
       })}
@@ -282,7 +282,6 @@ c28,32.6,51.5,72.7,62,91.7c2.8,5,9.9,5.1,12.8,0.2c14-23.3,44.3-83.4,44.3-166.9C4
       border-top: 0;
       border-radius: 0 0 0.1875rem 0.1875rem;
       padding: 0.125rem 0.25rem;
-      width: auto;
       font-size: 0.625rem;
       color: var(--t5ek-secondary-color);
     }
@@ -301,20 +300,12 @@ c28,32.6,51.5,72.7,62,91.7c2.8,5,9.9,5.1,12.8,0.2c14-23.3,44.3-83.4,44.3-166.9C4
       border-top: 0;
       border-radius: 0 0 0.1875rem 0.1875rem;
       padding: 0.125rem 0.25rem;
-      width: auto;
       font-size: 0.625rem;
-      color: var(--t5ek-secondary-color);
     }
 
     .configure-special-traits i.fas {
       line-height: 0.625rem;
       vertical-align: baseline;
-      color: var(--t5ek-tertiary-color);
-    }
-
-    .configure-special-traits:hover,
-    .configure-special-traits:hover i.fas {
-      color: var(--t5ek-primary-font-color);
     }
   }
 </style>

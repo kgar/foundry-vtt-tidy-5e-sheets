@@ -18,7 +18,7 @@
   <Notice>{localize('DND5E.NoSpellLevels')}</Notice>
   {#if editable}
     <button
-      class="create-spell-btn flex-row align-items-center no-gap"
+      class="create-spell-btn flex-row align-items-center extra-small-gap"
       on:click={() =>
         FoundryAdapter.createItem({ type: 'spell', level: '' }, $store.actor)}
     >

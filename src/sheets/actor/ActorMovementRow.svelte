@@ -32,7 +32,7 @@
   {#if $store.owner && !$store.lockSensitiveFields}
     <button
       type="button"
-      class="configure icon-button"
+      class="configure inline-icon-button"
       title={localize('DND5E.MovementConfig')}
       on:click={() =>
         new dnd5e.applications.actor.ActorMovementConfig(actor).render(true)}
@@ -48,7 +48,7 @@
     gap: 0.25rem;
     padding: 0.1875rem 0 0.125rem 0.25rem;
     font-size: 0.875rem;
-    line-height: 1;
+    line-height: 1rem;
 
     &:not(:hover) .configure {
       opacity: 0;
@@ -56,7 +56,6 @@
 
     .configure {
       font-size: 0.75rem;
-      width: auto;
     }
   }
 </style>

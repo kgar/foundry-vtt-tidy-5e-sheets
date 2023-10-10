@@ -8,11 +8,43 @@
 
   &:hover {
     background: transparent;
+    outline: none;
+    box-shadow: none;
+  }
+
+  &:focus {
+    box-shadow: none;
   }
 }
 
 .transparent-button {
   @include transparent-button-base();
+}
+
+.inline-transparent-button {
+  @include transparent-button-base();
+  font-size: inherit;
+  width: auto;
+}
+
+@mixin icon-button-base {
+  @include transparent-button-base();
+
+  color: var(--t5ek-icon-font-color);
+
+  &:hover {
+    color: var(--t5ek-icon-hover-color);
+  }
+}
+
+.icon-button {
+  @include icon-button-base();
+}
+
+.inline-icon-button {
+  @include icon-button-base();
+  font-size: inherit;
+  width: auto;
 }
 
 .icon-button {

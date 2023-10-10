@@ -277,14 +277,15 @@
           {localize('DND5E.Proficiency')}: {$store.labels.proficiency}
         </b>
         {#if $store.owner && !$store.lockSensitiveFields}
-          <a
-            class="origin-summary-tidy"
+          <button
+            type="button"
+            class="inline-icon-button"
             title={localize('T5EK.OriginSummaryConfig')}
             on:click={() =>
               new Tidy5eActorOriginSummaryConfig($store.actor).render(true)}
           >
             <i class="fas fa-cog" />
-          </a>
+          </button>
         {/if}
       </span>
     </section>
@@ -406,7 +407,7 @@
       border-bottom: 0.0625rem solid var(--t5ek-light-color);
       border-top: 0.0625rem solid var(--t5ek-light-color);
       font-size: 0.75rem;
-      line-height: 1;
+      line-height: 1rem;
       padding: 0.1875rem 0 0.125rem 0;
       margin-top: 0.125rem;
 

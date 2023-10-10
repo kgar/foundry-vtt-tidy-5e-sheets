@@ -38,7 +38,7 @@
   />
   {#if $store.owner}
     <button
-      class="icon-button"
+      class="inline-icon-button"
       title={localize('DND5E.HitPointsConfig')}
       on:click|stopPropagation|preventDefault={(event) =>
         new dnd5e.applications.actor.ActorHitPointsConfig($store.actor).render(
@@ -70,10 +70,6 @@
 
     :global(input.max-temphp) {
       text-align: center;
-    }
-
-    .icon-button {
-      width: auto;
     }
   }
 </style>

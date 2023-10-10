@@ -51,7 +51,7 @@
     {#each tabs as tab, i (tab.id)}
       <button
         type="button"
-        class="{CONSTANTS.TAB_OPTION_CLASS} transparent-button"
+        class="{CONSTANTS.TAB_OPTION_CLASS} inline-transparent-button"
         class:active={tab.id === selectedTabId}
         class:first-tab={i === 0}
         class:no-border-on-last-tab={!$$slots['tab-end'] &&
@@ -78,12 +78,12 @@
 
     .tab-option {
       background: var(--t5ek-header-background);
-      border: 0.0625rem solid transparent;
       border-bottom: 0.0625rem solid var(--t5ek-header-border-color);
       font-size: 0.8125rem;
       text-align: left;
       flex: 1 1 auto;
-      width: auto;
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
 
       &:hover {
         background: var(--t5ek-header-background);

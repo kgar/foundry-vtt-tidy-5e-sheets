@@ -58,7 +58,7 @@
           <li class="tool">
             {#if $store.owner && !$store.lockSensitiveFields}
               <button
-                class="tool-proficiency-toggle transparent-button"
+                class="tool-proficiency-toggle inline-transparent-button"
                 title={tool.hover}
                 on:click|stopPropagation|preventDefault={(event) =>
                   FoundryAdapter.cycleProficiency(
@@ -84,7 +84,7 @@
               >
             {/if}
             <button
-              class="tool-check-roller transparent-button"
+              class="tool-check-roller inline-transparent-button"
               class:rollable={$store.owner}
               on:click={(event) => $store.actor.rollToolCheck(key, { event })}
               disabled={!$store.owner}
@@ -93,7 +93,7 @@
             </button>
             {#if traitsExpanded && $store.owner && !$store.lockSensitiveFields}
               <button
-                class="tool-proficiency-editor icon-button"
+                class="tool-proficiency-editor inline-icon-button"
                 title="DND5E.ToolConfigure"
                 on:click|stopPropagation|preventDefault={() =>
                   new dnd5e.applications.actor.ProficiencyConfig($store.actor, {
@@ -110,7 +110,7 @@
     </div>
     {#if traitsExpanded && $store.owner && !$store.lockSensitiveFields}
       <button
-        class="trait-editor icon-button"
+        class="trait-editor inline-icon-button"
         title={configureButtonTitle}
         on:click|stopPropagation|preventDefault={(event) =>
           dispatcher('onConfigureClicked', event)}
@@ -138,11 +138,6 @@
       font-size: 0.75rem;
       padding: 0.125rem 0 0 0;
       text-align: center;
-    }
-
-    button {
-      width: auto;
-      font-size: 0.75rem;
     }
 
     .trait-editor:hover i,

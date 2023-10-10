@@ -66,7 +66,7 @@
           {#if $store.owner && !$store.lockSensitiveFields}
             <button
               type="button"
-              class="configure-proficiency icon-button"
+              class="configure-proficiency inline-icon-button"
               on:click={() =>
                 new dnd5e.applications.actor.ProficiencyConfig($store.actor, {
                   property: 'skills',
@@ -84,7 +84,7 @@
           {:else}
             <button
               type="button"
-              class="skill-proficiency-toggle icon-button"
+              class="skill-proficiency-toggle inline-icon-button"
               on:click={() =>
                 FoundryAdapter.cycleProficiency(
                   $store.actor,
@@ -129,7 +129,7 @@
     <div style="text-align:center;">
       <button
         type="button"
-        class="toggle-proficient transparent-button"
+        class="toggle-proficient inline-transparent-button"
         on:click={toggleShowAllSkills}
       >
         {#if showAllSkills}
@@ -179,7 +179,6 @@
       }
 
       .configure-proficiency {
-        width: auto;
         margin: 0;
         padding: 0;
         font-size: 0.625rem;
@@ -199,7 +198,6 @@
       }
 
       .skill-proficiency-toggle {
-        width: auto;
         font-size: 0.625rem;
         color: var(--t5ek-tertiary-color);
 
@@ -230,7 +228,6 @@
   }
 
   .skills-list-container .toggle-proficient {
-    width: auto;
     font-size: 0.625rem;
     text-transform: capitalize;
     border: 0.0625rem solid var(--t5ek-faint-color);

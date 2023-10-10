@@ -63,7 +63,7 @@
         <button
           type="button"
           title={ability.hover}
-          class="proficiency-toggle icon-button"
+          class="proficiency-toggle inline-icon-button"
           on:click={() =>
             $store.actor.update({
               [`system.abilities.${abbreviation}.proficient`]:
@@ -81,7 +81,7 @@
     {#if useConfigurationOption && !$store.lockSensitiveFields}
       <button
         type="button"
-        class="config-button icon-button"
+        class="config-button inline-icon-button"
         title={localize('DND5E.AbilityConfigure')}
         on:click={() =>
           new dnd5e.applications.actor.ActorAbilityConfig(
@@ -197,7 +197,6 @@
 
     .proficiency-toggle,
     .proficiency-toggle-readonly {
-      width: auto;
       position: absolute;
       font-size: 0.625rem;
       opacity: 0.4;
@@ -217,7 +216,6 @@
     }
 
     .config-button {
-      width: auto;
       position: absolute;
       bottom: -0.9375rem;
       right: calc(50% - 0.75rem);
