@@ -15,6 +15,16 @@
   @include transparent-button-base();
 }
 
+.icon-button {
+  @include transparent-button-base();
+
+  color: var(--t5ek-icon-font-color);
+
+  &:hover {
+    color: var(--t5ek-icon-hover-color);
+  }
+}
+
 .item-list-button {
   @include transparent-button-base();
   font-size: 0.75rem;
@@ -29,12 +39,20 @@
   }
 }
 
-.icon-button {
-  @include transparent-button-base();
-
-  color: var(--t5ek-icon-font-color);
+.item-list-footer-button {
+  flex: 0 0 max-content;
+  min-width: 7.5rem;
+  padding: 0.125rem 1.25rem 0;
+  border-radius: 0 0 0.3125rem 0.3125rem;
+  font-weight: 400;
+  line-height: 1.125rem;
+  border: none;
+  font-size: 0.75rem;
+  background: var(--t5ek-faintest-color);
+  color: var(--t5ek-secondary-color);
+  text-align: center;
 
   &:hover {
-    color: var(--t5ek-icon-hover-color);
+    background: var(--t5ek-light-color);
   }
 }

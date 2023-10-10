@@ -20,6 +20,7 @@
 - [ ] Find anchor-tag-based icon buttons; replace with actual buttons
   - `.icon-button` is for icon buttons
   - `.transparent-button` is for buttons that just want the button content and not the button background, border, etc.
+  - `.item-list-button` for buttons that appear in the classic controls item list.
   - [ ] Replace each one and test
   - [ ] Ensure disable logic is honored
 - [x] Convert all `<BlockTitle />` elements to contain buttons. Should the h4 be a button, or should it be an h4? Can an h4 contain a button and it be meaningful to a screen reader?
