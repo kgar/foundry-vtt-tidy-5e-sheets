@@ -300,24 +300,30 @@ export class Tidy5eNpcSheet extends dnd5e.applications.actor.ActorSheet5eNPC {
     // Display a Dialog for rolling hit dice
     if (config.dialog) {
       try {
-        config.newDay = await NpcShortRestDialog.shortRestDialog({
+        const result = await NpcShortRestDialog.shortRestDialog({
           actor: this.actor,
           canRoll: hd0 > 0,
         });
+
+        if (result.confirmed) {
+          config.newDay = result.newDay === true;
+          // Return the rest result
+          const dhd = hd0; // this.system.attributes.hd - hd0;
+          const dhp = this.actor.system.attributes.hp.value - hp0;
+          this._rest(config.chat, config.newDay, false, dhd, dhp);
+        }
       } catch (err) {
-        // error(err?.message, true);
+        error(
+          'An error occurred while attempting a short rest for the NPC. See devtool console for more information.',
+          true,
+          err
+        );
         return;
       }
-    }
-
-    // Automatically spend hit dice
-    else if (config.autoHD)
+    } else if (config.autoHD) {
+      // Automatically spend hit dice
       await this.autoSpendHitDice({ threshold: config.autoHDThreshold });
-
-    // Return the rest result
-    const dhd = hd0; // this.system.attributes.hd - hd0;
-    const dhp = this.actor.system.attributes.hp.value - hp0;
-    return this._rest(config.chat, config.newDay, false, dhd, dhp);
+    }
   }
 
   /* -------------------------------------------- */
@@ -347,22 +353,26 @@ export class Tidy5eNpcSheet extends dnd5e.applications.actor.ActorSheet5eNPC {
      */
     if (Hooks.call('dnd5e.preLongRest', this.actor, config) === false) return;
 
-    if (config.dialog) {
-      try {
-        config.newDay = await LongRestDialog.longRestDialog({
-          actor: this.actor,
-        });
-      } catch (err) {
-        error(
-          'An error occurred while attempting a long rest for the NPC. See devtool console for more information.',
-          true,
-          err
-        );
-        return;
-      }
+    if (!config.dialog) {
+      return;
     }
 
-    return this._rest(config.chat, config.newDay, true);
+    try {
+      const result = await LongRestDialog.longRestDialog({
+        actor: this.actor,
+      });
+
+      if (result.confirmed) {
+        config.newDay = result.newDay === true;
+        return this._rest(config.chat, config.newDay, true);
+      }
+    } catch (err) {
+      error(
+        'An error occurred while attempting a long rest for the NPC. See devtool console for more information.',
+        true,
+        err
+      );
+    }
   }
 
   /* -------------------------------------------- */
@@ -416,7 +426,7 @@ export class Tidy5eNpcSheet extends dnd5e.applications.actor.ActorSheet5eNPC {
     let hitPointUpdates = {};
     let hitDiceRecovered = 0;
     let hitDiceUpdates = [];
-    const rolls = [];
+    const rolls: any[] = [];
 
     // Recover hit points & hit dice on long rest
     if (longRest) {

@@ -1,5 +1,9 @@
-import { isLessThanOneIsOne } from "src/utils/numbers";
+import { isLessThanOneIsOne } from 'src/utils/numbers';
 
+export type ShortRestDialogResult = {
+  confirmed: boolean;
+  newDay?: boolean;
+};
 
 /**
  * A helper Dialog subclass for rolling Hit Dice on short rest.
@@ -30,8 +34,8 @@ export default class NpcShortRestDialog extends Dialog {
   /** @inheritDoc */
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
-      template: "systems/dnd5e/templates/apps/short-rest.hbs",
-      classes: ["dnd5e", "dialog"],
+      template: 'systems/dnd5e/templates/apps/short-rest.hbs',
+      classes: ['dnd5e', 'dialog'],
     });
   }
 
@@ -43,8 +47,8 @@ export default class NpcShortRestDialog extends Dialog {
 
     // Determine Hit Dice
     const hd = {};
-    const hitDice = isLessThanOneIsOne(this.actor.system.details.cr) + "d6";
-    const denom = hitDice ?? "d6";
+    const hitDice = isLessThanOneIsOne(this.actor.system.details.cr) + 'd6';
+    const denom = hitDice ?? 'd6';
     const available = 1; //parseInt(this.actor.system.details.cr ?? 1);
     hd[denom] = denom in hd ? hd[denom] + available : available;
 
@@ -54,8 +58,8 @@ export default class NpcShortRestDialog extends Dialog {
     data.denomination = this._denom;
 
     // Determine rest type
-    const variant = game.settings.get("dnd5e", "restVariant");
-    data.promptNewDay = variant !== "epic"; // It's never a new day when only resting 1 minute
+    const variant = game.settings.get('dnd5e', 'restVariant');
+    data.promptNewDay = variant !== 'epic'; // It's never a new day when only resting 1 minute
     data.newDay = false; // It may be a new day, but not by default
     return data;
   }
@@ -65,7 +69,7 @@ export default class NpcShortRestDialog extends Dialog {
   /** @inheritDoc */
   activateListeners(html) {
     super.activateListeners(html);
-    let btn = html.find("#roll-hd");
+    let btn = html.find('#roll-hd');
     btn.click(this._onRollHitDie.bind(this));
     btn.hide(); // Added for tidy
   }
@@ -95,29 +99,29 @@ export default class NpcShortRestDialog extends Dialog {
    * @param {Actor5e} [options.actor]  Actor that is taking the short rest.
    * @returns {Promise}                Promise that resolves when the rest is completed or rejects when canceled.
    */
-  static async shortRestDialog({ actor } = {}) {
-    return new Promise((resolve, reject) => {
+  static async shortRestDialog({ actor } = {}): Promise<ShortRestDialogResult> {
+    return new Promise((resolve) => {
       const dlg = new this(actor, {
-        title: `${game.i18n.localize("DND5E.ShortRest")}: ${actor.name}`,
+        title: `${game.i18n.localize('DND5E.ShortRest')}: ${actor.name}`,
         buttons: {
           rest: {
             icon: '<i class="fas fa-bed"></i>',
-            label: game.i18n.localize("DND5E.Rest"),
+            label: game.i18n.localize('DND5E.Rest'),
             callback: (html) => {
               let newDay = false;
-              if (game.settings.get("dnd5e", "restVariant") !== "epic") {
+              if (game.settings.get('dnd5e', 'restVariant') !== 'epic') {
                 newDay = html.find('input[name="newDay"]')[0].checked;
               }
-              resolve(newDay);
+              resolve({ confirmed: true, newDay });
             },
           },
           cancel: {
             icon: '<i class="fas fa-times"></i>',
-            label: game.i18n.localize("Cancel"),
-            callback: reject,
+            label: game.i18n.localize('Cancel'),
+            callback: resolve({ confirmed: false }),
           },
         },
-        close: reject,
+        close: () => resolve({ confirmed: false }),
       });
       dlg.render(true);
     });
@@ -153,7 +157,7 @@ export default class NpcShortRestDialog extends Dialog {
     // }
 
     // Prepare roll data
-    const flavor = game.i18n.localize("DND5E.HitDiceRoll");
+    const flavor = game.i18n.localize('DND5E.HitDiceRoll');
     const rollConfig = foundry.utils.mergeObject(
       {
         formula: `max(0, 1${denomination} + @abilities.con.mod)`,
@@ -163,8 +167,8 @@ export default class NpcShortRestDialog extends Dialog {
           speaker: ChatMessage.getSpeaker({ actor: this.actor }),
           flavor,
           title: `${flavor}: ${this.actor.name}`,
-          rollMode: game.settings.get("core", "rollMode"),
-          "flags.dnd5e.roll": { type: "hitDie" },
+          rollMode: game.settings.get('core', 'rollMode'),
+          'flags.dnd5e.roll': { type: 'hitDie' },
         },
       },
       options
@@ -183,15 +187,25 @@ export default class NpcShortRestDialog extends Dialog {
      * @param {string} denomination         Size of hit die to be rolled.
      * @returns {boolean}                   Explicitly return `false` to prevent hit die from being rolled.
      */
-    if (Hooks.call("dnd5e.preRollHitDie", this.actor, rollConfig, denomination) === false) return;
+    if (
+      Hooks.call(
+        'dnd5e.preRollHitDie',
+        this.actor,
+        rollConfig,
+        denomination
+      ) === false
+    )
+      return;
 
-    const roll = await new Roll(rollConfig.formula, rollConfig.data).roll({ async: true });
+    const roll = await new Roll(rollConfig.formula, rollConfig.data).roll({
+      async: true,
+    });
     if (rollConfig.chatMessage) roll.toMessage(rollConfig.messageData);
 
     const hp = this.actor.system.attributes.hp;
     const dhp = Math.min(hp.max + (hp.tempmax ?? 0) - hp.value, roll.total);
     const updates = {
-      actor: { "system.attributes.hp.value": hp.value + dhp },
+      actor: { 'system.attributes.hp.value': hp.value + dhp },
       //   class: {"system.hitDiceUsed": cls.system.hitDiceUsed + 1}
     };
 
@@ -206,13 +220,18 @@ export default class NpcShortRestDialog extends Dialog {
      * @param {object} updates.class  Updates that will be applied to the class.
      * @returns {boolean}             Explicitly return `false` to prevent updates from being performed.
      */
-    if (Hooks.call("dnd5e.rollHitDie", this.actor, roll, updates) === false) return roll;
+    if (Hooks.call('dnd5e.rollHitDie', this.actor, roll, updates) === false)
+      return roll;
 
     // Re-evaluate dhp in the event that it was changed in the previous hook
-    const updateOptions = { dhp: (updates.actor?.["system.attributes.hp.value"] ?? hp.value) - hp.value };
+    const updateOptions = {
+      dhp:
+        (updates.actor?.['system.attributes.hp.value'] ?? hp.value) - hp.value,
+    };
 
     // Perform updates
-    if (!foundry.utils.isEmpty(updates.actor)) await this.actor.update(updates.actor, updateOptions);
+    if (!foundry.utils.isEmpty(updates.actor))
+      await this.actor.update(updates.actor, updateOptions);
     // if ( !foundry.utils.isEmpty(updates.class) ) await cls.update(updates.class);
 
     return roll;
