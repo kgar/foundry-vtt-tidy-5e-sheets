@@ -29,7 +29,7 @@
   import ItemInfoCard from 'src/components/item-info-card/ItemInfoCard.svelte';
   import SheetMenu from '../actor/SheetMenu.svelte';
   import { settingStore } from 'src/settings/settings';
-    import ActorWarnings from '../ActorWarnings.svelte';
+  import ActorWarnings from '../ActorWarnings.svelte';
 
   export let selectedTabId: string;
 
@@ -194,9 +194,8 @@
           {#key $store.lockSensitiveFields}
             <DelimitedTruncatedContent cssClass="flex-grow-1">
               <span class="flex-row extra-small-gap align-items-center">
-                <a
-                  class="truncate highlight-on-hover"
-                  role="button"
+                <button
+                  class="truncate inline-transparent-button highlight-on-hover"
                   on:click={() =>
                     new dnd5e.applications.actor.ActorTypeConfig(
                       $store.actor
@@ -208,7 +207,7 @@
                     {localize('DND5E.CreatureType')}
                   {:else}
                     {$store.labels.type}
-                  {/if}</a
+                  {/if}</button
                 >
                 <span
                   class="environment"
@@ -239,14 +238,15 @@
             )}
           </b>
           {#if $store.owner && !$store.lockSensitiveFields}
-            <a
+            <button
+              type="button"
+              class="origin-summary-tidy inline-icon-button"
               on:click={() =>
                 new Tidy5eActorOriginSummaryConfig($store.actor).render(true)}
-              class="origin-summary-tidy"
               title={localize('T5EK.OriginSummaryConfig')}
             >
               <i class="fas fa-cog" />
-            </a>
+            </button>
           {/if}
         </div>
       </div>
@@ -395,6 +395,7 @@
     font-size: 0.75rem;
     line-height: 1;
     padding: 0.1875rem 0 0.125rem 0;
+    line-height: 1rem;
   }
 
   .actor-name-row {
