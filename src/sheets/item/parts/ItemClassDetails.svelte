@@ -70,7 +70,7 @@
       value={$store.system.identifier}
       placeholder={$store.item.identifier}
       disabled={!$store.owner}
-      />
+    />
   </div>
   <p class="hint">
     {@html localize('DND5E.ClassIdentifierHint', {
@@ -91,7 +91,7 @@
       field="system.hitDice"
       value={$store.system.hitDice}
       disabled={!$store.owner}
-      >
+    >
       {#each $store.config.hitDieTypes as type}
         <option value={type}>{type}</option>
       {/each}
@@ -112,7 +112,7 @@
       value={$store.system.hitDiceUsed}
       placeholder="0"
       disabled={!$store.owner}
-      />
+    />
   </div>
 </ItemFormGroup>
 
@@ -123,13 +123,14 @@
 <ItemFormGroup labelText={localize('DND5E.ClassSaves')}>
   <svelte:fragment slot="inside-after-label">
     {#if $store.editable}
-      <a
-        class="trait-selector class-saves"
+      <button
+        type="button"
+        class="trait-selector class-saves inline-icon-button"
         on:click={() =>
           selectTraits('system.saves', localize('DND5E.ClassSaves'), 'saves')}
       >
         <i class="fas fa-edit" />
-      </a>
+      </button>
     {/if}
   </svelte:fragment>
   <div class="form-fields">
@@ -155,15 +156,16 @@
       placeholder="0"
       value={$store.system.skills.number}
       disabled={!$store.owner}
-      />
+    />
   </div>
 </ItemFormGroup>
 
 <ItemFormGroup labelText={localize('DND5E.ClassSkillsEligible')}>
   <svelte:fragment slot="inside-after-label">
     {#if $store.editable}
-      <a
-        class="trait-selector class-skills"
+      <button
+        type="button"
+        class="trait-selector class-skills inline-icon-button"
         on:click={() =>
           selectTraits(
             'system.skills.choices',
@@ -172,7 +174,7 @@
           )}
       >
         <i class="fas fa-edit" />
-      </a>
+      </button>
     {/if}
   </svelte:fragment>
 
@@ -189,8 +191,9 @@
 <ItemFormGroup labelText={localize('DND5E.ClassSkillsChosen')}>
   <svelte:fragment slot="inside-after-label">
     {#if $store.editable}
-      <a
-        class="trait-selector class-skills"
+      <button
+        type="button"
+        class="trait-selector class-skills inline-icon-button"
         on:click={() =>
           selectTraits(
             'system.skills',
@@ -199,7 +202,7 @@
           )}
       >
         <i class="fas fa-edit" />
-      </a>
+      </button>
     {/if}
   </svelte:fragment>
 
