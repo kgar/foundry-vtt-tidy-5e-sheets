@@ -119,6 +119,7 @@ export class Tidy5eNpcSheet extends dnd5e.applications.actor.ActorSheet5eNPC {
         CONSTANTS.ROUNDED_PORTRAIT_OPTION_ALL as string,
         CONSTANTS.ROUNDED_PORTRAIT_OPTION_NPCVEHICLE as string,
       ].includes(SettingsProvider.settings.portraitStyle.get()),
+      encumbrance: this.actor.system.attributes.encumbrance,
     };
   }
 

@@ -31,6 +31,8 @@
   import type { ItemCardContentComponent } from 'src/types/item';
   import InventoryItemCardContent from 'src/components/item-info-card/InventoryItemCardContent.svelte';
   import { settingStore } from 'src/settings/settings';
+  import EncumbranceBar from '../actor/EncumbranceBar.svelte';
+  import TabFooter from '../actor/TabFooter.svelte';
 
   let store = getContext<Readable<NpcSheetContext>>('store');
 
@@ -227,9 +229,10 @@
     {/if}
   </div>
 </section>
-<footer class="abilities-tab-footer">
+<TabFooter mode="vertical">
   <Currency actor={$store.actor} />
-</footer>
+  <EncumbranceBar />
+</TabFooter>
 
 <style lang="scss">
   .npc-abilities-content {
@@ -298,20 +301,6 @@
     }
     :global(.npc-abilities-spellbook-footer input) {
       height: 1.125rem;
-    }
-  }
-
-  .abilities-tab-footer {
-    background-color: var(--t5ek-header-background);
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    box-shadow: 0 0 0.1875rem 0 var(--t5ek-tertiary-color);
-
-    margin: 0 -0.25rem -1rem -1rem;
-
-    :global(> *) {
-      flex-basis: 30rem;
     }
   }
 </style>

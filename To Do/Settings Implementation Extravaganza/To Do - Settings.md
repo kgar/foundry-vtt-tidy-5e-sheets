@@ -20,13 +20,21 @@
 - [x] Configure PC Actor Warning to use the `_onWarningLink` of the base sheet
 - [x] Add Actor Warning component to NPC
 - [x] Add Actor Warning to Vehicle
-- [ ] Find anchor-tag-based icon buttons; replace with actual buttons
+- [x] Find anchor-tag-based icon buttons; replace with actual buttons
   - `.icon-button` is for icon buttons
   - `.transparent-button` is for buttons that just want the button content and not the button background, border, etc.
   - `.item-list-button` for buttons that appear in the classic controls item list.
-  - [ ] Replace each one and test
+  - [x] Replace each one and test
   - [ ] Ensure disable logic is honored
 - [ ] 🐞 When changing sheet permissions from observer/owner to limited, half the sheet changes while the other half with the header and tab strip remain intact. It should refresh the entire sheet.
+- [ ] Style / functionality update: make all buttons reveal a box-shadow or outline when focused; unfocus the button after it has been invoked
+
+## Bonus Fun
+
+- [ ] NPC Encumbrance for Fallayn
+  - [x] Reveal it
+  - [x] Style it
+  - [ ] Wire it to an NPC setting at "World" scope: default OFF
 
 ## Implement ALL the Settings! 👏
 

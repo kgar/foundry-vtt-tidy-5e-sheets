@@ -835,3 +835,19 @@ I reckon it should just be in the local storage of the browser - no point storin
 
 TyphonJS (Michael) [UTC-7] — Today at 10:04 PM
 Yes... Session storage is actually what you want to use between page loads. It stays active for as long as the tab is open. Local storage is not the best for GUI element state as that persists potentially for a very long time. If you ever got around to TRL ehem there is indeed a bunch of utilities for using the various web storage / searching / filtering and such, but I gather you are still rolling your own solutions. 😉
+
+
+### fallayn - NPC encumbrance
+
+https://discord.com/channels/732325252788387980/1116078321067892796/1161780089512534086
+
+Fallayn — Today at 4:39 PM
+Can we have an option to display carry capacity/weight for an NPC too? Would be cool to enable for mounts/pets/helper allies/bag of holding actors
+that missing is the sole reason I always eventually give up and switch those over to a full PC actor
+
+kgar — Today at 4:57 PM
+Putting it on the list. 
+Since the rewrite has a dedicated footer on the Attributes tab for currency, it would be a natural upgrade to include encumbrance.
+Things we would want to nail down:
+- The existing data schema would need to support it
+- Making it opt-in at "World" scope, so a GM would go to NPC Settings and toggle the checkbox to include an encumbrance bar on NPC sheets

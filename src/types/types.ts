@@ -37,7 +37,9 @@ export type CharacterSheetContext = {
   JQueryHooksSheetIntegration &
   Record<string, any>;
 
-export type NpcSheetContext = {} & ActorSheetContext &
+export type NpcSheetContext = {
+  encumbrance: any
+} & ActorSheetContext &
   JQueryHooksSheetIntegration &
   Record<string, any>;
 
