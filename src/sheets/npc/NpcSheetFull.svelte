@@ -195,6 +195,7 @@
             <DelimitedTruncatedContent cssClass="flex-grow-1">
               <span class="flex-row extra-small-gap align-items-center">
                 <button
+                  type="button"
                   class="truncate inline-transparent-button highlight-on-hover"
                   on:click={() =>
                     new dnd5e.applications.actor.ActorTypeConfig(
