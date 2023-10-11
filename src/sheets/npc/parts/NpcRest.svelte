@@ -18,20 +18,22 @@
     <span class="resting-icon">
       <i class="rest-icon fas fa-bed" />
     </span>
-    <a
-      class="rest short-rest"
+    <button
+      type="button"
+      class="rest short-rest inline-icon-button"
       title={localize('T5EK.RestS')}
       on:click={(ev) => $store.shortRest(ev)}
     >
       <i class="fas fa-hourglass-half" />
-    </a>
-    <a
-      class="rest long-rest"
+    </button>
+    <button
+      type="button"
+      class="rest long-rest inline-icon-button"
       title={localize('T5EK.RestL')}
       on:click={(ev) => $store.longRest(ev)}
     >
       <i class="fas fa-hourglass-end" />
-    </a>
+    </button>
   </div>
 </div>
 
