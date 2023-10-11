@@ -49,14 +49,12 @@
     class="profile"
     src={$store.item.img}
     alt={$store.item.name}
-    title="{localize('T5EK.EditActorImage')} / {localize(
-      'T5EK.ShowItemImage'
-    )}"
+    title="{localize('T5EK.EditActorImage')} / {localize('T5EK.ShowItemImage')}"
     on:mousedown={(event) => handleClick(event)}
   />
   <div class="item-menu" class:hidden={hideImageMenu}>
-    <a class="showItemArt" on:click={() => showItemArt($store.item)}
-      >{localize('T5EK.ShowItemArt')}</a
+    <button class="showItemArt" on:click={() => showItemArt($store.item)}
+      >{localize('T5EK.ShowItemArt')}</button
     >
   </div>
 </div>
