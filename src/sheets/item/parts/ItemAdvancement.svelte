@@ -50,40 +50,48 @@
 
 <ol class="items-list">
   {#if $store.editable}
-    <li class="items-header flexrow main-controls">
-      <div class="item-controls flexrow configuration-mode-control">
+    <li class="items-header main-controls advancement">
+      <div class="item-controls configuration-mode-control">
         {#if $store.isEmbedded}
           {#if $store.advancementEditable}
-            <a
+            <button
+              class="inline-icon-button"
               on:click={() => toggleAdvancementLock($store.item)}
               title="DND5E.AdvancementConfigurationActionDisable"
             >
               <i class="fas fa-lock-open" />
               {localize('DND5E.AdvancementConfigurationModeEnabled')}
-            </a>
+            </button>
           {:else}
-            <a
+            <button
+              type="button"
+              class="inline-icon-button"
               on:click={() => toggleAdvancementLock($store.item)}
               title="DND5E.AdvancementConfigurationActionEnable"
             >
               <i class="fas fa-lock" />
               {localize('DND5E.AdvancementConfigurationModeDisabled')}
-            </a>
+            </button>
           {/if}
         {/if}
       </div>
       {#if $store.advancementEditable}
-        <div class="item-controls flexrow add-button">
-          <a
-            title="DND5E.AdvancementControlCreate"
+        <div class="item-controls add-button">
+          <button
+            type="button"
+            class="inline-icon-button"
+            title={localize('DND5E.AdvancementControlCreate')}
             on:click={() =>
               game.dnd5e.applications.advancement.AdvancementSelection.createDialog(
                 $store.item
               )}
           >
             <i class="fas fa-plus" />
-          </a>
+            {localize('DND5E.Add')}
+          </button>
         </div>
+      {:else}
+        <div role="presentation" />
       {/if}
     </li>
   {/if}
@@ -109,11 +117,17 @@
       {/if}
 
       {#if data.configured === 'full'}
-        <div class="item-checkmark" title="DND5E.AdvancementConfiguredComplete">
+        <div
+          class="item-checkmark"
+          title={localize('DND5E.AdvancementConfiguredComplete')}
+        >
           <i class="fas fa-check-circle" />
         </div>
       {:else if data.configured === 'partial'}
-        <div class="item-warning" title="DND5E.AdvancementConfiguredIncomplete">
+        <div
+          class="item-warning"
+          title={localize('DND5E.AdvancementConfiguredIncomplete')}
+        >
           <i class="fas fa-exclamation-triangle" />
         </div>
       {/if}
@@ -138,20 +152,24 @@
           {/if}
           {#if $store.advancementEditable}
             <div class="item-controls flexrow">
-              <a
-                title="DND5E.AdvancementControlEdit"
+              <button
+                type="button"
+                class="inline-icon-button"
+                title={localize('DND5E.AdvancementControlEdit')}
                 on:click={() =>
                   editAdvancement(advancementItem.id, $store.item)}
               >
                 <i class="fas fa-edit" />
-              </a>
-              <a
-                title="DND5E.AdvancementControlDelete"
+              </button>
+              <button
+                type="button"
+                class="inline-icon-button"
+                title={localize('DND5E.AdvancementControlDelete')}
                 on:click={() =>
                   deleteAdvancement(advancementItem.id, $store.item)}
               >
                 <i class="fas fa-trash" />
-              </a>
+              </button>
             </div>
           {/if}
           {#if advancementItem.summary}
