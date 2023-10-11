@@ -110,9 +110,13 @@
 
       {#if $store.editable && data.configured && level !== 'unconfigured'}
         <div>
-          <a on:click={() => modifyChoices(level, $store.item)}
-            >{localize('DND5E.AdvancementModifyChoices')}</a
+          <button
+            type="button"
+            class="inline-transparent-button"
+            on:click={() => modifyChoices(level, $store.item)}
           >
+            {localize('DND5E.AdvancementModifyChoices')}
+          </button>
         </div>
       {/if}
 

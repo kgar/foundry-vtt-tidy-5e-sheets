@@ -594,6 +594,21 @@ input[type='checkbox'] {
       font-size: 0.75rem;
       color: var(--t5ek-primary-font-color);
 
+      &:where(.advancement-item) {
+        :where(.item-controls) {
+          flex-basis: auto;
+          flex-grow: 0;
+          gap: 0.25rem;
+          padding-left: 0.325rem;
+          padding-right: 0.325rem;
+
+          :where(button) {
+            padding-left: 0.25rem;
+            padding-right: 0.25rem;
+          }
+        }
+      }
+
       div:not(.item-name) {
         border-left: 0.0625rem solid var(--t5ek-faint-color);
         display: flex;
@@ -729,6 +744,6 @@ label input[type='checkbox']:checked {
 }
 
 .advancement .items-header .item-checkmark {
-  flex: 0 0 44px;
-  color: var(--t5ek-prepared-background);
+  flex: 0 0 2.75rem;
+  color: var(--t5ek-secondary-color);
 }
