@@ -28,6 +28,8 @@
     onConfigureClicked: MouseEvent;
   }>();
 
+  const localize = FoundryAdapter.localize;
+
   $: show = traitsExpanded || tags.length > 0 || tools.length > 0;
 </script>
 
@@ -84,20 +86,28 @@
                 >{@html tool.icon}</span
               >
             {/if}
-            <button
-              type="button"
-              class="tool-check-roller inline-transparent-button"
-              class:rollable={$store.owner}
-              on:click={(event) => $store.actor.rollToolCheck(key, { event })}
-              disabled={!$store.owner}
-            >
-              {tool.label}
-            </button>
+
+            {#if $store.owner}
+              <button
+                type="button"
+                class="tool-check-roller inline-transparent-button"
+                class:rollable={$store.owner}
+                on:click={(event) => $store.actor.rollToolCheck(key, { event })}
+                disabled={!$store.owner}
+              >
+                {tool.label}
+              </button>
+            {:else}
+              <span class="tool-check-roller">
+                {tool.label}
+              </span>
+            {/if}
+
             {#if traitsExpanded && $store.owner && !$store.lockSensitiveFields}
               <button
                 type="button"
                 class="tool-proficiency-editor inline-icon-button"
-                title="DND5E.ToolConfigure"
+                title={localize('DND5E.ToolConfigure')}
                 on:click|stopPropagation|preventDefault={() =>
                   new dnd5e.applications.actor.ProficiencyConfig($store.actor, {
                     property: 'tools',

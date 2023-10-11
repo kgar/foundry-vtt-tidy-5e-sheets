@@ -172,14 +172,15 @@
       {/key}
       <div class="flex-row align-items-center extra-small-gap">
         {#if $store.owner && !$store.lockSensitiveFields}
-          <a
+          <button
+            type="button"
             on:click={() =>
               new Tidy5eActorOriginSummaryConfig($store.actor).render(true)}
-            class="origin-summary-tidy"
+            class="origin-summary-tidy inline-icon-button"
             title={localize('T5EK.OriginSummaryConfig')}
           >
             <i class="fas fa-cog" />
-          </a>
+          </button>
         {/if}
       </div>
     </div>
@@ -240,7 +241,7 @@
       align-items: center;
       gap: 0.25rem;
       font-size: 0.75rem;
-      line-height: 1;
+      line-height: 1rem;
       padding: 0.1875rem 0 0.125rem 0;
     }
   }

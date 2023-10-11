@@ -25,9 +25,51 @@
   - `.transparent-button` is for buttons that just want the button content and not the button background, border, etc.
   - `.item-list-button` for buttons that appear in the classic controls item list.
   - [x] Replace each one and test
-  - [ ] Ensure disable logic is honored
+  - [ ] Review button usage; provide fallbacks and/or ensure disable logic is honored
+    - [x] src\components\attributes\SkillsList.svelte:
+    - [x] src\components\attributes\TraitSection.svelte:
+    - [ ] src\components\button-menu\ButtonMenu.svelte:
+    - [ ] src\components\button-menu\ButtonMenuCommand.svelte:
+    - [ ] src\components\favorites\FavoriteFeaturesList.svelte:
+    - [ ] src\components\inventory\InventoryGrid.svelte:
+    - [ ] src\components\items\ItemAddUses.svelte:
+    - [ ] src\components\items\ItemControl.svelte:
+    - [ ] src\components\items\ItemCreateButton.svelte:
+    - [ ] src\components\items\ItemUseButton.svelte:
+    - [ ] src\components\player-character\CharacterFeaturesTab.svelte:
+    - [ ] src\components\spellbook\SpellbookGrid.svelte:
+    - [ ] src\components\spellbook\SpellSlotUses.svelte:
+    - [ ] src\components\tabs\Tabs.svelte:
+    - [ ] src\sheets\ActorWarnings.svelte:
+    - [ ] src\sheets\AttributeBlock.svelte:
+    - [ ] src\sheets\exhaustion.svelte:
+    - [ ] src\sheets\HitDice.svelte:
+    - [ ] src\sheets\InitiativeBlock.svelte:
+    - [ ] src\sheets\rest.svelte:
+    - [ ] src\sheets\TempHp.svelte:
+    - [ ] src\sheets\actor\AcShield.svelte:
+    - [ ] src\sheets\actor\ActorMovementRow.svelte:
+    - [ ] src\sheets\actor\ActorPortrait.svelte:
+    - [ ] src\sheets\actor\Currency.svelte:
+    - [ ] src\sheets\actor\NoSpells.svelte:
+    - [ ] src\sheets\actor\Traits.svelte:
+    - [ ] src\sheets\character\CharacterSheetFull.svelte:
+    - [ ] src\sheets\item\parts\ActiveEffects.svelte:
+    - [ ] src\sheets\item\parts\ItemAction.svelte:
+    - [ ] src\sheets\item\parts\ItemAdvancement.svelte:
+    - [ ] src\sheets\item\parts\ItemClassDetails.svelte:
+    - [ ] src\sheets\item\parts\ItemProfilePicture.svelte:
+    - [ ] src\sheets\npc\NpcAbilitiesTab.svelte:
+    - [ ] src\sheets\npc\NpcSheetFull.svelte:
+    - [ ] src\sheets\npc\parts\NpcRest.svelte:
+    - [ ] src\sheets\settings\sheet\SettingsSheet.svelte:
+    - [ ] src\sheets\settings\theme\ThemeSettingColorArticle.svelte:
+    - [ ] src\sheets\settings\theme\ThemeSettingsSheet.svelte:
+    - [ ] src\sheets\vehicle\VehicleAttributesTab.svelte:
+    - [ ] src\sheets\vehicle\VehicleSheetFull.svelte:
 - [ ] 🐞 When changing sheet permissions from observer/owner to limited, half the sheet changes while the other half with the header and tab strip remain intact. It should refresh the entire sheet.
 - [ ] Style / functionality update: make all buttons reveal a box-shadow or outline when focused; unfocus the button after it has been invoked
+- [ ] Review `title="` patterns, looking for non-localized localization keys
 
 ## Bonus Fun
 

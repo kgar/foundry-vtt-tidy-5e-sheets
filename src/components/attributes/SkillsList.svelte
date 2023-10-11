@@ -76,12 +76,6 @@
             >
               <i class="fas fa-cog" />
             </button>
-          {/if}
-          {#if $store.owner && $store.lockSensitiveFields}
-            <span class="skill-proficiency" title={skillRef.skill.hover}
-              >{@html skillRef.skill.icon}</span
-            >
-          {:else}
             <button
               type="button"
               class="skill-proficiency-toggle inline-icon-button"
@@ -102,17 +96,25 @@
                 )}
               title={skillRef.skill.hover}>{@html skillRef.skill.icon}</button
             >
+          {:else}
+            <span class="skill-proficiency" title={skillRef.skill.hover}
+              >{@html skillRef.skill.icon}</span
+            >
           {/if}
-          <button
-            type="button"
-            class="tidy5e-skill-name transparent-button"
-            class:rollable={$store.owner}
-            on:click={(event) =>
-              $store.actor.rollSkill(skillRef.key, { event })}
-            disabled={!$store.owner}
-          >
-            {skillRef.skill.label}
-          </button>
+          {#if $store.owner}
+            <button
+              type="button"
+              class="tidy5e-skill-name transparent-button rollable"
+              on:click={(event) =>
+                $store.actor.rollSkill(skillRef.key, { event })}
+            >
+              {skillRef.skill.label}
+            </button>
+          {:else}
+            <span class="tidy5e-skill-name">
+              {skillRef.skill.label}
+            </span>
+          {/if}
           <span class="skill-ability">{skillRef.skill.abbreviation}</span>
           <span class="skill-mod">{formatAsModifier(skillRef.skill.total)}</span
           >
