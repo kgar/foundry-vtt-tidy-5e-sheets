@@ -198,7 +198,7 @@
           <ItemTableColumn baseWidth="7.5rem">
             {localize('DND5E.Level')}
           </ItemTableColumn>
-          {#if $store.owner && $settingStore.classicControlsEnabled && $store.editable}
+          {#if $store.owner && $settingStore.classicControlsEnabled}
             <ItemTableColumn baseWidth={classicControlsBaseWidth} />
           {/if}
         </ItemTableHeaderRow>
@@ -266,7 +266,7 @@
               {/if}
             </ItemTableCell>
 
-            {#if $store.owner && $settingStore.classicControlsEnabled && $store.editable}
+            {#if $store.owner && $settingStore.classicControlsEnabled}
               <ItemTableCell baseWidth={classicControlsBaseWidth}>
                 <ItemControls>
                   {#if item.type !== 'class'}

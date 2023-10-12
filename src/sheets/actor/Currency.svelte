@@ -70,6 +70,7 @@
         class="currency-convert"
         title={localize('DND5E.CurrencyConvertHint')}
         on:click|stopPropagation|preventDefault={() => confirmConvertCurrency()}
+        disabled={!$store.owner}
       >
         <i class="fas fa-funnel-dollar" />
       </button>

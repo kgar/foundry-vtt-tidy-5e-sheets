@@ -140,6 +140,7 @@
                         title={item.labels.recharge}
                         tabindex="0"
                         on:click={() => item.rollRecharge()}
+                        disabled={!$store.owner}
                       >
                         <i class="fas fa-dice-six" />
                         {item.system.recharge

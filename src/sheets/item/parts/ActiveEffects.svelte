@@ -46,7 +46,7 @@
         <div class="effect-source">{localize('DND5E.Source')}</div>
         <div class="effect-source">{localize('DND5E.Duration')}</div>
         <div class="item-controls active-effect-controls flexrow">
-          {#if $store.editable}
+          {#if $store.owner && $store.editable}
             <button
               type="button"
               class="active-effect-control inline-icon-button"
@@ -88,7 +88,7 @@
               class="item-controls active-effect-controls flexrow"
               role="cell"
             >
-              {#if $store.editable}
+              {#if $store.owner && $store.editable}
                 <button
                   type="button"
                   class="active-effect-control inline-transparent-button"

@@ -137,8 +137,11 @@
     {localize('DND5E.Formula')}
     <button
       class="damage-formula-control add-damage"
-      on:click={() => addDamageFormula()}><i class="fas fa-plus" /></button
+      on:click={() => addDamageFormula()}
+      disabled={!$store.owner}
     >
+      <i class="fas fa-plus" />
+    </button>
   </h4>
   <ol class="damage-parts form-group">
     {#each damageParts as [formula, damageType], i}
@@ -169,6 +172,7 @@
         <button
           class="damage-formula-control delete-damage"
           on:click={() => deleteDamageFormula(i)}
+          disabled={!$store.owner}
         >
           <i class="fas fa-minus" />
         </button>

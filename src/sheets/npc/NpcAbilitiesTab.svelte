@@ -131,6 +131,7 @@
                       class="item-list-button"
                       title={item.labels.recharge}
                       on:click={() => item.rollRecharge()}
+                      disabled={!$store.owner}
                     >
                       <i class="fas fa-dice-six" />
                       {item.system.recharge
@@ -231,7 +232,9 @@
 </section>
 <TabFooter mode="vertical">
   <Currency actor={$store.actor} />
-  <EncumbranceBar />
+  {#if $settingStore.enableNpcEncumbranceBar}
+    <EncumbranceBar />
+  {/if}
 </TabFooter>
 
 <style lang="scss">

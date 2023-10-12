@@ -122,7 +122,7 @@
 <h3 class="form-header">{localize('DND5E.Proficiency')}</h3>
 <ItemFormGroup labelText={localize('DND5E.ClassSaves')}>
   <svelte:fragment slot="inside-after-label">
-    {#if $store.editable}
+    {#if $store.owner && $store.editable}
       <button
         type="button"
         class="trait-selector class-saves inline-icon-button"
@@ -162,7 +162,7 @@
 
 <ItemFormGroup labelText={localize('DND5E.ClassSkillsEligible')}>
   <svelte:fragment slot="inside-after-label">
-    {#if $store.editable}
+    {#if $store.owner && $store.editable}
       <button
         type="button"
         class="trait-selector class-skills inline-icon-button"
@@ -190,7 +190,7 @@
 
 <ItemFormGroup labelText={localize('DND5E.ClassSkillsChosen')}>
   <svelte:fragment slot="inside-after-label">
-    {#if $store.editable}
+    {#if $store.owner && $store.editable}
       <button
         type="button"
         class="trait-selector class-skills inline-icon-button"

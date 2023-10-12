@@ -25,6 +25,7 @@
   @include transparent-button-base();
   font-size: inherit;
   width: auto;
+  line-height: 1;
 }
 
 @mixin icon-button-base {
@@ -45,6 +46,7 @@
   @include icon-button-base();
   font-size: inherit;
   width: auto;
+  line-height: 1;
 }
 
 .icon-button {

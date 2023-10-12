@@ -78,7 +78,7 @@
         >
       {/if}
     {/if}
-    {#if useConfigurationOption && !$store.lockSensitiveFields}
+    {#if useConfigurationOption && $store.owner && !$store.lockSensitiveFields}
       <button
         type="button"
         class="config-button inline-icon-button"

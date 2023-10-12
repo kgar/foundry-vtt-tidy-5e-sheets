@@ -196,7 +196,9 @@
               <span class="flex-row extra-small-gap align-items-center">
                 <button
                   type="button"
-                  class="truncate inline-transparent-button highlight-on-hover"
+                  class="truncate inline-transparent-button"
+                  class:highlight-on-hover={$store.owner}
+                  disabled={!$store.owner}
                   on:click={() =>
                     new dnd5e.applications.actor.ActorTypeConfig(
                       $store.actor

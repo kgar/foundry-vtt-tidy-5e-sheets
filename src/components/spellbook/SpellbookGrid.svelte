@@ -86,7 +86,7 @@
           </div>
         </button>
       {/each}
-      {#if $store.editable}
+      {#if $store.owner && $store.editable}
         <div class="spells-footer">
           <button
             type="button"

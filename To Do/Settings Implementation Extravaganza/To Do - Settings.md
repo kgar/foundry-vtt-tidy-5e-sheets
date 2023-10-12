@@ -26,57 +26,61 @@
   - `.item-list-button` for buttons that appear in the classic controls item list.
   - [x] Replace each one and test
   - [ ] Review button usage; provide fallbacks and/or ensure disable logic is honored
-    - [x] src\components\attributes\SkillsList.svelte:
-    - [x] src\components\attributes\TraitSection.svelte:
-    - [ ] src\components\button-menu\ButtonMenu.svelte:
-    - [ ] src\components\button-menu\ButtonMenuCommand.svelte:
-    - [ ] src\components\favorites\FavoriteFeaturesList.svelte:
-    - [ ] src\components\inventory\InventoryGrid.svelte:
-    - [ ] src\components\items\ItemAddUses.svelte:
-    - [ ] src\components\items\ItemControl.svelte:
-    - [ ] src\components\items\ItemCreateButton.svelte:
-    - [ ] src\components\items\ItemUseButton.svelte:
-    - [ ] src\components\player-character\CharacterFeaturesTab.svelte:
-    - [ ] src\components\spellbook\SpellbookGrid.svelte:
-    - [ ] src\components\spellbook\SpellSlotUses.svelte:
-    - [ ] src\components\tabs\Tabs.svelte:
-    - [ ] src\sheets\ActorWarnings.svelte:
-    - [ ] src\sheets\AttributeBlock.svelte:
-    - [ ] src\sheets\exhaustion.svelte:
-    - [ ] src\sheets\HitDice.svelte:
-    - [ ] src\sheets\InitiativeBlock.svelte:
-    - [ ] src\sheets\rest.svelte:
-    - [ ] src\sheets\TempHp.svelte:
-    - [ ] src\sheets\actor\AcShield.svelte:
-    - [ ] src\sheets\actor\ActorMovementRow.svelte:
-    - [ ] src\sheets\actor\ActorPortrait.svelte:
-    - [ ] src\sheets\actor\Currency.svelte:
-    - [ ] src\sheets\actor\NoSpells.svelte:
-    - [ ] src\sheets\actor\Traits.svelte:
-    - [ ] src\sheets\character\CharacterSheetFull.svelte:
-    - [ ] src\sheets\item\parts\ActiveEffects.svelte:
-    - [ ] src\sheets\item\parts\ItemAction.svelte:
-    - [ ] src\sheets\item\parts\ItemAdvancement.svelte:
-    - [ ] src\sheets\item\parts\ItemClassDetails.svelte:
-    - [ ] src\sheets\item\parts\ItemProfilePicture.svelte:
-    - [ ] src\sheets\npc\NpcAbilitiesTab.svelte:
-    - [ ] src\sheets\npc\NpcSheetFull.svelte:
-    - [ ] src\sheets\npc\parts\NpcRest.svelte:
-    - [ ] src\sheets\settings\sheet\SettingsSheet.svelte:
-    - [ ] src\sheets\settings\theme\ThemeSettingColorArticle.svelte:
-    - [ ] src\sheets\settings\theme\ThemeSettingsSheet.svelte:
-    - [ ] src\sheets\vehicle\VehicleAttributesTab.svelte:
-    - [ ] src\sheets\vehicle\VehicleSheetFull.svelte:
+    - [x] src\components\attributes\SkillsList.svelte
+    - [x] src\components\attributes\TraitSection.svelte
+    - [x] src\components\button-menu\ButtonMenu.svelte
+    - [x] src\components\button-menu\ButtonMenuCommand.svelte
+    - [x] src\components\favorites\FavoriteFeaturesList.svelte
+    - [x] src\components\inventory\InventoryGrid.svelte
+    - [x] src\components\items\ItemAddUses.svelte
+    - [x] src\components\items\ItemControl.svelte
+    - [x] src\components\items\ItemCreateButton.svelte
+    - [x] src\components\items\ItemUseButton.svelte
+    - [x] src\components\player-character\CharacterFeaturesTab.svelte
+    - [x] src\components\spellbook\SpellbookGrid.svelte
+    - [x] src\components\spellbook\SpellSlotUses.svelte
+    - [x] src\components\tabs\Tabs.svelte
+    - [x] src\sheets\ActorWarnings.svelte
+    - [x] src\sheets\AttributeBlock.svelte
+    - [x] src\sheets\exhaustion.svelte
+    - [x] src\sheets\HitDice.svelte
+    - [x] src\sheets\InitiativeBlock.svelte
+    - [x] src\sheets\rest.svelte
+    - [x] src\sheets\TempHp.svelte
+    - [x] src\sheets\actor\AcShield.svelte
+    - [x] src\sheets\actor\ActorMovementRow.svelte
+    - [x] src\sheets\actor\ActorPortrait.svelte
+    - [x] src\sheets\actor\Currency.svelte
+    - [x] src\sheets\actor\NoSpells.svelte
+    - [x] src\sheets\actor\Traits.svelte
+    - [x] src\sheets\character\CharacterSheetFull.svelte
+    - [x] src\sheets\item\parts\ActiveEffects.svelte
+    - [x] src\sheets\item\parts\ItemAction.svelte
+    - [x] src\sheets\item\parts\ItemAdvancement.svelte
+    - [x] src\sheets\item\parts\ItemClassDetails.svelte
+    - [x] src\sheets\item\parts\ItemProfilePicture.svelte
+    - [x] src\sheets\npc\NpcAbilitiesTab.svelte
+    - [x] src\sheets\npc\NpcSheetFull.svelte
+    - [x] src\sheets\npc\parts\NpcRest.svelte
+    - [x] src\sheets\settings\sheet\SettingsSheet.svelte
+    - [x] src\sheets\settings\theme\ThemeSettingColorArticle.svelte
+    - [x] src\sheets\settings\theme\ThemeSettingsSheet.svelte
+    - [x] src\sheets\vehicle\VehicleAttributesTab.svelte
+    - [x] src\sheets\vehicle\VehicleSheetFull.svelte
 - [ ] 🐞 When changing sheet permissions from observer/owner to limited, half the sheet changes while the other half with the header and tab strip remain intact. It should refresh the entire sheet.
 - [ ] Style / functionality update: make all buttons reveal a box-shadow or outline when focused; unfocus the button after it has been invoked
 - [ ] Review `title="` patterns, looking for non-localized localization keys
+- [ ] Review Classic Controls option; determine if I should
+  - part out the option on a per-sheet basis, or
+  - expand the one setting to all sheets, or
+  - backfill the sheet contexts so that only Character can ever have Classic Controls as false per setting while the other sheets are always true.
 
 ## Bonus Fun
 
-- [ ] NPC Encumbrance for Fallayn
+- [x] NPC Encumbrance for Fallayn
   - [x] Reveal it
   - [x] Style it
-  - [ ] Wire it to an NPC setting at "World" scope: default OFF
+  - [x] Wire it to an NPC setting at "World" scope: default OFF
 
 ## Implement ALL the Settings! 👏
 

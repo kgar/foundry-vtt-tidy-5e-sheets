@@ -7,6 +7,7 @@ import type { Roll } from './types';
 
 export type ItemSheetContext = {
   lockItemQuantity: boolean;
+  owner: boolean;
 } & Record<string, any>;
 
 export type Item5e = Item & {

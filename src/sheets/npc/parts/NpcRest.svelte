@@ -23,6 +23,7 @@
       class="rest short-rest inline-icon-button"
       title={localize('T5EK.RestS')}
       on:click={(ev) => $store.shortRest(ev)}
+      disabled={!$store.owner}
     >
       <i class="fas fa-hourglass-half" />
     </button>
@@ -31,6 +32,7 @@
       class="rest long-rest inline-icon-button"
       title={localize('T5EK.RestL')}
       on:click={(ev) => $store.longRest(ev)}
+      disabled={!$store.owner}
     >
       <i class="fas fa-hourglass-end" />
     </button>

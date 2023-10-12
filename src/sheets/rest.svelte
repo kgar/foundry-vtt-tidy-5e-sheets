@@ -22,6 +22,7 @@
       class="rest icon-button"
       title={localize('T5EK.RestS')}
       on:click={(event) => $store.actor.sheet.onShortRest(event)}
+      disabled={!$store.owner}
     >
       <i class="fas fa-hourglass-half" />
     </button>
@@ -30,6 +31,7 @@
       class="rest icon-button"
       title={localize('T5EK.RestL')}
       on:click={(event) => $store.actor.sheet.onLongRest(event)}
+      disabled={!$store.owner}
     >
       <i class="fas fa-hourglass-end" />
     </button>

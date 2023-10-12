@@ -52,7 +52,7 @@
   {#if $store.editable}
     <li class="items-header main-controls advancement">
       <div class="item-controls configuration-mode-control">
-        {#if $store.isEmbedded}
+        {#if $store.owner && $store.isEmbedded}
           {#if $store.advancementEditable}
             <button
               class="inline-icon-button"
@@ -75,7 +75,7 @@
           {/if}
         {/if}
       </div>
-      {#if $store.advancementEditable}
+      {#if $store.owner && $store.advancementEditable}
         <div class="item-controls add-button">
           <button
             type="button"
@@ -108,7 +108,7 @@
         {/if}
       </h3>
 
-      {#if $store.editable && data.configured && level !== 'unconfigured'}
+      {#if $store.owner && $store.editable && data.configured && level !== 'unconfigured'}
         <div>
           <button
             type="button"
@@ -154,7 +154,7 @@
               {/if}
             </div>
           {/if}
-          {#if $store.advancementEditable}
+          {#if $store.owner && $store.advancementEditable}
             <div class="item-controls flexrow">
               <button
                 type="button"
