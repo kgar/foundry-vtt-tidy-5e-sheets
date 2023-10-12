@@ -21,9 +21,13 @@
   select,
   button {
     color: var(--t5ek-primary-font-color);
-    &:hover,
-    &:focus {
+    
+    &:not(:focus-visible) {
       box-shadow: none;
+    }
+  
+    &:focus-visible {
+      box-shadow: var(--t5ek-focus-visible-box-shadow);
     }
   }
 

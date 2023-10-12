@@ -60,7 +60,8 @@
     border: 0.0625rem solid var(--t5ek-icon-outline-color);
     color: var(--t5ek-icon-font-color);
 
-    &:hover {
+    &:hover,
+    &:focus-within {
       width: 5.875rem;
     }
 
@@ -82,7 +83,8 @@
       font-weight: 700;
       transition: color 0.3s ease, transform 0.3s ease;
 
-      &:hover {
+      &:hover,
+      &:focus-within {
         color: var(--t5ek-primary-font-color);
       }
     }
@@ -111,7 +113,7 @@
       transition: all 0.3s ease;
     }
 
-    .resting:not(:hover) {
+    .resting:not(:is(:hover, :focus-within)) {
       background: transparent;
       box-shadow: none;
       border-color: transparent;

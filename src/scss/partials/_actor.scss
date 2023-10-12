@@ -36,7 +36,16 @@
     display: block;
     padding: 0;
     border: none;
-    box-shadow: none;
+  }
+
+  .editor .editor-edit {
+    &:not(:focus-visible) {
+      box-shadow: none;
+    }
+
+    &:focus-visible {
+      box-shadow: var(--t5ek-focus-visible-box-shadow);
+    }
   }
 
   .section-titles {
@@ -81,9 +90,12 @@
   .editor .editor-content,
   .editor .tox .tox-toolbar__group {
     padding: 0;
-    &:hover,
-    &:focus {
+    &:not(:focus-visible) {
       box-shadow: none;
+    }
+
+    &:focus-visible {
+      box-shadow: var(--t5ek-focus-visible-box-shadow);
     }
   }
 
@@ -268,14 +280,20 @@ input {
   transition: background 0.3s ease, border-color 0.3s ease;
 }
 
-// pointer styles
 input[type='checkbox'],
 input[type='radio'],
 button,
 select {
   cursor: pointer;
-  box-shadow: none;
   color: var(--t5ek-primary-font-color);
+
+  &:not(:focus-visible) {
+    box-shadow: none;
+  }
+
+  &:focus-visible {
+    box-shadow: var(--t5ek-focus-visible-box-shadow);
+  }
 }
 
 [contenteditable],

@@ -9,11 +9,14 @@
   &:hover {
     background: transparent;
     outline: none;
+  }
+
+  &:not(:focus-visible) {
     box-shadow: none;
   }
 
-  &:focus {
-    box-shadow: none;
+  &:focus-visible {
+    box-shadow: var(--t5ek-focus-visible-box-shadow);
   }
 }
 

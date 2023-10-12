@@ -83,42 +83,42 @@
     position: absolute;
     top: 0;
     left: 0;
-    height: 34px;
-    width: 34px;
+    height: 2.125rem;
+    width: 2.125rem;
     z-index: 50;
     color: var(--t5ek-icon-font-color);
 
     .level-display {
       display: block;
-      width: 16px;
-      height: 16px;
-      line-height: 14px;
+      width: 1rem;
+      height: 1rem;
+      line-height: 0.875rem;
       text-align: center;
-      font-size: 14px;
+      font-size: 0.875rem;
       position: absolute;
       background: var(--t5ek-icon-background);
-      box-shadow: 0 0 8px var(--t5ek-icon-shadow-color) inset;
+      box-shadow: 0 0 0.5rem var(--t5ek-icon-shadow-color) inset;
       border: 1px solid var(--t5ek-icon-outline-color);
-      top: -2px;
-      left: -2px;
+      top: -0.125rem;
+      left: -0.125rem;
       border-radius: 50%;
       z-index: 1;
       font-weight: 700;
     }
 
-    &:hover .exhaustion-wrap {
+    &:is(:hover, :focus-within) .exhaustion-wrap {
       width: 10.875rem;
     }
 
     .exhaustion-wrap {
-      height: 34px;
-      width: 34px;
+      height: 2.125rem;
+      width: 2.125rem;
       overflow: hidden;
       transition: width 0.3s ease;
       background: var(--t5ek-icon-background);
       display: flex;
-      box-shadow: 0 0 10px var(--t5ek-icon-shadow-color) inset;
-      border: 1px solid var(--t5ek-icon-outline-color);
+      box-shadow: 0 0 0.625rem var(--t5ek-icon-shadow-color) inset;
+      border: 0.0625rem solid var(--t5ek-icon-outline-color);
 
       &.rounded {
         border-radius: 1.25rem;
@@ -126,12 +126,12 @@
 
       .exhaustion-icon {
         display: block;
-        flex: 0 0 32px;
-        width: 32px;
-        height: 32px;
-        line-height: 34px;
+        flex: 0 0 2rem;
+        width: 2rem;
+        height: 2rem;
+        line-height: 2.125rem;
         text-align: center;
-        font-size: 24px;
+        font-size: 1.5rem;
         position: relative;
       }
 
@@ -145,7 +145,7 @@
         li {
           flex: 0 0 1.25rem;
           text-align: center;
-          line-height: 34px;
+          line-height: 2.125rem;
           display: flex;
 
           .exhaustion-level-option {

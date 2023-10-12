@@ -20,9 +20,12 @@ a:hover {
 }
 
 button {
-  &:hover,
-  &:focus {
+  &:not(:focus-visible) {
     box-shadow: none;
+  }
+
+  &:focus-visible {
+    box-shadow: var(--t5ek-focus-visible-box-shadow);
   }
 }
 
@@ -43,13 +46,12 @@ select {
   padding: 0;
 }
 
-input[type='text'] {
+:is(input[type='text'], input[type='number']) {
   border: none;
   padding: 0 0.375rem;
 }
 
-input[type='text'],
-input[type='number'] {
+:is(input[type='text'], input[type='number']) {
   color: var(--t5ek-primary-font-color);
 }
 
@@ -57,8 +59,8 @@ input[type='number'] {
   color: var(--t5ek-secondary-color);
 }
 
-input[type='text']:hover,
-input[type='text']:focus {
+:is(input[type='text'], input[type='number']):hover,
+:is(input[type='text'], input[type='number']):focus {
   border: none;
   box-shadow: 0 0 0 0.0625rem var(--t5ek-primary-accent-color) inset;
 }
@@ -441,7 +443,7 @@ input[type='checkbox'] {
       }
 
       select,
-      input[type='text'] {
+      :is(input[type='text'], input[type='number']) {
         background: var(--t5ek-item-input-background);
         height: 1.25rem;
         font-size: 0.8125rem;

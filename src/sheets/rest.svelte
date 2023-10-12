@@ -46,13 +46,13 @@
     z-index: 25;
 
     &.rounded {
-      bottom: -7px;
+      bottom: -0.4375rem;
 
       .resting {
-        border-radius: 20px;
+        border-radius: 1.25rem;
 
-        &:hover {
-          width: 110px;
+        &:is(:hover, :focus-within) {
+          width: 6.875rem;
         }
       }
     }

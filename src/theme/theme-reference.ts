@@ -488,4 +488,8 @@ export const themeVariables = {
     type: 'todo',
     group: 'todo',
   },
+  '--t5ek-focus-visible-box-shadow': {
+    type: 'todo',
+    group: 'todo',
+  },
 };
