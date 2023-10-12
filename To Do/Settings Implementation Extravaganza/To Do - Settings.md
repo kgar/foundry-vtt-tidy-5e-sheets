@@ -25,7 +25,7 @@
   - `.transparent-button` is for buttons that just want the button content and not the button background, border, etc.
   - `.item-list-button` for buttons that appear in the classic controls item list.
   - [x] Replace each one and test
-  - [ ] Review button usage; provide fallbacks and/or ensure disable logic is honored
+  - [x] Review button usage; provide fallbacks and/or ensure disable logic is honored
     - [x] src\components\attributes\SkillsList.svelte
     - [x] src\components\attributes\TraitSection.svelte
     - [x] src\components\button-menu\ButtonMenu.svelte
