@@ -135,7 +135,8 @@
         z-index: 5;
       }
 
-      &:hover .ability-mod {
+      &:hover .ability-mod,
+      &:hover .ability-save {
         border-radius: 0;
       }
     }
