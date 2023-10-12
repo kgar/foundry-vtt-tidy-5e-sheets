@@ -11,6 +11,8 @@
 
   const dispatcher = createEventDispatcher<{ tabSelected: Tab }>();
 
+  let nav: HTMLElement;
+
   function selectTab(tab: Tab) {
     selectedTabId = tab.id;
     dispatcher('tabSelected', tab);
@@ -23,7 +25,7 @@
         const nextTab = tabs[(i + 1) % tabs.length];
         selectTab(nextTab);
         setTimeout(() => {
-          document
+          nav
             .querySelector<HTMLElement>(`[data-tab-id='${nextTab.id}']`)
             ?.focus();
         });
@@ -34,7 +36,7 @@
         if (previousTab) {
           selectTab(previousTab);
           setTimeout(() => {
-            document
+            nav
               .querySelector<HTMLElement>(`[data-tab-id='${previousTab.id}']`)
               ?.focus();
           });
@@ -46,7 +48,11 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-<nav class="tabs {cssClass}" class:vertical={orientation === 'vertical'}>
+<nav
+  class="tabs {cssClass}"
+  class:vertical={orientation === 'vertical'}
+  bind:this={nav}
+>
   {#if tabs.length > 1}
     {#each tabs as tab, i (tab.id)}
       <button
