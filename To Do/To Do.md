@@ -386,6 +386,8 @@ Evaluate module integration and think about better (API-centric) ways to support
   - [ ] Add settings-wide, case-insensitive, includes-based filter text input above the tabs
 - [ ] Standardize/componentize inputs to be used between Items and Settings UI. Ensure they look the same.
 - [ ] Move setting (and theme types, if any are still lingering) out of script files and into dedicated type files to help prevent circular dependencies and allow FoundryAdapter to take some more responsibility over Foundry API stuff.
+- [ ] 🐞 When changing sheet permissions from observer/owner to limited, half the sheet changes while the other half with the header and tab strip remain intact. It should refresh the entire sheet.
+
 
 
 ## (Deferred for later; might solve itself) SCSS Revolution

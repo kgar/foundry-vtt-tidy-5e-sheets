@@ -58,6 +58,7 @@ export const defaultDarkTheme: Tidy5eTheme = {
     '--t5ek-encumbrance-bar-outline-color': 'rgba(205, 228, 255, 1)',
     '--t5ek-encumbrance-outline-color': 'rgba(0, 0, 0, 0.9)',
     '--t5ek-warning-accent-color': 'rgba(255, 30, 0, 0.65)',
+    '--t5ek-warning-accent-contrast-color': 'rgba(255, 255, 255, 0.8)',
     '--t5ek-icon-background': 'rgba(30, 30, 30, 1)',
     '--t5ek-icon-shadow-color': 'rgba(0, 0, 0, 0.4)',
     '--t5ek-icon-outline-color': 'rgba(0, 0, 0, 0.4)',

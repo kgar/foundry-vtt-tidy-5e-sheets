@@ -220,6 +220,10 @@ export const themeVariables = {
     type: 'todo',
     group: 'todo',
   },
+  '--t5ek-warning-accent-contrast-color': {
+    type: 'todo',
+    group: 'todo',
+  },
   '--t5ek-icon-background': {
     type: 'todo',
     group: 'todo',

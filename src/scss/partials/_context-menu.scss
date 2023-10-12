@@ -40,7 +40,7 @@
 
       &:hover {
         background: var(--t5ek-warning-accent-color);
-        color: var(--t5ek-icon-hover-color);
+        color: var(--t5ek-warning-accent-contrast-color);
       }
     }
 
@@ -69,11 +69,11 @@
 
     &.warning {
       background: var(--t5ek-warning-accent-color);
-      color: var(--t5ek-secondary-color);
+      color: var(--t5ek-warning-accent-contrast-color);
 
       &:hover {
         background: var(--t5ek-warning-accent-color);
-        color: var(--t5ek-icon-hover-color);
+        color: var(--t5ek-warning-accent-contrast-color);
       }
     }
   }

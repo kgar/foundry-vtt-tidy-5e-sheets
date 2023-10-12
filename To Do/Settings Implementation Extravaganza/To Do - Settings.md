@@ -67,7 +67,6 @@
     - [x] src\sheets\settings\theme\ThemeSettingsSheet.svelte
     - [x] src\sheets\vehicle\VehicleAttributesTab.svelte
     - [x] src\sheets\vehicle\VehicleSheetFull.svelte
-- [ ] 🐞 When changing sheet permissions from observer/owner to limited, half the sheet changes while the other half with the header and tab strip remain intact. It should refresh the entire sheet.
 - [ ] Style / functionality update: make all buttons reveal a box-shadow or outline when focused; unfocus the button after it has been invoked
 - [ ] Review `title="` patterns, looking for non-localized localization keys
 - [ ] Review Classic Controls option; determine if I should

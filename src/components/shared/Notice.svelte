@@ -12,7 +12,7 @@
     background: var(--t5ek-warning-accent-color);
     padding: 0.625rem;
     font-size: 0.75rem;
-    color: var(--t5ek-background);
+    color: var(--t5ek-warning-accent-contrast-color);
     border-radius: 0.3125rem;
   }
 </style>

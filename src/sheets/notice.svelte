@@ -11,9 +11,9 @@
   .notice {
     display: block;
     background: var(--t5ek-warning-accent-color);
+    color: var(--t5ek-warning-accent-contrast-color);
     padding: 0.625rem;
     font-size: 0.75rem;
-    color: var(--t5ek-background);
     border-radius: 0.3125rem;
     margin-bottom: 0.5rem;
   }
