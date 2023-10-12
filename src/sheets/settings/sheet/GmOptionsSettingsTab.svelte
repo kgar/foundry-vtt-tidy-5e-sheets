@@ -41,6 +41,13 @@
   />
 
   <CheckboxSetting
+    bind:value={$store.enableNpcEncumbranceBar}
+    name={SettingsProvider.settings.enableNpcEncumbranceBar.options.name}
+    hint={SettingsProvider.settings.enableNpcEncumbranceBar.options.hint}
+    id="enableNpcEncumbranceBar"
+  />
+
+  <CheckboxSetting
     bind:value={$store.playerNameEnabled}
     name={'T5EK.Settings.PlayerName.name'}
     hint={'T5EK.Settings.PlayerName.hint'}

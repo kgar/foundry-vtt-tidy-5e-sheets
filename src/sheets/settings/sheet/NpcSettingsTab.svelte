@@ -95,15 +95,6 @@
   id="hideSpellbookTabNpc"
 />
 
-{#if userIsGm}
-  <CheckboxSetting
-    bind:value={$store.enableNpcEncumbranceBar}
-    name={SettingsProvider.settings.enableNpcEncumbranceBar.options.name}
-    hint={SettingsProvider.settings.enableNpcEncumbranceBar.options.hint}
-    id="enableNpcEncumbranceBar"
-  />
-{/if}
-
 <NumberInputSetting
   bind:value={$store.npcSheetWidth}
   name={'T5EK.Settings.npcSheetWidth.name'}
