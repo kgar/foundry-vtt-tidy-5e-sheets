@@ -581,6 +581,20 @@ export function createSettings() {
         },
       },
 
+      enableNpcEncumbranceBar: {
+        options: {
+          name: 'T5EK.Settings.EnableNPCEncumbranceBar.name',
+          hint: 'T5EK.Settings.EnableNPCEncumbranceBar.hint',
+          scope: 'world',
+          config: false,
+          default: false,
+          type: Boolean,
+        },
+        get() {
+          return FoundryAdapter.getGameSetting<boolean>('enableNpcEncumbranceBar');
+        },
+      },
+
       // Vehicle Sheet Settings
 
       hpBarDisabledVehicle: {

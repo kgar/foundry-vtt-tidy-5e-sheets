@@ -4,7 +4,10 @@
   import NumberInputSetting from 'src/sheets/settings/parts/NumberInputSetting.svelte';
   import { getContext } from 'svelte';
   import type { Writable } from 'svelte/store';
-  import type { CurrentSettings } from 'src/settings/settings';
+  import {
+    SettingsProvider,
+    type CurrentSettings,
+  } from 'src/settings/settings';
   import SelectSetting from 'src/sheets/settings/parts/SelectSetting.svelte';
 
   let store = getContext<Writable<CurrentSettings>>('store');
@@ -91,6 +94,15 @@
   hint={'T5EK.Settings.HideSpellbookTabNpc.hint'}
   id="hideSpellbookTabNpc"
 />
+
+{#if userIsGm}
+  <CheckboxSetting
+    bind:value={$store.enableNpcEncumbranceBar}
+    name={SettingsProvider.settings.enableNpcEncumbranceBar.options.name}
+    hint={SettingsProvider.settings.enableNpcEncumbranceBar.options.hint}
+    id="enableNpcEncumbranceBar"
+  />
+{/if}
 
 <NumberInputSetting
   bind:value={$store.npcSheetWidth}

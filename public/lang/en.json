@@ -299,7 +299,10 @@
     "name": "Hide Spellbook tab on NPC",
     "hint": "By default the spellbook tab on NPC is moved on the attributes tab. Disable this for never do that."
   },
-
+  "T5EK.Settings.EnableNPCEncumbranceBar": {
+    "name": "Enable NPC Encumbrance Bar",
+    "hint": "By default the encumbrance bar is not included on the NPC sheet. Enable this setting to include it."
+  },
   "T5EK.Settings.ActiveEffectsMarker": {
     "name": "Show Active Effects Marker on items.",
     "hint": "Enable if you want to see if items have active effects on them (only for list view)."

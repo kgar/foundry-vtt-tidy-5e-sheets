@@ -851,3 +851,16 @@ Since the rewrite has a dedicated footer on the Attributes tab for currency, it 
 Things we would want to nail down:
 - The existing data schema would need to support it
 - Making it opt-in at "World" scope, so a GM would go to NPC Settings and toggle the checkbox to include an encumbrance bar on NPC sheets
+
+
+### zanderaf - Encumbrance warning / notification
+
+https://discord.com/channels/732325252788387980/1116078321067892796/1161837459873742888
+
+Zanderaf — Yesterday at 8:27 PM
+Could we maybe get a notifier that appears somewhere saying if we're heavily encumbered /encumbered?  Not sure about everyone else but playing without any encumbrance stuff players tend to just not notice all too well
+
+Wasp — Today at 8:33 AM
+Maybe below the exhaustion selector there could be a flashing weight icon when you're above a certain amount?
+Should be optional tho
+
