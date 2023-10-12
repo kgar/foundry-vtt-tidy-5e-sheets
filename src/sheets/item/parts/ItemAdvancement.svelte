@@ -57,7 +57,7 @@
             <button
               class="inline-icon-button"
               on:click={() => toggleAdvancementLock($store.item)}
-              title="DND5E.AdvancementConfigurationActionDisable"
+              title={localize("DND5E.AdvancementConfigurationActionDisable")}
             >
               <i class="fas fa-lock-open" />
               {localize('DND5E.AdvancementConfigurationModeEnabled')}
@@ -67,7 +67,7 @@
               type="button"
               class="inline-icon-button"
               on:click={() => toggleAdvancementLock($store.item)}
-              title="DND5E.AdvancementConfigurationActionEnable"
+              title={localize("DND5E.AdvancementConfigurationActionEnable")}
             >
               <i class="fas fa-lock" />
               {localize('DND5E.AdvancementConfigurationModeDisabled')}

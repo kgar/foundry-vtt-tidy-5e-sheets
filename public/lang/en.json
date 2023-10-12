@@ -65,6 +65,7 @@
 
   "T5EK.GridLayout": "Grid Layout",
   "T5EK.ListLayout": "List Layout",
+  "T5EK.LayoutNotSupported": "Layout mode not supported.",
 
   "T5EK.Encumbrance": "Encumbrance",
 

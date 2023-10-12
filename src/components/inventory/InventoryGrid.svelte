@@ -94,7 +94,7 @@
             class="item-control item-edit"
             style="display:none"
             data-action="itemEdit"
-            title="DND5E.ItemEdit"
+            title={localize('DND5E.ItemEdit')}
           >
             <i class="fas fa-edit fa-fw" />
           </button>

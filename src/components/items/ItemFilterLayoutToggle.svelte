@@ -10,35 +10,32 @@
   const dispatcher = createEventDispatcher<{ toggle: void }>();
 </script>
 
-<svelte:element this={element} class="toggle-layout" title="todo: implement">
+<svelte:element this={element} class="toggle-layout">
   {#if mode === 'grid'}
-    <i
-      class="fas fa-th-list toggle-list"
+    <button
+      class="inline-icon-button"
       title={localize('T5EK.ListLayout')}
       on:click={() => dispatcher('toggle')}
-      role="button"
-      tabindex="0"
-    />
+    >
+      <i class="fas fa-th-list toggle-list" />
+    </button>
   {:else if mode === 'list'}
-    <i
-      class="fas fa-th-large toggle-grid"
+    <button
+      type="button"
+      class="inline-icon-button"
       title={localize('T5EK.GridLayout')}
       on:click={() => dispatcher('toggle')}
-      role="button"
-      tabindex="0"
-    />
+    >
+      <i class="fas fa-th-large toggle-grid" />
+    </button>
   {:else}
-    <span title="Layout mode not supported.">😞</span>
+    <span title={localize('T5EK.LayoutNotSupported')}>😞</span>
   {/if}
 </svelte:element>
 
 <style lang="scss">
   .toggle-layout {
-    margin: 0 4px;
-    padding: 0 2px;
-
-    &:hover {
-      color: var(--t5ek-primary-accent-color);
-    }
+    margin: 0 0.25rem;
+    padding: 0 0.125rem;
   }
 </style>

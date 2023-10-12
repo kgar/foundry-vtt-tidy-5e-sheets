@@ -50,7 +50,7 @@
             <button
               type="button"
               class="active-effect-control inline-icon-button"
-              title="DND5E.EffectCreate"
+              title={localize('DND5E.EffectCreate')}
               on:click={(event) => onAddClicked(section)}
             >
               <i class="fas fa-plus" />
@@ -106,7 +106,7 @@
                 <button
                   type="button"
                   class="active-effect-control inline-transparent-button"
-                  title="DND5E.EffectEdit"
+                  title={localize('DND5E.EffectEdit')}
                   on:click={() => effect.sheet.render(true)}
                 >
                   <i class="fas fa-edit" />
@@ -114,7 +114,7 @@
                 <button
                   type="button"
                   class="active-effect-control inline-transparent-button"
-                  title="DND5E.EffectDelete"
+                  title={localize('DND5E.EffectDelete')}
                   on:click={() => effect.delete()}
                 >
                   <i class="fas fa-trash" />

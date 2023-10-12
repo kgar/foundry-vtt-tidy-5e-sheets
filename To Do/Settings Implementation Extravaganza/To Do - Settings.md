@@ -68,7 +68,7 @@
     - [x] src\sheets\vehicle\VehicleAttributesTab.svelte
     - [x] src\sheets\vehicle\VehicleSheetFull.svelte
 - [x] ~~Style / functionality update: make all buttons reveal a box-shadow or outline when focused; unfocus the button after it has been invoked~~ Support input / button / interactable element box-shadow highlight when an element is `:focus-visible`
-- [ ] Review `title="` patterns, looking for non-localized localization keys
+- [x] Review `title="` patterns, looking for non-localized localization keys
 - [ ] Review Classic Controls option; determine if I should
   - part out the option on a per-sheet basis, or
   - expand the one setting to all sheets, or

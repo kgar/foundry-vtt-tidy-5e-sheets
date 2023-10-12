@@ -25,7 +25,7 @@
       <NumberInput
         id={inputId}
         value={$store.system.activation.cost}
-        title="DND5E.ConsumeQuanity"
+        title={localize("DND5E.ConsumeQuanity")}
         field="system.activation.cost"
         placeholder="&#8212;"
         document={$store.item}
@@ -106,7 +106,7 @@
         <Select
           id="{$store.appId}-system-target-units"
           value={$store.system.target.units}
-          title="DND5E.TargetUnits"
+          title={localize("DND5E.TargetUnits")}
           field="system.target.units"
           document={$store.item}
           disabled={!$store.owner}
@@ -118,7 +118,7 @@
       <Select
         id={inputId}
         value={$store.system.target.type}
-        title="DND5E.TargetType"
+        title={localize("DND5E.TargetType")}
         field="system.target.type"
         document={$store.item}
         disabled={!$store.owner}
@@ -169,7 +169,7 @@
           id="{$store.appId}-system-target-width"
           value={$store.system.range.value}
           placeholder={localize('DND5E.Normal')}
-          title="DND5E.RangeNormal"
+          title={localize("DND5E.RangeNormal")}
           field="system.range.value"
           document={$store.item}
           disabled={!$store.owner}
@@ -179,7 +179,7 @@
           id="{$store.appId}-system-range-long"
           value={$store.system.range.long}
           placeholder={localize('DND5E.Long')}
-          title="DND5E.RangeLong"
+          title={localize("DND5E.RangeLong")}
           field="system.range.long"
           document={$store.item}
           disabled={!$store.owner}
@@ -188,7 +188,7 @@
       <Select
         id={inputId}
         value={$store.system.range.units}
-        title="DND5E.RangeUnits"
+        title={localize("DND5E.RangeUnits")}
         document={$store.item}
         field="system.range.units"
         disabled={!$store.owner}
@@ -214,7 +214,7 @@
           id="{$store.appId}-source-duration-value"
           value={$store.source.duration.value}
           placeholder="&mdash;"
-          title="DND5E.DurationValue"
+          title={localize("DND5E.DurationValue")}
           field="system.duration.value"
           document={$store.item}
           dataset={{ formulaEditor: true }}
@@ -224,7 +224,7 @@
       <Select
         id={inputId}
         value={$store.system.duration.units}
-        title="DND5E.DurationType"
+        title={localize("DND5E.DurationType")}
         document={$store.item}
         field="system.duration.units"
         disabled={!$store.owner}
@@ -251,7 +251,7 @@
       <NumberInput
         id={inputId}
         value={$store.system.uses.value}
-        title="DND5E.UsesAvailable"
+        title={localize("DND5E.UsesAvailable")}
         field="system.uses.value"
         document={$store.item}
       />
@@ -259,7 +259,7 @@
       <TextInput
         id="{$store.appId}-system-uses-max"
         value={$store.source.uses.max}
-        title="DND5E.UsesMax"
+        title={localize("DND5E.UsesMax")}
         field="system.uses.max"
         document={$store.item}
         dataset={{ formulaEditor: true }}
@@ -269,7 +269,7 @@
       <Select
         id="{$store.appId}-system.uses.per"
         value={$store.system.uses.per}
-        title="DND5E.UsesPeriod"
+        title={localize("DND5E.UsesPeriod")}
         document={$store.item}
         field="system.uses.per"
         disabled={!$store.owner}
@@ -310,7 +310,7 @@
         <NumberInput
           id="{$store.appId}-system-consume-amount"
           value={$store.system.consume.amount}
-          title="DND5E.ConsumeQuanity"
+          title={localize("DND5E.ConsumeQuanity")}
           field="system.consume.amount"
           document={$store.item}
           disabled={!$store.owner}
@@ -318,7 +318,7 @@
         <Select
           id="{$store.appId}-system-consume-target"
           value={$store.system.consume.target}
-          title="DND5E.ConsumeTarget"
+          title={localize("DND5E.ConsumeTarget")}
           document={$store.item}
           field="system.consume.target"
           disabled={!$store.owner}
@@ -330,7 +330,7 @@
       <Select
         id={inputId}
         value={$store.system.consume.type}
-        title="DND5E.ConsumeType"
+        title={localize("DND5E.ConsumeType")}
         document={$store.item}
         field="system.consume.type"
         disabled={!$store.owner}
