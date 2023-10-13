@@ -8,6 +8,7 @@ import { getCoreThemes, themeVariables } from 'src/theme/theme-reference';
 import { Tidy5eKgarSettingsSheet } from 'src/sheets/settings/sheet/Tidy5eKgarSettingsSheet';
 import { Tidy5eKgarThemeSettingsSheet } from 'src/sheets/settings/theme/Tidy5eKgarThemeSettingsSheet';
 import { writable, type Writable } from 'svelte/store';
+import { getCurrentCharacterTabs } from 'src/api/character-sheet-runtime-config';
 
 export type Tidy5eSettings = {
   [settingKey: string]: Tidy5eSetting;
@@ -206,15 +207,15 @@ export function createSettings() {
           scope: 'world',
           config: false,
           type: String,
-          choices: () => ({
-            attributes: 'DND5E.Attributes',
-            inventory: 'DND5E.Inventory',
-            spellbook: 'DND5E.Spellbook',
-            features: 'DND5E.Features',
-            effects: 'DND5E.Effects',
-            biography: 'DND5E.Biography',
-            journal: 'T5EK.Journal',
-          }),
+          choices: () => {
+            const result = getCurrentCharacterTabs()
+              .sort((a, b) => a.order - b.order)
+              .reduce<Record<string, string>>((prev, curr) => {
+                prev[curr.id] = curr.displayName;
+                return prev;
+              }, {});
+            return result;
+          },
           default: 'attributes',
         },
         get() {
@@ -355,7 +356,9 @@ export function createSettings() {
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getGameSetting<boolean>('characterJournalTabDisabled');
+          return FoundryAdapter.getGameSetting<boolean>(
+            'characterJournalTabDisabled'
+          );
         },
       },
 

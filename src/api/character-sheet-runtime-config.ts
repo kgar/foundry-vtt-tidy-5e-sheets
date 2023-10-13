@@ -90,6 +90,16 @@ let characterSheetConfigStore = writable<CharacterSheetRuntimeConfig>({
   ],
 });
 
+let currentTabs: SheetTabRuntimeConfig<CharacterSheetContext>[] = [];
+
+characterSheetConfigStore.subscribe((data) => {
+  currentTabs = data.sheetTabs;
+});
+
+export function getCurrentCharacterTabs(): SheetTabRuntimeConfig<CharacterSheetContext>[] {
+  return [...currentTabs];
+}
+
 export let characterSheetTabsStore = derived(
   characterSheetConfigStore,
   (c) => ({
