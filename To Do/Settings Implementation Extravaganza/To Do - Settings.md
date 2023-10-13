@@ -69,10 +69,11 @@
     - [x] src\sheets\vehicle\VehicleSheetFull.svelte
 - [x] ~~Style / functionality update: make all buttons reveal a box-shadow or outline when focused; unfocus the button after it has been invoked~~ Support input / button / interactable element box-shadow highlight when an element is `:focus-visible`
 - [x] Review `title="` patterns, looking for non-localized localization keys
-- [ ] Review Classic Controls option; determine if I should
-  - part out the option on a per-sheet basis, or
-  - expand the one setting to all sheets, or
-  - backfill the sheet contexts so that only Character can ever have Classic Controls as false per setting while the other sheets are always true.
+- [ ] Classic Controls option; create one for each sheet type
+- [ ] "defaultActionsTab"
+  - [ ] Restyle as simply the Default Character Sheet Tab and put in Character settings
+  - [ ] Add similar settings to NPC and Vehicles
+  - [ ] Upgrade tabs to be fully data-driven for this
 
 ## Bonus Fun
 
@@ -247,10 +248,6 @@ Refine and improve any settings that compromise visual feedback and information 
   - Based on discussion with the commission, remove this.
 - [x] "hbSetFeaturesForUpcastFreeSpell" - removed
   - Based on discussion with the commission, remove this.
-- [ ] "defaultActionsTab"
-  - [ ] Restyle as simply the Default Character Sheet Tab and put in Character settings
-  - [ ] Add similar settings to NPC and Vehicles
-  - [ ] Upgrade tabs to be fully data-driven for this
 
 ## Specific setting notes
 
