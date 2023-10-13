@@ -109,7 +109,6 @@
           <SpellbookList
             spells={filteredSpells}
             {section}
-            classicControlsEnabled={$settingStore.classicControlsEnabled}
           />
         {:else}
           <SpellbookGrid spells={filteredSpells} {section} />

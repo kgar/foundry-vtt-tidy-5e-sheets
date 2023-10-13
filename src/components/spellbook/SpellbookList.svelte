@@ -2,6 +2,7 @@
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import {
+    type ActorSheetContext,
     type CharacterSheetContext,
     type NpcSheetContext,
   } from 'src/types/types';
@@ -29,11 +30,9 @@
   import SpellbookItemCardContent from '../item-info-card/SpellbookItemCardContent.svelte';
   import { settingStore } from 'src/settings/settings';
 
-  let store =
-    getContext<Readable<CharacterSheetContext | NpcSheetContext>>('store');
+  let store = getContext<Readable<ActorSheetContext>>('store');
   export let section: any;
   export let spells: any[];
-  export let classicControlsEnabled: boolean;
   export let allowFavorites: boolean = true;
   export let cssClass: string | null = null;
 
@@ -98,7 +97,7 @@
       >
         {localize('DND5E.Usage')}
       </ItemTableColumn>
-      {#if $store.owner && classicControlsEnabled}
+      {#if $store.owner && $store.classicControlsEnabled}
         <ItemTableColumn baseWidth={classicControlsBaseWidth} />
       {/if}
     </ItemTableHeaderRow>
@@ -169,7 +168,7 @@
         >
           {spell.labels.activation}
         </ItemTableCell>
-        {#if $store.owner && classicControlsEnabled}
+        {#if $store.owner && $store.classicControlsEnabled}
           <ItemTableCell baseWidth={classicControlsBaseWidth}>
             <ItemControls>
               {#if FoundryAdapter.canPrepareSpell(spell)}

@@ -67,6 +67,7 @@ export type ActorSheetContext = {
   owner: boolean;
   showLimitedSheet: boolean;
   useRoundedPortraitStyle: boolean;
+  classicControlsEnabled: boolean;
 };
 
 export type JQueryHooksSheetIntegration = {

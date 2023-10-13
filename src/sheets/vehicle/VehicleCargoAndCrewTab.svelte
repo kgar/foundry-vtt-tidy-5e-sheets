@@ -125,7 +125,7 @@
               </ItemTableColumn>
             {/if}
           {/each}
-          {#if $store.owner && (!section.editableName || ($store.editable && section.editableName))}
+          {#if $store.owner && ((!section.editableName && $store.classicControlsEnabled) || ($store.editable && section.editableName))}
             <ItemTableColumn
               baseWidth={section.editableName
                 ? classicControlsEditableRowBaseWidth
@@ -214,7 +214,7 @@
                 {/if}
               {/each}
             {/if}
-            {#if $store.owner && (!section.editableName || ($store.editable && section.editableName))}
+            {#if $store.owner && ((!section.editableName && $store.classicControlsEnabled) || ($store.editable && section.editableName))}
               <ItemTableCell
                 baseWidth={section.editableName
                   ? classicControlsEditableRowBaseWidth

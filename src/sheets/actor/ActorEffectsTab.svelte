@@ -1,10 +1,6 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import {
-    type CharacterSheetContext,
-    type NpcSheetContext,
-    type VehicleSheetContext,
-  } from 'src/types/types';
+  import { type ActorSheetContext } from 'src/types/types';
   import ItemTable from '../../components/items/ItemTable.svelte';
   import ItemTableHeaderRow from '../../components/items/ItemTableHeaderRow.svelte';
   import ItemTableRow from '../../components/items/ItemTableRow.svelte';
@@ -20,12 +16,7 @@
   import type { Readable } from 'svelte/store';
   import Notice from 'src/components/shared/Notice.svelte';
 
-  export let classicControlsEnabled: boolean;
-
-  let store =
-    getContext<
-      Readable<CharacterSheetContext | NpcSheetContext | VehicleSheetContext>
-    >('store');
+  let store = getContext<Readable<ActorSheetContext>>('store');
 
   const localize = FoundryAdapter.localize;
 
@@ -57,7 +48,7 @@
             <ItemTableColumn baseWidth="7.5rem">
               {localize('DND5E.Duration')}
             </ItemTableColumn>
-            {#if $store.owner && classicControlsEnabled && $store.allowEffectsManagement}
+            {#if $store.owner && $store.classicControlsEnabled && $store.allowEffectsManagement}
               <ItemTableColumn baseWidth={classicControlsBaseWidth} />
             {/if}
           </ItemTableHeaderRow>
@@ -81,7 +72,7 @@
                 >{effect.duration.label}</ItemTableCell
               >
 
-              {#if $store.owner && classicControlsEnabled && $store.allowEffectsManagement}
+              {#if $store.owner && $store.classicControlsEnabled && $store.allowEffectsManagement}
                 <ItemTableCell baseWidth={classicControlsBaseWidth}>
                   <ItemControls>
                     <ItemControl

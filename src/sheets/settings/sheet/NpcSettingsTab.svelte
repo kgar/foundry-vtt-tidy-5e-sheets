@@ -18,6 +18,23 @@
 </script>
 
 <h2>{localize('T5EK.Settings.TabNPCs.labelNPCs')}</h2>
+{#if userIsGm}
+  <SelectSetting
+    options={SettingsProvider.settings.defaultNpcSheetTab.options.choices()}
+    bind:value={$store.defaultNpcSheetTab}
+    name={SettingsProvider.settings.defaultNpcSheetTab.options.name}
+    hint={SettingsProvider.settings.defaultNpcSheetTab.options.hint}
+    id="defaultNpcSheetTab"
+  />
+{/if}
+
+<CheckboxSetting
+  bind:value={$store.enableClassicControlsForNpc}
+  name={SettingsProvider.settings.enableClassicControlsForNpc.options.name}
+  hint={SettingsProvider.settings.enableClassicControlsForNpc.options.hint}
+  id="enableClassicControlsForNpc"
+/>
+
 <CheckboxSetting
   bind:value={$store.journalTabNPCDisabled}
   name={'T5EK.Settings.JournalTabNPCDisabled.name'}

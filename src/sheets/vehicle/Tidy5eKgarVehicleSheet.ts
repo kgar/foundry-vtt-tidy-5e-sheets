@@ -90,6 +90,8 @@ export class Tidy5eVehicleSheet extends dnd5e.applications.actor
         CONSTANTS.ROUNDED_PORTRAIT_OPTION_ALL as string,
         CONSTANTS.ROUNDED_PORTRAIT_OPTION_NPCVEHICLE as string,
       ].includes(SettingsProvider.settings.portraitStyle.get()),
+      classicControlsEnabled:
+        SettingsProvider.settings.enableClassicControlsForVehicle.get(),
     };
 
     debug('Vehicle Sheet context data', context);
@@ -112,20 +114,9 @@ export class Tidy5eVehicleSheet extends dnd5e.applications.actor
   }
 
   #getSelectedTabId(): string {
-    if (
-      !game.modules.get('character-actions-list-5e')?.active &&
-      SettingsProvider.settings.defaultActionsTab.get() ===
-        CONSTANTS.TAB_ALL_ACTIONS
-    ) {
-      return CONSTANTS.TAB_VEHICLE_ATTRIBUTES;
-    }
-
     return (
       this.selectedTabId ??
-      (SettingsProvider.settings.defaultActionsTab.get() !==
-      CONSTANTS.TAB_ALL_DEFAULT
-        ? SettingsProvider.settings.defaultActionsTab.get()
-        : CONSTANTS.TAB_VEHICLE_ATTRIBUTES)
+      SettingsProvider.settings.defaultVehicleSheetTab.get()
     );
   }
 

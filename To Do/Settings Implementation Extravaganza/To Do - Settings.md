@@ -69,11 +69,22 @@
     - [x] src\sheets\vehicle\VehicleSheetFull.svelte
 - [x] ~~Style / functionality update: make all buttons reveal a box-shadow or outline when focused; unfocus the button after it has been invoked~~ Support input / button / interactable element box-shadow highlight when an element is `:focus-visible`
 - [x] Review `title="` patterns, looking for non-localized localization keys
-- [ ] Classic Controls option; create one for each sheet type
-- [ ] "defaultActionsTab"
-  - [ ] Restyle as simply the Default Character Sheet Tab and put in Character settings
-  - [ ] Add similar settings to NPC and Vehicles
-  - [ ] Upgrade tabs to be fully data-driven for this
+- [x] Classic Controls option; create one for each sheet type
+  - [x] Character
+  - [x] NPC
+  - [x] Vehicle
+- [x] "defaultActionsTab"
+  - [x] Restyle as simply the Default Character Sheet Tab and put in Character settings
+  - [x] Add similar settings to NPC and Vehicles
+  - [x] Upgrade tabs to be fully data-driven for this
+- [ ] Fix vertical tab styles - there is a 1px gap between options, and the right-side border line is offset after the options end.
+- [ ] Store ordered, tab data for each sheet type somewhere in this code base
+- [ ] Expose functions for getting and manipulating tabs for given sheet types
+- [ ] Leverage these functions to pull options for config
+- [ ] Leverage these functions for establishing which tabs to show and in which order
+- [ ] Create a one-off test script (world script) which adds a new tab and plugs in an arbitrary component
+  - [ ] Make a special Tidy 5e hook which establishes when Tidy 5e's API is ready to use
+  - [ ] Make the one-off test script talk to the Tidy 5e 
 
 ## Bonus Fun
 

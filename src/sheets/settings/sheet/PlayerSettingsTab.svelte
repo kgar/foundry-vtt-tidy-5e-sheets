@@ -1,18 +1,39 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { CurrentSettings } from 'src/settings/settings';
+  import {
+    SettingsProvider,
+    type CurrentSettings,
+  } from 'src/settings/settings';
   import { getContext } from 'svelte';
   import type { Writable } from 'svelte/store';
   import CheckboxSetting from 'src/sheets/settings/parts/CheckboxSetting.svelte';
   import NumberInputSetting from 'src/sheets/settings/parts/NumberInputSetting.svelte';
   import TextInputSetting from 'src/sheets/settings/parts/TextInputSetting.svelte';
+  import SelectSetting from '../parts/SelectSetting.svelte';
 
   let store = getContext<Writable<CurrentSettings>>('store');
 
+  const userIsGm = FoundryAdapter.userIsGm();
   const localize = FoundryAdapter.localize;
 </script>
 
 <h2>{localize('T5EK.Settings.TabPlayers.header')}</h2>
+{#if userIsGm}
+  <SelectSetting
+    options={SettingsProvider.settings.defaultCharacterSheetTab.options.choices()}
+    bind:value={$store.defaultCharacterSheetTab}
+    name={SettingsProvider.settings.defaultCharacterSheetTab.options.name}
+    hint={SettingsProvider.settings.defaultCharacterSheetTab.options.hint}
+    id="defaultCharacterSheetTab"
+  />
+{/if}
+
+<CheckboxSetting
+  bind:value={$store.enableClassicControlsForCharacter}
+  name={SettingsProvider.settings.enableClassicControlsForCharacter.options.name}
+  hint={SettingsProvider.settings.enableClassicControlsForCharacter.options.hint}
+  id="enableClassicControlsForCharacter"
+/>
 
 <CheckboxSetting
   bind:value={$store.journalTabDisabled}
@@ -103,13 +124,6 @@
   name={'T5EK.Settings.RightClickDisabled.name'}
   hint={'T5EK.Settings.RightClickDisabled.hint'}
   id="rightClickDisabled"
-/>
-
-<CheckboxSetting
-  bind:value={$store.classicControlsEnabled}
-  name={'T5EK.Settings.ClassicControls.name'}
-  hint={'T5EK.Settings.ClassicControls.hint'}
-  id="classicControlsEnabled"
 />
 
 <CheckboxSetting

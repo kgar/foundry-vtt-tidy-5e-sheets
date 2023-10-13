@@ -93,7 +93,7 @@
                 {localize('DND5E.Usage')}
               </ItemTableColumn>
             {/if}
-            {#if $store.owner}
+            {#if $store.owner && $store.classicControlsEnabled}
               <ItemTableColumn baseWidth="7.5rem" />
             {/if}
           </ItemTableHeaderRow>
@@ -151,7 +151,7 @@
                   {/if}
                 </ItemTableCell>
               {/if}
-              {#if $store.owner}
+              {#if $store.owner && $store.classicControlsEnabled}
                 <ItemTableCell baseWidth="7.5rem">
                   <ItemControls>
                     <ItemEditControl {item} />
@@ -211,7 +211,6 @@
                     spellComponentsBaseWidth="3.125rem"
                     targetBaseWidth="5.625rem"
                     usageBaseWidth="5.625rem"
-                    classicControlsEnabled={true}
                   />
                 {:else}
                   <SpellbookGrid spells={section.spells} {section} />

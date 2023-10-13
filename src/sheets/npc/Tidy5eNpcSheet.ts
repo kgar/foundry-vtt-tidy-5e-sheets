@@ -69,20 +69,8 @@ export class Tidy5eNpcSheet extends dnd5e.applications.actor.ActorSheet5eNPC {
   }
 
   #getSelectedTabId(): string {
-    if (
-      !game.modules.get('character-actions-list-5e')?.active &&
-      SettingsProvider.settings.defaultActionsTab.get() ===
-        CONSTANTS.TAB_ALL_ACTIONS
-    ) {
-      return CONSTANTS.TAB_NPC_ABILITIES;
-    }
-
     return (
-      this.selectedTabId ??
-      (SettingsProvider.settings.defaultActionsTab.get() !==
-      CONSTANTS.TAB_ALL_DEFAULT
-        ? SettingsProvider.settings.defaultActionsTab.get()
-        : CONSTANTS.TAB_NPC_ABILITIES)
+      this.selectedTabId ?? SettingsProvider.settings.defaultNpcSheetTab.get()
     );
   }
 
@@ -120,6 +108,8 @@ export class Tidy5eNpcSheet extends dnd5e.applications.actor.ActorSheet5eNPC {
         CONSTANTS.ROUNDED_PORTRAIT_OPTION_NPCVEHICLE as string,
       ].includes(SettingsProvider.settings.portraitStyle.get()),
       encumbrance: this.actor.system.attributes.encumbrance,
+      classicControlsEnabled:
+        SettingsProvider.settings.enableClassicControlsForNpc.get(),
     };
   }
 

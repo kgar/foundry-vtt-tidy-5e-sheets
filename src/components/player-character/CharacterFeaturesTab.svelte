@@ -119,7 +119,7 @@
           <ItemTableColumn baseWidth="7.5rem">
             {localize('DND5E.Requirements')}
           </ItemTableColumn>
-          {#if $store.owner && $settingStore.classicControlsEnabled}
+          {#if $store.owner && $store.classicControlsEnabled}
             <ItemTableColumn baseWidth={classicControlsBaseWidth} />
           {/if}
         </ItemTableHeaderRow>
@@ -162,7 +162,7 @@
               >
             </ItemTableCell>
 
-            {#if $store.owner && $settingStore.classicControlsEnabled}
+            {#if $store.owner && $store.classicControlsEnabled}
               <ItemTableCell baseWidth={classicControlsBaseWidth}>
                 <ItemControls>
                   <ItemFavoriteControl {item} />
@@ -198,7 +198,7 @@
           <ItemTableColumn baseWidth="7.5rem">
             {localize('DND5E.Level')}
           </ItemTableColumn>
-          {#if $store.owner && $settingStore.classicControlsEnabled}
+          {#if $store.owner && $store.classicControlsEnabled}
             <ItemTableColumn baseWidth={classicControlsBaseWidth} />
           {/if}
         </ItemTableHeaderRow>
@@ -266,7 +266,7 @@
               {/if}
             </ItemTableCell>
 
-            {#if $store.owner && $settingStore.classicControlsEnabled}
+            {#if $store.owner && $store.classicControlsEnabled}
               <ItemTableCell baseWidth={classicControlsBaseWidth}>
                 <ItemControls>
                   {#if item.type !== 'class'}
@@ -309,7 +309,7 @@
           <ItemTableColumn baseWidth="7.5rem">
             {localize('DND5E.Requirements')}
           </ItemTableColumn>
-          {#if $store.owner && $settingStore.classicControlsEnabled}
+          {#if $store.owner && $store.classicControlsEnabled}
             <ItemTableColumn baseWidth={classicControlsBaseWidth} />
           {/if}
         </ItemTableHeaderRow>
@@ -378,7 +378,7 @@
               >
             </ItemTableCell>
 
-            {#if $store.owner && $settingStore.classicControlsEnabled}
+            {#if $store.owner && $store.classicControlsEnabled}
               <ItemTableCell baseWidth={classicControlsBaseWidth}>
                 <ItemControls>
                   <ItemFavoriteControl {item} />
@@ -413,7 +413,7 @@
           <ItemTableColumn baseWidth="7.5rem">
             {localize('DND5E.Requirements')}
           </ItemTableColumn>
-          {#if $store.owner && $settingStore.classicControlsEnabled}
+          {#if $store.owner && $store.classicControlsEnabled}
             <ItemTableColumn baseWidth={classicControlsBaseWidth} />
           {/if}
         </ItemTableHeaderRow>
@@ -455,7 +455,7 @@
               >
             </ItemTableCell>
 
-            {#if $store.owner && $settingStore.classicControlsEnabled}
+            {#if $store.owner && $store.classicControlsEnabled}
               <ItemTableCell baseWidth={classicControlsBaseWidth}>
                 <ItemControls>
                   <ItemFavoriteControl {item} />

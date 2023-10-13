@@ -82,7 +82,6 @@
             allowFavorites={false}
             spells={filteredSpells}
             {section}
-            classicControlsEnabled={true}
           />
         {:else}
           <SpellbookGrid spells={filteredSpells} {section} />

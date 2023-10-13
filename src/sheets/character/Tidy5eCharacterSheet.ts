@@ -115,6 +115,8 @@ export class Tidy5eCharacterSheet extends dnd5e.applications.actor
         CONSTANTS.ROUNDED_PORTRAIT_OPTION_ALL as string,
         CONSTANTS.ROUNDED_PORTRAIT_OPTION_CHARACTER as string,
       ].includes(SettingsProvider.settings.portraitStyle.get()),
+      classicControlsEnabled:
+        SettingsProvider.settings.enableClassicControlsForCharacter.get(),
     };
 
     debug('Character Sheet context data', context);
@@ -123,18 +125,9 @@ export class Tidy5eCharacterSheet extends dnd5e.applications.actor
   }
 
   #getSelectedTabId(): string {
-    if (
-      !game.modules.get('character-actions-list-5e')?.active &&
-      SettingsProvider.settings.defaultActionsTab.get() === 'actions'
-    ) {
-      return 'attributes';
-    }
-
     return (
       this.selectedTabId ??
-      (SettingsProvider.settings.defaultActionsTab.get() !== 'default'
-        ? SettingsProvider.settings.defaultActionsTab.get()
-        : 'attributes')
+      SettingsProvider.settings.defaultCharacterSheetTab.get()
     );
   }
 

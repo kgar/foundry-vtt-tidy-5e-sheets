@@ -197,11 +197,37 @@ export function createSettings() {
         },
       },
 
-      // Classic Item Controls
-      classicControlsEnabled: {
+      // Player Character Settings
+
+      defaultCharacterSheetTab: {
         options: {
-          name: 'T5EK.Settings.ClassicControls.name',
-          hint: 'T5EK.Settings.ClassicControls.hint',
+          name: 'T5EK.Settings.DefaultSheetTab.name',
+          hint: 'T5EK.Settings.DefaultSheetTab.hint',
+          scope: 'world',
+          config: false,
+          type: String,
+          choices: () => ({
+            attributes: 'DND5E.Attributes',
+            inventory: 'DND5E.Inventory',
+            spellbook: 'DND5E.Spellbook',
+            features: 'DND5E.Features',
+            effects: 'DND5E.Effects',
+            biography: 'DND5E.Biography',
+            journal: 'T5EK.Journal',
+          }),
+          default: 'attributes',
+        },
+        get() {
+          return FoundryAdapter.getGameSetting<string>(
+            'defaultCharacterSheetTab'
+          );
+        },
+      },
+
+      enableClassicControlsForCharacter: {
+        options: {
+          name: 'T5EK.Settings.UseClassicControls.name',
+          hint: 'T5EK.Settings.UseClassicControls.hint',
           scope: 'client',
           config: false,
           default: true,
@@ -209,7 +235,7 @@ export function createSettings() {
         },
         get() {
           return FoundryAdapter.getGameSetting<boolean>(
-            'classicControlsEnabled'
+            'enableClassicControlsForCharacter'
           );
         },
       },
@@ -494,6 +520,42 @@ export function createSettings() {
       },
 
       // NPC Sheet Settings
+      defaultNpcSheetTab: {
+        options: {
+          name: 'T5EK.Settings.DefaultSheetTab.name',
+          hint: 'T5EK.Settings.DefaultSheetTab.hint',
+          scope: 'world',
+          config: false,
+          type: String,
+          choices: () => ({
+            abilities: 'T5EK.Abilities',
+            spellbook: 'DND5E.Spellbook',
+            effects: 'DND5E.Effects',
+            biography: 'DND5E.Biography',
+            journal: 'T5EK.Journal',
+          }),
+          default: 'abilities',
+        },
+        get() {
+          return FoundryAdapter.getGameSetting<string>('defaultNpcSheetTab');
+        },
+      },
+
+      enableClassicControlsForNpc: {
+        options: {
+          name: 'T5EK.Settings.UseClassicControls.name',
+          hint: 'T5EK.Settings.UseClassicControls.hint',
+          scope: 'client',
+          config: false,
+          default: true,
+          type: Boolean,
+        },
+        get() {
+          return FoundryAdapter.getGameSetting<boolean>(
+            'enableClassicControlsForNpc'
+          );
+        },
+      },
 
       traitsMovedBelowResourceNpc: {
         options: {
@@ -591,11 +653,51 @@ export function createSettings() {
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getGameSetting<boolean>('enableNpcEncumbranceBar');
+          return FoundryAdapter.getGameSetting<boolean>(
+            'enableNpcEncumbranceBar'
+          );
         },
       },
 
       // Vehicle Sheet Settings
+
+      defaultVehicleSheetTab: {
+        options: {
+          name: 'T5EK.Settings.DefaultSheetTab.name',
+          hint: 'T5EK.Settings.DefaultSheetTab.hint',
+          scope: 'world',
+          config: false,
+          type: String,
+          choices: () => ({
+            attributes: 'DND5E.Attributes',
+            cargo: 'DND5E.VehicleCargoCrew',
+            effects: 'DND5E.Effects',
+            biography: 'DND5E.Description',
+          }),
+          default: 'attributes',
+        },
+        get() {
+          return FoundryAdapter.getGameSetting<string>(
+            'defaultVehicleSheetTab'
+          );
+        },
+      },
+
+      enableClassicControlsForVehicle: {
+        options: {
+          name: 'T5EK.Settings.UseClassicControls.name',
+          hint: 'T5EK.Settings.UseClassicControls.hint',
+          scope: 'client',
+          config: false,
+          default: true,
+          type: Boolean,
+        },
+        get() {
+          return FoundryAdapter.getGameSetting<boolean>(
+            'enableClassicControlsForVehicle'
+          );
+        },
+      },
 
       hpBarDisabledVehicle: {
         options: {
@@ -910,31 +1012,6 @@ export function createSettings() {
         },
         get() {
           return FoundryAdapter.getGameSetting<boolean>('activeEffectsMarker');
-        },
-      },
-
-      defaultActionsTab: {
-        options: {
-          name: 'T5EK.Settings.defaultActionsTab.name',
-          hint: 'T5EK.Settings.defaultActionsTab.hint',
-          scope: 'world',
-          config: false,
-          type: String,
-          choices: {
-            default: 'T5EK.Settings.defaultActionsTab.default',
-            attributes: 'T5EK.Settings.defaultActionsTab.attributes',
-            inventory: 'T5EK.Settings.defaultActionsTab.inventory',
-            spellbook: 'T5EK.Settings.defaultActionsTab.spellbook',
-            features: 'T5EK.Settings.defaultActionsTab.features',
-            effects: 'T5EK.Settings.defaultActionsTab.effects',
-            biography: 'T5EK.Settings.defaultActionsTab.biography',
-            journal: 'T5EK.Settings.defaultActionsTab.journal',
-            actions: 'T5EK.Settings.defaultActionsTab.actions',
-          },
-          default: 'default',
-        },
-        get() {
-          return FoundryAdapter.getGameSetting<string>('defaultActionsTab');
         },
       },
 

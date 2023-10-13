@@ -222,9 +222,9 @@
     "dark": "Dark"
   },
 
-  "T5EK.Settings.ClassicControls": {
+  "T5EK.Settings.UseClassicControls": {
     "name": "Use classic item controls in list view.",
-    "hint": "Always shows item controls this will not disable the right click menu. Only applies for PC item/spell inventory in list layout."
+    "hint": "Always show item controls for this type of sheet."
   },
   "T5EK.Settings.HideIconsNextToTheItemName": {
     "name": "Hide icons next to the item name",
@@ -365,18 +365,9 @@
     "linked": "Highlight linked tokens",
     "both": "Highlight linked and unlinked tokens"
   },
-  "T5EK.Settings.DefaultActionsTab": {
-    "name": "Default Tab when opening a sheet for the first time.",
-    "hint": "Chose between 'Actions' and 'Attributes'.",
-    "default": "",
-    "attributes": "Attributes",
-    "inventory": "Inventory",
-    "spellbook": "Spellbook",
-    "features": "Features",
-    "effects": "Effects",
-    "biography": "Biography",
-    "journal": "Journal",
-    "actions": "Actions"
+  "T5EK.Settings.DefaultSheetTab": {
+    "name": "Default Sheet Tab.",
+    "hint": "Select this tab when opening a sheet for the first time."
   },
   "T5EK.Settings.HiddenDeathSaves": {
     "name": "Hide Death Saves from Players.",

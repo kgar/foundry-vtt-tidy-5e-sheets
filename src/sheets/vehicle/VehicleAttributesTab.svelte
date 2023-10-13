@@ -102,7 +102,7 @@
                   {/if}
                 {/each}
               {/if}
-              {#if $store.owner}
+              {#if $store.owner && $store.classicControlsEnabled}
                 <ItemTableColumn baseWidth={classicControlsBaseWidth} />
               {/if}
             </ItemTableHeaderRow>
@@ -240,7 +240,7 @@
                     {/if}
                   {/each}
                 {/if}
-                {#if $store.owner}
+                {#if $store.owner && $store.classicControlsEnabled}
                   <ItemTableCell baseWidth={classicControlsBaseWidth}>
                     <ItemControls>
                       <ItemControl

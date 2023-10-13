@@ -55,9 +55,6 @@
       displayName: 'DND5E.Effects',
       content: {
         component: ActorEffectsTab,
-        props: {
-          classicControlsEnabled: true,
-        },
       },
     },
     {

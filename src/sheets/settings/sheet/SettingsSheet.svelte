@@ -6,7 +6,6 @@
   import NpcSettingsTab from './NpcSettingsTab.svelte';
   import VehicleSettingsTab from './VehicleSettingsTab.svelte';
   import GmOptionsSettingsTab from './GmOptionsSettingsTab.svelte';
-  import ModuleSettingsTab from './ModuleSettingsTab.svelte';
   import LockSettingsTab from './LockSettingsTab.svelte';
   import InfoTab from './InfoTab.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
@@ -55,13 +54,6 @@
         displayName: 'T5EK.Settings.TabGM.tabLabel',
         content: {
           component: GmOptionsSettingsTab,
-        },
-      },
-      {
-        id: CONSTANTS.TAB_SETTINGS_MODULES,
-        displayName: 'T5EK.Settings.TabModules.tabLabel',
-        content: {
-          component: ModuleSettingsTab,
         },
       },
       {
