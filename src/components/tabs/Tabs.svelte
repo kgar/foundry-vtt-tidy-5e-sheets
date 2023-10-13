@@ -84,12 +84,9 @@
 
     .tab-option {
       background: var(--t5ek-header-background);
-      border-bottom: 0.0625rem solid var(--t5ek-header-border-color);
       font-size: 0.8125rem;
       text-align: left;
       flex: 1 1 auto;
-      border-bottom-left-radius: 0;
-      border-bottom-right-radius: 0;
 
       &:hover {
         background: var(--t5ek-header-background);
@@ -98,8 +95,6 @@
 
       &.active {
         background: transparent;
-        border: 0.0625rem solid var(--t5ek-light-color);
-        border-bottom-color: transparent;
         font-weight: 700;
         cursor: default;
         text-shadow: none;
@@ -116,6 +111,9 @@
       .tab-option {
         height: 1.625rem;
         padding: 0.3125rem 0.5rem 0 0.5rem;
+        border-bottom: 0.0625rem solid var(--t5ek-header-border-color);
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
 
         &.first-tab.active {
           border-left-color: transparent;
@@ -127,6 +125,11 @@
 
         &:first-child {
           padding-left: 1rem;
+        }
+
+        &.active {
+          border: 0.0625rem solid var(--t5ek-light-color);
+          border-bottom-color: transparent;
         }
       }
     }
@@ -142,9 +145,13 @@
       }
 
       .tab-option {
-        border: 0.0625rem solid transparent;
+        border-top: none;
+        border-left: none;
+        border-bottom: none;
         border-right: 0.0625rem solid var(--t5ek-header-border-color);
         transition: border-left-width 0.125s;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
 
         &.first-tab.active {
           border-top-color: transparent;
@@ -155,6 +162,8 @@
           border-right-color: transparent;
           border-left-width: 0.25rem;
           border-left-color: var(--t5ek-primary-accent-color);
+          border-top-left-radius: 5px;
+          border-bottom-left-radius: 5px;
         }
       }
     }

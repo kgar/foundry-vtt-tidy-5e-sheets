@@ -77,7 +77,7 @@
   - [x] Restyle as simply the Default Character Sheet Tab and put in Character settings
   - [x] Add similar settings to NPC and Vehicles
   - [x] Upgrade tabs to be fully data-driven for this
-- [ ] Fix vertical tab styles - there is a 1px gap between options, and the right-side border line is offset after the options end.
+- [x] Fix vertical tab styles - there is a 1px gap between options, and the right-side border line is offset after the options end.
 - [ ] Store ordered, tab data for each sheet type somewhere in this code base
 - [ ] Expose functions for getting and manipulating tabs for given sheet types
 - [ ] Leverage these functions to pull options for config
