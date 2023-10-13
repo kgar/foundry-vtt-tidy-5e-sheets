@@ -78,13 +78,15 @@
   - [x] Add similar settings to NPC and Vehicles
   - [x] Upgrade tabs to be fully data-driven for this
 - [x] Fix vertical tab styles - there is a 1px gap between options, and the right-side border line is offset after the options end.
-- [ ] Store ordered, tab data for each sheet type somewhere in this code base
-- [ ] Expose functions for getting and manipulating tabs for given sheet types
+- [x] Store ordered, tab data for each sheet type somewhere in this code base
+- [x] Expose functions for getting tabs for given sheet types
+- [ ] Expose functions for manipulating tabs for given sheet types
 - [ ] Leverage these functions to pull options for config
 - [ ] Leverage these functions for establishing which tabs to show and in which order
 - [ ] Create a one-off test script (world script) which adds a new tab and plugs in an arbitrary component
   - [ ] Make a special Tidy 5e hook which establishes when Tidy 5e's API is ready to use
   - [ ] Make the one-off test script talk to the Tidy 5e 
+- [ ] `game.settings.get('dnd5e', 'disableExperienceTracking')` -> extract to CharacterSheetContext
 
 ## Bonus Fun
 

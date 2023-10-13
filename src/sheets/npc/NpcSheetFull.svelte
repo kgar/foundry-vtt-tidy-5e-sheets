@@ -10,9 +10,7 @@
   } from 'src/types/types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
-  import NpcAbilitiesTab from './NpcAbilitiesTab.svelte';
-  import NpcSpellbookTab from './NpcSpellbookTab.svelte';
-  import NpcBiographyTab from './NpcBiographyTab.svelte';
+
   import NpcProfile from './parts/NpcProfile.svelte';
   import ContentEditableFormField from 'src/components/inputs/ContentEditableFormField.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
@@ -23,70 +21,25 @@
   import DelimitedTruncatedContent from 'src/components/layout/DelimitedTruncatedContent.svelte';
   import HorizontalLineSeparator from 'src/components/layout/HorizontalLineSeparator.svelte';
   import ActorMovementRow from '../actor/ActorMovementRow.svelte';
-  import ActorEffectsTab from '../actor/ActorEffectsTab.svelte';
   import ActorHeaderStats from '../actor/ActorHeaderStats.svelte';
-  import ActorJournalTab from 'src/components/player-character/ActorJournalTab.svelte';
   import ItemInfoCard from 'src/components/item-info-card/ItemInfoCard.svelte';
   import SheetMenu from '../actor/SheetMenu.svelte';
   import { settingStore } from 'src/settings/settings';
   import ActorWarnings from '../ActorWarnings.svelte';
+  import { npcSheetTabsStore } from 'src/api/npc-sheet-runtime-config';
 
   export let selectedTabId: string;
 
   let store = getContext<Readable<NpcSheetContext>>('store');
 
   let tabs: Tab[];
-
-  $: hideEmptySpellbook =
-    $store.lockSensitiveFields && $store.spellbook.length === 0;
-
   $: {
-    tabs = [
-      {
-        id: CONSTANTS.TAB_NPC_ABILITIES,
-        displayName: 'T5EK.Abilities',
-        content: {
-          component: NpcAbilitiesTab,
-        },
-      },
-    ];
+    tabs = $npcSheetTabsStore.getTabs($store);
 
-    if (!$settingStore.hideSpellbookTabNpc && !hideEmptySpellbook) {
-      tabs.push({
-        id: CONSTANTS.TAB_NPC_SPELLBOOK,
-        displayName: 'DND5E.Spellbook',
-        content: {
-          component: NpcSpellbookTab,
-        },
-      });
-    }
-
-    tabs.push(
-      {
-        id: CONSTANTS.TAB_NPC_EFFECTS,
-        displayName: 'DND5E.Effects',
-        content: {
-          component: ActorEffectsTab,
-        },
-      },
-      {
-        id: CONSTANTS.TAB_NPC_BIOGRAPHY,
-        displayName: 'DND5E.Biography',
-        content: {
-          component: NpcBiographyTab,
-        },
-      }
-    );
-
-    if (!$settingStore.journalTabNPCDisabled) {
-      tabs.push({
-        id: CONSTANTS.TAB_NPC_JOURNAL,
-        displayName: 'T5EK.Journal',
-        content: {
-          component: ActorJournalTab,
-        },
-      });
-    }
+    Hooks.call(CONSTANTS.HOOKS_RENDERING_NPC_TABS, {
+      tabs,
+      context: $store,
+    });
 
     if (!tabs.some((tab) => tab.id === selectedTabId)) {
       selectedTabId = tabs[0]?.id;

@@ -10,13 +10,6 @@
   import CharacterProfile from './parts/CharacterProfile.svelte';
   import TidyDropdownList from '../TidyDropdownList.svelte';
   import ActorWarnings from '../ActorWarnings.svelte';
-  import CharacterAttributesTab from 'src/components/player-character/CharacterAttributesTab.svelte';
-  import CharacterInventoryTab from 'src/components/player-character/CharacterInventoryTab.svelte';
-  import CharacterSpellbookTab from 'src/components/player-character/CharacterSpellbookTab.svelte';
-  import CharacterFeaturesTab from 'src/components/player-character/CharacterFeaturesTab.svelte';
-  import ActorEffectsTab from 'src/sheets/actor/ActorEffectsTab.svelte';
-  import CharacterBiographyTab from 'src/components/player-character/CharacterBiographyTab.svelte';
-  import ActorJournalTab from 'src/components/player-character/ActorJournalTab.svelte';
   import { CONSTANTS } from 'src/constants';
   import AllowEditLock from 'src/components/shared/AllowEditLock.svelte';
   import Tabs from 'src/components/tabs/Tabs.svelte';
@@ -30,6 +23,7 @@
   import ItemInfoCard from 'src/components/item-info-card/ItemInfoCard.svelte';
   import SheetMenu from '../actor/SheetMenu.svelte';
   import { settingStore } from 'src/settings/settings';
+  import { characterSheetTabsStore } from 'src/api/character-sheet-runtime-config';
 
   export let selectedTabId: string;
   let store = getContext<Readable<CharacterSheetContext>>('store');
@@ -60,74 +54,19 @@
     text: $store.config.actorSizes[$store.system.traits.size],
   };
 
-  let tabs: Tab[] = [];
+  let tabs: Tab[];
   $: {
-    tabs = [
-      {
-        id: 'attributes',
-        displayName: 'DND5E.Attributes',
-        content: {
-          component: CharacterAttributesTab,
-        },
-      },
-      {
-        id: 'inventory',
-        displayName: 'DND5E.Inventory',
-        content: {
-          component: CharacterInventoryTab,
-        },
-      },
-      {
-        id: 'spellbook',
-        displayName: 'DND5E.Spellbook',
-        content: {
-          component: CharacterSpellbookTab,
-        },
-      },
-      {
-        id: 'features',
-        displayName: 'DND5E.Features',
-        content: {
-          component: CharacterFeaturesTab,
-        },
-      },
-      {
-        id: 'effects',
-        displayName: 'DND5E.Effects',
-        content: {
-          component: ActorEffectsTab,
-        },
-      },
-      {
-        id: 'biography',
-        displayName: 'DND5E.Biography',
-        content: {
-          component: CharacterBiographyTab,
-        },
-      },
-    ];
+    tabs = $characterSheetTabsStore.getTabs($store);
 
-    const allowJournal = $store.owner && !$settingStore.journalTabDisabled;
-
-    if (allowJournal) {
-      tabs.push({
-        id: 'journal',
-        displayName: 'T5EK.Journal',
-        content: {
-          component: ActorJournalTab,
-        },
-      });
-    }
+    Hooks.call(CONSTANTS.HOOKS_RENDERING_CHARACTER_TABS, {
+      tabs,
+      context: $store,
+    });
 
     if (!tabs.some((tab) => tab.id === selectedTabId)) {
       selectedTabId = tabs[0]?.id;
     }
   }
-
-  Hooks.call(CONSTANTS.HOOKS_RENDERING_CHARACTER_TABS, {
-    tabs,
-    context: $store,
-  });
 </script>
 
 <ItemInfoCard />

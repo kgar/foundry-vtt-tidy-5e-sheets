@@ -81,8 +81,12 @@ export class Tidy5eNpcSheet extends dnd5e.applications.actor.ActorSheet5eNPC {
   private async getContext(): Promise<NpcSheetContext> {
     const editable = FoundryAdapter.canEditActor(this.actor) && this.isEditable;
 
+    const lockSensitiveFields =
+      !editable && SettingsProvider.settings.editTotalLockEnabled.get();
+    const defaultNpcContext = await super.getData(this.options);
+
     return {
-      ...(await super.getData(this.options)),
+      ...defaultNpcContext,
       appId: this.appId,
       activateFoundryJQueryListeners: (node: HTMLElement) => {
         this._activateCoreListeners($(node));
@@ -92,8 +96,7 @@ export class Tidy5eNpcSheet extends dnd5e.applications.actor.ActorSheet5eNPC {
       longRest: this._onLongRest.bind(this),
       rollDeathSave: this._rollDeathSave.bind(this),
       tokenState: this.#getTokenState(),
-      lockSensitiveFields:
-        !editable && SettingsProvider.settings.editTotalLockEnabled.get(),
+      lockSensitiveFields,
       editable,
       allowEffectsManagement: true,
       lockMoneyChanges: FoundryAdapter.shouldLockMoneyChanges(),
@@ -110,6 +113,9 @@ export class Tidy5eNpcSheet extends dnd5e.applications.actor.ActorSheet5eNPC {
       encumbrance: this.actor.system.attributes.encumbrance,
       classicControlsEnabled:
         SettingsProvider.settings.enableClassicControlsForNpc.get(),
+      hideSpellbookTab: SettingsProvider.settings.hideSpellbookTabNpc.get(),
+      hideEmptySpellbook:
+        lockSensitiveFields && defaultNpcContext.spellbook.length === 0,
     };
   }
 

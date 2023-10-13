@@ -49,7 +49,7 @@
                   event.currentTarget.checked,
               })}
             disabled={!$store.owner || $store.lockSensitiveFields}
-            />
+          />
           <label
             for="{$store.appId}-{res.name}.lr"
             class="checkbox"
@@ -227,12 +227,6 @@
         height: 1.375rem;
         line-height: 1.5625rem;
         font-family: var(--t5ek-title-font-family);
-      }
-
-      .attribute-name input[type='text'] {
-        height: 1.25rem;
-        margin: 0;
-        line-height: 1.5rem;
       }
 
       .resource-value.multiple {

@@ -117,6 +117,8 @@ export class Tidy5eCharacterSheet extends dnd5e.applications.actor
       ].includes(SettingsProvider.settings.portraitStyle.get()),
       classicControlsEnabled:
         SettingsProvider.settings.enableClassicControlsForCharacter.get(),
+      characterJournalTabDisabled:
+        SettingsProvider.settings.characterJournalTabDisabled.get(),
     };
 
     debug('Character Sheet context data', context);

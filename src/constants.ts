@@ -43,6 +43,8 @@ export const CONSTANTS = {
     custom: 'T5EK.ClassCustom',
   },
   HOOKS_RENDERING_CHARACTER_TABS: 'renderTidy5eKgarCharacterTabs',
+  HOOKS_RENDERING_NPC_TABS: 'renderTidy5eKgarNpcTabs',
+  HOOKS_RENDERING_VEHICLE_TABS: 'renderTidy5eKgarVehicleTabs',
   HOOKS_RENDERING_ITEM_EQUIPMENT_TABS: 'renderTidy5eKgarItemEquipmentTabs',
   HOOKS_RENDERING_ITEM_BACKGROUND_TABS: 'renderTidy5eKgarItemBackgroundTabs',
   HOOKS_RENDERING_ITEM_BACKPACK_TABS: 'renderTidy5eKgarItemBackpackTabs',

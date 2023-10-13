@@ -5,16 +5,12 @@
     VehicleSheetContext,
   } from 'src/types/types';
   import Tabs from 'src/components/tabs/Tabs.svelte';
-  import VehicleAttributesTab from './VehicleAttributesTab.svelte';
   import { CONSTANTS } from 'src/constants';
-  import VehicleCargoAndCrewTab from './VehicleCargoAndCrewTab.svelte';
-  import VehicleDescriptionTab from './VehicleDescriptionTab.svelte';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import AllowEditLock from 'src/components/shared/AllowEditLock.svelte';
   import TabContents from 'src/components/tabs/TabContents.svelte';
   import VehicleProfile from './parts/VehicleProfile.svelte';
-  import ActorEffectsTab from '../actor/ActorEffectsTab.svelte';
   import ContentEditableFormField from 'src/components/inputs/ContentEditableFormField.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import HorizontalLineSeparator from 'src/components/layout/HorizontalLineSeparator.svelte';
@@ -30,44 +26,24 @@
   import SheetMenu from '../actor/SheetMenu.svelte';
   import { settingStore } from 'src/settings/settings';
   import ActorWarnings from '../ActorWarnings.svelte';
+  import { vehicleSheetTabsStore } from 'src/api/vehicle-sheet-runtime-config';
 
   export let selectedTabId: string;
 
   let store = getContext<Readable<VehicleSheetContext>>('store');
 
-  let tabs: Tab[] = [
-    {
-      id: CONSTANTS.TAB_VEHICLE_ATTRIBUTES,
-      displayName: 'DND5E.Attributes',
-      content: {
-        component: VehicleAttributesTab,
-      },
-    },
-    {
-      id: CONSTANTS.TAB_VEHICLE_CARGO_AND_CREW,
-      displayName: 'DND5E.VehicleCargoCrew',
-      content: {
-        component: VehicleCargoAndCrewTab,
-      },
-    },
-    {
-      id: CONSTANTS.TAB_NPC_EFFECTS,
-      displayName: 'DND5E.Effects',
-      content: {
-        component: ActorEffectsTab,
-      },
-    },
-    {
-      id: CONSTANTS.TAB_VEHICLE_DESCRIPTION,
-      displayName: 'DND5E.Description',
-      content: {
-        component: VehicleDescriptionTab,
-      },
-    },
-  ];
+  let tabs: Tab[];
+  $: {
+    tabs = $vehicleSheetTabsStore.getTabs($store);
 
-  if (!tabs.some((tab) => tab.id === selectedTabId)) {
-    selectedTabId = tabs[0]?.id;
+    Hooks.call(CONSTANTS.HOOKS_RENDERING_VEHICLE_TABS, {
+      tabs,
+      context: $store,
+    });
+
+    if (!tabs.some((tab) => tab.id === selectedTabId)) {
+      selectedTabId = tabs[0]?.id;
+    }
   }
 
   $: sizes = <TidyDropdownOption[]>Object.entries($store.config.actorSizes).map(

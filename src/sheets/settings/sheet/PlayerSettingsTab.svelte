@@ -36,10 +36,10 @@
 />
 
 <CheckboxSetting
-  bind:value={$store.journalTabDisabled}
+  bind:value={$store.characterJournalTabDisabled}
   name={'T5EK.Settings.JournalTab.name'}
   hint={'T5EK.Settings.JournalTab.hint'}
-  id="journalTabDisabled"
+  id="characterJournalTabDisabled"
 />
 
 <CheckboxSetting

@@ -33,12 +33,15 @@ export type CharacterSheetContext = {
   tools: ActorContextTools;
   hp: Actor5eHp;
   allowMaxHpOverride: boolean;
+  characterJournalTabDisabled: boolean;
 } & ActorSheetContext &
   JQueryHooksSheetIntegration &
   Record<string, any>;
 
 export type NpcSheetContext = {
-  encumbrance: any
+  encumbrance: any;
+  hideSpellbookTab: boolean;
+  hideEmptySpellbook: boolean;
 } & ActorSheetContext &
   JQueryHooksSheetIntegration &
   Record<string, any>;

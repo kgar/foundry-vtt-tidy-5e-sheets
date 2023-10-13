@@ -345,7 +345,7 @@ export function createSettings() {
       // Settings Menu
 
       // PC Sheet Settings
-      journalTabDisabled: {
+      characterJournalTabDisabled: {
         options: {
           name: 'T5EK.Settings.JournalTab.name',
           hint: 'T5EK.Settings.JournalTab.hint',
@@ -355,7 +355,7 @@ export function createSettings() {
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getGameSetting<boolean>('journalTabDisabled');
+          return FoundryAdapter.getGameSetting<boolean>('characterJournalTabDisabled');
         },
       },
 
