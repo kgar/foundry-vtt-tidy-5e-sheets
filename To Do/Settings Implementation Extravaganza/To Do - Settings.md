@@ -87,12 +87,53 @@
   - [x] Vechicle
 - [x] Extract and share `SheetTabRuntimeConfig<TContext>` to the appropriate types location; it is copy/pasted across the three config scripts.
 - [ ] Expose functions for manipulating tabs for given sheet types
+  - [ ] Character - in progress, need to clean up a bit and reorganize
+  - [ ] NPC
+  - [ ] Vehicle
 - [ ] Create a one-off test script (world script) which adds a new tab and plugs in an arbitrary component
   - [ ] Make a special Tidy 5e hook which establishes when Tidy 5e's API is ready to use
   - [ ] Make the one-off test script talk to the Tidy 5e API in order to add a tab and arbitrary content
-    - [ ] Allow for raw HTML
-    - [ ] Provide render callback with HTML set to the containing tab content node
+    - [ ] Use a component provided by the API
+    - [x] Allow for raw HTML
+    - [ ] Allow for a function that receives context and expects raw HTML in return
+    - [x] Provide an optional render callback with HTML set to the containing tab content node
+    - [ ] Allow for handlebars?
 - [ ] `game.settings.get('dnd5e', 'disableExperienceTracking')` -> extract to CharacterSheetContext
+
+### Registering tabs through the API
+
+```js
+// Hint: throw this in a macro for demonstration
+  function addTestTab() {
+
+    game.modules.get('tidy5e-sheet-kgar').api.registerCharacterTab({
+      displayName: 'Test',
+      enabled: true,
+      id: 'test-tab',
+      order: -1,
+      content: {
+        html: `
+          <h2>Hello, world!</h2>
+          <button type="button">Click the buton</button>
+        `,
+        cssClass: 'test-class',
+        rerenderOnSubmit: false,
+        render: (tabContent) => {
+          tabContent
+            .querySelector('button')
+            ?.addEventListener('click', (ev) => {
+              const header = tabContent.querySelector('h2');
+              if (header) {
+                header.textContent = 'Goodbye, Moon Man!';
+              }
+            });
+        },
+      },
+    });
+  }
+
+  addTestTab();
+  ```
 
 ## Bonus Fun
 

@@ -1,6 +1,9 @@
 import { CONSTANTS } from 'src/constants';
 import { Tidy5eKgarSettingsSheet } from 'src/sheets/settings/sheet/Tidy5eKgarSettingsSheet';
 import { Tidy5eKgarThemeSettingsSheet } from 'src/sheets/settings/theme/Tidy5eKgarThemeSettingsSheet';
+import type { SheetTabRuntimeConfig } from './types';
+import type { CharacterSheetContext } from 'src/types/types';
+import { registerCharacterTab } from './character-sheet-runtime-config';
 
 /**
  * Tidy 5e Sheets API
@@ -28,5 +31,9 @@ export class Tidy5eSheetsApi {
     const rendered = this.#sheetSettings.render(true);
     setTimeout(() => this.#sheetSettings.bringToTop(), 150);
     return rendered;
+  }
+
+  registerCharacterTab(tab: SheetTabRuntimeConfig<CharacterSheetContext>) {
+    return registerCharacterTab(tab);
   }
 }

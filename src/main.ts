@@ -43,7 +43,7 @@ Items.registerSheet('dnd5e', Tidy5eKgarItemSheet, {
 FoundryAdapter.onReady(async () => {
   initSettings();
 
-  game.modules.get(CONSTANTS.MODULE_ID).API = getApi();
+  game.modules.get(CONSTANTS.MODULE_ID).api = getApi();
 
   // TODO: Remove after debugging:
   const compareActorSamples = import.meta.env.VITE_COMPARE_SAMPLE_ACTORS;

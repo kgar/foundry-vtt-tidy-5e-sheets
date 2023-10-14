@@ -100,3 +100,15 @@ export let characterSheetTabsStore = derived(
       getOrderedEnabledSheetTabs(c.sheetTabs, context),
   })
 );
+
+export function registerCharacterTab(
+  tab: SheetTabRuntimeConfig<CharacterSheetContext>
+) {
+  characterSheetConfigStore.update((store) => {
+    store.sheetTabs.push(tab);
+    store.sheetTabs.sort((a, b) => a.order - b.order);
+    return store;
+  });
+
+  return getCurrentCharacterTabs();
+}

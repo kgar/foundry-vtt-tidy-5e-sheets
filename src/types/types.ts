@@ -2,17 +2,28 @@ import type { ComponentProps, ComponentType, SvelteComponent } from 'svelte';
 import type { Actor5e, Actor5eHp } from './actor';
 import type { Item5e, ItemCardContentComponent } from './item';
 
+export type SvelteTabContent<
+  T extends SvelteComponent<any, any, any> = SvelteComponent<any, any, any>
+> = {
+  component: ComponentType<T>;
+  props?: ComponentProps<T>;
+  cssClass?: string;
+};
+
+export type HtmlTabContent = {
+  html: string;
+  render?: (tabContent: HTMLElement) => void;
+  rerenderOnSubmit?: boolean;
+  cssClass?: string;
+};
+
 // TODO: Make this generic in such a way that correct props are actually required and that an array of tabs can have hetergeneity of component types without a crazy TS type
 export type Tab<
   T extends SvelteComponent<any, any, any> = SvelteComponent<any, any, any>
 > = {
   id: string;
   displayName: string;
-  content: {
-    component: ComponentType<T>;
-    props?: ComponentProps<T>;
-    cssClass?: string;
-  };
+  content: SvelteTabContent<T> | HtmlTabContent;
 };
 
 export type ClassSummary = {
