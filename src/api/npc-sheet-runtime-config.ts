@@ -6,15 +6,8 @@ import NpcSpellbookTab from 'src/sheets/npc/NpcSpellbookTab.svelte';
 import NpcBiographyTab from 'src/sheets/npc/NpcBiographyTab.svelte';
 import ActorEffectsTab from 'src/sheets/actor/ActorEffectsTab.svelte';
 import ActorJournalTab from 'src/components/player-character/ActorJournalTab.svelte';
-
-type SheetTabRuntimeConfig<TContext> = Tab & {
-  enabled: boolean | ((context: TContext) => boolean);
-  order: number;
-};
-
-type NpcSheetRuntimeConfig = {
-  sheetTabs: SheetTabRuntimeConfig<NpcSheetContext>[];
-};
+import type { NpcSheetRuntimeConfig, SheetTabRuntimeConfig } from './types';
+import { getOrderedEnabledSheetTabs } from './config-functions';
 
 function getDefaultTabConfigs(): SheetTabRuntimeConfig<NpcSheetContext>[] {
   return [
@@ -71,13 +64,17 @@ let npcSheetConfigStore = writable<NpcSheetRuntimeConfig>({
   sheetTabs: getDefaultTabConfigs(),
 });
 
+let currentTabs: SheetTabRuntimeConfig<NpcSheetContext>[] = [];
+
+npcSheetConfigStore.subscribe((data) => {
+  currentTabs = data.sheetTabs;
+});
+
+export function getCurrentNpcTabs(): SheetTabRuntimeConfig<NpcSheetContext>[] {
+  return [...currentTabs];
+}
+
 export let npcSheetTabsStore = derived(npcSheetConfigStore, (c) => ({
   getTabs: (context: NpcSheetContext) =>
-    [...c.sheetTabs]
-      .filter(
-        (t) =>
-          t.enabled === true ||
-          (typeof t.enabled === 'function' && t.enabled(context))
-      )
-      .sort((a, b) => a.order - b.order),
+    getOrderedEnabledSheetTabs(c.sheetTabs, context),
 }));

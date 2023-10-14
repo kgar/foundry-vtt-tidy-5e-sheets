@@ -81,11 +81,11 @@
 - [x] Store ordered, tab data for each sheet type somewhere in this code base
 - [x] Expose functions for getting tabs for given sheet types
 - [x] Leverage these functions for establishing which tabs to show and in which order
-- [ ] Leverage these functions to pull options for config
-  - [ ] Character - in progress, need to clean up a bit
-  - [ ] NPC
-  - [ ] Vechicle
-- [ ] Extract and share `SheetTabRuntimeConfig<TContext>` to the appropriate types location; it is copy/pasted across the three config scripts.
+- [x] Leverage these functions to pull options for config
+  - [x] Character ~~- in progress, need to clean up a bit~~
+  - [x] NPC
+  - [x] Vechicle
+- [x] Extract and share `SheetTabRuntimeConfig<TContext>` to the appropriate types location; it is copy/pasted across the three config scripts.
 - [ ] Expose functions for manipulating tabs for given sheet types
 - [ ] Create a one-off test script (world script) which adds a new tab and plugs in an arbitrary component
   - [ ] Make a special Tidy 5e hook which establishes when Tidy 5e's API is ready to use

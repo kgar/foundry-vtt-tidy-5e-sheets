@@ -1,8 +1,4 @@
-import type {
-  ActorSheetContext,
-  CharacterSheetContext,
-  Tab,
-} from 'src/types/types';
+import type { CharacterSheetContext } from 'src/types/types';
 import { derived, writable } from 'svelte/store';
 import CharacterAttributesTab from 'src/components/player-character/CharacterAttributesTab.svelte';
 import CharacterInventoryTab from 'src/components/player-character/CharacterInventoryTab.svelte';
@@ -11,20 +7,17 @@ import CharacterFeaturesTab from 'src/components/player-character/CharacterFeatu
 import ActorEffectsTab from 'src/sheets/actor/ActorEffectsTab.svelte';
 import CharacterBiographyTab from 'src/components/player-character/CharacterBiographyTab.svelte';
 import ActorJournalTab from 'src/components/player-character/ActorJournalTab.svelte';
-
-type SheetTabRuntimeConfig<TContext> = Tab & {
-  enabled: boolean | ((context: TContext) => boolean);
-  order: number;
-};
-
-type CharacterSheetRuntimeConfig = {
-  sheetTabs: SheetTabRuntimeConfig<CharacterSheetContext>[];
-};
+import type {
+  CharacterSheetRuntimeConfig,
+  SheetTabRuntimeConfig,
+} from './types';
+import { getOrderedEnabledSheetTabs } from './config-functions';
+import { CONSTANTS } from 'src/constants';
 
 let characterSheetConfigStore = writable<CharacterSheetRuntimeConfig>({
   sheetTabs: [
     {
-      id: 'attributes',
+      id: CONSTANTS.TAB_CHARACTER_ATTRIBUTES,
       displayName: 'DND5E.Attributes',
       content: {
         component: CharacterAttributesTab,
@@ -33,7 +26,7 @@ let characterSheetConfigStore = writable<CharacterSheetRuntimeConfig>({
       order: 10,
     },
     {
-      id: 'inventory',
+      id: CONSTANTS.TAB_CHARACTER_INVENTORY,
       displayName: 'DND5E.Inventory',
       content: {
         component: CharacterInventoryTab,
@@ -42,7 +35,7 @@ let characterSheetConfigStore = writable<CharacterSheetRuntimeConfig>({
       order: 20,
     },
     {
-      id: 'spellbook',
+      id: CONSTANTS.TAB_CHARACTER_SPELLBOOK,
       displayName: 'DND5E.Spellbook',
       content: {
         component: CharacterSpellbookTab,
@@ -51,7 +44,7 @@ let characterSheetConfigStore = writable<CharacterSheetRuntimeConfig>({
       order: 30,
     },
     {
-      id: 'features',
+      id: CONSTANTS.TAB_CHARACTER_FEATURES,
       displayName: 'DND5E.Features',
       content: {
         component: CharacterFeaturesTab,
@@ -60,7 +53,7 @@ let characterSheetConfigStore = writable<CharacterSheetRuntimeConfig>({
       order: 40,
     },
     {
-      id: 'effects',
+      id: CONSTANTS.TAB_CHARACTER_EFFECTS,
       displayName: 'DND5E.Effects',
       content: {
         component: ActorEffectsTab,
@@ -69,7 +62,7 @@ let characterSheetConfigStore = writable<CharacterSheetRuntimeConfig>({
       order: 50,
     },
     {
-      id: 'biography',
+      id: CONSTANTS.TAB_CHARACTER_BIOGRAPHY,
       displayName: 'DND5E.Biography',
       content: {
         component: CharacterBiographyTab,
@@ -78,7 +71,7 @@ let characterSheetConfigStore = writable<CharacterSheetRuntimeConfig>({
       order: 60,
     },
     {
-      id: 'journal',
+      id: CONSTANTS.TAB_CHARACTER_JOURNAL,
       displayName: 'T5EK.Journal',
       content: {
         component: ActorJournalTab,
@@ -104,12 +97,6 @@ export let characterSheetTabsStore = derived(
   characterSheetConfigStore,
   (c) => ({
     getTabs: (context: CharacterSheetContext) =>
-      [...c.sheetTabs]
-        .filter(
-          (t) =>
-            t.enabled === true ||
-            (typeof t.enabled === 'function' && t.enabled(context))
-        )
-        .sort((a, b) => a.order - b.order),
+      getOrderedEnabledSheetTabs(c.sheetTabs, context),
   })
 );

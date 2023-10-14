@@ -5,15 +5,8 @@ import ActorEffectsTab from 'src/sheets/actor/ActorEffectsTab.svelte';
 import VehicleAttributesTab from 'src/sheets/vehicle/VehicleAttributesTab.svelte';
 import VehicleCargoAndCrewTab from 'src/sheets/vehicle/VehicleCargoAndCrewTab.svelte';
 import VehicleDescriptionTab from 'src/sheets/vehicle/VehicleDescriptionTab.svelte';
-
-type SheetTabRuntimeConfig<TContext> = Tab & {
-  enabled: boolean | ((context: TContext) => boolean);
-  order: number;
-};
-
-type VehicleSheetRuntimeConfig = {
-  sheetTabs: SheetTabRuntimeConfig<VehicleSheetContext>[];
-};
+import type { SheetTabRuntimeConfig, VehicleSheetRuntimeConfig } from './types';
+import { getOrderedEnabledSheetTabs } from './config-functions';
 
 function getDefaultTabConfigs(): SheetTabRuntimeConfig<VehicleSheetContext>[] {
   return [
@@ -60,13 +53,17 @@ let vehicleSheetConfigStore = writable<VehicleSheetRuntimeConfig>({
   sheetTabs: getDefaultTabConfigs(),
 });
 
+let currentTabs: SheetTabRuntimeConfig<VehicleSheetContext>[] = [];
+
+vehicleSheetConfigStore.subscribe((data) => {
+  currentTabs = data.sheetTabs;
+});
+
+export function getCurrentVehicleTabs(): SheetTabRuntimeConfig<VehicleSheetContext>[] {
+  return [...currentTabs];
+}
+
 export let vehicleSheetTabsStore = derived(vehicleSheetConfigStore, (c) => ({
   getTabs: (context: VehicleSheetContext) =>
-    [...c.sheetTabs]
-      .filter(
-        (t) =>
-          t.enabled === true ||
-          (typeof t.enabled === 'function' && t.enabled(context))
-      )
-      .sort((a, b) => a.order - b.order),
+    getOrderedEnabledSheetTabs(c.sheetTabs, context),
 }));

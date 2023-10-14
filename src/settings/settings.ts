@@ -9,6 +9,9 @@ import { Tidy5eKgarSettingsSheet } from 'src/sheets/settings/sheet/Tidy5eKgarSet
 import { Tidy5eKgarThemeSettingsSheet } from 'src/sheets/settings/theme/Tidy5eKgarThemeSettingsSheet';
 import { writable, type Writable } from 'svelte/store';
 import { getCurrentCharacterTabs } from 'src/api/character-sheet-runtime-config';
+import { getCurrentVehicleTabs } from 'src/api/vehicle-sheet-runtime-config';
+import { getCurrentNpcTabs } from 'src/api/npc-sheet-runtime-config';
+import { getTabsAsConfigOptions } from 'src/api/config-functions';
 
 export type Tidy5eSettings = {
   [settingKey: string]: Tidy5eSetting;
@@ -207,16 +210,8 @@ export function createSettings() {
           scope: 'world',
           config: false,
           type: String,
-          choices: () => {
-            const result = getCurrentCharacterTabs()
-              .sort((a, b) => a.order - b.order)
-              .reduce<Record<string, string>>((prev, curr) => {
-                prev[curr.id] = curr.displayName;
-                return prev;
-              }, {});
-            return result;
-          },
-          default: 'attributes',
+          choices: () => getTabsAsConfigOptions(getCurrentCharacterTabs()),
+          default: CONSTANTS.TAB_CHARACTER_ATTRIBUTES,
         },
         get() {
           return FoundryAdapter.getGameSetting<string>(
@@ -530,14 +525,8 @@ export function createSettings() {
           scope: 'world',
           config: false,
           type: String,
-          choices: () => ({
-            abilities: 'T5EK.Abilities',
-            spellbook: 'DND5E.Spellbook',
-            effects: 'DND5E.Effects',
-            biography: 'DND5E.Biography',
-            journal: 'T5EK.Journal',
-          }),
-          default: 'abilities',
+          choices: () => getTabsAsConfigOptions(getCurrentNpcTabs()),
+          default: CONSTANTS.TAB_NPC_ABILITIES,
         },
         get() {
           return FoundryAdapter.getGameSetting<string>('defaultNpcSheetTab');
@@ -671,13 +660,8 @@ export function createSettings() {
           scope: 'world',
           config: false,
           type: String,
-          choices: () => ({
-            attributes: 'DND5E.Attributes',
-            cargo: 'DND5E.VehicleCargoCrew',
-            effects: 'DND5E.Effects',
-            biography: 'DND5E.Description',
-          }),
-          default: 'attributes',
+          choices: () => getTabsAsConfigOptions(getCurrentVehicleTabs()),
+          default: CONSTANTS.TAB_VEHICLE_ATTRIBUTES,
         },
         get() {
           return FoundryAdapter.getGameSetting<string>(
