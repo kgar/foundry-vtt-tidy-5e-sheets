@@ -13,16 +13,16 @@
   import ActorProfile from 'src/sheets/actor/ActorProfile.svelte';
   import { settingStore } from 'src/settings/settings';
 
-  let store = getContext<Readable<CharacterSheetContext>>('store');
+  let context = getContext<Readable<CharacterSheetContext>>('context');
 
   $: portraitStyle = $settingStore.portraitStyle;
 
   $: incapacitated =
-    ($store.actor?.system?.attributes?.hp?.value ?? 0) <= 0 &&
-    $store.actor?.system?.attributes?.hp?.max !== 0;
+    ($context.actor?.system?.attributes?.hp?.value ?? 0) <= 0 &&
+    $context.actor?.system?.attributes?.hp?.max !== 0;
 
   function onLevelSelected(event: CustomEvent<{ level: number }>) {
-    $store.actor.update({
+    $context.actor.update({
       'system.attributes.exhaustion': event.detail.level,
     });
   }
@@ -36,41 +36,41 @@
 >
   {#if incapacitated && (!$settingStore.hiddenDeathSavesEnabled || FoundryAdapter.userIsGm())}
     <DeathSaves
-      successes={$store.system.attributes.death.success}
-      failures={$store.system.attributes.death.failure}
+      successes={$context.system.attributes.death.success}
+      failures={$context.system.attributes.death.failure}
       successesField="system.attributes.death.success"
       failuresField="system.attributes.death.failure"
       on:rollDeathSave={(event) =>
-        $store.actor.rollDeathSave({ event: event.detail.mouseEvent })}
+        $context.actor.rollDeathSave({ event: event.detail.mouseEvent })}
       hpOverlayDisabled={$settingStore.hpOverlayDisabled}
     />
   {/if}
 
   {#if !$settingStore.exhaustionDisabled && !incapacitated}
     <Exhaustion
-      level={$store.system.attributes.exhaustion}
-      radiusClass={$store.useRoundedPortraitStyle ? 'rounded' : 'top-left'}
+      level={$context.system.attributes.exhaustion}
+      radiusClass={$context.useRoundedPortraitStyle ? 'rounded' : 'top-left'}
       on:levelSelected={onLevelSelected}
       onlyShowOnHover={$settingStore.exhaustionOnHover ||
-        ($settingStore.hideIfZero && $store.system.attributes.exhaustion === 0)}
+        ($settingStore.hideIfZero && $context.system.attributes.exhaustion === 0)}
     />
   {/if}
 
   {#if !$settingStore.inspirationDisabled && !incapacitated}
     <Inspiration
-      inspired={$store.actor.system.attributes.inspiration}
-      radiusClass={$store.useRoundedPortraitStyle ? 'rounded' : 'top-right'}
+      inspired={$context.actor.system.attributes.inspiration}
+      radiusClass={$context.useRoundedPortraitStyle ? 'rounded' : 'top-right'}
       onlyShowOnHover={$settingStore.inspirationOnHover ||
         ($settingStore.hideIfZero &&
-          !$store.actor.system.attributes.inspiration)}
+          !$context.actor.system.attributes.inspiration)}
       disableAnimation={$settingStore.inspirationAnimationDisabled}
     />
   {/if}
 
   <CharacterHitPoints
-    value={$store.system.attributes.hp.value}
-    max={$store.system.attributes.hp.max}
-    actor={$store.actor}
+    value={$context.system.attributes.hp.value}
+    max={$context.system.attributes.hp.max}
+    actor={$context.actor}
     {incapacitated}
   />
 
@@ -80,9 +80,9 @@
 
   {#if !incapacitated}
     <HitDice
-      hitDice={$store.system.attributes.hd}
-      actorLevel={$store.system.details.level}
-      actor={$store.actor}
+      hitDice={$context.system.attributes.hd}
+      actorLevel={$context.system.details.level}
+      actor={$context.actor}
     />
   {/if}
 </ActorProfile>

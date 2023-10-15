@@ -8,9 +8,9 @@
   export let cssClass: string = '';
 
   $: inputId =
-    field !== null ? `${$store.appId}-${field.replaceAll('.', '-')}` : null;
+    field !== null ? `${$context.appId}-${field.replaceAll('.', '-')}` : null;
 
-  let store = getContext<Readable<ItemSheetContext>>('store');
+  let context = getContext<Readable<ItemSheetContext>>('context');
 </script>
 
 <div class="form-group {cssClass}">

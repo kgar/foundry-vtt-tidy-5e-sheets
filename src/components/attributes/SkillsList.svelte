@@ -17,8 +17,8 @@
   $: showAllSkills =
     !toggleable || FoundryAdapter.tryGetFlag(actor, 'npcSkillsExpanded');
 
-  let store =
-    getContext<Readable<CharacterSheetContext | NpcSheetContext>>('store');
+  let context =
+    getContext<Readable<CharacterSheetContext | NpcSheetContext>>('context');
 
   type SkillRef = {
     key: string;
@@ -28,7 +28,7 @@
   };
 
   let skillRefs: SkillRef[];
-  $: skillRefs = Array.from(Object.entries($store.config.skills)).map(
+  $: skillRefs = Array.from(Object.entries($context.config.skills)).map(
     (s: [key: string, value: any]) => ({
       key: s[0],
       label: s[1]['label'],
@@ -39,8 +39,8 @@
   const localize = FoundryAdapter.localize;
 
   function getSkill(key: string): ActorContextSkill | null {
-    if (key in $store.actor.system.skills) {
-      return $store.skills[key as keyof ActorContextSkills];
+    if (key in $context.actor.system.skills) {
+      return $context.skills[key as keyof ActorContextSkills];
     }
 
     return null;
@@ -63,12 +63,12 @@
           class="proficiency-row skill"
           class:proficient={skillRef.skill.value}
         >
-          {#if $store.owner && !$store.lockSensitiveFields}
+          {#if $context.owner && !$context.lockSensitiveFields}
             <button
               type="button"
               class="configure-proficiency inline-icon-button"
               on:click={() =>
-                new dnd5e.applications.actor.ProficiencyConfig($store.actor, {
+                new dnd5e.applications.actor.ProficiencyConfig($context.actor, {
                   property: 'skills',
                   key: skillRef.key,
                 }).render(true)}
@@ -81,14 +81,14 @@
               class="skill-proficiency-toggle inline-icon-button"
               on:click={() =>
                 FoundryAdapter.cycleProficiency(
-                  $store.actor,
+                  $context.actor,
                   skillRef.key,
                   skillRef.skill?.value,
                   'skills'
                 )}
               on:contextmenu={() =>
                 FoundryAdapter.cycleProficiency(
-                  $store.actor,
+                  $context.actor,
                   skillRef.key,
                   skillRef.skill?.value,
                   'skills',
@@ -101,12 +101,12 @@
               >{@html skillRef.skill.icon}</span
             >
           {/if}
-          {#if $store.owner}
+          {#if $context.owner}
             <button
               type="button"
               class="tidy5e-skill-name transparent-button rollable"
               on:click={(event) =>
-                $store.actor.rollSkill(skillRef.key, { event })}
+                $context.actor.rollSkill(skillRef.key, { event })}
             >
               {skillRef.skill.label}
             </button>

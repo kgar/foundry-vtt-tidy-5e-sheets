@@ -16,28 +16,28 @@
   import Notice from '../shared/Notice.svelte';
   import { settingStore } from 'src/settings/settings';
 
-  let store = getContext<Readable<CharacterSheetContext>>('store');
+  let context = getContext<Readable<CharacterSheetContext>>('context');
 
   const localize = FoundryAdapter.localize;
 
   let searchCriteria: string = '';
 
   let layoutMode: ItemLayoutMode;
-  $: layoutMode = FoundryAdapter.tryGetFlag($store.actor, 'spellbook-grid')
+  $: layoutMode = FoundryAdapter.tryGetFlag($context.actor, 'spellbook-grid')
     ? 'grid'
     : 'list';
 
   function toggleLayout() {
     if (layoutMode === 'grid') {
-      FoundryAdapter.unsetFlag($store.actor, 'spellbook-grid');
+      FoundryAdapter.unsetFlag($context.actor, 'spellbook-grid');
       return;
     }
 
-    FoundryAdapter.setFlag($store.actor, 'spellbook-grid', true);
+    FoundryAdapter.setFlag($context.actor, 'spellbook-grid', true);
   }
 
   $: selectedClassFilter =
-    FoundryAdapter.tryGetFlag($store.actor, 'classFilter') ?? '';
+    FoundryAdapter.tryGetFlag($context.actor, 'classFilter') ?? '';
 
   function tryFilterByClass(spells: any[]) {
     if (!$settingStore.spellClassFilterSelect || selectedClassFilter === '') {
@@ -50,10 +50,10 @@
     );
   }
 
-  $: noSpellLevels = !$store.spellbook.length;
+  $: noSpellLevels = !$context.spellbook.length;
 
   $: noSpells =
-    $store.spellbook.reduce(
+    $context.spellbook.reduce(
       (count: number, section: any) => count + section.spells.length,
       0
     ) === 0;
@@ -62,7 +62,7 @@
 <ItemFilters>
   <ItemFilterSearch
     bind:searchCriteria
-    actor={$store.actor}
+    actor={$context.actor}
     searchFlag="spell-search"
     cssClass="align-self-flex-end"
     placeholder={localize('T5EK.SearchSpell')}
@@ -89,8 +89,8 @@
   </ItemFilterOption>
   <ItemFilterOption setName="spellbook" filterName="prepared">
     {localize('DND5E.Prepared')}
-    {#if $store.preparedSpells > 0}
-      ({$store.preparedSpells})
+    {#if $context.preparedSpells > 0}
+      ({$context.preparedSpells})
     {/if}
   </ItemFilterOption>
   <ItemFilterLayoutToggle mode={layoutMode} on:toggle={() => toggleLayout()} />
@@ -98,13 +98,13 @@
 
 <ListContainer cssClass="flex-column small-gap">
   {#if noSpellLevels}
-    <NoSpells editable={$store.editable} />
+    <NoSpells editable={$context.editable} />
   {:else}
-    {#each $store.spellbook as section (section.label)}
+    {#each $context.spellbook as section (section.label)}
       {@const filteredSpells = tryFilterByClass(
         FoundryAdapter.getFilteredItems(searchCriteria, section.spells)
       )}
-      {#if (searchCriteria.trim() === '' && $store.editable) || filteredSpells.length > 0}
+      {#if (searchCriteria.trim() === '' && $context.editable) || filteredSpells.length > 0}
         {#if layoutMode === 'list'}
           <SpellbookList
             spells={filteredSpells}
@@ -117,7 +117,7 @@
     {/each}
   {/if}
 
-  {#if noSpells && !$store.editable}
+  {#if noSpells && !$context.editable}
     <Notice>{localize('T5EK.EmptySection')}</Notice>
   {/if}
 </ListContainer>

@@ -10,7 +10,7 @@
   import Checkbox from 'src/components/form/Checkbox.svelte';
   import ItemFormGroup from '../form/ItemFormGroup.svelte';
 
-  let store = getContext<Readable<ItemSheetContext>>('store');
+  let context = getContext<Readable<ItemSheetContext>>('context');
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -24,12 +24,12 @@
 >
   <Select
     id={inputId}
-    document={$store.item}
+    document={$context.item}
     field="system.consumableType"
-    value={$store.system.consumableType}
-    disabled={!$store.owner}
+    value={$context.system.consumableType}
+    disabled={!$context.owner}
     >
-    <SelectOptions data={$store.config.consumableTypes} />
+    <SelectOptions data={$context.config.consumableTypes} />
   </Select>
 </ItemFormGroup>
 
@@ -40,13 +40,13 @@
 >
   <Select
     id={inputId}
-    document={$store.item}
+    document={$context.item}
     field="system.attunement"
     dtype="Number"
-    value={$store.system.attunement}
-    disabled={!$store.owner}
+    value={$context.system.attunement}
+    disabled={!$context.owner}
     >
-    <SelectOptions data={$store.config.attunements} />
+    <SelectOptions data={$context.config.attunements} />
   </Select>
 </ItemFormGroup>
 
@@ -56,38 +56,38 @@
 >
   <Checkbox
     labelCssClass="checkbox"
-    document={$store.item}
+    document={$context.item}
     field="system.equipped"
-    checked={$store.system.equipped}
-    disabled={!$store.owner}
+    checked={$context.system.equipped}
+    disabled={!$context.owner}
     >
     {localize('DND5E.Equipped')}
   </Checkbox>
 
   <Checkbox
     labelCssClass="checkbox"
-    document={$store.item}
+    document={$context.item}
     field="system.identified"
-    checked={$store.system.identified}
-    disabled={!$store.owner}
+    checked={$context.system.identified}
+    disabled={!$context.owner}
     >
     {localize('DND5E.Identified')}
   </Checkbox>
 </ItemFormGroup>
 
-{#if $store.system.consumableType === 'ammo'}
+{#if $context.system.consumableType === 'ammo'}
   <ItemFormGroup
     cssClass="stacked weapon-properties"
     labelText={localize('DND5E.ItemAmmoProperties')}
   >
-    {#each Object.entries($store.config.physicalWeaponProperties) as [prop, name]}
-      {@const checked = $store.system.properties[prop]}
+    {#each Object.entries($context.config.physicalWeaponProperties) as [prop, name]}
+      {@const checked = $context.system.properties[prop]}
       <Checkbox
         labelCssClass="checkbox"
-        document={$store.item}
+        document={$context.item}
         field="system.properties.{prop}"
         {checked}
-        disabled={!$store.owner}
+        disabled={!$context.owner}
         >
         {name}
       </Checkbox>
@@ -98,14 +98,14 @@
 <h3 class="form-header">{localize('DND5E.ItemConsumableUsage')}</h3>
 
 <ItemActivation />
-{#if $store.system.activation.type}
+{#if $context.system.activation.type}
   <ItemFormGroup>
     <Checkbox
       labelCssClass="checkbox"
-      document={$store.item}
+      document={$context.item}
       field="system.uses.autoDestroy"
-      checked={$store.system.uses.autoDestroy}
-      disabled={!$store.owner}
+      checked={$context.system.uses.autoDestroy}
+      disabled={!$context.owner}
       >
       {localize('DND5E.ItemDestroyEmpty')}
     </Checkbox>

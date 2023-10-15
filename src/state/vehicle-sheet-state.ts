@@ -49,15 +49,15 @@ function getDefaultTabConfigs(): SheetTabState<VehicleSheetContext>[] {
   ];
 }
 
-let vehicleSheetConfigStore = writable<VehicleSheetState>({
+let vehicleSheetState = writable<VehicleSheetState>({
   sheetTabs: getDefaultTabConfigs(),
 });
 
 export function getCurrentVehicleTabs(): SheetTabState<VehicleSheetContext>[] {
-  return [...get(vehicleSheetConfigStore).sheetTabs];
+  return [...get(vehicleSheetState).sheetTabs];
 }
 
-export let vehicleSheetTabsStore = derived(vehicleSheetConfigStore, (c) => ({
+export let vehicleSheetTabsStore = derived(vehicleSheetState, (c) => ({
   getTabs: (context: VehicleSheetContext) =>
     getOrderedEnabledSheetTabs(c.sheetTabs, context),
 }));

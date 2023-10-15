@@ -11,7 +11,7 @@
   import ButtonMenuDivider from 'src/components/button-menu/ButtonMenuDivider.svelte';
 
   let functions = getContext<ThemeSettingsSheetFunctions>('functions');
-  let store = getContext<Writable<CurrentSettings>>('store');
+  let context = getContext<Writable<CurrentSettings>>('context');
   const dispatch = createEventDispatcher<{
     selectFile: File;
   }>();
@@ -56,7 +56,7 @@
     {localize('T5EK.ThemeSettings.Sheet.import')}
   </ButtonMenuCommand>
   <ButtonMenuCommand
-    on:click={() => functions.exportTheme($store)}
+    on:click={() => functions.exportTheme($context)}
     iconClass="fas fa-file-export"
   >
     {localize('T5EK.ThemeSettings.Sheet.export')}

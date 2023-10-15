@@ -34,21 +34,21 @@
   import EncumbranceBar from '../actor/EncumbranceBar.svelte';
   import TabFooter from '../actor/TabFooter.svelte';
 
-  let store = getContext<Readable<NpcSheetContext>>('store');
+  let context = getContext<Readable<NpcSheetContext>>('context');
 
-  $: noSpellLevels = !$store.spellbook.length;
+  $: noSpellLevels = !$context.spellbook.length;
 
   function toggleLayout() {
     if (layoutMode === 'grid') {
-      FoundryAdapter.unsetFlag($store.actor, 'spellbook-grid');
+      FoundryAdapter.unsetFlag($context.actor, 'spellbook-grid');
       return;
     }
 
-    FoundryAdapter.setFlag($store.actor, 'spellbook-grid', true);
+    FoundryAdapter.setFlag($context.actor, 'spellbook-grid', true);
   }
 
   let layoutMode: ItemLayoutMode;
-  $: layoutMode = FoundryAdapter.tryGetFlag($store.actor, 'spellbook-grid')
+  $: layoutMode = FoundryAdapter.tryGetFlag($context.actor, 'spellbook-grid')
     ? 'grid'
     : 'list';
 
@@ -66,7 +66,7 @@
 <section class="npc-abilities-content">
   <div class="side-panel">
     <SkillsList
-      actor={$store.actor}
+      actor={$context.actor}
       toggleable={!$settingStore.skillsAlwaysShownNpc}
     />
     {#if !$settingStore.traitsMovedBelowResourceNpc}
@@ -78,8 +78,8 @@
     {#if $settingStore.traitsMovedBelowResourceNpc}
       <Traits toggleable={!$settingStore.traitsAlwaysShownNpc} />
     {/if}
-    {#each $store.features as section}
-      {#if $store.editable || section.items.length}
+    {#each $context.features as section}
+      {#if $context.editable || section.items.length}
         <ItemTable>
           <ItemTableHeaderRow>
             <ItemTableColumn primary={true}>
@@ -93,12 +93,12 @@
                 {localize('DND5E.Usage')}
               </ItemTableColumn>
             {/if}
-            {#if $store.owner && $store.classicControlsEnabled}
+            {#if $context.owner && $context.classicControlsEnabled}
               <ItemTableColumn baseWidth="7.5rem" />
             {/if}
           </ItemTableHeaderRow>
           {#each section.items as item}
-            {@const ctx = $store.itemContext[item.id]}
+            {@const ctx = $context.itemContext[item.id]}
             <ItemTableRow
               let:toggleSummary
               on:mousedown={(event) =>
@@ -115,7 +115,7 @@
                 <ItemUseButton {item} />
                 <ItemName
                   on:click={(event) =>
-                    toggleSummary(event.detail, $store.actor)}
+                    toggleSummary(event.detail, $context.actor)}
                   cssClass="extra-small-gap"
                   {item}
                 >
@@ -131,7 +131,7 @@
                       class="item-list-button"
                       title={item.labels.recharge}
                       on:click={() => item.rollRecharge()}
-                      disabled={!$store.owner}
+                      disabled={!$context.owner}
                     >
                       <i class="fas fa-dice-six" />
                       {item.system.recharge
@@ -151,11 +151,11 @@
                   {/if}
                 </ItemTableCell>
               {/if}
-              {#if $store.owner && $store.classicControlsEnabled}
+              {#if $context.owner && $context.classicControlsEnabled}
                 <ItemTableCell baseWidth="7.5rem">
                   <ItemControls>
                     <ItemEditControl {item} />
-                    {#if $store.editable}
+                    {#if $context.editable}
                       <ItemDuplicateControl {item} />
                       <ItemDeleteControl {item} />
                     {/if}
@@ -164,8 +164,8 @@
               {/if}
             </ItemTableRow>
           {/each}
-          {#if $store.editable && section.dataset}
-            <ItemTableFooter actor={$store.actor} dataset={section.dataset} />
+          {#if $context.editable && section.dataset}
+            <ItemTableFooter actor={$context.actor} dataset={section.dataset} />
           {/if}
         </ItemTable>
       {/if}
@@ -197,10 +197,10 @@
       {#if !noSpellLevels || showNoSpellsView}
         <div class="flex-1 flex-column small-padding-bottom no-gap">
           {#if noSpellLevels}
-            <NoSpells cssClass="flex-1" editable={$store.editable} />
+            <NoSpells cssClass="flex-1" editable={$context.editable} />
           {:else}
             <div class="flex-1 small-padding-bottom flex-column small-gap">
-              {#each $store.spellbook as section (section.label)}
+              {#each $context.spellbook as section (section.label)}
                 {#if layoutMode === 'list'}
                   <SpellbookList
                     spells={section.spells}
@@ -230,7 +230,7 @@
   </div>
 </section>
 <TabFooter mode="vertical">
-  <Currency actor={$store.actor} />
+  <Currency actor={$context.actor} />
   {#if $settingStore.enableNpcEncumbranceBar}
     <EncumbranceBar />
   {/if}

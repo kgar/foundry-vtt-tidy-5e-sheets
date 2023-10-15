@@ -10,7 +10,7 @@
 
   export let initiative: { total: number; bonus: number };
 
-  let store = getContext<Readable<ActorSheetContext>>('store');
+  let context = getContext<Readable<ActorSheetContext>>('context');
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -20,15 +20,15 @@
     title={localize('DND5E.Initiative')}
     text={localize('T5EK.AbbrInitiative')}
     on:roll={(event) =>
-      $store.actor.rollInitiativeDialog({ event: event.detail })}
+      $context.actor.rollInitiativeDialog({ event: event.detail })}
   />
   <BlockScore>
     <span>{formatAsModifier(initiative.total)}</span>
   </BlockScore>
-  <label class="ini-bonus" for="{$store.appId}-initiative-mod">
+  <label class="ini-bonus" for="{$context.appId}-initiative-mod">
     <span>{localize('T5EK.AbbrMod')}</span>
     <TextInput
-      document={$store.actor}
+      document={$context.actor}
       field="system.attributes.init.bonus"
       cssClass="ini-mod"
       placeholder="0"
@@ -37,18 +37,18 @@
       allowDeltaChanges={true}
       value={initiative.bonus}
       maxlength={2}
-      disabled={!$store.owner || $store.lockSensitiveFields}
-      id="{$store.appId}-initiative-mod"
+      disabled={!$context.owner || $context.lockSensitiveFields}
+      id="{$context.appId}-initiative-mod"
     />
   </label>
 
-  {#if $store.owner && !$store.lockSensitiveFields}
+  {#if $context.owner && !$context.lockSensitiveFields}
     <button
       type="button"
       class="config-button icon-button"
       title={localize('DND5E.InitiativeConfig')}
       on:click={() =>
-        new dnd5e.applications.actor.ActorInitiativeConfig($store.actor).render(
+        new dnd5e.applications.actor.ActorInitiativeConfig($context.actor).render(
           true
         )}
     >

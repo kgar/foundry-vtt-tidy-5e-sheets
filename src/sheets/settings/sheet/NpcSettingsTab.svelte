@@ -10,7 +10,7 @@
   } from 'src/settings/settings';
   import SelectSetting from 'src/sheets/settings/parts/SelectSetting.svelte';
 
-  let store = getContext<Writable<CurrentSettings>>('store');
+  let context = getContext<Writable<CurrentSettings>>('context');
   const appId = getContext<string>('appId');
 
   const userIsGm = FoundryAdapter.userIsGm();
@@ -21,7 +21,7 @@
 {#if userIsGm}
   <SelectSetting
     options={SettingsProvider.settings.defaultNpcSheetTab.options.choices()}
-    bind:value={$store.defaultNpcSheetTab}
+    bind:value={$context.defaultNpcSheetTab}
     name={SettingsProvider.settings.defaultNpcSheetTab.options.name}
     hint={SettingsProvider.settings.defaultNpcSheetTab.options.hint}
     id="defaultNpcSheetTab"
@@ -29,14 +29,14 @@
 {/if}
 
 <CheckboxSetting
-  bind:value={$store.enableClassicControlsForNpc}
+  bind:value={$context.enableClassicControlsForNpc}
   name={SettingsProvider.settings.enableClassicControlsForNpc.options.name}
   hint={SettingsProvider.settings.enableClassicControlsForNpc.options.hint}
   id="enableClassicControlsForNpc"
 />
 
 <CheckboxSetting
-  bind:value={$store.journalTabNPCDisabled}
+  bind:value={$context.journalTabNPCDisabled}
   name={'T5EK.Settings.JournalTabNPCDisabled.name'}
   hint={'T5EK.Settings.JournalTabNPCDisabled.hint'}
   id="journalTabNPCDisabled"
@@ -44,14 +44,14 @@
 
 {#if userIsGm}
   <CheckboxSetting
-    bind:value={$store.restingForNpcsEnabled}
+    bind:value={$context.restingForNpcsEnabled}
     name={'T5EK.Settings.RestingForNpcs.name'}
     hint={'T5EK.Settings.RestingForNpcs.hint'}
     id="restingForNpcsEnabled"
   />
 
   <CheckboxSetting
-    bind:value={$store.restingForNpcsChatDisabled}
+    bind:value={$context.restingForNpcsChatDisabled}
     name={'T5EK.Settings.RestingForNpcsChat.name'}
     hint={'T5EK.Settings.RestingForNpcsChat.hint'}
     id="restingForNpcsChatDisabled"
@@ -63,7 +63,7 @@
       unlinked: 'T5EK.Settings.LinkMarker.unlinked',
       both: 'T5EK.Settings.LinkMarker.both',
     }}
-    bind:value={$store.linkMarkerNpc}
+    bind:value={$context.linkMarkerNpc}
     name="T5EK.Settings.LinkMarker.name"
     hint="T5EK.Settings.LinkMarker.hint"
     id="linkMarkerNpc"
@@ -71,49 +71,49 @@
 {/if}
 
 <CheckboxSetting
-  bind:value={$store.hpBarDisabledNpc}
+  bind:value={$context.hpBarDisabledNpc}
   name={'T5EK.Settings.HpBar.name'}
   hint={'T5EK.Settings.HpBar.hint'}
   id="hpBarDisabledNpc"
 />
 
 <CheckboxSetting
-  bind:value={$store.hpOverlayDisabledNpc}
+  bind:value={$context.hpOverlayDisabledNpc}
   name={'T5EK.Settings.HpOverlay.name'}
   hint={'T5EK.Settings.HpOverlay.hint'}
   id="hpOverlayDisabledNpc"
 />
 
 <CheckboxSetting
-  bind:value={$store.traitsAlwaysShownNpc}
+  bind:value={$context.traitsAlwaysShownNpc}
   name={'T5EK.Settings.TraitsAlwaysShown.name'}
   hint={'T5EK.Settings.TraitsAlwaysShown.hint'}
   id="traitsAlwaysShownNpc"
 />
 
 <CheckboxSetting
-  bind:value={$store.traitsMovedBelowResourceNpc}
+  bind:value={$context.traitsMovedBelowResourceNpc}
   name={'T5EK.Settings.TraitsMovedBelowResource.name'}
   hint={'T5EK.Settings.TraitsMovedBelowResource.hint'}
   id="traitsMovedBelowResourceNpc"
 />
 
 <CheckboxSetting
-  bind:value={$store.skillsAlwaysShownNpc}
+  bind:value={$context.skillsAlwaysShownNpc}
   name={'T5EK.Settings.SkillsAlwaysShown.name'}
   hint={'T5EK.Settings.SkillsAlwaysShown.hint'}
   id="skillsAlwaysShownNpc"
 />
 
 <CheckboxSetting
-  bind:value={$store.hideSpellbookTabNpc}
+  bind:value={$context.hideSpellbookTabNpc}
   name={'T5EK.Settings.HideSpellbookTabNpc.name'}
   hint={'T5EK.Settings.HideSpellbookTabNpc.hint'}
   id="hideSpellbookTabNpc"
 />
 
 <NumberInputSetting
-  bind:value={$store.npcSheetWidth}
+  bind:value={$context.npcSheetWidth}
   name={'T5EK.Settings.npcSheetWidth.name'}
   hint={'T5EK.Settings.npcSheetWidth.hint'}
   id="npcSheetWidth"

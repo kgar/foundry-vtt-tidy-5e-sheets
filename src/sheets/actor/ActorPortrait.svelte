@@ -10,7 +10,7 @@
   export let actor: Actor5e;
   export let useHpOverlay: boolean;
 
-  let store = getContext<Readable<ActorSheetContext>>('store');
+  let context = getContext<Readable<ActorSheetContext>>('context');
 
   let showPortraitMenu = false;
   const localize = FoundryAdapter.localize;
@@ -67,7 +67,7 @@
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <div
   class="portrait"
-  class:round-portrait={$store.useRoundedPortraitStyle}
+  class:round-portrait={$context.useRoundedPortraitStyle}
   on:mousedown={onPortraitClick}
 >
   <div

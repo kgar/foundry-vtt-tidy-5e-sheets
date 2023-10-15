@@ -5,16 +5,16 @@
 
   export let rounded: boolean;
 
-  let store = getContext<Readable<VehicleSheetContext>>('store');
+  let context = getContext<Readable<VehicleSheetContext>>('context');
 </script>
 
 <header>
   <div class="profile">
     <div class="portrait" class:rounded>
-      <img src={$store.actor.img} alt={$store.actor.name} data-edit="img" />
+      <img src={$context.actor.img} alt={$context.actor.name} data-edit="img" />
     </div>
   </div>
-  <h1>{$store.actor.name}</h1>
+  <h1>{$context.actor.name}</h1>
 </header>
 
 <style lang="scss">

@@ -3,7 +3,7 @@
     import { getContext } from "svelte";
     import type { Readable } from "svelte/store";
 
-  let store = getContext<Readable<NpcSheetContext>>('store');
+  let context = getContext<Readable<NpcSheetContext>>('context');
 </script>
 
 <p>If No Spells, then Banner "This character has no spellcaster levels, but you..."</p>

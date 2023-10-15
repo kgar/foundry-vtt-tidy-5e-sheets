@@ -13,12 +13,12 @@
   export let item: Item5e;
   export let chatData: ItemChatData;
 
-  let store =
+  let context =
     getContext<
       Readable<CharacterSheetContext | NpcSheetContext | VehicleSheetContext>
-    >('store');
+    >('context');
 
-  $: ctx = $store.itemContext[item.id];
+  $: ctx = $context.itemContext[item.id];
 
   const localize = FoundryAdapter.localize;
 </script>

@@ -17,7 +17,7 @@ import type { SvelteComponent } from 'svelte';
 
 export class Tidy5eCharacterSheet extends dnd5e.applications.actor
   .ActorSheet5eCharacter {
-  store = writable<CharacterSheetContext>();
+  context = writable<CharacterSheetContext>();
   stats = writable<SheetStats>({
     lastSubmissionTime: null,
   });
@@ -28,7 +28,7 @@ export class Tidy5eCharacterSheet extends dnd5e.applications.actor
     super(...args);
 
     settingStore.subscribe(() => {
-      this.getContext().then((context) => this.store.set(context));
+      this.getContext().then((context) => this.context.set(context));
     });
   }
 
@@ -54,7 +54,7 @@ export class Tidy5eCharacterSheet extends dnd5e.applications.actor
     const node = html.get(0);
     this.card.set({ sheet: node, item: null, itemCardContentTemplate: null });
     const initialContext = await this.getContext();
-    this.store.set(initialContext);
+    this.context.set(initialContext);
 
     this.component = new CharacterSheet({
       target: node,
@@ -62,7 +62,7 @@ export class Tidy5eCharacterSheet extends dnd5e.applications.actor
         selectedTabId: this.#getSelectedTabId(),
       },
       context: new Map<any, any>([
-        ['store', this.store],
+        ['context', this.context],
         ['stats', this.stats],
         ['card', this.card],
       ]),
@@ -223,7 +223,7 @@ export class Tidy5eCharacterSheet extends dnd5e.applications.actor
 
     applyTitleToWindow(this.title, this.element.get(0));
     this.getContext().then((context) => {
-      this.store.update(() => context);
+      this.context.update(() => context);
     });
     return this;
   }

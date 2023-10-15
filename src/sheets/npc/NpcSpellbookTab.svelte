@@ -13,33 +13,33 @@
   import type { Readable } from 'svelte/store';
   import NoSpells from '../actor/NoSpells.svelte';
 
-  let store = getContext<Readable<NpcSheetContext>>('store');
+  let context = getContext<Readable<NpcSheetContext>>('context');
 
   const localize = FoundryAdapter.localize;
 
   let searchCriteria: string = '';
 
   let layoutMode: ItemLayoutMode;
-  $: layoutMode = FoundryAdapter.tryGetFlag($store.actor, 'spellbook-grid')
+  $: layoutMode = FoundryAdapter.tryGetFlag($context.actor, 'spellbook-grid')
     ? 'grid'
     : 'list';
 
   function toggleLayout() {
     if (layoutMode === 'grid') {
-      FoundryAdapter.unsetFlag($store.actor, 'spellbook-grid');
+      FoundryAdapter.unsetFlag($context.actor, 'spellbook-grid');
       return;
     }
 
-    FoundryAdapter.setFlag($store.actor, 'spellbook-grid', true);
+    FoundryAdapter.setFlag($context.actor, 'spellbook-grid', true);
   }
 
-  $: noSpellLevels = !$store.spellbook.length;
+  $: noSpellLevels = !$context.spellbook.length;
 </script>
 
 <ItemFilters>
   <ItemFilterSearch
     bind:searchCriteria
-    actor={$store.actor}
+    actor={$context.actor}
     searchFlag="spell-search"
     cssClass="align-self-flex-end"
     placeholder={localize('T5EK.SearchSpell')}
@@ -61,22 +61,22 @@
   </ItemFilterOption>
   <ItemFilterOption setName="spellbook" filterName="prepared">
     {localize('DND5E.Prepared')}
-    {#if $store.preparedSpells > 0}
-      ({$store.preparedSpells})
+    {#if $context.preparedSpells > 0}
+      ({$context.preparedSpells})
     {/if}
   </ItemFilterOption>
   <ItemFilterLayoutToggle mode={layoutMode} on:toggle={() => toggleLayout()} />
 </ItemFilters>
 <ListContainer cssClass="flex-column small-gap">
   {#if noSpellLevels}
-    <NoSpells editable={$store.editable} />
+    <NoSpells editable={$context.editable} />
   {:else}
-    {#each $store.spellbook as section (section.label)}
+    {#each $context.spellbook as section (section.label)}
       {@const filteredSpells = FoundryAdapter.getFilteredItems(
         searchCriteria,
         section.spells
       )}
-      {#if (searchCriteria.trim() === '' && $store.editable) || filteredSpells.length > 0}
+      {#if (searchCriteria.trim() === '' && $context.editable) || filteredSpells.length > 0}
         {#if layoutMode === 'list'}
           <SpellbookList
             allowFavorites={false}

@@ -14,21 +14,21 @@
    */
   export let cssClass: string = '';
 
-  let store = getContext<Readable<ActorSheetContext>>('store');
+  let context = getContext<Readable<ActorSheetContext>>('context');
 </script>
 
 <AcShieldBase {cssClass}>
   <button
     type="button"
     on:click={() =>
-      new dnd5e.applications.actor.ActorArmorConfig($store.actor).render(true)}
-    on:mouseover={(ev) => $store.actor.sheet._onPropertyAttribution(ev)}
+      new dnd5e.applications.actor.ActorArmorConfig($context.actor).render(true)}
+    on:mouseover={(ev) => $context.actor.sheet._onPropertyAttribution(ev)}
     on:focus
     class="config-button attribute-value transparent-button"
     data-attribution="attributes.ac"
     data-attribution-caption="DND5E.ArmorClass"
     data-tooltip-direction="DOWN"
-    disabled={!$store.owner}
+    disabled={!$context.owner}
   >
     {ac}
   </button>

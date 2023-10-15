@@ -5,8 +5,8 @@
   import type { Readable } from 'svelte/store';
   import TextInput from 'src/components/form/TextInput.svelte';
 
-  let store =
-    getContext<Readable<CharacterSheetContext | NpcSheetContext>>('store');
+  let context =
+    getContext<Readable<CharacterSheetContext | NpcSheetContext>>('context');
 
   export let successes: number;
   export let failures: number;
@@ -24,11 +24,11 @@
 <!-- Death Saves -->
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <!-- svelte-ignore a11y-click-events-have-key-events -->
-<div class="death-saves" class:rounded={$store.useRoundedPortraitStyle}>
+<div class="death-saves" class:rounded={$context.useRoundedPortraitStyle}>
   <div class="death-save-counters" class:show-backdrop={hpOverlayDisabled}>
     <i class="fas fa-check" />
     <TextInput
-      document={$store.actor}
+      document={$context.actor}
       field={successesField}
       cssClass="death-save-result"
       dtype="Number"
@@ -38,7 +38,7 @@
       value={successes}
       maxlength={1}
       title={localize('DND5E.DeathSave')}
-      disabled={!$store.owner}
+      disabled={!$context.owner}
       />
     <div
       class="death-save rollable"
@@ -47,7 +47,7 @@
       <i class="fas fa-skull" />
     </div>
     <TextInput
-      document={$store.actor}
+      document={$context.actor}
       field={failuresField}
       cssClass="death-save-result"
       dtype="Number"
@@ -56,7 +56,7 @@
       placeholder="0"
       value={failures}
       maxlength={1}
-      disabled={!$store.owner}
+      disabled={!$context.owner}
       />
     <i class="fas fa-times" />
   </div>

@@ -5,44 +5,44 @@
   import type { Readable } from 'svelte/store';
   import TextInput from 'src/components/form/TextInput.svelte';
 
-  let store =
-    getContext<Readable<CharacterSheetContext | NpcSheetContext>>('store');
+  let context =
+    getContext<Readable<CharacterSheetContext | NpcSheetContext>>('context');
 
   const localize = FoundryAdapter.localize;
 </script>
 
 <div class="profile-temp">
   <TextInput
-    document={$store.actor}
+    document={$context.actor}
     field="system.attributes.hp.temp"
     cssClass="temphp"
     placeholder="+{localize('DND5E.Temp')}"
-    value={$store.hp.temp || null}
+    value={$context.hp.temp || null}
     dtype="Number"
     allowDeltaChanges={true}
     maxlength={5}
     title={localize('DND5E.HitPointsTemp')}
-    disabled={!$store.owner}
+    disabled={!$context.owner}
   />
   <TextInput
-    document={$store.actor}
+    document={$context.actor}
     field="system.attributes.hp.tempmax"
     cssClass="max-temphp"
     placeholder="+{localize('DND5E.Max')}"
-    value={$store.hp.tempmax || null}
+    value={$context.hp.tempmax || null}
     dtype="Number"
     allowDeltaChanges={true}
     maxlength={5}
     title={localize('DND5E.HitPointsTempMax')}
-    disabled={!$store.owner}
+    disabled={!$context.owner}
   />
-  {#if $store.owner}
+  {#if $context.owner}
     <button
       type="button"
       class="inline-icon-button"
       title={localize('DND5E.HitPointsConfig')}
       on:click|stopPropagation|preventDefault={(event) =>
-        new dnd5e.applications.actor.ActorHitPointsConfig($store.actor).render(
+        new dnd5e.applications.actor.ActorHitPointsConfig($context.actor).render(
           true
         )}
     >

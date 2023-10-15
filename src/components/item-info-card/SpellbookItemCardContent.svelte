@@ -13,24 +13,24 @@
   export let item: Item5e;
   export let chatData: ItemChatData;
 
-  let store =
+  let context =
     getContext<
-      Readable<CharacterSheetContext | NpcSheetContext | VehicleSheetContext>
-    >('store');
+      Readable<CharacterSheetContext | NpcSheetContext>
+    >('context');
 
   const localize = FoundryAdapter.localize;
 
   $: spellRowClasses = FoundryAdapter.getSpellRowClasses(item);
-  $: ctx = $store.itemContext[item.id];
+  $: ctx = $context.itemContext[item.id];
   $: canPrepare = FoundryAdapter.canPrepareSpell(item);
 </script>
 
 <div class="info-card {spellRowClasses}" data-item-id={item._id}>
   <p class="info-card-name">{item.name}</p>
-  {#if item.labels.school || ($store.owner && canPrepare)}
+  {#if item.labels.school || ($context.owner && canPrepare)}
     <div class="info-card-states">
       <span>{item.labels.school ?? ''}</span>
-      {#if $store.owner}
+      {#if $context.owner}
         {#if canPrepare}
           <span>{ctx.toggleTitle}</span>
         {/if}

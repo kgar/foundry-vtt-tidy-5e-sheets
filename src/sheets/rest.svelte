@@ -4,7 +4,7 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
 
-  let store = getContext<Readable<CharacterSheetContext>>('store');
+  let context = getContext<Readable<CharacterSheetContext>>('context');
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -12,7 +12,7 @@
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <!-- svelte-ignore a11y-missing-attribute -->
-<div class="rest-container" class:rounded={$store.useRoundedPortraitStyle}>
+<div class="rest-container" class:rounded={$context.useRoundedPortraitStyle}>
   <div class="resting">
     <span class="resting-icon" title={localize('T5EK.RestHint')}
       ><i class="rest-icon fas fa-bed" /></span
@@ -21,8 +21,8 @@
       type="button"
       class="rest icon-button"
       title={localize('T5EK.RestS')}
-      on:click={(event) => $store.actor.sheet.onShortRest(event)}
-      disabled={!$store.owner}
+      on:click={(event) => $context.actor.sheet.onShortRest(event)}
+      disabled={!$context.owner}
     >
       <i class="fas fa-hourglass-half" />
     </button>
@@ -30,8 +30,8 @@
       type="button"
       class="rest icon-button"
       title={localize('T5EK.RestL')}
-      on:click={(event) => $store.actor.sheet.onLongRest(event)}
-      disabled={!$store.owner}
+      on:click={(event) => $context.actor.sheet.onLongRest(event)}
+      disabled={!$context.owner}
     >
       <i class="fas fa-hourglass-end" />
     </button>

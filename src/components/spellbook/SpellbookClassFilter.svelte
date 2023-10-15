@@ -9,7 +9,7 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
 
-  let store = getContext<Readable<CharacterSheetContext>>('store');
+  let context = getContext<Readable<CharacterSheetContext>>('context');
 
   let allClasses: DropdownOption[] = [];
 
@@ -24,16 +24,16 @@
   const localize = FoundryAdapter.localize;
 
   $: selectedClassFilter =
-    FoundryAdapter.tryGetFlag($store.actor, 'classFilter') ?? '';
+    FoundryAdapter.tryGetFlag($context.actor, 'classFilter') ?? '';
 </script>
 
 <select
   class="class-filter"
   on:change|stopPropagation|preventDefault={(event) =>
-    $store.actor.update({
+    $context.actor.update({
       [`flags.${CONSTANTS.MODULE_ID}.classFilter`]: event.currentTarget.value,
     })}
-  disabled={!$store.owner}
+  disabled={!$context.owner}
 >
   {#each allClasses as option}
     <option

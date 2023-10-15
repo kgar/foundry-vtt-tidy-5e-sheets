@@ -16,7 +16,7 @@ import { debug } from 'src/utils/logging';
 
 export class Tidy5eVehicleSheet extends dnd5e.applications.actor
   .ActorSheet5eVehicle {
-  store = writable<VehicleSheetContext>();
+  context = writable<VehicleSheetContext>();
   stats = writable<SheetStats>({
     lastSubmissionTime: null,
   });
@@ -27,7 +27,7 @@ export class Tidy5eVehicleSheet extends dnd5e.applications.actor
     super(...args);
 
     settingStore.subscribe(() => {
-      this.getContext().then((context) => this.store.set(context));
+      this.getContext().then((context) => this.context.set(context));
     });
   }
 
@@ -48,7 +48,7 @@ export class Tidy5eVehicleSheet extends dnd5e.applications.actor
     const node = html.get(0);
     this.card.set({ sheet: node, item: null, itemCardContentTemplate: null });
     const initialContext = await this.getContext();
-    this.store.set(initialContext);
+    this.context.set(initialContext);
 
     this.component = new VehicleSheet({
       target: node,
@@ -56,7 +56,7 @@ export class Tidy5eVehicleSheet extends dnd5e.applications.actor
         selectedTabId: this.#getSelectedTabId(),
       },
       context: new Map<any, any>([
-        ['store', this.store],
+        ['context', this.context],
         ['stats', this.stats],
         ['card', this.card],
       ]),
@@ -146,7 +146,7 @@ export class Tidy5eVehicleSheet extends dnd5e.applications.actor
 
     applyTitleToWindow(this.title, this.element.get(0));
     const context = await this.getContext();
-    this.store.update(() => context);
+    this.context.update(() => context);
   }
 
   _getHeaderButtons() {

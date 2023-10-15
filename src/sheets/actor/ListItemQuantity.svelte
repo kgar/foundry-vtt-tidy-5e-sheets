@@ -10,7 +10,7 @@
   export let item: Item5e;
   export let ctx: any;
 
-  let store = getContext<Readable<ActorSheetContext>>('store');
+  let context = getContext<Readable<ActorSheetContext>>('context');
 </script>
 
 {#if item.system.quantity}
@@ -24,7 +24,7 @@
       readonly={!FoundryAdapter.userIsGm() && $settingStore.lockItemQuantity}
       selectOnFocus={true}
       stopClickPropagation={true}
-      disabled={!$store.owner || $store.lockItemQuantity}
+      disabled={!$context.owner || $context.lockItemQuantity}
     />)
   </span>
 {/if}

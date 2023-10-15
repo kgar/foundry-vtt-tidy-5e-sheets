@@ -5,7 +5,7 @@
 
   export let warnings: any;
 
-  let store = getContext<Readable<ActorSheetContext>>('store');
+  let context = getContext<Readable<ActorSheetContext>>('context');
 </script>
 
 <ol class="warnings">
@@ -15,7 +15,7 @@
         <button
           type="button"
           class="inline-transparent-button"
-          on:click={(ev) => $store.actor.sheet._onWarningLink(ev)}
+          on:click={(ev) => $context.actor.sheet._onWarningLink(ev)}
           data-target={warning.link}>{warning.message}</button
         >
       {:else}

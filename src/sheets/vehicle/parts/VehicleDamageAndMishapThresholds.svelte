@@ -5,35 +5,35 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
 
-  let store = getContext<Readable<VehicleSheetContext>>('store');
+  let context = getContext<Readable<VehicleSheetContext>>('context');
 
   const localize = FoundryAdapter.localize;
 </script>
 
 <div class="profile-thresholds">
   <TextInput
-    document={$store.actor}
+    document={$context.actor}
     field="system.attributes.hp.dt"
     cssClass="damage-threshold"
     placeholder={localize('DND5E.Threshold')}
-    value={$store.system.attributes.hp.dt || null}
+    value={$context.system.attributes.hp.dt || null}
     dtype="Number"
     allowDeltaChanges={true}
     maxlength={5}
     title={localize('DND5E.DamageThreshold')}
-    disabled={!$store.owner || $store.lockSensitiveFields}
+    disabled={!$context.owner || $context.lockSensitiveFields}
   />
   <TextInput
-    document={$store.actor}
+    document={$context.actor}
     field="system.attributes.hp.mt"
     cssClass="mishap-threshold"
     placeholder={localize('DND5E.VehicleMishap')}
-    value={$store.system.attributes.hp.mt || null}
+    value={$context.system.attributes.hp.mt || null}
     dtype="Number"
     allowDeltaChanges={true}
     maxlength={5}
     title={localize('DND5E.VehicleMishapThreshold')}
-    disabled={!$store.owner || $store.lockSensitiveFields}
+    disabled={!$context.owner || $context.lockSensitiveFields}
   />
 </div>
 

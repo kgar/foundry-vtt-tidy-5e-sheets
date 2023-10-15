@@ -9,8 +9,8 @@
   import TextInput from '../form/TextInput.svelte';
 
   export let section: any;
-  let store =
-    getContext<Readable<CharacterSheetContext | NpcSheetContext>>('store');
+  let context =
+    getContext<Readable<CharacterSheetContext | NpcSheetContext>>('context');
 
   const localize = FoundryAdapter.localize;
 
@@ -19,7 +19,7 @@
 
 <div class="spell-slots-detail">
   <TextInput
-    document={$store.actor}
+    document={$context.actor}
     field="system.spells.{section.prop}.value"
     cssClass="spell-slot-uses"
     value={section.uses}
@@ -27,12 +27,12 @@
     dtype="Number"
     selectOnFocus={true}
     allowDeltaChanges={true}
-    disabled={!$store.owner}
+    disabled={!$context.owner}
   />
   <span class="sep"> / </span>
   {#if overrideMode}
     <TextInput
-      document={$store.actor}
+      document={$context.actor}
       field="system.spells.{section.prop}.override"
       cssClass="spell-slot-override"
       value={section.override}
@@ -40,7 +40,7 @@
       dtype="Number"
       selectOnFocus={true}
       allowDeltaChanges={true}
-      disabled={!$store.owner || $store.lockSensitiveFields}
+      disabled={!$context.owner || $context.lockSensitiveFields}
     />
   {:else}
     <span
@@ -50,7 +50,7 @@
     >
       {section.slots}
     </span>
-    {#if $store.owner && !$store.lockSensitiveFields}
+    {#if $context.owner && !$context.lockSensitiveFields}
       <button
         type="button"
         class="spell-slot-max-override icon-button"

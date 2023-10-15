@@ -9,7 +9,7 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
 
-  let store = getContext<Readable<VehicleSheetContext>>('store');
+  let context = getContext<Readable<VehicleSheetContext>>('context');
 
   export let motion: boolean;
   export let cssClass: string = '';
@@ -26,11 +26,11 @@
   <Checkbox
     checkboxCssClass="motion-toggle"
     labelCssClass="{motion ? 'motion' : ''} {radiusClass}"
-    document={$store.actor}
+    document={$context.actor}
     field="flags.{CONSTANTS.MODULE_ID}.motion"
     dtype="Boolean"
     checked={motion}
-    disabled={!$store.owner}
+    disabled={!$context.owner}
     >
     <i
       class="motion-icon fas fa-sailboat"

@@ -16,7 +16,7 @@
   import type { Readable } from 'svelte/store';
   import SpellbookItemCardContent from '../item-info-card/SpellbookItemCardContent.svelte';
 
-  let store = getContext<Readable<CharacterSheetContext>>('store');
+  let context = getContext<Readable<CharacterSheetContext>>('context');
   export let section: any;
   export let spells: any[];
 
@@ -51,7 +51,7 @@
       </ItemTableColumn>
     </ItemTableHeaderRow>
     {#each spells as spell}
-      {@const spellImgUrl = FoundryAdapter.getSpellImageUrl($store, spell)}
+      {@const spellImgUrl = FoundryAdapter.getSpellImageUrl($context, spell)}
       <ItemTableRow
         item={spell}
         on:mousedown={(event) =>
@@ -67,7 +67,7 @@
         <ItemTableCell primary={true}>
           <ItemUseButton item={spell} imgUrlOverride={spellImgUrl} />
           <ItemName
-            on:click={(event) => toggleSummary(event.detail, $store.actor)}
+            on:click={(event) => toggleSummary(event.detail, $context.actor)}
             item={spell}
           >
             {spell.name}

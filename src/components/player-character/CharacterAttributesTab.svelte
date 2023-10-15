@@ -9,18 +9,18 @@
   import type { Readable } from 'svelte/store';
   import { settingStore } from 'src/settings/settings';
 
-  let store = getContext<Readable<CharacterSheetContext>>('store');
+  let context = getContext<Readable<CharacterSheetContext>>('context');
 
   $: showResources =
-    $store.editable ||
-    $store.resources.some(
+    $context.editable ||
+    $context.resources.some(
       (x) => !isNil(x.value) || !isNil(x.value, '') || !isNil(x.max)
     );
 </script>
 
 <div class="attributes-tab-contents">
   <section class="side-panel">
-    <SkillsList actor={$store.actor} />
+    <SkillsList actor={$context.actor} />
     {#if !$settingStore.traitsMovedBelowResource}
       <Traits toggleable={$settingStore.traitsTogglePc} />
     {/if}

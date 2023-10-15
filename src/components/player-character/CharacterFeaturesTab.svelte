@@ -28,10 +28,10 @@
   import Notice from '../shared/Notice.svelte';
   import { settingStore } from 'src/settings/settings';
 
-  let store = getContext<Readable<CharacterSheetContext>>('store');
+  let context = getContext<Readable<CharacterSheetContext>>('context');
 
   const localize = FoundryAdapter.localize;
-  $: classicControlsBaseWidth = $store.editable ? '7.5rem' : '5.3125rem';
+  $: classicControlsBaseWidth = $context.editable ? '7.5rem' : '5.3125rem';
 
   let backgroundSection: any,
     classSection: any,
@@ -39,7 +39,7 @@
     passiveAbilitiesSection: any;
 
   $: {
-    for (let section of $store.features) {
+    for (let section of $context.features) {
       switch (section.dataset?.type) {
         case 'background':
           backgroundSection = section;
@@ -59,10 +59,10 @@
   }
 
   $: noFeatures =
-    $store.features.some((section: any) => section.items.length > 0) === false;
+    $context.features.some((section: any) => section.items.length > 0) === false;
 
   function getAvailableLevels(id: string) {
-    return $store.itemContext[id]?.availableLevels ?? [];
+    return $context.itemContext[id]?.availableLevels ?? [];
   }
 
   let searchCriteria: string = '';
@@ -71,7 +71,7 @@
 <ItemFilters>
   <ItemFilterSearch
     bind:searchCriteria
-    actor={$store.actor}
+    actor={$context.actor}
     searchFlag="feat-search"
     placeholder={localize('T5EK.SearchFeat')}
   />
@@ -104,10 +104,10 @@
     passiveAbilitiesSection.items
   )}
 
-  {#if noFeatures && !$store.editable}
+  {#if noFeatures && !$context.editable}
     <Notice>{localize('T5EK.EmptySection')}</Notice>
   {:else}
-    {#if (searchCriteria.trim() === '' && $store.editable) || filteredBackgrounds.length > 0}
+    {#if (searchCriteria.trim() === '' && $context.editable) || filteredBackgrounds.length > 0}
       <ItemTable>
         <ItemTableHeaderRow>
           <ItemTableColumn primary={true}>
@@ -119,7 +119,7 @@
           <ItemTableColumn baseWidth="7.5rem">
             {localize('DND5E.Requirements')}
           </ItemTableColumn>
-          {#if $store.owner && $store.classicControlsEnabled}
+          {#if $context.owner && $context.classicControlsEnabled}
             <ItemTableColumn baseWidth={classicControlsBaseWidth} />
           {/if}
         </ItemTableHeaderRow>
@@ -138,7 +138,7 @@
             <ItemTableCell primary={true}>
               <ItemUseButton {item} />
               <ItemName
-                on:click={(event) => toggleSummary(event.detail, $store.actor)}
+                on:click={(event) => toggleSummary(event.detail, $context.actor)}
                 hasChildren={false}
                 {item}
               >
@@ -162,12 +162,12 @@
               >
             </ItemTableCell>
 
-            {#if $store.owner && $store.classicControlsEnabled}
+            {#if $context.owner && $context.classicControlsEnabled}
               <ItemTableCell baseWidth={classicControlsBaseWidth}>
                 <ItemControls>
                   <ItemFavoriteControl {item} />
                   <ItemEditControl {item} />
-                  {#if $store.editable}
+                  {#if $context.editable}
                     <ItemDuplicateControl {item} />
                     <ItemDeleteControl {item} />
                   {/if}
@@ -177,16 +177,16 @@
           </ItemTableRow>
         {/each}
 
-        {#if $store.editable}
+        {#if $context.editable}
           <ItemTableFooter
             dataset={backgroundSection.dataset}
-            actor={$store.actor}
+            actor={$context.actor}
           />
         {/if}
       </ItemTable>
     {/if}
 
-    {#if (searchCriteria.trim() === '' && $store.editable) || filteredClasses.length > 0}
+    {#if (searchCriteria.trim() === '' && $context.editable) || filteredClasses.length > 0}
       <ItemTable>
         <ItemTableHeaderRow>
           <ItemTableColumn primary={true}>
@@ -198,7 +198,7 @@
           <ItemTableColumn baseWidth="7.5rem">
             {localize('DND5E.Level')}
           </ItemTableColumn>
-          {#if $store.owner && $store.classicControlsEnabled}
+          {#if $context.owner && $context.classicControlsEnabled}
             <ItemTableColumn baseWidth={classicControlsBaseWidth} />
           {/if}
         </ItemTableHeaderRow>
@@ -216,7 +216,7 @@
             <ItemTableCell primary={true}>
               <ItemUseButton {item} />
               <ItemName
-                on:click={(event) => toggleSummary(event.detail, $store.actor)}
+                on:click={(event) => toggleSummary(event.detail, $context.actor)}
                 hasChildren={false}
                 {item}
               >
@@ -245,8 +245,8 @@
               {#if item.type === 'class'}
                 <select
                   on:change={(event) =>
-                    FoundryAdapter.onLevelChange(event, item, $store.actor)}
-                  disabled={!$store.owner || $store.lockLevelSelector}
+                    FoundryAdapter.onLevelChange(event, item, $context.actor)}
+                  disabled={!$context.owner || $context.lockLevelSelector}
                 >
                   {#each getAvailableLevels(item.id) as availableLevel}
                     <option
@@ -266,14 +266,14 @@
               {/if}
             </ItemTableCell>
 
-            {#if $store.owner && $store.classicControlsEnabled}
+            {#if $context.owner && $context.classicControlsEnabled}
               <ItemTableCell baseWidth={classicControlsBaseWidth}>
                 <ItemControls>
                   {#if item.type !== 'class'}
                     <ItemFavoriteControl {item} />
                   {/if}
                   <ItemEditControl {item} />
-                  {#if $store.editable}
+                  {#if $context.editable}
                     <ItemDuplicateControl {item} />
                     <ItemDeleteControl {item} />
                   {/if}
@@ -282,16 +282,16 @@
             {/if}
           </ItemTableRow>
         {/each}
-        {#if $store.editable}
+        {#if $context.editable}
           <ItemTableFooter
             dataset={classSection.dataset}
-            actor={$store.actor}
+            actor={$context.actor}
           />
         {/if}
       </ItemTable>
     {/if}
 
-    {#if (searchCriteria.trim() === '' && $store.editable) || filteredActiveAbilities.length > 0}
+    {#if (searchCriteria.trim() === '' && $context.editable) || filteredActiveAbilities.length > 0}
       <ItemTable>
         <ItemTableHeaderRow>
           <ItemTableColumn primary={true}>
@@ -309,12 +309,12 @@
           <ItemTableColumn baseWidth="7.5rem">
             {localize('DND5E.Requirements')}
           </ItemTableColumn>
-          {#if $store.owner && $store.classicControlsEnabled}
+          {#if $context.owner && $context.classicControlsEnabled}
             <ItemTableColumn baseWidth={classicControlsBaseWidth} />
           {/if}
         </ItemTableHeaderRow>
         {#each filteredActiveAbilities as item (item.id)}
-          {@const ctx = $store.itemContext[item.id]}
+          {@const ctx = $context.itemContext[item.id]}
           <ItemTableRow
             {item}
             let:toggleSummary
@@ -328,7 +328,7 @@
             <ItemTableCell primary={true}>
               <ItemUseButton {item} />
               <ItemName
-                on:click={(event) => toggleSummary(event.detail, $store.actor)}
+                on:click={(event) => toggleSummary(event.detail, $context.actor)}
                 hasChildren={false}
                 {item}
               >
@@ -348,7 +348,7 @@
                   class="item-list-button"
                   title={item.labels.recharge}
                   on:click={() => item.rollRecharge()}
-                  disabled={!$store.owner}
+                  disabled={!$context.owner}
                 >
                   <i class="fas fa-dice-six" />
                   {item.system.recharge
@@ -378,12 +378,12 @@
               >
             </ItemTableCell>
 
-            {#if $store.owner && $store.classicControlsEnabled}
+            {#if $context.owner && $context.classicControlsEnabled}
               <ItemTableCell baseWidth={classicControlsBaseWidth}>
                 <ItemControls>
                   <ItemFavoriteControl {item} />
                   <ItemEditControl {item} />
-                  {#if $store.editable}
+                  {#if $context.editable}
                     <ItemDuplicateControl {item} />
                     <ItemDeleteControl {item} />
                   {/if}
@@ -392,16 +392,16 @@
             {/if}
           </ItemTableRow>
         {/each}
-        {#if $store.editable}
+        {#if $context.editable}
           <ItemTableFooter
             dataset={activeAbilitiesSection.dataset}
-            actor={$store.actor}
+            actor={$context.actor}
           />
         {/if}
       </ItemTable>
     {/if}
 
-    {#if (searchCriteria.trim() === '' && $store.editable) || filteredPassiveAbilities.length > 0}
+    {#if (searchCriteria.trim() === '' && $context.editable) || filteredPassiveAbilities.length > 0}
       <ItemTable>
         <ItemTableHeaderRow>
           <ItemTableColumn primary={true}>
@@ -413,7 +413,7 @@
           <ItemTableColumn baseWidth="7.5rem">
             {localize('DND5E.Requirements')}
           </ItemTableColumn>
-          {#if $store.owner && $store.classicControlsEnabled}
+          {#if $context.owner && $context.classicControlsEnabled}
             <ItemTableColumn baseWidth={classicControlsBaseWidth} />
           {/if}
         </ItemTableHeaderRow>
@@ -431,7 +431,7 @@
             <ItemTableCell primary={true}>
               <ItemUseButton {item} />
               <ItemName
-                on:click={(event) => toggleSummary(event.detail, $store.actor)}
+                on:click={(event) => toggleSummary(event.detail, $context.actor)}
                 hasChildren={false}
                 {item}
               >
@@ -455,12 +455,12 @@
               >
             </ItemTableCell>
 
-            {#if $store.owner && $store.classicControlsEnabled}
+            {#if $context.owner && $context.classicControlsEnabled}
               <ItemTableCell baseWidth={classicControlsBaseWidth}>
                 <ItemControls>
                   <ItemFavoriteControl {item} />
                   <ItemEditControl {item} />
-                  {#if $store.editable}
+                  {#if $context.editable}
                     <ItemDuplicateControl {item} />
                     <ItemDeleteControl {item} />
                   {/if}
@@ -469,10 +469,10 @@
             {/if}
           </ItemTableRow>
         {/each}
-        {#if $store.editable}
+        {#if $context.editable}
           <ItemTableFooter
             dataset={passiveAbilitiesSection.dataset}
-            actor={$store.actor}
+            actor={$context.actor}
           />
         {/if}
       </ItemTable>

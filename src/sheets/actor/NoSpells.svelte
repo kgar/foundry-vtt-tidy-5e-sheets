@@ -8,20 +8,20 @@
   export let editable: boolean;
   export let cssClass: string | null = null;
 
-  let store =
-    getContext<Readable<CharacterSheetContext | NpcSheetContext>>('store');
+  let context =
+    getContext<Readable<CharacterSheetContext | NpcSheetContext>>('context');
 
   const localize = FoundryAdapter.localize;
 </script>
 
 <div class="no-spells-container {cssClass}">
   <Notice>{localize('DND5E.NoSpellLevels')}</Notice>
-  {#if $store.owner && editable}
+  {#if $context.owner && editable}
     <button
       type="button"
       class="create-spell-btn flex-row align-items-center extra-small-gap"
       on:click={() =>
-        FoundryAdapter.createItem({ type: 'spell', level: '' }, $store.actor)}
+        FoundryAdapter.createItem({ type: 'spell', level: '' }, $context.actor)}
     >
       <i class="fas fa-plus-circle" />
       {localize('DND5E.SpellCreate')}

@@ -9,7 +9,7 @@
   import ItemFormGroup from '../form/ItemFormGroup.svelte';
   import Checkbox from 'src/components/form/Checkbox.svelte';
 
-  let store = getContext<Readable<ItemSheetContext>>('store');
+  let context = getContext<Readable<ItemSheetContext>>('context');
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -18,10 +18,10 @@
   <div class="form-fields">
     <Checkbox
     labelCssClass="checkbox"
-      document={$store.item}
+      document={$context.item}
       field="system.equipped"
-      checked={$store.system.equipped}
-      disabled={!$store.owner}
+      checked={$context.system.equipped}
+      disabled={!$context.owner}
       >
       {localize('DND5E.Equipped')}
     </Checkbox>
@@ -35,12 +35,12 @@
 >
   <Select
     id={inputId}
-    document={$store.item}
+    document={$context.item}
     field="system.toolType"
-    value={$store.system.toolType}
-    disabled={!$store.owner}
+    value={$context.system.toolType}
+    disabled={!$context.owner}
     >
-    <SelectOptions data={$store.config.toolTypes} blank="" />
+    <SelectOptions data={$context.config.toolTypes} blank="" />
   </Select>
 </ItemFormGroup>
 
@@ -51,12 +51,12 @@
 >
   <Select
     id={inputId}
-    document={$store.item}
+    document={$context.item}
     field="system.baseItem"
-    value={$store.system.baseItem}
-    disabled={!$store.owner}
+    value={$context.system.baseItem}
+    disabled={!$context.owner}
     >
-    <SelectOptions data={$store.baseItems} blank="" />
+    <SelectOptions data={$context.baseItems} blank="" />
   </Select>
 </ItemFormGroup>
 
@@ -67,13 +67,13 @@
 >
   <Select
     id={inputId}
-    document={$store.item}
+    document={$context.item}
     field="system.attunement"
     dtype="Number"
-    value={$store.system.attunement}
-    disabled={!$store.owner}
+    value={$context.system.attunement}
+    disabled={!$context.owner}
     >
-    <SelectOptions data={$store.config.attunements} />
+    <SelectOptions data={$context.config.attunements} />
   </Select>
 </ItemFormGroup>
 
@@ -84,14 +84,14 @@
 >
   <Select
     id={inputId}
-    document={$store.item}
+    document={$context.item}
     field="system.proficient"
     dtype="Number"
-    value={$store.system.proficient}
-    disabled={!$store.owner}
+    value={$context.system.proficient}
+    disabled={!$context.owner}
     >
     <SelectOptions
-      data={$store.config.proficiencyLevels}
+      data={$context.config.proficiencyLevels}
       blank={localize('DND5E.Automatic')}
     />
   </Select>
@@ -104,13 +104,13 @@
 >
   <Select
     id={inputId}
-    document={$store.item}
+    document={$context.item}
     field="system.ability"
-    value={$store.system.ability}
-    disabled={!$store.owner}
+    value={$context.system.ability}
+    disabled={!$context.owner}
     >
     <SelectOptions
-      data={$store.config.abilities}
+      data={$context.config.abilities}
       labelProp="label"
       blank={localize('DND5E.Default')}
     />
@@ -124,11 +124,11 @@
 >
   <TextInput
     id={inputId}
-    document={$store.item}
+    document={$context.item}
     field="system.bonus"
-    value={$store.system.bonus}
+    value={$context.system.bonus}
     dataset={{ formulaEditor: true }}
-    disabled={!$store.owner}
+    disabled={!$context.owner}
     />
 </ItemFormGroup>
 
@@ -140,9 +140,9 @@
 >
   <TextInput
     id={inputId}
-    document={$store.item}
+    document={$context.item}
     field="system.chatFlavor"
-    value={$store.system.chatFlavor}
-    disabled={!$store.owner}
+    value={$context.system.chatFlavor}
+    disabled={!$context.owner}
     />
 </ItemFormGroup>

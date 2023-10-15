@@ -30,15 +30,15 @@
 
   export let selectedTabId: string;
 
-  let store = getContext<Readable<VehicleSheetContext>>('store');
+  let context = getContext<Readable<VehicleSheetContext>>('context');
 
   let tabs: Tab[];
   $: {
-    tabs = $vehicleSheetTabsStore.getTabs($store);
+    tabs = $vehicleSheetTabsStore.getTabs($context);
 
     Hooks.call(CONSTANTS.HOOKS_RENDERING_VEHICLE_TABS, {
       tabs,
-      context: $store,
+      context: $context,
     });
 
     if (!tabs.some((tab) => tab.id === selectedTabId)) {
@@ -46,7 +46,7 @@
     }
   }
 
-  $: sizes = <TidyDropdownOption[]>Object.entries($store.config.actorSizes).map(
+  $: sizes = <TidyDropdownOption[]>Object.entries($context.config.actorSizes).map(
     ([abbreviation, size]) => ({
       value: abbreviation,
       text: size as string,
@@ -54,11 +54,11 @@
   );
 
   $: currentSize = <TidyDropdownOption>{
-    value: $store.system.traits.size,
-    text: $store.config.actorSizes[$store.system.traits.size],
+    value: $context.system.traits.size,
+    text: $context.config.actorSizes[$context.system.traits.size],
   };
 
-  $: abilities = Object.entries<any>($store.abilities);
+  $: abilities = Object.entries<any>($context.abilities);
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -67,8 +67,8 @@
   <ItemInfoCard />
 {/if}
 
-{#if $store.warnings.length}
-  <ActorWarnings warnings={$store.warnings} />
+{#if $context.warnings.length}
+  <ActorWarnings warnings={$context.warnings} />
 {/if}
 <header>
   <div class="flex-0">
@@ -81,10 +81,10 @@
       <div class="actor-name">
         <ContentEditableFormField
           element="h1"
-          document={$store.actor}
+          document={$context.actor}
           field="name"
-          value={$store.actor.name}
-          editable={$store.owner && !$store.lockSensitiveFields}
+          value={$context.actor.name}
+          editable={$context.owner && !$context.lockSensitiveFields}
           spellcheck={false}
           placeholder={localize('DND5E.Name')}
           dataMaxLength={40}
@@ -95,12 +95,12 @@
     <HorizontalLineSeparator borderColor="light" />
     <div class="origin-summary">
       <div class="flex-row extra-small-gap">
-        {#if $store.owner}
+        {#if $context.owner}
           <TidyDropdownList
             options={sizes}
             selected={currentSize}
             on:optionClicked={(event) =>
-              $store.actor.update({
+              $context.actor.update({
                 'system.traits.size': event.detail.value,
               })}
             title={localize('DND5E.Size')}
@@ -110,7 +110,7 @@
         {/if}
       </div>
       <span>&#8226;</span>
-      {#key $store.lockSensitiveFields}
+      {#key $context.lockSensitiveFields}
         <DelimitedTruncatedContent cssClass="flex-1">
           <span class="flex-row extra-small-gap align-items-center">
             <span>{localize('DND5E.Vehicle')}</span>
@@ -118,37 +118,37 @@
 
           <ContentEditableFormField
             element="span"
-            document={$store.actor}
+            document={$context.actor}
             field="system.traits.dimensions"
-            value={$store.system.traits.dimensions}
-            title={$store.system.traits.dimensions}
-            editable={$store.owner && !$store.lockSensitiveFields}
+            value={$context.system.traits.dimensions}
+            title={$context.system.traits.dimensions}
+            editable={$context.owner && !$context.lockSensitiveFields}
             placeholder={localize('DND5E.Dimensions')}
             selectOnFocus={true}
           />
           <ContentEditableFormField
             element="span"
-            document={$store.actor}
+            document={$context.actor}
             field="system.details.source"
-            value={$store.system.details.source}
-            editable={$store.owner && !$store.lockSensitiveFields}
+            value={$context.system.details.source}
+            editable={$context.owner && !$context.lockSensitiveFields}
             placeholder={localize('DND5E.Source')}
             title="{localize('DND5E.Source')} {!isNil(
-              $store.system.details.source,
+              $context.system.details.source,
               ''
             )
-              ? '| ' + $store.system.details.source
+              ? '| ' + $context.system.details.source
               : ''}"
             selectOnFocus={true}
           />
         </DelimitedTruncatedContent>
       {/key}
       <div class="flex-row align-items-center extra-small-gap">
-        {#if $store.owner && !$store.lockSensitiveFields}
+        {#if $context.owner && !$context.lockSensitiveFields}
           <button
             type="button"
             on:click={() =>
-              new Tidy5eActorOriginSummaryConfig($store.actor).render(true)}
+              new Tidy5eActorOriginSummaryConfig($context.actor).render(true)}
             class="origin-summary-tidy inline-icon-button"
             title={localize('T5EK.OriginSummaryConfig')}
           >
@@ -158,7 +158,7 @@
       </div>
     </div>
     <HorizontalLineSeparator borderColor="light" />
-    <ActorMovementRow actor={$store.actor} movement={$store.movement} />
+    <ActorMovementRow actor={$context.actor} movement={$context.movement} />
     <HorizontalLineSeparator borderColor="light" />
     <section class="actor-stats">
       <AcShieldVehicle />
@@ -178,7 +178,7 @@
 </header>
 <Tabs {tabs} bind:selectedTabId>
   <svelte:fragment slot="tab-end">
-    {#if $store.owner}
+    {#if $context.owner}
       <AllowEditLock
         hint={$settingStore.enablePermanentUnlockOnVehicleIfYouAreGM &&
         FoundryAdapter.userIsGm()

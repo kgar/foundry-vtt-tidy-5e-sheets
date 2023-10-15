@@ -9,30 +9,30 @@
   import { settingStore } from 'src/settings/settings';
     import { CONSTANTS } from 'src/constants';
 
-  let store = getContext<Readable<NpcSheetContext>>('store');
+  let context = getContext<Readable<NpcSheetContext>>('context');
 
   const localize = FoundryAdapter.localize;
 
   function activateProseMirrorListeners(node: HTMLElement) {
-    $store.activateFoundryJQueryListeners(node);
+    $context.activateFoundryJQueryListeners(node);
   }
 </script>
 
 <div class="limited-character">
-  <LimitedHeader rounded={$store.useRoundedPortraitStyle} />
+  <LimitedHeader rounded={$context.useRoundedPortraitStyle} />
   <section class="sheet-body">
     <div class="note-entries">
       <RerenderAfterFormSubmission
-        andOnValueChange={$store.system.details.biography.value}
+        andOnValueChange={$context.system.details.biography.value}
       >
         <article class="appearance-notes" use:activateProseMirrorListeners>
           <div class="section-titles biopage">
             {localize('DND5E.Appearance')}
           </div>
           <SheetEditor
-            content={$store.system.details.appearance}
+            content={$context.system.details.appearance}
             target="system.details.appearance"
-            editable={$store.owner || FoundryAdapter.userIsGm()}
+            editable={$context.owner || FoundryAdapter.userIsGm()}
           />
         </article>
         <article class="biography-notes" use:activateProseMirrorListeners>
@@ -40,9 +40,9 @@
             {localize('DND5E.Background')}/{localize('DND5E.Biography')}
           </div>
           <SheetEditor
-            content={$store.biographyHTML}
+            content={$context.biographyHTML}
             target="system.details.biography.value"
-            editable={$store.owner || FoundryAdapter.userIsGm()}
+            editable={$context.owner || FoundryAdapter.userIsGm()}
           />
         </article>
       </RerenderAfterFormSubmission>

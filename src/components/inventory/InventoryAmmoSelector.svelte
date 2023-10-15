@@ -11,10 +11,10 @@
 
   export let item: Item5e;
 
-  let store =
+  let context =
     getContext<
       Readable<CharacterSheetContext | NpcSheetContext | VehicleSheetContext>
-    >('store');
+    >('context');
 
   let ammos: { text: string; value: string | null; ammo: Item5e | null }[];
   $: ammos = [
@@ -23,7 +23,7 @@
       value: null,
       ammo: null,
     },
-    ...$store.actor.items
+    ...$context.actor.items
       .filter(
         (x) =>
           x.system.consumableType === 'ammo' &&
@@ -58,7 +58,7 @@
 <select
   on:click|stopPropagation
   on:change={(event) => onAmmoChange(item, event.currentTarget.value)}
-  disabled={!$store.owner}
+  disabled={!$context.owner}
 >
   {#each ammos as ammo}
     <option

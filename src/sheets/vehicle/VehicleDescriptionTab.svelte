@@ -6,22 +6,22 @@
   import RerenderAfterFormSubmission from 'src/components/shared/RerenderAfterFormSubmission.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
-  let store = getContext<Readable<VehicleSheetContext>>('store');
+  let context = getContext<Readable<VehicleSheetContext>>('context');
 
   function activateProseMirrorListeners(node: HTMLElement) {
-    $store.activateFoundryJQueryListeners(node);
+    $context.activateFoundryJQueryListeners(node);
   }
 </script>
 
 <div class="note-entries">
   <RerenderAfterFormSubmission
-    andOnValueChange={$store.system.details.biography.value}
+    andOnValueChange={$context.system.details.biography.value}
   >
     <article class="biography-notes" use:activateProseMirrorListeners>
       <SheetEditor
-        content={$store.biographyHTML}
+        content={$context.biographyHTML}
         target="system.details.biography.value"
-        editable={$store.owner || FoundryAdapter.userIsGm()}
+        editable={$context.owner || FoundryAdapter.userIsGm()}
       />
     </article>
   </RerenderAfterFormSubmission>

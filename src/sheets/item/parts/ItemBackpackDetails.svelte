@@ -9,7 +9,7 @@
   import type { Readable } from 'svelte/store';
   import ItemFormGroup from '../form/ItemFormGroup.svelte';
 
-  let store = getContext<Readable<ItemSheetContext>>('store');
+  let context = getContext<Readable<ItemSheetContext>>('context');
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -22,10 +22,10 @@
 >
   <Checkbox
     labelCssClass="checkbox"
-    document={$store.item}
+    document={$context.item}
     field="system.equipped"
-    checked={$store.system.equipped}
-    disabled={!$store.owner}
+    checked={$context.system.equipped}
+    disabled={!$context.owner}
     >
     {localize('DND5E.Equipped')}
   </Checkbox>
@@ -39,11 +39,11 @@
   <div class="form-fields">
     <NumberInput
       id={inputId}
-      document={$store.item}
+      document={$context.item}
       field="system.capacity.value"
       placeholder="&mdash;"
-      value={$store.system.capacity.value}
-      disabled={!$store.owner}
+      value={$context.system.capacity.value}
+      disabled={!$context.owner}
       />
   </div>
 </ItemFormGroup>
@@ -55,24 +55,24 @@
 >
   <Select
     id={inputId}
-    document={$store.item}
+    document={$context.item}
     field="system.capacity.type"
-    value={$store.system.capacity.type}
-    disabled={!$store.owner}
+    value={$context.system.capacity.type}
+    disabled={!$context.owner}
     >
-    <SelectOptions data={$store.config.itemCapacityTypes} />
+    <SelectOptions data={$context.config.itemCapacityTypes} />
   </Select>
 </ItemFormGroup>
 
 <ItemFormGroup labelText={localize('DND5E.Attunement')}>
   <Select
-    document={$store.item}
+    document={$context.item}
     field="system.attunement"
     dtype="Number"
-    value={$store.system.attunement}
-    disabled={!$store.owner}
+    value={$context.system.attunement}
+    disabled={!$context.owner}
     >
-    <SelectOptions data={$store.config.attunements} />
+    <SelectOptions data={$context.config.attunements} />
   </Select>
 </ItemFormGroup>
 
@@ -81,11 +81,11 @@
   labelText={localize('DND5E.ItemContainerProperties')}
 >
   <Checkbox
-    checked={$store.system.capacity.weightless}
+    checked={$context.system.capacity.weightless}
     field="system.capacity.weightless"
-    document={$store.item}
+    document={$context.item}
     labelCssClass="checkbox container-property"
-    disabled={!$store.owner}
+    disabled={!$context.owner}
     >
     {localize('DND5E.ItemContainerWeightless')}
   </Checkbox>

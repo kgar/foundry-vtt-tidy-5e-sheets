@@ -26,7 +26,7 @@
   import Notice from 'src/components/shared/Notice.svelte';
   import ItemHpBar from '../item/parts/ItemHpBar.svelte';
 
-  let store = getContext<Readable<VehicleSheetContext>>('store');
+  let context = getContext<Readable<VehicleSheetContext>>('context');
 
   const localize = FoundryAdapter.localize;
 
@@ -49,11 +49,11 @@
   const controlsBaseWidthLocked: string = '5.3125rem';
   const controlsBaseWidthUnlocked: string = '7.5rem';
 
-  $: classicControlsBaseWidth = $store.editable
+  $: classicControlsBaseWidth = $context.editable
     ? controlsBaseWidthUnlocked
     : controlsBaseWidthLocked;
 
-  $: noFeatures = !$store.features.some((section: any) => section.items.length);
+  $: noFeatures = !$context.features.some((section: any) => section.items.length);
 </script>
 
 <div class="attributes-tab-contents">
@@ -66,13 +66,13 @@
     />
   </div>
   <div class="main-panel flex-column small-gap">
-    {#if noFeatures && !$store.editable}
+    {#if noFeatures && !$context.editable}
       <Notice>
         {localize('T5EK.EmptySection')}
       </Notice>
     {:else}
-      {#each $store.features as section}
-        {#if $store.editable || section.items.length}
+      {#each $context.features as section}
+        {#if $context.editable || section.items.length}
           <ItemTable>
             <ItemTableHeaderRow>
               <ItemTableColumn primary={true}>
@@ -102,12 +102,12 @@
                   {/if}
                 {/each}
               {/if}
-              {#if $store.owner && $store.classicControlsEnabled}
+              {#if $context.owner && $context.classicControlsEnabled}
                 <ItemTableColumn baseWidth={classicControlsBaseWidth} />
               {/if}
             </ItemTableHeaderRow>
             {#each section.items as item (item.id)}
-              {@const ctx = $store.itemContext[item.id]}
+              {@const ctx = $context.itemContext[item.id]}
               <ItemTableRow
                 let:toggleSummary
                 on:mousedown={(event) =>
@@ -123,7 +123,7 @@
                   <ItemUseButton {item} />
                   <ItemName
                     on:click={(event) =>
-                      toggleSummary(event.detail, $store.actor)}
+                      toggleSummary(event.detail, $context.actor)}
                     cssClass="extra-small-gap"
                     {item}
                   >
@@ -140,7 +140,7 @@
                         title={item.labels.recharge}
                         tabindex="0"
                         on:click={() => item.rollRecharge()}
-                        disabled={!$store.owner}
+                        disabled={!$context.owner}
                       >
                         <i class="fas fa-dice-six" />
                         {item.system.recharge
@@ -185,7 +185,7 @@
                             maxlength={5}
                             ariaDescribedBy="tooltip"
                             selectOnFocus={true}
-                            disabled={!$store.owner}
+                            disabled={!$context.owner}
                           />
                           <span class="value-seperator sep"> / </span>
                           <TextInput
@@ -200,8 +200,8 @@
                             maxlength={5}
                             ariaDescribedBy="tooltip"
                             selectOnFocus={true}
-                            disabled={!$store.owner ||
-                              $store.lockSensitiveFields}
+                            disabled={!$context.owner ||
+                              $context.lockSensitiveFields}
                           />
                         </div>
                       </ItemTableCell>
@@ -229,7 +229,7 @@
                             allowDeltaChanges={isNumber}
                             selectOnFocus={true}
                             {value}
-                            disabled={!$store.owner}
+                            disabled={!$context.owner}
                           />
                         {:else}
                           {FoundryAdapter.getProperty(item, column.property) ??
@@ -240,7 +240,7 @@
                     {/if}
                   {/each}
                 {/if}
-                {#if $store.owner && $store.classicControlsEnabled}
+                {#if $context.owner && $context.classicControlsEnabled}
                   <ItemTableCell baseWidth={classicControlsBaseWidth}>
                     <ItemControls>
                       <ItemControl
@@ -253,7 +253,7 @@
                           })}
                       />
                       <ItemEditControl {item} />
-                      {#if $store.editable}
+                      {#if $context.editable}
                         <ItemDuplicateControl {item} />
                         <ItemDeleteControl {item} />
                       {/if}
@@ -262,8 +262,8 @@
                 {/if}
               </ItemTableRow>
             {/each}
-            {#if $store.editable && section.dataset}
-              <ItemTableFooter actor={$store.actor} dataset={section.dataset} />
+            {#if $context.editable && section.dataset}
+              <ItemTableFooter actor={$context.actor} dataset={section.dataset} />
             {/if}
           </ItemTable>
         {/if}

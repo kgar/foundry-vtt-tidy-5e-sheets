@@ -11,7 +11,7 @@
   import TextInput from 'src/components/form/TextInput.svelte';
   import itemSheetTabs from './itemSheetTabs';
 
-  let store = getContext<Readable<ItemSheetContext>>('store');
+  let context = getContext<Readable<ItemSheetContext>>('context');
 
   export let selectedTabId: string;
 
@@ -23,7 +23,7 @@
 
   Hooks.call(CONSTANTS.HOOKS_RENDERING_ITEM_FEAT_TABS, {
     tabs,
-    context: $store,
+    context: $context,
   });
 
   const localize = FoundryAdapter.localize;
@@ -35,39 +35,39 @@
   <div class="header-details flexrow">
     <h1 class="charname">
       <TextInput
-        document={$store.item}
+        document={$context.item}
         field="name"
         placeholder={localize('DND5E.ItemName')}
-        value={$store.item.name}
-        disabled={!$store.owner}
+        value={$context.item.name}
+        disabled={!$context.owner}
         />
     </h1>
 
     <div class="item-subtitle">
-      <h4 class="item-type">{$store.itemType}</h4>
-      <span class="item-status">{$store.itemStatus ?? ''}</span>
+      <h4 class="item-type">{$context.itemType}</h4>
+      <span class="item-status">{$context.itemStatus ?? ''}</span>
     </div>
 
     <ul class="summary flexrow">
       <li>
-        {$store.labels.featType}
+        {$context.labels.featType}
       </li>
       <li>
         <TextInput
-          document={$store.item}
+          document={$context.item}
           field="system.requirements"
-          value={$store.system.requirements}
+          value={$context.system.requirements}
           placeholder={localize('DND5E.Requirements')}
-          disabled={!$store.owner}
+          disabled={!$context.owner}
         />
       </li>
       <li>
         <TextInput
-          document={$store.item}
+          document={$context.item}
           field="system.source"
-          value={$store.system.source}
+          value={$context.system.source}
           placeholder={localize('DND5E.Source')}
-          disabled={!$store.owner}
+          disabled={!$context.owner}
         />
       </li>
     </ul>

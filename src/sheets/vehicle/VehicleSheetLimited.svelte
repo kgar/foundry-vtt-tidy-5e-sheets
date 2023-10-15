@@ -7,30 +7,30 @@
   import SheetEditor from '../SheetEditor.svelte';
   import LimitedHeader from '../actor/LimitedHeader.svelte';
 
-  let store = getContext<Readable<VehicleSheetContext>>('store');
+  let context = getContext<Readable<VehicleSheetContext>>('context');
 
   const localize = FoundryAdapter.localize;
 
   function activateProseMirrorListeners(node: HTMLElement) {
-    $store.activateFoundryJQueryListeners(node);
+    $context.activateFoundryJQueryListeners(node);
   }
 </script>
 
 <div class="limited-vehicle">
-  <LimitedHeader rounded={$store.useRoundedPortraitStyle} />
+  <LimitedHeader rounded={$context.useRoundedPortraitStyle} />
   <section class="sheet-body">
     <div class="note-entries">
       <RerenderAfterFormSubmission
-        andOnValueChange={$store.system.details.biography.value}
+        andOnValueChange={$context.system.details.biography.value}
       >
         <article class="biography-notes" use:activateProseMirrorListeners>
           <div class="section-titles">
             {localize('DND5E.Description')}
           </div>
           <SheetEditor
-            content={$store.biographyHTML}
+            content={$context.biographyHTML}
             target="system.details.biography.value"
-            editable={$store.owner || FoundryAdapter.userIsGm()}
+            editable={$context.owner || FoundryAdapter.userIsGm()}
           />
         </article>
       </RerenderAfterFormSubmission>

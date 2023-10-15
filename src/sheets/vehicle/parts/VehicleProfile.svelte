@@ -10,14 +10,14 @@
   import VehicleMovement from './VehicleMovement.svelte';
   import { settingStore } from 'src/settings/settings';
 
-  let store = getContext<Readable<VehicleSheetContext>>('store');
+  let context = getContext<Readable<VehicleSheetContext>>('context');
 
   $: incapacitated =
-    ($store.actor?.system?.attributes?.hp?.value ?? 0) <= 0 &&
-    $store.actor?.system?.attributes?.hp?.max !== 0;
+    ($context.actor?.system?.attributes?.hp?.value ?? 0) <= 0 &&
+    $context.actor?.system?.attributes?.hp?.max !== 0;
 
   function onLevelSelected(event: CustomEvent<{ level: number }>) {
-    FoundryAdapter.setFlag($store.actor, 'exhaustion', event.detail.level);
+    FoundryAdapter.setFlag($context.actor, 'exhaustion', event.detail.level);
   }
 
 </script>
@@ -27,16 +27,16 @@
 >
   {#if !$settingStore.exhaustionDisabled && !incapacitated}
     <Exhaustion
-      level={FoundryAdapter.tryGetFlag($store.actor, 'exhaustion') ?? 0}
-      radiusClass={$store.useRoundedPortraitStyle ? 'rounded' : 'top-left'}
+      level={FoundryAdapter.tryGetFlag($context.actor, 'exhaustion') ?? 0}
+      radiusClass={$context.useRoundedPortraitStyle ? 'rounded' : 'top-left'}
       on:levelSelected={onLevelSelected}
       exhaustionLocalizationPrefix="T5EK.VehicleExhaustion"
     />
   {/if}
   {#if !$settingStore.vehicleMotionDisabled}
     <VehicleMovement
-      motion={FoundryAdapter.tryGetFlag($store.actor, 'motion') === true}
-      radiusClass={$store.useRoundedPortraitStyle ? 'rounded' : 'top-right'}
+      motion={FoundryAdapter.tryGetFlag($context.actor, 'motion') === true}
+      radiusClass={$context.useRoundedPortraitStyle ? 'rounded' : 'top-right'}
       disableAnimation={false}
     />
   {/if}

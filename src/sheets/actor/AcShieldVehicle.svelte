@@ -7,7 +7,7 @@
   import type { VehicleSheetContext } from 'src/types/types';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
-  let store = getContext<Readable<VehicleSheetContext>>('store');
+  let context = getContext<Readable<VehicleSheetContext>>('context');
 
   /**
    * Optional CSS class list string to apply to the AC Shield container element.
@@ -20,26 +20,26 @@
 <div class="vehicle-armor-class-wrapper">
   <AcShieldBase cssClass="{cssClass} vehicle-ac-shield">
     <NumberInput
-      document={$store.actor}
+      document={$context.actor}
       field="system.attributes.ac.flat"
-      value={$store.actor.system.attributes.ac.flat}
+      value={$context.actor.system.attributes.ac.flat}
       step="1"
       min="0"
       placeholder="&mdash;"
       title={localize('DND5E.ArmorClass')}
       cssClass="armor-class-flat"
       selectOnFocus={true}
-      disabled={!$store.owner || $store.lockSensitiveFields}
+      disabled={!$context.owner || $context.lockSensitiveFields}
     />
     <TextInput
-      document={$store.actor}
+      document={$context.actor}
       field="system.attributes.ac.motionless"
-      value={$store.system.attributes.ac.motionless}
+      value={$context.system.attributes.ac.motionless}
       placeholder="&mdash;"
       title={localize('DND5E.ArmorClassMotionless')}
       cssClass="armor-class-motionless"
       selectOnFocus={true}
-      disabled={!$store.owner || $store.lockSensitiveFields}
+      disabled={!$context.owner || $context.lockSensitiveFields}
     />
   </AcShieldBase>
 </div>

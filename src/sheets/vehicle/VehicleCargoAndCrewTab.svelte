@@ -27,10 +27,10 @@
   import InventoryItemCardContent from 'src/components/item-info-card/InventoryItemCardContent.svelte';
   import { settingStore } from 'src/settings/settings';
 
-  let store = getContext<Readable<VehicleSheetContext>>('store');
+  let context = getContext<Readable<VehicleSheetContext>>('context');
 
   $: noCargoOrCrew =
-    $store.cargo.some((section: any) => section.items.length > 0) === false;
+    $context.cargo.some((section: any) => section.items.length > 0) === false;
 
   let baseWidths: Record<string, string> = {
     quantity: '5rem',
@@ -43,7 +43,7 @@
   const localize = FoundryAdapter.localize;
 
   async function onItemCreate(type: string) {
-    const actor = $store.actor;
+    const actor = $context.actor;
     if (type === 'crew' || type === 'passengers') {
       const cargo = foundry.utils.deepClone(actor.system.cargo[type]);
       cargo.push(FoundryAdapter.getNewCargo());
@@ -62,7 +62,7 @@
     }
   ) {
     const cargo = foundry.utils.deepClone(
-      $store.actor.system.cargo[section.dataset.type]
+      $context.actor.system.cargo[section.dataset.type]
     );
 
     const value = ev.currentTarget.value;
@@ -72,7 +72,7 @@
     if (item) {
       item[field] = ev.currentTarget.type === 'number' ? Number(value) : value;
 
-      $store.actor.update({
+      $context.actor.update({
         [`system.cargo.${section.dataset.type}`]: cargo,
       });
     }
@@ -80,15 +80,15 @@
     return false;
   }
 
-  $: classicControlsBaseWidth = $store.editable ? '7.5rem' : '4.375rem';
+  $: classicControlsBaseWidth = $context.editable ? '7.5rem' : '4.375rem';
   $: classicControlsEditableRowBaseWidth = '4.375rem';
 
   function deleteCrewOrPassenger(section: any, index: number) {
     const cargo = foundry.utils
-      .deepClone($store.actor.system.cargo[section.dataset.type])
+      .deepClone($context.actor.system.cargo[section.dataset.type])
       .filter((_: unknown, i: number) => i !== index);
 
-    $store.actor.update({
+    $context.actor.update({
       [`system.cargo.${section.dataset.type}`]: cargo,
     });
 
@@ -100,16 +100,16 @@
   };
 </script>
 
-{#if noCargoOrCrew && !$store.editable}
+{#if noCargoOrCrew && !$context.editable}
   <Notice>
     {localize('T5EK.EmptySection')}
   </Notice>
 {/if}
 
 <ListContainer cssClass="flex-column small-gap">
-  {#each $store.cargo as section}
+  {#each $context.cargo as section}
     {@const cardTemplate = itemCardTemplates[section.dataset.type] ?? null}
-    {#if $store.editable || section.items.length}
+    {#if $context.editable || section.items.length}
       <ItemTable>
         <ItemTableHeaderRow>
           <ItemTableColumn primary={true}>
@@ -125,7 +125,7 @@
               </ItemTableColumn>
             {/if}
           {/each}
-          {#if $store.owner && ((!section.editableName && $store.classicControlsEnabled) || ($store.editable && section.editableName))}
+          {#if $context.owner && ((!section.editableName && $context.classicControlsEnabled) || ($context.editable && section.editableName))}
             <ItemTableColumn
               baseWidth={section.editableName
                 ? classicControlsEditableRowBaseWidth
@@ -134,7 +134,7 @@
           {/if}
         </ItemTableHeaderRow>
         {#each section.items as item, index (item.id ?? index)}
-          {@const ctx = $store.itemContext[item.id]}
+          {@const ctx = $context.itemContext[item.id]}
           <ItemTableRow
             let:toggleSummary
             on:mousedown={(event) =>
@@ -158,13 +158,13 @@
                   onSaveChange={(ev) => saveSection(ev, index, 'name', section)}
                   value={item.name}
                   cssClass="editable-name"
-                  disabled={!$store.owner}
+                  disabled={!$context.owner}
                 />
               {:else}
                 <ItemUseButton {item} />
                 <ItemName
                   on:click={(event) =>
-                    toggleSummary(event.detail, $store.actor)}
+                    toggleSummary(event.detail, $context.actor)}
                   cssClass="extra-small-gap"
                   {item}
                 >
@@ -201,9 +201,9 @@
                         {value}
                         onSaveChange={(ev) =>
                           saveSection(ev, index, column.property, section)}
-                        disabled={!$store.owner ||
+                        disabled={!$context.owner ||
                           (column.property === 'quantity' &&
-                            $store.lockItemQuantity)}
+                            $context.lockItemQuantity)}
                       />
                     {:else}
                       {FoundryAdapter.getProperty(item, column.property) ??
@@ -214,7 +214,7 @@
                 {/if}
               {/each}
             {/if}
-            {#if $store.owner && ((!section.editableName && $store.classicControlsEnabled) || ($store.editable && section.editableName))}
+            {#if $context.owner && ((!section.editableName && $context.classicControlsEnabled) || ($context.editable && section.editableName))}
               <ItemTableCell
                 baseWidth={section.editableName
                   ? classicControlsEditableRowBaseWidth
@@ -225,11 +225,11 @@
                     <ItemEditControl {item} />
                   {/if}
 
-                  {#if $store.editable && !section.editableName}
+                  {#if $context.editable && !section.editableName}
                     <ItemDuplicateControl {item} />
                   {/if}
 
-                  {#if $store.editable}
+                  {#if $context.editable}
                     <ItemDeleteControl
                       onDelete={() =>
                         !section.editableName ||
@@ -242,9 +242,9 @@
             {/if}
           </ItemTableRow>
         {/each}
-        {#if $store.editable && section.dataset}
+        {#if $context.editable && section.dataset}
           <ItemTableFooter
-            actor={$store.actor}
+            actor={$context.actor}
             dataset={section.dataset}
             create={() => onItemCreate(section.dataset.type)}
           />
@@ -256,7 +256,7 @@
 
 <TabFooter mode="vertical">
   <div class="currency">
-    <Currency actor={$store.actor} />
+    <Currency actor={$context.actor} />
   </div>
 
   {#if !$settingStore.hideStandardEncumbranceBar}

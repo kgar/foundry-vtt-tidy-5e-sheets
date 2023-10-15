@@ -11,7 +11,7 @@ import type { CharacterSheetState, SheetTabState } from './types';
 import { getOrderedEnabledSheetTabs } from './state-functions';
 import { CONSTANTS } from 'src/constants';
 
-let characterSheetConfigStore = writable<CharacterSheetState>({
+let characterSheetState = writable<CharacterSheetState>({
   sheetTabs: [
     {
       id: CONSTANTS.TAB_CHARACTER_ATTRIBUTES,
@@ -81,11 +81,11 @@ let characterSheetConfigStore = writable<CharacterSheetState>({
 });
 
 export function getCurrentCharacterTabs(): SheetTabState<CharacterSheetContext>[] {
-  return [...get(characterSheetConfigStore).sheetTabs];
+  return [...get(characterSheetState).sheetTabs];
 }
 
 export let characterSheetTabsStore = derived(
-  characterSheetConfigStore,
+  characterSheetState,
   (c) => ({
     getTabs: (context: CharacterSheetContext) =>
       getOrderedEnabledSheetTabs(c.sheetTabs, context),
@@ -95,10 +95,10 @@ export let characterSheetTabsStore = derived(
 export function registerCharacterTab(
   tab: SheetTabState<CharacterSheetContext>
 ) {
-  characterSheetConfigStore.update((store) => {
-    store.sheetTabs.push(tab);
-    store.sheetTabs.sort((a, b) => a.order - b.order);
-    return store;
+  characterSheetState.update((state) => {
+    state.sheetTabs.push(tab);
+    state.sheetTabs.sort((a, b) => a.order - b.order);
+    return state;
   });
 
   return getCurrentCharacterTabs();

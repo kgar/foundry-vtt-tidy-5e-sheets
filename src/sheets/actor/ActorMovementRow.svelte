@@ -12,10 +12,10 @@
   export let movement: any;
   export let actor: Actor5e;
 
-  let store =
+  let context =
     getContext<
       Readable<CharacterSheetContext | NpcSheetContext | VehicleSheetContext>
-    >('store');
+    >('context');
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -29,7 +29,7 @@
     |
     <span title={movement.special}>{movement.special}</span>
   {/if}
-  {#if $store.owner && !$store.lockSensitiveFields}
+  {#if $context.owner && !$context.lockSensitiveFields}
     <button
       type="button"
       class="configure inline-icon-button"

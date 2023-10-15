@@ -16,7 +16,7 @@
   export let section: any;
   export let items: Item5e[];
 
-  let store = getContext<Readable<CharacterSheetContext>>('store');
+  let context = getContext<Readable<CharacterSheetContext>>('context');
   let card = getContext<Writable<ItemCardStore>>('card');
 
   const localize = FoundryAdapter.localize;
@@ -26,7 +26,7 @@
 
     return FoundryAdapter.getInventoryRowClasses(
       item,
-      $store.itemContext[item.id],
+      $context.itemContext[item.id],
       extras
     );
   }
@@ -62,7 +62,7 @@
   </ItemTableHeaderRow>
   <div class="items">
     {#each items as item (item.id)}
-      {@const ctx = $store.itemContext[item.id]}
+      {@const ctx = $context.itemContext[item.id]}
 
       <!-- svelte-ignore a11y-click-events-have-key-events -->
       <button
@@ -71,11 +71,11 @@
         class:show-item-count-on-hover={!$settingStore.quantityAlwaysShownEnabled}
         data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
         data-context-menu-entity-id={item.id}
-        on:click={(event) => $store.owner && item.use({}, { event })}
+        on:click={(event) => $context.owner && item.use({}, { event })}
         on:mousedown={(event) => FoundryAdapter.editOnMiddleClick(event, item)}
         on:mouseenter={() => onMouseEnter(item)}
         on:mouseleave={onMouseLeave}
-        disabled={!$store.owner}
+        disabled={!$context.owner}
       >
         {#if ctx.attunement}
           <i
@@ -88,7 +88,7 @@
           <GridPaneFavoriteIcon />
         {/if}
 
-        {#if $store.owner}
+        {#if $context.owner}
           <button
             type="button"
             class="item-control item-edit"
@@ -124,7 +124,7 @@
                 allowDeltaChanges={true}
                 selectOnFocus={true}
                 on:click={preventUseItemEvent}
-                disabled={!$store.owner}
+                disabled={!$context.owner}
               />
             {/if}
           </div>
@@ -139,7 +139,7 @@
               cssClass="item-count"
               value={item.system.quantity}
               maxlength={2}
-              disabled={!$store.owner || $store.lockItemQuantity}
+              disabled={!$context.owner || $context.lockItemQuantity}
               dtype="Number"
               allowDeltaChanges={true}
               selectOnFocus={true}
@@ -149,7 +149,7 @@
         </div>
       </button>
     {/each}
-    {#if $store.editable}
+    {#if $context.editable}
       <div class="items-footer">
         <button
           type="button"
@@ -162,7 +162,7 @@
                 action: 'itemCreate',
                 tooltip: 'DND5E.ItemCreate',
               },
-              $store.actor
+              $context.actor
             )}
         >
           <i class="fas fa-plus-circle" />

@@ -8,120 +8,120 @@
   import RerenderAfterFormSubmission from '../shared/RerenderAfterFormSubmission.svelte';
   import TextInput from '../form/TextInput.svelte';
 
-  let store = getContext<Readable<CharacterSheetContext>>('store');
+  let context = getContext<Readable<CharacterSheetContext>>('context');
 
   const localize = FoundryAdapter.localize;
 
   function activateProseMirrorListeners(node: HTMLElement) {
-    $store.activateFoundryJQueryListeners(node);
+    $context.activateFoundryJQueryListeners(node);
   }
 </script>
 
-<div class="left-notes note-entries" class:limited={$store.showLimitedSheet}>
+<div class="left-notes note-entries" class:limited={$context.showLimitedSheet}>
   <RerenderAfterFormSubmission
-    andOnValueChange={FoundryAdapter.tryGetFlag($store.actor, 'notes1.value') ??
+    andOnValueChange={FoundryAdapter.tryGetFlag($context.actor, 'notes1.value') ??
       ''}
   >
     <article use:activateProseMirrorListeners>
       <div class="section-titles">
         <TextInput
-          document={$store.actor}
+          document={$context.actor}
           field="flags.{CONSTANTS.MODULE_ID}.notes1.name"
-          value={FoundryAdapter.tryGetFlag($store.actor, 'notes1.name') ?? ''}
+          value={FoundryAdapter.tryGetFlag($context.actor, 'notes1.name') ?? ''}
           placeholder={localize('T5EK.JournalPoi')}
           selectOnFocus={true}
           stopChangePropagation={true}
-          disabled={!$store.owner}
+          disabled={!$context.owner}
         />
       </div>
       <SheetEditor
-        content={FoundryAdapter.tryGetFlag($store.actor, 'notes1.value') ?? ''}
+        content={FoundryAdapter.tryGetFlag($context.actor, 'notes1.value') ?? ''}
         target="flags.{CONSTANTS.MODULE_ID}.notes1.value"
-        editable={$store.owner || FoundryAdapter.userIsGm()}
+        editable={$context.owner || FoundryAdapter.userIsGm()}
       />
     </article>
   </RerenderAfterFormSubmission>
   <RerenderAfterFormSubmission
-    andOnValueChange={FoundryAdapter.tryGetFlag($store.actor, 'notes2.value') ??
+    andOnValueChange={FoundryAdapter.tryGetFlag($context.actor, 'notes2.value') ??
       ''}
   >
     <article use:activateProseMirrorListeners>
       <div class="section-titles">
         <TextInput
-          document={$store.actor}
+          document={$context.actor}
           field="flags.{CONSTANTS.MODULE_ID}.notes2.name"
-          value={FoundryAdapter.tryGetFlag($store.actor, 'notes2.name') ?? ''}
+          value={FoundryAdapter.tryGetFlag($context.actor, 'notes2.name') ?? ''}
           placeholder={localize('T5EK.JournalLoi')}
           selectOnFocus={true}
           stopChangePropagation={true}
-          disabled={!$store.owner}
+          disabled={!$context.owner}
         />
       </div>
       <SheetEditor
-        content={FoundryAdapter.tryGetFlag($store.actor, 'notes2.value') ?? ''}
+        content={FoundryAdapter.tryGetFlag($context.actor, 'notes2.value') ?? ''}
         target="flags.{CONSTANTS.MODULE_ID}.notes2.value"
-        editable={$store.owner || FoundryAdapter.userIsGm()}
+        editable={$context.owner || FoundryAdapter.userIsGm()}
       />
     </article>
   </RerenderAfterFormSubmission>
   <RerenderAfterFormSubmission
-    andOnValueChange={FoundryAdapter.tryGetFlag($store.actor, 'notes3.value') ??
+    andOnValueChange={FoundryAdapter.tryGetFlag($context.actor, 'notes3.value') ??
       ''}
   >
     <article use:activateProseMirrorListeners>
       <div class="section-titles">
         <TextInput
-          document={$store.actor}
+          document={$context.actor}
           field="flags.{CONSTANTS.MODULE_ID}.notes3.name"
-          value={FoundryAdapter.tryGetFlag($store.actor, 'notes3.name') ?? ''}
+          value={FoundryAdapter.tryGetFlag($context.actor, 'notes3.name') ?? ''}
           placeholder={localize('T5EK.JournalQuests')}
           selectOnFocus={true}
           stopChangePropagation={true}
-          disabled={!$store.owner}
+          disabled={!$context.owner}
         />
       </div>
       <SheetEditor
-        content={FoundryAdapter.tryGetFlag($store.actor, 'notes3.value') ?? ''}
+        content={FoundryAdapter.tryGetFlag($context.actor, 'notes3.value') ?? ''}
         target="flags.{CONSTANTS.MODULE_ID}.notes3.value"
-        editable={$store.owner || FoundryAdapter.userIsGm()}
+        editable={$context.owner || FoundryAdapter.userIsGm()}
       />
     </article>
   </RerenderAfterFormSubmission>
   <RerenderAfterFormSubmission
-    andOnValueChange={FoundryAdapter.tryGetFlag($store.actor, 'notes4.value') ??
+    andOnValueChange={FoundryAdapter.tryGetFlag($context.actor, 'notes4.value') ??
       ''}
   >
     <article use:activateProseMirrorListeners>
       <div class="section-titles">
         <TextInput
-          document={$store.actor}
+          document={$context.actor}
           field="flags.{CONSTANTS.MODULE_ID}.notes4.name"
-          value={FoundryAdapter.tryGetFlag($store.actor, 'notes4.name') ?? ''}
+          value={FoundryAdapter.tryGetFlag($context.actor, 'notes4.name') ?? ''}
           placeholder={localize('T5EK.JournalMisc')}
           selectOnFocus={true}
           stopChangePropagation={true}
-          disabled={!$store.owner}
+          disabled={!$context.owner}
         />
       </div>
       <SheetEditor
-        content={FoundryAdapter.tryGetFlag($store.actor, 'notes4.value') ?? ''}
+        content={FoundryAdapter.tryGetFlag($context.actor, 'notes4.value') ?? ''}
         target="flags.{CONSTANTS.MODULE_ID}.notes4.value"
-        editable={$store.owner || FoundryAdapter.userIsGm()}
+        editable={$context.owner || FoundryAdapter.userIsGm()}
       />
     </article>
   </RerenderAfterFormSubmission>
 </div>
-<div class="right-notes note-entries" class:limited={$store.showLimitedSheet}>
+<div class="right-notes note-entries" class:limited={$context.showLimitedSheet}>
   <RerenderAfterFormSubmission
-    andOnValueChange={FoundryAdapter.tryGetFlag($store.actor, 'notes.value') ??
+    andOnValueChange={FoundryAdapter.tryGetFlag($context.actor, 'notes.value') ??
       ''}
   >
     <article class="journal-notes" use:activateProseMirrorListeners>
       <div class="section-titles">{localize('T5EK.JournalEntries')}</div>
       <SheetEditor
-        content={FoundryAdapter.tryGetFlag($store.actor, 'notes.value') ?? ''}
+        content={FoundryAdapter.tryGetFlag($context.actor, 'notes.value') ?? ''}
         target="flags.{CONSTANTS.MODULE_ID}.notes.value"
-        editable={$store.owner || FoundryAdapter.userIsGm()}
+        editable={$context.owner || FoundryAdapter.userIsGm()}
       />
     </article>
   </RerenderAfterFormSubmission>

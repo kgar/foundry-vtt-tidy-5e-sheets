@@ -8,14 +8,14 @@
 
   const dispatcher = createEventDispatcher<{ roll: MouseEvent }>();
 
-  let store = getContext<Readable<ActorSheetContext>>('store');
+  let context = getContext<Readable<ActorSheetContext>>('context');
 </script>
 
 <h4
-  class:rollable={$store.owner}
+  class:rollable={$context.owner}
   class="block-title"
   {title}
-  on:click={(ev) => $store.owner && dispatcher('roll', ev)}
+  on:click={(ev) => $context.owner && dispatcher('roll', ev)}
 >
   {text}
 </h4>

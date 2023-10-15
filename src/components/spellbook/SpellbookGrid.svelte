@@ -22,8 +22,8 @@
   export let spells: Item5e[];
   export let cssClass: string | null = null;
 
-  let store =
-    getContext<Readable<CharacterSheetContext | NpcSheetContext>>('store');
+  let context =
+    getContext<Readable<CharacterSheetContext | NpcSheetContext>>('context');
   let card = getContext<Writable<ItemCardStore>>('card');
 
   const localize = FoundryAdapter.localize;
@@ -62,18 +62,18 @@
     </ItemTableHeaderRow>
     <div class="spells">
       {#each spells as spell}
-        {@const spellImgUrl = FoundryAdapter.getSpellImageUrl($store, spell)}
+        {@const spellImgUrl = FoundryAdapter.getSpellImageUrl($context, spell)}
         <button
           type="button"
           class="spell {FoundryAdapter.getSpellRowClasses(spell)} icon-button"
           data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
           data-context-menu-entity-id={spell.id}
-          on:click={(event) => $store.owner && spell.use({}, { event })}
+          on:click={(event) => $context.owner && spell.use({}, { event })}
           on:mousedown={(event) =>
             FoundryAdapter.editOnMiddleClick(event, spell)}
           on:mouseenter={() => onMouseEnter(spell)}
           on:mouseleave={onMouseLeave}
-          disabled={!$store.owner}
+          disabled={!$context.owner}
         >
           {#if FoundryAdapter.tryGetFlag(spell, 'favorite')}
             <GridPaneFavoriteIcon />
@@ -86,14 +86,14 @@
           </div>
         </button>
       {/each}
-      {#if $store.owner && $store.editable}
+      {#if $context.owner && $context.editable}
         <div class="spells-footer">
           <button
             type="button"
             class="item-create icon-button"
             title={localize('DND5E.SpellCreate')}
             on:click|stopPropagation|preventDefault={() =>
-              FoundryAdapter.createItem(section.dataset, $store.actor)}
+              FoundryAdapter.createItem(section.dataset, $context.actor)}
           >
             <i class="fas fa-plus-circle" />
           </button>

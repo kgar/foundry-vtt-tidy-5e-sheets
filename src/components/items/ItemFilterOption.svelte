@@ -5,9 +5,9 @@
 
   export let setName: string;
   export let filterName: string;
-  let store = getContext<Readable<CharacterSheetContext>>('store');
+  let context = getContext<Readable<CharacterSheetContext>>('context');
 
-  $: isFilterActive = $store.actor.sheet.isFilterActive(setName, filterName);
+  $: isFilterActive = $context.actor.sheet.isFilterActive(setName, filterName);
 </script>
 
 <li
@@ -15,7 +15,7 @@
   class="filter-option"
   class:active={isFilterActive}
   on:click|preventDefault|stopPropagation={() =>
-    $store.actor.sheet.onToggleFilter(setName, filterName)}
+    $context.actor.sheet.onToggleFilter(setName, filterName)}
 >
   <slot />
 </li>

@@ -9,8 +9,8 @@
     willChange: boolean;
   };
 
-  let store =
-    getContext<Readable<CharacterSheetContext | NpcSheetContext>>('store');
+  let context =
+    getContext<Readable<CharacterSheetContext | NpcSheetContext>>('context');
   export let section: any;
 
   let targetedDotIndex: number | null = null;
@@ -20,7 +20,7 @@
 
     let value = isEmpty ? markerIndex + 1 : markerIndex;
 
-    $store.actor.update({
+    $context.actor.update({
       [`data.spells.${section.prop}.value`]: value,
     });
   }

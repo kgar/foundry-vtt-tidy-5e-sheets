@@ -7,7 +7,7 @@
   import ItemFormGroup from '../form/ItemFormGroup.svelte';
   import Select from 'src/components/form/Select.svelte';
 
-  let store = getContext<Readable<ItemSheetContext>>('store');
+  let context = getContext<Readable<ItemSheetContext>>('context');
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -20,12 +20,12 @@
   <div class="form-fields">
     <Select
       id={inputId}
-      document={$store.item}
+      document={$context.item}
       field="system.spellcasting.progression"
-      value={$store.system.spellcasting.progression}
-      disabled={!$store.owner}
+      value={$context.system.spellcasting.progression}
+      disabled={!$context.owner}
       >
-      <SelectOptions data={$store.config.spellProgression} />
+      <SelectOptions data={$context.config.spellProgression} />
     </Select>
   </div>
 </ItemFormGroup>
@@ -38,13 +38,13 @@
   <div class="form-fields">
     <Select
       id={inputId}
-      document={$store.item}
+      document={$context.item}
       field="system.spellcasting.ability"
-      value={$store.system.spellcasting.ability}
-      disabled={!$store.owner}
+      value={$context.system.spellcasting.ability}
+      disabled={!$context.owner}
       >
       <SelectOptions
-        data={$store.config.abilities}
+        data={$context.config.abilities}
         labelProp="label"
         blank=""
       />

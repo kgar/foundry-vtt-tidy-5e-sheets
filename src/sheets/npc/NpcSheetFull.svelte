@@ -30,15 +30,15 @@
 
   export let selectedTabId: string;
 
-  let store = getContext<Readable<NpcSheetContext>>('store');
+  let context = getContext<Readable<NpcSheetContext>>('context');
 
   let tabs: Tab[];
   $: {
-    tabs = $npcSheetTabsStore.getTabs($store);
+    tabs = $npcSheetTabsStore.getTabs($context);
 
     Hooks.call(CONSTANTS.HOOKS_RENDERING_NPC_TABS, {
       tabs,
-      context: $store,
+      context: $context,
     });
 
     if (!tabs.some((tab) => tab.id === selectedTabId)) {
@@ -46,7 +46,7 @@
     }
   }
 
-  $: sizes = <TidyDropdownOption[]>Object.entries($store.config.actorSizes).map(
+  $: sizes = <TidyDropdownOption[]>Object.entries($context.config.actorSizes).map(
     ([abbreviation, size]) => ({
       value: abbreviation,
       text: size as string,
@@ -54,11 +54,11 @@
   );
 
   $: currentSize = <TidyDropdownOption>{
-    value: $store.system.traits.size,
-    text: $store.config.actorSizes[$store.system.traits.size],
+    value: $context.system.traits.size,
+    text: $context.config.actorSizes[$context.system.traits.size],
   };
 
-  $: abilities = Object.entries<any>($store.abilities);
+  $: abilities = Object.entries<any>($context.abilities);
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -67,9 +67,9 @@
   <ItemInfoCard />
 {/if}
 
-<div class="token-link-wrapper {$store.tokenState}">
-  {#if $store.warnings.length}
-    <ActorWarnings warnings={$store.warnings} />
+<div class="token-link-wrapper {$context.tokenState}">
+  {#if $context.warnings.length}
+    <ActorWarnings warnings={$context.warnings} />
   {/if}
   <header>
     <div class="flex-0">
@@ -79,12 +79,12 @@
       <div
         class="actor-name-row flex-row justify-content-space-between align-items-center extra-small-gap"
       >
-        {#if $store.tokenState === 'linked'}
+        {#if $context.tokenState === 'linked'}
           <i
             class="link-state fas fa-link"
             title={localize('T5EK.TokenLinked')}
           />
-        {:else if $store.tokenState === 'unlinked'}
+        {:else if $context.tokenState === 'unlinked'}
           <i
             class="link-state fas fa-unlink"
             title={localize('T5EK.TokenUnlinked')}
@@ -94,10 +94,10 @@
         <div class="actor-name">
           <ContentEditableFormField
             element="h1"
-            document={$store.actor}
+            document={$context.actor}
             field="name"
-            value={$store.actor.name}
-            editable={$store.owner && !$store.lockSensitiveFields}
+            value={$context.actor.name}
+            editable={$context.owner && !$context.lockSensitiveFields}
             spellcheck={false}
             placeholder={localize('DND5E.Name')}
             dataMaxLength={40}
@@ -105,18 +105,18 @@
         </div>
         <div class="level-information">
           <div class="xp">
-            <span>{$store.system.details.xp.value} XP</span>
+            <span>{$context.system.details.xp.value} XP</span>
           </div>
           <div class="level">
             {localize('DND5E.AbbreviationCR')}
             <ContentEditableFormField
               element="span"
-              editable={!$store.lockSensitiveFields}
-              document={$store.actor}
+              editable={!$context.lockSensitiveFields}
+              document={$context.actor}
               field="system.details.cr"
               placeholder="0"
               dataMaxLength={4}
-              value={$store.labels.cr}
+              value={$context.labels.cr}
               saveAs="number"
               selectOnFocus={true}
             />
@@ -127,12 +127,12 @@
       <HorizontalLineSeparator borderColor="light" />
       <div class="origin-summary">
         <div class="flex-row extra-small-gap">
-          {#if $store.owner}
+          {#if $context.owner}
             <TidyDropdownList
               options={sizes}
               selected={currentSize}
               on:optionClicked={(event) =>
-                $store.actor.update({
+                $context.actor.update({
                   'system.traits.size': event.detail.value,
                 })}
               title={localize('DND5E.Size')}
@@ -141,30 +141,30 @@
             <span title={localize('DND5E.Size')}>{currentSize.text}</span>
           {/if}
           <span>&#8226;</span>
-          {#key $store.lockSensitiveFields}
+          {#key $context.lockSensitiveFields}
             <DelimitedTruncatedContent cssClass="flex-grow-1">
               <span class="flex-row extra-small-gap align-items-center">
                 <button
                   type="button"
                   class="truncate inline-transparent-button"
-                  class:highlight-on-hover={$store.owner}
-                  disabled={!$store.owner}
+                  class:highlight-on-hover={$context.owner}
+                  disabled={!$context.owner}
                   on:click={() =>
                     new dnd5e.applications.actor.ActorTypeConfig(
-                      $store.actor
+                      $context.actor
                     ).render(true)}
-                  title="{$store.labels.type} ({localize(
+                  title="{$context.labels.type} ({localize(
                     'DND5E.CreatureTypeConfig'
                   )})"
-                  >{#if isNil($store.labels.type, '')}
+                  >{#if isNil($context.labels.type, '')}
                     {localize('DND5E.CreatureType')}
                   {:else}
-                    {$store.labels.type}
+                    {$context.labels.type}
                   {/if}</button
                 >
                 <span
                   class="environment"
-                  title="{localize('T5EK.Environment')}: {$store.system.details
+                  title="{localize('T5EK.Environment')}: {$context.system.details
                     .environment}"
                 >
                   <i class="fas fa-tree" />
@@ -173,13 +173,13 @@
 
               <span
                 class="origin-summary-text"
-                title={$store.system.details.alignment}
-                >{$store.system.details.alignment}</span
+                title={$context.system.details.alignment}
+                >{$context.system.details.alignment}</span
               >
               <span
                 class="origin-summary-text source source-info"
-                title={$store.system.details.source}
-                >{$store.system.details.source}</span
+                title={$context.system.details.source}
+                >{$context.system.details.source}</span
               >
             </DelimitedTruncatedContent>
           {/key}
@@ -187,15 +187,15 @@
         <div class="flex-row align-items-center extra-small-gap">
           <b class="proficiency">
             {localize('DND5E.Proficiency')}: {formatAsModifier(
-              $store.system.attributes.prof
+              $context.system.attributes.prof
             )}
           </b>
-          {#if $store.owner && !$store.lockSensitiveFields}
+          {#if $context.owner && !$context.lockSensitiveFields}
             <button
               type="button"
               class="origin-summary-tidy inline-icon-button"
               on:click={() =>
-                new Tidy5eActorOriginSummaryConfig($store.actor).render(true)}
+                new Tidy5eActorOriginSummaryConfig($context.actor).render(true)}
               title={localize('T5EK.OriginSummaryConfig')}
             >
               <i class="fas fa-cog" />
@@ -204,18 +204,18 @@
         </div>
       </div>
       <HorizontalLineSeparator borderColor="light" />
-      <ActorMovementRow actor={$store.actor} movement={$store.movement} />
+      <ActorMovementRow actor={$context.actor} movement={$context.movement} />
       <HorizontalLineSeparator borderColor="light" />
       <ActorHeaderStats
         {abilities}
-        ac={$store.system.attributes.ac}
-        init={$store.system.attributes.init}
+        ac={$context.system.attributes.ac}
+        init={$context.system.attributes.init}
       />
     </div>
   </header>
   <Tabs {tabs} bind:selectedTabId>
     <svelte:fragment slot="tab-end">
-      {#if $store.owner}
+      {#if $context.owner}
         <AllowEditLock
           hint={$settingStore.enablePermanentUnlockOnNPCIfYouAreGM &&
           FoundryAdapter.userIsGm()

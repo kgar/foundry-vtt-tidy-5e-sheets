@@ -6,12 +6,12 @@
 
   export let useHpOverlay: boolean;
 
-  let store = getContext<Readable<ActorSheetContext>>('store');
+  let context = getContext<Readable<ActorSheetContext>>('context');
 </script>
 
 <div class="profile-wrap">
-  <div class="profile" class:round-portrait={$store.useRoundedPortraitStyle}>
-    <ActorPortrait actor={$store.actor} {useHpOverlay} />
+  <div class="profile" class:round-portrait={$context.useRoundedPortraitStyle}>
+    <ActorPortrait actor={$context.actor} {useHpOverlay} />
     <slot />
   </div>
 </div>

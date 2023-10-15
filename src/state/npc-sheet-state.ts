@@ -9,8 +9,8 @@ import ActorJournalTab from 'src/components/player-character/ActorJournalTab.sve
 import type { NpcSheetState, SheetTabState } from './types';
 import { getOrderedEnabledSheetTabs } from './state-functions';
 
-function getDefaultTabConfigs(): SheetTabState<NpcSheetContext>[] {
-  return [
+let npcSheetState = writable<NpcSheetState>({
+  sheetTabs: [
     {
       id: CONSTANTS.TAB_NPC_ABILITIES,
       displayName: 'T5EK.Abilities',
@@ -57,18 +57,14 @@ function getDefaultTabConfigs(): SheetTabState<NpcSheetContext>[] {
       enabled: (context) => context.owner && !context.npcJournalTabDisabled,
       order: 50,
     },
-  ];
-}
-
-let npcSheetConfigStore = writable<NpcSheetState>({
-  sheetTabs: getDefaultTabConfigs(),
+  ],
 });
 
 export function getCurrentNpcTabs(): SheetTabState<NpcSheetContext>[] {
-  return [...get(npcSheetConfigStore).sheetTabs];
+  return [...get(npcSheetState).sheetTabs];
 }
 
-export let npcSheetTabsStore = derived(npcSheetConfigStore, (c) => ({
+export let npcSheetTabsStore = derived(npcSheetState, (c) => ({
   getTabs: (context: NpcSheetContext) =>
     getOrderedEnabledSheetTabs(c.sheetTabs, context),
 }));

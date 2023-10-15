@@ -9,7 +9,7 @@
   import ItemFormGroup from '../form/ItemFormGroup.svelte';
   import TextInput from 'src/components/form/TextInput.svelte';
 
-  let store = getContext<Readable<ItemSheetContext>>('store');
+  let context = getContext<Readable<ItemSheetContext>>('context');
 
   const localize = FoundryAdapter.localize;
 
@@ -37,7 +37,7 @@
         options.labelKey = 'label';
         break;
       case 'skills':
-        const skills = $store.item.system.skills;
+        const skills = $context.item.system.skills;
         const choices = skills.choices?.length
           ? skills.choices
           : Object.keys(CONFIG.DND5E.skills);
@@ -51,7 +51,7 @@
         break;
     }
 
-    new game.dnd5e.applications.TraitSelector($store.item, options).render(
+    new game.dnd5e.applications.TraitSelector($context.item, options).render(
       true
     );
   }
@@ -65,16 +65,16 @@
   <div class="form-fields">
     <TextInput
       id={inputId}
-      document={$store.item}
+      document={$context.item}
       field="system.identifier"
-      value={$store.system.identifier}
-      placeholder={$store.item.identifier}
-      disabled={!$store.owner}
+      value={$context.system.identifier}
+      placeholder={$context.item.identifier}
+      disabled={!$context.owner}
     />
   </div>
   <p class="hint">
     {@html localize('DND5E.ClassIdentifierHint', {
-      identifier: $store.item.identifier,
+      identifier: $context.item.identifier,
     })}
   </p>
 </ItemFormGroup>
@@ -87,12 +87,12 @@
   <div class="form-fields">
     <Select
       id={inputId}
-      document={$store.item}
+      document={$context.item}
       field="system.hitDice"
-      value={$store.system.hitDice}
-      disabled={!$store.owner}
+      value={$context.system.hitDice}
+      disabled={!$context.owner}
     >
-      {#each $store.config.hitDieTypes as type}
+      {#each $context.config.hitDieTypes as type}
         <option value={type}>{type}</option>
       {/each}
     </Select>
@@ -107,11 +107,11 @@
   <div class="form-fields">
     <NumberInput
       id={inputId}
-      document={$store.item}
+      document={$context.item}
       field="system.hitDiceUsed"
-      value={$store.system.hitDiceUsed}
+      value={$context.system.hitDiceUsed}
       placeholder="0"
-      disabled={!$store.owner}
+      disabled={!$context.owner}
     />
   </div>
 </ItemFormGroup>
@@ -122,7 +122,7 @@
 <h3 class="form-header">{localize('DND5E.Proficiency')}</h3>
 <ItemFormGroup labelText={localize('DND5E.ClassSaves')}>
   <svelte:fragment slot="inside-after-label">
-    {#if $store.owner && $store.editable}
+    {#if $context.owner && $context.editable}
       <button
         type="button"
         class="trait-selector class-saves inline-icon-button"
@@ -135,8 +135,8 @@
   </svelte:fragment>
   <div class="form-fields">
     <ul class="traits-list">
-      {#each $store.system.saves as save}
-        {@const label = $store.config.abilities[save].label}
+      {#each $context.system.saves as save}
+        {@const label = $context.config.abilities[save].label}
         <li class="tag {save}">{label}</li>
       {/each}
     </ul>
@@ -151,18 +151,18 @@
   <div class="form-fields">
     <NumberInput
       id={inputId}
-      document={$store.item}
+      document={$context.item}
       field="system.skills.number"
       placeholder="0"
-      value={$store.system.skills.number}
-      disabled={!$store.owner}
+      value={$context.system.skills.number}
+      disabled={!$context.owner}
     />
   </div>
 </ItemFormGroup>
 
 <ItemFormGroup labelText={localize('DND5E.ClassSkillsEligible')}>
   <svelte:fragment slot="inside-after-label">
-    {#if $store.owner && $store.editable}
+    {#if $context.owner && $context.editable}
       <button
         type="button"
         class="trait-selector class-skills inline-icon-button"
@@ -180,8 +180,8 @@
 
   <div class="form-fields">
     <ul class="traits-list">
-      {#each $store.system.skills.choices as choice}
-        {@const label = $store.config.skills[choice].label}
+      {#each $context.system.skills.choices as choice}
+        {@const label = $context.config.skills[choice].label}
         <li class="tag {choice}">{label}</li>
       {/each}
     </ul>
@@ -190,7 +190,7 @@
 
 <ItemFormGroup labelText={localize('DND5E.ClassSkillsChosen')}>
   <svelte:fragment slot="inside-after-label">
-    {#if $store.owner && $store.editable}
+    {#if $context.owner && $context.editable}
       <button
         type="button"
         class="trait-selector class-skills inline-icon-button"
@@ -208,8 +208,8 @@
 
   <div class="form-fields">
     <ul class="traits-list">
-      {#each $store.system.skills.value as skillValue}
-        {@const label = $store.config.skills[skillValue].label}
+      {#each $context.system.skills.value as skillValue}
+        {@const label = $context.config.skills[skillValue].label}
         <li class="tag {skillValue}">{label}</li>
       {/each}
     </ul>

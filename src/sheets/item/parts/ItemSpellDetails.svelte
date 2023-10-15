@@ -14,7 +14,7 @@
   import { CONSTANTS } from 'src/constants';
   import { settingStore } from 'src/settings/settings';
 
-  let store = getContext<Readable<ItemSheetContext>>('store');
+  let context = getContext<Readable<ItemSheetContext>>('context');
 
   const allClasses = FoundryAdapter.getAllClassesDropdownOptions(
     $settingStore.spellClassFilterAdditionalClasses
@@ -33,10 +33,10 @@
   >
     <Select
       id={inputId}
-      document={$store.item}
+      document={$context.item}
       field="flags.{CONSTANTS.MODULE_ID}.parentClass"
-      value={FoundryAdapter.tryGetFlag($store.item, 'parentClass') ?? ''}
-      disabled={!$store.owner}
+      value={FoundryAdapter.tryGetFlag($context.item, 'parentClass') ?? ''}
+      disabled={!$context.owner}
       >
       <option value="">&mdash;</option>
       {#each allClasses as { text, value }}
@@ -53,13 +53,13 @@
 >
   <Select
     id={inputId}
-    document={$store.item}
+    document={$context.item}
     field="system.level"
-    value={$store.system.level}
+    value={$context.system.level}
     dtype="Number"
-    disabled={!$store.owner}
+    disabled={!$context.owner}
     >
-    <SelectOptions data={$store.config.spellLevels} />
+    <SelectOptions data={$context.config.spellLevels} />
   </Select>
 </ItemFormGroup>
 
@@ -70,12 +70,12 @@
 >
   <Select
     id={inputId}
-    document={$store.item}
+    document={$context.item}
     field="system.school"
-    value={$store.system.school}
-    disabled={!$store.owner}
+    value={$context.system.school}
+    disabled={!$context.owner}
     >
-    <SelectOptions data={$store.config.spellSchools} blank="" />
+    <SelectOptions data={$context.config.spellSchools} blank="" />
   </Select>
 </ItemFormGroup>
 
@@ -83,15 +83,15 @@
   cssClass="spell-components stacked"
   labelText={localize('DND5E.SpellComponents')}
 >
-  {#each Object.entries($store.spellComponents) as [key, component]}
-    {@const checked = $store.system.components[key]}
+  {#each Object.entries($context.spellComponents) as [key, component]}
+    {@const checked = $context.system.components[key]}
     <Checkbox
-      id="{$store.appId}-system-components-{key}"
+      id="{$context.appId}-system-components-{key}"
       labelCssClass="checkbox"
-      document={$store.item}
+      document={$context.item}
       field="system.components.{key}"
       {checked}
-      disabled={!$store.owner}
+      disabled={!$context.owner}
       >
       {component.label}
     </Checkbox>
@@ -107,44 +107,44 @@
   <TextInput
     id={inputId}
     cssClass="materials"
-    document={$store.item}
+    document={$context.item}
     field="system.materials.value"
-    value={$store.system.materials.value}
-    disabled={!$store.owner}
+    value={$context.system.materials.value}
+    disabled={!$context.owner}
     />
-  {#if $store.system.materials.value}
+  {#if $context.system.materials.value}
     <div class="spell-materials flexrow align-items-center small-gap">
-      <label for="{$store.appId}-system-materials-supply"
+      <label for="{$context.appId}-system-materials-supply"
         >{localize('DND5E.Supply')}</label
       >
       <NumberInput
-        id="{$store.appId}-system-materials-supply"
-        document={$store.item}
+        id="{$context.appId}-system-materials-supply"
+        document={$context.item}
         field="system.materials.supply"
-        value={$store.system.materials.supply}
+        value={$context.system.materials.supply}
         placeholder="0"
-        disabled={!$store.owner}
+        disabled={!$context.owner}
         />
 
-      <label for="{$store.appId}-system-materials-cost"
+      <label for="{$context.appId}-system-materials-cost"
         >{localize('DND5E.CostGP')}</label
       >
       <NumberInput
-        id="{$store.appId}-system-materials-cost"
-        document={$store.item}
+        id="{$context.appId}-system-materials-cost"
+        document={$context.item}
         field="system.materials.cost"
-        value={$store.system.materials.cost}
+        value={$context.system.materials.cost}
         placeholder="&mdash;"
-        disabled={!$store.owner}
+        disabled={!$context.owner}
         />
 
       <Checkbox
-        id="{$store.appId}-system-materials-consumed"
+        id="{$context.appId}-system-materials-consumed"
         labelCssClass="checkbox"
-        document={$store.item}
+        document={$context.item}
         field="system.materials.consumed"
-        checked={$store.system.materials.consumed}
-        disabled={!$store.owner}
+        checked={$context.system.materials.consumed}
+        disabled={!$context.owner}
         >
         {localize('DND5E.Consumed')}
       </Checkbox>
@@ -158,23 +158,23 @@
 >
   <div class="form-fields spell-preparation-mode">
     <Checkbox
-      id="{$store.appId}-system-preparation-prepared"
+      id="{$context.appId}-system-preparation-prepared"
       labelCssClass="checkbox prepared"
-      document={$store.item}
+      document={$context.item}
       field="system.preparation.prepared"
-      checked={$store.system.preparation.prepared}
-      disabled={!$store.owner}
+      checked={$context.system.preparation.prepared}
+      disabled={!$context.owner}
       >
       {localize('DND5E.SpellPrepared')}
     </Checkbox>
     <Select
-      id="{$store.appId}-system-preparation-mode"
-      document={$store.item}
+      id="{$context.appId}-system-preparation-mode"
+      document={$context.item}
       field="system.preparation.mode"
-      value={$store.system.preparation.mode}
-      disabled={!$store.owner}
+      value={$context.system.preparation.mode}
+      disabled={!$context.owner}
       >
-      <SelectOptions data={$store.config.spellPreparationModes} />
+      <SelectOptions data={$context.config.spellPreparationModes} />
     </Select>
   </div>
 </ItemFormGroup>
@@ -195,21 +195,21 @@
   <div class="form-fields">
     <Select
       id={inputId}
-      document={$store.item}
+      document={$context.item}
       field="system.scaling.mode"
-      value={$store.system.scaling.mode}
-      disabled={!$store.owner}
+      value={$context.system.scaling.mode}
+      disabled={!$context.owner}
       >
-      <SelectOptions data={$store.config.spellScalingModes} />
+      <SelectOptions data={$context.config.spellScalingModes} />
     </Select>
     <TextInput
-      id="{$store.appId}-system-scaling-formula"
-      document={$store.item}
+      id="{$context.appId}-system-scaling-formula"
+      document={$context.item}
       field="system.scaling.formula"
-      value={$store.system.scaling.formula}
+      value={$context.system.scaling.formula}
       placeholder={localize('DND5E.ScalingFormula')}
       dataset={{ formulaEditor: true }}
-      disabled={!$store.owner}
+      disabled={!$context.owner}
       />
   </div>
 </ItemFormGroup>

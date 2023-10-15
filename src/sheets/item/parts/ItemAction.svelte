@@ -9,27 +9,27 @@
   import ItemFormGroup from '../form/ItemFormGroup.svelte';
   import TextInput from 'src/components/form/TextInput.svelte';
 
-  let store = getContext<Readable<ItemSheetContext>>('store');
+  let context = getContext<Readable<ItemSheetContext>>('context');
 
   const localize = FoundryAdapter.localize;
 
   function addDamageFormula() {
-    const damage = $store.item.system.damage;
-    return $store.item.update({
+    const damage = $context.item.system.damage;
+    return $context.item.update({
       'system.damage.parts': damage.parts.concat([['', '']]),
     });
   }
 
   function deleteDamageFormula(index: number) {
-    const damage = foundry.utils.deepClone($store.item.system.damage);
+    const damage = foundry.utils.deepClone($context.item.system.damage);
     damage.parts.splice(index, 1);
-    return $store.item.update({ 'system.damage.parts': damage.parts });
+    return $context.item.update({ 'system.damage.parts': damage.parts });
   }
 
-  $: damageParts = [...$store.system.damage.parts];
+  $: damageParts = [...$context.system.damage.parts];
 
   function saveDamageFormulae() {
-    $store.item.update({
+    $context.item.update({
       'system.damage.parts': damageParts,
     });
   }
@@ -42,16 +42,16 @@
 >
   <Select
     id={inputId}
-    value={$store.system.actionType}
-    document={$store.item}
+    value={$context.system.actionType}
+    document={$context.item}
     field="system.actionType"
-    disabled={!$store.owner}
+    disabled={!$context.owner}
   >
-    <SelectOptions data={$store.config.itemActionTypes} blank="" />
+    <SelectOptions data={$context.config.itemActionTypes} blank="" />
   </Select>
 </ItemFormGroup>
 
-{#if $store.system.actionType}
+{#if $context.system.actionType}
   <ItemFormGroup
     cssClass="select"
     labelText={localize('DND5E.AbilityModifier')}
@@ -60,20 +60,20 @@
   >
     <Select
       id={inputId}
-      value={$store.system.ability}
-      document={$store.item}
+      value={$context.system.ability}
+      document={$context.item}
       field="system.ability"
-      disabled={!$store.owner}
+      disabled={!$context.owner}
     >
       <option value="">{localize('DND5E.Default')}</option>
       <option value="none">{localize('DND5E.None')}</option>
       <optgroup label={localize('DND5E.Ability')}>
-        <SelectOptions data={$store.config.abilities} labelProp="label" />
+        <SelectOptions data={$context.config.abilities} labelProp="label" />
       </optgroup>
     </Select>
   </ItemFormGroup>
 
-  {#if $store.system.hasAttack}
+  {#if $context.system.hasAttack}
     <ItemFormGroup
       labelText={localize('DND5E.ItemAttackBonus')}
       field="system.attackBonus"
@@ -82,11 +82,11 @@
       <div class="form-fields">
         <TextInput
           id={inputId}
-          document={$store.item}
+          document={$context.item}
           field="system.attackBonus"
-          value={$store.system.attackBonus}
+          value={$context.system.attackBonus}
           dataset={{ formulaEditor: true }}
-          disabled={!$store.owner}
+          disabled={!$context.owner}
         />
       </div>
     </ItemFormGroup>
@@ -99,14 +99,14 @@
       <div class="form-fields">
         <NumberInput
           id={inputId}
-          value={$store.system.critical.threshold}
-          document={$store.item}
+          value={$context.system.critical.threshold}
+          document={$context.item}
           field="system.critical.threshold"
           placeholder="20"
           max="20"
           min="1"
           step="1"
-          disabled={!$store.owner}
+          disabled={!$context.owner}
         />
       </div>
     </ItemFormGroup>
@@ -119,17 +119,17 @@
       <div class="form-fields">
         <TextInput
           id={inputId}
-          document={$store.item}
+          document={$context.item}
           field="system.critical.damage"
-          value={$store.system.critical.damage}
-          disabled={!$store.owner}
+          value={$context.system.critical.damage}
+          disabled={!$context.owner}
         />
       </div>
     </ItemFormGroup>
   {/if}
 
   <h4 class="damage-header">
-    {#if $store.isHealing}
+    {#if $context.isHealing}
       {localize('DND5E.Healing')}
     {:else}
       {localize('DND5E.Damage')}
@@ -138,7 +138,7 @@
     <button
       class="damage-formula-control add-damage"
       on:click={() => addDamageFormula()}
-      disabled={!$store.owner}
+      disabled={!$context.owner}
     >
       <i class="fas fa-plus" />
     </button>
@@ -147,32 +147,32 @@
     {#each damageParts as [formula, damageType], i}
       <li class="damage-part flexrow">
         <input
-          id="{$store.appId}-system-damage-part-{i}-0"
+          id="{$context.appId}-system-damage-part-{i}-0"
           type="text"
           bind:value={formula}
           data-formula-editor
           on:change={() => saveDamageFormulae()}
-          disabled={!$store.owner}
+          disabled={!$context.owner}
         />
         <select
-          id="{$store.appId}-system-damage-part-{i}-1"
+          id="{$context.appId}-system-damage-part-{i}-1"
           bind:value={damageType}
           data-formula-editor
           on:change={() => saveDamageFormulae()}
-          disabled={!$store.owner}
+          disabled={!$context.owner}
         >
           <option value="">{localize('DND5E.None')}</option>
           <optgroup label={localize('DND5E.Damage')}>
-            <SelectOptions data={$store.config.damageTypes} />
+            <SelectOptions data={$context.config.damageTypes} />
           </optgroup>
           <optgroup label={localize('DND5E.Healing')}>
-            <SelectOptions data={$store.config.healingTypes} />
+            <SelectOptions data={$context.config.healingTypes} />
           </optgroup>
         </select>
         <button
           class="damage-formula-control delete-damage"
           on:click={() => deleteDamageFormula(i)}
-          disabled={!$store.owner}
+          disabled={!$context.owner}
         >
           <i class="fas fa-minus" />
         </button>
@@ -180,7 +180,7 @@
     {/each}
   </ol>
 
-  {#if $store.system.damage.parts.length}
+  {#if $context.system.damage.parts.length}
     <ItemFormGroup
       labelText={localize('DND5E.VersatileDamage')}
       field="system.damage.versatile"
@@ -189,12 +189,12 @@
       <div class="form-fields">
         <TextInput
           id={inputId}
-          value={$store.system.damage.versatile}
+          value={$context.system.damage.versatile}
           placeholder={localize('DND5E.Formula')}
           dataset={{ formulaEditor: true }}
-          document={$store.item}
+          document={$context.item}
           field="system.damage.versatile"
-          disabled={!$store.owner}
+          disabled={!$context.owner}
         />
       </div>
     </ItemFormGroup>
@@ -208,12 +208,12 @@
     <div class="form-fields">
       <TextInput
         id={inputId}
-        document={$store.item}
+        document={$context.item}
         field="system.formula"
-        value={$store.system.formula}
+        value={$context.system.formula}
         placeholder={localize('DND5E.Formula')}
         dataset={{ formulaEditor: true }}
-        disabled={!$store.owner}
+        disabled={!$context.owner}
       />
     </div>
   </ItemFormGroup>
@@ -227,36 +227,36 @@
     <div class="form-fields">
       <Select
         id={inputId}
-        value={$store.system.save.ability}
-        document={$store.item}
+        value={$context.system.save.ability}
+        document={$context.item}
         field="system.save.ability"
-        disabled={!$store.owner}
+        disabled={!$context.owner}
       >
         <SelectOptions
-          data={$store.config.abilities}
+          data={$context.config.abilities}
           labelProp="label"
           blank=""
         />
       </Select>
       <span>{localize('DND5E.VsDC')}</span>
       <NumberInput
-        id="{$store.appId}-system-save-dc"
+        id="{$context.appId}-system-save-dc"
         step="any"
-        document={$store.item}
+        document={$context.item}
         field="system.save.dc"
-        value={$store.system.save.dc ?? null}
+        value={$context.system.save.dc ?? null}
         placeholder={localize('DND5E.AbbreviationDC')}
-        disabled={!$store.owner || !$store.isFlatDC}
+        disabled={!$context.owner || !$context.isFlatDC}
       />
       <Select
-        id="{$store.appId}-system-save-scaling"
-        document={$store.item}
+        id="{$context.appId}-system-save-scaling"
+        document={$context.item}
         field="system.save.scaling"
-        value={$store.system.save.scaling}
-        disabled={!$store.owner}
+        value={$context.system.save.scaling}
+        disabled={!$context.owner}
       >
         <option value="spell">{localize('DND5E.Spellcasting')}</option>
-        <SelectOptions data={$store.config.abilities} labelProp="label" />
+        <SelectOptions data={$context.config.abilities} labelProp="label" />
         <option value="flat">{localize('DND5E.Flat')}</option>
       </Select>
     </div>
@@ -270,10 +270,10 @@
   >
     <TextInput
       id={inputId}
-      document={$store.item}
+      document={$context.item}
       field="system.chatFlavor"
-      value={$store.system.chatFlavor}
-      disabled={!$store.owner}
+      value={$context.system.chatFlavor}
+      disabled={!$context.owner}
     />
   </ItemFormGroup>
 {/if}

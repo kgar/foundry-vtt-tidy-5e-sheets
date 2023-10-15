@@ -8,7 +8,7 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
 
-  let store = getContext<Readable<CharacterSheetContext>>('store');
+  let context = getContext<Readable<CharacterSheetContext>>('context');
 
   export let inspired: boolean;
   export let cssClass: string = '';
@@ -26,14 +26,14 @@
 >
   <Checkbox
     checkboxCssClass="inspiration-toggle"
-    labelCssClass="{inspired ? 'inspired' : ''} {radiusClass} {$store.owner
+    labelCssClass="{inspired ? 'inspired' : ''} {radiusClass} {$context.owner
       ? 'pointer'
       : ''}"
-    document={$store.actor}
+    document={$context.actor}
     field="system.attributes.inspiration"
     dtype="Boolean"
     checked={inspired}
-    disabled={!$store.owner}
+    disabled={!$context.owner}
   >
     <i
       class="inspiration-icon fas fa-dice-d20"

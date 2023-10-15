@@ -10,16 +10,16 @@
 
   export let hint: string | null = null;
 
-  let store =
+  let context =
     getContext<
       Readable<CharacterSheetContext | NpcSheetContext | VehicleSheetContext>
-    >('store');
+    >('context');
 
   async function toggleLock() {
-    await FoundryAdapter.setFlag($store.actor, 'allow-edit', !allowEdit);
+    await FoundryAdapter.setFlag($context.actor, 'allow-edit', !allowEdit);
   }
 
-  $: allowEdit = FoundryAdapter.tryGetFlag($store.actor, 'allow-edit');
+  $: allowEdit = FoundryAdapter.tryGetFlag($context.actor, 'allow-edit');
 
   const localize = FoundryAdapter.localize;
 </script>

@@ -25,7 +25,7 @@ export type ThemeSettingsSheetFunctions = {
 
 export class Tidy5eKgarThemeSettingsSheet extends FormApplication {
   themeableColors: ThemeColorSetting[] = getThemeableColors();
-  store: Writable<CurrentSettings> = writable(getCurrentSettings());
+  context: Writable<CurrentSettings> = writable(getCurrentSettings());
 
   static get defaultOptions() {
     return {
@@ -49,7 +49,7 @@ export class Tidy5eKgarThemeSettingsSheet extends FormApplication {
   activateListeners(html: any) {
     const node = html.get(0);
 
-    this.store = writable(getCurrentSettings());
+    this.context = writable(getCurrentSettings());
 
     this.component = new ThemeSettingsSheet({
       target: node,
@@ -57,7 +57,7 @@ export class Tidy5eKgarThemeSettingsSheet extends FormApplication {
         themeableColors: this.themeableColors,
       },
       context: new Map<any, any>([
-        ['store', this.store],
+        ['context', this.context],
         [
           'functions',
           {
@@ -103,7 +103,7 @@ export class Tidy5eKgarThemeSettingsSheet extends FormApplication {
   }
 
   async _updateObject() {
-    const settings = get(this.store);
+    const settings = get(this.context);
     await this.saveChangedSettings(settings);
   }
 
@@ -118,7 +118,7 @@ export class Tidy5eKgarThemeSettingsSheet extends FormApplication {
       {}
     );
 
-    this.store.update((current) => {
+    this.context.update((current) => {
       return {
         ...current,
         ...colorsToUpdate,

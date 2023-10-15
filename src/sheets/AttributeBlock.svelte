@@ -13,7 +13,7 @@
   export let useSavingThrowProficiency: boolean;
   export let useConfigurationOption: boolean;
 
-  let store = getContext<Readable<ActorSheetContext>>('store');
+  let context = getContext<Readable<ActorSheetContext>>('context');
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -23,49 +23,49 @@
     title={ability.label}
     text={abbreviation}
     on:roll={(event) =>
-      $store.actor.rollAbility(abbreviation, { event: event.detail })}
+      $context.actor.rollAbility(abbreviation, { event: event.detail })}
   />
   <BlockScore>
     <TextInput
-      document={$store.actor}
+      document={$context.actor}
       field="system.abilities.{abbreviation}.value"
       value={ability.value}
       placeholder="10"
       dtype="Number"
       selectOnFocus={true}
       allowDeltaChanges={true}
-      disabled={$store.lockSensitiveFields}
+      disabled={$context.lockSensitiveFields}
     />
   </BlockScore>
   <div class="ability-modifiers">
     <button
       type="button"
       class="ability-mod transparent-button"
-      class:rollable={$store.owner}
+      class:rollable={$context.owner}
       title={localize('DND5E.AbilityModifier')}
       on:click={(event) =>
-        $store.owner && $store.actor.rollAbilityTest(abbreviation, { event })}
+        $context.owner && $context.actor.rollAbilityTest(abbreviation, { event })}
     >
       {formatAsModifier(ability.mod)}
     </button>
     <button
       type="button"
       class="ability-save transparent-button"
-      class:rollable={$store.owner}
+      class:rollable={$context.owner}
       title={localize('DND5E.ActionSave')}
       on:click={(event) =>
-        $store.owner && $store.actor.rollAbilitySave(abbreviation, { event })}
+        $context.owner && $context.actor.rollAbilitySave(abbreviation, { event })}
     >
       {formatAsModifier(ability.save)}
     </button>
     {#if useSavingThrowProficiency}
-      {#if !$store.lockSensitiveFields}
+      {#if !$context.lockSensitiveFields}
         <button
           type="button"
           title={ability.hover}
           class="proficiency-toggle inline-icon-button"
           on:click={() =>
-            $store.actor.update({
+            $context.actor.update({
               [`system.abilities.${abbreviation}.proficient`]:
                 1 - parseInt(ability.proficient),
             })}
@@ -78,14 +78,14 @@
         >
       {/if}
     {/if}
-    {#if useConfigurationOption && $store.owner && !$store.lockSensitiveFields}
+    {#if useConfigurationOption && $context.owner && !$context.lockSensitiveFields}
       <button
         type="button"
         class="config-button inline-icon-button"
         title={localize('DND5E.AbilityConfigure')}
         on:click={() =>
           new dnd5e.applications.actor.ActorAbilityConfig(
-            $store.actor,
+            $context.actor,
             null,
             abbreviation
           ).render(true)}

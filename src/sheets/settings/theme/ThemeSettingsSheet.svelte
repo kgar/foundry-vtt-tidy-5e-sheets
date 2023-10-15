@@ -19,12 +19,12 @@
 
   export let themeableColors: ThemeColorSetting[];
   $: {
-    if ($store.colorPickerEnabled) {
+    if ($context.colorPickerEnabled) {
       themeableColors.forEach((color) =>
         trySetRootCssVariable(
           color.cssVariable,
-          $store[color.key]?.toString(),
-          $store.colorPickerEnabled
+          $context[color.key]?.toString(),
+          $context.colorPickerEnabled
         )
       );
     } else {
@@ -33,7 +33,7 @@
     }
   }
 
-  let store = getContext<Writable<CurrentSettings>>('store');
+  let context = getContext<Writable<CurrentSettings>>('context');
   let appId = getContext<string>('appId');
   let functions = getContext<ThemeSettingsSheetFunctions>('functions');
   const localize = FoundryAdapter.localize;
@@ -55,7 +55,7 @@
         themeableColors
       );
 
-      store.update((settings) => ({
+      context.update((settings) => ({
         ...settings,
         ...storeUpdateData,
       }));
@@ -106,7 +106,7 @@
           type="checkbox"
           data-dtype="boolean"
           id="colorPickerEnabled-{appId}"
-          bind:checked={$store.colorPickerEnabled}
+          bind:checked={$context.colorPickerEnabled}
         />
         {localize('T5EK.Settings.ColorPickerEnabled.name')}
       </label>
@@ -130,7 +130,7 @@
     <button
       type="submit"
       class="save-changes-btn"
-      on:click={() => functions.save($store)}
+      on:click={() => functions.save($context)}
     >
       <i class="fas fa-save" />
       {localize('T5EK.SaveChanges')}

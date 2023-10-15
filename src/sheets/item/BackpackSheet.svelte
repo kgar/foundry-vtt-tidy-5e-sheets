@@ -13,7 +13,7 @@
   import SelectOptions from 'src/components/form/SelectOptions.svelte';
   import itemSheetTabs from './itemSheetTabs';
 
-  let store = getContext<Readable<ItemSheetContext>>('store');
+  let context = getContext<Readable<ItemSheetContext>>('context');
 
   export let selectedTabId: string;
 
@@ -24,7 +24,7 @@
 
   Hooks.call(CONSTANTS.HOOKS_RENDERING_ITEM_BACKPACK_TABS, {
     tabs,
-    context: $store,
+    context: $context,
   });
 
   const localize = FoundryAdapter.localize;
@@ -36,36 +36,36 @@
     <h1 class="charname">
       <TextInput
         field="name"
-        document={$store.item}
-        value={$store.item.name}
+        document={$context.item}
+        value={$context.item.name}
         placeholder={localize('DND5E.ItemName')}
-        disabled={!$store.owner}
+        disabled={!$context.owner}
         />
     </h1>
 
     <div class="item-subtitle">
-      <h4 class="item-type">{$store.itemType}</h4>
-      <span class="item-status">{$store.itemStatus ?? ''}</span>
+      <h4 class="item-type">{$context.itemType}</h4>
+      <span class="item-status">{$context.itemStatus ?? ''}</span>
     </div>
 
     <ul class="summary flexrow">
       <li>
         <Select
           field="system.rarity"
-          document={$store.item}
-          value={$store.item.system.rarity}
-          disabled={!$store.owner}
+          document={$context.item}
+          value={$context.item.system.rarity}
+          disabled={!$context.owner}
         >
-          <SelectOptions data={$store.config.itemRarity} blank="" />
+          <SelectOptions data={$context.config.itemRarity} blank="" />
         </Select>
       </li>
       <li>
         <TextInput
           field="system.source"
-          document={$store.item}
-          value={$store.system.source}
+          document={$context.item}
+          value={$context.system.source}
           placeholder={localize('DND5E.Source')}
-          disabled={!$store.owner}
+          disabled={!$context.owner}
         />
       </li>
     </ul>

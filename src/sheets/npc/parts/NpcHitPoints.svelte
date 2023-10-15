@@ -7,20 +7,20 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
 
-  let store = getContext<Readable<NpcSheetContext>>('store');
+  let context = getContext<Readable<NpcSheetContext>>('context');
 
   const localize = FoundryAdapter.localize;
 </script>
 
 <div class="portrait-hp" title={localize('DND5E.HitPoints')}>
   {#if !$settingStore.hpBarDisabledNpc}
-    <ActorHpBar actor={$store.actor} />
+    <ActorHpBar actor={$context.actor} />
   {/if}
   <TextInput
     cssClass="hp-min"
-    document={$store.actor}
+    document={$context.actor}
     field="system.attributes.hp.value"
-    value={$store.system.attributes.hp.value}
+    value={$context.system.attributes.hp.value}
     placeholder="0"
     title={localize('DND5E.HitPointsCurrent')}
     dtype="Number"
@@ -28,14 +28,14 @@
     maxlength={5}
     ariaDescribedBy="tooltip"
     selectOnFocus={true}
-    disabled={!$store.owner}
+    disabled={!$context.owner}
     />
   <span class="value-seperator sep"> / </span>
   <TextInput
     cssClass="hp-max"
-    document={$store.actor}
+    document={$context.actor}
     field="system.attributes.hp.max"
-    value={$store.system.attributes.hp.max}
+    value={$context.system.attributes.hp.max}
     placeholder="0"
     title={localize('DND5E.HitPointsMax')}
     dtype="Number"
@@ -43,7 +43,7 @@
     maxlength={5}
     ariaDescribedBy="tooltip"
     selectOnFocus={true}
-    disabled={!$store.owner || $store.lockHpMaxChanges || $store.lockSensitiveFields}
+    disabled={!$context.owner || $context.lockHpMaxChanges || $context.lockSensitiveFields}
   />
 </div>
 

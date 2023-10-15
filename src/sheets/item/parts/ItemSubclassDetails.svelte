@@ -7,7 +7,7 @@
   import ItemFormGroup from '../form/ItemFormGroup.svelte';
   import TextInput from 'src/components/form/TextInput.svelte';
 
-  let store = getContext<Readable<ItemSheetContext>>('store');
+  let context = getContext<Readable<ItemSheetContext>>('context');
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -20,11 +20,11 @@
   <div class="form-fields">
     <TextInput
       id={inputId}
-      document={$store.item}
+      document={$context.item}
       field="system.identifier"
-      value={$store.system.identifier}
-      placeholder={$store.item.identifier}
-      disabled={!$store.owner}
+      value={$context.system.identifier}
+      placeholder={$context.item.identifier}
+      disabled={!$context.owner}
       />
   </div>
 </ItemFormGroup>
@@ -37,10 +37,10 @@
   <div class="form-fields">
     <TextInput
       id={inputId}
-      document={$store.item}
+      document={$context.item}
       field="system.classIdentifier"
-      value={$store.system.classIdentifier}
-      disabled={!$store.owner}
+      value={$context.system.classIdentifier}
+      disabled={!$context.owner}
       />
   </div>
   <p class="hint">

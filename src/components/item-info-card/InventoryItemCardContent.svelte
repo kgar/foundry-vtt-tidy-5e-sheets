@@ -10,9 +10,9 @@
   export let item: Item5e;
   export let chatData: ItemChatData;
 
-  let store = getContext<Readable<CharacterSheetContext>>('store');
+  let context = getContext<Readable<CharacterSheetContext>>('context');
 
-  $: ctx = $store.itemContext?.[item.id];
+  $: ctx = $context.itemContext?.[item.id];
 
   const localize = FoundryAdapter.localize;
   const weightUnit = FoundryAdapter.getWeightUnit();

@@ -12,10 +12,10 @@
   import type { Readable } from 'svelte/store';
   import { slide } from 'svelte/transition';
 
-  let store =
+  let context =
     getContext<
       Readable<CharacterSheetContext | VehicleSheetContext | NpcSheetContext>
-    >('store');
+    >('context');
   export let title: string;
   export let configureButtonTitle: string;
   export let iconCssClass: string | undefined = undefined;
@@ -58,21 +58,21 @@
         {/each}
         {#each tools as [key, tool]}
           <li class="tool">
-            {#if $store.owner && !$store.lockSensitiveFields}
+            {#if $context.owner && !$context.lockSensitiveFields}
               <button
                 type="button"
                 class="tool-proficiency-toggle inline-transparent-button"
                 title={tool.hover}
                 on:click|stopPropagation|preventDefault={(event) =>
                   FoundryAdapter.cycleProficiency(
-                    $store.actor,
+                    $context.actor,
                     key,
                     tool.value,
                     'tools'
                   )}
                 on:contextmenu|stopPropagation|preventDefault={(event) =>
                   FoundryAdapter.cycleProficiency(
-                    $store.actor,
+                    $context.actor,
                     key,
                     tool.value,
                     'tools',
@@ -87,13 +87,13 @@
               >
             {/if}
 
-            {#if $store.owner}
+            {#if $context.owner}
               <button
                 type="button"
                 class="tool-check-roller inline-transparent-button"
-                class:rollable={$store.owner}
-                on:click={(event) => $store.actor.rollToolCheck(key, { event })}
-                disabled={!$store.owner}
+                class:rollable={$context.owner}
+                on:click={(event) => $context.actor.rollToolCheck(key, { event })}
+                disabled={!$context.owner}
               >
                 {tool.label}
               </button>
@@ -103,13 +103,13 @@
               </span>
             {/if}
 
-            {#if traitsExpanded && $store.owner && !$store.lockSensitiveFields}
+            {#if traitsExpanded && $context.owner && !$context.lockSensitiveFields}
               <button
                 type="button"
                 class="tool-proficiency-editor inline-icon-button"
                 title={localize('DND5E.ToolConfigure')}
                 on:click|stopPropagation|preventDefault={() =>
-                  new dnd5e.applications.actor.ProficiencyConfig($store.actor, {
+                  new dnd5e.applications.actor.ProficiencyConfig($context.actor, {
                     property: 'tools',
                     key,
                   }).render(true)}
@@ -121,7 +121,7 @@
         {/each}
       </ul>
     </div>
-    {#if traitsExpanded && $store.owner && !$store.lockSensitiveFields}
+    {#if traitsExpanded && $context.owner && !$context.lockSensitiveFields}
       <button
         type="button"
         class="trait-editor inline-icon-button"

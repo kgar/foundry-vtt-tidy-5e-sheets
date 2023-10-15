@@ -14,7 +14,7 @@
   export let colorToConfigure: ThemeColorSetting;
 
   let appId = getContext('appId');
-  let store = getContext<Writable<CurrentSettings>>('store');
+  let context = getContext<Writable<CurrentSettings>>('context');
   let colorPickerIsOpen: boolean = false;
 
   const eyeDropperEnabled = 'EyeDropper' in window;
@@ -37,10 +37,10 @@
     trySetRootCssVariable(
       colorToConfigure.cssVariable,
       value,
-      $store.colorPickerEnabled
+      $context.colorPickerEnabled
     );
-    $store = {
-      ...$store,
+    $context = {
+      ...$context,
       [colorToConfigure.key]: value,
     };
   }
@@ -70,7 +70,7 @@
       isPopup={true}
       label=""
       hex={settingValueToHexaString(
-        $store[colorToConfigure.key]?.toString() ?? ''
+        $context[colorToConfigure.key]?.toString() ?? ''
       ).hexa}
       on:input={(ev) =>
         colorPickerIsOpen &&
@@ -79,7 +79,7 @@
     <input
       type="text"
       id="{colorToConfigure.key}-{appId}"
-      value={$store[colorToConfigure.key]}
+      value={$context[colorToConfigure.key]}
       class="theme-color-textbox"
       on:change={(ev) =>
         onColorSelected(colorToConfigure, ev.currentTarget.value)}

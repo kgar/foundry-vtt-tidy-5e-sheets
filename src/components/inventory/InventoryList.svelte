@@ -36,12 +36,12 @@
   export let allowFavoriteIconNextToName: boolean = true;
   export let includeWeightColumn: boolean = true;
 
-  let store = getContext<Readable<CharacterSheetContext>>('store');
+  let context = getContext<Readable<CharacterSheetContext>>('context');
 
   const localize = FoundryAdapter.localize;
   const weightUnit = FoundryAdapter.getWeightUnit();
 
-  $: classicControlsBaseWidth = $store.editable ? '7.5rem' : '5.3125rem';
+  $: classicControlsBaseWidth = $context.editable ? '7.5rem' : '5.3125rem';
 
   function getInventoryRowClasses(item: Item5e) {
     const extras: string[] = [];
@@ -52,7 +52,7 @@
 
     return FoundryAdapter.getInventoryRowClasses(
       item,
-      $store.itemContext[item.id],
+      $context.itemContext[item.id],
       extras
     );
   }
@@ -78,12 +78,12 @@
       <ItemTableColumn baseWidth="7.5rem">
         {localize('DND5E.Usage')}
       </ItemTableColumn>
-      {#if $store.owner && $store.classicControlsEnabled && !lockControls}
+      {#if $context.owner && $context.classicControlsEnabled && !lockControls}
         <ItemTableColumn baseWidth={classicControlsBaseWidth} />
       {/if}
     </ItemTableHeaderRow>
     {#each items as item (item.id)}
-      {@const ctx = $store.itemContext[item.id]}
+      {@const ctx = $context.itemContext[item.id]}
       <ItemTableRow
         {item}
         on:mousedown={(event) =>
@@ -99,7 +99,7 @@
         <ItemTableCell primary={true} title={item.name}>
           <ItemUseButton {item} />
           <ItemName
-            on:click={(event) => toggleSummary(event.detail, $store.actor)}
+            on:click={(event) => toggleSummary(event.detail, $context.actor)}
             cssClass="extra-small-gap"
             {item}
           >
@@ -153,7 +153,7 @@
             {item.labels.activation}
           {/if}
         </ItemTableCell>
-        {#if $store.owner && $store.classicControlsEnabled && !lockControls}
+        {#if $context.owner && $context.classicControlsEnabled && !lockControls}
           <ItemTableCell baseWidth={classicControlsBaseWidth}>
             <ItemControls>
               {#if ctx.attunement}
@@ -164,7 +164,7 @@
               {/if}
               <ItemFavoriteControl {item} />
               <ItemEditControl {item} />
-              {#if $store.editable}
+              {#if $context.editable}
                 <ItemDuplicateControl {item} />
                 <ItemDeleteControl {item} />
               {/if}
@@ -173,8 +173,8 @@
         {/if}
       </ItemTableRow>
     {/each}
-    {#if $store.editable && dataset}
-      <ItemTableFooter actor={$store.actor} {dataset} />
+    {#if $context.editable && dataset}
+      <ItemTableFooter actor={$context.actor} {dataset} />
     {/if}
   </ItemTable>
 </section>

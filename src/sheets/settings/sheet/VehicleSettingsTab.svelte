@@ -10,7 +10,7 @@
   import NumberInputSetting from 'src/sheets/settings/parts/NumberInputSetting.svelte';
   import SelectSetting from '../parts/SelectSetting.svelte';
 
-  let store = getContext<Writable<CurrentSettings>>('store');
+  let context = getContext<Writable<CurrentSettings>>('context');
 
   const userIsGm = FoundryAdapter.userIsGm();
   const localize = FoundryAdapter.localize;
@@ -20,7 +20,7 @@
 {#if userIsGm}
   <SelectSetting
     options={SettingsProvider.settings.defaultVehicleSheetTab.options.choices()}
-    bind:value={$store.defaultVehicleSheetTab}
+    bind:value={$context.defaultVehicleSheetTab}
     name={SettingsProvider.settings.defaultVehicleSheetTab.options.name}
     hint={SettingsProvider.settings.defaultVehicleSheetTab.options.hint}
     id="defaultVehicleSheetTab"
@@ -28,28 +28,28 @@
 {/if}
 
 <CheckboxSetting
-  bind:value={$store.enableClassicControlsForVehicle}
+  bind:value={$context.enableClassicControlsForVehicle}
   name={SettingsProvider.settings.enableClassicControlsForVehicle.options.name}
   hint={SettingsProvider.settings.enableClassicControlsForVehicle.options.hint}
   id="enableClassicControlsForVehicle"
 />
 
 <CheckboxSetting
-  bind:value={$store.hpBarDisabledVehicle}
+  bind:value={$context.hpBarDisabledVehicle}
   name={'T5EK.Settings.HpBar.name'}
   hint={'T5EK.Settings.HpBar.hint'}
   id="hpBarDisabledVehicle"
 />
 
 <CheckboxSetting
-  bind:value={$store.hpOverlayDisabledVehicle}
+  bind:value={$context.hpOverlayDisabledVehicle}
   name={'T5EK.Settings.HpOverlay.name'}
   hint={'T5EK.Settings.HpOverlay.hint'}
   id="hpOverlayDisabledVehicle"
 />
 
 <NumberInputSetting
-  bind:value={$store.vehicleSheetWidth}
+  bind:value={$context.vehicleSheetWidth}
   name={'T5EK.Settings.vehicleSheetWidth.name'}
   hint={'T5EK.Settings.vehicleSheetWidth.hint'}
   id="vehicleSheetWidth"

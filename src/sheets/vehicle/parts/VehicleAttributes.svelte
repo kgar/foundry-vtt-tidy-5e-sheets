@@ -10,19 +10,19 @@
   import type { Readable } from 'svelte/store';
   import { slide } from 'svelte/transition';
 
-  let store = getContext<Readable<VehicleSheetContext>>('store');
+  let context = getContext<Readable<VehicleSheetContext>>('context');
 
-  $: totalCrew = $store.system.cargo.crew.reduce(
+  $: totalCrew = $context.system.cargo.crew.reduce(
     (count: number, c: { quantity: number }) => count + c.quantity,
     0
   );
-  $: totalActions = $store.system.attributes.actions.value ?? 0;
+  $: totalActions = $context.system.attributes.actions.value ?? 0;
   $: actionsPerTurn =
-    totalCrew >= $store.system.attributes.actions.thresholds[2]
+    totalCrew >= $context.system.attributes.actions.thresholds[2]
       ? totalActions
-      : totalCrew >= $store.system.attributes.actions.thresholds[1]
+      : totalCrew >= $context.system.attributes.actions.thresholds[1]
       ? Math.max(totalActions - 1, 0)
-      : totalCrew >= $store.system.attributes.actions.thresholds[0]
+      : totalCrew >= $context.system.attributes.actions.thresholds[0]
       ? Math.max(totalActions - 2, 0)
       : 0;
   $: crewTallyDescription =
@@ -43,11 +43,11 @@
     <div class="counter-value">
       <ContentEditableFormField
         element="div"
-        document={$store.actor}
+        document={$context.actor}
         field="system.attributes.capacity.creature"
-        editable={$store.owner && !$store.lockSensitiveFields}
+        editable={$context.owner && !$context.lockSensitiveFields}
         placeholder="&mdash;"
-        value={$store.system.attributes.capacity.creature}
+        value={$context.system.attributes.capacity.creature}
         dataMaxLength={1000}
       />
     </div>
@@ -57,13 +57,13 @@
     <h4 class="flex-1">{localize('DND5E.VehicleCargoCapacity')}</h4>
     <div class="counter-value">
       <NumberInput
-        document={$store.actor}
+        document={$context.actor}
         field="system.attributes.capacity.cargo"
-        value={$store.system.attributes.capacity.cargo}
+        value={$context.system.attributes.capacity.cargo}
         min="0"
         placeholder="0"
         selectOnFocus={true}
-        disabled={!$store.owner || $store.lockSensitiveFields}
+        disabled={!$context.owner || $context.lockSensitiveFields}
       />
     </div>
   </div>
@@ -71,18 +71,18 @@
   <div class="counter stations">
     <div class="counter-value">
       <Checkbox
-        document={$store.actor}
+        document={$context.actor}
         field="system.attributes.actions.stations"
         dtype="Boolean"
-        checked={$store.system.attributes.actions.stations}
+        checked={$context.system.attributes.actions.stations}
         labelCssClass="action-stations-label"
-        disabled={!$store.owner || $store.lockSensitiveFields}
+        disabled={!$context.owner || $context.lockSensitiveFields}
       >
         <span>{localize('DND5E.VehicleActionStations')}</span>
       </Checkbox>
     </div>
   </div>
-  {#if !$store.system.attributes.actions.stations}
+  {#if !$context.system.attributes.actions.stations}
     <div
       class="counter-flex"
       transition:slide|global={{ duration: 200, easing: quadInOut }}
@@ -92,15 +92,15 @@
         <h4>{localize('DND5E.ActionPl')}</h4>
         <div class="counter-value">
           <NumberInput
-            document={$store.actor}
+            document={$context.actor}
             field="system.attributes.actions.value"
-            value={$store.system.attributes.actions.value}
+            value={$context.system.attributes.actions.value}
             step="1"
             min="0"
             placeholder="0"
             title={localize('DND5E.VehicleActionsHint')}
             selectOnFocus={true}
-            disabled={!$store.owner || $store.lockSensitiveFields}
+            disabled={!$context.owner || $context.lockSensitiveFields}
           />
         </div>
       </div>
@@ -111,41 +111,41 @@
           <span class="sep">&lt;</span>
 
           <NumberInput
-            document={$store.actor}
+            document={$context.actor}
             field="system.attributes.actions.thresholds.2"
-            value={$store.system.attributes.actions.thresholds['2']}
+            value={$context.system.attributes.actions.thresholds['2']}
             min="0"
             step="1"
             placeholder="&mdash;"
             title={localize('DND5E.VehicleActionThresholdsFull')}
             selectOnFocus={true}
-            disabled={!$store.owner || $store.lockSensitiveFields}
+            disabled={!$context.owner || $context.lockSensitiveFields}
           />
 
           <span class="sep">&lt;</span>
           <NumberInput
-            document={$store.actor}
+            document={$context.actor}
             field="system.attributes.actions.thresholds.1"
-            value={$store.system.attributes.actions.thresholds['1']}
+            value={$context.system.attributes.actions.thresholds['1']}
             min="0"
             step="1"
             placeholder="&mdash;"
             title={localize('DND5E.VehicleActionThresholdsMid')}
             selectOnFocus={true}
-            disabled={!$store.owner || $store.lockSensitiveFields}
+            disabled={!$context.owner || $context.lockSensitiveFields}
           />
 
           <span class="sep">&lt;</span>
           <NumberInput
-            document={$store.actor}
+            document={$context.actor}
             field="system.attributes.actions.thresholds.0"
-            value={$store.system.attributes.actions.thresholds['0']}
+            value={$context.system.attributes.actions.thresholds['0']}
             min="0"
             step="1"
             placeholder="&mdash;"
             title={localize('DND5E.VehicleActionThresholdsMin')}
             selectOnFocus={true}
-            disabled={!$store.owner || $store.lockSensitiveFields}
+            disabled={!$context.owner || $context.lockSensitiveFields}
           />
         </div>
       </div>

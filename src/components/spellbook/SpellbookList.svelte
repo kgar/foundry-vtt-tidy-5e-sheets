@@ -30,7 +30,7 @@
   import SpellbookItemCardContent from '../item-info-card/SpellbookItemCardContent.svelte';
   import { settingStore } from 'src/settings/settings';
 
-  let store = getContext<Readable<ActorSheetContext>>('store');
+  let context = getContext<Readable<ActorSheetContext>>('context');
   export let section: any;
   export let spells: any[];
   export let allowFavorites: boolean = true;
@@ -47,7 +47,7 @@
 
   const localize = FoundryAdapter.localize;
 
-  $: classicControlsBaseWidth = $store.editable
+  $: classicControlsBaseWidth = $context.editable
     ? controlsBaseWidthUnlocked
     : controlsBaseWidthLocked;
 </script>
@@ -97,13 +97,13 @@
       >
         {localize('DND5E.Usage')}
       </ItemTableColumn>
-      {#if $store.owner && $store.classicControlsEnabled}
+      {#if $context.owner && $context.classicControlsEnabled}
         <ItemTableColumn baseWidth={classicControlsBaseWidth} />
       {/if}
     </ItemTableHeaderRow>
     {#each spells as spell (spell.id)}
-      {@const ctx = $store.itemContext[spell.id]}
-      {@const spellImgUrl = FoundryAdapter.getSpellImageUrl($store, spell)}
+      {@const ctx = $context.itemContext[spell.id]}
+      {@const spellImgUrl = FoundryAdapter.getSpellImageUrl($context, spell)}
       <ItemTableRow
         item={spell}
         on:mousedown={(event) =>
@@ -119,7 +119,7 @@
         <ItemTableCell primary={true}>
           <ItemUseButton item={spell} imgUrlOverride={spellImgUrl} />
           <ItemName
-            on:click={(event) => toggleSummary(event.detail, $store.actor)}
+            on:click={(event) => toggleSummary(event.detail, $context.actor)}
             item={spell}
           >
             <span class="truncate">{spell.name}</span>
@@ -168,7 +168,7 @@
         >
           {spell.labels.activation}
         </ItemTableCell>
-        {#if $store.owner && $store.classicControlsEnabled}
+        {#if $context.owner && $context.classicControlsEnabled}
           <ItemTableCell baseWidth={classicControlsBaseWidth}>
             <ItemControls>
               {#if FoundryAdapter.canPrepareSpell(spell)}
@@ -180,7 +180,7 @@
                 <ItemFavoriteControl item={spell} />
               {/if}
               <ItemEditControl item={spell} />
-              {#if $store.editable}
+              {#if $context.editable}
                 <ItemDuplicateControl item={spell} />
                 <ItemDeleteControl item={spell} />
               {/if}
@@ -189,8 +189,8 @@
         {/if}
       </ItemTableRow>
     {/each}
-    {#if $store.editable}
-      <ItemTableFooter actor={$store.actor} dataset={section.dataset} />
+    {#if $context.editable}
+      <ItemTableFooter actor={$context.actor} dataset={section.dataset} />
     {/if}
   </ItemTable>
 </section>

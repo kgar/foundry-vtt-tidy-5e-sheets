@@ -13,7 +13,7 @@
   import Checkbox from 'src/components/form/Checkbox.svelte';
   import TextInput from 'src/components/form/TextInput.svelte';
 
-  let store = getContext<Readable<ItemSheetContext>>('store');
+  let context = getContext<Readable<ItemSheetContext>>('context');
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -29,16 +29,16 @@
 >
   <Select
     id={inputId}
-    value={$store.system.armor.type}
+    value={$context.system.armor.type}
     field="system.armor.type"
-    document={$store.item}
-    disabled={!$store.owner}
+    document={$context.item}
+    disabled={!$context.owner}
     >
     <option value="" />
     <optgroup label={localize('DND5E.Armor')}>
-      <SelectOptions data={$store.config.armorTypes} />
+      <SelectOptions data={$context.config.armorTypes} />
     </optgroup>
-    <SelectOptions data={$store.config.miscEquipmentTypes} />
+    <SelectOptions data={$context.config.miscEquipmentTypes} />
   </Select>
 </ItemFormGroup>
 
@@ -49,16 +49,16 @@
 >
   <Select
     id={inputId}
-    value={$store.system.baseItem}
+    value={$context.system.baseItem}
     field="system.baseItem"
-    document={$store.item}
-    disabled={!$store.owner}
+    document={$context.item}
+    disabled={!$context.owner}
     >
-    <SelectOptions data={$store.baseItems} blank="" />
+    <SelectOptions data={$context.baseItems} blank="" />
   </Select>
 </ItemFormGroup>
 
-{#if !$store.system.isMountable}
+{#if !$context.system.isMountable}
   <ItemFormGroup
     field="system.attunement"
     labelText={localize('DND5E.Attunement')}
@@ -66,27 +66,27 @@
   >
     <Select
       id={inputId}
-      value={$store.system.attunement?.toString() ?? ''}
+      value={$context.system.attunement?.toString() ?? ''}
       dtype="Number"
       field="system.attunement"
-      document={$store.item}
-      disabled={!$store.owner}
+      document={$context.item}
+      disabled={!$context.owner}
       >
-      <SelectOptions data={$store.config.attunements} />
+      <SelectOptions data={$context.config.attunements} />
     </Select>
   </ItemFormGroup>
 {/if}
 
 <ItemFormGroup labelText={localize('DND5E.Proficiency')}>
   <Select
-    document={$store.item}
+    document={$context.item}
     field="system.proficient"
-    value={$store.system.proficient}
+    value={$context.system.proficient}
     dtype="Number"
-    disabled={!$store.owner}
+    disabled={!$context.owner}
     >
     <SelectOptions
-      data={$store.config.weaponAndArmorProficiencyLevels}
+      data={$context.config.weaponAndArmorProficiencyLevels}
       blank={localize('DND5E.Automatic')}
     />
   </Select>
@@ -97,27 +97,27 @@
   labelText={localize('DND5E.ItemEquipmentStatus')}
 >
   <Checkbox
-    checked={$store.system.equipped}
+    checked={$context.system.equipped}
     labelCssClass="checkbox"
     field="system.equipped"
-    document={$store.item}
-    disabled={!$store.owner}
+    document={$context.item}
+    disabled={!$context.owner}
     >
     {localize('DND5E.Equipped')}
   </Checkbox>
 
   <Checkbox
-    checked={$store.system.identified}
+    checked={$context.system.identified}
     labelCssClass="checkbox"
     field="system.identified"
-    document={$store.item}
-    disabled={!$store.owner}
+    document={$context.item}
+    disabled={!$context.owner}
     >
     {localize('DND5E.Identified')}
   </Checkbox>
 </ItemFormGroup>
 
-{#if $store.system.isArmor || $store.system.isMountable}
+{#if $context.system.isArmor || $context.system.isMountable}
   <ItemFormGroup
     labelText={localize('DND5E.ArmorClass')}
     field="system.armor.value"
@@ -125,16 +125,16 @@
   >
     <NumberInput
       id={inputId}
-      value={$store.system.armor.value}
+      value={$context.system.armor.value}
       step="1"
       field="system.armor.value"
-      document={$store.item}
-      disabled={!$store.owner}
+      document={$context.item}
+      disabled={!$context.owner}
       />
   </ItemFormGroup>
 {/if}
 
-{#if $store.hasDexModifier}
+{#if $context.hasDexModifier}
   <ItemFormGroup
     labelText={localize('DND5E.ItemEquipmentDexMod')}
     field="system.armor.dex"
@@ -145,14 +145,14 @@
       step="1"
       placeholder={localize('DND5E.Unlimited')}
       field="system.armor.dex"
-      document={$store.item}
-      value={$store.system.armor.dex}
-      disabled={!$store.owner}
+      document={$context.item}
+      value={$context.system.armor.dex}
+      disabled={!$context.owner}
       />
   </ItemFormGroup>
 {/if}
 
-{#if $store.system.isArmor}
+{#if $context.system.isArmor}
   <ItemFormGroup
     field="system.strength"
     labelText={localize('DND5E.ItemRequiredStr')}
@@ -163,9 +163,9 @@
       step="1"
       placeholder={localize('DND5E.None')}
       field="system.strength"
-      document={$store.item}
-      value={$store.system.strength}
-      disabled={!$store.owner}
+      document={$context.item}
+      value={$context.system.strength}
+      disabled={!$context.owner}
       />
   </ItemFormGroup>
 
@@ -177,30 +177,30 @@
     <Checkbox
       id={inputId}
       field="system.stealth"
-      document={$store.item}
-      checked={$store.system.stealth}
-      disabled={!$store.owner}
+      document={$context.item}
+      checked={$context.system.stealth}
+      disabled={!$context.owner}
       />
   </ItemFormGroup>
 {/if}
 
-{#if $store.system.isMountable}
+{#if $context.system.isMountable}
   <ItemMountable />
   <ItemFormGroup labelText={localize('DND5E.Speed')}>
     <div class="form-fields">
       <NumberInput
         placeholder="0"
-        value={$store.system.speed.value}
+        value={$context.system.speed.value}
         field="system.speed.value"
-        document={$store.item}
-        disabled={!$store.owner}
+        document={$context.item}
+        disabled={!$context.owner}
         />
       <span class="sep">{localize('DND5E.FeetAbbr')}</span>
       <TextInput
         field="system.speed.conditions"
-        document={$store.item}
-        value={$store.system.speed.conditions}
-        disabled={!$store.owner}
+        document={$context.item}
+        value={$context.system.speed.conditions}
+        disabled={!$context.owner}
         />
     </div>
   </ItemFormGroup>

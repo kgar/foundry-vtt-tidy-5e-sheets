@@ -6,19 +6,19 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
 
-  let store =
-    getContext<Readable<ItemSheetContext | CharacterSheetContext>>('store');
+  let context =
+    getContext<Readable<ItemSheetContext | CharacterSheetContext>>('context');
 
   const localize = FoundryAdapter.localize;
 
   function onAddClicked(section: any) {
-    const unsupported = game.dnd5e.isV10 && $store.item.isOwned;
+    const unsupported = game.dnd5e.isV10 && $context.item.isOwned;
     if (unsupported)
       return ui.notifications.warn(
         'Managing Active Effects within an Owned Item is not currently supported and will be added in a subsequent update.'
       );
 
-    const owner = $store.item;
+    const owner = $context.item;
 
     return owner.createEmbeddedDocuments('ActiveEffect', [
       {
@@ -39,14 +39,14 @@
 </script>
 
 <ol class="items-list effects-list">
-  {#each Object.entries($store.effects) as [_, section]}
+  {#each Object.entries($context.effects) as [_, section]}
     {#if !section.hidden}
       <li class="items-header flexrow" data-effect-type={section.type}>
         <h3 class="item-name effect-name flexrow">{localize(section.label)}</h3>
         <div class="effect-source">{localize('DND5E.Source')}</div>
         <div class="effect-source">{localize('DND5E.Duration')}</div>
         <div class="item-controls active-effect-controls flexrow">
-          {#if $store.owner && $store.editable}
+          {#if $context.owner && $context.editable}
             <button
               type="button"
               class="active-effect-control inline-icon-button"
@@ -62,7 +62,7 @@
 
       {#if section.info}
         <ol class="info">
-          {#each $store.section.info as info}
+          {#each $context.section.info as info}
             <li class="notification info">{info}</li>
           {/each}
         </ol>
@@ -88,7 +88,7 @@
               class="item-controls active-effect-controls flexrow"
               role="cell"
             >
-              {#if $store.owner && $store.editable}
+              {#if $context.owner && $context.editable}
                 <button
                   type="button"
                   class="active-effect-control inline-transparent-button"

@@ -9,20 +9,20 @@
   import ContentEditableFormField from 'src/components/inputs/ContentEditableFormField.svelte';
   import RerenderAfterFormSubmission from 'src/components/shared/RerenderAfterFormSubmission.svelte';
 
-  let store = getContext<Readable<NpcSheetContext>>('store');
+  let context = getContext<Readable<NpcSheetContext>>('context');
 
   const localize = FoundryAdapter.localize;
 
   function activateProseMirrorListeners(node: HTMLElement) {
-    $store.activateFoundryJQueryListeners(node);
+    $context.activateFoundryJQueryListeners(node);
   }
 
   $: showNpcPersonalityInfo =
-    FoundryAdapter.tryGetFlag($store.actor, 'showNpcPersonalityInfo') ?? false;
+    FoundryAdapter.tryGetFlag($context.actor, 'showNpcPersonalityInfo') ?? false;
 
   function togglePersonalityInfo() {
     FoundryAdapter.setFlag(
-      $store.actor,
+      $context.actor,
       'showNpcPersonalityInfo',
       !showNpcPersonalityInfo
     );
@@ -30,17 +30,17 @@
 </script>
 
 <div class="notes-container">
-  <div class="top-notes note-entries" class:limited={$store.showLimitedSheet}>
+  <div class="top-notes note-entries" class:limited={$context.showLimitedSheet}>
     <article>
       <ul class="character-details">
         <li>
           <span>{localize('T5EK.Gender')}:</span>
           <ContentEditableFormField
             element="span"
-            editable={$store.owner && !$store.lockSensitiveFields}
-            document={$store.actor}
+            editable={$context.owner && !$context.lockSensitiveFields}
+            document={$context.actor}
             field="flags.{CONSTANTS.MODULE_ID}.gender"
-            value={FoundryAdapter.tryGetFlag($store.actor, 'gender') ?? ''}
+            value={FoundryAdapter.tryGetFlag($context.actor, 'gender') ?? ''}
             cssClass="detail-input"
           />
         </li>
@@ -48,10 +48,10 @@
           <span>{localize('T5EK.Age')}:</span>
           <ContentEditableFormField
             element="span"
-            editable={$store.owner && !$store.lockSensitiveFields}
-            document={$store.actor}
+            editable={$context.owner && !$context.lockSensitiveFields}
+            document={$context.actor}
             field="flags.{CONSTANTS.MODULE_ID}.age"
-            value={FoundryAdapter.tryGetFlag($store.actor, 'age') ?? ''}
+            value={FoundryAdapter.tryGetFlag($context.actor, 'age') ?? ''}
             cssClass="detail-input"
             dataMaxLength={5}
           />
@@ -60,10 +60,10 @@
           <span>{localize('T5EK.Height')}:</span>
           <ContentEditableFormField
             element="span"
-            editable={$store.owner && !$store.lockSensitiveFields}
-            document={$store.actor}
+            editable={$context.owner && !$context.lockSensitiveFields}
+            document={$context.actor}
             field="flags.{CONSTANTS.MODULE_ID}.height"
-            value={FoundryAdapter.tryGetFlag($store.actor, 'height') ?? ''}
+            value={FoundryAdapter.tryGetFlag($context.actor, 'height') ?? ''}
             cssClass="detail-input"
             dataMaxLength={20}
           />
@@ -72,10 +72,10 @@
           <span>{localize('T5EK.Weight')}:</span>
           <ContentEditableFormField
             element="span"
-            editable={$store.owner && !$store.lockSensitiveFields}
-            document={$store.actor}
+            editable={$context.owner && !$context.lockSensitiveFields}
+            document={$context.actor}
             field="flags.{CONSTANTS.MODULE_ID}.weight"
-            value={FoundryAdapter.tryGetFlag($store.actor, 'weight') ?? ''}
+            value={FoundryAdapter.tryGetFlag($context.actor, 'weight') ?? ''}
             cssClass="detail-input"
             dataMaxLength={20}
           />
@@ -84,10 +84,10 @@
           <span>{localize('T5EK.Eyes')}:</span>
           <ContentEditableFormField
             element="span"
-            editable={$store.owner && !$store.lockSensitiveFields}
-            document={$store.actor}
+            editable={$context.owner && !$context.lockSensitiveFields}
+            document={$context.actor}
             field="flags.{CONSTANTS.MODULE_ID}.eyes"
-            value={FoundryAdapter.tryGetFlag($store.actor, 'eyes') ?? ''}
+            value={FoundryAdapter.tryGetFlag($context.actor, 'eyes') ?? ''}
             cssClass="detail-input"
             dataMaxLength={40}
           />
@@ -96,10 +96,10 @@
           <span>{localize('T5EK.Skin')}:</span>
           <ContentEditableFormField
             element="span"
-            editable={$store.owner && !$store.lockSensitiveFields}
-            document={$store.actor}
+            editable={$context.owner && !$context.lockSensitiveFields}
+            document={$context.actor}
             field="flags.{CONSTANTS.MODULE_ID}.skin"
-            value={FoundryAdapter.tryGetFlag($store.actor, 'skin') ?? ''}
+            value={FoundryAdapter.tryGetFlag($context.actor, 'skin') ?? ''}
             cssClass="detail-input"
             dataMaxLength={40}
           />
@@ -108,10 +108,10 @@
           <span>{localize('T5EK.Hair')}:</span>
           <ContentEditableFormField
             element="span"
-            editable={$store.owner && !$store.lockSensitiveFields}
-            document={$store.actor}
+            editable={$context.owner && !$context.lockSensitiveFields}
+            document={$context.actor}
             field="flags.{CONSTANTS.MODULE_ID}.hair"
-            value={FoundryAdapter.tryGetFlag($store.actor, 'hair') ?? ''}
+            value={FoundryAdapter.tryGetFlag($context.actor, 'hair') ?? ''}
             cssClass="detail-input"
             dataMaxLength={40}
           />
@@ -135,11 +135,11 @@
       {#if showNpcPersonalityInfo}
         <div
           class="left-notes note-entries"
-          class:limited={$store.showLimitedSheet}
+          class:limited={$context.showLimitedSheet}
         >
           <RerenderAfterFormSubmission
             andOnValueChange={FoundryAdapter.tryGetFlag(
-              $store.actor,
+              $context.actor,
               'trait'
             ) ?? ''}
           >
@@ -148,15 +148,15 @@
                 {localize('DND5E.PersonalityTraits')}
               </div>
               <SheetEditor
-                content={FoundryAdapter.tryGetFlag($store.actor, 'trait') ?? ''}
+                content={FoundryAdapter.tryGetFlag($context.actor, 'trait') ?? ''}
                 target="flags.{CONSTANTS.MODULE_ID}.trait"
-                editable={$store.owner || FoundryAdapter.userIsGm()}
+                editable={$context.owner || FoundryAdapter.userIsGm()}
               />
             </article>
           </RerenderAfterFormSubmission>
           <RerenderAfterFormSubmission
             andOnValueChange={FoundryAdapter.tryGetFlag(
-              $store.actor,
+              $context.actor,
               'ideal'
             ) ?? ''}
           >
@@ -165,14 +165,14 @@
                 {localize('DND5E.Ideals')}
               </div>
               <SheetEditor
-                content={FoundryAdapter.tryGetFlag($store.actor, 'ideal') ?? ''}
+                content={FoundryAdapter.tryGetFlag($context.actor, 'ideal') ?? ''}
                 target="flags.{CONSTANTS.MODULE_ID}.ideal"
-                editable={$store.owner || FoundryAdapter.userIsGm()}
+                editable={$context.owner || FoundryAdapter.userIsGm()}
               />
             </article>
           </RerenderAfterFormSubmission>
           <RerenderAfterFormSubmission
-            andOnValueChange={FoundryAdapter.tryGetFlag($store.actor, 'bond') ??
+            andOnValueChange={FoundryAdapter.tryGetFlag($context.actor, 'bond') ??
               ''}
           >
             <article use:activateProseMirrorListeners>
@@ -180,14 +180,14 @@
                 {localize('DND5E.Bonds')}
               </div>
               <SheetEditor
-                content={FoundryAdapter.tryGetFlag($store.actor, 'bond') ?? ''}
+                content={FoundryAdapter.tryGetFlag($context.actor, 'bond') ?? ''}
                 target="flags.{CONSTANTS.MODULE_ID}.bond"
-                editable={$store.owner || FoundryAdapter.userIsGm()}
+                editable={$context.owner || FoundryAdapter.userIsGm()}
               />
             </article>
           </RerenderAfterFormSubmission>
           <RerenderAfterFormSubmission
-            andOnValueChange={FoundryAdapter.tryGetFlag($store.actor, 'flaw') ??
+            andOnValueChange={FoundryAdapter.tryGetFlag($context.actor, 'flaw') ??
               ''}
           >
             <article use:activateProseMirrorListeners>
@@ -195,9 +195,9 @@
                 {localize('DND5E.Flaws')}
               </div>
               <SheetEditor
-                content={FoundryAdapter.tryGetFlag($store.actor, 'flaw') ?? ''}
+                content={FoundryAdapter.tryGetFlag($context.actor, 'flaw') ?? ''}
                 target="flags.{CONSTANTS.MODULE_ID}.flaw"
-                editable={$store.owner || FoundryAdapter.userIsGm()}
+                editable={$context.owner || FoundryAdapter.userIsGm()}
               />
             </article>
           </RerenderAfterFormSubmission>
@@ -205,11 +205,11 @@
       {/if}
       <div
         class="right-notes note-entries"
-        class:limited={$store.showLimitedSheet}
+        class:limited={$context.showLimitedSheet}
       >
         <RerenderAfterFormSubmission
           andOnValueChange={FoundryAdapter.tryGetFlag(
-            $store.actor,
+            $context.actor,
             'appearance'
           ) ?? ''}
         >
@@ -218,24 +218,24 @@
               {localize('DND5E.Appearance')}
             </div>
             <SheetEditor
-              content={FoundryAdapter.tryGetFlag($store.actor, 'appearance') ??
+              content={FoundryAdapter.tryGetFlag($context.actor, 'appearance') ??
                 ''}
               target="flags.{CONSTANTS.MODULE_ID}.appearance"
-              editable={$store.owner || FoundryAdapter.userIsGm()}
+              editable={$context.owner || FoundryAdapter.userIsGm()}
             />
           </article>
         </RerenderAfterFormSubmission>
         <RerenderAfterFormSubmission
-          andOnValueChange={$store.system.details.biography.value}
+          andOnValueChange={$context.system.details.biography.value}
         >
           <article class="biography-notes" use:activateProseMirrorListeners>
             <div class="section-titles">
               {localize('DND5E.Background')}/{localize('DND5E.Biography')}
             </div>
             <SheetEditor
-              content={$store.system.details.biography.value}
+              content={$context.system.details.biography.value}
               target="system.details.biography.value"
-              editable={$store.owner || FoundryAdapter.userIsGm()}
+              editable={$context.owner || FoundryAdapter.userIsGm()}
             />
           </article>
         </RerenderAfterFormSubmission>

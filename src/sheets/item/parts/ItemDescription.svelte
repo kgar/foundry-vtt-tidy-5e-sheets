@@ -6,21 +6,21 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
 
-  let store = getContext<Readable<ItemSheetContext>>('store');
+  let context = getContext<Readable<ItemSheetContext>>('context');
 
   const localize = FoundryAdapter.localize;
 
   function activateProseMirrorListeners(node: HTMLElement) {
-    $store.activateFoundryJQueryListeners(node);
+    $context.activateFoundryJQueryListeners(node);
   }
 </script>
 
-<RerenderAfterFormSubmission andOnValueChange={$store.descriptionHTML}>
+<RerenderAfterFormSubmission andOnValueChange={$context.descriptionHTML}>
   <article class="editor-container" use:activateProseMirrorListeners>
     <h2 class="details-headline">{localize('T5EK.ItemDetailsHeadline')}</h2>
     <SheetEditor
-      content={$store.descriptionHTML}
-      editable={$store.owner || FoundryAdapter.userIsGm()}
+      content={$context.descriptionHTML}
+      editable={$context.owner || FoundryAdapter.userIsGm()}
       target="system.description.value"
     />
   </article>

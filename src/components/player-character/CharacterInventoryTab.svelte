@@ -18,33 +18,33 @@
   import TabFooter from 'src/sheets/actor/TabFooter.svelte';
   import { settingStore } from 'src/settings/settings';
 
-  let store = getContext<Readable<CharacterSheetContext>>('store');
+  let context = getContext<Readable<CharacterSheetContext>>('context');
 
   const localize = FoundryAdapter.localize;
 
   let searchCriteria: string = '';
 
   let layoutMode: ItemLayoutMode;
-  $: layoutMode = FoundryAdapter.tryGetFlag($store.actor, 'inventory-grid')
+  $: layoutMode = FoundryAdapter.tryGetFlag($context.actor, 'inventory-grid')
     ? 'grid'
     : 'list';
 
   function toggleLayout() {
     if (layoutMode === 'grid') {
-      FoundryAdapter.unsetFlag($store.actor, 'inventory-grid');
+      FoundryAdapter.unsetFlag($context.actor, 'inventory-grid');
       return;
     }
 
-    FoundryAdapter.setFlag($store.actor, 'inventory-grid', true);
+    FoundryAdapter.setFlag($context.actor, 'inventory-grid', true);
   }
 
   $: noItems =
-    $store.inventory.some((section: any) => section.items.length > 0) === false;
+    $context.inventory.some((section: any) => section.items.length > 0) === false;
 </script>
 
 <ItemFilters>
   <ItemFilterSearch
-    actor={$store.actor}
+    actor={$context.actor}
     bind:searchCriteria
     searchFlag="item-search"
     placeholder={localize('T5EK.SearchItem')}
@@ -65,15 +65,15 @@
 </ItemFilters>
 
 <ListContainer cssClass="flex-column small-gap">
-  {#if noItems && !$store.editable}
+  {#if noItems && !$context.editable}
     <Notice>{localize('T5EK.EmptySection')}</Notice>
   {:else}
-    {#each $store.inventory as section (section.label)}
+    {#each $context.inventory as section (section.label)}
       {@const filteredItems = FoundryAdapter.getFilteredItems(
         searchCriteria,
         section.items
       )}
-      {#if (searchCriteria.trim() === '' && $store.editable) || filteredItems.length > 0}
+      {#if (searchCriteria.trim() === '' && $context.editable) || filteredItems.length > 0}
         {#if layoutMode === 'list'}
           <InventoryList
             primaryColumnName="{localize(
@@ -95,34 +95,34 @@
   <div class="attunement-and-currency">
     <div
       class="attuned-items-counter"
-      class:overattuned={$store.actor.system.attributes.attunement.value >
-        $store.actor.system.attributes.attunement.max}
+      class:overattuned={$context.actor.system.attributes.attunement.value >
+        $context.actor.system.attributes.attunement.max}
       title={localize('DND5E.Attunement')}
     >
       <i class="fas fa-sun" />
       <span class="attuned-items-current"
-        >{$store.system.attributes.attunement.value}</span
+        >{$context.system.attributes.attunement.value}</span
       >
       /
       {#if FoundryAdapter.userIsGm()}
         <NumberInput
           selectOnFocus={true}
-          document={$store.actor}
+          document={$context.actor}
           field="system.attributes.attunement.max"
           cssClass="attuned-items-max"
           dtype="Number"
-          value={$store.system.attributes.attunement.max}
+          value={$context.system.attributes.attunement.max}
           placeholder="0"
           title={localize('T5EK.AttunementMax')}
-          disabled={!$store.owner || $store.lockSensitiveFields}
+          disabled={!$context.owner || $context.lockSensitiveFields}
         />
       {:else}
         <span class="attuned-items-max"
-          >{$store.system.attributes.attunement.max}</span
+          >{$context.system.attributes.attunement.max}</span
         >
       {/if}
     </div>
-    <Currency actor={$store.actor} />
+    <Currency actor={$context.actor} />
   </div>
 
   {#if !$settingStore.hideStandardEncumbranceBar}

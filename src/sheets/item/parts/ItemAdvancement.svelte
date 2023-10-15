@@ -5,7 +5,7 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
 
-  let store = getContext<Readable<ItemSheetContext>>('store');
+  let context = getContext<Readable<ItemSheetContext>>('context');
 
   const localize = FoundryAdapter.localize;
 
@@ -31,7 +31,7 @@
   }
 
   function toggleAdvancementLock(item: Item5e) {
-    $store.toggleAdvancementLock();
+    $context.toggleAdvancementLock();
   }
 
   function modifyChoices(advancementLevel: string, item: Item5e) {
@@ -49,14 +49,14 @@
 </script>
 
 <ol class="items-list">
-  {#if $store.editable}
+  {#if $context.editable}
     <li class="items-header main-controls advancement">
       <div class="item-controls configuration-mode-control">
-        {#if $store.owner && $store.isEmbedded}
-          {#if $store.advancementEditable}
+        {#if $context.owner && $context.isEmbedded}
+          {#if $context.advancementEditable}
             <button
               class="inline-icon-button"
-              on:click={() => toggleAdvancementLock($store.item)}
+              on:click={() => toggleAdvancementLock($context.item)}
               title={localize("DND5E.AdvancementConfigurationActionDisable")}
             >
               <i class="fas fa-lock-open" />
@@ -66,7 +66,7 @@
             <button
               type="button"
               class="inline-icon-button"
-              on:click={() => toggleAdvancementLock($store.item)}
+              on:click={() => toggleAdvancementLock($context.item)}
               title={localize("DND5E.AdvancementConfigurationActionEnable")}
             >
               <i class="fas fa-lock" />
@@ -75,7 +75,7 @@
           {/if}
         {/if}
       </div>
-      {#if $store.owner && $store.advancementEditable}
+      {#if $context.owner && $context.advancementEditable}
         <div class="item-controls add-button">
           <button
             type="button"
@@ -83,7 +83,7 @@
             title={localize('DND5E.AdvancementControlCreate')}
             on:click={() =>
               game.dnd5e.applications.advancement.AdvancementSelection.createDialog(
-                $store.item
+                $context.item
               )}
           >
             <i class="fas fa-plus" />
@@ -96,7 +96,7 @@
     </li>
   {/if}
 
-  {#each Object.entries($store.advancement) as [level, data]}
+  {#each Object.entries($context.advancement) as [level, data]}
     <li class="items-header flexrow" data-level={level}>
       <h3 class="item-name flexrow">
         {#if level === '0'}
@@ -108,12 +108,12 @@
         {/if}
       </h3>
 
-      {#if $store.owner && $store.editable && data.configured && level !== 'unconfigured'}
+      {#if $context.owner && $context.editable && data.configured && level !== 'unconfigured'}
         <div>
           <button
             type="button"
             class="inline-transparent-button"
-            on:click={() => modifyChoices(level, $store.item)}
+            on:click={() => modifyChoices(level, $context.item)}
           >
             {localize('DND5E.AdvancementModifyChoices')}
           </button>
@@ -145,7 +145,7 @@
             </div>
             <h4>{@html advancementItem.title}</h4>
           </div>
-          {#if $store.advancementEditable || !$store.isEmbedded}
+          {#if $context.advancementEditable || !$context.isEmbedded}
             <div class="flexrow">
               {#if advancementItem.classRestriction === 'primary'}
                 {localize('DND5E.AdvancementClassRestrictionPrimary')}
@@ -154,14 +154,14 @@
               {/if}
             </div>
           {/if}
-          {#if $store.owner && $store.advancementEditable}
+          {#if $context.owner && $context.advancementEditable}
             <div class="item-controls flexrow">
               <button
                 type="button"
                 class="inline-icon-button"
                 title={localize('DND5E.AdvancementControlEdit')}
                 on:click={() =>
-                  editAdvancement(advancementItem.id, $store.item)}
+                  editAdvancement(advancementItem.id, $context.item)}
               >
                 <i class="fas fa-edit" />
               </button>
@@ -170,7 +170,7 @@
                 class="inline-icon-button"
                 title={localize('DND5E.AdvancementControlDelete')}
                 on:click={() =>
-                  deleteAdvancement(advancementItem.id, $store.item)}
+                  deleteAdvancement(advancementItem.id, $context.item)}
               >
                 <i class="fas fa-trash" />
               </button>

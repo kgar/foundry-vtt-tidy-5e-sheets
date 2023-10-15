@@ -13,7 +13,7 @@
   export let actor: Actor5e;
   export let incapacitated: boolean;
 
-  let store = getContext<Readable<CharacterSheetContext>>('store');
+  let context = getContext<Readable<CharacterSheetContext>>('context');
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -21,7 +21,7 @@
 <div
   class="portrait-hp"
   class:incapacitated
-  class:widen-for-rounded-portrait={$store.useRoundedPortraitStyle}
+  class:widen-for-rounded-portrait={$context.useRoundedPortraitStyle}
   title={localize('DND5E.HitPoints')}
 >
   {#if !$settingStore.hpBarDisabled}
@@ -39,10 +39,10 @@
     allowDeltaChanges={true}
     maxlength={5}
     ariaDescribedBy="tooltip"
-    disabled={!$store.owner}
+    disabled={!$context.owner}
     />
   <span class="value-seperator sep"> / </span>
-  {#if $store.allowMaxHpOverride}
+  {#if $context.allowMaxHpOverride}
     <TextInput
       cssClass="hp-max"
       document={actor}
@@ -55,7 +55,7 @@
       allowDeltaChanges={true}
       maxlength={5}
       ariaDescribedBy="tooltip"
-      disabled={!$store.owner || $store.lockHpMaxChanges || $store.lockSensitiveFields}
+      disabled={!$context.owner || $context.lockHpMaxChanges || $context.lockSensitiveFields}
     />
   {:else}
     <span

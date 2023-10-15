@@ -16,27 +16,27 @@
   import type { Readable } from 'svelte/store';
   import Notice from 'src/components/shared/Notice.svelte';
 
-  let store = getContext<Readable<ActorSheetContext>>('store');
+  let context = getContext<Readable<ActorSheetContext>>('context');
 
   const localize = FoundryAdapter.localize;
 
-  $: effectSections = Object.values<any>($store.effects);
-  $: classicControlsBaseWidth = $store.editable ? '7.5rem' : '5.3125rem';
+  $: effectSections = Object.values<any>($context.effects);
+  $: classicControlsBaseWidth = $context.editable ? '7.5rem' : '5.3125rem';
 
   $: noEffects =
     effectSections.some((section: any) => section.effects.length > 0) === false;
 </script>
 
 <ListContainer cssClass="flex-column small-gap">
-  {#if !$store.allowEffectsManagement && $store.editable}
+  {#if !$context.allowEffectsManagement && $context.editable}
     <Notice>{localize('T5EK.GmOnlyEdit')}</Notice>
   {/if}
 
-  {#if noEffects && !$store.editable && $store.allowEffectsManagement}
+  {#if noEffects && !$context.editable && $context.allowEffectsManagement}
     <Notice>{localize('T5EK.EmptySection')}</Notice>
   {:else}
     {#each effectSections as section}
-      {#if ($store.editable && $store.allowEffectsManagement) || section.effects.length > 0}
+      {#if ($context.editable && $context.allowEffectsManagement) || section.effects.length > 0}
         <ItemTable>
           <ItemTableHeaderRow>
             <ItemTableColumn primary={true}>
@@ -48,7 +48,7 @@
             <ItemTableColumn baseWidth="7.5rem">
               {localize('DND5E.Duration')}
             </ItemTableColumn>
-            {#if $store.owner && $store.classicControlsEnabled && $store.allowEffectsManagement}
+            {#if $context.owner && $context.classicControlsEnabled && $context.allowEffectsManagement}
               <ItemTableColumn baseWidth={classicControlsBaseWidth} />
             {/if}
           </ItemTableHeaderRow>
@@ -72,7 +72,7 @@
                 >{effect.duration.label}</ItemTableCell
               >
 
-              {#if $store.owner && $store.classicControlsEnabled && $store.allowEffectsManagement}
+              {#if $context.owner && $context.classicControlsEnabled && $context.allowEffectsManagement}
                 <ItemTableCell baseWidth={classicControlsBaseWidth}>
                   <ItemControls>
                     <ItemControl
@@ -91,7 +91,7 @@
                       iconCssClass="fas fa-edit"
                     />
 
-                    {#if $store.editable}
+                    {#if $context.editable}
                       <ItemControl
                         on:click={() => effect.delete()}
                         title={localize('DND5E.EffectDelete')}
@@ -103,12 +103,12 @@
               {/if}
             </ItemTableRow>
           {/each}
-          {#if $store.owner && $store.editable && $store.allowEffectsManagement}
+          {#if $context.owner && $context.editable && $context.allowEffectsManagement}
             <ItemTableFooter
-              actor={$store.actor}
+              actor={$context.actor}
               dataset={section.dataset}
               create={() =>
-                FoundryAdapter.addEffect(section.type, $store.actor)}
+                FoundryAdapter.addEffect(section.type, $context.actor)}
             />
           {/if}
         </ItemTable>

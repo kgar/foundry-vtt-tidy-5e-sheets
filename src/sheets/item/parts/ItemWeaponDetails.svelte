@@ -12,7 +12,7 @@
   import Select from 'src/components/form/Select.svelte';
   import Checkbox from 'src/components/form/Checkbox.svelte';
 
-  let store = getContext<Readable<ItemSheetContext>>('store');
+  let context = getContext<Readable<ItemSheetContext>>('context');
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -26,12 +26,12 @@
 >
   <Select
     id={inputId}
-    document={$store.item}
+    document={$context.item}
     field="system.weaponType"
-    value={$store.system.weaponType}
-    disabled={!$store.owner}
+    value={$context.system.weaponType}
+    disabled={!$context.owner}
     >
-    <SelectOptions data={$store.config.weaponTypes} />
+    <SelectOptions data={$context.config.weaponTypes} />
   </Select>
 </ItemFormGroup>
 
@@ -42,16 +42,16 @@
 >
   <Select
     id={inputId}
-    document={$store.item}
+    document={$context.item}
     field="system.baseItem"
-    value={$store.system.baseItem}
-    disabled={!$store.owner}
+    value={$context.system.baseItem}
+    disabled={!$context.owner}
     >
-    <SelectOptions data={$store.baseItems} blank="" />
+    <SelectOptions data={$context.baseItems} blank="" />
   </Select>
 </ItemFormGroup>
 
-{#if !$store.system.isMountable}
+{#if !$context.system.isMountable}
   <ItemFormGroup
     labelText={localize('DND5E.Attunement')}
     field="system.attunement"
@@ -59,26 +59,26 @@
   >
     <Select
       id={inputId}
-      document={$store.item}
+      document={$context.item}
       field="system.attunement"
       dtype="Number"
-      value={$store.system.attunement}
-      disabled={!$store.owner}
+      value={$context.system.attunement}
+      disabled={!$context.owner}
       >
-      <SelectOptions data={$store.config.attunements} />
+      <SelectOptions data={$context.config.attunements} />
     </Select>
   </ItemFormGroup>
 
   <ItemFormGroup labelText={localize('DND5E.Proficiency')}>
     <Select
-      document={$store.item}
+      document={$context.item}
       field="system.proficient"
-      value={$store.system.proficient}
+      value={$context.system.proficient}
       dtype="Number"
-      disabled={!$store.owner}
+      disabled={!$context.owner}
       >
       <SelectOptions
-        data={$store.config.weaponAndArmorProficiencyLevels}
+        data={$context.config.weaponAndArmorProficiencyLevels}
         blank={localize('DND5E.Automatic')}
       />
     </Select>
@@ -91,20 +91,20 @@
     <div class="form-fields">
       <Checkbox
         labelCssClass="checkbox"
-        document={$store.item}
+        document={$context.item}
         field="system.equipped"
-        checked={$store.system.equipped}
-        disabled={!$store.owner}
+        checked={$context.system.equipped}
+        disabled={!$context.owner}
         >
         {localize('DND5E.Equipped')}</Checkbox
       >
 
       <Checkbox
         labelCssClass="checkbox"
-        document={$store.item}
+        document={$context.item}
         field="system.identified"
-        checked={$store.system.identified}
-        disabled={!$store.owner}
+        checked={$context.system.identified}
+        disabled={!$context.owner}
         >
         {localize('DND5E.Identified')}
       </Checkbox>
@@ -116,21 +116,21 @@
   cssClass="stacked weapon-properties"
   labelText={localize('DND5E.ItemWeaponProperties')}
 >
-  {#each Object.entries($store.config.weaponProperties) as [prop, name]}
-    {@const checked = $store.system.properties[prop]}
+  {#each Object.entries($context.config.weaponProperties) as [prop, name]}
+    {@const checked = $context.system.properties[prop]}
     <Checkbox
       labelCssClass="checkbox"
-      document={$store.item}
+      document={$context.item}
       field="system.properties.{prop}"
       {checked}
-      disabled={!$store.owner}
+      disabled={!$context.owner}
       >
       {name}
     </Checkbox>
   {/each}
 </ItemFormGroup>
 
-{#if $store.system.isMountable}
+{#if $context.system.isMountable}
   <ItemFormGroup
     labelText={localize('DND5E.ArmorClass')}
     field="system.armor.value"
@@ -139,10 +139,10 @@
     <div class="form-fields">
       <NumberInput
         id={inputId}
-        document={$store.item}
+        document={$context.item}
         field="system.armor.value"
-        value={$store.system.armor.value}
-        disabled={!$store.owner}
+        value={$context.system.armor.value}
+        disabled={!$context.owner}
         />
     </div>
   </ItemFormGroup>

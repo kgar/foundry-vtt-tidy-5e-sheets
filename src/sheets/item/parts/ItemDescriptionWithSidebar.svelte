@@ -11,66 +11,66 @@
   import VerticalLineSeparator from 'src/components/layout/VerticalLineSeparator.svelte';
   import { settingStore } from 'src/settings/settings';
 
-  let store = getContext<Readable<ItemSheetContext>>('store');
+  let context = getContext<Readable<ItemSheetContext>>('context');
 
   const localize = FoundryAdapter.localize;
 </script>
 
 <div class="item-description flexrow align-items-stretch small-gap">
   <div class="item-properties">
-    {#if $store.isPhysical}
+    {#if $context.isPhysical}
       <div class="form-group">
-        <label for="{$store.appId}-{$store.id}-quantity"
+        <label for="{$context.appId}-{$context.id}-quantity"
           >{localize('DND5E.Quantity')}</label
         >
         <NumberInput
-          id="{$store.appId}-{$store.id}-quantity"
-          value={$store.system.quantity}
+          id="{$context.appId}-{$context.id}-quantity"
+          value={$context.system.quantity}
           field="system.quantity"
-          document={$store.item}
+          document={$context.item}
           step="1"
-          disabled={!$store.owner || $store.lockItemQuantity}
+          disabled={!$context.owner || $context.lockItemQuantity}
         />
       </div>
 
       <HorizontalLineSeparator />
 
       <div class="form-group">
-        <label for="{$store.appId}-{$store.id}-weight"
+        <label for="{$context.appId}-{$context.id}-weight"
           >{localize('DND5E.Weight')}</label
         >
         <NumberInput
-          id="{$store.appId}-{$store.id}-weight"
-          value={$store.system.weight}
+          id="{$context.appId}-{$context.id}-weight"
+          value={$context.system.weight}
           step="any"
           field="system.weight"
-          document={$store.item}
-          disabled={!$store.owner}
+          document={$context.item}
+          disabled={!$context.owner}
         />
       </div>
 
       <HorizontalLineSeparator />
 
       <div class="form-group">
-        <label for="{$store.appId}-{$store.id}-price"
+        <label for="{$context.appId}-{$context.id}-price"
           >{localize('DND5E.Price')}</label
         >
         <NumberInput
-          id="{$store.appId}-{$store.id}-price"
-          value={$store.system.price.value}
+          id="{$context.appId}-{$context.id}-price"
+          value={$context.system.price.value}
           step="any"
           field="system.price.value"
-          document={$store.item}
-          disabled={!$store.owner}
+          document={$context.item}
+          disabled={!$context.owner}
         />
         <Select
-          value={$store.system.price.denomination}
+          value={$context.system.price.denomination}
           field="system.price.denomination"
-          document={$store.item}
-          disabled={!$store.owner}
+          document={$context.item}
+          disabled={!$context.owner}
         >
           <SelectOptions
-            data={$store.config.currencies}
+            data={$context.config.currencies}
             valueProp="abbreviation"
             labelProp="abbreviation"
           />
@@ -78,25 +78,25 @@
       </div>
     {/if}
 
-    {#if $store.labels.toHit || $store.labels.derivedDamage}
+    {#if $context.labels.toHit || $context.labels.derivedDamage}
       <h4 class="properties-header">
         {localize('DND5E.Attack')}/{localize('DND5E.Damage')}
       </h4>
       <ol class="properties-list">
-        {#if $store.labels.save}
+        {#if $context.labels.save}
           <li>
-            {$store.labels.save}
+            {$context.labels.save}
           </li>
         {/if}
 
-        {#if $store.labels.toHit}
+        {#if $context.labels.toHit}
           <li>
-            {$store.labels.toHit}
+            {$context.labels.toHit}
             {localize('DND5E.ToHit')}
           </li>
         {/if}
 
-        {#each $store.labels.derivedDamage ?? [] as derivedDamage}
+        {#each $context.labels.derivedDamage ?? [] as derivedDamage}
           {@const label = derivedDamage.label}
           <li>
             {label}
@@ -105,11 +105,11 @@
       </ol>
     {/if}
 
-    {#if $store.itemProperties.length}
+    {#if $context.itemProperties.length}
       <section>
         <h4 class="properties-header">{localize('DND5E.Properties')}</h4>
         <ol class="properties-list">
-          {#each $store.itemProperties as prop}
+          {#each $context.itemProperties as prop}
             <li>{prop}</li>
           {/each}
         </ol>

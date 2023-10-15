@@ -11,7 +11,7 @@
   import Select from 'src/components/form/Select.svelte';
   import ItemFormGroup from '../form/ItemFormGroup.svelte';
 
-  let store = getContext<Readable<ItemSheetContext>>('store');
+  let context = getContext<Readable<ItemSheetContext>>('context');
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -25,22 +25,22 @@
 >
   <Select
     id={inputId}
-    document={$store.item}
+    document={$context.item}
     field="system.type.value"
-    value={$store.system.type.value}
-    disabled={!$store.owner}
+    value={$context.system.type.value}
+    disabled={!$context.owner}
     >
     <SelectOptions
-      data={$store.config.featureTypes}
+      data={$context.config.featureTypes}
       labelProp="label"
       blank=""
     />
   </Select>
 </ItemFormGroup>
 
-{#if $store.featureSubtypes}
+{#if $context.featureSubtypes}
   {@const category =
-    $store.config.featureTypes[$store.system.type.value]?.label}
+    $context.config.featureTypes[$context.system.type.value]?.label}
   <ItemFormGroup
     labelText={localize('DND5E.ItemFeatureSubtype', { category })}
     field="system.type.subtype"
@@ -48,12 +48,12 @@
   >
     <Select
       id={inputId}
-      document={$store.item}
+      document={$context.item}
       field="system.type.subtype"
-      value={$store.system.type.subtype}
-      disabled={!$store.owner}
+      value={$context.system.type.subtype}
+      disabled={!$context.owner}
       >
-      <SelectOptions data={$store.featureSubtypes} blank="" />
+      <SelectOptions data={$context.featureSubtypes} blank="" />
     </Select>
   </ItemFormGroup>
 {/if}
@@ -62,7 +62,7 @@
 
 <ItemActivation />
 
-{#if $store.system.activation.type}
+{#if $context.system.activation.type}
   <ItemFormGroup
     cssClass="recharge"
     labelText={localize('DND5E.FeatureActionRecharge')}
@@ -73,20 +73,20 @@
       <span>{localize('DND5E.FeatureRechargeOn')}</span>
       <NumberInput
         id={inputId}
-        document={$store.item}
+        document={$context.item}
         field="system.recharge.value"
         placeholder={localize('DND5E.FeatureRechargeResult')}
-        value={$store.system.recharge.value}
-        disabled={!$store.owner}
+        value={$context.system.recharge.value}
+        disabled={!$context.owner}
         />
 
       <Checkbox
-        id="{$store.appId}-system-recharge-charged"
+        id="{$context.appId}-system-recharge-charged"
         labelCssClass="checkbox"
-        document={$store.item}
+        document={$context.item}
         field="system.recharge.charged"
-        checked={$store.system.recharge.charged}
-        disabled={!$store.owner}
+        checked={$context.system.recharge.charged}
+        disabled={!$context.owner}
         >
         {localize('DND5E.Charged')}
       </Checkbox>

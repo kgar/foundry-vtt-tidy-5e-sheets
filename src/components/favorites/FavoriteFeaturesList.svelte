@@ -15,7 +15,7 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
 
-  let store = getContext<Readable<CharacterSheetContext>>('store');
+  let context = getContext<Readable<CharacterSheetContext>>('context');
   export let items: Item5e[] = [];
 
   const localize = FoundryAdapter.localize;
@@ -34,7 +34,7 @@
     </ItemTableColumn>
   </ItemTableHeaderRow>
   {#each items as item (item.id)}
-    {@const ctx = $store.itemContext[item.id]}
+    {@const ctx = $context.itemContext[item.id]}
     <ItemTableRow
       {item}
       let:toggleSummary
@@ -48,7 +48,7 @@
       <ItemTableCell primary={true}>
         <ItemUseButton {item} />
         <ItemName
-          on:click={(event) => toggleSummary(event.detail, $store.actor)}
+          on:click={(event) => toggleSummary(event.detail, $context.actor)}
           hasChildren={false}
           {item}
         >
@@ -63,7 +63,7 @@
             class="item-list-button"
             title={item.labels.recharge}
             on:click={() => item.rollRecharge()}
-            disabled={!$store.owner}
+            disabled={!$context.owner}
           >
             <i class="fas fa-dice-six" />
             {item.system.recharge

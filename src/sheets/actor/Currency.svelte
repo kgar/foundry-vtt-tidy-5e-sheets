@@ -8,7 +8,7 @@
 
   export let actor: Actor5e;
 
-  let store = getContext<Readable<ActorSheetContext>>('store');
+  let context = getContext<Readable<ActorSheetContext>>('context');
 
   $: currencies = Object.entries(actor.system.currency).map((e) => ({
     key: e[0],
@@ -19,7 +19,7 @@
     return Dialog.confirm({
       title: `${localize('DND5E.CurrencyConvert')}`,
       content: `<p>${localize('DND5E.CurrencyConvertHint')}</p>`,
-      yes: () => $store.actor.convertCurrency(),
+      yes: () => $context.actor.convertCurrency(),
     });
   }
 
@@ -45,20 +45,20 @@
     {#each currencies as currency}
       <li
         class="currency-item {currency.key}"
-        title={$store.labels.currencies[currency.key]}
+        title={$context.labels.currencies[currency.key]}
       >
         <TextInput
           document={actor}
           field="system.currency.{currency.key}"
-          id="{$store.appId}-system.currency.{currency.key}"
+          id="{$context.appId}-system.currency.{currency.key}"
           value={currency.value}
           allowDeltaChanges={true}
           selectOnFocus={true}
           dtype="Number"
-          disabled={!$store.owner || $store.lockMoneyChanges}
+          disabled={!$context.owner || $context.lockMoneyChanges}
         />
         <label
-          for="{$store.appId}-system.currency.{currency.key}"
+          for="{$context.appId}-system.currency.{currency.key}"
           class="denomination {currency.key}"
           data-denom={currency.key}>{abbreviateCurrency(currency.key)}</label
         >
@@ -70,7 +70,7 @@
         class="currency-convert"
         title={localize('DND5E.CurrencyConvertHint')}
         on:click|stopPropagation|preventDefault={() => confirmConvertCurrency()}
-        disabled={!$store.owner}
+        disabled={!$context.owner}
       >
         <i class="fas fa-funnel-dollar" />
       </button>

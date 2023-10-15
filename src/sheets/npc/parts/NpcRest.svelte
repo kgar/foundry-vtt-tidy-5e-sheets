@@ -4,14 +4,14 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
 
-  let store = getContext<Readable<NpcSheetContext>>('store');
+  let context = getContext<Readable<NpcSheetContext>>('context');
 
   const localize = FoundryAdapter.localize;
 </script>
 
 <div
   class="rest-container"
-  class:has-rounded-portrait={$store.useRoundedPortraitStyle}
+  class:has-rounded-portrait={$context.useRoundedPortraitStyle}
   title={localize('T5EK.RestHint')}
 >
   <div class="resting">
@@ -22,8 +22,8 @@
       type="button"
       class="rest short-rest inline-icon-button"
       title={localize('T5EK.RestS')}
-      on:click={(ev) => $store.shortRest(ev)}
-      disabled={!$store.owner}
+      on:click={(ev) => $context.shortRest(ev)}
+      disabled={!$context.owner}
     >
       <i class="fas fa-hourglass-half" />
     </button>
@@ -31,8 +31,8 @@
       type="button"
       class="rest long-rest inline-icon-button"
       title={localize('T5EK.RestL')}
-      on:click={(ev) => $store.longRest(ev)}
-      disabled={!$store.owner}
+      on:click={(ev) => $context.longRest(ev)}
+      disabled={!$context.owner}
     >
       <i class="fas fa-hourglass-end" />
     </button>

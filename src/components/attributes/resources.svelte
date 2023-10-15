@@ -5,16 +5,16 @@
   import type { Readable } from 'svelte/store';
   import TextInput from '../form/TextInput.svelte';
 
-  let store = getContext<Readable<CharacterSheetContext>>('store');
+  let context = getContext<Readable<CharacterSheetContext>>('context');
 
   const localize = FoundryAdapter.localize;
 </script>
 
 <ul class="resources">
-  {#each $store.resources as res}
+  {#each $context.resources as res}
     <li class="resource">
       <header class="resource-header">
-        {#if $store.owner && !$store.lockSensitiveFields}
+        {#if $context.owner && !$context.lockSensitiveFields}
           <span class="resource-options">
             <i class="fas fa-cog" />
           </span>
@@ -22,36 +22,36 @@
         <div class="resource-rest">
           <h4>{localize('T5EK.RestoreOnRest')}</h4>
           <input
-            id="{$store.appId}-{res.name}.sr"
+            id="{$context.appId}-{res.name}.sr"
             type="checkbox"
             checked={res.sr}
             on:change|stopPropagation|preventDefault={(event) =>
-              $store.actor.update({
+              $context.actor.update({
                 [`system.resources.${res.name}.sr`]:
                   event.currentTarget.checked,
               })}
-            disabled={!$store.owner || $store.lockSensitiveFields}
+            disabled={!$context.owner || $context.lockSensitiveFields}
           />
           <label
-            for="{$store.appId}-{res.name}.sr"
+            for="{$context.appId}-{res.name}.sr"
             class="checkbox"
             title={localize('T5EK.RestS')}
           >
             {localize('DND5E.RestS')}
           </label>
           <input
-            id="{$store.appId}-{res.name}.lr"
+            id="{$context.appId}-{res.name}.lr"
             type="checkbox"
             checked={res.lr}
             on:change|stopPropagation|preventDefault={(event) =>
-              $store.actor.update({
+              $context.actor.update({
                 [`system.resources.${res.name}.lr`]:
                   event.currentTarget.checked,
               })}
-            disabled={!$store.owner || $store.lockSensitiveFields}
+            disabled={!$context.owner || $context.lockSensitiveFields}
           />
           <label
-            for="{$store.appId}-{res.name}.lr"
+            for="{$context.appId}-{res.name}.lr"
             class="checkbox"
             title={localize('T5EK.RestL')}
           >
@@ -61,18 +61,18 @@
       </header>
       <h4 class="resource-name">
         <TextInput
-          document={$store.actor}
+          document={$context.actor}
           field="system.resources.{res.name}.label"
           value={res.label}
           placeholder={res.placeholder}
           selectOnFocus={true}
-          disabled={!$store.owner || $store.lockSensitiveFields}
+          disabled={!$context.owner || $context.lockSensitiveFields}
         />
       </h4>
       <div class="resource-value multiple">
         <TextInput
           cssClass="resource-value"
-          document={$store.actor}
+          document={$context.actor}
           field="system.resources.{res.name}.value"
           value={res.value ?? null}
           placeholder="0"
@@ -80,11 +80,11 @@
           allowDeltaChanges={true}
           maxlength={3}
           selectOnFocus={true}
-          disabled={!$store.owner}
+          disabled={!$context.owner}
         />
         <span class="sep"> / </span>
         <TextInput
-          document={$store.actor}
+          document={$context.actor}
           field="system.resources.{res.name}.max"
           cssClass="resource-max"
           value={res.max ?? null}
@@ -93,7 +93,7 @@
           allowDeltaChanges={true}
           maxlength={3}
           selectOnFocus={true}
-          disabled={!$store.owner || $store.lockSensitiveFields}
+          disabled={!$context.owner || $context.lockSensitiveFields}
         />
       </div>
     </li>

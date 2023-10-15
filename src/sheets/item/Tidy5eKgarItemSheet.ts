@@ -21,7 +21,7 @@ import { isNil } from 'src/utils/data';
 import type { SvelteComponent } from 'svelte';
 
 export class Tidy5eKgarItemSheet extends dnd5e.applications.item.ItemSheet5e {
-  store = writable<ItemSheetContext>();
+  context = writable<ItemSheetContext>();
   stats = writable<SheetStats>({
     lastSubmissionTime: null,
   });
@@ -51,12 +51,12 @@ export class Tidy5eKgarItemSheet extends dnd5e.applications.item.ItemSheet5e {
 
   component: SvelteComponent | undefined;
   async activateListeners(html: { get: (index: 0) => HTMLElement }) {
-    this.store.set(await this.getContext());
+    this.context.set(await this.getContext());
 
     const node = html.get(0);
 
     const stores = new Map<any, any>([
-      ['store', this.store],
+      ['context', this.context],
       ['stats', this.stats],
     ]);
 
@@ -238,7 +238,7 @@ export class Tidy5eKgarItemSheet extends dnd5e.applications.item.ItemSheet5e {
 
   private async updateContext() {
     const context = await this.getContext();
-    this.store.update(() => context);
+    this.context.update(() => context);
   }
 
   private async getContext(): Promise<ItemSheetContext> {

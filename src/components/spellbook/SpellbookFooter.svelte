@@ -8,16 +8,16 @@
   import Select from '../form/Select.svelte';
   import TabFooter from 'src/sheets/actor/TabFooter.svelte';
 
-  let store =
-    getContext<Readable<CharacterSheetContext | NpcSheetContext>>('store');
+  let context =
+    getContext<Readable<CharacterSheetContext | NpcSheetContext>>('context');
   export let cssClass: string | null = null;
   export let includeAttackMod: boolean = true;
   export let includePreparedSpells: boolean = true;
 
   const localize = FoundryAdapter.localize;
-  $: spellAttackBonusInfo = FoundryAdapter.getSpellAttackModAndTooltip($store);
+  $: spellAttackBonusInfo = FoundryAdapter.getSpellAttackModAndTooltip($context);
 
-  $: abilities = Object.entries($store.abilities).map(
+  $: abilities = Object.entries($context.abilities).map(
     (a: [string, { label: string }]) => ({
       abbr: a[0],
       ...a[1],
@@ -28,7 +28,7 @@
 <TabFooter cssClass="{cssClass} spellbook-footer" mode="horizontal">
   <h3 class="spell-dc spell-mod">
     {localize('DND5E.SpellDC')}
-    {$store.system.attributes.spelldc}
+    {$context.system.attributes.spelldc}
 
     {#if includeAttackMod}
       / {localize('T5EK.SpellAttackMod')}:
@@ -48,30 +48,30 @@
   {#if includePreparedSpells}
     <div class="max-prepared-spells">
       <p>{localize('T5EK.PreparedSpells')}</p>
-      <span class="spells-prepared">{$store.preparedSpells ?? 0}</span>
+      <span class="spells-prepared">{$context.preparedSpells ?? 0}</span>
       /
       <NumberInput
-        document={$store.actor}
+        document={$context.actor}
         field="flags.{CONSTANTS.MODULE_ID}.maxPreparedSpells"
         cssClass="max-preparation"
-        value={FoundryAdapter.tryGetFlag($store.actor, 'maxPreparedSpells')}
+        value={FoundryAdapter.tryGetFlag($context.actor, 'maxPreparedSpells')}
         dtype="Number"
         placeholder="0"
         title={localize('T5EK.PreparedSpellsMax')}
         selectOnFocus={true}
-        disabled={!$store.owner || $store.lockSensitiveFields}
+        disabled={!$context.owner || $context.lockSensitiveFields}
       />
     </div>
   {/if}
   <div class="spellcasting-attribute">
     <p>{localize('DND5E.SpellAbility')}</p>
     <Select
-      document={$store.actor}
+      document={$context.actor}
       field="system.attributes.spellcasting"
-      value={$store.system.attributes.spellcasting}
-      disabled={!$store.owner || $store.lockSensitiveFields}
+      value={$context.system.attributes.spellcasting}
+      disabled={!$context.owner || $context.lockSensitiveFields}
     >
-      <option value="" selected={!$store.system.attributes.spellcasting}
+      <option value="" selected={!$context.system.attributes.spellcasting}
         >{localize('DND5E.None')}</option
       >
       {#each abilities as ability}
@@ -79,21 +79,21 @@
       {/each}
     </Select>
   </div>
-  {#if $store.isNPC}
+  {#if $context.isNPC}
     <div
       class="spellcasting-level-container flex-row extra-small-gap flex-0 align-items-center"
     >
       <h3 class="truncate">{localize('DND5E.SpellcasterLevel')}</h3>
       <NumberInput
         cssClass="spellcasting-level"
-        document={$store.actor}
+        document={$context.actor}
         field="system.details.spellLevel"
-        value={$store.system.details.spellLevel}
+        value={$context.system.details.spellLevel}
         placeholder="0"
         min="0"
         step="1"
         selectOnFocus={true}
-        disabled={!$store.owner || $store.lockSensitiveFields}
+        disabled={!$context.owner || $context.lockSensitiveFields}
       />
     </div>
   {/if}

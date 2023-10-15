@@ -15,7 +15,7 @@
 
   const localize = FoundryAdapter.localize;
 
-  let store = getContext<Readable<ActorSheetContext>>('store');
+  let context = getContext<Readable<ActorSheetContext>>('context');
 
   const dispatch = createEventDispatcher<{
     levelSelected: { level: number };
@@ -67,8 +67,8 @@
             class:colorized={levelOption <= level}
             title={localize(exhaustionLocalizationPrefix + levelOption)}
             on:click={() =>
-              $store.owner && dispatch('levelSelected', { level: levelOption })}
-            disabled={!$store.owner}
+              $context.owner && dispatch('levelSelected', { level: levelOption })}
+            disabled={!$context.owner}
           >
             {levelOption}
           </button>

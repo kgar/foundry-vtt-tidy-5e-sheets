@@ -4,19 +4,19 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
 
-  let store = getContext<Readable<VehicleSheetContext>>('store');
+  let context = getContext<Readable<VehicleSheetContext>>('context');
 
   const localize = FoundryAdapter.localize;
 </script>
 
 <div
   class="encumbrance"
-  class:encumbered={$store.encumbrance.encumbered}
+  class:encumbered={$context.encumbrance.encumbered}
   title={localize('T5EK.Encumbrance')}
 >
-  <span class="encumbrance-bar" style="width:{$store.encumbrance.pct}%" />
+  <span class="encumbrance-bar" style="width:{$context.encumbrance.pct}%" />
   <span class="encumbrance-label"
-    >{$store.encumbrance.value} / {$store.encumbrance.max}</span
+    >{$context.encumbrance.value} / {$context.encumbrance.max}</span
   >
   <i class="encumbrance-breakpoint encumbrance-33 arrow-up" />
   <i class="encumbrance-breakpoint encumbrance-33 arrow-down" />

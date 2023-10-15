@@ -9,7 +9,7 @@
   import TextInput from 'src/components/form/TextInput.svelte';
   import SelectOptions from 'src/components/form/SelectOptions.svelte';
 
-  let store = getContext<Readable<ItemSheetContext>>('store');
+  let context = getContext<Readable<ItemSheetContext>>('context');
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -21,32 +21,32 @@
   let:inputId
 >
   <div class="form-fields">
-    {#if $store.system.activation.type}
+    {#if $context.system.activation.type}
       <NumberInput
         id={inputId}
-        value={$store.system.activation.cost}
+        value={$context.system.activation.cost}
         title={localize("DND5E.ConsumeQuanity")}
         field="system.activation.cost"
         placeholder="&#8212;"
-        document={$store.item}
-        disabled={!$store.owner}
+        document={$context.item}
+        disabled={!$context.owner}
         />
     {/if}
     <Select
-      id="{$store.appId}-system-activation-type"
-      value={$store.system.activation.type?.toString() ?? ''}
+      id="{$context.appId}-system-activation-type"
+      value={$context.system.activation.type?.toString() ?? ''}
       title={localize('DND5E.ItemActivationType')}
-      document={$store.item}
+      document={$context.item}
       field="system.activation.type"
-      disabled={!$store.owner}
+      disabled={!$context.owner}
     >
       <option value="">{localize('DND5E.None')}</option>
-      <SelectOptions data={$store.config.abilityActivationTypes} />
+      <SelectOptions data={$context.config.abilityActivationTypes} />
     </Select>
   </div>
 </ItemFormGroup>
 
-{#if $store.system.activation.type}
+{#if $context.system.activation.type}
   <ItemFormGroup
     labelText={localize('DND5E.ItemActivationCondition')}
     field="system.activation.condition"
@@ -55,15 +55,15 @@
     <div class="form-fields">
       <TextInput
         id={inputId}
-        value={$store.system.activation.condition}
+        value={$context.system.activation.condition}
         field="system.activation.condition"
-        document={$store.item}
-        disabled={!$store.owner}
+        document={$context.item}
+        disabled={!$context.owner}
         />
     </div>
   </ItemFormGroup>
 
-  {#if $store.isCrewed}
+  {#if $context.isCrewed}
     <ItemFormGroup
       labelText={localize('DND5E.Cover')}
       field="system.cover"
@@ -73,13 +73,13 @@
         <Select
           id={inputId}
           dtype="Number"
-          value={$store.system.cover?.toString()}
+          value={$context.system.cover?.toString()}
           title={localize('DND5E.ItemActivationType')}
-          document={$store.item}
+          document={$context.item}
           field="system.cover"
-          disabled={!$store.owner}
+          disabled={!$context.owner}
         >
-          <SelectOptions data={$store.config.cover} blank="" />
+          <SelectOptions data={$context.config.cover} blank="" />
         </Select>
       </div>
     </ItemFormGroup>
@@ -92,44 +92,44 @@
     let:inputId
   >
     <div class="form-fields">
-      {#if $store.system.hasScalarTarget}
+      {#if $context.system.hasScalarTarget}
         <NumberInput
-          id="{$store.appId}-system-target-value"
-          value={$store.system.target.value}
+          id="{$context.appId}-system-target-value"
+          value={$context.system.target.value}
           placeholder="&mdash;"
           field="system.target.value"
-          document={$store.item}
-          disabled={!$store.owner}
+          document={$context.item}
+          disabled={!$context.owner}
         />
       {/if}
-      {#if $store.system.hasAreaTarget}
+      {#if $context.system.hasAreaTarget}
         <Select
-          id="{$store.appId}-system-target-units"
-          value={$store.system.target.units}
+          id="{$context.appId}-system-target-units"
+          value={$context.system.target.units}
           title={localize("DND5E.TargetUnits")}
           field="system.target.units"
-          document={$store.item}
-          disabled={!$store.owner}
+          document={$context.item}
+          disabled={!$context.owner}
         >
           <option value="" />
-          <SelectOptions data={$store.config.movementUnits} />
+          <SelectOptions data={$context.config.movementUnits} />
         </Select>
       {/if}
       <Select
         id={inputId}
-        value={$store.system.target.type}
+        value={$context.system.target.type}
         title={localize("DND5E.TargetType")}
         field="system.target.type"
-        document={$store.item}
-        disabled={!$store.owner}
+        document={$context.item}
+        disabled={!$context.owner}
       >
         <option value="">{localize('DND5E.None')}</option>
         <optgroup label={localize('DND5E.TargetTypeIndividual')}>
-          <SelectOptions data={$store.config.individualTargetTypes} />
+          <SelectOptions data={$context.config.individualTargetTypes} />
         </optgroup>
         <optgroup label={localize('DND5E.TargetTypeArea')}>
           <SelectOptions
-            data={$store.config.areaTargetTypes}
+            data={$context.config.areaTargetTypes}
             labelProp="label"
           />
         </optgroup>
@@ -137,7 +137,7 @@
     </div>
   </ItemFormGroup>
 
-  {#if $store.isLine}
+  {#if $context.isLine}
     <ItemFormGroup
       cssClass="input-select-select"
       labelText={localize('DND5E.TargetWidth')}
@@ -147,11 +147,11 @@
       <div class="form-fields">
         <NumberInput
           id={inputId}
-          value={$store.system.target.width}
+          value={$context.system.target.width}
           placeholder="&mdash;"
           field="system.target.width"
-          document={$store.item}
-          disabled={!$store.owner}
+          document={$context.item}
+          disabled={!$context.owner}
         />
       </div>
     </ItemFormGroup>
@@ -164,40 +164,40 @@
     let:inputId
   >
     <div class="form-fields">
-      {#if $store.system.hasScalarRange}
+      {#if $context.system.hasScalarRange}
         <NumberInput
-          id="{$store.appId}-system-target-width"
-          value={$store.system.range.value}
+          id="{$context.appId}-system-target-width"
+          value={$context.system.range.value}
           placeholder={localize('DND5E.Normal')}
           title={localize("DND5E.RangeNormal")}
           field="system.range.value"
-          document={$store.item}
-          disabled={!$store.owner}
+          document={$context.item}
+          disabled={!$context.owner}
         />
         <span class="sep">/</span>
         <NumberInput
-          id="{$store.appId}-system-range-long"
-          value={$store.system.range.long}
+          id="{$context.appId}-system-range-long"
+          value={$context.system.range.long}
           placeholder={localize('DND5E.Long')}
           title={localize("DND5E.RangeLong")}
           field="system.range.long"
-          document={$store.item}
-          disabled={!$store.owner}
+          document={$context.item}
+          disabled={!$context.owner}
         />
       {/if}
       <Select
         id={inputId}
-        value={$store.system.range.units}
+        value={$context.system.range.units}
         title={localize("DND5E.RangeUnits")}
-        document={$store.item}
+        document={$context.item}
         field="system.range.units"
-        disabled={!$store.owner}
+        disabled={!$context.owner}
       >
         <option value="">{localize('DND5E.None')}</option>
         <optgroup label={localize('DND5E.RangeDistance')}>
-          <SelectOptions data={$store.config.movementUnits} />
+          <SelectOptions data={$context.config.movementUnits} />
         </optgroup>
-        <SelectOptions data={$store.config.rangeTypes} />
+        <SelectOptions data={$context.config.rangeTypes} />
       </Select>
     </div>
   </ItemFormGroup>
@@ -209,34 +209,34 @@
     let:inputId
   >
     <div class="form-fields">
-      {#if $store.system.hasScalarDuration}
+      {#if $context.system.hasScalarDuration}
         <TextInput
-          id="{$store.appId}-source-duration-value"
-          value={$store.source.duration.value}
+          id="{$context.appId}-source-duration-value"
+          value={$context.source.duration.value}
           placeholder="&mdash;"
           title={localize("DND5E.DurationValue")}
           field="system.duration.value"
-          document={$store.item}
+          document={$context.item}
           dataset={{ formulaEditor: true }}
-          disabled={!$store.owner}
+          disabled={!$context.owner}
         />
       {/if}
       <Select
         id={inputId}
-        value={$store.system.duration.units}
+        value={$context.system.duration.units}
         title={localize("DND5E.DurationType")}
-        document={$store.item}
+        document={$context.item}
         field="system.duration.units"
-        disabled={!$store.owner}
+        disabled={!$context.owner}
       >
         <option value="">{localize('DND5E.None')}</option>
         <optgroup label={localize('DND5E.DurationTime')}>
-          <SelectOptions data={$store.config.scalarTimePeriods} />
+          <SelectOptions data={$context.config.scalarTimePeriods} />
         </optgroup>
         <optgroup label={localize('DND5E.DurationPermanent')}>
-          <SelectOptions data={$store.config.permanentTimePeriods} />
+          <SelectOptions data={$context.config.permanentTimePeriods} />
         </optgroup>
-        <SelectOptions data={$store.config.specialTimePeriods} />
+        <SelectOptions data={$context.config.specialTimePeriods} />
       </Select>
     </div>
   </ItemFormGroup>
@@ -250,37 +250,37 @@
     <div class="form-fields">
       <NumberInput
         id={inputId}
-        value={$store.system.uses.value}
+        value={$context.system.uses.value}
         title={localize("DND5E.UsesAvailable")}
         field="system.uses.value"
-        document={$store.item}
+        document={$context.item}
       />
       <span class="sep">{localize('DND5E.of')}</span>
       <TextInput
-        id="{$store.appId}-system-uses-max"
-        value={$store.source.uses.max}
+        id="{$context.appId}-system-uses-max"
+        value={$context.source.uses.max}
         title={localize("DND5E.UsesMax")}
         field="system.uses.max"
-        document={$store.item}
+        document={$context.item}
         dataset={{ formulaEditor: true }}
-        disabled={!$store.owner}
+        disabled={!$context.owner}
         />
       <span class="sep">{localize('DND5E.per')}</span>
       <Select
-        id="{$store.appId}-system.uses.per"
-        value={$store.system.uses.per}
+        id="{$context.appId}-system.uses.per"
+        value={$context.system.uses.per}
         title={localize("DND5E.UsesPeriod")}
-        document={$store.item}
+        document={$context.item}
         field="system.uses.per"
-        disabled={!$store.owner}
+        disabled={!$context.owner}
       >
         <option value="" />
-        <SelectOptions data={$store.config.limitedUsePeriods} />
+        <SelectOptions data={$context.config.limitedUsePeriods} />
       </Select>
     </div>
   </ItemFormGroup>
 
-  {#if $store.system.uses.per === 'charges'}
+  {#if $context.system.uses.per === 'charges'}
     <ItemFormGroup
       labelText={localize('DND5E.RecoveryFormula')}
       field="system.uses.recovery"
@@ -289,11 +289,11 @@
       <div class="form-fields">
         <TextInput
           id={inputId}
-          value={$store.system.uses.recovery}
-          document={$store.item}
+          value={$context.system.uses.recovery}
+          document={$context.item}
           field="system.uses.recovery"
           dataset={{ formulaEditor: true }}
-          disabled={!$store.owner}
+          disabled={!$context.owner}
         />
       </div>
     </ItemFormGroup>
@@ -306,37 +306,37 @@
     let:inputId
   >
     <div class="form-fields">
-      {#if $store.system.consume.type}
+      {#if $context.system.consume.type}
         <NumberInput
-          id="{$store.appId}-system-consume-amount"
-          value={$store.system.consume.amount}
+          id="{$context.appId}-system-consume-amount"
+          value={$context.system.consume.amount}
           title={localize("DND5E.ConsumeQuanity")}
           field="system.consume.amount"
-          document={$store.item}
-          disabled={!$store.owner}
+          document={$context.item}
+          disabled={!$context.owner}
         />
         <Select
-          id="{$store.appId}-system-consume-target"
-          value={$store.system.consume.target}
+          id="{$context.appId}-system-consume-target"
+          value={$context.system.consume.target}
           title={localize("DND5E.ConsumeTarget")}
-          document={$store.item}
+          document={$context.item}
           field="system.consume.target"
-          disabled={!$store.owner}
+          disabled={!$context.owner}
         >
           <option value="" />
-          <SelectOptions data={$store.abilityConsumptionTargets} />
+          <SelectOptions data={$context.abilityConsumptionTargets} />
         </Select>
       {/if}
       <Select
         id={inputId}
-        value={$store.system.consume.type}
+        value={$context.system.consume.type}
         title={localize("DND5E.ConsumeType")}
-        document={$store.item}
+        document={$context.item}
         field="system.consume.type"
-        disabled={!$store.owner}
+        disabled={!$context.owner}
       >
         <option value="">{localize('DND5E.None')}</option>
-        <SelectOptions data={$store.config.abilityConsumptionTypes} />
+        <SelectOptions data={$context.config.abilityConsumptionTypes} />
       </Select>
     </div>
   </ItemFormGroup>

@@ -6,17 +6,17 @@
   import type { Readable } from 'svelte/store';
   import TextInput from 'src/components/form/TextInput.svelte';
 
-  let store = getContext<Readable<NpcSheetContext>>('store');
+  let context = getContext<Readable<NpcSheetContext>>('context');
 
   async function rollNpcHp(event: Event) {
     event.preventDefault();
 
-    const formula = $store.actor.system.attributes.hp.formula;
+    const formula = $context.actor.system.attributes.hp.formula;
     if (!formula) return;
     const roll_hp = await new Roll(formula).evaluate({ async: true });
     const hp = roll_hp.total;
     AudioHelper.play({ src: CONFIG.sounds.dice });
-    $store.actor.update({
+    $context.actor.update({
       'system.attributes.hp.value': hp,
       'system.attributes.hp.max': hp,
     });
@@ -25,7 +25,7 @@
   function calcAverageHitDie(event: Event) {
     event.preventDefault();
 
-    let formula = $store.actor.system.attributes.hp.formula;
+    let formula = $context.actor.system.attributes.hp.formula;
     debug(`tidy5e-npc | activateListeners | formula: ${formula}`);
     let r = new Roll(formula);
     let term = r.terms;
@@ -62,7 +62,7 @@
     }
     debug(`tidy5e-npc | activateListeners | average: ${average}`);
 
-    $store.actor.update({
+    $context.actor.update({
       ['system.attributes.hp.value']: average,
       ['system.attributes.hp.max']: average,
     });
@@ -84,15 +84,15 @@
   </span>
   <div class="formula-edit">
     <TextInput
-      document={$store.actor}
+      document={$context.actor}
       field="system.attributes.hp.formula"
       cssClass="hpformula"
       placeholder={localize('DND5E.HPFormula')}
-      value={$store.system.attributes.hp.formula}
+      value={$context.system.attributes.hp.formula}
       maxlength={12}
-      title="{localize('DND5E.HPFormula')}: {$store.system.attributes.hp
+      title="{localize('DND5E.HPFormula')}: {$context.system.attributes.hp
         .formula}"
-          disabled={!$store.owner}
+          disabled={!$context.owner}
           />
   </div>
 </div>

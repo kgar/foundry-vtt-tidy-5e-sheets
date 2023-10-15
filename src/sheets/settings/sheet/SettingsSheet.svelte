@@ -17,9 +17,8 @@
   import { CONSTANTS } from 'src/constants';
 
   export let selectedTabId: string;
-  let store = getContext<SettingsSheetStore>('store');
+  let context = getContext<SettingsSheetStore>('context');
   let functions = getContext<SettingsSheetFunctions>('functions');
-  setContext('store', store);
 
   let tabs: Tab[] = [];
 
@@ -82,7 +81,7 @@
     applyingChanges = true;
 
     try {
-      await functions.save($store);
+      await functions.save($context);
     } finally {
       applyingChanges = false;
     }
@@ -92,7 +91,7 @@
     applyingChanges = true;
 
     try {
-      await functions.apply($store);
+      await functions.apply($context);
     } finally {
       applyingChanges = false;
     }

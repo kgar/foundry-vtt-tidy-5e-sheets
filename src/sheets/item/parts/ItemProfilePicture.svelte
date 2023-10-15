@@ -5,7 +5,7 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
 
-  let store = getContext<Readable<ItemSheetContext>>('store');
+  let context = getContext<Readable<ItemSheetContext>>('context');
 
   const localize = FoundryAdapter.localize;
 
@@ -28,7 +28,7 @@
 
   function handleClick(event: MouseEvent) {
     if (event.button === CONSTANTS.MOUSE_BUTTON_MAIN) {
-      openItemImagePicker(event.currentTarget as HTMLImageElement, $store.item);
+      openItemImagePicker(event.currentTarget as HTMLImageElement, $context.item);
     } else if (event.button === CONSTANTS.MOUSE_BUTTON_SECONDARY) {
       hideImageMenu = !hideImageMenu;
     }
@@ -47,13 +47,13 @@
 <div class="item-image item-image-show-item-art">
   <img
     class="profile"
-    src={$store.item.img}
-    alt={$store.item.name}
+    src={$context.item.img}
+    alt={$context.item.name}
     title="{localize('T5EK.EditActorImage')} / {localize('T5EK.ShowItemImage')}"
     on:mousedown={(event) => handleClick(event)}
   />
   <div class="item-menu" class:hidden={hideImageMenu}>
-    <button class="showItemArt" on:click={() => showItemArt($store.item)}
+    <button class="showItemArt" on:click={() => showItemArt($context.item)}
       >{localize('T5EK.ShowItemArt')}</button
     >
   </div>

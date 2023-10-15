@@ -26,23 +26,23 @@
   import { characterSheetTabsStore } from 'src/state/character-sheet-state';
 
   export let selectedTabId: string;
-  let store = getContext<Readable<CharacterSheetContext>>('store');
+  let context = getContext<Readable<CharacterSheetContext>>('context');
 
   const localize = FoundryAdapter.localize;
 
   $: playerName =
-    FoundryAdapter.tryGetFlag<string>($store.actor, 'playerName') ?? '';
+    FoundryAdapter.tryGetFlag<string>($context.actor, 'playerName') ?? '';
 
   $: classAndSubclassSummaries = Array.from(
-    FoundryAdapter.getClassAndSubclassSummaries($store.actor).values()
+    FoundryAdapter.getClassAndSubclassSummaries($context.actor).values()
   );
 
   $: characterSummaryEntries =
-    FoundryAdapter.getActorCharacterSummaryEntries($store);
+    FoundryAdapter.getActorCharacterSummaryEntries($context);
 
-  $: abilities = Object.entries<any>($store.abilities);
+  $: abilities = Object.entries<any>($context.abilities);
 
-  $: sizes = <TidyDropdownOption[]>Object.entries($store.config.actorSizes).map(
+  $: sizes = <TidyDropdownOption[]>Object.entries($context.config.actorSizes).map(
     ([abbreviation, size]) => ({
       value: abbreviation,
       text: size as string,
@@ -50,17 +50,17 @@
   );
 
   $: currentSize = <TidyDropdownOption>{
-    value: $store.system.traits.size,
-    text: $store.config.actorSizes[$store.system.traits.size],
+    value: $context.system.traits.size,
+    text: $context.config.actorSizes[$context.system.traits.size],
   };
 
   let tabs: Tab[];
   $: {
-    tabs = $characterSheetTabsStore.getTabs($store);
+    tabs = $characterSheetTabsStore.getTabs($context);
 
     Hooks.call(CONSTANTS.HOOKS_RENDERING_CHARACTER_TABS, {
       tabs,
-      context: $store,
+      context: $context,
     });
 
     if (!tabs.some((tab) => tab.id === selectedTabId)) {
@@ -71,8 +71,8 @@
 
 <ItemInfoCard />
 
-{#if $store.warnings.length}
-  <ActorWarnings warnings={$store.warnings} />
+{#if $context.warnings.length}
+  <ActorWarnings warnings={$context.warnings} />
 {/if}
 <header class="tidy5e-kgar-sheet-header flex-row">
   <div class="flex-0">
@@ -84,12 +84,12 @@
       <div class="actor-name">
         <ContentEditableFormField
           element="h1"
-          document={$store.actor}
-          editable={$store.owner && !$store.lockSensitiveFields}
+          document={$context.actor}
+          editable={$context.owner && !$context.lockSensitiveFields}
           spellcheck={false}
           placeholder={localize('DND5E.Name')}
           dataMaxLength={40}
-          value={$store.actor.name}
+          value={$context.actor.name}
           field="name"
         />
       </div>
@@ -100,40 +100,40 @@
           <div class="xp-tracker">
             <div class="experience flex-row no-gap">
               <TextInput
-                document={$store.actor}
+                document={$context.actor}
                 field="system.details.xp.value"
                 cssClass="current-xp"
-                value={$store.system.details.xp.value}
+                value={$context.system.details.xp.value}
                 placeholder="0"
                 dtype="Number"
                 selectOnFocus={true}
                 allowDeltaChanges={true}
                 maxlength={7}
-                disabled={$store.lockExpChanges}
+                disabled={$context.lockExpChanges}
               />
               <span class="sep">/</span>
               {#if FoundryAdapter.userIsGm()}
                 <TextInput
-                  document={$store.actor}
+                  document={$context.actor}
                   field="system.details.xp.max"
                   cssClass="max-xp max"
-                  value={$store.system.details.xp.max}
+                  value={$context.system.details.xp.max}
                   placeholder="0"
                   dtype="Number"
                   selectOnFocus={true}
                   allowDeltaChanges={true}
                   maxlength={7}
-                  disabled={!$store.owner}
+                  disabled={!$context.owner}
                 />
               {:else}
-                <span class="max">{$store.system.details.xp.max}</span>
+                <span class="max">{$context.system.details.xp.max}</span>
               {/if}
             </div>
             <div class="xp-bar">
               <div class="xp-bar-total">
                 <span
                   class="xp-bar-current"
-                  style="width: {$store.system.details.xp.pct}%"
+                  style="width: {$context.system.details.xp.pct}%"
                 />
               </div>
             </div>
@@ -141,7 +141,7 @@
         {/if}
         <h2 class="level">
           {localize('DND5E.AbbreviationLevel')}
-          {$store.system.details.level}
+          {$context.system.details.level}
         </h2>
         <SheetMenu defaultSettingsTab={CONSTANTS.TAB_SETTINGS_PLAYERS} />
       </div>
@@ -152,19 +152,19 @@
       {#if $settingStore.playerNameEnabled}
         <ContentEditableFormField
           element="span"
-          document={$store.actor}
+          document={$context.actor}
           field="flags.{CONSTANTS.MODULE_ID}.playerName"
           value={playerName}
           cssClass="player-name"
           placeholder={localize('T5EK.PlayerName')}
           dataMaxLength={40}
-          editable={$store.owner && !$store.lockSensitiveFields}
+          editable={$context.owner && !$context.lockSensitiveFields}
         />
         <!-- <span>&#8226;</span> -->
       {/if}
 
       <!-- Class / Subclass -->
-      {#if $store.owner && !$settingStore.classListDisabled}
+      {#if $context.owner && !$settingStore.classListDisabled}
         <span class="flex-row extra-small-gap">
           {#each classAndSubclassSummaries as summary, i}
             {#if i > 0}
@@ -190,12 +190,12 @@
     <section class="origin-summary">
       <span class="origin-points">
         <!-- TODO: Consider implementing the hidden select that the original sheet has, or figure out a way to format this select in such a way that it agrees with the rest of the layout instead of undermining it. -->
-        {#if $store.owner}
+        {#if $context.owner}
           <TidyDropdownList
             options={sizes}
             selected={currentSize}
             on:optionClicked={(event) =>
-              $store.actor.update({
+              $context.actor.update({
                 'system.traits.size': event.detail.value,
               })}
             title={localize('DND5E.Size')}
@@ -210,35 +210,35 @@
       </span>
       <span class="flex-row align-items-center extra-small-gap">
         <b>
-          {localize('DND5E.Proficiency')}: {$store.labels.proficiency}
+          {localize('DND5E.Proficiency')}: {$context.labels.proficiency}
         </b>
-        {#if $store.owner && !$store.lockSensitiveFields}
+        {#if $context.owner && !$context.lockSensitiveFields}
           <button
             type="button"
             class="inline-icon-button"
             title={localize('T5EK.OriginSummaryConfig')}
             on:click={() =>
-              new Tidy5eActorOriginSummaryConfig($store.actor).render(true)}
+              new Tidy5eActorOriginSummaryConfig($context.actor).render(true)}
           >
             <i class="fas fa-cog" />
           </button>
         {/if}
       </span>
     </section>
-    <ActorMovementRow actor={$store.actor} movement={$store.movement} />
+    <ActorMovementRow actor={$context.actor} movement={$context.movement} />
     <HorizontalLineSeparator borderColor="light" />
     <!-- AC  -->
     <ActorHeaderStats
       {abilities}
-      ac={$store.system.attributes.ac}
-      init={$store.system.attributes.init}
+      ac={$context.system.attributes.ac}
+      init={$context.system.attributes.init}
     />
   </div>
 </header>
 
 <Tabs {tabs} bind:selectedTabId>
   <svelte:fragment slot="tab-end">
-    {#if $store.owner}
+    {#if $context.owner}
       <AllowEditLock
         hint={$settingStore.enablePermanentUnlockOnCharacterIfYouAreGM &&
         FoundryAdapter.userIsGm()

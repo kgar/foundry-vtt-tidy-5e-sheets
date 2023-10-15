@@ -11,7 +11,7 @@
   import TextInput from 'src/components/form/TextInput.svelte';
   import itemSheetTabs from './itemSheetTabs';
 
-  let store = getContext<Readable<ItemSheetContext>>('store');
+  let context = getContext<Readable<ItemSheetContext>>('context');
 
   export let selectedTabId: string;
 
@@ -23,7 +23,7 @@
 
   Hooks.call(CONSTANTS.HOOKS_RENDERING_ITEM_SPELL_TABS, {
     tabs,
-    context: $store,
+    context: $context,
   });
 
   const localize = FoundryAdapter.localize;
@@ -35,29 +35,29 @@
   <div class="header-details flexrow">
     <h1 class="charname">
       <TextInput
-        document={$store.item}
+        document={$context.item}
         field="name"
-        value={$store.item.name}
+        value={$context.item.name}
         placeholder={localize('DND5E.SpellName')}
-        disabled={!$store.owner}
+        disabled={!$context.owner}
         />
     </h1>
 
     <div class="item-subtitle">
-      <h4 class="item-type">{$store.itemType}</h4>
-      <span class="item-status">{$store.itemStatus ?? ''}</span>
+      <h4 class="item-type">{$context.itemType}</h4>
+      <span class="item-status">{$context.itemStatus ?? ''}</span>
     </div>
 
     <ul class="summary flexrow">
-      <li>{$store.labels.level}</li>
-      <li>{$store.labels.school}</li>
+      <li>{$context.labels.level}</li>
+      <li>{$context.labels.school}</li>
       <li>
         <TextInput
-          document={$store.item}
+          document={$context.item}
           field="system.source"
-          value={$store.system.source}
+          value={$context.system.source}
           placeholder={localize('DND5E.Source')}
-          disabled={!$store.owner}
+          disabled={!$context.owner}
         />
       </li>
     </ul>

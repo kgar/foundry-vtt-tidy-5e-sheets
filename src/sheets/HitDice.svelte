@@ -9,14 +9,14 @@
   export let actorLevel: number;
   export let actor: Actor5e;
 
-  let store = getContext<Readable<ActorSheetContext>>('store');
+  let context = getContext<Readable<ActorSheetContext>>('context');
 
   const localize = FoundryAdapter.localize;
 </script>
 
 <div
   class="portrait-hd"
-  class:rounded={$store.useRoundedPortraitStyle}
+  class:rounded={$context.useRoundedPortraitStyle}
   title="{localize('DND5E.HitDice')}: {hitDice}/{actorLevel}&#10;{localize(
     'DND5E.HitDiceConfig'
   )}"
@@ -24,9 +24,9 @@
   <button
     type="button"
     class="current-hd config-button transparent-button"
-    on:click={$store.owner &&
+    on:click={$context.owner &&
       new dnd5e.applications.actor.ActorHitDiceConfig(actor).render(true)}
-    disabled={!$store.owner}>{hitDice}</button
+    disabled={!$context.owner}>{hitDice}</button
   >
 </div>
 

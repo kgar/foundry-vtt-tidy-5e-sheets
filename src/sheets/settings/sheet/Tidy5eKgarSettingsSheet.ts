@@ -64,7 +64,7 @@ export class Tidy5eKgarSettingsSheet extends FormApplication {
         selectedTabId: this.initialTabId,
       },
       context: new Map<any, any>([
-        ['store', writable(currentSettings) satisfies SettingsSheetStore],
+        ['context', writable(currentSettings) satisfies SettingsSheetStore],
         [
           'functions',
           {

@@ -9,20 +9,20 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
 
-  let store = getContext<Readable<CharacterSheetContext>>('store');
+  let context = getContext<Readable<CharacterSheetContext>>('context');
 
   const localize = FoundryAdapter.localize;
 
   $: favoriteInventory = sortByNameIfConfigured(
     $settingStore.enableSortFavoritesItemsAlphabetically,
-    $store.inventory
+    $context.inventory
       .flatMap((x: { items: Item5e[] }) => x.items)
       .filter(FoundryAdapter.isItemFavorite)
   );
 
   $: favoriteFeatures = sortByNameIfConfigured(
     $settingStore.enableSortFavoritesItemsAlphabetically,
-    $store.features
+    $context.features
       .flatMap((x: { items: Item5e[] }) => x.items)
       .filter(FoundryAdapter.isItemFavorite)
   );
@@ -62,7 +62,7 @@
     <FavoriteFeaturesList items={favoriteFeatures} />
   {/if}
 
-  {#each $store.spellbook as section}
+  {#each $context.spellbook as section}
     {@const favoriteSpells = getFavoriteSpells(
       $settingStore.enableSortFavoritesItemsAlphabetically,
       section.spells

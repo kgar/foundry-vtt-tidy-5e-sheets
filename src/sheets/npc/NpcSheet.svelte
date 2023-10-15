@@ -5,11 +5,11 @@
     import NpcSheetFull from './NpcSheetFull.svelte';
     import NpcSheetLimited from './NpcSheetLimited.svelte';
   
-    let store = getContext<Readable<NpcSheetContext>>('store');
+    let context = getContext<Readable<NpcSheetContext>>('context');
     export let selectedTabId: string;
   </script>
   
-  {#if $store.showLimitedSheet}
+  {#if $context.showLimitedSheet}
     <NpcSheetLimited />
   {:else}
     <NpcSheetFull {selectedTabId} />

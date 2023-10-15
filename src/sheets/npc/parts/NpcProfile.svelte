@@ -13,33 +13,33 @@
   import { CONSTANTS } from 'src/constants';
   import { settingStore } from 'src/settings/settings';
 
-  let store = getContext<Readable<NpcSheetContext>>('store');
+  let context = getContext<Readable<NpcSheetContext>>('context');
 
   $: incapacitated =
-    ($store.actor?.system?.attributes?.hp?.value ?? 0) <= 0 &&
-    $store.actor?.system?.attributes?.hp?.max !== 0;
+    ($context.actor?.system?.attributes?.hp?.value ?? 0) <= 0 &&
+    $context.actor?.system?.attributes?.hp?.max !== 0;
 
   function onLevelSelected(event: CustomEvent<{ level: number }>) {
-    FoundryAdapter.setFlag($store.actor, 'exhaustion', event.detail.level);
+    FoundryAdapter.setFlag($context.actor, 'exhaustion', event.detail.level);
   }
 </script>
 
 <ActorProfile useHpOverlay={!$settingStore.hpOverlayDisabledNpc}>
   {#if incapacitated && (!$settingStore.hiddenDeathSavesEnabled || FoundryAdapter.userIsGm())}
     <DeathSaves
-      successes={FoundryAdapter.tryGetFlag($store.actor, 'death')?.success ?? 0}
-      failures={FoundryAdapter.tryGetFlag($store.actor, 'death')?.failure ?? 0}
+      successes={FoundryAdapter.tryGetFlag($context.actor, 'death')?.success ?? 0}
+      failures={FoundryAdapter.tryGetFlag($context.actor, 'death')?.failure ?? 0}
       successesField="flags.{CONSTANTS.MODULE_ID}.death.success"
       failuresField="flags.{CONSTANTS.MODULE_ID}.death.failure"
       on:rollDeathSave={(event) =>
-        $store.rollDeathSave({ event: event.detail.mouseEvent })}
+        $context.rollDeathSave({ event: event.detail.mouseEvent })}
       hpOverlayDisabled={$settingStore.hpOverlayDisabledNpc}
     />
   {/if}
   {#if !$settingStore.exhaustionDisabled && !incapacitated}
     <Exhaustion
-      level={FoundryAdapter.tryGetFlag($store.actor, 'exhaustion') ?? 0}
-      radiusClass={$store.useRoundedPortraitStyle ? 'rounded' : 'top-left'}
+      level={FoundryAdapter.tryGetFlag($context.actor, 'exhaustion') ?? 0}
+      radiusClass={$context.useRoundedPortraitStyle ? 'rounded' : 'top-left'}
       on:levelSelected={onLevelSelected}
     />
   {/if}

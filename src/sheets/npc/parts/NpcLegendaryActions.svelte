@@ -7,25 +7,25 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
 
-  let store = getContext<Readable<NpcSheetContext>>('store');
+  let context = getContext<Readable<NpcSheetContext>>('context');
 
   const localize = FoundryAdapter.localize;
 
   $: showCounters =
-    $store.actor.system.resources.lair.value ||
-    $store.actor.system.resources.legact.max > 0 ||
-    $store.actor.system.resources.legres.max > 0;
+    $context.actor.system.resources.lair.value ||
+    $context.actor.system.resources.legact.max > 0 ||
+    $context.actor.system.resources.legres.max > 0;
 </script>
 
-{#if $store.editable || showCounters}
+{#if $context.editable || showCounters}
   <div class="counters">
     <div class="counter legendary">
       <h4>{localize('DND5E.LegAct')}</h4>
       <div class="counter-value">
         <NumberInput
-          document={$store.actor}
+          document={$context.actor}
           field="system.resources.legact.value"
-          value={$store.system.resources.legact.value}
+          value={$context.system.resources.legact.value}
           step="any"
           placeholder="0"
           title={localize('DND5E.LegActRemaining')}
@@ -33,18 +33,18 @@
             dtype: 'Number',
           }}
           selectOnFocus={true}
-          disabled={!$store.owner}
+          disabled={!$context.owner}
         />
         <span class="sep">/</span>
         <NumberInput
-          document={$store.actor}
+          document={$context.actor}
           field="system.resources.legact.max"
-          value={$store.system.resources.legact.max}
+          value={$context.system.resources.legact.max}
           min={0}
           step="1"
           placeholder="0"
           selectOnFocus={true}
-          disabled={!$store.owner || $store.lockSensitiveFields}
+          disabled={!$context.owner || $context.lockSensitiveFields}
         />
       </div>
     </div>
@@ -52,9 +52,9 @@
       <h4>{localize('DND5E.LegRes')}</h4>
       <div class="counter-value">
         <NumberInput
-          document={$store.actor}
+          document={$context.actor}
           field="system.resources.legres.value"
-          value={$store.system.resources.legres.value}
+          value={$context.system.resources.legres.value}
           step="any"
           placeholder="0"
           title={localize('DND5E.LegResRemaining')}
@@ -63,14 +63,14 @@
         />
         <span class="sep">/</span>
         <NumberInput
-          document={$store.actor}
+          document={$context.actor}
           field="system.resources.legres.max"
-          value={$store.system.resources.legres.max}
+          value={$context.system.resources.legres.max}
           min="0"
           step="1"
           placeholder="0"
           selectOnFocus={true}
-          disabled={!$store.owner || $store.lockSensitiveFields}
+          disabled={!$context.owner || $context.lockSensitiveFields}
         />
       </div>
     </div>
@@ -78,22 +78,22 @@
       <h4>{localize('DND5E.LairAct')}</h4>
       <div class="counter-value">
         <Checkbox
-          document={$store.actor}
+          document={$context.actor}
           field="system.resources.lair.value"
-          checked={$store.system.resources.lair.value}
+          checked={$context.system.resources.lair.value}
           dtype="Boolean"
-          disabled={!$store.owner || $store.lockSensitiveFields}
+          disabled={!$context.owner || $context.lockSensitiveFields}
         />
         <TextInput
-          document={$store.actor}
+          document={$context.actor}
           field="system.resources.lair.initiative"
-          value={$store.system.resources.lair.initiative}
+          value={$context.system.resources.lair.initiative}
           dtype="Number"
           placeholder="Init."
           allowDeltaChanges={true}
           selectOnFocus={true}
           saveEmptyAsNull={true}
-          disabled={!$store.owner || $store.lockSensitiveFields}
+          disabled={!$context.owner || $context.lockSensitiveFields}
         />
       </div>
     </div>

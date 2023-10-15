@@ -19,7 +19,7 @@ import { isNil } from 'src/utils/data';
 import type { SvelteComponent } from 'svelte';
 
 export class Tidy5eNpcSheet extends dnd5e.applications.actor.ActorSheet5eNPC {
-  store = writable<NpcSheetContext>();
+  context = writable<NpcSheetContext>();
   stats = writable<SheetStats>({
     lastSubmissionTime: null,
   });
@@ -30,7 +30,7 @@ export class Tidy5eNpcSheet extends dnd5e.applications.actor.ActorSheet5eNPC {
     super(...args);
 
     settingStore.subscribe(() => {
-      this.getContext().then((context) => this.store.set(context));
+      this.getContext().then((context) => this.context.set(context));
     });
   }
 
@@ -51,7 +51,7 @@ export class Tidy5eNpcSheet extends dnd5e.applications.actor.ActorSheet5eNPC {
     const node = html.get(0);
     this.card.set({ sheet: node, item: null, itemCardContentTemplate: null });
     const initialContext = await this.getContext();
-    this.store.set(initialContext);
+    this.context.set(initialContext);
 
     this.component = new NpcSheet({
       target: node,
@@ -59,7 +59,7 @@ export class Tidy5eNpcSheet extends dnd5e.applications.actor.ActorSheet5eNPC {
         selectedTabId: this.#getSelectedTabId(),
       },
       context: new Map<any, any>([
-        ['store', this.store],
+        ['context', this.context],
         ['stats', this.stats],
         ['card', this.card],
       ]),
@@ -206,7 +206,7 @@ export class Tidy5eNpcSheet extends dnd5e.applications.actor.ActorSheet5eNPC {
 
     applyTitleToWindow(this.title, this.element.get(0));
     this.getContext().then((context) => {
-      this.store.update(() => context);
+      this.context.update(() => context);
     });
     return this;
   }
