@@ -26,7 +26,7 @@
   import SheetMenu from '../actor/SheetMenu.svelte';
   import { settingStore } from 'src/settings/settings';
   import ActorWarnings from '../ActorWarnings.svelte';
-  import { vehicleSheetTabsStore } from 'src/api/vehicle-sheet-runtime-config';
+  import { vehicleSheetTabsStore } from 'src/state/vehicle-sheet-state';
 
   export let selectedTabId: string;
 

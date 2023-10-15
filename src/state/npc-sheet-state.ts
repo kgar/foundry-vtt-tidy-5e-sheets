@@ -6,10 +6,10 @@ import NpcSpellbookTab from 'src/sheets/npc/NpcSpellbookTab.svelte';
 import NpcBiographyTab from 'src/sheets/npc/NpcBiographyTab.svelte';
 import ActorEffectsTab from 'src/sheets/actor/ActorEffectsTab.svelte';
 import ActorJournalTab from 'src/components/player-character/ActorJournalTab.svelte';
-import type { NpcSheetRuntimeConfig, SheetTabRuntimeConfig } from './types';
-import { getOrderedEnabledSheetTabs } from './config-functions';
+import type { NpcSheetState, SheetTabState } from './types';
+import { getOrderedEnabledSheetTabs } from './state-functions';
 
-function getDefaultTabConfigs(): SheetTabRuntimeConfig<NpcSheetContext>[] {
+function getDefaultTabConfigs(): SheetTabState<NpcSheetContext>[] {
   return [
     {
       id: CONSTANTS.TAB_NPC_ABILITIES,
@@ -60,17 +60,17 @@ function getDefaultTabConfigs(): SheetTabRuntimeConfig<NpcSheetContext>[] {
   ];
 }
 
-let npcSheetConfigStore = writable<NpcSheetRuntimeConfig>({
+let npcSheetConfigStore = writable<NpcSheetState>({
   sheetTabs: getDefaultTabConfigs(),
 });
 
-let currentTabs: SheetTabRuntimeConfig<NpcSheetContext>[] = [];
+let currentTabs: SheetTabState<NpcSheetContext>[] = [];
 
 npcSheetConfigStore.subscribe((data) => {
   currentTabs = data.sheetTabs;
 });
 
-export function getCurrentNpcTabs(): SheetTabRuntimeConfig<NpcSheetContext>[] {
+export function getCurrentNpcTabs(): SheetTabState<NpcSheetContext>[] {
   return [...currentTabs];
 }
 

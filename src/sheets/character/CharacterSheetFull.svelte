@@ -23,7 +23,7 @@
   import ItemInfoCard from 'src/components/item-info-card/ItemInfoCard.svelte';
   import SheetMenu from '../actor/SheetMenu.svelte';
   import { settingStore } from 'src/settings/settings';
-  import { characterSheetTabsStore } from 'src/api/character-sheet-runtime-config';
+  import { characterSheetTabsStore } from 'src/state/character-sheet-state';
 
   export let selectedTabId: string;
   let store = getContext<Readable<CharacterSheetContext>>('store');

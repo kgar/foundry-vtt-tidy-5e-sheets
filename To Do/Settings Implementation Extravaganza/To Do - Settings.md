@@ -87,9 +87,12 @@
   - [x] Vechicle
 - [x] Extract and share `SheetTabRuntimeConfig<TContext>` to the appropriate types location; it is copy/pasted across the three config scripts.
 - [ ] Expose functions for manipulating tabs for given sheet types
+  - [ ] Register tab - should check tab IDs, should require a boolean to override existing tabs
+  - [ ] Remove tab by id
   - [ ] Character - in progress, need to clean up a bit and reorganize
   - [ ] NPC
   - [ ] Vehicle
+- [ ] Refashion the runtime config scripts to `state`. State will represent the current Tidy 5e state, which other modules can manipulate in order to do things like add/replace tabs, etc.
 - [ ] Create a one-off test script (world script) which adds a new tab and plugs in an arbitrary component
   - [ ] Make a special Tidy 5e hook which establishes when Tidy 5e's API is ready to use
   - [ ] Make the one-off test script talk to the Tidy 5e API in order to add a tab and arbitrary content

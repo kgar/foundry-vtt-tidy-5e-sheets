@@ -5,10 +5,10 @@ import ActorEffectsTab from 'src/sheets/actor/ActorEffectsTab.svelte';
 import VehicleAttributesTab from 'src/sheets/vehicle/VehicleAttributesTab.svelte';
 import VehicleCargoAndCrewTab from 'src/sheets/vehicle/VehicleCargoAndCrewTab.svelte';
 import VehicleDescriptionTab from 'src/sheets/vehicle/VehicleDescriptionTab.svelte';
-import type { SheetTabRuntimeConfig, VehicleSheetRuntimeConfig } from './types';
-import { getOrderedEnabledSheetTabs } from './config-functions';
+import type { SheetTabState, VehicleSheetState } from './types';
+import { getOrderedEnabledSheetTabs } from './state-functions';
 
-function getDefaultTabConfigs(): SheetTabRuntimeConfig<VehicleSheetContext>[] {
+function getDefaultTabConfigs(): SheetTabState<VehicleSheetContext>[] {
   return [
     {
       id: CONSTANTS.TAB_VEHICLE_ATTRIBUTES,
@@ -49,17 +49,17 @@ function getDefaultTabConfigs(): SheetTabRuntimeConfig<VehicleSheetContext>[] {
   ];
 }
 
-let vehicleSheetConfigStore = writable<VehicleSheetRuntimeConfig>({
+let vehicleSheetConfigStore = writable<VehicleSheetState>({
   sheetTabs: getDefaultTabConfigs(),
 });
 
-let currentTabs: SheetTabRuntimeConfig<VehicleSheetContext>[] = [];
+let currentTabs: SheetTabState<VehicleSheetContext>[] = [];
 
 vehicleSheetConfigStore.subscribe((data) => {
   currentTabs = data.sheetTabs;
 });
 
-export function getCurrentVehicleTabs(): SheetTabRuntimeConfig<VehicleSheetContext>[] {
+export function getCurrentVehicleTabs(): SheetTabState<VehicleSheetContext>[] {
   return [...currentTabs];
 }
 

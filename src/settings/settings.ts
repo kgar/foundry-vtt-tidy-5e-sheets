@@ -8,10 +8,10 @@ import { getCoreThemes, themeVariables } from 'src/theme/theme-reference';
 import { Tidy5eKgarSettingsSheet } from 'src/sheets/settings/sheet/Tidy5eKgarSettingsSheet';
 import { Tidy5eKgarThemeSettingsSheet } from 'src/sheets/settings/theme/Tidy5eKgarThemeSettingsSheet';
 import { writable, type Writable } from 'svelte/store';
-import { getCurrentCharacterTabs } from 'src/api/character-sheet-runtime-config';
-import { getCurrentVehicleTabs } from 'src/api/vehicle-sheet-runtime-config';
-import { getCurrentNpcTabs } from 'src/api/npc-sheet-runtime-config';
-import { getTabsAsConfigOptions } from 'src/api/config-functions';
+import { getCurrentCharacterTabs } from 'src/state/character-sheet-state';
+import { getCurrentVehicleTabs } from 'src/state/vehicle-sheet-state';
+import { getCurrentNpcTabs } from 'src/state/npc-sheet-state';
+import { getTabsAsConfigOptions } from 'src/state/state-functions';
 
 export type Tidy5eSettings = {
   [settingKey: string]: Tidy5eSetting;

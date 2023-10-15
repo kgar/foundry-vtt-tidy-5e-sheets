@@ -1,7 +1,7 @@
-import type { SheetTabRuntimeConfig } from './types';
+import type { SheetTabState } from './types';
 
 export function getOrderedEnabledSheetTabs<TContext>(
-  config: SheetTabRuntimeConfig<TContext>[],
+  config: SheetTabState<TContext>[],
   context: TContext
 ) {
   return [...config]
@@ -14,7 +14,7 @@ export function getOrderedEnabledSheetTabs<TContext>(
 }
 
 export function getTabsAsConfigOptions<TContext>(
-  tabs: SheetTabRuntimeConfig<TContext>[]
+  tabs: SheetTabState<TContext>[]
 ) {
   return tabs
     .sort((a, b) => a.order - b.order)

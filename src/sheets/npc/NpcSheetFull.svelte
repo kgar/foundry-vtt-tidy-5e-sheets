@@ -26,7 +26,7 @@
   import SheetMenu from '../actor/SheetMenu.svelte';
   import { settingStore } from 'src/settings/settings';
   import ActorWarnings from '../ActorWarnings.svelte';
-  import { npcSheetTabsStore } from 'src/api/npc-sheet-runtime-config';
+  import { npcSheetTabsStore } from 'src/state/npc-sheet-state';
 
   export let selectedTabId: string;
 

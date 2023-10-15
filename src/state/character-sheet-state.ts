@@ -8,13 +8,13 @@ import ActorEffectsTab from 'src/sheets/actor/ActorEffectsTab.svelte';
 import CharacterBiographyTab from 'src/components/player-character/CharacterBiographyTab.svelte';
 import ActorJournalTab from 'src/components/player-character/ActorJournalTab.svelte';
 import type {
-  CharacterSheetRuntimeConfig,
-  SheetTabRuntimeConfig,
+  CharacterSheetState,
+  SheetTabState,
 } from './types';
-import { getOrderedEnabledSheetTabs } from './config-functions';
+import { getOrderedEnabledSheetTabs } from './state-functions';
 import { CONSTANTS } from 'src/constants';
 
-let characterSheetConfigStore = writable<CharacterSheetRuntimeConfig>({
+let characterSheetConfigStore = writable<CharacterSheetState>({
   sheetTabs: [
     {
       id: CONSTANTS.TAB_CHARACTER_ATTRIBUTES,
@@ -83,13 +83,13 @@ let characterSheetConfigStore = writable<CharacterSheetRuntimeConfig>({
   ],
 });
 
-let currentTabs: SheetTabRuntimeConfig<CharacterSheetContext>[] = [];
+let currentTabs: SheetTabState<CharacterSheetContext>[] = [];
 
 characterSheetConfigStore.subscribe((data) => {
   currentTabs = data.sheetTabs;
 });
 
-export function getCurrentCharacterTabs(): SheetTabRuntimeConfig<CharacterSheetContext>[] {
+export function getCurrentCharacterTabs(): SheetTabState<CharacterSheetContext>[] {
   return [...currentTabs];
 }
 
@@ -102,7 +102,7 @@ export let characterSheetTabsStore = derived(
 );
 
 export function registerCharacterTab(
-  tab: SheetTabRuntimeConfig<CharacterSheetContext>
+  tab: SheetTabState<CharacterSheetContext>
 ) {
   characterSheetConfigStore.update((store) => {
     store.sheetTabs.push(tab);
