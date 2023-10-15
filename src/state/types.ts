@@ -21,3 +21,10 @@ export type NpcSheetState = {
 export type VehicleSheetState = {
   sheetTabs: SheetTabState<VehicleSheetContext>[];
 };
+
+export type SheetTabRegistrationOptions = {
+  /**
+   * Overwrite an existing sheet tab with the same id, if found. 
+   */
+  overwrite?: boolean;
+}

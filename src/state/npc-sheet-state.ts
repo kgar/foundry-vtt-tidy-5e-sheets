@@ -6,8 +6,13 @@ import NpcSpellbookTab from 'src/sheets/npc/NpcSpellbookTab.svelte';
 import NpcBiographyTab from 'src/sheets/npc/NpcBiographyTab.svelte';
 import ActorEffectsTab from 'src/sheets/actor/ActorEffectsTab.svelte';
 import ActorJournalTab from 'src/components/player-character/ActorJournalTab.svelte';
-import type { NpcSheetState, SheetTabState } from './types';
+import type {
+  NpcSheetState,
+  SheetTabRegistrationOptions,
+  SheetTabState,
+} from './types';
 import { getOrderedEnabledSheetTabs } from './state-functions';
+import { warn } from 'src/utils/logging';
 
 let npcSheetState = writable<NpcSheetState>({
   sheetTabs: [
@@ -68,3 +73,31 @@ export let npcSheetTabsStore = derived(npcSheetState, (c) => ({
   getTabs: (context: NpcSheetContext) =>
     getOrderedEnabledSheetTabs(c.sheetTabs, context),
 }));
+
+export function registerNpcTab(
+  tab: SheetTabState<NpcSheetContext>,
+  options?: SheetTabRegistrationOptions
+) {
+  const tabExists = getCurrentNpcTabs().some((t) => t.id === tab.id);
+
+  if (tabExists && !options?.overwrite) {
+    warn(
+      `Tab with id ${tab.id} already exists. Use option "overwrite" to replace an existing tab.`
+    );
+  }
+
+  npcSheetState.update((state) => {
+    state.sheetTabs.push(tab);
+    state.sheetTabs.sort((a, b) => a.order - b.order);
+    return state;
+  });
+
+  return getCurrentNpcTabs();
+}
+
+export function unregisterTab(tabId: string) {
+  npcSheetState.update((state) => {
+    state.sheetTabs = [...state.sheetTabs.filter((t) => t.id !== tabId)];
+    return state;
+  });
+}
