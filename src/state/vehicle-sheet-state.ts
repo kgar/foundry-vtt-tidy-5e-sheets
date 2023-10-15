@@ -1,5 +1,5 @@
 import type { VehicleSheetContext, Tab } from 'src/types/types';
-import { derived, writable } from 'svelte/store';
+import { derived, get, writable } from 'svelte/store';
 import { CONSTANTS } from 'src/constants';
 import ActorEffectsTab from 'src/sheets/actor/ActorEffectsTab.svelte';
 import VehicleAttributesTab from 'src/sheets/vehicle/VehicleAttributesTab.svelte';
@@ -53,14 +53,8 @@ let vehicleSheetConfigStore = writable<VehicleSheetState>({
   sheetTabs: getDefaultTabConfigs(),
 });
 
-let currentTabs: SheetTabState<VehicleSheetContext>[] = [];
-
-vehicleSheetConfigStore.subscribe((data) => {
-  currentTabs = data.sheetTabs;
-});
-
 export function getCurrentVehicleTabs(): SheetTabState<VehicleSheetContext>[] {
-  return [...currentTabs];
+  return [...get(vehicleSheetConfigStore).sheetTabs];
 }
 
 export let vehicleSheetTabsStore = derived(vehicleSheetConfigStore, (c) => ({

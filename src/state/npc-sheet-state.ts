@@ -1,5 +1,5 @@
 import type { NpcSheetContext, Tab } from 'src/types/types';
-import { derived, writable } from 'svelte/store';
+import { derived, get, writable } from 'svelte/store';
 import { CONSTANTS } from 'src/constants';
 import NpcAbilitiesTab from 'src/sheets/npc/NpcAbilitiesTab.svelte';
 import NpcSpellbookTab from 'src/sheets/npc/NpcSpellbookTab.svelte';
@@ -64,14 +64,8 @@ let npcSheetConfigStore = writable<NpcSheetState>({
   sheetTabs: getDefaultTabConfigs(),
 });
 
-let currentTabs: SheetTabState<NpcSheetContext>[] = [];
-
-npcSheetConfigStore.subscribe((data) => {
-  currentTabs = data.sheetTabs;
-});
-
 export function getCurrentNpcTabs(): SheetTabState<NpcSheetContext>[] {
-  return [...currentTabs];
+  return [...get(npcSheetConfigStore).sheetTabs];
 }
 
 export let npcSheetTabsStore = derived(npcSheetConfigStore, (c) => ({

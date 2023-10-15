@@ -1,5 +1,5 @@
 import type { CharacterSheetContext } from 'src/types/types';
-import { derived, writable } from 'svelte/store';
+import { derived, get, writable } from 'svelte/store';
 import CharacterAttributesTab from 'src/components/player-character/CharacterAttributesTab.svelte';
 import CharacterInventoryTab from 'src/components/player-character/CharacterInventoryTab.svelte';
 import CharacterSpellbookTab from 'src/components/player-character/CharacterSpellbookTab.svelte';
@@ -7,10 +7,7 @@ import CharacterFeaturesTab from 'src/components/player-character/CharacterFeatu
 import ActorEffectsTab from 'src/sheets/actor/ActorEffectsTab.svelte';
 import CharacterBiographyTab from 'src/components/player-character/CharacterBiographyTab.svelte';
 import ActorJournalTab from 'src/components/player-character/ActorJournalTab.svelte';
-import type {
-  CharacterSheetState,
-  SheetTabState,
-} from './types';
+import type { CharacterSheetState, SheetTabState } from './types';
 import { getOrderedEnabledSheetTabs } from './state-functions';
 import { CONSTANTS } from 'src/constants';
 
@@ -83,14 +80,8 @@ let characterSheetConfigStore = writable<CharacterSheetState>({
   ],
 });
 
-let currentTabs: SheetTabState<CharacterSheetContext>[] = [];
-
-characterSheetConfigStore.subscribe((data) => {
-  currentTabs = data.sheetTabs;
-});
-
 export function getCurrentCharacterTabs(): SheetTabState<CharacterSheetContext>[] {
-  return [...currentTabs];
+  return [...get(characterSheetConfigStore).sheetTabs];
 }
 
 export let characterSheetTabsStore = derived(

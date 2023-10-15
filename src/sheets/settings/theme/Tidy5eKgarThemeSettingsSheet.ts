@@ -5,7 +5,7 @@ import {
   getCurrentSettings,
   type CurrentSettings,
 } from 'src/settings/settings';
-import { writable, type Writable } from 'svelte/store';
+import { get, writable, type Writable } from 'svelte/store';
 import {
   applyCurrentTheme,
   getTheme,
@@ -103,10 +103,8 @@ export class Tidy5eKgarThemeSettingsSheet extends FormApplication {
   }
 
   async _updateObject() {
-    const unsubscribeFn = this.store.subscribe(async (settings) => {
-      await this.saveChangedSettings(settings);
-    });
-    unsubscribeFn();
+    const settings = get(this.store);
+    await this.saveChangedSettings(settings);
   }
 
   useExistingThemeColors(themeId: string) {
