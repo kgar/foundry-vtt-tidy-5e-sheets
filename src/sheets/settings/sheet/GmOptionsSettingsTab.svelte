@@ -140,10 +140,10 @@
   />
 
   <CheckboxSetting
-    bind:value={$context.allowCantripToBePreparedOnContext}
-    name={'T5EK.Settings.AllowCantripToBePreparedOnContext.name'}
-    hint={'T5EK.Settings.AllowCantripToBePreparedOnContext.hint'}
-    id="allowCantripToBePreparedOnContext"
+    bind:value={$context.allowCantripsToBePrepared}
+    name={'T5EK.Settings.AllowCantripsToBePrepared.name'}
+    hint={'T5EK.Settings.AllowCantripsToBePrepared.hint'}
+    id="allowCantripsToBePrepared"
   />
 
   <CheckboxSetting

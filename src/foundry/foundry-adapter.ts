@@ -63,7 +63,7 @@ export const FoundryAdapter = {
       item.system.preparation?.mode !==
         CONSTANTS.SPELL_PREPARATION_MODE_ALWAYS &&
       (item.system.level !== 0 ||
-        SettingsProvider.settings.allowCantripToBePreparedOnContext.get())
+        SettingsProvider.settings.allowCantripsToBePrepared.get())
     );
   },
   /**

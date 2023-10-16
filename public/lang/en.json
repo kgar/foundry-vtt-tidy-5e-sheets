@@ -405,7 +405,7 @@
     "name": "Add additional classes for 'Multiclass Spellbook filter'",
     "hint": "Add additional homebrewed classes to the dropdown with this syntax 'id1|name1,id2|name2' e.g. 'occultist|Occultist,alchemist|Alchemist'"
   },
-  "T5EK.Settings.AllowCantripToBePrepared": {
+  "T5EK.Settings.AllowCantripsToBePrepared": {
     "name": "Allow cantrips to be 'prepared'",
     "hint": "The \"cantrip formulas\" optional rule from Tashas Cauldron of Everything allows Wizards to prepare their cantrips after a long rest in the same way that they do with leveled spells."
   },

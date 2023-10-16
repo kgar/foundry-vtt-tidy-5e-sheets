@@ -36,15 +36,15 @@
     title={localize('DND5E.HitPointsTempMax')}
     disabled={!$context.owner}
   />
-  {#if $context.owner}
+  {#if $context.owner && !$context.lockSensitiveFields}
     <button
       type="button"
       class="inline-icon-button"
       title={localize('DND5E.HitPointsConfig')}
       on:click|stopPropagation|preventDefault={(event) =>
-        new dnd5e.applications.actor.ActorHitPointsConfig($context.actor).render(
-          true
-        )}
+        new dnd5e.applications.actor.ActorHitPointsConfig(
+          $context.actor
+        ).render(true)}
     >
       <i class="fas fa-cog" />
     </button>

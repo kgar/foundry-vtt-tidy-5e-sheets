@@ -1185,10 +1185,10 @@ export function createSettings() {
 
       // Other
 
-      allowCantripToBePreparedOnContext: {
+      allowCantripsToBePrepared: {
         options: {
-          name: 'T5EK.Settings.AllowCantripToBePreparedOnContext.name',
-          hint: 'T5EK.Settings.AllowCantripToBePreparedOnContext.hint',
+          name: 'T5EK.Settings.AllowCantripsToBePrepared.name',
+          hint: 'T5EK.Settings.AllowCantripsToBePrepared.hint',
           scope: 'world',
           config: false,
           default: false,
@@ -1196,7 +1196,7 @@ export function createSettings() {
         },
         get() {
           return FoundryAdapter.getGameSetting<boolean>(
-            'allowCantripToBePreparedOnContext'
+            'allowCantripsToBePrepared'
           );
         },
       },
