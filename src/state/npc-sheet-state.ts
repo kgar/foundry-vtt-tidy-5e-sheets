@@ -24,6 +24,7 @@ let npcSheetState = writable<NpcSheetState>({
       },
       enabled: true,
       order: 10,
+      layout: 'classic',
     },
     {
       id: CONSTANTS.TAB_NPC_SPELLBOOK,
@@ -34,6 +35,7 @@ let npcSheetState = writable<NpcSheetState>({
       enabled: (context) =>
         !context.hideEmptySpellbook && !context.hideSpellbookTab,
       order: 20,
+      layout: 'classic',
     },
     {
       id: 'effects',
@@ -43,6 +45,7 @@ let npcSheetState = writable<NpcSheetState>({
       },
       enabled: true,
       order: 30,
+      layout: 'classic',
     },
     {
       id: 'biography',
@@ -52,6 +55,7 @@ let npcSheetState = writable<NpcSheetState>({
       },
       enabled: true,
       order: 40,
+      layout: 'classic',
     },
     {
       id: 'journal',
@@ -61,29 +65,31 @@ let npcSheetState = writable<NpcSheetState>({
       },
       enabled: (context) => context.owner && !context.npcJournalTabDisabled,
       order: 50,
+      layout: 'classic',
     },
   ],
 });
 
-export function getCurrentNpcTabs(): SheetTabState<NpcSheetContext>[] {
+export function getAllRegisteredNpcSheetTabs(): SheetTabState<NpcSheetContext>[] {
   return [...get(npcSheetState).sheetTabs];
 }
 
-export let npcSheetTabsStore = derived(npcSheetState, (c) => ({
+export let currentNpcSheetTabs = derived(npcSheetState, (c) => ({
   getTabs: (context: NpcSheetContext) =>
     getOrderedEnabledSheetTabs(c.sheetTabs, context),
 }));
 
-export function registerNpcTab(
+export function registerNpcSheetTab(
   tab: SheetTabState<NpcSheetContext>,
   options?: SheetTabRegistrationOptions
 ) {
-  const tabExists = getCurrentNpcTabs().some((t) => t.id === tab.id);
+  const tabExists = getAllRegisteredNpcSheetTabs().some((t) => t.id === tab.id);
 
   if (tabExists && !options?.overwrite) {
     warn(
       `Tab with id ${tab.id} already exists. Use option "overwrite" to replace an existing tab.`
     );
+    return;
   }
 
   npcSheetState.update((state) => {
@@ -92,10 +98,10 @@ export function registerNpcTab(
     return state;
   });
 
-  return getCurrentNpcTabs();
+  return getAllRegisteredNpcSheetTabs();
 }
 
-export function unregisterTab(tabId: string) {
+export function unregisterNpcSheetTab(tabId: string) {
   npcSheetState.update((state) => {
     state.sheetTabs = [...state.sheetTabs.filter((t) => t.id !== tabId)];
     return state;

@@ -26,7 +26,7 @@
   import SheetMenu from '../actor/SheetMenu.svelte';
   import { settingStore } from 'src/settings/settings';
   import ActorWarnings from '../ActorWarnings.svelte';
-  import { npcSheetTabsStore } from 'src/state/npc-sheet-state';
+  import { currentNpcSheetTabs } from 'src/state/npc-sheet-state';
 
   export let selectedTabId: string;
 
@@ -34,7 +34,7 @@
 
   let tabs: Tab[];
   $: {
-    tabs = $npcSheetTabsStore.getTabs($context);
+    tabs = $currentNpcSheetTabs.getTabs($context);
 
     Hooks.call(CONSTANTS.HOOKS_RENDERING_NPC_TABS, {
       tabs,

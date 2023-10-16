@@ -26,7 +26,7 @@
   import SheetMenu from '../actor/SheetMenu.svelte';
   import { settingStore } from 'src/settings/settings';
   import ActorWarnings from '../ActorWarnings.svelte';
-  import { vehicleSheetTabsStore } from 'src/state/vehicle-sheet-state';
+  import { currentVehicleSheetTabs } from 'src/state/vehicle-sheet-state';
 
   export let selectedTabId: string;
 
@@ -34,7 +34,7 @@
 
   let tabs: Tab[];
   $: {
-    tabs = $vehicleSheetTabsStore.getTabs($context);
+    tabs = $currentVehicleSheetTabs.getTabs($context);
 
     Hooks.call(CONSTANTS.HOOKS_RENDERING_VEHICLE_TABS, {
       tabs,

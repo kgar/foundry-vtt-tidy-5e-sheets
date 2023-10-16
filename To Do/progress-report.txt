@@ -14,8 +14,8 @@ Progress:
 ✅ account for dnd5e 2.3.0-2.3.1 differences
 ✅ Settings Dialog Overhaul
 ✅ New Theme Interface with live updates
-🟧 Implement All Settings
-⬜ Miscellaneous To-Do's which have piled up during this rewrite
+✅ Implement All Settings
+🟧 Prepare for alpha testing
 ⬜ Making the repo public and allowing for alpha testing
 ⬜ API and module compatibility updates
 ⬜ Automated testing

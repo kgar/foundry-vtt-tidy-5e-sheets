@@ -10,9 +10,18 @@ import type {
   NpcSheetContext,
   VehicleSheetContext,
 } from 'src/types/types';
-import { registerCharacterTab } from '../state/character-sheet-state';
-import { registerVehicleTab } from 'src/state/vehicle-sheet-state';
-import { registerNpcTab } from 'src/state/npc-sheet-state';
+import {
+  registerCharacterSheetTab,
+  unregisterCharacterSheetTab,
+} from '../state/character-sheet-state';
+import {
+  registerVehicleSheetTab,
+  unregisterVehicleSheetTab,
+} from 'src/state/vehicle-sheet-state';
+import {
+  registerNpcSheetTab,
+  unregisterNpcSheetTab,
+} from 'src/state/npc-sheet-state';
 
 /**
  * Tidy 5e Sheets API
@@ -42,24 +51,36 @@ export class Tidy5eSheetsApi {
     return rendered;
   }
 
-  registerCharacterTab(
+  registerCharacterSheetTab(
     tab: SheetTabState<CharacterSheetContext>,
     options?: SheetTabRegistrationOptions
   ) {
-    return registerCharacterTab(tab, options);
+    return registerCharacterSheetTab(tab, options);
   }
 
-  registerNpcTab(
+  unregisterCharacterSheetTab(tabId: string) {
+    return unregisterCharacterSheetTab(tabId);
+  }
+
+  registerNpcSheetTab(
     tab: SheetTabState<NpcSheetContext>,
     options?: SheetTabRegistrationOptions
   ) {
-    return registerNpcTab(tab, options);
+    return registerNpcSheetTab(tab, options);
   }
 
-  registerVehicleTab(
+  unregisterNpcSheetTab(tabId: string) {
+    return unregisterNpcSheetTab(tabId);
+  }
+
+  registerVehicleSheetTab(
     tab: SheetTabState<VehicleSheetContext>,
     options?: SheetTabRegistrationOptions
   ) {
-    return registerVehicleTab(tab, options);
+    return registerVehicleSheetTab(tab, options);
+  }
+
+  unregisterVehicleSheetTab(tabId: string) {
+    return unregisterVehicleSheetTab(tabId);
   }
 }

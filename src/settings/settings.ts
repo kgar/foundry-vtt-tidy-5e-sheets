@@ -8,9 +8,9 @@ import { getCoreThemes, themeVariables } from 'src/theme/theme-reference';
 import { Tidy5eKgarSettingsSheet } from 'src/sheets/settings/sheet/Tidy5eKgarSettingsSheet';
 import { Tidy5eKgarThemeSettingsSheet } from 'src/sheets/settings/theme/Tidy5eKgarThemeSettingsSheet';
 import { writable, type Writable } from 'svelte/store';
-import { getCurrentCharacterTabs } from 'src/state/character-sheet-state';
-import { getCurrentVehicleTabs } from 'src/state/vehicle-sheet-state';
-import { getCurrentNpcTabs } from 'src/state/npc-sheet-state';
+import { getAllRegisteredCharacterSheetTabs } from 'src/state/character-sheet-state';
+import { getAllRegisteredVehicleSheetTabs } from 'src/state/vehicle-sheet-state';
+import { getAllRegisteredNpcSheetTabs } from 'src/state/npc-sheet-state';
 import { getTabsAsConfigOptions } from 'src/state/state-functions';
 
 export type Tidy5eSettings = {
@@ -210,7 +210,7 @@ export function createSettings() {
           scope: 'world',
           config: false,
           type: String,
-          choices: () => getTabsAsConfigOptions(getCurrentCharacterTabs()),
+          choices: () => getTabsAsConfigOptions(getAllRegisteredCharacterSheetTabs()),
           default: CONSTANTS.TAB_CHARACTER_ATTRIBUTES,
         },
         get() {
@@ -525,7 +525,7 @@ export function createSettings() {
           scope: 'world',
           config: false,
           type: String,
-          choices: () => getTabsAsConfigOptions(getCurrentNpcTabs()),
+          choices: () => getTabsAsConfigOptions(getAllRegisteredNpcSheetTabs()),
           default: CONSTANTS.TAB_NPC_ABILITIES,
         },
         get() {
@@ -660,7 +660,7 @@ export function createSettings() {
           scope: 'world',
           config: false,
           type: String,
-          choices: () => getTabsAsConfigOptions(getCurrentVehicleTabs()),
+          choices: () => getTabsAsConfigOptions(getAllRegisteredVehicleSheetTabs()),
           default: CONSTANTS.TAB_VEHICLE_ATTRIBUTES,
         },
         get() {

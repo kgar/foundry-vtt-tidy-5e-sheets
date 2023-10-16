@@ -23,7 +23,7 @@
   import ItemInfoCard from 'src/components/item-info-card/ItemInfoCard.svelte';
   import SheetMenu from '../actor/SheetMenu.svelte';
   import { settingStore } from 'src/settings/settings';
-  import { characterSheetTabsStore } from 'src/state/character-sheet-state';
+  import { currentCharacterSheetTabs } from 'src/state/character-sheet-state';
 
   export let selectedTabId: string;
   let context = getContext<Readable<CharacterSheetContext>>('context');
@@ -42,12 +42,12 @@
 
   $: abilities = Object.entries<any>($context.abilities);
 
-  $: sizes = <TidyDropdownOption[]>Object.entries($context.config.actorSizes).map(
-    ([abbreviation, size]) => ({
-      value: abbreviation,
-      text: size as string,
-    })
-  );
+  $: sizes = <TidyDropdownOption[]>Object.entries(
+    $context.config.actorSizes
+  ).map(([abbreviation, size]) => ({
+    value: abbreviation,
+    text: size as string,
+  }));
 
   $: currentSize = <TidyDropdownOption>{
     value: $context.system.traits.size,
@@ -56,7 +56,7 @@
 
   let tabs: Tab[];
   $: {
-    tabs = $characterSheetTabsStore.getTabs($context);
+    tabs = $currentCharacterSheetTabs.getTabs($context);
 
     Hooks.call(CONSTANTS.HOOKS_RENDERING_CHARACTER_TABS, {
       tabs,

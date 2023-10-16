@@ -26,6 +26,7 @@ let characterSheetState = writable<CharacterSheetState>({
       },
       enabled: true,
       order: 10,
+      layout: 'classic'
     },
     {
       id: CONSTANTS.TAB_CHARACTER_INVENTORY,
@@ -35,6 +36,7 @@ let characterSheetState = writable<CharacterSheetState>({
       },
       enabled: true,
       order: 20,
+      layout: 'classic'
     },
     {
       id: CONSTANTS.TAB_CHARACTER_SPELLBOOK,
@@ -44,6 +46,7 @@ let characterSheetState = writable<CharacterSheetState>({
       },
       enabled: true,
       order: 30,
+      layout: 'classic'
     },
     {
       id: CONSTANTS.TAB_CHARACTER_FEATURES,
@@ -53,6 +56,7 @@ let characterSheetState = writable<CharacterSheetState>({
       },
       enabled: true,
       order: 40,
+      layout: 'classic'
     },
     {
       id: CONSTANTS.TAB_CHARACTER_EFFECTS,
@@ -62,6 +66,7 @@ let characterSheetState = writable<CharacterSheetState>({
       },
       enabled: true,
       order: 50,
+      layout: 'classic'
     },
     {
       id: CONSTANTS.TAB_CHARACTER_BIOGRAPHY,
@@ -71,6 +76,7 @@ let characterSheetState = writable<CharacterSheetState>({
       },
       enabled: true,
       order: 60,
+      layout: 'classic'
     },
     {
       id: CONSTANTS.TAB_CHARACTER_JOURNAL,
@@ -81,29 +87,31 @@ let characterSheetState = writable<CharacterSheetState>({
       enabled: (context) =>
         context.owner && !context.characterJournalTabDisabled,
       order: 70,
+      layout: 'classic'
     },
   ],
 });
 
-export function getCurrentCharacterTabs(): SheetTabState<CharacterSheetContext>[] {
+export function getAllRegisteredCharacterSheetTabs(): SheetTabState<CharacterSheetContext>[] {
   return [...get(characterSheetState).sheetTabs];
 }
 
-export let characterSheetTabsStore = derived(characterSheetState, (c) => ({
+export let currentCharacterSheetTabs = derived(characterSheetState, (c) => ({
   getTabs: (context: CharacterSheetContext) =>
     getOrderedEnabledSheetTabs(c.sheetTabs, context),
 }));
 
-export function registerCharacterTab(
+export function registerCharacterSheetTab(
   tab: SheetTabState<CharacterSheetContext>,
   options?: SheetTabRegistrationOptions
 ) {
-  const tabExists = getCurrentCharacterTabs().some((t) => t.id === tab.id);
+  const tabExists = getAllRegisteredCharacterSheetTabs().some((t) => t.id === tab.id);
 
   if (tabExists && !options?.overwrite) {
     warn(
       `Tab with id ${tab.id} already exists. Use option "overwrite" to replace an existing tab.`
     );
+    return;
   }
 
   characterSheetState.update((state) => {
@@ -112,10 +120,10 @@ export function registerCharacterTab(
     return state;
   });
 
-  return getCurrentCharacterTabs();
+  return getAllRegisteredCharacterSheetTabs();
 }
 
-export function unregisterTab(tabId: string) {
+export function unregisterCharacterSheetTab(tabId: string) {
   characterSheetState.update((state) => {
     state.sheetTabs = [...state.sheetTabs.filter((t) => t.id !== tabId)];
     return state;

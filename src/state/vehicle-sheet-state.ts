@@ -5,12 +5,16 @@ import ActorEffectsTab from 'src/sheets/actor/ActorEffectsTab.svelte';
 import VehicleAttributesTab from 'src/sheets/vehicle/VehicleAttributesTab.svelte';
 import VehicleCargoAndCrewTab from 'src/sheets/vehicle/VehicleCargoAndCrewTab.svelte';
 import VehicleDescriptionTab from 'src/sheets/vehicle/VehicleDescriptionTab.svelte';
-import type { SheetTabRegistrationOptions, SheetTabState, VehicleSheetState } from './types';
+import type {
+  SheetTabRegistrationOptions,
+  SheetTabState,
+  VehicleSheetState,
+} from './types';
 import { getOrderedEnabledSheetTabs } from './state-functions';
 import { warn } from 'src/utils/logging';
 
-function getDefaultTabConfigs(): SheetTabState<VehicleSheetContext>[] {
-  return [
+let vehicleSheetState = writable<VehicleSheetState>({
+  sheetTabs: [
     {
       id: CONSTANTS.TAB_VEHICLE_ATTRIBUTES,
       displayName: 'DND5E.Attributes',
@@ -19,6 +23,7 @@ function getDefaultTabConfigs(): SheetTabState<VehicleSheetContext>[] {
       },
       enabled: true,
       order: 10,
+      layout: 'classic',
     },
     {
       id: CONSTANTS.TAB_VEHICLE_CARGO_AND_CREW,
@@ -28,6 +33,7 @@ function getDefaultTabConfigs(): SheetTabState<VehicleSheetContext>[] {
       },
       enabled: true,
       order: 20,
+      layout: 'classic',
     },
     {
       id: CONSTANTS.TAB_NPC_EFFECTS,
@@ -37,6 +43,7 @@ function getDefaultTabConfigs(): SheetTabState<VehicleSheetContext>[] {
       },
       enabled: true,
       order: 30,
+      layout: 'classic',
     },
     {
       id: CONSTANTS.TAB_VEHICLE_DESCRIPTION,
@@ -46,33 +53,33 @@ function getDefaultTabConfigs(): SheetTabState<VehicleSheetContext>[] {
       },
       enabled: true,
       order: 40,
+      layout: 'classic',
     },
-  ];
-}
-
-let vehicleSheetState = writable<VehicleSheetState>({
-  sheetTabs: getDefaultTabConfigs(),
+  ],
 });
 
-export function getCurrentVehicleTabs(): SheetTabState<VehicleSheetContext>[] {
+export function getAllRegisteredVehicleSheetTabs(): SheetTabState<VehicleSheetContext>[] {
   return [...get(vehicleSheetState).sheetTabs];
 }
 
-export let vehicleSheetTabsStore = derived(vehicleSheetState, (c) => ({
+export let currentVehicleSheetTabs = derived(vehicleSheetState, (c) => ({
   getTabs: (context: VehicleSheetContext) =>
     getOrderedEnabledSheetTabs(c.sheetTabs, context),
 }));
 
-export function registerVehicleTab(
+export function registerVehicleSheetTab(
   tab: SheetTabState<VehicleSheetContext>,
   options?: SheetTabRegistrationOptions
 ) {
-  const tabExists = getCurrentVehicleTabs().some((t) => t.id === tab.id);
+  const tabExists = getAllRegisteredVehicleSheetTabs().some(
+    (t) => t.id === tab.id
+  );
 
   if (tabExists && !options?.overwrite) {
     warn(
       `Tab with id ${tab.id} already exists. Use option "overwrite" to replace an existing tab.`
     );
+    return;
   }
 
   vehicleSheetState.update((state) => {
@@ -81,10 +88,10 @@ export function registerVehicleTab(
     return state;
   });
 
-  return getCurrentVehicleTabs();
+  return getAllRegisteredVehicleSheetTabs();
 }
 
-export function unregisterTab(tabId: string) {
+export function unregisterVehicleSheetTab(tabId: string) {
   vehicleSheetState.update((state) => {
     state.sheetTabs = [...state.sheetTabs.filter((t) => t.id !== tabId)];
     return state;

@@ -86,26 +86,15 @@
   - [x] NPC
   - [x] Vechicle
 - [x] Extract and share `SheetTabRuntimeConfig<TContext>` to the appropriate types location; it is copy/pasted across the three config scripts.
-- [ ] Expose functions for manipulating tabs for given sheet types
+- [x] Expose functions for manipulating tabs for given sheet types
   - [x] Register tab - should check tab IDs, should require a boolean to override existing tabs
   - [x] Remove tab by id
   - [x] Character ~~- in progress, need to clean up a bit and reorganize~~
   - [x] NPC
   - [x] Vehicle
-  - [ ] For each sheet type, export a single default object representing state
-    - [ ] Character
-    - [ ] NPC
-    - [ ] Vehicle
-- [ ] Refashion the runtime config scripts to `state`. State will represent the current Tidy 5e state, which other modules can manipulate in order to do things like add/replace tabs, etc.
-- [ ] Create a one-off test script (world script) which adds a new tab and plugs in an arbitrary component
-  - [ ] Make a special Tidy 5e hook which establishes when Tidy 5e's API is ready to use
-  - [ ] Make the one-off test script talk to the Tidy 5e API in order to add a tab and arbitrary content
-    - [ ] Use a component provided by the API
-    - [x] Allow for raw HTML
-    - [ ] Allow for a function that receives context and expects raw HTML in return
-    - [x] Provide an optional render callback with HTML set to the containing tab content node
-    - [ ] Allow for handlebars?
-- [ ] `game.settings.get('dnd5e', 'disableExperienceTracking')` -> extract to CharacterSheetContext
+  - [x] Add option for specifying Tidy 5e sheet type; options: 'all' (default), 'classic'
+- [x] Refashion the runtime config scripts to `state`. State will represent the current Tidy 5e state, which other modules can manipulate in order to do things like add/replace tabs, etc.
+
 
 ### Registering tabs through the API
 
@@ -113,15 +102,16 @@
 // Hint: throw this in a macro for demonstration
   function addTestTab() {
 
-    game.modules.get('tidy5e-sheet-kgar').api.registerCharacterTab({
+    game.modules.get('tidy5e-sheet-kgar').api.registerCharacterSheetTab({
       displayName: 'Test',
       enabled: true,
       id: 'test-tab',
       order: -1,
+      layout: 'all',
       content: {
         html: `
           <h2>Hello, world!</h2>
-          <button type="button">Click the buton</button>
+          <button type="button">Click the button</button>
         `,
         cssClass: 'test-class',
         rerenderOnSubmit: false,
