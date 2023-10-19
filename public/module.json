@@ -1,11 +1,13 @@
 {
   "id": "tidy5e-sheet-kgar",
-  "title": "Tidy5e Sheet KGar",
-  "description": "KGar Remake - Replaces the default D&D 5e character and NPC sheet with an alternate layout focused on a cleaner UI",
-  "version": "1.0.0",
+  "title": "Tidy5e Sheets Alpha",
+  "description": "Alternate D&D 5e sheet layouts focused on a clean UI, user ergonomics, and extensibility. This is an alpha testing module that is subject to numerous breaking changes and rapid updates.",
+  "version": "0.1.0",
   "authors": [
     {
-      "name": "_kgar"
+      "id": "kgar",
+      "discord": "_kgar",
+      "url": "TODO: Put discord server URL here"
     }
   ],
   "esmodules": ["./main.js"],
@@ -18,26 +20,22 @@
     }
   ],
   "compatibility": {
-    "minimum": 10,
-    "verified": 10,
-    "maximum": 10
+    "minimum": "10",
+    "verified": "11"
   },
   "relationships": {
     "systems": [
       {
         "id": "dnd5e",
-        "manifest": "https://raw.githubusercontent.com/foundryvtt/dnd5e/master/system.json",
         "compatibility": {
           "minimum": "2.3.0",
-          "verified": "2.3.1"
+          "verified": "2.3.1",
+          "maximum": "2.3"
         }
-      },
-      {
-        "id": "sw5e",
-        "type": "system"
       }
     ],
     "requires": [],
-    "conflicts": []
+    "conflicts": [],
+    "url": ""
   }
 }
