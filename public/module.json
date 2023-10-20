@@ -6,8 +6,29 @@
   "authors": [
     {
       "id": "kgar",
+      "name": "kgar",
       "discord": "_kgar",
-      "url": "TODO: Put discord server URL here"
+      "url": "https://github.com/kgar",
+      "twitter": "kevinleegarner",
+      "patreon": "https://www.patreon.com/user?u=103973827",
+      "github": "kgar",
+      "ko-fi": "https://ko-fi.com/iamkgar",
+      "reddit": "",
+      "email": ""
+    },
+    {
+      "name": "sednec#3813"
+    },
+    {
+      "name": "p4535992",
+      "url": "https://github.com/p4535992",
+      "discord": "",
+      "twitter": "",
+      "patreon": "",
+      "github": "p4535992",
+      "ko-fi": "",
+      "reddit": "",
+      "email": ""
     }
   ],
   "esmodules": ["./main.js"],
