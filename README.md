@@ -10,7 +10,7 @@ TODO: Add shields
 - GitHub all releases
 - Translation status
 
-D&D 5e sheet layouts for Foundry VTT, focused on a clean UI, user ergonomics, and extensibility. 
+> D&D 5e sheet layouts for Foundry VTT, focused on a clean UI, user ergonomics, and extensibility. 
 
 This is a complete rewrite of the [Tidy5e Sheet](https://github.com/sdenec/tidy5e-sheet) module by `sdenec`.
 
@@ -28,7 +28,7 @@ Manual installation instructions:
 `https://github.com/kgar/foundry-vtt-tidy-5e-sheets/releases/latest/download/module.json`
 4. Click 'Install' and wait for installation to complete
 5. Enable the module in game using the "Manage Module" button.
-6. Select the sheet layout from these options:
+6. Select the sheet layout from these options, depending on the sheet you are using:
     - Tidy 5e kgar Character Sheet
     - Tidy 5e kgar NPC Sheet
     - Tidy 5e kgar Vechicle Sheet
@@ -123,3 +123,7 @@ TODO: Show the age, hair, eyes, etc., content
 
 TODO: Point to a user manual
 TODO: Point to API documentation and examples
+
+## Reporting Issues and Requesting Features
+
+## Want to Build with Me?
