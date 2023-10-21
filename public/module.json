@@ -1,6 +1,6 @@
 {
   "id": "tidy5e-sheet-kgar",
-  "title": "Tidy5e Sheets Alpha",
+  "title": "Tidy 5e Sheets Kgar Alpha",
   "description": "Alternate D&D 5e sheet layouts focused on a clean UI, user ergonomics, and extensibility. This is an alpha testing module that is subject to numerous breaking changes and rapid updates.",
   "version": "0.1.0",
   "authors": [
@@ -51,7 +51,7 @@
         "compatibility": {
           "minimum": "2.3.0",
           "verified": "2.3.1",
-          "maximum": "2.3"
+          "maximum": "2.3.1"
         }
       }
     ],
