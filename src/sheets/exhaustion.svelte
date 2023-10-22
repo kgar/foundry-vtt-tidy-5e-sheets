@@ -66,8 +66,7 @@
             class="exhaustion-level-option transparent-button"
             class:colorized={levelOption <= level}
             title={localize(exhaustionLocalizationPrefix + levelOption)}
-            on:click={() =>
-              $context.owner && dispatch('levelSelected', { level: levelOption })}
+            on:click={() => dispatch('levelSelected', { level: levelOption })}
             disabled={!$context.owner}
           >
             {levelOption}
@@ -106,7 +105,8 @@
       font-weight: 700;
     }
 
-    &:is(:hover, :focus-within) .exhaustion-wrap {
+    &:hover .exhaustion-wrap,
+    .exhaustion-wrap:has(button:focus-visible) {
       width: 10.875rem;
     }
 
@@ -151,7 +151,7 @@
           .exhaustion-level-option {
             border-radius: 0;
 
-            &:hover {
+            &:is(:hover, :focus-visible) {
               background: var(--t5ek-tertiary-color);
               color: var(--t5ek-primary-font-color);
             }

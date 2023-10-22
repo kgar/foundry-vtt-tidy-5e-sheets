@@ -12,20 +12,13 @@
 
   let context = getContext<Readable<VehicleSheetContext>>('context');
 
-  $: incapacitated =
-    ($context.actor?.system?.attributes?.hp?.value ?? 0) <= 0 &&
-    $context.actor?.system?.attributes?.hp?.max !== 0;
-
   function onLevelSelected(event: CustomEvent<{ level: number }>) {
     FoundryAdapter.setFlag($context.actor, 'exhaustion', event.detail.level);
   }
-
 </script>
 
-<ActorProfile
-  useHpOverlay={!$settingStore.hpOverlayDisabledVehicle}
->
-  {#if !$settingStore.exhaustionDisabled && !incapacitated}
+<ActorProfile useHpOverlay={!$settingStore.hpOverlayDisabledVehicle}>
+  {#if !$settingStore.exhaustionDisabled}
     <Exhaustion
       level={FoundryAdapter.tryGetFlag($context.actor, 'exhaustion') ?? 0}
       radiusClass={$context.useRoundedPortraitStyle ? 'rounded' : 'top-left'}

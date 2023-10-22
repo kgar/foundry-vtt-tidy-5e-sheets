@@ -36,7 +36,8 @@
 
   color: var(--t5ek-icon-font-color);
 
-  &:hover {
+  &:hover,
+  &:focus-visible {
     color: var(--t5ek-icon-hover-color);
   }
 }
@@ -57,7 +58,8 @@
 
   color: var(--t5ek-icon-font-color);
 
-  &:hover {
+  &:hover,
+  &:focus-visible {
     color: var(--t5ek-icon-hover-color);
   }
 }
@@ -71,7 +73,8 @@
     color: var(--t5ek-light-color);
   }
 
-  &:hover {
+  &:hover,
+  &:focus-visible {
     color: var(--t5ek-primary-font-color);
   }
 }
@@ -89,7 +92,8 @@
   color: var(--t5ek-secondary-color);
   text-align: center;
 
-  &:hover {
+  &:hover,
+  &:focus-visible {
     background: var(--t5ek-light-color);
   }
 }

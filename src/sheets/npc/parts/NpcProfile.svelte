@@ -36,7 +36,7 @@
       hpOverlayDisabled={$settingStore.hpOverlayDisabledNpc}
     />
   {/if}
-  {#if !$settingStore.exhaustionDisabled && !incapacitated}
+  {#if !$settingStore.exhaustionDisabled}
     <Exhaustion
       level={FoundryAdapter.tryGetFlag($context.actor, 'exhaustion') ?? 0}
       radiusClass={$context.useRoundedPortraitStyle ? 'rounded' : 'top-left'}

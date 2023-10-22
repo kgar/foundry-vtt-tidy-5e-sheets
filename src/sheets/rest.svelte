@@ -51,7 +51,8 @@
       .resting {
         border-radius: 1.25rem;
 
-        &:is(:hover, :focus-within) {
+        &:is(:hover),
+        &:has(button:focus-visible) {
           width: 6.875rem;
         }
       }

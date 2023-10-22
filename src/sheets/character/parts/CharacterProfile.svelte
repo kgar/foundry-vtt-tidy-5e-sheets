@@ -15,8 +15,6 @@
 
   let context = getContext<Readable<CharacterSheetContext>>('context');
 
-  $: portraitStyle = $settingStore.portraitStyle;
-
   $: incapacitated =
     ($context.actor?.system?.attributes?.hp?.value ?? 0) <= 0 &&
     $context.actor?.system?.attributes?.hp?.max !== 0;
@@ -31,9 +29,7 @@
 <!-- TODO: Resolve linting comments after done re-styling -->
 <!-- svelte-ignore a11y-missing-attribute -->
 <!-- svelte-ignore a11y-click-events-have-key-events -->
-<ActorProfile
-  useHpOverlay={!$settingStore.hpOverlayDisabled}
->
+<ActorProfile useHpOverlay={!$settingStore.hpOverlayDisabled}>
   {#if incapacitated && (!$settingStore.hiddenDeathSavesEnabled || FoundryAdapter.userIsGm())}
     <DeathSaves
       successes={$context.system.attributes.death.success}
@@ -46,17 +42,18 @@
     />
   {/if}
 
-  {#if !$settingStore.exhaustionDisabled && !incapacitated}
+  {#if !$settingStore.exhaustionDisabled}
     <Exhaustion
       level={$context.system.attributes.exhaustion}
       radiusClass={$context.useRoundedPortraitStyle ? 'rounded' : 'top-left'}
       on:levelSelected={onLevelSelected}
       onlyShowOnHover={$settingStore.exhaustionOnHover ||
-        ($settingStore.hideIfZero && $context.system.attributes.exhaustion === 0)}
+        ($settingStore.hideIfZero &&
+          $context.system.attributes.exhaustion === 0)}
     />
   {/if}
 
-  {#if !$settingStore.inspirationDisabled && !incapacitated}
+  {#if !$settingStore.inspirationDisabled}
     <Inspiration
       inspired={$context.actor.system.attributes.inspiration}
       radiusClass={$context.useRoundedPortraitStyle ? 'rounded' : 'top-right'}
@@ -74,16 +71,12 @@
     {incapacitated}
   />
 
-  {#if !incapacitated}
-    <Rest />
-  {/if}
+  <Rest />
 
-  {#if !incapacitated}
-    <HitDice
-      hitDice={$context.system.attributes.hd}
-      actorLevel={$context.system.details.level}
-      actor={$context.actor}
-    />
-  {/if}
+  <HitDice
+    hitDice={$context.system.attributes.hd}
+    actorLevel={$context.system.details.level}
+    actor={$context.actor}
+  />
 </ActorProfile>
 <TempHp />
