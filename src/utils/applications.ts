@@ -1,4 +1,8 @@
 export function applyTitleToWindow(title: string, element: HTMLElement) {
+  if (!element) {
+    return;
+  }
+
   let windowTitle: HTMLElement | ChildNode | null =
     element.querySelector('.window-title');
 

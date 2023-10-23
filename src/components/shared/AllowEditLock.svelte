@@ -19,7 +19,7 @@
     await FoundryAdapter.setFlag($context.actor, 'allow-edit', !allowEdit);
   }
 
-  $: allowEdit = FoundryAdapter.tryGetFlag($context.actor, 'allow-edit');
+  $: allowEdit = FoundryAdapter.isSheetUnlocked($context.actor);
 
   const localize = FoundryAdapter.localize;
 </script>

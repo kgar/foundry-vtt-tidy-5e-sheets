@@ -437,9 +437,8 @@ export const FoundryAdapter = {
     return isFav;
   },
   canEditActor(actor: any) {
-    const allowEdit = FoundryAdapter.tryGetFlag(actor, 'allow-edit');
     return (
-      (actor.isOwner && allowEdit) ||
+      (actor.isOwner && FoundryAdapter.isSheetUnlocked(actor)) ||
       (FoundryAdapter.userIsGm() &&
         SettingsProvider.settings.enablePermanentUnlockOnCharacterIfYouAreGM.get() &&
         actor.type === CONSTANTS.SHEET_TYPE_CHARACTER) ||
@@ -450,6 +449,14 @@ export const FoundryAdapter = {
         SettingsProvider.settings.enablePermanentUnlockOnVehicleIfYouAreGM.get() &&
         actor.type === CONSTANTS.SHEET_TYPE_VEHICLE)
     );
+  },
+  /**
+   * Determines whether an actor's sheet should be editable per the sheet lock feature (default `true`).
+   * @param actor the actor
+   * @returns whether the sheet should be editable per the sheet lock feature
+   */
+  isSheetUnlocked(actor: any) {
+    return FoundryAdapter.tryGetFlag(actor, 'allow-edit') ?? true;
   },
   allowCharacterEffectsManagement(actor: any) {
     return (

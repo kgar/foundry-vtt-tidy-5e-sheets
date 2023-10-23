@@ -56,9 +56,11 @@
       [field]: valueToSave,
     });
 
-    if (selectOnFocus && theInput === window.document.activeElement) {
-      theInput.select();
-    }
+    setTimeout(() => {
+      if (selectOnFocus && theInput === window.document.activeElement) {
+        theInput.select();
+      }
+    });
   }
 </script>
 

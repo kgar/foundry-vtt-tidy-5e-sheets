@@ -17,8 +17,15 @@ export default defineConfig({
     open: '/game',
     proxy: {
       // Serves static files from main Foundry server.
-      [`^(/${s_PACKAGE_ID}/(assets|lang|packs|style.css))`]:
-        'http://localhost:30000',
+      [`^(/${s_PACKAGE_ID}/(style.css))`]: {
+        target: 'http://localhost:30000',
+        selfHandleResponse: true,
+        configure: (proxy) => {
+          proxy.on('proxyRes', (_, __, res) => {
+            res.end(`/* O HAI Tidy 5e Dev 🙋‍♂️ */`);
+          });
+        },
+      },
 
       // All other paths besides package ID path are served from main Foundry server.
       [`^(?!/${s_PACKAGE_ID}/)`]: 'http://localhost:30000',
