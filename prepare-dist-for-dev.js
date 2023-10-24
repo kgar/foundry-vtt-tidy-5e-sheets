@@ -14,7 +14,7 @@ function prepareDistForDev() {
 
   // Remove the dist folder and all its files, if present
   if (fs.existsSync(distFolder)) {
-    fs.rmdirSync(distFolder, { recursive: true, force: true });
+    fs.rmSync(distFolder, { recursive: true, force: true });
   }
 
   // Ensure the dist folder exists
