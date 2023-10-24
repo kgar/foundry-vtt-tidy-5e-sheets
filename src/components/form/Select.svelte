@@ -11,6 +11,7 @@
   export let title: string | null = null;
   export let disabled: boolean = false;
 
+  $: draftValue = value?.toString() ?? '';
   $: datasetAttributes = buildDataset(dataset);
 
   function saveChange(
@@ -23,12 +24,14 @@
     document.update({
       [field]: targetValue !== '' ? targetValue : null,
     });
+
+    draftValue = value?.toString() ?? '';
   }
 </script>
 
 <select
   {id}
-  value={value?.toString() ?? ''}
+  bind:value={draftValue}
   data-tooltip={tooltip}
   on:change={document && saveChange}
   {title}
