@@ -34,6 +34,7 @@
    */
   export let stopChangePropagation: boolean = false;
 
+  $: draftValue = value?.toString() ?? '';
   $: actualDataset = buildDataset(dataset);
   let theInput: HTMLInputElement | undefined;
 
@@ -51,9 +52,13 @@
         ? processInputChangeDelta(event, document, field)
         : event.currentTarget.value;
 
-    await document.update({
+    const result = await document.update({
       [field]: valueToSave,
     });
+
+    if (result === undefined) {
+      draftValue = value?.toString() ?? '';
+    }
 
     setTimeout(() => {
       if (selectOnFocus && theInput === window.document.activeElement) {
@@ -67,7 +72,7 @@
   bind:this={theInput}
   type="text"
   {id}
-  value={value?.toString() ?? ''}
+  bind:value={draftValue}
   {placeholder}
   data-tooltip={tooltip}
   {...actualDataset}
