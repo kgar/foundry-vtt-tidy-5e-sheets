@@ -13,6 +13,7 @@
   export let labelCssClass: string | null = null;
   export let checkboxCssClass: string | null = null;
 
+  $: draftValue = value;
   $: datasetAttributes = buildDataset(dataset);
 
   function saveChange(
@@ -23,6 +24,8 @@
     document.update({
       [field]: value ?? event.currentTarget.checked,
     });
+
+    draftValue = value;
   }
 </script>
 
@@ -32,7 +35,7 @@
     <input
       type="checkbox"
       {id}
-      {value}
+      bind:value={draftValue}
       {checked}
       on:change={saveChange}
       data-tooltip={tooltip}
@@ -46,7 +49,7 @@
   <input
     type="checkbox"
     {id}
-    {value}
+    bind:value={draftValue}
     {checked}
     on:change={saveChange}
     data-tooltip={tooltip}
