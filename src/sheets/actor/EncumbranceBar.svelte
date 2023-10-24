@@ -40,6 +40,7 @@
       border: 0.0625rem solid var(--t5ek-encumbrance-bar-outline-color);
       background: var(--t5ek-encumbrance-bar-background);
       border-radius: 0.25rem;
+      transition: width 0.3s ease;
     }
 
     .encumbrance-label {
