@@ -52,13 +52,11 @@
         ? processInputChangeDelta(event, document, field)
         : event.currentTarget.value;
 
-    const result = await document.update({
+    await document.update({
       [field]: valueToSave,
     });
 
-    if (result === undefined) {
-      draftValue = value?.toString() ?? '';
-    }
+    draftValue = value?.toString() ?? '';
 
     setTimeout(() => {
       if (selectOnFocus && theInput === window.document.activeElement) {
