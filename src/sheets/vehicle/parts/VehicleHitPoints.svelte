@@ -22,7 +22,6 @@
     value={$context.system.attributes.hp.value}
     placeholder="0"
     title={localize('DND5E.HitPointsCurrent')}
-    dtype="Number"
     allowDeltaChanges={true}
     maxlength={5}
     ariaDescribedBy="tooltip"
@@ -37,7 +36,6 @@
     value={$context.system.attributes.hp.max}
     placeholder="0"
     title={localize('DND5E.HitPointsMax')}
-    dtype="Number"
     allowDeltaChanges={true}
     maxlength={5}
     ariaDescribedBy="tooltip"

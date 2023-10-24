@@ -69,7 +69,6 @@
     id={inputId}
     document={$context.item}
     field="system.attunement"
-    dtype="Number"
     value={$context.system.attunement}
     disabled={!$context.owner}
     >
@@ -86,7 +85,6 @@
     id={inputId}
     document={$context.item}
     field="system.proficient"
-    dtype="Number"
     value={$context.system.proficient}
     disabled={!$context.owner}
     >

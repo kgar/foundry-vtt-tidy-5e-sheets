@@ -54,7 +54,6 @@
           value={currency.value}
           allowDeltaChanges={true}
           selectOnFocus={true}
-          dtype="Number"
           disabled={!$context.owner || $context.lockMoneyChanges}
         />
         <label

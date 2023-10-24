@@ -32,7 +32,6 @@
       field="system.attributes.init.bonus"
       cssClass="ini-mod"
       placeholder="0"
-      dtype="Number"
       selectOnFocus={true}
       allowDeltaChanges={true}
       value={initiative.bonus}

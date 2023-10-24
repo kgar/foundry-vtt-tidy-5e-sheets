@@ -31,7 +31,6 @@
       : ''}"
     document={$context.actor}
     field="system.attributes.inspiration"
-    dtype="Boolean"
     checked={inspired}
     disabled={!$context.owner}
   >

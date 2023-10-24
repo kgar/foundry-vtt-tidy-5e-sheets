@@ -55,7 +55,6 @@
         field="flags.{CONSTANTS.MODULE_ID}.maxPreparedSpells"
         cssClass="max-preparation"
         value={FoundryAdapter.tryGetFlag($context.actor, 'maxPreparedSpells')}
-        dtype="Number"
         placeholder="0"
         title={localize('T5EK.PreparedSpellsMax')}
         selectOnFocus={true}

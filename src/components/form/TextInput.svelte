@@ -15,7 +15,6 @@
   export let document: FoundryDocument;
   export let tooltip: string | null = null;
   export let id: string | null = null;
-  export let dtype: string | null = null;
   export let dataset: Record<string, unknown> | null = null;
   export let cssClass: string | null = null;
   export let maxlength: number | null = null;
@@ -27,7 +26,7 @@
   export let disabled: boolean = false;
   export let onSaveChange: OnSaveChangeFn = () => true;
   /**
-   * Stops propagation on input change event.
+   * Stop propagation on input change event.
    * Useful for cases when outside listeners like
    * the FormApplication are clearing an input
    * during a change event, since these inputs
@@ -74,7 +73,6 @@
   {...actualDataset}
   class={cssClass}
   {maxlength}
-  data-dtype={dtype}
   aria-describedby={ariaDescribedBy}
   {title}
   {disabled}

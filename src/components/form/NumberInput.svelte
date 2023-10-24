@@ -16,7 +16,6 @@
   export let readonly: boolean | null = null;
   export let cssClass: string | null = null;
   export let maxlength: HTMLInputElement['maxLength'] | null = null;
-  export let dtype: string | null = null;
   export let selectOnFocus: boolean = false;
   export let title: string | null = null;
   export let stopClickPropagation: boolean = false;
@@ -57,7 +56,6 @@
   class={cssClass}
   {maxlength}
   {...datasetAttributes}
-  data-dtype={dtype}
   on:focus={(ev) => selectOnFocus && ev.currentTarget.select()}
   on:click={(ev) => stopClickPropagation && ev.stopPropagation()}
   {title}

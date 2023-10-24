@@ -17,7 +17,6 @@
     cssClass="damage-threshold"
     placeholder={localize('DND5E.Threshold')}
     value={$context.system.attributes.hp.dt || null}
-    dtype="Number"
     allowDeltaChanges={true}
     maxlength={5}
     title={localize('DND5E.DamageThreshold')}
@@ -29,7 +28,6 @@
     cssClass="mishap-threshold"
     placeholder={localize('DND5E.VehicleMishap')}
     value={$context.system.attributes.hp.mt || null}
-    dtype="Number"
     allowDeltaChanges={true}
     maxlength={5}
     title={localize('DND5E.VehicleMishapThreshold')}

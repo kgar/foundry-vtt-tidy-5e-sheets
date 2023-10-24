@@ -104,7 +104,6 @@
       >
         <input
           type="checkbox"
-          data-dtype="boolean"
           id="colorPickerEnabled-{appId}"
           bind:checked={$context.colorPickerEnabled}
         />

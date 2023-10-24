@@ -76,7 +76,6 @@
           field="system.resources.{res.name}.value"
           value={res.value ?? null}
           placeholder="0"
-          dtype="Number"
           allowDeltaChanges={true}
           maxlength={3}
           selectOnFocus={true}
@@ -89,7 +88,6 @@
           cssClass="resource-max"
           value={res.max ?? null}
           placeholder="0"
-          dtype="Number"
           allowDeltaChanges={true}
           maxlength={3}
           selectOnFocus={true}

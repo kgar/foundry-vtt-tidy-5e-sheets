@@ -15,7 +15,6 @@
 <article class="setting">
   <input
     type="checkbox"
-    data-dtype="boolean"
     id="{id}-{appId}"
     bind:checked={value}
   />

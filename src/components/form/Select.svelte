@@ -6,7 +6,6 @@
   export let tooltip: string | null = null;
   export let field: string;
   export let document: FoundryDocument;
-  export let dtype: string | null = null;
   export let id: string | null = null;
   export let dataset: Record<string, unknown> | null = null;
   export let title: string | null = null;
@@ -29,7 +28,6 @@
 
 <select
   {id}
-  data-dtype={dtype}
   value={value?.toString() ?? ''}
   data-tooltip={tooltip}
   on:change={document && saveChange}

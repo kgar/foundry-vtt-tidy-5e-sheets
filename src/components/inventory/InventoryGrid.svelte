@@ -118,7 +118,6 @@
                 document={item}
                 field="system.uses.value"
                 value={item.system.uses?.value}
-                dtype="Number"
                 placeholder="0"
                 maxlength={2}
                 allowDeltaChanges={true}
@@ -140,7 +139,6 @@
               value={item.system.quantity}
               maxlength={2}
               disabled={!$context.owner || $context.lockItemQuantity}
-              dtype="Number"
               allowDeltaChanges={true}
               selectOnFocus={true}
               on:click={preventUseItemEvent}

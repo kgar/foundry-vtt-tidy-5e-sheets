@@ -31,7 +31,6 @@
       document={$context.actor}
       field={successesField}
       cssClass="death-save-result"
-      dtype="Number"
       selectOnFocus={true}
       allowDeltaChanges={true}
       placeholder="0"
@@ -50,7 +49,6 @@
       document={$context.actor}
       field={failuresField}
       cssClass="death-save-result"
-      dtype="Number"
       selectOnFocus={true}
       allowDeltaChanges={true}
       placeholder="0"

@@ -34,7 +34,6 @@
     {value}
     placeholder="0"
     title={localize('DND5E.HitPointsCurrent')}
-    dtype="Number"
     selectOnFocus={true}
     allowDeltaChanges={true}
     maxlength={5}
@@ -50,7 +49,6 @@
       value={max}
       placeholder="0"
       title={localize(max ? 'DND5E.HitPointsOverride' : 'DND5E.HitPointsMax')}
-      dtype="Number"
       selectOnFocus={true}
       allowDeltaChanges={true}
       maxlength={5}

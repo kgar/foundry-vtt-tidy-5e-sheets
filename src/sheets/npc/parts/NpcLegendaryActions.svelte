@@ -29,9 +29,6 @@
           step="any"
           placeholder="0"
           title={localize('DND5E.LegActRemaining')}
-          dataset={{
-            dtype: 'Number',
-          }}
           selectOnFocus={true}
           disabled={!$context.owner}
         />
@@ -58,7 +55,6 @@
           step="any"
           placeholder="0"
           title={localize('DND5E.LegResRemaining')}
-          dtype="Number"
           selectOnFocus={true}
         />
         <span class="sep">/</span>
@@ -81,14 +77,12 @@
           document={$context.actor}
           field="system.resources.lair.value"
           checked={$context.system.resources.lair.value}
-          dtype="Boolean"
           disabled={!$context.owner || $context.lockSensitiveFields}
         />
         <TextInput
           document={$context.actor}
           field="system.resources.lair.initiative"
           value={$context.system.resources.lair.initiative}
-          dtype="Number"
           placeholder="Init."
           allowDeltaChanges={true}
           selectOnFocus={true}

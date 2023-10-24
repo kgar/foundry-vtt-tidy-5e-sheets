@@ -110,7 +110,6 @@
           document={$context.actor}
           field="system.attributes.attunement.max"
           cssClass="attuned-items-max"
-          dtype="Number"
           value={$context.system.attributes.attunement.max}
           placeholder="0"
           title={localize('T5EK.AttunementMax')}

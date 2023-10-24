@@ -24,7 +24,6 @@
     cssClass="spell-slot-uses"
     value={section.uses}
     placeholder="0"
-    dtype="Number"
     selectOnFocus={true}
     allowDeltaChanges={true}
     disabled={!$context.owner}
@@ -37,7 +36,6 @@
       cssClass="spell-slot-override"
       value={section.override}
       placeholder={section.slots}
-      dtype="Number"
       selectOnFocus={true}
       allowDeltaChanges={true}
       disabled={!$context.owner || $context.lockSensitiveFields}

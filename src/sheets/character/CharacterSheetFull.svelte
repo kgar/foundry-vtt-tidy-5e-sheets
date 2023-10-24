@@ -105,7 +105,6 @@
                 cssClass="current-xp"
                 value={$context.system.details.xp.value}
                 placeholder="0"
-                dtype="Number"
                 selectOnFocus={true}
                 allowDeltaChanges={true}
                 maxlength={7}
@@ -119,7 +118,6 @@
                   cssClass="max-xp max"
                   value={$context.system.details.xp.max}
                   placeholder="0"
-                  dtype="Number"
                   selectOnFocus={true}
                   allowDeltaChanges={true}
                   maxlength={7}

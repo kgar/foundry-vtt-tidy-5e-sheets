@@ -73,7 +73,6 @@
       <Checkbox
         document={$context.actor}
         field="system.attributes.actions.stations"
-        dtype="Boolean"
         checked={$context.system.attributes.actions.stations}
         labelCssClass="action-stations-label"
         disabled={!$context.owner || $context.lockSensitiveFields}

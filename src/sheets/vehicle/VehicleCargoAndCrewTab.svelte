@@ -195,7 +195,6 @@
                       <TextInput
                         document={item}
                         field={column.property}
-                        dtype={column.editable}
                         allowDeltaChanges={isNumber}
                         selectOnFocus={true}
                         {value}

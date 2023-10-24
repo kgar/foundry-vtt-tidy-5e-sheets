@@ -37,7 +37,6 @@
 <div class="item-uses">
   <input
     class="uses-value"
-    data-dtype="Number"
     type="text"
     value={item.system.uses.value}
     on:change|stopPropagation|preventDefault={(event) =>
@@ -47,7 +46,6 @@
   /
   <input
     class="uses-max"
-    data-dtype="Number"
     type="text"
     value={item.system.uses.max}
     on:change|stopPropagation|preventDefault={(event) =>

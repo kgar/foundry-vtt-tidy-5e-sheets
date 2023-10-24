@@ -28,7 +28,6 @@
     labelCssClass="{motion ? 'motion' : ''} {radiusClass}"
     document={$context.actor}
     field="flags.{CONSTANTS.MODULE_ID}.motion"
-    dtype="Boolean"
     checked={motion}
     disabled={!$context.owner}
     >

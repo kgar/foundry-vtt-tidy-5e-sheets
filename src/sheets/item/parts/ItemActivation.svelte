@@ -72,7 +72,6 @@
       <div class="form-fields">
         <Select
           id={inputId}
-          dtype="Number"
           value={$context.system.cover?.toString()}
           title={localize('DND5E.ItemActivationType')}
           document={$context.item}

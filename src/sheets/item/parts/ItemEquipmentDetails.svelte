@@ -67,7 +67,6 @@
     <Select
       id={inputId}
       value={$context.system.attunement?.toString() ?? ''}
-      dtype="Number"
       field="system.attunement"
       document={$context.item}
       disabled={!$context.owner}
@@ -82,7 +81,6 @@
     document={$context.item}
     field="system.proficient"
     value={$context.system.proficient}
-    dtype="Number"
     disabled={!$context.owner}
     >
     <SelectOptions

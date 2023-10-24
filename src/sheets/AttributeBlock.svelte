@@ -31,7 +31,6 @@
       field="system.abilities.{abbreviation}.value"
       value={ability.value}
       placeholder="10"
-      dtype="Number"
       selectOnFocus={true}
       allowDeltaChanges={true}
       disabled={$context.lockSensitiveFields}

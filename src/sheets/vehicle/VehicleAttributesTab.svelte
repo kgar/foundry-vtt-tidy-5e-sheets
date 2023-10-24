@@ -180,7 +180,6 @@
                             value={item.system.hp.value}
                             placeholder="0"
                             title={localize('DND5E.HitPointsCurrent')}
-                            dtype="Number"
                             allowDeltaChanges={true}
                             maxlength={5}
                             ariaDescribedBy="tooltip"
@@ -195,7 +194,6 @@
                             value={item.system.hp.max}
                             placeholder="0"
                             title={localize('DND5E.HitPointsMax')}
-                            dtype="Number"
                             allowDeltaChanges={true}
                             maxlength={5}
                             ariaDescribedBy="tooltip"
@@ -225,7 +223,6 @@
                           <TextInput
                             document={item}
                             field={column.property}
-                            dtype={column.editable}
                             allowDeltaChanges={isNumber}
                             selectOnFocus={true}
                             {value}

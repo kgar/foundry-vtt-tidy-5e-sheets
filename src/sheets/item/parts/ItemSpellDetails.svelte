@@ -56,7 +56,6 @@
     document={$context.item}
     field="system.level"
     value={$context.system.level}
-    dtype="Number"
     disabled={!$context.owner}
     >
     <SelectOptions data={$context.config.spellLevels} />

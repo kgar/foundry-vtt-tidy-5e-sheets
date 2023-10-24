@@ -18,7 +18,6 @@
     cssClass="temphp"
     placeholder="+{localize('DND5E.Temp')}"
     value={$context.hp.temp || null}
-    dtype="Number"
     allowDeltaChanges={true}
     maxlength={5}
     title={localize('DND5E.HitPointsTemp')}
@@ -30,7 +29,6 @@
     cssClass="max-temphp"
     placeholder="+{localize('DND5E.Max')}"
     value={$context.hp.tempmax || null}
-    dtype="Number"
     allowDeltaChanges={true}
     maxlength={5}
     title={localize('DND5E.HitPointsTempMax')}
