@@ -35,15 +35,11 @@
       ? proposedValueToSave
       : null;
 
-    const result = await document.update({
+    await document.update({
       [field]: parsedValueToSave,
     });
 
-    if (result === undefined) {
-      draftValue = value;
-    } else {
-      draftValue = parsedValueToSave;
-    }
+    draftValue = value;
 
     if (selectOnFocus && theInput === window.document.activeElement) {
       theInput.select();
