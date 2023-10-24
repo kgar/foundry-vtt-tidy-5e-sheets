@@ -13,7 +13,7 @@
   let context = getContext<Readable<ActorSheetContext>>('context');
 </script>
 
-{#if item.system.quantity}
+{#if !isNaN(item.system.quantity)}
   <span class="item-quantity" class:isStack={ctx.isStack}>
     (<NumberInput
       cssClass="item-count"
@@ -25,6 +25,7 @@
       selectOnFocus={true}
       stopClickPropagation={true}
       disabled={!$context.owner || $context.lockItemQuantity}
+      placeholder="0"
     />)
   </span>
 {/if}

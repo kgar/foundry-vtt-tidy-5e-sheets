@@ -20,6 +20,7 @@
   export let title: string | null = null;
   export let stopClickPropagation: boolean = false;
 
+  $: draftValue = value;
   $: datasetAttributes = buildDataset(dataset);
   let theInput: HTMLInputElement | undefined;
 
@@ -28,11 +29,21 @@
       currentTarget: EventTarget & HTMLInputElement;
     }
   ) {
-    const value = parseFloat(event.currentTarget.value);
+    const proposedValueToSave = parseFloat(event.currentTarget.value);
 
-    await document.update({
-      [field]: !isNaN(value) ? value : null,
+    const parsedValueToSave = !isNaN(proposedValueToSave)
+      ? proposedValueToSave
+      : null;
+
+    const result = await document.update({
+      [field]: parsedValueToSave,
     });
+
+    if (result === undefined) {
+      draftValue = value;
+    } else {
+      draftValue = parsedValueToSave;
+    }
 
     if (selectOnFocus && theInput === window.document.activeElement) {
       theInput.select();
@@ -45,7 +56,7 @@
   type="number"
   {id}
   {step}
-  {value}
+  bind:value={draftValue}
   {min}
   {max}
   {placeholder}
