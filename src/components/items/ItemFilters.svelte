@@ -28,6 +28,7 @@
         font-size: 0.75rem;
         line-height: 1.125rem;
         color: var(--t5ek-secondary-color);
+        align-self: center;
       }
     }
   }

@@ -32,13 +32,13 @@
     bind:value={searchCriteria}
     on:blur|preventDefault|stopPropagation={() => rememberSearch()}
   />
-  <!-- svelte-ignore a11y-click-events-have-key-events -->
-  <span
-    class="clear-search"
+  <button
+    type="button"
+    class="clear-search inline-icon-button"
     title={localize('T5EK.SearchClear')}
     style:display={searchCriteria === '' ? 'none' : undefined}
     on:click|preventDefault|stopPropagation={() => clearSearch()}
-    ><i class="fas fa-times-circle" /></span
+    ><i class="fas fa-times-circle" /></button
   >
 </li>
 
@@ -64,11 +64,6 @@
       align-items: center;
       margin: 0 0.1875rem 0 0;
       cursor: pointer;
-      color: var(--t5ek-tertiary-color);
-
-      &:hover {
-        color: var(--t5ek-secondary-color);
-      }
     }
   }
 </style>
