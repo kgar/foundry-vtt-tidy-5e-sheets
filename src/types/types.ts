@@ -82,6 +82,12 @@ export type ActorSheetContext = {
   showLimitedSheet: boolean;
   useRoundedPortraitStyle: boolean;
   classicControlsEnabled: boolean;
+  /**
+   * Represents remaining health as a percentage within the range of `0` to `100`.
+   *
+   * Note: This calculation ignores temp HP / temp HP Max, because the stock 5e sheets count 0 hp (ignoring all temp values) as incapacitated. Tidy 5e sheets carries this principle forward with health percentage calculation.
+   */
+  healthPercentage: number;
 };
 
 export type JQueryHooksSheetIntegration = {

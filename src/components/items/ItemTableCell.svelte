@@ -20,6 +20,7 @@
   }
 </script>
 
+<!-- svelte-ignore a11y-no-static-element-interactions -->
 <div
   class="item-table-cell {cssClass}"
   class:primary
@@ -27,8 +28,6 @@
   {title}
   on:mouseenter={mouseEnter}
   on:mouseleave={mouseLeave}
-  role="gridcell"
-  tabindex="0"
 >
   <slot />
 </div>

@@ -444,6 +444,9 @@
   "T5EK.Settings.ColorPickerEquipped": {
     "name": "Equipped"
   },
+  "T5EK.Settings.ColorPickerHpBar": {
+    "name": "HP Bars"
+  },
   "T5EK.Settings.ColorPickerEquippedOutline": {
     "name": "Equipped Outline"
   },

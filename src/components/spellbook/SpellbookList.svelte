@@ -119,7 +119,7 @@
         <ItemTableCell primary={true}>
           <ItemUseButton item={spell} imgUrlOverride={spellImgUrl} />
           <ItemName
-            on:click={(event) => toggleSummary(event.detail, $context.actor)}
+            on:toggle={() => toggleSummary($context.actor)}
             item={spell}
           >
             <span class="truncate">{spell.name}</span>

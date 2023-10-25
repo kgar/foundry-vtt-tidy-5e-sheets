@@ -24,7 +24,7 @@
   import ItemEditControl from 'src/components/items/ItemEditControl.svelte';
   import ItemControl from 'src/components/items/ItemControl.svelte';
   import Notice from 'src/components/shared/Notice.svelte';
-  import ItemHpBar from '../item/parts/ItemHpBar.svelte';
+  import HpBar from '../../components/bar/HpBar.svelte';
 
   let context = getContext<Readable<VehicleSheetContext>>('context');
 
@@ -53,7 +53,9 @@
     ? controlsBaseWidthUnlocked
     : controlsBaseWidthLocked;
 
-  $: noFeatures = !$context.features.some((section: any) => section.items.length);
+  $: noFeatures = !$context.features.some(
+    (section: any) => section.items.length
+  );
 </script>
 
 <div class="attributes-tab-contents">
@@ -122,8 +124,7 @@
                 <ItemTableCell primary={true}>
                   <ItemUseButton {item} />
                   <ItemName
-                    on:click={(event) =>
-                      toggleSummary(event.detail, $context.actor)}
+                    on:toggle={() => toggleSummary($context.actor)}
                     cssClass="extra-small-gap"
                     {item}
                   >
@@ -172,7 +173,10 @@
                           class="item-hp"
                           title={localize('DND5E.HitPoints')}
                         >
-                          <ItemHpBar {item} />
+                          <HpBar
+                            value={item?.system?.hp?.value}
+                            max={item?.system?.hp?.max}
+                          />
                           <TextInput
                             cssClass="hp-min"
                             document={item}
@@ -260,7 +264,10 @@
               </ItemTableRow>
             {/each}
             {#if $context.editable && section.dataset}
-              <ItemTableFooter actor={$context.actor} dataset={section.dataset} />
+              <ItemTableFooter
+                actor={$context.actor}
+                dataset={section.dataset}
+              />
             {/if}
           </ItemTable>
         {/if}

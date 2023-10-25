@@ -13,7 +13,7 @@
 
 <div class="portrait-hp" title={localize('DND5E.HitPoints')}>
   {#if !$settingStore.hpBarDisabledVehicle}
-    <ActorHpBar actor={$context.actor} />
+    <ActorHpBar />
   {/if}
   <TextInput
     cssClass="hp-min"

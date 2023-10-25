@@ -13,6 +13,7 @@ import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
 import { applyTitleToWindow } from 'src/utils/applications';
 import type { SvelteComponent } from 'svelte';
 import { debug } from 'src/utils/logging';
+import { getPercentage } from 'src/utils/numbers';
 
 export class Tidy5eVehicleSheet extends dnd5e.applications.actor
   .ActorSheet5eVehicle {
@@ -92,6 +93,10 @@ export class Tidy5eVehicleSheet extends dnd5e.applications.actor
       ].includes(SettingsProvider.settings.portraitStyle.get()),
       classicControlsEnabled:
         SettingsProvider.settings.enableClassicControlsForVehicle.get(),
+      healthPercentage: getPercentage(
+        this.actor?.system?.attributes?.hp?.value,
+        this.actor?.system?.attributes?.hp?.max
+      ),
     };
 
     debug('Vehicle Sheet context data', context);

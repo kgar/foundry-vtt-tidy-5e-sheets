@@ -1295,6 +1295,22 @@ export function createSettings() {
         },
         representsCssVariable: '--t5ek-primary-accent-color',
       },
+      colorPickerHpBar: {
+        options: {
+          name: 'T5EK.Settings.ColorPickerHpBar.name',
+          hint: 'T5EK.Settings.ColorPickerHpBar.hint',
+          scope: 'client',
+          type: String,
+          default: defaultLightTheme.variables['--t5ek-hp-bar-color'],
+          config: false,
+        },
+        get() {
+          return FoundryAdapter.getGameSetting<string>(
+            'colorPickerHpBar'
+          );
+        },
+        representsCssVariable: '--t5ek-hp-bar-color',
+      },
       colorPickerEquipped: {
         options: {
           name: 'T5EK.Settings.ColorPickerEquipped.name',

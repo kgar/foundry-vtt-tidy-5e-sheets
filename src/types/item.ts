@@ -8,6 +8,10 @@ import type { Roll } from './types';
 export type ItemSheetContext = {
   lockItemQuantity: boolean;
   owner: boolean;
+  /**
+   * Represents remaining health as a percentage within the range of `0` to `100`.
+   */
+  healthPercentage: number;
 } & Record<string, any>;
 
 export type Item5e = Item & {

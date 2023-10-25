@@ -12,6 +12,22 @@ export function clamp<T extends number>(num: T, min: T, max: T) {
   return Math.min(Math.max(num, min), max);
 }
 
+export function getPercentage(
+  value: number | null | undefined,
+  max: number | null | undefined
+) {
+  max ??= 0;
+  value ??= 0;
+
+  if (max <= 0) {
+    return 0;
+  }
+
+  const percentage = Math.ceil((value / max) * 100);
+
+  return clamp(percentage, 0, 100);
+}
+
 export function toNumber(str: string) {
   if (str.includes('/')) {
     const pieces = str.split('/');

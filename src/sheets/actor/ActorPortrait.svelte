@@ -15,21 +15,6 @@
   let showPortraitMenu = false;
   const localize = FoundryAdapter.localize;
 
-  $: hpOverlayCalculationCurrent =
-    (100 /
-      ((isRealNumber(actor.system?.attributes?.hp?.max)
-        ? actor.system.attributes.hp.max
-        : 1) +
-        (isRealNumber(actor.system?.attributes?.hp?.tempmax)
-          ? actor.system.attributes.hp.tempmax
-          : 0))) *
-      (isRealNumber(actor.system?.attributes?.hp?.value)
-        ? actor.system.attributes.hp.value
-        : 0) +
-    (isRealNumber(actor.system?.attributes?.hp?.temp)
-      ? actor.system.attributes.hp.temp
-      : 0);
-
   function openPortraitPicker(target: HTMLElement) {
     const rect = target.getBoundingClientRect();
     const current = actor.img;
@@ -73,7 +58,7 @@
   <div
     class="actor-image-wrap"
     class:overlay={useHpOverlay}
-    style="--overlay-height: calc(100% - {hpOverlayCalculationCurrent}%)"
+    style="--overlay-height: calc(100% - {$context.healthPercentage}%)"
   >
     <img
       class="actor-image"

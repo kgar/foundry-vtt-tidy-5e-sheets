@@ -93,6 +93,7 @@ export const defaultLightTheme: Tidy5eTheme = {
     '--t5ek-vehicle-in-motion-text-shadow-color': '#76e4ff',
     '--t5ek-vehicle-in-motion-background': 'rgba(153, 153, 153, 1)',
     '--t5ek-hp-bar-color': 'rgba(0, 200, 0, 0.6)',
+    '--t5ek-resource-bar-color': 'rgba(120, 167, 242, 1)',
     '--t5ek-death-save-backdrop-background': 'rgba(255, 0, 0, 0.5)',
     '--t5ek-death-save-text-shadow-color': 'rgb(34, 34, 34)',
     '--t5ek-hp-overlay-background': 'rgba(255, 0, 0, 1)',

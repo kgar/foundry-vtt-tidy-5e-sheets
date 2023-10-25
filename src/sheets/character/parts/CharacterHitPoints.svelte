@@ -25,7 +25,7 @@
   title={localize('DND5E.HitPoints')}
 >
   {#if !$settingStore.hpBarDisabled}
-    <ActorHpBar {actor} />
+    <ActorHpBar />
   {/if}
   <TextInput
     cssClass="hp-min"

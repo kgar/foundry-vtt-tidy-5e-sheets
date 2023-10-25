@@ -59,7 +59,8 @@
   }
 
   $: noFeatures =
-    $context.features.some((section: any) => section.items.length > 0) === false;
+    $context.features.some((section: any) => section.items.length > 0) ===
+    false;
 
   function getAvailableLevels(id: string) {
     return $context.itemContext[id]?.availableLevels ?? [];
@@ -138,7 +139,7 @@
             <ItemTableCell primary={true}>
               <ItemUseButton {item} />
               <ItemName
-                on:click={(event) => toggleSummary(event.detail, $context.actor)}
+                on:toggle={() => toggleSummary($context.actor)}
                 hasChildren={false}
                 {item}
               >
@@ -216,7 +217,7 @@
             <ItemTableCell primary={true}>
               <ItemUseButton {item} />
               <ItemName
-                on:click={(event) => toggleSummary(event.detail, $context.actor)}
+                on:toggle={() => toggleSummary($context.actor)}
                 hasChildren={false}
                 {item}
               >
@@ -328,7 +329,7 @@
             <ItemTableCell primary={true}>
               <ItemUseButton {item} />
               <ItemName
-                on:click={(event) => toggleSummary(event.detail, $context.actor)}
+                on:toggle={() => toggleSummary($context.actor)}
                 hasChildren={false}
                 {item}
               >
@@ -431,7 +432,7 @@
             <ItemTableCell primary={true}>
               <ItemUseButton {item} />
               <ItemName
-                on:click={(event) => toggleSummary(event.detail, $context.actor)}
+                on:toggle={() => toggleSummary($context.actor)}
                 hasChildren={false}
                 {item}
               >

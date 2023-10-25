@@ -19,6 +19,7 @@ import { applyTitleToWindow } from 'src/utils/applications';
 import { debug } from 'src/utils/logging';
 import { isNil } from 'src/utils/data';
 import type { SvelteComponent } from 'svelte';
+import { getPercentage } from 'src/utils/numbers';
 
 export class Tidy5eKgarItemSheet extends dnd5e.applications.item.ItemSheet5e {
   context = writable<ItemSheetContext>();
@@ -251,6 +252,10 @@ export class Tidy5eKgarItemSheet extends dnd5e.applications.item.ItemSheet5e {
       },
       toggleAdvancementLock: this.toggleAdvancementLock.bind(this),
       lockItemQuantity: FoundryAdapter.shouldLockItemQuantity(),
+      healthPercentage: getPercentage(
+        this.item?.system?.hp?.value,
+        this.item?.system?.hp?.max
+      ),
     };
 
     debug(`${this.item?.type ?? 'Unknown Item Type'} context data`, context);

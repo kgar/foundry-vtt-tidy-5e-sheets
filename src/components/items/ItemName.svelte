@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { settingStore } from 'src/settings/settings';
   import type { Item5e } from 'src/types/item';
   import { createEventDispatcher } from 'svelte';
@@ -11,15 +10,16 @@
 
   $: hasActiveEffects = !!item.effects?.size;
 
-  const dispatcher = createEventDispatcher<{ click: MouseEvent }>();
+  const dispatcher = createEventDispatcher<{ toggle: Event }>();
 </script>
 
 <span
   role="button"
   tabindex="0"
-  on:click={(event) => dispatcher('click', event)}
+  on:click={(ev) => dispatcher('toggle', ev)}
   class="item-name truncate {cssClass}"
   class:has-children={hasChildren}
+  on:keypress={(ev) => ev.key === 'Enter' && dispatcher('toggle', ev)}
 >
   <slot />
 </span>
@@ -39,6 +39,10 @@
     &.has-children {
       display: flex;
       align-items: center;
+    }
+
+    &:focus-visible {
+      outline: 0.0625rem solid var(--t5ek-primary-accent-color);
     }
   }
 </style>

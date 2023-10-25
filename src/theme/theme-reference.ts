@@ -348,6 +348,10 @@ export const themeVariables = {
     type: 'todo',
     group: 'todo',
   },
+  '--t5ek-resource-bar-color': {
+    type: 'todo',
+    group: 'todo',
+  },
   '--t5ek-death-save-backdrop-background': {
     type: 'todo',
     group: 'todo',

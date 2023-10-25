@@ -11,7 +11,7 @@ import { applyTitleToWindow } from 'src/utils/applications';
 import { debug, error } from 'src/utils/logging';
 import { SettingsProvider, settingStore } from 'src/settings/settings';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
-import { isLessThanOneIsOne } from 'src/utils/numbers';
+import { getPercentage, isLessThanOneIsOne } from 'src/utils/numbers';
 import NpcShortRestDialog from 'src/dialogs/NpcShortRestDialog';
 import LongRestDialog from 'src/dialogs/NpcLongRestDialog';
 import { d20Roll } from 'src/utils/rolls';
@@ -116,6 +116,10 @@ export class Tidy5eNpcSheet extends dnd5e.applications.actor.ActorSheet5eNPC {
       hideSpellbookTab: SettingsProvider.settings.hideSpellbookTabNpc.get(),
       hideEmptySpellbook:
         lockSensitiveFields && defaultNpcContext.spellbook.length === 0,
+      healthPercentage: getPercentage(
+        this.actor?.system?.attributes?.hp?.value,
+        this.actor?.system?.attributes?.hp?.max
+      ),
     };
   }
 

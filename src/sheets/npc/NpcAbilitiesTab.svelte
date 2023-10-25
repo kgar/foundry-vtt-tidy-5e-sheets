@@ -114,8 +114,7 @@
               <ItemTableCell primary={true}>
                 <ItemUseButton {item} />
                 <ItemName
-                  on:click={(event) =>
-                    toggleSummary(event.detail, $context.actor)}
+                  on:toggle={() => toggleSummary($context.actor)}
                   cssClass="extra-small-gap"
                   {item}
                 >

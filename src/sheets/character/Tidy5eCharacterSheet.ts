@@ -14,6 +14,7 @@ import {
 } from 'src/types/types';
 import { applyTitleToWindow } from 'src/utils/applications';
 import type { SvelteComponent } from 'svelte';
+import { getPercentage } from 'src/utils/numbers';
 
 export class Tidy5eCharacterSheet extends dnd5e.applications.actor
   .ActorSheet5eCharacter {
@@ -119,6 +120,10 @@ export class Tidy5eCharacterSheet extends dnd5e.applications.actor
         SettingsProvider.settings.enableClassicControlsForCharacter.get(),
       characterJournalTabDisabled:
         SettingsProvider.settings.characterJournalTabDisabled.get(),
+      healthPercentage: getPercentage(
+        this.actor?.system?.attributes?.hp?.value,
+        this.actor?.system?.attributes?.hp?.max
+      ),
     };
 
     debug('Character Sheet context data', context);

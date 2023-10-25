@@ -21,14 +21,12 @@
   let showSummary = false;
   let chatData: ItemChatData;
 
-  async function toggleSummary(event: MouseEvent, actor: Actor5e) {
+  async function toggleSummary(actor: Actor5e) {
     if (!item) {
       warn('Unable to show summary. No item was provided.');
       showSummary = false;
       return;
     }
-
-    event.preventDefault();
 
     chatData ??= await item.getChatData({ secrets: actor.isOwner });
     showSummary = !showSummary;
@@ -66,6 +64,7 @@
   const dispatcher = createEventDispatcher<{ mousedown: MouseEvent }>();
 </script>
 
+<!-- svelte-ignore a11y-no-static-element-interactions -->
 <div
   class="item-table-row {cssClass}"
   class:show-item-count-on-hover={!$settingStore.quantityAlwaysShownEnabled}
@@ -74,8 +73,6 @@
   on:mousedown={(event) => dispatcher('mousedown', event)}
   on:mouseenter={onMouseEnter}
   on:mouseleave={onMouseLeave}
-  role="row"
-  tabindex="0"
   draggable={!!item}
   on:dragstart={handleDragStart}
   data-item-id={item?.id}
