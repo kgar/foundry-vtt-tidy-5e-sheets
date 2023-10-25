@@ -45,12 +45,14 @@
   ) {
     stopChangePropagation && event.stopPropagation();
 
+    const targetValue = event.currentTarget.value;
+
     let valueToSave =
-      saveEmptyAsNull && event.currentTarget.value === ''
+      saveEmptyAsNull && targetValue === ''
         ? null
-        : !isNaN(parseInt(event.currentTarget.value)) && allowDeltaChanges
-        ? processInputChangeDelta(event, document, field)
-        : event.currentTarget.value;
+        : !isNaN(parseInt(targetValue)) && allowDeltaChanges
+        ? processInputChangeDelta(targetValue, document, field)
+        : targetValue;
 
     await document.update({
       [field]: valueToSave,
