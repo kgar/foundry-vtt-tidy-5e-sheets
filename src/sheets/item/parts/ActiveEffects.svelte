@@ -70,24 +70,21 @@
 
       <ol class="item-list">
         {#each section.effects as effect}
+          <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
           <li
             class="item effect flexrow"
             data-effect-id={effect.id}
             on:mousedown={(event) => handleMiddleClickToEdit(event, effect)}
-            role="row"
           >
-            <div class="item-name effect-name flexrow" role="cell">
+            <div class="item-name effect-name flexrow">
               <img class="item-image" src={effect.icon} alt={effect.label} />
               <h4>{effect.label}</h4>
             </div>
-            <div class="effect-source" role="cell">{effect.sourceName}</div>
-            <div class="effect-duration" role="cell">
+            <div class="effect-source">{effect.sourceName}</div>
+            <div class="effect-duration">
               {effect.duration.label}
             </div>
-            <div
-              class="item-controls active-effect-controls flexrow"
-              role="cell"
-            >
+            <div class="item-controls active-effect-controls flexrow">
               {#if $context.owner && $context.editable}
                 <button
                   type="button"
