@@ -64,7 +64,6 @@
     {#each items as item (item.id)}
       {@const ctx = $context.itemContext[item.id]}
 
-      <!-- svelte-ignore a11y-click-events-have-key-events -->
       <button
         type="button"
         class="item {getInventoryRowClasses(item)} transparent-button"

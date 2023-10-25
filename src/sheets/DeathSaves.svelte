@@ -21,9 +21,6 @@
   }>();
 </script>
 
-<!-- Death Saves -->
-<!-- svelte-ignore a11y-no-static-element-interactions -->
-<!-- svelte-ignore a11y-click-events-have-key-events -->
 <div class="death-saves" class:rounded={$context.useRoundedPortraitStyle}>
   <div class="death-save-counters" class:show-backdrop={hpOverlayDisabled}>
     <i class="fas fa-check" />
@@ -38,13 +35,14 @@
       maxlength={1}
       title={localize('DND5E.DeathSave')}
       disabled={!$context.owner}
-      />
-    <div
+    />
+    <button
+      type="button"
       class="death-save rollable"
       on:click={(event) => dispatcher('rollDeathSave', { mouseEvent: event })}
     >
       <i class="fas fa-skull" />
-    </div>
+    </button>
     <TextInput
       document={$context.actor}
       field={failuresField}
@@ -55,7 +53,7 @@
       value={failures}
       maxlength={1}
       disabled={!$context.owner}
-      />
+    />
     <i class="fas fa-times" />
   </div>
 </div>
@@ -110,9 +108,12 @@
         color: var(--t5ek-death-save-icon-color);
         font-size: 1.875rem;
         transition: color 0.3s ease;
+        border: none;
+        padding: 0;
       }
 
       :global(.death-save:hover) {
+        background: none;
         color: var(--t5ek-death-save-text-color);
       }
     }

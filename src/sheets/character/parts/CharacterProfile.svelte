@@ -26,9 +26,6 @@
   }
 </script>
 
-<!-- TODO: Resolve linting comments after done re-styling -->
-<!-- svelte-ignore a11y-missing-attribute -->
-<!-- svelte-ignore a11y-click-events-have-key-events -->
 <ActorProfile useHpOverlay={!$settingStore.hpOverlayDisabled}>
   {#if incapacitated && (!$settingStore.hiddenDeathSavesEnabled || FoundryAdapter.userIsGm())}
     <DeathSaves
