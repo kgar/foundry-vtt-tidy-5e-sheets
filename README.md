@@ -5,7 +5,7 @@
 
 D&D 5e sheet layouts for Foundry VTT, focused on a clean UI, user ergonomics, and extensibility.
 
-Completely rewritten from the ground up, based on the [Tidy5e Sheet](https://github.com/sdenec/tidy5e-sheet) module by `sdenec`.
+Completely rewritten from the ground up, based on the [Tidy5e Sheet](https://github.com/sdenec/tidy5e-sheet) module by [sdenec](https://github.com/sdenec) and [4535992](https://github.com/p4535992).
 
 > **Warning**  
 > This is an alpha testing module that is subject to numerous breaking changes and rapid updates.
