@@ -35,7 +35,6 @@
       selectOnFocus={true}
       allowDeltaChanges={true}
       value={initiative.bonus}
-      maxlength={2}
       disabled={!$context.owner || $context.lockSensitiveFields}
       id="{$context.appId}-initiative-mod"
     />
