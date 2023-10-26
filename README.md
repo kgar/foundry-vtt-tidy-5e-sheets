@@ -59,7 +59,7 @@ Tidy 5e sheets provides alternate layouts with extra features for [D&D 5e](https
 
 ### Dark Mode
 
-![Alt text](images/image-3.png) ![Alt text](images/image-4.png)  
+![Alt text](images/image-3.png) ![Alt text](images/image-4.png)
 
 ![Alt text](images/image-5.png)
 
@@ -95,7 +95,6 @@ For those who multiclass, optional Spellbook filtering allows players to assign 
 ![Alt text](images/image-11.png)
 
 ![Alt text](images/image-12.png)
-
 
 #### Spell Class Icons
 
@@ -141,7 +140,7 @@ When enabled, item cards can provide a quick look at any hovered item, spell, or
 
 ![Alt text](images/demo-item-card-slide-and-hold-key.gif)
 
-Also, there is an option to make item cards floating near the mouse:
+Also, there is an option to make item cards float near the mouse:
 
 ![Alt text](images/demo-item-card-floating.gif)
 
