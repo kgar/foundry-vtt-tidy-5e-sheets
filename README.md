@@ -168,7 +168,7 @@ The attunement tracker brings it to the player's attention that they are over-at
 
 Keep track of your maximum prepared spells:
 
-![Alt text](images/image-max-prepared-spells.gif)
+![Alt text](images/image-max-prepared-spells.jpg)
 
 ### Ammo Quick Switch
 
