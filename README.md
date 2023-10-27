@@ -12,9 +12,7 @@ Completely rewritten from the ground up, based on the [Tidy5e Sheet](https://git
   frameborder="0"
   scrolling="0"
   width="62"
-  height="20">
-
-</iframe>
+  height="20"></iframe>
 
 > **Warning**  
 > This is an alpha testing module that is subject to numerous breaking changes and rapid updates.
