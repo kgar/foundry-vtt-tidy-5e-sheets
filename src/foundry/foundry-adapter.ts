@@ -274,29 +274,44 @@ export const FoundryAdapter = {
   },
   getSpellRowClasses(spell: any): string {
     const classes: string[] = [];
+
+    if (
+      spell.system.preparation.mode ===
+        CONSTANTS.SPELL_PREPARATION_MODE_PREPARED &&
+      (spell.system.level > 0 ||
+        SettingsProvider.settings.allowCantripsToBePrepared.get())
+    ) {
+      classes.push('preparable');
+    }
+
     if (spell.system.preparation.prepared) {
       classes.push('prepared');
     }
+
     if (
       spell.system.preparation.mode === CONSTANTS.SPELL_PREPARATION_MODE_ALWAYS
     ) {
       classes.push('always-prepared');
     }
+
     if (
       spell.system.preparation.mode === CONSTANTS.SPELL_PREPARATION_MODE_PACT
     ) {
       classes.push('pact');
     }
+
     if (
       spell.system.preparation.mode === CONSTANTS.SPELL_PREPARATION_MODE_ATWILL
     ) {
       classes.push('at-will');
     }
+
     if (
       spell.system.preparation.mode === CONSTANTS.SPELL_PREPARATION_MODE_INNATE
     ) {
       classes.push('innate');
     }
+
     return classes.join(' ');
   },
   getSpellAttackModAndTooltip(context: CharacterSheetContext) {

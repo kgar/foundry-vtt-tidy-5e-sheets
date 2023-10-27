@@ -111,141 +111,143 @@
     white-space: nowrap;
   }
 
-  .spells {
-    padding: 0;
-    display: flex;
-    flex-wrap: wrap;
+  .spellbook-grid {
+    .spells {
+      padding: 0;
+      display: flex;
+      flex-wrap: wrap;
 
-    .spell {
-      width: 3.125rem;
-      height: 3.125rem;
-      position: relative;
-      margin: 0.1875rem;
-      box-shadow: 0 0 0.0625rem 0.0625rem var(--t5ek-light-color);
-      border-radius: 0.3125rem;
-
-      &.context {
-        border: 1px solid var(--t5ek-primary-accent-color);
-      }
-
-      &.preparable {
-        .spell-image {
-          box-shadow: 0 0 0 0.125rem inset var(--t5ek-prepareable-color);
-          border-radius: 0.3125rem;
-        }
-      }
-
-      &.prepared {
-        box-shadow: 0 0 0 0.125rem
-          var(--t5ek-prepared-item-grid-tile-outline-color);
-        background-color: var(--t5ek-equipped-background);
-
-        .spell-image {
-          box-shadow: 0 0 0.0625rem 0.0625rem inset
-            var(--t5ek-prepared-item-grid-tile-accent-color);
-          border-radius: 0.3125rem;
-        }
-      }
-
-      &.pact {
-        box-shadow: 0 0 0 0.125rem var(--t5ek-pact-outline-color);
-        background-color: var(--t5ek-pact-background);
-
-        .spell-image {
-          box-shadow: 0 0 0.0625rem 0.0625rem inset
-            var(--t5ek-pact-accent-color);
-          border-radius: 0.3125rem;
-        }
-      }
-
-      &.at-will {
-        box-shadow: 0 0 0 0.125rem var(--t5ek-atwill-outline-color);
-        background-color: var(--t5ek-atwill-background);
-
-        .spell-image {
-          box-shadow: 0 0 0.0625rem 0.0625rem inset
-            var(--t5ek-atwill-accent-color);
-          border-radius: 0.3125rem;
-        }
-      }
-
-      &.innate {
-        box-shadow: 0 0 0 0.125rem var(--t5ek-innate-outline);
-        background-color: var(--t5ek-innate-background);
-
-        .spell-image {
-          box-shadow: 0 0 0.0625rem 0.0625rem inset var(--t5ek-innate-accent);
-          border-radius: 0.3125rem;
-        }
-      }
-
-      &.always-prepared {
-        box-shadow: 0 0 0 0.125rem var(--t5ek-alwaysprepared-outline-color);
-        background-color: var(--t5ek-alwaysprepared-background);
-
-        .spell-image {
-          box-shadow: 0 0 0.0625rem 0.0625rem inset
-            var(--t5ek-alwaysprepared-accent-color);
-        }
-      }
-
-      .spell-name {
-        display: block;
-        flex: unset;
-        width: 100%;
-        height: 100%;
+      .spell {
+        width: 3.125rem;
+        height: 3.125rem;
+        position: relative;
+        margin: 0.1875rem;
+        box-shadow: 0 0 0.0625rem 0.0625rem var(--t5ek-light-color);
         border-radius: 0.3125rem;
-        overflow: hidden;
-      }
 
-      .spell-image {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 100%;
-        height: 100%;
-        margin: 0;
-        border-radius: 0;
-        background-image: var(--bg-image);
-        background-repeat: no-repeat;
-        background-size: cover;
+        &.context {
+          border: 1px solid var(--t5ek-primary-accent-color);
+        }
 
-        i {
-          color: var(--t5ek-tertiary-color);
-          text-align: center;
-          font-size: 1.125rem;
-          display: none;
+        &.preparable {
+          .spell-image {
+            box-shadow: 0 0 0 0.125rem inset var(--t5ek-prepareable-color);
+            border-radius: 0.3125rem;
+          }
+        }
+
+        &.prepared {
+          box-shadow: 0 0 0 0.125rem
+            var(--t5ek-prepared-item-grid-tile-outline-color);
+          background-color: var(--t5ek-equipped-background);
+
+          .spell-image {
+            box-shadow: 0 0 0.0625rem 0.0625rem inset
+              var(--t5ek-prepared-item-grid-tile-accent-color);
+            border-radius: 0.3125rem;
+          }
+        }
+
+        &.pact {
+          box-shadow: 0 0 0 0.125rem var(--t5ek-pact-outline-color);
+          background-color: var(--t5ek-pact-background);
+
+          .spell-image {
+            box-shadow: 0 0 0.0625rem 0.0625rem inset
+              var(--t5ek-pact-accent-color);
+            border-radius: 0.3125rem;
+          }
+        }
+
+        &.at-will {
+          box-shadow: 0 0 0 0.125rem var(--t5ek-atwill-outline-color);
+          background-color: var(--t5ek-atwill-background);
+
+          .spell-image {
+            box-shadow: 0 0 0.0625rem 0.0625rem inset
+              var(--t5ek-atwill-accent-color);
+            border-radius: 0.3125rem;
+          }
+        }
+
+        &.innate {
+          box-shadow: 0 0 0 0.125rem var(--t5ek-innate-outline);
+          background-color: var(--t5ek-innate-background);
+
+          .spell-image {
+            box-shadow: 0 0 0.0625rem 0.0625rem inset var(--t5ek-innate-accent);
+            border-radius: 0.3125rem;
+          }
+        }
+
+        &.always-prepared {
+          box-shadow: 0 0 0 0.125rem var(--t5ek-alwaysprepared-outline-color);
+          background-color: var(--t5ek-alwaysprepared-background);
+
+          .spell-image {
+            box-shadow: 0 0 0.0625rem 0.0625rem inset
+              var(--t5ek-alwaysprepared-accent-color);
+          }
+        }
+
+        .spell-name {
+          display: block;
+          flex: unset;
+          width: 100%;
+          height: 100%;
+          border-radius: 0.3125rem;
+          overflow: hidden;
+        }
+
+        .spell-image {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 100%;
+          height: 100%;
+          margin: 0;
+          border-radius: 0;
+          background-image: var(--bg-image);
+          background-repeat: no-repeat;
+          background-size: cover;
+
+          i {
+            color: var(--t5ek-tertiary-color);
+            text-align: center;
+            font-size: 1.125rem;
+            display: none;
+          }
+        }
+
+        &:not([disabled]):hover .spell-name .spell-image {
+          background-image: none;
+
+          i {
+            display: initial;
+          }
+        }
+
+        .spell-name:hover .spell-image:hover i {
+          color: var(--t5ek-primary-font-color);
         }
       }
+      .spells-footer {
+        flex: 0 0 3.125rem;
+        height: 3.125rem;
+        margin: 0.125rem;
 
-      &:not([disabled]):hover .spell-name .spell-image {
-        background-image: none;
+        .item-create {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          white-space: nowrap;
+          height: 100%;
+          font-size: 1.5rem;
+          color: var(--t5ek-faint-color);
 
-        i {
-          display: initial;
-        }
-      }
-
-      .spell-name:hover .spell-image:hover i {
-        color: var(--t5ek-primary-font-color);
-      }
-    }
-    .spells-footer {
-      flex: 0 0 3.125rem;
-      height: 3.125rem;
-      margin: 0.125rem;
-
-      .item-create {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        white-space: nowrap;
-        height: 100%;
-        font-size: 1.5rem;
-        color: var(--t5ek-faint-color);
-
-        &:hover {
-          color: var(--t5ek-tertiary-color);
+          &:hover {
+            color: var(--t5ek-tertiary-color);
+          }
         }
       }
     }
