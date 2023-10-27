@@ -4,7 +4,7 @@ import type {
   NpcSheetContext,
   SheetStats,
 } from 'src/types/types';
-import { writable } from 'svelte/store';
+import { get, writable } from 'svelte/store';
 import NpcSheet from './NpcSheet.svelte';
 import { CONSTANTS } from 'src/constants';
 import { applyTitleToWindow } from 'src/utils/applications';
@@ -47,11 +47,9 @@ export class Tidy5eNpcSheet extends dnd5e.applications.actor.ActorSheet5eNPC {
   }
 
   component: SvelteComponent | undefined;
-  async activateListeners(html: { get: (index: 0) => HTMLElement }) {
+  activateListeners(html: { get: (index: 0) => HTMLElement }) {
     const node = html.get(0);
     this.card.set({ sheet: node, item: null, itemCardContentTemplate: null });
-    const initialContext = await this.getContext();
-    this.context.set(initialContext);
 
     this.component = new NpcSheet({
       target: node,
@@ -66,6 +64,11 @@ export class Tidy5eNpcSheet extends dnd5e.applications.actor.ActorSheet5eNPC {
     });
 
     initTidy5eContextMenu.call(this, html);
+  }
+
+  async getData(options = {}) {
+    this.context.set(await this.getContext());
+    return get(this.context);
   }
 
   #getSelectedTabId(): string {

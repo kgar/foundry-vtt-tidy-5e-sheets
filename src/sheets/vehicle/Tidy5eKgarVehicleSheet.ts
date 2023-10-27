@@ -7,7 +7,7 @@ import type {
   VehicleSheetContext,
 } from 'src/types/types';
 import { isNil } from 'src/utils/data';
-import { writable } from 'svelte/store';
+import { get, writable } from 'svelte/store';
 import VehicleSheet from './VehicleSheet.svelte';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
 import { applyTitleToWindow } from 'src/utils/applications';
@@ -45,11 +45,9 @@ export class Tidy5eVehicleSheet extends dnd5e.applications.actor
   }
 
   component: SvelteComponent | undefined;
-  async activateListeners(html: { get: (index: 0) => HTMLElement }) {
+  activateListeners(html: { get: (index: 0) => HTMLElement }) {
     const node = html.get(0);
     this.card.set({ sheet: node, item: null, itemCardContentTemplate: null });
-    const initialContext = await this.getContext();
-    this.context.set(initialContext);
 
     this.component = new VehicleSheet({
       target: node,
@@ -64,6 +62,11 @@ export class Tidy5eVehicleSheet extends dnd5e.applications.actor
     });
 
     initTidy5eContextMenu.call(this, html);
+  }
+
+  async getData(options = {}) {
+    this.context.set(await this.getContext());
+    return get(this.context);
   }
 
   private async getContext(): Promise<VehicleSheetContext> {

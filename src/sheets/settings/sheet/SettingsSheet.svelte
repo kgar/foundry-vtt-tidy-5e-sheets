@@ -110,7 +110,6 @@
   <div class="button-bar">
     <button
       type="button"
-      name="save"
       class="save-changes-btn"
       on:click={save}
       disabled={applyingChanges}
@@ -120,7 +119,6 @@
     </button>
     <button
       type="button"
-      name="apply"
       class="apply-changes-btn"
       on:click={apply}
       disabled={applyingChanges}

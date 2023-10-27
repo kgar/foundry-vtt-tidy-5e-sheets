@@ -1,7 +1,7 @@
 import { CONSTANTS } from 'src/constants';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type { Item5e, ItemSheetContext } from 'src/types/item';
-import { writable } from 'svelte/store';
+import { get, writable } from 'svelte/store';
 import TypeNotFoundSheet from './TypeNotFoundSheet.svelte';
 import EquipmentSheet from './EquipmentSheet.svelte';
 import BackpackSheet from './BackpackSheet.svelte';
@@ -51,8 +51,11 @@ export class Tidy5eKgarItemSheet extends dnd5e.applications.item.ItemSheet5e {
   }
 
   component: SvelteComponent | undefined;
-  async activateListeners(html: { get: (index: 0) => HTMLElement }) {
-    this.context.set(await this.getContext());
+  activateListeners(html: any) {
+    // Legacy jquery / form application change handling; will probably have to fix this further in the future
+    html.on('change', 'input[name], textarea[name], select[name]', () => {
+      this.submit();
+    });
 
     const node = html.get(0);
 
@@ -194,6 +197,11 @@ export class Tidy5eKgarItemSheet extends dnd5e.applications.item.ItemSheet5e {
     Hooks.call('dnd5e.getItemAdvancementContext', html, contextOptions);
     if (contextOptions)
       new ContextMenu(html, '.advancement-item', contextOptions);
+  }
+
+  async getData(options = {}) {
+    this.context.set(await this.getContext());
+    return get(this.context);
   }
 
   private makeWindowAutoHeightForDetailsTab(tabId: string | undefined) {

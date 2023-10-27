@@ -6,7 +6,7 @@ import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
 import type { Actor5e } from 'src/types/actor';
 import { isNil } from 'src/utils/data';
 import { CONSTANTS } from 'src/constants';
-import { writable } from 'svelte/store';
+import { get, writable } from 'svelte/store';
 import {
   type ItemCardStore,
   type CharacterSheetContext,
@@ -51,11 +51,9 @@ export class Tidy5eCharacterSheet extends dnd5e.applications.actor
   }
 
   component: SvelteComponent | undefined;
-  async activateListeners(html: { get: (index: 0) => HTMLElement }) {
+  activateListeners(html: { get: (index: 0) => HTMLElement }) {
     const node = html.get(0);
     this.card.set({ sheet: node, item: null, itemCardContentTemplate: null });
-    const initialContext = await this.getContext();
-    this.context.set(initialContext);
 
     this.component = new CharacterSheet({
       target: node,
@@ -70,6 +68,12 @@ export class Tidy5eCharacterSheet extends dnd5e.applications.actor
     });
 
     initTidy5eContextMenu.call(this, html);
+  }
+
+  async getData(options = {}) {
+    console.warn('getData', options);
+    this.context.set(await this.getContext());
+    return get(this.context);
   }
 
   onToggleAbilityProficiency(event: Event) {
