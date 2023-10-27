@@ -1,7 +1,11 @@
 <script lang="ts">
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+
   export let iconCssClass: string;
   export let title: string | undefined = undefined;
   export let active = true;
+
+  const localize = FoundryAdapter.localize;
 </script>
 
 <button
@@ -9,7 +13,7 @@
   class="item-list-button"
   class:inactive={!active}
   on:click
-  {title}
+  title={title !== undefined ? localize(title) : ''}
 >
   <i class={iconCssClass} />
 </button>

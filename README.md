@@ -47,31 +47,31 @@ Tidy 5e sheets provides alternate layouts with extra features for [D&D 5e](https
 
 ### Player Character Sheet
 
-![Alt text](images/image.png)
+![Alt text](images/image-character-sheet.png)
 
 ### NPC Sheet
 
-![Alt text](images/image-1.png)
+![Alt text](images/image-npc-sheet.png)
 
 ### Vehicle Sheet
 
-![Alt text](images/image-2.png)
+![Alt text](images/image-vehicle-sheet.png)
 
 ### Dark Mode
 
-![Alt text](images/image-3.png) ![Alt text](images/image-4.png)
+![Alt text](images/image-light-mode-theme-setting.png) ![Alt text](images/image-dark-mode-theme-setting.png)
 
-![Alt text](images/image-5.png)
+![Alt text](images/image-dark-mode-sheet.png)
 
 ### Theme Settings
 
 **Customize your theme colors** to give sheets the perfect tone for your game:
 
-![Alt text](images/image-6.png)
+![Alt text](images/image-theme-settings.png)
 
 **Import/Export** themes and share with others:
 
-![Alt text](images/image-7.png)
+![Alt text](images/image-theme-import-export.png)
 
 ### Enhanced Characters
 
@@ -81,7 +81,7 @@ Player character sheets come stocked with a variety of features above and beyond
 
 Tag your favorite items, spells, and features, and they will appear in the Attributes tab:
 
-![Alt text](images/image-8.png) ![Alt text](images/image-9.png)
+![Alt text](images/image-tag-favorites.png) ![Alt text](images/image-view-favorites.png)
 
 #### Multiclass Spellbook Filtering
 
@@ -90,41 +90,41 @@ For those who multiclass, optional Spellbook filtering allows players to assign 
 > **Note**  
 > Custom classes are also supported!
 
-![Alt text](images/image-10.png)
+![Alt text](images/image-spellbook-filter-cleric.png)
 
-![Alt text](images/image-11.png)
+![Alt text](images/image-spellbook-filter-switching.png)
 
-![Alt text](images/image-12.png)
+![Alt text](images/image-spellbook-filter-druid.png)
 
 #### Spell Class Icons
 
 For those who multiclass, Spell Class icons can delineate players' spells based on the spell's assigned class:
 
-![Alt text](images/image-13.png)
+![Alt text](images/image-spell-class-icons.png)
 
 #### Cantrip Preparation (for Cantrip Formulas)
 
 From "Tasha's Cauldron of Everything," the "Cantrip Formulas" feature allows wizards to prepare cantrips for the day. Tidy 5e optionally allows the preparation of cantrips:
 
-![Alt text](images/image-14.png)
+![Alt text](images/image-prepare-cantrips.png)
 
 #### Spell Slots Tracker
 
 Add/remove spell slot points quickly with spell slot tracking:
 
-![Alt text](images/image-15.png)
+![Alt text](images/image-spell-slot-dots-before.png)
 
-![Alt text](images/image-16.png)
+![Alt text](images/image-spell-slot-dots-changing.png)
 
-![Alt text](images/image-17.png)
+![Alt text](images/image-spell-slot-dots-after.png)
 
 #### More Character Detail Options
 
-![Alt text](images/image-18.png)
+![Alt text](images/image-character-bio-details.png)
 
-![Alt text](images/image-19.png)
+![Alt text](images/image-character-journal-extras.png)
 
-![Alt text](images/image-20.png)
+![Alt text](images/image-character-journal-custom-header.png)
 
 #### Animated Exhaustion Tracking
 
@@ -144,17 +144,42 @@ Also, there is an option to make item cards float near the mouse:
 
 ![Alt text](images/demo-item-card-floating.gif)
 
-### Grid and List Views
+### Alternate Grid View
+
+Inventory and spellbooks can be viewed in a convenient grid format:
+
+![Alt text](images/demo-grid-view.gif)
 
 ### Attunement Tracker
 
+The attunement tracker brings it to the player's attention that they are over-attuned:
+
+![Alt text](images/demo-attunement-tracker.gif)
+
 ### Max Prepared Spells
+
+Keep track of your maximum prepared spells:
+
+![Alt text](images/image-max-prepared-spells.gif)
 
 ### Ammo Quick Switch
 
-### Animated HP bars
+Swap ammo quickly using the ammo swap feature:
 
-### HP Overlay
+![Alt text](images/image-ammo-swap.png)
+
+You can even swap ammo in the item card:
+
+![Alt text](images/image-ammo-swap-item-card.png)
+
+### Animated HP bars and Overlay
+
+There is an optional, animated HP bar and HP overlay for each sheet type:
+
+![Alt text](demo-animated-bars.gif)
+
+> [!todo]
+> Finish the readme!
 
 ### Enhanced NPCs
 
