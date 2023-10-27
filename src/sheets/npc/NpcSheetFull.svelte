@@ -36,11 +36,6 @@
   $: {
     tabs = $currentNpcSheetTabs.getTabs($context);
 
-    Hooks.call(CONSTANTS.HOOKS_RENDERING_NPC_TABS, {
-      tabs,
-      context: $context,
-    });
-
     if (!tabs.some((tab) => tab.id === selectedTabId)) {
       selectedTabId = tabs[0]?.id;
     }

@@ -23,11 +23,6 @@
     itemSheetTabs.effects,
   ];
 
-  Hooks.call(CONSTANTS.HOOKS_RENDERING_ITEM_WEAPON_TABS, {
-    tabs,
-    context: $context,
-  });
-
   const localize = FoundryAdapter.localize;
 </script>
 
@@ -42,16 +37,16 @@
         value={$context.item.name}
         placeholder={localize('DND5E.ItemName')}
         disabled={!$context.owner}
-        />
+      />
     </h1>
 
     <div class="item-subtitle">
-      <h4 class="item-type">{$context.itemType}</h4>
+      <h4 class="item-type">{$context.itemType ?? ''}</h4>
       <span class="item-status">{$context.itemStatus ?? ''}</span>
     </div>
 
     <ul class="summary flexrow">
-      <li>{$context.config.weaponTypes[$context.system.weaponType]}</li>
+      <li>{$context.config.weaponTypes[$context.system.weaponType] ?? ''}</li>
       <li>
         <Select
           document={$context.item}

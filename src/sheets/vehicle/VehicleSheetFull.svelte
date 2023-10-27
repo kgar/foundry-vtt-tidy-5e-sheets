@@ -36,22 +36,17 @@
   $: {
     tabs = $currentVehicleSheetTabs.getTabs($context);
 
-    Hooks.call(CONSTANTS.HOOKS_RENDERING_VEHICLE_TABS, {
-      tabs,
-      context: $context,
-    });
-
     if (!tabs.some((tab) => tab.id === selectedTabId)) {
       selectedTabId = tabs[0]?.id;
     }
   }
 
-  $: sizes = <TidyDropdownOption[]>Object.entries($context.config.actorSizes).map(
-    ([abbreviation, size]) => ({
-      value: abbreviation,
-      text: size as string,
-    })
-  );
+  $: sizes = <TidyDropdownOption[]>Object.entries(
+    $context.config.actorSizes
+  ).map(([abbreviation, size]) => ({
+    value: abbreviation,
+    text: size as string,
+  }));
 
   $: currentSize = <TidyDropdownOption>{
     value: $context.system.traits.size,

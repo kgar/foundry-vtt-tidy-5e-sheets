@@ -58,11 +58,6 @@
   $: {
     tabs = $currentCharacterSheetTabs.getTabs($context);
 
-    Hooks.call(CONSTANTS.HOOKS_RENDERING_CHARACTER_TABS, {
-      tabs,
-      context: $context,
-    });
-
     if (!tabs.some((tab) => tab.id === selectedTabId)) {
       selectedTabId = tabs[0]?.id;
     }

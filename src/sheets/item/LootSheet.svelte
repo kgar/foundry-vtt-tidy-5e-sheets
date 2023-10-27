@@ -19,11 +19,6 @@
 
   let tabs: Tab[] = [itemSheetTabs.descriptionWithSidebar];
 
-  Hooks.call(CONSTANTS.HOOKS_RENDERING_ITEM_LOOT_TABS, {
-    tabs,
-    context: $context,
-  });
-
   const localize = FoundryAdapter.localize;
 </script>
 
@@ -41,7 +36,7 @@
     </h1>
 
     <div class="item-subtitle">
-      <h4 class="item-type">{$context.itemType}</h4>
+      <h4 class="item-type">{$context.itemType ?? ''}</h4>
       <span class="item-status">{$context.itemStatus ?? ''}</span>
     </div>
 
