@@ -15,7 +15,9 @@ Completely rewritten from the ground up, based on the [Tidy5e Sheet](https://git
 
 ## How to Support Tidy 5e Sheets
 
-Tidy 5e is a community effort, so there are no Patreon-exclusive perks. Development logs, community discussion, and more can be found on [discord](https://discord.com/channels/732325252788387980/1116078321067892796). With that said, sheets development is a longterm commitment that is subject to every Foundry and dnd5e system update, so any support is greatly appreciated!
+Tidy 5e is a community effort. Development logs, feature discussion, troubleshooting, dreaming, and more can be found on [discord](https://discord.com/channels/1167985253072257115/1167985253512650755). 
+
+Sheets development is a longterm commitment, subject to every Foundry and dnd5e system update, so any support is greatly appreciated.
 
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/V7V4Q88Z7) [!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/kgar)
 
@@ -231,3 +233,13 @@ TODO: Point to API documentation and examples
 ## Reporting Issues and Requesting Features
 
 ## Want to Build with Me?
+
+See the [CONTRIBUTING](https://github.com/kgar/foundry-vtt-tidy-5e-sheets/blob/main/CONTRIBUTING.md) page.
+
+## Tidy 5e Sheets Manifesto
+
+- Tidy 5e Sheets are meant to be nice sheets that make it easy to do D&D in style.
+- Tidy 5e Sheets are intended to remain compatible with the current version of the dnd5e system, including mirroring its Foundry compatibility settings. When there's a system update that has breaking changes, Tidy 5e Sheets will move all current efforts forward to the new dnd5e version and adjust its minimum system version accordingly.
+- This module cannot and should not try to bootstrap all sheet-augmenting modules within its own source code. Modules come and go.
+- This module should not become a Kitchen Sink module. Requests that go out of scope cannot be fulfilled.
+- This is a community effort. The Maintainer(s) strive to keep an open dialogue with interested users / devs while continuing maintenance and adding features.

@@ -1,6 +1,6 @@
 # Contributing to Tidy 5e Sheets
 
-Code contributions are accepted. Please feel free to submit issues to the issue tracker or submit pull requests for code changes. Approval for such requests involves code and (if necessary) design review by the Maintainer(s) of this repo. Please reach out on the [Tidy 5e Sheets discord server](https://discord.gg/PS7Xxpnh) with any questions.
+Code contributions are accepted. Please feel free to submit issues to the issue tracker or submit pull requests for code changes. Approval for such requests involves code and (if necessary) design review by the Maintainer(s) of this repo. Please reach out on the [Tidy 5e Sheets discord server](https://discord.com/channels/1167985253072257115/1167985253512650755) with any questions.
 
 Please ensure that there is an open issue about whatever contribution you are submitting. Please also ensure your contribution does not duplicate an existing one.
 
