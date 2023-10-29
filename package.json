@@ -4,8 +4,8 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "prep-for-dev": "node prepare-dist-for-dev.js",
-    "dev": "npm run prep-for-dev && vite",
+    "prepare-dev": "node prepare-dist-for-dev.js",
+    "dev": "npm run prepare-dev && vite",
     "build": "vite build",
     "build-watch": "vite build --watch",
     "preview": "vite preview",
