@@ -21,7 +21,7 @@ Sheets development is a longterm commitment, subject to every Foundry and dnd5e 
 
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/V7V4Q88Z7) [!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/kgar)
 
-Tidy 5e Sheets also has a [Patreon](https://www.patreon.com/user?u=103973827).
+Tidy 5e Sheets also has a [Patreon](https://www.patreon.com/iamkgar).
 
 ## Installation
 
