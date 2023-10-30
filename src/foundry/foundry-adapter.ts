@@ -422,7 +422,6 @@ export const FoundryAdapter = {
         b.class.includes('configure-sheet')
       );
       if (configureSheetButtonIndex >= 0) {
-        console.warn('removing configure-sheet button!');
         buttons.splice(configureSheetButtonIndex, 1);
       }
     }

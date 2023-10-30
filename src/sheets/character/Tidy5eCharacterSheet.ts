@@ -71,7 +71,6 @@ export class Tidy5eCharacterSheet extends dnd5e.applications.actor
   }
 
   async getData(options = {}) {
-    console.warn('getData', options);
     this.context.set(await this.getContext());
     return get(this.context);
   }
