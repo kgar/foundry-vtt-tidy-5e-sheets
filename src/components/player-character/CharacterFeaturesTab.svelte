@@ -27,6 +27,7 @@
   import type { Readable } from 'svelte/store';
   import Notice from '../shared/Notice.svelte';
   import { settingStore } from 'src/settings/settings';
+  import NumberInput from '../form/NumberInput.svelte';
 
   let context = getContext<Readable<CharacterSheetContext>>('context');
 
@@ -478,5 +479,164 @@
         {/if}
       </ItemTable>
     {/if}
+
+    {#each $context.features as section}
+      <ItemTable>
+        <ItemTableHeaderRow>
+          <ItemTableColumn primary={true}>
+            {localize(section.label)}
+          </ItemTableColumn>
+          {#if section.hasActions}
+            <ItemTableColumn baseWidth="3.125rem">
+              {localize('DND5E.Uses')}
+            </ItemTableColumn>
+            <ItemTableColumn baseWidth="7.5rem">
+              {localize('DND5E.Usage')}
+            </ItemTableColumn>
+          {:else if section.isClass}
+            <ItemTableColumn baseWidth="7.5rem">
+              {localize('DND5E.Level')}
+            </ItemTableColumn>
+          {:else if !section.columns}
+            <ItemTableColumn baseWidth="7.5rem">
+              {localize('DND5E.Source')}
+            </ItemTableColumn>
+            <ItemTableColumn baseWidth="7.5rem">
+              {localize('DND5E.Requirements')}
+            </ItemTableColumn>
+          {/if}
+          {#if section.columns}
+            {#each section.columns as column}
+              <ItemTableColumn cssClass={column.css ?? ''}>
+                {localize(column.label)}
+              </ItemTableColumn>
+            {/each}
+          {/if}
+          {#if $context.owner && $context.classicControlsEnabled}
+            <ItemTableColumn baseWidth={classicControlsBaseWidth} />
+          {/if}
+        </ItemTableHeaderRow>
+        {#each FoundryAdapter.getFilteredItems(searchCriteria, section.items) as item (item.id)}
+          {@const ctx = $context.itemContext[item.id]}
+          <ItemTableRow
+            {item}
+            let:toggleSummary
+            on:mousedown={(event) =>
+              FoundryAdapter.editOnMiddleClick(event.detail, item)}
+            contextMenu={{
+              type: CONSTANTS.CONTEXT_MENU_TYPE_ITEMS,
+              id: item.id,
+            }}
+          >
+            <ItemTableCell primary={true}>
+              <ItemUseButton {item} />
+              <ItemName
+                on:toggle={() => toggleSummary($context.actor)}
+                hasChildren={false}
+                {item}
+              >
+                {item.name}
+              </ItemName>
+            </ItemTableCell>
+
+            <!-- TODO: Handle more gracefully -->
+            {#if !$settingStore.hideIconsNextToTheItemName && FoundryAdapter.tryGetFlag(item, 'favorite')}
+              <InlineFavoriteIcon />
+            {/if}
+
+            {#if section.hasActions}
+              <ItemTableCell baseWidth="3.125rem">
+                {#if ctx?.isOnCooldown}
+                  <button
+                    type="button"
+                    class="item-list-button"
+                    title={item.labels.recharge}
+                    on:click={() => item.rollRecharge()}
+                    disabled={!$context.owner}
+                  >
+                    <i class="fas fa-dice-six" />
+                    {item.system.recharge
+                      .value}{#if item.system.recharge.value !== 6}+{/if}</button
+                  >
+                {:else if item.system.recharge.value}
+                  <i class="fas fa-bolt" title={localize('DND5E.Charged')} />
+                {:else if ctx?.hasUses}
+                  <ItemUses {item} />
+                {:else}
+                  <ItemAddUses {item} />
+                {/if}
+              </ItemTableCell>
+              <ItemTableCell baseWidth="7.5rem">
+                {#if item.system.activation.type}
+                  {item.labels.activation}
+                {/if}
+              </ItemTableCell>
+            {:else if item.type === 'class'}
+              <ItemTableCell baseWidth="7.5rem">
+                {#if item.type === 'class'}
+                  <select
+                    on:change={(event) =>
+                      FoundryAdapter.onLevelChange(event, item, $context.actor)}
+                    disabled={!$context.owner || $context.lockLevelSelector}
+                  >
+                    {#each getAvailableLevels(item.id) as availableLevel}
+                      <option
+                        value={availableLevel.delta}
+                        disabled={availableLevel.disabled || undefined}
+                        selected={availableLevel.delta === 0}
+                      >
+                        {localize('DND5E.LevelNumber', {
+                          level: availableLevel.level,
+                        })}
+                        {#if availableLevel.delta}
+                          ({formatAsModifier(availableLevel.delta)})
+                        {/if}
+                      </option>
+                    {/each}
+                  </select>
+                {/if}
+              </ItemTableCell>
+            {:else if item.type === 'subclass'}
+              <ItemTableCell baseWidth="7.5rem" />
+            {:else if !section.columns}
+              <ItemTableCell baseWidth="7.5rem">
+                <span class="truncate" title={item.system.source}
+                  >{item.system.source}</span
+                >
+              </ItemTableCell>
+              <ItemTableCell baseWidth="7.5rem">
+                <span class="truncate" title={item.system.requirements ?? ''}
+                  >{item.system.requirements ?? ''}</span
+                >
+              </ItemTableCell>
+            {/if}
+            {#if section.columns}
+              {#each section.columns as column}
+                <ItemTableCell>
+                  {#if column.editable}
+                    TODO: Support editable column in a component-centric way
+                  {:else}
+                    {FoundryAdapter.getProperty(item, item.property) ??
+                      FoundryAdapter.getProperty(item, ctx.property) ??
+                      ''}
+                  {/if}
+                </ItemTableCell>
+              {/each}
+            {/if}
+            {#if $context.owner && $context.classicControlsEnabled}
+              <ItemTableCell baseWidth={classicControlsBaseWidth}>
+                TODO: Controls here
+              </ItemTableCell>
+            {/if}
+          </ItemTableRow>
+        {/each}
+        {#if $context.editable}
+          <ItemTableFooter
+            dataset={classSection.dataset}
+            actor={$context.actor}
+          />
+        {/if}
+      </ItemTable>
+    {/each}
   {/if}
 </ListContainer>
