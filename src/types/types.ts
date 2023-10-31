@@ -38,6 +38,14 @@ export type ItemCardStore = {
   sheet: HTMLElement;
 };
 
+export type CharacterFeatureSection = {
+  showUsesColumn: boolean;
+  showUsagesColumn: boolean;
+  showLevelColumn: boolean;
+  showSourceColumn: boolean;
+  showRequirementsColumn: boolean;
+};
+
 export type CharacterSheetContext = {
   resources: Resource[];
   skills: ActorContextSkills;
@@ -45,6 +53,7 @@ export type CharacterSheetContext = {
   hp: Actor5eHp;
   allowMaxHpOverride: boolean;
   characterJournalTabDisabled: boolean;
+  features: CharacterFeatureSection[];
 } & ActorSheetContext &
   JQueryHooksSheetIntegration &
   Record<string, any>;

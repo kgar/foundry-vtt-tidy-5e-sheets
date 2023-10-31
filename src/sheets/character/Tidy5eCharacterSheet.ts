@@ -11,6 +11,7 @@ import {
   type ItemCardStore,
   type CharacterSheetContext,
   type SheetStats,
+  type CharacterFeatureSection,
 } from 'src/types/types';
 import { applyTitleToWindow } from 'src/utils/applications';
 import type { SvelteComponent } from 'svelte';
@@ -90,8 +91,21 @@ export class Tidy5eCharacterSheet extends dnd5e.applications.actor
   private async getContext(): Promise<CharacterSheetContext> {
     const editable = FoundryAdapter.canEditActor(this.actor) && this.isEditable;
 
+    const defaultContext = await super.getData(this.options);
+
+    const sections = defaultContext.features.map((section: any) => ({
+      ...section,
+      showUsesColumn: section.hasActions,
+      showUsagesColumn: section.hasActions,
+      showLevelColumn: !section.hasActions && section.isClass,
+      showSourceColumn:
+        !section.hasActions && !section.isClass && !section.columns?.length,
+      showRequirementsColumn:
+        !section.hasActions && !section.isClass && !section.columns?.length,
+    }));
+
     const context: CharacterSheetContext = {
-      ...(await super.getData(this.options)),
+      ...defaultContext,
       actorClassesToImages: getActorClassesToImages(this.actor),
       appId: this.appId,
       activateFoundryJQueryListeners: (node: HTMLElement) => {
@@ -127,6 +141,7 @@ export class Tidy5eCharacterSheet extends dnd5e.applications.actor
         this.actor?.system?.attributes?.hp?.value,
         this.actor?.system?.attributes?.hp?.max
       ),
+      sections,
     };
 
     debug('Character Sheet context data', context);

@@ -28,6 +28,7 @@
   import Notice from '../shared/Notice.svelte';
   import { settingStore } from 'src/settings/settings';
   import NumberInput from '../form/NumberInput.svelte';
+  import DtypeInput from '../form/DtypeInput.svelte';
 
   let context = getContext<Readable<CharacterSheetContext>>('context');
 
@@ -486,21 +487,27 @@
           <ItemTableColumn primary={true}>
             {localize(section.label)}
           </ItemTableColumn>
-          {#if section.hasActions}
+          {#if section.showUsesColumn}
             <ItemTableColumn baseWidth="3.125rem">
               {localize('DND5E.Uses')}
             </ItemTableColumn>
+          {/if}
+          {#if section.showUsagesColumn}
             <ItemTableColumn baseWidth="7.5rem">
               {localize('DND5E.Usage')}
             </ItemTableColumn>
-          {:else if section.isClass}
+          {/if}
+          {#if section.showLevelColumn}
             <ItemTableColumn baseWidth="7.5rem">
               {localize('DND5E.Level')}
             </ItemTableColumn>
-          {:else if !section.columns}
+          {/if}
+          {#if section.showSourceColumn}
             <ItemTableColumn baseWidth="7.5rem">
               {localize('DND5E.Source')}
             </ItemTableColumn>
+          {/if}
+          {#if section.showRequirementsColumn}
             <ItemTableColumn baseWidth="7.5rem">
               {localize('DND5E.Requirements')}
             </ItemTableColumn>
@@ -544,7 +551,7 @@
               <InlineFavoriteIcon />
             {/if}
 
-            {#if section.hasActions}
+            {#if section.showUsesColumn}
               <ItemTableCell baseWidth="3.125rem">
                 {#if ctx?.isOnCooldown}
                   <button
@@ -566,12 +573,15 @@
                   <ItemAddUses {item} />
                 {/if}
               </ItemTableCell>
+            {/if}
+            {#if section.showUsagesColumn}
               <ItemTableCell baseWidth="7.5rem">
                 {#if item.system.activation.type}
                   {item.labels.activation}
                 {/if}
               </ItemTableCell>
-            {:else if item.type === 'class'}
+            {/if}
+            {#if section.showLevelColumn}
               <ItemTableCell baseWidth="7.5rem">
                 {#if item.type === 'class'}
                   <select
@@ -596,14 +606,15 @@
                   </select>
                 {/if}
               </ItemTableCell>
-            {:else if item.type === 'subclass'}
-              <ItemTableCell baseWidth="7.5rem" />
-            {:else if !section.columns}
+            {/if}
+            {#if section.showSourceColumn}
               <ItemTableCell baseWidth="7.5rem">
                 <span class="truncate" title={item.system.source}
                   >{item.system.source}</span
                 >
               </ItemTableCell>
+            {/if}
+            {#if section.showRequirementsColumn}
               <ItemTableCell baseWidth="7.5rem">
                 <span class="truncate" title={item.system.requirements ?? ''}
                   >{item.system.requirements ?? ''}</span
@@ -612,13 +623,20 @@
             {/if}
             {#if section.columns}
               {#each section.columns as column}
+                {@const itemPropertyValue =
+                  FoundryAdapter.getProperty(item, item.property) ??
+                  FoundryAdapter.getProperty(item, ctx.property) ??
+                  ''}
                 <ItemTableCell>
                   {#if column.editable}
-                    TODO: Support editable column in a component-centric way
+                    <DtypeInput
+                      document={item}
+                      field={item.property ?? ctx.property}
+                      value={itemPropertyValue}
+                      dtype={column.editable}
+                    />
                   {:else}
-                    {FoundryAdapter.getProperty(item, item.property) ??
-                      FoundryAdapter.getProperty(item, ctx.property) ??
-                      ''}
+                    {itemPropertyValue}
                   {/if}
                 </ItemTableCell>
               {/each}
