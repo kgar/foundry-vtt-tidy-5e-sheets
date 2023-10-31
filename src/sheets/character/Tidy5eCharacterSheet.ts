@@ -98,10 +98,8 @@ export class Tidy5eCharacterSheet extends dnd5e.applications.actor
       showUsesColumn: section.hasActions,
       showUsagesColumn: section.hasActions,
       showLevelColumn: !section.hasActions && section.isClass,
-      showSourceColumn:
-        !section.hasActions && !section.isClass && !section.columns?.length,
-      showRequirementsColumn:
-        !section.hasActions && !section.isClass && !section.columns?.length,
+      showSourceColumn: !section.columns?.length,
+      showRequirementsColumn: !section.isClass && !section.columns?.length,
     }));
 
     const context: CharacterSheetContext = {
@@ -141,7 +139,7 @@ export class Tidy5eCharacterSheet extends dnd5e.applications.actor
         this.actor?.system?.attributes?.hp?.value,
         this.actor?.system?.attributes?.hp?.max
       ),
-      sections,
+      features: sections,
     };
 
     debug('Character Sheet context data', context);
