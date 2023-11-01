@@ -31,19 +31,19 @@
     'far fa-dizzy',
   ];
 
-  const exhaustionIntensity = [
-    'intensity-0',
-    'intensity-1',
-    'intensity-1',
-    'intensity-2',
-    'intensity-2',
-    'intensity-3',
-    'intensity-3',
+  const exhaustionSeverity = [
+    'severity-0',
+    'severity-1',
+    'severity-1',
+    'severity-2',
+    'severity-2',
+    'severity-3',
+    'severity-3',
   ];
 </script>
 
 <div
-  class="exhaustion-container {exhaustionIntensity[level]} {cssClass}"
+  class="exhaustion-container {exhaustionSeverity[level]} {cssClass}"
   class:only-show-on-hover={onlyShowOnHover}
 >
   <div class="level-display" class:colorized={level > 0}>
@@ -164,23 +164,23 @@
       background: var(--t5ek-light-color);
     }
 
-    &.intensity-0 .colorized {
+    &.severity-0 .colorized {
       background: transparent;
     }
 
-    &.intensity-1 .colorized {
-      background: var(--t5ek-exhaustion-intensity1-background);
-      color: var(--t5ek-exhaustion-intensity1-color);
+    &.severity-1 .colorized {
+      background: var(--t5ek-exhaustion-severity1-background);
+      color: var(--t5ek-exhaustion-severity1-color);
     }
 
-    &.intensity-2 .colorized {
-      background: var(--t5ek-exhaustion-intensity2-background);
-      color: var(--t5ek-exhaustion-intensity2-color);
+    &.severity-2 .colorized {
+      background: var(--t5ek-exhaustion-severity2-background);
+      color: var(--t5ek-exhaustion-severity2-color);
     }
 
-    &.intensity-3 .colorized {
-      background: var(--t5ek-exhaustion-intensity3-background);
-      color: var(--t5ek-exhaustion-intensity3-color);
+    &.severity-3 .colorized {
+      background: var(--t5ek-exhaustion-severity3-background);
+      color: var(--t5ek-exhaustion-severity3-color);
     }
   }
 </style>

@@ -248,15 +248,15 @@ export const themeVariables = {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-exhaustion-intensity1-background': {
+  '--t5ek-exhaustion-severity1-background': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-exhaustion-intensity2-background': {
+  '--t5ek-exhaustion-severity2-background': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-exhaustion-intensity3-background': {
+  '--t5ek-exhaustion-severity3-background': {
     type: 'todo',
     group: 'todo',
   },
@@ -400,15 +400,15 @@ export const themeVariables = {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-exhaustion-intensity1-color': {
+  '--t5ek-exhaustion-severity1-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-exhaustion-intensity2-color': {
+  '--t5ek-exhaustion-severity2-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-exhaustion-intensity3-color': {
+  '--t5ek-exhaustion-severity3-color': {
     type: 'todo',
     group: 'todo',
   },
