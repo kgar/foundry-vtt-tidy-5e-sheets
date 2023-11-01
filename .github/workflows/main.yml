@@ -31,7 +31,7 @@ jobs:
 
       # create a zip file with all files required by the module to add to the release
       - run: zip -r ./module.zip ./dist/*
-      
+
       # Update Release with Files
       - name: Create Release
         uses: ncipollo/release-action@v1.13.0
@@ -40,7 +40,7 @@ jobs:
           allowUpdates: true # set this to false if you want to prevent updating existing releases
           name: ${{ github.event.release.name }}
           draft: false
-          prerelease: true
+          prerelease: false
           token: ${{ secrets.GITHUB_TOKEN }}
           artifacts: './dist/module.json, ./module.zip'
           tag: ${{ github.event.release.tag_name }}
