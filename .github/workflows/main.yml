@@ -30,11 +30,10 @@ jobs:
           npm run build
 
       # create a zip file with all files required by the module to add to the release
-      - name: Zip the dist and list
+      - name: Zip the dist
         run: |
           cd ./dist
           zip -r ./module.zip *
-          ls
 
       # Update Release with Files
       - name: Create Release
