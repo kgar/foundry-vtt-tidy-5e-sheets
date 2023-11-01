@@ -31,10 +31,11 @@ jobs:
 
       # create a zip file with all files required by the module to add to the release
       - run: zip -r ./module.zip ./dist/*
-      # Create a release for this specific version
-      - name: Update Release with Files
+      
+      # Update Release with Files
+      - name: Create Release
+        uses: ncipollo/release-action@v1.13.0
         id: create_version_release
-        uses: ncipollo/release-action@v1
         with:
           allowUpdates: true # set this to false if you want to prevent updating existing releases
           name: ${{ github.event.release.name }}
