@@ -30,11 +30,10 @@ jobs:
           npm run build
 
       # create a zip file with all files required by the module to add to the release
-      - run: cd ./dist
-
-      - run: zip -r ../module.zip ./dist/*
-
-      - run: cd ..
+      - run: |
+          cd ./dist
+          zip -r ./module.zip ./dist/*
+          ls
 
       # Update Release with Files
       - name: Create Release
@@ -46,6 +45,6 @@ jobs:
           draft: false
           prerelease: false
           token: ${{ secrets.GITHUB_TOKEN }}
-          artifacts: './dist/module.json, ./module.zip'
+          artifacts: './dist/module.json, ./dist/module.zip'
           tag: ${{ github.event.release.tag_name }}
           body: ${{ github.event.release.body }}
