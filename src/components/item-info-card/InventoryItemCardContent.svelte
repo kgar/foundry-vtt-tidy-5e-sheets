@@ -5,7 +5,7 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import type { CharacterSheetContext } from 'src/types/types';
-  import InventoryAmmoSelector from '../inventory/InventoryAmmoSelector.svelte';
+  import AmmoSelector from '../../sheets/actor/AmmoSelector.svelte';
 
   export let item: Item5e;
   export let chatData: ItemChatData;
@@ -30,7 +30,7 @@
   </p>
   {#if item.system.properties?.amm}
     <p class="ammo-switch" data-id={item._id}>
-      <InventoryAmmoSelector {item} />
+      <AmmoSelector {item} />
     </p>
     <HorizontalLineSeparator borderColor="faint" />
   {/if}

@@ -15,7 +15,7 @@
 
   let context =
     getContext<
-      Readable<CharacterSheetContext | NpcSheetContext | VehicleSheetContext>
+      Readable<ActorSheetContext>
     >('context');
 
   $: ctx = $context.itemContext[item.id];

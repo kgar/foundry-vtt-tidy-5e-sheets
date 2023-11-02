@@ -5,7 +5,7 @@ import NpcAbilitiesTab from 'src/sheets/npc/NpcAbilitiesTab.svelte';
 import NpcSpellbookTab from 'src/sheets/npc/NpcSpellbookTab.svelte';
 import NpcBiographyTab from 'src/sheets/npc/NpcBiographyTab.svelte';
 import ActorEffectsTab from 'src/sheets/actor/ActorEffectsTab.svelte';
-import ActorJournalTab from 'src/components/player-character/ActorJournalTab.svelte';
+import ActorJournalTab from 'src/sheets/character/tabs/ActorJournalTab.svelte';
 import type {
   NpcSheetState,
   SheetTabRegistrationOptions,

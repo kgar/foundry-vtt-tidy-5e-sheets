@@ -14,7 +14,7 @@
 
   let context =
     getContext<
-      Readable<CharacterSheetContext | NpcSheetContext | VehicleSheetContext>
+      Readable<ActorSheetContext>
     >('context');
 
   const localize = FoundryAdapter.localize;

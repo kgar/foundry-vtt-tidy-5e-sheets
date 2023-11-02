@@ -1,9 +1,9 @@
 <script lang="ts">
   import type { CharacterSheetContext } from 'src/types/types';
-  import SkillsList from '../attributes/SkillsList.svelte';
-  import Traits from '../../sheets/actor/Traits.svelte';
-  import Favorites from '../attributes/Favorites.svelte';
-  import Resources from '../attributes/Resources.svelte';
+  import SkillsList from '../../actor/SkillsList.svelte';
+  import Traits from '../../actor/Traits.svelte';
+  import Favorites from '../parts/Favorites.svelte';
+  import Resources from '../parts/Resources.svelte';
   import { isNil } from 'src/utils/data';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';

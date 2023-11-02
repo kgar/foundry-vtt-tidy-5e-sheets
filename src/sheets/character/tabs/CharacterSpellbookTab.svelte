@@ -1,19 +1,19 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import ListContainer from '../layout/ListContainer.svelte';
+  import ListContainer from '../../../components/layout/ListContainer.svelte';
   import type { CharacterSheetContext, ItemLayoutMode } from 'src/types/types';
-  import ItemFilterSearch from '../items/ItemFilterSearch.svelte';
-  import ItemFilters from '../items/ItemFilters.svelte';
-  import ItemFilterOption from '../items/ItemFilterOption.svelte';
-  import ItemFilterLayoutToggle from '../items/ItemFilterLayoutToggle.svelte';
-  import SpellbookList from '../spellbook/SpellbookList.svelte';
-  import SpellbookFooter from '../spellbook/SpellbookFooter.svelte';
-  import SpellbookGrid from '../spellbook/SpellbookGrid.svelte';
-  import SpellbookClassFilter from '../spellbook/SpellbookClassFilter.svelte';
+  import ItemFilterSearch from '../../../components/items/ItemFilterSearch.svelte';
+  import ItemFilters from '../../../components/items/ItemFilters.svelte';
+  import ItemFilterOption from '../../../components/items/ItemFilterOption.svelte';
+  import ItemFilterLayoutToggle from '../../../components/items/ItemFilterLayoutToggle.svelte';
+  import SpellbookList from '../../../components/spellbook/SpellbookList.svelte';
+  import SpellbookFooter from '../../../components/spellbook/SpellbookFooter.svelte';
+  import SpellbookGrid from '../../../components/spellbook/SpellbookGrid.svelte';
+  import SpellbookClassFilter from '../../../components/spellbook/SpellbookClassFilter.svelte';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import NoSpells from 'src/sheets/actor/NoSpells.svelte';
-  import Notice from '../shared/Notice.svelte';
+  import Notice from '../../../components/shared/Notice.svelte';
   import { settingStore } from 'src/settings/settings';
 
   let context = getContext<Readable<CharacterSheetContext>>('context');

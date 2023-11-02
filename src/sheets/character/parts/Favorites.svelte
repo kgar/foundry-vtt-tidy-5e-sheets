@@ -1,10 +1,10 @@
 <script lang="ts">
   import type { CharacterSheetContext } from 'src/types/types';
-  import InventoryList from '../inventory/InventoryList.svelte';
+  import InventoryList from '../../../components/inventory/InventoryList.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import FavoriteFeaturesList from '../favorites/FavoriteFeaturesList.svelte';
+  import FavoriteFeaturesList from './FavoriteFeaturesList.svelte';
   import type { Item5e } from 'src/types/item';
-  import FavoriteSpellsList from 'src/components/favorites/FavoriteSpellsList.svelte';
+  import FavoriteSpellsList from 'src/sheets/character/parts/FavoriteSpellsList.svelte';
   import { settingStore } from 'src/settings/settings';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
@@ -16,14 +16,14 @@
   $: favoriteInventory = sortByNameIfConfigured(
     $settingStore.enableSortFavoritesItemsAlphabetically,
     $context.inventory
-      .flatMap((x: { items: Item5e[] }) => x.items)
+      .flatMap((x: any) => x.items)
       .filter(FoundryAdapter.isItemFavorite)
   );
 
   $: favoriteFeatures = sortByNameIfConfigured(
     $settingStore.enableSortFavoritesItemsAlphabetically,
     $context.features
-      .flatMap((x: { items: Item5e[] }) => x.items)
+      .flatMap((x: any) => x.items)
       .filter(FoundryAdapter.isItemFavorite)
   );
 

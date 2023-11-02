@@ -1,13 +1,12 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import SheetEditor from 'src/sheets/SheetEditor.svelte';
-  import ContentEditableFormField from '../inputs/ContentEditableFormField.svelte';
+  import ContentEditableFormField from '../../../components/inputs/ContentEditableFormField.svelte';
   import type { CharacterSheetContext } from 'src/types/types';
   import { CONSTANTS } from 'src/constants';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
-  import RerenderAfterFormSubmission from '../shared/RerenderAfterFormSubmission.svelte';
-    import { settingStore } from 'src/settings/settings';
+  import RerenderAfterFormSubmission from '../../../components/shared/RerenderAfterFormSubmission.svelte';
 
   let context = getContext<Readable<CharacterSheetContext>>('context');
 
@@ -109,7 +108,10 @@
     </article>
   </div>
   <div class="main-notes">
-    <div class="left-notes note-entries" class:limited={$context.showLimitedSheet}>
+    <div
+      class="left-notes note-entries"
+      class:limited={$context.showLimitedSheet}
+    >
       <RerenderAfterFormSubmission
         andOnValueChange={$context.system.details.trait}
       >
@@ -163,7 +165,10 @@
       </RerenderAfterFormSubmission>
     </div>
 
-    <div class="right-notes note-entries" class:limited={$context.showLimitedSheet}>
+    <div
+      class="right-notes note-entries"
+      class:limited={$context.showLimitedSheet}
+    >
       <RerenderAfterFormSubmission
         andOnValueChange={$context.system.details.appearance}
       >

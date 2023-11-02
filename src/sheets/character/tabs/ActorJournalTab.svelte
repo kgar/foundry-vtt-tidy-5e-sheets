@@ -5,8 +5,8 @@
   import SheetEditor from 'src/sheets/SheetEditor.svelte';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
-  import RerenderAfterFormSubmission from '../shared/RerenderAfterFormSubmission.svelte';
-  import TextInput from '../form/TextInput.svelte';
+  import RerenderAfterFormSubmission from '../../../components/shared/RerenderAfterFormSubmission.svelte';
+  import TextInput from '../../../components/form/TextInput.svelte';
 
   let context = getContext<Readable<CharacterSheetContext>>('context');
 

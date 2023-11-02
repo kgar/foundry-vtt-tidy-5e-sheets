@@ -1,12 +1,12 @@
 import type { CharacterSheetContext } from 'src/types/types';
 import { derived, get, writable } from 'svelte/store';
-import CharacterAttributesTab from 'src/components/player-character/CharacterAttributesTab.svelte';
-import CharacterInventoryTab from 'src/components/player-character/CharacterInventoryTab.svelte';
-import CharacterSpellbookTab from 'src/components/player-character/CharacterSpellbookTab.svelte';
-import CharacterFeaturesTab from 'src/components/player-character/CharacterFeaturesTab.svelte';
+import CharacterAttributesTab from 'src/sheets/character/tabs/CharacterAttributesTab.svelte';
+import CharacterInventoryTab from 'src/sheets/character/tabs/CharacterInventoryTab.svelte';
+import CharacterSpellbookTab from 'src/sheets/character/tabs/CharacterSpellbookTab.svelte';
+import CharacterFeaturesTab from 'src/sheets/character/tabs/CharacterFeaturesTab.svelte';
 import ActorEffectsTab from 'src/sheets/actor/ActorEffectsTab.svelte';
-import CharacterBiographyTab from 'src/components/player-character/CharacterBiographyTab.svelte';
-import ActorJournalTab from 'src/components/player-character/ActorJournalTab.svelte';
+import CharacterBiographyTab from 'src/sheets/character/tabs/CharacterBiographyTab.svelte';
+import ActorJournalTab from 'src/sheets/character/tabs/ActorJournalTab.svelte';
 import type {
   CharacterSheetState,
   SheetTabRegistrationOptions,

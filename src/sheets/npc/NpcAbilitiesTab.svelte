@@ -1,5 +1,5 @@
 <script lang="ts">
-  import SkillsList from 'src/components/attributes/SkillsList.svelte';
+  import SkillsList from 'src/sheets/actor/SkillsList.svelte';
   import Traits from '../actor/Traits.svelte';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
@@ -33,6 +33,7 @@
   import { settingStore } from 'src/settings/settings';
   import EncumbranceBar from '../actor/EncumbranceBar.svelte';
   import TabFooter from '../actor/TabFooter.svelte';
+  import AmmoSelector from '../actor/AmmoSelector.svelte';
 
   let context = getContext<Readable<NpcSheetContext>>('context');
 
@@ -119,6 +120,11 @@
                   {item}
                 >
                   <span class="truncate">{item.name}</span>
+                  {#if item.system?.properties?.amm}
+                    <span class="ammo">
+                      <AmmoSelector {item} />
+                    </span>
+                  {/if}
                   <ListItemQuantity {item} {ctx} />
                 </ItemName>
               </ItemTableCell>

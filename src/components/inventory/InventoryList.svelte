@@ -16,8 +16,8 @@
   import ItemDuplicateControl from '../items/ItemDuplicateControl.svelte';
   import ItemDeleteControl from '../items/ItemDeleteControl.svelte';
   import ItemEditControl from '../items/ItemEditControl.svelte';
-  import InventoryEquipControl from './InventoryEquipControl.svelte';
-  import InventoryAttuneControl from './InventoryAttuneControl.svelte';
+  import EquipControl from './EquipControl.svelte';
+  import AttuneControl from './AttuneControl.svelte';
   import InlineFavoriteIcon from '../shared/InlineFavoriteIcon.svelte';
   import ItemFavoriteControl from '../items/ItemFavoriteControl.svelte';
   import { getContext } from 'svelte';
@@ -25,7 +25,7 @@
   import type { CharacterSheetContext } from 'src/types/types';
   import ListItemQuantity from 'src/sheets/actor/ListItemQuantity.svelte';
   import InventoryItemCardContent from '../item-info-card/InventoryItemCardContent.svelte';
-  import InventoryAmmoSelector from './InventoryAmmoSelector.svelte';
+  import AmmoSelector from '../../sheets/actor/AmmoSelector.svelte';
   import { settingStore } from 'src/settings/settings';
 
   export let primaryColumnName: string;
@@ -106,7 +106,7 @@
             <span class="truncate">{item.name}</span>
             {#if item.system?.properties?.amm}
               <span class="ammo">
-                <InventoryAmmoSelector {item} />
+                <AmmoSelector {item} />
               </span>
             {/if}
             <ListItemQuantity {item} {ctx} />
@@ -157,10 +157,10 @@
           <ItemTableCell baseWidth={classicControlsBaseWidth}>
             <ItemControls>
               {#if ctx.attunement}
-                <InventoryAttuneControl {item} {ctx} />
+                <AttuneControl {item} {ctx} />
               {/if}
               {#if ctx.canToggle}
-                <InventoryEquipControl {item} {ctx} />
+                <EquipControl {item} {ctx} />
               {/if}
               <ItemFavoriteControl {item} />
               <ItemEditControl {item} />

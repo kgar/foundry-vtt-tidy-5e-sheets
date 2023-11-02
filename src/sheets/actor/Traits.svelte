@@ -5,7 +5,7 @@
     NpcSheetContext,
     VehicleSheetContext,
   } from 'src/types/types';
-  import TraitSection from '../../components/attributes/TraitSection.svelte';
+  import TraitSection from './TraitSection.svelte';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
 

@@ -1,19 +1,19 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { type CharacterSheetContext } from 'src/types/types';
-  import ItemFilters from '../items/ItemFilters.svelte';
-  import ItemFilterSearch from '../items/ItemFilterSearch.svelte';
-  import ItemFilterOption from '../items/ItemFilterOption.svelte';
+  import ItemFilters from '../../../components/items/ItemFilters.svelte';
+  import ItemFilterSearch from '../../../components/items/ItemFilterSearch.svelte';
+  import ItemFilterOption from '../../../components/items/ItemFilterOption.svelte';
   import type { ItemLayoutMode } from 'src/types/types';
-  import ItemFilterLayoutToggle from '../items/ItemFilterLayoutToggle.svelte';
-  import ListContainer from '../layout/ListContainer.svelte';
-  import InventoryList from '../inventory/InventoryList.svelte';
-  import InventoryGrid from '../inventory/InventoryGrid.svelte';
+  import ItemFilterLayoutToggle from '../../../components/items/ItemFilterLayoutToggle.svelte';
+  import ListContainer from '../../../components/layout/ListContainer.svelte';
+  import InventoryList from '../../../components/inventory/InventoryList.svelte';
+  import InventoryGrid from '../../../components/inventory/InventoryGrid.svelte';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import Currency from 'src/sheets/actor/Currency.svelte';
-  import Notice from '../shared/Notice.svelte';
-  import NumberInput from '../form/NumberInput.svelte';
+  import Notice from '../../../components/shared/Notice.svelte';
+  import NumberInput from '../../../components/form/NumberInput.svelte';
   import EncumbranceBar from 'src/sheets/actor/EncumbranceBar.svelte';
   import TabFooter from 'src/sheets/actor/TabFooter.svelte';
   import { settingStore } from 'src/settings/settings';

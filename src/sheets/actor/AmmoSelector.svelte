@@ -1,20 +1,13 @@
 <script lang="ts">
   import { settingStore } from 'src/settings/settings';
   import type { Item5e } from 'src/types/item';
-  import type {
-    CharacterSheetContext,
-    NpcSheetContext,
-    VehicleSheetContext,
-  } from 'src/types/types';
+  import type { ActorSheetContext } from 'src/types/types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
 
   export let item: Item5e;
 
-  let context =
-    getContext<
-      Readable<CharacterSheetContext | NpcSheetContext | VehicleSheetContext>
-    >('context');
+  let context = getContext<Readable<ActorSheetContext>>('context');
 
   let ammos: { text: string; value: string | null; ammo: Item5e | null }[];
   $: ammos = [
