@@ -11,7 +11,7 @@
   import TidyDropdownList from '../TidyDropdownList.svelte';
   import ActorWarnings from '../ActorWarnings.svelte';
   import { CONSTANTS } from 'src/constants';
-  import AllowEditLock from 'src/components/shared/AllowEditLock.svelte';
+  import AllowEditLock from 'src/sheets/actor/AllowEditLock.svelte';
   import Tabs from 'src/components/tabs/Tabs.svelte';
   import TabContents from 'src/components/tabs/TabContents.svelte';
   import type { Readable } from 'svelte/store';

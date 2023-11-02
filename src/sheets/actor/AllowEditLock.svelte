@@ -1,19 +1,12 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type {
-    CharacterSheetContext,
-    NpcSheetContext,
-    VehicleSheetContext,
-  } from 'src/types/types';
+  import type { ActorSheetContext } from 'src/types/types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
 
   export let hint: string | null = null;
 
-  let context =
-    getContext<
-      Readable<ActorSheetContext>
-    >('context');
+  let context = getContext<Readable<ActorSheetContext>>('context');
 
   async function toggleLock() {
     await FoundryAdapter.setFlag($context.actor, 'allow-edit', !allowEdit);

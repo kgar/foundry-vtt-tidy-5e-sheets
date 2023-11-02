@@ -3,7 +3,7 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import type { VehicleSheetContext } from 'src/types/types';
-  import RerenderAfterFormSubmission from 'src/components/shared/RerenderAfterFormSubmission.svelte';
+  import RerenderAfterFormSubmission from 'src/components/utility/RerenderAfterFormSubmission.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
   let context = getContext<Readable<VehicleSheetContext>>('context');

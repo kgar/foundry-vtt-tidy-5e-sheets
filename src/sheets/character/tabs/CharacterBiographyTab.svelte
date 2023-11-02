@@ -6,7 +6,7 @@
   import { CONSTANTS } from 'src/constants';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
-  import RerenderAfterFormSubmission from '../../../components/shared/RerenderAfterFormSubmission.svelte';
+  import RerenderAfterFormSubmission from '../../../components/utility/RerenderAfterFormSubmission.svelte';
 
   let context = getContext<Readable<CharacterSheetContext>>('context');
 

@@ -7,7 +7,7 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import ContentEditableFormField from 'src/components/inputs/ContentEditableFormField.svelte';
-  import RerenderAfterFormSubmission from 'src/components/shared/RerenderAfterFormSubmission.svelte';
+  import RerenderAfterFormSubmission from 'src/components/utility/RerenderAfterFormSubmission.svelte';
 
   let context = getContext<Readable<NpcSheetContext>>('context');
 

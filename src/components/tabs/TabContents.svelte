@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { Tab } from 'src/types/types';
-  import RerenderAfterFormSubmission from '../shared/RerenderAfterFormSubmission.svelte';
+  import RerenderAfterFormSubmission from '../utility/RerenderAfterFormSubmission.svelte';
 
   export let tabs: Tab[];
   export let selectedTabId: string;
@@ -8,7 +8,7 @@
 
   function onTabRender(node: HTMLElement, tab: Tab) {
     if ('render' in tab.content) {
-      tab.content.render(node);
+      tab.content.render?.(node);
     }
   }
 </script>

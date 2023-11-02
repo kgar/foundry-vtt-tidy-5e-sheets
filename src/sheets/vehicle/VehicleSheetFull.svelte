@@ -8,7 +8,7 @@
   import { CONSTANTS } from 'src/constants';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
-  import AllowEditLock from 'src/components/shared/AllowEditLock.svelte';
+  import AllowEditLock from 'src/sheets/actor/AllowEditLock.svelte';
   import TabContents from 'src/components/tabs/TabContents.svelte';
   import VehicleProfile from './parts/VehicleProfile.svelte';
   import ContentEditableFormField from 'src/components/inputs/ContentEditableFormField.svelte';

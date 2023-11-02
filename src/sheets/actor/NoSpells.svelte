@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Notice from 'src/components/shared/Notice.svelte';
+  import Notice from 'src/components/notice/Notice.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { CharacterSheetContext, NpcSheetContext } from 'src/types/types';
   import { getContext } from 'svelte';

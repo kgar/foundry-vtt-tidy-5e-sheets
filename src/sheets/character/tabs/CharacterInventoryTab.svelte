@@ -7,12 +7,12 @@
   import type { ItemLayoutMode } from 'src/types/types';
   import ItemFilterLayoutToggle from '../../../components/item-list/ItemFilterLayoutToggle.svelte';
   import ListContainer from '../../../components/layout/ListContainer.svelte';
-  import InventoryList from '../../../components/inventory/InventoryList.svelte';
-  import InventoryGrid from '../../../components/inventory/InventoryGrid.svelte';
+  import InventoryList from '../parts/InventoryList.svelte';
+  import InventoryGrid from '../parts/InventoryGrid.svelte';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import Currency from 'src/sheets/actor/Currency.svelte';
-  import Notice from '../../../components/shared/Notice.svelte';
+  import Notice from '../../../components/notice/Notice.svelte';
   import NumberInput from '../../../components/form/NumberInput.svelte';
   import EncumbranceBar from 'src/sheets/actor/EncumbranceBar.svelte';
   import TabFooter from 'src/sheets/actor/TabFooter.svelte';

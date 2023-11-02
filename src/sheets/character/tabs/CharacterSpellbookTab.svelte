@@ -13,7 +13,7 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import NoSpells from 'src/sheets/actor/NoSpells.svelte';
-  import Notice from '../../../components/shared/Notice.svelte';
+  import Notice from '../../../components/notice/Notice.svelte';
   import { settingStore } from 'src/settings/settings';
 
   let context = getContext<Readable<CharacterSheetContext>>('context');

@@ -15,12 +15,12 @@
   import ItemName from 'src/components/item-list/ItemName.svelte';
   import ListItemQuantity from '../actor/ListItemQuantity.svelte';
   import ItemTableFooter from 'src/components/item-list/ItemTableFooter.svelte';
-  import Notice from 'src/components/shared/Notice.svelte';
+  import Notice from 'src/components/notice/Notice.svelte';
   import Currency from '../actor/Currency.svelte';
   import EncumbranceBar from '../actor/EncumbranceBar.svelte';
   import TabFooter from '../actor/TabFooter.svelte';
-  import ItemDeleteControl from 'src/components/item-list/ItemDeleteControl.svelte';
-  import ItemDuplicateControl from 'src/components/item-list/ItemDuplicateControl.svelte';
+  import ItemDeleteControl from 'src/components/item-list/controls/ItemDeleteControl.svelte';
+  import ItemDuplicateControl from 'src/components/item-list/controls/ItemDuplicateControl.svelte';
   import ItemEditControl from 'src/components/item-list/ItemEditControl.svelte';
   import ItemControls from 'src/components/item-list/ItemControls.svelte';
   import type { ItemCardContentComponent } from 'src/types/item';

@@ -1,16 +1,16 @@
 <script lang="ts">
   import type { CharacterSheetContext, ItemCardStore } from 'src/types/types';
   import type { Item5e } from 'src/types/item';
-  import ItemTable from '../item-list/ItemTable.svelte';
-  import ItemTableHeaderRow from '../item-list/ItemTableHeaderRow.svelte';
-  import ItemTableColumn from '../item-list/ItemTableColumn.svelte';
+  import ItemTable from '../../../components/item-list/ItemTable.svelte';
+  import ItemTableHeaderRow from '../../../components/item-list/ItemTableHeaderRow.svelte';
+  import ItemTableColumn from '../../../components/item-list/ItemTableColumn.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { CONSTANTS } from 'src/constants';
-  import GridPaneFavoriteIcon from '../shared/GridPaneFavoriteIcon.svelte';
+  import GridPaneFavoriteIcon from '../../../components/item-grid/GridPaneFavoriteIcon.svelte';
   import { getContext } from 'svelte';
   import type { Readable, Writable } from 'svelte/store';
-  import TextInput from '../form/TextInput.svelte';
-  import InventoryItemCardContent from '../item-info-card/InventoryItemCardContent.svelte';
+  import TextInput from '../../../components/form/TextInput.svelte';
+  import InventoryItemCardContent from '../../../components/item-info-card/InventoryItemCardContent.svelte';
   import { settingStore } from 'src/settings/settings';
 
   export let section: any;

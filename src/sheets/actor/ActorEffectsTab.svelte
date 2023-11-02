@@ -8,13 +8,13 @@
   import ItemTableFooter from '../../components/item-list/ItemTableFooter.svelte';
   import ItemImage from '../../components/item-list/ItemImage.svelte';
   import ItemTableCell from '../../components/item-list/ItemTableCell.svelte';
-  import ItemControl from '../../components/item-list/ItemControl.svelte';
+  import ItemControl from '../../components/item-list/controls/ItemControl.svelte';
   import { CONSTANTS } from 'src/constants';
   import ListContainer from '../../components/layout/ListContainer.svelte';
   import ItemControls from '../../components/item-list/ItemControls.svelte';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
-  import Notice from 'src/components/shared/Notice.svelte';
+  import Notice from 'src/components/notice/Notice.svelte';
 
   let context = getContext<Readable<ActorSheetContext>>('context');
 

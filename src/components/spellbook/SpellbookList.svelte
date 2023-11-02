@@ -7,8 +7,8 @@
     type NpcSheetContext,
   } from 'src/types/types';
   import ItemControls from '../item-list/ItemControls.svelte';
-  import ItemDeleteControl from '../item-list/ItemDeleteControl.svelte';
-  import ItemDuplicateControl from '../item-list/ItemDuplicateControl.svelte';
+  import ItemDeleteControl from '../item-list/controls/ItemDeleteControl.svelte';
+  import ItemDuplicateControl from '../item-list/controls/ItemDuplicateControl.svelte';
   import ItemEditControl from '../item-list/ItemEditControl.svelte';
   import ItemName from '../item-list/ItemName.svelte';
   import ItemTable from '../item-list/ItemTable.svelte';
@@ -23,7 +23,7 @@
   import SpellPrepareControl from '../spellbook/SpellPrepareControl.svelte';
   import SpellSlotMarkers from '../spellbook/SpellSlotMarkers.svelte';
   import SpellSlotUses from '../spellbook/SpellSlotUses.svelte';
-  import InlineFavoriteIcon from '../shared/InlineFavoriteIcon.svelte';
+  import InlineFavoriteIcon from '../item-list/InlineFavoriteIcon.svelte';
   import ItemFavoriteControl from '../item-list/ItemFavoriteControl.svelte';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';

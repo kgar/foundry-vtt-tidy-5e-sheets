@@ -16,8 +16,8 @@
   import ItemName from 'src/components/item-list/ItemName.svelte';
   import ListItemQuantity from '../actor/ListItemQuantity.svelte';
   import ItemAddUses from 'src/components/item-list/ItemAddUses.svelte';
-  import ItemDeleteControl from 'src/components/item-list/ItemDeleteControl.svelte';
-  import ItemDuplicateControl from 'src/components/item-list/ItemDuplicateControl.svelte';
+  import ItemDeleteControl from 'src/components/item-list/controls/ItemDeleteControl.svelte';
+  import ItemDuplicateControl from 'src/components/item-list/controls/ItemDuplicateControl.svelte';
   import ItemEditControl from 'src/components/item-list/ItemEditControl.svelte';
   import ItemUses from 'src/components/item-list/ItemUses.svelte';
   import ItemControls from 'src/components/item-list/ItemControls.svelte';

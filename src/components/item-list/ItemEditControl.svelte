@@ -1,6 +1,6 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import ItemControl from './ItemControl.svelte';
+  import ItemControl from './controls/ItemControl.svelte';
 
   export let item: any;
 

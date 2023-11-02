@@ -1,5 +1,5 @@
 <script lang="ts">
-  import AllowEditLock from 'src/components/shared/AllowEditLock.svelte';
+  import AllowEditLock from 'src/sheets/actor/AllowEditLock.svelte';
   import TabContents from 'src/components/tabs/TabContents.svelte';
   import Tabs from 'src/components/tabs/Tabs.svelte';
   import { CONSTANTS } from 'src/constants';

@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { CharacterSheetContext } from 'src/types/types';
-  import InventoryList from '../../../components/inventory/InventoryList.svelte';
+  import InventoryList from './InventoryList.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import FavoriteFeaturesList from './FavoriteFeaturesList.svelte';
   import type { Item5e } from 'src/types/item';

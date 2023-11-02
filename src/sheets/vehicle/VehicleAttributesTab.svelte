@@ -19,11 +19,11 @@
   import ItemAddUses from 'src/components/item-list/ItemAddUses.svelte';
   import TextInput from 'src/components/form/TextInput.svelte';
   import ItemControls from 'src/components/item-list/ItemControls.svelte';
-  import ItemDuplicateControl from 'src/components/item-list/ItemDuplicateControl.svelte';
-  import ItemDeleteControl from 'src/components/item-list/ItemDeleteControl.svelte';
+  import ItemDuplicateControl from 'src/components/item-list/controls/ItemDuplicateControl.svelte';
+  import ItemDeleteControl from 'src/components/item-list/controls/ItemDeleteControl.svelte';
   import ItemEditControl from 'src/components/item-list/ItemEditControl.svelte';
-  import ItemControl from 'src/components/item-list/ItemControl.svelte';
-  import Notice from 'src/components/shared/Notice.svelte';
+  import ItemControl from 'src/components/item-list/controls/ItemControl.svelte';
+  import Notice from 'src/components/notice/Notice.svelte';
   import HpBar from '../../components/bar/HpBar.svelte';
 
   let context = getContext<Readable<VehicleSheetContext>>('context');

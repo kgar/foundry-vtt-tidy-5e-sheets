@@ -1,5 +1,5 @@
 <script lang="ts">
-  import RerenderAfterFormSubmission from 'src/components/shared/RerenderAfterFormSubmission.svelte';
+  import RerenderAfterFormSubmission from 'src/components/utility/RerenderAfterFormSubmission.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import SheetEditor from 'src/sheets/SheetEditor.svelte';
   import type { ItemSheetContext } from 'src/types/item';

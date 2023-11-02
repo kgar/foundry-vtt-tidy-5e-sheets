@@ -3,8 +3,8 @@
   import { type CharacterSheetContext } from 'src/types/types';
   import { formatAsModifier } from 'src/utils/formatting';
   import ItemEditControl from '../../../components/item-list/ItemEditControl.svelte';
-  import ItemDuplicateControl from '../../../components/item-list/ItemDuplicateControl.svelte';
-  import ItemDeleteControl from '../../../components/item-list/ItemDeleteControl.svelte';
+  import ItemDuplicateControl from '../../../components/item-list/controls/ItemDuplicateControl.svelte';
+  import ItemDeleteControl from '../../../components/item-list/controls/ItemDeleteControl.svelte';
   import ItemTable from '../../../components/item-list/ItemTable.svelte';
   import ItemTableHeaderRow from '../../../components/item-list/ItemTableHeaderRow.svelte';
   import ItemTableRow from '../../../components/item-list/ItemTableRow.svelte';
@@ -21,11 +21,11 @@
   import ItemFilters from '../../../components/item-list/ItemFilters.svelte';
   import ItemFilterSearch from '../../../components/item-list/ItemFilterSearch.svelte';
   import ItemFilterOption from '../../../components/item-list/ItemFilterOption.svelte';
-  import InlineFavoriteIcon from '../../../components/shared/InlineFavoriteIcon.svelte';
+  import InlineFavoriteIcon from '../../../components/item-list/InlineFavoriteIcon.svelte';
   import ItemFavoriteControl from '../../../components/item-list/ItemFavoriteControl.svelte';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
-  import Notice from '../../../components/shared/Notice.svelte';
+  import Notice from '../../../components/notice/Notice.svelte';
   import { settingStore } from 'src/settings/settings';
   import DtypeInput from '../../../components/form/DtypeInput.svelte';
 
