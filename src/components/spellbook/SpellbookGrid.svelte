@@ -6,9 +6,9 @@
     type ItemCardStore,
     type NpcSheetContext,
   } from 'src/types/types';
-  import ItemTable from '../items/ItemTable.svelte';
-  import ItemTableColumn from '../items/ItemTableColumn.svelte';
-  import ItemTableHeaderRow from '../items/ItemTableHeaderRow.svelte';
+  import ItemTable from '../item-list/ItemTable.svelte';
+  import ItemTableColumn from '../item-list/ItemTableColumn.svelte';
+  import ItemTableHeaderRow from '../item-list/ItemTableHeaderRow.svelte';
   import SpellSlotMarkers from '../spellbook/SpellSlotMarkers.svelte';
   import SpellSlotUses from '../spellbook/SpellSlotUses.svelte';
   import type { Item5e } from 'src/types/item';

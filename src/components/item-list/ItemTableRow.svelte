@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { Actor5e } from 'src/types/actor';
-  import ItemSummary from '../items/ItemSummary.svelte';
+  import ItemSummary from '../item-list/ItemSummary.svelte';
   import { warn } from 'src/utils/logging';
   import { createEventDispatcher, getContext } from 'svelte';
   import type { ItemCardStore } from 'src/types/types';

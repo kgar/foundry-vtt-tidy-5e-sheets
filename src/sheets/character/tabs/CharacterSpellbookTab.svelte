@@ -2,10 +2,10 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import ListContainer from '../../../components/layout/ListContainer.svelte';
   import type { CharacterSheetContext, ItemLayoutMode } from 'src/types/types';
-  import ItemFilterSearch from '../../../components/items/ItemFilterSearch.svelte';
-  import ItemFilters from '../../../components/items/ItemFilters.svelte';
-  import ItemFilterOption from '../../../components/items/ItemFilterOption.svelte';
-  import ItemFilterLayoutToggle from '../../../components/items/ItemFilterLayoutToggle.svelte';
+  import ItemFilterSearch from '../../../components/item-list/ItemFilterSearch.svelte';
+  import ItemFilters from '../../../components/item-list/ItemFilters.svelte';
+  import ItemFilterOption from '../../../components/item-list/ItemFilterOption.svelte';
+  import ItemFilterLayoutToggle from '../../../components/item-list/ItemFilterLayoutToggle.svelte';
   import SpellbookList from '../../../components/spellbook/SpellbookList.svelte';
   import SpellbookFooter from '../../../components/spellbook/SpellbookFooter.svelte';
   import SpellbookGrid from '../../../components/spellbook/SpellbookGrid.svelte';

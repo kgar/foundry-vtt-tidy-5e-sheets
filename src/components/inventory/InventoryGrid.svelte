@@ -1,9 +1,9 @@
 <script lang="ts">
   import type { CharacterSheetContext, ItemCardStore } from 'src/types/types';
   import type { Item5e } from 'src/types/item';
-  import ItemTable from '../items/ItemTable.svelte';
-  import ItemTableHeaderRow from '../items/ItemTableHeaderRow.svelte';
-  import ItemTableColumn from '../items/ItemTableColumn.svelte';
+  import ItemTable from '../item-list/ItemTable.svelte';
+  import ItemTableHeaderRow from '../item-list/ItemTableHeaderRow.svelte';
+  import ItemTableColumn from '../item-list/ItemTableColumn.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { CONSTANTS } from 'src/constants';
   import GridPaneFavoriteIcon from '../shared/GridPaneFavoriteIcon.svelte';

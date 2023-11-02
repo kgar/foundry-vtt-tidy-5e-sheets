@@ -1,17 +1,17 @@
 <script lang="ts">
   import type { Item5e } from 'src/types/item';
   import type { CharacterSheetContext } from 'src/types/types';
-  import ItemTable from '../../../components/items/ItemTable.svelte';
-  import ItemTableHeaderRow from '../../../components/items/ItemTableHeaderRow.svelte';
-  import ItemTableColumn from '../../../components/items/ItemTableColumn.svelte';
-  import ItemTableRow from '../../../components/items/ItemTableRow.svelte';
-  import ItemTableCell from '../../../components/items/ItemTableCell.svelte';
+  import ItemTable from '../../../components/item-list/ItemTable.svelte';
+  import ItemTableHeaderRow from '../../../components/item-list/ItemTableHeaderRow.svelte';
+  import ItemTableColumn from '../../../components/item-list/ItemTableColumn.svelte';
+  import ItemTableRow from '../../../components/item-list/ItemTableRow.svelte';
+  import ItemTableCell from '../../../components/item-list/ItemTableCell.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { CONSTANTS } from 'src/constants';
-  import ItemAddUses from '../../../components/items/ItemAddUses.svelte';
-  import ItemName from '../../../components/items/ItemName.svelte';
-  import ItemUseButton from '../../../components/items/ItemUseButton.svelte';
-  import ItemUses from '../../../components/items/ItemUses.svelte';
+  import ItemAddUses from '../../../components/item-list/ItemAddUses.svelte';
+  import ItemName from '../../../components/item-list/ItemName.svelte';
+  import ItemUseButton from '../../../components/item-list/ItemUseButton.svelte';
+  import ItemUses from '../../../components/item-list/ItemUses.svelte';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
 

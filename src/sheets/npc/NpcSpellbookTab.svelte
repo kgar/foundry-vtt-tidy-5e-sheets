@@ -1,8 +1,8 @@
 <script lang="ts">
-  import ItemFilterLayoutToggle from 'src/components/items/ItemFilterLayoutToggle.svelte';
-  import ItemFilterOption from 'src/components/items/ItemFilterOption.svelte';
-  import ItemFilterSearch from 'src/components/items/ItemFilterSearch.svelte';
-  import ItemFilters from 'src/components/items/ItemFilters.svelte';
+  import ItemFilterLayoutToggle from 'src/components/item-list/ItemFilterLayoutToggle.svelte';
+  import ItemFilterOption from 'src/components/item-list/ItemFilterOption.svelte';
+  import ItemFilterSearch from 'src/components/item-list/ItemFilterSearch.svelte';
+  import ItemFilters from 'src/components/item-list/ItemFilters.svelte';
   import ListContainer from 'src/components/layout/ListContainer.svelte';
   import SpellbookFooter from 'src/components/spellbook/SpellbookFooter.svelte';
   import SpellbookGrid from 'src/components/spellbook/SpellbookGrid.svelte';
