@@ -1,21 +1,13 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { Actor5e } from 'src/types/actor';
-  import type {
-    CharacterSheetContext,
-    NpcSheetContext,
-    VehicleSheetContext,
-  } from 'src/types/types';
+  import type { Actor5e, ActorSheetContext } from 'src/types/types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
 
   export let movement: any;
   export let actor: Actor5e;
 
-  let context =
-    getContext<
-      Readable<ActorSheetContext>
-    >('context');
+  let context = getContext<Readable<ActorSheetContext>>('context');
 
   const localize = FoundryAdapter.localize;
 </script>

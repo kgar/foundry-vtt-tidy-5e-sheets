@@ -1,6 +1,6 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { type Actor5e } from 'src/types/actor';
+  import { type Actor5e } from 'src/types/types';
   import { onMount } from 'svelte';
 
   const localize = FoundryAdapter.localize;

@@ -3,7 +3,6 @@ import CharacterSheet from './character/CharacterSheet.svelte';
 import { debug, error } from 'src/utils/logging';
 import { SettingsProvider, settingStore } from 'src/settings/settings';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
-import type { Actor5e } from 'src/types/actor';
 import { isNil } from 'src/utils/data';
 import { CONSTANTS } from 'src/constants';
 import { get, writable } from 'svelte/store';
@@ -11,10 +10,21 @@ import {
   type ItemCardStore,
   type CharacterSheetContext,
   type SheetStats,
+  type Actor5e,
 } from 'src/types/types';
 import { applyTitleToWindow } from 'src/utils/applications';
 import type { SvelteComponent } from 'svelte';
 import { getPercentage } from 'src/utils/numbers';
+
+declare var dnd5e: {
+  applications: {
+    actor: {
+      ActorSheet5eCharacter: any;
+    };
+  };
+};
+
+declare var $: any;
 
 export class Tidy5eCharacterSheet extends dnd5e.applications.actor
   .ActorSheet5eCharacter {
@@ -94,51 +104,52 @@ export class Tidy5eCharacterSheet extends dnd5e.applications.actor
 
     const sections = defaultContext.features.map((section: any) => ({
       ...section,
-      showUsesColumn: section.hasActions,
-      showUsagesColumn: section.hasActions,
       showLevelColumn: !section.hasActions && section.isClass,
-      showSourceColumn: !section.columns?.length,
       showRequirementsColumn: !section.isClass && !section.columns?.length,
+      showSourceColumn: !section.columns?.length,
+      showUsagesColumn: section.hasActions,
+      showUsesColumn: section.hasActions,
     }));
 
     const context: CharacterSheetContext = {
       ...defaultContext,
-      actorClassesToImages: getActorClassesToImages(this.actor),
-      appId: this.appId,
       activateFoundryJQueryListeners: (node: HTMLElement) => {
         this._activateCoreListeners($(node));
         super.activateListeners($(node));
       },
-      lockSensitiveFields:
-        !editable && SettingsProvider.settings.editTotalLockEnabled.get(),
-      editable,
+      actorClassesToImages: getActorClassesToImages(this.actor),
       allowEffectsManagement: FoundryAdapter.allowCharacterEffectsManagement(
         this.actor
       ),
-      lockMoneyChanges: FoundryAdapter.shouldLockMoneyChanges(),
-      lockExpChanges: FoundryAdapter.shouldLockExpChanges(),
-      lockHpMaxChanges: FoundryAdapter.shouldLockHpMaxChanges(),
-      lockLevelSelector: FoundryAdapter.shouldLockLevelSelector(),
-      lockItemQuantity: FoundryAdapter.shouldLockItemQuantity(),
-      owner: this.actor.isOwner,
       allowMaxHpOverride:
         SettingsProvider.settings.allowHpMaxOverride.get() &&
         (!SettingsProvider.settings.lockHpMaxChanges.get() ||
           FoundryAdapter.userIsGm()),
+      appId: this.appId,
+      classicControlsEnabled:
+        SettingsProvider.settings.enableClassicControlsForCharacter.get(),
+      characterJournalTabDisabled:
+        SettingsProvider.settings.characterJournalTabDisabled.get(),
+      editable,
+      features: sections,
+      healthPercentage: getPercentage(
+        this.actor?.system?.attributes?.hp?.value,
+        this.actor?.system?.attributes?.hp?.max
+      ),
+      lockExpChanges: FoundryAdapter.shouldLockExpChanges(),
+      lockHpMaxChanges: FoundryAdapter.shouldLockHpMaxChanges(),
+      lockItemQuantity: FoundryAdapter.shouldLockItemQuantity(),
+      lockLevelSelector: FoundryAdapter.shouldLockLevelSelector(),
+      lockMoneyChanges: FoundryAdapter.shouldLockMoneyChanges(),
+      lockSensitiveFields:
+        !editable && SettingsProvider.settings.editTotalLockEnabled.get(),
+      originalContext: defaultContext,
+      owner: this.actor.isOwner,
       showLimitedSheet: FoundryAdapter.showLimitedSheet(this.actor),
       useRoundedPortraitStyle: [
         CONSTANTS.ROUNDED_PORTRAIT_OPTION_ALL as string,
         CONSTANTS.ROUNDED_PORTRAIT_OPTION_CHARACTER as string,
       ].includes(SettingsProvider.settings.portraitStyle.get()),
-      classicControlsEnabled:
-        SettingsProvider.settings.enableClassicControlsForCharacter.get(),
-      characterJournalTabDisabled:
-        SettingsProvider.settings.characterJournalTabDisabled.get(),
-      healthPercentage: getPercentage(
-        this.actor?.system?.attributes?.hp?.value,
-        this.actor?.system?.attributes?.hp?.max
-      ),
-      features: sections,
     };
 
     debug('Character Sheet context data', context);
@@ -188,7 +199,7 @@ export class Tidy5eCharacterSheet extends dnd5e.applications.actor
     }
   }
 
-  override submit(): void {
+  submit(): void {
     this._saveViewState();
     super.submit();
   }
@@ -256,8 +267,7 @@ export class Tidy5eCharacterSheet extends dnd5e.applications.actor
   }
 }
 
-// TODO: Find a better home for this.
-function getActorClassesToImages(actor: Actor5e) {
+function getActorClassesToImages(actor: Actor5e): Record<string, string> {
   let actorClassesToImages: Record<string, string> = {};
   for (let item of actor.items) {
     if (item.type == 'class') {

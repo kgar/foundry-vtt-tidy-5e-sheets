@@ -1,7 +1,6 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { settingStore } from 'src/settings/settings';
-  import type { Tool } from 'src/types/actor';
   import type {
     CharacterSheetContext,
     NpcSheetContext,
@@ -21,7 +20,7 @@
   export let iconCssClass: string | undefined = undefined;
   export let traitCssClass: string | undefined = '';
   export let tags: [key: string, value: string][] = [];
-  export let tools: [key: string, value: Tool][] = [];
+  export let tools: [key: string, value: any][] = [];
   export let traitsExpanded: boolean;
 
   const dispatcher = createEventDispatcher<{
@@ -92,7 +91,8 @@
                 type="button"
                 class="tool-check-roller inline-transparent-button"
                 class:rollable={$context.owner}
-                on:click={(event) => $context.actor.rollToolCheck(key, { event })}
+                on:click={(event) =>
+                  $context.actor.rollToolCheck(key, { event })}
                 disabled={!$context.owner}
               >
                 {tool.label}
@@ -109,10 +109,13 @@
                 class="tool-proficiency-editor inline-icon-button"
                 title={localize('DND5E.ToolConfigure')}
                 on:click|stopPropagation|preventDefault={() =>
-                  new dnd5e.applications.actor.ProficiencyConfig($context.actor, {
-                    property: 'tools',
-                    key,
-                  }).render(true)}
+                  new dnd5e.applications.actor.ProficiencyConfig(
+                    $context.actor,
+                    {
+                      property: 'tools',
+                      key,
+                    }
+                  ).render(true)}
               >
                 <i class="fas fa-cog" />
               </button>

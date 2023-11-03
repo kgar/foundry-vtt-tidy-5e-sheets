@@ -1,9 +1,8 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { type Actor5e } from 'src/types/actor';
+  import { type Actor5e } from 'src/types/types';
   import type { ActorSheetContext } from 'src/types/types';
-  import { isRealNumber } from 'src/utils/numbers';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
 

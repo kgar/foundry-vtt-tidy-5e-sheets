@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { Actor5e } from 'src/types/actor';
+  import type { Actor5e } from 'src/types/types';
   import ItemCreateButton from '../item-list/ItemCreateButton.svelte';
 
   export let dataset: Record<string, unknown>;

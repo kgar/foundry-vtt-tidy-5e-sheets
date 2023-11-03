@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { Actor5e } from 'src/types/actor';
+  import type { Actor5e } from 'src/types/types';
   import ItemSummary from '../item-list/ItemSummary.svelte';
   import { warn } from 'src/utils/logging';
   import { createEventDispatcher, getContext } from 'svelte';

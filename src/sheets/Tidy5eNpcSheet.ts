@@ -18,6 +18,14 @@ import { d20Roll } from 'src/utils/rolls';
 import { isNil } from 'src/utils/data';
 import type { SvelteComponent } from 'svelte';
 
+declare var dnd5e: {
+  applications: {
+    actor: { ActorSheet5eNPC: any };
+  };
+};
+
+declare var $: any;
+
 export class Tidy5eNpcSheet extends dnd5e.applications.actor.ActorSheet5eNPC {
   context = writable<NpcSheetContext>();
   stats = writable<SheetStats>({
@@ -90,39 +98,39 @@ export class Tidy5eNpcSheet extends dnd5e.applications.actor.ActorSheet5eNPC {
 
     return {
       ...defaultNpcContext,
-      appId: this.appId,
       activateFoundryJQueryListeners: (node: HTMLElement) => {
         this._activateCoreListeners($(node));
         super.activateListeners($(node));
       },
-      shortRest: this._onShortRest.bind(this),
-      longRest: this._onLongRest.bind(this),
-      rollDeathSave: this._rollDeathSave.bind(this),
-      tokenState: this.#getTokenState(),
-      lockSensitiveFields,
-      editable,
       allowEffectsManagement: true,
-      lockMoneyChanges: FoundryAdapter.shouldLockMoneyChanges(),
-      lockExpChanges: FoundryAdapter.shouldLockExpChanges(),
-      lockHpMaxChanges: FoundryAdapter.shouldLockHpMaxChanges(),
-      lockLevelSelector: FoundryAdapter.shouldLockLevelSelector(),
-      lockItemQuantity: FoundryAdapter.shouldLockItemQuantity(),
-      owner: this.actor.isOwner,
-      showLimitedSheet: FoundryAdapter.showLimitedSheet(this.actor),
-      useRoundedPortraitStyle: [
-        CONSTANTS.ROUNDED_PORTRAIT_OPTION_ALL as string,
-        CONSTANTS.ROUNDED_PORTRAIT_OPTION_NPCVEHICLE as string,
-      ].includes(SettingsProvider.settings.portraitStyle.get()),
-      encumbrance: this.actor.system.attributes.encumbrance,
+      appId: this.appId,
       classicControlsEnabled:
         SettingsProvider.settings.enableClassicControlsForNpc.get(),
-      hideSpellbookTab: SettingsProvider.settings.hideSpellbookTabNpc.get(),
+      encumbrance: this.actor.system.attributes.encumbrance,
+      editable,
       hideEmptySpellbook:
         lockSensitiveFields && defaultNpcContext.spellbook.length === 0,
       healthPercentage: getPercentage(
         this.actor?.system?.attributes?.hp?.value,
         this.actor?.system?.attributes?.hp?.max
       ),
+      hideSpellbookTab: SettingsProvider.settings.hideSpellbookTabNpc.get(),
+      lockSensitiveFields,
+      longRest: this._onLongRest.bind(this),
+      rollDeathSave: this._rollDeathSave.bind(this),
+      shortRest: this._onShortRest.bind(this),
+      tokenState: this.#getTokenState(),
+      lockExpChanges: FoundryAdapter.shouldLockExpChanges(),
+      lockHpMaxChanges: FoundryAdapter.shouldLockHpMaxChanges(),
+      lockItemQuantity: FoundryAdapter.shouldLockItemQuantity(),
+      lockLevelSelector: FoundryAdapter.shouldLockLevelSelector(),
+      lockMoneyChanges: FoundryAdapter.shouldLockMoneyChanges(),
+      owner: this.actor.isOwner,
+      showLimitedSheet: FoundryAdapter.showLimitedSheet(this.actor),
+      useRoundedPortraitStyle: [
+        CONSTANTS.ROUNDED_PORTRAIT_OPTION_ALL as string,
+        CONSTANTS.ROUNDED_PORTRAIT_OPTION_NPCVEHICLE as string,
+      ].includes(SettingsProvider.settings.portraitStyle.get()),
     };
   }
 
@@ -275,8 +283,8 @@ export class Tidy5eNpcSheet extends dnd5e.applications.actor.ActorSheet5eNPC {
    * @param {RestConfiguration} [config]  Configuration options for a short rest.
    * @returns {Promise<RestResult>}       A Promise which resolves once the short rest workflow has completed.
    */
-  async shortRest(config = {}) {
-    config = foundry.utils.mergeObject(
+  async shortRest(config: any = {}) {
+    config = FoundryAdapter.mergeObject(
       {
         dialog: true,
         chat: true,
@@ -342,7 +350,7 @@ export class Tidy5eNpcSheet extends dnd5e.applications.actor.ActorSheet5eNPC {
    * @returns {Promise<RestResult>}       A Promise which resolves once the long rest workflow has completed.
    */
   async longRest(config = {}) {
-    config = foundry.utils.mergeObject(
+    config = FoundryAdapter.mergeObject(
       {
         dialog: true,
         chat: true,
@@ -521,7 +529,9 @@ export class Tidy5eNpcSheet extends dnd5e.applications.actor.ActorSheet5eNPC {
       death.failure >= 3 ||
       death.success >= 3
     ) {
-      ui.notifications.warn(game.i18n.localize('DND5E.DeathSaveUnnecessary'));
+      ui.notifications.warn(
+        FoundryAdapter.localize('DND5E.DeathSaveUnnecessary')
+      );
       return null;
     }
 
@@ -544,8 +554,8 @@ export class Tidy5eNpcSheet extends dnd5e.applications.actor.ActorSheet5eNPC {
     }
 
     // Evaluate the roll
-    const flavor = game.i18n.localize('DND5E.DeathSavingThrow');
-    const rollData = foundry.utils.mergeObject(
+    const flavor = FoundryAdapter.localize('DND5E.DeathSavingThrow');
+    const rollData = FoundryAdapter.mergeObject(
       {
         data,
         title: `${flavor}: ${this.actor.name}`,
@@ -617,13 +627,13 @@ export class Tidy5eNpcSheet extends dnd5e.applications.actor.ActorSheet5eNPC {
       }
     }
 
-    if (!foundry.utils.isEmpty(details.updates))
+    if (!FoundryAdapter.isEmpty(details.updates))
       await this.actor.update(details.updates);
 
     // Display success/failure chat message
     if (details.chatString) {
       let chatData = {
-        content: game.i18n.format(details.chatString, {
+        content: FoundryAdapter.format(details.chatString, {
           name: this.actor.name,
         }),
         speaker,

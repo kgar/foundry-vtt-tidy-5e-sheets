@@ -15,6 +15,16 @@ import type { SvelteComponent } from 'svelte';
 import { debug } from 'src/utils/logging';
 import { getPercentage } from 'src/utils/numbers';
 
+declare var dnd5e: {
+  applications: {
+    actor: {
+      ActorSheet5eVehicle: any;
+    };
+  };
+};
+
+declare var $: any;
+
 export class Tidy5eVehicleSheet extends dnd5e.applications.actor
   .ActorSheet5eVehicle {
   context = writable<VehicleSheetContext>();

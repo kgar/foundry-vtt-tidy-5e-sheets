@@ -1,4 +1,4 @@
-import type { Actor5e } from 'src/types/actor';
+import type { Actor5e } from 'src/types/types';
 
 export type LongRestDialogResult = {
   confirmed: boolean;

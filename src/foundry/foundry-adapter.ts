@@ -5,7 +5,7 @@ import type {
   NpcSheetContext,
 } from 'src/types/types';
 import { CONSTANTS } from '../constants';
-import type { Actor5e } from 'src/types/actor';
+import type { Actor5e } from 'src/types/types';
 import type { Item5e } from 'src/types/item';
 import type { FoundryDocument } from 'src/types/document';
 import { SettingsProvider } from 'src/settings/settings';
@@ -105,6 +105,9 @@ export const FoundryAdapter = {
   },
   expandObject(data: any) {
     return expandObject(data);
+  },
+  isEmpty(obj: any) {
+    return isEmpty(obj);
   },
   tryGetFlag<T>(flagged: any, flagName: string) {
     return flagged.getFlag(CONSTANTS.MODULE_ID, flagName) as
@@ -587,6 +590,9 @@ declare const game: any;
 declare const Actors: any;
 declare const Items: any;
 declare const CONFIG: any;
+declare const Roll: any;
+declare const dnd5e: any;
+declare const ui: any;
 
 type AbilityReference = {
   abbreviation: string;
@@ -639,6 +645,7 @@ declare var mergeObject: <T>(
 ) => T;
 
 declare var expandObject: (obj: any) => any;
+declare var isEmpty: (obj: any) => boolean;
 
 type SpellComponentRef = { label: string; abbr: string };
 type SpellTagRef = { label: string; abbr: string; tag: true };

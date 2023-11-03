@@ -1,9 +1,8 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { Actor5e } from 'src/types/actor';
+  import type { Actor5e } from 'src/types/types';
   import type {
     ActorContextSkill,
-    ActorContextSkills,
     CharacterSheetContext,
     NpcSheetContext,
   } from 'src/types/types';
@@ -38,9 +37,9 @@
   );
   const localize = FoundryAdapter.localize;
 
-  function getSkill(key: string): ActorContextSkill | null {
+  function getSkill(key: string): any | null {
     if (key in $context.actor.system.skills) {
-      return $context.skills[key as keyof ActorContextSkills];
+      return $context.skills[key];
     }
 
     return null;

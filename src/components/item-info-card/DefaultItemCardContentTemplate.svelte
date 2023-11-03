@@ -4,19 +4,12 @@
   import HorizontalLineSeparator from '../layout/HorizontalLineSeparator.svelte';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
-  import type {
-    CharacterSheetContext,
-    NpcSheetContext,
-    VehicleSheetContext,
-  } from 'src/types/types';
+  import type { ActorSheetContext } from 'src/types/types';
 
   export let item: Item5e;
   export let chatData: ItemChatData;
 
-  let context =
-    getContext<
-      Readable<ActorSheetContext>
-    >('context');
+  let context = getContext<Readable<ActorSheetContext>>('context');
 
   $: ctx = $context.itemContext[item.id];
 

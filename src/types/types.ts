@@ -1,6 +1,7 @@
 import type { ComponentProps, ComponentType, SvelteComponent } from 'svelte';
-import type { Actor5e, Actor5eHp } from './actor';
 import type { Item5e, ItemCardContentComponent } from './item';
+
+export type Actor5e = any;
 
 export type SvelteTabContent<
   T extends SvelteComponent<any, any, any> = SvelteComponent<any, any, any>
@@ -48,57 +49,53 @@ export type CharacterFeatureSection = {
 };
 
 export type CharacterSheetContext = {
-  resources: Resource[];
-  skills: ActorContextSkills;
-  tools: ActorContextTools;
-  hp: Actor5eHp;
+  actorClassesToImages: Record<string, string>;
   allowMaxHpOverride: boolean;
   characterJournalTabDisabled: boolean;
   features: CharacterFeatureSection[];
 } & ActorSheetContext &
-  JQueryHooksSheetIntegration &
   Record<string, any>;
 
 export type NpcSheetContext = {
   encumbrance: any;
   hideSpellbookTab: boolean;
   hideEmptySpellbook: boolean;
+  shortRest: (event: Event) => Promise<void>;
 } & ActorSheetContext &
-  JQueryHooksSheetIntegration &
   Record<string, any>;
 
-export type VehicleSheetContext = {} & ActorSheetContext &
-  JQueryHooksSheetIntegration &
-  Record<string, any>;
+export type VehicleSheetContext = {} & ActorSheetContext & Record<string, any>;
 
 export type ActorSheetContext = {
-  appId: string;
   actor: Actor5e;
-  lockSensitiveFields: boolean;
-  editable: boolean;
   allowEffectsManagement: boolean;
-  lockMoneyChanges: boolean;
-  lockExpChanges: boolean;
-  lockHpMaxChanges: boolean;
-  lockLevelSelector: boolean;
-  /**
-   * Item Quantity should be uneditable.
-   */
-  lockItemQuantity: boolean;
-  /**
-   * The current user owns the actor.
-   */
-  owner: boolean;
-  showLimitedSheet: boolean;
-  useRoundedPortraitStyle: boolean;
+  appId: string;
   classicControlsEnabled: boolean;
+  editable: boolean;
   /**
    * Represents remaining health as a percentage within the range of `0` to `100`.
    *
    * Note: This calculation ignores temp HP / temp HP Max, because the stock 5e sheets count 0 hp (ignoring all temp values) as incapacitated. Tidy 5e sheets carries this principle forward with health percentage calculation.
    */
   healthPercentage: number;
-};
+  itemContext: any;
+  lockExpChanges: boolean;
+  lockHpMaxChanges: boolean;
+  /**
+   * Item Quantity should be uneditable.
+   */
+  lockItemQuantity: boolean;
+  lockLevelSelector: boolean;
+  lockMoneyChanges: boolean;
+  lockSensitiveFields: boolean;
+  originalContext: unknown;
+  /**
+   * The current user owns the actor.
+   */
+  owner: boolean;
+  showLimitedSheet: boolean;
+  useRoundedPortraitStyle: boolean;
+} & JQueryHooksSheetIntegration;
 
 export type JQueryHooksSheetIntegration = {
   activateFoundryJQueryListeners: (html: HTMLElement) => Promise<void>;
@@ -113,29 +110,6 @@ export interface Resource {
   name: string;
   placeholder: string;
 }
-
-export interface ActorContextSkills {
-  acr: ActorContextSkill;
-  ani: ActorContextSkill;
-  arc: ActorContextSkill;
-  ath: ActorContextSkill;
-  dec: ActorContextSkill;
-  his: ActorContextSkill;
-  ins: ActorContextSkill;
-  itm: ActorContextSkill;
-  inv: ActorContextSkill;
-  med: ActorContextSkill;
-  nat: ActorContextSkill;
-  prc: ActorContextSkill;
-  prf: ActorContextSkill;
-  per: ActorContextSkill;
-  rel: ActorContextSkill;
-  slt: ActorContextSkill;
-  ste: ActorContextSkill;
-  sur: ActorContextSkill;
-}
-
-export type ActorContextTools = Actor5e;
 
 export interface ActorContextSkill {
   value: number;

@@ -60,7 +60,7 @@ export default class NpcShortRestDialog extends Dialog {
   /* -------------------------------------------- */
 
   /** @inheritDoc */
-  activateListeners(html) {
+  activateListeners(html: any) {
     super.activateListeners(html);
     let btn = html.find('#roll-hd');
     btn.click(this._onRollHitDie.bind(this));
@@ -92,15 +92,16 @@ export default class NpcShortRestDialog extends Dialog {
    * @param {Actor5e} [options.actor]  Actor that is taking the short rest.
    * @returns {Promise}                Promise that resolves when the rest is completed or rejects when canceled.
    */
-  static async shortRestDialog({ actor } = {}): Promise<ShortRestDialogResult> {
+  static async shortRestDialog(data: any = {}): Promise<ShortRestDialogResult> {
+    const actor = data.actor;
     return new Promise((resolve) => {
       const dlg = new this(actor, {
-        title: `${game.i18n.localize('DND5E.ShortRest')}: ${actor.name}`,
+        title: `${FoundryAdapter.localize('DND5E.ShortRest')}: ${actor.name}`,
         buttons: {
           rest: {
             icon: '<i class="fas fa-bed"></i>',
-            label: game.i18n.localize('DND5E.Rest'),
-            callback: (html) => {
+            label: FoundryAdapter.localize('DND5E.Rest'),
+            callback: (html: any) => {
               let newDay = false;
               if (game.settings.get('dnd5e', 'restVariant') !== 'epic') {
                 newDay = html.find('input[name="newDay"]')[0].checked;
@@ -110,7 +111,7 @@ export default class NpcShortRestDialog extends Dialog {
           },
           cancel: {
             icon: '<i class="fas fa-times"></i>',
-            label: game.i18n.localize('Cancel'),
+            label: FoundryAdapter.localize('Cancel'),
             callback: resolve({ confirmed: false }),
           },
         },
@@ -127,31 +128,15 @@ export default class NpcShortRestDialog extends Dialog {
    * @param {string} [denomination]  The hit denomination of hit die to roll. Example "d8".
    *                                 If no denomination is provided, the first available HD will be used
    * @param {object} options         Additional options which modify the roll.
-   * @returns {Promise<Roll|null>}   The created Roll instance, or null if no hit die was rolled
+   * @returns {Promise<any|null>}   The created Roll instance, or null if no hit die was rolled
    */
-  async rollHitDieNPC(denomination, options = {}) {
-    // If no denomination was provided, choose the first available
-    // let cls = null;
-    // if ( !denomination ) {
-    //   cls = this.actor.itemTypes.class.find(c => c.system.hitDiceUsed < c.system.levels);
-    //   if ( !cls ) return null;
-    //   denomination = cls.system.hitDice;
-    // }
-
-    // // Otherwise, locate a class (if any) which has an available hit die of the requested denomination
-    // else cls = this.actor.items.find(i => {
-    //   return (i.system.hitDice === denomination) && ((i.system.hitDiceUsed || 0) < (i.system.levels || 1));
-    // });
-
-    // If no class is available, display an error notification
-    // if ( !cls ) {
-    //   ui.notifications.error(game.i18n.format("DND5E.HitDiceWarn", {name: this.name, formula: denomination}));
-    //   return null;
-    // }
-
+  async rollHitDieNPC(
+    denomination: string,
+    options: any = {}
+  ): Promise<any | null> {
     // Prepare roll data
-    const flavor = game.i18n.localize('DND5E.HitDiceRoll');
-    const rollConfig = foundry.utils.mergeObject(
+    const flavor = FoundryAdapter.localize('DND5E.HitDiceRoll');
+    const rollConfig = FoundryAdapter.mergeObject(
       {
         formula: `max(0, 1${denomination} + @abilities.con.mod)`,
         data: this.actor.getRollData(),
@@ -230,10 +215,9 @@ export default class NpcShortRestDialog extends Dialog {
     };
 
     // Perform updates
-    if (!foundry.utils.isEmpty(updates.actor))
+    if (!FoundryAdapter.isEmpty(updates.actor)) {
       await this.actor.update(updates.actor, updateOptions);
-    // if ( !foundry.utils.isEmpty(updates.class) ) await cls.update(updates.class);
-
+    }
     return roll;
   }
 }
