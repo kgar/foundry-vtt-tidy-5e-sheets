@@ -1,12 +1,12 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import DeathSaves from 'src/sheets/DeathSaves.svelte';
-  import Exhaustion from 'src/sheets/Exhaustion.svelte';
+  import DeathSaves from 'src/sheets/actor/DeathSaves.svelte';
+  import Exhaustion from 'src/sheets/actor/Exhaustion.svelte';
   import type { NpcSheetContext } from 'src/types/types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import NpcHitPoints from './NpcHitPoints.svelte';
-  import TempHp from 'src/sheets/TempHp.svelte';
+  import TempHp from 'src/sheets/actor/TempHp.svelte';
   import NpcRest from './NpcRest.svelte';
   import NpcHealthFormula from './NpcHealthFormula.svelte';
   import ActorProfile from 'src/sheets/actor/ActorProfile.svelte';

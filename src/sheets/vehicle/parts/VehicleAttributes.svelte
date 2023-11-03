@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Checkbox from 'src/components/form/Checkbox.svelte';
+  import Checkbox from 'src/components/inputs/Checkbox.svelte';
   import NumberInput from 'src/components/inputs/NumberInput.svelte';
   import ContentEditableFormField from 'src/components/inputs/ContentEditableFormField.svelte';
   import HorizontalLineSeparator from 'src/components/layout/HorizontalLineSeparator.svelte';

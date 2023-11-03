@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Checkbox from 'src/components/form/Checkbox.svelte';
+  import Checkbox from 'src/components/inputs/Checkbox.svelte';
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type {

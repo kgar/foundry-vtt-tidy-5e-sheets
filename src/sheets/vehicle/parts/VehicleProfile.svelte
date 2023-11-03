@@ -5,7 +5,7 @@
   import type { Readable } from 'svelte/store';
   import VehicleHitPoints from './VehicleHitPoints.svelte';
   import VehicleDamageAndMishapThresholds from './VehicleDamageAndMishapThresholds.svelte';
-  import Exhaustion from 'src/sheets/Exhaustion.svelte';
+  import Exhaustion from 'src/sheets/actor/Exhaustion.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import VehicleMovement from './VehicleMovement.svelte';
   import { settingStore } from 'src/settings/settings';

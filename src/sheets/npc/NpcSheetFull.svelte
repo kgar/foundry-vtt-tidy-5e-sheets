@@ -14,7 +14,7 @@
   import NpcProfile from './parts/NpcProfile.svelte';
   import ContentEditableFormField from 'src/components/inputs/ContentEditableFormField.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import TidyDropdownList from '../TidyDropdownList.svelte';
+  import TidyDropdownList from '../../components/inputs/TidyDropdownList.svelte';
   import { isNil } from 'src/utils/data';
   import { formatAsModifier } from 'src/utils/formatting';
   import Tidy5eActorOriginSummaryConfig from '../tidy5e-actor-origin-summary-config';
@@ -25,7 +25,7 @@
   import ItemInfoCard from 'src/components/item-info-card/ItemInfoCard.svelte';
   import SheetMenu from '../actor/SheetMenu.svelte';
   import { settingStore } from 'src/settings/settings';
-  import ActorWarnings from '../ActorWarnings.svelte';
+  import ActorWarnings from '../actor/ActorWarnings.svelte';
   import { currentNpcSheetTabs } from 'src/state/npc-sheet-state';
 
   export let selectedTabId: string;

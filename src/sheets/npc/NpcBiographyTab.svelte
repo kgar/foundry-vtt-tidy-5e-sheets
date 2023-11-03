@@ -1,6 +1,6 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import SheetEditor from 'src/sheets/SheetEditor.svelte';
+  import SheetEditor from 'src/components/editor/SheetEditor.svelte';
 
   import type { NpcSheetContext } from 'src/types/types';
   import { CONSTANTS } from 'src/constants';

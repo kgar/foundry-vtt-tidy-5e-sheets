@@ -7,7 +7,7 @@
   import Select from 'src/components/inputs/Select.svelte';
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import ItemFormGroup from '../form/ItemFormGroup.svelte';
-  import Checkbox from 'src/components/form/Checkbox.svelte';
+  import Checkbox from 'src/components/inputs/Checkbox.svelte';
 
   let context = getContext<Readable<ItemSheetContext>>('context');
 

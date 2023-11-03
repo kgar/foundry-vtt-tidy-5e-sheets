@@ -2,7 +2,7 @@
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { type CharacterSheetContext } from 'src/types/types';
-  import SheetEditor from 'src/sheets/SheetEditor.svelte';
+  import SheetEditor from 'src/components/editor/SheetEditor.svelte';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import RerenderAfterFormSubmission from '../../../components/utility/RerenderAfterFormSubmission.svelte';

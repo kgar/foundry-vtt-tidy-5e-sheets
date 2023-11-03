@@ -1,5 +1,5 @@
 <script lang="ts">
-  import Checkbox from 'src/components/form/Checkbox.svelte';
+  import Checkbox from 'src/components/inputs/Checkbox.svelte';
   import NumberInput from 'src/components/inputs/NumberInput.svelte';
   import Select from 'src/components/inputs/Select.svelte';
   import SelectOptions from 'src/components/inputs/SelectOptions.svelte';

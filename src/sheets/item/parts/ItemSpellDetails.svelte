@@ -3,7 +3,7 @@
   import type { Readable } from 'svelte/store';
   import type { ItemSheetContext } from 'src/types/item';
   import Select from 'src/components/inputs/Select.svelte';
-  import Checkbox from 'src/components/form/Checkbox.svelte';
+  import Checkbox from 'src/components/inputs/Checkbox.svelte';
   import ItemActivation from './ItemActivation.svelte';
   import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
   import TextInput from 'src/components/inputs/TextInput.svelte';

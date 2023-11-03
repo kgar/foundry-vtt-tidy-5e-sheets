@@ -1,5 +1,5 @@
 <script lang="ts">
-  import SheetEditor from '../SheetEditor.svelte';
+  import SheetEditor from '../../components/editor/SheetEditor.svelte';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import type { VehicleSheetContext } from 'src/types/types';

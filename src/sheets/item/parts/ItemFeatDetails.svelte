@@ -6,7 +6,7 @@
   import type { Readable } from 'svelte/store';
   import { getContext } from 'svelte';
   import NumberInput from 'src/components/inputs/NumberInput.svelte';
-  import Checkbox from 'src/components/form/Checkbox.svelte';
+  import Checkbox from 'src/components/inputs/Checkbox.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import Select from 'src/components/inputs/Select.svelte';
   import ItemFormGroup from '../form/ItemFormGroup.svelte';

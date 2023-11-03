@@ -1,6 +1,6 @@
 <script lang="ts">
-  import AttributeBlock from '../AttributeBlock.svelte';
-  import InitiativeBlock from '../InitiativeBlock.svelte';
+  import AttributeBlock from './AttributeBlock.svelte';
+  import InitiativeBlock from './InitiativeBlock.svelte';
   import AcShield from './AcShield.svelte';
   import VerticalLineSeparator from 'src/components/layout/VerticalLineSeparator.svelte';
 

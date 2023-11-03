@@ -27,7 +27,7 @@
   import type { Readable } from 'svelte/store';
   import Notice from '../../../components/notice/Notice.svelte';
   import { settingStore } from 'src/settings/settings';
-  import DtypeInput from '../../../components/form/DtypeInput.svelte';
+  import DtypeInput from '../../../components/inputs/DtypeInput.svelte';
 
   let context = getContext<Readable<CharacterSheetContext>>('context');
 

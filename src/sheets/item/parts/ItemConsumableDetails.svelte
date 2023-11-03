@@ -7,7 +7,7 @@
   import type { ItemSheetContext } from 'src/types/item';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import Select from 'src/components/inputs/Select.svelte';
-  import Checkbox from 'src/components/form/Checkbox.svelte';
+  import Checkbox from 'src/components/inputs/Checkbox.svelte';
   import ItemFormGroup from '../form/ItemFormGroup.svelte';
 
   let context = getContext<Readable<ItemSheetContext>>('context');

@@ -4,7 +4,7 @@
   import type { VehicleSheetContext } from 'src/types/types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
-  import SheetEditor from '../SheetEditor.svelte';
+  import SheetEditor from '../../components/editor/SheetEditor.svelte';
   import LimitedHeader from '../actor/LimitedHeader.svelte';
 
   let context = getContext<Readable<VehicleSheetContext>>('context');

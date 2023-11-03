@@ -10,7 +10,7 @@
   import ItemAction from './ItemAction.svelte';
   import ItemFormGroup from '../form/ItemFormGroup.svelte';
   import Select from 'src/components/inputs/Select.svelte';
-  import Checkbox from 'src/components/form/Checkbox.svelte';
+  import Checkbox from 'src/components/inputs/Checkbox.svelte';
 
   let context = getContext<Readable<ItemSheetContext>>('context');
 

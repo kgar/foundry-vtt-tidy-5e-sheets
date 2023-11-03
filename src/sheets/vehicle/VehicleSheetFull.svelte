@@ -15,17 +15,17 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import HorizontalLineSeparator from 'src/components/layout/HorizontalLineSeparator.svelte';
   import DelimitedTruncatedContent from 'src/components/layout/DelimitedTruncatedContent.svelte';
-  import TidyDropdownList from '../TidyDropdownList.svelte';
+  import TidyDropdownList from '../../components/inputs/TidyDropdownList.svelte';
   import Tidy5eActorOriginSummaryConfig from '../tidy5e-actor-origin-summary-config';
   import { isNil } from 'src/utils/data';
   import ActorMovementRow from '../actor/ActorMovementRow.svelte';
   import AcShieldVehicle from '../actor/AcShieldVehicle.svelte';
   import VerticalLineSeparator from 'src/components/layout/VerticalLineSeparator.svelte';
-  import AttributeBlock from '../AttributeBlock.svelte';
+  import AttributeBlock from '../actor/AttributeBlock.svelte';
   import ItemInfoCard from 'src/components/item-info-card/ItemInfoCard.svelte';
   import SheetMenu from '../actor/SheetMenu.svelte';
   import { settingStore } from 'src/settings/settings';
-  import ActorWarnings from '../ActorWarnings.svelte';
+  import ActorWarnings from '../actor/ActorWarnings.svelte';
   import { currentVehicleSheetTabs } from 'src/state/vehicle-sheet-state';
 
   export let selectedTabId: string;

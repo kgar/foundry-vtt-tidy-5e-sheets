@@ -1,13 +1,13 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { type CharacterSheetContext } from 'src/types/types';
-  import Exhaustion from '../../Exhaustion.svelte';
-  import Inspiration from '../../Inspiration.svelte';
-  import DeathSaves from '../../DeathSaves.svelte';
-  import Rest from '../../Rest.svelte';
-  import HitDice from '../../HitDice.svelte';
+  import Exhaustion from '../../actor/Exhaustion.svelte';
+  import Inspiration from './Inspiration.svelte';
+  import DeathSaves from '../../actor/DeathSaves.svelte';
+  import Rest from './Rest.svelte';
+  import HitDice from './HitDice.svelte';
   import CharacterHitPoints from './CharacterHitPoints.svelte';
-  import TempHp from '../../TempHp.svelte';
+  import TempHp from '../../actor/TempHp.svelte';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import ActorProfile from 'src/sheets/actor/ActorProfile.svelte';
