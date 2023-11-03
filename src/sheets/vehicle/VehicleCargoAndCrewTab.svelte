@@ -10,7 +10,7 @@
   import type { Readable } from 'svelte/store';
   import { CONSTANTS } from 'src/constants';
   import ItemTableCell from 'src/components/item-list/ItemTableCell.svelte';
-  import TextInput from 'src/components/form/TextInput.svelte';
+  import TextInput from 'src/components/inputs/TextInput.svelte';
   import ItemUseButton from 'src/components/item-list/ItemUseButton.svelte';
   import ItemName from 'src/components/item-list/ItemName.svelte';
   import ListItemQuantity from '../actor/ListItemQuantity.svelte';

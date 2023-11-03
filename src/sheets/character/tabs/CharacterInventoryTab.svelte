@@ -13,7 +13,7 @@
   import type { Readable } from 'svelte/store';
   import Currency from 'src/sheets/actor/Currency.svelte';
   import Notice from '../../../components/notice/Notice.svelte';
-  import NumberInput from '../../../components/form/NumberInput.svelte';
+  import NumberInput from '../../../components/inputs/NumberInput.svelte';
   import EncumbranceBar from 'src/sheets/actor/EncumbranceBar.svelte';
   import TabFooter from 'src/sheets/actor/TabFooter.svelte';
   import { settingStore } from 'src/settings/settings';

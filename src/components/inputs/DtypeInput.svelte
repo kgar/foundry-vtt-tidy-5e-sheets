@@ -1,7 +1,7 @@
 <script lang="ts">
   import Checkbox from './Checkbox.svelte';
-  import NumberInput from './NumberInput.svelte';
-  import TextInput from './TextInput.svelte';
+  import NumberInput from '../inputs/NumberInput.svelte';
+  import TextInput from '../inputs/TextInput.svelte';
 
   export let document: any;
   export let field: string;

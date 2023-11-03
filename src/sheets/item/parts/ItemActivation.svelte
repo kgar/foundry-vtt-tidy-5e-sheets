@@ -4,10 +4,10 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import type { ItemSheetContext } from 'src/types/item';
-  import NumberInput from 'src/components/form/NumberInput.svelte';
-  import Select from 'src/components/form/Select.svelte';
-  import TextInput from 'src/components/form/TextInput.svelte';
-  import SelectOptions from 'src/components/form/SelectOptions.svelte';
+  import NumberInput from 'src/components/inputs/NumberInput.svelte';
+  import Select from 'src/components/inputs/Select.svelte';
+  import TextInput from 'src/components/inputs/TextInput.svelte';
+  import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
 
   let context = getContext<Readable<ItemSheetContext>>('context');
 

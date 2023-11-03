@@ -1,6 +1,6 @@
 <script lang="ts">
   import { setContext } from 'svelte';
-  import { clickOutside } from '../events/clickOutside';
+  import { clickOutside } from '../../events/clickOutside';
   import type {
     ButtonMenuAnchor,
     ButtonMenuContext,

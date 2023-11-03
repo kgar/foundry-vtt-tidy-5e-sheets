@@ -1,6 +1,6 @@
 <script lang="ts">
   import Checkbox from 'src/components/form/Checkbox.svelte';
-  import NumberInput from 'src/components/form/NumberInput.svelte';
+  import NumberInput from 'src/components/inputs/NumberInput.svelte';
   import ContentEditableFormField from 'src/components/inputs/ContentEditableFormField.svelte';
   import HorizontalLineSeparator from 'src/components/layout/HorizontalLineSeparator.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';

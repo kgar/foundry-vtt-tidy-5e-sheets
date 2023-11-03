@@ -9,7 +9,7 @@
   import GridPaneFavoriteIcon from '../../../components/item-grid/GridPaneFavoriteIcon.svelte';
   import { getContext } from 'svelte';
   import type { Readable, Writable } from 'svelte/store';
-  import TextInput from '../../../components/form/TextInput.svelte';
+  import TextInput from '../../../components/inputs/TextInput.svelte';
   import InventoryItemCardContent from '../../../components/item-info-card/InventoryItemCardContent.svelte';
   import { settingStore } from 'src/settings/settings';
 

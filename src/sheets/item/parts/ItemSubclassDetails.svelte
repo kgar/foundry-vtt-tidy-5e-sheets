@@ -5,7 +5,7 @@
   import type { ItemSheetContext } from 'src/types/item';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import ItemFormGroup from '../form/ItemFormGroup.svelte';
-  import TextInput from 'src/components/form/TextInput.svelte';
+  import TextInput from 'src/components/inputs/TextInput.svelte';
 
   let context = getContext<Readable<ItemSheetContext>>('context');
 

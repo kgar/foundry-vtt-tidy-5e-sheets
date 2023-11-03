@@ -1,7 +1,7 @@
 <script lang="ts">
   import AcShieldBase from './AcShieldBase.svelte';
-  import TextInput from 'src/components/form/TextInput.svelte';
-  import NumberInput from 'src/components/form/NumberInput.svelte';
+  import TextInput from 'src/components/inputs/TextInput.svelte';
+  import NumberInput from 'src/components/inputs/NumberInput.svelte';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import type { VehicleSheetContext } from 'src/types/types';

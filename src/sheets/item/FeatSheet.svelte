@@ -8,7 +8,7 @@
   import Tabs from 'src/components/tabs/Tabs.svelte';
   import TabContents from 'src/components/tabs/TabContents.svelte';
   import ItemProfilePicture from './parts/ItemProfilePicture.svelte';
-  import TextInput from 'src/components/form/TextInput.svelte';
+  import TextInput from 'src/components/inputs/TextInput.svelte';
   import itemSheetTabs from './itemSheetTabs';
 
   let context = getContext<Readable<ItemSheetContext>>('context');

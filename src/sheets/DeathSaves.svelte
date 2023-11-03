@@ -3,7 +3,7 @@
   import { createEventDispatcher, getContext } from 'svelte';
   import type { CharacterSheetContext, NpcSheetContext } from 'src/types/types';
   import type { Readable } from 'svelte/store';
-  import TextInput from 'src/components/form/TextInput.svelte';
+  import TextInput from 'src/components/inputs/TextInput.svelte';
 
   let context =
     getContext<Readable<CharacterSheetContext | NpcSheetContext>>('context');

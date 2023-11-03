@@ -8,7 +8,7 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import type { ItemSheetContext } from 'src/types/item';
-  import TextInput from 'src/components/form/TextInput.svelte';
+  import TextInput from 'src/components/inputs/TextInput.svelte';
   import itemSheetTabs from './itemSheetTabs';
 
   let context = getContext<Readable<ItemSheetContext>>('context');

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import TextInput from 'src/components/form/TextInput.svelte';
+  import TextInput from 'src/components/inputs/TextInput.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { VehicleSheetContext } from 'src/types/types';
   import { getContext } from 'svelte';

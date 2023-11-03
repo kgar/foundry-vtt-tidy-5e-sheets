@@ -3,7 +3,7 @@
   import { formatAsModifier } from 'src/utils/formatting';
   import BlockTitle from './RollableBlockTitle.svelte';
   import BlockScore from './BlockScore.svelte';
-  import TextInput from 'src/components/form/TextInput.svelte';
+  import TextInput from 'src/components/inputs/TextInput.svelte';
   import type { ActorSheetContext } from 'src/types/types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';

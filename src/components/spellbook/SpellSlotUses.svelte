@@ -6,7 +6,7 @@
   } from 'src/types/types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
-  import TextInput from '../form/TextInput.svelte';
+  import TextInput from '../inputs/TextInput.svelte';
 
   export let section: any;
   let context =

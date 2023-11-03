@@ -4,7 +4,7 @@
   import { debug } from 'src/utils/logging';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
-  import TextInput from 'src/components/form/TextInput.svelte';
+  import TextInput from 'src/components/inputs/TextInput.svelte';
 
   let context = getContext<Readable<NpcSheetContext>>('context');
 

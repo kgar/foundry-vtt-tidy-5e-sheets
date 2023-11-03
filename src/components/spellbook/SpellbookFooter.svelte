@@ -4,8 +4,8 @@
   import type { CharacterSheetContext, NpcSheetContext } from 'src/types/types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
-  import NumberInput from '../form/NumberInput.svelte';
-  import Select from '../form/Select.svelte';
+  import NumberInput from '../inputs/NumberInput.svelte';
+  import Select from '../inputs/Select.svelte';
   import TabFooter from 'src/sheets/actor/TabFooter.svelte';
 
   let context =

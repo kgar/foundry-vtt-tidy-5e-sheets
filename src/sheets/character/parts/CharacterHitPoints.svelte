@@ -1,7 +1,7 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { type Actor5e } from 'src/types/actor';
-  import TextInput from 'src/components/form/TextInput.svelte';
+  import TextInput from 'src/components/inputs/TextInput.svelte';
   import ActorHpBar from 'src/sheets/actor/ActorHpBar.svelte';
   import { settingStore } from 'src/settings/settings';
   import { getContext } from 'svelte';

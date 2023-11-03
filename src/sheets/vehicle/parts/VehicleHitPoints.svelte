@@ -1,5 +1,5 @@
 <script lang="ts">
-  import TextInput from 'src/components/form/TextInput.svelte';
+  import TextInput from 'src/components/inputs/TextInput.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { settingStore } from 'src/settings/settings';
   import ActorHpBar from 'src/sheets/actor/ActorHpBar.svelte';

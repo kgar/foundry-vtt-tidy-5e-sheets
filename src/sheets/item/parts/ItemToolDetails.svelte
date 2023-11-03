@@ -3,9 +3,9 @@
   import type { Readable } from 'svelte/store';
   import type { ItemSheetContext } from 'src/types/item';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import SelectOptions from 'src/components/form/SelectOptions.svelte';
-  import Select from 'src/components/form/Select.svelte';
-  import TextInput from 'src/components/form/TextInput.svelte';
+  import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
+  import Select from 'src/components/inputs/Select.svelte';
+  import TextInput from 'src/components/inputs/TextInput.svelte';
   import ItemFormGroup from '../form/ItemFormGroup.svelte';
   import Checkbox from 'src/components/form/Checkbox.svelte';
 

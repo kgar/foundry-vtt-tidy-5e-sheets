@@ -8,7 +8,7 @@
   import { getContext } from 'svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import ItemProfilePicture from './parts/ItemProfilePicture.svelte';
-  import TextInput from 'src/components/form/TextInput.svelte';
+  import TextInput from 'src/components/inputs/TextInput.svelte';
   import itemSheetTabs from './itemSheetTabs';
 
   let context = getContext<Readable<ItemSheetContext>>('context');

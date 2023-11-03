@@ -1,11 +1,11 @@
 <script lang="ts">
-  import SelectOptions from 'src/components/form/SelectOptions.svelte';
+  import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { ItemSheetContext } from 'src/types/item';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import ItemFormGroup from '../form/ItemFormGroup.svelte';
-  import Select from 'src/components/form/Select.svelte';
+  import Select from 'src/components/inputs/Select.svelte';
 
   let context = getContext<Readable<ItemSheetContext>>('context');
 

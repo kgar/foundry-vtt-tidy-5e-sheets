@@ -2,12 +2,12 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import type { ItemSheetContext } from 'src/types/item';
-  import Select from 'src/components/form/Select.svelte';
+  import Select from 'src/components/inputs/Select.svelte';
   import Checkbox from 'src/components/form/Checkbox.svelte';
   import ItemActivation from './ItemActivation.svelte';
-  import SelectOptions from 'src/components/form/SelectOptions.svelte';
-  import TextInput from 'src/components/form/TextInput.svelte';
-  import NumberInput from 'src/components/form/NumberInput.svelte';
+  import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
+  import TextInput from 'src/components/inputs/TextInput.svelte';
+  import NumberInput from 'src/components/inputs/NumberInput.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import ItemAction from './ItemAction.svelte';
   import ItemFormGroup from '../form/ItemFormGroup.svelte';

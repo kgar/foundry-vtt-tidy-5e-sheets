@@ -1,5 +1,5 @@
 <script lang="ts">
-  import SelectOptions from 'src/components/form/SelectOptions.svelte';
+  import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getContext } from 'svelte';
 

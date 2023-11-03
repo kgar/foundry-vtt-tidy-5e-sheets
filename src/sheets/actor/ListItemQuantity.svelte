@@ -1,5 +1,5 @@
 <script lang="ts">
-  import NumberInput from 'src/components/form/NumberInput.svelte';
+  import NumberInput from 'src/components/inputs/NumberInput.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { settingStore } from 'src/settings/settings';
   import type { Item5e } from 'src/types/item';

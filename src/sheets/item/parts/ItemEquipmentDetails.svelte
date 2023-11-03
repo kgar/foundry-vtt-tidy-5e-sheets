@@ -7,11 +7,11 @@
   import ItemMountable from './ItemMountable.svelte';
   import ItemActivation from './ItemActivation.svelte';
   import ItemAction from './ItemAction.svelte';
-  import NumberInput from 'src/components/form/NumberInput.svelte';
-  import Select from 'src/components/form/Select.svelte';
-  import SelectOptions from 'src/components/form/SelectOptions.svelte';
+  import NumberInput from 'src/components/inputs/NumberInput.svelte';
+  import Select from 'src/components/inputs/Select.svelte';
+  import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
   import Checkbox from 'src/components/form/Checkbox.svelte';
-  import TextInput from 'src/components/form/TextInput.svelte';
+  import TextInput from 'src/components/inputs/TextInput.svelte';
 
   let context = getContext<Readable<ItemSheetContext>>('context');
 
