@@ -1,9 +1,12 @@
+import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type { Actor5e } from 'src/types/types';
 
 export type LongRestDialogResult = {
   confirmed: boolean;
   newDay?: boolean;
 };
+
+declare var Dialog: any;
 
 /**
  * A helper Dialog subclass for completing a long rest.
@@ -13,7 +16,11 @@ export type LongRestDialogResult = {
  * @param {object} [options={}]     Dialog rendering options.
  */
 export default class LongRestDialog extends Dialog {
-  constructor(actor, dialogData = {}, options = {}) {
+  constructor(
+    actor: Actor5e,
+    dialogData: Record<string, any> = {},
+    options = {}
+  ) {
     super(dialogData, options);
     this.actor = actor;
   }
@@ -22,7 +29,7 @@ export default class LongRestDialog extends Dialog {
 
   /** @inheritDoc */
   static get defaultOptions() {
-    return foundry.utils.mergeObject(super.defaultOptions, {
+    return FoundryAdapter.mergeObject(super.defaultOptions, {
       template: 'systems/dnd5e/templates/apps/long-rest.hbs',
       classes: ['dnd5e', 'dialog'],
     });
@@ -33,7 +40,7 @@ export default class LongRestDialog extends Dialog {
   /** @inheritDoc */
   getData() {
     const data = super.getData();
-    const variant = game.settings.get('dnd5e', 'restVariant');
+    const variant = FoundryAdapter.getGameSetting('dnd5e', 'restVariant');
     data.promptNewDay = variant !== 'gritty'; // It's always a new day when resting 1 week
     data.newDay = variant === 'normal'; // It's probably a new day when resting normally (8 hours)
     return data;
@@ -53,16 +60,19 @@ export default class LongRestDialog extends Dialog {
   }: {
     actor: Actor5e;
   }): Promise<LongRestDialogResult> {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       const dlg = new this(actor, {
-        title: `${game.i18n.localize('DND5E.LongRest')}: ${actor.name}`,
+        title: `${FoundryAdapter.localize('DND5E.LongRest')}: ${actor.name}`,
         buttons: {
           rest: {
             icon: '<i class="fas fa-bed"></i>',
-            label: game.i18n.localize('DND5E.Rest'),
-            callback: (html) => {
+            label: FoundryAdapter.localize('DND5E.Rest'),
+            callback: (html: any) => {
               let newDay = true;
-              if (game.settings.get('dnd5e', 'restVariant') !== 'gritty') {
+              if (
+                FoundryAdapter.getGameSetting('dnd5e', 'restVariant') !==
+                'gritty'
+              ) {
                 newDay = html.find('input[name="newDay"]')[0].checked;
               }
               resolve({ confirmed: true, newDay });
@@ -70,7 +80,7 @@ export default class LongRestDialog extends Dialog {
           },
           cancel: {
             icon: '<i class="fas fa-times"></i>',
-            label: game.i18n.localize('Cancel'),
+            label: FoundryAdapter.localize('Cancel'),
             callback: () => resolve({ confirmed: false }),
           },
         },
