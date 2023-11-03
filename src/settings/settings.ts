@@ -210,7 +210,8 @@ export function createSettings() {
           scope: 'world',
           config: false,
           type: String,
-          choices: () => getTabsAsConfigOptions(getAllRegisteredCharacterSheetTabs()),
+          choices: () =>
+            getTabsAsConfigOptions(getAllRegisteredCharacterSheetTabs()),
           default: CONSTANTS.TAB_CHARACTER_ATTRIBUTES,
         },
         get() {
@@ -660,7 +661,8 @@ export function createSettings() {
           scope: 'world',
           config: false,
           type: String,
-          choices: () => getTabsAsConfigOptions(getAllRegisteredVehicleSheetTabs()),
+          choices: () =>
+            getTabsAsConfigOptions(getAllRegisteredVehicleSheetTabs()),
           default: CONSTANTS.TAB_VEHICLE_ATTRIBUTES,
         },
         get() {
@@ -1305,9 +1307,7 @@ export function createSettings() {
           config: false,
         },
         get() {
-          return FoundryAdapter.getGameSetting<string>(
-            'colorPickerHpBar'
-          );
+          return FoundryAdapter.getGameSetting<string>('colorPickerHpBar');
         },
         representsCssVariable: '--t5ek-hp-bar-color',
       },
@@ -1658,7 +1658,7 @@ export function initSettings() {
 
   settingStore = writable(getCurrentSettings());
 
-  Hooks.on('closeSettingsConfig', () => {
+  FoundryAdapter.hooksOn('closeSettingsConfig', () => {
     settingStore.set(getCurrentSettings());
   });
 }

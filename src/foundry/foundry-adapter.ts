@@ -5,7 +5,6 @@ import type {
   NpcSheetContext,
 } from 'src/types/types';
 import { CONSTANTS } from '../constants';
-import type { ActorSheet5eCharacter } from 'src/types/actor5e-sheet';
 import type { Actor5e } from 'src/types/actor';
 import type { Item5e } from 'src/types/item';
 import type { FoundryDocument } from 'src/types/document';
@@ -21,8 +20,17 @@ export const FoundryAdapter = {
   async setGameSetting(key: string, value: unknown): Promise<void> {
     await game.settings.set(CONSTANTS.MODULE_ID, key, value);
   },
-  onReady(func: Function) {
-    Hooks.on('ready', func);
+  hooksOn(hook: string, fn: Function, options?: { once: boolean }): number {
+    return Hooks.on(hook, fn, options);
+  },
+  hooksOnce(hook: string, fn: Function): number {
+    return Hooks.once(hook, fn);
+  },
+  hooksCall(hook: string, ...args: any[]): boolean {
+    return Hooks.call(hook, ...args);
+  },
+  hooksCallAll(hook: string, ...args: any[]): boolean {
+    return Hooks.callAll(hook, ...args);
   },
   onActor5eSheetRender(func: (...args: any[]) => void) {
     Hooks.on('renderActorSheet', (...args: any[]) => {
@@ -532,6 +540,28 @@ export const FoundryAdapter = {
   flattenObject(obj: Object) {
     return foundry.utils.flattenObject(obj || {});
   },
+  getGameItem(id: string): any | undefined {
+    return game.items.get(id);
+  },
+  getGameActor(id: string): any | undefined {
+    return game.actors.get(id);
+  },
+  registerActorSheet(sheet: any, types: string[], label: string) {
+    Actors.registerSheet(CONSTANTS.DND5E_SYSTEM_ID, sheet, {
+      types,
+      makeDefault: true,
+      label,
+    });
+  },
+  registerItemSheet(sheet: any, label: string) {
+    Items.registerSheet(CONSTANTS.DND5E_SYSTEM_ID, sheet, {
+      makeDefault: true,
+      label,
+    });
+  },
+  getModule(moduleId: string): any | undefined {
+    return game.modules.get(moduleId);
+  },
 };
 
 /* ------------------------------------------------------
@@ -551,45 +581,12 @@ export type ActorReference = {
 * Minimally stubbed foundry types to fuel the adapter.
 --------------------------------------------------------- */
 
-declare const Hooks: {
-  on: any;
-};
-
-/**
- * References the constructor of type `T`
- * @internal
- */
-type ConstructorOf<T> = new (...args: any) => T;
-
+declare const Hooks: any;
 declare const foundry: any;
-
-declare const game: {
-  user: {
-    isGM: boolean;
-  };
-  settings: {
-    get: (moduleId: string, settingName: string) => unknown;
-    set: (moduleId: string, key: string, value: unknown) => Promise<void>;
-  };
-  i18n: {
-    localize(value: string): string;
-    format(value: string, options: Record<string, unknown>): string;
-    lang: string;
-  };
-};
-declare const Actors: {
-  registerSheet(
-    system: string,
-    sheet: typeof ActorSheet5eCharacter,
-    options: unknown
-  ): unknown;
-};
-declare const CONFIG: {
-  DND5E: {
-    spellComponents: Record<string, SpellComponentRef>;
-    spellTags: Record<string, SpellTagRef>;
-  };
-};
+declare const game: any;
+declare const Actors: any;
+declare const Items: any;
+declare const CONFIG: any;
 
 type AbilityReference = {
   abbreviation: string;

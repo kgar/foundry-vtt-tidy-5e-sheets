@@ -1,9 +1,12 @@
+import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { isLessThanOneIsOne } from 'src/utils/numbers';
 
 export type ShortRestDialogResult = {
   confirmed: boolean;
   newDay?: boolean;
 };
+
+declare var Dialog: any;
 
 /**
  * A helper Dialog subclass for rolling Hit Dice on short rest.
@@ -13,19 +16,9 @@ export type ShortRestDialogResult = {
  * @param {object} [options={}]     Dialog rendering options.
  */
 export default class NpcShortRestDialog extends Dialog {
-  constructor(actor, dialogData = {}, options = {}) {
+  constructor(actor: any, dialogData: any = {}, options: any = {}) {
     super(dialogData, options);
-
-    /**
-     * Store a reference to the Actor document which is resting
-     * @type {Actor}
-     */
     this.actor = actor;
-
-    /**
-     * Track the most recently used HD denomination for re-rendering the form
-     * @type {string}
-     */
     this._denom = null;
   }
 
@@ -33,7 +26,7 @@ export default class NpcShortRestDialog extends Dialog {
 
   /** @inheritDoc */
   static get defaultOptions() {
-    return foundry.utils.mergeObject(super.defaultOptions, {
+    return FoundryAdapter.mergeObject(super.defaultOptions, {
       template: 'systems/dnd5e/templates/apps/short-rest.hbs',
       classes: ['dnd5e', 'dialog'],
     });
@@ -46,7 +39,7 @@ export default class NpcShortRestDialog extends Dialog {
     const data = super.getData();
 
     // Determine Hit Dice
-    const hd = {};
+    const hd: Record<string, any> = {};
     const hitDice = isLessThanOneIsOne(this.actor.system.details.cr) + 'd6';
     const denom = hitDice ?? 'd6';
     const available = 1; //parseInt(this.actor.system.details.cr ?? 1);
@@ -188,7 +181,7 @@ export default class NpcShortRestDialog extends Dialog {
      * @returns {boolean}                   Explicitly return `false` to prevent hit die from being rolled.
      */
     if (
-      Hooks.call(
+      FoundryAdapter.hooksCall(
         'dnd5e.preRollHitDie',
         this.actor,
         rollConfig,
@@ -220,7 +213,14 @@ export default class NpcShortRestDialog extends Dialog {
      * @param {object} updates.class  Updates that will be applied to the class.
      * @returns {boolean}             Explicitly return `false` to prevent updates from being performed.
      */
-    if (Hooks.call('dnd5e.rollHitDie', this.actor, roll, updates) === false)
+    if (
+      FoundryAdapter.hooksCall(
+        'dnd5e.rollHitDie',
+        this.actor,
+        roll,
+        updates
+      ) === false
+    )
       return roll;
 
     // Re-evaluate dhp in the event that it was changed in the previous hook

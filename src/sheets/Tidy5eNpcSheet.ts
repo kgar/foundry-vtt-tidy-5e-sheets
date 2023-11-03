@@ -295,7 +295,11 @@ export class Tidy5eNpcSheet extends dnd5e.applications.actor.ActorSheet5eNPC {
      * @param {RestConfiguration} config  Configuration options for the rest.
      * @returns {boolean}                 Explicitly return `false` to prevent the rest from being started.
      */
-    if (Hooks.call('dnd5e.preShortRest', this.actor, config) === false) return;
+    if (
+      FoundryAdapter.hooksCall('dnd5e.preShortRest', this.actor, config) ===
+      false
+    )
+      return;
 
     // Take note of the initial hit points and number of hit dice the Actor has
     const hd0 = isLessThanOneIsOne(this.actor.system.details.cr); // this.actor.system.attributes.hd;
@@ -355,7 +359,11 @@ export class Tidy5eNpcSheet extends dnd5e.applications.actor.ActorSheet5eNPC {
      * @param {RestConfiguration} config  Configuration options for the rest.
      * @returns {boolean}                 Explicitly return `false` to prevent the rest from being started.
      */
-    if (Hooks.call('dnd5e.preLongRest', this.actor, config) === false) return;
+    if (
+      FoundryAdapter.hooksCall('dnd5e.preLongRest', this.actor, config) ===
+      false
+    )
+      return;
 
     if (!config.dialog) {
       return;
@@ -473,7 +481,10 @@ export class Tidy5eNpcSheet extends dnd5e.applications.actor.ActorSheet5eNPC {
      * @param {RestResult} result  Details on the rest to be completed.
      * @returns {boolean}          Explicitly return `false` to prevent the rest updates from being performed.
      */
-    if (Hooks.call('dnd5e.preRestCompleted', this.actor, result) === false)
+    if (
+      FoundryAdapter.hooksCall('dnd5e.preRestCompleted', this.actor, result) ===
+      false
+    )
       return result;
 
     // Perform updates
@@ -490,7 +501,7 @@ export class Tidy5eNpcSheet extends dnd5e.applications.actor.ActorSheet5eNPC {
      * @param {Actor5e} actor      The actor that just completed resting.
      * @param {RestResult} result  Details on the rest completed.
      */
-    Hooks.callAll('dnd5e.restCompleted', this.actor, result);
+    FoundryAdapter.hooksCallAll('dnd5e.restCompleted', this.actor, result);
 
     // Return data summarizing the rest effects
     return result;
