@@ -14,7 +14,6 @@ import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
 import { getPercentage, isLessThanOneIsOne } from 'src/utils/numbers';
 import NpcShortRestDialog from 'src/dialogs/NpcShortRestDialog';
 import LongRestDialog from 'src/dialogs/NpcLongRestDialog';
-import { d20Roll } from 'src/utils/rolls';
 import { isNil } from 'src/utils/data';
 import type { SvelteComponent } from 'svelte';
 
@@ -349,7 +348,7 @@ export class Tidy5eNpcSheet extends dnd5e.applications.actor.ActorSheet5eNPC {
    * @param {RestConfiguration} [config]  Configuration options for a long rest.
    * @returns {Promise<RestResult>}       A Promise which resolves once the long rest workflow has completed.
    */
-  async longRest(config = {}) {
+  async longRest(config: any = {}) {
     config = FoundryAdapter.mergeObject(
       {
         dialog: true,
@@ -408,7 +407,13 @@ export class Tidy5eNpcSheet extends dnd5e.applications.actor.ActorSheet5eNPC {
    * @returns {Promise<RestResult>}  Consolidated results of the rest workflow.
    * @private
    */
-  async _rest(chat, newDay, longRest, dhd = 0, dhp = 0) {
+  async _rest(
+    chat: boolean,
+    newDay: boolean,
+    longRest: boolean,
+    dhd: number = 0,
+    dhp: number = 0
+  ): Promise<unknown> {
     // Recover hit points & hit dice on long rest
     if (longRest || newDay) {
       this.actor.update({
@@ -428,10 +433,10 @@ export class Tidy5eNpcSheet extends dnd5e.applications.actor.ActorSheet5eNPC {
       }
     } else {
       const rollData = this.actor.getRollData();
-      const roll_value = await new Roll(
-        isLessThanOneIsOne(dhd) + 'd6',
+      const roll_value = await FoundryAdapter.roll(
+        isLessThanOneIsOne(dhd).toString() + 'd6',
         rollData
-      ).roll();
+      );
       const value = roll_value.total;
       let newHpValue =
         this.actor.system.attributes.hp.value + Number(value ?? 0);
@@ -457,7 +462,7 @@ export class Tidy5eNpcSheet extends dnd5e.applications.actor.ActorSheet5eNPC {
     }
 
     // Figure out the rest of the changes
-    const result = {
+    const result: Record<string, unknown> = {
       dhd: dhd + hitDiceRecovered,
       dhp: dhp + hitPointsRecovered,
       updateData: {
@@ -520,130 +525,8 @@ export class Tidy5eNpcSheet extends dnd5e.applications.actor.ActorSheet5eNPC {
    * @param {object} options          Additional options which modify the roll
    * @returns {Promise<D20Roll|null>} A Promise which resolves to the Roll instance
    */
-  async _rollDeathSave(options = {}) {
-    const death = this.actor.flags[CONSTANTS.MODULE_ID].death ?? {};
-
-    // Display a warning if we are not at zero HP or if we already have reached 3
-    if (
-      this.actor.system.attributes.hp.value > 0 ||
-      death.failure >= 3 ||
-      death.success >= 3
-    ) {
-      ui.notifications.warn(
-        FoundryAdapter.localize('DND5E.DeathSaveUnnecessary')
-      );
-      return null;
-    }
-
-    // Evaluate a global saving throw bonus
-    const speaker = options.speaker || ChatMessage.getSpeaker({ actor: this });
-    const globalBonuses = this.actor.system.bonuses?.abilities ?? {};
-    const parts = [];
-    const data = this.actor.getRollData();
-
-    // Diamond Soul adds proficiency
-    if (this.actor.getFlag('dnd5e', 'diamondSoul')) {
-      parts.push('@prof');
-      data.prof = new Proficiency(this.actor.system.attributes.prof, 1).term;
-    }
-
-    // Include a global actor ability save bonus
-    if (globalBonuses.save) {
-      parts.push('@saveBonus');
-      data.saveBonus = Roll.replaceFormulaData(globalBonuses.save, data);
-    }
-
-    // Evaluate the roll
-    const flavor = FoundryAdapter.localize('DND5E.DeathSavingThrow');
-    const rollData = FoundryAdapter.mergeObject(
-      {
-        data,
-        title: `${flavor}: ${this.actor.name}`,
-        flavor,
-        halflingLucky: this.actor.getFlag('dnd5e', 'halflingLucky'),
-        targetValue: 10,
-        messageData: {
-          speaker: speaker,
-          'flags.dnd5e.roll': { type: 'death' },
-        },
-      },
-      options
-    );
-    rollData.parts = parts.concat(options.parts ?? []);
-
-    const roll = await d20Roll(rollData);
-    if (!roll) return null;
-
-    // Take action depending on the result
-    const details = {};
-
-    // Save success
-    if (roll.total >= (roll.options.targetValue ?? 10)) {
-      let successes = (death.success || 0) + 1;
-
-      // Critical Success = revive with 1hp
-      if (roll.isCritical) {
-        details.updates = {
-          [`flags.${CONSTANTS.MODULE_ID}.death.success`]: 0,
-          [`flags.${CONSTANTS.MODULE_ID}.death.failure`]: 0,
-          'system.attributes.hp.value': 1,
-        };
-        details.chatString = 'DND5E.DeathSaveCriticalSuccess';
-      }
-
-      // 3 Successes = survive and reset checks
-      else if (successes === 3) {
-        details.updates = {
-          [`flags.${CONSTANTS.MODULE_ID}.death.success`]: 0,
-          [`flags.${CONSTANTS.MODULE_ID}.death.failure`]: 0,
-        };
-        details.chatString = 'DND5E.DeathSaveSuccess';
-      }
-
-      // Increment successes
-      else
-        details.updates = {
-          [`flags.${CONSTANTS.MODULE_ID}.death.success`]: Math.clamped(
-            successes,
-            0,
-            3
-          ),
-        };
-    }
-
-    // Save failure
-    else {
-      let failures = (death.failure || 0) + (roll.isFumble ? 2 : 1);
-      details.updates = {
-        [`flags.${CONSTANTS.MODULE_ID}.death.failure`]: Math.clamped(
-          failures,
-          0,
-          3
-        ),
-      };
-      if (failures >= 3) {
-        // 3 Failures = death
-        details.chatString = 'DND5E.DeathSaveFailure';
-      }
-    }
-
-    if (!FoundryAdapter.isEmpty(details.updates))
-      await this.actor.update(details.updates);
-
-    // Display success/failure chat message
-    if (details.chatString) {
-      let chatData = {
-        content: FoundryAdapter.format(details.chatString, {
-          name: this.actor.name,
-        }),
-        speaker,
-      };
-      ChatMessage.applyRollMode(chatData, roll.options.rollMode);
-      await ChatMessage.create(chatData);
-    }
-
-    // Return the rolled result
-    return roll;
+  async _rollDeathSave(options: Record<string, any> = {}) {
+    return FoundryAdapter.rollNpcDeathSave(this.actor, options);
   }
 
   close(options: unknown = {}) {

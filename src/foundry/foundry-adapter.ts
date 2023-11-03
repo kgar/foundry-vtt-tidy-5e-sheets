@@ -9,6 +9,8 @@ import type { Actor5e } from 'src/types/types';
 import type { Item5e } from 'src/types/item';
 import type { FoundryDocument } from 'src/types/document';
 import { SettingsProvider } from 'src/settings/settings';
+import { warn } from 'src/utils/logging';
+import { clamp } from 'src/utils/numbers';
 
 export const FoundryAdapter = {
   userIsGm() {
@@ -584,6 +586,205 @@ export const FoundryAdapter = {
   debounce(callback: Function, delay: number): Function {
     return debounce(callback, delay);
   },
+  roll(formula: string, rollData: unknown): Promise<any> {
+    return new Roll(formula, rollData).roll();
+  },
+  async rollNpcDeathSave(
+    actor: Actor5e,
+    options: any
+  ): Promise<unknown | null> {
+    const death = actor.flags[CONSTANTS.MODULE_ID].death ?? {};
+
+    // Display a warning if we are not at zero HP or if we already have reached 3
+    if (
+      actor.system.attributes.hp.value > 0 ||
+      death.failure >= 3 ||
+      death.success >= 3
+    ) {
+      warn(FoundryAdapter.localize('DND5E.DeathSaveUnnecessary'), true);
+      return null;
+    }
+
+    // Evaluate a global saving throw bonus
+    const speaker = options.speaker || ChatMessage.getSpeaker({ actor: this });
+    const globalBonuses = actor.system.bonuses?.abilities ?? {};
+    const parts = [];
+    const data = actor.getRollData();
+
+    // Diamond Soul adds proficiency
+    if (actor.getFlag('dnd5e', 'diamondSoul')) {
+      parts.push('@prof');
+      data.prof = new dnd5e.documents.Proficiency(actor.system.attributes.prof, 1).term;
+    }
+
+    // Include a global actor ability save bonus
+    if (globalBonuses.save) {
+      parts.push('@saveBonus');
+      data.saveBonus = Roll.replaceFormulaData(globalBonuses.save, data);
+    }
+
+    // Evaluate the roll
+    const flavor = FoundryAdapter.localize('DND5E.DeathSavingThrow');
+    const rollData = FoundryAdapter.mergeObject<any>(
+      {
+        data,
+        title: `${flavor}: ${actor.name}`,
+        flavor,
+        halflingLucky: actor.getFlag('dnd5e', 'halflingLucky'),
+        targetValue: 10,
+        messageData: {
+          speaker: speaker,
+          'flags.dnd5e.roll': { type: 'death' },
+        },
+      },
+      options
+    );
+    rollData.parts = parts.concat(options.parts ?? []);
+
+    const roll = await FoundryAdapter.d20Roll(rollData);
+    if (!roll) return null;
+
+    // Take action depending on the result
+    const details: Record<string, any> = {};
+
+    // Save success
+    if (roll.total >= (roll.options.targetValue ?? 10)) {
+      let successes = (death.success || 0) + 1;
+
+      // Critical Success = revive with 1hp
+      if (roll.isCritical) {
+        details.updates = {
+          [`flags.${CONSTANTS.MODULE_ID}.death.success`]: 0,
+          [`flags.${CONSTANTS.MODULE_ID}.death.failure`]: 0,
+          'system.attributes.hp.value': 1,
+        };
+        details.chatString = 'DND5E.DeathSaveCriticalSuccess';
+      }
+
+      // 3 Successes = survive and reset checks
+      else if (successes === 3) {
+        details.updates = {
+          [`flags.${CONSTANTS.MODULE_ID}.death.success`]: 0,
+          [`flags.${CONSTANTS.MODULE_ID}.death.failure`]: 0,
+        };
+        details.chatString = 'DND5E.DeathSaveSuccess';
+      }
+
+      // Increment successes
+      else
+        details.updates = {
+          [`flags.${CONSTANTS.MODULE_ID}.death.success`]: clamp(
+            successes,
+            0,
+            3
+          ),
+        };
+    }
+
+    // Save failure
+    else {
+      let failures = (death.failure || 0) + (roll.isFumble ? 2 : 1);
+      details.updates = {
+        [`flags.${CONSTANTS.MODULE_ID}.death.failure`]: clamp(failures, 0, 3),
+      };
+      if (failures >= 3) {
+        // 3 Failures = death
+        details.chatString = 'DND5E.DeathSaveFailure';
+      }
+    }
+
+    if (!FoundryAdapter.isEmpty(details.updates))
+      await actor.update(details.updates);
+
+    // Display success/failure chat message
+    if (details.chatString) {
+      let chatData = {
+        content: FoundryAdapter.localize(details.chatString, {
+          name: actor.name,
+        }),
+        speaker,
+      };
+      ChatMessage.applyRollMode(chatData, roll.options.rollMode);
+      await ChatMessage.create(chatData);
+    }
+
+    // Return the rolled result
+    return roll;
+  },
+  async d20Roll({
+    parts = [],
+    data = {},
+    event,
+    advantage,
+    disadvantage,
+    critical = 20,
+    fumble = 1,
+    targetValue,
+    elvenAccuracy,
+    halflingLucky,
+    reliableTalent,
+    fastForward,
+    chooseModifier = false,
+    template,
+    title,
+    dialogOptions,
+    chatMessage = true,
+    messageData = {},
+    rollMode,
+    flavor,
+  }: any = {}) {
+    // Handle input arguments
+    const formula = ['1d20'].concat(parts).join(' + ');
+    const { advantageMode, isFF } = CONFIG.Dice.D20Roll.determineAdvantageMode({
+      advantage,
+      disadvantage,
+      fastForward,
+      event,
+    });
+    const defaultRollMode = rollMode || game.settings.get('core', 'rollMode');
+    if (chooseModifier && !isFF) {
+      data.mod = '@mod';
+      if ('abilityCheckBonus' in data)
+        data.abilityCheckBonus = '@abilityCheckBonus';
+    }
+
+    // Construct the D20Roll instance
+    const roll = new CONFIG.Dice.D20Roll(formula, data, {
+      flavor: flavor || title,
+      advantageMode,
+      defaultRollMode,
+      rollMode,
+      critical,
+      fumble,
+      targetValue,
+      elvenAccuracy,
+      halflingLucky,
+      reliableTalent,
+    });
+
+    // Prompt a Dialog to further configure the D20Roll
+    if (!isFF) {
+      const configured = await roll.configureDialog(
+        {
+          title,
+          chooseModifier,
+          defaultRollMode,
+          defaultAction: advantageMode,
+          defaultAbility: data?.item?.ability || data?.defaultAbility,
+          template,
+        },
+        dialogOptions
+      );
+      if (configured === null) return null;
+    } else roll.options.rollMode ??= defaultRollMode;
+
+    // Evaluate the configured roll
+    await roll.evaluate({ async: true });
+
+    // Create a Chat Message
+    if (roll && chatMessage) await roll.toMessage(messageData);
+    return roll;
+  },
 };
 
 /* ------------------------------------------------------
@@ -613,6 +814,7 @@ declare const Roll: any;
 declare const dnd5e: any;
 declare const ui: any;
 declare const debounce: any;
+declare const ChatMessage: any;
 
 type AbilityReference = {
   abbreviation: string;
@@ -666,6 +868,3 @@ declare var mergeObject: <T>(
 
 declare var expandObject: (obj: any) => any;
 declare var isEmpty: (obj: any) => boolean;
-
-type SpellComponentRef = { label: string; abbr: string };
-type SpellTagRef = { label: string; abbr: string; tag: true };
