@@ -187,7 +187,7 @@ export const FoundryAdapter = {
 
     entityWithSheet.sheet.render(true);
   },
-  createItem(dataset: Record<string, unknown>, actor: Actor5e) {
+  createItem(dataset: Record<string, any>, actor: Actor5e) {
     if (
       dataset.type === 'class' &&
       actor.system.details.level + 1 > CONFIG.DND5E.maxLevel
@@ -254,10 +254,10 @@ export const FoundryAdapter = {
   },
   getSpellAbbreviationMap() {
     const map = new Map<string, string>();
-    Object.values(CONFIG.DND5E.spellComponents).forEach(
-      (x: SpellComponentRef) => map.set(x.abbr, x.label)
+    Object.values(CONFIG.DND5E.spellComponents).forEach((x: any) =>
+      map.set(x.abbr, x.label)
     );
-    Object.values(CONFIG.DND5E.spellTags).forEach((x: SpellTagRef) =>
+    Object.values(CONFIG.DND5E.spellTags).forEach((x: any) =>
       map.set(x.abbr, x.label)
     );
     return map;
