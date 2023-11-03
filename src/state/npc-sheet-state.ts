@@ -1,9 +1,9 @@
 import type { NpcSheetContext, Tab } from 'src/types/types';
 import { derived, get, writable } from 'svelte/store';
 import { CONSTANTS } from 'src/constants';
-import NpcAbilitiesTab from 'src/sheets/npc/NpcAbilitiesTab.svelte';
-import NpcSpellbookTab from 'src/sheets/npc/NpcSpellbookTab.svelte';
-import NpcBiographyTab from 'src/sheets/npc/NpcBiographyTab.svelte';
+import NpcAbilitiesTab from 'src/sheets/npc/tabs/NpcAbilitiesTab.svelte';
+import NpcSpellbookTab from 'src/sheets/npc/tabs/NpcSpellbookTab.svelte';
+import NpcBiographyTab from 'src/sheets/npc/tabs/NpcBiographyTab.svelte';
 import ActorEffectsTab from 'src/sheets/actor/ActorEffectsTab.svelte';
 import ActorJournalTab from 'src/sheets/character/tabs/ActorJournalTab.svelte';
 import type {

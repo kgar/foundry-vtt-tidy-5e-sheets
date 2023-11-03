@@ -8,7 +8,7 @@ import type {
 } from 'src/types/types';
 import { isNil } from 'src/utils/data';
 import { get, writable } from 'svelte/store';
-import VehicleSheet from './VehicleSheet.svelte';
+import VehicleSheet from './vehicle/VehicleSheet.svelte';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
 import { applyTitleToWindow } from 'src/utils/applications';
 import type { SvelteComponent } from 'svelte';

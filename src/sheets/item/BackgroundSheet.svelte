@@ -9,7 +9,7 @@
   import type { Readable } from 'svelte/store';
   import type { ItemSheetContext } from 'src/types/item';
   import TextInput from 'src/components/inputs/TextInput.svelte';
-  import itemSheetTabs from './itemSheetTabs';
+  import itemSheetTabs from '../itemSheetTabs';
 
   let context = getContext<Readable<ItemSheetContext>>('context');
 

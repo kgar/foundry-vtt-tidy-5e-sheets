@@ -4,12 +4,12 @@
   import type { ItemSheetContext } from 'src/types/item';
   import Select from 'src/components/inputs/Select.svelte';
   import Checkbox from 'src/components/inputs/Checkbox.svelte';
-  import ItemActivation from './ItemActivation.svelte';
+  import ItemActivation from '../parts/ItemActivation.svelte';
   import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import NumberInput from 'src/components/inputs/NumberInput.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import ItemAction from './ItemAction.svelte';
+  import ItemAction from '../parts/ItemAction.svelte';
   import ItemFormGroup from '../form/ItemFormGroup.svelte';
   import { CONSTANTS } from 'src/constants';
   import { settingStore } from 'src/settings/settings';

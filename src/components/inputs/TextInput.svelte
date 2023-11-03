@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { processInputChangeDelta } from 'src/sheets/form';
+  import { processInputChangeDelta } from 'src/utils/form';
   import type { FoundryDocument } from 'src/types/document';
   import { buildDataset } from 'src/utils/data';
 

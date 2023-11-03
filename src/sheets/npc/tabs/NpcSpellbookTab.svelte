@@ -11,7 +11,7 @@
   import type { ItemLayoutMode, NpcSheetContext } from 'src/types/types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
-  import NoSpells from '../actor/NoSpells.svelte';
+  import NoSpells from '../../actor/NoSpells.svelte';
 
   let context = getContext<Readable<NpcSheetContext>>('context');
 

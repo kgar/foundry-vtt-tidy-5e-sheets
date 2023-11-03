@@ -5,7 +5,7 @@ import type {
   SheetStats,
 } from 'src/types/types';
 import { get, writable } from 'svelte/store';
-import NpcSheet from './NpcSheet.svelte';
+import NpcSheet from './npc/NpcSheet.svelte';
 import { CONSTANTS } from 'src/constants';
 import { applyTitleToWindow } from 'src/utils/applications';
 import { debug, error } from 'src/utils/logging';

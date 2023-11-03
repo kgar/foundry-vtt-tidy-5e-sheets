@@ -11,7 +11,7 @@
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import Select from 'src/components/inputs/Select.svelte';
   import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
-  import itemSheetTabs from './itemSheetTabs';
+  import itemSheetTabs from '../itemSheetTabs';
 
   let context = getContext<Readable<ItemSheetContext>>('context');
 

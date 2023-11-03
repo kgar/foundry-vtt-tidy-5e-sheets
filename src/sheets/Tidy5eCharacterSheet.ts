@@ -1,5 +1,5 @@
-import { FoundryAdapter } from '../../foundry/foundry-adapter';
-import CharacterSheet from './CharacterSheet.svelte';
+import { FoundryAdapter } from '../foundry/foundry-adapter
+import CharacterSheet from './character/CharacterSheet.svelte';
 import { debug, error } from 'src/utils/logging';
 import { SettingsProvider, settingStore } from 'src/settings/settings';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
@@ -11,7 +11,6 @@ import {
   type ItemCardStore,
   type CharacterSheetContext,
   type SheetStats,
-  type CharacterFeatureSection,
 } from 'src/types/types';
 import { applyTitleToWindow } from 'src/utils/applications';
 import type { SvelteComponent } from 'svelte';

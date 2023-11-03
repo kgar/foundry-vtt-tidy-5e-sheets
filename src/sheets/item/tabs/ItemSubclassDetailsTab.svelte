@@ -1,6 +1,6 @@
 <script lang="ts">
   import { getContext } from 'svelte';
-  import ItemSpellcasting from './ItemSpellcasting.svelte';
+  import ItemSpellcasting from '../parts/ItemSpellcasting.svelte';
   import type { Readable } from 'svelte/store';
   import type { ItemSheetContext } from 'src/types/item';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';

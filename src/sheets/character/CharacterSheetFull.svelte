@@ -6,7 +6,7 @@
     Tab,
     TidyDropdownOption,
   } from 'src/types/types';
-  import Tidy5eActorOriginSummaryConfig from '../tidy5e-actor-origin-summary-config';
+  import Tidy5eActorOriginSummaryConfig from '../../dialogs/tidy5e-actor-origin-summary-config';
   import CharacterProfile from './parts/CharacterProfile.svelte';
   import TidyDropdownList from '../../components/inputs/TidyDropdownList.svelte';
   import ActorWarnings from '../actor/ActorWarnings.svelte';

@@ -9,10 +9,10 @@ import {
   settingStore,
 } from 'src/settings/settings';
 import { debug } from 'src/utils/logging';
-import { Tidy5eCharacterSheet } from 'src/sheets/character/Tidy5eCharacterSheet';
-import { Tidy5eKgarItemSheet } from 'src/sheets/item/Tidy5eKgarItemSheet';
-import { Tidy5eNpcSheet } from 'src/sheets/npc/Tidy5eNpcSheet';
-import { Tidy5eVehicleSheet } from 'src/sheets/vehicle/Tidy5eKgarVehicleSheet';
+import { Tidy5eCharacterSheet } from 'src/sheets/Tidy5eCharacterSheet';
+import { Tidy5eKgarItemSheet } from 'src/sheets/Tidy5eItemSheet';
+import { Tidy5eNpcSheet } from 'src/sheets/Tidy5eNpcSheet';
+import { Tidy5eVehicleSheet } from 'src/sheets/Tidy5eKgarVehicleSheet';
 import { CONSTANTS } from 'src/constants';
 
 export type SettingsSheetFunctions = {

@@ -1,13 +1,13 @@
 import { FoundryAdapter } from './foundry/foundry-adapter';
-import { Tidy5eCharacterSheet } from './sheets/character/Tidy5eCharacterSheet';
+import { Tidy5eCharacterSheet } from './sheets/Tidy5eCharacterSheet';
 import './scss/core.scss';
 import { initSettings } from './settings/settings';
 import type { Dialog as ClientDialog } from './types/dialog';
 import type { globalThisUI } from './types/types';
 import type { globalThisDnd5e } from './types/dnd5e';
-import { Tidy5eKgarItemSheet } from './sheets/item/Tidy5eKgarItemSheet';
-import { Tidy5eNpcSheet } from './sheets/npc/Tidy5eNpcSheet';
-import { Tidy5eVehicleSheet } from './sheets/vehicle/Tidy5eKgarVehicleSheet';
+import { Tidy5eKgarItemSheet } from './sheets/Tidy5eItemSheet';
+import { Tidy5eNpcSheet } from './sheets/Tidy5eNpcSheet';
+import { Tidy5eVehicleSheet } from './sheets/Tidy5eKgarVehicleSheet';
 import { CONSTANTS } from './constants';
 import { getApi } from './api/api';
 

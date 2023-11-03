@@ -17,7 +17,7 @@
   import TidyDropdownList from '../../components/inputs/TidyDropdownList.svelte';
   import { isNil } from 'src/utils/data';
   import { formatAsModifier } from 'src/utils/formatting';
-  import Tidy5eActorOriginSummaryConfig from '../tidy5e-actor-origin-summary-config';
+  import Tidy5eActorOriginSummaryConfig from '../../dialogs/tidy5e-actor-origin-summary-config';
   import DelimitedTruncatedContent from 'src/components/layout/DelimitedTruncatedContent.svelte';
   import HorizontalLineSeparator from 'src/components/layout/HorizontalLineSeparator.svelte';
   import ActorMovementRow from '../actor/ActorMovementRow.svelte';

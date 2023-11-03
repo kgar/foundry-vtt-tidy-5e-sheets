@@ -1,7 +1,7 @@
 <script lang="ts">
   import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
-  import ItemActivation from './ItemActivation.svelte';
-  import ItemAction from './ItemAction.svelte';
+  import ItemActivation from '../parts/ItemActivation.svelte';
+  import ItemAction from '../parts/ItemAction.svelte';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import type { ItemSheetContext } from 'src/types/item';

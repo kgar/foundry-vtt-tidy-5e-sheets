@@ -1,10 +1,10 @@
 <script lang="ts">
   import SkillsList from 'src/sheets/actor/SkillsList.svelte';
-  import Traits from '../actor/Traits.svelte';
+  import Traits from '../../actor/Traits.svelte';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import type { ItemLayoutMode, NpcSheetContext } from 'src/types/types';
-  import Currency from '../actor/Currency.svelte';
+  import Currency from '../../actor/Currency.svelte';
   import ItemTableHeaderRow from 'src/components/item-list/ItemTableHeaderRow.svelte';
   import ItemTable from 'src/components/item-list/ItemTable.svelte';
   import ItemTableColumn from 'src/components/item-list/ItemTableColumn.svelte';
@@ -14,7 +14,7 @@
   import { CONSTANTS } from 'src/constants';
   import ItemUseButton from 'src/components/item-list/ItemUseButton.svelte';
   import ItemName from 'src/components/item-list/ItemName.svelte';
-  import ListItemQuantity from '../actor/ListItemQuantity.svelte';
+  import ListItemQuantity from '../../actor/ListItemQuantity.svelte';
   import ItemAddUses from 'src/components/item-list/ItemAddUses.svelte';
   import ItemDeleteControl from 'src/components/item-list/controls/ItemDeleteControl.svelte';
   import ItemDuplicateControl from 'src/components/item-list/controls/ItemDuplicateControl.svelte';
@@ -22,18 +22,18 @@
   import ItemUses from 'src/components/item-list/ItemUses.svelte';
   import ItemControls from 'src/components/item-list/ItemControls.svelte';
   import ItemTableFooter from 'src/components/item-list/ItemTableFooter.svelte';
-  import NpcLegendaryActions from './parts/NpcLegendaryActions.svelte';
+  import NpcLegendaryActions from '../parts/NpcLegendaryActions.svelte';
   import SpellbookList from 'src/components/spellbook/SpellbookList.svelte';
-  import NoSpells from '../actor/NoSpells.svelte';
+  import NoSpells from '../../actor/NoSpells.svelte';
   import SpellbookFooter from 'src/components/spellbook/SpellbookFooter.svelte';
   import ItemFilterLayoutToggle from 'src/components/item-list/ItemFilterLayoutToggle.svelte';
   import SpellbookGrid from 'src/components/spellbook/SpellbookGrid.svelte';
   import type { ItemCardContentComponent } from 'src/types/item';
   import InventoryItemCardContent from 'src/components/item-info-card/InventoryItemCardContent.svelte';
   import { settingStore } from 'src/settings/settings';
-  import EncumbranceBar from '../actor/EncumbranceBar.svelte';
-  import TabFooter from '../actor/TabFooter.svelte';
-  import AmmoSelector from '../actor/AmmoSelector.svelte';
+  import EncumbranceBar from '../../actor/EncumbranceBar.svelte';
+  import TabFooter from '../../actor/TabFooter.svelte';
+  import AmmoSelector from '../../actor/AmmoSelector.svelte';
 
   let context = getContext<Readable<NpcSheetContext>>('context');
 

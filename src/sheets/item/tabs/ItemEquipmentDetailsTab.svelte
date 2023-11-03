@@ -4,9 +4,9 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import ItemFormGroup from '../form/ItemFormGroup.svelte';
-  import ItemMountable from './ItemMountable.svelte';
-  import ItemActivation from './ItemActivation.svelte';
-  import ItemAction from './ItemAction.svelte';
+  import ItemMountable from '../parts/ItemMountable.svelte';
+  import ItemActivation from '../parts/ItemActivation.svelte';
+  import ItemAction from '../parts/ItemAction.svelte';
   import NumberInput from 'src/components/inputs/NumberInput.svelte';
   import Select from 'src/components/inputs/Select.svelte';
   import SelectOptions from 'src/components/inputs/SelectOptions.svelte';

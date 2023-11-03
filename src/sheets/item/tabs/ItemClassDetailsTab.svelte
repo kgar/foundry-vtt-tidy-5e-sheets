@@ -2,7 +2,7 @@
   import NumberInput from 'src/components/inputs/NumberInput.svelte';
   import Select from 'src/components/inputs/Select.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import ItemSpellcasting from './ItemSpellcasting.svelte';
+  import ItemSpellcasting from '../parts/ItemSpellcasting.svelte';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import type { ItemSheetContext } from 'src/types/item';

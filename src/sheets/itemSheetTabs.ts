@@ -1,17 +1,17 @@
 import { CONSTANTS } from 'src/constants';
-import ItemDescription from './parts/ItemDescription.svelte';
-import ItemDescriptionWithSidebar from './parts/ItemDescriptionWithSidebar.svelte';
-import ItemAdvancement from './parts/ItemAdvancement.svelte';
-import ItemWeaponDetails from './parts/ItemWeaponDetails.svelte';
-import ActiveEffects from './parts/ActiveEffects.svelte';
-import ItemToolDetails from './parts/ItemToolDetails.svelte';
-import ItemSubclassDetails from './parts/ItemSubclassDetails.svelte';
-import ItemSpellDetails from './parts/ItemSpellDetails.svelte';
-import ItemFeatDetails from './parts/ItemFeatDetails.svelte';
-import ItemEquipmentDetails from './parts/ItemEquipmentDetails.svelte';
-import ItemConsumableDetails from './parts/ItemConsumableDetails.svelte';
-import ItemClassDetails from './parts/ItemClassDetails.svelte';
-import ItemBackpackDetails from './parts/ItemBackpackDetails.svelte';
+import ItemDescriptionTab from './item/tabs/ItemDescriptionTab.svelte';
+import ItemDescriptionWithSidebarTab from './item/tabs/ItemDescriptionWithSidebarTab.svelte';
+import ItemAdvancementTab from './item/tabs/ItemAdvancementTab.svelte';
+import ItemWeaponDetailsTab from './item/tabs/ItemWeaponDetailsTab.svelte';
+import ItemActiveEffectsTab from './item/tabs/ItemActiveEffectsTab.svelte';
+import ItemToolDetailsTab from './item/tabs/ItemToolDetailsTab.svelte';
+import ItemSubclassDetailsTab from './item/tabs/ItemSubclassDetailsTab.svelte';
+import ItemSpellDetailsTab from './item/tabs/ItemSpellDetailsTab.svelte';
+import ItemFeatDetailsTab from './item/tabs/ItemFeatDetailsTab.svelte';
+import ItemEquipmentDetailsTab from './item/tabs/ItemEquipmentDetailsTab.svelte';
+import ItemConsumableDetailsTab from './item/tabs/ItemConsumableDetailsTab.svelte';
+import ItemClassDetailsTab from './item/tabs/ItemClassDetailsTab.svelte';
+import ItemBackpackDetailsTab from './item/tabs/ItemBackpackDetailsTab.svelte';
 
 const itemSheetTabs = {
   /**
@@ -21,7 +21,7 @@ const itemSheetTabs = {
     id: CONSTANTS.TAB_ITEM_DESCRIPTION_ID,
     displayName: 'DND5E.Description',
     content: {
-      component: ItemDescription,
+      component: ItemDescriptionTab,
       cssClass: 'flexcol',
     },
   },
@@ -32,7 +32,7 @@ const itemSheetTabs = {
     id: CONSTANTS.TAB_ITEM_DESCRIPTION_ID,
     displayName: 'DND5E.Description',
     content: {
-      component: ItemDescriptionWithSidebar,
+      component: ItemDescriptionWithSidebarTab,
       cssClass: 'flexrow',
     },
   },
@@ -43,7 +43,7 @@ const itemSheetTabs = {
     id: CONSTANTS.TAB_ITEM_ADVANCEMENT_ID,
     displayName: 'DND5E.AdvancementTitle',
     content: {
-      component: ItemAdvancement,
+      component: ItemAdvancementTab,
       cssClass: 'detail-tab-contents items-list-container',
     },
   },
@@ -54,7 +54,7 @@ const itemSheetTabs = {
     id: CONSTANTS.TAB_ITEM_DETAILS_ID,
     displayName: 'DND5E.Details',
     content: {
-      component: ItemWeaponDetails,
+      component: ItemWeaponDetailsTab,
       cssClass: 'detail-tab-contents',
     },
   },
@@ -65,7 +65,7 @@ const itemSheetTabs = {
     id: CONSTANTS.TAB_ITEM_EFFECTS_ID,
     displayName: 'DND5E.Effects',
     content: {
-      component: ActiveEffects,
+      component: ItemActiveEffectsTab,
       cssClass: 'flexcol items-list-container',
     },
   },
@@ -76,7 +76,7 @@ const itemSheetTabs = {
     id: CONSTANTS.TAB_ITEM_DETAILS_ID,
     displayName: 'DND5E.Details',
     content: {
-      component: ItemToolDetails,
+      component: ItemToolDetailsTab,
       cssClass: 'detail-tab-contents',
     },
   },
@@ -87,7 +87,7 @@ const itemSheetTabs = {
     id: CONSTANTS.TAB_ITEM_DETAILS_ID,
     displayName: 'DND5E.Details',
     content: {
-      component: ItemSubclassDetails,
+      component: ItemSubclassDetailsTab,
       cssClass: 'detail-tab-contents',
     },
   },
@@ -98,7 +98,7 @@ const itemSheetTabs = {
     id: CONSTANTS.TAB_ITEM_DETAILS_ID,
     displayName: 'DND5E.Details',
     content: {
-      component: ItemSpellDetails,
+      component: ItemSpellDetailsTab,
       cssClass: 'detail-tab-contents',
     },
   },
@@ -109,7 +109,7 @@ const itemSheetTabs = {
     id: CONSTANTS.TAB_ITEM_DETAILS_ID,
     displayName: 'DND5E.Details',
     content: {
-      component: ItemFeatDetails,
+      component: ItemFeatDetailsTab,
       cssClass: 'detail-tab-contents',
     },
   },
@@ -120,7 +120,7 @@ const itemSheetTabs = {
     id: CONSTANTS.TAB_ITEM_DETAILS_ID,
     displayName: 'DND5E.Details',
     content: {
-      component: ItemEquipmentDetails,
+      component: ItemEquipmentDetailsTab,
       cssClass: 'detail-tab-contents',
     },
   },
@@ -131,7 +131,7 @@ const itemSheetTabs = {
     id: CONSTANTS.TAB_ITEM_DETAILS_ID,
     displayName: 'DND5E.Details',
     content: {
-      component: ItemConsumableDetails,
+      component: ItemConsumableDetailsTab,
       props: {},
       cssClass: 'detail-tab-contents',
     },
@@ -143,7 +143,7 @@ const itemSheetTabs = {
     id: CONSTANTS.TAB_ITEM_DETAILS_ID,
     displayName: 'DND5E.Details',
     content: {
-      component: ItemClassDetails,
+      component: ItemClassDetailsTab,
       cssClass: 'detail-tab-contents',
     },
   },
@@ -154,7 +154,7 @@ const itemSheetTabs = {
     id: CONSTANTS.TAB_ITEM_DETAILS_ID,
     displayName: 'DND5E.Details',
     content: {
-      component: ItemBackpackDetails,
+      component: ItemBackpackDetailsTab,
       props: {},
       cssClass: 'detail-tab-contents',
     },

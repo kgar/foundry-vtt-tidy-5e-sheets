@@ -6,7 +6,7 @@
   import type { ItemSheetContext } from 'src/types/item';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
-  import ItemDescription from './ItemDescription.svelte';
+  import ItemDescription from './ItemDescriptionTab.svelte';
   import HorizontalLineSeparator from 'src/components/layout/HorizontalLineSeparator.svelte';
   import VerticalLineSeparator from 'src/components/layout/VerticalLineSeparator.svelte';
   import { settingStore } from 'src/settings/settings';
