@@ -1,4 +1,4 @@
-import { FoundryAdapter } from '../foundry/foundry-adapter
+import { FoundryAdapter } from '../foundry/foundry-adapter';
 import CharacterSheet from './character/CharacterSheet.svelte';
 import { debug, error } from 'src/utils/logging';
 import { SettingsProvider, settingStore } from 'src/settings/settings';
