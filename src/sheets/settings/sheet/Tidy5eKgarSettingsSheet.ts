@@ -6,13 +6,8 @@ import {
   getCurrentSettings,
   type CurrentSettings,
   type Tidy5eSettingKey,
-  settingStore,
 } from 'src/settings/settings';
-import { debug } from 'src/utils/logging';
-import { Tidy5eCharacterSheet } from 'src/sheets/Tidy5eCharacterSheet';
-import { Tidy5eKgarItemSheet } from 'src/sheets/Tidy5eItemSheet';
-import { Tidy5eNpcSheet } from 'src/sheets/Tidy5eNpcSheet';
-import { Tidy5eVehicleSheet } from 'src/sheets/Tidy5eKgarVehicleSheet';
+import { debug, error } from 'src/utils/logging';
 import { CONSTANTS } from 'src/constants';
 
 export type SettingsSheetFunctions = {
@@ -26,7 +21,7 @@ declare var FormApplication: any;
 
 export class Tidy5eKgarSettingsSheet extends FormApplication {
   initialTabId: string;
-  unchangedSettings: CurrentSettings;
+  unchangedSettings?: CurrentSettings;
 
   constructor(initialTabId: string, ...args: any[]) {
     super(...args);
@@ -106,6 +101,11 @@ export class Tidy5eKgarSettingsSheet extends FormApplication {
   }
 
   async applyChangedSettings(newSettings: CurrentSettings) {
+    if (!this.unchangedSettings) {
+      error('Unable to apply changed settings due to a sheet error', true);
+      return;
+    }
+
     const keys = Object.keys(this.unchangedSettings) as Tidy5eSettingKey[];
     let settingsUpdated = false;
     for (let key of keys) {
@@ -124,32 +124,5 @@ export class Tidy5eKgarSettingsSheet extends FormApplication {
   async saveChangedSettings(newSettings: CurrentSettings) {
     await this.applyChangedSettings(newSettings);
     this.close();
-  }
-
-  async redrawOpenTidy5eSheets() {
-    game.actors
-      .filter(
-        (a: any) =>
-          a.sheet.rendered &&
-          (a.sheet instanceof Tidy5eCharacterSheet ||
-            a.sheet instanceof Tidy5eNpcSheet ||
-            a.sheet instanceof Tidy5eVehicleSheet)
-      )
-      .map((a: any) => a.sheet.render(true));
-
-    game.items
-      .filter(
-        (a: any) => a.sheet.rendered && a.sheet instanceof Tidy5eKgarItemSheet
-      )
-      .map((a: any) => a.sheet.render(true));
-
-    game.actors
-      .map((a: any) =>
-        a.items.filter(
-          (i: any) => i.sheet.rendered && a.sheet instanceof Tidy5eKgarItemSheet
-        )
-      )
-      .flat()
-      .map((s: any) => s.render(true));
   }
 }
