@@ -95,6 +95,9 @@ export const FoundryAdapter = {
   ) {
     return mergeObject(original, other, options);
   },
+  expandObject(data: any) {
+    return expandObject(data);
+  },
   tryGetFlag<T>(flagged: any, flagName: string) {
     return flagged.getFlag(CONSTANTS.MODULE_ID, flagName) as
       | T
@@ -526,6 +529,9 @@ export const FoundryAdapter = {
     }
     return showLimitedSheet;
   },
+  flattenObject(obj: Object) {
+    return foundry.utils.flattenObject(obj || {});
+  },
 };
 
 /* ------------------------------------------------------
@@ -634,6 +640,8 @@ declare var mergeObject: <T>(
   other: Partial<T>,
   options?: Partial<MergeObjectOptions>
 ) => T;
+
+declare var expandObject: (obj: any) => any;
 
 type SpellComponentRef = { label: string; abbr: string };
 type SpellTagRef = { label: string; abbr: string; tag: true };
