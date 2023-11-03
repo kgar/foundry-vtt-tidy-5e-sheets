@@ -112,7 +112,7 @@ export class Tidy5eKgarSettingsSheet extends FormApplication {
       const currentValue = this.unchangedSettings[key];
       const newValue = newSettings[key];
       if (currentValue !== newValue) {
-        await FoundryAdapter.setGameSetting(key, newValue);
+        await FoundryAdapter.setTidySetting(key, newValue);
         debug(`Updated ${key} to ${newValue}`);
         settingsUpdated = true;
       }

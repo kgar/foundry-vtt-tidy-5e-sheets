@@ -14,11 +14,27 @@ export const FoundryAdapter = {
   userIsGm() {
     return game.user.isGM;
   },
-  getGameSetting<T = string>(settingName: string): T {
+  getTidySetting<T = string>(settingName: string): T {
     return game.settings.get(CONSTANTS.MODULE_ID, settingName) as T;
   },
-  async setGameSetting(key: string, value: unknown): Promise<void> {
+  async setTidySetting(key: string, value: unknown): Promise<void> {
     await game.settings.set(CONSTANTS.MODULE_ID, key, value);
+  },
+  registerTidySetting(key: string, data: any): void {
+    game.settings.register(CONSTANTS.MODULE_ID, key, data);
+  },
+  registerTidyMenu(key: string, data: any): void {
+    game.settings.register(CONSTANTS.MODULE_ID, key, data);
+  },
+  getGameSetting<T = string>(namespace: string, settingName: string): T {
+    return game.settings.get(namespace, settingName) as T;
+  },
+  async setGameSetting(
+    namespace: string,
+    key: string,
+    value: unknown
+  ): Promise<void> {
+    await game.settings.set(namespace, key, value);
   },
   hooksOn(hook: string, fn: Function, options?: { once: boolean }): number {
     return Hooks.on(hook, fn, options);
@@ -565,6 +581,9 @@ export const FoundryAdapter = {
   getModule(moduleId: string): any | undefined {
     return game.modules.get(moduleId);
   },
+  debounce(callback: Function, delay: number): Function {
+    return debounce(callback, delay);
+  },
 };
 
 /* ------------------------------------------------------
@@ -593,6 +612,7 @@ declare const CONFIG: any;
 declare const Roll: any;
 declare const dnd5e: any;
 declare const ui: any;
+declare const debounce: any;
 
 type AbilityReference = {
   abbreviation: string;

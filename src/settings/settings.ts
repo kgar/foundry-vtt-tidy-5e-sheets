@@ -149,7 +149,7 @@ export function createSettings() {
           },
         },
         get() {
-          return FoundryAdapter.getGameSetting<string>('defaultTheme');
+          return FoundryAdapter.getTidySetting<string>('defaultTheme');
         },
       },
       // Color Theme
@@ -182,7 +182,7 @@ export function createSettings() {
           },
         },
         get() {
-          return FoundryAdapter.getGameSetting<string>('colorScheme');
+          return FoundryAdapter.getTidySetting<string>('colorScheme');
         },
       },
 
@@ -197,7 +197,7 @@ export function createSettings() {
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getGameSetting<boolean>('rightClickDisabled');
+          return FoundryAdapter.getTidySetting<boolean>('rightClickDisabled');
         },
       },
 
@@ -215,7 +215,7 @@ export function createSettings() {
           default: CONSTANTS.TAB_CHARACTER_ATTRIBUTES,
         },
         get() {
-          return FoundryAdapter.getGameSetting<string>(
+          return FoundryAdapter.getTidySetting<string>(
             'defaultCharacterSheetTab'
           );
         },
@@ -231,7 +231,7 @@ export function createSettings() {
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getGameSetting<boolean>(
+          return FoundryAdapter.getTidySetting<boolean>(
             'enableClassicControlsForCharacter'
           );
         },
@@ -247,7 +247,7 @@ export function createSettings() {
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getGameSetting<boolean>(
+          return FoundryAdapter.getTidySetting<boolean>(
             'hideIconsNextToTheItemName'
           );
         },
@@ -264,7 +264,7 @@ export function createSettings() {
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getGameSetting<boolean>('itemCardsForAllItems');
+          return FoundryAdapter.getTidySetting<boolean>('itemCardsForAllItems');
         },
       },
 
@@ -278,7 +278,7 @@ export function createSettings() {
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getGameSetting<boolean>('itemCardsForNpcs');
+          return FoundryAdapter.getTidySetting<boolean>('itemCardsForNpcs');
         },
       },
 
@@ -292,7 +292,7 @@ export function createSettings() {
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getGameSetting<boolean>('itemCardsAreFloating');
+          return FoundryAdapter.getTidySetting<boolean>('itemCardsAreFloating');
         },
       },
 
@@ -306,7 +306,7 @@ export function createSettings() {
           type: Number,
         },
         get() {
-          return FoundryAdapter.getGameSetting<number>('itemCardsDelay');
+          return FoundryAdapter.getTidySetting<number>('itemCardsDelay');
         },
       },
 
@@ -320,7 +320,7 @@ export function createSettings() {
           type: String,
         },
         get() {
-          return FoundryAdapter.getGameSetting<string>('itemCardsFixKey');
+          return FoundryAdapter.getTidySetting<string>('itemCardsFixKey');
         },
       },
 
@@ -335,7 +335,7 @@ export function createSettings() {
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getGameSetting<boolean>('traitLabelsEnabled');
+          return FoundryAdapter.getTidySetting<boolean>('traitLabelsEnabled');
         },
       },
 
@@ -352,7 +352,7 @@ export function createSettings() {
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getGameSetting<boolean>(
+          return FoundryAdapter.getTidySetting<boolean>(
             'characterJournalTabDisabled'
           );
         },
@@ -368,7 +368,7 @@ export function createSettings() {
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getGameSetting<boolean>(
+          return FoundryAdapter.getTidySetting<boolean>(
             'journalTabNPCDisabled'
           );
         },
@@ -384,7 +384,7 @@ export function createSettings() {
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getGameSetting<boolean>('classListDisabled');
+          return FoundryAdapter.getTidySetting<boolean>('classListDisabled');
         },
       },
 
@@ -398,7 +398,7 @@ export function createSettings() {
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getGameSetting<boolean>(
+          return FoundryAdapter.getTidySetting<boolean>(
             'inspirationAnimationDisabled'
           );
         },
@@ -414,7 +414,7 @@ export function createSettings() {
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getGameSetting<boolean>('hideIfZero');
+          return FoundryAdapter.getTidySetting<boolean>('hideIfZero');
         },
       },
 
@@ -428,7 +428,7 @@ export function createSettings() {
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getGameSetting<boolean>('inspirationOnHover');
+          return FoundryAdapter.getTidySetting<boolean>('inspirationOnHover');
         },
       },
 
@@ -442,7 +442,7 @@ export function createSettings() {
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getGameSetting<boolean>('exhaustionOnHover');
+          return FoundryAdapter.getTidySetting<boolean>('exhaustionOnHover');
         },
       },
 
@@ -456,7 +456,7 @@ export function createSettings() {
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getGameSetting<boolean>('hpBarDisabled');
+          return FoundryAdapter.getTidySetting<boolean>('hpBarDisabled');
         },
       },
 
@@ -470,7 +470,7 @@ export function createSettings() {
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getGameSetting<boolean>('hpOverlayDisabled');
+          return FoundryAdapter.getTidySetting<boolean>('hpOverlayDisabled');
         },
       },
 
@@ -484,7 +484,7 @@ export function createSettings() {
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getGameSetting<boolean>('traitsTogglePc');
+          return FoundryAdapter.getTidySetting<boolean>('traitsTogglePc');
         },
       },
 
@@ -498,7 +498,7 @@ export function createSettings() {
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getGameSetting<boolean>(
+          return FoundryAdapter.getTidySetting<boolean>(
             'traitsMovedBelowResource'
           );
         },
@@ -514,7 +514,7 @@ export function createSettings() {
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getGameSetting<boolean>('ammoEquippedOnly');
+          return FoundryAdapter.getTidySetting<boolean>('ammoEquippedOnly');
         },
       },
 
@@ -530,7 +530,7 @@ export function createSettings() {
           default: CONSTANTS.TAB_NPC_ABILITIES,
         },
         get() {
-          return FoundryAdapter.getGameSetting<string>('defaultNpcSheetTab');
+          return FoundryAdapter.getTidySetting<string>('defaultNpcSheetTab');
         },
       },
 
@@ -544,7 +544,7 @@ export function createSettings() {
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getGameSetting<boolean>(
+          return FoundryAdapter.getTidySetting<boolean>(
             'enableClassicControlsForNpc'
           );
         },
@@ -560,7 +560,7 @@ export function createSettings() {
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getGameSetting<boolean>(
+          return FoundryAdapter.getTidySetting<boolean>(
             'traitsMovedBelowResourceNpc'
           );
         },
@@ -576,7 +576,7 @@ export function createSettings() {
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getGameSetting<boolean>('hpBarDisabledNpc');
+          return FoundryAdapter.getTidySetting<boolean>('hpBarDisabledNpc');
         },
       },
 
@@ -590,7 +590,7 @@ export function createSettings() {
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getGameSetting<boolean>('hpOverlayDisabledNpc');
+          return FoundryAdapter.getTidySetting<boolean>('hpOverlayDisabledNpc');
         },
       },
 
@@ -604,7 +604,7 @@ export function createSettings() {
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getGameSetting<boolean>('traitsAlwaysShownNpc');
+          return FoundryAdapter.getTidySetting<boolean>('traitsAlwaysShownNpc');
         },
       },
 
@@ -618,7 +618,7 @@ export function createSettings() {
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getGameSetting<boolean>('skillsAlwaysShownNpc');
+          return FoundryAdapter.getTidySetting<boolean>('skillsAlwaysShownNpc');
         },
       },
 
@@ -632,7 +632,7 @@ export function createSettings() {
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getGameSetting<boolean>('hideSpellbookTabNpc');
+          return FoundryAdapter.getTidySetting<boolean>('hideSpellbookTabNpc');
         },
       },
 
@@ -646,7 +646,7 @@ export function createSettings() {
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getGameSetting<boolean>(
+          return FoundryAdapter.getTidySetting<boolean>(
             'enableNpcEncumbranceBar'
           );
         },
@@ -666,7 +666,7 @@ export function createSettings() {
           default: CONSTANTS.TAB_VEHICLE_ATTRIBUTES,
         },
         get() {
-          return FoundryAdapter.getGameSetting<string>(
+          return FoundryAdapter.getTidySetting<string>(
             'defaultVehicleSheetTab'
           );
         },
@@ -682,7 +682,7 @@ export function createSettings() {
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getGameSetting<boolean>(
+          return FoundryAdapter.getTidySetting<boolean>(
             'enableClassicControlsForVehicle'
           );
         },
@@ -698,7 +698,7 @@ export function createSettings() {
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getGameSetting<boolean>('hpBarDisabledVehicle');
+          return FoundryAdapter.getTidySetting<boolean>('hpBarDisabledVehicle');
         },
       },
 
@@ -712,7 +712,7 @@ export function createSettings() {
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getGameSetting<boolean>(
+          return FoundryAdapter.getTidySetting<boolean>(
             'hpOverlayDisabledVehicle'
           );
         },
@@ -732,7 +732,7 @@ export function createSettings() {
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getGameSetting<boolean>('playerNameEnabled');
+          return FoundryAdapter.getTidySetting<boolean>('playerNameEnabled');
         },
       },
 
@@ -747,7 +747,7 @@ export function createSettings() {
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getGameSetting<boolean>('expandedSheetEnabled');
+          return FoundryAdapter.getTidySetting<boolean>('expandedSheetEnabled');
         },
       },
 
@@ -773,7 +773,7 @@ export function createSettings() {
           default: CONSTANTS.ROUNDED_PORTRAIT_OPTION_ALL,
         },
         get(): string {
-          return FoundryAdapter.getGameSetting<string>('portraitStyle');
+          return FoundryAdapter.getTidySetting<string>('portraitStyle');
         },
       },
 
@@ -788,7 +788,7 @@ export function createSettings() {
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getGameSetting<boolean>('editTotalLockEnabled');
+          return FoundryAdapter.getTidySetting<boolean>('editTotalLockEnabled');
         },
       },
 
@@ -802,7 +802,7 @@ export function createSettings() {
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getGameSetting<boolean>(
+          return FoundryAdapter.getTidySetting<boolean>(
             'enablePermanentUnlockOnCharacterIfYouAreGM'
           );
         },
@@ -818,7 +818,7 @@ export function createSettings() {
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getGameSetting<boolean>(
+          return FoundryAdapter.getTidySetting<boolean>(
             'editEffectsGmOnlyEnabled'
           );
         },
@@ -835,7 +835,7 @@ export function createSettings() {
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getGameSetting<boolean>(
+          return FoundryAdapter.getTidySetting<boolean>(
             'hiddenDeathSavesEnabled'
           );
         },
@@ -852,7 +852,7 @@ export function createSettings() {
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getGameSetting<boolean>('hideSpellSlotMarker');
+          return FoundryAdapter.getTidySetting<boolean>('hideSpellSlotMarker');
         },
       },
 
@@ -867,7 +867,7 @@ export function createSettings() {
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getGameSetting<boolean>(
+          return FoundryAdapter.getTidySetting<boolean>(
             'hideStandardEncumbranceBar'
           );
         },
@@ -884,7 +884,7 @@ export function createSettings() {
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getGameSetting<boolean>(
+          return FoundryAdapter.getTidySetting<boolean>(
             'quantityAlwaysShownEnabled'
           );
         },
@@ -900,7 +900,7 @@ export function createSettings() {
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getGameSetting<boolean>('exhaustionDisabled');
+          return FoundryAdapter.getTidySetting<boolean>('exhaustionDisabled');
         },
       },
 
@@ -914,7 +914,7 @@ export function createSettings() {
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getGameSetting<boolean>('inspirationDisabled');
+          return FoundryAdapter.getTidySetting<boolean>('inspirationDisabled');
         },
       },
 
@@ -928,7 +928,7 @@ export function createSettings() {
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getGameSetting<boolean>(
+          return FoundryAdapter.getTidySetting<boolean>(
             'vehicleMotionDisabled'
           );
         },
@@ -945,7 +945,7 @@ export function createSettings() {
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getGameSetting<boolean>(
+          return FoundryAdapter.getTidySetting<boolean>(
             'restingForNpcsEnabled'
           );
         },
@@ -961,7 +961,7 @@ export function createSettings() {
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getGameSetting<boolean>(
+          return FoundryAdapter.getTidySetting<boolean>(
             'restingForNpcsChatDisabled'
           );
         },
@@ -983,7 +983,7 @@ export function createSettings() {
           default: 'default',
         },
         get() {
-          return FoundryAdapter.getGameSetting<'default' | 'unlinked' | 'both'>(
+          return FoundryAdapter.getTidySetting<'default' | 'unlinked' | 'both'>(
             'linkMarkerNpc'
           );
         },
@@ -1000,7 +1000,7 @@ export function createSettings() {
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getGameSetting<boolean>('activeEffectsMarker');
+          return FoundryAdapter.getTidySetting<boolean>('activeEffectsMarker');
         },
       },
 
@@ -1015,7 +1015,7 @@ export function createSettings() {
           default: 740,
         },
         get() {
-          return FoundryAdapter.getGameSetting<number>('playerSheetWidth');
+          return FoundryAdapter.getTidySetting<number>('playerSheetWidth');
         },
       },
 
@@ -1030,7 +1030,7 @@ export function createSettings() {
           default: 740,
         },
         get() {
-          return FoundryAdapter.getGameSetting<number>('npcSheetWidth');
+          return FoundryAdapter.getTidySetting<number>('npcSheetWidth');
         },
       },
 
@@ -1044,7 +1044,7 @@ export function createSettings() {
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getGameSetting<boolean>(
+          return FoundryAdapter.getTidySetting<boolean>(
             'enablePermanentUnlockOnNPCIfYouAreGM'
           );
         },
@@ -1061,7 +1061,7 @@ export function createSettings() {
           default: 740,
         },
         get() {
-          return FoundryAdapter.getGameSetting<number>('vehicleSheetWidth');
+          return FoundryAdapter.getTidySetting<number>('vehicleSheetWidth');
         },
       },
 
@@ -1075,7 +1075,7 @@ export function createSettings() {
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getGameSetting<boolean>(
+          return FoundryAdapter.getTidySetting<boolean>(
             'enablePermanentUnlockOnVehicleIfYouAreGM'
           );
         },
@@ -1093,7 +1093,7 @@ export function createSettings() {
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getGameSetting<boolean>(
+          return FoundryAdapter.getTidySetting<boolean>(
             'enableSortFavoritesItemsAlphabetically'
           );
         },
@@ -1111,7 +1111,7 @@ export function createSettings() {
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getGameSetting<boolean>('lockMoneyChanges');
+          return FoundryAdapter.getTidySetting<boolean>('lockMoneyChanges');
         },
       },
 
@@ -1125,7 +1125,7 @@ export function createSettings() {
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getGameSetting<boolean>('lockExpChanges');
+          return FoundryAdapter.getTidySetting<boolean>('lockExpChanges');
         },
       },
 
@@ -1139,7 +1139,7 @@ export function createSettings() {
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getGameSetting<boolean>('lockHpMaxChanges');
+          return FoundryAdapter.getTidySetting<boolean>('lockHpMaxChanges');
         },
       },
 
@@ -1153,7 +1153,7 @@ export function createSettings() {
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getGameSetting<boolean>('lockLevelSelector');
+          return FoundryAdapter.getTidySetting<boolean>('lockLevelSelector');
         },
       },
 
@@ -1167,7 +1167,7 @@ export function createSettings() {
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getGameSetting<boolean>('lockConfigureSheet');
+          return FoundryAdapter.getTidySetting<boolean>('lockConfigureSheet');
         },
       },
 
@@ -1181,7 +1181,7 @@ export function createSettings() {
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getGameSetting<boolean>('lockItemQuantity');
+          return FoundryAdapter.getTidySetting<boolean>('lockItemQuantity');
         },
       },
 
@@ -1197,7 +1197,7 @@ export function createSettings() {
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getGameSetting<boolean>(
+          return FoundryAdapter.getTidySetting<boolean>(
             'allowCantripsToBePrepared'
           );
         },
@@ -1213,7 +1213,7 @@ export function createSettings() {
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getGameSetting<boolean>(
+          return FoundryAdapter.getTidySetting<boolean>(
             'spellClassFilterSelect'
           );
         },
@@ -1229,7 +1229,7 @@ export function createSettings() {
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getGameSetting<boolean>(
+          return FoundryAdapter.getTidySetting<boolean>(
             'spellClassFilterIconReplace'
           );
         },
@@ -1245,7 +1245,7 @@ export function createSettings() {
           type: String,
         },
         get() {
-          return FoundryAdapter.getGameSetting<string>(
+          return FoundryAdapter.getTidySetting<string>(
             'spellClassFilterAdditionalClasses'
           );
         },
@@ -1261,7 +1261,7 @@ export function createSettings() {
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getGameSetting<boolean>('allowHpMaxOverride');
+          return FoundryAdapter.getTidySetting<boolean>('allowHpMaxOverride');
         },
       },
 
@@ -1277,7 +1277,7 @@ export function createSettings() {
           config: false,
         },
         get() {
-          return FoundryAdapter.getGameSetting<boolean>('colorPickerEnabled');
+          return FoundryAdapter.getTidySetting<boolean>('colorPickerEnabled');
         },
       },
 
@@ -1291,7 +1291,7 @@ export function createSettings() {
           config: false,
         },
         get() {
-          return FoundryAdapter.getGameSetting<string>(
+          return FoundryAdapter.getTidySetting<string>(
             'colorPickerPrimaryAccent'
           );
         },
@@ -1307,7 +1307,7 @@ export function createSettings() {
           config: false,
         },
         get() {
-          return FoundryAdapter.getGameSetting<string>('colorPickerHpBar');
+          return FoundryAdapter.getTidySetting<string>('colorPickerHpBar');
         },
         representsCssVariable: '--t5ek-hp-bar-color',
       },
@@ -1321,7 +1321,7 @@ export function createSettings() {
           config: false,
         },
         get() {
-          return FoundryAdapter.getGameSetting<string>('colorPickerEquipped');
+          return FoundryAdapter.getTidySetting<string>('colorPickerEquipped');
         },
         representsCssVariable: '--t5ek-equipped-background',
       },
@@ -1338,7 +1338,7 @@ export function createSettings() {
           config: false,
         },
         get() {
-          return FoundryAdapter.getGameSetting<string>(
+          return FoundryAdapter.getTidySetting<string>(
             'colorPickerEquippedOutline'
           );
         },
@@ -1357,7 +1357,7 @@ export function createSettings() {
           config: false,
         },
         get() {
-          return FoundryAdapter.getGameSetting<string>(
+          return FoundryAdapter.getTidySetting<string>(
             'colorPickerEquippedAccent'
           );
         },
@@ -1374,7 +1374,7 @@ export function createSettings() {
           config: false,
         },
         get() {
-          return FoundryAdapter.getGameSetting<string>('colorPickerPrepared');
+          return FoundryAdapter.getTidySetting<string>('colorPickerPrepared');
         },
         representsCssVariable: '--t5ek-prepared-background',
       },
@@ -1391,7 +1391,7 @@ export function createSettings() {
           config: false,
         },
         get() {
-          return FoundryAdapter.getGameSetting<string>(
+          return FoundryAdapter.getTidySetting<string>(
             'colorPickerPreparedOutline'
           );
         },
@@ -1410,7 +1410,7 @@ export function createSettings() {
           config: false,
         },
         get() {
-          return FoundryAdapter.getGameSetting<string>(
+          return FoundryAdapter.getTidySetting<string>(
             'colorPickerPreparedAccent'
           );
         },
@@ -1427,7 +1427,7 @@ export function createSettings() {
           config: false,
         },
         get() {
-          return FoundryAdapter.getGameSetting<string>('colorPickerPact');
+          return FoundryAdapter.getTidySetting<string>('colorPickerPact');
         },
         representsCssVariable: '--t5ek-pact-background',
       },
@@ -1441,7 +1441,7 @@ export function createSettings() {
           config: false,
         },
         get() {
-          return FoundryAdapter.getGameSetting<string>(
+          return FoundryAdapter.getTidySetting<string>(
             'colorPickerPactOutline'
           );
         },
@@ -1457,7 +1457,7 @@ export function createSettings() {
           config: false,
         },
         get() {
-          return FoundryAdapter.getGameSetting<string>('colorPickerPactAccent');
+          return FoundryAdapter.getTidySetting<string>('colorPickerPactAccent');
         },
         representsCssVariable: '--t5ek-pact-accent-color',
       },
@@ -1472,7 +1472,7 @@ export function createSettings() {
           config: false,
         },
         get() {
-          return FoundryAdapter.getGameSetting<string>('colorPickerAtWill');
+          return FoundryAdapter.getTidySetting<string>('colorPickerAtWill');
         },
         representsCssVariable: '--t5ek-atwill-background',
       },
@@ -1486,7 +1486,7 @@ export function createSettings() {
           config: false,
         },
         get() {
-          return FoundryAdapter.getGameSetting<string>(
+          return FoundryAdapter.getTidySetting<string>(
             'colorPickerAtWillOutline'
           );
         },
@@ -1502,7 +1502,7 @@ export function createSettings() {
           config: false,
         },
         get() {
-          return FoundryAdapter.getGameSetting<string>(
+          return FoundryAdapter.getTidySetting<string>(
             'colorPickerAtWillAccent'
           );
         },
@@ -1519,7 +1519,7 @@ export function createSettings() {
           config: false,
         },
         get() {
-          return FoundryAdapter.getGameSetting<string>('colorPickerInnate');
+          return FoundryAdapter.getTidySetting<string>('colorPickerInnate');
         },
         representsCssVariable: '--t5ek-innate-background',
       },
@@ -1533,7 +1533,7 @@ export function createSettings() {
           config: false,
         },
         get() {
-          return FoundryAdapter.getGameSetting<string>(
+          return FoundryAdapter.getTidySetting<string>(
             'colorPickerInnateOutline'
           );
         },
@@ -1549,7 +1549,7 @@ export function createSettings() {
           config: false,
         },
         get() {
-          return FoundryAdapter.getGameSetting<string>(
+          return FoundryAdapter.getTidySetting<string>(
             'colorPickerInnateAccent'
           );
         },
@@ -1567,7 +1567,7 @@ export function createSettings() {
           config: false,
         },
         get() {
-          return FoundryAdapter.getGameSetting<string>(
+          return FoundryAdapter.getTidySetting<string>(
             'colorPickerAlwaysPrepared'
           );
         },
@@ -1584,7 +1584,7 @@ export function createSettings() {
           config: false,
         },
         get() {
-          return FoundryAdapter.getGameSetting<string>(
+          return FoundryAdapter.getTidySetting<string>(
             'colorPickerAlwaysPreparedOutline'
           );
         },
@@ -1601,7 +1601,7 @@ export function createSettings() {
           config: false,
         },
         get() {
-          return FoundryAdapter.getGameSetting<string>(
+          return FoundryAdapter.getTidySetting<string>(
             'colorPickerAlwaysPreparedAccent'
           );
         },
@@ -1618,7 +1618,7 @@ export function createSettings() {
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getGameSetting<boolean>('debug');
+          return FoundryAdapter.getTidySetting<boolean>('debug');
         },
       },
     } satisfies Tidy5eSettings,
@@ -1631,16 +1631,14 @@ export function initSettings() {
   SettingsProvider = createSettings();
 
   for (let menu of Object.entries(SettingsProvider.menus)) {
-    // TODO: Need some way to notify when new setting menus are not configured correctly; doesn't have to be perfect
-    game.settings.registerMenu(CONSTANTS.MODULE_ID, menu[0], menu[1].options);
+    FoundryAdapter.registerTidyMenu(menu[0], menu[1].options);
   }
 
-  const debouncedSettingStoreRefresh = foundry.utils.debounce(() => {
+  const debouncedSettingStoreRefresh = FoundryAdapter.debounce(() => {
     settingStore.set(getCurrentSettings());
   }, 100);
 
   for (let setting of Object.entries(SettingsProvider.settings)) {
-    // TODO: Need some way to notify when new settings are not configured correctly; doesn't have to be perfect
     const options = {
       ...setting[1].options,
       onChange: (...args: any[]) => {
@@ -1649,7 +1647,7 @@ export function initSettings() {
         (setting[1].options as any).onChange?.(...args);
       },
     };
-    game.settings.register(CONSTANTS.MODULE_ID, setting[0], options);
+    FoundryAdapter.registerTidySetting(setting[0], options);
   }
 
   SettingsProvider.settings.colorScheme.options.onChange(

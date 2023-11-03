@@ -73,10 +73,10 @@ export class Tidy5eKgarThemeSettingsSheet extends FormApplication {
 
   async saveChangedSettings(newSettings: CurrentSettings) {
     for (let color of this.themeableColors) {
-      await FoundryAdapter.setGameSetting(color.key, newSettings[color.key]);
+      await FoundryAdapter.setTidySetting(color.key, newSettings[color.key]);
     }
 
-    await FoundryAdapter.setGameSetting(
+    await FoundryAdapter.setTidySetting(
       'colorPickerEnabled',
       newSettings.colorPickerEnabled
     );

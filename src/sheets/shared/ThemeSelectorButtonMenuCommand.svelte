@@ -9,7 +9,7 @@
   const idSuffix = Date.now().toString();
 
   function setTheme(value: string) {
-    FoundryAdapter.setGameSetting('colorScheme', value);
+    FoundryAdapter.setTidySetting('colorScheme', value);
   }
 
   const localize = FoundryAdapter.localize;
