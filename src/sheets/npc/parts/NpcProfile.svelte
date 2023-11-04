@@ -27,8 +27,9 @@
 <ActorProfile useHpOverlay={!$settingStore.hpOverlayDisabledNpc}>
   {#if incapacitated && (!$settingStore.hiddenDeathSavesEnabled || FoundryAdapter.userIsGm())}
     <DeathSaves
-      successes={FoundryAdapter.tryGetFlag($context.actor, 'death')?.success ?? 0}
-      failures={FoundryAdapter.tryGetFlag($context.actor, 'death')?.failure ?? 0}
+      successes={FoundryAdapter.tryGetFlag($context.actor, 'death.success') ??
+        0}
+      failures={FoundryAdapter.tryGetFlag($context.actor, 'death.failure') ?? 0}
       successesField="flags.{CONSTANTS.MODULE_ID}.death.success"
       failuresField="flags.{CONSTANTS.MODULE_ID}.death.failure"
       on:rollDeathSave={(event) =>
