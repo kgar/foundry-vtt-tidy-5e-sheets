@@ -41,12 +41,12 @@
     }
   }
 
-  $: sizes = <TidyDropdownOption[]>Object.entries($context.config.actorSizes).map(
-    ([abbreviation, size]) => ({
-      value: abbreviation,
-      text: size as string,
-    })
-  );
+  $: sizes = <TidyDropdownOption[]>Object.entries(
+    $context.config.actorSizes
+  ).map(([abbreviation, size]) => ({
+    value: abbreviation,
+    text: size as string,
+  }));
 
   $: currentSize = <TidyDropdownOption>{
     value: $context.system.traits.size,
@@ -145,9 +145,7 @@
                   class:highlight-on-hover={$context.owner}
                   disabled={!$context.owner}
                   on:click={() =>
-                    new dnd5e.applications.actor.ActorTypeConfig(
-                      $context.actor
-                    ).render(true)}
+                    FoundryAdapter.openActorTypeConfig($context.actor)}
                   title="{$context.labels.type} ({localize(
                     'DND5E.CreatureTypeConfig'
                   )})"
@@ -159,8 +157,8 @@
                 >
                 <span
                   class="environment"
-                  title="{localize('T5EK.Environment')}: {$context.system.details
-                    .environment}"
+                  title="{localize('T5EK.Environment')}: {$context.system
+                    .details.environment}"
                 >
                   <i class="fas fa-tree" />
                 </span>

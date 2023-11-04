@@ -878,6 +878,11 @@ export const FoundryAdapter = {
     }
     return roll;
   },
+  openActorTypeConfig(actor: Actor5e) {
+    return new dnd5e.applications.actor.ActorTypeConfig(
+      actor
+    ).render(true);
+  }
 };
 
 /* ------------------------------------------------------
