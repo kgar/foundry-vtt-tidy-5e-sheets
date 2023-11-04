@@ -13,9 +13,11 @@
 
     const formula = $context.actor.system.attributes.hp.formula;
     if (!formula) return;
-    const roll_hp = await new Roll(formula).evaluate({ async: true });
+    const roll_hp = await FoundryAdapter.roll(formula, undefined, {
+      async: true,
+    });
     const hp = roll_hp.total;
-    AudioHelper.play({ src: CONFIG.sounds.dice });
+    FoundryAdapter.playDiceSound();
     $context.actor.update({
       'system.attributes.hp.value': hp,
       'system.attributes.hp.max': hp,
@@ -27,40 +29,7 @@
 
     let formula = $context.actor.system.attributes.hp.formula;
     debug(`tidy5e-npc | activateListeners | formula: ${formula}`);
-    let r = new Roll(formula);
-    let term = r.terms;
-    debug(`tidy5e-npc | activateListeners | term: ${term}`);
-    let averageString: string | any[] = '';
-    for (let i = 0; i < term.length; i++) {
-      let type = term[i].constructor.name;
-      switch (type) {
-        case 'Die': {
-          averageString += Math.floor(
-            (term[i].faces * term[i].number + term[i].number) / 2
-          );
-          break;
-        }
-        case 'OperatorTerm': {
-          averageString += term[i].operator;
-          break;
-        }
-        case 'NumericTerm': {
-          averageString += term[i].number;
-          break;
-        }
-        default: {
-          break;
-        }
-      }
-    }
-    debug(`tidy5e-npc | activateListeners | averageString: ${averageString}`);
-    let average = 0;
-    averageString =
-      averageString.replace(/\s/g, '').match(/[+\-]?([0-9\.\s]+)/g) ?? [];
-    while (averageString.length) {
-      average += parseFloat(averageString.shift());
-    }
-    debug(`tidy5e-npc | activateListeners | average: ${average}`);
+    const average = FoundryAdapter.calculateAverageFromFormula(formula);
 
     $context.actor.update({
       ['system.attributes.hp.value']: average,
@@ -92,8 +61,8 @@
       maxlength={12}
       title="{localize('DND5E.HPFormula')}: {$context.system.attributes.hp
         .formula}"
-          disabled={!$context.owner}
-          />
+      disabled={!$context.owner}
+    />
   </div>
 </div>
 

@@ -9,7 +9,7 @@ import type { Actor5e } from 'src/types/types';
 import type { Item5e } from 'src/types/item';
 import type { FoundryDocument } from 'src/types/document';
 import { SettingsProvider } from 'src/settings/settings';
-import { warn } from 'src/utils/logging';
+import { debug, warn } from 'src/utils/logging';
 import { clamp } from 'src/utils/numbers';
 
 export const FoundryAdapter = {
@@ -586,8 +586,12 @@ export const FoundryAdapter = {
   debounce(callback: Function, delay: number): Function {
     return debounce(callback, delay);
   },
-  roll(formula: string, rollData: unknown, options: any = {}): Promise<any> {
-    return new Roll(formula, rollData, options).roll();
+  roll(
+    formula: string,
+    rollData?: unknown,
+    rollFnOptions: any = {}
+  ): Promise<any> {
+    return new Roll(formula, rollData).roll(rollFnOptions);
   },
   async rollNpcDeathSave(
     actor: Actor5e,
@@ -879,10 +883,48 @@ export const FoundryAdapter = {
     return roll;
   },
   openActorTypeConfig(actor: Actor5e) {
-    return new dnd5e.applications.actor.ActorTypeConfig(
-      actor
-    ).render(true);
-  }
+    return new dnd5e.applications.actor.ActorTypeConfig(actor).render(true);
+  },
+  playDiceSound() {
+    return AudioHelper.play({ src: CONFIG.sounds.dice });
+  },
+  calculateAverageFromFormula(formula: string) {
+    let r = new Roll(formula);
+    let term = r.terms;
+    debug(`tidy5e-npc | activateListeners | term: ${term}`);
+    let averageString: string | any[] = '';
+    for (let i = 0; i < term.length; i++) {
+      let type = term[i].constructor.name;
+      switch (type) {
+        case 'Die': {
+          averageString += Math.floor(
+            (term[i].faces * term[i].number + term[i].number) / 2
+          );
+          break;
+        }
+        case 'OperatorTerm': {
+          averageString += term[i].operator;
+          break;
+        }
+        case 'NumericTerm': {
+          averageString += term[i].number;
+          break;
+        }
+        default: {
+          break;
+        }
+      }
+    }
+    debug(`tidy5e-npc | activateListeners | averageString: ${averageString}`);
+    let average = 0;
+    averageString =
+      averageString.replace(/\s/g, '').match(/[+\-]?([0-9\.\s]+)/g) ?? [];
+    while (averageString.length) {
+      average += parseFloat(averageString.shift());
+    }
+    debug(`tidy5e-npc | activateListeners | average: ${average}`);
+    return average;
+  },
 };
 
 /* ------------------------------------------------------
@@ -913,6 +955,7 @@ declare const dnd5e: any;
 declare const ui: any;
 declare const debounce: any;
 declare const ChatMessage: any;
+declare const AudioHelper: any;
 
 type AbilityReference = {
   abbreviation: string;
