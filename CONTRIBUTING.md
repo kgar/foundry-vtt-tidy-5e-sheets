@@ -51,6 +51,9 @@ Check that your Issue isn't a duplicate (also check the closed issues, as someti
 - Ensure that the bug is reproducible with no other modules active. If the bug only happens when another module is active, see the section on [Module Compatibility](#module-compatibility).
 - Provide clear step-by-step reproduction instructions, as well as what you expected to happen during those steps vs what actually happened.
 
+> [!NOTE]
+> An issue template is in the works. It's not ready yet.
+
 ### Feature Requests
 
 > Use the "Feature request" template.
@@ -61,18 +64,24 @@ Any feature request should be considered from the lens of "Is this in the scope 
 - If the intended feature is more specialized or specific than what one would expect in the core sheets, consider making a module that extends Tidy 5e sheets through the API.
 - Any feature addition should begin with a github issue and discussion with the maintainer and community. Surprise PRs with sweeping changes may be rejected.
 
+> [!NOTE]
+> An issue template is in the works. It's not ready yet.
+
 ### Module Compatibility
 
 > **Important**
 > Tidy 5e Sheets will not automatically work with sheet-augmenting modules which target the default 5e sheets. Tidy 5e Sheets deviates from the HTML structure of the default sheets in a variety of ways and is subject to change over time as the layouts are updated and new layouts are created.
 
-Within reason, the Maintainer(s) of this repository can provide changes to improve compatibility, but in many cases, it will be up to the module developer to utilize the provided Tidy 5e Sheets API to augment the sheets in a supported way. If it is deemed beyond the threshold of simple adjustments which make sense for these sheets, report it to the module's author and request they use the API.
+Within reason, the Maintainer(s) of this repository can make changes to improve compatibility, but in many cases, it will be up to the module developer to utilize the provided Tidy 5e Sheets API to augment the sheets in a supported way. If it is deemed beyond the threshold of simple adjustments which make sense for these sheets, report it to that module's author and request they use the API.
 
 ### API Needs
 
 > Use the "API Request" template.
 
 If there is missing API functionality, the Maintainer(s) of this module will make efforts to provide the missing functionality in a general way that will work for other module developers as well.
+
+> [!NOTE]
+> An issue template is in the works. It's not ready yet.
 
 ### Translations
 
@@ -96,10 +105,10 @@ Before (or alongside) submitting an PR, we ask that you open a feature request i
 
 If you want to work on an existing issue, leave a comment saying you're going to work on the issue so that other contributors know not to duplicate work. Similarly, if you see an issue is assigned to someone, that member of the team has made it known they are working on it.
 
-When you open an PR it is recommended to [link it to an open issue](https://docs.github.com/en/issues/tracking-your-work-with-issues/linking-a-pull-request-to-an-issue). Include which issue it resolves by putting something like this in your description:
+When you open an PR it is recommended to [link it to an open issue](https://docs.github.com/en/issues/tracking-your-work-with-issues/linking-a-pull-request-to-an-issue). Include which issue it resolves by putting something like this in your title:
 
-```text
-Closes #32
+```
+[#32] Resolves STR Check Click Bug
 ```
 
 ### Pull Request Review Process
