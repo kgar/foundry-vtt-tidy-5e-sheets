@@ -586,8 +586,8 @@ export const FoundryAdapter = {
   debounce(callback: Function, delay: number): Function {
     return debounce(callback, delay);
   },
-  roll(formula: string, rollData: unknown): Promise<any> {
-    return new Roll(formula, rollData).roll();
+  roll(formula: string, rollData: unknown, options: any = {}): Promise<any> {
+    return new Roll(formula, rollData, options).roll();
   },
   async rollNpcDeathSave(
     actor: Actor5e,
@@ -614,7 +614,10 @@ export const FoundryAdapter = {
     // Diamond Soul adds proficiency
     if (actor.getFlag('dnd5e', 'diamondSoul')) {
       parts.push('@prof');
-      data.prof = new dnd5e.documents.Proficiency(actor.system.attributes.prof, 1).term;
+      data.prof = new dnd5e.documents.Proficiency(
+        actor.system.attributes.prof,
+        1
+      ).term;
     }
 
     // Include a global actor ability save bonus
@@ -783,6 +786,96 @@ export const FoundryAdapter = {
 
     // Create a Chat Message
     if (roll && chatMessage) await roll.toMessage(messageData);
+    return roll;
+  },
+  async rollNpcHitDie(
+    actor: Actor5e,
+    flavor: string,
+    denomination: string,
+    options: any = {}
+  ): Promise<any | null> {
+    const rollConfig = FoundryAdapter.mergeObject(
+      {
+        formula: `max(0, 1${denomination} + @abilities.con.mod)`,
+        data: actor.getRollData(),
+        chatMessage: true,
+        messageData: {
+          speaker: ChatMessage.getSpeaker({ actor }),
+          flavor,
+          title: `${flavor}: ${actor.name}`,
+          rollMode: FoundryAdapter.getGameSetting('core', 'rollMode'),
+          'flags.dnd5e.roll': { type: 'hitDie' },
+        },
+      },
+      options
+    );
+
+    /**
+     * A hook event that fires before a hit die is rolled for an Actor.
+     * @function dnd5e.preRollHitDie
+     * @memberof hookEvents
+     * @param {Actor5e} actor               Actor for which the hit die is to be rolled.
+     * @param {object} config               Configuration data for the pending roll.
+     * @param {string} config.formula       Formula that will be rolled.
+     * @param {object} config.data          Data used when evaluating the roll.
+     * @param {boolean} config.chatMessage  Should a chat message be created for this roll?
+     * @param {object} config.messageData   Data used to create the chat message.
+     * @param {string} denomination         Size of hit die to be rolled.
+     * @returns {boolean}                   Explicitly return `false` to prevent hit die from being rolled.
+     */
+    if (
+      FoundryAdapter.hooksCall(
+        'dnd5e.preRollHitDie',
+        actor,
+        rollConfig,
+        denomination
+      ) === false
+    )
+      return;
+
+    const roll = await FoundryAdapter.roll(
+      rollConfig.formula,
+      rollConfig.data,
+      {
+        async: true,
+      }
+    );
+    if (rollConfig.chatMessage) roll.toMessage(rollConfig.messageData);
+
+    const hp = actor.system.attributes.hp;
+    const dhp = Math.min(hp.max + (hp.tempmax ?? 0) - hp.value, roll.total);
+    const updates = {
+      actor: { 'system.attributes.hp.value': hp.value + dhp },
+      //   class: {"system.hitDiceUsed": cls.system.hitDiceUsed + 1}
+    };
+
+    /**
+     * A hook event that fires after a hit die has been rolled for an Actor, but before updates have been performed.
+     * @function dnd5e.rollHitDie
+     * @memberof hookEvents
+     * @param {Actor5e} actor         Actor for which the hit die has been rolled.
+     * @param {Roll} roll             The resulting roll.
+     * @param {object} updates
+     * @param {object} updates.actor  Updates that will be applied to the actor.
+     * @param {object} updates.class  Updates that will be applied to the class.
+     * @returns {boolean}             Explicitly return `false` to prevent updates from being performed.
+     */
+    if (
+      FoundryAdapter.hooksCall('dnd5e.rollHitDie', actor, roll, updates) ===
+      false
+    )
+      return roll;
+
+    // Re-evaluate dhp in the event that it was changed in the previous hook
+    const updateOptions = {
+      dhp:
+        (updates.actor?.['system.attributes.hp.value'] ?? hp.value) - hp.value,
+    };
+
+    // Perform updates
+    if (!FoundryAdapter.isEmpty(updates.actor)) {
+      await actor.update(updates.actor, updateOptions);
+    }
     return roll;
   },
 };

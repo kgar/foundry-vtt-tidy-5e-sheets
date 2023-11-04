@@ -305,8 +305,9 @@ export class Tidy5eNpcSheet extends dnd5e.applications.actor.ActorSheet5eNPC {
     if (
       FoundryAdapter.hooksCall('dnd5e.preShortRest', this.actor, config) ===
       false
-    )
+    ) {
       return;
+    }
 
     // Take note of the initial hit points and number of hit dice the Actor has
     const hd0 = isLessThanOneIsOne(this.actor.system.details.cr); // this.actor.system.attributes.hd;

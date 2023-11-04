@@ -1,4 +1,5 @@
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+import { error } from 'src/utils/logging';
 import { isLessThanOneIsOne } from 'src/utils/numbers';
 
 export type ShortRestDialogResult = {
@@ -51,7 +52,7 @@ export default class NpcShortRestDialog extends Dialog {
     data.denomination = this._denom;
 
     // Determine rest type
-    const variant = game.settings.get('dnd5e', 'restVariant');
+    const variant = FoundryAdapter.getGameSetting('dnd5e', 'restVariant');
     data.promptNewDay = variant !== 'epic'; // It's never a new day when only resting 1 minute
     data.newDay = false; // It may be a new day, but not by default
     return data;
@@ -74,10 +75,15 @@ export default class NpcShortRestDialog extends Dialog {
    * @param {Event} event     The triggering click event
    * @protected
    */
-  async _onRollHitDie(event) {
+  async _onRollHitDie(event: Event) {
     event.preventDefault();
-    const btn = event.currentTarget;
-    this._denom = btn.form.hd.value;
+    const btn = event.currentTarget as any;
+    const hdValue = btn.form?.hd?.value;
+    if (hdValue === undefined) {
+      error('Unable to locate hit dice value. Unable to roll hit dice.');
+      return;
+    }
+    this._denom = hdValue;
     // await this.actor.rollHitDie(this._denom);
     await this.rollHitDieNPC(this._denom);
     this.render();
@@ -92,10 +98,11 @@ export default class NpcShortRestDialog extends Dialog {
    * @param {Actor5e} [options.actor]  Actor that is taking the short rest.
    * @returns {Promise}                Promise that resolves when the rest is completed or rejects when canceled.
    */
-  static async shortRestDialog(data: any = {}): Promise<ShortRestDialogResult> {
-    const actor = data.actor;
-    return new Promise((resolve) => {
-      const dlg = new this(actor, {
+  static async shortRestDialog({
+    actor,
+  }: any = {}): Promise<ShortRestDialogResult> {
+    return new Promise<ShortRestDialogResult>((resolve, reject) => {
+      const dialogData = {
         title: `${FoundryAdapter.localize('DND5E.ShortRest')}: ${actor.name}`,
         buttons: {
           rest: {
@@ -103,7 +110,7 @@ export default class NpcShortRestDialog extends Dialog {
             label: FoundryAdapter.localize('DND5E.Rest'),
             callback: (html: any) => {
               let newDay = false;
-              if (game.settings.get('dnd5e', 'restVariant') !== 'epic') {
+              if (FoundryAdapter.getGameSetting('dnd5e', 'restVariant') !== 'epic') {
                 newDay = html.find('input[name="newDay"]')[0].checked;
               }
               resolve({ confirmed: true, newDay });
@@ -112,11 +119,13 @@ export default class NpcShortRestDialog extends Dialog {
           cancel: {
             icon: '<i class="fas fa-times"></i>',
             label: FoundryAdapter.localize('Cancel'),
-            callback: resolve({ confirmed: false }),
+            callback: () => resolve({ confirmed: false }),
           },
         },
         close: () => resolve({ confirmed: false }),
-      });
+      };
+      
+      const dlg = new this(actor, dialogData);
       dlg.render(true);
     });
   }
@@ -134,90 +143,9 @@ export default class NpcShortRestDialog extends Dialog {
     denomination: string,
     options: any = {}
   ): Promise<any | null> {
-    // Prepare roll data
     const flavor = FoundryAdapter.localize('DND5E.HitDiceRoll');
-    const rollConfig = FoundryAdapter.mergeObject(
-      {
-        formula: `max(0, 1${denomination} + @abilities.con.mod)`,
-        data: this.actor.getRollData(),
-        chatMessage: true,
-        messageData: {
-          speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-          flavor,
-          title: `${flavor}: ${this.actor.name}`,
-          rollMode: game.settings.get('core', 'rollMode'),
-          'flags.dnd5e.roll': { type: 'hitDie' },
-        },
-      },
-      options
-    );
+    const actor = this.actor;
 
-    /**
-     * A hook event that fires before a hit die is rolled for an Actor.
-     * @function dnd5e.preRollHitDie
-     * @memberof hookEvents
-     * @param {Actor5e} actor               Actor for which the hit die is to be rolled.
-     * @param {object} config               Configuration data for the pending roll.
-     * @param {string} config.formula       Formula that will be rolled.
-     * @param {object} config.data          Data used when evaluating the roll.
-     * @param {boolean} config.chatMessage  Should a chat message be created for this roll?
-     * @param {object} config.messageData   Data used to create the chat message.
-     * @param {string} denomination         Size of hit die to be rolled.
-     * @returns {boolean}                   Explicitly return `false` to prevent hit die from being rolled.
-     */
-    if (
-      FoundryAdapter.hooksCall(
-        'dnd5e.preRollHitDie',
-        this.actor,
-        rollConfig,
-        denomination
-      ) === false
-    )
-      return;
-
-    const roll = await new Roll(rollConfig.formula, rollConfig.data).roll({
-      async: true,
-    });
-    if (rollConfig.chatMessage) roll.toMessage(rollConfig.messageData);
-
-    const hp = this.actor.system.attributes.hp;
-    const dhp = Math.min(hp.max + (hp.tempmax ?? 0) - hp.value, roll.total);
-    const updates = {
-      actor: { 'system.attributes.hp.value': hp.value + dhp },
-      //   class: {"system.hitDiceUsed": cls.system.hitDiceUsed + 1}
-    };
-
-    /**
-     * A hook event that fires after a hit die has been rolled for an Actor, but before updates have been performed.
-     * @function dnd5e.rollHitDie
-     * @memberof hookEvents
-     * @param {Actor5e} actor         Actor for which the hit die has been rolled.
-     * @param {Roll} roll             The resulting roll.
-     * @param {object} updates
-     * @param {object} updates.actor  Updates that will be applied to the actor.
-     * @param {object} updates.class  Updates that will be applied to the class.
-     * @returns {boolean}             Explicitly return `false` to prevent updates from being performed.
-     */
-    if (
-      FoundryAdapter.hooksCall(
-        'dnd5e.rollHitDie',
-        this.actor,
-        roll,
-        updates
-      ) === false
-    )
-      return roll;
-
-    // Re-evaluate dhp in the event that it was changed in the previous hook
-    const updateOptions = {
-      dhp:
-        (updates.actor?.['system.attributes.hp.value'] ?? hp.value) - hp.value,
-    };
-
-    // Perform updates
-    if (!FoundryAdapter.isEmpty(updates.actor)) {
-      await this.actor.update(updates.actor, updateOptions);
-    }
-    return roll;
+    return FoundryAdapter.rollNpcHitDie(actor, flavor, denomination, options);
   }
 }
