@@ -2,7 +2,6 @@
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import {
-    type ActorSheetContext,
     type CharacterSheetContext,
     type NpcSheetContext,
   } from 'src/types/types';
@@ -30,7 +29,8 @@
   import SpellbookItemCardContent from '../item-info-card/SpellbookItemCardContent.svelte';
   import { settingStore } from 'src/settings/settings';
 
-  let context = getContext<Readable<ActorSheetContext>>('context');
+  let context =
+    getContext<Readable<CharacterSheetContext | NpcSheetContext>>('context');
   export let section: any;
   export let spells: any[];
   export let allowFavorites: boolean = true;

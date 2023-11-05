@@ -245,9 +245,9 @@
                   <ItemTableCell baseWidth={classicControlsBaseWidth}>
                     <ItemControls>
                       <ItemControl
-                        iconCssClass="fas fa-user-alt {ctx.toggleClass}"
-                        title={ctx.toggleTitle}
-                        active={ctx.toggleClass === 'active'}
+                        iconCssClass="fas fa-user-alt {ctx?.toggleClass}"
+                        title={ctx?.toggleTitle}
+                        active={ctx?.toggleClass === 'active'}
                         on:click={(ev) =>
                           item.update({
                             ['system.crewed']: !item.system.crewed,

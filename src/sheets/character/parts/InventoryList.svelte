@@ -114,7 +114,7 @@
         </ItemTableCell>
         {#if !$settingStore.hideIconsNextToTheItemName}
           <ItemTableCell cssClass="no-border">
-            {#if ctx.attunement}
+            {#if ctx?.attunement}
               <div class="item-detail attunement">
                 <i
                   class="item-state-icon fas {ctx.attunement.icon} {ctx
@@ -134,7 +134,7 @@
             title="{localize('DND5E.Weight')}: {item.system
               .weight} {weightUnit}"
           >
-            {#if ctx.totalWeight}
+            {#if ctx?.totalWeight}
               {ctx.totalWeight} {weightUnit}
             {:else}
               {item.system.weight} {weightUnit}
@@ -156,10 +156,10 @@
         {#if $context.owner && $context.classicControlsEnabled && !lockControls}
           <ItemTableCell baseWidth={classicControlsBaseWidth}>
             <ItemControls>
-              {#if ctx.attunement}
+              {#if ctx?.attunement}
                 <AttuneControl {item} {ctx} />
               {/if}
-              {#if ctx.canToggle}
+              {#if ctx?.canToggle}
                 <EquipControl {item} {ctx} />
               {/if}
               <ItemFavoriteControl {item} />

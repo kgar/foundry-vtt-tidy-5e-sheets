@@ -33,7 +33,7 @@
 </script>
 
 <ItemControl
-  title={ctx.attunement?.title}
+  title={ctx?.attunement?.title}
   iconCssClass="fas fa-sun {!isAttuned ? 'not-attuned' : ''}"
   active={isAttuned}
   on:click={toggleAttuned}
