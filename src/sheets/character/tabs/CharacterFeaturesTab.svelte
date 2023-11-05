@@ -211,13 +211,13 @@
               {#each section.columns as column (column.property)}
                 {@const itemPropertyValue =
                   FoundryAdapter.getProperty(item, item.property) ??
-                  FoundryAdapter.getProperty(item, ctx.property) ??
+                  FoundryAdapter.getProperty(item, ctx?.property) ??
                   ''}
                 <ItemTableCell>
                   {#if column.editable}
                     <DtypeInput
                       document={item}
-                      field={item.property ?? ctx.property}
+                      field={item.property ?? ctx?.property}
                       value={itemPropertyValue}
                       dtype={column.editable}
                     />

@@ -14,7 +14,7 @@
 </script>
 
 {#if !isNaN(item.system.quantity)}
-  <span class="item-quantity" class:isStack={ctx.isStack}>
+  <span class="item-quantity" class:isStack={ctx?.isStack}>
     (<NumberInput
       cssClass="item-count"
       document={item}

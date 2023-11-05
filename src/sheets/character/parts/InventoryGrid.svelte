@@ -76,7 +76,7 @@
         on:mouseleave={onMouseLeave}
         disabled={!$context.owner}
       >
-        {#if ctx.attunement}
+        {#if ctx?.attunement}
           <i
             class="fas fa-sun icon-attuned {ctx.attunement?.cls ?? ''}"
             title={localize(ctx.attunement?.title)}
@@ -111,7 +111,7 @@
             title="{localize('DND5E.Uses')}: {item.system.uses?.value}/{item
               .system.uses?.max} "
           >
-            {#if ctx.hasUses}
+            {#if ctx?.hasUses}
               <i class="fas fa-bolt" />
               <TextInput
                 document={item}

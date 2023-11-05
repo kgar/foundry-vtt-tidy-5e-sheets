@@ -15,7 +15,7 @@
 </script>
 
 <ItemControl
-  title={ctx.toggleTitle}
+  title={ctx?.toggleTitle}
   iconCssClass="fas fa-user-alt"
   active={item.system.equipped}
   on:click={toggleEquipped}
