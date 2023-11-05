@@ -53,6 +53,17 @@ export type CharacterSheetContext = {
   allowMaxHpOverride: boolean;
   characterJournalTabDisabled: boolean;
   features: CharacterFeatureSection[];
+  traitEnrichedHtml: string;
+  idealEnrichedHtml: string;
+  bondEnrichedHtml: string;
+  flawEnrichedHtml: string;
+  appearanceEnrichedHtml: string;
+  biographyEnrichedHtml: string;
+  notesEnrichedHtml: string;
+  notes1EnrichedHtml: string;
+  notes2EnrichedHtml: string;
+  notes3EnrichedHtml: string;
+  notes4EnrichedHtml: string;
 } & ActorSheetContext &
   Record<string, any>;
 
@@ -61,6 +72,17 @@ export type NpcSheetContext = {
   hideSpellbookTab: boolean;
   hideEmptySpellbook: boolean;
   shortRest: (event: Event) => Promise<void>;
+  traitEnrichedHtml: string;
+  idealEnrichedHtml: string;
+  bondEnrichedHtml: string;
+  flawEnrichedHtml: string;
+  appearanceEnrichedHtml: string;
+  biographyEnrichedHtml: string;
+  notesEnrichedHtml: string;
+  notes1EnrichedHtml: string;
+  notes2EnrichedHtml: string;
+  notes3EnrichedHtml: string;
+  notes4EnrichedHtml: string;
 } & ActorSheetContext &
   Record<string, any>;
 

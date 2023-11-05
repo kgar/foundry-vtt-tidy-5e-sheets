@@ -100,9 +100,9 @@ export class Tidy5eCharacterSheet extends dnd5e.applications.actor
   private async getContext(): Promise<CharacterSheetContext> {
     const editable = FoundryAdapter.canEditActor(this.actor) && this.isEditable;
 
-    const defaultContext = await super.getData(this.options);
+    const defaultCharacterContext = await super.getData(this.options);
 
-    const sections = defaultContext.features.map((section: any) => ({
+    const sections = defaultCharacterContext.features.map((section: any) => ({
       ...section,
       showLevelColumn: !section.hasActions && section.isClass,
       showRequirementsColumn: !section.isClass && !section.columns?.length,
@@ -112,7 +112,7 @@ export class Tidy5eCharacterSheet extends dnd5e.applications.actor
     }));
 
     const context: CharacterSheetContext = {
-      ...defaultContext,
+      ...defaultCharacterContext,
       activateFoundryJQueryListeners: (node: HTMLElement) => {
         this._activateCoreListeners($(node));
         super.activateListeners($(node));
@@ -125,16 +125,61 @@ export class Tidy5eCharacterSheet extends dnd5e.applications.actor
         SettingsProvider.settings.allowHpMaxOverride.get() &&
         (!SettingsProvider.settings.lockHpMaxChanges.get() ||
           FoundryAdapter.userIsGm()),
+      appearanceEnrichedHtml: await FoundryAdapter.enrichHtml(
+        this.actor.system.details.appearance,
+        {
+          secrets: this.actor.isOwner,
+          rollData: defaultCharacterContext.rollData,
+          async: true,
+          relativeTo: this.actor,
+        }
+      ),
       appId: this.appId,
+      biographyEnrichedHtml: await FoundryAdapter.enrichHtml(
+        this.actor.system.details.biography.value,
+        {
+          secrets: this.actor.isOwner,
+          rollData: defaultCharacterContext.rollData,
+          async: true,
+          relativeTo: this.actor,
+        }
+      ),
+      bondEnrichedHtml: await FoundryAdapter.enrichHtml(
+        this.actor.system.details.bond,
+        {
+          secrets: this.actor.isOwner,
+          rollData: defaultCharacterContext.rollData,
+          async: true,
+          relativeTo: this.actor,
+        }
+      ),
       classicControlsEnabled:
         SettingsProvider.settings.enableClassicControlsForCharacter.get(),
       characterJournalTabDisabled:
         SettingsProvider.settings.characterJournalTabDisabled.get(),
       editable,
       features: sections,
+      flawEnrichedHtml: await FoundryAdapter.enrichHtml(
+        this.actor.system.details.flaw,
+        {
+          secrets: this.actor.isOwner,
+          rollData: defaultCharacterContext.rollData,
+          async: true,
+          relativeTo: this.actor,
+        }
+      ),
       healthPercentage: getPercentage(
         this.actor?.system?.attributes?.hp?.value,
         this.actor?.system?.attributes?.hp?.max
+      ),
+      idealEnrichedHtml: await FoundryAdapter.enrichHtml(
+        this.actor.system.details.ideal,
+        {
+          secrets: this.actor.isOwner,
+          rollData: defaultCharacterContext.rollData,
+          async: true,
+          relativeTo: this.actor,
+        }
       ),
       lockExpChanges: FoundryAdapter.shouldLockExpChanges(),
       lockHpMaxChanges: FoundryAdapter.shouldLockHpMaxChanges(),
@@ -143,9 +188,78 @@ export class Tidy5eCharacterSheet extends dnd5e.applications.actor
       lockMoneyChanges: FoundryAdapter.shouldLockMoneyChanges(),
       lockSensitiveFields:
         !editable && SettingsProvider.settings.editTotalLockEnabled.get(),
-      originalContext: defaultContext,
+      notes1EnrichedHtml: await FoundryAdapter.enrichHtml(
+        FoundryAdapter.getProperty<string>(
+          this.actor,
+          `flags.${CONSTANTS.MODULE_ID}.notes1.value`
+        ) ?? '',
+        {
+          secrets: this.actor.isOwner,
+          rollData: defaultCharacterContext.rollData,
+          async: true,
+          relativeTo: this.actor,
+        }
+      ),
+      notes2EnrichedHtml: await FoundryAdapter.enrichHtml(
+        FoundryAdapter.getProperty<string>(
+          this.actor,
+          `flags.${CONSTANTS.MODULE_ID}.notes2.value`
+        ) ?? '',
+        {
+          secrets: this.actor.isOwner,
+          rollData: defaultCharacterContext.rollData,
+          async: true,
+          relativeTo: this.actor,
+        }
+      ),
+      notes3EnrichedHtml: await FoundryAdapter.enrichHtml(
+        FoundryAdapter.getProperty<string>(
+          this.actor,
+          `flags.${CONSTANTS.MODULE_ID}.notes3.value`
+        ) ?? '',
+        {
+          secrets: this.actor.isOwner,
+          rollData: defaultCharacterContext.rollData,
+          async: true,
+          relativeTo: this.actor,
+        }
+      ),
+      notes4EnrichedHtml: await FoundryAdapter.enrichHtml(
+        FoundryAdapter.getProperty<string>(
+          this.actor,
+          `flags.${CONSTANTS.MODULE_ID}.notes4.value`
+        ) ?? '',
+        {
+          secrets: this.actor.isOwner,
+          rollData: defaultCharacterContext.rollData,
+          async: true,
+          relativeTo: this.actor,
+        }
+      ),
+      notesEnrichedHtml: await FoundryAdapter.enrichHtml(
+        FoundryAdapter.getProperty<string>(
+          this.actor,
+          `flags.${CONSTANTS.MODULE_ID}.notes.value`
+        ) ?? '',
+        {
+          secrets: this.actor.isOwner,
+          rollData: defaultCharacterContext.rollData,
+          async: true,
+          relativeTo: this.actor,
+        }
+      ),
+      originalContext: defaultCharacterContext,
       owner: this.actor.isOwner,
       showLimitedSheet: FoundryAdapter.showLimitedSheet(this.actor),
+      traitEnrichedHtml: await FoundryAdapter.enrichHtml(
+        this.actor.system.details.trait,
+        {
+          secrets: this.actor.isOwner,
+          rollData: defaultCharacterContext.rollData,
+          async: true,
+          relativeTo: this.actor,
+        }
+      ),
       useRoundedPortraitStyle: [
         CONSTANTS.ROUNDED_PORTRAIT_OPTION_ALL as string,
         CONSTANTS.ROUNDED_PORTRAIT_OPTION_CHARACTER as string,

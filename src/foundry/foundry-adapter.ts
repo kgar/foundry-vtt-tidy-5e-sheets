@@ -280,7 +280,7 @@ export const FoundryAdapter = {
     );
     return map;
   },
-  getProperty(obj: any, path: string): unknown {
+  getProperty<T = unknown>(obj: any, path: string): T | undefined {
     return foundry.utils.getProperty(obj, path);
   },
   getInventoryRowClasses(item: Item5e, ctx?: any, extras?: string[]): string {
@@ -925,6 +925,9 @@ export const FoundryAdapter = {
     debug(`tidy5e-npc | activateListeners | average: ${average}`);
     return average;
   },
+  enrichHtml(value: string, options?: any): Promise<string> {
+    return TextEditor.enrichHTML(value, options);
+  },
 };
 
 /* ------------------------------------------------------
@@ -956,6 +959,7 @@ declare const ui: any;
 declare const debounce: any;
 declare const ChatMessage: any;
 declare const AudioHelper: any;
+declare const TextEditor: any;
 
 type AbilityReference = {
   abbreviation: string;
