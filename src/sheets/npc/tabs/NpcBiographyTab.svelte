@@ -148,7 +148,7 @@
                 {localize('DND5E.PersonalityTraits')}
               </div>
               <SheetEditor
-                content={FoundryAdapter.tryGetFlag($context.actor, 'trait') ?? ''}
+                content={$context.traitEnrichedHtml}
                 target="flags.{CONSTANTS.MODULE_ID}.trait"
                 editable={$context.owner || FoundryAdapter.userIsGm()}
               />
@@ -165,7 +165,7 @@
                 {localize('DND5E.Ideals')}
               </div>
               <SheetEditor
-                content={FoundryAdapter.tryGetFlag($context.actor, 'ideal') ?? ''}
+                content={$context.idealEnrichedHtml}
                 target="flags.{CONSTANTS.MODULE_ID}.ideal"
                 editable={$context.owner || FoundryAdapter.userIsGm()}
               />
@@ -180,7 +180,7 @@
                 {localize('DND5E.Bonds')}
               </div>
               <SheetEditor
-                content={FoundryAdapter.tryGetFlag($context.actor, 'bond') ?? ''}
+                content={$context.bondEnrichedHtml}
                 target="flags.{CONSTANTS.MODULE_ID}.bond"
                 editable={$context.owner || FoundryAdapter.userIsGm()}
               />
@@ -195,7 +195,7 @@
                 {localize('DND5E.Flaws')}
               </div>
               <SheetEditor
-                content={FoundryAdapter.tryGetFlag($context.actor, 'flaw') ?? ''}
+                content={$context.flawEnrichedHtml}
                 target="flags.{CONSTANTS.MODULE_ID}.flaw"
                 editable={$context.owner || FoundryAdapter.userIsGm()}
               />
@@ -218,8 +218,7 @@
               {localize('DND5E.Appearance')}
             </div>
             <SheetEditor
-              content={FoundryAdapter.tryGetFlag($context.actor, 'appearance') ??
-                ''}
+              content={$context.appearanceEnrichedHtml}
               target="flags.{CONSTANTS.MODULE_ID}.appearance"
               editable={$context.owner || FoundryAdapter.userIsGm()}
             />
@@ -233,7 +232,7 @@
               {localize('DND5E.Background')}/{localize('DND5E.Biography')}
             </div>
             <SheetEditor
-              content={$context.system.details.biography.value}
+              content={$context.biographyEnrichedHtml}
               target="system.details.biography.value"
               editable={$context.owner || FoundryAdapter.userIsGm()}
             />

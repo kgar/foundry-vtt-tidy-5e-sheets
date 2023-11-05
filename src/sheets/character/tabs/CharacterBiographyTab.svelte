@@ -120,7 +120,7 @@
             {localize('DND5E.PersonalityTraits')}
           </div>
           <SheetEditor
-            content={$context.system.details.trait}
+            content={$context.traitEnrichedHtml}
             target="system.details.trait"
             editable={$context.owner || FoundryAdapter.userIsGm()}
           />
@@ -133,7 +133,7 @@
         <article use:activateProseMirrorListeners>
           <div class="section-titles biopage">{localize('DND5E.Ideals')}</div>
           <SheetEditor
-            content={$context.system.details.ideal}
+            content={$context.idealEnrichedHtml}
             target="system.details.ideal"
             editable={$context.owner || FoundryAdapter.userIsGm()}
           />
@@ -145,7 +145,7 @@
         <article use:activateProseMirrorListeners>
           <div class="section-titles biopage">{localize('DND5E.Bonds')}</div>
           <SheetEditor
-            content={$context.system.details.bond}
+            content={$context.bondEnrichedHtml}
             target="system.details.bond"
             editable={$context.owner || FoundryAdapter.userIsGm()}
           />
@@ -157,7 +157,7 @@
         <article use:activateProseMirrorListeners>
           <div class="section-titles biopage">{localize('DND5E.Flaws')}</div>
           <SheetEditor
-            content={$context.system.details.flaw}
+            content={$context.flawEnrichedHtml}
             target="system.details.flaw"
             editable={$context.owner || FoundryAdapter.userIsGm()}
           />
@@ -177,7 +177,7 @@
             {localize('DND5E.Appearance')}
           </div>
           <SheetEditor
-            content={$context.system.details.appearance}
+            content={$context.appearanceEnrichedHtml}
             target="system.details.appearance"
             editable={$context.owner || FoundryAdapter.userIsGm()}
           />
@@ -191,7 +191,7 @@
             {localize('DND5E.Background')}/{localize('DND5E.Biography')}
           </div>
           <SheetEditor
-            content={$context.system.details.biography.value}
+            content={$context.biographyEnrichedHtml}
             target="system.details.biography.value"
             editable={$context.owner || FoundryAdapter.userIsGm()}
           />

@@ -102,11 +102,59 @@ export class Tidy5eNpcSheet extends dnd5e.applications.actor.ActorSheet5eNPC {
         super.activateListeners($(node));
       },
       allowEffectsManagement: true,
+      appearanceEnrichedHtml: await FoundryAdapter.enrichHtml(
+        FoundryAdapter.getProperty<string>(
+          this.actor,
+          `flags.${CONSTANTS.MODULE_ID}.appearance`
+        ) ?? '',
+        {
+          secrets: this.actor.isOwner,
+          rollData: defaultNpcContext.rollData,
+          async: true,
+          relativeTo: this.actor,
+        }
+      ),
       appId: this.appId,
+      biographyEnrichedHtml: await FoundryAdapter.enrichHtml(
+        FoundryAdapter.getProperty<string>(
+          this.actor,
+          `system.details.biography.value`
+        ) ?? '',
+        {
+          secrets: this.actor.isOwner,
+          rollData: defaultNpcContext.rollData,
+          async: true,
+          relativeTo: this.actor,
+        }
+      ),
+      bondEnrichedHtml: await FoundryAdapter.enrichHtml(
+        FoundryAdapter.getProperty<string>(
+          this.actor,
+          `flags.${CONSTANTS.MODULE_ID}.bond`
+        ) ?? '',
+        {
+          secrets: this.actor.isOwner,
+          rollData: defaultNpcContext.rollData,
+          async: true,
+          relativeTo: this.actor,
+        }
+      ),
       classicControlsEnabled:
         SettingsProvider.settings.enableClassicControlsForNpc.get(),
       encumbrance: this.actor.system.attributes.encumbrance,
       editable,
+      flawEnrichedHtml: await FoundryAdapter.enrichHtml(
+        FoundryAdapter.getProperty<string>(
+          this.actor,
+          `flags.${CONSTANTS.MODULE_ID}.flaw`
+        ) ?? '',
+        {
+          secrets: this.actor.isOwner,
+          rollData: defaultNpcContext.rollData,
+          async: true,
+          relativeTo: this.actor,
+        }
+      ),
       hideEmptySpellbook:
         lockSensitiveFields && defaultNpcContext.spellbook.length === 0,
       healthPercentage: getPercentage(
@@ -114,18 +162,103 @@ export class Tidy5eNpcSheet extends dnd5e.applications.actor.ActorSheet5eNPC {
         this.actor?.system?.attributes?.hp?.max
       ),
       hideSpellbookTab: SettingsProvider.settings.hideSpellbookTabNpc.get(),
+      idealEnrichedHtml: await FoundryAdapter.enrichHtml(
+        FoundryAdapter.getProperty<string>(
+          this.actor,
+          `flags.${CONSTANTS.MODULE_ID}.ideal`
+        ) ?? '',
+        {
+          secrets: this.actor.isOwner,
+          rollData: defaultNpcContext.rollData,
+          async: true,
+          relativeTo: this.actor,
+        }
+      ),
       lockSensitiveFields,
       longRest: this._onLongRest.bind(this),
-      rollDeathSave: this._rollDeathSave.bind(this),
-      shortRest: this._onShortRest.bind(this),
-      tokenState: this.#getTokenState(),
       lockExpChanges: FoundryAdapter.shouldLockExpChanges(),
       lockHpMaxChanges: FoundryAdapter.shouldLockHpMaxChanges(),
       lockItemQuantity: FoundryAdapter.shouldLockItemQuantity(),
       lockLevelSelector: FoundryAdapter.shouldLockLevelSelector(),
       lockMoneyChanges: FoundryAdapter.shouldLockMoneyChanges(),
+      notes1EnrichedHtml: await FoundryAdapter.enrichHtml(
+        FoundryAdapter.getProperty<string>(
+          this.actor,
+          `flags.${CONSTANTS.MODULE_ID}.notes1.value`
+        ) ?? '',
+        {
+          secrets: this.actor.isOwner,
+          rollData: defaultNpcContext.rollData,
+          async: true,
+          relativeTo: this.actor,
+        }
+      ),
+      notes2EnrichedHtml: await FoundryAdapter.enrichHtml(
+        FoundryAdapter.getProperty<string>(
+          this.actor,
+          `flags.${CONSTANTS.MODULE_ID}.notes2.value`
+        ) ?? '',
+        {
+          secrets: this.actor.isOwner,
+          rollData: defaultNpcContext.rollData,
+          async: true,
+          relativeTo: this.actor,
+        }
+      ),
+      notes3EnrichedHtml: await FoundryAdapter.enrichHtml(
+        FoundryAdapter.getProperty<string>(
+          this.actor,
+          `flags.${CONSTANTS.MODULE_ID}.notes3.value`
+        ) ?? '',
+        {
+          secrets: this.actor.isOwner,
+          rollData: defaultNpcContext.rollData,
+          async: true,
+          relativeTo: this.actor,
+        }
+      ),
+      notes4EnrichedHtml: await FoundryAdapter.enrichHtml(
+        FoundryAdapter.getProperty<string>(
+          this.actor,
+          `flags.${CONSTANTS.MODULE_ID}.notes4.value`
+        ) ?? '',
+        {
+          secrets: this.actor.isOwner,
+          rollData: defaultNpcContext.rollData,
+          async: true,
+          relativeTo: this.actor,
+        }
+      ),
+      notesEnrichedHtml: await FoundryAdapter.enrichHtml(
+        FoundryAdapter.getProperty<string>(
+          this.actor,
+          `flags.${CONSTANTS.MODULE_ID}.notes.value`
+        ) ?? '',
+        {
+          secrets: this.actor.isOwner,
+          rollData: defaultNpcContext.rollData,
+          async: true,
+          relativeTo: this.actor,
+        }
+      ),
       owner: this.actor.isOwner,
+      rollDeathSave: this._rollDeathSave.bind(this),
+      shortRest: this._onShortRest.bind(this),
+
       showLimitedSheet: FoundryAdapter.showLimitedSheet(this.actor),
+      tokenState: this.#getTokenState(),
+      traitEnrichedHtml: await FoundryAdapter.enrichHtml(
+        FoundryAdapter.getProperty<string>(
+          this.actor,
+          `flags.${CONSTANTS.MODULE_ID}.trait`
+        ) ?? '',
+        {
+          secrets: this.actor.isOwner,
+          rollData: defaultNpcContext.rollData,
+          async: true,
+          relativeTo: this.actor,
+        }
+      ),
       useRoundedPortraitStyle: [
         CONSTANTS.ROUNDED_PORTRAIT_OPTION_ALL as string,
         CONSTANTS.ROUNDED_PORTRAIT_OPTION_NPCVEHICLE as string,

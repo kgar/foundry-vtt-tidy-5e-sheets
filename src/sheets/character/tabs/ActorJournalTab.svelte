@@ -35,7 +35,7 @@
         />
       </div>
       <SheetEditor
-        content={FoundryAdapter.tryGetFlag($context.actor, 'notes1.value') ?? ''}
+        content={$context.notes1EnrichedHtml}
         target="flags.{CONSTANTS.MODULE_ID}.notes1.value"
         editable={$context.owner || FoundryAdapter.userIsGm()}
       />
@@ -58,7 +58,7 @@
         />
       </div>
       <SheetEditor
-        content={FoundryAdapter.tryGetFlag($context.actor, 'notes2.value') ?? ''}
+        content={$context.notes2EnrichedHtml}
         target="flags.{CONSTANTS.MODULE_ID}.notes2.value"
         editable={$context.owner || FoundryAdapter.userIsGm()}
       />
@@ -81,7 +81,7 @@
         />
       </div>
       <SheetEditor
-        content={FoundryAdapter.tryGetFlag($context.actor, 'notes3.value') ?? ''}
+        content={$context.notes3EnrichedHtml}
         target="flags.{CONSTANTS.MODULE_ID}.notes3.value"
         editable={$context.owner || FoundryAdapter.userIsGm()}
       />
@@ -104,7 +104,7 @@
         />
       </div>
       <SheetEditor
-        content={FoundryAdapter.tryGetFlag($context.actor, 'notes4.value') ?? ''}
+        content={$context.notes4EnrichedHtml}
         target="flags.{CONSTANTS.MODULE_ID}.notes4.value"
         editable={$context.owner || FoundryAdapter.userIsGm()}
       />
@@ -119,7 +119,7 @@
     <article class="journal-notes" use:activateProseMirrorListeners>
       <div class="section-titles">{localize('T5EK.JournalEntries')}</div>
       <SheetEditor
-        content={FoundryAdapter.tryGetFlag($context.actor, 'notes.value') ?? ''}
+        content={$context.notesEnrichedHtml}
         target="flags.{CONSTANTS.MODULE_ID}.notes.value"
         editable={$context.owner || FoundryAdapter.userIsGm()}
       />
