@@ -41,9 +41,9 @@
     <ul class="summary flexrow">
       <li>
         <TextInput
-          field="system.source"
+          field="system.source.label"
           document={$context.item}
-          value={$context.system.source}
+          value={$context.system.source.label}
           placeholder={localize('DND5E.Source')}
           disabled={!$context.owner}
         />

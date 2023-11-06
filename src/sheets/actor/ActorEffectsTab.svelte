@@ -63,7 +63,7 @@
             >
               <ItemTableCell primary={true}>
                 <ItemImage src={effect.icon} />
-                <span class="align-self-center">{effect.label}</span>
+                <span class="align-self-center">{effect.name}</span>
               </ItemTableCell>
               <ItemTableCell baseWidth="12.5rem"
                 >{effect.sourceName}</ItemTableCell

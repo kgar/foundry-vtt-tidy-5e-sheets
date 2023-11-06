@@ -77,8 +77,8 @@
             on:mousedown={(event) => handleMiddleClickToEdit(event, effect)}
           >
             <div class="item-name effect-name flexrow">
-              <img class="item-image" src={effect.icon} alt={effect.label} />
-              <h4>{effect.label}</h4>
+              <img class="item-image" src={effect.icon} alt={effect.name} />
+              <h4>{effect.name}</h4>
             </div>
             <div class="effect-source">{effect.sourceName}</div>
             <div class="effect-duration">

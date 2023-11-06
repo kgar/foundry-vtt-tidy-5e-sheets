@@ -60,8 +60,8 @@
       <li>
         <TextInput
           document={$context.item}
-          field="system.source"
-          value={$context.system.source}
+          field="system.source.label"
+          value={$context.system.source.label}
           placeholder={localize('DND5E.Source')}
           disabled={!$context.owner}
         />
