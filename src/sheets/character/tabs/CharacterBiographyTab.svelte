@@ -7,6 +7,7 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import RerenderAfterFormSubmission from '../../../components/utility/RerenderAfterFormSubmission.svelte';
+  import ListContainer from 'src/components/layout/ListContainer.svelte';
 
   let context = getContext<Readable<CharacterSheetContext>>('context');
 
@@ -17,189 +18,194 @@
   }
 </script>
 
-<div class="notes-container">
-  <div class="top-notes note-entries" class:limited={$context.showLimitedSheet}>
-    <article>
-      <ul class="character-details">
-        <li>
-          <span>{localize('T5EK.Gender')}:</span>
-          <ContentEditableFormField
-            element="span"
-            editable={$context.owner && !$context.lockSensitiveFields}
-            document={$context.actor}
-            field="flags.{CONSTANTS.MODULE_ID}.gender"
-            value={FoundryAdapter.tryGetFlag($context.actor, 'gender') ?? ''}
-            cssClass="detail-input"
-          />
-        </li>
-        <li>
-          <span>{localize('T5EK.Age')}:</span>
-          <ContentEditableFormField
-            element="span"
-            editable={$context.owner && !$context.lockSensitiveFields}
-            document={$context.actor}
-            field="flags.{CONSTANTS.MODULE_ID}.age"
-            value={FoundryAdapter.tryGetFlag($context.actor, 'age') ?? ''}
-            cssClass="detail-input"
-            dataMaxLength={5}
-          />
-        </li>
-        <li>
-          <span>{localize('T5EK.Height')}:</span>
-          <ContentEditableFormField
-            element="span"
-            editable={$context.owner && !$context.lockSensitiveFields}
-            document={$context.actor}
-            field="flags.{CONSTANTS.MODULE_ID}.height"
-            value={FoundryAdapter.tryGetFlag($context.actor, 'height') ?? ''}
-            cssClass="detail-input"
-            dataMaxLength={20}
-          />
-        </li>
-        <li>
-          <span>{localize('T5EK.Weight')}:</span>
-          <ContentEditableFormField
-            element="span"
-            editable={$context.owner && !$context.lockSensitiveFields}
-            document={$context.actor}
-            field="flags.{CONSTANTS.MODULE_ID}.weight"
-            value={FoundryAdapter.tryGetFlag($context.actor, 'weight') ?? ''}
-            cssClass="detail-input"
-            dataMaxLength={20}
-          />
-        </li>
-        <li>
-          <span>{localize('T5EK.Eyes')}:</span>
-          <ContentEditableFormField
-            element="span"
-            editable={$context.owner && !$context.lockSensitiveFields}
-            document={$context.actor}
-            field="flags.{CONSTANTS.MODULE_ID}.eyes"
-            value={FoundryAdapter.tryGetFlag($context.actor, 'eyes') ?? ''}
-            cssClass="detail-input"
-            dataMaxLength={40}
-          />
-        </li>
-        <li>
-          <span>{localize('T5EK.Skin')}:</span>
-          <ContentEditableFormField
-            element="span"
-            editable={$context.owner && !$context.lockSensitiveFields}
-            document={$context.actor}
-            field="flags.{CONSTANTS.MODULE_ID}.skin"
-            value={FoundryAdapter.tryGetFlag($context.actor, 'skin') ?? ''}
-            cssClass="detail-input"
-            dataMaxLength={40}
-          />
-        </li>
-        <li>
-          <span>{localize('T5EK.Hair')}:</span>
-          <ContentEditableFormField
-            element="span"
-            editable={$context.owner && !$context.lockSensitiveFields}
-            document={$context.actor}
-            field="flags.{CONSTANTS.MODULE_ID}.hair"
-            value={FoundryAdapter.tryGetFlag($context.actor, 'hair') ?? ''}
-            cssClass="detail-input"
-            dataMaxLength={40}
-          />
-        </li>
-      </ul>
-    </article>
-  </div>
-  <div class="main-notes">
+<ListContainer>
+  <div class="notes-container">
     <div
-      class="left-notes note-entries"
+      class="top-notes note-entries"
       class:limited={$context.showLimitedSheet}
     >
-      <RerenderAfterFormSubmission
-        andOnValueChange={$context.system.details.trait}
-      >
-        <article use:activateProseMirrorListeners>
-          <div class="section-titles biopage">
-            {localize('DND5E.PersonalityTraits')}
-          </div>
-          <SheetEditor
-            content={$context.traitEnrichedHtml}
-            target="system.details.trait"
-            editable={$context.owner || FoundryAdapter.userIsGm()}
-          />
-        </article>
-      </RerenderAfterFormSubmission>
-
-      <RerenderAfterFormSubmission
-        andOnValueChange={$context.system.details.ideal}
-      >
-        <article use:activateProseMirrorListeners>
-          <div class="section-titles biopage">{localize('DND5E.Ideals')}</div>
-          <SheetEditor
-            content={$context.idealEnrichedHtml}
-            target="system.details.ideal"
-            editable={$context.owner || FoundryAdapter.userIsGm()}
-          />
-        </article>
-      </RerenderAfterFormSubmission>
-      <RerenderAfterFormSubmission
-        andOnValueChange={$context.system.details.bond}
-      >
-        <article use:activateProseMirrorListeners>
-          <div class="section-titles biopage">{localize('DND5E.Bonds')}</div>
-          <SheetEditor
-            content={$context.bondEnrichedHtml}
-            target="system.details.bond"
-            editable={$context.owner || FoundryAdapter.userIsGm()}
-          />
-        </article>
-      </RerenderAfterFormSubmission>
-      <RerenderAfterFormSubmission
-        andOnValueChange={$context.system.details.flaw}
-      >
-        <article use:activateProseMirrorListeners>
-          <div class="section-titles biopage">{localize('DND5E.Flaws')}</div>
-          <SheetEditor
-            content={$context.flawEnrichedHtml}
-            target="system.details.flaw"
-            editable={$context.owner || FoundryAdapter.userIsGm()}
-          />
-        </article>
-      </RerenderAfterFormSubmission>
+      <article>
+        <ul class="character-details">
+          <li>
+            <span>{localize('T5EK.Gender')}:</span>
+            <ContentEditableFormField
+              element="span"
+              editable={$context.owner && !$context.lockSensitiveFields}
+              document={$context.actor}
+              field="flags.{CONSTANTS.MODULE_ID}.gender"
+              value={FoundryAdapter.tryGetFlag($context.actor, 'gender') ?? ''}
+              cssClass="detail-input"
+            />
+          </li>
+          <li>
+            <span>{localize('T5EK.Age')}:</span>
+            <ContentEditableFormField
+              element="span"
+              editable={$context.owner && !$context.lockSensitiveFields}
+              document={$context.actor}
+              field="flags.{CONSTANTS.MODULE_ID}.age"
+              value={FoundryAdapter.tryGetFlag($context.actor, 'age') ?? ''}
+              cssClass="detail-input"
+              dataMaxLength={5}
+            />
+          </li>
+          <li>
+            <span>{localize('T5EK.Height')}:</span>
+            <ContentEditableFormField
+              element="span"
+              editable={$context.owner && !$context.lockSensitiveFields}
+              document={$context.actor}
+              field="flags.{CONSTANTS.MODULE_ID}.height"
+              value={FoundryAdapter.tryGetFlag($context.actor, 'height') ?? ''}
+              cssClass="detail-input"
+              dataMaxLength={20}
+            />
+          </li>
+          <li>
+            <span>{localize('T5EK.Weight')}:</span>
+            <ContentEditableFormField
+              element="span"
+              editable={$context.owner && !$context.lockSensitiveFields}
+              document={$context.actor}
+              field="flags.{CONSTANTS.MODULE_ID}.weight"
+              value={FoundryAdapter.tryGetFlag($context.actor, 'weight') ?? ''}
+              cssClass="detail-input"
+              dataMaxLength={20}
+            />
+          </li>
+          <li>
+            <span>{localize('T5EK.Eyes')}:</span>
+            <ContentEditableFormField
+              element="span"
+              editable={$context.owner && !$context.lockSensitiveFields}
+              document={$context.actor}
+              field="flags.{CONSTANTS.MODULE_ID}.eyes"
+              value={FoundryAdapter.tryGetFlag($context.actor, 'eyes') ?? ''}
+              cssClass="detail-input"
+              dataMaxLength={40}
+            />
+          </li>
+          <li>
+            <span>{localize('T5EK.Skin')}:</span>
+            <ContentEditableFormField
+              element="span"
+              editable={$context.owner && !$context.lockSensitiveFields}
+              document={$context.actor}
+              field="flags.{CONSTANTS.MODULE_ID}.skin"
+              value={FoundryAdapter.tryGetFlag($context.actor, 'skin') ?? ''}
+              cssClass="detail-input"
+              dataMaxLength={40}
+            />
+          </li>
+          <li>
+            <span>{localize('T5EK.Hair')}:</span>
+            <ContentEditableFormField
+              element="span"
+              editable={$context.owner && !$context.lockSensitiveFields}
+              document={$context.actor}
+              field="flags.{CONSTANTS.MODULE_ID}.hair"
+              value={FoundryAdapter.tryGetFlag($context.actor, 'hair') ?? ''}
+              cssClass="detail-input"
+              dataMaxLength={40}
+            />
+          </li>
+        </ul>
+      </article>
     </div>
+    <div class="main-notes">
+      <div
+        class="left-notes note-entries"
+        class:limited={$context.showLimitedSheet}
+      >
+        <RerenderAfterFormSubmission
+          andOnValueChange={$context.system.details.trait}
+        >
+          <article use:activateProseMirrorListeners>
+            <div class="section-titles biopage">
+              {localize('DND5E.PersonalityTraits')}
+            </div>
+            <SheetEditor
+              content={$context.traitEnrichedHtml}
+              target="system.details.trait"
+              editable={$context.owner || FoundryAdapter.userIsGm()}
+            />
+          </article>
+        </RerenderAfterFormSubmission>
 
-    <div
-      class="right-notes note-entries"
-      class:limited={$context.showLimitedSheet}
-    >
-      <RerenderAfterFormSubmission
-        andOnValueChange={$context.system.details.appearance}
+        <RerenderAfterFormSubmission
+          andOnValueChange={$context.system.details.ideal}
+        >
+          <article use:activateProseMirrorListeners>
+            <div class="section-titles biopage">{localize('DND5E.Ideals')}</div>
+            <SheetEditor
+              content={$context.idealEnrichedHtml}
+              target="system.details.ideal"
+              editable={$context.owner || FoundryAdapter.userIsGm()}
+            />
+          </article>
+        </RerenderAfterFormSubmission>
+        <RerenderAfterFormSubmission
+          andOnValueChange={$context.system.details.bond}
+        >
+          <article use:activateProseMirrorListeners>
+            <div class="section-titles biopage">{localize('DND5E.Bonds')}</div>
+            <SheetEditor
+              content={$context.bondEnrichedHtml}
+              target="system.details.bond"
+              editable={$context.owner || FoundryAdapter.userIsGm()}
+            />
+          </article>
+        </RerenderAfterFormSubmission>
+        <RerenderAfterFormSubmission
+          andOnValueChange={$context.system.details.flaw}
+        >
+          <article use:activateProseMirrorListeners>
+            <div class="section-titles biopage">{localize('DND5E.Flaws')}</div>
+            <SheetEditor
+              content={$context.flawEnrichedHtml}
+              target="system.details.flaw"
+              editable={$context.owner || FoundryAdapter.userIsGm()}
+            />
+          </article>
+        </RerenderAfterFormSubmission>
+      </div>
+
+      <div
+        class="right-notes note-entries"
+        class:limited={$context.showLimitedSheet}
       >
-        <article class="appearance-notes" use:activateProseMirrorListeners>
-          <div class="section-titles biopage">
-            {localize('DND5E.Appearance')}
-          </div>
-          <SheetEditor
-            content={$context.appearanceEnrichedHtml}
-            target="system.details.appearance"
-            editable={$context.owner || FoundryAdapter.userIsGm()}
-          />
-        </article>
-      </RerenderAfterFormSubmission>
-      <RerenderAfterFormSubmission
-        andOnValueChange={$context.system.details.biography.value}
-      >
-        <article class="biography-notes" use:activateProseMirrorListeners>
-          <div class="section-titles">
-            {localize('DND5E.Background')}/{localize('DND5E.Biography')}
-          </div>
-          <SheetEditor
-            content={$context.biographyEnrichedHtml}
-            target="system.details.biography.value"
-            editable={$context.owner || FoundryAdapter.userIsGm()}
-          />
-        </article>
-      </RerenderAfterFormSubmission>
+        <RerenderAfterFormSubmission
+          andOnValueChange={$context.system.details.appearance}
+        >
+          <article class="appearance-notes" use:activateProseMirrorListeners>
+            <div class="section-titles biopage">
+              {localize('DND5E.Appearance')}
+            </div>
+            <SheetEditor
+              content={$context.appearanceEnrichedHtml}
+              target="system.details.appearance"
+              editable={$context.owner || FoundryAdapter.userIsGm()}
+            />
+          </article>
+        </RerenderAfterFormSubmission>
+        <RerenderAfterFormSubmission
+          andOnValueChange={$context.system.details.biography.value}
+        >
+          <article class="biography-notes" use:activateProseMirrorListeners>
+            <div class="section-titles">
+              {localize('DND5E.Background')}/{localize('DND5E.Biography')}
+            </div>
+            <SheetEditor
+              content={$context.biographyEnrichedHtml}
+              target="system.details.biography.value"
+              editable={$context.owner || FoundryAdapter.userIsGm()}
+            />
+          </article>
+        </RerenderAfterFormSubmission>
+      </div>
     </div>
   </div>
-</div>
+</ListContainer>
 
 <style lang="scss">
   .notes-container {

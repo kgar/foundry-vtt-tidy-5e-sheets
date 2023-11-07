@@ -8,6 +8,7 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import { settingStore } from 'src/settings/settings';
+  import ListContainer from 'src/components/layout/ListContainer.svelte';
 
   let context = getContext<Readable<CharacterSheetContext>>('context');
 
@@ -18,23 +19,25 @@
     );
 </script>
 
-<div class="attributes-tab-contents">
-  <section class="side-panel">
-    <SkillsList actor={$context.actor} />
-    {#if !$settingStore.traitsMovedBelowResource}
-      <Traits toggleable={$settingStore.traitsTogglePc} />
-    {/if}
-  </section>
-  <section class="main-panel">
-    {#if showResources}
-      <Resources />
-    {/if}
-    {#if $settingStore.traitsMovedBelowResource}
-      <Traits toggleable={$settingStore.traitsTogglePc} />
-    {/if}
-    <Favorites />
-  </section>
-</div>
+<ListContainer>
+  <div class="attributes-tab-contents">
+    <section class="side-panel">
+      <SkillsList actor={$context.actor} />
+      {#if !$settingStore.traitsMovedBelowResource}
+        <Traits toggleable={$settingStore.traitsTogglePc} />
+      {/if}
+    </section>
+    <section class="main-panel">
+      {#if showResources}
+        <Resources />
+      {/if}
+      {#if $settingStore.traitsMovedBelowResource}
+        <Traits toggleable={$settingStore.traitsTogglePc} />
+      {/if}
+      <Favorites />
+    </section>
+  </div>
+</ListContainer>
 
 <style lang="scss">
   .attributes-tab-contents {

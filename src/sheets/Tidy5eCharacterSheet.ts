@@ -48,10 +48,6 @@ export class Tidy5eCharacterSheet
       SettingsProvider.settings.defaultCharacterSheetTab.get();
   }
 
-  onTabSelected(tabId: string) {
-    this.currentTabId = tabId;
-  }
-
   get template() {
     return FoundryAdapter.getTemplate('empty-form-template.hbs');
   }
@@ -285,7 +281,7 @@ export class Tidy5eCharacterSheet
   }
 
   close(options: unknown = {}) {
-    this.component?.$destroy();
+    this._destroySvelteComponent();
     return super.close(options);
   }
 
@@ -322,9 +318,9 @@ export class Tidy5eCharacterSheet
 
   render(force = false, ...args: any[]) {
     if (force) {
-      this.component?.$destroy();
-      super.render(force, ...args);
-      return this;
+      this._saveScrollPositions(this.element);
+      this._destroySvelteComponent();
+      return super.render(force, ...args);
     }
 
     applyTitleToWindow(this.title, this.element.get(0));
@@ -339,6 +335,25 @@ export class Tidy5eCharacterSheet
     return FoundryAdapter.removeConfigureSettingsButtonWhenLockedForNonGm(
       buttons
     );
+  }
+
+  _destroySvelteComponent() {
+    this.component?.$destroy();
+    this.component = undefined;
+  }
+
+  _saveScrollPositions(html: any) {
+    if (html.length && this.component) {
+      return super._saveScrollPositions(html);
+    }
+  }
+
+  /* -------------------------------------------- */
+  /* SheetTabCacheable
+  /* -------------------------------------------- */
+
+  onTabSelected(tabId: string) {
+    this.currentTabId = tabId;
   }
 }
 

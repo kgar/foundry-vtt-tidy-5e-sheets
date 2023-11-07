@@ -352,29 +352,4 @@
       }
     }
   }
-
-  .sheet-body {
-    :global(.tab.attributes) {
-      overflow-y: scroll;
-      padding-right: 0.75rem;
-    }
-
-    :global(.tab.biography),
-    :global(.tab.journal) {
-      align-items: flex-start;
-      flex-direction: row;
-      padding-right: 0.75rem;
-      overflow-x: inherit;
-      gap: 1rem;
-    }
-
-    :global(.tab.biography),
-    :global(.tab.journal) {
-      font-size: 0.8125rem;
-    }
-
-    :global(.tab.biography) {
-      flex-wrap: wrap;
-    }
-  }
 </style>

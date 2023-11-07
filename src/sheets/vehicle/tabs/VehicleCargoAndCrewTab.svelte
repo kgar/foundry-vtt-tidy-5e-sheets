@@ -13,12 +13,12 @@
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import ItemUseButton from 'src/components/item-list/ItemUseButton.svelte';
   import ItemName from 'src/components/item-list/ItemName.svelte';
-  import ListItemQuantity from '../actor/ListItemQuantity.svelte';
+  import ListItemQuantity from '../../actor/ListItemQuantity.svelte';
   import ItemTableFooter from 'src/components/item-list/ItemTableFooter.svelte';
   import Notice from 'src/components/notice/Notice.svelte';
-  import Currency from '../actor/Currency.svelte';
-  import EncumbranceBar from '../actor/EncumbranceBar.svelte';
-  import TabFooter from '../actor/TabFooter.svelte';
+  import Currency from '../../actor/Currency.svelte';
+  import EncumbranceBar from '../../actor/EncumbranceBar.svelte';
+  import TabFooter from '../../actor/TabFooter.svelte';
   import ItemDeleteControl from 'src/components/item-list/controls/ItemDeleteControl.svelte';
   import ItemDuplicateControl from 'src/components/item-list/controls/ItemDuplicateControl.svelte';
   import ItemEditControl from 'src/components/item-list/ItemEditControl.svelte';

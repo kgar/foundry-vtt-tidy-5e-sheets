@@ -1,5 +1,5 @@
 <script lang="ts">
-  import SheetEditor from '../../components/editor/SheetEditor.svelte';
+  import SheetEditor from '../../../components/editor/SheetEditor.svelte';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import type { VehicleSheetContext } from 'src/types/types';
@@ -13,7 +13,7 @@
   }
 </script>
 
-<div class="note-entries">
+<div class="note-entries" data-tidy-track-scroll-y>
   <RerenderAfterFormSubmission
     andOnValueChange={$context.system.details.biography.value}
   >

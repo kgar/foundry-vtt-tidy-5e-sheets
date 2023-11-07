@@ -260,40 +260,6 @@
     background: var(--t5ek-header-background);
   }
 
-  .sheet-body {
-    :global(.tab.attributes.active) {
-      display: flex;
-      flex-direction: column;
-    }
-    :global(.tab.attributes > section) {
-      flex: 1;
-    }
-    :global(.tab.attributes > footer) {
-      flex: 0;
-    }
-
-    :global(.tab.biography.active),
-    :global(.tab.journal.active) {
-      align-items: flex-start;
-      flex-direction: row;
-      padding-right: 0.75rem;
-      overflow-x: inherit;
-    }
-
-    :global(.tab.journal) {
-      gap: 1rem;
-    }
-
-    :global(.tab.biography),
-    :global(.tab.journal) {
-      font-size: 0.8125rem;
-    }
-
-    :global(.tab.biography) {
-      flex-wrap: wrap;
-    }
-  }
-
   .level-information {
     display: flex;
     flex-direction: row;

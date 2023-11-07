@@ -4,6 +4,7 @@ import { SettingsProvider, settingStore } from 'src/settings/settings';
 import type {
   ItemCardStore,
   SheetStats,
+  SheetTabCacheable,
   VehicleSheetContext,
 } from 'src/types/types';
 import { get, writable } from 'svelte/store';
@@ -24,8 +25,10 @@ declare var dnd5e: {
 
 declare var $: any;
 
-export class Tidy5eVehicleSheet extends dnd5e.applications.actor
-  .ActorSheet5eVehicle {
+export class Tidy5eVehicleSheet
+  extends dnd5e.applications.actor.ActorSheet5eVehicle
+  implements SheetTabCacheable
+{
   context = writable<VehicleSheetContext>();
   stats = writable<SheetStats>({
     lastSubmissionTime: null,
@@ -52,6 +55,7 @@ export class Tidy5eVehicleSheet extends dnd5e.applications.actor
       classes: ['tidy5e-kgar', 'sheet', 'actor', CONSTANTS.SHEET_TYPE_VEHICLE],
       height: 840,
       width: SettingsProvider.settings.vehicleSheetWidth.get(),
+      scrollY: ['[data-tidy-track-scroll-y]'],
     });
   }
 
@@ -117,16 +121,18 @@ export class Tidy5eVehicleSheet extends dnd5e.applications.actor
     return context;
   }
 
-  async render(force = false, ...args: any[]) {
+  render(force = false, ...args: any[]) {
     if (force) {
-      this.component?.$destroy();
-      super.render(force, ...args);
-      return;
+      this._saveScrollPositions(this.element);
+      this._destroySvelteComponent();
+      return super.render(force, ...args);
     }
 
     applyTitleToWindow(this.title, this.element.get(0));
-    const context = await this.getContext();
-    this.context.update(() => context);
+    this.getContext().then((context) => {
+      this.context.update(() => context);
+    });
+    return this;
   }
 
   _getHeaderButtons() {
@@ -136,12 +142,23 @@ export class Tidy5eVehicleSheet extends dnd5e.applications.actor
     );
   }
 
+  _destroySvelteComponent() {
+    this.component?.$destroy();
+    this.component = undefined;
+  }
+
+  _saveScrollPositions(html: any) {
+    if (html.length && this.component) {
+      return super._saveScrollPositions(html);
+    }
+  }
+
   async _onDropSingleItem(...args: any[]) {
     return super._onDropSingleItem(...args);
   }
 
   close(options: unknown = {}) {
-    this.component?.$destroy();
+    this._destroySvelteComponent();
     return super.close(options);
   }
 
@@ -151,5 +168,13 @@ export class Tidy5eVehicleSheet extends dnd5e.applications.actor
       stats.lastSubmissionTime = new Date();
       return stats;
     });
+  }
+
+  /* -------------------------------------------- */
+  /* SheetTabCacheable
+  /* -------------------------------------------- */
+
+  onTabSelected(tabId: string) {
+    this.currentTabId = tabId;
   }
 }
