@@ -16,8 +16,6 @@
   import ItemName from '../../../components/item-list/ItemName.svelte';
   import ItemUses from '../../../components/item-list/ItemUses.svelte';
   import ItemAddUses from '../../../components/item-list/ItemAddUses.svelte';
-  import ListContainer from '../../../components/layout/ListContainer.svelte';
-  import ItemControls from '../../../components/item-list/ItemControls.svelte';
   import ItemFilters from '../../../components/item-list/ItemFilters.svelte';
   import ItemFilterSearch from '../../../components/item-list/ItemFilterSearch.svelte';
   import ItemFilterOption from '../../../components/item-list/ItemFilterOption.svelte';
@@ -63,7 +61,7 @@
   </ItemFilterOption>
 </ItemFilters>
 
-<ListContainer cssClass="flex-column small-gap">
+<div class="scroll-container flex-column small-gap">
   {#if noFeatures && !$context.editable}
     <Notice>{localize('T5EK.EmptySection')}</Notice>
   {:else}
@@ -247,4 +245,4 @@
       </ItemTable>
     {/each}
   {/if}
-</ListContainer>
+</div>

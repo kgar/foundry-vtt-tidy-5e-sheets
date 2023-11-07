@@ -6,7 +6,6 @@
   import ItemFilterOption from '../../../components/item-list/ItemFilterOption.svelte';
   import type { ItemLayoutMode } from 'src/types/types';
   import ItemFilterLayoutToggle from '../../../components/item-list/ItemFilterLayoutToggle.svelte';
-  import ListContainer from '../../../components/layout/ListContainer.svelte';
   import InventoryList from '../parts/InventoryList.svelte';
   import InventoryGrid from '../parts/InventoryGrid.svelte';
   import { getContext } from 'svelte';
@@ -64,7 +63,7 @@
   <ItemFilterLayoutToggle mode={layoutMode} on:toggle={() => toggleLayout()} />
 </ItemFilters>
 
-<ListContainer cssClass="flex-column small-gap">
+<div class="scroll-container flex-column small-gap">
   {#if noItems && !$context.editable}
     <Notice>{localize('T5EK.EmptySection')}</Notice>
   {:else}
@@ -89,7 +88,7 @@
       {/if}
     {/each}
   {/if}
-</ListContainer>
+</div>
 
 <TabFooter mode="vertical">
   <div class="attunement-and-currency">

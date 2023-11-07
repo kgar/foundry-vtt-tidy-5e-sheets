@@ -3,7 +3,6 @@
   import ItemTableColumn from 'src/components/item-list/ItemTableColumn.svelte';
   import ItemTableRow from 'src/components/item-list/ItemTableRow.svelte';
   import ItemTableHeaderRow from 'src/components/item-list/ItemTableHeaderRow.svelte';
-  import ListContainer from 'src/components/layout/ListContainer.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { CargoOrCrewItem, VehicleSheetContext } from 'src/types/types';
   import { getContext } from 'svelte';
@@ -106,7 +105,7 @@
   </Notice>
 {/if}
 
-<ListContainer cssClass="flex-column small-gap">
+<div class="scroll-container flex-column small-gap">
   {#each $context.cargo as section}
     {@const cardTemplate = itemCardTemplates[section.dataset.type] ?? null}
     {#if $context.editable || section.items.length}
@@ -250,7 +249,7 @@
       </ItemTable>
     {/if}
   {/each}
-</ListContainer>
+</div>
 
 <TabFooter mode="vertical">
   <div class="currency">

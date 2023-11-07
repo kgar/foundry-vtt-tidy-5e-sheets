@@ -7,7 +7,6 @@
   import type { Readable } from 'svelte/store';
   import RerenderAfterFormSubmission from '../../../components/utility/RerenderAfterFormSubmission.svelte';
   import TextInput from '../../../components/inputs/TextInput.svelte';
-  import ListContainer from 'src/components/layout/ListContainer.svelte';
 
   let context = getContext<Readable<CharacterSheetContext>>('context');
 
@@ -18,7 +17,7 @@
   }
 </script>
 
-<ListContainer cssClass="journal-container">
+<div class="scroll-container journal-container">
   <div
     class="left-notes note-entries"
     class:limited={$context.showLimitedSheet}
@@ -148,10 +147,10 @@
       </article>
     </RerenderAfterFormSubmission>
   </div>
-</ListContainer>
+</div>
 
 <style lang="scss">
-  :global(.tidy5e-kgar .journal-container) {
+  .journal-container {
     display: flex;
     align-items: flex-start;
     flex-direction: row;

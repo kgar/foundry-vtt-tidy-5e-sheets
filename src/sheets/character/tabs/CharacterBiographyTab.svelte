@@ -7,7 +7,6 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import RerenderAfterFormSubmission from '../../../components/utility/RerenderAfterFormSubmission.svelte';
-  import ListContainer from 'src/components/layout/ListContainer.svelte';
 
   let context = getContext<Readable<CharacterSheetContext>>('context');
 
@@ -18,7 +17,7 @@
   }
 </script>
 
-<ListContainer>
+<div class="scroll-container">
   <div class="notes-container">
     <div
       class="top-notes note-entries"
@@ -205,7 +204,7 @@
       </div>
     </div>
   </div>
-</ListContainer>
+</div>
 
 <style lang="scss">
   .notes-container {

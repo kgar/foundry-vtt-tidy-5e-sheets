@@ -3,7 +3,6 @@
   import ItemFilterOption from 'src/components/item-list/ItemFilterOption.svelte';
   import ItemFilterSearch from 'src/components/item-list/ItemFilterSearch.svelte';
   import ItemFilters from 'src/components/item-list/ItemFilters.svelte';
-  import ListContainer from 'src/components/layout/ListContainer.svelte';
   import SpellbookFooter from 'src/components/spellbook/SpellbookFooter.svelte';
   import SpellbookGrid from 'src/components/spellbook/SpellbookGrid.svelte';
   import SpellbookList from 'src/components/spellbook/SpellbookList.svelte';
@@ -67,7 +66,7 @@
   </ItemFilterOption>
   <ItemFilterLayoutToggle mode={layoutMode} on:toggle={() => toggleLayout()} />
 </ItemFilters>
-<ListContainer cssClass="flex-column small-gap">
+<div class="scroll-container flex-column small-gap">
   {#if noSpellLevels}
     <NoSpells editable={$context.editable} />
   {:else}
@@ -89,5 +88,5 @@
       {/if}
     {/each}
   {/if}
-</ListContainer>
+</div>
 <SpellbookFooter />

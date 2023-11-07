@@ -1,6 +1,5 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import ListContainer from '../../../components/layout/ListContainer.svelte';
   import type { CharacterSheetContext, ItemLayoutMode } from 'src/types/types';
   import ItemFilterSearch from '../../../components/item-list/ItemFilterSearch.svelte';
   import ItemFilters from '../../../components/item-list/ItemFilters.svelte';
@@ -96,7 +95,7 @@
   <ItemFilterLayoutToggle mode={layoutMode} on:toggle={() => toggleLayout()} />
 </ItemFilters>
 
-<ListContainer cssClass="flex-column small-gap">
+<div class="scroll-container flex-column small-gap">
   {#if noSpellLevels}
     <NoSpells editable={$context.editable} />
   {:else}
@@ -120,7 +119,7 @@
   {#if noSpells && !$context.editable}
     <Notice>{localize('T5EK.EmptySection')}</Notice>
   {/if}
-</ListContainer>
+</div>
 
 <SpellbookFooter />
 
