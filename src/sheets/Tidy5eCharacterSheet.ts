@@ -66,6 +66,7 @@ export class Tidy5eCharacterSheet
       ],
       height: 840,
       width: SettingsProvider.settings.playerSheetWidth.get(),
+      scrollY: ['[data-tidy-track-scroll-y]'],
     });
   }
 

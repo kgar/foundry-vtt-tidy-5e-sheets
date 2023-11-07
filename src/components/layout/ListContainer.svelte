@@ -2,7 +2,7 @@
   export let cssClass: string = '';
 </script>
 
-<div class="list-container {cssClass}">
+<div class="list-container {cssClass}" data-tidy-track-scroll-y>
   <slot />
 </div>
 
