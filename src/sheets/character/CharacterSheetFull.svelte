@@ -25,7 +25,7 @@
   import { settingStore } from 'src/settings/settings';
   import { currentCharacterSheetTabs } from 'src/state/character-sheet-state';
 
-  export let selectedTabId: string;
+  let selectedTabId: string;
   let context = getContext<Readable<CharacterSheetContext>>('context');
 
   const localize = FoundryAdapter.localize;
@@ -57,10 +57,6 @@
   let tabs: Tab[];
   $: {
     tabs = $currentCharacterSheetTabs.getTabs($context);
-
-    if (!tabs.some((tab) => tab.id === selectedTabId)) {
-      selectedTabId = tabs[0]?.id;
-    }
   }
 </script>
 

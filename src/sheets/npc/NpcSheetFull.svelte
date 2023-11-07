@@ -28,17 +28,13 @@
   import ActorWarnings from '../actor/ActorWarnings.svelte';
   import { currentNpcSheetTabs } from 'src/state/npc-sheet-state';
 
-  export let selectedTabId: string;
+  let selectedTabId: string;
 
   let context = getContext<Readable<NpcSheetContext>>('context');
 
   let tabs: Tab[];
   $: {
     tabs = $currentNpcSheetTabs.getTabs($context);
-
-    if (!tabs.some((tab) => tab.id === selectedTabId)) {
-      selectedTabId = tabs[0]?.id;
-    }
   }
 
   $: sizes = <TidyDropdownOption[]>Object.entries(

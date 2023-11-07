@@ -3,7 +3,6 @@ import CharacterSheet from './character/CharacterSheet.svelte';
 import { debug, error } from 'src/utils/logging';
 import { SettingsProvider, settingStore } from 'src/settings/settings';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
-import { isNil } from 'src/utils/data';
 import { CONSTANTS } from 'src/constants';
 import { get, writable } from 'svelte/store';
 import {
@@ -11,6 +10,7 @@ import {
   type CharacterSheetContext,
   type SheetStats,
   type Actor5e,
+  type SheetTabCacheable,
 } from 'src/types/types';
 import { applyTitleToWindow } from 'src/utils/applications';
 import type { SvelteComponent } from 'svelte';
@@ -26,14 +26,16 @@ declare var dnd5e: {
 
 declare var $: any;
 
-export class Tidy5eCharacterSheet extends dnd5e.applications.actor
-  .ActorSheet5eCharacter {
+export class Tidy5eCharacterSheet
+  extends dnd5e.applications.actor.ActorSheet5eCharacter
+  implements SheetTabCacheable
+{
   context = writable<CharacterSheetContext>();
   stats = writable<SheetStats>({
     lastSubmissionTime: null,
   });
   card = writable<ItemCardStore>();
-  selectedTabId: string | undefined = undefined;
+  currentTabId: string | undefined = undefined;
 
   constructor(...args: any[]) {
     super(...args);
@@ -41,6 +43,13 @@ export class Tidy5eCharacterSheet extends dnd5e.applications.actor
     settingStore.subscribe(() => {
       this.getContext().then((context) => this.context.set(context));
     });
+
+    this.currentTabId =
+      SettingsProvider.settings.defaultCharacterSheetTab.get();
+  }
+
+  onTabSelected(tabId: string) {
+    this.currentTabId = tabId;
   }
 
   get template() {
@@ -67,13 +76,12 @@ export class Tidy5eCharacterSheet extends dnd5e.applications.actor
 
     this.component = new CharacterSheet({
       target: node,
-      props: {
-        selectedTabId: this.#getSelectedTabId(),
-      },
       context: new Map<any, any>([
         ['context', this.context],
         ['stats', this.stats],
         ['card', this.card],
+        ['currentTabId', this.currentTabId],
+        ['onTabSelected', this.onTabSelected.bind(this)],
       ]),
     });
 
@@ -271,50 +279,16 @@ export class Tidy5eCharacterSheet extends dnd5e.applications.actor
     return context;
   }
 
-  #getSelectedTabId(): string {
-    return (
-      this.selectedTabId ??
-      SettingsProvider.settings.defaultCharacterSheetTab.get()
-    );
-  }
-
-  #cacheSelectedTabId() {
-    const selectedTabId = this.element
-      ?.get(0)
-      ?.querySelector(`.${CONSTANTS.TAB_OPTION_CLASS}.active`)?.dataset?.tabId;
-
-    if (!isNil(selectedTabId, '')) {
-      this.selectedTabId = selectedTabId;
-    }
-
-    /* 
-      While Tidy 5e does its own thing with tabs, 
-      this active tab assignment is required in order 
-      to make item dropping tab-aware.
-    */
-    this._tabs[0].active = this.selectedTabId;
-  }
-
   async _onDropSingleItem(...args: any[]) {
-    this.#cacheSelectedTabId();
     return super._onDropSingleItem(...args);
   }
 
   close(options: unknown = {}) {
-    try {
-      this._saveViewState();
-    } catch (e) {
-      debug(
-        `Unable to save view state for ${Tidy5eCharacterSheet.name}. Ignoring.`
-      );
-    } finally {
-      this.component?.$destroy();
-      return super.close(options);
-    }
+    this.component?.$destroy();
+    return super.close(options);
   }
 
   submit(): void {
-    this._saveViewState();
     super.submit();
   }
 
@@ -324,20 +298,6 @@ export class Tidy5eCharacterSheet extends dnd5e.applications.actor
       stats.lastSubmissionTime = new Date();
       return stats;
     });
-  }
-
-  protected _saveViewState() {
-    /*
-      TODO: Save any state that needs to be restored to this sheet instance for rehydration on refresh.
-      - Currently Selected Tab
-      - Scroll Top of all scrollable areas + the tab they represent
-      - Expanded entity IDs
-      - Focused input element
-
-      To do this save operation, use query selectors and data-attributes to target the appropriate things to save.
-      Can it be made general-purpose? Or should it be more bespoke?
-    */
-    this.#cacheSelectedTabId();
   }
 
   onToggleFilter(setName: string, filterName: string) {

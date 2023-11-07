@@ -6,7 +6,6 @@ import type {
   SheetStats,
   VehicleSheetContext,
 } from 'src/types/types';
-import { isNil } from 'src/utils/data';
 import { get, writable } from 'svelte/store';
 import VehicleSheet from './vehicle/VehicleSheet.svelte';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
@@ -32,7 +31,7 @@ export class Tidy5eVehicleSheet extends dnd5e.applications.actor
     lastSubmissionTime: null,
   });
   card = writable<ItemCardStore>();
-  selectedTabId: string | undefined = undefined;
+  currentTabId: string | undefined = undefined;
 
   constructor(...args: any[]) {
     super(...args);
@@ -40,6 +39,8 @@ export class Tidy5eVehicleSheet extends dnd5e.applications.actor
     settingStore.subscribe(() => {
       this.getContext().then((context) => this.context.set(context));
     });
+
+    this.currentTabId = SettingsProvider.settings.defaultVehicleSheetTab.get();
   }
 
   get template() {
@@ -61,13 +62,12 @@ export class Tidy5eVehicleSheet extends dnd5e.applications.actor
 
     this.component = new VehicleSheet({
       target: node,
-      props: {
-        selectedTabId: this.#getSelectedTabId(),
-      },
       context: new Map<any, any>([
         ['context', this.context],
         ['stats', this.stats],
         ['card', this.card],
+        ['currentTabId', this.currentTabId],
+        ['onTabSelected', this.onTabSelected.bind(this)],
       ]),
     });
 
@@ -117,44 +117,6 @@ export class Tidy5eVehicleSheet extends dnd5e.applications.actor
     return context;
   }
 
-  protected _saveViewState() {
-    /*
-      TODO: Save any state that needs to be restored to this sheet instance for rehydration on refresh.
-      - Currently Selected Tab
-      - Scroll Top of all scrollable areas + the tab they represent
-      - Expanded entity IDs
-      - Focused input element
-
-      To do this save operation, use query selectors and data-attributes to target the appropriate things to save.
-      Can it be made general-purpose? Or should it be more bespoke?
-    */
-    this.#cacheSelectedTabId();
-  }
-
-  #getSelectedTabId(): string {
-    return (
-      this.selectedTabId ??
-      SettingsProvider.settings.defaultVehicleSheetTab.get()
-    );
-  }
-
-  #cacheSelectedTabId() {
-    const selectedTabId = this.element
-      ?.get(0)
-      ?.querySelector(`.${CONSTANTS.TAB_OPTION_CLASS}.active`)?.dataset?.tabId;
-
-    if (!isNil(selectedTabId, '')) {
-      this.selectedTabId = selectedTabId;
-    }
-
-    /* 
-      While Tidy 5e does its own thing with tabs, 
-      this active tab assignment is required in order 
-      to make item dropping tab-aware. 
-    */
-    this._tabs[0].active = this.selectedTabId;
-  }
-
   async render(force = false, ...args: any[]) {
     if (force) {
       this.component?.$destroy();
@@ -175,21 +137,12 @@ export class Tidy5eVehicleSheet extends dnd5e.applications.actor
   }
 
   async _onDropSingleItem(...args: any[]) {
-    this.#cacheSelectedTabId();
     return super._onDropSingleItem(...args);
   }
 
   close(options: unknown = {}) {
-    try {
-      this._saveViewState();
-    } catch (e) {
-      debug(
-        `Unable to save view state for ${Tidy5eVehicleSheet.name}. Ignoring.`
-      );
-    } finally {
-      this.component?.$destroy();
-      return super.close(options);
-    }
+    this.component?.$destroy();
+    return super.close(options);
   }
 
   async _onSubmit(...args: any[]) {

@@ -28,17 +28,13 @@
   import ActorWarnings from '../actor/ActorWarnings.svelte';
   import { currentVehicleSheetTabs } from 'src/state/vehicle-sheet-state';
 
-  export let selectedTabId: string;
+  let selectedTabId: string;
 
   let context = getContext<Readable<VehicleSheetContext>>('context');
 
   let tabs: Tab[];
   $: {
     tabs = $currentVehicleSheetTabs.getTabs($context);
-
-    if (!tabs.some((tab) => tab.id === selectedTabId)) {
-      selectedTabId = tabs[0]?.id;
-    }
   }
 
   $: sizes = <TidyDropdownOption[]>Object.entries(

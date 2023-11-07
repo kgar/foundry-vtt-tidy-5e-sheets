@@ -209,3 +209,9 @@ export type GetFunctionReturnType<T> = T extends {
 }
   ? V
   : never;
+
+export type SheetTabCacheable = {
+  onTabSelected: OnTabSelectedFn;
+}
+
+export type OnTabSelectedFn = (tabId: string) => void;
