@@ -2,6 +2,8 @@ import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type {
   ItemCardStore,
   NpcSheetContext,
+  SearchFilterCacheable,
+  SearchFilterIdToTextMap,
   SheetExpandedItemsCacheable,
   SheetStats,
   SheetTabCacheable,
@@ -28,7 +30,10 @@ declare var $: any;
 
 export class Tidy5eNpcSheet
   extends dnd5e.applications.actor.ActorSheet5eNPC
-  implements SheetTabCacheable, SheetExpandedItemsCacheable
+  implements
+    SheetTabCacheable,
+    SheetExpandedItemsCacheable,
+    SearchFilterCacheable
 {
   context = writable<NpcSheetContext>();
   stats = writable<SheetStats>({
@@ -77,6 +82,7 @@ export class Tidy5eNpcSheet
         ['onTabSelected', this.onTabSelected.bind(this)],
         ['onItemToggled', this.onItemToggled.bind(this)],
         ['expandedData', contextAtInit.expandedData],
+        ['searchFilters', this.searchFilters],
       ]),
     });
 
@@ -676,4 +682,10 @@ export class Tidy5eNpcSheet
       expandedItems: this._expanded,
     });
   }
+
+  /* -------------------------------------------- */
+  /* SearchFilterCacheable
+  /* -------------------------------------------- */
+
+  searchFilters: SearchFilterIdToTextMap = new Map<string, string>();
 }

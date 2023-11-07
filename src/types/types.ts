@@ -1,5 +1,6 @@
 import type { ComponentProps, ComponentType, SvelteComponent } from 'svelte';
 import type { Item5e, ItemCardContentComponent } from './item';
+import type { Writable } from 'svelte/store';
 
 export type Actor5e = any;
 
@@ -212,12 +213,18 @@ export type GetFunctionReturnType<T> = T extends {
 
 export type SheetTabCacheable = {
   onTabSelected: OnTabSelectedFn;
-}
+};
 
 export type OnTabSelectedFn = (tabId: string) => void;
 
 export type SheetExpandedItemsCacheable = {
   onTabSelected: OnTabSelectedFn;
-}
+};
 
 export type OnItemToggledFn = (itemId: string, isVisible: boolean) => void;
+
+export type SearchFilterCacheable = {
+  searchFilters: SearchFilterIdToTextMap;
+};
+
+export type SearchFilterIdToTextMap = Map<string, string>;

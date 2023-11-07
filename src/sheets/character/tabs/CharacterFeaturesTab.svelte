@@ -46,8 +46,7 @@
 <ItemFilters>
   <ItemFilterSearch
     bind:searchCriteria
-    actor={$context.actor}
-    searchFlag="feat-search"
+    filterId="feat-search"
     placeholder={localize('T5EK.SearchFeat')}
   />
   <ItemFilterOption setName="features" filterName="action">

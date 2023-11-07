@@ -61,8 +61,7 @@
 <ItemFilters>
   <ItemFilterSearch
     bind:searchCriteria
-    actor={$context.actor}
-    searchFlag="spell-search"
+    filterId="spell-search"
     cssClass="align-self-flex-end"
     placeholder={localize('T5EK.SearchSpell')}
   />

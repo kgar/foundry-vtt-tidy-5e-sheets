@@ -3,6 +3,8 @@ import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { SettingsProvider, settingStore } from 'src/settings/settings';
 import type {
   ItemCardStore,
+  SearchFilterCacheable,
+  SearchFilterIdToTextMap,
   SheetExpandedItemsCacheable,
   SheetStats,
   SheetTabCacheable,
@@ -28,7 +30,10 @@ declare var $: any;
 
 export class Tidy5eVehicleSheet
   extends dnd5e.applications.actor.ActorSheet5eVehicle
-  implements SheetTabCacheable, SheetExpandedItemsCacheable
+  implements
+    SheetTabCacheable,
+    SheetExpandedItemsCacheable,
+    SearchFilterCacheable
 {
   context = writable<VehicleSheetContext>();
   stats = writable<SheetStats>({
@@ -77,6 +82,7 @@ export class Tidy5eVehicleSheet
         ['onTabSelected', this.onTabSelected.bind(this)],
         ['onItemToggled', this.onItemToggled.bind(this)],
         ['expandedData', contextAtInit.expandedData],
+        ['searchFilters', this.searchFilters],
       ]),
     });
 
@@ -200,4 +206,10 @@ export class Tidy5eVehicleSheet
       expandedItems: this._expanded,
     });
   }
+
+  /* -------------------------------------------- */
+  /* SearchFilterCacheable
+  /* -------------------------------------------- */
+
+  searchFilters: SearchFilterIdToTextMap = new Map<string, string>();
 }

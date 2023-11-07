@@ -1,27 +1,31 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { type Actor5e } from 'src/types/types';
-  import { onMount } from 'svelte';
+  import { type SearchFilterIdToTextMap } from 'src/types/types';
+  import { getContext, onMount } from 'svelte';
 
   const localize = FoundryAdapter.localize;
 
   export let searchCriteria: string = '';
-  export let actor: Actor5e;
-  export let searchFlag: string;
+  /**
+   * A string identifier that is unique for a given sheet type. Used for caching search criteria.
+   */
+  export let filterId: string;
   export let cssClass: string = '';
   export let placeholder: string;
 
   async function rememberSearch() {
-    await FoundryAdapter.setFlag(actor, searchFlag, searchCriteria);
+    searchFilters.set(filterId, searchCriteria);
   }
 
   async function clearSearch() {
-    await FoundryAdapter.setFlag(actor, searchFlag, '');
     searchCriteria = '';
+    rememberSearch();
   }
 
+  const searchFilters = getContext<SearchFilterIdToTextMap>('searchFilters');
+
   onMount(() => {
-    searchCriteria = FoundryAdapter.tryGetFlag(actor, searchFlag) ?? '';
+    searchCriteria = searchFilters?.get(filterId) ?? '';
   });
 </script>
 

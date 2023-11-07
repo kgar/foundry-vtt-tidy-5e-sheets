@@ -12,6 +12,8 @@ import {
   type Actor5e,
   type SheetTabCacheable,
   type SheetExpandedItemsCacheable,
+  type SearchFilterCacheable,
+  type SearchFilterIdToTextMap,
 } from 'src/types/types';
 import { applyTitleToWindow } from 'src/utils/applications';
 import type { SvelteComponent } from 'svelte';
@@ -29,7 +31,10 @@ declare var $: any;
 
 export class Tidy5eCharacterSheet
   extends dnd5e.applications.actor.ActorSheet5eCharacter
-  implements SheetTabCacheable, SheetExpandedItemsCacheable
+  implements
+    SheetTabCacheable,
+    SheetExpandedItemsCacheable,
+    SearchFilterCacheable
 {
   context = writable<CharacterSheetContext>();
   stats = writable<SheetStats>({
@@ -84,6 +89,7 @@ export class Tidy5eCharacterSheet
         ['onTabSelected', this.onTabSelected.bind(this)],
         ['onItemToggled', this.onItemToggled.bind(this)],
         ['expandedData', contextAtInit.expandedData],
+        ['searchFilters', this.searchFilters],
       ]),
     });
 
@@ -378,6 +384,12 @@ export class Tidy5eCharacterSheet
       expandedItems: this._expanded,
     });
   }
+
+  /* -------------------------------------------- */
+  /* SearchFilterCacheable
+  /* -------------------------------------------- */
+
+  searchFilters: SearchFilterIdToTextMap = new Map<string, string>();
 }
 
 function getActorClassesToImages(actor: Actor5e): Record<string, string> {
