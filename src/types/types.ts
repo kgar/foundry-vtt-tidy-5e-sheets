@@ -215,3 +215,9 @@ export type SheetTabCacheable = {
 }
 
 export type OnTabSelectedFn = (tabId: string) => void;
+
+export type SheetExpandedItemsCacheable = {
+  onTabSelected: OnTabSelectedFn;
+}
+
+export type OnItemToggledFn = (itemId: string, isVisible: boolean) => void;

@@ -2,6 +2,7 @@ import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type {
   ItemCardStore,
   NpcSheetContext,
+  SheetExpandedItemsCacheable,
   SheetStats,
   SheetTabCacheable,
 } from 'src/types/types';
@@ -27,7 +28,7 @@ declare var $: any;
 
 export class Tidy5eNpcSheet
   extends dnd5e.applications.actor.ActorSheet5eNPC
-  implements SheetTabCacheable
+  implements SheetTabCacheable, SheetExpandedItemsCacheable
 {
   context = writable<NpcSheetContext>();
   stats = writable<SheetStats>({
@@ -55,7 +56,7 @@ export class Tidy5eNpcSheet
       classes: ['tidy5e-kgar', 'sheet', 'actor', CONSTANTS.SHEET_TYPE_NPC],
       height: 840,
       width: SettingsProvider.settings.npcSheetWidth.get(),
-      scrollY: ['[data-tidy-track-scroll-y]'],
+      scrollY: ['[data-tidy-track-scroll-y]', '.scroll-container'],
     });
   }
 
@@ -63,6 +64,8 @@ export class Tidy5eNpcSheet
   activateListeners(html: { get: (index: 0) => HTMLElement }) {
     const node = html.get(0);
     this.card.set({ sheet: node, item: null, itemCardContentTemplate: null });
+
+    const contextAtInit = get(this.context);
 
     this.component = new NpcSheet({
       target: node,
@@ -72,6 +75,8 @@ export class Tidy5eNpcSheet
         ['card', this.card],
         ['currentTabId', this.currentTabId],
         ['onTabSelected', this.onTabSelected.bind(this)],
+        ['onItemToggled', this.onItemToggled.bind(this)],
+        ['expandedData', contextAtInit.expandedData],
       ]),
     });
 
@@ -340,7 +345,9 @@ export class Tidy5eNpcSheet
 
   _saveScrollPositions(html: any) {
     if (html.length && this.component) {
-      return super._saveScrollPositions(html);
+      const save = super._saveScrollPositions(html);
+      debug('Saved scroll positions', this._scrollPositions);
+      return save;
     }
   }
 
@@ -652,5 +659,21 @@ export class Tidy5eNpcSheet
 
   onTabSelected(tabId: string) {
     this.currentTabId = tabId;
+  }
+
+  /* -------------------------------------------- */
+  /* SheetTabCacheable
+  /* -------------------------------------------- */
+
+  onItemToggled(itemId: string, isVisible: boolean) {
+    if (isVisible) {
+      this._expanded.add(itemId);
+    } else {
+      this._expanded.delete(itemId);
+    }
+
+    debug('Item Toggled', {
+      expandedItems: this._expanded,
+    });
   }
 }

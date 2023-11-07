@@ -11,6 +11,7 @@ import {
   type SheetStats,
   type Actor5e,
   type SheetTabCacheable,
+  type SheetExpandedItemsCacheable,
 } from 'src/types/types';
 import { applyTitleToWindow } from 'src/utils/applications';
 import type { SvelteComponent } from 'svelte';
@@ -28,7 +29,7 @@ declare var $: any;
 
 export class Tidy5eCharacterSheet
   extends dnd5e.applications.actor.ActorSheet5eCharacter
-  implements SheetTabCacheable
+  implements SheetTabCacheable, SheetExpandedItemsCacheable
 {
   context = writable<CharacterSheetContext>();
   stats = writable<SheetStats>({
@@ -62,7 +63,7 @@ export class Tidy5eCharacterSheet
       ],
       height: 840,
       width: SettingsProvider.settings.playerSheetWidth.get(),
-      scrollY: ['[data-tidy-track-scroll-y]'],
+      scrollY: ['[data-tidy-track-scroll-y]', '.scroll-container'],
     });
   }
 
@@ -70,6 +71,8 @@ export class Tidy5eCharacterSheet
   activateListeners(html: { get: (index: 0) => HTMLElement }) {
     const node = html.get(0);
     this.card.set({ sheet: node, item: null, itemCardContentTemplate: null });
+
+    const contextAtInit = get(this.context);
 
     this.component = new CharacterSheet({
       target: node,
@@ -79,6 +82,8 @@ export class Tidy5eCharacterSheet
         ['card', this.card],
         ['currentTabId', this.currentTabId],
         ['onTabSelected', this.onTabSelected.bind(this)],
+        ['onItemToggled', this.onItemToggled.bind(this)],
+        ['expandedData', contextAtInit.expandedData],
       ]),
     });
 
@@ -344,7 +349,9 @@ export class Tidy5eCharacterSheet
 
   _saveScrollPositions(html: any) {
     if (html.length && this.component) {
-      return super._saveScrollPositions(html);
+      const save = super._saveScrollPositions(html);
+      debug('Saved scroll positions', this._scrollPositions);
+      return save;
     }
   }
 
@@ -354,6 +361,22 @@ export class Tidy5eCharacterSheet
 
   onTabSelected(tabId: string) {
     this.currentTabId = tabId;
+  }
+
+  /* -------------------------------------------- */
+  /* SheetTabCacheable
+  /* -------------------------------------------- */
+
+  onItemToggled(itemId: string, isVisible: boolean) {
+    if (isVisible) {
+      this._expanded.add(itemId);
+    } else {
+      this._expanded.delete(itemId);
+    }
+
+    debug('Item Toggled', {
+      expandedItems: this._expanded,
+    });
   }
 }
 

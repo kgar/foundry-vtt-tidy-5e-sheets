@@ -1,8 +1,8 @@
 <script lang="ts">
-  import type { Actor5e } from 'src/types/types';
+  import { type Actor5e, type OnItemToggledFn } from 'src/types/types';
   import ItemSummary from '../item-list/ItemSummary.svelte';
   import { warn } from 'src/utils/logging';
-  import { createEventDispatcher, getContext } from 'svelte';
+  import { createEventDispatcher, getContext, onMount } from 'svelte';
   import type { ItemCardStore } from 'src/types/types';
   import type { Writable } from 'svelte/store';
   import type {
@@ -17,9 +17,14 @@
   export let cssClass: string = '';
   export let itemCardContentTemplate: ItemCardContentComponent | null = null;
 
+  const expandedData = getContext<Record<string, ItemChatData>>('expandedData');
+  const onItemToggled = getContext<OnItemToggledFn>('onItemToggled');
+  const dispatcher = createEventDispatcher<{ mousedown: MouseEvent }>();
+
   let card = getContext<Writable<ItemCardStore>>('card');
   let showSummary = false;
   let chatData: ItemChatData;
+  let useTransition: boolean = false;
 
   async function toggleSummary(actor: Actor5e) {
     if (!item) {
@@ -30,6 +35,7 @@
 
     chatData ??= await item.getChatData({ secrets: actor.isOwner });
     showSummary = !showSummary;
+    onItemToggled?.(item.id, showSummary);
   }
 
   async function onMouseEnter() {
@@ -58,10 +64,30 @@
     }
 
     const dragData = item.toDragData();
-    event.dataTransfer.setData('text/plain', JSON.stringify(dragData));
+    event.dataTransfer?.setData('text/plain', JSON.stringify(dragData));
   }
 
-  const dispatcher = createEventDispatcher<{ mousedown: MouseEvent }>();
+  function restoreCachedItemSummary() {
+    if (!item) {
+      useTransition = true;
+      return;
+    }
+
+    useTransition = false;
+
+    const expandedItem = expandedData?.[item.id];
+
+    chatData = expandedItem;
+    showSummary = !!expandedItem;
+
+    setTimeout(() => {
+      useTransition = true;
+    });
+  }
+
+  onMount(() => {
+    restoreCachedItemSummary();
+  });
 </script>
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->
@@ -79,7 +105,7 @@
 >
   <slot {toggleSummary} />
   {#if showSummary}
-    <ItemSummary {chatData} />
+    <ItemSummary {chatData} {useTransition} />
   {/if}
 </div>
 
