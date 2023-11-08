@@ -61,7 +61,6 @@
 <ItemFilters>
   <ItemFilterSearch
     bind:searchCriteria
-    filterId="spell-search"
     cssClass="align-self-flex-end"
     placeholder={localize('T5EK.SearchSpell')}
   />

@@ -417,8 +417,12 @@ export class Tidy5eCharacterSheet
   /* SearchFilterCacheable
   /* -------------------------------------------- */
 
-  onSearch(filterId: string, text: string): void {
-    this.searchFilters.set(filterId, text);
+  onSearch(location: string, text: string): void {
+    debug('Searched', {
+      location,
+      text,
+    });
+    this.searchFilters.set(location, text);
   }
 }
 

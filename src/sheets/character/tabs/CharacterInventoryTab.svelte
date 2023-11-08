@@ -44,7 +44,6 @@
 <ItemFilters>
   <ItemFilterSearch
     bind:searchCriteria
-    filterId="item-search"
     placeholder={localize('T5EK.SearchItem')}
   />
   <ItemFilterOption filterName="action" setName="inventory">

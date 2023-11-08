@@ -715,11 +715,11 @@ export class Tidy5eNpcSheet
   /* SearchFilterCacheable
   /* -------------------------------------------- */
 
-  onSearch(filterId: string, text: string): void {
+  onSearch(location: string, text: string): void {
     debug('Searched', {
-      filterId,
+      location,
       text,
     });
-    this.searchFilters.set(filterId, text);
+    this.searchFilters.set(location, text);
   }
 }

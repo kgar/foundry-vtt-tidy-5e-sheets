@@ -1,20 +1,19 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { type OnSearchFn, type SearchFilterIdToTextMap } from 'src/types/types';
+  import {
+    type OnSearchFn,
+    type SearchFilterIdToTextMap,
+  } from 'src/types/types';
   import { getContext, onMount } from 'svelte';
 
   const localize = FoundryAdapter.localize;
 
   export let searchCriteria: string = '';
-  /**
-   * A string identifier that is unique for a given sheet type. Used for caching search criteria.
-   */
-  export let filterId: string;
   export let cssClass: string = '';
   export let placeholder: string;
 
   async function rememberSearch() {
-    onSearch?.(filterId, searchCriteria);
+    onSearch?.(location, searchCriteria);
   }
 
   async function clearSearch() {
@@ -24,9 +23,10 @@
 
   const searchFilters = getContext<SearchFilterIdToTextMap>('searchFilters');
   const onSearch = getContext<OnSearchFn>('onSearch');
+  const location = getContext<string>('location');
 
   onMount(() => {
-    searchCriteria = searchFilters?.get(filterId) ?? '';
+    searchCriteria = searchFilters?.get(location) ?? '';
   });
 </script>
 

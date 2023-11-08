@@ -231,7 +231,7 @@ export type SearchFilterCacheable = {
   onSearch: OnSearchFn;
 };
 
-export type OnSearchFn = (filterId: string, text: string) => void;
+export type OnSearchFn = (location: string, text: string) => void;
 
 export type SearchFilterIdToTextMap = Map<string, string>;
 
