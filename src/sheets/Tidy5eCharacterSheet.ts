@@ -394,7 +394,7 @@ export class Tidy5eCharacterSheet
   }
 
   /* -------------------------------------------- */
-  /* SheetTabCacheable
+  /* SheetExpandedItemsCacheable
   /* -------------------------------------------- */
 
   onItemToggled(itemId: string, isVisible: boolean, location: string) {
