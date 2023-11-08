@@ -3,11 +3,11 @@ import type {
   ItemCardStore,
   NpcSheetContext,
   SearchFilterCacheable,
-  SearchFilterIdToTextMap,
+  LocationToSearchTextMap,
   SheetExpandedItemsCacheable,
   SheetStats,
   SheetTabCacheable,
-  LocationAwareExpandedItems,
+  ExpandedItemIdToLocationsMap,
   ExpandedItemData,
 } from 'src/types/types';
 import { get, writable } from 'svelte/store';
@@ -44,8 +44,8 @@ export class Tidy5eNpcSheet
   });
   card = writable<ItemCardStore>();
   currentTabId: string;
-  searchFilters: SearchFilterIdToTextMap = new Map<string, string>();
-  expandedItems: LocationAwareExpandedItems = new Map<string, Set<string>>();
+  searchFilters: LocationToSearchTextMap = new Map<string, string>();
+  expandedItems: ExpandedItemIdToLocationsMap = new Map<string, Set<string>>();
   expandedItemData: ExpandedItemData = new Map<string, ItemChatData>();
 
   constructor(...args: any[]) {

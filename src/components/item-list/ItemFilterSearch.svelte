@@ -2,7 +2,7 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import {
     type OnSearchFn,
-    type SearchFilterIdToTextMap,
+    type LocationToSearchTextMap,
   } from 'src/types/types';
   import { getContext, onMount } from 'svelte';
 
@@ -21,7 +21,7 @@
     rememberSearch();
   }
 
-  const searchFilters = getContext<SearchFilterIdToTextMap>('searchFilters');
+  const searchFilters = getContext<LocationToSearchTextMap>('searchFilters');
   const onSearch = getContext<OnSearchFn>('onSearch');
   const location = getContext<string>('location');
 

@@ -7,7 +7,7 @@ import type {
   SheetStats,
   SheetTabCacheable,
   ExpandedItemData,
-  LocationAwareExpandedItems,
+  ExpandedItemIdToLocationsMap,
   VehicleSheetContext,
 } from 'src/types/types';
 import { get, writable } from 'svelte/store';
@@ -39,7 +39,7 @@ export class Tidy5eVehicleSheet
   });
   card = writable<ItemCardStore>();
   currentTabId: string;
-  expandedItems: LocationAwareExpandedItems = new Map<string, Set<string>>();
+  expandedItems: ExpandedItemIdToLocationsMap = new Map<string, Set<string>>();
   expandedItemData: ExpandedItemData = new Map<string, ItemChatData>();
 
   constructor(...args: any[]) {

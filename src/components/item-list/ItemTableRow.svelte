@@ -6,7 +6,7 @@
   import type {
     ItemCardStore,
     ExpandedItemData,
-    LocationAwareExpandedItems,
+    ExpandedItemIdToLocationsMap,
   } from 'src/types/types';
   import type { Writable } from 'svelte/store';
   import type {
@@ -24,7 +24,7 @@
   const expandedItemData = getContext<ExpandedItemData>(
     'expandedItemData'
   );
-  const expandedItems = getContext<LocationAwareExpandedItems>('expandedItems');
+  const expandedItems = getContext<ExpandedItemIdToLocationsMap>('expandedItems');
   const onItemToggled = getContext<OnItemToggledFn>('onItemToggled');
   const dispatcher = createEventDispatcher<{ mousedown: MouseEvent }>();
   const location = getContext<string>('location');
