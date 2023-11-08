@@ -1,6 +1,6 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { type SearchFilterIdToTextMap } from 'src/types/types';
+  import { type OnSearchFn, type SearchFilterIdToTextMap } from 'src/types/types';
   import { getContext, onMount } from 'svelte';
 
   const localize = FoundryAdapter.localize;
@@ -14,7 +14,7 @@
   export let placeholder: string;
 
   async function rememberSearch() {
-    searchFilters.set(filterId, searchCriteria);
+    onSearch?.(filterId, searchCriteria);
   }
 
   async function clearSearch() {
@@ -23,6 +23,7 @@
   }
 
   const searchFilters = getContext<SearchFilterIdToTextMap>('searchFilters');
+  const onSearch = getContext<OnSearchFn>('onSearch');
 
   onMount(() => {
     searchCriteria = searchFilters?.get(filterId) ?? '';

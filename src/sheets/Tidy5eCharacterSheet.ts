@@ -42,6 +42,7 @@ export class Tidy5eCharacterSheet
   });
   card = writable<ItemCardStore>();
   currentTabId: string | undefined = undefined;
+  searchFilters: SearchFilterIdToTextMap = new Map<string, string>();
 
   constructor(...args: any[]) {
     super(...args);
@@ -89,7 +90,8 @@ export class Tidy5eCharacterSheet
         ['onTabSelected', this.onTabSelected.bind(this)],
         ['onItemToggled', this.onItemToggled.bind(this)],
         ['expandedData', contextAtInit.expandedData],
-        ['searchFilters', this.searchFilters],
+        ['searchFilters', new Map<string, string>(this.searchFilters)],
+        ['onSearch', this.onSearch.bind(this)],
       ]),
     });
 
@@ -389,7 +391,9 @@ export class Tidy5eCharacterSheet
   /* SearchFilterCacheable
   /* -------------------------------------------- */
 
-  searchFilters: SearchFilterIdToTextMap = new Map<string, string>();
+  onSearch(filterId: string, text: string): void {
+    this.searchFilters.set(filterId, text);
+  }
 }
 
 function getActorClassesToImages(actor: Actor5e): Record<string, string> {

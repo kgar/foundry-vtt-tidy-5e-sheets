@@ -218,13 +218,15 @@ export type SheetTabCacheable = {
 export type OnTabSelectedFn = (tabId: string) => void;
 
 export type SheetExpandedItemsCacheable = {
-  onTabSelected: OnTabSelectedFn;
+  onItemToggled: OnItemToggledFn;
 };
 
 export type OnItemToggledFn = (itemId: string, isVisible: boolean) => void;
 
 export type SearchFilterCacheable = {
-  searchFilters: SearchFilterIdToTextMap;
+  onSearch: OnSearchFn;
 };
+
+export type OnSearchFn = (filterId: string, text: string) => void;
 
 export type SearchFilterIdToTextMap = Map<string, string>;

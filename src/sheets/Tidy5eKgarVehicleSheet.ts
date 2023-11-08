@@ -30,10 +30,7 @@ declare var $: any;
 
 export class Tidy5eVehicleSheet
   extends dnd5e.applications.actor.ActorSheet5eVehicle
-  implements
-    SheetTabCacheable,
-    SheetExpandedItemsCacheable,
-    SearchFilterCacheable
+  implements SheetTabCacheable, SheetExpandedItemsCacheable
 {
   context = writable<VehicleSheetContext>();
   stats = writable<SheetStats>({
@@ -82,7 +79,6 @@ export class Tidy5eVehicleSheet
         ['onTabSelected', this.onTabSelected.bind(this)],
         ['onItemToggled', this.onItemToggled.bind(this)],
         ['expandedData', contextAtInit.expandedData],
-        ['searchFilters', this.searchFilters],
       ]),
     });
 
@@ -206,10 +202,4 @@ export class Tidy5eVehicleSheet
       expandedItems: this._expanded,
     });
   }
-
-  /* -------------------------------------------- */
-  /* SearchFilterCacheable
-  /* -------------------------------------------- */
-
-  searchFilters: SearchFilterIdToTextMap = new Map<string, string>();
 }
