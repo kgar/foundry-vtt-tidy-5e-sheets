@@ -125,7 +125,8 @@
       </article>
     </div>
     <div class="flex-row extra-small-gap full-height">
-      <div
+      <button
+        type="button"
         on:click={togglePersonalityInfo}
         class="toggle-personality-info"
         title={localize('T5EK.TogglePersonalityInfo')}
@@ -135,7 +136,7 @@
         {:else}
           <i class="fas fa-angle-double-right" />
         {/if}
-      </div>
+      </button>
       <div class="main-notes">
         {#if showNpcPersonalityInfo}
           <div
@@ -315,7 +316,10 @@
   }
 
   .toggle-personality-info {
+    width: auto;
+    border: none;
     align-self: flex-start;
+    transition: color 0.3s ease, transform 0.3s ease;
     padding: 1.25rem 0.25rem;
     background: var(--t5ek-faint-color);
     border-radius: 0.1875rem;
