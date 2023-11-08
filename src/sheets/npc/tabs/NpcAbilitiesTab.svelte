@@ -64,7 +64,7 @@
   }
 </script>
 
-<section class="npc-abilities-content">
+<section class="npc-abilities-content" data-tidy-track-scroll-y>
   <div class="side-panel">
     <SkillsList
       actor={$context.actor}
@@ -234,7 +234,7 @@
     {/if}
   </div>
 </section>
-<TabFooter mode="vertical">
+<TabFooter mode="vertical" cssClass="abilities-footer">
   <Currency actor={$context.actor} />
   {#if $settingStore.enableNpcEncumbranceBar}
     <EncumbranceBar />
@@ -242,6 +242,14 @@
 </TabFooter>
 
 <style lang="scss">
+  section {
+    flex: 1;
+  }
+
+  :global(.tidy5e-kgar .abilities-footer) {
+    flex: 0;
+  }
+
   .npc-abilities-content {
     display: flex;
     flex-direction: row;

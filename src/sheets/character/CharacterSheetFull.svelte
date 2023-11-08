@@ -25,7 +25,7 @@
   import { settingStore } from 'src/settings/settings';
   import { currentCharacterSheetTabs } from 'src/state/character-sheet-state';
 
-  export let selectedTabId: string;
+  let selectedTabId: string;
   let context = getContext<Readable<CharacterSheetContext>>('context');
 
   const localize = FoundryAdapter.localize;
@@ -57,10 +57,6 @@
   let tabs: Tab[];
   $: {
     tabs = $currentCharacterSheetTabs.getTabs($context);
-
-    if (!tabs.some((tab) => tab.id === selectedTabId)) {
-      selectedTabId = tabs[0]?.id;
-    }
   }
 </script>
 
@@ -354,31 +350,6 @@
         gap: 0.25rem;
         align-items: center;
       }
-    }
-  }
-
-  .sheet-body {
-    :global(.tab.attributes) {
-      overflow-y: scroll;
-      padding-right: 0.75rem;
-    }
-
-    :global(.tab.biography),
-    :global(.tab.journal) {
-      align-items: flex-start;
-      flex-direction: row;
-      padding-right: 0.75rem;
-      overflow-x: inherit;
-      gap: 1rem;
-    }
-
-    :global(.tab.biography),
-    :global(.tab.journal) {
-      font-size: 0.8125rem;
-    }
-
-    :global(.tab.biography) {
-      flex-wrap: wrap;
     }
   }
 </style>

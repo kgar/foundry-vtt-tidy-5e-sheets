@@ -1,27 +1,32 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { type Actor5e } from 'src/types/types';
-  import { onMount } from 'svelte';
+  import {
+    type OnSearchFn,
+    type LocationToSearchTextMap,
+  } from 'src/types/types';
+  import { getContext, onMount } from 'svelte';
 
   const localize = FoundryAdapter.localize;
 
   export let searchCriteria: string = '';
-  export let actor: Actor5e;
-  export let searchFlag: string;
   export let cssClass: string = '';
   export let placeholder: string;
 
   async function rememberSearch() {
-    await FoundryAdapter.setFlag(actor, searchFlag, searchCriteria);
+    onSearch?.(location, searchCriteria);
   }
 
   async function clearSearch() {
-    await FoundryAdapter.setFlag(actor, searchFlag, '');
     searchCriteria = '';
+    rememberSearch();
   }
 
+  const searchFilters = getContext<LocationToSearchTextMap>('searchFilters');
+  const onSearch = getContext<OnSearchFn>('onSearch');
+  const location = getContext<string>('location');
+
   onMount(() => {
-    searchCriteria = FoundryAdapter.tryGetFlag(actor, searchFlag) ?? '';
+    searchCriteria = searchFilters?.get(location) ?? '';
   });
 </script>
 

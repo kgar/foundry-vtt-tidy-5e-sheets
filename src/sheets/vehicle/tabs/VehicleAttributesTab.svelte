@@ -1,7 +1,7 @@
 <script lang="ts">
   import { getContext } from 'svelte';
-  import Traits from '../actor/Traits.svelte';
-  import VehicleAttributes from './parts/VehicleAttributes.svelte';
+  import Traits from '../../actor/Traits.svelte';
+  import VehicleAttributes from '../parts/VehicleAttributes.svelte';
   import type { Readable } from 'svelte/store';
   import type { VehicleSheetContext } from 'src/types/types';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
@@ -13,7 +13,7 @@
   import { CONSTANTS } from 'src/constants';
   import ItemName from 'src/components/item-list/ItemName.svelte';
   import ItemUseButton from 'src/components/item-list/ItemUseButton.svelte';
-  import ListItemQuantity from '../actor/ListItemQuantity.svelte';
+  import ListItemQuantity from '../../actor/ListItemQuantity.svelte';
   import ItemTableFooter from 'src/components/item-list/ItemTableFooter.svelte';
   import ItemUses from 'src/components/item-list/ItemUses.svelte';
   import ItemAddUses from 'src/components/item-list/ItemAddUses.svelte';
@@ -24,7 +24,7 @@
   import ItemEditControl from 'src/components/item-list/ItemEditControl.svelte';
   import ItemControl from 'src/components/item-list/controls/ItemControl.svelte';
   import Notice from 'src/components/notice/Notice.svelte';
-  import HpBar from '../../components/bar/HpBar.svelte';
+  import HpBar from '../../../components/bar/HpBar.svelte';
 
   let context = getContext<Readable<VehicleSheetContext>>('context');
 
@@ -58,7 +58,7 @@
   );
 </script>
 
-<div class="attributes-tab-contents">
+<div class="attributes-tab-contents" data-tidy-track-scroll-y>
   <div class="side-panel">
     <VehicleAttributes />
     <Traits

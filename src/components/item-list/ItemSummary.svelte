@@ -2,10 +2,15 @@
   export let chatData: { description: { value: string }; properties: string[] };
   import { slide } from 'svelte/transition';
   import { quadInOut } from 'svelte/easing';
+
+  export let useTransition: boolean;
 </script>
 
 <div
-  transition:slide|global={{ duration: 200, easing: quadInOut }}
+  transition:slide|global={{
+    duration: useTransition ? 200 : 0,
+    easing: quadInOut,
+  }}
   class="item-summary"
 >
   {@html chatData.description.value}

@@ -6,11 +6,10 @@
   import CharacterSheetLimited from './CharacterSheetLimited.svelte';
 
   let context = getContext<Readable<CharacterSheetContext>>('context');
-  export let selectedTabId: string;
 </script>
 
 {#if $context.showLimitedSheet}
   <CharacterSheetLimited />
 {:else}
-  <CharacterSheetFull {selectedTabId} />
+  <CharacterSheetFull />
 {/if}

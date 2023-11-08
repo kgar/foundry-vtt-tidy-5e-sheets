@@ -14,19 +14,31 @@ import SpellSheet from './item/SpellSheet.svelte';
 import SubclassSheet from './item/SubclassSheet.svelte';
 import ToolSheet from './item/ToolSheet.svelte';
 import WeaponSheet from './item/WeaponSheet.svelte';
-import type { SheetStats } from 'src/types/types';
+import type { SheetStats, SheetTabCacheable } from 'src/types/types';
 import { applyTitleToWindow } from 'src/utils/applications';
 import { debug } from 'src/utils/logging';
-import { isNil } from 'src/utils/data';
 import type { SvelteComponent } from 'svelte';
 import { getPercentage } from 'src/utils/numbers';
 
-export class Tidy5eKgarItemSheet extends dnd5e.applications.item.ItemSheet5e {
+declare var dnd5e: {
+  applications: {
+    item: {
+      ItemSheet5e: any;
+    };
+  };
+};
+
+declare var $: any;
+
+export class Tidy5eKgarItemSheet
+  extends dnd5e.applications.item.ItemSheet5e
+  implements SheetTabCacheable
+{
   context = writable<ItemSheetContext>();
   stats = writable<SheetStats>({
     lastSubmissionTime: null,
   });
-  selectedTabId: string;
+  currentTabId: string | undefined = undefined;
   advancementConfigurationMode = false;
 
   constructor(item: Item5e, ...args: any[]) {
@@ -59,131 +71,87 @@ export class Tidy5eKgarItemSheet extends dnd5e.applications.item.ItemSheet5e {
 
     const node = html.get(0);
 
-    const stores = new Map<any, any>([
+    const context = new Map<any, any>([
       ['context', this.context],
       ['stats', this.stats],
+      ['currentTabId', this.currentTabId],
+      ['onTabSelected', this.onTabSelected.bind(this)],
     ]);
 
     switch (this.item.type) {
       case CONSTANTS.ITEM_TYPE_EQUIPMENT:
         this.component = new EquipmentSheet({
           target: node,
-          props: {
-            selectedTabId: this.selectedTabId ?? 'description',
-          },
-          context: stores,
+          context: context,
         });
         break;
       case CONSTANTS.ITEM_TYPE_BACKGROUND:
         this.component = new BackgroundSheet({
           target: node,
-          props: {
-            selectedTabId: this.selectedTabId ?? 'description',
-          },
-          context: stores,
+          context: context,
         });
         break;
       case CONSTANTS.ITEM_TYPE_BACKPACK:
         this.component = new BackpackSheet({
           target: node,
-          props: {
-            selectedTabId: this.selectedTabId ?? 'description',
-          },
-          context: stores,
+          context: context,
         });
         break;
       case CONSTANTS.ITEM_TYPE_CLASS:
         this.component = new ClassSheet({
           target: node,
-          props: {
-            selectedTabId: this.selectedTabId ?? 'description',
-          },
-          context: stores,
+          context: context,
         });
         break;
       case CONSTANTS.ITEM_TYPE_CONSUMABLE:
         this.component = new ConsumableSheet({
           target: node,
-          props: {
-            selectedTabId: this.selectedTabId ?? 'description',
-          },
-          context: stores,
+          context: context,
         });
         break;
       case CONSTANTS.ITEM_TYPE_FEAT:
         this.component = new FeatSheet({
           target: node,
-          props: {
-            selectedTabId: this.selectedTabId ?? 'description',
-          },
-          context: stores,
+          context: context,
         });
         break;
       case CONSTANTS.ITEM_TYPE_LOOT:
         this.component = new LootSheet({
           target: node,
-          props: {
-            selectedTabId: this.selectedTabId ?? 'description',
-          },
-          context: stores,
+          context: context,
         });
         break;
       case CONSTANTS.ITEM_TYPE_SPELL:
         this.component = new SpellSheet({
           target: node,
-          props: {
-            selectedTabId: this.selectedTabId ?? 'description',
-          },
-          context: stores,
+          context: context,
         });
         break;
       case CONSTANTS.ITEM_TYPE_SUBCLASS:
         this.component = new SubclassSheet({
           target: node,
-          props: {
-            selectedTabId: this.selectedTabId ?? 'description',
-          },
-          context: stores,
+          context: context,
         });
         break;
       case CONSTANTS.ITEM_TYPE_TOOL:
         this.component = new ToolSheet({
           target: node,
-          props: {
-            selectedTabId: this.selectedTabId ?? 'description',
-          },
-          context: stores,
+          context: context,
         });
         break;
       case CONSTANTS.ITEM_TYPE_WEAPON:
         this.component = new WeaponSheet({
           target: node,
-          props: {
-            selectedTabId: this.selectedTabId ?? 'description',
-          },
-          context: stores,
+          context: context,
         });
         break;
       default:
         this.component = new TypeNotFoundSheet({
           target: node,
-          context: stores,
+          context: context,
         });
         break;
     }
-
-    node
-      .querySelectorAll<HTMLElement>(`.${CONSTANTS.TAB_OPTION_CLASS}`)
-      .forEach((tab) => {
-        tab.addEventListener(
-          'click',
-          (event: MouseEvent & { currentTarget: HTMLElement }) => {
-            const tabId = event.currentTarget.dataset.tabId;
-            this.makeWindowAutoHeightForDetailsTab(tabId);
-            this.#cacheSelectedTabId();
-          }
-        );
-      });
 
     // Advancement context menu
     const contextOptions = this._getAdvancementContextMenuOptions();
@@ -208,50 +176,19 @@ export class Tidy5eKgarItemSheet extends dnd5e.applications.item.ItemSheet5e {
     return get(this.context);
   }
 
-  private makeWindowAutoHeightForDetailsTab(tabId: string | undefined) {
-    if (tabId === CONSTANTS.TAB_ITEM_DETAILS_ID) {
-      const scrollTop = this.element
-        ?.get(0)
-        ?.querySelector(
-          `[data-tab-contents-for="${CONSTANTS.TAB_ITEM_DETAILS_ID}"]`
-        )?.scrollTop;
-      this.setPosition({
-        height: 'auto',
-      });
-      if (scrollTop) {
-        const adjustedApplication = this.element
-          ?.get(0)
-          ?.querySelector(
-            `[data-tab-contents-for="${CONSTANTS.TAB_ITEM_DETAILS_ID}"]`
-          );
-        if (adjustedApplication) {
-          adjustedApplication.scrollTop = scrollTop;
-        }
-      }
-    }
-  }
-
   // TODO: Extract this implementation somewhere. Or at least part of it.
   render(force = false, options = {}) {
     if (force) {
       this.component?.$destroy();
       super.render(force, options);
-      this.makeWindowAutoHeightForDetailsTab(this.selectedTabId);
       return this;
     }
 
     applyTitleToWindow(this.title, this.element.get(0));
-    this.updateContext().then(() => {
-      setTimeout(() => {
-        this.makeWindowAutoHeightForDetailsTab(this.selectedTabId);
-      });
+    this.getContext().then((context) => {
+      this.context.update(() => context);
     });
     return this;
-  }
-
-  private async updateContext() {
-    const context = await this.getContext();
-    this.context.update(() => context);
   }
 
   private async getContext(): Promise<ItemSheetContext> {
@@ -302,39 +239,7 @@ export class Tidy5eKgarItemSheet extends dnd5e.applications.item.ItemSheet5e {
     }
   }
 
-  protected _saveViewState() {
-    /*
-      TODO: Save any state that needs to be restored to this sheet instance for rehydration on refresh.
-      - Currently Selected Tab
-      - Scroll Top of all scrollable areas + the tab they represent
-      - Expanded entity IDs
-      - Focused input element
-
-      To do this save operation, use query selectors and data-attributes to target the appropriate things to save.
-      Can it be made general-purpose? Or should it be more bespoke?
-    */
-    this.#cacheSelectedTabId();
-  }
-
-  #cacheSelectedTabId() {
-    const selectedTabId = this.element
-      ?.get(0)
-      ?.querySelector(`.${CONSTANTS.TAB_OPTION_CLASS}.active`)?.dataset?.tabId;
-
-    if (!isNil(selectedTabId, '')) {
-      this.selectedTabId = selectedTabId;
-    }
-
-    /* 
-      While Tidy 5e does its own thing with tabs, 
-      this active tab assignment is required in order 
-      to make item dropping tab-aware.
-    */
-    this._tabs[0].active = this.selectedTabId;
-  }
-
   async _onDropSingleItem(...args: any[]) {
-    this.#cacheSelectedTabId();
     return super._onDropSingleItem(...args);
   }
 
@@ -349,5 +254,13 @@ export class Tidy5eKgarItemSheet extends dnd5e.applications.item.ItemSheet5e {
     return FoundryAdapter.removeConfigureSettingsButtonWhenLockedForNonGm(
       buttons
     );
+  }
+
+  /* -------------------------------------------- */
+  /* SheetTabCacheable
+  /* -------------------------------------------- */
+
+  onTabSelected(tabId: string) {
+    this.currentTabId = tabId;
   }
 }

@@ -18,22 +18,24 @@
     );
 </script>
 
-<div class="attributes-tab-contents">
-  <section class="side-panel">
-    <SkillsList actor={$context.actor} />
-    {#if !$settingStore.traitsMovedBelowResource}
-      <Traits toggleable={$settingStore.traitsTogglePc} />
-    {/if}
-  </section>
-  <section class="main-panel">
-    {#if showResources}
-      <Resources />
-    {/if}
-    {#if $settingStore.traitsMovedBelowResource}
-      <Traits toggleable={$settingStore.traitsTogglePc} />
-    {/if}
-    <Favorites />
-  </section>
+<div class="scroll-container">
+  <div class="attributes-tab-contents">
+    <section class="side-panel">
+      <SkillsList actor={$context.actor} />
+      {#if !$settingStore.traitsMovedBelowResource}
+        <Traits toggleable={$settingStore.traitsTogglePc} />
+      {/if}
+    </section>
+    <section class="main-panel">
+      {#if showResources}
+        <Resources />
+      {/if}
+      {#if $settingStore.traitsMovedBelowResource}
+        <Traits toggleable={$settingStore.traitsTogglePc} />
+      {/if}
+      <Favorites />
+    </section>
+  </div>
 </div>
 
 <style lang="scss">

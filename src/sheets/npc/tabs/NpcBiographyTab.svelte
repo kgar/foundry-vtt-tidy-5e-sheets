@@ -18,7 +18,8 @@
   }
 
   $: showNpcPersonalityInfo =
-    FoundryAdapter.tryGetFlag($context.actor, 'showNpcPersonalityInfo') ?? false;
+    FoundryAdapter.tryGetFlag($context.actor, 'showNpcPersonalityInfo') ??
+    false;
 
   function togglePersonalityInfo() {
     FoundryAdapter.setFlag(
@@ -29,215 +30,225 @@
   }
 </script>
 
-<div class="notes-container">
-  <div class="top-notes note-entries" class:limited={$context.showLimitedSheet}>
-    <article>
-      <ul class="character-details">
-        <li>
-          <span>{localize('T5EK.Gender')}:</span>
-          <ContentEditableFormField
-            element="span"
-            editable={$context.owner && !$context.lockSensitiveFields}
-            document={$context.actor}
-            field="flags.{CONSTANTS.MODULE_ID}.gender"
-            value={FoundryAdapter.tryGetFlag($context.actor, 'gender') ?? ''}
-            cssClass="detail-input"
-          />
-        </li>
-        <li>
-          <span>{localize('T5EK.Age')}:</span>
-          <ContentEditableFormField
-            element="span"
-            editable={$context.owner && !$context.lockSensitiveFields}
-            document={$context.actor}
-            field="flags.{CONSTANTS.MODULE_ID}.age"
-            value={FoundryAdapter.tryGetFlag($context.actor, 'age') ?? ''}
-            cssClass="detail-input"
-            dataMaxLength={5}
-          />
-        </li>
-        <li>
-          <span>{localize('T5EK.Height')}:</span>
-          <ContentEditableFormField
-            element="span"
-            editable={$context.owner && !$context.lockSensitiveFields}
-            document={$context.actor}
-            field="flags.{CONSTANTS.MODULE_ID}.height"
-            value={FoundryAdapter.tryGetFlag($context.actor, 'height') ?? ''}
-            cssClass="detail-input"
-            dataMaxLength={20}
-          />
-        </li>
-        <li>
-          <span>{localize('T5EK.Weight')}:</span>
-          <ContentEditableFormField
-            element="span"
-            editable={$context.owner && !$context.lockSensitiveFields}
-            document={$context.actor}
-            field="flags.{CONSTANTS.MODULE_ID}.weight"
-            value={FoundryAdapter.tryGetFlag($context.actor, 'weight') ?? ''}
-            cssClass="detail-input"
-            dataMaxLength={20}
-          />
-        </li>
-        <li>
-          <span>{localize('T5EK.Eyes')}:</span>
-          <ContentEditableFormField
-            element="span"
-            editable={$context.owner && !$context.lockSensitiveFields}
-            document={$context.actor}
-            field="flags.{CONSTANTS.MODULE_ID}.eyes"
-            value={FoundryAdapter.tryGetFlag($context.actor, 'eyes') ?? ''}
-            cssClass="detail-input"
-            dataMaxLength={40}
-          />
-        </li>
-        <li>
-          <span>{localize('T5EK.Skin')}:</span>
-          <ContentEditableFormField
-            element="span"
-            editable={$context.owner && !$context.lockSensitiveFields}
-            document={$context.actor}
-            field="flags.{CONSTANTS.MODULE_ID}.skin"
-            value={FoundryAdapter.tryGetFlag($context.actor, 'skin') ?? ''}
-            cssClass="detail-input"
-            dataMaxLength={40}
-          />
-        </li>
-        <li>
-          <span>{localize('T5EK.Hair')}:</span>
-          <ContentEditableFormField
-            element="span"
-            editable={$context.owner && !$context.lockSensitiveFields}
-            document={$context.actor}
-            field="flags.{CONSTANTS.MODULE_ID}.hair"
-            value={FoundryAdapter.tryGetFlag($context.actor, 'hair') ?? ''}
-            cssClass="detail-input"
-            dataMaxLength={40}
-          />
-        </li>
-      </ul>
-    </article>
-  </div>
-  <div class="flex-row extra-small-gap full-height">
+<div class="scroll-container">
+  <div class="notes-container">
     <div
-      on:click={togglePersonalityInfo}
-      class="toggle-personality-info"
-      title={localize('T5EK.TogglePersonalityInfo')}
+      class="top-notes note-entries"
+      class:limited={$context.showLimitedSheet}
     >
-      {#if showNpcPersonalityInfo}
-        <i class="fas fa-angle-double-left" />
-      {:else}
-        <i class="fas fa-angle-double-right" />
-      {/if}
+      <article>
+        <ul class="character-details">
+          <li>
+            <span>{localize('T5EK.Gender')}:</span>
+            <ContentEditableFormField
+              element="span"
+              editable={$context.owner && !$context.lockSensitiveFields}
+              document={$context.actor}
+              field="flags.{CONSTANTS.MODULE_ID}.gender"
+              value={FoundryAdapter.tryGetFlag($context.actor, 'gender') ?? ''}
+              cssClass="detail-input"
+            />
+          </li>
+          <li>
+            <span>{localize('T5EK.Age')}:</span>
+            <ContentEditableFormField
+              element="span"
+              editable={$context.owner && !$context.lockSensitiveFields}
+              document={$context.actor}
+              field="flags.{CONSTANTS.MODULE_ID}.age"
+              value={FoundryAdapter.tryGetFlag($context.actor, 'age') ?? ''}
+              cssClass="detail-input"
+              dataMaxLength={5}
+            />
+          </li>
+          <li>
+            <span>{localize('T5EK.Height')}:</span>
+            <ContentEditableFormField
+              element="span"
+              editable={$context.owner && !$context.lockSensitiveFields}
+              document={$context.actor}
+              field="flags.{CONSTANTS.MODULE_ID}.height"
+              value={FoundryAdapter.tryGetFlag($context.actor, 'height') ?? ''}
+              cssClass="detail-input"
+              dataMaxLength={20}
+            />
+          </li>
+          <li>
+            <span>{localize('T5EK.Weight')}:</span>
+            <ContentEditableFormField
+              element="span"
+              editable={$context.owner && !$context.lockSensitiveFields}
+              document={$context.actor}
+              field="flags.{CONSTANTS.MODULE_ID}.weight"
+              value={FoundryAdapter.tryGetFlag($context.actor, 'weight') ?? ''}
+              cssClass="detail-input"
+              dataMaxLength={20}
+            />
+          </li>
+          <li>
+            <span>{localize('T5EK.Eyes')}:</span>
+            <ContentEditableFormField
+              element="span"
+              editable={$context.owner && !$context.lockSensitiveFields}
+              document={$context.actor}
+              field="flags.{CONSTANTS.MODULE_ID}.eyes"
+              value={FoundryAdapter.tryGetFlag($context.actor, 'eyes') ?? ''}
+              cssClass="detail-input"
+              dataMaxLength={40}
+            />
+          </li>
+          <li>
+            <span>{localize('T5EK.Skin')}:</span>
+            <ContentEditableFormField
+              element="span"
+              editable={$context.owner && !$context.lockSensitiveFields}
+              document={$context.actor}
+              field="flags.{CONSTANTS.MODULE_ID}.skin"
+              value={FoundryAdapter.tryGetFlag($context.actor, 'skin') ?? ''}
+              cssClass="detail-input"
+              dataMaxLength={40}
+            />
+          </li>
+          <li>
+            <span>{localize('T5EK.Hair')}:</span>
+            <ContentEditableFormField
+              element="span"
+              editable={$context.owner && !$context.lockSensitiveFields}
+              document={$context.actor}
+              field="flags.{CONSTANTS.MODULE_ID}.hair"
+              value={FoundryAdapter.tryGetFlag($context.actor, 'hair') ?? ''}
+              cssClass="detail-input"
+              dataMaxLength={40}
+            />
+          </li>
+        </ul>
+      </article>
     </div>
-    <div class="main-notes">
-      {#if showNpcPersonalityInfo}
+    <div class="flex-row extra-small-gap full-height">
+      <button
+        type="button"
+        on:click={togglePersonalityInfo}
+        class="toggle-personality-info"
+        title={localize('T5EK.TogglePersonalityInfo')}
+      >
+        {#if showNpcPersonalityInfo}
+          <i class="fas fa-angle-double-left" />
+        {:else}
+          <i class="fas fa-angle-double-right" />
+        {/if}
+      </button>
+      <div class="main-notes">
+        {#if showNpcPersonalityInfo}
+          <div
+            class="left-notes note-entries"
+            class:limited={$context.showLimitedSheet}
+          >
+            <RerenderAfterFormSubmission
+              andOnValueChange={FoundryAdapter.tryGetFlag(
+                $context.actor,
+                'trait'
+              ) ?? ''}
+            >
+              <article use:activateProseMirrorListeners>
+                <div class="section-titles biopage">
+                  {localize('DND5E.PersonalityTraits')}
+                </div>
+                <SheetEditor
+                  content={$context.traitEnrichedHtml}
+                  target="flags.{CONSTANTS.MODULE_ID}.trait"
+                  editable={$context.owner || FoundryAdapter.userIsGm()}
+                />
+              </article>
+            </RerenderAfterFormSubmission>
+            <RerenderAfterFormSubmission
+              andOnValueChange={FoundryAdapter.tryGetFlag(
+                $context.actor,
+                'ideal'
+              ) ?? ''}
+            >
+              <article use:activateProseMirrorListeners>
+                <div class="section-titles biopage">
+                  {localize('DND5E.Ideals')}
+                </div>
+                <SheetEditor
+                  content={$context.idealEnrichedHtml}
+                  target="flags.{CONSTANTS.MODULE_ID}.ideal"
+                  editable={$context.owner || FoundryAdapter.userIsGm()}
+                />
+              </article>
+            </RerenderAfterFormSubmission>
+            <RerenderAfterFormSubmission
+              andOnValueChange={FoundryAdapter.tryGetFlag(
+                $context.actor,
+                'bond'
+              ) ?? ''}
+            >
+              <article use:activateProseMirrorListeners>
+                <div class="section-titles biopage">
+                  {localize('DND5E.Bonds')}
+                </div>
+                <SheetEditor
+                  content={$context.bondEnrichedHtml}
+                  target="flags.{CONSTANTS.MODULE_ID}.bond"
+                  editable={$context.owner || FoundryAdapter.userIsGm()}
+                />
+              </article>
+            </RerenderAfterFormSubmission>
+            <RerenderAfterFormSubmission
+              andOnValueChange={FoundryAdapter.tryGetFlag(
+                $context.actor,
+                'flaw'
+              ) ?? ''}
+            >
+              <article use:activateProseMirrorListeners>
+                <div class="section-titles biopage">
+                  {localize('DND5E.Flaws')}
+                </div>
+                <SheetEditor
+                  content={$context.flawEnrichedHtml}
+                  target="flags.{CONSTANTS.MODULE_ID}.flaw"
+                  editable={$context.owner || FoundryAdapter.userIsGm()}
+                />
+              </article>
+            </RerenderAfterFormSubmission>
+          </div>
+        {/if}
         <div
-          class="left-notes note-entries"
+          class="right-notes note-entries"
           class:limited={$context.showLimitedSheet}
         >
           <RerenderAfterFormSubmission
             andOnValueChange={FoundryAdapter.tryGetFlag(
               $context.actor,
-              'trait'
+              'appearance'
             ) ?? ''}
           >
-            <article use:activateProseMirrorListeners>
+            <article class="appearance-notes" use:activateProseMirrorListeners>
               <div class="section-titles biopage">
-                {localize('DND5E.PersonalityTraits')}
+                {localize('DND5E.Appearance')}
               </div>
               <SheetEditor
-                content={$context.traitEnrichedHtml}
-                target="flags.{CONSTANTS.MODULE_ID}.trait"
+                content={$context.appearanceEnrichedHtml}
+                target="flags.{CONSTANTS.MODULE_ID}.appearance"
                 editable={$context.owner || FoundryAdapter.userIsGm()}
               />
             </article>
           </RerenderAfterFormSubmission>
           <RerenderAfterFormSubmission
-            andOnValueChange={FoundryAdapter.tryGetFlag(
-              $context.actor,
-              'ideal'
-            ) ?? ''}
+            andOnValueChange={$context.system.details.biography.value}
           >
-            <article use:activateProseMirrorListeners>
-              <div class="section-titles biopage">
-                {localize('DND5E.Ideals')}
+            <article class="biography-notes" use:activateProseMirrorListeners>
+              <div class="section-titles">
+                {localize('DND5E.Background')}/{localize('DND5E.Biography')}
               </div>
               <SheetEditor
-                content={$context.idealEnrichedHtml}
-                target="flags.{CONSTANTS.MODULE_ID}.ideal"
-                editable={$context.owner || FoundryAdapter.userIsGm()}
-              />
-            </article>
-          </RerenderAfterFormSubmission>
-          <RerenderAfterFormSubmission
-            andOnValueChange={FoundryAdapter.tryGetFlag($context.actor, 'bond') ??
-              ''}
-          >
-            <article use:activateProseMirrorListeners>
-              <div class="section-titles biopage">
-                {localize('DND5E.Bonds')}
-              </div>
-              <SheetEditor
-                content={$context.bondEnrichedHtml}
-                target="flags.{CONSTANTS.MODULE_ID}.bond"
-                editable={$context.owner || FoundryAdapter.userIsGm()}
-              />
-            </article>
-          </RerenderAfterFormSubmission>
-          <RerenderAfterFormSubmission
-            andOnValueChange={FoundryAdapter.tryGetFlag($context.actor, 'flaw') ??
-              ''}
-          >
-            <article use:activateProseMirrorListeners>
-              <div class="section-titles biopage">
-                {localize('DND5E.Flaws')}
-              </div>
-              <SheetEditor
-                content={$context.flawEnrichedHtml}
-                target="flags.{CONSTANTS.MODULE_ID}.flaw"
+                content={$context.biographyEnrichedHtml}
+                target="system.details.biography.value"
                 editable={$context.owner || FoundryAdapter.userIsGm()}
               />
             </article>
           </RerenderAfterFormSubmission>
         </div>
-      {/if}
-      <div
-        class="right-notes note-entries"
-        class:limited={$context.showLimitedSheet}
-      >
-        <RerenderAfterFormSubmission
-          andOnValueChange={FoundryAdapter.tryGetFlag(
-            $context.actor,
-            'appearance'
-          ) ?? ''}
-        >
-          <article class="appearance-notes" use:activateProseMirrorListeners>
-            <div class="section-titles biopage">
-              {localize('DND5E.Appearance')}
-            </div>
-            <SheetEditor
-              content={$context.appearanceEnrichedHtml}
-              target="flags.{CONSTANTS.MODULE_ID}.appearance"
-              editable={$context.owner || FoundryAdapter.userIsGm()}
-            />
-          </article>
-        </RerenderAfterFormSubmission>
-        <RerenderAfterFormSubmission
-          andOnValueChange={$context.system.details.biography.value}
-        >
-          <article class="biography-notes" use:activateProseMirrorListeners>
-            <div class="section-titles">
-              {localize('DND5E.Background')}/{localize('DND5E.Biography')}
-            </div>
-            <SheetEditor
-              content={$context.biographyEnrichedHtml}
-              target="system.details.biography.value"
-              editable={$context.owner || FoundryAdapter.userIsGm()}
-            />
-          </article>
-        </RerenderAfterFormSubmission>
       </div>
     </div>
   </div>
@@ -305,7 +316,10 @@
   }
 
   .toggle-personality-info {
+    width: auto;
+    border: none;
     align-self: flex-start;
+    transition: color 0.3s ease, transform 0.3s ease;
     padding: 1.25rem 0.25rem;
     background: var(--t5ek-faint-color);
     border-radius: 0.1875rem;

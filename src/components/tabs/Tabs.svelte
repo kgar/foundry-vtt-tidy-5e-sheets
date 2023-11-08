@@ -1,13 +1,16 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { Tab } from 'src/types/types';
-  import { createEventDispatcher } from 'svelte';
+  import type { Tab, OnTabSelectedFn } from 'src/types/types';
+  import { isNil } from 'src/utils/data';
+  import { createEventDispatcher, getContext, onMount } from 'svelte';
 
   export let tabs: Tab[];
   export let selectedTabId: string | undefined = undefined;
   export let cssClass: string = '';
   export let orientation: 'horizontal' | 'vertical' = 'horizontal';
+
+  const onTabSelected = getContext<OnTabSelectedFn>('onTabSelected');
 
   const dispatcher = createEventDispatcher<{ tabSelected: Tab }>();
 
@@ -16,6 +19,7 @@
   function selectTab(tab: Tab) {
     selectedTabId = tab.id;
     dispatcher('tabSelected', tab);
+    onTabSelected?.(tab.id);
   }
 
   function onKeyDown(ev: KeyboardEvent, i: number) {
@@ -46,6 +50,17 @@
   }
 
   const localize = FoundryAdapter.localize;
+  const currentTabId = getContext<string>('currentTabId');
+
+  onMount(() => {
+    if (currentTabId !== undefined) {
+      selectedTabId = currentTabId;
+    }
+
+    if (!tabs.some((tab) => tab.id === selectedTabId)) {
+      selectedTabId = tabs[0]?.id;
+    }
+  });
 </script>
 
 <nav

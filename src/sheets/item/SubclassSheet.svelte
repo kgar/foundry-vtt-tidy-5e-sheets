@@ -3,7 +3,6 @@
   import type { Readable } from 'svelte/store';
   import type { ItemSheetContext } from 'src/types/item';
   import type { Tab } from 'src/types/types';
-  import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import Tabs from 'src/components/tabs/Tabs.svelte';
   import TabContents from 'src/components/tabs/TabContents.svelte';
@@ -13,7 +12,7 @@
 
   let context = getContext<Readable<ItemSheetContext>>('context');
 
-  export let selectedTabId: string;
+  let selectedTabId: string;
 
   const tabs: Tab[] = [
     itemSheetTabs.description,
@@ -34,7 +33,7 @@
         value={$context.item.name}
         placeholder={localize('DND5E.SubclassName')}
         disabled={!$context.owner}
-        />
+      />
     </h1>
 
     <div class="item-subtitle">
