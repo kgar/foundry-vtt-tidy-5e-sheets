@@ -38,7 +38,7 @@ export class Tidy5eVehicleSheet
     lastSubmissionTime: null,
   });
   card = writable<ItemCardStore>();
-  currentTabId: string | undefined = undefined;
+  currentTabId: string;
   tidyExpandedItems: TidyExpandedItems = new Map<string, Set<string>>();
   tidyExpandedItemData: TidyExpandedItemData = new Map<string, ItemChatData>();
 

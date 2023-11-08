@@ -14,14 +14,9 @@ import SpellSheet from './item/SpellSheet.svelte';
 import SubclassSheet from './item/SubclassSheet.svelte';
 import ToolSheet from './item/ToolSheet.svelte';
 import WeaponSheet from './item/WeaponSheet.svelte';
-import type {
-  OnTabSelectedFn,
-  SheetStats,
-  SheetTabCacheable,
-} from 'src/types/types';
+import type { SheetStats, SheetTabCacheable } from 'src/types/types';
 import { applyTitleToWindow } from 'src/utils/applications';
 import { debug } from 'src/utils/logging';
-import { isNil } from 'src/utils/data';
 import type { SvelteComponent } from 'svelte';
 import { getPercentage } from 'src/utils/numbers';
 
@@ -160,18 +155,6 @@ export class Tidy5eKgarItemSheet
         break;
     }
 
-    node
-      .querySelectorAll<HTMLElement>(`.${CONSTANTS.TAB_OPTION_CLASS}`)
-      .forEach((tab) => {
-        tab.addEventListener(
-          'click',
-          (event: MouseEvent & { currentTarget: HTMLElement }) => {
-            const tabId = event.currentTarget.dataset.tabId;
-            this.makeWindowAutoHeightForDetailsTab(tabId);
-          }
-        );
-      });
-
     // Advancement context menu
     const contextOptions = this._getAdvancementContextMenuOptions();
     /**
@@ -195,50 +178,19 @@ export class Tidy5eKgarItemSheet
     return get(this.context);
   }
 
-  private makeWindowAutoHeightForDetailsTab(tabId: string | undefined) {
-    if (tabId === CONSTANTS.TAB_ITEM_DETAILS_ID) {
-      const scrollTop = this.element
-        ?.get(0)
-        ?.querySelector(
-          `[data-tab-contents-for="${CONSTANTS.TAB_ITEM_DETAILS_ID}"]`
-        )?.scrollTop;
-      this.setPosition({
-        height: 'auto',
-      });
-      if (scrollTop) {
-        const adjustedApplication = this.element
-          ?.get(0)
-          ?.querySelector(
-            `[data-tab-contents-for="${CONSTANTS.TAB_ITEM_DETAILS_ID}"]`
-          );
-        if (adjustedApplication) {
-          adjustedApplication.scrollTop = scrollTop;
-        }
-      }
-    }
-  }
-
   // TODO: Extract this implementation somewhere. Or at least part of it.
   render(force = false, options = {}) {
     if (force) {
       this.component?.$destroy();
       super.render(force, options);
-      this.makeWindowAutoHeightForDetailsTab(this.currentTabId);
       return this;
     }
 
     applyTitleToWindow(this.title, this.element.get(0));
-    this.updateContext().then(() => {
-      setTimeout(() => {
-        this.makeWindowAutoHeightForDetailsTab(this.currentTabId);
-      });
+    this.getContext().then((context) => {
+      this.context.update(() => context);
     });
     return this;
-  }
-
-  private async updateContext() {
-    const context = await this.getContext();
-    this.context.update(() => context);
   }
 
   private async getContext(): Promise<ItemSheetContext> {
