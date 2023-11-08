@@ -1,14 +1,13 @@
 <script lang="ts">
   import type { Tab } from 'src/types/types';
   import RerenderAfterFormSubmission from '../utility/RerenderAfterFormSubmission.svelte';
-  import { getContext, setContext } from 'svelte';
+  import { declareLocation } from 'src/types/location-awareness';
 
   export let tab: Tab;
   export let active: boolean;
   export let cssClass: string = '';
 
-  const location = getContext('location');
-  setContext('location', `${location}/tab/${tab.id}`);
+  declareLocation('tab', tab.id);
 
   function onTabRender(node: HTMLElement, tab: Tab) {
     if ('render' in tab.content) {
