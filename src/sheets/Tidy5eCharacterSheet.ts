@@ -3,7 +3,6 @@ import CharacterSheet from './character/CharacterSheet.svelte';
 import { debug, error } from 'src/utils/logging';
 import { SettingsProvider, settingStore } from 'src/settings/settings';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
-import { isNil } from 'src/utils/data';
 import { CONSTANTS } from 'src/constants';
 import { get, writable } from 'svelte/store';
 import {
@@ -11,10 +10,17 @@ import {
   type CharacterSheetContext,
   type SheetStats,
   type Actor5e,
+  type SheetTabCacheable,
+  type SheetExpandedItemsCacheable,
+  type SearchFilterCacheable,
+  type LocationToSearchTextMap,
+  type ExpandedItemIdToLocationsMap,
+  type ExpandedItemData,
 } from 'src/types/types';
 import { applyTitleToWindow } from 'src/utils/applications';
 import type { SvelteComponent } from 'svelte';
 import { getPercentage } from 'src/utils/numbers';
+import type { ItemChatData } from 'src/types/item';
 
 declare var dnd5e: {
   applications: {
@@ -26,14 +32,22 @@ declare var dnd5e: {
 
 declare var $: any;
 
-export class Tidy5eCharacterSheet extends dnd5e.applications.actor
-  .ActorSheet5eCharacter {
+export class Tidy5eCharacterSheet
+  extends dnd5e.applications.actor.ActorSheet5eCharacter
+  implements
+    SheetTabCacheable,
+    SheetExpandedItemsCacheable,
+    SearchFilterCacheable
+{
   context = writable<CharacterSheetContext>();
   stats = writable<SheetStats>({
     lastSubmissionTime: null,
   });
   card = writable<ItemCardStore>();
-  selectedTabId: string | undefined = undefined;
+  currentTabId: string;
+  searchFilters: LocationToSearchTextMap = new Map<string, string>();
+  expandedItems: ExpandedItemIdToLocationsMap = new Map<string, Set<string>>();
+  expandedItemData: ExpandedItemData = new Map<string, ItemChatData>();
 
   constructor(...args: any[]) {
     super(...args);
@@ -41,6 +55,9 @@ export class Tidy5eCharacterSheet extends dnd5e.applications.actor
     settingStore.subscribe(() => {
       this.getContext().then((context) => this.context.set(context));
     });
+
+    this.currentTabId =
+      SettingsProvider.settings.defaultCharacterSheetTab.get();
   }
 
   get template() {
@@ -57,6 +74,7 @@ export class Tidy5eCharacterSheet extends dnd5e.applications.actor
       ],
       height: 840,
       width: SettingsProvider.settings.playerSheetWidth.get(),
+      scrollY: ['[data-tidy-track-scroll-y]', '.scroll-container'],
     });
   }
 
@@ -67,13 +85,18 @@ export class Tidy5eCharacterSheet extends dnd5e.applications.actor
 
     this.component = new CharacterSheet({
       target: node,
-      props: {
-        selectedTabId: this.#getSelectedTabId(),
-      },
       context: new Map<any, any>([
         ['context', this.context],
         ['stats', this.stats],
         ['card', this.card],
+        ['currentTabId', this.currentTabId],
+        ['onTabSelected', this.onTabSelected.bind(this)],
+        ['onItemToggled', this.onItemToggled.bind(this)],
+        ['searchFilters', new Map(this.searchFilters)],
+        ['onSearch', this.onSearch.bind(this)],
+        ['location', ''],
+        ['expandedItems', new Map(this.expandedItems)],
+        ['expandedItemData', new Map(this.expandedItemData)],
       ]),
     });
 
@@ -82,7 +105,21 @@ export class Tidy5eCharacterSheet extends dnd5e.applications.actor
 
   async getData(options = {}) {
     this.context.set(await this.getContext());
+    await this.setExpandedItemData();
     return get(this.context);
+  }
+
+  private async setExpandedItemData() {
+    this.expandedItemData.clear();
+    for (const id of this.expandedItems.keys()) {
+      const item = this.actor.items.get(id);
+      if (item) {
+        this.expandedItemData.set(
+          id,
+          await item.getChatData({ secrets: this.actor.isOwner })
+        );
+      }
+    }
   }
 
   onToggleAbilityProficiency(event: Event) {
@@ -271,50 +308,16 @@ export class Tidy5eCharacterSheet extends dnd5e.applications.actor
     return context;
   }
 
-  #getSelectedTabId(): string {
-    return (
-      this.selectedTabId ??
-      SettingsProvider.settings.defaultCharacterSheetTab.get()
-    );
-  }
-
-  #cacheSelectedTabId() {
-    const selectedTabId = this.element
-      ?.get(0)
-      ?.querySelector(`.${CONSTANTS.TAB_OPTION_CLASS}.active`)?.dataset?.tabId;
-
-    if (!isNil(selectedTabId, '')) {
-      this.selectedTabId = selectedTabId;
-    }
-
-    /* 
-      While Tidy 5e does its own thing with tabs, 
-      this active tab assignment is required in order 
-      to make item dropping tab-aware.
-    */
-    this._tabs[0].active = this.selectedTabId;
-  }
-
   async _onDropSingleItem(...args: any[]) {
-    this.#cacheSelectedTabId();
     return super._onDropSingleItem(...args);
   }
 
   close(options: unknown = {}) {
-    try {
-      this._saveViewState();
-    } catch (e) {
-      debug(
-        `Unable to save view state for ${Tidy5eCharacterSheet.name}. Ignoring.`
-      );
-    } finally {
-      this.component?.$destroy();
-      return super.close(options);
-    }
+    this._destroySvelteComponent();
+    return super.close(options);
   }
 
   submit(): void {
-    this._saveViewState();
     super.submit();
   }
 
@@ -324,20 +327,6 @@ export class Tidy5eCharacterSheet extends dnd5e.applications.actor
       stats.lastSubmissionTime = new Date();
       return stats;
     });
-  }
-
-  protected _saveViewState() {
-    /*
-      TODO: Save any state that needs to be restored to this sheet instance for rehydration on refresh.
-      - Currently Selected Tab
-      - Scroll Top of all scrollable areas + the tab they represent
-      - Expanded entity IDs
-      - Focused input element
-
-      To do this save operation, use query selectors and data-attributes to target the appropriate things to save.
-      Can it be made general-purpose? Or should it be more bespoke?
-    */
-    this.#cacheSelectedTabId();
   }
 
   onToggleFilter(setName: string, filterName: string) {
@@ -361,9 +350,9 @@ export class Tidy5eCharacterSheet extends dnd5e.applications.actor
 
   render(force = false, ...args: any[]) {
     if (force) {
-      this.component?.$destroy();
-      super.render(force, ...args);
-      return this;
+      this._saveScrollPositions(this.element);
+      this._destroySvelteComponent();
+      return super.render(force, ...args);
     }
 
     applyTitleToWindow(this.title, this.element.get(0));
@@ -378,6 +367,59 @@ export class Tidy5eCharacterSheet extends dnd5e.applications.actor
     return FoundryAdapter.removeConfigureSettingsButtonWhenLockedForNonGm(
       buttons
     );
+  }
+
+  _destroySvelteComponent() {
+    this.component?.$destroy();
+    this.component = undefined;
+  }
+
+  _saveScrollPositions(html: any) {
+    if (html.length && this.component) {
+      const save = super._saveScrollPositions(html);
+      debug('Saved scroll positions', this._scrollPositions);
+      return save;
+    }
+  }
+
+  /* -------------------------------------------- */
+  /* SheetTabCacheable
+  /* -------------------------------------------- */
+
+  onTabSelected(tabId: string) {
+    this.currentTabId = tabId;
+  }
+
+  /* -------------------------------------------- */
+  /* SheetExpandedItemsCacheable
+  /* -------------------------------------------- */
+
+  onItemToggled(itemId: string, isVisible: boolean, location: string) {
+    const locationSet =
+      this.expandedItems.get(itemId) ??
+      this.expandedItems.set(itemId, new Set<string>()).get(itemId);
+
+    if (isVisible) {
+      locationSet?.add(location);
+    } else {
+      locationSet?.delete(location);
+    }
+
+    debug('Item Toggled', {
+      expandedItems: this.expandedItems,
+    });
+  }
+
+  /* -------------------------------------------- */
+  /* SearchFilterCacheable
+  /* -------------------------------------------- */
+
+  onSearch(location: string, text: string): void {
+    debug('Searched', {
+      location,
+      text,
+    });
+    this.searchFilters.set(location, text);
   }
 }
 

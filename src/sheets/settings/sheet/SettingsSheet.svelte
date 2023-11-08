@@ -9,14 +9,14 @@
   import LockSettingsTab from './LockSettingsTab.svelte';
   import InfoTab from './InfoTab.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { getContext, setContext } from 'svelte';
+  import { getContext } from 'svelte';
   import type {
     SettingsSheetFunctions,
     SettingsSheetStore,
   } from './Tidy5eKgarSettingsSheet';
   import { CONSTANTS } from 'src/constants';
 
-  export let selectedTabId: string;
+  let selectedTabId: string;
   let context = getContext<SettingsSheetStore>('context');
   let functions = getContext<SettingsSheetFunctions>('functions');
 

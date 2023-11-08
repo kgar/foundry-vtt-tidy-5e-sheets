@@ -4,7 +4,6 @@
   import type { Readable } from 'svelte/store';
   import { getContext } from 'svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { CONSTANTS } from 'src/constants';
   import type { Tab } from 'src/types/types';
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import Select from 'src/components/inputs/Select.svelte';
@@ -15,7 +14,7 @@
 
   let context = getContext<Readable<ItemSheetContext>>('context');
 
-  export let selectedTabId: string;
+  let selectedTabId: string;
 
   let tabs: Tab[] = [itemSheetTabs.descriptionWithSidebar];
 
@@ -32,7 +31,7 @@
         placeholder={localize('DND5E.ItemName')}
         value={$context.item.name}
         disabled={!$context.owner}
-        />
+      />
     </h1>
 
     <div class="item-subtitle">

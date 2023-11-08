@@ -6,11 +6,10 @@
   import VehicleSheetLimited from './VehicleSheetLimited.svelte';
 
   let context = getContext<Readable<VehicleSheetContext>>('context');
-  export let selectedTabId: string;
 </script>
 
 {#if $context.showLimitedSheet}
   <VehicleSheetLimited />
 {:else}
-  <VehicleSheetFull {selectedTabId} />
+  <VehicleSheetFull />
 {/if}

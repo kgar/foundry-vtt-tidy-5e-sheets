@@ -8,10 +8,24 @@ D&D 5e sheet layouts for Foundry VTT, focused on a clean UI, user ergonomics, an
 Completely rewritten from the ground up, based on the [Tidy5e Sheet](https://github.com/sdenec/tidy5e-sheet) module by [sdenec](https://github.com/sdenec) and [4535992](https://github.com/p4535992).
 
 > **Warning**  
+> **Use at your own risk.**
+>
 > This is an alpha testing module that is subject to numerous breaking changes and rapid updates.
 >
-> It is recommended that you do not alpha test these sheets on your actual game world.  
-> **Use at your own risk.**
+> It is recommended that you do not alpha test these sheets on your actual game world.
+>
+> During alpha testing, various pieces of Tidy-specific data will not carry over from the original sheets to the alpha sheets and vice versa. If you have a sheet that is fully set up with the original Tidy 5e sheets, expect numerous fields to be reset to their default value when switching over to the new sheets.
+> 
+> These fields include but are not limited to:
+> - Journal and journal note fields
+> - Favorites
+> - Sheet Lock
+> - Skill Expand/Collapse
+> - Traits Expand/Collapse
+> - List/Grid View Preference
+> - Search Filter text
+> - NPC Exhaustion Level
+> - NPC Personality view toggle
 
 ## How to Support Tidy 5e Sheets
 

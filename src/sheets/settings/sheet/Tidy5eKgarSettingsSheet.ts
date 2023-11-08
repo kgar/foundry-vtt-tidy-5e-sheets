@@ -55,9 +55,6 @@ export class Tidy5eKgarSettingsSheet extends FormApplication {
     this.cacheSettingsForChangeTracking(currentSettings);
     this.component = new SettingsSheet({
       target: node,
-      props: {
-        selectedTabId: this.initialTabId,
-      },
       context: new Map<any, any>([
         ['context', writable(currentSettings) satisfies SettingsSheetStore],
         [

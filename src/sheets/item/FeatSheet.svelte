@@ -13,7 +13,7 @@
 
   let context = getContext<Readable<ItemSheetContext>>('context');
 
-  export let selectedTabId: string;
+  let selectedTabId: string;
 
   const tabs: Tab[] = [
     itemSheetTabs.descriptionWithSidebar,
@@ -35,7 +35,7 @@
         placeholder={localize('DND5E.ItemName')}
         value={$context.item.name}
         disabled={!$context.owner}
-        />
+      />
     </h1>
 
     <div class="item-subtitle">

@@ -5,7 +5,6 @@
   import type { Tab } from 'src/types/types';
   import Tabs from 'src/components/tabs/Tabs.svelte';
   import TabContents from 'src/components/tabs/TabContents.svelte';
-  import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import ItemProfilePicture from './parts/ItemProfilePicture.svelte';
   import TextInput from 'src/components/inputs/TextInput.svelte';
@@ -15,7 +14,7 @@
 
   let context = getContext<Readable<ItemSheetContext>>('context');
 
-  export let selectedTabId: string;
+  let selectedTabId: string;
 
   const tabs: Tab[] = [
     itemSheetTabs.descriptionWithSidebar,

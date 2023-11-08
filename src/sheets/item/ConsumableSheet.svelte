@@ -15,7 +15,7 @@
 
   let context = getContext<Readable<ItemSheetContext>>('context');
 
-  export let selectedTabId: string;
+  let selectedTabId: string;
 
   const tabs: Tab[] = [
     itemSheetTabs.descriptionWithSidebar,

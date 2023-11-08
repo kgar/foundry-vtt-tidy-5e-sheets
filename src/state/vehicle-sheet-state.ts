@@ -2,9 +2,9 @@ import type { VehicleSheetContext, Tab } from 'src/types/types';
 import { derived, get, writable } from 'svelte/store';
 import { CONSTANTS } from 'src/constants';
 import ActorEffectsTab from 'src/sheets/actor/ActorEffectsTab.svelte';
-import VehicleAttributesTab from 'src/sheets/vehicle/VehicleAttributesTab.svelte';
-import VehicleCargoAndCrewTab from 'src/sheets/vehicle/VehicleCargoAndCrewTab.svelte';
-import VehicleDescriptionTab from 'src/sheets/vehicle/VehicleDescriptionTab.svelte';
+import VehicleAttributesTab from 'src/sheets/vehicle/tabs/VehicleAttributesTab.svelte';
+import VehicleCargoAndCrewTab from 'src/sheets/vehicle/tabs/VehicleCargoAndCrewTab.svelte';
+import VehicleDescriptionTab from 'src/sheets/vehicle/tabs/VehicleDescriptionTab.svelte';
 import type {
   SheetTabRegistrationOptions,
   SheetTabState,

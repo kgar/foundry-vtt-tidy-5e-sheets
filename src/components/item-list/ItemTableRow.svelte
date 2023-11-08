@@ -1,9 +1,13 @@
 <script lang="ts">
-  import type { Actor5e } from 'src/types/types';
+  import { type Actor5e, type OnItemToggledFn } from 'src/types/types';
   import ItemSummary from '../item-list/ItemSummary.svelte';
   import { warn } from 'src/utils/logging';
-  import { createEventDispatcher, getContext } from 'svelte';
-  import type { ItemCardStore } from 'src/types/types';
+  import { createEventDispatcher, getContext, onMount } from 'svelte';
+  import type {
+    ItemCardStore,
+    ExpandedItemData,
+    ExpandedItemIdToLocationsMap,
+  } from 'src/types/types';
   import type { Writable } from 'svelte/store';
   import type {
     Item5e,
@@ -17,9 +21,18 @@
   export let cssClass: string = '';
   export let itemCardContentTemplate: ItemCardContentComponent | null = null;
 
+  const expandedItemData = getContext<ExpandedItemData>(
+    'expandedItemData'
+  );
+  const expandedItems = getContext<ExpandedItemIdToLocationsMap>('expandedItems');
+  const onItemToggled = getContext<OnItemToggledFn>('onItemToggled');
+  const dispatcher = createEventDispatcher<{ mousedown: MouseEvent }>();
+  const location = getContext<string>('location');
+
   let card = getContext<Writable<ItemCardStore>>('card');
   let showSummary = false;
-  let chatData: ItemChatData;
+  let chatData: ItemChatData | undefined;
+  let useTransition: boolean = false;
 
   async function toggleSummary(actor: Actor5e) {
     if (!item) {
@@ -30,6 +43,7 @@
 
     chatData ??= await item.getChatData({ secrets: actor.isOwner });
     showSummary = !showSummary;
+    onItemToggled?.(item.id, showSummary, location);
   }
 
   async function onMouseEnter() {
@@ -58,10 +72,32 @@
     }
 
     const dragData = item.toDragData();
-    event.dataTransfer.setData('text/plain', JSON.stringify(dragData));
+    event.dataTransfer?.setData('text/plain', JSON.stringify(dragData));
   }
 
-  const dispatcher = createEventDispatcher<{ mousedown: MouseEvent }>();
+  function restoreItemSummaryIfExpanded() {
+    if (!item) {
+      useTransition = true;
+      return;
+    }
+
+    useTransition = false;
+
+    const isExpandedAtThisLocation = expandedItems?.get(item.id)?.has(location);
+
+    if (isExpandedAtThisLocation) {
+      chatData = expandedItemData.get(item.id);
+      showSummary = true;
+    }
+
+    setTimeout(() => {
+      useTransition = true;
+    });
+  }
+
+  onMount(() => {
+    restoreItemSummaryIfExpanded();
+  });
 </script>
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->
@@ -78,8 +114,8 @@
   data-item-id={item?.id}
 >
   <slot {toggleSummary} />
-  {#if showSummary}
-    <ItemSummary {chatData} />
+  {#if showSummary && chatData}
+    <ItemSummary {chatData} {useTransition} />
   {/if}
 </div>
 

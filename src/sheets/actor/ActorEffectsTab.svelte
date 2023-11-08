@@ -10,7 +10,6 @@
   import ItemTableCell from '../../components/item-list/ItemTableCell.svelte';
   import ItemControl from '../../components/item-list/controls/ItemControl.svelte';
   import { CONSTANTS } from 'src/constants';
-  import ListContainer from '../../components/layout/ListContainer.svelte';
   import ItemControls from '../../components/item-list/ItemControls.svelte';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
@@ -27,7 +26,7 @@
     effectSections.some((section: any) => section.effects.length > 0) === false;
 </script>
 
-<ListContainer cssClass="flex-column small-gap">
+<div class="scroll-container flex-column small-gap">
   {#if !$context.allowEffectsManagement && $context.editable}
     <Notice>{localize('T5EK.GmOnlyEdit')}</Notice>
   {/if}
@@ -115,4 +114,4 @@
       {/if}
     {/each}
   {/if}
-</ListContainer>
+</div>
