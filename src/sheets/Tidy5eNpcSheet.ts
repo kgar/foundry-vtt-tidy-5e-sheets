@@ -7,8 +7,8 @@ import type {
   SheetExpandedItemsCacheable,
   SheetStats,
   SheetTabCacheable,
-  TidyExpandedItems,
-  TidyExpandedItemData,
+  LocationAwareExpandedItems,
+  ExpandedItemData,
 } from 'src/types/types';
 import { get, writable } from 'svelte/store';
 import NpcSheet from './npc/NpcSheet.svelte';
@@ -45,8 +45,8 @@ export class Tidy5eNpcSheet
   card = writable<ItemCardStore>();
   currentTabId: string;
   searchFilters: SearchFilterIdToTextMap = new Map<string, string>();
-  tidyExpandedItems: TidyExpandedItems = new Map<string, Set<string>>();
-  tidyExpandedItemData: TidyExpandedItemData = new Map<string, ItemChatData>();
+  expandedItems: LocationAwareExpandedItems = new Map<string, Set<string>>();
+  expandedItemData: ExpandedItemData = new Map<string, ItemChatData>();
 
   constructor(...args: any[]) {
     super(...args);
@@ -76,8 +76,6 @@ export class Tidy5eNpcSheet
     const node = html.get(0);
     this.card.set({ sheet: node, item: null, itemCardContentTemplate: null });
 
-    const contextAtInit = get(this.context);
-
     this.component = new NpcSheet({
       target: node,
       context: new Map<any, any>([
@@ -87,12 +85,11 @@ export class Tidy5eNpcSheet
         ['currentTabId', this.currentTabId],
         ['onTabSelected', this.onTabSelected.bind(this)],
         ['onItemToggled', this.onItemToggled.bind(this)],
-        ['expandedData', contextAtInit.expandedData],
         ['searchFilters', new Map(this.searchFilters)],
         ['onSearch', this.onSearch.bind(this)],
         ['location', ''],
-        ['tidyExpandedItems', new Map(this.tidyExpandedItems)],
-        ['tidyExpandedItemData', new Map(this.tidyExpandedItemData)],
+        ['expandedItems', new Map(this.expandedItems)],
+        ['expandedItemData', new Map(this.expandedItemData)],
       ]),
     });
 
@@ -106,11 +103,11 @@ export class Tidy5eNpcSheet
   }
 
   private async setExpandedItemData() {
-    this.tidyExpandedItemData.clear();
-    for (const id of this.tidyExpandedItems.keys()) {
+    this.expandedItemData.clear();
+    for (const id of this.expandedItems.keys()) {
       const item = this.actor.items.get(id);
       if (item) {
-        this.tidyExpandedItemData.set(
+        this.expandedItemData.set(
           id,
           await item.getChatData({ secrets: this.actor.isOwner })
         );
@@ -697,8 +694,8 @@ export class Tidy5eNpcSheet
 
   onItemToggled(itemId: string, isVisible: boolean, location: string) {
     const locationSet =
-      this.tidyExpandedItems.get(itemId) ??
-      this.tidyExpandedItems.set(itemId, new Set<string>()).get(itemId);
+      this.expandedItems.get(itemId) ??
+      this.expandedItems.set(itemId, new Set<string>()).get(itemId);
 
     if (isVisible) {
       locationSet?.add(location);
@@ -707,7 +704,7 @@ export class Tidy5eNpcSheet
     }
 
     debug('Item Toggled', {
-      expandedItems: this.tidyExpandedItems,
+      expandedItems: this.expandedItems,
     });
   }
 

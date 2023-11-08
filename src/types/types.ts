@@ -238,9 +238,9 @@ export type SearchFilterIdToTextMap = Map<string, string>;
 /**
  * A map from key Item ID to a set of locations in the sheet, as specified by the item table row during item toggling.
  */
-export type TidyExpandedItems = Map<string, Set<string>>;
+export type LocationAwareExpandedItems = Map<string, Set<string>>;
 
 /**
  * A map from key Item ID to pre-fetched chat data.
  */
-export type TidyExpandedItemData = Map<string, ItemChatData>;
+export type ExpandedItemData = Map<string, ItemChatData>;

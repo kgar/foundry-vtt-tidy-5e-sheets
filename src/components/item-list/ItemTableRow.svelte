@@ -5,8 +5,8 @@
   import { createEventDispatcher, getContext, onMount } from 'svelte';
   import type {
     ItemCardStore,
-    TidyExpandedItemData,
-    TidyExpandedItems,
+    ExpandedItemData,
+    LocationAwareExpandedItems,
   } from 'src/types/types';
   import type { Writable } from 'svelte/store';
   import type {
@@ -21,10 +21,10 @@
   export let cssClass: string = '';
   export let itemCardContentTemplate: ItemCardContentComponent | null = null;
 
-  const tidyExpandedItemData = getContext<TidyExpandedItemData>(
-    'tidyExpandedItemData'
+  const expandedItemData = getContext<ExpandedItemData>(
+    'expandedItemData'
   );
-  const tidyExpandedItems = getContext<TidyExpandedItems>('tidyExpandedItems');
+  const expandedItems = getContext<LocationAwareExpandedItems>('expandedItems');
   const onItemToggled = getContext<OnItemToggledFn>('onItemToggled');
   const dispatcher = createEventDispatcher<{ mousedown: MouseEvent }>();
   const location = getContext<string>('location');
@@ -83,10 +83,10 @@
 
     useTransition = false;
 
-    const isExpandedAtThisLocation = tidyExpandedItems?.get(item.id)?.has(location);
+    const isExpandedAtThisLocation = expandedItems?.get(item.id)?.has(location);
 
     if (isExpandedAtThisLocation) {
-      chatData = tidyExpandedItemData.get(item.id);
+      chatData = expandedItemData.get(item.id);
       showSummary = true;
     }
 
