@@ -41,21 +41,22 @@
 </script>
 
 <div class="portrait-hp-formula health" title={localize('DND5E.HPFormula')}>
-  <span
-    class="rollable"
+  <button
+    type="button"
     title="{localize('DND5E.HitDiceRoll')}/{localize(
       'T5EK.HitDiceRollAverage'
     )}"
     on:click={rollNpcHp}
     on:contextmenu={calcAverageHitDie}
+    class="roll-hp-formula"
   >
     <i class="fas fa-dice-six" />
-  </span>
+  </button>
   <div class="formula-edit">
     <TextInput
       document={$context.actor}
       field="system.attributes.hp.formula"
-      cssClass="hpformula"
+      cssClass="hp-formula"
       placeholder={localize('DND5E.HPFormula')}
       value={$context.system.attributes.hp.formula}
       maxlength={12}
@@ -72,15 +73,6 @@
     z-index: 25;
     right: 0.4375rem;
     bottom: 0rem;
-
-    span {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 1.25rem;
-      width: 1.375rem;
-      border-radius: 0 0.3125rem 0.3125rem 0;
-    }
 
     .formula-edit {
       background: var(--t5ek-icon-background);
@@ -102,13 +94,30 @@
       display: flex;
     }
 
-    :global(input) {
+    :global(.hp-formula) {
       text-align: center;
       width: 100%;
       height: 100%;
       font-size: 0.75rem;
       border-radius: 0.3125rem;
       margin: 0;
+    }
+
+    .roll-hp-formula {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 1.25rem;
+      width: 1.375rem;
+      border-radius: 0 0.3125rem 0.3125rem 0;
+      border: none;
+      padding: 0;
+      background: none;
+      transition: color 0.3s ease;
+
+      &:hover {
+        color: var(--t5ek-primary-accent-color);
+      }
     }
   }
 </style>

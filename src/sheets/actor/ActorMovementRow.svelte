@@ -42,7 +42,7 @@
     font-size: 0.875rem;
     line-height: 1rem;
 
-    &:not(:hover) .configure {
+    &:not(:hover) .configure:not(:focus-visible) {
       opacity: 0;
     }
 
