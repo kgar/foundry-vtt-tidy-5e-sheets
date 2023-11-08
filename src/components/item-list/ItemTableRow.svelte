@@ -3,7 +3,11 @@
   import ItemSummary from '../item-list/ItemSummary.svelte';
   import { warn } from 'src/utils/logging';
   import { createEventDispatcher, getContext, onMount } from 'svelte';
-  import type { ItemCardStore } from 'src/types/types';
+  import type {
+    ItemCardStore,
+    TidyExpandedItemData,
+    TidyExpandedItems,
+  } from 'src/types/types';
   import type { Writable } from 'svelte/store';
   import type {
     Item5e,
@@ -17,13 +21,17 @@
   export let cssClass: string = '';
   export let itemCardContentTemplate: ItemCardContentComponent | null = null;
 
-  const expandedData = getContext<Record<string, ItemChatData>>('expandedData');
+  const tidyExpandedItemData = getContext<TidyExpandedItemData>(
+    'tidyExpandedItemData'
+  );
+  const tidyExpandedItems = getContext<TidyExpandedItems>('tidyExpandedItems');
   const onItemToggled = getContext<OnItemToggledFn>('onItemToggled');
   const dispatcher = createEventDispatcher<{ mousedown: MouseEvent }>();
+  const location = getContext<string>('location');
 
   let card = getContext<Writable<ItemCardStore>>('card');
   let showSummary = false;
-  let chatData: ItemChatData;
+  let chatData: ItemChatData | undefined;
   let useTransition: boolean = false;
 
   async function toggleSummary(actor: Actor5e) {
@@ -35,7 +43,7 @@
 
     chatData ??= await item.getChatData({ secrets: actor.isOwner });
     showSummary = !showSummary;
-    onItemToggled?.(item.id, showSummary);
+    onItemToggled?.(item.id, showSummary, location);
   }
 
   async function onMouseEnter() {
@@ -67,7 +75,7 @@
     event.dataTransfer?.setData('text/plain', JSON.stringify(dragData));
   }
 
-  function restoreCachedItemSummary() {
+  function restoreItemSummaryIfExpanded() {
     if (!item) {
       useTransition = true;
       return;
@@ -75,10 +83,12 @@
 
     useTransition = false;
 
-    const expandedItem = expandedData?.[item.id];
+    const isExpandedAtThisLocation = tidyExpandedItems?.get(item.id)?.has(location);
 
-    chatData = expandedItem;
-    showSummary = !!expandedItem;
+    if (isExpandedAtThisLocation) {
+      chatData = tidyExpandedItemData.get(item.id);
+      showSummary = true;
+    }
 
     setTimeout(() => {
       useTransition = true;
@@ -86,7 +96,7 @@
   }
 
   onMount(() => {
-    restoreCachedItemSummary();
+    restoreItemSummaryIfExpanded();
   });
 </script>
 
@@ -104,7 +114,7 @@
   data-item-id={item?.id}
 >
   <slot {toggleSummary} />
-  {#if showSummary}
+  {#if showSummary && chatData}
     <ItemSummary {chatData} {useTransition} />
   {/if}
 </div>

@@ -1,5 +1,5 @@
 import type { ComponentProps, ComponentType, SvelteComponent } from 'svelte';
-import type { Item5e, ItemCardContentComponent } from './item';
+import type { Item5e, ItemCardContentComponent, ItemChatData } from './item';
 import type { Writable } from 'svelte/store';
 
 export type Actor5e = any;
@@ -221,7 +221,11 @@ export type SheetExpandedItemsCacheable = {
   onItemToggled: OnItemToggledFn;
 };
 
-export type OnItemToggledFn = (itemId: string, isVisible: boolean) => void;
+export type OnItemToggledFn = (
+  itemId: string,
+  isVisible: boolean,
+  location: string
+) => void;
 
 export type SearchFilterCacheable = {
   onSearch: OnSearchFn;
@@ -230,3 +234,13 @@ export type SearchFilterCacheable = {
 export type OnSearchFn = (filterId: string, text: string) => void;
 
 export type SearchFilterIdToTextMap = Map<string, string>;
+
+/**
+ * A map from key Item ID to a set of locations in the sheet, as specified by the item table row during item toggling.
+ */
+export type TidyExpandedItems = Map<string, Set<string>>;
+
+/**
+ * A map from key Item ID to pre-fetched chat data.
+ */
+export type TidyExpandedItemData = Map<string, ItemChatData>;

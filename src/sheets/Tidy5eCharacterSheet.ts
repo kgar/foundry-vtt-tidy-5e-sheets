@@ -14,10 +14,13 @@ import {
   type SheetExpandedItemsCacheable,
   type SearchFilterCacheable,
   type SearchFilterIdToTextMap,
+  type TidyExpandedItems,
+  type TidyExpandedItemData,
 } from 'src/types/types';
 import { applyTitleToWindow } from 'src/utils/applications';
 import type { SvelteComponent } from 'svelte';
 import { getPercentage } from 'src/utils/numbers';
+import type { ItemChatData } from 'src/types/item';
 
 declare var dnd5e: {
   applications: {
@@ -43,6 +46,8 @@ export class Tidy5eCharacterSheet
   card = writable<ItemCardStore>();
   currentTabId: string | undefined = undefined;
   searchFilters: SearchFilterIdToTextMap = new Map<string, string>();
+  tidyExpandedItems: TidyExpandedItems = new Map<string, Set<string>>();
+  tidyExpandedItemData: TidyExpandedItemData = new Map<string, ItemChatData>();
 
   constructor(...args: any[]) {
     super(...args);
@@ -90,8 +95,11 @@ export class Tidy5eCharacterSheet
         ['onTabSelected', this.onTabSelected.bind(this)],
         ['onItemToggled', this.onItemToggled.bind(this)],
         ['expandedData', contextAtInit.expandedData],
-        ['searchFilters', new Map<string, string>(this.searchFilters)],
+        ['searchFilters', new Map(this.searchFilters)],
         ['onSearch', this.onSearch.bind(this)],
+        ['location', ''],
+        ['tidyExpandedItems', new Map(this.tidyExpandedItems)],
+        ['tidyExpandedItemData', new Map(this.tidyExpandedItemData)],
       ]),
     });
 
@@ -100,7 +108,21 @@ export class Tidy5eCharacterSheet
 
   async getData(options = {}) {
     this.context.set(await this.getContext());
+    await this.setExpandedItemData();
     return get(this.context);
+  }
+
+  private async setExpandedItemData() {
+    this.tidyExpandedItemData.clear();
+    for (const id of this.tidyExpandedItems.keys()) {
+      const item = this.actor.items.get(id);
+      if (item) {
+        this.tidyExpandedItemData.set(
+          id,
+          await item.getChatData({ secrets: this.actor.isOwner })
+        );
+      }
+    }
   }
 
   onToggleAbilityProficiency(event: Event) {
@@ -375,15 +397,19 @@ export class Tidy5eCharacterSheet
   /* SheetTabCacheable
   /* -------------------------------------------- */
 
-  onItemToggled(itemId: string, isVisible: boolean) {
+  onItemToggled(itemId: string, isVisible: boolean, location: string) {
+    const locationSet =
+      this.tidyExpandedItems.get(itemId) ??
+      this.tidyExpandedItems.set(itemId, new Set<string>()).get(itemId);
+
     if (isVisible) {
-      this._expanded.add(itemId);
+      locationSet?.add(location);
     } else {
-      this._expanded.delete(itemId);
+      locationSet?.delete(location);
     }
 
     debug('Item Toggled', {
-      expandedItems: this._expanded,
+      expandedItems: this.tidyExpandedItems,
     });
   }
 
