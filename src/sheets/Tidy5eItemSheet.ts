@@ -28,6 +28,8 @@ declare var dnd5e: {
   };
 };
 
+declare var $: any;
+
 export class Tidy5eKgarItemSheet
   extends dnd5e.applications.item.ItemSheet5e
   implements SheetTabCacheable
@@ -48,10 +50,6 @@ export class Tidy5eKgarItemSheet
     } else if (this.object.type === 'subclass') {
       this.options.height = this.position.height = 540;
     }
-  }
-
-  onTabSelected(tabId: string) {
-    this.currentTabId = tabId;
   }
 
   get template() {
@@ -256,5 +254,13 @@ export class Tidy5eKgarItemSheet
     return FoundryAdapter.removeConfigureSettingsButtonWhenLockedForNonGm(
       buttons
     );
+  }
+
+  /* -------------------------------------------- */
+  /* SheetTabCacheable
+  /* -------------------------------------------- */
+
+  onTabSelected(tabId: string) {
+    this.currentTabId = tabId;
   }
 }
