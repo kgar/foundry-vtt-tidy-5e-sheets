@@ -41,7 +41,7 @@
     value={item.system.uses.value}
     on:change|stopPropagation|preventDefault={(event) =>
       onUsesChanged(event, item)}
-    disabled={!item.owner}
+    disabled={!item.isOwner}
   />
   /
   <input
@@ -50,7 +50,7 @@
     value={item.system.uses.max}
     on:change|stopPropagation|preventDefault={(event) =>
       onUsesMaxChanged(event, item)}
-    disabled={!item.owner}
+    disabled={!item.isOwner}
   />
 </div>
 
