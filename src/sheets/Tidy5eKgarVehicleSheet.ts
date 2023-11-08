@@ -85,7 +85,7 @@ export class Tidy5eVehicleSheet
       ]),
     });
 
-    initTidy5eContextMenu.call(this, html);
+    initTidy5eContextMenu(this, html);
   }
 
   async getData(options = {}) {

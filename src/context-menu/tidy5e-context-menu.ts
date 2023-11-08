@@ -5,11 +5,12 @@ import type { Item5e } from 'src/types/item';
 import { warn } from 'src/utils/logging';
 
 export function initTidy5eContextMenu(
+  sheet: any,
   html: any,
   contextMenuSelector: string = '[data-context-menu]'
 ) {
-  new ContextMenu(html, contextMenuSelector, [], {
-    onOpen: onItemContext.bind(this),
+  FoundryAdapter.createContextMenu(html, contextMenuSelector, [], {
+    onOpen: onItemContext.bind(sheet),
   });
 }
 

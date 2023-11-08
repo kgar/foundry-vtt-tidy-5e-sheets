@@ -168,7 +168,11 @@ export class Tidy5eKgarItemSheet
       contextOptions
     );
     if (contextOptions)
-      new ContextMenu(html, '.advancement-item', contextOptions);
+      FoundryAdapter.createContextMenu(
+        html,
+        '.advancement-item',
+        contextOptions
+      );
   }
 
   async getData(options = {}) {

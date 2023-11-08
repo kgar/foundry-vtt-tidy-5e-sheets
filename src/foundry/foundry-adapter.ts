@@ -928,6 +928,9 @@ export const FoundryAdapter = {
   enrichHtml(value: string, options?: any): Promise<string> {
     return TextEditor.enrichHTML(value, options);
   },
+  createContextMenu(...args: any[]): any {
+    return new ContextMenu(...args);
+  },
 };
 
 /* ------------------------------------------------------
@@ -960,6 +963,7 @@ declare const debounce: any;
 declare const ChatMessage: any;
 declare const AudioHelper: any;
 declare const TextEditor: any;
+declare const ContextMenu: any;
 
 type AbilityReference = {
   abbreviation: string;

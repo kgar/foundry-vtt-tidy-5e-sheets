@@ -100,7 +100,7 @@ export class Tidy5eCharacterSheet
       ]),
     });
 
-    initTidy5eContextMenu.call(this, html);
+    initTidy5eContextMenu(this, html);
   }
 
   async getData(options = {}) {
