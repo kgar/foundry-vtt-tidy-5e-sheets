@@ -980,6 +980,42 @@ export const FoundryAdapter = {
       true
     );
   },
+  createAdvancementSelectionDialog(item: any) {
+    return game.dnd5e.applications.advancement.AdvancementSelection.createDialog(
+      item
+    );
+  },
+  deleteAdvancement(advancementItemId: string, item: Item5e) {
+    if (item.isEmbedded && !game.settings.get('dnd5e', 'disableAdvancements')) {
+      let manager =
+        dnd5e.applications.advancement.AdvancementManager.forDeletedAdvancement(
+          item.actor,
+          item.id,
+          advancementItemId
+        );
+      if (manager.steps.length) return manager.render(true);
+    }
+    return item.deleteAdvancement(advancementItemId);
+  },
+  modifyAdvancementChoices(advancementLevel: string, item: Item5e) {
+    let manager =
+      dnd5e.applications.advancement.AdvancementManager.forModifyChoices(
+        item.actor,
+        item.id,
+        Number(advancementLevel)
+      );
+
+    if (manager.steps.length) {
+      manager.render(true);
+    }
+  },
+  editAdvancement(advancementItemId: string, item: Item5e) {
+    const advancement = item.advancement.byId[advancementItemId];
+
+    return new advancement.constructor.metadata.apps.config(advancement).render(
+      true
+    );
+  },
 };
 
 /* ------------------------------------------------------

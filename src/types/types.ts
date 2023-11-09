@@ -42,6 +42,9 @@ export type ItemCardStore = {
 
 export type CharacterFeatureSection = {
   label: string;
+  columns: any;
+  items: any;
+  dataset: any;
   showUsesColumn: boolean;
   showUsagesColumn: boolean;
   showLevelColumn: boolean;
