@@ -149,7 +149,7 @@
       </div>
     </div>
     <HorizontalLineSeparator borderColor="light" />
-    <ActorMovementRow actor={$context.actor} movement={$context.movement} />
+    <ActorMovementRow />
     <HorizontalLineSeparator borderColor="light" />
     <section class="actor-stats">
       <AcShieldVehicle />

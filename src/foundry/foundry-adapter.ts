@@ -1038,4 +1038,7 @@ export const FoundryAdapter = {
       abbreviation
     ).render(true);
   },
+  renderActorMovementConfig(actor: any) {
+    return new dnd5e.applications.actor.ActorMovementConfig(actor).render(true);
+  },
 };

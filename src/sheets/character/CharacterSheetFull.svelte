@@ -214,7 +214,7 @@
         {/if}
       </span>
     </section>
-    <ActorMovementRow actor={$context.actor} movement={$context.movement} />
+    <ActorMovementRow />
     <HorizontalLineSeparator borderColor="light" />
     <!-- AC  -->
     <ActorHeaderStats

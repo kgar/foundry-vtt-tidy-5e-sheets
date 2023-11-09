@@ -193,7 +193,7 @@
         </div>
       </div>
       <HorizontalLineSeparator borderColor="light" />
-      <ActorMovementRow actor={$context.actor} movement={$context.movement} />
+      <ActorMovementRow />
       <HorizontalLineSeparator borderColor="light" />
       <ActorHeaderStats
         {abilities}

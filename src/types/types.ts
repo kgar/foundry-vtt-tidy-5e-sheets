@@ -121,7 +121,8 @@ export type ActorSheetContext = {
   owner: boolean;
   showLimitedSheet: boolean;
   useRoundedPortraitStyle: boolean;
-} & JQueryHooksSheetIntegration;
+} & JQueryHooksSheetIntegration &
+  Record<string, any>;
 
 export type JQueryHooksSheetIntegration = {
   activateFoundryJQueryListeners: (html: HTMLElement) => Promise<void>;
