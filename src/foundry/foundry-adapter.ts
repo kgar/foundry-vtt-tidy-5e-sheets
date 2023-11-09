@@ -16,6 +16,9 @@ export const FoundryAdapter = {
   isFoundryV10() {
     return game.dnd5e.isV10;
   },
+  deepClone(obj: any) {
+    return foundry.utils.deepClone(obj);
+  },
   userIsGm() {
     return game.user.isGM;
   },
