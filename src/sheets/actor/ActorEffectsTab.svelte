@@ -59,6 +59,7 @@
                 type: CONSTANTS.CONTEXT_MENU_TYPE_EFFECTS,
                 id: effect.id,
               }}
+              {effect}
             >
               <ItemTableCell primary={true}>
                 <ItemImage src={effect.icon} />
