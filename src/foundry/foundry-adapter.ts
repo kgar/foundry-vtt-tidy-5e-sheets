@@ -1016,6 +1016,12 @@ export const FoundryAdapter = {
       true
     );
   },
+  renderImagePopout(...args: any[]) {
+    return new ImagePopout(...args).render(true);
+  },
+  browseFilePicker(...args: any[]) {
+    return new FilePicker(...args).browse();
+  },
 };
 
 /* ------------------------------------------------------
@@ -1049,6 +1055,8 @@ declare const ChatMessage: any;
 declare const AudioHelper: any;
 declare const TextEditor: any;
 declare const ContextMenu: any;
+declare const ImagePopout: any;
+declare const FilePicker: any;
 
 type AbilityReference = {
   abbreviation: string;
