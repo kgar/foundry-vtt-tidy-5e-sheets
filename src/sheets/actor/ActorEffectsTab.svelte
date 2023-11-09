@@ -66,10 +66,10 @@
                 <span class="align-self-center">{effect.label}</span>
               </ItemTableCell>
               <ItemTableCell baseWidth="12.5rem"
-                >{effect.sourceName}</ItemTableCell
+                >{effect.sourceName ?? ''}</ItemTableCell
               >
               <ItemTableCell baseWidth="7.5rem"
-                >{effect.duration.label}</ItemTableCell
+                >{effect.duration.label ?? ''}</ItemTableCell
               >
 
               {#if $context.owner && $context.classicControlsEnabled && $context.allowEffectsManagement}
