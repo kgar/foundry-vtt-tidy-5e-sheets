@@ -13,6 +13,9 @@ import { debug, warn } from 'src/utils/logging';
 import { clamp } from 'src/utils/numbers';
 
 export const FoundryAdapter = {
+  isFoundryV10() {
+    return game.dnd5e.isV10;
+  },
   userIsGm() {
     return game.user.isGM;
   },
