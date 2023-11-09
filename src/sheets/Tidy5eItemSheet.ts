@@ -39,7 +39,7 @@ export class Tidy5eKgarItemSheet
     lastSubmissionTime: null,
   });
   currentTabId: string | undefined = undefined;
-  advancementConfigurationMode = false;
+  // advancementConfigurationMode = false;
 
   constructor(item: Item5e, ...args: any[]) {
     super(item, ...args);
@@ -249,7 +249,7 @@ export class Tidy5eKgarItemSheet
 
   async toggleAdvancementLock() {
     this.advancementConfigurationMode = !this.advancementConfigurationMode;
-    await this.updateContext();
+    this.context.set(await this.getContext());
   }
 
   _getHeaderButtons() {
