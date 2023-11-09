@@ -48,7 +48,6 @@
     top: 0px;
     width: 2.125rem;
     height: 2.125rem;
-    z-index: 5;
 
     :global(input.inspiration-toggle) {
       display: none;

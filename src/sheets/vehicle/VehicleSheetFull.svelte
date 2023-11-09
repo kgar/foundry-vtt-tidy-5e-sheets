@@ -1,7 +1,7 @@
 <script lang="ts">
   import type {
     Tab,
-    TidyDropdownOption,
+    DropdownListOption,
     VehicleSheetContext,
   } from 'src/types/types';
   import Tabs from 'src/components/tabs/Tabs.svelte';
@@ -15,7 +15,7 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import HorizontalLineSeparator from 'src/components/layout/HorizontalLineSeparator.svelte';
   import DelimitedTruncatedContent from 'src/components/layout/DelimitedTruncatedContent.svelte';
-  import TidyDropdownList from '../../components/inputs/TidyDropdownList.svelte';
+  import InlineTextDropdownList from '../../components/inputs/InlineTextDropdownList.svelte';
   import Tidy5eActorOriginSummaryConfig from '../../dialogs/Tidy5eActorOriginSummaryConfig';
   import { isNil } from 'src/utils/data';
   import ActorMovementRow from '../actor/ActorMovementRow.svelte';
@@ -37,14 +37,14 @@
     tabs = $currentVehicleSheetTabs.getTabs($context);
   }
 
-  $: sizes = <TidyDropdownOption[]>Object.entries(
+  $: sizes = <DropdownListOption[]>Object.entries(
     $context.config.actorSizes
   ).map(([abbreviation, size]) => ({
     value: abbreviation,
     text: size as string,
   }));
 
-  $: currentSize = <TidyDropdownOption>{
+  $: currentSize = <DropdownListOption>{
     value: $context.system.traits.size,
     text: $context.config.actorSizes[$context.system.traits.size],
   };
@@ -87,7 +87,7 @@
     <div class="origin-summary">
       <div class="flex-row extra-small-gap">
         {#if $context.owner}
-          <TidyDropdownList
+          <InlineTextDropdownList
             options={sizes}
             selected={currentSize}
             on:optionClicked={(event) =>

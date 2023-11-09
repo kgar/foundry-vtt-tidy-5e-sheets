@@ -132,6 +132,7 @@
         display: flex;
         justify-content: flex-end;
         align-items: flex-end;
+        // TODO: Revamp the styles for resources so that a z-index is not necessary; the cog in this screen would sit atop any button menus
         z-index: 10;
 
         .resource-options {

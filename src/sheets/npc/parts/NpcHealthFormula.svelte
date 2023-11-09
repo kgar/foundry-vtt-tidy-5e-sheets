@@ -70,7 +70,6 @@
 <style lang="scss">
   .health {
     position: absolute;
-    z-index: 25;
     right: 0.4375rem;
     bottom: 0rem;
 

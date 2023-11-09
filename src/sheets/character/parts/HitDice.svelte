@@ -33,7 +33,6 @@
 <style lang="scss">
   .portrait-hd {
     position: absolute;
-    z-index: 25;
     right: 0;
     bottom: 0;
     width: 34px;

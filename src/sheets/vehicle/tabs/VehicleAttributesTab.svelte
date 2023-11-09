@@ -314,6 +314,7 @@
       margin-left: 0.125rem;
       margin-right: 0.125rem;
       height: 1.325rem;
+      // TODO: Figure out how to eliminate this z-index
       z-index: 20;
       display: flex;
       justify-content: center;

@@ -17,6 +17,7 @@
   export let buttonText: string = '';
   export let iconClass: string | StatefulIconClass | null = null;
   export let wrapperClass: string | null = null;
+  export let buttonClass: string | null = null;
   export let openerPadding: string | null = null;
   export let ariaLabel: string | null = null;
   export let title: string | null = null;
@@ -58,7 +59,7 @@
     aria-label={ariaLabel}
     bind:this={openerEl}
     {title}
-    class="button-menu-opener"
+    class="button-menu-opener {buttonClass}"
     style:padding={openerPadding}
   >
     {#if iconClass}

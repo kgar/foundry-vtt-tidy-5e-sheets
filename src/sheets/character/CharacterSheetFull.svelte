@@ -4,11 +4,11 @@
   import type {
     CharacterSheetContext,
     Tab,
-    TidyDropdownOption,
+    DropdownListOption,
   } from 'src/types/types';
   import Tidy5eActorOriginSummaryConfig from '../../dialogs/Tidy5eActorOriginSummaryConfig';
   import CharacterProfile from './parts/CharacterProfile.svelte';
-  import TidyDropdownList from '../../components/inputs/TidyDropdownList.svelte';
+  import InlineTextDropdownList from '../../components/inputs/InlineTextDropdownList.svelte';
   import ActorWarnings from '../actor/ActorWarnings.svelte';
   import { CONSTANTS } from 'src/constants';
   import AllowEditLock from 'src/sheets/actor/AllowEditLock.svelte';
@@ -42,14 +42,14 @@
 
   $: abilities = Object.entries<any>($context.abilities);
 
-  $: sizes = <TidyDropdownOption[]>Object.entries(
+  $: sizes = <DropdownListOption[]>Object.entries(
     $context.config.actorSizes
   ).map(([abbreviation, size]) => ({
     value: abbreviation,
     text: size as string,
   }));
 
-  $: currentSize = <TidyDropdownOption>{
+  $: currentSize = <DropdownListOption>{
     value: $context.system.traits.size,
     text: $context.config.actorSizes[$context.system.traits.size],
   };
@@ -178,9 +178,8 @@
     <!-- Origin Summary: Size , Race , Background , Alignment , Proficiency , Origin Summary Configuration Cog -->
     <section class="origin-summary">
       <span class="origin-points">
-        <!-- TODO: Consider implementing the hidden select that the original sheet has, or figure out a way to format this select in such a way that it agrees with the rest of the layout instead of undermining it. -->
         {#if $context.owner}
-          <TidyDropdownList
+          <InlineTextDropdownList
             options={sizes}
             selected={currentSize}
             on:optionClicked={(event) =>

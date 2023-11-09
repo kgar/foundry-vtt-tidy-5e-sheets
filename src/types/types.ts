@@ -166,7 +166,7 @@ export interface ActorContextSkillProficiency {
   rounding: string;
 }
 
-export type TidyDropdownOption = { value: any; text: string };
+export type DropdownListOption = { value: any; text: string };
 
 export type PortraitCharmRadiusClass =
   | 'top-left'

@@ -46,9 +46,7 @@
   class="exhaustion-container {exhaustionSeverity[level]} {cssClass}"
   class:only-show-on-hover={onlyShowOnHover}
 >
-  <div class="level-display" class:colorized={level > 0}>
-    {level}
-  </div>
+  
   <div class="exhaustion-wrap {radiusClass}">
     <div
       class="exhaustion-icon colorized"
@@ -75,6 +73,9 @@
       {/each}
     </ul>
   </div>
+  <div class="level-display" class:colorized={level > 0}>
+    {level}
+  </div>
 </div>
 
 <style lang="scss">
@@ -84,7 +85,7 @@
     left: 0;
     height: 2.125rem;
     width: 2.125rem;
-    z-index: 50;
+    z-index: 1;
     color: var(--t5ek-icon-font-color);
 
     .level-display {
@@ -101,7 +102,6 @@
       top: -0.125rem;
       left: -0.125rem;
       border-radius: 50%;
-      z-index: 1;
       font-weight: 700;
     }
 

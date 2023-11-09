@@ -73,7 +73,6 @@
     font-size: 1.125rem;
     transform: translateX(-50%);
     bottom: 0;
-    z-index: 20;
     display: flex;
     justify-content: center;
     align-items: center;

@@ -17,6 +17,7 @@
     top: 0;
     left: 0;
     height: 100%;
+    // TODO: Try to figure out how we can eliminate this z-index and still have things working.
     z-index: -1;
     background: var(--bar-color);
     transition: width 0.5s ease;

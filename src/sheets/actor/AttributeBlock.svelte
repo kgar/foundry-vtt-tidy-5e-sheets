@@ -124,12 +124,10 @@
         border-radius: 0;
         box-shadow: 0 0 0 0.0625rem
           var(--t5ek-ability-modifiers-hover-label-background);
-        z-index: 10;
       }
 
       &:hover ~ .mod-label {
         display: block;
-        z-index: 5;
       }
 
       &:hover .ability-mod,
