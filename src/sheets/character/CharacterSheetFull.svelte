@@ -86,7 +86,7 @@
       </div>
 
       <div class="flex-row extra-small-gap align-items-stretch">
-        {#if !game.settings.get('dnd5e', 'disableExperienceTracking')}
+        {#if !FoundryAdapter.getGameSetting('dnd5e', 'disableExperienceTracking')}
           <!-- XP / XP To Next Level -->
           <div class="xp-tracker">
             <div class="experience flex-row no-gap">

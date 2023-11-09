@@ -17,14 +17,14 @@
     $settingStore.enableSortFavoritesItemsAlphabetically,
     $context.inventory
       .flatMap((x: any) => x.items)
-      .filter(FoundryAdapter.isItemFavorite)
+      .filter(FoundryAdapter.isDocumentFavorited)
   );
 
   $: favoriteFeatures = sortByNameIfConfigured(
     $settingStore.enableSortFavoritesItemsAlphabetically,
     $context.features
       .flatMap((x: any) => x.items)
-      .filter(FoundryAdapter.isItemFavorite)
+      .filter(FoundryAdapter.isDocumentFavorited)
   );
 
   function getFavoriteSpells(
@@ -33,7 +33,7 @@
   ): Item5e[] {
     return sortByNameIfConfigured(
       sortFavoritesItemsAlphabetically,
-      spells.filter(FoundryAdapter.isItemFavorite)
+      spells.filter(FoundryAdapter.isDocumentFavorited)
     );
   }
 

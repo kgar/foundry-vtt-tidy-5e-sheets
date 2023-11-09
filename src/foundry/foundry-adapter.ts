@@ -120,12 +120,8 @@ export const FoundryAdapter = {
       },
     });
   },
-  mergeObject<T>(
-    original: T,
-    other: Partial<T>,
-    options?: Partial<MergeObjectOptions>
-  ) {
-    return mergeObject(original, other, options);
+  mergeObject<T>(original: T, ...args: any[]) {
+    return mergeObject(original, ...args) as T;
   },
   expandObject(data: any) {
     return expandObject(data);
@@ -476,17 +472,22 @@ export const FoundryAdapter = {
       }`
     );
   },
-  isItemFavorite(item: any) {
-    if (!item) {
+  isDocumentFavorited(document: any) {
+    if (!document) {
       return false;
     }
-    let isFav =
-      (game.modules.get('favorite-items')?.active &&
-        item.flags['favorite-items']?.favorite) ||
-      item.flags[CONSTANTS.MODULE_ID]?.favorite ||
-      false;
 
-    return isFav;
+    return (
+      FoundryAdapter.tryGetFlag<boolean | null>(document, 'favorite') ?? false
+    );
+  },
+  toggleFavorite(document: any) {
+    const favorited = FoundryAdapter.isDocumentFavorited(document);
+    if (favorited) {
+      FoundryAdapter.unsetFlag(document, 'favorite');
+    } else {
+      FoundryAdapter.setFlag(document, 'favorite', true);
+    }
   },
   canEditActor(actor: any) {
     return (
@@ -1022,91 +1023,19 @@ export const FoundryAdapter = {
   browseFilePicker(...args: any[]) {
     return new FilePicker(...args).browse();
   },
+  renderArmorConfig(actor: any) {
+    return new dnd5e.applications.actor.ActorArmorConfig(actor).render(true);
+  },
+  renderActorInitiativeConfig(actor: any) {
+    return new dnd5e.applications.actor.ActorInitiativeConfig(actor).render(
+      true
+    );
+  },
+  renderActorAbilityConfig(actor: any, abbreviation: any) {
+    return new dnd5e.applications.actor.ActorAbilityConfig(
+      actor,
+      null,
+      abbreviation
+    ).render(true);
+  },
 };
-
-/* ------------------------------------------------------
-* Facade Types
---------------------------------------------------------- */
-
-export type ActorReference = {
-  skills: Record<string, SkillReference>;
-  skillsList: ({
-    abbreviation: string;
-  } & SkillReference)[];
-  abilities: Record<string, AbilityReference>;
-  abilitiesList: AbilityReference[];
-};
-
-/* ------------------------------------------------------
-* Minimally stubbed foundry types to fuel the adapter.
---------------------------------------------------------- */
-
-declare const Hooks: any;
-declare const foundry: any;
-declare const game: any;
-declare const Actors: any;
-declare const Items: any;
-declare const CONFIG: any;
-declare const Roll: any;
-declare const dnd5e: any;
-declare const ui: any;
-declare const debounce: any;
-declare const ChatMessage: any;
-declare const AudioHelper: any;
-declare const TextEditor: any;
-declare const ContextMenu: any;
-declare const ImagePopout: any;
-declare const FilePicker: any;
-
-type AbilityReference = {
-  abbreviation: string;
-  defaults: Record<string, number>;
-  label: string;
-  type: string;
-};
-
-type SkillReference = {
-  label: string;
-  ability: string;
-};
-
-type TextEditorOptions = Partial<{
-  target: string;
-  button: boolean;
-  class: string;
-  editable: boolean;
-  engine: string;
-  collaborate: boolean;
-  owner: boolean;
-  documents: boolean;
-  rollData: any;
-  content: string;
-}>;
-
-declare var HandlebarsHelpers: {
-  editor: (
-    content: string,
-    options?: {
-      hash: TextEditorOptions;
-    }
-  ) => string;
-};
-
-type MergeObjectOptions = {
-  insertKeys: boolean;
-  insertValues: boolean;
-  overwrite: boolean;
-  recursive: boolean;
-  inplace: boolean;
-  enforceTypes: boolean;
-  performDeletions: boolean;
-};
-
-declare var mergeObject: <T>(
-  original: T,
-  other: Partial<T>,
-  options?: Partial<MergeObjectOptions>
-) => T;
-
-declare var expandObject: (obj: any) => any;
-declare var isEmpty: (obj: any) => boolean;

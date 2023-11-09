@@ -46,9 +46,7 @@
       class="config-button icon-button"
       title={localize('DND5E.InitiativeConfig')}
       on:click={() =>
-        new dnd5e.applications.actor.ActorInitiativeConfig($context.actor).render(
-          true
-        )}
+        FoundryAdapter.renderActorInitiativeConfig($context.actor)}
     >
       <i class="fas fa-cog" />
     </button>

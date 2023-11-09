@@ -43,7 +43,8 @@
       class:rollable={$context.owner}
       title={localize('DND5E.AbilityModifier')}
       on:click={(event) =>
-        $context.owner && $context.actor.rollAbilityTest(abbreviation, { event })}
+        $context.owner &&
+        $context.actor.rollAbilityTest(abbreviation, { event })}
     >
       {formatAsModifier(ability.mod)}
     </button>
@@ -53,7 +54,8 @@
       class:rollable={$context.owner}
       title={localize('DND5E.ActionSave')}
       on:click={(event) =>
-        $context.owner && $context.actor.rollAbilitySave(abbreviation, { event })}
+        $context.owner &&
+        $context.actor.rollAbilitySave(abbreviation, { event })}
     >
       {formatAsModifier(ability.save)}
     </button>
@@ -83,11 +85,7 @@
         class="config-button inline-icon-button"
         title={localize('DND5E.AbilityConfigure')}
         on:click={() =>
-          new dnd5e.applications.actor.ActorAbilityConfig(
-            $context.actor,
-            null,
-            abbreviation
-          ).render(true)}
+          FoundryAdapter.renderActorAbilityConfig($context.actor, abbreviation)}
       >
         <i class="fas fa-cog" />
       </button>
