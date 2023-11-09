@@ -11,14 +11,18 @@
   let context = getContext<Readable<ActorSheetContext>>('context');
 </script>
 
-<h4
+<button
+  type="button"
   class:rollable={$context.owner}
-  class="block-title"
+  class="transparent-button"
   {title}
   on:click={(ev) => $context.owner && dispatcher('roll', ev)}
+  disabled={!$context.owner}
 >
-  {text}
-</h4>
+  <h4 class="block-title">
+    {text}
+  </h4>
+</button>
 
 <style lang="scss">
   .block-title {
@@ -38,7 +42,7 @@
       border-bottom: 1px solid var(--t5ek-faint-color);
       position: absolute;
       left: 50%;
-      bottom: -1px;
+      bottom: -0.0625rem;
       transform: translate(-50%, 0);
     }
   }
