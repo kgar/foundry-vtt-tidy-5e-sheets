@@ -5,11 +5,15 @@
   export let max: number | null | undefined = null;
   export let percentage: number | null = null;
   export let color: string = 'var(--t5ek-hp-bar-color)';
+  export let cssClass: string | null = null;
 
   $: barPercentage = percentage ?? getPercentage(value, max);
 </script>
 
-<div class="bar" style="width: {barPercentage}%; --bar-color: {color}" />
+<div
+  class="bar {cssClass}"
+  style="width: {barPercentage}%; --bar-color: {color}"
+/>
 
 <style lang="scss">
   .bar {
@@ -17,8 +21,6 @@
     top: 0;
     left: 0;
     height: 100%;
-    // TODO: Try to figure out how we can eliminate this z-index and still have things working.
-    z-index: -1;
     background: var(--bar-color);
     transition: width 0.5s ease;
   }

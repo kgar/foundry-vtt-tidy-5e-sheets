@@ -1,8 +1,8 @@
 <script lang="ts">
+  import HpBar from 'src/components/bar/HpBar.svelte';
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { settingStore } from 'src/settings/settings';
-  import ActorHpBar from 'src/sheets/actor/ActorHpBar.svelte';
   import type { NpcSheetContext } from 'src/types/types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
@@ -14,7 +14,7 @@
 
 <div class="portrait-hp" title={localize('DND5E.HitPoints')}>
   {#if !$settingStore.hpBarDisabledNpc}
-    <ActorHpBar />
+    <HpBar percentage={$context.healthPercentage} />
   {/if}
   <TextInput
     cssClass="hp-min"
@@ -28,7 +28,7 @@
     ariaDescribedBy="tooltip"
     selectOnFocus={true}
     disabled={!$context.owner}
-    />
+  />
   <span class="value-seperator sep"> / </span>
   <TextInput
     cssClass="hp-max"
@@ -41,7 +41,9 @@
     maxlength={5}
     ariaDescribedBy="tooltip"
     selectOnFocus={true}
-    disabled={!$context.owner || $context.lockHpMaxChanges || $context.lockSensitiveFields}
+    disabled={!$context.owner ||
+      $context.lockHpMaxChanges ||
+      $context.lockSensitiveFields}
   />
 </div>
 
@@ -61,6 +63,10 @@
     background: var(--t5ek-icon-background);
     box-shadow: 0 0 0.3125rem var(--t5ek-icon-shadow-color) inset;
     border: 0.0625rem solid var(--t5ek-icon-outline-color);
+
+    :global(:not(.bar)) {
+      position: relative;
+    }
 
     :global(input.hp-min) {
       text-align: right;

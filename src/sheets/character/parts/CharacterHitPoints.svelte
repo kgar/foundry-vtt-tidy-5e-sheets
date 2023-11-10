@@ -2,11 +2,11 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { type Actor5e } from 'src/types/types';
   import TextInput from 'src/components/inputs/TextInput.svelte';
-  import ActorHpBar from 'src/sheets/actor/ActorHpBar.svelte';
   import { settingStore } from 'src/settings/settings';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import type { CharacterSheetContext } from 'src/types/types';
+  import HpBar from 'src/components/bar/HpBar.svelte';
 
   export let value: number;
   export let max: number;
@@ -25,7 +25,7 @@
   title={localize('DND5E.HitPoints')}
 >
   {#if !$settingStore.hpBarDisabled}
-    <ActorHpBar />
+    <HpBar percentage={$context.healthPercentage} />
   {/if}
   <TextInput
     cssClass="hp-min"
@@ -39,7 +39,7 @@
     maxlength={5}
     ariaDescribedBy="tooltip"
     disabled={!$context.owner}
-    />
+  />
   <span class="value-seperator sep"> / </span>
   {#if $context.allowMaxHpOverride}
     <TextInput
@@ -53,7 +53,9 @@
       allowDeltaChanges={true}
       maxlength={5}
       ariaDescribedBy="tooltip"
-      disabled={!$context.owner || $context.lockHpMaxChanges || $context.lockSensitiveFields}
+      disabled={!$context.owner ||
+        $context.lockHpMaxChanges ||
+        $context.lockSensitiveFields}
     />
   {:else}
     <span
@@ -79,6 +81,10 @@
     background: var(--t5ek-icon-background);
     box-shadow: 0 0 0.3125rem var(--t5ek-icon-shadow-color) inset;
     border: 0.0625rem solid var(--t5ek-icon-outline-color);
+
+    :global(:not(.bar)) {
+      position: relative;
+    }
 
     &.widen-for-rounded-portrait {
       width: 88px;
