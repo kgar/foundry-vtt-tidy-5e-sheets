@@ -3,26 +3,30 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { ItemSheetContext } from 'src/types/item';
   import type { CharacterSheetContext } from 'src/types/types';
+  import { warn } from 'src/utils/logging';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
 
   let context =
     getContext<Readable<ItemSheetContext | CharacterSheetContext>>('context');
 
+  $: effects = Object.entries($context.effects) as Iterable<[string, any]>;
+
   const localize = FoundryAdapter.localize;
 
   function onAddClicked(section: any) {
-    const unsupported = game.dnd5e.isV10 && $context.item.isOwned;
+    const unsupported = FoundryAdapter.isFoundryV10() && $context.item.isOwned;
     if (unsupported)
-      return ui.notifications.warn(
-        'Managing Active Effects within an Owned Item is not currently supported and will be added in a subsequent update.'
+      return warn(
+        'Managing Active Effects within an Owned Item is not currently supported and will be added in a subsequent update.',
+        true
       );
 
     const owner = $context.item;
 
     return owner.createEmbeddedDocuments('ActiveEffect', [
       {
-        label: game.i18n.localize('DND5E.EffectNew'),
+        label: FoundryAdapter.localize('DND5E.EffectNew'),
         icon: 'icons/svg/aura.svg',
         origin: owner.uuid,
         'duration.rounds': section.type === 'temporary' ? 1 : undefined,
@@ -39,7 +43,7 @@
 </script>
 
 <ol class="items-list effects-list">
-  {#each Object.entries($context.effects) as [_, section]}
+  {#each effects as [_, section]}
     {#if !section.hidden}
       <li class="items-header flexrow" data-effect-type={section.type}>
         <h3 class="item-name effect-name flexrow">{localize(section.label)}</h3>

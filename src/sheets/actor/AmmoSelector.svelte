@@ -18,11 +18,11 @@
     },
     ...$context.actor.items
       .filter(
-        (x) =>
+        (x: any) =>
           x.system.consumableType === 'ammo' &&
           (!$settingStore.ammoEquippedOnly || x.system.equipped)
       )
-      .map((x) => ({
+      .map((x: any) => ({
         text: `${x.name} (${x.system.quantity})`,
         value: x.id,
         ammo: x,
@@ -30,7 +30,7 @@
   ];
 
   function onAmmoChange(item: Item5e, ammoId: string) {
-    const ammo = item.actor?.items.find((i) => i.id === ammoId);
+    const ammo = item.actor?.items.find((i: any) => i.id === ammoId);
 
     item.update({
       system: {

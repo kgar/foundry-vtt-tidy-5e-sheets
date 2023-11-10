@@ -1,11 +1,10 @@
 <script lang="ts">
-  import type { FoundryDocument } from 'src/types/document';
   import { buildDataset } from 'src/utils/data';
 
   export let value: number | null = null;
   export let checked: boolean = false;
   export let field: string;
-  export let document: FoundryDocument;
+  export let document: any;
   export let tooltip: string | null = null;
   export let id: string | null = null;
   export let disabled: boolean | null = null;

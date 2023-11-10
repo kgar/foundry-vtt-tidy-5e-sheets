@@ -6,8 +6,6 @@ export type LongRestDialogResult = {
   newDay?: boolean;
 };
 
-declare var Dialog: any;
-
 /**
  * A helper Dialog subclass for completing a long rest.
  *

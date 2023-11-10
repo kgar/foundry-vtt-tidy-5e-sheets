@@ -4,9 +4,6 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
 
-  export let movement: any;
-  export let actor: Actor5e;
-
   let context = getContext<Readable<ActorSheetContext>>('context');
 
   const localize = FoundryAdapter.localize;
@@ -14,20 +11,19 @@
 
 <section class="movement flex-row small-gap">
   <h4>{localize('DND5E.Speed')}</h4>
-  {#if movement.primary}
-    <span title={movement.primary}>{movement.primary}</span>
+  {#if $context.movement.primary}
+    <span title={$context.movement.primary}>{$context.movement.primary}</span>
   {/if}
-  {#if movement.special}
+  {#if $context.movement.special}
     |
-    <span title={movement.special}>{movement.special}</span>
+    <span title={$context.movement.special}>{$context.movement.special}</span>
   {/if}
   {#if $context.owner && !$context.lockSensitiveFields}
     <button
       type="button"
       class="configure inline-icon-button"
       title={localize('DND5E.MovementConfig')}
-      on:click={() =>
-        new dnd5e.applications.actor.ActorMovementConfig(actor).render(true)}
+      on:click={() => FoundryAdapter.renderActorMovementConfig($context.actor)}
       ><i class="fas fa-cog" /></button
     >
   {/if}
@@ -42,7 +38,7 @@
     font-size: 0.875rem;
     line-height: 1rem;
 
-    &:not(:hover) .configure {
+    &:not(:hover) .configure:not(:focus-visible) {
       opacity: 0;
     }
 

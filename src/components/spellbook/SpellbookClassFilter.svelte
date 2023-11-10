@@ -4,14 +4,14 @@
   import { settingStore } from 'src/settings/settings';
   import {
     type CharacterSheetContext,
-    type DropdownOption,
+    type DropdownListOption,
   } from 'src/types/types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
 
   let context = getContext<Readable<CharacterSheetContext>>('context');
 
-  let allClasses: DropdownOption[] = [];
+  let allClasses: DropdownListOption[] = [];
 
   $: {
     allClasses = FoundryAdapter.getAllClassesDropdownOptions(

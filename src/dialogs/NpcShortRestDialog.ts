@@ -7,8 +7,6 @@ export type ShortRestDialogResult = {
   newDay?: boolean;
 };
 
-declare var Dialog: any;
-
 /**
  * A helper Dialog subclass for rolling Hit Dice on short rest.
  *

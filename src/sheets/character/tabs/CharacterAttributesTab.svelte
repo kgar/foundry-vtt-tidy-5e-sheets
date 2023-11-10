@@ -14,7 +14,7 @@
   $: showResources =
     $context.editable ||
     $context.resources.some(
-      (x) => !isNil(x.value) || !isNil(x.value, '') || !isNil(x.max)
+      (x: any) => !isNil(x.value) || !isNil(x.value, '') || !isNil(x.max)
     );
 </script>
 

@@ -55,23 +55,23 @@
       top: 40%;
       left: 50%;
       transform: translate(-50%, -50%);
-      font-size: 35px;
-      height: 40px;
+      font-size: 2.1875rem;
+      height: 2.5rem;
       font-weight: 700;
       margin: 0 auto;
-      width: 60px;
+      width: 3.75rem;
       text-align: center;
     }
 
     :global(.armor-class-motionless) {
       position: absolute;
-      bottom: 6px;
+      bottom: 0.375rem;
       left: 0;
       width: 100%;
-      font-size: 12px;
-      line-height: 14px;
-      height: 14px;
-      padding: 1px 0;
+      font-size: 0.75rem;
+      line-height: 0.875rem;
+      height: 0.875rem;
+      padding: 0.0625rem 0;
       text-align: center;
     }
   }

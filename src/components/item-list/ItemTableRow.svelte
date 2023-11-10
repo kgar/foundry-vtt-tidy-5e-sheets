@@ -17,14 +17,16 @@
   import { settingStore } from 'src/settings/settings';
 
   export let item: Item5e | null = null;
+  export let effect: any | null = null;
   export let contextMenu: { type: string; id: string } | null = null;
   export let cssClass: string = '';
   export let itemCardContentTemplate: ItemCardContentComponent | null = null;
 
-  const expandedItemData = getContext<ExpandedItemData>(
-    'expandedItemData'
-  );
-  const expandedItems = getContext<ExpandedItemIdToLocationsMap>('expandedItems');
+  $: draggable = item ?? effect;
+
+  const expandedItemData = getContext<ExpandedItemData>('expandedItemData');
+  const expandedItems =
+    getContext<ExpandedItemIdToLocationsMap>('expandedItems');
   const onItemToggled = getContext<OnItemToggledFn>('onItemToggled');
   const dispatcher = createEventDispatcher<{ mousedown: MouseEvent }>();
   const location = getContext<string>('location');
@@ -67,11 +69,11 @@
   }
 
   function handleDragStart(event: DragEvent) {
-    if (!item) {
+    if (!draggable) {
       return;
     }
 
-    const dragData = item.toDragData();
+    const dragData = draggable.toDragData();
     event.dataTransfer?.setData('text/plain', JSON.stringify(dragData));
   }
 
@@ -109,7 +111,7 @@
   on:mousedown={(event) => dispatcher('mousedown', event)}
   on:mouseenter={onMouseEnter}
   on:mouseleave={onMouseLeave}
-  draggable={!!item}
+  draggable={!!draggable}
   on:dragstart={handleDragStart}
   data-item-id={item?.id}
 >

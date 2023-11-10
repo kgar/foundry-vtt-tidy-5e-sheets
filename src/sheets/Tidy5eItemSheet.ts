@@ -20,16 +20,6 @@ import { debug } from 'src/utils/logging';
 import type { SvelteComponent } from 'svelte';
 import { getPercentage } from 'src/utils/numbers';
 
-declare var dnd5e: {
-  applications: {
-    item: {
-      ItemSheet5e: any;
-    };
-  };
-};
-
-declare var $: any;
-
 export class Tidy5eKgarItemSheet
   extends dnd5e.applications.item.ItemSheet5e
   implements SheetTabCacheable
@@ -39,7 +29,6 @@ export class Tidy5eKgarItemSheet
     lastSubmissionTime: null,
   });
   currentTabId: string | undefined = undefined;
-  advancementConfigurationMode = false;
 
   constructor(item: Item5e, ...args: any[]) {
     super(item, ...args);
@@ -168,7 +157,11 @@ export class Tidy5eKgarItemSheet
       contextOptions
     );
     if (contextOptions)
-      new ContextMenu(html, '.advancement-item', contextOptions);
+      FoundryAdapter.createContextMenu(
+        html,
+        '.advancement-item',
+        contextOptions
+      );
   }
 
   async getData(options = {}) {
@@ -245,7 +238,7 @@ export class Tidy5eKgarItemSheet
 
   async toggleAdvancementLock() {
     this.advancementConfigurationMode = !this.advancementConfigurationMode;
-    await this.updateContext();
+    this.context.set(await this.getContext());
   }
 
   _getHeaderButtons() {

@@ -1,0 +1,16 @@
+name: Check Code on Merge to Main
+
+on:
+  pull_request:
+    branches: 'main'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install and Check
+        run: |
+          npm install
+          npm run check

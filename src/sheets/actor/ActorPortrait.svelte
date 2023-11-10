@@ -72,7 +72,7 @@
         class="portrait-menu-item"
         on:mousedown={(ev) => ev.stopImmediatePropagation()}
         on:click={() =>
-          new ImagePopout(actor.img, {
+          FoundryAdapter.renderImagePopout(actor.img, {
             title: 'Portrait: ' + actor.name,
             shareable: true,
             uuid: actor.uuid,
@@ -83,7 +83,7 @@
         class="portrait-menu-item"
         on:mousedown={(ev) => ev.stopImmediatePropagation()}
         on:click={() =>
-          new ImagePopout(actor.prototypeToken.texture.src, {
+          FoundryAdapter.renderImagePopout(actor.prototypeToken.texture.src, {
             title: 'Portrait: ' + actor.name,
             shareable: true,
             uuid: actor.uuid,

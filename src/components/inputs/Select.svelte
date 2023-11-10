@@ -1,11 +1,10 @@
 <script lang="ts">
-  import type { FoundryDocument } from 'src/types/document';
   import { buildDataset } from 'src/utils/data';
 
   export let value: unknown;
   export let tooltip: string | null = null;
   export let field: string;
-  export let document: FoundryDocument;
+  export let document: any;
   export let id: string | null = null;
   export let dataset: Record<string, unknown> | null = null;
   export let title: string | null = null;

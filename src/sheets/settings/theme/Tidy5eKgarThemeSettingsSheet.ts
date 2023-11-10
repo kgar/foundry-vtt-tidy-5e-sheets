@@ -15,8 +15,6 @@ import type { ThemeColorSetting, Tidy5eThemeDataV1 } from 'src/types/theme';
 import { downloadTextFile } from 'src/utils/file';
 import { CONSTANTS } from 'src/constants';
 
-declare var FormApplication: any;
-
 export type ThemeSettingsSheetFunctions = {
   save(settings: CurrentSettings): Promise<unknown>;
   useExistingThemeColors(themeId: string): void;

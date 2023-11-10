@@ -18,7 +18,12 @@
 </script>
 
 <div class="toggle-allow-edit">
-  <span on:click={() => toggleLock()} class:editing-enabled={allowEdit}>
+  <button
+    type="button"
+    class="lock-button"
+    on:click={() => toggleLock()}
+    class:editing-enabled={allowEdit}
+  >
     {#if allowEdit}
       <i
         class="fas fa-lock-open"
@@ -32,7 +37,7 @@
           localize('T5EK.EditHint')}"
       />
     {/if}
-  </span>
+  </button>
 </div>
 
 <style lang="scss">
@@ -50,11 +55,15 @@
     text-align: left;
     height: 1.625rem;
 
-    span {
-      cursor: pointer;
+    .lock-button {
       background: var(--t5ek-sheet-unlocked-icon-background);
       color: var(--t5ek-sheet-lock-icon-color);
       border-radius: 0.1875rem;
+      width: 1.375rem;
+      border: none;
+      padding: 0;
+      line-height: normal;
+      transition: color 0.3s ease;
 
       &.editing-enabled {
         background: var(--t5ek-sheet-locked-icon-background);
@@ -67,7 +76,7 @@
       i {
         width: 100%;
         text-align: center;
-        padding: 0.25rem 0.375rem;
+        padding: 0.25rem 0;
       }
     }
   }

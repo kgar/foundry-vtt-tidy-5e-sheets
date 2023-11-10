@@ -12,8 +12,16 @@
     text-align: center;
     background: var(--t5ek-faint-color);
 
+    &.primary {
+      color: var(--t5ek-primary-color);
+    }
+
     &:hover {
       color: var(--t5ek-primary-color);
+
+      &.primary {
+        color: var(--t5ek-primary-accent-color);
+      }
     }
 
     i {
@@ -33,11 +41,21 @@
     margin: 0;
     padding: 0.5rem 0;
     list-style: none;
-    outline: 1px solid var(--t5ek-faint-color);
+    outline: 0.0625rem solid var(--t5ek-faint-color);
 
     .button-menu-item {
       &:not(.button-menu-command-li) {
         padding: 0.5rem;
+      }
+
+      &.button-menu-command-li {
+        .button-menu-command.standard {
+          line-height: 1.5rem;
+        }
+
+        .button-menu-command.compact {
+          line-height: 1rem;
+        }
       }
 
       .button-menu-command {
