@@ -183,7 +183,7 @@
             class="transparent-button spellbook-title toggle-spellbook"
             on:click={() => (showNoSpellsView = !showNoSpellsView)}
           >
-            {localize('DND5E.Spellbook')}
+            {localize('DND5E.Spellbook') I'M GONNA WRECK IT!}
             {#if showNoSpellsView}
               <i class="fas fa-caret-up" />
             {:else}
