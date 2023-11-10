@@ -158,9 +158,13 @@
             <ItemControls>
               {#if ctx?.attunement}
                 <AttuneControl {item} {ctx} />
+              {:else}
+                <span role="presentation" />
               {/if}
               {#if ctx?.canToggle}
                 <EquipControl {item} {ctx} />
+              {:else}
+                <span role="presentation" />
               {/if}
               <ItemFavoriteControl {item} />
               <ItemEditControl {item} />
