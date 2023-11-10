@@ -93,7 +93,7 @@
 
                     {#if $context.editable}
                       <ItemControl
-                        on:click={() => effect.delete()}
+                        on:click={() => effect.deleteDialog()}
                         title={localize('DND5E.EffectDelete')}
                         iconCssClass="fas fa-trash"
                       />
