@@ -95,6 +95,7 @@ export const FoundryAdapter = {
         CONSTANTS.SPELL_PREPARATION_MODE_INNATE &&
       item.system.preparation?.mode !==
         CONSTANTS.SPELL_PREPARATION_MODE_ALWAYS &&
+      item.system.preparation?.mode !== CONSTANTS.SPELL_PREPARATION_MODE_PACT &&
       (item.system.level !== 0 ||
         SettingsProvider.settings.allowCantripsToBePrepared.get())
     );
