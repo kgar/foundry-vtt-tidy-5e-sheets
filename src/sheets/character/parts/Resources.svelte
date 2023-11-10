@@ -13,6 +13,41 @@
 <ul class="resources">
   {#each $context.resources as res}
     <li class="resource">
+      <h4 class="resource-name">
+        <TextInput
+          document={$context.actor}
+          field="system.resources.{res.name}.label"
+          value={res.label}
+          placeholder={res.placeholder}
+          selectOnFocus={true}
+          disabled={!$context.owner || $context.lockSensitiveFields}
+        />
+      </h4>
+      <div class="resource-value multiple">
+        <TextInput
+          cssClass="resource-value"
+          document={$context.actor}
+          field="system.resources.{res.name}.value"
+          value={res.value ?? null}
+          placeholder="0"
+          allowDeltaChanges={true}
+          maxlength={3}
+          selectOnFocus={true}
+          disabled={!$context.owner}
+        />
+        <span class="sep"> / </span>
+        <TextInput
+          document={$context.actor}
+          field="system.resources.{res.name}.max"
+          cssClass="resource-max"
+          value={res.max ?? null}
+          placeholder="0"
+          allowDeltaChanges={true}
+          maxlength={3}
+          selectOnFocus={true}
+          disabled={!$context.owner || $context.lockSensitiveFields}
+        />
+      </div>
       <header class="resource-header">
         {#if $context.owner && !$context.lockSensitiveFields}
           <span class="resource-options">
@@ -59,41 +94,6 @@
           </label>
         </div>
       </header>
-      <h4 class="resource-name">
-        <TextInput
-          document={$context.actor}
-          field="system.resources.{res.name}.label"
-          value={res.label}
-          placeholder={res.placeholder}
-          selectOnFocus={true}
-          disabled={!$context.owner || $context.lockSensitiveFields}
-        />
-      </h4>
-      <div class="resource-value multiple">
-        <TextInput
-          cssClass="resource-value"
-          document={$context.actor}
-          field="system.resources.{res.name}.value"
-          value={res.value ?? null}
-          placeholder="0"
-          allowDeltaChanges={true}
-          maxlength={3}
-          selectOnFocus={true}
-          disabled={!$context.owner}
-        />
-        <span class="sep"> / </span>
-        <TextInput
-          document={$context.actor}
-          field="system.resources.{res.name}.max"
-          cssClass="resource-max"
-          value={res.max ?? null}
-          placeholder="0"
-          allowDeltaChanges={true}
-          maxlength={3}
-          selectOnFocus={true}
-          disabled={!$context.owner || $context.lockSensitiveFields}
-        />
-      </div>
     </li>
   {/each}
 </ul>
@@ -132,8 +132,7 @@
         display: flex;
         justify-content: flex-end;
         align-items: flex-end;
-        // TODO: Revamp the styles for resources so that a z-index is not necessary; the cog in this screen would sit atop any button menus
-        z-index: 10;
+        background-color: var(--t5ek-sheet-background);
 
         .resource-options {
           position: relative;
@@ -170,13 +169,13 @@
           border-radius: 0.3125rem;
           font-size: 0.6875rem;
           cursor: pointer;
-          transition: background 0.3s ease;
+          transition: background-color 0.3s ease;
           text-align: center;
           flex: 0 0 3.125rem;
           line-height: 1rem;
 
           &:hover {
-            background: var(--t5ek-light-color);
+            background-color: var(--t5ek-light-color);
           }
         }
 
@@ -202,10 +201,6 @@
           .resource-options {
             color: var(--t5ek-secondary-color);
           }
-        }
-
-        &:hover ~ * {
-          opacity: 0;
         }
       }
 
