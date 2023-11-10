@@ -86,10 +86,10 @@ export function applyCurrentTheme(
 }
 
 export function getThemeableColors(): ThemeColorSetting[] {
-  return getKeyedObjectEntries(SettingsProvider.settings)
+  return Object.entries(SettingsProvider.settings)
     .filter(([, value]) => 'representsCssVariable' in value)
     .map(([key, value]) => ({
-      key,
+      key: key as any,
       name: value.options.name,
       hint: 'hint' in value.options ? value.options.hint : '',
       cssVariable:

@@ -66,7 +66,6 @@
     width: 100%;
     height: 100%;
     border-radius: 0.3125rem;
-    z-index: 20;
     display: flex;
     justify-content: center;
     align-items: center;

@@ -3,6 +3,7 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import type { ActorSheetContext } from 'src/types/types';
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
   /**
    * The Armor Class value.
@@ -20,8 +21,7 @@
 <AcShieldBase {cssClass}>
   <button
     type="button"
-    on:click={() =>
-      new dnd5e.applications.actor.ActorArmorConfig($context.actor).render(true)}
+    on:click={() => FoundryAdapter.renderArmorConfig($context.actor)}
     on:mouseover={(ev) => $context.actor.sheet._onPropertyAttribution(ev)}
     on:focus
     class="config-button attribute-value transparent-button"

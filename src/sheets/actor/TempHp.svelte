@@ -39,10 +39,8 @@
       type="button"
       class="inline-icon-button"
       title={localize('DND5E.HitPointsConfig')}
-      on:click|stopPropagation|preventDefault={(event) =>
-        new dnd5e.applications.actor.ActorHitPointsConfig(
-          $context.actor
-        ).render(true)}
+      on:click|stopPropagation|preventDefault={() =>
+        FoundryAdapter.renderActorHitPointsDialog($context.actor)}
     >
       <i class="fas fa-cog" />
     </button>

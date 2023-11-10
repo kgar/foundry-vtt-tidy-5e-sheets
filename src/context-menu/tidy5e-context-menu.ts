@@ -5,14 +5,14 @@ import type { Item5e } from 'src/types/item';
 import { warn } from 'src/utils/logging';
 
 export function initTidy5eContextMenu(
+  sheet: any,
   html: any,
   contextMenuSelector: string = '[data-context-menu]'
 ) {
-  new ContextMenu(html, contextMenuSelector, [], {
-    onOpen: onItemContext.bind(this),
+  FoundryAdapter.createContextMenu(html, contextMenuSelector, [], {
+    onOpen: onItemContext.bind(sheet),
   });
 }
-
 /**
  * Handle activation of a context menu for an embedded Item or ActiveEffect document.
  * Dynamically populate the array of context menu options.
@@ -22,10 +22,13 @@ export function initTidy5eContextMenu(
 function onItemContext(element: HTMLElement) {
   const contextMenuType = element.getAttribute('data-context-menu');
   const id = element.getAttribute('data-context-menu-entity-id');
+  // TODO: rewrite context menu so that it's better integrated with the rest of Tidy 5e Sheets.
+  // @ts-ignore
+  const that: any = this as any;
 
   // Active Effects
   if (contextMenuType === CONSTANTS.CONTEXT_MENU_TYPE_EFFECTS) {
-    const effect = this.actor.effects.get(id);
+    const effect = that.actor.effects.get(id);
     if (!effect) {
       return;
     }
@@ -35,7 +38,7 @@ function onItemContext(element: HTMLElement) {
   }
   // Items
   else if (contextMenuType === CONSTANTS.CONTEXT_MENU_TYPE_ITEMS) {
-    const item = this.actor.items.get(id);
+    const item = that.actor.items.get(id);
     if (!item) return;
 
     // TODO: Leverage the API to aggregate any registered context menu options; pass in the context of the current item for reference.
@@ -85,7 +88,7 @@ function getActiveEffectContextOptions(effect: any) {
         callback: () =>
           effect.clone(
             {
-              label: game.i18n.format('DOCUMENT.CopyOf', {
+              label: FoundryAdapter.localize('DOCUMENT.CopyOf', {
                 name: effect.label,
               }),
             },
@@ -137,12 +140,12 @@ function getItemContextOptions(item: Item5e) {
     if (isAlways) toggleTitle = CONFIG.DND5E.spellPreparationModes.always;
     else if (isPrepared)
       toggleTitle = CONFIG.DND5E.spellPreparationModes.prepared;
-    else toggleTitle = game.i18n.localize('DND5E.SpellUnprepared');
+    else toggleTitle = FoundryAdapter.localize('DND5E.SpellUnprepared');
 
     canPrepare = item.system.level >= 1;
   } else {
     isActive = !!item.system.equipped;
-    toggleTitle = game.i18n.localize(
+    toggleTitle = FoundryAdapter.localize(
       isActive ? 'DND5E.Equipped' : 'DND5E.Unequipped'
     );
     canToggle = 'equipped' in item.system;
@@ -212,7 +215,7 @@ function getItemContextOptions(item: Item5e) {
   // TODO SUPPORT FAVORITE ON NPC ?
   if (isCharacter) {
     // Add favorites to context menu
-    let isFav = FoundryAdapter.isItemFavorite(item);
+    let isFav = FoundryAdapter.isDocumentFavorited(item);
 
     let favoriteIcon = 'fa-bookmark';
 
@@ -230,17 +233,7 @@ function getItemContextOptions(item: Item5e) {
           );
           return;
         }
-        let isFav = FoundryAdapter.isItemFavorite(item);
-
-        item.update({
-          [`flags.${CONSTANTS.MODULE_ID}.favorite`]: !isFav,
-        });
-        // Sync favorite flag with module 'favorite-items'
-        if (game.modules.get('favorite-items')?.active) {
-          item.update({
-            'flags.favorite-items.favorite': !isFav,
-          });
-        }
+        FoundryAdapter.toggleFavorite(item);
       },
     });
   }
@@ -280,7 +273,11 @@ function getItemContextOptions(item: Item5e) {
           !['race', 'background', 'class', 'subclass'].includes(item.type),
         callback: () =>
           item.clone(
-            { name: game.i18n.format('DOCUMENT.CopyOf', { name: item.name }) },
+            {
+              name: FoundryAdapter.localize('DOCUMENT.CopyOf', {
+                name: item.name,
+              }),
+            },
             { save: true }
           ),
       });
@@ -305,7 +302,11 @@ function getItemContextOptions(item: Item5e) {
           !['race', 'background', 'class', 'subclass'].includes(item.type),
         callback: () =>
           item.clone(
-            { name: game.i18n.format('DOCUMENT.CopyOf', { name: item.name }) },
+            {
+              name: FoundryAdapter.localize('DOCUMENT.CopyOf', {
+                name: item.name,
+              }),
+            },
             { save: true }
           ),
       });

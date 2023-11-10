@@ -18,41 +18,11 @@
     title: string,
     trait: 'saves' | 'skills.choices' | 'skills'
   ) {
-    const options: Record<string, unknown> = {
-      name: target,
+    FoundryAdapter.renderClassItemTraitSelector(
+      $context.item,
+      target,
       title,
-      choices: [],
-      allowCustom: false,
-      suppressWarning: true,
-    };
-    switch (trait) {
-      case 'saves':
-        options.choices = CONFIG.DND5E.abilities;
-        options.valueKey = null;
-        options.labelKey = 'label';
-        break;
-      case 'skills.choices':
-        options.choices = CONFIG.DND5E.skills;
-        options.valueKey = null;
-        options.labelKey = 'label';
-        break;
-      case 'skills':
-        const skills = $context.item.system.skills;
-        const choices = skills.choices?.length
-          ? skills.choices
-          : Object.keys(CONFIG.DND5E.skills);
-        options.choices = Object.fromEntries(
-          Object.entries(CONFIG.DND5E.skills).filter(([s]) =>
-            choices.includes(s)
-          )
-        );
-        options.maximum = skills.number;
-        options.labelKey = 'label';
-        break;
-    }
-
-    new game.dnd5e.applications.TraitSelector($context.item, options).render(
-      true
+      trait
     );
   }
 </script>

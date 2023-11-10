@@ -1,8 +1,6 @@
 import { CONSTANTS } from 'src/constants';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
-declare var DocumentSheet: any;
-
 /**
  * A form for configuring actor hit points and bonuses.
  */

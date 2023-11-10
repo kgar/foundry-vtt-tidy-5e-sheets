@@ -15,14 +15,13 @@
   export let includePreparedSpells: boolean = true;
 
   const localize = FoundryAdapter.localize;
-  $: spellAttackBonusInfo = FoundryAdapter.getSpellAttackModAndTooltip($context);
+  $: spellAttackBonusInfo =
+    FoundryAdapter.getSpellAttackModAndTooltip($context);
 
-  $: abilities = Object.entries($context.abilities).map(
-    (a: [string, { label: string }]) => ({
-      abbr: a[0],
-      ...a[1],
-    })
-  );
+  $: abilities = Object.entries($context.abilities).map((a: any) => ({
+    abbr: a[0],
+    ...a[1],
+  }));
 </script>
 
 <TabFooter cssClass="{cssClass} spellbook-footer" mode="horizontal">

@@ -19,16 +19,6 @@ import { debug } from 'src/utils/logging';
 import { getPercentage } from 'src/utils/numbers';
 import type { ItemChatData } from 'src/types/item';
 
-declare var dnd5e: {
-  applications: {
-    actor: {
-      ActorSheet5eVehicle: any;
-    };
-  };
-};
-
-declare var $: any;
-
 export class Tidy5eVehicleSheet
   extends dnd5e.applications.actor.ActorSheet5eVehicle
   implements SheetTabCacheable, SheetExpandedItemsCacheable
@@ -85,7 +75,7 @@ export class Tidy5eVehicleSheet
       ]),
     });
 
-    initTidy5eContextMenu.call(this, html);
+    initTidy5eContextMenu(this, html);
   }
 
   async getData(options = {}) {
@@ -112,32 +102,32 @@ export class Tidy5eVehicleSheet
 
     const context = {
       ...(await super.getData(this.options)),
-      appId: this.appId,
       activateFoundryJQueryListeners: (node: HTMLElement) => {
         this._activateCoreListeners($(node));
         super.activateListeners($(node));
       },
-      lockSensitiveFields:
-        !editable && SettingsProvider.settings.editTotalLockEnabled.get(),
-      editable,
       allowEffectsManagement: true,
-      lockMoneyChanges: FoundryAdapter.shouldLockMoneyChanges(),
+      appId: this.appId,
+      classicControlsEnabled:
+        SettingsProvider.settings.enableClassicControlsForVehicle.get(),
+      editable,
+      healthPercentage: getPercentage(
+        this.actor?.system?.attributes?.hp?.value,
+        this.actor?.system?.attributes?.hp?.max
+      ),
       lockExpChanges: FoundryAdapter.shouldLockExpChanges(),
       lockHpMaxChanges: FoundryAdapter.shouldLockHpMaxChanges(),
-      lockLevelSelector: FoundryAdapter.shouldLockLevelSelector(),
       lockItemQuantity: FoundryAdapter.shouldLockItemQuantity(),
+      lockLevelSelector: FoundryAdapter.shouldLockLevelSelector(),
+      lockMoneyChanges: FoundryAdapter.shouldLockMoneyChanges(),
+      lockSensitiveFields:
+        !editable && SettingsProvider.settings.editTotalLockEnabled.get(),
       owner: this.actor.isOwner,
       showLimitedSheet: FoundryAdapter.showLimitedSheet(this.actor),
       useRoundedPortraitStyle: [
         CONSTANTS.ROUNDED_PORTRAIT_OPTION_ALL as string,
         CONSTANTS.ROUNDED_PORTRAIT_OPTION_NPCVEHICLE as string,
       ].includes(SettingsProvider.settings.portraitStyle.get()),
-      classicControlsEnabled:
-        SettingsProvider.settings.enableClassicControlsForVehicle.get(),
-      healthPercentage: getPercentage(
-        this.actor?.system?.attributes?.hp?.value,
-        this.actor?.system?.attributes?.hp?.max
-      ),
     };
 
     debug('Vehicle Sheet context data', context);

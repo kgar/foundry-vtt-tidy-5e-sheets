@@ -12,11 +12,11 @@
 
   $: currencies = Object.entries(actor.system.currency).map((e) => ({
     key: e[0],
-    value: e[1],
+    value: e[1] as any,
   }));
 
   function confirmConvertCurrency() {
-    return Dialog.confirm({
+    return FoundryAdapter.dialogConfirm({
       title: `${localize('DND5E.CurrencyConvert')}`,
       content: `<p>${localize('DND5E.CurrencyConvertHint')}</p>`,
       yes: () => $context.actor.convertCurrency(),

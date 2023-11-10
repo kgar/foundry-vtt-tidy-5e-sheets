@@ -46,9 +46,7 @@
       class="config-button icon-button"
       title={localize('DND5E.InitiativeConfig')}
       on:click={() =>
-        new dnd5e.applications.actor.ActorInitiativeConfig($context.actor).render(
-          true
-        )}
+        FoundryAdapter.renderActorInitiativeConfig($context.actor)}
     >
       <i class="fas fa-cog" />
     </button>
@@ -82,10 +80,10 @@
       line-height: 0.875rem;
 
       :global(.ini-mod) {
-        flex: 0 1 1px;
+        flex: 0 1 0.0625rem;
         line-height: 0.875rem;
         height: 0.875rem;
-        padding: 1px 0;
+        padding: 0.0625rem 0;
       }
     }
 

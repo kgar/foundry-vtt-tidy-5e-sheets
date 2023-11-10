@@ -1,18 +1,24 @@
 import type {
+  ActorSheetContext,
   CharacterSheetContext,
   ClassSummary,
-  DropdownOption,
+  DropdownListOption,
   NpcSheetContext,
 } from 'src/types/types';
 import { CONSTANTS } from '../constants';
 import type { Actor5e } from 'src/types/types';
 import type { Item5e } from 'src/types/item';
-import type { FoundryDocument } from 'src/types/document';
 import { SettingsProvider } from 'src/settings/settings';
 import { debug, warn } from 'src/utils/logging';
 import { clamp } from 'src/utils/numbers';
 
 export const FoundryAdapter = {
+  isFoundryV10() {
+    return game.dnd5e.isV10;
+  },
+  deepClone(obj: any) {
+    return foundry.utils.deepClone(obj);
+  },
   userIsGm() {
     return game.user.isGM;
   },
@@ -26,7 +32,7 @@ export const FoundryAdapter = {
     game.settings.register(CONSTANTS.MODULE_ID, key, data);
   },
   registerTidyMenu(key: string, data: any): void {
-    game.settings.register(CONSTANTS.MODULE_ID, key, data);
+    game.settings.registerMenu(CONSTANTS.MODULE_ID, key, data);
   },
   getGameSetting<T = string>(namespace: string, settingName: string): T {
     return game.settings.get(namespace, settingName) as T;
@@ -88,6 +94,7 @@ export const FoundryAdapter = {
         CONSTANTS.SPELL_PREPARATION_MODE_INNATE &&
       item.system.preparation?.mode !==
         CONSTANTS.SPELL_PREPARATION_MODE_ALWAYS &&
+      item.system.preparation?.mode !== CONSTANTS.SPELL_PREPARATION_MODE_PACT &&
       (item.system.level !== 0 ||
         SettingsProvider.settings.allowCantripsToBePrepared.get())
     );
@@ -114,12 +121,8 @@ export const FoundryAdapter = {
       },
     });
   },
-  mergeObject<T>(
-    original: T,
-    other: Partial<T>,
-    options?: Partial<MergeObjectOptions>
-  ) {
-    return mergeObject(original, other, options);
+  mergeObject<T>(original: T, ...args: any[]) {
+    return mergeObject(original, ...args) as T;
   },
   expandObject(data: any) {
     return expandObject(data);
@@ -346,7 +349,7 @@ export const FoundryAdapter = {
 
     return classes.join(' ');
   },
-  getSpellAttackModAndTooltip(context: CharacterSheetContext) {
+  getSpellAttackModAndTooltip(context: ActorSheetContext) {
     let actor = context.actor;
     let formula = Roll.replaceFormulaData(
       actor.system.bonuses.rsak.attack,
@@ -376,7 +379,7 @@ export const FoundryAdapter = {
     currentValue: number | undefined,
     systemFieldName: string,
     reverse: boolean = false
-  ): Promise<FoundryDocument | undefined> {
+  ): Promise<any | undefined> {
     // TODO: Check for active effects and prevent if applicable.
 
     if (currentValue === null || currentValue === undefined) {
@@ -419,7 +422,7 @@ export const FoundryAdapter = {
   getAllClassesDropdownOptions(
     spellClassFilterAdditionalClassesText: string = ''
   ) {
-    const allClasses: DropdownOption[] = Object.entries(
+    const allClasses: DropdownListOption[] = Object.entries(
       CONSTANTS.DND5E_CLASSES
     ).map((x) => ({
       value: x[0],
@@ -429,7 +432,7 @@ export const FoundryAdapter = {
     if (spellClassFilterAdditionalClassesText?.trim() !== '') {
       const additionalClasses = spellClassFilterAdditionalClassesText
         .split(',')
-        .reduce((arr: DropdownOption[], x: string) => {
+        .reduce((arr: DropdownListOption[], x: string) => {
           const pieces = x.split('|');
           if (pieces.length !== 2) {
             return arr;
@@ -470,17 +473,22 @@ export const FoundryAdapter = {
       }`
     );
   },
-  isItemFavorite(item: any) {
-    if (!item) {
+  isDocumentFavorited(document: any) {
+    if (!document) {
       return false;
     }
-    let isFav =
-      (game.modules.get('favorite-items')?.active &&
-        item.flags['favorite-items']?.favorite) ||
-      item.flags[CONSTANTS.MODULE_ID]?.favorite ||
-      false;
 
-    return isFav;
+    return (
+      FoundryAdapter.tryGetFlag<boolean | null>(document, 'favorite') ?? false
+    );
+  },
+  toggleFavorite(document: any) {
+    const favorited = FoundryAdapter.isDocumentFavorited(document);
+    if (favorited) {
+      FoundryAdapter.unsetFlag(document, 'favorite');
+    } else {
+      FoundryAdapter.setFlag(document, 'favorite', true);
+    }
   },
   canEditActor(actor: any) {
     return (
@@ -928,88 +936,143 @@ export const FoundryAdapter = {
   enrichHtml(value: string, options?: any): Promise<string> {
     return TextEditor.enrichHTML(value, options);
   },
-};
-
-/* ------------------------------------------------------
-* Facade Types
---------------------------------------------------------- */
-
-export type ActorReference = {
-  skills: Record<string, SkillReference>;
-  skillsList: ({
-    abbreviation: string;
-  } & SkillReference)[];
-  abilities: Record<string, AbilityReference>;
-  abilitiesList: AbilityReference[];
-};
-
-/* ------------------------------------------------------
-* Minimally stubbed foundry types to fuel the adapter.
---------------------------------------------------------- */
-
-declare const Hooks: any;
-declare const foundry: any;
-declare const game: any;
-declare const Actors: any;
-declare const Items: any;
-declare const CONFIG: any;
-declare const Roll: any;
-declare const dnd5e: any;
-declare const ui: any;
-declare const debounce: any;
-declare const ChatMessage: any;
-declare const AudioHelper: any;
-declare const TextEditor: any;
-
-type AbilityReference = {
-  abbreviation: string;
-  defaults: Record<string, number>;
-  label: string;
-  type: string;
-};
-
-type SkillReference = {
-  label: string;
-  ability: string;
-};
-
-type TextEditorOptions = Partial<{
-  target: string;
-  button: boolean;
-  class: string;
-  editable: boolean;
-  engine: string;
-  collaborate: boolean;
-  owner: boolean;
-  documents: boolean;
-  rollData: any;
-  content: string;
-}>;
-
-declare var HandlebarsHelpers: {
-  editor: (
-    content: string,
-    options?: {
-      hash: TextEditorOptions;
+  createContextMenu(...args: any[]): any {
+    return new ContextMenu(...args);
+  },
+  renderClassItemTraitSelector(
+    item: any,
+    target: string,
+    title: string,
+    trait: 'saves' | 'skills.choices' | 'skills'
+  ) {
+    const options: Record<string, unknown> = {
+      name: target,
+      title,
+      choices: [],
+      allowCustom: false,
+      suppressWarning: true,
+    };
+    switch (trait) {
+      case 'saves':
+        options.choices = CONFIG.DND5E.abilities;
+        options.valueKey = null;
+        options.labelKey = 'label';
+        break;
+      case 'skills.choices':
+        options.choices = CONFIG.DND5E.skills;
+        options.valueKey = null;
+        options.labelKey = 'label';
+        break;
+      case 'skills':
+        const skills = item.system.skills;
+        const choices = skills.choices?.length
+          ? skills.choices
+          : Object.keys(CONFIG.DND5E.skills);
+        options.choices = Object.fromEntries(
+          Object.entries(CONFIG.DND5E.skills).filter(([s]) =>
+            choices.includes(s)
+          )
+        );
+        options.maximum = skills.number;
+        options.labelKey = 'label';
+        break;
     }
-  ) => string;
+
+    return new game.dnd5e.applications.TraitSelector(item, options).render(
+      true
+    );
+  },
+  createAdvancementSelectionDialog(item: any) {
+    return game.dnd5e.applications.advancement.AdvancementSelection.createDialog(
+      item
+    );
+  },
+  deleteAdvancement(advancementItemId: string, item: Item5e) {
+    if (item.isEmbedded && !game.settings.get('dnd5e', 'disableAdvancements')) {
+      let manager =
+        dnd5e.applications.advancement.AdvancementManager.forDeletedAdvancement(
+          item.actor,
+          item.id,
+          advancementItemId
+        );
+      if (manager.steps.length) return manager.render(true);
+    }
+    return item.deleteAdvancement(advancementItemId);
+  },
+  modifyAdvancementChoices(advancementLevel: string, item: Item5e) {
+    let manager =
+      dnd5e.applications.advancement.AdvancementManager.forModifyChoices(
+        item.actor,
+        item.id,
+        Number(advancementLevel)
+      );
+
+    if (manager.steps.length) {
+      manager.render(true);
+    }
+  },
+  editAdvancement(advancementItemId: string, item: Item5e) {
+    const advancement = item.advancement.byId[advancementItemId];
+
+    return new advancement.constructor.metadata.apps.config(advancement).render(
+      true
+    );
+  },
+  renderImagePopout(...args: any[]) {
+    return new ImagePopout(...args).render(true);
+  },
+  browseFilePicker(...args: any[]) {
+    return new FilePicker(...args).browse();
+  },
+  renderArmorConfig(actor: any) {
+    return new dnd5e.applications.actor.ActorArmorConfig(actor).render(true);
+  },
+  renderActorInitiativeConfig(actor: any) {
+    return new dnd5e.applications.actor.ActorInitiativeConfig(actor).render(
+      true
+    );
+  },
+  renderActorAbilityConfig(actor: any, abbreviation: any) {
+    return new dnd5e.applications.actor.ActorAbilityConfig(
+      actor,
+      null,
+      abbreviation
+    ).render(true);
+  },
+  renderActorMovementConfig(actor: any) {
+    return new dnd5e.applications.actor.ActorMovementConfig(actor).render(true);
+  },
+  renderActorHitPointsDialog(actor: any) {
+    return new dnd5e.applications.actor.ActorHitPointsConfig(actor).render(
+      true
+    );
+  },
+  renderActorHitDiceConfig(actor: any) {
+    return new dnd5e.applications.actor.ActorHitDiceConfig(actor).render(true);
+  },
+  dialogConfirm(...args: any[]) {
+    return Dialog.confirm(...args);
+  },
+  renderActorSheetFlags(actor: any) {
+    return new dnd5e.applications.actor.ActorSheetFlags(actor).render(true);
+  },
+  renderToolSelector(actor: any) {
+    return new dnd5e.applications.actor.ToolSelector(actor, 'tool').render(
+      true
+    );
+  },
+  renderActorSensesConfig(actor: any) {
+    return new dnd5e.applications.actor.ActorSensesConfig(actor).render(true);
+  },
+  renderTraitsSelector(actor: any, trait: string) {
+    return new dnd5e.applications.actor.TraitSelector(actor, trait).render(
+      true
+    );
+  },
+  renderProficiencyConfig(actor: any, property: string, key: string) {
+    return new dnd5e.applications.actor.ProficiencyConfig(actor, {
+      property,
+      key,
+    }).render(true);
+  },
 };
-
-type MergeObjectOptions = {
-  insertKeys: boolean;
-  insertValues: boolean;
-  overwrite: boolean;
-  recursive: boolean;
-  inplace: boolean;
-  enforceTypes: boolean;
-  performDeletions: boolean;
-};
-
-declare var mergeObject: <T>(
-  original: T,
-  other: Partial<T>,
-  options?: Partial<MergeObjectOptions>
-) => T;
-
-declare var expandObject: (obj: any) => any;
-declare var isEmpty: (obj: any) => boolean;

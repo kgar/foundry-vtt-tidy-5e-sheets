@@ -5,23 +5,15 @@
 
   export let item: Item5e;
 
-  $: active = FoundryAdapter.tryGetFlag<boolean>(item, 'favorite') === true;
+  $: active = FoundryAdapter.isDocumentFavorited(item);
   $: title = FoundryAdapter.localize(
     active ? 'Remove Favorite' : 'T5EK.AddFav'
   );
-
-  function toggleFavorite() {
-    if (active) {
-      FoundryAdapter.unsetFlag(item, 'favorite');
-    } else {
-      FoundryAdapter.setFlag(item, 'favorite', true);
-    }
-  }
 </script>
 
 <ItemControl
   iconCssClass="fas fa-bookmark"
   {active}
   {title}
-  on:click={() => toggleFavorite()}
+  on:click={() => FoundryAdapter.toggleFavorite(item)}
 />

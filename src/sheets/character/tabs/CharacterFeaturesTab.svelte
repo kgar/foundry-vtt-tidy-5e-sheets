@@ -124,6 +124,7 @@
                 hasChildren={false}
                 {item}
               >
+                {#if item.type === 'subclass'}&rdsh;{/if}
                 {item.name}
               </ItemName>
             </ItemTableCell>

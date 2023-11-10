@@ -1,9 +1,8 @@
 <script lang="ts">
-  import type { FoundryDocument } from 'src/types/document';
   import { toNumber } from 'src/utils/numbers';
 
   export let element: keyof HTMLElementTagNameMap;
-  export let document: FoundryDocument;
+  export let document: any;
   export let field: string;
   export let value: string;
   export let editable: boolean;
@@ -87,7 +86,7 @@
   [contenteditable] {
     border: none;
     outline: none;
-    border-radius: 3px;
+    border-radius: 0.1875rem;
     -moz-user-select: text;
     -khtml-user-select: text;
     -webkit-user-select: text;

@@ -22,16 +22,6 @@ import type { SvelteComponent } from 'svelte';
 import { getPercentage } from 'src/utils/numbers';
 import type { ItemChatData } from 'src/types/item';
 
-declare var dnd5e: {
-  applications: {
-    actor: {
-      ActorSheet5eCharacter: any;
-    };
-  };
-};
-
-declare var $: any;
-
 export class Tidy5eCharacterSheet
   extends dnd5e.applications.actor.ActorSheet5eCharacter
   implements
@@ -100,7 +90,7 @@ export class Tidy5eCharacterSheet
       ]),
     });
 
-    initTidy5eContextMenu.call(this, html);
+    initTidy5eContextMenu(this, html);
   }
 
   async getData(options = {}) {

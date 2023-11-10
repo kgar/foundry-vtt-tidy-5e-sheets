@@ -7,44 +7,14 @@
 
   let context = getContext<Readable<ItemSheetContext>>('context');
 
+  $: advancements = Object.entries($context.advancement) as Iterable<
+    [string, any]
+  >;
+
   const localize = FoundryAdapter.localize;
-
-  function editAdvancement(advancementItemId: string, item: Item5e) {
-    const advancement = item.advancement.byId[advancementItemId];
-
-    return new advancement.constructor.metadata.apps.config(advancement).render(
-      true
-    );
-  }
-
-  function deleteAdvancement(advancementItemId: string, item: Item5e) {
-    if (item.isEmbedded && !game.settings.get('dnd5e', 'disableAdvancements')) {
-      let manager =
-        dnd5e.applications.advancement.AdvancementManager.forDeletedAdvancement(
-          item.actor,
-          item.id,
-          advancementItemId
-        );
-      if (manager.steps.length) return manager.render(true);
-    }
-    return item.deleteAdvancement(advancementItemId);
-  }
 
   function toggleAdvancementLock(item: Item5e) {
     $context.toggleAdvancementLock();
-  }
-
-  function modifyChoices(advancementLevel: string, item: Item5e) {
-    let manager =
-      dnd5e.applications.advancement.AdvancementManager.forModifyChoices(
-        item.actor,
-        item.id,
-        Number(advancementLevel)
-      );
-
-    if (manager.steps.length) {
-      manager.render(true);
-    }
   }
 </script>
 
@@ -57,7 +27,7 @@
             <button
               class="inline-icon-button"
               on:click={() => toggleAdvancementLock($context.item)}
-              title={localize("DND5E.AdvancementConfigurationActionDisable")}
+              title={localize('DND5E.AdvancementConfigurationActionDisable')}
             >
               <i class="fas fa-lock-open" />
               {localize('DND5E.AdvancementConfigurationModeEnabled')}
@@ -67,7 +37,7 @@
               type="button"
               class="inline-icon-button"
               on:click={() => toggleAdvancementLock($context.item)}
-              title={localize("DND5E.AdvancementConfigurationActionEnable")}
+              title={localize('DND5E.AdvancementConfigurationActionEnable')}
             >
               <i class="fas fa-lock" />
               {localize('DND5E.AdvancementConfigurationModeDisabled')}
@@ -82,9 +52,7 @@
             class="inline-icon-button"
             title={localize('DND5E.AdvancementControlCreate')}
             on:click={() =>
-              game.dnd5e.applications.advancement.AdvancementSelection.createDialog(
-                $context.item
-              )}
+              FoundryAdapter.createAdvancementSelectionDialog($context.item)}
           >
             <i class="fas fa-plus" />
             {localize('DND5E.Add')}
@@ -96,7 +64,7 @@
     </li>
   {/if}
 
-  {#each Object.entries($context.advancement) as [level, data]}
+  {#each advancements as [level, data]}
     <li class="items-header flexrow" data-level={level}>
       <h3 class="item-name flexrow">
         {#if level === '0'}
@@ -113,7 +81,8 @@
           <button
             type="button"
             class="inline-transparent-button"
-            on:click={() => modifyChoices(level, $context.item)}
+            on:click={() =>
+              FoundryAdapter.modifyAdvancementChoices(level, $context.item)}
           >
             {localize('DND5E.AdvancementModifyChoices')}
           </button>
@@ -161,7 +130,10 @@
                 class="inline-icon-button"
                 title={localize('DND5E.AdvancementControlEdit')}
                 on:click={() =>
-                  editAdvancement(advancementItem.id, $context.item)}
+                  FoundryAdapter.editAdvancement(
+                    advancementItem.id,
+                    $context.item
+                  )}
               >
                 <i class="fas fa-edit" />
               </button>
@@ -170,7 +142,10 @@
                 class="inline-icon-button"
                 title={localize('DND5E.AdvancementControlDelete')}
                 on:click={() =>
-                  deleteAdvancement(advancementItem.id, $context.item)}
+                  FoundryAdapter.deleteAdvancement(
+                    advancementItem.id,
+                    $context.item
+                  )}
               >
                 <i class="fas fa-trash" />
               </button>

@@ -25,6 +25,7 @@
   import ItemControl from 'src/components/item-list/controls/ItemControl.svelte';
   import Notice from 'src/components/notice/Notice.svelte';
   import HpBar from '../../../components/bar/HpBar.svelte';
+  import ResourceWithBar from 'src/components/bar/ResourceWithBar.svelte';
 
   let context = getContext<Readable<VehicleSheetContext>>('context');
 
@@ -173,37 +174,18 @@
                           class="item-hp"
                           title={localize('DND5E.HitPoints')}
                         >
-                          <HpBar
-                            value={item?.system?.hp?.value}
-                            max={item?.system?.hp?.max}
-                          />
-                          <TextInput
-                            cssClass="hp-min"
+                          <ResourceWithBar
                             document={item}
-                            field="system.hp.value"
                             value={item.system.hp.value}
-                            placeholder="0"
-                            title={localize('DND5E.HitPointsCurrent')}
-                            allowDeltaChanges={true}
-                            maxlength={5}
-                            ariaDescribedBy="tooltip"
-                            selectOnFocus={true}
-                            disabled={!$context.owner}
-                          />
-                          <span class="value-seperator sep"> / </span>
-                          <TextInput
-                            cssClass="hp-max"
-                            document={item}
-                            field="system.hp.max"
-                            value={item.system.hp.max}
-                            placeholder="0"
-                            title={localize('DND5E.HitPointsMax')}
-                            allowDeltaChanges={true}
-                            maxlength={5}
-                            ariaDescribedBy="tooltip"
-                            selectOnFocus={true}
-                            disabled={!$context.owner ||
+                            valueField="system.hp.value"
+                            valueTitle={localize('DND5E.HitPointsCurrent')}
+                            valueDisabled={!$context.owner}
+                            max={item.system.hp.max}
+                            maxField="system.hp.max"
+                            maxTitle={localize('DND5E.HitPointsMax')}
+                            maxDisabled={!$context.owner ||
                               $context.lockSensitiveFields}
+                            Bar={HpBar}
                           />
                         </div>
                       </ItemTableCell>
@@ -299,14 +281,6 @@
       align-self: flex-start;
     }
 
-    :global(.item-table-cell .hp-min) {
-      text-align: right;
-    }
-
-    :global(.item-table-cell .hp-max) {
-      text-align: left;
-    }
-
     .item-hp {
       align-self: center;
       position: relative;
@@ -314,25 +288,9 @@
       margin-left: 0.125rem;
       margin-right: 0.125rem;
       height: 1.325rem;
-      z-index: 20;
       display: flex;
       justify-content: center;
       align-items: center;
-      background: var(--t5ek-icon-background);
-      box-shadow: 0 0 0.3125rem var(--t5ek-icon-shadow-color) inset;
-      border: 0.0625rem solid var(--t5ek-icon-outline-color);
-
-      :global(input.hp-min) {
-        text-align: right;
-      }
-
-      :global(input.hp-max) {
-        text-align: left;
-      }
-
-      :global(input.hp-max) {
-        width: 100%;
-      }
     }
   }
 </style>

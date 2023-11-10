@@ -177,8 +177,8 @@
           border-right-color: transparent;
           border-left-width: 0.25rem;
           border-left-color: var(--t5ek-primary-accent-color);
-          border-top-left-radius: 5px;
-          border-bottom-left-radius: 5px;
+          border-top-left-radius: 0.3125rem;
+          border-bottom-left-radius: 0.3125rem;
         }
       }
     }

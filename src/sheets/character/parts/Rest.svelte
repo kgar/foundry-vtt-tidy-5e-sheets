@@ -40,7 +40,6 @@
     position: absolute;
     left: 0;
     bottom: 0;
-    z-index: 25;
 
     &.rounded {
       bottom: -0.4375rem;

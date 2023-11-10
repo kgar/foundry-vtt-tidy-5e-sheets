@@ -1,6 +1,5 @@
 <script lang="ts">
   import { processInputChangeDelta } from 'src/utils/form';
-  import type { FoundryDocument } from 'src/types/document';
   import { buildDataset } from 'src/utils/data';
 
   type OnSaveChangeFn = (
@@ -12,7 +11,7 @@
   export let value: string | number | null = null;
   export let placeholder: string | null = null;
   export let field: string;
-  export let document: FoundryDocument;
+  export let document: any;
   export let tooltip: string | null = null;
   export let id: string | null = null;
   export let dataset: Record<string, unknown> | null = null;

@@ -20,6 +20,8 @@
     $settingStore.spellClassFilterAdditionalClasses
   );
 
+  $: spellComponents = Object.entries($context.spellComponents) as Iterable<[string, any]>;
+
   const localize = FoundryAdapter.localize;
 </script>
 
@@ -82,7 +84,7 @@
   cssClass="spell-components stacked"
   labelText={localize('DND5E.SpellComponents')}
 >
-  {#each Object.entries($context.spellComponents) as [key, component]}
+  {#each spellComponents as [key, component]}
     {@const checked = $context.system.components[key]}
     <Checkbox
       id="{$context.appId}-system-components-{key}"

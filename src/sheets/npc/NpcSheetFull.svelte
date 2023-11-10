@@ -6,7 +6,7 @@
   import type {
     NpcSheetContext,
     Tab,
-    TidyDropdownOption,
+    DropdownListOption,
   } from 'src/types/types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
@@ -14,7 +14,7 @@
   import NpcProfile from './parts/NpcProfile.svelte';
   import ContentEditableFormField from 'src/components/inputs/ContentEditableFormField.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import TidyDropdownList from '../../components/inputs/TidyDropdownList.svelte';
+  import InlineTextDropdownList from '../../components/inputs/InlineTextDropdownList.svelte';
   import { isNil } from 'src/utils/data';
   import { formatAsModifier } from 'src/utils/formatting';
   import Tidy5eActorOriginSummaryConfig from '../../dialogs/Tidy5eActorOriginSummaryConfig';
@@ -37,14 +37,14 @@
     tabs = $currentNpcSheetTabs.getTabs($context);
   }
 
-  $: sizes = <TidyDropdownOption[]>Object.entries(
+  $: sizes = <DropdownListOption[]>Object.entries(
     $context.config.actorSizes
   ).map(([abbreviation, size]) => ({
     value: abbreviation,
     text: size as string,
   }));
 
-  $: currentSize = <TidyDropdownOption>{
+  $: currentSize = <DropdownListOption>{
     value: $context.system.traits.size,
     text: $context.config.actorSizes[$context.system.traits.size],
   };
@@ -119,7 +119,7 @@
       <div class="origin-summary">
         <div class="flex-row extra-small-gap">
           {#if $context.owner}
-            <TidyDropdownList
+            <InlineTextDropdownList
               options={sizes}
               selected={currentSize}
               on:optionClicked={(event) =>
@@ -193,7 +193,7 @@
         </div>
       </div>
       <HorizontalLineSeparator borderColor="light" />
-      <ActorMovementRow actor={$context.actor} movement={$context.movement} />
+      <ActorMovementRow />
       <HorizontalLineSeparator borderColor="light" />
       <ActorHeaderStats
         {abilities}

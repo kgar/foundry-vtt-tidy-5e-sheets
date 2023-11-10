@@ -4,9 +4,7 @@ import { log } from 'src/utils/logging';
 
 export class ResetSettingsDialog extends FormApplication {
   constructor(...args: any[]) {
-    //@ts-ignore
     super(...args);
-    //@ts-ignore
     return new Dialog({
       title: FoundryAdapter.localize(`T5EK.Settings.Reset.dialogs.title`),
       content:
@@ -20,7 +18,7 @@ export class ResetSettingsDialog extends FormApplication {
           callback: async () => {
             const storedSettings = game.settings.storage
               .get('world')
-              .filter((setting) =>
+              .filter((setting: any) =>
                 setting.key.startsWith(`${CONSTANTS.MODULE_ID}.`)
               );
 
@@ -40,7 +38,7 @@ export class ResetSettingsDialog extends FormApplication {
     });
   }
 
-  async _updateObject(event, formData) {
+  async _updateObject(...args: any[]) {
     // do nothing
   }
 }

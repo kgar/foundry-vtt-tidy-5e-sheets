@@ -65,13 +65,16 @@
 {#if section.slots > 0}
   <div class="spell-slot-markers">
     {#each dots as dot}
-      <span
+      <button
+        type="button"
         class="dot"
         class:empty={dot.isEmpty}
         class:change={dot.willChange}
         on:click={() => onSpellMarkerClick(section, dot.index)}
         on:mouseenter={() => onMouseEnterDot(dot.index)}
         on:mouseleave={() => onMouseLeaveDot(dot.index)}
+        on:focusin={() => onMouseEnterDot(dot.index)}
+        on:focusout={() => onMouseLeaveDot(dot.index)}
       />
     {/each}
   </div>
@@ -85,12 +88,17 @@
     align-items: center;
 
     .dot {
+      margin: 0;
+      padding: 0;
+      line-height: normal;
       width: 0.75rem;
       height: 0.75rem;
       border-radius: 50%;
       background-color: var(--t5ek-primary-accent-color);
-      border: 1px solid var(--t5ek-primary-font-color);
-      &:hover,
+      border: 0.0625rem solid var(--t5ek-primary-font-color);
+      transition: background-color 0.3s ease;
+
+      &:is(:hover, :focus-visible),
       &.change {
         background-color: var(--t5ek-warning-accent-color);
       }
@@ -98,7 +106,7 @@
       &.empty {
         background-color: transparent;
 
-        &:hover,
+        &:is(:hover, :focus-visible),
         &.change {
           background-color: var(--t5ek-prepared-background);
         }

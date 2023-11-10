@@ -109,13 +109,11 @@
                 class="tool-proficiency-editor inline-icon-button"
                 title={localize('DND5E.ToolConfigure')}
                 on:click|stopPropagation|preventDefault={() =>
-                  new dnd5e.applications.actor.ProficiencyConfig(
+                  FoundryAdapter.renderProficiencyConfig(
                     $context.actor,
-                    {
-                      property: 'tools',
-                      key,
-                    }
-                  ).render(true)}
+                    'tools',
+                    key
+                  )}
               >
                 <i class="fas fa-cog" />
               </button>

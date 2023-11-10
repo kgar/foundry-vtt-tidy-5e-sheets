@@ -30,7 +30,7 @@
     field="flags.{CONSTANTS.MODULE_ID}.motion"
     checked={motion}
     disabled={!$context.owner}
-    >
+  >
     <i
       class="motion-icon fas fa-sailboat"
       class:disable-animation={disableAnimation}
@@ -42,10 +42,9 @@
   .motion {
     position: absolute;
     right: 0;
-    top: 0px;
+    top: 0;
     width: 2.125rem;
     height: 2.125rem;
-    z-index: 5;
 
     &.only-show-on-hover {
       :global(label) {
@@ -115,10 +114,10 @@
       transform: rotate(0);
     }
     25% {
-      transform: rotate(-3deg) translate(1px, 0);
+      transform: rotate(-3deg) translate(0.0625rem, 0);
     }
     50% {
-      transform: rotate(3deg) translate(1px, 0);
+      transform: rotate(3deg) translate(0.0625rem, 0);
     }
     100% {
       transform: rotate(0);
