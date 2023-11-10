@@ -80,10 +80,10 @@
       line-height: 0.875rem;
 
       :global(.ini-mod) {
-        flex: 0 1 1px;
+        flex: 0 1 0.0625rem;
         line-height: 0.875rem;
         height: 0.875rem;
-        padding: 1px 0;
+        padding: 0.0625rem 0;
       }
     }
 

@@ -45,7 +45,7 @@
   .inspiration {
     position: absolute;
     right: 0;
-    top: 0px;
+    top: 0;
     width: 2.125rem;
     height: 2.125rem;
 

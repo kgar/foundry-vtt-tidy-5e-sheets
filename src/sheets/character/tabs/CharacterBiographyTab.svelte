@@ -235,7 +235,6 @@
   }
 
   .top-notes {
-    // flex: 0 0 1px;
     width: 100%;
 
     .character-details {

@@ -295,7 +295,7 @@
 
     li {
       display: flex;
-      flex: 0 0 calc(100% / 3 - 4px);
+      flex: 0 0 calc(100% / 3 - 0.25rem);
 
       :global(span) {
         flex: 1;

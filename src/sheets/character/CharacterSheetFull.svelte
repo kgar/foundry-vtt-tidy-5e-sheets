@@ -270,9 +270,9 @@
 
     .xp-bar-total {
       width: 100%;
-      height: 5px;
-      border: 1px solid var(--t5ek-tertiary-color);
-      border-radius: 2px;
+      height: 0.3125rem;
+      border: 0.0625rem solid var(--t5ek-tertiary-color);
+      border-radius: 0.125rem;
       background: var(--t5ek-light-color);
       position: relative;
     }

@@ -86,7 +86,7 @@
   [contenteditable] {
     border: none;
     outline: none;
-    border-radius: 3px;
+    border-radius: 0.1875rem;
     -moz-user-select: text;
     -khtml-user-select: text;
     -webkit-user-select: text;

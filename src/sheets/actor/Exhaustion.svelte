@@ -98,7 +98,7 @@
       position: absolute;
       background: var(--t5ek-icon-background);
       box-shadow: 0 0 0.5rem var(--t5ek-icon-shadow-color) inset;
-      border: 1px solid var(--t5ek-icon-outline-color);
+      border: 0.0625rem solid var(--t5ek-icon-outline-color);
       top: -0.125rem;
       left: -0.125rem;
       border-radius: 50%;

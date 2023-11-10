@@ -175,9 +175,9 @@
 
   .counters {
     background: var(--t5ek-faint-color);
-    border-radius: 5px;
-    padding: 4px 8px;
-    font-size: 12px;
+    border-radius: 0.3125rem;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.75rem;
 
     .counter-value :global(input[type='number']) {
       height: 1.25rem;
@@ -197,7 +197,7 @@
       align-items: center;
 
       :global(input) {
-        width: 32px;
+        width: 2rem;
         text-align: center;
       }
     }

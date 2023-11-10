@@ -18,9 +18,9 @@
   .spell-component.R {
     color: var(--t5ek-background);
     background: var(--t5ek-tertiary-color);
-    border-radius: 2px;
-    padding: 1px 1px 0 1px;
-    margin: 0px 0 0 1px;
-    line-height: 12px;
+    border-radius: 0.125rem;
+    padding: 0.0625rem 0.0625rem 0 0.0625rem;
+    margin: 0 0 0 0.0625rem;
+    line-height: 0.75rem;
   }
 </style>

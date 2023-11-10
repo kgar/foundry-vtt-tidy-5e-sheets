@@ -17,7 +17,7 @@
   .item-filters {
     margin: 0 0.875rem 0.5rem 0;
     flex: 0 0 1.1875rem;
-    border-bottom: 1px solid var(--t5ek-light-color);
+    border-bottom: 0.0625rem solid var(--t5ek-light-color);
 
     .filter-list {
       max-width: initial;

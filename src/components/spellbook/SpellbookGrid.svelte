@@ -126,7 +126,7 @@
         border-radius: 0.3125rem;
 
         &.context {
-          border: 1px solid var(--t5ek-primary-accent-color);
+          border: 0.0625rem solid var(--t5ek-primary-accent-color);
         }
 
         &.preparable {
