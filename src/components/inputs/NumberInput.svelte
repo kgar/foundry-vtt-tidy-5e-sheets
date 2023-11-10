@@ -1,12 +1,11 @@
 <script lang="ts">
-  import type { FoundryDocument } from 'src/types/document';
   import { buildDataset } from 'src/utils/data';
 
   export let value: number | null = null;
   export let step: string = 'any';
   export let placeholder: string | null = null;
   export let field: string;
-  export let document: FoundryDocument;
+  export let document: any;
   export let tooltip: string | null = null;
   export let min: string | number | null | undefined = null;
   export let max: string | number | null | undefined = null;

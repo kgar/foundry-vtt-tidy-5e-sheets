@@ -1,9 +1,8 @@
 <script lang="ts">
-  import type { FoundryDocument } from 'src/types/document';
   import { toNumber } from 'src/utils/numbers';
 
   export let element: keyof HTMLElementTagNameMap;
-  export let document: FoundryDocument;
+  export let document: any;
   export let field: string;
   export let value: string;
   export let editable: boolean;

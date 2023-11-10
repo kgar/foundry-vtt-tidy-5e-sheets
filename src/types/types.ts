@@ -128,44 +128,6 @@ export type JQueryHooksSheetIntegration = {
   activateFoundryJQueryListeners: (html: HTMLElement) => Promise<void>;
 };
 
-export interface Resource {
-  value: number;
-  max: number;
-  sr: boolean;
-  lr: boolean;
-  label: string;
-  name: string;
-  placeholder: string;
-}
-
-export interface ActorContextSkill {
-  value: number;
-  ability: string;
-  bonuses: ActorContextSkillBonuses;
-  bonus: number;
-  mod: number;
-  prof: ActorContextSkillProficiency;
-  proficient: number;
-  total: number;
-  passive: number;
-  abbreviation: string;
-  icon: string;
-  hover: string;
-  label: string;
-  baseValue: number;
-}
-
-export interface ActorContextSkillBonuses {
-  check: string;
-  passive: string;
-}
-
-export interface ActorContextSkillProficiency {
-  _baseProficiency: number;
-  multiplier: number;
-  rounding: string;
-}
-
 export type DropdownListOption = { value: any; text: string };
 
 export type PortraitCharmRadiusClass =
@@ -176,32 +138,6 @@ export type PortraitCharmRadiusClass =
   | 'rounded';
 
 export type ItemLayoutMode = 'grid' | 'list';
-
-export type DropdownOption = { text: string; value: string };
-
-export type globalThisUI = {
-  notifications: ClientNotifications;
-};
-
-type ClientNotifications = {
-  error(message: string, options?: Partial<NotifyOptions>): void;
-  info(message: string, options?: Partial<NotifyOptions>): void;
-  warn(message: string, options?: Partial<NotifyOptions>): void;
-};
-
-type NotifyOptions = {
-  permanent: boolean;
-  localize: boolean;
-  console: boolean;
-};
-
-export type D20Roll = Roll & {
-  // TODO: Populate if needed
-};
-
-export type Roll = {
-  // TODO: Populate if needed
-};
 
 export type SheetStats = {
   lastSubmissionTime: Date | null;

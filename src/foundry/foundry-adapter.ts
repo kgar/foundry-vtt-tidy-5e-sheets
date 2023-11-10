@@ -2,13 +2,12 @@ import type {
   ActorSheetContext,
   CharacterSheetContext,
   ClassSummary,
-  DropdownOption,
+  DropdownListOption,
   NpcSheetContext,
 } from 'src/types/types';
 import { CONSTANTS } from '../constants';
 import type { Actor5e } from 'src/types/types';
 import type { Item5e } from 'src/types/item';
-import type { FoundryDocument } from 'src/types/document';
 import { SettingsProvider } from 'src/settings/settings';
 import { debug, warn } from 'src/utils/logging';
 import { clamp } from 'src/utils/numbers';
@@ -380,7 +379,7 @@ export const FoundryAdapter = {
     currentValue: number | undefined,
     systemFieldName: string,
     reverse: boolean = false
-  ): Promise<FoundryDocument | undefined> {
+  ): Promise<any | undefined> {
     // TODO: Check for active effects and prevent if applicable.
 
     if (currentValue === null || currentValue === undefined) {
@@ -423,7 +422,7 @@ export const FoundryAdapter = {
   getAllClassesDropdownOptions(
     spellClassFilterAdditionalClassesText: string = ''
   ) {
-    const allClasses: DropdownOption[] = Object.entries(
+    const allClasses: DropdownListOption[] = Object.entries(
       CONSTANTS.DND5E_CLASSES
     ).map((x) => ({
       value: x[0],
@@ -433,7 +432,7 @@ export const FoundryAdapter = {
     if (spellClassFilterAdditionalClassesText?.trim() !== '') {
       const additionalClasses = spellClassFilterAdditionalClassesText
         .split(',')
-        .reduce((arr: DropdownOption[], x: string) => {
+        .reduce((arr: DropdownListOption[], x: string) => {
           const pieces = x.split('|');
           if (pieces.length !== 2) {
             return arr;

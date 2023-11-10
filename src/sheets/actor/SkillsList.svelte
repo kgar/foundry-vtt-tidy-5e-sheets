@@ -1,11 +1,7 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { Actor5e } from 'src/types/types';
-  import type {
-    ActorContextSkill,
-    CharacterSheetContext,
-    NpcSheetContext,
-  } from 'src/types/types';
+  import type { CharacterSheetContext, NpcSheetContext } from 'src/types/types';
   import { formatAsModifier } from 'src/utils/formatting';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
@@ -23,7 +19,7 @@
     key: string;
     label: string;
     ability: string;
-    skill: ActorContextSkill | null;
+    skill: any | null;
   };
 
   let skillRefs: SkillRef[];
