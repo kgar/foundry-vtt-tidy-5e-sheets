@@ -20,16 +20,6 @@ import { debug } from 'src/utils/logging';
 import type { SvelteComponent } from 'svelte';
 import { getPercentage } from 'src/utils/numbers';
 
-declare var dnd5e: {
-  applications: {
-    item: {
-      ItemSheet5e: any;
-    };
-  };
-};
-
-declare var $: any;
-
 export class Tidy5eKgarItemSheet
   extends dnd5e.applications.item.ItemSheet5e
   implements SheetTabCacheable

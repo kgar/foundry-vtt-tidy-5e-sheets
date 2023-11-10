@@ -8,6 +8,7 @@
  */
 
 declare global {
+  var $: any;
   var Actors: any;
   var AudioHelper: any;
   var ChatMessage: any;
@@ -16,8 +17,10 @@ declare global {
   var debounce: any;
   var Dialog: any;
   var dnd5e: any;
+  var DocumentSheet: any;
   var expandObject: any;
   var FilePicker: any;
+  var FormApplication: any;
   var foundry: any;
   var game: any;
   var HandlebarsHelpers: any;
@@ -29,7 +32,6 @@ declare global {
   var Roll: any;
   var TextEditor: any;
   var ui: any;
-  var FormApplication: any;
 }
 
 export {};

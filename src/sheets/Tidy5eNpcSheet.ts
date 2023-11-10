@@ -23,14 +23,6 @@ import LongRestDialog from 'src/dialogs/NpcLongRestDialog';
 import type { SvelteComponent } from 'svelte';
 import type { ItemChatData } from 'src/types/item';
 
-declare var dnd5e: {
-  applications: {
-    actor: { ActorSheet5eNPC: any };
-  };
-};
-
-declare var $: any;
-
 export class Tidy5eNpcSheet
   extends dnd5e.applications.actor.ActorSheet5eNPC
   implements

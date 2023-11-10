@@ -17,8 +17,6 @@ export type SettingsSheetFunctions = {
 
 export type SettingsSheetStore = Writable<CurrentSettings>;
 
-declare var FormApplication: any;
-
 export class Tidy5eKgarSettingsSheet extends FormApplication {
   initialTabId: string;
   unchangedSettings?: CurrentSettings;

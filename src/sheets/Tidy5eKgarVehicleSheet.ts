@@ -19,16 +19,6 @@ import { debug } from 'src/utils/logging';
 import { getPercentage } from 'src/utils/numbers';
 import type { ItemChatData } from 'src/types/item';
 
-declare var dnd5e: {
-  applications: {
-    actor: {
-      ActorSheet5eVehicle: any;
-    };
-  };
-};
-
-declare var $: any;
-
 export class Tidy5eVehicleSheet
   extends dnd5e.applications.actor.ActorSheet5eVehicle
   implements SheetTabCacheable, SheetExpandedItemsCacheable
