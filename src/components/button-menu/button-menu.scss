@@ -48,6 +48,16 @@
         padding: 0.5rem;
       }
 
+      &.button-menu-command-li {
+        .button-menu-command.standard {
+          line-height: 1.5rem;
+        }
+
+        .button-menu-command.compact {
+          line-height: 1rem;
+        }
+      }
+
       .button-menu-command {
         display: block;
         gap: 0.25rem;

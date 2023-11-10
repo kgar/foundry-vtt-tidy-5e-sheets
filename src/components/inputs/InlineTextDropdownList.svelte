@@ -30,6 +30,7 @@
     <ButtonMenuCommand
       useIconColumn={false}
       on:click={() => optionClicked(option)}
+      size="compact"
     >
       {option.text}
     </ButtonMenuCommand>
