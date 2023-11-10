@@ -29,7 +29,6 @@ export class Tidy5eKgarItemSheet
     lastSubmissionTime: null,
   });
   currentTabId: string | undefined = undefined;
-  // advancementConfigurationMode = false;
 
   constructor(item: Item5e, ...args: any[]) {
     super(item, ...args);
