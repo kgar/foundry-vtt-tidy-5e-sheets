@@ -12,7 +12,7 @@ export function debug(msg: string, args?: any) {
     console.log(`DEBUG | ${CONSTANTS.MODULE_ID} | ${msg}`, args);
   }
 }
-export function log(message: string, args: any) {
+export function log(message: string, args?: any) {
   message = `${CONSTANTS.MODULE_ID} | ${message}`;
   console.log(message.replace('<br>', '\n'), args);
 }

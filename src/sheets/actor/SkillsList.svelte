@@ -67,10 +67,11 @@
               type="button"
               class="configure-proficiency inline-icon-button"
               on:click={() =>
-                new dnd5e.applications.actor.ProficiencyConfig($context.actor, {
-                  property: 'skills',
-                  key: skillRef.key,
-                }).render(true)}
+                FoundryAdapter.renderProficiencyConfig(
+                  $context.actor,
+                  'skills',
+                  skillRef.key
+                )}
               title={localize('DND5E.SkillConfigure')}
             >
               <i class="fas fa-cog" />

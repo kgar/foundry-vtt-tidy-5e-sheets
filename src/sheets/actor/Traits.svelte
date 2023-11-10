@@ -19,7 +19,8 @@
 
   $: traitsExpanded =
     !toggleable ||
-    FoundryAdapter.tryGetFlag<boolean>($context.actor, 'traitsExpanded') === true;
+    FoundryAdapter.tryGetFlag<boolean>($context.actor, 'traitsExpanded') ===
+      true;
 
   function toggleTraitsExpanded() {
     if (traitsExpanded) {
@@ -43,9 +44,7 @@
       tags={Object.entries($context.senses)}
       configureButtonTitle={localize('DND5E.SensesConfig')}
       on:onConfigureClicked={() =>
-        new dnd5e.applications.actor.ActorSensesConfig($context.actor).render(
-          true
-        )}
+        FoundryAdapter.renderActorSensesConfig($context.actor)}
       {traitsExpanded}
     />
   {/if}
@@ -60,10 +59,7 @@
         trait: localize('DND5E.Languages'),
       })}
       on:onConfigureClicked={() =>
-        new dnd5e.applications.actor.TraitSelector(
-          $context.actor,
-          'languages'
-        ).render(true)}
+        FoundryAdapter.renderTraitsSelector($context.actor, 'languages')}
       {traitsExpanded}
     />
   {/if}
@@ -78,9 +74,7 @@
         trait: localize('DND5E.DamImm'),
       })}
       on:onConfigureClicked={() =>
-        new dnd5e.applications.actor.TraitSelector($context.actor, 'di').render(
-          true
-        )}
+        FoundryAdapter.renderTraitsSelector($context.actor, 'di')}
       {traitsExpanded}
     />
   {/if}
@@ -95,9 +89,7 @@
         trait: localize('DND5E.DamRes'),
       })}
       on:onConfigureClicked={() =>
-        new dnd5e.applications.actor.TraitSelector($context.actor, 'dr').render(
-          true
-        )}
+        FoundryAdapter.renderTraitsSelector($context.actor, 'dr')}
       {traitsExpanded}
     />
   {/if}
@@ -112,9 +104,7 @@
         trait: localize('DND5E.DamVuln'),
       })}
       on:onConfigureClicked={() =>
-        new dnd5e.applications.actor.TraitSelector($context.actor, 'dv').render(
-          true
-        )}
+        FoundryAdapter.renderTraitsSelector($context.actor, 'dv')}
       {traitsExpanded}
     />
   {/if}
@@ -129,9 +119,7 @@
         trait: localize('DND5E.ConImm'),
       })}
       on:onConfigureClicked={() =>
-        new dnd5e.applications.actor.TraitSelector($context.actor, 'ci').render(
-          true
-        )}
+        FoundryAdapter.renderTraitsSelector($context.actor, 'ci')}
       {traitsExpanded}
     />
   {/if}
@@ -145,10 +133,7 @@
         trait: localize('DND5E.TraitWeaponProf'),
       })}
       on:onConfigureClicked={() =>
-        new dnd5e.applications.actor.TraitSelector(
-          $context.actor,
-          'weapon'
-        ).render(true)}
+        FoundryAdapter.renderTraitsSelector($context.actor, 'weapon')}
       {traitsExpanded}
     >
       <svg
@@ -179,10 +164,7 @@ c28,32.6,51.5,72.7,62,91.7c2.8,5,9.9,5.1,12.8,0.2c14-23.3,44.3-83.4,44.3-166.9C4
         trait: localize('DND5E.TraitArmorProf'),
       })}
       on:onConfigureClicked={() =>
-        new dnd5e.applications.actor.TraitSelector(
-          $context.actor,
-          'armor'
-        ).render(true)}
+        FoundryAdapter.renderTraitsSelector($context.actor, 'armor')}
       {traitsExpanded}
     >
       <svg
@@ -213,9 +195,7 @@ c28,32.6,51.5,72.7,62,91.7c2.8,5,9.9,5.1,12.8,0.2c14-23.3,44.3-83.4,44.3-166.9C4
         trait: localize('DND5E.TraitToolProf'),
       })}
       on:onConfigureClicked={() =>
-        new dnd5e.applications.actor.ToolSelector($context.actor, 'tool').render(
-          true
-        )}
+        FoundryAdapter.renderToolSelector($context.actor)}
       {traitsExpanded}
     />
   {/if}
@@ -241,7 +221,7 @@ c28,32.6,51.5,72.7,62,91.7c2.8,5,9.9,5.1,12.8,0.2c14-23.3,44.3-83.4,44.3-166.9C4
         trait: localize('DND5E.SpecialTraits'),
       })}
       on:click|stopPropagation|preventDefault={() =>
-        new dnd5e.applications.actor.ActorSheetFlags($context.actor).render(true)}
+        FoundryAdapter.renderActorSheetFlags($context.actor)}
     >
       <i class="fas fa-cog" />
     </button>

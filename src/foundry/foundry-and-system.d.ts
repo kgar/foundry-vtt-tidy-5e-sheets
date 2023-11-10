@@ -8,26 +8,28 @@
  */
 
 declare global {
-  var Hooks: any;
+  var Actors: any;
+  var AudioHelper: any;
+  var ChatMessage: any;
+  var CONFIG: any;
+  var ContextMenu: any;
+  var debounce: any;
+  var Dialog: any;
+  var dnd5e: any;
+  var expandObject: any;
+  var FilePicker: any;
   var foundry: any;
   var game: any;
-  var Actors: any;
-  var Items: any;
-  var CONFIG: any;
-  var Roll: any;
-  var dnd5e: any;
-  var ui: any;
-  var debounce: any;
-  var ChatMessage: any;
-  var AudioHelper: any;
-  var TextEditor: any;
-  var ContextMenu: any;
-  var ImagePopout: any;
-  var FilePicker: any;
-  var mergeObject: any;
-  var expandObject: any;
-  var isEmpty: any;
   var HandlebarsHelpers: any;
+  var Hooks: any;
+  var ImagePopout: any;
+  var isEmpty: any;
+  var Items: any;
+  var mergeObject: any;
+  var Roll: any;
+  var TextEditor: any;
+  var ui: any;
+  var FormApplication: any;
 }
 
 export {};

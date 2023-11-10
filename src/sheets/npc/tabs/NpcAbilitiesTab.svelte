@@ -177,16 +177,19 @@
     {/each}
     {#if $settingStore.hideSpellbookTabNpc}
       {#if noSpellLevels}
-        <h2
-          class="spellbook-title toggle-spellbook"
-          on:click={() => (showNoSpellsView = !showNoSpellsView)}
-        >
-          {localize('DND5E.Spellbook')}
-          {#if showNoSpellsView}
-            <i class="fas fa-caret-up" />
-          {:else}
-            <i class="fas fa-caret-down" />
-          {/if}
+        <h2>
+          <button
+            type="button"
+            class="transparent-button spellbook-title toggle-spellbook"
+            on:click={() => (showNoSpellsView = !showNoSpellsView)}
+          >
+            {localize('DND5E.Spellbook')}
+            {#if showNoSpellsView}
+              <i class="fas fa-caret-up" />
+            {:else}
+              <i class="fas fa-caret-down" />
+            {/if}
+          </button>
         </h2>
       {:else}
         <h2 class="spellbook-title">

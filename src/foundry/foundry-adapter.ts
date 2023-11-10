@@ -33,7 +33,7 @@ export const FoundryAdapter = {
     game.settings.register(CONSTANTS.MODULE_ID, key, data);
   },
   registerTidyMenu(key: string, data: any): void {
-    game.settings.register(CONSTANTS.MODULE_ID, key, data);
+    game.settings.registerMenu(CONSTANTS.MODULE_ID, key, data);
   },
   getGameSetting<T = string>(namespace: string, settingName: string): T {
     return game.settings.get(namespace, settingName) as T;
@@ -1049,5 +1049,30 @@ export const FoundryAdapter = {
   },
   renderActorHitDiceConfig(actor: any) {
     return new dnd5e.applications.actor.ActorHitDiceConfig(actor).render(true);
+  },
+  dialogConfirm(...args: any[]) {
+    return Dialog.confirm(...args);
+  },
+  renderActorSheetFlags(actor: any) {
+    return new dnd5e.applications.actor.ActorSheetFlags(actor).render(true);
+  },
+  renderToolSelector(actor: any) {
+    return new dnd5e.applications.actor.ToolSelector(actor, 'tool').render(
+      true
+    );
+  },
+  renderActorSensesConfig(actor: any) {
+    return new dnd5e.applications.actor.ActorSensesConfig(actor).render(true);
+  },
+  renderTraitsSelector(actor: any, trait: string) {
+    return new dnd5e.applications.actor.TraitSelector(actor, trait).render(
+      true
+    );
+  },
+  renderProficiencyConfig(actor: any, property: string, key: string) {
+    return new dnd5e.applications.actor.ProficiencyConfig(actor, {
+      property,
+      key,
+    }).render(true);
   },
 };
