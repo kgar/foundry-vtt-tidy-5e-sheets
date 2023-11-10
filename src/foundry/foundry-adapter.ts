@@ -1,4 +1,5 @@
 import type {
+  ActorSheetContext,
   CharacterSheetContext,
   ClassSummary,
   DropdownOption,
@@ -348,7 +349,7 @@ export const FoundryAdapter = {
 
     return classes.join(' ');
   },
-  getSpellAttackModAndTooltip(context: CharacterSheetContext) {
+  getSpellAttackModAndTooltip(context: ActorSheetContext) {
     let actor = context.actor;
     let formula = Roll.replaceFormulaData(
       actor.system.bonuses.rsak.attack,
