@@ -12,8 +12,16 @@
     text-align: center;
     background: var(--t5ek-faint-color);
 
+    &.primary {
+      color: var(--t5ek-primary-color);
+    }
+
     &:hover {
       color: var(--t5ek-primary-color);
+
+      &.primary {
+        color: var(--t5ek-primary-accent-color);
+      }
     }
 
     i {

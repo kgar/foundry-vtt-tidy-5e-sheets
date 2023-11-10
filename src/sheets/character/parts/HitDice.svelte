@@ -1,15 +1,13 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { type Actor5e } from 'src/types/types';
   import type { CharacterSheetContext } from 'src/types/types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
 
-  export let hitDice: number;
-  export let actorLevel: number;
-  export let actor: Actor5e;
-
   let context = getContext<Readable<CharacterSheetContext>>('context');
+
+  $: hitDice = $context.system.attributes.hd;
+  $: actorLevel = $context.system.details.level;
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -25,7 +23,7 @@
     type="button"
     class="current-hd config-button transparent-button"
     on:click={$context.owner &&
-      new dnd5e.applications.actor.ActorHitDiceConfig(actor).render(true)}
+      FoundryAdapter.renderActorHitDiceConfig($context.actor)}
     disabled={!$context.owner}>{hitDice}</button
   >
 </div>
@@ -35,16 +33,16 @@
     position: absolute;
     right: 0;
     bottom: 0;
-    width: 34px;
-    height: 34px;
+    width: 2.125rem;
+    height: 2.125rem;
     background: var(--t5ek-icon-background);
-    box-shadow: 0 0 10px var(--t5ek-icon-shadow-color) inset;
-    border: 1px solid var(--t5ek-icon-outline-color);
-    border-radius: 5px 0 5px 0px;
+    box-shadow: 0 0 0.625rem var(--t5ek-icon-shadow-color) inset;
+    border: 0.0625rem solid var(--t5ek-icon-outline-color);
+    border-radius: 0.3125rem 0 0.3125rem 0;
     color: var(--t5ek-icon-font-color);
 
     &.rounded {
-      bottom: -7px;
+      bottom: -0.4375rem;
       border-radius: 50%;
     }
 

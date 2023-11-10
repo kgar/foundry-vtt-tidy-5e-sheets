@@ -4,6 +4,7 @@
   import type { ButtonMenuContext } from './button-menu-types';
 
   export let iconClass: string = '';
+  export let useIconColumn: boolean = true;
   export let title: string | null = null;
 
   const buttonMenuContext = getContext<ButtonMenuContext>('buttonMenuContext');
@@ -28,11 +29,13 @@
     on:click={handleClick}
     {title}
   >
-    <span class="icon-container">
-      {#if iconClass}
-        <i class={iconClass} role="presentation" />
-      {/if}
-    </span>
+    {#if useIconColumn}
+      <span class="icon-container">
+        {#if iconClass}
+          <i class={iconClass} role="presentation" />
+        {/if}
+      </span>
+    {/if}
     <span class="command-text">
       <slot />
     </span>

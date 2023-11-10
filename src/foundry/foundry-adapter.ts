@@ -1041,4 +1041,12 @@ export const FoundryAdapter = {
   renderActorMovementConfig(actor: any) {
     return new dnd5e.applications.actor.ActorMovementConfig(actor).render(true);
   },
+  renderActorHitPointsDialog(actor: any) {
+    return new dnd5e.applications.actor.ActorHitPointsConfig(actor).render(
+      true
+    );
+  },
+  renderActorHitDiceConfig(actor: any) {
+    return new dnd5e.applications.actor.ActorHitDiceConfig(actor).render(true);
+  },
 };

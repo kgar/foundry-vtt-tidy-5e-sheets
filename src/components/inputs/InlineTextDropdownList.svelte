@@ -24,10 +24,13 @@
   ariaLabel={title}
   {title}
   buttonText={selected.text}
-  buttonClass="inline-transparent-button"
+  buttonClass="inline-transparent-button primary"
 >
   {#each options as option}
-    <ButtonMenuCommand on:click={() => optionClicked(option)}>
+    <ButtonMenuCommand
+      useIconColumn={false}
+      on:click={() => optionClicked(option)}
+    >
       {option.text}
     </ButtonMenuCommand>
   {/each}
