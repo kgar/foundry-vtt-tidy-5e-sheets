@@ -29,10 +29,10 @@
 
   "T5EK.AbbrInitiative": "Ini",
 
-  "T5EK.RestHint": "Take A Rest",
+  "T5EK.RestHint": "Rest",
   "T5EK.RestS": "Short Rest",
   "T5EK.RestL": "Long Rest",
-  "T5EK.HitDiceRollAverage": "Right Click: Average",
+  "T5EK.HitDiceRollAverage": "right click: apply average",
 
   "T5EK.Journal": "Journal",
 
@@ -45,9 +45,13 @@
   "T5EK.JournalEntries": "Journal Entries",
   "T5EK.TogglePersonalityInfo": "Toggle Personality Info",
 
-  "T5EK.EnableEdit": "Enable Edit",
-  "T5EK.DisableEdit": "Disable Edit",
-  "T5EK.EditHint": "Toggles visibility of add/delete buttons and empty sections",
+  "T5EK.SheetEdit.Enable.Hint": "Enable Edit - {description}",
+  "T5EK.SheetEdit.Disable.Hint": "Disable Edit - {description}",
+  "T5EK.SheetEdit.Description": "Toggle visibility of add/delete buttons and empty sections",
+
+  "T5EK.SheetLock.Unlock.Hint": "Unlock - {description}",
+  "T5EK.SheetLock.Lock.Hint": "Lock - {description}",
+  "T5EK.SheetLock.Description": "Toggle lock for sensitive fields that should not change often",
 
   "T5EK.Equip": "Equip Item",
   "T5EK.Unequip": "Unequip Item",
