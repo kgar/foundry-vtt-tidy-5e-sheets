@@ -57,7 +57,7 @@
       onlyShowOnHover={$settingStore.inspirationOnHover ||
         ($settingStore.hideIfZero &&
           !$context.actor.system.attributes.inspiration)}
-      disableAnimation={$settingStore.inspirationAnimationDisabled}
+      animate={$settingStore.animateInspiration}
     />
   {/if}
 

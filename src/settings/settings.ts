@@ -388,18 +388,18 @@ export function createSettings() {
         },
       },
 
-      inspirationAnimationDisabled: {
+      animateInspiration: {
         options: {
           name: 'T5EK.Settings.InspirationAnimation.name',
           hint: 'T5EK.Settings.InspirationAnimation.hint',
           scope: 'client',
           config: false,
-          default: false,
+          default: true,
           type: Boolean,
         },
         get() {
           return FoundryAdapter.getTidySetting<boolean>(
-            'inspirationAnimationDisabled'
+            'animateInspiration'
           );
         },
       },

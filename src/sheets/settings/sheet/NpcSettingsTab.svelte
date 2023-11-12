@@ -17,7 +17,7 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-<h2>{localize('T5EK.Settings.TabNPCs.labelNPCs')}</h2>
+<h2>{localize('T5EK.Settings.TabNPCs.header')}</h2>
 {#if userIsGm}
   <SelectSetting
     options={SettingsProvider.settings.defaultNpcSheetTab.options.choices()}

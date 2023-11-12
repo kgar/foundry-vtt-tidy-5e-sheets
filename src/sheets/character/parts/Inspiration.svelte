@@ -14,7 +14,7 @@
   export let cssClass: string = '';
   export let radiusClass: PortraitCharmRadiusClass;
   export let onlyShowOnHover: boolean = false;
-  export let disableAnimation: boolean = true;
+  export let animate: boolean = true;
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -34,10 +34,7 @@
     checked={inspired}
     disabled={!$context.owner}
   >
-    <i
-      class="inspiration-icon fas fa-dice-d20"
-      class:disable-animation={disableAnimation}
-    />
+    <i class="inspiration-icon fas fa-dice-d20" class:animate />
   </Checkbox>
 </div>
 
@@ -91,13 +88,9 @@
       background: var(--t5ek-inspiration-inspired-background);
     }
 
-    :global(label i) {
+    :global(label i.animate) {
       color: var(--t5ek-activated-profile-toggle-color);
       animation: glow 5s ease-in-out infinite alternate;
-    }
-
-    :global(label i.disable-animation) {
-      animation: none;
     }
   }
 

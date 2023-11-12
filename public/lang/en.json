@@ -128,7 +128,7 @@
 
   "T5EK.Settings.SheetMenu": {
     "name": "Tidy Sheet Settings",
-    "hint": "Customize your own version of Tidy",
+    "hint": "Customize your own version of Tidy 5e Sheets",
     "label": "Sheet Settings",
     "title": "T5EK Sheet Settings"
   },
@@ -138,13 +138,11 @@
   },
   "T5EK.Settings.TabNPCs": {
     "tabLabel": "NPCs",
-    "header": "NPC Sheets",
-    "labelNPCs": "NPCs"
+    "header": "NPC Sheets"
   },
   "T5EK.Settings.TabVehicles": {
     "tabLabel": "Vehicles",
-    "header": "Vehicle Sheets",
-    "labelVehicles": "Vehicles"
+    "header": "Vehicle Sheets"
   },
   "T5EK.Settings.TabGM": {
     "tabLabel": "GM Options",
@@ -153,8 +151,8 @@
   "T5EK.Settings.TabLocks": {
     "tabLabel": "Locks",
     "header": "Lock Options",
-    "hint": "Prevents players from making changes to aspects of their character sheets that should change infrequently, and provides the option to completely hide some elements that you don't want to use at all. Settings are available to customize exactly what is locked / hidden, and determine who has permission to make sheets editable through a toggle button.",
-    "hint2": "Note that this is not a secure lockdown and players could get around the restrictions, so this is not a sufficient answer if your players are malicious. This is intended for games where the players are inexperienced (with D&D and/or with using computers) to prevent them from making mistakes (ex. accidentally adding/removing saving throw proficiency).",
+    "hint": "Prevent players from making changes to aspects of their character sheets that should change infrequently. Optionally hide some elements that you don't want to use at all.",
+    "hint2": "Important: sheet lock features are intended to guide player sheet use and to help prevent mistakes such as accidentally adding/removing saving throw proficiency. Sheet lock settings do not provide a secure lockdown against players with malicious intent.",
     "labelGeneralLocks": "General Locks",
     "labelInventoryLocks": "Inventory Locks",
     "labelFeaturesLocks": "Features Locks"
@@ -164,71 +162,68 @@
     "header": "Info"
   },
   "T5EK.Settings.ItemCardsForAllItems": {
-    "name": "Show item info cards in all layouts.",
-    "hint": "Disable if you only want the slide out item info cards in grid layout."
+    "name": "Show item cards in all layouts",
+    "hint": "When this setting is disabled, item cards only show in the grid."
   },
   "T5EK.Settings.ItemCardsForNpcs": {
-    "name": "Show item info cards for NPCs/vehicles.",
-    "hint": "Disable if you don't want the slide out item info cards for NPCs/vehicles."
+    "name": "Show item cards for NPCs/vehicles",
+    "hint": "Enable to show item info cards for NPCs and vehicles."
   },
   "T5EK.Settings.ItemCardsAreFloating": {
-    "name": "Item info cards float next to cursor.",
-    "hint": "Enable to detach item info cards from sheet and float them next to the cursor. Best to use with delay. Also useful when sheet is popped out."
+    "name": "Show floating item cards",
+    "hint": "Enable to have item info cards float next to the mouse cursor. Recommended: use delay with this feature."
   },
   "T5EK.Settings.ItemCardsDelay": {
-    "name": "Delay showing info cards.",
-    "hint": "The Item Card will show when you hover an item for the value in milliseconds (0 = no delay, 300 is default)."
+    "name": "Item card delay (ms)",
+    "hint": "Delays showing item cards for the specified milliseconds (ms). 0 means no delay. Default: 300."
   },
   "T5EK.Settings.ItemCardsFixKey": {
-    "name": "Key to hold for Item Card interaction.",
-    "hint": "Enter a key (e.g.: x) to use for item card interaction. Can be any key except function keys (ctrl, alt, etc.)"
+    "name": "Item card fix key",
+    "hint": "Hold this keyboard character (e.g., x) while viewing an item card to keep it visible and allow for interaction."
   },
-
   "T5EK.Settings.DefaultTheme": {
-    "name": "T5EK default color theme",
+    "name": "Default color theme",
     "hint": "The default theme for all users who do not have a specific theme selected."
   },
-
   "T5EK.Settings.SheetTheme": {
-    "name": "T5EK color theme",
+    "name": "Color theme",
     "hint": "The theme for your sheets.",
     "default": "Default",
     "light": "Light",
     "dark": "Dark"
   },
-
   "T5EK.Settings.UseClassicControls": {
-    "name": "Use classic item controls in list view.",
-    "hint": "Always show item controls for this type of sheet."
+    "name": "Use classic list controls",
+    "hint": "Shows controls in the list view."
   },
   "T5EK.Settings.HideIconsNextToTheItemName": {
-    "name": "Hide icons next to the item name",
-    "hint": "If enabled this setting hides the support icons present next to the object name (Favorite, Attunement, etc.), this is usually useful with the 'Use classic item controls in list view' setting enabled in order to avoid a redundancy of icons..."
+    "name": "Hide item name icons",
+    "hint": "Hides the support icons next to the object name (Favorite, Attunement, etc.). This is useful in preventing redundant icons when classic controls are visible."
   },
   "T5EK.Settings.TraitLabels": {
-    "name": "Show Trait Labels.",
-    "hint": "Enable to show labels for PC, NPC, and Vehicle traits. Disable to show only icons."
+    "name": "Show Trait Labels",
+    "hint": "Shows labels for PC, NPC, and Vehicle traits. Disable to show only icons."
   },
 
   "T5EK.Settings.PlayerName": {
-    "name": "Show player name.",
-    "hint": "Enable to show a field for the player name below the character's name."
+    "name": "Show player name",
+    "hint": "Shows a field for the player name below the character's name."
   },
   "T5EK.Settings.JournalTab": {
-    "name": "Hide character journal.",
-    "hint": "Enable to hide the character journal tab."
+    "name": "Hide character journal",
+    "hint": "Hides the character journal tab."
   },
   "T5EK.Settings.JournalTabNPCDisabled": {
-    "name": "Hide npc journal.",
+    "name": "Hide npc journal",
     "hint": "Enable to hide the npc journal tab."
   },
   "T5EK.Settings.ClassList": {
-    "name": "Hide character class list.",
-    "hint": "Enable to hide the class list below the character's name."
+    "name": "Hide class list",
+    "hint": "Hides the class list below the character's name."
   },
   "T5EK.Settings.InspirationAnimation": {
-    "name": "Inanimate inspiration tracker.",
-    "hint": "Enable to turn off inspiration tracker glow animation."
+    "name": "Animate inspiration tracker",
+    "hint": "Shows inspiration tracker glow animation."
   },
   "T5EK.Settings.HideIfZero": {
     "name": "Hide exhaustion and inspiration tracker on 0.",

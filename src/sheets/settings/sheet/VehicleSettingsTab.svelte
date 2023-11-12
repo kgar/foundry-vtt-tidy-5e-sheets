@@ -16,7 +16,7 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-<h2>{localize('T5EK.Settings.TabVehicles.labelVehicles')}</h2>
+<h2>{localize('T5EK.Settings.TabVehicles.header')}</h2>
 {#if userIsGm}
   <SelectSetting
     options={SettingsProvider.settings.defaultVehicleSheetTab.options.choices()}

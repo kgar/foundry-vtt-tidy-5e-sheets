@@ -50,10 +50,10 @@
 />
 
 <CheckboxSetting
-  bind:value={$context.inspirationAnimationDisabled}
+  bind:value={$context.animateInspiration}
   name={'T5EK.Settings.InspirationAnimation.name'}
   hint={'T5EK.Settings.InspirationAnimation.hint'}
-  id="inspirationAnimationDisabled"
+  id="animateInspiration"
 />
 
 <CheckboxSetting
