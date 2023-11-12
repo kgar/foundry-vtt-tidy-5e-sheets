@@ -62,7 +62,7 @@
   <ItemFilterSearch
     bind:searchCriteria
     cssClass="align-self-flex-end"
-    placeholder={localize('T5EK.SearchSpell')}
+    placeholder={localize('T5EK.Search')}
   />
   {#if $settingStore.spellClassFilterSelect}
     <li class="spellbook-class-filter">

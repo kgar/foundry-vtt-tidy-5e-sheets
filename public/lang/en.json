@@ -11,7 +11,6 @@
   "T5EK.Eyes": "Eyes",
   "T5EK.Skin": "Skin",
   "T5EK.Hair": "Hair",
-  "T5EK.Subclass": "Subclass",
   "T5EK.EditActorImage": "left click: edit image",
   "T5EK.ShowActorImage": "right click: show character art",
   "T5EK.ShowPortraitArt": "show portrait",
@@ -53,68 +52,60 @@
   "T5EK.SheetLock.Lock.Hint": "Lock - {description}",
   "T5EK.SheetLock.Description": "Toggle lock for sensitive fields that should not change often",
 
-  "T5EK.Equip": "Equip Item",
-  "T5EK.Unequip": "Unequip Item",
-  "T5EK.Attune": "Attune to Item",
-  "T5EK.Deattune": "Break Attunement",
-  "T5EK.Prepare": "Prepare Spell",
-  "T5EK.Unprepare": "Remove Preparation",
+  "T5EK.ContextMenuActionEquip": "Equip",
+  "T5EK.ContextMenuActionUnequip": "Unequip",
+  "T5EK.ContextMenuActionAttune": "Attune",
+  "T5EK.ContextMenuActionUnattune": "Unattune",
+  "T5EK.ContextMenuActionPrepare": "Prepare",
+  "T5EK.ContextMenuActionUnprepare": "Unprepare",
+  "T5EK.ContextMenuActionEdit": "Edit",
+  "T5EK.ContextMenuActionDelete": "Delete",
 
   "T5EK.EmptySection": "This section is empty. Unlock the sheet to edit.",
   "T5EK.GmOnlyEdit": "Only your GM can edit this section.",
 
-  "T5EK.AttunementWarning": "Attunement warning: You can't attune to more than {number} items!",
+  "T5EK.AttunementWarning": "Attunement: Unable to attune to more than {number} items.",
   "T5EK.AttunementItems": "Attuned Items",
-  "T5EK.AttunementMax": "Attunement maximum",
+  "T5EK.AttunementMax": "Attunement Maximum",
 
   "T5EK.GridLayout": "Grid Layout",
   "T5EK.ListLayout": "List Layout",
-  "T5EK.LayoutNotSupported": "Layout mode not supported.",
+  "T5EK.LayoutNotSupported": "Layout mode not supported",
 
   "T5EK.Encumbrance": "Encumbrance",
 
-  "T5EK.EditSpell": "Edit Spell",
-  "T5EK.DeleteSpell": "Delete Spell",
-  "T5EK.AddFav": "Add Favorite",
-  "T5EK.isFav": "Favorite",
-  "T5EK.RemoveFav": "Remove Favorite",
+  "T5EK.AddFavorite": "Add Favorite",
+  "T5EK.Favorite": "Favorite",
+  "T5EK.RemoveFavorite": "Remove Favorite",
 
-  "T5EK.ToggleInfo": "Toggle Info",
-
-  "T5EK.Show": "show/edit",
-  "T5EK.Hide": "hide",
-  "T5EK.Edit": "edit",
-  "T5EK.TraitsEmpty": "empty traits",
+  "T5EK.ShowNotProficientSkills": "show not proficient",
+  "T5EK.HideNotProficientSkills": "hide not proficient",
+  "T5EK.ShowEmptyTraits": "show/edit empty traits",
+  "T5EK.HideEmptyTraits": "hide empty traits",
 
   "T5EK.Abilities": "Abilities",
 
   "T5EK.Environment": "Environment",
 
-  "T5EK.SearchItem": "search item",
-  "T5EK.SearchSpell": "search spell",
-  "T5EK.SearchFeat": "search feature",
+  "T5EK.Search": "search",
   "T5EK.SearchClear": "clear search",
-  "T5EK.SearchHint": "Just start to type what you are searching for.",
+  "T5EK.SearchHint": "Start typing to show search results",
 
-  "T5EK.ItemCardsKeyHint": "hold Key to interact with card.",
-  "T5EK.ItemCardsMouseHint": "middle mouse to view/edit item.",
+  "T5EK.ItemCardsKeyHint": "hold key to interact with card",
+  "T5EK.ItemCardsMouseHint": "middle mouse to view/edit item",
 
   "T5EK.AbbrMod": "Mod",
   "T5EK.AbbrSavingThrow": "Save",
   "T5EK.SpellAttackMod": "Attack Mod",
   "T5EK.PreparedSpells": "Prepared spells",
   "T5EK.PreparedSpellsMax": "Maximum for prepared spells (Note: do not use 'Override' mode on the active effect')",
-  "T5EK.Components": "Comps",
-  "T5EK.SpellSchool": "School",
 
   "T5EK.TokenLinked": "Token linked to actor",
   "T5EK.TokenUnlinked": "Token not linked to actor",
 
   "T5EK.ItemDetailsHeadline": "Mechanics/Flavor Text",
 
-  "T5EK.Class": "Class",
   "T5EK.SpellClass": "Spell Class",
-  "T5EK.Spellbook": "Spellbook",
 
   "T5EK.ClassArtificer": "Artificer",
   "T5EK.ClassBarbarian": "Barbarian",
@@ -133,15 +124,6 @@
 
   "T5EK.OriginSummaryConfig": "Origin Summary Configuration",
 
-  "T5EK.LevelBump": "Level Bump",
-  "T5EK.LevelBumpTooltip": "When you are casting a spell you can cast it one level higher for free.",
-
-  "T5EK.Settings.GlobalLabel": "Global",
-  "T5EK.Settings.DebugLabel": "Debug",
-  "T5EK.Settings.UserLabel": "User",
-  "T5EK.Settings.PcLabel": "PCs",
-  "T5EK.Settings.NpcLabel": "NPCs",
-  "T5EK.Settings.VehicleLabel": "Vehicles",
   "T5EK.Settings.MulticlassSpellbookFilterLabel": "Multiclass Spellbook Filter",
 
   "T5EK.Settings.SheetMenu": {
@@ -167,17 +149,6 @@
   "T5EK.Settings.TabGM": {
     "tabLabel": "GM Options",
     "header": "GM Sheet Options"
-  },
-  "T5EK.Settings.TabHomebrewRules": {
-    "tabLabel": "Homebrew Rules",
-    "header": "Homebrew Rules",
-    "labelHBUpcastFreeSpell": "Upcast Free Spell"
-  },
-  "T5EK.Settings.TabModules": {
-    "tabLabel": "Modules",
-    "header": "Module Options",
-    "labelActionsFavorites": "Actor Actions/Favorites",
-    "labelMidiQoL": "Midi Qol"
   },
   "T5EK.Settings.TabLocks": {
     "tabLabel": "Locks",
@@ -291,7 +262,6 @@
     "name": "Only show equipped ammunition.",
     "hint": "Enable to only show currently equipped ammunition in Weapon ammo selector."
   },
-
   "T5EK.Settings.TraitsAlwaysShown": {
     "name": "Always show traits.",
     "hint": "By default empty traits are hidden by a toggle button. Enable to never hide."
@@ -437,7 +407,6 @@
     "name": "Lock item quantity for non GM",
     "hint": "Enable this to lock the input quantity on the inventory and item sheet on the tidy sheet. All other module working with these fields are working just fine."
   },
-
   "T5EK.Settings.ColorPickerEnabled": {
     "name": "Enable Custom Theme Colors",
     "hint": "Enable/Disable custom theme colors"
@@ -559,7 +528,6 @@
       "explanation": "Select what color you wish to use for each option. The value \"#00000000\" is equivalent to disabling the color."
     }
   },
-  "T5EK.WindowHeaderSheetSettingsTooltip": "Open Tidy 5e Sheet Settings",
   "T5EK.FavoriteSpellLevelLabel": "Spell Level {number}",
   "T5EK.ApplyChanges": "Apply Changes",
   "T5EK.SaveChanges": "Save Changes",
@@ -578,5 +546,5 @@
     "label": "Menu",
     "themeLabel": "Theme"
   },
-  "T5EK.ActiveEffectsMarkerTitle": "This item has active effects"
+  "T5EK.ActiveEffectsMarkerTitle": "This has active effects"
 }

@@ -46,7 +46,7 @@
 <ItemFilters>
   <ItemFilterSearch
     bind:searchCriteria
-    placeholder={localize('T5EK.SearchFeat')}
+    placeholder={localize('T5EK.Search')}
   />
   <ItemFilterOption setName="features" filterName="action">
     {localize('DND5E.Action')}

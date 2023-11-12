@@ -131,11 +131,10 @@
         on:click={toggleShowAllSkills}
       >
         {#if showAllSkills}
-          {localize('T5EK.Hide')}
+          {localize('T5EK.HideNotProficientSkills')}
         {:else}
-          {localize('T5EK.Show')}
-        {/if}
-        {localize('DND5E.NotProficient')}</button
+          {localize('T5EK.ShowNotProficientSkills')}
+        {/if}</button
       >
     </div>
   {/if}

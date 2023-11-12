@@ -38,14 +38,12 @@
   }
 
   $: noItems =
-    $context.inventory.some((section: any) => section.items.length > 0) === false;
+    $context.inventory.some((section: any) => section.items.length > 0) ===
+    false;
 </script>
 
 <ItemFilters>
-  <ItemFilterSearch
-    bind:searchCriteria
-    placeholder={localize('T5EK.SearchItem')}
-  />
+  <ItemFilterSearch bind:searchCriteria placeholder={localize('T5EK.Search')} />
   <ItemFilterOption filterName="action" setName="inventory">
     {localize('DND5E.Action')}
   </ItemFilterOption>
@@ -97,7 +95,9 @@
       title={localize('DND5E.Attunement')}
     >
       <i class="fas fa-sun" />
-      <span class="attuned-items-current"
+      <span
+        class="attuned-items-current"
+        title={localize('T5EK.AttunementItems')}
         >{$context.system.attributes.attunement.value}</span
       >
       /
@@ -113,7 +113,7 @@
           disabled={!$context.owner || $context.lockSensitiveFields}
         />
       {:else}
-        <span class="attuned-items-max"
+        <span class="attuned-items-max" title={localize('T5EK.AttunementMax')}
           >{$context.system.attributes.attunement.max}</span
         >
       {/if}
