@@ -398,7 +398,7 @@ export const FoundryAdapter = {
     spell: any
   ): string | undefined {
     if (
-      !SettingsProvider.settings.spellClassFilterIconReplace.get() ||
+      !SettingsProvider.settings.useSpellClassFilterIcons.get() ||
       context.isNPC
     ) {
       return spell.img;

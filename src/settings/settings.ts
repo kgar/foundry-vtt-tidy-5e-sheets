@@ -186,18 +186,18 @@ export function createSettings() {
         },
       },
 
-      // Disable Right Click
-      rightClickDisabled: {
+      // Context Menu
+      useContextMenu: {
         options: {
-          name: 'T5EK.Settings.RightClickDisabled.name',
-          hint: 'T5EK.Settings.RightClickDisabled.hint',
+          name: 'T5EK.Settings.UseContextMenu.name',
+          hint: 'T5EK.Settings.UseContextMenu.hint',
           scope: 'client',
           config: false,
-          default: false,
+          default: true,
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getTidySetting<boolean>('rightClickDisabled');
+          return FoundryAdapter.getTidySetting<boolean>('useContextMenu');
         },
       },
 
@@ -446,31 +446,31 @@ export function createSettings() {
         },
       },
 
-      hpBarDisabled: {
+      useHpBar: {
         options: {
           name: 'T5EK.Settings.HpBar.name',
           hint: 'T5EK.Settings.HpBar.hint',
           scope: 'client',
           config: false,
-          default: false,
+          default: true,
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getTidySetting<boolean>('hpBarDisabled');
+          return FoundryAdapter.getTidySetting<boolean>('useHpBar');
         },
       },
 
-      hpOverlayDisabled: {
+      useHpOverlay: {
         options: {
           name: 'T5EK.Settings.HpOverlay.name',
           hint: 'T5EK.Settings.HpOverlay.hint',
           scope: 'client',
           config: false,
-          default: false,
+          default: true,
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getTidySetting<boolean>('hpOverlayDisabled');
+          return FoundryAdapter.getTidySetting<boolean>('useHpOverlay');
         },
       },
 
@@ -566,31 +566,31 @@ export function createSettings() {
         },
       },
 
-      hpBarDisabledNpc: {
+      useHpBarNpc: {
         options: {
           name: 'T5EK.Settings.HpBar.name',
           hint: 'T5EK.Settings.HpBar.hint',
           scope: 'client',
           config: false,
-          default: false,
+          default: true,
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getTidySetting<boolean>('hpBarDisabledNpc');
+          return FoundryAdapter.getTidySetting<boolean>('useHpBarNpc');
         },
       },
 
-      hpOverlayDisabledNpc: {
+      useHpOverlayNpc: {
         options: {
           name: 'T5EK.Settings.HpOverlay.name',
           hint: 'T5EK.Settings.HpOverlay.hint',
           scope: 'client',
           config: false,
-          default: false,
+          default: true,
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getTidySetting<boolean>('hpOverlayDisabledNpc');
+          return FoundryAdapter.getTidySetting<boolean>('useHpOverlayNpc');
         },
       },
 
@@ -622,33 +622,17 @@ export function createSettings() {
         },
       },
 
-      hideSpellbookTabNpc: {
+      showSpellbookTabNpc: {
         options: {
-          name: 'T5EK.Settings.SkillsAlwaysShown.name',
-          hint: 'T5EK.Settings.SkillsAlwaysShown.hint',
+          name: 'T5EK.Settings.ShowSpellbookTabNpc.name',
+          hint: 'T5EK.Settings.ShowSpellbookTabNpc.hint',
           scope: 'client',
           config: false,
-          default: false,
+          default: true,
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getTidySetting<boolean>('hideSpellbookTabNpc');
-        },
-      },
-
-      enableNpcEncumbranceBar: {
-        options: {
-          name: 'T5EK.Settings.EnableNPCEncumbranceBar.name',
-          hint: 'T5EK.Settings.EnableNPCEncumbranceBar.hint',
-          scope: 'world',
-          config: false,
-          default: false,
-          type: Boolean,
-        },
-        get() {
-          return FoundryAdapter.getTidySetting<boolean>(
-            'enableNpcEncumbranceBar'
-          );
+          return FoundryAdapter.getTidySetting<boolean>('showSpellbookTabNpc');
         },
       },
 
@@ -688,32 +672,32 @@ export function createSettings() {
         },
       },
 
-      hpBarDisabledVehicle: {
+      useHpBarVehicle: {
         options: {
           name: 'T5EK.Settings.HpBar.name',
           hint: 'T5EK.Settings.HpBar.hint',
           scope: 'client',
           config: false,
-          default: false,
+          default: true,
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getTidySetting<boolean>('hpBarDisabledVehicle');
+          return FoundryAdapter.getTidySetting<boolean>('useHpBarVehicle');
         },
       },
 
-      hpOverlayDisabledVehicle: {
+      useHpOverlayVehicle: {
         options: {
           name: 'T5EK.Settings.HpOverlay.name',
           hint: 'T5EK.Settings.HpOverlay.hint',
           scope: 'client',
           config: false,
-          default: false,
+          default: true,
           type: Boolean,
         },
         get() {
           return FoundryAdapter.getTidySetting<boolean>(
-            'hpOverlayDisabledVehicle'
+            'useHpOverlayVehicle'
           );
         },
       },
@@ -842,25 +826,40 @@ export function createSettings() {
       },
 
       // Hide marker spell slot
-      hideSpellSlotMarker: {
+      useSpellSlotMarker: {
         options: {
-          name: 'T5EK.Settings.HideSpellSlotMarker.name',
-          hint: 'T5EK.Settings.HideSpellSlotMarker.hint',
+          name: 'T5EK.Settings.UseSpellSlotMarker.name',
+          hint: 'T5EK.Settings.UseSpellSlotMarker.hint',
           scope: 'world',
           config: false,
-          default: false,
+          default: true,
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getTidySetting<boolean>('hideSpellSlotMarker');
+          return FoundryAdapter.getTidySetting<boolean>('useSpellSlotMarker');
         },
       },
 
-      // Hide Standard Encumbrance Bar
-      hideStandardEncumbranceBar: {
+      useCharacterEncumbranceBar: {
         options: {
-          name: 'T5EK.Settings.HideStandardEncumbranceBar.name',
-          hint: 'T5EK.Settings.HideStandardEncumbranceBar.hint',
+          name: 'T5EK.Settings.UseCharacterEncumbranceBar.name',
+          hint: 'T5EK.Settings.UseCharacterEncumbranceBar.hint',
+          scope: 'world',
+          config: false,
+          default: true,
+          type: Boolean,
+        },
+        get() {
+          return FoundryAdapter.getTidySetting<boolean>(
+            'useCharacterEncumbranceBar'
+          );
+        },
+      },
+
+      useNpcEncumbranceBar: {
+        options: {
+          name: 'T5EK.Settings.UseNPCEncumbranceBar.name',
+          hint: 'T5EK.Settings.UseNPCEncumbranceBar.hint',
           scope: 'world',
           config: false,
           default: false,
@@ -868,7 +867,23 @@ export function createSettings() {
         },
         get() {
           return FoundryAdapter.getTidySetting<boolean>(
-            'hideStandardEncumbranceBar'
+            'useNpcEncumbranceBar'
+          );
+        },
+      },
+
+      useVehicleEncumbranceBar: {
+        options: {
+          name: 'T5EK.Settings.UseVehicleEncumbranceBar.name',
+          hint: 'T5EK.Settings.UseVehicleEncumbranceBar.hint',
+          scope: 'world',
+          config: false,
+          default: true,
+          type: Boolean,
+        },
+        get() {
+          return FoundryAdapter.getTidySetting<boolean>(
+            'useVehicleEncumbranceBar'
           );
         },
       },
@@ -890,46 +905,46 @@ export function createSettings() {
         },
       },
 
-      exhaustionDisabled: {
+      useExhaustion: {
         options: {
-          name: 'T5EK.Settings.ExhaustionDisabled.name',
-          hint: 'T5EK.Settings.ExhaustionDisabled.hint',
+          name: 'T5EK.Settings.UseExhaustion.name',
+          hint: 'T5EK.Settings.UseExhaustion.hint',
           scope: 'world',
           config: false,
-          default: false,
+          default: true,
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getTidySetting<boolean>('exhaustionDisabled');
+          return FoundryAdapter.getTidySetting<boolean>('useExhaustion');
         },
       },
 
-      inspirationDisabled: {
+      useInspiration: {
         options: {
-          name: 'T5EK.Settings.InspirationDisabled.name',
-          hint: 'T5EK.Settings.InspirationDisabled.hint',
+          name: 'T5EK.Settings.UseInspiration.name',
+          hint: 'T5EK.Settings.UseInspiration.hint',
           scope: 'world',
           config: false,
-          default: false,
+          default: true,
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getTidySetting<boolean>('inspirationDisabled');
+          return FoundryAdapter.getTidySetting<boolean>('useInspiration');
         },
       },
 
-      vehicleMotionDisabled: {
+      useVehicleMotion: {
         options: {
-          name: 'T5EK.Settings.VehicleMotionDisabled.name',
-          hint: 'T5EK.Settings.VehicleMotionDisabled.hint',
+          name: 'T5EK.Settings.UseVehicleMotion.name',
+          hint: 'T5EK.Settings.UseVehicleMotion.hint',
           scope: 'world',
           config: false,
-          default: false,
+          default: true,
           type: Boolean,
         },
         get() {
           return FoundryAdapter.getTidySetting<boolean>(
-            'vehicleMotionDisabled'
+            'useVehicleMotion'
           );
         },
       },
@@ -1203,10 +1218,10 @@ export function createSettings() {
         },
       },
 
-      spellClassFilterSelect: {
+      useMulticlassSpellbookFilter: {
         options: {
-          name: 'T5EK.Settings.SpellClassFilterSelect.name',
-          hint: 'T5EK.Settings.SpellClassFilterSelect.hint',
+          name: 'T5EK.Settings.UseMulticlassSpellbookFilter.name',
+          hint: 'T5EK.Settings.UseMulticlassSpellbookFilter.hint',
           scope: 'client',
           config: false,
           default: false,
@@ -1214,15 +1229,15 @@ export function createSettings() {
         },
         get() {
           return FoundryAdapter.getTidySetting<boolean>(
-            'spellClassFilterSelect'
+            'useMulticlassSpellbookFilter'
           );
         },
       },
 
-      spellClassFilterIconReplace: {
+      useSpellClassFilterIcons: {
         options: {
-          name: 'T5EK.Settings.SpellClassFilterIconReplace.name',
-          hint: 'T5EK.Settings.SpellClassFilterIconReplace.hint',
+          name: 'T5EK.Settings.UseSpellClassIcons.name',
+          hint: 'T5EK.Settings.UseSpellClassIcons.hint',
           scope: 'client',
           config: false,
           default: false,
@@ -1230,7 +1245,7 @@ export function createSettings() {
         },
         get() {
           return FoundryAdapter.getTidySetting<boolean>(
-            'spellClassFilterIconReplace'
+            'useSpellClassFilterIcons'
           );
         },
       },

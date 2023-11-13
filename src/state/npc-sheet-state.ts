@@ -33,7 +33,7 @@ let npcSheetState = writable<NpcSheetState>({
         component: NpcSpellbookTab,
       },
       enabled: (context) =>
-        !context.hideEmptySpellbook && !context.hideSpellbookTab,
+        !context.hideEmptySpellbook && context.showSpellbookTab,
       order: 20,
       layout: 'classic',
     },

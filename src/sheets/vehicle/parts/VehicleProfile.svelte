@@ -17,8 +17,8 @@
   }
 </script>
 
-<ActorProfile useHpOverlay={!$settingStore.hpOverlayDisabledVehicle}>
-  {#if !$settingStore.exhaustionDisabled}
+<ActorProfile useHpOverlay={$settingStore.useHpOverlayVehicle}>
+  {#if $settingStore.useExhaustion}
     <Exhaustion
       level={FoundryAdapter.tryGetFlag($context.actor, 'exhaustion') ?? 0}
       radiusClass={$context.useRoundedPortraitStyle ? 'rounded' : 'top-left'}
@@ -26,11 +26,11 @@
       exhaustionLocalizationPrefix="T5EK.VehicleExhaustion"
     />
   {/if}
-  {#if !$settingStore.vehicleMotionDisabled}
+  {#if $settingStore.useVehicleMotion}
     <VehicleMovement
       motion={FoundryAdapter.tryGetFlag($context.actor, 'motion') === true}
       radiusClass={$context.useRoundedPortraitStyle ? 'rounded' : 'top-right'}
-      disableAnimation={false}
+      animate={false}
     />
   {/if}
   <VehicleHitPoints />

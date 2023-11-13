@@ -24,7 +24,7 @@
   }
 </script>
 
-<ActorProfile useHpOverlay={!$settingStore.hpOverlayDisabledNpc}>
+<ActorProfile useHpOverlay={$settingStore.useHpOverlayNpc}>
   {#if incapacitated && (!$settingStore.hiddenDeathSavesEnabled || FoundryAdapter.userIsGm())}
     <DeathSaves
       successes={FoundryAdapter.tryGetFlag($context.actor, 'death.success') ??
@@ -34,10 +34,10 @@
       failuresField="flags.{CONSTANTS.MODULE_ID}.death.failure"
       on:rollDeathSave={(event) =>
         $context.rollDeathSave({ event: event.detail.mouseEvent })}
-      hpOverlayDisabled={$settingStore.hpOverlayDisabledNpc}
+      hasHpOverlay={$settingStore.useHpOverlayNpc}
     />
   {/if}
-  {#if !$settingStore.exhaustionDisabled}
+  {#if $settingStore.useExhaustion}
     <Exhaustion
       level={FoundryAdapter.tryGetFlag($context.actor, 'exhaustion') ?? 0}
       radiusClass={$context.useRoundedPortraitStyle ? 'rounded' : 'top-left'}

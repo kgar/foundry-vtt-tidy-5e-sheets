@@ -78,17 +78,17 @@
 />
 
 <CheckboxSetting
-  bind:value={$context.hpBarDisabled}
+  bind:value={$context.useHpBar}
   name={'T5EK.Settings.HpBar.name'}
   hint={'T5EK.Settings.HpBar.hint'}
-  id="hpBarDisabled"
+  id="useHpBar"
 />
 
 <CheckboxSetting
-  bind:value={$context.hpOverlayDisabled}
+  bind:value={$context.useHpOverlay}
   name={'T5EK.Settings.HpOverlay.name'}
   hint={'T5EK.Settings.HpOverlay.hint'}
-  id="hpOverlayDisabled"
+  id="useHpOverlay"
 />
 
 <CheckboxSetting
@@ -120,10 +120,10 @@
 />
 
 <CheckboxSetting
-  bind:value={$context.rightClickDisabled}
-  name={'T5EK.Settings.RightClickDisabled.name'}
-  hint={'T5EK.Settings.RightClickDisabled.hint'}
-  id="rightClickDisabled"
+  bind:value={$context.useContextMenu}
+  name={'T5EK.Settings.UseContextMenu.name'}
+  hint={'T5EK.Settings.UseContextMenu.hint'}
+  id="useContextMenu"
 />
 
 <CheckboxSetting
@@ -143,17 +143,17 @@
 <h3>{localize('T5EK.Settings.MulticlassSpellbookFilterLabel')}</h3>
 
 <CheckboxSetting
-  bind:value={$context.spellClassFilterSelect}
-  name={'T5EK.Settings.SpellClassFilterSelect.name'}
-  hint={'T5EK.Settings.SpellClassFilterSelect.hint'}
-  id="spellClassFilterSelect"
+  bind:value={$context.useMulticlassSpellbookFilter}
+  name={'T5EK.Settings.UseMulticlassSpellbookFilter.name'}
+  hint={'T5EK.Settings.UseMulticlassSpellbookFilter.hint'}
+  id="useMulticlassSpellbookFilter"
 />
 
 <CheckboxSetting
-  bind:value={$context.spellClassFilterIconReplace}
-  name={'T5EK.Settings.SpellClassFilterIconReplace.name'}
-  hint={'T5EK.Settings.SpellClassFilterIconReplace.hint'}
-  id="spellClassFilterIconReplace"
+  bind:value={$context.useSpellClassFilterIcons}
+  name={'T5EK.Settings.UseSpellClassIcons.name'}
+  hint={'T5EK.Settings.UseSpellClassIcons.hint'}
+  id="useSpellClassFilterIcons"
 />
 
 <!-- TODO: Make a little crud-based admin interface for adding / removing these additional classes -->

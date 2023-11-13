@@ -39,7 +39,7 @@
     FoundryAdapter.tryGetFlag($context.actor, 'classFilter') ?? '';
 
   function tryFilterByClass(spells: any[]) {
-    if (!$settingStore.spellClassFilterSelect || selectedClassFilter === '') {
+    if (!$settingStore.useMulticlassSpellbookFilter || selectedClassFilter === '') {
       return spells;
     }
 
@@ -64,7 +64,7 @@
     cssClass="align-self-flex-end"
     placeholder={localize('T5EK.Search')}
   />
-  {#if $settingStore.spellClassFilterSelect}
+  {#if $settingStore.useMulticlassSpellbookFilter}
     <li class="spellbook-class-filter">
       <SpellbookClassFilter />
     </li>

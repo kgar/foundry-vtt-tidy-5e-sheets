@@ -226,68 +226,64 @@
     "hint": "Shows inspiration tracker glow animation."
   },
   "T5EK.Settings.HideIfZero": {
-    "name": "Hide exhaustion and inspiration tracker on 0.",
-    "hint": "Enable to hide exhaustion and inspiration if 0. Will show on hover."
+    "name": "Hide exhaustion and inspiration tracker on 0",
+    "hint": "Hides exhaustion and inspiration if 0 but still shows on hover."
   },
   "T5EK.Settings.InspirationOnHover": {
-    "name": "Show inspiration indicator only on hover.",
-    "hint": "Enable to only show the inspiration indicator when you hover over the portrait."
+    "name": "Show inspiration indicator only on hover",
+    "hint": "Shows the inspiration indicator only when hovering over the portrait."
   },
   "T5EK.Settings.ExhaustionOnHover": {
-    "name": "Show exhaustion tracker only on hover.",
-    "hint": "Enable to only show the exhaustion tracker when you hover over the portrait."
+    "name": "Show exhaustion tracker only on hover",
+    "hint": "Shows the exhaustion tracker only when hovering over the portrait."
   },
   "T5EK.Settings.HpBar": {
-    "name": "Disable health bar.",
-    "hint": "Enable to hide the colored bar indicating the remaining HP (Health Numbers will still be visible)."
+    "name": "Use health bar",
+    "hint": "Shows a colored bar indicating the remaining HP. Health numbers will still be visible."
   },
   "T5EK.Settings.HpOverlay": {
-    "name": "Hide hit point overlay.",
-    "hint": "Enable to hide the HP overlay for this actor type."
+    "name": "Use health overlay",
+    "hint": "Shows a colored HP overlay for this actor type."
   },
   "T5EK.Settings.TraitsTogglePc": {
-    "name": "Toggle empty character traits.",
-    "hint": "By default empty traits are always visible. Enable to add a toggle button."
+    "name": "Toggle empty character traits",
+    "hint": "Adds a toggle button for hiding empty traits."
   },
   "T5EK.Settings.TraitsMovedBelowResource": {
-    "name": "Move traits below resources.",
-    "hint": "Enable to move traits from the left side below resources."
+    "name": "Move traits below resources",
+    "hint": "Moves traits from the side to below resources."
   },
   "T5EK.Settings.AmmoEquippedOnly": {
-    "name": "Only show equipped ammunition.",
-    "hint": "Enable to only show currently equipped ammunition in Weapon ammo selector."
+    "name": "Show only equipped ammunition",
+    "hint": "Shows only currently equipped ammunition in the weapon ammo selector."
   },
   "T5EK.Settings.TraitsAlwaysShown": {
-    "name": "Always show traits.",
-    "hint": "By default empty traits are hidden by a toggle button. Enable to never hide."
+    "name": "Always show traits",
+    "hint": "Removes the visibility toggle button for empty traits and shows all."
   },
   "T5EK.Settings.SkillsAlwaysShown": {
-    "name": "Always show skills.",
-    "hint": "By default unproficient skills are hidden by a toggle button. Enable to never hide."
+    "name": "Always show skills",
+    "hint": "Removes the visibility toggle button for non-proficient skills and shows all."
   },
-  "T5EK.Settings.HideSpellbookTabNpc": {
-    "name": "Hide Spellbook tab on NPC",
-    "hint": "By default the spellbook tab on NPC is moved on the attributes tab. Disable this for never do that."
-  },
-  "T5EK.Settings.EnableNPCEncumbranceBar": {
-    "name": "Enable NPC Encumbrance Bar",
-    "hint": "By default the encumbrance bar is not included on the NPC sheet. Enable this setting to include it."
+  "T5EK.Settings.ShowSpellbookTabNpc": {
+    "name": "Show spellbook tab",
+    "hint": "Shows a spellbook tab for NPCs. Disable to move the spellbook section to the Attributes tab."
   },
   "T5EK.Settings.ActiveEffectsMarker": {
-    "name": "Show Active Effects Marker on items.",
-    "hint": "Enable if you want to see if items have active effects on them (only for list view)."
+    "name": "Show Active Effects Marker",
+    "hint": "Shows a marker for list view items that have active effects."
   },
-  "T5EK.Settings.RightClickDisabled": {
-    "name": "Disable right click context menu.",
-    "hint": "In case of module conflicts or preference you can disable the right click context menu."
+  "T5EK.Settings.UseContextMenu": {
+    "name": "Use context menu",
+    "hint": "Enables right-click context menu on items."
   },
   "T5EK.Settings.ExpandedSheet": {
-    "name": "Expanded Limited view for character sheets.",
-    "hint": "Displays the entire character sheet (minus the journal) to players with limited permission."
+    "name": "Show expanded limited view",
+    "hint": "Displays the entire sheet (minus the journal) to players with limited permission."
   },
   "T5EK.Settings.PortraitStyle": {
-    "name": "Round portrait style.",
-    "hint": "Choose to enable round portraits/icons for actors.",
+    "name": "Use circular portraits",
+    "hint": "Shows circular portraits/icons for actors.",
     "all": "All actors",
     "pc": "PCs",
     "npc": "NPCs/Vehicles",
@@ -295,39 +291,39 @@
     "default": "none"
   },
   "T5EK.Settings.EditTotalLock": {
-    "name": "Lock down sensitive fields.",
-    "hint": "Enable to prevent accidentally changing sensible, mostly static values."
+    "name": "Lock down sensitive fields",
+    "hint": "Locks infrequently changed fields (name, proficiency toggles) and hides configuration buttons when the sheet is locked."
   },
   "T5EK.Settings.EditEffectsGmOnly": {
-    "name": "Only GM can edit active effects.",
-    "hint": "Enable to deny players to edit active effects on their sheets. They will still see applied effects."
+    "name": "Limit active effects management to GMs",
+    "hint": "Limits permission to edit or toggle active effects to GMs only."
   },
   "T5EK.Settings.QuantityAlwaysShown": {
-    "name": "Always show item quantity.",
-    "hint": "Enable to never hide item quantity."
+    "name": "Always show item quantity",
+    "hint": "Shows item quantity on list views even when not hovered."
   },
-  "T5EK.Settings.InspirationDisabled": {
-    "name": "Disable inspiration tracker.",
-    "hint": "If your campaign doesn't use inspiration you can disable the tracker completely."
+  "T5EK.Settings.UseInspiration": {
+    "name": "Use inspiration tracker",
+    "hint": "Shows an inspiration tracker on the character profile."
   },
-  "T5EK.Settings.VehicleMotionDisabled": {
-    "name": "Disable vehicle motion tracker.",
-    "hint": "If your campaign doesn't use vehicle motion you can disable the tracker completely."
+  "T5EK.Settings.UseVehicleMotion": {
+    "name": "Use vehicle motion tracker",
+    "hint": "Shows a motion tracker on the vehicle profile."
   },
-  "T5EK.Settings.ExhaustionDisabled": {
-    "name": "Disable exhaustion tracker.",
-    "hint": "If your campaign doesn't use exhaustion you can disable the tracker completely."
+  "T5EK.Settings.UseExhaustion": {
+    "name": "Use exhaustion tracker",
+    "hint": "Shows an exhaustion tracker for characters, NPCs, and vehicles."
   },
   "T5EK.Settings.RestingForNpcs": {
-    "name": "Resting for NPCs.",
-    "hint": "Enable to shows the rest icon/buttons on NPC sheets."
+    "name": "Use NPC rest",
+    "hint": "Allows NPCs to take short and long rests."
   },
   "T5EK.Settings.RestingForNpcsChat": {
-    "name": "Hide chat card for NPC rest.",
-    "hint": "Enable to hide the Chat Card for NPC rest (applies to GM and Players)."
+    "name": "Hide chat card for NPC rest",
+    "hint": "Prevents the Chat Card for NPC rest from showing."
   },
   "T5EK.Settings.LinkMarker": {
-    "name": "Mark linked/unlinked NPCs.",
+    "name": "Mark linked/unlinked NPCs",
     "hint": "Adds a colored border and icon to linked/unliked NPC sheets.",
     "default": "No link marker (default)",
     "unlinked": "Highlight unlinked tokens",
@@ -335,76 +331,84 @@
     "both": "Highlight linked and unlinked tokens"
   },
   "T5EK.Settings.DefaultSheetTab": {
-    "name": "Default Sheet Tab.",
-    "hint": "Select this tab when opening a sheet for the first time."
+    "name": "Default sheet tab",
+    "hint": "Shows the indicated tab when opening a sheet for the first time."
   },
   "T5EK.Settings.HiddenDeathSaves": {
-    "name": "Hide Death Saves from Players.",
-    "hint": "Enable to make Death Saves and Death Save Results only visible to the GM"
+    "name": "Hide death saves from players",
+    "hint": "Makes death saves and death save results visible only to the GM."
   },
-  "T5EK.Settings.HideSpellSlotMarker": {
-    "name": "Hide Spell Slot Marker on sheet.",
-    "hint": "Enable to hide the colored spell slot marker, this is usually useful when the spell points variant rule is use."
+  "T5EK.Settings.UseSpellSlotMarker": {
+    "name": "Use spell slot marker",
+    "hint": "Shows spell slot markers (dots) above leveled spell sections in the spellbook."
   },
-  "T5EK.Settings.HideStandardEncumbranceBar": {
-    "name": "Remove/Hide standard encumbrance bar from the character sheet",
-    "hint": "If enabled it will hide the standard bar of encumbrance, if you are using 'Variant Encumbrance' module you probably DO NOT NEED THIS"
+  "T5EK.Settings.UseCharacterEncumbranceBar": {
+    "name": "Use Character encumbrance bar",
+    "hint": "Shows an encumbrance bar on character sheets."
+  },
+  "T5EK.Settings.UseNPCEncumbranceBar": {
+    "name": "Use NPC encumbrance bar",
+    "hint": "Shows an encumbrance bar on NPC sheets."
+  },
+  "T5EK.Settings.UseVehicleEncumbranceBar": {
+    "name": "Use vehicle encumnrance bar",
+    "hint": "Shows an encumbrance bar on vehicle sheets."
   },
   "T5EK.Settings.npcSheetWidth": {
-    "name": "Default NPC sheet width.",
-    "hint": "The width of the NPC sheet in pixels, requires a refresh to take effect (default 740)."
+    "name": "Default NPC sheet width",
+    "hint": "The width of the NPC sheet in pixels when showing the sheet for the first time. Requires a refresh to take effect. Default: 740."
   },
   "T5EK.Settings.playerSheetWidth": {
-    "name": "Default player sheet width.",
-    "hint": "The width of the player sheet in pixels, requires a refresh to take effect (default 740)."
+    "name": "Default player sheet width",
+    "hint": "The width of the player character sheet in pixels when showing the sheet for the first time. Requires a refresh to take effect. Default: 740."
   },
   "T5EK.Settings.vehicleSheetWidth": {
-    "name": "Default vehicle sheet width.",
-    "hint": "The width of the vehicle sheet in pixels, requires a refresh to take effect (default 740)."
+    "name": "Default vehicle sheet width",
+    "hint": "The width of the vehicle sheet in pixels when showing the sheet for the first time. Requires a refresh to take effect. Default: 740."
   },
-  "T5EK.Settings.SpellClassFilterSelect": {
-    "name": "Enable Multiclass Spellbook filter",
-    "hint": "If you don't need this for your character, disabling this option will allow you to reclaim the space and declutter your sheet."
+  "T5EK.Settings.UseMulticlassSpellbookFilter": {
+    "name": "Use multiclass spellbook filter",
+    "hint": "Allows filtering spells by class in the spellbook tab. The spell must be associated with a class using the Class selector on the spell edit sheet."
   },
-  "T5EK.Settings.SpellClassFilterIconReplace": {
-    "name": "Cover spell icon with class icon",
-    "hint": "Enabling this will change the spellbook tab to display the icon for the spell's class instead of the spell's image. Useful for managing multiple lists without having to switch between them."
+  "T5EK.Settings.UseSpellClassIcons": {
+    "name": "Use spell class icon for spells",
+    "hint": "Shows spell class's image on spells instead of the spell's own image. The spell must be associated with a class using the Class selector on the spell edit sheet. When multiclassing, this feature dinstinguishes which spells belong to which class at a glance."
   },
   "T5EK.Settings.SpellClassFilterAdditionalClasses": {
-    "name": "Add additional classes for 'Multiclass Spellbook filter'",
-    "hint": "Add additional homebrewed classes to the dropdown with this syntax 'id1|name1,id2|name2' e.g. 'occultist|Occultist,alchemist|Alchemist'"
+    "name": "Additional classes for multiclass spellbook filtering",
+    "hint": "Puts additional classes in the multiclass spellbook filter. Add classes to the dropdown with this syntax \"id1|name1,id2|name2\" e.g. \"occultist|Occultist,alchemist|Alchemist\""
   },
   "T5EK.Settings.AllowCantripsToBePrepared": {
-    "name": "Allow cantrips to be 'prepared'",
-    "hint": "The \"cantrip formulas\" optional rule from Tashas Cauldron of Everything allows Wizards to prepare their cantrips after a long rest in the same way that they do with leveled spells."
+    "name": "Allow cantrips to be prepared",
+    "hint": "The \"cantrip formulas\" optional rule from Tashas Cauldron of Everything allows wizards to prepare cantrips after a long rest in the same way that they do with leveled spells. Prepared cantrips do not count toward to total prepared spells."
   },
   "T5EK.Settings.LockMoneyChanges": {
-    "name": "Lock change money for non GM",
-    "hint": "This will lock up the money input pp, gp, ep, sp, cp on the tidy sheet for non GM player. All other module working with these fields are working just fine."
+    "name": "Lock currency",
+    "hint": "Prevents non-GMs from making changes to currency."
   },
   "T5EK.Settings.LockExpChanges": {
-    "name": "Lock change experience for non GM",
-    "hint": "This will lock up the experience input on the tidy sheet for non GM player. All other module working with these fields are working just fine."
+    "name": "Lock experience",
+    "hint": "Prevents non-GMs from making changes to experience."
   },
   "T5EK.Settings.LockHpMaxChanges": {
-    "name": "Lock change hp max for non GM",
-    "hint": "This will lock up the hp max input on the tidy sheet for non GM player. All other module working with these fields are working just fine."
+    "name": "Lock max HP changes",
+    "hint": "Prevents non-GMs from making changes to max HP."
   },
   "T5EK.Settings.LockLevelSelector": {
-    "name": "Lock level selector for non GM",
-    "hint": "Disable Level Dropdown on the tidy sheet under Features Tab or Offer Option to Lock PLayers out from changing it. All other module working with these fields are working just fine."
+    "name": "Lock level selector",
+    "hint": "Prevents non-GMs from changing player levels with the class level selector."
   },
   "T5EK.Settings.LockConfigureSheet": {
-    "name": "Lock configure sheet for non GM",
-    "hint": "Disable and hide the button for configure sheet on the tidy sheet, to avoid players to use other sheet. All other module working with these fields are working just fine."
+    "name": "Lock sheet selection",
+    "hint": "Prevents non-GMs from selecting another sheet layout."
   },
   "T5EK.Settings.LockItemQuantity": {
-    "name": "Lock item quantity for non GM",
-    "hint": "Enable this to lock the input quantity on the inventory and item sheet on the tidy sheet. All other module working with these fields are working just fine."
+    "name": "Lock item quantity",
+    "hint": "Prevents non-GMs from making changes to item quantity."
   },
   "T5EK.Settings.ColorPickerEnabled": {
-    "name": "Enable Custom Theme Colors",
-    "hint": "Enable/Disable custom theme colors"
+    "name": "Use Custom Theme Colors",
+    "hint": "Shows custom theme colors"
   },
   "T5EK.Settings.ColorPickerPrimaryAccent": {
     "name": "Primary Accent"
@@ -467,39 +471,39 @@
     "name": "Always Prepared Accent"
   },
   "T5EK.Settings.AllowHpMaxOverride": {
-    "name": "Allow Hp Max override on Character",
-    "hint": "If enable this module setting will let the GM to manually change the hp max  value on the character sheet."
+    "name": "Allow HP max override on character",
+    "hint": "Allows the GM to manually change max HP on the character sheet."
   },
   "T5EK.Settings.Reset": {
     "name": "Reset settings to default",
-    "hint": "This will reset all of the settings of back to the active game system's default.",
+    "hint": "This will reset all of the settings of back to the active game system's default. This affects \"world\"-scoped settings only, such as GM options.",
     "dialogs": {
       "title": "Reset Module Settings",
-      "content": "Are you sure you want to reset all of the module settings to the current system's defaults? <strong>THIS CANNOT BE UNDONE!</strong>",
+      "content": "Are you sure you want to reset all of the module settings to the current system's defaults? <strong>This cannot be undone.</strong>",
       "confirm": "Reset Module Settings",
       "cancel": "Cancel"
     }
   },
   "T5EK.Settings.Debug": {
     "name": "Enable debugging",
-    "hint": "Prints debug messages to the console"
+    "hint": "Prints debug messages to the console."
   },
   "T5EK.Settings.EnableSortFavoritesItemsAlphabetically": {
-    "name": "Enable Sort Favorites Alphabetically",
-    "hint": "It enabled this setting will sort the items, features, spells alphabetically on the favorites html template"
+    "name": "Sort favorites alphabetically",
+    "hint": "Sorts favorites alphabetically."
   },
   "T5EK.Settings.EnablePermanentUnlockOnCharacterIfYouAreGM": {
-    "name": "Character Sheet: permanently enable unlock if you are a GM",
+    "name": "Character Sheet: always unlocked for GM",
     "hint": "Treat the character sheet as though it were always unlocked, regardless of the lock setting. The GM can always edit the character, but they can also toggle lock/unlock for a player who also owns the character.",
     "title": "This sheet is always unlocked for the GM, regardless of the lock setting."
   },
   "T5EK.Settings.EnablePermanentUnlockOnNPCIfYouAreGM": {
-    "name": "NPC Sheet: permanently enable unlock if you are a GM",
+    "name": "NPC Sheet: always unlocked for GM",
     "hint": "Treat the NPC sheet as though it were always unlocked, regardless of the lock setting. The GM can always edit the NPC, but they can also toggle lock/unlock for a player who also owns the NPC.",
     "title": "This sheet is always unlocked for the GM, regardless of the lock setting."
   },
   "T5EK.Settings.EnablePermanentUnlockOnVehicleIfYouAreGM": {
-    "name": "Vehicle Sheet: permanently enable unlock if you are a GM",
+    "name": "Vehicle Sheet: always unlocked for GM",
     "hint": "Treat the vehicle sheet as though it were always unlocked, regardless of the lock setting. The GM can always edit the vehicle, but they can also toggle lock/unlock for a player who also owns the vehicle.",
     "title": "This sheet is always unlocked for the GM, regardless of the lock setting."
   },
@@ -541,5 +545,5 @@
     "label": "Menu",
     "themeLabel": "Theme"
   },
-  "T5EK.ActiveEffectsMarkerTitle": "This has active effects"
+  "T5EK.ActiveEffectsMarkerTitle": "This item has active effects"
 }

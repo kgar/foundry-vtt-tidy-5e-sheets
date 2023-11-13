@@ -52,7 +52,7 @@ function onItemContext(element: HTMLElement) {
 
 function getActiveEffectContextOptions(effect: any) {
   const actor = effect.actor ? effect.actor : effect.parent;
-  if (!actor?.isOwner || SettingsProvider.settings.rightClickDisabled.get()) {
+  if (!actor?.isOwner || !SettingsProvider.settings.useContextMenu.get()) {
     return [];
   }
 
@@ -119,7 +119,7 @@ function canEditEffect(effect: any) {
  */
 function getItemContextOptions(item: Item5e) {
   const actor = item.actor ? item.actor : item.parent;
-  if (!actor || SettingsProvider.settings.rightClickDisabled.get()) {
+  if (!actor?.isOwner || !SettingsProvider.settings.useContextMenu.get()) {
     return [];
   }
 

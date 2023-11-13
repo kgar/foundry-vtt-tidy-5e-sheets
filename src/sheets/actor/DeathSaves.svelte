@@ -12,7 +12,7 @@
   export let failures: number;
   export let successesField: string;
   export let failuresField: string;
-  export let hpOverlayDisabled: boolean;
+  export let hasHpOverlay: boolean;
 
   const localize = FoundryAdapter.localize;
 
@@ -22,7 +22,7 @@
 </script>
 
 <div class="death-saves" class:rounded={$context.useRoundedPortraitStyle}>
-  <div class="death-save-counters" class:show-backdrop={hpOverlayDisabled}>
+  <div class="death-save-counters" class:show-backdrop={!hasHpOverlay}>
     <i class="fas fa-check" />
     <TextInput
       document={$context.actor}

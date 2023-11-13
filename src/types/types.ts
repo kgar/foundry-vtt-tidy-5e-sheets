@@ -73,7 +73,7 @@ export type CharacterSheetContext = {
 
 export type NpcSheetContext = {
   encumbrance: any;
-  hideSpellbookTab: boolean;
+  showSpellbookTab: boolean;
   hideEmptySpellbook: boolean;
   shortRest: (event: Event) => Promise<void>;
   traitEnrichedHtml: string;

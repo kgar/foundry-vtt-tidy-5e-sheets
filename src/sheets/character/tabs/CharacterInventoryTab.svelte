@@ -121,7 +121,7 @@
     <Currency actor={$context.actor} />
   </div>
 
-  {#if !$settingStore.hideStandardEncumbranceBar}
+  {#if $settingStore.useCharacterEncumbranceBar}
     <EncumbranceBar />
   {/if}
 </TabFooter>

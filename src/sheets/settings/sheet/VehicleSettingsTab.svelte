@@ -35,17 +35,17 @@
 />
 
 <CheckboxSetting
-  bind:value={$context.hpBarDisabledVehicle}
+  bind:value={$context.useHpBarVehicle}
   name={'T5EK.Settings.HpBar.name'}
   hint={'T5EK.Settings.HpBar.hint'}
-  id="hpBarDisabledVehicle"
+  id="useHpBarVehicle"
 />
 
 <CheckboxSetting
-  bind:value={$context.hpOverlayDisabledVehicle}
+  bind:value={$context.useHpOverlayVehicle}
   name={'T5EK.Settings.HpOverlay.name'}
   hint={'T5EK.Settings.HpOverlay.hint'}
-  id="hpOverlayDisabledVehicle"
+  id="useHpOverlayVehicle"
 />
 
 <NumberInputSetting

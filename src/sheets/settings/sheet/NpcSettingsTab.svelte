@@ -71,17 +71,17 @@
 {/if}
 
 <CheckboxSetting
-  bind:value={$context.hpBarDisabledNpc}
+  bind:value={$context.useHpBarNpc}
   name={'T5EK.Settings.HpBar.name'}
   hint={'T5EK.Settings.HpBar.hint'}
-  id="hpBarDisabledNpc"
+  id="useHpBarNpc"
 />
 
 <CheckboxSetting
-  bind:value={$context.hpOverlayDisabledNpc}
+  bind:value={$context.useHpOverlayNpc}
   name={'T5EK.Settings.HpOverlay.name'}
   hint={'T5EK.Settings.HpOverlay.hint'}
-  id="hpOverlayDisabledNpc"
+  id="useHpOverlayNpc"
 />
 
 <CheckboxSetting
@@ -106,10 +106,10 @@
 />
 
 <CheckboxSetting
-  bind:value={$context.hideSpellbookTabNpc}
-  name={'T5EK.Settings.HideSpellbookTabNpc.name'}
-  hint={'T5EK.Settings.HideSpellbookTabNpc.hint'}
-  id="hideSpellbookTabNpc"
+  bind:value={$context.showSpellbookTabNpc}
+  name={'T5EK.Settings.ShowSpellbookTabNpc.name'}
+  hint={'T5EK.Settings.ShowSpellbookTabNpc.hint'}
+  id="showSpellbookTabNpc"
 />
 
 <NumberInputSetting

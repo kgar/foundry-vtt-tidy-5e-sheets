@@ -27,24 +27,31 @@
   />
 
   <CheckboxSetting
-    bind:value={$context.hideSpellSlotMarker}
-    name={'T5EK.Settings.HideSpellSlotMarker.name'}
-    hint={'T5EK.Settings.HideSpellSlotMarker.hint'}
-    id="hideSpellSlotMarker"
+    bind:value={$context.useSpellSlotMarker}
+    name={'T5EK.Settings.UseSpellSlotMarker.name'}
+    hint={'T5EK.Settings.UseSpellSlotMarker.hint'}
+    id="useSpellSlotMarker"
   />
 
   <CheckboxSetting
-    bind:value={$context.hideStandardEncumbranceBar}
-    name={'T5EK.Settings.HideStandardEncumbranceBar.name'}
-    hint={'T5EK.Settings.HideStandardEncumbranceBar.hint'}
-    id="hideStandardEncumbranceBar"
+    bind:value={$context.useCharacterEncumbranceBar}
+    name={SettingsProvider.settings.useCharacterEncumbranceBar.options.name}
+    hint={SettingsProvider.settings.useCharacterEncumbranceBar.options.hint}
+    id="useCharacterEncumbranceBar"
   />
 
   <CheckboxSetting
-    bind:value={$context.enableNpcEncumbranceBar}
-    name={SettingsProvider.settings.enableNpcEncumbranceBar.options.name}
-    hint={SettingsProvider.settings.enableNpcEncumbranceBar.options.hint}
-    id="enableNpcEncumbranceBar"
+    bind:value={$context.useNpcEncumbranceBar}
+    name={SettingsProvider.settings.useNpcEncumbranceBar.options.name}
+    hint={SettingsProvider.settings.useNpcEncumbranceBar.options.hint}
+    id="useNpcEncumbranceBar"
+  />
+
+  <CheckboxSetting
+    bind:value={$context.useVehicleEncumbranceBar}
+    name={SettingsProvider.settings.useVehicleEncumbranceBar.options.name}
+    hint={SettingsProvider.settings.useVehicleEncumbranceBar.options.hint}
+    id="useVehicleEncumbranceBar"
   />
 
   <CheckboxSetting
@@ -112,24 +119,24 @@
   />
 
   <CheckboxSetting
-    bind:value={$context.inspirationDisabled}
-    name={'T5EK.Settings.InspirationDisabled.name'}
-    hint={'T5EK.Settings.InspirationDisabled.hint'}
-    id="inspirationDisabled"
+    bind:value={$context.useInspiration}
+    name={'T5EK.Settings.UseInspiration.name'}
+    hint={'T5EK.Settings.UseInspiration.hint'}
+    id="useInspiration"
   />
 
   <CheckboxSetting
-    bind:value={$context.vehicleMotionDisabled}
-    name={'T5EK.Settings.VehicleMotionDisabled.name'}
-    hint={'T5EK.Settings.VehicleMotionDisabled.hint'}
-    id="vehicleMotionDisabled"
+    bind:value={$context.useVehicleMotion}
+    name={'T5EK.Settings.UseVehicleMotion.name'}
+    hint={'T5EK.Settings.UseVehicleMotion.hint'}
+    id="useVehicleMotion"
   />
 
   <CheckboxSetting
-    bind:value={$context.exhaustionDisabled}
-    name={'T5EK.Settings.ExhaustionDisabled.name'}
-    hint={'T5EK.Settings.ExhaustionDisabled.hint'}
-    id="exhaustionDisabled"
+    bind:value={$context.useExhaustion}
+    name={'T5EK.Settings.UseExhaustion.name'}
+    hint={'T5EK.Settings.UseExhaustion.hint'}
+    id="useExhaustion"
   />
 
   <CheckboxSetting

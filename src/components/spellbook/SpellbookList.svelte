@@ -60,7 +60,7 @@
           {section.label}
         </span>
         {#if section.usesSlots}
-          {#if !$settingStore.hideSpellSlotMarker}
+          {#if $settingStore.useSpellSlotMarker}
             <SpellSlotMarkers {section} />
           {/if}
           <SpellSlotUses {section} />

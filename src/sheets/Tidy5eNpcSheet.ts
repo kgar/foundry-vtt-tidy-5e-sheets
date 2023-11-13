@@ -184,7 +184,7 @@ export class Tidy5eNpcSheet
         this.actor?.system?.attributes?.hp?.value,
         this.actor?.system?.attributes?.hp?.max
       ),
-      hideSpellbookTab: SettingsProvider.settings.hideSpellbookTabNpc.get(),
+      showSpellbookTab: SettingsProvider.settings.showSpellbookTabNpc.get(),
       idealEnrichedHtml: await FoundryAdapter.enrichHtml(
         FoundryAdapter.getProperty<string>(
           this.actor,

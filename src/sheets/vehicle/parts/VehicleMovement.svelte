@@ -14,7 +14,7 @@
   export let motion: boolean;
   export let cssClass: string = '';
   export let radiusClass: PortraitCharmRadiusClass;
-  export let disableAnimation: boolean = true;
+  export let animate: boolean = true;
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -31,10 +31,7 @@
     checked={motion}
     disabled={!$context.owner}
   >
-    <i
-      class="motion-icon fas fa-sailboat"
-      class:disable-animation={disableAnimation}
-    />
+    <i class="motion-icon fas fa-sailboat" class:animate />
   </Checkbox>
 </div>
 
@@ -99,13 +96,9 @@
       background: var(--t5ek-vehicle-in-motion-background);
     }
 
-    :global(label i) {
+    :global(label i.animate) {
       color: var(--t5ek-activated-profile-toggle-color);
       animation: boat 5s linear infinite;
-    }
-
-    :global(label i.disable-animation) {
-      animation: none;
     }
   }
 

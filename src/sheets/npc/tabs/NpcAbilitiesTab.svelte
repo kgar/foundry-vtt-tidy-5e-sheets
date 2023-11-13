@@ -175,7 +175,7 @@
         </ItemTable>
       {/if}
     {/each}
-    {#if $settingStore.hideSpellbookTabNpc}
+    {#if !$settingStore.showSpellbookTabNpc}
       {#if noSpellLevels}
         <h2>
           <button
@@ -239,7 +239,7 @@
 </section>
 <TabFooter mode="vertical" cssClass="abilities-footer">
   <Currency actor={$context.actor} />
-  {#if $settingStore.enableNpcEncumbranceBar}
+  {#if $settingStore.useNpcEncumbranceBar}
     <EncumbranceBar />
   {/if}
 </TabFooter>
