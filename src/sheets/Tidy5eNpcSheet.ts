@@ -162,8 +162,8 @@ export class Tidy5eNpcSheet
           relativeTo: this.actor,
         }
       ),
-      classicControlsEnabled:
-        SettingsProvider.settings.enableClassicControlsForNpc.get(),
+      useClassicControls:
+        SettingsProvider.settings.useClassicControlsForNpc.get(),
       encumbrance: this.actor.system.attributes.encumbrance,
       editable,
       flawEnrichedHtml: await FoundryAdapter.enrichHtml(
@@ -267,7 +267,6 @@ export class Tidy5eNpcSheet
       owner: this.actor.isOwner,
       rollDeathSave: this._rollDeathSave.bind(this),
       shortRest: this._onShortRest.bind(this),
-
       showLimitedSheet: FoundryAdapter.showLimitedSheet(this.actor),
       tokenState: this.#getTokenState(),
       traitEnrichedHtml: await FoundryAdapter.enrichHtml(
@@ -282,6 +281,7 @@ export class Tidy5eNpcSheet
           relativeTo: this.actor,
         }
       ),
+      useJournalTab: SettingsProvider.settings.useJournalTabForNpc.get(),
       useRoundedPortraitStyle: [
         CONSTANTS.ROUNDED_PORTRAIT_OPTION_ALL as string,
         CONSTANTS.ROUNDED_PORTRAIT_OPTION_NPCVEHICLE as string,

@@ -11,7 +11,6 @@
   "T5EK.Eyes": "Szemszín",
   "T5EK.Skin": "Bőrszín",
   "T5EK.Hair": "Hajszín",
-  "T5EK.Subclass": "Alkaszt",
   "T5EK.EditActorImage": "bal klikk: kép szerkesztés",
   "T5EK.ShowActorImage": "jobb klikk: karakterkép mutatás",
   "T5EK.ShowPortraitArt": "portré mutatás",
@@ -45,16 +44,22 @@
   "T5EK.JournalEntries": "Napló Bejegyzések",
   "T5EK.TogglePersonalityInfo": "Személyiség Info Ki/Be",
 
-  "T5EK.EnableEdit": "Szerkesztés Be",
-  "T5EK.DisableEdit": "Szerkesztés Ki",
-  "T5EK.EditHint": "A hozzáadás/törlés gombok és üres szekciók láthatóságát kapcsolja ki/be",
+  "T5EK.SheetEdit.Enable.Hint": null,
+  "T5EK.SheetEdit.Disable.Hint": null,
+  "T5EK.SheetEdit.Description": "A hozzáadás/törlés gombok és üres szekciók láthatóságát kapcsolja ki/be",
 
-  "T5EK.Equip": "Tárgy Felszerelése",
-  "T5EK.Unequip": "Tárgy Leszerelése",
-  "T5EK.Attune": "Összehangolódás",
-  "T5EK.Deattune": "Összehangolódás Megtörése",
-  "T5EK.Prepare": "Varázslat Előkészítése",
-  "T5EK.Unprepare": "Előkészítés Törlése",
+  "T5EK.SheetLock.Unlock.Hint": null,
+  "T5EK.SheetLock.Lock.Hint": null,
+  "T5EK.SheetLock.Description": null,
+
+  "T5EK.ContextMenuActionEquip": "Tárgy Felszerelése",
+  "T5EK.ContextMenuActionUnequip": "Tárgy Leszerelése",
+  "T5EK.ContextMenuActionAttune": "Összehangolódás",
+  "T5EK.ContextMenuActionUnattune": "Összehangolódás Megtörése",
+  "T5EK.ContextMenuActionPrepare": "Varázslat Előkészítése",
+  "T5EK.ContextMenuActionUnprepare": "Előkészítés Törlése",
+  "T5EK.ContextMenuActionEdit": null,
+  "T5EK.ContextMenuActionDelete": null,
 
   "T5EK.EmptySection": "Ez a szekció üres. Tedd a karakterlapot szerkeszthetővé.",
   "T5EK.GmOnlyEdit": "Csak a JM szerkesztheti ezt a szekciót.",
@@ -65,30 +70,25 @@
 
   "T5EK.GridLayout": "Rács Elrendezés",
   "T5EK.ListLayout": "Lista Elrendezés",
+  "T5EK.LayoutNotSupported": null,
 
   "T5EK.Encumbrance": "Terheltség",
 
-  "T5EK.EditSpell": "Varázslat Szerkesztése",
-  "T5EK.DeleteSpell": "Varázslat Törlése",
-  "T5EK.AddFav": "Hozzáadás a Kedvencekhez",
-  "T5EK.isFav": "Kedvenc",
-  "T5EK.RemoveFav": "Törlés a Kedvencek közül",
+  "T5EK.AddFavorite": "Hozzáadás a Kedvencekhez",
+  "T5EK.Favorite": "Kedvenc",
+  "T5EK.RemoveFavorite": "Törlés a Kedvencek közül",
 
-  "T5EK.ToggleInfo": "Info Ki/Be",
-
-  "T5EK.Show": "mutat/szerkeszt",
-  "T5EK.Hide": "elrejt",
-  "T5EK.Edit": "szerkeszt",
-  "T5EK.TraitsEmpty": "üres jellemzők",
+  "T5EK.ShowNotProficientSkills": null,
+  "T5EK.HideNotProficientSkills": null,
+  "T5EK.ShowEmptyTraits": null,
+  "T5EK.HideEmptyTraits": null,
 
   "T5EK.Abilities": "Tulajdonságok",
 
   "T5EK.Environment": "Környezet",
 
-  "T5EK.SearchItem": "tárgy keresés",
-  "T5EK.SearchSpell": "varázslat keresés",
-  "T5EK.SearchFeat": "képesség keresés",
-  "T5EK.SearchClear": "keresés törlés",
+  "T5EK.Search": null,
+  "T5EK.SearchClear": null,
   "T5EK.SearchHint": "Kezdd el írni, amit keresel.",
 
   "T5EK.ItemCardsKeyHint": "tartsd lenyomva, hogy interakcióba lépj.",
@@ -99,22 +99,36 @@
   "T5EK.SpellAttackMod": "Támadás Mód.",
   "T5EK.PreparedSpells": "Előkészített varázslatok",
   "T5EK.PreparedSpellsMax": "Maximum előkészíthető varázslatok száma",
-  "T5EK.Components": "Komponensek",
-  "T5EK.SpellSchool": "Iskola",
 
   "T5EK.TokenLinked": "Aktorhoz linkelt token",
   "T5EK.TokenUnlinked": "Token nincs aktorhoz linkelve",
 
   "T5EK.ItemDetailsHeadline": "Mechanikák/Flavor Text",
 
-  "T5EK.Settings.GlobalLabel": "Globális",
-  "T5EK.Settings.DebugLabel": "Debug",
-  "T5EK.Settings.UserLabel": "Felhasználó",
-  "T5EK.Settings.PcLabel": "JK-k",
-  "T5EK.Settings.NpcLabel": "NJK-k",
-  "T5EK.Settings.VehicleLabel": "Járművek",
+  "T5EK.SpellClass": null,
+
+  "T5EK.ClassArtificer": null,
+  "T5EK.ClassBarbarian": null,
+  "T5EK.ClassBard": null,
+  "T5EK.ClassCleric": null,
+  "T5EK.ClassCustom": null,
+  "T5EK.ClassDruid": null,
+  "T5EK.ClassFighter": null,
+  "T5EK.ClassMonk": null,
+  "T5EK.ClassPaladin": null,
+  "T5EK.ClassRanger": null,
+  "T5EK.ClassRogue": null,
+  "T5EK.ClassSorcerer": null,
+  "T5EK.ClassWarlock": null,
+  "T5EK.ClassWizard": null,
+
+  "T5EK.OriginSummaryConfig": null,
+
+  "T5EK.Settings.MulticlassSpellbookFilterLabel": null,
 
   "T5EK.Settings.SheetMenu": {
+    "name": null,
+    "hint": null,
     "label": "Lap Beállítások",
     "title": "Tidy5e Lap Beállítások"
   },
@@ -122,21 +136,26 @@
     "tabLabel": "Játékosok",
     "header": "Játékos Karakterlapok"
   },
-  "T5EK.Settings.TabNPCsVehicles": {
-    "tabLabel": "NJK-k/Járművek",
-    "header": "NJK/Jármű Lapok",
-    "labelNPCs": "NJK-k",
-    "labelVehicles": "Járművek"
+  "T5EK.Settings.TabNPCs": {
+    "tabLabel": null,
+    "header": null
+  },
+  "T5EK.Settings.TabVehicles": {
+    "tabLabel": null,
+    "header": null
   },
   "T5EK.Settings.TabGM": {
     "tabLabel": "JM Opciók",
     "header": "JM Lap Opciók"
   },
-  "T5EK.Settings.TabModules": {
-    "tabLabel": "Modulok",
-    "header": "Modul Opciók",
-    "labelActionsFavorites": "Aktor Akciók/Kedvencek",
-    "labelMidiQoL": "Midi Qol"
+  "T5EK.Settings.TabLocks": {
+    "tabLabel": null,
+    "header": null,
+    "hint": null,
+    "hint2": null,
+    "labelGeneralLocks": null,
+    "labelInventoryLocks": null,
+    "labelFeaturesLocks": null
   },
   "T5EK.Settings.TabInfo": {
     "tabLabel": "Info",
@@ -162,34 +181,40 @@
     "name": "Billentyű a kártya interakcióhoz.",
     "hint": "Üss be egy billentyűt (pl. x) a kártya interakcióhoz. Bármilyen billentyű lehet, kivéve a vezérlőbillentyűk(ctrl, alt, stb.)"
   },
-
+  "T5EK.Settings.DefaultTheme": {
+    "name": null,
+    "hint": null
+  },
   "T5EK.Settings.SheetTheme": {
     "name": "Tidy5e színtéma.",
     "hint": "Alapértelmezetten világos vagy alternatívaként sötét téma érhető el a Tidy5e-hez.",
-    "default": "Alapértelmezett (világos)",
-    "dark": "Alternatív (sötét)"
+    "default": null,
+    "light": null,
+    "dark": null
   },
-
-  "T5EK.Settings.ClassicControls": {
+  "T5EK.Settings.UseClassicControls": {
     "name": "Klasszikus vezérlőelemek lista nézetben.",
     "hint": "Mindig mutassa a tételek vezérlését és kikapcsolja a jobb klikk menüt. Csak JK tárgy/varázslat készletre vonatkozik lista nézetben."
   },
-  "T5EK.Settings.RollButtonsToCard": {
-    "name": "midiQol tétel gombok mutatása az info kártyán.",
-    "hint": "Alapértelmezetten a dobás gombok a tárgy leírásában jelennek meg. Kapcsold be, hogy ehelyett az info kártyáko jelenjenek meg. Minden elrendezésben működik."
+  "T5EK.Settings.HideIconsNextToTheItemName": {
+    "name": null,
+    "hint": null
   },
   "T5EK.Settings.TraitLabels": {
     "name": "Jellemző Címkék Mutatása.",
     "hint": "Kapcsold ki, hogy csak JK/NJK jellemzőkhöz mutasson ikonokat."
   },
-
   "T5EK.Settings.PlayerName": {
     "name": "Játékosnév mutatása.",
     "hint": "Kapcsold be, hogy mutasson egy mezőt a játékosnévnek a karakternév alatt."
   },
-  "T5EK.Settings.JournalTab": {
+  "T5EK.Settings.UseJournalTabForCharacter": {
     "name": "Karakternapló elrejtése.",
     "hint": "Kapcsold be, hogy elrejtsd a karakternapló fület."
+  },
+  "T5EK.Settings.UseJournalTabForNPC": {
+    "name": null,
+    "hint": null
   },
   "T5EK.Settings.ClassList": {
     "name": "Karakter kaszt lista elrejtése.",
@@ -231,7 +256,6 @@
     "name": "Csak felszerelt lőszer mutatása.",
     "hint": "Kapcsold be, hogy csak a felszerelt lőszert mutassa a fegyver lőszer választóban."
   },
-
   "T5EK.Settings.TraitsAlwaysShown": {
     "name": "Mindig mutassa a jellemzőket.",
     "hint": "Alapértelmezetten az üres jellemzőket elrejti egy ki/be gomb. Kapcsold be, hogy sose legyenek elrejtve."
@@ -240,14 +264,17 @@
     "name": "Mindig mutassa a képzettségeket.",
     "hint": "Alapértelmezetten egy ki/be gomb elrejti azokat a képzettségekben, amikben nincs jártasság. Kapcsold be, hogy sose legyenek elrejtve."
   },
-
+  "T5EK.Settings.ShowSpellbookTabNpc": {
+    "name": null,
+    "hint": null
+  },
   "T5EK.Settings.ActiveEffectsMarker": {
     "name": "Aktív Hatások Jelölő mutatása a tételeken.",
     "hint": "Kapcsold be, hogy lásd a tételeken lévő aktív hatásokat (csak lista nézetben)."
   },
-  "T5EK.Settings.RightClickDisabled": {
-    "name": "Jobb klikk menü elrejtése.",
-    "hint": "Modul összeakadás vagy csak tetszés miatt kikapcsolhatod a jobb klikk menüt. Helyette a tételeken egy menü ikon lesz."
+  "T5EK.Settings.UseContextMenu": {
+    "name": null,
+    "hint": null
   },
   "T5EK.Settings.ExpandedSheet": {
     "name": "Kiterjesztett Korlátozott nézet a karakterlapokra.",
@@ -262,17 +289,9 @@
     "none": "egyikhez sem",
     "default": "egyikhez sem"
   },
-  "T5EK.Settings.HpOverlayBorder": {
-    "name": "HP átfedés eltolása.",
-    "hint": "Üss be egy eltolási értéket, amivel a portrékeretet kompenzálod és a színkeveredést meggátolod."
-  },
   "T5EK.Settings.EditTotalLock": {
     "name": "Érzékeny mezők lezárása.",
     "hint": "Kapcsold be, hogy véletlenül ne lehessen megváltoztatni érzékny, főleg statikus értékeket."
-  },
-  "T5EK.Settings.EditGmAlways": {
-    "name": "JM mindig szerkesztheti a JK lapokat.",
-    "hint": "Kapcsold be, hogy a JM-ek a lapzár kikapcsolása nélkül is szerkeszthessék a JK lapokat."
   },
   "T5EK.Settings.EditEffectsGmOnly": {
     "name": "Csak JM szerkesztheti az aktív hatásokat.",
@@ -282,30 +301,17 @@
     "name": "Mindig mutassa a tételek mennyiségét.",
     "hint": "Kapcsold be, hogy sose rejtse el a tételek mennyiségét."
   },
-  "T5EK.Settings.InspirationDisabled": {
-    "name": "Inspiráció követő kikapcsolása.",
-    "hint": "Ha a kampányod nem használ inspirációt, ezzel kikapcsolhatod a követőt teljesen."
+  "T5EK.Settings.UseInspiration": {
+    "name": null,
+    "hint": null
   },
-  "T5EK.Settings.ExhaustionEffects": {
-    "name": "Automatikus Kimerültség Hatások.",
-    "hint": "Válaszd ki, hogyan alkalmazod a kimerültség hatásokat a különböző szinteken (midiQol szükséges a hátránydobásokhoz).",
-    "default": "Nincs automatikusan kimerültség hatás",
-    "tidy5e": "Tidy5e - Integrált hatások alkalmazása (Active Effects szükséges)",
-    "custom": "Egyéni - A saját hatásaid alkalmazása (CUB szükséges)"
+  "T5EK.Settings.UseVehicleMotion": {
+    "name": null,
+    "hint": null
   },
-  "T5EK.Settings.CustomExhaustionIcon": {
-    "name": "Egyéni kimerültség hatás ikon.",
-    "hint": "Beállíthatod a saját kimerültség ikonodat az alábbi kép URL-lel. Csak akkor elérhető, ha a Kimerültség Hatás \"tidy 5e\"-re vannak állítva (pl.: modules/tidy5e-sheet/images/exhaustion.svg)."
-  },
-  "T5EK.Settings.CustomExhaustionEffect": {
-    "name": "Egyéni CUB kimerültség hatás név.",
-    "hint": "Állítsd be a saját Kimerültség Hatás nevét - ugyanannak kell lennie, mint a CUB-ban, de a szint NÉLKÜL. (pl. \"Kimerültség\")",
-    "tiers": "Egyéni CUB kimerültség szintek száma. Alapértelmezett = 5",
-    "warning": "Nem található aktor token, amire alkalmazható lenne a kimerültség hatás!"
-  },
-  "T5EK.Settings.ExhaustionDisabled": {
-    "name": "Kimerültség követő kikapcsolása.",
-    "hint": "Ha a kampányod nem használ kimerültséget, ezzel kikapcsolhatod a követőt teljesen."
+  "T5EK.Settings.UseExhaustion": {
+    "name": null,
+    "hint": null
   },
   "T5EK.Settings.RestingForNpcs": {
     "name": "Pihenés az NJK-knak.",
@@ -323,17 +329,31 @@
     "linked": "Linkelt tokenek kiemelése",
     "both": "Linkelt és nem linkelt tokenek kiemelése"
   },
-  "T5EK.Settings.DefaultActionsTab": {
-    "name": "Alapértelmezett fül a lap első nyitásakor.",
-    "hint": "Válassz az 'Akciók' és a 'Tulajdonságok' közül.",
-    "default": "Akciók",
-    "attributes": "Tulajdonságok"
+  "T5EK.Settings.DefaultSheetTab": {
+    "name": null,
+    "hint": null
   },
   "T5EK.Settings.HiddenDeathSaves": {
     "name": "Halál elleni mentők elrejtése a Játékosok elől.",
     "hint": "Kapcsold be, hogy a halál elleni mentőket csak a JM láthassa."
   },
-  "T5EK.Settings.npsSheetWidth": {
+  "T5EK.Settings.UseSpellSlotMarker": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.UseCharacterEncumbranceBar": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.UseNPCEncumbranceBar": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.UseVehicleEncumbranceBar": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.npcSheetWidth": {
     "name": "Alapértelmezett NJK lap szélesség.",
     "hint": "Az NJK lap szélessége pixelekben, újratöltés szükséges (alapértelmezett 740)."
   },
@@ -344,5 +364,185 @@
   "T5EK.Settings.vehicleSheetWidth": {
     "name": "Alapértelmezett jármű lap szélesség.",
     "hint": "A jármű lap szélessége pixelekben, újratöltés szükséges (alapértelmezett 740)."
-  }
+  },
+  "T5EK.Settings.UseMulticlassSpellbookFilter": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.UseSpellClassIcons": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.SpellClassFilterAdditionalClasses": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.AllowCantripsToBePrepared": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.LockMoneyChanges": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.LockExpChanges": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.LockHpMaxChanges": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.LockLevelSelector": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.LockConfigureSheet": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.LockItemQuantity": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.ColorPickerEnabled": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.ColorPickerPrimaryAccent": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerEquipped": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerHpBar": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerEquippedOutline": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerEquippedAccent": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerPrepared": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerPreparedOutline": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerPreparedAccent": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerPact": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerPactOutline": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerPactAccent": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerAtWill": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerAtWillOutline": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerAtWillAccent": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerInnate": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerInnateOutline": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerInnateAccent": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerAlwaysPrepared": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerAlwaysPreparedOutline": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerAlwaysPreparedAccent": {
+    "name": null
+  },
+  "T5EK.Settings.AllowHpMaxOverride": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.Reset": {
+    "name": null,
+    "hint": null,
+    "dialogs": {
+      "title": null,
+      "content": null,
+      "confirm": null,
+      "cancel": null
+    }
+  },
+  "T5EK.Settings.Debug": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.EnableSortFavoritesItemsAlphabetically": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.EnablePermanentUnlockOnCharacterIfYouAreGM": {
+    "name": null,
+    "hint": null,
+    "title": null
+  },
+  "T5EK.Settings.EnablePermanentUnlockOnNPCIfYouAreGM": {
+    "name": null,
+    "hint": null,
+    "title": null
+  },
+  "T5EK.Settings.EnablePermanentUnlockOnVehicleIfYouAreGM": {
+    "name": null,
+    "hint": null,
+    "title": null
+  },
+  "T5EK.ThemeSettings": {
+    "SheetMenu": {
+      "name": null,
+      "buttonLabel": null,
+      "hint": null
+    },
+    "Sheet": {
+      "title": null,
+      "header": null,
+      "useDefaultLightColors": null,
+      "useDefaultDarkColors": null,
+      "export": null,
+      "import": null,
+      "importDropHint": null,
+      "importError": null,
+      "importSuccess": null,
+      "menuLabel": null,
+      "explanation": null
+    }
+  },
+  "T5EK.FavoriteSpellLevelLabel": null,
+  "T5EK.ApplyChanges": null,
+  "T5EK.SaveChanges": null,
+  "T5EK.VehicleExhaustion0": null,
+  "T5EK.VehicleExhaustion1": null,
+  "T5EK.VehicleExhaustion2": null,
+  "T5EK.VehicleExhaustion3": null,
+  "T5EK.VehicleExhaustion4": null,
+  "T5EK.VehicleExhaustion5": null,
+  "T5EK.VehicleExhaustion6": null,
+  "T5EK.VehicleInMotion": null,
+  "T5EK.VehicleMotionless": null,
+  "T5EK.TotalCrewCount": null,
+  "T5EK.ActionsPerTurn": null,
+  "T5EK.SheetMenu": {
+    "label": null,
+    "themeLabel": null
+  },
+  "T5EK.ActiveEffectsMarkerTitle": null
 }

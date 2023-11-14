@@ -29,17 +29,17 @@
 {/if}
 
 <CheckboxSetting
-  bind:value={$context.enableClassicControlsForCharacter}
-  name={SettingsProvider.settings.enableClassicControlsForCharacter.options.name}
-  hint={SettingsProvider.settings.enableClassicControlsForCharacter.options.hint}
-  id="enableClassicControlsForCharacter"
+  bind:value={$context.useClassicControlsForCharacter}
+  name={SettingsProvider.settings.useClassicControlsForCharacter.options.name}
+  hint={SettingsProvider.settings.useClassicControlsForCharacter.options.hint}
+  id="useClassicControlsForCharacter"
 />
 
 <CheckboxSetting
-  bind:value={$context.characterJournalTabDisabled}
-  name={'T5EK.Settings.JournalTab.name'}
-  hint={'T5EK.Settings.JournalTab.hint'}
-  id="characterJournalTabDisabled"
+  bind:value={$context.useJournalTabForCharacter}
+  name={'T5EK.Settings.UseJournalTabForCharacter.name'}
+  hint={'T5EK.Settings.UseJournalTabForCharacter.hint'}
+  id="useJournalTabForCharacter"
 />
 
 <CheckboxSetting

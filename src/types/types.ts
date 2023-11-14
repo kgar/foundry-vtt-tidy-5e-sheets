@@ -55,38 +55,39 @@ export type CharacterFeatureSection = {
 export type CharacterSheetContext = {
   actorClassesToImages: Record<string, string>;
   allowMaxHpOverride: boolean;
-  characterJournalTabDisabled: boolean;
-  features: CharacterFeatureSection[];
-  traitEnrichedHtml: string;
-  idealEnrichedHtml: string;
-  bondEnrichedHtml: string;
-  flawEnrichedHtml: string;
   appearanceEnrichedHtml: string;
   biographyEnrichedHtml: string;
-  notesEnrichedHtml: string;
+  bondEnrichedHtml: string;
+  features: CharacterFeatureSection[];
+  flawEnrichedHtml: string;
+  idealEnrichedHtml: string;
   notes1EnrichedHtml: string;
   notes2EnrichedHtml: string;
   notes3EnrichedHtml: string;
   notes4EnrichedHtml: string;
+  notesEnrichedHtml: string;
+  traitEnrichedHtml: string;
+  useJournalTab: boolean;
 } & ActorSheetContext &
   Record<string, any>;
 
 export type NpcSheetContext = {
-  encumbrance: any;
-  showSpellbookTab: boolean;
-  hideEmptySpellbook: boolean;
-  shortRest: (event: Event) => Promise<void>;
-  traitEnrichedHtml: string;
-  idealEnrichedHtml: string;
-  bondEnrichedHtml: string;
-  flawEnrichedHtml: string;
   appearanceEnrichedHtml: string;
   biographyEnrichedHtml: string;
-  notesEnrichedHtml: string;
+  bondEnrichedHtml: string;
+  encumbrance: any;
+  flawEnrichedHtml: string;
+  hideEmptySpellbook: boolean;
+  idealEnrichedHtml: string;
   notes1EnrichedHtml: string;
   notes2EnrichedHtml: string;
   notes3EnrichedHtml: string;
   notes4EnrichedHtml: string;
+  notesEnrichedHtml: string;
+  shortRest: (event: Event) => Promise<void>;
+  showSpellbookTab: boolean;
+  traitEnrichedHtml: string;
+  useJournalTab: boolean;
 } & ActorSheetContext &
   Record<string, any>;
 
@@ -96,7 +97,6 @@ export type ActorSheetContext = {
   actor: Actor5e;
   allowEffectsManagement: boolean;
   appId: string;
-  classicControlsEnabled: boolean;
   editable: boolean;
   /**
    * Represents remaining health as a percentage within the range of `0` to `100`.
@@ -120,6 +120,7 @@ export type ActorSheetContext = {
    */
   owner: boolean;
   showLimitedSheet: boolean;
+  useClassicControls: boolean;
   useRoundedPortraitStyle: boolean;
 } & JQueryHooksSheetIntegration &
   Record<string, any>;

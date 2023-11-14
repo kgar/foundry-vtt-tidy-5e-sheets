@@ -108,8 +108,8 @@ export class Tidy5eVehicleSheet
       },
       allowEffectsManagement: true,
       appId: this.appId,
-      classicControlsEnabled:
-        SettingsProvider.settings.enableClassicControlsForVehicle.get(),
+      useClassicControls:
+        SettingsProvider.settings.useClassicControlsForVehicle.get(),
       editable,
       healthPercentage: getPercentage(
         this.actor?.system?.attributes?.hp?.value,

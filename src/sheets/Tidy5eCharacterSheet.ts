@@ -180,10 +180,10 @@ export class Tidy5eCharacterSheet
           relativeTo: this.actor,
         }
       ),
-      classicControlsEnabled:
-        SettingsProvider.settings.enableClassicControlsForCharacter.get(),
-      characterJournalTabDisabled:
-        SettingsProvider.settings.characterJournalTabDisabled.get(),
+      useClassicControls:
+        SettingsProvider.settings.useClassicControlsForCharacter.get(),
+      useJournalTab:
+        SettingsProvider.settings.useJournalTabForCharacter.get(),
       editable,
       features: sections,
       flawEnrichedHtml: await FoundryAdapter.enrichHtml(

@@ -28,10 +28,10 @@
 {/if}
 
 <CheckboxSetting
-  bind:value={$context.enableClassicControlsForVehicle}
-  name={SettingsProvider.settings.enableClassicControlsForVehicle.options.name}
-  hint={SettingsProvider.settings.enableClassicControlsForVehicle.options.hint}
-  id="enableClassicControlsForVehicle"
+  bind:value={$context.useClassicControlsForVehicle}
+  name={SettingsProvider.settings.useClassicControlsForVehicle.options.name}
+  hint={SettingsProvider.settings.useClassicControlsForVehicle.options.hint}
+  id="useClassicControlsForVehicle"
 />
 
 <CheckboxSetting

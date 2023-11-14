@@ -204,18 +204,17 @@
     "name": "Show Trait Labels",
     "hint": "Shows labels for PC, NPC, and Vehicle traits. Disable to show only icons."
   },
-
   "T5EK.Settings.PlayerName": {
     "name": "Show player name",
     "hint": "Shows a field for the player name below the character's name."
   },
-  "T5EK.Settings.JournalTab": {
-    "name": "Hide character journal",
-    "hint": "Hides the character journal tab."
+  "T5EK.Settings.UseJournalTabForCharacter": {
+    "name": "Use character journal",
+    "hint": "Shows the character journal tab."
   },
-  "T5EK.Settings.JournalTabNPCDisabled": {
-    "name": "Hide npc journal",
-    "hint": "Enable to hide the npc journal tab."
+  "T5EK.Settings.UseJournalTabForNPC": {
+    "name": "Use NPC journal",
+    "hint": "Shows the npc journal tab."
   },
   "T5EK.Settings.ClassList": {
     "name": "Hide class list",

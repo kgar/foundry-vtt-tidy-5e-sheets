@@ -11,7 +11,6 @@
   "T5EK.Eyes": "眼",
   "T5EK.Skin": "肌",
   "T5EK.Hair": "髪",
-  "T5EK.Subclass": "サブクラス",
   "T5EK.EditActorImage": "左クリック: 画像変更",
   "T5EK.ShowActorImage": "右クリック: 画像表示",
   "T5EK.ShowPortraitArt": "画像表示",
@@ -45,16 +44,22 @@
   "T5EK.JournalEntries": "資料",
   "T5EK.TogglePersonalityInfo": "情報表示の切替",
 
-  "T5EK.EnableEdit": "編集の有効化",
-  "T5EK.DisableEdit": "編集の無効化",
-  "T5EK.EditHint": "編集ロックとロック解除の表示を切替します",
+  "T5EK.SheetEdit.Enable.Hint": null,
+  "T5EK.SheetEdit.Disable.Hint": null,
+  "T5EK.SheetEdit.Description": "編集ロックとロック解除の表示を切替します",
 
-  "T5EK.Equip": "装備",
-  "T5EK.Unequip": "装備解除",
-  "T5EK.Attune": "同調",
-  "T5EK.Deattune": "同調解除",
-  "T5EK.Prepare": "呪文準備",
-  "T5EK.Unprepare": "準備解除",
+  "T5EK.SheetLock.Unlock.Hint": null,
+  "T5EK.SheetLock.Lock.Hint": null,
+  "T5EK.SheetLock.Description": null,
+
+  "T5EK.ContextMenuActionEquip": "装備",
+  "T5EK.ContextMenuActionUnequip": "装備解除",
+  "T5EK.ContextMenuActionAttune": "同調",
+  "T5EK.ContextMenuActionUnattune": "同調解除",
+  "T5EK.ContextMenuActionPrepare": "呪文準備",
+  "T5EK.ContextMenuActionUnprepare": "準備解除",
+  "T5EK.ContextMenuActionEdit": null,
+  "T5EK.ContextMenuActionDelete": null,
 
   "T5EK.EmptySection": "シートがロックされているため新規作成ができません。シートロックを解除して編集してください。",
   "T5EK.GmOnlyEdit": "この項目を編集できるのはGMだけです。",
@@ -65,30 +70,25 @@
 
   "T5EK.GridLayout": "グリッド",
   "T5EK.ListLayout": "リスト",
+  "T5EK.LayoutNotSupported": null,
 
   "T5EK.Encumbrance": "荷重",
 
-  "T5EK.EditSpell": "呪文編集",
-  "T5EK.DeleteSpell": "呪文削除",
-  "T5EK.AddFav": "お気に入り追加",
-  "T5EK.isFav": "お気に入り",
-  "T5EK.RemoveFav": "お気に入りから削除",
+  "T5EK.AddFavorite": "お気に入り追加",
+  "T5EK.Favorite": "お気に入り",
+  "T5EK.RemoveFavorite": "お気に入りから削除",
 
-  "T5EK.ToggleInfo": "詳細表示",
-
-  "T5EK.Show": "表示/編集",
-  "T5EK.Hide": "非表示",
-  "T5EK.Edit": "編集",
-  "T5EK.TraitsEmpty": "未設定の特徴",
+  "T5EK.ShowNotProficientSkills": null,
+  "T5EK.HideNotProficientSkills": null,
+  "T5EK.ShowEmptyTraits": null,
+  "T5EK.HideEmptyTraits": null,
 
   "T5EK.Abilities": "能力",
 
   "T5EK.Environment": "環境",
 
-  "T5EK.SearchItem": "アイテム検索",
-  "T5EK.SearchSpell": "呪文検索",
-  "T5EK.SearchFeat": "特徴検索",
-  "T5EK.SearchClear": "検索クリア",
+  "T5EK.Search": null,
+  "T5EK.SearchClear": null,
   "T5EK.SearchHint": "検索……",
 
   "T5EK.ItemCardsKeyHint": "キーを押したままカードを操作",
@@ -99,17 +99,13 @@
   "T5EK.SpellAttackMod": "攻撃修正",
   "T5EK.PreparedSpells": "準備済み呪文",
   "T5EK.PreparedSpellsMax": "準備済み呪文上限",
-  "T5EK.Components": "構成要素",
-  "T5EK.SpellSchool": "呪文の系統",
 
   "T5EK.TokenLinked": "リンク中のトークン",
   "T5EK.TokenUnlinked": "未リンクのトークン",
 
   "T5EK.ItemDetailsHeadline": "解説・背景",
 
-  "T5EK.Class": "クラス",
-  "T5EK.SpellClass": "呪文クラス",
-  "T5EK.Spellbook": "呪文書",
+  "T5EK.SpellClass": null,
 
   "T5EK.ClassArtificer": "アーティフィサ―",
   "T5EK.ClassBarbarian": "バーバリアン",
@@ -126,14 +122,9 @@
   "T5EK.ClassWarlock": "ウォーロック",
   "T5EK.ClassWizard": "ウィザード",
 
-  "T5EK.Settings.GlobalLabel": "全体",
-  "T5EK.Settings.DebugLabel": "デバッグ",
-  "T5EK.Settings.UserLabel": "ユーザー",
-  "T5EK.Settings.PcLabel": "PC",
-  "T5EK.Settings.NpcLabel": "NPC",
-  "T5EK.Settings.VehicleLabel": "乗り物",
+  "T5EK.OriginSummaryConfig": null,
+
   "T5EK.Settings.MulticlassSpellbookFilterLabel": "マルチクラス呪文書フィルター",
-  "T5EK.Settings.ColorPickerLabel": "色のカスタマイズ",
 
   "T5EK.Settings.SheetMenu": {
     "name": "Tidy Sheet設定",
@@ -145,22 +136,17 @@
     "tabLabel": "プレイヤー",
     "header": "プレイヤーキャラクターシート"
   },
-  "T5EK.Settings.TabNPCsVehicles": {
-    "tabLabel": "NPC/乗物",
-    "header": "NPC/乗物シート",
-    "labelNPCs": "NPC",
-    "labelVehicles": "乗物"
+  "T5EK.Settings.TabNPCs": {
+    "tabLabel": null,
+    "header": null
+  },
+  "T5EK.Settings.TabVehicles": {
+    "tabLabel": null,
+    "header": null
   },
   "T5EK.Settings.TabGM": {
     "tabLabel": "GMオプション",
     "header": "GMｼｰﾄ･ｵﾌﾟｼｮﾝ"
-  },
-  "T5EK.Settings.TabModules": {
-    "tabLabel": "モジュール",
-    "header": "モジュール･オプション",
-    "labelActionsFavorites": "アクター･アクション/お気に入り",
-    "labelMidiQoL": "Midi Qol",
-    "labelLazyMoney": "Lazy Money"
   },
   "T5EK.Settings.TabLocks": {
     "tabLabel": "ロック",
@@ -195,34 +181,40 @@
     "name": "アイテム情報カード操作キー",
     "hint": "アイテムカードの操作に使用するキー（例：x）を入力します。ファンクションキー（Ctrl、Altなど）以外の任意のキーにすることができます。(再読み込みが発生します)"
   },
-
+  "T5EK.Settings.DefaultTheme": {
+    "name": null,
+    "hint": null
+  },
   "T5EK.Settings.SheetTheme": {
     "name": "Tidy5eカラーテーマ",
     "hint": "Tidy5eシートのカラーテーマを、ライトカラーまたはダークカラーに設定します。",
-    "default": "ライトカラー",
-    "dark": "ダークカラー"
+    "default": null,
+    "light": null,
+    "dark": null
   },
-
-  "T5EK.Settings.ClassicControls": {
+  "T5EK.Settings.UseClassicControls": {
     "name": "一覧表示で従来のアイテム操作を使用",
     "hint": "常にアイテム操作を表示し、右クリックメニューを無効にします。一覧表示でPCのアイテム/呪文インベントリにのみ適用されます。"
   },
-  "T5EK.Settings.RollButtonsToCard": {
-    "name": "アイテム情報カードに、midiQolのアイテムボタンを表示",
-    "hint": "デフォルトでは、ロールボタンにはアイテムの説明が表示されます。それらをアイテムを情報カードに移動できるようにします。すべてのレイアウトモードで動作します。"
+  "T5EK.Settings.HideIconsNextToTheItemName": {
+    "name": null,
+    "hint": null
   },
   "T5EK.Settings.TraitLabels": {
     "name": "特徴ラベルの表示",
     "hint": "デフォルトでは、特徴アイコンのみが表示されます。ラベルも表示できるようにします。"
   },
-
   "T5EK.Settings.PlayerName": {
     "name": "プレイヤー名の表示",
     "hint": "キャラクターの名前の下に、プレイヤー名を表示します。"
   },
-  "T5EK.Settings.JournalTab": {
+  "T5EK.Settings.UseJournalTabForCharacter": {
     "name": "シートの記録タブを非表示",
     "hint": "シート上の記録タブを非表示にする場合に有効にします。"
+  },
+  "T5EK.Settings.UseJournalTabForNPC": {
+    "name": null,
+    "hint": null
   },
   "T5EK.Settings.ClassList": {
     "name": "クラス一覧を非表示",
@@ -264,7 +256,6 @@
     "name": "装備済の矢弾のみ表示",
     "hint": "武器ごとに現在装備されている矢弾のみ表示するようにします。"
   },
-
   "T5EK.Settings.TraitsAlwaysShown": {
     "name": "常に特徴を表示",
     "hint": "デフォルトでは、空の特徴はトグルボタンで非表示になります。"
@@ -273,18 +264,17 @@
     "name": "常に技能を表示",
     "hint": "デフォルトでは、技能が無効な場合はトグルボタンで表示されます。"
   },
-  "T5EK.Settings.HideSpellbookTabNpc": {
-    "name": "NPCの呪文書タブを隠す",
-    "hint": "デフォルトだと「能力」タブと一体化しています。これをオフにすればタブが分けられます。"
+  "T5EK.Settings.ShowSpellbookTabNpc": {
+    "name": null,
+    "hint": null
   },
-
   "T5EK.Settings.ActiveEffectsMarker": {
     "name": "アイテムに有効な効果を示すマーカーを表示",
     "hint": "有効な効果を持っているアイテムにマーカーを付けて、判別できるようにする場合は有効にします（リスト表示の場合のみ）。"
   },
-  "T5EK.Settings.RightClickDisabled": {
-    "name": "右ｸﾘｯｸﾒﾆｭｰの表示を無効化",
-    "hint": "モジュールが競合する場合など、右クリックによるメニュー表示を無効にすることができます。項目には、代わりにメニューアイコンが表示されます。"
+  "T5EK.Settings.UseContextMenu": {
+    "name": null,
+    "hint": null
   },
   "T5EK.Settings.ExpandedSheet": {
     "name": "リミテッド･シートの拡大表示",
@@ -299,17 +289,9 @@
     "none": "－",
     "default": "なし"
   },
-  "T5EK.Settings.HpOverlayBorder": {
-    "name": "オフセットhpｵｰﾊﾞｰﾚｲ",
-    "hint": "オフセット値を入力して、hp減少時に赤く塗りつぶす際、画像の外側に塗りつぶし禁止範囲を設けます。"
-  },
   "T5EK.Settings.EditTotalLock": {
     "name": "誤操作による変更をロック",
     "hint": "表記上ほとんど変わることがない値を、誤操作で変更されるのを防ぐことができます。"
-  },
-  "T5EK.Settings.EditGmAlways": {
-    "name": "GM権限でPCｼｰﾄを編集可能",
-    "hint": "有効にすると、シートロックを切替せずに、PCシートをGMが編集できるようになります。"
   },
   "T5EK.Settings.EditEffectsGmOnly": {
     "name": "GMだけが有効化された効果を編集可能",
@@ -319,32 +301,17 @@
     "name": "常にアイテム数量を表示する",
     "hint": "アイテム数量を常に表示にします。"
   },
-  "T5EK.Settings.InspirationDisabled": {
-    "name": "インスピレーション表示の無効化",
-    "hint": "キャンペーンでインスピレーションを使用しない場合､完全に無効化することができます。"
+  "T5EK.Settings.UseInspiration": {
+    "name": null,
+    "hint": null
   },
-  "T5EK.Settings.ExhaustionEffects": {
-    "name": "自動消耗効果",
-    "hint": "消耗レベルに対応した消耗効果を適用する方法を選択します（不利ロールのため要midiQol）",
-    "default": "自動消耗効果なし",
-    "tidy5e": "tidy 5e  - DnD5e標準の効果を適用（有効な効果を使用）",
-    "dfredce": "DFreds Convenient Effects - Use your own effects",
-    "cub": "CUB - Use your own effects",
-    "custom": "カスタム - あなた自身で効果を適用（要CUB）"
+  "T5EK.Settings.UseVehicleMotion": {
+    "name": null,
+    "hint": null
   },
-  "T5EK.Settings.CustomExhaustionIcon": {
-    "name": "カスタム消耗効果アイコン",
-    "hint": "画像のURL（例：modules/tidy5e-sheet/images/exhaustion.svg）を指定して、カスタムされた消耗効果アイコンを設定します。枯渇効果が \"tidy 5e\" に設定されている場合にのみ利用可能です。"
-  },
-  "T5EK.Settings.CustomExhaustionEffect": {
-    "name": "カスタムCUB消耗効果名",
-    "hint": "カスタムされた消耗効果の名前を設定します - CUBで定義されている、消耗レベル表記を抜いた名前と同一でなければなりません。 (例：\"Exhaustion\")",
-    "tiers": "カスタムCUBの消耗レベル数。デフォルトは 5",
-    "warning": "消耗効果を適用するためのアクタートークンが見つかりません！"
-  },
-  "T5EK.Settings.ExhaustionDisabled": {
-    "name": "消耗を無効化",
-    "hint": "キャンペーンで消耗を使用しない場合､完全に無効化することができます。"
+  "T5EK.Settings.UseExhaustion": {
+    "name": null,
+    "hint": null
   },
   "T5EK.Settings.RestingForNpcs": {
     "name": "NPCの休憩",
@@ -362,36 +329,31 @@
     "linked": "関連付けされたトークンを強調表示",
     "both": "トークンを全て強調表示"
   },
-  "T5EK.Settings.DefaultActionsTab": {
-    "name": "初めてシートを開くときのデフォルトタブ",
-    "hint": "「アクション」または「能力値」を選択します。",
-    "default": "アクション",
-    "attributes": "能力値",
-    "inventory": "所持品",
-    "spellbook": "呪文書",
-    "features": "特徴",
-    "effects": "効果",
-    "biography": "経歴",
-    "journal": "資料",
-    "actions": "アクション"
+  "T5EK.Settings.DefaultSheetTab": {
+    "name": null,
+    "hint": null
   },
   "T5EK.Settings.HiddenDeathSaves": {
     "name": "PLから死亡セーヴを隠す",
     "hint": "有効化することで死亡セーヴの結果をGMのみ表示します。"
   },
-  "T5EK.Settings.HideSpellSlotMarker": {
-    "name": "シートの呪文スロットマーカーを隠す",
-    "hint": "色の付いた呪文スロットマーカーを非表示にします。魔力点ルールを使っているときに便利です。"
+  "T5EK.Settings.UseSpellSlotMarker": {
+    "name": null,
+    "hint": null
   },
-  "T5EK.Settings.EnableSpellLevelButtons": {
-    "name": "呪文レベルボタン有効化",
-    "hint": "呪文レベルを選択する画面において、ドロップダウンの代わりに一列に並んだボタンを表示します。"
+  "T5EK.Settings.UseCharacterEncumbranceBar": {
+    "name": null,
+    "hint": null
   },
-  "T5EK.Settings.HideStandardEncumbranceBar": {
-    "name": "キャラシから荷重のバーを非表示にする",
-    "hint": "現在のキャラの所持品の合計の重さを表示する荷重バーを非表示にします。「Variant Encumbrance」モッドを使っている場合は非表示をお勧めします。"
+  "T5EK.Settings.UseNPCEncumbranceBar": {
+    "name": null,
+    "hint": null
   },
-  "T5EK.Settings.npsSheetWidth": {
+  "T5EK.Settings.UseVehicleEncumbranceBar": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.npcSheetWidth": {
     "name": "デフォルトNPCシート幅",
     "hint": "NPCシートの長さ（ピクセル単位）。再起動が必要です。"
   },
@@ -403,35 +365,19 @@
     "name": "乗り物シート幅",
     "hint": "乗り物シートの長さ（ピクセル単位）。再起動が必要です。"
   },
-  "T5EK.Settings.SpellClassFilterSelect": {
+  "T5EK.Settings.UseMulticlassSpellbookFilter": {
     "name": "マルチクラス呪文フィルタを有効化",
     "hint": "キャラシの空間を少し空けたい場合はこれを無効化すると良いです。"
   },
-  "T5EK.Settings.SpellClassFilterIconReplace": {
+  "T5EK.Settings.UseSpellClassIcons": {
     "name": "呪文アイコンをクラスアイコンに置き換える",
     "hint": "呪文の固有のアイコンの代わりにその呪文を獲得したクラスのアイコンを表示するように変更します。呪文の数が多い場合は判別しやすくなります。"
   },
-  "T5EK.Settings.LazyHpAndExpEnable": {
-    "name": "簡易HPと経験値操作",
-    "hint": "HPや経験値に「+10」「-10」「=10」「010」等を入力すると現在の値に大して操作を行い、繰り越し無しで処理されます。"
+  "T5EK.Settings.SpellClassFilterAdditionalClasses": {
+    "name": null,
+    "hint": null
   },
-  "T5EK.Settings.LazyMoneyEnable": {
-    "name": "簡易所持金操作",
-    "hint": "所持金に「+10」「-10」「=10」「010」等を入力すると現在の値に大して操作を行い、繰り越し無しで自動変換と処理がされます。"
-  },
-  "T5EK.Settings.LazyMoneyAddConvert": {
-    "name": "所持金追加時に変換する",
-    "hint": "所持金を増やしたとき、自動的に次に一番大きい貨幣に変換します。"
-  },
-  "T5EK.Settings.LazyMoneyIgnoreElectrum": {
-    "name": "エレクトラムを無視",
-    "hint": "自動的に変換する時、エレクトラム化を無視します。直接エレクトラム化を編集したときはこの限りではありませんが、「所持金追加時に変換する」が有効になっている場合は自動的に変換されます。"
-  },
-  "T5EK.Settings.LazyMoneyChatLog": {
-    "name": "チャットログ",
-    "hint": "所持金の変更をGMに秘話で通知します。"
-  },
-  "T5EK.Settings.AllowCantripToBePreparedOnContext": {
+  "T5EK.Settings.AllowCantripsToBePrepared": {
     "name": "初級呪文も「準備」できる",
     "hint": "ターシャの釜やOne D&D対応として初級呪文も右クリックメニューで準備を入れ替える事ができます。"
   },
@@ -459,88 +405,74 @@
     "name": "非GMのアイテム所持数変更をロック",
     "hint": "アイテム所持数の入力をロックし、非GM以外の人が操作できないようにします。この欄を操作する他のModは影響されません。"
   },
-
   "T5EK.Settings.ColorPickerEnabled": {
     "name": "色カスタマイズを有効化",
     "hint": "色のカスタマイズを有効化／無効化します。"
   },
+  "T5EK.Settings.ColorPickerPrimaryAccent": {
+    "name": null
+  },
   "T5EK.Settings.ColorPickerEquipped": {
-    "name": "「装備」色カスタマイズを有効化",
-    "hint": "「装備」されたアイテムの色をカスタマイズします。「#00000000」に設定すると透明となり、カスタマイズをオフしているのと同じ効果になります。"
+    "name": "「装備」色カスタマイズを有効化"
+  },
+  "T5EK.Settings.ColorPickerHpBar": {
+    "name": null
   },
   "T5EK.Settings.ColorPickerEquippedOutline": {
-    "name": "「装備された枠」色カスタマイズを有効化",
-    "hint": "「装備されたアイテムの枠」の色をカスタマイズします。「#00000000」に設定すると透明となり、カスタマイズをオフしているのと同じ効果になります。"
+    "name": "「装備された枠」色カスタマイズを有効化"
   },
   "T5EK.Settings.ColorPickerEquippedAccent": {
-    "name": "「装備された背景」色カスタマイズを有効化",
-    "hint": "「装備されたアイテムの背景」の色をカスタマイズします。「#00000000」に設定すると透明となり、カスタマイズをオフしているのと同じ効果になります。"
+    "name": "「装備された背景」色カスタマイズを有効化"
   },
   "T5EK.Settings.ColorPickerPrepared": {
-    "name": "「準備済み」色カスタマイズを有効化",
-    "hint": "「準備済み」のアイテムの色をカスタマイズします。「#00000000」に設定すると透明となり、カスタマイズをオフしているのと同じ効果になります。"
+    "name": "「準備済み」色カスタマイズを有効化"
   },
   "T5EK.Settings.ColorPickerPreparedOutline": {
-    "name": "「準備済み枠」色カスタマイズを有効化",
-    "hint": "「準備済みアイテムの枠」の色をカスタマイズします。「#00000000」に設定すると透明となり、カスタマイズをオフしているのと同じ効果になります。"
+    "name": "「準備済み枠」色カスタマイズを有効化"
   },
   "T5EK.Settings.ColorPickerPreparedAccent": {
-    "name": "「準備済み背景」色カスタマイズを有効化",
-    "hint": "「準備済みアイテムの背景」の色をカスタマイズします。「#00000000」に設定すると透明となり、カスタマイズをオフしているのと同じ効果になります。"
+    "name": "「準備済み背景」色カスタマイズを有効化"
   },
   "T5EK.Settings.ColorPickerPact": {
-    "name": "「契約」色カスタマイズを有効化",
-    "hint": "「契約」として設定されたアイテムの色をカスタマイズします。「#00000000」に設定すると透明となり、カスタマイズをオフしているのと同じ効果になります。"
+    "name": "「契約」色カスタマイズを有効化"
   },
   "T5EK.Settings.ColorPickerPactOutline": {
-    "name": "「契約枠」色カスタマイズを有効化",
-    "hint": "「契約アイテムの枠」の色をカスタマイズします。「#00000000」に設定すると透明となり、カスタマイズをオフしているのと同じ効果になります。"
+    "name": "「契約枠」色カスタマイズを有効化"
   },
   "T5EK.Settings.ColorPickerPactAccent": {
-    "name": "「契約背景」色カスタマイズを有効化",
-    "hint": "「契約アイテムの背景」の色をカスタマイズします。「#00000000」に設定すると透明となり、カスタマイズをオフしているのと同じ効果になります。"
+    "name": "「契約背景」色カスタマイズを有効化"
   },
   "T5EK.Settings.ColorPickerAtWill": {
-    "name": "「常に発動可能」色カスタマイズを有効化",
-    "hint": "「常に発動可能」として指定されたアイテムの色をカスタマイズします。「#00000000」に設定すると透明となり、カスタマイズをオフしているのと同じ効果になります。"
+    "name": "「常に発動可能」色カスタマイズを有効化"
   },
   "T5EK.Settings.ColorPickerAtWillOutline": {
-    "name": "「常に発動可能枠」色カスタマイズを有効化",
-    "hint": "「常に発動可能なアイテムの枠」の色をカスタマイズします。「#00000000」に設定すると透明となり、カスタマイズをオフしているのと同じ効果になります。"
+    "name": "「常に発動可能枠」色カスタマイズを有効化"
   },
   "T5EK.Settings.ColorPickerAtWillAccent": {
-    "name": "「常に発動可能背景」色カスタマイズを有効化",
-    "hint": "「常に発動可能なアイテムの背景」されたアイテムの色をカスタマイズします。「#00000000」に設定すると透明となり、カスタマイズをオフしているのと同じ効果になります。"
+    "name": "「常に発動可能背景」色カスタマイズを有効化"
   },
   "T5EK.Settings.ColorPickerInnate": {
-    "name": "「生得呪文」色カスタマイズを有効化",
-    "hint": "「生得呪文」として指定されたアイテムの色をカスタマイズします。「#00000000」に設定すると透明となり、カスタマイズをオフしているのと同じ効果になります。"
+    "name": "「生得呪文」色カスタマイズを有効化"
   },
   "T5EK.Settings.ColorPickerInnateOutline": {
-    "name": "「生得呪文枠」色カスタマイズを有効化",
-    "hint": "「生得呪文の枠」の色をカスタマイズします。「#00000000」に設定すると透明となり、カスタマイズをオフしているのと同じ効果になります。"
+    "name": "「生得呪文枠」色カスタマイズを有効化"
   },
   "T5EK.Settings.ColorPickerInnateAccent": {
-    "name": "「生得呪文背景」色カスタマイズを有効化",
-    "hint": "「生得呪文の背景」の色をカスタマイズします。「#00000000」に設定すると透明となり、カスタマイズをオフしているのと同じ効果になります。"
+    "name": "「生得呪文背景」色カスタマイズを有効化"
   },
   "T5EK.Settings.ColorPickerAlwaysPrepared": {
-    "name": "「常に準備済み」色カスタマイズを有効化",
-    "hint": "「常に準備済み」として指定されたアイテムの色をカスタマイズします。「#00000000」に設定すると透明となり、カスタマイズをオフしているのと同じ効果になります。"
+    "name": "「常に準備済み」色カスタマイズを有効化"
   },
   "T5EK.Settings.ColorPickerAlwaysPreparedOutline": {
-    "name": "「常に準備済み枠」色カスタマイズを有効化",
-    "hint": "「常に準備済みの枠」の色をカスタマイズします。「#00000000」に設定すると透明となり、カスタマイズをオフしているのと同じ効果になります。"
+    "name": "「常に準備済み枠」色カスタマイズを有効化"
   },
   "T5EK.Settings.ColorPickerAlwaysPreparedAccent": {
-    "name": "「常に準備済みの背景」色カスタマイズを有効化",
-    "hint": "「常に準備済みの背景」の色をカスタマイズします。「#00000000」に設定すると透明となり、カスタマイズをオフしているのと同じ効果になります。"
+    "name": "「常に準備済みの背景」色カスタマイズを有効化"
   },
   "T5EK.Settings.AllowHpMaxOverride": {
     "name": "キャラクターの最大HP手動変更",
     "hint": "キャラクターシートのデフォルトの設定を上書きし、プレイヤーキャラクターの最大HPをGMが手動で変更できるようになります。"
   },
-
   "T5EK.Settings.Reset": {
     "name": "設定を初期化",
     "hint": "シートの設定をデフォルトに戻します。",
@@ -551,5 +483,66 @@
       "cancel": "キャンセル"
     }
   },
-  "Save Changes": "保存"
+  "T5EK.Settings.Debug": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.EnableSortFavoritesItemsAlphabetically": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.EnablePermanentUnlockOnCharacterIfYouAreGM": {
+    "name": null,
+    "hint": null,
+    "title": null
+  },
+  "T5EK.Settings.EnablePermanentUnlockOnNPCIfYouAreGM": {
+    "name": null,
+    "hint": null,
+    "title": null
+  },
+  "T5EK.Settings.EnablePermanentUnlockOnVehicleIfYouAreGM": {
+    "name": null,
+    "hint": null,
+    "title": null
+  },
+  "T5EK.ThemeSettings": {
+    "SheetMenu": {
+      "name": null,
+      "buttonLabel": null,
+      "hint": null
+    },
+    "Sheet": {
+      "title": null,
+      "header": null,
+      "useDefaultLightColors": null,
+      "useDefaultDarkColors": null,
+      "export": null,
+      "import": null,
+      "importDropHint": null,
+      "importError": null,
+      "importSuccess": null,
+      "menuLabel": null,
+      "explanation": null
+    }
+  },
+  "T5EK.FavoriteSpellLevelLabel": null,
+  "T5EK.ApplyChanges": null,
+  "T5EK.SaveChanges": "保存",
+  "T5EK.VehicleExhaustion0": null,
+  "T5EK.VehicleExhaustion1": null,
+  "T5EK.VehicleExhaustion2": null,
+  "T5EK.VehicleExhaustion3": null,
+  "T5EK.VehicleExhaustion4": null,
+  "T5EK.VehicleExhaustion5": null,
+  "T5EK.VehicleExhaustion6": null,
+  "T5EK.VehicleInMotion": null,
+  "T5EK.VehicleMotionless": null,
+  "T5EK.TotalCrewCount": null,
+  "T5EK.ActionsPerTurn": null,
+  "T5EK.SheetMenu": {
+    "label": null,
+    "themeLabel": null
+  },
+  "T5EK.ActiveEffectsMarkerTitle": null
 }

@@ -1,109 +1,109 @@
 {
-  "T5EK.Tidy5eSheet": "Tidy 5e Character Sheet",
-  "T5EK.Tidy5eNPC": "Tidy 5e NPC Sheet",
-  "T5EK.Tidy5eItemSheet": "Tidy 5e Item Sheet",
-  "T5EK.Tidy5eVehicle": "Tidy 5e Vechicle Sheet",
-  "T5EK.PlayerName": "Nome do Jogador",
-  "T5EK.Gender": "Gênero",
-  "T5EK.Age": "Idade",
+  "T5EK.T5EKSheet": "Tidy 5e Character Sheet",
+  "T5EK.T5EKNPC": "Tidy 5e NPC Sheet",
+  "T5EK.T5EKItemSheet": "Tidy 5e Item Sheet",
+  "T5EK.T5EKVehicle": "Tidy 5e Vechicle Sheet",
+  "T5EK.PlayerName": "Nombre del jugador",
+  "T5EK.Gender": "Gender",
+  "T5EK.Age": "Edad",
   "T5EK.Weight": "Peso",
   "T5EK.Height": "Altura",
-  "T5EK.Eyes": "Olhos",
-  "T5EK.Skin": "Pele",
-  "T5EK.Hair": "Cabelo",
-  "T5EK.EditActorImage": "Clique Esq.: Editar Imagem",
-  "T5EK.ShowActorImage": "Clique Dir.: Mostrar Arte do Personagem",
-  "T5EK.ShowPortraitArt": "Mostrar imagem",
-  "T5EK.ShowTokenArt": "Mostrar Token",
+  "T5EK.Eyes": "Ojos",
+  "T5EK.Skin": "Piel",
+  "T5EK.Hair": "Pelo",
+  "T5EK.EditActorImage": "click izquierdo: editar imagen",
+  "T5EK.ShowActorImage": "click derecho: mostrar ilustración del pj",
+  "T5EK.ShowPortraitArt": "mostrar retrato",
+  "T5EK.ShowTokenArt": "mostrar token",
   "T5EK.ShowItemImage": "right click: show item art",
   "T5EK.ShowItemArt": "show image",
 
-  "T5EK.Exhaustion0": "Nenhum efeito negativo",
-  "T5EK.Exhaustion1": "Desvantagem em Testes de Atributo",
-  "T5EK.Exhaustion2": "Metade do Deslocamento",
-  "T5EK.Exhaustion3": "Desvantagem em jogadas de Ataque e Salvaguardas",
-  "T5EK.Exhaustion4": "Redução de pontos de vida máximos à metade",
-  "T5EK.Exhaustion5": "Deslocamento reduzido a 0",
-  "T5EK.Exhaustion6": "Morte",
+  "T5EK.Exhaustion0": "Sin efectos perjudiciales",
+  "T5EK.Exhaustion1": "Desventaja en pruebas de característica",
+  "T5EK.Exhaustion2": "Velocidad reducida a la mitad",
+  "T5EK.Exhaustion3": "Desventaja en tiradas de ataque y de salvación",
+  "T5EK.Exhaustion4": "Puntos de golpe máximos reducidos a la mitad",
+  "T5EK.Exhaustion5": "Velocidad reducida a 0",
+  "T5EK.Exhaustion6": "Muerte",
 
   "T5EK.AbbrInitiative": "Ini",
 
-  "T5EK.RestHint": "Fazer um Descanso",
-  "T5EK.RestS": "D. Curto",
-  "T5EK.RestL": "D. Longo",
+  "T5EK.RestHint": "Tomar un descanso",
+  "T5EK.RestS": "Descanso corto",
+  "T5EK.RestL": "Descanso largo",
   "T5EK.HitDiceRollAverage": "Right Click: Average",
 
-  "T5EK.Journal": "Diário",
+  "T5EK.Journal": "Diario",
 
-  "T5EK.RestoreOnRest": "Restaurar no Descanso",
+  "T5EK.RestoreOnRest": "Recuperar tras descanso",
 
-  "T5EK.JournalPoi": "Pessoas Importantes",
-  "T5EK.JournalLoi": "Locais Importantes",
-  "T5EK.JournalQuests": "Missões",
-  "T5EK.JournalMisc": "Diversos",
-  "T5EK.JournalEntries": "Entradas de Diário",
-  "T5EK.TogglePersonalityInfo": "Alternar Informações de Personalidade",
+  "T5EK.JournalPoi": "Personas de interés",
+  "T5EK.JournalLoi": "Lugares de interés",
+  "T5EK.JournalQuests": "Misiones",
+  "T5EK.JournalMisc": "Miscelánea",
+  "T5EK.JournalEntries": "Entradas del diario",
+  "T5EK.TogglePersonalityInfo": "Alternar información de personalidad",
 
   "T5EK.SheetEdit.Enable.Hint": null,
   "T5EK.SheetEdit.Disable.Hint": null,
-  "T5EK.SheetEdit.Description": "Alternar visibilidade dos botões de adicionar/apagar e seções vazias",
+  "T5EK.SheetEdit.Description": "Alternar la visibilidad de los botones añadir/eliminar de las secciones vacías",
 
   "T5EK.SheetLock.Unlock.Hint": null,
   "T5EK.SheetLock.Lock.Hint": null,
   "T5EK.SheetLock.Description": null,
 
-  "T5EK.ContextMenuActionEquip": "Equipar Item",
-  "T5EK.ContextMenuActionUnequip": "Desequipar Item",
-  "T5EK.ContextMenuActionAttune": "Sintonizar ao Item",
-  "T5EK.ContextMenuActionUnattune": "Quebrar Sintonização",
-  "T5EK.ContextMenuActionPrepare": "Preparar Magia",
-  "T5EK.ContextMenuActionUnprepare": "Remover Preparação",
+  "T5EK.ContextMenuActionEquip": "Equipar Objeto",
+  "T5EK.ContextMenuActionUnequip": "Desequipar Objeto",
+  "T5EK.ContextMenuActionAttune": "Sintonizarse al Objeto",
+  "T5EK.ContextMenuActionUnattune": "Romper Sintonización",
+  "T5EK.ContextMenuActionPrepare": "Preparar Conjuro",
+  "T5EK.ContextMenuActionUnprepare": "Eliminar Preparación",
   "T5EK.ContextMenuActionEdit": null,
   "T5EK.ContextMenuActionDelete": null,
 
-  "T5EK.EmptySection": "Essa sessão está vazia. Desbloqueie a ficha para editar.",
-  "T5EK.GmOnlyEdit": "Só seu Mestre consegue editar esta sessão.",
+  "T5EK.EmptySection": "Esta sección está vacía. Desbloquea la hoja para editarla.",
+  "T5EK.GmOnlyEdit": "Solo tu DJ puede editar esta sección.",
 
-  "T5EK.AttunementWarning": "Aviso de Sintonização: Você não pode sintonizar com mais de {number} itens!",
-  "T5EK.AttunementItems": "Itens Sintonizados",
-  "T5EK.AttunementMax": "Máximo de Sintonização",
+  "T5EK.AttunementWarning": "Aviso de sintonización: ¡No puedes sintonizar más de {número} objetos!",
+  "T5EK.AttunementItems": "Objetos sintonizados",
+  "T5EK.AttunementMax": "Máximo de sintonización",
 
-  "T5EK.GridLayout": "Disposição em Grade",
-  "T5EK.ListLayout": "Disposição em Lista",
+  "T5EK.GridLayout": "Diseño de cuadrícula",
+  "T5EK.ListLayout": "Diseño de lista",
   "T5EK.LayoutNotSupported": null,
 
-  "T5EK.Encumbrance": "Capacidade de Carga",
+  "T5EK.Encumbrance": "Estorbo",
 
-  "T5EK.AddFavorite": "Adicionar aos Favoritos",
+  "T5EK.AddFavorite": "Añadir Favorito",
   "T5EK.Favorite": "Favorito",
-  "T5EK.RemoveFavorite": "Remover dos Favoritos",
+  "T5EK.RemoveFavorite": "Eliminar Favorito",
 
   "T5EK.ShowNotProficientSkills": null,
   "T5EK.HideNotProficientSkills": null,
   "T5EK.ShowEmptyTraits": null,
   "T5EK.HideEmptyTraits": null,
 
-  "T5EK.Abilities": "Atributos",
+  "T5EK.Abilities": "Características",
 
-  "T5EK.Environment": "Ambiente",
+  "T5EK.Environment": "Entorno",
 
   "T5EK.Search": null,
   "T5EK.SearchClear": null,
-  "T5EK.SearchHint": "Comece digitando o que você gostaria de buscar.",
+  "T5EK.SearchHint": "Comienza a escribir lo que estás buscando.",
 
   "T5EK.ItemCardsKeyHint": "hold Key to interact with card.",
   "T5EK.ItemCardsMouseHint": "middle mouse to view/edit item.",
 
   "T5EK.AbbrMod": "Mod",
-  "T5EK.AbbrSavingThrow": "Salva",
-  "T5EK.SpellAttackMod": "Mod de Ataque",
-  "T5EK.PreparedSpells": "Magias Preparadas",
-  "T5EK.PreparedSpellsMax": "Máximo de magias preparadas",
+  "T5EK.AbbrSavingThrow": "Salvación",
+  "T5EK.SpellAttackMod": "Mod de ataque",
+  "T5EK.PreparedSpells": "Conjuros preparados",
+  "T5EK.PreparedSpellsMax": "Máximo de conjuros preparados",
 
-  "T5EK.TokenLinked": "Token vinculado a Ator",
-  "T5EK.TokenUnlinked": "Token não vinculado a Ator",
+  "T5EK.TokenLinked": "Token vinculado a actor",
+  "T5EK.TokenUnlinked": "Token no vinculado a actor",
 
-  "T5EK.ItemDetailsHeadline": "Mecânicas/Texto Opcional",
+  "T5EK.ItemDetailsHeadline": "Texto de reglas/ambientación",
 
   "T5EK.SpellClass": null,
 
@@ -129,12 +129,12 @@
   "T5EK.Settings.SheetMenu": {
     "name": null,
     "hint": null,
-    "label": "Configurações da Ficha",
-    "title": "Configurações da Ficha do Tidy5e"
+    "label": "Opciones de la hoja",
+    "title": "Opciones de la hoja de T5EK"
   },
   "T5EK.Settings.TabPlayers": {
-    "tabLabel": "Players",
-    "header": "Player Character Sheets"
+    "tabLabel": "Jugadores",
+    "header": "Hojas de los Personajes jugadores"
   },
   "T5EK.Settings.TabNPCs": {
     "tabLabel": null,
@@ -145,8 +145,8 @@
     "header": null
   },
   "T5EK.Settings.TabGM": {
-    "tabLabel": "GM Options",
-    "header": "GM Sheet Options"
+    "tabLabel": "Opciones del GM",
+    "header": "Opciones de la hoha de GM"
   },
   "T5EK.Settings.TabLocks": {
     "tabLabel": null,
@@ -162,51 +162,52 @@
     "header": "Info"
   },
   "T5EK.Settings.ItemCardsForAllItems": {
-    "name": "Show item info cards in all layouts.",
-    "hint": "Disable if you only want the slide out item info cards in grid layout."
+    "name": "Mostrar las tarjetas de informacíon del objeto de los objetos en todos los disenõs.",
+    "hint": "Desactívalo si quieres que las tarjetas de información del objeto solo salgan en el diseño de cuadrícula."
   },
   "T5EK.Settings.ItemCardsForNpcs": {
-    "name": "Show item info cards for NPCs/vehicles.",
-    "hint": "Disable if you don't want the slide out item info cards for NPCs/vehicles."
+    "name": "Mostrar las tarjetas de información del objeto en PNJs/vehículos.",
+    "hint": "Desactívalo si no quieres que las tarjetas de información del objeto salgan en las fichas de PNJs/vehículos."
   },
   "T5EK.Settings.ItemCardsAreFloating": {
-    "name": "Item info cards float next to cursor.",
-    "hint": "Enable to detach item info cards from sheet and float them next to the cursor. Best to use with delay. Also useful when sheet is popped out."
+    "name": "Las tarjetas de información del objeto flotan junto al cursor.",
+    "hint": "Actívalo para separar las tarjetas de información del objeto de la ficha y hacer que floten al lado del cursor. Es mejor utilizarlo con retardo. Útil cuando la ficha está en una nueva pestaña."
   },
   "T5EK.Settings.ItemCardsDelay": {
-    "name": "Delay showing info cards.",
-    "hint": "The Item Card will show when you hover an item for the value in milliseconds (0 = no delay, 300 is default)."
+    "name": "Retardo en mostrar las tarjetas de información del objeto",
+    "hint": "La Tarjeta de Información se mostrará al mantener el ratón sobre un objeto durante el valor en milisegundos (0 = no hay retardo, 300 es el valor por defecto)"
   },
   "T5EK.Settings.ItemCardsFixKey": {
-    "name": "Key to hold for Item Card interaction.",
-    "hint": "Enter a key (e.g.: x) to use for item card interaction. Can be any key except function keys (ctrl, alt, etc.)"
+    "name": "Tecla a mantener para la interacción con la Tarjeta de Información.",
+    "hint": "Introduce una tecla (p. ej: x) para interactuar con la tarjeta de información del objeto. Puede tratarse de cualquier tecla excepto las teclas de función (ctrl, alt, etc.)"
   },
   "T5EK.Settings.DefaultTheme": {
     "name": null,
     "hint": null
   },
   "T5EK.Settings.SheetTheme": {
-    "name": "Tema de Cor de Tidy5e",
-    "hint": "Use o tema claro padrão ou tema escuro alternativo para Tidy5e",
+    "name": "T5EK color del tema",
+    "hint": "Utiliza el tema por defecto de color claro u oscuro de T5EK.",
     "default": null,
     "light": null,
     "dark": null
   },
+
   "T5EK.Settings.UseClassicControls": {
-    "name": "Usar controles de item clássicos na lista.",
-    "hint": "Sempre mostra os controles de itens e desativa o menu de clique direito. Só se aplica para itens/magias de PJs na visão de lista."
+    "name": "Utilizar los controles clásicos de los objetos en el diseño de lista",
+    "hint": "Muestra siempre los botones de los objetos y desactiva el menú del botón derecho. Sólo se aplica para el inventario de objetos/conjuros del PJ en el listado."
   },
   "T5EK.Settings.HideIconsNextToTheItemName": {
     "name": null,
     "hint": null
   },
   "T5EK.Settings.TraitLabels": {
-    "name": "Mostrar Etiquetas de Traços",
-    "hint": "Por padrão, somente ícones são mostrados para traços. Habilite para mostrar as etiquetas também."
+    "name": "Mostrar etiquetas de los rasgos",
+    "hint": "Por defecto sólo se muestran los iconos de los rasgos. Actívalo para mostrar también las etiquetas."
   },
   "T5EK.Settings.PlayerName": {
-    "name": null,
-    "hint": null
+    "name": "Mostrar nombre del Jugador.",
+    "hint": "Permite mostrar un campo para el nombre del jugador debajo del nombre del personaje."
   },
   "T5EK.Settings.UseJournalTabForCharacter": {
     "name": null,
@@ -217,89 +218,89 @@
     "hint": null
   },
   "T5EK.Settings.ClassList": {
-    "name": "Esconder lista de classes do personagem.",
-    "hint": "Habilite para esconder a lista de classes abaixo do nome do personagem."
+    "name": "Ocultar la clase del personaje",
+    "hint": "Actívalo para ocultar la clase del personaje bajo su nombre."
   },
   "T5EK.Settings.InspirationAnimation": {
-    "name": "Sem animação do indicador de inspiração.",
-    "hint": "Habilite para desligar a animação de brilho do indicador de inspiração."
+    "name": "Indicador de inspiración sin animación",
+    "hint": "Actívalo para quitar la animación de brillo del Indicador de inspiración."
   },
   "T5EK.Settings.HideIfZero": {
-    "name": "Esconder indicadores de exaustão e inspiração em 0.",
-    "hint": "Habilite para esconder o indicador de exaustão e inspiração se for 0. Mostrará ao pairar o mouse sobre."
+    "name": "Ocultar el medidor de cansancio e inspiración con 0",
+    "hint": "Actívalo para ocultar el medidor de cansancio e inspiración si se encuentra a 0. Se mostrará al pasar el ratón."
   },
   "T5EK.Settings.InspirationOnHover": {
-    "name": "Mostrar indicador de inspiração só ao pairar o mouse sobre.",
-    "hint": "Habilite para mostrar somente o indicador de inspiração somente quando você pairar sobre o retrato."
+    "name": "Mostrar el indicador de inspiración sólo al pasar por encima",
+    "hint": "Actívalo para mostrar el indicador de inspiración sólo al pasar el ratón por encima del retrato."
   },
   "T5EK.Settings.ExhaustionOnHover": {
-    "name": "Mostrar o indicador de exaustão somente ao pairar o mouse.",
-    "hint": "Habilite para mostrar o indicator de exaustão quando você pairar o mouse sobre o retrato."
+    "name": "Mostrar el medidor de cansancio sólo al pasar por encima",
+    "hint": "Actívalo para mostrar el medidor de cansancio al pasar el ratón por encima del retrato."
   },
   "T5EK.Settings.HpBar": {
-    "name": "Desativar a barra de vida.",
-    "hint": "Habilite para esconder a barra colorida que indica a quantidade de PVs restante (número de pontos de vida ainda serão visíveis)."
+    "name": "Desactivar barra de salud",
+    "hint": "Actívalo para ocultar la barra coloreada que indica los PG restantes (los números de la salud seguirán siendo visibles)."
   },
   "T5EK.Settings.HpOverlay": {
-    "name": "Esconder a sobreposição de pontos de vida.",
-    "hint": "Habilite para esconder a sobreposição de PVs para esse tipo de ator."
+    "name": "Ocultar la superposición de puntos de golpe",
+    "hint": "Actívalo para ocultar la superposición de PG para este tipo de actor."
   },
   "T5EK.Settings.TraitsTogglePc": {
-    "name": "Alternar traços de personagem vazios.",
-    "hint": "Por padrão, traços vazios são sempre visíveis. Habilite para adicionar um botão que alterna a visibilidade."
+    "name": "Alternar rasgos de personaje vacíos",
+    "hint": "Por defecto los rasgos vacíos siempre están visibles. Actívalo para añadir un botón de activación."
   },
   "T5EK.Settings.TraitsMovedBelowResource": {
-    "name": "Mover traços para baixo de recursos.",
-    "hint": "Habilite para mover traços de personagem do lado esquerdo para o lado direito, abaixo de recursos."
+    "name": "Mover los rasgos debajo de los recursos",
+    "hint": "Permite mover los rasgos de la parte izquierda debajo de los recursos."
   },
   "T5EK.Settings.AmmoEquippedOnly": {
     "name": null,
     "hint": null
   },
   "T5EK.Settings.TraitsAlwaysShown": {
-    "name": "Sempre mostrar traços.",
-    "hint": "Por padrão, traços vazios são escondidos por botão de alternância. Habilite para nunca esconder."
+    "name": "Mostrar siempre los rasgos",
+    "hint": "Por defecto, los rasgos vacíos se ocultan mediante un botón de activación. Actívalo para no ocultarlos nunca."
   },
   "T5EK.Settings.SkillsAlwaysShown": {
-    "name": "Sempre mostrar perícias.",
-    "hint": "Por padrão, perícias sem proficiências são escondidas por um botão de alternância. Habilite para nunca esconder."
+    "name": "Mostrar siempre las habilidades",
+    "hint": "Por defecto, las habilidades no competentes se ocultan mediante un botón de activación. Actívalo para no ocultarlo nunca."
   },
   "T5EK.Settings.ShowSpellbookTabNpc": {
     "name": null,
     "hint": null
   },
   "T5EK.Settings.ActiveEffectsMarker": {
-    "name": "Mostrar marcador de Efeitos Ativos em itens.",
-    "hint": "Habilite se você deseja ver se itens possuem efeitos ativos neles (somente para lista)"
+    "name": "Mostrar un marcador de Efectos Activos en los objetos.",
+    "hint": "Actívalo si quieres ver si los objetos tienen efectos activos en ellos (solo en diseño de lista)."
   },
   "T5EK.Settings.UseContextMenu": {
     "name": null,
     "hint": null
   },
   "T5EK.Settings.ExpandedSheet": {
-    "name": "Visão Limitada expandida para fichas de personagem.",
-    "hint": "Mostra toda a ficha de personagem (menos o diário) para jogadores com permissão limitada."
+    "name": "Ampliar la vista limitada para las hojas de personaje",
+    "hint": "Muestra toda la hoja de personaje (menos el diario) a los jugadores con permiso limitado."
   },
   "T5EK.Settings.PortraitStyle": {
-    "name": "Estilo redondo para retrato.",
-    "hint": "Escolha para habilitar retratos/ícones redondos para atores.",
-    "all": "Todos os atores",
+    "name": "Estilo de retrato redondo.",
+    "hint": "Selecciona activar los retratos/iconos redondos para los actores.",
+    "all": "Todos los actores",
     "pc": "PJs",
-    "npc": "PNJs/Veículos",
-    "none": "Nenhum",
-    "default": "Nenhum"
+    "npc": "PNJs/Vehículos",
+    "none": "ninguno",
+    "default": "ninguno"
   },
   "T5EK.Settings.EditTotalLock": {
-    "name": "Travar campos delicados",
-    "hint": "Habilite para prevenir mudanças acidentais em campos sensíveis e em sua maioria estáticos."
+    "name": "Bloquar los campos sensibles.",
+    "hint": "Actívalo para evitar cambiar accidentalmente valores sensibles, en su mayoría estáticos."
   },
   "T5EK.Settings.EditEffectsGmOnly": {
-    "name": "Só o mestre pode editar efeitos ativos.",
-    "hint": "Habilite para negar aos jogadores a edição dos efeitos ativos em suas fichas. Eles ainda verão os efeitos aplicados."
+    "name": "Sólo el DJ puede editar los efectos activos.",
+    "hint": "Actívalo para impedir que los jugadores editen los efectos activos en sus hojas. Seguirán viendo los efectos aplicados."
   },
   "T5EK.Settings.QuantityAlwaysShown": {
-    "name": "Sempre mostrar a quantidade dos itens.",
-    "hint": "Habilite para nunca esconder a quantidade de itens."
+    "name": "Mostrar siempre la cantidad de objetos.",
+    "hint": "Actívalo para no ocultar nunca la cantidad de objetos."
   },
   "T5EK.Settings.UseInspiration": {
     "name": null,
@@ -314,20 +315,20 @@
     "hint": null
   },
   "T5EK.Settings.RestingForNpcs": {
-    "name": "Descanso para PNJs.",
-    "hint": "Habilite para mostrar os botões/ícones de descanso nas fichas de PNJs."
+    "name": "Descanso para los PNJs.",
+    "hint": "Actívalo para mostrar los iconos/botones de descanso en las hojas de los PNJs."
   },
   "T5EK.Settings.RestingForNpcsChat": {
-    "name": null,
-    "hint": null
+    "name": "Oculta la tarjeta en el chat del descanso de los PNJs.",
+    "hint": "Actívalo para ocultar la Tarjeta de Chat del descanso de los PNJs (se aplica al DJ y a los jugadores)."
   },
   "T5EK.Settings.LinkMarker": {
-    "name": "Marcar PNJs vinculados/não vinculados.",
-    "hint": "Adicionar uma borda colorida e um ícone em fichas de PNJs vinculados/não vinculados.",
-    "default": "Sem marcador de vínculo (padrão)",
-    "unlinked": "Destacar tokens não vinculados",
-    "linked": "Destacar tokens vinculados",
-    "both": "Destacar ambos"
+    "name": "Indicar los PNJs vinculados/desvinculados.",
+    "hint": "Añade un borde coloreado y un icono a las hojas de los PNJs vinculados/desvinculados.",
+    "default": "Sin marcador de vínculo (por defecto)",
+    "unlinked": "Resaltar los tokens desvinculados",
+    "linked": "Resaltar los tokens vinculados",
+    "both": "Resaltar los tokens vinculados y no vinculados"
   },
   "T5EK.Settings.DefaultSheetTab": {
     "name": null,

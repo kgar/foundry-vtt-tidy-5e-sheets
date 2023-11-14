@@ -101,7 +101,7 @@
               </ItemTableColumn>
             {/each}
           {/if}
-          {#if $context.owner && $context.classicControlsEnabled}
+          {#if $context.owner && $context.useClassicControls}
             <ItemTableColumn baseWidth={classicControlsBaseWidth} />
           {/if}
         </ItemTableHeaderRow>
@@ -224,7 +224,7 @@
                 </ItemTableCell>
               {/each}
             {/if}
-            {#if $context.owner && $context.classicControlsEnabled}
+            {#if $context.owner && $context.useClassicControls}
               <ItemTableCell baseWidth={classicControlsBaseWidth}>
                 {#if item.type !== 'class'}
                   <ItemFavoriteControl {item} />

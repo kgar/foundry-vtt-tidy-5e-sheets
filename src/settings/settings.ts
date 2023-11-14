@@ -221,7 +221,7 @@ export function createSettings() {
         },
       },
 
-      enableClassicControlsForCharacter: {
+      useClassicControlsForCharacter: {
         options: {
           name: 'T5EK.Settings.UseClassicControls.name',
           hint: 'T5EK.Settings.UseClassicControls.hint',
@@ -232,7 +232,7 @@ export function createSettings() {
         },
         get() {
           return FoundryAdapter.getTidySetting<boolean>(
-            'enableClassicControlsForCharacter'
+            'useClassicControlsForCharacter'
           );
         },
       },
@@ -342,35 +342,33 @@ export function createSettings() {
       // Settings Menu
 
       // PC Sheet Settings
-      characterJournalTabDisabled: {
+      useJournalTabForCharacter: {
         options: {
-          name: 'T5EK.Settings.JournalTab.name',
-          hint: 'T5EK.Settings.JournalTab.hint',
+          name: 'T5EK.Settings.UseJournalTabForCharacter.name',
+          hint: 'T5EK.Settings.UseJournalTabForCharacter.hint',
           scope: 'client',
           config: false,
-          default: false,
+          default: true,
           type: Boolean,
         },
         get() {
           return FoundryAdapter.getTidySetting<boolean>(
-            'characterJournalTabDisabled'
+            'useJournalTabForCharacter'
           );
         },
       },
 
-      journalTabNPCDisabled: {
+      useJournalTabForNpc: {
         options: {
-          name: 'T5EK.Settings.JournalTabNPCDisabled.name',
-          hint: 'T5EK.Settings.JournalTabNPCDisabled.hint',
+          name: 'T5EK.Settings.UseJournalTabForNPC.name',
+          hint: 'T5EK.Settings.UseJournalTabForNPC.hint',
           scope: 'client',
           config: false,
-          default: false,
+          default: true,
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getTidySetting<boolean>(
-            'journalTabNPCDisabled'
-          );
+          return FoundryAdapter.getTidySetting<boolean>('useJournalTabForNpc');
         },
       },
 
@@ -398,9 +396,7 @@ export function createSettings() {
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getTidySetting<boolean>(
-            'animateInspiration'
-          );
+          return FoundryAdapter.getTidySetting<boolean>('animateInspiration');
         },
       },
 
@@ -534,7 +530,7 @@ export function createSettings() {
         },
       },
 
-      enableClassicControlsForNpc: {
+      useClassicControlsForNpc: {
         options: {
           name: 'T5EK.Settings.UseClassicControls.name',
           hint: 'T5EK.Settings.UseClassicControls.hint',
@@ -545,7 +541,7 @@ export function createSettings() {
         },
         get() {
           return FoundryAdapter.getTidySetting<boolean>(
-            'enableClassicControlsForNpc'
+            'useClassicControlsForNpc'
           );
         },
       },
@@ -656,7 +652,7 @@ export function createSettings() {
         },
       },
 
-      enableClassicControlsForVehicle: {
+      useClassicControlsForVehicle: {
         options: {
           name: 'T5EK.Settings.UseClassicControls.name',
           hint: 'T5EK.Settings.UseClassicControls.hint',
@@ -667,7 +663,7 @@ export function createSettings() {
         },
         get() {
           return FoundryAdapter.getTidySetting<boolean>(
-            'enableClassicControlsForVehicle'
+            'useClassicControlsForVehicle'
           );
         },
       },
@@ -696,9 +692,7 @@ export function createSettings() {
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getTidySetting<boolean>(
-            'useHpOverlayVehicle'
-          );
+          return FoundryAdapter.getTidySetting<boolean>('useHpOverlayVehicle');
         },
       },
 
@@ -866,9 +860,7 @@ export function createSettings() {
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getTidySetting<boolean>(
-            'useNpcEncumbranceBar'
-          );
+          return FoundryAdapter.getTidySetting<boolean>('useNpcEncumbranceBar');
         },
       },
 
@@ -943,9 +935,7 @@ export function createSettings() {
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getTidySetting<boolean>(
-            'useVehicleMotion'
-          );
+          return FoundryAdapter.getTidySetting<boolean>('useVehicleMotion');
         },
       },
 

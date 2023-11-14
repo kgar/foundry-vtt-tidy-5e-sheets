@@ -78,7 +78,7 @@
       <ItemTableColumn baseWidth="7.5rem">
         {localize('DND5E.Usage')}
       </ItemTableColumn>
-      {#if $context.owner && $context.classicControlsEnabled && !lockControls}
+      {#if $context.owner && $context.useClassicControls && !lockControls}
         <ItemTableColumn baseWidth={classicControlsBaseWidth} />
       {/if}
     </ItemTableHeaderRow>
@@ -153,7 +153,7 @@
             {item.labels.activation}
           {/if}
         </ItemTableCell>
-        {#if $context.owner && $context.classicControlsEnabled && !lockControls}
+        {#if $context.owner && $context.useClassicControls && !lockControls}
           <ItemTableCell baseWidth={classicControlsBaseWidth}>
             <ItemControls>
               {#if ctx?.attunement}

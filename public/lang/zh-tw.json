@@ -12,6 +12,11 @@
   "T5EK.Skin": "Skin",
   "T5EK.Hair": "Hair",
   "T5EK.EditActorImage": "編輯圖片",
+  "T5EK.ShowActorImage": "右鍵單擊: 顯示角色立繪",
+  "T5EK.ShowPortraitArt": "顯示立繪",
+  "T5EK.ShowTokenArt": "顯示指示物",
+  "T5EK.ShowItemImage": "right click: show item art",
+  "T5EK.ShowItemArt": "show image",
 
   "T5EK.Exhaustion0": "無負面效應",
   "T5EK.Exhaustion1": "屬性檢定具有劣勢",
@@ -28,251 +33,293 @@
   "T5EK.RestL": "長休",
   "T5EK.HitDiceRollAverage": "Right Click: Average",
 
-  "T5EK.AttrHitPoints": "生命值",
-
-  "T5EK.HitDiceHint": "在短休時使用",
-
   "T5EK.Journal": "日誌",
 
-  "T5EK.SkillPassive": "被動技能",
-
   "T5EK.RestoreOnRest": "休息時恢復",
-
-  "T5EK.BioTraits": "特點",
-  "T5EK.BioIdeals": "理念",
-  "T5EK.BioBonds": "羈絆",
-  "T5EK.BioFlaws": "缺陷",
-  "T5EK.BioAppearance": "外貌",
-  "T5EK.BioBackground": "背景/傳記",
 
   "T5EK.JournalPoi": "相關人物",
   "T5EK.JournalLoi": "相關地點",
   "T5EK.JournalQuests": "任務",
   "T5EK.JournalMisc": "雜項",
   "T5EK.JournalEntries": "日誌條目",
+  "T5EK.TogglePersonalityInfo": "切換個人信息顯示",
 
-  "T5EK.DeleteDisabled": "不可刪除",
-  "T5EK.DeleteEnabled": "可以刪除",
-  "T5EK.DeleteDisabledHint": "點擊以顯示刪除按鈕",
-  "T5EK.DeleteEnabledHint": "點擊以隱藏刪除按鈕",
+  "T5EK.SheetEdit.Enable.Hint": null,
+  "T5EK.SheetEdit.Disable.Hint": null,
+  "T5EK.SheetEdit.Description": "切換添加/刪除按鈕和未空區塊的顯示",
 
-  "T5EK.ConvertCurrencyHint": "將貨幣兌換為最高面額貨幣",
-  "T5EK.ConvertCurrencyButton": "兌換",
+  "T5EK.SheetLock.Unlock.Hint": null,
+  "T5EK.SheetLock.Lock.Hint": null,
+  "T5EK.SheetLock.Description": null,
+
+  "T5EK.ContextMenuActionEquip": null,
+  "T5EK.ContextMenuActionUnequip": null,
+  "T5EK.ContextMenuActionAttune": null,
+  "T5EK.ContextMenuActionUnattune": null,
+  "T5EK.ContextMenuActionPrepare": null,
+  "T5EK.ContextMenuActionUnprepare": null,
+  "T5EK.ContextMenuActionEdit": null,
+  "T5EK.ContextMenuActionDelete": null,
+
+  "T5EK.EmptySection": "該區塊沒有內容。解鎖該卡片以編輯。",
+  "T5EK.GmOnlyEdit": "僅有你的 GM 可以編輯該區塊。",
+
+  "T5EK.AttunementWarning": "同調警告: 你不可以同調超過 {number} 件物品!",
+  "T5EK.AttunementItems": "已同調物品",
+  "T5EK.AttunementMax": "同調上限",
+
+  "T5EK.GridLayout": "網格佈局",
+  "T5EK.ListLayout": "列表佈局",
+  "T5EK.LayoutNotSupported": null,
 
   "T5EK.Encumbrance": "負重",
 
-  "T5EK.EditSpell": "編輯法術",
-  "T5EK.DeleteSpell": "刪除法術",
-  "T5EK.AddFav": "添加到收藏",
-  "T5EK.RemoveFav": "從收藏中移除",
+  "T5EK.AddFavorite": "添加到收藏",
+  "T5EK.Favorite": "收藏",
+  "T5EK.RemoveFavorite": "從收藏中移除",
 
-  "T5EK.ItemCardsKeyHint": "hold Key to interact with card.",
-  "T5EK.ItemCardsMouseHint": "middle mouse to view/edit item.",
-
-  "T5EK.ToggleInfo": "切換顯示信息",
-
-  "T5EK.Show": "顯示/編輯",
-  "T5EK.Hide": "隱藏",
-  "T5EK.Edit": "編輯",
-  "T5EK.SkillsNotProficient": "非熟練項",
-  "T5EK.TraitsEmpty": "空白特性",
-
-  "T5EK.AbbrArmorClass": "AC",
-
-  "T5EK.strAbility": "力量",
-  "T5EK.dexAbility": "敏捷",
-  "T5EK.conAbility": "體質",
-  "T5EK.intAbility": "智力",
-  "T5EK.wisAbility": "感知",
-  "T5EK.chaAbility": "魅力",
+  "T5EK.ShowNotProficientSkills": null,
+  "T5EK.HideNotProficientSkills": null,
+  "T5EK.ShowEmptyTraits": null,
+  "T5EK.HideEmptyTraits": null,
 
   "T5EK.Abilities": "屬性",
 
   "T5EK.Environment": "環境",
 
-  "T5EK.AbbrMod": "加值",
-
-  "T5EK.Settings.PcLabel": "PC 卡: ",
-  "T5EK.Settings.NpcLabel": "NPC 卡: ",
-
-  "T5EK.Settings.UseExpandedSheet": {
-    "name": "擴展顯示限制權限下的角色卡。",
-    "hint": "對該角色的權限為限制的玩家打開擴展後的角色卡時，該角色的角色卡將會完整顯示（去掉個人筆記部分）。"
-  },
-  "T5EK.Settings.UseDarkMode": {
-    "name": "使用可選暗黑模式。",
-    "hint": "勾選後，Tidy 5e 卡片將會啟用可選的暗黑版本的樣式。"
-  },
-  "T5EK.Settings.PrimaryAccentColor": {
-    "name": "主色調。",
-    "hint": "覆寫默認的主色調(默認: #ff6400/暗黑模式: #48BB78)，主色調用於比如按鈕、輸入框邊緣和懸停高亮色。可以使用任意的CSS 有效顏色值諸如red /#ff0000/rgba(255,0,0)/rgba(255,0,0,1)。"
-  },
-  "T5EK.Settings.SecondaryAccentColor": {
-    "name": "副色調。",
-    "hint": "覆寫默認的副色調(默認: rgba(210,0,255,.1)/暗黑模式: rgba(0,150,150,.325))，副色調用於高亮準備狀態。可以使用任意的CSS有效顏色值諸如red/#ff0000/rgba(255,0,0)/rgba(255,0,0,1)。"
-  },
-  "T5EK.Settings.AlwaysPreparedAccentColor": {
-    "name": "始終可用法術的色調。",
-    "hint": "覆寫默認色調(默認: rgba(210,0,255,.1)/暗黑模式: rgba(0,150,150,.325))，該色調用於始終可用狀態的法術。可以使用任意的CSS 有效顏色值諸如red/#ff0000/rgba(255,0,0)/rgba(255,0,0,1)。"
-  },
-  "T5EK.Settings.UseRoundPortraits": {
-    "name": "角色卡使用圓形立繪框。",
-    "hint": "如果使用圓形立繪圖請勾選該項。開啟後，將會使HP 疊加層和立繪框按鈕看起來更好看一些。使用沒有定制邊框的方形立繪圖上也會比較好看。"
-  },
-  "T5EK.Settings.HpOverlayBorder": {
-    "name": "HP 疊加層的邊緣寬度。",
-    "hint": "如果你的立繪圖有邊框，可以調整 HP 疊加層以補償邊框寬度。如果 HP 疊加層變色時不會改變邊框顏色會更好看一些。"
-  },
-  "T5EK.Settings.DisableHpOverlay": {
-    "name": "禁用 HP 疊加層。",
-    "hint": "如果你不喜歡你角色立繪框上的電子遊戲風格的 HP 疊加層，可以關閉該項。"
-  },
-  "T5EK.Settings.HideClassList": {
-    "name": "隱藏角色職業列表。",
-    "hint": "勾選後，角色卡等級旁的職業列表將會被隱藏。該角色卡模板可以正確處理 3 個職業，超過時雖然沒有問題但是看起來可能會蛋疼 ;)"
-  },
-  "T5EK.Settings.DisableInspirationAnimation": {
-    "name": "禁用激勵指示動畫。",
-    "hint": "如果激勵指示的小動畫過於乾擾使用，可以禁用該項。"
-  },
-  "T5EK.Settings.DisableInspiration": {
-    "name": "禁用激勵追踪器。",
-    "hint": "如果你的戰役不使用激勵，你可以完全禁用該追踪器。"
-  },
-  "T5EK.Settings.DisableExhaustion": {
-    "name": "禁用力竭追踪器。",
-    "hint": "如果你的戰役不使用力竭，你可以完全禁用該追踪器。"
-  },
-  "T5EK.Settings.HideIfZero": {
-    "name": "無效時隱藏力竭和激勵 (0).",
-    "hint": "如果想要力竭為 0 和沒有激勵時隱藏兩項請勾選該項，將會在鼠標懸停其上時顯示。"
-  },
-  "T5EK.Settings.ExhaustionOnHover": {
-    "name": "僅在鼠標懸停時顯示力竭追踪器。",
-    "hint": "勾選後，只會在鼠標懸停於立繪框上時才會顯示力竭追踪器。"
-  },
-  "T5EK.Settings.InspirationOnHover": {
-    "name": "僅在鼠標懸停時顯示激勵追踪器。",
-    "hint": "勾選後，只會在鼠標懸停於立繪框上時才會顯示激勵追踪器。"
-  },
-  "T5EK.Settings.RestOnHover": {
-    "name": "鼠標懸停時顯示休息按鈕。",
-    "hint": "勾選後，只會在鼠標懸停於立繪框上時才會顯示休息按鈕。"
-  },
-  "T5EK.Settings.MoveTraits": {
-    "name": "將特性欄移動到資源欄下。",
-    "hint": "勾選後，特性欄將會顯示在資源欄下。"
-  },
-  "T5EK.Settings.PcToggleTraits": {
-    "name": "角色特性欄中顯示切換按鈕。",
-    "hint": "勾選後，將會顯示用於切換空白特性的按鈕。"
-  },
-  "T5EK.Settings.AlwaysShowTraits": {
-    "name": "始終顯示所有特性。",
-    "hint": "如果不想隱藏/切換 NPC 空白特性，可以勾選該項。"
-  },
-  "T5EK.Settings.AlwaysShowSkills": {
-    "name": "始終顯示所有技能。",
-    "hint": "如果不想隱藏/切換 NPC 未熟練的技能，可以勾選該項。"
-  },
-  "T5EK.Settings.MarkLinked": {
-    "name": "高亮鏈接到角色的卡片。",
-    "hint": "可以高亮顯示鏈接角色了的 NPC 卡，避免自己編輯到錯誤的卡片。"
-  },
-  "T5EK.Settings.MarkUnlinked": {
-    "name": "高亮未鏈接到角色的卡片。",
-    "hint": "可以高亮顯示未鏈接角色的 NPC 卡，避免自己編輯到錯誤的卡片。"
-  },
-  "T5EK.Subclass": "子職",
-  "T5EK.ShowActorImage": "右鍵單擊: 顯示角色立繪",
-  "T5EK.ShowPortraitArt": "顯示立繪",
-  "T5EK.ShowTokenArt": "顯示指示物",
-  "T5EK.ShowItemImage": "right click: show item art",
-  "T5EK.ShowItemArt": "show image",
-  "T5EK.TogglePersonalityInfo": "切換個人信息顯示",
-  "T5EK.EnableEdit": "啟用編輯",
-  "T5EK.DisableEdit": "禁用編輯",
-  "T5EK.EditHint": "切換添加/刪除按鈕和未空區塊的顯示",
-  "T5EK.EmptySection": "該區塊沒有內容。解鎖該卡片以編輯。",
-  "T5EK.GmOnlyEdit": "僅有你的 GM 可以編輯該區塊。",
-  "T5EK.AttunementWarning": "同調警告: 你不可以同調超過 {number} 件物品!",
-  "T5EK.AttunementItems": "已同調物品",
-  "T5EK.AttunementMax": "同調上限",
-  "T5EK.GridLayout": "網格佈局",
-  "T5EK.ListLayout": "列表佈局",
-  "T5EK.isFav": "收藏",
-  "T5EK.ToggleMovement": "切換新版和舊版速度顯示",
-  "T5EK.SearchItem": "搜索物品",
-  "T5EK.SearchSpell": "搜索法術",
-  "T5EK.SearchClear": "清空搜索",
+  "T5EK.Search": null,
+  "T5EK.SearchClear": null,
   "T5EK.SearchHint": "輸入你想要搜索的東西就夠了。",
+
+  "T5EK.ItemCardsKeyHint": "hold Key to interact with card.",
+  "T5EK.ItemCardsMouseHint": "middle mouse to view/edit item.",
+
+  "T5EK.AbbrMod": "加值",
   "T5EK.AbbrSavingThrow": "豁免",
   "T5EK.SpellAttackMod": "攻擊加值",
   "T5EK.PreparedSpells": "已準備法術",
   "T5EK.PreparedSpellsMax": "準備法術上限",
-  "T5EK.Components": "構材",
-  "T5EK.SpellSchool": "學派",
+
   "T5EK.TokenLinked": "指示物已鏈接到角色",
   "T5EK.TokenUnlinked": "指示物未鏈接到角色",
+
   "T5EK.ItemDetailsHeadline": "機制/背景敘述",
-  "T5EK.Settings.GlobalLabel": "全局",
-  "T5EK.Settings.UserLabel": "用戶",
-  "T5EK.Settings.VehicleLabel": "載具",
+
+  "T5EK.SpellClass": null,
+
+  "T5EK.ClassArtificer": null,
+  "T5EK.ClassBarbarian": null,
+  "T5EK.ClassBard": null,
+  "T5EK.ClassCleric": null,
+  "T5EK.ClassCustom": null,
+  "T5EK.ClassDruid": null,
+  "T5EK.ClassFighter": null,
+  "T5EK.ClassMonk": null,
+  "T5EK.ClassPaladin": null,
+  "T5EK.ClassRanger": null,
+  "T5EK.ClassRogue": null,
+  "T5EK.ClassSorcerer": null,
+  "T5EK.ClassWarlock": null,
+  "T5EK.ClassWizard": null,
+
+  "T5EK.OriginSummaryConfig": null,
+
+  "T5EK.Settings.MulticlassSpellbookFilterLabel": null,
+
   "T5EK.Settings.SheetMenu": {
-    "label": "卡片設定"
+    "name": null,
+    "hint": null,
+    "label": "卡片設定",
+    "title": null
+  },
+  "T5EK.Settings.TabPlayers": {
+    "tabLabel": null,
+    "header": null
+  },
+  "T5EK.Settings.TabNPCs": {
+    "tabLabel": null,
+    "header": null
+  },
+  "T5EK.Settings.TabVehicles": {
+    "tabLabel": null,
+    "header": null
+  },
+  "T5EK.Settings.TabGM": {
+    "tabLabel": null,
+    "header": null
+  },
+  "T5EK.Settings.TabLocks": {
+    "tabLabel": null,
+    "header": null,
+    "hint": null,
+    "hint2": null,
+    "labelGeneralLocks": null,
+    "labelInventoryLocks": null,
+    "labelFeaturesLocks": null
+  },
+  "T5EK.Settings.TabInfo": {
+    "tabLabel": null,
+    "header": null
+  },
+  "T5EK.Settings.ItemCardsForAllItems": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.ItemCardsForNpcs": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.ItemCardsAreFloating": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.ItemCardsDelay": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.ItemCardsFixKey": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.DefaultTheme": {
+    "name": null,
+    "hint": null
   },
   "T5EK.Settings.SheetTheme": {
     "name": "Tidy5e 色彩主題。",
     "hint": "使用 Tidy5e 的默認的明亮或暗黑的色彩主題。",
-    "default": "默認 (明亮)",
-    "dark": "可選 (暗黑)"
+    "default": null,
+    "light": null,
+    "dark": null
   },
   "T5EK.Settings.UseClassicControls": {
     "name": "列表視圖下使用舊版物品操作按鈕。",
     "hint": "始終顯示物品操作按鈕並禁用右鍵菜單。僅適用於 PC 物品和法術的列表視圖。"
   },
-  "T5EK.Settings.ContextRollButtons": {
-    "name": "上下文菜單中顯示 midiQol/BetterRolls 的物品按鈕。",
-    "hint": "啟用後，物品描述中的擲骰按鈕將會顯示到上下文菜單中。使用網格佈局或者使用頻繁時比較方便。"
+  "T5EK.Settings.HideIconsNextToTheItemName": {
+    "name": null,
+    "hint": null
   },
-  "T5EK.Settings.ShowTraitLabels": {
-    "name": "顯示特性標籤。",
-    "hint": "默認僅顯示特性圖標。啟用後，也會顯示標籤。"
+  "T5EK.Settings.TraitLabels": {
+    "name": null,
+    "hint": null
   },
-  "T5EK.Settings.DisableHpBar": {
-    "name": "禁用生命值條。",
-    "hint": "啟用後，用於指示剩餘 HP 的著色條將會被隱藏 (HP 數字仍將可見)。"
+  "T5EK.Settings.PlayerName": {
+    "name": null,
+    "hint": null
   },
-  "T5EK.Settings.RightClickDisabled": {
-    "name": "禁用右鍵上下文菜單。",
-    "hint": "你可以禁用右鍵上下文菜單以避免 MOD 或設置的衝突。物品條目上將會顯示菜單按鈕作為替代。"
+  "T5EK.Settings.UseJournalTabForCharacter": {
+    "name": null,
+    "hint": null
   },
-  "T5EK.Settings.UseRoundPortraits": {
-    "all": "所有角色",
-    "pc": "所有 PC",
-    "npc": "所有 NPC/載具",
-    "none": "無",
-    "default": "無"
+  "T5EK.Settings.UseJournalTabForNPC": {
+    "name": null,
+    "hint": null
   },
-  "T5EK.Settings.GmEditPermission": {
-    "name": "GM 始終可以編輯 PC 角色卡。",
-    "hint": "啟用後，允許 GM 在未切換卡片鎖定的情況下也可以編輯 PC 角色卡。"
+  "T5EK.Settings.ClassList": {
+    "name": null,
+    "hint": null
   },
-  "T5EK.Settings.GmEditEffects": {
-    "name": "僅允許 GM 編輯主動效果。",
-    "hint": "啟用後，將禁止玩家編輯自己卡片上的主動效果。玩家仍將查看到已應用的效果。"
+  "T5EK.Settings.InspirationAnimation": {
+    "name": null,
+    "hint": null
   },
-  "T5EK.Settings.AlwaysShowQty": {
-    "name": "始終顯示物品數量。",
-    "hint": "啟用後，將不再隱藏物品數量。。"
+  "T5EK.Settings.HideIfZero": {
+    "name": "無效時隱藏力竭和激勵 (0).",
+    "hint": "如果想要力竭為 0 和沒有激勵時隱藏兩項請勾選該項，將會在鼠標懸停其上時顯示。"
   },
-  "T5EK.Settings.ExhaustionEffects": {
-    "name": "力竭效果 (使用主動效果)。",
-    "hint": "設定力竭等級時應用對應的主動效果 - 需要 midiQol 以設置劣勢擲骰！"
+  "T5EK.Settings.InspirationOnHover": {
+    "name": "僅在鼠標懸停時顯示激勵追踪器。",
+    "hint": "勾選後，只會在鼠標懸停於立繪框上時才會顯示激勵追踪器。"
   },
-  "T5EK.Settings.ShowNpcRest": {
-    "name": "NPC 休息.",
-    "hint": "啟用後，將在 NPC 角色卡上顯示休息圖標/按鈕。"
+  "T5EK.Settings.ExhaustionOnHover": {
+    "name": "僅在鼠標懸停時顯示力竭追踪器。",
+    "hint": "勾選後，只會在鼠標懸停於立繪框上時才會顯示力竭追踪器。"
+  },
+  "T5EK.Settings.HpBar": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.HpOverlay": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.TraitsTogglePc": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.TraitsMovedBelowResource": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.AmmoEquippedOnly": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.TraitsAlwaysShown": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.SkillsAlwaysShown": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.ShowSpellbookTabNpc": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.ActiveEffectsMarker": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.UseContextMenu": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.ExpandedSheet": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.PortraitStyle": {
+    "name": null,
+    "hint": null,
+    "all": null,
+    "pc": null,
+    "npc": null,
+    "none": null,
+    "default": null
+  },
+  "T5EK.Settings.EditTotalLock": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.EditEffectsGmOnly": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.QuantityAlwaysShown": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.UseInspiration": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.UseVehicleMotion": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.UseExhaustion": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.RestingForNpcs": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.RestingForNpcsChat": {
+    "name": null,
+    "hint": null
   },
   "T5EK.Settings.LinkMarker": {
     "name": "標記鏈接/未鏈接的 NPC。",
@@ -281,5 +328,221 @@
     "unlinked": "高亮未鏈接指示物的卡片",
     "linked": "高亮已鏈接指示物的卡片",
     "both": "高亮已鏈接和未鏈接的指示物的卡片"
-  }
+  },
+  "T5EK.Settings.DefaultSheetTab": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.HiddenDeathSaves": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.UseSpellSlotMarker": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.UseCharacterEncumbranceBar": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.UseNPCEncumbranceBar": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.UseVehicleEncumbranceBar": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.npcSheetWidth": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.playerSheetWidth": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.vehicleSheetWidth": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.UseMulticlassSpellbookFilter": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.UseSpellClassIcons": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.SpellClassFilterAdditionalClasses": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.AllowCantripsToBePrepared": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.LockMoneyChanges": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.LockExpChanges": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.LockHpMaxChanges": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.LockLevelSelector": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.LockConfigureSheet": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.LockItemQuantity": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.ColorPickerEnabled": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.ColorPickerPrimaryAccent": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerEquipped": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerHpBar": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerEquippedOutline": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerEquippedAccent": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerPrepared": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerPreparedOutline": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerPreparedAccent": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerPact": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerPactOutline": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerPactAccent": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerAtWill": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerAtWillOutline": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerAtWillAccent": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerInnate": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerInnateOutline": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerInnateAccent": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerAlwaysPrepared": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerAlwaysPreparedOutline": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerAlwaysPreparedAccent": {
+    "name": null
+  },
+  "T5EK.Settings.AllowHpMaxOverride": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.Reset": {
+    "name": null,
+    "hint": null,
+    "dialogs": {
+      "title": null,
+      "content": null,
+      "confirm": null,
+      "cancel": null
+    }
+  },
+  "T5EK.Settings.Debug": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.EnableSortFavoritesItemsAlphabetically": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.EnablePermanentUnlockOnCharacterIfYouAreGM": {
+    "name": null,
+    "hint": null,
+    "title": null
+  },
+  "T5EK.Settings.EnablePermanentUnlockOnNPCIfYouAreGM": {
+    "name": null,
+    "hint": null,
+    "title": null
+  },
+  "T5EK.Settings.EnablePermanentUnlockOnVehicleIfYouAreGM": {
+    "name": null,
+    "hint": null,
+    "title": null
+  },
+  "T5EK.ThemeSettings": {
+    "SheetMenu": {
+      "name": null,
+      "buttonLabel": null,
+      "hint": null
+    },
+    "Sheet": {
+      "title": null,
+      "header": null,
+      "useDefaultLightColors": null,
+      "useDefaultDarkColors": null,
+      "export": null,
+      "import": null,
+      "importDropHint": null,
+      "importError": null,
+      "importSuccess": null,
+      "menuLabel": null,
+      "explanation": null
+    }
+  },
+  "T5EK.FavoriteSpellLevelLabel": null,
+  "T5EK.ApplyChanges": null,
+  "T5EK.SaveChanges": null,
+  "T5EK.VehicleExhaustion0": null,
+  "T5EK.VehicleExhaustion1": null,
+  "T5EK.VehicleExhaustion2": null,
+  "T5EK.VehicleExhaustion3": null,
+  "T5EK.VehicleExhaustion4": null,
+  "T5EK.VehicleExhaustion5": null,
+  "T5EK.VehicleExhaustion6": null,
+  "T5EK.VehicleInMotion": null,
+  "T5EK.VehicleMotionless": null,
+  "T5EK.TotalCrewCount": null,
+  "T5EK.ActionsPerTurn": null,
+  "T5EK.SheetMenu": {
+    "label": null,
+    "themeLabel": null
+  },
+  "T5EK.ActiveEffectsMarkerTitle": null
 }

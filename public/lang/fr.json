@@ -11,7 +11,6 @@
   "T5EK.Eyes": "Yeux",
   "T5EK.Skin": "Peau",
   "T5EK.Hair": "Cheveux",
-  "T5EK.Subclass": "Sous-classe",
   "T5EK.EditActorImage": "Clic gauche : éditer l'image",
   "T5EK.ShowActorImage": "Clic droit : voir l'image du personnage",
   "T5EK.ShowPortraitArt": "Voir le portrait",
@@ -45,16 +44,22 @@
   "T5EK.JournalEntries": "Journal de bord",
   "T5EK.TogglePersonalityInfo": "Afficher / masquer les informations sur la personnalité",
 
-  "T5EK.EnableEdit": "Permettre les modifications",
-  "T5EK.DisableEdit": "Désactiver les modifications",
-  "T5EK.EditHint": "Visibilité des boutons d'ajout/suppression et des sections vides",
+  "T5EK.SheetEdit.Enable.Hint": null,
+  "T5EK.SheetEdit.Disable.Hint": null,
+  "T5EK.SheetEdit.Description": "Visibilité des boutons d'ajout/suppression et des sections vides",
 
-  "T5EK.Equip": "Équiper objet",
-  "T5EK.Unequip": "Déséquiper objet",
-  "T5EK.Attune": "Se lier à l'objet",
-  "T5EK.Deattune": "Briser le lien",
-  "T5EK.Prepare": "Préparer le sort",
-  "T5EK.Unprepare": "Supprimer la préparation",
+  "T5EK.SheetLock.Unlock.Hint": null,
+  "T5EK.SheetLock.Lock.Hint": null,
+  "T5EK.SheetLock.Description": null,
+
+  "T5EK.ContextMenuActionEquip": "Équiper objet",
+  "T5EK.ContextMenuActionUnequip": "Déséquiper objet",
+  "T5EK.ContextMenuActionAttune": "Se lier à l'objet",
+  "T5EK.ContextMenuActionUnattune": "Briser le lien",
+  "T5EK.ContextMenuActionPrepare": "Préparer le sort",
+  "T5EK.ContextMenuActionUnprepare": "Supprimer la préparation",
+  "T5EK.ContextMenuActionEdit": null,
+  "T5EK.ContextMenuActionDelete": null,
 
   "T5EK.EmptySection": "Cette section est vide. Déverrouiller la feuille pour la modifier.",
   "T5EK.GmOnlyEdit": "Seul votre MJ peut modifier cette section.",
@@ -65,30 +70,25 @@
 
   "T5EK.GridLayout": "Affichage grille",
   "T5EK.ListLayout": "Affichage liste",
+  "T5EK.LayoutNotSupported": null,
 
   "T5EK.Encumbrance": "Encombrement",
 
-  "T5EK.EditSpell": "Editer le Sort",
-  "T5EK.DeleteSpell": "Supprimer le Sort",
-  "T5EK.AddFav": "Ajouter aux Favoris",
-  "T5EK.RemoveFav": "Enlever des Favoris",
-  "T5EK.isFav": "Favori",
+  "T5EK.AddFavorite": "Ajouter aux Favoris",
+  "T5EK.RemoveFavorite": "Enlever des Favoris",
+  "T5EK.Favorite": "Favori",
 
-  "T5EK.ToggleInfo": "Afficher / masquer les informations",
-
-  "T5EK.Show": "Voir / éditer",
-  "T5EK.Hide": "Cacher",
-  "T5EK.Edit": "Éditer",
-  "T5EK.TraitsEmpty": "Trait vide",
+  "T5EK.ShowNotProficientSkills": null,
+  "T5EK.HideNotProficientSkills": null,
+  "T5EK.ShowEmptyTraits": null,
+  "T5EK.HideEmptyTraits": null,
 
   "T5EK.Abilities": "Caractéristiques",
 
   "T5EK.Environment": "Environnement",
 
-  "T5EK.SearchItem": "Rechercher objet",
-  "T5EK.SearchSpell": "Rechercher sort",
-  "T5EK.SearchFeat": "Fonction de recherche",
-  "T5EK.SearchClear": "Annuler la recherche",
+  "T5EK.Search": null,
+  "T5EK.SearchClear": null,
   "T5EK.SearchHint": "Saisir votre recherche",
 
   "T5EK.ItemCardsKeyHint": "Maintenir la touche pour interagir avec la carte.",
@@ -99,22 +99,36 @@
   "T5EK.SpellAttackMod": "Bonus d'attaque",
   "T5EK.PreparedSpells": "Sorts préparés",
   "T5EK.PreparedSpellsMax": "Maximum de sorts préparés",
-  "T5EK.Components": "Compo",
-  "T5EK.SpellSchool": "École",
 
   "T5EK.TokenLinked": "Token lié à l'acteur",
   "T5EK.TokenUnlinked": "Token non lié à l'acteur",
 
   "T5EK.ItemDetailsHeadline": "Mécanique / Contexte",
 
-  "T5EK.Settings.GlobalLabel": "Global",
-  "T5EK.Settings.DebugLabel": "Debug",
-  "T5EK.Settings.UserLabel": "Utilisateur",
-  "T5EK.Settings.PcLabel": "PJs",
-  "T5EK.Settings.NpcLabel": "PNJs",
-  "T5EK.Settings.VehicleLabel": "Véhicules",
+  "T5EK.SpellClass": null,
+
+  "T5EK.ClassArtificer": null,
+  "T5EK.ClassBarbarian": null,
+  "T5EK.ClassBard": null,
+  "T5EK.ClassCleric": null,
+  "T5EK.ClassCustom": null,
+  "T5EK.ClassDruid": null,
+  "T5EK.ClassFighter": null,
+  "T5EK.ClassMonk": null,
+  "T5EK.ClassPaladin": null,
+  "T5EK.ClassRanger": null,
+  "T5EK.ClassRogue": null,
+  "T5EK.ClassSorcerer": null,
+  "T5EK.ClassWarlock": null,
+  "T5EK.ClassWizard": null,
+
+  "T5EK.OriginSummaryConfig": null,
+
+  "T5EK.Settings.MulticlassSpellbookFilterLabel": null,
 
   "T5EK.Settings.SheetMenu": {
+    "name": null,
+    "hint": null,
     "label": "Configuration des feuilles",
     "title": "Configuration des feuilles Tidy5e"
   },
@@ -122,21 +136,26 @@
     "tabLabel": "Joueur",
     "header": "Option des feuilles de joueur"
   },
-  "T5EK.Settings.TabNPCsVehicles": {
-    "tabLabel": "PNJ / Véhicule",
-    "header": "Options des feuilles de PNJ / véhicule",
-    "labelNPCs": "PNJ",
-    "labelVehicles": "Véhicule"
+  "T5EK.Settings.TabNPCs": {
+    "tabLabel": null,
+    "header": null
+  },
+  "T5EK.Settings.TabVehicles": {
+    "tabLabel": null,
+    "header": null
   },
   "T5EK.Settings.TabGM": {
     "tabLabel": "Options MJ",
     "header": "Options pour le MJ"
   },
-  "T5EK.Settings.TabModules": {
-    "tabLabel": "Modules",
-    "header": "Options des modules tiers",
-    "labelActionsFavorites": "Actor Actions/Favorites",
-    "labelMidiQoL": "Midi Qol"
+  "T5EK.Settings.TabLocks": {
+    "tabLabel": null,
+    "header": null,
+    "hint": null,
+    "hint2": null,
+    "labelGeneralLocks": null,
+    "labelInventoryLocks": null,
+    "labelFeaturesLocks": null
   },
   "T5EK.Settings.TabInfo": {
     "tabLabel": "Informations",
@@ -162,30 +181,40 @@
     "name": "Touche à maintenir pour interagir avec la carte d'information",
     "hint": "Saisir une touche (par exemple : x) à utiliser pour l'interaction avec la carte d'information. Il peut s'agir de n'importe quelle touche, à l'exception des touches de fonction (ctrl, alt, etc.)."
   },
-
+  "T5EK.Settings.DefaultTheme": {
+    "name": null,
+    "hint": null
+  },
   "T5EK.Settings.SheetTheme": {
     "name": "Thème Tidy5e",
     "hint": "Utiliser le thème de couleur clair ou foncé par défaut de Tidy5e.",
-    "default": "Défaut (lumineux)",
-    "dark": "Alternatif (sombre)"
+    "default": null,
+    "light": null,
+    "dark": null
   },
-
-  "T5EK.Settings.ClassicControls": {
+  "T5EK.Settings.UseClassicControls": {
     "name": "Contrôles classiques en mode liste",
     "hint": "Toujours afficher les option de contrôle des éléments et désactive le menu du clic droit. Ne s'applique qu'à l'inventaire des objets / sorts du PJ en mode liste."
   },
-  "T5EK.Settings.RollButtonsToCard": {
-    "name": "Afficher les boutons midiQol dans la carte d'information",
-    "hint": "Par défaut, les boutons pour les lancers apparaissent dans la description de l'élément. Activer cette option pour les déplacer dans la carte d'information. Fonctionne dans tous les modes de mise en page."
+  "T5EK.Settings.HideIconsNextToTheItemName": {
+    "name": null,
+    "hint": null
   },
   "T5EK.Settings.TraitLabels": {
     "name": "Afficher les noms de traits",
     "hint": "Par défaut, seules des icones sont affichées pour les traits. Activer cette option pour afficher les noms également."
   },
-
   "T5EK.Settings.PlayerName": {
     "name": "Afficher le nom du joueur",
     "hint": "Activer cette option pour afficher le nom du joueur en dessous de celui de son personnage."
+  },
+  "T5EK.Settings.UseJournalTabForCharacter": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.UseJournalTabForNPC": {
+    "name": null,
+    "hint": null
   },
   "T5EK.Settings.ClassList": {
     "name": "Masquer la liste des classes du personnage",
@@ -223,7 +252,10 @@
     "name": "Déplacer les traits sous les ressources",
     "hint": "Activer cette option pour afficher les traits sous les ressources."
   },
-
+  "T5EK.Settings.AmmoEquippedOnly": {
+    "name": null,
+    "hint": null
+  },
   "T5EK.Settings.TraitsAlwaysShown": {
     "name": "Toujours montrer les traits",
     "hint": "Par défaut, les traits vides sont masqués et affichables vie un bouton. Activer cette option pour ne jamais les masquer."
@@ -232,14 +264,17 @@
     "name": "Toujours montrer les caractéristiques",
     "hint": "Par défaut, les caractéristiques sans compétence sont masquées et affichables vie un bouton. Activer cette option pour ne jamais les masquer."
   },
-
+  "T5EK.Settings.ShowSpellbookTabNpc": {
+    "name": null,
+    "hint": null
+  },
   "T5EK.Settings.ActiveEffectsMarker": {
     "name": "Afficher le marqueru d'effet actif sur les objets",
     "hint": "Activer cette option pour visualiser les objets avec un effet actif (uniquement pour la vue liste)."
   },
-  "T5EK.Settings.RightClickDisabled": {
-    "name": "Désactiver le menu contextuel au clic droit",
-    "hint": "En cas de conflits de modules ou par choix personnel, activer cette option pour désactiver le menu contextuel au clic droit."
+  "T5EK.Settings.UseContextMenu": {
+    "name": null,
+    "hint": null
   },
   "T5EK.Settings.ExpandedSheet": {
     "name": "Vue étendue pour la feuille limitée",
@@ -254,17 +289,9 @@
     "none": "Aucun",
     "default": "Aucun"
   },
-  "T5EK.Settings.HpOverlayBorder": {
-    "name": "Largeur de la bordure de la barre d'HP",
-    "hint": "Si votre portrait possède une bordure, vous pouvez ajuster la largeur de la barre de vie pour compenser celle du cadre."
-  },
   "T5EK.Settings.EditTotalLock": {
     "name": "Verrouiller les champs sensibles.",
     "hint": "Activer cette option pour prévenir les modifications de champs sensibles."
-  },
-  "T5EK.Settings.EditGmAlways": {
-    "name": "Le MJ peut toujours éditer les feuilles",
-    "hint": "Activer cette option pour permettre au MJ d'éditer les feuilles sans basculer le mode verrouillé."
   },
   "T5EK.Settings.EditEffectsGmOnly": {
     "name": "Seul le MJ peut éditer les effets actifs",
@@ -274,30 +301,17 @@
     "name": "Toujours montrer la quantité des objets",
     "hint": "Activer cette option pour ne jamais masquer la quantité des objets."
   },
-  "T5EK.Settings.InspirationDisabled": {
-    "name": "Désactiver l'indicateur d'inspiration",
-    "hint": "Si la campagne n'utilise pas l'inspiration : désactive complètement l'indicateur."
+  "T5EK.Settings.UseInspiration": {
+    "name": null,
+    "hint": null
   },
-  "T5EK.Settings.ExhaustionEffects": {
-    "name": "Effets d'épuisement automatiques",
-    "hint": "Choisir comment appliquer les effets d'épuisement correspondant aux niveaux (nécessite midiQol pour les jets de désavantage).",
-    "default": "Pas d'effet automatique",
-    "tidy5e": "Tidy5e - Applique les effets de base (utilise Active Effects)",
-    "custom": "Custom - Utilisez vos propres effets (necessite CUB)"
+  "T5EK.Settings.UseVehicleMotion": {
+    "name": null,
+    "hint": null
   },
-  "T5EK.Settings.CustomExhaustionIcon": {
-    "name": "Icône personnalisée pour l'épuisement",
-    "hint": "Définir une icône d'effet d'épuisement personnalisée en fournissant une url d'image. Disponible uniquement lorsque l'effet d'épuisement est défini sur \"tidy 5e\" (par exemple : modules/tidy5e-sheet/images/exhaustion.svg)."
-  },
-  "T5EK.Settings.CustomExhaustionEffect": {
-    "name": "CUB : nom personnalisé de l'effet d'épuisement",
-    "hint": "Définir le nom de l'effet d'épuisement personnalisé - doit être le même que celui défini dans CUB mais SANS le numéro de niveau (par exemple :  \"Exhaustion\").",
-    "tiers": "Nombre de niveaux d'épuisement CUB personnalisés. Valeur par défaut = 5",
-    "warning": "Impossible de trouver un token sur lequel appliquer l'épuisement."
-  },
-  "T5EK.Settings.ExhaustionDisabled": {
-    "name": "Désactiver l'indicateur d'épuisement",
-    "hint": "Si la campagne n'utilise pas l'épuisement : désactive complètement l'indicateur."
+  "T5EK.Settings.UseExhaustion": {
+    "name": null,
+    "hint": null
   },
   "T5EK.Settings.RestingForNpcs": {
     "name": "Repos pour les PNJs",
@@ -314,5 +328,221 @@
     "unlinked": "Mise en évidence des tokens non liés",
     "linked": "Mise en évidence des tokens liés",
     "both": "Mise en évidence des tokens liés ET non liés"
-  }
+  },
+  "T5EK.Settings.DefaultSheetTab": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.HiddenDeathSaves": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.UseSpellSlotMarker": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.UseCharacterEncumbranceBar": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.UseNPCEncumbranceBar": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.UseVehicleEncumbranceBar": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.npcSheetWidth": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.playerSheetWidth": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.vehicleSheetWidth": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.UseMulticlassSpellbookFilter": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.UseSpellClassIcons": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.SpellClassFilterAdditionalClasses": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.AllowCantripsToBePrepared": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.LockMoneyChanges": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.LockExpChanges": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.LockHpMaxChanges": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.LockLevelSelector": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.LockConfigureSheet": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.LockItemQuantity": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.ColorPickerEnabled": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.ColorPickerPrimaryAccent": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerEquipped": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerHpBar": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerEquippedOutline": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerEquippedAccent": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerPrepared": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerPreparedOutline": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerPreparedAccent": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerPact": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerPactOutline": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerPactAccent": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerAtWill": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerAtWillOutline": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerAtWillAccent": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerInnate": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerInnateOutline": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerInnateAccent": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerAlwaysPrepared": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerAlwaysPreparedOutline": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerAlwaysPreparedAccent": {
+    "name": null
+  },
+  "T5EK.Settings.AllowHpMaxOverride": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.Reset": {
+    "name": null,
+    "hint": null,
+    "dialogs": {
+      "title": null,
+      "content": null,
+      "confirm": null,
+      "cancel": null
+    }
+  },
+  "T5EK.Settings.Debug": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.EnableSortFavoritesItemsAlphabetically": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.EnablePermanentUnlockOnCharacterIfYouAreGM": {
+    "name": null,
+    "hint": null,
+    "title": null
+  },
+  "T5EK.Settings.EnablePermanentUnlockOnNPCIfYouAreGM": {
+    "name": null,
+    "hint": null,
+    "title": null
+  },
+  "T5EK.Settings.EnablePermanentUnlockOnVehicleIfYouAreGM": {
+    "name": null,
+    "hint": null,
+    "title": null
+  },
+  "T5EK.ThemeSettings": {
+    "SheetMenu": {
+      "name": null,
+      "buttonLabel": null,
+      "hint": null
+    },
+    "Sheet": {
+      "title": null,
+      "header": null,
+      "useDefaultLightColors": null,
+      "useDefaultDarkColors": null,
+      "export": null,
+      "import": null,
+      "importDropHint": null,
+      "importError": null,
+      "importSuccess": null,
+      "menuLabel": null,
+      "explanation": null
+    }
+  },
+  "T5EK.FavoriteSpellLevelLabel": null,
+  "T5EK.ApplyChanges": null,
+  "T5EK.SaveChanges": null,
+  "T5EK.VehicleExhaustion0": null,
+  "T5EK.VehicleExhaustion1": null,
+  "T5EK.VehicleExhaustion2": null,
+  "T5EK.VehicleExhaustion3": null,
+  "T5EK.VehicleExhaustion4": null,
+  "T5EK.VehicleExhaustion5": null,
+  "T5EK.VehicleExhaustion6": null,
+  "T5EK.VehicleInMotion": null,
+  "T5EK.VehicleMotionless": null,
+  "T5EK.TotalCrewCount": null,
+  "T5EK.ActionsPerTurn": null,
+  "T5EK.SheetMenu": {
+    "label": null,
+    "themeLabel": null
+  },
+  "T5EK.ActiveEffectsMarkerTitle": null
 }

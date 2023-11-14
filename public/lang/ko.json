@@ -11,7 +11,6 @@
   "T5EK.Eyes": "눈동자",
   "T5EK.Skin": "피부",
   "T5EK.Hair": "모발",
-  "T5EK.Subclass": "서브클래스",
   "T5EK.EditActorImage": "이미지 수정",
   "T5EK.ShowActorImage": "우클릭: 캐릭터 이미지 보기",
   "T5EK.ShowPortraitArt": "포트레이트 보기",
@@ -45,16 +44,22 @@
   "T5EK.JournalEntries": "저널 항목",
   "T5EK.TogglePersonalityInfo": "개인적 정보 전환",
 
-  "T5EK.EnableEdit": "수정 활성화",
-  "T5EK.DisableEdit": "수정 비활성화",
-  "T5EK.EditHint": "추가/삭제 버튼과 빈 섹션의 표시 여부를 전환한다.",
+  "T5EK.SheetEdit.Enable.Hint": null,
+  "T5EK.SheetEdit.Disable.Hint": null,
+  "T5EK.SheetEdit.Description": "추가/삭제 버튼과 빈 섹션의 표시 여부를 전환한다.",
 
-  "T5EK.Equip": "아이템 착용",
-  "T5EK.Unequip": "아이템 해제",
-  "T5EK.Attune": "아이템 조율",
-  "T5EK.Deattune": "조율 파기",
-  "T5EK.Prepare": "주문 준비",
-  "T5EK.Unprepare": "준비 취소",
+  "T5EK.SheetLock.Unlock.Hint": null,
+  "T5EK.SheetLock.Lock.Hint": null,
+  "T5EK.SheetLock.Description": null,
+
+  "T5EK.ContextMenuActionEquip": "아이템 착용",
+  "T5EK.ContextMenuActionUnequip": "아이템 해제",
+  "T5EK.ContextMenuActionAttune": "아이템 조율",
+  "T5EK.ContextMenuActionUnattune": "조율 파기",
+  "T5EK.ContextMenuActionPrepare": "주문 준비",
+  "T5EK.ContextMenuActionUnprepare": "준비 취소",
+  "T5EK.ContextMenuActionEdit": null,
+  "T5EK.ContextMenuActionDelete": null,
 
   "T5EK.EmptySection": "이 섹션은 비어 있습니다. 편집할 시트의 잠금을 해제합니다.",
   "T5EK.GmOnlyEdit": "GM만이 이 섹션을 편집할 수 있습니다.",
@@ -65,30 +70,25 @@
 
   "T5EK.GridLayout": "격자 레이아웃",
   "T5EK.ListLayout": "목록 레이아웃",
+  "T5EK.LayoutNotSupported": null,
 
   "T5EK.Encumbrance": "적재량",
 
-  "T5EK.EditSpell": "주문 수정",
-  "T5EK.DeleteSpell": "주문 삭제",
-  "T5EK.AddFav": "즐겨찾기에 추가",
-  "T5EK.isFav": "즐겨찾기",
-  "T5EK.RemoveFav": "줄겨찾기에서 삭제",
+  "T5EK.AddFavorite": "즐겨찾기에 추가",
+  "T5EK.Favorite": "즐겨찾기",
+  "T5EK.RemoveFavorite": "줄겨찾기에서 삭제",
 
-  "T5EK.ToggleInfo": "정보 전환",
-
-  "T5EK.Show": "보기/수정",
-  "T5EK.Hide": "숨기기",
-  "T5EK.Edit": "수정",
-  "T5EK.TraitsEmpty": "비어 있는 특성",
+  "T5EK.ShowNotProficientSkills": null,
+  "T5EK.HideNotProficientSkills": null,
+  "T5EK.ShowEmptyTraits": null,
+  "T5EK.HideEmptyTraits": null,
 
   "T5EK.Abilities": "능력치",
 
   "T5EK.Environment": "환경",
 
-  "T5EK.SearchItem": "아이템 검색",
-  "T5EK.SearchSpell": "주문 검색",
-  "T5EK.SearchFeat": "특성 검색",
-  "T5EK.SearchClear": "검색 삭제",
+  "T5EK.Search": null,
+  "T5EK.SearchClear": null,
   "T5EK.SearchHint": "찾고자 하는 것을 입력합니다.",
 
   "T5EK.ItemCardsKeyHint": "키를 눌러 카드와 상호작용",
@@ -99,22 +99,36 @@
   "T5EK.SpellAttackMod": "공격 수정치",
   "T5EK.PreparedSpells": "준비된 주문",
   "T5EK.PreparedSpellsMax": "준비할 최대 주문",
-  "T5EK.Components": "구성요소",
-  "T5EK.SpellSchool": "학파",
 
   "T5EK.TokenLinked": "액터에 연결된 토큰",
   "T5EK.TokenUnlinked": "액터에 연결되지 않은 토큰",
 
   "T5EK.ItemDetailsHeadline": "메커닉/플레이버 텍스트",
 
-  "T5EK.Settings.GlobalLabel": "전반적",
-  "T5EK.Settings.DebugLabel": "디버그",
-  "T5EK.Settings.UserLabel": "유저",
-  "T5EK.Settings.PcLabel": "PC 시트",
-  "T5EK.Settings.NpcLabel": "NPC 시트",
-  "T5EK.Settings.VehicleLabel": "탑승물",
+  "T5EK.SpellClass": null,
+
+  "T5EK.ClassArtificer": null,
+  "T5EK.ClassBarbarian": null,
+  "T5EK.ClassBard": null,
+  "T5EK.ClassCleric": null,
+  "T5EK.ClassCustom": null,
+  "T5EK.ClassDruid": null,
+  "T5EK.ClassFighter": null,
+  "T5EK.ClassMonk": null,
+  "T5EK.ClassPaladin": null,
+  "T5EK.ClassRanger": null,
+  "T5EK.ClassRogue": null,
+  "T5EK.ClassSorcerer": null,
+  "T5EK.ClassWarlock": null,
+  "T5EK.ClassWizard": null,
+
+  "T5EK.OriginSummaryConfig": null,
+
+  "T5EK.Settings.MulticlassSpellbookFilterLabel": null,
 
   "T5EK.Settings.SheetMenu": {
+    "name": null,
+    "hint": null,
     "label": "시트 설정",
     "title": "Tidy5e 시트 설정"
   },
@@ -122,21 +136,26 @@
     "tabLabel": "플레이어",
     "header": "플레이어 캐릭터 시트"
   },
-  "T5EK.Settings.TabNPCsVehicles": {
-    "tabLabel": "NPC/탑승물",
-    "header": "NPC/탑승물 시트",
-    "labelNPCs": "NPC",
-    "labelVehicles": "탑승물"
+  "T5EK.Settings.TabNPCs": {
+    "tabLabel": null,
+    "header": null
+  },
+  "T5EK.Settings.TabVehicles": {
+    "tabLabel": null,
+    "header": null
   },
   "T5EK.Settings.TabGM": {
     "tabLabel": "GM 옵션",
     "header": "GM 시트 옵션"
   },
-  "T5EK.Settings.TabModules": {
-    "tabLabel": "모듈",
-    "header": "모듈 옵션",
-    "labelActionsFavorites": "액터 액션/즐겨찾기",
-    "labelMidiQoL": "Midi Qol"
+  "T5EK.Settings.TabLocks": {
+    "tabLabel": null,
+    "header": null,
+    "hint": null,
+    "hint2": null,
+    "labelGeneralLocks": null,
+    "labelInventoryLocks": null,
+    "labelFeaturesLocks": null
   },
   "T5EK.Settings.TabInfo": {
     "tabLabel": "정보",
@@ -162,34 +181,40 @@
     "name": "아이템 카드 상호 작용 키",
     "hint": "키(e.g.: x)를 눌러 아이템 카드와 상호작용한다. 기능 키(Ctrl, alt, etc..)를 제외한 모든 키가 될 수 있다."
   },
-
+  "T5EK.Settings.DefaultTheme": {
+    "name": null,
+    "hint": null
+  },
   "T5EK.Settings.SheetTheme": {
     "name": "Tidy5e 색상 테마.",
     "hint": "Tidy5e의 기본 밝은/어두운 색상 테마를 사용한다.",
-    "default": "기본 (밝음)",
-    "dark": "대체 (어두움)"
+    "default": null,
+    "light": null,
+    "dark": null
   },
-
-  "T5EK.Settings.ClassicControls": {
+  "T5EK.Settings.UseClassicControls": {
     "name": "목록 보기에서 고전적 아이템 제어 사용",
     "hint": "항상 아이템 컨트롤을 표시하고 오른쪽 클릭 메뉴를 비활성화한다. 목록 레이아웃의 PC 아이템/주문 인벤토리에만 적용된다."
   },
-  "T5EK.Settings.RollButtonsToCard": {
-    "name": "설명에 midiQol/Better Rolls 아이템 버튼 표시",
-    "hint": "아이템 설명에 기본적으로 굴림 버튼이 나타난다. 활성화 시 해당 아이템을 상황에 맞는 메뉴를 선택할 수 있다. 격자 레이아웃에 유용하다. "
+  "T5EK.Settings.HideIconsNextToTheItemName": {
+    "name": null,
+    "hint": null
   },
   "T5EK.Settings.TraitLabels": {
     "name": "특성 레이블 표시",
     "hint": "기본적으로 특성에 대한 아이콘만 표시된다. 활성화 시 레이블도 표시된다."
   },
-
   "T5EK.Settings.PlayerName": {
     "name": "플레이어 이름 표시",
     "hint": "캐릭터 이름 아래에 플레이어 이름을 표시한다."
   },
-  "T5EK.Settings.JournalTab": {
+  "T5EK.Settings.UseJournalTabForCharacter": {
     "name": "캐릭터 저널 숨김",
     "hint": "활성화 시 저널 탭을 숨긴다."
+  },
+  "T5EK.Settings.UseJournalTabForNPC": {
+    "name": null,
+    "hint": null
   },
   "T5EK.Settings.ClassList": {
     "name": "캐릭터 클래스 목록 숨김.",
@@ -231,7 +256,6 @@
     "name": "장비된 탄약만 표시.",
     "hint": "활성화 시 무기 탄약 선택기에서 현재 장비된 탄약만이 표시된다."
   },
-
   "T5EK.Settings.TraitsAlwaysShown": {
     "name": "항상 특성 보이기.",
     "hint": "기본적으로 빈 특성은 전환 버튼에 의해 숨겨진다. 숨기지 않으려면 선택한다."
@@ -240,14 +264,17 @@
     "name": "항상 기술 보이기.",
     "hint": "기본적으로 비숙련 기술은 전환 버튼에 의해 숨겨진다. 숨기지 않으려면 선택한다."
   },
-
+  "T5EK.Settings.ShowSpellbookTabNpc": {
+    "name": null,
+    "hint": null
+  },
   "T5EK.Settings.ActiveEffectsMarker": {
     "name": "아이템에 활성화 효과 마커 보이기.",
     "hint": "아이템에 활성화 효과가 있는지 확인하려면 활성화 한다. (목록 보기 한정)"
   },
-  "T5EK.Settings.RightClickDisabled": {
-    "name": "우클릭 메뉴 비활성화",
-    "hint": "모듈이 충돌하거나 기본 설정이 필요한 경우 우클릭 메뉴를 비활성화 할 수 있다. 대신 아이템에 메뉴 아이콘이 표시된다."
+  "T5EK.Settings.UseContextMenu": {
+    "name": null,
+    "hint": null
   },
   "T5EK.Settings.ExpandedSheet": {
     "name": "제한된 시트에 대한 확장된 보기",
@@ -262,17 +289,9 @@
     "none": "없음",
     "default": "없음"
   },
-  "T5EK.Settings.HpOverlayBorder": {
-    "name": "Hp 오버레이 오프셋",
-    "hint": "포트레이트 프레임을 보정하고 색조를 막기 위한 오프셋 값을 입력한다"
-  },
   "T5EK.Settings.EditTotalLock": {
     "name": "중요 영역 잠금",
     "hint": "대부분의 정적 값을 우발적으로 변경하는 것을 방지하려면 이 옵션을 활성화한다."
-  },
-  "T5EK.Settings.EditGmAlways": {
-    "name": "GM이 항상 PC 시트를 편집할 수 있음",
-    "hint": "GM이 시트 잠금을 전환하지 않고 PC를 편집할 수 있도록 하려면 활성화한다."
   },
   "T5EK.Settings.EditEffectsGmOnly": {
     "name": "GM만이 활성화 효과를 편집 가능",
@@ -282,30 +301,17 @@
     "name": "항상 아이템 수량 표시",
     "hint": "활성화시 아이템 수량을 숨기지 않는다."
   },
-  "T5EK.Settings.InspirationDisabled": {
-    "name": "고양감 추적기 비활성화.",
-    "hint": "캠페인 내에서 고양감을 사용하지 않을 경우 추적기를 비활성화할 수 있다."
+  "T5EK.Settings.UseInspiration": {
+    "name": null,
+    "hint": null
   },
-  "T5EK.Settings.ExhaustionEffects": {
-    "name": "탈진 효과 (활성화 효과 사용)",
-    "hint": "탈진 단계를 설정할 때 해당하는 활성화 효과 적용 - (midi-Qol의 불리함 굴림 필요)",
-    "default": "자동 탈진 효과 없음",
-    "tidy5e": "Tidy5e - 통합 효과 적용(활성화 효과 사용)",
-    "custom": "Custom - 사용자 지정 효과 사용(CUB 필요)"
+  "T5EK.Settings.UseVehicleMotion": {
+    "name": null,
+    "hint": null
   },
-  "T5EK.Settings.CustomExhaustionIcon": {
-    "name": "사용자 지정 탈진 효과 아이콘.",
-    "hint": "이미지 URL을 사용해 사용자 지정 탈진 효과 아이콘을 설정한다. 탈진 효과가 \"tidy 5e\"로 설정된 경우에만 사용할 수 있다. (e. g.: modules/tidy5e-sheet/images/exhaustion.svg)."
-  },
-  "T5EK.Settings.CustomExhaustionEffect": {
-    "name": "사용자 지정 CUB 탈진 효과 이름",
-    "hint": "사용자 지정 탈진 효과의 이름 설정. CUb에 정의된 것과 동일해야 하지만 단계 숫자가 없어야 한다. (e. g. \"Exhaustion\")",
-    "tiers": "사용자 지정 CUB 탈진 단계 수이다. 기본값 = 5",
-    "warning": "탈진 효과를 적용할 액터 토큰을 찾을 수 없습니다!"
-  },
-  "T5EK.Settings.ExhaustionDisabled": {
-    "name": "탈진 추적기 비활성화.",
-    "hint": "캠페인 내에서 탈진을 사용하지 않을 경우 추적기를 비활성화할 수 있다."
+  "T5EK.Settings.UseExhaustion": {
+    "name": null,
+    "hint": null
   },
   "T5EK.Settings.RestingForNpcs": {
     "name": "NPC 휴식",
@@ -323,17 +329,31 @@
     "linked": "연결 토큰 강조 표시",
     "both": "연결/비연결 토큰 강조 표시"
   },
-  "T5EK.Settings.DefaultActionsTab": {
-    "name": "시트를 처음 열었을 때의 기본 탭",
-    "hint": "'행동'과 '특성' 사이에서 선택한다.",
-    "default": "행동",
-    "attributes": "특성"
+  "T5EK.Settings.DefaultSheetTab": {
+    "name": null,
+    "hint": null
   },
   "T5EK.Settings.HiddenDeathSaves": {
     "name": "죽음 내성 굴림을 플레이어로부터 숨김",
     "hint": "활성화시 GM에게만 죽음 내성 굴림과 그 결과가 표시된다."
   },
-  "T5EK.Settings.npsSheetWidth": {
+  "T5EK.Settings.UseSpellSlotMarker": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.UseCharacterEncumbranceBar": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.UseNPCEncumbranceBar": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.UseVehicleEncumbranceBar": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.npcSheetWidth": {
     "name": "기본 NPC 시트 너비",
     "hint": "NPC 시트 너비를 픽셀 단위로 조정한다. 새로 고침이 필요하다.(기본값 740)."
   },
@@ -344,5 +364,185 @@
   "T5EK.Settings.vehicleSheetWidth": {
     "name": "기본 탑승물 시트 너비",
     "hint": "탑승물 시트 너비를 픽셀 단위로 조정한다. 새로 고침이 필요하다.(기본값 740)."
-  }
+  },
+  "T5EK.Settings.UseMulticlassSpellbookFilter": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.UseSpellClassIcons": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.SpellClassFilterAdditionalClasses": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.AllowCantripsToBePrepared": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.LockMoneyChanges": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.LockExpChanges": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.LockHpMaxChanges": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.LockLevelSelector": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.LockConfigureSheet": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.LockItemQuantity": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.ColorPickerEnabled": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.ColorPickerPrimaryAccent": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerEquipped": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerHpBar": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerEquippedOutline": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerEquippedAccent": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerPrepared": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerPreparedOutline": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerPreparedAccent": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerPact": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerPactOutline": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerPactAccent": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerAtWill": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerAtWillOutline": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerAtWillAccent": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerInnate": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerInnateOutline": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerInnateAccent": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerAlwaysPrepared": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerAlwaysPreparedOutline": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerAlwaysPreparedAccent": {
+    "name": null
+  },
+  "T5EK.Settings.AllowHpMaxOverride": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.Reset": {
+    "name": null,
+    "hint": null,
+    "dialogs": {
+      "title": null,
+      "content": null,
+      "confirm": null,
+      "cancel": null
+    }
+  },
+  "T5EK.Settings.Debug": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.EnableSortFavoritesItemsAlphabetically": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.EnablePermanentUnlockOnCharacterIfYouAreGM": {
+    "name": null,
+    "hint": null,
+    "title": null
+  },
+  "T5EK.Settings.EnablePermanentUnlockOnNPCIfYouAreGM": {
+    "name": null,
+    "hint": null,
+    "title": null
+  },
+  "T5EK.Settings.EnablePermanentUnlockOnVehicleIfYouAreGM": {
+    "name": null,
+    "hint": null,
+    "title": null
+  },
+  "T5EK.ThemeSettings": {
+    "SheetMenu": {
+      "name": null,
+      "buttonLabel": null,
+      "hint": null
+    },
+    "Sheet": {
+      "title": null,
+      "header": null,
+      "useDefaultLightColors": null,
+      "useDefaultDarkColors": null,
+      "export": null,
+      "import": null,
+      "importDropHint": null,
+      "importError": null,
+      "importSuccess": null,
+      "menuLabel": null,
+      "explanation": null
+    }
+  },
+  "T5EK.FavoriteSpellLevelLabel": null,
+  "T5EK.ApplyChanges": null,
+  "T5EK.SaveChanges": null,
+  "T5EK.VehicleExhaustion0": null,
+  "T5EK.VehicleExhaustion1": null,
+  "T5EK.VehicleExhaustion2": null,
+  "T5EK.VehicleExhaustion3": null,
+  "T5EK.VehicleExhaustion4": null,
+  "T5EK.VehicleExhaustion5": null,
+  "T5EK.VehicleExhaustion6": null,
+  "T5EK.VehicleInMotion": null,
+  "T5EK.VehicleMotionless": null,
+  "T5EK.TotalCrewCount": null,
+  "T5EK.ActionsPerTurn": null,
+  "T5EK.SheetMenu": {
+    "label": null,
+    "themeLabel": null
+  },
+  "T5EK.ActiveEffectsMarkerTitle": null
 }

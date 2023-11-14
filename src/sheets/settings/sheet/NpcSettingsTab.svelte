@@ -29,17 +29,17 @@
 {/if}
 
 <CheckboxSetting
-  bind:value={$context.enableClassicControlsForNpc}
-  name={SettingsProvider.settings.enableClassicControlsForNpc.options.name}
-  hint={SettingsProvider.settings.enableClassicControlsForNpc.options.hint}
-  id="enableClassicControlsForNpc"
+  bind:value={$context.useClassicControlsForNpc}
+  name={SettingsProvider.settings.useClassicControlsForNpc.options.name}
+  hint={SettingsProvider.settings.useClassicControlsForNpc.options.hint}
+  id="useClassicControlsForNpc"
 />
 
 <CheckboxSetting
-  bind:value={$context.journalTabNPCDisabled}
-  name={'T5EK.Settings.JournalTabNPCDisabled.name'}
-  hint={'T5EK.Settings.JournalTabNPCDisabled.hint'}
-  id="journalTabNPCDisabled"
+  bind:value={$context.useJournalTabForNpc}
+  name={'T5EK.Settings.UseJournalTabForNPC.name'}
+  hint={'T5EK.Settings.UseJournalTabForNPC.hint'}
+  id="useJournalTabForNpc"
 />
 
 {#if userIsGm}

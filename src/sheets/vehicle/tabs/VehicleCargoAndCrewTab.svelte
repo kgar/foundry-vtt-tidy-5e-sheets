@@ -124,7 +124,7 @@
               </ItemTableColumn>
             {/if}
           {/each}
-          {#if $context.owner && ((!section.editableName && $context.classicControlsEnabled) || ($context.editable && section.editableName))}
+          {#if $context.owner && ((!section.editableName && $context.useClassicControls) || ($context.editable && section.editableName))}
             <ItemTableColumn
               baseWidth={section.editableName
                 ? classicControlsEditableRowBaseWidth
@@ -211,7 +211,7 @@
                 {/if}
               {/each}
             {/if}
-            {#if $context.owner && ((!section.editableName && $context.classicControlsEnabled) || ($context.editable && section.editableName))}
+            {#if $context.owner && ((!section.editableName && $context.useClassicControls) || ($context.editable && section.editableName))}
               <ItemTableCell
                 baseWidth={section.editableName
                   ? classicControlsEditableRowBaseWidth

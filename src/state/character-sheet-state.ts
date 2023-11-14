@@ -85,7 +85,7 @@ let characterSheetState = writable<CharacterSheetState>({
         component: ActorJournalTab,
       },
       enabled: (context) =>
-        context.owner && !context.characterJournalTabDisabled,
+        context.owner && context.useJournalTab,
       order: 70,
       layout: 'classic'
     },

@@ -97,7 +97,7 @@
       >
         {localize('DND5E.Usage')}
       </ItemTableColumn>
-      {#if $context.owner && $context.classicControlsEnabled}
+      {#if $context.owner && $context.useClassicControls}
         <ItemTableColumn baseWidth={classicControlsBaseWidth} />
       {/if}
     </ItemTableHeaderRow>
@@ -168,7 +168,7 @@
         >
           {spell.labels.activation}
         </ItemTableCell>
-        {#if $context.owner && $context.classicControlsEnabled}
+        {#if $context.owner && $context.useClassicControls}
           <ItemTableCell baseWidth={classicControlsBaseWidth}>
             <ItemControls>
               {#if FoundryAdapter.canPrepareSpell(spell)}

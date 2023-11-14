@@ -94,7 +94,7 @@
                 {localize('DND5E.Usage')}
               </ItemTableColumn>
             {/if}
-            {#if $context.owner && $context.classicControlsEnabled}
+            {#if $context.owner && $context.useClassicControls}
               <ItemTableColumn baseWidth="7.5rem" />
             {/if}
           </ItemTableHeaderRow>
@@ -156,7 +156,7 @@
                   {/if}
                 </ItemTableCell>
               {/if}
-              {#if $context.owner && $context.classicControlsEnabled}
+              {#if $context.owner && $context.useClassicControls}
                 <ItemTableCell baseWidth="7.5rem">
                   <ItemControls>
                     <ItemEditControl {item} />
