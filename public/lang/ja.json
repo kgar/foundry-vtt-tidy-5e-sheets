@@ -1,168 +1,168 @@
 {
-  "TIDY5E.Tidy5eSheet": "Tidy 5e Character Sheet",
-  "TIDY5E.Tidy5eNPC": "Tidy 5e NPC Sheet",
-  "TIDY5E.Tidy5eItemSheet": "Tidy 5e Item Sheet",
-  "TIDY5E.Tidy5eVehicle": "Tidy 5e Vechicle Sheet",
-  "TIDY5E.PlayerName": "プレイヤー名",
-  "TIDY5E.Gender": "性別",
-  "TIDY5E.Age": "年齢",
-  "TIDY5E.Weight": "体重",
-  "TIDY5E.Height": "身長",
-  "TIDY5E.Eyes": "眼",
-  "TIDY5E.Skin": "肌",
-  "TIDY5E.Hair": "髪",
-  "TIDY5E.Subclass": "サブクラス",
-  "TIDY5E.EditActorImage": "左クリック: 画像変更",
-  "TIDY5E.ShowActorImage": "右クリック: 画像表示",
-  "TIDY5E.ShowPortraitArt": "画像表示",
-  "TIDY5E.ShowTokenArt": "トークン表示",
-  "TIDY5E.ShowItemImage": "右クリック: 画像表示",
-  "TIDY5E.ShowItemArt": "画像表示",
+  "T5EK.Tidy5eSheet": "Tidy 5e Character Sheet",
+  "T5EK.Tidy5eNPC": "Tidy 5e NPC Sheet",
+  "T5EK.Tidy5eItemSheet": "Tidy 5e Item Sheet",
+  "T5EK.Tidy5eVehicle": "Tidy 5e Vechicle Sheet",
+  "T5EK.PlayerName": "プレイヤー名",
+  "T5EK.Gender": "性別",
+  "T5EK.Age": "年齢",
+  "T5EK.Weight": "体重",
+  "T5EK.Height": "身長",
+  "T5EK.Eyes": "眼",
+  "T5EK.Skin": "肌",
+  "T5EK.Hair": "髪",
+  "T5EK.Subclass": "サブクラス",
+  "T5EK.EditActorImage": "左クリック: 画像変更",
+  "T5EK.ShowActorImage": "右クリック: 画像表示",
+  "T5EK.ShowPortraitArt": "画像表示",
+  "T5EK.ShowTokenArt": "トークン表示",
+  "T5EK.ShowItemImage": "右クリック: 画像表示",
+  "T5EK.ShowItemArt": "画像表示",
 
-  "TIDY5E.Exhaustion0": "悪影響なし",
-  "TIDY5E.Exhaustion1": "能力値判定に不利",
-  "TIDY5E.Exhaustion2": "移動速度半減",
-  "TIDY5E.Exhaustion3": "攻撃ロールとセーヴィング･スローに不利",
-  "TIDY5E.Exhaustion4": "最大ＨＰ半減",
-  "TIDY5E.Exhaustion5": "移動速度０",
-  "TIDY5E.Exhaustion6": "死亡",
+  "T5EK.Exhaustion0": "悪影響なし",
+  "T5EK.Exhaustion1": "能力値判定に不利",
+  "T5EK.Exhaustion2": "移動速度半減",
+  "T5EK.Exhaustion3": "攻撃ロールとセーヴィング･スローに不利",
+  "T5EK.Exhaustion4": "最大ＨＰ半減",
+  "T5EK.Exhaustion5": "移動速度０",
+  "T5EK.Exhaustion6": "死亡",
 
-  "TIDY5E.AbbrInitiative": "ｲﾆｼ",
+  "T5EK.AbbrInitiative": "ｲﾆｼ",
 
-  "TIDY5E.RestHint": "休憩",
-  "TIDY5E.RestS": "小休憩",
-  "TIDY5E.RestL": "大休憩",
-  "TIDY5E.HitDiceRollAverage": "右クリック：平均",
+  "T5EK.RestHint": "休憩",
+  "T5EK.RestS": "小休憩",
+  "T5EK.RestL": "大休憩",
+  "T5EK.HitDiceRollAverage": "右クリック：平均",
 
-  "TIDY5E.Journal": "記録",
+  "T5EK.Journal": "記録",
 
-  "TIDY5E.RestoreOnRest": "休憩時に回復",
+  "T5EK.RestoreOnRest": "休憩時に回復",
 
-  "TIDY5E.JournalPoi": "関心のある人物",
-  "TIDY5E.JournalLoi": "関心のある場所",
-  "TIDY5E.JournalQuests": "クエスト",
-  "TIDY5E.JournalMisc": "その他",
-  "TIDY5E.JournalEntries": "資料",
-  "TIDY5E.TogglePersonalityInfo": "情報表示の切替",
+  "T5EK.JournalPoi": "関心のある人物",
+  "T5EK.JournalLoi": "関心のある場所",
+  "T5EK.JournalQuests": "クエスト",
+  "T5EK.JournalMisc": "その他",
+  "T5EK.JournalEntries": "資料",
+  "T5EK.TogglePersonalityInfo": "情報表示の切替",
 
-  "TIDY5E.EnableEdit": "編集の有効化",
-  "TIDY5E.DisableEdit": "編集の無効化",
-  "TIDY5E.EditHint": "編集ロックとロック解除の表示を切替します",
+  "T5EK.EnableEdit": "編集の有効化",
+  "T5EK.DisableEdit": "編集の無効化",
+  "T5EK.EditHint": "編集ロックとロック解除の表示を切替します",
 
-  "TIDY5E.Equip": "装備",
-  "TIDY5E.Unequip": "装備解除",
-  "TIDY5E.Attune": "同調",
-  "TIDY5E.Deattune": "同調解除",
-  "TIDY5E.Prepare": "呪文準備",
-  "TIDY5E.Unprepare": "準備解除",
+  "T5EK.Equip": "装備",
+  "T5EK.Unequip": "装備解除",
+  "T5EK.Attune": "同調",
+  "T5EK.Deattune": "同調解除",
+  "T5EK.Prepare": "呪文準備",
+  "T5EK.Unprepare": "準備解除",
 
-  "TIDY5E.EmptySection": "シートがロックされているため新規作成ができません。シートロックを解除して編集してください。",
-  "TIDY5E.GmOnlyEdit": "この項目を編集できるのはGMだけです。",
+  "T5EK.EmptySection": "シートがロックされているため新規作成ができません。シートロックを解除して編集してください。",
+  "T5EK.GmOnlyEdit": "この項目を編集できるのはGMだけです。",
 
-  "TIDY5E.AttunementWarning": "警告：同調が最大数である{number}に達しています。",
-  "TIDY5E.AttunementItems": "同調アイテム",
-  "TIDY5E.AttunementMax": "同調上限",
+  "T5EK.AttunementWarning": "警告：同調が最大数である{number}に達しています。",
+  "T5EK.AttunementItems": "同調アイテム",
+  "T5EK.AttunementMax": "同調上限",
 
-  "TIDY5E.GridLayout": "グリッド",
-  "TIDY5E.ListLayout": "リスト",
+  "T5EK.GridLayout": "グリッド",
+  "T5EK.ListLayout": "リスト",
 
-  "TIDY5E.Encumbrance": "荷重",
+  "T5EK.Encumbrance": "荷重",
 
-  "TIDY5E.EditSpell": "呪文編集",
-  "TIDY5E.DeleteSpell": "呪文削除",
-  "TIDY5E.AddFav": "お気に入り追加",
-  "TIDY5E.isFav": "お気に入り",
-  "TIDY5E.RemoveFav": "お気に入りから削除",
+  "T5EK.EditSpell": "呪文編集",
+  "T5EK.DeleteSpell": "呪文削除",
+  "T5EK.AddFav": "お気に入り追加",
+  "T5EK.isFav": "お気に入り",
+  "T5EK.RemoveFav": "お気に入りから削除",
 
-  "TIDY5E.ToggleInfo": "詳細表示",
+  "T5EK.ToggleInfo": "詳細表示",
 
-  "TIDY5E.Show": "表示/編集",
-  "TIDY5E.Hide": "非表示",
-  "TIDY5E.Edit": "編集",
-  "TIDY5E.TraitsEmpty": "未設定の特徴",
+  "T5EK.Show": "表示/編集",
+  "T5EK.Hide": "非表示",
+  "T5EK.Edit": "編集",
+  "T5EK.TraitsEmpty": "未設定の特徴",
 
-  "TIDY5E.Abilities": "能力",
+  "T5EK.Abilities": "能力",
 
-  "TIDY5E.Environment": "環境",
+  "T5EK.Environment": "環境",
 
-  "TIDY5E.SearchItem": "アイテム検索",
-  "TIDY5E.SearchSpell": "呪文検索",
-  "TIDY5E.SearchFeat": "特徴検索",
-  "TIDY5E.SearchClear": "検索クリア",
-  "TIDY5E.SearchHint": "検索……",
+  "T5EK.SearchItem": "アイテム検索",
+  "T5EK.SearchSpell": "呪文検索",
+  "T5EK.SearchFeat": "特徴検索",
+  "T5EK.SearchClear": "検索クリア",
+  "T5EK.SearchHint": "検索……",
 
-  "TIDY5E.ItemCardsKeyHint": "キーを押したままカードを操作",
-  "TIDY5E.ItemCardsMouseHint": "マウスホイールボタン（中央）で、アイテムを表示/編集",
+  "T5EK.ItemCardsKeyHint": "キーを押したままカードを操作",
+  "T5EK.ItemCardsMouseHint": "マウスホイールボタン（中央）で、アイテムを表示/編集",
 
-  "TIDY5E.AbbrMod": "修正",
-  "TIDY5E.AbbrSavingThrow": "セーヴ",
-  "TIDY5E.SpellAttackMod": "攻撃修正",
-  "TIDY5E.PreparedSpells": "準備済み呪文",
-  "TIDY5E.PreparedSpellsMax": "準備済み呪文上限",
-  "TIDY5E.Components": "構成要素",
-  "TIDY5E.SpellSchool": "呪文の系統",
+  "T5EK.AbbrMod": "修正",
+  "T5EK.AbbrSavingThrow": "セーヴ",
+  "T5EK.SpellAttackMod": "攻撃修正",
+  "T5EK.PreparedSpells": "準備済み呪文",
+  "T5EK.PreparedSpellsMax": "準備済み呪文上限",
+  "T5EK.Components": "構成要素",
+  "T5EK.SpellSchool": "呪文の系統",
 
-  "TIDY5E.TokenLinked": "リンク中のトークン",
-  "TIDY5E.TokenUnlinked": "未リンクのトークン",
+  "T5EK.TokenLinked": "リンク中のトークン",
+  "T5EK.TokenUnlinked": "未リンクのトークン",
 
-  "TIDY5E.ItemDetailsHeadline": "解説・背景",
+  "T5EK.ItemDetailsHeadline": "解説・背景",
 
-  "TIDY5E.Class": "クラス",
-  "TIDY5E.SpellClass": "呪文クラス",
-  "TIDY5E.Spellbook": "呪文書",
+  "T5EK.Class": "クラス",
+  "T5EK.SpellClass": "呪文クラス",
+  "T5EK.Spellbook": "呪文書",
 
-  "TIDY5E.ClassArtificer": "アーティフィサ―",
-  "TIDY5E.ClassBarbarian": "バーバリアン",
-  "TIDY5E.ClassBard": "バード",
-  "TIDY5E.ClassCleric": "クレリック",
-  "TIDY5E.ClassCustom": "カスタム",
-  "TIDY5E.ClassDruid": "ドルイド",
-  "TIDY5E.ClassFighter": "ファイター",
-  "TIDY5E.ClassMonk": "モンク",
-  "TIDY5E.ClassPaladin": "パラディン",
-  "TIDY5E.ClassRanger": "レンジャー",
-  "TIDY5E.ClassRogue": "ローグ",
-  "TIDY5E.ClassSorcerer": "ソーサラー",
-  "TIDY5E.ClassWarlock": "ウォーロック",
-  "TIDY5E.ClassWizard": "ウィザード",
+  "T5EK.ClassArtificer": "アーティフィサ―",
+  "T5EK.ClassBarbarian": "バーバリアン",
+  "T5EK.ClassBard": "バード",
+  "T5EK.ClassCleric": "クレリック",
+  "T5EK.ClassCustom": "カスタム",
+  "T5EK.ClassDruid": "ドルイド",
+  "T5EK.ClassFighter": "ファイター",
+  "T5EK.ClassMonk": "モンク",
+  "T5EK.ClassPaladin": "パラディン",
+  "T5EK.ClassRanger": "レンジャー",
+  "T5EK.ClassRogue": "ローグ",
+  "T5EK.ClassSorcerer": "ソーサラー",
+  "T5EK.ClassWarlock": "ウォーロック",
+  "T5EK.ClassWizard": "ウィザード",
 
-  "TIDY5E.Settings.GlobalLabel": "全体",
-  "TIDY5E.Settings.DebugLabel": "デバッグ",
-  "TIDY5E.Settings.UserLabel": "ユーザー",
-  "TIDY5E.Settings.PcLabel": "PC",
-  "TIDY5E.Settings.NpcLabel": "NPC",
-  "TIDY5E.Settings.VehicleLabel": "乗り物",
-  "TIDY5E.Settings.MulticlassSpellbookFilterLabel": "マルチクラス呪文書フィルター",
-  "TIDY5E.Settings.ColorPickerLabel": "色のカスタマイズ",
+  "T5EK.Settings.GlobalLabel": "全体",
+  "T5EK.Settings.DebugLabel": "デバッグ",
+  "T5EK.Settings.UserLabel": "ユーザー",
+  "T5EK.Settings.PcLabel": "PC",
+  "T5EK.Settings.NpcLabel": "NPC",
+  "T5EK.Settings.VehicleLabel": "乗り物",
+  "T5EK.Settings.MulticlassSpellbookFilterLabel": "マルチクラス呪文書フィルター",
+  "T5EK.Settings.ColorPickerLabel": "色のカスタマイズ",
 
-  "TIDY5E.Settings.SheetMenu": {
+  "T5EK.Settings.SheetMenu": {
     "name": "Tidy Sheet設定",
     "hint": "キャラクターシートの見た目を自由にカスタマイズしましょう！",
     "label": "シート設定",
     "title": "Tidy5eシート設定"
   },
-  "TIDY5E.Settings.TabPlayers": {
+  "T5EK.Settings.TabPlayers": {
     "tabLabel": "プレイヤー",
     "header": "プレイヤーキャラクターシート"
   },
-  "TIDY5E.Settings.TabNPCsVehicles": {
+  "T5EK.Settings.TabNPCsVehicles": {
     "tabLabel": "NPC/乗物",
     "header": "NPC/乗物シート",
     "labelNPCs": "NPC",
     "labelVehicles": "乗物"
   },
-  "TIDY5E.Settings.TabGM": {
+  "T5EK.Settings.TabGM": {
     "tabLabel": "GMオプション",
     "header": "GMｼｰﾄ･ｵﾌﾟｼｮﾝ"
   },
-  "TIDY5E.Settings.TabModules": {
+  "T5EK.Settings.TabModules": {
     "tabLabel": "モジュール",
     "header": "モジュール･オプション",
     "labelActionsFavorites": "アクター･アクション/お気に入り",
     "labelMidiQoL": "Midi Qol",
     "labelLazyMoney": "Lazy Money"
   },
-  "TIDY5E.Settings.TabLocks": {
+  "T5EK.Settings.TabLocks": {
     "tabLabel": "ロック",
     "header": "ロック設定",
     "hint": "シートの中であんまり使わない場所をPLが間違って変更するのを防いだり、そもそも表示したくないものを隠すためのオプションをここで提供しています。何をロックするのか、誰が使って良いのかを権限で完全に管理できます。",
@@ -171,126 +171,126 @@
     "labelInventoryLocks": "所持品ロック",
     "labelFeaturesLocks": "機能ロック"
   },
-  "TIDY5E.Settings.TabInfo": {
+  "T5EK.Settings.TabInfo": {
     "tabLabel": "情報",
     "header": "情報"
   },
-  "TIDY5E.Settings.ItemCardsForAllItems": {
+  "T5EK.Settings.ItemCardsForAllItems": {
     "name": "アイテム情報のカードをすべてのシートで表示するすべてのｼｰﾄでアイテム情報カード表示機能を使用",
     "hint": "アイテム情報をすべてのシートで表示する必要が無い場合は無効にしくてださい。(再読み込みが発生します)"
   },
-  "TIDY5E.Settings.ItemCardsForNpcs": {
+  "T5EK.Settings.ItemCardsForNpcs": {
     "name": "NPC/乗物のアイテム情報カードを表示",
     "hint": "NPC/乗物用のシートでアイテム情報カードが表示する必要が無い場合は無効にしてください。(再読み込みが発生します)"
   },
-  "TIDY5E.Settings.ItemCardsAreFloating": {
+  "T5EK.Settings.ItemCardsAreFloating": {
     "name": "アイテム情報カードをカーソル横に表示",
     "hint": "アイテム情報カードがカーソルの横に出現します。シートをオップアウト時に使用するのをお勧めします。遅延を設定しておくと便利です。(再読み込みが発生します)"
   },
-  "TIDY5E.Settings.ItemCardsDelay": {
+  "T5EK.Settings.ItemCardsDelay": {
     "name": "アイテム情報カードの表示遅延",
     "hint": "ミリ秒単位で指定した時間後にアイテムにカーソルを合わせたところに情報が出現します。（0:遅延なし、300:デフォルト）(再読み込みが発生します)"
   },
-  "TIDY5E.Settings.ItemCardsFixKey": {
+  "T5EK.Settings.ItemCardsFixKey": {
     "name": "アイテム情報カード操作キー",
     "hint": "アイテムカードの操作に使用するキー（例：x）を入力します。ファンクションキー（Ctrl、Altなど）以外の任意のキーにすることができます。(再読み込みが発生します)"
   },
 
-  "TIDY5E.Settings.SheetTheme": {
+  "T5EK.Settings.SheetTheme": {
     "name": "Tidy5eカラーテーマ",
     "hint": "Tidy5eシートのカラーテーマを、ライトカラーまたはダークカラーに設定します。",
     "default": "ライトカラー",
     "dark": "ダークカラー"
   },
 
-  "TIDY5E.Settings.ClassicControls": {
+  "T5EK.Settings.ClassicControls": {
     "name": "一覧表示で従来のアイテム操作を使用",
     "hint": "常にアイテム操作を表示し、右クリックメニューを無効にします。一覧表示でPCのアイテム/呪文インベントリにのみ適用されます。"
   },
-  "TIDY5E.Settings.RollButtonsToCard": {
+  "T5EK.Settings.RollButtonsToCard": {
     "name": "アイテム情報カードに、midiQolのアイテムボタンを表示",
     "hint": "デフォルトでは、ロールボタンにはアイテムの説明が表示されます。それらをアイテムを情報カードに移動できるようにします。すべてのレイアウトモードで動作します。"
   },
-  "TIDY5E.Settings.TraitLabels": {
+  "T5EK.Settings.TraitLabels": {
     "name": "特徴ラベルの表示",
     "hint": "デフォルトでは、特徴アイコンのみが表示されます。ラベルも表示できるようにします。"
   },
 
-  "TIDY5E.Settings.PlayerName": {
+  "T5EK.Settings.PlayerName": {
     "name": "プレイヤー名の表示",
     "hint": "キャラクターの名前の下に、プレイヤー名を表示します。"
   },
-  "TIDY5E.Settings.JournalTab": {
+  "T5EK.Settings.JournalTab": {
     "name": "シートの記録タブを非表示",
     "hint": "シート上の記録タブを非表示にする場合に有効にします。"
   },
-  "TIDY5E.Settings.ClassList": {
+  "T5EK.Settings.ClassList": {
     "name": "クラス一覧を非表示",
     "hint": "キャラクター名の下のクラスリストを非表示にする場合に有効にします。"
   },
-  "TIDY5E.Settings.InspirationAnimation": {
+  "T5EK.Settings.InspirationAnimation": {
     "name": "インスピレーションアニメ",
     "hint": "インスピレーションアイコンのアニメーションを無効化します。"
   },
-  "TIDY5E.Settings.HideIfZero": {
+  "T5EK.Settings.HideIfZero": {
     "name": "消耗とインスピレーションが0の時､表示を隠す",
     "hint": "0の場合、消耗とインスピレーションは表示されなくなります。マウスカーソルを合わせたときだけ表示されます。"
   },
-  "TIDY5E.Settings.InspirationOnHover": {
+  "T5EK.Settings.InspirationOnHover": {
     "name": "ﾏｳｽｵｰﾊﾞｰ時にｲﾝｽﾋﾟ表示",
     "hint": "画像の上にマウスカーソルを置いたときだけ、インスピレーションを表示します。"
   },
-  "TIDY5E.Settings.ExhaustionOnHover": {
+  "T5EK.Settings.ExhaustionOnHover": {
     "name": "ﾏｳｽｵｰﾊﾞｰ時に消耗表示",
     "hint": "画像の上にマウスカーソルを置いたときだけ、消耗を表示します。"
   },
-  "TIDY5E.Settings.HpBar": {
+  "T5EK.Settings.HpBar": {
     "name": "hpバーの無効化",
     "hint": "残りのhpを示す色付きのバーを非表示にします（hp数は引き続き表示されます）。"
   },
-  "TIDY5E.Settings.HpOverlay": {
+  "T5EK.Settings.HpOverlay": {
     "name": "hpｵｰﾊﾞｰﾚｲを非表示",
     "hint": "アクターのhpが減少しても、画像が赤く塗りつぶされないようになります。"
   },
-  "TIDY5E.Settings.TraitsTogglePc": {
+  "T5EK.Settings.TraitsTogglePc": {
     "name": "空のｷｬﾗｸﾀｰ特徴の切替",
     "hint": "デフォルトでは、空の特徴は常に表示されます。"
   },
-  "TIDY5E.Settings.TraitsMovedBelowResource": {
+  "T5EK.Settings.TraitsMovedBelowResource": {
     "name": "特徴をﾘｿｰｽの下に移動",
     "hint": "特徴を、技能の下 (左段)から、リソース下 (右段)に移動する場合に有効にします。"
   },
-  "TIDY5E.Settings.AmmoEquippedOnly": {
+  "T5EK.Settings.AmmoEquippedOnly": {
     "name": "装備済の矢弾のみ表示",
     "hint": "武器ごとに現在装備されている矢弾のみ表示するようにします。"
   },
 
-  "TIDY5E.Settings.TraitsAlwaysShown": {
+  "T5EK.Settings.TraitsAlwaysShown": {
     "name": "常に特徴を表示",
     "hint": "デフォルトでは、空の特徴はトグルボタンで非表示になります。"
   },
-  "TIDY5E.Settings.SkillsAlwaysShown": {
+  "T5EK.Settings.SkillsAlwaysShown": {
     "name": "常に技能を表示",
     "hint": "デフォルトでは、技能が無効な場合はトグルボタンで表示されます。"
   },
-  "TIDY5E.Settings.HideSpellbookTabNpc": {
+  "T5EK.Settings.HideSpellbookTabNpc": {
     "name": "NPCの呪文書タブを隠す",
     "hint": "デフォルトだと「能力」タブと一体化しています。これをオフにすればタブが分けられます。"
   },
 
-  "TIDY5E.Settings.ActiveEffectsMarker": {
+  "T5EK.Settings.ActiveEffectsMarker": {
     "name": "アイテムに有効な効果を示すマーカーを表示",
     "hint": "有効な効果を持っているアイテムにマーカーを付けて、判別できるようにする場合は有効にします（リスト表示の場合のみ）。"
   },
-  "TIDY5E.Settings.RightClickDisabled": {
+  "T5EK.Settings.RightClickDisabled": {
     "name": "右ｸﾘｯｸﾒﾆｭｰの表示を無効化",
     "hint": "モジュールが競合する場合など、右クリックによるメニュー表示を無効にすることができます。項目には、代わりにメニューアイコンが表示されます。"
   },
-  "TIDY5E.Settings.ExpandedSheet": {
+  "T5EK.Settings.ExpandedSheet": {
     "name": "リミテッド･シートの拡大表示",
     "hint": "リミテッド･シートの表示について、そのアクターに対して限定的(Limited)権限を持つプレイヤーに、キャラクターシートの全て（[効果],[記録]を除く）を表示します。"
   },
-  "TIDY5E.Settings.PortraitStyle": {
+  "T5EK.Settings.PortraitStyle": {
     "name": "PCシート：シートに円形画像を使用",
     "hint": "アクターの円形画像/アイコンを有効にする場合に選択します。",
     "all": "全てのアクター",
@@ -299,31 +299,31 @@
     "none": "－",
     "default": "なし"
   },
-  "TIDY5E.Settings.HpOverlayBorder": {
+  "T5EK.Settings.HpOverlayBorder": {
     "name": "オフセットhpｵｰﾊﾞｰﾚｲ",
     "hint": "オフセット値を入力して、hp減少時に赤く塗りつぶす際、画像の外側に塗りつぶし禁止範囲を設けます。"
   },
-  "TIDY5E.Settings.EditTotalLock": {
+  "T5EK.Settings.EditTotalLock": {
     "name": "誤操作による変更をロック",
     "hint": "表記上ほとんど変わることがない値を、誤操作で変更されるのを防ぐことができます。"
   },
-  "TIDY5E.Settings.EditGmAlways": {
+  "T5EK.Settings.EditGmAlways": {
     "name": "GM権限でPCｼｰﾄを編集可能",
     "hint": "有効にすると、シートロックを切替せずに、PCシートをGMが編集できるようになります。"
   },
-  "TIDY5E.Settings.EditEffectsGmOnly": {
+  "T5EK.Settings.EditEffectsGmOnly": {
     "name": "GMだけが有効化された効果を編集可能",
     "hint": "プレイヤーによる、自身のシート上にある有効化された効果の編集を禁止します。GM以外は適用されている効果の確認ができます。"
   },
-  "TIDY5E.Settings.QuantityAlwaysShown": {
+  "T5EK.Settings.QuantityAlwaysShown": {
     "name": "常にアイテム数量を表示する",
     "hint": "アイテム数量を常に表示にします。"
   },
-  "TIDY5E.Settings.InspirationDisabled": {
+  "T5EK.Settings.InspirationDisabled": {
     "name": "インスピレーション表示の無効化",
     "hint": "キャンペーンでインスピレーションを使用しない場合､完全に無効化することができます。"
   },
-  "TIDY5E.Settings.ExhaustionEffects": {
+  "T5EK.Settings.ExhaustionEffects": {
     "name": "自動消耗効果",
     "hint": "消耗レベルに対応した消耗効果を適用する方法を選択します（不利ロールのため要midiQol）",
     "default": "自動消耗効果なし",
@@ -332,29 +332,29 @@
     "cub": "CUB - Use your own effects",
     "custom": "カスタム - あなた自身で効果を適用（要CUB）"
   },
-  "TIDY5E.Settings.CustomExhaustionIcon": {
+  "T5EK.Settings.CustomExhaustionIcon": {
     "name": "カスタム消耗効果アイコン",
     "hint": "画像のURL（例：modules/tidy5e-sheet/images/exhaustion.svg）を指定して、カスタムされた消耗効果アイコンを設定します。枯渇効果が \"tidy 5e\" に設定されている場合にのみ利用可能です。"
   },
-  "TIDY5E.Settings.CustomExhaustionEffect": {
+  "T5EK.Settings.CustomExhaustionEffect": {
     "name": "カスタムCUB消耗効果名",
     "hint": "カスタムされた消耗効果の名前を設定します - CUBで定義されている、消耗レベル表記を抜いた名前と同一でなければなりません。 (例：\"Exhaustion\")",
     "tiers": "カスタムCUBの消耗レベル数。デフォルトは 5",
     "warning": "消耗効果を適用するためのアクタートークンが見つかりません！"
   },
-  "TIDY5E.Settings.ExhaustionDisabled": {
+  "T5EK.Settings.ExhaustionDisabled": {
     "name": "消耗を無効化",
     "hint": "キャンペーンで消耗を使用しない場合､完全に無効化することができます。"
   },
-  "TIDY5E.Settings.RestingForNpcs": {
+  "T5EK.Settings.RestingForNpcs": {
     "name": "NPCの休憩",
     "hint": "NPCシートのアイコン/ボタンに残り回数を表示します。"
   },
-  "TIDY5E.Settings.RestingForNpcsChat": {
+  "T5EK.Settings.RestingForNpcsChat": {
     "name": "NPCの休憩チャットカードを隠す",
     "hint": "NPCの休憩チャットカードを非表示にする（GMとプレイヤーに適用されます）。"
   },
-  "TIDY5E.Settings.LinkMarker": {
+  "T5EK.Settings.LinkMarker": {
     "name": "関連付けされたNPCをﾏｰｷﾝｸﾞ",
     "hint": "関連付けされた、または、されてないNPCシートに、色付きの境界線とアイコンを追加します。",
     "default": "関連付けマーカーなし (デフォルト)",
@@ -362,7 +362,7 @@
     "linked": "関連付けされたトークンを強調表示",
     "both": "トークンを全て強調表示"
   },
-  "TIDY5E.Settings.DefaultActionsTab": {
+  "T5EK.Settings.DefaultActionsTab": {
     "name": "初めてシートを開くときのデフォルトタブ",
     "hint": "「アクション」または「能力値」を選択します。",
     "default": "アクション",
@@ -375,173 +375,173 @@
     "journal": "資料",
     "actions": "アクション"
   },
-  "TIDY5E.Settings.HiddenDeathSaves": {
+  "T5EK.Settings.HiddenDeathSaves": {
     "name": "PLから死亡セーヴを隠す",
     "hint": "有効化することで死亡セーヴの結果をGMのみ表示します。"
   },
-  "TIDY5E.Settings.HideSpellSlotMarker": {
+  "T5EK.Settings.HideSpellSlotMarker": {
     "name": "シートの呪文スロットマーカーを隠す",
     "hint": "色の付いた呪文スロットマーカーを非表示にします。魔力点ルールを使っているときに便利です。"
   },
-  "TIDY5E.Settings.EnableSpellLevelButtons": {
+  "T5EK.Settings.EnableSpellLevelButtons": {
     "name": "呪文レベルボタン有効化",
     "hint": "呪文レベルを選択する画面において、ドロップダウンの代わりに一列に並んだボタンを表示します。"
   },
-  "TIDY5E.Settings.HideStandardEncumbranceBar": {
+  "T5EK.Settings.HideStandardEncumbranceBar": {
     "name": "キャラシから荷重のバーを非表示にする",
     "hint": "現在のキャラの所持品の合計の重さを表示する荷重バーを非表示にします。「Variant Encumbrance」モッドを使っている場合は非表示をお勧めします。"
   },
-  "TIDY5E.Settings.npsSheetWidth": {
+  "T5EK.Settings.npsSheetWidth": {
     "name": "デフォルトNPCシート幅",
     "hint": "NPCシートの長さ（ピクセル単位）。再起動が必要です。"
   },
-  "TIDY5E.Settings.playerSheetWidth": {
+  "T5EK.Settings.playerSheetWidth": {
     "name": "デフォルトPCシート幅",
     "hint": "PCシートの長さ（ピクセル単位）。再起動が必要です。"
   },
-  "TIDY5E.Settings.vehicleSheetWidth": {
+  "T5EK.Settings.vehicleSheetWidth": {
     "name": "乗り物シート幅",
     "hint": "乗り物シートの長さ（ピクセル単位）。再起動が必要です。"
   },
-  "TIDY5E.Settings.SpellClassFilterSelect": {
+  "T5EK.Settings.SpellClassFilterSelect": {
     "name": "マルチクラス呪文フィルタを有効化",
     "hint": "キャラシの空間を少し空けたい場合はこれを無効化すると良いです。"
   },
-  "TIDY5E.Settings.SpellClassFilterIconReplace": {
+  "T5EK.Settings.SpellClassFilterIconReplace": {
     "name": "呪文アイコンをクラスアイコンに置き換える",
     "hint": "呪文の固有のアイコンの代わりにその呪文を獲得したクラスのアイコンを表示するように変更します。呪文の数が多い場合は判別しやすくなります。"
   },
-  "TIDY5E.Settings.LazyHpAndExpEnable": {
+  "T5EK.Settings.LazyHpAndExpEnable": {
     "name": "簡易HPと経験値操作",
     "hint": "HPや経験値に「+10」「-10」「=10」「010」等を入力すると現在の値に大して操作を行い、繰り越し無しで処理されます。"
   },
-  "TIDY5E.Settings.LazyMoneyEnable": {
+  "T5EK.Settings.LazyMoneyEnable": {
     "name": "簡易所持金操作",
     "hint": "所持金に「+10」「-10」「=10」「010」等を入力すると現在の値に大して操作を行い、繰り越し無しで自動変換と処理がされます。"
   },
-  "TIDY5E.Settings.LazyMoneyAddConvert": {
+  "T5EK.Settings.LazyMoneyAddConvert": {
     "name": "所持金追加時に変換する",
     "hint": "所持金を増やしたとき、自動的に次に一番大きい貨幣に変換します。"
   },
-  "TIDY5E.Settings.LazyMoneyIgnoreElectrum": {
+  "T5EK.Settings.LazyMoneyIgnoreElectrum": {
     "name": "エレクトラムを無視",
     "hint": "自動的に変換する時、エレクトラム化を無視します。直接エレクトラム化を編集したときはこの限りではありませんが、「所持金追加時に変換する」が有効になっている場合は自動的に変換されます。"
   },
-  "TIDY5E.Settings.LazyMoneyChatLog": {
+  "T5EK.Settings.LazyMoneyChatLog": {
     "name": "チャットログ",
     "hint": "所持金の変更をGMに秘話で通知します。"
   },
-  "TIDY5E.Settings.AllowCantripToBePreparedOnContext": {
+  "T5EK.Settings.AllowCantripToBePreparedOnContext": {
     "name": "初級呪文も「準備」できる",
     "hint": "ターシャの釜やOne D&D対応として初級呪文も右クリックメニューで準備を入れ替える事ができます。"
   },
-  "TIDY5E.Settings.LockMoneyChanges": {
+  "T5EK.Settings.LockMoneyChanges": {
     "name": "非GMの所持金操作をロック",
     "hint": "pp, gp, ep, sp, cpの入力をロックし、非GM以外の人が操作できないようにします。この欄を操作する他のModは影響されません。"
   },
-  "TIDY5E.Settings.LockExpChanges": {
+  "T5EK.Settings.LockExpChanges": {
     "name": "非GMの経験値金操作をロック",
     "hint": "経験値の入力をロックし、非GM以外の人が操作できないようにします。この欄を操作する他のModは影響されません。"
   },
-  "TIDY5E.Settings.LockHpMaxChanges": {
+  "T5EK.Settings.LockHpMaxChanges": {
     "name": "非GMの最大HP操作をロックLock change hp max for non GM",
     "hint": "最大HPの入力をロックし、非GM以外の人が操作できないようにします。この欄を操作する他のModは影響されません。."
   },
-  "TIDY5E.Settings.LockLevelSelector": {
+  "T5EK.Settings.LockLevelSelector": {
     "name": "非GMのレベル操作をロック",
     "hint": "レベルのドロップダウンをロックし、非GM以外の人が操作できないようにします。この欄を操作する他のModは影響されません。"
   },
-  "TIDY5E.Settings.LockConfigureSheet": {
+  "T5EK.Settings.LockConfigureSheet": {
     "name": "非GMのシート設定をロック",
     "hint": "シート設定の入力をロックし、非GM以外の人が操作できないようにします。この欄を操作する他のModは影響されません。"
   },
-  "TIDY5E.Settings.LockItemQuantity": {
+  "T5EK.Settings.LockItemQuantity": {
     "name": "非GMのアイテム所持数変更をロック",
     "hint": "アイテム所持数の入力をロックし、非GM以外の人が操作できないようにします。この欄を操作する他のModは影響されません。"
   },
 
-  "TIDY5E.Settings.ColorPickerEnabled": {
+  "T5EK.Settings.ColorPickerEnabled": {
     "name": "色カスタマイズを有効化",
     "hint": "色のカスタマイズを有効化／無効化します。"
   },
-  "TIDY5E.Settings.ColorPickerEquipped": {
+  "T5EK.Settings.ColorPickerEquipped": {
     "name": "「装備」色カスタマイズを有効化",
     "hint": "「装備」されたアイテムの色をカスタマイズします。「#00000000」に設定すると透明となり、カスタマイズをオフしているのと同じ効果になります。"
   },
-  "TIDY5E.Settings.ColorPickerEquippedOutline": {
+  "T5EK.Settings.ColorPickerEquippedOutline": {
     "name": "「装備された枠」色カスタマイズを有効化",
     "hint": "「装備されたアイテムの枠」の色をカスタマイズします。「#00000000」に設定すると透明となり、カスタマイズをオフしているのと同じ効果になります。"
   },
-  "TIDY5E.Settings.ColorPickerEquippedAccent": {
+  "T5EK.Settings.ColorPickerEquippedAccent": {
     "name": "「装備された背景」色カスタマイズを有効化",
     "hint": "「装備されたアイテムの背景」の色をカスタマイズします。「#00000000」に設定すると透明となり、カスタマイズをオフしているのと同じ効果になります。"
   },
-  "TIDY5E.Settings.ColorPickerPrepared": {
+  "T5EK.Settings.ColorPickerPrepared": {
     "name": "「準備済み」色カスタマイズを有効化",
     "hint": "「準備済み」のアイテムの色をカスタマイズします。「#00000000」に設定すると透明となり、カスタマイズをオフしているのと同じ効果になります。"
   },
-  "TIDY5E.Settings.ColorPickerPreparedOutline": {
+  "T5EK.Settings.ColorPickerPreparedOutline": {
     "name": "「準備済み枠」色カスタマイズを有効化",
     "hint": "「準備済みアイテムの枠」の色をカスタマイズします。「#00000000」に設定すると透明となり、カスタマイズをオフしているのと同じ効果になります。"
   },
-  "TIDY5E.Settings.ColorPickerPreparedAccent": {
+  "T5EK.Settings.ColorPickerPreparedAccent": {
     "name": "「準備済み背景」色カスタマイズを有効化",
     "hint": "「準備済みアイテムの背景」の色をカスタマイズします。「#00000000」に設定すると透明となり、カスタマイズをオフしているのと同じ効果になります。"
   },
-  "TIDY5E.Settings.ColorPickerPact": {
+  "T5EK.Settings.ColorPickerPact": {
     "name": "「契約」色カスタマイズを有効化",
     "hint": "「契約」として設定されたアイテムの色をカスタマイズします。「#00000000」に設定すると透明となり、カスタマイズをオフしているのと同じ効果になります。"
   },
-  "TIDY5E.Settings.ColorPickerPactOutline": {
+  "T5EK.Settings.ColorPickerPactOutline": {
     "name": "「契約枠」色カスタマイズを有効化",
     "hint": "「契約アイテムの枠」の色をカスタマイズします。「#00000000」に設定すると透明となり、カスタマイズをオフしているのと同じ効果になります。"
   },
-  "TIDY5E.Settings.ColorPickerPactAccent": {
+  "T5EK.Settings.ColorPickerPactAccent": {
     "name": "「契約背景」色カスタマイズを有効化",
     "hint": "「契約アイテムの背景」の色をカスタマイズします。「#00000000」に設定すると透明となり、カスタマイズをオフしているのと同じ効果になります。"
   },
-  "TIDY5E.Settings.ColorPickerAtWill": {
+  "T5EK.Settings.ColorPickerAtWill": {
     "name": "「常に発動可能」色カスタマイズを有効化",
     "hint": "「常に発動可能」として指定されたアイテムの色をカスタマイズします。「#00000000」に設定すると透明となり、カスタマイズをオフしているのと同じ効果になります。"
   },
-  "TIDY5E.Settings.ColorPickerAtWillOutline": {
+  "T5EK.Settings.ColorPickerAtWillOutline": {
     "name": "「常に発動可能枠」色カスタマイズを有効化",
     "hint": "「常に発動可能なアイテムの枠」の色をカスタマイズします。「#00000000」に設定すると透明となり、カスタマイズをオフしているのと同じ効果になります。"
   },
-  "TIDY5E.Settings.ColorPickerAtWillAccent": {
+  "T5EK.Settings.ColorPickerAtWillAccent": {
     "name": "「常に発動可能背景」色カスタマイズを有効化",
     "hint": "「常に発動可能なアイテムの背景」されたアイテムの色をカスタマイズします。「#00000000」に設定すると透明となり、カスタマイズをオフしているのと同じ効果になります。"
   },
-  "TIDY5E.Settings.ColorPickerInnate": {
+  "T5EK.Settings.ColorPickerInnate": {
     "name": "「生得呪文」色カスタマイズを有効化",
     "hint": "「生得呪文」として指定されたアイテムの色をカスタマイズします。「#00000000」に設定すると透明となり、カスタマイズをオフしているのと同じ効果になります。"
   },
-  "TIDY5E.Settings.ColorPickerInnateOutline": {
+  "T5EK.Settings.ColorPickerInnateOutline": {
     "name": "「生得呪文枠」色カスタマイズを有効化",
     "hint": "「生得呪文の枠」の色をカスタマイズします。「#00000000」に設定すると透明となり、カスタマイズをオフしているのと同じ効果になります。"
   },
-  "TIDY5E.Settings.ColorPickerInnateAccent": {
+  "T5EK.Settings.ColorPickerInnateAccent": {
     "name": "「生得呪文背景」色カスタマイズを有効化",
     "hint": "「生得呪文の背景」の色をカスタマイズします。「#00000000」に設定すると透明となり、カスタマイズをオフしているのと同じ効果になります。"
   },
-  "TIDY5E.Settings.ColorPickerAlwaysPrepared": {
+  "T5EK.Settings.ColorPickerAlwaysPrepared": {
     "name": "「常に準備済み」色カスタマイズを有効化",
     "hint": "「常に準備済み」として指定されたアイテムの色をカスタマイズします。「#00000000」に設定すると透明となり、カスタマイズをオフしているのと同じ効果になります。"
   },
-  "TIDY5E.Settings.ColorPickerAlwaysPreparedOutline": {
+  "T5EK.Settings.ColorPickerAlwaysPreparedOutline": {
     "name": "「常に準備済み枠」色カスタマイズを有効化",
     "hint": "「常に準備済みの枠」の色をカスタマイズします。「#00000000」に設定すると透明となり、カスタマイズをオフしているのと同じ効果になります。"
   },
-  "TIDY5E.Settings.ColorPickerAlwaysPreparedAccent": {
+  "T5EK.Settings.ColorPickerAlwaysPreparedAccent": {
     "name": "「常に準備済みの背景」色カスタマイズを有効化",
     "hint": "「常に準備済みの背景」の色をカスタマイズします。「#00000000」に設定すると透明となり、カスタマイズをオフしているのと同じ効果になります。"
   },
-  "TIDY5E.Settings.AllowHpMaxOverride": {
+  "T5EK.Settings.AllowHpMaxOverride": {
     "name": "キャラクターの最大HP手動変更",
     "hint": "キャラクターシートのデフォルトの設定を上書きし、プレイヤーキャラクターの最大HPをGMが手動で変更できるようになります。"
   },
 
-  "TIDY5E.Settings.Reset": {
+  "T5EK.Settings.Reset": {
     "name": "設定を初期化",
     "hint": "シートの設定をデフォルトに戻します。",
     "dialogs": {

@@ -1,283 +1,283 @@
 {
-  "TIDY5E.Tidy5eSheet": "Tidy 5e Character Sheet",
-  "TIDY5E.Tidy5eNPC": "Tidy 5e NPC Sheet",
-  "TIDY5E.Tidy5eItemSheet": "Tidy 5e Item Sheet",
-  "TIDY5E.Tidy5eVehicle": "Tidy 5e Vechicle Sheet",
-  "TIDY5E.PlayerName": "Player Name",
-  "TIDY5E.Gender": "Geschlecht",
-  "TIDY5E.Age": "Alter",
-  "TIDY5E.Weight": "Gewicht",
-  "TIDY5E.Height": "Größe",
-  "TIDY5E.Eyes": "Augen",
-  "TIDY5E.Skin": "Haut",
-  "TIDY5E.Hair": "Haare",
-  "TIDY5E.Subclass": "Unterklasse",
-  "TIDY5E.EditActorImage": "Linksklick: Bild bearbeiten",
-  "TIDY5E.ShowActorImage": "Rechtsklick: Charakter-Bilder zeigen",
-  "TIDY5E.ShowPortraitArt": "zeige Portrait",
-  "TIDY5E.ShowTokenArt": "zeige Figur",
-  "TIDY5E.ShowItemImage": "Rechtslick: Gegenstand-Bild zeigen",
-  "TIDY5E.ShowItemArt": "zeige Bild",
+  "T5EK.Tidy5eSheet": "Tidy 5e Character Sheet",
+  "T5EK.Tidy5eNPC": "Tidy 5e NPC Sheet",
+  "T5EK.Tidy5eItemSheet": "Tidy 5e Item Sheet",
+  "T5EK.Tidy5eVehicle": "Tidy 5e Vechicle Sheet",
+  "T5EK.PlayerName": "Player Name",
+  "T5EK.Gender": "Geschlecht",
+  "T5EK.Age": "Alter",
+  "T5EK.Weight": "Gewicht",
+  "T5EK.Height": "Größe",
+  "T5EK.Eyes": "Augen",
+  "T5EK.Skin": "Haut",
+  "T5EK.Hair": "Haare",
+  "T5EK.Subclass": "Unterklasse",
+  "T5EK.EditActorImage": "Linksklick: Bild bearbeiten",
+  "T5EK.ShowActorImage": "Rechtsklick: Charakter-Bilder zeigen",
+  "T5EK.ShowPortraitArt": "zeige Portrait",
+  "T5EK.ShowTokenArt": "zeige Figur",
+  "T5EK.ShowItemImage": "Rechtslick: Gegenstand-Bild zeigen",
+  "T5EK.ShowItemArt": "zeige Bild",
 
-  "TIDY5E.Exhaustion0": "Keine negativen Effekte",
-  "TIDY5E.Exhaustion1": "Nachteil auf Fähigkeits-Proben",
-  "TIDY5E.Exhaustion2": "Geschwindigkeit halbiert",
-  "TIDY5E.Exhaustion3": "Nachteil auf Angriffs- und Rettungswürfe",
-  "TIDY5E.Exhaustion4": "Maximale Trefferpunkte halbiert",
-  "TIDY5E.Exhaustion5": "Geschwindigkeit auf 0 reduziert",
-  "TIDY5E.Exhaustion6": "Tod",
+  "T5EK.Exhaustion0": "Keine negativen Effekte",
+  "T5EK.Exhaustion1": "Nachteil auf Fähigkeits-Proben",
+  "T5EK.Exhaustion2": "Geschwindigkeit halbiert",
+  "T5EK.Exhaustion3": "Nachteil auf Angriffs- und Rettungswürfe",
+  "T5EK.Exhaustion4": "Maximale Trefferpunkte halbiert",
+  "T5EK.Exhaustion5": "Geschwindigkeit auf 0 reduziert",
+  "T5EK.Exhaustion6": "Tod",
 
-  "TIDY5E.AbbrInitiative": "Ini",
+  "T5EK.AbbrInitiative": "Ini",
 
-  "TIDY5E.RestHint": "Rasten",
-  "TIDY5E.RestS": "Kurze Rast",
-  "TIDY5E.RestL": "Lange Rast",
-  "TIDY5E.HitDiceRollAverage": "Rechtsklick: Durchschnitt",
+  "T5EK.RestHint": "Rasten",
+  "T5EK.RestS": "Kurze Rast",
+  "T5EK.RestL": "Lange Rast",
+  "T5EK.HitDiceRollAverage": "Rechtsklick: Durchschnitt",
 
-  "TIDY5E.Journal": "Tagebuch",
+  "T5EK.Journal": "Tagebuch",
 
-  "TIDY5E.RestoreOnRest": "Bei Rast regenerieren",
+  "T5EK.RestoreOnRest": "Bei Rast regenerieren",
 
-  "TIDY5E.JournalPoi": "Interessante Personen",
-  "TIDY5E.JournalLoi": "Interessante Orte",
-  "TIDY5E.JournalQuests": "Aufträge",
-  "TIDY5E.JournalMisc": "Verschiedenes",
-  "TIDY5E.JournalEntries": "Tagebucheinträge",
-  "TIDY5E.TogglePersonalityInfo": "Persönlichkeits-Infos umschalten",
+  "T5EK.JournalPoi": "Interessante Personen",
+  "T5EK.JournalLoi": "Interessante Orte",
+  "T5EK.JournalQuests": "Aufträge",
+  "T5EK.JournalMisc": "Verschiedenes",
+  "T5EK.JournalEntries": "Tagebucheinträge",
+  "T5EK.TogglePersonalityInfo": "Persönlichkeits-Infos umschalten",
 
-  "TIDY5E.EnableEdit": "Bearbeiten erlauben",
-  "TIDY5E.DisableEdit": "Bearbeiten verbieten",
-  "TIDY5E.EditHint": "Schaltet Sichtbarkeit von Hinzufügen/Löschen Buttons und leeren Sektionen um.",
+  "T5EK.EnableEdit": "Bearbeiten erlauben",
+  "T5EK.DisableEdit": "Bearbeiten verbieten",
+  "T5EK.EditHint": "Schaltet Sichtbarkeit von Hinzufügen/Löschen Buttons und leeren Sektionen um.",
 
-  "TIDY5E.Equip": "Gegenstand anlegen",
-  "TIDY5E.Unequip": "Gegenstand Ablegen",
-  "TIDY5E.Attune": "Gegenstand einstimmen",
-  "TIDY5E.Deattune": "Einstimmung brechen",
-  "TIDY5E.Prepare": "Zauber vorbereiten",
-  "TIDY5E.Unprepare": "Vorbereitung entfernen",
+  "T5EK.Equip": "Gegenstand anlegen",
+  "T5EK.Unequip": "Gegenstand Ablegen",
+  "T5EK.Attune": "Gegenstand einstimmen",
+  "T5EK.Deattune": "Einstimmung brechen",
+  "T5EK.Prepare": "Zauber vorbereiten",
+  "T5EK.Unprepare": "Vorbereitung entfernen",
 
-  "TIDY5E.EmptySection": "Dieser Bereich ist leer. Entsperre den Charakterbogen zum Bearbeiten.",
-  "TIDY5E.GmOnlyEdit": "Nur der Spielleiter kann diesen Bereich bearbeiten.",
+  "T5EK.EmptySection": "Dieser Bereich ist leer. Entsperre den Charakterbogen zum Bearbeiten.",
+  "T5EK.GmOnlyEdit": "Nur der Spielleiter kann diesen Bereich bearbeiten.",
 
-  "TIDY5E.AttunementWarning": "Einstimmungs-Warnung: Du kannst dich maximal auf {number} Gegenständen einstimmen!",
-  "TIDY5E.AttunementItems": "Eingestimmte Gegenstände",
-  "TIDY5E.AttunementMax": "Maximale Einstimmungen",
+  "T5EK.AttunementWarning": "Einstimmungs-Warnung: Du kannst dich maximal auf {number} Gegenständen einstimmen!",
+  "T5EK.AttunementItems": "Eingestimmte Gegenstände",
+  "T5EK.AttunementMax": "Maximale Einstimmungen",
 
-  "TIDY5E.GridLayout": "Raster-Ansicht",
-  "TIDY5E.ListLayout": "Listen-Ansicht",
+  "T5EK.GridLayout": "Raster-Ansicht",
+  "T5EK.ListLayout": "Listen-Ansicht",
 
-  "TIDY5E.Encumbrance": "Traglast",
+  "T5EK.Encumbrance": "Traglast",
 
-  "TIDY5E.EditSpell": "Zauber bearbeiten",
-  "TIDY5E.DeleteSpell": "Zauber löschen",
-  "TIDY5E.AddFav": "Favorit hinzufügen",
-  "TIDY5E.isFav": "Favorit",
-  "TIDY5E.RemoveFav": "Favorit löschen",
+  "T5EK.EditSpell": "Zauber bearbeiten",
+  "T5EK.DeleteSpell": "Zauber löschen",
+  "T5EK.AddFav": "Favorit hinzufügen",
+  "T5EK.isFav": "Favorit",
+  "T5EK.RemoveFav": "Favorit löschen",
 
-  "TIDY5E.ToggleInfo": "Info umschalten",
+  "T5EK.ToggleInfo": "Info umschalten",
 
-  "TIDY5E.Show": "zeigen/bearbeiten",
-  "TIDY5E.Hide": "verstecken",
-  "TIDY5E.Edit": "bearbeiten",
-  "TIDY5E.TraitsEmpty": "leeren Merkmale",
+  "T5EK.Show": "zeigen/bearbeiten",
+  "T5EK.Hide": "verstecken",
+  "T5EK.Edit": "bearbeiten",
+  "T5EK.TraitsEmpty": "leeren Merkmale",
 
-  "TIDY5E.Abilities": "Fähigkeiten",
+  "T5EK.Abilities": "Fähigkeiten",
 
-  "TIDY5E.Environment": "Umgebung",
+  "T5EK.Environment": "Umgebung",
 
-  "TIDY5E.SearchItem": "Suche Gegenstand",
-  "TIDY5E.SearchSpell": "Suche Zauber",
-  "TIDY5E.SearchFeat": "Suche Feature",
-  "TIDY5E.SearchClear": "Suchfeld leeren",
-  "TIDY5E.SearchHint": "Fange einfach an einzutippen nach was du suchst.",
+  "T5EK.SearchItem": "Suche Gegenstand",
+  "T5EK.SearchSpell": "Suche Zauber",
+  "T5EK.SearchFeat": "Suche Feature",
+  "T5EK.SearchClear": "Suchfeld leeren",
+  "T5EK.SearchHint": "Fange einfach an einzutippen nach was du suchst.",
 
-  "TIDY5E.ItemCardsKeyHint": "Taste halten zum Interagieren.",
-  "TIDY5E.ItemCardsMouseHint": "Mittlere Maustaste zum ansehen/bearbeiten.",
+  "T5EK.ItemCardsKeyHint": "Taste halten zum Interagieren.",
+  "T5EK.ItemCardsMouseHint": "Mittlere Maustaste zum ansehen/bearbeiten.",
 
-  "TIDY5E.AbbrMod": "Mod",
-  "TIDY5E.AbbrSavingThrow": "Rettung",
-  "TIDY5E.SpellAttackMod": "Attacke Mod",
-  "TIDY5E.PreparedSpells": "Vorbereitete Zauber",
-  "TIDY5E.PreparedSpellsMax": "Maximum für vorbereitete Zauber",
-  "TIDY5E.Components": "Komp.",
-  "TIDY5E.SpellSchool": "Schule",
+  "T5EK.AbbrMod": "Mod",
+  "T5EK.AbbrSavingThrow": "Rettung",
+  "T5EK.SpellAttackMod": "Attacke Mod",
+  "T5EK.PreparedSpells": "Vorbereitete Zauber",
+  "T5EK.PreparedSpellsMax": "Maximum für vorbereitete Zauber",
+  "T5EK.Components": "Komp.",
+  "T5EK.SpellSchool": "Schule",
 
-  "TIDY5E.TokenLinked": "Figur mit Akteur verknüpft",
-  "TIDY5E.TokenUnlinked": "Figur nicht mit Akteur verknüpft",
+  "T5EK.TokenLinked": "Figur mit Akteur verknüpft",
+  "T5EK.TokenUnlinked": "Figur nicht mit Akteur verknüpft",
 
-  "TIDY5E.ItemDetailsHeadline": "Mechaniken/Flavor-Text",
+  "T5EK.ItemDetailsHeadline": "Mechaniken/Flavor-Text",
 
-  "TIDY5E.Class": "Klasse",
-  "TIDY5E.SpellClass": "Zauberklasse",
-  "TIDY5E.Spellbook": "Zauberbuch",
+  "T5EK.Class": "Klasse",
+  "T5EK.SpellClass": "Zauberklasse",
+  "T5EK.Spellbook": "Zauberbuch",
 
-  "TIDY5E.ClassArtificer": "Artifizient",
-  "TIDY5E.ClassBarbarian": "Barbar",
-  "TIDY5E.ClassBard": "Barde",
-  "TIDY5E.ClassCleric": "Kleriker",
-  "TIDY5E.ClassCustom": "Eigene",
-  "TIDY5E.ClassDruid": "Druide",
-  "TIDY5E.ClassFighter": "Kämpfer",
-  "TIDY5E.ClassMonk": "Mönch",
-  "TIDY5E.ClassPaladin": "Paladin",
-  "TIDY5E.ClassRanger": "Waldläufer",
-  "TIDY5E.ClassRogue": "Schurke",
-  "TIDY5E.ClassSorcerer": "Zauberer",
-  "TIDY5E.ClassWarlock": "Hexenmeister",
-  "TIDY5E.ClassWizard": "Magier",
+  "T5EK.ClassArtificer": "Artifizient",
+  "T5EK.ClassBarbarian": "Barbar",
+  "T5EK.ClassBard": "Barde",
+  "T5EK.ClassCleric": "Kleriker",
+  "T5EK.ClassCustom": "Eigene",
+  "T5EK.ClassDruid": "Druide",
+  "T5EK.ClassFighter": "Kämpfer",
+  "T5EK.ClassMonk": "Mönch",
+  "T5EK.ClassPaladin": "Paladin",
+  "T5EK.ClassRanger": "Waldläufer",
+  "T5EK.ClassRogue": "Schurke",
+  "T5EK.ClassSorcerer": "Zauberer",
+  "T5EK.ClassWarlock": "Hexenmeister",
+  "T5EK.ClassWizard": "Magier",
 
-  "TIDY5E.OriginSummaryConfig": "Herkunftskonfiguration",
+  "T5EK.OriginSummaryConfig": "Herkunftskonfiguration",
 
-  "TIDY5E.LevelBump": "Wirkung vom nächsten Grad",
-  "TIDY5E.LevelBumpTooltip": "Den Zauber wirken, als wäre der verbrauchte Zauberplatz einen Grad höher.",
+  "T5EK.LevelBump": "Wirkung vom nächsten Grad",
+  "T5EK.LevelBumpTooltip": "Den Zauber wirken, als wäre der verbrauchte Zauberplatz einen Grad höher.",
 
-  "TIDY5E.Settings.GlobalLabel": "Global",
-  "TIDY5E.Settings.DebugLabel": "Debug",
-  "TIDY5E.Settings.UserLabel": "Nutzer",
-  "TIDY5E.Settings.PcLabel": "SCs",
-  "TIDY5E.Settings.NpcLabel": "NSCs",
-  "TIDY5E.Settings.VehicleLabel": "Fahrzeuge",
+  "T5EK.Settings.GlobalLabel": "Global",
+  "T5EK.Settings.DebugLabel": "Debug",
+  "T5EK.Settings.UserLabel": "Nutzer",
+  "T5EK.Settings.PcLabel": "SCs",
+  "T5EK.Settings.NpcLabel": "NSCs",
+  "T5EK.Settings.VehicleLabel": "Fahrzeuge",
 
-  "TIDY5E.Settings.SheetMenu": {
+  "T5EK.Settings.SheetMenu": {
     "label": "Einstellungen für Charakterbögen",
     "title": "Tidy5e Einstellungen für Charakterbögen"
   },
-  "TIDY5E.Settings.TabPlayers": {
+  "T5EK.Settings.TabPlayers": {
     "tabLabel": "Spieler",
     "header": "Spieler Charakterbögen"
   },
-  "TIDY5E.Settings.TabNPCsVehicles": {
+  "T5EK.Settings.TabNPCsVehicles": {
     "tabLabel": "NSCs/Fahrzeuge",
     "header": "NSC-/Fahrzeugbögen",
     "labelNPCs": "NSCs",
     "labelVehicles": "Fahrzeuge"
   },
-  "TIDY5E.Settings.TabGM": {
+  "T5EK.Settings.TabGM": {
     "tabLabel": "SL Einstellungen",
     "header": "SL Bogeneinstellungen"
   },
-  "TIDY5E.Settings.TabModules": {
+  "T5EK.Settings.TabModules": {
     "tabLabel": "Module",
     "header": "Moduleinstellungen",
     "labelActionsFavorites": "Akteur Aktionen/Favoriten",
     "labelMidiQoL": "Midi Qol"
   },
-  "TIDY5E.Settings.TabInfo": {
+  "T5EK.Settings.TabInfo": {
     "tabLabel": "Info",
     "header": "Info"
   },
-  "TIDY5E.Settings.ItemCardsForAllItems": {
+  "T5EK.Settings.ItemCardsForAllItems": {
     "name": "Zeigen Gegenstand-Infokarten in allen Ansichten.",
     "hint": "Deaktivieren, um die Infokarten nur in der Rasteransicht anzuzeigen."
   },
-  "TIDY5E.Settings.ItemCardsForNpcs": {
+  "T5EK.Settings.ItemCardsForNpcs": {
     "name": "Zeigen Gegenstand-Infokarten für NSCs/Fahrzeuge.",
     "hint": "Aktivieren, um die Infokarten nicht für NSCs/Fahrzeuge anzuzeigen."
   },
-  "TIDY5E.Settings.ItemCardsAreFloating": {
+  "T5EK.Settings.ItemCardsAreFloating": {
     "name": "Gegenstandskarten schweben neben dem Cursor.",
     "hint": "Aktivieren, um Infokarten nicht auszufahren sondern neben dem Cursor anzuzeigen. Nützlich für Charakterbögen im eigenen Fenster."
   },
-  "TIDY5E.Settings.ItemCardsDelay": {
+  "T5EK.Settings.ItemCardsDelay": {
     "name": "Verzögerung zum Anzeigen der Gegenstand- Infokarten.",
     "hint": "Die Infokarte wird erst nach dieser Zeit in Millisekunden angezeigt (0 = sofort, 300 ist Standard)."
   },
-  "TIDY5E.Settings.ItemCardsFixKey": {
+  "T5EK.Settings.ItemCardsFixKey": {
     "name": "Taste, um mit Gegenstand-Infokarte zu interagieren.",
     "hint": "Gib eine Taste (z. B.: x) für die Infokarten-Interaktion ein. Alle Tasten außer Funktionstasten (ctrl, alt, etc.) möglich"
   },
 
-  "TIDY5E.Settings.SheetTheme": {
+  "T5EK.Settings.SheetTheme": {
     "name": "Tidy5e Farbschema.",
     "hint": "Nutze das helle Standarschema oder das dunkle Alternativschema von Tidy5e.",
     "default": "Standard (hell)",
     "dark": "Alternativ (dunkel)"
   },
 
-  "TIDY5E.Settings.ClassicControls": {
+  "T5EK.Settings.ClassicControls": {
     "name": "Klassische Gegenstand-Steuerung in Listenansicht nutzen.",
     "hint": "Zeigt die Gegenstandsteuerung immer an ohne Rechtsklick. Trifft nur auf SC-Gegenstands/Zauber-Inventar in der Listenansicht zu."
   },
-  "TIDY5E.Settings.RollButtonsToCard": {
+  "T5EK.Settings.RollButtonsToCard": {
     "name": "Zeige midiQol Gegenstand-Buttons in der Info-Karte",
     "hint": "Standardmäßig werden Gegenstands-Buttons in den Zusatzinfos angezeigt. Aktivieren, um sie in die Info-Karte zu verschieben. Funktioniert in allen Layout-Modi."
   },
-  "TIDY5E.Settings.TraitLabels": {
+  "T5EK.Settings.TraitLabels": {
     "name": "Beschriftung von Merkmalen.",
     "hint": "Standardmäßig werden nur Icons für Merkmale angezeigt. Aktivieren, um auch Beschriftungen für Merkmale anzuzeigen."
   },
 
-  "TIDY5E.Settings.PlayerName": {
+  "T5EK.Settings.PlayerName": {
     "name": "Zeige Spielername.",
     "hint": "Aktivieren, um ein Feld für den Namen des Spielers unterhalb des Charakternamens anzuzeigen."
   },
-  "TIDY5E.Settings.JournalTab": {
+  "T5EK.Settings.JournalTab": {
     "name": "Charakter-Tagebuch verstecken.",
     "hint": "Aktivieren, um den Tagebuch-Reiter zu verstecken."
   },
-  "TIDY5E.Settings.ClassList": {
+  "T5EK.Settings.ClassList": {
     "name": "Charakter-Klassenliste verstecken.",
     "hint": "Aktivieren, um die Klassenliste unter dem Namen eines Charakters zu verstecken."
   },
-  "TIDY5E.Settings.InspirationAnimation": {
+  "T5EK.Settings.InspirationAnimation": {
     "name": "Unbewegter Inspirations-Tracker.",
     "hint": "Aktivieren, um die Animation des Inspirations-Trackers zu deaktivieren."
   },
-  "TIDY5E.Settings.HideIfZero": {
+  "T5EK.Settings.HideIfZero": {
     "name": "Verstecke Erschöpfungs- und Inspirations-Tracker bei 0.",
     "hint": "Aktivieren, um Erschöpfungs- und Inspirations-Tracker bei 0 zu verstecken. Erscheint bei Maushover."
   },
-  "TIDY5E.Settings.InspirationOnHover": {
+  "T5EK.Settings.InspirationOnHover": {
     "name": "Zeige Inspirations-Tracker bei Hover.",
     "hint": "Aktivieren, um den Inspirations-Tracker grundsätzlich nur bei Maushover zu zeigen."
   },
-  "TIDY5E.Settings.ExhaustionOnHover": {
+  "T5EK.Settings.ExhaustionOnHover": {
     "name": "Zeige Erschöpfungs-Tracker bei Hover.",
     "hint": "Aktivieren, um den Erschöpfungs-Tracker grundsätzlich nur bei Maushover zu zeigen."
   },
-  "TIDY5E.Settings.HpBar": {
+  "T5EK.Settings.HpBar": {
     "name": "Lebensbalken deaktivieren.",
     "hint": "Aktivieren, um den farbigen Balken zur Anzeige des Rest-Lebens unter dem Portrait zu deaktivieren (Trefferpunkte bleiben weiter sichtbar)."
   },
-  "TIDY5E.Settings.HpOverlay": {
+  "T5EK.Settings.HpOverlay": {
     "name": "Trefferpunkt-Overlay verstecken.",
     "hint": "Aktivieren, um das Trefferpunkt-Overlay für diesen Darstellertyp zu verstecken."
   },
-  "TIDY5E.Settings.TraitsTogglePc": {
+  "T5EK.Settings.TraitsTogglePc": {
     "name": "Leere Charakter-Merkmale umschalten.",
     "hint": "Standardmäßig sind leere Merkmale immer sichtbar. Aktivieren, um per Schalter zu wechseln."
   },
-  "TIDY5E.Settings.TraitsMovedBelowResource": {
+  "T5EK.Settings.TraitsMovedBelowResource": {
     "name": "Verschiebe Merkmale unter Ressourcen.",
     "hint": "Aktivieren, um Merkmalliste von der linken Seite unter die Ressourcen zu verschieben."
   },
-  "TIDY5E.Settings.AmmoEquippedOnly": {
+  "T5EK.Settings.AmmoEquippedOnly": {
     "name": "Zeige nur ausgerüstete Munition.",
     "hint": "Aktivieren, um nur ausgerüstete Munition in der Munitionsauswahl von Waffen anzuzeigen."
   },
 
-  "TIDY5E.Settings.TraitsAlwaysShown": {
+  "T5EK.Settings.TraitsAlwaysShown": {
     "name": "Merkmale immer anzeigen.",
     "hint": "Standardmäßig sind leere Merkmale per Schalter ausgeblendet. Aktivieren, um immer anzuzeigen."
   },
-  "TIDY5E.Settings.SkillsAlwaysShown": {
+  "T5EK.Settings.SkillsAlwaysShown": {
     "name": "Fähigkeiten immer anzeigen.",
     "hint": "Standardmäßig sind ungeübte Fähigkeiten per Schalter ausgeblendet. Aktivieren, um immer anzuzeigen."
   },
 
-  "TIDY5E.Settings.ActiveEffectsMarker": {
+  "T5EK.Settings.ActiveEffectsMarker": {
     "name": "Zeige Marker für Gegenstände mit Aktiven Effekten.",
     "hint": "Aktivieren, um einen Marker neben Gegenständen mit Aktiven Effekten anzuzeigen (nur für Listen-Ansicht)."
   },
-  "TIDY5E.Settings.RightClickDisabled": {
+  "T5EK.Settings.RightClickDisabled": {
     "name": "Rechtsklick-Menü deaktivieren.",
     "hint": "Im Falle von Modulkonflikten oder persönlicher Vorliebe kann das Rechtsklickmenü deaktiviert werden. Stattdessen erscheint ein Menü-Button neben Gegenständen. Der Mittelklick bleibt."
   },
-  "TIDY5E.Settings.ExpandedSheet": {
+  "T5EK.Settings.ExpandedSheet": {
     "name": "Erweiterte eingeschränkte Ansicht für Charakterbögen.",
     "hint": "Zeigt Spielern mit eingeschränkten Rechten den gesamten Charakterbogen abzüglich Tagebuch."
   },
-  "TIDY5E.Settings.PortraitStyle": {
+  "T5EK.Settings.PortraitStyle": {
     "name": "Runde Portraits.",
     "hint": "Wähle runde Portraits/Icons für Darsteller.",
     "all": "Alle Darsteller",
@@ -286,60 +286,60 @@
     "none": "Keine",
     "default": "Keine"
   },
-  "TIDY5E.Settings.HpOverlayBorder": {
+  "T5EK.Settings.HpOverlayBorder": {
     "name": "Trefferpunkt-Overlay verschieben.",
     "hint": "Trage einen Wert ein, um Portraitrahmen zu kompensieren und eine Einfärbung zu verhindern."
   },
-  "TIDY5E.Settings.EditTotalLock": {
+  "T5EK.Settings.EditTotalLock": {
     "name": "Empfindliche Felder sperren.",
     "hint": "Aktivieren, um versehentliches Editieren empfindlicher (meist statischer) Felder zu minimieren."
   },
-  "TIDY5E.Settings.EditGmAlways": {
+  "T5EK.Settings.EditGmAlways": {
     "name": "SL kann immer SC-Bögen bearbeiten.",
     "hint": "Aktivieren, um SLs immer das Bearbeiten von Spielerbögen zu erlauben ohne das Schloss zu ändern."
   },
-  "TIDY5E.Settings.EditEffectsGmOnly": {
+  "T5EK.Settings.EditEffectsGmOnly": {
     "name": "Nur SL darf Effekte bearbeiten.",
     "hint": "Aktivieren, um nur SLs zu erlauben Aktive Effekte für SCs zu bearbeiten. Spieler sehen weiterhin die angewandten Effekte."
   },
-  "TIDY5E.Settings.QuantityAlwaysShown": {
+  "T5EK.Settings.QuantityAlwaysShown": {
     "name": "Immer Gegenstandsmenge anzeigen.",
     "hint": "Aktivieren, um Gegestandsanzahl niemals auszublenden."
   },
-  "TIDY5E.Settings.InspirationDisabled": {
+  "T5EK.Settings.InspirationDisabled": {
     "name": "Inspirations-Tracker deaktivieren.",
     "hint": "Wenn deine Kampagne keine Inspiration nutzt, kannst du den Tracker komplett ausblenden."
   },
-  "TIDY5E.Settings.ExhaustionEffects": {
+  "T5EK.Settings.ExhaustionEffects": {
     "name": "Erschöpfunseffekte (nutzt Aktive Effekte).",
     "hint": "Füge die passenden Effekte bei Wechsel der Eschöpfungsstufe hinzu - erfordert midiQol für Nachteils-Würfe!",
     "default": "Keine automatischen Effekte",
     "tidy5e": "Tidy5e - Integrierte Effekte benutzen (verwendet Active Effects)",
     "custom": "Eigene - Nutze eigene Effekte (erfordert CUB)"
   },
-  "TIDY5E.Settings.CustomExhaustionIcon": {
+  "T5EK.Settings.CustomExhaustionIcon": {
     "name": "Eigenes Icon für Erschöpfungseffekt.",
     "hint": "Wähle dein eigenes Icon durch Setzen eines Bildpfades. Nur für \"Tidy 5e\"-Einstellung (z. B.: modules/tidy5e-sheet/images/exhaustion.svg)."
   },
-  "TIDY5E.Settings.CustomExhaustionEffect": {
+  "T5EK.Settings.CustomExhaustionEffect": {
     "name": "Name des CUB Erschöpfungseffekts.",
     "hint": "Stelle den Namen deines eigenen Effekts ein. Muss exakt so lauten wie in CUB jedoch OHNE Zahl. (z. B. \"Exhaustion\")",
     "tiers": "Zahl der CUB-Erschöpfungslevel. Standard = 5",
     "warning": "Keine Charakter-Figur gefunden, um den Effekt anzuwenden!"
   },
-  "TIDY5E.Settings.ExhaustionDisabled": {
+  "T5EK.Settings.ExhaustionDisabled": {
     "name": "Erschöpfungs-Tracker deaktivieren.",
     "hint": "Wenn deine Kampagne keine Erschöpfungsregeln nutzt, kannst du den Tracker komplett ausblenden."
   },
-  "TIDY5E.Settings.RestingForNpcs": {
+  "T5EK.Settings.RestingForNpcs": {
     "name": "Rast für NSCs.",
     "hint": "Aktivieren, um den Rast-Button auch für NSCs anzuzeigen."
   },
-  "TIDY5E.Settings.RestingForNpcsChat": {
+  "T5EK.Settings.RestingForNpcsChat": {
     "name": "Verstecke Chat-Karte für NSC-Rast.",
     "hint": "Aktivieren, um die Ausgabe der Chat-Karte für NSC-Rast zu unterbinden (gilt für SL und Spieler)."
   },
-  "TIDY5E.Settings.LinkMarker": {
+  "T5EK.Settings.LinkMarker": {
     "name": "Verknüpfte/unverknüpfte NSCs markieren.",
     "hint": "Fügt farbige Rahmen und Icons zu verknüpften/unverknüpften NSC-Bögen hinzu.",
     "default": "Kein Verknüpfungsmarker (standard)",
@@ -347,25 +347,25 @@
     "linked": "Verknüpfte Figuren hervorheben",
     "both": "Verknüpfte und unverknüpfte Figuren hervorheben"
   },
-  "TIDY5E.Settings.DefaultActionsTab": {
+  "T5EK.Settings.DefaultActionsTab": {
     "name": "Standard-Reiter beim ersten Öffnen eines Charakter Bogens.",
     "hint": "Auswahl zwischen 'Aktionen' und 'Attributen'.",
     "default": "Aktionen",
     "attributes": "Attribute"
   },
-  "TIDY5E.Settings.HiddenDeathSaves": {
+  "T5EK.Settings.HiddenDeathSaves": {
     "name": "Verstecke Todesrettungswürfe vor Spielern.",
     "hint": "Aktivieren, damit Todesrettungswürfe und deren Ergebnisse nur vom SL gesehen werden können."
   },
-  "TIDY5E.Settings.npsSheetWidth": {
+  "T5EK.Settings.npsSheetWidth": {
     "name": "Standard Breite des NSC Bogens.",
     "hint": "Die Breite des NSC Bogens in Pixeln, benötigt ein Neuladen der Seite (standard 740)."
   },
-  "TIDY5E.Settings.playerSheetWidth": {
+  "T5EK.Settings.playerSheetWidth": {
     "name": "Standard Breite des Spieler Bogens.",
     "hint": "Die Breite des Spieler Bogens in Pixeln, benötigt ein Neuladen der Seite (standard 740)."
   },
-  "TIDY5E.Settings.vehicleSheetWidth": {
+  "T5EK.Settings.vehicleSheetWidth": {
     "name": "Standard Breite des Fahrzeug Bogens.",
     "hint": "Die Breite des Fahrzeug Bogens in Pixeln, benötigt ein Neuladen der Seite (standard 740)."
   }
