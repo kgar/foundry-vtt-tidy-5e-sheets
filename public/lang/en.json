@@ -204,7 +204,7 @@
     "name": "Show Trait Labels",
     "hint": "Shows labels for PC, NPC, and Vehicle traits. Disable to show only icons."
   },
-  "T5EK.Settings.PlayerName": {
+  "T5EK.Settings.ShowPlayerName": {
     "name": "Show player name",
     "hint": "Shows a field for the player name below the character's name."
   },
@@ -228,19 +228,19 @@
     "name": "Hide exhaustion and inspiration tracker on 0",
     "hint": "Hides exhaustion and inspiration if 0 but still shows on hover."
   },
-  "T5EK.Settings.InspirationOnHover": {
+  "T5EK.Settings.ShowInspirationOnHover": {
     "name": "Show inspiration indicator only on hover",
     "hint": "Shows the inspiration indicator only when hovering over the portrait."
   },
-  "T5EK.Settings.ExhaustionOnHover": {
+  "T5EK.Settings.ShowExhaustionOnHover": {
     "name": "Show exhaustion tracker only on hover",
     "hint": "Shows the exhaustion tracker only when hovering over the portrait."
   },
-  "T5EK.Settings.HpBar": {
-    "name": "Use health bar",
+  "T5EK.Settings.UseHpBar": {
+    "name": "Use HP bar",
     "hint": "Shows a colored bar indicating the remaining HP. Health numbers will still be visible."
   },
-  "T5EK.Settings.HpOverlay": {
+  "T5EK.Settings.UseHpOverlay": {
     "name": "Use health overlay",
     "hint": "Shows a colored HP overlay for this actor type."
   },
@@ -276,11 +276,11 @@
     "name": "Use context menu",
     "hint": "Enables right-click context menu on items."
   },
-  "T5EK.Settings.ExpandedSheet": {
+  "T5EK.Settings.ShowExpandedLimitedView": {
     "name": "Show expanded limited view",
     "hint": "Displays the entire sheet (minus the journal) to players with limited permission."
   },
-  "T5EK.Settings.PortraitStyle": {
+  "T5EK.Settings.UseCircularPortraitStyle": {
     "name": "Use circular portraits",
     "hint": "Shows circular portraits/icons for actors.",
     "all": "All actors",

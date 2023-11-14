@@ -204,7 +204,7 @@
     "name": "특성 레이블 표시",
     "hint": "기본적으로 특성에 대한 아이콘만 표시된다. 활성화 시 레이블도 표시된다."
   },
-  "T5EK.Settings.PlayerName": {
+  "T5EK.Settings.ShowPlayerName": {
     "name": "플레이어 이름 표시",
     "hint": "캐릭터 이름 아래에 플레이어 이름을 표시한다."
   },
@@ -228,21 +228,21 @@
     "name": "탈진과 고양감이 (0)이 되어 사용되지 않을 경우 숨김.",
     "hint": "탈진과 고양감의 정도가 0일 경우 숨기려면 이 옵션을 선택한다. 호버시 표시된다."
   },
-  "T5EK.Settings.InspirationOnHover": {
+  "T5EK.Settings.ShowInspirationOnHover": {
     "name": "호버시 고양감 추적기 보이기.",
     "hint": "활성화 시 포트레이트 위에 마우스 호버시에만 고양감 추적기를 볼 수 있다."
   },
-  "T5EK.Settings.ExhaustionOnHover": {
+  "T5EK.Settings.ShowExhaustionOnHover": {
     "name": "호버시 탈진 추적기 보이기.",
     "hint": "활성화 시 포트레이트 위에 마우스 호버시에만 탈진 추적기를 볼 수 있다."
   },
-  "T5EK.Settings.HpBar": {
-    "name": "체력바 비활성화.",
-    "hint": "활성화 시 나머지 Hp를 나타내는 색상 막대를 숨긴다. (체력량은 계속 표시된다)"
+  "T5EK.Settings.UseHpBar": {
+    "name": null,
+    "hint": null
   },
-  "T5EK.Settings.HpOverlay": {
-    "name": "Hp 오버레이 비활성화.",
-    "hint": "활성화 시 이 액터 유형의 Hp 오버레이를 숨길 수 있다."
+  "T5EK.Settings.UseHpOverlay": {
+    "name": null,
+    "hint": null
   },
   "T5EK.Settings.TraitsTogglePc": {
     "name": "캐릭터 특성 전환 버튼 보이기.",
@@ -276,11 +276,11 @@
     "name": null,
     "hint": null
   },
-  "T5EK.Settings.ExpandedSheet": {
+  "T5EK.Settings.ShowExpandedLimitedView": {
     "name": "제한된 시트에 대한 확장된 보기",
     "hint": "제한된 시트의 확장된 보기는 액터에 대해 제한된 권한이 있는 플레이어에게 전체 캐릭터 시트(개인 노트 탭 제외)를 보여준다."
   },
-  "T5EK.Settings.PortraitStyle": {
+  "T5EK.Settings.UseCircularPortraitStyle": {
     "name": "둥근 포트레이트 스타일",
     "hint": "액터에 둥근 포트레이트를 사용하려면 체크한다.",
     "all": "모든 액터",

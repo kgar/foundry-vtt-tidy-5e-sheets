@@ -64,30 +64,30 @@
 />
 
 <CheckboxSetting
-  bind:value={$context.inspirationOnHover}
-  name={'T5EK.Settings.InspirationOnHover.name'}
-  hint={'T5EK.Settings.InspirationOnHover.hint'}
-  id="inspirationOnHover"
+  bind:value={$context.showInspirationOnHover}
+  name={'T5EK.Settings.ShowInspirationOnHover.name'}
+  hint={'T5EK.Settings.ShowInspirationOnHover.hint'}
+  id="showInspirationOnHover"
 />
 
 <CheckboxSetting
-  bind:value={$context.exhaustionOnHover}
-  name={'T5EK.Settings.ExhaustionOnHover.name'}
-  hint={'T5EK.Settings.ExhaustionOnHover.hint'}
-  id="exhaustionOnHover"
+  bind:value={$context.showExhaustionOnHover}
+  name={'T5EK.Settings.ShowExhaustionOnHover.name'}
+  hint={'T5EK.Settings.ShowExhaustionOnHover.hint'}
+  id="showExhaustionOnHover"
 />
 
 <CheckboxSetting
   bind:value={$context.useHpBar}
-  name={'T5EK.Settings.HpBar.name'}
-  hint={'T5EK.Settings.HpBar.hint'}
+  name={'T5EK.Settings.UseHpBar.name'}
+  hint={'T5EK.Settings.UseHpBar.hint'}
   id="useHpBar"
 />
 
 <CheckboxSetting
   bind:value={$context.useHpOverlay}
-  name={'T5EK.Settings.HpOverlay.name'}
-  hint={'T5EK.Settings.HpOverlay.hint'}
+  name={'T5EK.Settings.UseHpOverlay.name'}
+  hint={'T5EK.Settings.UseHpOverlay.hint'}
   id="useHpOverlay"
 />
 

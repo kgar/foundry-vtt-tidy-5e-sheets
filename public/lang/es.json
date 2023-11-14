@@ -205,7 +205,7 @@
     "name": "Mostrar etiquetas de los rasgos",
     "hint": "Por defecto sólo se muestran los iconos de los rasgos. Actívalo para mostrar también las etiquetas."
   },
-  "T5EK.Settings.PlayerName": {
+  "T5EK.Settings.ShowPlayerName": {
     "name": "Mostrar nombre del Jugador.",
     "hint": "Permite mostrar un campo para el nombre del jugador debajo del nombre del personaje."
   },
@@ -229,21 +229,21 @@
     "name": "Ocultar el medidor de cansancio e inspiración con 0",
     "hint": "Actívalo para ocultar el medidor de cansancio e inspiración si se encuentra a 0. Se mostrará al pasar el ratón."
   },
-  "T5EK.Settings.InspirationOnHover": {
+  "T5EK.Settings.ShowInspirationOnHover": {
     "name": "Mostrar el indicador de inspiración sólo al pasar por encima",
     "hint": "Actívalo para mostrar el indicador de inspiración sólo al pasar el ratón por encima del retrato."
   },
-  "T5EK.Settings.ExhaustionOnHover": {
+  "T5EK.Settings.ShowExhaustionOnHover": {
     "name": "Mostrar el medidor de cansancio sólo al pasar por encima",
     "hint": "Actívalo para mostrar el medidor de cansancio al pasar el ratón por encima del retrato."
   },
-  "T5EK.Settings.HpBar": {
-    "name": "Desactivar barra de salud",
-    "hint": "Actívalo para ocultar la barra coloreada que indica los PG restantes (los números de la salud seguirán siendo visibles)."
+  "T5EK.Settings.UseHpBar": {
+    "name": null,
+    "hint": null
   },
-  "T5EK.Settings.HpOverlay": {
-    "name": "Ocultar la superposición de puntos de golpe",
-    "hint": "Actívalo para ocultar la superposición de PG para este tipo de actor."
+  "T5EK.Settings.UseHpOverlay": {
+    "name": null,
+    "hint": null
   },
   "T5EK.Settings.TraitsTogglePc": {
     "name": "Alternar rasgos de personaje vacíos",
@@ -277,11 +277,11 @@
     "name": null,
     "hint": null
   },
-  "T5EK.Settings.ExpandedSheet": {
+  "T5EK.Settings.ShowExpandedLimitedView": {
     "name": "Ampliar la vista limitada para las hojas de personaje",
     "hint": "Muestra toda la hoja de personaje (menos el diario) a los jugadores con permiso limitado."
   },
-  "T5EK.Settings.PortraitStyle": {
+  "T5EK.Settings.UseCircularPortraitStyle": {
     "name": "Estilo de retrato redondo.",
     "hint": "Selecciona activar los retratos/iconos redondos para los actores.",
     "all": "Todos los actores",

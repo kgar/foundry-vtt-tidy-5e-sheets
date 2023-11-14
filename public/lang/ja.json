@@ -204,7 +204,7 @@
     "name": "特徴ラベルの表示",
     "hint": "デフォルトでは、特徴アイコンのみが表示されます。ラベルも表示できるようにします。"
   },
-  "T5EK.Settings.PlayerName": {
+  "T5EK.Settings.ShowPlayerName": {
     "name": "プレイヤー名の表示",
     "hint": "キャラクターの名前の下に、プレイヤー名を表示します。"
   },
@@ -228,21 +228,21 @@
     "name": "消耗とインスピレーションが0の時､表示を隠す",
     "hint": "0の場合、消耗とインスピレーションは表示されなくなります。マウスカーソルを合わせたときだけ表示されます。"
   },
-  "T5EK.Settings.InspirationOnHover": {
+  "T5EK.Settings.ShowInspirationOnHover": {
     "name": "ﾏｳｽｵｰﾊﾞｰ時にｲﾝｽﾋﾟ表示",
     "hint": "画像の上にマウスカーソルを置いたときだけ、インスピレーションを表示します。"
   },
-  "T5EK.Settings.ExhaustionOnHover": {
+  "T5EK.Settings.ShowExhaustionOnHover": {
     "name": "ﾏｳｽｵｰﾊﾞｰ時に消耗表示",
     "hint": "画像の上にマウスカーソルを置いたときだけ、消耗を表示します。"
   },
-  "T5EK.Settings.HpBar": {
-    "name": "hpバーの無効化",
-    "hint": "残りのhpを示す色付きのバーを非表示にします（hp数は引き続き表示されます）。"
+  "T5EK.Settings.UseHpBar": {
+    "name": null,
+    "hint": null
   },
-  "T5EK.Settings.HpOverlay": {
-    "name": "hpｵｰﾊﾞｰﾚｲを非表示",
-    "hint": "アクターのhpが減少しても、画像が赤く塗りつぶされないようになります。"
+  "T5EK.Settings.UseHpOverlay": {
+    "name": null,
+    "hint": null
   },
   "T5EK.Settings.TraitsTogglePc": {
     "name": "空のｷｬﾗｸﾀｰ特徴の切替",
@@ -276,11 +276,11 @@
     "name": null,
     "hint": null
   },
-  "T5EK.Settings.ExpandedSheet": {
+  "T5EK.Settings.ShowExpandedLimitedView": {
     "name": "リミテッド･シートの拡大表示",
     "hint": "リミテッド･シートの表示について、そのアクターに対して限定的(Limited)権限を持つプレイヤーに、キャラクターシートの全て（[効果],[記録]を除く）を表示します。"
   },
-  "T5EK.Settings.PortraitStyle": {
+  "T5EK.Settings.UseCircularPortraitStyle": {
     "name": "PCシート：シートに円形画像を使用",
     "hint": "アクターの円形画像/アイコンを有効にする場合に選択します。",
     "all": "全てのアクター",

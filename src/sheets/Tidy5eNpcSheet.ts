@@ -283,9 +283,9 @@ export class Tidy5eNpcSheet
       ),
       useJournalTab: SettingsProvider.settings.useJournalTabForNpc.get(),
       useRoundedPortraitStyle: [
-        CONSTANTS.ROUNDED_PORTRAIT_OPTION_ALL as string,
-        CONSTANTS.ROUNDED_PORTRAIT_OPTION_NPCVEHICLE as string,
-      ].includes(SettingsProvider.settings.portraitStyle.get()),
+        CONSTANTS.CIRCULAR_PORTRAIT_OPTION_ALL as string,
+        CONSTANTS.CIRCULAR_PORTRAIT_OPTION_NPCVEHICLE as string,
+      ].includes(SettingsProvider.settings.useCircularPortraitStyle.get()),
     };
   }
 

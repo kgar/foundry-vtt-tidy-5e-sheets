@@ -414,38 +414,38 @@ export function createSettings() {
         },
       },
 
-      inspirationOnHover: {
+      showInspirationOnHover: {
         options: {
-          name: 'T5EK.Settings.InspirationOnHover.name',
-          hint: 'T5EK.Settings.InspirationOnHover.hint',
+          name: 'T5EK.Settings.ShowInspirationOnHover.name',
+          hint: 'T5EK.Settings.ShowInspirationOnHover.hint',
           scope: 'client',
           config: false,
           default: false,
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getTidySetting<boolean>('inspirationOnHover');
+          return FoundryAdapter.getTidySetting<boolean>('showInspirationOnHover');
         },
       },
 
-      exhaustionOnHover: {
+      showExhaustionOnHover: {
         options: {
-          name: 'T5EK.Settings.ExhaustionOnHover.name',
-          hint: 'T5EK.Settings.ExhaustionOnHover.hint',
+          name: 'T5EK.Settings.ShowExhaustionOnHover.name',
+          hint: 'T5EK.Settings.ShowExhaustionOnHover.hint',
           scope: 'client',
           config: false,
           default: false,
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getTidySetting<boolean>('exhaustionOnHover');
+          return FoundryAdapter.getTidySetting<boolean>('showExhaustionOnHover');
         },
       },
 
       useHpBar: {
         options: {
-          name: 'T5EK.Settings.HpBar.name',
-          hint: 'T5EK.Settings.HpBar.hint',
+          name: 'T5EK.Settings.UseHpBar.name',
+          hint: 'T5EK.Settings.UseHpBar.hint',
           scope: 'client',
           config: false,
           default: true,
@@ -458,8 +458,8 @@ export function createSettings() {
 
       useHpOverlay: {
         options: {
-          name: 'T5EK.Settings.HpOverlay.name',
-          hint: 'T5EK.Settings.HpOverlay.hint',
+          name: 'T5EK.Settings.UseHpOverlay.name',
+          hint: 'T5EK.Settings.UseHpOverlay.hint',
           scope: 'client',
           config: false,
           default: true,
@@ -564,8 +564,8 @@ export function createSettings() {
 
       useHpBarNpc: {
         options: {
-          name: 'T5EK.Settings.HpBar.name',
-          hint: 'T5EK.Settings.HpBar.hint',
+          name: 'T5EK.Settings.UseHpBar.name',
+          hint: 'T5EK.Settings.UseHpBar.hint',
           scope: 'client',
           config: false,
           default: true,
@@ -578,8 +578,8 @@ export function createSettings() {
 
       useHpOverlayNpc: {
         options: {
-          name: 'T5EK.Settings.HpOverlay.name',
-          hint: 'T5EK.Settings.HpOverlay.hint',
+          name: 'T5EK.Settings.UseHpOverlay.name',
+          hint: 'T5EK.Settings.UseHpOverlay.hint',
           scope: 'client',
           config: false,
           default: true,
@@ -670,8 +670,8 @@ export function createSettings() {
 
       useHpBarVehicle: {
         options: {
-          name: 'T5EK.Settings.HpBar.name',
-          hint: 'T5EK.Settings.HpBar.hint',
+          name: 'T5EK.Settings.UseHpBar.name',
+          hint: 'T5EK.Settings.UseHpBar.hint',
           scope: 'client',
           config: false,
           default: true,
@@ -684,8 +684,8 @@ export function createSettings() {
 
       useHpOverlayVehicle: {
         options: {
-          name: 'T5EK.Settings.HpOverlay.name',
-          hint: 'T5EK.Settings.HpOverlay.hint',
+          name: 'T5EK.Settings.UseHpOverlay.name',
+          hint: 'T5EK.Settings.UseHpOverlay.hint',
           scope: 'client',
           config: false,
           default: true,
@@ -700,61 +700,62 @@ export function createSettings() {
       // GM Options
       //
       // Show Player Name
-      playerNameEnabled: {
+      showPlayerName: {
         options: {
-          name: 'T5EK.Settings.PlayerName.name',
-          hint: 'T5EK.Settings.PlayerName.hint',
+          name: 'T5EK.Settings.ShowPlayerName.name',
+          hint: 'T5EK.Settings.ShowPlayerName.hint',
           scope: 'world',
           config: false,
           default: false,
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getTidySetting<boolean>('playerNameEnabled');
+          return FoundryAdapter.getTidySetting<boolean>('showPlayerName');
         },
       },
 
       // Expanded Sheet
-      expandedSheetEnabled: {
+      showExpandedLimitedView: {
         options: {
-          name: 'T5EK.Settings.ExpandedSheet.name',
-          hint: 'T5EK.Settings.ExpandedSheet.hint',
+          name: 'T5EK.Settings.ShowExpandedLimitedView.name',
+          hint: 'T5EK.Settings.ShowExpandedLimitedView.hint',
           scope: 'world',
           config: false,
           default: false,
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getTidySetting<boolean>('expandedSheetEnabled');
+          return FoundryAdapter.getTidySetting<boolean>('showExpandedLimitedView');
         },
       },
 
       // Portrait Settings
       // Portrait Style
-      portraitStyle: {
+      useCircularPortraitStyle: {
         options: {
-          name: 'T5EK.Settings.PortraitStyle.name',
-          hint: 'T5EK.Settings.PortraitStyle.hint',
+          name: 'T5EK.Settings.UseCircularPortraitStyle.name',
+          hint: 'T5EK.Settings.UseCircularPortraitStyle.hint',
           scope: 'world',
           config: false,
           type: String,
           choices: {
-            [CONSTANTS.ROUNDED_PORTRAIT_OPTION_NONE]:
-              'T5EK.Settings.PortraitStyle.default',
-            [CONSTANTS.ROUNDED_PORTRAIT_OPTION_CHARACTER]:
-              'T5EK.Settings.PortraitStyle.pc',
-            [CONSTANTS.ROUNDED_PORTRAIT_OPTION_NPCVEHICLE]:
-              'T5EK.Settings.PortraitStyle.npc',
-            [CONSTANTS.ROUNDED_PORTRAIT_OPTION_ALL]:
-              'T5EK.Settings.PortraitStyle.all',
+            [CONSTANTS.CIRCULAR_PORTRAIT_OPTION_NONE]:
+              'T5EK.Settings.UseCircularPortraitStyle.default',
+            [CONSTANTS.CIRCULAR_PORTRAIT_OPTION_CHARACTER]:
+              'T5EK.Settings.UseCircularPortraitStyle.pc',
+            [CONSTANTS.CIRCULAR_PORTRAIT_OPTION_NPCVEHICLE]:
+              'T5EK.Settings.UseCircularPortraitStyle.npc',
+            [CONSTANTS.CIRCULAR_PORTRAIT_OPTION_ALL]:
+              'T5EK.Settings.UseCircularPortraitStyle.all',
           },
-          default: CONSTANTS.ROUNDED_PORTRAIT_OPTION_ALL,
+          default: CONSTANTS.CIRCULAR_PORTRAIT_OPTION_ALL,
         },
         get(): string {
-          return FoundryAdapter.getTidySetting<string>('portraitStyle');
+          return FoundryAdapter.getTidySetting<string>('useCircularPortraitStyle');
         },
       },
 
+      // TODO: 🌟 Resume here
       // Total Edit Lock
       editTotalLockEnabled: {
         options: {

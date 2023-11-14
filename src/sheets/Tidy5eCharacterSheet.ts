@@ -288,9 +288,9 @@ export class Tidy5eCharacterSheet
         }
       ),
       useRoundedPortraitStyle: [
-        CONSTANTS.ROUNDED_PORTRAIT_OPTION_ALL as string,
-        CONSTANTS.ROUNDED_PORTRAIT_OPTION_CHARACTER as string,
-      ].includes(SettingsProvider.settings.portraitStyle.get()),
+        CONSTANTS.CIRCULAR_PORTRAIT_OPTION_ALL as string,
+        CONSTANTS.CIRCULAR_PORTRAIT_OPTION_CHARACTER as string,
+      ].includes(SettingsProvider.settings.useCircularPortraitStyle.get()),
     };
 
     debug('Character Sheet context data', context);

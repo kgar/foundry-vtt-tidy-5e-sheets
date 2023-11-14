@@ -125,9 +125,9 @@ export class Tidy5eVehicleSheet
       owner: this.actor.isOwner,
       showLimitedSheet: FoundryAdapter.showLimitedSheet(this.actor),
       useRoundedPortraitStyle: [
-        CONSTANTS.ROUNDED_PORTRAIT_OPTION_ALL as string,
-        CONSTANTS.ROUNDED_PORTRAIT_OPTION_NPCVEHICLE as string,
-      ].includes(SettingsProvider.settings.portraitStyle.get()),
+        CONSTANTS.CIRCULAR_PORTRAIT_OPTION_ALL as string,
+        CONSTANTS.CIRCULAR_PORTRAIT_OPTION_NPCVEHICLE as string,
+      ].includes(SettingsProvider.settings.useCircularPortraitStyle.get()),
     };
 
     debug('Vehicle Sheet context data', context);

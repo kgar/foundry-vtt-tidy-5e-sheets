@@ -204,7 +204,7 @@
     "name": null,
     "hint": null
   },
-  "T5EK.Settings.PlayerName": {
+  "T5EK.Settings.ShowPlayerName": {
     "name": null,
     "hint": null
   },
@@ -228,19 +228,19 @@
     "name": "無效時隱藏力竭和激勵 (0).",
     "hint": "如果想要力竭為 0 和沒有激勵時隱藏兩項請勾選該項，將會在鼠標懸停其上時顯示。"
   },
-  "T5EK.Settings.InspirationOnHover": {
+  "T5EK.Settings.ShowInspirationOnHover": {
     "name": "僅在鼠標懸停時顯示激勵追踪器。",
     "hint": "勾選後，只會在鼠標懸停於立繪框上時才會顯示激勵追踪器。"
   },
-  "T5EK.Settings.ExhaustionOnHover": {
+  "T5EK.Settings.ShowExhaustionOnHover": {
     "name": "僅在鼠標懸停時顯示力竭追踪器。",
     "hint": "勾選後，只會在鼠標懸停於立繪框上時才會顯示力竭追踪器。"
   },
-  "T5EK.Settings.HpBar": {
+  "T5EK.Settings.UseHpBar": {
     "name": null,
     "hint": null
   },
-  "T5EK.Settings.HpOverlay": {
+  "T5EK.Settings.UseHpOverlay": {
     "name": null,
     "hint": null
   },
@@ -276,11 +276,11 @@
     "name": null,
     "hint": null
   },
-  "T5EK.Settings.ExpandedSheet": {
+  "T5EK.Settings.ShowExpandedLimitedView": {
     "name": null,
     "hint": null
   },
-  "T5EK.Settings.PortraitStyle": {
+  "T5EK.Settings.UseCircularPortraitStyle": {
     "name": null,
     "hint": null,
     "all": null,

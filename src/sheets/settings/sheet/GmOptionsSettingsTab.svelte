@@ -55,17 +55,17 @@
   />
 
   <CheckboxSetting
-    bind:value={$context.playerNameEnabled}
-    name={'T5EK.Settings.PlayerName.name'}
-    hint={'T5EK.Settings.PlayerName.hint'}
-    id="playerNameEnabled"
+    bind:value={$context.showPlayerName}
+    name={'T5EK.Settings.ShowPlayerName.name'}
+    hint={'T5EK.Settings.ShowPlayerName.hint'}
+    id="showPlayerName"
   />
 
   <CheckboxSetting
-    bind:value={$context.expandedSheetEnabled}
-    name={'T5EK.Settings.ExpandedSheet.name'}
-    hint={'T5EK.Settings.ExpandedSheet.hint'}
-    id="expandedSheetEnabled"
+    bind:value={$context.showExpandedLimitedView}
+    name={'T5EK.Settings.ShowExpandedLimitedView.name'}
+    hint={'T5EK.Settings.ShowExpandedLimitedView.hint'}
+    id="showExpandedLimitedView"
   />
 
   <TextInputSetting
@@ -76,11 +76,11 @@
   />
 
   <SelectSetting
-    options={SettingsProvider.settings.portraitStyle.options.choices}
-    bind:value={$context.portraitStyle}
-    name={'T5EK.Settings.PortraitStyle.name'}
-    hint={'T5EK.Settings.PortraitStyle.hint'}
-    id="portraitStyle"
+    options={SettingsProvider.settings.useCircularPortraitStyle.options.choices}
+    bind:value={$context.useCircularPortraitStyle}
+    name={'T5EK.Settings.UseCircularPortraitStyle.name'}
+    hint={'T5EK.Settings.UseCircularPortraitStyle.hint'}
+    id="useCircularPortraitStyle"
   />
 
   <CheckboxSetting

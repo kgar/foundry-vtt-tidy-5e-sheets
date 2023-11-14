@@ -561,7 +561,7 @@ export const FoundryAdapter = {
     if (actor.type === CONSTANTS.SHEET_TYPE_CHARACTER) {
       return (
         showLimitedSheet &&
-        !SettingsProvider.settings.expandedSheetEnabled.get()
+        !SettingsProvider.settings.showExpandedLimitedView.get()
       );
     }
     return showLimitedSheet;

@@ -204,7 +204,7 @@
     "name": "Jellemző Címkék Mutatása.",
     "hint": "Kapcsold ki, hogy csak JK/NJK jellemzőkhöz mutasson ikonokat."
   },
-  "T5EK.Settings.PlayerName": {
+  "T5EK.Settings.ShowPlayerName": {
     "name": "Játékosnév mutatása.",
     "hint": "Kapcsold be, hogy mutasson egy mezőt a játékosnévnek a karakternév alatt."
   },
@@ -228,21 +228,21 @@
     "name": "Kimerültség és inspiráció követő elrejtése 0-n.",
     "hint": "Kapcsold be, hogy elrejtsd a kimerültség és inspiráció követőt, ha 0-n állnak. Ha ráviszed az egeret, látszódni fog."
   },
-  "T5EK.Settings.InspirationOnHover": {
+  "T5EK.Settings.ShowInspirationOnHover": {
     "name": "Inspiráció követő mutatása csak egérmutatóval.",
     "hint": "Kapcsold be, hogy csak akkor mutassa az inspiráció követőt, ha ráviszed az egeret a portréra."
   },
-  "T5EK.Settings.ExhaustionOnHover": {
+  "T5EK.Settings.ShowExhaustionOnHover": {
     "name": "Kimerültség követő mutatása csak egérmutatóval.",
     "hint": "Kapcsold be, hogy csak akkor mutassa a kimerültség követőt, ha ráviszed az egeret a portréra."
   },
-  "T5EK.Settings.HpBar": {
-    "name": "HP sáv kikapcsolása.",
-    "hint": "Kapcsold be, hogy elrejtsd a megmaradt HP-t mutató színes sávot (A HP számok továbbra is látszódni fognak)."
+  "T5EK.Settings.UseHpBar": {
+    "name": null,
+    "hint": null
   },
-  "T5EK.Settings.HpOverlay": {
-    "name": "HP átfedés elrejtése.",
-    "hint": "Kapcsold be, hogy elrejtsd a HP átfedés ehhez az aktor típushoz."
+  "T5EK.Settings.UseHpOverlay": {
+    "name": null,
+    "hint": null
   },
   "T5EK.Settings.TraitsTogglePc": {
     "name": "Üres karakterjellemzők ki/be.",
@@ -276,11 +276,11 @@
     "name": null,
     "hint": null
   },
-  "T5EK.Settings.ExpandedSheet": {
+  "T5EK.Settings.ShowExpandedLimitedView": {
     "name": "Kiterjesztett Korlátozott nézet a karakterlapokra.",
     "hint": "A naplón kívül az egész karakterlapot mutass a korlátozott jogosultsággal rendelkező játékosoknak."
   },
-  "T5EK.Settings.PortraitStyle": {
+  "T5EK.Settings.UseCircularPortraitStyle": {
     "name": "Kerek portré stílus.",
     "hint": "Válaszd ki, hogy milyen aktorokhoz kapcsold be a kerek portrékat/ikonokat.",
     "all": "Minden aktor",

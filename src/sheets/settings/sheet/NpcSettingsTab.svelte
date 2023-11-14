@@ -72,15 +72,15 @@
 
 <CheckboxSetting
   bind:value={$context.useHpBarNpc}
-  name={'T5EK.Settings.HpBar.name'}
-  hint={'T5EK.Settings.HpBar.hint'}
+  name={'T5EK.Settings.UseHpBar.name'}
+  hint={'T5EK.Settings.UseHpBar.hint'}
   id="useHpBarNpc"
 />
 
 <CheckboxSetting
   bind:value={$context.useHpOverlayNpc}
-  name={'T5EK.Settings.HpOverlay.name'}
-  hint={'T5EK.Settings.HpOverlay.hint'}
+  name={'T5EK.Settings.UseHpOverlay.name'}
+  hint={'T5EK.Settings.UseHpOverlay.hint'}
   id="useHpOverlayNpc"
 />
 

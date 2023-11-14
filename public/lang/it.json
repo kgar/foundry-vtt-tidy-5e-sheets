@@ -204,7 +204,7 @@
     "name": "Mostra le etichette relative ai tratti.",
     "hint": "Per impostazione predefinita, vengono visualizzate solo le icone relative ai tratti. Seleziona per visualizzare anche le etichette."
   },
-  "T5EK.Settings.PlayerName": {
+  "T5EK.Settings.ShowPlayerName": {
     "name": null,
     "hint": null
   },
@@ -228,21 +228,21 @@
     "name": "Nascondi l'indicatore di indebolimento e ispirazione se = 0.",
     "hint": "Seleziona per nascondere gli indicatori di indebolimento  e ispirazione se = 0. Apparirà al passaggio del mouse."
   },
-  "T5EK.Settings.InspirationOnHover": {
+  "T5EK.Settings.ShowInspirationOnHover": {
     "name": "Mostra l'indicatore di ispirazione solo al passaggio del mouse.",
     "hint": "Seleziona per mostrare l'indicatore di ispirazione solo quando passi il mouse sopra il ritratto."
   },
-  "T5EK.Settings.ExhaustionOnHover": {
+  "T5EK.Settings.ShowExhaustionOnHover": {
     "name": "Mostra l'indicatore di indebolimento solo al passaggio del mouse.",
     "hint": "Seleziona per mostrare l'indicatore di indebolimento solo quando passi il mouse sopra il ritratto."
   },
-  "T5EK.Settings.HpBar": {
-    "name": "Disabilita la barra della salute.",
-    "hint": "Seleziona per nascondere la barra colorata che indica i PF rimanenti (i numeri relativi alla salute saranno ancora visibili)."
+  "T5EK.Settings.UseHpBar": {
+    "name": null,
+    "hint": null
   },
-  "T5EK.Settings.HpOverlay": {
-    "name": "Nascondi la sovrapposizione dei PF.",
-    "hint": "Seleziona per nascondere l'overlay dei PF per questo tipo di attore."
+  "T5EK.Settings.UseHpOverlay": {
+    "name": null,
+    "hint": null
   },
   "T5EK.Settings.TraitsTogglePc": {
     "name": "Attiva/disattiva i tratti se vuoti.",
@@ -276,11 +276,11 @@
     "name": null,
     "hint": null
   },
-  "T5EK.Settings.ExpandedSheet": {
+  "T5EK.Settings.ShowExpandedLimitedView": {
     "name": "Vista limitata espansa per le schede PG.",
     "hint": "Mostra l'intera scheda del personaggio (meno il diario) ai giocatori con autorizzazioni limitate."
   },
-  "T5EK.Settings.PortraitStyle": {
+  "T5EK.Settings.UseCircularPortraitStyle": {
     "name": "Stile ritratto: tondo.",
     "hint": "Scegli di abilitare i ritratti/icone tondi per gli attori.",
     "all": "Tutti gli attori",

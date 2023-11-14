@@ -138,7 +138,7 @@
 
     <section class="class-list">
       <!-- Player Name -->
-      {#if $settingStore.playerNameEnabled}
+      {#if $settingStore.showPlayerName}
         <ContentEditableFormField
           element="span"
           document={$context.actor}

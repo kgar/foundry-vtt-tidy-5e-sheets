@@ -204,7 +204,7 @@
     "name": "Afficher les noms de traits",
     "hint": "Par défaut, seules des icones sont affichées pour les traits. Activer cette option pour afficher les noms également."
   },
-  "T5EK.Settings.PlayerName": {
+  "T5EK.Settings.ShowPlayerName": {
     "name": "Afficher le nom du joueur",
     "hint": "Activer cette option pour afficher le nom du joueur en dessous de celui de son personnage."
   },
@@ -228,21 +228,21 @@
     "name": "Cacher l'épuisement et l'inspiration lorsqu'ils ne sont pas affectés",
     "hint": "Activer cette option pour masquer l'épuisment si son niveau est de 0 et l'inspiration si elle n'est pas donnée."
   },
-  "T5EK.Settings.InspirationOnHover": {
+  "T5EK.Settings.ShowInspirationOnHover": {
     "name": "Afficher l'indicateur d'inspiration uniquement au survol",
     "hint": "Activer cette option pour rendre l'indicateur d'inspiration visible uniquement au survol du portrait avec la souris."
   },
-  "T5EK.Settings.ExhaustionOnHover": {
+  "T5EK.Settings.ShowExhaustionOnHover": {
     "name": "Afficher l'indicateur d'épuisement uniquement au survol",
     "hint": "Activer cette option pour rendre l'indicateur d'épuisement visible uniquement au survol du portrait avec la souris."
   },
-  "T5EK.Settings.HpBar": {
-    "name": "Désactiver la barre d'HP",
-    "hint": "Activer cette option pour masquer la barre colorée indiquant les HP restants (les chiffres seront toujours visibles)."
+  "T5EK.Settings.UseHpBar": {
+    "name": null,
+    "hint": null
   },
-  "T5EK.Settings.HpOverlay": {
-    "name": "Masquer l'overlay des HP",
-    "hint": "Activer cette option pour masque l'overlay des HP pour ce type d'acteur."
+  "T5EK.Settings.UseHpOverlay": {
+    "name": null,
+    "hint": null
   },
   "T5EK.Settings.TraitsTogglePc": {
     "name": "Afficher un bouton de bascule de l'affichage des traits",
@@ -276,11 +276,11 @@
     "name": null,
     "hint": null
   },
-  "T5EK.Settings.ExpandedSheet": {
+  "T5EK.Settings.ShowExpandedLimitedView": {
     "name": "Vue étendue pour la feuille limitée",
     "hint": "Activer cette option pour afficher l'intégralité de la feuille de personnage (sans l'onglet Notes Privées) pour les joueurs ayant une autorisation limitée pour cet acteur."
   },
-  "T5EK.Settings.PortraitStyle": {
+  "T5EK.Settings.UseCircularPortraitStyle": {
     "name": "Utiliser des portraits ronds",
     "hint": "Activer cette option pour pour utiliser des portraits ronds.",
     "all": "Tous les acteurs",

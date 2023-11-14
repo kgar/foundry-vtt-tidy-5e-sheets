@@ -44,7 +44,7 @@
       level={$context.system.attributes.exhaustion}
       radiusClass={$context.useRoundedPortraitStyle ? 'rounded' : 'top-left'}
       on:levelSelected={onLevelSelected}
-      onlyShowOnHover={$settingStore.exhaustionOnHover ||
+      onlyShowOnHover={$settingStore.showExhaustionOnHover ||
         ($settingStore.hideIfZero &&
           $context.system.attributes.exhaustion === 0)}
     />
@@ -54,7 +54,7 @@
     <Inspiration
       inspired={$context.actor.system.attributes.inspiration}
       radiusClass={$context.useRoundedPortraitStyle ? 'rounded' : 'top-right'}
-      onlyShowOnHover={$settingStore.inspirationOnHover ||
+      onlyShowOnHover={$settingStore.showInspirationOnHover ||
         ($settingStore.hideIfZero &&
           !$context.actor.system.attributes.inspiration)}
       animate={$settingStore.animateInspiration}

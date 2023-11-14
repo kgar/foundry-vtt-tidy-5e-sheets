@@ -204,7 +204,7 @@
     "name": "Zobrazit popisky rysů.",
     "hint": "Ve výchozím nastavení se zobrazují pouze ikony rysů. Povolte pro zobrazení popisků."
   },
-  "T5EK.Settings.PlayerName": {
+  "T5EK.Settings.ShowPlayerName": {
     "name": "Zobrazit jméno hráče.",
     "hint": "Zaškrtnutím zobrazíte pole s jménem hráče pod jménem postavy."
   },
@@ -228,21 +228,21 @@
     "name": "Skrýt únavu a inspiraci, pokud nejsou dostupné (0).",
     "hint": "Zaškrtnutím skryje únavu a inspiraci, pokud mají hodnotu 0. Objeví se při najetí myší."
   },
-  "T5EK.Settings.InspirationOnHover": {
+  "T5EK.Settings.ShowInspirationOnHover": {
     "name": "Zobrazit ukazatel inspirace jen při najetí myši.",
     "hint": "Zaškrtnutím bude ukazatel inspirace viditelný pouze při najetí myši na portrét."
   },
-  "T5EK.Settings.ExhaustionOnHover": {
+  "T5EK.Settings.ShowExhaustionOnHover": {
     "name": "Zobrazit ukazatel únavy jen při najetí myši.",
     "hint": "Zaškrtnutím bude ukazatel únavy viditelný pouze při najetí myši na portrét."
   },
-  "T5EK.Settings.HpBar": {
-    "name": "Zakázat ukazatel zdraví.",
-    "hint": "Povolte pro skrytí barevného ukazatele zbývajících bodů života (čísla budou stále viditelná)."
+  "T5EK.Settings.UseHpBar": {
+    "name": null,
+    "hint": null
   },
-  "T5EK.Settings.HpOverlay": {
-    "name": "Zakázat překrytí životů.",
-    "hint": "Zaškrtnutím skryjete překrytí životů (barevná výplň) pro tento typ aktora."
+  "T5EK.Settings.UseHpOverlay": {
+    "name": null,
+    "hint": null
   },
   "T5EK.Settings.TraitsTogglePc": {
     "name": "Přepínání prázdných rysů postavy.",
@@ -276,11 +276,11 @@
     "name": null,
     "hint": null
   },
-  "T5EK.Settings.ExpandedSheet": {
+  "T5EK.Settings.ShowExpandedLimitedView": {
     "name": "Rozšířené Omezené zobrazení pro deník postav.",
     "hint": "Zobrazí celý deník postavy (kromě poznámek) hráčům s Omezeným oprávněním."
   },
-  "T5EK.Settings.PortraitStyle": {
+  "T5EK.Settings.UseCircularPortraitStyle": {
     "name": "Kruhový styl portrétu.",
     "hint": "Zvolte pro zapnutí kruhových portrétů/ikon pro aktory.",
     "all": "Všichni aktoři",

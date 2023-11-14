@@ -204,7 +204,7 @@
     "name": "Mostrar Etiquetas de Traços",
     "hint": "Por padrão, somente ícones são mostrados para traços. Habilite para mostrar as etiquetas também."
   },
-  "T5EK.Settings.PlayerName": {
+  "T5EK.Settings.ShowPlayerName": {
     "name": null,
     "hint": null
   },
@@ -228,21 +228,21 @@
     "name": "Esconder indicadores de exaustão e inspiração em 0.",
     "hint": "Habilite para esconder o indicador de exaustão e inspiração se for 0. Mostrará ao pairar o mouse sobre."
   },
-  "T5EK.Settings.InspirationOnHover": {
+  "T5EK.Settings.ShowInspirationOnHover": {
     "name": "Mostrar indicador de inspiração só ao pairar o mouse sobre.",
     "hint": "Habilite para mostrar somente o indicador de inspiração somente quando você pairar sobre o retrato."
   },
-  "T5EK.Settings.ExhaustionOnHover": {
+  "T5EK.Settings.ShowExhaustionOnHover": {
     "name": "Mostrar o indicador de exaustão somente ao pairar o mouse.",
     "hint": "Habilite para mostrar o indicator de exaustão quando você pairar o mouse sobre o retrato."
   },
-  "T5EK.Settings.HpBar": {
-    "name": "Desativar a barra de vida.",
-    "hint": "Habilite para esconder a barra colorida que indica a quantidade de PVs restante (número de pontos de vida ainda serão visíveis)."
+  "T5EK.Settings.UseHpBar": {
+    "name": null,
+    "hint": null
   },
-  "T5EK.Settings.HpOverlay": {
-    "name": "Esconder a sobreposição de pontos de vida.",
-    "hint": "Habilite para esconder a sobreposição de PVs para esse tipo de ator."
+  "T5EK.Settings.UseHpOverlay": {
+    "name": null,
+    "hint": null
   },
   "T5EK.Settings.TraitsTogglePc": {
     "name": "Alternar traços de personagem vazios.",
@@ -276,11 +276,11 @@
     "name": null,
     "hint": null
   },
-  "T5EK.Settings.ExpandedSheet": {
+  "T5EK.Settings.ShowExpandedLimitedView": {
     "name": "Visão Limitada expandida para fichas de personagem.",
     "hint": "Mostra toda a ficha de personagem (menos o diário) para jogadores com permissão limitada."
   },
-  "T5EK.Settings.PortraitStyle": {
+  "T5EK.Settings.UseCircularPortraitStyle": {
     "name": "Estilo redondo para retrato.",
     "hint": "Escolha para habilitar retratos/ícones redondos para atores.",
     "all": "Todos os atores",

@@ -204,7 +204,7 @@
     "name": "Beschriftung von Merkmalen.",
     "hint": "Standardmäßig werden nur Icons für Merkmale angezeigt. Aktivieren, um auch Beschriftungen für Merkmale anzuzeigen."
   },
-  "T5EK.Settings.PlayerName": {
+  "T5EK.Settings.ShowPlayerName": {
     "name": "Zeige Spielername.",
     "hint": "Aktivieren, um ein Feld für den Namen des Spielers unterhalb des Charakternamens anzuzeigen."
   },
@@ -228,21 +228,21 @@
     "name": "Verstecke Erschöpfungs- und Inspirations-Tracker bei 0.",
     "hint": "Aktivieren, um Erschöpfungs- und Inspirations-Tracker bei 0 zu verstecken. Erscheint bei Maushover."
   },
-  "T5EK.Settings.InspirationOnHover": {
+  "T5EK.Settings.ShowInspirationOnHover": {
     "name": "Zeige Inspirations-Tracker bei Hover.",
     "hint": "Aktivieren, um den Inspirations-Tracker grundsätzlich nur bei Maushover zu zeigen."
   },
-  "T5EK.Settings.ExhaustionOnHover": {
+  "T5EK.Settings.ShowExhaustionOnHover": {
     "name": "Zeige Erschöpfungs-Tracker bei Hover.",
     "hint": "Aktivieren, um den Erschöpfungs-Tracker grundsätzlich nur bei Maushover zu zeigen."
   },
-  "T5EK.Settings.HpBar": {
-    "name": "Lebensbalken deaktivieren.",
-    "hint": "Aktivieren, um den farbigen Balken zur Anzeige des Rest-Lebens unter dem Portrait zu deaktivieren (Trefferpunkte bleiben weiter sichtbar)."
+  "T5EK.Settings.UseHpBar": {
+    "name": null,
+    "hint": null
   },
-  "T5EK.Settings.HpOverlay": {
-    "name": "Trefferpunkt-Overlay verstecken.",
-    "hint": "Aktivieren, um das Trefferpunkt-Overlay für diesen Darstellertyp zu verstecken."
+  "T5EK.Settings.UseHpOverlay": {
+    "name": null,
+    "hint": null
   },
   "T5EK.Settings.TraitsTogglePc": {
     "name": "Leere Charakter-Merkmale umschalten.",
@@ -276,11 +276,11 @@
     "name": null,
     "hint": null
   },
-  "T5EK.Settings.ExpandedSheet": {
+  "T5EK.Settings.ShowExpandedLimitedView": {
     "name": "Erweiterte eingeschränkte Ansicht für Charakterbögen.",
     "hint": "Zeigt Spielern mit eingeschränkten Rechten den gesamten Charakterbogen abzüglich Tagebuch."
   },
-  "T5EK.Settings.PortraitStyle": {
+  "T5EK.Settings.UseCircularPortraitStyle": {
     "name": "Runde Portraits.",
     "hint": "Wähle runde Portraits/Icons für Darsteller.",
     "all": "Alle Darsteller",
