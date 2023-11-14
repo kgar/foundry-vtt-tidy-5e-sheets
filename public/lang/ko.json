@@ -200,7 +200,7 @@
     "name": null,
     "hint": null
   },
-  "T5EK.Settings.TraitLabels": {
+  "T5EK.Settings.ShowTraitLabels": {
     "name": "특성 레이블 표시",
     "hint": "기본적으로 특성에 대한 아이콘만 표시된다. 활성화 시 레이블도 표시된다."
   },
@@ -216,9 +216,9 @@
     "name": null,
     "hint": null
   },
-  "T5EK.Settings.ClassList": {
-    "name": "캐릭터 클래스 목록 숨김.",
-    "hint": "활성화 시 캐릭터 이름 하단에 있는 클래스 목록이 숨겨진다."
+  "T5EK.Settings.ShowClassList": {
+    "name": null,
+    "hint": null
   },
   "T5EK.Settings.InspirationAnimation": {
     "name": "고양감 표시 애니메이션 없음.",

@@ -140,10 +140,10 @@
   />
 
   <CheckboxSetting
-    bind:value={$context.traitLabelsEnabled}
-    name={'T5EK.Settings.TraitLabels.name'}
-    hint={'T5EK.Settings.TraitLabels.hint'}
-    id="traitLabelsEnabled"
+    bind:value={$context.showTraitLabels}
+    name={'T5EK.Settings.ShowTraitLabels.name'}
+    hint={'T5EK.Settings.ShowTraitLabels.hint'}
+    id="showTraitLabels"
   />
 
   <CheckboxSetting

@@ -200,7 +200,7 @@
     "name": "Hide item name icons",
     "hint": "Hides the support icons next to the object name (Favorite, Attunement, etc.). This is useful in preventing redundant icons when classic controls are visible."
   },
-  "T5EK.Settings.TraitLabels": {
+  "T5EK.Settings.ShowTraitLabels": {
     "name": "Show Trait Labels",
     "hint": "Shows labels for PC, NPC, and Vehicle traits. Disable to show only icons."
   },
@@ -216,9 +216,9 @@
     "name": "Use NPC journal",
     "hint": "Shows the npc journal tab."
   },
-  "T5EK.Settings.ClassList": {
-    "name": "Hide class list",
-    "hint": "Hides the class list below the character's name."
+  "T5EK.Settings.ShowClassList": {
+    "name": "Show class list",
+    "hint": "Shows the class list below the character's name."
   },
   "T5EK.Settings.InspirationAnimation": {
     "name": "Animate inspiration tracker",

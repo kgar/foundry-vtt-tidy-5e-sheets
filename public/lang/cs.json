@@ -200,7 +200,7 @@
     "name": null,
     "hint": null
   },
-  "T5EK.Settings.TraitLabels": {
+  "T5EK.Settings.ShowTraitLabels": {
     "name": "Zobrazit popisky rysů.",
     "hint": "Ve výchozím nastavení se zobrazují pouze ikony rysů. Povolte pro zobrazení popisků."
   },
@@ -216,9 +216,9 @@
     "name": null,
     "hint": null
   },
-  "T5EK.Settings.ClassList": {
-    "name": "Skrýt seznam povolání.",
-    "hint": "Zaškrtnutím skryjete seznam povolání pod jménem postavy."
+  "T5EK.Settings.ShowClassList": {
+    "name": null,
+    "hint": null
   },
   "T5EK.Settings.InspirationAnimation": {
     "name": "Žádná animace indikátoru inspirace.",

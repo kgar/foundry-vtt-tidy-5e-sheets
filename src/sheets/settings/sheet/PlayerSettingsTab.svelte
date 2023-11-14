@@ -43,10 +43,10 @@
 />
 
 <CheckboxSetting
-  bind:value={$context.classListDisabled}
-  name={'T5EK.Settings.ClassList.name'}
-  hint={'T5EK.Settings.ClassList.hint'}
-  id="classListDisabled"
+  bind:value={$context.showClassList}
+  name={'T5EK.Settings.ShowClassList.name'}
+  hint={'T5EK.Settings.ShowClassList.hint'}
+  id="showClassList"
 />
 
 <CheckboxSetting

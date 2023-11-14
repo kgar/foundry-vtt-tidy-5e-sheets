@@ -200,7 +200,7 @@
     "name": null,
     "hint": null
   },
-  "T5EK.Settings.TraitLabels": {
+  "T5EK.Settings.ShowTraitLabels": {
     "name": "Mostrar Etiquetas de Traços",
     "hint": "Por padrão, somente ícones são mostrados para traços. Habilite para mostrar as etiquetas também."
   },
@@ -216,9 +216,9 @@
     "name": null,
     "hint": null
   },
-  "T5EK.Settings.ClassList": {
-    "name": "Esconder lista de classes do personagem.",
-    "hint": "Habilite para esconder a lista de classes abaixo do nome do personagem."
+  "T5EK.Settings.ShowClassList": {
+    "name": null,
+    "hint": null
   },
   "T5EK.Settings.InspirationAnimation": {
     "name": "Sem animação do indicador de inspiração.",

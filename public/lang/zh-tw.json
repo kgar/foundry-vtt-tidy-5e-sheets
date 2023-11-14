@@ -200,7 +200,7 @@
     "name": null,
     "hint": null
   },
-  "T5EK.Settings.TraitLabels": {
+  "T5EK.Settings.ShowTraitLabels": {
     "name": null,
     "hint": null
   },
@@ -216,7 +216,7 @@
     "name": null,
     "hint": null
   },
-  "T5EK.Settings.ClassList": {
+  "T5EK.Settings.ShowClassList": {
     "name": null,
     "hint": null
   },

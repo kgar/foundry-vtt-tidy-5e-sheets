@@ -200,7 +200,7 @@
     "name": null,
     "hint": null
   },
-  "T5EK.Settings.TraitLabels": {
+  "T5EK.Settings.ShowTraitLabels": {
     "name": "特徴ラベルの表示",
     "hint": "デフォルトでは、特徴アイコンのみが表示されます。ラベルも表示できるようにします。"
   },
@@ -216,9 +216,9 @@
     "name": null,
     "hint": null
   },
-  "T5EK.Settings.ClassList": {
-    "name": "クラス一覧を非表示",
-    "hint": "キャラクター名の下のクラスリストを非表示にする場合に有効にします。"
+  "T5EK.Settings.ShowClassList": {
+    "name": null,
+    "hint": null
   },
   "T5EK.Settings.InspirationAnimation": {
     "name": "インスピレーションアニメ",

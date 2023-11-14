@@ -153,7 +153,7 @@
       {/if}
 
       <!-- Class / Subclass -->
-      {#if $context.owner && !$settingStore.classListDisabled}
+      {#if $context.owner && $settingStore.showClassList}
         <span class="flex-row extra-small-gap">
           {#each classAndSubclassSummaries as summary, i}
             {#if i > 0}

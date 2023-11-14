@@ -200,7 +200,7 @@
     "name": null,
     "hint": null
   },
-  "T5EK.Settings.TraitLabels": {
+  "T5EK.Settings.ShowTraitLabels": {
     "name": "Mostra le etichette relative ai tratti.",
     "hint": "Per impostazione predefinita, vengono visualizzate solo le icone relative ai tratti. Seleziona per visualizzare anche le etichette."
   },
@@ -216,9 +216,9 @@
     "name": null,
     "hint": null
   },
-  "T5EK.Settings.ClassList": {
-    "name": "Nascondi l'elenco delle classi per i personaggi.",
-    "hint": "Abilita per nascondere l'elenco delle classi sotto il nome del personaggio."
+  "T5EK.Settings.ShowClassList": {
+    "name": null,
+    "hint": null
   },
   "T5EK.Settings.InspirationAnimation": {
     "name": "Indicatore punti ispirazione non animato.",

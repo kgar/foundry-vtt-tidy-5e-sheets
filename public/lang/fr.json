@@ -200,7 +200,7 @@
     "name": null,
     "hint": null
   },
-  "T5EK.Settings.TraitLabels": {
+  "T5EK.Settings.ShowTraitLabels": {
     "name": "Afficher les noms de traits",
     "hint": "Par défaut, seules des icones sont affichées pour les traits. Activer cette option pour afficher les noms également."
   },
@@ -216,9 +216,9 @@
     "name": null,
     "hint": null
   },
-  "T5EK.Settings.ClassList": {
-    "name": "Masquer la liste des classes du personnage",
-    "hint": "Activer cette option pour cacher la liste des classes du personnage à côté de l'affichage du niveau. La feuille peut gérer 3 classes : plus cela devient compliqué ;)"
+  "T5EK.Settings.ShowClassList": {
+    "name": null,
+    "hint": null
   },
   "T5EK.Settings.InspirationAnimation": {
     "name": "Pas d'animation de l'indicateur d'inspiration",

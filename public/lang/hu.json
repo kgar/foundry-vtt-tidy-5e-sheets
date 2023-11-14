@@ -200,7 +200,7 @@
     "name": null,
     "hint": null
   },
-  "T5EK.Settings.TraitLabels": {
+  "T5EK.Settings.ShowTraitLabels": {
     "name": "Jellemző Címkék Mutatása.",
     "hint": "Kapcsold ki, hogy csak JK/NJK jellemzőkhöz mutasson ikonokat."
   },
@@ -216,9 +216,9 @@
     "name": null,
     "hint": null
   },
-  "T5EK.Settings.ClassList": {
-    "name": "Karakter kaszt lista elrejtése.",
-    "hint": "Kapcsold be, hogy elrejtsd a kaszt listát a karakternv alól."
+  "T5EK.Settings.ShowClassList": {
+    "name": null,
+    "hint": null
   },
   "T5EK.Settings.InspirationAnimation": {
     "name": "Statikus inspiráció követő.",

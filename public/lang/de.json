@@ -200,7 +200,7 @@
     "name": null,
     "hint": null
   },
-  "T5EK.Settings.TraitLabels": {
+  "T5EK.Settings.ShowTraitLabels": {
     "name": "Beschriftung von Merkmalen.",
     "hint": "Standardmäßig werden nur Icons für Merkmale angezeigt. Aktivieren, um auch Beschriftungen für Merkmale anzuzeigen."
   },
@@ -216,9 +216,9 @@
     "name": null,
     "hint": null
   },
-  "T5EK.Settings.ClassList": {
-    "name": "Charakter-Klassenliste verstecken.",
-    "hint": "Aktivieren, um die Klassenliste unter dem Namen eines Charakters zu verstecken."
+  "T5EK.Settings.ShowClassList": {
+    "name": null,
+    "hint": null
   },
   "T5EK.Settings.InspirationAnimation": {
     "name": "Unbewegter Inspirations-Tracker.",

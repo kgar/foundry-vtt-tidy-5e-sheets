@@ -325,17 +325,17 @@ export function createSettings() {
       },
 
       //Show trait labels
-      traitLabelsEnabled: {
+      showTraitLabels: {
         options: {
-          name: 'T5EK.Settings.TraitLabels.name',
-          hint: 'T5EK.Settings.TraitLabels.hint',
+          name: 'T5EK.Settings.ShowTraitLabels.name',
+          hint: 'T5EK.Settings.ShowTraitLabels.hint',
           scope: 'world',
           config: false,
           default: true,
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getTidySetting<boolean>('traitLabelsEnabled');
+          return FoundryAdapter.getTidySetting<boolean>('showTraitLabels');
         },
       },
 
@@ -372,17 +372,17 @@ export function createSettings() {
         },
       },
 
-      classListDisabled: {
+      showClassList: {
         options: {
-          name: 'T5EK.Settings.ClassList.name',
-          hint: 'T5EK.Settings.ClassList.hint',
+          name: 'T5EK.Settings.ShowClassList.name',
+          hint: 'T5EK.Settings.ShowClassList.hint',
           scope: 'client',
           config: false,
-          default: false,
+          default: true,
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getTidySetting<boolean>('classListDisabled');
+          return FoundryAdapter.getTidySetting<boolean>('showClassList');
         },
       },
 
