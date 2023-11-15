@@ -159,7 +159,16 @@
   },
   "T5EK.Settings.TabInfo": {
     "tabLabel": "Info",
-    "header": "Info"
+    "Header": "Info",
+    "MaintainerParagraph": "Tidy 5e Sheets are maintained by {urlStart}kgar{urlEnd}.",
+    "GithubParagraph": "Do you have a feature idea? Is something wrong? Submit a {urlStart}Github Issue{urlEnd}. Do you localize web content? Tidy 5e Sheets could use your help! Go to the Weblate website to see our localization progress in various languages. This module is accepting new language translations and modifications to existing translations.",
+    "DiscordParagraph": "{urlStart}Tidy 5e Sheets Discord Server{urlEnd}: : Discuss new feature ideas, get help from others, and track progress of this module.",
+    "LocalizationParagraph": "{urlStart}Foundry Hub Weblate{urlEnd}: ",
+    "FinancialSupportHeader": "Ways to Support Tidy 5e Sheets",
+    "FinancialSupportParagraph": "If you like Tidy 5e Sheets and want to support it financially, here are some ways to do it:",
+    "BuyMeACoffeeLink": "{urlStart}Buy Me a Coffee{urlEnd}",
+    "KoFiLink": "{urlStart}Ko-Fi{urlEnd}",
+    "PatreonLink": "{urlStart}Patreon{urlEnd}"
   },
   "T5EK.Settings.ItemCardsForAllItems": {
     "name": "Show Item Cards in All Layouts",
