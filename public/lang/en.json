@@ -286,8 +286,7 @@
     "all": "All actors",
     "pc": "PCs",
     "npc": "NPCs/Vehicles",
-    "none": "none",
-    "default": "none"
+    "none": "None"
   },
   "T5EK.Settings.UseTotalSheetLock": {
     "name": "Lock down sensitive fields",

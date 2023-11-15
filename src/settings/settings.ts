@@ -746,7 +746,7 @@ export function createSettings() {
           type: String,
           choices: {
             [CONSTANTS.CIRCULAR_PORTRAIT_OPTION_NONE]:
-              'T5EK.Settings.UseCircularPortraitStyle.default',
+              'T5EK.Settings.UseCircularPortraitStyle.none',
             [CONSTANTS.CIRCULAR_PORTRAIT_OPTION_CHARACTER]:
               'T5EK.Settings.UseCircularPortraitStyle.pc',
             [CONSTANTS.CIRCULAR_PORTRAIT_OPTION_NPCVEHICLE]:
