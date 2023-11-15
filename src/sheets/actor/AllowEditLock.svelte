@@ -17,13 +17,13 @@
 
   $: descriptionVariable =
     hint ??
-    ($settingStore.editTotalLockEnabled
+    ($settingStore.useTotalSheetLock
       ? localize('T5EK.SheetLock.Description')
       : localize('T5EK.SheetEdit.Description'));
-  $: lockHintVariable = $settingStore.editTotalLockEnabled
+  $: lockHintVariable = $settingStore.useTotalSheetLock
     ? 'T5EK.SheetLock.Unlock.Hint'
     : 'T5EK.SheetEdit.Enable.Hint';
-  $: unlockHintVariable = $settingStore.editTotalLockEnabled
+  $: unlockHintVariable = $settingStore.useTotalSheetLock
     ? 'T5EK.SheetLock.Lock.Hint'
     : 'T5EK.SheetEdit.Disable.Hint';
   $: unlockTitle = localize(unlockHintVariable, {

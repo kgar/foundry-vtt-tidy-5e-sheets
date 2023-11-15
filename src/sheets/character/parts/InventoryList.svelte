@@ -112,7 +112,7 @@
             <ListItemQuantity {item} {ctx} />
           </ItemName>
         </ItemTableCell>
-        {#if !$settingStore.hideIconsNextToTheItemName}
+        {#if $settingStore.showIconsNextToTheItemName}
           <ItemTableCell cssClass="no-border">
             {#if ctx?.attunement}
               <div class="item-detail attunement">

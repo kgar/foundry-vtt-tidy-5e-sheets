@@ -29,16 +29,16 @@
   "T5EK.AbbrInitiative": "Ini",
 
   "T5EK.RestHint": "Rest",
-  "T5EK.RestS": "Short Rest",
-  "T5EK.RestL": "Long Rest",
+  "T5EK.ShortRest": "Short Rest",
+  "T5EK.LongRest": "Long Rest",
   "T5EK.HitDiceRollAverage": "right click: apply average",
 
   "T5EK.Journal": "Journal",
 
   "T5EK.RestoreOnRest": "Restore on rest",
 
-  "T5EK.JournalPoi": "Persons of Interest",
-  "T5EK.JournalLoi": "Locations of Interest",
+  "T5EK.JournalPersonsOfInterest": "Persons of Interest",
+  "T5EK.JournalLocationsOfInterest": "Locations of Interest",
   "T5EK.JournalQuests": "Quests",
   "T5EK.JournalMisc": "Miscellaneous",
   "T5EK.JournalEntries": "Journal Entries",
@@ -62,7 +62,7 @@
   "T5EK.ContextMenuActionDelete": "Delete",
 
   "T5EK.EmptySection": "This section is empty. Unlock the sheet to edit.",
-  "T5EK.GmOnlyEdit": "Only your GM can edit this section.",
+  "T5EK.GMOnlyEdit": "Only your GM can edit this section.",
 
   "T5EK.AttunementWarning": "Attunement: Unable to attune to more than {number} items.",
   "T5EK.AttunementItems": "Attuned Items",
@@ -107,20 +107,20 @@
 
   "T5EK.SpellClass": "Spell Class",
 
-  "T5EK.ClassArtificer": "Artificer",
-  "T5EK.ClassBarbarian": "Barbarian",
-  "T5EK.ClassBard": "Bard",
-  "T5EK.ClassCleric": "Cleric",
-  "T5EK.ClassCustom": "Custom",
-  "T5EK.ClassDruid": "Druid",
-  "T5EK.ClassFighter": "Fighter",
-  "T5EK.ClassMonk": "Monk",
-  "T5EK.ClassPaladin": "Paladin",
-  "T5EK.ClassRanger": "Ranger",
-  "T5EK.ClassRogue": "Rogue",
-  "T5EK.ClassSorcerer": "Sorcerer",
-  "T5EK.ClassWarlock": "Warlock",
-  "T5EK.ClassWizard": "Wizard",
+  "T5EK.Class.Artificer": "Artificer",
+  "T5EK.Class.Barbarian": "Barbarian",
+  "T5EK.Class.Bard": "Bard",
+  "T5EK.Class.Cleric": "Cleric",
+  "T5EK.Class.Custom": "Custom",
+  "T5EK.Class.Druid": "Druid",
+  "T5EK.Class.Fighter": "Fighter",
+  "T5EK.Class.Monk": "Monk",
+  "T5EK.Class.Paladin": "Paladin",
+  "T5EK.Class.Ranger": "Ranger",
+  "T5EK.Class.Rogue": "Rogue",
+  "T5EK.Class.Sorcerer": "Sorcerer",
+  "T5EK.Class.Warlock": "Warlock",
+  "T5EK.Class.Wizard": "Wizard",
 
   "T5EK.OriginSummaryConfig": "Origin Summary Configuration",
 
@@ -196,9 +196,9 @@
     "name": "Use classic list controls",
     "hint": "Shows controls in the list view."
   },
-  "T5EK.Settings.HideIconsNextToTheItemName": {
-    "name": "Hide item name icons",
-    "hint": "Hides the support icons next to the object name (Favorite, Attunement, etc.). This is useful in preventing redundant icons when classic controls are visible."
+  "T5EK.Settings.ShowIconsNextToTheItemName": {
+    "name": "Show item name icons",
+    "hint": "Shows support icons next to the item name (Favorite, Attunement, etc.)."
   },
   "T5EK.Settings.ShowTraitLabels": {
     "name": "Show Trait Labels",
@@ -244,23 +244,23 @@
     "name": "Use health overlay",
     "hint": "Shows a colored HP overlay for this actor type."
   },
-  "T5EK.Settings.TraitsTogglePc": {
+  "T5EK.Settings.ToggleEmptyCharacterTraits": {
     "name": "Toggle empty character traits",
     "hint": "Adds a toggle button for hiding empty traits."
   },
-  "T5EK.Settings.TraitsMovedBelowResource": {
+  "T5EK.Settings.MoveTraitsBelowResources": {
     "name": "Move traits below resources",
     "hint": "Moves traits from the side to below resources."
   },
-  "T5EK.Settings.AmmoEquippedOnly": {
-    "name": "Show only equipped ammunition",
+  "T5EK.Settings.ShowEquippedAmmoOnly": {
+    "name": "Show equipped ammunition only",
     "hint": "Shows only currently equipped ammunition in the weapon ammo selector."
   },
-  "T5EK.Settings.TraitsAlwaysShown": {
+  "T5EK.Settings.AlwaysShowTraits": {
     "name": "Always show traits",
     "hint": "Removes the visibility toggle button for empty traits and shows all."
   },
-  "T5EK.Settings.SkillsAlwaysShown": {
+  "T5EK.Settings.AlwaysShowSkills": {
     "name": "Always show skills",
     "hint": "Removes the visibility toggle button for non-proficient skills and shows all."
   },
@@ -268,7 +268,7 @@
     "name": "Show spellbook tab",
     "hint": "Shows a spellbook tab for NPCs. Disable to move the spellbook section to the Attributes tab."
   },
-  "T5EK.Settings.ActiveEffectsMarker": {
+  "T5EK.Settings.ShowActiveEffectsMarker": {
     "name": "Show Active Effects Marker",
     "hint": "Shows a marker for list view items that have active effects."
   },
@@ -289,15 +289,15 @@
     "none": "none",
     "default": "none"
   },
-  "T5EK.Settings.EditTotalLock": {
+  "T5EK.Settings.UseTotalSheetLock": {
     "name": "Lock down sensitive fields",
     "hint": "Locks infrequently changed fields (name, proficiency toggles) and hides configuration buttons when the sheet is locked."
   },
-  "T5EK.Settings.EditEffectsGmOnly": {
+  "T5EK.Settings.LimitEffectsManagementToGM": {
     "name": "Limit active effects management to GMs",
     "hint": "Limits permission to edit or toggle active effects to GMs only."
   },
-  "T5EK.Settings.QuantityAlwaysShown": {
+  "T5EK.Settings.AlwaysShowItemQuantity": {
     "name": "Always show item quantity",
     "hint": "Shows item quantity on list views even when not hovered."
   },
@@ -313,15 +313,15 @@
     "name": "Use exhaustion tracker",
     "hint": "Shows an exhaustion tracker for characters, NPCs, and vehicles."
   },
-  "T5EK.Settings.RestingForNpcs": {
+  "T5EK.Settings.UseNPCRest": {
     "name": "Use NPC rest",
     "hint": "Allows NPCs to take short and long rests."
   },
-  "T5EK.Settings.RestingForNpcsChat": {
-    "name": "Hide chat card for NPC rest",
-    "hint": "Prevents the Chat Card for NPC rest from showing."
+  "T5EK.Settings.ShowNPCRestInChat": {
+    "name": "Show NPC rest in chat",
+    "hint": "Shows the chat card when an NPC rests."
   },
-  "T5EK.Settings.LinkMarker": {
+  "T5EK.Settings.ShowNPCActorLinkMarker": {
     "name": "Mark linked/unlinked NPCs",
     "hint": "Adds a colored border and icon to linked/unliked NPC sheets.",
     "default": "No link marker (default)",
@@ -333,7 +333,7 @@
     "name": "Default sheet tab",
     "hint": "Shows the indicated tab when opening a sheet for the first time."
   },
-  "T5EK.Settings.HiddenDeathSaves": {
+  "T5EK.Settings.HideDeathSavesFromPlayers": {
     "name": "Hide death saves from players",
     "hint": "Makes death saves and death save results visible only to the GM."
   },
@@ -487,21 +487,21 @@
     "name": "Enable debugging",
     "hint": "Prints debug messages to the console."
   },
-  "T5EK.Settings.EnableSortFavoritesItemsAlphabetically": {
+  "T5EK.Settings.SortFavoriteItemsAlphabetically": {
     "name": "Sort favorites alphabetically",
     "hint": "Sorts favorites alphabetically."
   },
-  "T5EK.Settings.EnablePermanentUnlockOnCharacterIfYouAreGM": {
+  "T5EK.Settings.PermanentlyUnlockCharacterSheetForGM": {
     "name": "Character Sheet: always unlocked for GM",
     "hint": "Treat the character sheet as though it were always unlocked, regardless of the lock setting. The GM can always edit the character, but they can also toggle lock/unlock for a player who also owns the character.",
     "title": "This sheet is always unlocked for the GM, regardless of the lock setting."
   },
-  "T5EK.Settings.EnablePermanentUnlockOnNPCIfYouAreGM": {
+  "T5EK.Settings.PermanentlyUnlockNPCSheetForGM": {
     "name": "NPC Sheet: always unlocked for GM",
     "hint": "Treat the NPC sheet as though it were always unlocked, regardless of the lock setting. The GM can always edit the NPC, but they can also toggle lock/unlock for a player who also owns the NPC.",
     "title": "This sheet is always unlocked for the GM, regardless of the lock setting."
   },
-  "T5EK.Settings.EnablePermanentUnlockOnVehicleIfYouAreGM": {
+  "T5EK.Settings.PermanentlyUnlockVehicleSheetForGM": {
     "name": "Vehicle Sheet: always unlocked for GM",
     "hint": "Treat the vehicle sheet as though it were always unlocked, regardless of the lock setting. The GM can always edit the vehicle, but they can also toggle lock/unlock for a player who also owns the vehicle.",
     "title": "This sheet is always unlocked for the GM, regardless of the lock setting."

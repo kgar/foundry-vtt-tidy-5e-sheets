@@ -92,24 +92,24 @@
 />
 
 <CheckboxSetting
-  bind:value={$context.traitsTogglePc}
-  name={'T5EK.Settings.TraitsTogglePc.name'}
-  hint={'T5EK.Settings.TraitsTogglePc.hint'}
-  id="traitsTogglePc"
+  bind:value={$context.toggleEmptyCharacterTraits}
+  name={'T5EK.Settings.ToggleEmptyCharacterTraits.name'}
+  hint={'T5EK.Settings.ToggleEmptyCharacterTraits.hint'}
+  id="toggleEmptyCharacterTraits"
 />
 
 <CheckboxSetting
-  bind:value={$context.traitsMovedBelowResource}
-  name={'T5EK.Settings.TraitsMovedBelowResource.name'}
-  hint={'T5EK.Settings.TraitsMovedBelowResource.hint'}
-  id="traitsMovedBelowResource"
+  bind:value={$context.moveTraitsBelowCharacterResources}
+  name={'T5EK.Settings.MoveTraitsBelowResources.name'}
+  hint={'T5EK.Settings.MoveTraitsBelowResources.hint'}
+  id="moveTraitsBelowCharacterResources"
 />
 
 <CheckboxSetting
-  bind:value={$context.ammoEquippedOnly}
-  name={'T5EK.Settings.AmmoEquippedOnly.name'}
-  hint={'T5EK.Settings.AmmoEquippedOnly.hint'}
-  id="ammoEquippedOnly"
+  bind:value={$context.showEquippedAmmoOnly}
+  name={'T5EK.Settings.ShowEquippedAmmoOnly.name'}
+  hint={'T5EK.Settings.ShowEquippedAmmoOnly.hint'}
+  id="showEquippedAmmoOnly"
 />
 
 <NumberInputSetting
@@ -127,17 +127,17 @@
 />
 
 <CheckboxSetting
-  bind:value={$context.hideIconsNextToTheItemName}
-  name={'T5EK.Settings.HideIconsNextToTheItemName.name'}
-  hint={'T5EK.Settings.HideIconsNextToTheItemName.hint'}
-  id="hideIconsNextToTheItemName"
+  bind:value={$context.showIconsNextToTheItemName}
+  name={'T5EK.Settings.ShowIconsNextToTheItemName.name'}
+  hint={'T5EK.Settings.ShowIconsNextToTheItemName.hint'}
+  id="showIconsNextToTheItemName"
 />
 
 <CheckboxSetting
-  bind:value={$context.enableSortFavoritesItemsAlphabetically}
-  name={'T5EK.Settings.EnableSortFavoritesItemsAlphabetically.name'}
-  hint={'T5EK.Settings.EnableSortFavoritesItemsAlphabetically.hint'}
-  id="enableSortFavoritesItemsAlphabetically"
+  bind:value={$context.sortFavoriteItemsAlphabetically}
+  name={'T5EK.Settings.SortFavoriteItemsAlphabetically.name'}
+  hint={'T5EK.Settings.SortFavoriteItemsAlphabetically.hint'}
+  id="sortFavoriteItemsAlphabetically"
 />
 
 <h3>{localize('T5EK.Settings.MulticlassSpellbookFilterLabel')}</h3>

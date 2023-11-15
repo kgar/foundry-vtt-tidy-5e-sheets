@@ -22,16 +22,16 @@
   <div class="attributes-tab-contents">
     <section class="side-panel">
       <SkillsList actor={$context.actor} />
-      {#if !$settingStore.traitsMovedBelowResource}
-        <Traits toggleable={$settingStore.traitsTogglePc} />
+      {#if !$settingStore.moveTraitsBelowCharacterResources}
+        <Traits toggleable={$settingStore.toggleEmptyCharacterTraits} />
       {/if}
     </section>
     <section class="main-panel">
       {#if showResources}
         <Resources />
       {/if}
-      {#if $settingStore.traitsMovedBelowResource}
-        <Traits toggleable={$settingStore.traitsTogglePc} />
+      {#if $settingStore.moveTraitsBelowCharacterResources}
+        <Traits toggleable={$settingStore.toggleEmptyCharacterTraits} />
       {/if}
       <Favorites />
     </section>

@@ -130,7 +130,7 @@
             </ItemTableCell>
 
             <!-- TODO: Handle more gracefully -->
-            {#if !$settingStore.hideIconsNextToTheItemName && FoundryAdapter.tryGetFlag(item, 'favorite')}
+            {#if $settingStore.showIconsNextToTheItemName && FoundryAdapter.tryGetFlag(item, 'favorite')}
               <InlineFavoriteIcon />
             {/if}
 

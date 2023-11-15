@@ -121,7 +121,7 @@ export class Tidy5eVehicleSheet
       lockLevelSelector: FoundryAdapter.shouldLockLevelSelector(),
       lockMoneyChanges: FoundryAdapter.shouldLockMoneyChanges(),
       lockSensitiveFields:
-        !editable && SettingsProvider.settings.editTotalLockEnabled.get(),
+        !editable && SettingsProvider.settings.useTotalSheetLock.get(),
       owner: this.actor.isOwner,
       showLimitedSheet: FoundryAdapter.showLimitedSheet(this.actor),
       useRoundedPortraitStyle: [

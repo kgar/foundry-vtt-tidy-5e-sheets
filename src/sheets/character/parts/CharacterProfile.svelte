@@ -27,7 +27,7 @@
 </script>
 
 <ActorProfile useHpOverlay={$settingStore.useHpOverlay}>
-  {#if incapacitated && (!$settingStore.hiddenDeathSavesEnabled || FoundryAdapter.userIsGm())}
+  {#if incapacitated && (!$settingStore.hideDeathSavesFromPlayers || FoundryAdapter.userIsGm())}
     <DeathSaves
       successes={$context.system.attributes.death.success}
       failures={$context.system.attributes.death.failure}
@@ -50,7 +50,7 @@
     />
   {/if}
 
-  {#if $settingStore.useInspiration}
+  {#if $settingStore.useCharacterInspiration}
     <Inspiration
       inspired={$context.actor.system.attributes.inspiration}
       radiusClass={$context.useRoundedPortraitStyle ? 'rounded' : 'top-right'}

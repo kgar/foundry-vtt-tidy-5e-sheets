@@ -29,16 +29,16 @@
   "T5EK.AbbrInitiative": "Ini",
 
   "T5EK.RestHint": "Tomar un descanso",
-  "T5EK.RestS": "Descanso corto",
-  "T5EK.RestL": "Descanso largo",
+  "T5EK.ShortRest": "Descanso corto",
+  "T5EK.LongRest": "Descanso largo",
   "T5EK.HitDiceRollAverage": "Right Click: Average",
 
   "T5EK.Journal": "Diario",
 
   "T5EK.RestoreOnRest": "Recuperar tras descanso",
 
-  "T5EK.JournalPoi": "Personas de interés",
-  "T5EK.JournalLoi": "Lugares de interés",
+  "T5EK.JournalPersonsOfInterest": "Personas de interés",
+  "T5EK.JournalLocationsOfInterest": "Lugares de interés",
   "T5EK.JournalQuests": "Misiones",
   "T5EK.JournalMisc": "Miscelánea",
   "T5EK.JournalEntries": "Entradas del diario",
@@ -62,7 +62,7 @@
   "T5EK.ContextMenuActionDelete": null,
 
   "T5EK.EmptySection": "Esta sección está vacía. Desbloquea la hoja para editarla.",
-  "T5EK.GmOnlyEdit": "Solo tu DJ puede editar esta sección.",
+  "T5EK.GMOnlyEdit": "Solo tu DJ puede editar esta sección.",
 
   "T5EK.AttunementWarning": "Aviso de sintonización: ¡No puedes sintonizar más de {número} objetos!",
   "T5EK.AttunementItems": "Objetos sintonizados",
@@ -107,20 +107,20 @@
 
   "T5EK.SpellClass": null,
 
-  "T5EK.ClassArtificer": null,
-  "T5EK.ClassBarbarian": null,
-  "T5EK.ClassBard": null,
-  "T5EK.ClassCleric": null,
-  "T5EK.ClassCustom": null,
-  "T5EK.ClassDruid": null,
-  "T5EK.ClassFighter": null,
-  "T5EK.ClassMonk": null,
-  "T5EK.ClassPaladin": null,
-  "T5EK.ClassRanger": null,
-  "T5EK.ClassRogue": null,
-  "T5EK.ClassSorcerer": null,
-  "T5EK.ClassWarlock": null,
-  "T5EK.ClassWizard": null,
+  "T5EK.Class.Artificer": null,
+  "T5EK.Class.Barbarian": null,
+  "T5EK.Class.Bard": null,
+  "T5EK.Class.Cleric": null,
+  "T5EK.Class.Custom": null,
+  "T5EK.Class.Druid": null,
+  "T5EK.Class.Fighter": null,
+  "T5EK.Class.Monk": null,
+  "T5EK.Class.Paladin": null,
+  "T5EK.Class.Ranger": null,
+  "T5EK.Class.Rogue": null,
+  "T5EK.Class.Sorcerer": null,
+  "T5EK.Class.Warlock": null,
+  "T5EK.Class.Wizard": null,
 
   "T5EK.OriginSummaryConfig": null,
 
@@ -197,7 +197,7 @@
     "name": "Utilizar los controles clásicos de los objetos en el diseño de lista",
     "hint": "Muestra siempre los botones de los objetos y desactiva el menú del botón derecho. Sólo se aplica para el inventario de objetos/conjuros del PJ en el listado."
   },
-  "T5EK.Settings.HideIconsNextToTheItemName": {
+  "T5EK.Settings.ShowIconsNextToTheItemName": {
     "name": null,
     "hint": null
   },
@@ -245,23 +245,23 @@
     "name": null,
     "hint": null
   },
-  "T5EK.Settings.TraitsTogglePc": {
+  "T5EK.Settings.ToggleEmptyCharacterTraits": {
     "name": "Alternar rasgos de personaje vacíos",
     "hint": "Por defecto los rasgos vacíos siempre están visibles. Actívalo para añadir un botón de activación."
   },
-  "T5EK.Settings.TraitsMovedBelowResource": {
+  "T5EK.Settings.MoveTraitsBelowResources": {
     "name": "Mover los rasgos debajo de los recursos",
     "hint": "Permite mover los rasgos de la parte izquierda debajo de los recursos."
   },
-  "T5EK.Settings.AmmoEquippedOnly": {
+  "T5EK.Settings.ShowEquippedAmmoOnly": {
     "name": null,
     "hint": null
   },
-  "T5EK.Settings.TraitsAlwaysShown": {
+  "T5EK.Settings.AlwaysShowTraits": {
     "name": "Mostrar siempre los rasgos",
     "hint": "Por defecto, los rasgos vacíos se ocultan mediante un botón de activación. Actívalo para no ocultarlos nunca."
   },
-  "T5EK.Settings.SkillsAlwaysShown": {
+  "T5EK.Settings.AlwaysShowSkills": {
     "name": "Mostrar siempre las habilidades",
     "hint": "Por defecto, las habilidades no competentes se ocultan mediante un botón de activación. Actívalo para no ocultarlo nunca."
   },
@@ -269,7 +269,7 @@
     "name": null,
     "hint": null
   },
-  "T5EK.Settings.ActiveEffectsMarker": {
+  "T5EK.Settings.ShowActiveEffectsMarker": {
     "name": "Mostrar un marcador de Efectos Activos en los objetos.",
     "hint": "Actívalo si quieres ver si los objetos tienen efectos activos en ellos (solo en diseño de lista)."
   },
@@ -290,15 +290,15 @@
     "none": "ninguno",
     "default": "ninguno"
   },
-  "T5EK.Settings.EditTotalLock": {
+  "T5EK.Settings.UseTotalSheetLock": {
     "name": "Bloquar los campos sensibles.",
     "hint": "Actívalo para evitar cambiar accidentalmente valores sensibles, en su mayoría estáticos."
   },
-  "T5EK.Settings.EditEffectsGmOnly": {
+  "T5EK.Settings.LimitEffectsManagementToGM": {
     "name": "Sólo el DJ puede editar los efectos activos.",
     "hint": "Actívalo para impedir que los jugadores editen los efectos activos en sus hojas. Seguirán viendo los efectos aplicados."
   },
-  "T5EK.Settings.QuantityAlwaysShown": {
+  "T5EK.Settings.AlwaysShowItemQuantity": {
     "name": "Mostrar siempre la cantidad de objetos.",
     "hint": "Actívalo para no ocultar nunca la cantidad de objetos."
   },
@@ -314,15 +314,15 @@
     "name": null,
     "hint": null
   },
-  "T5EK.Settings.RestingForNpcs": {
+  "T5EK.Settings.UseNPCRest": {
     "name": "Descanso para los PNJs.",
     "hint": "Actívalo para mostrar los iconos/botones de descanso en las hojas de los PNJs."
   },
-  "T5EK.Settings.RestingForNpcsChat": {
-    "name": "Oculta la tarjeta en el chat del descanso de los PNJs.",
-    "hint": "Actívalo para ocultar la Tarjeta de Chat del descanso de los PNJs (se aplica al DJ y a los jugadores)."
+  "T5EK.Settings.ShowNPCRestInChat": {
+    "name": null,
+    "hint": null
   },
-  "T5EK.Settings.LinkMarker": {
+  "T5EK.Settings.ShowNPCActorLinkMarker": {
     "name": "Indicar los PNJs vinculados/desvinculados.",
     "hint": "Añade un borde coloreado y un icono a las hojas de los PNJs vinculados/desvinculados.",
     "default": "Sin marcador de vínculo (por defecto)",
@@ -334,7 +334,7 @@
     "name": null,
     "hint": null
   },
-  "T5EK.Settings.HiddenDeathSaves": {
+  "T5EK.Settings.HideDeathSavesFromPlayers": {
     "name": null,
     "hint": null
   },
@@ -488,21 +488,21 @@
     "name": null,
     "hint": null
   },
-  "T5EK.Settings.EnableSortFavoritesItemsAlphabetically": {
+  "T5EK.Settings.SortFavoriteItemsAlphabetically": {
     "name": null,
     "hint": null
   },
-  "T5EK.Settings.EnablePermanentUnlockOnCharacterIfYouAreGM": {
+  "T5EK.Settings.PermanentlyUnlockCharacterSheetForGM": {
     "name": null,
     "hint": null,
     "title": null
   },
-  "T5EK.Settings.EnablePermanentUnlockOnNPCIfYouAreGM": {
+  "T5EK.Settings.PermanentlyUnlockNPCSheetForGM": {
     "name": null,
     "hint": null,
     "title": null
   },
-  "T5EK.Settings.EnablePermanentUnlockOnVehicleIfYouAreGM": {
+  "T5EK.Settings.PermanentlyUnlockVehicleSheetForGM": {
     "name": null,
     "hint": null,
     "title": null

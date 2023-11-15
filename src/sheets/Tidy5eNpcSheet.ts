@@ -115,7 +115,7 @@ export class Tidy5eNpcSheet
     const editable = FoundryAdapter.canEditActor(this.actor) && this.isEditable;
 
     const lockSensitiveFields =
-      !editable && SettingsProvider.settings.editTotalLockEnabled.get();
+      !editable && SettingsProvider.settings.useTotalSheetLock.get();
     const defaultNpcContext = await super.getData(this.options);
 
     return {
@@ -292,19 +292,19 @@ export class Tidy5eNpcSheet
   #getTokenState(): 'linked' | 'unlinked' | null {
     const { token } = this;
 
-    const linkMarkerNpc = SettingsProvider.settings.linkMarkerNpc.get();
+    const showNpcActorLinkMarker = SettingsProvider.settings.showNpcActorLinkMarker.get();
 
     if (!token) {
       return null;
     }
 
-    if (token.actorLink && linkMarkerNpc == 'both') {
+    if (token.actorLink && showNpcActorLinkMarker == 'both') {
       return 'linked';
     }
 
     if (
       !token.actorLink &&
-      (linkMarkerNpc == 'unlinked' || linkMarkerNpc == 'both')
+      (showNpcActorLinkMarker == 'unlinked' || showNpcActorLinkMarker == 'both')
     ) {
       return 'unlinked';
     }
@@ -378,7 +378,7 @@ export class Tidy5eNpcSheet
   async _onShortRest(event: Event) {
     event.preventDefault();
     await this._onSubmit(event);
-    if (SettingsProvider.settings.restingForNpcsChatDisabled.get()) {
+    if (SettingsProvider.settings.showNpcRestInChat.get()) {
       let obj = {
         dialog: true,
         chat: false,
@@ -396,7 +396,7 @@ export class Tidy5eNpcSheet
   async _onLongRest(event: Event) {
     event.preventDefault();
     await this._onSubmit(event);
-    if (SettingsProvider.settings.restingForNpcsChatDisabled.get()) {
+    if (SettingsProvider.settings.showNpcRestInChat.get()) {
       let obj = {
         dialog: true,
         chat: false,

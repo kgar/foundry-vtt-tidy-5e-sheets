@@ -29,16 +29,16 @@
   "T5EK.AbbrInitiative": "Ini",
 
   "T5EK.RestHint": "휴식 취하기",
-  "T5EK.RestS": "짧은 휴식",
-  "T5EK.RestL": "긴 휴식",
+  "T5EK.ShortRest": "짧은 휴식",
+  "T5EK.LongRest": "긴 휴식",
   "T5EK.HitDiceRollAverage": "우클릭: 평균",
 
   "T5EK.Journal": "저널",
 
   "T5EK.RestoreOnRest": "휴식시 복원",
 
-  "T5EK.JournalPoi": "흥미로운 인물",
-  "T5EK.JournalLoi": "흥미로운 장소",
+  "T5EK.JournalPersonsOfInterest": "흥미로운 인물",
+  "T5EK.JournalLocationsOfInterest": "흥미로운 장소",
   "T5EK.JournalQuests": "퀘스트",
   "T5EK.JournalMisc": "기타사항",
   "T5EK.JournalEntries": "저널 항목",
@@ -62,7 +62,7 @@
   "T5EK.ContextMenuActionDelete": null,
 
   "T5EK.EmptySection": "이 섹션은 비어 있습니다. 편집할 시트의 잠금을 해제합니다.",
-  "T5EK.GmOnlyEdit": "GM만이 이 섹션을 편집할 수 있습니다.",
+  "T5EK.GMOnlyEdit": "GM만이 이 섹션을 편집할 수 있습니다.",
 
   "T5EK.AttunementWarning": "조율 경고: {number}개 넘는 아이템에 조율할 수 없습니다!",
   "T5EK.AttunementItems": "조율한 아이템",
@@ -107,20 +107,20 @@
 
   "T5EK.SpellClass": null,
 
-  "T5EK.ClassArtificer": null,
-  "T5EK.ClassBarbarian": null,
-  "T5EK.ClassBard": null,
-  "T5EK.ClassCleric": null,
-  "T5EK.ClassCustom": null,
-  "T5EK.ClassDruid": null,
-  "T5EK.ClassFighter": null,
-  "T5EK.ClassMonk": null,
-  "T5EK.ClassPaladin": null,
-  "T5EK.ClassRanger": null,
-  "T5EK.ClassRogue": null,
-  "T5EK.ClassSorcerer": null,
-  "T5EK.ClassWarlock": null,
-  "T5EK.ClassWizard": null,
+  "T5EK.Class.Artificer": null,
+  "T5EK.Class.Barbarian": null,
+  "T5EK.Class.Bard": null,
+  "T5EK.Class.Cleric": null,
+  "T5EK.Class.Custom": null,
+  "T5EK.Class.Druid": null,
+  "T5EK.Class.Fighter": null,
+  "T5EK.Class.Monk": null,
+  "T5EK.Class.Paladin": null,
+  "T5EK.Class.Ranger": null,
+  "T5EK.Class.Rogue": null,
+  "T5EK.Class.Sorcerer": null,
+  "T5EK.Class.Warlock": null,
+  "T5EK.Class.Wizard": null,
 
   "T5EK.OriginSummaryConfig": null,
 
@@ -196,7 +196,7 @@
     "name": "목록 보기에서 고전적 아이템 제어 사용",
     "hint": "항상 아이템 컨트롤을 표시하고 오른쪽 클릭 메뉴를 비활성화한다. 목록 레이아웃의 PC 아이템/주문 인벤토리에만 적용된다."
   },
-  "T5EK.Settings.HideIconsNextToTheItemName": {
+  "T5EK.Settings.ShowIconsNextToTheItemName": {
     "name": null,
     "hint": null
   },
@@ -244,23 +244,23 @@
     "name": null,
     "hint": null
   },
-  "T5EK.Settings.TraitsTogglePc": {
+  "T5EK.Settings.ToggleEmptyCharacterTraits": {
     "name": "캐릭터 특성 전환 버튼 보이기.",
     "hint": "기본적으로 빈 특성이 항상 표시되며, 전환 버튼을 추가할 수 있다."
   },
-  "T5EK.Settings.TraitsMovedBelowResource": {
+  "T5EK.Settings.MoveTraitsBelowResources": {
     "name": "특성을 자원 아래로 이동.",
     "hint": "좌단의 자원 아래 특성(언어, 숙련 등)을 표시하려면 이 항목을 선택한다."
   },
-  "T5EK.Settings.AmmoEquippedOnly": {
+  "T5EK.Settings.ShowEquippedAmmoOnly": {
     "name": "장비된 탄약만 표시.",
     "hint": "활성화 시 무기 탄약 선택기에서 현재 장비된 탄약만이 표시된다."
   },
-  "T5EK.Settings.TraitsAlwaysShown": {
+  "T5EK.Settings.AlwaysShowTraits": {
     "name": "항상 특성 보이기.",
     "hint": "기본적으로 빈 특성은 전환 버튼에 의해 숨겨진다. 숨기지 않으려면 선택한다."
   },
-  "T5EK.Settings.SkillsAlwaysShown": {
+  "T5EK.Settings.AlwaysShowSkills": {
     "name": "항상 기술 보이기.",
     "hint": "기본적으로 비숙련 기술은 전환 버튼에 의해 숨겨진다. 숨기지 않으려면 선택한다."
   },
@@ -268,7 +268,7 @@
     "name": null,
     "hint": null
   },
-  "T5EK.Settings.ActiveEffectsMarker": {
+  "T5EK.Settings.ShowActiveEffectsMarker": {
     "name": "아이템에 활성화 효과 마커 보이기.",
     "hint": "아이템에 활성화 효과가 있는지 확인하려면 활성화 한다. (목록 보기 한정)"
   },
@@ -289,15 +289,15 @@
     "none": "없음",
     "default": "없음"
   },
-  "T5EK.Settings.EditTotalLock": {
+  "T5EK.Settings.UseTotalSheetLock": {
     "name": "중요 영역 잠금",
     "hint": "대부분의 정적 값을 우발적으로 변경하는 것을 방지하려면 이 옵션을 활성화한다."
   },
-  "T5EK.Settings.EditEffectsGmOnly": {
+  "T5EK.Settings.LimitEffectsManagementToGM": {
     "name": "GM만이 활성화 효과를 편집 가능",
     "hint": "플레이어의 시트 활성화 효과 편집을 거부한다. 적용된 활성화 효과는 볼 수 있다."
   },
-  "T5EK.Settings.QuantityAlwaysShown": {
+  "T5EK.Settings.AlwaysShowItemQuantity": {
     "name": "항상 아이템 수량 표시",
     "hint": "활성화시 아이템 수량을 숨기지 않는다."
   },
@@ -313,15 +313,15 @@
     "name": null,
     "hint": null
   },
-  "T5EK.Settings.RestingForNpcs": {
+  "T5EK.Settings.UseNPCRest": {
     "name": "NPC 휴식",
     "hint": "NPC 시트에 휴식 아이콘/버튼을 표시한다."
   },
-  "T5EK.Settings.RestingForNpcsChat": {
-    "name": "NPC 휴식 채팅 카드 숨김",
-    "hint": "NPC 휴식을 위한 채팅 카드를 숨기려면 활성화 한다. GM과 플레이어에게 적용된다."
+  "T5EK.Settings.ShowNPCRestInChat": {
+    "name": null,
+    "hint": null
   },
-  "T5EK.Settings.LinkMarker": {
+  "T5EK.Settings.ShowNPCActorLinkMarker": {
     "name": "연결/비연결 NPC 표시",
     "hint": "연결/비연결 NPC 시트에 유색 테두리 및 아이콘을 추가한다.",
     "default": "연결 표시 없음 (기본)",
@@ -333,7 +333,7 @@
     "name": null,
     "hint": null
   },
-  "T5EK.Settings.HiddenDeathSaves": {
+  "T5EK.Settings.HideDeathSavesFromPlayers": {
     "name": "죽음 내성 굴림을 플레이어로부터 숨김",
     "hint": "활성화시 GM에게만 죽음 내성 굴림과 그 결과가 표시된다."
   },
@@ -487,21 +487,21 @@
     "name": null,
     "hint": null
   },
-  "T5EK.Settings.EnableSortFavoritesItemsAlphabetically": {
+  "T5EK.Settings.SortFavoriteItemsAlphabetically": {
     "name": null,
     "hint": null
   },
-  "T5EK.Settings.EnablePermanentUnlockOnCharacterIfYouAreGM": {
+  "T5EK.Settings.PermanentlyUnlockCharacterSheetForGM": {
     "name": null,
     "hint": null,
     "title": null
   },
-  "T5EK.Settings.EnablePermanentUnlockOnNPCIfYouAreGM": {
+  "T5EK.Settings.PermanentlyUnlockNPCSheetForGM": {
     "name": null,
     "hint": null,
     "title": null
   },
-  "T5EK.Settings.EnablePermanentUnlockOnVehicleIfYouAreGM": {
+  "T5EK.Settings.PermanentlyUnlockVehicleSheetForGM": {
     "name": null,
     "hint": null,
     "title": null

@@ -70,7 +70,7 @@
           <label
             for="{$context.appId}-{res.name}.sr"
             class="checkbox"
-            title={localize('T5EK.RestS')}
+            title={localize('T5EK.ShortRest')}
           >
             {localize('DND5E.RestS')}
           </label>
@@ -88,7 +88,7 @@
           <label
             for="{$context.appId}-{res.name}.lr"
             class="checkbox"
-            title={localize('T5EK.RestL')}
+            title={localize('T5EK.LongRest')}
           >
             {localize('DND5E.RestL')}
           </label>

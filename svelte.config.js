@@ -5,8 +5,6 @@ export default {
   // for more information about preprocessors
   preprocess: vitePreprocess(),
   vitePlugin: {
-    experimental: {
-      inspector: true,
-    },
+    inspector: true,
   },
 };

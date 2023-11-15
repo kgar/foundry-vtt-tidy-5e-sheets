@@ -130,7 +130,7 @@
             <ItemUses item={spell} />
           </ItemTableCell>
         {/if}
-        {#if allowFavorites && !$settingStore.hideIconsNextToTheItemName && FoundryAdapter.tryGetFlag(spell, 'favorite')}
+        {#if allowFavorites && $settingStore.showIconsNextToTheItemName && FoundryAdapter.tryGetFlag(spell, 'favorite')}
           <InlineFavoriteIcon />
         {/if}
         <ItemTableCell baseWidth={spellComponentsBaseWidth} cssClass="no-gap">

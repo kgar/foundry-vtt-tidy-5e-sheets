@@ -68,16 +68,16 @@
   <div class="side-panel">
     <SkillsList
       actor={$context.actor}
-      toggleable={!$settingStore.skillsAlwaysShownNpc}
+      toggleable={!$settingStore.alwaysShowNpcSkills}
     />
-    {#if !$settingStore.traitsMovedBelowResourceNpc}
-      <Traits toggleable={!$settingStore.traitsAlwaysShownNpc} />
+    {#if !$settingStore.moveTraitsBelowNpcResources}
+      <Traits toggleable={!$settingStore.alwaysShowNpcTraits} />
     {/if}
   </div>
   <div class="main-panel">
     <NpcLegendaryActions />
-    {#if $settingStore.traitsMovedBelowResourceNpc}
-      <Traits toggleable={!$settingStore.traitsAlwaysShownNpc} />
+    {#if $settingStore.moveTraitsBelowNpcResources}
+      <Traits toggleable={!$settingStore.alwaysShowNpcTraits} />
     {/if}
     {#each $context.features as section}
       {#if $context.editable || section.items.length}

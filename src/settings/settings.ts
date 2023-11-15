@@ -237,18 +237,18 @@ export function createSettings() {
         },
       },
 
-      hideIconsNextToTheItemName: {
+      showIconsNextToTheItemName: {
         options: {
-          name: 'T5EK.Settings.HideIconsNextToTheItemName.name',
-          hint: 'T5EK.Settings.HideIconsNextToTheItemName.hint',
+          name: 'T5EK.Settings.ShowIconsNextToTheItemName.name',
+          hint: 'T5EK.Settings.ShowIconsNextToTheItemName.hint',
           scope: 'client',
           config: false,
-          default: false,
+          default: true,
           type: Boolean,
         },
         get() {
           return FoundryAdapter.getTidySetting<boolean>(
-            'hideIconsNextToTheItemName'
+            'showIconsNextToTheItemName'
           );
         },
       },
@@ -424,7 +424,9 @@ export function createSettings() {
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getTidySetting<boolean>('showInspirationOnHover');
+          return FoundryAdapter.getTidySetting<boolean>(
+            'showInspirationOnHover'
+          );
         },
       },
 
@@ -438,7 +440,9 @@ export function createSettings() {
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getTidySetting<boolean>('showExhaustionOnHover');
+          return FoundryAdapter.getTidySetting<boolean>(
+            'showExhaustionOnHover'
+          );
         },
       },
 
@@ -470,24 +474,24 @@ export function createSettings() {
         },
       },
 
-      traitsTogglePc: {
+      toggleEmptyCharacterTraits: {
         options: {
-          name: 'T5EK.Settings.TraitsTogglePc.name',
-          hint: 'T5EK.Settings.TraitsTogglePc.hint',
+          name: 'T5EK.Settings.ToggleEmptyCharacterTraits.name',
+          hint: 'T5EK.Settings.ToggleEmptyCharacterTraits.hint',
           scope: 'client',
           config: false,
           default: false,
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getTidySetting<boolean>('traitsTogglePc');
+          return FoundryAdapter.getTidySetting<boolean>('toggleEmptyCharacterTraits');
         },
       },
 
-      traitsMovedBelowResource: {
+      moveTraitsBelowCharacterResources: {
         options: {
-          name: 'T5EK.Settings.TraitsMovedBelowResource.name',
-          hint: 'T5EK.Settings.TraitsMovedBelowResource.hint',
+          name: 'T5EK.Settings.MoveTraitsBelowResources.name',
+          hint: 'T5EK.Settings.MoveTraitsBelowResources.hint',
           scope: 'client',
           config: false,
           default: false,
@@ -495,22 +499,22 @@ export function createSettings() {
         },
         get() {
           return FoundryAdapter.getTidySetting<boolean>(
-            'traitsMovedBelowResource'
+            'moveTraitsBelowCharacterResources'
           );
         },
       },
 
-      ammoEquippedOnly: {
+      showEquippedAmmoOnly: {
         options: {
-          name: 'T5EK.Settings.AmmoEquippedOnly.name',
-          hint: 'T5EK.Settings.AmmoEquippedOnly.hint',
+          name: 'T5EK.Settings.ShowEquippedAmmoOnly.name',
+          hint: 'T5EK.Settings.ShowEquippedAmmoOnly.hint',
           scope: 'client',
           config: false,
           default: false,
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getTidySetting<boolean>('ammoEquippedOnly');
+          return FoundryAdapter.getTidySetting<boolean>('showEquippedAmmoOnly');
         },
       },
 
@@ -546,10 +550,10 @@ export function createSettings() {
         },
       },
 
-      traitsMovedBelowResourceNpc: {
+      moveTraitsBelowNpcResources: {
         options: {
-          name: 'T5EK.Settings.TraitsMovedBelowResource.name',
-          hint: 'T5EK.Settings.TraitsMovedBelowResource.hint',
+          name: 'T5EK.Settings.MoveTraitsBelowResources.name',
+          hint: 'T5EK.Settings.MoveTraitsBelowResources.hint',
           scope: 'client',
           config: false,
           default: false,
@@ -557,7 +561,7 @@ export function createSettings() {
         },
         get() {
           return FoundryAdapter.getTidySetting<boolean>(
-            'traitsMovedBelowResourceNpc'
+            'moveTraitsBelowNpcResources'
           );
         },
       },
@@ -590,31 +594,31 @@ export function createSettings() {
         },
       },
 
-      traitsAlwaysShownNpc: {
+      alwaysShowNpcTraits: {
         options: {
-          name: 'T5EK.Settings.TraitsAlwaysShown.name',
-          hint: 'T5EK.Settings.TraitsAlwaysShown.hint',
+          name: 'T5EK.Settings.AlwaysShowTraits.name',
+          hint: 'T5EK.Settings.AlwaysShowTraits.hint',
           scope: 'client',
           config: false,
           default: false,
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getTidySetting<boolean>('traitsAlwaysShownNpc');
+          return FoundryAdapter.getTidySetting<boolean>('alwaysShowNpcTraits');
         },
       },
 
-      skillsAlwaysShownNpc: {
+      alwaysShowNpcSkills: {
         options: {
-          name: 'T5EK.Settings.SkillsAlwaysShown.name',
-          hint: 'T5EK.Settings.SkillsAlwaysShown.hint',
+          name: 'T5EK.Settings.AlwaysShowSkills.name',
+          hint: 'T5EK.Settings.AlwaysShowSkills.hint',
           scope: 'client',
           config: false,
           default: false,
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getTidySetting<boolean>('skillsAlwaysShownNpc');
+          return FoundryAdapter.getTidySetting<boolean>('alwaysShowNpcSkills');
         },
       },
 
@@ -725,7 +729,9 @@ export function createSettings() {
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getTidySetting<boolean>('showExpandedLimitedView');
+          return FoundryAdapter.getTidySetting<boolean>(
+            'showExpandedLimitedView'
+          );
         },
       },
 
@@ -751,46 +757,31 @@ export function createSettings() {
           default: CONSTANTS.CIRCULAR_PORTRAIT_OPTION_ALL,
         },
         get(): string {
-          return FoundryAdapter.getTidySetting<string>('useCircularPortraitStyle');
-        },
-      },
-
-      // TODO: 🌟 Resume here
-      // Total Edit Lock
-      editTotalLockEnabled: {
-        options: {
-          name: 'T5EK.Settings.EditTotalLock.name',
-          hint: 'T5EK.Settings.EditTotalLock.hint',
-          scope: 'world',
-          config: false,
-          default: false,
-          type: Boolean,
-        },
-        get() {
-          return FoundryAdapter.getTidySetting<boolean>('editTotalLockEnabled');
-        },
-      },
-
-      enablePermanentUnlockOnCharacterIfYouAreGM: {
-        options: {
-          name: 'T5EK.Settings.EnablePermanentUnlockOnCharacterIfYouAreGM.name',
-          hint: 'T5EK.Settings.EnablePermanentUnlockOnCharacterIfYouAreGM.hint',
-          scope: 'world',
-          config: false,
-          default: false,
-          type: Boolean,
-        },
-        get() {
-          return FoundryAdapter.getTidySetting<boolean>(
-            'enablePermanentUnlockOnCharacterIfYouAreGM'
+          return FoundryAdapter.getTidySetting<string>(
+            'useCircularPortraitStyle'
           );
         },
       },
 
-      editEffectsGmOnlyEnabled: {
+      // Total Edit Lock
+      useTotalSheetLock: {
         options: {
-          name: 'T5EK.Settings.EditEffectsGmOnly.name',
-          hint: 'T5EK.Settings.EditEffectsGmOnly.hint',
+          name: 'T5EK.Settings.UseTotalSheetLock.name',
+          hint: 'T5EK.Settings.UseTotalSheetLock.hint',
+          scope: 'world',
+          config: false,
+          default: false,
+          type: Boolean,
+        },
+        get() {
+          return FoundryAdapter.getTidySetting<boolean>('useTotalSheetLock');
+        },
+      },
+
+      permanentlyUnlockCharacterSheetForGm: {
+        options: {
+          name: 'T5EK.Settings.PermanentlyUnlockCharacterSheetForGM.name',
+          hint: 'T5EK.Settings.PermanentlyUnlockCharacterSheetForGM.hint',
           scope: 'world',
           config: false,
           default: false,
@@ -798,16 +789,32 @@ export function createSettings() {
         },
         get() {
           return FoundryAdapter.getTidySetting<boolean>(
-            'editEffectsGmOnlyEnabled'
+            'permanentlyUnlockCharacterSheetForGm'
+          );
+        },
+      },
+
+      limitEffectsManagementToGm: {
+        options: {
+          name: 'T5EK.Settings.LimitEffectsManagementToGM.name',
+          hint: 'T5EK.Settings.LimitEffectsManagementToGM.hint',
+          scope: 'world',
+          config: false,
+          default: false,
+          type: Boolean,
+        },
+        get() {
+          return FoundryAdapter.getTidySetting<boolean>(
+            'limitEffectsManagementToGm'
           );
         },
       },
 
       // Hidden Death Saves
-      hiddenDeathSavesEnabled: {
+      hideDeathSavesFromPlayers: {
         options: {
-          name: 'T5EK.Settings.HiddenDeathSaves.name',
-          hint: 'T5EK.Settings.HiddenDeathSaves.hint',
+          name: 'T5EK.Settings.HideDeathSavesFromPlayers.name',
+          hint: 'T5EK.Settings.HideDeathSavesFromPlayers.hint',
           scope: 'world',
           config: false,
           default: false,
@@ -815,7 +822,7 @@ export function createSettings() {
         },
         get() {
           return FoundryAdapter.getTidySetting<boolean>(
-            'hiddenDeathSavesEnabled'
+            'hideDeathSavesFromPlayers'
           );
         },
       },
@@ -882,10 +889,10 @@ export function createSettings() {
       },
 
       // Item quantity
-      quantityAlwaysShownEnabled: {
+      alwaysShowItemQuantity: {
         options: {
-          name: 'T5EK.Settings.QuantityAlwaysShown.name',
-          hint: 'T5EK.Settings.QuantityAlwaysShown.hint',
+          name: 'T5EK.Settings.AlwaysShowItemQuantity.name',
+          hint: 'T5EK.Settings.AlwaysShowItemQuantity.hint',
           scope: 'world',
           config: false,
           default: false,
@@ -893,7 +900,7 @@ export function createSettings() {
         },
         get() {
           return FoundryAdapter.getTidySetting<boolean>(
-            'quantityAlwaysShownEnabled'
+            'alwaysShowItemQuantity'
           );
         },
       },
@@ -912,7 +919,7 @@ export function createSettings() {
         },
       },
 
-      useInspiration: {
+      useCharacterInspiration: {
         options: {
           name: 'T5EK.Settings.UseInspiration.name',
           hint: 'T5EK.Settings.UseInspiration.hint',
@@ -922,7 +929,7 @@ export function createSettings() {
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getTidySetting<boolean>('useInspiration');
+          return FoundryAdapter.getTidySetting<boolean>('useCharacterInspiration');
         },
       },
 
@@ -941,77 +948,74 @@ export function createSettings() {
       },
 
       // NPC Resting
-      restingForNpcsEnabled: {
+      useNpcRest: {
         options: {
-          name: 'T5EK.Settings.RestingForNpcs.name',
-          hint: 'T5EK.Settings.RestingForNpcs.hint',
+          name: 'T5EK.Settings.UseNPCRest.name',
+          hint: 'T5EK.Settings.UseNPCRest.hint',
           scope: 'world',
           config: false,
           default: false,
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getTidySetting<boolean>(
-            'restingForNpcsEnabled'
-          );
+          return FoundryAdapter.getTidySetting<boolean>('useNpcRest');
         },
       },
 
-      restingForNpcsChatDisabled: {
+      showNpcRestInChat: {
         options: {
-          name: 'T5EK.Settings.RestingForNpcsChat.name',
-          hint: 'T5EK.Settings.RestingForNpcsChat.hint',
+          name: 'T5EK.Settings.ShowNPCRestInChat.name',
+          hint: 'T5EK.Settings.ShowNPCRestInChat.hint',
           scope: 'world',
           config: false,
-          default: false,
+          default: true,
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getTidySetting<boolean>(
-            'restingForNpcsChatDisabled'
-          );
+          return FoundryAdapter.getTidySetting<boolean>('showNpcRestInChat');
         },
       },
 
       // Link Marker
-      linkMarkerNpc: {
+      showNpcActorLinkMarker: {
         options: {
-          name: 'T5EK.Settings.LinkMarker.name',
-          hint: 'T5EK.Settings.LinkMarker.hint',
+          name: 'T5EK.Settings.ShowNPCActorLinkMarker.name',
+          hint: 'T5EK.Settings.ShowNPCActorLinkMarker.hint',
           scope: 'world',
           config: false,
           type: String,
           choices: {
-            default: 'T5EK.Settings.LinkMarker.default',
-            unlinked: 'T5EK.Settings.LinkMarker.unlinked',
-            both: 'T5EK.Settings.LinkMarker.both',
+            default: 'T5EK.Settings.ShowNPCActorLinkMarker.default',
+            unlinked: 'T5EK.Settings.ShowNPCActorLinkMarker.unlinked',
+            both: 'T5EK.Settings.ShowNPCActorLinkMarker.both',
           },
           default: 'default',
         },
         get() {
           return FoundryAdapter.getTidySetting<'default' | 'unlinked' | 'both'>(
-            'linkMarkerNpc'
+            'showNpcActorLinkMarker'
           );
         },
       },
 
       // Show if item has active effects
-      activeEffectsMarker: {
+      showActiveEffectsMarker: {
         options: {
-          name: 'T5EK.Settings.ActiveEffectsMarker.name',
-          hint: 'T5EK.Settings.ActiveEffectsMarker.hint',
+          name: 'T5EK.Settings.ShowActiveEffectsMarker.name',
+          hint: 'T5EK.Settings.ShowActiveEffectsMarker.hint',
           scope: 'world',
           config: false,
           default: false,
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getTidySetting<boolean>('activeEffectsMarker');
+          return FoundryAdapter.getTidySetting<boolean>(
+            'showActiveEffectsMarker'
+          );
         },
       },
 
       // Default width for player sheet
-
       playerSheetWidth: {
         options: {
           name: 'T5EK.Settings.playerSheetWidth',
@@ -1026,7 +1030,6 @@ export function createSettings() {
       },
 
       // Default width for NPC sheet
-
       npcSheetWidth: {
         options: {
           name: 'T5EK.Settings.npcSheetWidth',
@@ -1040,10 +1043,10 @@ export function createSettings() {
         },
       },
 
-      enablePermanentUnlockOnNPCIfYouAreGM: {
+      permanentlyUnlockNpcSheetForGm: {
         options: {
-          name: 'T5EK.Settings.EnablePermanentUnlockOnNPCIfYouAreGM.name',
-          hint: 'T5EK.Settings.EnablePermanentUnlockOnNPCIfYouAreGM.hint',
+          name: 'T5EK.Settings.PermanentlyUnlockNPCSheetForGM.name',
+          hint: 'T5EK.Settings.PermanentlyUnlockNPCSheetForGM.hint',
           scope: 'world',
           config: false,
           default: false,
@@ -1051,7 +1054,7 @@ export function createSettings() {
         },
         get() {
           return FoundryAdapter.getTidySetting<boolean>(
-            'enablePermanentUnlockOnNPCIfYouAreGM'
+            'permanentlyUnlockNpcSheetForGm'
           );
         },
       },
@@ -1071,10 +1074,10 @@ export function createSettings() {
         },
       },
 
-      enablePermanentUnlockOnVehicleIfYouAreGM: {
+      permanentlyUnlockVehicleSheetForGm: {
         options: {
-          name: 'T5EK.Settings.EnablePermanentUnlockOnVehicleIfYouAreGM.name',
-          hint: 'T5EK.Settings.EnablePermanentUnlockOnVehicleIfYouAreGM.hint',
+          name: 'T5EK.Settings.PermanentlyUnlockVehicleSheetForGM.name',
+          hint: 'T5EK.Settings.PermanentlyUnlockVehicleSheetForGM.hint',
           scope: 'world',
           config: false,
           default: false,
@@ -1082,17 +1085,17 @@ export function createSettings() {
         },
         get() {
           return FoundryAdapter.getTidySetting<boolean>(
-            'enablePermanentUnlockOnVehicleIfYouAreGM'
+            'permanentlyUnlockVehicleSheetForGm'
           );
         },
       },
 
       // Favorites
 
-      enableSortFavoritesItemsAlphabetically: {
+      sortFavoriteItemsAlphabetically: {
         options: {
-          name: 'T5EK.Settings.EnableSortFavoritesItemsAlphabetically.name',
-          hint: 'T5EK.Settings.EnableSortFavoritesItemsAlphabetically.hint',
+          name: 'T5EK.Settings.SortFavoriteItemsAlphabetically.name',
+          hint: 'T5EK.Settings.SortFavoriteItemsAlphabetically.hint',
           scope: 'world',
           config: false,
           default: false,
@@ -1100,13 +1103,12 @@ export function createSettings() {
         },
         get() {
           return FoundryAdapter.getTidySetting<boolean>(
-            'enableSortFavoritesItemsAlphabetically'
+            'sortFavoriteItemsAlphabetically'
           );
         },
       },
 
       // Locks
-
       lockMoneyChanges: {
         options: {
           name: 'T5EK.Settings.LockMoneyChanges.name',
@@ -1192,7 +1194,6 @@ export function createSettings() {
       },
 
       // Other
-
       allowCantripsToBePrepared: {
         options: {
           name: 'T5EK.Settings.AllowCantripsToBePrepared.name',

@@ -20,10 +20,10 @@
   <h2>{localize('T5EK.Settings.TabGM.header')}</h2>
 
   <CheckboxSetting
-    bind:value={$context.hiddenDeathSavesEnabled}
-    name={'T5EK.Settings.HiddenDeathSaves.name'}
-    hint={'T5EK.Settings.HiddenDeathSaves.hint'}
-    id="hiddenDeathSavesEnabled"
+    bind:value={$context.hideDeathSavesFromPlayers}
+    name={'T5EK.Settings.HideDeathSavesFromPlayers.name'}
+    hint={'T5EK.Settings.HideDeathSavesFromPlayers.hint'}
+    id="hideDeathSavesFromPlayers"
   />
 
   <CheckboxSetting
@@ -84,45 +84,45 @@
   />
 
   <CheckboxSetting
-    bind:value={$context.enablePermanentUnlockOnCharacterIfYouAreGM}
-    name={'T5EK.Settings.EnablePermanentUnlockOnCharacterIfYouAreGM.name'}
-    hint={'T5EK.Settings.EnablePermanentUnlockOnCharacterIfYouAreGM.hint'}
-    id="enablePermanentUnlockOnCharacterIfYouAreGM"
+    bind:value={$context.permanentlyUnlockCharacterSheetForGm}
+    name={'T5EK.Settings.PermanentlyUnlockCharacterSheetForGM.name'}
+    hint={'T5EK.Settings.PermanentlyUnlockCharacterSheetForGM.hint'}
+    id="permanentlyUnlockCharacterSheetForGm"
   />
 
   <CheckboxSetting
-    bind:value={$context.enablePermanentUnlockOnNPCIfYouAreGM}
-    name={'T5EK.Settings.EnablePermanentUnlockOnNPCIfYouAreGM.name'}
-    hint={'T5EK.Settings.EnablePermanentUnlockOnNPCIfYouAreGM.hint'}
-    id="enablePermanentUnlockOnNPCIfYouAreGM"
+    bind:value={$context.permanentlyUnlockNpcSheetForGm}
+    name={'T5EK.Settings.PermanentlyUnlockNPCSheetForGM.name'}
+    hint={'T5EK.Settings.PermanentlyUnlockNPCSheetForGM.hint'}
+    id="permanentlyUnlockNpcSheetForGm"
   />
 
   <CheckboxSetting
-    bind:value={$context.enablePermanentUnlockOnVehicleIfYouAreGM}
-    name={'T5EK.Settings.EnablePermanentUnlockOnVehicleIfYouAreGM.name'}
-    hint={'T5EK.Settings.EnablePermanentUnlockOnVehicleIfYouAreGM.hint'}
-    id="enablePermanentUnlockOnVehicleIfYouAreGM"
+    bind:value={$context.permanentlyUnlockVehicleSheetForGm}
+    name={'T5EK.Settings.PermanentlyUnlockVehicleSheetForGM.name'}
+    hint={'T5EK.Settings.PermanentlyUnlockVehicleSheetForGM.hint'}
+    id="permanentlyUnlockVehicleSheetForGm"
   />
 
   <CheckboxSetting
-    bind:value={$context.editEffectsGmOnlyEnabled}
-    name={'T5EK.Settings.EditEffectsGmOnly.name'}
-    hint={'T5EK.Settings.EditEffectsGmOnly.hint'}
-    id="editEffectsGmOnlyEnabled"
+    bind:value={$context.limitEffectsManagementToGm}
+    name={'T5EK.Settings.LimitEffectsManagementToGM.name'}
+    hint={'T5EK.Settings.LimitEffectsManagementToGM.hint'}
+    id="limitEffectsManagementToGm"
   />
 
   <CheckboxSetting
-    bind:value={$context.quantityAlwaysShownEnabled}
-    name={'T5EK.Settings.QuantityAlwaysShown.name'}
-    hint={'T5EK.Settings.QuantityAlwaysShown.hint'}
-    id="quantityAlwaysShownEnabled"
+    bind:value={$context.alwaysShowItemQuantity}
+    name={'T5EK.Settings.AlwaysShowItemQuantity.name'}
+    hint={'T5EK.Settings.AlwaysShowItemQuantity.hint'}
+    id="alwaysShowItemQuantity"
   />
 
   <CheckboxSetting
-    bind:value={$context.useInspiration}
+    bind:value={$context.useCharacterInspiration}
     name={'T5EK.Settings.UseInspiration.name'}
     hint={'T5EK.Settings.UseInspiration.hint'}
-    id="useInspiration"
+    id="useCharacterInspiration"
   />
 
   <CheckboxSetting
@@ -161,9 +161,9 @@
   />
 
   <CheckboxSetting
-    bind:value={$context.activeEffectsMarker}
-    name={'T5EK.Settings.ActiveEffectsMarker.name'}
-    hint={'T5EK.Settings.ActiveEffectsMarker.hint'}
-    id="activeEffectsMarker"
+    bind:value={$context.showActiveEffectsMarker}
+    name={'T5EK.Settings.ShowActiveEffectsMarker.name'}
+    hint={'T5EK.Settings.ShowActiveEffectsMarker.hint'}
+    id="showActiveEffectsMarker"
   />
 {/if}

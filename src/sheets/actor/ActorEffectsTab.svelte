@@ -28,7 +28,7 @@
 
 <div class="scroll-container flex-column small-gap">
   {#if !$context.allowEffectsManagement && $context.editable}
-    <Notice>{localize('T5EK.GmOnlyEdit')}</Notice>
+    <Notice>{localize('T5EK.GMOnlyEdit')}</Notice>
   {/if}
 
   {#if noEffects && !$context.editable && $context.allowEffectsManagement}

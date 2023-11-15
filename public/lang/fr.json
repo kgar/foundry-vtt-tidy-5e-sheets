@@ -29,16 +29,16 @@
   "T5EK.AbbrInitiative": "Ini",
 
   "T5EK.RestHint": "Se reposer",
-  "T5EK.RestS": "Repos Court",
-  "T5EK.RestL": "Repos Long",
+  "T5EK.ShortRest": "Repos Court",
+  "T5EK.LongRest": "Repos Long",
   "T5EK.HitDiceRollAverage": "Right Click: Average",
 
   "T5EK.Journal": "Journal",
 
   "T5EK.RestoreOnRest": "Restaurer lors d'un repos",
 
-  "T5EK.JournalPoi": "Personnages importants",
-  "T5EK.JournalLoi": "Lieux importants",
+  "T5EK.JournalPersonsOfInterest": "Personnages importants",
+  "T5EK.JournalLocationsOfInterest": "Lieux importants",
   "T5EK.JournalQuests": "Quêtes",
   "T5EK.JournalMisc": "Divers",
   "T5EK.JournalEntries": "Journal de bord",
@@ -62,7 +62,7 @@
   "T5EK.ContextMenuActionDelete": null,
 
   "T5EK.EmptySection": "Cette section est vide. Déverrouiller la feuille pour la modifier.",
-  "T5EK.GmOnlyEdit": "Seul votre MJ peut modifier cette section.",
+  "T5EK.GMOnlyEdit": "Seul votre MJ peut modifier cette section.",
 
   "T5EK.AttunementWarning": "Attention : Vous ne pouvez pas vous lier à plus de {number} objets !",
   "T5EK.AttunementItems": "Objets liés",
@@ -107,20 +107,20 @@
 
   "T5EK.SpellClass": null,
 
-  "T5EK.ClassArtificer": null,
-  "T5EK.ClassBarbarian": null,
-  "T5EK.ClassBard": null,
-  "T5EK.ClassCleric": null,
-  "T5EK.ClassCustom": null,
-  "T5EK.ClassDruid": null,
-  "T5EK.ClassFighter": null,
-  "T5EK.ClassMonk": null,
-  "T5EK.ClassPaladin": null,
-  "T5EK.ClassRanger": null,
-  "T5EK.ClassRogue": null,
-  "T5EK.ClassSorcerer": null,
-  "T5EK.ClassWarlock": null,
-  "T5EK.ClassWizard": null,
+  "T5EK.Class.Artificer": null,
+  "T5EK.Class.Barbarian": null,
+  "T5EK.Class.Bard": null,
+  "T5EK.Class.Cleric": null,
+  "T5EK.Class.Custom": null,
+  "T5EK.Class.Druid": null,
+  "T5EK.Class.Fighter": null,
+  "T5EK.Class.Monk": null,
+  "T5EK.Class.Paladin": null,
+  "T5EK.Class.Ranger": null,
+  "T5EK.Class.Rogue": null,
+  "T5EK.Class.Sorcerer": null,
+  "T5EK.Class.Warlock": null,
+  "T5EK.Class.Wizard": null,
 
   "T5EK.OriginSummaryConfig": null,
 
@@ -196,7 +196,7 @@
     "name": "Contrôles classiques en mode liste",
     "hint": "Toujours afficher les option de contrôle des éléments et désactive le menu du clic droit. Ne s'applique qu'à l'inventaire des objets / sorts du PJ en mode liste."
   },
-  "T5EK.Settings.HideIconsNextToTheItemName": {
+  "T5EK.Settings.ShowIconsNextToTheItemName": {
     "name": null,
     "hint": null
   },
@@ -244,23 +244,23 @@
     "name": null,
     "hint": null
   },
-  "T5EK.Settings.TraitsTogglePc": {
+  "T5EK.Settings.ToggleEmptyCharacterTraits": {
     "name": "Afficher un bouton de bascule de l'affichage des traits",
     "hint": "Activer cette option pour afficher un bouton de bascule de l'affichage des traits."
   },
-  "T5EK.Settings.TraitsMovedBelowResource": {
+  "T5EK.Settings.MoveTraitsBelowResources": {
     "name": "Déplacer les traits sous les ressources",
     "hint": "Activer cette option pour afficher les traits sous les ressources."
   },
-  "T5EK.Settings.AmmoEquippedOnly": {
+  "T5EK.Settings.ShowEquippedAmmoOnly": {
     "name": null,
     "hint": null
   },
-  "T5EK.Settings.TraitsAlwaysShown": {
+  "T5EK.Settings.AlwaysShowTraits": {
     "name": "Toujours montrer les traits",
     "hint": "Par défaut, les traits vides sont masqués et affichables vie un bouton. Activer cette option pour ne jamais les masquer."
   },
-  "T5EK.Settings.SkillsAlwaysShown": {
+  "T5EK.Settings.AlwaysShowSkills": {
     "name": "Toujours montrer les caractéristiques",
     "hint": "Par défaut, les caractéristiques sans compétence sont masquées et affichables vie un bouton. Activer cette option pour ne jamais les masquer."
   },
@@ -268,7 +268,7 @@
     "name": null,
     "hint": null
   },
-  "T5EK.Settings.ActiveEffectsMarker": {
+  "T5EK.Settings.ShowActiveEffectsMarker": {
     "name": "Afficher le marqueru d'effet actif sur les objets",
     "hint": "Activer cette option pour visualiser les objets avec un effet actif (uniquement pour la vue liste)."
   },
@@ -289,15 +289,15 @@
     "none": "Aucun",
     "default": "Aucun"
   },
-  "T5EK.Settings.EditTotalLock": {
+  "T5EK.Settings.UseTotalSheetLock": {
     "name": "Verrouiller les champs sensibles.",
     "hint": "Activer cette option pour prévenir les modifications de champs sensibles."
   },
-  "T5EK.Settings.EditEffectsGmOnly": {
+  "T5EK.Settings.LimitEffectsManagementToGM": {
     "name": "Seul le MJ peut éditer les effets actifs",
     "hint": "Activer cette option pour interdire aux joueurs de modifier les effets actifs sur leur feuille. Ils verront toujours les effets appliqués."
   },
-  "T5EK.Settings.QuantityAlwaysShown": {
+  "T5EK.Settings.AlwaysShowItemQuantity": {
     "name": "Toujours montrer la quantité des objets",
     "hint": "Activer cette option pour ne jamais masquer la quantité des objets."
   },
@@ -313,15 +313,15 @@
     "name": null,
     "hint": null
   },
-  "T5EK.Settings.RestingForNpcs": {
+  "T5EK.Settings.UseNPCRest": {
     "name": "Repos pour les PNJs",
     "hint": "Activer cette option pour afficher le bouton de repos sur les feuilles de PNJs."
   },
-  "T5EK.Settings.RestingForNpcsChat": {
-    "name": "Masquer le message de tchat",
-    "hint": "Activer cette option pour masquer le message de tchat lors du repos d'un PNJ (valable pour le MJ et les joueurs)."
+  "T5EK.Settings.ShowNPCRestInChat": {
+    "name": null,
+    "hint": null
   },
-  "T5EK.Settings.LinkMarker": {
+  "T5EK.Settings.ShowNPCActorLinkMarker": {
     "name": "Marquer les PNJs liés / non liés",
     "hint": "Ajoute un contour coloré et une icone pour les feuilles de PNJs liés / non liés",
     "default": "Aucun marqueur de lien (par défaut)",
@@ -333,7 +333,7 @@
     "name": null,
     "hint": null
   },
-  "T5EK.Settings.HiddenDeathSaves": {
+  "T5EK.Settings.HideDeathSavesFromPlayers": {
     "name": null,
     "hint": null
   },
@@ -487,21 +487,21 @@
     "name": null,
     "hint": null
   },
-  "T5EK.Settings.EnableSortFavoritesItemsAlphabetically": {
+  "T5EK.Settings.SortFavoriteItemsAlphabetically": {
     "name": null,
     "hint": null
   },
-  "T5EK.Settings.EnablePermanentUnlockOnCharacterIfYouAreGM": {
+  "T5EK.Settings.PermanentlyUnlockCharacterSheetForGM": {
     "name": null,
     "hint": null,
     "title": null
   },
-  "T5EK.Settings.EnablePermanentUnlockOnNPCIfYouAreGM": {
+  "T5EK.Settings.PermanentlyUnlockNPCSheetForGM": {
     "name": null,
     "hint": null,
     "title": null
   },
-  "T5EK.Settings.EnablePermanentUnlockOnVehicleIfYouAreGM": {
+  "T5EK.Settings.PermanentlyUnlockVehicleSheetForGM": {
     "name": null,
     "hint": null,
     "title": null

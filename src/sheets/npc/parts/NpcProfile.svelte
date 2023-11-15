@@ -25,7 +25,7 @@
 </script>
 
 <ActorProfile useHpOverlay={$settingStore.useHpOverlayNpc}>
-  {#if incapacitated && (!$settingStore.hiddenDeathSavesEnabled || FoundryAdapter.userIsGm())}
+  {#if incapacitated && (!$settingStore.hideDeathSavesFromPlayers || FoundryAdapter.userIsGm())}
     <DeathSaves
       successes={FoundryAdapter.tryGetFlag($context.actor, 'death.success') ??
         0}
@@ -46,7 +46,7 @@
   {/if}
 
   <NpcHitPoints />
-  {#if $settingStore.restingForNpcsEnabled}
+  {#if $settingStore.useNpcRest}
     <NpcRest />
   {/if}
   <NpcHealthFormula />

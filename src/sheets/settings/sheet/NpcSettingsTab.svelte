@@ -44,29 +44,29 @@
 
 {#if userIsGm}
   <CheckboxSetting
-    bind:value={$context.restingForNpcsEnabled}
-    name={'T5EK.Settings.RestingForNpcs.name'}
-    hint={'T5EK.Settings.RestingForNpcs.hint'}
-    id="restingForNpcsEnabled"
+    bind:value={$context.useNpcRest}
+    name={'T5EK.Settings.UseNPCRest.name'}
+    hint={'T5EK.Settings.UseNPCRest.hint'}
+    id="useNpcRest"
   />
 
   <CheckboxSetting
-    bind:value={$context.restingForNpcsChatDisabled}
-    name={'T5EK.Settings.RestingForNpcsChat.name'}
-    hint={'T5EK.Settings.RestingForNpcsChat.hint'}
-    id="restingForNpcsChatDisabled"
+    bind:value={$context.showNpcRestInChat}
+    name={'T5EK.Settings.ShowNPCRestInChat.name'}
+    hint={'T5EK.Settings.ShowNPCRestInChat.hint'}
+    id="showNpcRestInChat"
   />
 
   <SelectSetting
     options={{
-      default: 'T5EK.Settings.LinkMarker.default',
-      unlinked: 'T5EK.Settings.LinkMarker.unlinked',
-      both: 'T5EK.Settings.LinkMarker.both',
+      default: 'T5EK.Settings.ShowNPCActorLinkMarker.default',
+      unlinked: 'T5EK.Settings.ShowNPCActorLinkMarker.unlinked',
+      both: 'T5EK.Settings.ShowNPCActorLinkMarker.both',
     }}
-    bind:value={$context.linkMarkerNpc}
-    name="T5EK.Settings.LinkMarker.name"
-    hint="T5EK.Settings.LinkMarker.hint"
-    id="linkMarkerNpc"
+    bind:value={$context.showNpcActorLinkMarker}
+    name="T5EK.Settings.ShowNPCActorLinkMarker.name"
+    hint="T5EK.Settings.ShowNPCActorLinkMarker.hint"
+    id="showNpcActorLinkMarker"
   />
 {/if}
 
@@ -85,24 +85,24 @@
 />
 
 <CheckboxSetting
-  bind:value={$context.traitsAlwaysShownNpc}
-  name={'T5EK.Settings.TraitsAlwaysShown.name'}
-  hint={'T5EK.Settings.TraitsAlwaysShown.hint'}
-  id="traitsAlwaysShownNpc"
+  bind:value={$context.alwaysShowNpcTraits}
+  name={'T5EK.Settings.AlwaysShowTraits.name'}
+  hint={'T5EK.Settings.AlwaysShowTraits.hint'}
+  id="alwaysShowNpcTraits"
 />
 
 <CheckboxSetting
-  bind:value={$context.traitsMovedBelowResourceNpc}
-  name={'T5EK.Settings.TraitsMovedBelowResource.name'}
-  hint={'T5EK.Settings.TraitsMovedBelowResource.hint'}
-  id="traitsMovedBelowResourceNpc"
+  bind:value={$context.moveTraitsBelowNpcResources}
+  name={'T5EK.Settings.MoveTraitsBelowResources.name'}
+  hint={'T5EK.Settings.MoveTraitsBelowResources.hint'}
+  id="moveTraitsBelowNpcResources"
 />
 
 <CheckboxSetting
-  bind:value={$context.skillsAlwaysShownNpc}
-  name={'T5EK.Settings.SkillsAlwaysShown.name'}
-  hint={'T5EK.Settings.SkillsAlwaysShown.hint'}
-  id="skillsAlwaysShownNpc"
+  bind:value={$context.alwaysShowNpcSkills}
+  name={'T5EK.Settings.AlwaysShowSkills.name'}
+  hint={'T5EK.Settings.AlwaysShowSkills.hint'}
+  id="alwaysShowNpcSkills"
 />
 
 <CheckboxSetting

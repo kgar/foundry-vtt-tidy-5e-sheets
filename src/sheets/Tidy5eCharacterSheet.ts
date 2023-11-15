@@ -214,7 +214,7 @@ export class Tidy5eCharacterSheet
       lockLevelSelector: FoundryAdapter.shouldLockLevelSelector(),
       lockMoneyChanges: FoundryAdapter.shouldLockMoneyChanges(),
       lockSensitiveFields:
-        !editable && SettingsProvider.settings.editTotalLockEnabled.get(),
+        !editable && SettingsProvider.settings.useTotalSheetLock.get(),
       notes1EnrichedHtml: await FoundryAdapter.enrichHtml(
         FoundryAdapter.getProperty<string>(
           this.actor,
