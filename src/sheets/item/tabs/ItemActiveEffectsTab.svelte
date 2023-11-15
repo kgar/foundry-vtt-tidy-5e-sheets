@@ -116,7 +116,7 @@
                   type="button"
                   class="active-effect-control inline-transparent-button"
                   title={localize('DND5E.EffectDelete')}
-                  on:click={() => effect.delete()}
+                  on:click={() => effect.deleteDialog()}
                 >
                   <i class="fas fa-trash" />
                 </button>

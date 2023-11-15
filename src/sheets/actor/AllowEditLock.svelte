@@ -1,5 +1,6 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import { settingStore } from 'src/settings/settings';
   import type { ActorSheetContext } from 'src/types/types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
@@ -14,6 +15,24 @@
 
   $: allowEdit = FoundryAdapter.isSheetUnlocked($context.actor);
 
+  $: descriptionVariable =
+    hint ??
+    ($settingStore.useTotalSheetLock
+      ? localize('T5EK.SheetLock.Description')
+      : localize('T5EK.SheetEdit.Description'));
+  $: lockHintVariable = $settingStore.useTotalSheetLock
+    ? 'T5EK.SheetLock.Unlock.Hint'
+    : 'T5EK.SheetEdit.Enable.Hint';
+  $: unlockHintVariable = $settingStore.useTotalSheetLock
+    ? 'T5EK.SheetLock.Lock.Hint'
+    : 'T5EK.SheetEdit.Disable.Hint';
+  $: unlockTitle = localize(unlockHintVariable, {
+    description: descriptionVariable,
+  });
+  $: lockTitle = localize(lockHintVariable, {
+    description: descriptionVariable,
+  });
+
   const localize = FoundryAdapter.localize;
 </script>
 
@@ -25,17 +44,9 @@
     class:editing-enabled={allowEdit}
   >
     {#if allowEdit}
-      <i
-        class="fas fa-lock-open"
-        title="{localize('T5EK.DisableEdit')} - {hint ??
-          localize('T5EK.EditHint')}"
-      />
+      <i class="fas fa-lock-open" title={unlockTitle} />
     {:else}
-      <i
-        class="fas fa-lock"
-        title="{localize('T5EK.EnableEdit')} - {hint ??
-          localize('T5EK.EditHint')}"
-      />
+      <i class="fas fa-lock" title={lockTitle} />
     {/if}
   </button>
 </div>

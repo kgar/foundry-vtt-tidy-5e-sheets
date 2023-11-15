@@ -206,10 +206,10 @@
     <svelte:fragment slot="tab-end">
       {#if $context.owner}
         <AllowEditLock
-          hint={$settingStore.enablePermanentUnlockOnNPCIfYouAreGM &&
+          hint={$settingStore.permanentlyUnlockNpcSheetForGm &&
           FoundryAdapter.userIsGm()
             ? localize(
-                'T5EK.Settings.EnablePermanentUnlockOnNPCIfYouAreGM.title'
+                'T5EK.Settings.PermanentlyUnlockNPCSheetForGM.title'
               )
             : null}
         />

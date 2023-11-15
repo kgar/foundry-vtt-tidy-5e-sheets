@@ -44,7 +44,7 @@
       <slot name="custom-icon" />
     </span>
     <div class="trait-label-and-list">
-      {#if $settingStore.traitLabelsEnabled}
+      {#if $settingStore.showTraitLabels}
         <span class="trait-label">{title}</span>
       {/if}
       <ul

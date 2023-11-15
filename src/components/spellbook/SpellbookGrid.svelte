@@ -53,7 +53,7 @@
           {section.label}
         </span>
         {#if section.usesSlots}
-          {#if !$settingStore.hideSpellSlotMarker}
+          {#if $settingStore.useSpellSlotMarker}
             <SpellSlotMarkers {section} />
           {/if}
           <SpellSlotUses {section} />
@@ -80,7 +80,7 @@
           {/if}
 
           <div class="spell-name">
-            <div class="spell-image" style="--bg-image: url('/{spellImgUrl}');">
+            <div class="spell-image" style="--bg-image: url('{spellImgUrl}');">
               <i class="fa fa-dice-d20" />
             </div>
           </div>

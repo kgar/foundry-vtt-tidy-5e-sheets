@@ -20,45 +20,52 @@
   <h2>{localize('T5EK.Settings.TabGM.header')}</h2>
 
   <CheckboxSetting
-    bind:value={$context.hiddenDeathSavesEnabled}
-    name={'T5EK.Settings.HiddenDeathSaves.name'}
-    hint={'T5EK.Settings.HiddenDeathSaves.hint'}
-    id="hiddenDeathSavesEnabled"
+    bind:value={$context.hideDeathSavesFromPlayers}
+    name={'T5EK.Settings.HideDeathSavesFromPlayers.name'}
+    hint={'T5EK.Settings.HideDeathSavesFromPlayers.hint'}
+    id="hideDeathSavesFromPlayers"
   />
 
   <CheckboxSetting
-    bind:value={$context.hideSpellSlotMarker}
-    name={'T5EK.Settings.HideSpellSlotMarker.name'}
-    hint={'T5EK.Settings.HideSpellSlotMarker.hint'}
-    id="hideSpellSlotMarker"
+    bind:value={$context.useSpellSlotMarker}
+    name={'T5EK.Settings.UseSpellSlotMarker.name'}
+    hint={'T5EK.Settings.UseSpellSlotMarker.hint'}
+    id="useSpellSlotMarker"
   />
 
   <CheckboxSetting
-    bind:value={$context.hideStandardEncumbranceBar}
-    name={'T5EK.Settings.HideStandardEncumbranceBar.name'}
-    hint={'T5EK.Settings.HideStandardEncumbranceBar.hint'}
-    id="hideStandardEncumbranceBar"
+    bind:value={$context.useCharacterEncumbranceBar}
+    name={SettingsProvider.settings.useCharacterEncumbranceBar.options.name}
+    hint={SettingsProvider.settings.useCharacterEncumbranceBar.options.hint}
+    id="useCharacterEncumbranceBar"
   />
 
   <CheckboxSetting
-    bind:value={$context.enableNpcEncumbranceBar}
-    name={SettingsProvider.settings.enableNpcEncumbranceBar.options.name}
-    hint={SettingsProvider.settings.enableNpcEncumbranceBar.options.hint}
-    id="enableNpcEncumbranceBar"
+    bind:value={$context.useNpcEncumbranceBar}
+    name={SettingsProvider.settings.useNpcEncumbranceBar.options.name}
+    hint={SettingsProvider.settings.useNpcEncumbranceBar.options.hint}
+    id="useNpcEncumbranceBar"
   />
 
   <CheckboxSetting
-    bind:value={$context.playerNameEnabled}
-    name={'T5EK.Settings.PlayerName.name'}
-    hint={'T5EK.Settings.PlayerName.hint'}
-    id="playerNameEnabled"
+    bind:value={$context.useVehicleEncumbranceBar}
+    name={SettingsProvider.settings.useVehicleEncumbranceBar.options.name}
+    hint={SettingsProvider.settings.useVehicleEncumbranceBar.options.hint}
+    id="useVehicleEncumbranceBar"
   />
 
   <CheckboxSetting
-    bind:value={$context.expandedSheetEnabled}
-    name={'T5EK.Settings.ExpandedSheet.name'}
-    hint={'T5EK.Settings.ExpandedSheet.hint'}
-    id="expandedSheetEnabled"
+    bind:value={$context.showPlayerName}
+    name={'T5EK.Settings.ShowPlayerName.name'}
+    hint={'T5EK.Settings.ShowPlayerName.hint'}
+    id="showPlayerName"
+  />
+
+  <CheckboxSetting
+    bind:value={$context.showExpandedLimitedView}
+    name={'T5EK.Settings.ShowExpandedLimitedView.name'}
+    hint={'T5EK.Settings.ShowExpandedLimitedView.hint'}
+    id="showExpandedLimitedView"
   />
 
   <TextInputSetting
@@ -69,74 +76,74 @@
   />
 
   <SelectSetting
-    options={SettingsProvider.settings.portraitStyle.options.choices}
-    bind:value={$context.portraitStyle}
-    name={'T5EK.Settings.PortraitStyle.name'}
-    hint={'T5EK.Settings.PortraitStyle.hint'}
-    id="portraitStyle"
+    options={SettingsProvider.settings.useCircularPortraitStyle.options.choices}
+    bind:value={$context.useCircularPortraitStyle}
+    name={'T5EK.Settings.UseCircularPortraitStyle.name'}
+    hint={'T5EK.Settings.UseCircularPortraitStyle.hint'}
+    id="useCircularPortraitStyle"
   />
 
   <CheckboxSetting
-    bind:value={$context.enablePermanentUnlockOnCharacterIfYouAreGM}
-    name={'T5EK.Settings.EnablePermanentUnlockOnCharacterIfYouAreGM.name'}
-    hint={'T5EK.Settings.EnablePermanentUnlockOnCharacterIfYouAreGM.hint'}
-    id="enablePermanentUnlockOnCharacterIfYouAreGM"
+    bind:value={$context.permanentlyUnlockCharacterSheetForGm}
+    name={'T5EK.Settings.PermanentlyUnlockCharacterSheetForGM.name'}
+    hint={'T5EK.Settings.PermanentlyUnlockCharacterSheetForGM.hint'}
+    id="permanentlyUnlockCharacterSheetForGm"
   />
 
   <CheckboxSetting
-    bind:value={$context.enablePermanentUnlockOnNPCIfYouAreGM}
-    name={'T5EK.Settings.EnablePermanentUnlockOnNPCIfYouAreGM.name'}
-    hint={'T5EK.Settings.EnablePermanentUnlockOnNPCIfYouAreGM.hint'}
-    id="enablePermanentUnlockOnNPCIfYouAreGM"
+    bind:value={$context.permanentlyUnlockNpcSheetForGm}
+    name={'T5EK.Settings.PermanentlyUnlockNPCSheetForGM.name'}
+    hint={'T5EK.Settings.PermanentlyUnlockNPCSheetForGM.hint'}
+    id="permanentlyUnlockNpcSheetForGm"
   />
 
   <CheckboxSetting
-    bind:value={$context.enablePermanentUnlockOnVehicleIfYouAreGM}
-    name={'T5EK.Settings.EnablePermanentUnlockOnVehicleIfYouAreGM.name'}
-    hint={'T5EK.Settings.EnablePermanentUnlockOnVehicleIfYouAreGM.hint'}
-    id="enablePermanentUnlockOnVehicleIfYouAreGM"
+    bind:value={$context.permanentlyUnlockVehicleSheetForGm}
+    name={'T5EK.Settings.PermanentlyUnlockVehicleSheetForGM.name'}
+    hint={'T5EK.Settings.PermanentlyUnlockVehicleSheetForGM.hint'}
+    id="permanentlyUnlockVehicleSheetForGm"
   />
 
   <CheckboxSetting
-    bind:value={$context.editEffectsGmOnlyEnabled}
-    name={'T5EK.Settings.EditEffectsGmOnly.name'}
-    hint={'T5EK.Settings.EditEffectsGmOnly.hint'}
-    id="editEffectsGmOnlyEnabled"
+    bind:value={$context.limitEffectsManagementToGm}
+    name={'T5EK.Settings.LimitEffectsManagementToGM.name'}
+    hint={'T5EK.Settings.LimitEffectsManagementToGM.hint'}
+    id="limitEffectsManagementToGm"
   />
 
   <CheckboxSetting
-    bind:value={$context.quantityAlwaysShownEnabled}
-    name={'T5EK.Settings.QuantityAlwaysShown.name'}
-    hint={'T5EK.Settings.QuantityAlwaysShown.hint'}
-    id="quantityAlwaysShownEnabled"
+    bind:value={$context.alwaysShowItemQuantity}
+    name={'T5EK.Settings.AlwaysShowItemQuantity.name'}
+    hint={'T5EK.Settings.AlwaysShowItemQuantity.hint'}
+    id="alwaysShowItemQuantity"
   />
 
   <CheckboxSetting
-    bind:value={$context.inspirationDisabled}
-    name={'T5EK.Settings.InspirationDisabled.name'}
-    hint={'T5EK.Settings.InspirationDisabled.hint'}
-    id="inspirationDisabled"
+    bind:value={$context.useCharacterInspiration}
+    name={'T5EK.Settings.UseInspiration.name'}
+    hint={'T5EK.Settings.UseInspiration.hint'}
+    id="useCharacterInspiration"
   />
 
   <CheckboxSetting
-    bind:value={$context.vehicleMotionDisabled}
-    name={'T5EK.Settings.VehicleMotionDisabled.name'}
-    hint={'T5EK.Settings.VehicleMotionDisabled.hint'}
-    id="vehicleMotionDisabled"
+    bind:value={$context.useVehicleMotion}
+    name={'T5EK.Settings.UseVehicleMotion.name'}
+    hint={'T5EK.Settings.UseVehicleMotion.hint'}
+    id="useVehicleMotion"
   />
 
   <CheckboxSetting
-    bind:value={$context.exhaustionDisabled}
-    name={'T5EK.Settings.ExhaustionDisabled.name'}
-    hint={'T5EK.Settings.ExhaustionDisabled.hint'}
-    id="exhaustionDisabled"
+    bind:value={$context.useExhaustion}
+    name={'T5EK.Settings.UseExhaustion.name'}
+    hint={'T5EK.Settings.UseExhaustion.hint'}
+    id="useExhaustion"
   />
 
   <CheckboxSetting
-    bind:value={$context.traitLabelsEnabled}
-    name={'T5EK.Settings.TraitLabels.name'}
-    hint={'T5EK.Settings.TraitLabels.hint'}
-    id="traitLabelsEnabled"
+    bind:value={$context.showTraitLabels}
+    name={'T5EK.Settings.ShowTraitLabels.name'}
+    hint={'T5EK.Settings.ShowTraitLabels.hint'}
+    id="showTraitLabels"
   />
 
   <CheckboxSetting
@@ -154,9 +161,9 @@
   />
 
   <CheckboxSetting
-    bind:value={$context.activeEffectsMarker}
-    name={'T5EK.Settings.ActiveEffectsMarker.name'}
-    hint={'T5EK.Settings.ActiveEffectsMarker.hint'}
-    id="activeEffectsMarker"
+    bind:value={$context.showActiveEffectsMarker}
+    name={'T5EK.Settings.ShowActiveEffectsMarker.name'}
+    hint={'T5EK.Settings.ShowActiveEffectsMarker.hint'}
+    id="showActiveEffectsMarker"
   />
 {/if}

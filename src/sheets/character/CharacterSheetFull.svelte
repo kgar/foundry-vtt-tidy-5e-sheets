@@ -138,7 +138,7 @@
 
     <section class="class-list">
       <!-- Player Name -->
-      {#if $settingStore.playerNameEnabled}
+      {#if $settingStore.showPlayerName}
         <ContentEditableFormField
           element="span"
           document={$context.actor}
@@ -153,7 +153,7 @@
       {/if}
 
       <!-- Class / Subclass -->
-      {#if $context.owner && !$settingStore.classListDisabled}
+      {#if $context.owner && $settingStore.showClassList}
         <span class="flex-row extra-small-gap">
           {#each classAndSubclassSummaries as summary, i}
             {#if i > 0}
@@ -228,10 +228,10 @@
   <svelte:fragment slot="tab-end">
     {#if $context.owner}
       <AllowEditLock
-        hint={$settingStore.enablePermanentUnlockOnCharacterIfYouAreGM &&
+        hint={$settingStore.permanentlyUnlockCharacterSheetForGm &&
         FoundryAdapter.userIsGm()
           ? localize(
-              'T5EK.Settings.EnablePermanentUnlockOnCharacterIfYouAreGM.title'
+              'T5EK.Settings.PermanentlyUnlockCharacterSheetForGM.title'
             )
           : null}
       />

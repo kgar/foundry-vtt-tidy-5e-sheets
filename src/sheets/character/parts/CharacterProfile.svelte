@@ -26,8 +26,8 @@
   }
 </script>
 
-<ActorProfile useHpOverlay={!$settingStore.hpOverlayDisabled}>
-  {#if incapacitated && (!$settingStore.hiddenDeathSavesEnabled || FoundryAdapter.userIsGm())}
+<ActorProfile useHpOverlay={$settingStore.useHpOverlay}>
+  {#if incapacitated && (!$settingStore.hideDeathSavesFromPlayers || FoundryAdapter.userIsGm())}
     <DeathSaves
       successes={$context.system.attributes.death.success}
       failures={$context.system.attributes.death.failure}
@@ -35,29 +35,29 @@
       failuresField="system.attributes.death.failure"
       on:rollDeathSave={(event) =>
         $context.actor.rollDeathSave({ event: event.detail.mouseEvent })}
-      hpOverlayDisabled={$settingStore.hpOverlayDisabled}
+      hasHpOverlay={$settingStore.useHpOverlay}
     />
   {/if}
 
-  {#if !$settingStore.exhaustionDisabled}
+  {#if $settingStore.useExhaustion}
     <Exhaustion
       level={$context.system.attributes.exhaustion}
       radiusClass={$context.useRoundedPortraitStyle ? 'rounded' : 'top-left'}
       on:levelSelected={onLevelSelected}
-      onlyShowOnHover={$settingStore.exhaustionOnHover ||
+      onlyShowOnHover={$settingStore.showExhaustionOnHover ||
         ($settingStore.hideIfZero &&
           $context.system.attributes.exhaustion === 0)}
     />
   {/if}
 
-  {#if !$settingStore.inspirationDisabled}
+  {#if $settingStore.useCharacterInspiration}
     <Inspiration
       inspired={$context.actor.system.attributes.inspiration}
       radiusClass={$context.useRoundedPortraitStyle ? 'rounded' : 'top-right'}
-      onlyShowOnHover={$settingStore.inspirationOnHover ||
+      onlyShowOnHover={$settingStore.showInspirationOnHover ||
         ($settingStore.hideIfZero &&
           !$context.actor.system.attributes.inspiration)}
-      disableAnimation={$settingStore.inspirationAnimationDisabled}
+      animate={$settingStore.animateInspiration}
     />
   {/if}
 

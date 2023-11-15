@@ -16,7 +16,7 @@
 <div
   class="item-image"
   class:item-use-button-has-focus={buttonIsFocused}
-  style="--bg-image: url('/{imgUrlOverride ?? item.img}')"
+  style="--bg-image: url('{imgUrlOverride ?? item.img}')"
   class:show-roll={item.isOwner && $showRoll}
 >
   {#if item.isOwner}

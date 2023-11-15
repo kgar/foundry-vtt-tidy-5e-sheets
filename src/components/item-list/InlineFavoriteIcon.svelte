@@ -4,7 +4,7 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-<div class="is-favorite" title={localize('T5EK.isFav')}>
+<div class="is-favorite" title={localize('T5EK.Favorite')}>
   <i class="fas fa-bookmark icon-fav" />
 </div>
 

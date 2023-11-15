@@ -52,7 +52,7 @@ function onItemContext(element: HTMLElement) {
 
 function getActiveEffectContextOptions(effect: any) {
   const actor = effect.actor ? effect.actor : effect.parent;
-  if (!actor?.isOwner || SettingsProvider.settings.rightClickDisabled.get()) {
+  if (!actor?.isOwner || !SettingsProvider.settings.useContextMenu.get()) {
     return [];
   }
 
@@ -119,7 +119,7 @@ function canEditEffect(effect: any) {
  */
 function getItemContextOptions(item: Item5e) {
   const actor = item.actor ? item.actor : item.parent;
-  if (!actor || SettingsProvider.settings.rightClickDisabled.get()) {
+  if (!actor?.isOwner || !SettingsProvider.settings.useContextMenu.get()) {
     return [];
   }
 
@@ -168,7 +168,9 @@ function getItemContextOptions(item: Item5e) {
     //   })
     // });
     options.push({
-      name: isAttuned ? 'T5EK.Deattune' : 'T5EK.Attune',
+      name: isAttuned
+        ? 'T5EK.ContextMenuActionUnattune'
+        : 'T5EK.ContextMenuActionAttune',
       icon: isAttuned
         ? "<i class='fas fa-sun fa-fw' style='color: var(--t5ek-warning-accent-color);'></i>"
         : "<i class='fas fa-sun fa-fw'></i>",
@@ -189,7 +191,9 @@ function getItemContextOptions(item: Item5e) {
     // });
     const isEquipped = item.system.equipped;
     options.push({
-      name: isEquipped ? 'T5EK.Unequip' : 'T5EK.Equip',
+      name: isEquipped
+        ? 'T5EK.ContextMenuActionUnequip'
+        : 'T5EK.ContextMenuActionEquip',
       icon: isEquipped
         ? "<i class='fas fa-user-alt fa-fw' style='color: var(--t5ek-warning-accent-color);'></i> "
         : "<i class='fas fa-user-alt fa-fw'></i> ",
@@ -202,7 +206,9 @@ function getItemContextOptions(item: Item5e) {
     if (FoundryAdapter.canPrepareSpell(item)) {
       const isPrepared = item.system?.preparation?.prepared === true;
       options.push({
-        name: isActive ? 'T5EK.Unprepare' : 'T5EK.Prepare',
+        name: isActive
+          ? 'T5EK.ContextMenuActionUnprepare'
+          : 'T5EK.ContextMenuActionPrepare',
         icon: isActive
           ? "<i class='fas fa-book fa-fw'></i>"
           : "<i class='fas fa-book fa-fw'></i>",
@@ -220,7 +226,7 @@ function getItemContextOptions(item: Item5e) {
     let favoriteIcon = 'fa-bookmark';
 
     options.push({
-      name: isFav ? 'T5EK.RemoveFav' : 'T5EK.AddFav',
+      name: isFav ? 'T5EK.RemoveFavorite' : 'T5EK.AddFavorite',
       icon: isFav
         ? `<i class='fas ${favoriteIcon} fa-fw'></i>`
         : `<i class='fas ${favoriteIcon} fa-fw inactive'></i>`,
@@ -261,7 +267,7 @@ function getItemContextOptions(item: Item5e) {
 
   if (item.type === 'spell') {
     options.push({
-      name: 'T5EK.EditSpell',
+      name: 'T5EK.ContextMenuActionEdit',
       icon: "<i class='fas fa-pencil-alt fa-fw'></i>",
       callback: () => item.sheet.render(true),
     });
@@ -282,7 +288,7 @@ function getItemContextOptions(item: Item5e) {
           ),
       });
       options.push({
-        name: 'T5EK.DeleteSpell',
+        name: 'T5EK.ContextMenuActionDelete',
         icon: "<i class='fas fa-trash fa-fw' style='color: var(--t5ek-warning-accent-color);'></i>",
         callback: () => item.deleteDialog(),
       });

@@ -108,8 +108,8 @@ export class Tidy5eVehicleSheet
       },
       allowEffectsManagement: true,
       appId: this.appId,
-      classicControlsEnabled:
-        SettingsProvider.settings.enableClassicControlsForVehicle.get(),
+      useClassicControls:
+        SettingsProvider.settings.useClassicControlsForVehicle.get(),
       editable,
       healthPercentage: getPercentage(
         this.actor?.system?.attributes?.hp?.value,
@@ -121,13 +121,13 @@ export class Tidy5eVehicleSheet
       lockLevelSelector: FoundryAdapter.shouldLockLevelSelector(),
       lockMoneyChanges: FoundryAdapter.shouldLockMoneyChanges(),
       lockSensitiveFields:
-        !editable && SettingsProvider.settings.editTotalLockEnabled.get(),
+        !editable && SettingsProvider.settings.useTotalSheetLock.get(),
       owner: this.actor.isOwner,
       showLimitedSheet: FoundryAdapter.showLimitedSheet(this.actor),
       useRoundedPortraitStyle: [
-        CONSTANTS.ROUNDED_PORTRAIT_OPTION_ALL as string,
-        CONSTANTS.ROUNDED_PORTRAIT_OPTION_NPCVEHICLE as string,
-      ].includes(SettingsProvider.settings.portraitStyle.get()),
+        CONSTANTS.CIRCULAR_PORTRAIT_OPTION_ALL as string,
+        CONSTANTS.CIRCULAR_PORTRAIT_OPTION_NPCVEHICLE as string,
+      ].includes(SettingsProvider.settings.useCircularPortraitStyle.get()),
     };
 
     debug('Vehicle Sheet context data', context);

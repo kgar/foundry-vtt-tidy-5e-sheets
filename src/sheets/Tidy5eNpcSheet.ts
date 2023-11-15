@@ -115,7 +115,7 @@ export class Tidy5eNpcSheet
     const editable = FoundryAdapter.canEditActor(this.actor) && this.isEditable;
 
     const lockSensitiveFields =
-      !editable && SettingsProvider.settings.editTotalLockEnabled.get();
+      !editable && SettingsProvider.settings.useTotalSheetLock.get();
     const defaultNpcContext = await super.getData(this.options);
 
     return {
@@ -162,8 +162,8 @@ export class Tidy5eNpcSheet
           relativeTo: this.actor,
         }
       ),
-      classicControlsEnabled:
-        SettingsProvider.settings.enableClassicControlsForNpc.get(),
+      useClassicControls:
+        SettingsProvider.settings.useClassicControlsForNpc.get(),
       encumbrance: this.actor.system.attributes.encumbrance,
       editable,
       flawEnrichedHtml: await FoundryAdapter.enrichHtml(
@@ -184,7 +184,7 @@ export class Tidy5eNpcSheet
         this.actor?.system?.attributes?.hp?.value,
         this.actor?.system?.attributes?.hp?.max
       ),
-      hideSpellbookTab: SettingsProvider.settings.hideSpellbookTabNpc.get(),
+      showSpellbookTab: SettingsProvider.settings.showSpellbookTabNpc.get(),
       idealEnrichedHtml: await FoundryAdapter.enrichHtml(
         FoundryAdapter.getProperty<string>(
           this.actor,
@@ -267,7 +267,6 @@ export class Tidy5eNpcSheet
       owner: this.actor.isOwner,
       rollDeathSave: this._rollDeathSave.bind(this),
       shortRest: this._onShortRest.bind(this),
-
       showLimitedSheet: FoundryAdapter.showLimitedSheet(this.actor),
       tokenState: this.#getTokenState(),
       traitEnrichedHtml: await FoundryAdapter.enrichHtml(
@@ -282,29 +281,30 @@ export class Tidy5eNpcSheet
           relativeTo: this.actor,
         }
       ),
+      useJournalTab: SettingsProvider.settings.useJournalTabForNpc.get(),
       useRoundedPortraitStyle: [
-        CONSTANTS.ROUNDED_PORTRAIT_OPTION_ALL as string,
-        CONSTANTS.ROUNDED_PORTRAIT_OPTION_NPCVEHICLE as string,
-      ].includes(SettingsProvider.settings.portraitStyle.get()),
+        CONSTANTS.CIRCULAR_PORTRAIT_OPTION_ALL as string,
+        CONSTANTS.CIRCULAR_PORTRAIT_OPTION_NPCVEHICLE as string,
+      ].includes(SettingsProvider.settings.useCircularPortraitStyle.get()),
     };
   }
 
   #getTokenState(): 'linked' | 'unlinked' | null {
     const { token } = this;
 
-    const linkMarkerNpc = SettingsProvider.settings.linkMarkerNpc.get();
+    const showNpcActorLinkMarker = SettingsProvider.settings.showNpcActorLinkMarker.get();
 
     if (!token) {
       return null;
     }
 
-    if (token.actorLink && linkMarkerNpc == 'both') {
+    if (token.actorLink && showNpcActorLinkMarker == 'both') {
       return 'linked';
     }
 
     if (
       !token.actorLink &&
-      (linkMarkerNpc == 'unlinked' || linkMarkerNpc == 'both')
+      (showNpcActorLinkMarker == 'unlinked' || showNpcActorLinkMarker == 'both')
     ) {
       return 'unlinked';
     }
@@ -378,7 +378,7 @@ export class Tidy5eNpcSheet
   async _onShortRest(event: Event) {
     event.preventDefault();
     await this._onSubmit(event);
-    if (SettingsProvider.settings.restingForNpcsChatDisabled.get()) {
+    if (SettingsProvider.settings.showNpcRestInChat.get()) {
       let obj = {
         dialog: true,
         chat: false,
@@ -396,7 +396,7 @@ export class Tidy5eNpcSheet
   async _onLongRest(event: Event) {
     event.preventDefault();
     await this._onSubmit(event);
-    if (SettingsProvider.settings.restingForNpcsChatDisabled.get()) {
+    if (SettingsProvider.settings.showNpcRestInChat.get()) {
       let obj = {
         dialog: true,
         chat: false,

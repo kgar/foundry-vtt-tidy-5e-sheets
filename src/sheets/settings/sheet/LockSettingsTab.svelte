@@ -17,10 +17,10 @@
   <p class="tab-notes">{localize('T5EK.Settings.TabLocks.hint2')}</p>
 
   <CheckboxSetting
-    bind:value={$context.editTotalLockEnabled}
-    name={'T5EK.Settings.EditTotalLock.name'}
-    hint={'T5EK.Settings.EditTotalLock.hint'}
-    id="editTotalLockEnabled"
+    bind:value={$context.useTotalSheetLock}
+    name={'T5EK.Settings.UseTotalSheetLock.name'}
+    hint={'T5EK.Settings.UseTotalSheetLock.hint'}
+    id="useTotalSheetLock"
   />
 
   <h3>{localize('T5EK.Settings.TabLocks.labelGeneralLocks')}</h3>

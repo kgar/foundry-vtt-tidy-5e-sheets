@@ -67,7 +67,7 @@
       <button
         type="button"
         class="item {getInventoryRowClasses(item)} transparent-button"
-        class:show-item-count-on-hover={!$settingStore.quantityAlwaysShownEnabled}
+        class:show-item-count-on-hover={!$settingStore.alwaysShowItemQuantity}
         data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
         data-context-menu-entity-id={item.id}
         on:click={(event) => $context.owner && item.use({}, { event })}
@@ -100,7 +100,7 @@
         {/if}
 
         <div class="item-name">
-          <div class="item-image" style="--bg-image: url('/{item.img}');">
+          <div class="item-image" style="--bg-image: url('{item.img}');">
             <i class="fa fa-dice-d20" />
           </div>
         </div>

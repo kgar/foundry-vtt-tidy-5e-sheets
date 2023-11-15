@@ -46,7 +46,7 @@
 <ItemFilters>
   <ItemFilterSearch
     bind:searchCriteria
-    placeholder={localize('T5EK.SearchFeat')}
+    placeholder={localize('T5EK.Search')}
   />
   <ItemFilterOption setName="features" filterName="action">
     {localize('DND5E.Action')}
@@ -101,7 +101,7 @@
               </ItemTableColumn>
             {/each}
           {/if}
-          {#if $context.owner && $context.classicControlsEnabled}
+          {#if $context.owner && $context.useClassicControls}
             <ItemTableColumn baseWidth={classicControlsBaseWidth} />
           {/if}
         </ItemTableHeaderRow>
@@ -130,7 +130,7 @@
             </ItemTableCell>
 
             <!-- TODO: Handle more gracefully -->
-            {#if !$settingStore.hideIconsNextToTheItemName && FoundryAdapter.tryGetFlag(item, 'favorite')}
+            {#if $settingStore.showIconsNextToTheItemName && FoundryAdapter.tryGetFlag(item, 'favorite')}
               <InlineFavoriteIcon />
             {/if}
 
@@ -224,7 +224,7 @@
                 </ItemTableCell>
               {/each}
             {/if}
-            {#if $context.owner && $context.classicControlsEnabled}
+            {#if $context.owner && $context.useClassicControls}
               <ItemTableCell baseWidth={classicControlsBaseWidth}>
                 {#if item.type !== 'class'}
                   <ItemFavoriteControl {item} />

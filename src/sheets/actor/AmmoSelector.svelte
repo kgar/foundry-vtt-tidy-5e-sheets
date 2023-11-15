@@ -20,7 +20,7 @@
       .filter(
         (x: any) =>
           x.system.consumableType === 'ammo' &&
-          (!$settingStore.ammoEquippedOnly || x.system.equipped)
+          (!$settingStore.showEquippedAmmoOnly || x.system.equipped)
       )
       .map((x: any) => ({
         text: `${x.name} (${x.system.quantity})`,

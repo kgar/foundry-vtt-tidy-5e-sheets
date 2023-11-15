@@ -68,16 +68,16 @@
   <div class="side-panel">
     <SkillsList
       actor={$context.actor}
-      toggleable={!$settingStore.skillsAlwaysShownNpc}
+      toggleable={!$settingStore.alwaysShowNpcSkills}
     />
-    {#if !$settingStore.traitsMovedBelowResourceNpc}
-      <Traits toggleable={!$settingStore.traitsAlwaysShownNpc} />
+    {#if !$settingStore.moveTraitsBelowNpcResources}
+      <Traits toggleable={!$settingStore.alwaysShowNpcTraits} />
     {/if}
   </div>
   <div class="main-panel">
     <NpcLegendaryActions />
-    {#if $settingStore.traitsMovedBelowResourceNpc}
-      <Traits toggleable={!$settingStore.traitsAlwaysShownNpc} />
+    {#if $settingStore.moveTraitsBelowNpcResources}
+      <Traits toggleable={!$settingStore.alwaysShowNpcTraits} />
     {/if}
     {#each $context.features as section}
       {#if $context.editable || section.items.length}
@@ -94,7 +94,7 @@
                 {localize('DND5E.Usage')}
               </ItemTableColumn>
             {/if}
-            {#if $context.owner && $context.classicControlsEnabled}
+            {#if $context.owner && $context.useClassicControls}
               <ItemTableColumn baseWidth="7.5rem" />
             {/if}
           </ItemTableHeaderRow>
@@ -156,7 +156,7 @@
                   {/if}
                 </ItemTableCell>
               {/if}
-              {#if $context.owner && $context.classicControlsEnabled}
+              {#if $context.owner && $context.useClassicControls}
                 <ItemTableCell baseWidth="7.5rem">
                   <ItemControls>
                     <ItemEditControl {item} />
@@ -175,7 +175,7 @@
         </ItemTable>
       {/if}
     {/each}
-    {#if $settingStore.hideSpellbookTabNpc}
+    {#if !$settingStore.showSpellbookTabNpc}
       {#if noSpellLevels}
         <h2>
           <button
@@ -239,7 +239,7 @@
 </section>
 <TabFooter mode="vertical" cssClass="abilities-footer">
   <Currency actor={$context.actor} />
-  {#if $settingStore.enableNpcEncumbranceBar}
+  {#if $settingStore.useNpcEncumbranceBar}
     <EncumbranceBar />
   {/if}
 </TabFooter>

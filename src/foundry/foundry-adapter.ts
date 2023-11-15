@@ -398,7 +398,7 @@ export const FoundryAdapter = {
     spell: any
   ): string | undefined {
     if (
-      !SettingsProvider.settings.spellClassFilterIconReplace.get() ||
+      !SettingsProvider.settings.useSpellClassFilterIcons.get() ||
       context.isNPC
     ) {
       return spell.img;
@@ -494,13 +494,13 @@ export const FoundryAdapter = {
     return (
       (actor.isOwner && FoundryAdapter.isSheetUnlocked(actor)) ||
       (FoundryAdapter.userIsGm() &&
-        SettingsProvider.settings.enablePermanentUnlockOnCharacterIfYouAreGM.get() &&
+        SettingsProvider.settings.permanentlyUnlockCharacterSheetForGm.get() &&
         actor.type === CONSTANTS.SHEET_TYPE_CHARACTER) ||
       (FoundryAdapter.userIsGm() &&
-        SettingsProvider.settings.enablePermanentUnlockOnNPCIfYouAreGM.get() &&
+        SettingsProvider.settings.permanentlyUnlockNpcSheetForGm.get() &&
         actor.type === CONSTANTS.SHEET_TYPE_NPC) ||
       (FoundryAdapter.userIsGm() &&
-        SettingsProvider.settings.enablePermanentUnlockOnVehicleIfYouAreGM.get() &&
+        SettingsProvider.settings.permanentlyUnlockVehicleSheetForGm.get() &&
         actor.type === CONSTANTS.SHEET_TYPE_VEHICLE)
     );
   },
@@ -514,9 +514,9 @@ export const FoundryAdapter = {
   },
   allowCharacterEffectsManagement(actor: any) {
     return (
-      (SettingsProvider.settings.editEffectsGmOnlyEnabled.get() &&
+      (SettingsProvider.settings.limitEffectsManagementToGm.get() &&
         FoundryAdapter.userIsGm()) ||
-      (!SettingsProvider.settings.editEffectsGmOnlyEnabled.get() &&
+      (!SettingsProvider.settings.limitEffectsManagementToGm.get() &&
         actor.isOwner)
     );
   },
@@ -561,7 +561,7 @@ export const FoundryAdapter = {
     if (actor.type === CONSTANTS.SHEET_TYPE_CHARACTER) {
       return (
         showLimitedSheet &&
-        !SettingsProvider.settings.expandedSheetEnabled.get()
+        !SettingsProvider.settings.showExpandedLimitedView.get()
       );
     }
     return showLimitedSheet;

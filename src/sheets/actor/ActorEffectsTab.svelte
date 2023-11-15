@@ -28,7 +28,7 @@
 
 <div class="scroll-container flex-column small-gap">
   {#if !$context.allowEffectsManagement && $context.editable}
-    <Notice>{localize('T5EK.GmOnlyEdit')}</Notice>
+    <Notice>{localize('T5EK.GMOnlyEdit')}</Notice>
   {/if}
 
   {#if noEffects && !$context.editable && $context.allowEffectsManagement}
@@ -47,7 +47,7 @@
             <ItemTableColumn baseWidth="7.5rem">
               {localize('DND5E.Duration')}
             </ItemTableColumn>
-            {#if $context.owner && $context.classicControlsEnabled && $context.allowEffectsManagement}
+            {#if $context.owner && $context.useClassicControls && $context.allowEffectsManagement}
               <ItemTableColumn baseWidth={classicControlsBaseWidth} />
             {/if}
           </ItemTableHeaderRow>
@@ -72,7 +72,7 @@
                 >{effect.duration.label ?? ''}</ItemTableCell
               >
 
-              {#if $context.owner && $context.classicControlsEnabled && $context.allowEffectsManagement}
+              {#if $context.owner && $context.useClassicControls && $context.allowEffectsManagement}
                 <ItemTableCell baseWidth={classicControlsBaseWidth}>
                   <ItemControls>
                     <ItemControl
@@ -93,7 +93,7 @@
 
                     {#if $context.editable}
                       <ItemControl
-                        on:click={() => effect.delete()}
+                        on:click={() => effect.deleteDialog()}
                         title={localize('DND5E.EffectDelete')}
                         iconCssClass="fas fa-trash"
                       />

@@ -16,7 +16,7 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-<h2>{localize('T5EK.Settings.TabVehicles.labelVehicles')}</h2>
+<h2>{localize('T5EK.Settings.TabVehicles.header')}</h2>
 {#if userIsGm}
   <SelectSetting
     options={SettingsProvider.settings.defaultVehicleSheetTab.options.choices()}
@@ -28,29 +28,29 @@
 {/if}
 
 <CheckboxSetting
-  bind:value={$context.enableClassicControlsForVehicle}
-  name={SettingsProvider.settings.enableClassicControlsForVehicle.options.name}
-  hint={SettingsProvider.settings.enableClassicControlsForVehicle.options.hint}
-  id="enableClassicControlsForVehicle"
+  bind:value={$context.useClassicControlsForVehicle}
+  name={SettingsProvider.settings.useClassicControlsForVehicle.options.name}
+  hint={SettingsProvider.settings.useClassicControlsForVehicle.options.hint}
+  id="useClassicControlsForVehicle"
 />
 
 <CheckboxSetting
-  bind:value={$context.hpBarDisabledVehicle}
-  name={'T5EK.Settings.HpBar.name'}
-  hint={'T5EK.Settings.HpBar.hint'}
-  id="hpBarDisabledVehicle"
+  bind:value={$context.useHpBarVehicle}
+  name={'T5EK.Settings.UseHpBar.name'}
+  hint={'T5EK.Settings.UseHpBar.hint'}
+  id="useHpBarVehicle"
 />
 
 <CheckboxSetting
-  bind:value={$context.hpOverlayDisabledVehicle}
-  name={'T5EK.Settings.HpOverlay.name'}
-  hint={'T5EK.Settings.HpOverlay.hint'}
-  id="hpOverlayDisabledVehicle"
+  bind:value={$context.useHpOverlayVehicle}
+  name={'T5EK.Settings.UseHpOverlay.name'}
+  hint={'T5EK.Settings.UseHpOverlay.hint'}
+  id="useHpOverlayVehicle"
 />
 
 <NumberInputSetting
   bind:value={$context.vehicleSheetWidth}
-  name={'T5EK.Settings.vehicleSheetWidth.name'}
-  hint={'T5EK.Settings.vehicleSheetWidth.hint'}
+  name={'T5EK.Settings.VehicleSheetWidth.name'}
+  hint={'T5EK.Settings.VehicleSheetWidth.hint'}
   id="vehicleSheetWidth"
 />
