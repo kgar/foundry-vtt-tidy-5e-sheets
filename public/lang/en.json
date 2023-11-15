@@ -152,7 +152,7 @@
     "tabLabel": "Locks",
     "header": "Lock Options",
     "hint": "Prevent players from making changes to aspects of their character sheets that should change infrequently. Optionally hide some elements that you don't want to use at all.",
-    "hint2": "Important: sheet lock features are intended to guide player sheet use and to help prevent mistakes such as accidentally adding/removing saving throw proficiency. Sheet lock settings do not provide a secure lockdown against players with malicious intent.",
+    "hint2": "Important: sheet lock features are intended to guide player sheet use and to help prevent mistakes such as accidentally adding/removing a saving throw proficiency. Sheet lock settings do not provide a secure lockdown against players with malicious intent.",
     "labelGeneralLocks": "General Locks",
     "labelInventoryLocks": "Inventory Locks",
     "labelFeaturesLocks": "Features Locks"
