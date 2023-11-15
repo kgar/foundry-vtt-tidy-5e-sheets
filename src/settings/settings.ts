@@ -1018,7 +1018,8 @@ export function createSettings() {
       // Default width for player sheet
       playerSheetWidth: {
         options: {
-          name: 'T5EK.Settings.PlayerSheetWidth',
+          name: 'T5EK.Settings.PlayerSheetWidth.name',
+          hint: 'T5EK.Settings.PlayerSheetWidth.hint',
           scope: 'client',
           config: false,
           type: Number,
@@ -1032,7 +1033,8 @@ export function createSettings() {
       // Default width for NPC sheet
       npcSheetWidth: {
         options: {
-          name: 'T5EK.Settings.NPCSheetWidth',
+          name: 'T5EK.Settings.NPCSheetWidth.name',
+          hint: 'T5EK.Settings.NPCSheetWidth.hint',
           scope: 'client',
           config: false,
           type: Number,
@@ -1063,7 +1065,8 @@ export function createSettings() {
 
       vehicleSheetWidth: {
         options: {
-          name: 'T5EK.Settings.VehicleSheetWidth',
+          name: 'T5EK.Settings.VehicleSheetWidth.name',
+          hint: 'T5EK.Settings.VehicleSheetWidth.hint',
           scope: 'client',
           config: false,
           type: Number,
@@ -1291,7 +1294,6 @@ export function createSettings() {
       colorPickerPrimaryAccent: {
         options: {
           name: 'T5EK.Settings.ColorPickerPrimaryAccent.name',
-          hint: 'T5EK.Settings.ColorPickerPrimaryAccent.hint',
           scope: 'client',
           type: String,
           default: defaultLightTheme.variables['--t5ek-primary-accent-color'],
@@ -1307,7 +1309,6 @@ export function createSettings() {
       colorPickerHpBar: {
         options: {
           name: 'T5EK.Settings.ColorPickerHpBar.name',
-          hint: 'T5EK.Settings.ColorPickerHpBar.hint',
           scope: 'client',
           type: String,
           default: defaultLightTheme.variables['--t5ek-hp-bar-color'],
@@ -1321,7 +1322,6 @@ export function createSettings() {
       colorPickerEquipped: {
         options: {
           name: 'T5EK.Settings.ColorPickerEquipped.name',
-          hint: 'T5EK.Settings.ColorPickerEquipped.hint',
           scope: 'client',
           type: String,
           default: defaultLightTheme.variables['--t5ek-equipped-background'],
@@ -1335,7 +1335,6 @@ export function createSettings() {
       colorPickerEquippedOutline: {
         options: {
           name: 'T5EK.Settings.ColorPickerEquippedOutline.name',
-          hint: 'T5EK.Settings.ColorPickerEquippedOutline.hint',
           scope: 'client',
           type: String,
           default:
@@ -1354,7 +1353,6 @@ export function createSettings() {
       colorPickerEquippedAccent: {
         options: {
           name: 'T5EK.Settings.ColorPickerEquippedAccent.name',
-          hint: 'T5EK.Settings.ColorPickerEquippedAccent.hint',
           scope: 'client',
           type: String,
           default:
@@ -1374,7 +1372,6 @@ export function createSettings() {
       colorPickerPrepared: {
         options: {
           name: 'T5EK.Settings.ColorPickerPrepared.name',
-          hint: 'T5EK.Settings.ColorPickerPrepared.hint',
           scope: 'client',
           type: String,
           default: defaultLightTheme.variables['--t5ek-prepared-background'],
@@ -1388,7 +1385,6 @@ export function createSettings() {
       colorPickerPreparedOutline: {
         options: {
           name: 'T5EK.Settings.ColorPickerPreparedOutline.name',
-          hint: 'T5EK.Settings.ColorPickerPreparedOutline.hint',
           scope: 'client',
           type: String,
           default:
@@ -1407,7 +1403,6 @@ export function createSettings() {
       colorPickerPreparedAccent: {
         options: {
           name: 'T5EK.Settings.ColorPickerPreparedAccent.name',
-          hint: 'T5EK.Settings.ColorPickerPreparedAccent.hint',
           scope: 'client',
           type: String,
           default:
@@ -1427,7 +1422,6 @@ export function createSettings() {
       colorPickerPact: {
         options: {
           name: 'T5EK.Settings.ColorPickerPact.name',
-          hint: 'T5EK.Settings.ColorPickerPact.hint',
           scope: 'client',
           type: String,
           default: defaultLightTheme.variables['--t5ek-pact-background'],
@@ -1441,7 +1435,6 @@ export function createSettings() {
       colorPickerPactOutline: {
         options: {
           name: 'T5EK.Settings.ColorPickerPactOutline.name',
-          hint: 'T5EK.Settings.ColorPickerPactOutline.hint',
           scope: 'client',
           type: String,
           default: defaultLightTheme.variables['--t5ek-pact-outline-color'],
@@ -1457,7 +1450,6 @@ export function createSettings() {
       colorPickerPactAccent: {
         options: {
           name: 'T5EK.Settings.ColorPickerPactAccent.name',
-          hint: 'T5EK.Settings.ColorPickerPactAccent.hint',
           scope: 'client',
           type: String,
           default: defaultLightTheme.variables['--t5ek-pact-accent-color'],
@@ -1472,7 +1464,6 @@ export function createSettings() {
       colorPickerAtWill: {
         options: {
           name: 'T5EK.Settings.ColorPickerAtWill.name',
-          hint: 'T5EK.Settings.ColorPickerAtWill.hint',
           scope: 'client',
           type: String,
           default: defaultLightTheme.variables['--t5ek-atwill-background'],
@@ -1486,7 +1477,6 @@ export function createSettings() {
       colorPickerAtWillOutline: {
         options: {
           name: 'T5EK.Settings.ColorPickerAtWillOutline.name',
-          hint: 'T5EK.Settings.ColorPickerAtWillOutline.hint',
           scope: 'client',
           type: String,
           default: defaultLightTheme.variables['--t5ek-atwill-outline-color'],
@@ -1502,7 +1492,6 @@ export function createSettings() {
       colorPickerAtWillAccent: {
         options: {
           name: 'T5EK.Settings.ColorPickerAtWillAccent.name',
-          hint: 'T5EK.Settings.ColorPickerAtWillAccent.hint',
           scope: 'client',
           type: String,
           default: defaultLightTheme.variables['--t5ek-atwill-accent-color'],
@@ -1519,7 +1508,6 @@ export function createSettings() {
       colorPickerInnate: {
         options: {
           name: 'T5EK.Settings.ColorPickerInnate.name',
-          hint: 'T5EK.Settings.ColorPickerInnate.hint',
           scope: 'client',
           type: String,
           default: defaultLightTheme.variables['--t5ek-innate-background'],
@@ -1533,7 +1521,6 @@ export function createSettings() {
       colorPickerInnateOutline: {
         options: {
           name: 'T5EK.Settings.ColorPickerInnateOutline.name',
-          hint: 'T5EK.Settings.ColorPickerInnateOutline.hint',
           scope: 'client',
           type: String,
           default: defaultLightTheme.variables['--t5ek-innate-outline'],
@@ -1549,7 +1536,6 @@ export function createSettings() {
       colorPickerInnateAccent: {
         options: {
           name: 'T5EK.Settings.ColorPickerInnateAccent.name',
-          hint: 'T5EK.Settings.ColorPickerInnateAccent.hint',
           scope: 'client',
           type: String,
           default: defaultLightTheme.variables['--t5ek-innate-accent'],
@@ -1566,7 +1552,6 @@ export function createSettings() {
       colorPickerAlwaysPrepared: {
         options: {
           name: 'T5EK.Settings.ColorPickerAlwaysPrepared.name',
-          hint: 'T5EK.Settings.ColorPickerAlwaysPrepared.hint',
           scope: 'client',
           type: String,
           default:
@@ -1583,7 +1568,6 @@ export function createSettings() {
       colorPickerAlwaysPreparedOutline: {
         options: {
           name: 'T5EK.Settings.ColorPickerAlwaysPreparedOutline.name',
-          hint: 'T5EK.Settings.ColorPickerAlwaysPreparedOutline.hint',
           scope: 'client',
           type: String,
           default:
@@ -1600,7 +1584,6 @@ export function createSettings() {
       colorPickerAlwaysPreparedAccent: {
         options: {
           name: 'T5EK.Settings.ColorPickerAlwaysPreparedAccent.name',
-          hint: 'T5EK.Settings.ColorPickerAlwaysPreparedAccent.hint',
           scope: 'client',
           type: String,
           default:
