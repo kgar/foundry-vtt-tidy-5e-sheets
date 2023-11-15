@@ -29,7 +29,7 @@
 
 {#if $settingStore.useMulticlassSpellbookFilter}
   <ItemFormGroup
-    labelText="{localize('T5EK.SpellClass')}}"
+    labelText="{localize('T5EK.SpellClass')}"
     field="flags.{CONSTANTS.MODULE_ID}.parentClass"
     let:inputId
   >
