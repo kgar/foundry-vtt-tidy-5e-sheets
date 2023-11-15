@@ -100,7 +100,7 @@
         {/if}
 
         <div class="item-name">
-          <div class="item-image" style="--bg-image: url('/{item.img}');">
+          <div class="item-image" style="--bg-image: url('{item.img}');">
             <i class="fa fa-dice-d20" />
           </div>
         </div>
