@@ -29,31 +29,31 @@
 {/if}
 
 <CheckboxSetting
-  bind:value={$context.enableClassicControlsForCharacter}
-  name={SettingsProvider.settings.enableClassicControlsForCharacter.options.name}
-  hint={SettingsProvider.settings.enableClassicControlsForCharacter.options.hint}
-  id="enableClassicControlsForCharacter"
+  bind:value={$context.useClassicControlsForCharacter}
+  name={SettingsProvider.settings.useClassicControlsForCharacter.options.name}
+  hint={SettingsProvider.settings.useClassicControlsForCharacter.options.hint}
+  id="useClassicControlsForCharacter"
 />
 
 <CheckboxSetting
-  bind:value={$context.characterJournalTabDisabled}
-  name={'T5EK.Settings.JournalTab.name'}
-  hint={'T5EK.Settings.JournalTab.hint'}
-  id="characterJournalTabDisabled"
+  bind:value={$context.useJournalTabForCharacter}
+  name={'T5EK.Settings.UseJournalTabForCharacter.name'}
+  hint={'T5EK.Settings.UseJournalTabForCharacter.hint'}
+  id="useJournalTabForCharacter"
 />
 
 <CheckboxSetting
-  bind:value={$context.classListDisabled}
-  name={'T5EK.Settings.ClassList.name'}
-  hint={'T5EK.Settings.ClassList.hint'}
-  id="classListDisabled"
+  bind:value={$context.showClassList}
+  name={'T5EK.Settings.ShowClassList.name'}
+  hint={'T5EK.Settings.ShowClassList.hint'}
+  id="showClassList"
 />
 
 <CheckboxSetting
-  bind:value={$context.inspirationAnimationDisabled}
+  bind:value={$context.animateInspiration}
   name={'T5EK.Settings.InspirationAnimation.name'}
   hint={'T5EK.Settings.InspirationAnimation.hint'}
-  id="inspirationAnimationDisabled"
+  id="animateInspiration"
 />
 
 <CheckboxSetting
@@ -64,96 +64,96 @@
 />
 
 <CheckboxSetting
-  bind:value={$context.inspirationOnHover}
-  name={'T5EK.Settings.InspirationOnHover.name'}
-  hint={'T5EK.Settings.InspirationOnHover.hint'}
-  id="inspirationOnHover"
+  bind:value={$context.showInspirationOnHover}
+  name={'T5EK.Settings.ShowInspirationOnHover.name'}
+  hint={'T5EK.Settings.ShowInspirationOnHover.hint'}
+  id="showInspirationOnHover"
 />
 
 <CheckboxSetting
-  bind:value={$context.exhaustionOnHover}
-  name={'T5EK.Settings.ExhaustionOnHover.name'}
-  hint={'T5EK.Settings.ExhaustionOnHover.hint'}
-  id="exhaustionOnHover"
+  bind:value={$context.showExhaustionOnHover}
+  name={'T5EK.Settings.ShowExhaustionOnHover.name'}
+  hint={'T5EK.Settings.ShowExhaustionOnHover.hint'}
+  id="showExhaustionOnHover"
 />
 
 <CheckboxSetting
-  bind:value={$context.hpBarDisabled}
-  name={'T5EK.Settings.HpBar.name'}
-  hint={'T5EK.Settings.HpBar.hint'}
-  id="hpBarDisabled"
+  bind:value={$context.useHpBar}
+  name={'T5EK.Settings.UseHpBar.name'}
+  hint={'T5EK.Settings.UseHpBar.hint'}
+  id="useHpBar"
 />
 
 <CheckboxSetting
-  bind:value={$context.hpOverlayDisabled}
-  name={'T5EK.Settings.HpOverlay.name'}
-  hint={'T5EK.Settings.HpOverlay.hint'}
-  id="hpOverlayDisabled"
+  bind:value={$context.useHpOverlay}
+  name={'T5EK.Settings.UseHpOverlay.name'}
+  hint={'T5EK.Settings.UseHpOverlay.hint'}
+  id="useHpOverlay"
 />
 
 <CheckboxSetting
-  bind:value={$context.traitsTogglePc}
-  name={'T5EK.Settings.TraitsTogglePc.name'}
-  hint={'T5EK.Settings.TraitsTogglePc.hint'}
-  id="traitsTogglePc"
+  bind:value={$context.toggleEmptyCharacterTraits}
+  name={'T5EK.Settings.ToggleEmptyCharacterTraits.name'}
+  hint={'T5EK.Settings.ToggleEmptyCharacterTraits.hint'}
+  id="toggleEmptyCharacterTraits"
 />
 
 <CheckboxSetting
-  bind:value={$context.traitsMovedBelowResource}
-  name={'T5EK.Settings.TraitsMovedBelowResource.name'}
-  hint={'T5EK.Settings.TraitsMovedBelowResource.hint'}
-  id="traitsMovedBelowResource"
+  bind:value={$context.moveTraitsBelowCharacterResources}
+  name={'T5EK.Settings.MoveTraitsBelowResources.name'}
+  hint={'T5EK.Settings.MoveTraitsBelowResources.hint'}
+  id="moveTraitsBelowCharacterResources"
 />
 
 <CheckboxSetting
-  bind:value={$context.ammoEquippedOnly}
-  name={'T5EK.Settings.AmmoEquippedOnly.name'}
-  hint={'T5EK.Settings.AmmoEquippedOnly.hint'}
-  id="ammoEquippedOnly"
+  bind:value={$context.showEquippedAmmoOnly}
+  name={'T5EK.Settings.ShowEquippedAmmoOnly.name'}
+  hint={'T5EK.Settings.ShowEquippedAmmoOnly.hint'}
+  id="showEquippedAmmoOnly"
 />
 
 <NumberInputSetting
   bind:value={$context.playerSheetWidth}
-  name={'T5EK.Settings.playerSheetWidth.name'}
-  hint={'T5EK.Settings.playerSheetWidth.hint'}
+  name={'T5EK.Settings.PlayerSheetWidth.name'}
+  hint={'T5EK.Settings.PlayerSheetWidth.hint'}
   id="playerSheetWidth"
 />
 
 <CheckboxSetting
-  bind:value={$context.rightClickDisabled}
-  name={'T5EK.Settings.RightClickDisabled.name'}
-  hint={'T5EK.Settings.RightClickDisabled.hint'}
-  id="rightClickDisabled"
+  bind:value={$context.useContextMenu}
+  name={'T5EK.Settings.UseContextMenu.name'}
+  hint={'T5EK.Settings.UseContextMenu.hint'}
+  id="useContextMenu"
 />
 
 <CheckboxSetting
-  bind:value={$context.hideIconsNextToTheItemName}
-  name={'T5EK.Settings.HideIconsNextToTheItemName.name'}
-  hint={'T5EK.Settings.HideIconsNextToTheItemName.hint'}
-  id="hideIconsNextToTheItemName"
+  bind:value={$context.showIconsNextToTheItemName}
+  name={'T5EK.Settings.ShowIconsNextToTheItemName.name'}
+  hint={'T5EK.Settings.ShowIconsNextToTheItemName.hint'}
+  id="showIconsNextToTheItemName"
 />
 
 <CheckboxSetting
-  bind:value={$context.enableSortFavoritesItemsAlphabetically}
-  name={'T5EK.Settings.EnableSortFavoritesItemsAlphabetically.name'}
-  hint={'T5EK.Settings.EnableSortFavoritesItemsAlphabetically.hint'}
-  id="enableSortFavoritesItemsAlphabetically"
+  bind:value={$context.sortFavoriteItemsAlphabetically}
+  name={'T5EK.Settings.SortFavoriteItemsAlphabetically.name'}
+  hint={'T5EK.Settings.SortFavoriteItemsAlphabetically.hint'}
+  id="sortFavoriteItemsAlphabetically"
 />
 
 <h3>{localize('T5EK.Settings.MulticlassSpellbookFilterLabel')}</h3>
 
 <CheckboxSetting
-  bind:value={$context.spellClassFilterSelect}
-  name={'T5EK.Settings.SpellClassFilterSelect.name'}
-  hint={'T5EK.Settings.SpellClassFilterSelect.hint'}
-  id="spellClassFilterSelect"
+  bind:value={$context.useMulticlassSpellbookFilter}
+  name={'T5EK.Settings.UseMulticlassSpellbookFilter.name'}
+  hint={'T5EK.Settings.UseMulticlassSpellbookFilter.hint'}
+  id="useMulticlassSpellbookFilter"
 />
 
 <CheckboxSetting
-  bind:value={$context.spellClassFilterIconReplace}
-  name={'T5EK.Settings.SpellClassFilterIconReplace.name'}
-  hint={'T5EK.Settings.SpellClassFilterIconReplace.hint'}
-  id="spellClassFilterIconReplace"
+  bind:value={$context.useSpellClassFilterIcons}
+  name={'T5EK.Settings.UseSpellClassIcons.name'}
+  hint={'T5EK.Settings.UseSpellClassIcons.hint'}
+  id="useSpellClassFilterIcons"
 />
 
 <!-- TODO: Make a little crud-based admin interface for adding / removing these additional classes -->

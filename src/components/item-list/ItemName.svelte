@@ -23,7 +23,7 @@
 >
   <slot />
 </span>
-{#if $settingStore.activeEffectsMarker && hasActiveEffects}
+{#if $settingStore.showActiveEffectsMarker && hasActiveEffects}
   <ActiveEffectsMarker />
 {/if}
 

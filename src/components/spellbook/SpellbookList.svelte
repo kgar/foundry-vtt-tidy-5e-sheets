@@ -60,7 +60,7 @@
           {section.label}
         </span>
         {#if section.usesSlots}
-          {#if !$settingStore.hideSpellSlotMarker}
+          {#if $settingStore.useSpellSlotMarker}
             <SpellSlotMarkers {section} />
           {/if}
           <SpellSlotUses {section} />
@@ -97,7 +97,7 @@
       >
         {localize('DND5E.Usage')}
       </ItemTableColumn>
-      {#if $context.owner && $context.classicControlsEnabled}
+      {#if $context.owner && $context.useClassicControls}
         <ItemTableColumn baseWidth={classicControlsBaseWidth} />
       {/if}
     </ItemTableHeaderRow>
@@ -130,7 +130,7 @@
             <ItemUses item={spell} />
           </ItemTableCell>
         {/if}
-        {#if allowFavorites && !$settingStore.hideIconsNextToTheItemName && FoundryAdapter.tryGetFlag(spell, 'favorite')}
+        {#if allowFavorites && $settingStore.showIconsNextToTheItemName && FoundryAdapter.tryGetFlag(spell, 'favorite')}
           <InlineFavoriteIcon />
         {/if}
         <ItemTableCell baseWidth={spellComponentsBaseWidth} cssClass="no-gap">
@@ -168,7 +168,7 @@
         >
           {spell.labels.activation}
         </ItemTableCell>
-        {#if $context.owner && $context.classicControlsEnabled}
+        {#if $context.owner && $context.useClassicControls}
           <ItemTableCell baseWidth={classicControlsBaseWidth}>
             <ItemControls>
               {#if FoundryAdapter.canPrepareSpell(spell)}

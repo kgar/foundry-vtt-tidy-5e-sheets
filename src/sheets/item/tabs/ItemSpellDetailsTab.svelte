@@ -27,9 +27,9 @@
 
 <h3 class="form-header">{localize('DND5E.SpellDetails')}</h3>
 
-{#if $settingStore.spellClassFilterSelect}
+{#if $settingStore.useMulticlassSpellbookFilter}
   <ItemFormGroup
-    labelText="{localize('T5EK.SpellClass')}}"
+    labelText="{localize('T5EK.SpellClass')}"
     field="flags.{CONSTANTS.MODULE_ID}.parentClass"
     let:inputId
   >

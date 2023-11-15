@@ -21,7 +21,7 @@
     <button
       type="button"
       class="rest short-rest inline-icon-button"
-      title={localize('T5EK.RestS')}
+      title={localize('T5EK.ShortRest')}
       on:click={(ev) => $context.shortRest(ev)}
       disabled={!$context.owner}
     >
@@ -30,7 +30,7 @@
     <button
       type="button"
       class="rest long-rest inline-icon-button"
-      title={localize('T5EK.RestL')}
+      title={localize('T5EK.LongRest')}
       on:click={(ev) => $context.longRest(ev)}
       disabled={!$context.owner}
     >

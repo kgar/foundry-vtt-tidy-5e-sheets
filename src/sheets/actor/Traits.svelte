@@ -207,9 +207,9 @@ c28,32.6,51.5,72.7,62,91.7c2.8,5,9.9,5.1,12.8,0.2c14-23.3,44.3-83.4,44.3-166.9C4
       on:click|stopPropagation|preventDefault={() => toggleTraitsExpanded()}
     >
       {#if traitsExpanded}
-        {localize('T5EK.Hide')} {localize('T5EK.TraitsEmpty')}
+        {localize('T5EK.HideEmptyTraits')}
       {:else}
-        {localize('T5EK.Show')} {localize('T5EK.TraitsEmpty')}
+        {localize('T5EK.ShowEmptyTraits')}
       {/if}
     </button>
   {/if}

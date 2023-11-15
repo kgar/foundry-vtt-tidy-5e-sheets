@@ -105,7 +105,7 @@
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <div
   class="item-table-row {cssClass}"
-  class:show-item-count-on-hover={!$settingStore.quantityAlwaysShownEnabled}
+  class:show-item-count-on-hover={!$settingStore.alwaysShowItemQuantity}
   data-context-menu={contextMenu?.type}
   data-context-menu-entity-id={contextMenu?.id}
   on:mousedown={(event) => dispatcher('mousedown', event)}

@@ -1,0 +1,548 @@
+{
+  "T5EK.Tidy5eSheet": "Tidy 5e Character Sheet",
+  "T5EK.Tidy5eNPC": "Tidy 5e NPC Sheet",
+  "T5EK.Tidy5eItemSheet": "Tidy 5e Item Sheet",
+  "T5EK.Tidy5eVehicle": "Tidy 5e Vechicle Sheet",
+  "T5EK.PlayerName": "Player Name",
+  "T5EK.Gender": "Gender",
+  "T5EK.Age": "Age",
+  "T5EK.Weight": "Weight",
+  "T5EK.Height": "Height",
+  "T5EK.Eyes": "Eyes",
+  "T5EK.Skin": "Skin",
+  "T5EK.Hair": "Hair",
+  "T5EK.EditActorImage": "tasto sinistro: modifica immagine",
+  "T5EK.ShowActorImage": "tasto destro: mostra ritratto PG",
+  "T5EK.ShowPortraitArt": "mostra ritratto",
+  "T5EK.ShowTokenArt": "mostra token",
+  "T5EK.ShowItemImage": "right click: show item art",
+  "T5EK.ShowItemArt": "show image",
+
+  "T5EK.Exhaustion0": "Nessun effetto negativo",
+  "T5EK.Exhaustion1": "Svantaggio Sulle Prove di Caratteristica",
+  "T5EK.Exhaustion2": "Velocità dimezzata",
+  "T5EK.Exhaustion3": "Svantaggio sui Tiri per Colpire e sui Tiri Salvezza",
+  "T5EK.Exhaustion4": "Punti ferita massimi dimezzati",
+  "T5EK.Exhaustion5": "Velocità ridotta a 0",
+  "T5EK.Exhaustion6": "Morte",
+
+  "T5EK.AbbrInitiative": "Ini",
+
+  "T5EK.RestHint": "Riposati",
+  "T5EK.ShortRest": "Riposo Breve",
+  "T5EK.LongRest": "Riposo Lungo",
+  "T5EK.HitDiceRollAverage": "Right Click: Average",
+
+  "T5EK.Journal": "Diario",
+
+  "T5EK.RestoreOnRest": "Ripristina dopo un riposo",
+
+  "T5EK.JournalPersonsOfInterest": "Persone di interesse",
+  "T5EK.JournalLocationsOfInterest": "Luoghi di interesse",
+  "T5EK.JournalQuests": "Missioni",
+  "T5EK.JournalMisc": "Miscellanea",
+  "T5EK.JournalEntries": "Appunti Diario",
+  "T5EK.TogglePersonalityInfo": "Attiva/disattiva le informazioni sulla personalità",
+
+  "T5EK.SheetEdit.Enable.Hint": null,
+  "T5EK.SheetEdit.Disable.Hint": null,
+  "T5EK.SheetEdit.Description": "Attiva/disattiva la visibilità dei pulsanti di aggiunta/eliminazione e delle sezioni vuote",
+
+  "T5EK.SheetLock.Unlock.Hint": null,
+  "T5EK.SheetLock.Lock.Hint": null,
+  "T5EK.SheetLock.Description": null,
+
+  "T5EK.ContextMenuActionEquip": null,
+  "T5EK.ContextMenuActionUnequip": null,
+  "T5EK.ContextMenuActionAttune": null,
+  "T5EK.ContextMenuActionUnattune": null,
+  "T5EK.ContextMenuActionPrepare": null,
+  "T5EK.ContextMenuActionUnprepare": null,
+  "T5EK.ContextMenuActionEdit": null,
+  "T5EK.ContextMenuActionDelete": null,
+
+  "T5EK.EmptySection": "Questa sezione è vuota. Sblocca il foglio per modificare.",
+  "T5EK.GMOnlyEdit": "Solo il tuo GM può modificare questa sezione.",
+
+  "T5EK.AttunementWarning": "Avviso su \"sintonizzazione\": non puoi sintonizzarti su più di {number} oggetti!",
+  "T5EK.AttunementItems": "Oggetti Sincronizzati",
+  "T5EK.AttunementMax": "Massimi Sincronizzati",
+
+  "T5EK.GridLayout": "Layout a Griglia",
+  "T5EK.ListLayout": "Layout a Lista",
+  "T5EK.LayoutNotSupported": null,
+
+  "T5EK.Encumbrance": "Ingombro",
+
+  "T5EK.AddFavorite": "Aggiungi ai Preferiti",
+  "T5EK.Favorite": "Preferito",
+  "T5EK.RemoveFavorite": "Rimuovi dai Preferiti",
+
+  "T5EK.ShowNotProficientSkills": null,
+  "T5EK.HideNotProficientSkills": null,
+  "T5EK.ShowEmptyTraits": null,
+  "T5EK.HideEmptyTraits": null,
+
+  "T5EK.Abilities": "Caratteristiche",
+
+  "T5EK.Environment": "Ambiente",
+
+  "T5EK.Search": null,
+  "T5EK.SearchClear": null,
+  "T5EK.SearchHint": "Inizia a digitare ciò che stai cercando.",
+
+  "T5EK.ItemCardsKeyHint": "hold Key to interact with card.",
+  "T5EK.ItemCardsMouseHint": "middle mouse to view/edit item.",
+
+  "T5EK.AbbrMod": "Mod",
+  "T5EK.AbbrSavingThrow": "Salva",
+  "T5EK.SpellAttackMod": "Mod Attacco",
+  "T5EK.PreparedSpells": "Incantesimi Preparati",
+  "T5EK.PreparedSpellsMax": "Massimi incantesimi praparati",
+
+  "T5EK.TokenLinked": "Token collegato all'attore",
+  "T5EK.TokenUnlinked": "Token non collegato all'attore",
+
+  "T5EK.ItemDetailsHeadline": "Meccaniche/Note di Colore",
+
+  "T5EK.SpellClass": null,
+
+  "T5EK.Class.Artificer": null,
+  "T5EK.Class.Barbarian": null,
+  "T5EK.Class.Bard": null,
+  "T5EK.Class.Cleric": null,
+  "T5EK.Class.Custom": null,
+  "T5EK.Class.Druid": null,
+  "T5EK.Class.Fighter": null,
+  "T5EK.Class.Monk": null,
+  "T5EK.Class.Paladin": null,
+  "T5EK.Class.Ranger": null,
+  "T5EK.Class.Rogue": null,
+  "T5EK.Class.Sorcerer": null,
+  "T5EK.Class.Warlock": null,
+  "T5EK.Class.Wizard": null,
+
+  "T5EK.OriginSummaryConfig": null,
+
+  "T5EK.Settings.MulticlassSpellbookFilterLabel": null,
+
+  "T5EK.Settings.SheetMenu": {
+    "name": null,
+    "hint": null,
+    "label": "Impostazioni Scheda",
+    "title": null
+  },
+  "T5EK.Settings.TabPlayers": {
+    "tabLabel": null,
+    "header": null
+  },
+  "T5EK.Settings.TabNPCs": {
+    "tabLabel": null,
+    "header": null
+  },
+  "T5EK.Settings.TabVehicles": {
+    "tabLabel": null,
+    "header": null
+  },
+  "T5EK.Settings.TabGM": {
+    "tabLabel": null,
+    "header": null
+  },
+  "T5EK.Settings.TabLocks": {
+    "tabLabel": null,
+    "header": null,
+    "hint": null,
+    "hint2": null,
+    "labelGeneralLocks": null,
+    "labelInventoryLocks": null,
+    "labelFeaturesLocks": null
+  },
+  "T5EK.Settings.TabInfo": {
+    "tabLabel": null,
+    "header": null
+  },
+  "T5EK.Settings.ItemCardsForAllItems": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.ItemCardsForNPCs": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.ItemCardsAreFloating": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.ItemCardsDelay": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.ItemCardsFixKey": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.DefaultTheme": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.SheetTheme": {
+    "name": "Tidy 5e colore tema.",
+    "hint": "Seleziona il tema di colore chiaro predefinito o quello alternativo scuro.",
+    "default": null,
+    "light": null,
+    "dark": null
+  },
+  "T5EK.Settings.UseClassicControls": {
+    "name": "Utilizza i controlli classici degli oggetti nella visualizzazione \"elenco\".",
+    "hint": "Mostra sempre i controlli degli elementi e disabilita il menu di scelta rapida. Si applica solo nell'inventario di oggetti/incantesimi per i PC nella visualizzazione \"elenco\""
+  },
+  "T5EK.Settings.ShowIconsNextToTheItemName": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.ShowTraitLabels": {
+    "name": "Mostra le etichette relative ai tratti.",
+    "hint": "Per impostazione predefinita, vengono visualizzate solo le icone relative ai tratti. Seleziona per visualizzare anche le etichette."
+  },
+  "T5EK.Settings.ShowPlayerName": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.UseJournalTabForCharacter": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.UseJournalTabForNPC": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.ShowClassList": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.InspirationAnimation": {
+    "name": "Indicatore punti ispirazione non animato.",
+    "hint": "Seleziona per disattivare l'animazione dell'indicatore dei punti ispirazione."
+  },
+  "T5EK.Settings.HideIfZero": {
+    "name": "Nascondi l'indicatore di indebolimento e ispirazione se = 0.",
+    "hint": "Seleziona per nascondere gli indicatori di indebolimento  e ispirazione se = 0. Apparirà al passaggio del mouse."
+  },
+  "T5EK.Settings.ShowInspirationOnHover": {
+    "name": "Mostra l'indicatore di ispirazione solo al passaggio del mouse.",
+    "hint": "Seleziona per mostrare l'indicatore di ispirazione solo quando passi il mouse sopra il ritratto."
+  },
+  "T5EK.Settings.ShowExhaustionOnHover": {
+    "name": "Mostra l'indicatore di indebolimento solo al passaggio del mouse.",
+    "hint": "Seleziona per mostrare l'indicatore di indebolimento solo quando passi il mouse sopra il ritratto."
+  },
+  "T5EK.Settings.UseHpBar": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.UseHpOverlay": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.ToggleEmptyCharacterTraits": {
+    "name": "Attiva/disattiva i tratti se vuoti.",
+    "hint": "Per impostazione predefinita, i tratti \"vuoti\" sono sempre visibili. Seleziona per aggiungere un pulsante di attivazione/disattivazione."
+  },
+  "T5EK.Settings.MoveTraitsBelowResources": {
+    "name": "Sposta i tratti sotto le risorse.",
+    "hint": "Seleziona per spostare i tratti dal lato sinistro a sotto le risorse."
+  },
+  "T5EK.Settings.ShowEquippedAmmoOnly": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.AlwaysShowTraits": {
+    "name": "Mostra sempre i tratti.",
+    "hint": "Per impostazione predefinita, i tratti vuoti sono nascosti da un pulsante di attivazione/disattivazione. Seleziona perché non siano mai nascosti."
+  },
+  "T5EK.Settings.AlwaysShowSkills": {
+    "name": "Mostra sempre le abilità.",
+    "hint": "Per impostazione predefinita, le abilità non competenti sono nascoste da un pulsante di attivazione/disattivazione. Seleziona perché non siano mai nascosti."
+  },
+  "T5EK.Settings.ShowNPCSpellbookTab": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.ShowActiveEffectsMarker": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.UseContextMenu": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.ShowExpandedLimitedView": {
+    "name": "Vista limitata espansa per le schede PG.",
+    "hint": "Mostra l'intera scheda del personaggio (meno il diario) ai giocatori con autorizzazioni limitate."
+  },
+  "T5EK.Settings.UseCircularPortraitStyle": {
+    "name": "Stile ritratto: tondo.",
+    "hint": "Scegli di abilitare i ritratti/icone tondi per gli attori.",
+    "all": "Tutti gli attori",
+    "pc": "PG",
+    "npc": "PNG/Veicoli",
+    "none": "nessuna",
+    "default": null
+  },
+  "T5EK.Settings.UseTotalSheetLock": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.LimitEffectsManagementToGM": {
+    "name": "Solo il GM può modificare gli effetti attivi.",
+    "hint": "Seleziona per evitare che i giocatori modifichino gli effetti attivi sulle loro schede. Continueranno comunque a vedere gli effetti applicati."
+  },
+  "T5EK.Settings.AlwaysShowItemQuantity": {
+    "name": "Mostra sempre la quantità nell'inventario.",
+    "hint": "Seleziona per non nascondere mai la quantità nell'inventario."
+  },
+  "T5EK.Settings.UseInspiration": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.UseVehicleMotion": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.UseExhaustion": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.UseNPCRest": {
+    "name": "Riposo per i PNG.",
+    "hint": "Seleziona per mostrare l'icona/i pulsanti di riposo sulle schede dei PNG."
+  },
+  "T5EK.Settings.ShowNPCRestInChat": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.ShowNPCActorLinkMarker": {
+    "name": "Contrassegna i PNG collegati/non collegati.",
+    "hint": "Aggiunge un bordo colorato e un'icona alle schede dei PNG collegati/non collegati.",
+    "default": "Nessun indicatore di collegamento (predefinito)",
+    "unlinked": "Evidenzia i token non collegati",
+    "linked": "Evidenzia i token collegati",
+    "both": "Evidenzia i token collegati e non collegati"
+  },
+  "T5EK.Settings.DefaultSheetTab": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.HideDeathSavesFromPlayers": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.UseSpellSlotMarker": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.UseCharacterEncumbranceBar": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.UseNPCEncumbranceBar": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.UseVehicleEncumbranceBar": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.NPCSheetWidth": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.PlayerSheetWidth": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.VehicleSheetWidth": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.UseMulticlassSpellbookFilter": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.UseSpellClassIcons": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.SpellClassFilterAdditionalClasses": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.AllowCantripsToBePrepared": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.LockMoneyChanges": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.LockExpChanges": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.LockHpMaxChanges": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.LockLevelSelector": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.LockConfigureSheet": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.LockItemQuantity": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.ColorPickerEnabled": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.ColorPickerPrimaryAccent": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerEquipped": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerHpBar": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerEquippedOutline": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerEquippedAccent": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerPrepared": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerPreparedOutline": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerPreparedAccent": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerPact": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerPactOutline": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerPactAccent": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerAtWill": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerAtWillOutline": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerAtWillAccent": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerInnate": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerInnateOutline": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerInnateAccent": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerAlwaysPrepared": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerAlwaysPreparedOutline": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerAlwaysPreparedAccent": {
+    "name": null
+  },
+  "T5EK.Settings.AllowHpMaxOverride": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.Reset": {
+    "name": null,
+    "hint": null,
+    "dialogs": {
+      "title": null,
+      "content": null,
+      "confirm": null,
+      "cancel": null
+    }
+  },
+  "T5EK.Settings.Debug": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.SortFavoriteItemsAlphabetically": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.PermanentlyUnlockCharacterSheetForGM": {
+    "name": null,
+    "hint": null,
+    "title": null
+  },
+  "T5EK.Settings.PermanentlyUnlockNPCSheetForGM": {
+    "name": null,
+    "hint": null,
+    "title": null
+  },
+  "T5EK.Settings.PermanentlyUnlockVehicleSheetForGM": {
+    "name": null,
+    "hint": null,
+    "title": null
+  },
+  "T5EK.ThemeSettings": {
+    "SheetMenu": {
+      "name": null,
+      "buttonLabel": null,
+      "hint": null
+    },
+    "Sheet": {
+      "title": null,
+      "header": null,
+      "useDefaultLightColors": null,
+      "useDefaultDarkColors": null,
+      "export": null,
+      "import": null,
+      "importDropHint": null,
+      "importError": null,
+      "importSuccess": null,
+      "menuLabel": null,
+      "explanation": null
+    }
+  },
+  "T5EK.FavoriteSpellLevelLabel": null,
+  "T5EK.ApplyChanges": null,
+  "T5EK.SaveChanges": null,
+  "T5EK.VehicleExhaustion0": null,
+  "T5EK.VehicleExhaustion1": null,
+  "T5EK.VehicleExhaustion2": null,
+  "T5EK.VehicleExhaustion3": null,
+  "T5EK.VehicleExhaustion4": null,
+  "T5EK.VehicleExhaustion5": null,
+  "T5EK.VehicleExhaustion6": null,
+  "T5EK.VehicleInMotion": null,
+  "T5EK.VehicleMotionless": null,
+  "T5EK.TotalCrewCount": null,
+  "T5EK.ActionsPerTurn": null,
+  "T5EK.SheetMenu": {
+    "label": null,
+    "themeLabel": null
+  },
+  "T5EK.ActiveEffectsMarkerTitle": null
+}

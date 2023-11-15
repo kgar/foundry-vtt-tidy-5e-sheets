@@ -14,25 +14,25 @@
   const localize = FoundryAdapter.localize;
 
   $: favoriteInventory = sortByNameIfConfigured(
-    $settingStore.enableSortFavoritesItemsAlphabetically,
+    $settingStore.sortFavoriteItemsAlphabetically,
     $context.inventory
       .flatMap((x: any) => x.items)
       .filter(FoundryAdapter.isDocumentFavorited)
   );
 
   $: favoriteFeatures = sortByNameIfConfigured(
-    $settingStore.enableSortFavoritesItemsAlphabetically,
+    $settingStore.sortFavoriteItemsAlphabetically,
     $context.features
       .flatMap((x: any) => x.items)
       .filter(FoundryAdapter.isDocumentFavorited)
   );
 
   function getFavoriteSpells(
-    sortFavoritesItemsAlphabetically: boolean,
+    sortFavoriteItemsAlphabetically: boolean,
     spells: Item5e[]
   ): Item5e[] {
     return sortByNameIfConfigured(
-      sortFavoritesItemsAlphabetically,
+      sortFavoriteItemsAlphabetically,
       spells.filter(FoundryAdapter.isDocumentFavorited)
     );
   }
@@ -64,7 +64,7 @@
 
   {#each $context.spellbook as section}
     {@const favoriteSpells = getFavoriteSpells(
-      $settingStore.enableSortFavoritesItemsAlphabetically,
+      $settingStore.sortFavoriteItemsAlphabetically,
       section.spells
     )}
     {#if favoriteSpells.length}

@@ -26,7 +26,7 @@
       $context.lockHpMaxChanges ||
       $context.lockSensitiveFields}
     percentage={$context.healthPercentage}
-    Bar={!$settingStore.hpBarDisabledVehicle ? HpBar : null}
+    Bar={$settingStore.useHpBarVehicle ? HpBar : null}
   />
 </div>
 

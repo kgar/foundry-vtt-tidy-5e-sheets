@@ -35,7 +35,7 @@
             field="flags.{CONSTANTS.MODULE_ID}.notes1.name"
             value={FoundryAdapter.tryGetFlag($context.actor, 'notes1.name') ??
               ''}
-            placeholder={localize('T5EK.JournalPoi')}
+            placeholder={localize('T5EK.JournalPersonsOfInterest')}
             selectOnFocus={true}
             stopChangePropagation={true}
             disabled={!$context.owner}
@@ -61,7 +61,7 @@
             field="flags.{CONSTANTS.MODULE_ID}.notes2.name"
             value={FoundryAdapter.tryGetFlag($context.actor, 'notes2.name') ??
               ''}
-            placeholder={localize('T5EK.JournalLoi')}
+            placeholder={localize('T5EK.JournalLocationsOfInterest')}
             selectOnFocus={true}
             stopChangePropagation={true}
             disabled={!$context.owner}

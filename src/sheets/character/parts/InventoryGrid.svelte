@@ -67,7 +67,7 @@
       <button
         type="button"
         class="item {getInventoryRowClasses(item)} transparent-button"
-        class:show-item-count-on-hover={!$settingStore.quantityAlwaysShownEnabled}
+        class:show-item-count-on-hover={!$settingStore.alwaysShowItemQuantity}
         data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
         data-context-menu-entity-id={item.id}
         on:click={(event) => $context.owner && item.use({}, { event })}

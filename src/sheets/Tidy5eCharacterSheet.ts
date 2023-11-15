@@ -180,10 +180,10 @@ export class Tidy5eCharacterSheet
           relativeTo: this.actor,
         }
       ),
-      classicControlsEnabled:
-        SettingsProvider.settings.enableClassicControlsForCharacter.get(),
-      characterJournalTabDisabled:
-        SettingsProvider.settings.characterJournalTabDisabled.get(),
+      useClassicControls:
+        SettingsProvider.settings.useClassicControlsForCharacter.get(),
+      useJournalTab:
+        SettingsProvider.settings.useJournalTabForCharacter.get(),
       editable,
       features: sections,
       flawEnrichedHtml: await FoundryAdapter.enrichHtml(
@@ -214,7 +214,7 @@ export class Tidy5eCharacterSheet
       lockLevelSelector: FoundryAdapter.shouldLockLevelSelector(),
       lockMoneyChanges: FoundryAdapter.shouldLockMoneyChanges(),
       lockSensitiveFields:
-        !editable && SettingsProvider.settings.editTotalLockEnabled.get(),
+        !editable && SettingsProvider.settings.useTotalSheetLock.get(),
       notes1EnrichedHtml: await FoundryAdapter.enrichHtml(
         FoundryAdapter.getProperty<string>(
           this.actor,
@@ -288,9 +288,9 @@ export class Tidy5eCharacterSheet
         }
       ),
       useRoundedPortraitStyle: [
-        CONSTANTS.ROUNDED_PORTRAIT_OPTION_ALL as string,
-        CONSTANTS.ROUNDED_PORTRAIT_OPTION_CHARACTER as string,
-      ].includes(SettingsProvider.settings.portraitStyle.get()),
+        CONSTANTS.CIRCULAR_PORTRAIT_OPTION_ALL as string,
+        CONSTANTS.CIRCULAR_PORTRAIT_OPTION_CHARACTER as string,
+      ].includes(SettingsProvider.settings.useCircularPortraitStyle.get()),
     };
 
     debug('Character Sheet context data', context);

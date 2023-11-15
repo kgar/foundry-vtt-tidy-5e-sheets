@@ -13,20 +13,20 @@
   import { warn } from 'src/utils/logging';
   import { settingStore } from 'src/settings/settings';
 
-  // Freeze
+  // Fix Key
   let frozen: boolean = false;
-  $: freezeKey = $settingStore.itemCardsFixKey?.toUpperCase();
+  $: fixKey = $settingStore.itemCardsFixKey?.toUpperCase();
 
-  function detectFreezeStart(ev: KeyboardEvent) {
+  function detectFixStart(ev: KeyboardEvent) {
     if (frozen) {
       return;
     }
 
-    frozen = ev.key?.toUpperCase() === freezeKey;
+    frozen = ev.key?.toUpperCase() === fixKey;
   }
 
-  function detectFreezeStop(ev: KeyboardEvent) {
-    if (ev.key?.toUpperCase() === freezeKey) {
+  function detectFixStop(ev: KeyboardEvent) {
+    if (ev.key?.toUpperCase() === fixKey) {
       frozen = false;
     }
   }
@@ -88,13 +88,13 @@
     }
   }
   function listenForBodyEvents(body: HTMLElement) {
-    body.addEventListener('keydown', detectFreezeStart);
-    body.addEventListener('keyup', detectFreezeStop);
+    body.addEventListener('keydown', detectFixStart);
+    body.addEventListener('keyup', detectFixStop);
     body.addEventListener('mousemove', onMouseMove);
   }
   function stopListeningForBodyEvents(body: HTMLElement) {
-    body.addEventListener('keydown', detectFreezeStart);
-    body.addEventListener('keyup', detectFreezeStop);
+    body.addEventListener('keydown', detectFixStart);
+    body.addEventListener('keyup', detectFixStop);
     body.addEventListener('mousemove', onMouseMove);
   }
   let debug = false;
@@ -258,7 +258,7 @@
 
     <article class="item-info-card-hints">
       <p class:frozen>
-        <span class="key">{freezeKey}</span>
+        <span class="key">{fixKey}</span>
         {localize('T5EK.ItemCardsKeyHint')}
       </p>
       <p><i class="fas fa-mouse" /> {localize('T5EK.ItemCardsMouseHint')}</p>

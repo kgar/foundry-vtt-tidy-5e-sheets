@@ -1,0 +1,548 @@
+{
+  "T5EK.Tidy5eSheet": "Tidy 5e Character Sheet",
+  "T5EK.Tidy5eNPC": "Tidy 5e NPC Sheet",
+  "T5EK.Tidy5eItemSheet": "Tidy 5e Item Sheet",
+  "T5EK.Tidy5eVehicle": "Tidy 5e Vechicle Sheet",
+  "T5EK.PlayerName": "Jméno Hráče",
+  "T5EK.Gender": "Gender",
+  "T5EK.Age": "Věk",
+  "T5EK.Weight": "Váha",
+  "T5EK.Height": "Výška",
+  "T5EK.Eyes": "Oči",
+  "T5EK.Skin": "Kůže",
+  "T5EK.Hair": "Vlasy",
+  "T5EK.EditActorImage": "Levý klik: Upravit obrázek",
+  "T5EK.ShowActorImage": "Pravý klik: Ukázat obrázek postavy",
+  "T5EK.ShowPortraitArt": "ukázat portrét",
+  "T5EK.ShowTokenArt": "ukázat žeton",
+  "T5EK.ShowItemImage": "right click: show item art",
+  "T5EK.ShowItemArt": "show image",
+
+  "T5EK.Exhaustion0": "Bez negativních účinků",
+  "T5EK.Exhaustion1": "Nevýhoda na ověření vlastností",
+  "T5EK.Exhaustion2": "Poloviční rychlost",
+  "T5EK.Exhaustion3": "Nevýhoda na hod na útok a záchranné hody",
+  "T5EK.Exhaustion4": "Poloviční maximální počet životů",
+  "T5EK.Exhaustion5": "Rychlost zredukována na 0",
+  "T5EK.Exhaustion6": "Smrt",
+
+  "T5EK.AbbrInitiative": "Ini",
+
+  "T5EK.RestHint": "Odpočívat",
+  "T5EK.ShortRest": "Krátký odpočinek",
+  "T5EK.LongRest": "Důkladný odpočinek",
+  "T5EK.HitDiceRollAverage": "Right Click: Average",
+
+  "T5EK.Journal": "Deník",
+
+  "T5EK.RestoreOnRest": "Obnovit při odpočinku",
+
+  "T5EK.JournalPersonsOfInterest": "Zájmové osoby",
+  "T5EK.JournalLocationsOfInterest": "Zájmové lokace",
+  "T5EK.JournalQuests": "Úkoly",
+  "T5EK.JournalMisc": "Různé",
+  "T5EK.JournalEntries": "Záznamy deníku",
+  "T5EK.TogglePersonalityInfo": "Přepnout informace o osobnosti",
+
+  "T5EK.SheetEdit.Enable.Hint": null,
+  "T5EK.SheetEdit.Disable.Hint": null,
+  "T5EK.SheetEdit.Description": "Přepne viditelnost tlačítek přidat/smazat a prázdných sekcí",
+
+  "T5EK.SheetLock.Unlock.Hint": null,
+  "T5EK.SheetLock.Lock.Hint": null,
+  "T5EK.SheetLock.Description": null,
+
+  "T5EK.ContextMenuActionEquip": "Vybavit Předmět",
+  "T5EK.ContextMenuActionUnequip": "Odvybavit Předmět",
+  "T5EK.ContextMenuActionAttune": "Sladit se s Předmětem",
+  "T5EK.ContextMenuActionUnattune": "Ukončit Sladění",
+  "T5EK.ContextMenuActionPrepare": "Připravit Kouzlo",
+  "T5EK.ContextMenuActionUnprepare": "Odstranit Připravení",
+  "T5EK.ContextMenuActionEdit": null,
+  "T5EK.ContextMenuActionDelete": null,
+
+  "T5EK.EmptySection": "Tato sekce je prázdná. Pro úpravy odemkněte deník.",
+  "T5EK.GMOnlyEdit": "Pouze váš PJ může upravovat tuto sekci.",
+
+  "T5EK.AttunementWarning": "Varování: Nemůžete se sladit s více než {number} předměty!",
+  "T5EK.AttunementItems": "Sladěné předměty",
+  "T5EK.AttunementMax": "Maximální sladění",
+
+  "T5EK.GridLayout": "Mřížkové rozvržení",
+  "T5EK.ListLayout": "Seznamové rozvržení",
+  "T5EK.LayoutNotSupported": null,
+
+  "T5EK.Encumbrance": "Zatížení",
+
+  "T5EK.AddFavorite": "Přidat do oblíbených",
+  "T5EK.Favorite": "Oblíbený",
+  "T5EK.RemoveFavorite": "Odebrat z oblíbených",
+
+  "T5EK.ShowNotProficientSkills": null,
+  "T5EK.HideNotProficientSkills": null,
+  "T5EK.ShowEmptyTraits": null,
+  "T5EK.HideEmptyTraits": null,
+
+  "T5EK.Abilities": "Vlastnosti",
+
+  "T5EK.Environment": "Prostředí",
+
+  "T5EK.Search": null,
+  "T5EK.SearchClear": null,
+  "T5EK.SearchHint": "Začněte psát název toho, co hledáte.",
+
+  "T5EK.ItemCardsKeyHint": "drž Klávesu pro interakci s kartou.",
+  "T5EK.ItemCardsMouseHint": "prostřední tlačítko pro zobrazení/editaci předmětu.",
+
+  "T5EK.AbbrMod": "Oprava",
+  "T5EK.AbbrSavingThrow": "Uložit",
+  "T5EK.SpellAttackMod": "Modifikace útoku",
+  "T5EK.PreparedSpells": "Připravená kouzla",
+  "T5EK.PreparedSpellsMax": "Maximum pro připravená kouzla",
+
+  "T5EK.TokenLinked": "Žeton je propojený s aktorem",
+  "T5EK.TokenUnlinked": "Žeton není propojený s aktorem",
+
+  "T5EK.ItemDetailsHeadline": "Mechaniky/Popisek",
+
+  "T5EK.SpellClass": null,
+
+  "T5EK.Class.Artificer": null,
+  "T5EK.Class.Barbarian": null,
+  "T5EK.Class.Bard": null,
+  "T5EK.Class.Cleric": null,
+  "T5EK.Class.Custom": null,
+  "T5EK.Class.Druid": null,
+  "T5EK.Class.Fighter": null,
+  "T5EK.Class.Monk": null,
+  "T5EK.Class.Paladin": null,
+  "T5EK.Class.Ranger": null,
+  "T5EK.Class.Rogue": null,
+  "T5EK.Class.Sorcerer": null,
+  "T5EK.Class.Warlock": null,
+  "T5EK.Class.Wizard": null,
+
+  "T5EK.OriginSummaryConfig": null,
+
+  "T5EK.Settings.MulticlassSpellbookFilterLabel": null,
+
+  "T5EK.Settings.SheetMenu": {
+    "name": null,
+    "hint": null,
+    "label": "Nastavení deníků",
+    "title": "Tidy5e Nastavení Deníků"
+  },
+  "T5EK.Settings.TabPlayers": {
+    "tabLabel": "Hráči",
+    "header": "Deníky Hráčských Postav"
+  },
+  "T5EK.Settings.TabNPCs": {
+    "tabLabel": null,
+    "header": null
+  },
+  "T5EK.Settings.TabVehicles": {
+    "tabLabel": null,
+    "header": null
+  },
+  "T5EK.Settings.TabGM": {
+    "tabLabel": "Nastavení PJ",
+    "header": "Nastavení Deníků PJ"
+  },
+  "T5EK.Settings.TabLocks": {
+    "tabLabel": null,
+    "header": null,
+    "hint": null,
+    "hint2": null,
+    "labelGeneralLocks": null,
+    "labelInventoryLocks": null,
+    "labelFeaturesLocks": null
+  },
+  "T5EK.Settings.TabInfo": {
+    "tabLabel": "Info",
+    "header": "Info"
+  },
+  "T5EK.Settings.ItemCardsForAllItems": {
+    "name": "Zobrazit info karty předmětů ve všech rozvrženích.",
+    "hint": "Vypni, pokud chceš, aby info karty předmětů vyjížděly pouze v mřížkovém rozvržení."
+  },
+  "T5EK.Settings.ItemCardsForNPCs": {
+    "name": "Zobrazit info karty předmětů pro CP/dopravní prostředky.",
+    "hint": "Vypni, pokud nechceš, aby info karty předmětů vyjížděly pro CP/dopravní prostředky."
+  },
+  "T5EK.Settings.ItemCardsAreFloating": {
+    "name": "Info karta předmětu plovoucí vedle kurzoru.",
+    "hint": "Zapni, aby se info karta předmětu odepla z deníku a zobrazila se jako plovoucí rámeček u kurzoru. Toto je nejlépe použít se spožděným zobrazením. Také užitečné, pokud je deník ve vlastním okně."
+  },
+  "T5EK.Settings.ItemCardsDelay": {
+    "name": "Zpozdi zobrazení info karet.",
+    "hint": "Info Karta se zobrazí při najetí na předmět po dobu delší než hodnota v milisekundách (0 = bez spoždění, 300 je standard)."
+  },
+  "T5EK.Settings.ItemCardsFixKey": {
+    "name": "Klávesa, jejimž držení se interaguje s Kartou Předmětu.",
+    "hint": "Uveďte klávesu (např.: x) použitou pro interakci s kartou předmětu. Může se jednat o kteroukoliv klávesu kromě funkčních kláves (ctrl, alt, atd.)"
+  },
+  "T5EK.Settings.DefaultTheme": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.SheetTheme": {
+    "name": "Barevné schéma pro Tidy5e.",
+    "hint": "Použije buď výchozí světlé nebo alternativní tmavé barevné schéma pro Tidy5e.",
+    "default": null,
+    "light": null,
+    "dark": null
+  },
+  "T5EK.Settings.UseClassicControls": {
+    "name": "Použít klasické ovládání předmětů v seznamu.",
+    "hint": "Vždy zobrazit ovládací prvky předmětů a zakázat kontextové menu. Platí pouze pro inventář předmětů/kouzel hráčů v seznamovém rozvržení."
+  },
+  "T5EK.Settings.ShowIconsNextToTheItemName": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.ShowTraitLabels": {
+    "name": "Zobrazit popisky rysů.",
+    "hint": "Ve výchozím nastavení se zobrazují pouze ikony rysů. Povolte pro zobrazení popisků."
+  },
+  "T5EK.Settings.ShowPlayerName": {
+    "name": "Zobrazit jméno hráče.",
+    "hint": "Zaškrtnutím zobrazíte pole s jménem hráče pod jménem postavy."
+  },
+  "T5EK.Settings.UseJournalTabForCharacter": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.UseJournalTabForNPC": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.ShowClassList": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.InspirationAnimation": {
+    "name": "Žádná animace indikátoru inspirace.",
+    "hint": "Zaškrtnutím deaktivujete zářící animaci indikátoru inspirace."
+  },
+  "T5EK.Settings.HideIfZero": {
+    "name": "Skrýt únavu a inspiraci, pokud nejsou dostupné (0).",
+    "hint": "Zaškrtnutím skryje únavu a inspiraci, pokud mají hodnotu 0. Objeví se při najetí myší."
+  },
+  "T5EK.Settings.ShowInspirationOnHover": {
+    "name": "Zobrazit ukazatel inspirace jen při najetí myši.",
+    "hint": "Zaškrtnutím bude ukazatel inspirace viditelný pouze při najetí myši na portrét."
+  },
+  "T5EK.Settings.ShowExhaustionOnHover": {
+    "name": "Zobrazit ukazatel únavy jen při najetí myši.",
+    "hint": "Zaškrtnutím bude ukazatel únavy viditelný pouze při najetí myši na portrét."
+  },
+  "T5EK.Settings.UseHpBar": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.UseHpOverlay": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.ToggleEmptyCharacterTraits": {
+    "name": "Přepínání prázdných rysů postavy.",
+    "hint": "V základním nastavení jsou prázdné rysy vždy viditelné. Zaškrtněte pro přidání tlačítka pro přepnutí prázdných rysů."
+  },
+  "T5EK.Settings.MoveTraitsBelowResources": {
+    "name": "Přesunout rysy pod zdroje.",
+    "hint": "Zaškrtněte pro přesunutí rysů z levé strany pod zdroje."
+  },
+  "T5EK.Settings.ShowEquippedAmmoOnly": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.AlwaysShowTraits": {
+    "name": "Vždy zobrazovat rysy.",
+    "hint": "V základním nastavení jsou prázdné rysy skryty přepínacím tlačítkem. Zaškrtněte, aby se nikdy neskrývaly."
+  },
+  "T5EK.Settings.AlwaysShowSkills": {
+    "name": "Vždy zobrazovat dovednosti.",
+    "hint": "V základním nastavení jsou dovednosti bez zdatnosti skryty přepínacím tlačítkem. Zaškrtněte, aby se nikdy neskrývaly."
+  },
+  "T5EK.Settings.ShowNPCSpellbookTab": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.ShowActiveEffectsMarker": {
+    "name": "Zobrazovat na předmětech Značku Aktivního Efektu.",
+    "hint": "Zaškrtněte, pokud chcete vidět, zda mají předměty na sobě aktivní efekt (pouze v řádkovém zobrazení)."
+  },
+  "T5EK.Settings.UseContextMenu": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.ShowExpandedLimitedView": {
+    "name": "Rozšířené Omezené zobrazení pro deník postav.",
+    "hint": "Zobrazí celý deník postavy (kromě poznámek) hráčům s Omezeným oprávněním."
+  },
+  "T5EK.Settings.UseCircularPortraitStyle": {
+    "name": "Kruhový styl portrétu.",
+    "hint": "Zvolte pro zapnutí kruhových portrétů/ikon pro aktory.",
+    "all": "Všichni aktoři",
+    "pc": "Hráči",
+    "npc": "CP/Dop. prostředky",
+    "none": "žádné",
+    "default": "žádné"
+  },
+  "T5EK.Settings.UseTotalSheetLock": {
+    "name": "Zamknout citlivá pole.",
+    "hint": "Zaškrtněte, aby se zabránilo nechtěné změně citlivých, povětšinou neměnných hodnot."
+  },
+  "T5EK.Settings.LimitEffectsManagementToGM": {
+    "name": "Pouze PJ může upravovat aktivní efekty.",
+    "hint": "Zašrtnutím zakáže hráčům upravovat aktivní efekty ve svých denících. Pořád však uvidí aplikované efekty."
+  },
+  "T5EK.Settings.AlwaysShowItemQuantity": {
+    "name": "Vždy zobrazovat množství předmětů.",
+    "hint": "Povolte pokud se nemá skrývat množství předmětů."
+  },
+  "T5EK.Settings.UseInspiration": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.UseVehicleMotion": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.UseExhaustion": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.UseNPCRest": {
+    "name": "Odpočinek pro CP.",
+    "hint": "Povolí zobrazení ikony/tlačítek pro odpočinek v denících cizích postav."
+  },
+  "T5EK.Settings.ShowNPCRestInChat": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.ShowNPCActorLinkMarker": {
+    "name": "Označit propojené/nepropojené cizí postavy.",
+    "hint": "Přidá barevné ohraničení a ikonu na propojené/nepropojené deníky cizích postav.",
+    "default": "Bez označení propojení (výchozí)",
+    "unlinked": "Zvýraznit nepropojené žetony",
+    "linked": "Zvýraznit propojené žetony.",
+    "both": "Zvýraznit propojené a nepropojené žetony"
+  },
+  "T5EK.Settings.DefaultSheetTab": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.HideDeathSavesFromPlayers": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.UseSpellSlotMarker": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.UseCharacterEncumbranceBar": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.UseNPCEncumbranceBar": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.UseVehicleEncumbranceBar": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.NPCSheetWidth": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.PlayerSheetWidth": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.VehicleSheetWidth": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.UseMulticlassSpellbookFilter": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.UseSpellClassIcons": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.SpellClassFilterAdditionalClasses": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.AllowCantripsToBePrepared": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.LockMoneyChanges": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.LockExpChanges": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.LockHpMaxChanges": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.LockLevelSelector": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.LockConfigureSheet": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.LockItemQuantity": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.ColorPickerEnabled": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.ColorPickerPrimaryAccent": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerEquipped": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerHpBar": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerEquippedOutline": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerEquippedAccent": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerPrepared": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerPreparedOutline": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerPreparedAccent": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerPact": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerPactOutline": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerPactAccent": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerAtWill": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerAtWillOutline": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerAtWillAccent": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerInnate": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerInnateOutline": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerInnateAccent": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerAlwaysPrepared": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerAlwaysPreparedOutline": {
+    "name": null
+  },
+  "T5EK.Settings.ColorPickerAlwaysPreparedAccent": {
+    "name": null
+  },
+  "T5EK.Settings.AllowHpMaxOverride": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.Reset": {
+    "name": null,
+    "hint": null,
+    "dialogs": {
+      "title": null,
+      "content": null,
+      "confirm": null,
+      "cancel": null
+    }
+  },
+  "T5EK.Settings.Debug": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.SortFavoriteItemsAlphabetically": {
+    "name": null,
+    "hint": null
+  },
+  "T5EK.Settings.PermanentlyUnlockCharacterSheetForGM": {
+    "name": null,
+    "hint": null,
+    "title": null
+  },
+  "T5EK.Settings.PermanentlyUnlockNPCSheetForGM": {
+    "name": null,
+    "hint": null,
+    "title": null
+  },
+  "T5EK.Settings.PermanentlyUnlockVehicleSheetForGM": {
+    "name": null,
+    "hint": null,
+    "title": null
+  },
+  "T5EK.ThemeSettings": {
+    "SheetMenu": {
+      "name": null,
+      "buttonLabel": null,
+      "hint": null
+    },
+    "Sheet": {
+      "title": null,
+      "header": null,
+      "useDefaultLightColors": null,
+      "useDefaultDarkColors": null,
+      "export": null,
+      "import": null,
+      "importDropHint": null,
+      "importError": null,
+      "importSuccess": null,
+      "menuLabel": null,
+      "explanation": null
+    }
+  },
+  "T5EK.FavoriteSpellLevelLabel": null,
+  "T5EK.ApplyChanges": null,
+  "T5EK.SaveChanges": null,
+  "T5EK.VehicleExhaustion0": null,
+  "T5EK.VehicleExhaustion1": null,
+  "T5EK.VehicleExhaustion2": null,
+  "T5EK.VehicleExhaustion3": null,
+  "T5EK.VehicleExhaustion4": null,
+  "T5EK.VehicleExhaustion5": null,
+  "T5EK.VehicleExhaustion6": null,
+  "T5EK.VehicleInMotion": null,
+  "T5EK.VehicleMotionless": null,
+  "T5EK.TotalCrewCount": null,
+  "T5EK.ActionsPerTurn": null,
+  "T5EK.SheetMenu": {
+    "label": null,
+    "themeLabel": null
+  },
+  "T5EK.ActiveEffectsMarkerTitle": null
+}
