@@ -214,7 +214,7 @@
   },
   "T5EK.Settings.UseJournalTabForNPC": {
     "name": "Use NPC journal",
-    "hint": "Shows the npc journal tab."
+    "hint": "Shows the NPC journal tab."
   },
   "T5EK.Settings.ShowClassList": {
     "name": "Show class list",
@@ -238,19 +238,19 @@
   },
   "T5EK.Settings.UseHpBar": {
     "name": "Use HP bar",
-    "hint": "Shows a colored bar indicating the remaining HP. Health numbers will still be visible."
+    "hint": "Shows a colored bar indicating remaining HP. Health numbers will still be visible."
   },
   "T5EK.Settings.UseHpOverlay": {
     "name": "Use health overlay",
-    "hint": "Shows a colored HP overlay for this actor type."
+    "hint": "Shows a colored HP overlay."
   },
   "T5EK.Settings.ToggleEmptyCharacterTraits": {
     "name": "Toggle empty character traits",
-    "hint": "Adds a toggle button for hiding empty traits."
+    "hint": "Adds a toggle button for showing/hiding empty traits."
   },
   "T5EK.Settings.MoveTraitsBelowResources": {
     "name": "Move traits below resources",
-    "hint": "Moves traits from the side to below resources."
+    "hint": "Positions traits below character resources."
   },
   "T5EK.Settings.ShowEquippedAmmoOnly": {
     "name": "Show equipped ammunition only",
@@ -318,7 +318,7 @@
   },
   "T5EK.Settings.ShowNPCRestInChat": {
     "name": "Show NPC rest in chat",
-    "hint": "Shows the chat card when an NPC rests."
+    "hint": "Shows a chat card when an NPC rests."
   },
   "T5EK.Settings.ShowNPCActorLinkMarker": {
     "name": "Mark linked/unlinked NPCs",
@@ -349,7 +349,7 @@
     "hint": "Shows an encumbrance bar on NPC sheets."
   },
   "T5EK.Settings.UseVehicleEncumbranceBar": {
-    "name": "Use vehicle encumnrance bar",
+    "name": "Use vehicle encumbrance bar",
     "hint": "Shows an encumbrance bar on vehicle sheets."
   },
   "T5EK.Settings.NPCSheetWidth": {
@@ -378,7 +378,7 @@
   },
   "T5EK.Settings.AllowCantripsToBePrepared": {
     "name": "Allow cantrips to be prepared",
-    "hint": "The \"cantrip formulas\" optional rule from Tashas Cauldron of Everything allows wizards to prepare cantrips after a long rest in the same way that they do with leveled spells. Prepared cantrips do not count toward to total prepared spells."
+    "hint": "The \"cantrip formulas\" optional rule from Tasha's Cauldron of Everything allows wizards to prepare cantrips after a long rest in the same way that they do with leveled spells. Prepared cantrips do not count toward to total prepared spells."
   },
   "T5EK.Settings.LockMoneyChanges": {
     "name": "Lock currency",
@@ -436,10 +436,10 @@
     "name": "Pact"
   },
   "T5EK.Settings.ColorPickerPactOutline": {
-    "name": "PactOutline"
+    "name": "Pact Outline"
   },
   "T5EK.Settings.ColorPickerPactAccent": {
-    "name": "PactAccent"
+    "name": "Pact Accent"
   },
   "T5EK.Settings.ColorPickerAtWill": {
     "name": "At Will"
