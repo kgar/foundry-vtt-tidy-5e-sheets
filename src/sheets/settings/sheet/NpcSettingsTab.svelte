@@ -107,14 +107,14 @@
 
 <CheckboxSetting
   bind:value={$context.showSpellbookTabNpc}
-  name={'T5EK.Settings.ShowSpellbookTabNpc.name'}
-  hint={'T5EK.Settings.ShowSpellbookTabNpc.hint'}
+  name={'T5EK.Settings.ShowNPCSpellbookTab.name'}
+  hint={'T5EK.Settings.ShowNPCSpellbookTab.hint'}
   id="showSpellbookTabNpc"
 />
 
 <NumberInputSetting
   bind:value={$context.npcSheetWidth}
-  name={'T5EK.Settings.npcSheetWidth.name'}
-  hint={'T5EK.Settings.npcSheetWidth.hint'}
+  name={'T5EK.Settings.NPCSheetWidth.name'}
+  hint={'T5EK.Settings.NPCSheetWidth.hint'}
   id="npcSheetWidth"
 />

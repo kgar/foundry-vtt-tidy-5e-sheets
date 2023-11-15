@@ -165,7 +165,7 @@
     "name": "Zobrazit info karty předmětů ve všech rozvrženích.",
     "hint": "Vypni, pokud chceš, aby info karty předmětů vyjížděly pouze v mřížkovém rozvržení."
   },
-  "T5EK.Settings.ItemCardsForNpcs": {
+  "T5EK.Settings.ItemCardsForNPCs": {
     "name": "Zobrazit info karty předmětů pro CP/dopravní prostředky.",
     "hint": "Vypni, pokud nechceš, aby info karty předmětů vyjížděly pro CP/dopravní prostředky."
   },
@@ -264,7 +264,7 @@
     "name": "Vždy zobrazovat dovednosti.",
     "hint": "V základním nastavení jsou dovednosti bez zdatnosti skryty přepínacím tlačítkem. Zaškrtněte, aby se nikdy neskrývaly."
   },
-  "T5EK.Settings.ShowSpellbookTabNpc": {
+  "T5EK.Settings.ShowNPCSpellbookTab": {
     "name": null,
     "hint": null
   },
@@ -353,15 +353,15 @@
     "name": null,
     "hint": null
   },
-  "T5EK.Settings.npcSheetWidth": {
+  "T5EK.Settings.NPCSheetWidth": {
     "name": null,
     "hint": null
   },
-  "T5EK.Settings.playerSheetWidth": {
+  "T5EK.Settings.PlayerSheetWidth": {
     "name": null,
     "hint": null
   },
-  "T5EK.Settings.vehicleSheetWidth": {
+  "T5EK.Settings.VehicleSheetWidth": {
     "name": null,
     "hint": null
   },

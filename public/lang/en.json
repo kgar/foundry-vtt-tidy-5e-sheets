@@ -165,7 +165,7 @@
     "name": "Show item cards in all layouts",
     "hint": "When this setting is disabled, item cards only show in the grid."
   },
-  "T5EK.Settings.ItemCardsForNpcs": {
+  "T5EK.Settings.ItemCardsForNPCs": {
     "name": "Show item cards for NPCs/vehicles",
     "hint": "Enable to show item info cards for NPCs and vehicles."
   },
@@ -264,7 +264,7 @@
     "name": "Always show skills",
     "hint": "Removes the visibility toggle button for non-proficient skills and shows all."
   },
-  "T5EK.Settings.ShowSpellbookTabNpc": {
+  "T5EK.Settings.ShowNPCSpellbookTab": {
     "name": "Show spellbook tab",
     "hint": "Shows a spellbook tab for NPCs. Disable to move the spellbook section to the Attributes tab."
   },
@@ -353,15 +353,15 @@
     "name": "Use vehicle encumnrance bar",
     "hint": "Shows an encumbrance bar on vehicle sheets."
   },
-  "T5EK.Settings.npcSheetWidth": {
+  "T5EK.Settings.NPCSheetWidth": {
     "name": "Default NPC sheet width",
     "hint": "The width of the NPC sheet in pixels when showing the sheet for the first time. Requires a refresh to take effect. Default: 740."
   },
-  "T5EK.Settings.playerSheetWidth": {
+  "T5EK.Settings.PlayerSheetWidth": {
     "name": "Default player sheet width",
     "hint": "The width of the player character sheet in pixels when showing the sheet for the first time. Requires a refresh to take effect. Default: 740."
   },
-  "T5EK.Settings.vehicleSheetWidth": {
+  "T5EK.Settings.VehicleSheetWidth": {
     "name": "Default vehicle sheet width",
     "hint": "The width of the vehicle sheet in pixels when showing the sheet for the first time. Requires a refresh to take effect. Default: 740."
   },

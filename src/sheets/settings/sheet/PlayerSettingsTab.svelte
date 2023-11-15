@@ -114,8 +114,8 @@
 
 <NumberInputSetting
   bind:value={$context.playerSheetWidth}
-  name={'T5EK.Settings.playerSheetWidth.name'}
-  hint={'T5EK.Settings.playerSheetWidth.hint'}
+  name={'T5EK.Settings.PlayerSheetWidth.name'}
+  hint={'T5EK.Settings.PlayerSheetWidth.hint'}
   id="playerSheetWidth"
 />
 

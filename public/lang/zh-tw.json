@@ -165,7 +165,7 @@
     "name": null,
     "hint": null
   },
-  "T5EK.Settings.ItemCardsForNpcs": {
+  "T5EK.Settings.ItemCardsForNPCs": {
     "name": null,
     "hint": null
   },
@@ -264,7 +264,7 @@
     "name": null,
     "hint": null
   },
-  "T5EK.Settings.ShowSpellbookTabNpc": {
+  "T5EK.Settings.ShowNPCSpellbookTab": {
     "name": null,
     "hint": null
   },
@@ -353,15 +353,15 @@
     "name": null,
     "hint": null
   },
-  "T5EK.Settings.npcSheetWidth": {
+  "T5EK.Settings.NPCSheetWidth": {
     "name": null,
     "hint": null
   },
-  "T5EK.Settings.playerSheetWidth": {
+  "T5EK.Settings.PlayerSheetWidth": {
     "name": null,
     "hint": null
   },
-  "T5EK.Settings.vehicleSheetWidth": {
+  "T5EK.Settings.VehicleSheetWidth": {
     "name": null,
     "hint": null
   },

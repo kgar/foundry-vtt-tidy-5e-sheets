@@ -50,7 +50,7 @@
 
 <NumberInputSetting
   bind:value={$context.vehicleSheetWidth}
-  name={'T5EK.Settings.vehicleSheetWidth.name'}
-  hint={'T5EK.Settings.vehicleSheetWidth.hint'}
+  name={'T5EK.Settings.VehicleSheetWidth.name'}
+  hint={'T5EK.Settings.VehicleSheetWidth.hint'}
   id="vehicleSheetWidth"
 />

@@ -165,7 +165,7 @@
     "name": "アイテム情報のカードをすべてのシートで表示するすべてのｼｰﾄでアイテム情報カード表示機能を使用",
     "hint": "アイテム情報をすべてのシートで表示する必要が無い場合は無効にしくてださい。(再読み込みが発生します)"
   },
-  "T5EK.Settings.ItemCardsForNpcs": {
+  "T5EK.Settings.ItemCardsForNPCs": {
     "name": "NPC/乗物のアイテム情報カードを表示",
     "hint": "NPC/乗物用のシートでアイテム情報カードが表示する必要が無い場合は無効にしてください。(再読み込みが発生します)"
   },
@@ -264,7 +264,7 @@
     "name": "常に技能を表示",
     "hint": "デフォルトでは、技能が無効な場合はトグルボタンで表示されます。"
   },
-  "T5EK.Settings.ShowSpellbookTabNpc": {
+  "T5EK.Settings.ShowNPCSpellbookTab": {
     "name": null,
     "hint": null
   },
@@ -353,15 +353,15 @@
     "name": null,
     "hint": null
   },
-  "T5EK.Settings.npcSheetWidth": {
+  "T5EK.Settings.NPCSheetWidth": {
     "name": "デフォルトNPCシート幅",
     "hint": "NPCシートの長さ（ピクセル単位）。再起動が必要です。"
   },
-  "T5EK.Settings.playerSheetWidth": {
+  "T5EK.Settings.PlayerSheetWidth": {
     "name": "デフォルトPCシート幅",
     "hint": "PCシートの長さ（ピクセル単位）。再起動が必要です。"
   },
-  "T5EK.Settings.vehicleSheetWidth": {
+  "T5EK.Settings.VehicleSheetWidth": {
     "name": "乗り物シート幅",
     "hint": "乗り物シートの長さ（ピクセル単位）。再起動が必要です。"
   },

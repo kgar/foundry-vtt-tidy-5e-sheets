@@ -165,7 +165,7 @@
     "name": "모든 레이아웃에 아이템 정보 카드 표시",
     "hint": "슬라이드 아웃 정보 카드만을 원할 경우 활성화 할 것. 비활성화시 격자 레이아웃 정보 카드가 나온다."
   },
-  "T5EK.Settings.ItemCardsForNpcs": {
+  "T5EK.Settings.ItemCardsForNPCs": {
     "name": "NPC/탑승물용 정보 카드를 표시한다.",
     "hint": "NPC/탑승물용 슬라이드 아웃 정보 카드를 원치 않는다면 비활성화 할 것."
   },
@@ -264,7 +264,7 @@
     "name": "항상 기술 보이기.",
     "hint": "기본적으로 비숙련 기술은 전환 버튼에 의해 숨겨진다. 숨기지 않으려면 선택한다."
   },
-  "T5EK.Settings.ShowSpellbookTabNpc": {
+  "T5EK.Settings.ShowNPCSpellbookTab": {
     "name": null,
     "hint": null
   },
@@ -353,15 +353,15 @@
     "name": null,
     "hint": null
   },
-  "T5EK.Settings.npcSheetWidth": {
+  "T5EK.Settings.NPCSheetWidth": {
     "name": "기본 NPC 시트 너비",
     "hint": "NPC 시트 너비를 픽셀 단위로 조정한다. 새로 고침이 필요하다.(기본값 740)."
   },
-  "T5EK.Settings.playerSheetWidth": {
+  "T5EK.Settings.PlayerSheetWidth": {
     "name": "기본 플레이어 시트 너비",
     "hint": "플레이어 시트 너비를 픽셀 단위로 조정한다. 새로 고침이 필요하다.(기본값 740)."
   },
-  "T5EK.Settings.vehicleSheetWidth": {
+  "T5EK.Settings.VehicleSheetWidth": {
     "name": "기본 탑승물 시트 너비",
     "hint": "탑승물 시트 너비를 픽셀 단위로 조정한다. 새로 고침이 필요하다.(기본값 740)."
   },

@@ -165,7 +165,7 @@
     "name": "Mostrar las tarjetas de informacíon del objeto de los objetos en todos los disenõs.",
     "hint": "Desactívalo si quieres que las tarjetas de información del objeto solo salgan en el diseño de cuadrícula."
   },
-  "T5EK.Settings.ItemCardsForNpcs": {
+  "T5EK.Settings.ItemCardsForNPCs": {
     "name": "Mostrar las tarjetas de información del objeto en PNJs/vehículos.",
     "hint": "Desactívalo si no quieres que las tarjetas de información del objeto salgan en las fichas de PNJs/vehículos."
   },
@@ -265,7 +265,7 @@
     "name": "Mostrar siempre las habilidades",
     "hint": "Por defecto, las habilidades no competentes se ocultan mediante un botón de activación. Actívalo para no ocultarlo nunca."
   },
-  "T5EK.Settings.ShowSpellbookTabNpc": {
+  "T5EK.Settings.ShowNPCSpellbookTab": {
     "name": null,
     "hint": null
   },
@@ -354,15 +354,15 @@
     "name": null,
     "hint": null
   },
-  "T5EK.Settings.npcSheetWidth": {
+  "T5EK.Settings.NPCSheetWidth": {
     "name": null,
     "hint": null
   },
-  "T5EK.Settings.playerSheetWidth": {
+  "T5EK.Settings.PlayerSheetWidth": {
     "name": null,
     "hint": null
   },
-  "T5EK.Settings.vehicleSheetWidth": {
+  "T5EK.Settings.VehicleSheetWidth": {
     "name": null,
     "hint": null
   },

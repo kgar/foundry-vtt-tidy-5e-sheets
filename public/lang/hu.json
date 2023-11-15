@@ -165,7 +165,7 @@
     "name": "Minden elrendezésben mutassa az info kártyákat.",
     "hint": "Kapcsold ki, ha rács elrendezésben is szeretnéd látni az info kártyákat."
   },
-  "T5EK.Settings.ItemCardsForNpcs": {
+  "T5EK.Settings.ItemCardsForNPCs": {
     "name": "NJK-k/járművek esetében mutassa az info kártyákat.",
     "hint": "Kapcsold ki, ha NJK-k/járművek esetében is szeretnéd látni az info kátyákat."
   },
@@ -264,7 +264,7 @@
     "name": "Mindig mutassa a képzettségeket.",
     "hint": "Alapértelmezetten egy ki/be gomb elrejti azokat a képzettségekben, amikben nincs jártasság. Kapcsold be, hogy sose legyenek elrejtve."
   },
-  "T5EK.Settings.ShowSpellbookTabNpc": {
+  "T5EK.Settings.ShowNPCSpellbookTab": {
     "name": null,
     "hint": null
   },
@@ -353,15 +353,15 @@
     "name": null,
     "hint": null
   },
-  "T5EK.Settings.npcSheetWidth": {
+  "T5EK.Settings.NPCSheetWidth": {
     "name": "Alapértelmezett NJK lap szélesség.",
     "hint": "Az NJK lap szélessége pixelekben, újratöltés szükséges (alapértelmezett 740)."
   },
-  "T5EK.Settings.playerSheetWidth": {
+  "T5EK.Settings.PlayerSheetWidth": {
     "name": "Alapértelmezett JK lap szélesség.",
     "hint": "Az JK lap szélessége pixelekben, újratöltés szükséges (alapértelmezett 740)."
   },
-  "T5EK.Settings.vehicleSheetWidth": {
+  "T5EK.Settings.VehicleSheetWidth": {
     "name": "Alapértelmezett jármű lap szélesség.",
     "hint": "A jármű lap szélessége pixelekben, újratöltés szükséges (alapértelmezett 740)."
   },

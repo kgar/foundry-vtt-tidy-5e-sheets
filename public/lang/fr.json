@@ -165,7 +165,7 @@
     "name": "Montrer la carte d'information des éléments dans toutes les mise en page",
     "hint": "Désactiver cette option pour afficher la carte d'information uniquement en mode grille."
   },
-  "T5EK.Settings.ItemCardsForNpcs": {
+  "T5EK.Settings.ItemCardsForNPCs": {
     "name": "Montrer la carte d'information des éléments pour les PNJs / véhicules",
     "hint": "Désactiver cette option pour masquer la carte d'information pour les PNJs / véhicules."
   },
@@ -264,7 +264,7 @@
     "name": "Toujours montrer les caractéristiques",
     "hint": "Par défaut, les caractéristiques sans compétence sont masquées et affichables vie un bouton. Activer cette option pour ne jamais les masquer."
   },
-  "T5EK.Settings.ShowSpellbookTabNpc": {
+  "T5EK.Settings.ShowNPCSpellbookTab": {
     "name": null,
     "hint": null
   },
@@ -353,15 +353,15 @@
     "name": null,
     "hint": null
   },
-  "T5EK.Settings.npcSheetWidth": {
+  "T5EK.Settings.NPCSheetWidth": {
     "name": null,
     "hint": null
   },
-  "T5EK.Settings.playerSheetWidth": {
+  "T5EK.Settings.PlayerSheetWidth": {
     "name": null,
     "hint": null
   },
-  "T5EK.Settings.vehicleSheetWidth": {
+  "T5EK.Settings.VehicleSheetWidth": {
     "name": null,
     "hint": null
   },

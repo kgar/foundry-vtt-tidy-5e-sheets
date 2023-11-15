@@ -270,8 +270,8 @@ export function createSettings() {
 
       itemCardsForNpcs: {
         options: {
-          name: 'T5EK.Settings.ItemCardsForNpcs.name',
-          hint: 'T5EK.Settings.ItemCardsForNpcs.hint',
+          name: 'T5EK.Settings.ItemCardsForNPCs.name',
+          hint: 'T5EK.Settings.ItemCardsForNPCs.hint',
           scope: 'world',
           config: true,
           default: true,
@@ -624,8 +624,8 @@ export function createSettings() {
 
       showSpellbookTabNpc: {
         options: {
-          name: 'T5EK.Settings.ShowSpellbookTabNpc.name',
-          hint: 'T5EK.Settings.ShowSpellbookTabNpc.hint',
+          name: 'T5EK.Settings.ShowNPCSpellbookTab.name',
+          hint: 'T5EK.Settings.ShowNPCSpellbookTab.hint',
           scope: 'client',
           config: false,
           default: true,
@@ -1018,7 +1018,7 @@ export function createSettings() {
       // Default width for player sheet
       playerSheetWidth: {
         options: {
-          name: 'T5EK.Settings.playerSheetWidth',
+          name: 'T5EK.Settings.PlayerSheetWidth',
           scope: 'client',
           config: false,
           type: Number,
@@ -1032,7 +1032,7 @@ export function createSettings() {
       // Default width for NPC sheet
       npcSheetWidth: {
         options: {
-          name: 'T5EK.Settings.npcSheetWidth',
+          name: 'T5EK.Settings.NPCSheetWidth',
           scope: 'client',
           config: false,
           type: Number,
@@ -1063,7 +1063,7 @@ export function createSettings() {
 
       vehicleSheetWidth: {
         options: {
-          name: 'T5EK.Settings.vehicleSheetWidth',
+          name: 'T5EK.Settings.VehicleSheetWidth',
           scope: 'client',
           config: false,
           type: Number,

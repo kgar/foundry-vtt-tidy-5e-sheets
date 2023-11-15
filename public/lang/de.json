@@ -165,7 +165,7 @@
     "name": "Zeigen Gegenstand-Infokarten in allen Ansichten.",
     "hint": "Deaktivieren, um die Infokarten nur in der Rasteransicht anzuzeigen."
   },
-  "T5EK.Settings.ItemCardsForNpcs": {
+  "T5EK.Settings.ItemCardsForNPCs": {
     "name": "Zeigen Gegenstand-Infokarten für NSCs/Fahrzeuge.",
     "hint": "Aktivieren, um die Infokarten nicht für NSCs/Fahrzeuge anzuzeigen."
   },
@@ -264,7 +264,7 @@
     "name": "Fähigkeiten immer anzeigen.",
     "hint": "Standardmäßig sind ungeübte Fähigkeiten per Schalter ausgeblendet. Aktivieren, um immer anzuzeigen."
   },
-  "T5EK.Settings.ShowSpellbookTabNpc": {
+  "T5EK.Settings.ShowNPCSpellbookTab": {
     "name": null,
     "hint": null
   },
@@ -353,15 +353,15 @@
     "name": null,
     "hint": null
   },
-  "T5EK.Settings.npcSheetWidth": {
+  "T5EK.Settings.NPCSheetWidth": {
     "name": "Standard Breite des NSC Bogens.",
     "hint": "Die Breite des NSC Bogens in Pixeln, benötigt ein Neuladen der Seite (standard 740)."
   },
-  "T5EK.Settings.playerSheetWidth": {
+  "T5EK.Settings.PlayerSheetWidth": {
     "name": "Standard Breite des Spieler Bogens.",
     "hint": "Die Breite des Spieler Bogens in Pixeln, benötigt ein Neuladen der Seite (standard 740)."
   },
-  "T5EK.Settings.vehicleSheetWidth": {
+  "T5EK.Settings.VehicleSheetWidth": {
     "name": null,
     "hint": null
   },
