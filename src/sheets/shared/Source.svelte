@@ -43,7 +43,7 @@
       placeholder={localize('DND5E.Source')}
     />
   {:else}
-    <span title={source.label}>{source.label}</span>
+    <span title={source.label} class="truncate">{source.label}</span>
   {/if}
   {#if editable}
     <button
