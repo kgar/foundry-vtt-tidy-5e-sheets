@@ -16,7 +16,7 @@
 <div
   class="item-image"
   class:item-use-button-has-focus={buttonIsFocused}
-  style="--bg-image: url('{imgUrlOverride ?? item.img}')"
+  style="background-image: url('{imgUrlOverride ?? item.img}')"
   class:show-roll={item.isOwner && $showRoll}
 >
   {#if item.isOwner}
@@ -36,7 +36,6 @@
   .item-image {
     flex: 0 0 1.5rem;
     height: 1.5rem;
-    background-image: var(--bg-image);
     background-size: cover;
     display: flex;
     flex-direction: row;
@@ -60,7 +59,7 @@
 
     &.show-roll,
     &.item-use-button-has-focus {
-      background-image: none;
+      background-image: none !important; // TODO: Figure out a way to avoid !important
 
       .item-use-button {
         opacity: 1;
