@@ -21,11 +21,11 @@
   select,
   button {
     color: var(--t5ek-primary-font-color);
-    
+
     &:not(:focus-visible) {
       box-shadow: none;
     }
-  
+
     &:focus-visible {
       box-shadow: var(--t5ek-focus-visible-box-shadow);
     }
@@ -47,6 +47,7 @@
   }
 
   h3 {
+    font-size: 1rem;
     font-weight: 600;
     margin: 0.5rem 0;
     border-bottom: 0.0625rem solid var(--t5ek-light-color);
