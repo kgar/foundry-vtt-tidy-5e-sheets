@@ -100,7 +100,7 @@
         {/if}
 
         <div class="item-name">
-          <div class="item-image" style="--bg-image: url('{item.img}');">
+          <div class="item-image" style="background-image: url('{item.img}');">
             <i class="fa fa-dice-d20" />
           </div>
         </div>
@@ -263,7 +263,6 @@
         height: 100%;
         margin: 0;
         border-radius: 0;
-        background-image: var(--bg-image);
         background-repeat: no-repeat;
         background-size: cover;
 
@@ -276,7 +275,7 @@
       }
 
       &:not([disabled]):hover .item-name .item-image {
-        background-image: none;
+        background-image: none !important; // TODO: Figure out a way to avoid !important
 
         i {
           display: initial;

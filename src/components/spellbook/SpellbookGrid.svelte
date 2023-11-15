@@ -80,7 +80,7 @@
           {/if}
 
           <div class="spell-name">
-            <div class="spell-image" style="--bg-image: url('{spellImgUrl}');">
+            <div class="spell-image" style="background-image: url('{spellImgUrl}');">
               <i class="fa fa-dice-d20" />
             </div>
           </div>
@@ -207,7 +207,6 @@
           height: 100%;
           margin: 0;
           border-radius: 0;
-          background-image: var(--bg-image);
           background-repeat: no-repeat;
           background-size: cover;
 
@@ -220,7 +219,7 @@
         }
 
         &:not([disabled]):hover .spell-name .spell-image {
-          background-image: none;
+          background-image: none !important; // TODO: Figure out a way to avoid !important
 
           i {
             display: initial;
