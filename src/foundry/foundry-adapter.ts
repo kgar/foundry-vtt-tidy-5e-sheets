@@ -1075,4 +1075,24 @@ export const FoundryAdapter = {
       key,
     }).render(true);
   },
+  renderItemTypeConfig(item: any) {
+    return new dnd5e.applications.actor.ActorTypeConfig(item, {
+      keyPath: 'system.type',
+    }).render(true);
+  },
+  renderItemMovementConfig(item: any) {
+    return new dnd5e.applications.actor.ActorMovementConfig(item, {
+      keyPath: 'system.movement',
+    }).render(true);
+  },
+  renderItemSensesConfig(item: any) {
+    return new dnd5e.applications.actor.ActorSensesConfig(item, {
+      keyPath: 'system.senses',
+    }).render(true);
+  },
+  renderItemSourceConfig(item: any) {
+    return new dnd5e.applications.SourceConfig(item, {
+      keyPath: 'system.source',
+    }).render(true);
+  },
 };

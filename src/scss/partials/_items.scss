@@ -242,6 +242,15 @@ input[type='checkbox'] {
 
     .properties-header {
       margin-top: 0.25rem;
+
+      .hidden-config-button {
+        visibility: hidden;
+        font-size: 0.75rem;
+      }
+
+      &:hover .hidden-config-button {
+        visibility: visible;
+      }
     }
 
     .properties-list {

@@ -1,17 +1,18 @@
 import { CONSTANTS } from 'src/constants';
+import ItemActiveEffectsTab from './item/tabs/ItemActiveEffectsTab.svelte';
+import ItemAdvancementTab from './item/tabs/ItemAdvancementTab.svelte';
+import ItemBackpackDetailsTab from './item/tabs/ItemBackpackDetailsTab.svelte';
+import ItemClassDetailsTab from './item/tabs/ItemClassDetailsTab.svelte';
+import ItemConsumableDetailsTab from './item/tabs/ItemConsumableDetailsTab.svelte';
 import ItemDescriptionTab from './item/tabs/ItemDescriptionTab.svelte';
 import ItemDescriptionWithSidebarTab from './item/tabs/ItemDescriptionWithSidebarTab.svelte';
-import ItemAdvancementTab from './item/tabs/ItemAdvancementTab.svelte';
-import ItemWeaponDetailsTab from './item/tabs/ItemWeaponDetailsTab.svelte';
-import ItemActiveEffectsTab from './item/tabs/ItemActiveEffectsTab.svelte';
-import ItemToolDetailsTab from './item/tabs/ItemToolDetailsTab.svelte';
-import ItemSubclassDetailsTab from './item/tabs/ItemSubclassDetailsTab.svelte';
-import ItemSpellDetailsTab from './item/tabs/ItemSpellDetailsTab.svelte';
-import ItemFeatDetailsTab from './item/tabs/ItemFeatDetailsTab.svelte';
 import ItemEquipmentDetailsTab from './item/tabs/ItemEquipmentDetailsTab.svelte';
-import ItemConsumableDetailsTab from './item/tabs/ItemConsumableDetailsTab.svelte';
-import ItemClassDetailsTab from './item/tabs/ItemClassDetailsTab.svelte';
-import ItemBackpackDetailsTab from './item/tabs/ItemBackpackDetailsTab.svelte';
+import ItemFeatDetailsTab from './item/tabs/ItemFeatDetailsTab.svelte';
+import ItemRaceDescriptionTab from './item/tabs/ItemRaceDescriptionTab.svelte';
+import ItemSpellDetailsTab from './item/tabs/ItemSpellDetailsTab.svelte';
+import ItemSubclassDetailsTab from './item/tabs/ItemSubclassDetailsTab.svelte';
+import ItemToolDetailsTab from './item/tabs/ItemToolDetailsTab.svelte';
+import ItemWeaponDetailsTab from './item/tabs/ItemWeaponDetailsTab.svelte';
 
 const itemSheetTabs = {
   /**
@@ -33,6 +34,17 @@ const itemSheetTabs = {
     displayName: 'DND5E.Description',
     content: {
       component: ItemDescriptionWithSidebarTab,
+      cssClass: 'flexrow',
+    },
+  },
+  /**
+   * A sidebar with race properties and configuration buttons, and a description editor.
+   */
+  raceDescription: {
+    id: CONSTANTS.TAB_ITEM_DESCRIPTION_ID,
+    displayName: 'DND5E.Description',
+    content: {
+      component: ItemRaceDescriptionTab,
       cssClass: 'flexrow',
     },
   },

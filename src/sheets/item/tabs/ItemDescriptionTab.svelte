@@ -15,11 +15,11 @@
   }
 </script>
 
-<RerenderAfterFormSubmission andOnValueChange={$context.descriptionHTML}>
+<RerenderAfterFormSubmission andOnValueChange={$context.item.system.description.value}>
   <article class="editor-container" use:activateProseMirrorListeners>
     <h2 class="details-headline">{localize('T5EK.ItemDetailsHeadline')}</h2>
     <SheetEditor
-      content={$context.descriptionHTML}
+      content={$context.enriched.description}
       editable={$context.owner || FoundryAdapter.userIsGm()}
       target="system.description.value"
     />
