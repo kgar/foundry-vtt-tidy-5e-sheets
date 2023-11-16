@@ -11,30 +11,9 @@
   $: source = FoundryAdapter.getProperty<any>(document, keyPath);
 
   const localize = FoundryAdapter.localize;
-
-  $: {
-    console.warn({
-      document,
-      keyPath,
-      keyPathToCustom,
-      source,
-    });
-  }
 </script>
 
-<!-- {{#if (eq system.details.source.custom system.details.source.label)}}
-      <input type="text" name="system.details.source.custom" value="{{system.details.source.custom}}"
-                   placeholder="{{ localize 'DND5E.Source' }}">
-  {{else}}
-      <span data-tooltip="{{system.details.source.label}}">{{system.details.source.label}}</span>
-  {{/if}}
-  {{#if editable}}
-      <a class="config-button" data-action="source" data-tooltip="DND5E.SourceConfig">
-          <i class="fas fa-cog"></i>
-      </a>
-  {{/if}} -->
-
-<div class="source-container flex-row no-gap">
+<div class="source-container flex-row extra-small-gap align-items-center">
   {#if source?.custom === source?.label}
     <TextInput
       {document}
@@ -43,7 +22,7 @@
       placeholder={localize('DND5E.Source')}
     />
   {:else}
-    <span title={source.label} class="truncate">{source.label}</span>
+    <div title={source.label ?? ''}>{source.label ?? ''}</div>
   {/if}
   {#if editable}
     <button
@@ -57,6 +36,12 @@
 
 <style lang="scss">
   .source-container {
+    width: 100%;
+
+    > :global(:not(.config-button)) {
+      flex: 1;
+    }
+
     &:not(:hover) .config-button:not(:focus-visible) {
       opacity: 0;
       position: absolute;

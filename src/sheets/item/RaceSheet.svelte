@@ -42,7 +42,7 @@
     </div>
 
     <ul class="summary flexrow">
-      <li>
+      <li class="flex-row">
         <Source
           document={$context.item}
           keyPath="system.source"
