@@ -36,7 +36,7 @@
     height: inherit;
 
     &.placeholder:not(:hover, :focus-visible) {
-      color: var(--t5ek-secondary-color);
+      color: var(--t5ek-tertiary-color);
     }
   }
 </style>
