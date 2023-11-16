@@ -173,6 +173,7 @@
       height: 1.0625rem; // This is far too precise; can we make this more relative to its target?
       padding: 0.1875rem 0.25rem 0.125rem 0.25rem; // this padding is providing the positioning of the text. Can we do this in flexbox?
       white-space: nowrap;
+      z-index: 1;
 
       &.ability-mod-label {
         right: 1.5625rem; // This is far too precise; can we make this more relative to its target?
