@@ -1,6 +1,5 @@
 <script lang="ts">
   import type { Tab } from 'src/types/types';
-  import { CONSTANTS } from 'src/constants';
   import type { ItemSheetContext } from 'src/types/item';
   import type { Readable } from 'svelte/store';
   import { getContext } from 'svelte';
@@ -10,6 +9,7 @@
   import ItemProfilePicture from './parts/ItemProfilePicture.svelte';
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import itemSheetTabs from '../itemSheetTabs';
+  import Source from '../shared/Source.svelte';
 
   let context = getContext<Readable<ItemSheetContext>>('context');
 
@@ -56,13 +56,11 @@
           disabled={!$context.owner}
         />
       </li>
-      <li>
-        <TextInput
+      <li class="flex-row">
+        <Source
           document={$context.item}
-          field="system.source.label"
-          value={$context.system.source.label}
-          placeholder={localize('DND5E.Source')}
-          disabled={!$context.owner}
+          keyPath="system.source"
+          editable={$context.editable}
         />
       </li>
     </ul>

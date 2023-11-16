@@ -12,6 +12,7 @@
   import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import itemSheetTabs from '../itemSheetTabs';
+  import Source from '../shared/Source.svelte';
 
   let context = getContext<Readable<ItemSheetContext>>('context');
 
@@ -37,7 +38,7 @@
         value={$context.item.name}
         placeholder={localize('DND5E.ItemName')}
         disabled={!$context.owner}
-        />
+      />
     </h1>
 
     <div class="item-subtitle">
@@ -57,13 +58,11 @@
           <SelectOptions data={$context.config.itemRarity} blank="" />
         </Select>
       </li>
-      <li>
-        <TextInput
+      <li class="flex-row">
+        <Source
           document={$context.item}
-          field="system.source.label"
-          value={$context.system.source.label}
-          placeholder={localize('DND5E.Source')}
-          disabled={!$context.owner}
+          keyPath="system.source"
+          editable={$context.editable}
         />
       </li>
     </ul>

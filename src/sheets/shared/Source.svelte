@@ -20,9 +20,12 @@
       field={keyPathToCustom}
       value={source.custom}
       placeholder={localize('DND5E.Source')}
+      cssClass="source-custom"
     />
   {:else}
-    <div title={source.label ?? ''}>{source.label ?? ''}</div>
+    <span class="source-label truncate" title={source.label ?? ''}
+      >{source.label ?? ''}</span
+    >
   {/if}
   {#if editable}
     <button
@@ -37,9 +40,13 @@
 <style lang="scss">
   .source-container {
     width: 100%;
+    line-height: inherit;
 
-    > :global(:not(.config-button)) {
+    .source-label,
+    :global(.source-custom) {
       flex: 1;
+      line-height: inherit;
+      height: inherit;
     }
 
     &:not(:hover) .config-button:not(:focus-visible) {

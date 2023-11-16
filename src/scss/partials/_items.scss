@@ -120,6 +120,7 @@ input[type='checkbox'] {
 
   .header-details {
     align-items: center;
+    min-width: 0; // needed for flex children that truncate overflow
   }
 
   .charname {
@@ -186,7 +187,13 @@ input[type='checkbox'] {
       border-left: 0.0625rem solid var(--t5ek-faint-color);
       line-height: 1.25rem;
       font-weight: 600;
+      min-width: 0; // needed for flex children that truncate overflow
+      padding-left: 0.325rem;
 
+      &:has(> input, > select) {
+        padding: 0;
+      }
+      
       input {
         height: 1.25rem;
         background: transparent;
@@ -201,6 +208,7 @@ input[type='checkbox'] {
 
       &:first-child {
         border: none;
+        padding-left: 0;
       }
 
       &:last-child {
