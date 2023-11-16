@@ -28,6 +28,7 @@
   import ActorWarnings from '../actor/ActorWarnings.svelte';
   import { currentNpcSheetTabs } from 'src/state/npc-sheet-state';
   import InlineSource from '../shared/InlineSource.svelte';
+  import InlineCreatureType from '../shared/InlineCreatureType.svelte';
 
   let selectedTabId: string;
 
@@ -136,22 +137,7 @@
           {#key $context.lockSensitiveFields}
             <DelimitedTruncatedContent cssClass="flex-grow-1">
               <span class="flex-row extra-small-gap align-items-center">
-                <button
-                  type="button"
-                  class="truncate inline-transparent-button"
-                  class:highlight-on-hover={$context.owner}
-                  disabled={!$context.owner}
-                  on:click={() =>
-                    FoundryAdapter.openActorTypeConfig($context.actor)}
-                  title="{$context.labels.type} ({localize(
-                    'DND5E.CreatureTypeConfig'
-                  )})"
-                  >{#if isNil($context.labels.type, '')}
-                    {localize('DND5E.CreatureType')}
-                  {:else}
-                    {$context.labels.type}
-                  {/if}</button
-                >
+                <InlineCreatureType />
                 <span
                   class="environment"
                   title={localize('T5EK.EnvironmentTooltip', {
