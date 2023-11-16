@@ -42,8 +42,11 @@ export default class Tidy5eActorOriginSummaryConfig extends DocumentSheet {
   /** @inheritdoc */
   getData(options: any) {
     return {
-      race: this.clone.system.details.race,
-      background: this.clone.system.details.background,
+      race:
+        this.clone.system.details.race?.name ?? this.clone.system.details.race,
+      background:
+        this.clone.system.details.background?.name ??
+        this.clone.system.details.background,
       environment: this.clone.system.details.environment,
       alignment: this.clone.system.details.alignment,
       dimensions: this.clone.system.traits.dimensions,
@@ -51,6 +54,8 @@ export default class Tidy5eActorOriginSummaryConfig extends DocumentSheet {
       isCharacter: this.document.type === CONSTANTS.SHEET_TYPE_CHARACTER,
       isNPC: this.document.type === CONSTANTS.SHEET_TYPE_NPC,
       isVehicle: this.document.type === CONSTANTS.SHEET_TYPE_VEHICLE,
+      canEditBackground: !this.clone.system.details.background?.name,
+      canEditRace: !this.clone.system.details.race?.name,
     };
   }
 

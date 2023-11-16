@@ -171,12 +171,14 @@ export const FoundryAdapter = {
   getActorCharacterSummaryEntries(actorContext: any): string[] {
     const entries: string[] = [];
 
-    if (actorContext.system.details.race) {
+    if (actorContext.system.details.race?.name) {
+      entries.push(actorContext.system.details.race.name);
+    } else if (actorContext.system.details.race) {
       entries.push(actorContext.system.details.race);
     }
 
-    if (actorContext.labels.background) {
-      entries.push(actorContext.labels.background);
+    if (actorContext.system.details.background?.name) {
+      entries.push(actorContext.system.details.background.name);
     } else if (actorContext.system.details.background) {
       entries.push(actorContext.system.details.background);
     }
