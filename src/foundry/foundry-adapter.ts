@@ -1045,8 +1045,8 @@ export const FoundryAdapter = {
       keyPath: 'system.senses',
     }).render(true);
   },
-  renderSourceConfig(item: any, keyPath: string) {
-    return new dnd5e.applications.SourceConfig(item, {
+  renderSourceConfig(document: any, keyPath: string) {
+    return new dnd5e.applications.SourceConfig(document, {
       keyPath,
     }).render(true);
   },

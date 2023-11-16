@@ -27,6 +27,7 @@
   import { settingStore } from 'src/settings/settings';
   import ActorWarnings from '../actor/ActorWarnings.svelte';
   import { currentNpcSheetTabs } from 'src/state/npc-sheet-state';
+  import InlineSource from '../shared/InlineSource.svelte';
 
   let selectedTabId: string;
 
@@ -166,11 +167,12 @@
                 title={$context.system.details.alignment}
                 >{$context.system.details.alignment}</span
               >
-              <span
-                class="origin-summary-text source source-info"
-                title={$context.system.details.source.label}
-                >{$context.system.details.source.label}</span
-              >
+
+              <InlineSource
+                document={$context.actor}
+                keyPath="system.details.source"
+                editable={$context.editable}
+              />
             </DelimitedTruncatedContent>
           {/key}
         </div>
