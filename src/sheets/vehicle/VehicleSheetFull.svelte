@@ -120,8 +120,8 @@
           <ContentEditableFormField
             element="span"
             document={$context.actor}
-            field="system.details.source"
-            value={$context.system.details.source}
+            field="system.details.source.label"
+            value={$context.system.details.source.label}
             editable={$context.owner && !$context.lockSensitiveFields}
             placeholder={localize('DND5E.Source')}
             title="{localize('DND5E.Source')} {!isNil(
