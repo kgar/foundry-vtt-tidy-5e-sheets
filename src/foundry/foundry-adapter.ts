@@ -578,13 +578,11 @@ export const FoundryAdapter = {
   registerActorSheet(sheet: any, types: string[], label: string) {
     Actors.registerSheet(CONSTANTS.DND5E_SYSTEM_ID, sheet, {
       types,
-      makeDefault: true,
       label,
     });
   },
   registerItemSheet(sheet: any, label: string) {
     Items.registerSheet(CONSTANTS.DND5E_SYSTEM_ID, sheet, {
-      makeDefault: true,
       label,
     });
   },
