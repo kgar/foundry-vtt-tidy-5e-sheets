@@ -937,49 +937,6 @@ export const FoundryAdapter = {
   createContextMenu(...args: any[]): any {
     return new ContextMenu(...args);
   },
-  renderClassItemTraitSelector(
-    item: any,
-    target: string,
-    title: string,
-    trait: 'saves' | 'skills.choices' | 'skills'
-  ) {
-    const options: Record<string, unknown> = {
-      name: target,
-      title,
-      choices: [],
-      allowCustom: false,
-      suppressWarning: true,
-    };
-    switch (trait) {
-      case 'saves':
-        options.choices = CONFIG.DND5E.abilities;
-        options.valueKey = null;
-        options.labelKey = 'label';
-        break;
-      case 'skills.choices':
-        options.choices = CONFIG.DND5E.skills;
-        options.valueKey = null;
-        options.labelKey = 'label';
-        break;
-      case 'skills':
-        const skills = item.system.skills;
-        const choices = skills.choices?.length
-          ? skills.choices
-          : Object.keys(CONFIG.DND5E.skills);
-        options.choices = Object.fromEntries(
-          Object.entries(CONFIG.DND5E.skills).filter(([s]) =>
-            choices.includes(s)
-          )
-        );
-        options.maximum = skills.number;
-        options.labelKey = 'label';
-        break;
-    }
-
-    return new game.dnd5e.applications.TraitSelector(item, options).render(
-      true
-    );
-  },
   createAdvancementSelectionDialog(item: any) {
     return game.dnd5e.applications.advancement.AdvancementSelection.createDialog(
       item
