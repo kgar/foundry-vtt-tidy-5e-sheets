@@ -891,6 +891,18 @@ export const FoundryAdapter = {
   openActorTypeConfig(actor: Actor5e) {
     return new dnd5e.applications.actor.ActorTypeConfig(actor).render(true);
   },
+  openCharacterActorTypeConfig(actor: Actor5e) {
+    if (actor.system.details.race?.id) {
+      return new dnd5e.applications.actor.ActorTypeConfig(
+        actor.system.details.race,
+        { keyPath: 'system.type' }
+      ).render(true);
+    }
+
+    warn(
+      'Unable to open actor type config for player character because they do not have a race.'
+    );
+  },
   playDiceSound() {
     return AudioHelper.play({ src: CONFIG.sounds.dice });
   },
