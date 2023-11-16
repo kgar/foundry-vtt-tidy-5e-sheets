@@ -46,7 +46,7 @@ export default class Tidy5eActorOriginSummaryConfig extends DocumentSheet {
       background: this.clone.system.details.background,
       environment: this.clone.system.details.environment,
       alignment: this.clone.system.details.alignment,
-      source: this.clone.system.details.source,
+      source: this.clone.system.details.source.custom,
       dimensions: this.clone.system.traits.dimensions,
 
       isCharacter: this.document.type === CONSTANTS.SHEET_TYPE_CHARACTER,
@@ -79,7 +79,7 @@ export default class Tidy5eActorOriginSummaryConfig extends DocumentSheet {
       return this.document.update({
         'system.details.environment': environment,
         'system.details.alignment': alignment,
-        'system.details.source': source,
+        'system.details.source.custom': source,
       });
     } else if (isVehicle) {
       return this.document.update({

@@ -153,8 +153,9 @@
                 >
                 <span
                   class="environment"
-                  title="{localize('T5EK.Environment')}: {$context.system
-                    .details.environment}"
+                  title={localize('T5EK.EnvironmentTooltip', {
+                    environment: $context.system.details.environment,
+                  })}
                 >
                   <i class="fas fa-tree" />
                 </span>
@@ -167,8 +168,8 @@
               >
               <span
                 class="origin-summary-text source source-info"
-                title={$context.system.details.source}
-                >{$context.system.details.source}</span
+                title={$context.system.details.source.label}
+                >{$context.system.details.source.label}</span
               >
             </DelimitedTruncatedContent>
           {/key}
@@ -208,9 +209,7 @@
         <AllowEditLock
           hint={$settingStore.permanentlyUnlockNpcSheetForGm &&
           FoundryAdapter.userIsGm()
-            ? localize(
-                'T5EK.Settings.PermanentlyUnlockNPCSheetForGM.title'
-              )
+            ? localize('T5EK.Settings.PermanentlyUnlockNPCSheetForGM.title')
             : null}
         />
       {/if}

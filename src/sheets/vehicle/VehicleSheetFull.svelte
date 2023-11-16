@@ -120,16 +120,11 @@
           <ContentEditableFormField
             element="span"
             document={$context.actor}
-            field="system.details.source.label"
-            value={$context.system.details.source.label}
+            field="system.details.source.custom"
+            value={$context.system.details.source.custom}
             editable={$context.owner && !$context.lockSensitiveFields}
             placeholder={localize('DND5E.Source')}
-            title="{localize('DND5E.Source')} {!isNil(
-              $context.system.details.source,
-              ''
-            )
-              ? '| ' + $context.system.details.source
-              : ''}"
+            title={$context.system.details.source.label ?? ''}
             selectOnFocus={true}
           />
         </DelimitedTruncatedContent>
@@ -173,9 +168,7 @@
       <AllowEditLock
         hint={$settingStore.permanentlyUnlockVehicleSheetForGm &&
         FoundryAdapter.userIsGm()
-          ? localize(
-              'T5EK.Settings.PermanentlyUnlockVehicleSheetForGM.title'
-            )
+          ? localize('T5EK.Settings.PermanentlyUnlockVehicleSheetForGM.title')
           : null}
       />
     {/if}
