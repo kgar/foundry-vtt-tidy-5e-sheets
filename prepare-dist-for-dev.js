@@ -33,6 +33,8 @@ function prepareDistForDev() {
   fs.writeFileSync(path.join(distFolder, 'main.js'), `// ${message}`);
 
   fs.writeFileSync(path.join(distFolder, 'style.css'), `/* ${message} */`);
+  
+  fs.writeFileSync(path.join(distFolder, 'tidy5e-sheet-kgar.lock'), "🔒");
 }
 
 prepareDistForDev();
