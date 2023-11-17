@@ -8,6 +8,7 @@
   import Select from 'src/components/inputs/Select.svelte';
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
+  import Checkbox from 'src/components/inputs/Checkbox.svelte';
 
   let context = getContext<Readable<ItemSheetContext>>('context');
 
@@ -25,12 +26,12 @@
       <NumberInput
         id={inputId}
         value={$context.system.activation.cost}
-        title={localize("DND5E.ConsumeQuanity")}
+        title={localize('DND5E.ConsumeQuanity')}
         field="system.activation.cost"
         placeholder="&#8212;"
         document={$context.item}
         disabled={!$context.owner}
-        />
+      />
     {/if}
     <Select
       id="{$context.appId}-system-activation-type"
@@ -59,7 +60,7 @@
         field="system.activation.condition"
         document={$context.item}
         disabled={!$context.owner}
-        />
+      />
     </div>
   </ItemFormGroup>
 
@@ -105,7 +106,7 @@
         <Select
           id="{$context.appId}-system-target-units"
           value={$context.system.target.units}
-          title={localize("DND5E.TargetUnits")}
+          title={localize('DND5E.TargetUnits')}
           field="system.target.units"
           document={$context.item}
           disabled={!$context.owner}
@@ -117,7 +118,7 @@
       <Select
         id={inputId}
         value={$context.system.target.type}
-        title={localize("DND5E.TargetType")}
+        title={localize('DND5E.TargetType')}
         field="system.target.type"
         document={$context.item}
         disabled={!$context.owner}
@@ -168,7 +169,7 @@
           id="{$context.appId}-system-target-width"
           value={$context.system.range.value}
           placeholder={localize('DND5E.Normal')}
-          title={localize("DND5E.RangeNormal")}
+          title={localize('DND5E.RangeNormal')}
           field="system.range.value"
           document={$context.item}
           disabled={!$context.owner}
@@ -178,7 +179,7 @@
           id="{$context.appId}-system-range-long"
           value={$context.system.range.long}
           placeholder={localize('DND5E.Long')}
-          title={localize("DND5E.RangeLong")}
+          title={localize('DND5E.RangeLong')}
           field="system.range.long"
           document={$context.item}
           disabled={!$context.owner}
@@ -187,7 +188,7 @@
       <Select
         id={inputId}
         value={$context.system.range.units}
-        title={localize("DND5E.RangeUnits")}
+        title={localize('DND5E.RangeUnits')}
         document={$context.item}
         field="system.range.units"
         disabled={!$context.owner}
@@ -213,7 +214,7 @@
           id="{$context.appId}-source-duration-value"
           value={$context.source.duration.value}
           placeholder="&mdash;"
-          title={localize("DND5E.DurationValue")}
+          title={localize('DND5E.DurationValue')}
           field="system.duration.value"
           document={$context.item}
           dataset={{ formulaEditor: true }}
@@ -223,7 +224,7 @@
       <Select
         id={inputId}
         value={$context.system.duration.units}
-        title={localize("DND5E.DurationType")}
+        title={localize('DND5E.DurationType')}
         document={$context.item}
         field="system.duration.units"
         disabled={!$context.owner}
@@ -250,7 +251,7 @@
       <NumberInput
         id={inputId}
         value={$context.system.uses.value}
-        title={localize("DND5E.UsesAvailable")}
+        title={localize('DND5E.UsesAvailable')}
         field="system.uses.value"
         document={$context.item}
       />
@@ -258,17 +259,17 @@
       <TextInput
         id="{$context.appId}-system-uses-max"
         value={$context.source.uses.max}
-        title={localize("DND5E.UsesMax")}
+        title={localize('DND5E.UsesMax')}
         field="system.uses.max"
         document={$context.item}
         dataset={{ formulaEditor: true }}
         disabled={!$context.owner}
-        />
+      />
       <span class="sep">{localize('DND5E.per')}</span>
       <Select
         id="{$context.appId}-system.uses.per"
         value={$context.system.uses.per}
-        title={localize("DND5E.UsesPeriod")}
+        title={localize('DND5E.UsesPeriod')}
         document={$context.item}
         field="system.uses.per"
         disabled={!$context.owner}
@@ -309,7 +310,7 @@
         <NumberInput
           id="{$context.appId}-system-consume-amount"
           value={$context.system.consume.amount}
-          title={localize("DND5E.ConsumeQuanity")}
+          title={localize('DND5E.ConsumeQuanity')}
           field="system.consume.amount"
           document={$context.item}
           disabled={!$context.owner}
@@ -317,7 +318,7 @@
         <Select
           id="{$context.appId}-system-consume-target"
           value={$context.system.consume.target}
-          title={localize("DND5E.ConsumeTarget")}
+          title={localize('DND5E.ConsumeTarget')}
           document={$context.item}
           field="system.consume.target"
           disabled={!$context.owner}
@@ -329,7 +330,7 @@
       <Select
         id={inputId}
         value={$context.system.consume.type}
-        title={localize("DND5E.ConsumeType")}
+        title={localize('DND5E.ConsumeType')}
         document={$context.item}
         field="system.consume.type"
         disabled={!$context.owner}
@@ -338,5 +339,56 @@
         <SelectOptions data={$context.config.abilityConsumptionTypes} />
       </Select>
     </div>
+  </ItemFormGroup>
+
+  <ItemFormGroup cssClass="stacked">
+    {#if $context.item.type === 'consumable'}
+      <Checkbox
+        labelCssClass="checkbox"
+        document={$context.item}
+        field="system.uses.autoDestroy"
+        checked={$context.system.uses.autoDestroy}
+        disabled={!$context.owner}
+        title={localize('DND5E.ItemDestroyEmptyTooltip')}
+      >
+        {localize('DND5E.ItemDestroyEmpty')}
+      </Checkbox>
+    {/if}
+    {#if $context.item.hasAreaTarget}
+      <Checkbox
+        labelCssClass="checkbox"
+        document={$context.item}
+        field="system.target.prompt"
+        checked={$context.system.target.prompt}
+        disabled={!$context.owner}
+        title={localize('DND5E.TemplatePromptTooltip')}
+      >
+        {localize('DND5E.TemplatePrompt')}
+      </Checkbox>
+    {/if}
+    {#if $context.system.uses.per}
+      <Checkbox
+        labelCssClass="checkbox"
+        document={$context.item}
+        field="system.uses.prompt"
+        checked={$context.system.uses.prompt}
+        disabled={!$context.owner}
+        title={localize('DND5E.LimitedUsesPromptTooltip')}
+      >
+        {localize('DND5E.LimitedUsesPrompt')}
+      </Checkbox>
+    {/if}
+    {#if $context.item.type === 'spell' && $context.system.consume.type}
+      <Checkbox
+        labelCssClass="checkbox"
+        document={$context.item}
+        field="system.consume.scale"
+        checked={$context.system.consume.scale}
+        disabled={!$context.owner}
+        title={localize('DND5E.ConsumeScalingTooltip')}
+      >
+        {localize('DND5E.ConsumeScaling')}
+      </Checkbox>
+    {/if}
   </ItemFormGroup>
 {/if}

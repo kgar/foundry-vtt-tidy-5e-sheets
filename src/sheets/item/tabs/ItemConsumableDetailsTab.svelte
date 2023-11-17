@@ -28,7 +28,7 @@
     field="system.consumableType"
     value={$context.system.consumableType}
     disabled={!$context.owner}
-    >
+  >
     <SelectOptions data={$context.config.consumableTypes} />
   </Select>
 </ItemFormGroup>
@@ -44,7 +44,7 @@
     field="system.attunement"
     value={$context.system.attunement}
     disabled={!$context.owner}
-    >
+  >
     <SelectOptions data={$context.config.attunements} />
   </Select>
 </ItemFormGroup>
@@ -59,7 +59,7 @@
     field="system.equipped"
     checked={$context.system.equipped}
     disabled={!$context.owner}
-    >
+  >
     {localize('DND5E.Equipped')}
   </Checkbox>
 
@@ -69,7 +69,7 @@
     field="system.identified"
     checked={$context.system.identified}
     disabled={!$context.owner}
-    >
+  >
     {localize('DND5E.Identified')}
   </Checkbox>
 </ItemFormGroup>
@@ -87,7 +87,7 @@
         field="system.properties.{prop}"
         {checked}
         disabled={!$context.owner}
-        >
+      >
         {name}
       </Checkbox>
     {/each}
@@ -97,19 +97,6 @@
 <h3 class="form-header">{localize('DND5E.ItemConsumableUsage')}</h3>
 
 <ItemActivation />
-{#if $context.system.activation.type}
-  <ItemFormGroup>
-    <Checkbox
-      labelCssClass="checkbox"
-      document={$context.item}
-      field="system.uses.autoDestroy"
-      checked={$context.system.uses.autoDestroy}
-      disabled={!$context.owner}
-      >
-      {localize('DND5E.ItemDestroyEmpty')}
-    </Checkbox>
-  </ItemFormGroup>
-{/if}
 
 <h3 class="form-header">{localize('DND5E.ItemConsumableActivation')}</h3>
 
