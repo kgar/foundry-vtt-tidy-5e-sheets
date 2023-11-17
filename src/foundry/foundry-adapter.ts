@@ -171,12 +171,14 @@ export const FoundryAdapter = {
   getActorCharacterSummaryEntries(actorContext: any): string[] {
     const entries: string[] = [];
 
-    if (actorContext.system.details.race) {
+    if (actorContext.system.details.race?.name) {
+      entries.push(actorContext.system.details.race.name);
+    } else if (actorContext.system.details.race) {
       entries.push(actorContext.system.details.race);
     }
 
-    if (actorContext.labels.background) {
-      entries.push(actorContext.labels.background);
+    if (actorContext.system.details.background?.name) {
+      entries.push(actorContext.system.details.background.name);
     } else if (actorContext.system.details.background) {
       entries.push(actorContext.system.details.background);
     }
@@ -578,13 +580,11 @@ export const FoundryAdapter = {
   registerActorSheet(sheet: any, types: string[], label: string) {
     Actors.registerSheet(CONSTANTS.DND5E_SYSTEM_ID, sheet, {
       types,
-      makeDefault: true,
       label,
     });
   },
   registerItemSheet(sheet: any, label: string) {
     Items.registerSheet(CONSTANTS.DND5E_SYSTEM_ID, sheet, {
-      makeDefault: true,
       label,
     });
   },
@@ -893,6 +893,18 @@ export const FoundryAdapter = {
   openActorTypeConfig(actor: Actor5e) {
     return new dnd5e.applications.actor.ActorTypeConfig(actor).render(true);
   },
+  openCharacterActorTypeConfig(actor: Actor5e) {
+    if (actor.system.details.race?.id) {
+      return new dnd5e.applications.actor.ActorTypeConfig(
+        actor.system.details.race,
+        { keyPath: 'system.type' }
+      ).render(true);
+    }
+
+    warn(
+      'Unable to open actor type config for player character because they do not have a race.'
+    );
+  },
   playDiceSound() {
     return AudioHelper.play({ src: CONFIG.sounds.dice });
   },
@@ -938,49 +950,6 @@ export const FoundryAdapter = {
   },
   createContextMenu(...args: any[]): any {
     return new ContextMenu(...args);
-  },
-  renderClassItemTraitSelector(
-    item: any,
-    target: string,
-    title: string,
-    trait: 'saves' | 'skills.choices' | 'skills'
-  ) {
-    const options: Record<string, unknown> = {
-      name: target,
-      title,
-      choices: [],
-      allowCustom: false,
-      suppressWarning: true,
-    };
-    switch (trait) {
-      case 'saves':
-        options.choices = CONFIG.DND5E.abilities;
-        options.valueKey = null;
-        options.labelKey = 'label';
-        break;
-      case 'skills.choices':
-        options.choices = CONFIG.DND5E.skills;
-        options.valueKey = null;
-        options.labelKey = 'label';
-        break;
-      case 'skills':
-        const skills = item.system.skills;
-        const choices = skills.choices?.length
-          ? skills.choices
-          : Object.keys(CONFIG.DND5E.skills);
-        options.choices = Object.fromEntries(
-          Object.entries(CONFIG.DND5E.skills).filter(([s]) =>
-            choices.includes(s)
-          )
-        );
-        options.maximum = skills.number;
-        options.labelKey = 'label';
-        break;
-    }
-
-    return new game.dnd5e.applications.TraitSelector(item, options).render(
-      true
-    );
   },
   createAdvancementSelectionDialog(item: any) {
     return game.dnd5e.applications.advancement.AdvancementSelection.createDialog(
@@ -1073,6 +1042,26 @@ export const FoundryAdapter = {
     return new dnd5e.applications.actor.ProficiencyConfig(actor, {
       property,
       key,
+    }).render(true);
+  },
+  renderItemTypeConfig(item: any) {
+    return new dnd5e.applications.actor.ActorTypeConfig(item, {
+      keyPath: 'system.type',
+    }).render(true);
+  },
+  renderItemMovementConfig(item: any) {
+    return new dnd5e.applications.actor.ActorMovementConfig(item, {
+      keyPath: 'system.movement',
+    }).render(true);
+  },
+  renderItemSensesConfig(item: any) {
+    return new dnd5e.applications.actor.ActorSensesConfig(item, {
+      keyPath: 'system.senses',
+    }).render(true);
+  },
+  renderSourceConfig(document: any, keyPath: string) {
+    return new dnd5e.applications.SourceConfig(document, {
+      keyPath,
     }).render(true);
   },
 };

@@ -24,6 +24,7 @@
   import SheetMenu from '../actor/SheetMenu.svelte';
   import { settingStore } from 'src/settings/settings';
   import { currentCharacterSheetTabs } from 'src/state/character-sheet-state';
+  import InlineCreatureType from '../shared/InlineCreatureType.svelte';
 
   let selectedTabId: string;
   let context = getContext<Readable<CharacterSheetContext>>('context');
@@ -191,6 +192,8 @@
         {:else}
           <span title={localize('DND5E.Size')}>{currentSize.text}</span>
         {/if}
+        <span>&#8226;</span>
+        <InlineCreatureType />
         {#each characterSummaryEntries as entry}
           <span>&#8226;</span>
           <span title={entry} class="truncate">{entry}</span>
@@ -230,9 +233,7 @@
       <AllowEditLock
         hint={$settingStore.permanentlyUnlockCharacterSheetForGm &&
         FoundryAdapter.userIsGm()
-          ? localize(
-              'T5EK.Settings.PermanentlyUnlockCharacterSheetForGM.title'
-            )
+          ? localize('T5EK.Settings.PermanentlyUnlockCharacterSheetForGM.title')
           : null}
       />
     {/if}
@@ -340,6 +341,8 @@
         display: grid;
         grid-template-columns:
           min-content /* Size */
+          min-content /* Bullet */
+          minmax(auto, min-content) /* Creature Type */
           min-content /* Bullet */
           minmax(auto, min-content) /* Species */
           min-content /* Bullet */

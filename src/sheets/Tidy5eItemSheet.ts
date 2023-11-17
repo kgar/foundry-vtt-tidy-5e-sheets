@@ -14,6 +14,7 @@ import SpellSheet from './item/SpellSheet.svelte';
 import SubclassSheet from './item/SubclassSheet.svelte';
 import ToolSheet from './item/ToolSheet.svelte';
 import WeaponSheet from './item/WeaponSheet.svelte';
+import RaceSheet from './item/RaceSheet.svelte';
 import type { SheetStats, SheetTabCacheable } from 'src/types/types';
 import { applyTitleToWindow } from 'src/utils/applications';
 import { debug } from 'src/utils/logging';
@@ -130,6 +131,12 @@ export class Tidy5eKgarItemSheet
         break;
       case CONSTANTS.ITEM_TYPE_WEAPON:
         this.component = new WeaponSheet({
+          target: node,
+          context: context,
+        });
+        break;
+      case CONSTANTS.ITEM_TYPE_RACE:
+        this.component = new RaceSheet({
           target: node,
           context: context,
         });

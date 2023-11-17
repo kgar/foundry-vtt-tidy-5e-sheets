@@ -10,6 +10,7 @@
   import type { ItemSheetContext } from 'src/types/item';
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import itemSheetTabs from '../itemSheetTabs';
+  import Source from '../shared/Source.svelte';
 
   let context = getContext<Readable<ItemSheetContext>>('context');
 
@@ -30,7 +31,7 @@
         value={$context.item.name}
         placeholder={localize('DND5E.BackgroundName')}
         disabled={!$context.owner}
-        />
+      />
     </h1>
 
     <div class="item-subtitle">
@@ -39,13 +40,11 @@
     </div>
 
     <ul class="summary flexrow">
-      <li>
-        <TextInput
-          field="system.source"
+      <li class="flex-row">
+        <Source
           document={$context.item}
-          value={$context.system.source}
-          placeholder={localize('DND5E.Source')}
-          disabled={!$context.owner}
+          keyPath="system.source"
+          editable={$context.editable}
         />
       </li>
     </ul>

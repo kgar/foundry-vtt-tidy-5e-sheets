@@ -42,16 +42,20 @@ export default class Tidy5eActorOriginSummaryConfig extends DocumentSheet {
   /** @inheritdoc */
   getData(options: any) {
     return {
-      race: this.clone.system.details.race,
-      background: this.clone.system.details.background,
+      race:
+        this.clone.system.details.race?.name ?? this.clone.system.details.race,
+      background:
+        this.clone.system.details.background?.name ??
+        this.clone.system.details.background,
       environment: this.clone.system.details.environment,
       alignment: this.clone.system.details.alignment,
-      source: this.clone.system.details.source,
       dimensions: this.clone.system.traits.dimensions,
 
       isCharacter: this.document.type === CONSTANTS.SHEET_TYPE_CHARACTER,
       isNPC: this.document.type === CONSTANTS.SHEET_TYPE_NPC,
       isVehicle: this.document.type === CONSTANTS.SHEET_TYPE_VEHICLE,
+      canEditBackground: !this.clone.system.details.background?.name,
+      canEditRace: !this.clone.system.details.race?.name,
     };
   }
 
@@ -61,7 +65,6 @@ export default class Tidy5eActorOriginSummaryConfig extends DocumentSheet {
     const background = FoundryAdapter.expandObject(formData).background;
     const environment = FoundryAdapter.expandObject(formData).environment;
     const alignment = FoundryAdapter.expandObject(formData).alignment;
-    const source = FoundryAdapter.expandObject(formData).source;
 
     const dimensions = FoundryAdapter.expandObject(formData).dimensions;
 
@@ -79,7 +82,6 @@ export default class Tidy5eActorOriginSummaryConfig extends DocumentSheet {
       return this.document.update({
         'system.details.environment': environment,
         'system.details.alignment': alignment,
-        'system.details.source': source,
       });
     } else if (isVehicle) {
       return this.document.update({

@@ -14,6 +14,7 @@ export const CONSTANTS = {
   ITEM_TYPE_SUBCLASS: 'subclass',
   ITEM_TYPE_TOOL: 'tool',
   ITEM_TYPE_WEAPON: 'weapon',
+  ITEM_TYPE_RACE: 'race',
   /**
    * Main button pressed, usually the left button or the un-initialized state
    */

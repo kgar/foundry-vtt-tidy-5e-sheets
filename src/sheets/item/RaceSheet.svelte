@@ -1,11 +1,11 @@
 <script lang="ts">
-  import type { Tab } from 'src/types/types';
   import type { ItemSheetContext } from 'src/types/item';
+  import type { Tab } from 'src/types/types';
+  import Tabs from 'src/components/tabs/Tabs.svelte';
   import type { Readable } from 'svelte/store';
+  import TabContents from 'src/components/tabs/TabContents.svelte';
   import { getContext } from 'svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import Tabs from 'src/components/tabs/Tabs.svelte';
-  import TabContents from 'src/components/tabs/TabContents.svelte';
   import ItemProfilePicture from './parts/ItemProfilePicture.svelte';
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import itemSheetTabs from '../itemSheetTabs';
@@ -16,9 +16,8 @@
   let selectedTabId: string;
 
   const tabs: Tab[] = [
-    itemSheetTabs.descriptionWithSidebar,
-    itemSheetTabs.featDetails,
-    itemSheetTabs.effects,
+    itemSheetTabs.raceDescription,
+    itemSheetTabs.advancement,
   ];
 
   const localize = FoundryAdapter.localize;
@@ -26,14 +25,13 @@
 
 <header class="sheet-header flexrow gap">
   <ItemProfilePicture />
-
   <div class="header-details flexrow">
     <h1 class="charname">
       <TextInput
-        document={$context.item}
         field="name"
-        placeholder={localize('DND5E.ItemName')}
+        document={$context.item}
         value={$context.item.name}
+        placeholder={localize('DND5E.ClassName')}
         disabled={!$context.owner}
       />
     </h1>
@@ -44,18 +42,6 @@
     </div>
 
     <ul class="summary flexrow">
-      <li>
-        {$context.labels.featType ?? ''}
-      </li>
-      <li>
-        <TextInput
-          document={$context.item}
-          field="system.requirements"
-          value={$context.system.requirements}
-          placeholder={localize('DND5E.Requirements')}
-          disabled={!$context.owner}
-        />
-      </li>
       <li class="flex-row">
         <Source
           document={$context.item}

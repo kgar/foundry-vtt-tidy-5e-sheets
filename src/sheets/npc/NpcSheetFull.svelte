@@ -27,6 +27,8 @@
   import { settingStore } from 'src/settings/settings';
   import ActorWarnings from '../actor/ActorWarnings.svelte';
   import { currentNpcSheetTabs } from 'src/state/npc-sheet-state';
+  import InlineSource from '../shared/InlineSource.svelte';
+  import InlineCreatureType from '../shared/InlineCreatureType.svelte';
 
   let selectedTabId: string;
 
@@ -135,26 +137,12 @@
           {#key $context.lockSensitiveFields}
             <DelimitedTruncatedContent cssClass="flex-grow-1">
               <span class="flex-row extra-small-gap align-items-center">
-                <button
-                  type="button"
-                  class="truncate inline-transparent-button"
-                  class:highlight-on-hover={$context.owner}
-                  disabled={!$context.owner}
-                  on:click={() =>
-                    FoundryAdapter.openActorTypeConfig($context.actor)}
-                  title="{$context.labels.type} ({localize(
-                    'DND5E.CreatureTypeConfig'
-                  )})"
-                  >{#if isNil($context.labels.type, '')}
-                    {localize('DND5E.CreatureType')}
-                  {:else}
-                    {$context.labels.type}
-                  {/if}</button
-                >
+                <InlineCreatureType />
                 <span
                   class="environment"
-                  title="{localize('T5EK.Environment')}: {$context.system
-                    .details.environment}"
+                  title={localize('T5EK.EnvironmentTooltip', {
+                    environment: $context.system.details.environment,
+                  })}
                 >
                   <i class="fas fa-tree" />
                 </span>
@@ -165,11 +153,12 @@
                 title={$context.system.details.alignment}
                 >{$context.system.details.alignment}</span
               >
-              <span
-                class="origin-summary-text source source-info"
-                title={$context.system.details.source}
-                >{$context.system.details.source}</span
-              >
+
+              <InlineSource
+                document={$context.actor}
+                keyPath="system.details.source"
+                editable={$context.editable}
+              />
             </DelimitedTruncatedContent>
           {/key}
         </div>
@@ -208,9 +197,7 @@
         <AllowEditLock
           hint={$settingStore.permanentlyUnlockNpcSheetForGm &&
           FoundryAdapter.userIsGm()
-            ? localize(
-                'T5EK.Settings.PermanentlyUnlockNPCSheetForGM.title'
-              )
+            ? localize('T5EK.Settings.PermanentlyUnlockNPCSheetForGM.title')
             : null}
         />
       {/if}

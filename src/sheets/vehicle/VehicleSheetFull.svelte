@@ -17,7 +17,6 @@
   import DelimitedTruncatedContent from 'src/components/layout/DelimitedTruncatedContent.svelte';
   import InlineTextDropdownList from '../../components/inputs/InlineTextDropdownList.svelte';
   import Tidy5eActorOriginSummaryConfig from '../../dialogs/Tidy5eActorOriginSummaryConfig';
-  import { isNil } from 'src/utils/data';
   import ActorMovementRow from '../actor/ActorMovementRow.svelte';
   import AcShieldVehicle from '../actor/AcShieldVehicle.svelte';
   import VerticalLineSeparator from 'src/components/layout/VerticalLineSeparator.svelte';
@@ -27,6 +26,7 @@
   import { settingStore } from 'src/settings/settings';
   import ActorWarnings from '../actor/ActorWarnings.svelte';
   import { currentVehicleSheetTabs } from 'src/state/vehicle-sheet-state';
+  import InlineSource from '../shared/InlineSource.svelte';
 
   let selectedTabId: string;
 
@@ -117,20 +117,10 @@
             placeholder={localize('DND5E.Dimensions')}
             selectOnFocus={true}
           />
-          <ContentEditableFormField
-            element="span"
+          <InlineSource
             document={$context.actor}
-            field="system.details.source"
-            value={$context.system.details.source}
-            editable={$context.owner && !$context.lockSensitiveFields}
-            placeholder={localize('DND5E.Source')}
-            title="{localize('DND5E.Source')} {!isNil(
-              $context.system.details.source,
-              ''
-            )
-              ? '| ' + $context.system.details.source
-              : ''}"
-            selectOnFocus={true}
+            keyPath="system.details.source"
+            editable={$context.editable}
           />
         </DelimitedTruncatedContent>
       {/key}
@@ -173,9 +163,7 @@
       <AllowEditLock
         hint={$settingStore.permanentlyUnlockVehicleSheetForGm &&
         FoundryAdapter.userIsGm()
-          ? localize(
-              'T5EK.Settings.PermanentlyUnlockVehicleSheetForGM.title'
-            )
+          ? localize('T5EK.Settings.PermanentlyUnlockVehicleSheetForGM.title')
           : null}
       />
     {/if}

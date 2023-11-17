@@ -86,6 +86,7 @@
   "T5EK.Abilities": "Abilities",
 
   "T5EK.Environment": "Environment",
+  "T5EK.EnvironmentTooltip": "Environment: {environment}",
 
   "T5EK.Search": "search",
   "T5EK.SearchClear": "clear search",

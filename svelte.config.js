@@ -5,6 +5,8 @@ export default {
   // for more information about preprocessors
   preprocess: vitePreprocess(),
   vitePlugin: {
-    inspector: true,
+    inspector: {
+      toggleKeyCombo: 'control-alt-shift',
+    },
   },
 };

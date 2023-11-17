@@ -20,7 +20,8 @@
 </script>
 
 <div
-  class="motion motion-{motion ? 1 : 0} {cssClass}"
+  class="motion {cssClass}"
+  class:is-in-motion={motion}
   title={localize(motion ? 'T5EK.VehicleInMotion' : 'T5EK.VehicleMotionless')}
 >
   <Checkbox
@@ -89,7 +90,7 @@
     }
   }
 
-  .motion-1 {
+  .is-in-motion {
     :global(label) {
       color: var(--t5ek-activated-profile-toggle-color);
       text-shadow: 0 0 0.625rem var(--t5ek-vehicle-in-motion-text-shadow-color);

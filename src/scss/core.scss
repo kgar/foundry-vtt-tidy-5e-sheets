@@ -108,7 +108,7 @@
     margin: unset;
   }
 
-  .highlight-on-hover:hover {
+  .highlight-on-hover:is(:hover, :focus-visible) {
     color: var(--t5ek-primary-accent-color);
   }
 

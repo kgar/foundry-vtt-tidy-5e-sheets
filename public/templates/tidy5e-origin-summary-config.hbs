@@ -1,25 +1,32 @@
 <form>
   {{#if isCharacter}}
 
-    <div class='form-group'>
-      <label>{{localize 'DND5E.Race'}}</label>
-      <textarea
-        rows='4'
-        cols='50'
-        name='race'
-        value='{{race}}'
-        placeholder='{{localize "DND5E.Race"}}'
-      >{{race}}</textarea>
-    </div>
+    {{#if canEditRace}}
+      <div class='form-group'>
+        <label>{{localize 'DND5E.Race'}}</label>
+        <textarea
+          rows='4'
+          cols='50'
+          name='race'
+          value='{{race}}'
+          placeholder='{{localize "DND5E.Race"}}'
+        >{{race}}</textarea>
+
+      </div>
+    {{/if}}
     <div class='form-group'>
       <label>{{localize 'DND5E.Background'}}</label>
-      <textarea
-        rows='4'
-        cols='50'
-        name='background'
-        value='{{background}}'
-        placeholder='{{localize "DND5E.Background"}}'
-      >{{background}}</textarea>
+      {{#if canEditBackground}}
+        <textarea
+          rows='4'
+          cols='50'
+          name='background'
+          value='{{background}}'
+          placeholder='{{localize "DND5E.Background"}}'
+        >{{background}}</textarea>
+      {{else}}
+        <span>{{background}}</span>
+      {{/if}}
     </div>
     <div class='form-group'>
       <label>{{localize 'DND5E.Alignment'}}</label>
@@ -53,16 +60,6 @@
         value='{{alignment}}'
         placeholder='{{localize "DND5E.Alignment"}}'
       >{{alignment}}</textarea>
-    </div>
-    <div class='form-group'>
-      <label>{{localize 'DND5E.Source'}}</label>
-      <textarea
-        rows='4'
-        cols='50'
-        name='source'
-        value='{{source}}'
-        placeholder='{{localize "DND5E.Source"}}'
-      >{{source}}</textarea>
     </div>
 
   {{else if isVehicle}}

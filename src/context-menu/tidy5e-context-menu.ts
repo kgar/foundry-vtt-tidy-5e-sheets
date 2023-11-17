@@ -88,8 +88,8 @@ function getActiveEffectContextOptions(effect: any) {
         callback: () =>
           effect.clone(
             {
-              label: FoundryAdapter.localize('DOCUMENT.CopyOf', {
-                name: effect.label,
+              name: FoundryAdapter.localize('DOCUMENT.CopyOf', {
+                name: effect.name,
               }),
             },
             { save: true }

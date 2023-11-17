@@ -30,7 +30,7 @@
     <VehicleMovement
       motion={FoundryAdapter.tryGetFlag($context.actor, 'motion') === true}
       radiusClass={$context.useRoundedPortraitStyle ? 'rounded' : 'top-right'}
-      animate={false}
+      animate={true}
     />
   {/if}
   <VehicleHitPoints />
