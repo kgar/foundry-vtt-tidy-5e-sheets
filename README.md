@@ -7,7 +7,7 @@ D&D 5e sheet layouts for Foundry VTT, focused on a clean UI, user ergonomics, an
 
 Completely rewritten from the ground up, based on the [Tidy5e Sheet](https://github.com/sdenec/tidy5e-sheet) module by [sdenec](https://github.com/sdenec) and [4535992](https://github.com/p4535992).
 
-> **Warning**  
+> [!WARNING]
 > **Use at your own risk.**
 >
 > This is an alpha testing module that is subject to numerous breaking changes and rapid updates.
@@ -55,7 +55,7 @@ Manual installation instructions:
    - Tidy 5e kgar Vehicle Sheet
    - Tidy 5e kgar Item Sheet
 
-> **Important**  
+> [!Important]
 > During alpha testing, I am using a temporary module ID, `tidy5e-sheet-kgar`, and as a result, these sheets are intended to sit alongside the current Tidy5e sheet layouts. When alpha testing is over, these sheets will become the official Tidy5e sheets, meaning **all settings related to these test sheets during alpha testing will be forgotten after alpha testing.**
 >
 > Your character/NPC/vehicle/item core data will remain intact. This is the data that is included with the dnd5e system. However, certain module-specific data that you set up for these alpha sheets such as config settings, favorites, NPC/vehicular exhaustion, vehicle movement status, search filter text, spellbook class filter selection, theme settings, etc., will be forgotten. There will not be a migration because of the sheer amount of work remaining to get these sheets to version 1 status.
