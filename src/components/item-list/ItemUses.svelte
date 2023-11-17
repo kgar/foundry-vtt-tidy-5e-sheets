@@ -42,6 +42,7 @@
     on:change|stopPropagation|preventDefault={(event) =>
       onUsesChanged(event, item)}
     disabled={!item.isOwner}
+    on:focus={(ev) => ev.currentTarget.select()}
   />
   /
   <input
@@ -51,6 +52,7 @@
     on:change|stopPropagation|preventDefault={(event) =>
       onUsesMaxChanged(event, item)}
     disabled={!item.isOwner}
+    on:focus={(ev) => ev.currentTarget.select()}
   />
 </div>
 
