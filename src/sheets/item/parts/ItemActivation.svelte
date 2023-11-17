@@ -248,24 +248,26 @@
     let:inputId
   >
     <div class="form-fields">
-      <NumberInput
-        id={inputId}
-        value={$context.system.uses.value}
-        title={localize('DND5E.UsesAvailable')}
-        field="system.uses.value"
-        document={$context.item}
-      />
-      <span class="sep">{localize('DND5E.of')}</span>
-      <TextInput
-        id="{$context.appId}-system-uses-max"
-        value={$context.source.uses.max}
-        title={localize('DND5E.UsesMax')}
-        field="system.uses.max"
-        document={$context.item}
-        dataset={{ formulaEditor: true }}
-        disabled={!$context.owner}
-      />
-      <span class="sep">{localize('DND5E.per')}</span>
+      {#if $context.system.uses.per}
+        <NumberInput
+          id={inputId}
+          value={$context.system.uses.value}
+          title={localize('DND5E.UsesAvailable')}
+          field="system.uses.value"
+          document={$context.item}
+        />
+        <span class="sep">{localize('DND5E.of')}</span>
+        <TextInput
+          id="{$context.appId}-system-uses-max"
+          value={$context.source.uses.max}
+          title={localize('DND5E.UsesMax')}
+          field="system.uses.max"
+          document={$context.item}
+          dataset={{ formulaEditor: true }}
+          disabled={!$context.owner}
+        />
+        <span class="sep">{localize('DND5E.per')}</span>
+      {/if}
       <Select
         id="{$context.appId}-system.uses.per"
         value={$context.system.uses.per}
@@ -274,8 +276,10 @@
         field="system.uses.per"
         disabled={!$context.owner}
       >
-        <option value="" />
-        <SelectOptions data={$context.config.limitedUsePeriods} />
+        <SelectOptions
+          data={$context.config.limitedUsePeriods}
+          blank={localize('DND5E.None')}
+        />
       </Select>
     </div>
   </ItemFormGroup>
@@ -310,7 +314,7 @@
         <NumberInput
           id="{$context.appId}-system-consume-amount"
           value={$context.system.consume.amount}
-          title={localize('DND5E.ConsumeQuanity')}
+          title={localize('DND5E.ConsumeAmount')}
           field="system.consume.amount"
           document={$context.item}
           disabled={!$context.owner}
