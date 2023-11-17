@@ -17,7 +17,10 @@
 
   let selectedTabId: string;
 
-  let tabs: Tab[] = [itemSheetTabs.descriptionWithSidebar];
+  let tabs: Tab[] = [
+    itemSheetTabs.descriptionWithSidebar,
+    itemSheetTabs.lootDetails,
+  ];
 
   const localize = FoundryAdapter.localize;
 </script>

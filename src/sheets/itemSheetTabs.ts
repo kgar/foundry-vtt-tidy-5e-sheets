@@ -8,6 +8,7 @@ import ItemDescriptionTab from './item/tabs/ItemDescriptionTab.svelte';
 import ItemDescriptionWithSidebarTab from './item/tabs/ItemDescriptionWithSidebarTab.svelte';
 import ItemEquipmentDetailsTab from './item/tabs/ItemEquipmentDetailsTab.svelte';
 import ItemFeatDetailsTab from './item/tabs/ItemFeatDetailsTab.svelte';
+import ItemLootDetailsTab from './item/tabs/ItemLootDetailsTab.svelte';
 import ItemRaceDescriptionTab from './item/tabs/ItemRaceDescriptionTab.svelte';
 import ItemSpellDetailsTab from './item/tabs/ItemSpellDetailsTab.svelte';
 import ItemSubclassDetailsTab from './item/tabs/ItemSubclassDetailsTab.svelte';
@@ -15,6 +16,52 @@ import ItemToolDetailsTab from './item/tabs/ItemToolDetailsTab.svelte';
 import ItemWeaponDetailsTab from './item/tabs/ItemWeaponDetailsTab.svelte';
 
 const itemSheetTabs = {
+  /**
+   * Advancement create/read/update/delete interface.
+   */
+  advancement: {
+    id: CONSTANTS.TAB_ITEM_ADVANCEMENT_ID,
+    displayName: 'DND5E.AdvancementTitle',
+    content: {
+      component: ItemAdvancementTab,
+      cssClass: 'detail-tab-contents items-list-container',
+    },
+  },
+  /**
+   * Details form for backpack items.
+   */
+  backpackDetails: {
+    id: CONSTANTS.TAB_ITEM_DETAILS_ID,
+    displayName: 'DND5E.Details',
+    content: {
+      component: ItemBackpackDetailsTab,
+      props: {},
+      cssClass: 'detail-tab-contents',
+    },
+  },
+  /**
+   * Details form for class items.
+   */
+  classDetails: {
+    id: CONSTANTS.TAB_ITEM_DETAILS_ID,
+    displayName: 'DND5E.Details',
+    content: {
+      component: ItemClassDetailsTab,
+      cssClass: 'detail-tab-contents',
+    },
+  },
+  /**
+   * Details form for consumable items.
+   */
+  consumableDetails: {
+    id: CONSTANTS.TAB_ITEM_DETAILS_ID,
+    displayName: 'DND5E.Details',
+    content: {
+      component: ItemConsumableDetailsTab,
+      props: {},
+      cssClass: 'detail-tab-contents',
+    },
+  },
   /**
    * Description editor and a header for mechanics/flavor.
    */
@@ -38,39 +85,6 @@ const itemSheetTabs = {
     },
   },
   /**
-   * A sidebar with race properties and configuration buttons, and a description editor.
-   */
-  raceDescription: {
-    id: CONSTANTS.TAB_ITEM_DESCRIPTION_ID,
-    displayName: 'DND5E.Description',
-    content: {
-      component: ItemRaceDescriptionTab,
-      cssClass: 'flexrow',
-    },
-  },
-  /**
-   * Advancement create/read/update/delete interface.
-   */
-  advancement: {
-    id: CONSTANTS.TAB_ITEM_ADVANCEMENT_ID,
-    displayName: 'DND5E.AdvancementTitle',
-    content: {
-      component: ItemAdvancementTab,
-      cssClass: 'detail-tab-contents items-list-container',
-    },
-  },
-  /**
-   * Details form for weapon items.
-   */
-  weaponDetails: {
-    id: CONSTANTS.TAB_ITEM_DETAILS_ID,
-    displayName: 'DND5E.Details',
-    content: {
-      component: ItemWeaponDetailsTab,
-      cssClass: 'detail-tab-contents',
-    },
-  },
-  /**
    * Active Effects create/read/update/delete interface.
    */
   effects: {
@@ -82,35 +96,13 @@ const itemSheetTabs = {
     },
   },
   /**
-   * Details form for tool items.
+   * Details form for equipment items.
    */
-  toolDetails: {
+  equipmentDetails: {
     id: CONSTANTS.TAB_ITEM_DETAILS_ID,
     displayName: 'DND5E.Details',
     content: {
-      component: ItemToolDetailsTab,
-      cssClass: 'detail-tab-contents',
-    },
-  },
-  /**
-   * Details form for subclass items.
-   */
-  subclassDetails: {
-    id: CONSTANTS.TAB_ITEM_DETAILS_ID,
-    displayName: 'DND5E.Details',
-    content: {
-      component: ItemSubclassDetailsTab,
-      cssClass: 'detail-tab-contents',
-    },
-  },
-  /**
-   * Details form for spell items.
-   */
-  spellDetails: {
-    id: CONSTANTS.TAB_ITEM_DETAILS_ID,
-    displayName: 'DND5E.Details',
-    content: {
-      component: ItemSpellDetailsTab,
+      component: ItemEquipmentDetailsTab,
       cssClass: 'detail-tab-contents',
     },
   },
@@ -126,48 +118,69 @@ const itemSheetTabs = {
     },
   },
   /**
-   * Details form for equipment items.
+   * Details form for loot.
    */
-  equipmentDetails: {
+  lootDetails: {
     id: CONSTANTS.TAB_ITEM_DETAILS_ID,
     displayName: 'DND5E.Details',
     content: {
-      component: ItemEquipmentDetailsTab,
-      cssClass: 'detail-tab-contents',
-    },
-  },
-  /**
-   * Details form for consumable items.
-   */
-  consumableDetails: {
-    id: CONSTANTS.TAB_ITEM_DETAILS_ID,
-    displayName: 'DND5E.Details',
-    content: {
-      component: ItemConsumableDetailsTab,
+      component: ItemLootDetailsTab,
       props: {},
       cssClass: 'detail-tab-contents',
     },
   },
   /**
-   * Details form for class items.
+   * A sidebar with race properties and configuration buttons, and a description editor.
    */
-  classDetails: {
+  raceDescription: {
+    id: CONSTANTS.TAB_ITEM_DESCRIPTION_ID,
+    displayName: 'DND5E.Description',
+    content: {
+      component: ItemRaceDescriptionTab,
+      cssClass: 'flexrow',
+    },
+  },
+  /**
+   * Details form for spell items.
+   */
+  spellDetails: {
     id: CONSTANTS.TAB_ITEM_DETAILS_ID,
     displayName: 'DND5E.Details',
     content: {
-      component: ItemClassDetailsTab,
+      component: ItemSpellDetailsTab,
       cssClass: 'detail-tab-contents',
     },
   },
   /**
-   * Details form for backpack items.
+   * Details form for subclass items.
    */
-  backpackDetails: {
+  subclassDetails: {
     id: CONSTANTS.TAB_ITEM_DETAILS_ID,
     displayName: 'DND5E.Details',
     content: {
-      component: ItemBackpackDetailsTab,
-      props: {},
+      component: ItemSubclassDetailsTab,
+      cssClass: 'detail-tab-contents',
+    },
+  },
+  /**
+   * Details form for tool items.
+   */
+  toolDetails: {
+    id: CONSTANTS.TAB_ITEM_DETAILS_ID,
+    displayName: 'DND5E.Details',
+    content: {
+      component: ItemToolDetailsTab,
+      cssClass: 'detail-tab-contents',
+    },
+  },
+  /**
+   * Details form for weapon items.
+   */
+  weaponDetails: {
+    id: CONSTANTS.TAB_ITEM_DETAILS_ID,
+    displayName: 'DND5E.Details',
+    content: {
+      component: ItemWeaponDetailsTab,
       cssClass: 'detail-tab-contents',
     },
   },
