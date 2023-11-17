@@ -125,7 +125,7 @@
             <span class="truncate">{spell.name}</span>
           </ItemName>
         </ItemTableCell>
-        {#if spell.system.uses.per}
+        {#if spell.hasLimitedUses}
           <ItemTableCell baseWidth="3.125rem">
             <ItemUses item={spell} />
           </ItemTableCell>
