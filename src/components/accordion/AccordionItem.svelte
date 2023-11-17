@@ -3,6 +3,7 @@
   import type { AccordionCtxType } from './Accordion.svelte';
   import { writable } from 'svelte/store';
   import { slide } from 'svelte/transition';
+  import { quadInOut } from 'svelte/easing';
 
   export let open: boolean = false;
 
@@ -33,34 +34,43 @@
   </button>
 </h2>
 
-<div class="accordion-item-content" class:closed={!open}>
-  <slot />
-</div>
+{#if open}
+  <div
+    class="accordion-item-content"
+    transition:slide={{ duration: 200, easing: quadInOut }}
+  >
+    <slot />
+  </div>
+{:else}
+  <div class="accordion-item-content hidden">
+    <slot />
+  </div>
+{/if}
 
 <style lang="scss">
-  .accordion-item-content {
-    max-height: 100%;
-    max-width: 100%;
-    transition: max-height 0.3s ease;
-    overflow: hidden;
-
-    &.closed {
-      max-height: 0;
-    }
+  .accordion-item-header {
+    padding: 0.25rem;
   }
-
   .accordion-item-toggle {
     display: flex;
     gap: 0.5rem;
     align-items: center;
+
+    .accordion-arrow {
+      font-size: 0.75rem;
+      transition: transform 0.2s;
+
+      &.open {
+        transform: rotate(90deg);
+      }
+    }
   }
 
-  .accordion-arrow {
-    font-size: 0.75rem;
-    transition: transform 0.2s;
+  .accordion-item-content {
+    overflow-y: hidden;
 
-    &.open {
-      transform: rotate(90deg);
+    &.hidden {
+      display: none;
     }
   }
 </style>

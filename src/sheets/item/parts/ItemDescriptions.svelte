@@ -6,67 +6,92 @@
   import type { Readable } from 'svelte/store';
   import Accordion from 'src/components/accordion/Accordion.svelte';
   import AccordionItem from 'src/components/accordion/AccordionItem.svelte';
-  import SheetEditor from 'src/components/editor/SheetEditor.svelte';
+  import OpenSheetEditor from 'src/components/editor/OpenSheetEditor.svelte';
 
   let context = getContext<Readable<ItemSheetContext>>('context');
 
   const localize = FoundryAdapter.localize;
 
-  function activateProseMirrorListeners(node: HTMLElement) {
+  function onEditorActivation(node: HTMLElement) {
+    if (latch) {
+      editing = false;
+      latch = false;
+      return;
+    }
+
     $context.activateFoundryJQueryListeners(node);
-    editingDescription = false;
+    latch = true;
   }
 
-  let editingDescription = false;
+  let editing = false;
+  let latch = false;
+  let valueToEdit: string;
+  let fieldToEdit: string;
+
+  function edit(value: string, field: string) {
+    valueToEdit = value;
+    fieldToEdit = field;
+    editing = true;
+  }
 </script>
 
-<Accordion multiple>
+<Accordion multiple class={editing ? 'hidden' : ''}>
   <AccordionItem>
-    <span slot="header">
+    <span slot="header" class="flex-1 flex-row justify-content-space-between">
       {localize('DND5E.Description')}
+
+      {#if $context.owner}
+        <button
+          type="button"
+          class="inline-icon-button"
+          on:click|stopPropagation={() =>
+            edit($context.enriched.description, 'system.description.value')}
+          ><i class="fas fa-edit" /></button
+        >
+      {/if}
     </span>
-    <RerenderAfterFormSubmission
-      andOnValueChange={$context.item.system.description.value}
-    >
-      <article class="editor-container" use:activateProseMirrorListeners>
-        <SheetEditor
-          content={$context.enriched.description}
-          editable={$context.owner || FoundryAdapter.userIsGm()}
-          target="system.description.value"
-        />
-      </article>
-    </RerenderAfterFormSubmission>
+    {@html $context.enriched.description}
   </AccordionItem>
   <AccordionItem>
-    <span slot="header">
+    <span slot="header" class="flex-1 flex-row justify-content-space-between">
       {localize('DND5E.DescriptionUnidentified')}
+
+      {#if $context.owner}
+        <button
+          type="button"
+          class="inline-icon-button"
+          on:click|stopPropagation={() =>
+            edit(
+              $context.enriched.unidentified,
+              'system.description.unidentified'
+            )}><i class="fas fa-edit" /></button
+        >
+      {/if}
     </span>
-    <RerenderAfterFormSubmission
-      andOnValueChange={$context.item.system.description.unidentified}
-    >
-      <article class="editor-container" use:activateProseMirrorListeners>
-        <SheetEditor
-          content={$context.enriched.unidentified}
-          editable={$context.owner || FoundryAdapter.userIsGm()}
-          target="system.description.unidentified"
-        />
-      </article>
-    </RerenderAfterFormSubmission>
+    {@html $context.enriched.unidentified}
   </AccordionItem>
   <AccordionItem>
-    <span slot="header">
+    <span slot="header" class="flex-1 flex-row justify-content-space-between">
       {localize('DND5E.DescriptionChat')}
+
+      {#if $context.owner}
+        <button
+          type="button"
+          class="inline-icon-button"
+          on:click|stopPropagation={() =>
+            edit($context.enriched.chat, 'system.description.chat')}
+          ><i class="fas fa-edit" /></button
+        >
+      {/if}
     </span>
-    <RerenderAfterFormSubmission
-      andOnValueChange={$context.item.system.description.chat}
-    >
-      <article class="editor-container" use:activateProseMirrorListeners>
-        <SheetEditor
-          content={$context.enriched.chat}
-          editable={$context.owner || FoundryAdapter.userIsGm()}
-          target="system.description.chat"
-        />
-      </article>
-    </RerenderAfterFormSubmission>
+    {@html $context.enriched.chat}
   </AccordionItem>
 </Accordion>
+
+{#if editing}
+  <RerenderAfterFormSubmission andOnValueChange={valueToEdit}>
+    <article class="editor-container" use:onEditorActivation>
+      <OpenSheetEditor content={valueToEdit} target={fieldToEdit} />
+    </article>
+  </RerenderAfterFormSubmission>
+{/if}

@@ -16,7 +16,7 @@
 </script>
 
 {#key multiple}
-  <div>
+  <div class={$$props.class}>
     <slot />
   </div>
 {/key}
