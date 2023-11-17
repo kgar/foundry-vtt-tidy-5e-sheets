@@ -5,7 +5,7 @@
   export let checked: boolean = false;
   export let field: string;
   export let document: any;
-  export let tooltip: string | null = null;
+  export let title: string | null = null;
   export let id: string | null = null;
   export let disabled: boolean | null = null;
   export let dataset: Record<string, unknown> | null = null;
@@ -30,14 +30,13 @@
 
 <!-- TODO: Make label wrapper conditional when Svelte offers inline template component nodes -->
 {#if $$slots.default}
-  <label class={labelCssClass}>
+  <label class={labelCssClass} {title}>
     <input
       type="checkbox"
       {id}
       bind:value={draftValue}
       {checked}
       on:change={saveChange}
-      data-tooltip={tooltip}
       {disabled}
       {...datasetAttributes}
       class={checkboxCssClass}
@@ -51,7 +50,7 @@
     bind:value={draftValue}
     {checked}
     on:change={saveChange}
-    data-tooltip={tooltip}
+    {title}
     {disabled}
     {...datasetAttributes}
     class={checkboxCssClass}
