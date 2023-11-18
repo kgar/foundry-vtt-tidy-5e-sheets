@@ -13,18 +13,18 @@
   const localize = FoundryAdapter.localize;
 
   function onEditorActivation(node: HTMLElement) {
-    if (latch) {
+    if (editorIsActive) {
       editing = false;
-      latch = false;
+      editorIsActive = false;
       return;
     }
 
     $context.activateFoundryJQueryListeners(node);
-    latch = true;
+    editorIsActive = true;
   }
 
   let editing = false;
-  let latch = false;
+  let editorIsActive = false;
   let valueToEdit: string;
   let fieldToEdit: string;
 
@@ -33,60 +33,35 @@
     fieldToEdit = field;
     editing = true;
   }
+
+  let accordionItemOpenStates = $context.itemDescriptions.map(
+    (_, i) => i === 0
+  );
 </script>
 
 <div class="item-descriptions-container">
   <Accordion multiple class={editing ? 'hidden' : ''}>
-    <AccordionItem open={true}>
-      <span slot="header" class="flex-1 flex-row justify-content-space-between">
-        {localize('DND5E.Description')}
+    {#each $context.itemDescriptions as itemDescription, i (itemDescription.field)}
+      <AccordionItem bind:open={accordionItemOpenStates[i]}>
+        <span
+          slot="header"
+          class="flex-1 flex-row justify-content-space-between"
+        >
+          {itemDescription.label}
 
-        {#if $context.owner}
-          <button
-            type="button"
-            class="inline-icon-button"
-            on:click|stopPropagation={() =>
-              edit($context.enriched.description, 'system.description.value')}
-            ><i class="fas fa-edit" /></button
-          >
-        {/if}
-      </span>
-      {@html $context.enriched.description}
-    </AccordionItem>
-    <AccordionItem>
-      <span slot="header" class="flex-1 flex-row justify-content-space-between">
-        {localize('DND5E.DescriptionUnidentified')}
-
-        {#if $context.owner}
-          <button
-            type="button"
-            class="inline-icon-button"
-            on:click|stopPropagation={() =>
-              edit(
-                $context.enriched.unidentified,
-                'system.description.unidentified'
-              )}><i class="fas fa-edit" /></button
-          >
-        {/if}
-      </span>
-      {@html $context.enriched.unidentified}
-    </AccordionItem>
-    <AccordionItem>
-      <span slot="header" class="flex-1 flex-row justify-content-space-between">
-        {localize('DND5E.DescriptionChat')}
-
-        {#if $context.owner}
-          <button
-            type="button"
-            class="inline-icon-button"
-            on:click|stopPropagation={() =>
-              edit($context.enriched.chat, 'system.description.chat')}
-            ><i class="fas fa-edit" /></button
-          >
-        {/if}
-      </span>
-      {@html $context.enriched.chat}
-    </AccordionItem>
+          {#if $context.owner}
+            <button
+              type="button"
+              class="inline-icon-button"
+              on:click|stopPropagation={() =>
+                edit(itemDescription.content, itemDescription.field)}
+              ><i class="fas fa-edit" /></button
+            >
+          {/if}
+        </span>
+        {@html itemDescription.content}
+      </AccordionItem>
+    {/each}
   </Accordion>
 
   {#if editing}

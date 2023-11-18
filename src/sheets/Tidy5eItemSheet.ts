@@ -1,6 +1,6 @@
 import { CONSTANTS } from 'src/constants';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-import type { Item5e, ItemSheetContext } from 'src/types/item';
+import type { Item5e, ItemDescription, ItemSheetContext } from 'src/types/item';
 import { get, writable } from 'svelte/store';
 import TypeNotFoundSheet from './item/TypeNotFoundSheet.svelte';
 import EquipmentSheet from './item/EquipmentSheet.svelte';
@@ -192,8 +192,28 @@ export class Tidy5eKgarItemSheet
   }
 
   private async getContext(): Promise<ItemSheetContext> {
+    const defaultCharacterContext = await super.getData(this.options);
+
+    const itemDescriptions: ItemDescription[] = [
+      {
+        content: defaultCharacterContext.enriched.description,
+        field: 'system.description.value',
+        label: FoundryAdapter.localize('DND5E.Description'),
+      },
+      {
+        content: defaultCharacterContext.enriched.unidentified,
+        field: 'system.description.unidentified',
+        label: FoundryAdapter.localize('DND5E.DescriptionUnidentified'),
+      },
+      {
+        content: defaultCharacterContext.enriched.chat,
+        field: 'system.description.chat',
+        label: FoundryAdapter.localize('DND5E.DescriptionChat'),
+      },
+    ];
+
     const context = {
-      ...(await super.getData(this.options)),
+      ...defaultCharacterContext,
       appId: this.appId,
       activateFoundryJQueryListeners: (node: HTMLElement) => {
         this._activateCoreListeners($(node));
@@ -205,6 +225,8 @@ export class Tidy5eKgarItemSheet
         this.item?.system?.hp?.value,
         this.item?.system?.hp?.max
       ),
+      itemDescriptions,
+      originalContext: defaultCharacterContext,
     };
 
     debug(`${this.item?.type ?? 'Unknown Item Type'} context data`, context);

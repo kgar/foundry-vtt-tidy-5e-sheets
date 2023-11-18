@@ -1,13 +1,21 @@
 import type { ComponentType, SvelteComponent } from 'svelte';
 
 export type ItemSheetContext = {
-  lockItemQuantity: boolean;
-  owner: boolean;
   /**
    * Represents remaining health as a percentage within the range of `0` to `100`.
    */
   healthPercentage: number;
+  itemDescriptions: ItemDescription[];
+  lockItemQuantity: boolean;
+  originalContext: unknown;
+  owner: boolean;
 } & Record<string, any>;
+
+export type ItemDescription = {
+  field: string;
+  content: string;
+  label: string;
+};
 
 export type Item5e = any;
 
