@@ -9,13 +9,40 @@
   import HorizontalLineSeparator from 'src/components/layout/HorizontalLineSeparator.svelte';
   import VerticalLineSeparator from 'src/components/layout/VerticalLineSeparator.svelte';
   import ItemDescriptions from '../parts/ItemDescriptions.svelte';
+  import RerenderAfterFormSubmission from 'src/components/utility/RerenderAfterFormSubmission.svelte';
+  import OpenSheetEditor from 'src/components/editor/OpenSheetEditor.svelte';
 
   let context = getContext<Readable<ItemSheetContext>>('context');
+
+  function onEditorActivation(node: HTMLElement) {
+    if (editorIsActive) {
+      editing = false;
+      editorIsActive = false;
+      return;
+    }
+
+    $context.activateFoundryJQueryListeners(node);
+    editorIsActive = true;
+  }
+
+  let editing = false;
+  let editorIsActive = false;
+  let valueToEdit: string;
+  let fieldToEdit: string;
+
+  function edit(value: string, field: string) {
+    valueToEdit = value;
+    fieldToEdit = field;
+    editing = true;
+  }
 
   const localize = FoundryAdapter.localize;
 </script>
 
-<div class="item-description flexrow align-items-stretch small-gap">
+<div
+  class="item-description flexrow align-items-stretch small-gap"
+  class:hidden={editing}
+>
   <div class="item-properties">
     {#if $context.isPhysical}
       <div class="form-group">
@@ -118,11 +145,25 @@
 
   <VerticalLineSeparator />
 
-  <ItemDescriptions />
+  <ItemDescriptions
+    on:edit={(ev) => edit(ev.detail.valueToEdit, ev.detail.fieldToEdit)}
+  />
 </div>
+
+{#if editing}
+  <RerenderAfterFormSubmission andOnValueChange={valueToEdit}>
+    <article class="editor-container" use:onEditorActivation>
+      <OpenSheetEditor content={valueToEdit} target={fieldToEdit} />
+    </article>
+  </RerenderAfterFormSubmission>
+{/if}
 
 <style lang="scss">
   .item-properties {
     flex: 0 0 7.5rem;
+  }
+
+  .editor-container {
+    width: 100%;
   }
 </style>
