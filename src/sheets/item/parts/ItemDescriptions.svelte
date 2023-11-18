@@ -52,7 +52,7 @@
           {#if $context.owner}
             <button
               type="button"
-              class="inline-icon-button"
+              class="inline-icon-button edit-item-description"
               on:click|stopPropagation={() =>
                 edit(itemDescription.content, itemDescription.field)}
               ><i class="fas fa-edit" /></button
@@ -76,5 +76,10 @@
 <style lang="scss">
   .item-descriptions-container {
     padding-right: 0.3125rem;
+
+    .edit-item-description {
+      padding-left: 2rem;
+      padding-right: 0.125rem;
+    }
   }
 </style>
