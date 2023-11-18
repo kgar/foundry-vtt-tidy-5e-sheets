@@ -35,63 +35,71 @@
   }
 </script>
 
-<Accordion multiple class={editing ? 'hidden' : ''}>
-  <AccordionItem>
-    <span slot="header" class="flex-1 flex-row justify-content-space-between">
-      {localize('DND5E.Description')}
+<div class="item-descriptions-container">
+  <Accordion multiple class={editing ? 'hidden' : ''}>
+    <AccordionItem open={true}>
+      <span slot="header" class="flex-1 flex-row justify-content-space-between">
+        {localize('DND5E.Description')}
 
-      {#if $context.owner}
-        <button
-          type="button"
-          class="inline-icon-button"
-          on:click|stopPropagation={() =>
-            edit($context.enriched.description, 'system.description.value')}
-          ><i class="fas fa-edit" /></button
-        >
-      {/if}
-    </span>
-    {@html $context.enriched.description}
-  </AccordionItem>
-  <AccordionItem>
-    <span slot="header" class="flex-1 flex-row justify-content-space-between">
-      {localize('DND5E.DescriptionUnidentified')}
+        {#if $context.owner}
+          <button
+            type="button"
+            class="inline-icon-button"
+            on:click|stopPropagation={() =>
+              edit($context.enriched.description, 'system.description.value')}
+            ><i class="fas fa-edit" /></button
+          >
+        {/if}
+      </span>
+      {@html $context.enriched.description}
+    </AccordionItem>
+    <AccordionItem>
+      <span slot="header" class="flex-1 flex-row justify-content-space-between">
+        {localize('DND5E.DescriptionUnidentified')}
 
-      {#if $context.owner}
-        <button
-          type="button"
-          class="inline-icon-button"
-          on:click|stopPropagation={() =>
-            edit(
-              $context.enriched.unidentified,
-              'system.description.unidentified'
-            )}><i class="fas fa-edit" /></button
-        >
-      {/if}
-    </span>
-    {@html $context.enriched.unidentified}
-  </AccordionItem>
-  <AccordionItem>
-    <span slot="header" class="flex-1 flex-row justify-content-space-between">
-      {localize('DND5E.DescriptionChat')}
+        {#if $context.owner}
+          <button
+            type="button"
+            class="inline-icon-button"
+            on:click|stopPropagation={() =>
+              edit(
+                $context.enriched.unidentified,
+                'system.description.unidentified'
+              )}><i class="fas fa-edit" /></button
+          >
+        {/if}
+      </span>
+      {@html $context.enriched.unidentified}
+    </AccordionItem>
+    <AccordionItem>
+      <span slot="header" class="flex-1 flex-row justify-content-space-between">
+        {localize('DND5E.DescriptionChat')}
 
-      {#if $context.owner}
-        <button
-          type="button"
-          class="inline-icon-button"
-          on:click|stopPropagation={() =>
-            edit($context.enriched.chat, 'system.description.chat')}
-          ><i class="fas fa-edit" /></button
-        >
-      {/if}
-    </span>
-    {@html $context.enriched.chat}
-  </AccordionItem>
-</Accordion>
+        {#if $context.owner}
+          <button
+            type="button"
+            class="inline-icon-button"
+            on:click|stopPropagation={() =>
+              edit($context.enriched.chat, 'system.description.chat')}
+            ><i class="fas fa-edit" /></button
+          >
+        {/if}
+      </span>
+      {@html $context.enriched.chat}
+    </AccordionItem>
+  </Accordion>
 
-{#if editing}
-  <RerenderAfterFormSubmission andOnValueChange={valueToEdit}>
-    <article class="editor-container" use:onEditorActivation>
-      <OpenSheetEditor content={valueToEdit} target={fieldToEdit} />
-    </article>
-  </RerenderAfterFormSubmission>
-{/if}
+  {#if editing}
+    <RerenderAfterFormSubmission andOnValueChange={valueToEdit}>
+      <article class="editor-container" use:onEditorActivation>
+        <OpenSheetEditor content={valueToEdit} target={fieldToEdit} />
+      </article>
+    </RerenderAfterFormSubmission>
+  {/if}
+</div>
+
+<style lang="scss">
+  .item-descriptions-container {
+    padding-right: 0.3125rem;
+  }
+</style>

@@ -112,6 +112,8 @@ export const defaultLightTheme: Tidy5eTheme = {
     '--t5ek-exhaustion-severity2-color': 'rgba(255, 255, 255, 0.7)',
     '--t5ek-exhaustion-severity3-color': 'rgba(255, 255, 255, 0.7)',
     '--t5ek-tinymce-toolbar-background': 'transparent',
+    '--t5ek-prosemirror-button-color': '#deded3',
+    '--t5ek-prosemirror-dropdown-item-hover-color': 'var(--t5ek-faint-color)',
     '--t5ek-item-info-card-box-shadow-color': 'rgba(0, 0, 0, 0.5)',
     '--t5ek-sheet-lock-icon-color': 'rgba(255, 255, 255, 0.6)',
     '--t5ek-grid-pane-favorite-icon-color': 'rgba(0, 200, 100, 1)',
