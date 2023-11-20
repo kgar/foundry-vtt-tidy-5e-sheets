@@ -27,6 +27,16 @@ Completely rewritten from the ground up, based on the [Tidy5e Sheet](https://git
 > - NPC Exhaustion Level
 > - NPC Personality view toggle
 
+> [!TIP]
+> If you'd like to transfer Tidy-specific data from the original sheets to the alpha sheets and vice versa, you can use these macros:
+> 
+> - [Copy Original Sheet Data to the Alpha Sheets](./macros/transfer-alpha-tidy-data-to-original.js)
+> - [Copy Alpha Sheet Data to the Original Sheets](./macros/transfer-original-tidy-data-to-alpha.js)
+> 
+> **DISCLAIMER**: Use at your own risk. These macros affect all actors and their items. It is recommended you back up your game world before performing this data transfer. This data transfer overwrites things like the journal and journal note fields.
+
+---
+
 ## How to Support Tidy 5e Sheets
 
 Tidy 5e is a community effort. Development logs, feature discussion, troubleshooting, dreaming, and more can be found on [discord](https://discord.com/channels/1167985253072257115/1167985253512650755). 
