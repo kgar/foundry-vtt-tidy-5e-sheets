@@ -65,11 +65,6 @@ Manual installation instructions:
    - Tidy 5e kgar Vehicle Sheet
    - Tidy 5e kgar Item Sheet
 
-> [!Important]
-> During alpha testing, I am using a temporary module ID, `tidy5e-sheet-kgar`, and as a result, these sheets are intended to sit alongside the current Tidy5e sheet layouts. When alpha testing is over, these sheets will become the official Tidy5e sheets, meaning **all settings related to these test sheets during alpha testing will be forgotten after alpha testing.**
->
-> Your character/NPC/vehicle/item core data will remain intact. This is the data that is included with the dnd5e system. However, certain module-specific data that you set up for these alpha sheets such as config settings, favorites, NPC/vehicular exhaustion, vehicle movement status, search filter text, spellbook class filter selection, theme settings, etc., will be forgotten. There will not be a migration because of the sheer amount of work remaining to get these sheets to version 1 status.
-
 ## Alpha Testing Goals
 
 - Ensure the essential features of the sheets work as intended
