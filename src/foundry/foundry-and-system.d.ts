@@ -10,6 +10,7 @@
 declare global {
   var $: any;
   var Actors: any;
+  var Application: any;
   var AudioHelper: any;
   var ChatMessage: any;
   var CONFIG: any;
