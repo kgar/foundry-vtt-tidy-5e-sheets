@@ -22,6 +22,8 @@
     @import './partials/settings';
   }
 
+  @import './partials/application-shell';
+
   select option {
     color: var(--t5ek-primary-font-color);
     background: var(--t5ek-background);

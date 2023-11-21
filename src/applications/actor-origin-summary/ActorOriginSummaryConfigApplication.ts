@@ -82,12 +82,6 @@ export default class ActorOriginSummaryApplication extends SvelteApplicationBase
 
   static get defaultOptions() {
     return FoundryAdapter.mergeObject(super.defaultOptions, {
-      title: 'T5EK.TabSelection.Title',
-      classes: [
-        ...super.defaultOptions.classes,
-        'actor-origin-summary',
-        'resizable',
-      ],
       width: 320,
       height: 'auto',
       sheetConfig: false,

@@ -1,0 +1,52 @@
+&.application-shell {
+  header.resizable + .window-content > *:last-child {
+    padding-bottom: 1.5rem;
+  }
+
+  :where(.window-content) {
+    padding: 0;
+
+    > * {
+      padding: 0.5rem;
+      color: var(--t5ek-primary-font-color);
+      background: var(--t5ek-sheet-background);
+      height: 100%;
+    }
+
+    input,
+    select,
+    button {
+      color: var(--t5ek-primary-font-color);
+
+      &:not(:focus-visible) {
+        box-shadow: none;
+      }
+
+      &:focus-visible {
+        box-shadow: var(--t5ek-focus-visible-box-shadow);
+      }
+    }
+
+    button {
+      background: var(--t5ek-faintest-color);
+      &:hover {
+        background: var(--t5ek-faint-color);
+      }
+    }
+
+    h2 {
+      font-size: 1.125rem;
+      font-weight: 600;
+      margin: 0 0 0.5rem;
+      padding: 0 0 0.25rem;
+      border-bottom: 0.0625rem solid var(--t5ek-light-color);
+    }
+
+    h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin: 0.5rem 0;
+      border-bottom: 0.0625rem solid var(--t5ek-light-color);
+    }
+  }
+}
