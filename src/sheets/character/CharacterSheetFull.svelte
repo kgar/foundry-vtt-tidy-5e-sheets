@@ -6,7 +6,6 @@
     Tab,
     DropdownListOption,
   } from 'src/types/types';
-  import Tidy5eActorOriginSummaryConfig from '../../dialogs/Tidy5eActorOriginSummaryConfig';
   import CharacterProfile from './parts/CharacterProfile.svelte';
   import InlineTextDropdownList from '../../components/inputs/InlineTextDropdownList.svelte';
   import ActorWarnings from '../actor/ActorWarnings.svelte';
@@ -25,6 +24,7 @@
   import { settingStore } from 'src/settings/settings';
   import { currentCharacterSheetTabs } from 'src/state/character-sheet-state';
   import InlineCreatureType from '../shared/InlineCreatureType.svelte';
+  import ActorOriginSummaryConfig from 'src/applications/actor-origin-summary/ActorOriginSummaryConfigApplication';
 
   let selectedTabId: string;
   let context = getContext<Readable<CharacterSheetContext>>('context');
@@ -209,7 +209,7 @@
             class="inline-icon-button"
             title={localize('T5EK.OriginSummaryConfig')}
             on:click={() =>
-              new Tidy5eActorOriginSummaryConfig($context.actor).render(true)}
+              new ActorOriginSummaryConfig($context.actor).render(true)}
           >
             <i class="fas fa-cog" />
           </button>

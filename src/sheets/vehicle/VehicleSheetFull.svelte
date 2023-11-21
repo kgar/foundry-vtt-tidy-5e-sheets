@@ -16,7 +16,6 @@
   import HorizontalLineSeparator from 'src/components/layout/HorizontalLineSeparator.svelte';
   import DelimitedTruncatedContent from 'src/components/layout/DelimitedTruncatedContent.svelte';
   import InlineTextDropdownList from '../../components/inputs/InlineTextDropdownList.svelte';
-  import Tidy5eActorOriginSummaryConfig from '../../dialogs/Tidy5eActorOriginSummaryConfig';
   import ActorMovementRow from '../actor/ActorMovementRow.svelte';
   import AcShieldVehicle from '../actor/AcShieldVehicle.svelte';
   import VerticalLineSeparator from 'src/components/layout/VerticalLineSeparator.svelte';
@@ -27,6 +26,7 @@
   import ActorWarnings from '../actor/ActorWarnings.svelte';
   import { currentVehicleSheetTabs } from 'src/state/vehicle-sheet-state';
   import InlineSource from '../shared/InlineSource.svelte';
+  import ActorOriginSummaryConfig from 'src/applications/actor-origin-summary/ActorOriginSummaryConfigApplication';
 
   let selectedTabId: string;
 
@@ -129,7 +129,7 @@
           <button
             type="button"
             on:click={() =>
-              new Tidy5eActorOriginSummaryConfig($context.actor).render(true)}
+              new ActorOriginSummaryConfig($context.actor).render(true)}
             class="origin-summary-tidy inline-icon-button"
             title={localize('T5EK.OriginSummaryConfig')}
           >

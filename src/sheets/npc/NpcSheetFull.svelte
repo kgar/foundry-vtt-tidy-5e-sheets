@@ -15,9 +15,7 @@
   import ContentEditableFormField from 'src/components/inputs/ContentEditableFormField.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import InlineTextDropdownList from '../../components/inputs/InlineTextDropdownList.svelte';
-  import { isNil } from 'src/utils/data';
   import { formatAsModifier } from 'src/utils/formatting';
-  import Tidy5eActorOriginSummaryConfig from '../../dialogs/Tidy5eActorOriginSummaryConfig';
   import DelimitedTruncatedContent from 'src/components/layout/DelimitedTruncatedContent.svelte';
   import HorizontalLineSeparator from 'src/components/layout/HorizontalLineSeparator.svelte';
   import ActorMovementRow from '../actor/ActorMovementRow.svelte';
@@ -29,6 +27,7 @@
   import { currentNpcSheetTabs } from 'src/state/npc-sheet-state';
   import InlineSource from '../shared/InlineSource.svelte';
   import InlineCreatureType from '../shared/InlineCreatureType.svelte';
+  import ActorOriginSummaryApplication from 'src/applications/actor-origin-summary/ActorOriginSummaryConfigApplication';
 
   let selectedTabId: string;
 
@@ -173,7 +172,7 @@
               type="button"
               class="origin-summary-tidy inline-icon-button"
               on:click={() =>
-                new Tidy5eActorOriginSummaryConfig($context.actor).render(true)}
+                new ActorOriginSummaryApplication($context.actor).render(true)}
               title={localize('T5EK.OriginSummaryConfig')}
             >
               <i class="fas fa-cog" />
