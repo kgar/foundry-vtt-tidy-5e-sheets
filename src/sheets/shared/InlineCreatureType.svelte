@@ -7,7 +7,7 @@
 
   let context = getContext<Readable<ActorSheetContext>>('context');
 
-  $: text = coalesce($context.labels.type, '');
+  $: text = coalesce($context.labels.type, localize('DND5E.CreatureType'));
 
   $: configFn =
     $context.actor.type === 'character'
