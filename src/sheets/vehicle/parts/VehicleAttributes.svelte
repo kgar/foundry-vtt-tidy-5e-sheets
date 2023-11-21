@@ -84,7 +84,7 @@
   {#if !$context.system.attributes.actions.stations}
     <div
       class="counter-flex"
-      transition:slide|global={{ duration: 200, easing: quadInOut }}
+      transition:slide={{ duration: 200, easing: quadInOut }}
     >
       <HorizontalLineSeparator />
       <div class="counter actions">
