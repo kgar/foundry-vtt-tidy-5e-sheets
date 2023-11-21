@@ -18,6 +18,12 @@
     background: var(--t5ek-sheet-background);
   }
 
+  /* Scrollbars for Firefox 🦊 */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #782e22 #0000;
+  }
+
   &.settings {
     @import './partials/settings';
   }

@@ -35,7 +35,7 @@
 {#if show}
   <div
     class="trait-form-group {traitCssClass ?? ''}"
-    transition:slide|global={{ duration: 200, easing: quadInOut }}
+    transition:slide={{ duration: 200, easing: quadInOut }}
   >
     <span class="trait-icon" aria-label={title} {title}>
       {#if iconCssClass !== undefined}

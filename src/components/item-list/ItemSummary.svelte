@@ -7,7 +7,7 @@
 </script>
 
 <div
-  transition:slide|global={{
+  transition:slide={{
     duration: useTransition ? 200 : 0,
     easing: quadInOut,
   }}

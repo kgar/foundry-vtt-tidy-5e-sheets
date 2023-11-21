@@ -484,7 +484,9 @@ export function createSettings() {
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getTidySetting<boolean>('toggleEmptyCharacterTraits');
+          return FoundryAdapter.getTidySetting<boolean>(
+            'toggleEmptyCharacterTraits'
+          );
         },
       },
 
@@ -929,7 +931,9 @@ export function createSettings() {
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getTidySetting<boolean>('useCharacterInspiration');
+          return FoundryAdapter.getTidySetting<boolean>(
+            'useCharacterInspiration'
+          );
         },
       },
 

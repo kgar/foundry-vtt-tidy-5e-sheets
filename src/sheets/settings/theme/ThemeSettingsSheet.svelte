@@ -89,7 +89,7 @@
 </script>
 
 <section class="theme-settings-wrapper" on:drop={onDrop} aria-label="dropzone">
-  <div class="theme-settings-form">
+  <div class="theme-settings-form scroll-container">
     <h2 class="header flex-row justify-content-space-between">
       {localize('T5EK.ThemeSettings.Sheet.header')}
       <ThemeSettingSheetMenu
@@ -160,7 +160,6 @@
 
     .theme-settings-form {
       flex: 1;
-      overflow-y: auto;
       display: flex;
       flex-direction: column;
       gap: 0.5rem;
