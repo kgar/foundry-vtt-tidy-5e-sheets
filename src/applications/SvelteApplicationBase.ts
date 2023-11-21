@@ -3,11 +3,16 @@ import type { SvelteComponent } from 'svelte';
 
 export default abstract class SvelteApplicationBase extends Application {
   component: SvelteComponent | undefined;
+  staticExtraApplicationClasses: string[] = [];
+
+  constructor(...args: any[]) {
+    super(...args);
+  }
 
   static get defaultOptions() {
     return {
       ...super.defaultOptions,
-      classes: ['tidy5e-kgar'],
+      classes: ['tidy5e-kgar', 'application-shell'],
       submitOnClose: false,
       minimizable: true,
       popOut: true,
@@ -21,6 +26,7 @@ export default abstract class SvelteApplicationBase extends Application {
 
   activateListeners(html: any) {
     const node = html.get(0);
+    this.refreshContext();
     this.component = this.createComponent(node);
   }
 
@@ -38,6 +44,11 @@ export default abstract class SvelteApplicationBase extends Application {
       return this;
     }
 
+    this.refreshContext();
     return this;
+  }
+
+  refreshContext() {
+    /* Implement in a subclass if needed */
   }
 }
