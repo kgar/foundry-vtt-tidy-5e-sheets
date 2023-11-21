@@ -1,5 +1,5 @@
 import type { SvelteComponent } from 'svelte';
-import SvelteApplicationBase from './SvelteApplicationBase';
+import SvelteApplicationBase from '../SvelteApplicationBase';
 import Test from './Test.svelte';
 
 export default class TabSelectionApplication extends SvelteApplicationBase {
