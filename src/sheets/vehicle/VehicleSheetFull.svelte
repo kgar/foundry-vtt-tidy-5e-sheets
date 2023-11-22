@@ -24,7 +24,7 @@
   import { settingStore } from 'src/settings/settings';
   import ActorWarnings from '../actor/ActorWarnings.svelte';
   import InlineSource from '../shared/InlineSource.svelte';
-  import ActorOriginSummaryConfig from 'src/applications/actor-origin-summary/ActorOriginSummaryConfigApplication';
+  import ActorOriginSummaryConfigFormApplication from 'src/applications/actor-origin-summary/ActorOriginSummaryConfigFormApplication';
 
   let selectedTabId: string;
 
@@ -122,7 +122,7 @@
           <button
             type="button"
             on:click={() =>
-              new ActorOriginSummaryConfig($context.actor).render(true)}
+              new ActorOriginSummaryConfigFormApplication($context.actor).render(true)}
             class="origin-summary-tidy inline-icon-button"
             title={localize('T5EK.OriginSummaryConfig')}
           >

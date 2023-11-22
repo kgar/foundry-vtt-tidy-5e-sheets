@@ -20,7 +20,7 @@ export type ActorOriginSummaryContext = {
   dimensions: string;
 };
 
-export default class ActorOriginSummaryApplication extends SvelteFormApplicationBase {
+export default class ActorOriginSummaryConfigFormApplication extends SvelteFormApplicationBase {
   context: Writable<ActorOriginSummaryContext | null> = writable(null);
   actor: Actor5e;
   actorHook: number | undefined;

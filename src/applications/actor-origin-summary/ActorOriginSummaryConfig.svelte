@@ -1,6 +1,6 @@
 <script lang="ts">
   import { getContext } from 'svelte';
-  import type { ActorOriginSummaryContext } from './ActorOriginSummaryConfigApplication';
+  import type { ActorOriginSummaryContext } from './ActorOriginSummaryConfigFormApplication';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { Readable } from 'svelte/store';
 

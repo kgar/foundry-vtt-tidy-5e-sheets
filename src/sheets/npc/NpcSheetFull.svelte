@@ -21,7 +21,7 @@
   import ActorWarnings from '../actor/ActorWarnings.svelte';
   import InlineSource from '../shared/InlineSource.svelte';
   import InlineCreatureType from '../shared/InlineCreatureType.svelte';
-  import ActorOriginSummaryApplication from 'src/applications/actor-origin-summary/ActorOriginSummaryConfigApplication';
+  import ActorOriginSummaryConfigFormApplication from 'src/applications/actor-origin-summary/ActorOriginSummaryConfigFormApplication';
 
   let selectedTabId: string;
 
@@ -161,7 +161,7 @@
               type="button"
               class="origin-summary-tidy inline-icon-button"
               on:click={() =>
-                new ActorOriginSummaryApplication($context.actor).render(true)}
+                new ActorOriginSummaryConfigFormApplication($context.actor).render(true)}
               title={localize('T5EK.OriginSummaryConfig')}
             >
               <i class="fas fa-cog" />

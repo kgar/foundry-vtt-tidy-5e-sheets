@@ -22,9 +22,8 @@
   import ItemInfoCard from 'src/components/item-info-card/ItemInfoCard.svelte';
   import SheetMenu from '../actor/SheetMenu.svelte';
   import { settingStore } from 'src/settings/settings';
-  import { registeredCharacterTabs } from 'src/runtime/character-sheet-state';
   import InlineCreatureType from '../shared/InlineCreatureType.svelte';
-  import ActorOriginSummaryConfig from 'src/applications/actor-origin-summary/ActorOriginSummaryConfigApplication';
+  import ActorOriginSummaryConfigFormApplication from 'src/applications/actor-origin-summary/ActorOriginSummaryConfigFormApplication';
 
   let selectedTabId: string;
   let context = getContext<Readable<CharacterSheetContext>>('context');
@@ -204,7 +203,7 @@
             class="inline-icon-button"
             title={localize('T5EK.OriginSummaryConfig')}
             on:click={() =>
-              new ActorOriginSummaryConfig($context.actor).render(true)}
+              new ActorOriginSummaryConfigFormApplication($context.actor).render(true)}
           >
             <i class="fas fa-cog" />
           </button>
