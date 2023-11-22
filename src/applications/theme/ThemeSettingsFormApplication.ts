@@ -1,4 +1,3 @@
-import SvelteApplicationBase from 'src/applications/SvelteApplicationBase';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import {
   getCurrentSettings,

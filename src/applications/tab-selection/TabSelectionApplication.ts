@@ -1,8 +1,8 @@
 import type { SvelteComponent } from 'svelte';
-import SvelteApplicationBase from '../SvelteApplicationBase';
+import SvelteFormApplicationBase from '../SvelteFormApplicationBase';
 import Test from './Test.svelte';
 
-export default class TabSelectionApplication extends SvelteApplicationBase {
+export default class TabSelectionApplication extends SvelteFormApplicationBase {
   createComponent(node: HTMLElement): SvelteComponent<any, any, any> {
     return new Test({
       target: node,
