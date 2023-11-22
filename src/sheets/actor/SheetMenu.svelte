@@ -38,11 +38,13 @@
   >
     {localize('T5EK.ThemeSettings.Sheet.title')}
   </ButtonMenuCommand>
-  <ButtonMenuCommand
-    on:click={() =>
-      new TabSelectionFormApplication($context.actor).render(true)}
-    iconClass="fas fa-file-invoice"
-  >
-    {localize('T5EK.TabSelection.MenuOptionText')}
-  </ButtonMenuCommand>
+  {#if $context.owner}
+    <ButtonMenuCommand
+      on:click={() =>
+        new TabSelectionFormApplication($context.actor).render(true)}
+      iconClass="fas fa-file-invoice"
+    >
+      {localize('T5EK.TabSelection.MenuOptionText')}
+    </ButtonMenuCommand>
+  {/if}
 </ButtonMenu>
