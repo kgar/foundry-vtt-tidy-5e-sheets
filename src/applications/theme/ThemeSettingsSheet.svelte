@@ -3,7 +3,6 @@
   import type { CurrentSettings } from 'src/settings/settings';
   import { getContext, onDestroy } from 'svelte';
   import type { Writable } from 'svelte/store';
-  import type { ThemeSettingsSheetFunctions } from './Tidy5eKgarThemeSettingsSheet';
   import type { ThemeColorSetting, Tidy5eThemeDataV1 } from 'src/types/theme';
   import { applyCurrentTheme } from 'src/theme/theme';
   import { error } from 'src/utils/logging';
@@ -16,6 +15,7 @@
     validateImportFile,
   } from 'src/theme/theme';
   import { getSingleFileFromDropEvent, readFileAsText } from 'src/utils/file';
+  import type { ThemeSettingsSheetFunctions } from './ThemeSettingsFormApplication';
 
   export let themeableColors: ThemeColorSetting[];
   $: {
@@ -126,11 +126,7 @@
     </div>
   </div>
   <div class="button-bar">
-    <button
-      type="submit"
-      class="save-changes-btn"
-      on:click={() => functions.save($context)}
-    >
+    <button type="submit" class="save-changes-btn">
       <i class="fas fa-save" />
       {localize('T5EK.SaveChanges')}
     </button>
@@ -143,7 +139,7 @@
     flex-direction: column;
     gap: 0.25rem;
     height: 100%;
-    padding: 0.5rem 0 0.5rem 0.5rem;
+    margin-right: -0.25rem;
 
     .header {
       margin: 0;
@@ -167,10 +163,10 @@
     }
 
     .button-bar {
-      padding-right: 1rem;
       display: flex;
       flex-direction: column;
       gap: 0.25rem;
+      margin-right: 0.75rem;
 
       button {
         margin: 0;

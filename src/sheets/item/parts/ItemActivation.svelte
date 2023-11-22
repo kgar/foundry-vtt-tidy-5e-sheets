@@ -244,13 +244,13 @@
   <ItemFormGroup
     cssClass="uses-per"
     labelText={localize('DND5E.LimitedUses')}
-    field="system.uses.value"
+    field="system.uses.per"
     let:inputId
   >
     <div class="form-fields">
       {#if $context.system.uses.per}
         <NumberInput
-          id={inputId}
+          id="{$context.appId}-system-uses-value"
           value={$context.system.uses.value}
           title={localize('DND5E.UsesAvailable')}
           field="system.uses.value"
@@ -269,7 +269,7 @@
         <span class="sep">{localize('DND5E.per')}</span>
       {/if}
       <Select
-        id="{$context.appId}-system.uses.per"
+        id={inputId}
         value={$context.system.uses.per}
         title={localize('DND5E.UsesPeriod')}
         document={$context.item}

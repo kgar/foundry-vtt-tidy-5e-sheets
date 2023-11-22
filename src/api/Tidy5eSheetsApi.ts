@@ -1,10 +1,9 @@
 import { CONSTANTS } from 'src/constants';
-import { Tidy5eKgarSettingsSheet } from 'src/sheets/settings/sheet/Tidy5eKgarSettingsSheet';
-import { Tidy5eKgarThemeSettingsSheet } from 'src/sheets/settings/theme/Tidy5eKgarThemeSettingsSheet';
+import { SheetSettingsFormApplication } from 'src/applications/sheet-settings/SheetSettingsFormApplication';
 import type {
   SheetTabRegistrationOptions,
   SheetTabState,
-} from '../state/types';
+} from '../runtime/types';
 import type {
   CharacterSheetContext,
   NpcSheetContext,
@@ -13,15 +12,16 @@ import type {
 import {
   registerCharacterSheetTab,
   unregisterCharacterSheetTab,
-} from '../state/character-sheet-state';
+} from '../runtime/character-sheet-state';
 import {
   registerVehicleSheetTab,
   unregisterVehicleSheetTab,
-} from 'src/state/vehicle-sheet-state';
+} from 'src/runtime/vehicle-sheet-state';
 import {
   registerNpcSheetTab,
   unregisterNpcSheetTab,
-} from 'src/state/npc-sheet-state';
+} from 'src/runtime/npc-sheet-state';
+import ThemeSettingsFormApplication from 'src/applications/theme/ThemeSettingsFormApplication';
 
 /**
  * Tidy 5e Sheets API
@@ -29,19 +29,19 @@ import {
  * More info later
  */
 export class Tidy5eSheetsApi {
-  #themeSettings = new Tidy5eKgarThemeSettingsSheet();
-  #sheetSettings = new Tidy5eKgarSettingsSheet(CONSTANTS.TAB_SETTINGS_PLAYERS);
+  #themeSettings = new ThemeSettingsFormApplication();
+  #sheetSettings = new SheetSettingsFormApplication(CONSTANTS.TAB_SETTINGS_PLAYERS);
 
   /**
    * Opens the Theme Settings dialog.
    */
-  openThemeSettings(): Tidy5eKgarThemeSettingsSheet {
+  openThemeSettings(): ThemeSettingsFormApplication {
     const rendered = this.#themeSettings.render(true);
     setTimeout(() => this.#themeSettings.bringToTop(), 150);
     return rendered;
   }
 
-  openSheetSettings(initialTab?: string): Tidy5eKgarSettingsSheet {
+  openSheetSettings(initialTab?: string): SheetSettingsFormApplication {
     if (initialTab) {
       this.#sheetSettings.initialTabId = initialTab;
     }

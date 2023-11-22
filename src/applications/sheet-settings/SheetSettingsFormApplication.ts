@@ -1,6 +1,6 @@
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type { SvelteComponent } from 'svelte';
-import SettingsSheet from './SettingsSheet.svelte';
+import SheetSettings from './SheetSettings.svelte';
 import { writable, type Writable } from 'svelte/store';
 import {
   getCurrentSettings,
@@ -9,6 +9,7 @@ import {
 } from 'src/settings/settings';
 import { debug, error } from 'src/utils/logging';
 import { CONSTANTS } from 'src/constants';
+import SvelteFormApplicationBase from 'src/applications/SvelteFormApplicationBase';
 
 export type SettingsSheetFunctions = {
   save(settings: CurrentSettings): Promise<unknown>;
@@ -17,7 +18,7 @@ export type SettingsSheetFunctions = {
 
 export type SettingsSheetStore = Writable<CurrentSettings>;
 
-export class Tidy5eKgarSettingsSheet extends FormApplication {
+export class SheetSettingsFormApplication extends SvelteFormApplicationBase {
   initialTabId: string;
   unchangedSettings?: CurrentSettings;
 
@@ -32,11 +33,7 @@ export class Tidy5eKgarSettingsSheet extends FormApplication {
       height: 750,
       title: 'T5EK.Settings.SheetMenu.title',
       width: 750,
-      classes: ['tidy5e-kgar', 'settings'],
-      submitOnClose: false,
-      minimizable: true,
-      popOut: true,
-      resizable: true,
+      classes: [...super.defaultOptions.classes, 'settings'],
     };
   }
 
@@ -44,14 +41,11 @@ export class Tidy5eKgarSettingsSheet extends FormApplication {
     return FoundryAdapter.getTemplate('empty-form-template.hbs');
   }
 
-  component: SvelteComponent | undefined;
-  activateListeners(html: any) {
-    const node = html.get(0);
-
+  createComponent(node: HTMLElement): SvelteComponent<any, any, any> {
     const currentSettings = getCurrentSettings();
 
     this.cacheSettingsForChangeTracking(currentSettings);
-    this.component = new SettingsSheet({
+    return new SheetSettings({
       target: node,
       context: new Map<any, any>([
         ['context', writable(currentSettings) satisfies SettingsSheetStore],
@@ -77,22 +71,6 @@ export class Tidy5eKgarSettingsSheet extends FormApplication {
   */
   private cacheSettingsForChangeTracking(currentSettings: CurrentSettings) {
     this.unchangedSettings = structuredClone(currentSettings);
-  }
-
-  close(options: unknown = {}) {
-    this.component?.$destroy();
-    return super.close(options);
-  }
-
-  render(force = false, ...args: any[]) {
-    if (force) {
-      this.component?.$destroy();
-      super.render(force, ...args);
-      return this;
-    }
-
-    // TODO: If there's context to refresh, do it here
-    return this;
   }
 
   async applyChangedSettings(newSettings: CurrentSettings) {

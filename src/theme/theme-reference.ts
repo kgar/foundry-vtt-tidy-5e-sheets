@@ -496,4 +496,16 @@ export const themeVariables = {
     type: 'todo',
     group: 'todo',
   },
+  '--t5ek-button-background': {
+    type: 'todo',
+    group: 'todo',
+  },
+  '--t5ek-button-hover-background': {
+    type: 'todo',
+    group: 'todo',
+  },
+  '--t5ek-button-disabled-color': {
+    type: 'todo',
+    group: 'todo',
+  },
 };

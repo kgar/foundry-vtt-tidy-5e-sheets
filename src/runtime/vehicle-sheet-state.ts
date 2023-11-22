@@ -62,7 +62,7 @@ export function getAllRegisteredVehicleSheetTabs(): SheetTabState<VehicleSheetCo
   return [...get(vehicleSheetState).sheetTabs];
 }
 
-export let currentVehicleSheetTabs = derived(vehicleSheetState, (c) => ({
+export let registeredVehicleTabs = derived(vehicleSheetState, (c) => ({
   getTabs: (context: VehicleSheetContext) =>
     getOrderedEnabledSheetTabs(c.sheetTabs, context),
 }));

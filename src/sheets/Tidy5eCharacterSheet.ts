@@ -21,6 +21,7 @@ import { applyTitleToWindow } from 'src/utils/applications';
 import type { SvelteComponent } from 'svelte';
 import { getPercentage } from 'src/utils/numbers';
 import type { ItemChatData } from 'src/types/item';
+import { registeredCharacterTabs } from 'src/runtime/character-sheet-state';
 
 export class Tidy5eCharacterSheet
   extends dnd5e.applications.actor.ActorSheet5eCharacter
@@ -182,8 +183,7 @@ export class Tidy5eCharacterSheet
       ),
       useClassicControls:
         SettingsProvider.settings.useClassicControlsForCharacter.get(),
-      useJournalTab:
-        SettingsProvider.settings.useJournalTabForCharacter.get(),
+      useJournalTab: SettingsProvider.settings.useJournalTabForCharacter.get(),
       editable,
       features: sections,
       flawEnrichedHtml: await FoundryAdapter.enrichHtml(
@@ -278,6 +278,7 @@ export class Tidy5eCharacterSheet
       originalContext: defaultCharacterContext,
       owner: this.actor.isOwner,
       showLimitedSheet: FoundryAdapter.showLimitedSheet(this.actor),
+      tabs: [],
       traitEnrichedHtml: await FoundryAdapter.enrichHtml(
         this.actor.system.details.trait,
         {
@@ -292,6 +293,23 @@ export class Tidy5eCharacterSheet
         CONSTANTS.CIRCULAR_PORTRAIT_OPTION_CHARACTER as string,
       ].includes(SettingsProvider.settings.useCircularPortraitStyle.get()),
     };
+
+    let tabs = get(registeredCharacterTabs).getTabs(context);
+
+    const selectedTabs = FoundryAdapter.tryGetFlag<string[]>(
+      context.actor,
+      'selected-tabs'
+    );
+
+    if (selectedTabs?.length) {
+      tabs = tabs
+        .filter((t) => selectedTabs?.includes(t.id))
+        .sort(
+          (a, b) => selectedTabs.indexOf(a.id) - selectedTabs.indexOf(b.id)
+        );
+    }
+
+    context.tabs = tabs;
 
     debug('Character Sheet context data', context);
 

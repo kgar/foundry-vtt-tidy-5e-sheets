@@ -5,13 +5,13 @@ import type { GetFunctionReturnType } from 'src/types/types';
 import { applyTheme, getTheme } from 'src/theme/theme';
 import { defaultLightTheme } from 'src/theme/default-light-theme';
 import { getCoreThemes, themeVariables } from 'src/theme/theme-reference';
-import { Tidy5eKgarSettingsSheet } from 'src/sheets/settings/sheet/Tidy5eKgarSettingsSheet';
-import { Tidy5eKgarThemeSettingsSheet } from 'src/sheets/settings/theme/Tidy5eKgarThemeSettingsSheet';
+import { SheetSettingsFormApplication } from 'src/applications/sheet-settings/SheetSettingsFormApplication';
 import { writable, type Writable } from 'svelte/store';
-import { getAllRegisteredCharacterSheetTabs } from 'src/state/character-sheet-state';
-import { getAllRegisteredVehicleSheetTabs } from 'src/state/vehicle-sheet-state';
-import { getAllRegisteredNpcSheetTabs } from 'src/state/npc-sheet-state';
-import { getTabsAsConfigOptions } from 'src/state/state-functions';
+import { getAllRegisteredCharacterSheetTabs } from 'src/runtime/character-sheet-state';
+import { getAllRegisteredVehicleSheetTabs } from 'src/runtime/vehicle-sheet-state';
+import { getAllRegisteredNpcSheetTabs } from 'src/runtime/npc-sheet-state';
+import { getTabsAsConfigOptions } from 'src/runtime/state-functions';
+import ThemeSettingsFormApplication from 'src/applications/theme/ThemeSettingsFormApplication';
 
 export type Tidy5eSettings = {
   [settingKey: string]: Tidy5eSetting;
@@ -104,7 +104,7 @@ export function createSettings() {
           label: 'T5EK.Settings.SheetMenu.label',
           hint: `T5EK.Settings.SheetMenu.hint`,
           icon: 'fas fa-cog',
-          type: Tidy5eKgarSettingsSheet,
+          type: SheetSettingsFormApplication,
           restricted: false,
         },
       },
@@ -114,7 +114,7 @@ export function createSettings() {
           label: 'T5EK.ThemeSettings.SheetMenu.buttonLabel',
           hint: `T5EK.ThemeSettings.SheetMenu.hint`,
           icon: 'fas fa-palette',
-          type: Tidy5eKgarThemeSettingsSheet,
+          type: ThemeSettingsFormApplication,
           restricted: false,
         },
       },

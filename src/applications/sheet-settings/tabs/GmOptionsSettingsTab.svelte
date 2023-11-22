@@ -1,14 +1,14 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import CheckboxSetting from 'src/sheets/settings/parts/CheckboxSetting.svelte';
+  import CheckboxSetting from 'src/applications/sheet-settings/parts/CheckboxSetting.svelte';
   import { getContext } from 'svelte';
   import type { Writable } from 'svelte/store';
   import {
     SettingsProvider,
     type CurrentSettings,
   } from 'src/settings/settings';
-  import TextInputSetting from 'src/sheets/settings/parts/TextInputSetting.svelte';
-  import SelectSetting from 'src/sheets/settings/parts/SelectSetting.svelte';
+  import TextInputSetting from 'src/applications/sheet-settings/parts/TextInputSetting.svelte';
+  import SelectSetting from 'src/applications/sheet-settings/parts/SelectSetting.svelte';
 
   let context = getContext<Writable<CurrentSettings>>('context');
 

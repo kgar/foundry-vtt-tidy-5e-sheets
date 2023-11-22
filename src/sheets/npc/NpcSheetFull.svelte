@@ -3,21 +3,14 @@
   import TabContents from 'src/components/tabs/TabContents.svelte';
   import Tabs from 'src/components/tabs/Tabs.svelte';
   import { CONSTANTS } from 'src/constants';
-  import type {
-    NpcSheetContext,
-    Tab,
-    DropdownListOption,
-  } from 'src/types/types';
+  import type { NpcSheetContext, DropdownListOption } from 'src/types/types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
-
   import NpcProfile from './parts/NpcProfile.svelte';
   import ContentEditableFormField from 'src/components/inputs/ContentEditableFormField.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import InlineTextDropdownList from '../../components/inputs/InlineTextDropdownList.svelte';
-  import { isNil } from 'src/utils/data';
   import { formatAsModifier } from 'src/utils/formatting';
-  import Tidy5eActorOriginSummaryConfig from '../../dialogs/Tidy5eActorOriginSummaryConfig';
   import DelimitedTruncatedContent from 'src/components/layout/DelimitedTruncatedContent.svelte';
   import HorizontalLineSeparator from 'src/components/layout/HorizontalLineSeparator.svelte';
   import ActorMovementRow from '../actor/ActorMovementRow.svelte';
@@ -26,21 +19,16 @@
   import SheetMenu from '../actor/SheetMenu.svelte';
   import { settingStore } from 'src/settings/settings';
   import ActorWarnings from '../actor/ActorWarnings.svelte';
-  import { currentNpcSheetTabs } from 'src/state/npc-sheet-state';
   import InlineSource from '../shared/InlineSource.svelte';
   import InlineCreatureType from '../shared/InlineCreatureType.svelte';
+  import ActorOriginSummaryConfigFormApplication from 'src/applications/actor-origin-summary/ActorOriginSummaryConfigFormApplication';
 
   let selectedTabId: string;
 
   let context = getContext<Readable<NpcSheetContext>>('context');
 
-  let tabs: Tab[];
-  $: {
-    tabs = $currentNpcSheetTabs.getTabs($context);
-  }
-
   $: sizes = <DropdownListOption[]>Object.entries(
-    $context.config.actorSizes
+    $context.config.actorSizes,
   ).map(([abbreviation, size]) => ({
     value: abbreviation,
     text: size as string,
@@ -165,7 +153,7 @@
         <div class="flex-row align-items-center extra-small-gap">
           <b class="proficiency">
             {localize('DND5E.Proficiency')}: {formatAsModifier(
-              $context.system.attributes.prof
+              $context.system.attributes.prof,
             )}
           </b>
           {#if $context.owner && !$context.lockSensitiveFields}
@@ -173,7 +161,7 @@
               type="button"
               class="origin-summary-tidy inline-icon-button"
               on:click={() =>
-                new Tidy5eActorOriginSummaryConfig($context.actor).render(true)}
+                new ActorOriginSummaryConfigFormApplication($context.actor).render(true)}
               title={localize('T5EK.OriginSummaryConfig')}
             >
               <i class="fas fa-cog" />
@@ -191,7 +179,7 @@
       />
     </div>
   </header>
-  <Tabs {tabs} bind:selectedTabId>
+  <Tabs tabs={$context.tabs} bind:selectedTabId>
     <svelte:fragment slot="tab-end">
       {#if $context.owner}
         <AllowEditLock
@@ -204,7 +192,7 @@
     </svelte:fragment>
   </Tabs>
   <section class="sheet-body">
-    <TabContents {tabs} {selectedTabId} />
+    <TabContents tabs={$context.tabs} {selectedTabId} />
   </section>
 </div>
 

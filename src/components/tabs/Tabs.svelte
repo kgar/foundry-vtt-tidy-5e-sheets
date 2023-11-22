@@ -56,11 +56,13 @@
     if (currentTabId !== undefined) {
       selectedTabId = currentTabId;
     }
+  });
 
+  $: {
     if (!tabs.some((tab) => tab.id === selectedTabId)) {
       selectedTabId = tabs[0]?.id;
     }
-  });
+  }
 </script>
 
 <nav

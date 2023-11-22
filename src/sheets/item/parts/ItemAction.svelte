@@ -38,6 +38,7 @@
 <ItemFormGroup
   cssClass="select"
   labelText={localize('DND5E.ItemActionType')}
+  field="system.actionType"
   let:inputId
 >
   <Select

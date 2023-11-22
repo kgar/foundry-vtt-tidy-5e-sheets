@@ -250,6 +250,19 @@ ul {
   scrollbar-width: thin;
 }
 
+.item-summary {
+  p,
+  li {
+    line-height: normal;
+  }
+
+  ul {
+    list-style: initial;
+    padding-left: 1.25rem;
+    margin: initial;
+  }
+}
+
 .actor-name {
   flex: 1;
   word-break: break-word;

@@ -6,7 +6,6 @@
     Tab,
     DropdownListOption,
   } from 'src/types/types';
-  import Tidy5eActorOriginSummaryConfig from '../../dialogs/Tidy5eActorOriginSummaryConfig';
   import CharacterProfile from './parts/CharacterProfile.svelte';
   import InlineTextDropdownList from '../../components/inputs/InlineTextDropdownList.svelte';
   import ActorWarnings from '../actor/ActorWarnings.svelte';
@@ -23,8 +22,8 @@
   import ItemInfoCard from 'src/components/item-info-card/ItemInfoCard.svelte';
   import SheetMenu from '../actor/SheetMenu.svelte';
   import { settingStore } from 'src/settings/settings';
-  import { currentCharacterSheetTabs } from 'src/state/character-sheet-state';
   import InlineCreatureType from '../shared/InlineCreatureType.svelte';
+  import ActorOriginSummaryConfigFormApplication from 'src/applications/actor-origin-summary/ActorOriginSummaryConfigFormApplication';
 
   let selectedTabId: string;
   let context = getContext<Readable<CharacterSheetContext>>('context');
@@ -35,7 +34,7 @@
     FoundryAdapter.tryGetFlag<string>($context.actor, 'playerName') ?? '';
 
   $: classAndSubclassSummaries = Array.from(
-    FoundryAdapter.getClassAndSubclassSummaries($context.actor).values()
+    FoundryAdapter.getClassAndSubclassSummaries($context.actor).values(),
   );
 
   $: characterSummaryEntries =
@@ -44,7 +43,7 @@
   $: abilities = Object.entries<any>($context.abilities);
 
   $: sizes = <DropdownListOption[]>Object.entries(
-    $context.config.actorSizes
+    $context.config.actorSizes,
   ).map(([abbreviation, size]) => ({
     value: abbreviation,
     text: size as string,
@@ -54,11 +53,6 @@
     value: $context.system.traits.size,
     text: $context.config.actorSizes[$context.system.traits.size],
   };
-
-  let tabs: Tab[];
-  $: {
-    tabs = $currentCharacterSheetTabs.getTabs($context);
-  }
 </script>
 
 <ItemInfoCard />
@@ -209,7 +203,7 @@
             class="inline-icon-button"
             title={localize('T5EK.OriginSummaryConfig')}
             on:click={() =>
-              new Tidy5eActorOriginSummaryConfig($context.actor).render(true)}
+              new ActorOriginSummaryConfigFormApplication($context.actor).render(true)}
           >
             <i class="fas fa-cog" />
           </button>
@@ -227,7 +221,7 @@
   </div>
 </header>
 
-<Tabs {tabs} bind:selectedTabId>
+<Tabs tabs={$context.tabs} bind:selectedTabId>
   <svelte:fragment slot="tab-end">
     {#if $context.owner}
       <AllowEditLock
@@ -241,7 +235,7 @@
 </Tabs>
 
 <section class="sheet-body">
-  <TabContents {tabs} {selectedTabId} />
+  <TabContents tabs={$context.tabs} {selectedTabId} />
 </section>
 
 <style lang="scss">

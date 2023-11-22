@@ -56,7 +56,11 @@
     justify-content: center;
     align-items: center;
     font-family: var(--t5ek-title-font-family);
-    font-weight: 700;
+
+    :global(.resource-value),
+    :global(.resource-max) {
+      font-weight: 700;
+    }
 
     &.widen-for-rounded-portrait {
       width: 5.5rem;
