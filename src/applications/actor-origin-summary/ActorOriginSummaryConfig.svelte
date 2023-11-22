@@ -11,10 +11,10 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-<div class="flex-column">
+<form class="flex-column" on:submit|preventDefault={() => save()}>
   {#if $context.isCharacter}
     {#if $context.canEditRace}
-      <div class="form-group">
+      <div class="form-field">
         <label for="race-edit-{appId}">{localize('DND5E.Race')}</label>
 
         <input
@@ -25,7 +25,7 @@
         />
       </div>
     {/if}
-    <div class="form-group">
+    <div class="form-field">
       <label for="background-edit-{appId}">{localize('DND5E.Background')}</label
       >
       {#if $context.canEditBackground}
@@ -39,7 +39,7 @@
         <span>{$context.background}</span>
       {/if}
     </div>
-    <div class="form-group">
+    <div class="form-field">
       <label for="pc-alignment-edit-{appId}"
         >{localize('DND5E.Alignment')}</label
       >
@@ -51,7 +51,7 @@
       />
     </div>
   {:else if $context.isNpc}
-    <div class="environment form-group">
+    <div class="environment form-field">
       <label for="environment-edit-{appId}"
         >{localize('T5EK.Environment')}</label
       >
@@ -62,7 +62,7 @@
         bind:value={$context.environment}
       />
     </div>
-    <div class="form-group">
+    <div class="form-field">
       <label for="alignment-edit-{appId}">{localize('DND5E.Alignment')}</label>
       <input
         id="alignment-edit-{appId}"
@@ -72,7 +72,7 @@
       />
     </div>
   {:else if $context.isVehicle}
-    <div class="form-group">
+    <div class="form-field">
       <label for="dimensions-edit-{appId}">{localize('DND5E.Dimensions')}</label
       >
       <textarea
@@ -90,4 +90,4 @@
     <i class="far fa-save" />
     {localize('Save')}
   </button>
-</div>
+</form>
