@@ -123,10 +123,10 @@
   "T5EK.Class.Warlock": "Warlock",
   "T5EK.Class.Wizard": "Wizard",
 
-  "T5EK.OriginSummaryConfig": "Origin Summary Configuration",
+  "T5EK.OriginSummaryConfig": "Origin Summary Configuration: {actorName}",
 
   "T5EK.TabSelection": {
-    "Title": "Tab Selection",
+    "Title": "Tab Selection: {documentName}",
     "MenuOptionText": "Tab Selection",
     "AvailableHeader": "Available Tabs",
     "SelectedHeader": "Selected Tabs",

@@ -87,9 +87,9 @@ export default class ActorOriginSummaryApplication extends SvelteFormApplication
   }
 
   get title() {
-    return `${FoundryAdapter.localize('T5EK.OriginSummaryConfig')}: ${
-      this.actor.name
-    }`;
+    return `${FoundryAdapter.localize('T5EK.OriginSummaryConfig', {
+      actorName: this.actor.name,
+    })}`;
   }
 
   refreshContext() {

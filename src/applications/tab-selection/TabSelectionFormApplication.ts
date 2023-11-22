@@ -66,12 +66,17 @@ export default class TabSelectionFormApplication extends SvelteFormApplicationBa
   static get defaultOptions() {
     return {
       ...super.defaultOptions,
-      title: 'T5EK.TabSelection.Title',
       height: 550,
       width: 750,
       classes: [...super.defaultOptions.classes, 'tab-selection'],
       resizable: false,
     };
+  }
+
+  get title() {
+    return FoundryAdapter.localize('T5EK.TabSelection.Title', {
+      documentName: this.actor.name,
+    });
   }
 
   getData() {
