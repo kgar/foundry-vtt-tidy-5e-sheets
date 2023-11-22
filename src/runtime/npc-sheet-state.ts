@@ -74,7 +74,7 @@ export function getAllRegisteredNpcSheetTabs(): SheetTabState<NpcSheetContext>[]
   return [...get(npcSheetState).sheetTabs];
 }
 
-export let currentNpcSheetTabs = derived(npcSheetState, (c) => ({
+export let registeredNpcTabs = derived(npcSheetState, (c) => ({
   getTabs: (context: NpcSheetContext) =>
     getOrderedEnabledSheetTabs(c.sheetTabs, context),
 }));

@@ -22,7 +22,7 @@
   import ItemInfoCard from 'src/components/item-info-card/ItemInfoCard.svelte';
   import SheetMenu from '../actor/SheetMenu.svelte';
   import { settingStore } from 'src/settings/settings';
-  import { currentCharacterSheetTabs } from 'src/state/character-sheet-state';
+  import { registeredCharacterTabs } from 'src/runtime/character-sheet-state';
   import InlineCreatureType from '../shared/InlineCreatureType.svelte';
   import ActorOriginSummaryConfig from 'src/applications/actor-origin-summary/ActorOriginSummaryConfigApplication';
 
@@ -35,7 +35,7 @@
     FoundryAdapter.tryGetFlag<string>($context.actor, 'playerName') ?? '';
 
   $: classAndSubclassSummaries = Array.from(
-    FoundryAdapter.getClassAndSubclassSummaries($context.actor).values()
+    FoundryAdapter.getClassAndSubclassSummaries($context.actor).values(),
   );
 
   $: characterSummaryEntries =
@@ -44,7 +44,7 @@
   $: abilities = Object.entries<any>($context.abilities);
 
   $: sizes = <DropdownListOption[]>Object.entries(
-    $context.config.actorSizes
+    $context.config.actorSizes,
   ).map(([abbreviation, size]) => ({
     value: abbreviation,
     text: size as string,
@@ -54,11 +54,6 @@
     value: $context.system.traits.size,
     text: $context.config.actorSizes[$context.system.traits.size],
   };
-
-  let tabs: Tab[];
-  $: {
-    tabs = $currentCharacterSheetTabs.getTabs($context);
-  }
 </script>
 
 <ItemInfoCard />
@@ -227,7 +222,7 @@
   </div>
 </header>
 
-<Tabs {tabs} bind:selectedTabId>
+<Tabs tabs={$context.tabs} bind:selectedTabId>
   <svelte:fragment slot="tab-end">
     {#if $context.owner}
       <AllowEditLock
@@ -241,7 +236,7 @@
 </Tabs>
 
 <section class="sheet-body">
-  <TabContents {tabs} {selectedTabId} />
+  <TabContents tabs={$context.tabs} {selectedTabId} />
 </section>
 
 <style lang="scss">

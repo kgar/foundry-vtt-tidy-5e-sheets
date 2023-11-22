@@ -3,7 +3,7 @@ import { SheetSettingsFormApplication } from 'src/applications/sheet-settings/Sh
 import type {
   SheetTabRegistrationOptions,
   SheetTabState,
-} from '../state/types';
+} from '../runtime/types';
 import type {
   CharacterSheetContext,
   NpcSheetContext,
@@ -12,15 +12,15 @@ import type {
 import {
   registerCharacterSheetTab,
   unregisterCharacterSheetTab,
-} from '../state/character-sheet-state';
+} from '../runtime/character-sheet-state';
 import {
   registerVehicleSheetTab,
   unregisterVehicleSheetTab,
-} from 'src/state/vehicle-sheet-state';
+} from 'src/runtime/vehicle-sheet-state';
 import {
   registerNpcSheetTab,
   unregisterNpcSheetTab,
-} from 'src/state/npc-sheet-state';
+} from 'src/runtime/npc-sheet-state';
 import ThemeSettingsFormApplication from 'src/applications/theme/ThemeSettingsFormApplication';
 
 /**

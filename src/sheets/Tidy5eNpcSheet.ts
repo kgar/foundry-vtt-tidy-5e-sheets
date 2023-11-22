@@ -22,6 +22,7 @@ import NpcShortRestDialog from 'src/dialogs/NpcShortRestDialog';
 import LongRestDialog from 'src/dialogs/NpcLongRestDialog';
 import type { SvelteComponent } from 'svelte';
 import type { ItemChatData } from 'src/types/item';
+import { registeredNpcTabs } from 'src/runtime/npc-sheet-state';
 
 export class Tidy5eNpcSheet
   extends dnd5e.applications.actor.ActorSheet5eNPC
@@ -118,7 +119,7 @@ export class Tidy5eNpcSheet
       !editable && SettingsProvider.settings.useTotalSheetLock.get();
     const defaultNpcContext = await super.getData(this.options);
 
-    return {
+    const context = {
       ...defaultNpcContext,
       activateFoundryJQueryListeners: (node: HTMLElement) => {
         this._activateCoreListeners($(node));
@@ -268,6 +269,7 @@ export class Tidy5eNpcSheet
       rollDeathSave: this._rollDeathSave.bind(this),
       shortRest: this._onShortRest.bind(this),
       showLimitedSheet: FoundryAdapter.showLimitedSheet(this.actor),
+      tabs: [],
       tokenState: this.#getTokenState(),
       traitEnrichedHtml: await FoundryAdapter.enrichHtml(
         FoundryAdapter.getProperty<string>(
@@ -287,12 +289,30 @@ export class Tidy5eNpcSheet
         CONSTANTS.CIRCULAR_PORTRAIT_OPTION_NPCVEHICLE as string,
       ].includes(SettingsProvider.settings.useCircularPortraitStyle.get()),
     };
+
+    let tabs = get(registeredNpcTabs).getTabs(context);
+
+    const selectedTabs = FoundryAdapter.tryGetFlag<string[]>(
+      context.actor,
+      'selected-tabs'
+    );
+
+    if (selectedTabs?.length) {
+      tabs = tabs.filter((t) => selectedTabs?.includes(t.id));
+    }
+
+    context.tabs = tabs;
+
+    debug('NPC Sheet context data', context);
+
+    return context;
   }
 
   #getTokenState(): 'linked' | 'unlinked' | null {
     const { token } = this;
 
-    const showNpcActorLinkMarker = SettingsProvider.settings.showNpcActorLinkMarker.get();
+    const showNpcActorLinkMarker =
+      SettingsProvider.settings.showNpcActorLinkMarker.get();
 
     if (!token) {
       return null;

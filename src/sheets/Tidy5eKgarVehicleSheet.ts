@@ -18,6 +18,7 @@ import type { SvelteComponent } from 'svelte';
 import { debug } from 'src/utils/logging';
 import { getPercentage } from 'src/utils/numbers';
 import type { ItemChatData } from 'src/types/item';
+import { registeredVehicleTabs } from 'src/runtime/vehicle-sheet-state';
 
 export class Tidy5eVehicleSheet
   extends dnd5e.applications.actor.ActorSheet5eVehicle
@@ -124,11 +125,25 @@ export class Tidy5eVehicleSheet
         !editable && SettingsProvider.settings.useTotalSheetLock.get(),
       owner: this.actor.isOwner,
       showLimitedSheet: FoundryAdapter.showLimitedSheet(this.actor),
+      tabs: [],
       useRoundedPortraitStyle: [
         CONSTANTS.CIRCULAR_PORTRAIT_OPTION_ALL as string,
         CONSTANTS.CIRCULAR_PORTRAIT_OPTION_NPCVEHICLE as string,
       ].includes(SettingsProvider.settings.useCircularPortraitStyle.get()),
     };
+
+    let tabs = get(registeredVehicleTabs).getTabs(context);
+
+    const selectedTabs = FoundryAdapter.tryGetFlag<string[]>(
+      context.actor,
+      'selected-tabs'
+    );
+
+    if (selectedTabs?.length) {
+      tabs = tabs.filter((t) => selectedTabs?.includes(t.id));
+    }
+
+    context.tabs = tabs;
 
     debug('Vehicle Sheet context data', context);
 

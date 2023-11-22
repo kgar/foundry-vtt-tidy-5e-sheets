@@ -24,7 +24,7 @@
   import SheetMenu from '../actor/SheetMenu.svelte';
   import { settingStore } from 'src/settings/settings';
   import ActorWarnings from '../actor/ActorWarnings.svelte';
-  import { currentVehicleSheetTabs } from 'src/state/vehicle-sheet-state';
+  import { registeredVehicleTabs } from 'src/runtime/vehicle-sheet-state';
   import InlineSource from '../shared/InlineSource.svelte';
   import ActorOriginSummaryConfig from 'src/applications/actor-origin-summary/ActorOriginSummaryConfigApplication';
 
@@ -32,13 +32,8 @@
 
   let context = getContext<Readable<VehicleSheetContext>>('context');
 
-  let tabs: Tab[];
-  $: {
-    tabs = $currentVehicleSheetTabs.getTabs($context);
-  }
-
   $: sizes = <DropdownListOption[]>Object.entries(
-    $context.config.actorSizes
+    $context.config.actorSizes,
   ).map(([abbreviation, size]) => ({
     value: abbreviation,
     text: size as string,
@@ -157,7 +152,7 @@
     </section>
   </div>
 </header>
-<Tabs {tabs} bind:selectedTabId>
+<Tabs tabs={$context.tabs} bind:selectedTabId>
   <svelte:fragment slot="tab-end">
     {#if $context.owner}
       <AllowEditLock
@@ -170,7 +165,7 @@
   </svelte:fragment>
 </Tabs>
 <section class="sheet-body">
-  <TabContents {tabs} {selectedTabId} />
+  <TabContents tabs={$context.tabs} {selectedTabId} />
 </section>
 
 <style lang="scss">

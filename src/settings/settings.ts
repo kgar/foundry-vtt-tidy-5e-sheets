@@ -7,10 +7,10 @@ import { defaultLightTheme } from 'src/theme/default-light-theme';
 import { getCoreThemes, themeVariables } from 'src/theme/theme-reference';
 import { SheetSettingsFormApplication } from 'src/applications/sheet-settings/SheetSettingsFormApplication';
 import { writable, type Writable } from 'svelte/store';
-import { getAllRegisteredCharacterSheetTabs } from 'src/state/character-sheet-state';
-import { getAllRegisteredVehicleSheetTabs } from 'src/state/vehicle-sheet-state';
-import { getAllRegisteredNpcSheetTabs } from 'src/state/npc-sheet-state';
-import { getTabsAsConfigOptions } from 'src/state/state-functions';
+import { getAllRegisteredCharacterSheetTabs } from 'src/runtime/character-sheet-state';
+import { getAllRegisteredVehicleSheetTabs } from 'src/runtime/vehicle-sheet-state';
+import { getAllRegisteredNpcSheetTabs } from 'src/runtime/npc-sheet-state';
+import { getTabsAsConfigOptions } from 'src/runtime/state-functions';
 import ThemeSettingsFormApplication from 'src/applications/theme/ThemeSettingsFormApplication';
 
 export type Tidy5eSettings = {

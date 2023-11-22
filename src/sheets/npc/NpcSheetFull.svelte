@@ -24,7 +24,7 @@
   import SheetMenu from '../actor/SheetMenu.svelte';
   import { settingStore } from 'src/settings/settings';
   import ActorWarnings from '../actor/ActorWarnings.svelte';
-  import { currentNpcSheetTabs } from 'src/state/npc-sheet-state';
+  import { registeredNpcTabs } from 'src/runtime/npc-sheet-state';
   import InlineSource from '../shared/InlineSource.svelte';
   import InlineCreatureType from '../shared/InlineCreatureType.svelte';
   import ActorOriginSummaryApplication from 'src/applications/actor-origin-summary/ActorOriginSummaryConfigApplication';
@@ -33,13 +33,8 @@
 
   let context = getContext<Readable<NpcSheetContext>>('context');
 
-  let tabs: Tab[];
-  $: {
-    tabs = $currentNpcSheetTabs.getTabs($context);
-  }
-
   $: sizes = <DropdownListOption[]>Object.entries(
-    $context.config.actorSizes
+    $context.config.actorSizes,
   ).map(([abbreviation, size]) => ({
     value: abbreviation,
     text: size as string,
@@ -164,7 +159,7 @@
         <div class="flex-row align-items-center extra-small-gap">
           <b class="proficiency">
             {localize('DND5E.Proficiency')}: {formatAsModifier(
-              $context.system.attributes.prof
+              $context.system.attributes.prof,
             )}
           </b>
           {#if $context.owner && !$context.lockSensitiveFields}
@@ -190,7 +185,7 @@
       />
     </div>
   </header>
-  <Tabs {tabs} bind:selectedTabId>
+  <Tabs tabs={$context.tabs} bind:selectedTabId>
     <svelte:fragment slot="tab-end">
       {#if $context.owner}
         <AllowEditLock
@@ -203,7 +198,7 @@
     </svelte:fragment>
   </Tabs>
   <section class="sheet-body">
-    <TabContents {tabs} {selectedTabId} />
+    <TabContents tabs={$context.tabs} {selectedTabId} />
   </section>
 </div>
 
