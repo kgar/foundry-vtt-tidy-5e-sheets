@@ -108,6 +108,12 @@
       border-bottom: 0.0625rem solid var(--t5ek-light-color);
     }
 
+    :is(h2, h3).minimal {
+      margin: 0;
+      padding: 0;
+      border: 0;
+    }
+
     .form-field {
       display: flex;
       flex-direction: column;

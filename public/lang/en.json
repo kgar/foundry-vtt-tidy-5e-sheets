@@ -131,7 +131,8 @@
     "AvailableHeader": "Available Tabs",
     "SelectedHeader": "Selected Tabs",
     "UnsupportedDocumentErrorMessage": "The document type ",
-    "AtLeastOneRequiredErrorMessage": "At least one tab is required."
+    "AtLeastOneRequiredErrorMessage": "At least one tab is required.",
+    "Explanation": "Any tabs that the user or sheet are configured not to see (e.g., disabling the journal in config settings) will still not appear on the sheet."
   },
 
   "T5EK.Listbox": {

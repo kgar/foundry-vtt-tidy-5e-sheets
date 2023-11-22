@@ -22,9 +22,15 @@
     listboxCssClass="scroll-container"
     class="flex-1"
   >
-    <h2 slot="left-header">{localize('T5EK.TabSelection.AvailableHeader')}</h2>
-    <h2 slot="right-header">{localize('T5EK.TabSelection.SelectedHeader')}</h2>
+    <h2 class="minimal" slot="left-header">{localize('T5EK.TabSelection.AvailableHeader')}</h2>
+    <h2 class="minimal" slot="right-header">{localize('T5EK.TabSelection.SelectedHeader')}</h2>
   </SelectionListbox>
+  <p class="flex-row align-items-center no-gap">
+    <span class="extra-info-icon-container"
+      ><i class="fas fa-info-circle"></i></span
+    >
+    <span>{localize('T5EK.TabSelection.Explanation')}</span>
+  </p>
   <div class="flex-row small-gap">
     <button
       type="button"
@@ -54,4 +60,12 @@
 </section>
 
 <style lang="scss">
+  .extra-info-icon-container {
+    width: 3.5rem;
+    text-align: center;
+    i {
+      font-size: 1.5rem;
+      color: var(--t5ek-secondary-color);
+    }
+  }
 </style>

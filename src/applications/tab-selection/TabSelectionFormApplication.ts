@@ -67,7 +67,7 @@ export default class TabSelectionFormApplication extends SvelteFormApplicationBa
     return {
       ...super.defaultOptions,
       title: 'T5EK.TabSelection.Title',
-      height: 450,
+      height: 550,
       width: 750,
       classes: [...super.defaultOptions.classes, 'tab-selection'],
       resizable: false,
