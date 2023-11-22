@@ -121,5 +121,16 @@
         padding: 0.25rem 0.375rem;
       }
     }
+
+    :global(:is(.color-picker .wrapper)) {
+      color: unset;
+      box-shadow: 0 0 0.25rem 0.125rem var(--t5ek-light-color);
+      background: var(--t5ek-background);
+    }
+
+    :global(:is(.color-picker .wrapper input)) {
+      background: var(--t5ek-faintest-color);
+      color: var(--t5ek-primary-font-color);
+    }
   }
 </style>

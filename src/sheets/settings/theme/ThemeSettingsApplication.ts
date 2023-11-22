@@ -1,17 +1,18 @@
+import SvelteApplicationBase from 'src/applications/SvelteApplicationBase';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-import type { SvelteComponent } from 'svelte';
-import ThemeSettingsSheet from './ThemeSettingsSheet.svelte';
 import {
   getCurrentSettings,
   type CurrentSettings,
 } from 'src/settings/settings';
-import { get, writable, type Writable } from 'svelte/store';
 import {
   applyCurrentTheme,
   getTheme,
   getThemeableColors,
 } from 'src/theme/theme';
 import type { ThemeColorSetting, Tidy5eThemeDataV1 } from 'src/types/theme';
+import type { SvelteComponent } from 'svelte';
+import { writable, type Writable } from 'svelte/store';
+import ThemeSettingsSheet from './ThemeSettingsSheet.svelte';
 import { downloadTextFile } from 'src/utils/file';
 import { CONSTANTS } from 'src/constants';
 
@@ -21,7 +22,7 @@ export type ThemeSettingsSheetFunctions = {
   exportTheme(settings: CurrentSettings): void;
 };
 
-export class Tidy5eKgarThemeSettingsSheet extends FormApplication {
+export default class ThemeSettingsApplication extends SvelteApplicationBase {
   themeableColors: ThemeColorSetting[] = getThemeableColors();
   context: Writable<CurrentSettings> = writable(getCurrentSettings());
 
@@ -31,7 +32,6 @@ export class Tidy5eKgarThemeSettingsSheet extends FormApplication {
       height: 750,
       title: 'T5EK.ThemeSettings.Sheet.title',
       width: 400,
-      classes: ['tidy5e-kgar', 'settings'],
       submitOnClose: false,
       minimizable: true,
       popOut: true,
@@ -40,16 +40,11 @@ export class Tidy5eKgarThemeSettingsSheet extends FormApplication {
   }
 
   get template() {
-    return FoundryAdapter.getTemplate('empty-form-template.hbs');
+    return FoundryAdapter.getTemplate('empty-div-template.hbs');
   }
 
-  component: SvelteComponent | undefined;
-  activateListeners(html: any) {
-    const node = html.get(0);
-
-    this.context = writable(getCurrentSettings());
-
-    this.component = new ThemeSettingsSheet({
+  createComponent(node: HTMLElement): SvelteComponent<any, any, any> {
+    return new ThemeSettingsSheet({
       target: node,
       props: {
         themeableColors: this.themeableColors,
@@ -69,6 +64,10 @@ export class Tidy5eKgarThemeSettingsSheet extends FormApplication {
     });
   }
 
+  refreshContext(): void {
+    this.context.set(getCurrentSettings());
+  }
+
   async saveChangedSettings(newSettings: CurrentSettings) {
     for (let color of this.themeableColors) {
       await FoundryAdapter.setTidySetting(color.key, newSettings[color.key]);
@@ -82,27 +81,6 @@ export class Tidy5eKgarThemeSettingsSheet extends FormApplication {
     applyCurrentTheme();
 
     this.close();
-  }
-
-  render(force = false, ...args: any[]) {
-    if (force) {
-      this.component?.$destroy();
-      super.render(force, ...args);
-      return this;
-    }
-
-    // TODO: If there's context to refresh, do it here
-    return this;
-  }
-
-  close(...args: any[]) {
-    this.component?.$destroy();
-    return super.close(...args);
-  }
-
-  async _updateObject() {
-    const settings = get(this.context);
-    await this.saveChangedSettings(settings);
   }
 
   useExistingThemeColors(themeId: string) {

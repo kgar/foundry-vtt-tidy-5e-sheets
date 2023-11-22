@@ -6,12 +6,12 @@ import { applyTheme, getTheme } from 'src/theme/theme';
 import { defaultLightTheme } from 'src/theme/default-light-theme';
 import { getCoreThemes, themeVariables } from 'src/theme/theme-reference';
 import { Tidy5eKgarSettingsSheet } from 'src/sheets/settings/sheet/Tidy5eKgarSettingsSheet';
-import { Tidy5eKgarThemeSettingsSheet } from 'src/sheets/settings/theme/Tidy5eKgarThemeSettingsSheet';
 import { writable, type Writable } from 'svelte/store';
 import { getAllRegisteredCharacterSheetTabs } from 'src/state/character-sheet-state';
 import { getAllRegisteredVehicleSheetTabs } from 'src/state/vehicle-sheet-state';
 import { getAllRegisteredNpcSheetTabs } from 'src/state/npc-sheet-state';
 import { getTabsAsConfigOptions } from 'src/state/state-functions';
+import ThemeSettingsApplication from 'src/sheets/settings/theme/ThemeSettingsApplication';
 
 export type Tidy5eSettings = {
   [settingKey: string]: Tidy5eSetting;
@@ -114,7 +114,7 @@ export function createSettings() {
           label: 'T5EK.ThemeSettings.SheetMenu.buttonLabel',
           hint: `T5EK.ThemeSettings.SheetMenu.hint`,
           icon: 'fas fa-palette',
-          type: Tidy5eKgarThemeSettingsSheet,
+          type: ThemeSettingsApplication,
           restricted: false,
         },
       },

@@ -132,6 +132,8 @@ export const defaultDarkTheme: Tidy5eTheme = {
     '--t5ek-button-menu-hover-color': 'var(--t5ek-faint-color)',
     '--t5ek-button-menu-divider-color': 'var(--t5ek-tertiary-color)',
     '--t5ek-focus-visible-box-shadow':
-      '-0.0625rem -0.0625rem 0 var(--t5ek-primary-accent-color), -0.0625rem 0.0625rem 0 var(--t5ek-primary-accent-color), 0.0625rem 0.0625rem 0 var(--t5ek-primary-accent-color), 0.0625rem -0.0625rem 0 var(--t5ek-primary-accent-color)',
+    '-0.0625rem -0.0625rem 0 var(--t5ek-primary-accent-color), -0.0625rem 0.0625rem 0 var(--t5ek-primary-accent-color), 0.0625rem 0.0625rem 0 var(--t5ek-primary-accent-color), 0.0625rem -0.0625rem 0 var(--t5ek-primary-accent-color)',
+    '--t5ek-button-background': 'var(--t5ek-faintest-color)',
+    '--t5ek-button-hover-background': 'var(--t5ek-faint-color)',
   },
 };
