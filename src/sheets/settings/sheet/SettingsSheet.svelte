@@ -13,7 +13,7 @@
   import type {
     SettingsSheetFunctions,
     SettingsSheetStore,
-  } from './Tidy5eKgarSettingsSheet';
+  } from './SettingsSheetFunctions';
   import { CONSTANTS } from 'src/constants';
 
   let selectedTabId: string;
@@ -142,13 +142,17 @@
 
     .vertical-tab-container {
       grid-area: nav;
+      margin-top: -0.5rem;
+      margin-left: -0.5rem;
+      margin-bottom: -1.5rem;
     }
 
     :global(.sheet-body) {
       grid-area: body;
       overflow-y: scroll;
       padding-top: 0.5rem;
-      padding-right: 1rem;
+      padding-right: 0.5rem;
+      margin-right: -0.25rem;
       flex: 1;
     }
 
@@ -160,8 +164,7 @@
   .button-bar {
     flex: 0;
     display: flex;
-    padding-right: 1.5rem;
-    padding-bottom: 0.25rem;
+    padding-right: 0.5rem;
   }
 
   .remaining-vertical-space {

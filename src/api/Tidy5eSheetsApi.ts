@@ -1,5 +1,5 @@
 import { CONSTANTS } from 'src/constants';
-import { Tidy5eKgarSettingsSheet } from 'src/sheets/settings/sheet/Tidy5eKgarSettingsSheet';
+import { SheetSettingsFormApplication } from 'src/sheets/settings/sheet/SettingsSheetFunctions';
 import type {
   SheetTabRegistrationOptions,
   SheetTabState,
@@ -30,7 +30,7 @@ import ThemeSettingsFormApplication from 'src/sheets/settings/theme/ThemeSetting
  */
 export class Tidy5eSheetsApi {
   #themeSettings = new ThemeSettingsFormApplication();
-  #sheetSettings = new Tidy5eKgarSettingsSheet(CONSTANTS.TAB_SETTINGS_PLAYERS);
+  #sheetSettings = new SheetSettingsFormApplication(CONSTANTS.TAB_SETTINGS_PLAYERS);
 
   /**
    * Opens the Theme Settings dialog.
@@ -41,7 +41,7 @@ export class Tidy5eSheetsApi {
     return rendered;
   }
 
-  openSheetSettings(initialTab?: string): Tidy5eKgarSettingsSheet {
+  openSheetSettings(initialTab?: string): SheetSettingsFormApplication {
     if (initialTab) {
       this.#sheetSettings.initialTabId = initialTab;
     }

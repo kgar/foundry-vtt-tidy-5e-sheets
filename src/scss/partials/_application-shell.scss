@@ -17,7 +17,8 @@
       text-shadow: none;
     }
 
-    button {
+    button,
+    select {
       background: var(--t5ek-button-background);
 
       &:not(:focus-visible) {
@@ -75,6 +76,12 @@
 
     input[type='checkbox'] {
       margin: 0.125rem;
+    }
+
+    input[type='checkbox']:focus-visible,
+    input[type='radio']:focus-visible {
+      box-shadow: 0 0 0 0.0625rem var(--t5ek-primary-accent-color) inset;
+      outline: none;
     }
 
     h2 {
