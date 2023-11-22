@@ -1,6 +1,5 @@
 <script lang="ts">
   import type {
-    Tab,
     DropdownListOption,
     VehicleSheetContext,
   } from 'src/types/types';
@@ -24,7 +23,6 @@
   import SheetMenu from '../actor/SheetMenu.svelte';
   import { settingStore } from 'src/settings/settings';
   import ActorWarnings from '../actor/ActorWarnings.svelte';
-  import { registeredVehicleTabs } from 'src/runtime/vehicle-sheet-state';
   import InlineSource from '../shared/InlineSource.svelte';
   import ActorOriginSummaryConfig from 'src/applications/actor-origin-summary/ActorOriginSummaryConfigApplication';
 

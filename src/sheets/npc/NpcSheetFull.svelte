@@ -3,14 +3,9 @@
   import TabContents from 'src/components/tabs/TabContents.svelte';
   import Tabs from 'src/components/tabs/Tabs.svelte';
   import { CONSTANTS } from 'src/constants';
-  import type {
-    NpcSheetContext,
-    Tab,
-    DropdownListOption,
-  } from 'src/types/types';
+  import type { NpcSheetContext, DropdownListOption } from 'src/types/types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
-
   import NpcProfile from './parts/NpcProfile.svelte';
   import ContentEditableFormField from 'src/components/inputs/ContentEditableFormField.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
@@ -24,7 +19,6 @@
   import SheetMenu from '../actor/SheetMenu.svelte';
   import { settingStore } from 'src/settings/settings';
   import ActorWarnings from '../actor/ActorWarnings.svelte';
-  import { registeredNpcTabs } from 'src/runtime/npc-sheet-state';
   import InlineSource from '../shared/InlineSource.svelte';
   import InlineCreatureType from '../shared/InlineCreatureType.svelte';
   import ActorOriginSummaryApplication from 'src/applications/actor-origin-summary/ActorOriginSummaryConfigApplication';
