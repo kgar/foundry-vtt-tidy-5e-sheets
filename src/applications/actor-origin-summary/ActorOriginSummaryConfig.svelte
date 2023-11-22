@@ -22,7 +22,7 @@
           type="text"
           placeholder={localize('DND5E.Race')}
           bind:value={$context.race}
-        />
+      />
       </div>
     {/if}
     <div class="form-field">

@@ -15,6 +15,7 @@ import { writable, type Writable } from 'svelte/store';
 import ThemeSettingsSheet from './ThemeSettingsSheet.svelte';
 import { downloadTextFile } from 'src/utils/file';
 import { CONSTANTS } from 'src/constants';
+import SvelteFormApplicationBase from 'src/applications/SvelteFormApplicationBase';
 
 export type ThemeSettingsSheetFunctions = {
   save(settings: CurrentSettings): Promise<unknown>;
@@ -22,7 +23,7 @@ export type ThemeSettingsSheetFunctions = {
   exportTheme(settings: CurrentSettings): void;
 };
 
-export default class ThemeSettingsApplication extends SvelteApplicationBase {
+export default class ThemeSettingsFormApplication extends SvelteFormApplicationBase {
   themeableColors: ThemeColorSetting[] = getThemeableColors();
   context: Writable<CurrentSettings> = writable(getCurrentSettings());
 
@@ -37,10 +38,6 @@ export default class ThemeSettingsApplication extends SvelteApplicationBase {
       popOut: true,
       resizable: true,
     };
-  }
-
-  get template() {
-    return FoundryAdapter.getTemplate('empty-div-template.hbs');
   }
 
   createComponent(node: HTMLElement): SvelteComponent<any, any, any> {

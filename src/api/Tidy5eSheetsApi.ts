@@ -21,7 +21,7 @@ import {
   registerNpcSheetTab,
   unregisterNpcSheetTab,
 } from 'src/state/npc-sheet-state';
-import ThemeSettingsApplication from 'src/sheets/settings/theme/ThemeSettingsApplication';
+import ThemeSettingsFormApplication from 'src/sheets/settings/theme/ThemeSettingsFormApplication';
 
 /**
  * Tidy 5e Sheets API
@@ -29,13 +29,13 @@ import ThemeSettingsApplication from 'src/sheets/settings/theme/ThemeSettingsApp
  * More info later
  */
 export class Tidy5eSheetsApi {
-  #themeSettings = new ThemeSettingsApplication();
+  #themeSettings = new ThemeSettingsFormApplication();
   #sheetSettings = new Tidy5eKgarSettingsSheet(CONSTANTS.TAB_SETTINGS_PLAYERS);
 
   /**
    * Opens the Theme Settings dialog.
    */
-  openThemeSettings(): ThemeSettingsApplication {
+  openThemeSettings(): ThemeSettingsFormApplication {
     const rendered = this.#themeSettings.render(true);
     setTimeout(() => this.#themeSettings.bringToTop(), 150);
     return rendered;

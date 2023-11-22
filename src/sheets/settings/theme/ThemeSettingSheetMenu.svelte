@@ -8,7 +8,7 @@
   import type { CurrentSettings } from 'src/settings/settings';
   import ThemeSelectorButtonMenuCommand from 'src/sheets/shared/ThemeSelectorButtonMenuCommand.svelte';
   import ButtonMenuDivider from 'src/components/button-menu/ButtonMenuDivider.svelte';
-  import type { ThemeSettingsSheetFunctions } from './ThemeSettingsApplication';
+  import type { ThemeSettingsSheetFunctions } from './ThemeSettingsFormApplication';
 
   let functions = getContext<ThemeSettingsSheetFunctions>('functions');
   let context = getContext<Writable<CurrentSettings>>('context');

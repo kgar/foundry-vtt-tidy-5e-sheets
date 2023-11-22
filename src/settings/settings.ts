@@ -11,7 +11,7 @@ import { getAllRegisteredCharacterSheetTabs } from 'src/state/character-sheet-st
 import { getAllRegisteredVehicleSheetTabs } from 'src/state/vehicle-sheet-state';
 import { getAllRegisteredNpcSheetTabs } from 'src/state/npc-sheet-state';
 import { getTabsAsConfigOptions } from 'src/state/state-functions';
-import ThemeSettingsApplication from 'src/sheets/settings/theme/ThemeSettingsApplication';
+import ThemeSettingsFormApplication from 'src/sheets/settings/theme/ThemeSettingsFormApplication';
 
 export type Tidy5eSettings = {
   [settingKey: string]: Tidy5eSetting;
@@ -114,7 +114,7 @@ export function createSettings() {
           label: 'T5EK.ThemeSettings.SheetMenu.buttonLabel',
           hint: `T5EK.ThemeSettings.SheetMenu.hint`,
           icon: 'fas fa-palette',
-          type: ThemeSettingsApplication,
+          type: ThemeSettingsFormApplication,
           restricted: false,
         },
       },

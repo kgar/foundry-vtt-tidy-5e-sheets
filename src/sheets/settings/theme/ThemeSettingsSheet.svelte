@@ -15,7 +15,7 @@
     validateImportFile,
   } from 'src/theme/theme';
   import { getSingleFileFromDropEvent, readFileAsText } from 'src/utils/file';
-  import type { ThemeSettingsSheetFunctions } from './ThemeSettingsApplication';
+  import type { ThemeSettingsSheetFunctions } from './ThemeSettingsFormApplication';
 
   export let themeableColors: ThemeColorSetting[];
   $: {
