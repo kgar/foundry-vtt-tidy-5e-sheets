@@ -1,5 +1,5 @@
 import { CONSTANTS } from 'src/constants';
-import { SheetSettingsFormApplication } from 'src/sheets/settings/sheet/SettingsSheetFunctions';
+import { SheetSettingsFormApplication } from 'src/applications/sheet-settings/SheetSettingsFormApplication';
 import type {
   SheetTabRegistrationOptions,
   SheetTabState,

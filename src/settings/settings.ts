@@ -5,7 +5,7 @@ import type { GetFunctionReturnType } from 'src/types/types';
 import { applyTheme, getTheme } from 'src/theme/theme';
 import { defaultLightTheme } from 'src/theme/default-light-theme';
 import { getCoreThemes, themeVariables } from 'src/theme/theme-reference';
-import { SheetSettingsFormApplication } from 'src/sheets/settings/sheet/SettingsSheetFunctions';
+import { SheetSettingsFormApplication } from 'src/applications/sheet-settings/SheetSettingsFormApplication';
 import { writable, type Writable } from 'svelte/store';
 import { getAllRegisteredCharacterSheetTabs } from 'src/state/character-sheet-state';
 import { getAllRegisteredVehicleSheetTabs } from 'src/state/vehicle-sheet-state';

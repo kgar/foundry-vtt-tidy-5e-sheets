@@ -6,9 +6,9 @@
   } from 'src/settings/settings';
   import { getContext } from 'svelte';
   import type { Writable } from 'svelte/store';
-  import CheckboxSetting from 'src/sheets/settings/parts/CheckboxSetting.svelte';
-  import NumberInputSetting from 'src/sheets/settings/parts/NumberInputSetting.svelte';
-  import TextInputSetting from 'src/sheets/settings/parts/TextInputSetting.svelte';
+  import CheckboxSetting from 'src/applications/sheet-settings/parts/CheckboxSetting.svelte';
+  import NumberInputSetting from 'src/applications/sheet-settings/parts/NumberInputSetting.svelte';
+  import TextInputSetting from 'src/applications/sheet-settings/parts/TextInputSetting.svelte';
   import SelectSetting from '../parts/SelectSetting.svelte';
 
   let context = getContext<Writable<CurrentSettings>>('context');

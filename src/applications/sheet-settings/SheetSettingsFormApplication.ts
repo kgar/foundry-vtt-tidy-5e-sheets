@@ -1,6 +1,6 @@
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type { SvelteComponent } from 'svelte';
-import SettingsSheet from './SettingsSheet.svelte';
+import SheetSettings from './SheetSettings.svelte';
 import { writable, type Writable } from 'svelte/store';
 import {
   getCurrentSettings,
@@ -45,7 +45,7 @@ export class SheetSettingsFormApplication extends SvelteFormApplicationBase {
     const currentSettings = getCurrentSettings();
 
     this.cacheSettingsForChangeTracking(currentSettings);
-    return new SettingsSheet({
+    return new SheetSettings({
       target: node,
       context: new Map<any, any>([
         ['context', writable(currentSettings) satisfies SettingsSheetStore],

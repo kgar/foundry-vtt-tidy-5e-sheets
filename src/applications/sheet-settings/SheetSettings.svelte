@@ -2,18 +2,18 @@
   import type { Tab } from 'src/types/types';
   import Tabs from 'src/components/tabs/Tabs.svelte';
   import TabContents from 'src/components/tabs/TabContents.svelte';
-  import PlayerSettingsTab from './PlayerSettingsTab.svelte';
-  import NpcSettingsTab from './NpcSettingsTab.svelte';
-  import VehicleSettingsTab from './VehicleSettingsTab.svelte';
-  import GmOptionsSettingsTab from './GmOptionsSettingsTab.svelte';
-  import LockSettingsTab from './LockSettingsTab.svelte';
-  import InfoTab from './InfoTab.svelte';
+  import PlayerSettingsTab from './tabs/PlayerSettingsTab.svelte';
+  import NpcSettingsTab from './tabs/NpcSettingsTab.svelte';
+  import VehicleSettingsTab from './tabs/VehicleSettingsTab.svelte';
+  import GmOptionsSettingsTab from './tabs/GmOptionsSettingsTab.svelte';
+  import LockSettingsTab from './tabs/LockSettingsTab.svelte';
+  import InfoTab from './tabs/InfoTab.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getContext } from 'svelte';
   import type {
     SettingsSheetFunctions,
     SettingsSheetStore,
-  } from './SettingsSheetFunctions';
+  } from './SheetSettingsFormApplication';
   import { CONSTANTS } from 'src/constants';
 
   let selectedTabId: string;
