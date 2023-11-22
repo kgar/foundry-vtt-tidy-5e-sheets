@@ -34,6 +34,15 @@
       }
     }
 
+    button[disabled] {
+      color: var(--t5ek-button-disabled-color);
+
+      &:hover {
+        background: var(--t5ek-button-background);
+      }
+      cursor: default;
+    }
+
     input[type='checkbox'],
     button,
     select {

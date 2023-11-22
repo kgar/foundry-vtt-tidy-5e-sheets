@@ -16,7 +16,7 @@
   let listbox: HTMLElement;
 
   function handleListboxKeyDown(
-    ev: KeyboardEvent & { currentTarget: HTMLElement }
+    ev: KeyboardEvent & { currentTarget: HTMLElement },
   ) {
     if (items.length) {
       const currentIndex = selectedItemIndex ?? -1;
@@ -73,28 +73,32 @@
   {/each}
 </ul>
 
-<style>
+<style lang="scss">
   ul.listbox {
     margin: 0;
     padding: 0;
-    border: 1px solid gray;
+    border: 0.0625rem solid var(--t5ek-light-color);
     overflow-y: auto;
     max-height: inherit;
     height: 100%;
+
+    &:focus-visible {
+      outline: 1px solid var(--t5ek-primary-accent-color);
+    }
   }
   .listbox li {
     list-style-type: none;
     padding: 0.5rem;
   }
   .listbox [role='option'].focused {
-    background-color: #ffc0cb;
+    background-color: var(--t5ek-faint-color);
   }
 
   .listbox [role='option']:hover {
-    background: rgba(240, 240, 240);
+    background: var(--t5ek-faintest-color);
   }
 
   .listbox [role='option'].focused:hover {
-    background: #fcb2be;
+    background-color: var(--t5ek-faint-color);
   }
 </style>

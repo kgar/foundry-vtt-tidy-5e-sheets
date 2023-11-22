@@ -504,4 +504,8 @@ export const themeVariables = {
     type: 'todo',
     group: 'todo',
   },
+  '--t5ek-button-disabled-color': {
+    type: 'todo',
+    group: 'todo',
+  },
 };

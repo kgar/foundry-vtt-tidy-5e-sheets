@@ -302,7 +302,11 @@ export class Tidy5eCharacterSheet
     );
 
     if (selectedTabs?.length) {
-      tabs = tabs.filter((t) => selectedTabs?.includes(t.id));
+      tabs = tabs
+        .filter((t) => selectedTabs?.includes(t.id))
+        .sort(
+          (a, b) => selectedTabs.indexOf(a.id) - selectedTabs.indexOf(b.id)
+        );
     }
 
     context.tabs = tabs;

@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { createEventDispatcher } from 'svelte';
 
   export let moveAllToTheLeftDisabled: boolean;
@@ -16,55 +17,70 @@
     moveRight: void;
     moveAllToTheRight: void;
   }>();
+
+  const localize = FoundryAdapter.localize;
 </script>
 
 <div class="selection-listbox-toolbar {$$props.class ?? ''}">
   <button
-    title="Move Up (Alt + Up arrow key)"
+    title={localize('T5EK.Listbox.MoveUp')}
     type="button"
     disabled={moveUpDisabled}
-    on:click={() => dispatcher('moveUp')}>👆</button
+    on:click={() => dispatcher('moveUp')}
   >
+    <i class="fas fa-angle-up"></i>
+  </button>
   <button
-    title="Move down (Alt + Down arrow key)"
+    title={localize('T5EK.Listbox.MoveDown')}
     type="button"
     disabled={moveDownDisabled}
-    on:click={() => dispatcher('moveDown')}>👇</button
+    on:click={() => dispatcher('moveDown')}
   >
+    <i class="fas fa-angle-down"></i>
+  </button>
   <button
-    title="Move left (Space)"
+    title={localize('T5EK.Listbox.MoveLeft')}
     type="button"
     disabled={moveLeftDisabled}
-    on:click={() => dispatcher('moveLeft')}>👈</button
+    on:click={() => dispatcher('moveLeft')}
   >
+    <i class="fas fa-angle-left"></i>
+  </button>
   <button
-    title="Move right (Space)"
+    title={localize('T5EK.Listbox.MoveRight')}
     type="button"
     disabled={moveRightDisabled}
-    on:click={() => dispatcher('moveRight')}>👉</button
+    on:click={() => dispatcher('moveRight')}
   >
+    <i class="fas fa-angle-right"></i>
+  </button>
   <button
-    title="Move all to the left"
+    title={localize('T5EK.Listbox.MoveAllLeft')}
     type="button"
     disabled={moveAllToTheLeftDisabled}
-    on:click={() => dispatcher('moveAllToTheLeft')}>◀◀</button
+    on:click={() => dispatcher('moveAllToTheLeft')}
   >
+    <i class="fas fa-angles-left"></i>
+  </button>
   <button
-    title="Move all to the right"
+    title={localize('T5EK.Listbox.MoveAllRight')}
     type="button"
     disabled={moveAllToTheRightDisabled}
-    on:click={() => dispatcher('moveAllToTheRight')}>▶▶</button
+    on:click={() => dispatcher('moveAllToTheRight')}
   >
+    <i class="fas fa-angles-right"></i>
+  </button>
 </div>
 
 <style>
   .selection-listbox-toolbar {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     gap: 0.5rem;
   }
 
   .selection-listbox-toolbar button {
-    padding: 0.5rem;
+    padding: 0.25rem 0.5rem;
   }
 </style>

@@ -8,6 +8,7 @@
   export let selectedRightItemIndex: number | null = null;
   export let labelProp: string;
   export let valueProp: string;
+  export let listboxCssClass: string = '';
 
   let listboxesContainer: HTMLElement;
   $: selectedItemIndex = selectedLeftItemIndex ?? selectedRightItemIndex;
@@ -15,8 +16,8 @@
     selectedLeftItemIndex !== null
       ? leftItems
       : selectedRightItemIndex !== null
-      ? rightItems
-      : null;
+        ? rightItems
+        : null;
 
   function moveAllToTheLeft() {
     leftItems = [...leftItems, ...rightItems];
@@ -149,7 +150,7 @@
   }
 
   function handleLeftListboxKeydown(
-    e: CustomEvent<KeyboardEvent & { currentTarget: HTMLElement }>
+    e: CustomEvent<KeyboardEvent & { currentTarget: HTMLElement }>,
   ): void {
     if (e.detail.code === 'Space') {
       moveRight();
@@ -161,7 +162,7 @@
     }
   }
   function handleRightListboxKeydown(
-    e: CustomEvent<KeyboardEvent & { currentTarget: HTMLElement }>
+    e: CustomEvent<KeyboardEvent & { currentTarget: HTMLElement }>,
   ): void {
     if (e.detail.code === 'Space') {
       moveLeft();
@@ -174,7 +175,10 @@
   }
 </script>
 
-<div class="selection-listbox" bind:this={listboxesContainer}>
+<div
+  class="selection-listbox {$$props.class ?? ''}"
+  bind:this={listboxesContainer}
+>
   {#if $$slots['left-header'] || $$slots['right-header']}
     <div class="column-1">
       <slot name="left-header" />
@@ -192,7 +196,7 @@
       selectedRightItemIndex = null;
     }}
     on:keydown={handleLeftListboxKeydown}
-    class="column-1"
+    class="column-1 {listboxCssClass}"
   />
   <SelectionListboxToolbar
     moveUpDisabled={selectedItemIndex === null || selectedItemIndex === 0}
@@ -222,7 +226,7 @@
       selectedLeftItemIndex = null;
     }}
     on:keydown={handleRightListboxKeydown}
-    class="column-3"
+    class="column-3 {listboxCssClass}"
   />
 </div>
 
@@ -230,6 +234,8 @@
   .selection-listbox {
     display: grid;
     grid-template-columns: 1fr auto 1fr;
+    grid-template-rows: auto 1fr;
+    min-height: 0;
     max-height: inherit;
     height: 100%;
     gap: 0.5rem;

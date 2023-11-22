@@ -125,6 +125,24 @@
 
   "T5EK.OriginSummaryConfig": "Origin Summary Configuration",
 
+  "T5EK.TabSelection": {
+    "Title": "Tab Selection",
+    "MenuOptionText": "Tab Selection",
+    "AvailableHeader": "Available Tabs",
+    "SelectedHeader": "Selected Tabs",
+    "UnsupportedDocumentErrorMessage": "The document type ",
+    "AtLeastOneRequiredErrorMessage": "At least one tab is required."
+  },
+
+  "T5EK.Listbox": {
+    "MoveUp": "Move Up (Alt + Up arrow key)",
+    "MoveDown": "Move down (Alt + Down arrow key)",
+    "MoveLeft": "Move left (Space)",
+    "MoveRight": "Move right (Space)",
+    "MoveAllLeft": "Move all to the left",
+    "MoveAllRight": "Move all to the right"
+  },
+
   "T5EK.Settings.MulticlassSpellbookFilterLabel": "Multiclass Spellbook Filter",
 
   "T5EK.Settings.SheetMenu": {
@@ -538,6 +556,7 @@
   "T5EK.FavoriteSpellLevelLabel": "Spell Level {number}",
   "T5EK.ApplyChanges": "Apply Changes",
   "T5EK.SaveChanges": "Save Changes",
+  "T5EK.UseDefault": "Use Default",
   "T5EK.VehicleExhaustion0": "No negative effects",
   "T5EK.VehicleExhaustion1": "Disadvantage on Ability Checks",
   "T5EK.VehicleExhaustion2": "Speed halved",
