@@ -1,11 +1,11 @@
 import type { SvelteComponent } from 'svelte';
-import SvelteApplicationBase from '../SvelteApplicationBase';
 import ActorOriginSummaryConfig from './ActorOriginSummaryConfig.svelte';
 import { get, writable, type Writable } from 'svelte/store';
 import type { Actor5e } from 'src/types/types';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { CONSTANTS } from 'src/constants';
 import { error } from 'src/utils/logging';
+import SvelteFormApplicationBase from '../SvelteFormApplicationBase';
 
 export type ActorOriginSummaryContext = {
   isCharacter: boolean;
@@ -20,7 +20,7 @@ export type ActorOriginSummaryContext = {
   dimensions: string;
 };
 
-export default class ActorOriginSummaryApplication extends SvelteApplicationBase {
+export default class ActorOriginSummaryApplication extends SvelteFormApplicationBase {
   context: Writable<ActorOriginSummaryContext | null> = writable(null);
   actor: Actor5e;
   actorHook: number | undefined;
@@ -38,13 +38,11 @@ export default class ActorOriginSummaryApplication extends SvelteApplicationBase
       context: new Map<any, any>([
         ['appId', this.appId],
         ['context', this.context],
-        ['save', this.save.bind(this)],
       ]),
     });
   }
 
   activateListeners(html: any): void {
-    console.warn('activating summary listeners');
     this.refreshContextOnActorChanges();
     super.activateListeners(html);
   }
@@ -104,7 +102,7 @@ export default class ActorOriginSummaryApplication extends SvelteApplicationBase
     super.close(options);
   }
 
-  save() {
+  async save() {
     const context = get(this.context);
     if (!context) {
       error('Unable to save data due to an error.', true);
@@ -126,17 +124,21 @@ export default class ActorOriginSummaryApplication extends SvelteApplicationBase
       if (context.canEditRace) {
         update['system.details.race'] = context.race;
       }
-      this.actor.update(update);
+      await this.actor.update(update);
     } else if (context.isNpc) {
-      this.actor.update({
+      await this.actor.update({
         'system.details.environment': context.environment,
         'system.details.alignment': context.alignment,
       });
     } else if (context.isVehicle) {
-      this.actor.update({
+      await this.actor.update({
         'system.traits.dimensions': context.dimensions,
       });
     }
     this.close();
+  }
+
+  async _updateObject(): Promise<void> {
+    await this.save();
   }
 }

@@ -126,11 +126,7 @@
     </div>
   </div>
   <div class="button-bar">
-    <button
-      type="submit"
-      class="save-changes-btn"
-      on:click={() => functions.save($context)}
-    >
+    <button type="submit" class="save-changes-btn">
       <i class="fas fa-save" />
       {localize('T5EK.SaveChanges')}
     </button>

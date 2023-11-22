@@ -51,4 +51,8 @@ export default abstract class SvelteFormApplicationBase extends FormApplication 
   refreshContext() {
     /* Implement in a subclass if needed */
   }
+
+  async _updateObject() {
+    /* Implement in a subclass if needed */
+  }
 }

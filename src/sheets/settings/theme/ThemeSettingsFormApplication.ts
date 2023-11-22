@@ -11,7 +11,7 @@ import {
 } from 'src/theme/theme';
 import type { ThemeColorSetting, Tidy5eThemeDataV1 } from 'src/types/theme';
 import type { SvelteComponent } from 'svelte';
-import { writable, type Writable } from 'svelte/store';
+import { get, writable, type Writable } from 'svelte/store';
 import ThemeSettingsSheet from './ThemeSettingsSheet.svelte';
 import { downloadTextFile } from 'src/utils/file';
 import { CONSTANTS } from 'src/constants';
@@ -117,5 +117,10 @@ export default class ThemeSettingsFormApplication extends SvelteFormApplicationB
       'theme' + CONSTANTS.THEME_EXTENSION_WITH_DOT,
       JSON.stringify(exportData, null, ' ')
     );
+  }
+
+  async _updateObject() {
+    const settings = get(this.context);
+    await this.saveChangedSettings(settings);
   }
 }

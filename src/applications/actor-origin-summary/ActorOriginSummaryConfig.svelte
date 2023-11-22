@@ -6,12 +6,11 @@
 
   let context = getContext<Readable<ActorOriginSummaryContext>>('context');
   let appId = getContext<string>('appId');
-  let save = getContext<Function>('save');
 
   const localize = FoundryAdapter.localize;
 </script>
 
-<form class="flex-column" on:submit|preventDefault={() => save()}>
+<section class="flex-column">
   {#if $context.isCharacter}
     {#if $context.canEditRace}
       <div class="form-field">
@@ -22,7 +21,7 @@
           type="text"
           placeholder={localize('DND5E.Race')}
           bind:value={$context.race}
-      />
+        />
       </div>
     {/if}
     <div class="form-field">
@@ -86,8 +85,8 @@
     </div>
   {/if}
 
-  <button type="button" on:click={() => save()}>
+  <button type="submit">
     <i class="far fa-save" />
     {localize('Save')}
   </button>
-</form>
+</section>
