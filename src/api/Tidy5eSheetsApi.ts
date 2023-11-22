@@ -21,7 +21,7 @@ import {
   registerNpcSheetTab,
   unregisterNpcSheetTab,
 } from 'src/state/npc-sheet-state';
-import ThemeSettingsFormApplication from 'src/sheets/settings/theme/ThemeSettingsFormApplication';
+import ThemeSettingsFormApplication from 'src/applications/theme/ThemeSettingsFormApplication';
 
 /**
  * Tidy 5e Sheets API

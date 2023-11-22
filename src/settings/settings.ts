@@ -11,7 +11,7 @@ import { getAllRegisteredCharacterSheetTabs } from 'src/state/character-sheet-st
 import { getAllRegisteredVehicleSheetTabs } from 'src/state/vehicle-sheet-state';
 import { getAllRegisteredNpcSheetTabs } from 'src/state/npc-sheet-state';
 import { getTabsAsConfigOptions } from 'src/state/state-functions';
-import ThemeSettingsFormApplication from 'src/sheets/settings/theme/ThemeSettingsFormApplication';
+import ThemeSettingsFormApplication from 'src/applications/theme/ThemeSettingsFormApplication';
 
 export type Tidy5eSettings = {
   [settingKey: string]: Tidy5eSetting;
