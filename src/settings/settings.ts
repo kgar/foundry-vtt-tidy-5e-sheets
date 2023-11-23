@@ -1291,16 +1291,8 @@ export function createSettings() {
           config: false,
           default: false,
           type: Boolean,
-          onChange: (_) => {
-            SettingsProvider.settings.actionListRegisterCharacterTab.options.onChange(
-              SettingsProvider.settings.actionListRegisterCharacterTab.get()
-            );
-            SettingsProvider.settings.actionListRegisterNpcTab.options.onChange(
-              SettingsProvider.settings.actionListRegisterCharacterTab.get()
-            );
-            SettingsProvider.settings.actionListRegisterVehicleTab.options.onChange(
-              SettingsProvider.settings.actionListRegisterCharacterTab.get()
-            );
+          onChange: (useActionsList) => {
+            adjustActionsListTabRegistrations();
           },
         },
         get() {
@@ -1861,4 +1853,16 @@ export function initSettings() {
   FoundryAdapter.hooksOn('closeSettingsConfig', () => {
     settingStore.set(getCurrentSettings());
   });
+}
+
+function adjustActionsListTabRegistrations() {
+  SettingsProvider.settings.actionListRegisterCharacterTab.options.onChange(
+    SettingsProvider.settings.actionListRegisterCharacterTab.get()
+  );
+  SettingsProvider.settings.actionListRegisterNpcTab.options.onChange(
+    SettingsProvider.settings.actionListRegisterCharacterTab.get()
+  );
+  SettingsProvider.settings.actionListRegisterVehicleTab.options.onChange(
+    SettingsProvider.settings.actionListRegisterCharacterTab.get()
+  );
 }
