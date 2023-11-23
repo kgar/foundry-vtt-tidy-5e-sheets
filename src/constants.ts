@@ -67,6 +67,7 @@ export const CONSTANTS = {
   TAB_VEHICLE_CARGO_AND_CREW: 'cargo',
   TAB_VEHICLE_EFFECTS: 'effects',
   TAB_VEHICLE_DESCRIPTION: 'biography',
+  TAB_ACTOR_ACTIONS: 'actions',
   TAB_SETTINGS_PLAYERS: 'players',
   TAB_SETTINGS_NPCS: 'npcs',
   TAB_SETTINGS_VEHICLES: 'vehicles',
