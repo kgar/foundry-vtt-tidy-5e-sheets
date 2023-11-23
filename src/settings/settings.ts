@@ -1279,6 +1279,120 @@ export function createSettings() {
         },
       },
 
+      // Actions List
+
+      useActionsList: {
+        options: {
+          name: "T5EK.Settings.UseActionsList.name",
+          hint: "T5EK.Settings.UseActionsList.hint",
+          scope: 'world',
+          config: false,
+          default: false,
+          type: Boolean,
+        },
+        get() {
+          return FoundryAdapter.getTidySetting<boolean>('useActionsList');
+        }
+      },
+
+      actionListLimitActionsToCantrips: {
+          options: {
+            name: "T5EK.Settings.ActionsListLimitActionsToCantrips.name",
+            hint: "T5EK.Settings.ActionsListLimitActionsToCantrips.hint",
+            scope: 'client',
+            config: false,
+            default: false,
+            type: Boolean,
+          },
+          get() {
+            return FoundryAdapter.getTidySetting<boolean>('actionListLimitActionsToCantrips');
+          }
+      },
+
+      actionListIncludeMinuteLongSpellsAsActions: {
+          options: {
+            name: "T5EK.Settings.ActionsListIncludeMinuteLongSpellsAsActions.name",
+            hint: "T5EK.Settings.ActionsListIncludeMinuteLongSpellsAsActions.hint",
+            scope: 'client',
+            config: false,
+            default: true,
+            type: Boolean,
+          },
+          get() {
+            return FoundryAdapter.getTidySetting<boolean>('actionListIncludeMinuteLongSpellsAsActions');
+          }
+      },
+
+      actionListIncludeSpellsWithActiveEffects: {
+        options: {
+          name: "T5EK.Settings.ActionsListIncludeSpellsWithActiveEffects.name",
+          hint: "T5EK.Settings.ActionsListIncludeSpellsWithActiveEffects.hint",
+          scope: 'client',
+          config: false,
+          default: true,
+          type: Boolean,
+        },
+        get() {
+          return FoundryAdapter.getTidySetting<boolean>('actionListIncludeSpellsWithActiveEffects');
+        }
+      },
+
+      actionListIncludeConsumables: {
+          options: {
+            name: "T5EK.Settings.ActionsListIncludeConsumables.name",
+            hint: "T5EK.Settings.ActionsListIncludeConsumables.hint",
+            scope: 'client',
+            config: false,
+            default: true,
+            type: Boolean,
+          },
+          get() {
+            return FoundryAdapter.getTidySetting<boolean>('actionListIncludeConsumables');
+          }
+      },
+
+      actionListRegisterCharacterTab: {
+          options: {
+            name: "T5EK.Settings.ActionsListRegisterCharacterTab.name",
+            hint: "T5EK.Settings.ActionsListRegisterCharacterTab.hint",
+            scope: 'client',
+            config: false,
+            default: true,
+            type: Boolean,
+          },
+          get() {
+            return FoundryAdapter.getTidySetting<boolean>('actionListRegisterCharacterTab');
+          }
+      },
+
+      actionListRegisterNpcTab: {
+          options: {
+            name: "T5EK.Settings.ActionsListRegisterNpcTab.name",
+            hint: "T5EK.Settings.ActionsListRegisterNpcTab.hint",
+            scope: 'world',
+            config: false,
+            default: true,
+            type: Boolean,
+          },
+          get() {
+            return FoundryAdapter.getTidySetting<boolean>('actionListRegisterNpcTab');
+          }
+      },
+
+      actionListRegisterVehicleTab: {
+          options: {
+            name: "T5EK.Settings.ActionsListRegisterVehicleTab.name",
+            hint: "T5EK.Settings.ActionsListRegisterVehicleTab.hint",
+            scope: 'world',
+            config: false,
+            default: true,
+            type: Boolean,
+          },
+          get() {
+            return FoundryAdapter.getTidySetting<boolean>('actionListRegisterVehicleTab');
+          }
+      },
+
       // Color customization
 
       colorPickerEnabled: {

@@ -177,6 +177,9 @@
     "labelInventoryLocks": "Inventory Locks",
     "labelFeaturesLocks": "Features Locks"
   },
+  "T5EK.Settings.TabFeatures": {
+    "tabLabel": "Features"
+  },
   "T5EK.Settings.TabInfo": {
     "tabLabel": "Info",
     "Header": "Info",
@@ -432,6 +435,39 @@
   "T5EK.Settings.LockItemQuantity": {
     "name": "Lock Item Quantity",
     "hint": "Prevents non-GMs from making changes to item quantity."
+  },
+  "T5EK.Settings.ActionsList.Header": "Actions List",
+  "T5EK.Settings.UseActionsList": {
+    "name": "Use Actions List",
+    "hint": "Provides an Actions tab which details all of the actions a given actor can take. The Actions List intends to replicate the Actions Tab of the D&DBeyond character sheet."
+  },
+  "T5EK.Settings.ActionsListLimitActionsToCantrips": {
+    "name": "Limit Actions to Cantrips",
+    "hint": "Instead of showing all spells that deal damage in the Actions tab/panel by default, limits to only cantrips. This is the default D&DBeyond behavior."
+  },
+  "T5EK.Settings.ActionsListIncludeMinuteLongSpellsAsActions": {
+    "name": "Include Minute-long Spells as Actions",
+    "hint": "Includes spells with a duration of one minute or less (e.g. 1 round) and an activation time of 1 Action or 1 Bonus Action (e.g. Bless, Bane, Command) in the Actions tab/panel by default."
+  },
+  "T5EK.Settings.ActionsListIncludeSpellsWithActiveEffects": {
+    "name": "Include Spells with Active Effects as Actions",
+    "hint": "Includes spells with active effects attached (e.g. Barkskin) in the Actions tab/panel by default."
+  },
+  "T5EK.Settings.ActionsListIncludeConsumables": {
+    "name": "Include Consumables as Actions",
+    "hint": "Includes consumables which have an activation cost (Action, Bonus Action, etc) in the Actions list by default."
+  },
+  "T5EK.Settings.ActionsListRegisterCharacterTab": {
+    "name": "Character Actions Tab",
+    "hint": "Includes the Actions tab in the available tabs for the player character sheet."
+  },
+  "T5EK.Settings.ActionsListRegisterNpcTab": {
+    "name": "NPC Actions Tab",
+    "hint": "Includes the Actions tab in the available tabs for NPCs."
+  },
+  "T5EK.Settings.ActionsListRegisterVehicleTab": {
+    "name": "Vehicle Actions Tab",
+    "hint": "Includes the Actions tab in the available tabs for vehicles."
   },
   "T5EK.Settings.ColorPickerEnabled": {
     "name": "Use Custom Theme Colors",

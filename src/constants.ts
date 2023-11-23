@@ -74,6 +74,7 @@ export const CONSTANTS = {
   TAB_SETTINGS_MODULES: 'modules',
   TAB_SETTINGS_HOMEBREW: 'homebrew',
   TAB_SETTINGS_LOCKS: 'locks',
+  TAB_SETTINGS_FEATURES: 'features',
   TAB_SETTINGS_INFO: 'info',
   THEME_EXTENSION_WITH_DOT: '.tidy5e-theme',
   THEME_ID_DEFAULT_LIGHT: 'light',
