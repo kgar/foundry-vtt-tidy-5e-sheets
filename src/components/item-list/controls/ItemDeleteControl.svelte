@@ -12,6 +12,7 @@
 
 <ItemControl
   iconCssClass="fas fa-trash fa-fw"
-  on:click={() => onDelete() && item.deleteDialog()}
+  on:click={() =>
+    onDelete() && FoundryAdapter.onActorItemDelete(item.actor, item)}
   title={localize('DND5E.ItemDelete')}
 />

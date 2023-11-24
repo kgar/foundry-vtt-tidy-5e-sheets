@@ -243,27 +243,6 @@ function getItemContextOptions(item: Item5e) {
       },
     });
   }
-  /*
- // Standard Options
- const options = [
-   {
-     name: "DND5E.ContextMenuActionEdit",
-     icon: "<i class='fas fa-edit fa-fw'></i>",
-     callback: () => item.sheet.render(true)
-   },
-   {
-     name: "DND5E.ContextMenuActionDuplicate",
-     icon: "<i class='fas fa-copy fa-fw'></i>",
-     condition: () => !["race", "background", "class", "subclass"].includes(item.type),
-     callback: () => item.clone({name: game.i18n.format("DOCUMENT.CopyOf", {name: item.name})}, {save: true})
-   },
-   {
-     name: "DND5E.ContextMenuActionDelete",
-     icon: "<i class='fas fa-trash fa-fw'></i>",
-     callback: () => item.deleteDialog()
-   }
- ]
- */
 
   if (item.type === 'spell') {
     options.push({
@@ -290,7 +269,7 @@ function getItemContextOptions(item: Item5e) {
       options.push({
         name: 'T5EK.ContextMenuActionDelete',
         icon: "<i class='fas fa-trash fa-fw' style='color: var(--t5ek-warning-accent-color);'></i>",
-        callback: () => item.deleteDialog(),
+        callback: () => FoundryAdapter.onActorItemDelete(actor, item),
       });
     }
   } else {
@@ -319,7 +298,7 @@ function getItemContextOptions(item: Item5e) {
       options.push({
         name: 'DND5E.ContextMenuActionDelete',
         icon: "<i class='fas fa-trash fa-fw' style='color: var(--t5ek-warning-accent-color);'></i>",
-        callback: () => item.deleteDialog(),
+        callback: () => FoundryAdapter.onActorItemDelete(actor, item),
       });
     }
   }
