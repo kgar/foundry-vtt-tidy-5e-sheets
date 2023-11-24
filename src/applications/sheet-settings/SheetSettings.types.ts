@@ -27,6 +27,10 @@ export type SettingsSheetFunctions = {
     selectedTabIds: string[]
   ): DefaultTabSelectionFields;
   validate(context: SettingsSheetContext): boolean;
+  resetDefaultTabs(
+    context$: Writable<SettingsSheetContext>,
+    actorType: string
+  ): void;
 };
 
 export type SettingsSheetStore = Writable<SettingsSheetContext>;

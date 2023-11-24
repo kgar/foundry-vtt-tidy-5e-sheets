@@ -10,21 +10,14 @@
     SettingsSheetContext,
     SettingsSheetFunctions,
   } from '../SheetSettings.types';
-  import { getAllRegisteredVehicleSheetTabs } from 'src/runtime/vehicle-sheet-state';
   import ListboxSetting from '../parts/ListboxSetting.svelte';
+  import { CONSTANTS } from 'src/constants';
 
   let context = getContext<Writable<SettingsSheetContext>>('context');
   let functions = getContext<SettingsSheetFunctions>('functions');
 
   const userIsGm = FoundryAdapter.userIsGm();
   const localize = FoundryAdapter.localize;
-
-  function resetDefaultTabs(): any {
-    $context.defaultVehicleTabs = functions.mapTabSelectionFields(
-      getAllRegisteredVehicleSheetTabs(),
-      [...SettingsProvider.settings.defaultVehicleSheetTabs.options.default],
-    );
-  }
 </script>
 
 <h2>{localize('T5EK.Settings.TabVehicles.header')}</h2>
@@ -48,9 +41,13 @@
     valueProp="id"
   >
     <div slot="below-listbox">
-      <button type="button" on:click={() => resetDefaultTabs()}>
+      <button
+        type="button"
+        on:click={() =>
+          functions.resetDefaultTabs(context, CONSTANTS.SHEET_TYPE_VEHICLE)}
+      >
         <i class="fas fa-rotate-right" />
-        {localize('T5EK.UseDefault')}
+        {localize('T5EK.Reset')}
       </button>
     </div>
   </ListboxSetting>

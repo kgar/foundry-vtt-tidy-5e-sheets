@@ -11,22 +11,14 @@
     SettingsSheetContext,
     SettingsSheetFunctions,
   } from '../SheetSettings.types';
-  import { getAllRegisteredCharacterSheetTabs } from 'src/runtime/character-sheet-state';
   import ListboxSetting from '../parts/ListboxSetting.svelte';
+  import { CONSTANTS } from 'src/constants';
 
   let context = getContext<Writable<SettingsSheetContext>>('context');
   let functions = getContext<SettingsSheetFunctions>('functions');
 
   const userIsGm = FoundryAdapter.userIsGm();
   const localize = FoundryAdapter.localize;
-
-  // TODO: Extract all of these to the sheet, in `functions`, with actor-type-specific names
-  function resetDefaultTabs(): any {
-    $context.defaultCharacterTabs = functions.mapTabSelectionFields(
-      getAllRegisteredCharacterSheetTabs(),
-      [...SettingsProvider.settings.defaultCharacterSheetTabs.options.default],
-    );
-  }
 </script>
 
 <h2>{localize('T5EK.Settings.TabPlayers.header')}</h2>
@@ -50,9 +42,13 @@
     valueProp="id"
   >
     <div slot="below-listbox">
-      <button type="button" on:click={() => resetDefaultTabs()}>
+      <button
+        type="button"
+        on:click={() =>
+          functions.resetDefaultTabs(context, CONSTANTS.SHEET_TYPE_CHARACTER)}
+      >
         <i class="fas fa-rotate-right" />
-        {localize('T5EK.UseDefault')}
+        {localize('T5EK.Reset')}
       </button>
     </div>
   </ListboxSetting>

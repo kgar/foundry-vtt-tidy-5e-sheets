@@ -6,6 +6,7 @@ import {
   getCurrentSettings,
   type CurrentSettings,
   type Tidy5eSettingKey,
+  SettingsProvider,
 } from 'src/settings/settings';
 import { debug, error } from 'src/utils/logging';
 import { CONSTANTS } from 'src/constants';
@@ -80,6 +81,7 @@ export class SheetSettingsFormApplication extends SvelteFormApplicationBase {
             apply: this.applyChangedSettings.bind(this),
             mapTabSelectionFields: this.mapTabSelectionFields.bind(this),
             validate: this.validate.bind(this),
+            resetDefaultTabs: this.resetDefaultTabs.bind(this),
           } satisfies SettingsSheetFunctions,
         ],
         ['appId', this.appId],
@@ -170,14 +172,12 @@ export class SheetSettingsFormApplication extends SvelteFormApplicationBase {
     };
 
     const keys = Object.keys(this.unchangedSettings) as Tidy5eSettingKey[];
-    let settingsUpdated = false;
     for (let key of keys) {
       const currentValue = this.unchangedSettings[key];
       const newValue = newSettings[key];
       if (currentValue !== newValue) {
         await FoundryAdapter.setTidySetting(key, newValue);
         debug(`Updated ${key} to ${newValue}`);
-        settingsUpdated = true;
       }
     }
 
@@ -194,5 +194,46 @@ export class SheetSettingsFormApplication extends SvelteFormApplicationBase {
     }
 
     this.close();
+  }
+
+  resetDefaultTabs(
+    context$: Writable<SettingsSheetContext>,
+    actorType: string
+  ) {
+    switch (actorType) {
+      case CONSTANTS.SHEET_TYPE_CHARACTER:
+        context$.update((context) => {
+          context.defaultCharacterTabs = this.mapTabSelectionFields(
+            getAllRegisteredCharacterSheetTabs(),
+            [
+              ...SettingsProvider.settings.defaultCharacterSheetTabs.options
+                .default,
+            ]
+          );
+          return context;
+        });
+        break;
+      case CONSTANTS.SHEET_TYPE_NPC:
+        context$.update((context) => {
+          context.defaultNpcTabs = this.mapTabSelectionFields(
+            getAllRegisteredNpcSheetTabs(),
+            [...SettingsProvider.settings.defaultNpcSheetTabs.options.default]
+          );
+          return context;
+        });
+        break;
+      case CONSTANTS.SHEET_TYPE_VEHICLE:
+        context$.update((context) => {
+          context.defaultVehicleTabs = this.mapTabSelectionFields(
+            getAllRegisteredVehicleSheetTabs(),
+            [
+              ...SettingsProvider.settings.defaultVehicleSheetTabs.options
+                .default,
+            ]
+          );
+          return context;
+        });
+        break;
+    }
   }
 }
