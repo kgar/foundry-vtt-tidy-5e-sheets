@@ -1102,11 +1102,7 @@ export const FoundryAdapter = {
 
           return item.delete({ shouldRemoveAdvancements });
         } catch (err) {
-          error(
-            'An error occurred while attempting to delete item with advancements',
-            true,
-            err
-          );
+          // This dialog throws an exception when you click cancel. We'll ignore it.
           return;
         }
       }
