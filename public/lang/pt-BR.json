@@ -329,7 +329,7 @@
     "linked": "Destacar tokens vinculados",
     "both": "Destacar ambos"
   },
-  "T5EK.Settings.DefaultSheetTab": {
+  "T5EK.Settings.InitialSheetTab": {
     "name": null,
     "hint": null
   },

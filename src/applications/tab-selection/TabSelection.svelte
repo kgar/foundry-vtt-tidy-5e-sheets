@@ -22,8 +22,12 @@
     listboxCssClass="scroll-container"
     class="flex-1"
   >
-    <h2 class="minimal" slot="left-header">{localize('T5EK.TabSelection.AvailableHeader')}</h2>
-    <h2 class="minimal" slot="right-header">{localize('T5EK.TabSelection.SelectedHeader')}</h2>
+    <h2 class="minimal" slot="left-header">
+      {localize('T5EK.TabSelection.AvailableHeader')}
+    </h2>
+    <h2 class="minimal" slot="right-header">
+      {localize('T5EK.TabSelection.SelectedHeader')}
+    </h2>
   </SelectionListbox>
   <p class="flex-row align-items-center no-gap">
     <span class="extra-info-icon-container"

@@ -329,7 +329,7 @@
     "linked": "Verknüpfte Figuren hervorheben",
     "both": "Verknüpfte und unverknüpfte Figuren hervorheben"
   },
-  "T5EK.Settings.DefaultSheetTab": {
+  "T5EK.Settings.InitialSheetTab": {
     "name": null,
     "hint": null
   },

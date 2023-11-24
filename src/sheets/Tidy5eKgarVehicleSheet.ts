@@ -40,7 +40,7 @@ export class Tidy5eVehicleSheet
       this.getContext().then((context) => this.context.set(context));
     });
 
-    this.currentTabId = SettingsProvider.settings.defaultVehicleSheetTab.get();
+    this.currentTabId = SettingsProvider.settings.initialVehicleSheetTab.get();
   }
 
   get template() {
@@ -145,6 +145,12 @@ export class Tidy5eVehicleSheet
         .sort(
           (a, b) => selectedTabs.indexOf(a.id) - selectedTabs.indexOf(b.id)
         );
+    } else {
+      const defaultTabs =
+        SettingsProvider.settings.defaultVehicleSheetTabs.get();
+      tabs = tabs
+        .filter((t) => defaultTabs?.includes(t.id))
+        .sort((a, b) => defaultTabs.indexOf(a.id) - defaultTabs.indexOf(b.id));
     }
 
     context.tabs = tabs;

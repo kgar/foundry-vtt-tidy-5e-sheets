@@ -1,8 +1,4 @@
 &.application-shell {
-  header.resizable + .window-content > *:last-child {
-    padding-bottom: 1.5rem;
-  }
-
   :where(.window-content) {
     padding: 0;
 

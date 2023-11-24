@@ -329,7 +329,7 @@
     "linked": "関連付けされたトークンを強調表示",
     "both": "トークンを全て強調表示"
   },
-  "T5EK.Settings.DefaultSheetTab": {
+  "T5EK.Settings.InitialSheetTab": {
     "name": null,
     "hint": null
   },

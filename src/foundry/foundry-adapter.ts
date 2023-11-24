@@ -9,7 +9,7 @@ import { CONSTANTS } from '../constants';
 import type { Actor5e } from 'src/types/types';
 import type { Item5e } from 'src/types/item';
 import { SettingsProvider } from 'src/settings/settings';
-import { debug, warn } from 'src/utils/logging';
+import { debug, error, warn } from 'src/utils/logging';
 import { clamp } from 'src/utils/numbers';
 
 export const FoundryAdapter = {
@@ -121,7 +121,11 @@ export const FoundryAdapter = {
       },
     });
   },
-  createOpenEditorHtml(content: string, targetDataField: string, textEditorOptions?: Record<string, any>) {
+  createOpenEditorHtml(
+    content: string,
+    targetDataField: string,
+    textEditorOptions?: Record<string, any>
+  ) {
     return HandlebarsHelpers.editor(content, {
       hash: {
         target: targetDataField,
@@ -129,7 +133,7 @@ export const FoundryAdapter = {
         engine: 'prosemirror',
         collaborate: false,
         editable: true,
-        ...textEditorOptions
+        ...textEditorOptions,
       },
     });
   },
@@ -1075,5 +1079,35 @@ export const FoundryAdapter = {
     return new dnd5e.applications.SourceConfig(document, {
       keyPath,
     }).render(true);
+  },
+  async onActorItemDelete(actor: Actor5e, item: Item5e) {
+    // If item has advancement, handle it separately
+    if (!game.settings.get('dnd5e', 'disableAdvancements')) {
+      const manager =
+        dnd5e.applications.advancement.AdvancementManager.forDeletedItem(
+          actor,
+          item.id
+        );
+
+      if (manager.steps.length) {
+        try {
+          const shouldRemoveAdvancements =
+            await dnd5e.applications.advancement.AdvancementConfirmationDialog.forDelete(
+              item
+            );
+
+          if (shouldRemoveAdvancements) {
+            return manager.render(true);
+          }
+
+          return item.delete({ shouldRemoveAdvancements });
+        } catch (err) {
+          // This dialog throws an exception when you click cancel. We'll ignore it.
+          return;
+        }
+      }
+    }
+
+    return item.deleteDialog();
   },
 };

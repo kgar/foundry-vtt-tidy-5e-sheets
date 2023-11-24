@@ -329,7 +329,7 @@
     "linked": "高亮已鏈接指示物的卡片",
     "both": "高亮已鏈接和未鏈接的指示物的卡片"
   },
-  "T5EK.Settings.DefaultSheetTab": {
+  "T5EK.Settings.InitialSheetTab": {
     "name": null,
     "hint": null
   },

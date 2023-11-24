@@ -35,9 +35,11 @@
     background: var(--t5ek-background);
   }
 
+  // Enrichers
   a.entity-link,
   a.content-link,
-  a.inline-roll {
+  a.inline-roll,
+  a.roll-link {
     padding: 0.125rem 0.25rem;
     border-radius: 0.3125rem;
     background: var(--t5ek-content-entity-link-background);
