@@ -6,7 +6,7 @@
   import { SettingsProvider } from 'src/settings/settings';
   import TextInputSetting from 'src/applications/sheet-settings/parts/TextInputSetting.svelte';
   import SelectSetting from 'src/applications/sheet-settings/parts/SelectSetting.svelte';
-  import type { SettingsSheetContext } from '../SheetSettingsFormApplication';
+  import type { SettingsSheetContext } from '../SheetSettings.types';
 
   let context = getContext<Writable<SettingsSheetContext>>('context');
 

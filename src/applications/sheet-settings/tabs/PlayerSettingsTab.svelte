@@ -8,39 +8,24 @@
   import TextInputSetting from 'src/applications/sheet-settings/parts/TextInputSetting.svelte';
   import SelectSetting from '../parts/SelectSetting.svelte';
   import SelectionListbox from 'src/components/listbox/SelectionListbox.svelte';
-  import type { SettingsSheetContext } from '../SheetSettingsFormApplication';
+  import type {
+    SettingsSheetContext,
+    SettingsSheetFunctions,
+  } from '../SheetSettings.types';
+  import { getAllRegisteredCharacterSheetTabs } from 'src/runtime/character-sheet-state';
 
   let context = getContext<Writable<SettingsSheetContext>>('context');
+  let functions = getContext<SettingsSheetFunctions>('functions');
 
   const userIsGm = FoundryAdapter.userIsGm();
   const localize = FoundryAdapter.localize;
 
-  // TODO: Put on application class and generalize if able
+  // TODO: Extract all of these to the sheet, in `functions`, with actor-type-specific names
   function resetDefaultTabs(): any {
-    const defaultCharacterTabs = [
-      ...SettingsProvider.settings.defaultCharacterSheetTabs.options.default,
-    ] as string[];
-    const available = $context.availableCharacterTabs
-      .filter((t) => !defaultCharacterTabs.includes(t.id))
-      .concat(
-        $context.selectedCharacterTabs.filter(
-          (t) => !defaultCharacterTabs.includes(t.id),
-        ),
-      );
-    const selected = $context.availableCharacterTabs
-      .filter((t) => defaultCharacterTabs.includes(t.id))
-      .concat(
-        $context.selectedCharacterTabs.filter((t) =>
-          defaultCharacterTabs.includes(t.id),
-        ),
-      )
-      .sort(
-        (a, b) =>
-          defaultCharacterTabs.indexOf(a.id) -
-          defaultCharacterTabs.indexOf(b.id),
-      );
-    $context.availableCharacterTabs = available;
-    $context.selectedCharacterTabs = selected;
+    $context.defaultCharacterTabs = functions.mapTabSelectionFields(
+      getAllRegisteredCharacterSheetTabs(),
+      [...SettingsProvider.settings.defaultCharacterSheetTabs.options.default],
+    );
   }
 </script>
 
@@ -54,6 +39,7 @@
     id="initialCharacterSheetTab"
   />
 
+  <!-- TODO: Attempt to abstract this to a shared setting component and reuse across PC, NPC, and Vehicle; make it agnostic to tab selection -->
   <article class="setting group">
     <div class="description flex-1">
       <b
@@ -68,8 +54,8 @@
       </p>
       <div class="flex-column small-gap">
         <SelectionListbox
-          bind:leftItems={$context.availableCharacterTabs}
-          bind:rightItems={$context.selectedCharacterTabs}
+          bind:leftItems={$context.defaultCharacterTabs.available}
+          bind:rightItems={$context.defaultCharacterTabs.selected}
           labelProp="label"
           valueProp="id"
         >

@@ -9,8 +9,9 @@
   import type {
     SettingsSheetContext,
     SettingsSheetFunctions,
-  } from '../SheetSettingsFormApplication';
+  } from '../SheetSettings.types';
   import SelectionListbox from 'src/components/listbox/SelectionListbox.svelte';
+  import { getAllRegisteredNpcSheetTabs } from 'src/runtime/npc-sheet-state';
 
   let context = getContext<Writable<SettingsSheetContext>>('context');
   let functions = getContext<SettingsSheetFunctions>('functions');
@@ -18,26 +19,11 @@
   const userIsGm = FoundryAdapter.userIsGm();
   const localize = FoundryAdapter.localize;
 
-  // TODO: Put on application class and generalize if able
   function resetDefaultTabs(): any {
-    const defaultNpcTabs = [
-      ...SettingsProvider.settings.defaultNpcSheetTabs.options.default,
-    ] as string[];
-    const available = $context.availableNpcTabs
-      .filter((t) => !defaultNpcTabs.includes(t.id))
-      .concat(
-        $context.selectedNpcTabs.filter((t) => !defaultNpcTabs.includes(t.id)),
-      );
-    const selected = $context.availableNpcTabs
-      .filter((t) => defaultNpcTabs.includes(t.id))
-      .concat(
-        $context.selectedNpcTabs.filter((t) => defaultNpcTabs.includes(t.id)),
-      )
-      .sort(
-        (a, b) => defaultNpcTabs.indexOf(a.id) - defaultNpcTabs.indexOf(b.id),
-      );
-    $context.availableNpcTabs = available;
-    $context.selectedNpcTabs = selected;
+    $context.defaultCharacterTabs = functions.mapTabSelectionFields(
+      getAllRegisteredNpcSheetTabs(),
+      [...SettingsProvider.settings.defaultNpcSheetTabs.options.default],
+    );
   }
 </script>
 
@@ -63,8 +49,8 @@
       </p>
       <div class="flex-column small-gap">
         <SelectionListbox
-          bind:leftItems={$context.availableNpcTabs}
-          bind:rightItems={$context.selectedNpcTabs}
+          bind:leftItems={$context.defaultNpcTabs.available}
+          bind:rightItems={$context.defaultNpcTabs.selected}
           labelProp="label"
           valueProp="id"
         >

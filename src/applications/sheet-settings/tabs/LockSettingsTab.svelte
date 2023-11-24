@@ -3,8 +3,7 @@
   import CheckboxSetting from 'src/applications/sheet-settings/parts/CheckboxSetting.svelte';
   import { getContext } from 'svelte';
   import type { Writable } from 'svelte/store';
-  import type { CurrentSettings } from 'src/settings/settings';
-    import type { SettingsSheetContext } from '../SheetSettingsFormApplication';
+  import type { SettingsSheetContext } from '../SheetSettings.types';
 
   let context = getContext<Writable<SettingsSheetContext>>('context');
 

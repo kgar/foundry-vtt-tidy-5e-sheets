@@ -6,39 +6,24 @@
   import { SettingsProvider } from 'src/settings/settings';
   import NumberInputSetting from 'src/applications/sheet-settings/parts/NumberInputSetting.svelte';
   import SelectSetting from '../parts/SelectSetting.svelte';
-  import type { SettingsSheetContext } from '../SheetSettingsFormApplication';
+  import type {
+    SettingsSheetContext,
+    SettingsSheetFunctions,
+  } from '../SheetSettings.types';
   import SelectionListbox from 'src/components/listbox/SelectionListbox.svelte';
+  import { getAllRegisteredVehicleSheetTabs } from 'src/runtime/vehicle-sheet-state';
 
   let context = getContext<Writable<SettingsSheetContext>>('context');
+  let functions = getContext<SettingsSheetFunctions>('functions');
 
   const userIsGm = FoundryAdapter.userIsGm();
   const localize = FoundryAdapter.localize;
 
-  // TODO: Put on application class and generalize if able
   function resetDefaultTabs(): any {
-    const defaultVehicleTabs = [
-      ...SettingsProvider.settings.defaultVehicleSheetTabs.options.default,
-    ] as string[];
-    const available = $context.availableVehicleTabs
-      .filter((t) => !defaultVehicleTabs.includes(t.id))
-      .concat(
-        $context.selectedVehicleTabs.filter(
-          (t) => !defaultVehicleTabs.includes(t.id),
-        ),
-      );
-    const selected = $context.availableVehicleTabs
-      .filter((t) => defaultVehicleTabs.includes(t.id))
-      .concat(
-        $context.selectedVehicleTabs.filter((t) =>
-          defaultVehicleTabs.includes(t.id),
-        ),
-      )
-      .sort(
-        (a, b) =>
-          defaultVehicleTabs.indexOf(a.id) - defaultVehicleTabs.indexOf(b.id),
-      );
-    $context.availableVehicleTabs = available;
-    $context.selectedVehicleTabs = selected;
+    $context.defaultCharacterTabs = functions.mapTabSelectionFields(
+      getAllRegisteredVehicleSheetTabs(),
+      [...SettingsProvider.settings.defaultVehicleSheetTabs.options.default],
+    );
   }
 </script>
 
@@ -66,8 +51,8 @@
       </p>
       <div class="flex-column small-gap">
         <SelectionListbox
-          bind:leftItems={$context.availableVehicleTabs}
-          bind:rightItems={$context.selectedVehicleTabs}
+          bind:leftItems={$context.defaultVehicleTabs.available}
+          bind:rightItems={$context.defaultVehicleTabs.selected}
           labelProp="label"
           valueProp="id"
         >
