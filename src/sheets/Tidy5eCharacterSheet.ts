@@ -48,7 +48,7 @@ export class Tidy5eCharacterSheet
     });
 
     this.currentTabId =
-      SettingsProvider.settings.defaultCharacterSheetTab.get();
+      SettingsProvider.settings.initialCharacterSheetTab.get();
   }
 
   get template() {
@@ -307,6 +307,12 @@ export class Tidy5eCharacterSheet
         .sort(
           (a, b) => selectedTabs.indexOf(a.id) - selectedTabs.indexOf(b.id)
         );
+    } else {
+      const defaultTabs =
+        SettingsProvider.settings.defaultCharacterSheetTabs.get();
+      tabs = tabs
+        .filter((t) => defaultTabs?.includes(t.id))
+        .sort((a, b) => defaultTabs.indexOf(a.id) - defaultTabs.indexOf(b.id));
     }
 
     context.tabs = tabs;

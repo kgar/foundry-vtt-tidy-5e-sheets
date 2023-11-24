@@ -48,7 +48,7 @@ export class Tidy5eNpcSheet
       this.getContext().then((context) => this.context.set(context));
     });
 
-    this.currentTabId = SettingsProvider.settings.defaultNpcSheetTab.get();
+    this.currentTabId = SettingsProvider.settings.initialNpcSheetTab.get();
   }
 
   get template() {
@@ -303,6 +303,12 @@ export class Tidy5eNpcSheet
         .sort(
           (a, b) => selectedTabs.indexOf(a.id) - selectedTabs.indexOf(b.id)
         );
+    } else {
+      const defaultTabs =
+        SettingsProvider.settings.defaultNpcSheetTabs.get();
+      tabs = tabs
+        .filter((t) => defaultTabs?.includes(t.id))
+        .sort((a, b) => defaultTabs.indexOf(a.id) - defaultTabs.indexOf(b.id));
     }
 
     context.tabs = tabs;
@@ -590,8 +596,6 @@ export class Tidy5eNpcSheet
         await this.actor.update({
           [`flags.${CONSTANTS.MODULE_ID}.exhaustion`]: exhaustion - 1,
         });
-        // TODO: Implement:
-        // await updateExhaustion(this.actor);
       }
     } else {
       const rollData = this.actor.getRollData();

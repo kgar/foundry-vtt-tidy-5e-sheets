@@ -10,11 +10,11 @@
   import InfoTab from './tabs/InfoTab.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getContext } from 'svelte';
+  import { CONSTANTS } from 'src/constants';
   import type {
     SettingsSheetFunctions,
     SettingsSheetStore,
-  } from './SheetSettingsFormApplication';
-  import { CONSTANTS } from 'src/constants';
+  } from './SheetSettings.types';
 
   let selectedTabId: string;
   let context = getContext<SettingsSheetStore>('context');
@@ -61,7 +61,7 @@
         content: {
           component: LockSettingsTab,
         },
-      }
+      },
     );
   }
 
@@ -144,7 +144,7 @@
       grid-area: nav;
       margin-top: -0.5rem;
       margin-left: -0.5rem;
-      margin-bottom: -1.5rem;
+      margin-bottom: -0.5rem;
     }
 
     :global(.sheet-body) {

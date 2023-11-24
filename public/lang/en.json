@@ -357,9 +357,16 @@
     "linked": "Highlight linked tokens",
     "both": "Highlight linked and unlinked tokens"
   },
-  "T5EK.Settings.DefaultSheetTab": {
-    "name": "Default Sheet Tab",
+  "T5EK.Settings.InitialSheetTab": {
+    "name": "Initial Sheet Tab",
     "hint": "Shows the indicated tab when opening a sheet for the first time."
+  },
+  "T5EK.Settings.DefaultSheetTabs": {
+    "name": "Default Sheet Tabs",
+    "hint": "Determines which tabs will show and in what order by default. Applies when no tab selections have been made for an actor.",
+    "AvailableHeader": "Available Tabs",
+    "SelectedHeader": "Selected Tabs",
+    "AtLeastOneTabRequiredErrorMessage": "Default tabs: at least one tab is required for each actor type."
   },
   "T5EK.Settings.HideDeathSavesFromPlayers": {
     "name": "Hide Death Saves From Players",
@@ -558,6 +565,7 @@
   "T5EK.ApplyChanges": "Apply Changes",
   "T5EK.SaveChanges": "Save Changes",
   "T5EK.UseDefault": "Use Default",
+  "T5EK.Reset": "Reset",
   "T5EK.VehicleExhaustion0": "No negative effects",
   "T5EK.VehicleExhaustion1": "Disadvantage on Ability Checks",
   "T5EK.VehicleExhaustion2": "Speed halved",

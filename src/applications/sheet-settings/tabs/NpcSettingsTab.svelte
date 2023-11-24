@@ -4,14 +4,17 @@
   import NumberInputSetting from 'src/applications/sheet-settings/parts/NumberInputSetting.svelte';
   import { getContext } from 'svelte';
   import type { Writable } from 'svelte/store';
-  import {
-    SettingsProvider,
-    type CurrentSettings,
-  } from 'src/settings/settings';
+  import { SettingsProvider } from 'src/settings/settings';
   import SelectSetting from 'src/applications/sheet-settings/parts/SelectSetting.svelte';
+  import type {
+    SettingsSheetContext,
+    SettingsSheetFunctions,
+  } from '../SheetSettings.types';
+  import ListboxSetting from '../parts/ListboxSetting.svelte';
+  import { CONSTANTS } from 'src/constants';
 
-  let context = getContext<Writable<CurrentSettings>>('context');
-  const appId = getContext<string>('appId');
+  let context = getContext<Writable<SettingsSheetContext>>('context');
+  let functions = getContext<SettingsSheetFunctions>('functions');
 
   const userIsGm = FoundryAdapter.userIsGm();
   const localize = FoundryAdapter.localize;
@@ -20,23 +23,45 @@
 <h2>{localize('T5EK.Settings.TabNPCs.header')}</h2>
 {#if userIsGm}
   <SelectSetting
-    options={SettingsProvider.settings.defaultNpcSheetTab.options.choices()}
-    bind:value={$context.defaultNpcSheetTab}
-    name={SettingsProvider.settings.defaultNpcSheetTab.options.name}
-    hint={SettingsProvider.settings.defaultNpcSheetTab.options.hint}
-    id="defaultNpcSheetTab"
+    options={SettingsProvider.settings.initialNpcSheetTab.options.choices()}
+    bind:value={$context.settings.initialNpcSheetTab}
+    name={SettingsProvider.settings.initialNpcSheetTab.options.name}
+    hint={SettingsProvider.settings.initialNpcSheetTab.options.hint}
+    id="initialNpcSheetTab"
   />
+
+  <ListboxSetting
+    name={SettingsProvider.settings.defaultNpcSheetTabs.options.name}
+    hint={SettingsProvider.settings.defaultNpcSheetTabs.options.hint}
+    leftHeader="T5EK.Settings.DefaultSheetTabs.AvailableHeader"
+    bind:leftItems={$context.defaultNpcTabs.available}
+    rightHeader="T5EK.Settings.DefaultSheetTabs.SelectedHeader"
+    bind:rightItems={$context.defaultNpcTabs.selected}
+    labelProp="label"
+    valueProp="id"
+  >
+    <div slot="below-listbox">
+      <button
+        type="button"
+        on:click={() =>
+          functions.resetDefaultTabs(context, CONSTANTS.SHEET_TYPE_NPC)}
+      >
+        <i class="fas fa-rotate-right" />
+        {localize('T5EK.Reset')}
+      </button>
+    </div>
+  </ListboxSetting>
 {/if}
 
 <CheckboxSetting
-  bind:value={$context.useClassicControlsForNpc}
+  bind:value={$context.settings.useClassicControlsForNpc}
   name={SettingsProvider.settings.useClassicControlsForNpc.options.name}
   hint={SettingsProvider.settings.useClassicControlsForNpc.options.hint}
   id="useClassicControlsForNpc"
 />
 
 <CheckboxSetting
-  bind:value={$context.useJournalTabForNpc}
+  bind:value={$context.settings.useJournalTabForNpc}
   name={'T5EK.Settings.UseJournalTabForNPC.name'}
   hint={'T5EK.Settings.UseJournalTabForNPC.hint'}
   id="useJournalTabForNpc"
@@ -44,14 +69,14 @@
 
 {#if userIsGm}
   <CheckboxSetting
-    bind:value={$context.useNpcRest}
+    bind:value={$context.settings.useNpcRest}
     name={'T5EK.Settings.UseNPCRest.name'}
     hint={'T5EK.Settings.UseNPCRest.hint'}
     id="useNpcRest"
   />
 
   <CheckboxSetting
-    bind:value={$context.showNpcRestInChat}
+    bind:value={$context.settings.showNpcRestInChat}
     name={'T5EK.Settings.ShowNPCRestInChat.name'}
     hint={'T5EK.Settings.ShowNPCRestInChat.hint'}
     id="showNpcRestInChat"
@@ -63,7 +88,7 @@
       unlinked: 'T5EK.Settings.ShowNPCActorLinkMarker.unlinked',
       both: 'T5EK.Settings.ShowNPCActorLinkMarker.both',
     }}
-    bind:value={$context.showNpcActorLinkMarker}
+    bind:value={$context.settings.showNpcActorLinkMarker}
     name="T5EK.Settings.ShowNPCActorLinkMarker.name"
     hint="T5EK.Settings.ShowNPCActorLinkMarker.hint"
     id="showNpcActorLinkMarker"
@@ -71,49 +96,49 @@
 {/if}
 
 <CheckboxSetting
-  bind:value={$context.useHpBarNpc}
+  bind:value={$context.settings.useHpBarNpc}
   name={'T5EK.Settings.UseHpBar.name'}
   hint={'T5EK.Settings.UseHpBar.hint'}
   id="useHpBarNpc"
 />
 
 <CheckboxSetting
-  bind:value={$context.useHpOverlayNpc}
+  bind:value={$context.settings.useHpOverlayNpc}
   name={'T5EK.Settings.UseHpOverlay.name'}
   hint={'T5EK.Settings.UseHpOverlay.hint'}
   id="useHpOverlayNpc"
 />
 
 <CheckboxSetting
-  bind:value={$context.alwaysShowNpcTraits}
+  bind:value={$context.settings.alwaysShowNpcTraits}
   name={'T5EK.Settings.AlwaysShowTraits.name'}
   hint={'T5EK.Settings.AlwaysShowTraits.hint'}
   id="alwaysShowNpcTraits"
 />
 
 <CheckboxSetting
-  bind:value={$context.moveTraitsBelowNpcResources}
+  bind:value={$context.settings.moveTraitsBelowNpcResources}
   name={'T5EK.Settings.MoveTraitsBelowResources.name'}
   hint={'T5EK.Settings.MoveTraitsBelowResources.hint'}
   id="moveTraitsBelowNpcResources"
 />
 
 <CheckboxSetting
-  bind:value={$context.alwaysShowNpcSkills}
+  bind:value={$context.settings.alwaysShowNpcSkills}
   name={'T5EK.Settings.AlwaysShowSkills.name'}
   hint={'T5EK.Settings.AlwaysShowSkills.hint'}
   id="alwaysShowNpcSkills"
 />
 
 <CheckboxSetting
-  bind:value={$context.showSpellbookTabNpc}
+  bind:value={$context.settings.showSpellbookTabNpc}
   name={'T5EK.Settings.ShowNPCSpellbookTab.name'}
   hint={'T5EK.Settings.ShowNPCSpellbookTab.hint'}
   id="showSpellbookTabNpc"
 />
 
 <NumberInputSetting
-  bind:value={$context.npcSheetWidth}
+  bind:value={$context.settings.npcSheetWidth}
   name={'T5EK.Settings.NPCSheetWidth.name'}
   hint={'T5EK.Settings.NPCSheetWidth.hint'}
   id="npcSheetWidth"

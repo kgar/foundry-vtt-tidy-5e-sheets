@@ -10,6 +10,7 @@ import { CONSTANTS } from 'src/constants';
 import { getAllRegisteredCharacterSheetTabs } from 'src/runtime/character-sheet-state';
 import { getAllRegisteredNpcSheetTabs } from 'src/runtime/npc-sheet-state';
 import { getAllRegisteredVehicleSheetTabs } from 'src/runtime/vehicle-sheet-state';
+import { SettingsProvider } from 'src/settings/settings';
 
 export type TabSelectionItem = {
   id: string;
@@ -32,13 +33,31 @@ export default class TabSelectionFormApplication extends SvelteFormApplicationBa
     this.registeredTabs = this.getRegisteredTabs(actor);
   }
 
-  getRegisteredTabs(actor: Actor5e) {
+  getRegisteredTabs(actor: Actor5e): SheetTabState<any>[] {
     if (actor.type === CONSTANTS.SHEET_TYPE_CHARACTER) {
       return getAllRegisteredCharacterSheetTabs();
     } else if (actor.type === CONSTANTS.SHEET_TYPE_NPC) {
       return getAllRegisteredNpcSheetTabs();
     } else if (actor.type === CONSTANTS.SHEET_TYPE_VEHICLE) {
       return getAllRegisteredVehicleSheetTabs();
+    }
+
+    error(
+      FoundryAdapter.localize(
+        'T5EK.TabSelection.UnsupportedDocumentErrorMessage',
+        { documentType: this.actor.type }
+      )
+    );
+    return [];
+  }
+
+  getDefaultTabIds(actor: Actor5e): string[] {
+    if (actor.type === CONSTANTS.SHEET_TYPE_CHARACTER) {
+      return SettingsProvider.settings.defaultCharacterSheetTabs.get();
+    } else if (actor.type === CONSTANTS.SHEET_TYPE_NPC) {
+      return SettingsProvider.settings.defaultNpcSheetTabs.get();
+    } else if (actor.type === CONSTANTS.SHEET_TYPE_VEHICLE) {
+      return SettingsProvider.settings.defaultVehicleSheetTabs.get();
     }
 
     error(
@@ -81,7 +100,8 @@ export default class TabSelectionFormApplication extends SvelteFormApplicationBa
 
   getData() {
     const selectedTabIds =
-      FoundryAdapter.tryGetFlag<string[]>(this.actor, 'selected-tabs') ?? [];
+      FoundryAdapter.tryGetFlag<string[]>(this.actor, 'selected-tabs') ??
+      this.getDefaultTabIds(this.actor);
 
     let availableTabs: TabSelectionItem[] = this.registeredTabs
       .filter((t) => !selectedTabIds.includes(t.id))
@@ -96,12 +116,6 @@ export default class TabSelectionFormApplication extends SvelteFormApplicationBa
       .sort(
         (a, b) => selectedTabIds.indexOf(a.id) - selectedTabIds.indexOf(b.id)
       );
-
-    // Having no selected tabs means having all available tabs
-    if (availableTabs.length > 0 && selectedTabs.length === 0) {
-      selectedTabs = availableTabs;
-      availableTabs = [];
-    }
 
     return {
       available: availableTabs,
