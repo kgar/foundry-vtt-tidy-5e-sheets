@@ -143,7 +143,7 @@ export class SheetSettingsFormApplication extends SvelteFormApplicationBase {
       );
     }
 
-    // Add more data validation here
+    // Add more data validation here as needed
 
     return valid;
   }
