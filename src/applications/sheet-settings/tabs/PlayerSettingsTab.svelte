@@ -7,12 +7,12 @@
   import NumberInputSetting from 'src/applications/sheet-settings/parts/NumberInputSetting.svelte';
   import TextInputSetting from 'src/applications/sheet-settings/parts/TextInputSetting.svelte';
   import SelectSetting from '../parts/SelectSetting.svelte';
-  import SelectionListbox from 'src/components/listbox/SelectionListbox.svelte';
   import type {
     SettingsSheetContext,
     SettingsSheetFunctions,
   } from '../SheetSettings.types';
   import { getAllRegisteredCharacterSheetTabs } from 'src/runtime/character-sheet-state';
+  import ListboxSetting from '../parts/ListboxSetting.svelte';
 
   let context = getContext<Writable<SettingsSheetContext>>('context');
   let functions = getContext<SettingsSheetFunctions>('functions');
@@ -39,40 +39,23 @@
     id="initialCharacterSheetTab"
   />
 
-  <!-- TODO: Attempt to abstract this to a shared setting component and reuse across PC, NPC, and Vehicle; make it agnostic to tab selection -->
-  <article class="setting group">
-    <div class="description flex-1">
-      <b
-        >{localize(
-          SettingsProvider.settings.defaultCharacterSheetTabs.options.name,
-        )}</b
-      >
-      <p>
-        {localize(
-          SettingsProvider.settings.defaultCharacterSheetTabs.options.hint,
-        )}
-      </p>
-      <div class="flex-column small-gap">
-        <SelectionListbox
-          bind:leftItems={$context.defaultCharacterTabs.available}
-          bind:rightItems={$context.defaultCharacterTabs.selected}
-          labelProp="label"
-          valueProp="id"
-        >
-          <b slot="left-header" class="minimal"
-            >{localize('T5EK.Settings.DefaultSheetTabs.AvailableHeader')}</b
-          >
-          <b slot="right-header" class="minimal"
-            >{localize('T5EK.Settings.DefaultSheetTabs.SelectedHeader')}</b
-          >
-        </SelectionListbox>
-        <button type="button" on:click={() => resetDefaultTabs()}>
-          <i class="fas fa-rotate-right" />
-          {localize('T5EK.UseDefault')}
-        </button>
-      </div>
+  <ListboxSetting
+    name={SettingsProvider.settings.defaultCharacterSheetTabs.options.name}
+    hint={SettingsProvider.settings.defaultCharacterSheetTabs.options.hint}
+    leftHeader="T5EK.Settings.DefaultSheetTabs.AvailableHeader"
+    bind:leftItems={$context.defaultCharacterTabs.available}
+    rightHeader="T5EK.Settings.DefaultSheetTabs.SelectedHeader"
+    bind:rightItems={$context.defaultCharacterTabs.selected}
+    labelProp="label"
+    valueProp="id"
+  >
+    <div slot="below-listbox">
+      <button type="button" on:click={() => resetDefaultTabs()}>
+        <i class="fas fa-rotate-right" />
+        {localize('T5EK.UseDefault')}
+      </button>
     </div>
-  </article>
+  </ListboxSetting>
 {/if}
 
 <CheckboxSetting

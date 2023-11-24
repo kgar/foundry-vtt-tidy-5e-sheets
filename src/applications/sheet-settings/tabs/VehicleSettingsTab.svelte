@@ -10,8 +10,8 @@
     SettingsSheetContext,
     SettingsSheetFunctions,
   } from '../SheetSettings.types';
-  import SelectionListbox from 'src/components/listbox/SelectionListbox.svelte';
   import { getAllRegisteredVehicleSheetTabs } from 'src/runtime/vehicle-sheet-state';
+  import ListboxSetting from '../parts/ListboxSetting.svelte';
 
   let context = getContext<Writable<SettingsSheetContext>>('context');
   let functions = getContext<SettingsSheetFunctions>('functions');
@@ -20,7 +20,7 @@
   const localize = FoundryAdapter.localize;
 
   function resetDefaultTabs(): any {
-    $context.defaultCharacterTabs = functions.mapTabSelectionFields(
+    $context.defaultVehicleTabs = functions.mapTabSelectionFields(
       getAllRegisteredVehicleSheetTabs(),
       [...SettingsProvider.settings.defaultVehicleSheetTabs.options.default],
     );
@@ -37,39 +37,23 @@
     id="initialVehicleSheetTab"
   />
 
-  <article class="setting group">
-    <div class="description flex-1">
-      <b
-        >{localize(
-          SettingsProvider.settings.defaultVehicleSheetTabs.options.name,
-        )}</b
-      >
-      <p>
-        {localize(
-          SettingsProvider.settings.defaultVehicleSheetTabs.options.hint,
-        )}
-      </p>
-      <div class="flex-column small-gap">
-        <SelectionListbox
-          bind:leftItems={$context.defaultVehicleTabs.available}
-          bind:rightItems={$context.defaultVehicleTabs.selected}
-          labelProp="label"
-          valueProp="id"
-        >
-          <b slot="left-header" class="minimal"
-            >{localize('T5EK.Settings.DefaultSheetTabs.AvailableHeader')}</b
-          >
-          <b slot="right-header" class="minimal"
-            >{localize('T5EK.Settings.DefaultSheetTabs.SelectedHeader')}</b
-          >
-        </SelectionListbox>
-        <button type="button" on:click={() => resetDefaultTabs()}>
-          <i class="fas fa-rotate-right" />
-          {localize('T5EK.UseDefault')}
-        </button>
-      </div>
+  <ListboxSetting
+    name={SettingsProvider.settings.defaultVehicleSheetTabs.options.name}
+    hint={SettingsProvider.settings.defaultVehicleSheetTabs.options.hint}
+    leftHeader="T5EK.Settings.DefaultSheetTabs.AvailableHeader"
+    bind:leftItems={$context.defaultVehicleTabs.available}
+    rightHeader="T5EK.Settings.DefaultSheetTabs.SelectedHeader"
+    bind:rightItems={$context.defaultVehicleTabs.selected}
+    labelProp="label"
+    valueProp="id"
+  >
+    <div slot="below-listbox">
+      <button type="button" on:click={() => resetDefaultTabs()}>
+        <i class="fas fa-rotate-right" />
+        {localize('T5EK.UseDefault')}
+      </button>
     </div>
-  </article>
+  </ListboxSetting>
 {/if}
 
 <CheckboxSetting
