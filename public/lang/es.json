@@ -330,7 +330,7 @@
     "linked": "Resaltar los tokens vinculados",
     "both": "Resaltar los tokens vinculados y no vinculados"
   },
-  "T5EK.Settings.DefaultSheetTab": {
+  "T5EK.Settings.InitialSheetTab": {
     "name": null,
     "hint": null
   },

@@ -329,7 +329,7 @@
     "linked": "Zvýraznit propojené žetony.",
     "both": "Zvýraznit propojené a nepropojené žetony"
   },
-  "T5EK.Settings.DefaultSheetTab": {
+  "T5EK.Settings.InitialSheetTab": {
     "name": null,
     "hint": null
   },

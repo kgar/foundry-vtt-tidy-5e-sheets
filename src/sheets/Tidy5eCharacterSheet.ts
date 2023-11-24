@@ -48,7 +48,7 @@ export class Tidy5eCharacterSheet
     });
 
     this.currentTabId =
-      SettingsProvider.settings.defaultCharacterSheetTab.get();
+      SettingsProvider.settings.initialCharacterSheetTab.get();
   }
 
   get template() {

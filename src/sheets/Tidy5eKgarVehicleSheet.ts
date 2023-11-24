@@ -40,7 +40,7 @@ export class Tidy5eVehicleSheet
       this.getContext().then((context) => this.context.set(context));
     });
 
-    this.currentTabId = SettingsProvider.settings.defaultVehicleSheetTab.get();
+    this.currentTabId = SettingsProvider.settings.initialVehicleSheetTab.get();
   }
 
   get template() {

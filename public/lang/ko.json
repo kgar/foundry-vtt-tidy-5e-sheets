@@ -329,7 +329,7 @@
     "linked": "연결 토큰 강조 표시",
     "both": "연결/비연결 토큰 강조 표시"
   },
-  "T5EK.Settings.DefaultSheetTab": {
+  "T5EK.Settings.InitialSheetTab": {
     "name": null,
     "hint": null
   },

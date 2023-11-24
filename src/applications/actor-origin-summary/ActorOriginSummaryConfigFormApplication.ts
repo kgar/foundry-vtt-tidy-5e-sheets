@@ -80,9 +80,10 @@ export default class ActorOriginSummaryConfigFormApplication extends SvelteFormA
 
   static get defaultOptions() {
     return FoundryAdapter.mergeObject(super.defaultOptions, {
-      width: 320,
+      width: 380,
       height: 'auto',
       sheetConfig: false,
+      resizable: false,
     });
   }
 

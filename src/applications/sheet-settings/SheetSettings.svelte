@@ -144,7 +144,7 @@
       grid-area: nav;
       margin-top: -0.5rem;
       margin-left: -0.5rem;
-      margin-bottom: -1.5rem;
+      margin-bottom: -0.5rem;
     }
 
     :global(.sheet-body) {

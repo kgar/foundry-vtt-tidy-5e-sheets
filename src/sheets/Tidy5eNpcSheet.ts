@@ -48,7 +48,7 @@ export class Tidy5eNpcSheet
       this.getContext().then((context) => this.context.set(context));
     });
 
-    this.currentTabId = SettingsProvider.settings.defaultNpcSheetTab.get();
+    this.currentTabId = SettingsProvider.settings.initialNpcSheetTab.get();
   }
 
   get template() {
