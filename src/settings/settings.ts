@@ -221,6 +221,30 @@ export function createSettings() {
         },
       },
 
+      defaultCharacterSheetTabs: {
+        options: {
+          name: 'T5EK.Settings.DefaultSheetTabs.name',
+          hint: 'T5EK.Settings.DefaultSheetTabs.hint',
+          scope: 'world',
+          config: false,
+          type: String,
+          default: [
+            CONSTANTS.TAB_CHARACTER_ATTRIBUTES,
+            CONSTANTS.TAB_CHARACTER_INVENTORY,
+            CONSTANTS.TAB_CHARACTER_SPELLBOOK,
+            CONSTANTS.TAB_CHARACTER_FEATURES,
+            CONSTANTS.TAB_CHARACTER_EFFECTS,
+            CONSTANTS.TAB_CHARACTER_BIOGRAPHY,
+            CONSTANTS.TAB_CHARACTER_JOURNAL,
+          ],
+        },
+        get() {
+          return FoundryAdapter.getTidySetting<string>(
+            'defaultCharacterSheetTabs'
+          );
+        },
+      },
+
       useClassicControlsForCharacter: {
         options: {
           name: 'T5EK.Settings.UseClassicControls.name',
@@ -536,6 +560,26 @@ export function createSettings() {
         },
       },
 
+      defaultNpcSheetTabs: {
+        options: {
+          name: 'T5EK.Settings.DefaultSheetTabs.name',
+          hint: 'T5EK.Settings.DefaultSheetTabs.hint',
+          scope: 'world',
+          config: false,
+          type: String,
+          default: [
+            CONSTANTS.TAB_NPC_ABILITIES,
+            CONSTANTS.TAB_NPC_SPELLBOOK,
+            CONSTANTS.TAB_NPC_EFFECTS,
+            CONSTANTS.TAB_NPC_BIOGRAPHY,
+            CONSTANTS.TAB_NPC_JOURNAL,
+          ],
+        },
+        get() {
+          return FoundryAdapter.getTidySetting<string>('defaultNpcSheetTabs');
+        },
+      },
+
       useClassicControlsForNpc: {
         options: {
           name: 'T5EK.Settings.UseClassicControls.name',
@@ -654,6 +698,27 @@ export function createSettings() {
         get() {
           return FoundryAdapter.getTidySetting<string>(
             'defaultVehicleSheetTab'
+          );
+        },
+      },
+
+      defaultVehicleSheetTabs: {
+        options: {
+          name: 'T5EK.Settings.DefaultSheetTabs.name',
+          hint: 'T5EK.Settings.DefaultSheetTabs.hint',
+          scope: 'world',
+          config: false,
+          type: String,
+          default: [
+            CONSTANTS.TAB_VEHICLE_ATTRIBUTES,
+            CONSTANTS.TAB_VEHICLE_CARGO_AND_CREW,
+            CONSTANTS.TAB_VEHICLE_EFFECTS,
+            CONSTANTS.TAB_VEHICLE_DESCRIPTION,
+          ],
+        },
+        get() {
+          return FoundryAdapter.getTidySetting<string>(
+            'defaultVehicleSheetTabs'
           );
         },
       },
