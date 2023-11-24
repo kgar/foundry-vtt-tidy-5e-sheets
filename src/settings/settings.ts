@@ -12,8 +12,6 @@ import { getAllRegisteredVehicleSheetTabs } from 'src/runtime/vehicle-sheet-stat
 import { getAllRegisteredNpcSheetTabs } from 'src/runtime/npc-sheet-state';
 import { getTabsAsConfigOptions } from 'src/runtime/state-functions';
 import ThemeSettingsFormApplication from 'src/applications/theme/ThemeSettingsFormApplication';
-import { getApi } from 'src/api/api';
-import ActionsTab from 'src/sheets/actor/tabs/ActionsTab.svelte';
 
 export type Tidy5eSettings = {
   [settingKey: string]: Tidy5eSetting;
@@ -1348,23 +1346,6 @@ export function createSettings() {
 
       // Actions List
 
-      useActionsList: {
-        options: {
-          name: 'T5EK.Settings.UseActionsList.name',
-          hint: 'T5EK.Settings.UseActionsList.hint',
-          scope: 'world',
-          config: false,
-          default: false,
-          type: Boolean,
-          onChange: (useActionsList) => {
-            adjustActionsListTabRegistrations();
-          },
-        },
-        get() {
-          return FoundryAdapter.getTidySetting<boolean>('useActionsList');
-        },
-      },
-
       actionListLimitActionsToCantrips: {
         options: {
           name: 'T5EK.Settings.ActionsListLimitActionsToCantrips.name',
@@ -1425,115 +1406,6 @@ export function createSettings() {
         get() {
           return FoundryAdapter.getTidySetting<boolean>(
             'actionListIncludeConsumables'
-          );
-        },
-      },
-
-      actionListRegisterCharacterTab: {
-        options: {
-          name: 'T5EK.Settings.ActionsListRegisterCharacterTab.name',
-          hint: 'T5EK.Settings.ActionsListRegisterCharacterTab.hint',
-          scope: 'client',
-          config: false,
-          default: true,
-          type: Boolean,
-          onChange: (actionListRegisterCharacterTab) => {
-            const api = getApi();
-            const useActionsList =
-              SettingsProvider.settings.useActionsList.get();
-            const registerTab =
-              useActionsList && actionListRegisterCharacterTab;
-
-            if (registerTab) {
-              api.registerCharacterSheetTab({
-                displayName: 'TODO: Localize!',
-                content: {
-                  component: ActionsTab,
-                },
-                enabled: true,
-                id: CONSTANTS.TAB_ACTOR_ACTIONS,
-                order: Number.NEGATIVE_INFINITY,
-              });
-            } else {
-              api.unregisterCharacterSheetTab(CONSTANTS.TAB_ACTOR_ACTIONS);
-            }
-          },
-        },
-        get() {
-          return FoundryAdapter.getTidySetting<boolean>(
-            'actionListRegisterCharacterTab'
-          );
-        },
-      },
-
-      actionListRegisterNpcTab: {
-        options: {
-          name: 'T5EK.Settings.ActionsListRegisterNpcTab.name',
-          hint: 'T5EK.Settings.ActionsListRegisterNpcTab.hint',
-          scope: 'world',
-          config: false,
-          default: true,
-          type: Boolean,
-          onChange: (actionListRegisterNpcTab) => {
-            const api = getApi();
-            const useActionsList =
-              SettingsProvider.settings.useActionsList.get();
-            const registerTab = useActionsList && actionListRegisterNpcTab;
-
-            if (registerTab) {
-              api.registerNpcSheetTab({
-                displayName: 'TODO: Localize!',
-                content: {
-                  component: ActionsTab,
-                },
-                enabled: true,
-                id: CONSTANTS.TAB_ACTOR_ACTIONS,
-                order: Number.NEGATIVE_INFINITY,
-              });
-            } else {
-              api.unregisterNpcSheetTab(CONSTANTS.TAB_ACTOR_ACTIONS);
-            }
-          },
-        },
-        get() {
-          return FoundryAdapter.getTidySetting<boolean>(
-            'actionListRegisterNpcTab'
-          );
-        },
-      },
-
-      actionListRegisterVehicleTab: {
-        options: {
-          name: 'T5EK.Settings.ActionsListRegisterVehicleTab.name',
-          hint: 'T5EK.Settings.ActionsListRegisterVehicleTab.hint',
-          scope: 'world',
-          config: false,
-          default: true,
-          type: Boolean,
-          onChange: (actionsListRegisterVehicleTab) => {
-            const api = getApi();
-            const useActionsList =
-              SettingsProvider.settings.useActionsList.get();
-            const registerTab = useActionsList && actionsListRegisterVehicleTab;
-
-            if (registerTab) {
-              api.registerVehicleSheetTab({
-                displayName: 'TODO: Localize!',
-                content: {
-                  component: ActionsTab,
-                },
-                enabled: true,
-                id: CONSTANTS.TAB_ACTOR_ACTIONS,
-                order: Number.NEGATIVE_INFINITY,
-              });
-            } else {
-              api.unregisterVehicleSheetTab(CONSTANTS.TAB_ACTOR_ACTIONS);
-            }
-          },
-        },
-        get() {
-          return FoundryAdapter.getTidySetting<boolean>(
-            'actionListRegisterVehicleTab'
           );
         },
       },
@@ -1908,26 +1780,9 @@ export function initSettings() {
     SettingsProvider.settings.colorScheme.get()
   );
 
-  // Register Configurable Tabs, if any
-  SettingsProvider.settings.useActionsList.options.onChange(
-    SettingsProvider.settings.useActionsList.get()
-  );
-
   settingStore = writable(getCurrentSettings());
 
   FoundryAdapter.hooksOn('closeSettingsConfig', () => {
     settingStore.set(getCurrentSettings());
   });
-}
-
-function adjustActionsListTabRegistrations() {
-  SettingsProvider.settings.actionListRegisterCharacterTab.options.onChange(
-    SettingsProvider.settings.actionListRegisterCharacterTab.get()
-  );
-  SettingsProvider.settings.actionListRegisterNpcTab.options.onChange(
-    SettingsProvider.settings.actionListRegisterCharacterTab.get()
-  );
-  SettingsProvider.settings.actionListRegisterVehicleTab.options.onChange(
-    SettingsProvider.settings.actionListRegisterCharacterTab.get()
-  );
 }

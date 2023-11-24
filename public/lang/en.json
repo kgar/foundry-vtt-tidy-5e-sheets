@@ -444,10 +444,6 @@
     "hint": "Prevents non-GMs from making changes to item quantity."
   },
   "T5EK.Settings.ActionsList.Header": "Actions List",
-  "T5EK.Settings.UseActionsList": {
-    "name": "Use Actions List",
-    "hint": "Provides an Actions tab which details all of the actions a given actor can take. The Actions List intends to replicate the Actions Tab of the D&DBeyond character sheet."
-  },
   "T5EK.Settings.ActionsListLimitActionsToCantrips": {
     "name": "Limit Actions to Cantrips",
     "hint": "Instead of showing all spells that deal damage in the Actions tab/panel by default, limits to only cantrips. This is the default D&DBeyond behavior."
@@ -463,18 +459,6 @@
   "T5EK.Settings.ActionsListIncludeConsumables": {
     "name": "Include Consumables as Actions",
     "hint": "Includes consumables which have an activation cost (Action, Bonus Action, etc) in the Actions list by default."
-  },
-  "T5EK.Settings.ActionsListRegisterCharacterTab": {
-    "name": "Character Actions Tab",
-    "hint": "Includes the Actions tab in the available tabs for the player character sheet."
-  },
-  "T5EK.Settings.ActionsListRegisterNpcTab": {
-    "name": "NPC Actions Tab",
-    "hint": "Includes the Actions tab in the available tabs for NPCs."
-  },
-  "T5EK.Settings.ActionsListRegisterVehicleTab": {
-    "name": "Vehicle Actions Tab",
-    "hint": "Includes the Actions tab in the available tabs for vehicles."
   },
   "T5EK.Settings.ColorPickerEnabled": {
     "name": "Use Custom Theme Colors",

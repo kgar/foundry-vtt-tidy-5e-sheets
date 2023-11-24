@@ -6,7 +6,8 @@ import CharacterSpellbookTab from 'src/sheets/character/tabs/CharacterSpellbookT
 import CharacterFeaturesTab from 'src/sheets/character/tabs/CharacterFeaturesTab.svelte';
 import ActorEffectsTab from 'src/sheets/actor/ActorEffectsTab.svelte';
 import CharacterBiographyTab from 'src/sheets/character/tabs/CharacterBiographyTab.svelte';
-import ActorJournalTab from 'src/sheets/character/tabs/ActorJournalTab.svelte';
+import ActorJournalTab from 'src/sheets/actor/tabs/ActorJournalTab.svelte';
+import ActorActionsTab from 'src/sheets/actor/tabs/ActorActionsTab.svelte';
 import type {
   CharacterSheetState,
   SheetTabRegistrationOptions,
@@ -19,13 +20,23 @@ import { warn } from 'src/utils/logging';
 let characterSheetState = writable<CharacterSheetState>({
   sheetTabs: [
     {
+      displayName: 'T5EK.ActionsTabName',
+      content: {
+        component: ActorActionsTab,
+      },
+      enabled: true,
+      id: CONSTANTS.TAB_ACTOR_ACTIONS,
+      order: 10,
+      layout: 'classic',
+    },
+    {
       id: CONSTANTS.TAB_CHARACTER_ATTRIBUTES,
       displayName: 'DND5E.Attributes',
       content: {
         component: CharacterAttributesTab,
       },
       enabled: true,
-      order: 10,
+      order: 20,
       layout: 'classic',
     },
     {
@@ -35,7 +46,7 @@ let characterSheetState = writable<CharacterSheetState>({
         component: CharacterInventoryTab,
       },
       enabled: true,
-      order: 20,
+      order: 30,
       layout: 'classic',
     },
     {
@@ -45,7 +56,7 @@ let characterSheetState = writable<CharacterSheetState>({
         component: CharacterSpellbookTab,
       },
       enabled: true,
-      order: 30,
+      order: 40,
       layout: 'classic',
     },
     {
@@ -55,7 +66,7 @@ let characterSheetState = writable<CharacterSheetState>({
         component: CharacterFeaturesTab,
       },
       enabled: true,
-      order: 40,
+      order: 50,
       layout: 'classic',
     },
     {
@@ -65,7 +76,7 @@ let characterSheetState = writable<CharacterSheetState>({
         component: ActorEffectsTab,
       },
       enabled: true,
-      order: 50,
+      order: 60,
       layout: 'classic',
     },
     {
@@ -75,7 +86,7 @@ let characterSheetState = writable<CharacterSheetState>({
         component: CharacterBiographyTab,
       },
       enabled: true,
-      order: 60,
+      order: 70,
       layout: 'classic',
     },
     {
@@ -85,7 +96,7 @@ let characterSheetState = writable<CharacterSheetState>({
         component: ActorJournalTab,
       },
       enabled: (context) => context.owner && context.useJournalTab,
-      order: 70,
+      order: 80,
       layout: 'classic',
     },
   ],

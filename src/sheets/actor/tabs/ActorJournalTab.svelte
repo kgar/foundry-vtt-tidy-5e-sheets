@@ -25,7 +25,7 @@
     <RerenderAfterFormSubmission
       andOnValueChange={FoundryAdapter.tryGetFlag(
         $context.actor,
-        'notes1.value'
+        'notes1.value',
       ) ?? ''}
     >
       <article use:activateProseMirrorListeners>
@@ -51,7 +51,7 @@
     <RerenderAfterFormSubmission
       andOnValueChange={FoundryAdapter.tryGetFlag(
         $context.actor,
-        'notes2.value'
+        'notes2.value',
       ) ?? ''}
     >
       <article use:activateProseMirrorListeners>
@@ -77,7 +77,7 @@
     <RerenderAfterFormSubmission
       andOnValueChange={FoundryAdapter.tryGetFlag(
         $context.actor,
-        'notes3.value'
+        'notes3.value',
       ) ?? ''}
     >
       <article use:activateProseMirrorListeners>
@@ -103,7 +103,7 @@
     <RerenderAfterFormSubmission
       andOnValueChange={FoundryAdapter.tryGetFlag(
         $context.actor,
-        'notes4.value'
+        'notes4.value',
       ) ?? ''}
     >
       <article use:activateProseMirrorListeners>
@@ -134,7 +134,7 @@
     <RerenderAfterFormSubmission
       andOnValueChange={FoundryAdapter.tryGetFlag(
         $context.actor,
-        'notes.value'
+        'notes.value',
       ) ?? ''}
     >
       <article class="journal-notes" use:activateProseMirrorListeners>
