@@ -14,6 +14,34 @@
 
   const userIsGm = FoundryAdapter.userIsGm();
   const localize = FoundryAdapter.localize;
+
+  // TODO: Put on application class and generalize if able
+  function resetDefaultTabs(): any {
+    const defaultCharacterTabs = [
+      ...SettingsProvider.settings.defaultCharacterSheetTabs.options.default,
+    ] as string[];
+    const available = $context.availableCharacterTabs
+      .filter((t) => !defaultCharacterTabs.includes(t.id))
+      .concat(
+        $context.selectedCharacterTabs.filter(
+          (t) => !defaultCharacterTabs.includes(t.id),
+        ),
+      );
+    const selected = $context.availableCharacterTabs
+      .filter((t) => defaultCharacterTabs.includes(t.id))
+      .concat(
+        $context.selectedCharacterTabs.filter((t) =>
+          defaultCharacterTabs.includes(t.id),
+        ),
+      )
+      .sort(
+        (a, b) =>
+          defaultCharacterTabs.indexOf(a.id) -
+          defaultCharacterTabs.indexOf(b.id),
+      );
+    $context.availableCharacterTabs = available;
+    $context.selectedCharacterTabs = selected;
+  }
 </script>
 
 <h2>{localize('T5EK.Settings.TabPlayers.header')}</h2>
@@ -38,7 +66,7 @@
           SettingsProvider.settings.defaultCharacterSheetTabs.options.hint,
         )}
       </p>
-      <div>
+      <div class="flex-column small-gap">
         <SelectionListbox
           bind:leftItems={$context.availableCharacterTabs}
           bind:rightItems={$context.selectedCharacterTabs}
@@ -52,6 +80,10 @@
             >{localize('T5EK.Settings.DefaultSheetTabs.SelectedHeader')}</b
           >
         </SelectionListbox>
+        <button type="button" on:click={() => resetDefaultTabs()}>
+          <i class="fas fa-rotate-right" />
+          {localize('T5EK.UseDefault')}
+        </button>
       </div>
     </div>
   </article>

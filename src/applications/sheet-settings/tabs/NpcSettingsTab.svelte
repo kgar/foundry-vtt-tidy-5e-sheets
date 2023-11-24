@@ -6,14 +6,39 @@
   import type { Writable } from 'svelte/store';
   import { SettingsProvider } from 'src/settings/settings';
   import SelectSetting from 'src/applications/sheet-settings/parts/SelectSetting.svelte';
-  import type { SettingsSheetContext } from '../SheetSettingsFormApplication';
+  import type {
+    SettingsSheetContext,
+    SettingsSheetFunctions,
+  } from '../SheetSettingsFormApplication';
   import SelectionListbox from 'src/components/listbox/SelectionListbox.svelte';
 
   let context = getContext<Writable<SettingsSheetContext>>('context');
-  const appId = getContext<string>('appId');
+  let functions = getContext<SettingsSheetFunctions>('functions');
 
   const userIsGm = FoundryAdapter.userIsGm();
   const localize = FoundryAdapter.localize;
+
+  // TODO: Put on application class and generalize if able
+  function resetDefaultTabs(): any {
+    const defaultNpcTabs = [
+      ...SettingsProvider.settings.defaultNpcSheetTabs.options.default,
+    ] as string[];
+    const available = $context.availableNpcTabs
+      .filter((t) => !defaultNpcTabs.includes(t.id))
+      .concat(
+        $context.selectedNpcTabs.filter((t) => !defaultNpcTabs.includes(t.id)),
+      );
+    const selected = $context.availableNpcTabs
+      .filter((t) => defaultNpcTabs.includes(t.id))
+      .concat(
+        $context.selectedNpcTabs.filter((t) => defaultNpcTabs.includes(t.id)),
+      )
+      .sort(
+        (a, b) => defaultNpcTabs.indexOf(a.id) - defaultNpcTabs.indexOf(b.id),
+      );
+    $context.availableNpcTabs = available;
+    $context.selectedNpcTabs = selected;
+  }
 </script>
 
 <h2>{localize('T5EK.Settings.TabNPCs.header')}</h2>
@@ -36,7 +61,7 @@
       <p>
         {localize(SettingsProvider.settings.defaultNpcSheetTabs.options.hint)}
       </p>
-      <div>
+      <div class="flex-column small-gap">
         <SelectionListbox
           bind:leftItems={$context.availableNpcTabs}
           bind:rightItems={$context.selectedNpcTabs}
@@ -50,6 +75,10 @@
             >{localize('T5EK.Settings.DefaultSheetTabs.SelectedHeader')}</b
           >
         </SelectionListbox>
+        <button type="button" on:click={() => resetDefaultTabs()}>
+          <i class="fas fa-rotate-right" />
+          {localize('T5EK.UseDefault')}
+        </button>
       </div>
     </div>
   </article>
