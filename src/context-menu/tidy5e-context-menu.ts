@@ -218,7 +218,6 @@ function getItemContextOptions(item: Item5e) {
     }
   }
 
-  // TODO SUPPORT FAVORITE ON NPC ?
   if (isCharacter) {
     // Add favorites to context menu
     let isFav = FoundryAdapter.isDocumentFavorited(item);

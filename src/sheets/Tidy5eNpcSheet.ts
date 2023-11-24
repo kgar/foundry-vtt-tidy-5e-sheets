@@ -596,8 +596,6 @@ export class Tidy5eNpcSheet
         await this.actor.update({
           [`flags.${CONSTANTS.MODULE_ID}.exhaustion`]: exhaustion - 1,
         });
-        // TODO: Implement:
-        // await updateExhaustion(this.actor);
       }
     } else {
       const rollData = this.actor.getRollData();

@@ -19,7 +19,6 @@ import type {
   SettingsSheetContext,
   SettingsSheetFunctions,
   SettingsSheetStore,
-  DefaultTabSelectionItem,
 } from './SheetSettings.types';
 
 export class SheetSettingsFormApplication extends SvelteFormApplicationBase {
@@ -45,85 +44,42 @@ export class SheetSettingsFormApplication extends SvelteFormApplicationBase {
     return FoundryAdapter.getTemplate('empty-form-template.hbs');
   }
 
-  // TODO: Create a `getData()` function to house the data prep
-  createComponent(node: HTMLElement): SvelteComponent<any, any, any> {
+  getData() {
     const currentSettings = getCurrentSettings();
 
-    const registeredCharacterTabs = getAllRegisteredCharacterSheetTabs();
-    const availableCharacterTabs: DefaultTabSelectionItem[] =
-      registeredCharacterTabs
-        .filter(
-          (t) => !currentSettings.defaultCharacterSheetTabs.includes(t.id)
-        )
-        .map((t) => ({
-          id: t.id,
-          label: FoundryAdapter.localize(t.displayName),
-        }));
-    const selectedCharacterTabs: DefaultTabSelectionItem[] =
-      registeredCharacterTabs
-        .filter((t) => currentSettings.defaultCharacterSheetTabs.includes(t.id))
-        .map((t) => ({
-          id: t.id,
-          label: FoundryAdapter.localize(t.displayName),
-        }));
+    return {
+      settings: currentSettings,
+      defaultCharacterTabs: this.mapTabSelectionFields(
+        getAllRegisteredCharacterSheetTabs(),
+        currentSettings.defaultCharacterSheetTabs
+      ),
+      defaultNpcTabs: this.mapTabSelectionFields(
+        getAllRegisteredNpcSheetTabs(),
+        currentSettings.defaultNpcSheetTabs
+      ),
+      defaultVehicleTabs: this.mapTabSelectionFields(
+        getAllRegisteredVehicleSheetTabs(),
+        currentSettings.defaultVehicleSheetTabs
+      ),
+    };
+  }
 
-    const registeredNpcTabs = getAllRegisteredNpcSheetTabs();
-    const availableNpcTabs: DefaultTabSelectionItem[] = registeredNpcTabs
-      .filter((t) => !currentSettings.defaultNpcSheetTabs.includes(t.id))
-      .map((t) => ({
-        id: t.id,
-        label: FoundryAdapter.localize(t.displayName),
-      }));
-    const selectedNpcTabs: DefaultTabSelectionItem[] = registeredNpcTabs
-      .filter((t) => currentSettings.defaultNpcSheetTabs.includes(t.id))
-      .map((t) => ({
-        id: t.id,
-        label: FoundryAdapter.localize(t.displayName),
-      }));
+  createComponent(node: HTMLElement): SvelteComponent<any, any, any> {
+    const data = this.getData();
 
-    const registeredVehicleTabs = getAllRegisteredVehicleSheetTabs();
-    const availableVehicleTabs: DefaultTabSelectionItem[] =
-      registeredVehicleTabs
-        .filter((t) => !currentSettings.defaultVehicleSheetTabs.includes(t.id))
-        .map((t) => ({
-          id: t.id,
-          label: FoundryAdapter.localize(t.displayName),
-        }));
-    const selectedVehicleTabs: DefaultTabSelectionItem[] = registeredVehicleTabs
-      .filter((t) => currentSettings.defaultVehicleSheetTabs.includes(t.id))
-      .map((t) => ({
-        id: t.id,
-        label: FoundryAdapter.localize(t.displayName),
-      }));
+    this.cacheSettingsForChangeTracking(data.settings);
 
-    this.cacheSettingsForChangeTracking(currentSettings);
     return new SheetSettings({
       target: node,
       context: new Map<any, any>([
-        [
-          'context',
-          writable({
-            settings: currentSettings,
-            defaultCharacterTabs: this.mapTabSelectionFields(
-              getAllRegisteredCharacterSheetTabs(),
-              currentSettings.defaultCharacterSheetTabs
-            ),
-            defaultNpcTabs: this.mapTabSelectionFields(
-              getAllRegisteredNpcSheetTabs(),
-              currentSettings.defaultNpcSheetTabs
-            ),
-            defaultVehicleTabs: this.mapTabSelectionFields(
-              getAllRegisteredVehicleSheetTabs(),
-              currentSettings.defaultVehicleSheetTabs
-            ),
-          }) satisfies SettingsSheetStore,
-        ],
+        ['context', writable(data) satisfies SettingsSheetStore],
         [
           'functions',
           {
             save: this.saveChangedSettings.bind(this),
             apply: this.applyChangedSettings.bind(this),
             mapTabSelectionFields: this.mapTabSelectionFields.bind(this),
+            validate: this.validate.bind(this),
           } satisfies SettingsSheetFunctions,
         ],
         ['appId', this.appId],
@@ -161,7 +117,7 @@ export class SheetSettingsFormApplication extends SvelteFormApplicationBase {
   /**
     Detect settings drift from the point in time when the sheet was opened,
     rather than differences with the live settings upon saving/applying changes.
-    This ensures that the only settings which are update are those that
+    This ensures that the only settings which are updated are those that
     the user actually changed during editing this form.
     Otherwise, for example, a user could open this form, change the color scheme from another form,
     and then save this form, causing the color scheme to revert back.
@@ -170,12 +126,36 @@ export class SheetSettingsFormApplication extends SvelteFormApplicationBase {
     this.unchangedSettings = structuredClone(currentSettings);
   }
 
+  validate(context: SettingsSheetContext) {
+    let valid = true;
+
+    if (
+      context.defaultCharacterTabs.selected.length === 0 ||
+      context.defaultNpcTabs.selected.length === 0 ||
+      context.defaultVehicleTabs.selected.length === 0
+    ) {
+      valid = false;
+      error(
+        FoundryAdapter.localize(
+          'T5EK.Settings.DefaultSheetTabs.AtLeastOneTabRequiredErrorMessage'
+        ),
+        true
+      );
+    }
+
+    // Add more data validation here
+
+    return valid;
+  }
+
   async applyChangedSettings(context: SettingsSheetContext) {
-    // TODO: Validate before save
+    if (!this.validate(context)) {
+      return false;
+    }
 
     if (!this.unchangedSettings) {
       error('Unable to apply changed settings due to a sheet error', true);
-      return;
+      return false;
     }
 
     const newSettings: CurrentSettings = {
@@ -202,11 +182,17 @@ export class SheetSettingsFormApplication extends SvelteFormApplicationBase {
     }
 
     this.cacheSettingsForChangeTracking(newSettings);
+
+    return true;
   }
 
   async saveChangedSettings(context: SettingsSheetContext) {
-    // TODO: Validate before save
-    await this.applyChangedSettings(context);
+    const changesApplied = await this.applyChangedSettings(context);
+
+    if (!changesApplied) {
+      return;
+    }
+
     this.close();
   }
 }

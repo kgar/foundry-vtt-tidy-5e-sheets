@@ -1,6 +1,6 @@
-import type { SheetTabState } from "src/runtime/types";
-import type { CurrentSettings } from "src/settings/settings";
-import type { Writable } from "svelte/store";
+import type { SheetTabState } from 'src/runtime/types';
+import type { CurrentSettings } from 'src/settings/settings';
+import type { Writable } from 'svelte/store';
 
 export type DefaultTabSelectionItem = {
   id: string;
@@ -26,6 +26,7 @@ export type SettingsSheetFunctions = {
     registeredTabs: SheetTabState<any>[],
     selectedTabIds: string[]
   ): DefaultTabSelectionFields;
+  validate(context: SettingsSheetContext): boolean;
 };
 
 export type SettingsSheetStore = Writable<SettingsSheetContext>;
