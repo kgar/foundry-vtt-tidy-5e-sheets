@@ -9,8 +9,9 @@ import { CONSTANTS } from '../constants';
 import type { Actor5e } from 'src/types/types';
 import type { Item5e } from 'src/types/item';
 import { SettingsProvider } from 'src/settings/settings';
-import { debug, error, warn } from 'src/utils/logging';
+import { debug, warn } from 'src/utils/logging';
 import { clamp } from 'src/utils/numbers';
+import { isItemInActionList } from 'src/actions/actions';
 
 export const FoundryAdapter = {
   isFoundryV10() {
@@ -1114,5 +1115,12 @@ export const FoundryAdapter = {
     return activationType === 'other'
       ? FoundryAdapter.localize('DND5E.ActionOther')
       : game.dnd5e.config.abilityActivationTypes[activationType];
+  },
+  toggleActionFilterOverride(item: Item5e) {
+    FoundryAdapter.setFlag(
+      item,
+      'action-filter-override',
+      !isItemInActionList(item)
+    );
   },
 };

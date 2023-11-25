@@ -28,6 +28,7 @@
   import type { Readable } from 'svelte/store';
   import SpellbookItemCardContent from '../item-info-card/SpellbookItemCardContent.svelte';
   import { settingStore } from 'src/settings/settings';
+  import ActionFilterOverrideControl from '../item-list/controls/ActionFilterOverrideControl.svelte';
 
   let context =
     getContext<Readable<CharacterSheetContext | NpcSheetContext>>('context');
@@ -184,6 +185,7 @@
                 <ItemDuplicateControl item={spell} />
                 <ItemDeleteControl item={spell} />
               {/if}
+              <ActionFilterOverrideControl item={spell} />
             </ItemControls>
           </ItemTableCell>
         {/if}

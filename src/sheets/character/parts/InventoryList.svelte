@@ -27,6 +27,7 @@
   import InventoryItemCardContent from '../../../components/item-info-card/InventoryItemCardContent.svelte';
   import AmmoSelector from '../../actor/AmmoSelector.svelte';
   import { settingStore } from 'src/settings/settings';
+  import ActionFilterOverrideControl from 'src/components/item-list/controls/ActionFilterOverrideControl.svelte';
 
   export let primaryColumnName: string;
   export let items: Item5e[];
@@ -53,7 +54,7 @@
     return FoundryAdapter.getInventoryRowClasses(
       item,
       $context.itemContext[item.id],
-      extras
+      extras,
     );
   }
 </script>
@@ -172,6 +173,7 @@
                 <ItemDuplicateControl {item} />
                 <ItemDeleteControl {item} />
               {/if}
+              <ActionFilterOverrideControl {item} />
             </ItemControls>
           </ItemTableCell>
         {/if}

@@ -26,7 +26,8 @@
   import Notice from '../../../components/notice/Notice.svelte';
   import { settingStore } from 'src/settings/settings';
   import DtypeInput from '../../../components/inputs/DtypeInput.svelte';
-    import RechargeControl from 'src/components/item-list/controls/RechargeControl.svelte';
+  import RechargeControl from 'src/components/item-list/controls/RechargeControl.svelte';
+  import ActionFilterOverrideControl from 'src/components/item-list/controls/ActionFilterOverrideControl.svelte';
 
   let context = getContext<Readable<CharacterSheetContext>>('context');
 
@@ -231,6 +232,7 @@
                     <ItemDuplicateControl {item} />
                     <ItemDeleteControl {item} />
                   {/if}
+                  <ActionFilterOverrideControl {item} />
                 </ItemTableCell>
               {/if}
             </ItemTableRow>

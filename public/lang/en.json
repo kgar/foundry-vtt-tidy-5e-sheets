@@ -34,9 +34,11 @@
   "T5EK.HitDiceRollAverage": "right click: apply average",
 
   "T5EK.JournalTabName": "Journal",
-  
+
   "T5EK.Actions": {
     "TabName": "Actions",
+    "OverriddenSetOverrideFalse": "Remove from Actions List (Shift+Click to clear override)",
+    "OverriddenSetOverrideTrue": "Add to Actions List (Shift+Click to clear override)",
     "SetOverrideFalse": "Remove from Actions List",
     "SetOverrideTrue": "Add to Actions List"
   },

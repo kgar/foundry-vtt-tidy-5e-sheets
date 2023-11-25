@@ -35,6 +35,7 @@
   import TabFooter from '../../actor/TabFooter.svelte';
   import AmmoSelector from '../../actor/AmmoSelector.svelte';
   import RechargeControl from 'src/components/item-list/controls/RechargeControl.svelte';
+  import ActionFilterOverrideControl from 'src/components/item-list/controls/ActionFilterOverrideControl.svelte';
 
   let context = getContext<Readable<NpcSheetContext>>('context');
 
@@ -155,6 +156,7 @@
                       <ItemDuplicateControl {item} />
                       <ItemDeleteControl {item} />
                     {/if}
+                    <ActionFilterOverrideControl {item} />
                   </ItemControls>
                 </ItemTableCell>
               {/if}

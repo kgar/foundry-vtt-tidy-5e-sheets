@@ -13,6 +13,7 @@
   import ItemUseButton from 'src/components/item-list/ItemUseButton.svelte';
   import { damageTypeIconMap } from 'src/actions/actions';
   import RechargeControl from 'src/components/item-list/controls/RechargeControl.svelte';
+  import ActionFilterOverrideControl from 'src/components/item-list/controls/ActionFilterOverrideControl.svelte';
 
   let context = getContext<Readable<ActorSheetContext>>('context');
 
@@ -37,9 +38,7 @@
             >{localize('DND5E.Damage')}</ItemTableColumn
           >
           {#if $context.owner && $context.useClassicControls}
-            <ItemTableColumn baseWidth="1.5rem"
-              ><!-- Item Table Controls -->
-            </ItemTableColumn>
+            <ItemTableColumn baseWidth="1.5rem"></ItemTableColumn>
           {/if}
         </ItemTableHeaderRow>
         {#each itemSet as item (item.id)}
@@ -104,7 +103,7 @@
               cssClass="truncate flex-column no-gap"
             >
               <!-- Range -->
-              {#if item.system.target.type === 'self'}
+              {#if item.system.target?.type === 'self'}
                 <div title={item.labels.target} class="flex-column-truncate">
                   {item.labels.target}
                 </div>
@@ -159,7 +158,7 @@
             </ItemTableCell>
             {#if $context.owner && $context.useClassicControls}
               <ItemTableCell baseWidth="1.5rem">
-                <!-- Item Table Controls -->
+                <ActionFilterOverrideControl {item} />
               </ItemTableCell>
             {/if}
           </ItemTableRow>

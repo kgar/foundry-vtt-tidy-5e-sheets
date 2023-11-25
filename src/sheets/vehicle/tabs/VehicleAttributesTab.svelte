@@ -27,6 +27,7 @@
   import HpBar from '../../../components/bar/HpBar.svelte';
   import ResourceWithBar from 'src/components/bar/ResourceWithBar.svelte';
   import RechargeControl from 'src/components/item-list/controls/RechargeControl.svelte';
+  import ActionFilterOverrideControl from 'src/components/item-list/controls/ActionFilterOverrideControl.svelte';
 
   let context = getContext<Readable<VehicleSheetContext>>('context');
 
@@ -230,6 +231,7 @@
                         <ItemDuplicateControl {item} />
                         <ItemDeleteControl {item} />
                       {/if}
+                      <ActionFilterOverrideControl {item} />
                     </ItemControls>
                   </ItemTableCell>
                 {/if}
