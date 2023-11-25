@@ -59,52 +59,46 @@
                 on:toggle={() => toggleSummary($context.actor)}
                 useActiveEffectsMarker={false}
               >
-                <div class="flex-1 flex-row extra-small-gap align-items-center">
-                  <div class="flex-1">
-                    <div>{item.name}</div>
+                <div class="flex-1">
+                  <div>{item.name}</div>
 
-                    <small>
-                      {#if item.type !== CONSTANTS.ITEM_TYPE_SPELL}
-                        {item.labels.type}
-                      {/if}
-                      {#if item.type === 'spell' && item.system.level !== 0}
-                        {item.labels.level ?? ''} {item.labels.school ?? ''}
-                      {:else}
-                        {item.labels.school ?? ''} {item.labels.level ?? ''}
-                      {/if}
-                    </small>
-                  </div>
-
-                  {#if item.system.recharge?.value || item.hasLimitedUses || item.system.activation?.type === 'legendary'}
-                    <div
-                      class="item-detail item-uses"
-                      title={localize('DND5E.Uses')}
-                    >
-                      {#if item.system.recharge?.charged && item.system.recharge?.value}
-                        {localize('DND5E.Charged')}
-                      {:else if item.system.recharge?.value}
-                        <RechargeControl {item} />
-                      {:else if item.hasLimitedUses}
-                        {#if item.system.uses?.value === item.system.uses?.max && item.system.uses?.autoDestroy}
-                          <span title={item.system.quantity}
-                            >{item.system.quantity}</span
-                          >
-                          <small>{localize('DND5E.Quantity')}</small>
-                        {:else}
-                          <span>
-                            {item.system.uses.value} / {item.system.uses.max}
-                          </span>
-                          <small>{localize('DND5E.Uses')}</small>
-                        {/if}
-                      {/if}
-
-                      {#if item.system.activation.type === 'legendary'}
-                        {item.system.activation.cost}
-                      {/if}
-                    </div>
-                  {/if}
+                  <small>
+                    {#if item.type !== CONSTANTS.ITEM_TYPE_SPELL}
+                      {item.labels.type}
+                    {/if}
+                    {#if item.type === 'spell' && item.system.level !== 0}
+                      {item.labels.level ?? ''} {item.labels.school ?? ''}
+                    {:else}
+                      {item.labels.school ?? ''} {item.labels.level ?? ''}
+                    {/if}
+                  </small>
                 </div>
               </ItemName>
+              {#if item.system.recharge?.value || item.hasLimitedUses || item.system.activation?.type === 'legendary'}
+                <div class="item-uses" title={localize('DND5E.Uses')}>
+                  {#if item.system.recharge?.charged && item.system.recharge?.value}
+                    <i class="fas fa-bolt" title={localize('DND5E.Charged')} />
+                  {:else if item.system.recharge?.value}
+                    <RechargeControl {item} />
+                  {:else if item.hasLimitedUses}
+                    {#if item.system.uses?.value === item.system.uses?.max && item.system.uses?.autoDestroy}
+                      <span title={item.system.quantity}
+                        >{item.system.quantity}</span
+                      >
+                      <small>{localize('DND5E.Quantity')}</small>
+                    {:else}
+                      <span>
+                        {item.system.uses.value} / {item.system.uses.max}
+                      </span>
+                      <small>{localize('DND5E.Uses')}</small>
+                    {/if}
+                  {/if}
+
+                  {#if item.system.activation.type === 'legendary'}
+                    {item.system.activation.cost}
+                  {/if}
+                </div>
+              {/if}
             </ItemTableCell>
             <ItemTableCell
               baseWidth="4.375rem"
@@ -187,5 +181,12 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+  }
+
+  .item-uses {
+    align-self: center;
+    text-align: center;
+    padding: 0.325rem;
+    flex-basis: 4.25rem;
   }
 </style>
