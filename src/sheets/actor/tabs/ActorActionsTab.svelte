@@ -130,15 +130,20 @@
                 {/if}
               {/if}
             </ItemTableCell>
-            <ItemTableCell baseWidth="3.75rem">
+            <ItemTableCell baseWidth="3.75rem" cssClass="flex-column no-gap">
               <!-- HIT / DC -->
               {#if item.labels.save || item.labels.toHit}
                 {#if item.labels.save !== '' && item.labels.save !== undefined}
-                  <span title={item.labels.save}>
+                  {@const saveAbilityLabel =
+                    dnd5e.config.abilities[item.system.save.ability]?.label ??
+                    ''}
+                  <span title={item.labels.save} class="flex-column-truncate">
                     {localize('DND5E.AbbreviationDC')}
                     {item.system.save.dc}
                   </span>
-                  <small>{'lookup @root/abilities system.save.ability'}</small>
+                  <small title={saveAbilityLabel} class="flex-column-truncate"
+                    >{saveAbilityLabel}</small
+                  >
                 {:else}
                   <span title={item.labels.toHit}>{item.labels.toHit}</span>
                 {/if}
