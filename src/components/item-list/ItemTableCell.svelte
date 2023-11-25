@@ -38,7 +38,7 @@
     flex-shrink: 0;
     font-size: 0.75rem;
     font-family: var(--t5ek-body-font-family);
-    height: 1.5rem;
+    min-height: 1.5rem;
     color: var(--t5ek-secondary-color);
     overflow: hidden;
     display: flex;

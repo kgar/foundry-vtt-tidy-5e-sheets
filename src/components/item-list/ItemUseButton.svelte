@@ -7,7 +7,7 @@
   export let imgUrlOverride: string | undefined = undefined;
 
   const showRoll = getContext<Readable<boolean>>(
-    CONSTANTS.CONTEXT_GRID_CELL_HOVER
+    CONSTANTS.CONTEXT_GRID_CELL_HOVER,
   );
 
   let buttonIsFocused = false;
@@ -34,6 +34,7 @@
 
 <style lang="scss">
   .item-image {
+    align-self: center;
     flex: 0 0 1.5rem;
     height: 1.5rem;
     background-size: cover;
