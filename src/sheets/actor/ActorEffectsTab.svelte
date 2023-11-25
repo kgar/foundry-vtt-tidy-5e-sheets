@@ -10,7 +10,7 @@
   import ItemTableCell from '../../components/item-list/ItemTableCell.svelte';
   import ItemControl from '../../components/item-list/controls/ItemControl.svelte';
   import { CONSTANTS } from 'src/constants';
-  import ItemControls from '../../components/item-list/ItemControls.svelte';
+  import ItemControls from '../../components/item-list/controls/ItemControls.svelte';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import Notice from 'src/components/notice/Notice.svelte';

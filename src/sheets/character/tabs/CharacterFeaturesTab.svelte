@@ -2,7 +2,7 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { type CharacterSheetContext } from 'src/types/types';
   import { formatAsModifier } from 'src/utils/formatting';
-  import ItemEditControl from '../../../components/item-list/ItemEditControl.svelte';
+  import ItemEditControl from '../../../components/item-list/controls/ItemEditControl.svelte';
   import ItemDuplicateControl from '../../../components/item-list/controls/ItemDuplicateControl.svelte';
   import ItemDeleteControl from '../../../components/item-list/controls/ItemDeleteControl.svelte';
   import ItemTable from '../../../components/item-list/ItemTable.svelte';
@@ -20,12 +20,13 @@
   import ItemFilterSearch from '../../../components/item-list/ItemFilterSearch.svelte';
   import ItemFilterOption from '../../../components/item-list/ItemFilterOption.svelte';
   import InlineFavoriteIcon from '../../../components/item-list/InlineFavoriteIcon.svelte';
-  import ItemFavoriteControl from '../../../components/item-list/ItemFavoriteControl.svelte';
+  import ItemFavoriteControl from '../../../components/item-list/controls/ItemFavoriteControl.svelte';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import Notice from '../../../components/notice/Notice.svelte';
   import { settingStore } from 'src/settings/settings';
   import DtypeInput from '../../../components/inputs/DtypeInput.svelte';
+    import RechargeControl from 'src/components/item-list/controls/RechargeControl.svelte';
 
   let context = getContext<Readable<CharacterSheetContext>>('context');
 
@@ -63,7 +64,7 @@
     {#each $context.features as section (section.label)}
       {@const filteredItems = FoundryAdapter.getFilteredItems(
         searchCriteria,
-        section.items
+        section.items,
       )}
       {#if (searchCriteria.trim() === '' && $context.editable) || filteredItems.length > 0}
         <ItemTable>
@@ -139,17 +140,7 @@
               {#if section.showUsesColumn}
                 <ItemTableCell baseWidth="3.125rem">
                   {#if ctx?.isOnCooldown}
-                    <button
-                      type="button"
-                      class="item-list-button"
-                      title={item.labels.recharge}
-                      on:click={() => item.rollRecharge()}
-                      disabled={!$context.owner}
-                    >
-                      <i class="fas fa-dice-six" />
-                      {item.system.recharge
-                        .value}{#if item.system.recharge.value !== 6}+{/if}</button
-                    >
+                    <RechargeControl {item} />
                   {:else if item.system.recharge.value}
                     <i class="fas fa-bolt" title={localize('DND5E.Charged')} />
                   {:else if ctx?.hasUses}
@@ -181,7 +172,7 @@
                         FoundryAdapter.onLevelChange(
                           event,
                           item,
-                          $context.actor
+                          $context.actor,
                         )}
                       disabled={!$context.owner || $context.lockLevelSelector}
                     >

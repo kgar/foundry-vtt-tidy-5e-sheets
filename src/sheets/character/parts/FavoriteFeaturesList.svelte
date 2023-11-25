@@ -14,6 +14,7 @@
   import ItemUses from '../../../components/item-list/ItemUses.svelte';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
+    import RechargeControl from 'src/components/item-list/controls/RechargeControl.svelte';
 
   let context = getContext<Readable<CharacterSheetContext>>('context');
   export let items: Item5e[] = [];
@@ -58,17 +59,7 @@
 
       <ItemTableCell baseWidth="3.125rem">
         {#if ctx?.isOnCooldown}
-          <button
-            type="button"
-            class="item-list-button"
-            title={item.labels.recharge}
-            on:click={() => item.rollRecharge()}
-            disabled={!$context.owner}
-          >
-            <i class="fas fa-dice-six" />
-            {item.system.recharge
-              ?.value}{#if item.system.recharge?.value !== 6}+{/if}</button
-          >
+        <RechargeControl {item} />
         {:else if item.system.recharge?.value}
           <i class="fas fa-bolt" title={localize('DND5E.Charged')} />
         {:else if ctx?.hasUses}

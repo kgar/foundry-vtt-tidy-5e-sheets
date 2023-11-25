@@ -18,9 +18,9 @@
   import ItemAddUses from 'src/components/item-list/ItemAddUses.svelte';
   import ItemDeleteControl from 'src/components/item-list/controls/ItemDeleteControl.svelte';
   import ItemDuplicateControl from 'src/components/item-list/controls/ItemDuplicateControl.svelte';
-  import ItemEditControl from 'src/components/item-list/ItemEditControl.svelte';
+  import ItemEditControl from 'src/components/item-list/controls/ItemEditControl.svelte';
   import ItemUses from 'src/components/item-list/ItemUses.svelte';
-  import ItemControls from 'src/components/item-list/ItemControls.svelte';
+  import ItemControls from 'src/components/item-list/controls/ItemControls.svelte';
   import ItemTableFooter from 'src/components/item-list/ItemTableFooter.svelte';
   import NpcLegendaryActions from '../parts/NpcLegendaryActions.svelte';
   import SpellbookList from 'src/components/spellbook/SpellbookList.svelte';
@@ -34,6 +34,7 @@
   import EncumbranceBar from '../../actor/EncumbranceBar.svelte';
   import TabFooter from '../../actor/TabFooter.svelte';
   import AmmoSelector from '../../actor/AmmoSelector.svelte';
+  import RechargeControl from 'src/components/item-list/controls/RechargeControl.svelte';
 
   let context = getContext<Readable<NpcSheetContext>>('context');
 
@@ -131,17 +132,7 @@
               {#if section.hasActions}
                 <ItemTableCell baseWidth="3.125rem">
                   {#if ctx?.isOnCooldown}
-                    <button
-                      type="button"
-                      class="item-list-button"
-                      title={item.labels.recharge}
-                      on:click={() => item.rollRecharge()}
-                      disabled={!$context.owner}
-                    >
-                      <i class="fas fa-dice-six" />
-                      {item.system.recharge
-                        .value}{#if item.system.recharge?.value !== 6}+{/if}</button
-                    >
+                    <RechargeControl {item} />
                   {:else if item.system.recharge?.value}
                     <i class="fas fa-bolt" title={localize('DND5E.Charged')} />
                   {:else if ctx?.hasUses}

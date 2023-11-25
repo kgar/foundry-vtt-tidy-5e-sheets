@@ -20,8 +20,8 @@
   import TabFooter from '../../actor/TabFooter.svelte';
   import ItemDeleteControl from 'src/components/item-list/controls/ItemDeleteControl.svelte';
   import ItemDuplicateControl from 'src/components/item-list/controls/ItemDuplicateControl.svelte';
-  import ItemEditControl from 'src/components/item-list/ItemEditControl.svelte';
-  import ItemControls from 'src/components/item-list/ItemControls.svelte';
+  import ItemEditControl from 'src/components/item-list/controls/ItemEditControl.svelte';
+  import ItemControls from 'src/components/item-list/controls/ItemControls.svelte';
   import type { ItemCardContentComponent } from 'src/types/item';
   import InventoryItemCardContent from 'src/components/item-info-card/InventoryItemCardContent.svelte';
   import { settingStore } from 'src/settings/settings';
