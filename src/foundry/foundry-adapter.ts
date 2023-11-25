@@ -1111,6 +1111,8 @@ export const FoundryAdapter = {
     return item.deleteDialog();
   },
   getActivationTypeLabel(activationType: string) {
-    return game.dnd5e.config.abilityActivationTypes[activationType];
-  }
+    return activationType === 'other'
+      ? FoundryAdapter.localize('DND5E.ActionOther')
+      : game.dnd5e.config.abilityActivationTypes[activationType];
+  },
 };

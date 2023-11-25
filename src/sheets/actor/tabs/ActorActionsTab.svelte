@@ -106,14 +106,25 @@
                 -->
               </ItemName>
             </ItemTableCell>
-            <ItemTableCell baseWidth="4.375rem">
+            <ItemTableCell
+              baseWidth="4.375rem"
+              cssClass="truncate flex-column no-gap"
+            >
               <!-- Range -->
               {#if item.system.target.type === 'self'}
-                <span title={item.labels.target}>{item.labels.target}</span>
+                <div title={item.labels.target} class="flex-column-truncate">
+                  {item.labels.target}
+                </div>
               {:else}
-                <span title={item.labels.range}>{item.labels.range}</span>
+                <div title={item.labels.range} class="flex-column-truncate">
+                  {item.labels.range}
+                </div>
                 {#if item.labels.target}
-                  <small title={item.labels.target}>
+                  <small
+                    title={item.labels.target}
+                    class="flex-column-truncate"
+                    style="min-width: 0; "
+                  >
                     {item.labels.target}
                   </small>
                 {/if}
@@ -160,5 +171,14 @@
 <style lang="scss">
   .actions-tab-container {
     --t5ek-image-size-override: 1.75rem;
+  }
+
+  .flex-column-truncate {
+    text-align: center;
+    min-width: 0;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 </style>

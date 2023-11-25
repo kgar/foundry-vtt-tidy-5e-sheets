@@ -72,10 +72,6 @@ export function getActorActions(actor: Actor5e): ActorActions {
   };
   const actionsData = filteredItems.reduce<ActionSets>((acc, item) => {
     try {
-      debug('digesting item', {
-        item,
-      });
-
       if (['backpack', 'tool'].includes(item.type)) {
         return acc;
       }
