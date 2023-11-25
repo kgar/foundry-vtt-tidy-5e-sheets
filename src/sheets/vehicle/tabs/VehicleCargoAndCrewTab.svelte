@@ -236,7 +236,7 @@
                     />
                   {/if}
 
-                  {#if $context.editable && !section.editableName}
+                  {#if $context.editable && !section.editableName && $context.useActionsFeature}
                     <ActionFilterOverrideControl {item} />
                   {/if}
                 </ItemControls>

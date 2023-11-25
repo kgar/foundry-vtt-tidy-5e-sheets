@@ -1,3 +1,4 @@
+import { CONSTANTS } from 'src/constants';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { SettingsProvider } from 'src/settings/settings';
 import type { Item5e } from 'src/types/item';
@@ -202,3 +203,33 @@ export const damageTypeIconMap: Record<string, string> = {
   healing: '<i class="fas fa-heart"></i>',
   temphp: '<i class="fas fa-shield-alt"></i>',
 };
+
+export function actorUsesActionFeature(actor: Actor5e) {
+  const selectedTabIds = FoundryAdapter.tryGetFlag<string[] | undefined>(
+    actor,
+    'selected-tabs'
+  );
+
+  if (selectedTabIds) {
+    return selectedTabIds.includes(CONSTANTS.TAB_ACTOR_ACTIONS);
+  }
+
+  const defaultTabIds =
+    actor.type === CONSTANTS.SHEET_TYPE_CHARACTER
+      ? SettingsProvider.settings.defaultCharacterSheetTabs.get()
+      : actor.type === CONSTANTS.SHEET_TYPE_NPC
+      ? SettingsProvider.settings.defaultNpcSheetTabs.get()
+      : actor.type === CONSTANTS.SHEET_TYPE_VEHICLE
+      ? SettingsProvider.settings.defaultVehicleSheetTabs.get()
+      : [];
+
+  return defaultTabIds.includes(CONSTANTS.TAB_ACTOR_ACTIONS);
+}
+
+export function toggleActionFilterOverride(item: Item5e) {
+  FoundryAdapter.setFlag(
+    item,
+    'action-filter-override',
+    !isItemInActionList(item)
+  );
+}

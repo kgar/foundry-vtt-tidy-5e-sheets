@@ -40,7 +40,8 @@
     "OverriddenSetOverrideFalse": "Remove from Actions List (Shift+Click to clear override)",
     "OverriddenSetOverrideTrue": "Add to Actions List (Shift+Click to clear override)",
     "SetOverrideFalse": "Remove from Actions List",
-    "SetOverrideTrue": "Add to Actions List"
+    "SetOverrideTrue": "Add to Actions List",
+    "ClearOverride": "Clear Action Override"
   },
 
   "T5EK.HitDC": "Hit / DC",

@@ -232,7 +232,9 @@
                     <ItemDuplicateControl {item} />
                     <ItemDeleteControl {item} />
                   {/if}
-                  <ActionFilterOverrideControl {item} />
+                  {#if $context.useActionsFeature}
+                    <ActionFilterOverrideControl {item} />
+                  {/if}
                 </ItemTableCell>
               {/if}
             </ItemTableRow>

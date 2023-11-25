@@ -123,6 +123,7 @@ export type ActorSheetContext = {
   owner: boolean;
   showLimitedSheet: boolean;
   tabs: Tab[];
+  useActionsFeature?: boolean;
   useClassicControls: boolean;
   useRoundedPortraitStyle: boolean;
 } & JQueryHooksSheetIntegration &

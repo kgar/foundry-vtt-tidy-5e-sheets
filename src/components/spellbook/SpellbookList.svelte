@@ -185,7 +185,9 @@
                 <ItemDuplicateControl item={spell} />
                 <ItemDeleteControl item={spell} />
               {/if}
-              <ActionFilterOverrideControl item={spell} />
+              {#if $context.useActionsFeature}
+                <ActionFilterOverrideControl item={spell} />
+              {/if}
             </ItemControls>
           </ItemTableCell>
         {/if}

@@ -22,7 +22,7 @@ import type { SvelteComponent } from 'svelte';
 import { getPercentage } from 'src/utils/numbers';
 import type { ItemChatData } from 'src/types/item';
 import { registeredCharacterTabs } from 'src/runtime/character-sheet-state';
-import { getActorActions } from 'src/actions/actions';
+import { actorUsesActionFeature, getActorActions } from 'src/actions/actions';
 
 export class Tidy5eCharacterSheet
   extends dnd5e.applications.actor.ActorSheet5eCharacter
@@ -183,9 +183,6 @@ export class Tidy5eCharacterSheet
           relativeTo: this.actor,
         }
       ),
-      useClassicControls:
-        SettingsProvider.settings.useClassicControlsForCharacter.get(),
-      useJournalTab: SettingsProvider.settings.useJournalTabForCharacter.get(),
       editable,
       features: sections,
       flawEnrichedHtml: await FoundryAdapter.enrichHtml(
@@ -290,6 +287,10 @@ export class Tidy5eCharacterSheet
           relativeTo: this.actor,
         }
       ),
+      useActionsFeature: actorUsesActionFeature(this.actor),
+      useClassicControls:
+        SettingsProvider.settings.useClassicControlsForCharacter.get(),
+      useJournalTab: SettingsProvider.settings.useJournalTabForCharacter.get(),
       useRoundedPortraitStyle: [
         CONSTANTS.CIRCULAR_PORTRAIT_OPTION_ALL as string,
         CONSTANTS.CIRCULAR_PORTRAIT_OPTION_CHARACTER as string,

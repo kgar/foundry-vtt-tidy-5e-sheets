@@ -1,3 +1,8 @@
+import {
+  actorUsesActionFeature,
+  isItemInActionList,
+  toggleActionFilterOverride,
+} from 'src/actions/actions';
 import { CONSTANTS } from 'src/constants';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { SettingsProvider } from 'src/settings/settings';
@@ -298,6 +303,33 @@ function getItemContextOptions(item: Item5e) {
         name: 'DND5E.ContextMenuActionDelete',
         icon: "<i class='fas fa-trash fa-fw' style='color: var(--t5ek-warning-accent-color);'></i>",
         callback: () => FoundryAdapter.onActorItemDelete(actor, item),
+      });
+    }
+  }
+
+  if (actorUsesActionFeature(actor)) {
+    const active = isItemInActionList(item);
+    options.push({
+      name: active
+        ? 'T5EK.Actions.SetOverrideFalse'
+        : 'T5EK.Actions.SetOverrideTrue',
+      icon: active
+        ? '<i class="fas fa-fist-raised" style="color: var(--t5ek-warning-accent-color)"></i>'
+        : '<i class="fas fa-fist-raised"></i>',
+      callback: () => {
+        toggleActionFilterOverride(item);
+      },
+    });
+
+    const overridden =
+      FoundryAdapter.tryGetFlag(item, 'action-filter-override') !== undefined;
+    if (overridden) {
+      options.push({
+        name: 'T5EK.Actions.ClearOverride',
+        icon: '<i class="fas fa-fist-raised" style="color: var(--t5ek-warning-accent-color)"></i>',
+        callback: () => {
+          FoundryAdapter.unsetFlag(item, 'action-filter-override');
+        },
       });
     }
   }

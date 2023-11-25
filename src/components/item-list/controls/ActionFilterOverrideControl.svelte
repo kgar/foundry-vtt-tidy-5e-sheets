@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { Item5e } from 'src/types/item';
   import ItemControl from './ItemControl.svelte';
-  import { isItemInActionList } from 'src/actions/actions';
+  import { isItemInActionList, toggleActionFilterOverride } from 'src/actions/actions';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
   export let item: Item5e;
@@ -33,5 +33,5 @@
   on:click={(ev) =>
     ev.shiftKey
       ? FoundryAdapter.unsetFlag(item, 'action-filter-override')
-      : FoundryAdapter.toggleActionFilterOverride(item)}
+      : toggleActionFilterOverride(item)}
 />

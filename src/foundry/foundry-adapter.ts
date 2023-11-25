@@ -1116,11 +1116,4 @@ export const FoundryAdapter = {
       ? FoundryAdapter.localize('DND5E.ActionOther')
       : game.dnd5e.config.abilityActivationTypes[activationType];
   },
-  toggleActionFilterOverride(item: Item5e) {
-    FoundryAdapter.setFlag(
-      item,
-      'action-filter-override',
-      !isItemInActionList(item)
-    );
-  },
 };
