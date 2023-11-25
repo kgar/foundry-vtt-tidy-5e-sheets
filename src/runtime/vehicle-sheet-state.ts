@@ -17,7 +17,7 @@ import { warn } from 'src/utils/logging';
 let vehicleSheetState = writable<VehicleSheetState>({
   sheetTabs: [
     {
-      displayName: 'T5EK.ActionsTabName',
+      displayName: 'T5EK.Actions.TabName',
       content: {
         component: ActorActionsTab,
       },

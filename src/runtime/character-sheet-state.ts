@@ -20,7 +20,7 @@ import { warn } from 'src/utils/logging';
 let characterSheetState = writable<CharacterSheetState>({
   sheetTabs: [
     {
-      displayName: 'T5EK.ActionsTabName',
+      displayName: 'T5EK.Actions.TabName',
       content: {
         component: ActorActionsTab,
       },
@@ -91,7 +91,7 @@ let characterSheetState = writable<CharacterSheetState>({
     },
     {
       id: CONSTANTS.TAB_CHARACTER_JOURNAL,
-      displayName: 'T5EK.Journal',
+      displayName: 'T5EK.JournalTabName',
       content: {
         component: ActorJournalTab,
       },

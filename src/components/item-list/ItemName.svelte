@@ -13,6 +13,7 @@
   const dispatcher = createEventDispatcher<{ toggle: Event }>();
 </script>
 
+<!-- TODO: Make this a button -->
 <span
   role="button"
   tabindex="0"

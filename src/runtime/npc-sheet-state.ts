@@ -18,7 +18,7 @@ import { warn } from 'src/utils/logging';
 let npcSheetState = writable<NpcSheetState>({
   sheetTabs: [
     {
-      displayName: 'T5EK.ActionsTabName',
+      displayName: 'T5EK.Actions.TabName',
       content: {
         component: ActorActionsTab,
       },
@@ -70,7 +70,7 @@ let npcSheetState = writable<NpcSheetState>({
     },
     {
       id: 'journal',
-      displayName: 'T5EK.Journal',
+      displayName: 'T5EK.JournalTabName',
       content: {
         component: ActorJournalTab,
       },

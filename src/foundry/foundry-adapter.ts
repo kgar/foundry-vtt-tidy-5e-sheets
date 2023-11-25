@@ -1110,4 +1110,7 @@ export const FoundryAdapter = {
 
     return item.deleteDialog();
   },
+  getActivationTypeLabel(activationType: string) {
+    return game.dnd5e.config.abilityActivationTypes[activationType];
+  }
 };
