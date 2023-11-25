@@ -175,7 +175,6 @@
 
   .flex-column-truncate {
     text-align: center;
-    min-width: 0;
     width: 100%;
     white-space: nowrap;
     overflow: hidden;
