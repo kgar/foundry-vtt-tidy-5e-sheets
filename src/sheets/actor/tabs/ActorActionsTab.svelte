@@ -20,7 +20,6 @@
 </script>
 
 <div class="actions-tab-container scroll-container flex-column small-gap">
-  <!-- Make takes from action data -->
   {#each Object.entries($context.actions) as [actionType, itemSet] (actionType)}
     {#if itemSet.size}
       <ItemTable>
