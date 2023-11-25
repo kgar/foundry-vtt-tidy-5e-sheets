@@ -74,7 +74,35 @@
 
                 <!--
                   TODO: Implement this block starting with
-                  {{#if (or item.system.recharge.value item.hasLimitedUses (eq item.system.activation.type "legendary"))}}
+                        {{#if (or item.system.recharge.value item.hasLimitedUses (eq item.system.activation.type "legendary"))}}
+                        <div class="item-detail item-uses" title="{{localize 'DND5E.Uses'}}">
+
+                          {{#if (and item.system.recharge.charged item.system.recharge.value)}}
+
+                          {{localize "DND5E.Charged"}}
+
+                          {{else if item.system.recharge.value}}
+
+                          <a class="item-recharge rollable">{{item.labels.recharge}}</a>
+
+                          {{else if item.hasLimitedUses}}
+
+                          {{#if (and (eq item.system.uses.value item.system.uses.max) item.system.uses.autoDestroy)}}
+                          <span title='{{item.system.quantity}}'>{{item.system.quantity}}</span>
+                          <small>{{localize "DND5E.Quantity"}}</small>
+                          {{else}}
+                          <span>
+                            {{item.system.uses.value}} / {{item.system.uses.max}}
+                          </span>
+                          <small>{{localize "DND5E.Uses"}}</small>
+                          {{/if}}
+
+                          {{/if}}
+
+
+                          {{#if (eq item.system.activation.type 'legendary')}} {{item.system.activation.cost}} {{/if}}
+                        </div>
+                        {{/if}}
                 -->
               </ItemName>
             </ItemTableCell>
@@ -99,7 +127,7 @@
                     {localize('DND5E.AbbreviationDC')}
                     {item.system.save.dc}
                   </span>
-                  <!-- <small>{lookup @root/abilities system.save.ability}</small> -->
+                  <small>{'lookup @root/abilities system.save.ability'}</small>
                 {:else}
                   <span title={item.labels.toHit}>{item.labels.toHit}</span>
                 {/if}
@@ -107,6 +135,15 @@
             </ItemTableCell>
             <ItemTableCell baseWidth="7.5rem">
               <!-- Damage -->
+              {#each item.labels.derivedDamage ?? [] as entry}
+                <p
+                  title={entry.label ??
+                    entry.formula + 'lookup @root/damageTypes damageType'}
+                >
+                  {entry.formula}
+                  <span>{'lookup @root/damageTypeIconMap damageType'}</span>
+                </p>
+              {/each}
             </ItemTableCell>
             {#if $context.owner && $context.useClassicControls}
               <ItemTableCell baseWidth="1.5rem">
