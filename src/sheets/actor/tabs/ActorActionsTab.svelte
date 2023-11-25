@@ -46,6 +46,10 @@
             {item}
             on:mousedown={(event) =>
               FoundryAdapter.editOnMiddleClick(event.detail, item)}
+            contextMenu={{
+              type: CONSTANTS.CONTEXT_MENU_TYPE_ITEMS,
+              id: item.id,
+            }}
             let:toggleSummary
           >
             <!-- TODO: Put the correct itemCardContentTemplate attr on ItemTableRow; it should switch on item type and fall back to the standard -->
