@@ -11,6 +11,7 @@
   import ItemName from 'src/components/item-list/ItemName.svelte';
   import { CONSTANTS } from 'src/constants';
   import ItemUseButton from 'src/components/item-list/ItemUseButton.svelte';
+  import { damageTypeIconMap } from 'src/actions/actions';
 
   let context = getContext<Readable<ActorSheetContext>>('context');
 
@@ -152,12 +153,15 @@
             <ItemTableCell baseWidth="7.5rem">
               <!-- Damage -->
               {#each item.labels.derivedDamage ?? [] as entry}
+                {@const damageHealingTypeLabel =
+                  dnd5e.config.damageTypes[entry.damageType] ??
+                  dnd5e.config.healingTypes[entry.damageType]}
                 <p
-                  title={entry.label ??
-                    entry.formula + 'lookup @root/damageTypes damageType'}
+                  class="flex-column-truncate"
+                  title={entry.label ?? entry.formula + damageHealingTypeLabel}
                 >
                   {entry.formula}
-                  <span>{'lookup @root/damageTypeIconMap damageType'}</span>
+                  <span>{@html damageTypeIconMap[entry.damageType] ?? ''}</span>
                 </p>
               {/each}
             </ItemTableCell>
