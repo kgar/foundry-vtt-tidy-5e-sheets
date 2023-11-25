@@ -35,8 +35,8 @@
 <style lang="scss">
   .item-image {
     align-self: center;
-    flex: 0 0 1.5rem;
-    height: 1.5rem;
+    flex: 0 0 var(--t5ek-image-size-override, 1.5rem);
+    height: var(--t5ek-image-size-override, 1.5rem);
     background-size: cover;
     display: flex;
     flex-direction: row;

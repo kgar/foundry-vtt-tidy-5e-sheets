@@ -7,6 +7,7 @@
   export let cssClass: string = '';
   export let hasChildren = true;
   export let item: Item5e;
+  export let useActiveEffectsMarker: boolean = true;
 
   $: hasActiveEffects = !!item.effects?.size;
 
@@ -24,7 +25,7 @@
 >
   <slot />
 </span>
-{#if $settingStore.showActiveEffectsMarker && hasActiveEffects}
+{#if useActiveEffectsMarker && $settingStore.showActiveEffectsMarker && hasActiveEffects}
   <ActiveEffectsMarker />
 {/if}
 

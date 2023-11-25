@@ -17,7 +17,7 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-<div class="scroll-container">
+<div class="actions-tab-container scroll-container">
   <!-- Make takes from action data -->
   {#each Object.entries($context.actions) as [actionType, itemSet] (actionType)}
     {#if itemSet.size}
@@ -52,7 +52,11 @@
             <!-- TODO: Consider having this item card logic be universal and built into the ItemTableRow -->
             <ItemTableCell primary={true}>
               <ItemUseButton {item} />
-              <ItemName {item} on:toggle={() => toggleSummary($context.actor)}>
+              <ItemName
+                {item}
+                on:toggle={() => toggleSummary($context.actor)}
+                useActiveEffectsMarker={false}
+              >
                 <div>
                   <div>{item.name}</div>
 
@@ -115,3 +119,9 @@
     {/if}
   {/each}
 </div>
+
+<style lang="scss">
+  .actions-tab-container {
+    --t5ek-image-size-override: 1.75rem;
+  }
+</style>
