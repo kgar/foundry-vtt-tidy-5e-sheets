@@ -23,6 +23,7 @@ import LongRestDialog from 'src/dialogs/NpcLongRestDialog';
 import type { SvelteComponent } from 'svelte';
 import type { ItemChatData } from 'src/types/item';
 import { registeredNpcTabs } from 'src/runtime/npc-sheet-state';
+import { getActorActions } from 'src/actions/actions';
 
 export class Tidy5eNpcSheet
   extends dnd5e.applications.actor.ActorSheet5eNPC
@@ -121,6 +122,7 @@ export class Tidy5eNpcSheet
 
     const context = {
       ...defaultNpcContext,
+      actions: getActorActions(this.actor),
       activateFoundryJQueryListeners: (node: HTMLElement) => {
         this._activateCoreListeners($(node));
         super.activateListeners($(node));

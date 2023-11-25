@@ -19,6 +19,7 @@ import { debug } from 'src/utils/logging';
 import { getPercentage } from 'src/utils/numbers';
 import type { ItemChatData } from 'src/types/item';
 import { registeredVehicleTabs } from 'src/runtime/vehicle-sheet-state';
+import { getActorActions } from 'src/actions/actions';
 
 export class Tidy5eVehicleSheet
   extends dnd5e.applications.actor.ActorSheet5eVehicle
@@ -103,6 +104,7 @@ export class Tidy5eVehicleSheet
 
     const context = {
       ...(await super.getData(this.options)),
+      actions: getActorActions(this.actor),
       activateFoundryJQueryListeners: (node: HTMLElement) => {
         this._activateCoreListeners($(node));
         super.activateListeners($(node));
