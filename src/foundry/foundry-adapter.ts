@@ -11,7 +11,6 @@ import type { Item5e } from 'src/types/item';
 import { SettingsProvider } from 'src/settings/settings';
 import { debug, warn } from 'src/utils/logging';
 import { clamp } from 'src/utils/numbers';
-import { isItemInActionList } from 'src/actions/actions';
 
 export const FoundryAdapter = {
   isFoundryV10() {
@@ -469,6 +468,36 @@ export const FoundryAdapter = {
     allClasses.sort((a, b) => a.text.localeCompare(b.text));
 
     return allClasses;
+  },
+  getClassLabel(id: string) {
+    return (
+      (CONSTANTS.DND5E_CLASSES as Record<string, string>)[id] ??
+      FoundryAdapter.getAdditionalClassLabel(id)
+    );
+  },
+  getAdditionalClassLabel(id: string) {
+    const additionalClasses =
+      SettingsProvider.settings.spellClassFilterAdditionalClasses.get();
+    return FoundryAdapter.parseAdditionalClassesDropDownItems(
+      additionalClasses
+    ).find((c) => c.value === id)?.text;
+  },
+  parseAdditionalClassesDropDownItems(
+    spellClassFilterAdditionalClassesText: string
+  ) {
+    return spellClassFilterAdditionalClassesText
+      .split(',')
+      .reduce((arr: DropdownListOption[], x: string) => {
+        const pieces = x.split('|');
+        if (pieces.length !== 2) {
+          return arr;
+        }
+        arr.push({
+          value: pieces[0],
+          text: pieces[1],
+        });
+        return arr;
+      }, []);
   },
   removeConfigureSettingsButtonWhenLockedForNonGm(buttons: any[]) {
     if (FoundryAdapter.shouldLockConfigureSheet()) {

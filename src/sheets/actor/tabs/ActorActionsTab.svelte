@@ -59,17 +59,27 @@
                 on:toggle={() => toggleSummary($context.actor)}
                 useActiveEffectsMarker={false}
               >
+                {@const spellClass = FoundryAdapter.getClassLabel(
+                  FoundryAdapter.tryGetFlag(item, 'parentClass') ?? '',
+                )}
                 <div class="flex-1">
                   <div>{item.name}</div>
 
                   <small>
                     {#if item.type !== CONSTANTS.ITEM_TYPE_SPELL}
                       {item.labels.type}
+                    {:else if item.type === 'spell' && item.system.level !== 0}
+                      {item.labels.level ?? ''}
+                      {item.labels.school ?? ''}
+                      {#if spellClass}
+                        • {localize(spellClass)}
                     {/if}
-                    {#if item.type === 'spell' && item.system.level !== 0}
-                      {item.labels.level ?? ''} {item.labels.school ?? ''}
                     {:else}
-                      {item.labels.school ?? ''} {item.labels.level ?? ''}
+                      {item.labels.school ?? ''}
+                      {item.labels.level ?? ''}
+                      {#if spellClass}
+                        • {localize(spellClass)}
+                      {/if}
                     {/if}
                   </small>
                 </div>
@@ -82,14 +92,14 @@
                     <RechargeControl {item} />
                   {:else if item.hasLimitedUses}
                     {#if item.system.uses?.value === item.system.uses?.max && item.system.uses?.autoDestroy}
-                      <span title={item.system.quantity}
-                        >{item.system.quantity}</span
-                      >
+                      <div title={item.system.quantity}>
+                        {item.system.quantity}
+                      </div>
                       <small>{localize('DND5E.Quantity')}</small>
                     {:else}
-                      <span>
+                      <div>
                         {item.system.uses.value} / {item.system.uses.max}
-                      </span>
+                      </div>
                       <small>{localize('DND5E.Uses')}</small>
                     {/if}
                   {/if}
@@ -143,18 +153,20 @@
                 {/if}
               {/if}
             </ItemTableCell>
-            <ItemTableCell baseWidth="7.5rem">
+            <ItemTableCell baseWidth="7.5rem" cssClass="flex-wrap">
               <!-- Damage -->
               {#each item.labels.derivedDamage ?? [] as entry}
                 {@const damageHealingTypeLabel =
                   FoundryAdapter.lookupDamageType(entry.damageType) ??
                   FoundryAdapter.lookupHealingType(entry.damageType)}
                 <p
-                  class="flex-column-truncate"
-                  title={entry.label ?? entry.formula + damageHealingTypeLabel}
+                    title={entry.label ??
+                      entry.formula + damageHealingTypeLabel}
                 >
                   {entry.formula}
-                  <span>{@html damageTypeIconMap[entry.damageType] ?? ''}</span>
+                    <span
+                      >{@html damageTypeIconMap[entry.damageType] ?? ''}</span
+                    >
                 </p>
               {/each}
             </ItemTableCell>
@@ -172,7 +184,11 @@
 
 <style lang="scss">
   .actions-tab-container {
-    --t5ek-image-size-override: 1.75rem;
+    --t5ek-image-size-override: 2rem;
+
+    :global(.item-table-row) {
+      min-height: 2rem;
+    }
   }
 
   .flex-column-truncate {
@@ -186,7 +202,10 @@
   .item-uses {
     align-self: center;
     text-align: center;
-    padding: 0.325rem;
     flex-basis: 4.25rem;
+  }
+
+  small {
+    color: var(--t5ek-tertiary-color);
   }
 </style>
