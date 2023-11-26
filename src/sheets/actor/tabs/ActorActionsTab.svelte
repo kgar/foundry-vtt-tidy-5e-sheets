@@ -97,12 +97,12 @@
                   {:else if item.hasLimitedUses}
                     {#if item.system.uses?.value === item.system.uses?.max && item.system.uses?.autoDestroy}
                       <div title={item.system.quantity}>
-                        {item.system.quantity}
+                        {item.system.quantity ?? 0}
                       </div>
                       <small>{localize('DND5E.Quantity')}</small>
                     {:else}
                       <div>
-                        {item.system.uses.value} / {item.system.uses.max}
+                        {item.system.uses.value ?? 0} / {item.system.uses.max ?? 0}
                       </div>
                       <small>{localize('DND5E.Uses')}</small>
                     {/if}
