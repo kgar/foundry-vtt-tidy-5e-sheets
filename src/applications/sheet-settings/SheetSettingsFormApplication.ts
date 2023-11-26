@@ -70,6 +70,8 @@ export class SheetSettingsFormApplication extends SvelteFormApplicationBase {
 
     this.cacheSettingsForChangeTracking(data.settings);
 
+    debug('Sheet Settings context data', data);
+
     return new SheetSettings({
       target: node,
       context: new Map<any, any>([
