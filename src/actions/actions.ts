@@ -233,3 +233,36 @@ export function toggleActionFilterOverride(item: Item5e) {
     !isItemInActionList(item)
   );
 }
+
+type derivedDamage = {
+  label: string;
+  formula: string;
+  damageType: string;
+};
+
+export function getScaledCantripDamageFormulaForSinglePart(
+  item: Item5e,
+  partIndex: number
+): derivedDamage {
+  try {
+    const damageFormula = item.system.damage.parts[partIndex]?.[0] ?? '';
+    const scaledFormula = item._scaleCantripDamage(
+      [damageFormula],
+      item.system.scaling.formula,
+      item.actor.type === 'character'
+        ? item.actor.system.details.level ?? 0
+        : item.system.preparation.mode === 'innate'
+        ? Math.ceil(item.actor.system.details.cr ?? 0)
+        : item.actor.system.details.spellLevel ?? 0,
+      item.getRollData()
+    );
+
+    return {
+      ...item.labels.derivedDamage[partIndex],
+      formula: scaledFormula,
+    };
+  } catch (e) {
+    error('An error occurred while scaling cantrip damage', false, e);
+    return item.labels.derivedDamage[partIndex];
+  }
+}

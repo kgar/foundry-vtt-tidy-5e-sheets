@@ -11,9 +11,13 @@
   import ItemName from 'src/components/item-list/ItemName.svelte';
   import { CONSTANTS } from 'src/constants';
   import ItemUseButton from 'src/components/item-list/ItemUseButton.svelte';
-  import { damageTypeIconMap } from 'src/actions/actions';
+  import {
+    damageTypeIconMap,
+    getScaledCantripDamageFormulaForSinglePart,
+  } from 'src/actions/actions';
   import RechargeControl from 'src/components/item-list/controls/RechargeControl.svelte';
   import ActionFilterOverrideControl from 'src/components/item-list/controls/ActionFilterOverrideControl.svelte';
+  import { settingStore } from 'src/settings/settings';
 
   let context = getContext<Readable<ActorSheetContext>>('context');
 
@@ -73,7 +77,7 @@
                       {item.labels.school ?? ''}
                       {#if spellClass}
                         • {localize(spellClass)}
-                    {/if}
+                      {/if}
                     {:else}
                       {item.labels.school ?? ''}
                       {item.labels.level ?? ''}
@@ -93,12 +97,12 @@
                   {:else if item.hasLimitedUses}
                     {#if item.system.uses?.value === item.system.uses?.max && item.system.uses?.autoDestroy}
                       <div title={item.system.quantity}>
-                        {item.system.quantity}
+                        {item.system.quantity ?? 0}
                       </div>
                       <small>{localize('DND5E.Quantity')}</small>
                     {:else}
                       <div>
-                        {item.system.uses.value} / {item.system.uses.max}
+                        {item.system.uses.value ?? 0} / {item.system.uses.max ?? 0}
                       </div>
                       <small>{localize('DND5E.Uses')}</small>
                     {/if}
@@ -155,19 +159,36 @@
             </ItemTableCell>
             <ItemTableCell baseWidth="7.5rem" cssClass="flex-wrap">
               <!-- Damage -->
-              {#each item.labels.derivedDamage ?? [] as entry}
+              {#each item.labels.derivedDamage ?? [] as entry, i}
                 {@const damageHealingTypeLabel =
                   FoundryAdapter.lookupDamageType(entry.damageType) ??
                   FoundryAdapter.lookupHealingType(entry.damageType)}
-                <p
+                {@const isScalableCantripDamage =
+                  item.type === 'spell' &&
+                  item.system.scaling?.mode === 'cantrip' &&
+                  $settingStore.actionListScaleCantripDamage}
+
+                {#if isScalableCantripDamage}
+                  {@const scaledEntry =
+                    getScaledCantripDamageFormulaForSinglePart(item, i)}
+                  <p title={scaledEntry.formula + damageHealingTypeLabel}>
+                    {scaledEntry.formula}
+                    <span
+                      >{@html damageTypeIconMap[scaledEntry.damageType] ??
+                        ''}</span
+                    >
+                  </p>
+                {:else}
+                  <p
                     title={entry.label ??
                       entry.formula + damageHealingTypeLabel}
-                >
-                  {entry.formula}
+                  >
+                    {entry.formula}
                     <span
                       >{@html damageTypeIconMap[entry.damageType] ?? ''}</span
                     >
-                </p>
+                  </p>
+                {/if}
               {/each}
             </ItemTableCell>
             {#if $context.owner && $context.useClassicControls}

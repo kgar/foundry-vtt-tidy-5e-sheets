@@ -4,11 +4,11 @@
   import type { Writable } from 'svelte/store';
   import {
     SettingsProvider,
-    type CurrentSettings,
   } from 'src/settings/settings';
   import CheckboxSetting from '../parts/CheckboxSetting.svelte';
+    import type { SettingsSheetContext } from '../SheetSettings.types';
 
-  let context = getContext<Writable<CurrentSettings>>('context');
+  let context = getContext<Writable<SettingsSheetContext>>('context');
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -16,14 +16,14 @@
 <h2>{localize('T5EK.Settings.ActionsList.Header')}</h2>
 
 <CheckboxSetting
-  bind:value={$context.actionListLimitActionsToCantrips}
+  bind:value={$context.settings.actionListLimitActionsToCantrips}
   name={SettingsProvider.settings.actionListLimitActionsToCantrips.options.name}
   hint={SettingsProvider.settings.actionListLimitActionsToCantrips.options.hint}
   id="actionListLimitActionsToCantrips"
 />
 
 <CheckboxSetting
-  bind:value={$context.actionListIncludeMinuteLongSpellsAsActions}
+  bind:value={$context.settings.actionListIncludeMinuteLongSpellsAsActions}
   name={SettingsProvider.settings.actionListIncludeMinuteLongSpellsAsActions
     .options.name}
   hint={SettingsProvider.settings.actionListIncludeMinuteLongSpellsAsActions
@@ -32,7 +32,7 @@
 />
 
 <CheckboxSetting
-  bind:value={$context.actionListIncludeSpellsWithActiveEffects}
+  bind:value={$context.settings.actionListIncludeSpellsWithActiveEffects}
   name={SettingsProvider.settings.actionListIncludeSpellsWithActiveEffects
     .options.name}
   hint={SettingsProvider.settings.actionListIncludeSpellsWithActiveEffects
@@ -41,8 +41,15 @@
 />
 
 <CheckboxSetting
-  bind:value={$context.actionListIncludeConsumables}
+  bind:value={$context.settings.actionListIncludeConsumables}
   name={SettingsProvider.settings.actionListIncludeConsumables.options.name}
   hint={SettingsProvider.settings.actionListIncludeConsumables.options.hint}
   id="actionListIncludeConsumables"
+/>
+
+<CheckboxSetting
+  bind:value={$context.settings.actionListScaleCantripDamage}
+  name={SettingsProvider.settings.actionListScaleCantripDamage.options.name}
+  hint={SettingsProvider.settings.actionListScaleCantripDamage.options.hint}
+  id="actionListScaleCantripDamage"
 />
