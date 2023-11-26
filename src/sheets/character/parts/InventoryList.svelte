@@ -95,7 +95,6 @@
         }}
         let:toggleSummary
         cssClass={getInventoryRowClasses(item)}
-        itemCardContentTemplate={InventoryItemCardContent}
       >
         <ItemTableCell primary={true} title={item.name}>
           <ItemUseButton {item} />

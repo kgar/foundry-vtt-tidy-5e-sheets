@@ -115,7 +115,6 @@
         }}
         let:toggleSummary
         cssClass={FoundryAdapter.getSpellRowClasses(spell)}
-        itemCardContentTemplate={SpellbookItemCardContent}
       >
         <ItemTableCell primary={true}>
           <ItemUseButton item={spell} imgUrlOverride={spellImgUrl} />

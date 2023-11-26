@@ -14,9 +14,7 @@
   export let chatData: ItemChatData;
 
   let context =
-    getContext<
-      Readable<CharacterSheetContext | NpcSheetContext>
-    >('context');
+    getContext<Readable<CharacterSheetContext | NpcSheetContext>>('context');
 
   const localize = FoundryAdapter.localize;
 

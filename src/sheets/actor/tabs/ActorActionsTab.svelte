@@ -52,8 +52,6 @@
             }}
             let:toggleSummary
           >
-            <!-- TODO: Put the correct itemCardContentTemplate attr on ItemTableRow; it should switch on item type and fall back to the standard -->
-            <!-- TODO: Consider having this item card logic be universal and built into the ItemTableRow -->
             <ItemTableCell primary={true}>
               <ItemUseButton {item} />
               <ItemName

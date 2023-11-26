@@ -147,7 +147,6 @@
                 }}
             {item}
             cssClass={FoundryAdapter.getInventoryRowClasses(item, ctx)}
-            itemCardContentTemplate={cardTemplate}
           >
             <ItemTableCell primary={true}>
               {#if section.editableName}

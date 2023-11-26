@@ -8,10 +8,10 @@
   import type { ItemCardStore } from 'src/types/types';
   import { getContext, onDestroy, onMount } from 'svelte';
   import type { Writable } from 'svelte/store';
-  import DefaultItemCardContentTemplate from './DefaultItemCardContentTemplate.svelte';
   import HorizontalLineSeparator from '../layout/HorizontalLineSeparator.svelte';
   import { warn } from 'src/utils/logging';
   import { settingStore } from 'src/settings/settings';
+  import { getItemCardContentTemplate } from './item-info-card';
 
   // Fix Key
   let frozen: boolean = false;
@@ -99,9 +99,7 @@
   }
   let debug = false;
   let timer: any;
-  const defaultContentTemplate: ItemCardContentComponent =
-    DefaultItemCardContentTemplate;
-  let infoContentTemplate: ItemCardContentComponent | undefined;
+  let infoContentTemplate: ItemCardContentComponent | null;
   $: delayMs = $settingStore.itemCardsDelay ?? 0;
 
   async function showCard() {
@@ -119,8 +117,7 @@
       in case the user has moused away. 
     */
     if ($card.item) {
-      infoContentTemplate =
-        $card.itemCardContentTemplate ?? defaultContentTemplate;
+      infoContentTemplate = $card.itemCardContentTemplate;
       item = $card.item;
 
       if ($settingStore.itemCardsAreFloating) {
@@ -178,7 +175,7 @@
       sheet.addEventListener('mousemove', onMouseMove);
     } else {
       warn(
-        'Item Card parent sheet not found. Unable to support floating item card.'
+        'Item Card parent sheet not found. Unable to support floating item card.',
       );
     }
   });
@@ -204,7 +201,7 @@
       props.push(
         item.labels.derivedDamage[0].label
           .replace(' + ', '+')
-          .replace(' - ', '-')
+          .replace(' - ', '-'),
       );
     }
     if (item?.labels?.save) {
@@ -229,8 +226,12 @@
 >
   <div class="info-wrap">
     <article class="item-info-container-content">
-      {#if !!infoContentTemplate && !!item && !!chatData}
-        <svelte:component this={infoContentTemplate} {item} {chatData}>
+      {#if !!item && !!chatData}
+        <svelte:component
+          this={infoContentTemplate ?? getItemCardContentTemplate(item)}
+          {item}
+          {chatData}
+        >
           {#if specialProps.length || itemProps.length}
             <HorizontalLineSeparator />
             {#if specialProps.length}

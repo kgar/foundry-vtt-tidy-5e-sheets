@@ -112,7 +112,6 @@
               }}
               {item}
               cssClass={FoundryAdapter.getInventoryRowClasses(item, ctx)}
-              itemCardContentTemplate={getInfoCardTemplate(section)}
             >
               <ItemTableCell primary={true}>
                 <ItemUseButton {item} />
