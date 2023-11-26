@@ -250,10 +250,10 @@ export function getScaledCantripDamageFormulaForSinglePart(
       [damageFormula],
       item.system.scaling.formula,
       item.actor.type === 'character'
-        ? item.actor.system.details.level
+        ? item.actor.system.details.level ?? 0
         : item.system.preparation.mode === 'innate'
-        ? Math.ceil(item.actor.system.details.cr)
-        : item.actor.system.details.spellLevel,
+        ? Math.ceil(item.actor.system.details.cr ?? 0)
+        : item.actor.system.details.spellLevel ?? 0,
       item.getRollData()
     );
 
