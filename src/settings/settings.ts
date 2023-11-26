@@ -1410,6 +1410,22 @@ export function createSettings() {
         },
       },
 
+      actionListScaleCantripDamage: {
+        options: {
+          name: 'T5EK.Settings.ActionsListScaleCantripDamage.name',
+          hint: 'T5EK.Settings.ActionsListScaleCantripDamage.hint',
+          scope: 'client',
+          config: false,
+          default: true,
+          type: Boolean,
+        },
+        get() {
+          return FoundryAdapter.getTidySetting<boolean>(
+            'actionListScaleCantripDamage'
+          );
+        },
+      },
+
       // Color customization
 
       colorPickerEnabled: {
