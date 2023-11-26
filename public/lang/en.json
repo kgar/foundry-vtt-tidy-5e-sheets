@@ -472,8 +472,8 @@
     "hint": "Includes consumables which have an activation cost (Action, Bonus Action, etc) in the Actions list by default."
   },
   "T5EK.Settings.ActionsListScaleCantripDamage": {
-    "name": "Show Scaled Cantrip Damage",
-    "hint": "Scales cantrip damage to match the actor's current level or challenge rating. This feature will only work for cantrips with one damage type (e.g., 1d8 Radiant) and no custom scaling formula."
+    "name": "Show Scaled Cantrip Damage (experimental)",
+    "hint": "Scales cantrip damage to match the PC's current level or the NPC's challenge rating."
   },
   "T5EK.Settings.ColorPickerEnabled": {
     "name": "Use Custom Theme Colors",
