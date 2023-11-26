@@ -7,6 +7,7 @@
   import VehicleSettingsTab from './tabs/VehicleSettingsTab.svelte';
   import GmOptionsSettingsTab from './tabs/GmOptionsSettingsTab.svelte';
   import LockSettingsTab from './tabs/LockSettingsTab.svelte';
+  import FeaturesSettingsTab from './tabs/FeaturesSettingsTab.svelte';
   import InfoTab from './tabs/InfoTab.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getContext } from 'svelte';
@@ -64,6 +65,14 @@
       },
     );
   }
+
+  tabs.push({
+    id: CONSTANTS.TAB_SETTINGS_FEATURES,
+    displayName: 'T5EK.Settings.TabFeatures.tabLabel',
+    content: {
+      component: FeaturesSettingsTab,
+    },
+  });
 
   tabs.push({
     id: CONSTANTS.TAB_SETTINGS_INFO,

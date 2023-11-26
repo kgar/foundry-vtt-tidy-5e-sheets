@@ -7,7 +7,7 @@
   export let imgUrlOverride: string | undefined = undefined;
 
   const showRoll = getContext<Readable<boolean>>(
-    CONSTANTS.CONTEXT_GRID_CELL_HOVER
+    CONSTANTS.CONTEXT_GRID_CELL_HOVER,
   );
 
   let buttonIsFocused = false;
@@ -34,8 +34,9 @@
 
 <style lang="scss">
   .item-image {
-    flex: 0 0 1.5rem;
-    height: 1.5rem;
+    align-self: center;
+    flex: 0 0 var(--t5ek-image-size-override, 1.5rem);
+    height: var(--t5ek-image-size-override, 1.5rem);
     background-size: cover;
     display: flex;
     flex-direction: row;

@@ -20,11 +20,12 @@
   import TabFooter from '../../actor/TabFooter.svelte';
   import ItemDeleteControl from 'src/components/item-list/controls/ItemDeleteControl.svelte';
   import ItemDuplicateControl from 'src/components/item-list/controls/ItemDuplicateControl.svelte';
-  import ItemEditControl from 'src/components/item-list/ItemEditControl.svelte';
-  import ItemControls from 'src/components/item-list/ItemControls.svelte';
+  import ItemEditControl from 'src/components/item-list/controls/ItemEditControl.svelte';
+  import ItemControls from 'src/components/item-list/controls/ItemControls.svelte';
   import type { ItemCardContentComponent } from 'src/types/item';
   import InventoryItemCardContent from 'src/components/item-info-card/InventoryItemCardContent.svelte';
   import { settingStore } from 'src/settings/settings';
+  import ActionFilterOverrideControl from 'src/components/item-list/controls/ActionFilterOverrideControl.svelte';
 
   let context = getContext<Readable<VehicleSheetContext>>('context');
 
@@ -58,10 +59,10 @@
     section: {
       dataset: { type: 'crew' | 'passenger' };
       items: CargoOrCrewItem[];
-    }
+    },
   ) {
     const cargo = foundry.utils.deepClone(
-      $context.actor.system.cargo[section.dataset.type]
+      $context.actor.system.cargo[section.dataset.type],
     );
 
     const value = ev.currentTarget.value;
@@ -146,7 +147,6 @@
                 }}
             {item}
             cssClass={FoundryAdapter.getInventoryRowClasses(item, ctx)}
-            itemCardContentTemplate={cardTemplate}
           >
             <ItemTableCell primary={true}>
               {#if section.editableName}
@@ -179,11 +179,11 @@
                   {@const value =
                     FoundryAdapter.getProperty(
                       item,
-                      column.property
+                      column.property,
                     )?.toString() ??
                     FoundryAdapter.getProperty(
                       ctx,
-                      column.property
+                      column.property,
                     )?.toString() ??
                     fallback}
                   <ItemTableCell
@@ -233,6 +233,10 @@
                         deleteCrewOrPassenger(section, index)}
                       {item}
                     />
+                  {/if}
+
+                  {#if $context.editable && !section.editableName && $context.useActionsFeature}
+                    <ActionFilterOverrideControl {item} />
                   {/if}
                 </ItemControls>
               </ItemTableCell>

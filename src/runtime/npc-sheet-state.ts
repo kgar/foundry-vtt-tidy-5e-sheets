@@ -5,7 +5,8 @@ import NpcAbilitiesTab from 'src/sheets/npc/tabs/NpcAbilitiesTab.svelte';
 import NpcSpellbookTab from 'src/sheets/npc/tabs/NpcSpellbookTab.svelte';
 import NpcBiographyTab from 'src/sheets/npc/tabs/NpcBiographyTab.svelte';
 import ActorEffectsTab from 'src/sheets/actor/ActorEffectsTab.svelte';
-import ActorJournalTab from 'src/sheets/character/tabs/ActorJournalTab.svelte';
+import ActorJournalTab from 'src/sheets/actor/tabs/ActorJournalTab.svelte';
+import ActorActionsTab from 'src/sheets/actor/tabs/ActorActionsTab.svelte';
 import type {
   NpcSheetState,
   SheetTabRegistrationOptions,
@@ -17,13 +18,23 @@ import { warn } from 'src/utils/logging';
 let npcSheetState = writable<NpcSheetState>({
   sheetTabs: [
     {
+      displayName: 'T5EK.Actions.TabName',
+      content: {
+        component: ActorActionsTab,
+      },
+      enabled: true,
+      id: CONSTANTS.TAB_ACTOR_ACTIONS,
+      order: 10,
+      layout: 'classic',
+    },
+    {
       id: CONSTANTS.TAB_NPC_ABILITIES,
       displayName: 'T5EK.Abilities',
       content: {
         component: NpcAbilitiesTab,
       },
       enabled: true,
-      order: 10,
+      order: 20,
       layout: 'classic',
     },
     {
@@ -34,7 +45,7 @@ let npcSheetState = writable<NpcSheetState>({
       },
       enabled: (context) =>
         !context.hideEmptySpellbook && context.showSpellbookTab,
-      order: 20,
+      order: 30,
       layout: 'classic',
     },
     {
@@ -44,7 +55,7 @@ let npcSheetState = writable<NpcSheetState>({
         component: ActorEffectsTab,
       },
       enabled: true,
-      order: 30,
+      order: 40,
       layout: 'classic',
     },
     {
@@ -54,17 +65,17 @@ let npcSheetState = writable<NpcSheetState>({
         component: NpcBiographyTab,
       },
       enabled: true,
-      order: 40,
+      order: 50,
       layout: 'classic',
     },
     {
       id: 'journal',
-      displayName: 'T5EK.Journal',
+      displayName: 'T5EK.JournalTabName',
       content: {
         component: ActorJournalTab,
       },
       enabled: (context) => context.owner && context.useJournalTab,
-      order: 50,
+      order: 60,
       layout: 'classic',
     },
   ],

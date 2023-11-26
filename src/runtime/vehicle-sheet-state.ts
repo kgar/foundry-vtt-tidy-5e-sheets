@@ -5,6 +5,7 @@ import ActorEffectsTab from 'src/sheets/actor/ActorEffectsTab.svelte';
 import VehicleAttributesTab from 'src/sheets/vehicle/tabs/VehicleAttributesTab.svelte';
 import VehicleCargoAndCrewTab from 'src/sheets/vehicle/tabs/VehicleCargoAndCrewTab.svelte';
 import VehicleDescriptionTab from 'src/sheets/vehicle/tabs/VehicleDescriptionTab.svelte';
+import ActorActionsTab from 'src/sheets/actor/tabs/ActorActionsTab.svelte';
 import type {
   SheetTabRegistrationOptions,
   SheetTabState,
@@ -16,13 +17,23 @@ import { warn } from 'src/utils/logging';
 let vehicleSheetState = writable<VehicleSheetState>({
   sheetTabs: [
     {
+      displayName: 'T5EK.Actions.TabName',
+      content: {
+        component: ActorActionsTab,
+      },
+      enabled: true,
+      id: CONSTANTS.TAB_ACTOR_ACTIONS,
+      order: 10,
+      layout: 'classic',
+    },
+    {
       id: CONSTANTS.TAB_VEHICLE_ATTRIBUTES,
       displayName: 'DND5E.Attributes',
       content: {
         component: VehicleAttributesTab,
       },
       enabled: true,
-      order: 10,
+      order: 20,
       layout: 'classic',
     },
     {
@@ -32,7 +43,7 @@ let vehicleSheetState = writable<VehicleSheetState>({
         component: VehicleCargoAndCrewTab,
       },
       enabled: true,
-      order: 20,
+      order: 30,
       layout: 'classic',
     },
     {
@@ -42,7 +53,7 @@ let vehicleSheetState = writable<VehicleSheetState>({
         component: ActorEffectsTab,
       },
       enabled: true,
-      order: 30,
+      order: 40,
       layout: 'classic',
     },
     {
@@ -52,7 +63,7 @@ let vehicleSheetState = writable<VehicleSheetState>({
         component: VehicleDescriptionTab,
       },
       enabled: true,
-      order: 40,
+      order: 50,
       layout: 'classic',
     },
   ],

@@ -38,7 +38,6 @@
   async function onMouseEnter(item: Item5e) {
     card.update((card) => {
       card.item = item;
-      card.itemCardContentTemplate = InventoryItemCardContent;
       return card;
     });
   }
@@ -46,7 +45,6 @@
   async function onMouseLeave() {
     card.update((card) => {
       card.item = null;
-      card.itemCardContentTemplate = null;
       return card;
     });
   }

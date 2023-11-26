@@ -1,6 +1,5 @@
 import type { ComponentProps, ComponentType, SvelteComponent } from 'svelte';
 import type { Item5e, ItemCardContentComponent, ItemChatData } from './item';
-import type { Writable } from 'svelte/store';
 
 export type Actor5e = any;
 
@@ -93,7 +92,10 @@ export type NpcSheetContext = {
 
 export type VehicleSheetContext = {} & ActorSheetContext & Record<string, any>;
 
+export type ActorActions = Record<string, Set<Item5e>>;
+
 export type ActorSheetContext = {
+  actions: ActorActions;
   actor: Actor5e;
   allowEffectsManagement: boolean;
   appId: string;
@@ -121,6 +123,7 @@ export type ActorSheetContext = {
   owner: boolean;
   showLimitedSheet: boolean;
   tabs: Tab[];
+  useActionsFeature?: boolean;
   useClassicControls: boolean;
   useRoundedPortraitStyle: boolean;
 } & JQueryHooksSheetIntegration &

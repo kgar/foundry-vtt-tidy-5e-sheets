@@ -18,14 +18,16 @@
   import ItemUses from 'src/components/item-list/ItemUses.svelte';
   import ItemAddUses from 'src/components/item-list/ItemAddUses.svelte';
   import TextInput from 'src/components/inputs/TextInput.svelte';
-  import ItemControls from 'src/components/item-list/ItemControls.svelte';
+  import ItemControls from 'src/components/item-list/controls/ItemControls.svelte';
   import ItemDuplicateControl from 'src/components/item-list/controls/ItemDuplicateControl.svelte';
   import ItemDeleteControl from 'src/components/item-list/controls/ItemDeleteControl.svelte';
-  import ItemEditControl from 'src/components/item-list/ItemEditControl.svelte';
+  import ItemEditControl from 'src/components/item-list/controls/ItemEditControl.svelte';
   import ItemControl from 'src/components/item-list/controls/ItemControl.svelte';
   import Notice from 'src/components/notice/Notice.svelte';
   import HpBar from '../../../components/bar/HpBar.svelte';
   import ResourceWithBar from 'src/components/bar/ResourceWithBar.svelte';
+  import RechargeControl from 'src/components/item-list/controls/RechargeControl.svelte';
+  import ActionFilterOverrideControl from 'src/components/item-list/controls/ActionFilterOverrideControl.svelte';
 
   let context = getContext<Readable<VehicleSheetContext>>('context');
 
@@ -43,7 +45,7 @@
 
   let alternateColumnHeaderContent: Record<string, string> = {
     threshold: `<i class="fas fa-heart-crack" title="${localize(
-      'DND5E.Threshold'
+      'DND5E.Threshold',
     )}"></i>`,
   };
 
@@ -55,7 +57,7 @@
     : controlsBaseWidthLocked;
 
   $: noFeatures = !$context.features.some(
-    (section: any) => section.items.length
+    (section: any) => section.items.length,
   );
 </script>
 
@@ -136,18 +138,7 @@
                 {#if section.hasActions}
                   <ItemTableCell baseWidth="3.125rem">
                     {#if ctx?.isOnCooldown}
-                      <button
-                        type="button"
-                        class="item-list-button"
-                        title={item.labels.recharge}
-                        tabindex="0"
-                        on:click={() => item.rollRecharge()}
-                        disabled={!$context.owner}
-                      >
-                        <i class="fas fa-dice-six" />
-                        {item.system.recharge
-                          .value}{#if item.system.recharge?.value !== 6}+{/if}</button
-                      >
+                      <RechargeControl {item} />
                     {:else if item.system.recharge?.value}
                       <i
                         class="fas fa-bolt"
@@ -195,11 +186,11 @@
                       {@const value =
                         FoundryAdapter.getProperty(
                           item,
-                          column.property
+                          column.property,
                         )?.toString() ??
                         FoundryAdapter.getProperty(
                           ctx,
-                          column.property
+                          column.property,
                         )?.toString() ??
                         fallback}
                       <ItemTableCell
@@ -239,6 +230,9 @@
                       {#if $context.editable}
                         <ItemDuplicateControl {item} />
                         <ItemDeleteControl {item} />
+                      {/if}
+                      {#if $context.useActionsFeature}
+                        <ActionFilterOverrideControl {item} />
                       {/if}
                     </ItemControls>
                   </ItemTableCell>

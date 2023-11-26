@@ -5,10 +5,10 @@
     type CharacterSheetContext,
     type NpcSheetContext,
   } from 'src/types/types';
-  import ItemControls from '../item-list/ItemControls.svelte';
+  import ItemControls from '../item-list/controls/ItemControls.svelte';
   import ItemDeleteControl from '../item-list/controls/ItemDeleteControl.svelte';
   import ItemDuplicateControl from '../item-list/controls/ItemDuplicateControl.svelte';
-  import ItemEditControl from '../item-list/ItemEditControl.svelte';
+  import ItemEditControl from '../item-list/controls/ItemEditControl.svelte';
   import ItemName from '../item-list/ItemName.svelte';
   import ItemTable from '../item-list/ItemTable.svelte';
   import ItemTableCell from '../item-list/ItemTableCell.svelte';
@@ -23,11 +23,12 @@
   import SpellSlotMarkers from '../spellbook/SpellSlotMarkers.svelte';
   import SpellSlotUses from '../spellbook/SpellSlotUses.svelte';
   import InlineFavoriteIcon from '../item-list/InlineFavoriteIcon.svelte';
-  import ItemFavoriteControl from '../item-list/ItemFavoriteControl.svelte';
+  import ItemFavoriteControl from '../item-list/controls/ItemFavoriteControl.svelte';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import SpellbookItemCardContent from '../item-info-card/SpellbookItemCardContent.svelte';
   import { settingStore } from 'src/settings/settings';
+  import ActionFilterOverrideControl from '../item-list/controls/ActionFilterOverrideControl.svelte';
 
   let context =
     getContext<Readable<CharacterSheetContext | NpcSheetContext>>('context');
@@ -114,7 +115,6 @@
         }}
         let:toggleSummary
         cssClass={FoundryAdapter.getSpellRowClasses(spell)}
-        itemCardContentTemplate={SpellbookItemCardContent}
       >
         <ItemTableCell primary={true}>
           <ItemUseButton item={spell} imgUrlOverride={spellImgUrl} />
@@ -183,6 +183,9 @@
               {#if $context.editable}
                 <ItemDuplicateControl item={spell} />
                 <ItemDeleteControl item={spell} />
+              {/if}
+              {#if $context.useActionsFeature}
+                <ActionFilterOverrideControl item={spell} />
               {/if}
             </ItemControls>
           </ItemTableCell>

@@ -23,6 +23,7 @@ import LongRestDialog from 'src/dialogs/NpcLongRestDialog';
 import type { SvelteComponent } from 'svelte';
 import type { ItemChatData } from 'src/types/item';
 import { registeredNpcTabs } from 'src/runtime/npc-sheet-state';
+import { actorUsesActionFeature, getActorActions } from 'src/actions/actions';
 
 export class Tidy5eNpcSheet
   extends dnd5e.applications.actor.ActorSheet5eNPC
@@ -121,6 +122,7 @@ export class Tidy5eNpcSheet
 
     const context = {
       ...defaultNpcContext,
+      actions: getActorActions(this.actor),
       activateFoundryJQueryListeners: (node: HTMLElement) => {
         this._activateCoreListeners($(node));
         super.activateListeners($(node));
@@ -283,6 +285,7 @@ export class Tidy5eNpcSheet
           relativeTo: this.actor,
         }
       ),
+      useActionsFeature: actorUsesActionFeature(this.actor),
       useJournalTab: SettingsProvider.settings.useJournalTabForNpc.get(),
       useRoundedPortraitStyle: [
         CONSTANTS.CIRCULAR_PORTRAIT_OPTION_ALL as string,
@@ -304,8 +307,7 @@ export class Tidy5eNpcSheet
           (a, b) => selectedTabs.indexOf(a.id) - selectedTabs.indexOf(b.id)
         );
     } else {
-      const defaultTabs =
-        SettingsProvider.settings.defaultNpcSheetTabs.get();
+      const defaultTabs = SettingsProvider.settings.defaultNpcSheetTabs.get();
       tabs = tabs
         .filter((t) => defaultTabs?.includes(t.id))
         .sort((a, b) => defaultTabs.indexOf(a.id) - defaultTabs.indexOf(b.id));

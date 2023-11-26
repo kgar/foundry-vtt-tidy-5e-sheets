@@ -1344,6 +1344,72 @@ export function createSettings() {
         },
       },
 
+      // Actions List
+
+      actionListLimitActionsToCantrips: {
+        options: {
+          name: 'T5EK.Settings.ActionsListLimitActionsToCantrips.name',
+          hint: 'T5EK.Settings.ActionsListLimitActionsToCantrips.hint',
+          scope: 'client',
+          config: false,
+          default: false,
+          type: Boolean,
+        },
+        get() {
+          return FoundryAdapter.getTidySetting<boolean>(
+            'actionListLimitActionsToCantrips'
+          );
+        },
+      },
+
+      actionListIncludeMinuteLongSpellsAsActions: {
+        options: {
+          name: 'T5EK.Settings.ActionsListIncludeMinuteLongSpellsAsActions.name',
+          hint: 'T5EK.Settings.ActionsListIncludeMinuteLongSpellsAsActions.hint',
+          scope: 'client',
+          config: false,
+          default: true,
+          type: Boolean,
+        },
+        get() {
+          return FoundryAdapter.getTidySetting<boolean>(
+            'actionListIncludeMinuteLongSpellsAsActions'
+          );
+        },
+      },
+
+      actionListIncludeSpellsWithActiveEffects: {
+        options: {
+          name: 'T5EK.Settings.ActionsListIncludeSpellsWithActiveEffects.name',
+          hint: 'T5EK.Settings.ActionsListIncludeSpellsWithActiveEffects.hint',
+          scope: 'client',
+          config: false,
+          default: true,
+          type: Boolean,
+        },
+        get() {
+          return FoundryAdapter.getTidySetting<boolean>(
+            'actionListIncludeSpellsWithActiveEffects'
+          );
+        },
+      },
+
+      actionListIncludeConsumables: {
+        options: {
+          name: 'T5EK.Settings.ActionsListIncludeConsumables.name',
+          hint: 'T5EK.Settings.ActionsListIncludeConsumables.hint',
+          scope: 'client',
+          config: false,
+          default: true,
+          type: Boolean,
+        },
+        get() {
+          return FoundryAdapter.getTidySetting<boolean>(
+            'actionListIncludeConsumables'
+          );
+        },
+      },
+
       // Color customization
 
       colorPickerEnabled: {
@@ -1709,6 +1775,7 @@ export function initSettings() {
     FoundryAdapter.registerTidySetting(setting[0], options);
   }
 
+  // Apply current color scheme
   SettingsProvider.settings.colorScheme.options.onChange(
     SettingsProvider.settings.colorScheme.get()
   );
@@ -1718,12 +1785,4 @@ export function initSettings() {
   FoundryAdapter.hooksOn('closeSettingsConfig', () => {
     settingStore.set(getCurrentSettings());
   });
-}
-
-function setDnd5eCssVariable(
-  ...params: Parameters<CSSStyleDeclaration['setProperty']>
-) {
-  document
-    .querySelector<HTMLElement>('.system-dnd5e')
-    ?.style.setProperty(params[0], params[1]);
 }

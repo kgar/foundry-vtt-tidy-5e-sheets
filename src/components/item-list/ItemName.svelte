@@ -7,12 +7,14 @@
   export let cssClass: string = '';
   export let hasChildren = true;
   export let item: Item5e;
+  export let useActiveEffectsMarker: boolean = true;
 
   $: hasActiveEffects = !!item.effects?.size;
 
   const dispatcher = createEventDispatcher<{ toggle: Event }>();
 </script>
 
+<!-- TODO: Make this a button -->
 <span
   role="button"
   tabindex="0"
@@ -23,7 +25,7 @@
 >
   <slot />
 </span>
-{#if $settingStore.showActiveEffectsMarker && hasActiveEffects}
+{#if useActiveEffectsMarker && $settingStore.showActiveEffectsMarker && hasActiveEffects}
   <ActiveEffectsMarker />
 {/if}
 

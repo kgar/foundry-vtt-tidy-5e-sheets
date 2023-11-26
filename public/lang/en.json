@@ -33,7 +33,18 @@
   "T5EK.LongRest": "Long Rest",
   "T5EK.HitDiceRollAverage": "right click: apply average",
 
-  "T5EK.Journal": "Journal",
+  "T5EK.JournalTabName": "Journal",
+
+  "T5EK.Actions": {
+    "TabName": "Actions",
+    "OverriddenSetOverrideFalse": "Remove from Actions List (Shift+Click to clear override)",
+    "OverriddenSetOverrideTrue": "Add to Actions List (Shift+Click to clear override)",
+    "SetOverrideFalse": "Remove from Actions List",
+    "SetOverrideTrue": "Add to Actions List",
+    "ClearOverride": "Clear Action Override"
+  },
+
+  "T5EK.HitDC": "Hit / DC",
 
   "T5EK.RestoreOnRest": "Restore on rest",
 
@@ -176,6 +187,9 @@
     "labelGeneralLocks": "General Locks",
     "labelInventoryLocks": "Inventory Locks",
     "labelFeaturesLocks": "Features Locks"
+  },
+  "T5EK.Settings.TabFeatures": {
+    "tabLabel": "Features"
   },
   "T5EK.Settings.TabInfo": {
     "tabLabel": "Info",
@@ -439,6 +453,23 @@
   "T5EK.Settings.LockItemQuantity": {
     "name": "Lock Item Quantity",
     "hint": "Prevents non-GMs from making changes to item quantity."
+  },
+  "T5EK.Settings.ActionsList.Header": "Actions List",
+  "T5EK.Settings.ActionsListLimitActionsToCantrips": {
+    "name": "Limit Actions to Cantrips",
+    "hint": "Instead of showing all spells that deal damage in the Actions tab/panel by default, limits to only cantrips. This is the default D&DBeyond behavior."
+  },
+  "T5EK.Settings.ActionsListIncludeMinuteLongSpellsAsActions": {
+    "name": "Include Minute-long Spells as Actions",
+    "hint": "Includes spells with a duration of one minute or less (e.g. 1 round) and an activation time of 1 Action or 1 Bonus Action (e.g. Bless, Bane, Command) in the Actions tab/panel by default."
+  },
+  "T5EK.Settings.ActionsListIncludeSpellsWithActiveEffects": {
+    "name": "Include Spells with Active Effects as Actions",
+    "hint": "Includes spells with active effects attached (e.g. Barkskin) in the Actions tab/panel by default."
+  },
+  "T5EK.Settings.ActionsListIncludeConsumables": {
+    "name": "Include Consumables as Actions",
+    "hint": "Includes consumables which have an activation cost (Action, Bonus Action, etc) in the Actions list by default."
   },
   "T5EK.Settings.ColorPickerEnabled": {
     "name": "Use Custom Theme Colors",

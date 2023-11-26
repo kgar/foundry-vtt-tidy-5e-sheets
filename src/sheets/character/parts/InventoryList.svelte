@@ -12,14 +12,14 @@
   import { CONSTANTS } from 'src/constants';
   import ItemUses from '../../../components/item-list/ItemUses.svelte';
   import ItemAddUses from '../../../components/item-list/ItemAddUses.svelte';
-  import ItemControls from '../../../components/item-list/ItemControls.svelte';
+  import ItemControls from '../../../components/item-list/controls/ItemControls.svelte';
   import ItemDuplicateControl from '../../../components/item-list/controls/ItemDuplicateControl.svelte';
   import ItemDeleteControl from '../../../components/item-list/controls/ItemDeleteControl.svelte';
-  import ItemEditControl from '../../../components/item-list/ItemEditControl.svelte';
+  import ItemEditControl from '../../../components/item-list/controls/ItemEditControl.svelte';
   import EquipControl from '../../../components/item-list/controls/EquipControl.svelte';
   import AttuneControl from '../../../components/item-list/controls/AttuneControl.svelte';
   import InlineFavoriteIcon from '../../../components/item-list/InlineFavoriteIcon.svelte';
-  import ItemFavoriteControl from '../../../components/item-list/ItemFavoriteControl.svelte';
+  import ItemFavoriteControl from '../../../components/item-list/controls/ItemFavoriteControl.svelte';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import type { CharacterSheetContext } from 'src/types/types';
@@ -27,6 +27,7 @@
   import InventoryItemCardContent from '../../../components/item-info-card/InventoryItemCardContent.svelte';
   import AmmoSelector from '../../actor/AmmoSelector.svelte';
   import { settingStore } from 'src/settings/settings';
+  import ActionFilterOverrideControl from 'src/components/item-list/controls/ActionFilterOverrideControl.svelte';
 
   export let primaryColumnName: string;
   export let items: Item5e[];
@@ -53,7 +54,7 @@
     return FoundryAdapter.getInventoryRowClasses(
       item,
       $context.itemContext[item.id],
-      extras
+      extras,
     );
   }
 </script>
@@ -94,7 +95,6 @@
         }}
         let:toggleSummary
         cssClass={getInventoryRowClasses(item)}
-        itemCardContentTemplate={InventoryItemCardContent}
       >
         <ItemTableCell primary={true} title={item.name}>
           <ItemUseButton {item} />
@@ -171,6 +171,9 @@
               {#if $context.editable}
                 <ItemDuplicateControl {item} />
                 <ItemDeleteControl {item} />
+              {/if}
+              {#if $context.useActionsFeature}
+                <ActionFilterOverrideControl {item} />
               {/if}
             </ItemControls>
           </ItemTableCell>
