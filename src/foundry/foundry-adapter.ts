@@ -1116,4 +1116,13 @@ export const FoundryAdapter = {
       ? FoundryAdapter.localize('DND5E.ActionOther')
       : game.dnd5e.config.abilityActivationTypes[activationType];
   },
+  lookupDamageType(type: string) {
+    return game.dnd5e.config.damageTypes[type];
+  },
+  lookupHealingType(type: string) {
+    return game.dnd5e.config.healingTypes[type];
+  },
+  lookupAbility(abbr: string) {
+    return game.dnd5e.config.abilities[abbr];
+  },
 };

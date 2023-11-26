@@ -129,8 +129,8 @@
               {#if item.labels.save || item.labels.toHit}
                 {#if item.labels.save !== '' && item.labels.save !== undefined}
                   {@const saveAbilityLabel =
-                    dnd5e.config.abilities[item.system.save.ability]?.label ??
-                    ''}
+                    FoundryAdapter.lookupAbility(item.system.save.ability)
+                      ?.label ?? ''}
                   <span title={item.labels.save} class="flex-column-truncate">
                     {localize('DND5E.AbbreviationDC')}
                     {item.system.save.dc}
@@ -147,8 +147,8 @@
               <!-- Damage -->
               {#each item.labels.derivedDamage ?? [] as entry}
                 {@const damageHealingTypeLabel =
-                  dnd5e.config.damageTypes[entry.damageType] ??
-                  dnd5e.config.healingTypes[entry.damageType]}
+                  FoundryAdapter.lookupDamageType(entry.damageType) ??
+                  FoundryAdapter.lookupHealingType(entry.damageType)}
                 <p
                   class="flex-column-truncate"
                   title={entry.label ?? entry.formula + damageHealingTypeLabel}
