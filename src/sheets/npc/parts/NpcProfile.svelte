@@ -1,7 +1,7 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import DeathSaves from 'src/sheets/actor/DeathSaves.svelte';
-  import Exhaustion from 'src/sheets/actor/Exhaustion.svelte';
+  import ExhaustionTracker from 'src/sheets/actor/ExhaustionTracker.svelte';
   import type { NpcSheetContext } from 'src/types/types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
@@ -37,11 +37,12 @@
       hasHpOverlay={$settingStore.useHpOverlayNpc}
     />
   {/if}
-  {#if $settingStore.useExhaustion}
-    <Exhaustion
+  {#if $settingStore.useExhaustion && $settingStore.exhaustionConfig.type === 'specific'}
+    <ExhaustionTracker
       level={FoundryAdapter.tryGetFlag($context.actor, 'exhaustion') ?? 0}
       radiusClass={$context.useRoundedPortraitStyle ? 'rounded' : 'top-left'}
       on:levelSelected={onLevelSelected}
+      exhaustionConfig={$settingStore.exhaustionConfig}
     />
   {/if}
 

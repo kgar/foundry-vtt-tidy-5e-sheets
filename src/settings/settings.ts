@@ -16,7 +16,7 @@ import {
   getStandardExhaustionConfig,
   getStandardVehicleExhaustionConfig,
 } from 'src/features/exhaustion/exhaustion';
-import type { ExhaustionConfig } from './settings.types';
+import type { ExhaustionConfig } from '../features/exhaustion/exhaustion.types';
 
 export type Tidy5eSettings = {
   [settingKey: string]: Tidy5eSetting;

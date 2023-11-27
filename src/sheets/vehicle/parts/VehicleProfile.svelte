@@ -5,7 +5,7 @@
   import type { Readable } from 'svelte/store';
   import VehicleHitPoints from './VehicleHitPoints.svelte';
   import VehicleDamageAndMishapThresholds from './VehicleDamageAndMishapThresholds.svelte';
-  import Exhaustion from 'src/sheets/actor/Exhaustion.svelte';
+  import ExhaustionTracker from 'src/sheets/actor/ExhaustionTracker.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import VehicleMovement from './VehicleMovement.svelte';
   import { settingStore } from 'src/settings/settings';
@@ -18,12 +18,12 @@
 </script>
 
 <ActorProfile useHpOverlay={$settingStore.useHpOverlayVehicle}>
-  {#if $settingStore.useExhaustion}
-    <Exhaustion
+  {#if $settingStore.useExhaustion && $settingStore.vehicleExhaustionConfig.type === 'specific'}
+    <ExhaustionTracker
       level={FoundryAdapter.tryGetFlag($context.actor, 'exhaustion') ?? 0}
       radiusClass={$context.useRoundedPortraitStyle ? 'rounded' : 'top-left'}
       on:levelSelected={onLevelSelected}
-      exhaustionLocalizationPrefix="T5EK.StandardVehicleExhaustion"
+      exhaustionConfig={$settingStore.vehicleExhaustionConfig}
     />
   {/if}
   {#if $settingStore.useVehicleMotion}
