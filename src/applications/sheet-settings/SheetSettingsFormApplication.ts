@@ -62,6 +62,12 @@ export class SheetSettingsFormApplication extends SvelteFormApplicationBase {
         getAllRegisteredVehicleSheetTabs(),
         currentSettings.defaultVehicleSheetTabs
       ),
+      exhaustionConfig: currentSettings.exhaustionConfig ?? {
+        ...SettingsProvider.settings.exhaustionConfig.options.default,
+      },
+      vehicleExhaustionConfig: currentSettings.vehicleExhaustionConfig ?? {
+        ...SettingsProvider.settings.vehicleExhaustionConfig.options.default,
+      },
     };
   }
 

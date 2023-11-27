@@ -1,3 +1,4 @@
+import type { ExhaustionConfig } from 'src/features/exhaustion/exhaustion.types';
 import type { SheetTabState } from 'src/runtime/types';
 import type { CurrentSettings } from 'src/settings/settings';
 import type { Writable } from 'svelte/store';
@@ -17,6 +18,8 @@ export type SettingsSheetContext = {
   defaultCharacterTabs: DefaultTabSelectionFields;
   defaultNpcTabs: DefaultTabSelectionFields;
   defaultVehicleTabs: DefaultTabSelectionFields;
+  exhaustionConfig: ExhaustionConfig;
+  vehicleExhaustionConfig: ExhaustionConfig;
 };
 
 export type SettingsSheetFunctions = {

@@ -501,20 +501,19 @@
     "name": "Exhaustion Configuration",
     "hint": "Determines how non-vehicle exhaustion is configured and presented on the character and NPC sheets.",
     "options.specific.text": "Specific Levels",
-    "options.specific.explanation": "Shows the user a numeric input to enter the level of exhaustion.",
+    "options.specific.levels.name": "Total Levels",
+    "options.specific.levels.hint": "Determines the maximum number of levels of exhaustion.",
+    "options.specific.levels.tooltip.name": "Exhaustion Level {level} Tooltip",
+    "options.specific.levels.tooltip.hint": "Tooltip for this level of exhaustion. Localization keys also work.",
     "options.open.text": "Open Number Input",
-    "options.open.label": "Exhaustion Level {level} Hint",
+    "options.open.explanation": "Shows the user a numeric input to enter the level of exhaustion.",
     "useStandardExhaustionButton": "Use Standard Exhaustion",
     "useOneDnDExhaustionButton": "Use One D&D Exhaustion"
   },
   "T5EK.Settings.VehicleExhaustion": {
     "Header": "Vehicle Exhaustion",
     "name": "Vehicular Exhaustion Configuration",
-    "hint": "Determines how vehicle exhaustion is configured and presented on the vehicle sheet.",
-    "options.specific.text": "Specific Levels",
-    "options.specific.explanation": "Shows the user a numeric input to enter the level of exhaustion.",
-    "options.open.text": "Open Number Input",
-    "options.open.label": "Exhaustion Level {level} Hint"
+    "hint": "Determines how vehicle exhaustion is configured and presented on the vehicle sheet."
   },
   "T5EK.Settings.ColorPickerEnabled": {
     "name": "Use Custom Theme Colors",
