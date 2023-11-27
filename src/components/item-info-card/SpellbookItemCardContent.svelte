@@ -30,7 +30,7 @@
       <span>{item.labels.school ?? ''}</span>
       {#if $context.owner}
         {#if canPrepare}
-          <span>{ctx?.toggleTitle}</span>
+          <span>{ctx?.toggleTitle ?? ''}</span>
         {/if}
       {/if}
     </div>
