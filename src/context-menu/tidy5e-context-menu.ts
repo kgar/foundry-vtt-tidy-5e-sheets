@@ -2,7 +2,7 @@ import {
   actorUsesActionFeature,
   isItemInActionList,
   toggleActionFilterOverride,
-} from 'src/actions/actions';
+} from 'src/features/actions/actions';
 import { CONSTANTS } from 'src/constants';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { SettingsProvider } from 'src/settings/settings';

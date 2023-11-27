@@ -12,6 +12,11 @@ import { getAllRegisteredVehicleSheetTabs } from 'src/runtime/vehicle-sheet-stat
 import { getAllRegisteredNpcSheetTabs } from 'src/runtime/npc-sheet-state';
 import { getTabsAsConfigOptions } from 'src/runtime/state-functions';
 import ThemeSettingsFormApplication from 'src/applications/theme/ThemeSettingsFormApplication';
+import {
+  getStandardExhaustionConfig,
+  getStandardVehicleExhaustionConfig,
+} from 'src/features/exhaustion/exhaustion';
+import type { ExhaustionConfig } from './settings.types';
 
 export type Tidy5eSettings = {
   [settingKey: string]: Tidy5eSetting;
@@ -1422,6 +1427,40 @@ export function createSettings() {
         get() {
           return FoundryAdapter.getTidySetting<boolean>(
             'actionListScaleCantripDamage'
+          );
+        },
+      },
+
+      // Exhaustion
+
+      exhaustionConfig: {
+        options: {
+          name: 'T5EK.Settings.Exhaustion.name',
+          hint: 'T5EK.Settings.Exhaustion.hint',
+          scope: 'world',
+          config: false,
+          default: getStandardExhaustionConfig(),
+          type: Object,
+        },
+        get() {
+          return FoundryAdapter.getTidySetting<ExhaustionConfig>(
+            'exhaustionConfig'
+          );
+        },
+      },
+
+      vehicleExhaustionConfig: {
+        options: {
+          name: 'T5EK.Settings.VehicleExhaustion.name',
+          hint: 'T5EK.Settings.VehicleExhaustion.hint',
+          scope: 'world',
+          config: false,
+          default: getStandardVehicleExhaustionConfig(),
+          type: Object,
+        },
+        get() {
+          return FoundryAdapter.getTidySetting<ExhaustionConfig>(
+            'vehicleExhaustionConfig'
           );
         },
       },

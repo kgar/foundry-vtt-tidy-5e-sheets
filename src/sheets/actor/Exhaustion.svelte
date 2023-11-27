@@ -11,7 +11,7 @@
   export let radiusClass: PortraitCharmRadiusClass;
   export let level: number;
   export let onlyShowOnHover: boolean = false;
-  export let exhaustionLocalizationPrefix: string = 'T5EK.Exhaustion';
+  export let exhaustionLocalizationPrefix: string = 'T5EK.StandardExhaustion';
 
   const localize = FoundryAdapter.localize;
 

@@ -23,7 +23,7 @@ import LongRestDialog from 'src/dialogs/NpcLongRestDialog';
 import type { SvelteComponent } from 'svelte';
 import type { ItemChatData } from 'src/types/item';
 import { registeredNpcTabs } from 'src/runtime/npc-sheet-state';
-import { actorUsesActionFeature, getActorActions } from 'src/actions/actions';
+import { actorUsesActionFeature, getActorActions } from 'src/features/actions/actions';
 
 export class Tidy5eNpcSheet
   extends dnd5e.applications.actor.ActorSheet5eNPC

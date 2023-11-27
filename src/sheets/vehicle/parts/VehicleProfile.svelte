@@ -23,7 +23,7 @@
       level={FoundryAdapter.tryGetFlag($context.actor, 'exhaustion') ?? 0}
       radiusClass={$context.useRoundedPortraitStyle ? 'rounded' : 'top-left'}
       on:levelSelected={onLevelSelected}
-      exhaustionLocalizationPrefix="T5EK.VehicleExhaustion"
+      exhaustionLocalizationPrefix="T5EK.StandardVehicleExhaustion"
     />
   {/if}
   {#if $settingStore.useVehicleMotion}
