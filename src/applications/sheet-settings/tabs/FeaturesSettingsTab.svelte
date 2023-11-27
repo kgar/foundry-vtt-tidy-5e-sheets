@@ -75,6 +75,7 @@
 
 <h2>{localize('T5EK.Settings.Exhaustion.header')}</h2>
 
+<!-- TODO: Add validation and add save logic -->
 <article class="setting group">
   <section>
     <div class="description">
@@ -135,6 +136,7 @@
                   level: i,
                 },
               )}
+              <!-- TODO: Put a tooltip icon here with a tooltip that is the localized version of the provided text value -->
             </label>
             <p class="tidy5e-notes">
               {localize(
