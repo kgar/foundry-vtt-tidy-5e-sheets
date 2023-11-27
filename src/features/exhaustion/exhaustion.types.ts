@@ -5,7 +5,7 @@ export type OpenExhaustionConfig = {
   type: 'open';
 };
 
-export type ClosedExhaustionConfig = {
+export type SpecificExhaustionConfig = {
   /**
    * Limits exhaustion to a specific number of levels.
    */
@@ -20,7 +20,7 @@ export type ClosedExhaustionConfig = {
   hints: string[];
 };
 
-export type ExhaustionConfig = OpenExhaustionConfig | ClosedExhaustionConfig;
+export type ExhaustionConfig = OpenExhaustionConfig | SpecificExhaustionConfig;
 
 export type IconWithSeverity = {
   iconCssClass: string;

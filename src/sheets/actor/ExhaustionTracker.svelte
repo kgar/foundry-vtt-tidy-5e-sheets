@@ -1,7 +1,7 @@
 <script lang="ts">
   import { getExhaustionIconsWithSeverity } from 'src/features/exhaustion/exhaustion';
   import type {
-    ClosedExhaustionConfig,
+    SpecificExhaustionConfig,
     IconWithSeverity,
   } from 'src/features/exhaustion/exhaustion.types';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
@@ -16,7 +16,7 @@
   export let radiusClass: PortraitCharmRadiusClass;
   export let level: number;
   export let onlyShowOnHover: boolean = false;
-  export let exhaustionConfig: ClosedExhaustionConfig;
+  export let exhaustionConfig: SpecificExhaustionConfig;
 
   let iconsWithSeverities: IconWithSeverity[];
   $: {
