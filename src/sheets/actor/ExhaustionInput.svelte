@@ -13,7 +13,7 @@
     levelSelected: { level: number };
   }>();
 
-  let fontScales = ['1.25rem', '1rem', '0.75rem'] as const;
+  let fontScales = ['1.25rem', '1.125rem', '1rem'] as const;
 
   let inputFontSize: string;
   $: {
@@ -50,7 +50,6 @@
     left: 0;
     height: 2.125rem;
     width: 2.125rem;
-    z-index: 1;
     color: var(--t5ek-icon-font-color);
 
     .exhaustion-wrap {
@@ -68,11 +67,14 @@
       }
 
       input {
+        height: 100%;
+        width: 100%;
         text-align: center;
         font-size: var(--t5ek-exhaustion-input-font-size);
         border-radius: 1.25rem;
         color: var(--t5ek-tertiary-color);
         transition: color 0.3s ease;
+        font-family: var(--t5ek-title-font-family);
 
         &:focus {
           color: var(--t5ek-primary-font-color);
