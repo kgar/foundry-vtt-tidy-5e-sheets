@@ -29,12 +29,12 @@
             open: 'T5EK.Settings.Exhaustion.options.open.text',
           }}
         ></SelectOptions>
-        {#if config.type === 'open'}
-          <p class="tidy5e-notes">
-            {localize('T5EK.Settings.Exhaustion.options.open.explanation')}
-          </p>
-        {/if}
       </select>
+      {#if config.type === 'open'}
+        <p class="tidy5e-notes">
+          {localize('T5EK.Settings.Exhaustion.options.open.explanation')}
+        </p>
+      {/if}
     </div>
   </section>
 </article>
