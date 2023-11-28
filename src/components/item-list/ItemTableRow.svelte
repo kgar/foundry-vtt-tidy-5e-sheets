@@ -73,6 +73,13 @@
       return;
     }
 
+    // Don't show cards while dragging
+    onMouseLeave();
+
+    card.update((card) => {
+      return card;
+    });
+
     const dragData = draggable.toDragData();
     event.dataTransfer?.setData('text/plain', JSON.stringify(dragData));
   }
