@@ -6,8 +6,14 @@
   import CheckboxSetting from '../parts/CheckboxSetting.svelte';
   import type { SettingsSheetContext } from '../SheetSettings.types';
   import ExhaustionSetting from '../parts/ExhaustionSetting.svelte';
+  import {
+    getOneDnDExhaustionConfig,
+    getStandardExhaustionConfig,
+  } from 'src/features/exhaustion/exhaustion';
 
   let context = getContext<Writable<SettingsSheetContext>>('context');
+
+  let userIsGm = FoundryAdapter.userIsGm();
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -53,18 +59,36 @@
   id="actionListScaleCantripDamage"
 />
 
-<h2>{localize('T5EK.Settings.Exhaustion.header')}</h2>
+{#if userIsGm}
+  <h2>{localize('T5EK.Settings.Exhaustion.header')}</h2>
 
-<ExhaustionSetting
-  name="T5EK.Settings.Exhaustion.name"
-  hint="T5EK.Settings.Exhaustion.hint"
-  bind:config={$context.exhaustionConfig}
-/>
+  <article class="setting flex-row extra-small-gap" style="padding: 0.5rem">
+    <button
+      type="button"
+      on:click={() =>
+        ($context.exhaustionConfig = getStandardExhaustionConfig())}
+    >
+      {localize('T5EK.Settings.Exhaustion.useStandardExhaustion')}
+    </button>
+    <button
+      type="button"
+      on:click={() => ($context.exhaustionConfig = getOneDnDExhaustionConfig())}
+    >
+      {localize('T5EK.Settings.Exhaustion.useOneDnDExhaustion')}
+    </button>
+  </article>
 
-<h2>{localize('T5EK.Settings.VehicleExhaustion.header')}</h2>
+  <ExhaustionSetting
+    name="T5EK.Settings.Exhaustion.name"
+    hint="T5EK.Settings.Exhaustion.hint"
+    bind:config={$context.exhaustionConfig}
+  />
 
-<ExhaustionSetting
-  name="T5EK.Settings.VehicleExhaustion.name"
-  hint="T5EK.Settings.VehicleExhaustion.hint"
-  bind:config={$context.vehicleExhaustionConfig}
-/>
+  <h2>{localize('T5EK.Settings.VehicleExhaustion.Header')}</h2>
+
+  <ExhaustionSetting
+    name="T5EK.Settings.VehicleExhaustion.name"
+    hint="T5EK.Settings.VehicleExhaustion.hint"
+    bind:config={$context.vehicleExhaustionConfig}
+  />
+{/if}

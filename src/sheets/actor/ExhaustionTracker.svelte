@@ -28,7 +28,7 @@
   let selectedLevel: IconWithSeverity;
   let selectedHintKey: string;
   $: {
-    selectedLevel = iconsWithSeverities[level];
+    selectedLevel = iconsWithSeverities[level] ?? iconsWithSeverities.at(-1);
     selectedHintKey = exhaustionConfig.hints[level] ?? '';
   }
 

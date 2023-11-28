@@ -507,8 +507,8 @@
     "options.specific.levels.tooltip.hint": "Tooltip for this level of exhaustion. Localization keys also work.",
     "options.open.text": "Open Number Input",
     "options.open.explanation": "Shows the user a numeric input to enter the level of exhaustion.",
-    "useStandardExhaustionButton": "Use Standard Exhaustion",
-    "useOneDnDExhaustionButton": "Use One D&D Exhaustion",
+    "useStandardExhaustion": "Use Standard Exhaustion",
+    "useOneDnDExhaustion": "Use One D&D Exhaustion",
     "AtLeastOneLevelRequiredErrorMessage": "At least one exhaustion level is required."
   },
   "T5EK.Settings.VehicleExhaustion": {

@@ -21,7 +21,6 @@ import type {
   SettingsSheetFunctions,
   SettingsSheetStore,
 } from './SheetSettings.types';
-import { cleanExhaustionConfig } from 'src/features/exhaustion/exhaustion';
 
 export class SheetSettingsFormApplication extends SvelteFormApplicationBase {
   initialTabId: string;
@@ -63,11 +62,13 @@ export class SheetSettingsFormApplication extends SvelteFormApplicationBase {
         getAllRegisteredVehicleSheetTabs(),
         currentSettings.defaultVehicleSheetTabs
       ),
-      exhaustionConfig: currentSettings.exhaustionConfig ?? {
+      exhaustionConfig: {
         ...SettingsProvider.settings.exhaustionConfig.options.default,
+        ...currentSettings.exhaustionConfig,
       },
-      vehicleExhaustionConfig: currentSettings.vehicleExhaustionConfig ?? {
+      vehicleExhaustionConfig: {
         ...SettingsProvider.settings.vehicleExhaustionConfig.options.default,
+        ...currentSettings.vehicleExhaustionConfig,
       },
     };
   }
@@ -195,6 +196,21 @@ export class SheetSettingsFormApplication extends SvelteFormApplicationBase {
       return false;
     }
 
+    if (context.exhaustionConfig.type === 'specific') {
+      context.exhaustionConfig.hints = context.exhaustionConfig.hints.slice(
+        0,
+        context.exhaustionConfig.levels + 1
+      );
+    }
+
+    if (context.vehicleExhaustionConfig.type === 'specific') {
+      context.vehicleExhaustionConfig.hints =
+        context.vehicleExhaustionConfig.hints.slice(
+          0,
+          context.vehicleExhaustionConfig.levels + 1
+        );
+    }
+
     const newSettings: CurrentSettings = {
       ...context.settings,
       defaultCharacterSheetTabs: context.defaultCharacterTabs.selected.map(
@@ -204,10 +220,8 @@ export class SheetSettingsFormApplication extends SvelteFormApplicationBase {
       defaultVehicleSheetTabs: context.defaultVehicleTabs.selected.map(
         (t) => t.id
       ),
-      exhaustionConfig: cleanExhaustionConfig(context.exhaustionConfig),
-      vehicleExhaustionConfig: cleanExhaustionConfig(
-        context.vehicleExhaustionConfig
-      ),
+      exhaustionConfig: context.exhaustionConfig,
+      vehicleExhaustionConfig: context.vehicleExhaustionConfig,
     };
 
     const keys = Object.keys(this.unchangedSettings) as Tidy5eSettingKey[];

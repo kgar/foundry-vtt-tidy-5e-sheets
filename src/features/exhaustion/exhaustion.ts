@@ -109,13 +109,3 @@ export function getExhaustionIconsWithSeverity(
     lastIconWithSeverity,
   ];
 }
-
-export function cleanExhaustionConfig(
-  config: ExhaustionConfig
-): ExhaustionConfig {
-  if (config.type === 'open') {
-    return { type: 'open' };
-  }
-
-  return config;
-}

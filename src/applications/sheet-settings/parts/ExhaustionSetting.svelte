@@ -1,30 +1,17 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { getContext } from 'svelte';
+  import { getContext, onMount } from 'svelte';
   import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
   import type { ExhaustionConfig } from 'src/features/exhaustion/exhaustion.types';
 
   export let name: string;
   export let hint: string;
   export let config: ExhaustionConfig;
-  
+
   let appId = getContext('appId');
 
-  let exhaustionLevelsIterator: number[] = [];
-  $: {
-    if (config.type === 'specific') {
-      let levelsWithZero = config.levels + 1;
-
-      exhaustionLevelsIterator = Array(Math.max(levelsWithZero, 0)).fill(0);
-
-      const missingHintSections = config.hints.length - levelsWithZero;
-
-      if (missingHintSections > 0) {
-        config.hints = config.hints.concat(Array(missingHintSections).fill(''));
-      }
-    }
-  }
-
+  $: levelsIterator =
+    config.type === 'specific' ? Array(config.levels + 1).fill(0) : [];
   const localize = FoundryAdapter.localize;
 </script>
 
@@ -66,20 +53,20 @@
         </p>
       </div>
       <div class="settings-group">
-        <input type="number" bind:value={config.levels} />
+        <input type="number" bind:value={config.levels} min="1" />
       </div>
     </section>
   </article>
 
   {#if config.type === 'specific'}
-    {#each exhaustionLevelsIterator as _, i (i)}
+    {#each levelsIterator as _, i (i)}
       <article class="setting group">
         <section class="">
           <div class="description">
             <label
               for="exhaustion-level-{i}-{appId}"
               title={localize(config.hints[i])}
-              class="flex-row small-gap"
+              class="flex-row small-gap align-items-center"
             >
               {localize(
                 'T5EK.Settings.Exhaustion.options.specific.levels.tooltip.name',
