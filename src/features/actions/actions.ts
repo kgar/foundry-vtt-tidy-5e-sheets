@@ -2,7 +2,12 @@ import { CONSTANTS } from 'src/constants';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { SettingsProvider } from 'src/settings/settings';
 import type { Item5e } from 'src/types/item';
-import type { Actor5e, ActorActions } from 'src/types/types';
+import type {
+  ActionItem,
+  Actor5e,
+  ActorActions,
+  ActorActionsV2,
+} from 'src/types/types';
 import { debug, error } from 'src/utils/logging';
 
 export type ActionSets = {
@@ -28,6 +33,40 @@ const itemTypeSortValues: Record<string, number> = {
   class: 8,
   loot: 9,
 };
+
+export function getActorActionsV2(actor: Actor5e): ActorActionsV2 {
+  const actorRollData = actor.getRollData();
+
+  const filteredItems: any[] = actor.items
+    .filter(isItemInActionList)
+    .sort((a: Item5e, b: Item5e) => {
+      if (a.type !== b.type) {
+        return itemTypeSortValues[a.type] - itemTypeSortValues[b.type];
+      }
+      if (a.type === 'spell' && b.type === 'spell') {
+        return a.system.level - b.system.level;
+      }
+      return (a.sort || 0) - (b.sort || 0);
+    })
+    .map((item: Item5e) => mapActionItem(item, actorRollData));
+
+  return {};
+}
+
+function mapActionItem(item: Item5e, actorRollData: any): ActionItem {
+  // TODO: plug this in and then map / simplify formulae where able with actorRollData.
+
+  return {
+    item,
+    calculatedDerivedDamage: [
+      {
+        damageType: 'Radiant',
+        formula: '2d8',
+        label: '2d8 Radiant',
+      },
+    ],
+  };
+}
 
 export function getActorActions(actor: Actor5e): ActorActions {
   const filteredItems: any[] = actor.items
