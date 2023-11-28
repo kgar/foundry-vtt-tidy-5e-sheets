@@ -21,6 +21,7 @@ import type {
   SettingsSheetFunctions,
   SettingsSheetStore,
 } from './SheetSettings.types';
+import { cleanExhaustionConfig } from 'src/features/exhaustion/exhaustion';
 
 export class SheetSettingsFormApplication extends SvelteFormApplicationBase {
   initialTabId: string;
@@ -153,6 +154,32 @@ export class SheetSettingsFormApplication extends SvelteFormApplicationBase {
       );
     }
 
+    if (
+      context.exhaustionConfig.type === 'specific' &&
+      context.exhaustionConfig.levels < 1
+    ) {
+      valid = false;
+      error(
+        FoundryAdapter.localize(
+          'T5EK.Settings.Exhaustion.AtLeastOneLevelRequiredErrorMessage'
+        ),
+        true
+      );
+    }
+
+    if (
+      context.vehicleExhaustionConfig.type === 'specific' &&
+      context.vehicleExhaustionConfig.levels < 1
+    ) {
+      valid = false;
+      error(
+        FoundryAdapter.localize(
+          'T5EK.Settings.VehicleExhaustion.AtLeastOneLevelRequiredErrorMessage'
+        ),
+        true
+      );
+    }
+
     // Add more data validation here as needed
 
     return valid;
@@ -176,6 +203,10 @@ export class SheetSettingsFormApplication extends SvelteFormApplicationBase {
       defaultNpcSheetTabs: context.defaultNpcTabs.selected.map((t) => t.id),
       defaultVehicleSheetTabs: context.defaultVehicleTabs.selected.map(
         (t) => t.id
+      ),
+      exhaustionConfig: cleanExhaustionConfig(context.exhaustionConfig),
+      vehicleExhaustionConfig: cleanExhaustionConfig(
+        context.vehicleExhaustionConfig
       ),
     };
 
