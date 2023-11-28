@@ -78,7 +78,7 @@ export function getExhaustionIconsWithSeverity(
   const lastIconWithSeverity = iconsWithSeverity[iconsWithSeverity.length - 1];
 
   if (levelsIncludingZero === 1) {
-    return [lastIconWithSeverity];
+    return [iconsWithSeverity[0]];
   }
 
   if (levelsIncludingZero === 2) {
