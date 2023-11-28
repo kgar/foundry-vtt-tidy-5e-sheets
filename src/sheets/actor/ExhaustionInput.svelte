@@ -41,35 +41,6 @@
       on:focus={(ev) => ev.currentTarget.select()}
     />
   </div>
-  <!-- <div class="exhaustion-wrap {radiusClass}">
-    <div
-      class="exhaustion-icon colorized"
-      title={`${localize('DND5E.Exhaustion')} ${localize(
-        'DND5E.AbbreviationLevel',
-      )} ${level}, ${localize(selectedHintKey)}`}
-    >
-      <i class={selectedLevel.iconCssClass ?? ''} />
-    </div>
-    <ul class="exhaustion-levels">
-      {#each iconsWithSeverities as _, i}
-        <li>
-          <button
-            type="button"
-            class="exhaustion-level-option transparent-button"
-            class:colorized={i <= level}
-            title={localize(exhaustionConfig.hints[i] ?? '')}
-            on:click={() => dispatch('levelSelected', { level: i })}
-            disabled={!$context.owner}
-          >
-            {i}
-          </button>
-        </li>
-      {/each}
-    </ul>
-  </div> -->
-  <!-- <div class="level-display" class:colorized={level > 0}>
-    {level}
-  </div> -->
 </div>
 
 <style lang="scss">
