@@ -63,7 +63,7 @@
 {#if userIsGm}
   <h2>{localize('T5EK.Settings.Exhaustion.Header')}</h2>
 
-  <article class="setting flex-row extra-small-gap" style="padding: 0.5rem">
+  <article class="setting buttons">
     <button
       type="button"
       on:click={() =>
@@ -87,7 +87,7 @@
 
   <h2>{localize('T5EK.Settings.VehicleExhaustion.Header')}</h2>
 
-  <article class="setting flex-row extra-small-gap" style="padding: 0.5rem">
+  <article class="setting buttons">
     <button
       type="button"
       on:click={() =>
