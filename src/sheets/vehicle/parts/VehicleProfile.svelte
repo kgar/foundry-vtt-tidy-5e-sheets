@@ -9,6 +9,7 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import VehicleMovement from './VehicleMovement.svelte';
   import { settingStore } from 'src/settings/settings';
+  import ExhaustionInput from 'src/sheets/actor/ExhaustionInput.svelte';
 
   let context = getContext<Readable<VehicleSheetContext>>('context');
 
@@ -24,6 +25,12 @@
       radiusClass={$context.useRoundedPortraitStyle ? 'rounded' : 'top-left'}
       on:levelSelected={onLevelSelected}
       exhaustionConfig={$settingStore.vehicleExhaustionConfig}
+    />
+  {:else if $settingStore.useExhaustion && $settingStore.vehicleExhaustionConfig.type === 'open'}
+    <ExhaustionInput
+      level={FoundryAdapter.tryGetFlag($context.actor, 'exhaustion') ?? 0}
+      radiusClass={$context.useRoundedPortraitStyle ? 'rounded' : 'top-left'}
+      on:levelSelected={onLevelSelected}
     />
   {/if}
   {#if $settingStore.useVehicleMotion}

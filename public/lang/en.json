@@ -497,7 +497,7 @@
     "hint": "Scales cantrip damage to match the PC's current level or the NPC's challenge rating."
   },
   "T5EK.Settings.Exhaustion": {
-    "header": "Exhaustion",
+    "Header": "Exhaustion",
     "name": "Exhaustion Configuration",
     "hint": "Determines how non-vehicle exhaustion is configured and presented on the character and NPC sheets.",
     "options.specific.text": "Specific Levels",

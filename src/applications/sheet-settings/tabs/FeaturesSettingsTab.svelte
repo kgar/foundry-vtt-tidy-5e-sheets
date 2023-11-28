@@ -60,7 +60,7 @@
 />
 
 {#if userIsGm}
-  <h2>{localize('T5EK.Settings.Exhaustion.header')}</h2>
+  <h2>{localize('T5EK.Settings.Exhaustion.Header')}</h2>
 
   <article class="setting flex-row extra-small-gap" style="padding: 0.5rem">
     <button

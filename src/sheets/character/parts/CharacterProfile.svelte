@@ -12,6 +12,7 @@
   import type { Readable } from 'svelte/store';
   import ActorProfile from 'src/sheets/actor/ActorProfile.svelte';
   import { settingStore } from 'src/settings/settings';
+  import ExhaustionInput from 'src/sheets/actor/ExhaustionInput.svelte';
 
   let context = getContext<Readable<CharacterSheetContext>>('context');
 
@@ -48,6 +49,15 @@
         ($settingStore.hideIfZero &&
           $context.system.attributes.exhaustion === 0)}
       exhaustionConfig={$settingStore.exhaustionConfig}
+    />
+  {:else if $settingStore.useExhaustion && $settingStore.exhaustionConfig.type === 'open'}
+    <ExhaustionInput
+      level={$context.system.attributes.exhaustion}
+      radiusClass={$context.useRoundedPortraitStyle ? 'rounded' : 'top-left'}
+      on:levelSelected={onLevelSelected}
+      onlyShowOnHover={$settingStore.showExhaustionOnHover ||
+        ($settingStore.hideIfZero &&
+          $context.system.attributes.exhaustion === 0)}
     />
   {/if}
 
