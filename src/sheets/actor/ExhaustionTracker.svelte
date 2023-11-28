@@ -1,4 +1,9 @@
 <script lang="ts">
+  import { getExhaustionIconsWithSeverity } from 'src/features/exhaustion/exhaustion';
+  import type {
+    SpecificExhaustionConfig,
+    IconWithSeverity,
+  } from 'src/features/exhaustion/exhaustion.types';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type {
     ActorSheetContext,
@@ -11,7 +16,26 @@
   export let radiusClass: PortraitCharmRadiusClass;
   export let level: number;
   export let onlyShowOnHover: boolean = false;
-  export let exhaustionLocalizationPrefix: string = 'T5EK.Exhaustion';
+  export let exhaustionConfig: SpecificExhaustionConfig;
+
+  let iconsWithSeverities: IconWithSeverity[];
+  $: {
+    iconsWithSeverities = getExhaustionIconsWithSeverity(
+      exhaustionConfig.levels,
+    );
+  }
+
+  let selectedLevel: IconWithSeverity;
+  let selectedHintKey: string;
+  $: {
+    selectedLevel = iconsWithSeverities[level] ?? iconsWithSeverities.at(-1);
+    selectedHintKey = exhaustionConfig.hints[level] ?? '';
+  }
+
+  let severityClass: string;
+  $: {
+    severityClass = `severity-${selectedLevel?.severity ?? 0}`;
+  }
 
   const localize = FoundryAdapter.localize;
 
@@ -21,53 +45,38 @@
     levelSelected: { level: number };
   }>();
 
-  const exhaustionClasses = [
-    'far fa-grin',
-    'far fa-smile',
-    'far fa-meh',
-    'far fa-frown',
-    'far fa-frown-open',
-    'far fa-tired',
-    'far fa-dizzy',
-  ];
-
-  const exhaustionSeverity = [
-    'severity-0',
-    'severity-1',
-    'severity-1',
-    'severity-2',
-    'severity-2',
-    'severity-3',
-    'severity-3',
-  ];
+  let exhaustionOptionWidthRems = 1.25;
+  $: exhaustionExpandedWidth = `${
+    exhaustionOptionWidthRems * (exhaustionConfig.levels + 1) + 2.125
+  }rem`;
 </script>
 
 <div
-  class="exhaustion-container {exhaustionSeverity[level]} {cssClass}"
+  class="exhaustion-container {severityClass} {cssClass}"
   class:only-show-on-hover={onlyShowOnHover}
+  style="--t5ek-exhaustion-expanded-width: {exhaustionExpandedWidth}"
 >
-  
   <div class="exhaustion-wrap {radiusClass}">
     <div
       class="exhaustion-icon colorized"
       title={`${localize('DND5E.Exhaustion')} ${localize(
-        'DND5E.AbbreviationLevel'
-      )} ${level}, ${localize(exhaustionLocalizationPrefix + level)}`}
+        'DND5E.AbbreviationLevel',
+      )} ${level}, ${localize(selectedHintKey)}`}
     >
-      <i class={exhaustionClasses[level] ?? ''} />
+      <i class={selectedLevel.iconCssClass ?? ''} />
     </div>
     <ul class="exhaustion-levels">
-      {#each [0, 1, 2, 3, 4, 5, 6] as levelOption}
+      {#each iconsWithSeverities as _, i}
         <li>
           <button
             type="button"
             class="exhaustion-level-option transparent-button"
-            class:colorized={levelOption <= level}
-            title={localize(exhaustionLocalizationPrefix + levelOption)}
-            on:click={() => dispatch('levelSelected', { level: levelOption })}
+            class:colorized={i <= level}
+            title={localize(exhaustionConfig.hints[i] ?? '')}
+            on:click={() => dispatch('levelSelected', { level: i })}
             disabled={!$context.owner}
           >
-            {levelOption}
+            {i}
           </button>
         </li>
       {/each}
@@ -107,7 +116,7 @@
 
     &:hover .exhaustion-wrap,
     .exhaustion-wrap:has(button:focus-visible) {
-      width: 10.875rem;
+      width: var(--t5ek-exhaustion-expanded-width);
     }
 
     .exhaustion-wrap {

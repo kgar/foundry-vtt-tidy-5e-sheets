@@ -62,6 +62,14 @@ export class SheetSettingsFormApplication extends SvelteFormApplicationBase {
         getAllRegisteredVehicleSheetTabs(),
         currentSettings.defaultVehicleSheetTabs
       ),
+      exhaustionConfig: {
+        ...SettingsProvider.settings.exhaustionConfig.options.default,
+        ...currentSettings.exhaustionConfig,
+      },
+      vehicleExhaustionConfig: {
+        ...SettingsProvider.settings.vehicleExhaustionConfig.options.default,
+        ...currentSettings.vehicleExhaustionConfig,
+      },
     };
   }
 
@@ -147,6 +155,32 @@ export class SheetSettingsFormApplication extends SvelteFormApplicationBase {
       );
     }
 
+    if (
+      context.exhaustionConfig.type === 'specific' &&
+      context.exhaustionConfig.levels < 1
+    ) {
+      valid = false;
+      error(
+        FoundryAdapter.localize(
+          'T5EK.Settings.Exhaustion.AtLeastOneLevelRequiredErrorMessage'
+        ),
+        true
+      );
+    }
+
+    if (
+      context.vehicleExhaustionConfig.type === 'specific' &&
+      context.vehicleExhaustionConfig.levels < 1
+    ) {
+      valid = false;
+      error(
+        FoundryAdapter.localize(
+          'T5EK.Settings.VehicleExhaustion.AtLeastOneLevelRequiredErrorMessage'
+        ),
+        true
+      );
+    }
+
     // Add more data validation here as needed
 
     return valid;
@@ -162,6 +196,21 @@ export class SheetSettingsFormApplication extends SvelteFormApplicationBase {
       return false;
     }
 
+    if (context.exhaustionConfig.type === 'specific') {
+      context.exhaustionConfig.hints = context.exhaustionConfig.hints.slice(
+        0,
+        context.exhaustionConfig.levels + 1
+      );
+    }
+
+    if (context.vehicleExhaustionConfig.type === 'specific') {
+      context.vehicleExhaustionConfig.hints =
+        context.vehicleExhaustionConfig.hints.slice(
+          0,
+          context.vehicleExhaustionConfig.levels + 1
+        );
+    }
+
     const newSettings: CurrentSettings = {
       ...context.settings,
       defaultCharacterSheetTabs: context.defaultCharacterTabs.selected.map(
@@ -171,6 +220,8 @@ export class SheetSettingsFormApplication extends SvelteFormApplicationBase {
       defaultVehicleSheetTabs: context.defaultVehicleTabs.selected.map(
         (t) => t.id
       ),
+      exhaustionConfig: context.exhaustionConfig,
+      vehicleExhaustionConfig: context.vehicleExhaustionConfig,
     };
 
     const keys = Object.keys(this.unchangedSettings) as Tidy5eSettingKey[];

@@ -14,7 +14,7 @@
   import {
     damageTypeIconMap,
     getScaledCantripDamageFormulaForSinglePart,
-  } from 'src/actions/actions';
+  } from 'src/features/actions/actions';
   import RechargeControl from 'src/components/item-list/controls/RechargeControl.svelte';
   import ActionFilterOverrideControl from 'src/components/item-list/controls/ActionFilterOverrideControl.svelte';
   import { settingStore } from 'src/settings/settings';

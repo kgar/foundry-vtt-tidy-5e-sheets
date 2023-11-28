@@ -17,10 +17,12 @@
   let context = getContext<Readable<ItemSheetContext>>('context');
 
   const allClasses = FoundryAdapter.getAllClassesDropdownOptions(
-    $settingStore.spellClassFilterAdditionalClasses
+    $settingStore.spellClassFilterAdditionalClasses,
   );
 
-  $: spellComponents = Object.entries($context.spellComponents) as Iterable<[string, any]>;
+  $: spellComponents = Object.entries($context.spellComponents) as Iterable<
+    [string, any]
+  >;
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -29,7 +31,7 @@
 
 {#if $settingStore.useMulticlassSpellbookFilter}
   <ItemFormGroup
-    labelText="{localize('T5EK.SpellClass')}"
+    labelText={localize('T5EK.SpellClass')}
     field="flags.{CONSTANTS.MODULE_ID}.parentClass"
     let:inputId
   >
@@ -39,7 +41,7 @@
       field="flags.{CONSTANTS.MODULE_ID}.parentClass"
       value={FoundryAdapter.tryGetFlag($context.item, 'parentClass') ?? ''}
       disabled={!$context.owner}
-      >
+    >
       <option value="">&mdash;</option>
       {#each allClasses as { text, value }}
         <option {value}>{localize(text)}</option>
@@ -59,7 +61,7 @@
     field="system.level"
     value={$context.system.level}
     disabled={!$context.owner}
-    >
+  >
     <SelectOptions data={$context.config.spellLevels} />
   </Select>
 </ItemFormGroup>
@@ -75,7 +77,7 @@
     field="system.school"
     value={$context.system.school}
     disabled={!$context.owner}
-    >
+  >
     <SelectOptions data={$context.config.spellSchools} blank="" />
   </Select>
 </ItemFormGroup>
@@ -93,7 +95,7 @@
       field="system.components.{key}"
       {checked}
       disabled={!$context.owner}
-      >
+    >
       {component.label}
     </Checkbox>
   {/each}
@@ -112,7 +114,7 @@
     field="system.materials.value"
     value={$context.system.materials.value}
     disabled={!$context.owner}
-    />
+  />
   {#if $context.system.materials.value}
     <div class="spell-materials flexrow align-items-center small-gap">
       <label for="{$context.appId}-system-materials-supply"
@@ -125,7 +127,7 @@
         value={$context.system.materials.supply}
         placeholder="0"
         disabled={!$context.owner}
-        />
+      />
 
       <label for="{$context.appId}-system-materials-cost"
         >{localize('DND5E.CostGP')}</label
@@ -137,7 +139,7 @@
         value={$context.system.materials.cost}
         placeholder="&mdash;"
         disabled={!$context.owner}
-        />
+      />
 
       <Checkbox
         id="{$context.appId}-system-materials-consumed"
@@ -146,7 +148,7 @@
         field="system.materials.consumed"
         checked={$context.system.materials.consumed}
         disabled={!$context.owner}
-        >
+      >
         {localize('DND5E.Consumed')}
       </Checkbox>
     </div>
@@ -165,7 +167,7 @@
       field="system.preparation.prepared"
       checked={$context.system.preparation.prepared}
       disabled={!$context.owner}
-      >
+    >
       {localize('DND5E.SpellPrepared')}
     </Checkbox>
     <Select
@@ -174,7 +176,7 @@
       field="system.preparation.mode"
       value={$context.system.preparation.mode}
       disabled={!$context.owner}
-      >
+    >
       <SelectOptions data={$context.config.spellPreparationModes} />
     </Select>
   </div>
@@ -200,7 +202,7 @@
       field="system.scaling.mode"
       value={$context.system.scaling.mode}
       disabled={!$context.owner}
-      >
+    >
       <SelectOptions data={$context.config.spellScalingModes} />
     </Select>
     <TextInput
@@ -211,6 +213,6 @@
       placeholder={localize('DND5E.ScalingFormula')}
       dataset={{ formulaEditor: true }}
       disabled={!$context.owner}
-      />
+    />
   </div>
 </ItemFormGroup>

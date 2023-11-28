@@ -19,7 +19,7 @@ import { debug } from 'src/utils/logging';
 import { getPercentage } from 'src/utils/numbers';
 import type { ItemChatData } from 'src/types/item';
 import { registeredVehicleTabs } from 'src/runtime/vehicle-sheet-state';
-import { actorUsesActionFeature, getActorActions } from 'src/actions/actions';
+import { actorUsesActionFeature, getActorActions } from 'src/features/actions/actions';
 
 export class Tidy5eVehicleSheet
   extends dnd5e.applications.actor.ActorSheet5eVehicle

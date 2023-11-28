@@ -1,7 +1,7 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { type CharacterSheetContext } from 'src/types/types';
-  import Exhaustion from '../../actor/Exhaustion.svelte';
+  import ExhaustionTracker from '../../actor/ExhaustionTracker.svelte';
   import Inspiration from './Inspiration.svelte';
   import DeathSaves from '../../actor/DeathSaves.svelte';
   import Rest from './Rest.svelte';
@@ -12,6 +12,7 @@
   import type { Readable } from 'svelte/store';
   import ActorProfile from 'src/sheets/actor/ActorProfile.svelte';
   import { settingStore } from 'src/settings/settings';
+  import ExhaustionInput from 'src/sheets/actor/ExhaustionInput.svelte';
 
   let context = getContext<Readable<CharacterSheetContext>>('context');
 
@@ -39,8 +40,18 @@
     />
   {/if}
 
-  {#if $settingStore.useExhaustion}
-    <Exhaustion
+  {#if $settingStore.useExhaustion && $settingStore.exhaustionConfig.type === 'specific'}
+    <ExhaustionTracker
+      level={$context.system.attributes.exhaustion}
+      radiusClass={$context.useRoundedPortraitStyle ? 'rounded' : 'top-left'}
+      on:levelSelected={onLevelSelected}
+      onlyShowOnHover={$settingStore.showExhaustionOnHover ||
+        ($settingStore.hideIfZero &&
+          $context.system.attributes.exhaustion === 0)}
+      exhaustionConfig={$settingStore.exhaustionConfig}
+    />
+  {:else if $settingStore.useExhaustion && $settingStore.exhaustionConfig.type === 'open'}
+    <ExhaustionInput
       level={$context.system.attributes.exhaustion}
       radiusClass={$context.useRoundedPortraitStyle ? 'rounded' : 'top-left'}
       on:levelSelected={onLevelSelected}
