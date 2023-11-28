@@ -9,6 +9,7 @@
   import {
     getOneDnDExhaustionConfig,
     getStandardExhaustionConfig,
+    getStandardVehicleExhaustionConfig,
   } from 'src/features/exhaustion/exhaustion';
 
   let context = getContext<Writable<SettingsSheetContext>>('context');
@@ -85,6 +86,17 @@
   />
 
   <h2>{localize('T5EK.Settings.VehicleExhaustion.Header')}</h2>
+
+  <article class="setting flex-row extra-small-gap" style="padding: 0.5rem">
+    <button
+      type="button"
+      on:click={() =>
+        ($context.vehicleExhaustionConfig =
+          getStandardVehicleExhaustionConfig())}
+    >
+      {localize('T5EK.Settings.Exhaustion.useStandardExhaustion')}
+    </button>
+  </article>
 
   <ExhaustionSetting
     name="T5EK.Settings.VehicleExhaustion.name"
