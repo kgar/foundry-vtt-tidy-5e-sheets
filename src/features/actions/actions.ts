@@ -84,18 +84,10 @@ export function getActorActionsV2(actor: Actor5e): ActorActionsV2 {
 }
 
 function mapActionItem(item: Item5e, actorRollData: any): ActionItem {
-  // TODO: plug this in and then map / simplify formulae where able with actorRollData.
-
   let calculatedDerivedDamage = Array.isArray(item.labels.derivedDamage)
     ? [...item.labels.derivedDamage].map(({ formula, ...rest }: any) => {
-        // const formulaWithoutFlavor = formula?.replace(RollTerm.FLAVOR_REGEXP_STRING, '') || '0';
-
-        const roll = new Roll(formula);
-
-        roll.terms.forEach(console.log);
-
         return {
-          formula: formula,
+          formula: simplifyFormula(formula, actorRollData, true),
           ...rest,
         };
       })
@@ -125,14 +117,34 @@ function mapActionItem(item: Item5e, actorRollData: any): ActionItem {
   return {
     item,
     typeLabel: FoundryAdapter.localize(`ITEM.Type${item.type.titleCase()}`),
-    calculatedDerivedDamage: [
-      {
-        damageType: 'radiant',
-        formula: '2d8',
-        label: '2d8 Radiant',
-      },
-    ],
+    calculatedDerivedDamage,
   };
+}
+
+function simplifyFormula(
+  formula: string,
+  actorRollData: any,
+  removeFlavor: boolean = false
+): string {
+  try {
+    const roll = Roll.create(formula, actorRollData);
+    const simplifiedTerms = roll.terms.map((t: any) =>
+      t.isIntermediate
+        ? new NumericTerm({ number: t.evaluate().total, options: t.options })
+        : t
+    );
+    let simplifiedFormula = Roll.fromTerms(simplifiedTerms).formula;
+    if (removeFlavor) {
+      simplifiedFormula = simplifiedFormula.replace(
+        RollTerm.FLAVOR_REGEXP_STRING,
+        ''
+      );
+    }
+    return simplifiedFormula;
+  } catch (e) {
+    error('Unable to simplify formula due to an error.', false, e);
+    return formula;
+  }
 }
 
 export function getActorActions(actor: Actor5e): ActorActions {
