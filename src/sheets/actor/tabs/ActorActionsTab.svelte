@@ -25,7 +25,7 @@
 </script>
 
 <div class="actions-tab-container scroll-container flex-column small-gap">
-  {#each Object.entries($context.actions) as [actionType, itemSet] (actionType)}
+  {#each Object.entries($context.actionsV2) as [actionType, itemSet] (actionType)}
     {#if itemSet.size}
       <ItemTable>
         <ItemTableHeaderRow>
@@ -45,42 +45,43 @@
             <ItemTableColumn baseWidth="1.5rem"></ItemTableColumn>
           {/if}
         </ItemTableHeaderRow>
-        {#each itemSet as item (item.id)}
+        {#each itemSet as actionItem (actionItem.item.id)}
           <ItemTableRow
-            {item}
+            item={actionItem.item}
             on:mousedown={(event) =>
-              FoundryAdapter.editOnMiddleClick(event.detail, item)}
+              FoundryAdapter.editOnMiddleClick(event.detail, actionItem.item)}
             contextMenu={{
               type: CONSTANTS.CONTEXT_MENU_TYPE_ITEMS,
-              id: item.id,
+              id: actionItem.item.id,
             }}
             let:toggleSummary
           >
             <ItemTableCell primary={true}>
-              <ItemUseButton {item} />
+              <ItemUseButton item={actionItem.item} />
               <ItemName
-                {item}
+                item={actionItem.item}
                 on:toggle={() => toggleSummary($context.actor)}
                 useActiveEffectsMarker={false}
               >
                 {@const spellClass = FoundryAdapter.getClassLabel(
-                  FoundryAdapter.tryGetFlag(item, 'parentClass') ?? '',
+                  FoundryAdapter.tryGetFlag(actionItem.item, 'parentClass') ??
+                    '',
                 )}
                 <div class="flex-1">
-                  <div>{item.name}</div>
+                  <div>{actionItem.item.name}</div>
 
                   <small>
-                    {#if item.type !== CONSTANTS.ITEM_TYPE_SPELL}
-                      {item.labels.type}
-                    {:else if item.type === 'spell' && item.system.level !== 0}
-                      {item.labels.level ?? ''}
-                      {item.labels.school ?? ''}
+                    {#if actionItem.item.type !== CONSTANTS.ITEM_TYPE_SPELL}
+                      {actionItem.typeLabel}
+                    {:else if actionItem.item.type === 'spell' && actionItem.item.system.level !== 0}
+                      {actionItem.item.labels.level ?? ''}
+                      {actionItem.item.labels.school ?? ''}
                       {#if spellClass}
                         • {localize(spellClass)}
                       {/if}
                     {:else}
-                      {item.labels.school ?? ''}
-                      {item.labels.level ?? ''}
+                      {actionItem.item.labels.school ?? ''}
+                      {actionItem.item.labels.level ?? ''}
                       {#if spellClass}
                         • {localize(spellClass)}
                       {/if}
@@ -88,28 +89,29 @@
                   </small>
                 </div>
               </ItemName>
-              {#if item.system.recharge?.value || item.hasLimitedUses || item.system.activation?.type === 'legendary'}
+              {#if actionItem.item.system.recharge?.value || actionItem.item.hasLimitedUses || actionItem.item.system.activation?.type === 'legendary'}
                 <div class="item-uses" title={localize('DND5E.Uses')}>
-                  {#if item.system.recharge?.charged && item.system.recharge?.value}
+                  {#if actionItem.item.system.recharge?.charged && actionItem.item.system.recharge?.value}
                     <i class="fas fa-bolt" title={localize('DND5E.Charged')} />
-                  {:else if item.system.recharge?.value}
-                    <RechargeControl {item} />
-                  {:else if item.hasLimitedUses}
-                    {#if item.system.uses?.value === item.system.uses?.max && item.system.uses?.autoDestroy}
-                      <div title={item.system.quantity}>
-                        {item.system.quantity ?? 0}
+                  {:else if actionItem.item.system.recharge?.value}
+                    <RechargeControl item={actionItem.item} />
+                  {:else if actionItem.item.hasLimitedUses}
+                    {#if actionItem.item.system.uses?.value === actionItem.item.system.uses?.max && actionItem.item.system.uses?.autoDestroy}
+                      <div title={actionItem.item.system.quantity}>
+                        {actionItem.item.system.quantity ?? 0}
                       </div>
                       <small>{localize('DND5E.Quantity')}</small>
                     {:else}
                       <div>
-                        {item.system.uses.value ?? 0} / {item.system.uses.max ?? 0}
+                        {actionItem.item.system.uses.value ?? 0} / {actionItem
+                          .item.system.uses.max ?? 0}
                       </div>
                       <small>{localize('DND5E.Uses')}</small>
                     {/if}
                   {/if}
 
-                  {#if item.system.activation.type === 'legendary'}
-                    {item.system.activation.cost}
+                  {#if actionItem.item.system.activation.type === 'legendary'}
+                    {actionItem.item.system.activation.cost}
                   {/if}
                 </div>
               {/if}
@@ -119,58 +121,73 @@
               cssClass="truncate flex-column no-gap"
             >
               <!-- Range -->
-              {#if item.system.target?.type === 'self'}
-                <div title={item.labels.target} class="flex-column-truncate">
-                  {item.labels.target}
+              {#if actionItem.item.system.target?.type === 'self'}
+                <div
+                  title={actionItem.item.labels.target}
+                  class="flex-column-truncate"
+                >
+                  {actionItem.item.labels.target}
                 </div>
               {:else}
-                <div title={item.labels.range} class="flex-column-truncate">
-                  {item.labels.range}
+                <div
+                  title={actionItem.item.labels.range}
+                  class="flex-column-truncate"
+                >
+                  {actionItem.item.labels.range}
                 </div>
-                {#if item.labels.target}
+                {#if actionItem.item.labels.target}
                   <small
-                    title={item.labels.target}
+                    title={actionItem.item.labels.target}
                     class="flex-column-truncate"
                     style="min-width: 0; "
                   >
-                    {item.labels.target}
+                    {actionItem.item.labels.target}
                   </small>
                 {/if}
               {/if}
             </ItemTableCell>
             <ItemTableCell baseWidth="3.75rem" cssClass="flex-column no-gap">
               <!-- HIT / DC -->
-              {#if item.labels.save || item.labels.toHit}
-                {#if item.labels.save !== '' && item.labels.save !== undefined}
+              {#if actionItem.item.labels.save || actionItem.item.labels.toHit}
+                {#if actionItem.item.labels.save !== '' && actionItem.item.labels.save !== undefined}
                   {@const saveAbilityLabel =
-                    FoundryAdapter.lookupAbility(item.system.save.ability)
-                      ?.label ?? ''}
-                  <span title={item.labels.save} class="flex-column-truncate">
+                    FoundryAdapter.lookupAbility(
+                      actionItem.item.system.save.ability,
+                    )?.label ?? ''}
+                  <span
+                    title={actionItem.item.labels.save}
+                    class="flex-column-truncate"
+                  >
                     {localize('DND5E.AbbreviationDC')}
-                    {item.system.save.dc}
+                    {actionItem.item.system.save.dc}
                   </span>
                   <small title={saveAbilityLabel} class="flex-column-truncate"
                     >{saveAbilityLabel}</small
                   >
                 {:else}
-                  <span title={item.labels.toHit}>{item.labels.toHit}</span>
+                  <span title={actionItem.item.labels.toHit}
+                    >{actionItem.item.labels.toHit}</span
+                  >
                 {/if}
               {/if}
             </ItemTableCell>
             <ItemTableCell baseWidth="7.5rem" cssClass="flex-wrap">
               <!-- Damage -->
-              {#each item.labels.derivedDamage ?? [] as entry, i}
+              {#each actionItem.calculatedDerivedDamage ?? [] as entry, i}
                 {@const damageHealingTypeLabel =
                   FoundryAdapter.lookupDamageType(entry.damageType) ??
                   FoundryAdapter.lookupHealingType(entry.damageType)}
                 {@const isScalableCantripDamage =
-                  item.type === 'spell' &&
-                  item.system.scaling?.mode === 'cantrip' &&
+                  actionItem.item.type === 'spell' &&
+                  actionItem.item.system.scaling?.mode === 'cantrip' &&
                   $settingStore.actionListScaleCantripDamage}
 
                 {#if isScalableCantripDamage}
                   {@const scaledEntry =
-                    getScaledCantripDamageFormulaForSinglePart(item, i)}
+                    getScaledCantripDamageFormulaForSinglePart(
+                      actionItem.item,
+                      i,
+                    )}
                   <p title={scaledEntry.formula + damageHealingTypeLabel}>
                     {scaledEntry.formula}
                     <span
@@ -193,7 +210,7 @@
             </ItemTableCell>
             {#if $context.owner && $context.useClassicControls}
               <ItemTableCell baseWidth="1.5rem">
-                <ActionFilterOverrideControl {item} />
+                <ActionFilterOverrideControl item={actionItem.item} />
               </ItemTableCell>
             {/if}
           </ItemTableRow>

@@ -7,8 +7,9 @@ import type {
   Actor5e,
   ActorActions,
   ActorActionsV2,
+  DerivedDamage,
 } from 'src/types/types';
-import { debug, error } from 'src/utils/logging';
+import { error } from 'src/utils/logging';
 
 export type ActionSets = {
   action: Set<Item5e>;
@@ -37,7 +38,7 @@ const itemTypeSortValues: Record<string, number> = {
 export function getActorActionsV2(actor: Actor5e): ActorActionsV2 {
   const actorRollData = actor.getRollData();
 
-  const filteredItems: any[] = actor.items
+  const filteredItems = actor.items
     .filter(isItemInActionList)
     .sort((a: Item5e, b: Item5e) => {
       if (a.type !== b.type) {
@@ -50,17 +51,83 @@ export function getActorActionsV2(actor: Actor5e): ActorActionsV2 {
     })
     .map((item: Item5e) => mapActionItem(item, actorRollData));
 
-  return {};
+  const initial: ActionSets = {
+    action: new Set(),
+    bonus: new Set(),
+    crew: new Set(),
+    lair: new Set(),
+    legendary: new Set(),
+    reaction: new Set(),
+    other: new Set(),
+    mythic: new Set(),
+    special: new Set(),
+  };
+  return filteredItems.reduce((acc: ActionSets, actionItem: ActionItem) => {
+    try {
+      if (['backpack', 'tool'].includes(actionItem.item.type)) {
+        return acc;
+      }
+
+      const activationType = getActivationType(
+        actionItem.item.system.activation?.type
+      );
+      acc[activationType].add(actionItem);
+      return acc;
+    } catch (e) {
+      error('error trying to digest item', true, {
+        name: actionItem.item.name,
+        e,
+      });
+      return acc;
+    }
+  }, initial);
 }
 
 function mapActionItem(item: Item5e, actorRollData: any): ActionItem {
   // TODO: plug this in and then map / simplify formulae where able with actorRollData.
 
+  let calculatedDerivedDamage = Array.isArray(item.labels.derivedDamage)
+    ? [...item.labels.derivedDamage].map(({ formula, ...rest }: any) => {
+        // const formulaWithoutFlavor = formula?.replace(RollTerm.FLAVOR_REGEXP_STRING, '') || '0';
+
+        const roll = new Roll(formula);
+
+        roll.terms.forEach(console.log);
+
+        return {
+          formula: formula,
+          ...rest,
+        };
+      })
+    : [];
+
+  /*
+      // Straight from Foundry, roll.js line 254:
+      if ( term.isIntermediate ) {
+        await term.evaluate({minimize, maximize, async: true});
+        this._dice = this._dice.concat(term.dice);
+        term = new NumericTerm({number: term.total, options: term.options});
+      }
+
+      For my purposes...
+      If term is deterministic, evaluate it and take the total as a NumericTerm.
+      Reconstruct the roll via Roll.fromTerms()
+      https://foundryvtt.com/api/v11/classes/client.Roll.html#fromTerms
+
+      Some sample code:
+      let rollTerms = new Roll('(1-6/6+1)d6+1d6').terms.map(t => t.isIntermediate ? new NumericTerm({number: t.evaluate().total, options: t.options}) : t);
+      Roll.fromTerms(rollTerms).formula
+      > '1d6 + 1d6' 🤯
+
+      WARNING: Try/Catch/Log and fall back to original terms
+    */
+
   return {
     item,
+    typeLabel: FoundryAdapter.localize(`ITEM.Type${item.type.titleCase()}`),
     calculatedDerivedDamage: [
       {
-        damageType: 'Radiant',
+        damageType: 'radiant',
         formula: '2d8',
         label: '2d8 Radiant',
       },
@@ -273,16 +340,10 @@ export function toggleActionFilterOverride(item: Item5e) {
   );
 }
 
-type derivedDamage = {
-  label: string;
-  formula: string;
-  damageType: string;
-};
-
 export function getScaledCantripDamageFormulaForSinglePart(
   item: Item5e,
   partIndex: number
-): derivedDamage {
+): DerivedDamage {
   try {
     const damageFormula = item.system.damage.parts[partIndex]?.[0] ?? '';
     const scaledFormula = item._scaleCantripDamage(

@@ -22,7 +22,11 @@ import type { SvelteComponent } from 'svelte';
 import { getPercentage } from 'src/utils/numbers';
 import type { ItemChatData } from 'src/types/item';
 import { registeredCharacterTabs } from 'src/runtime/character-sheet-state';
-import { actorUsesActionFeature, getActorActions } from 'src/features/actions/actions';
+import {
+  actorUsesActionFeature,
+  getActorActions,
+  getActorActionsV2,
+} from 'src/features/actions/actions';
 
 export class Tidy5eCharacterSheet
   extends dnd5e.applications.actor.ActorSheet5eCharacter
@@ -147,6 +151,7 @@ export class Tidy5eCharacterSheet
         super.activateListeners($(node));
       },
       actions: getActorActions(this.actor),
+      actionsV2: getActorActionsV2(this.actor),
       actorClassesToImages: getActorClassesToImages(this.actor),
       allowEffectsManagement: FoundryAdapter.allowCharacterEffectsManagement(
         this.actor

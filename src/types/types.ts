@@ -94,14 +94,17 @@ export type VehicleSheetContext = {} & ActorSheetContext & Record<string, any>;
 
 export type ActorActions = Record<string, Set<Item5e>>;
 
+export type DerivedDamage = {
+  label: string;
+  formula: string;
+  damageType: string;
+};
+
 export type ActionItem = {
   item: Item5e;
   // Put the goods here
-  calculatedDerivedDamage: {
-    damageType: string;
-    label: string;
-    formula: string;
-  }[];
+  typeLabel: string;
+  calculatedDerivedDamage: DerivedDamage[];
 };
 
 type ActionSectionTitle = string;
