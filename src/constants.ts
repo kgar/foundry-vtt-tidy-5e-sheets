@@ -2,7 +2,8 @@ const moduleId = 'tidy5e-sheet-kgar';
 export const CONSTANTS = {
   MODULE_ID: moduleId,
   DND5E_SYSTEM_ID: 'dnd5e',
-  HOOK_TIDY5E_SHEETS_READY: `${moduleId}-ready`,
+  // TODO: inject moduleId variable when this module overtakes the original
+  HOOK_TIDY5E_SHEETS_READY: `tidy5e-sheet.ready`,
   ITEM_TYPE_EQUIPMENT: 'equipment',
   ITEM_TYPE_BACKGROUND: 'background',
   ITEM_TYPE_BACKPACK: 'backpack',

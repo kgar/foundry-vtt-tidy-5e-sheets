@@ -188,23 +188,27 @@
                       actionItem.item,
                       i,
                     )}
-                  <p title={scaledEntry.formula + damageHealingTypeLabel}>
+                  <div
+                    title={scaledEntry.formula + damageHealingTypeLabel}
+                    class="truncate"
+                  >
                     {scaledEntry.formula}
                     <span
                       >{@html damageTypeIconMap[scaledEntry.damageType] ??
                         ''}</span
                     >
-                  </p>
+                  </div>
                 {:else}
-                  <p
+                  <div
                     title={entry.label ??
                       entry.formula + damageHealingTypeLabel}
+                    class="truncate"
                   >
                     {entry.formula}
                     <span
                       >{@html damageTypeIconMap[entry.damageType] ?? ''}</span
                     >
-                  </p>
+                  </div>
                 {/if}
               {/each}
             </ItemTableCell>
