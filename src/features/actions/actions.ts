@@ -3,6 +3,7 @@ import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { SettingsProvider } from 'src/settings/settings';
 import type { Item5e } from 'src/types/item';
 import type { ActionItem, Actor5e, ActorActions } from 'src/types/types';
+import { isNil } from 'src/utils/data';
 import { scaleCantripDamageFormula, simplifyFormula } from 'src/utils/formula';
 import { error } from 'src/utils/logging';
 
@@ -187,7 +188,7 @@ function getRangeTitles(item: Item5e): {
 }
 
 function hasRange(item: Item5e): boolean {
-  return item.system.range.units !== null;
+  return !isNil(item.system.range?.units);
 }
 
 function buildActionSets(filteredItems: any) {
@@ -205,10 +206,6 @@ function buildActionSets(filteredItems: any) {
 
   return filteredItems.reduce((acc: ActionSets, actionItem: ActionItem) => {
     try {
-      if (['backpack', 'tool'].includes(actionItem.item.type)) {
-        return acc;
-      }
-
       const activationType = getActivationType(
         actionItem.item.system.activation?.type
       );

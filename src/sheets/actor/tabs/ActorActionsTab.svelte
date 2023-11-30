@@ -121,15 +121,14 @@
                 <div title={actionItem.rangeTitle} class="flex-column-truncate">
                   {actionItem.rangeTitle}
                 </div>
-
-                {#if actionItem.rangeSubtitle !== null}
-                  <small
-                    title={actionItem.rangeSubtitle}
-                    class="flex-column-truncate"
-                  >
-                    {actionItem.rangeSubtitle}
-                  </small>
-                {/if}
+              {/if}
+              {#if actionItem.rangeSubtitle !== null}
+                <small
+                  title={actionItem.rangeSubtitle}
+                  class="flex-column-truncate"
+                >
+                  {actionItem.rangeSubtitle}
+                </small>
               {/if}
             </ItemTableCell>
             <ItemTableCell baseWidth="5rem" cssClass="flex-column no-gap">
