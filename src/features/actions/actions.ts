@@ -31,8 +31,6 @@ const itemTypeSortValues: Record<string, number> = {
 };
 
 export function getActorActions(actor: Actor5e): ActorActions {
-  const actorRollData = actor.getRollData();
-
   const filteredItems = actor.items
     .filter(isItemInActionList)
     .sort((a: Item5e, b: Item5e) => {
