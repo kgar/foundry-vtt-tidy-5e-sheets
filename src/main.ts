@@ -34,12 +34,11 @@ FoundryAdapter.hooksOnce('ready', async () => {
   const tidy5eModule = FoundryAdapter.getModule(CONSTANTS.MODULE_ID);
   tidy5eModule.api = getApi();
 
-  // DEBUG: Remove after taking over the live module ID
+  // TODO: Remove after taking over the live module ID
   const prodTidy5eModule = FoundryAdapter.getModule('tidy5e-sheet');
   if (prodTidy5eModule) {
     prodTidy5eModule.api = tidy5eModule.api;
   }
-  // END DEBUG
 
   FoundryAdapter.hooksCall(CONSTANTS.HOOK_TIDY5E_SHEETS_READY);
 });

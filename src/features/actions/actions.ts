@@ -2,8 +2,10 @@ import { CONSTANTS } from 'src/constants';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { SettingsProvider } from 'src/settings/settings';
 import type { Item5e } from 'src/types/item';
-import type { Actor5e, ActorActions } from 'src/types/types';
-import { debug, error } from 'src/utils/logging';
+import type { ActionItem, Actor5e, ActorActions } from 'src/types/types';
+import { isNil } from 'src/utils/data';
+import { scaleCantripDamageFormula, simplifyFormula } from 'src/utils/formula';
+import { error } from 'src/utils/logging';
 
 export type ActionSets = {
   action: Set<Item5e>;
@@ -30,7 +32,7 @@ const itemTypeSortValues: Record<string, number> = {
 };
 
 export function getActorActions(actor: Actor5e): ActorActions {
-  const filteredItems: any[] = actor.items
+  const filteredItems = actor.items
     .filter(isItemInActionList)
     .sort((a: Item5e, b: Item5e) => {
       if (a.type !== b.type) {
@@ -41,56 +43,13 @@ export function getActorActions(actor: Actor5e): ActorActions {
       }
       return (a.sort || 0) - (b.sort || 0);
     })
-    .map((item: Item5e) => {
-      if (item.labels) {
-        item.labels.type = FoundryAdapter.localize(
-          `ITEM.Type${item.type.titleCase()}`
-        );
-      }
+    .map((item: Item5e) => mapActionItem(item));
 
-      // removes any in-formula flavor text from the formula in the label
-      if (item.labels?.derivedDamage?.length) {
-        item.labels.derivedDamage = item.labels.derivedDamage.map(
-          ({ formula, ...rest }: any) => ({
-            formula: formula?.replace(/\[.+?\]/, '') || '0',
-            ...rest,
-          })
-        );
-      }
-      return item;
-    });
-
-  const initial: ActionSets = {
-    action: new Set(),
-    bonus: new Set(),
-    crew: new Set(),
-    lair: new Set(),
-    legendary: new Set(),
-    reaction: new Set(),
-    other: new Set(),
-    mythic: new Set(),
-    special: new Set(),
-  };
-  const actionsData = filteredItems.reduce<ActionSets>((acc, item) => {
-    try {
-      if (['backpack', 'tool'].includes(item.type)) {
-        return acc;
-      }
-
-      const activationType = getActivationType(item.system.activation?.type);
-      acc[activationType].add(item);
-      return acc;
-    } catch (e) {
-      error('error trying to digest item', true, { name: item.name, e });
-      return acc;
-    }
-  }, initial);
-  return actionsData;
+  return buildActionSets(filteredItems);
 }
 
 export function isItemInActionList(item: Item5e): boolean {
   // check our override
-
   const override = FoundryAdapter.tryGetFlag<boolean>(
     item,
     'action-filter-override'
@@ -158,6 +117,108 @@ export function isItemInActionList(item: Item5e): boolean {
       return false;
     }
   }
+}
+
+function mapActionItem(item: Item5e): ActionItem {
+  let calculatedDerivedDamage = Array.isArray(item.labels.derivedDamage)
+    ? [...item.labels.derivedDamage].map(
+        ({ formula, label, damageType }: any, i: number) => {
+          const rawDamagePartFormula = item.system.damage?.parts[i]?.[0];
+
+          if (rawDamagePartFormula?.trim() === '') {
+            formula = '';
+          }
+
+          formula = simplifyFormula(formula, true);
+
+          const damageHealingTypeLabel =
+            FoundryAdapter.lookupDamageType(damageType) ??
+            FoundryAdapter.lookupHealingType(damageType) ??
+            '';
+
+          if (
+            item.type === 'spell' &&
+            item.system.scaling?.mode === 'cantrip' &&
+            SettingsProvider.settings.actionListScaleCantripDamage.get()
+          ) {
+            formula = scaleCantripDamageFormula(item, formula);
+            label = `${formula} ${damageHealingTypeLabel}`;
+          }
+
+          return {
+            label,
+            formula,
+            damageType,
+            damageHealingTypeLabel,
+          };
+        }
+      )
+    : [];
+
+  return {
+    item,
+    typeLabel: FoundryAdapter.localize(`ITEM.Type${item.type.titleCase()}`),
+    calculatedDerivedDamage,
+    ...getRangeTitles(item),
+  };
+}
+
+function getRangeTitles(item: Item5e): {
+  rangeTitle: string | null;
+  rangeSubtitle: string | null;
+} {
+  const rangeSubtitle =
+    item.system.target?.type !== 'self' && item.labels.target
+      ? item.labels.target
+      : null;
+
+  const rangeTitle =
+    item.system.target?.type === 'self'
+      ? item.labels.target
+      : hasRange(item)
+      ? item.labels.range
+      : rangeSubtitle !== null
+      ? '—'
+      : null;
+
+  return {
+    rangeTitle,
+    rangeSubtitle,
+  };
+}
+
+function hasRange(item: Item5e): boolean {
+  return !isNil(item.system.range?.units);
+}
+
+function buildActionSets(filteredItems: any) {
+  const initial: ActionSets = {
+    action: new Set(),
+    bonus: new Set(),
+    crew: new Set(),
+    lair: new Set(),
+    legendary: new Set(),
+    reaction: new Set(),
+    mythic: new Set(),
+    special: new Set(),
+    other: new Set(),
+  };
+
+  return filteredItems.reduce((acc: ActionSets, actionItem: ActionItem) => {
+    try {
+      const activationType = getActivationType(
+        actionItem.item.system.activation?.type
+      );
+      acc[activationType].add(actionItem);
+      return acc;
+    } catch (e) {
+      error('error trying to digest item', true, {
+        name: actionItem.item.name,
+        e,
+      });
+      return acc;
+    }
+  }, initial);
 }
 
 function getActivationType(activationType: string) {
@@ -232,37 +293,4 @@ export function toggleActionFilterOverride(item: Item5e) {
     'action-filter-override',
     !isItemInActionList(item)
   );
-}
-
-type derivedDamage = {
-  label: string;
-  formula: string;
-  damageType: string;
-};
-
-export function getScaledCantripDamageFormulaForSinglePart(
-  item: Item5e,
-  partIndex: number
-): derivedDamage {
-  try {
-    const damageFormula = item.system.damage.parts[partIndex]?.[0] ?? '';
-    const scaledFormula = item._scaleCantripDamage(
-      [damageFormula],
-      item.system.scaling.formula,
-      item.actor.type === 'character'
-        ? item.actor.system.details.level ?? 0
-        : item.system.preparation.mode === 'innate'
-        ? Math.ceil(item.actor.system.details.cr ?? 0)
-        : item.actor.system.details.spellLevel ?? 0,
-      item.getRollData()
-    );
-
-    return {
-      ...item.labels.derivedDamage[partIndex],
-      formula: scaledFormula,
-    };
-  } catch (e) {
-    error('An error occurred while scaling cantrip damage', false, e);
-    return item.labels.derivedDamage[partIndex];
-  }
 }

@@ -11,13 +11,9 @@
   import ItemName from 'src/components/item-list/ItemName.svelte';
   import { CONSTANTS } from 'src/constants';
   import ItemUseButton from 'src/components/item-list/ItemUseButton.svelte';
-  import {
-    damageTypeIconMap,
-    getScaledCantripDamageFormulaForSinglePart,
-  } from 'src/features/actions/actions';
+  import { damageTypeIconMap } from 'src/features/actions/actions';
   import RechargeControl from 'src/components/item-list/controls/RechargeControl.svelte';
   import ActionFilterOverrideControl from 'src/components/item-list/controls/ActionFilterOverrideControl.svelte';
-  import { settingStore } from 'src/settings/settings';
 
   let context = getContext<Readable<ActorSheetContext>>('context');
 
@@ -32,10 +28,10 @@
           <ItemTableColumn primary={true}>
             {FoundryAdapter.getActivationTypeLabel(actionType)}
           </ItemTableColumn>
-          <ItemTableColumn baseWidth="4.375rem"
+          <ItemTableColumn baseWidth="6.25rem"
             >{localize('DND5E.Range')}</ItemTableColumn
           >
-          <ItemTableColumn baseWidth="3.75rem"
+          <ItemTableColumn baseWidth="5rem"
             >{localize('T5EK.HitDC')}</ItemTableColumn
           >
           <ItemTableColumn baseWidth="7.5rem"
@@ -45,42 +41,43 @@
             <ItemTableColumn baseWidth="1.5rem"></ItemTableColumn>
           {/if}
         </ItemTableHeaderRow>
-        {#each itemSet as item (item.id)}
+        {#each itemSet as actionItem (actionItem.item.id)}
           <ItemTableRow
-            {item}
+            item={actionItem.item}
             on:mousedown={(event) =>
-              FoundryAdapter.editOnMiddleClick(event.detail, item)}
+              FoundryAdapter.editOnMiddleClick(event.detail, actionItem.item)}
             contextMenu={{
               type: CONSTANTS.CONTEXT_MENU_TYPE_ITEMS,
-              id: item.id,
+              id: actionItem.item.id,
             }}
             let:toggleSummary
           >
             <ItemTableCell primary={true}>
-              <ItemUseButton {item} />
+              <ItemUseButton item={actionItem.item} />
               <ItemName
-                {item}
+                item={actionItem.item}
                 on:toggle={() => toggleSummary($context.actor)}
                 useActiveEffectsMarker={false}
               >
                 {@const spellClass = FoundryAdapter.getClassLabel(
-                  FoundryAdapter.tryGetFlag(item, 'parentClass') ?? '',
+                  FoundryAdapter.tryGetFlag(actionItem.item, 'parentClass') ??
+                    '',
                 )}
                 <div class="flex-1">
-                  <div>{item.name}</div>
+                  <div>{actionItem.item.name}</div>
 
                   <small>
-                    {#if item.type !== CONSTANTS.ITEM_TYPE_SPELL}
-                      {item.labels.type}
-                    {:else if item.type === 'spell' && item.system.level !== 0}
-                      {item.labels.level ?? ''}
-                      {item.labels.school ?? ''}
+                    {#if actionItem.item.type !== CONSTANTS.ITEM_TYPE_SPELL}
+                      {actionItem.typeLabel}
+                    {:else if actionItem.item.type === 'spell' && actionItem.item.system.level !== 0}
+                      {actionItem.item.labels.level ?? ''}
+                      {actionItem.item.labels.school ?? ''}
                       {#if spellClass}
                         • {localize(spellClass)}
                       {/if}
                     {:else}
-                      {item.labels.school ?? ''}
-                      {item.labels.level ?? ''}
+                      {actionItem.item.labels.school ?? ''}
+                      {actionItem.item.labels.level ?? ''}
                       {#if spellClass}
                         • {localize(spellClass)}
                       {/if}
@@ -88,112 +85,93 @@
                   </small>
                 </div>
               </ItemName>
-              {#if item.system.recharge?.value || item.hasLimitedUses || item.system.activation?.type === 'legendary'}
+              {#if actionItem.item.system.recharge?.value || actionItem.item.hasLimitedUses || actionItem.item.system.activation?.type === 'legendary'}
                 <div class="item-uses" title={localize('DND5E.Uses')}>
-                  {#if item.system.recharge?.charged && item.system.recharge?.value}
+                  {#if actionItem.item.system.recharge?.charged && actionItem.item.system.recharge?.value}
                     <i class="fas fa-bolt" title={localize('DND5E.Charged')} />
-                  {:else if item.system.recharge?.value}
-                    <RechargeControl {item} />
-                  {:else if item.hasLimitedUses}
-                    {#if item.system.uses?.value === item.system.uses?.max && item.system.uses?.autoDestroy}
-                      <div title={item.system.quantity}>
-                        {item.system.quantity ?? 0}
+                  {:else if actionItem.item.system.recharge?.value}
+                    <RechargeControl item={actionItem.item} />
+                  {:else if actionItem.item.hasLimitedUses}
+                    {#if actionItem.item.system.uses?.value === actionItem.item.system.uses?.max && actionItem.item.system.uses?.autoDestroy}
+                      <div title={actionItem.item.system.quantity}>
+                        {actionItem.item.system.quantity ?? 0}
                       </div>
                       <small>{localize('DND5E.Quantity')}</small>
                     {:else}
                       <div>
-                        {item.system.uses.value ?? 0} / {item.system.uses.max ?? 0}
+                        {actionItem.item.system.uses.value ?? 0} / {actionItem
+                          .item.system.uses.max ?? 0}
                       </div>
                       <small>{localize('DND5E.Uses')}</small>
                     {/if}
                   {/if}
 
-                  {#if item.system.activation.type === 'legendary'}
-                    {item.system.activation.cost}
+                  {#if actionItem.item.system.activation.type === 'legendary'}
+                    {actionItem.item.system.activation.cost}
                   {/if}
                 </div>
               {/if}
             </ItemTableCell>
             <ItemTableCell
-              baseWidth="4.375rem"
+              baseWidth="6.25rem"
               cssClass="truncate flex-column no-gap"
             >
               <!-- Range -->
-              {#if item.system.target?.type === 'self'}
-                <div title={item.labels.target} class="flex-column-truncate">
-                  {item.labels.target}
+              {#if actionItem.rangeTitle !== null}
+                <div title={actionItem.rangeTitle} class="flex-column-truncate">
+                  {actionItem.rangeTitle}
                 </div>
-              {:else}
-                <div title={item.labels.range} class="flex-column-truncate">
-                  {item.labels.range}
-                </div>
-                {#if item.labels.target}
-                  <small
-                    title={item.labels.target}
-                    class="flex-column-truncate"
-                    style="min-width: 0; "
-                  >
-                    {item.labels.target}
-                  </small>
-                {/if}
+              {/if}
+              {#if actionItem.rangeSubtitle !== null}
+                <small
+                  title={actionItem.rangeSubtitle}
+                  class="flex-column-truncate"
+                >
+                  {actionItem.rangeSubtitle}
+                </small>
               {/if}
             </ItemTableCell>
-            <ItemTableCell baseWidth="3.75rem" cssClass="flex-column no-gap">
+            <ItemTableCell baseWidth="5rem" cssClass="flex-column no-gap">
               <!-- HIT / DC -->
-              {#if item.labels.save || item.labels.toHit}
-                {#if item.labels.save !== '' && item.labels.save !== undefined}
+              {#if actionItem.item.labels.save || actionItem.item.labels.toHit}
+                {#if actionItem.item.labels.save !== '' && actionItem.item.labels.save !== undefined}
                   {@const saveAbilityLabel =
-                    FoundryAdapter.lookupAbility(item.system.save.ability)
-                      ?.label ?? ''}
-                  <span title={item.labels.save} class="flex-column-truncate">
+                    FoundryAdapter.lookupAbility(
+                      actionItem.item.system.save.ability,
+                    )?.label ?? ''}
+                  <span
+                    title={actionItem.item.labels.save}
+                    class="flex-column-truncate"
+                  >
                     {localize('DND5E.AbbreviationDC')}
-                    {item.system.save.dc}
+                    {actionItem.item.system.save.dc}
                   </span>
                   <small title={saveAbilityLabel} class="flex-column-truncate"
                     >{saveAbilityLabel}</small
                   >
                 {:else}
-                  <span title={item.labels.toHit}>{item.labels.toHit}</span>
+                  <span title={actionItem.item.labels.toHit}
+                    >{actionItem.item.labels.toHit}</span
+                  >
                 {/if}
               {/if}
             </ItemTableCell>
             <ItemTableCell baseWidth="7.5rem" cssClass="flex-wrap">
               <!-- Damage -->
-              {#each item.labels.derivedDamage ?? [] as entry, i}
-                {@const damageHealingTypeLabel =
-                  FoundryAdapter.lookupDamageType(entry.damageType) ??
-                  FoundryAdapter.lookupHealingType(entry.damageType)}
-                {@const isScalableCantripDamage =
-                  item.type === 'spell' &&
-                  item.system.scaling?.mode === 'cantrip' &&
-                  $settingStore.actionListScaleCantripDamage}
-
-                {#if isScalableCantripDamage}
-                  {@const scaledEntry =
-                    getScaledCantripDamageFormulaForSinglePart(item, i)}
-                  <p title={scaledEntry.formula + damageHealingTypeLabel}>
-                    {scaledEntry.formula}
-                    <span
-                      >{@html damageTypeIconMap[scaledEntry.damageType] ??
-                        ''}</span
-                    >
-                  </p>
-                {:else}
-                  <p
-                    title={entry.label ??
-                      entry.formula + damageHealingTypeLabel}
-                  >
-                    {entry.formula}
-                    <span
-                      >{@html damageTypeIconMap[entry.damageType] ?? ''}</span
-                    >
-                  </p>
-                {/if}
+              {#each actionItem.calculatedDerivedDamage ?? [] as entry, i}
+                <div
+                  title={entry.label ??
+                    entry.formula + entry.damageHealingTypeLabel}
+                  class="truncate"
+                >
+                  {entry.formula}
+                  <span>{@html damageTypeIconMap[entry.damageType] ?? ''}</span>
+                </div>
               {/each}
             </ItemTableCell>
             {#if $context.owner && $context.useClassicControls}
               <ItemTableCell baseWidth="1.5rem">
-                <ActionFilterOverrideControl {item} />
+                <ActionFilterOverrideControl item={actionItem.item} />
               </ItemTableCell>
             {/if}
           </ItemTableRow>

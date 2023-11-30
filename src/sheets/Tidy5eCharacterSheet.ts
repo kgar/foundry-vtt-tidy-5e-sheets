@@ -22,7 +22,10 @@ import type { SvelteComponent } from 'svelte';
 import { getPercentage } from 'src/utils/numbers';
 import type { ItemChatData } from 'src/types/item';
 import { registeredCharacterTabs } from 'src/runtime/character-sheet-state';
-import { actorUsesActionFeature, getActorActions } from 'src/features/actions/actions';
+import {
+  actorUsesActionFeature,
+  getActorActions,
+} from 'src/features/actions/actions';
 
 export class Tidy5eCharacterSheet
   extends dnd5e.applications.actor.ActorSheet5eCharacter

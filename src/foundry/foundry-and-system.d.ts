@@ -30,7 +30,9 @@ declare global {
   var isEmpty: any;
   var Items: any;
   var mergeObject: any;
+  var NumericTerm: any;
   var Roll: any;
+  var RollTerm: any;
   var TextEditor: any;
   var ui: any;
 }
