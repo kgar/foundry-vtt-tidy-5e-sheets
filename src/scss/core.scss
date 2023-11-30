@@ -86,7 +86,7 @@
 
   @import './partials/layout';
 
-  .sheet {
+  &.sheet {
     @import './partials/context-menu';
   }
 
