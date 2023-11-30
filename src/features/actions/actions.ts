@@ -44,27 +44,6 @@ function mapActionItem(item: Item5e, actorRollData: any): ActionItem {
       })
     : [];
 
-  /*
-      // Straight from Foundry, roll.js line 254:
-      if ( term.isIntermediate ) {
-        await term.evaluate({minimize, maximize, async: true});
-        this._dice = this._dice.concat(term.dice);
-        term = new NumericTerm({number: term.total, options: term.options});
-      }
-
-      For my purposes...
-      If term is deterministic, evaluate it and take the total as a NumericTerm.
-      Reconstruct the roll via Roll.fromTerms()
-      https://foundryvtt.com/api/v11/classes/client.Roll.html#fromTerms
-
-      Some sample code:
-      let rollTerms = new Roll('(1-6/6+1)d6+1d6').terms.map(t => t.isIntermediate ? new NumericTerm({number: t.evaluate().total, options: t.options}) : t);
-      Roll.fromTerms(rollTerms).formula
-      > '1d6 + 1d6' 🤯
-
-      WARNING: Try/Catch/Log and fall back to original terms
-    */
-
   return {
     item,
     typeLabel: FoundryAdapter.localize(`ITEM.Type${item.type.titleCase()}`),
@@ -121,9 +100,9 @@ export function getActorActions(actor: Actor5e): ActorActions {
     lair: new Set(),
     legendary: new Set(),
     reaction: new Set(),
-    other: new Set(),
     mythic: new Set(),
     special: new Set(),
+    other: new Set(),
   };
 
   return filteredItems.reduce((acc: ActionSets, actionItem: ActionItem) => {
@@ -149,7 +128,6 @@ export function getActorActions(actor: Actor5e): ActorActions {
 
 export function isItemInActionList(item: Item5e): boolean {
   // check our override
-
   const override = FoundryAdapter.tryGetFlag<boolean>(
     item,
     'action-filter-override'
