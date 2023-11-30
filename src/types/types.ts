@@ -111,6 +111,17 @@ type ActionSectionTitle = string;
 
 export type ActorActions = Record<ActionSectionTitle, Set<ActionItem>>;
 
+export type TidyResource = {
+  name: string;
+  label: string;
+  placeholder: string;
+  value: number | null;
+  max: number | null;
+  sr: boolean;
+  lr: boolean;
+  cssClass: string;
+};
+
 export type ActorSheetContext = {
   actions: ActorActions;
   actor: Actor5e;
@@ -140,6 +151,7 @@ export type ActorSheetContext = {
   owner: boolean;
   showLimitedSheet: boolean;
   tabs: Tab[];
+  tidyResources: TidyResource[];
   useActionsFeature?: boolean;
   useClassicControls: boolean;
   useRoundedPortraitStyle: boolean;

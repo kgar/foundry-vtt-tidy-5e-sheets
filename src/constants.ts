@@ -4,6 +4,7 @@ export const CONSTANTS = {
   DND5E_SYSTEM_ID: 'dnd5e',
   // TODO: inject moduleId variable when this module overtakes the original
   HOOK_TIDY5E_SHEETS_READY: `tidy5e-sheet.ready`,
+  HOOK_TIDY5E_SHEETS_PREPARE_RESOURCES: `tidy5e-sheet.prepareResources`,
   ITEM_TYPE_EQUIPMENT: 'equipment',
   ITEM_TYPE_BACKGROUND: 'background',
   ITEM_TYPE_BACKPACK: 'backpack',
