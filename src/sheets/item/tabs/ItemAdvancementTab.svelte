@@ -16,6 +16,12 @@
   function toggleAdvancementLock(item: Item5e) {
     $context.toggleAdvancementLock();
   }
+
+  const basicSvgFilePathRegex = /\.svg$/i;
+
+  function isSvg(iconPath: string) {
+    return basicSvgFilePathRegex.test(iconPath?.trim());
+  }
 </script>
 
 <ol class="items-list">
@@ -107,10 +113,15 @@
     </li>
     <ol class="item-list">
       {#each data.items as advancementItem}
+        {@const isSvgIcon = isSvg(advancementItem.icon)}
         <li class="advancement-item item flexrow" data-id={advancementItem.id}>
           <div class="item-name flexrow">
             <div class="item-image">
-              <InlineSvg svgUrl={advancementItem.icon} />
+              {#if isSvgIcon}
+                <InlineSvg svgUrl={advancementItem.icon} />
+              {:else}
+                <img src={advancementItem.icon} alt="" />
+              {/if}
             </div>
             <h4>{@html advancementItem.title}</h4>
           </div>
@@ -132,7 +143,7 @@
                 on:click={() =>
                   FoundryAdapter.editAdvancement(
                     advancementItem.id,
-                    $context.item
+                    $context.item,
                   )}
               >
                 <i class="fas fa-edit" />
@@ -144,7 +155,7 @@
                 on:click={() =>
                   FoundryAdapter.deleteAdvancement(
                     advancementItem.id,
-                    $context.item
+                    $context.item,
                   )}
               >
                 <i class="fas fa-trash" />
