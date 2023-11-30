@@ -28,10 +28,10 @@
           <ItemTableColumn primary={true}>
             {FoundryAdapter.getActivationTypeLabel(actionType)}
           </ItemTableColumn>
-          <ItemTableColumn baseWidth="4.375rem"
+          <ItemTableColumn baseWidth="6.25rem"
             >{localize('DND5E.Range')}</ItemTableColumn
           >
-          <ItemTableColumn baseWidth="3.75rem"
+          <ItemTableColumn baseWidth="5rem"
             >{localize('T5EK.HitDC')}</ItemTableColumn
           >
           <ItemTableColumn baseWidth="7.5rem"
@@ -113,36 +113,26 @@
               {/if}
             </ItemTableCell>
             <ItemTableCell
-              baseWidth="4.375rem"
+              baseWidth="6.25rem"
               cssClass="truncate flex-column no-gap"
             >
               <!-- Range -->
-              {#if actionItem.item.system.target?.type === 'self'}
-                <div
-                  title={actionItem.item.labels.target}
-                  class="flex-column-truncate"
-                >
-                  {actionItem.item.labels.target}
+              {#if actionItem.rangeTitle !== null}
+                <div title={actionItem.rangeTitle} class="flex-column-truncate">
+                  {actionItem.rangeTitle}
                 </div>
-              {:else}
-                <div
-                  title={actionItem.item.labels.range}
-                  class="flex-column-truncate"
-                >
-                  {actionItem.item.labels.range}
-                </div>
-                {#if actionItem.item.labels.target}
+
+                {#if actionItem.rangeSubtitle !== null}
                   <small
-                    title={actionItem.item.labels.target}
+                    title={actionItem.rangeSubtitle}
                     class="flex-column-truncate"
-                    style="min-width: 0; "
                   >
-                    {actionItem.item.labels.target}
+                    {actionItem.rangeSubtitle}
                   </small>
                 {/if}
               {/if}
             </ItemTableCell>
-            <ItemTableCell baseWidth="3.75rem" cssClass="flex-column no-gap">
+            <ItemTableCell baseWidth="5rem" cssClass="flex-column no-gap">
               <!-- HIT / DC -->
               {#if actionItem.item.labels.save || actionItem.item.labels.toHit}
                 {#if actionItem.item.labels.save !== '' && actionItem.item.labels.save !== undefined}

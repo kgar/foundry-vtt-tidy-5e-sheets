@@ -123,7 +123,13 @@ export function isItemInActionList(item: Item5e): boolean {
 function mapActionItem(item: Item5e): ActionItem {
   let calculatedDerivedDamage = Array.isArray(item.labels.derivedDamage)
     ? [...item.labels.derivedDamage].map(
-        ({ formula, label, damageType }: any) => {
+        ({ formula, label, damageType }: any, i: number) => {
+          const rawDamagePartFormula = item.system.damage?.parts[i]?.[0];
+
+          if (rawDamagePartFormula?.trim() === '') {
+            formula = '';
+          }
+
           formula = simplifyFormula(formula, true);
 
           const damageHealingTypeLabel =
@@ -150,11 +156,43 @@ function mapActionItem(item: Item5e): ActionItem {
       )
     : [];
 
+  const { rangeTitle, rangeSubtitle } = getRangeTitles(item);
+
   return {
     item,
     typeLabel: FoundryAdapter.localize(`ITEM.Type${item.type.titleCase()}`),
     calculatedDerivedDamage,
+    rangeTitle,
+    rangeSubtitle,
   };
+}
+
+function getRangeTitles(item: Item5e): {
+  rangeTitle: string | null;
+  rangeSubtitle: string | null;
+} {
+  const rangeSubtitle =
+    item.system.target?.type !== 'self' && item.labels.target
+      ? item.labels.target
+      : null;
+
+  const rangeTitle =
+    item.system.target?.type === 'self'
+      ? item.labels.target
+      : hasRange(item)
+      ? item.labels.range
+      : rangeSubtitle !== null
+      ? '—'
+      : null;
+
+  return {
+    rangeTitle,
+    rangeSubtitle,
+  };
+}
+
+function hasRange(item: Item5e): boolean {
+  return item.system.range.units !== null;
 }
 
 function buildActionSets(filteredItems: any) {

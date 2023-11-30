@@ -103,6 +103,8 @@ export type ActionItem = {
   item: Item5e;
   typeLabel: string;
   calculatedDerivedDamage: DerivedDamage[];
+  rangeTitle: string | null;
+  rangeSubtitle: string | null;
 };
 
 type ActionSectionTitle = string;
