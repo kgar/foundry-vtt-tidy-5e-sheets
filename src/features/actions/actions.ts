@@ -34,49 +34,6 @@ const itemTypeSortValues: Record<string, number> = {
   loot: 9,
 };
 
-function mapActionItem(item: Item5e, actorRollData: any): ActionItem {
-  let calculatedDerivedDamage = Array.isArray(item.labels.derivedDamage)
-    ? [...item.labels.derivedDamage].map(({ formula, ...rest }: any) => {
-        return {
-          formula: simplifyFormula(formula, actorRollData, true),
-          ...rest,
-        };
-      })
-    : [];
-
-  return {
-    item,
-    typeLabel: FoundryAdapter.localize(`ITEM.Type${item.type.titleCase()}`),
-    calculatedDerivedDamage,
-  };
-}
-
-function simplifyFormula(
-  formula: string,
-  actorRollData: any,
-  removeFlavor: boolean = false
-): string {
-  try {
-    const roll = Roll.create(formula, actorRollData);
-    const simplifiedTerms = roll.terms.map((t: any) =>
-      t.isIntermediate
-        ? new NumericTerm({ number: t.evaluate().total, options: t.options })
-        : t
-    );
-    let simplifiedFormula = Roll.fromTerms(simplifiedTerms).formula;
-    if (removeFlavor) {
-      simplifiedFormula = simplifiedFormula.replace(
-        RollTerm.FLAVOR_REGEXP_STRING,
-        ''
-      );
-    }
-    return simplifiedFormula;
-  } catch (e) {
-    error('Unable to simplify formula due to an error.', false, e);
-    return formula;
-  }
-}
-
 export function getActorActions(actor: Actor5e): ActorActions {
   const actorRollData = actor.getRollData();
 
@@ -93,37 +50,7 @@ export function getActorActions(actor: Actor5e): ActorActions {
     })
     .map((item: Item5e) => mapActionItem(item, actorRollData));
 
-  const initial: ActionSets = {
-    action: new Set(),
-    bonus: new Set(),
-    crew: new Set(),
-    lair: new Set(),
-    legendary: new Set(),
-    reaction: new Set(),
-    mythic: new Set(),
-    special: new Set(),
-    other: new Set(),
-  };
-
-  return filteredItems.reduce((acc: ActionSets, actionItem: ActionItem) => {
-    try {
-      if (['backpack', 'tool'].includes(actionItem.item.type)) {
-        return acc;
-      }
-
-      const activationType = getActivationType(
-        actionItem.item.system.activation?.type
-      );
-      acc[activationType].add(actionItem);
-      return acc;
-    } catch (e) {
-      error('error trying to digest item', true, {
-        name: actionItem.item.name,
-        e,
-      });
-      return acc;
-    }
-  }, initial);
+  return buildActionSets(filteredItems);
 }
 
 export function isItemInActionList(item: Item5e): boolean {
@@ -195,6 +122,83 @@ export function isItemInActionList(item: Item5e): boolean {
       return false;
     }
   }
+}
+
+function mapActionItem(item: Item5e, actorRollData: any): ActionItem {
+  let calculatedDerivedDamage = Array.isArray(item.labels.derivedDamage)
+    ? [...item.labels.derivedDamage].map(({ formula, ...rest }: any) => {
+        return {
+          formula: simplifyFormula(formula, actorRollData, true),
+          ...rest,
+        };
+      })
+    : [];
+
+  return {
+    item,
+    typeLabel: FoundryAdapter.localize(`ITEM.Type${item.type.titleCase()}`),
+    calculatedDerivedDamage,
+  };
+}
+
+function simplifyFormula(
+  formula: string,
+  actorRollData: any,
+  removeFlavor: boolean = false
+): string {
+  try {
+    const roll = Roll.create(formula, actorRollData);
+    const simplifiedTerms = roll.terms.map((t: any) =>
+      t.isIntermediate
+        ? new NumericTerm({ number: t.evaluate().total, options: t.options })
+        : t
+    );
+    let simplifiedFormula = Roll.fromTerms(simplifiedTerms).formula;
+    if (removeFlavor) {
+      simplifiedFormula = simplifiedFormula.replace(
+        RollTerm.FLAVOR_REGEXP_STRING,
+        ''
+      );
+    }
+    return simplifiedFormula;
+  } catch (e) {
+    error('Unable to simplify formula due to an error.', false, e);
+    return formula;
+  }
+}
+
+function buildActionSets(filteredItems: any) {
+  const initial: ActionSets = {
+    action: new Set(),
+    bonus: new Set(),
+    crew: new Set(),
+    lair: new Set(),
+    legendary: new Set(),
+    reaction: new Set(),
+    mythic: new Set(),
+    special: new Set(),
+    other: new Set(),
+  };
+
+  return filteredItems.reduce((acc: ActionSets, actionItem: ActionItem) => {
+    try {
+      if (['backpack', 'tool'].includes(actionItem.item.type)) {
+        return acc;
+      }
+
+      const activationType = getActivationType(
+        actionItem.item.system.activation?.type
+      );
+      acc[activationType].add(actionItem);
+      return acc;
+    } catch (e) {
+      error('error trying to digest item', true, {
+        name: actionItem.item.name,
+        e,
+      });
+      return acc;
+    }
+  }, initial);
 }
 
 function getActivationType(activationType: string) {
