@@ -2,12 +2,8 @@ import { CONSTANTS } from 'src/constants';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { SettingsProvider } from 'src/settings/settings';
 import type { Item5e } from 'src/types/item';
-import type {
-  ActionItem,
-  Actor5e,
-  ActorActions,
-  DerivedDamage,
-} from 'src/types/types';
+import type { ActionItem, Actor5e, ActorActions } from 'src/types/types';
+import { scaleCantripDamageFormula, simplifyFormula } from 'src/utils/formula';
 import { error } from 'src/utils/logging';
 
 export type ActionSets = {
@@ -48,7 +44,7 @@ export function getActorActions(actor: Actor5e): ActorActions {
       }
       return (a.sort || 0) - (b.sort || 0);
     })
-    .map((item: Item5e) => mapActionItem(item, actorRollData));
+    .map((item: Item5e) => mapActionItem(item));
 
   return buildActionSets(filteredItems);
 }
@@ -124,14 +120,34 @@ export function isItemInActionList(item: Item5e): boolean {
   }
 }
 
-function mapActionItem(item: Item5e, actorRollData: any): ActionItem {
+function mapActionItem(item: Item5e): ActionItem {
   let calculatedDerivedDamage = Array.isArray(item.labels.derivedDamage)
-    ? [...item.labels.derivedDamage].map(({ formula, ...rest }: any) => {
-        return {
-          formula: simplifyFormula(formula, actorRollData, true),
-          ...rest,
-        };
-      })
+    ? [...item.labels.derivedDamage].map(
+        ({ formula, label, damageType }: any) => {
+          formula = simplifyFormula(formula, true);
+
+          const damageHealingTypeLabel =
+            FoundryAdapter.lookupDamageType(damageType) ??
+            FoundryAdapter.lookupHealingType(damageType) ??
+            '';
+
+          if (
+            item.type === 'spell' &&
+            item.system.scaling?.mode === 'cantrip' &&
+            SettingsProvider.settings.actionListScaleCantripDamage.get()
+          ) {
+            formula = scaleCantripDamageFormula(item, formula);
+            label = `${formula} ${damageHealingTypeLabel}`;
+          }
+
+          return {
+            label,
+            formula,
+            damageType,
+            damageHealingTypeLabel,
+          };
+        }
+      )
     : [];
 
   return {
@@ -139,40 +155,6 @@ function mapActionItem(item: Item5e, actorRollData: any): ActionItem {
     typeLabel: FoundryAdapter.localize(`ITEM.Type${item.type.titleCase()}`),
     calculatedDerivedDamage,
   };
-}
-
-function simplifyFormula(
-  formula: string,
-  actorRollData: any,
-  removeFlavor: boolean = false
-): string {
-  try {
-    if (removeFlavor) {
-      formula = formula
-        ?.replace(RollTerm.FLAVOR_REGEXP, '')
-        ?.replace(RollTerm.FLAVOR_REGEXP_STRING, '')
-        ?.trim();
-    }
-
-    if (formula?.trim() === '') {
-      return '';
-    }
-
-    const roll = Roll.create(formula, actorRollData);
-
-    const simplifiedTerms = roll.terms.map((t: any) =>
-      t.isIntermediate
-        ? new NumericTerm({ number: t.evaluate().total, options: t.options })
-        : t
-    );
-
-    let simplifiedFormula = Roll.fromTerms(simplifiedTerms).formula;
-
-    return simplifiedFormula;
-  } catch (e) {
-    error('Unable to simplify formula due to an error.', false, e);
-    return formula;
-  }
 }
 
 function buildActionSets(filteredItems: any) {
@@ -281,31 +263,4 @@ export function toggleActionFilterOverride(item: Item5e) {
     'action-filter-override',
     !isItemInActionList(item)
   );
-}
-
-export function getScaledCantripDamageFormulaForSinglePart(
-  item: Item5e,
-  partIndex: number
-): DerivedDamage {
-  try {
-    const damageFormula = item.system.damage.parts[partIndex]?.[0] ?? '';
-    const scaledFormula = item._scaleCantripDamage(
-      [damageFormula],
-      item.system.scaling.formula,
-      item.actor.type === 'character'
-        ? item.actor.system.details.level ?? 0
-        : item.system.preparation.mode === 'innate'
-        ? Math.ceil(item.actor.system.details.cr ?? 0)
-        : item.actor.system.details.spellLevel ?? 0,
-      item.getRollData()
-    );
-
-    return {
-      ...item.labels.derivedDamage[partIndex],
-      formula: scaledFormula,
-    };
-  } catch (e) {
-    error('An error occurred while scaling cantrip damage', false, e);
-    return item.labels.derivedDamage[partIndex];
-  }
 }

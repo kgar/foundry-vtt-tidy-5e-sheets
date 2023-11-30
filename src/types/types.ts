@@ -96,6 +96,7 @@ export type DerivedDamage = {
   label: string;
   formula: string;
   damageType: string;
+  damageHealingTypeLabel: string;
 };
 
 export type ActionItem = {

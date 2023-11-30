@@ -11,13 +11,9 @@
   import ItemName from 'src/components/item-list/ItemName.svelte';
   import { CONSTANTS } from 'src/constants';
   import ItemUseButton from 'src/components/item-list/ItemUseButton.svelte';
-  import {
-    damageTypeIconMap,
-    getScaledCantripDamageFormulaForSinglePart,
-  } from 'src/features/actions/actions';
+  import { damageTypeIconMap } from 'src/features/actions/actions';
   import RechargeControl from 'src/components/item-list/controls/RechargeControl.svelte';
   import ActionFilterOverrideControl from 'src/components/item-list/controls/ActionFilterOverrideControl.svelte';
-  import { settingStore } from 'src/settings/settings';
 
   let context = getContext<Readable<ActorSheetContext>>('context');
 
@@ -174,42 +170,14 @@
             <ItemTableCell baseWidth="7.5rem" cssClass="flex-wrap">
               <!-- Damage -->
               {#each actionItem.calculatedDerivedDamage ?? [] as entry, i}
-                {@const damageHealingTypeLabel =
-                  FoundryAdapter.lookupDamageType(entry.damageType) ??
-                  FoundryAdapter.lookupHealingType(entry.damageType)}
-                {@const isScalableCantripDamage =
-                  actionItem.item.type === 'spell' &&
-                  actionItem.item.system.scaling?.mode === 'cantrip' &&
-                  $settingStore.actionListScaleCantripDamage}
-
-                {#if isScalableCantripDamage}
-                  {@const scaledEntry =
-                    getScaledCantripDamageFormulaForSinglePart(
-                      actionItem.item,
-                      i,
-                    )}
-                  <div
-                    title={scaledEntry.formula + damageHealingTypeLabel}
-                    class="truncate"
-                  >
-                    {scaledEntry.formula}
-                    <span
-                      >{@html damageTypeIconMap[scaledEntry.damageType] ??
-                        ''}</span
-                    >
-                  </div>
-                {:else}
-                  <div
-                    title={entry.label ??
-                      entry.formula + damageHealingTypeLabel}
-                    class="truncate"
-                  >
-                    {entry.formula}
-                    <span
-                      >{@html damageTypeIconMap[entry.damageType] ?? ''}</span
-                    >
-                  </div>
-                {/if}
+                <div
+                  title={entry.label ??
+                    entry.formula + entry.damageHealingTypeLabel}
+                  class="truncate"
+                >
+                  {entry.formula}
+                  <span>{@html damageTypeIconMap[entry.damageType] ?? ''}</span>
+                </div>
               {/each}
             </ItemTableCell>
             {#if $context.owner && $context.useClassicControls}
