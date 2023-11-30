@@ -6,7 +6,6 @@ import type {
   ActionItem,
   Actor5e,
   ActorActions,
-  ActorActionsV2,
   DerivedDamage,
 } from 'src/types/types';
 import { error } from 'src/utils/logging';
@@ -34,54 +33,6 @@ const itemTypeSortValues: Record<string, number> = {
   class: 8,
   loot: 9,
 };
-
-export function getActorActionsV2(actor: Actor5e): ActorActionsV2 {
-  const actorRollData = actor.getRollData();
-
-  const filteredItems = actor.items
-    .filter(isItemInActionList)
-    .sort((a: Item5e, b: Item5e) => {
-      if (a.type !== b.type) {
-        return itemTypeSortValues[a.type] - itemTypeSortValues[b.type];
-      }
-      if (a.type === 'spell' && b.type === 'spell') {
-        return a.system.level - b.system.level;
-      }
-      return (a.sort || 0) - (b.sort || 0);
-    })
-    .map((item: Item5e) => mapActionItem(item, actorRollData));
-
-  const initial: ActionSets = {
-    action: new Set(),
-    bonus: new Set(),
-    crew: new Set(),
-    lair: new Set(),
-    legendary: new Set(),
-    reaction: new Set(),
-    other: new Set(),
-    mythic: new Set(),
-    special: new Set(),
-  };
-  return filteredItems.reduce((acc: ActionSets, actionItem: ActionItem) => {
-    try {
-      if (['backpack', 'tool'].includes(actionItem.item.type)) {
-        return acc;
-      }
-
-      const activationType = getActivationType(
-        actionItem.item.system.activation?.type
-      );
-      acc[activationType].add(actionItem);
-      return acc;
-    } catch (e) {
-      error('error trying to digest item', true, {
-        name: actionItem.item.name,
-        e,
-      });
-      return acc;
-    }
-  }, initial);
-}
 
 function mapActionItem(item: Item5e, actorRollData: any): ActionItem {
   let calculatedDerivedDamage = Array.isArray(item.labels.derivedDamage)
@@ -148,7 +99,9 @@ function simplifyFormula(
 }
 
 export function getActorActions(actor: Actor5e): ActorActions {
-  const filteredItems: any[] = actor.items
+  const actorRollData = actor.getRollData();
+
+  const filteredItems = actor.items
     .filter(isItemInActionList)
     .sort((a: Item5e, b: Item5e) => {
       if (a.type !== b.type) {
@@ -159,24 +112,7 @@ export function getActorActions(actor: Actor5e): ActorActions {
       }
       return (a.sort || 0) - (b.sort || 0);
     })
-    .map((item: Item5e) => {
-      if (item.labels) {
-        item.labels.type = FoundryAdapter.localize(
-          `ITEM.Type${item.type.titleCase()}`
-        );
-      }
-
-      // removes any in-formula flavor text from the formula in the label
-      if (item.labels?.derivedDamage?.length) {
-        item.labels.derivedDamage = item.labels.derivedDamage.map(
-          ({ formula, ...rest }: any) => ({
-            formula: formula?.replace(/\[.+?\]/, '') || '0',
-            ...rest,
-          })
-        );
-      }
-      return item;
-    });
+    .map((item: Item5e) => mapActionItem(item, actorRollData));
 
   const initial: ActionSets = {
     action: new Set(),
@@ -189,21 +125,26 @@ export function getActorActions(actor: Actor5e): ActorActions {
     mythic: new Set(),
     special: new Set(),
   };
-  const actionsData = filteredItems.reduce<ActionSets>((acc, item) => {
+
+  return filteredItems.reduce((acc: ActionSets, actionItem: ActionItem) => {
     try {
-      if (['backpack', 'tool'].includes(item.type)) {
+      if (['backpack', 'tool'].includes(actionItem.item.type)) {
         return acc;
       }
 
-      const activationType = getActivationType(item.system.activation?.type);
-      acc[activationType].add(item);
+      const activationType = getActivationType(
+        actionItem.item.system.activation?.type
+      );
+      acc[activationType].add(actionItem);
       return acc;
     } catch (e) {
-      error('error trying to digest item', true, { name: item.name, e });
+      error('error trying to digest item', true, {
+        name: actionItem.item.name,
+        e,
+      });
       return acc;
     }
   }, initial);
-  return actionsData;
 }
 
 export function isItemInActionList(item: Item5e): boolean {

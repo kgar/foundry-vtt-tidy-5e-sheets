@@ -101,7 +101,7 @@
         "compatibility": {
           "minimum": "2.4.0",
           "verified": "2.4.0",
-          "maximum": "2.4.0"
+          "maximum": "2.4.9"
         }
       }
     ],

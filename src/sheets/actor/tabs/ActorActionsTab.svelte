@@ -25,7 +25,7 @@
 </script>
 
 <div class="actions-tab-container scroll-container flex-column small-gap">
-  {#each Object.entries($context.actionsV2) as [actionType, itemSet] (actionType)}
+  {#each Object.entries($context.actions) as [actionType, itemSet] (actionType)}
     {#if itemSet.size}
       <ItemTable>
         <ItemTableHeaderRow>

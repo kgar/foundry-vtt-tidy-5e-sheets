@@ -92,8 +92,6 @@ export type NpcSheetContext = {
 
 export type VehicleSheetContext = {} & ActorSheetContext & Record<string, any>;
 
-export type ActorActions = Record<string, Set<Item5e>>;
-
 export type DerivedDamage = {
   label: string;
   formula: string;
@@ -102,18 +100,16 @@ export type DerivedDamage = {
 
 export type ActionItem = {
   item: Item5e;
-  // Put the goods here
   typeLabel: string;
   calculatedDerivedDamage: DerivedDamage[];
 };
 
 type ActionSectionTitle = string;
 
-export type ActorActionsV2 = Record<ActionSectionTitle, Set<ActionItem>>;
+export type ActorActions = Record<ActionSectionTitle, Set<ActionItem>>;
 
 export type ActorSheetContext = {
   actions: ActorActions;
-  actionsV2: ActorActionsV2;
   actor: Actor5e;
   allowEffectsManagement: boolean;
   appId: string;

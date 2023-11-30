@@ -25,7 +25,6 @@ import { registeredCharacterTabs } from 'src/runtime/character-sheet-state';
 import {
   actorUsesActionFeature,
   getActorActions,
-  getActorActionsV2,
 } from 'src/features/actions/actions';
 
 export class Tidy5eCharacterSheet
@@ -151,7 +150,6 @@ export class Tidy5eCharacterSheet
         super.activateListeners($(node));
       },
       actions: getActorActions(this.actor),
-      actionsV2: getActorActionsV2(this.actor),
       actorClassesToImages: getActorClassesToImages(this.actor),
       allowEffectsManagement: FoundryAdapter.allowCharacterEffectsManagement(
         this.actor
