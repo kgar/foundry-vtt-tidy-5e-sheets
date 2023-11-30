@@ -147,19 +147,27 @@ function simplifyFormula(
   removeFlavor: boolean = false
 ): string {
   try {
+    if (removeFlavor) {
+      formula = formula
+        ?.replace(RollTerm.FLAVOR_REGEXP, '')
+        ?.replace(RollTerm.FLAVOR_REGEXP_STRING, '')
+        ?.trim();
+    }
+
+    if (formula?.trim() === '') {
+      return '';
+    }
+
     const roll = Roll.create(formula, actorRollData);
+
     const simplifiedTerms = roll.terms.map((t: any) =>
       t.isIntermediate
         ? new NumericTerm({ number: t.evaluate().total, options: t.options })
         : t
     );
+
     let simplifiedFormula = Roll.fromTerms(simplifiedTerms).formula;
-    if (removeFlavor) {
-      simplifiedFormula = simplifiedFormula.replace(
-        RollTerm.FLAVOR_REGEXP_STRING,
-        ''
-      );
-    }
+
     return simplifiedFormula;
   } catch (e) {
     error('Unable to simplify formula due to an error.', false, e);
