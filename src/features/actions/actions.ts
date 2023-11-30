@@ -154,14 +154,11 @@ function mapActionItem(item: Item5e): ActionItem {
       )
     : [];
 
-  const { rangeTitle, rangeSubtitle } = getRangeTitles(item);
-
   return {
     item,
     typeLabel: FoundryAdapter.localize(`ITEM.Type${item.type.titleCase()}`),
     calculatedDerivedDamage,
-    rangeTitle,
-    rangeSubtitle,
+    ...getRangeTitles(item),
   };
 }
 
