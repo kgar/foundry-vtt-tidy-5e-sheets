@@ -7,17 +7,7 @@ import { isNil } from 'src/utils/data';
 import { scaleCantripDamageFormula, simplifyFormula } from 'src/utils/formula';
 import { error } from 'src/utils/logging';
 
-export type ActionSets = {
-  action: Set<Item5e>;
-  bonus: Set<Item5e>;
-  crew: Set<Item5e>;
-  lair: Set<Item5e>;
-  legendary: Set<Item5e>;
-  mythic: Set<Item5e>;
-  special: Set<Item5e>;
-  reaction: Set<Item5e>;
-  other: Set<Item5e>;
-};
+export type ActionSets = Record<string, Set<ActionItem>>;
 
 const itemTypeSortValues: Record<string, number> = {
   weapon: 1,
@@ -192,23 +182,14 @@ function hasRange(item: Item5e): boolean {
 }
 
 function buildActionSets(filteredItems: any) {
-  const initial: ActionSets = {
-    action: new Set(),
-    bonus: new Set(),
-    crew: new Set(),
-    lair: new Set(),
-    legendary: new Set(),
-    reaction: new Set(),
-    mythic: new Set(),
-    special: new Set(),
-    other: new Set(),
-  };
-
   return filteredItems.reduce((acc: ActionSets, actionItem: ActionItem) => {
     try {
       const activationType = getActivationType(
         actionItem.item.system.activation?.type
       );
+      if (!acc[activationType]) {
+        acc[activationType] = new Set<ActionItem>();
+      }
       acc[activationType].add(actionItem);
       return acc;
     } catch (e) {
@@ -218,7 +199,7 @@ function buildActionSets(filteredItems: any) {
       });
       return acc;
     }
-  }, initial);
+  }, {});
 }
 
 function getActivationType(activationType: string) {
