@@ -43,7 +43,7 @@ Tidy 5e is a community effort. Development logs, feature discussion, troubleshoo
 
 Sheets development is a longterm commitment, subject to every Foundry and dnd5e system update, so any support is greatly appreciated.
 
-[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/iamkgar) [!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_readme-images/orange_img.png)](https://www.buymeacoffee.com/kgar)
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/iamkgar) [!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/kgar)
 
 Tidy 5e Sheets also has a [Patreon](https://www.patreon.com/iamkgar).
 
