@@ -1,11 +1,11 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { CharacterSheetContext } from 'src/types/types';
+  import type { CharacterSheetContext, TidyResource } from 'src/types/types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import TextInput from '../../../components/inputs/TextInput.svelte';
 
-  export let res: any;
+  export let resource: TidyResource;
   let context = getContext<Readable<CharacterSheetContext>>('context');
 
   const localize = FoundryAdapter.localize;
@@ -15,13 +15,13 @@
   let viewingConfig = false;
 </script>
 
-<li class="resource">
+<li class="resource {resource.cssClasses?.join(' ') ?? ''}">
   <h4 class="resource-name" class:hidden={viewingConfig || configActive}>
     <TextInput
       document={$context.actor}
-      field="system.resources.{res.name}.label"
-      value={res.label}
-      placeholder={res.placeholder}
+      field={resource.labelName}
+      value={resource.label}
+      placeholder={resource.placeholder}
       selectOnFocus={true}
       disabled={!$context.owner || $context.lockSensitiveFields}
     />
@@ -33,8 +33,8 @@
     <TextInput
       cssClass="resource-value"
       document={$context.actor}
-      field="system.resources.{res.name}.value"
-      value={res.value ?? null}
+      field={resource.valueName}
+      value={resource.value ?? null}
       placeholder="0"
       allowDeltaChanges={true}
       maxlength={3}
@@ -44,9 +44,9 @@
     <span class="sep"> / </span>
     <TextInput
       document={$context.actor}
-      field="system.resources.{res.name}.max"
+      field={resource.maxName}
       cssClass="resource-max"
-      value={res.max ?? null}
+      value={resource.max ?? null}
       placeholder="0"
       allowDeltaChanges={true}
       maxlength={3}
@@ -64,34 +64,34 @@
     <div class="resource-rest">
       <h4>{localize('T5EK.RestoreOnRest')}</h4>
       <input
-        id="{$context.appId}-{res.name}.sr"
+        id="{$context.appId}-{resource.name}-sr"
         type="checkbox"
-        checked={res.sr}
+        checked={resource.sr}
         on:change|stopPropagation|preventDefault={(event) =>
           $context.actor.update({
-            [`system.resources.${res.name}.sr`]: event.currentTarget.checked,
+            [resource.srName]: event.currentTarget.checked,
           })}
         disabled={!$context.owner || $context.lockSensitiveFields}
       />
       <label
-        for="{$context.appId}-{res.name}.sr"
+        for="{$context.appId}-{resource.name}-sr"
         class="checkbox"
         title={localize('T5EK.ShortRest')}
       >
         {localize('DND5E.RestS')}
       </label>
       <input
-        id="{$context.appId}-{res.name}.lr"
+        id="{$context.appId}-{resource.name}-lr"
         type="checkbox"
-        checked={res.lr}
+        checked={resource.lr}
         on:change|stopPropagation|preventDefault={(event) =>
           $context.actor.update({
-            [`system.resources.${res.name}.lr`]: event.currentTarget.checked,
+            [resource.lrName]: event.currentTarget.checked,
           })}
         disabled={!$context.owner || $context.lockSensitiveFields}
       />
       <label
-        for="{$context.appId}-{res.name}.lr"
+        for="{$context.appId}-{resource.name}-lr"
         class="checkbox"
         title={localize('T5EK.LongRest')}
       >

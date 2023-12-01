@@ -16,6 +16,7 @@ import {
   type LocationToSearchTextMap,
   type ExpandedItemIdToLocationsMap,
   type ExpandedItemData,
+  type TidyResource,
 } from 'src/types/types';
 import { applyTitleToWindow } from 'src/utils/applications';
 import type { SvelteComponent } from 'svelte';
@@ -133,6 +134,31 @@ export class Tidy5eCharacterSheet
     const editable = FoundryAdapter.canEditActor(this.actor) && this.isEditable;
 
     const defaultCharacterContext = await super.getData(this.options);
+
+    const tidyResources: TidyResource[] = defaultCharacterContext.resources.map(
+      (r: any) => ({
+        name: r.name,
+        label: r.label,
+        labelName: `system.resources.${r.name}.label`,
+        placeholder: r.placeholder,
+        value: r.value,
+        valueName: `system.resources.${r.name}.value`,
+        max: r.max,
+        maxName: `system.resources.${r.name}.max`,
+        sr: r.sr,
+        srName: `system.resources.${r.name}.sr`,
+        lr: r.lr,
+        lrName: `system.resources.${r.name}.lr`,
+        cssClasses: [],
+        dataSet: {},
+      })
+    );
+
+    Hooks.call(
+      CONSTANTS.HOOK_TIDY5E_SHEETS_PREPARE_RESOURCES,
+      tidyResources,
+      this.actor
+    );
 
     const sections = defaultCharacterContext.features.map((section: any) => ({
       ...section,
@@ -281,6 +307,7 @@ export class Tidy5eCharacterSheet
       owner: this.actor.isOwner,
       showLimitedSheet: FoundryAdapter.showLimitedSheet(this.actor),
       tabs: [],
+      tidyResources,
       traitEnrichedHtml: await FoundryAdapter.enrichHtml(
         this.actor.system.details.trait,
         {

@@ -8,8 +8,8 @@
 </script>
 
 <ul class="resources">
-  {#each $context.resources as res}
-    <Resource {res} />
+  {#each $context.tidyResources as resource}
+    <Resource {resource} />
   {/each}
 </ul>
 
