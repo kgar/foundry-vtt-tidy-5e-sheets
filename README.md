@@ -43,7 +43,7 @@ Tidy 5e is a community effort. Development logs, feature discussion, troubleshoo
 
 Sheets development is a longterm commitment, subject to every Foundry and dnd5e system update, so any support is greatly appreciated.
 
-[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/iamkgar) [!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/kgar)
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/iamkgar) [!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_readme-images/orange_img.png)](https://www.buymeacoffee.com/kgar)
 
 Tidy 5e Sheets also has a [Patreon](https://www.patreon.com/iamkgar).
 
@@ -76,31 +76,31 @@ Tidy 5e sheets provides alternate layouts with extra features for [D&D 5e](https
 
 ### Player Character Sheet
 
-![Alt text](images/image-character-sheet.png)
+![Alt text](readme-images/image-character-sheet.png)
 
 ### NPC Sheet
 
-![Alt text](images/image-npc-sheet.png)
+![Alt text](readme-images/image-npc-sheet.png)
 
 ### Vehicle Sheet
 
-![Alt text](images/image-vehicle-sheet.png)
+![Alt text](readme-images/image-vehicle-sheet.png)
 
 ### Dark Mode
 
-![Alt text](images/image-light-mode-theme-setting.png) ![Alt text](images/image-dark-mode-theme-setting.png)
+![Alt text](readme-images/image-light-mode-theme-setting.png) ![Alt text](readme-images/image-dark-mode-theme-setting.png)
 
-![Alt text](images/image-dark-mode-sheet.png)
+![Alt text](readme-images/image-dark-mode-sheet.png)
 
 ### Theme Settings
 
 **Customize your theme colors** to give sheets the perfect tone for your game:
 
-![Alt text](images/image-theme-settings.png)
+![Alt text](readme-images/image-theme-settings.png)
 
 **Import/Export** themes and share with others:
 
-![Alt text](images/image-theme-import-export.png)
+![Alt text](readme-images/image-theme-import-export.png)
 
 ### Enhanced Characters
 
@@ -110,7 +110,7 @@ Player character sheets come stocked with a variety of features above and beyond
 
 Tag your favorite items, spells, and features, and they will appear in the Attributes tab:
 
-![Alt text](images/image-tag-favorites.png) ![Alt text](images/image-view-favorites.png)
+![Alt text](readme-images/image-tag-favorites.png) ![Alt text](readme-images/image-view-favorites.png)
 
 #### Multiclass Spellbook Filtering
 
@@ -119,93 +119,93 @@ For those who multiclass, optional Spellbook filtering allows players to assign 
 > **Note**  
 > Custom classes are also supported!
 
-![Alt text](images/image-spellbook-filter-cleric.png)
+![Alt text](readme-images/image-spellbook-filter-cleric.png)
 
-![Alt text](images/image-spellbook-filter-switching.png)
+![Alt text](readme-images/image-spellbook-filter-switching.png)
 
-![Alt text](images/image-spellbook-filter-druid.png)
+![Alt text](readme-images/image-spellbook-filter-druid.png)
 
 #### Spell Class Icons
 
 For those who multiclass, Spell Class icons can delineate players' spells based on the spell's assigned class:
 
-![Alt text](images/image-spell-class-icons.png)
+![Alt text](readme-images/image-spell-class-icons.png)
 
 #### Cantrip Preparation (for Cantrip Formulas)
 
 From "Tasha's Cauldron of Everything," the "Cantrip Formulas" feature allows wizards to prepare cantrips for the day. Tidy 5e optionally allows the preparation of cantrips:
 
-![Alt text](images/image-prepare-cantrips.png)
+![Alt text](readme-images/image-prepare-cantrips.png)
 
 #### Spell Slots Tracker
 
 Add/remove spell slot points quickly with spell slot tracking:
 
-![Alt text](images/image-spell-slot-dots-before.png)
+![Alt text](readme-images/image-spell-slot-dots-before.png)
 
-![Alt text](images/image-spell-slot-dots-changing.png)
+![Alt text](readme-images/image-spell-slot-dots-changing.png)
 
-![Alt text](images/image-spell-slot-dots-after.png)
+![Alt text](readme-images/image-spell-slot-dots-after.png)
 
 #### More Character Detail Options
 
-![Alt text](images/image-character-bio-details.png)
+![Alt text](readme-images/image-character-bio-details.png)
 
-![Alt text](images/image-character-journal-extras.png)
+![Alt text](readme-images/image-character-journal-extras.png)
 
-![Alt text](images/image-character-journal-custom-header.png)
+![Alt text](readme-images/image-character-journal-custom-header.png)
 
 #### Animated Exhaustion Tracking
 
-![Alt text](images/demo-akra-exhaustion.gif)
+![Alt text](readme-images/demo-akra-exhaustion.gif)
 
 #### Animated Inspiration Tracking
 
-![Alt text](images/demo-akra-inspiration.gif)
+![Alt text](readme-images/demo-akra-inspiration.gif)
 
 ### Item Cards
 
 When enabled, item cards can provide a quick look at any hovered item, spell, or feature:
 
-![Alt text](images/demo-item-card-slide-and-hold-key.gif)
+![Alt text](readme-images/demo-item-card-slide-and-hold-key.gif)
 
 Also, there is an option to make item cards float near the mouse:
 
-![Alt text](images/demo-item-card-floating.gif)
+![Alt text](readme-images/demo-item-card-floating.gif)
 
 ### Alternate Grid View
 
 Inventory and spellbooks can be viewed in a convenient grid format:
 
-![Alt text](images/demo-grid-view.gif)
+![Alt text](readme-images/demo-grid-view.gif)
 
 ### Attunement Tracker
 
 The attunement tracker brings it to the player's attention that they are over-attuned:
 
-![Alt text](images/demo-attunement-tracker.gif)
+![Alt text](readme-images/demo-attunement-tracker.gif)
 
 ### Max Prepared Spells
 
 Keep track of your maximum prepared spells:
 
-![Alt text](images/image-max-prepared-spells.jpg)
+![Alt text](readme-images/image-max-prepared-spells.jpg)
 
 ### Ammo Quick Switch
 
 Swap ammo quickly using the ammo swap feature:
 
-![Alt text](images/image-ammo-swap.png)
+![Alt text](readme-images/image-ammo-swap.png)
 
 You can even swap ammo in the item card:
 
-![Alt text](images/image-ammo-swap-item-card.png)
+![Alt text](readme-images/image-ammo-swap-item-card.png)
 
 ### Animated HP bars and Overlay
 
 There is an optional, animated HP bar and HP overlay for each sheet type:
 
-![Alt text](demo-animated-bars.gif)
+![Alt text](readme-images/demo-animated-bars.gif)
 
 > [!todo]
 > Finish the readme!
