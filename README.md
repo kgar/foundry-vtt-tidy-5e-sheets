@@ -37,6 +37,19 @@ Completely rewritten from the ground up, based on the [Tidy5e Sheet](https://git
 
 ---
 
+## Module Compatibility Work Has Begun
+
+Tidy 5e Sheets are built with different web tech and are structured differently than the default sheets, making compatibility not an automatic thing. As a result, efforts are underway to provide compatibility on a module-by-module basis, by way of this module adding API functions and hooks for module devs to hook into and augment the sheets in various ways. The modules whose compatibility has been request in a [github issue](https://github.com/kgar/foundry-vtt-tidy-5e-sheets/issues) are being evaluated first.
+
+In many cases, this will require changes to this module and to the module with which we want to be compatible. For this reason, there will be periods where we are awaiting the result of a submitting Pull Request to another module. 
+
+### World Scripts Available
+
+Sometimes, however, I will not be able to provide compatibility through changes to the other module, and to avoid our past mistakes with Tidy 5e Sheets, this rewrite does not embed other modules' integrating code into the source code, because for one sheets module, there are thousands+ sheet augmenting modules. Over time, some modules come and go, and the integrating code remains behind 😢.
+
+For whatever reason, if I am unable to work with the module author to come up with a solution on their end, but a solution is available that doesn't require changing their module, I will endeavor to have a world script available which can patch in the necessary changes. These scripts can be found here: https://github.com/kgar/foundry-vtt-tidy-5e-sheets/tree/main/compatibility/world-scripts.
+
+
 ## How to Support Tidy 5e Sheets
 
 Tidy 5e is a community effort. Development logs, feature discussion, troubleshooting, dreaming, and more can be found on [discord](https://discord.com/channels/1167985253072257115/1167985253512650755). 
