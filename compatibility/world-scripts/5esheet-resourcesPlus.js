@@ -1,5 +1,8 @@
 /*
-    Compatibility world script for 5esheet-resourcesPlus.
+    Compatibility world script for 5esheet-resourcesPlus:
+    - https://foundryvtt.com/packages/resourcesplus
+    - https://github.com/ardittristan/5eSheet-resourcesPlus
+    
     How to add world scripts to a game world: https://foundryvtt.wiki/en/basics/world-scripts
     
     --------------
