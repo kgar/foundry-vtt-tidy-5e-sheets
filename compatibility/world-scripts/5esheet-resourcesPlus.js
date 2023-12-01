@@ -10,6 +10,10 @@
 */
 // This only fires when this module is active: https://github.com/kgar/foundry-vtt-tidy-5e-sheets
 Hooks.once('tidy5e-sheet.ready', () => {
+  if (!game.modules.get('resourcesplus').active) {
+    return;
+  }
+
   Hooks.on('tidy5e-sheet.prepareResources', hideResourcesWhichShouldBeHidden);
   Hooks.on('renderEntitySheetConfig', updateResourcesCountOnSubmit);
   Hooks.on('renderDocumentSheetConfig', updateResourcesCountOnSubmit);
