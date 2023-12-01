@@ -7,16 +7,16 @@ D&D 5e sheet layouts for Foundry VTT, focused on a clean UI, user ergonomics, an
 
 Completely rewritten from the ground up, based on the [Tidy5e Sheet](https://github.com/sdenec/tidy5e-sheet) module by [sdenec](https://github.com/sdenec) and [4535992](https://github.com/p4535992).
 
-> [!WARNING]
-> **Use at your own risk.**
+> [!WARNING] > **Use at your own risk.**
 >
 > This is an alpha testing module that is subject to numerous breaking changes and rapid updates.
 >
 > It is recommended that you do not alpha test these sheets on your actual game world.
 >
 > During alpha testing, various pieces of Tidy-specific data will not carry over from the original sheets to the alpha sheets and vice versa. If you have a sheet that is fully set up with the original Tidy 5e sheets, expect numerous fields to be reset to their default value when switching over to the new sheets.
-> 
+>
 > These fields include but are not limited to:
+>
 > - Journal and journal note fields
 > - Favorites
 > - Sheet Lock
@@ -29,30 +29,31 @@ Completely rewritten from the ground up, based on the [Tidy5e Sheet](https://git
 
 > [!TIP]
 > If you'd like to transfer Tidy-specific data from the original sheets to the alpha sheets and vice versa, you can use these macros:
-> 
+>
 > - [Copy Original Sheet Data to the Alpha Sheets](./macros/transfer-original-tidy-data-to-alpha.js)
 > - [Copy Alpha Sheet Data to the Original Sheets](./macros/transfer-alpha-tidy-data-to-original.js)
-> 
+>
 > **DISCLAIMER**: Use at your own risk. These macros affect all actors and their items. It is recommended you back up your game world before performing this data transfer. This data transfer overwrites things like the journal and journal note fields.
 
 ---
 
 ## Module Compatibility Work Has Begun
 
-Tidy 5e Sheets are built with different web tech and are structured differently than the default sheets, making compatibility not an automatic thing. As a result, efforts are underway to provide compatibility on a module-by-module basis, by way of this module adding API functions and hooks for module devs to hook into and augment the sheets in various ways. The modules whose compatibility has been request in a [github issue](https://github.com/kgar/foundry-vtt-tidy-5e-sheets/issues) are being evaluated first.
+Tidy 5e Sheets are built with different web tech and are structured differently than the default sheets, making compatibility not an automatic thing. As a result, efforts are underway to provide compatibility on a module-by-module basis, by way of this module adding API functions and hooks for module devs to hook into and augment the sheets in various ways. The modules whose compatibility has been requested in a [github issue](https://github.com/kgar/foundry-vtt-tidy-5e-sheets/issues) are being evaluated first.
 
-In many cases, this will require changes to this module and to the module with which we want to be compatible. For this reason, there will be periods where we are awaiting the result of a submitting Pull Request to another module. 
+In many cases, this will require changes to this module and to the module with which we want to be compatible. For this reason, there will be periods where we are awaiting the result of a submitted Pull Request to another module.
 
 ### World Scripts Available
 
-Sometimes, however, I will not be able to provide compatibility through changes to the other module, and to avoid our past mistakes with Tidy 5e Sheets, this rewrite does not embed other modules' integrating code into the source code, because for one sheets module, there are thousands+ sheet augmenting modules. Over time, some modules come and go, and the integrating code remains behind 😢.
+Sometimes, however, I will not be able to provide compatibility through changes to the other module, and to avoid the past mistakes with Tidy 5e Sheets, this rewrite does not embed other modules' integrating code into the source code, because for one sheets module, there are thousands+ sheet augmenting modules. Over time, some modules come and go, and the integrating code remains behind 😢—Tidy becomes untidy and unmaintainable.
 
-For whatever reason, if I am unable to work with the module author to come up with a solution on their end, but a solution is available that doesn't require changing their module, I will endeavor to have a world script available which can patch in the necessary changes. These scripts can be found here: https://github.com/kgar/foundry-vtt-tidy-5e-sheets/tree/main/compatibility/world-scripts.
+For whatever reason, if I am unable to work with the module author to come up with a solution on their end, but a solution is available that doesn't require changing their module, I will endeavor to have a world script available which can patch in the necessary changes. These scripts can be found here: https://github.com/kgar/foundry-vtt-tidy-5e-sheets/tree/main/compatibility/world-scripts. World scripts of this nature come with the specific disclaimer to use at your own risk.
 
+If fixes are needed to world scripts that integrate with other modules, submit a [github issue](https://github.com/kgar/foundry-vtt-tidy-5e-sheets/issues), linking the affected world script, what is wrong, and what should be happening.
 
 ## How to Support Tidy 5e Sheets
 
-Tidy 5e is a community effort. Development logs, feature discussion, troubleshooting, dreaming, and more can be found on [discord](https://discord.com/channels/1167985253072257115/1167985253512650755). 
+Tidy 5e is a community effort. Development logs, feature discussion, troubleshooting, dreaming, and more can be found on [discord](https://discord.com/channels/1167985253072257115/1167985253512650755).
 
 Sheets development is a longterm commitment, subject to every Foundry and dnd5e system update, so any support is greatly appreciated.
 
