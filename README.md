@@ -7,7 +7,8 @@ D&D 5e sheet layouts for Foundry VTT, focused on a clean UI, user ergonomics, an
 
 Completely rewritten from the ground up, based on the [Tidy5e Sheet](https://github.com/sdenec/tidy5e-sheet) module by [sdenec](https://github.com/sdenec) and [4535992](https://github.com/p4535992).
 
-> [!WARNING] > **Use at your own risk.**
+> [!WARNING]
+> **Use at your own risk.**
 >
 > This is an alpha testing module that is subject to numerous breaking changes and rapid updates.
 >
@@ -53,7 +54,7 @@ If fixes are needed to world scripts that integrate with other modules, submit a
 
 ## How to Support Tidy 5e Sheets
 
-Tidy 5e is a community effort. Development logs, feature discussion, troubleshooting, dreaming, and more can be found on [discord](https://discord.com/channels/1167985253072257115/1167985253512650755).
+Tidy 5e is a community effort. Development logs, feature discussion, troubleshooting, dreaming, and more can be found on [discord](https://discord.com/channels/1167985253072257115/1167985253512650755). 
 
 Sheets development is a longterm commitment, subject to every Foundry and dnd5e system update, so any support is greatly appreciated.
 
