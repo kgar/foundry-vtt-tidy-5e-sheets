@@ -111,6 +111,26 @@ type ActionSectionTitle = string;
 
 export type ActorActions = Record<ActionSectionTitle, Set<ActionItem>>;
 
+export type TidyResource = {
+  name: string;
+  label: string;
+  labelName: string;
+  placeholder: string;
+  value: number | null;
+  valueName: string;
+  max: number | null;
+  maxName: string;
+  sr: boolean;
+  srName: string;
+  lr: boolean;
+  lrName: string;
+} & ExtensibleComponent;
+
+export type ExtensibleComponent = {
+  cssClasses: string[];
+  dataset: Record<string, string>;
+};
+
 export type ActorSheetContext = {
   actions: ActorActions;
   actor: Actor5e;
@@ -140,6 +160,7 @@ export type ActorSheetContext = {
   owner: boolean;
   showLimitedSheet: boolean;
   tabs: Tab[];
+  tidyResources: TidyResource[];
   useActionsFeature?: boolean;
   useClassicControls: boolean;
   useRoundedPortraitStyle: boolean;
