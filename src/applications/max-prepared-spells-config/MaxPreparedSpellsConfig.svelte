@@ -31,7 +31,7 @@
         <button
           type="button"
           class="highlight-on-hover"
-          on:click={(ev) => {
+          on:click={() => {
             $context.maxPreparedSpells = formula.value;
           }}>{localize(formula.label)}</button
         >
