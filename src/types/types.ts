@@ -60,6 +60,7 @@ export type CharacterSheetContext = {
   features: CharacterFeatureSection[];
   flawEnrichedHtml: string;
   idealEnrichedHtml: string;
+  maxPreparedSpellsTotal: number;
   notes1EnrichedHtml: string;
   notes2EnrichedHtml: string;
   notes3EnrichedHtml: string;

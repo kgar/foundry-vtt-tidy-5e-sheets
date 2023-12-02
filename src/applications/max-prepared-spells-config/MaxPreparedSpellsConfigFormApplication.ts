@@ -8,32 +8,37 @@ import { CONSTANTS } from 'src/constants';
 
 export type MaxPreparedSpellFormula = {
   label: string;
-  formula: string;
+  value: string;
 };
 
 export type MaxPreparedSpellsConfigContext = {
   maxPreparedSpells: string;
   formulas: MaxPreparedSpellFormula[];
+  actor: Actor5e;
 };
 
-const classFormulas = [
+const classFormulas: MaxPreparedSpellFormula[] = [
   {
     label: 'T5EK.Class.Artificer',
-    formula: '@abilities.int.mod + floor(@classes.artificer.levels / 2)',
+    value: '@abilities.int.mod + floor(@classes.artificer.levels / 2)',
   },
-  { label: 'T5EK.Class.Barbarian', formula: '' },
-  { label: 'T5EK.Class.Bard', formula: '' },
-  { label: 'T5EK.Class.Cleric', formula: '' },
-  { label: 'T5EK.Class.Custom', formula: '' },
-  { label: 'T5EK.Class.Druid', formula: '' },
-  { label: 'T5EK.Class.Fighter', formula: '' },
-  { label: 'T5EK.Class.Monk', formula: '' },
-  { label: 'T5EK.Class.Paladin', formula: '' },
-  { label: 'T5EK.Class.Ranger', formula: '' },
-  { label: 'T5EK.Class.Rogue', formula: '' },
-  { label: 'T5EK.Class.Sorcerer', formula: '' },
-  { label: 'T5EK.Class.Warlock', formula: '' },
-  { label: 'T5EK.Class.Wizard', formula: '' },
+  {
+    label: 'T5EK.Class.Cleric',
+    value: '@abilities.wis.mod + @classes.cleric.levels',
+  },
+  {
+    label: 'T5EK.Class.Druid',
+    value: '@abilities.wis.mod + @classes.druid.levels',
+  },
+  {
+    label: 'T5EK.Class.Paladin',
+    value: '@abilities.cha.mod + floor(@classes.paladin.levels / 2)',
+  },
+  { label: 'T5EK.Class.Ranger', value: 'ceil(@classes.rangers.levels/2)+1' },
+  {
+    label: 'T5EK.Class.Wizard',
+    value: '@abilities.int.mod + @classes.wizard.levels',
+  },
 ];
 export class MaxPreparedSpellsConfigFormApplication extends SvelteFormApplicationBase {
   context: Writable<MaxPreparedSpellsConfigContext>;
@@ -46,6 +51,7 @@ export class MaxPreparedSpellsConfigFormApplication extends SvelteFormApplicatio
     this.context = writable({
       maxPreparedSpells: '',
       formulas: classFormulas,
+      actor,
     });
   }
 
@@ -69,6 +75,7 @@ export class MaxPreparedSpellsConfigFormApplication extends SvelteFormApplicatio
           'maxPreparedSpells'
         )?.toString() ?? '',
       formulas: classFormulas,
+      actor: this.actor,
     };
   }
 

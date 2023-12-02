@@ -165,7 +165,8 @@
   // Components
   @import '../components/button-menu/button-menu.scss';
 
-  &.sheet form {
+  &.sheet form,
+  &.application-shell {
     @import './partials/buttons';
   }
 }

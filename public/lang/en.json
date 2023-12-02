@@ -159,7 +159,7 @@
 
   "T5EK.MaxPreparedSpellsConfig": {
     "Title": "Max Prepared Spells Configuration: {actorName}",
-    "Label": "Max Prepared Spells",
+    "ExamplesHeader": "Sample Formulas",
     "ButtonTooltip": "Configure Max Prepared Spells"
   },
 

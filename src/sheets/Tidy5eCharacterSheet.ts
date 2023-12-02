@@ -169,19 +169,21 @@ export class Tidy5eCharacterSheet
       showUsesColumn: section.hasActions,
     }));
 
-    let maxPreparedSpells = 0;
+    let maxPreparedSpellsTotal = 0;
     try {
       const formula =
         FoundryAdapter.tryGetFlag(
           this.actor,
           'maxPreparedSpells'
-        )?.toString() ?? '0';
+        )?.toString() ?? '';
 
-      const roll = await Roll.create(
-        formula,
-        this.actor.getRollData()
-      ).evaluate({ async: true });
-      maxPreparedSpells = roll.total;
+      if (formula?.trim() !== '') {
+        const roll = await Roll.create(
+          formula,
+          this.actor.getRollData()
+        ).evaluate({ async: true });
+        maxPreparedSpellsTotal = roll.total;
+      }
     } catch (e) {
       error('Unable to calculate max prepared spells', false, e);
     }
@@ -260,7 +262,7 @@ export class Tidy5eCharacterSheet
       lockMoneyChanges: FoundryAdapter.shouldLockMoneyChanges(),
       lockSensitiveFields:
         !editable && SettingsProvider.settings.useTotalSheetLock.get(),
-      maxPreparedSpells,
+      maxPreparedSpellsTotal,
       notes1EnrichedHtml: await FoundryAdapter.enrichHtml(
         FoundryAdapter.getProperty<string>(
           this.actor,

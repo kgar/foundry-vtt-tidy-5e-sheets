@@ -47,7 +47,7 @@
   {#if includePreparedSpells}
     <button
       type="button"
-      class="transparent-button max-prepared-spells"
+      class="transparent-button max-prepared-spells highlight-on-hover"
       on:click={() =>
         new MaxPreparedSpellsConfigFormApplication($context.actor).render(true)}
       title={localize('T5EK.MaxPreparedSpellsConfig.ButtonTooltip')}
@@ -56,8 +56,7 @@
       <p>{localize('T5EK.PreparedSpells')}</p>
       <span class="spells-prepared">{$context.preparedSpells ?? 0}</span>
       /
-      <span class="spells-max-prepared">{$context.maxPreparedSpells ?? 0}</span>
-      <i class="configure-max-prepared-spells-cog fas fa-cog"></i>
+      <span class="spells-max-prepared">{$context.maxPreparedSpellsTotal ?? 0}</span>
     </button>
   {/if}
   <div class="spellcasting-attribute">
@@ -103,22 +102,6 @@
     display: flex;
     align-items: center;
     font-size: 0.75rem;
-  }
-
-  .max-prepared-spells.max-prepared-spells {
-    position: relative;
-    padding: 0 1rem;
-
-    &:hover .configure-max-prepared-spells-cog {
-      opacity: 1;
-    }
-  }
-
-  .configure-max-prepared-spells-cog {
-    position: absolute;
-    right: -0rem;
-    opacity: 0;
-    transition: opacity 0.2s ease;
   }
 
   h3 {

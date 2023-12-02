@@ -11,10 +11,10 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-<section>
+<section class="flex-column">
   <div class="form-field">
     <label for="max-prepared-spells-edit-{appId}"
-      >{localize('T5EK.MaxPreparedSpellsConfig.Label')}</label
+      >{localize('DND5E.Formula')}</label
     >
 
     <input
@@ -24,12 +24,30 @@
       bind:value={$context.maxPreparedSpells}
     />
   </div>
+  <div role="presentation">
+    <h3>{localize('T5EK.MaxPreparedSpellsConfig.ExamplesHeader')}</h3>
+    <p class="flex-row flex-wrap sample-formulas">
+      {#each $context.formulas as formula}
+        <button
+          type="button"
+          class="highlight-on-hover"
+          on:click={(ev) => {
+            $context.maxPreparedSpells = formula.value;
+          }}>{localize(formula.label)}</button
+        >
+      {/each}
+    </p>
+  </div>
+  <button type="submit">
+    <i class="far fa-save" />
+    {localize('Save')}
+  </button>
 </section>
-<p>
-  TODO: Add buttons for each class to plunk in the standard calculation. It'll
-  help the average user get started.
-</p>
-<button type="submit">
-  <i class="far fa-save" />
-  {localize('Save')}
-</button>
+
+<style lang="scss">
+  .sample-formulas {
+    button {
+      flex: 0 0 1rem;
+    }
+  }
+</style>
