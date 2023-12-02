@@ -100,10 +100,10 @@
     </div>
     {#if $context.owner && !$context.lockSensitiveFields}
       <button
+        type="button"
         class="inline-icon-button resource-options"
         class:active={configActive}
         on:click={() => {
-          console.warn('Youuuuuu clicked it!');
           configActive = !configActive;
         }}
       >
