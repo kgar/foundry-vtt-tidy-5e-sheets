@@ -1,5 +1,6 @@
 import type { Item5e } from 'src/types/item';
 import { error } from './logging';
+import type { MaxPreparedSpellFormula } from 'src/types/types';
 
 export function scaleCantripDamageFormula(spell: Item5e, formula: string) {
   try {
@@ -56,4 +57,30 @@ export function simplifyFormula(
     error('Unable to simplify formula due to an error.', false, e);
     return formula;
   }
+}
+
+export function getMaxPreparedSpellsSampleFormulas(): MaxPreparedSpellFormula[] {
+  return [
+    {
+      label: 'T5EK.Class.Artificer',
+      value: '@abilities.int.mod + floor(@classes.artificer.levels / 2)',
+    },
+    {
+      label: 'T5EK.Class.Cleric',
+      value: '@abilities.wis.mod + @classes.cleric.levels',
+    },
+    {
+      label: 'T5EK.Class.Druid',
+      value: '@abilities.wis.mod + @classes.druid.levels',
+    },
+    {
+      label: 'T5EK.Class.Paladin',
+      value: '@abilities.cha.mod + floor(@classes.paladin.levels / 2)',
+    },
+    { label: 'T5EK.Class.Ranger', value: 'ceil(@classes.rangers.levels/2)+1' },
+    {
+      label: 'T5EK.Class.Wizard',
+      value: '@abilities.int.mod + @classes.wizard.levels',
+    },
+  ];
 }

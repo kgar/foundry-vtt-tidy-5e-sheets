@@ -157,6 +157,13 @@
 
   "T5EK.OriginSummaryConfig": "Origin Summary Configuration: {actorName}",
 
+  "T5EK.MaxPreparedSpellsConfig": {
+    "Title": "Max Prepared Spells Configuration: {actorName}",
+    "ExamplesHeader": "Sample Formulas",
+    "ButtonTooltip": "Configure Max Prepared Spells",
+    "MoreFormulas": "More formulas"
+  },
+
   "T5EK.TabSelection": {
     "Title": "Tab Selection: {documentName}",
     "MenuOptionText": "Tab Selection",

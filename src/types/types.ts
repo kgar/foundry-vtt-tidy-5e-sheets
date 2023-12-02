@@ -60,6 +60,7 @@ export type CharacterSheetContext = {
   features: CharacterFeatureSection[];
   flawEnrichedHtml: string;
   idealEnrichedHtml: string;
+  maxPreparedSpellsTotal: number;
   notes1EnrichedHtml: string;
   notes2EnrichedHtml: string;
   notes3EnrichedHtml: string;
@@ -230,3 +231,8 @@ export type ExpandedItemIdToLocationsMap = Map<string, Set<string>>;
  * A map from key Item ID to pre-fetched chat data.
  */
 export type ExpandedItemData = Map<string, ItemChatData>;
+
+export type MaxPreparedSpellFormula = {
+  label: string;
+  value: string;
+};
