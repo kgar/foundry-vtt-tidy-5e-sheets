@@ -57,13 +57,6 @@
 
   let showNoSpellsView = false;
   const localize = FoundryAdapter.localize;
-
-  function getInfoCardTemplate(section: any): ItemCardContentComponent | null {
-    if (['weapon', 'loot'].includes(section.dataset.type)) {
-      return InventoryItemCardContent;
-    }
-    return null;
-  }
 </script>
 
 <section class="npc-abilities-content" data-tidy-track-scroll-y>
@@ -71,6 +64,8 @@
     <SkillsList
       actor={$context.actor}
       toggleable={!$settingStore.alwaysShowNpcSkills}
+      expanded={!!FoundryAdapter.tryGetFlag($context.actor, 'skillsExpanded')}
+      toggleField="flags.{CONSTANTS.MODULE_ID}.skillsExpanded"
     />
     {#if !$settingStore.moveTraitsBelowNpcResources}
       <Traits toggleable={!$settingStore.alwaysShowNpcTraits} />

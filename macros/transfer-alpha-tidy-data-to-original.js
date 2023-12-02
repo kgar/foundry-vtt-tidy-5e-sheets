@@ -137,7 +137,7 @@
       isNew: false,
     },
     {
-      alpha: 'npcSkillsExpanded',
+      alpha: 'skillsExpanded',
       original: 'npcSkillsExpanded',
       isNew: false,
     },

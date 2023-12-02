@@ -503,6 +503,22 @@ export function createSettings() {
         },
       },
 
+      toggleEmptyCharacterSkills: {
+        options: {
+          name: 'T5EK.Settings.ToggleEmptyCharacterSkills.name',
+          hint: 'T5EK.Settings.ToggleEmptyCharacterSkills.hint',
+          scope: 'client',
+          config: false,
+          default: false,
+          type: Boolean,
+        },
+        get() {
+          return FoundryAdapter.getTidySetting<boolean>(
+            'toggleEmptyCharacterSkills'
+          );
+        },
+      },
+
       toggleEmptyCharacterTraits: {
         options: {
           name: 'T5EK.Settings.ToggleEmptyCharacterTraits.name',

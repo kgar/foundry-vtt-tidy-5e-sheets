@@ -315,6 +315,10 @@
     "name": "Use Health Overlay",
     "hint": "Shows a colored HP overlay."
   },
+  "T5EK.Settings.ToggleEmptyCharacterSkills": {
+    "name": "Toggle Empty Character Skills",
+    "hint": "Adds a toggle button for showing/hiding empty skills."
+  },
   "T5EK.Settings.ToggleEmptyCharacterTraits": {
     "name": "Toggle Empty Character Traits",
     "hint": "Adds a toggle button for showing/hiding empty traits."
