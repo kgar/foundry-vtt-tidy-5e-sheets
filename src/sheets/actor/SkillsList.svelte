@@ -8,9 +8,10 @@
 
   export let toggleable: boolean = false;
   export let actor: Actor5e;
+  export let expanded: boolean = true;
+  export let toggleField: string | null = null;
 
-  $: showAllSkills =
-    !toggleable || FoundryAdapter.tryGetFlag(actor, 'npcSkillsExpanded');
+  $: showAllSkills = !toggleable || expanded;
 
   let context =
     getContext<Readable<CharacterSheetContext | NpcSheetContext>>('context');
@@ -29,7 +30,7 @@
       label: s[1]['label'],
       ability: s[1]['ability'],
       skill: getSkill(s[0]),
-    })
+    }),
   );
   const localize = FoundryAdapter.localize;
 
@@ -42,11 +43,11 @@
   }
 
   function toggleShowAllSkills() {
-    const npcSkillsExpanded = FoundryAdapter.tryGetFlag(
-      actor,
-      'npcSkillsExpanded'
-    );
-    FoundryAdapter.setFlag(actor, 'npcSkillsExpanded', !npcSkillsExpanded);
+    if (toggleField === null) {
+      return;
+    }
+
+    actor.update({ [toggleField]: !expanded });
   }
 </script>
 
@@ -66,7 +67,7 @@
                 FoundryAdapter.renderProficiencyConfig(
                   $context.actor,
                   'skills',
-                  skillRef.key
+                  skillRef.key,
                 )}
               title={localize('DND5E.SkillConfigure')}
             >
@@ -80,7 +81,7 @@
                   $context.actor,
                   skillRef.key,
                   skillRef.skill?.value,
-                  'skills'
+                  'skills',
                 )}
               on:contextmenu={() =>
                 FoundryAdapter.cycleProficiency(
@@ -88,7 +89,7 @@
                   skillRef.key,
                   skillRef.skill?.value,
                   'skills',
-                  true
+                  true,
                 )}
               title={skillRef.skill.hover}>{@html skillRef.skill.icon}</button
             >

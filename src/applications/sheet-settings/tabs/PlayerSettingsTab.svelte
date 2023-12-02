@@ -118,6 +118,13 @@
 />
 
 <CheckboxSetting
+  bind:value={$context.settings.toggleEmptyCharacterSkills}
+  name={'T5EK.Settings.ToggleEmptyCharacterSkills.name'}
+  hint={'T5EK.Settings.ToggleEmptyCharacterSkills.hint'}
+  id="toggleEmptyCharacterSkills"
+/>
+
+<CheckboxSetting
   bind:value={$context.settings.toggleEmptyCharacterTraits}
   name={'T5EK.Settings.ToggleEmptyCharacterTraits.name'}
   hint={'T5EK.Settings.ToggleEmptyCharacterTraits.hint'}
