@@ -16,7 +16,6 @@
     <label for="max-prepared-spells-edit-{appId}"
       >{localize('DND5E.Formula')}</label
     >
-
     <input
       id="max-prepared-spells-edit-{appId}"
       type="text"
