@@ -1,0 +1,11 @@
+/*
+    Reset styles are meant to override Foundry styles with universally Tidy overrides, 
+    strictly for Tidy sheets, without imposing additional specificity 
+    for deeper styles to contend with.
+*/
+
+:is(img, svg) {
+  border: none;
+}
+
+// to do: add more generic tidy reset styles here.
