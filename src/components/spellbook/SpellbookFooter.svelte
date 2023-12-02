@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { CharacterSheetContext, NpcSheetContext } from 'src/types/types';
   import { getContext } from 'svelte';
@@ -7,6 +6,7 @@
   import NumberInput from '../inputs/NumberInput.svelte';
   import Select from '../inputs/Select.svelte';
   import TabFooter from 'src/sheets/actor/TabFooter.svelte';
+  import { MaxPreparedSpellsConfigFormApplication } from 'src/applications/max-prepared-spells-config/MaxPreparedSpellsConfigFormApplication';
 
   let context =
     getContext<Readable<CharacterSheetContext | NpcSheetContext>>('context');
@@ -45,21 +45,20 @@
     {/if}
   </h3>
   {#if includePreparedSpells}
-    <div class="max-prepared-spells">
+    <button
+      type="button"
+      class="transparent-button max-prepared-spells"
+      on:click={() =>
+        new MaxPreparedSpellsConfigFormApplication($context.actor).render(true)}
+      title={localize('T5EK.MaxPreparedSpellsConfig.ButtonTooltip')}
+      disabled={!$context.owner || $context.lockSensitiveFields}
+    >
       <p>{localize('T5EK.PreparedSpells')}</p>
       <span class="spells-prepared">{$context.preparedSpells ?? 0}</span>
       /
-      <NumberInput
-        document={$context.actor}
-        field="flags.{CONSTANTS.MODULE_ID}.maxPreparedSpells"
-        cssClass="max-preparation"
-        value={FoundryAdapter.tryGetFlag($context.actor, 'maxPreparedSpells')}
-        placeholder="0"
-        title={localize('T5EK.PreparedSpellsMax')}
-        selectOnFocus={true}
-        disabled={!$context.owner || $context.lockSensitiveFields}
-      />
-    </div>
+      <span class="spells-max-prepared">{$context.maxPreparedSpells ?? 0}</span>
+      <i class="configure-max-prepared-spells-cog fas fa-cog"></i>
+    </button>
   {/if}
   <div class="spellcasting-attribute">
     <p>{localize('DND5E.SpellAbility')}</p>
@@ -104,6 +103,22 @@
     display: flex;
     align-items: center;
     font-size: 0.75rem;
+  }
+
+  .max-prepared-spells.max-prepared-spells {
+    position: relative;
+    padding: 0 1rem;
+
+    &:hover .configure-max-prepared-spells-cog {
+      opacity: 1;
+    }
+  }
+
+  .configure-max-prepared-spells-cog {
+    position: absolute;
+    right: -0rem;
+    opacity: 0;
+    transition: opacity 0.2s ease;
   }
 
   h3 {
