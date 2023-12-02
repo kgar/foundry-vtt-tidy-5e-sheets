@@ -12,6 +12,10 @@
   font-style: normal;
 }
 
+:where(.tidy5e-kgar) {
+  @import './partials/reset';
+}
+
 .tidy5e-kgar {
   &.sheet form {
     color: var(--t5ek-primary-font-color);
