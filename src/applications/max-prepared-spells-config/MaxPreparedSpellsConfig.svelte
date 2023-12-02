@@ -37,6 +37,13 @@
         >
       {/each}
     </p>
+    <p>
+      <a
+        target="_blank"
+        href="https://github.com/kgar/foundry-vtt-tidy-5e-sheets/wiki/Max-Prepared-Spells-Formulas"
+        >{localize('T5EK.MaxPreparedSpellsConfig.MoreFormulas')}</a
+      >
+    </p>
   </div>
   <button type="submit">
     <i class="far fa-save" />

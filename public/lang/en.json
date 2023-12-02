@@ -160,7 +160,8 @@
   "T5EK.MaxPreparedSpellsConfig": {
     "Title": "Max Prepared Spells Configuration: {actorName}",
     "ExamplesHeader": "Sample Formulas",
-    "ButtonTooltip": "Configure Max Prepared Spells"
+    "ButtonTooltip": "Configure Max Prepared Spells",
+    "MoreFormulas": "More formulas"
   },
 
   "T5EK.TabSelection": {

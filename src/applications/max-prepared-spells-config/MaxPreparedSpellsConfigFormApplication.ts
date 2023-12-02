@@ -1,15 +1,11 @@
 import type { SvelteComponent } from 'svelte';
 import SvelteFormApplicationBase from '../SvelteFormApplicationBase';
 import MaxPreparedSpellsConfig from './MaxPreparedSpellsConfig.svelte';
-import type { Actor5e } from 'src/types/types';
+import type { Actor5e, MaxPreparedSpellFormula } from 'src/types/types';
 import { get, writable, type Writable } from 'svelte/store';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { CONSTANTS } from 'src/constants';
-
-export type MaxPreparedSpellFormula = {
-  label: string;
-  value: string;
-};
+import { getMaxPreparedSpellsSampleFormulas } from 'src/utils/formula';
 
 export type MaxPreparedSpellsConfigContext = {
   maxPreparedSpells: string;
@@ -17,29 +13,6 @@ export type MaxPreparedSpellsConfigContext = {
   actor: Actor5e;
 };
 
-const classFormulas: MaxPreparedSpellFormula[] = [
-  {
-    label: 'T5EK.Class.Artificer',
-    value: '@abilities.int.mod + floor(@classes.artificer.levels / 2)',
-  },
-  {
-    label: 'T5EK.Class.Cleric',
-    value: '@abilities.wis.mod + @classes.cleric.levels',
-  },
-  {
-    label: 'T5EK.Class.Druid',
-    value: '@abilities.wis.mod + @classes.druid.levels',
-  },
-  {
-    label: 'T5EK.Class.Paladin',
-    value: '@abilities.cha.mod + floor(@classes.paladin.levels / 2)',
-  },
-  { label: 'T5EK.Class.Ranger', value: 'ceil(@classes.rangers.levels/2)+1' },
-  {
-    label: 'T5EK.Class.Wizard',
-    value: '@abilities.int.mod + @classes.wizard.levels',
-  },
-];
 export class MaxPreparedSpellsConfigFormApplication extends SvelteFormApplicationBase {
   context: Writable<MaxPreparedSpellsConfigContext>;
   actor: Actor5e;
@@ -50,7 +23,7 @@ export class MaxPreparedSpellsConfigFormApplication extends SvelteFormApplicatio
 
     this.context = writable({
       maxPreparedSpells: '',
-      formulas: classFormulas,
+      formulas: getMaxPreparedSpellsSampleFormulas(),
       actor,
     });
   }
@@ -74,7 +47,7 @@ export class MaxPreparedSpellsConfigFormApplication extends SvelteFormApplicatio
           this.actor,
           'maxPreparedSpells'
         )?.toString() ?? '',
-      formulas: classFormulas,
+      formulas: getMaxPreparedSpellsSampleFormulas(),
       actor: this.actor,
     };
   }
