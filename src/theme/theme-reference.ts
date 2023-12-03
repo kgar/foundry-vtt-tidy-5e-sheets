@@ -512,4 +512,12 @@ export const themeVariables = {
     type: 'todo',
     group: 'todo',
   },
+  '--t5ek-table-header-row-color': {
+    type: 'todo',
+    group: 'todo',
+  },
+  '--t5ek-table-header-row-border-color': {
+    type: 'todo',
+    group: 'todo',
+  },
 };

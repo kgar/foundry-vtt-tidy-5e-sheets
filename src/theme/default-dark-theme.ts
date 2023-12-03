@@ -137,5 +137,7 @@ export const defaultDarkTheme: Tidy5eTheme = {
     '--t5ek-button-hover-background': 'var(--t5ek-faint-color)',
     '--t5ek-button-disabled-color': 'var(--t5ek-light-color)',
     '--t5ek-separator-color': 'rgba(120, 120, 120, 0.1)',
+    '--t5ek-table-header-row-color': '#111111',
+    '--t5ek-table-header-row-border-color': '#111111',
   },
 };
