@@ -67,7 +67,7 @@ export const defaultDarkTheme: Tidy5eTheme = {
     '--t5ek-exhaustion-severity1-background': 'rgba(255, 230, 0, 1)',
     '--t5ek-exhaustion-severity2-background': 'rgba(255, 130, 0, 1)',
     '--t5ek-exhaustion-severity3-background': 'rgba(255, 50, 0, 1)',
-    '--t5ek-ability-accent-background': '#1111111',
+    '--t5ek-ability-accent-background': 'rgb(80, 80, 80)',
     '--t5ek-context-outline-color': 'rgba(0, 0, 0, 0.4)',
     '--t5ek-context-shadow-color': 'rgba(0, 0, 0, 0.65)',
     '--t5ek-check-default-background-image':
