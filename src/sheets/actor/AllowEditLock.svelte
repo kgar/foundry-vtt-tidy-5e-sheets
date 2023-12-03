@@ -59,9 +59,9 @@
     align-items: center;
     justify-content: center;
     white-space: nowrap;
-    background: var(--t5ek-header-background);
+    background: var(--t5ek-tab-background);
     border: 0.0625rem solid transparent;
-    border-bottom: 0.0625rem solid var(--t5ek-header-border-color);
+    border-bottom: 0.0625rem solid var(--t5ek-tab-strip-border-color);
     font-size: 0.8125rem;
     text-align: left;
     height: 1.625rem;

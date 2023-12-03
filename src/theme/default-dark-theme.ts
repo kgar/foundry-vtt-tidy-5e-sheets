@@ -28,7 +28,6 @@ export const defaultDarkTheme: Tidy5eTheme = {
     '--t5ek-sheet-unlocked-icon-background': 'rgba(0, 150, 100, 0.6)',
     '--t5ek-sheet-locked-icon-background': 'rgba(255, 0, 0, 0.6)',
     '--t5ek-header-background': 'rgba(255, 255, 255, 0.05)',
-    '--t5ek-header-border-color': 'rgba(255, 255, 255, 0.25)',
     '--t5ek-prepareable-color': 'rgba(119, 136, 153, 1)',
     '--t5ek-equipped-background': 'rgba(0, 250, 180, 0.3)',
     '--t5ek-equipped-item-grid-tile-outline-color': 'rgba(50, 205, 50, 1)',
@@ -139,5 +138,9 @@ export const defaultDarkTheme: Tidy5eTheme = {
     '--t5ek-separator-color': 'rgba(120, 120, 120, 0.1)',
     '--t5ek-table-header-row-color': '#111111',
     '--t5ek-table-header-row-border-color': '#111111',
+    '--t5ek-tab-strip-border-color': 'transparent',
+    '--t5ek-tabs-background': 'var(--t5ek-header-background)',
+    '--t5ek-active-tab-background': 'var(--t5ek-sheet-background)',
+    '--t5ek-tab-background': 'transparent',
   },
 };

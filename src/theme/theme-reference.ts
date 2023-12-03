@@ -100,10 +100,6 @@ export const themeVariables = {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-header-border-color': {
-    type: 'todo',
-    group: 'todo',
-  },
   '--t5ek-prepareable-color': {
     type: 'todo',
     group: 'todo',
@@ -517,6 +513,22 @@ export const themeVariables = {
     group: 'todo',
   },
   '--t5ek-table-header-row-border-color': {
+    type: 'todo',
+    group: 'todo',
+  },
+  '--t5ek-tab-strip-border-color': {
+    type: 'todo',
+    group: 'todo',
+  },
+  '--t5ek-tabs-background': {
+    type: 'todo',
+    group: 'todo',
+  },
+  '--t5ek-active-tab-background': {
+    type: 'todo',
+    group: 'todo',
+  },
+  '--t5ek-tab-background': {
     type: 'todo',
     group: 'todo',
   },
