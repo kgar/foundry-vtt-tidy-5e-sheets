@@ -60,13 +60,6 @@
   id="useClassicControlsForNpc"
 />
 
-<CheckboxSetting
-  bind:value={$context.settings.useJournalTabForNpc}
-  name={'T5EK.Settings.UseJournalTabForNPC.name'}
-  hint={'T5EK.Settings.UseJournalTabForNPC.hint'}
-  id="useJournalTabForNpc"
-/>
-
 {#if userIsGm}
   <CheckboxSetting
     bind:value={$context.settings.useNpcRest}

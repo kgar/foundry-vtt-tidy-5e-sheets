@@ -279,14 +279,6 @@
     "name": "Show Player Name",
     "hint": "Shows a field for the player name below the character's name."
   },
-  "T5EK.Settings.UseJournalTabForCharacter": {
-    "name": "Use Character Journal",
-    "hint": "Shows the character journal tab."
-  },
-  "T5EK.Settings.UseJournalTabForNPC": {
-    "name": "Use NPC Journal",
-    "hint": "Shows the NPC journal tab."
-  },
   "T5EK.Settings.ShowClassList": {
     "name": "Show Class List",
     "hint": "Shows the class list below the character's name."

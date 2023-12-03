@@ -340,7 +340,6 @@ export class Tidy5eCharacterSheet
       useActionsFeature: actorUsesActionFeature(this.actor),
       useClassicControls:
         SettingsProvider.settings.useClassicControlsForCharacter.get(),
-      useJournalTab: SettingsProvider.settings.useJournalTabForCharacter.get(),
       useRoundedPortraitStyle: [
         CONSTANTS.CIRCULAR_PORTRAIT_OPTION_ALL as string,
         CONSTANTS.CIRCULAR_PORTRAIT_OPTION_CHARACTER as string,

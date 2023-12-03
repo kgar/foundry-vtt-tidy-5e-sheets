@@ -62,13 +62,6 @@
 />
 
 <CheckboxSetting
-  bind:value={$context.settings.useJournalTabForCharacter}
-  name={'T5EK.Settings.UseJournalTabForCharacter.name'}
-  hint={'T5EK.Settings.UseJournalTabForCharacter.hint'}
-  id="useJournalTabForCharacter"
-/>
-
-<CheckboxSetting
   bind:value={$context.settings.showClassList}
   name={'T5EK.Settings.ShowClassList.name'}
   hint={'T5EK.Settings.ShowClassList.hint'}
