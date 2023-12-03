@@ -77,7 +77,7 @@ export function getMaxPreparedSpellsSampleFormulas(): MaxPreparedSpellFormula[] 
       label: 'T5EK.Class.Paladin',
       value: '@abilities.cha.mod + floor(@classes.paladin.levels / 2)',
     },
-    { label: 'T5EK.Class.Ranger', value: 'ceil(@classes.rangers.levels/2)+1' },
+    { label: 'T5EK.Class.Ranger', value: 'ceil(@classes.ranger.levels/2)+1' },
     {
       label: 'T5EK.Class.Wizard',
       value: '@abilities.int.mod + @classes.wizard.levels',
