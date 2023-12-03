@@ -508,4 +508,8 @@ export const themeVariables = {
     type: 'todo',
     group: 'todo',
   },
+  '--t5ek-separator-color': {
+    type: 'todo',
+    group: 'todo',
+  },
 };

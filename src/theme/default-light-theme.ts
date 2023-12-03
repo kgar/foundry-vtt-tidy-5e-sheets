@@ -133,5 +133,6 @@ export const defaultLightTheme: Tidy5eTheme = {
     '--t5ek-button-background': 'var(--t5ek-faint-color)',
     '--t5ek-button-hover-background': 'var(--t5ek-faintest-color)',
     '--t5ek-button-disabled-color': 'var(--t5ek-light-color)',
+    '--t5ek-separator-color': 'var(--t5ek-light-color)',
   },
 };
