@@ -229,14 +229,6 @@
     "name": "Afficher le nom du joueur",
     "hint": "Activer cette option pour afficher le nom du joueur en dessous de celui de son personnage."
   },
-  "T5EK.Settings.UseJournalTabForCharacter": {
-    "name": null,
-    "hint": null
-  },
-  "T5EK.Settings.UseJournalTabForNPC": {
-    "name": null,
-    "hint": null
-  },
   "T5EK.Settings.ShowClassList": {
     "name": null,
     "hint": null

@@ -371,36 +371,6 @@ export function createSettings() {
       // Settings Menu
 
       // PC Sheet Settings
-      useJournalTabForCharacter: {
-        options: {
-          name: 'T5EK.Settings.UseJournalTabForCharacter.name',
-          hint: 'T5EK.Settings.UseJournalTabForCharacter.hint',
-          scope: 'client',
-          config: false,
-          default: true,
-          type: Boolean,
-        },
-        get() {
-          return FoundryAdapter.getTidySetting<boolean>(
-            'useJournalTabForCharacter'
-          );
-        },
-      },
-
-      useJournalTabForNpc: {
-        options: {
-          name: 'T5EK.Settings.UseJournalTabForNPC.name',
-          hint: 'T5EK.Settings.UseJournalTabForNPC.hint',
-          scope: 'client',
-          config: false,
-          default: true,
-          type: Boolean,
-        },
-        get() {
-          return FoundryAdapter.getTidySetting<boolean>('useJournalTabForNpc');
-        },
-      },
-
       showClassList: {
         options: {
           name: 'T5EK.Settings.ShowClassList.name',
