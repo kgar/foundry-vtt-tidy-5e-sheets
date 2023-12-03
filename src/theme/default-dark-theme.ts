@@ -92,7 +92,7 @@ export const defaultDarkTheme: Tidy5eTheme = {
     '--t5ek-vehicle-motion-text-shadow-hover-color': 'rgba(118, 228, 255, 0.5)',
     '--t5ek-vehicle-in-motion-text-shadow-color': '#76e4ff',
     '--t5ek-vehicle-in-motion-background': 'rgba(153, 153, 153, 1)',
-    '--t5ek-hp-bar-color': 'rgba(0, 200, 0, 0.6)',
+    '--t5ek-hp-bar-color': 'rgba(50, 149, 50, 0.6)',
     '--t5ek-resource-bar-color': 'rgba(21, 51, 98, 1)',
     '--t5ek-death-save-backdrop-background': 'rgba(255, 0, 0, 0.5)',
     '--t5ek-death-save-text-shadow-color': 'rgb(34, 34, 34)',

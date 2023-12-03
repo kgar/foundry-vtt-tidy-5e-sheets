@@ -50,7 +50,7 @@
 <style lang="scss">
   .filter-search {
     display: flex;
-    border: 0.0625rem solid var(--t5ek-light-color);
+    border: 0.0625rem solid var(--t5ek-separator-color);
     border-bottom: none;
     border-radius: 0.1875rem 0.1875rem 0 0;
     margin: -0.125rem 0 0 0.25rem;
