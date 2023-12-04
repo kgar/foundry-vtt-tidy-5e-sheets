@@ -159,13 +159,6 @@
   id="showIconsNextToTheItemName"
 />
 
-<CheckboxSetting
-  bind:value={$context.settings.sortFavoriteItemsAlphabetically}
-  name={'T5EK.Settings.SortFavoriteItemsAlphabetically.name'}
-  hint={'T5EK.Settings.SortFavoriteItemsAlphabetically.hint'}
-  id="sortFavoriteItemsAlphabetically"
-/>
-
 <h3>{localize('T5EK.Settings.MulticlassSpellbookFilterLabel')}</h3>
 
 <CheckboxSetting
