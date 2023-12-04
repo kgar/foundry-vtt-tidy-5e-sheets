@@ -192,6 +192,10 @@ export const themeVariables = {
     type: 'todo',
     group: 'todo',
   },
+  '--t5ek-attuned-color': {
+    type: 'todo',
+    group: 'todo',
+  },
   '--t5ek-attuned-item-grid-icon-color': {
     type: 'todo',
     group: 'todo',
