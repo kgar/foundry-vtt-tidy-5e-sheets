@@ -74,7 +74,7 @@ let npcSheetState = writable<NpcSheetState>({
       content: {
         component: ActorJournalTab,
       },
-      enabled: (context) => context.owner && context.useJournalTab,
+      enabled: (context) => context.owner,
       order: 60,
       layout: 'classic',
     },

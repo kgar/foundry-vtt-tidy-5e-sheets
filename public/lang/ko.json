@@ -229,14 +229,6 @@
     "name": "플레이어 이름 표시",
     "hint": "캐릭터 이름 아래에 플레이어 이름을 표시한다."
   },
-  "T5EK.Settings.UseJournalTabForCharacter": {
-    "name": "캐릭터 저널 숨김",
-    "hint": "활성화 시 저널 탭을 숨긴다."
-  },
-  "T5EK.Settings.UseJournalTabForNPC": {
-    "name": null,
-    "hint": null
-  },
   "T5EK.Settings.ShowClassList": {
     "name": null,
     "hint": null

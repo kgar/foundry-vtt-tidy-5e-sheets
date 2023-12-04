@@ -286,7 +286,6 @@ export class Tidy5eNpcSheet
         }
       ),
       useActionsFeature: actorUsesActionFeature(this.actor),
-      useJournalTab: SettingsProvider.settings.useJournalTabForNpc.get(),
       useRoundedPortraitStyle: [
         CONSTANTS.CIRCULAR_PORTRAIT_OPTION_ALL as string,
         CONSTANTS.CIRCULAR_PORTRAIT_OPTION_NPCVEHICLE as string,

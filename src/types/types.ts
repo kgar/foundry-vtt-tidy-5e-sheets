@@ -67,7 +67,6 @@ export type CharacterSheetContext = {
   notes4EnrichedHtml: string;
   notesEnrichedHtml: string;
   traitEnrichedHtml: string;
-  useJournalTab: boolean;
 } & ActorSheetContext &
   Record<string, any>;
 
@@ -87,7 +86,6 @@ export type NpcSheetContext = {
   shortRest: (event: Event) => Promise<void>;
   showSpellbookTab: boolean;
   traitEnrichedHtml: string;
-  useJournalTab: boolean;
 } & ActorSheetContext &
   Record<string, any>;
 
