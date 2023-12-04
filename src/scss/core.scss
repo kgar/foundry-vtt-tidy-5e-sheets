@@ -141,7 +141,11 @@
   }
 
   i.not-attuned {
-    color: var(--t5ek-attunement-required-color);
+    color: var(--t5ek-light-color);
+  }
+
+  i.attuned {
+    color: var(--t5ek-primary-accent-color);
   }
 
   .item-properties {

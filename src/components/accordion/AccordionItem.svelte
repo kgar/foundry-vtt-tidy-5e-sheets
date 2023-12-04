@@ -56,11 +56,13 @@
   .accordion-item {
     margin-block-end: 0.5rem;
   }
-  
+
   .accordion-item-header {
     padding: 0.25rem;
-    background-color: var(--t5ek-faintest-color);
+    background-color: var(--t5ek-table-header-row-color);
     margin: 0;
+    border: 0.0625rem solid var(--t5ek-table-header-row-color);
+    border-radius: 0.1875rem;
   }
 
   .accordion-item-toggle {
@@ -80,6 +82,7 @@
 
   .accordion-item-content {
     overflow-y: hidden;
+    padding-left: 0.25rem;
 
     &.hidden {
       display: none;
