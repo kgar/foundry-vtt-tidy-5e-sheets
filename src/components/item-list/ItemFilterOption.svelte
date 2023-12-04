@@ -35,7 +35,7 @@
       background: none;
       border: none;
       border-radius: 0;
-      border-bottom: 0.1875rem solid var(--t5ek-light-color);
+      border-bottom: 0.1875rem solid var(--t5ek-separator-color);
       line-height: unset;
 
       display: inline-flex;

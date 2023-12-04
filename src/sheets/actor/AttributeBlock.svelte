@@ -142,6 +142,10 @@
       border-radius: 0.3125rem 0 0 0.3125rem;
     }
 
+    .ability-save {
+      border-radius: 0 0.3125rem 0.3125rem 0;
+    }
+
     .ability-mod,
     .ability-save {
       flex: 1;

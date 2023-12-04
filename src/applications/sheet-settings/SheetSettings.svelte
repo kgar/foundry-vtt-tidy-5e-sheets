@@ -178,7 +178,7 @@
 
   .remaining-vertical-space {
     margin-right: -0.0625rem;
-    border-right: 0.0625rem solid var(--t5ek-light-color);
+    border-right: 0.0625rem solid var(--t5ek-tab-strip-border-color);
     flex: 1;
     background-color: var(--t5ek-header-background);
   }

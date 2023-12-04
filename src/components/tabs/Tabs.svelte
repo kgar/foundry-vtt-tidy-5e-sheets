@@ -98,20 +98,23 @@
     justify-content: center;
     flex-direction: row;
     flex-wrap: wrap;
+    background: var(--t5ek-tabs-background);
 
     .tab-option {
-      background: var(--t5ek-header-background);
+      background: var(--t5ek-tab-background);
       font-size: 0.8125rem;
       text-align: left;
       flex: 1 1 auto;
+      border-top-left-radius: 0.1875rem;
+      border-top-right-radius: 0.1875rem;
 
       &:hover {
-        background: var(--t5ek-header-background);
+        background: var(--t5ek-tab-background);
         color: var(--t5ek-primary-accent-color);
       }
 
       &.active {
-        background: transparent;
+        background: var(--t5ek-active-tab-background);
         font-weight: 700;
         cursor: default;
         text-shadow: none;
@@ -128,16 +131,18 @@
       .tab-option {
         height: 1.625rem;
         padding: 0.3125rem 0.5rem 0 0.5rem;
-        border-bottom: 0.0625rem solid var(--t5ek-header-border-color);
+        border-bottom: 0.0625rem solid var(--t5ek-tab-strip-border-color);
         border-bottom-left-radius: 0;
         border-bottom-right-radius: 0;
 
         &.first-tab.active {
           border-left-color: transparent;
+          border-top-left-radius: 0;
         }
 
         &.no-border-on-last-tab.active {
           border-right-color: transparent;
+          border-top-right-radius: 0;
         }
 
         &:first-child {
@@ -145,7 +150,7 @@
         }
 
         &.active {
-          border: 0.0625rem solid var(--t5ek-light-color);
+          border: 0.0625rem solid var(--t5ek-tab-strip-border-color);
           border-bottom-color: transparent;
         }
       }
@@ -165,7 +170,7 @@
         border-top: none;
         border-left: none;
         border-bottom: none;
-        border-right: 0.0625rem solid var(--t5ek-header-border-color);
+        border-right: 0.0625rem solid var(--t5ek-tab-strip-border-color);
         transition: border-left-width 0.125s;
         border-top-right-radius: 0;
         border-bottom-right-radius: 0;
@@ -175,7 +180,7 @@
         }
 
         &.active {
-          border: 0.0625rem solid var(--t5ek-light-color);
+          border: 0.0625rem solid var(--t5ek-tab-strip-border-color);
           border-right-color: transparent;
           border-left-width: 0.25rem;
           border-left-color: var(--t5ek-primary-accent-color);

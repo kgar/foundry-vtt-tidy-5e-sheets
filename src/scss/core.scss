@@ -144,6 +144,10 @@
     color: var(--t5ek-attunement-required-color);
   }
 
+  i.attuned {
+    color: var(--t5ek-attuned-color);
+  }
+
   .item-properties {
     justify-content: flex-start;
     flex-wrap: wrap;

@@ -323,8 +323,8 @@
       justify-content: space-between;
       align-items: center;
       gap: 0.25rem;
-      border-bottom: 0.0625rem solid var(--t5ek-light-color);
-      border-top: 0.0625rem solid var(--t5ek-light-color);
+      border-bottom: 0.0625rem solid var(--t5ek-separator-color);
+      border-top: 0.0625rem solid var(--t5ek-separator-color);
       font-size: 0.75rem;
       line-height: 1rem;
       padding: 0.1875rem 0 0.125rem 0;
