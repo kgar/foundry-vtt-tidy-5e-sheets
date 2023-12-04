@@ -66,13 +66,13 @@
     {#each $context.inventory as section (section.label)}
       {@const filteredItems = FoundryAdapter.getFilteredItems(
         searchCriteria,
-        section.items
+        section.items,
       )}
       {#if (searchCriteria.trim() === '' && $context.editable) || filteredItems.length > 0}
         {#if layoutMode === 'list'}
           <InventoryList
             primaryColumnName="{localize(
-              section.label
+              section.label,
             )} ({filteredItems.length})"
             items={filteredItems}
             extraInventoryRowClasses={section.css}
@@ -147,6 +147,10 @@
         box-shadow: 0 0 0.1875rem var(--t5ek-primary-accent-color);
         animation: attention 2s infinite alternate ease-in-out;
         color: var(--t5ek-white);
+
+        :global(input) {
+          color: var(--t5ek-white);
+        }
       }
 
       @keyframes attention {
