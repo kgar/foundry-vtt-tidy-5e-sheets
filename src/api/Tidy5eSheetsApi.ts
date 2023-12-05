@@ -22,32 +22,47 @@ import {
   unregisterNpcSheetTab,
 } from 'src/runtime/npc-sheet-state';
 import ThemeSettingsFormApplication from 'src/applications/theme/ThemeSettingsFormApplication';
+import type { RegisterItemDetailsSectionOptions } from './api.types';
 
 /**
- * Tidy 5e Sheets API
+ * A sinlgeton APITidy 5e Sheets API
  *
  * More info later
  */
 export class Tidy5eSheetsApi {
-  #themeSettings = new ThemeSettingsFormApplication();
-  #sheetSettings = new SheetSettingsFormApplication(CONSTANTS.TAB_SETTINGS_PLAYERS);
+  private static _instance: Tidy5eSheetsApi;
+
+  private constructor() {}
+
+  static getApi() {
+    Tidy5eSheetsApi._instance ??= new Tidy5eSheetsApi();
+    return this._instance;
+  }
+
+  private static _themeSettings: ThemeSettingsFormApplication;
+  private static _sheetSettings: SheetSettingsFormApplication;
 
   /**
    * Opens the Theme Settings dialog.
    */
   openThemeSettings(): ThemeSettingsFormApplication {
-    const rendered = this.#themeSettings.render(true);
-    setTimeout(() => this.#themeSettings.bringToTop(), 150);
+    Tidy5eSheetsApi._themeSettings ??= new ThemeSettingsFormApplication();
+    const rendered = Tidy5eSheetsApi._themeSettings.render(true);
+    setTimeout(() => Tidy5eSheetsApi._themeSettings.bringToTop(), 150);
     return rendered;
   }
 
   openSheetSettings(initialTab?: string): SheetSettingsFormApplication {
+    Tidy5eSheetsApi._sheetSettings ??= new SheetSettingsFormApplication(
+      CONSTANTS.TAB_SETTINGS_PLAYERS
+    );
+
     if (initialTab) {
-      this.#sheetSettings.initialTabId = initialTab;
+      Tidy5eSheetsApi._sheetSettings.initialTabId = initialTab;
     }
 
-    const rendered = this.#sheetSettings.render(true);
-    setTimeout(() => this.#sheetSettings.bringToTop(), 150);
+    const rendered = Tidy5eSheetsApi._sheetSettings.render(true);
+    setTimeout(() => Tidy5eSheetsApi._sheetSettings.bringToTop(), 150);
     return rendered;
   }
 
@@ -82,5 +97,10 @@ export class Tidy5eSheetsApi {
 
   unregisterVehicleSheetTab(tabId: string) {
     return unregisterVehicleSheetTab(tabId);
+  }
+
+  registerItemDetailSection(options?: RegisterItemDetailsSectionOptions) {
+    // TODO: add support the handlebars scenario first and ensure you can add arbitrary content in a world script in the structure/class makeup of the default item sheets
+    // then move on to the other scenarios
   }
 }

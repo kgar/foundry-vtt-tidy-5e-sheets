@@ -6,7 +6,7 @@ import { Tidy5eKgarItemSheet } from './sheets/Tidy5eItemSheet';
 import { Tidy5eNpcSheet } from './sheets/Tidy5eNpcSheet';
 import { Tidy5eVehicleSheet } from './sheets/Tidy5eKgarVehicleSheet';
 import { CONSTANTS } from './constants';
-import { getApi } from './api/api';
+import { Tidy5eSheetsApi } from './api/Tidy5eSheetsApi';
 
 FoundryAdapter.registerActorSheet(
   Tidy5eCharacterSheet,
@@ -32,7 +32,7 @@ FoundryAdapter.hooksOnce('ready', async () => {
   initSettings();
 
   const tidy5eModule = FoundryAdapter.getModule(CONSTANTS.MODULE_ID);
-  const api = getApi();
+  const api = Tidy5eSheetsApi.getApi();
   tidy5eModule.api = api;
 
   // TODO: Remove after taking over the live module ID

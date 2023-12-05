@@ -1,7 +1,6 @@
 <script lang="ts">
   import ButtonMenu from 'src/components/button-menu/ButtonMenu.svelte';
   import ButtonMenuCommand from 'src/components/button-menu/ButtonMenuCommand.svelte';
-  import { getApi } from 'src/api/api';
   import ButtonMenuDivider from 'src/components/button-menu/ButtonMenuDivider.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import ThemeSelectorButtonMenuCommand from '../shared/ThemeSelectorButtonMenuCommand.svelte';
@@ -9,10 +8,11 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import type { ActorSheetContext } from 'src/types/types';
+  import { Tidy5eSheetsApi } from 'src/api/Tidy5eSheetsApi';
   export let defaultSettingsTab: string | undefined = undefined;
 
   const localize = FoundryAdapter.localize;
-  const api = getApi();
+  const api = Tidy5eSheetsApi.getApi();
 
   let context = getContext<Readable<ActorSheetContext>>('context');
 </script>
