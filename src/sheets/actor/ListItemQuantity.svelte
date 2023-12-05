@@ -1,7 +1,5 @@
 <script lang="ts">
-  import NumberInput from 'src/components/inputs/NumberInput.svelte';
-  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { settingStore } from 'src/settings/settings';
+  import TextInput from 'src/components/inputs/TextInput.svelte';
   import type { Item5e } from 'src/types/item';
   import type { ActorSheetContext } from 'src/types/types';
   import { getContext } from 'svelte';
@@ -15,17 +13,17 @@
 
 {#if !isNaN(item.system.quantity)}
   <span class="item-quantity" class:isStack={ctx?.isStack}>
-    (<NumberInput
+    (<TextInput
       cssClass="item-count"
       document={item}
       field="system.quantity"
       value={item.system.quantity}
-      maxlength={3}
-      readonly={!FoundryAdapter.userIsGm() && $settingStore.lockItemQuantity}
       selectOnFocus={true}
-      stopClickPropagation={true}
       disabled={!$context.owner || $context.lockItemQuantity}
       placeholder="0"
+      allowDeltaChanges={true}
+      on:click={(ev) => ev.stopPropagation()}
+      on:keypress={(ev) => ev.stopPropagation()}
     />)
   </span>
 {/if}
