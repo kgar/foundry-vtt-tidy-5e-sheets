@@ -31,14 +31,17 @@ export interface RegisterItemDetailsSectionOptions {
    */
   onRender?(args: OnRenderArgs): void;
   /**
-   * Rerender this content whenever the actor data changes.
-   * This mimics the handlebars render scheme.
-   * @default true
+   * Determines when the injected content will render.
+   * - 'handlebars': the content will rerender every time the render event is called.
+   * - `undefined`: the content will rerender when render is called with `force=true`
+   * @default 'handlebars'
    */
-  renderOnActorChange?: boolean;
+  renderStrategy?: 'handlebars';
   /**
-   * 
+   * The content to be rendered within the section.
+   * @default undefined
    */
+  content?: InjectableContent;
 }
 
 /**
