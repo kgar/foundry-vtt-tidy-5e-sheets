@@ -26,7 +26,7 @@ import { debug } from 'src/utils/logging';
 import type { SvelteComponent } from 'svelte';
 import { getPercentage } from 'src/utils/numbers';
 import { getCustomItemDetailSections } from 'src/runtime/item-sheet-runtime';
-import { HandlebarsContent } from 'src/api/HandlebarsContent';
+import { HandlebarsTemplateContent } from 'src/api/HandlebarsTemplateContent';
 
 export class Tidy5eKgarItemSheet
   extends dnd5e.applications.item.ItemSheet5e
@@ -156,6 +156,8 @@ export class Tidy5eKgarItemSheet
         break;
     }
 
+    this.customContentOnRender();
+
     // Advancement context menu
     const contextOptions = this._getAdvancementContextMenuOptions();
     /**
@@ -178,6 +180,17 @@ export class Tidy5eKgarItemSheet
       );
   }
 
+  private customContentOnRender() {
+    const data = get(this.context);
+    data.customDetailSections.forEach((s) =>
+      s.options.onRender?.({
+        app: this,
+        data: data,
+        element: this.element.get(0),
+      })
+    );
+  }
+
   async getData(options = {}) {
     this.context.set(await this.getContext());
     return get(this.context);
@@ -194,6 +207,11 @@ export class Tidy5eKgarItemSheet
     applyTitleToWindow(this.title, this.element.get(0));
     this.getContext().then((context) => {
       this.context.update(() => context);
+      // The HTML will update after a change detection cycle, so custom content is notified after this, via setTimeout.
+      // TODO: Find a better way. Perhaps a wrapping component which invokes a custom content refresh function from `afterUpdate` lifecycle event (maybe onMount as well)
+      setTimeout(() => {
+        this.customContentOnRender();
+      });
     });
     return this;
   }
@@ -232,14 +250,14 @@ export class Tidy5eKgarItemSheet
     for (let option of registeredCustomItemSectionOptions) {
       let content = '';
       // TODO: Create an InjectableContent utility function that can handle this common pattern.
-      if (option.content instanceof HandlebarsContent) {
+      if (option.content instanceof HandlebarsTemplateContent) {
         content = await option.content.render(defaultCharacterContext);
       } else if (typeof option.content === 'string') {
         content = option.content;
       }
 
       let sectionTitle: string | undefined = undefined;
-      if (option.sectionTitle instanceof HandlebarsContent) {
+      if (option.sectionTitle instanceof HandlebarsTemplateContent) {
         sectionTitle = await option.sectionTitle.render(
           defaultCharacterContext
         );

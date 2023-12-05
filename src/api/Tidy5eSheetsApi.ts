@@ -107,4 +107,6 @@ export class Tidy5eSheetsApi {
     }
     registerItemDetailSection(options);
   }
+
+  // TODO: add relevant class models in the style of dnd5e <3, but to the API
 }

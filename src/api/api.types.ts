@@ -1,4 +1,4 @@
-import type { HandlebarsContent } from './HandlebarsContent';
+import type { HandlebarsTemplateContent } from './HandlebarsTemplateContent';
 
 /**
  * Content which can be injected into Tidy 5e Sheets via the API.
@@ -7,7 +7,7 @@ export type InjectableContent =
   | string
   | HTMLElement
   | HTMLElement[]
-  | HandlebarsContent;
+  | HandlebarsTemplateContent;
 
 /**
  * Options for how and what to render, as well as callbacks
@@ -57,19 +57,19 @@ export interface RegisterItemDetailsSectionOptions {
 }
 
 /**
- * Data provided during the rendering of this item section.
+ * Data provided during the rendering of this item document sheet.
  */
 export interface OnRenderArgs {
   /**
-   * An empty HTMLElement container for your content
+   * The sheet application instance.
    */
-  node: HTMLElement;
+  app: any;
   /**
-   * An Item5e instance from the dnd5e system
+   * The document sheet application element. This is the entire application window, including the header.
    */
-  item: any;
+  element: HTMLElement;
   /**
    * The item sheet context which is typically passed to the handlebars template
    */
-  itemSheetContext: any;
+  data: any;
 }
