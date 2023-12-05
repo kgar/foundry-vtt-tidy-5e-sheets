@@ -39,7 +39,7 @@
       content: '';
       height: 0;
       width: 60%;
-      border-bottom: 0.0625rem solid var(--t5ek-faint-color);
+      border-bottom: 0.0625rem solid var(--t5ek-separator-color);
       position: absolute;
       left: 50%;
       bottom: -0.0625rem;

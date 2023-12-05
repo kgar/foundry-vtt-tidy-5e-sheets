@@ -66,13 +66,13 @@
     {#each $context.inventory as section (section.label)}
       {@const filteredItems = FoundryAdapter.getFilteredItems(
         searchCriteria,
-        section.items
+        section.items,
       )}
       {#if (searchCriteria.trim() === '' && $context.editable) || filteredItems.length > 0}
         {#if layoutMode === 'list'}
           <InventoryList
             primaryColumnName="{localize(
-              section.label
+              section.label,
             )} ({filteredItems.length})"
             items={filteredItems}
             extraInventoryRowClasses={section.css}
@@ -94,7 +94,7 @@
         $context.actor.system.attributes.attunement.max}
       title={localize('DND5E.Attunement')}
     >
-      <i class="fas fa-sun" />
+      <i class="attunement-icon fas fa-sun" />
       <span
         class="attuned-items-current"
         title={localize('T5EK.AttunementItems')}
@@ -139,22 +139,21 @@
       padding-left: 0.625rem;
       border-radius: 0.3125rem;
       background: var(--t5ek-faint-color);
-      box-shadow: 0 0 0.3125rem var(--t5ek-magic-accent-color) inset;
-      border: 0.0625rem solid var(--t5ek-magic-accent-color);
 
-      &.overattuned {
-        background: var(--t5ek-primary-accent-color);
-        box-shadow: 0 0 0.1875rem var(--t5ek-primary-accent-color);
-        animation: attention 2s infinite alternate ease-in-out;
-        color: var(--t5ek-white);
+      .attunement-icon {
+        color: var(--t5ek-primary-accent-color);
       }
 
-      @keyframes attention {
+      &.overattuned {
+        animation: overflowing-with-arcane-power 2s infinite;
+      }
+
+      @keyframes overflowing-with-arcane-power {
         0% {
-          transform: scale(1);
+          box-shadow: 0 0 0 0 var(--t5ek-primary-accent-color);
         }
         100% {
-          transform: scale(1.1);
+          box-shadow: 0 0 0 0.375rem rgba(0, 0, 0, 0);
         }
       }
 

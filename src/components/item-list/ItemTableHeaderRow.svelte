@@ -11,8 +11,8 @@
     padding: 0.25rem 0 0.125rem 0.375rem;
     line-height: 0.75rem;
     font-size: 0.75rem;
-    background: var(--t5ek-faint-color);
-    box-shadow: 0 0 0.1875rem inset var(--t5ek-light-color);
+    background: var(--t5ek-table-header-row-color);
+    box-shadow: 0 0 0.1875rem inset var(--t5ek-table-header-row-border-color);
     border-radius: 0.3125rem;
   }
 </style>

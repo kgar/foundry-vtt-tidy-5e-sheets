@@ -60,6 +60,13 @@
   />
 
   <CheckboxSetting
+    bind:value={$context.settings.sortFavoriteItemsAlphabetically}
+    name={'T5EK.Settings.SortFavoriteItemsAlphabetically.name'}
+    hint={'T5EK.Settings.SortFavoriteItemsAlphabetically.hint'}
+    id="sortFavoriteItemsAlphabetically"
+  />
+
+  <CheckboxSetting
     bind:value={$context.settings.showExpandedLimitedView}
     name={'T5EK.Settings.ShowExpandedLimitedView.name'}
     hint={'T5EK.Settings.ShowExpandedLimitedView.hint'}

@@ -46,11 +46,13 @@
 
       .resting {
         border-radius: 1.25rem;
+      }
+    }
 
-        &:is(:hover),
-        &:has(button:focus-visible) {
-          width: 6.875rem;
-        }
+    .resting {
+      &:is(:hover),
+      &:has(button:focus-visible) {
+        width: 6.875rem;
       }
     }
   }

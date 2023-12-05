@@ -20,6 +20,6 @@
   }
 
   .light {
-    background: var(--t5ek-light-color);
+    background: var(--t5ek-separator-color);
   }
 </style>

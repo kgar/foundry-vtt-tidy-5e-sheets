@@ -95,7 +95,7 @@
       height: 0.75rem;
       border-radius: 50%;
       background-color: var(--t5ek-primary-accent-color);
-      border: 0.0625rem solid var(--t5ek-primary-font-color);
+      border: 0.0625rem solid var(--t5ek-separator-color);
       transition: background-color 0.3s ease;
 
       &:is(:hover, :focus-visible),
