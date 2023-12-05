@@ -115,7 +115,7 @@
     <div role="presentation" class="remaining-vertical-space" />
   </div>
 
-  <TabContents {tabs} {selectedTabId} cssClass="sheet-body" />
+  <TabContents {tabs} {selectedTabId} cssClass="tidy-sheet-body" />
   <div class="button-bar">
     <button
       type="button"
@@ -156,7 +156,7 @@
       margin-bottom: -0.5rem;
     }
 
-    :global(.sheet-body) {
+    :global(.tidy-sheet-body) {
       grid-area: body;
       overflow-y: scroll;
       padding-top: 0.5rem;

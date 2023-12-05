@@ -234,7 +234,7 @@
   </svelte:fragment>
 </Tabs>
 
-<section class="sheet-body">
+<section class="tidy-sheet-body">
   <TabContents tabs={$context.tabs} {selectedTabId} />
 </section>
 
