@@ -68,7 +68,7 @@
       {#if includeWeightColumn}
         <ItemTableColumn
           title="{localize('DND5E.Weight')} ({weightUnit})"
-          baseWidth="2.5rem"
+          baseWidth="4rem"
         >
           <i class="fas fa-weight-hanging" />
         </ItemTableColumn>
@@ -129,16 +129,20 @@
           {/if}
         {/if}
         {#if includeWeightColumn}
+          {@const weight = ctx?.totalWeight ?? item.system.weight}
           <ItemTableCell
-            baseWidth="2.5rem"
-            title="{localize('DND5E.Weight')}: {item.system
-              .weight} {weightUnit}"
+            baseWidth="4rem"
+            title={localize('T5EK.Inventory.Weight.Tooltip', {
+              weight: weight,
+              weightUnit: weightUnit,
+            })}
           >
-            {#if ctx?.totalWeight}
-              {ctx.totalWeight} {weightUnit}
-            {:else}
-              {item.system.weight} {weightUnit}
-            {/if}
+            <span class="truncate">
+              {localize('T5EK.Inventory.Weight.Text', {
+                weight: weight,
+                weightUnit: weightUnit,
+              })}
+            </span>
           </ItemTableCell>
         {/if}
         <ItemTableCell baseWidth="3.125rem" title={localize('DND5E.Uses')}>
