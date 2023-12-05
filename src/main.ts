@@ -43,3 +43,9 @@ FoundryAdapter.hooksOnce('ready', async () => {
 
   Hooks.call(CONSTANTS.HOOK_TIDY5E_SHEETS_READY, api);
 });
+
+Hooks.on('renderItemSheet5e', async (app, html, data) => {
+  const template = FoundryAdapter.getTemplate('test.hbs');
+  const myHTML = await renderTemplate(template, data);
+  html.find(".form-group.consumption").first().after(myHTML);
+});
