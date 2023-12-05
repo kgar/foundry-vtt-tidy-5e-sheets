@@ -1,0 +1,82 @@
+{{#if isTemplate}}
+  <h3 class='form-header'>{{localize
+      'walledtemplates.MeasuredTemplateConfiguration.LegendTitle'
+    }}</h3>
+
+  <div class='form-group'>
+    <label>{{localize
+        'walledtemplates.MeasuredTemplateConfiguration.walls-block.Name'
+      }}
+      <i
+        class='tip fas fa-info-circle'
+        data-tooltip='walledtemplates.MeasuredTemplateConfiguration.walls-block.Hint'
+      ></i>
+    </label>
+    <div class='form-fields'>
+      <select name='flags.walledtemplates.wallsBlock'>
+        {{selectOptions
+          walledtemplates.blockoptions
+          selected=item.flags.walledtemplates.wallsBlock
+          localize=true
+        }}
+      </select>
+    </div>
+  </div>
+
+  <div class='form-group'>
+    <label>{{localize
+        'walledtemplates.MeasuredTemplateConfiguration.wall-restriction-type.Name'
+      }}
+      <i
+        class='tip fas fa-info-circle'
+        data-tooltip='walledtemplates.MeasuredTemplateConfiguration.walls-restriction-type.Hint'
+      ></i>
+    </label>
+    <div class='form-fields'>
+      <select name='flags.walledtemplates.wallRestriction'>
+        {{selectOptions
+          walledtemplates.walloptions
+          selected=item.flags.walledtemplates.wallRestriction
+          localize=true
+        }}
+      </select>
+    </div>
+  </div>
+
+  <div class='form-group'>
+    <label>{{localize 'walledtemplates.dnd5e-spell-config.attach-token.Name'}}
+      <i
+        class='tip fas fa-info-circle'
+        data-tooltip='walledtemplates.MeasuredTemplateConfiguration.attach-token.Hint'
+      ></i>
+    </label>
+    <div class='form-fields'>
+      <select name='flags.walledtemplates.attachToken'>
+        {{selectOptions
+          walledtemplates.attachtokenoptions
+          selected=item.flags.walledtemplates.attachToken
+          localize=true
+        }}
+      </select>
+    </div>
+  </div>
+
+  <div class='form-group'>
+    <label class='checkbox'>{{localize
+        'walledtemplates.dnd5e-spell-config.add-token-size.Name'
+      }}
+      <i
+        class='tip fas fa-info-circle'
+        data-tooltip='walledtemplates.dnd5e-spell-config.add-token-size.Hint'
+      ></i>
+    </label>
+    <div class='form-fields'>
+      <input
+        type='checkbox'
+        name='flags.walledtemplates.addTokenSize'
+        {{checked item.flags.walledtemplates.addTokenSize}}
+      />
+    </div>
+  </div>
+
+{{/if}}

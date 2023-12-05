@@ -42,6 +42,18 @@ export interface RegisterItemDetailsSectionOptions {
    * @default undefined
    */
   content?: InjectableContent;
+  /**
+   * Allows for preparing data in any special way or to make any other miscellaneous preparations leading up to rendering the item.
+   * @param data the item sheet context
+   * @returns void
+   */
+  onPrepareData?: (data: any) => void;
+  /**
+   * Determines whether this custom applies to the target item to be rendered.
+   * @param data the item sheet context
+   * @returns boolean for whether to use this custom section or not
+   */
+  enabled?: (data: any) => boolean;
 }
 
 /**

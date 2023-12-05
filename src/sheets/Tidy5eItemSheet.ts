@@ -1,6 +1,11 @@
 import { CONSTANTS } from 'src/constants';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-import type { Item5e, ItemDescription, ItemSheetContext } from 'src/types/item';
+import type {
+  CustomItemSection,
+  Item5e,
+  ItemDescription,
+  ItemSheetContext,
+} from 'src/types/item';
 import { get, writable } from 'svelte/store';
 import TypeNotFoundSheet from './item/TypeNotFoundSheet.svelte';
 import EquipmentSheet from './item/EquipmentSheet.svelte';
@@ -20,6 +25,8 @@ import { applyTitleToWindow } from 'src/utils/applications';
 import { debug } from 'src/utils/logging';
 import type { SvelteComponent } from 'svelte';
 import { getPercentage } from 'src/utils/numbers';
+import { getCustomItemDetailSections } from 'src/runtime/item-sheet-runtime';
+import { HandlebarsContent } from 'src/api/HandlebarsContent';
 
 export class Tidy5eKgarItemSheet
   extends dnd5e.applications.item.ItemSheet5e
@@ -212,13 +219,49 @@ export class Tidy5eKgarItemSheet
       },
     ];
 
-    const context = {
+    const registeredCustomItemSectionOptions = getCustomItemDetailSections(
+      defaultCharacterContext
+    );
+
+    registeredCustomItemSectionOptions.forEach((s) =>
+      s.onPrepareData?.(defaultCharacterContext)
+    );
+
+    const customItemSections: CustomItemSection[] = [];
+
+    for (let option of registeredCustomItemSectionOptions) {
+      let content = '';
+      // TODO: Create an InjectableContent utility function that can handle this common pattern.
+      if (option.content instanceof HandlebarsContent) {
+        content = await option.content.render(defaultCharacterContext);
+      } else if (typeof option.content === 'string') {
+        content = option.content;
+      }
+
+      let sectionTitle: string | undefined = undefined;
+      if (option.sectionTitle instanceof HandlebarsContent) {
+        sectionTitle = await option.sectionTitle.render(
+          defaultCharacterContext
+        );
+      } else if (typeof option.sectionTitle === 'string') {
+        sectionTitle = option.sectionTitle;
+      }
+
+      customItemSections.push({
+        contentHtml: content,
+        sectionTitleHtml: sectionTitle,
+        options: option,
+      });
+    }
+
+    const context: ItemSheetContext = {
       ...defaultCharacterContext,
       appId: this.appId,
       activateFoundryJQueryListeners: (node: HTMLElement) => {
         this._activateCoreListeners($(node));
         super.activateListeners($(node));
       },
+      customDetailSections: customItemSections,
       toggleAdvancementLock: this.toggleAdvancementLock.bind(this),
       lockItemQuantity: FoundryAdapter.shouldLockItemQuantity(),
       healthPercentage: getPercentage(

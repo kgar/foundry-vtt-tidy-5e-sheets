@@ -23,6 +23,7 @@ import {
 } from 'src/runtime/npc-sheet-state';
 import ThemeSettingsFormApplication from 'src/applications/theme/ThemeSettingsFormApplication';
 import type { RegisterItemDetailsSectionOptions } from './api.types';
+import { registerItemDetailSection } from 'src/runtime/item-sheet-runtime';
 
 /**
  * A sinlgeton APITidy 5e Sheets API
@@ -100,7 +101,10 @@ export class Tidy5eSheetsApi {
   }
 
   registerItemDetailSection(options?: RegisterItemDetailsSectionOptions) {
-    // TODO: add support the handlebars scenario first and ensure you can add arbitrary content in a world script in the structure/class makeup of the default item sheets
-    // then move on to the other scenarios
+    if (!options) {
+      // error? log / notify?
+      return;
+    }
+    registerItemDetailSection(options);
   }
 }
