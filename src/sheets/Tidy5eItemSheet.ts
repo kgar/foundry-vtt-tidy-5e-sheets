@@ -25,7 +25,7 @@ import { applyTitleToWindow } from 'src/utils/applications';
 import { debug } from 'src/utils/logging';
 import type { SvelteComponent } from 'svelte';
 import { getPercentage } from 'src/utils/numbers';
-import { getCustomItemDetailSections } from 'src/runtime/item-sheet-runtime';
+import { getCustomItemDetailSections } from 'src/runtime/item/item-sheet-runtime';
 import { HandlebarsTemplateContent } from 'src/api/HandlebarsTemplateContent';
 
 export class Tidy5eKgarItemSheet

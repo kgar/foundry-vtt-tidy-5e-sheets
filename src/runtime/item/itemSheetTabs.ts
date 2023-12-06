@@ -1,19 +1,19 @@
 import { CONSTANTS } from 'src/constants';
-import ItemActiveEffectsTab from '../sheets/item/tabs/ItemActiveEffectsTab.svelte';
-import ItemAdvancementTab from '../sheets/item/tabs/ItemAdvancementTab.svelte';
-import ItemBackpackDetailsTab from '../sheets/item/tabs/ItemBackpackDetailsTab.svelte';
-import ItemClassDetailsTab from '../sheets/item/tabs/ItemClassDetailsTab.svelte';
-import ItemConsumableDetailsTab from '../sheets/item/tabs/ItemConsumableDetailsTab.svelte';
-import ItemDescriptionTab from '../sheets/item/tabs/ItemDescriptionTab.svelte';
-import ItemDescriptionWithSidebarTab from '../sheets/item/tabs/ItemDescriptionWithSidebarTab.svelte';
-import ItemEquipmentDetailsTab from '../sheets/item/tabs/ItemEquipmentDetailsTab.svelte';
-import ItemFeatDetailsTab from '../sheets/item/tabs/ItemFeatDetailsTab.svelte';
-import ItemLootDetailsTab from '../sheets/item/tabs/ItemLootDetailsTab.svelte';
-import ItemRaceDescriptionTab from '../sheets/item/tabs/ItemRaceDescriptionTab.svelte';
-import ItemSpellDetailsTab from '../sheets/item/tabs/ItemSpellDetailsTab.svelte';
-import ItemSubclassDetailsTab from '../sheets/item/tabs/ItemSubclassDetailsTab.svelte';
-import ItemToolDetailsTab from '../sheets/item/tabs/ItemToolDetailsTab.svelte';
-import ItemWeaponDetailsTab from '../sheets/item/tabs/ItemWeaponDetailsTab.svelte';
+import ItemActiveEffectsTab from '../../sheets/item/tabs/ItemActiveEffectsTab.svelte';
+import ItemAdvancementTab from '../../sheets/item/tabs/ItemAdvancementTab.svelte';
+import ItemBackpackDetailsTab from '../../sheets/item/tabs/ItemBackpackDetailsTab.svelte';
+import ItemClassDetailsTab from '../../sheets/item/tabs/ItemClassDetailsTab.svelte';
+import ItemConsumableDetailsTab from '../../sheets/item/tabs/ItemConsumableDetailsTab.svelte';
+import ItemDescriptionTab from '../../sheets/item/tabs/ItemDescriptionTab.svelte';
+import ItemDescriptionWithSidebarTab from '../../sheets/item/tabs/ItemDescriptionWithSidebarTab.svelte';
+import ItemEquipmentDetailsTab from '../../sheets/item/tabs/ItemEquipmentDetailsTab.svelte';
+import ItemFeatDetailsTab from '../../sheets/item/tabs/ItemFeatDetailsTab.svelte';
+import ItemLootDetailsTab from '../../sheets/item/tabs/ItemLootDetailsTab.svelte';
+import ItemRaceDescriptionTab from '../../sheets/item/tabs/ItemRaceDescriptionTab.svelte';
+import ItemSpellDetailsTab from '../../sheets/item/tabs/ItemSpellDetailsTab.svelte';
+import ItemSubclassDetailsTab from '../../sheets/item/tabs/ItemSubclassDetailsTab.svelte';
+import ItemToolDetailsTab from '../../sheets/item/tabs/ItemToolDetailsTab.svelte';
+import ItemWeaponDetailsTab from '../../sheets/item/tabs/ItemWeaponDetailsTab.svelte';
 
 const itemSheetTabs = {
   /**

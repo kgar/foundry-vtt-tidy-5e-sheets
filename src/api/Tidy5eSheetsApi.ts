@@ -23,7 +23,7 @@ import {
 } from 'src/runtime/npc-sheet-state';
 import ThemeSettingsFormApplication from 'src/applications/theme/ThemeSettingsFormApplication';
 import type { RegisterItemDetailsSectionOptions } from './api.types';
-import { registerItemDetailSection } from 'src/runtime/item-sheet-runtime';
+import { registerItemDetailSection } from 'src/runtime/item/item-sheet-runtime';
 
 /**
  * A sinlgeton APITidy 5e Sheets API
