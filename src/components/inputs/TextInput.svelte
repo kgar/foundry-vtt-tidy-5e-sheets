@@ -82,5 +82,6 @@
   {disabled}
   on:change={(ev) => onSaveChange(ev) && saveChange(ev)}
   on:click
+  on:keypress
   on:focus={(ev) => selectOnFocus && ev.currentTarget.select()}
 />

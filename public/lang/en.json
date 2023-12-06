@@ -84,6 +84,9 @@
   "T5EK.SheetLock.Lock.Hint": "Lock - {description}",
   "T5EK.SheetLock.Description": "Toggle lock for sensitive fields that should not change often",
 
+  "T5EK.Inventory.Weight.Tooltip": "Weight: {weight} {weightUnit}",
+  "T5EK.Inventory.Weight.Text": "{weight} {weightUnit}",
+
   "T5EK.ContextMenuActionEquip": "Equip",
   "T5EK.ContextMenuActionUnequip": "Unequip",
   "T5EK.ContextMenuActionAttune": "Attune",
