@@ -23,7 +23,8 @@ import {
 } from 'src/runtime/npc-sheet-state';
 import ThemeSettingsFormApplication from 'src/applications/theme/ThemeSettingsFormApplication';
 import type { RegisterItemDetailsSectionOptions } from './api.types';
-import { registerItemDetailSection } from 'src/runtime/item/item-sheet-runtime';
+import { HandlebarsTab } from './HandlebarsTab';
+import { ItemSheetRuntime } from 'src/runtime/item/ItemSheetRuntime';
 
 /**
  * A sinlgeton APITidy 5e Sheets API
@@ -105,8 +106,15 @@ export class Tidy5eSheetsApi {
       // error? log / notify?
       return;
     }
-    registerItemDetailSection(options);
+    ItemSheetRuntime.registerDetailTabSection(options);
+  }
+
+  registerItemTab(tab: HandlebarsTab) {
+    ItemSheetRuntime.registerTab(tab);
   }
 
   // TODO: add relevant class models in the style of dnd5e <3, but to the API
+  models = {
+    HandlebarsTab: HandlebarsTab,
+  };
 }

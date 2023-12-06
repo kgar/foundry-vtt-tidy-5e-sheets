@@ -45,35 +45,56 @@ FoundryAdapter.hooksOnce('ready', async () => {
   Hooks.call(CONSTANTS.HOOK_TIDY5E_SHEETS_READY, api);
 });
 
-Hooks.once('tidy5e-sheet.ready', async (api: Tidy5eSheetsApi) => {
-  api.registerItemDetailSection({
-    sectionTitle: 'Kgar Custom Section 🦁',
-    content: new HandlebarsTemplateContent({
-      path: `modules/${CONSTANTS.MODULE_ID}/templates/test.hbs`,
-    }),
-    onPrepareData(data) {
-      data.secretKgarMessage = '🤖';
-    },
-    enabled(data) {
-      return (
-        data.itemType === 'Spell' &&
-        data.system.target.type in CONFIG.DND5E.areaTargetTypes
-      );
-    },
-    onRender(args) {
-      const appId = args.app.appId;
-      const classList = args.element.classList;
-      const secretMessage = args.data.secretKgarMessage;
-      console.log(
-        `App ID ${appId} | item ${args.data.item.name} | With classes ${classList} | Secret Message: ${secretMessage}`
-      );
+// Hooks.once('tidy5e-sheet.ready', async (api: Tidy5eSheetsApi) => {
+//   api.registerItemDetailSection({
+//     sectionTitle: 'Kgar Custom Section 🦁',
+//     content: new HandlebarsTemplateContent({
+//       path: `modules/${CONSTANTS.MODULE_ID}/templates/test.hbs`,
+//     }),
+//     onPrepareData(data) {
+//       data.secretKgarMessage = '🤖';
+//     },
+//     enabled(data) {
+//       return (
+//         data.itemType === 'Spell' &&
+//         data.system.target.type in CONFIG.DND5E.areaTargetTypes
+//       );
+//     },
+//     onRender(args) {
+//       const appId = args.app.appId;
+//       const classList = args.element.classList;
+//       const secretMessage = args.data.secretKgarMessage;
+//       console.log(
+//         `App ID ${appId} | item ${args.data.item.name} | With classes ${classList} | Secret Message: ${secretMessage}`
+//       );
 
-      // ⚠ only update the HTML you are injecting, because rendering works differently on these sheets.
-      $(args.element)
-        .find(`[id="kgar-secret-message-button-${appId}"]`)
-        .on('click', function () {
-          alert(secretMessage);
-        });
-    },
+//       // ⚠ only update the HTML you are injecting, because rendering works differently on these sheets.
+//       $(args.element)
+//         .find(`[id="kgar-secret-message-button-${appId}"]`)
+//         .on('click', function () {
+//           alert(secretMessage);
+//         });
+//     },
+//   });
+// });
+
+Hooks.on('tidy5e-sheet.ready', (api: Tidy5eSheetsApi) => {
+  const handlebarsTab = new api.models.HandlebarsTab({
+    path: `modules/${CONSTANTS.MODULE_ID}/templates/test.hbs`,
+    title: 'Test',
+    
+    // enabled: (data) => {
+    //   // let enabled = false;
+    //   // try {
+    //   //   enabled = !!game.settings.get(
+    //   //     'items-with-spells-5e',
+    //   //     `includeItemType${data.item.type.titleCase()}`
+    //   //   );
+    //   // } catch {}
+    //   // return enabled;
+    //   return true;
+    // },
   });
+
+  api.registerItemTab(handlebarsTab);
 });

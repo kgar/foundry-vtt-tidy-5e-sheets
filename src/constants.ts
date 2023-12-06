@@ -98,4 +98,6 @@ export const CONSTANTS = {
   SPELL_PREPARATION_MODE_PACT: 'pact',
   SPELL_PREPARATION_MODE_ATWILL: 'atwill',
   CONTEXT_GRID_CELL_HOVER: 'grid-cell-hover',
+  CLASS_TIDY_USE_CORE_LISTENERS: 'tidy-use-core-listeners',
+  CLASS_SELECTOR_TIDY_USE_CORE_LISTENERS: '.tidy-use-core-listeners'
 } as const;

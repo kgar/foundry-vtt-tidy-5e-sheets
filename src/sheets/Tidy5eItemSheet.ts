@@ -1,7 +1,8 @@
 import { CONSTANTS } from 'src/constants';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type {
-  CustomItemSection,
+  CustomHtmlItemSection,
+  CustomTab,
   Item5e,
   ItemDescription,
   ItemSheetContext,
@@ -25,8 +26,9 @@ import { applyTitleToWindow } from 'src/utils/applications';
 import { debug } from 'src/utils/logging';
 import type { SvelteComponent } from 'svelte';
 import { getPercentage } from 'src/utils/numbers';
-import { getCustomItemDetailSections } from 'src/runtime/item/item-sheet-runtime';
 import { HandlebarsTemplateContent } from 'src/api/HandlebarsTemplateContent';
+import { ItemSheetRuntime } from 'src/runtime/item/ItemSheetRuntime';
+import { HandlebarsTab } from 'src/api/HandlebarsTab';
 
 export class Tidy5eKgarItemSheet
   extends dnd5e.applications.item.ItemSheet5e
@@ -61,11 +63,6 @@ export class Tidy5eKgarItemSheet
 
   component: SvelteComponent | undefined;
   activateListeners(html: any) {
-    // Legacy jquery / form application change handling; will probably have to fix this further in the future
-    html.on('change', 'input[name], textarea[name], select[name]', () => {
-      this.submit();
-    });
-
     const node = html.get(0);
 
     const context = new Map<any, any>([
@@ -178,6 +175,24 @@ export class Tidy5eKgarItemSheet
         '.advancement-item',
         contextOptions
       );
+
+    this.wireCompatibilityEventListeners(html);
+  }
+
+  private wireCompatibilityEventListeners(html: any) {
+    let sheet = this;
+    html.on('change', 'input[name], textarea[name], select[name]', function () {
+      //@ts-expect-error
+      if (this.closest(CONSTANTS.CLASS_SELECTOR_TIDY_USE_CORE_LISTENERS)) {
+        sheet.submit();
+      }
+    });
+
+    html
+      .find(CONSTANTS.CLASS_SELECTOR_TIDY_USE_CORE_LISTENERS)
+      .each((_: number, el: HTMLElement) => {
+        super.activateListeners($(el));
+      });
   }
 
   private customContentOnRender() {
@@ -237,15 +252,14 @@ export class Tidy5eKgarItemSheet
       },
     ];
 
-    const registeredCustomItemSectionOptions = getCustomItemDetailSections(
-      defaultCharacterContext
-    );
+    const registeredCustomItemSectionOptions =
+      ItemSheetRuntime.getCustomItemDetailSections(defaultCharacterContext);
 
     registeredCustomItemSectionOptions.forEach((s) =>
       s.onPrepareData?.(defaultCharacterContext)
     );
 
-    const customItemSections: CustomItemSection[] = [];
+    const customItemSections: CustomHtmlItemSection[] = [];
 
     for (let option of registeredCustomItemSectionOptions) {
       let content = '';
@@ -272,6 +286,27 @@ export class Tidy5eKgarItemSheet
       });
     }
 
+    const registeredTabs = ItemSheetRuntime.getTabs(defaultCharacterContext);
+
+    const customTabs: CustomTab[] = [];
+
+    for (let tab of registeredTabs) {
+      if (tab instanceof HandlebarsTab) {
+        const handlebarsContent = new HandlebarsTemplateContent({
+          path: tab.path,
+        });
+
+        customTabs.push({
+          type: 'html',
+          contentHtml: await handlebarsContent.render(defaultCharacterContext),
+          tabClasses: [],
+          tabContentsClasses: [CONSTANTS.CLASS_TIDY_USE_CORE_LISTENERS],
+          tabId: tab.tabId,
+          title: tab.title,
+        });
+      }
+    }
+
     const context: ItemSheetContext = {
       ...defaultCharacterContext,
       appId: this.appId,
@@ -280,6 +315,7 @@ export class Tidy5eKgarItemSheet
         super.activateListeners($(node));
       },
       customDetailSections: customItemSections,
+      customTabs: customTabs,
       toggleAdvancementLock: this.toggleAdvancementLock.bind(this),
       lockItemQuantity: FoundryAdapter.shouldLockItemQuantity(),
       healthPercentage: getPercentage(
@@ -291,6 +327,8 @@ export class Tidy5eKgarItemSheet
     };
 
     debug(`${this.item?.type ?? 'Unknown Item Type'} context data`, context);
+
+    // TODO: Add hook for preparing Tidy-specific context data
 
     return context;
   }

@@ -1,7 +1,7 @@
 <script lang="ts">
-  import type { CustomItemSection } from 'src/types/item';
+  import type { CustomHtmlItemSection } from 'src/types/item';
 
-  export let section: CustomItemSection;
+  export let section: CustomHtmlItemSection;
 </script>
 
 {#if section.sectionTitleHtml}

@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { ItemSheetContext } from 'src/types/item';
-  import type { Tab } from 'src/types/types';
+  import type { HtmlTabContent, Tab } from 'src/types/types';
   import Tabs from 'src/components/tabs/Tabs.svelte';
   import TabContents from 'src/components/tabs/TabContents.svelte';
   import type { Readable } from 'svelte/store';
@@ -8,18 +8,30 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import ItemProfilePicture from './parts/ItemProfilePicture.svelte';
   import TextInput from 'src/components/inputs/TextInput.svelte';
-  import itemSheetTabs from '../../runtime/item/itemSheetTabs';
+  import itemSheetTabs from '../../runtime/item/item-sheet-tabs';
   import Source from '../shared/Source.svelte';
 
   let context = getContext<Readable<ItemSheetContext>>('context');
 
-  let selectedTabId: string;
+  $: selectedTabId = getContext<string>('currentTabId');
 
-  const tabs: Tab[] = [
-    itemSheetTabs.descriptionWithSidebar,
-    itemSheetTabs.spellDetails,
-    itemSheetTabs.effects,
-  ];
+  let tabs: Tab[] = [];
+  $: {
+    const customTabs = $context.customTabs.map<Tab>((t) => ({
+      content: {
+        html: t.contentHtml,
+        cssClass: t.tabContentsClasses.join(' '),
+      } satisfies HtmlTabContent,
+      displayName: t.title,
+      id: t.tabId,
+    }));
+    tabs = [
+      itemSheetTabs.descriptionWithSidebar,
+      itemSheetTabs.spellDetails,
+      itemSheetTabs.effects,
+      ...customTabs,
+    ];
+  }
 
   const localize = FoundryAdapter.localize;
 </script>
