@@ -232,7 +232,7 @@ function getItemContextOptions(item: Item5e) {
     options.push({
       name: isFav ? 'T5EK.RemoveFavorite' : 'T5EK.AddFavorite',
       icon: isFav
-        ? `<i class='fas ${favoriteIcon} fa-fw'></i>`
+        ? `<i class='fas ${favoriteIcon} fa-fw' style='color: var(--t5ek-warning-accent-color)'></i>`
         : `<i class='fas ${favoriteIcon} fa-fw inactive'></i>`,
       callback: () => {
         // const item_id = ev[0].dataset.itemId; //ev.currentTarget.closest('[data-item-id]').dataset.itemId;
@@ -325,7 +325,7 @@ function getItemContextOptions(item: Item5e) {
       FoundryAdapter.tryGetFlag(item, 'action-filter-override') !== undefined;
     if (overridden) {
       options.push({
-        name: 'T5EK.Actions.ClearOverride',
+        name: 'T5EK.Actions.ResetActionDefault',
         icon: '<i class="fas fa-fist-raised" style="color: var(--t5ek-warning-accent-color)"></i>',
         callback: () => {
           FoundryAdapter.unsetFlag(item, 'action-filter-override');

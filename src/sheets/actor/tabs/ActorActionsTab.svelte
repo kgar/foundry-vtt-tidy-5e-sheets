@@ -119,7 +119,7 @@
               <!-- Range -->
               {#if actionItem.rangeTitle !== null}
                 <div title={actionItem.rangeTitle} class="flex-column-truncate">
-                  {actionItem.rangeTitle}
+                  {actionItem.rangeTitle ?? ''}
                 </div>
               {/if}
               {#if actionItem.rangeSubtitle !== null}
@@ -127,7 +127,7 @@
                   title={actionItem.rangeSubtitle}
                   class="flex-column-truncate"
                 >
-                  {actionItem.rangeSubtitle}
+                  {actionItem.rangeSubtitle ?? ''}
                 </small>
               {/if}
             </ItemTableCell>
@@ -140,18 +140,18 @@
                       actionItem.item.system.save.ability,
                     )?.label ?? ''}
                   <span
-                    title={actionItem.item.labels.save}
+                    title={actionItem.item.labels.save ?? ''}
                     class="flex-column-truncate"
                   >
                     {localize('DND5E.AbbreviationDC')}
-                    {actionItem.item.system.save.dc}
+                    {actionItem.item.system.save.dc ?? ''}
                   </span>
                   <small title={saveAbilityLabel} class="flex-column-truncate"
                     >{saveAbilityLabel}</small
                   >
                 {:else}
-                  <span title={actionItem.item.labels.toHit}
-                    >{actionItem.item.labels.toHit}</span
+                  <span title={actionItem.item.labels.toHit ?? ''}
+                    >{actionItem.item.labels.toHit ?? ''}</span
                   >
                 {/if}
               {/if}
