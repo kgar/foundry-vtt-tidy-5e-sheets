@@ -31,13 +31,6 @@ export interface RegisterItemDetailsSectionOptions {
    */
   onRender?(args: OnRenderArgs): void;
   /**
-   * Determines when the injected content will render.
-   * - 'handlebars': the content will rerender every time the render event is called.
-   * - `undefined`: the content will rerender when render is called with `force=true`
-   * @default 'handlebars'
-   */
-  renderStrategy?: 'handlebars';
-  /**
    * The content to be rendered within the section.
    * @default undefined
    */

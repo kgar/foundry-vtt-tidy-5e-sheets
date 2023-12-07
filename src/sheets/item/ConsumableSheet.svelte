@@ -1,10 +1,9 @@
 <script lang="ts">
   import type { ItemSheetContext } from 'src/types/item';
-  import type { Tab } from 'src/types/types';
+  import type { HtmlTabContent, Tab } from 'src/types/types';
   import Tabs from 'src/components/tabs/Tabs.svelte';
   import type { Readable } from 'svelte/store';
   import TabContents from 'src/components/tabs/TabContents.svelte';
-  import { CONSTANTS } from 'src/constants';
   import { getContext } from 'svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import ItemProfilePicture from './parts/ItemProfilePicture.svelte';
@@ -18,11 +17,23 @@
 
   let selectedTabId: string;
 
-  const tabs: Tab[] = [
-    itemSheetTabs.descriptionWithSidebar,
-    itemSheetTabs.consumableDetails,
-    itemSheetTabs.effects,
-  ];
+  let tabs: Tab[] = [];
+  $: {
+    const customTabs = $context.customTabs.map<Tab>((t) => ({
+      content: {
+        html: t.contentHtml,
+        cssClass: t.tabContentsClasses.join(' '),
+      } satisfies HtmlTabContent,
+      displayName: t.title,
+      id: t.tabId,
+    }));
+    tabs = [
+      itemSheetTabs.descriptionWithSidebar,
+      itemSheetTabs.consumableDetails,
+      itemSheetTabs.effects,
+      ...customTabs,
+    ];
+  }
 
   const localize = FoundryAdapter.localize;
 </script>

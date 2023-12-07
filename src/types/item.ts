@@ -1,4 +1,4 @@
-import type { RegisterItemDetailsSectionOptions } from 'src/api/api.types';
+import type { OnRenderArgs, RegisterItemDetailsSectionOptions } from 'src/api/api.types';
 import type { ComponentType, SvelteComponent } from 'svelte';
 
 export type ItemSheetContext = {
@@ -44,7 +44,11 @@ export type CustomHtmlItemSection = {
   options: RegisterItemDetailsSectionOptions;
 };
 
-export type CustomTab = CustomHtmlTab; // & others as time goes on
+export type CustomTabBase = {
+  onRender?: (args: OnRenderArgs & { tabContentsElement: HTMLElement }) => void;
+}
+
+export type CustomTab = CustomHtmlTab & CustomTabBase; // & others as time goes on
 
 export type CustomHtmlTab = {
   type: 'html';

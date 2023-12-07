@@ -78,23 +78,23 @@ FoundryAdapter.hooksOnce('ready', async () => {
 //   });
 // });
 
-Hooks.on('tidy5e-sheet.ready', (api: Tidy5eSheetsApi) => {
-  const handlebarsTab = new api.models.HandlebarsTab({
-    path: `modules/${CONSTANTS.MODULE_ID}/templates/test.hbs`,
-    title: 'Test',
+// Hooks.on('tidy5e-sheet.ready', (api: Tidy5eSheetsApi) => {
+//   const handlebarsTab = new api.models.HandlebarsTab({
+//     path: `modules/${CONSTANTS.MODULE_ID}/templates/test.hbs`,
+//     title: 'Test',
     
-    // enabled: (data) => {
-    //   // let enabled = false;
-    //   // try {
-    //   //   enabled = !!game.settings.get(
-    //   //     'items-with-spells-5e',
-    //   //     `includeItemType${data.item.type.titleCase()}`
-    //   //   );
-    //   // } catch {}
-    //   // return enabled;
-    //   return true;
-    // },
-  });
+//     // enabled: (data) => {
+//     //   // let enabled = false;
+//     //   // try {
+//     //   //   enabled = !!game.settings.get(
+//     //   //     'items-with-spells-5e',
+//     //   //     `includeItemType${data.item.type.titleCase()}`
+//     //   //   );
+//     //   // } catch {}
+//     //   // return enabled;
+//     //   return true;
+//     // },
+//   });
 
-  api.registerItemTab(handlebarsTab);
-});
+//   api.registerItemTab(handlebarsTab);
+// });

@@ -30,7 +30,7 @@ export class ItemSheetRuntime {
   }
 
   static getTabs(context: any) {
-    return [...ItemSheetRuntime._itemTabs].filter(
+    return ItemSheetRuntime._itemTabs.filter(
       (s) => s.enabled === undefined || s.enabled(context)
     );
   }

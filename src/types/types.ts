@@ -14,7 +14,6 @@ export type SvelteTabContent<
 export type HtmlTabContent = {
   html: string;
   render?: (tabContent: HTMLElement) => void;
-  rerenderOnSubmit?: boolean;
   cssClass?: string;
 };
 

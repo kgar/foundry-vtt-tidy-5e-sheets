@@ -61,6 +61,8 @@ export class Tidy5eKgarItemSheet
     });
   }
 
+  test = writable<string>(foundry.utils.randomID());
+
   component: SvelteComponent | undefined;
   activateListeners(html: any) {
     const node = html.get(0);
@@ -70,6 +72,7 @@ export class Tidy5eKgarItemSheet
       ['stats', this.stats],
       ['currentTabId', this.currentTabId],
       ['onTabSelected', this.onTabSelected.bind(this)],
+      ['test', this.test],
     ]);
 
     switch (this.item.type) {
@@ -197,6 +200,7 @@ export class Tidy5eKgarItemSheet
 
   private customContentOnRender() {
     const data = get(this.context);
+
     data.customDetailSections.forEach((s) =>
       s.options.onRender?.({
         app: this,
@@ -204,6 +208,23 @@ export class Tidy5eKgarItemSheet
         element: this.element.get(0),
       })
     );
+
+    data.customTabs.forEach((s) => {
+      if (!s.onRender) {
+        return;
+      }
+
+      const tab = this.element
+        .get(0)
+        .querySelector(`[data-tab-contents-for="${s.tabId}"]`);
+
+      s.onRender({
+        app: this,
+        data: data,
+        element: this.element.get(0),
+        tabContentsElement: tab,
+      });
+    });
   }
 
   async getData(options = {}) {
@@ -220,6 +241,7 @@ export class Tidy5eKgarItemSheet
     }
 
     applyTitleToWindow(this.title, this.element.get(0));
+    this.test.set(foundry.utils.randomID());
     this.getContext().then((context) => {
       this.context.update(() => context);
       // The HTML will update after a change detection cycle, so custom content is notified after this, via setTimeout.
@@ -296,13 +318,20 @@ export class Tidy5eKgarItemSheet
           path: tab.path,
         });
 
+        const templateData = await (tab.getData?.(defaultCharacterContext) ??
+          defaultCharacterContext);
+
         customTabs.push({
           type: 'html',
-          contentHtml: await handlebarsContent.render(defaultCharacterContext),
+          contentHtml: await handlebarsContent.render(templateData),
           tabClasses: [],
-          tabContentsClasses: [CONSTANTS.CLASS_TIDY_USE_CORE_LISTENERS],
+          tabContentsClasses: [
+            CONSTANTS.CLASS_TIDY_USE_CORE_LISTENERS,
+            ...tab.tabContentsClasses,
+          ],
           tabId: tab.tabId,
           title: tab.title,
+          onRender: tab.onRender,
         });
       }
     }
