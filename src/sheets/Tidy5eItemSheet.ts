@@ -28,7 +28,8 @@ import type { SvelteComponent } from 'svelte';
 import { getPercentage } from 'src/utils/numbers';
 import { HandlebarsTemplateContent } from 'src/api/HandlebarsTemplateContent';
 import { ItemSheetRuntime } from 'src/runtime/item/ItemSheetRuntime';
-import { HandlebarsTab } from 'src/api/HandlebarsTab';
+import { HandlebarsTab } from 'src/api/tab/HandlebarsTab';
+import { HtmlTab } from 'src/api/tab/HtmlTab';
 
 export class Tidy5eKgarItemSheet
   extends dnd5e.applications.item.ItemSheet5e
@@ -155,8 +156,6 @@ export class Tidy5eKgarItemSheet
         break;
     }
 
-    this.customContentOnRender();
-
     // Advancement context menu
     const contextOptions = this._getAdvancementContextMenuOptions();
     /**
@@ -197,7 +196,7 @@ export class Tidy5eKgarItemSheet
       });
   }
 
-  private customContentOnRender() {
+  private customContentOnRender(args: { isFullRender: boolean }) {
     const data = get(this.context);
 
     data.customDetailSections.forEach((s) =>
@@ -205,6 +204,7 @@ export class Tidy5eKgarItemSheet
         app: this,
         data: data,
         element: this.element.get(0),
+        isFullRender: args.isFullRender,
       })
     );
 
@@ -222,34 +222,28 @@ export class Tidy5eKgarItemSheet
         data: data,
         element: this.element.get(0),
         tabContentsElement: tab,
+        isFullRender: args.isFullRender,
       });
     });
   }
 
   async getData(options = {}) {
-    this.context.set(await this.getContext());
-    return get(this.context);
+    return await this.getContext();
   }
 
-  // TODO: Extract this implementation somewhere. Or at least part of it.
-  render(force = false, options = {}) {
+  async _render(force?: boolean, options = {}) {
+    this.renderKey.set(foundry.utils.randomID());
+    this.context.set(await this.getData());
+
     if (force) {
       this.component?.$destroy();
-      super.render(force, options);
-      return this;
+      await super._render(force, options);
+      this.customContentOnRender({ isFullRender: true });
+      return;
     }
 
     applyTitleToWindow(this.title, this.element.get(0));
-    this.renderKey.set(foundry.utils.randomID());
-    this.getContext().then((context) => {
-      this.context.update(() => context);
-      // The HTML will update after a change detection cycle, so custom content is notified after this, via setTimeout.
-      // TODO: Find a better way. Perhaps a wrapping component which invokes a custom content refresh function from `afterUpdate` lifecycle event (maybe onMount as well)
-      setTimeout(() => {
-        this.customContentOnRender();
-      });
-    });
-    return this;
+    this.customContentOnRender({ isFullRender: false });
   }
 
   private async getContext(): Promise<ItemSheetContext> {
@@ -280,7 +274,7 @@ export class Tidy5eKgarItemSheet
       s.onPrepareData?.(defaultCharacterContext)
     );
 
-    const customItemSections: CustomHtmlItemSection[] = [];
+    const customItemDetailSections: CustomHtmlItemSection[] = [];
 
     for (let option of registeredCustomItemSectionOptions) {
       let content = '';
@@ -300,7 +294,7 @@ export class Tidy5eKgarItemSheet
         sectionTitle = option.sectionTitle;
       }
 
-      customItemSections.push({
+      customItemDetailSections.push({
         contentHtml: content,
         sectionTitleHtml: sectionTitle,
         options: option,
@@ -311,6 +305,8 @@ export class Tidy5eKgarItemSheet
 
     const customTabs: CustomTab[] = [];
 
+    // TODO: Pull back to a custom/runtime util script
+    // TODO: Fold all tabs together into actor context variable, to allow for an additional layer of extensibility
     for (let tab of registeredTabs) {
       if (tab instanceof HandlebarsTab) {
         const handlebarsContent = new HandlebarsTemplateContent({
@@ -331,6 +327,21 @@ export class Tidy5eKgarItemSheet
           tabId: tab.tabId,
           title: tab.title,
           onRender: tab.onRender,
+          renderScheme: tab.renderScheme,
+        });
+      } else if (tab instanceof HtmlTab) {
+        customTabs.push({
+          type: 'html',
+          contentHtml: tab.html,
+          tabClasses: [],
+          tabContentsClasses: [
+            CONSTANTS.CLASS_TIDY_USE_CORE_LISTENERS,
+            ...tab.tabContentsClasses,
+          ],
+          tabId: tab.tabId,
+          title: tab.title,
+          onRender: tab.onRender,
+          renderScheme: tab.renderScheme,
         });
       }
     }
@@ -342,7 +353,7 @@ export class Tidy5eKgarItemSheet
         this._activateCoreListeners($(node));
         super.activateListeners($(node));
       },
-      customDetailSections: customItemSections,
+      customDetailSections: customItemDetailSections,
       customTabs: customTabs,
       toggleAdvancementLock: this.toggleAdvancementLock.bind(this),
       lockItemQuantity: FoundryAdapter.shouldLockItemQuantity(),

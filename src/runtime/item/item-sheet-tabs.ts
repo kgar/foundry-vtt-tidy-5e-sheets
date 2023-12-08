@@ -25,6 +25,7 @@ const itemSheetTabs = {
     content: {
       component: ItemAdvancementTab,
       cssClass: 'detail-tab-contents items-list-container',
+      type: 'svelte',
     },
   },
   /**
@@ -37,6 +38,7 @@ const itemSheetTabs = {
       component: ItemBackpackDetailsTab,
       props: {},
       cssClass: 'detail-tab-contents',
+      type: 'svelte',
     },
   },
   /**
@@ -48,6 +50,7 @@ const itemSheetTabs = {
     content: {
       component: ItemClassDetailsTab,
       cssClass: 'detail-tab-contents',
+      type: 'svelte',
     },
   },
   /**
@@ -60,6 +63,7 @@ const itemSheetTabs = {
       component: ItemConsumableDetailsTab,
       props: {},
       cssClass: 'detail-tab-contents',
+      type: 'svelte',
     },
   },
   /**
@@ -71,6 +75,7 @@ const itemSheetTabs = {
     content: {
       component: ItemDescriptionTab,
       cssClass: 'flexcol',
+      type: 'svelte',
     },
   },
   /**
@@ -82,6 +87,7 @@ const itemSheetTabs = {
     content: {
       component: ItemDescriptionWithSidebarTab,
       cssClass: 'flexrow',
+      type: 'svelte',
     },
   },
   /**
@@ -93,6 +99,7 @@ const itemSheetTabs = {
     content: {
       component: ItemActiveEffectsTab,
       cssClass: 'flexcol items-list-container',
+      type: 'svelte',
     },
   },
   /**
@@ -104,6 +111,7 @@ const itemSheetTabs = {
     content: {
       component: ItemEquipmentDetailsTab,
       cssClass: 'detail-tab-contents',
+      type: 'svelte',
     },
   },
   /**
@@ -115,6 +123,7 @@ const itemSheetTabs = {
     content: {
       component: ItemFeatDetailsTab,
       cssClass: 'detail-tab-contents',
+      type: 'svelte',
     },
   },
   /**
@@ -127,6 +136,7 @@ const itemSheetTabs = {
       component: ItemLootDetailsTab,
       props: {},
       cssClass: 'detail-tab-contents',
+      type: 'svelte',
     },
   },
   /**
@@ -138,6 +148,7 @@ const itemSheetTabs = {
     content: {
       component: ItemRaceDescriptionTab,
       cssClass: 'flexrow',
+      type: 'svelte',
     },
   },
   /**
@@ -149,6 +160,7 @@ const itemSheetTabs = {
     content: {
       component: ItemSpellDetailsTab,
       cssClass: 'detail-tab-contents',
+      type: 'svelte',
     },
   },
   /**
@@ -160,6 +172,7 @@ const itemSheetTabs = {
     content: {
       component: ItemSubclassDetailsTab,
       cssClass: 'detail-tab-contents',
+      type: 'svelte',
     },
   },
   /**
@@ -171,6 +184,7 @@ const itemSheetTabs = {
     content: {
       component: ItemToolDetailsTab,
       cssClass: 'detail-tab-contents',
+      type: 'svelte',
     },
   },
   /**
@@ -182,8 +196,9 @@ const itemSheetTabs = {
     content: {
       component: ItemWeaponDetailsTab,
       cssClass: 'detail-tab-contents',
+      type: 'svelte',
     },
   },
-};
+} as const;
 
 export default itemSheetTabs;

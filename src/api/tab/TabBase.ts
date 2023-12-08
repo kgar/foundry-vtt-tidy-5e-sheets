@@ -1,8 +1,9 @@
-import type { OnRenderArgs } from '../api.types';
+import type { OnRenderArgs, RenderScheme } from '../api.types';
 
-export abstract class ItemTabBase {
+export abstract class TabBase {
   abstract title: string;
   abstract tabId: string;
+  abstract renderScheme: RenderScheme;
   abstract enabled?: (context: any) => boolean;
   abstract onRender?: (
     args: OnRenderArgs & { tabContentsElement: HTMLElement }

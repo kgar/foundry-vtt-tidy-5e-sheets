@@ -1,11 +1,11 @@
 import type { RegisterItemDetailsSectionOptions } from 'src/api/api.types';
-import type { ItemTabBase } from 'src/api/item/ItemTabBase';
+import type { TabBase } from 'src/api/tab/TabBase';
 import { isNil } from 'src/utils/data';
 
 export class ItemSheetRuntime {
   private static _itemDetailCustomSections: RegisterItemDetailsSectionOptions[] =
     [];
-  private static _itemTabs: ItemTabBase[] = [];
+  private static _itemTabs: TabBase[] = [];
 
   static registerDetailTabSection(section: RegisterItemDetailsSectionOptions) {
     // validate? Or let chaos reign?
@@ -20,7 +20,7 @@ export class ItemSheetRuntime {
     );
   }
 
-  static registerTab(tab: ItemTabBase) {
+  static registerTab(tab: TabBase) {
     // validate? Or let chaos reign?
     const tabId = tab.tabId?.trim();
     if (isNil(tabId, '')) {

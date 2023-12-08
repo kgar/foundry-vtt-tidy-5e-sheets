@@ -1,4 +1,8 @@
-import type { OnRenderArgs, RegisterItemDetailsSectionOptions } from 'src/api/api.types';
+import type {
+  OnRenderArgs,
+  RegisterItemDetailsSectionOptions,
+  RenderScheme,
+} from 'src/api/api.types';
 import type { ComponentType, SvelteComponent } from 'svelte';
 
 export type ItemSheetContext = {
@@ -46,7 +50,7 @@ export type CustomHtmlItemSection = {
 
 export type CustomTabBase = {
   onRender?: (args: OnRenderArgs & { tabContentsElement: HTMLElement }) => void;
-}
+};
 
 export type CustomTab = CustomHtmlTab & CustomTabBase; // & others as time goes on
 
@@ -57,4 +61,5 @@ export type CustomHtmlTab = {
   tabClasses: string[];
   contentHtml: string;
   tabContentsClasses: string[];
+  renderScheme: RenderScheme;
 };

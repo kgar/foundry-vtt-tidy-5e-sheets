@@ -12,6 +12,17 @@
 
   let renderKey = getContext<Readable<string>>('renderKey');
 
+  let htmlRenderKey: string = 'static';
+  $: {
+    if (
+      tab.content.type === 'html' &&
+      tab.content.renderScheme === 'handlebars'
+    ) {
+      htmlRenderKey = $renderKey;
+    }
+  }
+
+  // TODO: Is this necessary anymore? Should this
   function onTabRender(node: HTMLElement, tab: Tab) {
     if ('render' in tab.content) {
       tab.content.render?.(node);
@@ -29,7 +40,7 @@
     <svelte:component this={tab.content.component} {...tab.content.props} />
   </div>
 {:else if 'html' in tab.content}
-  {#key $renderKey}
+  {#key htmlRenderKey}
     <div
       use:onTabRender={tab}
       class="tidy-tab {tab.id} {cssClass} {tab.content.cssClass ??

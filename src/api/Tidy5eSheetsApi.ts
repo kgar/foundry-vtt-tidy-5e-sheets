@@ -23,7 +23,8 @@ import {
 } from 'src/runtime/npc-sheet-state';
 import ThemeSettingsFormApplication from 'src/applications/theme/ThemeSettingsFormApplication';
 import type { RegisterItemDetailsSectionOptions } from './api.types';
-import { HandlebarsTab } from './HandlebarsTab';
+import { HandlebarsTab } from './tab/HandlebarsTab';
+import { HtmlTab } from './tab/HtmlTab';
 import { ItemSheetRuntime } from 'src/runtime/item/ItemSheetRuntime';
 
 /**
@@ -116,5 +117,6 @@ export class Tidy5eSheetsApi {
   // TODO: add relevant class models in the style of dnd5e <3, but to the API
   models = {
     HandlebarsTab: HandlebarsTab,
+    HtmlTab: HtmlTab,
   };
 }

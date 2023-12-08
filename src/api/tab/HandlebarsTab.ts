@@ -1,10 +1,11 @@
-import type { OnRenderArgs } from './api.types';
-import { ItemTabBase } from './item/ItemTabBase';
+import type { OnRenderArgs, RenderScheme } from '../api.types';
+import { TabBase } from './TabBase';
 
-export class HandlebarsTab extends ItemTabBase {
+export class HandlebarsTab extends TabBase {
   title: string = '';
   tabId: string = '';
   path: string = '';
+  renderScheme: RenderScheme = 'handlebars';
   tabContentsClasses: string[] = [];
 
   constructor(props?: Partial<HandlebarsTab>) {

@@ -23,6 +23,8 @@
       content: {
         html: t.contentHtml,
         cssClass: t.tabContentsClasses.join(' '),
+        type: 'html',
+        renderScheme: t.renderScheme,
       } satisfies HtmlTabContent,
       displayName: t.title,
       id: t.tabId,
