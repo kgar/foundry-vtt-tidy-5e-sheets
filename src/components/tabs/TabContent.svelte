@@ -22,7 +22,7 @@
 {#if 'component' in tab.content}
   <section
     use:onTabRender={tab}
-    class="tab {tab.id} {cssClass} {tab.content.cssClass ?? ''}"
+    class="tidy-tab {tab.id} {cssClass} {tab.content.cssClass ?? ''}"
     class:active
     data-tab-contents-for={tab.id}
   >
@@ -32,7 +32,7 @@
   {#key $renderKey}
     <section
       use:onTabRender={tab}
-      class="tab {tab.id} {cssClass} {tab.content.cssClass ??
+      class="tidy-tab {tab.id} {cssClass} {tab.content.cssClass ??
         ''} scroll-container"
       class:active
       data-tab-contents-for={tab.id}
@@ -43,7 +43,7 @@
 {/if}
 
 <style lang="scss">
-  .tab {
+  .tidy-tab {
     height: 100%;
     flex-direction: column;
     display: none;
