@@ -20,17 +20,17 @@
 </script>
 
 {#if 'component' in tab.content}
-  <section
+  <div
     use:onTabRender={tab}
     class="tidy-tab {tab.id} {cssClass} {tab.content.cssClass ?? ''}"
     class:active
     data-tab-contents-for={tab.id}
   >
     <svelte:component this={tab.content.component} {...tab.content.props} />
-  </section>
+  </div>
 {:else if 'html' in tab.content}
   {#key $renderKey}
-    <section
+    <div
       use:onTabRender={tab}
       class="tidy-tab {tab.id} {cssClass} {tab.content.cssClass ??
         ''} scroll-container"
@@ -38,7 +38,7 @@
       data-tab-contents-for={tab.id}
     >
       {@html tab.content.html}
-    </section>
+    </div>
   {/key}
 {/if}
 

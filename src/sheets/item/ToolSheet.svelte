@@ -76,6 +76,6 @@
   </div>
 </header>
 <Tabs bind:selectedTabId {tabs} />
-<div class="tidy-sheet-body">
+<section class="tidy-sheet-body">
   <TabContents {tabs} {selectedTabId} />
-</div>
+</section>
