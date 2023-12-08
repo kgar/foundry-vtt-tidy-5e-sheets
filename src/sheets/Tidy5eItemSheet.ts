@@ -39,6 +39,7 @@ export class Tidy5eKgarItemSheet
     lastSubmissionTime: null,
   });
   currentTabId: string | undefined = undefined;
+  renderKey = writable<string>(foundry.utils.randomID());
 
   constructor(item: Item5e, ...args: any[]) {
     super(item, ...args);
@@ -61,8 +62,6 @@ export class Tidy5eKgarItemSheet
     });
   }
 
-  test = writable<string>(foundry.utils.randomID());
-
   component: SvelteComponent | undefined;
   activateListeners(html: any) {
     const node = html.get(0);
@@ -72,7 +71,7 @@ export class Tidy5eKgarItemSheet
       ['stats', this.stats],
       ['currentTabId', this.currentTabId],
       ['onTabSelected', this.onTabSelected.bind(this)],
-      ['test', this.test],
+      ['renderKey', this.renderKey],
     ]);
 
     switch (this.item.type) {
@@ -241,7 +240,7 @@ export class Tidy5eKgarItemSheet
     }
 
     applyTitleToWindow(this.title, this.element.get(0));
-    this.test.set(foundry.utils.randomID());
+    this.renderKey.set(foundry.utils.randomID());
     this.getContext().then((context) => {
       this.context.update(() => context);
       // The HTML will update after a change detection cycle, so custom content is notified after this, via setTimeout.

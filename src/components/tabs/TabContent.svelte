@@ -10,7 +10,7 @@
 
   declareLocation('tab', tab.id);
 
-  let test = getContext<Readable<string>>('test');
+  let renderKey = getContext<Readable<string>>('renderKey');
 
   function onTabRender(node: HTMLElement, tab: Tab) {
     if ('render' in tab.content) {
@@ -29,7 +29,7 @@
     <svelte:component this={tab.content.component} {...tab.content.props} />
   </section>
 {:else if 'html' in tab.content}
-  {#key $test}
+  {#key $renderKey}
     <section
       use:onTabRender={tab}
       class="tab {tab.id} {cssClass} {tab.content.cssClass ??
