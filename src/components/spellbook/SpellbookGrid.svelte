@@ -78,7 +78,10 @@
           {/if}
 
           <div class="spell-name">
-            <div class="spell-image" style="background-image: url('{spellImgUrl}');">
+            <div
+              class="spell-image"
+              style="background-image: url('{spellImgUrl}');"
+            >
               <i class="fa fa-dice-d20" />
             </div>
           </div>
@@ -86,15 +89,17 @@
       {/each}
       {#if $context.owner && $context.editable}
         <div class="spells-footer">
-          <button
-            type="button"
-            class="item-create icon-button"
-            title={localize('DND5E.SpellCreate')}
-            on:click|stopPropagation|preventDefault={() =>
-              FoundryAdapter.createItem(section.dataset, $context.actor)}
-          >
-            <i class="fas fa-plus-circle" />
-          </button>
+          {#if section.canCreate}
+            <button
+              type="button"
+              class="item-create icon-button"
+              title={localize('DND5E.SpellCreate')}
+              on:click|stopPropagation|preventDefault={() =>
+                FoundryAdapter.createItem(section.dataset, $context.actor)}
+            >
+              <i class="fas fa-plus-circle" />
+            </button>
+          {/if}
         </div>
       {/if}
     </div>

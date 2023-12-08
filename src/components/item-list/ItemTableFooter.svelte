@@ -4,6 +4,7 @@
 
   export let dataset: Record<string, unknown>;
   export let actor: Actor5e;
+  export let canCreate = true;
   /**
    * Override for the underlying create button's `create()` function.
    */
@@ -11,7 +12,9 @@
 </script>
 
 <footer class="item-table-footer-row">
-  <ItemCreateButton {dataset} {actor} {create} />
+  {#if canCreate}
+    <ItemCreateButton {dataset} {actor} {create} />
+  {/if}
 </footer>
 
 <style lang="scss">
