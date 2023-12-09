@@ -9,19 +9,12 @@ import type {
 } from 'src/types/item';
 import { get, writable } from 'svelte/store';
 import TypeNotFoundSheet from './item/TypeNotFoundSheet.svelte';
-import EquipmentSheet from './item/EquipmentSheet.svelte';
-import BackpackSheet from './item/BackpackSheet.svelte';
-import BackgroundSheet from './item/BackgroundSheet.svelte';
-import ClassSheet from './item/ClassSheet.svelte';
-import ConsumableSheet from './item/ConsumableSheet.svelte';
-import FeatSheet from './item/FeatSheet.svelte';
-import LootSheet from './item/LootSheet.svelte';
-import SpellSheet from './item/SpellSheet.svelte';
-import SubclassSheet from './item/SubclassSheet.svelte';
-import ToolSheet from './item/ToolSheet.svelte';
-import WeaponSheet from './item/WeaponSheet.svelte';
-import RaceSheet from './item/RaceSheet.svelte';
-import type { SheetStats, SheetTabCacheable } from 'src/types/types';
+import type {
+  HtmlTabContent,
+  SheetStats,
+  SheetTabCacheable,
+  Tab,
+} from 'src/types/types';
 import { applyTitleToWindow } from 'src/utils/applications';
 import { debug } from 'src/utils/logging';
 import type { SvelteComponent } from 'svelte';
@@ -75,86 +68,18 @@ export class Tidy5eKgarItemSheet
       ['renderKey', this.renderKey],
     ]);
 
-    switch (this.item.type) {
-      case CONSTANTS.ITEM_TYPE_EQUIPMENT:
-        this.component = new EquipmentSheet({
+    // TODO: Try find sheet from runtime
+    const sheetComponent = ItemSheetRuntime.sheets[this.item.type];
+
+    this.component = sheetComponent
+      ? new sheetComponent.Sheet({
+          target: node,
+          context: context,
+        })
+      : new TypeNotFoundSheet({
           target: node,
           context: context,
         });
-        break;
-      case CONSTANTS.ITEM_TYPE_BACKGROUND:
-        this.component = new BackgroundSheet({
-          target: node,
-          context: context,
-        });
-        break;
-      case CONSTANTS.ITEM_TYPE_BACKPACK:
-        this.component = new BackpackSheet({
-          target: node,
-          context: context,
-        });
-        break;
-      case CONSTANTS.ITEM_TYPE_CLASS:
-        this.component = new ClassSheet({
-          target: node,
-          context: context,
-        });
-        break;
-      case CONSTANTS.ITEM_TYPE_CONSUMABLE:
-        this.component = new ConsumableSheet({
-          target: node,
-          context: context,
-        });
-        break;
-      case CONSTANTS.ITEM_TYPE_FEAT:
-        this.component = new FeatSheet({
-          target: node,
-          context: context,
-        });
-        break;
-      case CONSTANTS.ITEM_TYPE_LOOT:
-        this.component = new LootSheet({
-          target: node,
-          context: context,
-        });
-        break;
-      case CONSTANTS.ITEM_TYPE_SPELL:
-        this.component = new SpellSheet({
-          target: node,
-          context: context,
-        });
-        break;
-      case CONSTANTS.ITEM_TYPE_SUBCLASS:
-        this.component = new SubclassSheet({
-          target: node,
-          context: context,
-        });
-        break;
-      case CONSTANTS.ITEM_TYPE_TOOL:
-        this.component = new ToolSheet({
-          target: node,
-          context: context,
-        });
-        break;
-      case CONSTANTS.ITEM_TYPE_WEAPON:
-        this.component = new WeaponSheet({
-          target: node,
-          context: context,
-        });
-        break;
-      case CONSTANTS.ITEM_TYPE_RACE:
-        this.component = new RaceSheet({
-          target: node,
-          context: context,
-        });
-        break;
-      default:
-        this.component = new TypeNotFoundSheet({
-          target: node,
-          context: context,
-        });
-        break;
-    }
 
     // Advancement context menu
     const contextOptions = this._getAdvancementContextMenuOptions();
@@ -301,13 +226,15 @@ export class Tidy5eKgarItemSheet
       });
     }
 
-    const registeredTabs = ItemSheetRuntime.getTabs(defaultCharacterContext);
+    const eligibleCustomTabs = ItemSheetRuntime.getCustomItemTabs(
+      defaultCharacterContext
+    );
 
     const customTabs: CustomTab[] = [];
 
     // TODO: Pull back to a custom/runtime util script
     // TODO: Fold all tabs together into actor context variable, to allow for an additional layer of extensibility
-    for (let tab of registeredTabs) {
+    for (let tab of eligibleCustomTabs) {
       if (tab instanceof HandlebarsTab) {
         const handlebarsContent = new HandlebarsTemplateContent({
           path: tab.path,
@@ -346,6 +273,22 @@ export class Tidy5eKgarItemSheet
       }
     }
 
+    // TODO: add `onRender` to `Tab` and eliminate the intermediary customTabs field. Just loop over all known tabs to invoke `onRender`
+    const fred = customTabs.map<Tab>((t) => ({
+      content: {
+        html: t.contentHtml,
+        cssClass: t.tabContentsClasses.join(' '),
+        type: 'html',
+        renderScheme: t.renderScheme,
+      } satisfies HtmlTabContent,
+      displayName: t.title,
+      id: t.tabId,
+    }));
+
+    const tabs = ItemSheetRuntime.sheets[this.item.type]?.defaultTabs ?? [];
+
+    tabs.push(...fred);
+
     const context: ItemSheetContext = {
       ...defaultCharacterContext,
       appId: this.appId,
@@ -363,6 +306,7 @@ export class Tidy5eKgarItemSheet
       ),
       itemDescriptions,
       originalContext: defaultCharacterContext,
+      tabs: tabs,
     };
 
     debug(`${this.item?.type ?? 'Unknown Item Type'} context data`, context);
