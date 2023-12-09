@@ -4,9 +4,11 @@ import type {
   RenderScheme,
 } from 'src/api/api.types';
 import type { ComponentType, SvelteComponent } from 'svelte';
+import type { Tab } from './types';
 
 export type ItemSheetContext = {
   customDetailSections: CustomHtmlItemSection[];
+  tabs: Tab[];
   customTabs: CustomTab[];
   /**
    * Represents remaining health as a percentage within the range of `0` to `100`.
@@ -52,7 +54,7 @@ export type CustomTabBase = {
   onRender?: (args: OnRenderArgs & { tabContentsElement: HTMLElement }) => void;
 };
 
-export type CustomTab = CustomHtmlTab & CustomTabBase; // & others as time goes on
+export type CustomTab = CustomHtmlTab; // & others as time goes on
 
 export type CustomHtmlTab = {
   type: 'html';
@@ -62,4 +64,4 @@ export type CustomHtmlTab = {
   contentHtml: string;
   tabContentsClasses: string[];
   renderScheme: RenderScheme;
-};
+} & CustomTabBase;
