@@ -20,6 +20,7 @@ import { applyTitleToWindow } from 'src/utils/applications';
 import { debug } from 'src/utils/logging';
 import type { SvelteComponent } from 'svelte';
 import { getPercentage } from 'src/utils/numbers';
+import { isNil } from 'src/utils/data';
 
 export class Tidy5eKgarItemSheet
   extends dnd5e.applications.item.ItemSheet5e
@@ -192,28 +193,28 @@ export class Tidy5eKgarItemSheet
   }
 
   private async getContext(): Promise<ItemSheetContext> {
-    const defaultCharacterContext = await super.getData(this.options);
+    const defaultDocumentContext = await super.getData(this.options);
 
     const itemDescriptions: ItemDescription[] = [
       {
-        content: defaultCharacterContext.enriched.description,
+        content: defaultDocumentContext.enriched.description,
         field: 'system.description.value',
         label: FoundryAdapter.localize('DND5E.Description'),
       },
       {
-        content: defaultCharacterContext.enriched.unidentified,
+        content: defaultDocumentContext.enriched.unidentified,
         field: 'system.description.unidentified',
         label: FoundryAdapter.localize('DND5E.DescriptionUnidentified'),
       },
       {
-        content: defaultCharacterContext.enriched.chat,
+        content: defaultDocumentContext.enriched.chat,
         field: 'system.description.chat',
         label: FoundryAdapter.localize('DND5E.DescriptionChat'),
       },
     ];
 
     const context = {
-      ...defaultCharacterContext,
+      ...defaultDocumentContext,
       appId: this.appId,
       activateFoundryJQueryListeners: (node: HTMLElement) => {
         this._activateCoreListeners($(node));
@@ -226,7 +227,11 @@ export class Tidy5eKgarItemSheet
         this.item?.system?.hp?.max
       ),
       itemDescriptions,
-      originalContext: defaultCharacterContext,
+      originalContext: defaultDocumentContext,
+      viewableWarnings:
+        defaultDocumentContext.warnings?.filter(
+          (w: any) => !isNil(w.message?.trim(), '')
+        ) ?? [],
     };
 
     debug(`${this.item?.type ?? 'Unknown Item Type'} context data`, context);

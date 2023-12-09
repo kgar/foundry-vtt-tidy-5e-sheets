@@ -23,7 +23,11 @@ import LongRestDialog from 'src/dialogs/NpcLongRestDialog';
 import type { SvelteComponent } from 'svelte';
 import type { ItemChatData } from 'src/types/item';
 import { registeredNpcTabs } from 'src/runtime/npc-sheet-state';
-import { actorUsesActionFeature, getActorActions } from 'src/features/actions/actions';
+import {
+  actorUsesActionFeature,
+  getActorActions,
+} from 'src/features/actions/actions';
+import { isNil } from 'src/utils/data';
 
 export class Tidy5eNpcSheet
   extends dnd5e.applications.actor.ActorSheet5eNPC
@@ -118,10 +122,10 @@ export class Tidy5eNpcSheet
 
     const lockSensitiveFields =
       !editable && SettingsProvider.settings.useTotalSheetLock.get();
-    const defaultNpcContext = await super.getData(this.options);
+    const defaultDocumentContext = await super.getData(this.options);
 
     const context = {
-      ...defaultNpcContext,
+      ...defaultDocumentContext,
       actions: getActorActions(this.actor),
       activateFoundryJQueryListeners: (node: HTMLElement) => {
         this._activateCoreListeners($(node));
@@ -135,7 +139,7 @@ export class Tidy5eNpcSheet
         ) ?? '',
         {
           secrets: this.actor.isOwner,
-          rollData: defaultNpcContext.rollData,
+          rollData: defaultDocumentContext.rollData,
           async: true,
           relativeTo: this.actor,
         }
@@ -148,7 +152,7 @@ export class Tidy5eNpcSheet
         ) ?? '',
         {
           secrets: this.actor.isOwner,
-          rollData: defaultNpcContext.rollData,
+          rollData: defaultDocumentContext.rollData,
           async: true,
           relativeTo: this.actor,
         }
@@ -160,7 +164,7 @@ export class Tidy5eNpcSheet
         ) ?? '',
         {
           secrets: this.actor.isOwner,
-          rollData: defaultNpcContext.rollData,
+          rollData: defaultDocumentContext.rollData,
           async: true,
           relativeTo: this.actor,
         }
@@ -176,13 +180,13 @@ export class Tidy5eNpcSheet
         ) ?? '',
         {
           secrets: this.actor.isOwner,
-          rollData: defaultNpcContext.rollData,
+          rollData: defaultDocumentContext.rollData,
           async: true,
           relativeTo: this.actor,
         }
       ),
       hideEmptySpellbook:
-        lockSensitiveFields && defaultNpcContext.spellbook.length === 0,
+        lockSensitiveFields && defaultDocumentContext.spellbook.length === 0,
       healthPercentage: getPercentage(
         this.actor?.system?.attributes?.hp?.value,
         this.actor?.system?.attributes?.hp?.max
@@ -195,7 +199,7 @@ export class Tidy5eNpcSheet
         ) ?? '',
         {
           secrets: this.actor.isOwner,
-          rollData: defaultNpcContext.rollData,
+          rollData: defaultDocumentContext.rollData,
           async: true,
           relativeTo: this.actor,
         }
@@ -214,7 +218,7 @@ export class Tidy5eNpcSheet
         ) ?? '',
         {
           secrets: this.actor.isOwner,
-          rollData: defaultNpcContext.rollData,
+          rollData: defaultDocumentContext.rollData,
           async: true,
           relativeTo: this.actor,
         }
@@ -226,7 +230,7 @@ export class Tidy5eNpcSheet
         ) ?? '',
         {
           secrets: this.actor.isOwner,
-          rollData: defaultNpcContext.rollData,
+          rollData: defaultDocumentContext.rollData,
           async: true,
           relativeTo: this.actor,
         }
@@ -238,7 +242,7 @@ export class Tidy5eNpcSheet
         ) ?? '',
         {
           secrets: this.actor.isOwner,
-          rollData: defaultNpcContext.rollData,
+          rollData: defaultDocumentContext.rollData,
           async: true,
           relativeTo: this.actor,
         }
@@ -250,7 +254,7 @@ export class Tidy5eNpcSheet
         ) ?? '',
         {
           secrets: this.actor.isOwner,
-          rollData: defaultNpcContext.rollData,
+          rollData: defaultDocumentContext.rollData,
           async: true,
           relativeTo: this.actor,
         }
@@ -262,7 +266,7 @@ export class Tidy5eNpcSheet
         ) ?? '',
         {
           secrets: this.actor.isOwner,
-          rollData: defaultNpcContext.rollData,
+          rollData: defaultDocumentContext.rollData,
           async: true,
           relativeTo: this.actor,
         }
@@ -280,7 +284,7 @@ export class Tidy5eNpcSheet
         ) ?? '',
         {
           secrets: this.actor.isOwner,
-          rollData: defaultNpcContext.rollData,
+          rollData: defaultDocumentContext.rollData,
           async: true,
           relativeTo: this.actor,
         }
@@ -290,6 +294,10 @@ export class Tidy5eNpcSheet
         CONSTANTS.CIRCULAR_PORTRAIT_OPTION_ALL as string,
         CONSTANTS.CIRCULAR_PORTRAIT_OPTION_NPCVEHICLE as string,
       ].includes(SettingsProvider.settings.useCircularPortraitStyle.get()),
+      viewableWarnings:
+        defaultDocumentContext.warnings?.filter(
+          (w: any) => !isNil(w.message?.trim(), '')
+        ) ?? [],
     };
 
     let tabs = get(registeredNpcTabs).getTabs(context);
