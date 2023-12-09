@@ -1,6 +1,5 @@
 <script lang="ts">
   import type { ItemSheetContext } from 'src/types/item';
-  import type { Tab } from 'src/types/types';
   import Tabs from 'src/components/tabs/Tabs.svelte';
   import type { Readable } from 'svelte/store';
   import { getContext } from 'svelte';
@@ -10,17 +9,11 @@
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import Select from 'src/components/inputs/Select.svelte';
   import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
-  import itemSheetTabs from '../../runtime/item/item-sheet-tabs';
   import Source from '../shared/Source.svelte';
 
   let context = getContext<Readable<ItemSheetContext>>('context');
 
   let selectedTabId: string;
-
-  const tabs: Tab[] = [
-    itemSheetTabs.descriptionWithSidebar,
-    itemSheetTabs.backpackDetails,
-  ];
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -64,7 +57,7 @@
     </ul>
   </div>
 </header>
-<Tabs bind:selectedTabId {tabs} />
+<Tabs bind:selectedTabId tabs={$context.tabs} />
 <section class="tidy-sheet-body">
-  <TabContents {tabs} {selectedTabId} />
+  <TabContents tabs={$context.tabs} {selectedTabId} />
 </section>

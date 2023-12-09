@@ -1,6 +1,5 @@
 <script lang="ts">
   import type { ItemSheetContext } from 'src/types/item';
-  import type { HtmlTabContent, Tab } from 'src/types/types';
   import Tabs from 'src/components/tabs/Tabs.svelte';
   import type { Readable } from 'svelte/store';
   import TabContents from 'src/components/tabs/TabContents.svelte';
@@ -10,32 +9,11 @@
   import Select from 'src/components/inputs/Select.svelte';
   import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
   import TextInput from 'src/components/inputs/TextInput.svelte';
-  import itemSheetTabs from '../../runtime/item/item-sheet-tabs';
   import Source from '../shared/Source.svelte';
 
   let context = getContext<Readable<ItemSheetContext>>('context');
 
   let selectedTabId: string;
-
-  let tabs: Tab[] = [];
-  $: {
-    const customTabs = $context.customTabs.map<Tab>((t) => ({
-      content: {
-        html: t.contentHtml,
-        cssClass: t.tabContentsClasses.join(' '),
-        type: 'html',
-        renderScheme: t.renderScheme,
-      } satisfies HtmlTabContent,
-      displayName: t.title,
-      id: t.tabId,
-    }));
-    tabs = [
-      itemSheetTabs.descriptionWithSidebar,
-      itemSheetTabs.consumableDetails,
-      itemSheetTabs.effects,
-      ...customTabs,
-    ];
-  }
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -81,7 +59,7 @@
     </ul>
   </div>
 </header>
-<Tabs bind:selectedTabId {tabs} />
+<Tabs bind:selectedTabId tabs={$context.tabs} />
 <section class="tidy-sheet-body">
-  <TabContents {tabs} {selectedTabId} />
+  <TabContents tabs={$context.tabs} {selectedTabId} />
 </section>
