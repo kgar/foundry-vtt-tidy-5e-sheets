@@ -8,11 +8,7 @@ import type {
 } from 'src/types/item';
 import { get, writable } from 'svelte/store';
 import TypeNotFoundSheet from './item/TypeNotFoundSheet.svelte';
-import type {
-  SheetStats,
-  SheetTabCacheable,
-  Tab,
-} from 'src/types/types';
+import type { SheetStats, SheetTabCacheable, Tab } from 'src/types/types';
 import { applyTitleToWindow } from 'src/utils/applications';
 import { debug } from 'src/utils/logging';
 import type { SvelteComponent } from 'svelte';
@@ -229,7 +225,7 @@ export class Tidy5eKgarItemSheet
       defaultItemContext
     );
 
-    const tabs = ItemSheetRuntime.sheets[this.item.type]?.defaultTabs ?? [];
+    const tabs = ItemSheetRuntime.sheets[this.item.type]?.defaultTabs() ?? [];
 
     tabs.push(...customTabs);
 

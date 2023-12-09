@@ -53,7 +53,7 @@ export class ItemSheetRuntime {
   static sheets: Record<string, ItemSheetInfo> = {
     [CONSTANTS.ITEM_TYPE_EQUIPMENT]: {
       Sheet: EquipmentSheet,
-      defaultTabs: [
+      defaultTabs: () => [
         itemSheetTabs.descriptionWithSidebar,
         itemSheetTabs.equipmentDetails,
         itemSheetTabs.effects,
@@ -61,18 +61,18 @@ export class ItemSheetRuntime {
     },
     [CONSTANTS.ITEM_TYPE_BACKGROUND]: {
       Sheet: BackgroundSheet,
-      defaultTabs: [itemSheetTabs.description, itemSheetTabs.advancement],
+      defaultTabs: () => [itemSheetTabs.description, itemSheetTabs.advancement],
     },
     [CONSTANTS.ITEM_TYPE_BACKPACK]: {
       Sheet: BackpackSheet,
-      defaultTabs: [
+      defaultTabs: () => [
         itemSheetTabs.descriptionWithSidebar,
         itemSheetTabs.backpackDetails,
       ],
     },
     [CONSTANTS.ITEM_TYPE_CLASS]: {
       Sheet: ClassSheet,
-      defaultTabs: [
+      defaultTabs: () => [
         itemSheetTabs.description,
         itemSheetTabs.classDetails,
         itemSheetTabs.advancement,
@@ -80,7 +80,7 @@ export class ItemSheetRuntime {
     },
     [CONSTANTS.ITEM_TYPE_CONSUMABLE]: {
       Sheet: ConsumableSheet,
-      defaultTabs: [
+      defaultTabs: () => [
         itemSheetTabs.descriptionWithSidebar,
         itemSheetTabs.consumableDetails,
         itemSheetTabs.effects,
@@ -88,7 +88,7 @@ export class ItemSheetRuntime {
     },
     [CONSTANTS.ITEM_TYPE_FEAT]: {
       Sheet: FeatSheet,
-      defaultTabs: [
+      defaultTabs: () => [
         itemSheetTabs.descriptionWithSidebar,
         itemSheetTabs.featDetails,
         itemSheetTabs.effects,
@@ -96,14 +96,14 @@ export class ItemSheetRuntime {
     },
     [CONSTANTS.ITEM_TYPE_LOOT]: {
       Sheet: LootSheet,
-      defaultTabs: [
+      defaultTabs: () => [
         itemSheetTabs.descriptionWithSidebar,
         itemSheetTabs.lootDetails,
       ],
     },
     [CONSTANTS.ITEM_TYPE_SPELL]: {
       Sheet: SpellSheet,
-      defaultTabs: [
+      defaultTabs: () => [
         itemSheetTabs.descriptionWithSidebar,
         itemSheetTabs.spellDetails,
         itemSheetTabs.effects,
@@ -111,7 +111,7 @@ export class ItemSheetRuntime {
     },
     [CONSTANTS.ITEM_TYPE_SUBCLASS]: {
       Sheet: SubclassSheet,
-      defaultTabs: [
+      defaultTabs: () => [
         itemSheetTabs.description,
         itemSheetTabs.subclassDetails,
         itemSheetTabs.advancement,
@@ -119,7 +119,7 @@ export class ItemSheetRuntime {
     },
     [CONSTANTS.ITEM_TYPE_TOOL]: {
       Sheet: ToolSheet,
-      defaultTabs: [
+      defaultTabs: () => [
         itemSheetTabs.descriptionWithSidebar,
         itemSheetTabs.toolDetails,
         itemSheetTabs.effects,
@@ -127,7 +127,7 @@ export class ItemSheetRuntime {
     },
     [CONSTANTS.ITEM_TYPE_WEAPON]: {
       Sheet: WeaponSheet,
-      defaultTabs: [
+      defaultTabs: () => [
         itemSheetTabs.descriptionWithSidebar,
         itemSheetTabs.weaponDetails,
         itemSheetTabs.effects,
@@ -135,12 +135,15 @@ export class ItemSheetRuntime {
     },
     [CONSTANTS.ITEM_TYPE_RACE]: {
       Sheet: RaceSheet,
-      defaultTabs: [itemSheetTabs.raceDescription, itemSheetTabs.advancement],
+      defaultTabs: () => [
+        itemSheetTabs.raceDescription,
+        itemSheetTabs.advancement,
+      ],
     },
   };
 }
 
 type ItemSheetInfo = {
   Sheet: SvelteComponentConstructor<any, any>;
-  defaultTabs: Tab[];
+  defaultTabs(): Tab[];
 };
