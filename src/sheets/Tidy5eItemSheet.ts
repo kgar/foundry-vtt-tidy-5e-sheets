@@ -2,7 +2,6 @@ import { CONSTANTS } from 'src/constants';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type {
   CustomHtmlItemSection,
-  CustomTab,
   Item5e,
   ItemDescription,
   ItemSheetContext,
@@ -10,6 +9,7 @@ import type {
 import { get, writable } from 'svelte/store';
 import TypeNotFoundSheet from './item/TypeNotFoundSheet.svelte';
 import type {
+  CustomTab,
   HtmlTabContent,
   SheetStats,
   SheetTabCacheable,
@@ -133,14 +133,14 @@ export class Tidy5eKgarItemSheet
       })
     );
 
-    data.customTabs.forEach((s) => {
+    data.tabs.forEach((s) => {
       if (!s.onRender) {
         return;
       }
 
       const tab = this.element
         .get(0)
-        .querySelector(`[data-tab-contents-for="${s.tabId}"]`);
+        .querySelector(`[data-tab-contents-for="${s.id}"]`);
 
       s.onRender({
         app: this,
@@ -283,6 +283,7 @@ export class Tidy5eKgarItemSheet
       } satisfies HtmlTabContent,
       displayName: t.title,
       id: t.tabId,
+      onRender: t.onRender,
     }));
 
     const tabs = ItemSheetRuntime.sheets[this.item.type]?.defaultTabs ?? [];
@@ -297,7 +298,6 @@ export class Tidy5eKgarItemSheet
         super.activateListeners($(node));
       },
       customDetailSections: customItemDetailSections,
-      customTabs: customTabs,
       toggleAdvancementLock: this.toggleAdvancementLock.bind(this),
       lockItemQuantity: FoundryAdapter.shouldLockItemQuantity(),
       healthPercentage: getPercentage(

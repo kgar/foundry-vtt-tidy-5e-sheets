@@ -1,15 +1,10 @@
-import type {
-  OnRenderArgs,
-  RegisterItemDetailsSectionOptions,
-  RenderScheme,
-} from 'src/api/api.types';
+import type { RegisterItemDetailsSectionOptions } from 'src/api/api.types';
 import type { ComponentType, SvelteComponent } from 'svelte';
-import type { Tab } from './types';
+import type { CustomTab, Tab } from './types';
 
 export type ItemSheetContext = {
   customDetailSections: CustomHtmlItemSection[];
   tabs: Tab[];
-  customTabs: CustomTab[];
   /**
    * Represents remaining health as a percentage within the range of `0` to `100`.
    */
@@ -49,19 +44,3 @@ export type CustomHtmlItemSection = {
   contentHtml: string;
   options: RegisterItemDetailsSectionOptions;
 };
-
-export type CustomTabBase = {
-  onRender?: (args: OnRenderArgs & { tabContentsElement: HTMLElement }) => void;
-};
-
-export type CustomTab = CustomHtmlTab; // & others as time goes on
-
-export type CustomHtmlTab = {
-  type: 'html';
-  title: string;
-  tabId: string;
-  tabClasses: string[];
-  contentHtml: string;
-  tabContentsClasses: string[];
-  renderScheme: RenderScheme;
-} & CustomTabBase;
