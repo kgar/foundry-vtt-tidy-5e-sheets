@@ -21,6 +21,7 @@ let npcSheetState = writable<NpcSheetState>({
       displayName: 'T5EK.Actions.TabName',
       content: {
         component: ActorActionsTab,
+        type: 'svelte'
       },
       enabled: true,
       id: CONSTANTS.TAB_ACTOR_ACTIONS,
@@ -32,6 +33,7 @@ let npcSheetState = writable<NpcSheetState>({
       displayName: 'T5EK.Abilities',
       content: {
         component: NpcAbilitiesTab,
+        type: 'svelte'
       },
       enabled: true,
       order: 20,
@@ -42,6 +44,7 @@ let npcSheetState = writable<NpcSheetState>({
       displayName: 'DND5E.Spellbook',
       content: {
         component: NpcSpellbookTab,
+        type: 'svelte'
       },
       enabled: (context) =>
         !context.hideEmptySpellbook && context.showSpellbookTab,
@@ -53,6 +56,7 @@ let npcSheetState = writable<NpcSheetState>({
       displayName: 'DND5E.Effects',
       content: {
         component: ActorEffectsTab,
+        type: 'svelte'
       },
       enabled: true,
       order: 40,
@@ -63,6 +67,7 @@ let npcSheetState = writable<NpcSheetState>({
       displayName: 'DND5E.Biography',
       content: {
         component: NpcBiographyTab,
+        type: 'svelte'
       },
       enabled: true,
       order: 50,
@@ -73,6 +78,7 @@ let npcSheetState = writable<NpcSheetState>({
       displayName: 'T5EK.JournalTabName',
       content: {
         component: ActorJournalTab,
+        type: 'svelte'
       },
       enabled: (context) => context.owner,
       order: 60,

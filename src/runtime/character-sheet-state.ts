@@ -23,6 +23,7 @@ let characterSheetState = writable<CharacterSheetState>({
       displayName: 'T5EK.Actions.TabName',
       content: {
         component: ActorActionsTab,
+        type: 'svelte',
       },
       enabled: true,
       id: CONSTANTS.TAB_ACTOR_ACTIONS,
@@ -34,6 +35,7 @@ let characterSheetState = writable<CharacterSheetState>({
       displayName: 'DND5E.Attributes',
       content: {
         component: CharacterAttributesTab,
+        type: 'svelte',
       },
       enabled: true,
       order: 20,
@@ -44,6 +46,7 @@ let characterSheetState = writable<CharacterSheetState>({
       displayName: 'DND5E.Inventory',
       content: {
         component: CharacterInventoryTab,
+        type: 'svelte',
       },
       enabled: true,
       order: 30,
@@ -54,6 +57,7 @@ let characterSheetState = writable<CharacterSheetState>({
       displayName: 'DND5E.Spellbook',
       content: {
         component: CharacterSpellbookTab,
+        type: 'svelte',
       },
       enabled: true,
       order: 40,
@@ -64,6 +68,7 @@ let characterSheetState = writable<CharacterSheetState>({
       displayName: 'DND5E.Features',
       content: {
         component: CharacterFeaturesTab,
+        type: 'svelte',
       },
       enabled: true,
       order: 50,
@@ -74,6 +79,7 @@ let characterSheetState = writable<CharacterSheetState>({
       displayName: 'DND5E.Effects',
       content: {
         component: ActorEffectsTab,
+        type: 'svelte',
       },
       enabled: true,
       order: 60,
@@ -84,6 +90,7 @@ let characterSheetState = writable<CharacterSheetState>({
       displayName: 'DND5E.Biography',
       content: {
         component: CharacterBiographyTab,
+        type: 'svelte',
       },
       enabled: true,
       order: 70,
@@ -94,6 +101,7 @@ let characterSheetState = writable<CharacterSheetState>({
       displayName: 'T5EK.JournalTabName',
       content: {
         component: ActorJournalTab,
+        type: 'svelte',
       },
       enabled: (context) => context.owner,
       order: 80,

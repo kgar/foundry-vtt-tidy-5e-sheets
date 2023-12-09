@@ -20,6 +20,7 @@ let vehicleSheetState = writable<VehicleSheetState>({
       displayName: 'T5EK.Actions.TabName',
       content: {
         component: ActorActionsTab,
+        type: 'svelte'
       },
       enabled: true,
       id: CONSTANTS.TAB_ACTOR_ACTIONS,
@@ -31,6 +32,7 @@ let vehicleSheetState = writable<VehicleSheetState>({
       displayName: 'DND5E.Attributes',
       content: {
         component: VehicleAttributesTab,
+        type: 'svelte'
       },
       enabled: true,
       order: 20,
@@ -41,6 +43,7 @@ let vehicleSheetState = writable<VehicleSheetState>({
       displayName: 'DND5E.VehicleCargoCrew',
       content: {
         component: VehicleCargoAndCrewTab,
+        type: 'svelte'
       },
       enabled: true,
       order: 30,
@@ -51,6 +54,7 @@ let vehicleSheetState = writable<VehicleSheetState>({
       displayName: 'DND5E.Effects',
       content: {
         component: ActorEffectsTab,
+        type: 'svelte'
       },
       enabled: true,
       order: 40,
@@ -61,6 +65,7 @@ let vehicleSheetState = writable<VehicleSheetState>({
       displayName: 'DND5E.Description',
       content: {
         component: VehicleDescriptionTab,
+        type: 'svelte'
       },
       enabled: true,
       order: 50,

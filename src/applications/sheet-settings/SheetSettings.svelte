@@ -29,6 +29,7 @@
       displayName: 'T5EK.Settings.TabPlayers.tabLabel',
       content: {
         component: PlayerSettingsTab,
+        type: 'svelte',
       },
     },
     {
@@ -36,6 +37,7 @@
       displayName: 'T5EK.Settings.TabNPCs.tabLabel',
       content: {
         component: NpcSettingsTab,
+        type: 'svelte',
       },
     },
     {
@@ -43,6 +45,7 @@
       displayName: 'T5EK.Settings.TabVehicles.tabLabel',
       content: {
         component: VehicleSettingsTab,
+        type: 'svelte',
       },
     },
   ];
@@ -54,6 +57,7 @@
         displayName: 'T5EK.Settings.TabGM.tabLabel',
         content: {
           component: GmOptionsSettingsTab,
+          type: 'svelte',
         },
       },
       {
@@ -61,6 +65,7 @@
         displayName: 'T5EK.Settings.TabLocks.tabLabel',
         content: {
           component: LockSettingsTab,
+          type: 'svelte',
         },
       },
     );
@@ -71,6 +76,7 @@
     displayName: 'T5EK.Settings.TabFeatures.tabLabel',
     content: {
       component: FeaturesSettingsTab,
+      type: 'svelte',
     },
   });
 
@@ -79,6 +85,7 @@
     displayName: 'T5EK.Settings.TabInfo.tabLabel',
     content: {
       component: InfoTab,
+      type: 'svelte',
     },
   });
 
