@@ -1,8 +1,7 @@
 import type { RegisterItemDetailsSectionOptions } from 'src/api/api.types';
-import type { TabBase } from 'src/api/tab/TabBase';
+import type { CustomTabBase } from 'src/api/tab/TabBase';
 import { CONSTANTS } from 'src/constants';
 import { isNil } from 'src/utils/data';
-import type { SvelteComponent } from 'svelte';
 import EquipmentSheet from 'src/sheets/item/EquipmentSheet.svelte';
 import type { Tab } from 'src/types/types';
 import itemSheetTabs from './item-sheet-tabs';
@@ -21,7 +20,7 @@ import RaceSheet from 'src/sheets/item/RaceSheet.svelte';
 export class ItemSheetRuntime {
   private static _itemDetailCustomSections: RegisterItemDetailsSectionOptions[] =
     [];
-  private static _itemTabs: TabBase[] = [];
+  private static _itemTabs: CustomTabBase[] = [];
 
   static registerDetailTabSection(section: RegisterItemDetailsSectionOptions) {
     // validate? Or let chaos reign?
@@ -36,7 +35,7 @@ export class ItemSheetRuntime {
     );
   }
 
-  static registerTab(tab: TabBase) {
+  static registerTab(tab: CustomTabBase) {
     // validate? Or let chaos reign?
     const tabId = tab.tabId?.trim();
     if (isNil(tabId, '')) {

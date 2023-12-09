@@ -9,8 +9,6 @@ import type {
 import { get, writable } from 'svelte/store';
 import TypeNotFoundSheet from './item/TypeNotFoundSheet.svelte';
 import type {
-  CustomTab,
-  HtmlTabContent,
   SheetStats,
   SheetTabCacheable,
   Tab,
@@ -21,8 +19,7 @@ import type { SvelteComponent } from 'svelte';
 import { getPercentage } from 'src/utils/numbers';
 import { HandlebarsTemplateContent } from 'src/api/HandlebarsTemplateContent';
 import { ItemSheetRuntime } from 'src/runtime/item/ItemSheetRuntime';
-import { HandlebarsTab } from 'src/api/tab/HandlebarsTab';
-import { HtmlTab } from 'src/api/tab/HtmlTab';
+import { TabManager } from 'src/runtime/tab/TabManager';
 
 export class Tidy5eKgarItemSheet
   extends dnd5e.applications.item.ItemSheet5e
@@ -172,31 +169,31 @@ export class Tidy5eKgarItemSheet
   }
 
   private async getContext(): Promise<ItemSheetContext> {
-    const defaultCharacterContext = await super.getData(this.options);
+    const defaultItemContext = await super.getData(this.options);
 
     const itemDescriptions: ItemDescription[] = [
       {
-        content: defaultCharacterContext.enriched.description,
+        content: defaultItemContext.enriched.description,
         field: 'system.description.value',
         label: FoundryAdapter.localize('DND5E.Description'),
       },
       {
-        content: defaultCharacterContext.enriched.unidentified,
+        content: defaultItemContext.enriched.unidentified,
         field: 'system.description.unidentified',
         label: FoundryAdapter.localize('DND5E.DescriptionUnidentified'),
       },
       {
-        content: defaultCharacterContext.enriched.chat,
+        content: defaultItemContext.enriched.chat,
         field: 'system.description.chat',
         label: FoundryAdapter.localize('DND5E.DescriptionChat'),
       },
     ];
 
     const registeredCustomItemSectionOptions =
-      ItemSheetRuntime.getCustomItemDetailSections(defaultCharacterContext);
+      ItemSheetRuntime.getCustomItemDetailSections(defaultItemContext);
 
     registeredCustomItemSectionOptions.forEach((s) =>
-      s.onPrepareData?.(defaultCharacterContext)
+      s.onPrepareData?.(defaultItemContext)
     );
 
     const customItemDetailSections: CustomHtmlItemSection[] = [];
@@ -205,16 +202,14 @@ export class Tidy5eKgarItemSheet
       let content = '';
       // TODO: Create an InjectableContent utility function that can handle this common pattern.
       if (option.content instanceof HandlebarsTemplateContent) {
-        content = await option.content.render(defaultCharacterContext);
+        content = await option.content.render(defaultItemContext);
       } else if (typeof option.content === 'string') {
         content = option.content;
       }
 
       let sectionTitle: string | undefined = undefined;
       if (option.sectionTitle instanceof HandlebarsTemplateContent) {
-        sectionTitle = await option.sectionTitle.render(
-          defaultCharacterContext
-        );
+        sectionTitle = await option.sectionTitle.render(defaultItemContext);
       } else if (typeof option.sectionTitle === 'string') {
         sectionTitle = option.sectionTitle;
       }
@@ -226,72 +221,20 @@ export class Tidy5eKgarItemSheet
       });
     }
 
-    const eligibleCustomTabs = ItemSheetRuntime.getCustomItemTabs(
-      defaultCharacterContext
+    const eligibleCustomTabs =
+      ItemSheetRuntime.getCustomItemTabs(defaultItemContext);
+
+    const customTabs: Tab[] = await TabManager.prepareCustomTabsForRender(
+      eligibleCustomTabs,
+      defaultItemContext
     );
-
-    const customTabs: CustomTab[] = [];
-
-    // TODO: Pull back to a custom/runtime util script
-    // TODO: Fold all tabs together into actor context variable, to allow for an additional layer of extensibility
-    for (let tab of eligibleCustomTabs) {
-      if (tab instanceof HandlebarsTab) {
-        const handlebarsContent = new HandlebarsTemplateContent({
-          path: tab.path,
-        });
-
-        const templateData = await (tab.getData?.(defaultCharacterContext) ??
-          defaultCharacterContext);
-
-        customTabs.push({
-          type: 'html',
-          contentHtml: await handlebarsContent.render(templateData),
-          tabClasses: [],
-          tabContentsClasses: [
-            CONSTANTS.CLASS_TIDY_USE_CORE_LISTENERS,
-            ...tab.tabContentsClasses,
-          ],
-          tabId: tab.tabId,
-          title: tab.title,
-          onRender: tab.onRender,
-          renderScheme: tab.renderScheme,
-        });
-      } else if (tab instanceof HtmlTab) {
-        customTabs.push({
-          type: 'html',
-          contentHtml: tab.html,
-          tabClasses: [],
-          tabContentsClasses: [
-            CONSTANTS.CLASS_TIDY_USE_CORE_LISTENERS,
-            ...tab.tabContentsClasses,
-          ],
-          tabId: tab.tabId,
-          title: tab.title,
-          onRender: tab.onRender,
-          renderScheme: tab.renderScheme,
-        });
-      }
-    }
-
-    // TODO: add `onRender` to `Tab` and eliminate the intermediary customTabs field. Just loop over all known tabs to invoke `onRender`
-    const fred = customTabs.map<Tab>((t) => ({
-      content: {
-        html: t.contentHtml,
-        cssClass: t.tabContentsClasses.join(' '),
-        type: 'html',
-        renderScheme: t.renderScheme,
-      } satisfies HtmlTabContent,
-      displayName: t.title,
-      id: t.tabId,
-      onRender: t.onRender,
-    }));
 
     const tabs = ItemSheetRuntime.sheets[this.item.type]?.defaultTabs ?? [];
 
-    tabs.push(...fred);
+    tabs.push(...customTabs);
 
     const context: ItemSheetContext = {
-      ...defaultCharacterContext,
+      ...defaultItemContext,
       appId: this.appId,
       activateFoundryJQueryListeners: (node: HTMLElement) => {
         this._activateCoreListeners($(node));
@@ -305,7 +248,7 @@ export class Tidy5eKgarItemSheet
         this.item?.system?.hp?.max
       ),
       itemDescriptions,
-      originalContext: defaultCharacterContext,
+      originalContext: defaultItemContext,
       tabs: tabs,
     };
 

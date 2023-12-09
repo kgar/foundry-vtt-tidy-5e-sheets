@@ -1,7 +1,7 @@
 import type { OnRenderArgs } from '../api.types';
-import { TabBase } from './TabBase';
+import { CustomTabBase } from './TabBase';
 
-export class HtmlTab extends TabBase {
+export class HtmlTab extends CustomTabBase {
   title: string = '';
   tabId: string = '';
   html: string = '';

@@ -1,7 +1,7 @@
 import type { OnRenderArgs, RenderScheme } from '../api.types';
-import { TabBase } from './TabBase';
+import { CustomTabBase } from './TabBase';
 
-export class HandlebarsTab extends TabBase {
+export class HandlebarsTab extends CustomTabBase {
   title: string = '';
   tabId: string = '';
   path: string = '';

@@ -1,6 +1,6 @@
 import type { OnRenderArgs, RenderScheme } from '../api.types';
 
-export abstract class TabBase {
+export abstract class CustomTabBase {
   abstract title: string;
   abstract tabId: string;
   abstract renderScheme: RenderScheme;

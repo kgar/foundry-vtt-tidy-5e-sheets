@@ -1,6 +1,6 @@
 import type { RegisterItemDetailsSectionOptions } from 'src/api/api.types';
 import type { ComponentType, SvelteComponent } from 'svelte';
-import type { CustomTab, Tab } from './types';
+import type { Tab } from './types';
 
 export type ItemSheetContext = {
   customDetailSections: CustomHtmlItemSection[];
