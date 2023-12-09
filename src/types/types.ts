@@ -25,25 +25,6 @@ export type OnRenderTabArgs = OnRenderArgs & {
   tabContentsElement: HTMLElement;
 };
 
-// TODO: Can this be removed?
-export type CustomTabBase = {
-  onRender?: (args: OnRenderTabArgs) => void;
-};
-
-// TODO: Can this be removed?
-export type CustomTab = CustomHtmlTab; // & others as time goes on
-
-// TODO: Can this be removed?
-export type CustomHtmlTab = {
-  type: 'html';
-  title: string;
-  tabId: string;
-  tabClasses: string[];
-  contentHtml: string;
-  tabContentsClasses: string[];
-  renderScheme: RenderScheme;
-} & CustomTabBase;
-
 // TODO: Make this generic in such a way that correct props are actually required and that an array of tabs can have hetergeneity of component types without a crazy TS type
 export type Tab<
   T extends SvelteComponent<any, any, any> = SvelteComponent<any, any, any>
