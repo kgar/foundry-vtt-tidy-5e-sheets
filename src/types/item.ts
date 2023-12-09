@@ -1,4 +1,5 @@
 import type { ComponentType, SvelteComponent } from 'svelte';
+import type { DocumentPreparationWarning } from './types';
 
 export type ItemSheetContext = {
   /**
@@ -9,6 +10,7 @@ export type ItemSheetContext = {
   lockItemQuantity: boolean;
   originalContext: unknown;
   owner: boolean;
+  viewableWarnings: DocumentPreparationWarning[];
 } & Record<string, any>;
 
 export type ItemDescription = {

@@ -27,6 +27,7 @@ import {
   actorUsesActionFeature,
   getActorActions,
 } from 'src/features/actions/actions';
+import { isNil } from 'src/utils/data';
 
 export class Tidy5eCharacterSheet
   extends dnd5e.applications.actor.ActorSheet5eCharacter
@@ -133,9 +134,9 @@ export class Tidy5eCharacterSheet
   private async getContext(): Promise<CharacterSheetContext> {
     const editable = FoundryAdapter.canEditActor(this.actor) && this.isEditable;
 
-    const defaultCharacterContext = await super.getData(this.options);
+    const defaultDocumentContext = await super.getData(this.options);
 
-    const tidyResources: TidyResource[] = defaultCharacterContext.resources.map(
+    const tidyResources: TidyResource[] = defaultDocumentContext.resources.map(
       (r: any) => ({
         name: r.name,
         label: r.label,
@@ -160,7 +161,7 @@ export class Tidy5eCharacterSheet
       this.actor
     );
 
-    const sections = defaultCharacterContext.features.map((section: any) => ({
+    const sections = defaultDocumentContext.features.map((section: any) => ({
       ...section,
       showLevelColumn: !section.hasActions && section.isClass,
       showRequirementsColumn: !section.isClass && !section.columns?.length,
@@ -189,7 +190,7 @@ export class Tidy5eCharacterSheet
     }
 
     const context: CharacterSheetContext = {
-      ...defaultCharacterContext,
+      ...defaultDocumentContext,
       activateFoundryJQueryListeners: (node: HTMLElement) => {
         this._activateCoreListeners($(node));
         super.activateListeners($(node));
@@ -207,7 +208,7 @@ export class Tidy5eCharacterSheet
         this.actor.system.details.appearance,
         {
           secrets: this.actor.isOwner,
-          rollData: defaultCharacterContext.rollData,
+          rollData: defaultDocumentContext.rollData,
           async: true,
           relativeTo: this.actor,
         }
@@ -217,7 +218,7 @@ export class Tidy5eCharacterSheet
         this.actor.system.details.biography.value,
         {
           secrets: this.actor.isOwner,
-          rollData: defaultCharacterContext.rollData,
+          rollData: defaultDocumentContext.rollData,
           async: true,
           relativeTo: this.actor,
         }
@@ -226,7 +227,7 @@ export class Tidy5eCharacterSheet
         this.actor.system.details.bond,
         {
           secrets: this.actor.isOwner,
-          rollData: defaultCharacterContext.rollData,
+          rollData: defaultDocumentContext.rollData,
           async: true,
           relativeTo: this.actor,
         }
@@ -237,7 +238,7 @@ export class Tidy5eCharacterSheet
         this.actor.system.details.flaw,
         {
           secrets: this.actor.isOwner,
-          rollData: defaultCharacterContext.rollData,
+          rollData: defaultDocumentContext.rollData,
           async: true,
           relativeTo: this.actor,
         }
@@ -250,7 +251,7 @@ export class Tidy5eCharacterSheet
         this.actor.system.details.ideal,
         {
           secrets: this.actor.isOwner,
-          rollData: defaultCharacterContext.rollData,
+          rollData: defaultDocumentContext.rollData,
           async: true,
           relativeTo: this.actor,
         }
@@ -270,7 +271,7 @@ export class Tidy5eCharacterSheet
         ) ?? '',
         {
           secrets: this.actor.isOwner,
-          rollData: defaultCharacterContext.rollData,
+          rollData: defaultDocumentContext.rollData,
           async: true,
           relativeTo: this.actor,
         }
@@ -282,7 +283,7 @@ export class Tidy5eCharacterSheet
         ) ?? '',
         {
           secrets: this.actor.isOwner,
-          rollData: defaultCharacterContext.rollData,
+          rollData: defaultDocumentContext.rollData,
           async: true,
           relativeTo: this.actor,
         }
@@ -294,7 +295,7 @@ export class Tidy5eCharacterSheet
         ) ?? '',
         {
           secrets: this.actor.isOwner,
-          rollData: defaultCharacterContext.rollData,
+          rollData: defaultDocumentContext.rollData,
           async: true,
           relativeTo: this.actor,
         }
@@ -306,7 +307,7 @@ export class Tidy5eCharacterSheet
         ) ?? '',
         {
           secrets: this.actor.isOwner,
-          rollData: defaultCharacterContext.rollData,
+          rollData: defaultDocumentContext.rollData,
           async: true,
           relativeTo: this.actor,
         }
@@ -318,12 +319,12 @@ export class Tidy5eCharacterSheet
         ) ?? '',
         {
           secrets: this.actor.isOwner,
-          rollData: defaultCharacterContext.rollData,
+          rollData: defaultDocumentContext.rollData,
           async: true,
           relativeTo: this.actor,
         }
       ),
-      originalContext: defaultCharacterContext,
+      originalContext: defaultDocumentContext,
       owner: this.actor.isOwner,
       showLimitedSheet: FoundryAdapter.showLimitedSheet(this.actor),
       tabs: [],
@@ -332,7 +333,7 @@ export class Tidy5eCharacterSheet
         this.actor.system.details.trait,
         {
           secrets: this.actor.isOwner,
-          rollData: defaultCharacterContext.rollData,
+          rollData: defaultDocumentContext.rollData,
           async: true,
           relativeTo: this.actor,
         }
@@ -344,6 +345,10 @@ export class Tidy5eCharacterSheet
         CONSTANTS.CIRCULAR_PORTRAIT_OPTION_ALL as string,
         CONSTANTS.CIRCULAR_PORTRAIT_OPTION_CHARACTER as string,
       ].includes(SettingsProvider.settings.useCircularPortraitStyle.get()),
+      viewableWarnings:
+        defaultDocumentContext.warnings?.filter(
+          (w: any) => !isNil(w.message?.trim(), '')
+        ) ?? [],
     };
 
     let tabs = get(registeredCharacterTabs).getTabs(context);

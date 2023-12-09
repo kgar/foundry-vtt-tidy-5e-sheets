@@ -19,7 +19,11 @@ import { debug } from 'src/utils/logging';
 import { getPercentage } from 'src/utils/numbers';
 import type { ItemChatData } from 'src/types/item';
 import { registeredVehicleTabs } from 'src/runtime/vehicle-sheet-state';
-import { actorUsesActionFeature, getActorActions } from 'src/features/actions/actions';
+import {
+  actorUsesActionFeature,
+  getActorActions,
+} from 'src/features/actions/actions';
+import { isNil } from 'src/utils/data';
 
 export class Tidy5eVehicleSheet
   extends dnd5e.applications.actor.ActorSheet5eVehicle
@@ -102,8 +106,9 @@ export class Tidy5eVehicleSheet
   private async getContext(): Promise<VehicleSheetContext> {
     const editable = FoundryAdapter.canEditActor(this.actor) && this.isEditable;
 
+    const defaultDocumentContext = await super.getData(this.options);
     const context = {
-      ...(await super.getData(this.options)),
+      ...defaultDocumentContext,
       actions: getActorActions(this.actor),
       activateFoundryJQueryListeners: (node: HTMLElement) => {
         this._activateCoreListeners($(node));
@@ -133,6 +138,10 @@ export class Tidy5eVehicleSheet
         CONSTANTS.CIRCULAR_PORTRAIT_OPTION_ALL as string,
         CONSTANTS.CIRCULAR_PORTRAIT_OPTION_NPCVEHICLE as string,
       ].includes(SettingsProvider.settings.useCircularPortraitStyle.get()),
+      viewableWarnings:
+        defaultDocumentContext.warnings?.filter(
+          (w: any) => !isNil(w.message?.trim(), '')
+        ) ?? [],
     };
 
     let tabs = get(registeredVehicleTabs).getTabs(context);
