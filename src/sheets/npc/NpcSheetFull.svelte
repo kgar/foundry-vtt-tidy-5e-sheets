@@ -49,8 +49,8 @@
 {/if}
 
 <div class="token-link-wrapper {$context.tokenState}">
-  {#if $context.warnings.length}
-    <ActorWarnings warnings={$context.warnings} />
+  {#if $context.viewableWarnings.length}
+    <ActorWarnings warnings={$context.viewableWarnings} />
   {/if}
   <header>
     <div class="flex-0">

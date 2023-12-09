@@ -57,8 +57,8 @@
 
 <ItemInfoCard />
 
-{#if $context.warnings.length}
-  <ActorWarnings warnings={$context.warnings} />
+{#if $context.viewableWarnings.length}
+  <ActorWarnings warnings={$context.viewableWarnings} />
 {/if}
 <header class="tidy5e-kgar-sheet-header flex-row">
   <div class="flex-0">

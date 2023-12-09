@@ -1,6 +1,7 @@
 import type { RegisterItemDetailsSectionOptions } from 'src/api/api.types';
 import type { ComponentType, SvelteComponent } from 'svelte';
 import type { Tab } from './types';
+import type { DocumentPreparationWarning } from './types';
 
 export type ItemSheetContext = {
   customDetailSections: CustomHtmlItemSection[];
@@ -13,6 +14,7 @@ export type ItemSheetContext = {
   lockItemQuantity: boolean;
   originalContext: unknown;
   owner: boolean;
+  viewableWarnings: DocumentPreparationWarning[];
 } & Record<string, any>;
 
 export type ItemDescription = {

@@ -21,18 +21,10 @@
       htmlRenderKey = $renderKey;
     }
   }
-
-  // TODO: Is this necessary anymore? Should this
-  function onTabRender(node: HTMLElement, tab: Tab) {
-    if ('render' in tab.content) {
-      tab.content.render?.(node);
-    }
-  }
 </script>
 
 {#if 'component' in tab.content}
   <div
-    use:onTabRender={tab}
     class="tidy-tab {tab.id} {cssClass} {tab.content.cssClass ?? ''}"
     class:active
     data-tab-contents-for={tab.id}
@@ -42,7 +34,6 @@
 {:else if 'html' in tab.content}
   {#key htmlRenderKey}
     <div
-      use:onTabRender={tab}
       class="tidy-tab {tab.id} {cssClass} {tab.content.cssClass ??
         ''} scroll-container"
       class:active

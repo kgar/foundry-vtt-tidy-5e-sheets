@@ -16,7 +16,6 @@ export type SvelteTabContent<
 export type HtmlTabContent = {
   type: 'html';
   html: string;
-  render?: (tabContent: HTMLElement) => void;
   cssClass?: string;
   renderScheme: RenderScheme;
 };
@@ -171,8 +170,15 @@ export type ActorSheetContext = {
   useActionsFeature?: boolean;
   useClassicControls: boolean;
   useRoundedPortraitStyle: boolean;
+  viewableWarnings: DocumentPreparationWarning[];
 } & JQueryHooksSheetIntegration &
   Record<string, any>;
+
+export type DocumentPreparationWarning = Partial<{
+  message: string;
+  link: string;
+  type: string;
+}>;
 
 export type JQueryHooksSheetIntegration = {
   activateFoundryJQueryListeners: (html: HTMLElement) => Promise<void>;

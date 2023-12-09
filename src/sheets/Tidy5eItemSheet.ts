@@ -13,6 +13,7 @@ import { applyTitleToWindow } from 'src/utils/applications';
 import { debug } from 'src/utils/logging';
 import type { SvelteComponent } from 'svelte';
 import { getPercentage } from 'src/utils/numbers';
+import { isNil } from 'src/utils/data';
 import { HandlebarsTemplateContent } from 'src/api/HandlebarsTemplateContent';
 import { ItemSheetRuntime } from 'src/runtime/item/ItemSheetRuntime';
 import { TabManager } from 'src/runtime/tab/TabManager';
@@ -165,31 +166,31 @@ export class Tidy5eKgarItemSheet
   }
 
   private async getContext(): Promise<ItemSheetContext> {
-    const defaultItemContext = await super.getData(this.options);
+    const defaultDocumentContext = await super.getData(this.options);
 
     const itemDescriptions: ItemDescription[] = [
       {
-        content: defaultItemContext.enriched.description,
+        content: defaultDocumentContext.enriched.description,
         field: 'system.description.value',
         label: FoundryAdapter.localize('DND5E.Description'),
       },
       {
-        content: defaultItemContext.enriched.unidentified,
+        content: defaultDocumentContext.enriched.unidentified,
         field: 'system.description.unidentified',
         label: FoundryAdapter.localize('DND5E.DescriptionUnidentified'),
       },
       {
-        content: defaultItemContext.enriched.chat,
+        content: defaultDocumentContext.enriched.chat,
         field: 'system.description.chat',
         label: FoundryAdapter.localize('DND5E.DescriptionChat'),
       },
     ];
 
     const registeredCustomItemSectionOptions =
-      ItemSheetRuntime.getCustomItemDetailSections(defaultItemContext);
+      ItemSheetRuntime.getCustomItemDetailSections(defaultDocumentContext);
 
     registeredCustomItemSectionOptions.forEach((s) =>
-      s.onPrepareData?.(defaultItemContext)
+      s.onPrepareData?.(defaultDocumentContext)
     );
 
     const customItemDetailSections: CustomHtmlItemSection[] = [];
@@ -198,14 +199,14 @@ export class Tidy5eKgarItemSheet
       let content = '';
       // TODO: Create an InjectableContent utility function that can handle this common pattern.
       if (option.content instanceof HandlebarsTemplateContent) {
-        content = await option.content.render(defaultItemContext);
+        content = await option.content.render(defaultDocumentContext);
       } else if (typeof option.content === 'string') {
         content = option.content;
       }
 
       let sectionTitle: string | undefined = undefined;
       if (option.sectionTitle instanceof HandlebarsTemplateContent) {
-        sectionTitle = await option.sectionTitle.render(defaultItemContext);
+        sectionTitle = await option.sectionTitle.render(defaultDocumentContext);
       } else if (typeof option.sectionTitle === 'string') {
         sectionTitle = option.sectionTitle;
       }
@@ -218,11 +219,11 @@ export class Tidy5eKgarItemSheet
     }
 
     const eligibleCustomTabs =
-      ItemSheetRuntime.getCustomItemTabs(defaultItemContext);
+      ItemSheetRuntime.getCustomItemTabs(defaultDocumentContext);
 
     const customTabs: Tab[] = await TabManager.prepareCustomTabsForRender(
       eligibleCustomTabs,
-      defaultItemContext
+      defaultDocumentContext
     );
 
     const tabs = ItemSheetRuntime.sheets[this.item.type]?.defaultTabs() ?? [];
@@ -230,7 +231,7 @@ export class Tidy5eKgarItemSheet
     tabs.push(...customTabs);
 
     const context: ItemSheetContext = {
-      ...defaultItemContext,
+      ...defaultDocumentContext,
       appId: this.appId,
       activateFoundryJQueryListeners: (node: HTMLElement) => {
         this._activateCoreListeners($(node));
@@ -244,8 +245,12 @@ export class Tidy5eKgarItemSheet
         this.item?.system?.hp?.max
       ),
       itemDescriptions,
-      originalContext: defaultItemContext,
+      originalContext: defaultDocumentContext,
       tabs: tabs,
+      viewableWarnings:
+        defaultDocumentContext.warnings?.filter(
+          (w: any) => !isNil(w.message?.trim(), '')
+        ) ?? [],
     };
 
     debug(`${this.item?.type ?? 'Unknown Item Type'} context data`, context);
