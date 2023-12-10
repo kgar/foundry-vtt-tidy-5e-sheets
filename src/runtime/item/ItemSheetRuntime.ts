@@ -1,4 +1,3 @@
-import type { RegisterItemDetailsSectionOptions } from 'src/api/api.types';
 import type { CustomTabBase } from 'src/api/tab/TabBase';
 import { CONSTANTS } from 'src/constants';
 import { isNil } from 'src/utils/data';
@@ -19,22 +18,7 @@ import RaceSheet from 'src/sheets/item/RaceSheet.svelte';
 import type { ComponentType } from 'svelte';
 
 export class ItemSheetRuntime {
-  private static _itemDetailCustomSections: RegisterItemDetailsSectionOptions[] =
-    [];
   private static _itemTabs: CustomTabBase[] = [];
-
-  static registerDetailTabSection(section: RegisterItemDetailsSectionOptions) {
-    // validate? Or let chaos reign?
-    ItemSheetRuntime._itemDetailCustomSections.push(section);
-  }
-
-  static getCustomItemDetailSections(
-    context: any
-  ): RegisterItemDetailsSectionOptions[] {
-    return [...ItemSheetRuntime._itemDetailCustomSections].filter(
-      (s) => s.enabled === undefined || s.enabled(context)
-    );
-  }
 
   static registerTab(tab: CustomTabBase) {
     // validate? Or let chaos reign?

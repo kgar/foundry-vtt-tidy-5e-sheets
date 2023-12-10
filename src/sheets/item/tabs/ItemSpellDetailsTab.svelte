@@ -13,7 +13,6 @@
   import ItemFormGroup from '../form/ItemFormGroup.svelte';
   import { CONSTANTS } from 'src/constants';
   import { settingStore } from 'src/settings/settings';
-  import ItemCustomDetailSection from '../parts/ItemCustomDetailSection.svelte';
 
   let context = getContext<Readable<ItemSheetContext>>('context');
 
@@ -217,6 +216,3 @@
     />
   </div>
 </ItemFormGroup>
-{#each $context.customDetailSections as section}
-  <ItemCustomDetailSection {section} />
-{/each}

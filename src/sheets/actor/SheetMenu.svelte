@@ -9,6 +9,7 @@
   import type { Readable } from 'svelte/store';
   import type { ActorSheetContext } from 'src/types/types';
   import { Tidy5eSheetsApi } from 'src/api/Tidy5eSheetsApi';
+  import { ApplicationsManager } from 'src/applications/ApplicationsManager';
   export let defaultSettingsTab: string | undefined = undefined;
 
   const localize = FoundryAdapter.localize;
@@ -27,13 +28,13 @@
   <ThemeSelectorButtonMenuCommand />
   <ButtonMenuDivider />
   <ButtonMenuCommand
-    on:click={() => api.openSheetSettings(defaultSettingsTab)}
+    on:click={() => ApplicationsManager.openSheetSettings(defaultSettingsTab)}
     iconClass="fas fa-cog"
   >
     {localize('T5EK.Settings.SheetMenu.label')}
   </ButtonMenuCommand>
   <ButtonMenuCommand
-    on:click={() => api.openThemeSettings()}
+    on:click={() => ApplicationsManager.openThemeSettings()}
     iconClass="fas fa-palette"
   >
     {localize('T5EK.ThemeSettings.Sheet.title')}

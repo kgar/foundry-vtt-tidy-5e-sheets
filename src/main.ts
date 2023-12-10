@@ -7,7 +7,6 @@ import { Tidy5eNpcSheet } from './sheets/Tidy5eNpcSheet';
 import { Tidy5eVehicleSheet } from './sheets/Tidy5eKgarVehicleSheet';
 import { CONSTANTS } from './constants';
 import { Tidy5eSheetsApi } from './api/Tidy5eSheetsApi';
-import { HandlebarsTemplateContent } from './api/HandlebarsTemplateContent';
 
 FoundryAdapter.registerActorSheet(
   Tidy5eCharacterSheet,

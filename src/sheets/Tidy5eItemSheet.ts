@@ -1,11 +1,6 @@
 import { CONSTANTS } from 'src/constants';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-import type {
-  CustomHtmlItemSection,
-  Item5e,
-  ItemDescription,
-  ItemSheetContext,
-} from 'src/types/item';
+import type { Item5e, ItemDescription, ItemSheetContext } from 'src/types/item';
 import { get, writable } from 'svelte/store';
 import TypeNotFoundSheet from './item/TypeNotFoundSheet.svelte';
 import type { SheetStats, SheetTabCacheable, Tab } from 'src/types/types';
@@ -14,7 +9,6 @@ import { debug } from 'src/utils/logging';
 import type { SvelteComponent } from 'svelte';
 import { getPercentage } from 'src/utils/numbers';
 import { isNil } from 'src/utils/data';
-import { HandlebarsTemplateContent } from 'src/api/HandlebarsTemplateContent';
 import { ItemSheetRuntime } from 'src/runtime/item/ItemSheetRuntime';
 import { TabManager } from 'src/runtime/tab/TabManager';
 
@@ -118,15 +112,6 @@ export class Tidy5eKgarItemSheet
   private customContentOnRender(args: { isFullRender: boolean }) {
     const data = get(this.context);
 
-    data.customDetailSections.forEach((s) =>
-      s.options.onRender?.({
-        app: this,
-        data: data,
-        element: this.element.get(0),
-        isFullRender: args.isFullRender,
-      })
-    );
-
     data.tabs.forEach((s) => {
       if (!s.onRender) {
         return;
@@ -186,40 +171,9 @@ export class Tidy5eKgarItemSheet
       },
     ];
 
-    const registeredCustomItemSectionOptions =
-      ItemSheetRuntime.getCustomItemDetailSections(defaultDocumentContext);
-
-    registeredCustomItemSectionOptions.forEach((s) =>
-      s.onPrepareData?.(defaultDocumentContext)
+    const eligibleCustomTabs = ItemSheetRuntime.getCustomItemTabs(
+      defaultDocumentContext
     );
-
-    const customItemDetailSections: CustomHtmlItemSection[] = [];
-
-    for (let option of registeredCustomItemSectionOptions) {
-      let content = '';
-      // TODO: Create an InjectableContent utility function that can handle this common pattern.
-      if (option.content instanceof HandlebarsTemplateContent) {
-        content = await option.content.render(defaultDocumentContext);
-      } else if (typeof option.content === 'string') {
-        content = option.content;
-      }
-
-      let sectionTitle: string | undefined = undefined;
-      if (option.sectionTitle instanceof HandlebarsTemplateContent) {
-        sectionTitle = await option.sectionTitle.render(defaultDocumentContext);
-      } else if (typeof option.sectionTitle === 'string') {
-        sectionTitle = option.sectionTitle;
-      }
-
-      customItemDetailSections.push({
-        contentHtml: content,
-        sectionTitleHtml: sectionTitle,
-        options: option,
-      });
-    }
-
-    const eligibleCustomTabs =
-      ItemSheetRuntime.getCustomItemTabs(defaultDocumentContext);
 
     const customTabs: Tab[] = await TabManager.prepareCustomTabsForRender(
       eligibleCustomTabs,
@@ -237,7 +191,6 @@ export class Tidy5eKgarItemSheet
         this._activateCoreListeners($(node));
         super.activateListeners($(node));
       },
-      customDetailSections: customItemDetailSections,
       toggleAdvancementLock: this.toggleAdvancementLock.bind(this),
       lockItemQuantity: FoundryAdapter.shouldLockItemQuantity(),
       healthPercentage: getPercentage(

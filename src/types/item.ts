@@ -1,10 +1,8 @@
-import type { RegisterItemDetailsSectionOptions } from 'src/api/api.types';
 import type { ComponentType, SvelteComponent } from 'svelte';
 import type { Tab } from './types';
 import type { DocumentPreparationWarning } from './types';
 
 export type ItemSheetContext = {
-  customDetailSections: CustomHtmlItemSection[];
   tabs: Tab[];
   /**
    * Represents remaining health as a percentage within the range of `0` to `100`.
@@ -40,9 +38,3 @@ export type ItemCardContentComponent = ComponentType<
     any
   >
 >;
-
-export type CustomHtmlItemSection = {
-  sectionTitleHtml?: string;
-  contentHtml: string;
-  options: RegisterItemDetailsSectionOptions;
-};
