@@ -25,6 +25,7 @@
   $: draggable = item ?? effect;
 
   const expandedItemData = getContext<ExpandedItemData>('expandedItemData');
+  const context = getContext<Writable<unknown>>('context');
   const expandedItems =
     getContext<ExpandedItemIdToLocationsMap>('expandedItems');
   const onItemToggled = getContext<OnItemToggledFn>('onItemToggled');
@@ -105,7 +106,22 @@
   }
 
   onMount(() => {
-    restoreItemSummaryIfExpanded();
+    let first = true;
+    return context?.subscribe(async (c: any) => {
+      if (first) {
+        first = false;
+        restoreItemSummaryIfExpanded();
+        return;
+      }
+
+      if (item && chatData) {
+        item
+          .getChatData({ secrets: item.actor.isOwner })
+          .then((data: ItemChatData) => {
+            chatData = data;
+          });
+      }
+    });
   });
 </script>
 
