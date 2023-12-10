@@ -16,6 +16,7 @@ import SubclassSheet from 'src/sheets/item/SubclassSheet.svelte';
 import ToolSheet from 'src/sheets/item/ToolSheet.svelte';
 import WeaponSheet from 'src/sheets/item/WeaponSheet.svelte';
 import RaceSheet from 'src/sheets/item/RaceSheet.svelte';
+import type { ComponentType } from 'svelte';
 
 export class ItemSheetRuntime {
   private static _itemDetailCustomSections: RegisterItemDetailsSectionOptions[] =
@@ -144,6 +145,6 @@ export class ItemSheetRuntime {
 }
 
 type ItemSheetInfo = {
-  Sheet: SvelteComponentConstructor<any, any>;
+  Sheet: ComponentType;
   defaultTabs(): Tab[];
 };
