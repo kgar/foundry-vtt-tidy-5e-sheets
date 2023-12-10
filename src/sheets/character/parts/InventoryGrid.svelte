@@ -27,7 +27,7 @@
     return FoundryAdapter.getInventoryRowClasses(
       item,
       $context.itemContext[item.id],
-      extras
+      extras,
     );
   }
 
@@ -68,7 +68,8 @@
         class:show-item-count-on-hover={!$settingStore.alwaysShowItemQuantity}
         data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
         data-context-menu-entity-id={item.id}
-        on:click={(event) => $context.owner && item.use({}, { event })}
+        on:click={(event) =>
+          $context.owner && FoundryAdapter.actorTryUseItem(item, {}, { event })}
         on:mousedown={(event) => FoundryAdapter.editOnMiddleClick(event, item)}
         on:mouseenter={() => onMouseEnter(item)}
         on:mouseleave={onMouseLeave}
@@ -157,7 +158,7 @@
                 action: 'itemCreate',
                 tooltip: 'DND5E.ItemCreate',
               },
-              $context.actor
+              $context.actor,
             )}
         >
           <i class="fas fa-plus-circle" />
@@ -207,14 +208,16 @@
       // TODO: Determine the best longterm way to support this...
       &.magic-item {
         .item-image {
-          box-shadow: 0 0 0 0.0625rem var(--t5ek-magic-accent-color) inset,
+          box-shadow:
+            0 0 0 0.0625rem var(--t5ek-magic-accent-color) inset,
             0 0 0.1875rem 0.125rem var(--t5ek-magic-accent-color) inset;
           border-radius: 0.3125rem;
         }
 
         &.equipped .item-image {
-          box-shadow: 0 0 0rem 0.0625rem
-              var(--t5ek-magic-item-grid-tile-outline-color) inset,
+          box-shadow:
+            0 0 0rem 0.0625rem var(--t5ek-magic-item-grid-tile-outline-color)
+              inset,
             0 0 0 0.0625rem var(--t5ek-magic-accent-color) inset,
             0 0 0.1875rem 0.125rem var(--t5ek-magic-accent-color) inset;
           border: none;

@@ -66,7 +66,9 @@
           class="spell {FoundryAdapter.getSpellRowClasses(spell)} icon-button"
           data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
           data-context-menu-entity-id={spell.id}
-          on:click={(event) => $context.owner && spell.use({}, { event })}
+          on:click={(event) =>
+            $context.owner &&
+            FoundryAdapter.actorTryUseItem(spell, {}, { event })}
           on:mousedown={(event) =>
             FoundryAdapter.editOnMiddleClick(event, spell)}
           on:mouseenter={() => onMouseEnter(spell)}
