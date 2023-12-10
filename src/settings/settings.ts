@@ -9,7 +9,6 @@ import { SheetSettingsFormApplication } from 'src/applications/sheet-settings/Sh
 import { writable, type Writable } from 'svelte/store';
 import { getAllRegisteredCharacterSheetTabs } from 'src/runtime/character-sheet-state';
 import { getAllRegisteredVehicleSheetTabs } from 'src/runtime/vehicle-sheet-state';
-import { getAllRegisteredNpcSheetTabs } from 'src/runtime/npc-sheet-state';
 import { getTabsAsConfigOptions } from 'src/runtime/state-functions';
 import ThemeSettingsFormApplication from 'src/applications/theme/ThemeSettingsFormApplication';
 import {
@@ -17,6 +16,7 @@ import {
   getStandardVehicleExhaustionConfig,
 } from 'src/features/exhaustion/exhaustion';
 import type { ExhaustionConfig } from '../features/exhaustion/exhaustion.types';
+import { NpcSheetRuntime } from 'src/runtime/NpcSheetRuntime';
 
 export type Tidy5eSettings = {
   [settingKey: string]: Tidy5eSetting;
@@ -543,7 +543,7 @@ export function createSettings() {
           scope: 'world',
           config: false,
           type: String,
-          choices: () => getTabsAsConfigOptions(getAllRegisteredNpcSheetTabs()),
+          choices: () => getTabsAsConfigOptions(NpcSheetRuntime.getAllRegisteredNpcSheetTabs()),
           default: CONSTANTS.TAB_NPC_ABILITIES,
         },
         get() {

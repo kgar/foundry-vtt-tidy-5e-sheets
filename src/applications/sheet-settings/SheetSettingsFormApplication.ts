@@ -12,7 +12,6 @@ import { debug, error } from 'src/utils/logging';
 import { CONSTANTS } from 'src/constants';
 import SvelteFormApplicationBase from 'src/applications/SvelteFormApplicationBase';
 import { getAllRegisteredCharacterSheetTabs } from 'src/runtime/character-sheet-state';
-import { getAllRegisteredNpcSheetTabs } from 'src/runtime/npc-sheet-state';
 import { getAllRegisteredVehicleSheetTabs } from 'src/runtime/vehicle-sheet-state';
 import type { SheetTabState } from 'src/runtime/types';
 import type {
@@ -21,6 +20,7 @@ import type {
   SettingsSheetFunctions,
   SettingsSheetStore,
 } from './SheetSettings.types';
+import { NpcSheetRuntime } from 'src/runtime/NpcSheetRuntime';
 
 export class SheetSettingsFormApplication extends SvelteFormApplicationBase {
   initialTabId: string;
@@ -55,7 +55,7 @@ export class SheetSettingsFormApplication extends SvelteFormApplicationBase {
         currentSettings.defaultCharacterSheetTabs
       ),
       defaultNpcTabs: this.mapTabSelectionFields(
-        getAllRegisteredNpcSheetTabs(),
+        NpcSheetRuntime.getAllRegisteredNpcSheetTabs(),
         currentSettings.defaultNpcSheetTabs
       ),
       defaultVehicleTabs: this.mapTabSelectionFields(
@@ -269,7 +269,7 @@ export class SheetSettingsFormApplication extends SvelteFormApplicationBase {
       case CONSTANTS.SHEET_TYPE_NPC:
         context$.update((context) => {
           context.defaultNpcTabs = this.mapTabSelectionFields(
-            getAllRegisteredNpcSheetTabs(),
+            NpcSheetRuntime.getAllRegisteredNpcSheetTabs(),
             [...SettingsProvider.settings.defaultNpcSheetTabs.options.default]
           );
           return context;

@@ -18,7 +18,7 @@ import RaceSheet from 'src/sheets/item/RaceSheet.svelte';
 import type { ComponentType } from 'svelte';
 
 export class ItemSheetRuntime {
-  private static _itemTabs: CustomTabBase[] = [];
+  private static _customTabs: CustomTabBase[] = [];
 
   static registerTab(tab: CustomTabBase) {
     // validate? Or let chaos reign?
@@ -26,11 +26,11 @@ export class ItemSheetRuntime {
     if (isNil(tabId, '')) {
       tab.tabId = foundry.utils.randomID();
     }
-    ItemSheetRuntime._itemTabs.push(tab);
+    ItemSheetRuntime._customTabs.push(tab);
   }
 
   static getCustomItemTabs(context: any) {
-    return ItemSheetRuntime._itemTabs.filter(
+    return ItemSheetRuntime._customTabs.filter(
       (s) => s.enabled === undefined || s.enabled(context)
     );
   }

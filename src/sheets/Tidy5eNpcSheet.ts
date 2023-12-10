@@ -22,7 +22,7 @@ import NpcShortRestDialog from 'src/dialogs/NpcShortRestDialog';
 import LongRestDialog from 'src/dialogs/NpcLongRestDialog';
 import type { SvelteComponent } from 'svelte';
 import type { ItemChatData } from 'src/types/item';
-import { registeredNpcTabs } from 'src/runtime/npc-sheet-state';
+import { NpcSheetRuntime } from 'src/runtime/NpcSheetRuntime';
 import {
   actorUsesActionFeature,
   getActorActions,
@@ -300,7 +300,7 @@ export class Tidy5eNpcSheet
         ) ?? [],
     };
 
-    let tabs = get(registeredNpcTabs).getTabs(context);
+    let tabs = NpcSheetRuntime.getTabs(context);
 
     const selectedTabs = FoundryAdapter.tryGetFlag<string[]>(
       context.actor,

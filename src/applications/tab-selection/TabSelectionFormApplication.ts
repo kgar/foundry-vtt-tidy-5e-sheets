@@ -8,9 +8,9 @@ import { error } from 'src/utils/logging';
 import type { SheetTabState } from 'src/runtime/types';
 import { CONSTANTS } from 'src/constants';
 import { getAllRegisteredCharacterSheetTabs } from 'src/runtime/character-sheet-state';
-import { getAllRegisteredNpcSheetTabs } from 'src/runtime/npc-sheet-state';
 import { getAllRegisteredVehicleSheetTabs } from 'src/runtime/vehicle-sheet-state';
 import { SettingsProvider } from 'src/settings/settings';
+import { NpcSheetRuntime } from 'src/runtime/NpcSheetRuntime';
 
 export type TabSelectionItem = {
   id: string;
@@ -37,7 +37,7 @@ export default class TabSelectionFormApplication extends SvelteFormApplicationBa
     if (actor.type === CONSTANTS.SHEET_TYPE_CHARACTER) {
       return getAllRegisteredCharacterSheetTabs();
     } else if (actor.type === CONSTANTS.SHEET_TYPE_NPC) {
-      return getAllRegisteredNpcSheetTabs();
+      return NpcSheetRuntime.getAllRegisteredNpcSheetTabs();
     } else if (actor.type === CONSTANTS.SHEET_TYPE_VEHICLE) {
       return getAllRegisteredVehicleSheetTabs();
     }
