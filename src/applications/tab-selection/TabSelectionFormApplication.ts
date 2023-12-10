@@ -7,10 +7,10 @@ import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { error } from 'src/utils/logging';
 import type { SheetTabState } from 'src/runtime/types';
 import { CONSTANTS } from 'src/constants';
-import { getAllRegisteredCharacterSheetTabs } from 'src/runtime/character-sheet-state';
 import { getAllRegisteredVehicleSheetTabs } from 'src/runtime/vehicle-sheet-state';
 import { SettingsProvider } from 'src/settings/settings';
 import { NpcSheetRuntime } from 'src/runtime/NpcSheetRuntime';
+import { CharacterSheetRuntime } from 'src/runtime/CharacterSheetRuntime';
 
 export type TabSelectionItem = {
   id: string;
@@ -35,9 +35,9 @@ export default class TabSelectionFormApplication extends SvelteFormApplicationBa
 
   getRegisteredTabs(actor: Actor5e): SheetTabState<any>[] {
     if (actor.type === CONSTANTS.SHEET_TYPE_CHARACTER) {
-      return getAllRegisteredCharacterSheetTabs();
+      return CharacterSheetRuntime.getAllRegisteredTabs();
     } else if (actor.type === CONSTANTS.SHEET_TYPE_NPC) {
-      return NpcSheetRuntime.getAllRegisteredNpcSheetTabs();
+      return NpcSheetRuntime.getAllRegisteredTabs();
     } else if (actor.type === CONSTANTS.SHEET_TYPE_VEHICLE) {
       return getAllRegisteredVehicleSheetTabs();
     }

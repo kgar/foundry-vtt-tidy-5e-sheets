@@ -11,7 +11,6 @@ import {
 import { debug, error } from 'src/utils/logging';
 import { CONSTANTS } from 'src/constants';
 import SvelteFormApplicationBase from 'src/applications/SvelteFormApplicationBase';
-import { getAllRegisteredCharacterSheetTabs } from 'src/runtime/character-sheet-state';
 import { getAllRegisteredVehicleSheetTabs } from 'src/runtime/vehicle-sheet-state';
 import type { SheetTabState } from 'src/runtime/types';
 import type {
@@ -21,6 +20,7 @@ import type {
   SettingsSheetStore,
 } from './SheetSettings.types';
 import { NpcSheetRuntime } from 'src/runtime/NpcSheetRuntime';
+import { CharacterSheetRuntime } from 'src/runtime/CharacterSheetRuntime';
 
 export class SheetSettingsFormApplication extends SvelteFormApplicationBase {
   initialTabId: string;
@@ -51,11 +51,11 @@ export class SheetSettingsFormApplication extends SvelteFormApplicationBase {
     return {
       settings: currentSettings,
       defaultCharacterTabs: this.mapTabSelectionFields(
-        getAllRegisteredCharacterSheetTabs(),
+        CharacterSheetRuntime.getAllRegisteredTabs(),
         currentSettings.defaultCharacterSheetTabs
       ),
       defaultNpcTabs: this.mapTabSelectionFields(
-        NpcSheetRuntime.getAllRegisteredNpcSheetTabs(),
+        NpcSheetRuntime.getAllRegisteredTabs(),
         currentSettings.defaultNpcSheetTabs
       ),
       defaultVehicleTabs: this.mapTabSelectionFields(
@@ -257,7 +257,7 @@ export class SheetSettingsFormApplication extends SvelteFormApplicationBase {
       case CONSTANTS.SHEET_TYPE_CHARACTER:
         context$.update((context) => {
           context.defaultCharacterTabs = this.mapTabSelectionFields(
-            getAllRegisteredCharacterSheetTabs(),
+            CharacterSheetRuntime.getAllRegisteredTabs(),
             [
               ...SettingsProvider.settings.defaultCharacterSheetTabs.options
                 .default,
@@ -269,7 +269,7 @@ export class SheetSettingsFormApplication extends SvelteFormApplicationBase {
       case CONSTANTS.SHEET_TYPE_NPC:
         context$.update((context) => {
           context.defaultNpcTabs = this.mapTabSelectionFields(
-            NpcSheetRuntime.getAllRegisteredNpcSheetTabs(),
+            NpcSheetRuntime.getAllRegisteredTabs(),
             [...SettingsProvider.settings.defaultNpcSheetTabs.options.default]
           );
           return context;

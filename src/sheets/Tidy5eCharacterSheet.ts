@@ -22,7 +22,7 @@ import { applyTitleToWindow } from 'src/utils/applications';
 import type { SvelteComponent } from 'svelte';
 import { getPercentage } from 'src/utils/numbers';
 import type { ItemChatData } from 'src/types/item';
-import { registeredCharacterTabs } from 'src/runtime/character-sheet-state';
+import { CharacterSheetRuntime } from 'src/runtime/CharacterSheetRuntime';
 import {
   actorUsesActionFeature,
   getActorActions,
@@ -351,7 +351,7 @@ export class Tidy5eCharacterSheet
         ) ?? [],
     };
 
-    let tabs = get(registeredCharacterTabs).getTabs(context);
+    let tabs = CharacterSheetRuntime.getTabs(context);
 
     const selectedTabs = FoundryAdapter.tryGetFlag<string[]>(
       context.actor,

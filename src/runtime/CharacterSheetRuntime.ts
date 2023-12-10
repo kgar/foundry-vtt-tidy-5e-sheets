@@ -17,8 +17,8 @@ import { getOrderedEnabledSheetTabs } from './state-functions';
 import { CONSTANTS } from 'src/constants';
 import { warn } from 'src/utils/logging';
 
-let characterSheetState = writable<CharacterSheetState>({
-  sheetTabs: [
+export class CharacterSheetRuntime {
+  private static _tabs: SheetTabState<CharacterSheetContext>[] = [
     {
       displayName: 'T5EK.Actions.TabName',
       content: {
@@ -107,45 +107,33 @@ let characterSheetState = writable<CharacterSheetState>({
       order: 80,
       layout: 'classic',
     },
-  ],
-});
+  ];
 
-export function getAllRegisteredCharacterSheetTabs(): SheetTabState<CharacterSheetContext>[] {
-  return [...get(characterSheetState).sheetTabs];
-}
-
-export let registeredCharacterTabs = derived(characterSheetState, (c) => ({
-  getTabs: (context: CharacterSheetContext) =>
-    getOrderedEnabledSheetTabs(c.sheetTabs, context),
-}));
-
-export function registerCharacterSheetTab(
-  tab: SheetTabState<CharacterSheetContext>,
-  options?: SheetTabRegistrationOptions
-) {
-  const tabExists = getAllRegisteredCharacterSheetTabs().some(
-    (t) => t.id === tab.id
-  );
-
-  if (tabExists && !options?.overwrite) {
-    warn(
-      `Tab with id ${tab.id} already exists. Use option "overwrite" to replace an existing tab.`
-    );
-    return;
+  static getTabs(context: CharacterSheetContext) {
+    return getOrderedEnabledSheetTabs(CharacterSheetRuntime._tabs, context);
   }
 
-  characterSheetState.update((state) => {
-    state.sheetTabs.push(tab);
-    state.sheetTabs.sort((a, b) => a.order - b.order);
-    return state;
-  });
+  static getAllRegisteredTabs(): SheetTabState<CharacterSheetContext>[] {
+    return [...CharacterSheetRuntime._tabs];
+  }
 
-  return getAllRegisteredCharacterSheetTabs();
-}
+  static registerCharacterSheetTab(
+    tab: SheetTabState<CharacterSheetContext>,
+    options?: SheetTabRegistrationOptions
+  ) {
+    const tabExists = CharacterSheetRuntime.getAllRegisteredTabs().some(
+      (t) => t.id === tab.id
+    );
 
-export function unregisterCharacterSheetTab(tabId: string) {
-  characterSheetState.update((state) => {
-    state.sheetTabs = [...state.sheetTabs.filter((t) => t.id !== tabId)];
-    return state;
-  });
+    if (tabExists && !options?.overwrite) {
+      warn(
+        `Tab with id ${tab.id} already exists. Use option "overwrite" to replace an existing tab.`
+      );
+      return;
+    }
+
+    CharacterSheetRuntime._tabs.push(tab);
+
+    return CharacterSheetRuntime.getAllRegisteredTabs();
+  }
 }

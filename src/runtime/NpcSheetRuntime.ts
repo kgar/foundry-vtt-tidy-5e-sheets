@@ -88,15 +88,15 @@ export class NpcSheetRuntime {
     return getOrderedEnabledSheetTabs(NpcSheetRuntime._tabs, context);
   }
 
-  static getAllRegisteredNpcSheetTabs(): SheetTabState<NpcSheetContext>[] {
+  static getAllRegisteredTabs(): SheetTabState<NpcSheetContext>[] {
     return [...NpcSheetRuntime._tabs];
   }
 
-  static registerNpcSheetTab(
+  static registerTab(
     tab: SheetTabState<NpcSheetContext>,
     options?: SheetTabRegistrationOptions
   ) {
-    const tabExists = NpcSheetRuntime.getAllRegisteredNpcSheetTabs().some(
+    const tabExists = NpcSheetRuntime.getAllRegisteredTabs().some(
       (t) => t.id === tab.id
     );
 
@@ -109,6 +109,6 @@ export class NpcSheetRuntime {
 
     NpcSheetRuntime._tabs.push(tab);
 
-    return NpcSheetRuntime.getAllRegisteredNpcSheetTabs();
+    return NpcSheetRuntime.getAllRegisteredTabs();
   }
 }
