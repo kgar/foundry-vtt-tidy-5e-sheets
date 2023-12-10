@@ -1,26 +1,21 @@
-import type { VehicleSheetContext, Tab } from 'src/types/types';
-import { derived, get, writable } from 'svelte/store';
+import type { VehicleSheetContext } from 'src/types/types';
 import { CONSTANTS } from 'src/constants';
 import ActorEffectsTab from 'src/sheets/actor/ActorEffectsTab.svelte';
 import VehicleAttributesTab from 'src/sheets/vehicle/tabs/VehicleAttributesTab.svelte';
 import VehicleCargoAndCrewTab from 'src/sheets/vehicle/tabs/VehicleCargoAndCrewTab.svelte';
 import VehicleDescriptionTab from 'src/sheets/vehicle/tabs/VehicleDescriptionTab.svelte';
 import ActorActionsTab from 'src/sheets/actor/tabs/ActorActionsTab.svelte';
-import type {
-  SheetTabRegistrationOptions,
-  SheetTabState,
-  VehicleSheetState,
-} from './types';
+import type { SheetTabRegistrationOptions, SheetTabState } from './types';
 import { getOrderedEnabledSheetTabs } from './state-functions';
 import { warn } from 'src/utils/logging';
 
-let vehicleSheetState = writable<VehicleSheetState>({
-  sheetTabs: [
+export class VehicleSheetRuntime {
+  private static _tabs: SheetTabState<VehicleSheetContext>[] = [
     {
       displayName: 'T5EK.Actions.TabName',
       content: {
         component: ActorActionsTab,
-        type: 'svelte'
+        type: 'svelte',
       },
       enabled: true,
       id: CONSTANTS.TAB_ACTOR_ACTIONS,
@@ -32,7 +27,7 @@ let vehicleSheetState = writable<VehicleSheetState>({
       displayName: 'DND5E.Attributes',
       content: {
         component: VehicleAttributesTab,
-        type: 'svelte'
+        type: 'svelte',
       },
       enabled: true,
       order: 20,
@@ -43,7 +38,7 @@ let vehicleSheetState = writable<VehicleSheetState>({
       displayName: 'DND5E.VehicleCargoCrew',
       content: {
         component: VehicleCargoAndCrewTab,
-        type: 'svelte'
+        type: 'svelte',
       },
       enabled: true,
       order: 30,
@@ -54,7 +49,7 @@ let vehicleSheetState = writable<VehicleSheetState>({
       displayName: 'DND5E.Effects',
       content: {
         component: ActorEffectsTab,
-        type: 'svelte'
+        type: 'svelte',
       },
       enabled: true,
       order: 40,
@@ -65,51 +60,39 @@ let vehicleSheetState = writable<VehicleSheetState>({
       displayName: 'DND5E.Description',
       content: {
         component: VehicleDescriptionTab,
-        type: 'svelte'
+        type: 'svelte',
       },
       enabled: true,
       order: 50,
       layout: 'classic',
     },
-  ],
-});
+  ];
 
-export function getAllRegisteredVehicleSheetTabs(): SheetTabState<VehicleSheetContext>[] {
-  return [...get(vehicleSheetState).sheetTabs];
-}
-
-export let registeredVehicleTabs = derived(vehicleSheetState, (c) => ({
-  getTabs: (context: VehicleSheetContext) =>
-    getOrderedEnabledSheetTabs(c.sheetTabs, context),
-}));
-
-export function registerVehicleSheetTab(
-  tab: SheetTabState<VehicleSheetContext>,
-  options?: SheetTabRegistrationOptions
-) {
-  const tabExists = getAllRegisteredVehicleSheetTabs().some(
-    (t) => t.id === tab.id
-  );
-
-  if (tabExists && !options?.overwrite) {
-    warn(
-      `Tab with id ${tab.id} already exists. Use option "overwrite" to replace an existing tab.`
-    );
-    return;
+  static getTabs(context: VehicleSheetContext) {
+    return getOrderedEnabledSheetTabs(VehicleSheetRuntime._tabs, context);
   }
 
-  vehicleSheetState.update((state) => {
-    state.sheetTabs.push(tab);
-    state.sheetTabs.sort((a, b) => a.order - b.order);
-    return state;
-  });
+  static getAllRegisteredTabs(): SheetTabState<VehicleSheetContext>[] {
+    return [...VehicleSheetRuntime._tabs];
+  }
 
-  return getAllRegisteredVehicleSheetTabs();
-}
+  static registerTab(
+    tab: SheetTabState<VehicleSheetContext>,
+    options?: SheetTabRegistrationOptions
+  ) {
+    const tabExists = VehicleSheetRuntime.getAllRegisteredTabs().some(
+      (t) => t.id === tab.id
+    );
 
-export function unregisterVehicleSheetTab(tabId: string) {
-  vehicleSheetState.update((state) => {
-    state.sheetTabs = [...state.sheetTabs.filter((t) => t.id !== tabId)];
-    return state;
-  });
+    if (tabExists && !options?.overwrite) {
+      warn(
+        `Tab with id ${tab.id} already exists. Use option "overwrite" to replace an existing tab.`
+      );
+      return;
+    }
+
+    VehicleSheetRuntime._tabs.push(tab);
+
+    return VehicleSheetRuntime.getAllRegisteredTabs();
+  }
 }

@@ -18,7 +18,7 @@ import type { SvelteComponent } from 'svelte';
 import { debug } from 'src/utils/logging';
 import { getPercentage } from 'src/utils/numbers';
 import type { ItemChatData } from 'src/types/item';
-import { registeredVehicleTabs } from 'src/runtime/vehicle-sheet-state';
+import { VehicleSheetRuntime } from 'src/runtime/VehicleSheetRuntime';
 import {
   actorUsesActionFeature,
   getActorActions,
@@ -144,7 +144,7 @@ export class Tidy5eVehicleSheet
         ) ?? [],
     };
 
-    let tabs = get(registeredVehicleTabs).getTabs(context);
+    let tabs = VehicleSheetRuntime.getTabs(context);
 
     const selectedTabs = FoundryAdapter.tryGetFlag<string[]>(
       context.actor,

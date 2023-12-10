@@ -1,5 +1,4 @@
 import type { CharacterSheetContext } from 'src/types/types';
-import { derived, get, writable } from 'svelte/store';
 import CharacterAttributesTab from 'src/sheets/character/tabs/CharacterAttributesTab.svelte';
 import CharacterInventoryTab from 'src/sheets/character/tabs/CharacterInventoryTab.svelte';
 import CharacterSpellbookTab from 'src/sheets/character/tabs/CharacterSpellbookTab.svelte';
@@ -8,11 +7,7 @@ import ActorEffectsTab from 'src/sheets/actor/ActorEffectsTab.svelte';
 import CharacterBiographyTab from 'src/sheets/character/tabs/CharacterBiographyTab.svelte';
 import ActorJournalTab from 'src/sheets/actor/tabs/ActorJournalTab.svelte';
 import ActorActionsTab from 'src/sheets/actor/tabs/ActorActionsTab.svelte';
-import type {
-  CharacterSheetState,
-  SheetTabRegistrationOptions,
-  SheetTabState,
-} from './types';
+import type { SheetTabRegistrationOptions, SheetTabState } from './types';
 import { getOrderedEnabledSheetTabs } from './state-functions';
 import { CONSTANTS } from 'src/constants';
 import { warn } from 'src/utils/logging';
@@ -117,7 +112,7 @@ export class CharacterSheetRuntime {
     return [...CharacterSheetRuntime._tabs];
   }
 
-  static registerCharacterSheetTab(
+  static registerTab(
     tab: SheetTabState<CharacterSheetContext>,
     options?: SheetTabRegistrationOptions
   ) {

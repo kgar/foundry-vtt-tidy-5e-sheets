@@ -7,7 +7,6 @@ import { defaultLightTheme } from 'src/theme/default-light-theme';
 import { getCoreThemes, themeVariables } from 'src/theme/theme-reference';
 import { SheetSettingsFormApplication } from 'src/applications/sheet-settings/SheetSettingsFormApplication';
 import { writable, type Writable } from 'svelte/store';
-import { getAllRegisteredVehicleSheetTabs } from 'src/runtime/vehicle-sheet-state';
 import { getTabsAsConfigOptions } from 'src/runtime/state-functions';
 import ThemeSettingsFormApplication from 'src/applications/theme/ThemeSettingsFormApplication';
 import {
@@ -17,6 +16,7 @@ import {
 import type { ExhaustionConfig } from '../features/exhaustion/exhaustion.types';
 import { NpcSheetRuntime } from 'src/runtime/NpcSheetRuntime';
 import { CharacterSheetRuntime } from 'src/runtime/CharacterSheetRuntime';
+import { VehicleSheetRuntime } from 'src/runtime/VehicleSheetRuntime';
 
 export type Tidy5eSettings = {
   [settingKey: string]: Tidy5eSetting;
@@ -686,7 +686,7 @@ export function createSettings() {
           config: false,
           type: String,
           choices: () =>
-            getTabsAsConfigOptions(getAllRegisteredVehicleSheetTabs()),
+            getTabsAsConfigOptions(VehicleSheetRuntime.getAllRegisteredTabs()),
           default: CONSTANTS.TAB_VEHICLE_ATTRIBUTES,
         },
         get() {

@@ -11,7 +11,6 @@ import {
 import { debug, error } from 'src/utils/logging';
 import { CONSTANTS } from 'src/constants';
 import SvelteFormApplicationBase from 'src/applications/SvelteFormApplicationBase';
-import { getAllRegisteredVehicleSheetTabs } from 'src/runtime/vehicle-sheet-state';
 import type { SheetTabState } from 'src/runtime/types';
 import type {
   DefaultTabSelectionFields,
@@ -21,6 +20,7 @@ import type {
 } from './SheetSettings.types';
 import { NpcSheetRuntime } from 'src/runtime/NpcSheetRuntime';
 import { CharacterSheetRuntime } from 'src/runtime/CharacterSheetRuntime';
+import { VehicleSheetRuntime } from 'src/runtime/VehicleSheetRuntime';
 
 export class SheetSettingsFormApplication extends SvelteFormApplicationBase {
   initialTabId: string;
@@ -59,7 +59,7 @@ export class SheetSettingsFormApplication extends SvelteFormApplicationBase {
         currentSettings.defaultNpcSheetTabs
       ),
       defaultVehicleTabs: this.mapTabSelectionFields(
-        getAllRegisteredVehicleSheetTabs(),
+        VehicleSheetRuntime.getAllRegisteredTabs(),
         currentSettings.defaultVehicleSheetTabs
       ),
       exhaustionConfig: {
@@ -278,7 +278,7 @@ export class SheetSettingsFormApplication extends SvelteFormApplicationBase {
       case CONSTANTS.SHEET_TYPE_VEHICLE:
         context$.update((context) => {
           context.defaultVehicleTabs = this.mapTabSelectionFields(
-            getAllRegisteredVehicleSheetTabs(),
+            VehicleSheetRuntime.getAllRegisteredTabs(),
             [
               ...SettingsProvider.settings.defaultVehicleSheetTabs.options
                 .default,
