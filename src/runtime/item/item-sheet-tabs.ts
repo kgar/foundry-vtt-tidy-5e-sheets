@@ -14,14 +14,15 @@ import ItemSpellDetailsTab from '../../sheets/item/tabs/ItemSpellDetailsTab.svel
 import ItemSubclassDetailsTab from '../../sheets/item/tabs/ItemSubclassDetailsTab.svelte';
 import ItemToolDetailsTab from '../../sheets/item/tabs/ItemToolDetailsTab.svelte';
 import ItemWeaponDetailsTab from '../../sheets/item/tabs/ItemWeaponDetailsTab.svelte';
+import type { Tab } from 'src/types/types';
 
-const itemSheetTabs = {
+const itemSheetTabs: Record<string, Tab> = {
   /**
    * Advancement create/read/update/delete interface.
    */
   advancement: {
     id: CONSTANTS.TAB_ITEM_ADVANCEMENT_ID,
-    displayName: 'DND5E.AdvancementTitle',
+    title: 'DND5E.AdvancementTitle',
     content: {
       component: ItemAdvancementTab,
       cssClass: 'detail-tab-contents items-list-container',
@@ -33,7 +34,7 @@ const itemSheetTabs = {
    */
   backpackDetails: {
     id: CONSTANTS.TAB_ITEM_DETAILS_ID,
-    displayName: 'DND5E.Details',
+    title: 'DND5E.Details',
     content: {
       component: ItemBackpackDetailsTab,
       props: {},
@@ -46,7 +47,7 @@ const itemSheetTabs = {
    */
   classDetails: {
     id: CONSTANTS.TAB_ITEM_DETAILS_ID,
-    displayName: 'DND5E.Details',
+    title: 'DND5E.Details',
     content: {
       component: ItemClassDetailsTab,
       cssClass: 'detail-tab-contents',
@@ -58,7 +59,7 @@ const itemSheetTabs = {
    */
   consumableDetails: {
     id: CONSTANTS.TAB_ITEM_DETAILS_ID,
-    displayName: 'DND5E.Details',
+    title: 'DND5E.Details',
     content: {
       component: ItemConsumableDetailsTab,
       props: {},
@@ -71,7 +72,7 @@ const itemSheetTabs = {
    */
   description: {
     id: CONSTANTS.TAB_ITEM_DESCRIPTION_ID,
-    displayName: 'DND5E.Description',
+    title: 'DND5E.Description',
     content: {
       component: ItemDescriptionTab,
       cssClass: 'flexcol',
@@ -83,7 +84,7 @@ const itemSheetTabs = {
    */
   descriptionWithSidebar: {
     id: CONSTANTS.TAB_ITEM_DESCRIPTION_ID,
-    displayName: 'DND5E.Description',
+    title: 'DND5E.Description',
     content: {
       component: ItemDescriptionWithSidebarTab,
       cssClass: 'flexrow',
@@ -95,7 +96,7 @@ const itemSheetTabs = {
    */
   effects: {
     id: CONSTANTS.TAB_ITEM_EFFECTS_ID,
-    displayName: 'DND5E.Effects',
+    title: 'DND5E.Effects',
     content: {
       component: ItemActiveEffectsTab,
       cssClass: 'flexcol items-list-container',
@@ -107,7 +108,7 @@ const itemSheetTabs = {
    */
   equipmentDetails: {
     id: CONSTANTS.TAB_ITEM_DETAILS_ID,
-    displayName: 'DND5E.Details',
+    title: 'DND5E.Details',
     content: {
       component: ItemEquipmentDetailsTab,
       cssClass: 'detail-tab-contents',
@@ -119,7 +120,7 @@ const itemSheetTabs = {
    */
   featDetails: {
     id: CONSTANTS.TAB_ITEM_DETAILS_ID,
-    displayName: 'DND5E.Details',
+    title: 'DND5E.Details',
     content: {
       component: ItemFeatDetailsTab,
       cssClass: 'detail-tab-contents',
@@ -131,7 +132,7 @@ const itemSheetTabs = {
    */
   lootDetails: {
     id: CONSTANTS.TAB_ITEM_DETAILS_ID,
-    displayName: 'DND5E.Details',
+    title: 'DND5E.Details',
     content: {
       component: ItemLootDetailsTab,
       props: {},
@@ -144,7 +145,7 @@ const itemSheetTabs = {
    */
   raceDescription: {
     id: CONSTANTS.TAB_ITEM_DESCRIPTION_ID,
-    displayName: 'DND5E.Description',
+    title: 'DND5E.Description',
     content: {
       component: ItemRaceDescriptionTab,
       cssClass: 'flexrow',
@@ -156,7 +157,7 @@ const itemSheetTabs = {
    */
   spellDetails: {
     id: CONSTANTS.TAB_ITEM_DETAILS_ID,
-    displayName: 'DND5E.Details',
+    title: 'DND5E.Details',
     content: {
       component: ItemSpellDetailsTab,
       cssClass: 'detail-tab-contents',
@@ -168,7 +169,7 @@ const itemSheetTabs = {
    */
   subclassDetails: {
     id: CONSTANTS.TAB_ITEM_DETAILS_ID,
-    displayName: 'DND5E.Details',
+    title: 'DND5E.Details',
     content: {
       component: ItemSubclassDetailsTab,
       cssClass: 'detail-tab-contents',
@@ -180,7 +181,7 @@ const itemSheetTabs = {
    */
   toolDetails: {
     id: CONSTANTS.TAB_ITEM_DETAILS_ID,
-    displayName: 'DND5E.Details',
+    title: 'DND5E.Details',
     content: {
       component: ItemToolDetailsTab,
       cssClass: 'detail-tab-contents',
@@ -192,7 +193,7 @@ const itemSheetTabs = {
    */
   weaponDetails: {
     id: CONSTANTS.TAB_ITEM_DETAILS_ID,
-    displayName: 'DND5E.Details',
+    title: 'DND5E.Details',
     content: {
       component: ItemWeaponDetailsTab,
       cssClass: 'detail-tab-contents',

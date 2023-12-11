@@ -7,86 +7,79 @@ import ActorEffectsTab from 'src/sheets/actor/ActorEffectsTab.svelte';
 import CharacterBiographyTab from 'src/sheets/character/tabs/CharacterBiographyTab.svelte';
 import ActorJournalTab from 'src/sheets/actor/tabs/ActorJournalTab.svelte';
 import ActorActionsTab from 'src/sheets/actor/tabs/ActorActionsTab.svelte';
-import type { SheetTabRegistrationOptions, SheetTabState } from './types';
-import { getOrderedEnabledSheetTabs } from './state-functions';
+import type { SheetTabRegistrationOptions, RegisteredActorTab } from './types';
+import { getOrderedEnabledSheetTabs } from './runtime-functions';
 import { CONSTANTS } from 'src/constants';
 import { warn } from 'src/utils/logging';
 
 export class CharacterSheetRuntime {
-  private static _tabs: SheetTabState<CharacterSheetContext>[] = [
+  private static _tabs: RegisteredActorTab<CharacterSheetContext>[] = [
     {
-      displayName: 'T5EK.Actions.TabName',
+      title: 'T5EK.Actions.TabName',
       content: {
         component: ActorActionsTab,
         type: 'svelte',
       },
-      enabled: true,
       id: CONSTANTS.TAB_ACTOR_ACTIONS,
       layout: 'classic',
     },
     {
       id: CONSTANTS.TAB_CHARACTER_ATTRIBUTES,
-      displayName: 'DND5E.Attributes',
+      title: 'DND5E.Attributes',
       content: {
         component: CharacterAttributesTab,
         type: 'svelte',
       },
-      enabled: true,
       layout: 'classic',
     },
     {
       id: CONSTANTS.TAB_CHARACTER_INVENTORY,
-      displayName: 'DND5E.Inventory',
+      title: 'DND5E.Inventory',
       content: {
         component: CharacterInventoryTab,
         type: 'svelte',
       },
-      enabled: true,
       layout: 'classic',
     },
     {
       id: CONSTANTS.TAB_CHARACTER_SPELLBOOK,
-      displayName: 'DND5E.Spellbook',
+      title: 'DND5E.Spellbook',
       content: {
         component: CharacterSpellbookTab,
         type: 'svelte',
       },
-      enabled: true,
       layout: 'classic',
     },
     {
       id: CONSTANTS.TAB_CHARACTER_FEATURES,
-      displayName: 'DND5E.Features',
+      title: 'DND5E.Features',
       content: {
         component: CharacterFeaturesTab,
         type: 'svelte',
       },
-      enabled: true,
       layout: 'classic',
     },
     {
       id: CONSTANTS.TAB_CHARACTER_EFFECTS,
-      displayName: 'DND5E.Effects',
+      title: 'DND5E.Effects',
       content: {
         component: ActorEffectsTab,
         type: 'svelte',
       },
-      enabled: true,
       layout: 'classic',
     },
     {
       id: CONSTANTS.TAB_CHARACTER_BIOGRAPHY,
-      displayName: 'DND5E.Biography',
+      title: 'DND5E.Biography',
       content: {
         component: CharacterBiographyTab,
         type: 'svelte',
       },
-      enabled: true,
       layout: 'classic',
     },
     {
       id: CONSTANTS.TAB_CHARACTER_JOURNAL,
-      displayName: 'T5EK.JournalTabName',
+      title: 'T5EK.JournalTabName',
       content: {
         component: ActorJournalTab,
         type: 'svelte',
@@ -100,12 +93,12 @@ export class CharacterSheetRuntime {
     return getOrderedEnabledSheetTabs(CharacterSheetRuntime._tabs, context);
   }
 
-  static getAllRegisteredTabs(): SheetTabState<CharacterSheetContext>[] {
+  static getAllRegisteredTabs(): RegisteredActorTab<CharacterSheetContext>[] {
     return [...CharacterSheetRuntime._tabs];
   }
 
   static registerTab(
-    tab: SheetTabState<CharacterSheetContext>,
+    tab: RegisteredActorTab<CharacterSheetContext>,
     options?: SheetTabRegistrationOptions
   ) {
     const tabExists = CharacterSheetRuntime.getAllRegisteredTabs().some(

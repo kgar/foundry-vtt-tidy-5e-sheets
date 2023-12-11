@@ -84,7 +84,7 @@
         on:click={() => selectTab(tab)}
         on:keydown={(ev) => onKeyDown(ev, i)}
       >
-        {localize(tab.displayName)}
+        {localize(tab.title)}
       </button>
     {/each}
   {/if}

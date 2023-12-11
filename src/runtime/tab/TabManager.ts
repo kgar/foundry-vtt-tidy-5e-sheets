@@ -26,7 +26,7 @@ export class TabManager {
             type: 'html',
             renderScheme: tab.renderScheme,
           } satisfies HtmlTabContent,
-          displayName: tab.title,
+          title: tab.title,
           id: tab.tabId,
           onRender: tab.onRender,
         });
@@ -38,7 +38,7 @@ export class TabManager {
             type: 'html',
             renderScheme: tab.renderScheme,
           } satisfies HtmlTabContent,
-          displayName: tab.title,
+          title: tab.title,
           id: tab.tabId,
           onRender: tab.onRender,
         });

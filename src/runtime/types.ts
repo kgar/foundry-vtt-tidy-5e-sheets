@@ -6,16 +6,16 @@ import type {
   VehicleSheetContext,
 } from 'src/types/types';
 
-export type SheetTabState<TContext> = Tab & {
+export type RegisteredActorTab<TContext> = Tab & {
   /**
    * Determines whether the tab should be visible when viewing the sheet.
    */
-  enabled: boolean | ((context: TContext) => boolean);
+  enabled?: ((context: TContext) => boolean);
 
   /**
    * The layout(s) which should support this tab (default: 'all')
    */
-  layout?: SheetLayout;
+  layout?: SheetLayout | SheetLayout[];
 };
 
 /**
@@ -26,7 +26,7 @@ export type CharacterSheetState = {
   /**
    * All registered sheet tabs.
    */
-  sheetTabs: SheetTabState<CharacterSheetContext>[];
+  sheetTabs: RegisteredActorTab<CharacterSheetContext>[];
 };
 
 /**
@@ -34,7 +34,7 @@ export type CharacterSheetState = {
  * by other modules through the API to affect how the target sheet is presented.
  */
 export type NpcSheetState = {
-  sheetTabs: SheetTabState<NpcSheetContext>[];
+  sheetTabs: RegisteredActorTab<NpcSheetContext>[];
 };
 
 /**
@@ -42,7 +42,7 @@ export type NpcSheetState = {
  * by other modules through the API to affect how the target sheet is presented.
  */
 export type VehicleSheetState = {
-  sheetTabs: SheetTabState<VehicleSheetContext>[];
+  sheetTabs: RegisteredActorTab<VehicleSheetContext>[];
 };
 
 /**

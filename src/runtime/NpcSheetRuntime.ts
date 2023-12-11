@@ -6,35 +6,33 @@ import NpcBiographyTab from 'src/sheets/npc/tabs/NpcBiographyTab.svelte';
 import ActorEffectsTab from 'src/sheets/actor/ActorEffectsTab.svelte';
 import ActorJournalTab from 'src/sheets/actor/tabs/ActorJournalTab.svelte';
 import ActorActionsTab from 'src/sheets/actor/tabs/ActorActionsTab.svelte';
-import type { SheetTabRegistrationOptions, SheetTabState } from './types';
-import { getOrderedEnabledSheetTabs } from './state-functions';
+import type { SheetTabRegistrationOptions, RegisteredActorTab } from './types';
+import { getOrderedEnabledSheetTabs } from './runtime-functions';
 import { warn } from 'src/utils/logging';
 
 export class NpcSheetRuntime {
-  private static _tabs: SheetTabState<NpcSheetContext>[] = [
+  private static _tabs: RegisteredActorTab<NpcSheetContext>[] = [
     {
-      displayName: 'T5EK.Actions.TabName',
+      title: 'T5EK.Actions.TabName',
       content: {
         component: ActorActionsTab,
         type: 'svelte',
       },
-      enabled: true,
       id: CONSTANTS.TAB_ACTOR_ACTIONS,
       layout: 'classic',
     },
     {
       id: CONSTANTS.TAB_NPC_ABILITIES,
-      displayName: 'T5EK.Abilities',
+      title: 'T5EK.Abilities',
       content: {
         component: NpcAbilitiesTab,
         type: 'svelte',
       },
-      enabled: true,
       layout: 'classic',
     },
     {
       id: CONSTANTS.TAB_NPC_SPELLBOOK,
-      displayName: 'DND5E.Spellbook',
+      title: 'DND5E.Spellbook',
       content: {
         component: NpcSpellbookTab,
         type: 'svelte',
@@ -45,27 +43,25 @@ export class NpcSheetRuntime {
     },
     {
       id: 'effects',
-      displayName: 'DND5E.Effects',
+      title: 'DND5E.Effects',
       content: {
         component: ActorEffectsTab,
         type: 'svelte',
       },
-      enabled: true,
       layout: 'classic',
     },
     {
       id: 'biography',
-      displayName: 'DND5E.Biography',
+      title: 'DND5E.Biography',
       content: {
         component: NpcBiographyTab,
         type: 'svelte',
       },
-      enabled: true,
       layout: 'classic',
     },
     {
       id: 'journal',
-      displayName: 'T5EK.JournalTabName',
+      title: 'T5EK.JournalTabName',
       content: {
         component: ActorJournalTab,
         type: 'svelte',
@@ -79,12 +75,12 @@ export class NpcSheetRuntime {
     return getOrderedEnabledSheetTabs(NpcSheetRuntime._tabs, context);
   }
 
-  static getAllRegisteredTabs(): SheetTabState<NpcSheetContext>[] {
+  static getAllRegisteredTabs(): RegisteredActorTab<NpcSheetContext>[] {
     return [...NpcSheetRuntime._tabs];
   }
 
   static registerTab(
-    tab: SheetTabState<NpcSheetContext>,
+    tab: RegisteredActorTab<NpcSheetContext>,
     options?: SheetTabRegistrationOptions
   ) {
     const tabExists = NpcSheetRuntime.getAllRegisteredTabs().some(

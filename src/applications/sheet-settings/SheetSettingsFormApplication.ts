@@ -11,7 +11,7 @@ import {
 import { debug, error } from 'src/utils/logging';
 import { CONSTANTS } from 'src/constants';
 import SvelteFormApplicationBase from 'src/applications/SvelteFormApplicationBase';
-import type { SheetTabState } from 'src/runtime/types';
+import type { RegisteredActorTab } from 'src/runtime/types';
 import type {
   DefaultTabSelectionFields,
   SettingsSheetContext,
@@ -100,14 +100,14 @@ export class SheetSettingsFormApplication extends SvelteFormApplicationBase {
   }
 
   mapTabSelectionFields(
-    registeredTabs: SheetTabState<any>[],
+    registeredTabs: RegisteredActorTab<any>[],
     selectedTabIds: string[]
   ): DefaultTabSelectionFields {
     const available = registeredTabs
       .filter((t) => !selectedTabIds.includes(t.id))
       .map((t) => ({
         id: t.id,
-        label: FoundryAdapter.localize(t.displayName),
+        label: FoundryAdapter.localize(t.title),
       }));
 
     const selected = registeredTabs
@@ -117,7 +117,7 @@ export class SheetSettingsFormApplication extends SvelteFormApplicationBase {
       )
       .map((t) => ({
         id: t.id,
-        label: FoundryAdapter.localize(t.displayName),
+        label: FoundryAdapter.localize(t.title),
       }));
 
     return {

@@ -7,7 +7,7 @@ import { defaultLightTheme } from 'src/theme/default-light-theme';
 import { getCoreThemes, themeVariables } from 'src/theme/theme-reference';
 import { SheetSettingsFormApplication } from 'src/applications/sheet-settings/SheetSettingsFormApplication';
 import { writable, type Writable } from 'svelte/store';
-import { getTabsAsConfigOptions } from 'src/runtime/state-functions';
+import { getTabsAsConfigOptions } from 'src/runtime/runtime-functions';
 import ThemeSettingsFormApplication from 'src/applications/theme/ThemeSettingsFormApplication';
 import {
   getStandardExhaustionConfig,

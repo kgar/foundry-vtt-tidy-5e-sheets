@@ -28,8 +28,8 @@ export type OnRenderTabArgs = OnRenderArgs & {
 export type Tab<
   T extends SvelteComponent<any, any, any> = SvelteComponent<any, any, any>
 > = {
+  title: string;
   id: string;
-  displayName: string;
   content: SvelteTabContent<T> | HtmlTabContent;
   onRender?: (args: OnRenderTabArgs) => void;
 };

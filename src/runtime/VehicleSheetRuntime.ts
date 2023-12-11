@@ -5,60 +5,55 @@ import VehicleAttributesTab from 'src/sheets/vehicle/tabs/VehicleAttributesTab.s
 import VehicleCargoAndCrewTab from 'src/sheets/vehicle/tabs/VehicleCargoAndCrewTab.svelte';
 import VehicleDescriptionTab from 'src/sheets/vehicle/tabs/VehicleDescriptionTab.svelte';
 import ActorActionsTab from 'src/sheets/actor/tabs/ActorActionsTab.svelte';
-import type { SheetTabRegistrationOptions, SheetTabState } from './types';
-import { getOrderedEnabledSheetTabs } from './state-functions';
+import type { SheetTabRegistrationOptions, RegisteredActorTab } from './types';
+import { getOrderedEnabledSheetTabs } from './runtime-functions';
 import { warn } from 'src/utils/logging';
 
 export class VehicleSheetRuntime {
-  private static _tabs: SheetTabState<VehicleSheetContext>[] = [
+  private static _tabs: RegisteredActorTab<VehicleSheetContext>[] = [
     {
-      displayName: 'T5EK.Actions.TabName',
+      title: 'T5EK.Actions.TabName',
       content: {
         component: ActorActionsTab,
         type: 'svelte',
       },
-      enabled: true,
       id: CONSTANTS.TAB_ACTOR_ACTIONS,
       layout: 'classic',
     },
     {
       id: CONSTANTS.TAB_VEHICLE_ATTRIBUTES,
-      displayName: 'DND5E.Attributes',
+      title: 'DND5E.Attributes',
       content: {
         component: VehicleAttributesTab,
         type: 'svelte',
       },
-      enabled: true,
       layout: 'classic',
     },
     {
       id: CONSTANTS.TAB_VEHICLE_CARGO_AND_CREW,
-      displayName: 'DND5E.VehicleCargoCrew',
+      title: 'DND5E.VehicleCargoCrew',
       content: {
         component: VehicleCargoAndCrewTab,
         type: 'svelte',
       },
-      enabled: true,
       layout: 'classic',
     },
     {
       id: CONSTANTS.TAB_NPC_EFFECTS,
-      displayName: 'DND5E.Effects',
+      title: 'DND5E.Effects',
       content: {
         component: ActorEffectsTab,
         type: 'svelte',
       },
-      enabled: true,
       layout: 'classic',
     },
     {
       id: CONSTANTS.TAB_VEHICLE_DESCRIPTION,
-      displayName: 'DND5E.Description',
+      title: 'DND5E.Description',
       content: {
         component: VehicleDescriptionTab,
         type: 'svelte',
       },
-      enabled: true,
       layout: 'classic',
     },
   ];
@@ -67,12 +62,12 @@ export class VehicleSheetRuntime {
     return getOrderedEnabledSheetTabs(VehicleSheetRuntime._tabs, context);
   }
 
-  static getAllRegisteredTabs(): SheetTabState<VehicleSheetContext>[] {
+  static getAllRegisteredTabs(): RegisteredActorTab<VehicleSheetContext>[] {
     return [...VehicleSheetRuntime._tabs];
   }
 
   static registerTab(
-    tab: SheetTabState<VehicleSheetContext>,
+    tab: RegisteredActorTab<VehicleSheetContext>,
     options?: SheetTabRegistrationOptions
   ) {
     const tabExists = VehicleSheetRuntime.getAllRegisteredTabs().some(

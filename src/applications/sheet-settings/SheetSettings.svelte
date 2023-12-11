@@ -26,7 +26,7 @@
   tabs = [
     {
       id: CONSTANTS.TAB_SETTINGS_PLAYERS,
-      displayName: 'T5EK.Settings.TabPlayers.tabLabel',
+      title: 'T5EK.Settings.TabPlayers.tabLabel',
       content: {
         component: PlayerSettingsTab,
         type: 'svelte',
@@ -34,7 +34,7 @@
     },
     {
       id: CONSTANTS.TAB_SETTINGS_NPCS,
-      displayName: 'T5EK.Settings.TabNPCs.tabLabel',
+      title: 'T5EK.Settings.TabNPCs.tabLabel',
       content: {
         component: NpcSettingsTab,
         type: 'svelte',
@@ -42,7 +42,7 @@
     },
     {
       id: CONSTANTS.TAB_SETTINGS_VEHICLES,
-      displayName: 'T5EK.Settings.TabVehicles.tabLabel',
+      title: 'T5EK.Settings.TabVehicles.tabLabel',
       content: {
         component: VehicleSettingsTab,
         type: 'svelte',
@@ -54,7 +54,7 @@
     tabs.push(
       {
         id: CONSTANTS.TAB_SETTINGS_GM,
-        displayName: 'T5EK.Settings.TabGM.tabLabel',
+        title: 'T5EK.Settings.TabGM.tabLabel',
         content: {
           component: GmOptionsSettingsTab,
           type: 'svelte',
@@ -62,7 +62,7 @@
       },
       {
         id: CONSTANTS.TAB_SETTINGS_LOCKS,
-        displayName: 'T5EK.Settings.TabLocks.tabLabel',
+        title: 'T5EK.Settings.TabLocks.tabLabel',
         content: {
           component: LockSettingsTab,
           type: 'svelte',
@@ -73,7 +73,7 @@
 
   tabs.push({
     id: CONSTANTS.TAB_SETTINGS_FEATURES,
-    displayName: 'T5EK.Settings.TabFeatures.tabLabel',
+    title: 'T5EK.Settings.TabFeatures.tabLabel',
     content: {
       component: FeaturesSettingsTab,
       type: 'svelte',
@@ -82,7 +82,7 @@
 
   tabs.push({
     id: CONSTANTS.TAB_SETTINGS_INFO,
-    displayName: 'T5EK.Settings.TabInfo.tabLabel',
+    title: 'T5EK.Settings.TabInfo.tabLabel',
     content: {
       component: InfoTab,
       type: 'svelte',
