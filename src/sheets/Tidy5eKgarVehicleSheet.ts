@@ -144,7 +144,7 @@ export class Tidy5eVehicleSheet
         ) ?? [],
     };
 
-    let tabs = VehicleSheetRuntime.getTabs(context);
+    let tabs = await VehicleSheetRuntime.getTabs(context);
 
     const selectedTabs = FoundryAdapter.tryGetFlag<string[]>(
       context.actor,

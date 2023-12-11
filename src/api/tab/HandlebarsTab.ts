@@ -1,5 +1,5 @@
 import type { OnRenderArgs, RenderScheme } from '../api.types';
-import { CustomTabBase } from './TabBase';
+import { CustomTabBase } from './CustomTabBase';
 
 export class HandlebarsTab extends CustomTabBase {
   title: string = '';

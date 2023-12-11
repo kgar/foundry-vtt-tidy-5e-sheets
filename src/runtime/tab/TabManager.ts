@@ -1,7 +1,7 @@
 import { HandlebarsTemplateContent } from 'src/api/HandlebarsTemplateContent';
 import { HandlebarsTab } from 'src/api/tab/HandlebarsTab';
 import { HtmlTab } from 'src/api/tab/HtmlTab';
-import type { CustomTabBase } from 'src/api/tab/TabBase';
+import type { CustomTabBase } from 'src/api/tab/CustomTabBase';
 import type { HtmlTabContent, Tab } from 'src/types/types';
 
 export class TabManager {

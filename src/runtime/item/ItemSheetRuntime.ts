@@ -1,4 +1,4 @@
-import type { CustomTabBase } from 'src/api/tab/TabBase';
+import type { CustomTabBase } from 'src/api/tab/CustomTabBase';
 import { CONSTANTS } from 'src/constants';
 import { isNil } from 'src/utils/data';
 import EquipmentSheet from 'src/sheets/item/EquipmentSheet.svelte';

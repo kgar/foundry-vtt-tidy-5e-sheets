@@ -1,4 +1,4 @@
-import type { CharacterSheetContext } from 'src/types/types';
+import type { CharacterSheetContext, Tab } from 'src/types/types';
 import CharacterAttributesTab from 'src/sheets/character/tabs/CharacterAttributesTab.svelte';
 import CharacterInventoryTab from 'src/sheets/character/tabs/CharacterInventoryTab.svelte';
 import CharacterSpellbookTab from 'src/sheets/character/tabs/CharacterSpellbookTab.svelte';
@@ -7,10 +7,10 @@ import ActorEffectsTab from 'src/sheets/actor/ActorEffectsTab.svelte';
 import CharacterBiographyTab from 'src/sheets/character/tabs/CharacterBiographyTab.svelte';
 import ActorJournalTab from 'src/sheets/actor/tabs/ActorJournalTab.svelte';
 import ActorActionsTab from 'src/sheets/actor/tabs/ActorActionsTab.svelte';
-import type { SheetTabRegistrationOptions, RegisteredActorTab } from './types';
-import { getOrderedEnabledSheetTabs } from './runtime-functions';
+import type { RegisteredActorTab } from './types';
 import { CONSTANTS } from 'src/constants';
 import { warn } from 'src/utils/logging';
+import { ActorSheetRuntimeManager } from './ActorSheetRuntimeManager';
 
 export class CharacterSheetRuntime {
   private static _tabs: RegisteredActorTab<CharacterSheetContext>[] = [
@@ -89,26 +89,24 @@ export class CharacterSheetRuntime {
     },
   ];
 
-  static getTabs(context: CharacterSheetContext) {
-    return getOrderedEnabledSheetTabs(CharacterSheetRuntime._tabs, context);
+  static async getTabs(context: CharacterSheetContext): Promise<Tab[]> {
+    return await ActorSheetRuntimeManager.prepareTabsForRender(
+      context,
+      CharacterSheetRuntime._tabs
+    );
   }
 
   static getAllRegisteredTabs(): RegisteredActorTab<CharacterSheetContext>[] {
     return [...CharacterSheetRuntime._tabs];
   }
 
-  static registerTab(
-    tab: RegisteredActorTab<CharacterSheetContext>,
-    options?: SheetTabRegistrationOptions
-  ) {
+  static registerTab(tab: RegisteredActorTab<CharacterSheetContext>) {
     const tabExists = CharacterSheetRuntime.getAllRegisteredTabs().some(
       (t) => t.id === tab.id
     );
 
-    if (tabExists && !options?.overwrite) {
-      warn(
-        `Tab with id ${tab.id} already exists. Use option "overwrite" to replace an existing tab.`
-      );
+    if (tabExists) {
+      warn(`Tab with id ${tab.id} already exists.`);
       return;
     }
 

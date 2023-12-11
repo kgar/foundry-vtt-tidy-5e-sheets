@@ -1,13 +1,13 @@
-import type { VehicleSheetContext } from 'src/types/types';
+import type { Tab, VehicleSheetContext } from 'src/types/types';
 import { CONSTANTS } from 'src/constants';
 import ActorEffectsTab from 'src/sheets/actor/ActorEffectsTab.svelte';
 import VehicleAttributesTab from 'src/sheets/vehicle/tabs/VehicleAttributesTab.svelte';
 import VehicleCargoAndCrewTab from 'src/sheets/vehicle/tabs/VehicleCargoAndCrewTab.svelte';
 import VehicleDescriptionTab from 'src/sheets/vehicle/tabs/VehicleDescriptionTab.svelte';
 import ActorActionsTab from 'src/sheets/actor/tabs/ActorActionsTab.svelte';
-import type { SheetTabRegistrationOptions, RegisteredActorTab } from './types';
-import { getOrderedEnabledSheetTabs } from './runtime-functions';
+import type { RegisteredActorTab } from './types';
 import { warn } from 'src/utils/logging';
+import { ActorSheetRuntimeManager } from './ActorSheetRuntimeManager';
 
 export class VehicleSheetRuntime {
   private static _tabs: RegisteredActorTab<VehicleSheetContext>[] = [
@@ -58,26 +58,24 @@ export class VehicleSheetRuntime {
     },
   ];
 
-  static getTabs(context: VehicleSheetContext) {
-    return getOrderedEnabledSheetTabs(VehicleSheetRuntime._tabs, context);
+  static getTabs(context: VehicleSheetContext): Promise<Tab[]> {
+    return ActorSheetRuntimeManager.prepareTabsForRender(
+      context,
+      VehicleSheetRuntime._tabs
+    );
   }
 
   static getAllRegisteredTabs(): RegisteredActorTab<VehicleSheetContext>[] {
     return [...VehicleSheetRuntime._tabs];
   }
 
-  static registerTab(
-    tab: RegisteredActorTab<VehicleSheetContext>,
-    options?: SheetTabRegistrationOptions
-  ) {
+  static registerTab(tab: RegisteredActorTab<VehicleSheetContext>) {
     const tabExists = VehicleSheetRuntime.getAllRegisteredTabs().some(
       (t) => t.id === tab.id
     );
 
-    if (tabExists && !options?.overwrite) {
-      warn(
-        `Tab with id ${tab.id} already exists. Use option "overwrite" to replace an existing tab.`
-      );
+    if (tabExists) {
+      warn(`Tab with id ${tab.id} already exists.`);
       return;
     }
 

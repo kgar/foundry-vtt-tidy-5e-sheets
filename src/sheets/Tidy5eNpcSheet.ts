@@ -300,7 +300,7 @@ export class Tidy5eNpcSheet
         ) ?? [],
     };
 
-    let tabs = NpcSheetRuntime.getTabs(context);
+    let tabs = await NpcSheetRuntime.getTabs(context);
 
     const selectedTabs = FoundryAdapter.tryGetFlag<string[]>(
       context.actor,

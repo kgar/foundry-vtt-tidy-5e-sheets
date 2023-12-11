@@ -34,6 +34,6 @@ export interface OnRenderArgs {
 /**
  * Determines when custom content will be rendered.
  * - `"handlebars"` - render on each change detection cycle (actor data changed, setting data changed, embedded item changed, etc.)
- * - `"none"`, `undefined`, or any other unspecified value - render when the `render` function is called with `force=true`, i.e. a full re-render
+ * - `"force"`, `undefined`, or any other unspecified value - render when the `render` function is called with `force=true`, i.e. a full re-render
  */
-export type RenderScheme = 'handlebars' | 'none';
+export type RenderScheme = 'handlebars' | 'force';

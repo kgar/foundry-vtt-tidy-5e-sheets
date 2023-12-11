@@ -1,7 +1,7 @@
 import { HandlebarsTab } from './tab/HandlebarsTab';
 import { HtmlTab } from './tab/HtmlTab';
 import { ItemSheetRuntime } from 'src/runtime/item/ItemSheetRuntime';
-import type { CustomTabBase } from './tab/TabBase';
+import type { CustomTabBase } from './tab/CustomTabBase';
 import { isNil } from 'src/utils/data';
 import { error } from 'src/utils/logging';
 

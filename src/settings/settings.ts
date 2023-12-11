@@ -7,7 +7,6 @@ import { defaultLightTheme } from 'src/theme/default-light-theme';
 import { getCoreThemes, themeVariables } from 'src/theme/theme-reference';
 import { SheetSettingsFormApplication } from 'src/applications/sheet-settings/SheetSettingsFormApplication';
 import { writable, type Writable } from 'svelte/store';
-import { getTabsAsConfigOptions } from 'src/runtime/runtime-functions';
 import ThemeSettingsFormApplication from 'src/applications/theme/ThemeSettingsFormApplication';
 import {
   getStandardExhaustionConfig,
@@ -17,6 +16,7 @@ import type { ExhaustionConfig } from '../features/exhaustion/exhaustion.types';
 import { NpcSheetRuntime } from 'src/runtime/NpcSheetRuntime';
 import { CharacterSheetRuntime } from 'src/runtime/CharacterSheetRuntime';
 import { VehicleSheetRuntime } from 'src/runtime/VehicleSheetRuntime';
+import { ActorSheetRuntimeManager } from 'src/runtime/ActorSheetRuntimeManager';
 
 export type Tidy5eSettings = {
   [settingKey: string]: Tidy5eSetting;
@@ -216,7 +216,7 @@ export function createSettings() {
           config: false,
           type: String,
           choices: () =>
-            getTabsAsConfigOptions(
+            ActorSheetRuntimeManager.getTabsAsConfigOptions(
               CharacterSheetRuntime.getAllRegisteredTabs()
             ),
           default: CONSTANTS.TAB_CHARACTER_ATTRIBUTES,
@@ -546,7 +546,9 @@ export function createSettings() {
           config: false,
           type: String,
           choices: () =>
-            getTabsAsConfigOptions(NpcSheetRuntime.getAllRegisteredTabs()),
+            ActorSheetRuntimeManager.getTabsAsConfigOptions(
+              NpcSheetRuntime.getAllRegisteredTabs()
+            ),
           default: CONSTANTS.TAB_NPC_ABILITIES,
         },
         get() {
@@ -686,7 +688,9 @@ export function createSettings() {
           config: false,
           type: String,
           choices: () =>
-            getTabsAsConfigOptions(VehicleSheetRuntime.getAllRegisteredTabs()),
+            ActorSheetRuntimeManager.getTabsAsConfigOptions(
+              VehicleSheetRuntime.getAllRegisteredTabs()
+            ),
           default: CONSTANTS.TAB_VEHICLE_ATTRIBUTES,
         },
         get() {

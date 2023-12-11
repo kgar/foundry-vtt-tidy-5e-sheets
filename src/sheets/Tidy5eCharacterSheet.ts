@@ -351,7 +351,7 @@ export class Tidy5eCharacterSheet
         ) ?? [],
     };
 
-    let tabs = CharacterSheetRuntime.getTabs(context);
+    let tabs = await CharacterSheetRuntime.getTabs(context);
 
     const selectedTabs = FoundryAdapter.tryGetFlag<string[]>(
       context.actor,

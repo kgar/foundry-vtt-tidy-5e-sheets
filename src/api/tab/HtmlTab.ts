@@ -1,11 +1,11 @@
-import type { OnRenderArgs } from '../api.types';
-import { CustomTabBase } from './TabBase';
+import type { OnRenderArgs, RenderScheme } from '../api.types';
+import { CustomTabBase } from './CustomTabBase';
 
 export class HtmlTab extends CustomTabBase {
   title: string = '';
   tabId: string = '';
   html: string = '';
-  renderScheme: 'handlebars' | 'none' = 'handlebars';
+  renderScheme: RenderScheme = 'handlebars';
   tabContentsClasses: string[] = [];
 
   constructor(props?: Partial<HtmlTab>) {
