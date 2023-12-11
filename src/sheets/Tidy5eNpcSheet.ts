@@ -28,6 +28,7 @@ import {
   getActorActions,
 } from 'src/features/actions/actions';
 import { isNil } from 'src/utils/data';
+import { SheetCompatibilityManager } from './SheetCompatibilityManager';
 
 export class Tidy5eNpcSheet
   extends dnd5e.applications.actor.ActorSheet5eNPC
@@ -95,9 +96,7 @@ export class Tidy5eNpcSheet
   }
 
   async getData(options = {}) {
-    this.context.set(await this.getContext());
-    await this.setExpandedItemData();
-    return get(this.context);
+    return await this.getContext();
   }
 
   private async setExpandedItemData() {
@@ -374,18 +373,33 @@ export class Tidy5eNpcSheet
     return this._filters[setName]?.has(filterName) === true;
   }
 
-  render(force = false, ...args: any[]) {
+  async _render(force?: boolean, options = {}) {
+    await this.setExpandedItemData();
+    this.context.set(await this.getData());
+
     if (force) {
       this._saveScrollPositions(this.element);
       this._destroySvelteComponent();
-      return super.render(force, ...args);
+      await super._render(force, options);
+      await this.renderCustomContent({ isFullRender: true });
+      return;
     }
 
     applyTitleToWindow(this.title, this.element.get(0));
-    this.getContext().then((context) => {
-      this.context.update(() => context);
+    await this.renderCustomContent({ isFullRender: false });
+  }
+
+  private async renderCustomContent(args: { isFullRender: boolean }) {
+    const data = get(this.context);
+
+    await SheetCompatibilityManager.renderCustomContent({
+      app: this,
+      data: data,
+      element: this.element,
+      isFullRender: args.isFullRender,
+      superActivateListeners: super.activateListeners,
+      tabs: data.tabs,
     });
-    return this;
   }
 
   _getHeaderButtons() {

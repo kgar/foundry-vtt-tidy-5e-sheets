@@ -1,8 +1,9 @@
 import { HandlebarsTemplateContent } from 'src/api/HandlebarsTemplateContent';
 import type { Tab, HtmlTabContent } from 'src/types/types';
 import { isNil } from 'src/utils/data';
-import type { RegisteredActorTab } from './types';
+import type { RegisteredActorTab, SheetLayout } from './types';
 import { error } from 'src/utils/logging';
+import { HandlebarsTab, HtmlTab } from 'src/api';
 
 export class ActorSheetRuntimeManager {
   static async prepareTabsForRender(
@@ -34,6 +35,55 @@ export class ActorSheetRuntimeManager {
       return prev;
     }, {});
   }
+
+  static validateTab(tab: HandlebarsTab | HtmlTab) {
+    if (isNil(tab.tabId?.trim(), '')) {
+      error('A tab ID is required for actor sheet custom tabs.', true);
+      return false;
+    }
+
+    // Add any other validation as needed.
+
+    return true;
+  }
+
+  static mapCustomTabToRegisteredTab(
+    tab: HandlebarsTab | HtmlTab,
+    layout?: SheetLayout | SheetLayout[]
+  ): RegisteredActorTab<any> | undefined {
+    let registeredTab: RegisteredActorTab<any> | undefined;
+
+    if (tab instanceof HandlebarsTab) {
+      registeredTab = {
+        content: new HandlebarsTemplateContent({ path: tab.path }),
+        id: tab.tabId,
+        title: tab.title,
+        enabled: tab.enabled,
+        layout: layout,
+        onRender: tab.onRender,
+        renderScheme: tab.renderScheme,
+        tabContentsClasses: tab.tabContentsClasses,
+      };
+    } else if (tab instanceof HtmlTab) {
+      registeredTab = {
+        content: {
+          html: tab.html,
+          type: 'html',
+          renderScheme: tab.renderScheme,
+          cssClass: tab.tabContentsClasses.join(' '),
+        },
+        id: tab.tabId,
+        title: tab.title,
+        enabled: tab.enabled,
+        layout: layout,
+        onRender: tab.onRender,
+        renderScheme: tab.renderScheme,
+        tabContentsClasses: tab.tabContentsClasses,
+      };
+    }
+
+    return registeredTab;
+  }
 }
 
 function getOrderedEnabledSheetTabs<TContext>(
@@ -52,7 +102,7 @@ async function getActorTabContent(data: any, tab: RegisteredActorTab<any>) {
     return tab.content;
   }
 
-  if ('type' in tab.content && tab.content.html === 'svelte') {
+  if ('type' in tab.content && tab.content.type === 'html') {
     return tab.content;
   }
 

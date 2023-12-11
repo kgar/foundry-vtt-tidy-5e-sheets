@@ -11,6 +11,7 @@ import { getPercentage } from 'src/utils/numbers';
 import { isNil } from 'src/utils/data';
 import { ItemSheetRuntime } from 'src/runtime/item/ItemSheetRuntime';
 import { TabManager } from 'src/runtime/tab/TabManager';
+import { SheetCompatibilityManager } from './SheetCompatibilityManager';
 
 export class Tidy5eKgarItemSheet
   extends dnd5e.applications.item.ItemSheet5e
@@ -21,7 +22,6 @@ export class Tidy5eKgarItemSheet
     lastSubmissionTime: null,
   });
   currentTabId: string | undefined = undefined;
-  renderKey = writable<string>(foundry.utils.randomID());
 
   constructor(item: Item5e, ...args: any[]) {
     super(item, ...args);
@@ -53,7 +53,6 @@ export class Tidy5eKgarItemSheet
       ['stats', this.stats],
       ['currentTabId', this.currentTabId],
       ['onTabSelected', this.onTabSelected.bind(this)],
-      ['renderKey', this.renderKey],
     ]);
 
     // TODO: Try find sheet from runtime
@@ -89,46 +88,6 @@ export class Tidy5eKgarItemSheet
         '.advancement-item',
         contextOptions
       );
-
-    this.wireCompatibilityEventListeners(html);
-  }
-
-  private wireCompatibilityEventListeners(html: any) {
-    let sheet = this;
-    html.on('change', 'input[name], textarea[name], select[name]', function () {
-      //@ts-expect-error
-      if (this.closest(CONSTANTS.CLASS_SELECTOR_TIDY_USE_CORE_LISTENERS)) {
-        sheet.submit();
-      }
-    });
-
-    html
-      .find(CONSTANTS.CLASS_SELECTOR_TIDY_USE_CORE_LISTENERS)
-      .each((_: number, el: HTMLElement) => {
-        super.activateListeners($(el));
-      });
-  }
-
-  private customContentOnRender(args: { isFullRender: boolean }) {
-    const data = get(this.context);
-
-    data.tabs.forEach((s) => {
-      if (!s.onRender) {
-        return;
-      }
-
-      const tab = this.element
-        .get(0)
-        .querySelector(`[data-tab-contents-for="${s.id}"]`);
-
-      s.onRender({
-        app: this,
-        data: data,
-        element: this.element.get(0),
-        tabContentsElement: tab,
-        isFullRender: args.isFullRender,
-      });
-    });
   }
 
   async getData(options = {}) {
@@ -136,18 +95,30 @@ export class Tidy5eKgarItemSheet
   }
 
   async _render(force?: boolean, options = {}) {
-    this.renderKey.set(foundry.utils.randomID());
     this.context.set(await this.getData());
 
     if (force) {
       this.component?.$destroy();
       await super._render(force, options);
-      this.customContentOnRender({ isFullRender: true });
+      await this.renderCustomContent({ isFullRender: true });
       return;
     }
 
     applyTitleToWindow(this.title, this.element.get(0));
-    this.customContentOnRender({ isFullRender: false });
+    await this.renderCustomContent({ isFullRender: false });
+  }
+
+  private async renderCustomContent(args: { isFullRender: boolean }) {
+    const data = get(this.context);
+
+    await SheetCompatibilityManager.renderCustomContent({
+      app: this,
+      data: data,
+      element: this.element,
+      isFullRender: args.isFullRender,
+      superActivateListeners: super.activateListeners,
+      tabs: data.tabs,
+    });
   }
 
   private async getContext(): Promise<ItemSheetContext> {

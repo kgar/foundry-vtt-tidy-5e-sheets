@@ -2,8 +2,12 @@ import { HandlebarsTab } from './tab/HandlebarsTab';
 import { HtmlTab } from './tab/HtmlTab';
 import { ItemSheetRuntime } from 'src/runtime/item/ItemSheetRuntime';
 import type { CustomTabBase } from './tab/CustomTabBase';
-import { isNil } from 'src/utils/data';
-import { error } from 'src/utils/logging';
+import { warn } from 'src/utils/logging';
+import { CharacterSheetRuntime } from 'src/runtime/CharacterSheetRuntime';
+import type { RegisteredActorTab, SheetLayout } from 'src/runtime/types';
+import { ActorSheetRuntimeManager } from 'src/runtime/ActorSheetRuntimeManager';
+import { NpcSheetRuntime } from 'src/runtime/NpcSheetRuntime';
+import { VehicleSheetRuntime } from 'src/runtime/VehicleSheetRuntime';
 
 /**
  * The Tidy 5e Sheets API. The API becomes available after the hook `tidy5e-sheet.read` is called.
@@ -29,36 +33,65 @@ export class Tidy5eSheetsApi {
     return this._instance;
   }
 
-  registerCharacterTab(tab: HandlebarsTab | HtmlTab) {
-    if (!this._validateActorTab(tab)) {
+  registerCharacterTab(
+    tab: HandlebarsTab | HtmlTab,
+    layout?: SheetLayout | SheetLayout[]
+  ) {
+    if (!ActorSheetRuntimeManager.validateTab(tab)) {
       return;
     }
-    // TODO: Implement
-  }
 
-  registerNpcTab(tab: HandlebarsTab | HtmlTab) {
-    if (!this._validateActorTab(tab)) {
+    const registeredTab = ActorSheetRuntimeManager.mapCustomTabToRegisteredTab(
+      tab,
+      layout
+    );
+
+    if (!registeredTab) {
+      warn('Unable to register tab. Tab type not supported');
       return;
     }
-    // TODO: Implement
+
+    CharacterSheetRuntime.registerTab(registeredTab);
   }
 
-  registerVehicleTab(tab: HandlebarsTab | HtmlTab) {
-    if (!this._validateActorTab(tab)) {
+  registerNpcTab(
+    tab: HandlebarsTab | HtmlTab,
+    layout?: SheetLayout | SheetLayout[]
+  ) {
+    if (!ActorSheetRuntimeManager.validateTab(tab)) {
       return;
     }
-    // TODO: Implement
-  }
+    const registeredTab = ActorSheetRuntimeManager.mapCustomTabToRegisteredTab(
+      tab,
+      layout
+    );
 
-  private _validateActorTab(tab: HandlebarsTab | HtmlTab) {
-    if (isNil(tab.tabId?.trim(), '')) {
-      error('A tab ID is required for actor sheet custom tabs.', true);
-      return false;
+    if (!registeredTab) {
+      warn('Unable to register tab. Tab type not supported');
+      return;
     }
 
-    // Add any other validation as needed.
+    NpcSheetRuntime.registerTab(registeredTab);
+  }
 
-    return true;
+  registerVehicleTab(
+    tab: HandlebarsTab | HtmlTab,
+    layout?: SheetLayout | SheetLayout[]
+  ) {
+    if (!ActorSheetRuntimeManager.validateTab(tab)) {
+      return;
+    }
+    const registeredTab = ActorSheetRuntimeManager.mapCustomTabToRegisteredTab(
+      tab,
+      layout
+    );
+
+    if (!registeredTab) {
+      warn('Unable to register tab. Tab type not supported');
+      return;
+    }
+
+    VehicleSheetRuntime.registerTab(registeredTab);
   }
 
   /**
