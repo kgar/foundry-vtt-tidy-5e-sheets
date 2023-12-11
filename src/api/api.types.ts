@@ -1,14 +1,3 @@
-import type { HandlebarsTemplateContent } from './HandlebarsTemplateContent';
-
-/**
- * Content which can be injected into Tidy 5e Sheets via the API.
- */
-export type InjectableContent =
-  | string
-  | HTMLElement
-  | HTMLElement[]
-  | HandlebarsTemplateContent;
-
 /**
  * Data provided during the rendering of this item document sheet.
  */

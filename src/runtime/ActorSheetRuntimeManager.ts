@@ -4,6 +4,7 @@ import { isNil } from 'src/utils/data';
 import type { RegisteredActorTab, SheetLayout } from './types';
 import { error } from 'src/utils/logging';
 import { HandlebarsTab, HtmlTab } from 'src/api';
+import { CONSTANTS } from 'src/constants';
 
 export class ActorSheetRuntimeManager {
   static async prepareTabsForRender(
@@ -52,6 +53,7 @@ export class ActorSheetRuntimeManager {
     layout?: SheetLayout | SheetLayout[]
   ): RegisteredActorTab<any> | undefined {
     let registeredTab: RegisteredActorTab<any> | undefined;
+    layout ??= CONSTANTS.SHEET_LAYOUT_ALL;
 
     if (tab instanceof HandlebarsTab) {
       registeredTab = {
@@ -63,6 +65,7 @@ export class ActorSheetRuntimeManager {
         onRender: tab.onRender,
         renderScheme: tab.renderScheme,
         tabContentsClasses: tab.tabContentsClasses,
+        getData: tab.getData,
       };
     } else if (tab instanceof HtmlTab) {
       registeredTab = {
@@ -107,8 +110,11 @@ async function getActorTabContent(data: any, tab: RegisteredActorTab<any>) {
   }
 
   if (tab.content instanceof HandlebarsTemplateContent) {
+    const handlebarsData =
+      typeof tab.getData === 'function' ? await tab.getData(data) : data;
+
     return {
-      html: await tab.content.render(data),
+      html: await tab.content.render(handlebarsData),
       renderScheme: tab.renderScheme ?? 'handlebars',
       type: 'html',
       cssClass: tab.tabContentsClasses?.join(' '),

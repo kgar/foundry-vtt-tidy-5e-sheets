@@ -16,11 +16,10 @@ export type RegisteredActorTab<TContext> = {
   onRender?: (args: OnRenderTabArgs) => void;
   renderScheme?: RenderScheme;
   tabContentsClasses?: string[];
+  getData?: (data: any) => any | Promise<any>;
 };
 
 /**
  * One of the supported layouts of Tidy 5e sheets.
  */
-export type SheetLayout =
-  | typeof CONSTANTS.SHEET_LAYOUT_ALL
-  | typeof CONSTANTS.SHEET_LAYOUT_CLASSIC; // More to come ;)
+export type SheetLayout = 'all' | 'classic';
