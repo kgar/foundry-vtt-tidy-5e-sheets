@@ -1,10 +1,9 @@
-import { CONSTANTS } from 'src/constants';
-import { SheetSettingsFormApplication } from 'src/applications/sheet-settings/SheetSettingsFormApplication';
-import ThemeSettingsFormApplication from 'src/applications/theme/ThemeSettingsFormApplication';
 import { HandlebarsTab } from './tab/HandlebarsTab';
 import { HtmlTab } from './tab/HtmlTab';
 import { ItemSheetRuntime } from 'src/runtime/item/ItemSheetRuntime';
 import type { CustomTabBase } from './tab/TabBase';
+import { isNil } from 'src/utils/data';
+import { error } from 'src/utils/logging';
 
 /**
  * The Tidy 5e Sheets API. The API becomes available after the hook `tidy5e-sheet.read` is called.
@@ -28,6 +27,38 @@ export class Tidy5eSheetsApi {
   static getApi() {
     Tidy5eSheetsApi._instance ??= new Tidy5eSheetsApi();
     return this._instance;
+  }
+
+  registerCharacterTab(tab: HandlebarsTab | HtmlTab) {
+    if (!this._validateActorTab(tab)) {
+      return;
+    }
+    // TODO: Implement
+  }
+
+  registerNpcTab(tab: HandlebarsTab | HtmlTab) {
+    if (!this._validateActorTab(tab)) {
+      return;
+    }
+    // TODO: Implement
+  }
+
+  registerVehicleTab(tab: HandlebarsTab | HtmlTab) {
+    if (!this._validateActorTab(tab)) {
+      return;
+    }
+    // TODO: Implement
+  }
+
+  private _validateActorTab(tab: HandlebarsTab | HtmlTab) {
+    if (isNil(tab.tabId?.trim(), '')) {
+      error('A tab ID is required for actor sheet custom tabs.', true);
+      return false;
+    }
+
+    // Add any other validation as needed.
+
+    return true;
   }
 
   /**
