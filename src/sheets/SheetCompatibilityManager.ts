@@ -49,15 +49,15 @@ export class SheetCompatibilityManager {
           isFullRender: isFullRender,
         });
       }
-
-      SheetCompatibilityManager.wireCompatibilityEventListeners(
-        element,
-        superActivateListeners,
-        app
-      );
     });
 
     await Promise.all(renderPromises);
+
+    SheetCompatibilityManager.wireCompatibilityEventListeners(
+      element,
+      superActivateListeners,
+      app
+    );
   }
 
   static wireCompatibilityEventListeners(

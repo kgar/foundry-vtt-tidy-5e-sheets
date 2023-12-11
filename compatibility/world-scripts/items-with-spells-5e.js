@@ -39,7 +39,7 @@ Hooks.on('tidy5e-sheet.ready', (api) => {
         return includeTab(data.item.type);
       },
       onRender(args) {
-        if (!args.isFullRender && includeTab(args.data.item.type)) {
+        if (includeTab(args.data.item.type)) {
           let instance = ItemsWithSpells5eItemSheet.instances.get(
             args.data.appId
           );
