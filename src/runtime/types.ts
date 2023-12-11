@@ -13,11 +13,6 @@ export type SheetTabState<TContext> = Tab & {
   enabled: boolean | ((context: TContext) => boolean);
 
   /**
-   * The sort order where this tab should appear. A lower number is further to the left.
-   */
-  order: number;
-
-  /**
    * The layout(s) which should support this tab (default: 'all')
    */
   layout?: SheetLayout;

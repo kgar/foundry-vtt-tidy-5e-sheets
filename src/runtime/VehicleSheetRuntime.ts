@@ -19,7 +19,6 @@ export class VehicleSheetRuntime {
       },
       enabled: true,
       id: CONSTANTS.TAB_ACTOR_ACTIONS,
-      order: 10,
       layout: 'classic',
     },
     {
@@ -30,7 +29,6 @@ export class VehicleSheetRuntime {
         type: 'svelte',
       },
       enabled: true,
-      order: 20,
       layout: 'classic',
     },
     {
@@ -41,7 +39,6 @@ export class VehicleSheetRuntime {
         type: 'svelte',
       },
       enabled: true,
-      order: 30,
       layout: 'classic',
     },
     {
@@ -52,7 +49,6 @@ export class VehicleSheetRuntime {
         type: 'svelte',
       },
       enabled: true,
-      order: 40,
       layout: 'classic',
     },
     {
@@ -63,7 +59,6 @@ export class VehicleSheetRuntime {
         type: 'svelte',
       },
       enabled: true,
-      order: 50,
       layout: 'classic',
     },
   ];
