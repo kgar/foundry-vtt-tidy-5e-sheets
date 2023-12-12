@@ -260,7 +260,7 @@
     }
 
     .xp-tracker {
-      max-width: 7rem;
+      max-width: 7.75rem;
     }
 
     .xp-bar-total {
