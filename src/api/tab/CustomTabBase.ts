@@ -10,7 +10,7 @@ export abstract class CustomTabBase {
   abstract title: string;
 
   /**
-   * The static ID associated with the tab. It is used by Tidy 5e Sheets to enable tab selection.<br />
+   * The static ID associated with the tab. It is used by Tidy 5e Sheets to enable tab selection.
    *
    * **Note**: Use the same ID for your target tab every time.
    *  For example, try an ID like "my-module-ID-my-tab-title".
