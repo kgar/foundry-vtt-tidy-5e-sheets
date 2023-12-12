@@ -5,9 +5,9 @@ import type { CustomTabBase } from './tab/CustomTabBase';
 import { warn } from 'src/utils/logging';
 import { CharacterSheetRuntime } from 'src/runtime/CharacterSheetRuntime';
 import type { SheetLayout } from 'src/runtime/types';
-import { ActorSheetRuntimeManager } from 'src/runtime/ActorSheetRuntimeManager';
 import { NpcSheetRuntime } from 'src/runtime/NpcSheetRuntime';
 import { VehicleSheetRuntime } from 'src/runtime/VehicleSheetRuntime';
+import { TabManager } from 'src/runtime/tab/TabManager';
 
 /**
  * The Tidy 5e Sheets API. The API becomes available after the hook `tidy5e-sheet.ready` is called.
@@ -43,14 +43,11 @@ export class Tidy5eSheetsApi {
     tab: HandlebarsTab | HtmlTab,
     layout?: SheetLayout | SheetLayout[]
   ): void {
-    if (!ActorSheetRuntimeManager.validateTab(tab)) {
+    if (!TabManager.validateTab(tab)) {
       return;
     }
 
-    const registeredTab = ActorSheetRuntimeManager.mapCustomTabToRegisteredTab(
-      tab,
-      layout
-    );
+    const registeredTab = TabManager.mapCustomTabToRegisteredTab(tab, layout);
 
     if (!registeredTab) {
       warn('Unable to register tab. Tab type not supported');
@@ -70,13 +67,10 @@ export class Tidy5eSheetsApi {
     tab: HandlebarsTab | HtmlTab,
     layout?: SheetLayout | SheetLayout[]
   ): void {
-    if (!ActorSheetRuntimeManager.validateTab(tab)) {
+    if (!TabManager.validateTab(tab)) {
       return;
     }
-    const registeredTab = ActorSheetRuntimeManager.mapCustomTabToRegisteredTab(
-      tab,
-      layout
-    );
+    const registeredTab = TabManager.mapCustomTabToRegisteredTab(tab, layout);
 
     if (!registeredTab) {
       warn('Unable to register tab. Tab type not supported');
@@ -96,13 +90,10 @@ export class Tidy5eSheetsApi {
     tab: HandlebarsTab | HtmlTab,
     layout?: SheetLayout | SheetLayout[]
   ): void {
-    if (!ActorSheetRuntimeManager.validateTab(tab)) {
+    if (!TabManager.validateTab(tab)) {
       return;
     }
-    const registeredTab = ActorSheetRuntimeManager.mapCustomTabToRegisteredTab(
-      tab,
-      layout
-    );
+    const registeredTab = TabManager.mapCustomTabToRegisteredTab(tab, layout);
 
     if (!registeredTab) {
       warn('Unable to register tab. Tab type not supported');
@@ -133,7 +124,18 @@ export class Tidy5eSheetsApi {
    * ```
    */
   registerItemTab(tab: HandlebarsTab | HtmlTab): void {
-    ItemSheetRuntime.registerTab(tab);
+    if (!TabManager.validateTab(tab)) {
+      return;
+    }
+
+    const registeredTab = TabManager.mapCustomTabToRegisteredTab(tab);
+
+    if (!registeredTab) {
+      warn('Unable to register tab. Tab type not supported');
+      return;
+    }
+
+    ItemSheetRuntime.registerTab(registeredTab);
   }
 
   /**

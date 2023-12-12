@@ -5,12 +5,12 @@ import VehicleAttributesTab from 'src/sheets/vehicle/tabs/VehicleAttributesTab.s
 import VehicleCargoAndCrewTab from 'src/sheets/vehicle/tabs/VehicleCargoAndCrewTab.svelte';
 import VehicleDescriptionTab from 'src/sheets/vehicle/tabs/VehicleDescriptionTab.svelte';
 import ActorActionsTab from 'src/sheets/actor/tabs/ActorActionsTab.svelte';
-import type { RegisteredActorTab } from './types';
+import type { RegisteredTab } from './types';
 import { warn } from 'src/utils/logging';
-import { ActorSheetRuntimeManager } from './ActorSheetRuntimeManager';
+import { TabManager } from './tab/TabManager';
 
 export class VehicleSheetRuntime {
-  private static _tabs: RegisteredActorTab<VehicleSheetContext>[] = [
+  private static _tabs: RegisteredTab<VehicleSheetContext>[] = [
     {
       title: 'T5EK.Actions.TabName',
       content: {
@@ -59,17 +59,14 @@ export class VehicleSheetRuntime {
   ];
 
   static getTabs(context: VehicleSheetContext): Promise<Tab[]> {
-    return ActorSheetRuntimeManager.prepareTabsForRender(
-      context,
-      VehicleSheetRuntime._tabs
-    );
+    return TabManager.prepareTabsForRender(context, VehicleSheetRuntime._tabs);
   }
 
-  static getAllRegisteredTabs(): RegisteredActorTab<VehicleSheetContext>[] {
+  static getAllRegisteredTabs(): RegisteredTab<VehicleSheetContext>[] {
     return [...VehicleSheetRuntime._tabs];
   }
 
-  static registerTab(tab: RegisteredActorTab<VehicleSheetContext>) {
+  static registerTab(tab: RegisteredTab<VehicleSheetContext>) {
     const tabExists = VehicleSheetRuntime.getAllRegisteredTabs().some(
       (t) => t.id === tab.id
     );

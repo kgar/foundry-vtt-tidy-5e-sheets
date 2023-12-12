@@ -6,12 +6,12 @@ import NpcBiographyTab from 'src/sheets/npc/tabs/NpcBiographyTab.svelte';
 import ActorEffectsTab from 'src/sheets/actor/ActorEffectsTab.svelte';
 import ActorJournalTab from 'src/sheets/actor/tabs/ActorJournalTab.svelte';
 import ActorActionsTab from 'src/sheets/actor/tabs/ActorActionsTab.svelte';
-import type { RegisteredActorTab } from './types';
+import type { RegisteredTab } from './types';
 import { warn } from 'src/utils/logging';
-import { ActorSheetRuntimeManager } from './ActorSheetRuntimeManager';
+import { TabManager } from './tab/TabManager';
 
 export class NpcSheetRuntime {
-  private static _tabs: RegisteredActorTab<NpcSheetContext>[] = [
+  private static _tabs: RegisteredTab<NpcSheetContext>[] = [
     {
       title: 'T5EK.Actions.TabName',
       content: {
@@ -72,17 +72,14 @@ export class NpcSheetRuntime {
   ];
 
   static getTabs(context: NpcSheetContext): Promise<Tab[]> {
-    return ActorSheetRuntimeManager.prepareTabsForRender(
-      context,
-      NpcSheetRuntime._tabs
-    );
+    return TabManager.prepareTabsForRender(context, NpcSheetRuntime._tabs);
   }
 
-  static getAllRegisteredTabs(): RegisteredActorTab<NpcSheetContext>[] {
+  static getAllRegisteredTabs(): RegisteredTab<NpcSheetContext>[] {
     return [...NpcSheetRuntime._tabs];
   }
 
-  static registerTab(tab: RegisteredActorTab<NpcSheetContext>) {
+  static registerTab(tab: RegisteredTab<NpcSheetContext>) {
     const tabExists = NpcSheetRuntime.getAllRegisteredTabs().some(
       (t) => t.id === tab.id
     );

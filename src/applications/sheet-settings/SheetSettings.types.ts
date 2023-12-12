@@ -1,5 +1,5 @@
 import type { ExhaustionConfig } from 'src/features/exhaustion/exhaustion.types';
-import type { RegisteredActorTab } from 'src/runtime/types';
+import type { RegisteredTab } from 'src/runtime/types';
 import type { CurrentSettings } from 'src/settings/settings';
 import type { Writable } from 'svelte/store';
 
@@ -26,7 +26,7 @@ export type SettingsSheetFunctions = {
   save(settings: SettingsSheetContext): Promise<unknown>;
   apply(settings: SettingsSheetContext): Promise<unknown>;
   mapTabSelectionFields(
-    registeredTabs: RegisteredActorTab<any>[],
+    registeredTabs: RegisteredTab<any>[],
     selectedTabIds: string[]
   ): DefaultTabSelectionFields;
   validate(context: SettingsSheetContext): boolean;

@@ -11,7 +11,7 @@ import {
 import { debug, error } from 'src/utils/logging';
 import { CONSTANTS } from 'src/constants';
 import SvelteFormApplicationBase from 'src/applications/SvelteFormApplicationBase';
-import type { RegisteredActorTab } from 'src/runtime/types';
+import type { RegisteredTab } from 'src/runtime/types';
 import type {
   DefaultTabSelectionFields,
   SettingsSheetContext,
@@ -100,7 +100,7 @@ export class SheetSettingsFormApplication extends SvelteFormApplicationBase {
   }
 
   mapTabSelectionFields(
-    registeredTabs: RegisteredActorTab<any>[],
+    registeredTabs: RegisteredTab<any>[],
     selectedTabIds: string[]
   ): DefaultTabSelectionFields {
     const available = registeredTabs

@@ -1,11 +1,11 @@
 import type { SvelteComponent } from 'svelte';
 import SvelteFormApplicationBase from '../SvelteFormApplicationBase';
 import TabSelection from './TabSelection.svelte';
-import type { Actor5e, Tab } from 'src/types/types';
+import type { Actor5e } from 'src/types/types';
 import { get, writable } from 'svelte/store';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { error } from 'src/utils/logging';
-import type { RegisteredActorTab } from 'src/runtime/types';
+import type { RegisteredTab } from 'src/runtime/types';
 import { CONSTANTS } from 'src/constants';
 import { SettingsProvider } from 'src/settings/settings';
 import { NpcSheetRuntime } from 'src/runtime/NpcSheetRuntime';
@@ -25,7 +25,7 @@ export type TabSelectionContext = {
 export default class TabSelectionFormApplication extends SvelteFormApplicationBase {
   actor: Actor5e;
   context = writable<TabSelectionContext>({ available: [], selected: [] });
-  registeredTabs: RegisteredActorTab<any>[];
+  registeredTabs: RegisteredTab<any>[];
 
   constructor(actor: Actor5e, ...args: any[]) {
     super(...args);
@@ -33,7 +33,7 @@ export default class TabSelectionFormApplication extends SvelteFormApplicationBa
     this.registeredTabs = this.getRegisteredTabs(actor);
   }
 
-  getRegisteredTabs(actor: Actor5e): RegisteredActorTab<any>[] {
+  getRegisteredTabs(actor: Actor5e): RegisteredTab<any>[] {
     if (actor.type === CONSTANTS.SHEET_TYPE_CHARACTER) {
       return CharacterSheetRuntime.getAllRegisteredTabs();
     } else if (actor.type === CONSTANTS.SHEET_TYPE_NPC) {

@@ -1,4 +1,3 @@
-import { CONSTANTS } from 'src/constants';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type { Item5e, ItemDescription, ItemSheetContext } from 'src/types/item';
 import { get, writable } from 'svelte/store';
@@ -115,7 +114,7 @@ export class Tidy5eKgarItemSheet
       defaultDocumentContext
     );
 
-    const customTabs: Tab[] = await TabManager.prepareCustomTabsForRender(
+    const customTabs: Tab[] = await TabManager.prepareTabsForRender(
       eligibleCustomTabs,
       defaultDocumentContext
     );

@@ -7,13 +7,13 @@ import ActorEffectsTab from 'src/sheets/actor/ActorEffectsTab.svelte';
 import CharacterBiographyTab from 'src/sheets/character/tabs/CharacterBiographyTab.svelte';
 import ActorJournalTab from 'src/sheets/actor/tabs/ActorJournalTab.svelte';
 import ActorActionsTab from 'src/sheets/actor/tabs/ActorActionsTab.svelte';
-import type { RegisteredActorTab } from './types';
+import type { RegisteredTab } from './types';
 import { CONSTANTS } from 'src/constants';
 import { warn } from 'src/utils/logging';
-import { ActorSheetRuntimeManager } from './ActorSheetRuntimeManager';
+import { TabManager } from './tab/TabManager';
 
 export class CharacterSheetRuntime {
-  private static _tabs: RegisteredActorTab<CharacterSheetContext>[] = [
+  private static _tabs: RegisteredTab<CharacterSheetContext>[] = [
     {
       title: 'T5EK.Actions.TabName',
       content: {
@@ -90,17 +90,17 @@ export class CharacterSheetRuntime {
   ];
 
   static async getTabs(context: CharacterSheetContext): Promise<Tab[]> {
-    return await ActorSheetRuntimeManager.prepareTabsForRender(
+    return await TabManager.prepareTabsForRender(
       context,
       CharacterSheetRuntime._tabs
     );
   }
 
-  static getAllRegisteredTabs(): RegisteredActorTab<CharacterSheetContext>[] {
+  static getAllRegisteredTabs(): RegisteredTab<CharacterSheetContext>[] {
     return [...CharacterSheetRuntime._tabs];
   }
 
-  static registerTab(tab: RegisteredActorTab<CharacterSheetContext>) {
+  static registerTab(tab: RegisteredTab<CharacterSheetContext>) {
     const tabExists = CharacterSheetRuntime.getAllRegisteredTabs().some(
       (t) => t.id === tab.id
     );

@@ -1,6 +1,4 @@
-import type { CustomTabBase } from 'src/api/tab/CustomTabBase';
 import { CONSTANTS } from 'src/constants';
-import { isNil } from 'src/utils/data';
 import EquipmentSheet from 'src/sheets/item/EquipmentSheet.svelte';
 import type { Tab } from 'src/types/types';
 import itemSheetTabs from './item-sheet-tabs';
@@ -16,16 +14,13 @@ import ToolSheet from 'src/sheets/item/ToolSheet.svelte';
 import WeaponSheet from 'src/sheets/item/WeaponSheet.svelte';
 import RaceSheet from 'src/sheets/item/RaceSheet.svelte';
 import type { ComponentType } from 'svelte';
+import type { RegisteredTab } from '../types';
+import type { ItemSheetContext } from 'src/types/item';
 
 export class ItemSheetRuntime {
-  private static _customTabs: CustomTabBase[] = [];
+  private static _customTabs: RegisteredTab<ItemSheetContext>[] = [];
 
-  static registerTab(tab: CustomTabBase) {
-    // validate? Or let chaos reign?
-    const tabId = tab.tabId?.trim();
-    if (isNil(tabId, '')) {
-      tab.tabId = foundry.utils.randomID();
-    }
+  static registerTab(tab: RegisteredTab<ItemSheetContext>) {
     ItemSheetRuntime._customTabs.push(tab);
   }
 

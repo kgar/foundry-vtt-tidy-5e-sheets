@@ -1,13 +1,12 @@
 import type { RenderScheme } from 'src/api';
 import type { HandlebarsTemplateContent } from 'src/api/HandlebarsTemplateContent';
-import { CONSTANTS } from 'src/constants';
 import type {
   HtmlTabContent,
   OnRenderTabArgs,
   SvelteTabContent,
 } from 'src/types/types';
 
-export type RegisteredActorTab<TContext> = {
+export type RegisteredTab<TContext> = {
   enabled?: (context: TContext) => boolean;
   layout?: SheetLayout | SheetLayout[];
   title: string;

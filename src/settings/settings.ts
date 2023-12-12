@@ -16,7 +16,7 @@ import type { ExhaustionConfig } from '../features/exhaustion/exhaustion.types';
 import { NpcSheetRuntime } from 'src/runtime/NpcSheetRuntime';
 import { CharacterSheetRuntime } from 'src/runtime/CharacterSheetRuntime';
 import { VehicleSheetRuntime } from 'src/runtime/VehicleSheetRuntime';
-import { ActorSheetRuntimeManager } from 'src/runtime/ActorSheetRuntimeManager';
+import { TabManager } from 'src/runtime/tab/TabManager';
 
 export type Tidy5eSettings = {
   [settingKey: string]: Tidy5eSetting;
@@ -216,7 +216,7 @@ export function createSettings() {
           config: false,
           type: String,
           choices: () =>
-            ActorSheetRuntimeManager.getTabsAsConfigOptions(
+            TabManager.getTabsAsConfigOptions(
               CharacterSheetRuntime.getAllRegisteredTabs()
             ),
           default: CONSTANTS.TAB_CHARACTER_ATTRIBUTES,
@@ -546,7 +546,7 @@ export function createSettings() {
           config: false,
           type: String,
           choices: () =>
-            ActorSheetRuntimeManager.getTabsAsConfigOptions(
+            TabManager.getTabsAsConfigOptions(
               NpcSheetRuntime.getAllRegisteredTabs()
             ),
           default: CONSTANTS.TAB_NPC_ABILITIES,
@@ -688,7 +688,7 @@ export function createSettings() {
           config: false,
           type: String,
           choices: () =>
-            ActorSheetRuntimeManager.getTabsAsConfigOptions(
+            TabManager.getTabsAsConfigOptions(
               VehicleSheetRuntime.getAllRegisteredTabs()
             ),
           default: CONSTANTS.TAB_VEHICLE_ATTRIBUTES,
