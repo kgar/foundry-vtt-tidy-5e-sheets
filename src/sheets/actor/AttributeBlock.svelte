@@ -7,6 +7,7 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import type { ActorSheetContext } from 'src/types/types';
+  import { settingStore } from 'src/settings/settings';
 
   export let abbreviation: string;
   export let ability: any;
@@ -24,6 +25,7 @@
     text={abbreviation}
     on:roll={(event) =>
       $context.actor.rollAbility(abbreviation, { event: event.detail })}
+    hideFromTabOrder={$settingStore.useOldAttributeTabbing}
   />
   <BlockScore>
     <TextInput
@@ -45,6 +47,7 @@
       on:click={(event) =>
         $context.owner &&
         $context.actor.rollAbilityTest(abbreviation, { event })}
+      tabindex={!$settingStore.useOldAttributeTabbing ? 0 : -1}
     >
       {formatAsModifier(ability.mod)}
     </button>
@@ -56,6 +59,7 @@
       on:click={(event) =>
         $context.owner &&
         $context.actor.rollAbilitySave(abbreviation, { event })}
+      tabindex={!$settingStore.useOldAttributeTabbing ? 0 : -1}
     >
       {formatAsModifier(ability.save)}
     </button>
@@ -70,6 +74,7 @@
               [`system.abilities.${abbreviation}.proficient`]:
                 1 - parseInt(ability.proficient),
             })}
+          tabindex={!$settingStore.useOldAttributeTabbing ? 0 : -1}
         >
           {@html ability.icon}
         </button>
@@ -86,6 +91,7 @@
         title={localize('DND5E.AbilityConfigure')}
         on:click={() =>
           FoundryAdapter.renderActorAbilityConfig($context.actor, abbreviation)}
+        tabindex={!$settingStore.useOldAttributeTabbing ? 0 : -1}
       >
         <i class="fas fa-cog" />
       </button>

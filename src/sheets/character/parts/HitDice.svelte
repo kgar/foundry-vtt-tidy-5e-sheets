@@ -3,6 +3,7 @@
   import type { CharacterSheetContext } from 'src/types/types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
+  import { settingStore } from 'src/settings/settings';
 
   let context = getContext<Readable<CharacterSheetContext>>('context');
 
@@ -16,7 +17,7 @@
   class="portrait-hd"
   class:rounded={$context.useRoundedPortraitStyle}
   title="{localize('DND5E.HitDice')}: {hitDice}/{actorLevel}&#10;{localize(
-    'DND5E.HitDiceConfig'
+    'DND5E.HitDiceConfig',
   )}"
 >
   <button
@@ -24,8 +25,11 @@
     class="current-hd config-button transparent-button"
     on:click={$context.owner &&
       FoundryAdapter.renderActorHitDiceConfig($context.actor)}
-    disabled={!$context.owner}>{hitDice}</button
+    disabled={!$context.owner}
+    tabindex={!$settingStore.useOldHpTabbing ? 0 : -1}
   >
+    {hitDice}
+  </button>
 </div>
 
 <style lang="scss">

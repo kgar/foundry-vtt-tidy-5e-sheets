@@ -5,6 +5,7 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import TextInput from 'src/components/inputs/TextInput.svelte';
+  import { settingStore } from 'src/settings/settings';
 
   let context = getContext<Readable<NpcSheetContext>>('context');
 
@@ -44,11 +45,12 @@
   <button
     type="button"
     title="{localize('DND5E.HitDiceRoll')}/{localize(
-      'T5EK.HitDiceRollAverage'
+      'T5EK.HitDiceRollAverage',
     )}"
     on:click={rollNpcHp}
     on:contextmenu={calcAverageHitDie}
     class="roll-hp-formula"
+    tabindex={!$settingStore.useOldHpTabbing ? 0 : -1}
   >
     <i class="fas fa-dice-six" />
   </button>
