@@ -1,7 +1,7 @@
 import { CONSTANTS } from 'src/constants';
 import type { Tab } from 'src/types/types';
 import { delay } from 'src/utils/asynchrony';
-import { warn } from 'src/utils/logging';
+import { error, warn } from 'src/utils/logging';
 
 type RenderCustomContentArgs = {
   app: any;
@@ -18,36 +18,42 @@ export class SheetCompatibilityManager {
       args;
 
     const renderPromises = tabs.map(async (s) => {
-      let tab = element
-        .get(0)
-        .querySelector(`[data-tab-contents-for="${s.id}"]`);
+      try {
+        let tab = element
+          .get(0)
+          .querySelector(`[data-tab-contents-for="${s.id}"]`);
 
-      if (!tab) {
-        // This content was added during a non-forced render (e.g., tab selection changes); wait a tick and re-attempt to set its HTML
-        await delay(0);
-        tab = element.get(0).querySelector(`[data-tab-contents-for="${s.id}"]`);
-      }
+        if (!tab) {
+          // This content was added during a non-forced render (e.g., tab selection changes); wait a tick and re-attempt to set its HTML
+          await delay(0);
+          tab = element
+            .get(0)
+            .querySelector(`[data-tab-contents-for="${s.id}"]`);
+        }
 
-      if (!tab) {
-        warn('Unable to find custom tab content container for render');
-        return;
-      }
+        if (!tab) {
+          warn('Unable to find custom tab content container for render');
+          return;
+        }
 
-      if (
-        s.content.type === 'html' &&
-        (isFullRender || s.content.renderScheme === 'handlebars')
-      ) {
-        tab.innerHTML = s.content.html;
-      }
+        if (
+          s.content.type === 'html' &&
+          (isFullRender || s.content.renderScheme === 'handlebars')
+        ) {
+          tab.innerHTML = s.content.html;
+        }
 
-      if (s.onRender) {
-        s.onRender({
-          app: app,
-          data: data,
-          element: element.get(0),
-          tabContentsElement: tab,
-          isFullRender: isFullRender,
-        });
+        if (s.onRender) {
+          s.onRender({
+            app: app,
+            data: data,
+            element: element.get(0),
+            tabContentsElement: tab,
+            isFullRender: isFullRender,
+          });
+        }
+      } catch (e) {
+        error('Failed to render custom content due to an error', false, e);
       }
     });
 
