@@ -29,6 +29,10 @@ jobs:
         run: |
           git reset --hard origin/main
 
+      - name: install
+        run: |
+          npm ci
+
       - name: refresh docs
         run: |
           npm run refresh-docs
