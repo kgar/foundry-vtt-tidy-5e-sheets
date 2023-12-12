@@ -22,12 +22,13 @@ import NpcShortRestDialog from 'src/dialogs/NpcShortRestDialog';
 import LongRestDialog from 'src/dialogs/NpcLongRestDialog';
 import type { SvelteComponent } from 'svelte';
 import type { ItemChatData } from 'src/types/item';
-import { registeredNpcTabs } from 'src/runtime/npc-sheet-state';
+import { NpcSheetRuntime } from 'src/runtime/NpcSheetRuntime';
 import {
   actorUsesActionFeature,
   getActorActions,
 } from 'src/features/actions/actions';
 import { isNil } from 'src/utils/data';
+import { SheetCompatibilityManager } from './SheetCompatibilityManager';
 
 export class Tidy5eNpcSheet
   extends dnd5e.applications.actor.ActorSheet5eNPC
@@ -50,7 +51,7 @@ export class Tidy5eNpcSheet
     super(...args);
 
     settingStore.subscribe(() => {
-      this.getContext().then((context) => this.context.set(context));
+      this.getData().then((context) => this.context.set(context));
     });
 
     this.currentTabId = SettingsProvider.settings.initialNpcSheetTab.get();
@@ -95,29 +96,6 @@ export class Tidy5eNpcSheet
   }
 
   async getData(options = {}) {
-    this.context.set(await this.getContext());
-    await this.setExpandedItemData();
-    return get(this.context);
-  }
-
-  private async setExpandedItemData() {
-    this.expandedItemData.clear();
-    for (const id of this.expandedItems.keys()) {
-      const item = this.actor.items.get(id);
-      if (item) {
-        this.expandedItemData.set(
-          id,
-          await item.getChatData({ secrets: this.actor.isOwner })
-        );
-      }
-    }
-  }
-
-  onToggleAbilityProficiency(event: Event) {
-    return this._onToggleAbilityProficiency(event);
-  }
-
-  private async getContext(): Promise<NpcSheetContext> {
     const editable = FoundryAdapter.canEditActor(this.actor) && this.isEditable;
 
     const lockSensitiveFields =
@@ -300,7 +278,7 @@ export class Tidy5eNpcSheet
         ) ?? [],
     };
 
-    let tabs = get(registeredNpcTabs).getTabs(context);
+    let tabs = await NpcSheetRuntime.getTabs(context);
 
     const selectedTabs = FoundryAdapter.tryGetFlag<string[]>(
       context.actor,
@@ -325,6 +303,23 @@ export class Tidy5eNpcSheet
     debug('NPC Sheet context data', context);
 
     return context;
+  }
+
+  private async setExpandedItemData() {
+    this.expandedItemData.clear();
+    for (const id of this.expandedItems.keys()) {
+      const item = this.actor.items.get(id);
+      if (item) {
+        this.expandedItemData.set(
+          id,
+          await item.getChatData({ secrets: this.actor.isOwner })
+        );
+      }
+    }
+  }
+
+  onToggleAbilityProficiency(event: Event) {
+    return this._onToggleAbilityProficiency(event);
   }
 
   #getTokenState(): 'linked' | 'unlinked' | null {
@@ -374,18 +369,33 @@ export class Tidy5eNpcSheet
     return this._filters[setName]?.has(filterName) === true;
   }
 
-  render(force = false, ...args: any[]) {
+  async _render(force?: boolean, options = {}) {
+    await this.setExpandedItemData();
+    this.context.set(await this.getData());
+
     if (force) {
       this._saveScrollPositions(this.element);
       this._destroySvelteComponent();
-      return super.render(force, ...args);
+      await super._render(force, options);
+      await this.renderCustomContent({ isFullRender: true });
+      return;
     }
 
     applyTitleToWindow(this.title, this.element.get(0));
-    this.getContext().then((context) => {
-      this.context.update(() => context);
+    await this.renderCustomContent({ isFullRender: false });
+  }
+
+  private async renderCustomContent(args: { isFullRender: boolean }) {
+    const data = get(this.context);
+
+    await SheetCompatibilityManager.renderCustomContent({
+      app: this,
+      data: data,
+      element: this.element,
+      isFullRender: args.isFullRender,
+      superActivateListeners: super.activateListeners,
+      tabs: data.tabs,
     });
-    return this;
   }
 
   _getHeaderButtons() {

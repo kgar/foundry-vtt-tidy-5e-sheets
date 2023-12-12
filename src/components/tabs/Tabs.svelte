@@ -66,7 +66,7 @@
 </script>
 
 <nav
-  class="tabs {cssClass}"
+  class="tidy-tabs {cssClass}"
   class:vertical={orientation === 'vertical'}
   bind:this={nav}
 >
@@ -84,7 +84,7 @@
         on:click={() => selectTab(tab)}
         on:keydown={(ev) => onKeyDown(ev, i)}
       >
-        {localize(tab.displayName)}
+        {localize(tab.title)}
       </button>
     {/each}
   {/if}
@@ -92,7 +92,7 @@
 </nav>
 
 <style lang="scss">
-  .tabs {
+  .tidy-tabs {
     display: flex;
     align-items: center;
     justify-content: center;

@@ -193,7 +193,11 @@
       </ItemTableRow>
     {/each}
     {#if $context.editable}
-      <ItemTableFooter actor={$context.actor} dataset={section.dataset} />
+      <ItemTableFooter
+        actor={$context.actor}
+        dataset={section.dataset}
+        canCreate={section.canCreate}
+      />
     {/if}
   </ItemTable>
 </section>

@@ -11,16 +11,16 @@ import {
 import { debug, error } from 'src/utils/logging';
 import { CONSTANTS } from 'src/constants';
 import SvelteFormApplicationBase from 'src/applications/SvelteFormApplicationBase';
-import { getAllRegisteredCharacterSheetTabs } from 'src/runtime/character-sheet-state';
-import { getAllRegisteredNpcSheetTabs } from 'src/runtime/npc-sheet-state';
-import { getAllRegisteredVehicleSheetTabs } from 'src/runtime/vehicle-sheet-state';
-import type { SheetTabState } from 'src/runtime/types';
+import type { RegisteredTab } from 'src/runtime/types';
 import type {
   DefaultTabSelectionFields,
   SettingsSheetContext,
   SettingsSheetFunctions,
   SettingsSheetStore,
 } from './SheetSettings.types';
+import { NpcSheetRuntime } from 'src/runtime/NpcSheetRuntime';
+import { CharacterSheetRuntime } from 'src/runtime/CharacterSheetRuntime';
+import { VehicleSheetRuntime } from 'src/runtime/VehicleSheetRuntime';
 
 export class SheetSettingsFormApplication extends SvelteFormApplicationBase {
   initialTabId: string;
@@ -51,15 +51,15 @@ export class SheetSettingsFormApplication extends SvelteFormApplicationBase {
     return {
       settings: currentSettings,
       defaultCharacterTabs: this.mapTabSelectionFields(
-        getAllRegisteredCharacterSheetTabs(),
+        CharacterSheetRuntime.getAllRegisteredTabs(),
         currentSettings.defaultCharacterSheetTabs
       ),
       defaultNpcTabs: this.mapTabSelectionFields(
-        getAllRegisteredNpcSheetTabs(),
+        NpcSheetRuntime.getAllRegisteredTabs(),
         currentSettings.defaultNpcSheetTabs
       ),
       defaultVehicleTabs: this.mapTabSelectionFields(
-        getAllRegisteredVehicleSheetTabs(),
+        VehicleSheetRuntime.getAllRegisteredTabs(),
         currentSettings.defaultVehicleSheetTabs
       ),
       exhaustionConfig: {
@@ -100,14 +100,14 @@ export class SheetSettingsFormApplication extends SvelteFormApplicationBase {
   }
 
   mapTabSelectionFields(
-    registeredTabs: SheetTabState<any>[],
+    registeredTabs: RegisteredTab<any>[],
     selectedTabIds: string[]
   ): DefaultTabSelectionFields {
     const available = registeredTabs
       .filter((t) => !selectedTabIds.includes(t.id))
       .map((t) => ({
         id: t.id,
-        label: FoundryAdapter.localize(t.displayName),
+        label: FoundryAdapter.localize(t.title),
       }));
 
     const selected = registeredTabs
@@ -117,7 +117,7 @@ export class SheetSettingsFormApplication extends SvelteFormApplicationBase {
       )
       .map((t) => ({
         id: t.id,
-        label: FoundryAdapter.localize(t.displayName),
+        label: FoundryAdapter.localize(t.title),
       }));
 
     return {
@@ -257,7 +257,7 @@ export class SheetSettingsFormApplication extends SvelteFormApplicationBase {
       case CONSTANTS.SHEET_TYPE_CHARACTER:
         context$.update((context) => {
           context.defaultCharacterTabs = this.mapTabSelectionFields(
-            getAllRegisteredCharacterSheetTabs(),
+            CharacterSheetRuntime.getAllRegisteredTabs(),
             [
               ...SettingsProvider.settings.defaultCharacterSheetTabs.options
                 .default,
@@ -269,7 +269,7 @@ export class SheetSettingsFormApplication extends SvelteFormApplicationBase {
       case CONSTANTS.SHEET_TYPE_NPC:
         context$.update((context) => {
           context.defaultNpcTabs = this.mapTabSelectionFields(
-            getAllRegisteredNpcSheetTabs(),
+            NpcSheetRuntime.getAllRegisteredTabs(),
             [...SettingsProvider.settings.defaultNpcSheetTabs.options.default]
           );
           return context;
@@ -278,7 +278,7 @@ export class SheetSettingsFormApplication extends SvelteFormApplicationBase {
       case CONSTANTS.SHEET_TYPE_VEHICLE:
         context$.update((context) => {
           context.defaultVehicleTabs = this.mapTabSelectionFields(
-            getAllRegisteredVehicleSheetTabs(),
+            VehicleSheetRuntime.getAllRegisteredTabs(),
             [
               ...SettingsProvider.settings.defaultVehicleSheetTabs.options
                 .default,

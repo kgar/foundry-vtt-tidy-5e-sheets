@@ -66,7 +66,9 @@
           class="spell {FoundryAdapter.getSpellRowClasses(spell)} icon-button"
           data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
           data-context-menu-entity-id={spell.id}
-          on:click={(event) => $context.owner && spell.use({}, { event })}
+          on:click={(event) =>
+            $context.owner &&
+            FoundryAdapter.actorTryUseItem(spell, {}, { event })}
           on:mousedown={(event) =>
             FoundryAdapter.editOnMiddleClick(event, spell)}
           on:mouseenter={() => onMouseEnter(spell)}
@@ -78,7 +80,10 @@
           {/if}
 
           <div class="spell-name">
-            <div class="spell-image" style="background-image: url('{spellImgUrl}');">
+            <div
+              class="spell-image"
+              style="background-image: url('{spellImgUrl}');"
+            >
               <i class="fa fa-dice-d20" />
             </div>
           </div>
@@ -86,15 +91,17 @@
       {/each}
       {#if $context.owner && $context.editable}
         <div class="spells-footer">
-          <button
-            type="button"
-            class="item-create icon-button"
-            title={localize('DND5E.SpellCreate')}
-            on:click|stopPropagation|preventDefault={() =>
-              FoundryAdapter.createItem(section.dataset, $context.actor)}
-          >
-            <i class="fas fa-plus-circle" />
-          </button>
+          {#if section.canCreate}
+            <button
+              type="button"
+              class="item-create icon-button"
+              title={localize('DND5E.SpellCreate')}
+              on:click|stopPropagation|preventDefault={() =>
+                FoundryAdapter.createItem(section.dataset, $context.actor)}
+            >
+              <i class="fas fa-plus-circle" />
+            </button>
+          {/if}
         </div>
       {/if}
     </div>

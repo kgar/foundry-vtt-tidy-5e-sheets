@@ -1,5 +1,6 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
 
@@ -23,7 +24,7 @@
     <button
       type="button"
       class="item-use-button icon-button"
-      on:click={(event) => item.use({}, { event })}
+      on:click={(event) => FoundryAdapter.actorTryUseItem(item, {}, { event })}
       on:focusin={() => (buttonIsFocused = true)}
       on:focusout={() => (buttonIsFocused = false)}
     >

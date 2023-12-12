@@ -1154,4 +1154,15 @@ export const FoundryAdapter = {
   lookupAbility(abbr: string) {
     return game.dnd5e.config.abilities[abbr];
   },
+  actorTryUseItem(item: Item5e, config: any = {}, options: any = {}) {
+    const suppressItemUse =
+      Hooks.call('tidy5e-sheet.actorPreUseItem', item, config, options) ===
+      false;
+
+    if (suppressItemUse) {
+      return;
+    }
+
+    item.use(config, options);
+  },
 };

@@ -1,26 +1,16 @@
-import { CONSTANTS } from 'src/constants';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type { Item5e, ItemDescription, ItemSheetContext } from 'src/types/item';
 import { get, writable } from 'svelte/store';
 import TypeNotFoundSheet from './item/TypeNotFoundSheet.svelte';
-import EquipmentSheet from './item/EquipmentSheet.svelte';
-import BackpackSheet from './item/BackpackSheet.svelte';
-import BackgroundSheet from './item/BackgroundSheet.svelte';
-import ClassSheet from './item/ClassSheet.svelte';
-import ConsumableSheet from './item/ConsumableSheet.svelte';
-import FeatSheet from './item/FeatSheet.svelte';
-import LootSheet from './item/LootSheet.svelte';
-import SpellSheet from './item/SpellSheet.svelte';
-import SubclassSheet from './item/SubclassSheet.svelte';
-import ToolSheet from './item/ToolSheet.svelte';
-import WeaponSheet from './item/WeaponSheet.svelte';
-import RaceSheet from './item/RaceSheet.svelte';
-import type { SheetStats, SheetTabCacheable } from 'src/types/types';
+import type { SheetStats, SheetTabCacheable, Tab } from 'src/types/types';
 import { applyTitleToWindow } from 'src/utils/applications';
 import { debug } from 'src/utils/logging';
 import type { SvelteComponent } from 'svelte';
 import { getPercentage } from 'src/utils/numbers';
 import { isNil } from 'src/utils/data';
+import { ItemSheetRuntime } from 'src/runtime/item/ItemSheetRuntime';
+import { TabManager } from 'src/runtime/tab/TabManager';
+import { SheetCompatibilityManager } from './SheetCompatibilityManager';
 
 export class Tidy5eKgarItemSheet
   extends dnd5e.applications.item.ItemSheet5e
@@ -55,11 +45,6 @@ export class Tidy5eKgarItemSheet
 
   component: SvelteComponent | undefined;
   activateListeners(html: any) {
-    // Legacy jquery / form application change handling; will probably have to fix this further in the future
-    html.on('change', 'input[name], textarea[name], select[name]', () => {
-      this.submit();
-    });
-
     const node = html.get(0);
 
     const context = new Map<any, any>([
@@ -69,86 +54,18 @@ export class Tidy5eKgarItemSheet
       ['onTabSelected', this.onTabSelected.bind(this)],
     ]);
 
-    switch (this.item.type) {
-      case CONSTANTS.ITEM_TYPE_EQUIPMENT:
-        this.component = new EquipmentSheet({
+    // TODO: Try find sheet from runtime
+    const sheetComponent = ItemSheetRuntime.sheets[this.item.type];
+
+    this.component = sheetComponent
+      ? new sheetComponent.Sheet({
+          target: node,
+          context: context,
+        })
+      : new TypeNotFoundSheet({
           target: node,
           context: context,
         });
-        break;
-      case CONSTANTS.ITEM_TYPE_BACKGROUND:
-        this.component = new BackgroundSheet({
-          target: node,
-          context: context,
-        });
-        break;
-      case CONSTANTS.ITEM_TYPE_BACKPACK:
-        this.component = new BackpackSheet({
-          target: node,
-          context: context,
-        });
-        break;
-      case CONSTANTS.ITEM_TYPE_CLASS:
-        this.component = new ClassSheet({
-          target: node,
-          context: context,
-        });
-        break;
-      case CONSTANTS.ITEM_TYPE_CONSUMABLE:
-        this.component = new ConsumableSheet({
-          target: node,
-          context: context,
-        });
-        break;
-      case CONSTANTS.ITEM_TYPE_FEAT:
-        this.component = new FeatSheet({
-          target: node,
-          context: context,
-        });
-        break;
-      case CONSTANTS.ITEM_TYPE_LOOT:
-        this.component = new LootSheet({
-          target: node,
-          context: context,
-        });
-        break;
-      case CONSTANTS.ITEM_TYPE_SPELL:
-        this.component = new SpellSheet({
-          target: node,
-          context: context,
-        });
-        break;
-      case CONSTANTS.ITEM_TYPE_SUBCLASS:
-        this.component = new SubclassSheet({
-          target: node,
-          context: context,
-        });
-        break;
-      case CONSTANTS.ITEM_TYPE_TOOL:
-        this.component = new ToolSheet({
-          target: node,
-          context: context,
-        });
-        break;
-      case CONSTANTS.ITEM_TYPE_WEAPON:
-        this.component = new WeaponSheet({
-          target: node,
-          context: context,
-        });
-        break;
-      case CONSTANTS.ITEM_TYPE_RACE:
-        this.component = new RaceSheet({
-          target: node,
-          context: context,
-        });
-        break;
-      default:
-        this.component = new TypeNotFoundSheet({
-          target: node,
-          context: context,
-        });
-        break;
-    }
 
     // Advancement context menu
     const contextOptions = this._getAdvancementContextMenuOptions();
@@ -173,26 +90,6 @@ export class Tidy5eKgarItemSheet
   }
 
   async getData(options = {}) {
-    this.context.set(await this.getContext());
-    return get(this.context);
-  }
-
-  // TODO: Extract this implementation somewhere. Or at least part of it.
-  render(force = false, options = {}) {
-    if (force) {
-      this.component?.$destroy();
-      super.render(force, options);
-      return this;
-    }
-
-    applyTitleToWindow(this.title, this.element.get(0));
-    this.getContext().then((context) => {
-      this.context.update(() => context);
-    });
-    return this;
-  }
-
-  private async getContext(): Promise<ItemSheetContext> {
     const defaultDocumentContext = await super.getData(this.options);
 
     const itemDescriptions: ItemDescription[] = [
@@ -213,7 +110,20 @@ export class Tidy5eKgarItemSheet
       },
     ];
 
-    const context = {
+    const eligibleCustomTabs = ItemSheetRuntime.getCustomItemTabs(
+      defaultDocumentContext
+    );
+
+    const customTabs: Tab[] = await TabManager.prepareTabsForRender(
+      defaultDocumentContext,
+      eligibleCustomTabs
+    );
+
+    const tabs = ItemSheetRuntime.sheets[this.item.type]?.defaultTabs() ?? [];
+
+    tabs.push(...customTabs);
+
+    const context: ItemSheetContext = {
       ...defaultDocumentContext,
       appId: this.appId,
       activateFoundryJQueryListeners: (node: HTMLElement) => {
@@ -228,6 +138,7 @@ export class Tidy5eKgarItemSheet
       ),
       itemDescriptions,
       originalContext: defaultDocumentContext,
+      tabs: tabs,
       viewableWarnings:
         defaultDocumentContext.warnings?.filter(
           (w: any) => !isNil(w.message?.trim(), '')
@@ -236,7 +147,36 @@ export class Tidy5eKgarItemSheet
 
     debug(`${this.item?.type ?? 'Unknown Item Type'} context data`, context);
 
+    // TODO: Add hook for preparing Tidy-specific context data
+
     return context;
+  }
+
+  async _render(force?: boolean, options = {}) {
+    this.context.set(await this.getData());
+
+    if (force) {
+      this.component?.$destroy();
+      await super._render(force, options);
+      await this.renderCustomContent({ isFullRender: true });
+      return;
+    }
+
+    applyTitleToWindow(this.title, this.element.get(0));
+    await this.renderCustomContent({ isFullRender: false });
+  }
+
+  private async renderCustomContent(args: { isFullRender: boolean }) {
+    const data = get(this.context);
+
+    await SheetCompatibilityManager.renderCustomContent({
+      app: this,
+      data: data,
+      element: this.element,
+      isFullRender: args.isFullRender,
+      superActivateListeners: super.activateListeners,
+      tabs: data.tabs,
+    });
   }
 
   async _onSubmit(...args: any[]) {
@@ -272,7 +212,7 @@ export class Tidy5eKgarItemSheet
 
   async toggleAdvancementLock() {
     this.advancementConfigurationMode = !this.advancementConfigurationMode;
-    this.context.set(await this.getContext());
+    this.context.set(await this.getData());
   }
 
   _getHeaderButtons() {

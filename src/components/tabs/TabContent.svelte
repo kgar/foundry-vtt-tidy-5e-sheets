@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { Tab } from 'src/types/types';
-  import RerenderAfterFormSubmission from '../utility/RerenderAfterFormSubmission.svelte';
   import { declareLocation } from 'src/types/location-awareness';
+  import { CONSTANTS } from 'src/constants';
 
   export let tab: Tab;
   export let active: boolean;
@@ -9,35 +9,25 @@
 
   declareLocation('tab', tab.id);
 
-  function onTabRender(node: HTMLElement, tab: Tab) {
-    if ('render' in tab.content) {
-      tab.content.render?.(node);
-    }
-  }
+  $: useCoreListenersClass =
+    tab.content.type === 'html' && tab.content.renderScheme === 'handlebars'
+      ? CONSTANTS.CLASS_TIDY_USE_CORE_LISTENERS
+      : '';
 </script>
 
-<section
-  use:onTabRender={tab}
-  class="tab {tab.id} {cssClass} {tab.content.cssClass ?? ''}"
+<div
+  class="tidy-tab {tab.id} {cssClass} {tab.content.cssClass ??
+    ''} {useCoreListenersClass}"
   class:active
   data-tab-contents-for={tab.id}
 >
-  {#if 'component' in tab.content}
+  {#if tab.content.type === 'svelte'}
     <svelte:component this={tab.content.component} {...tab.content.props} />
   {/if}
-  {#if 'html' in tab.content}
-    {#if tab.content.rerenderOnSubmit}
-      <RerenderAfterFormSubmission>
-        {@html tab.content.html}
-      </RerenderAfterFormSubmission>
-    {:else}
-      {@html tab.content.html}
-    {/if}
-  {/if}
-</section>
+</div>
 
 <style lang="scss">
-  .tab {
+  .tidy-tab {
     height: 100%;
     flex-direction: column;
     display: none;

@@ -26,23 +26,26 @@
   tabs = [
     {
       id: CONSTANTS.TAB_SETTINGS_PLAYERS,
-      displayName: 'T5EK.Settings.TabPlayers.tabLabel',
+      title: 'T5EK.Settings.TabPlayers.tabLabel',
       content: {
         component: PlayerSettingsTab,
+        type: 'svelte',
       },
     },
     {
       id: CONSTANTS.TAB_SETTINGS_NPCS,
-      displayName: 'T5EK.Settings.TabNPCs.tabLabel',
+      title: 'T5EK.Settings.TabNPCs.tabLabel',
       content: {
         component: NpcSettingsTab,
+        type: 'svelte',
       },
     },
     {
       id: CONSTANTS.TAB_SETTINGS_VEHICLES,
-      displayName: 'T5EK.Settings.TabVehicles.tabLabel',
+      title: 'T5EK.Settings.TabVehicles.tabLabel',
       content: {
         component: VehicleSettingsTab,
+        type: 'svelte',
       },
     },
   ];
@@ -51,16 +54,18 @@
     tabs.push(
       {
         id: CONSTANTS.TAB_SETTINGS_GM,
-        displayName: 'T5EK.Settings.TabGM.tabLabel',
+        title: 'T5EK.Settings.TabGM.tabLabel',
         content: {
           component: GmOptionsSettingsTab,
+          type: 'svelte',
         },
       },
       {
         id: CONSTANTS.TAB_SETTINGS_LOCKS,
-        displayName: 'T5EK.Settings.TabLocks.tabLabel',
+        title: 'T5EK.Settings.TabLocks.tabLabel',
         content: {
           component: LockSettingsTab,
+          type: 'svelte',
         },
       },
     );
@@ -68,17 +73,19 @@
 
   tabs.push({
     id: CONSTANTS.TAB_SETTINGS_FEATURES,
-    displayName: 'T5EK.Settings.TabFeatures.tabLabel',
+    title: 'T5EK.Settings.TabFeatures.tabLabel',
     content: {
       component: FeaturesSettingsTab,
+      type: 'svelte',
     },
   });
 
   tabs.push({
     id: CONSTANTS.TAB_SETTINGS_INFO,
-    displayName: 'T5EK.Settings.TabInfo.tabLabel',
+    title: 'T5EK.Settings.TabInfo.tabLabel',
     content: {
       component: InfoTab,
+      type: 'svelte',
     },
   });
 
@@ -115,7 +122,7 @@
     <div role="presentation" class="remaining-vertical-space" />
   </div>
 
-  <TabContents {tabs} {selectedTabId} cssClass="sheet-body" />
+  <TabContents {tabs} {selectedTabId} cssClass="tidy-sheet-body" />
   <div class="button-bar">
     <button
       type="button"
@@ -156,7 +163,7 @@
       margin-bottom: -0.5rem;
     }
 
-    :global(.sheet-body) {
+    :global(.tidy-sheet-body) {
       grid-area: body;
       overflow-y: scroll;
       padding-top: 0.5rem;

@@ -1,0 +1,6 @@
+// Tidy 5e intentionally uses .tidy-tab for its tabs. 
+// As such, to provide tab injection for default sheet tab contents, 
+// this shim is needed.
+.tab[data-tab] {
+  display: flex;
+}

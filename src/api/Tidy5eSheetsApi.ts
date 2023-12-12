@@ -1,86 +1,148 @@
-import { CONSTANTS } from 'src/constants';
-import { SheetSettingsFormApplication } from 'src/applications/sheet-settings/SheetSettingsFormApplication';
-import type {
-  SheetTabRegistrationOptions,
-  SheetTabState,
-} from '../runtime/types';
-import type {
-  CharacterSheetContext,
-  NpcSheetContext,
-  VehicleSheetContext,
-} from 'src/types/types';
-import {
-  registerCharacterSheetTab,
-  unregisterCharacterSheetTab,
-} from '../runtime/character-sheet-state';
-import {
-  registerVehicleSheetTab,
-  unregisterVehicleSheetTab,
-} from 'src/runtime/vehicle-sheet-state';
-import {
-  registerNpcSheetTab,
-  unregisterNpcSheetTab,
-} from 'src/runtime/npc-sheet-state';
-import ThemeSettingsFormApplication from 'src/applications/theme/ThemeSettingsFormApplication';
+import { HandlebarsTab } from './tab/HandlebarsTab';
+import { HtmlTab } from './tab/HtmlTab';
+import { ItemSheetRuntime } from 'src/runtime/item/ItemSheetRuntime';
+import type { CustomTabBase } from './tab/CustomTabBase';
+import { warn } from 'src/utils/logging';
+import { CharacterSheetRuntime } from 'src/runtime/CharacterSheetRuntime';
+import type { SheetLayout } from 'src/runtime/types';
+import { NpcSheetRuntime } from 'src/runtime/NpcSheetRuntime';
+import { VehicleSheetRuntime } from 'src/runtime/VehicleSheetRuntime';
+import { TabManager } from 'src/runtime/tab/TabManager';
 
 /**
- * Tidy 5e Sheets API
- *
- * More info later
+ * The Tidy 5e Sheets API. The API becomes available after the hook `tidy5e-sheet.ready` is called.
+ * When the hook fires, it provides an instance of the API.
+ * @example Getting the API for extending Tidy 5e Sheets
+ * ```js
+ * Hooks.once("tidy5e-sheet.ready", (api) => {
+ *   // Do something awesome!
+ * });
+ * ```
  */
 export class Tidy5eSheetsApi {
-  #themeSettings = new ThemeSettingsFormApplication();
-  #sheetSettings = new SheetSettingsFormApplication(CONSTANTS.TAB_SETTINGS_PLAYERS);
+  private static _instance: Tidy5eSheetsApi;
+
+  private constructor() {}
 
   /**
-   * Opens the Theme Settings dialog.
+   * Gets an instance of the Tidy 5e Sheets API
+   * @returns instance of the Tidy 5e Sheets API
    */
-  openThemeSettings(): ThemeSettingsFormApplication {
-    const rendered = this.#themeSettings.render(true);
-    setTimeout(() => this.#themeSettings.bringToTop(), 150);
-    return rendered;
+  static getApi() {
+    Tidy5eSheetsApi._instance ??= new Tidy5eSheetsApi();
+    return this._instance;
   }
 
-  openSheetSettings(initialTab?: string): SheetSettingsFormApplication {
-    if (initialTab) {
-      this.#sheetSettings.initialTabId = initialTab;
+  /**
+   * Adds a tab to the available Character sheet tabs.
+   * @param tab the information necessary to render a tab
+   * @param layout an optional sheet layout or layouts (default: 'all')
+   * @returns void
+   */
+  registerCharacterTab(
+    tab: HandlebarsTab | HtmlTab,
+    layout?: SheetLayout | SheetLayout[]
+  ): void {
+    if (!TabManager.validateTab(tab)) {
+      return;
     }
 
-    const rendered = this.#sheetSettings.render(true);
-    setTimeout(() => this.#sheetSettings.bringToTop(), 150);
-    return rendered;
+    const registeredTab = TabManager.mapCustomTabToRegisteredTab(tab, layout);
+
+    if (!registeredTab) {
+      warn('Unable to register tab. Tab type not supported');
+      return;
+    }
+
+    CharacterSheetRuntime.registerTab(registeredTab);
   }
 
-  registerCharacterSheetTab(
-    tab: SheetTabState<CharacterSheetContext>,
-    options?: SheetTabRegistrationOptions
-  ) {
-    return registerCharacterSheetTab(tab, options);
+  /**
+   * Adds a tab to the available NPC sheet tabs.
+   * @param tab the information necessary to render a tab
+   * @param layout an optional sheet layout or layouts (default: 'all')
+   * @returns void
+   */
+  registerNpcTab(
+    tab: HandlebarsTab | HtmlTab,
+    layout?: SheetLayout | SheetLayout[]
+  ): void {
+    if (!TabManager.validateTab(tab)) {
+      return;
+    }
+    const registeredTab = TabManager.mapCustomTabToRegisteredTab(tab, layout);
+
+    if (!registeredTab) {
+      warn('Unable to register tab. Tab type not supported');
+      return;
+    }
+
+    NpcSheetRuntime.registerTab(registeredTab);
   }
 
-  unregisterCharacterSheetTab(tabId: string) {
-    return unregisterCharacterSheetTab(tabId);
+  /**
+   * Adds a tab to the available Vehicle sheet tabs.
+   * @param tab the information necessary to render a tab
+   * @param layout an optional sheet layout or layouts (default: 'all')
+   * @returns void
+   */
+  registerVehicleTab(
+    tab: HandlebarsTab | HtmlTab,
+    layout?: SheetLayout | SheetLayout[]
+  ): void {
+    if (!TabManager.validateTab(tab)) {
+      return;
+    }
+    const registeredTab = TabManager.mapCustomTabToRegisteredTab(tab, layout);
+
+    if (!registeredTab) {
+      warn('Unable to register tab. Tab type not supported');
+      return;
+    }
+
+    VehicleSheetRuntime.registerTab(registeredTab);
   }
 
-  registerNpcSheetTab(
-    tab: SheetTabState<NpcSheetContext>,
-    options?: SheetTabRegistrationOptions
-  ) {
-    return registerNpcSheetTab(tab, options);
+  /**
+   * Adds a tab to all relevant item sheets.
+   * @see {@link CustomTabBase} for options related to all tabs.
+   * @param tab the custom tab settings to use when incorporating this tab.
+   * @example Register an item tab for spell items only, adding some custom data to the Item Sheet Context object before rendering my handlebars template
+   * ```js
+   * Hooks.once("tidy5e-sheet.ready", (api) => {
+   *   api.registerItemTab(
+   *     new api.models.HandlebarsTab({
+   *       title: "My Item Tab",
+   *       path: "/modules/my-module/my-item-tab.hbs",
+   *       enabled: (data) => data.item.type === 'spell',
+   *       getData: (data) => {
+   *         data['my-extra-data'] = "Hello, world! 👋";
+   *         return data;
+   *       }
+   *     }));
+   * });
+   * ```
+   */
+  registerItemTab(tab: HandlebarsTab | HtmlTab): void {
+    if (!TabManager.validateTab(tab)) {
+      return;
+    }
+
+    const registeredTab = TabManager.mapCustomTabToRegisteredTab(tab);
+
+    if (!registeredTab) {
+      warn('Unable to register tab. Tab type not supported');
+      return;
+    }
+
+    ItemSheetRuntime.registerTab(registeredTab);
   }
 
-  unregisterNpcSheetTab(tabId: string) {
-    return unregisterNpcSheetTab(tabId);
-  }
-
-  registerVehicleSheetTab(
-    tab: SheetTabState<VehicleSheetContext>,
-    options?: SheetTabRegistrationOptions
-  ) {
-    return registerVehicleSheetTab(tab, options);
-  }
-
-  unregisterVehicleSheetTab(tabId: string) {
-    return unregisterVehicleSheetTab(tabId);
-  }
+  /**
+   * Various models can be used for API calls.
+   */
+  models = {
+    HandlebarsTab: HandlebarsTab,
+    HtmlTab: HtmlTab,
+  };
 }

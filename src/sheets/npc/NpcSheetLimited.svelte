@@ -19,7 +19,7 @@
 
 <div class="limited-npc">
   <LimitedHeader rounded={$context.useRoundedPortraitStyle} />
-  <section class="sheet-body">
+  <section class="tidy-sheet-body">
     <div class="note-entries">
       <RerenderAfterFormSubmission
         andOnValueChange={$context.system.details.biography.value}
@@ -57,7 +57,7 @@
     flex-direction: column;
   }
 
-  .sheet-body {
+  .tidy-sheet-body {
     flex: 1;
     margin-right: 1rem;
 

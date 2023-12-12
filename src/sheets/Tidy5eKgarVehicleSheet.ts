@@ -18,12 +18,13 @@ import type { SvelteComponent } from 'svelte';
 import { debug } from 'src/utils/logging';
 import { getPercentage } from 'src/utils/numbers';
 import type { ItemChatData } from 'src/types/item';
-import { registeredVehicleTabs } from 'src/runtime/vehicle-sheet-state';
+import { VehicleSheetRuntime } from 'src/runtime/VehicleSheetRuntime';
 import {
   actorUsesActionFeature,
   getActorActions,
 } from 'src/features/actions/actions';
 import { isNil } from 'src/utils/data';
+import { SheetCompatibilityManager } from './SheetCompatibilityManager';
 
 export class Tidy5eVehicleSheet
   extends dnd5e.applications.actor.ActorSheet5eVehicle
@@ -42,7 +43,7 @@ export class Tidy5eVehicleSheet
     super(...args);
 
     settingStore.subscribe(() => {
-      this.getContext().then((context) => this.context.set(context));
+      this.getData().then((context) => this.context.set(context));
     });
 
     this.currentTabId = SettingsProvider.settings.initialVehicleSheetTab.get();
@@ -85,25 +86,6 @@ export class Tidy5eVehicleSheet
   }
 
   async getData(options = {}) {
-    this.context.set(await this.getContext());
-    await this.setExpandedItemData();
-    return get(this.context);
-  }
-
-  private async setExpandedItemData() {
-    this.expandedItemData.clear();
-    for (const id of this.expandedItems.keys()) {
-      const item = this.actor.items.get(id);
-      if (item) {
-        this.expandedItemData.set(
-          id,
-          await item.getChatData({ secrets: this.actor.isOwner })
-        );
-      }
-    }
-  }
-
-  private async getContext(): Promise<VehicleSheetContext> {
     const editable = FoundryAdapter.canEditActor(this.actor) && this.isEditable;
 
     const defaultDocumentContext = await super.getData(this.options);
@@ -144,7 +126,7 @@ export class Tidy5eVehicleSheet
         ) ?? [],
     };
 
-    let tabs = get(registeredVehicleTabs).getTabs(context);
+    let tabs = await VehicleSheetRuntime.getTabs(context);
 
     const selectedTabs = FoundryAdapter.tryGetFlag<string[]>(
       context.actor,
@@ -172,18 +154,46 @@ export class Tidy5eVehicleSheet
     return context;
   }
 
-  render(force = false, ...args: any[]) {
+  private async setExpandedItemData() {
+    this.expandedItemData.clear();
+    for (const id of this.expandedItems.keys()) {
+      const item = this.actor.items.get(id);
+      if (item) {
+        this.expandedItemData.set(
+          id,
+          await item.getChatData({ secrets: this.actor.isOwner })
+        );
+      }
+    }
+  }
+
+  async _render(force?: boolean, options = {}) {
+    await this.setExpandedItemData();
+    this.context.set(await this.getData());
+
     if (force) {
       this._saveScrollPositions(this.element);
       this._destroySvelteComponent();
-      return super.render(force, ...args);
+      await super._render(force, options);
+      await this.renderCustomContent({ isFullRender: true });
+      return;
     }
 
     applyTitleToWindow(this.title, this.element.get(0));
-    this.getContext().then((context) => {
-      this.context.update(() => context);
+    await this.renderCustomContent({ isFullRender: false });
+  }
+
+  private async renderCustomContent(args: { isFullRender: boolean }) {
+    const data = get(this.context);
+
+    await SheetCompatibilityManager.renderCustomContent({
+      app: this,
+      data: data,
+      element: this.element,
+      isFullRender: args.isFullRender,
+      superActivateListeners: super.activateListeners,
+      tabs: data.tabs,
     });
-    return this;
   }
 
   _getHeaderButtons() {

@@ -1,7 +1,9 @@
 import type { ComponentType, SvelteComponent } from 'svelte';
+import type { Tab } from './types';
 import type { DocumentPreparationWarning } from './types';
 
 export type ItemSheetContext = {
+  tabs: Tab[];
   /**
    * Represents remaining health as a percentage within the range of `0` to `100`.
    */

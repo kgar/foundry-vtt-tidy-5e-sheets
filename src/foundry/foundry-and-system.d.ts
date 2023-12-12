@@ -31,6 +31,7 @@ declare global {
   var Items: any;
   var mergeObject: any;
   var NumericTerm: any;
+  var renderTemplate: any;
   var Roll: any;
   var RollTerm: any;
   var TextEditor: any;
