@@ -10,7 +10,7 @@
 */
 
 // 👇 Make sure you specify the right path to the module
-import { ItemsWithSpells5eItemSheet } from '../../../modules/items-with-spells-5e/scripts/classes/item-sheet.js';
+import { ItemsWithSpells5eItemSheet } from '/modules/items-with-spells-5e/scripts/classes/item-sheet.js';
 // 👆 Make sure you specify the right path to the module
 
 // This only fires when this module is active: https://github.com/kgar/foundry-vtt-tidy-5e-sheets
@@ -32,6 +32,7 @@ Hooks.on('tidy5e-sheet.ready', (api) => {
 
   api.registerItemTab(
     new api.models.HtmlTab({
+      tabId: 'items-with-spells-tab',
       title: game.i18n.localize(`ITEM.TypeSpellPl`),
       html: `<div class='sheet-body' role='presentation'></div>`,
       tabContentsClasses: ['items-with-spells-tab'],
