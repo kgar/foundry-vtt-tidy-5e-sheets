@@ -39,6 +39,10 @@ jobs:
         run: |
           npm run refresh-docs
 
+      - name: What docs ya got?
+        run: |
+          ls -R docs
+
       - name: stage changes
         run: |
           git add -A
