@@ -2,7 +2,7 @@ import type { OnRenderTabArgs } from 'src/types/types';
 import type { RenderScheme } from '../api.types';
 
 /**
- * The required static ID associated with the tab. It is used by Tidy 5e Sheets to enable tab selection.
+ * The required static ID associated with a tab.
  *
  * @remarks
  * A `tabId` is a unique string of text that identifies your tab.
