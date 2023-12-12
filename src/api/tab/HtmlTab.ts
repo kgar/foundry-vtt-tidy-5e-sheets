@@ -1,4 +1,5 @@
-import type { OnRenderArgs, RenderScheme } from '../api.types';
+import type { OnRenderTabArgs } from 'src/types/types';
+import type { RenderScheme } from '../api.types';
 import { CustomTabBase } from './CustomTabBase';
 
 export class HtmlTab extends CustomTabBase {
@@ -17,5 +18,5 @@ export class HtmlTab extends CustomTabBase {
 
   enabled?: (context: any) => boolean;
 
-  onRender?: (args: OnRenderArgs & { tabContentsElement: HTMLElement }) => void;
+  onRender?: (args: OnRenderTabArgs) => void;
 }

@@ -1,4 +1,5 @@
-import type { OnRenderArgs, RenderScheme } from '../api.types';
+import type { OnRenderTabArgs } from 'src/types/types';
+import type { RenderScheme } from '../api.types';
 import { CustomTabBase } from './CustomTabBase';
 
 /**
@@ -56,5 +57,5 @@ export class HandlebarsTab extends CustomTabBase {
    * Optional function which is called each time a change detection cycle occurs on the sheet.
    * It is called after this tab's content is optionally re-rendered to the DOM.
    */
-  onRender?: (args: OnRenderArgs & { tabContentsElement: HTMLElement }) => void;
+  onRender?: (args: OnRenderTabArgs) => void;
 }
