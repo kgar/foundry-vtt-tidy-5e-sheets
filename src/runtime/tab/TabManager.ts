@@ -12,7 +12,7 @@ export class TabManager {
     context: any,
     registeredTabs: RegisteredTab<any>[]
   ): Promise<Tab[]> {
-    let enabledTabs = getOrderedEnabledSheetTabs(registeredTabs, context);
+    let enabledTabs = getOrderedEnabledSheetTabs(context, registeredTabs);
 
     let tabs: Tab[] = [];
 
@@ -91,8 +91,8 @@ export class TabManager {
 }
 
 function getOrderedEnabledSheetTabs<TContext>(
-  config: RegisteredTab<TContext>[],
-  context: TContext
+  context: TContext,
+  config: RegisteredTab<TContext>[]
 ) {
   return [...config].filter(
     (t) =>

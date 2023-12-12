@@ -115,8 +115,8 @@ export class Tidy5eKgarItemSheet
     );
 
     const customTabs: Tab[] = await TabManager.prepareTabsForRender(
-      eligibleCustomTabs,
-      defaultDocumentContext
+      defaultDocumentContext,
+      eligibleCustomTabs
     );
 
     const tabs = ItemSheetRuntime.sheets[this.item.type]?.defaultTabs() ?? [];
