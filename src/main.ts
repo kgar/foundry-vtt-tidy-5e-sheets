@@ -32,7 +32,7 @@ FoundryAdapter.hooksOnce('ready', async () => {
   initSettings();
 
   const tidy5eModule = FoundryAdapter.getModule(CONSTANTS.MODULE_ID);
-  const api = Tidy5eSheetsApi.getApi();
+  const api = Tidy5eSheetsApi._getApi();
   tidy5eModule.api = api;
 
   // TODO: Remove after taking over the live module ID
