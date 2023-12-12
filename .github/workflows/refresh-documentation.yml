@@ -41,7 +41,8 @@ jobs:
 
       - name: stage and commit changes
         run: |
-          git commit -am "Updated documentation"
+          git add -A
+          git commit -m "Updated documentation"
 
       - name: force push
         run: |
