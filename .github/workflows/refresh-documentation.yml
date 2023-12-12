@@ -41,7 +41,7 @@ jobs:
 
       - name: What docs ya got?
         run: |
-          ls -R docs
+          ls -R -a docs
 
       - name: stage changes
         run: |
