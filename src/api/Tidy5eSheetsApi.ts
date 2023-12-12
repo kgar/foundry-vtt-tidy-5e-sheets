@@ -8,6 +8,7 @@ import type { SheetLayout } from 'src/runtime/types';
 import { NpcSheetRuntime } from 'src/runtime/NpcSheetRuntime';
 import { VehicleSheetRuntime } from 'src/runtime/VehicleSheetRuntime';
 import { TabManager } from 'src/runtime/tab/TabManager';
+import type { TabId } from './tab/CustomTabBase';
 
 /**
  * The Tidy 5e Sheets API. The API becomes available after the hook `tidy5e-sheet.ready` is called.
@@ -18,6 +19,22 @@ import { TabManager } from 'src/runtime/tab/TabManager';
  *   // Do something awesome!
  * });
  * ```
+ *
+ * @example Getting the API from the alpha module
+ * ```js
+ * game.modules.get('tidy5e-sheet-kgar').api
+ * ```
+ *
+ * @example Getting the API from the official Tidy 5e Sheets module
+ * ```js
+ * game.modules.get('tidy5e-sheet').api
+ * ```
+ *
+ * @remarks
+ * It is recommended to retrieve the API from the `tidy5e-sheet.ready` hook.
+ *
+ * The `game.modules.get('tidy5e-sheet').api` approach only works when the original module AND the alpha module are active.
+ * This requirement will last until the alpha sheets become the official replacement and assume the module ID "tidy5e-sheet".
  */
 export class Tidy5eSheetsApi {
   private static _instance: Tidy5eSheetsApi;
@@ -27,8 +44,9 @@ export class Tidy5eSheetsApi {
   /**
    * Gets an instance of the Tidy 5e Sheets API
    * @returns instance of the Tidy 5e Sheets API
+   * @internal
    */
-  static getApi() {
+  static _getApi() {
     Tidy5eSheetsApi._instance ??= new Tidy5eSheetsApi();
     return this._instance;
   }
@@ -38,6 +56,27 @@ export class Tidy5eSheetsApi {
    * @param tab the information necessary to render a tab
    * @param layout an optional sheet layout or layouts (default: 'all')
    * @returns void
+   * @example Registering a handlebars-based character sheet tab
+   * ```js
+   * Hooks.once('tidy5e-sheet.ready', (api) => {
+   *   api.registerCharacterTab(
+   *     new api.models.HandlebarsTab({
+   *       title: 'My Tab',
+   *       path: '/modules/my-module-id/templates/my-handlebars-template.hbs',
+   *       tabId: 'my-module-id-registered-character-tab',
+   *       getData: async (data) => {
+   *         data['my-message'] = 'Hello, world! 🌊🏄‍♂️';
+   *         return new Promise((resolve) => {
+   *           resolve(data);
+   *         });
+   *       },
+   *     })
+   *   );
+   * });
+   * ```
+   *
+   * @remarks
+   * A tab ID is always required (see {@link TabId}).
    */
   registerCharacterTab(
     tab: HandlebarsTab | HtmlTab,
@@ -62,6 +101,27 @@ export class Tidy5eSheetsApi {
    * @param tab the information necessary to render a tab
    * @param layout an optional sheet layout or layouts (default: 'all')
    * @returns void
+   * @example Registering a handlebars-based NPC sheet tab
+   * ```js
+   * Hooks.once('tidy5e-sheet.ready', (api) => {
+   *   api.registerNpcTab(
+   *     new api.models.HandlebarsTab({
+   *       title: 'My Tab',
+   *       path: '/modules/my-module-id/templates/my-handlebars-template.hbs',
+   *       tabId: 'my-module-id-registered-npc-tab',
+   *       getData: async (data) => {
+   *         data['my-message'] = 'Hello, world! 🌊🏄‍♂️';
+   *         return new Promise((resolve) => {
+   *           resolve(data);
+   *         });
+   *       },
+   *     })
+   *   );
+   * });
+   * ```
+   *
+   * @remarks
+   * A tab ID is always required (see {@link TabId}).
    */
   registerNpcTab(
     tab: HandlebarsTab | HtmlTab,
@@ -85,6 +145,27 @@ export class Tidy5eSheetsApi {
    * @param tab the information necessary to render a tab
    * @param layout an optional sheet layout or layouts (default: 'all')
    * @returns void
+   * @example Registering a handlebars-based vehicle sheet tab
+   * ```js
+   * Hooks.once('tidy5e-sheet.ready', (api) => {
+   *   api.registerVehicleTab(
+   *     new api.models.HandlebarsTab({
+   *       title: 'My Tab',
+   *       path: '/modules/my-module-id/templates/my-handlebars-template.hbs',
+   *       tabId: 'my-module-id-registered-vehicle-tab',
+   *       getData: async (data) => {
+   *         data['my-message'] = 'Hello, world! 🌊🏄‍♂️';
+   *         return new Promise((resolve) => {
+   *           resolve(data);
+   *         });
+   *       },
+   *     })
+   *   );
+   * });
+   * ```
+   *
+   * @remarks
+   * A tab ID is always required (see {@link TabId}).
    */
   registerVehicleTab(
     tab: HandlebarsTab | HtmlTab,
@@ -113,7 +194,8 @@ export class Tidy5eSheetsApi {
    *   api.registerItemTab(
    *     new api.models.HandlebarsTab({
    *       title: "My Item Tab",
-   *       path: "/modules/my-module/my-item-tab.hbs",
+   *       tabId: "my-module-id-my-item-tab",
+   *       path: "/modules/my-module-id/my-item-tab.hbs",
    *       enabled: (data) => data.item.type === 'spell',
    *       getData: (data) => {
    *         data['my-extra-data'] = "Hello, world! 👋";
@@ -122,6 +204,9 @@ export class Tidy5eSheetsApi {
    *     }));
    * });
    * ```
+   *
+   * @remarks
+   * A tab ID is always required (see {@link TabId}).
    */
   registerItemTab(tab: HandlebarsTab | HtmlTab): void {
     if (!TabManager.validateTab(tab)) {

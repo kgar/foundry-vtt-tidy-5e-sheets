@@ -10,7 +10,8 @@
     "build-watch": "vite build --watch",
     "preview": "vite preview",
     "check": "svelte-check --tsconfig ./tsconfig.json",
-    "check-watch": "svelte-check --watch --tsconfig ./tsconfig.json"
+    "check-watch": "svelte-check --watch --tsconfig ./tsconfig.json",
+    "refresh-docs": "typedoc ./src/api/index.ts --readme ./src/api/README.md"
   },
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^2.4.6",
