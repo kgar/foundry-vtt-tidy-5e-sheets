@@ -39,13 +39,9 @@ jobs:
         run: |
           npm run refresh-docs
 
-      - name: What docs ya got?
+      - name: stage and commit changes
         run: |
-          ls -R -a docs
-
-      - name: stage changes
-        run: |
-          git add -A
+          git commit -am "Updated documentation"
 
       - name: force push
         run: |
