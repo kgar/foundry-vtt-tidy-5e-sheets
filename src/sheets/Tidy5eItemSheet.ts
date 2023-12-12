@@ -91,37 +91,6 @@ export class Tidy5eKgarItemSheet
   }
 
   async getData(options = {}) {
-    return await this.getContext();
-  }
-
-  async _render(force?: boolean, options = {}) {
-    this.context.set(await this.getData());
-
-    if (force) {
-      this.component?.$destroy();
-      await super._render(force, options);
-      await this.renderCustomContent({ isFullRender: true });
-      return;
-    }
-
-    applyTitleToWindow(this.title, this.element.get(0));
-    await this.renderCustomContent({ isFullRender: false });
-  }
-
-  private async renderCustomContent(args: { isFullRender: boolean }) {
-    const data = get(this.context);
-
-    await SheetCompatibilityManager.renderCustomContent({
-      app: this,
-      data: data,
-      element: this.element,
-      isFullRender: args.isFullRender,
-      superActivateListeners: super.activateListeners,
-      tabs: data.tabs,
-    });
-  }
-
-  private async getContext(): Promise<ItemSheetContext> {
     const defaultDocumentContext = await super.getData(this.options);
 
     const itemDescriptions: ItemDescription[] = [
@@ -184,6 +153,33 @@ export class Tidy5eKgarItemSheet
     return context;
   }
 
+  async _render(force?: boolean, options = {}) {
+    this.context.set(await this.getData());
+
+    if (force) {
+      this.component?.$destroy();
+      await super._render(force, options);
+      await this.renderCustomContent({ isFullRender: true });
+      return;
+    }
+
+    applyTitleToWindow(this.title, this.element.get(0));
+    await this.renderCustomContent({ isFullRender: false });
+  }
+
+  private async renderCustomContent(args: { isFullRender: boolean }) {
+    const data = get(this.context);
+
+    await SheetCompatibilityManager.renderCustomContent({
+      app: this,
+      data: data,
+      element: this.element,
+      isFullRender: args.isFullRender,
+      superActivateListeners: super.activateListeners,
+      tabs: data.tabs,
+    });
+  }
+
   async _onSubmit(...args: any[]) {
     await super._onSubmit(...args);
 
@@ -217,7 +213,7 @@ export class Tidy5eKgarItemSheet
 
   async toggleAdvancementLock() {
     this.advancementConfigurationMode = !this.advancementConfigurationMode;
-    this.context.set(await this.getContext());
+    this.context.set(await this.getData());
   }
 
   _getHeaderButtons() {

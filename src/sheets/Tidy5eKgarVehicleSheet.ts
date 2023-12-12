@@ -43,7 +43,7 @@ export class Tidy5eVehicleSheet
     super(...args);
 
     settingStore.subscribe(() => {
-      this.getContext().then((context) => this.context.set(context));
+      this.getData().then((context) => this.context.set(context));
     });
 
     this.currentTabId = SettingsProvider.settings.initialVehicleSheetTab.get();
@@ -86,23 +86,6 @@ export class Tidy5eVehicleSheet
   }
 
   async getData(options = {}) {
-    return await this.getContext();
-  }
-
-  private async setExpandedItemData() {
-    this.expandedItemData.clear();
-    for (const id of this.expandedItems.keys()) {
-      const item = this.actor.items.get(id);
-      if (item) {
-        this.expandedItemData.set(
-          id,
-          await item.getChatData({ secrets: this.actor.isOwner })
-        );
-      }
-    }
-  }
-
-  private async getContext(): Promise<VehicleSheetContext> {
     const editable = FoundryAdapter.canEditActor(this.actor) && this.isEditable;
 
     const defaultDocumentContext = await super.getData(this.options);
@@ -169,6 +152,19 @@ export class Tidy5eVehicleSheet
     debug('Vehicle Sheet context data', context);
 
     return context;
+  }
+
+  private async setExpandedItemData() {
+    this.expandedItemData.clear();
+    for (const id of this.expandedItems.keys()) {
+      const item = this.actor.items.get(id);
+      if (item) {
+        this.expandedItemData.set(
+          id,
+          await item.getChatData({ secrets: this.actor.isOwner })
+        );
+      }
+    }
   }
 
   async _render(force?: boolean, options = {}) {

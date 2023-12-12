@@ -51,7 +51,7 @@ export class Tidy5eNpcSheet
     super(...args);
 
     settingStore.subscribe(() => {
-      this.getContext().then((context) => this.context.set(context));
+      this.getData().then((context) => this.context.set(context));
     });
 
     this.currentTabId = SettingsProvider.settings.initialNpcSheetTab.get();
@@ -96,27 +96,6 @@ export class Tidy5eNpcSheet
   }
 
   async getData(options = {}) {
-    return await this.getContext();
-  }
-
-  private async setExpandedItemData() {
-    this.expandedItemData.clear();
-    for (const id of this.expandedItems.keys()) {
-      const item = this.actor.items.get(id);
-      if (item) {
-        this.expandedItemData.set(
-          id,
-          await item.getChatData({ secrets: this.actor.isOwner })
-        );
-      }
-    }
-  }
-
-  onToggleAbilityProficiency(event: Event) {
-    return this._onToggleAbilityProficiency(event);
-  }
-
-  private async getContext(): Promise<NpcSheetContext> {
     const editable = FoundryAdapter.canEditActor(this.actor) && this.isEditable;
 
     const lockSensitiveFields =
@@ -324,6 +303,23 @@ export class Tidy5eNpcSheet
     debug('NPC Sheet context data', context);
 
     return context;
+  }
+
+  private async setExpandedItemData() {
+    this.expandedItemData.clear();
+    for (const id of this.expandedItems.keys()) {
+      const item = this.actor.items.get(id);
+      if (item) {
+        this.expandedItemData.set(
+          id,
+          await item.getChatData({ secrets: this.actor.isOwner })
+        );
+      }
+    }
+  }
+
+  onToggleAbilityProficiency(event: Event) {
+    return this._onToggleAbilityProficiency(event);
   }
 
   #getTokenState(): 'linked' | 'unlinked' | null {
