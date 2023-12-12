@@ -10,6 +10,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
       - name: set git config
         run: |
@@ -28,13 +30,18 @@ jobs:
         run: |
           git reset --hard origin/main
 
+      - name: install
+        run: |
+          npm ci
+
       - name: refresh docs
         run: |
           npm run refresh-docs
 
-      - name: stage changes
+      - name: stage and commit changes
         run: |
-          git add *
+          git add -A
+          git commit -m "Updated documentation"
 
       - name: force push
         run: |
