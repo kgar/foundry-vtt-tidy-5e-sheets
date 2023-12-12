@@ -307,8 +307,13 @@ input[type='checkbox'] {
       border: none;
     }
 
+    [contenteditable='true']:hover,
+    [contenteditable='true']:focus {
+      box-shadow: 0 0 0 0.0625rem var(--t5ek-primary-accent-color) inset;
+    }
+
     .editor {
-      height: 100%;
+      flex: 1;
       font-size: 0.8125rem;
       display: flex;
       flex-direction: column;

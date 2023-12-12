@@ -107,21 +107,28 @@
 
   onMount(() => {
     let first = true;
-    return context?.subscribe(async (c: any) => {
+
+    const subscription = context?.subscribe(async (c: any) => {
       if (first) {
         first = false;
         restoreItemSummaryIfExpanded();
         return;
       }
 
-      if (item && chatData) {
+      if (item && showSummary) {
         item
           .getChatData({ secrets: item.actor.isOwner })
           .then((data: ItemChatData) => {
             chatData = data;
           });
+      } else if (item && !showSummary && chatData) {
+        // Reset chat data for non-expanded, hydrated chatData 
+        // so it rehydrates on next open
+        chatData = undefined;
       }
     });
+
+    return subscription;
   });
 </script>
 
