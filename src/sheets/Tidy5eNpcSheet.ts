@@ -489,7 +489,7 @@ export class Tidy5eNpcSheet
      * @returns {boolean}                 Explicitly return `false` to prevent the rest from being started.
      */
     if (
-      FoundryAdapter.hooksCall('dnd5e.preShortRest', this.actor, config) ===
+      Hooks.call('dnd5e.preShortRest', this.actor, config) ===
       false
     ) {
       return;
@@ -554,7 +554,7 @@ export class Tidy5eNpcSheet
      * @returns {boolean}                 Explicitly return `false` to prevent the rest from being started.
      */
     if (
-      FoundryAdapter.hooksCall('dnd5e.preLongRest', this.actor, config) ===
+      Hooks.call('dnd5e.preLongRest', this.actor, config) ===
       false
     )
       return;
@@ -680,7 +680,7 @@ export class Tidy5eNpcSheet
      * @returns {boolean}          Explicitly return `false` to prevent the rest updates from being performed.
      */
     if (
-      FoundryAdapter.hooksCall('dnd5e.preRestCompleted', this.actor, result) ===
+      Hooks.call('dnd5e.preRestCompleted', this.actor, result) ===
       false
     )
       return result;
@@ -699,7 +699,7 @@ export class Tidy5eNpcSheet
      * @param {Actor5e} actor      The actor that just completed resting.
      * @param {RestResult} result  Details on the rest completed.
      */
-    FoundryAdapter.hooksCallAll('dnd5e.restCompleted', this.actor, result);
+    Hooks.callAll('dnd5e.restCompleted', this.actor, result);
 
     // Return data summarizing the rest effects
     return result;

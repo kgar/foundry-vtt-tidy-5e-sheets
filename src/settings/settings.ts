@@ -1830,7 +1830,7 @@ export function initSettings() {
 
   settingStore = writable(getCurrentSettings());
 
-  FoundryAdapter.hooksOn('closeSettingsConfig', () => {
+  Hooks.on('closeSettingsConfig', () => {
     settingStore.set(getCurrentSettings());
   });
 }

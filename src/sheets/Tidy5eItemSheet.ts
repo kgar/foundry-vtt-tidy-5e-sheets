@@ -76,7 +76,7 @@ export class Tidy5eKgarItemSheet
      * @param {jQuery} html                      The HTML element to which the context options are attached.
      * @param {ContextMenuEntry[]} entryOptions  The context menu entries.
      */
-    FoundryAdapter.hooksCall(
+    Hooks.call(
       'dnd5e.getItemAdvancementContext',
       html,
       contextOptions

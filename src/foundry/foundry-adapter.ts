@@ -44,18 +44,6 @@ export const FoundryAdapter = {
   ): Promise<void> {
     await game.settings.set(namespace, key, value);
   },
-  hooksOn(hook: string, fn: Function, options?: { once: boolean }): number {
-    return Hooks.on(hook, fn, options);
-  },
-  hooksOnce(hook: string, fn: Function): number {
-    return Hooks.once(hook, fn);
-  },
-  hooksCall(hook: string, ...args: any[]): boolean {
-    return Hooks.call(hook, ...args);
-  },
-  hooksCallAll(hook: string, ...args: any[]): boolean {
-    return Hooks.callAll(hook, ...args);
-  },
   onActor5eSheetRender(func: (...args: any[]) => void) {
     Hooks.on('renderActorSheet', (...args: any[]) => {
       func(args);
@@ -882,12 +870,8 @@ export const FoundryAdapter = {
      * @returns {boolean}                   Explicitly return `false` to prevent hit die from being rolled.
      */
     if (
-      FoundryAdapter.hooksCall(
-        'dnd5e.preRollHitDie',
-        actor,
-        rollConfig,
-        denomination
-      ) === false
+      Hooks.call('dnd5e.preRollHitDie', actor, rollConfig, denomination) ===
+      false
     )
       return;
 
@@ -918,10 +902,7 @@ export const FoundryAdapter = {
      * @param {object} updates.class  Updates that will be applied to the class.
      * @returns {boolean}             Explicitly return `false` to prevent updates from being performed.
      */
-    if (
-      FoundryAdapter.hooksCall('dnd5e.rollHitDie', actor, roll, updates) ===
-      false
-    )
+    if (Hooks.call('dnd5e.rollHitDie', actor, roll, updates) === false)
       return roll;
 
     // Re-evaluate dhp in the event that it was changed in the previous hook
@@ -1164,5 +1145,9 @@ export const FoundryAdapter = {
     }
 
     item.use(config, options);
+  },
+  onActorItemButtonContextMenu(item: Item5e, options: { event: Event }) {
+    // Allow another module to react to a context menu action on the item use button.
+    Hooks.callAll('tidy5e-sheet.actorItemUseContextMenu', item, options);
   },
 };
