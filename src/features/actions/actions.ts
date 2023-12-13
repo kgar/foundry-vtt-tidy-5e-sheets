@@ -1,5 +1,6 @@
 import { CONSTANTS } from 'src/constants';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+import { ActionListRuntime } from 'src/runtime/action-list/ActionListRuntime';
 import { SettingsProvider } from 'src/settings/settings';
 import type { Item5e } from 'src/types/item';
 import type { ActionItem, Actor5e, ActorActions } from 'src/types/types';
@@ -182,10 +183,12 @@ function hasRange(item: Item5e): boolean {
 }
 
 function buildActionSets(filteredItems: any) {
+  const customMappings = ActionListRuntime.getActivationTypeMappings();
   return filteredItems.reduce((acc: ActionSets, actionItem: ActionItem) => {
     try {
       const activationType = getActivationType(
-        actionItem.item.system.activation?.type
+        actionItem.item.system.activation?.type,
+        customMappings
       );
       if (!acc[activationType]) {
         acc[activationType] = new Set<ActionItem>();
@@ -202,7 +205,15 @@ function buildActionSets(filteredItems: any) {
   }, {});
 }
 
-function getActivationType(activationType: string) {
+function getActivationType(
+  activationType: string,
+  customMappings: Record<string, string>
+) {
+  const customMapping = customMappings[activationType];
+  if (customMapping) {
+    return customMapping;
+  }
+
   switch (activationType) {
     case 'action':
     case 'bonus':

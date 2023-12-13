@@ -19,7 +19,7 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-<h2>{localize('T5EK.Settings.ActionsList.Header')}</h2>
+<h2>{localize('T5EK.Settings.ActionList.Header')}</h2>
 
 <CheckboxSetting
   bind:value={$context.settings.actionListLimitActionsToCantrips}
