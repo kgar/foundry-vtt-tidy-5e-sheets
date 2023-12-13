@@ -125,7 +125,7 @@ export class Tidy5eCharacterSheet
       })
     );
 
-    Hooks.call(
+    Hooks.callAll(
       CONSTANTS.HOOK_TIDY5E_SHEETS_PREPARE_RESOURCES,
       tidyResources,
       this.actor
