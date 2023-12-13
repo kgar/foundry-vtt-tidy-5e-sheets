@@ -17,6 +17,7 @@
   "T5EK.ShowTokenArt": "show token",
   "T5EK.ShowItemImage": "right click: show item art",
   "T5EK.ShowItemArt": "show image",
+
   "T5EK.StandardExhaustion0": "No negative effects",
   "T5EK.StandardExhaustion1": "Disadvantage on Ability Checks",
   "T5EK.StandardExhaustion2": "Speed halved",
@@ -24,6 +25,7 @@
   "T5EK.StandardExhaustion4": "Hit point maximum halved",
   "T5EK.StandardExhaustion5": "Speed reduced to 0",
   "T5EK.StandardExhaustion6": "Death",
+
   "T5EK.OneDnDExhaustion0": "No negative effects",
   "T5EK.OneDnDExhaustion1": "-1 to all D20 Tests and Spell Save DC",
   "T5EK.OneDnDExhaustion2": "-2 to all D20 Tests and Spell Save DC",
@@ -36,6 +38,7 @@
   "T5EK.OneDnDExhaustion9": "-9 to all D20 Tests and Spell Save DC",
   "T5EK.OneDnDExhaustion10": "-10 to all D20 Tests and Spell Save DC",
   "T5EK.OneDnDExhaustion11": "Death",
+
   "T5EK.StandardVehicleExhaustion0": "No negative effects",
   "T5EK.StandardVehicleExhaustion1": "Disadvantage on Ability Checks",
   "T5EK.StandardVehicleExhaustion2": "Speed halved",
@@ -43,12 +46,16 @@
   "T5EK.StandardVehicleExhaustion4": "Hit point maximum halved",
   "T5EK.StandardVehicleExhaustion5": "Speed reduced to 0",
   "T5EK.StandardVehicleExhaustion6": "Hit points drop to 0 and the vehicle breaks down",
+
   "T5EK.AbbrInitiative": "Ini",
+
   "T5EK.RestHint": "Rest",
   "T5EK.ShortRest": "Short Rest",
   "T5EK.LongRest": "Long Rest",
   "T5EK.HitDiceRollAverage": "right click: apply average",
+
   "T5EK.JournalTabName": "Journal",
+
   "T5EK.Actions": {
     "TabName": "Actions",
     "OverriddenSetOverrideFalse": "Remove from Actions List (Shift+Click to clear override)",
@@ -57,22 +64,29 @@
     "SetOverrideTrue": "Add to Actions List",
     "ResetActionDefault": "Reset Action Default"
   },
+
   "T5EK.HitDC": "Hit / DC",
+
   "T5EK.RestoreOnRest": "Restore on rest",
+
   "T5EK.JournalPersonsOfInterest": "Persons of Interest",
   "T5EK.JournalLocationsOfInterest": "Locations of Interest",
   "T5EK.JournalQuests": "Quests",
   "T5EK.JournalMisc": "Miscellaneous",
   "T5EK.JournalEntries": "Journal Entries",
   "T5EK.TogglePersonalityInfo": "Toggle Personality Info",
+
   "T5EK.SheetEdit.Enable.Hint": "Enable Edit - {description}",
   "T5EK.SheetEdit.Disable.Hint": "Disable Edit - {description}",
   "T5EK.SheetEdit.Description": "Toggle visibility of add/delete buttons and empty sections",
+
   "T5EK.SheetLock.Unlock.Hint": "Unlock - {description}",
   "T5EK.SheetLock.Lock.Hint": "Lock - {description}",
   "T5EK.SheetLock.Description": "Toggle lock for sensitive fields that should not change often",
+
   "T5EK.Inventory.Weight.Tooltip": "Weight: {weight} {weightUnit}",
   "T5EK.Inventory.Weight.Text": "{weight} {weightUnit}",
+
   "T5EK.ContextMenuActionEquip": "Equip",
   "T5EK.ContextMenuActionUnequip": "Unequip",
   "T5EK.ContextMenuActionAttune": "Attune",
@@ -81,39 +95,54 @@
   "T5EK.ContextMenuActionUnprepare": "Unprepare",
   "T5EK.ContextMenuActionEdit": "Edit",
   "T5EK.ContextMenuActionDelete": "Delete",
+
   "T5EK.EmptySection": "This section is empty. Unlock the sheet to edit.",
   "T5EK.GMOnlyEdit": "Only your GM can edit this section.",
+
   "T5EK.AttunementWarning": "Attunement: Unable to attune to more than {number} items.",
   "T5EK.AttunementItems": "Attuned Items",
   "T5EK.AttunementMax": "Attunement Maximum",
+
   "T5EK.GridLayout": "Grid Layout",
   "T5EK.ListLayout": "List Layout",
   "T5EK.LayoutNotSupported": "Layout mode not supported",
+
   "T5EK.Encumbrance": "Encumbrance",
+
   "T5EK.AddFavorite": "Add Favorite",
   "T5EK.Favorite": "Favorite",
   "T5EK.RemoveFavorite": "Remove Favorite",
+
   "T5EK.ShowNotProficientSkills": "show not proficient",
   "T5EK.HideNotProficientSkills": "hide not proficient",
   "T5EK.ShowEmptyTraits": "show/edit empty traits",
   "T5EK.HideEmptyTraits": "hide empty traits",
+
   "T5EK.Abilities": "Abilities",
+
   "T5EK.Environment": "Environment",
   "T5EK.EnvironmentTooltip": "Environment: {environment}",
+
   "T5EK.Search": "search",
   "T5EK.SearchClear": "clear search",
   "T5EK.SearchHint": "Start typing to show search results",
+
   "T5EK.ItemCardsKeyHint": "hold key to interact with card",
   "T5EK.ItemCardsMouseHint": "middle mouse to view/edit item",
+
   "T5EK.AbbrMod": "Mod",
   "T5EK.AbbrSavingThrow": "Save",
   "T5EK.SpellAttackMod": "Attack Mod",
   "T5EK.PreparedSpells": "Prepared spells",
   "T5EK.PreparedSpellsMax": "Maximum for prepared spells (Note: do not use 'Override' mode on the active effect')",
+
   "T5EK.TokenLinked": "Token linked to actor",
   "T5EK.TokenUnlinked": "Token not linked to actor",
+
   "T5EK.ItemDetailsHeadline": "Mechanics/Flavor Text",
+
   "T5EK.SpellClass": "Spell Class",
+
   "T5EK.Class.Artificer": "Artificer",
   "T5EK.Class.Barbarian": "Barbarian",
   "T5EK.Class.Bard": "Bard",
@@ -128,13 +157,16 @@
   "T5EK.Class.Sorcerer": "Sorcerer",
   "T5EK.Class.Warlock": "Warlock",
   "T5EK.Class.Wizard": "Wizard",
+
   "T5EK.OriginSummaryConfig": "Origin Summary Configuration: {actorName}",
+
   "T5EK.MaxPreparedSpellsConfig": {
     "Title": "Max Prepared Spells Configuration: {actorName}",
     "ExamplesHeader": "Sample Formulas",
     "ButtonTooltip": "Configure Max Prepared Spells",
     "MoreFormulas": "More formulas"
   },
+
   "T5EK.TabSelection": {
     "Title": "Tab Selection: {documentName}",
     "MenuOptionText": "Tab Selection",
@@ -144,6 +176,7 @@
     "AtLeastOneRequiredErrorMessage": "At least one tab is required.",
     "Explanation": "Any tabs that the user or sheet are configured not to see (e.g., disabling the journal in config settings) will still not appear on the sheet, even if selected."
   },
+
   "T5EK.Listbox": {
     "MoveUp": "Move Up (Alt + Up arrow key)",
     "MoveDown": "Move down (Alt + Down arrow key)",
@@ -152,7 +185,9 @@
     "MoveAllLeft": "Move all to the left",
     "MoveAllRight": "Move all to the right"
   },
+
   "T5EK.Settings.MulticlassSpellbookFilterLabel": "Multiclass Spellbook Filter",
+
   "T5EK.Settings.SheetMenu": {
     "name": "Tidy Sheet Settings",
     "hint": "Customize your own version of Tidy 5e Sheets",
