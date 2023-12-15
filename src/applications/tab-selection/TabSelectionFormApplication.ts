@@ -11,6 +11,7 @@ import { SettingsProvider } from 'src/settings/settings';
 import { NpcSheetRuntime } from 'src/runtime/NpcSheetRuntime';
 import { CharacterSheetRuntime } from 'src/runtime/CharacterSheetRuntime';
 import { VehicleSheetRuntime } from 'src/runtime/VehicleSheetRuntime';
+import { TabManager } from 'src/runtime/tab/TabManager';
 
 export type TabSelectionItem = {
   id: string;
@@ -107,12 +108,15 @@ export default class TabSelectionFormApplication extends SvelteFormApplicationBa
       .filter((t) => !selectedTabIds.includes(t.id))
       .map((t) => ({
         id: t.id,
-        label: FoundryAdapter.localize(t.title),
+        label: FoundryAdapter.localize(TabManager.getTabTitle(t)),
       }));
 
     let selectedTabs: TabSelectionItem[] = this.registeredTabs
       .filter((t) => selectedTabIds.includes(t.id))
-      .map((t) => ({ id: t.id, label: FoundryAdapter.localize(t.title) }))
+      .map((t) => ({
+        id: t.id,
+        label: FoundryAdapter.localize(TabManager.getTabTitle(t)),
+      }))
       .sort(
         (a, b) => selectedTabIds.indexOf(a.id) - selectedTabIds.indexOf(b.id)
       );

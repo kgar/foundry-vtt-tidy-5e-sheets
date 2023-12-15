@@ -32,6 +32,7 @@ export type Tab<
   id: string;
   content: SvelteTabContent<T> | HtmlTabContent;
   onRender?: (args: OnRenderTabArgs) => void;
+  activateDefaultSheetListeners?: boolean;
 };
 
 export type ClassSummary = {

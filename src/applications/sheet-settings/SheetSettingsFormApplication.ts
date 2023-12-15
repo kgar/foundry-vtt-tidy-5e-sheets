@@ -21,6 +21,7 @@ import type {
 import { NpcSheetRuntime } from 'src/runtime/NpcSheetRuntime';
 import { CharacterSheetRuntime } from 'src/runtime/CharacterSheetRuntime';
 import { VehicleSheetRuntime } from 'src/runtime/VehicleSheetRuntime';
+import { TabManager } from 'src/runtime/tab/TabManager';
 
 export class SheetSettingsFormApplication extends SvelteFormApplicationBase {
   initialTabId: string;
@@ -107,7 +108,7 @@ export class SheetSettingsFormApplication extends SvelteFormApplicationBase {
       .filter((t) => !selectedTabIds.includes(t.id))
       .map((t) => ({
         id: t.id,
-        label: FoundryAdapter.localize(t.title),
+        label: FoundryAdapter.localize(TabManager.getTabTitle(t)),
       }));
 
     const selected = registeredTabs
@@ -117,7 +118,7 @@ export class SheetSettingsFormApplication extends SvelteFormApplicationBase {
       )
       .map((t) => ({
         id: t.id,
-        label: FoundryAdapter.localize(t.title),
+        label: FoundryAdapter.localize(TabManager.getTabTitle(t)),
       }));
 
     return {
