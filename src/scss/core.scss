@@ -34,9 +34,9 @@
 
   @import './partials/application-shell';
 
-  @import './compatibility/actor';
+  @import './compatibility/apps-items-lists';
+  @import './compatibility/apps-active-effects';
   @import './compatibility/tabs';
-  @import './compatibility/items';
 
   select option {
     color: var(--t5ek-primary-font-color);
