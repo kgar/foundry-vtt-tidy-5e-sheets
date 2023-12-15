@@ -1,32 +1,33 @@
 import type { OnRenderTabArgs } from 'src/types/types';
 import type { RenderScheme } from '../api.types';
-import { CustomTabBase } from './CustomTabBase';
+import { CustomTabBase, type TabId } from './CustomTabBase';
 
 /**
  * The information necessary for rendering a handlebars-based tab.
- * @example Getting the API and creating a Handlebars tab
+ * @example Getting the API and creating a handlebars-based item tab that only shows on spells
  * ```js
  * Hooks.once('tidy5e-sheet.ready', (api) => {
  *   const myTab = new api.models.HandlebarsTab({
- *     title: 'My Item Tab',
- *     path: '/modules/my-module/my-item-tab.hbs',
+ *     title: 'My Tab',
+ *     tabId: "my-module-id-my-example-handlebars-tab",
+ *     path: '/modules/my-module-id/my-item-tab.hbs',
  *     enabled: (data) => data.item.type === 'spell',
  *     getData: (data) => {
  *       data['my-extra-data'] = 'Hello, world! 👋';
  *       return data;
  *     },
  *   });
- *   // To Do: Register this tab!
+ *   // To Do: Register this handlebars-based item tab!
  * });
  * ```
  */
 export class HandlebarsTab extends CustomTabBase {
   title: string = '';
-  tabId: string = '';
+  tabId: TabId = '';
   /**
    * The path to the handlebars template. Use a leading slash to look in the UserData directory.
    * @example A template in a module's templates directory
-   * ```"/modules/my-module/templates/my-module-template.hbs"```
+   * ```"/modules/my-module-id/templates/my-module-template.hbs"```
    */
   path: string = '';
   renderScheme: RenderScheme = 'handlebars';

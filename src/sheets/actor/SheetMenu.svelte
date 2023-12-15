@@ -8,12 +8,10 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import type { ActorSheetContext } from 'src/types/types';
-  import { Tidy5eSheetsApi } from 'src/api/Tidy5eSheetsApi';
   import { ApplicationsManager } from 'src/applications/ApplicationsManager';
   export let defaultSettingsTab: string | undefined = undefined;
 
   const localize = FoundryAdapter.localize;
-  const api = Tidy5eSheetsApi.getApi();
 
   let context = getContext<Readable<ActorSheetContext>>('context');
 </script>

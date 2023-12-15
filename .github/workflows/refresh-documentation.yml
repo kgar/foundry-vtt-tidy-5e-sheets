@@ -1,0 +1,48 @@
+name: Refresh Documentation
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  synchronize-and-refresh-docs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: set git config
+        run: |
+          git config --global user.name "${GITHUB_ACTOR}"
+          git config --global user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+
+      - name: fetch latest
+        run: |
+          git fetch origin
+
+      - name: Checkout pages branch
+        run: |
+          git checkout github-pages
+
+      - name: reset to main branch state
+        run: |
+          git reset --hard origin/main
+
+      - name: install
+        run: |
+          npm ci
+
+      - name: refresh docs
+        run: |
+          npm run refresh-docs
+
+      - name: stage and commit changes
+        run: |
+          git add -A
+          git commit -m "Updated documentation"
+
+      - name: force push
+        run: |
+          git push --force origin github-pages
