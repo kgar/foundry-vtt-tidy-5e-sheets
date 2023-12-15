@@ -69,6 +69,8 @@
           on:click={(event) =>
             $context.owner &&
             FoundryAdapter.actorTryUseItem(spell, {}, { event })}
+          on:contextmenu={(event) =>
+            FoundryAdapter.onActorItemButtonContextMenu(spell, { event })}
           on:mousedown={(event) =>
             FoundryAdapter.editOnMiddleClick(event, spell)}
           on:mouseenter={() => onMouseEnter(spell)}

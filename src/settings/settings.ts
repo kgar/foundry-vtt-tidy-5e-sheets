@@ -1374,8 +1374,8 @@ export function createSettings() {
 
       actionListLimitActionsToCantrips: {
         options: {
-          name: 'T5EK.Settings.ActionsListLimitActionsToCantrips.name',
-          hint: 'T5EK.Settings.ActionsListLimitActionsToCantrips.hint',
+          name: 'T5EK.Settings.ActionListLimitActionsToCantrips.name',
+          hint: 'T5EK.Settings.ActionListLimitActionsToCantrips.hint',
           scope: 'client',
           config: false,
           default: false,
@@ -1390,8 +1390,8 @@ export function createSettings() {
 
       actionListIncludeMinuteLongSpellsAsActions: {
         options: {
-          name: 'T5EK.Settings.ActionsListIncludeMinuteLongSpellsAsActions.name',
-          hint: 'T5EK.Settings.ActionsListIncludeMinuteLongSpellsAsActions.hint',
+          name: 'T5EK.Settings.ActionListIncludeMinuteLongSpellsAsActions.name',
+          hint: 'T5EK.Settings.ActionListIncludeMinuteLongSpellsAsActions.hint',
           scope: 'client',
           config: false,
           default: true,
@@ -1406,8 +1406,8 @@ export function createSettings() {
 
       actionListIncludeSpellsWithActiveEffects: {
         options: {
-          name: 'T5EK.Settings.ActionsListIncludeSpellsWithActiveEffects.name',
-          hint: 'T5EK.Settings.ActionsListIncludeSpellsWithActiveEffects.hint',
+          name: 'T5EK.Settings.ActionListIncludeSpellsWithActiveEffects.name',
+          hint: 'T5EK.Settings.ActionListIncludeSpellsWithActiveEffects.hint',
           scope: 'client',
           config: false,
           default: true,
@@ -1422,8 +1422,8 @@ export function createSettings() {
 
       actionListIncludeConsumables: {
         options: {
-          name: 'T5EK.Settings.ActionsListIncludeConsumables.name',
-          hint: 'T5EK.Settings.ActionsListIncludeConsumables.hint',
+          name: 'T5EK.Settings.ActionListIncludeConsumables.name',
+          hint: 'T5EK.Settings.ActionListIncludeConsumables.hint',
           scope: 'client',
           config: false,
           default: true,
@@ -1438,8 +1438,8 @@ export function createSettings() {
 
       actionListScaleCantripDamage: {
         options: {
-          name: 'T5EK.Settings.ActionsListScaleCantripDamage.name',
-          hint: 'T5EK.Settings.ActionsListScaleCantripDamage.hint',
+          name: 'T5EK.Settings.ActionListScaleCantripDamage.name',
+          hint: 'T5EK.Settings.ActionListScaleCantripDamage.hint',
           scope: 'client',
           config: false,
           default: true,
@@ -1858,7 +1858,7 @@ export function initSettings() {
 
   settingStore = writable(getCurrentSettings());
 
-  FoundryAdapter.hooksOn('closeSettingsConfig', () => {
+  Hooks.on('closeSettingsConfig', () => {
     settingStore.set(getCurrentSettings());
   });
 }

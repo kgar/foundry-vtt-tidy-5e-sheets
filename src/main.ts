@@ -28,7 +28,7 @@ FoundryAdapter.registerActorSheet(
 
 FoundryAdapter.registerItemSheet(Tidy5eKgarItemSheet, 'T5EK.Tidy5eItemSheet');
 
-FoundryAdapter.hooksOnce('ready', async () => {
+Hooks.once('ready', async () => {
   initSettings();
 
   const tidy5eModule = FoundryAdapter.getModule(CONSTANTS.MODULE_ID);
@@ -41,5 +41,5 @@ FoundryAdapter.hooksOnce('ready', async () => {
     prodTidy5eModule.api = tidy5eModule.api;
   }
 
-  Hooks.call(CONSTANTS.HOOK_TIDY5E_SHEETS_READY, api);
+  Hooks.callAll(CONSTANTS.HOOK_TIDY5E_SHEETS_READY, api);
 });
