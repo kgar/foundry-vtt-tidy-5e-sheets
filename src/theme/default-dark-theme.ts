@@ -144,4 +144,5 @@ export const defaultDarkTheme: Tidy5eTheme = {
     '--t5ek-active-tab-background': 'var(--t5ek-sheet-background)',
     '--t5ek-tab-background': 'transparent',
   },
+  type: 'dark',
 };

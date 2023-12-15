@@ -140,4 +140,5 @@ export const defaultLightTheme: Tidy5eTheme = {
     '--t5ek-active-tab-background': 'transparent',
     '--t5ek-tab-background': 'var(--t5ek-header-background)',
   },
+  type: 'light',
 };

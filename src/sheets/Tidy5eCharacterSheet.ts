@@ -18,7 +18,11 @@ import {
   type ExpandedItemData,
   type TidyResource,
 } from 'src/types/types';
-import { applyTitleToWindow } from 'src/utils/applications';
+import {
+  applyModuleSheetDataAttributeToWindow,
+  applyThemeDataAttributeToWindow,
+  applyTitleToWindow,
+} from 'src/utils/applications';
 import type { SvelteComponent } from 'svelte';
 import { getPercentage } from 'src/utils/numbers';
 import type { ItemChatData } from 'src/types/item';
@@ -52,6 +56,10 @@ export class Tidy5eCharacterSheet
 
     settingStore.subscribe(() => {
       this.getData().then((context) => this.context.set(context));
+      applyThemeDataAttributeToWindow(
+        SettingsProvider.settings.colorScheme.get(),
+        this.element?.get(0)
+      );
     });
 
     this.currentTabId =
@@ -422,6 +430,11 @@ export class Tidy5eCharacterSheet
       this._saveScrollPositions(this.element);
       this._destroySvelteComponent();
       await super._render(force, options);
+      applyModuleSheetDataAttributeToWindow(this.element.get(0));
+      applyThemeDataAttributeToWindow(
+        SettingsProvider.settings.colorScheme.get(),
+        this.element.get(0)
+      );
       await this.renderCustomContent({ isFullRender: true });
       return;
     }
