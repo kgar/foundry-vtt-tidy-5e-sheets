@@ -70,6 +70,8 @@
         data-context-menu-entity-id={item.id}
         on:click={(event) =>
           $context.owner && FoundryAdapter.actorTryUseItem(item, {}, { event })}
+        on:contextmenu={(event) =>
+          FoundryAdapter.onActorItemButtonContextMenu(item, { event })}
         on:mousedown={(event) => FoundryAdapter.editOnMiddleClick(event, item)}
         on:mouseenter={() => onMouseEnter(item)}
         on:mouseleave={onMouseLeave}

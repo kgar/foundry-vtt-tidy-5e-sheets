@@ -9,6 +9,7 @@ import { NpcSheetRuntime } from 'src/runtime/NpcSheetRuntime';
 import { VehicleSheetRuntime } from 'src/runtime/VehicleSheetRuntime';
 import { TabManager } from 'src/runtime/tab/TabManager';
 import type { TabId } from './tab/CustomTabBase';
+import { ActionListApi } from './action-list/ActionListApi';
 
 /**
  * The Tidy 5e Sheets API. The API becomes available after the hook `tidy5e-sheet.ready` is called.
@@ -222,6 +223,9 @@ export class Tidy5eSheetsApi {
 
     ItemSheetRuntime.registerTab(registeredTab);
   }
+
+  /** {@inheritDoc ActionListApi} */
+  actionList = new ActionListApi();
 
   /**
    * Various models can be used for API calls.
