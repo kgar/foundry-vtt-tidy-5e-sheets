@@ -83,9 +83,7 @@
       line-height: 1.125rem;
       font-family: var(--t5ek-body-font-family);
       font-weight: 700;
-      transition:
-        color 0.3s ease,
-        transform 0.3s ease;
+      transition: color 0.3s ease, transform 0.3s ease;
 
       &:hover,
       &:focus-within {
