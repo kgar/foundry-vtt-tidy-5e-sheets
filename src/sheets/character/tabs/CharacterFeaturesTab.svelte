@@ -122,7 +122,7 @@
               }}
             >
               <ItemTableCell primary={true}>
-                <ItemUseButton {item} />
+                <ItemUseButton disabled={!$context.editable} {item} />
                 <ItemName
                   on:toggle={() => toggleSummary($context.actor)}
                   hasChildren={false}

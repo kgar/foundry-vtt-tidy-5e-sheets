@@ -97,7 +97,7 @@
         cssClass={getInventoryRowClasses(item)}
       >
         <ItemTableCell primary={true} title={item.name}>
-          <ItemUseButton {item} />
+          <ItemUseButton disabled={!$context.editable} {item} />
           <ItemName
             on:toggle={() => toggleSummary($context.actor)}
             cssClass="extra-small-gap"
