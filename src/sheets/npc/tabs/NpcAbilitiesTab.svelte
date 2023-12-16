@@ -109,7 +109,7 @@
               cssClass={FoundryAdapter.getInventoryRowClasses(item, ctx)}
             >
               <ItemTableCell primary={true}>
-                <ItemUseButton {item} />
+                <ItemUseButton disabled={!$context.editable} {item} />
                 <ItemName
                   on:toggle={() => toggleSummary($context.actor)}
                   cssClass="extra-small-gap"

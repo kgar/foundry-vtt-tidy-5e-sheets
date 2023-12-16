@@ -53,7 +53,7 @@
             let:toggleSummary
           >
             <ItemTableCell primary={true}>
-              <ItemUseButton item={actionItem.item} />
+              <ItemUseButton disabled={!$context.editable} item={actionItem.item} />
               <ItemName
                 item={actionItem.item}
                 on:toggle={() => toggleSummary($context.actor)}
