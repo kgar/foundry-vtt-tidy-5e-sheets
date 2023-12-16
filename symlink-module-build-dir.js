@@ -7,7 +7,7 @@ const {ensureDir, existsSync, readJSONSync, remove, symlink} = fs;
 const argv = yargs(hideBin(process.argv)).argv;
 
 const moduleDirectory = 'tidy5e-sheet-kgar';
-const distDirectory = './dist';
+const buildDirectory = './dist';
 
 /**
  * Get the data path for Foundry VTT based on what is configured in `foundry-data-path-config.json`
@@ -32,10 +32,10 @@ function getFoundryDataPath() {
 async function createSymlink() {
   let destinationDirectory;
 
-  if (existsSync(resolve(distDirectory, 'module.json'))) {
+  if (existsSync(resolve(buildDirectory, 'module.json'))) {
     destinationDirectory = 'modules';
   } else {
-    throw new Error(`Could not find module.json in ${distDirectory}`);
+    throw new Error(`Could not find module.json in ${buildDirectory}`);
   }
 
   const symlinkDirectory = resolve(
@@ -49,9 +49,9 @@ async function createSymlink() {
     console.log(`[== Removing link: ${symlinkDirectory} ==]\n`);
     await remove(symlinkDirectory);
   } else if (!existsSync(symlinkDirectory)) {
-    console.log(`[== Linking ${distDirectory} to ${symlinkDirectory} ==]\n`);
+    console.log(`[== Linking ${buildDirectory} to ${symlinkDirectory} ==]\n`);
     await ensureDir(resolve(symlinkDirectory, '..'));
-    await symlink(resolve(distDirectory), symlinkDirectory);
+    await symlink(resolve(buildDirectory), symlinkDirectory);
   }
 }
 
