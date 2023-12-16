@@ -3,6 +3,7 @@
   import type { CharacterSheetContext } from 'src/types/types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
+  import { settingStore } from 'src/settings/settings';
 
   let context = getContext<Readable<CharacterSheetContext>>('context');
 
@@ -20,6 +21,7 @@
       title={localize('T5EK.ShortRest')}
       on:click={(event) => $context.actor.sheet.onShortRest(event)}
       disabled={!$context.editable}
+      tabindex={!$settingStore.useDefaultSheetHpTabbing ? 0 : -1}
     >
       <i class="fas fa-hourglass-half" />
     </button>
@@ -29,6 +31,7 @@
       title={localize('T5EK.LongRest')}
       on:click={(event) => $context.actor.sheet.onLongRest(event)}
       disabled={!$context.editable}
+      tabindex={!$settingStore.useDefaultSheetHpTabbing ? 0 : -1}
     >
       <i class="fas fa-hourglass-end" />
     </button>

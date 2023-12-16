@@ -3,6 +3,7 @@
   import type { CharacterSheetContext } from 'src/types/types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
+  import { settingStore } from 'src/settings/settings';
 
   let context = getContext<Readable<CharacterSheetContext>>('context');
 
@@ -24,8 +25,11 @@
     class="current-hd config-button transparent-button"
     on:click={$context.editable &&
       FoundryAdapter.renderActorHitDiceConfig($context.actor)}
-    disabled={!$context.editable}>{hitDice}</button
+    disabled={!$context.editable}
+    tabindex={!$settingStore.useDefaultSheetHpTabbing ? 0 : -1}
   >
+    {hitDice}
+  </button>
 </div>
 
 <style lang="scss">

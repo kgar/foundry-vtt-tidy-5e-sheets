@@ -5,6 +5,7 @@
 
   export let title: string | null = null;
   export let text: string;
+  export let hideFromTabOrder: boolean = false;
 
   const dispatcher = createEventDispatcher<{ roll: MouseEvent }>();
 
@@ -18,6 +19,7 @@
   {title}
   on:click={(ev) => dispatcher('roll', ev)}
   disabled={!$context.editable}
+  tabindex={!hideFromTabOrder ? 0 : -1}
 >
   <h4 class="block-title">
     {text}

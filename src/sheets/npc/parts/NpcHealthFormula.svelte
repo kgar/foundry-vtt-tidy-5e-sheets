@@ -5,6 +5,7 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import TextInput from 'src/components/inputs/TextInput.svelte';
+  import { settingStore } from 'src/settings/settings';
 
   let context = getContext<Readable<NpcSheetContext>>('context');
 
@@ -49,6 +50,7 @@
     on:click={rollNpcHp}
     on:contextmenu={calcAverageHitDie}
     class="roll-hp-formula"
+    tabindex={!$settingStore.useDefaultSheetHpTabbing ? 0 : -1}
   >
     <i class="fas fa-dice-six" />
   </button>

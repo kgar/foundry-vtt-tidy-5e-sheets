@@ -341,6 +341,34 @@ export function createSettings() {
         },
       },
 
+      useDefaultSheetAttributeTabbing: {
+        options: {
+          name: 'T5EK.Settings.UseDefaultSheetAttributeTabbing.name',
+          hint: 'T5EK.Settings.UseDefaultSheetAttributeTabbing.hint',
+          scope: 'client',
+          config: true,
+          default: false,
+          type: Boolean,
+        },
+        get() {
+          return FoundryAdapter.getTidySetting<boolean>('useDefaultSheetAttributeTabbing');
+        },
+      },
+
+      useDefaultSheetHpTabbing: {
+        options: {
+          name: 'T5EK.Settings.UseDefaultSheetHpTabbing.name',
+          hint: 'T5EK.Settings.UseDefaultSheetHpTabbing.hint',
+          scope: 'client',
+          config: true,
+          default: false,
+          type: Boolean,
+        },
+        get() {
+          return FoundryAdapter.getTidySetting<boolean>('useDefaultSheetHpTabbing');
+        },
+      },
+
       itemCardsFixKey: {
         options: {
           name: 'T5EK.Settings.ItemCardsFixKey.name',

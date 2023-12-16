@@ -3,6 +3,7 @@
   import type { NpcSheetContext } from 'src/types/types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
+  import { settingStore } from 'src/settings/settings';
 
   let context = getContext<Readable<NpcSheetContext>>('context');
 
@@ -24,6 +25,7 @@
       title={localize('T5EK.ShortRest')}
       on:click={(ev) => $context.shortRest(ev)}
       disabled={!$context.editable}
+      tabindex={!$settingStore.useDefaultSheetHpTabbing ? 0 : -1}
     >
       <i class="fas fa-hourglass-half" />
     </button>
@@ -33,6 +35,7 @@
       title={localize('T5EK.LongRest')}
       on:click={(ev) => $context.longRest(ev)}
       disabled={!$context.editable}
+      tabindex={!$settingStore.useDefaultSheetHpTabbing ? 0 : -1}
     >
       <i class="fas fa-hourglass-end" />
     </button>
