@@ -160,7 +160,7 @@
                   disabled={!$context.editable}
                 />
               {:else}
-                <ItemUseButton {item} />
+                <ItemUseButton disabled={!$context.editable} {item} />
                 <ItemName
                   on:toggle={() => toggleSummary($context.actor)}
                   cssClass="extra-small-gap"
