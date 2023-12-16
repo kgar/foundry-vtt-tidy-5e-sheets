@@ -17,9 +17,12 @@ Tidy 5e Sheets builds a rich UI with [svelte](https://svelte.dev/) and leverages
 
 1. Download the repo
 2. Run `npm install`
-3. Run `npm run dev`
-4. Create a symlink from the newly-created `dist` folder to the Foundry `modules` folder as `tidy5e-sheet-kgar`
-5. Start Foundry VTT
+3. Run `npm run build`
+4. Copy `foundry-data-path-config_example.json` to `foundry-data-path-config.json`
+5. Edit `foundry-data-path-config.json` and change `dataPath` to point to your Foundry VTT data folder
+6. Run `npm run link-create` to create a symlink from the newly-created `dist` folder to the Foundry `modules` folder as `tidy5e-sheet-kgar`
+7. Run `npm run dev`
+8. Start Foundry VTT
 
 ### `npm install`
 
@@ -35,6 +38,14 @@ Runs Tidy 5e Sheets in dev mode with HMR enabled.
 ### `npm run build`
 
 Builds a production distribution of the module.
+
+### `npm run link-create`
+
+Symlinks the build folder to the Foundry VTT data folder defined in `foundry-data-path-config.json`.
+
+### `npm run link-remove`
+
+Removes the symlink from the build folder to the Foundry VTT data folder.
 
 ### Others
 

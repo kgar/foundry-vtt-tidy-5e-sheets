@@ -11,11 +11,14 @@
     "preview": "vite preview",
     "check": "svelte-check --tsconfig ./tsconfig.json",
     "check-watch": "svelte-check --watch --tsconfig ./tsconfig.json",
-    "refresh-docs": "typedoc ./src/api/index.ts --readme ./src/api/README.md"
+    "refresh-docs": "typedoc ./src/api/index.ts --readme ./src/api/README.md",
+    "link-create": "node symlink-module-build-dir.js",
+    "link-remove": "node symlink-module-build-dir.js --clean"
   },
   "devDependencies": {
     "@sveltejs/vite-plugin-svelte": "^2.4.6",
     "@tsconfig/svelte": "^5.0.2",
+    "fs-extra": "^11.2.0",
     "sass": "^1.69.5",
     "svelte": "^4.2.7",
     "svelte-awesome-color-picker": "^2.4.8",
@@ -24,7 +27,8 @@
     "tslib": "^2.6.2",
     "typedoc": "^0.25.4",
     "typescript": "^5.2.2",
-    "vite": "^4.4.9"
+    "vite": "^4.4.9",
+    "yargs": "^17.7.2"
   },
   "dependencies": {
     "@types/node": "^20.6.1",
