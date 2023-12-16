@@ -341,31 +341,31 @@ export function createSettings() {
         },
       },
 
-      useOldAttributeTabbing: {
+      useDefaultSheetAttributeTabbing: {
         options: {
-          name: 'T5EK.Settings.UseOldAttributeTabbing.name',
-          hint: 'T5EK.Settings.UseOldAttributeTabbing.hint',
+          name: 'T5EK.Settings.UseDefaultSheetAttributeTabbing.name',
+          hint: 'T5EK.Settings.UseDefaultSheetAttributeTabbing.hint',
           scope: 'client',
           config: true,
           default: false,
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getTidySetting<boolean>('useOldAttributeTabbing');
+          return FoundryAdapter.getTidySetting<boolean>('useDefaultSheetAttributeTabbing');
         },
       },
 
-      useOldHpTabbing: {
+      useDefaultSheetHpTabbing: {
         options: {
-          name: 'T5EK.Settings.UseOldHpTabbing.name',
-          hint: 'T5EK.Settings.UseOldHpTabbing.hint',
+          name: 'T5EK.Settings.UseDefaultSheetHpTabbing.name',
+          hint: 'T5EK.Settings.UseDefaultSheetHpTabbing.hint',
           scope: 'client',
           config: true,
           default: false,
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getTidySetting<boolean>('useOldHpTabbing');
+          return FoundryAdapter.getTidySetting<boolean>('useDefaultSheetHpTabbing');
         },
       },
 

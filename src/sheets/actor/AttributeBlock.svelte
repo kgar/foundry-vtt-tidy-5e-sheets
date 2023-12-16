@@ -25,7 +25,7 @@
     text={abbreviation}
     on:roll={(event) =>
       $context.actor.rollAbility(abbreviation, { event: event.detail })}
-    hideFromTabOrder={$settingStore.useOldAttributeTabbing}
+    hideFromTabOrder={$settingStore.useDefaultSheetAttributeTabbing}
   />
   <BlockScore>
     <TextInput
@@ -46,7 +46,7 @@
       title={localize('DND5E.AbilityModifier')}
       on:click={(event) =>
         $context.actor.rollAbilityTest(abbreviation, { event })}
-      tabindex={!$settingStore.useOldAttributeTabbing ? 0 : -1}
+      tabindex={!$settingStore.useDefaultSheetAttributeTabbing ? 0 : -1}
       disabled={!$context.editable}
     >
       {formatAsModifier(ability.mod)}
@@ -58,7 +58,7 @@
       title={localize('DND5E.ActionSave')}
       on:click={(event) =>
         $context.actor.rollAbilitySave(abbreviation, { event })}
-      tabindex={!$settingStore.useOldAttributeTabbing ? 0 : -1}
+      tabindex={!$settingStore.useDefaultSheetAttributeTabbing ? 0 : -1}
       disabled={!$context.editable}
     >
       {formatAsModifier(ability.save)}
@@ -74,7 +74,7 @@
               [`system.abilities.${abbreviation}.proficient`]:
                 1 - parseInt(ability.proficient),
             })}
-          tabindex={!$settingStore.useOldAttributeTabbing ? 0 : -1}
+          tabindex={!$settingStore.useDefaultSheetAttributeTabbing ? 0 : -1}
         >
           {@html ability.icon}
         </button>
@@ -91,7 +91,7 @@
         title={localize('DND5E.AbilityConfigure')}
         on:click={() =>
           FoundryAdapter.renderActorAbilityConfig($context.actor, abbreviation)}
-        tabindex={!$settingStore.useOldAttributeTabbing ? 0 : -1}
+        tabindex={!$settingStore.useDefaultSheetAttributeTabbing ? 0 : -1}
       >
         <i class="fas fa-cog" />
       </button>

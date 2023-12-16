@@ -21,7 +21,7 @@
       title={localize('T5EK.ShortRest')}
       on:click={(event) => $context.actor.sheet.onShortRest(event)}
       disabled={!$context.editable}
-      tabindex={!$settingStore.useOldHpTabbing ? 0 : -1}
+      tabindex={!$settingStore.useDefaultSheetHpTabbing ? 0 : -1}
     >
       <i class="fas fa-hourglass-half" />
     </button>
@@ -31,7 +31,7 @@
       title={localize('T5EK.LongRest')}
       on:click={(event) => $context.actor.sheet.onLongRest(event)}
       disabled={!$context.editable}
-      tabindex={!$settingStore.useOldHpTabbing ? 0 : -1}
+      tabindex={!$settingStore.useDefaultSheetHpTabbing ? 0 : -1}
     >
       <i class="fas fa-hourglass-end" />
     </button>

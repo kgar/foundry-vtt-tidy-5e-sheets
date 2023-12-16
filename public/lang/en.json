@@ -251,13 +251,13 @@
     "name": "Item Card Delay (ms)",
     "hint": "Delays showing item cards for the specified milliseconds (ms). 0 means no delay. Default: 300."
   },
-  "T5EK.Settings.UseOldAttributeTabbing": {
-    "name": "Use old attribute keyboard tabbing",
-    "hint": "The older Tidy 5e Sheet and the default 5e sheet both allow keyboard tabbing from one attribute input to the next by hiding the controls around them from the tab order. Enabling this replicates that behaviour."
+  "T5EK.Settings.UseDefaultSheetAttributeTabbing": {
+    "name": "Use default sheet attribute keyboard tabbing",
+    "hint": "The default 5e sheet allows keyboard tabbing from one attribute input to the next by hiding the controls around them from the tab order. Enabling this replicates that behaviour."
   },
-  "T5EK.Settings.UseOldHpTabbing": {
-    "name": "Use old HP keyboard tabbing",
-    "hint": "The older Tidy 5e Sheet and the default 5e sheet both allow keyboard tabbing from current HP input to current temp HP input. Enabling this replicates that behaviour."
+  "T5EK.Settings.UseDefaultSheetHpTabbing": {
+    "name": "Use default sheet HP keyboard tabbing",
+    "hint": "The default 5e sheet allows keyboard tabbing from the current HP input to the current temp HP input. Enabling this replicates that behaviour."
   },
   "T5EK.Settings.ItemCardsFixKey": {
     "name": "Item Card Fix Key",
