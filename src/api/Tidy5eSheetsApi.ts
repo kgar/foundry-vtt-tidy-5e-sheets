@@ -59,27 +59,52 @@ export class Tidy5eSheetsApi {
   /** {@inheritDoc ActionListApi} */
   actionList = new ActionListApi();
 
+  /**
+   * Determines whether the provided sheet is a Tidy 5e Character sheet.
+   * @param app an actor sheet
+   * @returns boolean indicating if the sheet is a Tidy 5e Character sheet
+   */
   isTidy5eCharacterSheet(app: any) {
-    return Tidy5eCharacterSheet.name === app.constructor.name;
+    return Tidy5eCharacterSheet.name === app?.constructor?.name;
   }
 
+  /**
+   * Determines whether the provided sheet is a Tidy 5e Item sheet.
+   * @param app an actor sheet
+   * @returns boolean indicating if the sheet is a Tidy 5e Item sheet
+   */
   isTidy5eItemSheet(app: any) {
-    return Tidy5eKgarItemSheet.name === app.constructor.name;
+    return Tidy5eKgarItemSheet.name === app?.constructor?.name;
   }
 
+  /**
+   * Determines whether the provided sheet is a Tidy 5e NPC sheet.
+   * @param app an actor sheet
+   * @returns boolean indicating if the sheet is a Tidy 5e NPC sheet
+   */
   isTidy5eNpcSheet(app: any) {
-    return Tidy5eNpcSheet.name === app.constructor.name;
+    return Tidy5eNpcSheet.name === app?.constructor?.name;
   }
 
+  /**
+   * Determines whether the provided sheet is any Tidy 5e sheet.
+   * @param app an actor sheet
+   * @returns boolean indicating if the sheet is any Tidy 5e sheet
+   */
   isTidy5eSheet(app: any) {
     return [
       Tidy5eCharacterSheet.name,
       Tidy5eNpcSheet.name,
       Tidy5eVehicleSheet.name,
       Tidy5eKgarItemSheet.name,
-    ].includes(app.constructor.name);
+    ].includes(app?.constructor?.name);
   }
 
+  /**
+   * Determines whether the provided sheet is a Tidy 5e Vehicle sheet.
+   * @param app an actor sheet
+   * @returns boolean indicating if the sheet is a Tidy 5e Vehicle sheet
+   */
   isTidy5eVehicleSheet(app: any) {
     return Tidy5eVehicleSheet.name === app.constructor.name;
   }
