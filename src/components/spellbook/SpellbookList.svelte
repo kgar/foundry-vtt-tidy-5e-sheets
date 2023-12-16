@@ -117,7 +117,7 @@
         cssClass={FoundryAdapter.getSpellRowClasses(spell)}
       >
         <ItemTableCell primary={true}>
-          <ItemUseButton item={spell} imgUrlOverride={spellImgUrl} />
+          <ItemUseButton disabled={!$context.editable} item={spell} imgUrlOverride={spellImgUrl} />
           <ItemName
             on:toggle={() => toggleSummary($context.actor)}
             item={spell}

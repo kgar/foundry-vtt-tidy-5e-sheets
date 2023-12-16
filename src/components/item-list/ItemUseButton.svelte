@@ -6,6 +6,7 @@
 
   export let item: any;
   export let imgUrlOverride: string | undefined = undefined;
+  export let disabled: boolean = false;
 
   const showRoll = getContext<Readable<boolean>>(
     CONSTANTS.CONTEXT_GRID_CELL_HOVER,
@@ -18,9 +19,9 @@
   class="item-image"
   class:item-use-button-has-focus={buttonIsFocused}
   style="background-image: url('{imgUrlOverride ?? item.img}')"
-  class:show-roll={item.isEditable && $showRoll}
+  class:show-roll={!disabled && $showRoll}
 >
-  {#if item.isEditable}
+  {#if !disabled}
     <button
       type="button"
       class="item-use-button icon-button"
