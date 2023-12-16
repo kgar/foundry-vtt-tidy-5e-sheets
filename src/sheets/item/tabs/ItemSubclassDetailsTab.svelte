@@ -24,7 +24,7 @@
       field="system.identifier"
       value={$context.system.identifier}
       placeholder={$context.item.identifier}
-      disabled={!$context.owner}
+      disabled={!$context.editable}
       />
   </div>
 </ItemFormGroup>
@@ -40,7 +40,7 @@
       document={$context.item}
       field="system.classIdentifier"
       value={$context.system.classIdentifier}
-      disabled={!$context.owner}
+      disabled={!$context.editable}
       />
   </div>
   <p class="hint">

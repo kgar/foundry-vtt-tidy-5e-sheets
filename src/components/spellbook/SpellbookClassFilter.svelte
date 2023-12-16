@@ -33,7 +33,7 @@
     $context.actor.update({
       [`flags.${CONSTANTS.MODULE_ID}.classFilter`]: event.currentTarget.value,
     })}
-  disabled={!$context.owner}
+  disabled={!$context.editable}
 >
   {#each allClasses as option}
     <option

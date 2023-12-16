@@ -42,7 +42,7 @@
   const localize = FoundryAdapter.localize;
   const weightUnit = FoundryAdapter.getWeightUnit();
 
-  $: classicControlsBaseWidth = $context.editable ? '7.5rem' : '5.3125rem';
+  $: classicControlsBaseWidth = $context.unlocked ? '7.5rem' : '5.3125rem';
 
   function getInventoryRowClasses(item: Item5e) {
     const extras: string[] = [];
@@ -79,7 +79,7 @@
       <ItemTableColumn baseWidth="7.5rem">
         {localize('DND5E.Usage')}
       </ItemTableColumn>
-      {#if $context.owner && $context.useClassicControls && !lockControls}
+      {#if $context.editable && $context.useClassicControls && !lockControls}
         <ItemTableColumn baseWidth={classicControlsBaseWidth} />
       {/if}
     </ItemTableHeaderRow>
@@ -157,7 +157,7 @@
             {item.labels.activation}
           {/if}
         </ItemTableCell>
-        {#if $context.owner && $context.useClassicControls && !lockControls}
+        {#if $context.editable && $context.useClassicControls && !lockControls}
           <ItemTableCell baseWidth={classicControlsBaseWidth}>
             <ItemControls>
               {#if ctx?.attunement}
@@ -172,7 +172,7 @@
               {/if}
               <ItemFavoriteControl {item} />
               <ItemEditControl {item} />
-              {#if $context.editable}
+              {#if $context.unlocked}
                 <ItemDuplicateControl {item} />
                 <ItemDeleteControl {item} />
               {/if}
@@ -184,7 +184,7 @@
         {/if}
       </ItemTableRow>
     {/each}
-    {#if $context.editable && dataset}
+    {#if $context.unlocked && dataset}
       <ItemTableFooter actor={$context.actor} {dataset} />
     {/if}
   </ItemTable>

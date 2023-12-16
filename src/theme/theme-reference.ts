@@ -1,6 +1,7 @@
 import { CONSTANTS } from 'src/constants';
 import { defaultDarkTheme } from './default-dark-theme';
 import { defaultLightTheme } from './default-light-theme';
+import type { Tidy5eTheme } from 'src/types/theme';
 
 export function getCoreThemes(includeDefault: boolean) {
   let themes: Record<string, string> = {};
@@ -13,6 +14,17 @@ export function getCoreThemes(includeDefault: boolean) {
   themes[CONSTANTS.THEME_ID_DEFAULT_DARK] = defaultDarkTheme.name;
 
   return themes;
+}
+
+/**
+ * Provides a record where the key is the theme ID and the value is the theme definition.
+ * @returns all registered themes
+ */
+export function getThemes(): Record<string, Tidy5eTheme> {
+  return {
+    [CONSTANTS.THEME_ID_DEFAULT_LIGHT]: defaultLightTheme,
+    [CONSTANTS.THEME_ID_DEFAULT_DARK]: defaultDarkTheme,
+  };
 }
 
 export const themeVariables = {

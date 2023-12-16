@@ -113,7 +113,7 @@ function getActiveEffectContextOptions(effect: any) {
 
 function canEditEffect(effect: any) {
   const actor = effect.actor ? effect.actor : effect.parent;
-  return FoundryAdapter.canEditActor(actor);
+  return FoundryAdapter.isActorSheetUnlocked(actor);
 }
 
 /**
@@ -254,7 +254,7 @@ function getItemContextOptions(item: Item5e) {
       icon: "<i class='fas fa-pencil-alt fa-fw'></i>",
       callback: () => item.sheet.render(true),
     });
-    if (FoundryAdapter.canEditActor(actor)) {
+    if (FoundryAdapter.isActorSheetUnlocked(actor)) {
       options.push({
         name: 'DND5E.ContextMenuActionDuplicate',
         icon: "<i class='fas fa-copy fa-fw'></i>",
@@ -283,7 +283,7 @@ function getItemContextOptions(item: Item5e) {
       callback: () => item.sheet.render(true),
     });
 
-    if (FoundryAdapter.canEditActor(actor)) {
+    if (FoundryAdapter.isActorSheetUnlocked(actor)) {
       options.push({
         name: 'DND5E.ContextMenuActionDuplicate',
         icon: "<i class='fas fa-copy fa-fw'></i>",

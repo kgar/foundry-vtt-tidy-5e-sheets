@@ -17,7 +17,7 @@
     $context.actor.system.resources.legres.max > 0;
 </script>
 
-{#if $context.editable || showCounters}
+{#if $context.unlocked || showCounters}
   <div class="counters">
     <div class="counter legendary">
       <h4>{localize('DND5E.LegAct')}</h4>
@@ -30,7 +30,7 @@
           placeholder="0"
           title={localize('DND5E.LegActRemaining')}
           selectOnFocus={true}
-          disabled={!$context.owner}
+          disabled={!$context.editable}
         />
         <span class="sep">/</span>
         <NumberInput
@@ -41,7 +41,7 @@
           step="1"
           placeholder="0"
           selectOnFocus={true}
-          disabled={!$context.owner || $context.lockSensitiveFields}
+          disabled={!$context.editable || $context.lockSensitiveFields}
         />
       </div>
     </div>
@@ -66,7 +66,7 @@
           step="1"
           placeholder="0"
           selectOnFocus={true}
-          disabled={!$context.owner || $context.lockSensitiveFields}
+          disabled={!$context.editable || $context.lockSensitiveFields}
         />
       </div>
     </div>
@@ -77,7 +77,7 @@
           document={$context.actor}
           field="system.resources.lair.value"
           checked={$context.system.resources.lair.value}
-          disabled={!$context.owner || $context.lockSensitiveFields}
+          disabled={!$context.editable || $context.lockSensitiveFields}
         />
         <TextInput
           document={$context.actor}
@@ -87,7 +87,7 @@
           allowDeltaChanges={true}
           selectOnFocus={true}
           saveEmptyAsNull={true}
-          disabled={!$context.owner || $context.lockSensitiveFields}
+          disabled={!$context.editable || $context.lockSensitiveFields}
         />
       </div>
     </div>

@@ -13,7 +13,11 @@ import type {
 import { get, writable } from 'svelte/store';
 import NpcSheet from './npc/NpcSheet.svelte';
 import { CONSTANTS } from 'src/constants';
-import { applyTitleToWindow } from 'src/utils/applications';
+import {
+  applyModuleSheetDataAttributeToWindow,
+  applyThemeDataAttributeToWindow,
+  applyTitleToWindow,
+} from 'src/utils/applications';
 import { debug, error } from 'src/utils/logging';
 import { SettingsProvider, settingStore } from 'src/settings/settings';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
@@ -52,6 +56,10 @@ export class Tidy5eNpcSheet
 
     settingStore.subscribe(() => {
       this.getData().then((context) => this.context.set(context));
+      applyThemeDataAttributeToWindow(
+        SettingsProvider.settings.colorScheme.get(),
+        this.element?.get(0)
+      );
     });
 
     this.currentTabId = SettingsProvider.settings.initialNpcSheetTab.get();
@@ -96,11 +104,15 @@ export class Tidy5eNpcSheet
   }
 
   async getData(options = {}) {
-    const editable = FoundryAdapter.canEditActor(this.actor) && this.isEditable;
+    const defaultDocumentContext = await super.getData(this.options);
+
+    const unlocked =
+      FoundryAdapter.isActorSheetUnlocked(this.actor) &&
+      defaultDocumentContext.editable;
 
     const lockSensitiveFields =
-      !editable && SettingsProvider.settings.useTotalSheetLock.get();
-    const defaultDocumentContext = await super.getData(this.options);
+      (!unlocked && SettingsProvider.settings.useTotalSheetLock.get()) ||
+      !defaultDocumentContext.editable;
 
     const context = {
       ...defaultDocumentContext,
@@ -150,7 +162,7 @@ export class Tidy5eNpcSheet
       useClassicControls:
         SettingsProvider.settings.useClassicControlsForNpc.get(),
       encumbrance: this.actor.system.attributes.encumbrance,
-      editable,
+      editable: defaultDocumentContext.editable,
       flawEnrichedHtml: await FoundryAdapter.enrichHtml(
         FoundryAdapter.getProperty<string>(
           this.actor,
@@ -182,7 +194,7 @@ export class Tidy5eNpcSheet
           relativeTo: this.actor,
         }
       ),
-      lockSensitiveFields,
+      lockSensitiveFields: lockSensitiveFields,
       longRest: this._onLongRest.bind(this),
       lockExpChanges: FoundryAdapter.shouldLockExpChanges(),
       lockHpMaxChanges: FoundryAdapter.shouldLockHpMaxChanges(),
@@ -267,6 +279,7 @@ export class Tidy5eNpcSheet
           relativeTo: this.actor,
         }
       ),
+      unlocked: unlocked,
       useActionsFeature: actorUsesActionFeature(this.actor),
       useRoundedPortraitStyle: [
         CONSTANTS.CIRCULAR_PORTRAIT_OPTION_ALL as string,
@@ -377,6 +390,11 @@ export class Tidy5eNpcSheet
       this._saveScrollPositions(this.element);
       this._destroySvelteComponent();
       await super._render(force, options);
+      applyModuleSheetDataAttributeToWindow(this.element.get(0));
+      applyThemeDataAttributeToWindow(
+        SettingsProvider.settings.colorScheme.get(),
+        this.element.get(0)
+      );
       await this.renderCustomContent({ isFullRender: true });
       return;
     }
@@ -488,10 +506,7 @@ export class Tidy5eNpcSheet
      * @param {RestConfiguration} config  Configuration options for the rest.
      * @returns {boolean}                 Explicitly return `false` to prevent the rest from being started.
      */
-    if (
-      Hooks.call('dnd5e.preShortRest', this.actor, config) ===
-      false
-    ) {
+    if (Hooks.call('dnd5e.preShortRest', this.actor, config) === false) {
       return;
     }
 
@@ -553,11 +568,7 @@ export class Tidy5eNpcSheet
      * @param {RestConfiguration} config  Configuration options for the rest.
      * @returns {boolean}                 Explicitly return `false` to prevent the rest from being started.
      */
-    if (
-      Hooks.call('dnd5e.preLongRest', this.actor, config) ===
-      false
-    )
-      return;
+    if (Hooks.call('dnd5e.preLongRest', this.actor, config) === false) return;
 
     if (!config.dialog) {
       return;
@@ -679,10 +690,7 @@ export class Tidy5eNpcSheet
      * @param {RestResult} result  Details on the rest to be completed.
      * @returns {boolean}          Explicitly return `false` to prevent the rest updates from being performed.
      */
-    if (
-      Hooks.call('dnd5e.preRestCompleted', this.actor, result) ===
-      false
-    )
+    if (Hooks.call('dnd5e.preRestCompleted', this.actor, result) === false)
       return result;
 
     // Perform updates
@@ -717,6 +725,10 @@ export class Tidy5eNpcSheet
   close(options: unknown = {}) {
     this._destroySvelteComponent();
     return super.close(options);
+  }
+
+  _disableFields(...args: any[]) {
+    debug('Ignoring call to disable fields. Delegating to Tidy Sheets...');
   }
 
   /* -------------------------------------------- */

@@ -52,7 +52,7 @@
   const controlsBaseWidthLocked: string = '5.3125rem';
   const controlsBaseWidthUnlocked: string = '7.5rem';
 
-  $: classicControlsBaseWidth = $context.editable
+  $: classicControlsBaseWidth = $context.unlocked
     ? controlsBaseWidthUnlocked
     : controlsBaseWidthLocked;
 
@@ -71,13 +71,13 @@
     />
   </div>
   <div class="main-panel flex-column small-gap">
-    {#if noFeatures && !$context.editable}
+    {#if noFeatures && !$context.unlocked}
       <Notice>
         {localize('T5EK.EmptySection')}
       </Notice>
     {:else}
       {#each $context.features as section}
-        {#if $context.editable || section.items.length}
+        {#if $context.unlocked || section.items.length}
           <ItemTable>
             <ItemTableHeaderRow>
               <ItemTableColumn primary={true}>
@@ -107,7 +107,7 @@
                   {/if}
                 {/each}
               {/if}
-              {#if $context.owner && $context.useClassicControls}
+              {#if $context.editable && $context.useClassicControls}
                 <ItemTableColumn baseWidth={classicControlsBaseWidth} />
               {/if}
             </ItemTableHeaderRow>
@@ -170,11 +170,11 @@
                             value={item.system.hp.value}
                             valueField="system.hp.value"
                             valueTitle={localize('DND5E.HitPointsCurrent')}
-                            valueDisabled={!$context.owner}
+                            valueDisabled={!$context.editable}
                             max={item.system.hp.max}
                             maxField="system.hp.max"
                             maxTitle={localize('DND5E.HitPointsMax')}
-                            maxDisabled={!$context.owner ||
+                            maxDisabled={!$context.editable ||
                               $context.lockSensitiveFields}
                             Bar={HpBar}
                           />
@@ -203,7 +203,7 @@
                             allowDeltaChanges={isNumber}
                             selectOnFocus={true}
                             {value}
-                            disabled={!$context.owner}
+                            disabled={!$context.editable}
                           />
                         {:else}
                           {FoundryAdapter.getProperty(item, column.property) ??
@@ -214,7 +214,7 @@
                     {/if}
                   {/each}
                 {/if}
-                {#if $context.owner && $context.useClassicControls}
+                {#if $context.editable && $context.useClassicControls}
                   <ItemTableCell baseWidth={classicControlsBaseWidth}>
                     <ItemControls>
                       <ItemControl
@@ -227,7 +227,7 @@
                           })}
                       />
                       <ItemEditControl {item} />
-                      {#if $context.editable}
+                      {#if $context.unlocked}
                         <ItemDuplicateControl {item} />
                         <ItemDeleteControl {item} />
                       {/if}
@@ -239,7 +239,7 @@
                 {/if}
               </ItemTableRow>
             {/each}
-            {#if $context.editable && section.dataset}
+            {#if $context.unlocked && section.dataset}
               <ItemTableFooter
                 actor={$context.actor}
                 dataset={section.dataset}

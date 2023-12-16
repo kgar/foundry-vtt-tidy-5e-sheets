@@ -20,7 +20,7 @@
     <h2 class="details-headline">{localize('T5EK.ItemDetailsHeadline')}</h2>
     <SheetEditor
       content={$context.enriched.description}
-      editable={$context.owner || FoundryAdapter.userIsGm()}
+      editable={$context.editable}
       target="system.description.value"
     />
   </article>

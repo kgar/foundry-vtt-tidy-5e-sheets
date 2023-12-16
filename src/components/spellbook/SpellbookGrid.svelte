@@ -66,16 +66,14 @@
           class="spell {FoundryAdapter.getSpellRowClasses(spell)} icon-button"
           data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
           data-context-menu-entity-id={spell.id}
-          on:click={(event) =>
-            $context.owner &&
-            FoundryAdapter.actorTryUseItem(spell, {}, { event })}
+          on:click={(event) => FoundryAdapter.actorTryUseItem(spell, {}, { event })}
           on:contextmenu={(event) =>
             FoundryAdapter.onActorItemButtonContextMenu(spell, { event })}
           on:mousedown={(event) =>
             FoundryAdapter.editOnMiddleClick(event, spell)}
           on:mouseenter={() => onMouseEnter(spell)}
           on:mouseleave={onMouseLeave}
-          disabled={!$context.owner}
+          disabled={!$context.editable}
         >
           {#if FoundryAdapter.tryGetFlag(spell, 'favorite')}
             <GridPaneFavoriteIcon />
@@ -91,7 +89,7 @@
           </div>
         </button>
       {/each}
-      {#if $context.owner && $context.editable}
+      {#if $context.unlocked}
         <div class="spells-footer">
           {#if section.canCreate}
             <button

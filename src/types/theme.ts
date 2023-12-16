@@ -5,6 +5,10 @@ export type Tidy5eTheme = {
   name: string;
   description: string;
   variables: Record<string, string>;
+  /**
+   * Determines whether this theme is considered a dark-oriented theme or a light-oriented theme.
+   */
+  type: 'dark' | 'light';
 };
 
 export type ThemeColorSetting = {

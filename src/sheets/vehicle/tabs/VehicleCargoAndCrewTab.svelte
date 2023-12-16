@@ -80,7 +80,7 @@
     return false;
   }
 
-  $: classicControlsBaseWidth = $context.editable ? '7.5rem' : '4.375rem';
+  $: classicControlsBaseWidth = $context.unlocked ? '7.5rem' : '4.375rem';
   $: classicControlsEditableRowBaseWidth = '4.375rem';
 
   function deleteCrewOrPassenger(section: any, index: number) {
@@ -100,7 +100,7 @@
   };
 </script>
 
-{#if noCargoOrCrew && !$context.editable}
+{#if noCargoOrCrew && !$context.unlocked}
   <Notice>
     {localize('T5EK.EmptySection')}
   </Notice>
@@ -109,7 +109,7 @@
 <div class="scroll-container flex-column small-gap">
   {#each $context.cargo as section}
     {@const cardTemplate = itemCardTemplates[section.dataset.type] ?? null}
-    {#if $context.editable || section.items.length}
+    {#if $context.unlocked || section.items.length}
       <ItemTable>
         <ItemTableHeaderRow>
           <ItemTableColumn primary={true}>
@@ -125,7 +125,7 @@
               </ItemTableColumn>
             {/if}
           {/each}
-          {#if $context.owner && ((!section.editableName && $context.useClassicControls) || ($context.editable && section.editableName))}
+          {#if $context.editable && ((!section.editableName && $context.useClassicControls) || ($context.unlocked && section.editableName))}
             <ItemTableColumn
               baseWidth={section.editableName
                 ? classicControlsEditableRowBaseWidth
@@ -157,7 +157,7 @@
                   onSaveChange={(ev) => saveSection(ev, index, 'name', section)}
                   value={item.name}
                   cssClass="editable-name"
-                  disabled={!$context.owner}
+                  disabled={!$context.editable}
                 />
               {:else}
                 <ItemUseButton {item} />
@@ -198,7 +198,7 @@
                         {value}
                         onSaveChange={(ev) =>
                           saveSection(ev, index, column.property, section)}
-                        disabled={!$context.owner ||
+                        disabled={!$context.editable ||
                           (column.property === 'quantity' &&
                             $context.lockItemQuantity)}
                       />
@@ -211,7 +211,7 @@
                 {/if}
               {/each}
             {/if}
-            {#if $context.owner && ((!section.editableName && $context.useClassicControls) || ($context.editable && section.editableName))}
+            {#if $context.editable && ((!section.editableName && $context.useClassicControls) || ($context.unlocked && section.editableName))}
               <ItemTableCell
                 baseWidth={section.editableName
                   ? classicControlsEditableRowBaseWidth
@@ -222,11 +222,11 @@
                     <ItemEditControl {item} />
                   {/if}
 
-                  {#if $context.editable && !section.editableName}
+                  {#if $context.unlocked && !section.editableName}
                     <ItemDuplicateControl {item} />
                   {/if}
 
-                  {#if $context.editable}
+                  {#if $context.unlocked}
                     <ItemDeleteControl
                       onDelete={() =>
                         !section.editableName ||
@@ -235,7 +235,7 @@
                     />
                   {/if}
 
-                  {#if $context.editable && !section.editableName && $context.useActionsFeature}
+                  {#if $context.unlocked && !section.editableName && $context.useActionsFeature}
                     <ActionFilterOverrideControl {item} />
                   {/if}
                 </ItemControls>
@@ -243,7 +243,7 @@
             {/if}
           </ItemTableRow>
         {/each}
-        {#if $context.editable && section.dataset}
+        {#if $context.unlocked && section.dataset}
           <ItemTableFooter
             actor={$context.actor}
             dataset={section.dataset}

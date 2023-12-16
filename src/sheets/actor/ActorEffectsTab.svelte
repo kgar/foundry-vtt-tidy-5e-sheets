@@ -20,22 +20,22 @@
   const localize = FoundryAdapter.localize;
 
   $: effectSections = Object.values<any>($context.effects);
-  $: classicControlsBaseWidth = $context.editable ? '7.5rem' : '5.3125rem';
+  $: classicControlsBaseWidth = $context.unlocked ? '7.5rem' : '5.3125rem';
 
   $: noEffects =
     effectSections.some((section: any) => section.effects.length > 0) === false;
 </script>
 
 <div class="scroll-container flex-column small-gap">
-  {#if !$context.allowEffectsManagement && $context.editable}
+  {#if !$context.allowEffectsManagement && $context.unlocked}
     <Notice>{localize('T5EK.GMOnlyEdit')}</Notice>
   {/if}
 
-  {#if noEffects && !$context.editable && $context.allowEffectsManagement}
+  {#if noEffects && !$context.unlocked && $context.allowEffectsManagement}
     <Notice>{localize('T5EK.EmptySection')}</Notice>
   {:else}
     {#each effectSections as section}
-      {#if ($context.editable && $context.allowEffectsManagement) || section.effects.length > 0}
+      {#if ($context.unlocked && $context.allowEffectsManagement) || section.effects.length > 0}
         <ItemTable>
           <ItemTableHeaderRow>
             <ItemTableColumn primary={true}>
@@ -47,7 +47,7 @@
             <ItemTableColumn baseWidth="7.5rem">
               {localize('DND5E.Duration')}
             </ItemTableColumn>
-            {#if $context.owner && $context.useClassicControls && $context.allowEffectsManagement}
+            {#if $context.editable && $context.useClassicControls && $context.allowEffectsManagement}
               <ItemTableColumn baseWidth={classicControlsBaseWidth} />
             {/if}
           </ItemTableHeaderRow>
@@ -72,7 +72,7 @@
                 >{effect.duration.label ?? ''}</ItemTableCell
               >
 
-              {#if $context.owner && $context.useClassicControls && $context.allowEffectsManagement}
+              {#if $context.editable && $context.useClassicControls && $context.allowEffectsManagement}
                 <ItemTableCell baseWidth={classicControlsBaseWidth}>
                   <ItemControls>
                     <ItemControl
@@ -91,7 +91,7 @@
                       iconCssClass="fas fa-edit"
                     />
 
-                    {#if $context.editable}
+                    {#if $context.unlocked}
                       <ItemControl
                         on:click={() => effect.deleteDialog()}
                         title={localize('DND5E.EffectDelete')}
@@ -103,7 +103,7 @@
               {/if}
             </ItemTableRow>
           {/each}
-          {#if $context.owner && $context.editable && $context.allowEffectsManagement}
+          {#if $context.unlocked && $context.allowEffectsManagement}
             <ItemTableFooter
               actor={$context.actor}
               dataset={section.dataset}

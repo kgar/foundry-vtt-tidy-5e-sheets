@@ -55,7 +55,7 @@
           field="system.quantity"
           document={$context.item}
           step="1"
-          disabled={!$context.owner || $context.lockItemQuantity}
+          disabled={!$context.editable || $context.lockItemQuantity}
         />
       </div>
 
@@ -71,7 +71,7 @@
           step="any"
           field="system.weight"
           document={$context.item}
-          disabled={!$context.owner}
+          disabled={!$context.editable}
         />
       </div>
 
@@ -87,13 +87,13 @@
           step="any"
           field="system.price.value"
           document={$context.item}
-          disabled={!$context.owner}
+          disabled={!$context.editable}
         />
         <Select
           value={$context.system.price.denomination}
           field="system.price.denomination"
           document={$context.item}
-          disabled={!$context.owner}
+          disabled={!$context.editable}
         >
           <SelectOptions
             data={$context.config.currencies}

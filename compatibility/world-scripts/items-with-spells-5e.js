@@ -32,10 +32,9 @@ Hooks.on('tidy5e-sheet.ready', (api) => {
 
   api.registerItemTab(
     new api.models.HtmlTab({
-      tabId: 'items-with-spells-tab',
+      tabId: 'items-with-spells-5e-tab',
       title: game.i18n.localize(`ITEM.TypeSpellPl`),
-      html: `<div class='sheet-body' role='presentation'></div>`,
-      tabContentsClasses: ['items-with-spells-tab'],
+      html: ``,
       enabled(data) {
         return includeTab(data.item.type);
       },
@@ -44,7 +43,11 @@ Hooks.on('tidy5e-sheet.ready', (api) => {
           let instance = ItemsWithSpells5eItemSheet.instances.get(
             args.data.appId
           );
-          instance.renderHeavy($(args.tabContentsElement));
+          instance.renderHeavy(args.tabContentsElement);
+          // After HTML is added, flex the inner tab content area to the full height of the actual tab contents area
+          setTimeout(() => {
+            $(args.tabContentsElement).find('>:first-child').addClass('flex-1');
+          });
         }
       },
     })

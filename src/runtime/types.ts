@@ -1,4 +1,4 @@
-import type { RenderScheme } from 'src/api';
+import type { CustomTabTitle, RenderScheme } from 'src/api';
 import type { HandlebarsTemplateContent } from 'src/api/HandlebarsTemplateContent';
 import type {
   HtmlTabContent,
@@ -9,13 +9,14 @@ import type {
 export type RegisteredTab<TContext> = {
   enabled?: (context: TContext) => boolean;
   layout?: SheetLayout | SheetLayout[];
-  title: string;
+  title: CustomTabTitle;
   id: string;
   content: SvelteTabContent | HtmlTabContent | HandlebarsTemplateContent;
   onRender?: (args: OnRenderTabArgs) => void;
   renderScheme?: RenderScheme;
   tabContentsClasses?: string[];
   getData?: (data: any) => any | Promise<any>;
+  activateDefaultSheetListeners?: boolean;
 };
 
 /**

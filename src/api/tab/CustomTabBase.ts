@@ -24,6 +24,8 @@ import type { RenderScheme } from '../api.types';
  */
 export type TabId = string;
 
+export type CustomTabTitle = string | (() => string);
+
 /**
  * The basis of all custom registered tabs.
  */
@@ -31,7 +33,7 @@ export abstract class CustomTabBase {
   /**
    * The title to display on the tab. Accepts localization keys and plain text.
    */
-  abstract title: string;
+  abstract title: CustomTabTitle;
 
   /** {@inheritDoc TabId} */
   abstract tabId: TabId;
@@ -57,4 +59,21 @@ export abstract class CustomTabBase {
    * An optional array of CSS classes to apply to the tab contents container.
    */
   abstract tabContentsClasses?: string[];
+
+  /**
+   * An optional override to whether the target tab should use default sheet event listeners.
+   * When not specified, default sheet event listeners are applied for handlebars- and HTML-based tabs.
+   * 
+   * @remarks
+   * The default sheet listeners pertain to the default 5e sheets. Behaviors include but are not limited to
+   * - `data-action` click handling
+   * - drag-and-drop behaviors
+   * - rollable items click handling
+   * - item controls click handling
+   * - proficiency toggling
+   * - ... etc.
+   *
+   * Essentially, if you wish to take full control of your content via event handlers of your own, then set this field to `false`.
+   */
+  abstract activateDefaultSheetListeners?: boolean;
 }

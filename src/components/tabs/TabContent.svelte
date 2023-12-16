@@ -9,10 +9,9 @@
 
   declareLocation('tab', tab.id);
 
-  $: useCoreListenersClass =
-    tab.content.type === 'html' && tab.content.renderScheme === 'handlebars'
-      ? CONSTANTS.CLASS_TIDY_USE_CORE_LISTENERS
-      : '';
+  $: useCoreListenersClass = tab.activateDefaultSheetListeners
+    ? CONSTANTS.CLASS_TIDY_USE_CORE_LISTENERS
+    : '';
 </script>
 
 <div

@@ -24,7 +24,7 @@
       class="rest short-rest inline-icon-button"
       title={localize('T5EK.ShortRest')}
       on:click={(ev) => $context.shortRest(ev)}
-      disabled={!$context.owner}
+      disabled={!$context.editable}
       tabindex={!$settingStore.useOldHpTabbing ? 0 : -1}
     >
       <i class="fas fa-hourglass-half" />
@@ -34,7 +34,7 @@
       class="rest long-rest inline-icon-button"
       title={localize('T5EK.LongRest')}
       on:click={(ev) => $context.longRest(ev)}
-      disabled={!$context.owner}
+      disabled={!$context.editable}
       tabindex={!$settingStore.useOldHpTabbing ? 0 : -1}
     >
       <i class="fas fa-hourglass-end" />

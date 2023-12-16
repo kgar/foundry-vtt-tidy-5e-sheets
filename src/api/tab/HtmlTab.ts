@@ -1,6 +1,10 @@
 import type { OnRenderTabArgs } from 'src/types/types';
 import type { RenderScheme } from '../api.types';
-import { CustomTabBase, type TabId } from './CustomTabBase';
+import {
+  CustomTabBase,
+  type CustomTabTitle,
+  type TabId,
+} from './CustomTabBase';
 
 /**
  * The information necessary for rendering an HTML-based tab.
@@ -24,15 +28,17 @@ import { CustomTabBase, type TabId } from './CustomTabBase';
  * ```
  */
 export class HtmlTab extends CustomTabBase {
-  title: string = '';
+  title: CustomTabTitle = '';
   tabId: TabId = '';
   html: string = '';
   renderScheme: RenderScheme = 'handlebars';
   tabContentsClasses: string[] = [];
+  activateDefaultSheetListeners?: boolean | undefined;
 
   constructor(props?: Partial<HtmlTab>) {
     super();
 
+    this.activateDefaultSheetListeners = true;
     const merged = mergeObject(this, props);
     Object.assign(this, merged);
   }

@@ -51,7 +51,7 @@
       on:click={() =>
         new MaxPreparedSpellsConfigFormApplication($context.actor).render(true)}
       title={localize('T5EK.MaxPreparedSpellsConfig.ButtonTooltip')}
-      disabled={!$context.owner || $context.lockSensitiveFields}
+      disabled={!$context.editable || $context.lockSensitiveFields}
     >
       <p>{localize('T5EK.PreparedSpells')}</p>
       <span class="spells-prepared">{$context.preparedSpells ?? 0}</span>
@@ -65,7 +65,7 @@
       document={$context.actor}
       field="system.attributes.spellcasting"
       value={$context.system.attributes.spellcasting}
-      disabled={!$context.owner || $context.lockSensitiveFields}
+      disabled={!$context.editable || $context.lockSensitiveFields}
     >
       <option value="" selected={!$context.system.attributes.spellcasting}
         >{localize('DND5E.None')}</option
@@ -89,7 +89,7 @@
         min="0"
         step="1"
         selectOnFocus={true}
-        disabled={!$context.owner || $context.lockSensitiveFields}
+        disabled={!$context.editable || $context.lockSensitiveFields}
       />
     </div>
   {/if}

@@ -64,7 +64,7 @@
       maxlength={12}
       title="{localize('DND5E.HPFormula')}: {$context.system.attributes.hp
         .formula}"
-      disabled={!$context.owner}
+      disabled={!$context.editable}
     />
   </div>
 </div>

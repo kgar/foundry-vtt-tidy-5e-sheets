@@ -69,13 +69,13 @@
         data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
         data-context-menu-entity-id={item.id}
         on:click={(event) =>
-          $context.owner && FoundryAdapter.actorTryUseItem(item, {}, { event })}
+          $context.editable && FoundryAdapter.actorTryUseItem(item, {}, { event })}
         on:contextmenu={(event) =>
           FoundryAdapter.onActorItemButtonContextMenu(item, { event })}
         on:mousedown={(event) => FoundryAdapter.editOnMiddleClick(event, item)}
         on:mouseenter={() => onMouseEnter(item)}
         on:mouseleave={onMouseLeave}
-        disabled={!$context.owner}
+        disabled={!$context.editable}
       >
         {#if ctx?.attunement}
           <i
@@ -88,7 +88,7 @@
           <GridPaneFavoriteIcon />
         {/if}
 
-        {#if $context.owner}
+        {#if $context.editable}
           <button
             type="button"
             class="item-control item-edit"
@@ -123,7 +123,7 @@
                 allowDeltaChanges={true}
                 selectOnFocus={true}
                 on:click={preventUseItemEvent}
-                disabled={!$context.owner}
+                disabled={!$context.editable}
               />
             {/if}
           </div>
@@ -138,7 +138,7 @@
               cssClass="item-count"
               value={item.system.quantity}
               maxlength={2}
-              disabled={!$context.owner || $context.lockItemQuantity}
+              disabled={!$context.editable || $context.lockItemQuantity}
               allowDeltaChanges={true}
               selectOnFocus={true}
               on:click={preventUseItemEvent}
@@ -147,7 +147,7 @@
         </div>
       </button>
     {/each}
-    {#if $context.editable}
+    {#if $context.unlocked}
       <div class="items-footer">
         <button
           type="button"
