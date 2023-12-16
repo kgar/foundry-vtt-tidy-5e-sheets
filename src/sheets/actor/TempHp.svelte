@@ -21,7 +21,7 @@
     allowDeltaChanges={true}
     maxlength={5}
     title={localize('DND5E.HitPointsTemp')}
-    disabled={!$context.owner}
+    disabled={!$context.editable}
   />
   <TextInput
     document={$context.actor}
@@ -32,9 +32,9 @@
     allowDeltaChanges={true}
     maxlength={5}
     title={localize('DND5E.HitPointsTempMax')}
-    disabled={!$context.owner}
+    disabled={!$context.editable}
   />
-  {#if $context.owner && !$context.lockSensitiveFields}
+  {#if $context.editable && !$context.lockSensitiveFields}
     <button
       type="button"
       class="inline-icon-button"

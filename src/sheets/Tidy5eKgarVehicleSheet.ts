@@ -94,9 +94,12 @@ export class Tidy5eVehicleSheet
   }
 
   async getData(options = {}) {
-    const editable = FoundryAdapter.canEditActor(this.actor) && this.isEditable;
-
     const defaultDocumentContext = await super.getData(this.options);
+
+    const unlocked =
+      FoundryAdapter.isActorSheetUnlocked(this.actor) &&
+      defaultDocumentContext.editable;
+
     const context = {
       ...defaultDocumentContext,
       actions: getActorActions(this.actor),
@@ -108,7 +111,7 @@ export class Tidy5eVehicleSheet
       appId: this.appId,
       useClassicControls:
         SettingsProvider.settings.useClassicControlsForVehicle.get(),
-      editable,
+      editable: defaultDocumentContext.editable,
       healthPercentage: getPercentage(
         this.actor?.system?.attributes?.hp?.value,
         this.actor?.system?.attributes?.hp?.max
@@ -119,10 +122,12 @@ export class Tidy5eVehicleSheet
       lockLevelSelector: FoundryAdapter.shouldLockLevelSelector(),
       lockMoneyChanges: FoundryAdapter.shouldLockMoneyChanges(),
       lockSensitiveFields:
-        !editable && SettingsProvider.settings.useTotalSheetLock.get(),
+        (!unlocked && SettingsProvider.settings.useTotalSheetLock.get()) ||
+        !defaultDocumentContext.editable,
       owner: this.actor.isOwner,
       showLimitedSheet: FoundryAdapter.showLimitedSheet(this.actor),
       tabs: [],
+      unlocked: unlocked,
       useActionsFeature: actorUsesActionFeature(this.actor),
       useRoundedPortraitStyle: [
         CONSTANTS.CIRCULAR_PORTRAIT_OPTION_ALL as string,
@@ -244,6 +249,10 @@ export class Tidy5eVehicleSheet
       stats.lastSubmissionTime = new Date();
       return stats;
     });
+  }
+
+  _disableFields(...args: any[]) {
+    debug('Ignoring call to disable fields. Delegating to Tidy Sheets...');
   }
 
   /* -------------------------------------------- */

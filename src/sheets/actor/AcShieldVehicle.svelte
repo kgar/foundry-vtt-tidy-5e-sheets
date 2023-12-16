@@ -29,7 +29,7 @@
       title={localize('DND5E.ArmorClass')}
       cssClass="armor-class-flat"
       selectOnFocus={true}
-      disabled={!$context.owner || $context.lockSensitiveFields}
+      disabled={!$context.editable || $context.lockSensitiveFields}
     />
     <TextInput
       document={$context.actor}
@@ -39,7 +39,7 @@
       title={localize('DND5E.ArmorClassMotionless')}
       cssClass="armor-class-motionless"
       selectOnFocus={true}
-      disabled={!$context.owner || $context.lockSensitiveFields}
+      disabled={!$context.editable || $context.lockSensitiveFields}
     />
   </AcShieldBase>
 </div>

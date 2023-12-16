@@ -26,7 +26,7 @@
       field="system.identifier"
       value={$context.system.identifier}
       placeholder={$context.item.identifier}
-      disabled={!$context.owner}
+      disabled={!$context.editable}
     />
   </div>
   <p class="hint">
@@ -47,7 +47,7 @@
       document={$context.item}
       field="system.hitDice"
       value={$context.system.hitDice}
-      disabled={!$context.owner}
+      disabled={!$context.editable}
     >
       {#each $context.config.hitDieTypes as type}
         <option value={type}>{type}</option>
@@ -68,7 +68,7 @@
       field="system.hitDiceUsed"
       value={$context.system.hitDiceUsed}
       placeholder="0"
-      disabled={!$context.owner}
+      disabled={!$context.editable}
     />
   </div>
 </ItemFormGroup>

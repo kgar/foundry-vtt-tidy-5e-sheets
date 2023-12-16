@@ -29,7 +29,7 @@
         >
           {itemDescription.label}
 
-          {#if $context.owner}
+          {#if $context.editable}
             <button
               type="button"
               class="inline-icon-button edit-item-description"

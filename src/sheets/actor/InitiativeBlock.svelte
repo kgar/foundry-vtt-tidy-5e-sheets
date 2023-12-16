@@ -35,12 +35,12 @@
       selectOnFocus={true}
       allowDeltaChanges={true}
       value={initiative.bonus}
-      disabled={!$context.owner || $context.lockSensitiveFields}
+      disabled={!$context.editable || $context.lockSensitiveFields}
       id="{$context.appId}-initiative-mod"
     />
   </label>
 
-  {#if $context.owner && !$context.lockSensitiveFields}
+  {#if $context.editable && !$context.lockSensitiveFields}
     <button
       type="button"
       class="config-button icon-button"

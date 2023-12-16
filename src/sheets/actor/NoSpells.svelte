@@ -16,7 +16,7 @@
 
 <div class="no-spells-container {cssClass}">
   <Notice>{localize('DND5E.NoSpellLevels')}</Notice>
-  {#if $context.owner && editable}
+  {#if $context.editable && editable}
     <button
       type="button"
       class="create-spell-btn flex-row align-items-center extra-small-gap"

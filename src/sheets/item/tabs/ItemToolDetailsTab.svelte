@@ -21,7 +21,7 @@
       document={$context.item}
       field="system.equipped"
       checked={$context.system.equipped}
-      disabled={!$context.owner}
+      disabled={!$context.editable}
       >
       {localize('DND5E.Equipped')}
     </Checkbox>
@@ -38,7 +38,7 @@
     document={$context.item}
     field="system.toolType"
     value={$context.system.toolType}
-    disabled={!$context.owner}
+    disabled={!$context.editable}
     >
     <SelectOptions data={$context.config.toolTypes} blank="" />
   </Select>
@@ -54,7 +54,7 @@
     document={$context.item}
     field="system.baseItem"
     value={$context.system.baseItem}
-    disabled={!$context.owner}
+    disabled={!$context.editable}
     >
     <SelectOptions data={$context.baseItems} blank="" />
   </Select>
@@ -70,7 +70,7 @@
     document={$context.item}
     field="system.attunement"
     value={$context.system.attunement}
-    disabled={!$context.owner}
+    disabled={!$context.editable}
     >
     <SelectOptions data={$context.config.attunements} />
   </Select>
@@ -86,7 +86,7 @@
     document={$context.item}
     field="system.proficient"
     value={$context.system.proficient}
-    disabled={!$context.owner}
+    disabled={!$context.editable}
     >
     <SelectOptions
       data={$context.config.proficiencyLevels}
@@ -105,7 +105,7 @@
     document={$context.item}
     field="system.ability"
     value={$context.system.ability}
-    disabled={!$context.owner}
+    disabled={!$context.editable}
     >
     <SelectOptions
       data={$context.config.abilities}
@@ -126,7 +126,7 @@
     field="system.bonus"
     value={$context.system.bonus}
     dataset={{ formulaEditor: true }}
-    disabled={!$context.owner}
+    disabled={!$context.editable}
     />
 </ItemFormGroup>
 
@@ -141,6 +141,6 @@
     document={$context.item}
     field="system.chatFlavor"
     value={$context.system.chatFlavor}
-    disabled={!$context.owner}
+    disabled={!$context.editable}
     />
 </ItemFormGroup>

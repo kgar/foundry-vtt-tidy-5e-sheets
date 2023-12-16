@@ -24,7 +24,7 @@
     document={$context.item}
     field="system.type.value"
     value={$context.system.type.value}
-    disabled={!$context.owner}
+    disabled={!$context.editable}
   >
     <SelectOptions
       data={$context.config.lootTypes}
@@ -49,7 +49,7 @@
       document={$context.item}
       field="system.type.subtype"
       value={$context.system.type.subtype}
-      disabled={!$context.owner}
+      disabled={!$context.editable}
     >
       <SelectOptions data={$context.lootSubtypes} blank="" />
     </Select>

@@ -57,7 +57,7 @@
         {/each}
         {#each tools as [key, tool]}
           <li class="tool">
-            {#if $context.owner && !$context.lockSensitiveFields}
+            {#if $context.editable && !$context.lockSensitiveFields}
               <button
                 type="button"
                 class="tool-proficiency-toggle inline-transparent-button"
@@ -67,7 +67,7 @@
                     $context.actor,
                     key,
                     tool.value,
-                    'tools'
+                    'tools',
                   )}
                 on:contextmenu|stopPropagation|preventDefault={(event) =>
                   FoundryAdapter.cycleProficiency(
@@ -75,7 +75,7 @@
                     key,
                     tool.value,
                     'tools',
-                    true
+                    true,
                   )}
               >
                 {@html tool.icon}
@@ -86,14 +86,12 @@
               >
             {/if}
 
-            {#if $context.owner}
+            {#if $context.editable}
               <button
                 type="button"
-                class="tool-check-roller inline-transparent-button"
-                class:rollable={$context.owner}
+                class="tool-check-roller inline-transparent-button rollable"
                 on:click={(event) =>
                   $context.actor.rollToolCheck(key, { event })}
-                disabled={!$context.owner}
               >
                 {tool.label}
               </button>
@@ -103,7 +101,7 @@
               </span>
             {/if}
 
-            {#if traitsExpanded && $context.owner && !$context.lockSensitiveFields}
+            {#if traitsExpanded && $context.editable && !$context.lockSensitiveFields}
               <button
                 type="button"
                 class="tool-proficiency-editor inline-icon-button"
@@ -112,7 +110,7 @@
                   FoundryAdapter.renderProficiencyConfig(
                     $context.actor,
                     'tools',
-                    key
+                    key,
                   )}
               >
                 <i class="fas fa-cog" />
@@ -122,7 +120,7 @@
         {/each}
       </ul>
     </div>
-    {#if traitsExpanded && $context.owner && !$context.lockSensitiveFields}
+    {#if traitsExpanded && $context.editable && !$context.lockSensitiveFields}
       <button
         type="button"
         class="trait-editor inline-icon-button"

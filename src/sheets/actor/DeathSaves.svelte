@@ -34,7 +34,7 @@
       value={successes}
       maxlength={1}
       title={localize('DND5E.DeathSave')}
-      disabled={!$context.owner}
+      disabled={!$context.editable}
     />
     <button
       type="button"
@@ -52,7 +52,7 @@
       placeholder="0"
       value={failures}
       maxlength={1}
-      disabled={!$context.owner}
+      disabled={!$context.editable}
     />
     <i class="fas fa-times" />
   </div>

@@ -13,11 +13,11 @@
 
 <button
   type="button"
-  class:rollable={$context.owner}
+  class:rollable={$context.editable}
   class="transparent-button"
   {title}
-  on:click={(ev) => $context.owner && dispatcher('roll', ev)}
-  disabled={!$context.owner}
+  on:click={(ev) => dispatcher('roll', ev)}
+  disabled={!$context.editable}
 >
   <h4 class="block-title">
     {text}

@@ -17,7 +17,7 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-{#if ($context.owner && $context.actor.type === 'npc') || $context.system.details?.race?.id}
+{#if $context.editable && ($context.actor.type === 'npc' || $context.system.details?.race?.id)}
   <button
     type="button"
     class="configure-creature-type inline-transparent-button highlight-on-hover truncate"

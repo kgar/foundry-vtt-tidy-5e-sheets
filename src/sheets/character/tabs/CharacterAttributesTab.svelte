@@ -14,7 +14,7 @@
   let context = getContext<Readable<CharacterSheetContext>>('context');
 
   $: showResources =
-    $context.editable ||
+    $context.unlocked ||
     $context.resources.some(
       (x: any) => !isNil(x.value) || !isNil(x.value, '') || !isNil(x.max),
     );

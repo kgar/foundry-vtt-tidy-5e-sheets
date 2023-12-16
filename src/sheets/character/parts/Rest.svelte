@@ -19,7 +19,7 @@
       class="rest icon-button"
       title={localize('T5EK.ShortRest')}
       on:click={(event) => $context.actor.sheet.onShortRest(event)}
-      disabled={!$context.owner}
+      disabled={!$context.editable}
     >
       <i class="fas fa-hourglass-half" />
     </button>
@@ -28,7 +28,7 @@
       class="rest icon-button"
       title={localize('T5EK.LongRest')}
       on:click={(event) => $context.actor.sheet.onLongRest(event)}
-      disabled={!$context.owner}
+      disabled={!$context.editable}
     >
       <i class="fas fa-hourglass-end" />
     </button>

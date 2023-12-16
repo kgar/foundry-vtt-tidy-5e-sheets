@@ -30,12 +30,12 @@
     {value}
     valueField="system.attributes.hp.value"
     valueTitle={localize('DND5E.HitPointsCurrent')}
-    valueDisabled={!$context.owner}
+    valueDisabled={!$context.editable}
     {max}
     maxField="system.attributes.hp.max"
     maxTitle={localize('DND5E.HitPointsMax')}
     maxDisabled={!$context.allowMaxHpOverride ||
-      !$context.owner ||
+      !$context.editable ||
       $context.lockHpMaxChanges ||
       $context.lockSensitiveFields}
     percentage={$context.healthPercentage}

@@ -60,7 +60,7 @@
 </ItemFilters>
 
 <div class="scroll-container flex-column small-gap">
-  {#if noItems && !$context.editable}
+  {#if noItems && !$context.unlocked}
     <Notice>{localize('T5EK.EmptySection')}</Notice>
   {:else}
     {#each $context.inventory as section (section.label)}
@@ -68,7 +68,7 @@
         searchCriteria,
         section.items,
       )}
-      {#if (searchCriteria.trim() === '' && $context.editable) || filteredItems.length > 0}
+      {#if (searchCriteria.trim() === '' && $context.unlocked) || filteredItems.length > 0}
         {#if layoutMode === 'list'}
           <InventoryList
             primaryColumnName="{localize(
@@ -101,7 +101,7 @@
         >{$context.system.attributes.attunement.value}</span
       >
       /
-      {#if FoundryAdapter.userIsGm()}
+      {#if $context.editable && FoundryAdapter.userIsGm()}
         <NumberInput
           selectOnFocus={true}
           document={$context.actor}
@@ -110,7 +110,7 @@
           value={$context.system.attributes.attunement.max}
           placeholder="0"
           title={localize('T5EK.AttunementMax')}
-          disabled={!$context.owner || $context.lockSensitiveFields}
+          disabled={!$context.editable || $context.lockSensitiveFields}
         />
       {:else}
         <span class="attuned-items-max" title={localize('T5EK.AttunementMax')}

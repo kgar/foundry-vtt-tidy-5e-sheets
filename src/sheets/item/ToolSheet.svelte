@@ -28,7 +28,7 @@
         field="name"
         value={$context.item.name}
         placeholder={localize('DND5E.ItemName')}
-        disabled={!$context.owner}
+        disabled={!$context.editable}
       />
     </h1>
 
@@ -52,7 +52,7 @@
           document={$context.item}
           field="system.rarity"
           value={$context.system.rarity}
-          disabled={!$context.owner}
+          disabled={!$context.editable}
         >
           <SelectOptions data={$context.config.itemRarity} blank="" />
         </Select>
@@ -61,7 +61,7 @@
         <Source
           document={$context.item}
           keyPath="system.source"
-          editable={$context.editable}
+          editable={$context.unlocked}
         />
       </li>
     </ul>

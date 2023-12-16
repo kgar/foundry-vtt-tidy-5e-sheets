@@ -23,7 +23,7 @@
       class="rest short-rest inline-icon-button"
       title={localize('T5EK.ShortRest')}
       on:click={(ev) => $context.shortRest(ev)}
-      disabled={!$context.owner}
+      disabled={!$context.editable}
     >
       <i class="fas fa-hourglass-half" />
     </button>
@@ -32,7 +32,7 @@
       class="rest long-rest inline-icon-button"
       title={localize('T5EK.LongRest')}
       on:click={(ev) => $context.longRest(ev)}
-      disabled={!$context.owner}
+      disabled={!$context.editable}
     >
       <i class="fas fa-hourglass-end" />
     </button>

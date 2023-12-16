@@ -54,7 +54,7 @@
           value={currency.value}
           allowDeltaChanges={true}
           selectOnFocus={true}
-          disabled={!$context.owner || $context.lockMoneyChanges}
+          disabled={!$context.editable || $context.lockMoneyChanges}
         />
         <label
           for="{$context.appId}-system.currency.{currency.key}"
@@ -69,7 +69,7 @@
         class="currency-convert"
         title={localize('DND5E.CurrencyConvertHint')}
         on:click|stopPropagation|preventDefault={() => confirmConvertCurrency()}
-        disabled={!$context.owner}
+        disabled={!$context.editable}
       >
         <i class="fas fa-funnel-dollar" />
       </button>

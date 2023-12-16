@@ -23,7 +23,7 @@
       document={$context.item}
       field="system.spellcasting.progression"
       value={$context.system.spellcasting.progression}
-      disabled={!$context.owner}
+      disabled={!$context.editable}
       >
       <SelectOptions data={$context.config.spellProgression} />
     </Select>
@@ -41,7 +41,7 @@
       document={$context.item}
       field="system.spellcasting.ability"
       value={$context.system.spellcasting.ability}
-      disabled={!$context.owner}
+      disabled={!$context.editable}
       >
       <SelectOptions
         data={$context.config.abilities}

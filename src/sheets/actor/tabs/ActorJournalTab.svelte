@@ -38,13 +38,13 @@
             placeholder={localize('T5EK.JournalPersonsOfInterest')}
             selectOnFocus={true}
             stopChangePropagation={true}
-            disabled={!$context.owner}
+            disabled={!$context.editable}
           />
         </div>
         <SheetEditor
           content={$context.notes1EnrichedHtml}
           target="flags.{CONSTANTS.MODULE_ID}.notes1.value"
-          editable={$context.owner || FoundryAdapter.userIsGm()}
+          editable={$context.editable}
         />
       </article>
     </RerenderAfterFormSubmission>
@@ -64,13 +64,13 @@
             placeholder={localize('T5EK.JournalLocationsOfInterest')}
             selectOnFocus={true}
             stopChangePropagation={true}
-            disabled={!$context.owner}
+            disabled={!$context.editable}
           />
         </div>
         <SheetEditor
           content={$context.notes2EnrichedHtml}
           target="flags.{CONSTANTS.MODULE_ID}.notes2.value"
-          editable={$context.owner || FoundryAdapter.userIsGm()}
+          editable={$context.editable}
         />
       </article>
     </RerenderAfterFormSubmission>
@@ -90,13 +90,13 @@
             placeholder={localize('T5EK.JournalQuests')}
             selectOnFocus={true}
             stopChangePropagation={true}
-            disabled={!$context.owner}
+            disabled={!$context.editable}
           />
         </div>
         <SheetEditor
           content={$context.notes3EnrichedHtml}
           target="flags.{CONSTANTS.MODULE_ID}.notes3.value"
-          editable={$context.owner || FoundryAdapter.userIsGm()}
+          editable={$context.editable}
         />
       </article>
     </RerenderAfterFormSubmission>
@@ -116,13 +116,13 @@
             placeholder={localize('T5EK.JournalMisc')}
             selectOnFocus={true}
             stopChangePropagation={true}
-            disabled={!$context.owner}
+            disabled={!$context.editable}
           />
         </div>
         <SheetEditor
           content={$context.notes4EnrichedHtml}
           target="flags.{CONSTANTS.MODULE_ID}.notes4.value"
-          editable={$context.owner || FoundryAdapter.userIsGm()}
+          editable={$context.editable}
         />
       </article>
     </RerenderAfterFormSubmission>
@@ -142,7 +142,7 @@
         <SheetEditor
           content={$context.notesEnrichedHtml}
           target="flags.{CONSTANTS.MODULE_ID}.notes.value"
-          editable={$context.owner || FoundryAdapter.userIsGm()}
+          editable={$context.editable}
         />
       </article>
     </RerenderAfterFormSubmission>

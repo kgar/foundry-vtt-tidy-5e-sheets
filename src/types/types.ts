@@ -143,6 +143,10 @@ export type ActorSheetContext = {
   actor: Actor5e;
   allowEffectsManagement: boolean;
   appId: string;
+  /**
+   * Whether or not the sheet can be edited, regardless of lock/sensitive field settings.
+   * When this boolean is `false`, then the sheet is effectively hard locked.
+   */
   editable: boolean;
   /**
    * Represents remaining health as a percentage within the range of `0` to `100`.
@@ -168,6 +172,10 @@ export type ActorSheetContext = {
   showLimitedSheet: boolean;
   tabs: Tab[];
   tidyResources: TidyResource[];
+  /**
+   * Tells whether the sheet is unlocked via the Sheet Lock feature. When the sheet lock feature is disabled and the sheet is generally editable, this is always `true`.
+   */
+  unlocked: boolean;
   useActionsFeature?: boolean;
   useClassicControls: boolean;
   useRoundedPortraitStyle: boolean;

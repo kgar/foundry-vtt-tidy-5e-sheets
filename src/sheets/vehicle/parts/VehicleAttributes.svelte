@@ -45,7 +45,7 @@
         element="div"
         document={$context.actor}
         field="system.attributes.capacity.creature"
-        editable={$context.owner && !$context.lockSensitiveFields}
+        editable={$context.editable && !$context.lockSensitiveFields}
         placeholder="&mdash;"
         value={$context.system.attributes.capacity.creature}
         dataMaxLength={1000}
@@ -63,7 +63,7 @@
         min="0"
         placeholder="0"
         selectOnFocus={true}
-        disabled={!$context.owner || $context.lockSensitiveFields}
+        disabled={!$context.editable || $context.lockSensitiveFields}
       />
     </div>
   </div>
@@ -75,7 +75,7 @@
         field="system.attributes.actions.stations"
         checked={$context.system.attributes.actions.stations}
         labelCssClass="action-stations-label"
-        disabled={!$context.owner || $context.lockSensitiveFields}
+        disabled={!$context.editable || $context.lockSensitiveFields}
       >
         <span>{localize('DND5E.VehicleActionStations')}</span>
       </Checkbox>
@@ -99,7 +99,7 @@
             placeholder="0"
             title={localize('DND5E.VehicleActionsHint')}
             selectOnFocus={true}
-            disabled={!$context.owner || $context.lockSensitiveFields}
+            disabled={!$context.editable || $context.lockSensitiveFields}
           />
         </div>
       </div>
@@ -118,7 +118,7 @@
             placeholder="&mdash;"
             title={localize('DND5E.VehicleActionThresholdsFull')}
             selectOnFocus={true}
-            disabled={!$context.owner || $context.lockSensitiveFields}
+            disabled={!$context.editable || $context.lockSensitiveFields}
           />
 
           <span class="sep">&lt;</span>
@@ -131,7 +131,7 @@
             placeholder="&mdash;"
             title={localize('DND5E.VehicleActionThresholdsMid')}
             selectOnFocus={true}
-            disabled={!$context.owner || $context.lockSensitiveFields}
+            disabled={!$context.editable || $context.lockSensitiveFields}
           />
 
           <span class="sep">&lt;</span>
@@ -144,7 +144,7 @@
             placeholder="&mdash;"
             title={localize('DND5E.VehicleActionThresholdsMin')}
             selectOnFocus={true}
-            disabled={!$context.owner || $context.lockSensitiveFields}
+            disabled={!$context.editable || $context.lockSensitiveFields}
           />
         </div>
       </div>

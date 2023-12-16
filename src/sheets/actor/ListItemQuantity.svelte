@@ -19,7 +19,7 @@
       field="system.quantity"
       value={item.system.quantity}
       selectOnFocus={true}
-      disabled={!$context.owner || $context.lockItemQuantity}
+      disabled={!$context.editable || $context.lockItemQuantity}
       placeholder="0"
       allowDeltaChanges={true}
       on:click={(ev) => ev.stopPropagation()}

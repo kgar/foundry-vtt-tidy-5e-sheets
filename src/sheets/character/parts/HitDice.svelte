@@ -22,9 +22,9 @@
   <button
     type="button"
     class="current-hd config-button transparent-button"
-    on:click={$context.owner &&
+    on:click={$context.editable &&
       FoundryAdapter.renderActorHitDiceConfig($context.actor)}
-    disabled={!$context.owner}>{hitDice}</button
+    disabled={!$context.editable}>{hitDice}</button
   >
 </div>
 

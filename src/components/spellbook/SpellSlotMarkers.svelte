@@ -75,6 +75,7 @@
         on:mouseleave={() => onMouseLeaveDot(dot.index)}
         on:focusin={() => onMouseEnterDot(dot.index)}
         on:focusout={() => onMouseLeaveDot(dot.index)}
+        disabled={!$context.editable}
       />
     {/each}
   </div>

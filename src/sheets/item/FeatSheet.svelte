@@ -26,7 +26,7 @@
         field="name"
         placeholder={localize('DND5E.ItemName')}
         value={$context.item.name}
-        disabled={!$context.owner}
+        disabled={!$context.editable}
       />
     </h1>
 
@@ -45,14 +45,14 @@
           field="system.requirements"
           value={$context.system.requirements}
           placeholder={localize('DND5E.Requirements')}
-          disabled={!$context.owner}
+          disabled={!$context.editable}
         />
       </li>
       <li class="flex-row">
         <Source
           document={$context.item}
           keyPath="system.source"
-          editable={$context.editable}
+          editable={$context.unlocked}
         />
       </li>
     </ul>

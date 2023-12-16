@@ -30,7 +30,7 @@
     document={$context.actor}
     field="flags.{CONSTANTS.MODULE_ID}.motion"
     checked={motion}
-    disabled={!$context.owner}
+    disabled={!$context.editable}
   >
     <i class="motion-icon fas fa-sailboat" class:animate />
   </Checkbox>

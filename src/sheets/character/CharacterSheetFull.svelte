@@ -71,7 +71,7 @@
         <ContentEditableFormField
           element="h1"
           document={$context.actor}
-          editable={$context.owner && !$context.lockSensitiveFields}
+          editable={$context.editable && !$context.lockSensitiveFields}
           spellcheck={false}
           placeholder={localize('DND5E.Name')}
           dataMaxLength={40}
@@ -94,10 +94,10 @@
                 selectOnFocus={true}
                 allowDeltaChanges={true}
                 maxlength={7}
-                disabled={$context.lockExpChanges}
+                disabled={!$context.editable || $context.lockExpChanges}
               />
               <span class="sep">/</span>
-              {#if FoundryAdapter.userIsGm()}
+              {#if $context.editable && FoundryAdapter.userIsGm()}
                 <TextInput
                   document={$context.actor}
                   field="system.details.xp.max"
@@ -107,7 +107,7 @@
                   selectOnFocus={true}
                   allowDeltaChanges={true}
                   maxlength={7}
-                  disabled={!$context.owner}
+                  disabled={!$context.editable}
                 />
               {:else}
                 <span class="max">{$context.system.details.xp.max}</span>
@@ -142,7 +142,7 @@
           cssClass="player-name"
           placeholder={localize('T5EK.PlayerName')}
           dataMaxLength={40}
-          editable={$context.owner && !$context.lockSensitiveFields}
+          editable={$context.editable && !$context.lockSensitiveFields}
         />
         <!-- <span>&#8226;</span> -->
       {/if}
@@ -173,7 +173,7 @@
     <!-- Origin Summary: Size , Race , Background , Alignment , Proficiency , Origin Summary Configuration Cog -->
     <section class="origin-summary">
       <span class="origin-points">
-        {#if $context.owner}
+        {#if $context.editable}
           <InlineTextDropdownList
             options={sizes}
             selected={currentSize}
@@ -197,13 +197,15 @@
         <b>
           {localize('DND5E.Proficiency')}: {$context.labels.proficiency}
         </b>
-        {#if $context.owner && !$context.lockSensitiveFields}
+        {#if $context.editable && !$context.lockSensitiveFields}
           <button
             type="button"
             class="inline-icon-button"
             title={localize('T5EK.OriginSummaryConfig')}
             on:click={() =>
-              new ActorOriginSummaryConfigFormApplication($context.actor).render(true)}
+              new ActorOriginSummaryConfigFormApplication(
+                $context.actor,
+              ).render(true)}
           >
             <i class="fas fa-cog" />
           </button>
@@ -223,7 +225,7 @@
 
 <Tabs tabs={$context.tabs} bind:selectedTabId>
   <svelte:fragment slot="tab-end">
-    {#if $context.owner}
+    {#if $context.editable}
       <AllowEditLock
         hint={$settingStore.permanentlyUnlockCharacterSheetForGm &&
         FoundryAdapter.userIsGm()

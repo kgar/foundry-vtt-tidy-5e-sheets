@@ -26,13 +26,13 @@
 >
   <Checkbox
     checkboxCssClass="inspiration-toggle"
-    labelCssClass="{inspired ? 'inspired' : ''} {radiusClass} {$context.owner
+    labelCssClass="{inspired ? 'inspired' : ''} {radiusClass} {$context.editable
       ? 'pointer'
       : ''}"
     document={$context.actor}
     field="system.attributes.inspiration"
     checked={inspired}
-    disabled={!$context.owner}
+    disabled={!$context.editable}
   >
     <i class="inspiration-icon fas fa-dice-d20" class:animate />
   </Checkbox>

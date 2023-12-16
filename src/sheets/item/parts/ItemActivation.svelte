@@ -30,7 +30,7 @@
         field="system.activation.cost"
         placeholder="&#8212;"
         document={$context.item}
-        disabled={!$context.owner}
+        disabled={!$context.editable}
       />
     {/if}
     <Select
@@ -39,7 +39,7 @@
       title={localize('DND5E.ItemActivationType')}
       document={$context.item}
       field="system.activation.type"
-      disabled={!$context.owner}
+      disabled={!$context.editable}
     >
       <option value="">{localize('DND5E.None')}</option>
       <SelectOptions data={$context.config.abilityActivationTypes} />
@@ -59,7 +59,7 @@
         value={$context.system.activation.condition}
         field="system.activation.condition"
         document={$context.item}
-        disabled={!$context.owner}
+        disabled={!$context.editable}
       />
     </div>
   </ItemFormGroup>
@@ -77,7 +77,7 @@
           title={localize('DND5E.ItemActivationType')}
           document={$context.item}
           field="system.cover"
-          disabled={!$context.owner}
+          disabled={!$context.editable}
         >
           <SelectOptions data={$context.config.cover} blank="" />
         </Select>
@@ -99,7 +99,7 @@
           placeholder="&mdash;"
           field="system.target.value"
           document={$context.item}
-          disabled={!$context.owner}
+          disabled={!$context.editable}
         />
       {/if}
       {#if $context.system.hasAreaTarget}
@@ -109,7 +109,7 @@
           title={localize('DND5E.TargetUnits')}
           field="system.target.units"
           document={$context.item}
-          disabled={!$context.owner}
+          disabled={!$context.editable}
         >
           <option value="" />
           <SelectOptions data={$context.config.movementUnits} />
@@ -121,7 +121,7 @@
         title={localize('DND5E.TargetType')}
         field="system.target.type"
         document={$context.item}
-        disabled={!$context.owner}
+        disabled={!$context.editable}
       >
         <option value="">{localize('DND5E.None')}</option>
         <optgroup label={localize('DND5E.TargetTypeIndividual')}>
@@ -151,7 +151,7 @@
           placeholder="&mdash;"
           field="system.target.width"
           document={$context.item}
-          disabled={!$context.owner}
+          disabled={!$context.editable}
         />
       </div>
     </ItemFormGroup>
@@ -172,7 +172,7 @@
           title={localize('DND5E.RangeNormal')}
           field="system.range.value"
           document={$context.item}
-          disabled={!$context.owner}
+          disabled={!$context.editable}
         />
         <span class="sep">/</span>
         <NumberInput
@@ -182,7 +182,7 @@
           title={localize('DND5E.RangeLong')}
           field="system.range.long"
           document={$context.item}
-          disabled={!$context.owner}
+          disabled={!$context.editable}
         />
       {/if}
       <Select
@@ -191,7 +191,7 @@
         title={localize('DND5E.RangeUnits')}
         document={$context.item}
         field="system.range.units"
-        disabled={!$context.owner}
+        disabled={!$context.editable}
       >
         <option value="">{localize('DND5E.None')}</option>
         <optgroup label={localize('DND5E.RangeDistance')}>
@@ -218,7 +218,7 @@
           field="system.duration.value"
           document={$context.item}
           dataset={{ formulaEditor: true }}
-          disabled={!$context.owner}
+          disabled={!$context.editable}
         />
       {/if}
       <Select
@@ -227,7 +227,7 @@
         title={localize('DND5E.DurationType')}
         document={$context.item}
         field="system.duration.units"
-        disabled={!$context.owner}
+        disabled={!$context.editable}
       >
         <option value="">{localize('DND5E.None')}</option>
         <optgroup label={localize('DND5E.DurationTime')}>
@@ -264,7 +264,7 @@
           field="system.uses.max"
           document={$context.item}
           dataset={{ formulaEditor: true }}
-          disabled={!$context.owner}
+          disabled={!$context.editable}
         />
         <span class="sep">{localize('DND5E.per')}</span>
       {/if}
@@ -274,7 +274,7 @@
         title={localize('DND5E.UsesPeriod')}
         document={$context.item}
         field="system.uses.per"
-        disabled={!$context.owner}
+        disabled={!$context.editable}
       >
         <SelectOptions
           data={$context.config.limitedUsePeriods}
@@ -297,7 +297,7 @@
           document={$context.item}
           field="system.uses.recovery"
           dataset={{ formulaEditor: true }}
-          disabled={!$context.owner}
+          disabled={!$context.editable}
         />
       </div>
     </ItemFormGroup>
@@ -317,7 +317,7 @@
           title={localize('DND5E.ConsumeAmount')}
           field="system.consume.amount"
           document={$context.item}
-          disabled={!$context.owner}
+          disabled={!$context.editable}
         />
         <Select
           id="{$context.appId}-system-consume-target"
@@ -325,7 +325,7 @@
           title={localize('DND5E.ConsumeTarget')}
           document={$context.item}
           field="system.consume.target"
-          disabled={!$context.owner}
+          disabled={!$context.editable}
         >
           <option value="" />
           <SelectOptions data={$context.abilityConsumptionTargets} />
@@ -337,7 +337,7 @@
         title={localize('DND5E.ConsumeType')}
         document={$context.item}
         field="system.consume.type"
-        disabled={!$context.owner}
+        disabled={!$context.editable}
       >
         <option value="">{localize('DND5E.None')}</option>
         <SelectOptions data={$context.config.abilityConsumptionTypes} />
@@ -352,7 +352,7 @@
         document={$context.item}
         field="system.uses.autoDestroy"
         checked={$context.system.uses.autoDestroy}
-        disabled={!$context.owner}
+        disabled={!$context.editable}
         title={localize('DND5E.ItemDestroyEmptyTooltip')}
       >
         {localize('DND5E.ItemDestroyEmpty')}
@@ -364,7 +364,7 @@
         document={$context.item}
         field="system.target.prompt"
         checked={$context.system.target.prompt}
-        disabled={!$context.owner}
+        disabled={!$context.editable}
         title={localize('DND5E.TemplatePromptTooltip')}
       >
         {localize('DND5E.TemplatePrompt')}
@@ -376,7 +376,7 @@
         document={$context.item}
         field="system.uses.prompt"
         checked={$context.system.uses.prompt}
-        disabled={!$context.owner}
+        disabled={!$context.editable}
         title={localize('DND5E.LimitedUsesPromptTooltip')}
       >
         {localize('DND5E.LimitedUsesPrompt')}
@@ -388,7 +388,7 @@
         document={$context.item}
         field="system.consume.scale"
         checked={$context.system.consume.scale}
-        disabled={!$context.owner}
+        disabled={!$context.editable}
         title={localize('DND5E.ConsumeScalingTooltip')}
       >
         {localize('DND5E.ConsumeScaling')}

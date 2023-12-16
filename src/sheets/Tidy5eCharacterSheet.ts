@@ -110,9 +110,11 @@ export class Tidy5eCharacterSheet
   }
 
   async getData(options = {}) {
-    const editable = FoundryAdapter.canEditActor(this.actor) && this.isEditable;
-
     const defaultDocumentContext = await super.getData(this.options);
+
+    const unlocked =
+      FoundryAdapter.isActorSheetUnlocked(this.actor) &&
+      defaultDocumentContext.editable;
 
     const tidyResources: TidyResource[] = defaultDocumentContext.resources.map(
       (r: any) => ({
@@ -210,7 +212,7 @@ export class Tidy5eCharacterSheet
           relativeTo: this.actor,
         }
       ),
-      editable,
+      editable: defaultDocumentContext.editable,
       features: sections,
       flawEnrichedHtml: await FoundryAdapter.enrichHtml(
         this.actor.system.details.flaw,
@@ -240,7 +242,8 @@ export class Tidy5eCharacterSheet
       lockLevelSelector: FoundryAdapter.shouldLockLevelSelector(),
       lockMoneyChanges: FoundryAdapter.shouldLockMoneyChanges(),
       lockSensitiveFields:
-        !editable && SettingsProvider.settings.useTotalSheetLock.get(),
+        (!unlocked && SettingsProvider.settings.useTotalSheetLock.get()) ||
+        !defaultDocumentContext.editable,
       maxPreparedSpellsTotal,
       notes1EnrichedHtml: await FoundryAdapter.enrichHtml(
         FoundryAdapter.getProperty<string>(
@@ -306,7 +309,7 @@ export class Tidy5eCharacterSheet
       owner: this.actor.isOwner,
       showLimitedSheet: FoundryAdapter.showLimitedSheet(this.actor),
       tabs: [],
-      tidyResources,
+      tidyResources: tidyResources,
       traitEnrichedHtml: await FoundryAdapter.enrichHtml(
         this.actor.system.details.trait,
         {
@@ -316,6 +319,7 @@ export class Tidy5eCharacterSheet
           relativeTo: this.actor,
         }
       ),
+      unlocked: unlocked,
       useActionsFeature: actorUsesActionFeature(this.actor),
       useClassicControls:
         SettingsProvider.settings.useClassicControlsForCharacter.get(),
@@ -474,6 +478,10 @@ export class Tidy5eCharacterSheet
       debug('Saved scroll positions', this._scrollPositions);
       return save;
     }
+  }
+
+  _disableFields(...args: any[]) {
+    debug('Ignoring call to disable fields. Delegating to Tidy Sheets...');
   }
 
   /* -------------------------------------------- */

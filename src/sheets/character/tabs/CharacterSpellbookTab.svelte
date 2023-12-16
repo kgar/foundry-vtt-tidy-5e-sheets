@@ -95,13 +95,13 @@
 
 <div class="scroll-container flex-column small-gap">
   {#if noSpellLevels}
-    <NoSpells editable={$context.editable} />
+    <NoSpells editable={$context.unlocked} />
   {:else}
     {#each $context.spellbook as section (section.label)}
       {@const filteredSpells = tryFilterByClass(
         FoundryAdapter.getFilteredItems(searchCriteria, section.spells)
       )}
-      {#if (searchCriteria.trim() === '' && $context.editable) || filteredSpells.length > 0}
+      {#if (searchCriteria.trim() === '' && $context.unlocked) || filteredSpells.length > 0}
         {#if layoutMode === 'list'}
           <SpellbookList
             spells={filteredSpells}
@@ -114,7 +114,7 @@
     {/each}
   {/if}
 
-  {#if noSpells && !$context.editable}
+  {#if noSpells && !$context.unlocked}
     <Notice>{localize('T5EK.EmptySection')}</Notice>
   {/if}
 </div>

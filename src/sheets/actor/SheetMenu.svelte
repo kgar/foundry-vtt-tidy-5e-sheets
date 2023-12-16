@@ -42,6 +42,7 @@
       on:click={() =>
         new TabSelectionFormApplication($context.actor).render(true)}
       iconClass="fas fa-file-invoice"
+      disabled={!$context.editable}
     >
       {localize('T5EK.TabSelection.MenuOptionText')}
     </ButtonMenuCommand>

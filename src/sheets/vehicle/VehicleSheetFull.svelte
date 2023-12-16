@@ -68,7 +68,7 @@
           document={$context.actor}
           field="name"
           value={$context.actor.name}
-          editable={$context.owner && !$context.lockSensitiveFields}
+          editable={$context.editable && !$context.lockSensitiveFields}
           spellcheck={false}
           placeholder={localize('DND5E.Name')}
           dataMaxLength={40}
@@ -79,7 +79,7 @@
     <HorizontalLineSeparator borderColor="light" />
     <div class="origin-summary">
       <div class="flex-row extra-small-gap">
-        {#if $context.owner}
+        {#if $context.editable}
           <InlineTextDropdownList
             options={sizes}
             selected={currentSize}
@@ -106,19 +106,19 @@
             field="system.traits.dimensions"
             value={$context.system.traits.dimensions}
             title={$context.system.traits.dimensions}
-            editable={$context.owner && !$context.lockSensitiveFields}
+            editable={$context.editable && !$context.lockSensitiveFields}
             placeholder={localize('DND5E.Dimensions')}
             selectOnFocus={true}
           />
           <InlineSource
             document={$context.actor}
             keyPath="system.details.source"
-            editable={$context.editable}
+            editable={$context.unlocked}
           />
         </DelimitedTruncatedContent>
       {/key}
       <div class="flex-row align-items-center extra-small-gap">
-        {#if $context.owner && !$context.lockSensitiveFields}
+        {#if $context.editable && !$context.lockSensitiveFields}
           <button
             type="button"
             on:click={() =>
@@ -152,7 +152,7 @@
 </header>
 <Tabs tabs={$context.tabs} bind:selectedTabId>
   <svelte:fragment slot="tab-end">
-    {#if $context.owner}
+    {#if $context.editable}
       <AllowEditLock
         hint={$settingStore.permanentlyUnlockVehicleSheetForGm &&
         FoundryAdapter.userIsGm()

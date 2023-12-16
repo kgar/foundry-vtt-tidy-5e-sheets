@@ -104,11 +104,15 @@ export class Tidy5eNpcSheet
   }
 
   async getData(options = {}) {
-    const editable = FoundryAdapter.canEditActor(this.actor) && this.isEditable;
+    const defaultDocumentContext = await super.getData(this.options);
+
+    const unlocked =
+      FoundryAdapter.isActorSheetUnlocked(this.actor) &&
+      defaultDocumentContext.editable;
 
     const lockSensitiveFields =
-      !editable && SettingsProvider.settings.useTotalSheetLock.get();
-    const defaultDocumentContext = await super.getData(this.options);
+      (!unlocked && SettingsProvider.settings.useTotalSheetLock.get()) ||
+      !defaultDocumentContext.editable;
 
     const context = {
       ...defaultDocumentContext,
@@ -158,7 +162,7 @@ export class Tidy5eNpcSheet
       useClassicControls:
         SettingsProvider.settings.useClassicControlsForNpc.get(),
       encumbrance: this.actor.system.attributes.encumbrance,
-      editable,
+      editable: defaultDocumentContext.editable,
       flawEnrichedHtml: await FoundryAdapter.enrichHtml(
         FoundryAdapter.getProperty<string>(
           this.actor,
@@ -190,7 +194,7 @@ export class Tidy5eNpcSheet
           relativeTo: this.actor,
         }
       ),
-      lockSensitiveFields,
+      lockSensitiveFields: lockSensitiveFields,
       longRest: this._onLongRest.bind(this),
       lockExpChanges: FoundryAdapter.shouldLockExpChanges(),
       lockHpMaxChanges: FoundryAdapter.shouldLockHpMaxChanges(),
@@ -275,6 +279,7 @@ export class Tidy5eNpcSheet
           relativeTo: this.actor,
         }
       ),
+      unlocked: unlocked,
       useActionsFeature: actorUsesActionFeature(this.actor),
       useRoundedPortraitStyle: [
         CONSTANTS.CIRCULAR_PORTRAIT_OPTION_ALL as string,
@@ -720,6 +725,10 @@ export class Tidy5eNpcSheet
   close(options: unknown = {}) {
     this._destroySvelteComponent();
     return super.close(options);
+  }
+
+  _disableFields(...args: any[]) {
+    debug('Ignoring call to disable fields. Delegating to Tidy Sheets...');
   }
 
   /* -------------------------------------------- */
