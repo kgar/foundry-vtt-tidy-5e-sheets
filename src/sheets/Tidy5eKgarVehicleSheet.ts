@@ -13,7 +13,11 @@ import type {
 import { get, writable } from 'svelte/store';
 import VehicleSheet from './vehicle/VehicleSheet.svelte';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
-import { applyTitleToWindow } from 'src/utils/applications';
+import {
+  applyModuleSheetDataAttributeToWindow,
+  applyThemeDataAttributeToWindow,
+  applyTitleToWindow,
+} from 'src/utils/applications';
 import type { SvelteComponent } from 'svelte';
 import { debug } from 'src/utils/logging';
 import { getPercentage } from 'src/utils/numbers';
@@ -44,6 +48,10 @@ export class Tidy5eVehicleSheet
 
     settingStore.subscribe(() => {
       this.getData().then((context) => this.context.set(context));
+      applyThemeDataAttributeToWindow(
+        SettingsProvider.settings.colorScheme.get(),
+        this.element?.get(0)
+      );
     });
 
     this.currentTabId = SettingsProvider.settings.initialVehicleSheetTab.get();
@@ -86,9 +94,12 @@ export class Tidy5eVehicleSheet
   }
 
   async getData(options = {}) {
-    const editable = FoundryAdapter.canEditActor(this.actor) && this.isEditable;
-
     const defaultDocumentContext = await super.getData(this.options);
+
+    const unlocked =
+      FoundryAdapter.isActorSheetUnlocked(this.actor) &&
+      defaultDocumentContext.editable;
+
     const context = {
       ...defaultDocumentContext,
       actions: getActorActions(this.actor),
@@ -100,7 +111,7 @@ export class Tidy5eVehicleSheet
       appId: this.appId,
       useClassicControls:
         SettingsProvider.settings.useClassicControlsForVehicle.get(),
-      editable,
+      editable: defaultDocumentContext.editable,
       healthPercentage: getPercentage(
         this.actor?.system?.attributes?.hp?.value,
         this.actor?.system?.attributes?.hp?.max
@@ -111,10 +122,12 @@ export class Tidy5eVehicleSheet
       lockLevelSelector: FoundryAdapter.shouldLockLevelSelector(),
       lockMoneyChanges: FoundryAdapter.shouldLockMoneyChanges(),
       lockSensitiveFields:
-        !editable && SettingsProvider.settings.useTotalSheetLock.get(),
+        (!unlocked && SettingsProvider.settings.useTotalSheetLock.get()) ||
+        !defaultDocumentContext.editable,
       owner: this.actor.isOwner,
       showLimitedSheet: FoundryAdapter.showLimitedSheet(this.actor),
       tabs: [],
+      unlocked: unlocked,
       useActionsFeature: actorUsesActionFeature(this.actor),
       useRoundedPortraitStyle: [
         CONSTANTS.CIRCULAR_PORTRAIT_OPTION_ALL as string,
@@ -175,6 +188,11 @@ export class Tidy5eVehicleSheet
       this._saveScrollPositions(this.element);
       this._destroySvelteComponent();
       await super._render(force, options);
+      applyModuleSheetDataAttributeToWindow(this.element.get(0));
+      applyThemeDataAttributeToWindow(
+        SettingsProvider.settings.colorScheme.get(),
+        this.element.get(0)
+      );
       await this.renderCustomContent({ isFullRender: true });
       return;
     }
@@ -231,6 +249,10 @@ export class Tidy5eVehicleSheet
       stats.lastSubmissionTime = new Date();
       return stats;
     });
+  }
+
+  _disableFields(...args: any[]) {
+    debug('Ignoring call to disable fields. Delegating to Tidy Sheets...');
   }
 
   /* -------------------------------------------- */

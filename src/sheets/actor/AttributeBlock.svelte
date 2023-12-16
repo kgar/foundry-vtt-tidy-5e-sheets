@@ -40,22 +40,22 @@
     <button
       type="button"
       class="ability-mod transparent-button"
-      class:rollable={$context.owner}
+      class:rollable={$context.editable}
       title={localize('DND5E.AbilityModifier')}
       on:click={(event) =>
-        $context.owner &&
         $context.actor.rollAbilityTest(abbreviation, { event })}
+      disabled={!$context.editable}
     >
       {formatAsModifier(ability.mod)}
     </button>
     <button
       type="button"
       class="ability-save transparent-button"
-      class:rollable={$context.owner}
+      class:rollable={$context.editable}
       title={localize('DND5E.ActionSave')}
       on:click={(event) =>
-        $context.owner &&
         $context.actor.rollAbilitySave(abbreviation, { event })}
+      disabled={!$context.editable}
     >
       {formatAsModifier(ability.save)}
     </button>
@@ -79,7 +79,7 @@
         >
       {/if}
     {/if}
-    {#if useConfigurationOption && $context.owner && !$context.lockSensitiveFields}
+    {#if useConfigurationOption && $context.editable && !$context.lockSensitiveFields}
       <button
         type="button"
         class="config-button inline-icon-button"

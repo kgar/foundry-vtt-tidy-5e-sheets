@@ -46,7 +46,7 @@
     value={$context.system.actionType}
     document={$context.item}
     field="system.actionType"
-    disabled={!$context.owner}
+    disabled={!$context.editable}
   >
     <SelectOptions data={$context.config.itemActionTypes} blank="" />
   </Select>
@@ -64,7 +64,7 @@
       value={$context.system.ability}
       document={$context.item}
       field="system.ability"
-      disabled={!$context.owner}
+      disabled={!$context.editable}
     >
       <option value="">{localize('DND5E.Default')}</option>
       <option value="none">{localize('DND5E.None')}</option>
@@ -87,7 +87,7 @@
           field="system.attackBonus"
           value={$context.system.attackBonus}
           dataset={{ formulaEditor: true }}
-          disabled={!$context.owner}
+          disabled={!$context.editable}
         />
       </div>
     </ItemFormGroup>
@@ -107,7 +107,7 @@
           max="20"
           min="1"
           step="1"
-          disabled={!$context.owner}
+          disabled={!$context.editable}
         />
       </div>
     </ItemFormGroup>
@@ -123,7 +123,7 @@
           document={$context.item}
           field="system.critical.damage"
           value={$context.system.critical.damage}
-          disabled={!$context.owner}
+          disabled={!$context.editable}
         />
       </div>
     </ItemFormGroup>
@@ -139,7 +139,7 @@
     <button
       class="damage-formula-control add-damage"
       on:click={() => addDamageFormula()}
-      disabled={!$context.owner}
+      disabled={!$context.editable}
     >
       <i class="fas fa-plus" />
     </button>
@@ -153,14 +153,14 @@
           bind:value={formula}
           data-formula-editor
           on:change={() => saveDamageFormulae()}
-          disabled={!$context.owner}
+          disabled={!$context.editable}
         />
         <select
           id="{$context.appId}-system-damage-part-{i}-1"
           bind:value={damageType}
           data-formula-editor
           on:change={() => saveDamageFormulae()}
-          disabled={!$context.owner}
+          disabled={!$context.editable}
         >
           <option value="">{localize('DND5E.None')}</option>
           <optgroup label={localize('DND5E.Damage')}>
@@ -173,7 +173,7 @@
         <button
           class="damage-formula-control delete-damage"
           on:click={() => deleteDamageFormula(i)}
-          disabled={!$context.owner}
+          disabled={!$context.editable}
         >
           <i class="fas fa-minus" />
         </button>
@@ -195,7 +195,7 @@
           dataset={{ formulaEditor: true }}
           document={$context.item}
           field="system.damage.versatile"
-          disabled={!$context.owner}
+          disabled={!$context.editable}
         />
       </div>
     </ItemFormGroup>
@@ -214,7 +214,7 @@
         value={$context.system.formula}
         placeholder={localize('DND5E.Formula')}
         dataset={{ formulaEditor: true }}
-        disabled={!$context.owner}
+        disabled={!$context.editable}
       />
     </div>
   </ItemFormGroup>
@@ -231,7 +231,7 @@
         value={$context.system.save.ability}
         document={$context.item}
         field="system.save.ability"
-        disabled={!$context.owner}
+        disabled={!$context.editable}
       >
         <SelectOptions
           data={$context.config.abilities}
@@ -247,14 +247,14 @@
         field="system.save.dc"
         value={$context.system.save.dc ?? null}
         placeholder={localize('DND5E.AbbreviationDC')}
-        disabled={!$context.owner || !$context.isFlatDC}
+        disabled={!$context.editable || !$context.isFlatDC}
       />
       <Select
         id="{$context.appId}-system-save-scaling"
         document={$context.item}
         field="system.save.scaling"
         value={$context.system.save.scaling}
-        disabled={!$context.owner}
+        disabled={!$context.editable}
       >
         <option value="spell">{localize('DND5E.Spellcasting')}</option>
         <SelectOptions data={$context.config.abilities} labelProp="label" />
@@ -274,7 +274,7 @@
       document={$context.item}
       field="system.chatFlavor"
       value={$context.system.chatFlavor}
-      disabled={!$context.owner}
+      disabled={!$context.editable}
     />
   </ItemFormGroup>
 {/if}

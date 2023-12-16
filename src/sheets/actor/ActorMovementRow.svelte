@@ -18,7 +18,7 @@
     |
     <span title={$context.movement.special}>{$context.movement.special}</span>
   {/if}
-  {#if $context.owner && !$context.lockSensitiveFields}
+  {#if $context.editable && !$context.lockSensitiveFields}
     <button
       type="button"
       class="configure inline-icon-button"

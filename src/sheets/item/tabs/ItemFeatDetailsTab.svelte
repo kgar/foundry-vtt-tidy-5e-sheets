@@ -28,7 +28,7 @@
     document={$context.item}
     field="system.type.value"
     value={$context.system.type.value}
-    disabled={!$context.owner}
+    disabled={!$context.editable}
     >
     <SelectOptions
       data={$context.config.featureTypes}
@@ -51,7 +51,7 @@
       document={$context.item}
       field="system.type.subtype"
       value={$context.system.type.subtype}
-      disabled={!$context.owner}
+      disabled={!$context.editable}
       >
       <SelectOptions data={$context.featureSubtypes} blank="" />
     </Select>
@@ -77,7 +77,7 @@
         field="system.recharge.value"
         placeholder={localize('DND5E.FeatureRechargeResult')}
         value={$context.system.recharge.value}
-        disabled={!$context.owner}
+        disabled={!$context.editable}
         />
 
       <Checkbox
@@ -86,7 +86,7 @@
         document={$context.item}
         field="system.recharge.charged"
         checked={$context.system.recharge.charged}
-        disabled={!$context.owner}
+        disabled={!$context.editable}
         >
         {localize('DND5E.Charged')}
       </Checkbox>

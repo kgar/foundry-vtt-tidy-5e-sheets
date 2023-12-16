@@ -32,7 +32,7 @@
   let context = getContext<Readable<CharacterSheetContext>>('context');
 
   const localize = FoundryAdapter.localize;
-  $: classicControlsBaseWidth = $context.editable ? '7.5rem' : '5.3125rem';
+  $: classicControlsBaseWidth = $context.unlocked ? '7.5rem' : '5.3125rem';
 
   $: noFeatures =
     $context.features.some((section: any) => section.items.length > 0) ===
@@ -59,7 +59,7 @@
 </ItemFilters>
 
 <div class="scroll-container flex-column small-gap">
-  {#if noFeatures && !$context.editable}
+  {#if noFeatures && !$context.unlocked}
     <Notice>{localize('T5EK.EmptySection')}</Notice>
   {:else}
     {#each $context.features as section (section.label)}
@@ -67,7 +67,7 @@
         searchCriteria,
         section.items,
       )}
-      {#if (searchCriteria.trim() === '' && $context.editable) || filteredItems.length > 0}
+      {#if (searchCriteria.trim() === '' && $context.unlocked) || filteredItems.length > 0}
         <ItemTable>
           <ItemTableHeaderRow>
             <ItemTableColumn primary={true}>
@@ -105,7 +105,7 @@
                 </ItemTableColumn>
               {/each}
             {/if}
-            {#if $context.owner && $context.useClassicControls}
+            {#if $context.editable && $context.useClassicControls}
               <ItemTableColumn baseWidth={classicControlsBaseWidth} />
             {/if}
           </ItemTableHeaderRow>
@@ -175,7 +175,7 @@
                           item,
                           $context.actor,
                         )}
-                      disabled={!$context.owner || $context.lockLevelSelector}
+                      disabled={!$context.editable || $context.lockLevelSelector}
                     >
                       {#each getAvailableLevels(item.id) as availableLevel}
                         <option
@@ -222,13 +222,13 @@
                   </ItemTableCell>
                 {/each}
               {/if}
-              {#if $context.owner && $context.useClassicControls}
+              {#if $context.editable && $context.useClassicControls}
                 <ItemTableCell baseWidth={classicControlsBaseWidth}>
                   {#if item.type !== 'class'}
                     <ItemFavoriteControl {item} />
                   {/if}
                   <ItemEditControl {item} />
-                  {#if $context.editable}
+                  {#if $context.unlocked}
                     <ItemDuplicateControl {item} />
                     <ItemDeleteControl {item} />
                   {/if}
@@ -239,7 +239,7 @@
               {/if}
             </ItemTableRow>
           {/each}
-          {#if $context.editable}
+          {#if $context.unlocked}
             <ItemTableFooter dataset={section.dataset} actor={$context.actor} />
           {/if}
         </ItemTable>

@@ -10,6 +10,10 @@ import { VehicleSheetRuntime } from 'src/runtime/VehicleSheetRuntime';
 import { TabManager } from 'src/runtime/tab/TabManager';
 import type { TabId } from './tab/CustomTabBase';
 import { ActionListApi } from './action-list/ActionListApi';
+import { Tidy5eCharacterSheet } from 'src/sheets/Tidy5eCharacterSheet';
+import { Tidy5eNpcSheet } from 'src/sheets/Tidy5eNpcSheet';
+import { Tidy5eVehicleSheet } from 'src/sheets/Tidy5eKgarVehicleSheet';
+import { Tidy5eKgarItemSheet } from 'src/sheets/Tidy5eItemSheet';
 
 /**
  * The Tidy 5e Sheets API. The API becomes available after the hook `tidy5e-sheet.ready` is called.
@@ -51,6 +55,67 @@ export class Tidy5eSheetsApi {
     Tidy5eSheetsApi._instance ??= new Tidy5eSheetsApi();
     return this._instance;
   }
+
+  /** {@inheritDoc ActionListApi} */
+  actionList = new ActionListApi();
+
+  /**
+   * Determines whether the provided sheet is a Tidy 5e Character sheet.
+   * @param app an actor sheet
+   * @returns boolean indicating if the sheet is a Tidy 5e Character sheet
+   */
+  isTidy5eCharacterSheet(app: any) {
+    return Tidy5eCharacterSheet.name === app?.constructor?.name;
+  }
+
+  /**
+   * Determines whether the provided sheet is a Tidy 5e Item sheet.
+   * @param app an actor sheet
+   * @returns boolean indicating if the sheet is a Tidy 5e Item sheet
+   */
+  isTidy5eItemSheet(app: any) {
+    return Tidy5eKgarItemSheet.name === app?.constructor?.name;
+  }
+
+  /**
+   * Determines whether the provided sheet is a Tidy 5e NPC sheet.
+   * @param app an actor sheet
+   * @returns boolean indicating if the sheet is a Tidy 5e NPC sheet
+   */
+  isTidy5eNpcSheet(app: any) {
+    return Tidy5eNpcSheet.name === app?.constructor?.name;
+  }
+
+  /**
+   * Determines whether the provided sheet is any Tidy 5e sheet.
+   * @param app an actor sheet
+   * @returns boolean indicating if the sheet is any Tidy 5e sheet
+   */
+  isTidy5eSheet(app: any) {
+    return [
+      Tidy5eCharacterSheet.name,
+      Tidy5eNpcSheet.name,
+      Tidy5eVehicleSheet.name,
+      Tidy5eKgarItemSheet.name,
+    ].includes(app?.constructor?.name);
+  }
+
+  /**
+   * Determines whether the provided sheet is a Tidy 5e Vehicle sheet.
+   * @param app an actor sheet
+   * @returns boolean indicating if the sheet is a Tidy 5e Vehicle sheet
+   */
+  isTidy5eVehicleSheet(app: any) {
+    return Tidy5eVehicleSheet.name === app.constructor.name;
+  }
+
+  /**
+   * Various models can be used for API calls.
+   */
+  models = {
+    HandlebarsTab: HandlebarsTab,
+    HtmlTab: HtmlTab,
+  };
 
   /**
    * Adds a tab to the available Character sheet tabs.
@@ -95,6 +160,45 @@ export class Tidy5eSheetsApi {
     }
 
     CharacterSheetRuntime.registerTab(registeredTab);
+  }
+
+  /**
+   * Adds a tab to all relevant item sheets.
+   * @see {@link CustomTabBase} for options related to all tabs.
+   * @param tab the custom tab settings to use when incorporating this tab.
+   * @example Register an item tab for spell items only, adding some custom data to the Item Sheet Context object before rendering my handlebars template
+   * ```js
+   * Hooks.once("tidy5e-sheet.ready", (api) => {
+   *   api.registerItemTab(
+   *     new api.models.HandlebarsTab({
+   *       title: "My Item Tab",
+   *       tabId: "my-module-id-my-item-tab",
+   *       path: "/modules/my-module-id/my-item-tab.hbs",
+   *       enabled: (data) => data.item.type === 'spell',
+   *       getData: (data) => {
+   *         data['my-extra-data'] = "Hello, world! 👋";
+   *         return data;
+   *       }
+   *     }));
+   * });
+   * ```
+   *
+   * @remarks
+   * A tab ID is always required (see {@link TabId}).
+   */
+  registerItemTab(tab: HandlebarsTab | HtmlTab): void {
+    if (!TabManager.validateTab(tab)) {
+      return;
+    }
+
+    const registeredTab = TabManager.mapCustomTabToRegisteredTab(tab);
+
+    if (!registeredTab) {
+      warn('Unable to register tab. Tab type not supported');
+      return;
+    }
+
+    ItemSheetRuntime.registerTab(registeredTab);
   }
 
   /**
@@ -184,54 +288,4 @@ export class Tidy5eSheetsApi {
 
     VehicleSheetRuntime.registerTab(registeredTab);
   }
-
-  /**
-   * Adds a tab to all relevant item sheets.
-   * @see {@link CustomTabBase} for options related to all tabs.
-   * @param tab the custom tab settings to use when incorporating this tab.
-   * @example Register an item tab for spell items only, adding some custom data to the Item Sheet Context object before rendering my handlebars template
-   * ```js
-   * Hooks.once("tidy5e-sheet.ready", (api) => {
-   *   api.registerItemTab(
-   *     new api.models.HandlebarsTab({
-   *       title: "My Item Tab",
-   *       tabId: "my-module-id-my-item-tab",
-   *       path: "/modules/my-module-id/my-item-tab.hbs",
-   *       enabled: (data) => data.item.type === 'spell',
-   *       getData: (data) => {
-   *         data['my-extra-data'] = "Hello, world! 👋";
-   *         return data;
-   *       }
-   *     }));
-   * });
-   * ```
-   *
-   * @remarks
-   * A tab ID is always required (see {@link TabId}).
-   */
-  registerItemTab(tab: HandlebarsTab | HtmlTab): void {
-    if (!TabManager.validateTab(tab)) {
-      return;
-    }
-
-    const registeredTab = TabManager.mapCustomTabToRegisteredTab(tab);
-
-    if (!registeredTab) {
-      warn('Unable to register tab. Tab type not supported');
-      return;
-    }
-
-    ItemSheetRuntime.registerTab(registeredTab);
-  }
-
-  /** {@inheritDoc ActionListApi} */
-  actionList = new ActionListApi();
-
-  /**
-   * Various models can be used for API calls.
-   */
-  models = {
-    HandlebarsTab: HandlebarsTab,
-    HtmlTab: HtmlTab,
-  };
 }

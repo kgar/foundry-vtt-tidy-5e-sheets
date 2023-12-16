@@ -74,7 +74,7 @@
             class:colorized={i <= level}
             title={localize(exhaustionConfig.hints[i] ?? '')}
             on:click={() => dispatch('levelSelected', { level: i })}
-            disabled={!$context.owner}
+            disabled={!$context.editable}
           >
             {i}
           </button>

@@ -32,7 +32,7 @@
     value={$context.system.armor.type}
     field="system.armor.type"
     document={$context.item}
-    disabled={!$context.owner}
+    disabled={!$context.editable}
     >
     <option value="" />
     <optgroup label={localize('DND5E.Armor')}>
@@ -52,7 +52,7 @@
     value={$context.system.baseItem}
     field="system.baseItem"
     document={$context.item}
-    disabled={!$context.owner}
+    disabled={!$context.editable}
     >
     <SelectOptions data={$context.baseItems} blank="" />
   </Select>
@@ -69,7 +69,7 @@
       value={$context.system.attunement?.toString() ?? ''}
       field="system.attunement"
       document={$context.item}
-      disabled={!$context.owner}
+      disabled={!$context.editable}
       >
       <SelectOptions data={$context.config.attunements} />
     </Select>
@@ -81,7 +81,7 @@
     document={$context.item}
     field="system.proficient"
     value={$context.system.proficient}
-    disabled={!$context.owner}
+    disabled={!$context.editable}
     >
     <SelectOptions
       data={$context.config.weaponAndArmorProficiencyLevels}
@@ -99,7 +99,7 @@
     labelCssClass="checkbox"
     field="system.equipped"
     document={$context.item}
-    disabled={!$context.owner}
+    disabled={!$context.editable}
     >
     {localize('DND5E.Equipped')}
   </Checkbox>
@@ -109,7 +109,7 @@
     labelCssClass="checkbox"
     field="system.identified"
     document={$context.item}
-    disabled={!$context.owner}
+    disabled={!$context.editable}
     >
     {localize('DND5E.Identified')}
   </Checkbox>
@@ -127,7 +127,7 @@
       step="1"
       field="system.armor.value"
       document={$context.item}
-      disabled={!$context.owner}
+      disabled={!$context.editable}
       />
   </ItemFormGroup>
 {/if}
@@ -145,7 +145,7 @@
       field="system.armor.dex"
       document={$context.item}
       value={$context.system.armor.dex}
-      disabled={!$context.owner}
+      disabled={!$context.editable}
       />
   </ItemFormGroup>
 {/if}
@@ -163,7 +163,7 @@
       field="system.strength"
       document={$context.item}
       value={$context.system.strength}
-      disabled={!$context.owner}
+      disabled={!$context.editable}
       />
   </ItemFormGroup>
 
@@ -177,7 +177,7 @@
       field="system.stealth"
       document={$context.item}
       checked={$context.system.stealth}
-      disabled={!$context.owner}
+      disabled={!$context.editable}
       />
   </ItemFormGroup>
 {/if}
@@ -191,14 +191,14 @@
         value={$context.system.speed.value}
         field="system.speed.value"
         document={$context.item}
-        disabled={!$context.owner}
+        disabled={!$context.editable}
         />
       <span class="sep">{localize('DND5E.FeetAbbr')}</span>
       <TextInput
         field="system.speed.conditions"
         document={$context.item}
         value={$context.system.speed.conditions}
-        disabled={!$context.owner}
+        disabled={!$context.editable}
         />
     </div>
   </ItemFormGroup>

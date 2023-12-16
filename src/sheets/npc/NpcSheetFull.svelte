@@ -78,7 +78,7 @@
             document={$context.actor}
             field="name"
             value={$context.actor.name}
-            editable={$context.owner && !$context.lockSensitiveFields}
+            editable={$context.editable && !$context.lockSensitiveFields}
             spellcheck={false}
             placeholder={localize('DND5E.Name')}
             dataMaxLength={40}
@@ -108,7 +108,7 @@
       <HorizontalLineSeparator borderColor="light" />
       <div class="origin-summary">
         <div class="flex-row extra-small-gap">
-          {#if $context.owner}
+          {#if $context.editable}
             <InlineTextDropdownList
               options={sizes}
               selected={currentSize}
@@ -145,7 +145,7 @@
               <InlineSource
                 document={$context.actor}
                 keyPath="system.details.source"
-                editable={$context.editable}
+                editable={$context.unlocked}
               />
             </DelimitedTruncatedContent>
           {/key}
@@ -156,7 +156,7 @@
               $context.system.attributes.prof,
             )}
           </b>
-          {#if $context.owner && !$context.lockSensitiveFields}
+          {#if $context.editable && !$context.lockSensitiveFields}
             <button
               type="button"
               class="origin-summary-tidy inline-icon-button"
@@ -181,7 +181,7 @@
   </header>
   <Tabs tabs={$context.tabs} bind:selectedTabId>
     <svelte:fragment slot="tab-end">
-      {#if $context.owner}
+      {#if $context.editable}
         <AllowEditLock
           hint={$settingStore.permanentlyUnlockNpcSheetForGm &&
           FoundryAdapter.userIsGm()

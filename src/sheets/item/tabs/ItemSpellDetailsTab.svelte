@@ -40,7 +40,7 @@
       document={$context.item}
       field="flags.{CONSTANTS.MODULE_ID}.parentClass"
       value={FoundryAdapter.tryGetFlag($context.item, 'parentClass') ?? ''}
-      disabled={!$context.owner}
+      disabled={!$context.editable}
     >
       <option value="">&mdash;</option>
       {#each allClasses as { text, value }}
@@ -60,7 +60,7 @@
     document={$context.item}
     field="system.level"
     value={$context.system.level}
-    disabled={!$context.owner}
+    disabled={!$context.editable}
   >
     <SelectOptions data={$context.config.spellLevels} />
   </Select>
@@ -76,7 +76,7 @@
     document={$context.item}
     field="system.school"
     value={$context.system.school}
-    disabled={!$context.owner}
+    disabled={!$context.editable}
   >
     <SelectOptions data={$context.config.spellSchools} blank="" />
   </Select>
@@ -94,7 +94,7 @@
       document={$context.item}
       field="system.components.{key}"
       {checked}
-      disabled={!$context.owner}
+      disabled={!$context.editable}
     >
       {component.label}
     </Checkbox>
@@ -113,7 +113,7 @@
     document={$context.item}
     field="system.materials.value"
     value={$context.system.materials.value}
-    disabled={!$context.owner}
+    disabled={!$context.editable}
   />
   {#if $context.system.materials.value}
     <div class="spell-materials flexrow align-items-center small-gap">
@@ -126,7 +126,7 @@
         field="system.materials.supply"
         value={$context.system.materials.supply}
         placeholder="0"
-        disabled={!$context.owner}
+        disabled={!$context.editable}
       />
 
       <label for="{$context.appId}-system-materials-cost"
@@ -138,7 +138,7 @@
         field="system.materials.cost"
         value={$context.system.materials.cost}
         placeholder="&mdash;"
-        disabled={!$context.owner}
+        disabled={!$context.editable}
       />
 
       <Checkbox
@@ -147,7 +147,7 @@
         document={$context.item}
         field="system.materials.consumed"
         checked={$context.system.materials.consumed}
-        disabled={!$context.owner}
+        disabled={!$context.editable}
       >
         {localize('DND5E.Consumed')}
       </Checkbox>
@@ -166,7 +166,7 @@
       document={$context.item}
       field="system.preparation.prepared"
       checked={$context.system.preparation.prepared}
-      disabled={!$context.owner}
+      disabled={!$context.editable}
     >
       {localize('DND5E.SpellPrepared')}
     </Checkbox>
@@ -175,7 +175,7 @@
       document={$context.item}
       field="system.preparation.mode"
       value={$context.system.preparation.mode}
-      disabled={!$context.owner}
+      disabled={!$context.editable}
     >
       <SelectOptions data={$context.config.spellPreparationModes} />
     </Select>
@@ -201,7 +201,7 @@
       document={$context.item}
       field="system.scaling.mode"
       value={$context.system.scaling.mode}
-      disabled={!$context.owner}
+      disabled={!$context.editable}
     >
       <SelectOptions data={$context.config.spellScalingModes} />
     </Select>
@@ -212,7 +212,7 @@
       value={$context.system.scaling.formula}
       placeholder={localize('DND5E.ScalingFormula')}
       dataset={{ formulaEditor: true }}
-      disabled={!$context.owner}
+      disabled={!$context.editable}
     />
   </div>
 </ItemFormGroup>

@@ -6,6 +6,7 @@ import { error } from 'src/utils/logging';
 import { CONSTANTS } from 'src/constants';
 import { isNil } from 'src/utils/data';
 import type { RegisteredTab, SheetLayout } from '../types';
+import type { CustomTabTitle } from 'src/api/tab/CustomTabBase';
 
 export class TabManager {
   static async prepareTabsForRender(
@@ -19,9 +20,10 @@ export class TabManager {
     for (let sheetTab of enabledTabs) {
       let tab = {
         id: sheetTab.id,
-        title: sheetTab.title,
+        title: TabManager.getTabTitle(sheetTab),
         onRender: sheetTab.onRender,
         content: await getTabContent(context, sheetTab),
+        activateDefaultSheetListeners: sheetTab.activateDefaultSheetListeners,
       };
 
       tabs.push(tab);
@@ -33,7 +35,7 @@ export class TabManager {
     tabs: RegisteredTab<TContext>[]
   ): Record<string, string> {
     return tabs.reduce<Record<string, string>>((prev, curr) => {
-      prev[curr.id] = curr.title;
+      prev[curr.id] = TabManager.getTabTitle(curr);
       return prev;
     }, {});
   }
@@ -67,6 +69,7 @@ export class TabManager {
         renderScheme: tab.renderScheme,
         tabContentsClasses: tab.tabContentsClasses,
         getData: tab.getData,
+        activateDefaultSheetListeners: tab.activateDefaultSheetListeners,
       };
     } else if (tab instanceof HtmlTab) {
       registeredTab = {
@@ -83,10 +86,15 @@ export class TabManager {
         onRender: tab.onRender,
         renderScheme: tab.renderScheme,
         tabContentsClasses: tab.tabContentsClasses,
+        activateDefaultSheetListeners: tab.activateDefaultSheetListeners,
       };
     }
 
     return registeredTab;
+  }
+
+  static getTabTitle(tab: { title: CustomTabTitle }) {
+    return typeof tab.title === 'function' ? tab.title() : tab.title;
   }
 }
 

@@ -59,7 +59,7 @@
           class="proficiency-row skill"
           class:proficient={skillRef.skill.value}
         >
-          {#if $context.owner && !$context.lockSensitiveFields}
+          {#if $context.editable && !$context.lockSensitiveFields}
             <button
               type="button"
               class="configure-proficiency inline-icon-button"
@@ -98,7 +98,7 @@
               >{@html skillRef.skill.icon}</span
             >
           {/if}
-          {#if $context.owner}
+          {#if $context.editable}
             <button
               type="button"
               class="tidy5e-skill-name transparent-button rollable"

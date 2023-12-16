@@ -77,7 +77,7 @@
       <Traits toggleable={!$settingStore.alwaysShowNpcTraits} />
     {/if}
     {#each $context.features as section}
-      {#if $context.editable || section.items.length}
+      {#if $context.unlocked || section.items.length}
         <ItemTable>
           <ItemTableHeaderRow>
             <ItemTableColumn primary={true}>
@@ -91,7 +91,7 @@
                 {localize('DND5E.Usage')}
               </ItemTableColumn>
             {/if}
-            {#if $context.owner && $context.useClassicControls}
+            {#if $context.editable && $context.useClassicControls}
               <ItemTableColumn baseWidth="7.5rem" />
             {/if}
           </ItemTableHeaderRow>
@@ -142,11 +142,11 @@
                   {/if}
                 </ItemTableCell>
               {/if}
-              {#if $context.owner && $context.useClassicControls}
+              {#if $context.editable && $context.useClassicControls}
                 <ItemTableCell baseWidth="7.5rem">
                   <ItemControls>
                     <ItemEditControl {item} />
-                    {#if $context.editable}
+                    {#if $context.unlocked}
                       <ItemDuplicateControl {item} />
                       <ItemDeleteControl {item} />
                     {/if}
@@ -158,7 +158,7 @@
               {/if}
             </ItemTableRow>
           {/each}
-          {#if $context.editable && section.dataset}
+          {#if $context.unlocked && section.dataset}
             <ItemTableFooter actor={$context.actor} dataset={section.dataset} />
           {/if}
         </ItemTable>
@@ -194,7 +194,7 @@
       {#if !noSpellLevels || showNoSpellsView}
         <div class="flex-1 flex-column small-padding-bottom no-gap">
           {#if noSpellLevels}
-            <NoSpells cssClass="flex-1" editable={$context.editable} />
+            <NoSpells cssClass="flex-1" editable={$context.unlocked} />
           {:else}
             <div class="flex-1 small-padding-bottom flex-column small-gap">
               {#each $context.spellbook as section (section.label)}

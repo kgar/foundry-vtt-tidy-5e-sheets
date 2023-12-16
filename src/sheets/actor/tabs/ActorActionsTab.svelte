@@ -37,7 +37,7 @@
           <ItemTableColumn baseWidth="7.5rem"
             >{localize('DND5E.Damage')}</ItemTableColumn
           >
-          {#if $context.owner && $context.useClassicControls}
+          {#if $context.editable && $context.useClassicControls}
             <ItemTableColumn baseWidth="1.5rem"></ItemTableColumn>
           {/if}
         </ItemTableHeaderRow>
@@ -169,7 +169,7 @@
                 </div>
               {/each}
             </ItemTableCell>
-            {#if $context.owner && $context.useClassicControls}
+            {#if $context.editable && $context.useClassicControls}
               <ItemTableCell baseWidth="1.5rem">
                 <ActionFilterOverrideControl item={actionItem.item} />
               </ItemTableCell>

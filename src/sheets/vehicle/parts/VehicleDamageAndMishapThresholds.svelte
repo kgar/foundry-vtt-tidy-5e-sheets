@@ -20,7 +20,7 @@
     allowDeltaChanges={true}
     maxlength={5}
     title={localize('DND5E.DamageThreshold')}
-    disabled={!$context.owner || $context.lockSensitiveFields}
+    disabled={!$context.editable || $context.lockSensitiveFields}
   />
   <TextInput
     document={$context.actor}
@@ -31,7 +31,7 @@
     allowDeltaChanges={true}
     maxlength={5}
     title={localize('DND5E.VehicleMishapThreshold')}
-    disabled={!$context.owner || $context.lockSensitiveFields}
+    disabled={!$context.editable || $context.lockSensitiveFields}
   />
 </div>
 

@@ -30,7 +30,7 @@
           <SheetEditor
             content={$context.biographyHTML}
             target="system.details.biography.value"
-            editable={$context.owner || FoundryAdapter.userIsGm()}
+            editable={$context.editable}
           />
         </article>
       </RerenderAfterFormSubmission>

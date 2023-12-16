@@ -18,9 +18,9 @@
   class="item-image"
   class:item-use-button-has-focus={buttonIsFocused}
   style="background-image: url('{imgUrlOverride ?? item.img}')"
-  class:show-roll={item.isOwner && $showRoll}
+  class:show-roll={item.isEditable && $showRoll}
 >
-  {#if item.isOwner}
+  {#if item.isEditable}
     <button
       type="button"
       class="item-use-button icon-button"

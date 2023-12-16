@@ -27,7 +27,7 @@
     document={$context.item}
     field="system.consumableType"
     value={$context.system.consumableType}
-    disabled={!$context.owner}
+    disabled={!$context.editable}
   >
     <SelectOptions data={$context.config.consumableTypes} />
   </Select>
@@ -43,7 +43,7 @@
     document={$context.item}
     field="system.attunement"
     value={$context.system.attunement}
-    disabled={!$context.owner}
+    disabled={!$context.editable}
   >
     <SelectOptions data={$context.config.attunements} />
   </Select>
@@ -58,7 +58,7 @@
     document={$context.item}
     field="system.equipped"
     checked={$context.system.equipped}
-    disabled={!$context.owner}
+    disabled={!$context.editable}
   >
     {localize('DND5E.Equipped')}
   </Checkbox>
@@ -68,7 +68,7 @@
     document={$context.item}
     field="system.identified"
     checked={$context.system.identified}
-    disabled={!$context.owner}
+    disabled={!$context.editable}
   >
     {localize('DND5E.Identified')}
   </Checkbox>
@@ -86,7 +86,7 @@
         document={$context.item}
         field="system.properties.{prop}"
         {checked}
-        disabled={!$context.owner}
+        disabled={!$context.editable}
       >
         {name}
       </Checkbox>

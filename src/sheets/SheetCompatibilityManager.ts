@@ -1,7 +1,7 @@
 import { CONSTANTS } from 'src/constants';
 import type { Tab } from 'src/types/types';
 import { delay } from 'src/utils/asynchrony';
-import { error, warn } from 'src/utils/logging';
+import { debug, error, warn } from 'src/utils/logging';
 
 type RenderCustomContentArgs = {
   app: any;
@@ -17,43 +17,48 @@ export class SheetCompatibilityManager {
     const { app, tabs, element, data, isFullRender, superActivateListeners } =
       args;
 
-    const renderPromises = tabs.map(async (s) => {
+    const renderPromises = tabs.map(async (tab) => {
       try {
-        let tab = element
+        let tabEl = element
           .get(0)
-          .querySelector(`[data-tab-contents-for="${s.id}"]`);
+          .querySelector(`[data-tab-contents-for="${tab.id}"]`);
 
-        if (!tab) {
+        if (!tabEl) {
           // This content was added during a non-forced render (e.g., tab selection changes); wait a tick and re-attempt to set its HTML
           await delay(0);
-          tab = element
+          tabEl = element
             .get(0)
-            .querySelector(`[data-tab-contents-for="${s.id}"]`);
+            .querySelector(`[data-tab-contents-for="${tab.id}"]`);
         }
 
-        if (!tab) {
+        if (!tabEl) {
           warn('Unable to find custom tab content container for render');
           return;
         }
 
         if (
-          s.content.type === 'html' &&
-          (isFullRender || s.content.renderScheme === 'handlebars')
+          tab.content.type === 'html' &&
+          (isFullRender || tab.content.renderScheme === 'handlebars')
         ) {
-          tab.innerHTML = s.content.html;
+          tabEl.innerHTML = tab.content.html;
         }
 
-        if (s.onRender) {
-          s.onRender({
+        if (tab.onRender) {
+          tab.onRender({
             app: app,
             data: data,
             element: element.get(0),
-            tabContentsElement: tab,
+            tabContentsElement: tabEl,
             isFullRender: isFullRender,
           });
         }
       } catch (e) {
         error('Failed to render custom content due to an error', false, e);
+        debug('Custom content error debug details', {
+          error: e,
+          erroredTab: tab,
+          args: args,
+        });
       }
     });
 

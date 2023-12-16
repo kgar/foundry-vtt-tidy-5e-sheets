@@ -526,7 +526,7 @@ export const FoundryAdapter = {
       FoundryAdapter.setFlag(document, 'favorite', true);
     }
   },
-  canEditActor(actor: any) {
+  isActorSheetUnlocked(actor: any) {
     return (
       (actor.isOwner && FoundryAdapter.isSheetUnlocked(actor)) ||
       (FoundryAdapter.userIsGm() &&

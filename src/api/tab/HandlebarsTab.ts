@@ -1,6 +1,10 @@
 import type { OnRenderTabArgs } from 'src/types/types';
 import type { RenderScheme } from '../api.types';
-import { CustomTabBase, type TabId } from './CustomTabBase';
+import {
+  CustomTabBase,
+  type CustomTabTitle,
+  type TabId,
+} from './CustomTabBase';
 
 /**
  * The information necessary for rendering a handlebars-based tab.
@@ -22,7 +26,7 @@ import { CustomTabBase, type TabId } from './CustomTabBase';
  * ```
  */
 export class HandlebarsTab extends CustomTabBase {
-  title: string = '';
+  title: CustomTabTitle = '';
   tabId: TabId = '';
   /**
    * The path to the handlebars template. Use a leading slash to look in the UserData directory.
@@ -32,10 +36,12 @@ export class HandlebarsTab extends CustomTabBase {
   path: string = '';
   renderScheme: RenderScheme = 'handlebars';
   tabContentsClasses: string[] = [];
+  activateDefaultSheetListeners?: boolean | undefined;
 
   constructor(props?: Partial<HandlebarsTab>) {
     super();
 
+    this.activateDefaultSheetListeners = true;
     const merged = mergeObject(this, props);
     Object.assign(this, merged);
   }

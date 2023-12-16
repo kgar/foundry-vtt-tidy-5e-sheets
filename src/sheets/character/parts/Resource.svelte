@@ -23,7 +23,7 @@
       value={resource.label}
       placeholder={resource.placeholder}
       selectOnFocus={true}
-      disabled={!$context.owner || $context.lockSensitiveFields}
+      disabled={!$context.editable || $context.lockSensitiveFields}
     />
   </h4>
   <div
@@ -39,7 +39,7 @@
       allowDeltaChanges={true}
       maxlength={3}
       selectOnFocus={true}
-      disabled={!$context.owner}
+      disabled={!$context.editable}
     />
     <span class="sep"> / </span>
     <TextInput
@@ -51,7 +51,7 @@
       allowDeltaChanges={true}
       maxlength={3}
       selectOnFocus={true}
-      disabled={!$context.owner || $context.lockSensitiveFields}
+      disabled={!$context.editable || $context.lockSensitiveFields}
     />
   </div>
   <!-- svelte-ignore a11y-no-static-element-interactions -->
@@ -71,7 +71,7 @@
           $context.actor.update({
             [resource.srName]: event.currentTarget.checked,
           })}
-        disabled={!$context.owner || $context.lockSensitiveFields}
+        disabled={!$context.editable || $context.lockSensitiveFields}
       />
       <label
         for="{$context.appId}-{resource.name}-sr"
@@ -88,7 +88,7 @@
           $context.actor.update({
             [resource.lrName]: event.currentTarget.checked,
           })}
-        disabled={!$context.owner || $context.lockSensitiveFields}
+        disabled={!$context.editable || $context.lockSensitiveFields}
       />
       <label
         for="{$context.appId}-{resource.name}-lr"
@@ -98,7 +98,7 @@
         {localize('DND5E.RestL')}
       </label>
     </div>
-    {#if $context.owner && !$context.lockSensitiveFields}
+    {#if $context.editable && !$context.lockSensitiveFields}
       <button
         type="button"
         class="inline-icon-button resource-options"

@@ -1,0 +1,17 @@
+/* ----------------------------------------- */
+/*  Active Effects                           */
+/* ----------------------------------------- */
+
+.effects .item {
+  .effect-source,
+  .effect-duration,
+  .effect-controls {
+    text-align: center;
+    border-left: 0.0625rem solid var(--t5ek-faint-color);
+    border-right: 0.0625rem solid var(--t5ek-faint-color);
+    font-size: 0.75rem;
+  }
+  .effect-controls {
+    border: none;
+  }
+}

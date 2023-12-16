@@ -48,7 +48,7 @@
 
   const localize = FoundryAdapter.localize;
 
-  $: classicControlsBaseWidth = $context.editable
+  $: classicControlsBaseWidth = $context.unlocked
     ? controlsBaseWidthUnlocked
     : controlsBaseWidthLocked;
 </script>
@@ -98,7 +98,7 @@
       >
         {localize('DND5E.Usage')}
       </ItemTableColumn>
-      {#if $context.owner && $context.useClassicControls}
+      {#if $context.editable && $context.useClassicControls}
         <ItemTableColumn baseWidth={classicControlsBaseWidth} />
       {/if}
     </ItemTableHeaderRow>
@@ -168,7 +168,7 @@
         >
           {spell.labels.activation}
         </ItemTableCell>
-        {#if $context.owner && $context.useClassicControls}
+        {#if $context.editable && $context.useClassicControls}
           <ItemTableCell baseWidth={classicControlsBaseWidth}>
             <ItemControls>
               {#if FoundryAdapter.canPrepareSpell(spell)}
@@ -180,7 +180,7 @@
                 <ItemFavoriteControl item={spell} />
               {/if}
               <ItemEditControl item={spell} />
-              {#if $context.editable}
+              {#if $context.unlocked}
                 <ItemDuplicateControl item={spell} />
                 <ItemDeleteControl item={spell} />
               {/if}
@@ -192,7 +192,7 @@
         {/if}
       </ItemTableRow>
     {/each}
-    {#if $context.editable}
+    {#if $context.unlocked}
       <ItemTableFooter
         actor={$context.actor}
         dataset={section.dataset}

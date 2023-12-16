@@ -26,7 +26,7 @@
     placeholder="0"
     selectOnFocus={true}
     allowDeltaChanges={true}
-    disabled={!$context.owner}
+    disabled={!$context.editable}
   />
   <span class="sep"> / </span>
   {#if overrideMode}
@@ -38,7 +38,7 @@
       placeholder={section.slots}
       selectOnFocus={true}
       allowDeltaChanges={true}
-      disabled={!$context.owner || $context.lockSensitiveFields}
+      disabled={!$context.editable || $context.lockSensitiveFields}
     />
   {:else}
     <span
@@ -48,7 +48,7 @@
     >
       {section.slots}
     </span>
-    {#if $context.owner && !$context.lockSensitiveFields}
+    {#if $context.editable && !$context.lockSensitiveFields}
       <button
         type="button"
         class="spell-slot-max-override icon-button"

@@ -28,7 +28,7 @@
     data-attribution="attributes.ac"
     data-attribution-caption="DND5E.ArmorClass"
     data-tooltip-direction="DOWN"
-    disabled={!$context.owner}
+    disabled={!$context.editable}
   >
     {ac}
   </button>

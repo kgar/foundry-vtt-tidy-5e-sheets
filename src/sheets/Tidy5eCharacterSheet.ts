@@ -18,7 +18,11 @@ import {
   type ExpandedItemData,
   type TidyResource,
 } from 'src/types/types';
-import { applyTitleToWindow } from 'src/utils/applications';
+import {
+  applyModuleSheetDataAttributeToWindow,
+  applyThemeDataAttributeToWindow,
+  applyTitleToWindow,
+} from 'src/utils/applications';
 import type { SvelteComponent } from 'svelte';
 import { getPercentage } from 'src/utils/numbers';
 import type { ItemChatData } from 'src/types/item';
@@ -52,6 +56,10 @@ export class Tidy5eCharacterSheet
 
     settingStore.subscribe(() => {
       this.getData().then((context) => this.context.set(context));
+      applyThemeDataAttributeToWindow(
+        SettingsProvider.settings.colorScheme.get(),
+        this.element?.get(0)
+      );
     });
 
     this.currentTabId =
@@ -102,9 +110,11 @@ export class Tidy5eCharacterSheet
   }
 
   async getData(options = {}) {
-    const editable = FoundryAdapter.canEditActor(this.actor) && this.isEditable;
-
     const defaultDocumentContext = await super.getData(this.options);
+
+    const unlocked =
+      FoundryAdapter.isActorSheetUnlocked(this.actor) &&
+      defaultDocumentContext.editable;
 
     const tidyResources: TidyResource[] = defaultDocumentContext.resources.map(
       (r: any) => ({
@@ -202,7 +212,7 @@ export class Tidy5eCharacterSheet
           relativeTo: this.actor,
         }
       ),
-      editable,
+      editable: defaultDocumentContext.editable,
       features: sections,
       flawEnrichedHtml: await FoundryAdapter.enrichHtml(
         this.actor.system.details.flaw,
@@ -232,7 +242,8 @@ export class Tidy5eCharacterSheet
       lockLevelSelector: FoundryAdapter.shouldLockLevelSelector(),
       lockMoneyChanges: FoundryAdapter.shouldLockMoneyChanges(),
       lockSensitiveFields:
-        !editable && SettingsProvider.settings.useTotalSheetLock.get(),
+        (!unlocked && SettingsProvider.settings.useTotalSheetLock.get()) ||
+        !defaultDocumentContext.editable,
       maxPreparedSpellsTotal,
       notes1EnrichedHtml: await FoundryAdapter.enrichHtml(
         FoundryAdapter.getProperty<string>(
@@ -298,7 +309,7 @@ export class Tidy5eCharacterSheet
       owner: this.actor.isOwner,
       showLimitedSheet: FoundryAdapter.showLimitedSheet(this.actor),
       tabs: [],
-      tidyResources,
+      tidyResources: tidyResources,
       traitEnrichedHtml: await FoundryAdapter.enrichHtml(
         this.actor.system.details.trait,
         {
@@ -308,6 +319,7 @@ export class Tidy5eCharacterSheet
           relativeTo: this.actor,
         }
       ),
+      unlocked: unlocked,
       useActionsFeature: actorUsesActionFeature(this.actor),
       useClassicControls:
         SettingsProvider.settings.useClassicControlsForCharacter.get(),
@@ -422,6 +434,11 @@ export class Tidy5eCharacterSheet
       this._saveScrollPositions(this.element);
       this._destroySvelteComponent();
       await super._render(force, options);
+      applyModuleSheetDataAttributeToWindow(this.element.get(0));
+      applyThemeDataAttributeToWindow(
+        SettingsProvider.settings.colorScheme.get(),
+        this.element.get(0)
+      );
       await this.renderCustomContent({ isFullRender: true });
       return;
     }
@@ -461,6 +478,10 @@ export class Tidy5eCharacterSheet
       debug('Saved scroll positions', this._scrollPositions);
       return save;
     }
+  }
+
+  _disableFields(...args: any[]) {
+    debug('Ignoring call to disable fields. Delegating to Tidy Sheets...');
   }
 
   /* -------------------------------------------- */

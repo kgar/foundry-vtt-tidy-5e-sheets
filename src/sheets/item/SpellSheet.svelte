@@ -26,7 +26,7 @@
         field="name"
         value={$context.item.name}
         placeholder={localize('DND5E.SpellName')}
-        disabled={!$context.owner}
+        disabled={!$context.editable}
       />
     </h1>
 
@@ -42,7 +42,7 @@
         <Source
           document={$context.item}
           keyPath="system.source"
-          editable={$context.editable}
+          editable={$context.unlocked}
         />
       </li>
     </ul>

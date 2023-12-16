@@ -51,7 +51,7 @@
 <select
   on:click|stopPropagation
   on:change={(event) => onAmmoChange(item, event.currentTarget.value)}
-  disabled={!$context.owner}
+  disabled={!$context.editable}
 >
   {#each ammos as ammo}
     <option

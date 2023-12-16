@@ -7,6 +7,7 @@
   export let useIconColumn: boolean = true;
   export let title: string | null = null;
   export let size: 'standard' | 'compact' = 'standard';
+  export let disabled = false;
 
   const buttonMenuContext = getContext<ButtonMenuContext>('buttonMenuContext');
   const dispatch = createEventDispatcher<{
@@ -16,7 +17,7 @@
   }>();
 
   function handleClick(
-    event: MouseEvent & { currentTarget: HTMLButtonElement }
+    event: MouseEvent & { currentTarget: HTMLButtonElement },
   ) {
     buttonMenuContext.close();
     dispatch('click', { event });
@@ -29,6 +30,7 @@
     class="button-menu-command {size}"
     on:click={handleClick}
     {title}
+    {disabled}
   >
     {#if useIconColumn}
       <span class="icon-container">

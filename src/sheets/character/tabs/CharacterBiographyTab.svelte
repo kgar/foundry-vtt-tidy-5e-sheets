@@ -29,7 +29,7 @@
             <span>{localize('T5EK.Gender')}:</span>
             <ContentEditableFormField
               element="span"
-              editable={$context.owner && !$context.lockSensitiveFields}
+              editable={$context.editable && !$context.lockSensitiveFields}
               document={$context.actor}
               field="flags.{CONSTANTS.MODULE_ID}.gender"
               value={FoundryAdapter.tryGetFlag($context.actor, 'gender') ?? ''}
@@ -40,7 +40,7 @@
             <span>{localize('T5EK.Age')}:</span>
             <ContentEditableFormField
               element="span"
-              editable={$context.owner && !$context.lockSensitiveFields}
+              editable={$context.editable && !$context.lockSensitiveFields}
               document={$context.actor}
               field="flags.{CONSTANTS.MODULE_ID}.age"
               value={FoundryAdapter.tryGetFlag($context.actor, 'age') ?? ''}
@@ -52,7 +52,7 @@
             <span>{localize('T5EK.Height')}:</span>
             <ContentEditableFormField
               element="span"
-              editable={$context.owner && !$context.lockSensitiveFields}
+              editable={$context.editable && !$context.lockSensitiveFields}
               document={$context.actor}
               field="flags.{CONSTANTS.MODULE_ID}.height"
               value={FoundryAdapter.tryGetFlag($context.actor, 'height') ?? ''}
@@ -64,7 +64,7 @@
             <span>{localize('T5EK.Weight')}:</span>
             <ContentEditableFormField
               element="span"
-              editable={$context.owner && !$context.lockSensitiveFields}
+              editable={$context.editable && !$context.lockSensitiveFields}
               document={$context.actor}
               field="flags.{CONSTANTS.MODULE_ID}.weight"
               value={FoundryAdapter.tryGetFlag($context.actor, 'weight') ?? ''}
@@ -76,7 +76,7 @@
             <span>{localize('T5EK.Eyes')}:</span>
             <ContentEditableFormField
               element="span"
-              editable={$context.owner && !$context.lockSensitiveFields}
+              editable={$context.editable && !$context.lockSensitiveFields}
               document={$context.actor}
               field="flags.{CONSTANTS.MODULE_ID}.eyes"
               value={FoundryAdapter.tryGetFlag($context.actor, 'eyes') ?? ''}
@@ -88,7 +88,7 @@
             <span>{localize('T5EK.Skin')}:</span>
             <ContentEditableFormField
               element="span"
-              editable={$context.owner && !$context.lockSensitiveFields}
+              editable={$context.editable && !$context.lockSensitiveFields}
               document={$context.actor}
               field="flags.{CONSTANTS.MODULE_ID}.skin"
               value={FoundryAdapter.tryGetFlag($context.actor, 'skin') ?? ''}
@@ -100,7 +100,7 @@
             <span>{localize('T5EK.Hair')}:</span>
             <ContentEditableFormField
               element="span"
-              editable={$context.owner && !$context.lockSensitiveFields}
+              editable={$context.editable && !$context.lockSensitiveFields}
               document={$context.actor}
               field="flags.{CONSTANTS.MODULE_ID}.hair"
               value={FoundryAdapter.tryGetFlag($context.actor, 'hair') ?? ''}
@@ -126,7 +126,7 @@
             <SheetEditor
               content={$context.traitEnrichedHtml}
               target="system.details.trait"
-              editable={$context.owner || FoundryAdapter.userIsGm()}
+              editable={$context.editable}
             />
           </article>
         </RerenderAfterFormSubmission>
@@ -139,7 +139,7 @@
             <SheetEditor
               content={$context.idealEnrichedHtml}
               target="system.details.ideal"
-              editable={$context.owner || FoundryAdapter.userIsGm()}
+              editable={$context.editable}
             />
           </article>
         </RerenderAfterFormSubmission>
@@ -151,7 +151,7 @@
             <SheetEditor
               content={$context.bondEnrichedHtml}
               target="system.details.bond"
-              editable={$context.owner || FoundryAdapter.userIsGm()}
+              editable={$context.editable}
             />
           </article>
         </RerenderAfterFormSubmission>
@@ -163,7 +163,7 @@
             <SheetEditor
               content={$context.flawEnrichedHtml}
               target="system.details.flaw"
-              editable={$context.owner || FoundryAdapter.userIsGm()}
+              editable={$context.editable}
             />
           </article>
         </RerenderAfterFormSubmission>
@@ -183,7 +183,7 @@
             <SheetEditor
               content={$context.appearanceEnrichedHtml}
               target="system.details.appearance"
-              editable={$context.owner || FoundryAdapter.userIsGm()}
+              editable={$context.editable}
             />
           </article>
         </RerenderAfterFormSubmission>
@@ -197,7 +197,7 @@
             <SheetEditor
               content={$context.biographyEnrichedHtml}
               target="system.details.biography.value"
-              editable={$context.owner || FoundryAdapter.userIsGm()}
+              editable={$context.editable}
             />
           </article>
         </RerenderAfterFormSubmission>

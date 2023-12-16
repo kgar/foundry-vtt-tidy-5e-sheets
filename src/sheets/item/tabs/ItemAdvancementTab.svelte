@@ -25,10 +25,10 @@
 </script>
 
 <ol class="items-list">
-  {#if $context.editable}
+  {#if $context.unlocked}
     <li class="items-header main-controls advancement">
       <div class="item-controls configuration-mode-control">
-        {#if $context.owner && $context.isEmbedded}
+        {#if $context.editable && $context.isEmbedded}
           {#if $context.advancementEditable}
             <button
               class="inline-icon-button"
@@ -51,7 +51,7 @@
           {/if}
         {/if}
       </div>
-      {#if $context.owner && $context.advancementEditable}
+      {#if $context.editable && $context.advancementEditable}
         <div class="item-controls add-button">
           <button
             type="button"
@@ -82,7 +82,7 @@
         {/if}
       </h3>
 
-      {#if $context.owner && $context.editable && data.configured && level !== 'unconfigured'}
+      {#if $context.unlocked && data.configured && level !== 'unconfigured'}
         <div>
           <button
             type="button"
@@ -134,7 +134,7 @@
               {/if}
             </div>
           {/if}
-          {#if $context.owner && $context.advancementEditable}
+          {#if $context.editable && $context.advancementEditable}
             <div class="item-controls flexrow">
               <button
                 type="button"

@@ -25,7 +25,7 @@
     document={$context.item}
     field="system.equipped"
     checked={$context.system.equipped}
-    disabled={!$context.owner}
+    disabled={!$context.editable}
     >
     {localize('DND5E.Equipped')}
   </Checkbox>
@@ -43,7 +43,7 @@
       field="system.capacity.value"
       placeholder="&mdash;"
       value={$context.system.capacity.value}
-      disabled={!$context.owner}
+      disabled={!$context.editable}
       />
   </div>
 </ItemFormGroup>
@@ -58,7 +58,7 @@
     document={$context.item}
     field="system.capacity.type"
     value={$context.system.capacity.type}
-    disabled={!$context.owner}
+    disabled={!$context.editable}
     >
     <SelectOptions data={$context.config.itemCapacityTypes} />
   </Select>
@@ -69,7 +69,7 @@
     document={$context.item}
     field="system.attunement"
     value={$context.system.attunement}
-    disabled={!$context.owner}
+    disabled={!$context.editable}
     >
     <SelectOptions data={$context.config.attunements} />
   </Select>
@@ -84,7 +84,7 @@
     field="system.capacity.weightless"
     document={$context.item}
     labelCssClass="checkbox container-property"
-    disabled={!$context.owner}
+    disabled={!$context.editable}
     >
     {localize('DND5E.ItemContainerWeightless')}
   </Checkbox>
