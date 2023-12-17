@@ -11,6 +11,7 @@ node_modules
 dist
 dist-ssr
 *.local
+foundry-data-path-config.json
 
 # Editor directories and files
 .vscode/*
