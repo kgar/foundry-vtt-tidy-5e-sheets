@@ -1,3 +1,4 @@
+import type { SheetLayout } from 'src/runtime/types';
 import type { HandlebarsTab } from './tab/HandlebarsTab';
 import type { HtmlTab } from './tab/HtmlTab';
 import type { SvelteTab } from './tab/SvelteTab';
@@ -35,3 +36,18 @@ export type RenderScheme = 'handlebars' | 'force';
  * The currently supported tab types.
  */
 export type SupportedTab = HtmlTab | HandlebarsTab | SvelteTab;
+
+/**
+ * Options for registering an actor tab.
+ */
+export type ActorTabRegistrationOptions = {
+  /**
+   * An optional sheet layout or layouts (default: 'all')
+   */
+  layout?: SheetLayout | SheetLayout[];
+  /**
+   * Determines whether a newly registered tab should override an existing of the same tab ID.
+   * Useful for replacing core Tidy 5e Sheet tabs.
+   */
+  overrideExisting?: boolean;
+};
