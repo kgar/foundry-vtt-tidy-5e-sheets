@@ -37,7 +37,6 @@ const itemSheetTabs: Record<string, Tab> = {
     title: 'DND5E.Details',
     content: {
       component: ItemBackpackDetailsTab,
-      props: {},
       cssClass: 'detail-tab-contents',
       type: 'svelte',
     },
@@ -62,7 +61,6 @@ const itemSheetTabs: Record<string, Tab> = {
     title: 'DND5E.Details',
     content: {
       component: ItemConsumableDetailsTab,
-      props: {},
       cssClass: 'detail-tab-contents',
       type: 'svelte',
     },
@@ -135,7 +133,6 @@ const itemSheetTabs: Record<string, Tab> = {
     title: 'DND5E.Details',
     content: {
       component: ItemLootDetailsTab,
-      props: {},
       cssClass: 'detail-tab-contents',
       type: 'svelte',
     },

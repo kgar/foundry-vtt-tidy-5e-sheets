@@ -1,3 +1,7 @@
+import type { HandlebarsTab } from './tab/HandlebarsTab';
+import type { HtmlTab } from './tab/HtmlTab';
+import type { SvelteTab } from './tab/SvelteTab';
+
 /**
  * Data provided during the rendering of this item document sheet.
  */
@@ -26,3 +30,8 @@ export interface OnRenderArgs {
  * - `"force"`, `undefined`, or any other unspecified value - render when the `render` function is called with `force=true`, i.e. a full re-render
  */
 export type RenderScheme = 'handlebars' | 'force';
+
+/**
+ * The currently supported tab types.
+ */
+export type SupportedTab = HtmlTab | HandlebarsTab | SvelteTab;

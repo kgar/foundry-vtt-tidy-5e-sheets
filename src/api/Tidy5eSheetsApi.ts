@@ -14,6 +14,8 @@ import { Tidy5eCharacterSheet } from 'src/sheets/Tidy5eCharacterSheet';
 import { Tidy5eNpcSheet } from 'src/sheets/Tidy5eNpcSheet';
 import { Tidy5eVehicleSheet } from 'src/sheets/Tidy5eKgarVehicleSheet';
 import { Tidy5eKgarItemSheet } from 'src/sheets/Tidy5eItemSheet';
+import { SvelteTab } from './tab/SvelteTab';
+import type { SupportedTab } from './api.types';
 
 /**
  * The Tidy 5e Sheets API. The API becomes available after the hook `tidy5e-sheet.ready` is called.
@@ -115,6 +117,7 @@ export class Tidy5eSheetsApi {
   models = {
     HandlebarsTab: HandlebarsTab,
     HtmlTab: HtmlTab,
+    SvelteTab: SvelteTab
   };
 
   /**
@@ -145,7 +148,7 @@ export class Tidy5eSheetsApi {
    * A tab ID is always required (see {@link TabId}).
    */
   registerCharacterTab(
-    tab: HandlebarsTab | HtmlTab,
+    tab: SupportedTab,
     layout?: SheetLayout | SheetLayout[]
   ): void {
     if (!TabManager.validateTab(tab)) {
@@ -186,7 +189,7 @@ export class Tidy5eSheetsApi {
    * @remarks
    * A tab ID is always required (see {@link TabId}).
    */
-  registerItemTab(tab: HandlebarsTab | HtmlTab): void {
+  registerItemTab(tab: SupportedTab): void {
     if (!TabManager.validateTab(tab)) {
       return;
     }
@@ -229,7 +232,7 @@ export class Tidy5eSheetsApi {
    * A tab ID is always required (see {@link TabId}).
    */
   registerNpcTab(
-    tab: HandlebarsTab | HtmlTab,
+    tab: SupportedTab,
     layout?: SheetLayout | SheetLayout[]
   ): void {
     if (!TabManager.validateTab(tab)) {
@@ -273,7 +276,7 @@ export class Tidy5eSheetsApi {
    * A tab ID is always required (see {@link TabId}).
    */
   registerVehicleTab(
-    tab: HandlebarsTab | HtmlTab,
+    tab: SupportedTab,
     layout?: SheetLayout | SheetLayout[]
   ): void {
     if (!TabManager.validateTab(tab)) {
