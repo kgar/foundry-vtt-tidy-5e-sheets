@@ -11,6 +11,7 @@ import type { RegisteredTab } from './types';
 import { CONSTANTS } from 'src/constants';
 import { warn } from 'src/utils/logging';
 import { TabManager } from './tab/TabManager';
+import type { ActorTabRegistrationOptions } from 'src/api/api.types';
 
 export class CharacterSheetRuntime {
   private static _tabs: RegisteredTab<CharacterSheetContext>[] = [
@@ -100,14 +101,24 @@ export class CharacterSheetRuntime {
     return [...CharacterSheetRuntime._tabs];
   }
 
-  static registerTab(tab: RegisteredTab<CharacterSheetContext>) {
-    const tabExists = CharacterSheetRuntime.getAllRegisteredTabs().some(
-      (t) => t.id === tab.id
-    );
+  static registerTab(
+    tab: RegisteredTab<CharacterSheetContext>,
+    options?: ActorTabRegistrationOptions
+  ) {
+    const tabExists = CharacterSheetRuntime._tabs.some((t) => t.id === tab.id);
 
-    if (tabExists) {
+    if (tabExists && !options?.overrideExisting) {
       warn(`Tab with id ${tab.id} already exists.`);
       return;
+    }
+
+    if (tabExists && options?.overrideExisting) {
+      const index = CharacterSheetRuntime._tabs.findIndex(
+        (t) => t.id === tab.id
+      );
+      if (index >= 0) {
+        CharacterSheetRuntime._tabs.splice(index, 1);
+      }
     }
 
     CharacterSheetRuntime._tabs.push(tab);

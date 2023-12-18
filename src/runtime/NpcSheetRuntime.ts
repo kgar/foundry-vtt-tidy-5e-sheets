@@ -9,6 +9,7 @@ import ActorActionsTab from 'src/sheets/actor/tabs/ActorActionsTab.svelte';
 import type { RegisteredTab } from './types';
 import { warn } from 'src/utils/logging';
 import { TabManager } from './tab/TabManager';
+import type { ActorTabRegistrationOptions } from 'src/api/api.types';
 
 export class NpcSheetRuntime {
   private static _tabs: RegisteredTab<NpcSheetContext>[] = [
@@ -79,14 +80,22 @@ export class NpcSheetRuntime {
     return [...NpcSheetRuntime._tabs];
   }
 
-  static registerTab(tab: RegisteredTab<NpcSheetContext>) {
-    const tabExists = NpcSheetRuntime.getAllRegisteredTabs().some(
-      (t) => t.id === tab.id
-    );
+  static registerTab(
+    tab: RegisteredTab<NpcSheetContext>,
+    options?: ActorTabRegistrationOptions
+  ) {
+    const tabExists = NpcSheetRuntime._tabs.some((t) => t.id === tab.id);
 
     if (tabExists) {
       warn(`Tab with id ${tab.id} already exists.`);
       return;
+    }
+
+    if (tabExists && options?.overrideExisting) {
+      const index = NpcSheetRuntime._tabs.findIndex((t) => t.id === tab.id);
+      if (index >= 0) {
+        NpcSheetRuntime._tabs.splice(index, 1);
+      }
     }
 
     NpcSheetRuntime._tabs.push(tab);

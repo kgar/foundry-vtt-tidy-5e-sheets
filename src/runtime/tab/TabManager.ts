@@ -7,6 +7,9 @@ import { CONSTANTS } from 'src/constants';
 import { isNil } from 'src/utils/data';
 import type { RegisteredTab, SheetLayout } from '../types';
 import type { CustomTabTitle } from 'src/api/tab/CustomTabBase';
+import type { SupportedTab } from 'src/api/api.types';
+import { SvelteTab } from 'src/api/tab/SvelteTab';
+import { readable, writable } from 'svelte/store';
 
 export class TabManager {
   static async prepareTabsForRender(
@@ -40,7 +43,7 @@ export class TabManager {
     }, {});
   }
 
-  static validateTab(tab: HandlebarsTab | HtmlTab) {
+  static validateTab(tab: SupportedTab) {
     if (isNil(tab.tabId?.trim(), '')) {
       error('A tab ID is required for registered tabs.', true);
       return false;
@@ -52,7 +55,7 @@ export class TabManager {
   }
 
   static mapCustomTabToRegisteredTab(
-    tab: HandlebarsTab | HtmlTab,
+    tab: SupportedTab,
     layout?: SheetLayout | SheetLayout[]
   ): RegisteredTab<any> | undefined {
     let registeredTab: RegisteredTab<any> | undefined;
@@ -88,6 +91,27 @@ export class TabManager {
         tabContentsClasses: tab.tabContentsClasses,
         activateDefaultSheetListeners: tab.activateDefaultSheetListeners,
       };
+    } else if (tab instanceof SvelteTab) {
+      // An external svelte tab should be instantiated
+      if (tab.component) {
+        registeredTab = {
+          content: {
+            type: 'svelte',
+            component: tab.component,
+            cssClass: tab.tabContentsClasses?.join(' ') ?? '',
+            getProps: tab.getProps,
+            getContext: tab.getContext,
+          },
+          id: tab.tabId,
+          title: tab.title,
+          enabled: tab.enabled,
+          layout: layout,
+          onRender: tab.onRender,
+          renderScheme: 'force',
+          tabContentsClasses: tab.tabContentsClasses,
+          activateDefaultSheetListeners: tab.activateDefaultSheetListeners,
+        };
+      }
     }
 
     return registeredTab;

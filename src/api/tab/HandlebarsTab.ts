@@ -8,6 +8,7 @@ import {
 
 /**
  * The information necessary for rendering a handlebars-based tab.
+ * 
  * @example Getting the API and creating a handlebars-based item tab that only shows on spells
  * ```js
  * Hooks.once('tidy5e-sheet.ready', (api) => {

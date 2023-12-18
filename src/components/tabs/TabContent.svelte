@@ -2,16 +2,47 @@
   import type { Tab } from 'src/types/types';
   import { declareLocation } from 'src/types/location-awareness';
   import { CONSTANTS } from 'src/constants';
+  import { getAllContexts, getContext, onMount } from 'svelte';
+  import type { Readable } from 'svelte/store';
+  import { error } from 'src/utils/logging';
 
   export let tab: Tab;
   export let active: boolean;
   export let cssClass: string = '';
+
+  const context = getContext<Readable<any>>('context');
+  const allContexts = getAllContexts();
 
   declareLocation('tab', tab.id);
 
   $: useCoreListenersClass = tab.activateDefaultSheetListeners
     ? CONSTANTS.CLASS_TIDY_USE_CORE_LISTENERS
     : '';
+
+  let tidyTab: HTMLElement;
+
+  onMount(() => {
+    if (tab.content.type !== 'svelte') {
+      return;
+    }
+
+    try {
+      const props = tab.content.getProps?.($context) ?? {};
+      const tabComponentContext =
+        tab.content.getContext?.(allContexts) ?? allContexts;
+      const svelteTabComponent = new tab.content.component({
+        target: tidyTab,
+        context: tabComponentContext,
+        props: props,
+      });
+
+      return () => {
+        svelteTabComponent.$destroy();
+      };
+    } catch (e) {
+      error('Failed to render svelte tab', false, e);
+    }
+  });
 </script>
 
 <div
@@ -19,11 +50,8 @@
     ''} {useCoreListenersClass}"
   class:active
   data-tab-contents-for={tab.id}
->
-  {#if tab.content.type === 'svelte'}
-    <svelte:component this={tab.content.component} {...tab.content.props} />
-  {/if}
-</div>
+  bind:this={tidyTab}
+></div>
 
 <style lang="scss">
   .tidy-tab {

@@ -8,6 +8,7 @@ import ActorActionsTab from 'src/sheets/actor/tabs/ActorActionsTab.svelte';
 import type { RegisteredTab } from './types';
 import { warn } from 'src/utils/logging';
 import { TabManager } from './tab/TabManager';
+import type { ActorTabRegistrationOptions } from 'src/api/api.types';
 
 export class VehicleSheetRuntime {
   private static _tabs: RegisteredTab<VehicleSheetContext>[] = [
@@ -66,14 +67,22 @@ export class VehicleSheetRuntime {
     return [...VehicleSheetRuntime._tabs];
   }
 
-  static registerTab(tab: RegisteredTab<VehicleSheetContext>) {
-    const tabExists = VehicleSheetRuntime.getAllRegisteredTabs().some(
-      (t) => t.id === tab.id
-    );
+  static registerTab(
+    tab: RegisteredTab<VehicleSheetContext>,
+    options?: ActorTabRegistrationOptions
+  ) {
+    const tabExists = VehicleSheetRuntime._tabs.some((t) => t.id === tab.id);
 
     if (tabExists) {
       warn(`Tab with id ${tab.id} already exists.`);
       return;
+    }
+
+    if (tabExists && options?.overrideExisting) {
+      const index = VehicleSheetRuntime._tabs.findIndex((t) => t.id === tab.id);
+      if (index >= 0) {
+        VehicleSheetRuntime._tabs.splice(index, 1);
+      }
     }
 
     VehicleSheetRuntime._tabs.push(tab);

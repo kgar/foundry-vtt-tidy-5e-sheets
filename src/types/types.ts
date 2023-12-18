@@ -1,4 +1,4 @@
-import type { ComponentProps, ComponentType, SvelteComponent } from 'svelte';
+import type { ComponentType, SvelteComponent } from 'svelte';
 import type { Item5e, ItemCardContentComponent, ItemChatData } from './item';
 import type { OnRenderArgs, RenderScheme } from 'src/api/api.types';
 
@@ -9,8 +9,9 @@ export type SvelteTabContent<
 > = {
   type: 'svelte';
   component: ComponentType<T>;
-  props?: ComponentProps<T>;
   cssClass?: string;
+  getProps?: (data: any) => Record<string, any>;
+  getContext?: (context: Map<any, any>) => Map<any, any>;
 };
 
 export type HtmlTabContent = {
