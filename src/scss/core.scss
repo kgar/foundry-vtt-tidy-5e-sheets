@@ -156,17 +156,20 @@
     justify-content: flex-start;
     flex-wrap: wrap;
     border: none;
+  }
 
-    .tag {
-      display: inline-block;
-      padding: 0.125rem 0.25rem;
-      background: var(--t5ek-faint-color);
-      border: 0.0625rem solid var(--t5ek-light-color);
-      margin: 0 0.125rem 0.0625rem 0;
-      white-space: nowrap;
-      line-height: 1;
-      border-radius: 0.1875rem;
-      font-size: 0.75rem;
+  .tag {
+    display: inline-block;
+    padding: 0.125rem 0.25rem;
+    background: var(--t5ek-faint-color);
+    border: 0.0625rem solid var(--t5ek-light-color);
+    white-space: nowrap;
+    line-height: 1;
+    border-radius: 0.1875rem;
+    font-size: 0.75rem;
+
+    & + .tag {
+      margin-left: 0.125rem;
     }
   }
 

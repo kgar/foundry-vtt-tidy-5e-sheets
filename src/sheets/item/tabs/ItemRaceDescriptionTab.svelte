@@ -19,7 +19,7 @@
   <div class="item-properties">
     <h4 class="properties-header flex-row justify-content-space-between">
       {localize('DND5E.Type')}
-      {#if $context.unlocked}
+      {#if $context.editable}
         <button
           class="inline-icon-button hidden-config-button"
           type="button"
@@ -34,7 +34,7 @@
     </ol>
     <h4 class="properties-header flex-row justify-content-space-between">
       {localize('DND5E.Movement')}
-      {#if $context.unlocked}
+      {#if $context.editable}
         <button
           type="button"
           class="inline-icon-button hidden-config-button"
@@ -55,7 +55,7 @@
     </ol>
     <h4 class="properties-header flex-row justify-content-space-between">
       {localize('DND5E.Senses')}
-      {#if $context.unlocked}
+      {#if $context.editable}
         <button
           type="button"
           class="inline-icon-button hidden-config-button"

@@ -774,7 +774,40 @@ label input[type='checkbox']:checked {
   }
 }
 
-.advancement .items-header .item-checkmark {
-  flex: 0 0 2.75rem;
-  color: var(--t5ek-secondary-color);
+.advancement {
+  .items-header {
+    :is(.item-checkmark, .item-warning) {
+      flex: 0 0 2.75rem;
+    }
+
+    .item-checkmark {
+      color: var(--t5ek-secondary-color);
+    }
+
+    .item-warning {
+      color: var(--t5ek-warning-accent-color);
+    }
+  }
+
+  .configuration-mode-control {
+    white-space: nowrap;
+    padding: 0.125rem 0.5rem;
+  }
+
+  .item-image.svg svg {
+    max-width: 1.875rem;
+    max-height: 1.875rem;
+    &,
+    path {
+      fill: var(--t5ek-secondary-color);
+    }
+  }
+
+  .items-list .item-name {
+    flex-basis: 8.125rem;
+  }
+
+  .content-link + .content-link {
+    margin-left: 0.125rem;
+  }
 }

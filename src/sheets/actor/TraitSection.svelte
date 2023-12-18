@@ -53,7 +53,7 @@
         class:traits={tags.length}
       >
         {#each tags as [key, value]}
-          <li class="tag {key}">{value}</li>
+          <li class="trait-tag {key}">{value}</li>
         {/each}
         {#each tools as [key, tool]}
           <li class="tool">
@@ -183,12 +183,12 @@
         }
       }
 
-      .tag,
+      .trait-tag,
       .tool {
         font-size: 0.75rem;
       }
 
-      .tag {
+      .trait-tag {
         &::after {
           content: ',';
         }
