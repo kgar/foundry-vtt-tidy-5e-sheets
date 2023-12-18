@@ -15,6 +15,7 @@ import { Tidy5eVehicleSheet } from 'src/sheets/Tidy5eKgarVehicleSheet';
 import { Tidy5eKgarItemSheet } from 'src/sheets/Tidy5eItemSheet';
 import { SvelteTab } from './tab/SvelteTab';
 import type { SupportedTab, ActorTabRegistrationOptions } from './api.types';
+import ApiConstants from './ApiConstants';
 
 /**
  * The Tidy 5e Sheets API. The API becomes available after the hook `tidy5e-sheet.ready` is called.
@@ -59,6 +60,16 @@ export class Tidy5eSheetsApi {
 
   /** {@inheritDoc ActionListApi} */
   actionList = new ActionListApi();
+
+  /**
+   * Constants for a variety of uses.
+   * 
+   * @remarks
+   * When APIs call for specific IDs or selectors related to Tidy 5e Sheets,
+   * using the related constant when available will insulate against breakage
+   * when Tidy has internal changes.
+   */
+  constants = ApiConstants;
 
   /**
    * Determines whether the provided sheet is a Tidy 5e Character sheet.
@@ -127,6 +138,7 @@ export class Tidy5eSheetsApi {
    * @param {string} [options.overrideExisting] if a tab with this ID already exists, override it
    * @param layout an optional sheet layout or layouts (default: 'all')
    * @returns void
+   *
    * @example Registering a handlebars-based character sheet tab
    * ```js
    * Hooks.once('tidy5e-sheet.ready', (api) => {
@@ -145,6 +157,29 @@ export class Tidy5eSheetsApi {
    *   );
    * });
    * ```
+   *
+   * @example Overriding an existing sheet tab
+   * ```js
+   * Hooks.once('tidy5e-sheet.ready', (api) => {
+   *   api.registerCharacterTab(
+   *     new api.models.HandlebarsTab({
+   *       title: 'The New Inventory Tab',
+   *       path: '/modules/my-module-id/templates/my-handlebars-template.hbs',
+   *       tabId: api.constants.TAB_ID_CHARACTER_INVENTORY,
+   *       getData: async (data) => {
+   *         data['my-message'] = 'Hello, world! 🌊🏄‍♂️';
+   *         return new Promise((resolve) => {
+   *           resolve(data);
+   *         });
+   *       },
+   *     }),
+   *     {
+   *       overrideExisting: true,
+   *     }
+   *   );
+   * });
+   * ```
+   *
    *
    * @remarks
    * A tab ID is always required (see {@link TabId}).
