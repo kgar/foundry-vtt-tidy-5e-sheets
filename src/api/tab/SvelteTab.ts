@@ -18,11 +18,11 @@ export class SvelteTab extends CustomTabBase {
     Object.assign(this, merged);
   }
 
-  getProps?: (context: any) => Record<string, any>;
+  getProps?: (data: any) => Record<string, any>;
 
-  getContext?: (context: any) => any;
+  getContext?: (context: Map<any, any>) => Map<any, any>;
 
-  enabled?: (context: any) => boolean;
+  enabled?: (data: any) => boolean;
 
   onRender?: (args: OnRenderTabArgs) => void;
 }

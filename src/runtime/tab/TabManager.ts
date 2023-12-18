@@ -96,28 +96,18 @@ export class TabManager {
       if (tab.component) {
         registeredTab = {
           content: {
-            type: 'html',
-            html: '',
-            renderScheme: 'force',
+            type: 'svelte',
+            component: tab.component,
+            cssClass: tab.tabContentsClasses?.join(' ') ?? '',
+            getProps: tab.getProps,
+            getContext: tab.getContext,
           },
           id: tab.tabId,
           title: tab.title,
           enabled: tab.enabled,
           layout: layout,
-          onRender: (args) => {
-            if (args.isFullRender) {
-              const context = readable(
-                tab.getContext?.(args.data) ?? args.data
-              );
-              const instance = new tab.component!({
-                target: args.tabContentsElement,
-                context: new Map<any, any>([['context', context]]),
-              });
-              // Register instance for eventual destruction
-              tab.onRender?.(args);
-            }
-          },
-          renderScheme: tab.renderScheme,
+          onRender: tab.onRender,
+          renderScheme: 'force',
           tabContentsClasses: tab.tabContentsClasses,
           activateDefaultSheetListeners: tab.activateDefaultSheetListeners,
         };

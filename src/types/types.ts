@@ -10,8 +10,8 @@ export type SvelteTabContent<
   type: 'svelte';
   component: ComponentType<T>;
   cssClass?: string;
-  getProps?: (context: any) => Record<string, any>;
-  getContext?: (context: any) => Map<any, any>;
+  getProps?: (data: any) => Record<string, any>;
+  getContext?: (context: Map<any, any>) => Map<any, any>;
 };
 
 export type HtmlTabContent = {
