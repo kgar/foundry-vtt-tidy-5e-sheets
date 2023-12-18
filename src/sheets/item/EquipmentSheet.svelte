@@ -53,7 +53,7 @@
         <Source
           document={$context.item}
           keyPath="system.source"
-          editable={$context.unlocked}
+          editable={$context.editable}
         />
       </li>
     </ul>

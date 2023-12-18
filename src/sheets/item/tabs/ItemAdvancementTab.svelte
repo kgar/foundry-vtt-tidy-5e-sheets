@@ -25,30 +25,25 @@
 </script>
 
 <ol class="items-list">
-  {#if $context.unlocked}
-    <li class="items-header main-controls advancement">
+  {#if $context.editable}
+    <li
+      class="items-header main-controls advancement flex-row justify-content-space-between"
+    >
       <div class="item-controls configuration-mode-control">
         {#if $context.editable && $context.isEmbedded}
-          {#if $context.advancementEditable}
-            <button
-              class="inline-icon-button"
-              on:click={() => toggleAdvancementLock($context.item)}
-              title={localize('DND5E.AdvancementConfigurationActionDisable')}
-            >
+          <button
+            class="inline-icon-button"
+            on:click={() => toggleAdvancementLock($context.item)}
+            title={localize('DND5E.AdvancementConfigurationActionDisable')}
+          >
+            {#if $context.advancementEditable}
               <i class="fas fa-lock-open" />
               {localize('DND5E.AdvancementConfigurationModeEnabled')}
-            </button>
-          {:else}
-            <button
-              type="button"
-              class="inline-icon-button"
-              on:click={() => toggleAdvancementLock($context.item)}
-              title={localize('DND5E.AdvancementConfigurationActionEnable')}
-            >
+            {:else}
               <i class="fas fa-lock" />
               {localize('DND5E.AdvancementConfigurationModeDisabled')}
-            </button>
-          {/if}
+            {/if}
+          </button>
         {/if}
       </div>
       {#if $context.editable && $context.advancementEditable}
@@ -82,7 +77,7 @@
         {/if}
       </h3>
 
-      {#if $context.unlocked && data.configured && level !== 'unconfigured'}
+      {#if $context.editable && data.configured && level !== 'unconfigured'}
         <div>
           <button
             type="button"
@@ -116,7 +111,7 @@
         {@const isSvgIcon = isSvg(advancementItem.icon)}
         <li class="advancement-item item flexrow" data-id={advancementItem.id}>
           <div class="item-name flexrow">
-            <div class="item-image">
+            <div class="item-image" class:svg={isSvgIcon}>
               {#if isSvgIcon}
                 <InlineSvg svgUrl={advancementItem.icon} />
               {:else}
