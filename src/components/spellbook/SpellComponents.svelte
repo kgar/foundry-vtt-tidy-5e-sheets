@@ -9,13 +9,13 @@
 {#each spell.labels.components.all as component}
   <span
     class="spell-component"
-    class:tag={component.tag}
+    class:spell-tag={component.tag}
     title={spellAbbreviationMap.get(component.abbr)}>{component.abbr}</span
   >
 {/each}
 
 <style lang="scss">
-  .spell-component.tag {
+  .spell-component.spell-tag {
     color: var(--t5ek-background);
     background: var(--t5ek-tertiary-color);
     border-radius: 0.125rem;
