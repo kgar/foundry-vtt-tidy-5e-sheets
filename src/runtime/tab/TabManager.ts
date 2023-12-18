@@ -9,6 +9,7 @@ import type { RegisteredTab, SheetLayout } from '../types';
 import type { CustomTabTitle } from 'src/api/tab/CustomTabBase';
 import type { SupportedTab } from 'src/api/api.types';
 import { SvelteTab } from 'src/api/tab/SvelteTab';
+import { readable, writable } from 'svelte/store';
 
 export class TabManager {
   static async prepareTabsForRender(
@@ -91,20 +92,31 @@ export class TabManager {
         activateDefaultSheetListeners: tab.activateDefaultSheetListeners,
       };
     } else if (tab instanceof SvelteTab) {
+      // An external svelte tab should be instantiated
       if (tab.component) {
         registeredTab = {
           content: {
-            type: 'svelte',
-            component: tab.component,
-            cssClass: tab.tabContentsClasses?.join(' ') ?? '',
-            getProps: tab.getProps,
-            getContext: tab.getContext,
+            type: 'html',
+            html: '',
+            renderScheme: 'force',
           },
           id: tab.tabId,
           title: tab.title,
           enabled: tab.enabled,
           layout: layout,
-          onRender: tab.onRender,
+          onRender: (args) => {
+            if (args.isFullRender) {
+              const context = readable(
+                tab.getContext?.(args.data) ?? args.data
+              );
+              const instance = new tab.component!({
+                target: args.tabContentsElement,
+                context: new Map<any, any>([['context', context]]),
+              });
+              // Register instance for eventual destruction
+              tab.onRender?.(args);
+            }
+          },
           renderScheme: tab.renderScheme,
           tabContentsClasses: tab.tabContentsClasses,
           activateDefaultSheetListeners: tab.activateDefaultSheetListeners,
