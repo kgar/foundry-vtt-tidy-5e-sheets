@@ -22,9 +22,18 @@
   function isSvg(iconPath: string) {
     return basicSvgFilePathRegex.test(iconPath?.trim());
   }
+
+  function handleDragStart(event: DragEvent, effect: any) {
+    if (!effect) {
+      return;
+    }
+
+    const dragData = effect.toDragData();
+    event.dataTransfer?.setData('text/plain', JSON.stringify(dragData));
+  }
 </script>
 
-<ol class="items-list">
+<ol class="items-list" on:drop={(ev) => $context.item.sheet._onDrop(ev)}>
   {#if $context.editable}
     <li
       class="items-header main-controls advancement flex-row justify-content-space-between"
@@ -109,7 +118,12 @@
     <ol class="item-list">
       {#each data.items as advancementItem}
         {@const isSvgIcon = isSvg(advancementItem.icon)}
-        <li class="advancement-item item flexrow" data-id={advancementItem.id}>
+        <li
+          class="advancement-item item flexrow"
+          data-id={advancementItem.id}
+          on:dragstart={(ev) => handleDragStart(ev, effect)}
+          draggable={true}
+        >
           <div class="item-name flexrow">
             <div class="item-image" class:svg={isSvgIcon}>
               {#if isSvgIcon}
