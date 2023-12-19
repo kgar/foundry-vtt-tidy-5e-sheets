@@ -22,9 +22,22 @@
   function isSvg(iconPath: string) {
     return basicSvgFilePathRegex.test(iconPath?.trim());
   }
+
+  function handleAdvancementDragStart(event: DragEvent, advancement: any) {
+    if (!advancement) {
+      return;
+    }
+
+    const dragData =
+      $context.item.advancement.byId[advancement.id]?.toDragData();
+    event.dataTransfer?.setData('text/plain', JSON.stringify(dragData));
+  }
 </script>
 
-<ol class="items-list">
+<ol
+  class="items-list flex-1"
+  on:drop={(ev) => $context.owner && $context.item.sheet._onDrop(ev)}
+>
   {#if $context.editable}
     <li
       class="items-header main-controls advancement flex-row justify-content-space-between"
@@ -107,24 +120,29 @@
       {/if}
     </li>
     <ol class="item-list">
-      {#each data.items as advancementItem}
-        {@const isSvgIcon = isSvg(advancementItem.icon)}
-        <li class="advancement-item item flexrow" data-id={advancementItem.id}>
+      {#each data.items as advancement}
+        {@const isSvgIcon = isSvg(advancement.icon)}
+        <li
+          class="advancement-item item flexrow"
+          data-id={advancement.id}
+          on:dragstart={(ev) => handleAdvancementDragStart(ev, advancement)}
+          draggable={$context.owner}
+        >
           <div class="item-name flexrow">
             <div class="item-image" class:svg={isSvgIcon}>
               {#if isSvgIcon}
-                <InlineSvg svgUrl={advancementItem.icon} />
+                <InlineSvg svgUrl={advancement.icon} />
               {:else}
-                <img src={advancementItem.icon} alt="" />
+                <img src={advancement.icon} alt="" />
               {/if}
             </div>
-            <h4>{@html advancementItem.title}</h4>
+            <h4>{@html advancement.title}</h4>
           </div>
           {#if $context.advancementEditable || !$context.isEmbedded}
             <div class="flexrow">
-              {#if advancementItem.classRestriction === 'primary'}
+              {#if advancement.classRestriction === 'primary'}
                 {localize('DND5E.AdvancementClassRestrictionPrimary')}
-              {:else if advancementItem.classRestriction === 'secondary'}
+              {:else if advancement.classRestriction === 'secondary'}
                 {localize('DND5E.AdvancementClassRestrictionSecondary')}
               {/if}
             </div>
@@ -136,10 +154,7 @@
                 class="inline-icon-button"
                 title={localize('DND5E.AdvancementControlEdit')}
                 on:click={() =>
-                  FoundryAdapter.editAdvancement(
-                    advancementItem.id,
-                    $context.item,
-                  )}
+                  FoundryAdapter.editAdvancement(advancement.id, $context.item)}
               >
                 <i class="fas fa-edit" />
               </button>
@@ -149,7 +164,7 @@
                 title={localize('DND5E.AdvancementControlDelete')}
                 on:click={() =>
                   FoundryAdapter.deleteAdvancement(
-                    advancementItem.id,
+                    advancement.id,
                     $context.item,
                   )}
               >
@@ -157,9 +172,9 @@
               </button>
             </div>
           {/if}
-          {#if advancementItem.summary}
+          {#if advancement.summary}
             <div class="item-summary">
-              {@html advancementItem.summary}
+              {@html advancement.summary}
             </div>
           {/if}
         </li>

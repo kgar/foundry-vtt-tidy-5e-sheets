@@ -40,9 +40,21 @@
       effect.sheet.render(true);
     }
   }
+
+  function handleDragStart(event: DragEvent, effect: any) {
+    if (!effect) {
+      return;
+    }
+
+    const dragData = effect.toDragData();
+    event.dataTransfer?.setData('text/plain', JSON.stringify(dragData));
+  }
 </script>
 
-<ol class="items-list effects-list">
+<ol
+  class="items-list effects-list"
+  on:drop={(ev) => $context.item.sheet._onDrop(ev)}
+>
   {#each effects as [_, section]}
     {#if !section.hidden}
       <li class="items-header flexrow" data-effect-type={section.type}>
@@ -79,6 +91,8 @@
             class="item effect flexrow"
             data-effect-id={effect.id}
             on:mousedown={(event) => handleMiddleClickToEdit(event, effect)}
+            on:dragstart={(ev) => handleDragStart(ev, effect)}
+            draggable={true}
           >
             <div class="item-name effect-name flexrow">
               <img
