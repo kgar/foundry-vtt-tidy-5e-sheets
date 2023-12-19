@@ -19,7 +19,7 @@
     if (unsupported)
       return warn(
         'Managing Active Effects within an Owned Item is not currently supported and will be added in a subsequent update.',
-        true
+        true,
       );
 
     const owner = $context.item;
@@ -67,7 +67,7 @@
       {#if section.info}
         <ol class="info">
           {#each $context.section.info as info}
-            <li class="notification info">{info}</li>
+            <li class="notification info">{info ?? ''}</li>
           {/each}
         </ol>
       {/if}
@@ -81,12 +81,16 @@
             on:mousedown={(event) => handleMiddleClickToEdit(event, effect)}
           >
             <div class="item-name effect-name flexrow">
-              <img class="item-image" src={effect.icon} alt={effect.name} />
-              <h4>{effect.name}</h4>
+              <img
+                class="item-image"
+                src={effect.icon}
+                alt={effect.name ?? ''}
+              />
+              <h4>{effect.name ?? ''}</h4>
             </div>
-            <div class="effect-source">{effect.sourceName}</div>
+            <div class="effect-source">{effect.sourceName ?? ''}</div>
             <div class="effect-duration">
-              {effect.duration.label}
+              {effect.duration.label ?? ''}
             </div>
             <div class="item-controls active-effect-controls flexrow">
               {#if $context.editable}
