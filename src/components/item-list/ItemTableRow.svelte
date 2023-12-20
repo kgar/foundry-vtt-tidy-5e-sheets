@@ -122,7 +122,7 @@
             chatData = data;
           });
       } else if (item && !showSummary && chatData) {
-        // Reset chat data for non-expanded, hydrated chatData 
+        // Reset chat data for non-expanded, hydrated chatData
         // so it rehydrates on next open
         chatData = undefined;
       }
@@ -147,7 +147,7 @@
 >
   <slot {toggleSummary} />
   {#if showSummary && chatData}
-    <ItemSummary {chatData} {useTransition} />
+    <ItemSummary {chatData} {useTransition} {item} />
   {/if}
 </div>
 

@@ -12,6 +12,9 @@
   import { warn } from 'src/utils/logging';
   import { settingStore } from 'src/settings/settings';
   import { getItemCardContentTemplate } from './item-info-card';
+  import { ItemSummaryRuntime } from 'src/runtime/ItemSummaryRuntime';
+  import ItemSummaryCommandButton from '../item-summary/ItemSummaryCommandButton.svelte';
+  import ItemSummaryCommandButtonList from '../item-summary/ItemSummaryCommandButtonList.svelte';
 
   // Fix Key
   let frozen: boolean = false;
@@ -143,6 +146,7 @@
   const mouseCursorCardGapRem = 1.5;
   let rootFontSizePx = getRootFontSizePx();
   let item: Item5e | undefined;
+  $: itemSummaryCommands = ItemSummaryRuntime.getItemSummaryCommands(item);
   let chatData: ItemChatData | undefined;
   $: specialProps = getSpecialProperties(item);
   $: itemProps = chatData?.properties ?? [];
@@ -232,23 +236,27 @@
           {item}
           {chatData}
         >
-          {#if specialProps.length || itemProps.length}
+          {#if specialProps.length}
             <HorizontalLineSeparator />
-            {#if specialProps.length}
-              <div class="item-properties">
-                {#each specialProps as prop}
-                  <span class="tag">{prop}</span>
-                {/each}
-              </div>
-              <HorizontalLineSeparator cssClass="prop-separator" />
-            {/if}
-            {#if itemProps.length}
-              <div class="item-properties">
-                {#each itemProps as prop}
-                  <span class="tag">{prop}</span>
-                {/each}
-              </div>
-            {/if}
+            <div class="item-properties">
+              {#each specialProps as prop}
+                <span class="tag">{prop}</span>
+              {/each}
+            </div>
+          {/if}
+          {#if itemProps.length}
+            <HorizontalLineSeparator />
+            <div class="item-properties">
+              {#each itemProps as prop}
+                <span class="tag">{prop}</span>
+              {/each}
+            </div>
+          {/if}
+          {#if itemSummaryCommands.length}
+            <HorizontalLineSeparator />
+            <div class="item-properties">
+              <ItemSummaryCommandButtonList {item} />
+            </div>
           {/if}
         </svelte:component>
       {:else}

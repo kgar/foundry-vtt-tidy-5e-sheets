@@ -1,5 +1,6 @@
 import type { CustomTabTitle, RenderScheme } from 'src/api';
 import type { HandlebarsTemplateContent } from 'src/api/HandlebarsTemplateContent';
+import type { Item5e } from 'src/types/item';
 import type {
   HtmlTabContent,
   OnRenderTabArgs,
@@ -23,3 +24,18 @@ export type RegisteredTab<TContext> = {
  * One of the supported layouts of Tidy 5e sheets.
  */
 export type SheetLayout = 'all' | 'classic';
+
+export type RegisteredItemSummaryCommand = {
+  label: string;
+  iconClass?: string;
+  tooltip?: string;
+  enabled?: (params: RegisteredItemSummaryCommandEnabledParams) => boolean;
+  execute?: (params: RegisteredItemSummaryCommandExecuteParams) => void;
+};
+
+export type RegisteredItemSummaryCommandEnabledParams = {
+  item: Item5e;
+};
+export type RegisteredItemSummaryCommandExecuteParams = {
+  item: Item5e;
+};
