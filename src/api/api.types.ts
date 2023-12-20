@@ -105,3 +105,29 @@ export type ItemSummaryCommandExecuteParams = {
    */
   item: any;
 };
+
+/**
+ * Information needed to configure specific-level exhaustion.
+ */
+export type UseSpecificLevelExhaustionParams = {
+  /**
+   * The max number of levels. If not specified or less than 1, will default to `1`.
+   */
+  totalLevels?: number;
+  /**
+   * Optional hints (usually rendered as tooltips).
+   * Localization keys also work.
+   *
+   * @remarks
+   * This array should include level 0, meaning it is length `totalLevels + 1`.
+   * For example, with `totalLevels` of 3:
+   * 
+   * 0. 'No exhaustion'
+   * 1. 'You are kind of tired'
+   * 2. 'You look unwell'
+   * 3. 'Dead 💀'
+   *
+   * > `['No exhaustion', 'You are kind of tired', 'You look unwell', 'Dead 💀']`
+   */
+  hints?: string[];
+};

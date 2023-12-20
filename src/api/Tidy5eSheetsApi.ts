@@ -17,6 +17,7 @@ import { SvelteTab } from './tab/SvelteTab';
 import type { SupportedTab, ActorTabRegistrationOptions } from './api.types';
 import ApiConstants from './ApiConstants';
 import { ItemSummaryApi } from './item-summary/ItemSummaryApi';
+import { ExhaustionApi } from './exhaustion/ExhaustionApi';
 
 /**
  * The Tidy 5e Sheets API. The API becomes available after the hook `tidy5e-sheet.ready` is called.
@@ -71,6 +72,9 @@ export class Tidy5eSheetsApi {
    * when Tidy has internal changes.
    */
   constants = ApiConstants;
+
+  /** {@inheritDoc ExhaustionApi} */
+  exhaustion = new ExhaustionApi();
 
   /**
    * Determines whether the provided sheet is a Tidy 5e Character sheet.
