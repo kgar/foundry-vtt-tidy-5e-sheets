@@ -2,7 +2,6 @@ import type { SheetLayout } from 'src/runtime/types';
 import type { HandlebarsTab } from './tab/HandlebarsTab';
 import type { HtmlTab } from './tab/HtmlTab';
 import type { SvelteTab } from './tab/SvelteTab';
-import type { Item5e } from 'src/types/item';
 
 /**
  * Data provided during the rendering of this item document sheet.
@@ -87,7 +86,7 @@ export type ItemSummaryCommand = {
    * It is up to the user to execute commands, such as clicking a button that represents the command. This is the general-purpose event handler for that button click.
    * Note that the command may instead be a menu item or other control for other scenarios, depending on the sheet and version of Tidy 5e.
    */
-  execute?: (item: Item5e) => void;
+  execute?: (item: any) => void;
 };
 
 /**
@@ -97,5 +96,5 @@ export type ItemSummaryCommandEnabledParams = {
   /**
    * The item for which the command was executed.
    */
-  item: Item5e;
+  item: any;
 };

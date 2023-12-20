@@ -83,7 +83,7 @@ export class Tidy5eSheetsApi {
 
   /**
    * Determines whether the provided sheet is a Tidy 5e Item sheet.
-   * @param app an actor sheet
+   * @param app an item sheet
    * @returns boolean indicating if the sheet is a Tidy 5e Item sheet
    */
   isTidy5eItemSheet(app: any) {
