@@ -236,28 +236,27 @@
           {item}
           {chatData}
         >
-          {#if specialProps.length || itemProps.length}
+          {#if specialProps.length}
             <HorizontalLineSeparator />
-            {#if specialProps.length}
-              <div class="item-properties">
-                {#each specialProps as prop}
-                  <span class="tag">{prop}</span>
-                {/each}
-              </div>
-              <HorizontalLineSeparator cssClass="prop-separator" />
-            {/if}
-            {#if itemProps.length}
-              <div class="item-properties">
-                {#each itemProps as prop}
-                  <span class="tag">{prop}</span>
-                {/each}
-              </div>
-            {/if}
-            {#if itemSummaryCommands.length}
-              <div class="item-commands">
-                <ItemSummaryCommandButtonList {item} />
-              </div>
-            {/if}
+            <div class="item-properties">
+              {#each specialProps as prop}
+                <span class="tag">{prop}</span>
+              {/each}
+            </div>
+          {/if}
+          {#if itemProps.length}
+            <HorizontalLineSeparator />
+            <div class="item-properties">
+              {#each itemProps as prop}
+                <span class="tag">{prop}</span>
+              {/each}
+            </div>
+          {/if}
+          {#if itemSummaryCommands.length}
+            <HorizontalLineSeparator />
+            <div class="item-properties">
+              <ItemSummaryCommandButtonList {item} />
+            </div>
           {/if}
         </svelte:component>
       {:else}

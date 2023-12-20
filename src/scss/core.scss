@@ -52,6 +52,7 @@
     border-radius: 0.3125rem;
     background: var(--t5ek-content-entity-link-background);
     color: var(--t5ek-content-entity-link-color);
+    border: 0.0625rem solid var(--t5ek-separator-color);
 
     i {
       color: var(--t5ek-content-entity-link-color);
@@ -67,12 +68,7 @@
     }
   }
 
-  // TODO: After settings overhaul, support dark mode on sheet settings screen(s)
-  // .window-content {
-  //   background: var(--t5ek-sheet-background);
-  // }
-
-  &.actor {
+  &:where(.actor) {
     @import './partials/actor';
     @import './partials/item-card';
   }
@@ -156,21 +152,19 @@
     justify-content: flex-start;
     flex-wrap: wrap;
     border: none;
+    display: flex;
+    gap: 0.125rem;
   }
 
   .tag {
     display: inline-block;
     padding: 0.125rem 0.25rem;
     background: var(--t5ek-faint-color);
-    border: 0.0625rem solid var(--t5ek-light-color);
+    border: 0.0625rem solid var(--t5ek-separator-color);
     white-space: nowrap;
-    line-height: 1;
-    border-radius: 0.1875rem;
+    line-height: 1rem;
+    border-radius: 0.3125rem;
     font-size: 0.75rem;
-
-    & + .tag {
-      margin-left: 0.125rem;
-    }
   }
 
   .no-border {

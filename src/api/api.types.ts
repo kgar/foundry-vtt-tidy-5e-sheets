@@ -62,6 +62,14 @@ export type ItemSummaryCommand = {
    */
   label: string;
   /**
+   * Optional string of CSS classes representing a FontAwesome icon to be rendered with the command.
+   */
+  iconClass?: string;
+  /**
+   * Optional tooltip text for the target command.
+   */
+  tooltip?: string;
+  /**
    * An optional callback which allows for conditionally including a command. If not included, defaults to `true`.
    * @param params contextual information to assist with determining whether a command is appropriate for a particular item
    * @returns whether to include this command in the UI for the target item

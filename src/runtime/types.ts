@@ -27,6 +27,8 @@ export type SheetLayout = 'all' | 'classic';
 
 export type RegisteredItemSummaryCommand = {
   label: string;
+  iconClass?: string;
+  tooltip?: string;
   enabled?: (params: RegisteredItemSummaryCommandEnabledParams) => boolean;
   execute?: (item: Item5e) => void;
 };

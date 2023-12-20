@@ -10,19 +10,42 @@
 <button
   type="button"
   class="item-summary-command"
+  title={command.tooltip ?? null}
   on:click={() => command.execute?.({ item: item })}
-  >{FoundryAdapter.localize(command.label)}</button
 >
+  {#if command.iconClass}
+    <i class={command.iconClass}></i>
+  {/if}
+  {FoundryAdapter.localize(command.label)}
+</button>
 
 <style lang="scss">
   .item-summary-command {
-    flex: 0 0 auto;
     width: auto;
-    padding: 0;
-    margin: 0;
-    line-height: normal;
+    line-height: 1rem;
+    padding: 0.125rem 0.25rem;
     border-radius: 0.3125rem;
-    border: 0.0625rem solid blue;
-    background: red;
+    background: var(--t5ek-content-entity-link-background);
+    color: var(--t5ek-content-entity-link-color);
+    border: 0.0625rem solid var(--t5ek-separator-color);
+    font-size: 0.75rem;
+    margin: 0;
+
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+
+    i {
+      color: var(--t5ek-content-entity-link-color);
+    }
+
+    &:hover {
+      color: var(--t5ek-content-entity-link-hover-color);
+      background: var(--t5ek-content-entity-link-hover-background);
+
+      i {
+        color: var(--t5ek-content-entity-link-hover-color);
+      }
+    }
   }
 </style>
