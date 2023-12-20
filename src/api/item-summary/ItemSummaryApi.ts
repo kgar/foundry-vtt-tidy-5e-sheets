@@ -6,7 +6,7 @@ import type { ItemSummaryCommand } from '../api.types';
  *
  * @remarks
  * The item summary makes multiple appearances in the Tidy 5e Sheets.
- * Particularly, it shows up when expanding a item table row or when
+ * Particularly, it shows up when expanding an item table row or when
  * flying out an item info card.
  */
 export class ItemSummaryApi {
