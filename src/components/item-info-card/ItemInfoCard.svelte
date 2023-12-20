@@ -12,6 +12,9 @@
   import { warn } from 'src/utils/logging';
   import { settingStore } from 'src/settings/settings';
   import { getItemCardContentTemplate } from './item-info-card';
+  import { ItemSummaryRuntime } from 'src/runtime/ItemSummaryRuntime';
+  import ItemSummaryCommandButton from '../item-summary/ItemSummaryCommandButton.svelte';
+  import ItemSummaryCommandButtonList from '../item-summary/ItemSummaryCommandButtonList.svelte';
 
   // Fix Key
   let frozen: boolean = false;
@@ -143,6 +146,7 @@
   const mouseCursorCardGapRem = 1.5;
   let rootFontSizePx = getRootFontSizePx();
   let item: Item5e | undefined;
+  $: itemSummaryCommands = ItemSummaryRuntime.getItemSummaryCommands(item);
   let chatData: ItemChatData | undefined;
   $: specialProps = getSpecialProperties(item);
   $: itemProps = chatData?.properties ?? [];
@@ -247,6 +251,11 @@
                 {#each itemProps as prop}
                   <span class="tag">{prop}</span>
                 {/each}
+              </div>
+            {/if}
+            {#if itemSummaryCommands.length}
+              <div class="item-commands">
+                <ItemSummaryCommandButtonList {item} />
               </div>
             {/if}
           {/if}

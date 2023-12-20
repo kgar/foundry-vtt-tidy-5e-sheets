@@ -16,6 +16,7 @@ import { Tidy5eKgarItemSheet } from 'src/sheets/Tidy5eItemSheet';
 import { SvelteTab } from './tab/SvelteTab';
 import type { SupportedTab, ActorTabRegistrationOptions } from './api.types';
 import ApiConstants from './ApiConstants';
+import { ItemSummaryApi } from './item-summary/ItemSummaryApi';
 
 /**
  * The Tidy 5e Sheets API. The API becomes available after the hook `tidy5e-sheet.ready` is called.
@@ -63,7 +64,7 @@ export class Tidy5eSheetsApi {
 
   /**
    * Constants for a variety of uses.
-   * 
+   *
    * @remarks
    * When APIs call for specific IDs or selectors related to Tidy 5e Sheets,
    * using the related constant when available will insulate against breakage
@@ -120,6 +121,9 @@ export class Tidy5eSheetsApi {
   isTidy5eVehicleSheet(app: any) {
     return Tidy5eVehicleSheet.name === app.constructor.name;
   }
+
+  /**{@inheritDoc ItemSummaryApi} */
+  itemSummary = new ItemSummaryApi();
 
   /**
    * Various models can be used for API calls.
