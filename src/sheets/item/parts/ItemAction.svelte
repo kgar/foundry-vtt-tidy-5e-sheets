@@ -196,6 +196,9 @@
           document={$context.item}
           field="system.damage.versatile"
           disabled={!$context.editable}
+          additionalDataToSave={{
+            'system.damage.parts': damageParts,
+          }}
         />
       </div>
     </ItemFormGroup>

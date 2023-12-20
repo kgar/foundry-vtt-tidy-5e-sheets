@@ -5,7 +5,7 @@
   type OnSaveChangeFn = (
     event: Event & {
       currentTarget: EventTarget & HTMLInputElement;
-    }
+    },
   ) => boolean;
 
   export let value: string | number | null = null;
@@ -25,6 +25,11 @@
   export let disabled: boolean = false;
   export let onSaveChange: OnSaveChangeFn = () => true;
   /**
+   * There are cases where related data must be updated together,
+   * else odd behaviors will result.
+   */
+  export let additionalDataToSave: Record<string, any> = {};
+  /**
    * Stop propagation on input change event.
    * Useful for cases when outside listeners like
    * the FormApplication are clearing an input
@@ -40,7 +45,7 @@
   async function saveChange(
     event: Event & {
       currentTarget: EventTarget & HTMLInputElement;
-    }
+    },
   ) {
     stopChangePropagation && event.stopPropagation();
 
@@ -50,10 +55,11 @@
       saveEmptyAsNull && targetValue === ''
         ? null
         : !isNaN(parseInt(targetValue)) && allowDeltaChanges
-        ? processInputChangeDelta(targetValue, document, field)
-        : targetValue;
+          ? processInputChangeDelta(targetValue, document, field)
+          : targetValue;
 
     await document.update({
+      ...additionalDataToSave,
       [field]: valueToSave,
     });
 
