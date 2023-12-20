@@ -9,7 +9,5 @@
 </script>
 
 {#each itemSummaryCommands as command}
-  {#if command.enabled?.(item) ?? true}
-    <ItemSummaryCommandButton {item} {command} />
-  {/if}
+  <ItemSummaryCommandButton {item} {command} />
 {/each}

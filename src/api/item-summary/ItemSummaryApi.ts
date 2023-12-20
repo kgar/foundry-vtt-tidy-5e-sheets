@@ -10,7 +10,7 @@ import type { ItemSummaryCommand } from '../api.types';
  *   api.itemSummary.registerCommands([
  *     {
  *       label: 'Character Button',
- *       enabled: (item) => item?.actor?.type === 'character',
+ *       enabled: (args) => args.item.actor?.type === 'character',
  *       iconClass: 'fas fa-dice-d20',
  *       execute: (args) => {
  *         console.log('Clicked Character button', args.item);
@@ -18,14 +18,14 @@ import type { ItemSummaryCommand } from '../api.types';
  *     },
  *     {
  *       label: 'NPC Button',
- *       enabled: (item) => item?.actor?.type === 'npc',
+ *       enabled: (args) => args.item.actor?.type === 'npc',
  *       execute: (args) => {
  *         console.log('Clicked NPC button', args.item);
  *       },
  *     },
  *     {
- *       label: 'Item Type',
- *       enabled: (item) => item?.actor?.type === 'character',
+ *       label: 'Vehicle Button',
+ *       enabled: (args) => args.item.actor?.type === 'vehicle',
  *       execute: (args) => {
  *         console.log('Clicked Vehicle button', args.item);
  *       },
@@ -40,10 +40,10 @@ import type { ItemSummaryCommand } from '../api.types';
  *   api.itemSummary.registerCommands([
  *     {
  *       label: 'Versatile Weapon Button',
- *       enabled: (item) =>
- *         item?.type === 'weapon' &&
- *         item?.system?.properties?.ver &&
- *         item?.system?.damage?.versatile,
+ *       enabled: (args) =>
+ *         args.item.type === 'weapon' &&
+ *         args.item.system?.properties?.ver &&
+ *         args.item.system?.damage?.versatile,
  *       iconClass: 'fa-solid fa-hands-praying',
  *       execute: (args) => {
  *         console.log('Do something versatile', args.item);

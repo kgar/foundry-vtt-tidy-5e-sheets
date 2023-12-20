@@ -11,7 +11,7 @@ export class ItemSummaryRuntime {
 
   static getItemSummaryCommands(item: Item5e): RegisteredItemSummaryCommand[] {
     return [...ItemSummaryRuntime._itemSummaryCommands].filter(
-      (c) => item && (c.enabled?.(item) ?? true)
+      (c) => item && (c.enabled?.({ item }) ?? true)
     );
   }
 }
