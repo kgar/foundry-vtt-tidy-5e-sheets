@@ -15,7 +15,6 @@
   import GridPaneFavoriteIcon from '../item-grid/GridPaneFavoriteIcon.svelte';
   import { getContext } from 'svelte';
   import type { Readable, Writable } from 'svelte/store';
-  import SpellbookItemCardContent from '../item-info-card/SpellbookItemCardContent.svelte';
   import { settingStore } from 'src/settings/settings';
 
   export let section: any;
@@ -28,14 +27,18 @@
 
   const localize = FoundryAdapter.localize;
 
-  async function onMouseEnter(item: Item5e) {
+  async function onMouseEnter(event: Event, item: Item5e) {
+    Hooks.callAll(CONSTANTS.HOOK_TIDY5E_SHEETS_ITEM_HOVER_ON, event, item);
+
     card.update((card) => {
       card.item = item;
       return card;
     });
   }
 
-  async function onMouseLeave() {
+  async function onMouseLeave(event: Event, item: Item5e) {
+    Hooks.callAll(CONSTANTS.HOOK_TIDY5E_SHEETS_ITEM_HOVER_OFF, event, item);
+
     card.update((card) => {
       card.item = null;
       return card;
@@ -66,13 +69,14 @@
           class="spell {FoundryAdapter.getSpellRowClasses(spell)} icon-button"
           data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
           data-context-menu-entity-id={spell.id}
-          on:click={(event) => FoundryAdapter.actorTryUseItem(spell, {}, { event })}
+          on:click={(event) =>
+            FoundryAdapter.actorTryUseItem(spell, {}, { event })}
           on:contextmenu={(event) =>
             FoundryAdapter.onActorItemButtonContextMenu(spell, { event })}
           on:mousedown={(event) =>
             FoundryAdapter.editOnMiddleClick(event, spell)}
-          on:mouseenter={() => onMouseEnter(spell)}
-          on:mouseleave={onMouseLeave}
+          on:mouseenter={(ev) => onMouseEnter(ev, spell)}
+          on:mouseleave={(ev) => onMouseLeave(ev, spell)}
           disabled={!$context.editable}
         >
           {#if FoundryAdapter.tryGetFlag(spell, 'favorite')}

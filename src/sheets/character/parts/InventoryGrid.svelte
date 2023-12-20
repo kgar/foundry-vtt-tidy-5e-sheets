@@ -10,7 +10,6 @@
   import { getContext } from 'svelte';
   import type { Readable, Writable } from 'svelte/store';
   import TextInput from '../../../components/inputs/TextInput.svelte';
-  import InventoryItemCardContent from '../../../components/item-info-card/InventoryItemCardContent.svelte';
   import { settingStore } from 'src/settings/settings';
 
   export let section: any;
@@ -35,14 +34,18 @@
     ev.stopPropagation();
   }
 
-  async function onMouseEnter(item: Item5e) {
+  async function onMouseEnter(event: Event, item: Item5e) {
+    Hooks.callAll(CONSTANTS.HOOK_TIDY5E_SHEETS_ITEM_HOVER_ON, event, item);
+
     card.update((card) => {
       card.item = item;
       return card;
     });
   }
 
-  async function onMouseLeave() {
+  async function onMouseLeave(event: Event, item: Item5e) {
+    Hooks.callAll(CONSTANTS.HOOK_TIDY5E_SHEETS_ITEM_HOVER_OFF, event, item);
+
     card.update((card) => {
       card.item = null;
       return card;
@@ -69,12 +72,13 @@
         data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
         data-context-menu-entity-id={item.id}
         on:click={(event) =>
-          $context.editable && FoundryAdapter.actorTryUseItem(item, {}, { event })}
+          $context.editable &&
+          FoundryAdapter.actorTryUseItem(item, {}, { event })}
         on:contextmenu={(event) =>
           FoundryAdapter.onActorItemButtonContextMenu(item, { event })}
         on:mousedown={(event) => FoundryAdapter.editOnMiddleClick(event, item)}
-        on:mouseenter={() => onMouseEnter(item)}
-        on:mouseleave={onMouseLeave}
+        on:mouseenter={(ev) => onMouseEnter(ev, item)}
+        on:mouseleave={(ev) => onMouseLeave(ev, item)}
         disabled={!$context.editable}
       >
         {#if ctx?.attunement}

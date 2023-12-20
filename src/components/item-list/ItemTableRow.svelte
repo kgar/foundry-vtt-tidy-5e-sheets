@@ -15,6 +15,7 @@
     ItemChatData,
   } from 'src/types/item';
   import { settingStore } from 'src/settings/settings';
+  import { CONSTANTS } from 'src/constants';
 
   export let item: Item5e | null = null;
   export let effect: any | null = null;
@@ -49,7 +50,9 @@
     onItemToggled?.(item.id, showSummary, location);
   }
 
-  async function onMouseEnter() {
+  async function onMouseEnter(event: Event) {
+    Hooks.callAll(CONSTANTS.HOOK_TIDY5E_SHEETS_ITEM_HOVER_ON, event, item);
+
     if (!item?.getChatData || !$settingStore.itemCardsForAllItems) {
       return;
     }
@@ -61,7 +64,9 @@
     });
   }
 
-  async function onMouseLeave() {
+  async function onMouseLeave(event: Event) {
+    Hooks.callAll(CONSTANTS.HOOK_TIDY5E_SHEETS_ITEM_HOVER_OFF, event, item);
+
     card.update((card) => {
       card.item = null;
       card.itemCardContentTemplate = null;
@@ -75,7 +80,7 @@
     }
 
     // Don't show cards while dragging
-    onMouseLeave();
+    onMouseLeave(event);
 
     card.update((card) => {
       return card;
