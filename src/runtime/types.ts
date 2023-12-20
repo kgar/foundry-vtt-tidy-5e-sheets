@@ -30,9 +30,12 @@ export type RegisteredItemSummaryCommand = {
   iconClass?: string;
   tooltip?: string;
   enabled?: (params: RegisteredItemSummaryCommandEnabledParams) => boolean;
-  execute?: (item: Item5e) => void;
+  execute?: (params: RegisteredItemSummaryCommandExecuteParams) => void;
 };
 
 export type RegisteredItemSummaryCommandEnabledParams = {
+  item: Item5e;
+};
+export type RegisteredItemSummaryCommandExecuteParams = {
   item: Item5e;
 };

@@ -4,55 +4,6 @@ import type { ItemSummaryCommand } from '../api.types';
 /**
  * API functionality related to the Item Summary.
  *
- * @example Registering commands that show for specific actor types
- * ```js
- * Hooks.once('tidy5e-sheet.ready', (api) => {
- *   api.itemSummary.registerCommands([
- *     {
- *       label: 'Character Button',
- *       enabled: (args) => args.item.actor?.type === 'character',
- *       iconClass: 'fas fa-dice-d20',
- *       execute: (args) => {
- *         console.log('Clicked Character button', args.item);
- *       },
- *     },
- *     {
- *       label: 'NPC Button',
- *       enabled: (args) => args.item.actor?.type === 'npc',
- *       execute: (args) => {
- *         console.log('Clicked NPC button', args.item);
- *       },
- *     },
- *     {
- *       label: 'Vehicle Button',
- *       enabled: (args) => args.item.actor?.type === 'vehicle',
- *       execute: (args) => {
- *         console.log('Clicked Vehicle button', args.item);
- *       },
- *     },
- *   ]);
- * });
- * ```
- *
- * @example Displaying a button for versatile weapons only
- * ```js
- * Hooks.once('tidy5e-sheet.ready', (api) => {
- *   api.itemSummary.registerCommands([
- *     {
- *       label: 'Versatile Weapon Button',
- *       enabled: (args) =>
- *         args.item.type === 'weapon' &&
- *         args.item.system?.properties?.ver &&
- *         args.item.system?.damage?.versatile,
- *       iconClass: 'fa-solid fa-hands-praying',
- *       execute: (args) => {
- *         console.log('Do something versatile', args.item);
- *       },
- *     },
- *   ]);
- * });
- * ```
- *
  * @remarks
  * The item summary makes multiple appearances in the Tidy 5e Sheets.
  * Particularly, it shows up when expanding a item table row or when
@@ -62,6 +13,55 @@ export class ItemSummaryApi {
   /**
    * Registers item summary commands which Tidy 5e can render at select locations on the sheet.
    * @param commands item summary commands for Tidy 5e to render
+   *
+   * @example Registering commands that show for specific actor types
+   * ```js
+   * Hooks.once('tidy5e-sheet.ready', (api) => {
+   *   api.itemSummary.registerCommands([
+   *     {
+   *       label: 'Character Button',
+   *       enabled: (params) => params.item.actor?.type === 'character',
+   *       iconClass: 'fas fa-dice-d20',
+   *       execute: (params) => {
+   *         console.log('Clicked Character button', params.item);
+   *       },
+   *     },
+   *     {
+   *       label: 'NPC Button',
+   *       enabled: (params) => params.item.actor?.type === 'npc',
+   *       execute: (params) => {
+   *         console.log('Clicked NPC button', params.item);
+   *       },
+   *     },
+   *     {
+   *       label: 'Vehicle Button',
+   *       enabled: (params) => params.item.actor?.type === 'vehicle',
+   *       execute: (params) => {
+   *         console.log('Clicked Vehicle button', params.item);
+   *       },
+   *     },
+   *   ]);
+   * });
+   * ```
+   *
+   * @example Displaying a button for versatile weapons only
+   * ```js
+   * Hooks.once('tidy5e-sheet.ready', (api) => {
+   *   api.itemSummary.registerCommands([
+   *     {
+   *       label: 'Versatile Weapon Button',
+   *       enabled: (params) =>
+   *         params.item.type === 'weapon' &&
+   *         params.item.system?.properties?.ver &&
+   *         params.item.system?.damage?.versatile,
+   *       iconClass: 'fa-solid fa-hands-praying',
+   *       execute: (params) => {
+   *         console.log('Do something versatile', params.item);
+   *       },
+   *     },
+   *   ]);
+   * });
+   * ```
    */
   registerCommands(commands: ItemSummaryCommand[] = []) {
     ItemSummaryRuntime.registerItemSummaryCommands(commands);

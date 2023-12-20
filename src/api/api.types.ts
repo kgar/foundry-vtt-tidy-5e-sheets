@@ -86,13 +86,20 @@ export type ItemSummaryCommand = {
    * It is up to the user to execute commands, such as clicking a button that represents the command. This is the general-purpose event handler for that button click.
    * Note that the command may instead be a menu item or other control for other scenarios, depending on the sheet and version of Tidy 5e.
    */
-  execute?: (item: any) => void;
+  execute?: (params: ItemSummaryCommandExecuteParams) => void;
 };
 
 /**
  * Contextual information to assist with determining whether a command is appropriate for a particular item
  */
 export type ItemSummaryCommandEnabledParams = {
+  /**
+   * The item for which the command will show.
+   */
+  item: any;
+};
+
+export type ItemSummaryCommandExecuteParams = {
   /**
    * The item for which the command was executed.
    */
