@@ -15,11 +15,15 @@
   }>();
 
   let accordionItemOpenStates = $context.itemDescriptions.map(
-    (_, i) => i === 0
+    (_, i) => i === 0,
   );
+
+  function activateCoreJqueryListeners(node: HTMLElement): any {
+    $context.activateFoundryJQueryListeners(node);
+  }
 </script>
 
-<div class="item-descriptions-container">
+<div class="item-descriptions-container" use:activateCoreJqueryListeners>
   <Accordion multiple>
     {#each $context.itemDescriptions as itemDescription, i (itemDescription.field)}
       <AccordionItem bind:open={accordionItemOpenStates[i]}>
@@ -41,7 +45,9 @@
             >
           {/if}
         </span>
-        {@html itemDescription.content}
+        <div class="editor">
+          {@html itemDescription.content}
+        </div>
       </AccordionItem>
     {/each}
   </Accordion>
