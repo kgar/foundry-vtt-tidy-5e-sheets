@@ -101,5 +101,6 @@ export const CONSTANTS = {
   SPELL_PREPARATION_MODE_ATWILL: 'atwill',
   CONTEXT_GRID_CELL_HOVER: 'grid-cell-hover',
   CLASS_TIDY_USE_CORE_LISTENERS: 'tidy-use-core-listeners',
-  CLASS_SELECTOR_TIDY_USE_CORE_LISTENERS: '.tidy-use-core-listeners'
+  CLASS_SELECTOR_TIDY_USE_CORE_LISTENERS: '.tidy-use-core-listeners',
+  CLASS_ACTOR_SHEET_5E: 'ActorSheet5e',
 } as const;

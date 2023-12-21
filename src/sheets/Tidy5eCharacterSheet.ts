@@ -386,8 +386,19 @@ export class Tidy5eCharacterSheet
     return this._onLongRest(event);
   }
 
-  async _onDropSingleItem(...args: any[]) {
-    return super._onDropSingleItem(...args);
+  async _onDropSingleItem(itemData: any) {
+    // Create a Consumable spell scroll on the Inventory tab
+    if (
+      itemData.type === 'spell' &&
+      this.currentTabId === CONSTANTS.TAB_CHARACTER_INVENTORY
+    ) {
+      const scroll = await dnd5e.documents.Item5e.createScrollFromSpell(
+        itemData
+      );
+      return scroll.toObject();
+    }
+
+    return super._onDropSingleItem(itemData);
   }
 
   close(options: unknown = {}) {

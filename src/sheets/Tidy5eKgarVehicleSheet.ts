@@ -29,6 +29,7 @@ import {
 } from 'src/features/actions/actions';
 import { isNil } from 'src/utils/data';
 import { SheetCompatibilityManager } from './SheetCompatibilityManager';
+import { getBaseActorSheet5e } from 'src/utils/class-inheritance';
 
 export class Tidy5eVehicleSheet
   extends dnd5e.applications.actor.ActorSheet5eVehicle
@@ -234,8 +235,33 @@ export class Tidy5eVehicleSheet
     }
   }
 
-  async _onDropSingleItem(...args: any[]) {
-    return super._onDropSingleItem(...args);
+  async _onDropSingleItem(itemData: any) {
+    const cargoTypes = [
+      'weapon',
+      'equipment',
+      'consumable',
+      'tool',
+      'loot',
+      'backpack',
+    ];
+    const isCargo =
+      cargoTypes.includes(itemData.type) &&
+      this.currentTabId === CONSTANTS.TAB_VEHICLE_CARGO_AND_CREW;
+    foundry.utils.setProperty(itemData, 'flags.dnd5e.vehicleCargo', isCargo);
+
+    // Create a Consumable spell scroll on the Inventory tab
+    if (itemData.type === 'spell') {
+      const scroll = await dnd5e.documents.Item5e.createScrollFromSpell(
+        itemData
+      );
+      return scroll.toObject();
+    }
+
+    // Skip the default vehicle sheet handler, as we are handling all use cases.
+    const baseActor5eClass = getBaseActorSheet5e(this);
+    if (baseActor5eClass) {
+      return baseActor5eClass._onDropSingleItem(itemData);
+    }
   }
 
   close(options: unknown = {}) {
