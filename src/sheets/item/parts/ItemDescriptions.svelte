@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { ItemSheetContext } from 'src/types/item';
-  import { createEventDispatcher, getContext } from 'svelte';
+  import { createEventDispatcher, getContext, tick } from 'svelte';
   import type { Readable } from 'svelte/store';
   import Accordion from 'src/components/accordion/Accordion.svelte';
   import AccordionItem from 'src/components/accordion/AccordionItem.svelte';
@@ -21,34 +21,50 @@
   function activateCoreJqueryListeners(node: HTMLElement): any {
     $context.activateFoundryJQueryListeners(node);
   }
+
+  async function activateCoreJqueryListenersAsync(node: HTMLElement) {
+    await tick();
+    activateCoreJqueryListeners(node);
+  }
+
+  let editorsContainers: HTMLElement[] = [];
 </script>
 
-<div class="item-descriptions-container" use:activateCoreJqueryListeners>
+<div class="item-descriptions-container">
   <Accordion multiple>
     {#each $context.itemDescriptions as itemDescription, i (itemDescription.field)}
-      <AccordionItem bind:open={accordionItemOpenStates[i]}>
-        <span
-          slot="header"
-          class="flex-1 flex-row justify-content-space-between"
-        >
-          {itemDescription.label}
-
-          {#if $context.editable}
-            <button
-              type="button"
-              class="inline-icon-button edit-item-description"
-              on:click|stopPropagation={() =>
-                dispatcher('edit', {
-                  valueToEdit: itemDescription.content,
-                  fieldToEdit: itemDescription.field,
-                })}><i class="fas fa-edit" /></button
+      {#key itemDescription.content}
+        <div bind:this={editorsContainers[i]} use:activateCoreJqueryListeners>
+          <AccordionItem
+            bind:open={accordionItemOpenStates[i]}
+            class="editor"
+            on:open={() =>
+              activateCoreJqueryListenersAsync(editorsContainers[i])}
+          >
+            <span
+              slot="header"
+              class="flex-1 flex-row justify-content-space-between"
             >
-          {/if}
-        </span>
-        <div class="editor">
-          {@html itemDescription.content}
+              {itemDescription.label}
+
+              {#if $context.editable}
+                <button
+                  type="button"
+                  class="inline-icon-button edit-item-description"
+                  on:click|stopPropagation={() =>
+                    dispatcher('edit', {
+                      valueToEdit: itemDescription.content,
+                      fieldToEdit: itemDescription.field,
+                    })}><i class="fas fa-edit" /></button
+                >
+              {/if}
+            </span>
+            <div data-edit={itemDescription.field}>
+              {@html itemDescription.content}
+            </div>
+          </AccordionItem>
         </div>
-      </AccordionItem>
+      {/key}
     {/each}
   </Accordion>
 </div>

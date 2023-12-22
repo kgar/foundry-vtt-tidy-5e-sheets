@@ -1,11 +1,15 @@
 <script lang="ts">
-  import { getContext, onMount } from 'svelte';
+  import { createEventDispatcher, getContext, onMount } from 'svelte';
   import type { AccordionCtxType } from './Accordion.svelte';
   import { writable } from 'svelte/store';
   import { slide } from 'svelte/transition';
   import { quadInOut } from 'svelte/easing';
 
   export let open: boolean = false;
+
+  const dispatcher = createEventDispatcher<{
+    open: void;
+  }>();
 
   const ctx = getContext<AccordionCtxType>('ctx') ?? {};
 
@@ -14,6 +18,9 @@
 
   function toggle() {
     selected.set(open ? {} : self);
+    if ($selected === self) {
+      dispatcher('open');
+    }
   }
 
   onMount(() => {
@@ -24,7 +31,7 @@
   });
 </script>
 
-<section class="accordion-item">
+<section class="accordion-item {$$props.class ?? ''}">
   <h2 class="accordion-item-header" class:open>
     <button
       class="accordion-item-toggle transparent-button"
