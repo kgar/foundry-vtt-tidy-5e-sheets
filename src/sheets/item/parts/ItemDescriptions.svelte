@@ -38,8 +38,6 @@
           <AccordionItem
             bind:open={accordionItemOpenStates[i]}
             class="editor"
-            on:open={() =>
-              activateCoreJqueryListenersAsync(editorsContainers[i])}
           >
             <span
               slot="header"
