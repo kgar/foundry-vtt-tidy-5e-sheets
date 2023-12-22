@@ -147,6 +147,7 @@
 
   <ItemDescriptions
     on:edit={(ev) => edit(ev.detail.valueToEdit, ev.detail.fieldToEdit)}
+    renderDescriptions={!editing}
   />
 </div>
 
