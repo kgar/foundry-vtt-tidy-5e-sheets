@@ -1,4 +1,4 @@
-import type { OnRenderTabArgs } from 'src/types/types';
+import type { OnRenderTabParams } from 'src/types/types';
 import type { RenderScheme } from '../api.types';
 import {
   CustomTabBase,
@@ -15,8 +15,8 @@ import {
  *     title: 'My Tab',
  *     tabId: "my-module-id-my-example-html-tab",
  *     html: `<button type="button" class="my-button">My button</button>`,
- *     onRender(args) {
- *       args.element
+ *     onRender(params) {
+ *       params.element
  *         .querySelector('.my-button')
  *         ?.addEventListener('click', () => {
  *           alert('clicked');
@@ -45,5 +45,5 @@ export class HtmlTab extends CustomTabBase {
 
   enabled?: (context: any) => boolean;
 
-  onRender?: (args: OnRenderTabArgs) => void;
+  onRender?: (params: OnRenderTabParams) => void;
 }

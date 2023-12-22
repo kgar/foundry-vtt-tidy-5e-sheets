@@ -237,7 +237,7 @@ export class Tidy5eSheetsApi {
    *       getData: (data) => {
    *         data['my-extra-data'] = 'Hello, world! 👋';
    *         return data;
-   *       }
+   *       },
    *       onRender(params) {
    *         const myTab = $(params.tabContentsElement);
    *         myTab.find('.my-control').click(_myHandler.bind(params.app));

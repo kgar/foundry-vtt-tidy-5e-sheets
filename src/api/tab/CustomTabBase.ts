@@ -1,4 +1,4 @@
-import type { OnRenderTabArgs } from 'src/types/types';
+import type { OnRenderTabParams } from 'src/types/types';
 import type { RenderScheme } from '../api.types';
 
 /**
@@ -53,7 +53,7 @@ export abstract class CustomTabBase {
   /**
    * Optional function which is called each time a change detection cycle occurs on the sheet. This is any time a FormApplication would normally call `render()`.
    */
-  abstract onRender?: (args: OnRenderTabArgs) => void;
+  abstract onRender?: (params: OnRenderTabParams) => void;
 
   /**
    * An optional array of CSS classes to apply to the tab contents container.
