@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { createEventDispatcher, getContext, onMount } from 'svelte';
+  import { getContext, onMount } from 'svelte';
   import type { AccordionCtxType } from './Accordion.svelte';
   import { writable } from 'svelte/store';
 
