@@ -14,12 +14,16 @@ import {
  * Hooks.once('tidy5e-sheet.ready', (api) => {
  *   const myTab = new api.models.HandlebarsTab({
  *     title: 'My Tab',
- *     tabId: "my-module-id-my-example-handlebars-tab",
+ *     tabId: 'my-module-id-my-example-handlebars-tab',
  *     path: '/modules/my-module-id/my-item-tab.hbs',
  *     enabled: (data) => data.item.type === 'spell',
  *     getData: (data) => {
  *       data['my-extra-data'] = 'Hello, world! 👋';
  *       return data;
+ *     },
+ *     onRender(params) {
+ *       const myTab = $(params.tabContentsElement);
+ *       myTab.find('.my-control').click(_myHandler.bind(params.app));
  *     },
  *   });
  *   // To Do: Register this handlebars-based item tab!
