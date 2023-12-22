@@ -1,5 +1,5 @@
 import type { ComponentType } from 'svelte';
-import type { OnRenderTabArgs } from '..';
+import type { OnRenderTabParams } from 'src/types/types';
 import type { RenderScheme } from '../api.types';
 import { CustomTabBase, type CustomTabTitle } from './CustomTabBase';
 
@@ -73,5 +73,5 @@ export class SvelteTab extends CustomTabBase {
 
   enabled?: (data: any) => boolean;
 
-  onRender?: (args: OnRenderTabArgs) => void;
+  onRender?: (params: OnRenderTabParams) => void;
 }

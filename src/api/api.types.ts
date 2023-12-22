@@ -6,7 +6,7 @@ import type { SvelteTab } from './tab/SvelteTab';
 /**
  * Data provided during the rendering of this item document sheet.
  */
-export interface OnRenderArgs {
+export interface OnRenderParams {
   /**
    * The sheet application instance.
    */

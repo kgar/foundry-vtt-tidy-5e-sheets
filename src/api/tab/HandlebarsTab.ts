@@ -1,4 +1,4 @@
-import type { OnRenderTabArgs } from 'src/types/types';
+import type { OnRenderTabParams } from 'src/types/types';
 import type { RenderScheme } from '../api.types';
 import {
   CustomTabBase,
@@ -14,12 +14,16 @@ import {
  * Hooks.once('tidy5e-sheet.ready', (api) => {
  *   const myTab = new api.models.HandlebarsTab({
  *     title: 'My Tab',
- *     tabId: "my-module-id-my-example-handlebars-tab",
+ *     tabId: 'my-module-id-my-example-handlebars-tab',
  *     path: '/modules/my-module-id/my-item-tab.hbs',
  *     enabled: (data) => data.item.type === 'spell',
  *     getData: (data) => {
  *       data['my-extra-data'] = 'Hello, world! 👋';
  *       return data;
+ *     },
+ *     onRender(params) {
+ *       const myTab = $(params.tabContentsElement);
+ *       myTab.find('.my-control').click(_myHandler.bind(params.app));
  *     },
  *   });
  *   // To Do: Register this handlebars-based item tab!
@@ -65,5 +69,5 @@ export class HandlebarsTab extends CustomTabBase {
    * Optional function which is called each time a change detection cycle occurs on the sheet.
    * It is called after this tab's content is optionally re-rendered to the DOM.
    */
-  onRender?: (args: OnRenderTabArgs) => void;
+  onRender?: (params: OnRenderTabParams) => void;
 }

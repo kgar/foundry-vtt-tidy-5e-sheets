@@ -1,6 +1,6 @@
 import type { ComponentType, SvelteComponent } from 'svelte';
 import type { Item5e, ItemCardContentComponent, ItemChatData } from './item';
-import type { OnRenderArgs, RenderScheme } from 'src/api/api.types';
+import type { OnRenderParams, RenderScheme } from 'src/api/api.types';
 
 export type Actor5e = any;
 
@@ -21,7 +21,7 @@ export type HtmlTabContent = {
   renderScheme: RenderScheme;
 };
 
-export type OnRenderTabArgs = OnRenderArgs & {
+export type OnRenderTabParams = OnRenderParams & {
   tabContentsElement: HTMLElement;
 };
 
@@ -32,7 +32,7 @@ export type Tab<
   title: string;
   id: string;
   content: SvelteTabContent<T> | HtmlTabContent;
-  onRender?: (args: OnRenderTabArgs) => void;
+  onRender?: (params: OnRenderTabParams) => void;
   activateDefaultSheetListeners?: boolean;
 };
 

@@ -38,15 +38,15 @@ Hooks.on('tidy5e-sheet.ready', (api) => {
       enabled(data) {
         return includeTab(data.item.type);
       },
-      onRender(args) {
-        if (includeTab(args.data.item.type)) {
+      onRender(params) {
+        if (includeTab(params.data.item.type)) {
           let instance = ItemsWithSpells5eItemSheet.instances.get(
-            args.data.appId
+            params.data.appId
           );
-          instance.renderHeavy(args.tabContentsElement);
+          instance.renderHeavy(params.tabContentsElement);
           // After HTML is added, flex the inner tab content area to the full height of the actual tab contents area
           setTimeout(() => {
-            $(args.tabContentsElement).find('>:first-child').addClass('flex-1');
+            $(params.tabContentsElement).find('>:first-child').addClass('flex-1');
           });
         }
       },
