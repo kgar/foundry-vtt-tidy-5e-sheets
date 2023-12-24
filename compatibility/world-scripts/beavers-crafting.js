@@ -49,7 +49,5 @@ async function applyCompatibility(api) {
     });
   }
 
-  api.registerCharacterTab(createCraftingTab(api));
-  api.registerNpcTab(createCraftingTab(api));
-  api.registerVehicleTab(createCraftingTab(api));
+  api.registerActorTab(createCraftingTab(api));
 }
