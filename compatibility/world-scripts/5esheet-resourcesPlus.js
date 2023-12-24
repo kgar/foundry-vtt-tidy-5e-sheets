@@ -11,8 +11,22 @@
     Use this world script at your own risk. If the module author provides compatibility with Tidy 5e sheets,
     it is advised to discontinue using the world script and update the module.
 */
-// This only fires when this module is active: https://github.com/kgar/foundry-vtt-tidy-5e-sheets
-Hooks.once('tidy5e-sheet.ready', () => {
+
+// World Scripter integration 😉
+const api =
+  game.modules.get('tidy5e-sheet')?.api ??
+  game.modules.get('tidy5e-sheet-kgar').api;
+
+if (api) {
+  wireUpResourcesPlus();
+} else {
+  // This only fires when this module is active: https://github.com/kgar/foundry-vtt-tidy-5e-sheets
+  Hooks.once('tidy5e-sheet.ready', () => {
+    wireUpResourcesPlus();
+  });
+}
+
+function wireUpResourcesPlus() {
   if (!game.modules.get('resourcesplus').active) {
     return;
   }
@@ -20,7 +34,7 @@ Hooks.once('tidy5e-sheet.ready', () => {
   Hooks.on('tidy5e-sheet.prepareResources', hideResourcesWhichShouldBeHidden);
   Hooks.on('renderEntitySheetConfig', updateResourcesCountOnSubmit);
   Hooks.on('renderDocumentSheetConfig', updateResourcesCountOnSubmit);
-});
+}
 
 function hideResourcesWhichShouldBeHidden(tidyResources, actor) {
   const configuredNumberOfResources = tidyResources.find(

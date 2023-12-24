@@ -10,14 +10,30 @@
 */
 
 // 👇 Make sure you specify the right path to the module
-import { ItemsWithSpells5eItemSheet } from '/modules/items-with-spells-5e/scripts/classes/item-sheet.js';
+const pathToItemsWithSpells =
+  '/modules/items-with-spells-5e/scripts/classes/item-sheet.js';
 // 👆 Make sure you specify the right path to the module
 
-// This only fires when this module is active: https://github.com/kgar/foundry-vtt-tidy-5e-sheets
-Hooks.on('tidy5e-sheet.ready', (api) => {
+// World Scripter integration 😉
+const api =
+  game.modules.get('tidy5e-sheet')?.api ??
+  game.modules.get('tidy5e-sheet-kgar').api;
+
+if (api) {
+  addItemsWithSpellsTab(api);
+} else {
+  // This only fires when this module is active: https://github.com/kgar/foundry-vtt-tidy-5e-sheets
+  Hooks.once('tidy5e-sheet.ready', (api) => {
+    addItemsWithSpellsTab(api);
+  });
+}
+
+async function addItemsWithSpellsTab(api) {
   if (!game.modules.get('items-with-spells-5e')?.active) {
     return;
   }
+
+  const { ItemsWithSpells5eItemSheet } = await import(pathToItemsWithSpells);
 
   function includeTab(itemType) {
     let include = false;
@@ -46,10 +62,12 @@ Hooks.on('tidy5e-sheet.ready', (api) => {
           instance.renderHeavy(params.tabContentsElement);
           // After HTML is added, flex the inner tab content area to the full height of the actual tab contents area
           setTimeout(() => {
-            $(params.tabContentsElement).find('>:first-child').addClass('flex-1');
+            $(params.tabContentsElement)
+              .find('>:first-child')
+              .addClass('flex-1');
           });
         }
       },
     })
   );
-});
+}
