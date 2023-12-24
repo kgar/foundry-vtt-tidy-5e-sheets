@@ -139,6 +139,21 @@ export class Tidy5eSheetsApi {
   };
 
   /**
+   * Adds a tab to the available sheet tabs for all actor types that Tidy 5e supports.
+   * @param {SupportedTab} tab the information necessary to render a tab
+   * @param {object} [options] sheet registration options
+   * @param {string} [options.layout] an optional sheet layout or layouts (default: 'all')
+   * @param {string} [options.overrideExisting] if a tab with this ID already exists, override it
+   * @param layout an optional sheet layout or layouts (default: 'all')
+   * @returns void
+   */
+  registerActorTab(tab: SupportedTab, options?: ActorTabRegistrationOptions) {
+    this.registerCharacterTab(tab, options);
+    this.registerNpcTab(tab, options);
+    this.registerVehicleTab(tab, options);
+  }
+
+  /**
    * Adds a tab to the available Character sheet tabs.
    * @param {SupportedTab} tab the information necessary to render a tab
    * @param {object} [options] sheet registration options
