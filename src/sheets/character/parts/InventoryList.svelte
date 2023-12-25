@@ -96,14 +96,23 @@
         let:toggleSummary
         cssClass={getInventoryRowClasses(item)}
       >
-        <ItemTableCell primary={true} title={item.name}>
+        <ItemTableCell
+          primary={true}
+          title={item.name}
+          attributes={{
+            'data-tidy-item-name-container': true,
+            'data-item-id': item.id,
+          }}
+        >
           <ItemUseButton disabled={!$context.editable} {item} />
           <ItemName
             on:toggle={() => toggleSummary($context.actor)}
             cssClass="extra-small-gap"
             {item}
           >
-            <span class="truncate">{item.name}</span>
+            <span class="truncate" data-tidy-item-name={item.name}
+              >{item.name}</span
+            >
             {#if item.system?.properties?.amm}
               <span class="ammo">
                 <AmmoSelector {item} />
