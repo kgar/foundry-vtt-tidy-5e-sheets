@@ -21,12 +21,17 @@
 <header class="sheet-header loot-header flexrow gap">
   <ItemProfilePicture />
   <div class="header-details flexrow">
-    <h1 class="charname">
+    <h1
+      class="charname"
+      data-tidy-item-name-container="true"
+      data-item-id={$context.item.id}
+    >
       <TextInput
         document={$context.item}
         field="name"
         placeholder={localize('DND5E.ItemName')}
         value={$context.item.name}
+        attributes={{ 'data-tidy-item-name': $context.item.name }}
         disabled={!$context.editable}
       />
     </h1>

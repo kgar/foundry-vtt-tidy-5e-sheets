@@ -19,11 +19,16 @@
 <header class="sheet-header flexrow gap">
   <ItemProfilePicture />
   <div class="header-details flexrow">
-    <h1 class="charname">
+    <h1
+      class="charname"
+      data-tidy-item-name-container="true"
+      data-item-id={$context.item.id}
+    >
       <TextInput
         field="name"
         document={$context.item}
         value={$context.item.name}
+        attributes={{ 'data-tidy-item-name': $context.item.name }}
         placeholder={localize('DND5E.SubclassName')}
         disabled={!$context.editable}
       />
