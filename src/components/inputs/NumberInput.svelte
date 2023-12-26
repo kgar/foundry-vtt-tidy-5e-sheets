@@ -65,4 +65,5 @@
   on:focus={(ev) => selectOnFocus && ev.currentTarget.select()}
   on:click={(ev) => stopClickPropagation && ev.stopPropagation()}
   {title}
+  data-tidy-field={field}
 />

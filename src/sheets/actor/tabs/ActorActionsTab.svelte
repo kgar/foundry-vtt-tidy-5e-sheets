@@ -53,7 +53,10 @@
             let:toggleSummary
           >
             <ItemTableCell primary={true}>
-              <ItemUseButton disabled={!$context.editable} item={actionItem.item} />
+              <ItemUseButton
+                disabled={!$context.editable}
+                item={actionItem.item}
+              />
               <ItemName
                 item={actionItem.item}
                 on:toggle={() => toggleSummary($context.actor)}
@@ -63,8 +66,13 @@
                   FoundryAdapter.tryGetFlag(actionItem.item, 'parentClass') ??
                     '',
                 )}
-                <div class="flex-1">
-                  <div>{actionItem.item.name}</div>
+                <div class="flex-1 min-width-0">
+                  <div
+                    data-tidy-item-name={actionItem.item.name}
+                    class="truncate"
+                  >
+                    {actionItem.item.name}
+                  </div>
 
                   <small>
                     {#if actionItem.item.type !== CONSTANTS.ITEM_TYPE_SPELL}

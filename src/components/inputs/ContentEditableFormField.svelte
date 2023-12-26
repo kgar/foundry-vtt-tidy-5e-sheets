@@ -75,11 +75,17 @@
     data-max-length={dataMaxLength}
     data-placeholder={placeholder}
     {title}
+    data-tidy-field={field}
   />
 {:else}
-  <svelte:element this={element} class={cssClass} {title}
-    >{value}</svelte:element
+  <svelte:element
+    this={element}
+    class={cssClass}
+    {title}
+    data-tidy-field={field}
   >
+    {value}
+  </svelte:element>
 {/if}
 
 <style lang="scss">

@@ -149,6 +149,7 @@
   draggable={!!draggable}
   on:dragstart={handleDragStart}
   data-item-id={item?.id}
+  data-tidy-item-table-row
 >
   <slot {toggleSummary} />
   {#if showSummary && chatData}

@@ -72,6 +72,7 @@
             [resource.srName]: event.currentTarget.checked,
           })}
         disabled={!$context.editable || $context.lockSensitiveFields}
+        data-tidy-field={resource.srName}
       />
       <label
         for="{$context.appId}-{resource.name}-sr"
@@ -89,6 +90,7 @@
             [resource.lrName]: event.currentTarget.checked,
           })}
         disabled={!$context.editable || $context.lockSensitiveFields}
+        data-tidy-field={resource.lrName}
       />
       <label
         for="{$context.appId}-{resource.name}-lr"
