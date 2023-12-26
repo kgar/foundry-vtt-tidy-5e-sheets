@@ -234,6 +234,10 @@ export class Tidy5eKgarItemSheet
     );
   }
 
+  _disableFields(...args: any[]) {
+    debug('Ignoring call to disable fields. Delegating to Tidy Sheets...');
+  }
+
   /* -------------------------------------------- */
   /* SheetTabCacheable
   /* -------------------------------------------- */
