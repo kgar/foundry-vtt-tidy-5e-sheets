@@ -18,6 +18,7 @@ import type { SupportedTab, ActorTabRegistrationOptions } from './api.types';
 import ApiConstants from './ApiConstants';
 import { ItemSummaryApi } from './item-summary/ItemSummaryApi';
 import { ExhaustionApi } from './exhaustion/ExhaustionApi';
+import { ActorItemApi } from './actor-item/ActorItemApi';
 
 /**
  * The Tidy 5e Sheets API. The API becomes available after the hook `tidy5e-sheet.ready` is called.
@@ -62,6 +63,9 @@ export class Tidy5eSheetsApi {
 
   /** {@inheritDoc ActionListApi} */
   actionList = new ActionListApi();
+
+  /** {@inheritDoc ActorItemApi} */
+  actorItem = new ActorItemApi();
 
   /**
    * Constants for a variety of uses.

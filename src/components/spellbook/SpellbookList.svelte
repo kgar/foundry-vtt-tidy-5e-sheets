@@ -201,7 +201,7 @@
     {#if $context.unlocked}
       <ItemTableFooter
         actor={$context.actor}
-        dataset={section.dataset}
+        {section}
         canCreate={section.canCreate}
       />
     {/if}

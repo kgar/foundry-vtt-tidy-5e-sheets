@@ -16,7 +16,7 @@
   {#if command.iconClass}
     <i class={command.iconClass}></i>
   {/if}
-  {FoundryAdapter.localize(command.label)}
+  {FoundryAdapter.localize(command.label ?? '')}
 </button>
 
 <style lang="scss">

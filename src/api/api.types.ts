@@ -2,6 +2,7 @@ import type { SheetLayout } from 'src/runtime/types';
 import type { HandlebarsTab } from './tab/HandlebarsTab';
 import type { HtmlTab } from './tab/HtmlTab';
 import type { SvelteTab } from './tab/SvelteTab';
+import type { Actor5e } from 'src/types/types';
 
 /**
  * Data provided during the rendering of this item document sheet.
@@ -59,7 +60,7 @@ export type ItemSummaryCommand = {
   /**
    * A label to use when displaying the command. Localization keys also work.
    */
-  label: string;
+  label?: string;
   /**
    * Optional string of CSS classes representing a FontAwesome icon to be rendered with the command.
    */
@@ -99,11 +100,77 @@ export type ItemSummaryCommandEnabledParams = {
   item: any;
 };
 
+/**
+ * Contextual information related to the item for which the target command was executed.
+ */
 export type ItemSummaryCommandExecuteParams = {
   /**
    * The item for which the command was executed.
    */
   item: any;
+};
+
+/**
+ * A command, such as a button or a menu item, which can be executed on behalf of an actor item section.
+ */
+export type ActorItemSectionFooterCommand = {
+  /**
+   * Optional label to use when displaying the command. Localization keys also work.
+   */
+  label?: string;
+  /**
+   * Optional string of CSS classes representing a FontAwesome icon to be rendered with the command.
+   */
+  iconClass?: string;
+  /**
+   * Optional tooltip text for the target command.
+   */
+  tooltip?: string;
+  /**
+   * An optional callback which allows for conditionally including a command. If not included, defaults to `true`.
+   * @param params contextual information to assist with determining whether a command is appropriate for a particular item section
+   * @returns whether to include this command in the UI for the target item section
+   *
+   * @remarks
+   * This option allows for scenarios such as showing a Versatile Damage button only when an item is tagged as versatile.
+   */
+  enabled?: (params: ActorItemSectionFooterCommandEnabledParams) => boolean;
+  /**
+   * An optional callback to allow for executing logic when a user executes the command.
+   * @param item the item for which the command has been executed
+   * @returns void
+   *
+   * @remarks
+   * It is up to the user to execute commands, such as clicking a button that represents the command. This is the general-purpose event handler for that button click.
+   * Note that the command may instead be a menu item or other control for other scenarios, depending on the sheet and version of Tidy 5e.
+   */
+  execute?: (params: ActorItemSectionFooterCommandExecuteParams) => void;
+};
+
+export type ActorItemSectionFooterCommandEnabledParams = {
+  /**
+   * The actor for whom the command will show.
+   */
+  actor: Actor5e;
+  /**
+   * The item section for which the command will show.
+   */
+  section: any;
+};
+
+export type ActorItemSectionFooterCommandExecuteParams = {
+  /**
+   * The actor for whom the command was executed.
+   */
+  actor: Actor5e;
+  /**
+   * The item section for which the command was executed.
+   */
+  section: any;
+  /**
+   * Any user-initiated event which triggered the command execution. For example, a MouseEvent or PointerEvent.
+   */
+  event: Event;
 };
 
 /**
@@ -121,7 +188,7 @@ export type UseSpecificLevelExhaustionParams = {
    * @remarks
    * This array should include level 0, meaning it is length `totalLevels + 1`.
    * For example, with `totalLevels` of 3:
-   * 
+   *
    * 0. 'No exhaustion'
    * 1. 'You are kind of tired'
    * 2. 'You look unwell'

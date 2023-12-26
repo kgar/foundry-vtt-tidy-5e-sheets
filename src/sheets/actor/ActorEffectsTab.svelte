@@ -115,7 +115,7 @@
           {#if $context.unlocked && $context.allowEffectsManagement}
             <ItemTableFooter
               actor={$context.actor}
-              dataset={section.dataset}
+              {section}
               create={() =>
                 FoundryAdapter.addEffect(section.type, $context.actor)}
             />
