@@ -2,8 +2,6 @@
   import { getContext, onMount } from 'svelte';
   import type { AccordionCtxType } from './Accordion.svelte';
   import { writable } from 'svelte/store';
-  import { slide } from 'svelte/transition';
-  import { quadInOut } from 'svelte/easing';
 
   export let open: boolean = false;
 
@@ -24,7 +22,7 @@
   });
 </script>
 
-<section class="accordion-item">
+<section class="accordion-item {$$props.class ?? ''}">
   <h2 class="accordion-item-header" class:open>
     <button
       class="accordion-item-toggle transparent-button"
@@ -38,18 +36,15 @@
     </button>
   </h2>
 
-  {#if open}
-    <div
-      class="accordion-item-content"
-      transition:slide={{ duration: 200, easing: quadInOut }}
-    >
+  <div
+    class="accordion-item-content-animation-wrapper"
+    class:open
+    role="presentation"
+  >
+    <div class="accordion-item-content" class:open>
       <slot />
     </div>
-  {:else}
-    <div class="accordion-item-content hidden">
-      <slot />
-    </div>
-  {/if}
+  </div>
 </section>
 
 <style lang="scss">
@@ -78,6 +73,15 @@
         transform: rotate(90deg);
       }
     }
+  }
+
+  .accordion-item-content-animation-wrapper {
+    display: grid;
+    grid-template-rows: 0fr;
+    &.open {
+      grid-template-rows: 1fr;
+    }
+    transition: grid-template-rows 0.2s ease;
   }
 
   .accordion-item-content {
