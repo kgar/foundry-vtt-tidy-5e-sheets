@@ -91,4 +91,5 @@
   on:keypress
   on:focus={(ev) => selectOnFocus && ev.currentTarget.select()}
   {...$$props.attributes}
+  data-tidy-field={field}
 />
