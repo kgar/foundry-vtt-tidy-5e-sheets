@@ -157,7 +157,7 @@ export class Tidy5eKgarItemSheet
       await super._render(force, options);
       await this.renderCustomContent({ isFullRender: true });
       Hooks.callAll(
-        'tidy5e-sheet.renderActorSheet',
+        'tidy5e-sheet.renderItemSheet',
         this,
         this.element.get(0),
         data,
@@ -169,7 +169,7 @@ export class Tidy5eKgarItemSheet
     applyTitleToWindow(this.title, this.element.get(0));
     await this.renderCustomContent({ isFullRender: false });
     Hooks.callAll(
-      'tidy5e-sheet.renderActorSheet',
+      'tidy5e-sheet.renderItemSheet',
       this,
       this.element.get(0),
       data,
