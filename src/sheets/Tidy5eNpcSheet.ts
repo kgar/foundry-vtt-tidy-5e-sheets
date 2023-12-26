@@ -397,13 +397,25 @@ export class Tidy5eNpcSheet
         this.element.get(0)
       );
       await this.renderCustomContent({ isFullRender: true });
-      Hooks.callAll('tidy5e-sheet.renderActorSheet', this, this.element, data, true);
+      Hooks.callAll(
+        'tidy5e-sheet.renderActorSheet',
+        this,
+        this.element.get(0),
+        data,
+        true
+      );
       return;
     }
 
     applyTitleToWindow(this.title, this.element.get(0));
     await this.renderCustomContent({ isFullRender: false });
-    Hooks.callAll('tidy5e-sheet.renderActorSheet', this, this.element, data, false);
+    Hooks.callAll(
+      'tidy5e-sheet.renderActorSheet',
+      this,
+      this.element.get(0),
+      data,
+      false
+    );
   }
 
   private async renderCustomContent(args: { isFullRender: boolean }) {
