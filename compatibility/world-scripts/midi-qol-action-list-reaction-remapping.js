@@ -1,3 +1,14 @@
+/*
+    How to add world scripts to a game world: https://foundryvtt.wiki/en/basics/world-scripts
+    Alternatively, use World Scripter: https://foundryvtt.com/packages/world-scripter
+    
+    --------------
+    | DISCLAIMER |
+    --------------
+    Use this world script at your own risk. If the module author provides compatibility with Tidy 5e sheets,
+    it is advised to discontinue using the world script and update the module.
+*/
+
 // World Scripter integration 😉
 const api =
   game.modules.get('tidy5e-sheet')?.api ??

@@ -1150,4 +1150,36 @@ export const FoundryAdapter = {
     // Allow another module to react to a context menu action on the item use button.
     Hooks.callAll('tidy5e-sheet.actorItemUseContextMenu', item, options);
   },
+  /**
+   * Fires appropriate hooks related to tab selection and reports whether tab selection was cancelled.
+   * @param app the associated sheets
+   * @param newTabId the new tab ID to select
+   * @returns `true` to indicate proceeding with tab change; `false` to halt tab change
+   */
+  onTabSelecting(app: any & { currentTabId: string }, newTabId: string) {
+    const canProceed = Hooks.call(
+      'tidy5e-sheet.preSelectTab',
+      app,
+      app.element.get(0),
+      {
+        currentTab: app.currentTabId,
+        newTab: newTabId,
+      }
+    );
+
+    if (!canProceed) {
+      return false;
+    }
+
+    setTimeout(() => {
+      Hooks.callAll(
+        'tidy5e-sheet.selectTab',
+        app,
+        app.element.get(0),
+        newTabId
+      );
+    });
+
+    return true;
+  },
 };
