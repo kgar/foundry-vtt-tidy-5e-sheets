@@ -121,13 +121,7 @@
                 id: item.id,
               }}
             >
-              <ItemTableCell
-                primary={true}
-                attributes={{
-                  'data-tidy-item-name-container': true,
-                  'data-item-id': item.id,
-                }}
-              >
+              <ItemTableCell primary={true}>
                 <ItemUseButton disabled={!$context.editable} {item} />
                 <ItemName
                   on:toggle={() => toggleSummary($context.actor)}

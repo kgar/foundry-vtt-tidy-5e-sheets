@@ -52,13 +52,7 @@
             }}
             let:toggleSummary
           >
-            <ItemTableCell
-              primary={true}
-              attributes={{
-                'data-tidy-item-name-container': true,
-                'data-item-id': actionItem.item.id,
-              }}
-            >
+            <ItemTableCell primary={true}>
               <ItemUseButton
                 disabled={!$context.editable}
                 item={actionItem.item}
@@ -73,7 +67,10 @@
                     '',
                 )}
                 <div class="flex-1 min-width-0">
-                  <div data-tidy-item-name={actionItem.item.name} class="truncate">
+                  <div
+                    data-tidy-item-name={actionItem.item.name}
+                    class="truncate"
+                  >
                     {actionItem.item.name}
                   </div>
 

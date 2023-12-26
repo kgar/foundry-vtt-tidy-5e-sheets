@@ -116,13 +116,7 @@
         let:toggleSummary
         cssClass={FoundryAdapter.getSpellRowClasses(spell)}
       >
-        <ItemTableCell
-          primary={true}
-          attributes={{
-            'data-tidy-item-name-container': true,
-            'data-item-id': spell.id,
-          }}
-        >
+        <ItemTableCell primary={true}>
           <ItemUseButton
             disabled={!$context.editable}
             item={spell}

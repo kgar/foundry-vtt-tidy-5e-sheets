@@ -148,13 +148,7 @@
             {item}
             cssClass={FoundryAdapter.getInventoryRowClasses(item, ctx)}
           >
-            <ItemTableCell
-              primary={true}
-              attributes={{
-                'data-tidy-item-name-container': true,
-                'data-item-id': item.id,
-              }}
-            >
+            <ItemTableCell primary={true}>
               {#if section.editableName}
                 <TextInput
                   document={item}

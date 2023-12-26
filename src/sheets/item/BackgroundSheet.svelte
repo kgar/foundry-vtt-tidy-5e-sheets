@@ -19,11 +19,7 @@
 <header class="sheet-header flexrow gap">
   <ItemProfilePicture />
   <div class="header-details flexrow">
-    <h1
-      class="charname"
-      data-tidy-item-name-container="true"
-      data-item-id={$context.item.id}
-    >
+    <h1 class="charname">
       <TextInput
         field="name"
         document={$context.item}
