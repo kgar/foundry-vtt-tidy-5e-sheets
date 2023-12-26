@@ -2,14 +2,15 @@
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { Tab, OnTabSelectedFn } from 'src/types/types';
-  import { isNil } from 'src/utils/data';
   import { createEventDispatcher, getContext, onMount } from 'svelte';
+  import type { Readable } from 'svelte/store';
 
   export let tabs: Tab[];
   export let selectedTabId: string | undefined = undefined;
   export let cssClass: string = '';
   export let orientation: 'horizontal' | 'vertical' = 'horizontal';
 
+  const context = getContext<Readable<any> | undefined>('context');
   const onTabSelected = getContext<OnTabSelectedFn>('onTabSelected');
 
   const dispatcher = createEventDispatcher<{ tabSelected: Tab }>();
@@ -17,6 +18,10 @@
   let nav: HTMLElement;
 
   function selectTab(tab: Tab) {
+    const sheet = $context.actor?.sheet ?? $context.item?.sheet;
+    if (sheet && !FoundryAdapter.onTabSelecting(sheet, tab.id)) {
+      return;
+    }
     selectedTabId = tab.id;
     dispatcher('tabSelected', tab);
     onTabSelected?.(tab.id);
