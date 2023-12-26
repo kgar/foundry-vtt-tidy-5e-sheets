@@ -117,12 +117,18 @@
         cssClass={FoundryAdapter.getSpellRowClasses(spell)}
       >
         <ItemTableCell primary={true}>
-          <ItemUseButton disabled={!$context.editable} item={spell} imgUrlOverride={spellImgUrl} />
+          <ItemUseButton
+            disabled={!$context.editable}
+            item={spell}
+            imgUrlOverride={spellImgUrl}
+          />
           <ItemName
             on:toggle={() => toggleSummary($context.actor)}
             item={spell}
           >
-            <span class="truncate">{spell.name}</span>
+            <span class="truncate" data-tidy-item-name={spell.name}
+              >{spell.name}</span
+            >
           </ItemName>
         </ItemTableCell>
         {#if spell.hasLimitedUses}

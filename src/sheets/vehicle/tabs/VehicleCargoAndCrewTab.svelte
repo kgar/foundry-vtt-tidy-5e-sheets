@@ -158,6 +158,7 @@
                   value={item.name}
                   cssClass="editable-name"
                   disabled={!$context.editable}
+                  attributes={{ 'data-tidy-item-name': item.name }}
                 />
               {:else}
                 <ItemUseButton disabled={!$context.editable} {item} />
@@ -166,7 +167,9 @@
                   cssClass="extra-small-gap"
                   {item}
                 >
-                  <span class="truncate">{item.name}</span>
+                  <span class="truncate" data-tidy-item-name={item.name}
+                    >{item.name}</span
+                  >
                   <ListItemQuantity {item} {ctx} />
                 </ItemName>
               {/if}

@@ -28,6 +28,7 @@
   {title}
   on:mouseenter={mouseEnter}
   on:mouseleave={mouseLeave}
+  {...$$props.attributes}
 >
   <slot />
 </div>

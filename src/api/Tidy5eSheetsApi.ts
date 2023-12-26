@@ -24,7 +24,7 @@ import { ExhaustionApi } from './exhaustion/ExhaustionApi';
  * When the hook fires, it provides an instance of the API.
  * @example Getting the API for extending Tidy 5e Sheets
  * ```js
- * Hooks.once("tidy5e-sheet.ready", (api) => {
+ * Hooks.once('tidy5e-sheet.ready', (api) => {
  *   // Do something awesome!
  * });
  * ```
@@ -139,6 +139,21 @@ export class Tidy5eSheetsApi {
   };
 
   /**
+   * Adds a tab to the available sheet tabs for all actor types that Tidy 5e supports.
+   * @param {SupportedTab} tab the information necessary to render a tab
+   * @param {object} [options] sheet registration options
+   * @param {string} [options.layout] an optional sheet layout or layouts (default: 'all')
+   * @param {string} [options.overrideExisting] if a tab with this ID already exists, override it
+   * @param layout an optional sheet layout or layouts (default: 'all')
+   * @returns void
+   */
+  registerActorTab(tab: SupportedTab, options?: ActorTabRegistrationOptions) {
+    this.registerCharacterTab(tab, options);
+    this.registerNpcTab(tab, options);
+    this.registerVehicleTab(tab, options);
+  }
+
+  /**
    * Adds a tab to the available Character sheet tabs.
    * @param {SupportedTab} tab the information necessary to render a tab
    * @param {object} [options] sheet registration options
@@ -161,6 +176,10 @@ export class Tidy5eSheetsApi {
    *           resolve(data);
    *         });
    *       },
+   *       onRender(params) {
+   *         const myTab = $(params.tabContentsElement);
+   *         myTab.find('.my-control').click(_myHandler.bind(params.app));
+   *       },
    *     })
    *   );
    * });
@@ -179,6 +198,10 @@ export class Tidy5eSheetsApi {
    *         return new Promise((resolve) => {
    *           resolve(data);
    *         });
+   *       },
+   *       onRender(params) {
+   *         const myTab = $(params.tabContentsElement);
+   *         myTab.find('.my-control').click(_myHandler.bind(params.app));
    *       },
    *     }),
    *     {
@@ -219,17 +242,21 @@ export class Tidy5eSheetsApi {
    * @param tab the custom tab settings to use when incorporating this tab.
    * @example Register an item tab for spell items only, adding some custom data to the Item Sheet Context object before rendering my handlebars template
    * ```js
-   * Hooks.once("tidy5e-sheet.ready", (api) => {
+   * Hooks.once('tidy5e-sheet.ready', (api) => {
    *   api.registerItemTab(
    *     new api.models.HandlebarsTab({
-   *       title: "My Item Tab",
-   *       tabId: "my-module-id-my-item-tab",
-   *       path: "/modules/my-module-id/my-item-tab.hbs",
+   *       title: 'My Item Tab',
+   *       tabId: 'my-module-id-my-item-tab',
+   *       path: '/modules/my-module-id/my-item-tab.hbs',
    *       enabled: (data) => data.item.type === 'spell',
    *       getData: (data) => {
-   *         data['my-extra-data'] = "Hello, world! 👋";
+   *         data['my-extra-data'] = 'Hello, world! 👋';
    *         return data;
-   *       }
+   *       },
+   *       onRender(params) {
+   *         const myTab = $(params.tabContentsElement);
+   *         myTab.find('.my-control').click(_myHandler.bind(params.app));
+   *       },
    *     }));
    * });
    * ```
@@ -272,6 +299,10 @@ export class Tidy5eSheetsApi {
    *         return new Promise((resolve) => {
    *           resolve(data);
    *         });
+   *       },
+   *       onRender(params) {
+   *         const myTab = $(params.tabContentsElement);
+   *         myTab.find('.my-control').click(_myHandler.bind(params.app));
    *       },
    *     })
    *   );
@@ -321,6 +352,10 @@ export class Tidy5eSheetsApi {
    *         return new Promise((resolve) => {
    *           resolve(data);
    *         });
+   *       },
+   *       onRender(params) {
+   *         const myTab = $(params.tabContentsElement);
+   *         myTab.find('.my-control').click(_myHandler.bind(params.app));
    *       },
    *     })
    *   );

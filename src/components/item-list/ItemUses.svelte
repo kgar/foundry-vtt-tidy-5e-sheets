@@ -43,6 +43,7 @@
       onUsesChanged(event, item)}
     disabled={!item.isOwner}
     on:focus={(ev) => ev.currentTarget.select()}
+    data-tidy-field="system.uses.value"
   />
   /
   <input
@@ -53,6 +54,7 @@
       onUsesMaxChanged(event, item)}
     disabled={!item.isOwner}
     on:focus={(ev) => ev.currentTarget.select()}
+    data-tidy-field="system.uses.max"
   />
 </div>
 

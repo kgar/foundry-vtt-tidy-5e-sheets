@@ -3,7 +3,7 @@ import type { HandlebarsTemplateContent } from 'src/api/HandlebarsTemplateConten
 import type { Item5e } from 'src/types/item';
 import type {
   HtmlTabContent,
-  OnRenderTabArgs,
+  OnRenderTabParams,
   SvelteTabContent,
 } from 'src/types/types';
 
@@ -13,7 +13,7 @@ export type RegisteredTab<TContext> = {
   title: CustomTabTitle;
   id: string;
   content: SvelteTabContent | HtmlTabContent | HandlebarsTemplateContent;
-  onRender?: (args: OnRenderTabArgs) => void;
+  onRender?: (args: OnRenderTabParams) => void;
   renderScheme?: RenderScheme;
   tabContentsClasses?: string[];
   getData?: (data: any) => any | Promise<any>;

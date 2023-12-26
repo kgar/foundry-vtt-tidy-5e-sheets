@@ -154,6 +154,7 @@
           data-formula-editor
           on:change={() => saveDamageFormulae()}
           disabled={!$context.editable}
+          data-tidy-field={`system.damage.part-${i}-0`}
         />
         <select
           id="{$context.appId}-system-damage-part-{i}-1"
@@ -161,6 +162,7 @@
           data-formula-editor
           on:change={() => saveDamageFormulae()}
           disabled={!$context.editable}
+          data-tidy-field={`system.damage.part-${i}-1`}
         >
           <option value="">{localize('DND5E.None')}</option>
           <optgroup label={localize('DND5E.Damage')}>

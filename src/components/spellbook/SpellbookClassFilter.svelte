@@ -15,7 +15,7 @@
 
   $: {
     allClasses = FoundryAdapter.getAllClassesDropdownOptions(
-      $settingStore.spellClassFilterAdditionalClasses
+      $settingStore.spellClassFilterAdditionalClasses,
     );
 
     allClasses.unshift({ text: 'DND5E.Spellbook', value: '' });
@@ -34,6 +34,7 @@
       [`flags.${CONSTANTS.MODULE_ID}.classFilter`]: event.currentTarget.value,
     })}
   disabled={!$context.editable}
+  data-tidy-field={`flags.${CONSTANTS.MODULE_ID}.classFilter`}
 >
   {#each allClasses as option}
     <option

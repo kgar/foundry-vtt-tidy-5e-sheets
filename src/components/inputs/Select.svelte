@@ -36,6 +36,7 @@
   {title}
   {...datasetAttributes}
   {disabled}
+  data-tidy-field={field}
 >
   <slot />
 </select>

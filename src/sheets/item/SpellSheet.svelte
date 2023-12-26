@@ -25,6 +25,7 @@
         document={$context.item}
         field="name"
         value={$context.item.name}
+        attributes={{ 'data-tidy-item-name': $context.item.name }}
         placeholder={localize('DND5E.SpellName')}
         disabled={!$context.editable}
       />

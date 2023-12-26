@@ -76,11 +76,7 @@ export class Tidy5eKgarItemSheet
      * @param {jQuery} html                      The HTML element to which the context options are attached.
      * @param {ContextMenuEntry[]} entryOptions  The context menu entries.
      */
-    Hooks.call(
-      'dnd5e.getItemAdvancementContext',
-      html,
-      contextOptions
-    );
+    Hooks.call('dnd5e.getItemAdvancementContext', html, contextOptions);
     if (contextOptions)
       FoundryAdapter.createContextMenu(
         html,
@@ -153,17 +149,32 @@ export class Tidy5eKgarItemSheet
   }
 
   async _render(force?: boolean, options = {}) {
-    this.context.set(await this.getData());
+    const data = await this.getData();
+    this.context.set(data);
 
     if (force) {
       this.component?.$destroy();
       await super._render(force, options);
       await this.renderCustomContent({ isFullRender: true });
+      Hooks.callAll(
+        'tidy5e-sheet.renderItemSheet',
+        this,
+        this.element.get(0),
+        data,
+        true
+      );
       return;
     }
 
     applyTitleToWindow(this.title, this.element.get(0));
     await this.renderCustomContent({ isFullRender: false });
+    Hooks.callAll(
+      'tidy5e-sheet.renderItemSheet',
+      this,
+      this.element.get(0),
+      data,
+      false
+    );
   }
 
   private async renderCustomContent(args: { isFullRender: boolean }) {

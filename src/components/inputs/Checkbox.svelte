@@ -18,7 +18,7 @@
   function saveChange(
     event: Event & {
       currentTarget: EventTarget & HTMLInputElement;
-    }
+    },
   ) {
     document.update({
       [field]: value ?? event.currentTarget.checked,
@@ -28,7 +28,7 @@
   }
 </script>
 
-<!-- TODO: Make label wrapper conditional when Svelte offers inline template component nodes -->
+<!-- TODO: Make label wrapper conditional when Svelte 5 snippets come out -->
 {#if $$slots.default}
   <label class={labelCssClass} {title}>
     <input
@@ -40,6 +40,7 @@
       {disabled}
       {...datasetAttributes}
       class={checkboxCssClass}
+      data-tidy-field={field}
     />
     <slot />
   </label>
@@ -54,5 +55,6 @@
     {disabled}
     {...datasetAttributes}
     class={checkboxCssClass}
+    data-tidy-field={field}
   />
 {/if}

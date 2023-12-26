@@ -129,7 +129,7 @@
                   {item}
                 >
                   {#if item.type === 'subclass'}&rdsh;{/if}
-                  {item.name}
+                  <span data-tidy-item-name={item.name}>{item.name}</span>
                 </ItemName>
               </ItemTableCell>
 
@@ -175,7 +175,8 @@
                           item,
                           $context.actor,
                         )}
-                      disabled={!$context.editable || $context.lockLevelSelector}
+                      disabled={!$context.editable ||
+                        $context.lockLevelSelector}
                     >
                       {#each getAvailableLevels(item.id) as availableLevel}
                         <option
