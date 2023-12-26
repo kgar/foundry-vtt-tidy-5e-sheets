@@ -90,4 +90,5 @@
   on:click
   on:keypress
   on:focus={(ev) => selectOnFocus && ev.currentTarget.select()}
+  {...$$props.attributes}
 />
