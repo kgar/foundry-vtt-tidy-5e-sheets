@@ -73,7 +73,7 @@
             on:toggle={() => toggleSummary($context.actor)}
             item={spell}
           >
-            <span data-tidy-item-name={spell.name}>{spell.name}</span>
+            <span class="truncate" data-tidy-item-name={spell.name}>{spell.name}</span>
           </ItemName>
         </ItemTableCell>
         {#if spell.system.uses.per}
