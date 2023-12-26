@@ -148,7 +148,13 @@
             {item}
             cssClass={FoundryAdapter.getInventoryRowClasses(item, ctx)}
           >
-            <ItemTableCell primary={true}>
+            <ItemTableCell
+              primary={true}
+              attributes={{
+                'data-tidy-item-name-container': true,
+                'data-item-id': item.id,
+              }}
+            >
               {#if section.editableName}
                 <TextInput
                   document={item}
@@ -158,6 +164,7 @@
                   value={item.name}
                   cssClass="editable-name"
                   disabled={!$context.editable}
+                  attributes={{ 'data-tidy-item-name': item.name }}
                 />
               {:else}
                 <ItemUseButton disabled={!$context.editable} {item} />
@@ -166,7 +173,9 @@
                   cssClass="extra-small-gap"
                   {item}
                 >
-                  <span class="truncate">{item.name}</span>
+                  <span class="truncate" data-tidy-item-name={item.name}
+                    >{item.name}</span
+                  >
                   <ListItemQuantity {item} {ctx} />
                 </ItemName>
               {/if}

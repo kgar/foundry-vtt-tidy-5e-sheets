@@ -63,13 +63,23 @@
         let:toggleSummary
         cssClass={FoundryAdapter.getSpellRowClasses(spell)}
       >
-        <ItemTableCell primary={true}>
-          <ItemUseButton disabled={!$context.editable} item={spell} imgUrlOverride={spellImgUrl} />
+        <ItemTableCell
+          primary={true}
+          attributes={{
+            'data-tidy-item-name-container': true,
+            'data-item-id': spell.id,
+          }}
+        >
+          <ItemUseButton
+            disabled={!$context.editable}
+            item={spell}
+            imgUrlOverride={spellImgUrl}
+          />
           <ItemName
             on:toggle={() => toggleSummary($context.actor)}
             item={spell}
           >
-            {spell.name}
+            <span data-tidy-item-name={spell.name}>{spell.name}</span>
           </ItemName>
         </ItemTableCell>
         {#if spell.system.uses.per}

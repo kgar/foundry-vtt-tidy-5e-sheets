@@ -121,7 +121,13 @@
                 id: item.id,
               }}
             >
-              <ItemTableCell primary={true}>
+              <ItemTableCell
+                primary={true}
+                attributes={{
+                  'data-tidy-item-name-container': true,
+                  'data-item-id': item.id,
+                }}
+              >
                 <ItemUseButton disabled={!$context.editable} {item} />
                 <ItemName
                   on:toggle={() => toggleSummary($context.actor)}
@@ -129,7 +135,7 @@
                   {item}
                 >
                   {#if item.type === 'subclass'}&rdsh;{/if}
-                  {item.name}
+                  <span data-tidy-item-name={item.name}>{item.name}</span>
                 </ItemName>
               </ItemTableCell>
 
@@ -175,7 +181,8 @@
                           item,
                           $context.actor,
                         )}
-                      disabled={!$context.editable || $context.lockLevelSelector}
+                      disabled={!$context.editable ||
+                        $context.lockLevelSelector}
                     >
                       {#each getAvailableLevels(item.id) as availableLevel}
                         <option

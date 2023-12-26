@@ -183,7 +183,8 @@ export class Tidy5eVehicleSheet
 
   async _render(force?: boolean, options = {}) {
     await this.setExpandedItemData();
-    this.context.set(await this.getData());
+    const data = await this.getData();
+    this.context.set(data);
 
     if (force) {
       this._saveScrollPositions(this.element);
@@ -195,11 +196,13 @@ export class Tidy5eVehicleSheet
         this.element.get(0)
       );
       await this.renderCustomContent({ isFullRender: true });
+      Hooks.callAll('tidy5e-sheet.renderActorSheet', this, this.element, data, true);
       return;
     }
 
     applyTitleToWindow(this.title, this.element.get(0));
     await this.renderCustomContent({ isFullRender: false });
+    Hooks.callAll('tidy5e-sheet.renderActorSheet', this, this.element, data, false);
   }
 
   private async renderCustomContent(args: { isFullRender: boolean }) {

@@ -61,9 +61,18 @@
               }}
               {effect}
             >
-              <ItemTableCell primary={true}>
+              <ItemTableCell
+                primary={true}
+                attributes={{
+                  'data-tidy-effect-name-container': true,
+                  'data-effect-id': effect.id,
+                }}
+              >
                 <ItemImage src={effect.icon} />
-                <span class="align-self-center">{effect.name}</span>
+                <span
+                  class="align-self-center truncate"
+                  data-tidy-effect-name={effect.name}>{effect.name}</span
+                >
               </ItemTableCell>
               <ItemTableCell baseWidth="12.5rem"
                 >{effect.sourceName ?? ''}</ItemTableCell
