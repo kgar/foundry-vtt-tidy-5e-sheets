@@ -233,19 +233,23 @@ input[type='checkbox'] {
 
     .form-group {
       margin: 0;
+      padding: 0;
       color: var(--t5ek-secondary-color);
       font-size: 0.8125rem;
+      background: none;
 
       label {
         font-weight: 600;
         line-height: 1.25rem;
+        padding: 0;
+        margin: 0;
       }
 
-      input {
+      input,
+      select {
         flex: 0 0 2.5rem;
         text-align: right;
         background: none;
-        height: 1rem;
       }
     }
 
@@ -374,163 +378,164 @@ input[type='checkbox'] {
   flex: 0 0 auto;
 }
 
-.tidy-tab {
+.tidy-tab, 
+/* Compatibility selector */ .tidy-tab > .tab {
   overflow: hidden auto;
   height: 100%;
   align-content: flex-start;
 
-  &.detail-tab-contents {
+  &.detail-tab-contents, 
+  /* Compatibility selector */ & > .tab {
     padding-right: 0.75rem;
+  }
+  .form-header {
+    margin: 0.5rem 0.375rem 0.25rem 0.375rem;
+    font-size: 1.125rem;
+    line-height: 1rem;
+    font-family: var(--t5ek-title-font-family);
+    font-weight: 600;
+    color: var(--t5ek-primary-font-color);
 
-    .form-header {
-      margin: 0.5rem 0.375rem 0.25rem 0.375rem;
-      font-size: 1.125rem;
-      line-height: 1rem;
-      font-family: var(--t5ek-title-font-family);
-      font-weight: 600;
-      color: var(--t5ek-primary-font-color);
+    &:first-child {
+      margin-top: 0;
+    }
+  }
 
-      &:first-child {
-        margin-top: 0;
+  .form-group {
+    margin: 0;
+
+    & + .form-group {
+      margin-top: 0.125rem;
+    }
+    padding: 0.1875rem;
+    background: var(--t5ek-faintest-color);
+    border-radius: 0.3125rem;
+
+    .form-fields {
+      justify-content: flex-start;
+      gap: 0.0625rem;
+
+      &.spell-preparation-mode {
+        gap: 0.5rem;
       }
     }
 
-    .form-group {
+    &.stacked {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.0625rem;
+    }
+
+    span {
+      text-align: center;
+    }
+
+    label {
+      margin-left: 0.25rem;
+      line-height: 1.25rem;
+      font-size: 0.8125rem;
+      font-weight: 600;
+      color: var(--t5ek-secondary-color);
+      white-space: nowrap;
+
+      &.checkbox {
+        position: relative;
+        z-index: 1;
+        margin: 0;
+        padding: 0.0625rem;
+        display: flex;
+        border-radius: 0.1875rem;
+        overflow: hidden;
+        border: 0.0625rem solid var(--t5ek-checkbox-outline-color);
+        background: var(--t5ek-checkbox-checked-color);
+        height: 1.25rem;
+        cursor: pointer;
+        color: var(--t5ek-checkbox-font-color);
+        font-size: 0.8125rem;
+        line-height: 1rem;
+        flex: 0 0 calc(100% / 4 - 0.0625rem);
+        font-weight: 400;
+
+        &:hover {
+          background: var(--t5ek-checkbox-checked-color);
+        }
+
+        &:hover input::after {
+          background: var(--t5ek-checkbox-checked-color);
+        }
+      }
+
+      &.checkbox.container-property {
+        padding-right: 0.625rem;
+        flex-basis: auto;
+      }
+    }
+
+    :where(select),
+    :where(:is(input[type='text'], input[type='number'])) {
+      background: var(--t5ek-item-input-background);
+      height: 1.25rem;
+      font-size: 0.8125rem;
+
+      &:hover {
+        background: var(--t5ek-item-input-hover-background);
+      }
+    }
+
+    input:disabled {
+      background: transparent;
+      color: var(--t5ek-secondary-color);
+
+      &:hover {
+        border: none !important;
+      }
+    }
+
+    .checkbox input {
+      position: static;
       margin: 0;
 
-      & + .form-group {
-        margin-top: 0.125rem;
-      }
-      padding: 0.1875rem;
-      background: var(--t5ek-faintest-color);
-      border-radius: 0.3125rem;
-
-      .form-fields {
-        justify-content: flex-start;
-        gap: 0.0625rem;
-
-        &.spell-preparation-mode {
-          gap: 0.5rem;
-        }
+      &::after {
+        content: '';
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -1;
+        background: var(--t5ek-checkbox-unchecked-color);
+        width: 100%;
+        height: 100%;
+        cursor: pointer;
       }
 
-      &.stacked {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.0625rem;
+      &:checked::after {
+        display: none;
       }
+    }
 
-      span {
-        text-align: center;
-      }
+    // TODO: Tag these inputs with text-align-right layout class instead of locking that style into their property path.
+    // input[name='data.activation.cost'],
+    // input[name='data.target.value'],
+    // input[name='data.range.value'],
+    // input[name='data.duration.value'],
+    // input[name='data.uses.value'],
+    &.damage-parts input {
+      text-align: right;
+    }
 
-      label {
-        margin-left: 0.25rem;
-        line-height: 1.25rem;
-        font-size: 0.8125rem;
-        font-weight: 600;
-        color: var(--t5ek-secondary-color);
-        white-space: nowrap;
+    // TODO: Give this input a class rather than relying on the prop path in a name attr.
+    // input[name="data.save.dc"] {
+    //   text-align: center;
+    //   flex: 0 0 1.875rem;
+    // }
 
-        &.checkbox {
-          position: relative;
-          z-index: 1;
-          margin: 0;
-          padding: 0.0625rem;
-          display: flex;
-          border-radius: 0.1875rem;
-          overflow: hidden;
-          border: 0.0625rem solid var(--t5ek-checkbox-outline-color);
-          background: var(--t5ek-checkbox-checked-color);
-          height: 1.25rem;
-          cursor: pointer;
-          color: var(--t5ek-checkbox-font-color);
-          font-size: 0.8125rem;
-          line-height: 1rem;
-          flex: 0 0 calc(100% / 4 - 0.0625rem);
-          font-weight: 400;
-
-          &:hover {
-            background: var(--t5ek-checkbox-checked-color);
-          }
-
-          &:hover input::after {
-            background: var(--t5ek-checkbox-checked-color);
-          }
-        }
-
-        &.checkbox.container-property {
-          padding-right: 0.625rem;
-          flex-basis: auto;
-        }
-      }
-
-      select,
-      :is(input[type='text'], input[type='number']) {
-        background: var(--t5ek-item-input-background);
-        height: 1.25rem;
-        font-size: 0.8125rem;
-
-        &:hover {
-          background: var(--t5ek-item-input-hover-background);
-        }
-      }
-
-      input:disabled {
-        background: transparent;
-        color: var(--t5ek-secondary-color);
-
-        &:hover {
-          border: none !important;
-        }
-      }
-
-      .checkbox input {
-        position: static;
-        margin: 0;
-
-        &::after {
-          content: '';
-          display: block;
-          position: absolute;
-          top: 0;
-          left: 0;
-          z-index: -1;
-          background: var(--t5ek-checkbox-unchecked-color);
-          width: 100%;
-          height: 100%;
-          cursor: pointer;
-        }
-
-        &:checked::after {
-          display: none;
-        }
-      }
-
-      // TODO: Tag these inputs with text-align-right layout class instead of locking that style into their property path.
-      // input[name='data.activation.cost'],
-      // input[name='data.target.value'],
-      // input[name='data.range.value'],
-      // input[name='data.duration.value'],
-      // input[name='data.uses.value'],
-      &.damage-parts input {
-        text-align: right;
-      }
-
-      // TODO: Give this input a class rather than relying on the prop path in a name attr.
-      // input[name="data.save.dc"] {
-      //   text-align: center;
-      //   flex: 0 0 1.875rem;
-      // }
-
-      // TODO: After completing Item Sheets, reevaluate this style. Is it actually doing anything?
-      input[type='text']:hover,
-      input[type='number']:hover,
-      select:hover,
-      select:focus {
-        border: none;
-        box-shadow: 0 0 0 0.0625rem var(--t5ek-primary-accent-color) inset;
-      }
+    // TODO: After completing Item Sheets, reevaluate this style. Is it actually doing anything?
+    input[type='text']:hover,
+    input[type='number']:hover,
+    select:hover,
+    select:focus {
+      border: none;
+      box-shadow: 0 0 0 0.0625rem var(--t5ek-primary-accent-color) inset;
     }
   }
 }
@@ -729,7 +734,8 @@ label input[type='checkbox']:checked {
   font-size: 1.125rem;
 }
 
-.damage-formula-control {
+.damage-formula-control,
+/* Compatibility selector */ .damage-control {
   margin: 0 0.5rem;
   text-align: center;
   display: flex;

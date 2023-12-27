@@ -46,48 +46,51 @@
   <div class="item-properties">
     {#if $context.isPhysical}
       <div class="form-group">
-        <label for="{$context.appId}-{$context.id}-quantity"
+        <label for="{$context.appId}-{$context.item.id}-quantity"
           >{localize('DND5E.Quantity')}</label
         >
         <NumberInput
-          id="{$context.appId}-{$context.id}-quantity"
+          id="{$context.appId}-{$context.item.id}-quantity"
           value={$context.system.quantity}
           field="system.quantity"
           document={$context.item}
           step="1"
           disabled={!$context.editable || $context.lockItemQuantity}
+          selectOnFocus={true}
         />
       </div>
 
       <HorizontalLineSeparator />
 
       <div class="form-group">
-        <label for="{$context.appId}-{$context.id}-weight"
+        <label for="{$context.appId}-{$context.item.id}-weight"
           >{localize('DND5E.Weight')}</label
         >
         <NumberInput
-          id="{$context.appId}-{$context.id}-weight"
+          id="{$context.appId}-{$context.item.id}-weight"
           value={$context.system.weight}
           step="any"
           field="system.weight"
           document={$context.item}
           disabled={!$context.editable}
+          selectOnFocus={true}
         />
       </div>
 
       <HorizontalLineSeparator />
 
       <div class="form-group">
-        <label for="{$context.appId}-{$context.id}-price"
+        <label for="{$context.appId}-{$context.item.id}-price"
           >{localize('DND5E.Price')}</label
         >
         <NumberInput
-          id="{$context.appId}-{$context.id}-price"
+          id="{$context.appId}-{$context.item.id}-price"
           value={$context.system.price.value}
           step="any"
           field="system.price.value"
           document={$context.item}
           disabled={!$context.editable}
+          selectOnFocus={true}
         />
         <Select
           value={$context.system.price.denomination}
