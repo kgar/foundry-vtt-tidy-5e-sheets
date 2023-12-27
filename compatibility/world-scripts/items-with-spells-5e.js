@@ -1,6 +1,7 @@
 /*
     Compatibility world script for items-with-spells version 11.1.0 https://github.com/krbz999/foundryvtt-items-with-spells-5e
     How to add world scripts to a game world: https://foundryvtt.wiki/en/basics/world-scripts
+    Alternatively, use World Scripter: https://foundryvtt.com/packages/world-scripter
     
     --------------
     | DISCLAIMER |

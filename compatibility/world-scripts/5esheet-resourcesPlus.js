@@ -4,6 +4,7 @@
     - https://github.com/ardittristan/5eSheet-resourcesPlus
     
     How to add world scripts to a game world: https://foundryvtt.wiki/en/basics/world-scripts
+    Alternatively, use World Scripter: https://foundryvtt.com/packages/world-scripter
     
     --------------
     | DISCLAIMER |
