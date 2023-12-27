@@ -2,7 +2,7 @@
 // As such, to provide tab injection for default sheet tab contents,
 // this shim is needed.
 .tab[data-tab] {
-  display: flex;
+  display: block;
 }
 
 // Default sheet tabs, by default, have auto y scroll behavior baked in
