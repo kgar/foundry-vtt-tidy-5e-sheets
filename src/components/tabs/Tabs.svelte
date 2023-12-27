@@ -57,15 +57,18 @@
   const localize = FoundryAdapter.localize;
   const currentTabId = getContext<string>('currentTabId');
 
+  let mounted = false;
   onMount(() => {
-    if (currentTabId !== undefined) {
-      selectedTabId = currentTabId;
+    const initialTab = tabs.find((t) => t.id === currentTabId);
+    if (initialTab) {
+      selectTab(initialTab);
     }
+    mounted = true;
   });
 
   $: {
-    if (!tabs.some((tab) => tab.id === selectedTabId)) {
-      selectedTabId = tabs[0]?.id;
+    if (mounted && !tabs.some((tab) => tab.id === selectedTabId)) {
+      selectTab(tabs[0]);
     }
   }
 </script>
