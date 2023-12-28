@@ -5,7 +5,7 @@ import { debug, error, warn } from 'src/utils/logging';
 
 type RenderCustomContentArgs = {
   app: any;
-  element: any;
+  element: any; // jQuery
   data: any;
   tabs: Tab[];
   isFullRender: boolean;
@@ -17,7 +17,38 @@ export class SheetCompatibilityManager {
     const { app, tabs, element, data, isFullRender, superActivateListeners } =
       args;
 
-    const renderPromises = tabs.map(async (tab) => {
+    element
+      .get(0)
+      .querySelectorAll(CONSTANTS.HTML_DYNAMIC_RENDERING_ATTRIBUTE_SELECTOR)
+      .forEach((el: HTMLElement) => el.remove());
+
+    await SheetCompatibilityManager.renderTabs(
+      tabs,
+      element,
+      isFullRender,
+      app,
+      data,
+      args
+    );
+
+    // place dynamic content
+
+    SheetCompatibilityManager.wireCompatibilityEventListeners(
+      element,
+      superActivateListeners,
+      app
+    );
+  }
+
+  private static renderTabs(
+    tabs: Tab[],
+    element: any,
+    isFullRender: boolean,
+    app: any,
+    data: any,
+    args: RenderCustomContentArgs
+  ): Promise<unknown> {
+    const promises = tabs.map(async (tab) => {
       try {
         let tabEl = element
           .get(0)
@@ -61,14 +92,7 @@ export class SheetCompatibilityManager {
         });
       }
     });
-
-    await Promise.all(renderPromises);
-
-    SheetCompatibilityManager.wireCompatibilityEventListeners(
-      element,
-      superActivateListeners,
-      app
-    );
+    return Promise.all(promises);
   }
 
   static wireCompatibilityEventListeners(

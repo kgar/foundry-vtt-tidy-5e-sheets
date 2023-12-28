@@ -103,4 +103,17 @@ export const CONSTANTS = {
   CLASS_TIDY_USE_CORE_LISTENERS: 'tidy-use-core-listeners',
   CLASS_SELECTOR_TIDY_USE_CORE_LISTENERS: '.tidy-use-core-listeners',
   CLASS_ACTOR_SHEET_5E: 'ActorSheet5e',
+  HTML_DYNAMIC_RENDERING_ATTRIBUTE: 'data-tidy-render-scheme="handlebars"',
+  HTML_DYNAMIC_RENDERING_ATTRIBUTE_SELECTOR:
+    '[data-tidy-render-scheme="handlebars"]',
+  SHEET_PARTS: {
+    /**
+     * A container for a single resource (first, second, third, etc.).
+     */
+    RESOURCE: 'resource',
+    /**
+     * The container where all known resources (first, second, third, etc.) are kept.
+     */
+    RESOURCES_CONTAINER: 'resources-container',
+  },
 } as const;

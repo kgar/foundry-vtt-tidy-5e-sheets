@@ -52,6 +52,12 @@ export type ActorTabRegistrationOptions = {
   overrideExisting?: boolean;
 };
 
+export type DynamicContentRegistrationOptions = {
+  layout?: SheetLayout | SheetLayout[];
+
+  
+}
+
 /**
  * A command, such as a button or a menu item, which can be executed on behalf of an item.
  */

@@ -236,6 +236,26 @@ export class Tidy5eSheetsApi {
     CharacterSheetRuntime.registerTab(registeredTab, options);
   }
 
+  registerDynamicActorContent() {
+
+  }
+
+  registerDynamicCharacterContent() {
+    
+  }
+
+  registerDynamicItemContent() {
+
+  }
+
+  registerDynamicNpcContent() {
+
+  }
+
+  registerDynamicVehicleContent() {
+
+  }
+
   /**
    * Adds a tab to all relevant item sheets.
    * @see {@link CustomTabBase} for options related to all tabs.

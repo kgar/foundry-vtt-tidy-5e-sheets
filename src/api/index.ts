@@ -6,6 +6,7 @@ export * from './tab/CustomTabBase';
 export * from './tab/HtmlTab';
 export * from './tab/HandlebarsTab';
 export * from './tab/SvelteTab';
+export * from './ApiConstants';
 export type { SheetLayout } from '../runtime/types.ts';
 export type { OnRenderTabParams } from '../types/types.ts';
 export * from './action-list/ActionListApi';
