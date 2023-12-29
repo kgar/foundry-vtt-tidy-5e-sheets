@@ -8,7 +8,7 @@ export class HandlebarsContent {
    */
   path: string = '';
   renderScheme: RenderScheme = 'handlebars';
-  activateDefaultSheetListeners?: boolean | undefined;
+  activateDefaultSheetListeners?: boolean | undefined = false;
 
   /**
    * An optional function that provides the relevant application context

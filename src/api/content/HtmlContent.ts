@@ -4,7 +4,7 @@ export class HtmlContent {
   html: string = '';
   renderScheme: RenderScheme = 'handlebars';
   tabContentsClasses: string[] = [];
-  activateDefaultSheetListeners?: boolean | undefined;
+  activateDefaultSheetListeners?: boolean | undefined = false;
 
   enabled?: (context: any) => boolean;
 
