@@ -1,6 +1,10 @@
 import type { ComponentType, SvelteComponent } from 'svelte';
 import type { Item5e, ItemCardContentComponent, ItemChatData } from './item';
-import type { OnRenderParams, RenderScheme } from 'src/api/api.types';
+import type {
+  OnContentReadyParams,
+  OnRenderParams,
+  RenderScheme,
+} from 'src/api/api.types';
 import type { HtmlContent } from 'src/api/content/HtmlContent';
 
 export type Actor5e = any;
@@ -49,6 +53,7 @@ export type CustomContent = {
   selector: string;
   position: string;
   content: HtmlContent;
+  onContentReady?: (params: OnContentReadyParams) => void;
   onRender?: (params: OnRenderParams) => void;
   activateDefaultSheetListeners?: boolean;
 };

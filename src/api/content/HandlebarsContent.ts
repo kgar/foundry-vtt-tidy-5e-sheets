@@ -1,6 +1,12 @@
-import type { OnRenderParams, RenderScheme } from '../api.types';
+import type {
+  CustomContentHtmlInsertParams,
+  OnRenderParams,
+  RenderScheme,
+} from '../api.types';
+import { CustomContentBase } from './CustomContentBase';
 
-export class HandlebarsContent {
+export class HandlebarsContent extends CustomContentBase {
+  htmlInsertParams?: CustomContentHtmlInsertParams | undefined;
   /**
    * The path to the handlebars template. Use a leading slash to look in the UserData directory.
    * @example A template in a module's templates directory
@@ -11,12 +17,13 @@ export class HandlebarsContent {
   activateDefaultSheetListeners?: boolean | undefined = false;
 
   constructor(props?: Partial<HandlebarsContent>) {
-    // TODO: Extract the base class
-    // super();
+    super();
 
     const merged = mergeObject(this, props);
     Object.assign(this, merged);
   }
+
+  onContentReady?: (() => void) | undefined;
 
   /**
    * An optional function that provides the relevant application context
@@ -26,15 +33,7 @@ export class HandlebarsContent {
    */
   getData?: (context: any) => any | Promise<any>;
 
-  /**
-   * Optional function to determine whether the content should be rendered. When excluded, it defaults to `true`.
-   * The `context` field is the relevant application context (item sheet, character sheet, etc.).
-   */
   enabled?: (context: any) => boolean;
 
-  /**
-   * Optional function which is called each time a change detection cycle occurs on the sheet.
-   * It is called after this content is optionally re-rendered to the DOM.
-   */
   onRender?: (params: OnRenderParams) => void;
 }

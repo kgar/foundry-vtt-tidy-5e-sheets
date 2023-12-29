@@ -2,6 +2,7 @@ import { CONSTANTS } from 'src/constants';
 import type { CustomContent, Tab } from 'src/types/types';
 import { delay } from 'src/utils/asynchrony';
 import { wrapCustomHtmlForRendering } from 'src/utils/content';
+import { isNil } from 'src/utils/data';
 import { debug, error, warn } from 'src/utils/logging';
 
 type RenderCustomContentArgs = {
@@ -14,7 +15,9 @@ type RenderCustomContentArgs = {
   customContent: CustomContent[];
 };
 
+// TODO: Work on this class name a bit; it seems misleading
 export class SheetCompatibilityManager {
+  // TODO: Work on this function name. Custom Content is now the "Inject Anywhere" stuff, and tabs are another, more specialized form of custom contentn
   static async renderCustomContent(args: RenderCustomContentArgs) {
     const {
       app,
@@ -42,28 +45,14 @@ export class SheetCompatibilityManager {
 
     const sheetEl = element.get(0);
     for (let c of customContent) {
-      sheetEl.querySelectorAll(c.selector).forEach((el: HTMLElement) => {
-        const contentWrapperId = foundry.utils.randomID();
-
-        const wrappedContent = wrapCustomHtmlForRendering(
-          c.content.html,
-          contentWrapperId,
-          c.content.renderScheme
-        );
-
-        // TODO: `onContentReady here`
-
-        el.insertAdjacentHTML(c.position as InsertPosition, wrappedContent);
-
-        if (c.onRender) {
-          c.onRender({
-            app: app,
-            data: data,
-            element: element.get(0),
-            isFullRender: isFullRender,
-          });
-        }
-      });
+      SheetCompatibilityManager.renderContent(
+        sheetEl,
+        c,
+        app,
+        data,
+        element,
+        isFullRender
+      );
     }
 
     SheetCompatibilityManager.wireCompatibilityEventListeners(
@@ -126,6 +115,60 @@ export class SheetCompatibilityManager {
       }
     });
     return Promise.all(promises);
+  }
+
+  private static renderContent(
+    sheetEl: any,
+    c: CustomContent,
+    app: any,
+    data: any,
+    element: any,
+    isFullRender: boolean
+  ) {
+    // TODO: Handle any unhandled errors here with a log-and-skip
+    const targetElements = Array.from(
+      sheetEl.querySelectorAll(c.selector)
+    ) as HTMLElement[];
+
+    if (!targetElements.length) {
+      debug('No target elements were found for injecting custom content', {
+        content: c,
+      });
+    }
+
+    targetElements.forEach((el: HTMLElement) => {
+      // TODO: Catch and handle any issues with individual target nodes
+      const contentWrapperId = foundry.utils.randomID();
+
+      const wrappedContent = wrapCustomHtmlForRendering(
+        c.content.html,
+        contentWrapperId,
+        c.content.renderScheme
+      );
+
+      if (c.onContentReady) {
+        c.onContentReady({
+          app: app,
+          data: data,
+          element: element.get(0),
+          isFullRender: isFullRender,
+          content: wrappedContent,
+        });
+      }
+
+      if (!isNil(c.position)) {
+        el.insertAdjacentHTML(c.position as InsertPosition, wrappedContent);
+      }
+
+      if (c.onRender) {
+        c.onRender({
+          app: app,
+          data: data,
+          element: element.get(0),
+          isFullRender: isFullRender,
+        });
+      }
+    });
   }
 
   static wireCompatibilityEventListeners(

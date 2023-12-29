@@ -6,6 +6,16 @@ import type { HtmlContent } from './content/HtmlContent';
 import type { HandlebarsContent } from './content/HandlebarsContent';
 
 /**
+ * Data provided after custom content has been prepared for rendering.
+ */
+export interface OnContentReadyParams extends OnRenderParams {
+  /**
+   * An HTML string that is ready to be rendered to the sheet.
+   */
+  content: string;
+}
+
+/**
  * Data provided during the rendering of this item document sheet.
  */
 export interface OnRenderParams {
@@ -145,3 +155,34 @@ export type UseSpecificLevelExhaustionParams = {
    */
   hints?: string[];
 };
+
+/**
+ * Optional params which, when provided, will cause
+ * the custom content to be rendered at the designated `position`
+ * in relation to all instances of the found `selector`.
+ *
+ * @remarks
+ * This interface leverages the API for [Element: insertAdjacentHTML() method](https://developer.mozilla.org/en-US/docs/Web/API/Element/insertAdjacentHTML).
+ */
+export interface CustomContentHtmlInsertParams {
+  /**
+   * A string representing the position relative to the element.
+   * Must be one of the following strings:
+   * - `"beforebegin"`: Before the element. Only valid if the element is in the DOM tree and has a parent element.
+   * - `"afterbegin"`: Just inside the element, before its first child.
+   * - `"beforeend"`: Just inside the element, after its last child.
+   * - `"afterend"`: After the element. Only valid if the element is in the DOM tree and has a parent element.
+   *
+   * @remarks
+   * See [Element: insertAdjacentHTML() method](https://developer.mozilla.org/en-US/docs/Web/API/Element/insertAdjacentHTML) for more details.
+   */
+  position: string;
+  /**
+   * The selector to use when looking for the place to insert adjacent HTML.
+   * This is scoped to the sheet where this content was registered.
+   *
+   * @example
+   * ```'[data-tidy-field="name"]'```
+   */
+  selector: string;
+}
