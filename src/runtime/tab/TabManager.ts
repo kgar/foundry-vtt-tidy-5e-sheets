@@ -123,9 +123,9 @@ export class TabManager {
 
 function getOrderedEnabledSheetTabs<TContext>(
   context: TContext,
-  config: RegisteredTab<TContext>[]
+  registeredTabs: RegisteredTab<TContext>[]
 ) {
-  return [...config].filter(
+  return [...registeredTabs].filter(
     (t) =>
       isNil(t.enabled) ||
       (typeof t.enabled === 'function' && t.enabled(context))

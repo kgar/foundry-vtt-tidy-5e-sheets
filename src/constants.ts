@@ -106,6 +106,8 @@ export const CONSTANTS = {
   HTML_DYNAMIC_RENDERING_ATTRIBUTE: 'data-tidy-render-scheme="handlebars"',
   HTML_DYNAMIC_RENDERING_ATTRIBUTE_SELECTOR:
     '[data-tidy-render-scheme="handlebars"]',
+  /** The attribute which indicates a particular part of a sheet. */
+  SHEET_PART_ATTRIBUTE: 'data-tidy-sheet-part',
   SHEET_PARTS: {
     /**
      * A container for a single resource (first, second, third, etc.).

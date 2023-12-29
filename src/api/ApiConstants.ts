@@ -18,8 +18,10 @@ const ApiConstants = {
   TAB_ID_VEHICLE_EFFECTS: CONSTANTS.TAB_VEHICLE_EFFECTS,
   TAB_ID_VEHICLE_DESCRIPTION: CONSTANTS.TAB_VEHICLE_DESCRIPTION,
   TAB_ID_ACTOR_ACTIONS: CONSTANTS.TAB_ACTOR_ACTIONS,
+  /** The attribute which indicates a particular part of a sheet. */
+  SHEET_PART_ATTRIBUTE: CONSTANTS.SHEET_PART_ATTRIBUTE,
   /**
-   * Values used in conjunction with the attribute `data-tidy-sheet-part` to identify a part of a Tidy 5e sheet.
+   * Values used in conjunction with the attribute `api.constants.SHEET_PART_ATTRIBUTE` to identify a part of a Tidy 5e sheet.
    * 
    *
    * @example an element which is tagged with a sheet part value
@@ -33,7 +35,7 @@ const ApiConstants = {
    * Hooks.on('tidy5e-sheet.renderActorSheet', (sheet, element, data) => {
    *   // get the resources container of the target actor sheet
    *   element
-   *     .querySelector(`[data-tidy-sheet-part="${api.constants.SHEET_PARTS.RESOURCES_CONTAINER}"]`)
+   *     .querySelector(api.getSheetPartSelector(api.constants.SHEET_PARTS.RESOURCES_CONTAINER))
    *      // inject some HTML
    *     .insertAdjacentHTML(
    *       // put it as the first element inside the resources container; see https://developer.mozilla.org/en-US/docs/Web/API/Element/insertAdjacentHTML#afterbegin

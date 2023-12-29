@@ -24,6 +24,7 @@ import { ItemSummaryApi } from './item-summary/ItemSummaryApi';
 import { ExhaustionApi } from './exhaustion/ExhaustionApi';
 import { HtmlContent } from './content/HtmlContent';
 import { HandlebarsContent } from './content/HandlebarsContent';
+import { CONSTANTS } from 'src/constants';
 
 /**
  * The Tidy 5e Sheets API. The API becomes available after the hook `tidy5e-sheet.ready` is called.
@@ -78,6 +79,15 @@ export class Tidy5eSheetsApi {
    * when Tidy has internal changes.
    */
   constants = ApiConstants;
+
+  /**
+   * Creates a selector which allows for locating a part of a given sheet.
+   * @param sheetPart a part of the sheet as found in `api.constants.SHEET_PARTS`
+   * @returns an HTML selector valid for use with JavaScript query selectors
+   */
+  getSheetPartSelector(sheetPart: string) {
+    return `[${CONSTANTS.SHEET_PART_ATTRIBUTE}="${sheetPart}"]`;
+  }
 
   /** {@inheritDoc ExhaustionApi} */
   exhaustion = new ExhaustionApi();

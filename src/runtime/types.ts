@@ -1,22 +1,23 @@
-import type { CustomTabTitle, RenderScheme } from 'src/api';
+import type { CustomTabTitle, OnRenderParams, RenderScheme } from 'src/api';
 import type { HandlebarsTemplateRenderer } from 'src/api/HandlebarsTemplateRenderer';
-import type { HtmlContent } from 'src/api/content/HtmlContent';
 import type { Item5e } from 'src/types/item';
 import type {
+  HtmlRuntimeContent,
   HtmlTabContent,
   OnRenderTabParams,
   SvelteTabContent,
 } from 'src/types/types';
 
 export type RegisteredContent<TContext> = {
-  selector: string;
-  position: string;
-  enabled?: (context: TContext) => boolean;
-  layout?: SheetLayout | SheetLayout[];
-  // TODO: Cut a separate internal HtmlContent type
-  content: SvelteTabContent | HtmlContent | HandlebarsTemplateRenderer;
-  renderScheme?: RenderScheme;
   activateDefaultSheetListeners?: boolean;
+  content: SvelteTabContent | HtmlRuntimeContent | HandlebarsTemplateRenderer;
+  enabled?: (context: TContext) => boolean;
+  getData?: (data: any) => any | Promise<any>;
+  layout?: SheetLayout | SheetLayout[];
+  onRender?: (args: OnRenderParams) => void;
+  position: string;
+  renderScheme?: RenderScheme;
+  selector: string;
 }
 
 export type RegisteredTab<TContext> = {

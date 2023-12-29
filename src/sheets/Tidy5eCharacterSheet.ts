@@ -212,6 +212,9 @@ export class Tidy5eCharacterSheet
           relativeTo: this.actor,
         }
       ),
+      customContent: await CharacterSheetRuntime.getContent(
+        defaultDocumentContext
+      ),
       editable: defaultDocumentContext.editable,
       features: sections,
       flawEnrichedHtml: await FoundryAdapter.enrichHtml(
@@ -478,6 +481,7 @@ export class Tidy5eCharacterSheet
 
     await SheetCompatibilityManager.renderCustomContent({
       app: this,
+      customContent: data.customContent,
       data: data,
       element: this.element,
       isFullRender: args.isFullRender,

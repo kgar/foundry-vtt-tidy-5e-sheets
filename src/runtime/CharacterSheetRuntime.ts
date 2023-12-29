@@ -1,4 +1,9 @@
-import type { CharacterSheetContext, Tab } from 'src/types/types';
+import type {
+  CharacterSheetContext,
+  CustomContent,
+  HtmlRuntimeContent,
+  Tab,
+} from 'src/types/types';
 import CharacterAttributesTab from 'src/sheets/character/tabs/CharacterAttributesTab.svelte';
 import CharacterInventoryTab from 'src/sheets/character/tabs/CharacterInventoryTab.svelte';
 import CharacterSpellbookTab from 'src/sheets/character/tabs/CharacterSpellbookTab.svelte';
@@ -16,9 +21,9 @@ import type {
   ContentRegistrationOptions,
   SupportedContent,
 } from 'src/api/api.types';
-import type { HtmlContent } from 'src/api/content/HtmlContent';
 import { HandlebarsContent } from 'src/api/content/HandlebarsContent';
 import { HandlebarsTemplateRenderer } from 'src/api/HandlebarsTemplateRenderer';
+import { CustomContentManager } from './content/CustomContentManager';
 
 export class CharacterSheetRuntime {
   private static _content: RegisteredContent<CharacterSheetContext>[] = [];
@@ -98,6 +103,15 @@ export class CharacterSheetRuntime {
     },
   ];
 
+  static async getContent(
+    context: CharacterSheetContext
+  ): Promise<CustomContent[]> {
+    return await CustomContentManager.prepareContentForRender(
+      context,
+      CharacterSheetRuntime._content
+    );
+  }
+
   static async getTabs(context: CharacterSheetContext): Promise<Tab[]> {
     return await TabManager.prepareTabsForRender(
       context,
@@ -115,12 +129,16 @@ export class CharacterSheetRuntime {
     content: SupportedContent,
     options: ContentRegistrationOptions | undefined
   ) {
-    let mappedContent: HtmlContent | HandlebarsTemplateRenderer =
+    let mappedContent: HtmlRuntimeContent | HandlebarsTemplateRenderer =
       content instanceof HandlebarsContent
         ? new HandlebarsTemplateRenderer({
             path: content.path,
           })
-        : content;
+        : ({
+            html: content.html,
+            renderScheme: content.renderScheme,
+            type: 'html',
+          } satisfies HtmlRuntimeContent);
 
     this._content.push({
       selector: selector,
@@ -130,6 +148,9 @@ export class CharacterSheetRuntime {
       enabled: content.enabled,
       layout: options?.layout ?? 'all',
       renderScheme: content.renderScheme,
+      getData:
+        content instanceof HandlebarsContent ? content.getData : undefined,
+      onRender: content.onRender,
     });
   }
 

@@ -43,12 +43,26 @@ export class SheetCompatibilityManager {
     const sheetEl = element.get(0);
     for (let c of customContent) {
       sheetEl.querySelectorAll(c.selector).forEach((el: HTMLElement) => {
+        const contentWrapperId = foundry.utils.randomID();
+
         const wrappedContent = wrapCustomHtmlForRendering(
           c.content.html,
-          foundry.utils.randomID(),
+          contentWrapperId,
           c.content.renderScheme
         );
-        el.insertAdjacentHTML(c.position, wrappedContent);
+
+        // TODO: `onContentReady here`
+
+        el.insertAdjacentHTML(c.position as InsertPosition, wrappedContent);
+
+        if (c.onRender) {
+          c.onRender({
+            app: app,
+            data: data,
+            element: element.get(0),
+            isFullRender: isFullRender,
+          });
+        }
       });
     }
 
