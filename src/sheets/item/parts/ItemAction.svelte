@@ -137,6 +137,7 @@
     {/if}
     {localize('DND5E.Formula')}
     <button
+      type="button"
       class="damage-formula-control add-damage"
       on:click={() => addDamageFormula()}
       disabled={!$context.editable}
@@ -173,6 +174,7 @@
           </optgroup>
         </select>
         <button
+          type="button"
           class="damage-formula-control delete-damage"
           on:click={() => deleteDamageFormula(i)}
           disabled={!$context.editable}

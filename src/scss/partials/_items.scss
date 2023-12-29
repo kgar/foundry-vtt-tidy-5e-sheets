@@ -736,17 +736,23 @@ label input[type='checkbox']:checked {
 
 .damage-formula-control,
 /* Compatibility selector */ .damage-control {
-  margin: 0 0.5rem;
   text-align: center;
   display: flex;
   align-items: center;
   flex: 0 0 0.0625rem;
   white-space: nowrap;
   background: none;
-  padding: 0;
+  margin: 0;
+  padding: 0.125rem 0.5rem;
   color: var(--t5ek-tertiary-color);
   font-family: var(--t5ek-body-font-family);
   font-size: 0.8125rem;
+
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: var(--t5ek-icon-hover-color);
+  }
 
   // &::after {
   // 	display: inline-block;
@@ -816,4 +822,15 @@ label input[type='checkbox']:checked {
   .content-link + .content-link {
     margin-left: 0.125rem;
   }
+}
+
+/* Compatibility Styles */
+.form-group :has(.damage-control) {
+  clear: both;
+}
+
+.damage-control {
+  float: right;
+  margin: 0;
+  padding: 0 0.325rem;
 }
