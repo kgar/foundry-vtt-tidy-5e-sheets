@@ -1,6 +1,7 @@
 import type { ComponentType, SvelteComponent } from 'svelte';
 import type { Item5e, ItemCardContentComponent, ItemChatData } from './item';
 import type { OnRenderParams, RenderScheme } from 'src/api/api.types';
+import type { HtmlContent } from 'src/api/content/HtmlContent';
 
 export type Actor5e = any;
 
@@ -33,6 +34,14 @@ export type Tab<
   id: string;
   content: SvelteTabContent<T> | HtmlTabContent;
   onRender?: (params: OnRenderTabParams) => void;
+  activateDefaultSheetListeners?: boolean;
+};
+
+export type CustomContent = {
+  selector: string;
+  position: InsertPosition;
+  content: HtmlContent;
+  onRender?: (params: OnRenderParams) => void;
   activateDefaultSheetListeners?: boolean;
 };
 
@@ -144,6 +153,7 @@ export type ActorSheetContext = {
   actor: Actor5e;
   allowEffectsManagement: boolean;
   appId: string;
+  customContent: CustomContent[];
   /**
    * Whether or not the sheet can be edited, regardless of lock/sensitive field settings.
    * When this boolean is `false`, then the sheet is effectively hard locked.

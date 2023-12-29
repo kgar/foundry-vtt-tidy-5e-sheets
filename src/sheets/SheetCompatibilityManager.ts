@@ -1,6 +1,7 @@
 import { CONSTANTS } from 'src/constants';
-import type { Tab } from 'src/types/types';
+import type { CustomContent, Tab } from 'src/types/types';
 import { delay } from 'src/utils/asynchrony';
+import { wrapCustomHtmlForRendering } from 'src/utils/content';
 import { debug, error, warn } from 'src/utils/logging';
 
 type RenderCustomContentArgs = {
@@ -10,12 +11,20 @@ type RenderCustomContentArgs = {
   tabs: Tab[];
   isFullRender: boolean;
   superActivateListeners: any;
+  customContent: CustomContent[];
 };
 
 export class SheetCompatibilityManager {
   static async renderCustomContent(args: RenderCustomContentArgs) {
-    const { app, tabs, element, data, isFullRender, superActivateListeners } =
-      args;
+    const {
+      app,
+      tabs,
+      element,
+      data,
+      isFullRender,
+      superActivateListeners,
+      customContent,
+    } = args;
 
     element
       .get(0)
@@ -31,7 +40,17 @@ export class SheetCompatibilityManager {
       args
     );
 
-    // place dynamic content
+    const sheetEl = element.get(0);
+    for (let c of customContent) {
+      sheetEl.querySelectorAll(c.selector).forEach((el: HTMLElement) => {
+        const wrappedContent = wrapCustomHtmlForRendering(
+          c.content.html,
+          foundry.utils.randomID(),
+          c.content.renderScheme
+        );
+        el.insertAdjacentHTML(c.position, wrappedContent);
+      });
+    }
 
     SheetCompatibilityManager.wireCompatibilityEventListeners(
       element,

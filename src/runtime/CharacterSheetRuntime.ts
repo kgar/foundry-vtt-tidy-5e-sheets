@@ -7,13 +7,21 @@ import ActorEffectsTab from 'src/sheets/actor/ActorEffectsTab.svelte';
 import CharacterBiographyTab from 'src/sheets/character/tabs/CharacterBiographyTab.svelte';
 import ActorJournalTab from 'src/sheets/actor/tabs/ActorJournalTab.svelte';
 import ActorActionsTab from 'src/sheets/actor/tabs/ActorActionsTab.svelte';
-import type { RegisteredTab } from './types';
+import type { RegisteredContent, RegisteredTab } from './types';
 import { CONSTANTS } from 'src/constants';
 import { warn } from 'src/utils/logging';
 import { TabManager } from './tab/TabManager';
-import type { ActorTabRegistrationOptions } from 'src/api/api.types';
+import type {
+  ActorTabRegistrationOptions,
+  ContentRegistrationOptions,
+  SupportedContent,
+} from 'src/api/api.types';
+import type { HtmlContent } from 'src/api/content/HtmlContent';
+import { HandlebarsContent } from 'src/api/content/HandlebarsContent';
+import { HandlebarsTemplateRenderer } from 'src/api/HandlebarsTemplateRenderer';
 
 export class CharacterSheetRuntime {
+  private static _content: RegisteredContent<CharacterSheetContext>[] = [];
   private static _tabs: RegisteredTab<CharacterSheetContext>[] = [
     {
       title: 'T5EK.Actions.TabName',
@@ -99,6 +107,30 @@ export class CharacterSheetRuntime {
 
   static getAllRegisteredTabs(): RegisteredTab<CharacterSheetContext>[] {
     return [...CharacterSheetRuntime._tabs];
+  }
+
+  static registerContent(
+    selector: string,
+    position: string,
+    content: SupportedContent,
+    options: ContentRegistrationOptions | undefined
+  ) {
+    let mappedContent: HtmlContent | HandlebarsTemplateRenderer =
+      content instanceof HandlebarsContent
+        ? new HandlebarsTemplateRenderer({
+            path: content.path,
+          })
+        : content;
+
+    this._content.push({
+      selector: selector,
+      position: position,
+      content: mappedContent,
+      activateDefaultSheetListeners: content.activateDefaultSheetListeners,
+      enabled: content.enabled,
+      layout: options?.layout ?? 'all',
+      renderScheme: content.renderScheme,
+    });
   }
 
   static registerTab(

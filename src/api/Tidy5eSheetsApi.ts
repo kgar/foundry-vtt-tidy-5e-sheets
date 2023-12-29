@@ -14,10 +14,16 @@ import { Tidy5eNpcSheet } from 'src/sheets/Tidy5eNpcSheet';
 import { Tidy5eVehicleSheet } from 'src/sheets/Tidy5eKgarVehicleSheet';
 import { Tidy5eKgarItemSheet } from 'src/sheets/Tidy5eItemSheet';
 import { SvelteTab } from './tab/SvelteTab';
-import type { SupportedTab, ActorTabRegistrationOptions } from './api.types';
+import type {
+  SupportedTab,
+  ActorTabRegistrationOptions,
+  ContentRegistrationOptions,
+} from './api.types';
 import ApiConstants from './ApiConstants';
 import { ItemSummaryApi } from './item-summary/ItemSummaryApi';
 import { ExhaustionApi } from './exhaustion/ExhaustionApi';
+import { HtmlContent } from './content/HtmlContent';
+import { HandlebarsContent } from './content/HandlebarsContent';
 
 /**
  * The Tidy 5e Sheets API. The API becomes available after the hook `tidy5e-sheet.ready` is called.
@@ -136,6 +142,8 @@ export class Tidy5eSheetsApi {
     HandlebarsTab: HandlebarsTab,
     HtmlTab: HtmlTab,
     SvelteTab: SvelteTab,
+    HandlebarsContent: HandlebarsContent,
+    HtmlContent: HtmlContent,
   };
 
   /**
@@ -236,25 +244,22 @@ export class Tidy5eSheetsApi {
     CharacterSheetRuntime.registerTab(registeredTab, options);
   }
 
-  registerDynamicActorContent() {
+  registerDynamicActorContent() {}
 
+  registerCharacterContent(
+    selector: string,
+    position: string,
+    content: HtmlContent | HandlebarsContent,
+    options: ContentRegistrationOptions | undefined
+  ) {
+    CharacterSheetRuntime.registerContent(selector, position, content, options);
   }
 
-  registerDynamicCharacterContent() {
-    
-  }
+  registerItemContent() {}
 
-  registerDynamicItemContent() {
+  registerNpcContent() {}
 
-  }
-
-  registerDynamicNpcContent() {
-
-  }
-
-  registerDynamicVehicleContent() {
-
-  }
+  registerVehicleContent() {}
 
   /**
    * Adds a tab to all relevant item sheets.

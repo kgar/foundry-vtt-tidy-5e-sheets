@@ -2,6 +2,8 @@ import type { SheetLayout } from 'src/runtime/types';
 import type { HandlebarsTab } from './tab/HandlebarsTab';
 import type { HtmlTab } from './tab/HtmlTab';
 import type { SvelteTab } from './tab/SvelteTab';
+import type { HtmlContent } from './content/HtmlContent';
+import type { HandlebarsContent } from './content/HandlebarsContent';
 
 /**
  * Data provided during the rendering of this item document sheet.
@@ -52,11 +54,17 @@ export type ActorTabRegistrationOptions = {
   overrideExisting?: boolean;
 };
 
-export type DynamicContentRegistrationOptions = {
-  layout?: SheetLayout | SheetLayout[];
+/**
+ * The currently supported custom content types.
+ */
+export type SupportedContent = HtmlContent | HandlebarsContent;
 
-  
-}
+/**
+ * Options for registering content.
+ */
+export type ContentRegistrationOptions = {
+  layout?: SheetLayout | SheetLayout[];
+};
 
 /**
  * A command, such as a button or a menu item, which can be executed on behalf of an item.
@@ -127,7 +135,7 @@ export type UseSpecificLevelExhaustionParams = {
    * @remarks
    * This array should include level 0, meaning it is length `totalLevels + 1`.
    * For example, with `totalLevels` of 3:
-   * 
+   *
    * 0. 'No exhaustion'
    * 1. 'You are kind of tired'
    * 2. 'You look unwell'

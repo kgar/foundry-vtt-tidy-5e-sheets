@@ -10,6 +10,14 @@ export class HandlebarsContent {
   renderScheme: RenderScheme = 'handlebars';
   activateDefaultSheetListeners?: boolean | undefined = false;
 
+  constructor(props?: Partial<HandlebarsContent>) {
+    // TODO: Extract the base class
+    // super();
+
+    const merged = mergeObject(this, props);
+    Object.assign(this, merged);
+  }
+
   /**
    * An optional function that provides the relevant application context
    * (item sheet context, character sheet context, NPC sheet context, etc.)
