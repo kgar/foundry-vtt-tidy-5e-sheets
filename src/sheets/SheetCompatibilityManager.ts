@@ -157,6 +157,9 @@ export class SheetCompatibilityManager {
         // TODO: Catch and handle any issues with individual target nodes
         el.insertAdjacentHTML(customContent.position as InsertPosition, wrappedContent);
       });
+
+      // TODO: activate listeners if relevant; this will require a way of targeting the wrapped content, whether it's been planted in one place or many;
+      // perhaps a generated attribute or class on the wrapper?
     }
 
     if (customContent.onRender) {
