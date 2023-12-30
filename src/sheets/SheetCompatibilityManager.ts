@@ -119,56 +119,54 @@ export class SheetCompatibilityManager {
 
   private static renderContent(
     sheetEl: any,
-    c: CustomContent,
+    customContent: CustomContent,
     app: any,
     data: any,
     element: any,
     isFullRender: boolean
   ) {
     // TODO: Handle any unhandled errors here with a log-and-skip
-    const targetElements = Array.from(
-      sheetEl.querySelectorAll(c.selector)
-    ) as HTMLElement[];
 
-    if (!targetElements.length) {
-      debug('No target elements were found for injecting custom content', {
-        content: c,
+    const wrappedContent = wrapCustomHtmlForRendering(
+      customContent.content.html,
+      customContent.content.renderScheme
+    );
+
+    if (customContent.onContentReady) {
+      customContent.onContentReady({
+        app: app,
+        data: data,
+        element: element.get(0),
+        isFullRender: isFullRender,
+        content: wrappedContent,
       });
     }
 
-    targetElements.forEach((el: HTMLElement) => {
-      // TODO: Catch and handle any issues with individual target nodes
-      const contentWrapperId = foundry.utils.randomID();
+    if (!isNil(customContent.position)) {
+      const targetElements = Array.from(
+        sheetEl.querySelectorAll(customContent.selector)
+      ) as HTMLElement[];
 
-      const wrappedContent = wrapCustomHtmlForRendering(
-        c.content.html,
-        contentWrapperId,
-        c.content.renderScheme
-      );
-
-      if (c.onContentReady) {
-        c.onContentReady({
-          app: app,
-          data: data,
-          element: element.get(0),
-          isFullRender: isFullRender,
-          content: wrappedContent,
+      if (!targetElements.length) {
+        debug('No target elements were found for injecting custom content', {
+          content: customContent,
         });
       }
 
-      if (!isNil(c.position)) {
-        el.insertAdjacentHTML(c.position as InsertPosition, wrappedContent);
-      }
+      targetElements.forEach((el: HTMLElement) => {
+        // TODO: Catch and handle any issues with individual target nodes
+        el.insertAdjacentHTML(customContent.position as InsertPosition, wrappedContent);
+      });
+    }
 
-      if (c.onRender) {
-        c.onRender({
-          app: app,
-          data: data,
-          element: element.get(0),
-          isFullRender: isFullRender,
-        });
-      }
-    });
+    if (customContent.onRender) {
+      customContent.onRender({
+        app: app,
+        data: data,
+        element: element.get(0),
+        isFullRender: isFullRender,
+      });
+    }
   }
 
   static wireCompatibilityEventListeners(
