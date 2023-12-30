@@ -256,6 +256,13 @@ export class Tidy5eSheetsApi {
     CharacterSheetRuntime.registerTab(registeredTab, options);
   }
 
+  /**
+   * Adds custom content to all actor sheets at `position` relative to `selector`.
+   * 
+   * @param content the information necessary to render custom content
+   * @param options custom content registration options
+   * @returns void
+   */
   registerActorContent(
     content: SupportedContent,
     options?: ContentRegistrationOptions
@@ -281,6 +288,13 @@ export class Tidy5eSheetsApi {
     VehicleSheetRuntime.registerContent(registeredContent);
   }
 
+  /**
+   * Adds custom content to player character sheets at `position` relative to `selector`.
+   * 
+   * @param content the information necessary to render custom content
+   * @param options custom content registration options
+   * @returns void
+   */
   registerCharacterContent(
     content: SupportedContent,
     options?: ContentRegistrationOptions
@@ -303,6 +317,13 @@ export class Tidy5eSheetsApi {
     CharacterSheetRuntime.registerContent(registeredContent);
   }
 
+  /**
+   * Adds custom content to item sheets at `position` relative to `selector`.
+   * 
+   * @param content the information necessary to render custom content
+   * @param options custom content registration options
+   * @returns void
+   */
   registerItemContent(
     content: SupportedContent,
     options?: ContentRegistrationOptions
@@ -325,6 +346,13 @@ export class Tidy5eSheetsApi {
     ItemSheetRuntime.registerContent(registeredContent);
   }
 
+  /**
+   * Adds custom content to NPC sheets at `position` relative to `selector`.
+   * 
+   * @param content the information necessary to render custom content
+   * @param options custom content registration options
+   * @returns void
+   */
   registerNpcContent(
     content: SupportedContent,
     options?: ContentRegistrationOptions
@@ -347,6 +375,13 @@ export class Tidy5eSheetsApi {
     NpcSheetRuntime.registerContent(registeredContent);
   }
 
+  /**
+   * Adds custom content to vehicle sheets at `position` relative to `selector`.
+   * 
+   * @param content the information necessary to render custom content
+   * @param options custom content registration options
+   * @returns void
+   */
   registerVehicleContent(
     content: SupportedContent,
     options?: ContentRegistrationOptions
