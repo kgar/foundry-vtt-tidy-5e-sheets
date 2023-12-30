@@ -18,6 +18,7 @@ import type {
   SupportedTab,
   ActorTabRegistrationOptions,
   ContentRegistrationOptions,
+  SupportedContent,
 } from './api.types';
 import ApiConstants from './ApiConstants';
 import { ItemSummaryApi } from './item-summary/ItemSummaryApi';
@@ -25,6 +26,7 @@ import { ExhaustionApi } from './exhaustion/ExhaustionApi';
 import { HtmlContent } from './content/HtmlContent';
 import { HandlebarsContent } from './content/HandlebarsContent';
 import { CONSTANTS } from 'src/constants';
+import { CustomContentManager } from 'src/runtime/content/CustomContentManager';
 
 /**
  * The Tidy 5e Sheets API. The API becomes available after the hook `tidy5e-sheet.ready` is called.
@@ -254,22 +256,118 @@ export class Tidy5eSheetsApi {
     CharacterSheetRuntime.registerTab(registeredTab, options);
   }
 
-  registerDynamicActorContent() {}
-
-  registerCharacterContent(
-    selector: string,
-    position: string,
-    content: HtmlContent | HandlebarsContent,
-    options: ContentRegistrationOptions | undefined
+  registerActorContent(
+    content: SupportedContent,
+    options?: ContentRegistrationOptions
   ) {
-    CharacterSheetRuntime.registerContent(selector, position, content, options);
+    if (!CustomContentManager.validateContent(content)) {
+      return;
+    }
+
+    const registeredContent =
+      CustomContentManager.mapContentToRegisteredContent(
+        content,
+        options?.layout
+      );
+
+    if (!registeredContent) {
+      warn('Unable to register content. Content type not supported.');
+      return;
+    }
+
+    CharacterSheetRuntime.registerContent(registeredContent);
+    ItemSheetRuntime.registerContent(registeredContent);
+    NpcSheetRuntime.registerContent(registeredContent);
+    VehicleSheetRuntime.registerContent(registeredContent);
   }
 
-  registerItemContent() {}
+  registerCharacterContent(
+    content: SupportedContent,
+    options?: ContentRegistrationOptions
+  ) {
+    if (!CustomContentManager.validateContent(content)) {
+      return;
+    }
 
-  registerNpcContent() {}
+    const registeredContent =
+      CustomContentManager.mapContentToRegisteredContent(
+        content,
+        options?.layout
+      );
 
-  registerVehicleContent() {}
+    if (!registeredContent) {
+      warn('Unable to register content. Content type not supported.');
+      return;
+    }
+
+    CharacterSheetRuntime.registerContent(registeredContent);
+  }
+
+  registerItemContent(
+    content: SupportedContent,
+    options?: ContentRegistrationOptions
+  ) {
+    if (!CustomContentManager.validateContent(content)) {
+      return;
+    }
+
+    const registeredContent =
+      CustomContentManager.mapContentToRegisteredContent(
+        content,
+        options?.layout
+      );
+
+    if (!registeredContent) {
+      warn('Unable to register content. Content type not supported.');
+      return;
+    }
+
+    ItemSheetRuntime.registerContent(registeredContent);
+  }
+
+  registerNpcContent(
+    content: SupportedContent,
+    options?: ContentRegistrationOptions
+  ) {
+    if (!CustomContentManager.validateContent(content)) {
+      return;
+    }
+
+    const registeredContent =
+      CustomContentManager.mapContentToRegisteredContent(
+        content,
+        options?.layout
+      );
+
+    if (!registeredContent) {
+      warn('Unable to register content. Content type not supported.');
+      return;
+    }
+
+    NpcSheetRuntime.registerContent(registeredContent);
+  }
+
+  registerVehicleContent(
+    content: SupportedContent,
+    options?: ContentRegistrationOptions
+  ) {
+    if (!CustomContentManager.validateContent(content)) {
+      return;
+    }
+
+    const registeredContent =
+      CustomContentManager.mapContentToRegisteredContent(
+        content,
+        options?.layout
+      );
+
+    if (!registeredContent) {
+      warn('Unable to register content. Content type not supported.');
+      return;
+    }
+
+    VehicleSheetRuntime.registerContent(registeredContent);
+  }
 
   /**
    * Adds a tab to all relevant item sheets.

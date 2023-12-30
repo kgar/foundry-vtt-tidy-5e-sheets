@@ -50,8 +50,8 @@ export type Tab<
 };
 
 export type CustomContent = {
-  selector: string;
-  position: string;
+  selector?: string;
+  position?: string;
   content: HtmlContent;
   onContentReady?: (params: OnContentReadyParams) => void;
   onRender?: (params: OnRenderParams) => void;

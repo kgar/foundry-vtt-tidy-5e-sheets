@@ -1,9 +1,9 @@
 import type { ComponentType, SvelteComponent } from 'svelte';
-import type { Tab } from './types';
+import type { CustomContent, Tab } from './types';
 import type { DocumentPreparationWarning } from './types';
 
 export type ItemSheetContext = {
-  tabs: Tab[];
+  customContent: CustomContent[];
   /**
    * Represents remaining health as a percentage within the range of `0` to `100`.
    */
@@ -12,6 +12,7 @@ export type ItemSheetContext = {
   lockItemQuantity: boolean;
   originalContext: unknown;
   owner: boolean;
+  tabs: Tab[];
   viewableWarnings: DocumentPreparationWarning[];
 } & Record<string, any>;
 

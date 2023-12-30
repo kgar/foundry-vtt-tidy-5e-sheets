@@ -1,4 +1,4 @@
-import type { NpcSheetContext, Tab } from 'src/types/types';
+import type { CharacterSheetContext, CustomContent, NpcSheetContext, Tab } from 'src/types/types';
 import { CONSTANTS } from 'src/constants';
 import NpcAbilitiesTab from 'src/sheets/npc/tabs/NpcAbilitiesTab.svelte';
 import NpcSpellbookTab from 'src/sheets/npc/tabs/NpcSpellbookTab.svelte';
@@ -6,12 +6,14 @@ import NpcBiographyTab from 'src/sheets/npc/tabs/NpcBiographyTab.svelte';
 import ActorEffectsTab from 'src/sheets/actor/ActorEffectsTab.svelte';
 import ActorJournalTab from 'src/sheets/actor/tabs/ActorJournalTab.svelte';
 import ActorActionsTab from 'src/sheets/actor/tabs/ActorActionsTab.svelte';
-import type { RegisteredTab } from './types';
+import type { RegisteredContent, RegisteredTab } from './types';
 import { warn } from 'src/utils/logging';
 import { TabManager } from './tab/TabManager';
 import type { ActorTabRegistrationOptions } from 'src/api/api.types';
+import { CustomContentManager } from './content/CustomContentManager';
 
 export class NpcSheetRuntime {
+  private static _content: RegisteredContent<NpcSheetContext>[] = [];
   private static _tabs: RegisteredTab<NpcSheetContext>[] = [
     {
       title: 'T5EK.Actions.TabName',
@@ -72,12 +74,27 @@ export class NpcSheetRuntime {
     },
   ];
 
+  static async getContent(
+    context: CharacterSheetContext
+  ): Promise<CustomContent[]> {
+    return await CustomContentManager.prepareContentForRender(
+      context,
+      NpcSheetRuntime._content
+    );
+  }
+
   static getTabs(context: NpcSheetContext): Promise<Tab[]> {
     return TabManager.prepareTabsForRender(context, NpcSheetRuntime._tabs);
   }
 
   static getAllRegisteredTabs(): RegisteredTab<NpcSheetContext>[] {
     return [...NpcSheetRuntime._tabs];
+  }
+
+  static registerContent(
+    registeredContent: RegisteredContent<NpcSheetContext>
+  ) {
+    this._content.push(registeredContent);
   }
 
   static registerTab(
@@ -99,7 +116,5 @@ export class NpcSheetRuntime {
     }
 
     NpcSheetRuntime._tabs.push(tab);
-
-    return NpcSheetRuntime.getAllRegisteredTabs();
   }
 }

@@ -1,7 +1,6 @@
 import type {
   CharacterSheetContext,
   CustomContent,
-  HtmlRuntimeContent,
   Tab,
 } from 'src/types/types';
 import CharacterAttributesTab from 'src/sheets/character/tabs/CharacterAttributesTab.svelte';
@@ -16,13 +15,7 @@ import type { RegisteredContent, RegisteredTab } from './types';
 import { CONSTANTS } from 'src/constants';
 import { warn } from 'src/utils/logging';
 import { TabManager } from './tab/TabManager';
-import type {
-  ActorTabRegistrationOptions,
-  ContentRegistrationOptions,
-  SupportedContent,
-} from 'src/api/api.types';
-import { HandlebarsContent } from 'src/api/content/HandlebarsContent';
-import { HandlebarsTemplateRenderer } from 'src/api/HandlebarsTemplateRenderer';
+import type { ActorTabRegistrationOptions } from 'src/api/api.types';
 import { CustomContentManager } from './content/CustomContentManager';
 
 export class CharacterSheetRuntime {
@@ -124,34 +117,9 @@ export class CharacterSheetRuntime {
   }
 
   static registerContent(
-    selector: string,
-    position: string,
-    content: SupportedContent,
-    options: ContentRegistrationOptions | undefined
+    registeredContent: RegisteredContent<CharacterSheetContext>
   ) {
-    let mappedContent: HtmlRuntimeContent | HandlebarsTemplateRenderer =
-      content instanceof HandlebarsContent
-        ? new HandlebarsTemplateRenderer({
-            path: content.path,
-          })
-        : ({
-            html: content.html,
-            renderScheme: content.renderScheme,
-            type: 'html',
-          } satisfies HtmlRuntimeContent);
-
-    this._content.push({
-      selector: selector,
-      position: position,
-      content: mappedContent,
-      activateDefaultSheetListeners: content.activateDefaultSheetListeners,
-      enabled: content.enabled,
-      layout: options?.layout ?? 'all',
-      renderScheme: content.renderScheme,
-      getData:
-        content instanceof HandlebarsContent ? content.getData : undefined,
-      onRender: content.onRender,
-    });
+    this._content.push(registeredContent);
   }
 
   static registerTab(
@@ -175,7 +143,5 @@ export class CharacterSheetRuntime {
     }
 
     CharacterSheetRuntime._tabs.push(tab);
-
-    return CharacterSheetRuntime.getAllRegisteredTabs();
   }
 }

@@ -126,15 +126,16 @@ export class Tidy5eKgarItemSheet
         this._activateCoreListeners($(node));
         super.activateListeners($(node));
       },
-      toggleAdvancementLock: this.toggleAdvancementLock.bind(this),
-      lockItemQuantity: FoundryAdapter.shouldLockItemQuantity(),
+      customContent: await ItemSheetRuntime.getContent(defaultDocumentContext),
       healthPercentage: getPercentage(
         this.item?.system?.hp?.value,
         this.item?.system?.hp?.max
       ),
       itemDescriptions,
+      lockItemQuantity: FoundryAdapter.shouldLockItemQuantity(),
       originalContext: defaultDocumentContext,
       tabs: tabs,
+      toggleAdvancementLock: this.toggleAdvancementLock.bind(this),
       viewableWarnings:
         defaultDocumentContext.warnings?.filter(
           (w: any) => !isNil(w.message?.trim(), '')
@@ -182,6 +183,7 @@ export class Tidy5eKgarItemSheet
 
     await SheetCompatibilityManager.renderCustomContent({
       app: this,
+      customContent: data.customContent,
       data: data,
       element: this.element,
       isFullRender: args.isFullRender,

@@ -1,12 +1,13 @@
 import type {
-  CustomContentHtmlInsertParams,
+  CustomContentInjectParams,
+  OnContentReadyParams,
   OnRenderParams,
   RenderScheme,
 } from '../api.types';
 
 export abstract class CustomContentBase {
-  /** {@inheritDoc CustomContentHtmlInsertParams} */
-  abstract htmlInsertParams?: CustomContentHtmlInsertParams;
+  /** {@inheritDoc CustomContentHtmlInjectParams} */
+  abstract injectParams?: CustomContentInjectParams;
 
   /**
    * Optionally determines whether to refresh content each time an application render occurs.
@@ -25,12 +26,12 @@ export abstract class CustomContentBase {
    * this callback is invoked.
    *
    * @remarks
-   * For more complex HTML insertion scenarios, one can skip {@link CustomContentHtmlInsertParams}
+   * For more complex HTML insertion scenarios, one can skip {@link CustomContentInjectParams}
    * and simply inject the prepared content with this callback.
-   * 
+   *
    * This callback is also useful for quick debug logging of the content to be rendered.
    */
-  abstract onContentReady?: () => void;
+  abstract onContentReady?: (params: OnContentReadyParams) => void;
 
   /**
    * Optional function which is called each time a change detection cycle occurs on the sheet. This is any time a FormApplication would normally call `render()`.

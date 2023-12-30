@@ -3,6 +3,8 @@ import type { RegisteredContent } from '../types';
 import { isNil } from 'src/utils/data';
 import { HandlebarsTemplateRenderer } from 'src/api/HandlebarsTemplateRenderer';
 import { error } from 'src/utils/logging';
+import type { SheetLayout, SupportedContent } from 'src/api';
+import { HandlebarsContent } from 'src/api/content/HandlebarsContent';
 
 export class CustomContentManager {
   static async prepareContentForRender(
@@ -16,8 +18,8 @@ export class CustomContentManager {
     for (let content of enabledContent) {
       let c: CustomContent = {
         content: await mapRenderableContent(context, content),
-        position: content.position,
-        selector: content.selector,
+        position: content.injectParams?.position,
+        selector: content.injectParams?.selector,
         activateDefaultSheetListeners: content.activateDefaultSheetListeners,
         onRender: content.onRender,
       };
@@ -25,6 +27,39 @@ export class CustomContentManager {
     }
 
     return customContent;
+  }
+
+  static validateContent(content: SupportedContent) {
+    // TODO: Determine what we're validating, if anything.
+    return true;
+  }
+
+  static mapContentToRegisteredContent(
+    content: SupportedContent,
+    layout?: SheetLayout | SheetLayout[]
+  ) {
+    let mappedContent: HtmlRuntimeContent | HandlebarsTemplateRenderer =
+      content instanceof HandlebarsContent
+        ? new HandlebarsTemplateRenderer({
+            path: content.path,
+          })
+        : ({
+            html: content.html,
+            renderScheme: content.renderScheme,
+            type: 'html',
+          } satisfies HtmlRuntimeContent);
+
+    return {
+      content: mappedContent,
+      activateDefaultSheetListeners: content.activateDefaultSheetListeners,
+      enabled: content.enabled,
+      injectParams: content.injectParams,
+      layout: layout ?? 'all',
+      renderScheme: content.renderScheme,
+      getData:
+        content instanceof HandlebarsContent ? content.getData : undefined,
+      onRender: content.onRender,
+    } satisfies RegisteredContent<any>;
   }
 }
 

@@ -1,4 +1,9 @@
-import type { CustomTabTitle, OnRenderParams, RenderScheme } from 'src/api';
+import type {
+  CustomContentInjectParams,
+  CustomTabTitle,
+  OnRenderParams,
+  RenderScheme,
+} from 'src/api';
 import type { HandlebarsTemplateRenderer } from 'src/api/HandlebarsTemplateRenderer';
 import type { Item5e } from 'src/types/item';
 import type {
@@ -13,12 +18,11 @@ export type RegisteredContent<TContext> = {
   content: SvelteTabContent | HtmlRuntimeContent | HandlebarsTemplateRenderer;
   enabled?: (context: TContext) => boolean;
   getData?: (data: any) => any | Promise<any>;
+  injectParams?: CustomContentInjectParams;
   layout?: SheetLayout | SheetLayout[];
   onRender?: (args: OnRenderParams) => void;
-  position: string;
   renderScheme?: RenderScheme;
-  selector: string;
-}
+};
 
 export type RegisteredTab<TContext> = {
   enabled?: (context: TContext) => boolean;

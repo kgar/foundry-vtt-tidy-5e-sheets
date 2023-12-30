@@ -164,7 +164,7 @@ export type UseSpecificLevelExhaustionParams = {
  * @remarks
  * This interface leverages the API for [Element: insertAdjacentHTML() method](https://developer.mozilla.org/en-US/docs/Web/API/Element/insertAdjacentHTML).
  */
-export interface CustomContentHtmlInsertParams {
+export interface CustomContentInjectParams {
   /**
    * A string representing the position relative to the element.
    * Must be one of the following strings:

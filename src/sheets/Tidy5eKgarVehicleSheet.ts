@@ -110,6 +110,9 @@ export class Tidy5eVehicleSheet
       },
       allowEffectsManagement: true,
       appId: this.appId,
+      customContent: await VehicleSheetRuntime.getContent(
+        defaultDocumentContext
+      ),
       useClassicControls:
         SettingsProvider.settings.useClassicControlsForVehicle.get(),
       editable: defaultDocumentContext.editable,
@@ -222,6 +225,7 @@ export class Tidy5eVehicleSheet
 
     await SheetCompatibilityManager.renderCustomContent({
       app: this,
+      customContent: data.customContent,
       data: data,
       element: this.element,
       isFullRender: args.isFullRender,

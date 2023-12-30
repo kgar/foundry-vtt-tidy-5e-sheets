@@ -159,6 +159,9 @@ export class Tidy5eNpcSheet
           relativeTo: this.actor,
         }
       ),
+      customContent: await NpcSheetRuntime.getContent(
+        defaultDocumentContext
+      ),
       useClassicControls:
         SettingsProvider.settings.useClassicControlsForNpc.get(),
       encumbrance: this.actor.system.attributes.encumbrance,
@@ -423,6 +426,7 @@ export class Tidy5eNpcSheet
 
     await SheetCompatibilityManager.renderCustomContent({
       app: this,
+      customContent: data.customContent,
       data: data,
       element: this.element,
       isFullRender: args.isFullRender,

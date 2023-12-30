@@ -1,12 +1,13 @@
 import type {
-  CustomContentHtmlInsertParams,
+  CustomContentInjectParams,
+  OnContentReadyParams,
   OnRenderParams,
   RenderScheme,
 } from '../api.types';
 import { CustomContentBase } from './CustomContentBase';
 
 export class HandlebarsContent extends CustomContentBase {
-  htmlInsertParams?: CustomContentHtmlInsertParams | undefined;
+  injectParams?: CustomContentInjectParams | undefined;
   /**
    * The path to the handlebars template. Use a leading slash to look in the UserData directory.
    * @example A template in a module's templates directory
@@ -23,7 +24,7 @@ export class HandlebarsContent extends CustomContentBase {
     Object.assign(this, merged);
   }
 
-  onContentReady?: (() => void) | undefined;
+  onContentReady?: (params: OnContentReadyParams) => void;
 
   /**
    * An optional function that provides the relevant application context
