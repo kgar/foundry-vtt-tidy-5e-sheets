@@ -156,7 +156,7 @@ export class Tidy5eKgarItemSheet
     if (force) {
       this.component?.$destroy();
       await super._render(force, options);
-      await this.renderCustomContent({ isFullRender: true });
+      await this.renderCustomContent({ data, isFullRender: true });
       Hooks.callAll(
         'tidy5e-sheet.renderItemSheet',
         this,
@@ -168,7 +168,7 @@ export class Tidy5eKgarItemSheet
     }
 
     applyTitleToWindow(this.title, this.element.get(0));
-    await this.renderCustomContent({ isFullRender: false });
+    await this.renderCustomContent({ data, isFullRender: false });
     Hooks.callAll(
       'tidy5e-sheet.renderItemSheet',
       this,
@@ -178,17 +178,18 @@ export class Tidy5eKgarItemSheet
     );
   }
 
-  private async renderCustomContent(args: { isFullRender: boolean }) {
-    const data = get(this.context);
-
+  private async renderCustomContent(args: {
+    data: ItemSheetContext;
+    isFullRender: boolean;
+  }) {
     await CustomContentRenderer.render({
       app: this,
-      customContent: data.customContent,
-      data: data,
+      customContent: args.data.customContent,
+      data: args.data,
       element: this.element,
       isFullRender: args.isFullRender,
       superActivateListeners: super.activateListeners,
-      tabs: data.tabs,
+      tabs: args.data.tabs,
     });
   }
 

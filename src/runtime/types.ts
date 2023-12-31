@@ -1,6 +1,7 @@
 import type {
   CustomContentInjectParams,
   CustomTabTitle,
+  OnContentReadyParams,
   OnRenderParams,
   RenderScheme,
 } from 'src/api';
@@ -20,6 +21,7 @@ export type RegisteredContent<TContext> = {
   getData?: (data: any) => any | Promise<any>;
   injectParams?: CustomContentInjectParams;
   layout?: SheetLayout | SheetLayout[];
+  onContentReady?: (params: OnContentReadyParams) => void;
   onRender?: (args: OnRenderParams) => void;
   renderScheme?: RenderScheme;
 };

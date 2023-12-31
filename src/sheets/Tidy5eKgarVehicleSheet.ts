@@ -198,7 +198,7 @@ export class Tidy5eVehicleSheet
         SettingsProvider.settings.colorScheme.get(),
         this.element.get(0)
       );
-      await this.renderCustomContent({ isFullRender: true });
+      await this.renderCustomContent({ data, isFullRender: true });
       Hooks.callAll(
         'tidy5e-sheet.renderActorSheet',
         this,
@@ -210,7 +210,7 @@ export class Tidy5eVehicleSheet
     }
 
     applyTitleToWindow(this.title, this.element.get(0));
-    await this.renderCustomContent({ isFullRender: false });
+    await this.renderCustomContent({ data, isFullRender: false });
     Hooks.callAll(
       'tidy5e-sheet.renderActorSheet',
       this,
@@ -220,17 +220,18 @@ export class Tidy5eVehicleSheet
     );
   }
 
-  private async renderCustomContent(args: { isFullRender: boolean }) {
-    const data = get(this.context);
-
+  private async renderCustomContent(args: {
+    data: VehicleSheetContext;
+    isFullRender: boolean;
+  }) {
     await CustomContentRenderer.render({
       app: this,
-      customContent: data.customContent,
-      data: data,
+      customContent: args.data.customContent,
+      data: args.data,
       element: this.element,
       isFullRender: args.isFullRender,
       superActivateListeners: super.activateListeners,
-      tabs: data.tabs,
+      tabs: args.data.tabs,
     });
   }
 

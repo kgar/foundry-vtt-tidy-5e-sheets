@@ -110,6 +110,15 @@ export const CONSTANTS = {
   SHEET_PART_ATTRIBUTE: 'data-tidy-sheet-part',
   SHEET_PARTS: {
     /**
+     * A container for a sheet name. The sheet name is usually in input, and its container has some additional styles associated with it.
+     * The container typically sits in a sheet header row with other header-related elements.
+     */
+    NAME_CONTAINER: 'name-container',
+    /**
+     * The sheet header row where the sheet name appears.
+     */
+    NAME_HEADER_ROW: 'name-header-row',
+    /**
      * A container for a single resource (first, second, third, etc.).
      */
     RESOURCE: 'resource',

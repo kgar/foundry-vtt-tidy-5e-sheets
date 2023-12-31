@@ -66,8 +66,14 @@
   </div>
 
   <div class="flex-grow-1">
-    <div class="flex-row justify-content-space-between align-items-center">
-      <div class="actor-name">
+    <div
+      class="flex-row justify-content-space-between align-items-center"
+      data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.NAME_HEADER_ROW}
+    >
+      <div
+        class="actor-name"
+        data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.NAME_CONTAINER}
+      >
         <ContentEditableFormField
           element="h1"
           document={$context.actor}

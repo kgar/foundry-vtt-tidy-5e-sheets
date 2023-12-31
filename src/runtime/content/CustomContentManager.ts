@@ -21,6 +21,7 @@ export class CustomContentManager {
         position: content.injectParams?.position,
         selector: content.injectParams?.selector,
         activateDefaultSheetListeners: content.activateDefaultSheetListeners,
+        onContentReady: content.onContentReady,
         onRender: content.onRender,
       };
       customContent.push(c);
@@ -58,6 +59,7 @@ export class CustomContentManager {
       renderScheme: content.renderScheme,
       getData:
         content instanceof HandlebarsContent ? content.getData : undefined,
+      onContentReady: content.onContentReady,
       onRender: content.onRender,
     } satisfies RegisteredContent<any>;
   }

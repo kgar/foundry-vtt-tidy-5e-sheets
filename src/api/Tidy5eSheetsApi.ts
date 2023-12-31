@@ -258,10 +258,36 @@ export class Tidy5eSheetsApi {
 
   /**
    * Adds custom content to all actor sheets at `position` relative to `selector`.
-   * 
+   *
    * @param content the information necessary to render custom content
    * @param options custom content registration options
    * @returns void
+   *
+   * @example registering an icon next to the actor sheet name
+   * ```js
+   * Hooks.once("tidy5e-sheet.ready", (api) => {
+   *   api.registerActorContent(
+   *     new api.models.HtmlContent({
+   *       html: `<a title="Example Button" class="my-custom-icon"><i class="fas fa-user"></i></a>`,
+   *       injectParams: {
+   *         selector: api.getSheetPartSelector(
+   *           api.constants.SHEET_PARTS.NAME_CONTAINER
+   *         ),
+   *         position: "beforebegin",
+   *       },
+   *       onContentReady: (params) => {
+   *         console.log("content ready to render", params);
+   *         console.log("my content", params.content);
+   *       },
+   *       onRender: (params) => {
+   *         params.element
+   *           .querySelector(".my-custom-icon")
+   *           .addEventListener("click", () => alert("Clicked custom actor icon"));
+   *       },
+   *     })
+   *   );
+   * });
+   * ```
    */
   registerActorContent(
     content: SupportedContent,
@@ -283,17 +309,42 @@ export class Tidy5eSheetsApi {
     }
 
     CharacterSheetRuntime.registerContent(registeredContent);
-    ItemSheetRuntime.registerContent(registeredContent);
     NpcSheetRuntime.registerContent(registeredContent);
     VehicleSheetRuntime.registerContent(registeredContent);
   }
 
   /**
    * Adds custom content to player character sheets at `position` relative to `selector`.
-   * 
+   *
    * @param content the information necessary to render custom content
    * @param options custom content registration options
    * @returns void
+   *
+   * @example registering an icon next to the character sheet name
+   * ```js
+   * Hooks.once("tidy5e-sheet.ready", (api) => {
+   *   api.registerCharacterContent(
+   *     new api.models.HtmlContent({
+   *       html: `<a title="Example Button" class="my-custom-icon"><i class="fas fa-user"></i></a>`,
+   *       injectParams: {
+   *         selector: api.getSheetPartSelector(
+   *           api.constants.SHEET_PARTS.NAME_CONTAINER
+   *         ),
+   *         position: "beforebegin",
+   *       },
+   *       onContentReady: (params) => {
+   *         console.log("content ready to render", params);
+   *         console.log("my content", params.content);
+   *       },
+   *       onRender: (params) => {
+   *         params.element
+   *           .querySelector(".my-custom-icon")
+   *           .addEventListener("click", () => alert("Clicked custom PC icon"));
+   *       },
+   *     })
+   *   );
+   * });
+   * ```
    */
   registerCharacterContent(
     content: SupportedContent,
@@ -319,10 +370,36 @@ export class Tidy5eSheetsApi {
 
   /**
    * Adds custom content to item sheets at `position` relative to `selector`.
-   * 
+   *
    * @param content the information necessary to render custom content
    * @param options custom content registration options
    * @returns void
+   *
+   * @example registering an icon next to the item sheet name
+   * ```js
+   * Hooks.once("tidy5e-sheet.ready", (api) => {
+   *   api.registerItemContent(
+   *     new api.models.HtmlContent({
+   *       html: `<a title="Example Button" class="my-custom-icon"><i class="fas fa-flask"></i></a>`,
+   *       injectParams: {
+   *         selector: api.getSheetPartSelector(
+   *           api.constants.SHEET_PARTS.NAME_CONTAINER
+   *         ),
+   *         position: "beforebegin",
+   *       },
+   *       onContentReady: (params) => {
+   *         console.log("content ready to render", params);
+   *         console.log("my content", params.content);
+   *       },
+   *       onRender: (params) => {
+   *         params.element
+   *           .querySelector(".my-custom-icon")
+   *           .addEventListener("click", () => alert("Clicked custom item icon"));
+   *       },
+   *     })
+   *   );
+   * });
+   * ```
    */
   registerItemContent(
     content: SupportedContent,
@@ -348,10 +425,36 @@ export class Tidy5eSheetsApi {
 
   /**
    * Adds custom content to NPC sheets at `position` relative to `selector`.
-   * 
+   *
    * @param content the information necessary to render custom content
    * @param options custom content registration options
    * @returns void
+   *
+   * @example registering an icon next to the NPC sheet name
+   * ```js
+   * Hooks.once("tidy5e-sheet.ready", (api) => {
+   *   api.registerNpcContent(
+   *     new api.models.HtmlContent({
+   *       html: `<a title="Example Button" class="my-custom-icon"><i class="fas fa-user"></i></a>`,
+   *       injectParams: {
+   *         selector: api.getSheetPartSelector(
+   *           api.constants.SHEET_PARTS.NAME_CONTAINER
+   *         ),
+   *         position: "beforebegin",
+   *       },
+   *       onContentReady: (params) => {
+   *         console.log("content ready to render", params);
+   *         console.log("my content", params.content);
+   *       },
+   *       onRender: (params) => {
+   *         params.element
+   *           .querySelector(".my-custom-icon")
+   *           .addEventListener("click", () => alert("Clicked custom NPC icon"));
+   *       },
+   *     })
+   *   );
+   * });
+   * ```
    */
   registerNpcContent(
     content: SupportedContent,
@@ -377,10 +480,36 @@ export class Tidy5eSheetsApi {
 
   /**
    * Adds custom content to vehicle sheets at `position` relative to `selector`.
-   * 
+   *
    * @param content the information necessary to render custom content
    * @param options custom content registration options
    * @returns void
+   *
+   * @example registering an icon next to the vehicle sheet name
+   * ```js
+   * Hooks.once("tidy5e-sheet.ready", (api) => {
+   *   api.registerVehicleContent(
+   *     new api.models.HtmlContent({
+   *       html: `<a title="Example Button" class="my-custom-icon"><i class="fas fa-user"></i></a>`,
+   *       injectParams: {
+   *         selector: api.getSheetPartSelector(
+   *           api.constants.SHEET_PARTS.NAME_CONTAINER
+   *         ),
+   *         position: "beforebegin",
+   *       },
+   *       onContentReady: (params) => {
+   *         console.log("content ready to render", params);
+   *         console.log("my content", params.content);
+   *       },
+   *       onRender: (params) => {
+   *         params.element
+   *           .querySelector(".my-custom-icon")
+   *           .addEventListener("click", () => alert("Clicked Vehicle custom icon"));
+   *       },
+   *     })
+   *   );
+   * });
+   * ```
    */
   registerVehicleContent(
     content: SupportedContent,

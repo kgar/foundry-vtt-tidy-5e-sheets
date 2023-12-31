@@ -10,6 +10,7 @@
   import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import Source from '../shared/Source.svelte';
+  import { CONSTANTS } from 'src/constants';
 
   let context = getContext<Readable<ItemSheetContext>>('context');
 
@@ -21,8 +22,14 @@
 <header class="sheet-header flexrow gap">
   <ItemProfilePicture />
 
-  <div class="header-details flexrow">
-    <h1 class="charname">
+  <div
+    class="header-details flexrow extra-small-gap"
+    data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.NAME_HEADER_ROW}
+  >
+    <h1
+      class="charname"
+      data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.NAME_CONTAINER}
+    >
       <TextInput
         document={$context.item}
         field="name"

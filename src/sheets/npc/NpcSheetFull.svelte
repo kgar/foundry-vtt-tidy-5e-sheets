@@ -59,6 +59,7 @@
     <div class="flex-grow-1">
       <div
         class="actor-name-row flex-row justify-content-space-between align-items-center extra-small-gap"
+        data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.NAME_HEADER_ROW}
       >
         {#if $context.tokenState === 'linked'}
           <i
@@ -72,7 +73,10 @@
           />
         {/if}
 
-        <div class="actor-name">
+        <div
+          class="actor-name"
+          data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.NAME_CONTAINER}
+        >
           <ContentEditableFormField
             element="h1"
             document={$context.actor}
@@ -161,7 +165,9 @@
               type="button"
               class="origin-summary-tidy inline-icon-button"
               on:click={() =>
-                new ActorOriginSummaryConfigFormApplication($context.actor).render(true)}
+                new ActorOriginSummaryConfigFormApplication(
+                  $context.actor,
+                ).render(true)}
               title={localize('T5EK.OriginSummaryConfig')}
             >
               <i class="fas fa-cog" />

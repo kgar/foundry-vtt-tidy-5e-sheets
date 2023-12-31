@@ -159,9 +159,7 @@ export class Tidy5eNpcSheet
           relativeTo: this.actor,
         }
       ),
-      customContent: await NpcSheetRuntime.getContent(
-        defaultDocumentContext
-      ),
+      customContent: await NpcSheetRuntime.getContent(defaultDocumentContext),
       useClassicControls:
         SettingsProvider.settings.useClassicControlsForNpc.get(),
       encumbrance: this.actor.system.attributes.encumbrance,
@@ -399,7 +397,7 @@ export class Tidy5eNpcSheet
         SettingsProvider.settings.colorScheme.get(),
         this.element.get(0)
       );
-      await this.renderCustomContent({ isFullRender: true });
+      await this.renderCustomContent({ data, isFullRender: true });
       Hooks.callAll(
         'tidy5e-sheet.renderActorSheet',
         this,
@@ -411,7 +409,7 @@ export class Tidy5eNpcSheet
     }
 
     applyTitleToWindow(this.title, this.element.get(0));
-    await this.renderCustomContent({ isFullRender: false });
+    await this.renderCustomContent({ data, isFullRender: false });
     Hooks.callAll(
       'tidy5e-sheet.renderActorSheet',
       this,
@@ -421,17 +419,18 @@ export class Tidy5eNpcSheet
     );
   }
 
-  private async renderCustomContent(args: { isFullRender: boolean }) {
-    const data = get(this.context);
-
+  private async renderCustomContent(args: {
+    data: NpcSheetContext;
+    isFullRender: boolean;
+  }) {
     await CustomContentRenderer.render({
       app: this,
-      customContent: data.customContent,
-      data: data,
+      customContent: args.data.customContent,
+      data: args.data,
       element: this.element,
       isFullRender: args.isFullRender,
       superActivateListeners: super.activateListeners,
-      tabs: data.tabs,
+      tabs: args.data.tabs,
     });
   }
 
