@@ -28,7 +28,7 @@ import {
   getActorActions,
 } from 'src/features/actions/actions';
 import { isNil } from 'src/utils/data';
-import { SheetCompatibilityManager } from './SheetCompatibilityManager';
+import { CustomContentRenderer } from './CustomContentRenderer';
 import { getBaseActorSheet5e } from 'src/utils/class-inheritance';
 
 export class Tidy5eVehicleSheet
@@ -223,7 +223,7 @@ export class Tidy5eVehicleSheet
   private async renderCustomContent(args: { isFullRender: boolean }) {
     const data = get(this.context);
 
-    await SheetCompatibilityManager.renderCustomContent({
+    await CustomContentRenderer.render({
       app: this,
       customContent: data.customContent,
       data: data,

@@ -32,7 +32,7 @@ import {
   getActorActions,
 } from 'src/features/actions/actions';
 import { isNil } from 'src/utils/data';
-import { SheetCompatibilityManager } from './SheetCompatibilityManager';
+import { CustomContentRenderer } from './CustomContentRenderer';
 
 export class Tidy5eNpcSheet
   extends dnd5e.applications.actor.ActorSheet5eNPC
@@ -424,7 +424,7 @@ export class Tidy5eNpcSheet
   private async renderCustomContent(args: { isFullRender: boolean }) {
     const data = get(this.context);
 
-    await SheetCompatibilityManager.renderCustomContent({
+    await CustomContentRenderer.render({
       app: this,
       customContent: data.customContent,
       data: data,

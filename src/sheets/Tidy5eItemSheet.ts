@@ -10,7 +10,7 @@ import { getPercentage } from 'src/utils/numbers';
 import { isNil } from 'src/utils/data';
 import { ItemSheetRuntime } from 'src/runtime/item/ItemSheetRuntime';
 import { TabManager } from 'src/runtime/tab/TabManager';
-import { SheetCompatibilityManager } from './SheetCompatibilityManager';
+import { CustomContentRenderer } from './CustomContentRenderer';
 
 export class Tidy5eKgarItemSheet
   extends dnd5e.applications.item.ItemSheet5e
@@ -181,7 +181,7 @@ export class Tidy5eKgarItemSheet
   private async renderCustomContent(args: { isFullRender: boolean }) {
     const data = get(this.context);
 
-    await SheetCompatibilityManager.renderCustomContent({
+    await CustomContentRenderer.render({
       app: this,
       customContent: data.customContent,
       data: data,

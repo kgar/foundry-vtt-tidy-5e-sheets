@@ -5,7 +5,7 @@ import { wrapCustomHtmlForRendering } from 'src/utils/content';
 import { isNil } from 'src/utils/data';
 import { debug, error, warn } from 'src/utils/logging';
 
-type RenderCustomContentArgs = {
+type CustomContentRenderParams = {
   app: any;
   element: any; // jQuery
   data: any;
@@ -15,10 +15,8 @@ type RenderCustomContentArgs = {
   customContent: CustomContent[];
 };
 
-// TODO: Work on this class name a bit; it seems misleading
-export class SheetCompatibilityManager {
-  // TODO: Work on this function name. Custom Content is now the "Inject Anywhere" stuff, and tabs are another, more specialized form of custom contentn
-  static async renderCustomContent(args: RenderCustomContentArgs) {
+export class CustomContentRenderer {
+  static async render(params: CustomContentRenderParams) {
     const {
       app,
       tabs,
@@ -27,25 +25,25 @@ export class SheetCompatibilityManager {
       isFullRender,
       superActivateListeners,
       customContent,
-    } = args;
+    } = params;
 
     element
       .get(0)
       .querySelectorAll(CONSTANTS.HTML_DYNAMIC_RENDERING_ATTRIBUTE_SELECTOR)
       .forEach((el: HTMLElement) => el.remove());
 
-    await SheetCompatibilityManager.renderTabs(
+    await CustomContentRenderer._renderTabs(
       tabs,
       element,
       isFullRender,
       app,
       data,
-      args
+      params
     );
 
     const sheetEl = element.get(0);
     for (let c of customContent) {
-      SheetCompatibilityManager.renderContent(
+      CustomContentRenderer._renderContent(
         sheetEl,
         c,
         app,
@@ -55,20 +53,20 @@ export class SheetCompatibilityManager {
       );
     }
 
-    SheetCompatibilityManager.wireCompatibilityEventListeners(
+    CustomContentRenderer.wireCompatibilityEventListeners(
       element,
       superActivateListeners,
       app
     );
   }
 
-  private static renderTabs(
+  private static _renderTabs(
     tabs: Tab[],
     element: any,
     isFullRender: boolean,
     app: any,
     data: any,
-    args: RenderCustomContentArgs
+    args: CustomContentRenderParams
   ): Promise<unknown> {
     const promises = tabs.map(async (tab) => {
       try {
@@ -117,7 +115,7 @@ export class SheetCompatibilityManager {
     return Promise.all(promises);
   }
 
-  private static renderContent(
+  private static _renderContent(
     sheetEl: any,
     customContent: CustomContent,
     app: any,
