@@ -32,23 +32,22 @@ export class CustomContentRenderer {
       .querySelectorAll(CONSTANTS.HTML_DYNAMIC_RENDERING_ATTRIBUTE_SELECTOR)
       .forEach((el: HTMLElement) => el.remove());
 
+    const sheetEl = element.get(0);
     await CustomContentRenderer._renderTabs(
       tabs,
-      element,
+      sheetEl,
       isFullRender,
       app,
       data,
       params
     );
 
-    const sheetEl = element.get(0);
     for (let c of customContent) {
       CustomContentRenderer._renderContent(
         sheetEl,
         c,
         app,
         data,
-        element,
         isFullRender
       );
     }
@@ -62,7 +61,7 @@ export class CustomContentRenderer {
 
   private static _renderTabs(
     tabs: Tab[],
-    element: any,
+    sheetEl: HTMLElement,
     isFullRender: boolean,
     app: any,
     data: any,
@@ -70,16 +69,14 @@ export class CustomContentRenderer {
   ): Promise<unknown> {
     const promises = tabs.map(async (tab) => {
       try {
-        let tabEl = element
-          .get(0)
-          .querySelector(`[data-tab-contents-for="${tab.id}"]`);
+        let tabEl = sheetEl
+          .querySelector<HTMLElement>(`[data-tab-contents-for="${tab.id}"]`);
 
         if (!tabEl) {
           // This content was added during a non-forced render (e.g., tab selection changes); wait a tick and re-attempt to set its HTML
           await delay(0);
-          tabEl = element
-            .get(0)
-            .querySelector(`[data-tab-contents-for="${tab.id}"]`);
+          tabEl = sheetEl
+            .querySelector<HTMLElement>(`[data-tab-contents-for="${tab.id}"]`);
         }
 
         if (!tabEl) {
@@ -98,7 +95,7 @@ export class CustomContentRenderer {
           tab.onRender({
             app: app,
             data: data,
-            element: element.get(0),
+            element: sheetEl,
             tabContentsElement: tabEl,
             isFullRender: isFullRender,
           });
@@ -120,7 +117,6 @@ export class CustomContentRenderer {
     customContent: CustomContent,
     app: any,
     data: any,
-    element: any,
     isFullRender: boolean
   ) {
     // TODO: Handle any unhandled errors here with a log-and-skip
@@ -134,7 +130,7 @@ export class CustomContentRenderer {
       customContent.onContentReady({
         app: app,
         data: data,
-        element: element.get(0),
+        element: sheetEl,
         isFullRender: isFullRender,
         content: wrappedContent,
       });
@@ -153,7 +149,10 @@ export class CustomContentRenderer {
 
       targetElements.forEach((el: HTMLElement) => {
         // TODO: Catch and handle any issues with individual target nodes
-        el.insertAdjacentHTML(customContent.position as InsertPosition, wrappedContent);
+        el.insertAdjacentHTML(
+          customContent.position as InsertPosition,
+          wrappedContent
+        );
       });
 
       // TODO: activate listeners if relevant; this will require a way of targeting the wrapped content, whether it's been planted in one place or many;
@@ -164,7 +163,7 @@ export class CustomContentRenderer {
       customContent.onRender({
         app: app,
         data: data,
-        element: element.get(0),
+        element: sheetEl,
         isFullRender: isFullRender,
       });
     }
