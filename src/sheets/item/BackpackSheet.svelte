@@ -22,7 +22,7 @@
 <header class="sheet-header flexrow gap">
   <ItemProfilePicture />
   <div
-    class="header-details flexrow extra-small-gap"
+    class="header-details flexrow small-gap"
     data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.NAME_HEADER_ROW}
   >
     <h1

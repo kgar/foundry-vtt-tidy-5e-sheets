@@ -67,7 +67,7 @@
 
   <div class="flex-grow-1">
     <div
-      class="flex-row justify-content-space-between align-items-center"
+      class="flex-row justify-content-space-between align-items-center small-gap"
       data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.NAME_HEADER_ROW}
     >
       <div

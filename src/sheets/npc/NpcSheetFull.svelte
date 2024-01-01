@@ -58,7 +58,7 @@
     </div>
     <div class="flex-grow-1">
       <div
-        class="actor-name-row flex-row justify-content-space-between align-items-center extra-small-gap"
+        class="actor-name-row flex-row justify-content-space-between align-items-center small-gap"
         data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.NAME_HEADER_ROW}
       >
         {#if $context.tokenState === 'linked'}
