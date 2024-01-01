@@ -6,7 +6,7 @@ import type {
 } from '../api.types';
 
 export abstract class CustomContentBase {
-  /** {@inheritDoc CustomContentHtmlInjectParams} */
+  /** {@inheritDoc CustomContentInjectParams} */
   abstract injectParams?: CustomContentInjectParams;
 
   /**
