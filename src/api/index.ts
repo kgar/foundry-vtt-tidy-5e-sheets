@@ -1,6 +1,7 @@
 export * from './action-list/ActionListApi';
 export * from './api.types';
 export * from './ApiConstants';
+export * from './content/CustomContentBase';
 export * from './content/HandlebarsContent';
 export * from './content/HtmlContent';
 export * from './exhaustion/ExhaustionApi';
