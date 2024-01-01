@@ -1,6 +1,6 @@
 import { CONSTANTS } from 'src/constants';
 import EquipmentSheet from 'src/sheets/item/EquipmentSheet.svelte';
-import type { Tab } from 'src/types/types';
+import type { CustomContent, Tab } from 'src/types/types';
 import itemSheetTabs from './item-sheet-tabs';
 import BackgroundSheet from 'src/sheets/item/BackgroundSheet.svelte';
 import BackpackSheet from 'src/sheets/item/BackpackSheet.svelte';
@@ -14,11 +14,26 @@ import ToolSheet from 'src/sheets/item/ToolSheet.svelte';
 import WeaponSheet from 'src/sheets/item/WeaponSheet.svelte';
 import RaceSheet from 'src/sheets/item/RaceSheet.svelte';
 import type { ComponentType } from 'svelte';
-import type { RegisteredTab } from '../types';
+import type { RegisteredContent, RegisteredTab } from '../types';
 import type { ItemSheetContext } from 'src/types/item';
+import { CustomContentManager } from '../content/CustomContentManager';
 
 export class ItemSheetRuntime {
+  private static _content: RegisteredContent<ItemSheetContext>[] = [];
   private static _customTabs: RegisteredTab<ItemSheetContext>[] = [];
+
+  static async getContent(context: ItemSheetContext): Promise<CustomContent[]> {
+    return await CustomContentManager.prepareContentForRender(
+      context,
+      ItemSheetRuntime._content
+    );
+  }
+
+  static registerContent(
+    registeredContent: RegisteredContent<ItemSheetContext>
+  ) {
+    this._content.push(registeredContent);
+  }
 
   static registerTab(tab: RegisteredTab<ItemSheetContext>) {
     ItemSheetRuntime._customTabs.push(tab);

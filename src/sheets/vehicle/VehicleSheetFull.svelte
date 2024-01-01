@@ -60,9 +60,13 @@
   </div>
   <div class="flex-grow-1">
     <div
-      class="actor-name-row flex-row justify-content-space-between align-items-center extra-small-gap"
+      class="actor-name-row flex-row justify-content-space-between align-items-center small-gap"
+      data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.NAME_HEADER_ROW}
     >
-      <div class="actor-name">
+      <div
+        class="actor-name"
+        data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.NAME_CONTAINER}
+      >
         <ContentEditableFormField
           element="h1"
           document={$context.actor}
@@ -122,7 +126,9 @@
           <button
             type="button"
             on:click={() =>
-              new ActorOriginSummaryConfigFormApplication($context.actor).render(true)}
+              new ActorOriginSummaryConfigFormApplication(
+                $context.actor,
+              ).render(true)}
             class="origin-summary-tidy inline-icon-button"
             title={localize('T5EK.OriginSummaryConfig')}
           >

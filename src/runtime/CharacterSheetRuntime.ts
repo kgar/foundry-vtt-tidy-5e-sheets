@@ -1,4 +1,8 @@
-import type { CharacterSheetContext, Tab } from 'src/types/types';
+import type {
+  CharacterSheetContext,
+  CustomContent,
+  Tab,
+} from 'src/types/types';
 import CharacterAttributesTab from 'src/sheets/character/tabs/CharacterAttributesTab.svelte';
 import CharacterInventoryTab from 'src/sheets/character/tabs/CharacterInventoryTab.svelte';
 import CharacterSpellbookTab from 'src/sheets/character/tabs/CharacterSpellbookTab.svelte';
@@ -7,13 +11,15 @@ import ActorEffectsTab from 'src/sheets/actor/ActorEffectsTab.svelte';
 import CharacterBiographyTab from 'src/sheets/character/tabs/CharacterBiographyTab.svelte';
 import ActorJournalTab from 'src/sheets/actor/tabs/ActorJournalTab.svelte';
 import ActorActionsTab from 'src/sheets/actor/tabs/ActorActionsTab.svelte';
-import type { RegisteredTab } from './types';
+import type { RegisteredContent, RegisteredTab } from './types';
 import { CONSTANTS } from 'src/constants';
 import { warn } from 'src/utils/logging';
 import { TabManager } from './tab/TabManager';
 import type { ActorTabRegistrationOptions } from 'src/api/api.types';
+import { CustomContentManager } from './content/CustomContentManager';
 
 export class CharacterSheetRuntime {
+  private static _content: RegisteredContent<CharacterSheetContext>[] = [];
   private static _tabs: RegisteredTab<CharacterSheetContext>[] = [
     {
       title: 'T5EK.Actions.TabName',
@@ -90,6 +96,15 @@ export class CharacterSheetRuntime {
     },
   ];
 
+  static async getContent(
+    context: CharacterSheetContext
+  ): Promise<CustomContent[]> {
+    return await CustomContentManager.prepareContentForRender(
+      context,
+      CharacterSheetRuntime._content
+    );
+  }
+
   static async getTabs(context: CharacterSheetContext): Promise<Tab[]> {
     return await TabManager.prepareTabsForRender(
       context,
@@ -99,6 +114,12 @@ export class CharacterSheetRuntime {
 
   static getAllRegisteredTabs(): RegisteredTab<CharacterSheetContext>[] {
     return [...CharacterSheetRuntime._tabs];
+  }
+
+  static registerContent(
+    registeredContent: RegisteredContent<CharacterSheetContext>
+  ) {
+    this._content.push(registeredContent);
   }
 
   static registerTab(
@@ -122,7 +143,5 @@ export class CharacterSheetRuntime {
     }
 
     CharacterSheetRuntime._tabs.push(tab);
-
-    return CharacterSheetRuntime.getAllRegisteredTabs();
   }
 }

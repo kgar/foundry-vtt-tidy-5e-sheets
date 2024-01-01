@@ -3,11 +3,15 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import Resource from './Resource.svelte';
+  import { CONSTANTS } from 'src/constants';
 
   let context = getContext<Readable<CharacterSheetContext>>('context');
 </script>
 
-<ul class="resources">
+<ul
+  class="resources"
+  data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.RESOURCES_CONTAINER}
+>
   {#each $context.tidyResources as resource}
     <Resource {resource} />
   {/each}

@@ -28,7 +28,7 @@ import {
   getActorActions,
 } from 'src/features/actions/actions';
 import { isNil } from 'src/utils/data';
-import { SheetCompatibilityManager } from './SheetCompatibilityManager';
+import { CustomContentRenderer } from './CustomContentRenderer';
 import { getBaseActorSheet5e } from 'src/utils/class-inheritance';
 
 export class Tidy5eVehicleSheet
@@ -110,6 +110,9 @@ export class Tidy5eVehicleSheet
       },
       allowEffectsManagement: true,
       appId: this.appId,
+      customContent: await VehicleSheetRuntime.getContent(
+        defaultDocumentContext
+      ),
       useClassicControls:
         SettingsProvider.settings.useClassicControlsForVehicle.get(),
       editable: defaultDocumentContext.editable,
@@ -195,7 +198,7 @@ export class Tidy5eVehicleSheet
         SettingsProvider.settings.colorScheme.get(),
         this.element.get(0)
       );
-      await this.renderCustomContent({ isFullRender: true });
+      await this.renderCustomContent({ data, isFullRender: true });
       Hooks.callAll(
         'tidy5e-sheet.renderActorSheet',
         this,
@@ -207,7 +210,7 @@ export class Tidy5eVehicleSheet
     }
 
     applyTitleToWindow(this.title, this.element.get(0));
-    await this.renderCustomContent({ isFullRender: false });
+    await this.renderCustomContent({ data, isFullRender: false });
     Hooks.callAll(
       'tidy5e-sheet.renderActorSheet',
       this,
@@ -217,16 +220,18 @@ export class Tidy5eVehicleSheet
     );
   }
 
-  private async renderCustomContent(args: { isFullRender: boolean }) {
-    const data = get(this.context);
-
-    await SheetCompatibilityManager.renderCustomContent({
+  private async renderCustomContent(args: {
+    data: VehicleSheetContext;
+    isFullRender: boolean;
+  }) {
+    await CustomContentRenderer.render({
       app: this,
-      data: data,
+      customContent: args.data.customContent,
+      data: args.data,
       element: this.element,
       isFullRender: args.isFullRender,
       superActivateListeners: super.activateListeners,
-      tabs: data.tabs,
+      tabs: args.data.tabs,
     });
   }
 

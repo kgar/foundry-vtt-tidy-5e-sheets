@@ -103,4 +103,28 @@ export const CONSTANTS = {
   CLASS_TIDY_USE_CORE_LISTENERS: 'tidy-use-core-listeners',
   CLASS_SELECTOR_TIDY_USE_CORE_LISTENERS: '.tidy-use-core-listeners',
   CLASS_ACTOR_SHEET_5E: 'ActorSheet5e',
+  HTML_DYNAMIC_RENDERING_ATTRIBUTE: 'data-tidy-render-scheme="handlebars"',
+  HTML_DYNAMIC_RENDERING_ATTRIBUTE_SELECTOR:
+    '[data-tidy-render-scheme="handlebars"]',
+  /** The attribute which indicates a particular part of a sheet. */
+  SHEET_PART_ATTRIBUTE: 'data-tidy-sheet-part',
+  SHEET_PARTS: {
+    /**
+     * A container for a sheet name. The sheet name is usually in input, and its container has some additional styles associated with it.
+     * The container typically sits in a sheet header row with other header-related elements.
+     */
+    NAME_CONTAINER: 'name-container',
+    /**
+     * The sheet header row where the sheet name appears.
+     */
+    NAME_HEADER_ROW: 'name-header-row',
+    /**
+     * A container for a single resource (first, second, third, etc.).
+     */
+    RESOURCE: 'resource',
+    /**
+     * The container where all known resources (first, second, third, etc.) are kept.
+     */
+    RESOURCES_CONTAINER: 'resources-container',
+  },
 } as const;

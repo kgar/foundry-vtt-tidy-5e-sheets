@@ -1,4 +1,4 @@
-import { HandlebarsTemplateContent } from 'src/api/HandlebarsTemplateContent';
+import { HandlebarsTemplateRenderer } from 'src/api/HandlebarsTemplateRenderer';
 import { HandlebarsTab } from 'src/api/tab/HandlebarsTab';
 import { HtmlTab } from 'src/api/tab/HtmlTab';
 import type { HtmlTabContent, Tab } from 'src/types/types';
@@ -9,7 +9,6 @@ import type { RegisteredTab, SheetLayout } from '../types';
 import type { CustomTabTitle } from 'src/api/tab/CustomTabBase';
 import type { SupportedTab } from 'src/api/api.types';
 import { SvelteTab } from 'src/api/tab/SvelteTab';
-import { readable, writable } from 'svelte/store';
 
 export class TabManager {
   static async prepareTabsForRender(
@@ -63,7 +62,7 @@ export class TabManager {
 
     if (tab instanceof HandlebarsTab) {
       registeredTab = {
-        content: new HandlebarsTemplateContent({ path: tab.path }),
+        content: new HandlebarsTemplateRenderer({ path: tab.path }),
         id: tab.tabId,
         title: tab.title,
         enabled: tab.enabled,
@@ -124,9 +123,9 @@ export class TabManager {
 
 function getOrderedEnabledSheetTabs<TContext>(
   context: TContext,
-  config: RegisteredTab<TContext>[]
+  registeredTabs: RegisteredTab<TContext>[]
 ) {
-  return [...config].filter(
+  return [...registeredTabs].filter(
     (t) =>
       isNil(t.enabled) ||
       (typeof t.enabled === 'function' && t.enabled(context))
@@ -142,7 +141,7 @@ async function getTabContent(data: any, tab: RegisteredTab<any>) {
     return tab.content;
   }
 
-  if (tab.content instanceof HandlebarsTemplateContent) {
+  if (tab.content instanceof HandlebarsTemplateRenderer) {
     const handlebarsData =
       typeof tab.getData === 'function' ? await tab.getData(data) : data;
 

@@ -1,6 +1,11 @@
 import type { ComponentType, SvelteComponent } from 'svelte';
 import type { Item5e, ItemCardContentComponent, ItemChatData } from './item';
-import type { OnRenderParams, RenderScheme } from 'src/api/api.types';
+import type {
+  OnContentReadyParams,
+  OnRenderParams,
+  RenderScheme,
+} from 'src/api/api.types';
+import type { HtmlContent } from 'src/api/content/HtmlContent';
 
 export type Actor5e = any;
 
@@ -21,9 +26,17 @@ export type HtmlTabContent = {
   renderScheme: RenderScheme;
 };
 
-export type OnRenderTabParams = OnRenderParams & {
+// TODO: Give better name; this is the prepared HTML that is ready to render
+export interface HtmlRuntimeContent {
+  type: 'html';
+  html: string;
+  cssClass?: string;
+  renderScheme: RenderScheme;
+}
+
+export interface OnRenderTabParams extends OnRenderParams {
   tabContentsElement: HTMLElement;
-};
+}
 
 // TODO: Make this generic in such a way that correct props are actually required and that an array of tabs can have hetergeneity of component types without a crazy TS type
 export type Tab<
@@ -33,6 +46,15 @@ export type Tab<
   id: string;
   content: SvelteTabContent<T> | HtmlTabContent;
   onRender?: (params: OnRenderTabParams) => void;
+  activateDefaultSheetListeners?: boolean;
+};
+
+export type CustomContent = {
+  selector?: string;
+  position?: string;
+  content: HtmlContent;
+  onContentReady?: (params: OnContentReadyParams) => void;
+  onRender?: (params: OnRenderParams) => void;
   activateDefaultSheetListeners?: boolean;
 };
 
@@ -144,6 +166,7 @@ export type ActorSheetContext = {
   actor: Actor5e;
   allowEffectsManagement: boolean;
   appId: string;
+  customContent: CustomContent[];
   /**
    * Whether or not the sheet can be edited, regardless of lock/sensitive field settings.
    * When this boolean is `false`, then the sheet is effectively hard locked.

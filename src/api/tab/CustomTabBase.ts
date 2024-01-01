@@ -62,7 +62,7 @@ export abstract class CustomTabBase {
 
   /**
    * An optional override to whether the target tab should use default sheet event listeners.
-   * When not specified, default sheet event listeners are applied for handlebars- and HTML-based tabs.
+   * Defaults to `false`.
    * 
    * @remarks
    * The default sheet listeners pertain to the default 5e sheets. Behaviors include but are not limited to
@@ -73,7 +73,7 @@ export abstract class CustomTabBase {
    * - proficiency toggling
    * - ... etc.
    *
-   * Essentially, if you wish to take full control of your content via event handlers of your own, then set this field to `false`.
+   * Leaving this field `false` means you wish to take full control of the event handling of your content.
    */
   abstract activateDefaultSheetListeners?: boolean;
 }
