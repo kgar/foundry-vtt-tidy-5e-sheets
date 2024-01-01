@@ -293,10 +293,6 @@ export class Tidy5eSheetsApi {
     content: SupportedContent,
     options?: ContentRegistrationOptions
   ) {
-    if (!CustomContentManager.validateContent(content)) {
-      return;
-    }
-
     const registeredContent =
       CustomContentManager.mapContentToRegisteredContent(
         content,
@@ -350,10 +346,6 @@ export class Tidy5eSheetsApi {
     content: SupportedContent,
     options?: ContentRegistrationOptions
   ) {
-    if (!CustomContentManager.validateContent(content)) {
-      return;
-    }
-
     const registeredContent =
       CustomContentManager.mapContentToRegisteredContent(
         content,
@@ -405,10 +397,6 @@ export class Tidy5eSheetsApi {
     content: SupportedContent,
     options?: ContentRegistrationOptions
   ) {
-    if (!CustomContentManager.validateContent(content)) {
-      return;
-    }
-
     const registeredContent =
       CustomContentManager.mapContentToRegisteredContent(
         content,
@@ -460,10 +448,6 @@ export class Tidy5eSheetsApi {
     content: SupportedContent,
     options?: ContentRegistrationOptions
   ) {
-    if (!CustomContentManager.validateContent(content)) {
-      return;
-    }
-
     const registeredContent =
       CustomContentManager.mapContentToRegisteredContent(
         content,
@@ -515,10 +499,6 @@ export class Tidy5eSheetsApi {
     content: SupportedContent,
     options?: ContentRegistrationOptions
   ) {
-    if (!CustomContentManager.validateContent(content)) {
-      return;
-    }
-
     const registeredContent =
       CustomContentManager.mapContentToRegisteredContent(
         content,

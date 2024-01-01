@@ -30,11 +30,6 @@ export class CustomContentManager {
     return customContent;
   }
 
-  static validateContent(content: SupportedContent) {
-    // TODO: Determine what we're validating, if anything.
-    return true;
-  }
-
   static mapContentToRegisteredContent(
     content: SupportedContent,
     layout?: SheetLayout | SheetLayout[]

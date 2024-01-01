@@ -1,7 +1,10 @@
 import { CONSTANTS } from 'src/constants';
 import type { CustomContent, Tab } from 'src/types/types';
 import { delay } from 'src/utils/asynchrony';
-import { wrapCustomHtmlForRendering } from 'src/utils/content';
+import {
+  getCustomContentGroupIdSelector,
+  wrapCustomHtmlForRendering,
+} from 'src/utils/content';
 import { isNil } from 'src/utils/data';
 import { debug, error, warn } from 'src/utils/logging';
 
@@ -43,13 +46,24 @@ export class CustomContentRenderer {
     );
 
     for (let c of customContent) {
-      CustomContentRenderer._renderContent(
-        sheetEl,
-        c,
-        app,
-        data,
-        isFullRender
-      );
+      try {
+        CustomContentRenderer._renderContent(
+          sheetEl,
+          c,
+          app,
+          data,
+          isFullRender,
+          superActivateListeners
+        );
+      } catch (e) {
+        error('Unable to render custom content', false, e);
+        debug('Custom content render failure context', {
+          content: c,
+          app,
+          data,
+          isFullRender,
+        });
+      }
     }
 
     CustomContentRenderer.wireCompatibilityEventListeners(
@@ -69,14 +83,16 @@ export class CustomContentRenderer {
   ): Promise<unknown> {
     const promises = tabs.map(async (tab) => {
       try {
-        let tabEl = sheetEl
-          .querySelector<HTMLElement>(`[data-tab-contents-for="${tab.id}"]`);
+        let tabEl = sheetEl.querySelector<HTMLElement>(
+          `[data-tab-contents-for="${tab.id}"]`
+        );
 
         if (!tabEl) {
           // This content was added during a non-forced render (e.g., tab selection changes); wait a tick and re-attempt to set its HTML
           await delay(0);
-          tabEl = sheetEl
-            .querySelector<HTMLElement>(`[data-tab-contents-for="${tab.id}"]`);
+          tabEl = sheetEl.querySelector<HTMLElement>(
+            `[data-tab-contents-for="${tab.id}"]`
+          );
         }
 
         if (!tabEl) {
@@ -117,13 +133,15 @@ export class CustomContentRenderer {
     customContent: CustomContent,
     app: any,
     data: any,
-    isFullRender: boolean
+    isFullRender: boolean,
+    superActivateListeners: any
   ) {
-    // TODO: Handle any unhandled errors here with a log-and-skip
-
+    const groupId = foundry.utils.randomID();
     const wrappedContent = wrapCustomHtmlForRendering(
       customContent.content.html,
-      customContent.content.renderScheme
+      customContent.content.renderScheme,
+      groupId,
+      customContent.activateDefaultSheetListeners
     );
 
     if (customContent.onContentReady) {
@@ -148,15 +166,18 @@ export class CustomContentRenderer {
       }
 
       targetElements.forEach((el: HTMLElement) => {
-        // TODO: Catch and handle any issues with individual target nodes
         el.insertAdjacentHTML(
           customContent.position as InsertPosition,
           wrappedContent
         );
       });
 
-      // TODO: activate listeners if relevant; this will require a way of targeting the wrapped content, whether it's been planted in one place or many;
-      // perhaps a generated attribute or class on the wrapper?
+      if (customContent.activateDefaultSheetListeners) {
+        const groupSelector = getCustomContentGroupIdSelector(groupId);
+        sheetEl
+          .querySelectorAll(groupSelector)
+          .forEach((el: HTMLElement) => superActivateListeners(el));
+      }
     }
 
     if (customContent.onRender) {
