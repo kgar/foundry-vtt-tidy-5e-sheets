@@ -10,7 +10,7 @@ import { getPercentage } from 'src/utils/numbers';
 import { isNil } from 'src/utils/data';
 import { ItemSheetRuntime } from 'src/runtime/item/ItemSheetRuntime';
 import { TabManager } from 'src/runtime/tab/TabManager';
-import { SheetCompatibilityManager } from './SheetCompatibilityManager';
+import { CustomContentRenderer } from './CustomContentRenderer';
 
 export class Tidy5eKgarItemSheet
   extends dnd5e.applications.item.ItemSheet5e
@@ -126,15 +126,16 @@ export class Tidy5eKgarItemSheet
         this._activateCoreListeners($(node));
         super.activateListeners($(node));
       },
-      toggleAdvancementLock: this.toggleAdvancementLock.bind(this),
-      lockItemQuantity: FoundryAdapter.shouldLockItemQuantity(),
+      customContent: await ItemSheetRuntime.getContent(defaultDocumentContext),
       healthPercentage: getPercentage(
         this.item?.system?.hp?.value,
         this.item?.system?.hp?.max
       ),
       itemDescriptions,
+      lockItemQuantity: FoundryAdapter.shouldLockItemQuantity(),
       originalContext: defaultDocumentContext,
       tabs: tabs,
+      toggleAdvancementLock: this.toggleAdvancementLock.bind(this),
       viewableWarnings:
         defaultDocumentContext.warnings?.filter(
           (w: any) => !isNil(w.message?.trim(), '')
@@ -155,7 +156,7 @@ export class Tidy5eKgarItemSheet
     if (force) {
       this.component?.$destroy();
       await super._render(force, options);
-      await this.renderCustomContent({ isFullRender: true });
+      await this.renderCustomContent({ data, isFullRender: true });
       Hooks.callAll(
         'tidy5e-sheet.renderItemSheet',
         this,
@@ -167,7 +168,7 @@ export class Tidy5eKgarItemSheet
     }
 
     applyTitleToWindow(this.title, this.element.get(0));
-    await this.renderCustomContent({ isFullRender: false });
+    await this.renderCustomContent({ data, isFullRender: false });
     Hooks.callAll(
       'tidy5e-sheet.renderItemSheet',
       this,
@@ -177,16 +178,18 @@ export class Tidy5eKgarItemSheet
     );
   }
 
-  private async renderCustomContent(args: { isFullRender: boolean }) {
-    const data = get(this.context);
-
-    await SheetCompatibilityManager.renderCustomContent({
+  private async renderCustomContent(args: {
+    data: ItemSheetContext;
+    isFullRender: boolean;
+  }) {
+    await CustomContentRenderer.render({
       app: this,
-      data: data,
+      customContent: args.data.customContent,
+      data: args.data,
       element: this.element,
       isFullRender: args.isFullRender,
       superActivateListeners: super.activateListeners,
-      tabs: data.tabs,
+      tabs: args.data.tabs,
     });
   }
 

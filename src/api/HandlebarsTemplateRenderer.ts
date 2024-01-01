@@ -1,9 +1,9 @@
 import { error } from 'src/utils/logging';
 
-export class HandlebarsTemplateContent {
+export class HandlebarsTemplateRenderer {
   path: string;
 
-  constructor(props: Partial<HandlebarsTemplateContent>) {
+  constructor(props: Partial<HandlebarsTemplateRenderer>) {
     this.path = props?.path ?? '';
   }
 

@@ -2,6 +2,18 @@ import type { SheetLayout } from 'src/runtime/types';
 import type { HandlebarsTab } from './tab/HandlebarsTab';
 import type { HtmlTab } from './tab/HtmlTab';
 import type { SvelteTab } from './tab/SvelteTab';
+import type { HtmlContent } from './content/HtmlContent';
+import type { HandlebarsContent } from './content/HandlebarsContent';
+
+/**
+ * Data provided after custom content has been prepared for rendering.
+ */
+export interface OnContentReadyParams extends OnRenderParams {
+  /**
+   * An HTML string that is ready to be rendered to the sheet.
+   */
+  content: string;
+}
 import type { Actor5e } from 'src/types/types';
 
 /**
@@ -41,7 +53,7 @@ export type SupportedTab = HtmlTab | HandlebarsTab | SvelteTab;
 /**
  * Options for registering an actor tab.
  */
-export type ActorTabRegistrationOptions = {
+export interface ActorTabRegistrationOptions {
   /**
    * An optional sheet layout or layouts (default: 'all')
    */
@@ -51,12 +63,24 @@ export type ActorTabRegistrationOptions = {
    * Useful for replacing core Tidy 5e Sheet tabs.
    */
   overrideExisting?: boolean;
-};
+}
+
+/**
+ * The currently supported custom content types.
+ */
+export type SupportedContent = HtmlContent | HandlebarsContent;
+
+/**
+ * Options for registering content.
+ */
+export interface ContentRegistrationOptions {
+  layout?: SheetLayout | SheetLayout[];
+}
 
 /**
  * A command, such as a button or a menu item, which can be executed on behalf of an item.
  */
-export type ItemSummaryCommand = {
+export interface ItemSummaryCommand {
   /**
    * A label to use when displaying the command. Localization keys also work.
    */
@@ -88,27 +112,27 @@ export type ItemSummaryCommand = {
    * Note that the command may instead be a menu item or other control for other scenarios, depending on the sheet and version of Tidy 5e.
    */
   execute?: (params: ItemSummaryCommandExecuteParams) => void;
-};
+}
 
 /**
  * Contextual information to assist with determining whether a command is appropriate for a particular item
  */
-export type ItemSummaryCommandEnabledParams = {
+export interface ItemSummaryCommandEnabledParams {
   /**
    * The item for which the command will show.
    */
   item: any;
-};
+}
 
 /**
  * Contextual information related to the item for which the target command was executed.
  */
-export type ItemSummaryCommandExecuteParams = {
+export interface ItemSummaryCommandExecuteParams {
   /**
    * The item for which the command was executed.
    */
   item: any;
-};
+}
 
 /**
  * A command, such as a button or a menu item, which can be executed on behalf of an actor item section.
@@ -176,7 +200,7 @@ export type ActorItemSectionFooterCommandExecuteParams = {
 /**
  * Information needed to configure specific-level exhaustion.
  */
-export type UseSpecificLevelExhaustionParams = {
+export interface UseSpecificLevelExhaustionParams {
   /**
    * The max number of levels. If not specified or less than 1, will default to `1`.
    */
@@ -198,3 +222,34 @@ export type UseSpecificLevelExhaustionParams = {
    */
   hints?: string[];
 };
+
+/**
+ * Optional params which, when provided, will cause
+ * the custom content to be rendered at the designated `position`
+ * in relation to all instances of the found `selector`.
+ *
+ * @remarks
+ * This interface leverages the API for [Element: insertAdjacentHTML() method](https://developer.mozilla.org/en-US/docs/Web/API/Element/insertAdjacentHTML).
+ */
+export interface CustomContentInjectParams {
+  /**
+   * A string representing the position relative to the element.
+   * Must be one of the following strings:
+   * - `"beforebegin"`: Before the element. Only valid if the element is in the DOM tree and has a parent element.
+   * - `"afterbegin"`: Just inside the element, before its first child.
+   * - `"beforeend"`: Just inside the element, after its last child.
+   * - `"afterend"`: After the element. Only valid if the element is in the DOM tree and has a parent element.
+   *
+   * @remarks
+   * See [Element: insertAdjacentHTML() method](https://developer.mozilla.org/en-US/docs/Web/API/Element/insertAdjacentHTML) for more details.
+   */
+  position: string;
+  /**
+   * The selector to use when looking for the place to insert adjacent HTML.
+   * This is scoped to the sheet where this content was registered.
+   *
+   * @example
+   * ```'[data-tidy-field="name"]'```
+   */
+  selector: string;
+}

@@ -41,12 +41,11 @@ export class HandlebarsTab extends CustomTabBase {
   path: string = '';
   renderScheme: RenderScheme = 'handlebars';
   tabContentsClasses: string[] = [];
-  activateDefaultSheetListeners?: boolean | undefined;
+  activateDefaultSheetListeners?: boolean | undefined = false;
 
   constructor(props?: Partial<HandlebarsTab>) {
     super();
 
-    this.activateDefaultSheetListeners = true;
     const merged = mergeObject(this, props);
     Object.assign(this, merged);
   }

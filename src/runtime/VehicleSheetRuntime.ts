@@ -1,16 +1,18 @@
-import type { Tab, VehicleSheetContext } from 'src/types/types';
+import type { CustomContent, Tab, VehicleSheetContext } from 'src/types/types';
 import { CONSTANTS } from 'src/constants';
 import ActorEffectsTab from 'src/sheets/actor/ActorEffectsTab.svelte';
 import VehicleAttributesTab from 'src/sheets/vehicle/tabs/VehicleAttributesTab.svelte';
 import VehicleCargoAndCrewTab from 'src/sheets/vehicle/tabs/VehicleCargoAndCrewTab.svelte';
 import VehicleDescriptionTab from 'src/sheets/vehicle/tabs/VehicleDescriptionTab.svelte';
 import ActorActionsTab from 'src/sheets/actor/tabs/ActorActionsTab.svelte';
-import type { RegisteredTab } from './types';
+import type { RegisteredContent, RegisteredTab } from './types';
 import { warn } from 'src/utils/logging';
 import { TabManager } from './tab/TabManager';
 import type { ActorTabRegistrationOptions } from 'src/api/api.types';
+import { CustomContentManager } from './content/CustomContentManager';
 
 export class VehicleSheetRuntime {
+  private static _content: RegisteredContent<VehicleSheetContext>[] = [];
   private static _tabs: RegisteredTab<VehicleSheetContext>[] = [
     {
       title: 'T5EK.Actions.TabName',
@@ -59,12 +61,27 @@ export class VehicleSheetRuntime {
     },
   ];
 
+  static async getContent(
+    context: VehicleSheetContext
+  ): Promise<CustomContent[]> {
+    return await CustomContentManager.prepareContentForRender(
+      context,
+      VehicleSheetRuntime._content
+    );
+  }
+
   static getTabs(context: VehicleSheetContext): Promise<Tab[]> {
     return TabManager.prepareTabsForRender(context, VehicleSheetRuntime._tabs);
   }
 
   static getAllRegisteredTabs(): RegisteredTab<VehicleSheetContext>[] {
     return [...VehicleSheetRuntime._tabs];
+  }
+
+  static registerContent(
+    registeredContent: RegisteredContent<VehicleSheetContext>
+  ) {
+    this._content.push(registeredContent);
   }
 
   static registerTab(
@@ -86,7 +103,5 @@ export class VehicleSheetRuntime {
     }
 
     VehicleSheetRuntime._tabs.push(tab);
-
-    return VehicleSheetRuntime.getAllRegisteredTabs();
   }
 }

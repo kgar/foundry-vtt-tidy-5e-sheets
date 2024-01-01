@@ -11,7 +11,7 @@
     "preview": "vite preview",
     "check": "svelte-check --tsconfig ./tsconfig.json",
     "check-watch": "svelte-check --watch --tsconfig ./tsconfig.json",
-    "refresh-docs": "typedoc ./src/api/index.ts --readme ./src/api/README.md",
+    "refresh-docs": "typedoc ./src/api/index.ts --readme ./src/api/README.md --name \"Tidy 5e Sheets API\"",
     "link-create": "node symlink-module-build-dir.js",
     "link-remove": "node symlink-module-build-dir.js --clean"
   },
@@ -27,7 +27,7 @@
     "tslib": "^2.6.2",
     "typedoc": "^0.25.4",
     "typescript": "^5.2.2",
-    "vite": "^4.4.9",
+    "vite": "^4.5.1",
     "yargs": "^17.7.2"
   },
   "dependencies": {

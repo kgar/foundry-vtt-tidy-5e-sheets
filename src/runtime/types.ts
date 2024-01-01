@@ -1,19 +1,38 @@
-import type { CustomTabTitle, RenderScheme } from 'src/api';
-import type { HandlebarsTemplateContent } from 'src/api/HandlebarsTemplateContent';
+import type {
+  CustomContentInjectParams,
+  CustomTabTitle,
+  OnContentReadyParams,
+  OnRenderParams,
+  RenderScheme,
+} from 'src/api';
+import type { HandlebarsTemplateRenderer } from 'src/api/HandlebarsTemplateRenderer';
 import type { Item5e } from 'src/types/item';
 import type {
+  HtmlRuntimeContent,
   Actor5e,
   HtmlTabContent,
   OnRenderTabParams,
   SvelteTabContent,
 } from 'src/types/types';
 
+export type RegisteredContent<TContext> = {
+  activateDefaultSheetListeners?: boolean;
+  content: SvelteTabContent | HtmlRuntimeContent | HandlebarsTemplateRenderer;
+  enabled?: (context: TContext) => boolean;
+  getData?: (data: any) => any | Promise<any>;
+  injectParams?: CustomContentInjectParams;
+  layout?: SheetLayout | SheetLayout[];
+  onContentReady?: (params: OnContentReadyParams) => void;
+  onRender?: (args: OnRenderParams) => void;
+  renderScheme?: RenderScheme;
+};
+
 export type RegisteredTab<TContext> = {
   enabled?: (context: TContext) => boolean;
   layout?: SheetLayout | SheetLayout[];
   title: CustomTabTitle;
   id: string;
-  content: SvelteTabContent | HtmlTabContent | HandlebarsTemplateContent;
+  content: SvelteTabContent | HtmlTabContent | HandlebarsTemplateRenderer;
   onRender?: (args: OnRenderTabParams) => void;
   renderScheme?: RenderScheme;
   tabContentsClasses?: string[];

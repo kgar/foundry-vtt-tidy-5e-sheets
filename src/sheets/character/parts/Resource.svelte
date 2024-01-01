@@ -4,6 +4,7 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import TextInput from '../../../components/inputs/TextInput.svelte';
+  import { CONSTANTS } from 'src/constants';
 
   export let resource: TidyResource;
   let context = getContext<Readable<CharacterSheetContext>>('context');
@@ -15,7 +16,10 @@
   let viewingConfig = false;
 </script>
 
-<li class="resource {resource.cssClasses?.join(' ') ?? ''}">
+<li
+  class="resource {resource.cssClasses?.join(' ') ?? ''}"
+  data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.RESOURCE}
+>
   <h4 class="resource-name" class:hidden={viewingConfig || configActive}>
     <TextInput
       document={$context.actor}
