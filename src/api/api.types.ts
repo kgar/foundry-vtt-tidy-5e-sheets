@@ -52,7 +52,7 @@ export type SupportedTab = HtmlTab | HandlebarsTab | SvelteTab;
 /**
  * Options for registering an actor tab.
  */
-export type ActorTabRegistrationOptions = {
+export interface ActorTabRegistrationOptions {
   /**
    * An optional sheet layout or layouts (default: 'all')
    */
@@ -62,7 +62,7 @@ export type ActorTabRegistrationOptions = {
    * Useful for replacing core Tidy 5e Sheet tabs.
    */
   overrideExisting?: boolean;
-};
+}
 
 /**
  * The currently supported custom content types.
@@ -72,14 +72,14 @@ export type SupportedContent = HtmlContent | HandlebarsContent;
 /**
  * Options for registering content.
  */
-export type ContentRegistrationOptions = {
+export interface ContentRegistrationOptions {
   layout?: SheetLayout | SheetLayout[];
-};
+}
 
 /**
  * A command, such as a button or a menu item, which can be executed on behalf of an item.
  */
-export type ItemSummaryCommand = {
+export interface ItemSummaryCommand {
   /**
    * A label to use when displaying the command. Localization keys also work.
    */
@@ -111,29 +111,29 @@ export type ItemSummaryCommand = {
    * Note that the command may instead be a menu item or other control for other scenarios, depending on the sheet and version of Tidy 5e.
    */
   execute?: (params: ItemSummaryCommandExecuteParams) => void;
-};
+}
 
 /**
  * Contextual information to assist with determining whether a command is appropriate for a particular item
  */
-export type ItemSummaryCommandEnabledParams = {
+export interface ItemSummaryCommandEnabledParams {
   /**
    * The item for which the command will show.
    */
   item: any;
-};
+}
 
-export type ItemSummaryCommandExecuteParams = {
+export interface ItemSummaryCommandExecuteParams {
   /**
    * The item for which the command was executed.
    */
   item: any;
-};
+}
 
 /**
  * Information needed to configure specific-level exhaustion.
  */
-export type UseSpecificLevelExhaustionParams = {
+export interface UseSpecificLevelExhaustionParams {
   /**
    * The max number of levels. If not specified or less than 1, will default to `1`.
    */

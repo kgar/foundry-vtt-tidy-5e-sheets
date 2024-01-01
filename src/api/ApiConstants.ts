@@ -22,7 +22,6 @@ const ApiConstants = {
   SHEET_PART_ATTRIBUTE: CONSTANTS.SHEET_PART_ATTRIBUTE,
   /**
    * Values used in conjunction with the attribute `api.constants.SHEET_PART_ATTRIBUTE` to identify a part of a Tidy 5e sheet.
-   * 
    *
    * @example an element which is tagged with a sheet part value
    * ```html

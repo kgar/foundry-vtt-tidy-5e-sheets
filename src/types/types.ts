@@ -27,16 +27,16 @@ export type HtmlTabContent = {
 };
 
 // TODO: Give better name; this is the prepared HTML that is ready to render
-export type HtmlRuntimeContent = {
+export interface HtmlRuntimeContent {
   type: 'html';
   html: string;
   cssClass?: string;
   renderScheme: RenderScheme;
-};
+}
 
-export type OnRenderTabParams = OnRenderParams & {
+export interface OnRenderTabParams extends OnRenderParams {
   tabContentsElement: HTMLElement;
-};
+}
 
 // TODO: Make this generic in such a way that correct props are actually required and that an array of tabs can have hetergeneity of component types without a crazy TS type
 export type Tab<
