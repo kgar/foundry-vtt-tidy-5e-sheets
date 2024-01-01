@@ -294,7 +294,7 @@ export class Tidy5eSheetsApi {
     options?: ContentRegistrationOptions
   ) {
     const registeredContent =
-      CustomContentManager.mapContentToRegisteredContent(
+      CustomContentManager.mapToRegisteredContent(
         content,
         options?.layout
       );
@@ -347,7 +347,7 @@ export class Tidy5eSheetsApi {
     options?: ContentRegistrationOptions
   ) {
     const registeredContent =
-      CustomContentManager.mapContentToRegisteredContent(
+      CustomContentManager.mapToRegisteredContent(
         content,
         options?.layout
       );
@@ -398,7 +398,7 @@ export class Tidy5eSheetsApi {
     options?: ContentRegistrationOptions
   ) {
     const registeredContent =
-      CustomContentManager.mapContentToRegisteredContent(
+      CustomContentManager.mapToRegisteredContent(
         content,
         options?.layout
       );
@@ -449,7 +449,7 @@ export class Tidy5eSheetsApi {
     options?: ContentRegistrationOptions
   ) {
     const registeredContent =
-      CustomContentManager.mapContentToRegisteredContent(
+      CustomContentManager.mapToRegisteredContent(
         content,
         options?.layout
       );
@@ -500,7 +500,7 @@ export class Tidy5eSheetsApi {
     options?: ContentRegistrationOptions
   ) {
     const registeredContent =
-      CustomContentManager.mapContentToRegisteredContent(
+      CustomContentManager.mapToRegisteredContent(
         content,
         options?.layout
       );

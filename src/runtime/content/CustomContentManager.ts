@@ -30,7 +30,7 @@ export class CustomContentManager {
     return customContent;
   }
 
-  static mapContentToRegisteredContent(
+  static mapToRegisteredContent(
     content: SupportedContent,
     layout?: SheetLayout | SheetLayout[]
   ) {
