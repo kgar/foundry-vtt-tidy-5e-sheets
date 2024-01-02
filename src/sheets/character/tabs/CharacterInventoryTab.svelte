@@ -76,7 +76,7 @@
             )} ({filteredItems.length})"
             items={filteredItems}
             extraInventoryRowClasses={section.css}
-            dataset={section.dataset}
+            {section}
           />
         {:else}
           <InventoryGrid items={filteredItems} {section} />

@@ -9,6 +9,7 @@ import type { HandlebarsTemplateRenderer } from 'src/api/HandlebarsTemplateRende
 import type { Item5e } from 'src/types/item';
 import type {
   HtmlRuntimeContent,
+  Actor5e,
   HtmlTabContent,
   OnRenderTabParams,
   SvelteTabContent,
@@ -45,7 +46,7 @@ export type RegisteredTab<TContext> = {
 export type SheetLayout = 'all' | 'classic';
 
 export type RegisteredItemSummaryCommand = {
-  label: string;
+  label?: string;
   iconClass?: string;
   tooltip?: string;
   enabled?: (params: RegisteredItemSummaryCommandEnabledParams) => boolean;
@@ -57,4 +58,26 @@ export type RegisteredItemSummaryCommandEnabledParams = {
 };
 export type RegisteredItemSummaryCommandExecuteParams = {
   item: Item5e;
+};
+
+export type RegisteredActorItemSectionFooterCommand = {
+  label?: string;
+  iconClass?: string;
+  tooltip?: string;
+  enabled?: (
+    params: RegisteredActorItemSectionFooterCommandEnabledParams
+  ) => boolean;
+  execute?: (
+    params: RegisteredActorItemSectionFooterCommandExecuteParams
+  ) => void;
+};
+
+export type RegisteredActorItemSectionFooterCommandEnabledParams = {
+  actor: Actor5e;
+  section: any;
+};
+export type RegisteredActorItemSectionFooterCommandExecuteParams = {
+  actor: Actor5e;
+  section: any;
+  event: Event;
 };

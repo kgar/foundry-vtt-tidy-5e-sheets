@@ -27,6 +27,7 @@ import { HtmlContent } from './content/HtmlContent';
 import { HandlebarsContent } from './content/HandlebarsContent';
 import { CONSTANTS } from 'src/constants';
 import { CustomContentManager } from 'src/runtime/content/CustomContentManager';
+import { ActorItemApi } from './actor-item/ActorItemApi';
 
 /**
  * The Tidy 5e Sheets API. The API becomes available after the hook `tidy5e-sheet.ready` is called.
@@ -71,6 +72,9 @@ export class Tidy5eSheetsApi {
 
   /** {@inheritDoc ActionListApi} */
   actionList = new ActionListApi();
+
+  /** {@inheritDoc ActorItemApi} */
+  actorItem = new ActorItemApi();
 
   /**
    * Constants for a variety of uses.

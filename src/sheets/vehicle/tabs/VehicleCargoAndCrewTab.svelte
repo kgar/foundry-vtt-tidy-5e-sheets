@@ -249,7 +249,7 @@
         {#if $context.unlocked && section.dataset}
           <ItemTableFooter
             actor={$context.actor}
-            dataset={section.dataset}
+            {section}
             create={() => onItemCreate(section.dataset.type)}
           />
         {/if}

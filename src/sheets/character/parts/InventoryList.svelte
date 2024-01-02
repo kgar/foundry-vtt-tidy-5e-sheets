@@ -24,7 +24,6 @@
   import type { Readable } from 'svelte/store';
   import type { CharacterSheetContext } from 'src/types/types';
   import ListItemQuantity from 'src/sheets/actor/ListItemQuantity.svelte';
-  import InventoryItemCardContent from '../../../components/item-info-card/InventoryItemCardContent.svelte';
   import AmmoSelector from '../../actor/AmmoSelector.svelte';
   import { settingStore } from 'src/settings/settings';
   import ActionFilterOverrideControl from 'src/components/item-list/controls/ActionFilterOverrideControl.svelte';
@@ -32,7 +31,7 @@
   export let primaryColumnName: string;
   export let items: Item5e[];
   export let extraInventoryRowClasses: string = '';
-  export let dataset: Record<string, unknown> | undefined = undefined;
+  export let section: any = undefined;
   export let lockControls: boolean = false;
   export let allowFavoriteIconNextToName: boolean = true;
   export let includeWeightColumn: boolean = true;
@@ -186,8 +185,8 @@
         {/if}
       </ItemTableRow>
     {/each}
-    {#if $context.unlocked && dataset}
-      <ItemTableFooter actor={$context.actor} {dataset} />
+    {#if $context.unlocked && section}
+      <ItemTableFooter actor={$context.actor} {section} />
     {/if}
   </ItemTable>
 </section>
