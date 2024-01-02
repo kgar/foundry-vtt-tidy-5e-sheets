@@ -137,7 +137,7 @@ export interface ItemSummaryCommandExecuteParams {
 /**
  * A command, such as a button or a menu item, which can be executed on behalf of an actor item section.
  */
-export type ActorItemSectionFooterCommand = {
+export interface ActorItemSectionFooterCommand {
   /**
    * Optional label to use when displaying the command. Localization keys also work.
    */
@@ -169,9 +169,9 @@ export type ActorItemSectionFooterCommand = {
    * Note that the command may instead be a menu item or other control for other scenarios, depending on the sheet and version of Tidy 5e.
    */
   execute?: (params: ActorItemSectionFooterCommandExecuteParams) => void;
-};
+}
 
-export type ActorItemSectionFooterCommandEnabledParams = {
+export interface ActorItemSectionFooterCommandEnabledParams {
   /**
    * The actor for whom the command will show.
    */
@@ -180,9 +180,9 @@ export type ActorItemSectionFooterCommandEnabledParams = {
    * The item section for which the command will show.
    */
   section: any;
-};
+}
 
-export type ActorItemSectionFooterCommandExecuteParams = {
+export interface ActorItemSectionFooterCommandExecuteParams {
   /**
    * The actor for whom the command was executed.
    */
@@ -195,7 +195,7 @@ export type ActorItemSectionFooterCommandExecuteParams = {
    * Any user-initiated event which triggered the command execution. For example, a MouseEvent or PointerEvent.
    */
   event: Event;
-};
+}
 
 /**
  * Information needed to configure specific-level exhaustion.
