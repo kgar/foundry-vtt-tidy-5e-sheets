@@ -1,4 +1,5 @@
 export * from './action-list/ActionListApi';
+export * from './actor-item/ActorItemApi';
 export * from './api.types';
 export * from './ApiConstants';
 export * from './content/CustomContentBase';
