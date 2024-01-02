@@ -4,6 +4,7 @@ import type { HtmlTab } from './tab/HtmlTab';
 import type { SvelteTab } from './tab/SvelteTab';
 import type { HtmlContent } from './content/HtmlContent';
 import type { HandlebarsContent } from './content/HandlebarsContent';
+import type { Actor5e } from 'src/types/types';
 
 /**
  * Data provided after custom content has been prepared for rendering.
@@ -14,7 +15,6 @@ export interface OnContentReadyParams extends OnRenderParams {
    */
   content: string;
 }
-import type { Actor5e } from 'src/types/types';
 
 /**
  * Data provided during the rendering of this item document sheet.
@@ -221,7 +221,7 @@ export interface UseSpecificLevelExhaustionParams {
    * > `['No exhaustion', 'You are kind of tired', 'You look unwell', 'Dead 💀']`
    */
   hints?: string[];
-};
+}
 
 /**
  * Optional params which, when provided, will cause
