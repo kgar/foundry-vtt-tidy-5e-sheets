@@ -66,7 +66,7 @@
                   >
                 {/if}
               </span>
-              <div data-edit={itemDescription.field}>
+              <div data-edit={itemDescription.field} class="item-editor-descriptions-text">
                 {@html itemDescription.content}
               </div>
             </AccordionItem>
@@ -85,5 +85,9 @@
       padding-left: 2rem;
       padding-right: 0.125rem;
     }
+  }
+
+  .item-editor-descriptions-text {
+    line-height: 1.5rem;
   }
 </style>
