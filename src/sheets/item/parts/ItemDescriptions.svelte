@@ -12,8 +12,8 @@
    * This is a compatibility feature to allow for the singleton active editor
    * while preventing unwanted additional data saving from readonly editor content
    * which has compatibility tags allowing it to render secret buttons.
-   * 
-   * When showing the active editor and when saving active editor changes, 
+   *
+   * When showing the active editor and when saving active editor changes,
    * readonly editors should not be in the form / DOM, else strange side effects occur.
    */
   export let renderDescriptions: boolean = true;
@@ -66,7 +66,10 @@
                   >
                 {/if}
               </span>
-              <div data-edit={itemDescription.field} class="item-editor-descriptions-text">
+              <div
+                data-edit={itemDescription.field}
+                class="item-editor-descriptions-html-container"
+              >
                 {@html itemDescription.content}
               </div>
             </AccordionItem>
@@ -85,9 +88,5 @@
       padding-left: 2rem;
       padding-right: 0.125rem;
     }
-  }
-
-  .item-editor-descriptions-text {
-    line-height: 1.5rem;
   }
 </style>
