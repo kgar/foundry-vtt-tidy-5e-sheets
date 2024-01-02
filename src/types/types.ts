@@ -82,6 +82,13 @@ export type CharacterFeatureSection = {
   showRequirementsColumn: boolean;
 };
 
+export type SpellAttackModCalculations = {
+  rangedMod: string;
+  rangedTooltip: string;
+  meleeMod: string;
+  meleeTooltip: string;
+};
+
 export type CharacterSheetContext = {
   actorClassesToImages: Record<string, string>;
   allowMaxHpOverride: boolean;
@@ -97,6 +104,7 @@ export type CharacterSheetContext = {
   notes3EnrichedHtml: string;
   notes4EnrichedHtml: string;
   notesEnrichedHtml: string;
+  spellAttackModCalculations: SpellAttackModCalculations;
   traitEnrichedHtml: string;
 } & ActorSheetContext &
   Record<string, any>;
@@ -116,6 +124,7 @@ export type NpcSheetContext = {
   notesEnrichedHtml: string;
   shortRest: (event: Event) => Promise<void>;
   showSpellbookTab: boolean;
+  spellAttackModCalculations: SpellAttackModCalculations;
   traitEnrichedHtml: string;
 } & ActorSheetContext &
   Record<string, any>;

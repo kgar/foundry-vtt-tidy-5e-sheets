@@ -84,3 +84,37 @@ export function getMaxPreparedSpellsSampleFormulas(): MaxPreparedSpellFormula[] 
     },
   ];
 }
+
+export function extractDeterministicFormula(formula: string): string {
+  try {
+    formula =
+      formula
+        ?.replace(RollTerm.FLAVOR_REGEXP, '')
+        ?.replace(RollTerm.FLAVOR_REGEXP_STRING, '')
+        ?.trim() ?? '';
+
+    if (formula?.trim() === '') {
+      return '';
+    }
+
+    const roll = Roll.create(formula);
+
+    const deterministicTerms = roll.terms
+      .filter((t: any) => t.isDeterministic || t.isIntermediate)
+      .map(
+        (t: any) =>
+          new NumericTerm({ number: t.evaluate().total, options: t.options })
+      );
+
+    if (!deterministicTerms.length) {
+      return '';
+    }
+
+    let simplifiedFormula = Roll.fromTerms(deterministicTerms).formula;
+
+    return simplifiedFormula;
+  } catch (e) {
+    error('Unable to simplify formula due to an error.', false, e);
+    return formula;
+  }
+}
