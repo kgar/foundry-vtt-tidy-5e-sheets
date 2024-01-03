@@ -29,6 +29,7 @@
 
     {#if includeAttackMod}
       / {localize('T5EK.SpellAttackMod')}:
+      <!-- <i class="fa-solid fa-wand-magic-sparkles"></i> -->
       <span
         class="spell-attack-mod"
         data-tooltip={$context.spellAttackModCalculations.rangedTooltip}
@@ -37,6 +38,7 @@
       </span>
 
       {#if $context.spellAttackModCalculations.rangedMod !== $context.spellAttackModCalculations.meleeMod}
+        <!-- <i class="fa-solid fa-hand-sparkles"></i> -->
         <span
           class="spell-attack-mod"
           data-tooltip={$context.spellAttackModCalculations.meleeTooltip}
