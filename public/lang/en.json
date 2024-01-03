@@ -133,6 +133,7 @@
   "T5EK.AbbrMod": "Mod",
   "T5EK.AbbrSavingThrow": "Save",
   "T5EK.SpellAttackMod": "Attack Mod",
+  "T5EK.SpellAttackModTooltipWithBonus": "{modNumber} ({abilityName}) + {proficiencyNumber} (Proficiency) + {bonusNumber} (Bonus)",
   "T5EK.PreparedSpells": "Prepared spells",
   "T5EK.PreparedSpellsMax": "Maximum for prepared spells (Note: do not use 'Override' mode on the active effect')",
 

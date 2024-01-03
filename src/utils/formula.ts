@@ -1,11 +1,11 @@
 import type { Item5e } from 'src/types/item';
-import { error } from './logging';
+import { debug, error } from './logging';
 import type {
   Actor5e,
   MaxPreparedSpellFormula,
   SpellAttackModCalculations,
 } from 'src/types/types';
-import { isNil } from './data';
+import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
 export function scaleCantripDamageFormula(spell: Item5e, formula: string) {
   try {
@@ -90,96 +90,98 @@ export function getMaxPreparedSpellsSampleFormulas(): MaxPreparedSpellFormula[] 
   ];
 }
 
-export function extractDeterministicFormula(formula: string): string {
-  try {
-    formula =
-      formula
-        ?.replace(RollTerm.FLAVOR_REGEXP, '')
-        ?.replace(RollTerm.FLAVOR_REGEXP_STRING, '')
-        ?.trim() ?? '';
-
-    if (formula?.trim() === '') {
-      return '';
-    }
-
-    const roll = Roll.create(formula);
-
-    const deterministicTerms = roll.terms
-      .filter((t: any) => t.isDeterministic || t.isIntermediate)
-      .map(
-        (t: any) =>
-          new NumericTerm({ number: t.evaluate().total, options: t.options })
-      );
-
-    if (!deterministicTerms.length) {
-      return '';
-    }
-
-    let simplifiedFormula = Roll.fromTerms(deterministicTerms).formula;
-
-    return simplifiedFormula;
-  } catch (e) {
-    error('Unable to simplify formula due to an error.', false, e);
-    return formula;
-  }
-}
-
 export function calculateSpellAttackMod(
   actor: Actor5e
 ): SpellAttackModCalculations {
-  const rollData = actor.getRollData();
+  try {
+    const rollData = actor.getRollData();
 
-  let prof = actor.system.attributes.prof ?? 0;
-  let spellAbility = actor.system.attributes.spellcasting;
-  let abilityMod =
-    (spellAbility != '' ? actor.system.abilities[spellAbility].mod : 0) ?? 0;
-  let spellAttackMod = prof + abilityMod;
+    let prof = actor.system.attributes.prof ?? 0;
+    let spellAbility = actor.system.attributes.spellcasting;
+    let abilityMod =
+      (spellAbility != '' ? actor.system.abilities[spellAbility].mod : 0) ?? 0;
+    let spellAttackMod = prof + abilityMod;
 
-  let rawRsak = Roll.replaceFormulaData(
-    actor.system.bonuses.rsak.attack,
-    rollData,
-    { missing: 0, warn: false }
+    let rawRsak = Roll.replaceFormulaData(
+      actor.system.bonuses.rsak.attack,
+      rollData,
+      { missing: 0, warn: false }
+    );
+
+    let rsakBonusTotal = calculateDeterministicBonus(rawRsak);
+
+    let rsakTotal = (spellAttackMod + rsakBonusTotal).toString();
+
+    if (!rsakTotal.startsWith('-')) {
+      rsakTotal = '+' + rsakTotal;
+    }
+
+    let rawMsak = Roll.replaceFormulaData(
+      actor.system.bonuses.msak.attack,
+      rollData,
+      { missing: 0, warn: false }
+    );
+
+    let msakBonusTotal = calculateDeterministicBonus(rawMsak);
+
+    let msakTotal = (spellAttackMod + msakBonusTotal).toString();
+
+    if (!msakTotal.startsWith('-')) {
+      msakTotal = '+' + msakTotal;
+    }
+
+    return {
+      meleeMod: msakTotal,
+      meleeTooltip: FoundryAdapter.localize(
+        'T5EK.SpellAttackModTooltipWithBonus',
+        {
+          modNumber: abilityMod,
+          abilityName: CONFIG.DND5E.abilities[spellAbility].label,
+          proficiencyNumber: prof,
+          bonusNumber: msakBonusTotal,
+        }
+      ),
+      rangedMod: rsakTotal,
+      rangedTooltip: FoundryAdapter.localize(
+        'T5EK.SpellAttackModTooltipWithBonus',
+        {
+          modNumber: abilityMod,
+          abilityName: CONFIG.DND5E.abilities[spellAbility].label,
+          proficiencyNumber: prof,
+          bonusNumber: rsakBonusTotal,
+        }
+      ),
+    };
+  } catch (e) {
+    error('An error occurred while calculating spell attack bonus', false, e);
+    debug('Spell attack bonus error troubleshooting details', {
+      bonuses: actor.system.bonuses,
+      actor: actor,
+    });
+
+    return {
+      meleeMod: '',
+      meleeTooltip: '',
+      rangedMod: '',
+      rangedTooltip: '',
+    };
+  }
+}
+
+function calculateDeterministicBonus(rawBonus: string): number {
+  if (!Roll.validate(rawBonus)) {
+    return 0;
+  }
+
+  const deterministicRawBonus = new Roll(rawBonus).terms.filter(
+    (t: any) => t.isDeterministic
   );
 
-  let staticRsak = simplifyFormula(extractDeterministicFormula(rawRsak));
+  const bonusRoll = Roll.fromTerms(deterministicRawBonus);
 
-  let rsakTotalSegments = [spellAttackMod];
-  if (!isNil(staticRsak, '')) {
-    rsakTotalSegments.push(staticRsak);
+  let bonusTotal = 0;
+  if (Roll.validate(bonusRoll.formula)) {
+    bonusTotal = bonusRoll.evaluate({ async: false }).total;
   }
-
-  let rsakTotal = simplifyFormula(rsakTotalSegments.join('+'));
-
-  if (!rsakTotal.startsWith('-')) {
-    rsakTotal = "+" + rsakTotal;
-  }
-  
-  let rawMsak = Roll.replaceFormulaData(
-    actor.system.bonuses.msak.attack,
-    rollData,
-    { missing: 0, warn: false }
-  );
-
-  let staticMsak = simplifyFormula(extractDeterministicFormula(rawMsak));
-
-  let msakTotalSegments = [spellAttackMod];
-  if (!isNil(staticMsak, '')) {
-    msakTotalSegments.push(staticMsak);
-  }
-
-  let msakTotal = simplifyFormula(msakTotalSegments.join('+'));
-
-  if (!msakTotal.startsWith('-')) {
-    msakTotal = "+" + msakTotal;
-  }
-
-  let spellAttackText =
-    spellAttackMod > 0 ? '+' + spellAttackMod : spellAttackMod;
-
-  return {
-    meleeMod: msakTotal,
-    meleeTooltip: 'Test MSAK',
-    rangedMod: rsakTotal,
-    rangedTooltip: 'Test RSAK',
-  };
+  return bonusTotal;
 }

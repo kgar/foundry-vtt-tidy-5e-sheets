@@ -15,8 +15,6 @@
   export let includePreparedSpells: boolean = true;
 
   const localize = FoundryAdapter.localize;
-  $: spellAttackBonusInfo =
-    FoundryAdapter.getSpellAttackModAndTooltip($context);
 
   $: abilities = Object.entries($context.abilities).map((a: any) => ({
     abbr: a[0],
@@ -31,17 +29,21 @@
 
     {#if includeAttackMod}
       / {localize('T5EK.SpellAttackMod')}:
-      <span class="spell-attack-mod">
-        <span data-tooltip={spellAttackBonusInfo.modTooltip}
-          >{spellAttackBonusInfo.mod}</span
-        >
-        {#if spellAttackBonusInfo.bonus?.trim() !== ''}
-          <i
-            class="bonus-icon fa-solid fa-dice-d4"
-            data-tooltip="{spellAttackBonusInfo.bonus}: bonus 'actor.system.bonuses.rsak.attack'"
-          />
-        {/if}
+      <span
+        class="spell-attack-mod"
+        data-tooltip={$context.spellAttackModCalculations.rangedTooltip}
+      >
+        <span>{$context.spellAttackModCalculations.rangedMod}</span>
       </span>
+
+      {#if $context.spellAttackModCalculations.rangedMod !== $context.spellAttackModCalculations.meleeMod}
+        <span
+          class="spell-attack-mod"
+          data-tooltip={$context.spellAttackModCalculations.meleeTooltip}
+        >
+          <span>{$context.spellAttackModCalculations.meleeMod}</span>
+        </span>
+      {/if}
     {/if}
   </h3>
   {#if includePreparedSpells}
@@ -56,7 +58,9 @@
       <p>{localize('T5EK.PreparedSpells')}</p>
       <span class="spells-prepared">{$context.preparedSpells ?? 0}</span>
       /
-      <span class="spells-max-prepared">{$context.maxPreparedSpellsTotal ?? 0}</span>
+      <span class="spells-max-prepared"
+        >{$context.maxPreparedSpellsTotal ?? 0}</span
+      >
     </button>
   {/if}
   <div class="spellcasting-attribute">
