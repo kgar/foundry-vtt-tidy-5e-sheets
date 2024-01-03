@@ -33,6 +33,7 @@ import {
 } from 'src/features/actions/actions';
 import { isNil } from 'src/utils/data';
 import { CustomContentRenderer } from './CustomContentRenderer';
+import { calculateSpellAttackMod } from 'src/utils/formula';
 
 export class Tidy5eCharacterSheet
   extends dnd5e.applications.actor.ActorSheet5eCharacter
@@ -311,6 +312,7 @@ export class Tidy5eCharacterSheet
       originalContext: defaultDocumentContext,
       owner: this.actor.isOwner,
       showLimitedSheet: FoundryAdapter.showLimitedSheet(this.actor),
+      spellAttackModCalculations: calculateSpellAttackMod(this.actor),
       tabs: [],
       tidyResources: tidyResources,
       traitEnrichedHtml: await FoundryAdapter.enrichHtml(

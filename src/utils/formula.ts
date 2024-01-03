@@ -1,6 +1,11 @@
 import type { Item5e } from 'src/types/item';
 import { error } from './logging';
-import type { MaxPreparedSpellFormula } from 'src/types/types';
+import type {
+  Actor5e,
+  MaxPreparedSpellFormula,
+  SpellAttackModCalculations,
+} from 'src/types/types';
+import { isNil } from './data';
 
 export function scaleCantripDamageFormula(spell: Item5e, formula: string) {
   try {
@@ -117,4 +122,64 @@ export function extractDeterministicFormula(formula: string): string {
     error('Unable to simplify formula due to an error.', false, e);
     return formula;
   }
+}
+
+export function calculateSpellAttackMod(
+  actor: Actor5e
+): SpellAttackModCalculations {
+  const rollData = actor.getRollData();
+
+  let prof = actor.system.attributes.prof ?? 0;
+  let spellAbility = actor.system.attributes.spellcasting;
+  let abilityMod =
+    (spellAbility != '' ? actor.system.abilities[spellAbility].mod : 0) ?? 0;
+  let spellAttackMod = prof + abilityMod;
+
+  let rawRsak = Roll.replaceFormulaData(
+    actor.system.bonuses.rsak.attack,
+    rollData,
+    { missing: 0, warn: false }
+  );
+
+  let staticRsak = simplifyFormula(extractDeterministicFormula(rawRsak));
+
+  let rsakTotalSegments = [spellAttackMod];
+  if (!isNil(staticRsak, '')) {
+    rsakTotalSegments.push(staticRsak);
+  }
+
+  let rsakTotal = simplifyFormula(rsakTotalSegments.join('+'));
+
+  if (!rsakTotal.startsWith('-')) {
+    rsakTotal = "+" + rsakTotal;
+  }
+  
+  let rawMsak = Roll.replaceFormulaData(
+    actor.system.bonuses.msak.attack,
+    rollData,
+    { missing: 0, warn: false }
+  );
+
+  let staticMsak = simplifyFormula(extractDeterministicFormula(rawMsak));
+
+  let msakTotalSegments = [spellAttackMod];
+  if (!isNil(staticMsak, '')) {
+    msakTotalSegments.push(staticMsak);
+  }
+
+  let msakTotal = simplifyFormula(msakTotalSegments.join('+'));
+
+  if (!msakTotal.startsWith('-')) {
+    msakTotal = "+" + msakTotal;
+  }
+
+  let spellAttackText =
+    spellAttackMod > 0 ? '+' + spellAttackMod : spellAttackMod;
+
+  return {
+    meleeMod: msakTotal,
+    meleeTooltip: 'Test MSAK',
+    rangedMod: rsakTotal,
+    rangedTooltip: 'Test RSAK',
+  };
 }
