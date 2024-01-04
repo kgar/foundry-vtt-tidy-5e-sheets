@@ -23,28 +23,42 @@
 </script>
 
 <TabFooter cssClass="{cssClass} spellbook-footer" mode="horizontal">
-  <h3 class="spell-dc spell-mod">
-    {localize('DND5E.SpellDC')}
-    {$context.system.attributes.spelldc}
+  <h3 class="spell-dc spell-mod flex-row">
+    <div data-tooltip="Spell DC: {$context.system.attributes.spelldc}">
+      <i class="fa-solid fa-shield"></i>
+      {$context.system.attributes.spelldc}
+    </div>
 
     {#if includeAttackMod}
-      / {localize('T5EK.SpellAttackMod')}:
-      <!-- <i class="fa-solid fa-wand-magic-sparkles"></i> -->
-      <span
-        class="spell-attack-mod"
-        data-tooltip={$context.spellAttackModCalculations.rangedTooltip}
-      >
-        <span>{$context.spellAttackModCalculations.rangedMod}</span>
-      </span>
-
       {#if $context.spellAttackModCalculations.rangedMod !== $context.spellAttackModCalculations.meleeMod}
-        <!-- <i class="fa-solid fa-hand-sparkles"></i> -->
-        <span
-          class="spell-attack-mod"
-          data-tooltip={$context.spellAttackModCalculations.meleeTooltip}
+        <div
+          data-tooltip="Ranged Spell Attack Mod: {$context
+            .spellAttackModCalculations.rangedTooltip}"
         >
-          <span>{$context.spellAttackModCalculations.meleeMod}</span>
-        </span>
+          <i class="fa-solid fa-wand-magic-sparkles"></i>
+          <span class="spell-attack-mod">
+            <span>{$context.spellAttackModCalculations.rangedMod}</span>
+          </span>
+        </div>
+        <div
+          data-tooltip="Melee Spell Attack Mod: {$context
+            .spellAttackModCalculations.meleeTooltip}"
+        >
+          <i class="fa-solid fa-hand-sparkles"></i>
+          <span class="spell-attack-mod">
+            <span>{$context.spellAttackModCalculations.meleeMod}</span>
+          </span>
+        </div>
+      {:else}
+        <div
+          data-tooltip="Spell Attack Mod: {$context.spellAttackModCalculations
+            .rangedTooltip}"
+        >
+          <i class="fa-solid fa-hat-wizard"></i>
+          <span class="spell-attack-mod">
+            <span>{$context.spellAttackModCalculations.meleeMod}</span>
+          </span>
+        </div>
       {/if}
     {/if}
   </h3>
