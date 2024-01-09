@@ -24,51 +24,57 @@
 
 <TabFooter cssClass="{cssClass} spellbook-footer" mode="horizontal">
   <h3 class="spell-dc spell-mod flex-row extra-small-gap">
-    <div data-tooltip="Spell DC: {$context.system.attributes.spelldc}">
-      DC:
-      {$context.system.attributes.spelldc}
-    </div>
+    <div
+      class="flex-row extra-small-gap"
+      style="align-items: baseline;"
+      data-tooltip="Spell DC: {$context.system.attributes.spelldc}"
+    >
+      <div>DC:</div>
+      <div class="dc-container">{$context.system.attributes.spelldc}</div>
 
-    {#if includeAttackMod}
-      <div>|</div>
-      Attack Mod:
+      {#if includeAttackMod}
+        <span>|</span>
+        <span class="truncate" style="min-width: 0;">Attack Mod:</span>
 
-      {#if $context.spellAttackModCalculations.rangedMod !== $context.spellAttackModCalculations.meleeMod}
-        <div
-          data-tooltip="Ranged Spell Attack Mod: {$context
-            .spellAttackModCalculations.rangedTooltip}"
-        >
-          <i style="font-size: 1rem;" class="fa-solid fa-wand-magic-sparkles"
-          ></i>
-          <span class="spell-attack-mod">
-            <span>{$context.spellAttackModCalculations.rangedMod}</span>
-          </span>
-        </div>
-        <div
-          data-tooltip="Melee Spell Attack Mod: {$context
-            .spellAttackModCalculations.meleeTooltip}"
-        >
-          <i style="font-size: 1rem;" class="fa-solid fa-hand-sparkles"></i>
-          <span class="spell-attack-mod">
-            <span>{$context.spellAttackModCalculations.meleeMod}</span>
-          </span>
-        </div>
-      {:else}
-        <div
-          data-tooltip="Spell Attack Mod: {$context.spellAttackModCalculations
-            .meleeTooltip}"
-        >
-          <span class="spell-attack-mod">
-            <span>{$context.spellAttackModCalculations.meleeMod}</span>
-          </span>
-        </div>
+        {#if $context.spellAttackModCalculations.rangedMod !== $context.spellAttackModCalculations.meleeMod}
+          <div
+            data-tooltip="Ranged Spell Attack Mod: {$context
+              .spellAttackModCalculations.rangedTooltip}"
+            class="spell-attack-mod-container"
+          >
+            <i class="fa-solid fa-wand-magic-sparkles"></i>
+            <span class="spell-attack-mod">
+              <span>{$context.spellAttackModCalculations.rangedMod}</span>
+            </span>
+          </div>
+          <div
+            data-tooltip="Melee Spell Attack Mod: {$context
+              .spellAttackModCalculations.meleeTooltip}"
+            class="spell-attack-mod-container"
+          >
+            <i class="fa-solid fa-hand-sparkles"></i>
+            <span class="spell-attack-mod">
+              <span>{$context.spellAttackModCalculations.meleeMod}</span>
+            </span>
+          </div>
+        {:else}
+          <div
+            data-tooltip="Spell Attack Mod: {$context.spellAttackModCalculations
+              .meleeTooltip}"
+            class="spell-attack-mod-container"
+          >
+            <span class="spell-attack-mod">
+              <span>{$context.spellAttackModCalculations.meleeMod}</span>
+            </span>
+          </div>
+        {/if}
       {/if}
-    {/if}
+    </div>
   </h3>
   {#if includePreparedSpells}
     <button
       type="button"
-      class="transparent-button max-prepared-spells highlight-on-hover"
+      class="transparent-button secondary-footer-field highlight-on-hover"
       on:click={() =>
         new MaxPreparedSpellsConfigFormApplication($context.actor).render(true)}
       title={localize('T5EK.MaxPreparedSpellsConfig.ButtonTooltip')}
@@ -82,7 +88,7 @@
       >
     </button>
   {/if}
-  <div class="spellcasting-attribute">
+  <div class="spellcasting-attribute secondary-footer-field">
     <p>{localize('DND5E.SpellAbility')}</p>
     <Select
       document={$context.actor}
@@ -99,10 +105,8 @@
     </Select>
   </div>
   {#if $context.isNPC}
-    <div
-      class="spellcasting-level-container flex-row extra-small-gap flex-0 align-items-center"
-    >
-      <h3 class="truncate">{localize('DND5E.SpellcasterLevel')}</h3>
+    <div class="spellcasting-level-container secondary-footer-field">
+      <p class="truncate">{localize('DND5E.SpellcasterLevel')}</p>
       <NumberInput
         cssClass="spellcasting-level"
         document={$context.actor}
@@ -119,12 +123,31 @@
 </TabFooter>
 
 <style lang="scss">
-  .max-prepared-spells,
-  .spellcasting-attribute {
+  :global(.tidy5e-kgar .spellbook-footer) {
+    min-height: 2.5rem;
+  }
+
+  .secondary-footer-field {
     flex: 0;
     display: flex;
     align-items: center;
     font-size: 0.75rem;
+  }
+
+  .spell-attack-mod-container,
+  .dc-container {
+    // border: 1px solid var(--t5ek-table-header-row-border-color);
+    // background: var(--t5ek-table-header-row-color);
+    border-radius: 5px;
+    // padding: 2px 4px;
+
+    display: flex;
+    align-items: center;
+    gap: 0.125rem;
+  }
+
+  .spell-attack-mod-container i {
+    font-size: 1rem;
   }
 
   h3 {
@@ -149,9 +172,5 @@
     height: 1.25rem;
     flex: 0;
     text-align: center;
-  }
-
-  .bonus-icon {
-    font-size: 1rem;
   }
 </style>
