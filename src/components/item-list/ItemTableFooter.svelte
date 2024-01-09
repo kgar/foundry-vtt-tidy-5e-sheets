@@ -11,8 +11,11 @@
    * Override for the underlying create button's `create()` function.
    */
   export let create: (() => void) | undefined = undefined;
+  export let isItem: boolean;
 
-  let customCommands = ActorItemRuntime.getActorItemSectionCommands({ actor, section });
+  let customCommands = isItem
+    ? ActorItemRuntime.getActorItemSectionCommands({ actor, section })
+    : [];
 
   const localize = FoundryAdapter.localize;
 </script>
