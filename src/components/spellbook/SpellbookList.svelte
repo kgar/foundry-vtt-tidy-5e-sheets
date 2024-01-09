@@ -203,6 +203,7 @@
         actor={$context.actor}
         {section}
         canCreate={section.canCreate}
+        isItem={true}
       />
     {/if}
   </ItemTable>

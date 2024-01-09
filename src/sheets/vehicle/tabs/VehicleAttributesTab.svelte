@@ -242,7 +242,7 @@
               </ItemTableRow>
             {/each}
             {#if $context.unlocked && section.dataset}
-              <ItemTableFooter actor={$context.actor} {section} />
+              <ItemTableFooter actor={$context.actor} {section} isItem={true} />
             {/if}
           </ItemTable>
         {/if}
