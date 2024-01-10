@@ -1181,4 +1181,13 @@ export const FoundryAdapter = {
 
     return true;
   },
+  forceKeyboardManagerEvent(up: boolean, ev: KeyboardEvent) {
+    KeyboardManager.emulateKeypress(up, ev.code, {
+      altKey: ev.altKey,
+      ctrlKey: ev.ctrlKey,
+      shiftKey: ev.shiftKey,
+      repeat: ev.repeat,
+      force: true,
+    });
+  },
 };
