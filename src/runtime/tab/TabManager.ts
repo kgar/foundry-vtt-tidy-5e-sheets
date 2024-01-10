@@ -20,15 +20,22 @@ export class TabManager {
     let tabs: Tab[] = [];
 
     for (let sheetTab of enabledTabs) {
-      let tab = {
-        id: sheetTab.id,
-        title: TabManager.getTabTitle(sheetTab),
-        onRender: sheetTab.onRender,
-        content: await getTabContent(context, sheetTab),
-        activateDefaultSheetListeners: sheetTab.activateDefaultSheetListeners,
-      };
+      try {
+        let tab = {
+          id: sheetTab.id,
+          title: TabManager.getTabTitle(sheetTab),
+          onRender: sheetTab.onRender,
+          content: await getTabContent(context, sheetTab),
+          activateDefaultSheetListeners: sheetTab.activateDefaultSheetListeners,
+        };
 
-      tabs.push(tab);
+        tabs.push(tab);
+      } catch (e) {
+        error('Unable to prepare tab for rendering', false, {
+          error: e,
+          tab: sheetTab,
+        });
+      }
     }
     return tabs;
   }
