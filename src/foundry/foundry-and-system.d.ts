@@ -26,6 +26,7 @@ declare global {
   var game: any;
   var HandlebarsHelpers: any;
   var Hooks: any;
+  var KeyboardManager: any;
   var ImagePopout: any;
   var isEmpty: any;
   var Items: any;
