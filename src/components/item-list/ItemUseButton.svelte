@@ -30,6 +30,8 @@
         FoundryAdapter.onActorItemButtonContextMenu(item, { event })}
       on:focusin={() => (buttonIsFocused = true)}
       on:focusout={() => (buttonIsFocused = false)}
+      on:keydown={(ev) => FoundryAdapter.forceKeyboardManagerEvent(false, ev)}
+      on:keyup={(ev) => FoundryAdapter.forceKeyboardManagerEvent(true, ev)}
     >
       <i class="fa fa-dice-d20" />
     </button>

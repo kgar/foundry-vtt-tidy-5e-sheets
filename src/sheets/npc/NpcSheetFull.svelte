@@ -169,6 +169,10 @@
                   $context.actor,
                 ).render(true)}
               title={localize('T5EK.OriginSummaryConfig')}
+              on:keydown={(ev) =>
+                FoundryAdapter.forceKeyboardManagerEvent(false, ev)}
+              on:keyup={(ev) =>
+                FoundryAdapter.forceKeyboardManagerEvent(true, ev)}
             >
               <i class="fas fa-cog" />
             </button>

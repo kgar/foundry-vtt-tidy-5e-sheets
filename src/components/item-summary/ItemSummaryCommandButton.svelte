@@ -12,6 +12,8 @@
   class="item-summary-command"
   title={command.tooltip ?? null}
   on:click={() => command.execute?.({ item: item })}
+  on:keydown={(ev) => FoundryAdapter.forceKeyboardManagerEvent(false, ev)}
+  on:keyup={(ev) => FoundryAdapter.forceKeyboardManagerEvent(true, ev)}
 >
   {#if command.iconClass}
     <i class={command.iconClass}></i>

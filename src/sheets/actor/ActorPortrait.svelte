@@ -30,7 +30,7 @@
   }
 
   function onPortraitClick(
-    event: MouseEvent & { currentTarget: EventTarget & HTMLElement }
+    event: MouseEvent & { currentTarget: EventTarget & HTMLElement },
   ) {
     switch (event.button) {
       case CONSTANTS.MOUSE_BUTTON_MAIN:
@@ -76,7 +76,10 @@
             title: 'Portrait: ' + actor.name,
             shareable: true,
             uuid: actor.uuid,
-          }).render(true)}>{localize('T5EK.ShowPortraitArt')}</button
+          }).render(true)}
+        on:keydown={(ev) => FoundryAdapter.forceKeyboardManagerEvent(false, ev)}
+        on:keyup={(ev) => FoundryAdapter.forceKeyboardManagerEvent(true, ev)}
+        >{localize('T5EK.ShowPortraitArt')}</button
       >
       <button
         type="button"
@@ -87,7 +90,10 @@
             title: 'Portrait: ' + actor.name,
             shareable: true,
             uuid: actor.uuid,
-          }).render(true)}>{localize('T5EK.ShowTokenArt')}</button
+          }).render(true)}
+        on:keydown={(ev) => FoundryAdapter.forceKeyboardManagerEvent(false, ev)}
+        on:keyup={(ev) => FoundryAdapter.forceKeyboardManagerEvent(true, ev)}
+        >{localize('T5EK.ShowTokenArt')}</button
       >
     </div>
   {/if}

@@ -77,6 +77,10 @@
                     'tools',
                     true,
                   )}
+                on:keydown={(ev) =>
+                  FoundryAdapter.forceKeyboardManagerEvent(false, ev)}
+                on:keyup={(ev) =>
+                  FoundryAdapter.forceKeyboardManagerEvent(true, ev)}
               >
                 {@html tool.icon}
               </button>
@@ -92,6 +96,10 @@
                 class="tool-check-roller inline-transparent-button rollable"
                 on:click={(event) =>
                   $context.actor.rollToolCheck(key, { event })}
+                on:keydown={(ev) =>
+                  FoundryAdapter.forceKeyboardManagerEvent(false, ev)}
+                on:keyup={(ev) =>
+                  FoundryAdapter.forceKeyboardManagerEvent(true, ev)}
               >
                 {tool.label}
               </button>
@@ -112,6 +120,10 @@
                     'tools',
                     key,
                   )}
+                on:keydown={(ev) =>
+                  FoundryAdapter.forceKeyboardManagerEvent(false, ev)}
+                on:keyup={(ev) =>
+                  FoundryAdapter.forceKeyboardManagerEvent(true, ev)}
               >
                 <i class="fas fa-cog" />
               </button>
@@ -127,6 +139,8 @@
         title={configureButtonTitle}
         on:click|stopPropagation|preventDefault={(event) =>
           dispatcher('onConfigureClicked', event)}
+        on:keydown={(ev) => FoundryAdapter.forceKeyboardManagerEvent(false, ev)}
+        on:keyup={(ev) => FoundryAdapter.forceKeyboardManagerEvent(true, ev)}
       >
         <i class="fas fa-pencil-alt" />
       </button>

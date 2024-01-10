@@ -30,6 +30,8 @@
       class="icon-button"
       title={toggleButtonPresentation?.title}
       on:click={() => dispatcher('toggle')}
+      on:keydown={(ev) => FoundryAdapter.forceKeyboardManagerEvent(false, ev)}
+      on:keyup={(ev) => FoundryAdapter.forceKeyboardManagerEvent(true, ev)}
     >
       <i class={toggleButtonPresentation?.iconClass} />
     </button>

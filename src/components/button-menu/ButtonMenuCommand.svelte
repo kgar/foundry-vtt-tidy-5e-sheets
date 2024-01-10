@@ -2,6 +2,7 @@
   import { createEventDispatcher, getContext } from 'svelte';
   import ButtonMenuItem from './ButtonMenuItem.svelte';
   import type { ButtonMenuContext } from './button-menu-types';
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
   export let iconClass: string = '';
   export let useIconColumn: boolean = true;
@@ -31,6 +32,8 @@
     on:click={handleClick}
     {title}
     {disabled}
+    on:keydown={(ev) => FoundryAdapter.forceKeyboardManagerEvent(false, ev)}
+    on:keyup={(ev) => FoundryAdapter.forceKeyboardManagerEvent(true, ev)}
   >
     {#if useIconColumn}
       <span class="icon-container">

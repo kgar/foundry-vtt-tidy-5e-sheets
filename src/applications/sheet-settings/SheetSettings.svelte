@@ -129,6 +129,8 @@
       class="save-changes-btn"
       on:click={save}
       disabled={applyingChanges}
+      on:keydown={(ev) => FoundryAdapter.forceKeyboardManagerEvent(false, ev)}
+      on:keyup={(ev) => FoundryAdapter.forceKeyboardManagerEvent(true, ev)}
     >
       <i class="fas fa-save" />
       {localize('T5EK.SaveChanges')}
@@ -138,6 +140,8 @@
       class="apply-changes-btn"
       on:click={apply}
       disabled={applyingChanges}
+      on:keydown={(ev) => FoundryAdapter.forceKeyboardManagerEvent(false, ev)}
+      on:keyup={(ev) => FoundryAdapter.forceKeyboardManagerEvent(true, ev)}
     >
       <i class="fas fa-check" />
       {localize('T5EK.ApplyChanges')}

@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { CharacterSheetContext } from 'src/types/types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
@@ -16,6 +17,8 @@
     class="filter-option"
     class:active={isFilterActive}
     on:click={() => $context.actor.sheet.onToggleFilter(setName, filterName)}
+    on:keydown={(ev) => FoundryAdapter.forceKeyboardManagerEvent(false, ev)}
+    on:keyup={(ev) => FoundryAdapter.forceKeyboardManagerEvent(true, ev)}
   >
     <slot />
   </button>

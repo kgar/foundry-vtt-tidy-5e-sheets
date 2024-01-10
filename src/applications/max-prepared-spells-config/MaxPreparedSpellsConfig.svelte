@@ -32,7 +32,11 @@
           class="highlight-on-hover"
           on:click={() => {
             $context.maxPreparedSpells = formula.value;
-          }}>{localize(formula.label)}</button
+          }}
+          on:keydown={(ev) =>
+            FoundryAdapter.forceKeyboardManagerEvent(false, ev)}
+          on:keyup={(ev) => FoundryAdapter.forceKeyboardManagerEvent(true, ev)}
+          >{localize(formula.label)}</button
         >
       {/each}
     </p>
@@ -44,7 +48,11 @@
       >
     </p>
   </div>
-  <button type="submit">
+  <button
+    type="submit"
+    on:keydown={(ev) => FoundryAdapter.forceKeyboardManagerEvent(false, ev)}
+    on:keyup={(ev) => FoundryAdapter.forceKeyboardManagerEvent(true, ev)}
+  >
     <i class="far fa-save" />
     {localize('Save')}
   </button>

@@ -27,6 +27,8 @@
     type="button"
     disabled={moveUpDisabled}
     on:click={() => dispatcher('moveUp')}
+    on:keydown={(ev) => FoundryAdapter.forceKeyboardManagerEvent(false, ev)}
+    on:keyup={(ev) => FoundryAdapter.forceKeyboardManagerEvent(true, ev)}
   >
     <i class="fas fa-angle-up"></i>
   </button>
@@ -35,6 +37,8 @@
     type="button"
     disabled={moveDownDisabled}
     on:click={() => dispatcher('moveDown')}
+    on:keydown={(ev) => FoundryAdapter.forceKeyboardManagerEvent(false, ev)}
+    on:keyup={(ev) => FoundryAdapter.forceKeyboardManagerEvent(true, ev)}
   >
     <i class="fas fa-angle-down"></i>
   </button>
@@ -43,6 +47,8 @@
     type="button"
     disabled={moveLeftDisabled}
     on:click={() => dispatcher('moveLeft')}
+    on:keydown={(ev) => FoundryAdapter.forceKeyboardManagerEvent(false, ev)}
+    on:keyup={(ev) => FoundryAdapter.forceKeyboardManagerEvent(true, ev)}
   >
     <i class="fas fa-angle-left"></i>
   </button>
@@ -51,6 +57,8 @@
     type="button"
     disabled={moveRightDisabled}
     on:click={() => dispatcher('moveRight')}
+    on:keydown={(ev) => FoundryAdapter.forceKeyboardManagerEvent(false, ev)}
+    on:keyup={(ev) => FoundryAdapter.forceKeyboardManagerEvent(true, ev)}
   >
     <i class="fas fa-angle-right"></i>
   </button>
@@ -59,6 +67,8 @@
     type="button"
     disabled={moveAllToTheLeftDisabled}
     on:click={() => dispatcher('moveAllToTheLeft')}
+    on:keydown={(ev) => FoundryAdapter.forceKeyboardManagerEvent(false, ev)}
+    on:keyup={(ev) => FoundryAdapter.forceKeyboardManagerEvent(true, ev)}
   >
     <i class="fas fa-angles-left"></i>
   </button>
@@ -67,6 +77,8 @@
     type="button"
     disabled={moveAllToTheRightDisabled}
     on:click={() => dispatcher('moveAllToTheRight')}
+    on:keydown={(ev) => FoundryAdapter.forceKeyboardManagerEvent(false, ev)}
+    on:keyup={(ev) => FoundryAdapter.forceKeyboardManagerEvent(true, ev)}
   >
     <i class="fas fa-angles-right"></i>
   </button>

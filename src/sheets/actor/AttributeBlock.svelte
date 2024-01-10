@@ -48,6 +48,8 @@
         $context.actor.rollAbilityTest(abbreviation, { event })}
       tabindex={!$settingStore.useDefaultSheetAttributeTabbing ? 0 : -1}
       disabled={!$context.editable}
+      on:keydown={(ev) => FoundryAdapter.forceKeyboardManagerEvent(false, ev)}
+      on:keyup={(ev) => FoundryAdapter.forceKeyboardManagerEvent(true, ev)}
     >
       {formatAsModifier(ability.mod)}
     </button>
@@ -60,6 +62,8 @@
         $context.actor.rollAbilitySave(abbreviation, { event })}
       tabindex={!$settingStore.useDefaultSheetAttributeTabbing ? 0 : -1}
       disabled={!$context.editable}
+      on:keydown={(ev) => FoundryAdapter.forceKeyboardManagerEvent(false, ev)}
+      on:keyup={(ev) => FoundryAdapter.forceKeyboardManagerEvent(true, ev)}
     >
       {formatAsModifier(ability.save)}
     </button>
@@ -75,6 +79,9 @@
                 1 - parseInt(ability.proficient),
             })}
           tabindex={!$settingStore.useDefaultSheetAttributeTabbing ? 0 : -1}
+          on:keydown={(ev) =>
+            FoundryAdapter.forceKeyboardManagerEvent(false, ev)}
+          on:keyup={(ev) => FoundryAdapter.forceKeyboardManagerEvent(true, ev)}
         >
           {@html ability.icon}
         </button>
@@ -92,6 +99,8 @@
         on:click={() =>
           FoundryAdapter.renderActorAbilityConfig($context.actor, abbreviation)}
         tabindex={!$settingStore.useDefaultSheetAttributeTabbing ? 0 : -1}
+        on:keydown={(ev) => FoundryAdapter.forceKeyboardManagerEvent(false, ev)}
+        on:keyup={(ev) => FoundryAdapter.forceKeyboardManagerEvent(true, ev)}
       >
         <i class="fas fa-cog" />
       </button>

@@ -22,6 +22,8 @@
       class="create-spell-btn flex-row align-items-center extra-small-gap"
       on:click={() =>
         FoundryAdapter.createItem({ type: 'spell', level: '' }, $context.actor)}
+      on:keydown={(ev) => FoundryAdapter.forceKeyboardManagerEvent(false, ev)}
+      on:keyup={(ev) => FoundryAdapter.forceKeyboardManagerEvent(true, ev)}
     >
       <i class="fas fa-plus-circle" />
       {localize('DND5E.SpellCreate')}

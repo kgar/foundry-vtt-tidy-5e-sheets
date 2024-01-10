@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { CharacterSheetContext, NpcSheetContext } from 'src/types/types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
@@ -76,6 +77,8 @@
         on:focusin={() => onMouseEnterDot(dot.index)}
         on:focusout={() => onMouseLeaveDot(dot.index)}
         disabled={!$context.editable}
+        on:keydown={(ev) => FoundryAdapter.forceKeyboardManagerEvent(false, ev)}
+        on:keyup={(ev) => FoundryAdapter.forceKeyboardManagerEvent(true, ev)}
       />
     {/each}
   </div>

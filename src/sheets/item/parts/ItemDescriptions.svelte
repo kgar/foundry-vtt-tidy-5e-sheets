@@ -4,6 +4,7 @@
   import type { Readable } from 'svelte/store';
   import Accordion from 'src/components/accordion/Accordion.svelte';
   import AccordionItem from 'src/components/accordion/AccordionItem.svelte';
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
   /**
    * When true, descriptions are rendered to the DOM; else, they are excluded.
@@ -62,7 +63,12 @@
                       dispatcher('edit', {
                         valueToEdit: itemDescription.content,
                         fieldToEdit: itemDescription.field,
-                      })}><i class="fas fa-edit" /></button
+                      })}
+                    on:keydown={(ev) =>
+                      FoundryAdapter.forceKeyboardManagerEvent(false, ev)}
+                    on:keyup={(ev) =>
+                      FoundryAdapter.forceKeyboardManagerEvent(true, ev)}
+                    ><i class="fas fa-edit" /></button
                   >
                 {/if}
               </span>

@@ -26,6 +26,8 @@
       on:click={(ev) => $context.shortRest(ev)}
       disabled={!$context.editable}
       tabindex={!$settingStore.useDefaultSheetHpTabbing ? 0 : -1}
+      on:keydown={(ev) => FoundryAdapter.forceKeyboardManagerEvent(false, ev)}
+      on:keyup={(ev) => FoundryAdapter.forceKeyboardManagerEvent(true, ev)}
     >
       <i class="fas fa-hourglass-half" />
     </button>
@@ -36,6 +38,8 @@
       on:click={(ev) => $context.longRest(ev)}
       disabled={!$context.editable}
       tabindex={!$settingStore.useDefaultSheetHpTabbing ? 0 : -1}
+      on:keydown={(ev) => FoundryAdapter.forceKeyboardManagerEvent(false, ev)}
+      on:keyup={(ev) => FoundryAdapter.forceKeyboardManagerEvent(true, ev)}
     >
       <i class="fas fa-hourglass-end" />
     </button>
@@ -83,7 +87,9 @@
       line-height: 1.125rem;
       font-family: var(--t5ek-body-font-family);
       font-weight: 700;
-      transition: color 0.3s ease, transform 0.3s ease;
+      transition:
+        color 0.3s ease,
+        transform 0.3s ease;
 
       &:hover,
       &:focus-within {

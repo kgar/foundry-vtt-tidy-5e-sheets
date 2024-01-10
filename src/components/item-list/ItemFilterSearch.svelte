@@ -43,6 +43,8 @@
     title={localize('T5EK.SearchClear')}
     style:display={searchCriteria === '' ? 'none' : undefined}
     on:click|preventDefault|stopPropagation={() => clearSearch()}
+    on:keydown={(ev) => FoundryAdapter.forceKeyboardManagerEvent(false, ev)}
+    on:keyup={(ev) => FoundryAdapter.forceKeyboardManagerEvent(true, ev)}
     ><i class="fas fa-times-circle" /></button
   >
 </li>

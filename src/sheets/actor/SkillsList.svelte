@@ -70,6 +70,10 @@
                   skillRef.key,
                 )}
               title={localize('DND5E.SkillConfigure')}
+              on:keydown={(ev) =>
+                FoundryAdapter.forceKeyboardManagerEvent(false, ev)}
+              on:keyup={(ev) =>
+                FoundryAdapter.forceKeyboardManagerEvent(true, ev)}
             >
               <i class="fas fa-cog" />
             </button>
@@ -91,6 +95,10 @@
                   'skills',
                   true,
                 )}
+              on:keydown={(ev) =>
+                FoundryAdapter.forceKeyboardManagerEvent(false, ev)}
+              on:keyup={(ev) =>
+                FoundryAdapter.forceKeyboardManagerEvent(true, ev)}
               title={skillRef.skill.hover}>{@html skillRef.skill.icon}</button
             >
           {:else}
@@ -104,6 +112,10 @@
               class="tidy5e-skill-name transparent-button rollable"
               on:click={(event) =>
                 $context.actor.rollSkill(skillRef.key, { event })}
+              on:keydown={(ev) =>
+                FoundryAdapter.forceKeyboardManagerEvent(false, ev)}
+              on:keyup={(ev) =>
+                FoundryAdapter.forceKeyboardManagerEvent(true, ev)}
             >
               {skillRef.skill.label}
             </button>
@@ -130,6 +142,8 @@
         type="button"
         class="toggle-proficient inline-transparent-button"
         on:click={toggleShowAllSkills}
+        on:keydown={(ev) => FoundryAdapter.forceKeyboardManagerEvent(false, ev)}
+        on:keyup={(ev) => FoundryAdapter.forceKeyboardManagerEvent(true, ev)}
       >
         {#if showAllSkills}
           {localize('T5EK.HideNotProficientSkills')}

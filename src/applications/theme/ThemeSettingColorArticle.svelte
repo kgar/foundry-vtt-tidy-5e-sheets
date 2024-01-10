@@ -37,7 +37,7 @@
     trySetRootCssVariable(
       colorToConfigure.cssVariable,
       value,
-      $context.colorPickerEnabled
+      $context.colorPickerEnabled,
     );
     $context = {
       ...$context,
@@ -70,7 +70,7 @@
       isPopup={true}
       label=""
       hex={settingValueToHexaString(
-        $context[colorToConfigure.key]?.toString() ?? ''
+        $context[colorToConfigure.key]?.toString() ?? '',
       ).hexa}
       on:input={(ev) =>
         colorPickerIsOpen &&
@@ -89,6 +89,8 @@
         type="button"
         class="eye-dropper"
         on:click={() => activateEyeDropper(colorToConfigure)}
+        on:keydown={(ev) => FoundryAdapter.forceKeyboardManagerEvent(false, ev)}
+        on:keyup={(ev) => FoundryAdapter.forceKeyboardManagerEvent(true, ev)}
         ><i class="fas fa-eye-dropper" /></button
       >
     {/if}

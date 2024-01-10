@@ -25,7 +25,7 @@
     FoundryAdapter.setFlag(
       $context.actor,
       'showNpcPersonalityInfo',
-      !showNpcPersonalityInfo
+      !showNpcPersonalityInfo,
     );
   }
 </script>
@@ -130,6 +130,8 @@
         on:click={togglePersonalityInfo}
         class="toggle-personality-info"
         title={localize('T5EK.TogglePersonalityInfo')}
+        on:keydown={(ev) => FoundryAdapter.forceKeyboardManagerEvent(false, ev)}
+        on:keyup={(ev) => FoundryAdapter.forceKeyboardManagerEvent(true, ev)}
       >
         {#if showNpcPersonalityInfo}
           <i class="fas fa-angle-double-left" />
@@ -146,7 +148,7 @@
             <RerenderAfterFormSubmission
               andOnValueChange={FoundryAdapter.tryGetFlag(
                 $context.actor,
-                'trait'
+                'trait',
               ) ?? ''}
             >
               <article use:activateProseMirrorListeners>
@@ -163,7 +165,7 @@
             <RerenderAfterFormSubmission
               andOnValueChange={FoundryAdapter.tryGetFlag(
                 $context.actor,
-                'ideal'
+                'ideal',
               ) ?? ''}
             >
               <article use:activateProseMirrorListeners>
@@ -180,7 +182,7 @@
             <RerenderAfterFormSubmission
               andOnValueChange={FoundryAdapter.tryGetFlag(
                 $context.actor,
-                'bond'
+                'bond',
               ) ?? ''}
             >
               <article use:activateProseMirrorListeners>
@@ -197,7 +199,7 @@
             <RerenderAfterFormSubmission
               andOnValueChange={FoundryAdapter.tryGetFlag(
                 $context.actor,
-                'flaw'
+                'flaw',
               ) ?? ''}
             >
               <article use:activateProseMirrorListeners>
@@ -220,7 +222,7 @@
           <RerenderAfterFormSubmission
             andOnValueChange={FoundryAdapter.tryGetFlag(
               $context.actor,
-              'appearance'
+              'appearance',
             ) ?? ''}
           >
             <article class="appearance-notes" use:activateProseMirrorListeners>
@@ -319,7 +321,9 @@
     width: auto;
     border: none;
     align-self: flex-start;
-    transition: color 0.3s ease, transform 0.3s ease;
+    transition:
+      color 0.3s ease,
+      transform 0.3s ease;
     padding: 1.25rem 0.25rem;
     background: var(--t5ek-faint-color);
     border-radius: 0.1875rem;

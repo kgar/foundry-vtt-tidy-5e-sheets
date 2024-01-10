@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { ActorSheetContext } from 'src/types/types';
   import { createEventDispatcher, getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
@@ -20,6 +21,8 @@
   on:click={(ev) => dispatcher('roll', ev)}
   disabled={!$context.editable}
   tabindex={!hideFromTabOrder ? 0 : -1}
+  on:keydown={(ev) => FoundryAdapter.forceKeyboardManagerEvent(false, ev)}
+  on:keyup={(ev) => FoundryAdapter.forceKeyboardManagerEvent(true, ev)}
 >
   <h4 class="block-title">
     {text}

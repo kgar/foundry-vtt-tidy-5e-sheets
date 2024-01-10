@@ -9,7 +9,7 @@
   let context = getContext<Readable<ItemSheetContext>>('context');
 
   $: movementLabels = Object.values(
-    $context.item.system.movementLabels
+    $context.item.system.movementLabels,
   ) as string[];
 
   const localize = FoundryAdapter.localize;
@@ -24,6 +24,9 @@
           class="inline-icon-button hidden-config-button"
           type="button"
           on:click={() => FoundryAdapter.renderItemTypeConfig($context.item)}
+          on:keydown={(ev) =>
+            FoundryAdapter.forceKeyboardManagerEvent(false, ev)}
+          on:keyup={(ev) => FoundryAdapter.forceKeyboardManagerEvent(true, ev)}
         >
           <i class="fas fa-cog" />
         </button>
@@ -41,6 +44,9 @@
           data-action="movement"
           on:click={() =>
             FoundryAdapter.renderItemMovementConfig($context.item)}
+          on:keydown={(ev) =>
+            FoundryAdapter.forceKeyboardManagerEvent(false, ev)}
+          on:keyup={(ev) => FoundryAdapter.forceKeyboardManagerEvent(true, ev)}
         >
           <i class="fas fa-cog" />
         </button>
@@ -61,6 +67,9 @@
           class="inline-icon-button hidden-config-button"
           data-action="senses"
           on:click={() => FoundryAdapter.renderItemSensesConfig($context.item)}
+          on:keydown={(ev) =>
+            FoundryAdapter.forceKeyboardManagerEvent(false, ev)}
+          on:keyup={(ev) => FoundryAdapter.forceKeyboardManagerEvent(true, ev)}
         >
           <i class="fas fa-cog" />
         </button>

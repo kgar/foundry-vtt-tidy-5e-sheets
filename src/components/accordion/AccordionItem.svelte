@@ -2,6 +2,7 @@
   import { getContext, onMount } from 'svelte';
   import type { AccordionCtxType } from './Accordion.svelte';
   import { writable } from 'svelte/store';
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
   export let open: boolean = false;
 
@@ -28,6 +29,8 @@
       class="accordion-item-toggle transparent-button"
       type="button"
       on:click={() => toggle()}
+      on:keydown={(ev) => FoundryAdapter.forceKeyboardManagerEvent(false, ev)}
+      on:keyup={(ev) => FoundryAdapter.forceKeyboardManagerEvent(true, ev)}
     >
       <span class="accordion-arrow" class:open
         ><i class="fas fa-chevron-right" /></span

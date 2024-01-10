@@ -41,6 +41,8 @@
       title={localize('DND5E.HitPointsConfig')}
       on:click|stopPropagation|preventDefault={() =>
         FoundryAdapter.renderActorHitPointsDialog($context.actor)}
+      on:keydown={(ev) => FoundryAdapter.forceKeyboardManagerEvent(false, ev)}
+      on:keyup={(ev) => FoundryAdapter.forceKeyboardManagerEvent(true, ev)}
     >
       <i class="fas fa-cog" />
     </button>

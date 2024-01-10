@@ -80,6 +80,8 @@
         on:mouseenter={(ev) => onMouseEnter(ev, item)}
         on:mouseleave={(ev) => onMouseLeave(ev, item)}
         disabled={!$context.editable}
+        on:keydown={(ev) => FoundryAdapter.forceKeyboardManagerEvent(false, ev)}
+        on:keyup={(ev) => FoundryAdapter.forceKeyboardManagerEvent(true, ev)}
       >
         {#if ctx?.attunement}
           <i
@@ -99,6 +101,10 @@
             style="display:none"
             data-action="itemEdit"
             title={localize('DND5E.ItemEdit')}
+            on:keydown={(ev) =>
+              FoundryAdapter.forceKeyboardManagerEvent(false, ev)}
+            on:keyup={(ev) =>
+              FoundryAdapter.forceKeyboardManagerEvent(true, ev)}
           >
             <i class="fas fa-edit fa-fw" />
           </button>
@@ -166,6 +172,9 @@
               },
               $context.actor,
             )}
+          on:keydown={(ev) =>
+            FoundryAdapter.forceKeyboardManagerEvent(false, ev)}
+          on:keyup={(ev) => FoundryAdapter.forceKeyboardManagerEvent(true, ev)}
         >
           <i class="fas fa-plus-circle" />
         </button>

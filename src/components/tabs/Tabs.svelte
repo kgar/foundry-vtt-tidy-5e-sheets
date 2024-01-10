@@ -90,7 +90,11 @@
         data-tab-id={tab.id}
         role="tab"
         on:click={() => selectTab(tab)}
-        on:keydown={(ev) => onKeyDown(ev, i)}
+        on:keydown={(ev) => {
+          onKeyDown(ev, i);
+          FoundryAdapter.forceKeyboardManagerEvent(false, ev);
+        }}
+        on:keyup={(ev) => FoundryAdapter.forceKeyboardManagerEvent(true, ev)}
       >
         {localize(tab.title)}
       </button>

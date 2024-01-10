@@ -32,6 +32,8 @@
       type="button"
       class="inline-icon-button config-button"
       on:click={() => FoundryAdapter.renderSourceConfig(document, keyPath)}
+      on:keydown={(ev) => FoundryAdapter.forceKeyboardManagerEvent(false, ev)}
+      on:keyup={(ev) => FoundryAdapter.forceKeyboardManagerEvent(true, ev)}
       ><i class="fas fa-cog" /></button
     >
   {/if}

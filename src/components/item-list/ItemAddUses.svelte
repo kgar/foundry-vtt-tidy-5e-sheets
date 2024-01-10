@@ -1,4 +1,6 @@
 <script lang="ts">
+    import { FoundryAdapter } from "src/foundry/foundry-adapter";
+
   export let item: any;
 
   function onAddUses() {
@@ -15,6 +17,8 @@
   class="item-add-uses item-list-button"
   on:click={() => onAddUses()}
   disabled={!item.isOwner}
+  on:keydown={(ev) => FoundryAdapter.forceKeyboardManagerEvent(false, ev)}
+  on:keyup={(ev) => FoundryAdapter.forceKeyboardManagerEvent(true, ev)}
 >
   Add
 </button>

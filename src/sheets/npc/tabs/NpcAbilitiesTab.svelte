@@ -173,6 +173,10 @@
             type="button"
             class="transparent-button spellbook-title toggle-spellbook"
             on:click={() => (showNoSpellsView = !showNoSpellsView)}
+            on:keydown={(ev) =>
+              FoundryAdapter.forceKeyboardManagerEvent(false, ev)}
+            on:keyup={(ev) =>
+              FoundryAdapter.forceKeyboardManagerEvent(true, ev)}
           >
             {localize('DND5E.Spellbook')}
             {#if showNoSpellsView}

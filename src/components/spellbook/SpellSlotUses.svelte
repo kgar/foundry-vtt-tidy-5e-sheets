@@ -54,6 +54,8 @@
         class="spell-slot-max-override icon-button"
         title={localize('DND5E.SpellProgOverride')}
         on:click={() => (overrideMode = true)}
+        on:keydown={(ev) => FoundryAdapter.forceKeyboardManagerEvent(false, ev)}
+        on:keyup={(ev) => FoundryAdapter.forceKeyboardManagerEvent(true, ev)}
       >
         <i class="fas fa-pencil-alt" />
       </button>

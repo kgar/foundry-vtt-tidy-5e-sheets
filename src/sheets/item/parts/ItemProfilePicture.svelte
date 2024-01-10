@@ -48,7 +48,11 @@
     on:contextmenu={() => (hideImageMenu = !hideImageMenu)}
   />
   <div class="item-menu" class:hidden={hideImageMenu}>
-    <button class="showItemArt" on:click={() => showItemArt($context.item)}
+    <button
+      class="showItemArt"
+      on:click={() => showItemArt($context.item)}
+      on:keydown={(ev) => FoundryAdapter.forceKeyboardManagerEvent(false, ev)}
+      on:keyup={(ev) => FoundryAdapter.forceKeyboardManagerEvent(true, ev)}
       >{localize('T5EK.ShowItemArt')}</button
     >
   </div>

@@ -18,6 +18,8 @@
   class="item-list-footer-button"
   on:click={create}
   title={localize('DND5E.FeatureAdd')}
+  on:keydown={(ev) => FoundryAdapter.forceKeyboardManagerEvent(false, ev)}
+  on:keyup={(ev) => FoundryAdapter.forceKeyboardManagerEvent(true, ev)}
 >
   <i class="fas fa-plus-circle" />
   {localize('DND5E.Add')}

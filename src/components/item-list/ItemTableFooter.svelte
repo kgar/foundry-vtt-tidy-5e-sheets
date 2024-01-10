@@ -30,6 +30,8 @@
       class="item-list-footer-button"
       on:click={(ev) => command.execute?.({ section, event: ev, actor: actor })}
       title={localize(command.tooltip ?? '')}
+      on:keydown={(ev) => FoundryAdapter.forceKeyboardManagerEvent(false, ev)}
+      on:keyup={(ev) => FoundryAdapter.forceKeyboardManagerEvent(true, ev)}
     >
       {#if (command.iconClass ?? '') !== ''}
         <i class={command.iconClass} />

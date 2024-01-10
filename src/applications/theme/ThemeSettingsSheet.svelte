@@ -24,8 +24,8 @@
         trySetRootCssVariable(
           color.cssVariable,
           $context[color.key]?.toString(),
-          $context.colorPickerEnabled
-        )
+          $context.colorPickerEnabled,
+        ),
       );
     } else {
       clearTidy5eRootCssVariables();
@@ -52,7 +52,7 @@
 
       const storeUpdateData = extractSettingsUpdateDeltaFromTheme(
         theme,
-        themeableColors
+        themeableColors,
       );
 
       context.update((settings) => ({
@@ -66,7 +66,7 @@
       error(
         'An error occurred while attempting to import a theme file. See the devtools console for more details.',
         true,
-        e
+        e,
       );
     }
   }
@@ -74,7 +74,7 @@
   function onDrop(
     ev: DragEvent & {
       currentTarget: EventTarget & HTMLElement;
-    }
+    },
   ) {
     let file = getSingleFileFromDropEvent(ev);
 
@@ -126,7 +126,12 @@
     </div>
   </div>
   <div class="button-bar">
-    <button type="submit" class="save-changes-btn">
+    <button
+      type="submit"
+      class="save-changes-btn"
+      on:keydown={(ev) => FoundryAdapter.forceKeyboardManagerEvent(false, ev)}
+      on:keyup={(ev) => FoundryAdapter.forceKeyboardManagerEvent(true, ev)}
+    >
       <i class="fas fa-save" />
       {localize('T5EK.SaveChanges')}
     </button>
