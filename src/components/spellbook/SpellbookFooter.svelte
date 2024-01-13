@@ -43,8 +43,12 @@
             class="spell-attack-mod-container"
           >
             <i class="fa-solid fa-wand-magic-sparkles"></i>
-            <span class="spell-attack-mod">
-              <span>{$context.spellAttackModCalculations.rangedMod}</span>
+            <span
+              class="spell-attack-mod"
+              class:has-bonus={$context.spellAttackModCalculations
+                .rangedHasBonus}
+            >
+              {$context.spellAttackModCalculations.rangedMod}
             </span>
           </div>
           <div
@@ -53,8 +57,12 @@
             class="spell-attack-mod-container"
           >
             <i class="fa-solid fa-hand-sparkles"></i>
-            <span class="spell-attack-mod">
-              <span>{$context.spellAttackModCalculations.meleeMod}</span>
+            <span
+              class="spell-attack-mod"
+              class:has-bonus={$context.spellAttackModCalculations
+                .meleeHasBonus}
+            >
+              {$context.spellAttackModCalculations.meleeMod}
             </span>
           </div>
         {:else}
@@ -63,8 +71,12 @@
               .meleeTooltip}"
             class="spell-attack-mod-container"
           >
-            <span class="spell-attack-mod">
-              <span>{$context.spellAttackModCalculations.meleeMod}</span>
+            <span
+              class="spell-attack-mod"
+              class:has-bonus={$context.spellAttackModCalculations
+                .rangedHasBonus}
+            >
+              {$context.spellAttackModCalculations.meleeMod}
             </span>
           </div>
         {/if}
@@ -148,6 +160,10 @@
 
   .spell-attack-mod-container i {
     font-size: 1rem;
+  }
+
+  .spell-attack-mod.has-bonus {
+    color: var(--t5ek-primary-accent-color);
   }
 
   h3 {

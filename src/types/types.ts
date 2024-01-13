@@ -85,8 +85,10 @@ export type CharacterFeatureSection = {
 export type SpellAttackModCalculations = {
   rangedMod: string;
   rangedTooltip: string;
+  rangedHasBonus: boolean;
   meleeMod: string;
   meleeTooltip: string;
+  meleeHasBonus: boolean;
 };
 
 export type CharacterSheetContext = {

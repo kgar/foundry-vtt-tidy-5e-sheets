@@ -141,6 +141,7 @@ export function calculateSpellAttackMod(
           bonusNumber: msakBonusTotal,
         }
       ),
+      meleeHasBonus: msakBonusTotal !== 0,
       rangedMod: rsakTotal,
       rangedTooltip: FoundryAdapter.localize(
         'T5EK.SpellAttackModTooltipWithBonus',
@@ -151,6 +152,7 @@ export function calculateSpellAttackMod(
           bonusNumber: rsakBonusTotal,
         }
       ),
+      rangedHasBonus: rsakBonusTotal !== 0,
     };
   } catch (e) {
     error('An error occurred while calculating spell attack bonus', false, e);
@@ -162,8 +164,10 @@ export function calculateSpellAttackMod(
     return {
       meleeMod: '',
       meleeTooltip: '',
+      meleeHasBonus: false,
       rangedMod: '',
       rangedTooltip: '',
+      rangedHasBonus: false,
     };
   }
 }
