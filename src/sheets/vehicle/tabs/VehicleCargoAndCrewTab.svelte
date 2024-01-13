@@ -251,6 +251,8 @@
             actor={$context.actor}
             {section}
             create={() => onItemCreate(section.dataset.type)}
+            isItem={section.dataset.type !== 'crew' &&
+              section.dataset.type !== 'passengers'}
           />
         {/if}
       </ItemTable>

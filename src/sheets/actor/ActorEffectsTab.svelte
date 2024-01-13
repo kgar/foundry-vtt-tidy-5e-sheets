@@ -118,6 +118,7 @@
               {section}
               create={() =>
                 FoundryAdapter.addEffect(section.type, $context.actor)}
+              isItem={false}
             />
           {/if}
         </ItemTable>
