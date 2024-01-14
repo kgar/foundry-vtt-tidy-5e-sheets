@@ -74,28 +74,20 @@
   </div>
   {#if showPortraitMenu}
     <div class="portrait-menu">
-      <button
-        type="button"
-        class="portrait-menu-item"
-        on:mousedown={(ev) => ev.stopImmediatePropagation()}
-        on:click={() =>
-          FoundryAdapter.renderImagePopout(actor.img, {
-            title: 'Portrait: ' + actor.name,
-            shareable: true,
-            uuid: actor.uuid,
-          }).render(true)}>{localize('T5EK.ShowPortraitArt')}</button
-      >
-      <button
-        type="button"
-        class="portrait-menu-item"
-        on:mousedown={(ev) => ev.stopImmediatePropagation()}
-        on:click={() =>
-          FoundryAdapter.renderImagePopout(actor.prototypeToken.texture.src, {
-            title: 'Portrait: ' + actor.name,
-            shareable: true,
-            uuid: actor.uuid,
-          }).render(true)}>{localize('T5EK.ShowTokenArt')}</button
-      >
+      {#each $context.actorPortraitCommands as command}
+        <button
+          type="button"
+          class="portrait-menu-item"
+          on:mousedown={(ev) => ev.stopImmediatePropagation()}
+          on:click={(ev) => command.execute?.({ actor })}
+          title={command.tooltip}
+        >
+          {#if command.iconClass}
+            <i class={command.iconClass}></i>
+          {/if}
+          {localize(command.label ?? '')}
+        </button>
+      {/each}
     </div>
   {/if}
 </div>
@@ -172,7 +164,10 @@
       font-size: 0.75rem;
       border: 0.0625rem solid var(--t5ek-light-color);
       border-radius: 0.3125rem;
-      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.25rem;
 
       &:hover {
         background: var(--t5ek-background);
