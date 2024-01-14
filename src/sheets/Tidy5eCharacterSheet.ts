@@ -179,7 +179,7 @@ export class Tidy5eCharacterSheet
       actions: getActorActions(this.actor),
       actorClassesToImages: getActorClassesToImages(this.actor),
       actorPortraitCommands:
-        ActorPortraitRuntime.getEnabledPortraitContextMenuCommands(this.actor),
+        ActorPortraitRuntime.getEnabledPortraitMenuCommands(this.actor),
       allowEffectsManagement: FoundryAdapter.allowCharacterEffectsManagement(
         this.actor
       ),

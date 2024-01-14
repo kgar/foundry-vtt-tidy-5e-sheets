@@ -6,7 +6,7 @@ import type {
   RenderScheme,
 } from 'src/api/api.types';
 import type { HtmlContent } from 'src/api/content/HtmlContent';
-import type { RegisteredPortraitContextMenuCommand } from 'src/runtime/types';
+import type { RegisteredPortraitMenuCommand } from 'src/runtime/types';
 
 export type Actor5e = any;
 
@@ -165,7 +165,7 @@ export type ExtensibleComponent = {
 export type ActorSheetContext = {
   actions: ActorActions;
   actor: Actor5e;
-  actorPortraitCommands: RegisteredPortraitContextMenuCommand[];
+  actorPortraitCommands: RegisteredPortraitMenuCommand[];
   allowEffectsManagement: boolean;
   appId: string;
   customContent: CustomContent[];

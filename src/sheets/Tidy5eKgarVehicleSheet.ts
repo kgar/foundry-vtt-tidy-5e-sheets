@@ -110,7 +110,7 @@ export class Tidy5eVehicleSheet
         super.activateListeners($(node));
       },
       actorPortraitCommands:
-        ActorPortraitRuntime.getEnabledPortraitContextMenuCommands(this.actor),
+        ActorPortraitRuntime.getEnabledPortraitMenuCommands(this.actor),
       allowEffectsManagement: true,
       appId: this.appId,
       customContent: await VehicleSheetRuntime.getContent(

@@ -123,7 +123,7 @@ export class Tidy5eNpcSheet
         super.activateListeners($(node));
       },
       actorPortraitCommands:
-        ActorPortraitRuntime.getEnabledPortraitContextMenuCommands(this.actor),
+        ActorPortraitRuntime.getEnabledPortraitMenuCommands(this.actor),
       allowEffectsManagement: true,
       appearanceEnrichedHtml: await FoundryAdapter.enrichHtml(
         FoundryAdapter.getProperty<string>(

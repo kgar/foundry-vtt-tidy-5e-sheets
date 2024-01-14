@@ -1,8 +1,8 @@
-import type { PortraitContextMenuCommand } from '..';
+import type { PortraitContextMenuCommand as PortraitMenuCommand } from '..';
 import { ActorPortraitRuntime } from 'src/runtime/ActorPortraitRuntime';
 
 export class ActorPortraitApi {
-  registerContextMenuCommands(commands: PortraitContextMenuCommand[]) {
-    ActorPortraitRuntime.registerPortraitContextMenuCommands([...commands]);
+  registerMenuCommands(commands: PortraitMenuCommand[]) {
+    ActorPortraitRuntime.registerMenuCommands([...commands]);
   }
 }
