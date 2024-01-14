@@ -33,6 +33,7 @@ import {
 } from 'src/features/actions/actions';
 import { isNil } from 'src/utils/data';
 import { CustomContentRenderer } from './CustomContentRenderer';
+import { ActorPortraitRuntime } from 'src/runtime/ActorPortraitRuntime';
 
 export class Tidy5eNpcSheet
   extends dnd5e.applications.actor.ActorSheet5eNPC
@@ -121,6 +122,8 @@ export class Tidy5eNpcSheet
         this._activateCoreListeners($(node));
         super.activateListeners($(node));
       },
+      actorPortraitCommands:
+        ActorPortraitRuntime.getEnabledPortraitContextMenuCommands(this.actor),
       allowEffectsManagement: true,
       appearanceEnrichedHtml: await FoundryAdapter.enrichHtml(
         FoundryAdapter.getProperty<string>(
