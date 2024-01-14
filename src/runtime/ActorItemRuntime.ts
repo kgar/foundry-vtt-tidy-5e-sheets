@@ -4,6 +4,7 @@ import type {
   RegisteredActorItemSectionFooterCommandEnabledParams,
 } from './types';
 import type { Actor5e } from 'src/types/types';
+import { error } from 'src/utils/logging';
 
 export class ActorItemRuntime {
   private static _actorItemSectionCommands: RegisteredActorItemSectionFooterCommand[] =
@@ -19,8 +20,17 @@ export class ActorItemRuntime {
     section,
     actor,
   }: RegisteredActorItemSectionFooterCommandEnabledParams): RegisteredActorItemSectionFooterCommand[] {
-    return [...ActorItemRuntime._actorItemSectionCommands].filter(
-      (c) => section && (c.enabled?.({ section, actor }) ?? true)
-    );
+    return [...ActorItemRuntime._actorItemSectionCommands].filter((c) => {
+      try {
+        return section && (c.enabled?.({ section, actor }) ?? true);
+      } catch (e) {
+        error(
+          'Failed to check if actor item section command is enabled',
+          false,
+          { error: e, actor, section }
+        );
+        return false;
+      }
+    });
   }
 }
