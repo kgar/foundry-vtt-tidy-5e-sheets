@@ -7,6 +7,7 @@
   import Select from '../inputs/Select.svelte';
   import TabFooter from 'src/sheets/actor/TabFooter.svelte';
   import { MaxPreparedSpellsConfigFormApplication } from 'src/applications/max-prepared-spells-config/MaxPreparedSpellsConfigFormApplication';
+  import { CONSTANTS } from 'src/constants';
 
   let context =
     getContext<Readable<CharacterSheetContext | NpcSheetContext>>('context');
@@ -24,59 +25,70 @@
 
 <TabFooter cssClass="{cssClass} spellbook-footer" mode="horizontal">
   <h3 class="spell-dc spell-mod flex-row extra-small-gap">
-    <div
-      class="flex-row extra-small-gap"
-      style="align-items: baseline;"
-      data-tooltip="Spell DC: {$context.system.attributes.spelldc}"
-    >
-      <div>DC:</div>
-      <div class="dc-container">{$context.system.attributes.spelldc}</div>
+    <div class="flex-row extra-small-gap" style="align-items: baseline;">
+      <div>{FoundryAdapter.localize('DND5E.AbbreviationDC')}:</div>
+      <div
+        class="dc-container"
+        data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.SPELL_DC}
+        data-tooltip="{FoundryAdapter.localize('DND5E.SpellDC')}: {$context
+          .system.attributes.spelldc}"
+      >
+        {$context.system.attributes.spelldc}
+      </div>
 
       {#if includeAttackMod}
         <span>|</span>
-        <span class="truncate" style="min-width: 0;">Attack Mod:</span>
+        <span>{FoundryAdapter.localize('T5EK.AttackMod')}:</span>
 
         {#if $context.spellAttackModCalculations.rangedMod !== $context.spellAttackModCalculations.meleeMod}
           <div
-            data-tooltip="Ranged Spell Attack Mod: {$context
-              .spellAttackModCalculations.rangedTooltip}"
+            data-tooltip="{FoundryAdapter.localize(
+              'T5EK.RangedSpellAttackMod',
+            )}: {$context.spellAttackModCalculations.rangedTooltip}"
             class="spell-attack-mod-container"
           >
             <i class="fa-solid fa-wand-magic-sparkles"></i>
             <span
               class="spell-attack-mod"
-              class:has-bonus={$context.spellAttackModCalculations
+              data-tidy-mod-has-bonus={$context.spellAttackModCalculations
                 .rangedHasBonus}
+              data-tidy-sheet-part={CONSTANTS.SHEET_PARTS
+                .RANGED_SPELL_ATTACK_MOD}
             >
               {$context.spellAttackModCalculations.rangedMod}
             </span>
           </div>
           <div
-            data-tooltip="Melee Spell Attack Mod: {$context
-              .spellAttackModCalculations.meleeTooltip}"
+            data-tooltip="{FoundryAdapter.localize(
+              'T5EK.MeleeSpellAttackMod',
+            )}: {$context.spellAttackModCalculations.meleeTooltip}"
             class="spell-attack-mod-container"
           >
             <i class="fa-solid fa-hand-sparkles"></i>
             <span
               class="spell-attack-mod"
-              class:has-bonus={$context.spellAttackModCalculations
+              data-tidy-mod-has-bonus={$context.spellAttackModCalculations
                 .meleeHasBonus}
+              data-tidy-sheet-part={CONSTANTS.SHEET_PARTS
+                .MELEE_SPELL_ATTACK_MOD}
             >
               {$context.spellAttackModCalculations.meleeMod}
             </span>
           </div>
         {:else}
           <div
-            data-tooltip="Spell Attack Mod: {$context.spellAttackModCalculations
-              .meleeTooltip}"
+            data-tooltip="{FoundryAdapter.localize(
+              'T5EK.SpellAttackMod',
+            )}: {$context.spellAttackModCalculations.meleeTooltip}"
             class="spell-attack-mod-container"
           >
             <span
               class="spell-attack-mod"
-              class:has-bonus={$context.spellAttackModCalculations
+              data-tidy-mod-has-bonus={$context.spellAttackModCalculations
                 .rangedHasBonus}
+              data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.SPELL_ATTACK_MOD}
             >
-              {$context.spellAttackModCalculations.meleeMod}
+              {$context.spellAttackModCalculations.rangedMod}
             </span>
           </div>
         {/if}
@@ -148,10 +160,7 @@
 
   .spell-attack-mod-container,
   .dc-container {
-    // border: 1px solid var(--t5ek-table-header-row-border-color);
-    // background: var(--t5ek-table-header-row-color);
     border-radius: 5px;
-    // padding: 2px 4px;
 
     display: flex;
     align-items: center;
@@ -160,10 +169,6 @@
 
   .spell-attack-mod-container i {
     font-size: 1rem;
-  }
-
-  .spell-attack-mod.has-bonus {
-    color: var(--t5ek-primary-accent-color);
   }
 
   h3 {

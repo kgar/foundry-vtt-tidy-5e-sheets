@@ -130,27 +130,22 @@ export function calculateSpellAttackMod(
       msakTotal = '+' + msakTotal;
     }
 
+    const abilityName = CONFIG.DND5E.abilities[spellAbility].label;
     return {
       meleeMod: msakTotal,
-      meleeTooltip: FoundryAdapter.localize(
-        'T5EK.SpellAttackModTooltipWithBonus',
-        {
-          modNumber: abilityMod,
-          abilityName: CONFIG.DND5E.abilities[spellAbility].label,
-          proficiencyNumber: prof,
-          bonusNumber: msakBonusTotal,
-        }
+      meleeTooltip: buildAttackModTooltip(
+        abilityName,
+        abilityMod,
+        prof,
+        msakBonusTotal
       ),
       meleeHasBonus: msakBonusTotal !== 0,
       rangedMod: rsakTotal,
-      rangedTooltip: FoundryAdapter.localize(
-        'T5EK.SpellAttackModTooltipWithBonus',
-        {
-          modNumber: abilityMod,
-          abilityName: CONFIG.DND5E.abilities[spellAbility].label,
-          proficiencyNumber: prof,
-          bonusNumber: rsakBonusTotal,
-        }
+      rangedTooltip: buildAttackModTooltip(
+        abilityName,
+        abilityMod,
+        prof,
+        rsakBonusTotal
       ),
       rangedHasBonus: rsakBonusTotal !== 0,
     };
@@ -170,6 +165,38 @@ export function calculateSpellAttackMod(
       rangedHasBonus: false,
     };
   }
+}
+
+function buildAttackModTooltip(
+  abilityName: string,
+  abilityMod: number,
+  proficiency: number,
+  bonusTotal: number
+) {
+  let tooltip = '';
+  if (abilityMod !== 0) {
+    tooltip += `${abilityMod} (${abilityName})`;
+  }
+
+  if (proficiency !== 0) {
+    if (tooltip !== '') {
+      tooltip += proficiency < 0 ? ' - ' : ' + ';
+    }
+    tooltip += `${Math.abs(proficiency)} (${FoundryAdapter.localize(
+      'DND5E.ProficiencyBonus'
+    )})`;
+  }
+
+  if (bonusTotal !== 0) {
+    if (tooltip !== '') {
+      tooltip += bonusTotal < 0 ? ' - ' : ' + ';
+    }
+    tooltip += `${Math.abs(bonusTotal)} (${FoundryAdapter.localize(
+      'DND5E.Bonus'
+    )})`;
+  }
+
+  return tooltip;
 }
 
 function calculateDeterministicBonus(rawBonus: string): number {

@@ -109,6 +109,7 @@ export const CONSTANTS = {
   /** The attribute which indicates a particular part of a sheet. */
   SHEET_PART_ATTRIBUTE: 'data-tidy-sheet-part',
   SHEET_PARTS: {
+    MELEE_SPELL_ATTACK_MOD: 'melee-spell-attack-mod',
     /**
      * A container for a sheet name. The sheet name is usually in input, and its container has some additional styles associated with it.
      * The container typically sits in a sheet header row with other header-related elements.
@@ -118,6 +119,7 @@ export const CONSTANTS = {
      * The sheet header row where the sheet name appears.
      */
     NAME_HEADER_ROW: 'name-header-row',
+    RANGED_SPELL_ATTACK_MOD: 'ranged-spell-attack-mod',
     /**
      * A container for a single resource (first, second, third, etc.).
      */
@@ -126,5 +128,7 @@ export const CONSTANTS = {
      * The container where all known resources (first, second, third, etc.) are kept.
      */
     RESOURCES_CONTAINER: 'resources-container',
+    SPELL_ATTACK_MOD: 'spell-attack-mod',
+    SPELL_DC: 'spell-dc',
   },
 } as const;
