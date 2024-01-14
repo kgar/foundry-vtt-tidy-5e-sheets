@@ -1,6 +1,7 @@
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type { Actor5e } from 'src/types/types';
 import type { RegisteredPortraitContextMenuCommand } from './types';
+import { error } from 'src/utils/logging';
 
 export class ActorPortraitRuntime {
   private static _portraitContextMenuCommands: RegisteredPortraitContextMenuCommand[] =
@@ -34,8 +35,17 @@ export class ActorPortraitRuntime {
   }
 
   static getEnabledPortraitContextMenuCommands(actor: Actor5e) {
-    return ActorPortraitRuntime._portraitContextMenuCommands.filter(
-      (c) => c.enabled?.(actor) ?? true
-    );
+    return ActorPortraitRuntime._portraitContextMenuCommands.filter((c) => {
+      try {
+        return c.enabled?.(actor) ?? true;
+      } catch (e) {
+        error(
+          'Failed to check if actor portrait context menu command is enabled',
+          false,
+          { error: e, actor }
+        );
+        return false;
+      }
+    });
   }
 }
