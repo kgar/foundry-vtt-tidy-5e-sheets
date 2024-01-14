@@ -175,28 +175,25 @@ function buildAttackModTooltip(
 ) {
   let tooltip = '';
   if (abilityMod !== 0) {
+    tooltip += abilityMod < 0 ? ' - ' : ' + ';
     tooltip += `${abilityMod} (${abilityName})`;
   }
 
   if (proficiency !== 0) {
-    if (tooltip !== '') {
-      tooltip += proficiency < 0 ? ' - ' : ' + ';
-    }
+    tooltip += proficiency < 0 ? ' - ' : ' + ';
     tooltip += `${Math.abs(proficiency)} (${FoundryAdapter.localize(
       'DND5E.ProficiencyBonus'
     )})`;
   }
 
   if (bonusTotal !== 0) {
-    if (tooltip !== '') {
-      tooltip += bonusTotal < 0 ? ' - ' : ' + ';
-    }
+    tooltip += bonusTotal < 0 ? ' - ' : ' + ';
     tooltip += `${Math.abs(bonusTotal)} (${FoundryAdapter.localize(
       'DND5E.Bonus'
     )})`;
   }
 
-  return tooltip;
+  return tooltip.trim();
 }
 
 function calculateDeterministicBonus(rawBonus: string): number {
