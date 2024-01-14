@@ -135,6 +135,60 @@ export interface ItemSummaryCommandExecuteParams {
 }
 
 /**
+ * A command, such as a button or a menu item, which can be executed on behalf of an actor.
+ */
+export interface PortraitContextMenuCommand {
+  /**
+   * A label to use when displaying the command. Localization keys also work.
+   */
+  label?: string;
+  /**
+   * Optional string of CSS classes representing a FontAwesome icon to be rendered with the command.
+   */
+  iconClass?: string;
+  /**
+   * Optional tooltip text for the target command.
+   */
+  tooltip?: string;
+  /**
+   * An optional callback which allows for conditionally including a command. If not included, defaults to `true`.
+   * @param params contextual information to assist with determining whether a command is appropriate for a particular actor
+   * @returns whether to include this command in the UI for the target actor
+   */
+  enabled?: (params: PortraitContextMenuCommandEnabledParams) => boolean;
+  /**
+   * An optional callback to allow for executing logic when a user executes the command.
+   * @param params contextual information to assist with determining whether a command is appropriate for a particular actor
+   * @returns void
+   *
+   * @remarks
+   * It is up to the user to execute commands, such as clicking a button that represents the command. This is the general-purpose event handler for that button click.
+   * Note that the command may instead be a menu item or other control for other scenarios, depending on the sheet and version of Tidy 5e.
+   */
+  execute?: (params: PortraitContextMenuCommandExecuteParams) => void;
+}
+
+/**
+ * Contextual information to assist with determining whether a command is appropriate for a particular actor
+ */
+export interface PortraitContextMenuCommandEnabledParams {
+  /**
+   * The actor for which the command will show.
+   */
+  actor: any;
+}
+
+/**
+ * Contextual information related to the actor for which the target command was executed.
+ */
+export interface PortraitContextMenuCommandExecuteParams {
+  /**
+   * The actor for which the command was executed.
+   */
+  actor: any;
+}
+
+/**
  * A command, such as a button or a menu item, which can be executed on behalf of an actor item section.
  */
 export interface ActorItemSectionFooterCommand {

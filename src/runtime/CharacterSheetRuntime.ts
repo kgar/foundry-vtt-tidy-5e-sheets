@@ -1,4 +1,5 @@
 import type {
+  Actor5e,
   CharacterSheetContext,
   CustomContent,
   Tab,
@@ -11,15 +12,46 @@ import ActorEffectsTab from 'src/sheets/actor/ActorEffectsTab.svelte';
 import CharacterBiographyTab from 'src/sheets/character/tabs/CharacterBiographyTab.svelte';
 import ActorJournalTab from 'src/sheets/actor/tabs/ActorJournalTab.svelte';
 import ActorActionsTab from 'src/sheets/actor/tabs/ActorActionsTab.svelte';
-import type { RegisteredContent, RegisteredTab } from './types';
+import type {
+  RegisteredContent,
+  RegisteredPortraitContextMenuCommand,
+  RegisteredTab,
+} from './types';
 import { CONSTANTS } from 'src/constants';
 import { warn } from 'src/utils/logging';
 import { TabManager } from './tab/TabManager';
-import type { ActorTabRegistrationOptions } from 'src/api/api.types';
+import type {
+  ActorTabRegistrationOptions,
+  PortraitContextMenuCommand,
+} from 'src/api/api.types';
 import { CustomContentManager } from './content/CustomContentManager';
+import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
 export class CharacterSheetRuntime {
   private static _content: RegisteredContent<CharacterSheetContext>[] = [];
+  private static _portraitContextMenuCommands: RegisteredPortraitContextMenuCommand[] =
+    [
+      {
+        label: 'T5EK.ShowPortraitArt',
+        execute: (actor: any) => {
+          FoundryAdapter.renderImagePopout(actor.img, {
+            title: 'Portrait: ' + actor.name,
+            shareable: true,
+            uuid: actor.uuid,
+          }).render(true);
+        },
+      },
+      {
+        label: 'T5EK.ShowTokenArt',
+        execute: (actor: any) => {
+          FoundryAdapter.renderImagePopout(actor.prototypeToken.texture.src, {
+            title: 'Portrait: ' + actor.name,
+            shareable: true,
+            uuid: actor.uuid,
+          }).render(true);
+        },
+      },
+    ];
   private static _tabs: RegisteredTab<CharacterSheetContext>[] = [
     {
       title: 'T5EK.Actions.TabName',
@@ -143,5 +175,17 @@ export class CharacterSheetRuntime {
     }
 
     CharacterSheetRuntime._tabs.push(tab);
+  }
+
+  static registerPortraitContextMenuCommands(
+    commands: PortraitContextMenuCommand[]
+  ) {
+    CharacterSheetRuntime._portraitContextMenuCommands.push(...commands);
+  }
+
+  static getEnabledPortraitContextMenuCommands(actor: Actor5e) {
+    return CharacterSheetRuntime._portraitContextMenuCommands.filter(
+      (c) => c.enabled?.(actor) ?? true
+    );
   }
 }

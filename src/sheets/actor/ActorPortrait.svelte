@@ -14,8 +14,15 @@
   let showPortraitMenu = false;
   const localize = FoundryAdapter.localize;
 
-  function openPortraitPicker(target: HTMLElement) {
-    const rect = target.getBoundingClientRect();
+  function openPortraitPicker(
+    event: MouseEvent & { currentTarget: EventTarget & HTMLElement },
+  ) {
+    if (
+      !Hooks.call('tidy5e-sheet.preOpenActorPortraitFilePicker', actor, event)
+    ) {
+      return;
+    }
+    const rect = event.currentTarget.getBoundingClientRect();
     const current = actor.img;
     const fp = new FilePicker({
       type: 'image',
@@ -30,11 +37,11 @@
   }
 
   function onPortraitClick(
-    event: MouseEvent & { currentTarget: EventTarget & HTMLElement }
+    event: MouseEvent & { currentTarget: EventTarget & HTMLElement },
   ) {
     switch (event.button) {
       case CONSTANTS.MOUSE_BUTTON_MAIN:
-        openPortraitPicker(event.currentTarget);
+        openPortraitPicker(event);
         break;
       case CONSTANTS.MOUSE_BUTTON_AUXILIARY:
         break;

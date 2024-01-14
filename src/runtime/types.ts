@@ -60,6 +60,23 @@ export type RegisteredItemSummaryCommandExecuteParams = {
   item: Item5e;
 };
 
+export type RegisteredPortraitContextMenuCommand = {
+  label?: string;
+  iconClass?: string;
+  tooltip?: string;
+  enabled?: (
+    params: RegisteredPortraitContextMenuCommandEnabledParams
+  ) => boolean;
+  execute?: (params: RegisteredPortraitContextMenuCommandExecuteParams) => void;
+};
+
+export type RegisteredPortraitContextMenuCommandEnabledParams = {
+  actor: Actor5e;
+};
+export type RegisteredPortraitContextMenuCommandExecuteParams = {
+  actor: Actor5e;
+};
+
 export type RegisteredActorItemSectionFooterCommand = {
   label?: string;
   iconClass?: string;
