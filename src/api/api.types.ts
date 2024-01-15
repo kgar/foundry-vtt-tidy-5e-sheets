@@ -135,7 +135,7 @@ export interface ItemSummaryCommandExecuteParams {
 }
 
 /**
- * A command, such as a button or a menu item, which can be executed on behalf of an actor.
+ * A command, eventually rendered as a control like a button or a menu item, which can be executed on behalf of an actor when accessing actor portrait menu options.
  */
 export interface PortraitContextMenuCommand {
   /**
@@ -189,7 +189,7 @@ export interface PortraitContextMenuCommandExecuteParams {
 }
 
 /**
- * A command, such as a button or a menu item, which can be executed on behalf of an actor item section.
+ * A command, eventually rendered as a control like a button or a menu item, which can be executed on behalf of an actor item section.
  */
 export interface ActorItemSectionFooterCommand {
   /**
