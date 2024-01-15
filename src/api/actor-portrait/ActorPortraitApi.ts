@@ -10,6 +10,7 @@ export class ActorPortraitApi {
    * @param commands actor portrait menu commands for Tidy 5e to render
    *
    * @example Registering a command
+   * ```js
    * Hooks.once("tidy5e-sheet.ready", (api) => {
    *   api.actorPortrait.registerMenuCommands([
    *     {
@@ -26,7 +27,7 @@ export class ActorPortraitApi {
    *     },
    *   ]);
    * });
-   *
+   * ```
    */
   registerMenuCommands(commands: PortraitMenuCommand[]) {
     ActorPortraitRuntime.registerMenuCommands([...commands]);
