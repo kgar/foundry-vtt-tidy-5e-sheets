@@ -8,6 +8,7 @@
   import GmOptionsSettingsTab from './tabs/GmOptionsSettingsTab.svelte';
   import LockSettingsTab from './tabs/LockSettingsTab.svelte';
   import FeaturesSettingsTab from './tabs/FeaturesSettingsTab.svelte';
+  import ExperimentalSettingsTab from './tabs/ExperimentalSettingsTab.svelte';
   import InfoTab from './tabs/InfoTab.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getContext } from 'svelte';
@@ -79,6 +80,17 @@
       type: 'svelte',
     },
   });
+
+  if (FoundryAdapter.userIsGm()) {
+    tabs.push({
+      id: CONSTANTS.TAB_SETTINGS_EXPERIMENTAL,
+      title: 'T5EK.Settings.TabExperimental.tabLabel',
+      content: {
+        component: ExperimentalSettingsTab,
+        type: 'svelte',
+      },
+    });
+  }
 
   tabs.push({
     id: CONSTANTS.TAB_SETTINGS_INFO,

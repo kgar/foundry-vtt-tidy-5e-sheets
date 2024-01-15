@@ -1182,6 +1182,12 @@ export const FoundryAdapter = {
     return true;
   },
   forceKeyboardManagerEvent(up: boolean, ev: KeyboardEvent) {
+    if (
+      !SettingsProvider.settings.experimentalForwardButtonKeyboardEvents.get()
+    ) {
+      return;
+    }
+
     KeyboardManager.emulateKeypress(up, ev.code, {
       altKey: ev.altKey,
       ctrlKey: ev.ctrlKey,

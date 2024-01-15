@@ -351,7 +351,9 @@ export function createSettings() {
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getTidySetting<boolean>('useDefaultSheetAttributeTabbing');
+          return FoundryAdapter.getTidySetting<boolean>(
+            'useDefaultSheetAttributeTabbing'
+          );
         },
       },
 
@@ -365,7 +367,9 @@ export function createSettings() {
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getTidySetting<boolean>('useDefaultSheetHpTabbing');
+          return FoundryAdapter.getTidySetting<boolean>(
+            'useDefaultSheetHpTabbing'
+          );
         },
       },
 
@@ -1820,6 +1824,22 @@ export function createSettings() {
         },
         get() {
           return FoundryAdapter.getTidySetting<boolean>('debug');
+        },
+      },
+
+      experimentalForwardButtonKeyboardEvents: {
+        options: {
+          name: `T5EK.Settings.ExperimentalForwardButtonKeyboardEvents.name`,
+          hint: `T5EK.Settings.ExperimentalForwardButtonKeyboardEvents.hint`,
+          scope: 'world',
+          config: false,
+          default: false,
+          type: Boolean,
+        },
+        get() {
+          return FoundryAdapter.getTidySetting<boolean>(
+            'experimentalForwardButtonKeyboardEvents'
+          );
         },
       },
     } satisfies Tidy5eSettings,
