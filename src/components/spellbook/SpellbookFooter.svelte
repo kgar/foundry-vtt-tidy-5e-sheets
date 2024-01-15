@@ -7,6 +7,7 @@
   import Select from '../inputs/Select.svelte';
   import TabFooter from 'src/sheets/actor/TabFooter.svelte';
   import { MaxPreparedSpellsConfigFormApplication } from 'src/applications/max-prepared-spells-config/MaxPreparedSpellsConfigFormApplication';
+  import { CONSTANTS } from 'src/constants';
 
   let context =
     getContext<Readable<CharacterSheetContext | NpcSheetContext>>('context');
@@ -15,8 +16,6 @@
   export let includePreparedSpells: boolean = true;
 
   const localize = FoundryAdapter.localize;
-  $: spellAttackBonusInfo =
-    FoundryAdapter.getSpellAttackModAndTooltip($context);
 
   $: abilities = Object.entries($context.abilities).map((a: any) => ({
     abbr: a[0],
@@ -25,29 +24,81 @@
 </script>
 
 <TabFooter cssClass="{cssClass} spellbook-footer" mode="horizontal">
-  <h3 class="spell-dc spell-mod">
-    {localize('DND5E.SpellDC')}
-    {$context.system.attributes.spelldc}
+  <h3 class="spell-dc spell-mod flex-row extra-small-gap">
+    <div class="flex-row extra-small-gap" style="align-items: baseline;">
+      <div>{FoundryAdapter.localize('DND5E.AbbreviationDC')}:</div>
+      <div
+        class="dc-container"
+        data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.SPELL_DC}
+        data-tooltip="{FoundryAdapter.localize('DND5E.SpellDC')}: {$context
+          .system.attributes.spelldc}"
+      >
+        {$context.system.attributes.spelldc}
+      </div>
 
-    {#if includeAttackMod}
-      / {localize('T5EK.SpellAttackMod')}:
-      <span class="spell-attack-mod">
-        <span data-tooltip={spellAttackBonusInfo.modTooltip}
-          >{spellAttackBonusInfo.mod}</span
-        >
-        {#if spellAttackBonusInfo.bonus?.trim() !== ''}
-          <i
-            class="bonus-icon fa-solid fa-dice-d4"
-            data-tooltip="{spellAttackBonusInfo.bonus}: bonus 'actor.system.bonuses.rsak.attack'"
-          />
+      {#if includeAttackMod}
+        <span>|</span>
+        <span>{FoundryAdapter.localize('T5EK.AttackMod')}:</span>
+
+        {#if $context.spellAttackModCalculations.rangedMod !== $context.spellAttackModCalculations.meleeMod}
+          <div
+            data-tooltip="{FoundryAdapter.localize(
+              'T5EK.RangedSpellAttackMod',
+            )}: {$context.spellAttackModCalculations.rangedTooltip}"
+            class="spell-attack-mod-container"
+          >
+            <i class="fa-solid fa-wand-magic-sparkles"></i>
+            <span
+              class="spell-attack-mod"
+              data-tidy-mod-has-bonus={$context.spellAttackModCalculations
+                .rangedHasBonus}
+              data-tidy-sheet-part={CONSTANTS.SHEET_PARTS
+                .RANGED_SPELL_ATTACK_MOD}
+            >
+              {$context.spellAttackModCalculations.rangedMod}
+            </span>
+          </div>
+          <div
+            data-tooltip="{FoundryAdapter.localize(
+              'T5EK.MeleeSpellAttackMod',
+            )}: {$context.spellAttackModCalculations.meleeTooltip}"
+            class="spell-attack-mod-container"
+          >
+            <i class="fa-solid fa-hand-sparkles"></i>
+            <span
+              class="spell-attack-mod"
+              data-tidy-mod-has-bonus={$context.spellAttackModCalculations
+                .meleeHasBonus}
+              data-tidy-sheet-part={CONSTANTS.SHEET_PARTS
+                .MELEE_SPELL_ATTACK_MOD}
+            >
+              {$context.spellAttackModCalculations.meleeMod}
+            </span>
+          </div>
+        {:else}
+          <div
+            data-tooltip="{FoundryAdapter.localize(
+              'T5EK.SpellAttackMod',
+            )}: {$context.spellAttackModCalculations.rangedTooltip}"
+            class="spell-attack-mod-container"
+          >
+            <span
+              class="spell-attack-mod"
+              data-tidy-mod-has-bonus={$context.spellAttackModCalculations
+                .rangedHasBonus}
+              data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.SPELL_ATTACK_MOD}
+            >
+              {$context.spellAttackModCalculations.rangedMod}
+            </span>
+          </div>
         {/if}
-      </span>
-    {/if}
+      {/if}
+    </div>
   </h3>
   {#if includePreparedSpells}
     <button
       type="button"
-      class="transparent-button max-prepared-spells highlight-on-hover"
+      class="transparent-button secondary-footer-field highlight-on-hover"
       on:click={() =>
         new MaxPreparedSpellsConfigFormApplication($context.actor).render(true)}
       title={localize('T5EK.MaxPreparedSpellsConfig.ButtonTooltip')}
@@ -63,7 +114,7 @@
       >
     </button>
   {/if}
-  <div class="spellcasting-attribute">
+  <div class="spellcasting-attribute secondary-footer-field">
     <p>{localize('DND5E.SpellAbility')}</p>
     <Select
       document={$context.actor}
@@ -80,10 +131,8 @@
     </Select>
   </div>
   {#if $context.isNPC}
-    <div
-      class="spellcasting-level-container flex-row extra-small-gap flex-0 align-items-center"
-    >
-      <h3 class="truncate">{localize('DND5E.SpellcasterLevel')}</h3>
+    <div class="spellcasting-level-container secondary-footer-field">
+      <p class="truncate">{localize('DND5E.SpellcasterLevel')}</p>
       <NumberInput
         cssClass="spellcasting-level"
         document={$context.actor}
@@ -100,12 +149,26 @@
 </TabFooter>
 
 <style lang="scss">
-  .max-prepared-spells,
-  .spellcasting-attribute {
+  :global(.tidy5e-kgar .spellbook-footer) {
+    min-height: 2.5rem;
+  }
+
+  .secondary-footer-field {
     flex: 0;
     display: flex;
     align-items: center;
     font-size: 0.75rem;
+  }
+
+  .spell-attack-mod-container,
+  .dc-container {
+    display: flex;
+    align-items: center;
+    gap: 0.125rem;
+  }
+
+  .spell-attack-mod-container i {
+    font-size: 1rem;
   }
 
   h3 {
@@ -130,9 +193,5 @@
     height: 1.25rem;
     flex: 0;
     text-align: center;
-  }
-
-  .bonus-icon {
-    font-size: 1rem;
   }
 </style>

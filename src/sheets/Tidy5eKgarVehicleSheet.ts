@@ -30,6 +30,7 @@ import {
 import { isNil } from 'src/utils/data';
 import { CustomContentRenderer } from './CustomContentRenderer';
 import { getBaseActorSheet5e } from 'src/utils/class-inheritance';
+import { ActorPortraitRuntime } from 'src/runtime/ActorPortraitRuntime';
 
 export class Tidy5eVehicleSheet
   extends dnd5e.applications.actor.ActorSheet5eVehicle
@@ -108,6 +109,8 @@ export class Tidy5eVehicleSheet
         this._activateCoreListeners($(node));
         super.activateListeners($(node));
       },
+      actorPortraitCommands:
+        ActorPortraitRuntime.getEnabledPortraitMenuCommands(this.actor),
       allowEffectsManagement: true,
       appId: this.appId,
       customContent: await VehicleSheetRuntime.getContent(

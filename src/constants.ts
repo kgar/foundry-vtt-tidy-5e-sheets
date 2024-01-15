@@ -111,6 +111,10 @@ export const CONSTANTS = {
   SHEET_PART_ATTRIBUTE: 'data-tidy-sheet-part',
   SHEET_PARTS: {
     /**
+     * The element which contains the modifier text for melee spell attacks.
+     */
+    MELEE_SPELL_ATTACK_MOD: 'melee-spell-attack-mod',
+    /**
      * A container for a sheet name. The sheet name is usually in input, and its container has some additional styles associated with it.
      * The container typically sits in a sheet header row with other header-related elements.
      */
@@ -120,6 +124,10 @@ export const CONSTANTS = {
      */
     NAME_HEADER_ROW: 'name-header-row',
     /**
+     * The element which contains the modifier text for ranged spell attacks.
+     */
+    RANGED_SPELL_ATTACK_MOD: 'ranged-spell-attack-mod',
+    /**
      * A container for a single resource (first, second, third, etc.).
      */
     RESOURCE: 'resource',
@@ -127,5 +135,13 @@ export const CONSTANTS = {
      * The container where all known resources (first, second, third, etc.) are kept.
      */
     RESOURCES_CONTAINER: 'resources-container',
+    /**
+     * The element which contains the modifier text for spell attacks in general. This field is shown when melee and ranged spell attack mods are the same.
+     */
+    SPELL_ATTACK_MOD: 'spell-attack-mod',
+    /**
+     * The element which contains spell DC.
+     */
+    SPELL_DC: 'spell-dc',
   },
 } as const;
