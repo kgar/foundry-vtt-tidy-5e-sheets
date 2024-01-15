@@ -160,8 +160,6 @@
 
   .spell-attack-mod-container,
   .dc-container {
-    border-radius: 5px;
-
     display: flex;
     align-items: center;
     gap: 0.125rem;
