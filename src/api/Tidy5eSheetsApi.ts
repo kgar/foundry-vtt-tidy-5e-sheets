@@ -28,6 +28,7 @@ import { HandlebarsContent } from './content/HandlebarsContent';
 import { CONSTANTS } from 'src/constants';
 import { CustomContentManager } from 'src/runtime/content/CustomContentManager';
 import { ActorItemApi } from './actor-item/ActorItemApi';
+import { ActorPortraitApi } from './actor-portrait/ActorPortraitApi';
 
 /**
  * The Tidy 5e Sheets API. The API becomes available after the hook `tidy5e-sheet.ready` is called.
@@ -75,6 +76,9 @@ export class Tidy5eSheetsApi {
 
   /** {@inheritDoc ActorItemApi} */
   actorItem = new ActorItemApi();
+
+  /** {@inheritDoc ActorPortraitApi} */
+  actorPortrait = new ActorPortraitApi();
 
   /**
    * Constants for a variety of uses.
@@ -297,11 +301,10 @@ export class Tidy5eSheetsApi {
     content: SupportedContent,
     options?: ContentRegistrationOptions
   ) {
-    const registeredContent =
-      CustomContentManager.mapToRegisteredContent(
-        content,
-        options?.layout
-      );
+    const registeredContent = CustomContentManager.mapToRegisteredContent(
+      content,
+      options?.layout
+    );
 
     if (!registeredContent) {
       warn('Unable to register content. Content type not supported.');
@@ -350,11 +353,10 @@ export class Tidy5eSheetsApi {
     content: SupportedContent,
     options?: ContentRegistrationOptions
   ) {
-    const registeredContent =
-      CustomContentManager.mapToRegisteredContent(
-        content,
-        options?.layout
-      );
+    const registeredContent = CustomContentManager.mapToRegisteredContent(
+      content,
+      options?.layout
+    );
 
     if (!registeredContent) {
       warn('Unable to register content. Content type not supported.');
@@ -401,11 +403,10 @@ export class Tidy5eSheetsApi {
     content: SupportedContent,
     options?: ContentRegistrationOptions
   ) {
-    const registeredContent =
-      CustomContentManager.mapToRegisteredContent(
-        content,
-        options?.layout
-      );
+    const registeredContent = CustomContentManager.mapToRegisteredContent(
+      content,
+      options?.layout
+    );
 
     if (!registeredContent) {
       warn('Unable to register content. Content type not supported.');
@@ -452,11 +453,10 @@ export class Tidy5eSheetsApi {
     content: SupportedContent,
     options?: ContentRegistrationOptions
   ) {
-    const registeredContent =
-      CustomContentManager.mapToRegisteredContent(
-        content,
-        options?.layout
-      );
+    const registeredContent = CustomContentManager.mapToRegisteredContent(
+      content,
+      options?.layout
+    );
 
     if (!registeredContent) {
       warn('Unable to register content. Content type not supported.');
@@ -503,11 +503,10 @@ export class Tidy5eSheetsApi {
     content: SupportedContent,
     options?: ContentRegistrationOptions
   ) {
-    const registeredContent =
-      CustomContentManager.mapToRegisteredContent(
-        content,
-        options?.layout
-      );
+    const registeredContent = CustomContentManager.mapToRegisteredContent(
+      content,
+      options?.layout
+    );
 
     if (!registeredContent) {
       warn('Unable to register content. Content type not supported.');

@@ -33,6 +33,7 @@ import {
 } from 'src/features/actions/actions';
 import { isNil } from 'src/utils/data';
 import { CustomContentRenderer } from './CustomContentRenderer';
+import { ActorPortraitRuntime } from 'src/runtime/ActorPortraitRuntime';
 import { calculateSpellAttackMod } from 'src/utils/formula';
 
 export class Tidy5eNpcSheet
@@ -122,6 +123,8 @@ export class Tidy5eNpcSheet
         this._activateCoreListeners($(node));
         super.activateListeners($(node));
       },
+      actorPortraitCommands:
+        ActorPortraitRuntime.getEnabledPortraitMenuCommands(this.actor),
       allowEffectsManagement: true,
       appearanceEnrichedHtml: await FoundryAdapter.enrichHtml(
         FoundryAdapter.getProperty<string>(

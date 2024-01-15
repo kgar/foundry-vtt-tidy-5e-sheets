@@ -33,6 +33,7 @@ import {
 } from 'src/features/actions/actions';
 import { isNil } from 'src/utils/data';
 import { CustomContentRenderer } from './CustomContentRenderer';
+import { ActorPortraitRuntime } from 'src/runtime/ActorPortraitRuntime';
 import { calculateSpellAttackMod } from 'src/utils/formula';
 
 export class Tidy5eCharacterSheet
@@ -178,6 +179,8 @@ export class Tidy5eCharacterSheet
       },
       actions: getActorActions(this.actor),
       actorClassesToImages: getActorClassesToImages(this.actor),
+      actorPortraitCommands:
+        ActorPortraitRuntime.getEnabledPortraitMenuCommands(this.actor),
       allowEffectsManagement: FoundryAdapter.allowCharacterEffectsManagement(
         this.actor
       ),
