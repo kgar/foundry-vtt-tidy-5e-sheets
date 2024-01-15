@@ -79,7 +79,7 @@
           <div
             data-tooltip="{FoundryAdapter.localize(
               'T5EK.SpellAttackMod',
-            )}: {$context.spellAttackModCalculations.meleeTooltip}"
+            )}: {$context.spellAttackModCalculations.rangedTooltip}"
             class="spell-attack-mod-container"
           >
             <span
