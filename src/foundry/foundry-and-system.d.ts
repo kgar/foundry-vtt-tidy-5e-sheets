@@ -35,6 +35,7 @@ declare global {
   var renderTemplate: any;
   var Roll: any;
   var RollTerm: any;
+  var SettingsConfig: any;
   var TextEditor: any;
   var ui: any;
 }

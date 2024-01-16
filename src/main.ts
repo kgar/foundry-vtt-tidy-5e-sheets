@@ -1,7 +1,7 @@
 import { FoundryAdapter } from './foundry/foundry-adapter';
 import { Tidy5eCharacterSheet } from './sheets/Tidy5eCharacterSheet';
 import './scss/core.scss';
-import { initSettings } from './settings/settings';
+import { SettingsProvider, initSettings } from './settings/settings';
 import { Tidy5eKgarItemSheet } from './sheets/Tidy5eItemSheet';
 import { Tidy5eNpcSheet } from './sheets/Tidy5eNpcSheet';
 import { Tidy5eVehicleSheet } from './sheets/Tidy5eKgarVehicleSheet';
@@ -45,12 +45,17 @@ Hooks.once('ready', async () => {
 });
 
 Hooks.once('ready', () => {
-  const test = game.keyboard._processKeyboardContext as Function;
+  if (
+    !SettingsProvider.settings.experimentalForwardButtonKeyboardEvents.get()
+  ) {
+    return;
+  }
 
   const originalHasFocus = Object.getOwnPropertyDescriptor(
     Object.getPrototypeOf(game.keyboard),
     'hasFocus'
   );
+
   Object.defineProperty(game.keyboard, 'hasFocus', {
     get() {
       const focusedElement = document.querySelector(':focus');
@@ -65,15 +70,4 @@ Hooks.once('ready', () => {
       return originalHasFocus?.value;
     },
   });
-  // game.keyboard._processKeyboardContext = (context, options) => {
-  //   const force = context.event.target?.hasAttribute?.(
-  //     'data-force-keyboard-events'
-  //   );
-
-  //   if (force) {
-  //     console.log('forcing keyboard context');
-  //   }
-
-  //   test.call(game.keyboard, context, { ...options, force: !!force });
-  // };
 });

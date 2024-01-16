@@ -1835,6 +1835,9 @@ export function createSettings() {
           config: false,
           default: false,
           type: Boolean,
+          onChange() {
+            SettingsConfig.reloadConfirm();
+          }
         },
         get() {
           return FoundryAdapter.getTidySetting<boolean>(

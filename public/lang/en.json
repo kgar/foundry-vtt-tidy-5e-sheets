@@ -621,7 +621,7 @@
     "hint": "Prints debug messages to the console."
   },
   "T5EK.Settings.ExperimentalForwardButtonKeyboardEvents": {
-    "name": "Forward Keybind Events from Tidy Buttons",
+    "name": "Forward Keybind Events from Tidy Buttons (Requires Reload)",
     "hint": "Roll buttons, tab options, and many other elements on Tidy sheets are actually HTML Buttons. Foundry prevents keybindings from tiggering when a user is focused on a button. Because of this, when a user is holding Shift or CTRL while trying to click a roll button, there's a chance that Foundry will not see the Shift / CTRL keypress and will not handle it properly. Enable this experimental setting to allow keypresses to be forwarded to the Foundry keybind manager from Tidy buttons."
   },
   "T5EK.Settings.SortFavoriteItemsAlphabetically": {
