@@ -137,8 +137,19 @@ export class CustomContentRenderer {
     superActivateListeners: any
   ) {
     const groupId = foundry.utils.randomID();
+
+    let contentHtml = '';
+    try {
+      contentHtml =
+        typeof customContent.content.html === 'function'
+          ? customContent.content.html(data)
+          : customContent.content.html;
+    } catch (e) {
+      error('Failed to render custom HTML', false, { e, customContent });
+    }
+
     const wrappedContent = wrapCustomHtmlForRendering(
-      customContent.content.html,
+      contentHtml,
       customContent.content.renderScheme,
       groupId,
       customContent.activateDefaultSheetListeners

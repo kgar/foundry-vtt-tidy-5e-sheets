@@ -30,7 +30,7 @@ export type HtmlTabContent = {
 // TODO: Give better name; this is the prepared HTML that is ready to render
 export interface HtmlRuntimeContent {
   type: 'html';
-  html: string;
+  html: string | ((data: any) => string);
   cssClass?: string;
   renderScheme: RenderScheme;
 }
@@ -53,7 +53,7 @@ export type Tab<
 export type CustomContent = {
   selector?: string;
   position?: string;
-  content: HtmlContent;
+  content: HtmlRuntimeContent;
   onContentReady?: (params: OnContentReadyParams) => void;
   onRender?: (params: OnRenderParams) => void;
   activateDefaultSheetListeners?: boolean;

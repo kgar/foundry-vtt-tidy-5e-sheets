@@ -110,6 +110,22 @@ export const CONSTANTS = {
   SHEET_PART_ATTRIBUTE: 'data-tidy-sheet-part',
   SHEET_PARTS: {
     /**
+     * A container for all form fields related to a given damage part.
+     */
+    DAMAGE_PART_CONTAINER: 'damage-part-container',
+    /**
+     * An interactable control, usually an anchor or a button, which the user can execute to delete a damage part to an item.
+     */
+    DAMAGE_PART_DELETE_COMMAND: 'damage-part-delete-command',
+    /**
+     * An input element which contains a damage part formula, usually for an item.
+     */
+    DAMAGE_PART_FORMULA: 'damage-part-formula',
+    /**
+     * An input element which represents the damage type of a damage part, usually for an item.
+     */
+    DAMAGE_PART_TYPE: 'damage-part-type',
+    /**
      * The element which contains the modifier text for melee spell attacks.
      */
     MELEE_SPELL_ATTACK_MOD: 'melee-spell-attack-mod',
