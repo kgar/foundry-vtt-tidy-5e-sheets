@@ -43,3 +43,37 @@ Hooks.once('ready', async () => {
 
   Hooks.callAll(CONSTANTS.HOOK_TIDY5E_SHEETS_READY, api);
 });
+
+Hooks.once('ready', () => {
+  const test = game.keyboard._processKeyboardContext as Function;
+
+  const originalHasFocus = Object.getOwnPropertyDescriptor(
+    Object.getPrototypeOf(game.keyboard),
+    'hasFocus'
+  );
+  Object.defineProperty(game.keyboard, 'hasFocus', {
+    get() {
+      const focusedElement = document.querySelector(':focus');
+
+      if (
+        focusedElement?.tagName === 'BUTTON' &&
+        focusedElement?.closest(`[data-sheet-module="tidy5e-sheet"]`)
+      ) {
+        return false;
+      }
+
+      return originalHasFocus?.value;
+    },
+  });
+  // game.keyboard._processKeyboardContext = (context, options) => {
+  //   const force = context.event.target?.hasAttribute?.(
+  //     'data-force-keyboard-events'
+  //   );
+
+  //   if (force) {
+  //     console.log('forcing keyboard context');
+  //   }
+
+  //   test.call(game.keyboard, context, { ...options, force: !!force });
+  // };
+});
