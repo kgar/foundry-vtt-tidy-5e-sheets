@@ -51,8 +51,6 @@
     on:contextmenu={calcAverageHitDie}
     class="roll-hp-formula"
     tabindex={!$settingStore.useDefaultSheetHpTabbing ? 0 : -1}
-    on:keydown={(ev) => FoundryAdapter.forceKeyboardManagerEvent(false, ev)}
-    on:keyup={(ev) => FoundryAdapter.forceKeyboardManagerEvent(true, ev)}
   >
     <i class="fas fa-dice-six" />
   </button>

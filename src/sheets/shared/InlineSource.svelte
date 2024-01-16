@@ -17,8 +17,6 @@
     class="configure-source inline-transparent-button highlight-on-hover truncate"
     class:placeholder={usePlaceholder}
     on:click={() => FoundryAdapter.renderSourceConfig(document, keyPath)}
-    on:keydown={(ev) => FoundryAdapter.forceKeyboardManagerEvent(false, ev)}
-    on:keyup={(ev) => FoundryAdapter.forceKeyboardManagerEvent(true, ev)}
   >
     {text}
   </button>

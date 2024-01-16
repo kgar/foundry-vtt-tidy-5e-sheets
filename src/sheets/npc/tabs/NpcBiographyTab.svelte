@@ -130,8 +130,6 @@
         on:click={togglePersonalityInfo}
         class="toggle-personality-info"
         title={localize('T5EK.TogglePersonalityInfo')}
-        on:keydown={(ev) => FoundryAdapter.forceKeyboardManagerEvent(false, ev)}
-        on:keyup={(ev) => FoundryAdapter.forceKeyboardManagerEvent(true, ev)}
       >
         {#if showNpcPersonalityInfo}
           <i class="fas fa-angle-double-left" />

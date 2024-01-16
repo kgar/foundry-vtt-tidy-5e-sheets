@@ -126,12 +126,7 @@
     </div>
   </div>
   <div class="button-bar">
-    <button
-      type="submit"
-      class="save-changes-btn"
-      on:keydown={(ev) => FoundryAdapter.forceKeyboardManagerEvent(false, ev)}
-      on:keyup={(ev) => FoundryAdapter.forceKeyboardManagerEvent(true, ev)}
-    >
+    <button type="submit" class="save-changes-btn">
       <i class="fas fa-save" />
       {localize('T5EK.SaveChanges')}
     </button>

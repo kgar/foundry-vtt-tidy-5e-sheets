@@ -24,8 +24,6 @@
       class="configure inline-icon-button"
       title={localize('DND5E.MovementConfig')}
       on:click={() => FoundryAdapter.renderActorMovementConfig($context.actor)}
-      on:keydown={(ev) => FoundryAdapter.forceKeyboardManagerEvent(false, ev)}
-      on:keyup={(ev) => FoundryAdapter.forceKeyboardManagerEvent(true, ev)}
       ><i class="fas fa-cog" /></button
     >
   {/if}

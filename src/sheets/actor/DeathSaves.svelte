@@ -40,8 +40,6 @@
       type="button"
       class="death-save rollable"
       on:click={(event) => dispatcher('rollDeathSave', { mouseEvent: event })}
-      on:keydown={(ev) => FoundryAdapter.forceKeyboardManagerEvent(false, ev)}
-      on:keyup={(ev) => FoundryAdapter.forceKeyboardManagerEvent(true, ev)}
     >
       <i class="fas fa-skull" />
     </button>

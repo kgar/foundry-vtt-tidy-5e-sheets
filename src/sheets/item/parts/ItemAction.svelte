@@ -141,8 +141,6 @@
       class="damage-formula-control add-damage"
       on:click={() => addDamageFormula()}
       disabled={!$context.editable}
-      on:keydown={(ev) => FoundryAdapter.forceKeyboardManagerEvent(false, ev)}
-      on:keyup={(ev) => FoundryAdapter.forceKeyboardManagerEvent(true, ev)}
     >
       <i class="fas fa-plus" />
     </button>
@@ -180,9 +178,6 @@
           class="damage-formula-control delete-damage"
           on:click={() => deleteDamageFormula(i)}
           disabled={!$context.editable}
-          on:keydown={(ev) =>
-            FoundryAdapter.forceKeyboardManagerEvent(false, ev)}
-          on:keyup={(ev) => FoundryAdapter.forceKeyboardManagerEvent(true, ev)}
         >
           <i class="fas fa-minus" />
         </button>

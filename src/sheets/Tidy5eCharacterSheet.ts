@@ -467,6 +467,26 @@ export class Tidy5eCharacterSheet
         data,
         true
       );
+      this.element
+        .get(0)
+        .addEventListener(
+          'keydown',
+          (ev: KeyboardEvent & { target: Element }) => {
+            if (ev.target.tagName !== 'BUTTON') return;
+            console.log('keydown', ev.key);
+            FoundryAdapter.forceKeyboardManagerEvent(false, ev);
+          }
+        );
+      this.element
+        .get(0)
+        .addEventListener(
+          'keyup',
+          (ev: KeyboardEvent & { target: Element }) => {
+            if (ev.target.tagName !== 'BUTTON') return;
+            console.log('keyup', ev.key);
+            FoundryAdapter.forceKeyboardManagerEvent(true, ev);
+          }
+        );
       return;
     }
 

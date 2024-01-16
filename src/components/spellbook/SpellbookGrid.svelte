@@ -78,9 +78,6 @@
           on:mouseenter={(ev) => onMouseEnter(ev, spell)}
           on:mouseleave={(ev) => onMouseLeave(ev, spell)}
           disabled={!$context.editable}
-          on:keydown={(ev) =>
-            FoundryAdapter.forceKeyboardManagerEvent(false, ev)}
-          on:keyup={(ev) => FoundryAdapter.forceKeyboardManagerEvent(true, ev)}
         >
           {#if FoundryAdapter.tryGetFlag(spell, 'favorite')}
             <GridPaneFavoriteIcon />
@@ -105,10 +102,6 @@
               title={localize('DND5E.SpellCreate')}
               on:click|stopPropagation|preventDefault={() =>
                 FoundryAdapter.createItem(section.dataset, $context.actor)}
-              on:keydown={(ev) =>
-                FoundryAdapter.forceKeyboardManagerEvent(false, ev)}
-              on:keyup={(ev) =>
-                FoundryAdapter.forceKeyboardManagerEvent(true, ev)}
             >
               <i class="fas fa-plus-circle" />
             </button>

@@ -75,10 +75,6 @@
             title={localize(exhaustionConfig.hints[i] ?? '')}
             on:click={() => dispatch('levelSelected', { level: i })}
             disabled={!$context.editable}
-            on:keydown={(ev) =>
-              FoundryAdapter.forceKeyboardManagerEvent(false, ev)}
-            on:keyup={(ev) =>
-              FoundryAdapter.forceKeyboardManagerEvent(true, ev)}
           >
             {i}
           </button>

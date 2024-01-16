@@ -23,8 +23,6 @@
     class="configure-creature-type inline-transparent-button highlight-on-hover truncate"
     on:click={() => configFn($context.actor)}
     title={localize('DND5E.CreatureType')}
-    on:keydown={(ev) => FoundryAdapter.forceKeyboardManagerEvent(false, ev)}
-    on:keyup={(ev) => FoundryAdapter.forceKeyboardManagerEvent(true, ev)}
   >
     {text}
   </button>

@@ -46,8 +46,6 @@
         type="button"
         on:click={() =>
           functions.resetDefaultTabs(context, CONSTANTS.SHEET_TYPE_CHARACTER)}
-        on:keydown={(ev) => FoundryAdapter.forceKeyboardManagerEvent(false, ev)}
-        on:keyup={(ev) => FoundryAdapter.forceKeyboardManagerEvent(true, ev)}
       >
         <i class="fas fa-rotate-right" />
         {localize('T5EK.Reset')}

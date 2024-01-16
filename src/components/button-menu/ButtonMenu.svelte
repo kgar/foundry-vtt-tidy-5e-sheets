@@ -7,7 +7,7 @@
     ButtonMenuPosition,
   } from './button-menu-types';
   import { getPositionStyles } from './button-menu-position';
-    import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
   type StatefulIconClass = {
     opened: string | null;
@@ -62,8 +62,6 @@
     {title}
     class="button-menu-opener {buttonClass}"
     style:padding={openerPadding}
-    on:keydown={(ev) => FoundryAdapter.forceKeyboardManagerEvent(false, ev)}
-    on:keyup={(ev) => FoundryAdapter.forceKeyboardManagerEvent(true, ev)}
   >
     {#if iconClass}
       <i class={actualIconClass} />

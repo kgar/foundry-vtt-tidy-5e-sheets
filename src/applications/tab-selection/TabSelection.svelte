@@ -40,8 +40,6 @@
       type="button"
       class="use-default-btn"
       on:click={(ev) => useDefault()}
-      on:keydown={(ev) => FoundryAdapter.forceKeyboardManagerEvent(false, ev)}
-      on:keyup={(ev) => FoundryAdapter.forceKeyboardManagerEvent(true, ev)}
     >
       <i class="fas fa-rotate-right" />
       {localize('T5EK.UseDefault')}
@@ -50,8 +48,6 @@
       type="submit"
       class="save-changes-btn"
       on:click={(ev) => validate() || ev.preventDefault()}
-      on:keydown={(ev) => FoundryAdapter.forceKeyboardManagerEvent(false, ev)}
-      on:keyup={(ev) => FoundryAdapter.forceKeyboardManagerEvent(true, ev)}
     >
       <i class="fas fa-save" />
       {localize('T5EK.SaveChanges')}
@@ -60,8 +56,6 @@
       type="button"
       class="apply-changes-btn"
       on:click={() => validate() && apply()}
-      on:keydown={(ev) => FoundryAdapter.forceKeyboardManagerEvent(false, ev)}
-      on:keyup={(ev) => FoundryAdapter.forceKeyboardManagerEvent(true, ev)}
     >
       <i class="fas fa-check" />
       {localize('T5EK.ApplyChanges')}

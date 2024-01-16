@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { ActorSheetContext } from 'src/types/types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
@@ -17,9 +17,6 @@
           type="button"
           class="inline-transparent-button"
           on:click={(ev) => $context.actor.sheet._onWarningLink(ev)}
-          on:keydown={(ev) =>
-            FoundryAdapter.forceKeyboardManagerEvent(false, ev)}
-          on:keyup={(ev) => FoundryAdapter.forceKeyboardManagerEvent(true, ev)}
           data-target={warning.link}>{warning.message}</button
         >
       {:else}

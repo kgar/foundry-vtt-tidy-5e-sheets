@@ -48,10 +48,6 @@
             class="inline-icon-button"
             on:click={() => toggleAdvancementLock($context.item)}
             title={localize('DND5E.AdvancementConfigurationActionDisable')}
-            on:keydown={(ev) =>
-              FoundryAdapter.forceKeyboardManagerEvent(false, ev)}
-            on:keyup={(ev) =>
-              FoundryAdapter.forceKeyboardManagerEvent(true, ev)}
           >
             {#if $context.advancementEditable}
               <i class="fas fa-lock-open" />
@@ -71,10 +67,6 @@
             title={localize('DND5E.AdvancementControlCreate')}
             on:click={() =>
               FoundryAdapter.createAdvancementSelectionDialog($context.item)}
-            on:keydown={(ev) =>
-              FoundryAdapter.forceKeyboardManagerEvent(false, ev)}
-            on:keyup={(ev) =>
-              FoundryAdapter.forceKeyboardManagerEvent(true, ev)}
           >
             <i class="fas fa-plus" />
             {localize('DND5E.Add')}
@@ -105,10 +97,6 @@
             class="inline-transparent-button"
             on:click={() =>
               FoundryAdapter.modifyAdvancementChoices(level, $context.item)}
-            on:keydown={(ev) =>
-              FoundryAdapter.forceKeyboardManagerEvent(false, ev)}
-            on:keyup={(ev) =>
-              FoundryAdapter.forceKeyboardManagerEvent(true, ev)}
           >
             {localize('DND5E.AdvancementModifyChoices')}
           </button>
@@ -167,10 +155,6 @@
                 title={localize('DND5E.AdvancementControlEdit')}
                 on:click={() =>
                   FoundryAdapter.editAdvancement(advancement.id, $context.item)}
-                on:keydown={(ev) =>
-                  FoundryAdapter.forceKeyboardManagerEvent(false, ev)}
-                on:keyup={(ev) =>
-                  FoundryAdapter.forceKeyboardManagerEvent(true, ev)}
               >
                 <i class="fas fa-edit" />
               </button>
@@ -183,10 +167,6 @@
                     advancement.id,
                     $context.item,
                   )}
-                on:keydown={(ev) =>
-                  FoundryAdapter.forceKeyboardManagerEvent(false, ev)}
-                on:keyup={(ev) =>
-                  FoundryAdapter.forceKeyboardManagerEvent(true, ev)}
               >
                 <i class="fas fa-trash" />
               </button>

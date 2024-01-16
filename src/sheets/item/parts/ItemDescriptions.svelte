@@ -63,12 +63,7 @@
                       dispatcher('edit', {
                         valueToEdit: itemDescription.content,
                         fieldToEdit: itemDescription.field,
-                      })}
-                    on:keydown={(ev) =>
-                      FoundryAdapter.forceKeyboardManagerEvent(false, ev)}
-                    on:keyup={(ev) =>
-                      FoundryAdapter.forceKeyboardManagerEvent(true, ev)}
-                    ><i class="fas fa-edit" /></button
+                      })}><i class="fas fa-edit" /></button
                   >
                 {/if}
               </span>

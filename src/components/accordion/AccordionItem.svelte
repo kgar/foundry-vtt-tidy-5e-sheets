@@ -29,8 +29,6 @@
       class="accordion-item-toggle transparent-button"
       type="button"
       on:click={() => toggle()}
-      on:keydown={(ev) => FoundryAdapter.forceKeyboardManagerEvent(false, ev)}
-      on:keyup={(ev) => FoundryAdapter.forceKeyboardManagerEvent(true, ev)}
     >
       <span class="accordion-arrow" class:open
         ><i class="fas fa-chevron-right" /></span

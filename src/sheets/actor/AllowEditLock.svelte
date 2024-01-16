@@ -42,8 +42,6 @@
     class="lock-button"
     on:click={() => toggleLock()}
     class:editing-enabled={allowEdit}
-    on:keydown={(ev) => FoundryAdapter.forceKeyboardManagerEvent(false, ev)}
-    on:keyup={(ev) => FoundryAdapter.forceKeyboardManagerEvent(true, ev)}
   >
     {#if allowEdit}
       <i class="fas fa-lock-open" title={unlockTitle} />

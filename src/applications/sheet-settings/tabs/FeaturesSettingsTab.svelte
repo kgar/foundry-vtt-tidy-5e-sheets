@@ -68,16 +68,12 @@
       type="button"
       on:click={() =>
         ($context.exhaustionConfig = getStandardExhaustionConfig())}
-      on:keydown={(ev) => FoundryAdapter.forceKeyboardManagerEvent(false, ev)}
-      on:keyup={(ev) => FoundryAdapter.forceKeyboardManagerEvent(true, ev)}
     >
       {localize('T5EK.Settings.Exhaustion.useStandardExhaustion')}
     </button>
     <button
       type="button"
       on:click={() => ($context.exhaustionConfig = getOneDnDExhaustionConfig())}
-      on:keydown={(ev) => FoundryAdapter.forceKeyboardManagerEvent(false, ev)}
-      on:keyup={(ev) => FoundryAdapter.forceKeyboardManagerEvent(true, ev)}
     >
       {localize('T5EK.Settings.Exhaustion.useOneDnDExhaustion')}
     </button>
@@ -97,8 +93,6 @@
       on:click={() =>
         ($context.vehicleExhaustionConfig =
           getStandardVehicleExhaustionConfig())}
-      on:keydown={(ev) => FoundryAdapter.forceKeyboardManagerEvent(false, ev)}
-      on:keyup={(ev) => FoundryAdapter.forceKeyboardManagerEvent(true, ev)}
     >
       {localize('T5EK.Settings.Exhaustion.useStandardExhaustion')}
     </button>

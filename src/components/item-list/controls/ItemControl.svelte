@@ -14,8 +14,6 @@
   class:inactive={!active}
   on:click
   title={title !== undefined ? localize(title) : ''}
-  on:keydown={(ev) => FoundryAdapter.forceKeyboardManagerEvent(false, ev)}
-  on:keyup={(ev) => FoundryAdapter.forceKeyboardManagerEvent(true, ev)}
 >
   <i class={iconCssClass} />
 </button>

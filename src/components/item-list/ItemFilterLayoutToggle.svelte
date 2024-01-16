@@ -13,11 +13,11 @@
           iconClass: 'fas fa-th-list toggle-list',
         }
       : mode === 'list'
-      ? {
-          title: localize('T5EK.GridLayout'),
-          iconClass: 'fas fa-th-large toggle-grid',
-        }
-      : null;
+        ? {
+            title: localize('T5EK.GridLayout'),
+            iconClass: 'fas fa-th-large toggle-grid',
+          }
+        : null;
 
   const localize = FoundryAdapter.localize;
   const dispatcher = createEventDispatcher<{ toggle: void }>();
@@ -30,8 +30,6 @@
       class="icon-button"
       title={toggleButtonPresentation?.title}
       on:click={() => dispatcher('toggle')}
-      on:keydown={(ev) => FoundryAdapter.forceKeyboardManagerEvent(false, ev)}
-      on:keyup={(ev) => FoundryAdapter.forceKeyboardManagerEvent(true, ev)}
     >
       <i class={toggleButtonPresentation?.iconClass} />
     </button>

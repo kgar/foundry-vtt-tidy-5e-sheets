@@ -27,8 +27,6 @@
       FoundryAdapter.renderActorHitDiceConfig($context.actor)}
     disabled={!$context.editable}
     tabindex={!$settingStore.useDefaultSheetHpTabbing ? 0 : -1}
-    on:keydown={(ev) => FoundryAdapter.forceKeyboardManagerEvent(false, ev)}
-    on:keyup={(ev) => FoundryAdapter.forceKeyboardManagerEvent(true, ev)}
   >
     {hitDice}
   </button>

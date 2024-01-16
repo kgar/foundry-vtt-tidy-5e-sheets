@@ -85,11 +85,7 @@
     </div>
   {/if}
 
-  <button
-    type="submit"
-    on:keydown={(ev) => FoundryAdapter.forceKeyboardManagerEvent(false, ev)}
-    on:keyup={(ev) => FoundryAdapter.forceKeyboardManagerEvent(true, ev)}
-  >
+  <button type="submit">
     <i class="far fa-save" />
     {localize('Save')}
   </button>

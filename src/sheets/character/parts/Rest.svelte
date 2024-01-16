@@ -22,8 +22,6 @@
       on:click={(event) => $context.actor.sheet.onShortRest(event)}
       disabled={!$context.editable}
       tabindex={!$settingStore.useDefaultSheetHpTabbing ? 0 : -1}
-      on:keydown={(ev) => FoundryAdapter.forceKeyboardManagerEvent(false, ev)}
-      on:keyup={(ev) => FoundryAdapter.forceKeyboardManagerEvent(true, ev)}
     >
       <i class="fas fa-hourglass-half" />
     </button>
@@ -34,8 +32,6 @@
       on:click={(event) => $context.actor.sheet.onLongRest(event)}
       disabled={!$context.editable}
       tabindex={!$settingStore.useDefaultSheetHpTabbing ? 0 : -1}
-      on:keydown={(ev) => FoundryAdapter.forceKeyboardManagerEvent(false, ev)}
-      on:keyup={(ev) => FoundryAdapter.forceKeyboardManagerEvent(true, ev)}
     >
       <i class="fas fa-hourglass-end" />
     </button>

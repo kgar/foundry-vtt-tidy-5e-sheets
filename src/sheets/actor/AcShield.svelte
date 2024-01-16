@@ -29,8 +29,6 @@
     data-attribution-caption="DND5E.ArmorClass"
     data-tooltip-direction="DOWN"
     disabled={!$context.editable}
-    on:keydown={(ev) => FoundryAdapter.forceKeyboardManagerEvent(false, ev)}
-    on:keyup={(ev) => FoundryAdapter.forceKeyboardManagerEvent(true, ev)}
   >
     {ac}
   </button>

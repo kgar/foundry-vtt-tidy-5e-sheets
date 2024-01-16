@@ -32,8 +32,6 @@
     on:click={handleClick}
     {title}
     {disabled}
-    on:keydown={(ev) => FoundryAdapter.forceKeyboardManagerEvent(false, ev)}
-    on:keyup={(ev) => FoundryAdapter.forceKeyboardManagerEvent(true, ev)}
   >
     {#if useIconColumn}
       <span class="icon-container">

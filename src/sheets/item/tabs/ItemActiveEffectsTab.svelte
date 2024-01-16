@@ -68,10 +68,6 @@
               class="active-effect-control inline-icon-button"
               title={localize('DND5E.EffectCreate')}
               on:click={(event) => onAddClicked(section)}
-              on:keydown={(ev) =>
-                FoundryAdapter.forceKeyboardManagerEvent(false, ev)}
-              on:keyup={(ev) =>
-                FoundryAdapter.forceKeyboardManagerEvent(true, ev)}
             >
               <i class="fas fa-plus" />
               {localize('DND5E.Add')}
@@ -119,10 +115,6 @@
                     ? 'DND5E.EffectEnable'
                     : 'DND5E.EffectDisable'}
                   on:click={() => effect.update({ disabled: !effect.disabled })}
-                  on:keydown={(ev) =>
-                    FoundryAdapter.forceKeyboardManagerEvent(false, ev)}
-                  on:keyup={(ev) =>
-                    FoundryAdapter.forceKeyboardManagerEvent(true, ev)}
                 >
                   <i
                     class="fas"
@@ -135,10 +127,6 @@
                   class="active-effect-control inline-transparent-button"
                   title={localize('DND5E.EffectEdit')}
                   on:click={() => effect.sheet.render(true)}
-                  on:keydown={(ev) =>
-                    FoundryAdapter.forceKeyboardManagerEvent(false, ev)}
-                  on:keyup={(ev) =>
-                    FoundryAdapter.forceKeyboardManagerEvent(true, ev)}
                 >
                   <i class="fas fa-edit" />
                 </button>
@@ -147,10 +135,6 @@
                   class="active-effect-control inline-transparent-button"
                   title={localize('DND5E.EffectDelete')}
                   on:click={() => effect.deleteDialog()}
-                  on:keydown={(ev) =>
-                    FoundryAdapter.forceKeyboardManagerEvent(false, ev)}
-                  on:keyup={(ev) =>
-                    FoundryAdapter.forceKeyboardManagerEvent(true, ev)}
                 >
                   <i class="fas fa-trash" />
                 </button>
