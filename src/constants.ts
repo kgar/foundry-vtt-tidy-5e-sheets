@@ -110,6 +110,34 @@ export const CONSTANTS = {
   SHEET_PART_ATTRIBUTE: 'data-tidy-sheet-part',
   SHEET_PARTS: {
     /**
+     * An interactable control that can open configuration settings for a target ability.
+     */
+    ABILITY_CONFIGURATION_CONTROL: 'ability-configuration-control',
+    /**
+     * An interactable toggle for ability saving throw proficiency.
+     */
+    ABILITY_SAVE_PROFICIENCY_TOGGLE: 'ability-save-proficiency-toggle',
+    /**
+     * An ability score (e.g., "str", "dex", "wis", etc.), whether readonly or editable.
+     */
+    ABILITY_SCORE: 'ability-score',
+    /**
+     * A rollable/interactable element which rolls an ability save.
+     */
+    ABILITY_SAVE_ROLLER: 'ability-save-roller',
+    /**
+     * A container for a given ability score (e.g., "str", "dex", "wis", etc.).
+     */
+    ABILITY_SCORE_CONTAINER: 'ability-score-container',
+    /**
+     * A rollable/interactable element which rolls an ability save or test.
+     */
+    ABILITY_ROLLER: 'ability-roller',
+    /**
+     * A rollable/interactable element which rolls an ability test.
+     */
+    ABILITY_TEST_ROLLER: 'ability-test-roller',
+    /**
      * A container for all form fields related to a given damage part.
      */
     DAMAGE_PART_CONTAINER: 'damage-part-container',

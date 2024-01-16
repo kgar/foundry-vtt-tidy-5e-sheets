@@ -8,6 +8,7 @@
   import type { Readable } from 'svelte/store';
   import type { ActorSheetContext } from 'src/types/types';
   import { settingStore } from 'src/settings/settings';
+  import { CONSTANTS } from 'src/constants';
 
   export let abbreviation: string;
   export let ability: any;
@@ -19,13 +20,20 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-<div class="wrapper">
+<div
+  class="wrapper"
+  data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ABILITY_SCORE_CONTAINER}
+  data-ability={abbreviation}
+>
   <BlockTitle
     title={ability.label}
     text={abbreviation}
     on:roll={(event) =>
       $context.actor.rollAbility(abbreviation, { event: event.detail })}
     hideFromTabOrder={$settingStore.useDefaultSheetAttributeTabbing}
+    attributes={{
+      'data-tidy-sheet-part': CONSTANTS.SHEET_PARTS.ABILITY_ROLLER,
+    }}
   />
   <BlockScore>
     <TextInput
@@ -36,6 +44,7 @@
       selectOnFocus={true}
       allowDeltaChanges={true}
       disabled={$context.lockSensitiveFields}
+      dataset={{'data-tidy-sheet-part': CONSTANTS.SHEET_PARTS.ABILITY_SCORE}}
     />
   </BlockScore>
   <div class="ability-modifiers">
@@ -48,6 +57,7 @@
         $context.actor.rollAbilityTest(abbreviation, { event })}
       tabindex={!$settingStore.useDefaultSheetAttributeTabbing ? 0 : -1}
       disabled={!$context.editable}
+      data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ABILITY_TEST_ROLLER}
     >
       {formatAsModifier(ability.mod)}
     </button>
@@ -60,6 +70,7 @@
         $context.actor.rollAbilitySave(abbreviation, { event })}
       tabindex={!$settingStore.useDefaultSheetAttributeTabbing ? 0 : -1}
       disabled={!$context.editable}
+      data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ABILITY_SAVE_ROLLER}
     >
       {formatAsModifier(ability.save)}
     </button>
@@ -75,6 +86,7 @@
                 1 - parseInt(ability.proficient),
             })}
           tabindex={!$settingStore.useDefaultSheetAttributeTabbing ? 0 : -1}
+          data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ABILITY_SAVE_PROFICIENCY_TOGGLE}
         >
           {@html ability.icon}
         </button>
@@ -92,6 +104,7 @@
         on:click={() =>
           FoundryAdapter.renderActorAbilityConfig($context.actor, abbreviation)}
         tabindex={!$settingStore.useDefaultSheetAttributeTabbing ? 0 : -1}
+        data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ABILITY_CONFIGURATION_CONTROL}
       >
         <i class="fas fa-cog" />
       </button>
