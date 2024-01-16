@@ -65,12 +65,6 @@ export class CustomContentRenderer {
         });
       }
     }
-
-    CustomContentRenderer.wireCompatibilityEventListeners(
-      element,
-      superActivateListeners,
-      app
-    );
   }
 
   private static _renderTabs(

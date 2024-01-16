@@ -410,6 +410,11 @@ export class Tidy5eNpcSheet
         data,
         true
       );
+      CustomContentRenderer.wireCompatibilityEventListeners(
+        this.element,
+        super.activateListeners,
+        this
+      );
       return;
     }
 
@@ -421,6 +426,11 @@ export class Tidy5eNpcSheet
       this.element.get(0),
       data,
       false
+    );
+    CustomContentRenderer.wireCompatibilityEventListeners(
+      this.element,
+      super.activateListeners,
+      this
     );
   }
 

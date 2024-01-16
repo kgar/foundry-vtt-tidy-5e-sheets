@@ -164,6 +164,11 @@ export class Tidy5eKgarItemSheet
         data,
         true
       );
+      CustomContentRenderer.wireCompatibilityEventListeners(
+        this.element,
+        super.activateListeners,
+        this
+      );
       return;
     }
 
@@ -175,6 +180,11 @@ export class Tidy5eKgarItemSheet
       this.element.get(0),
       data,
       false
+    );
+    CustomContentRenderer.wireCompatibilityEventListeners(
+      this.element,
+      super.activateListeners,
+      this
     );
   }
 
