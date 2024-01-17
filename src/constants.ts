@@ -142,7 +142,7 @@ export const CONSTANTS = {
      */
     DAMAGE_PART_CONTAINER: 'damage-part-container',
     /**
-     * An interactable control, usually an anchor or a button, which the user can execute to delete a damage part to an item.
+     * An interactable control which the user can execute to delete a damage part to an item.
      */
     DAMAGE_PART_DELETE_COMMAND: 'damage-part-delete-command',
     /**
@@ -165,6 +165,10 @@ export const CONSTANTS = {
      * An input for the number of successful death saves an actor has.
      */
     DEATH_SAVE_SUCCESSES: 'death-save-successes',
+    /**
+     * An interactable control which the user can execute to use an item (e.g., consumable, feature, loot, spell, weapon, etc.).
+     */
+    ITEM_USE_COMMAND: 'item-use-command',
     /**
      * The element which contains the modifier text for melee spell attacks.
      */
