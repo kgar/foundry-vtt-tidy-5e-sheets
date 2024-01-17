@@ -3,7 +3,7 @@ import { debug, error } from './logging';
 import type {
   Actor5e,
   MaxPreparedSpellFormula,
-  SpellAttackModCalculations,
+  SpellCalculations,
 } from 'src/types/types';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
@@ -90,25 +90,23 @@ export function getMaxPreparedSpellsSampleFormulas(): MaxPreparedSpellFormula[] 
   ];
 }
 
-export function calculateSpellAttackMod(
-  actor: Actor5e
-): SpellAttackModCalculations {
+export function calculateSpellAttackAndDc(actor: Actor5e): SpellCalculations {
   try {
     const rollData = actor.getRollData();
 
-    let prof = actor.system.attributes.prof ?? 0;
-    let spellAbility = actor.system.attributes.spellcasting;
-    let abilityMod =
+    const prof = actor.system.attributes.prof ?? 0;
+    const spellAbility = actor.system.attributes.spellcasting;
+    const abilityMod =
       (spellAbility != '' ? actor.system.abilities[spellAbility].mod : 0) ?? 0;
-    let spellAttackMod = prof + abilityMod;
+    const spellAttackMod = prof + abilityMod;
 
-    let rawRsak = Roll.replaceFormulaData(
+    const rawRsak = Roll.replaceFormulaData(
       actor.system.bonuses.rsak.attack,
       rollData,
       { missing: 0, warn: false }
     );
 
-    let rsakBonusTotal = calculateDeterministicBonus(rawRsak);
+    const rsakBonusTotal = calculateDeterministicBonus(rawRsak);
 
     let rsakTotal = (spellAttackMod + rsakBonusTotal).toString();
 
@@ -132,6 +130,8 @@ export function calculateSpellAttackMod(
 
     const abilityName = CONFIG.DND5E.abilities[spellAbility].label;
     return {
+      dc: actor.system.attributes.spelldc,
+      dcTooltip: getDcTooltip(actor),
       meleeMod: msakTotal,
       meleeTooltip: buildAttackModTooltip(
         abilityName,
@@ -157,6 +157,8 @@ export function calculateSpellAttackMod(
     });
 
     return {
+      dc: actor.system.attributes.spelldc,
+      dcTooltip: '',
       meleeMod: '',
       meleeTooltip: '',
       meleeHasBonus: false,
@@ -176,7 +178,7 @@ function buildAttackModTooltip(
   let tooltip = '';
   if (abilityMod !== 0) {
     tooltip += abilityMod < 0 ? ' - ' : ' + ';
-    tooltip += `${abilityMod} (${abilityName})`;
+    tooltip += `${Math.abs(abilityMod)} (${abilityName})`;
   }
 
   if (proficiency !== 0) {
@@ -212,4 +214,43 @@ function calculateDeterministicBonus(rawBonus: string): number {
     bonusTotal = bonusRoll.evaluate({ async: false }).total;
   }
   return bonusTotal;
+}
+
+export function getDcTooltip(actor: Actor5e) {
+  const base = 8;
+  const spellAbility = actor.system.attributes.spellcasting;
+  const abilityMod =
+    (spellAbility != '' ? actor.system.abilities[spellAbility].mod : 0) ?? 0;
+  const abilityName = CONFIG.DND5E.abilities[spellAbility].label;
+  const prof = actor.system.attributes.prof ?? 0;
+
+  let tooltip = base.toString();
+
+  if (abilityMod !== 0) {
+    tooltip += abilityMod < 0 ? ' - ' : ' + ';
+    tooltip += `${Math.abs(abilityMod)} (${abilityName})`;
+  }
+
+  if (prof !== 0) {
+    tooltip += prof < 0 ? ' - ' : ' + ';
+    tooltip += `${Math.abs(prof)} (${FoundryAdapter.localize(
+      'DND5E.ProficiencyBonus'
+    )})`;
+  }
+
+  const rawBonus = actor.system.bonuses.spell.dc;
+  if (Roll.validate(rawBonus)) {
+    const bonusRoll = new Roll(rawBonus);
+    bonusRoll.evaluate({ async: false });
+    const bonusTotal = bonusRoll.total;
+
+    if (bonusTotal !== 0) {
+      tooltip += bonusTotal < 0 ? ' - ' : ' + ';
+      tooltip += `${Math.abs(bonusTotal)} (${FoundryAdapter.localize(
+        'DND5E.Bonus'
+      )})`;
+    }
+  }
+
+  return tooltip;
 }
