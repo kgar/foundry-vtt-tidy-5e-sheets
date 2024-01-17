@@ -24,14 +24,7 @@
   }
 
   function abbreviateCurrency(currencyKey: string) {
-    let currency = currencyKey.toUpperCase();
-
-    let abbr = localize(`DND5E.CurrencyAbbr${currency}`);
-    if (abbr == `DND5E.CurrencyAbbr${currency}`) {
-      abbr = currency;
-    }
-
-    return abbr;
+    return CONFIG.DND5E.currencies[currencyKey]?.abbreviation ?? currencyKey;
   }
 
   const localize = FoundryAdapter.localize;
