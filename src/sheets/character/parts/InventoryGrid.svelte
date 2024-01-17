@@ -81,6 +81,7 @@
         on:mouseleave={(ev) => onMouseLeave(ev, item)}
         disabled={!$context.editable}
         data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_USE_COMMAND}
+        data-item-id={item.id}
       >
         {#if ctx?.attunement}
           <i

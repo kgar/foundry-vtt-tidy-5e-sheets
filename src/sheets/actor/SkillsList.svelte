@@ -58,81 +58,82 @@
     data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.SKILLS_LIST}
   >
     {#each skillRefs as skillRef (skillRef.key)}
-      {#if skillRef.skill && (showAllSkills || skillRef.skill.value > 0)}
-        <li
-          class="proficiency-row skill"
-          class:proficient={skillRef.skill.value}
-          data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.SKILL_CONTAINER}
-          data-key={skillRef.key}
+      {@const showSkill =
+        skillRef.skill && (showAllSkills || skillRef.skill.value > 0)}
+
+      <li
+        class="proficiency-row skill"
+        class:proficient={skillRef.skill.value}
+        class:hidden={!showSkill}
+        data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.SKILL_CONTAINER}
+        data-key={skillRef.key}
+      >
+        {#if $context.editable && !$context.lockSensitiveFields}
+          <button
+            type="button"
+            class="configure-proficiency inline-icon-button"
+            on:click={() =>
+              FoundryAdapter.renderProficiencyConfig(
+                $context.actor,
+                'skills',
+                skillRef.key,
+              )}
+            title={localize('DND5E.SkillConfigure')}
+            data-tidy-sheet-part={CONSTANTS.SHEET_PARTS
+              .SKILL_CONFIGURATION_CONTROL}
+          >
+            <i class="fas fa-cog" />
+          </button>
+          <button
+            type="button"
+            class="skill-proficiency-toggle inline-icon-button"
+            on:click={() =>
+              FoundryAdapter.cycleProficiency(
+                $context.actor,
+                skillRef.key,
+                skillRef.skill?.value,
+                'skills',
+              )}
+            on:contextmenu={() =>
+              FoundryAdapter.cycleProficiency(
+                $context.actor,
+                skillRef.key,
+                skillRef.skill?.value,
+                'skills',
+                true,
+              )}
+            title={skillRef.skill.hover}
+            data-tidy-sheet-part={CONSTANTS.SHEET_PARTS
+              .SKILL_PROFICIENCY_TOGGLE}>{@html skillRef.skill.icon}</button
+          >
+        {:else}
+          <span class="skill-proficiency" title={skillRef.skill.hover}
+            >{@html skillRef.skill.icon}</span
+          >
+        {/if}
+        {#if $context.editable}
+          <button
+            type="button"
+            class="tidy5e-skill-name transparent-button rollable"
+            on:click={(event) =>
+              $context.actor.rollSkill(skillRef.key, { event })}
+            data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.SKILL_ROLLER}
+          >
+            {skillRef.skill.label}
+          </button>
+        {:else}
+          <span class="tidy5e-skill-name">
+            {skillRef.skill.label}
+          </span>
+        {/if}
+        <span class="skill-ability">{skillRef.skill.abbreviation}</span>
+        <span class="skill-mod">{formatAsModifier(skillRef.skill.total)}</span>
+        <span
+          class="skill-passive"
+          title="{skillRef.skill.label} ({localize('DND5E.Passive')})"
+          >({skillRef.skill.passive})</span
         >
-          {#if $context.editable && !$context.lockSensitiveFields}
-            <button
-              type="button"
-              class="configure-proficiency inline-icon-button"
-              on:click={() =>
-                FoundryAdapter.renderProficiencyConfig(
-                  $context.actor,
-                  'skills',
-                  skillRef.key,
-                )}
-              title={localize('DND5E.SkillConfigure')}
-              data-tidy-sheet-part={CONSTANTS.SHEET_PARTS
-                .SKILL_CONFIGURATION_CONTROL}
-            >
-              <i class="fas fa-cog" />
-            </button>
-            <button
-              type="button"
-              class="skill-proficiency-toggle inline-icon-button"
-              on:click={() =>
-                FoundryAdapter.cycleProficiency(
-                  $context.actor,
-                  skillRef.key,
-                  skillRef.skill?.value,
-                  'skills',
-                )}
-              on:contextmenu={() =>
-                FoundryAdapter.cycleProficiency(
-                  $context.actor,
-                  skillRef.key,
-                  skillRef.skill?.value,
-                  'skills',
-                  true,
-                )}
-              title={skillRef.skill.hover}
-              data-tidy-sheet-part={CONSTANTS.SHEET_PARTS
-                .SKILL_PROFICIENCY_TOGGLE}>{@html skillRef.skill.icon}</button
-            >
-          {:else}
-            <span class="skill-proficiency" title={skillRef.skill.hover}
-              >{@html skillRef.skill.icon}</span
-            >
-          {/if}
-          {#if $context.editable}
-            <button
-              type="button"
-              class="tidy5e-skill-name transparent-button rollable"
-              on:click={(event) =>
-                $context.actor.rollSkill(skillRef.key, { event })}
-              data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.SKILL_ROLLER}
-            >
-              {skillRef.skill.label}
-            </button>
-          {:else}
-            <span class="tidy5e-skill-name">
-              {skillRef.skill.label}
-            </span>
-          {/if}
-          <span class="skill-ability">{skillRef.skill.abbreviation}</span>
-          <span class="skill-mod">{formatAsModifier(skillRef.skill.total)}</span
-          >
-          <span
-            class="skill-passive"
-            title="{skillRef.skill.label} ({localize('DND5E.Passive')})"
-            >({skillRef.skill.passive})</span
-          >
-        </li>
-      {/if}
+      </li>
     {/each}
   </ul>
   {#if toggleable}
@@ -174,6 +175,10 @@
       padding: 0.1875rem 0.25rem 0.0625rem 0.25rem;
       height: 1.125rem;
       flex-wrap: nowrap;
+
+      &.hidden {
+        display: none;
+      }
 
       &:nth-child(even) {
         background: var(--t5ek-faint-color);

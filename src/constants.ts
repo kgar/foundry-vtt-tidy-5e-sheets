@@ -226,5 +226,25 @@ export const CONSTANTS = {
      * The element which contains spell DC.
      */
     SPELL_DC: 'spell-dc',
+    /**
+     * An interactable control that can open configuration settings for a target tool.
+     */
+    TOOL_CONFIGURATION_CONTROL: 'tool-configuration-control',
+    /**
+     * A container for a single tool, including its roller, proficiency toggle, and any other elements related to the tool.
+     */
+    TOOL_CONTAINER: 'tool-container',
+    /**
+     * An interactable toggle for tool proficiency.
+     */
+    TOOL_PROFICIENCY_TOGGLE: 'tool-proficiency-toggle',
+    /**
+     * A rollable/interactable element which rolls a tool check.
+     */
+    TOOL_ROLLER: 'tool-roller',
+    /**
+     * A list of tools for the target actor.
+     */
+    TOOLS_LIST: 'tools-list',
   },
 } as const;
