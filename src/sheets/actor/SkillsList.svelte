@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { Actor5e } from 'src/types/types';
   import type { CharacterSheetContext, NpcSheetContext } from 'src/types/types';
@@ -52,12 +53,17 @@
 </script>
 
 <div class="skills-list-container">
-  <ul class="skills-list">
+  <ul
+    class="skills-list"
+    data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.SKILLS_LIST}
+  >
     {#each skillRefs as skillRef (skillRef.key)}
       {#if skillRef.skill && (showAllSkills || skillRef.skill.value > 0)}
         <li
           class="proficiency-row skill"
           class:proficient={skillRef.skill.value}
+          data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.SKILL_CONTAINER}
+          data-key={skillRef.key}
         >
           {#if $context.editable && !$context.lockSensitiveFields}
             <button
@@ -70,6 +76,8 @@
                   skillRef.key,
                 )}
               title={localize('DND5E.SkillConfigure')}
+              data-tidy-sheet-part={CONSTANTS.SHEET_PARTS
+                .SKILL_CONFIGURATION_CONTROL}
             >
               <i class="fas fa-cog" />
             </button>
@@ -91,7 +99,9 @@
                   'skills',
                   true,
                 )}
-              title={skillRef.skill.hover}>{@html skillRef.skill.icon}</button
+              title={skillRef.skill.hover}
+              data-tidy-sheet-part={CONSTANTS.SHEET_PARTS
+                .SKILL_PROFICIENCY_TOGGLE}>{@html skillRef.skill.icon}</button
             >
           {:else}
             <span class="skill-proficiency" title={skillRef.skill.hover}
@@ -104,6 +114,7 @@
               class="tidy5e-skill-name transparent-button rollable"
               on:click={(event) =>
                 $context.actor.rollSkill(skillRef.key, { event })}
+              data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.SKILL_ROLLER}
             >
               {skillRef.skill.label}
             </button>
@@ -130,6 +141,8 @@
         type="button"
         class="toggle-proficient inline-transparent-button"
         on:click={toggleShowAllSkills}
+        data-tidy-sheet-part={CONSTANTS.SHEET_PARTS
+          .SKILLS_SHOW_PROFICIENT_TOGGLE}
       >
         {#if showAllSkills}
           {localize('T5EK.HideNotProficientSkills')}

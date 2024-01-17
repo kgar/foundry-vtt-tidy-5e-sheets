@@ -179,6 +179,30 @@ export const CONSTANTS = {
      */
     RESOURCES_CONTAINER: 'resources-container',
     /**
+     * An interactable control that can open configuration settings for a target skill.
+     */
+    SKILL_CONFIGURATION_CONTROL: 'skill-configuration-control',
+    /**
+     * A container for a single skill, including its roller, proficiency toggle, and any other elements related to the skill.
+     */
+    SKILL_CONTAINER: 'skill-container',
+    /**
+     * An interactable toggle for skill proficiency.
+     */
+    SKILL_PROFICIENCY_TOGGLE: 'skill-proficiency-toggle',
+    /**
+     * A rollable/interactable element which rolls a skill check.
+     */
+    SKILL_ROLLER: 'skill-roller',
+    /**
+     * A list of skills for the target actor.
+     */
+    SKILLS_LIST: 'skills-list',
+    /**
+     * An interactable toggle for showing/hiding unproficienct skills.
+     */
+    SKILLS_SHOW_PROFICIENT_TOGGLE: 'skills-show-proficiency-toggle',
+    /**
      * The element which contains the modifier text for spell attacks in general. This field is shown when melee and ranged spell attack mods are the same.
      */
     SPELL_ATTACK_MOD: 'spell-attack-mod',
