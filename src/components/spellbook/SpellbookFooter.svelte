@@ -31,64 +31,63 @@
         class="dc-container"
         data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.SPELL_DC}
         data-tooltip="{FoundryAdapter.localize('DND5E.SpellDC')}: {$context
-          .system.attributes.spelldc}"
+          .spellCalculations.dcTooltip}"
       >
-        {$context.system.attributes.spelldc}
+        {$context.spellCalculations.dc}
       </div>
 
       {#if includeAttackMod}
         <span>|</span>
         <span>{FoundryAdapter.localize('T5EK.AttackMod')}:</span>
 
-        {#if $context.spellAttackModCalculations.rangedMod !== $context.spellAttackModCalculations.meleeMod}
+        {#if $context.spellCalculations.rangedMod !== $context.spellCalculations.meleeMod}
           <div
             data-tooltip="{FoundryAdapter.localize(
               'T5EK.RangedSpellAttackMod',
-            )}: {$context.spellAttackModCalculations.rangedTooltip}"
+            )}: {$context.spellCalculations.rangedTooltip}"
             class="spell-attack-mod-container"
           >
             <i class="fa-solid fa-wand-magic-sparkles"></i>
             <span
               class="spell-attack-mod"
-              data-tidy-mod-has-bonus={$context.spellAttackModCalculations
+              data-tidy-mod-has-bonus={$context.spellCalculations
                 .rangedHasBonus}
               data-tidy-sheet-part={CONSTANTS.SHEET_PARTS
                 .RANGED_SPELL_ATTACK_MOD}
             >
-              {$context.spellAttackModCalculations.rangedMod}
+              {$context.spellCalculations.rangedMod}
             </span>
           </div>
           <div
             data-tooltip="{FoundryAdapter.localize(
               'T5EK.MeleeSpellAttackMod',
-            )}: {$context.spellAttackModCalculations.meleeTooltip}"
+            )}: {$context.spellCalculations.meleeTooltip}"
             class="spell-attack-mod-container"
           >
             <i class="fa-solid fa-hand-sparkles"></i>
             <span
               class="spell-attack-mod"
-              data-tidy-mod-has-bonus={$context.spellAttackModCalculations
-                .meleeHasBonus}
+              data-tidy-mod-has-bonus={$context.spellCalculations.meleeHasBonus}
               data-tidy-sheet-part={CONSTANTS.SHEET_PARTS
                 .MELEE_SPELL_ATTACK_MOD}
             >
-              {$context.spellAttackModCalculations.meleeMod}
+              {$context.spellCalculations.meleeMod}
             </span>
           </div>
         {:else}
           <div
             data-tooltip="{FoundryAdapter.localize(
               'T5EK.SpellAttackMod',
-            )}: {$context.spellAttackModCalculations.rangedTooltip}"
+            )}: {$context.spellCalculations.rangedTooltip}"
             class="spell-attack-mod-container"
           >
             <span
               class="spell-attack-mod"
-              data-tidy-mod-has-bonus={$context.spellAttackModCalculations
+              data-tidy-mod-has-bonus={$context.spellCalculations
                 .rangedHasBonus}
               data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.SPELL_ATTACK_MOD}
             >
-              {$context.spellAttackModCalculations.rangedMod}
+              {$context.spellCalculations.rangedMod}
             </span>
           </div>
         {/if}

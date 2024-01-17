@@ -34,7 +34,7 @@ import {
 import { isNil } from 'src/utils/data';
 import { CustomContentRenderer } from './CustomContentRenderer';
 import { ActorPortraitRuntime } from 'src/runtime/ActorPortraitRuntime';
-import { calculateSpellAttackMod } from 'src/utils/formula';
+import { calculateSpellAttackAndDc } from 'src/utils/formula';
 
 export class Tidy5eNpcSheet
   extends dnd5e.applications.actor.ActorSheet5eNPC
@@ -270,7 +270,7 @@ export class Tidy5eNpcSheet
       rollDeathSave: this._rollDeathSave.bind(this),
       shortRest: this._onShortRest.bind(this),
       showLimitedSheet: FoundryAdapter.showLimitedSheet(this.actor),
-      spellAttackModCalculations: calculateSpellAttackMod(this.actor),
+      spellCalculations: calculateSpellAttackAndDc(this.actor),
       tabs: [],
       tokenState: this.#getTokenState(),
       traitEnrichedHtml: await FoundryAdapter.enrichHtml(

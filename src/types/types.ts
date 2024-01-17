@@ -83,7 +83,9 @@ export type CharacterFeatureSection = {
   showRequirementsColumn: boolean;
 };
 
-export type SpellAttackModCalculations = {
+export type SpellCalculations = {
+  dc: string;
+  dcTooltip: string;
   rangedMod: string;
   rangedTooltip: string;
   rangedHasBonus: boolean;
@@ -107,7 +109,7 @@ export type CharacterSheetContext = {
   notes3EnrichedHtml: string;
   notes4EnrichedHtml: string;
   notesEnrichedHtml: string;
-  spellAttackModCalculations: SpellAttackModCalculations;
+  spellCalculations: SpellCalculations;
   traitEnrichedHtml: string;
 } & ActorSheetContext &
   Record<string, any>;
@@ -127,7 +129,7 @@ export type NpcSheetContext = {
   notesEnrichedHtml: string;
   shortRest: (event: Event) => Promise<void>;
   showSpellbookTab: boolean;
-  spellAttackModCalculations: SpellAttackModCalculations;
+  spellCalculations: SpellCalculations;
   traitEnrichedHtml: string;
 } & ActorSheetContext &
   Record<string, any>;
