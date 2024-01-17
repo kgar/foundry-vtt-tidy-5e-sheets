@@ -59,7 +59,7 @@ If fixes are needed to world scripts that integrate with other modules, submit a
 
 ## How to Support Tidy 5e Sheets
 
-Tidy 5e is a community effort. Development logs, feature discussion, troubleshooting, dreaming, and more can be found on [discord](https://discord.com/channels/1167985253072257115/1167985253512650755). 
+Tidy 5e is a community effort. Development logs, feature discussion, troubleshooting, dreaming, and more can be found on [discord](https://discord.gg/865zzNscRA).
 
 Sheets development is a longterm commitment, subject to every Foundry and dnd5e system update, so any support is greatly appreciated.
 
