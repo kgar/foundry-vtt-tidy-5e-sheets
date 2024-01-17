@@ -154,6 +154,18 @@ export const CONSTANTS = {
      */
     DAMAGE_PART_TYPE: 'damage-part-type',
     /**
+     * An input for the number of failed death saves an actor has.
+     */
+    DEATH_SAVE_FAILURES: 'death-save-failures',
+    /**
+     * A rollable/interactable element which rolls a death saving throw.
+     */
+    DEATH_SAVE_ROLLER: 'death-save-roller',
+    /**
+     * An input for the number of successful death saves an actor has.
+     */
+    DEATH_SAVE_SUCCESSES: 'death-save-successes',
+    /**
      * The element which contains the modifier text for melee spell attacks.
      */
     MELEE_SPELL_ATTACK_MOD: 'melee-spell-attack-mod',
