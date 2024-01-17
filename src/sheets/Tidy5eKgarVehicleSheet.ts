@@ -280,6 +280,10 @@ export class Tidy5eVehicleSheet
       return scroll.toObject();
     }
 
+    if (itemData.type === 'consumable') {
+      return super._onDropSingleItem(itemData);
+    }
+
     // Skip the default vehicle sheet handler, as we are handling all use cases.
     const baseActor5eClass = getBaseActorSheet5e(this);
     if (baseActor5eClass) {
