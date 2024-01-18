@@ -79,7 +79,7 @@
           type="button"
           class="portrait-menu-item"
           on:mousedown={(ev) => ev.stopImmediatePropagation()}
-          on:click={(ev) => command.execute?.({ actor })}
+          on:click={(ev) => command.execute?.({ actor, context: $context })}
           title={command.tooltip}
         >
           {#if command.iconClass}
