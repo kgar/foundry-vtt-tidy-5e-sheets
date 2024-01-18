@@ -13,6 +13,7 @@ import type {
   HtmlTabContent,
   OnRenderTabParams,
   SvelteTabContent,
+  ActorSheetContext,
 } from 'src/types/types';
 
 export type RegisteredContent<TContext> = {
@@ -73,6 +74,7 @@ export type RegisteredPortraitMenuCommandEnabledParams = {
 };
 export type RegisteredPortraitMenuCommandExecuteParams = {
   actor: Actor5e;
+  context: ActorSheetContext;
 };
 
 export type RegisteredActorItemSectionFooterCommand = {

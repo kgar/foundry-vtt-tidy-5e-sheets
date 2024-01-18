@@ -186,6 +186,10 @@ export interface PortraitContextMenuCommandExecuteParams {
    * The actor for which the command was executed.
    */
   actor: any;
+  /**
+   * The actor sheet context which is typically provided on render.
+   */
+  context: any;
 }
 
 /**
