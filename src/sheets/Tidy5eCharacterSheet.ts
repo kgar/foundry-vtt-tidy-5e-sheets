@@ -22,6 +22,7 @@ import {
   applyModuleSheetDataAttributeToWindow,
   applyThemeDataAttributeToWindow,
   applyTitleToWindow,
+  maintainCustomContentInputFocus,
 } from 'src/utils/applications';
 import type { SvelteComponent } from 'svelte';
 import { getPercentage } from 'src/utils/numbers';
@@ -475,28 +476,22 @@ export class Tidy5eCharacterSheet
       return;
     }
 
-    let focus = this.element.find(':focus');
-    focus = focus.length ? focus[0] : null;
-
-    applyTitleToWindow(this.title, this.element.get(0));
-    await this.renderCustomContent({ data, isFullRender: false });
-    Hooks.callAll(
-      'tidy5e-sheet.renderActorSheet',
-      this,
-      this.element.get(0),
-      data,
-      false
-    );
-    CustomContentRenderer.wireCompatibilityEventListeners(
-      this.element,
-      super.activateListeners,
-      this
-    );
-
-    if (focus && focus.name) {
-      const input = this.form?.[focus.name];
-      if (input && input.focus instanceof Function) input.focus();
-    }
+    maintainCustomContentInputFocus(this, async () => {
+      applyTitleToWindow(this.title, this.element.get(0));
+      await this.renderCustomContent({ data, isFullRender: false });
+      Hooks.callAll(
+        'tidy5e-sheet.renderActorSheet',
+        this,
+        this.element.get(0),
+        data,
+        false
+      );
+      CustomContentRenderer.wireCompatibilityEventListeners(
+        this.element,
+        super.activateListeners,
+        this
+      );
+    });
   }
 
   private async renderCustomContent(args: {

@@ -40,3 +40,18 @@ export function applyThemeDataAttributeToWindow(
 export function applyModuleSheetDataAttributeToWindow(element?: HTMLElement) {
   element?.setAttribute('data-sheet-module', 'tidy5e-sheet');
 }
+
+export async function maintainCustomContentInputFocus(
+  app: any,
+  asyncRender: () => Promise<unknown>
+) {
+  let focus = app.element.find(':focus');
+  focus = focus.length ? focus[0] : null;
+
+  await asyncRender();
+
+  if (focus && focus.name) {
+    const input = app.form?.[focus.name];
+    if (input && input.focus instanceof Function) input.focus();
+  }
+}
