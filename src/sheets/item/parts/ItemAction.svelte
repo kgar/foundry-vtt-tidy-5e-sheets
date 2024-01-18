@@ -8,6 +8,7 @@
   import type { Readable } from 'svelte/store';
   import ItemFormGroup from '../form/ItemFormGroup.svelte';
   import TextInput from 'src/components/inputs/TextInput.svelte';
+  import { CONSTANTS } from 'src/constants';
 
   let context = getContext<Readable<ItemSheetContext>>('context');
 
@@ -147,7 +148,11 @@
   </h4>
   <ol class="damage-parts form-group">
     {#each damageParts as [formula, damageType], i}
-      <li class="damage-part flexrow">
+      <li
+        class="damage-part flexrow"
+        data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.DAMAGE_PART_CONTAINER}
+        data-tidy-damage-part-index={i}
+      >
         <input
           id="{$context.appId}-system-damage-part-{i}-0"
           type="text"
@@ -155,6 +160,7 @@
           data-formula-editor
           on:change={() => saveDamageFormulae()}
           disabled={!$context.editable}
+          data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.DAMAGE_PART_FORMULA}
           data-tidy-field={`system.damage.part-${i}-0`}
         />
         <select
@@ -163,6 +169,7 @@
           data-formula-editor
           on:change={() => saveDamageFormulae()}
           disabled={!$context.editable}
+          data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.DAMAGE_PART_TYPE}
           data-tidy-field={`system.damage.part-${i}-1`}
         >
           <option value="">{localize('DND5E.None')}</option>
@@ -178,6 +185,8 @@
           class="damage-formula-control delete-damage"
           on:click={() => deleteDamageFormula(i)}
           disabled={!$context.editable}
+          data-tidy-sheet-part={CONSTANTS.SHEET_PARTS
+            .DAMAGE_PART_DELETE_COMMAND}
         >
           <i class="fas fa-minus" />
         </button>

@@ -11,7 +11,7 @@ export class HtmlContent extends CustomContentBase {
   /**
    * The HTML to be injected into the sheet.
    */
-  html: string = '';
+  html: string | ((data: any) => string) = '';
   renderScheme: RenderScheme = 'handlebars';
   activateDefaultSheetListeners?: boolean | undefined = false;
 

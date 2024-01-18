@@ -47,21 +47,21 @@ select {
   padding: 0;
 }
 
-:is(input[type='text'], input[type='number']) {
+:is(input[type='text'], input[type='number'], textarea) {
   border: none;
   padding: 0 0.375rem;
 }
 
-:is(input[type='text'], input[type='number']) {
+:is(input[type='text'], input[type='number'], textarea) {
   color: var(--t5ek-primary-font-color);
 }
 
-:is(input[type='text'], input[type='number'])::placeholder {
+:is(input[type='text'], input[type='number'], textarea)::placeholder {
   color: var(--t5ek-secondary-color);
 }
 
-:is(input[type='text'], input[type='number']):hover,
-:is(input[type='text'], input[type='number']):focus {
+:is(input[type='text'], input[type='number'], textarea):hover,
+:is(input[type='text'], input[type='number'], textarea):focus {
   border: none;
   box-shadow: 0 0 0 0.0625rem var(--t5ek-primary-accent-color) inset;
 }
@@ -475,7 +475,7 @@ input[type='checkbox'] {
     }
 
     :where(select),
-    :where(:is(input[type='text'], input[type='number'])) {
+    :where(:is(input[type='text'], input[type='number'], textarea)) {
       background: var(--t5ek-item-input-background);
       height: 1.25rem;
       font-size: 0.8125rem;
@@ -536,7 +536,8 @@ input[type='checkbox'] {
     input[type='text']:hover,
     input[type='number']:hover,
     select:hover,
-    select:focus {
+    select:focus,
+    textarea {
       border: none;
       box-shadow: 0 0 0 0.0625rem var(--t5ek-primary-accent-color) inset;
     }

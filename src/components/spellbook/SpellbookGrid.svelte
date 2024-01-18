@@ -78,6 +78,8 @@
           on:mouseenter={(ev) => onMouseEnter(ev, spell)}
           on:mouseleave={(ev) => onMouseLeave(ev, spell)}
           disabled={!$context.editable}
+          data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_USE_COMMAND}
+          data-item-id={spell.id}
         >
           {#if FoundryAdapter.tryGetFlag(spell, 'favorite')}
             <GridPaneFavoriteIcon />

@@ -30,6 +30,7 @@
         FoundryAdapter.onActorItemButtonContextMenu(item, { event })}
       on:focusin={() => (buttonIsFocused = true)}
       on:focusout={() => (buttonIsFocused = false)}
+      data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_USE_COMMAND}
     >
       <i class="fa fa-dice-d20" />
     </button>

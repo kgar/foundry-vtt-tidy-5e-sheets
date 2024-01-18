@@ -4,6 +4,7 @@
   import type { CharacterSheetContext, NpcSheetContext } from 'src/types/types';
   import type { Readable } from 'svelte/store';
   import TextInput from 'src/components/inputs/TextInput.svelte';
+    import { CONSTANTS } from 'src/constants';
 
   let context =
     getContext<Readable<CharacterSheetContext | NpcSheetContext>>('context');
@@ -35,11 +36,13 @@
       maxlength={1}
       title={localize('DND5E.DeathSave')}
       disabled={!$context.editable}
+      data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.DEATH_SAVE_SUCCESSES}
     />
     <button
       type="button"
       class="death-save rollable"
       on:click={(event) => dispatcher('rollDeathSave', { mouseEvent: event })}
+      data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.DEATH_SAVE_ROLLER}
     >
       <i class="fas fa-skull" />
     </button>
@@ -53,6 +56,7 @@
       value={failures}
       maxlength={1}
       disabled={!$context.editable}
+      data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.DEATH_SAVE_FAILURES}
     />
     <i class="fas fa-times" />
   </div>

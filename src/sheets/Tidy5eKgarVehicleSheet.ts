@@ -209,6 +209,11 @@ export class Tidy5eVehicleSheet
         data,
         true
       );
+      CustomContentRenderer.wireCompatibilityEventListeners(
+        this.element,
+        super.activateListeners,
+        this
+      );
       return;
     }
 
@@ -220,6 +225,11 @@ export class Tidy5eVehicleSheet
       this.element.get(0),
       data,
       false
+    );
+    CustomContentRenderer.wireCompatibilityEventListeners(
+      this.element,
+      super.activateListeners,
+      this
     );
   }
 

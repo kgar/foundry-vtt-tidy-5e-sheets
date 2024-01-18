@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { settingStore } from 'src/settings/settings';
   import type {
@@ -32,31 +33,35 @@
   $: show = traitsExpanded || tags.length > 0 || tools.length > 0;
 </script>
 
-{#if show}
-  <div
-    class="trait-form-group {traitCssClass ?? ''}"
-    transition:slide={{ duration: 200, easing: quadInOut }}
-  >
-    <span class="trait-icon" aria-label={title} {title}>
-      {#if iconCssClass !== undefined}
-        <i class={iconCssClass} />
-      {/if}
-      <slot name="custom-icon" />
-    </span>
-    <div class="trait-label-and-list">
-      {#if $settingStore.showTraitLabels}
-        <span class="trait-label">{title}</span>
-      {/if}
-      <ul
-        class="trait-list"
-        class:tools={tools.length}
-        class:traits={tags.length}
-      >
+<div class="trait-form-group {traitCssClass ?? ''}" class:hidden={!show}>
+  <span class="trait-icon" aria-label={title} {title}>
+    {#if iconCssClass !== undefined}
+      <i class={iconCssClass} />
+    {/if}
+    <slot name="custom-icon" />
+  </span>
+  <div class="trait-label-and-list">
+    {#if $settingStore.showTraitLabels}
+      <span class="trait-label">{title}</span>
+    {/if}
+    {#if tags.length}
+      <ul class="trait-list traits">
         {#each tags as [key, value]}
           <li class="trait-tag {key}">{value}</li>
         {/each}
+      </ul>
+    {/if}
+    {#if tools.length}
+      <ul
+        class="trait-list tools"
+        data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.TOOLS_LIST}
+      >
         {#each tools as [key, tool]}
-          <li class="tool">
+          <li
+            class="tool"
+            data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.TOOL_CONTAINER}
+            data-key={key}
+          >
             {#if $context.editable && !$context.lockSensitiveFields}
               <button
                 type="button"
@@ -77,6 +82,8 @@
                     'tools',
                     true,
                   )}
+                data-tidy-sheet-part={CONSTANTS.SHEET_PARTS
+                  .TOOL_PROFICIENCY_TOGGLE}
               >
                 {@html tool.icon}
               </button>
@@ -92,6 +99,7 @@
                 class="tool-check-roller inline-transparent-button rollable"
                 on:click={(event) =>
                   $context.actor.rollToolCheck(key, { event })}
+                data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.TOOL_ROLLER}
               >
                 {tool.label}
               </button>
@@ -112,6 +120,8 @@
                     'tools',
                     key,
                   )}
+                data-tidy-sheet-part={CONSTANTS.SHEET_PARTS
+                  .TOOL_CONFIGURATION_CONTROL}
               >
                 <i class="fas fa-cog" />
               </button>
@@ -119,25 +129,29 @@
           </li>
         {/each}
       </ul>
-    </div>
-    {#if traitsExpanded && $context.editable && !$context.lockSensitiveFields}
-      <button
-        type="button"
-        class="trait-editor inline-icon-button"
-        title={configureButtonTitle}
-        on:click|stopPropagation|preventDefault={(event) =>
-          dispatcher('onConfigureClicked', event)}
-      >
-        <i class="fas fa-pencil-alt" />
-      </button>
     {/if}
   </div>
-{/if}
+  {#if traitsExpanded && $context.editable && !$context.lockSensitiveFields}
+    <button
+      type="button"
+      class="trait-editor inline-icon-button flex-row align-items-flex-start justify-content-center"
+      title={configureButtonTitle}
+      on:click|stopPropagation|preventDefault={(event) =>
+        dispatcher('onConfigureClicked', event)}
+    >
+      <i class="fas fa-pencil-alt" />
+    </button>
+  {/if}
+</div>
 
 <style lang="scss">
   .trait-form-group {
     display: flex;
     flex-direction: row;
+
+    &.hidden {
+      display: none;
+    }
 
     :global(i) {
       color: var(--t5ek-tertiary-color);
