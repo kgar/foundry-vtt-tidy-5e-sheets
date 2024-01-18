@@ -44,7 +44,7 @@
       selectOnFocus={true}
       allowDeltaChanges={true}
       disabled={$context.lockSensitiveFields}
-      dataset={{'data-tidy-sheet-part': CONSTANTS.SHEET_PARTS.ABILITY_SCORE}}
+      attributes={{'data-tidy-sheet-part': CONSTANTS.SHEET_PARTS.ABILITY_SCORE}}
     />
   </BlockScore>
   <div class="ability-modifiers">
