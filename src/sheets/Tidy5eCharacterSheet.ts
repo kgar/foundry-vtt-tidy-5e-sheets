@@ -4,7 +4,7 @@ import { debug, error } from 'src/utils/logging';
 import { SettingsProvider, settingStore } from 'src/settings/settings';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
 import { CONSTANTS } from 'src/constants';
-import { get, writable } from 'svelte/store';
+import { writable } from 'svelte/store';
 import {
   type ItemCardStore,
   type CharacterSheetContext,
@@ -475,6 +475,9 @@ export class Tidy5eCharacterSheet
       return;
     }
 
+    let focus = this.element.find(':focus');
+    focus = focus.length ? focus[0] : null;
+
     applyTitleToWindow(this.title, this.element.get(0));
     await this.renderCustomContent({ data, isFullRender: false });
     Hooks.callAll(
@@ -489,6 +492,11 @@ export class Tidy5eCharacterSheet
       super.activateListeners,
       this
     );
+
+    if (focus && focus.name) {
+      const input = this.form?.[focus.name];
+      if (input && input.focus instanceof Function) input.focus();
+    }
   }
 
   private async renderCustomContent(args: {

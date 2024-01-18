@@ -172,6 +172,9 @@ export class Tidy5eKgarItemSheet
       return;
     }
 
+    let focus = this.element.find(':focus');
+    focus = focus.length ? focus[0] : null;
+
     applyTitleToWindow(this.title, this.element.get(0));
     await this.renderCustomContent({ data, isFullRender: false });
     Hooks.callAll(
@@ -186,6 +189,11 @@ export class Tidy5eKgarItemSheet
       super.activateListeners,
       this
     );
+
+    if (focus && focus.name) {
+      const input = this.form?.[focus.name];
+      if (input && input.focus instanceof Function) input.focus();
+    }
   }
 
   private async renderCustomContent(args: {
