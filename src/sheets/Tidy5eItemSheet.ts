@@ -3,7 +3,10 @@ import type { Item5e, ItemDescription, ItemSheetContext } from 'src/types/item';
 import { get, writable } from 'svelte/store';
 import TypeNotFoundSheet from './item/TypeNotFoundSheet.svelte';
 import type { SheetStats, SheetTabCacheable, Tab } from 'src/types/types';
-import { applyTitleToWindow } from 'src/utils/applications';
+import {
+  applyTitleToWindow,
+  maintainCustomContentInputFocus,
+} from 'src/utils/applications';
 import { debug } from 'src/utils/logging';
 import type { SvelteComponent } from 'svelte';
 import { getPercentage } from 'src/utils/numbers';
@@ -172,20 +175,22 @@ export class Tidy5eKgarItemSheet
       return;
     }
 
-    applyTitleToWindow(this.title, this.element.get(0));
-    await this.renderCustomContent({ data, isFullRender: false });
-    Hooks.callAll(
-      'tidy5e-sheet.renderItemSheet',
-      this,
-      this.element.get(0),
-      data,
-      false
-    );
-    CustomContentRenderer.wireCompatibilityEventListeners(
-      this.element,
-      super.activateListeners,
-      this
-    );
+    maintainCustomContentInputFocus(this, async () => {
+      applyTitleToWindow(this.title, this.element.get(0));
+      await this.renderCustomContent({ data, isFullRender: false });
+      Hooks.callAll(
+        'tidy5e-sheet.renderItemSheet',
+        this,
+        this.element.get(0),
+        data,
+        false
+      );
+      CustomContentRenderer.wireCompatibilityEventListeners(
+        this.element,
+        super.activateListeners,
+        this
+      );
+    });
   }
 
   private async renderCustomContent(args: {

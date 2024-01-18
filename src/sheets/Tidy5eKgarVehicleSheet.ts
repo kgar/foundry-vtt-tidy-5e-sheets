@@ -10,13 +10,14 @@ import type {
   ExpandedItemIdToLocationsMap,
   VehicleSheetContext,
 } from 'src/types/types';
-import { get, writable } from 'svelte/store';
+import { writable } from 'svelte/store';
 import VehicleSheet from './vehicle/VehicleSheet.svelte';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
 import {
   applyModuleSheetDataAttributeToWindow,
   applyThemeDataAttributeToWindow,
   applyTitleToWindow,
+  maintainCustomContentInputFocus,
 } from 'src/utils/applications';
 import type { SvelteComponent } from 'svelte';
 import { debug } from 'src/utils/logging';
@@ -217,20 +218,22 @@ export class Tidy5eVehicleSheet
       return;
     }
 
-    applyTitleToWindow(this.title, this.element.get(0));
-    await this.renderCustomContent({ data, isFullRender: false });
-    Hooks.callAll(
-      'tidy5e-sheet.renderActorSheet',
-      this,
-      this.element.get(0),
-      data,
-      false
-    );
-    CustomContentRenderer.wireCompatibilityEventListeners(
-      this.element,
-      super.activateListeners,
-      this
-    );
+    maintainCustomContentInputFocus(this, async () => {
+      applyTitleToWindow(this.title, this.element.get(0));
+      await this.renderCustomContent({ data, isFullRender: false });
+      Hooks.callAll(
+        'tidy5e-sheet.renderActorSheet',
+        this,
+        this.element.get(0),
+        data,
+        false
+      );
+      CustomContentRenderer.wireCompatibilityEventListeners(
+        this.element,
+        super.activateListeners,
+        this
+      );
+    });
   }
 
   private async renderCustomContent(args: {

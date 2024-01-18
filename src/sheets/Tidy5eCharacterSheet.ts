@@ -4,7 +4,7 @@ import { debug, error } from 'src/utils/logging';
 import { SettingsProvider, settingStore } from 'src/settings/settings';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
 import { CONSTANTS } from 'src/constants';
-import { get, writable } from 'svelte/store';
+import { writable } from 'svelte/store';
 import {
   type ItemCardStore,
   type CharacterSheetContext,
@@ -22,6 +22,7 @@ import {
   applyModuleSheetDataAttributeToWindow,
   applyThemeDataAttributeToWindow,
   applyTitleToWindow,
+  maintainCustomContentInputFocus,
 } from 'src/utils/applications';
 import type { SvelteComponent } from 'svelte';
 import { getPercentage } from 'src/utils/numbers';
@@ -475,20 +476,22 @@ export class Tidy5eCharacterSheet
       return;
     }
 
-    applyTitleToWindow(this.title, this.element.get(0));
-    await this.renderCustomContent({ data, isFullRender: false });
-    Hooks.callAll(
-      'tidy5e-sheet.renderActorSheet',
-      this,
-      this.element.get(0),
-      data,
-      false
-    );
-    CustomContentRenderer.wireCompatibilityEventListeners(
-      this.element,
-      super.activateListeners,
-      this
-    );
+    maintainCustomContentInputFocus(this, async () => {
+      applyTitleToWindow(this.title, this.element.get(0));
+      await this.renderCustomContent({ data, isFullRender: false });
+      Hooks.callAll(
+        'tidy5e-sheet.renderActorSheet',
+        this,
+        this.element.get(0),
+        data,
+        false
+      );
+      CustomContentRenderer.wireCompatibilityEventListeners(
+        this.element,
+        super.activateListeners,
+        this
+      );
+    });
   }
 
   private async renderCustomContent(args: {

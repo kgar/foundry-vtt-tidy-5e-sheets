@@ -17,6 +17,7 @@ import {
   applyModuleSheetDataAttributeToWindow,
   applyThemeDataAttributeToWindow,
   applyTitleToWindow,
+  maintainCustomContentInputFocus,
 } from 'src/utils/applications';
 import { debug, error } from 'src/utils/logging';
 import { SettingsProvider, settingStore } from 'src/settings/settings';
@@ -418,20 +419,22 @@ export class Tidy5eNpcSheet
       return;
     }
 
-    applyTitleToWindow(this.title, this.element.get(0));
-    await this.renderCustomContent({ data, isFullRender: false });
-    Hooks.callAll(
-      'tidy5e-sheet.renderActorSheet',
-      this,
-      this.element.get(0),
-      data,
-      false
-    );
-    CustomContentRenderer.wireCompatibilityEventListeners(
-      this.element,
-      super.activateListeners,
-      this
-    );
+    maintainCustomContentInputFocus(this, async () => {
+      applyTitleToWindow(this.title, this.element.get(0));
+      await this.renderCustomContent({ data, isFullRender: false });
+      Hooks.callAll(
+        'tidy5e-sheet.renderActorSheet',
+        this,
+        this.element.get(0),
+        data,
+        false
+      );
+      CustomContentRenderer.wireCompatibilityEventListeners(
+        this.element,
+        super.activateListeners,
+        this
+      );
+    });
   }
 
   private async renderCustomContent(args: {
