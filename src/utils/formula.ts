@@ -129,7 +129,10 @@ export function calculateSpellAttackAndDc(actor: Actor5e): SpellCalculations {
       msakTotal = '+' + msakTotal;
     }
 
-    const abilityName = CONFIG.DND5E.abilities[spellAbility].label;
+    const abilityName = !isNil(spellAbility, '')
+      ? CONFIG.DND5E.abilities[spellAbility].label
+      : FoundryAdapter.localize('DND5E.None');
+
     return {
       dc: actor.system.attributes.spelldc,
       dcTooltip: getDcTooltip(actor),
@@ -222,7 +225,9 @@ export function getDcTooltip(actor: Actor5e) {
   const spellAbility = actor.system.attributes.spellcasting;
   const abilityMod =
     (spellAbility != '' ? actor.system.abilities[spellAbility].mod : 0) ?? 0;
-  const abilityName = CONFIG.DND5E.abilities[spellAbility].label;
+  const abilityName = !isNil(spellAbility, '')
+    ? CONFIG.DND5E.abilities[spellAbility].label
+    : FoundryAdapter.localize('DND5E.None');
   const prof = actor.system.attributes.prof ?? 0;
 
   let tooltip = base.toString();
