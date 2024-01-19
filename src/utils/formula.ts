@@ -6,6 +6,7 @@ import type {
   SpellCalculations,
 } from 'src/types/types';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+import { isNil } from './data';
 
 export function scaleCantripDamageFormula(spell: Item5e, formula: string) {
   try {
@@ -238,8 +239,8 @@ export function getDcTooltip(actor: Actor5e) {
     )})`;
   }
 
-  const rawBonus = actor.system.bonuses.spell.dc;
-  if (Roll.validate(rawBonus)) {
+  const rawBonus = actor.system.bonuses.spell.dc?.toString()?.trim();
+  if (!isNil(rawBonus, '') && Roll.validate(rawBonus)) {
     const bonusRoll = new Roll(rawBonus);
     bonusRoll.evaluate({ async: false });
     const bonusTotal = bonusRoll.total;
