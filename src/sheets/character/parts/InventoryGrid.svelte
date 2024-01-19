@@ -1,5 +1,10 @@
 <script lang="ts">
-  import type { CharacterSheetContext, ItemCardStore } from 'src/types/types';
+  import type {
+    ActorSheetContext,
+    CharacterSheetContext,
+    ItemCardStore,
+    NpcSheetContext,
+  } from 'src/types/types';
   import type { Item5e } from 'src/types/item';
   import ItemTable from '../../../components/item-list/ItemTable.svelte';
   import ItemTableHeaderRow from '../../../components/item-list/ItemTableHeaderRow.svelte';
@@ -11,12 +16,19 @@
   import type { Readable, Writable } from 'svelte/store';
   import TextInput from '../../../components/inputs/TextInput.svelte';
   import { settingStore } from 'src/settings/settings';
+  import { ActorItemRuntime } from 'src/runtime/ActorItemRuntime';
 
   export let section: any;
   export let items: Item5e[];
 
-  let context = getContext<Readable<CharacterSheetContext>>('context');
+  let context =
+    getContext<Readable<CharacterSheetContext | NpcSheetContext>>('context');
   let card = getContext<Writable<ItemCardStore>>('card');
+
+  $: customCommands = ActorItemRuntime.getActorItemSectionCommands({
+    actor: $context.actor,
+    section,
+  });
 
   const localize = FoundryAdapter.localize;
 
@@ -51,6 +63,22 @@
       return card;
     });
   }
+
+  function handleDragStart(event: DragEvent, item: Item5e) {
+    if (!item) {
+      return;
+    }
+
+    // Don't show cards while dragging
+    onMouseLeave(event, item);
+
+    card.update((card) => {
+      return card;
+    });
+
+    const dragData = item.toDragData();
+    event.dataTransfer?.setData('text/plain', JSON.stringify(dragData));
+  }
 </script>
 
 <ItemTable>
@@ -79,6 +107,8 @@
         on:mousedown={(event) => FoundryAdapter.editOnMiddleClick(event, item)}
         on:mouseenter={(ev) => onMouseEnter(ev, item)}
         on:mouseleave={(ev) => onMouseLeave(ev, item)}
+        on:dragstart={(ev) => handleDragStart(ev, item)}
+        draggable={true}
         disabled={!$context.editable}
         data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_USE_COMMAND}
         data-item-id={item.id}
@@ -157,7 +187,7 @@
       <div class="items-footer">
         <button
           type="button"
-          class="item-create icon-button"
+          class="footer-command icon-button"
           title={localize('DND5E.ItemCreate')}
           on:click|stopPropagation|preventDefault={() =>
             FoundryAdapter.createItem(
@@ -168,9 +198,24 @@
               },
               $context.actor,
             )}
+          data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_CREATE_COMMAND}
         >
           <i class="fas fa-plus-circle" />
         </button>
+        {#each customCommands as command}
+          <button
+            type="button"
+            class="footer-command icon-button"
+            on:click={(ev) =>
+              command.execute?.({ section, event: ev, actor: $context.actor })}
+            title={localize(command.tooltip ?? '')}
+          >
+            {#if (command.iconClass ?? '') !== ''}
+              <i class={command.iconClass} />
+            {/if}
+            {localize(command.label ?? '')}
+          </button>
+        {/each}
       </div>
     {/if}
   </div>
@@ -360,12 +405,14 @@
     }
 
     .items-footer {
-      flex: 0 0 3.125rem;
+      flex: 0 0 auto;
       height: 3.125rem;
       margin: 0.125rem;
+      display: flex;
 
-      .item-create {
+      .footer-command {
         display: flex;
+        flex: 0 0 3.125rem;
         justify-content: center;
         align-items: center;
         white-space: nowrap;
