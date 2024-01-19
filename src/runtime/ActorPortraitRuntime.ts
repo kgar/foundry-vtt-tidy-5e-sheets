@@ -1,6 +1,9 @@
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type { Actor5e } from 'src/types/types';
-import type { RegisteredPortraitMenuCommand, RegisteredPortraitMenuCommandExecuteParams } from './types';
+import type {
+  RegisteredPortraitMenuCommand,
+  RegisteredPortraitMenuCommandExecuteParams,
+} from './types';
 import { error } from 'src/utils/logging';
 
 export class ActorPortraitRuntime {
@@ -18,11 +21,14 @@ export class ActorPortraitRuntime {
     {
       label: 'T5EK.ShowTokenArt',
       execute: (params: RegisteredPortraitMenuCommandExecuteParams) => {
-        FoundryAdapter.renderImagePopout(params.actor.prototypeToken.texture.src, {
-          title: 'Portrait: ' + params.actor.name,
-          shareable: true,
-          uuid: params.actor.uuid,
-        }).render(true);
+        FoundryAdapter.renderImagePopout(
+          params.actor.prototypeToken.texture.src,
+          {
+            title: 'Portrait: ' + params.actor.name,
+            shareable: true,
+            uuid: params.actor.uuid,
+          }
+        ).render(true);
       },
     },
   ];
