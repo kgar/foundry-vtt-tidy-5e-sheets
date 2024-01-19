@@ -1,5 +1,4 @@
 <script lang="ts">
-    import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { type Actor5e } from 'src/types/types';
 
@@ -19,7 +18,6 @@
   class="item-list-footer-button"
   on:click={create}
   title={localize('DND5E.FeatureAdd')}
-  data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_CREATE_COMMAND}
 >
   <i class="fas fa-plus-circle" />
   {localize('DND5E.Add')}

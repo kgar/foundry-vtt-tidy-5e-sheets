@@ -166,10 +166,6 @@ export const CONSTANTS = {
      */
     DEATH_SAVE_SUCCESSES: 'death-save-successes',
     /**
-     * An interactable control which the user can execute to create an item (e.g., consumable, feature, loot, spell, weapon, etc.).
-     */
-    ITEM_CREATE_COMMAND: 'item-create-command',
-    /**
      * An interactable control which the user can execute to use an item (e.g., consumable, feature, loot, spell, weapon, etc.).
      */
     ITEM_USE_COMMAND: 'item-use-command',

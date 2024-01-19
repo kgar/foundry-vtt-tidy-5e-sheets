@@ -16,7 +16,6 @@
   import { getContext } from 'svelte';
   import type { Readable, Writable } from 'svelte/store';
   import { settingStore } from 'src/settings/settings';
-  import { ActorItemRuntime } from 'src/runtime/ActorItemRuntime';
 
   export let section: any;
   export let spells: Item5e[];
@@ -25,11 +24,6 @@
   let context =
     getContext<Readable<CharacterSheetContext | NpcSheetContext>>('context');
   let card = getContext<Writable<ItemCardStore>>('card');
-
-  $: customCommands = ActorItemRuntime.getActorItemSectionCommands({
-    actor: $context.actor,
-    section,
-  });
 
   const localize = FoundryAdapter.localize;
 
@@ -49,22 +43,6 @@
       card.item = null;
       return card;
     });
-  }
-
-  function handleDragStart(event: DragEvent, item: Item5e) {
-    if (!item) {
-      return;
-    }
-
-    // Don't show cards while dragging
-    onMouseLeave(event, item);
-
-    card.update((card) => {
-      return card;
-    });
-
-    const dragData = item.toDragData();
-    event.dataTransfer?.setData('text/plain', JSON.stringify(dragData));
   }
 </script>
 
@@ -99,8 +77,6 @@
             FoundryAdapter.editOnMiddleClick(event, spell)}
           on:mouseenter={(ev) => onMouseEnter(ev, spell)}
           on:mouseleave={(ev) => onMouseLeave(ev, spell)}
-          on:dragstart={(ev) => handleDragStart(ev, spell)}
-          draggable={true}
           disabled={!$context.editable}
           data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_USE_COMMAND}
           data-item-id={spell.id}
@@ -124,33 +100,14 @@
           {#if section.canCreate}
             <button
               type="button"
-              class="footer-command icon-button"
+              class="item-create icon-button"
               title={localize('DND5E.SpellCreate')}
               on:click|stopPropagation|preventDefault={() =>
                 FoundryAdapter.createItem(section.dataset, $context.actor)}
-              data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_CREATE_COMMAND}
             >
               <i class="fas fa-plus-circle" />
             </button>
           {/if}
-          {#each customCommands as command}
-            <button
-              type="button"
-              class="footer-command icon-button"
-              on:click={(ev) =>
-                command.execute?.({
-                  section,
-                  event: ev,
-                  actor: $context.actor,
-                })}
-              title={localize(command.tooltip ?? '')}
-            >
-              {#if (command.iconClass ?? '') !== ''}
-                <i class={command.iconClass} />
-              {/if}
-              {localize(command.label ?? '')}
-            </button>
-          {/each}
         </div>
       {/if}
     </div>
@@ -285,14 +242,12 @@
         }
       }
       .spells-footer {
-        flex: 0 0 auto;
+        flex: 0 0 3.125rem;
         height: 3.125rem;
         margin: 0.125rem;
-        display: flex;
 
-        .footer-command {
+        .item-create {
           display: flex;
-          flex: 0 0 3.125rem;
           justify-content: center;
           align-items: center;
           white-space: nowrap;
