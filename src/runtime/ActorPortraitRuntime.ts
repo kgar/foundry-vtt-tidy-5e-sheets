@@ -1,28 +1,34 @@
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type { Actor5e } from 'src/types/types';
-import type { RegisteredPortraitMenuCommand } from './types';
+import type {
+  RegisteredPortraitMenuCommand,
+  RegisteredPortraitMenuCommandExecuteParams,
+} from './types';
 import { error } from 'src/utils/logging';
 
 export class ActorPortraitRuntime {
   private static _portraitMenuCommands: RegisteredPortraitMenuCommand[] = [
     {
       label: 'T5EK.ShowPortraitArt',
-      execute: (actor: any) => {
-        FoundryAdapter.renderImagePopout(actor.img, {
-          title: 'Portrait: ' + actor.name,
+      execute: (params: RegisteredPortraitMenuCommandExecuteParams) => {
+        FoundryAdapter.renderImagePopout(params.actor.img, {
+          title: 'Portrait: ' + params.actor.name,
           shareable: true,
-          uuid: actor.uuid,
+          uuid: params.actor.uuid,
         }).render(true);
       },
     },
     {
       label: 'T5EK.ShowTokenArt',
-      execute: (actor: any) => {
-        FoundryAdapter.renderImagePopout(actor.prototypeToken.texture.src, {
-          title: 'Portrait: ' + actor.name,
-          shareable: true,
-          uuid: actor.uuid,
-        }).render(true);
+      execute: (params: RegisteredPortraitMenuCommandExecuteParams) => {
+        FoundryAdapter.renderImagePopout(
+          params.actor.prototypeToken.texture.src,
+          {
+            title: 'Portrait: ' + params.actor.name,
+            shareable: true,
+            uuid: params.actor.uuid,
+          }
+        ).render(true);
       },
     },
   ];
