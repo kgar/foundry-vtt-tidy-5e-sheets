@@ -146,8 +146,8 @@
   on:mousedown={(event) => dispatcher('mousedown', event)}
   on:mouseenter={onMouseEnter}
   on:mouseleave={onMouseLeave}
-  draggable={!!draggable}
   on:dragstart={handleDragStart}
+  draggable={!!draggable}
   data-item-id={item?.id}
   data-tidy-item-table-row
 >
