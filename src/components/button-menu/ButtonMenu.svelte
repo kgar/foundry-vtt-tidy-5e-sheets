@@ -7,6 +7,7 @@
     ButtonMenuPosition,
   } from './button-menu-types';
   import { getPositionStyles } from './button-menu-position';
+  import { settingStore } from 'src/settings/settings';
 
   type StatefulIconClass = {
     opened: string | null;
@@ -61,6 +62,7 @@
     {title}
     class="button-menu-opener {buttonClass}"
     style:padding={openerPadding}
+    tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
   >
     {#if iconClass}
       <i class={actualIconClass} />

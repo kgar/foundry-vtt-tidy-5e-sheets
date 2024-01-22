@@ -4,6 +4,7 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import TextInput from 'src/components/inputs/TextInput.svelte';
+  import { settingStore } from 'src/settings/settings';
 
   let context =
     getContext<Readable<CharacterSheetContext | NpcSheetContext>>('context');
@@ -41,6 +42,7 @@
       title={localize('DND5E.HitPointsConfig')}
       on:click|stopPropagation|preventDefault={() =>
         FoundryAdapter.renderActorHitPointsDialog($context.actor)}
+      tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
     >
       <i class="fas fa-cog" />
     </button>

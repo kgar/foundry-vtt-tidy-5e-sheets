@@ -1,6 +1,7 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import { settingStore } from 'src/settings/settings';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
 
@@ -31,6 +32,7 @@
       on:focusin={() => (buttonIsFocused = true)}
       on:focusout={() => (buttonIsFocused = false)}
       data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_USE_COMMAND}
+      tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
     >
       <i class="fa fa-dice-d20" />
     </button>

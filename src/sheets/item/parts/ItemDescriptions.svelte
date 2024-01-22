@@ -4,6 +4,7 @@
   import type { Readable } from 'svelte/store';
   import Accordion from 'src/components/accordion/Accordion.svelte';
   import AccordionItem from 'src/components/accordion/AccordionItem.svelte';
+  import { settingStore } from 'src/settings/settings';
 
   /**
    * When true, descriptions are rendered to the DOM; else, they are excluded.
@@ -62,7 +63,10 @@
                       dispatcher('edit', {
                         valueToEdit: itemDescription.content,
                         fieldToEdit: itemDescription.field,
-                      })}><i class="fas fa-edit" /></button
+                      })}
+                    tabindex={$settingStore.useAccessibleKeyboardSupport
+                      ? 0
+                      : -1}><i class="fas fa-edit" /></button
                   >
                 {/if}
               </span>

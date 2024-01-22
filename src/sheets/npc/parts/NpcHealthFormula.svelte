@@ -45,12 +45,15 @@
   <button
     type="button"
     title="{localize('DND5E.HitDiceRoll')}/{localize(
-      'T5EK.HitDiceRollAverage'
+      'T5EK.HitDiceRollAverage',
     )}"
     on:click={rollNpcHp}
     on:contextmenu={calcAverageHitDie}
     class="roll-hp-formula"
-    tabindex={!$settingStore.useDefaultSheetHpTabbing ? 0 : -1}
+    tabindex={!$settingStore.useDefaultSheetHpTabbing &&
+    $settingStore.useAccessibleKeyboardSupport
+      ? 0
+      : -1}
   >
     <i class="fas fa-dice-six" />
   </button>

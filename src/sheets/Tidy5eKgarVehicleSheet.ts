@@ -17,6 +17,7 @@ import {
   applyModuleSheetDataAttributeToWindow,
   applyThemeDataAttributeToWindow,
   applyTitleToWindow,
+  blurUntabbableButtonsOnClick,
   maintainCustomContentInputFocus,
 } from 'src/utils/applications';
 import type { SvelteComponent } from 'svelte';
@@ -215,6 +216,7 @@ export class Tidy5eVehicleSheet
         super.activateListeners,
         this
       );
+      blurUntabbableButtonsOnClick(this.element);
       return;
     }
 

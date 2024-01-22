@@ -1,6 +1,7 @@
 <script lang="ts">
   import Notice from 'src/components/notice/Notice.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import { settingStore } from 'src/settings/settings';
   import type { CharacterSheetContext, NpcSheetContext } from 'src/types/types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
@@ -22,6 +23,7 @@
       class="create-spell-btn flex-row align-items-center extra-small-gap"
       on:click={() =>
         FoundryAdapter.createItem({ type: 'spell', level: '' }, $context.actor)}
+      tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
     >
       <i class="fas fa-plus-circle" />
       {localize('DND5E.SpellCreate')}

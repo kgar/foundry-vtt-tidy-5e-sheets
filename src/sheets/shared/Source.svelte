@@ -1,6 +1,7 @@
 <script lang="ts">
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import { settingStore } from 'src/settings/settings';
 
   export let document: any;
   export let keyPath: string;
@@ -32,6 +33,7 @@
       type="button"
       class="inline-icon-button config-button"
       on:click={() => FoundryAdapter.renderSourceConfig(document, keyPath)}
+      tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
       ><i class="fas fa-cog" /></button
     >
   {/if}

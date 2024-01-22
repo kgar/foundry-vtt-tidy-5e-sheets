@@ -4,6 +4,7 @@
   import type { Readable } from 'svelte/store';
   import type { ActorSheetContext } from 'src/types/types';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import { settingStore } from 'src/settings/settings';
 
   /**
    * The Armor Class value.
@@ -29,6 +30,7 @@
     data-attribution-caption="DND5E.ArmorClass"
     data-tooltip-direction="DOWN"
     disabled={!$context.editable}
+    tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
   >
     {ac}
   </button>

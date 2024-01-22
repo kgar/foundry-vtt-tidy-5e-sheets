@@ -6,8 +6,6 @@
   import type { Readable } from 'svelte/store';
   import SheetEditor from '../../components/editor/SheetEditor.svelte';
   import LimitedHeader from '../actor/LimitedHeader.svelte';
-  import { settingStore } from 'src/settings/settings';
-    import { CONSTANTS } from 'src/constants';
 
   let context = getContext<Readable<NpcSheetContext>>('context');
 

@@ -1,6 +1,7 @@
 <script lang="ts">
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import { settingStore } from 'src/settings/settings';
   import type { Actor5e } from 'src/types/types';
   import type { ActorSheetContext } from 'src/types/types';
   import { getContext } from 'svelte';
@@ -63,6 +64,7 @@
         title={localize('DND5E.CurrencyConvertHint')}
         on:click|stopPropagation|preventDefault={() => confirmConvertCurrency()}
         disabled={!$context.editable}
+        tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
       >
         <i class="fas fa-funnel-dollar" />
       </button>

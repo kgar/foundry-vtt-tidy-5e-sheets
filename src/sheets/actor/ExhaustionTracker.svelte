@@ -5,6 +5,7 @@
     IconWithSeverity,
   } from 'src/features/exhaustion/exhaustion.types';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import { settingStore } from 'src/settings/settings';
   import type {
     ActorSheetContext,
     PortraitCharmRadiusClass,
@@ -75,6 +76,7 @@
             title={localize(exhaustionConfig.hints[i] ?? '')}
             on:click={() => dispatch('levelSelected', { level: i })}
             disabled={!$context.editable}
+            tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
           >
             {i}
           </button>

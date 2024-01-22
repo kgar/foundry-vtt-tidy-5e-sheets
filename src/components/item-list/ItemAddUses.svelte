@@ -1,4 +1,6 @@
 <script lang="ts">
+    import { settingStore } from "src/settings/settings";
+
   export let item: any;
 
   function onAddUses() {
@@ -15,6 +17,7 @@
   class="item-add-uses item-list-button"
   on:click={() => onAddUses()}
   disabled={!item.isOwner}
+  tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
 >
   Add
 </button>

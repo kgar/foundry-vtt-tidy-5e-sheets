@@ -1,6 +1,7 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import { settingStore } from 'src/settings/settings';
   import type { ItemSheetContext } from 'src/types/item';
   import type { CharacterSheetContext } from 'src/types/types';
   import { warn } from 'src/utils/logging';
@@ -68,6 +69,7 @@
               class="active-effect-control inline-icon-button"
               title={localize('DND5E.EffectCreate')}
               on:click={(event) => onAddClicked(section)}
+              tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
             >
               <i class="fas fa-plus" />
               {localize('DND5E.Add')}
@@ -115,6 +117,7 @@
                     ? 'DND5E.EffectEnable'
                     : 'DND5E.EffectDisable'}
                   on:click={() => effect.update({ disabled: !effect.disabled })}
+                  tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
                 >
                   <i
                     class="fas"
@@ -127,6 +130,7 @@
                   class="active-effect-control inline-transparent-button"
                   title={localize('DND5E.EffectEdit')}
                   on:click={() => effect.sheet.render(true)}
+                  tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
                 >
                   <i class="fas fa-edit" />
                 </button>
@@ -135,6 +139,7 @@
                   class="active-effect-control inline-transparent-button"
                   title={localize('DND5E.EffectDelete')}
                   on:click={() => effect.deleteDialog()}
+                  tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
                 >
                   <i class="fas fa-trash" />
                 </button>

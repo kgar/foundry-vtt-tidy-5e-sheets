@@ -8,6 +8,7 @@
   import type { Readable } from 'svelte/store';
   import ContentEditableFormField from 'src/components/inputs/ContentEditableFormField.svelte';
   import RerenderAfterFormSubmission from 'src/components/utility/RerenderAfterFormSubmission.svelte';
+  import { settingStore } from 'src/settings/settings';
 
   let context = getContext<Readable<NpcSheetContext>>('context');
 
@@ -25,7 +26,7 @@
     FoundryAdapter.setFlag(
       $context.actor,
       'showNpcPersonalityInfo',
-      !showNpcPersonalityInfo
+      !showNpcPersonalityInfo,
     );
   }
 </script>
@@ -130,6 +131,7 @@
         on:click={togglePersonalityInfo}
         class="toggle-personality-info"
         title={localize('T5EK.TogglePersonalityInfo')}
+        tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
       >
         {#if showNpcPersonalityInfo}
           <i class="fas fa-angle-double-left" />
@@ -146,7 +148,7 @@
             <RerenderAfterFormSubmission
               andOnValueChange={FoundryAdapter.tryGetFlag(
                 $context.actor,
-                'trait'
+                'trait',
               ) ?? ''}
             >
               <article use:activateProseMirrorListeners>
@@ -163,7 +165,7 @@
             <RerenderAfterFormSubmission
               andOnValueChange={FoundryAdapter.tryGetFlag(
                 $context.actor,
-                'ideal'
+                'ideal',
               ) ?? ''}
             >
               <article use:activateProseMirrorListeners>
@@ -180,7 +182,7 @@
             <RerenderAfterFormSubmission
               andOnValueChange={FoundryAdapter.tryGetFlag(
                 $context.actor,
-                'bond'
+                'bond',
               ) ?? ''}
             >
               <article use:activateProseMirrorListeners>
@@ -197,7 +199,7 @@
             <RerenderAfterFormSubmission
               andOnValueChange={FoundryAdapter.tryGetFlag(
                 $context.actor,
-                'flaw'
+                'flaw',
               ) ?? ''}
             >
               <article use:activateProseMirrorListeners>
@@ -220,7 +222,7 @@
           <RerenderAfterFormSubmission
             andOnValueChange={FoundryAdapter.tryGetFlag(
               $context.actor,
-              'appearance'
+              'appearance',
             ) ?? ''}
           >
             <article class="appearance-notes" use:activateProseMirrorListeners>
@@ -319,7 +321,9 @@
     width: auto;
     border: none;
     align-self: flex-start;
-    transition: color 0.3s ease, transform 0.3s ease;
+    transition:
+      color 0.3s ease,
+      transform 0.3s ease;
     padding: 1.25rem 0.25rem;
     background: var(--t5ek-faint-color);
     border-radius: 0.1875rem;

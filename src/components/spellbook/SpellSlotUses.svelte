@@ -7,6 +7,7 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import TextInput from '../inputs/TextInput.svelte';
+  import { settingStore } from 'src/settings/settings';
 
   export let section: any;
   let context =
@@ -54,6 +55,7 @@
         class="spell-slot-max-override icon-button"
         title={localize('DND5E.SpellProgOverride')}
         on:click={() => (overrideMode = true)}
+        tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
       >
         <i class="fas fa-pencil-alt" />
       </button>

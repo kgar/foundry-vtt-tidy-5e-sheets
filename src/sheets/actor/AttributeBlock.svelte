@@ -30,7 +30,8 @@
     text={abbreviation}
     on:roll={(event) =>
       $context.actor.rollAbility(abbreviation, { event: event.detail })}
-    hideFromTabOrder={$settingStore.useDefaultSheetAttributeTabbing}
+    hideFromTabOrder={$settingStore.useDefaultSheetAttributeTabbing ||
+      !$settingStore.useAccessibleKeyboardSupport}
     attributes={{
       'data-tidy-sheet-part': CONSTANTS.SHEET_PARTS.ABILITY_ROLLER,
     }}
@@ -44,7 +45,9 @@
       selectOnFocus={true}
       allowDeltaChanges={true}
       disabled={$context.lockSensitiveFields}
-      attributes={{'data-tidy-sheet-part': CONSTANTS.SHEET_PARTS.ABILITY_SCORE}}
+      attributes={{
+        'data-tidy-sheet-part': CONSTANTS.SHEET_PARTS.ABILITY_SCORE,
+      }}
     />
   </BlockScore>
   <div class="ability-modifiers">
@@ -55,7 +58,10 @@
       title={localize('DND5E.AbilityModifier')}
       on:click={(event) =>
         $context.actor.rollAbilityTest(abbreviation, { event })}
-      tabindex={!$settingStore.useDefaultSheetAttributeTabbing ? 0 : -1}
+      tabindex={!$settingStore.useDefaultSheetAttributeTabbing &&
+      $settingStore.useAccessibleKeyboardSupport
+        ? 0
+        : -1}
       disabled={!$context.editable}
       data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ABILITY_TEST_ROLLER}
     >
@@ -68,7 +74,10 @@
       title={localize('DND5E.ActionSave')}
       on:click={(event) =>
         $context.actor.rollAbilitySave(abbreviation, { event })}
-      tabindex={!$settingStore.useDefaultSheetAttributeTabbing ? 0 : -1}
+      tabindex={!$settingStore.useDefaultSheetAttributeTabbing &&
+      $settingStore.useAccessibleKeyboardSupport
+        ? 0
+        : -1}
       disabled={!$context.editable}
       data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ABILITY_SAVE_ROLLER}
     >
@@ -85,8 +94,12 @@
               [`system.abilities.${abbreviation}.proficient`]:
                 1 - parseInt(ability.proficient),
             })}
-          tabindex={!$settingStore.useDefaultSheetAttributeTabbing ? 0 : -1}
-          data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ABILITY_SAVE_PROFICIENCY_TOGGLE}
+          tabindex={!$settingStore.useDefaultSheetAttributeTabbing &&
+          $settingStore.useAccessibleKeyboardSupport
+            ? 0
+            : -1}
+          data-tidy-sheet-part={CONSTANTS.SHEET_PARTS
+            .ABILITY_SAVE_PROFICIENCY_TOGGLE}
         >
           {@html ability.icon}
         </button>
@@ -103,8 +116,12 @@
         title={localize('DND5E.AbilityConfigure')}
         on:click={() =>
           FoundryAdapter.renderActorAbilityConfig($context.actor, abbreviation)}
-        tabindex={!$settingStore.useDefaultSheetAttributeTabbing ? 0 : -1}
-        data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ABILITY_CONFIGURATION_CONTROL}
+        tabindex={!$settingStore.useDefaultSheetAttributeTabbing &&
+        $settingStore.useAccessibleKeyboardSupport
+          ? 0
+          : -1}
+        data-tidy-sheet-part={CONSTANTS.SHEET_PARTS
+          .ABILITY_CONFIGURATION_CONTROL}
       >
         <i class="fas fa-cog" />
       </button>

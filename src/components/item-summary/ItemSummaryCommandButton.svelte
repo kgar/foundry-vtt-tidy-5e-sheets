@@ -1,6 +1,7 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { RegisteredItemSummaryCommand } from 'src/runtime/types';
+  import { settingStore } from 'src/settings/settings';
   import type { Item5e } from 'src/types/item';
 
   export let command: RegisteredItemSummaryCommand;
@@ -12,6 +13,7 @@
   class="item-summary-command"
   title={command.tooltip ?? null}
   on:click={() => command.execute?.({ item: item })}
+  tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
 >
   {#if command.iconClass}
     <i class={command.iconClass}></i>

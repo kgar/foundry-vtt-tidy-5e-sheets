@@ -1,6 +1,7 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import { settingStore } from 'src/settings/settings';
   import type { Actor5e } from 'src/types/types';
   import type { CharacterSheetContext, NpcSheetContext } from 'src/types/types';
   import { formatAsModifier } from 'src/utils/formatting';
@@ -81,6 +82,7 @@
             title={localize('DND5E.SkillConfigure')}
             data-tidy-sheet-part={CONSTANTS.SHEET_PARTS
               .SKILL_CONFIGURATION_CONTROL}
+            tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
           >
             <i class="fas fa-cog" />
           </button>
@@ -104,7 +106,9 @@
               )}
             title={skillRef.skill.hover}
             data-tidy-sheet-part={CONSTANTS.SHEET_PARTS
-              .SKILL_PROFICIENCY_TOGGLE}>{@html skillRef.skill.icon}</button
+              .SKILL_PROFICIENCY_TOGGLE}
+            tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+            >{@html skillRef.skill.icon}</button
           >
         {:else}
           <span class="skill-proficiency" title={skillRef.skill.hover}
@@ -118,6 +122,7 @@
             on:click={(event) =>
               $context.actor.rollSkill(skillRef.key, { event })}
             data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.SKILL_ROLLER}
+            tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
           >
             {skillRef.skill.label}
           </button>
@@ -144,6 +149,7 @@
         on:click={toggleShowAllSkills}
         data-tidy-sheet-part={CONSTANTS.SHEET_PARTS
           .SKILLS_SHOW_PROFICIENT_TOGGLE}
+        tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
       >
         {#if showAllSkills}
           {localize('T5EK.HideNotProficientSkills')}

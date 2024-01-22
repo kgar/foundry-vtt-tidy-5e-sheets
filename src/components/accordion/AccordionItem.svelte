@@ -2,6 +2,7 @@
   import { getContext, onMount } from 'svelte';
   import type { AccordionCtxType } from './Accordion.svelte';
   import { writable } from 'svelte/store';
+  import { settingStore } from 'src/settings/settings';
 
   export let open: boolean = false;
 
@@ -28,6 +29,7 @@
       class="accordion-item-toggle transparent-button"
       type="button"
       on:click={() => toggle()}
+      tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
     >
       <span class="accordion-arrow" class:open
         ><i class="fas fa-chevron-right" /></span

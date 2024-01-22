@@ -1,5 +1,6 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import { settingStore } from 'src/settings/settings';
   import type { Actor5e, ActorSheetContext } from 'src/types/types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
@@ -24,6 +25,7 @@
       class="configure inline-icon-button"
       title={localize('DND5E.MovementConfig')}
       on:click={() => FoundryAdapter.renderActorMovementConfig($context.actor)}
+      tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
       ><i class="fas fa-cog" /></button
     >
   {/if}

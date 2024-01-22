@@ -84,6 +84,7 @@
                   )}
                 data-tidy-sheet-part={CONSTANTS.SHEET_PARTS
                   .TOOL_PROFICIENCY_TOGGLE}
+                tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
               >
                 {@html tool.icon}
               </button>
@@ -100,6 +101,7 @@
                 on:click={(event) =>
                   $context.actor.rollToolCheck(key, { event })}
                 data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.TOOL_ROLLER}
+                tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
               >
                 {tool.label}
               </button>
@@ -122,6 +124,7 @@
                   )}
                 data-tidy-sheet-part={CONSTANTS.SHEET_PARTS
                   .TOOL_CONFIGURATION_CONTROL}
+                tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
               >
                 <i class="fas fa-cog" />
               </button>
@@ -138,6 +141,7 @@
       title={configureButtonTitle}
       on:click|stopPropagation|preventDefault={(event) =>
         dispatcher('onConfigureClicked', event)}
+      tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
     >
       <i class="fas fa-pencil-alt" />
     </button>

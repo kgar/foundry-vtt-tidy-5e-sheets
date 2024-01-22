@@ -8,6 +8,7 @@
   import TabFooter from 'src/sheets/actor/TabFooter.svelte';
   import { MaxPreparedSpellsConfigFormApplication } from 'src/applications/max-prepared-spells-config/MaxPreparedSpellsConfigFormApplication';
   import { CONSTANTS } from 'src/constants';
+  import { settingStore } from 'src/settings/settings';
 
   let context =
     getContext<Readable<CharacterSheetContext | NpcSheetContext>>('context');
@@ -102,6 +103,7 @@
         new MaxPreparedSpellsConfigFormApplication($context.actor).render(true)}
       title={localize('T5EK.MaxPreparedSpellsConfig.ButtonTooltip')}
       disabled={!$context.editable || $context.lockSensitiveFields}
+      tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
     >
       <p>{localize('T5EK.PreparedSpells')}</p>
       <span class="spells-prepared">{$context.preparedSpells ?? 0}</span>

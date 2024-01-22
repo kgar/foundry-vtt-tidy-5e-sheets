@@ -212,6 +212,7 @@
               new ActorOriginSummaryConfigFormApplication(
                 $context.actor,
               ).render(true)}
+            tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
           >
             <i class="fas fa-cog" />
           </button>

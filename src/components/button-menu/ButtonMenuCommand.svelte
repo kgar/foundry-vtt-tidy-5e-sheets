@@ -2,6 +2,7 @@
   import { createEventDispatcher, getContext } from 'svelte';
   import ButtonMenuItem from './ButtonMenuItem.svelte';
   import type { ButtonMenuContext } from './button-menu-types';
+  import { settingStore } from 'src/settings/settings';
 
   export let iconClass: string = '';
   export let useIconColumn: boolean = true;
@@ -31,6 +32,7 @@
     on:click={handleClick}
     {title}
     {disabled}
+    tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
   >
     {#if useIconColumn}
       <span class="icon-container">

@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { settingStore } from 'src/settings/settings';
   import type { Item5e } from 'src/types/item';
   import type { ActorSheetContext } from 'src/types/types';
   import { getContext } from 'svelte';
@@ -15,6 +16,7 @@
   title={item.labels.recharge}
   on:click={() => item.rollRecharge()}
   disabled={!$context.owner}
+  tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
 >
   <i class="fas fa-dice-six" />
   {item.system.recharge

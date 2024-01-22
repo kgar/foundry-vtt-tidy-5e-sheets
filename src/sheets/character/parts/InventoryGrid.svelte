@@ -112,6 +112,7 @@
         disabled={!$context.editable}
         data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_USE_COMMAND}
         data-item-id={item.id}
+        tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
       >
         {#if ctx?.attunement}
           <i
@@ -131,6 +132,7 @@
             style="display:none"
             data-action="itemEdit"
             title={localize('DND5E.ItemEdit')}
+            tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
           >
             <i class="fas fa-edit fa-fw" />
           </button>
@@ -199,6 +201,7 @@
               $context.actor,
             )}
           data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_CREATE_COMMAND}
+          tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
         >
           <i class="fas fa-plus-circle" />
         </button>
@@ -208,6 +211,7 @@
             class="footer-command icon-button"
             on:click={(ev) =>
               command.execute?.({ section, event: ev, actor: $context.actor })}
+            tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
             title={localize(command.tooltip ?? '')}
           >
             {#if (command.iconClass ?? '') !== ''}

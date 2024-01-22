@@ -173,6 +173,7 @@
             type="button"
             class="transparent-button spellbook-title toggle-spellbook"
             on:click={() => (showNoSpellsView = !showNoSpellsView)}
+            tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
           >
             {localize('DND5E.Spellbook')}
             {#if showNoSpellsView}

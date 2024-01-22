@@ -1,5 +1,6 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import { settingStore } from 'src/settings/settings';
 
   export let iconCssClass: string;
   export let title: string | undefined = undefined;
@@ -14,6 +15,7 @@
   class:inactive={!active}
   on:click
   title={title !== undefined ? localize(title) : ''}
+  tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
 >
   <i class={iconCssClass} />
 </button>
