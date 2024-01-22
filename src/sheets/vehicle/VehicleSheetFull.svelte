@@ -131,6 +131,7 @@
               ).render(true)}
             class="origin-summary-tidy inline-icon-button"
             title={localize('T5EK.OriginSummaryConfig')}
+            tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
           >
             <i class="fas fa-cog" />
           </button>

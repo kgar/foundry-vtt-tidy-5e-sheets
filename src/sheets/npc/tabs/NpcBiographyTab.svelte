@@ -8,6 +8,7 @@
   import type { Readable } from 'svelte/store';
   import ContentEditableFormField from 'src/components/inputs/ContentEditableFormField.svelte';
   import RerenderAfterFormSubmission from 'src/components/utility/RerenderAfterFormSubmission.svelte';
+    import { settingStore } from 'src/settings/settings';
 
   let context = getContext<Readable<NpcSheetContext>>('context');
 
@@ -130,6 +131,7 @@
         on:click={togglePersonalityInfo}
         class="toggle-personality-info"
         title={localize('T5EK.TogglePersonalityInfo')}
+        tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
       >
         {#if showNpcPersonalityInfo}
           <i class="fas fa-angle-double-left" />

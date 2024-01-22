@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { settingStore } from 'src/settings/settings';
   import type { CharacterSheetContext } from 'src/types/types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
@@ -16,6 +17,7 @@
     class="filter-option"
     class:active={isFilterActive}
     on:click={() => $context.actor.sheet.onToggleFilter(setName, filterName)}
+    tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
   >
     <slot />
   </button>

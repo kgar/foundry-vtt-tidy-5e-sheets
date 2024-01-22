@@ -42,6 +42,7 @@
     class="lock-button"
     on:click={() => toggleLock()}
     class:editing-enabled={allowEdit}
+    tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
   >
     {#if allowEdit}
       <i class="fas fa-lock-open" title={unlockTitle} />

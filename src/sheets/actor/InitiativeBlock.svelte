@@ -7,6 +7,7 @@
   import type { ActorSheetContext } from 'src/types/types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
+  import { settingStore } from 'src/settings/settings';
 
   export let initiative: { total: number; bonus: number };
 
@@ -47,6 +48,7 @@
       title={localize('DND5E.InitiativeConfig')}
       on:click={() =>
         FoundryAdapter.renderActorInitiativeConfig($context.actor)}
+      tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
     >
       <i class="fas fa-cog" />
     </button>

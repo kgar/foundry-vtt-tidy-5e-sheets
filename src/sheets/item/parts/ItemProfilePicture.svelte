@@ -1,5 +1,6 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import { settingStore } from 'src/settings/settings';
   import type { Item5e, ItemSheetContext } from 'src/types/item';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
@@ -48,7 +49,10 @@
     on:contextmenu={() => (hideImageMenu = !hideImageMenu)}
   />
   <div class="item-menu" class:hidden={hideImageMenu}>
-    <button class="showItemArt" on:click={() => showItemArt($context.item)}
+    <button
+      class="showItemArt"
+      on:click={() => showItemArt($context.item)}
+      tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
       >{localize('T5EK.ShowItemArt')}</button
     >
   </div>

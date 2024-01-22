@@ -104,6 +104,7 @@
           disabled={!$context.editable}
           data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_USE_COMMAND}
           data-item-id={spell.id}
+          tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
         >
           {#if FoundryAdapter.tryGetFlag(spell, 'favorite')}
             <GridPaneFavoriteIcon />
@@ -129,6 +130,7 @@
               on:click|stopPropagation|preventDefault={() =>
                 FoundryAdapter.createItem(section.dataset, $context.actor)}
               data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_CREATE_COMMAND}
+              tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
             >
               <i class="fas fa-plus-circle" />
             </button>
@@ -144,6 +146,7 @@
                   actor: $context.actor,
                 })}
               title={localize(command.tooltip ?? '')}
+              tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
             >
               {#if (command.iconClass ?? '') !== ''}
                 <i class={command.iconClass} />

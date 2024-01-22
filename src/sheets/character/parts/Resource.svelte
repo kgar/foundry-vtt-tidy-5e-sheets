@@ -5,6 +5,7 @@
   import type { Readable } from 'svelte/store';
   import TextInput from '../../../components/inputs/TextInput.svelte';
   import { CONSTANTS } from 'src/constants';
+  import { settingStore } from 'src/settings/settings';
 
   export let resource: TidyResource;
   let context = getContext<Readable<CharacterSheetContext>>('context');
@@ -112,6 +113,7 @@
         on:click={() => {
           configActive = !configActive;
         }}
+        tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
       >
         <i class="fas fa-cog" />
       </button>

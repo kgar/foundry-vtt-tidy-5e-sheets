@@ -1,5 +1,6 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+    import { settingStore } from 'src/settings/settings';
 
   export let document: any;
   export let keyPath: string;
@@ -17,6 +18,7 @@
     class="configure-source inline-transparent-button highlight-on-hover truncate"
     class:placeholder={usePlaceholder}
     on:click={() => FoundryAdapter.renderSourceConfig(document, keyPath)}
+    tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
   >
     {text}
   </button>

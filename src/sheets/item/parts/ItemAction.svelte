@@ -9,6 +9,7 @@
   import ItemFormGroup from '../form/ItemFormGroup.svelte';
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import { CONSTANTS } from 'src/constants';
+  import { settingStore } from 'src/settings/settings';
 
   let context = getContext<Readable<ItemSheetContext>>('context');
 
@@ -142,6 +143,7 @@
       class="damage-formula-control add-damage"
       on:click={() => addDamageFormula()}
       disabled={!$context.editable}
+      tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
     >
       <i class="fas fa-plus" />
     </button>
@@ -187,6 +189,7 @@
           disabled={!$context.editable}
           data-tidy-sheet-part={CONSTANTS.SHEET_PARTS
             .DAMAGE_PART_DELETE_COMMAND}
+          tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
         >
           <i class="fas fa-minus" />
         </button>

@@ -1,6 +1,7 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+    import { settingStore } from 'src/settings/settings';
   import { type Actor5e } from 'src/types/types';
   import type { ActorSheetContext } from 'src/types/types';
   import { getContext } from 'svelte';
@@ -81,6 +82,7 @@
           on:mousedown={(ev) => ev.stopImmediatePropagation()}
           on:click={(ev) => command.execute?.({ actor, context: $context })}
           title={command.tooltip}
+          tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
         >
           {#if command.iconClass}
             <i class={command.iconClass}></i>

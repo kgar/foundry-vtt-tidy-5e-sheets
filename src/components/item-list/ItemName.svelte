@@ -17,7 +17,7 @@
 <!-- TODO: Make this a button -->
 <span
   role="button"
-  tabindex="0"
+  tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
   on:click={(ev) => dispatcher('toggle', ev)}
   class="item-name truncate {cssClass}"
   class:has-children={hasChildren}

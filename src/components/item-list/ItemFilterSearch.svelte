@@ -1,5 +1,6 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+    import { settingStore } from 'src/settings/settings';
   import {
     type OnSearchFn,
     type LocationToSearchTextMap,
@@ -43,6 +44,7 @@
     title={localize('T5EK.SearchClear')}
     style:display={searchCriteria === '' ? 'none' : undefined}
     on:click|preventDefault|stopPropagation={() => clearSearch()}
+    tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
     ><i class="fas fa-times-circle" /></button
   >
 </li>
