@@ -341,6 +341,22 @@ export function createSettings() {
         },
       },
 
+      useAccessibleKeyboardSupport: {
+        options: {
+          name: 'T5EK.Settings.UseAccessibleKeyboardSupport.name',
+          hint: 'T5EK.Settings.UseAccessibleKeyboardSupport.hint',
+          scope: 'world',
+          config: true,
+          default: false,
+          type: Boolean,
+        },
+        get() {
+          return FoundryAdapter.getTidySetting<boolean>(
+            'useAccessibleKeyboardSupport'
+          );
+        },
+      },
+
       useDefaultSheetAttributeTabbing: {
         options: {
           name: 'T5EK.Settings.UseDefaultSheetAttributeTabbing.name',
@@ -351,7 +367,9 @@ export function createSettings() {
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getTidySetting<boolean>('useDefaultSheetAttributeTabbing');
+          return FoundryAdapter.getTidySetting<boolean>(
+            'useDefaultSheetAttributeTabbing'
+          );
         },
       },
 
@@ -365,7 +383,9 @@ export function createSettings() {
           type: Boolean,
         },
         get() {
-          return FoundryAdapter.getTidySetting<boolean>('useDefaultSheetHpTabbing');
+          return FoundryAdapter.getTidySetting<boolean>(
+            'useDefaultSheetHpTabbing'
+          );
         },
       },
 

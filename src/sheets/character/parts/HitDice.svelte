@@ -17,7 +17,7 @@
   class="portrait-hd"
   class:rounded={$context.useRoundedPortraitStyle}
   title="{localize('DND5E.HitDice')}: {hitDice}/{actorLevel}&#10;{localize(
-    'DND5E.HitDiceConfig'
+    'DND5E.HitDiceConfig',
   )}"
 >
   <button
@@ -26,7 +26,10 @@
     on:click={$context.editable &&
       FoundryAdapter.renderActorHitDiceConfig($context.actor)}
     disabled={!$context.editable}
-    tabindex={!$settingStore.useDefaultSheetHpTabbing ? 0 : -1}
+    tabindex={!$settingStore.useDefaultSheetHpTabbing &&
+    $settingStore.useAccessibleKeyboardSupport
+      ? 0
+      : -1}
   >
     {hitDice}
   </button>
