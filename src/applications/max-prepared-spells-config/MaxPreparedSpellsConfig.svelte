@@ -3,7 +3,6 @@
   import type { MaxPreparedSpellsConfigContext } from './MaxPreparedSpellsConfigFormApplication';
   import type { Writable } from 'svelte/store';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { settingStore } from 'src/settings/settings';
 
   const appId = getContext<string>('appId');
   const context =
