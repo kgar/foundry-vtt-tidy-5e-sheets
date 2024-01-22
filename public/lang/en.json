@@ -260,11 +260,11 @@
   },
   "T5EK.Settings.UseDefaultSheetAttributeTabbing": {
     "name": "Use default sheet attribute keyboard tabbing",
-    "hint": "The default 5e sheet allows keyboard tabbing from one attribute input to the next by hiding the controls around them from the tab order. Enabling this replicates that behaviour. This setting is ignored if \"Use Enhanced Keyboard Support\" is turned off."
+    "hint": "The default 5e sheet allows keyboard tabbing from one attribute input to the next by hiding the controls around them from the tab order. Enabling this replicates that behaviour. This setting is ignored if \"Use Accessible Keyboard Support\" is turned off."
   },
   "T5EK.Settings.UseDefaultSheetHpTabbing": {
     "name": "Use default sheet HP keyboard tabbing",
-    "hint": "The default 5e sheet allows keyboard tabbing from the current HP input to the current temp HP input. Enabling this replicates that behaviour. This setting is ignored if \"Use Enhanced Keyboard Support\" is turned off."
+    "hint": "The default 5e sheet allows keyboard tabbing from the current HP input to the current temp HP input. Enabling this replicates that behaviour. This setting is ignored if \"Use Accessible Keyboard Support\" is turned off."
   },
   "T5EK.Settings.ItemCardsFixKey": {
     "name": "Item Card Fix Key",
