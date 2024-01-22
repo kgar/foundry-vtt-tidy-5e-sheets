@@ -17,6 +17,7 @@ import {
   applyModuleSheetDataAttributeToWindow,
   applyThemeDataAttributeToWindow,
   applyTitleToWindow,
+  blurUntabbableButtonsOnClick,
   maintainCustomContentInputFocus,
 } from 'src/utils/applications';
 import { debug, error } from 'src/utils/logging';
@@ -416,6 +417,7 @@ export class Tidy5eNpcSheet
         super.activateListeners,
         this
       );
+      blurUntabbableButtonsOnClick(this.element);
       return;
     }
 
