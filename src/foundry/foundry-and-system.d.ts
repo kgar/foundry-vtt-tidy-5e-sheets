@@ -15,6 +15,7 @@ declare global {
   var ChatMessage: any;
   var CONFIG: any;
   var ContextMenu: any;
+  var DefaultSheetsConfig: any;
   var debounce: any;
   var Dialog: any;
   var dnd5e: any;
@@ -30,6 +31,7 @@ declare global {
   var isEmpty: any;
   var Items: any;
   var mergeObject: any;
+  var ModuleManagement: any;
   var NumericTerm: any;
   var renderTemplate: any;
   var Roll: any;
