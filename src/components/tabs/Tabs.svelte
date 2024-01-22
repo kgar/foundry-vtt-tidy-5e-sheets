@@ -1,7 +1,7 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-    import { settingStore } from 'src/settings/settings';
+  import { settingStore } from 'src/settings/settings';
   import type { Tab, OnTabSelectedFn } from 'src/types/types';
   import { createEventDispatcher, getContext, onMount } from 'svelte';
   import type { Readable } from 'svelte/store';

@@ -8,7 +8,7 @@
   import TabFooter from 'src/sheets/actor/TabFooter.svelte';
   import { MaxPreparedSpellsConfigFormApplication } from 'src/applications/max-prepared-spells-config/MaxPreparedSpellsConfigFormApplication';
   import { CONSTANTS } from 'src/constants';
-    import { settingStore } from 'src/settings/settings';
+  import { settingStore } from 'src/settings/settings';
 
   let context =
     getContext<Readable<CharacterSheetContext | NpcSheetContext>>('context');

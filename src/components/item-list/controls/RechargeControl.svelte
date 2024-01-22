@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { settingStore } from 'src/settings/settings';
+  import { settingStore } from 'src/settings/settings';
   import type { Item5e } from 'src/types/item';
   import type { ActorSheetContext } from 'src/types/types';
   import { getContext } from 'svelte';

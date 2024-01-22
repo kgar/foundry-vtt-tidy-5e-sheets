@@ -7,7 +7,7 @@
     ButtonMenuPosition,
   } from './button-menu-types';
   import { getPositionStyles } from './button-menu-position';
-    import { settingStore } from 'src/settings/settings';
+  import { settingStore } from 'src/settings/settings';
 
   type StatefulIconClass = {
     opened: string | null;

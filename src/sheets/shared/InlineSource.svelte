@@ -1,6 +1,6 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-    import { settingStore } from 'src/settings/settings';
+  import { settingStore } from 'src/settings/settings';
 
   export let document: any;
   export let keyPath: string;

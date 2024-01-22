@@ -1,7 +1,7 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { RegisteredItemSummaryCommand } from 'src/runtime/types';
-    import { settingStore } from 'src/settings/settings';
+  import { settingStore } from 'src/settings/settings';
   import type { Item5e } from 'src/types/item';
 
   export let command: RegisteredItemSummaryCommand;

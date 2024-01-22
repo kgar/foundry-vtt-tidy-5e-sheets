@@ -20,7 +20,7 @@
       .filter(
         (x: any) =>
           x.system.consumableType === 'ammo' &&
-          (!$settingStore.showEquippedAmmoOnly || x.system.equipped)
+          (!$settingStore.showEquippedAmmoOnly || x.system.equipped),
       )
       .map((x: any) => ({
         text: `${x.name} (${x.system.quantity})`,
@@ -38,8 +38,8 @@
           amount: !ammo
             ? null
             : !!item.system.consume?.amount
-            ? item.system.consume.amount
-            : 1,
+              ? item.system.consume.amount
+              : 1,
           target: !ammo ? '' : ammo.id,
           type: !ammo ? '' : ammo.system.consumableType,
         },

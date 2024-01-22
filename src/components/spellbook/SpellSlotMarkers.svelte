@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { settingStore } from 'src/settings/settings';
+  import { settingStore } from 'src/settings/settings';
   import type { CharacterSheetContext, NpcSheetContext } from 'src/types/types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';

@@ -1,7 +1,7 @@
 <script lang="ts">
   import Notice from 'src/components/notice/Notice.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-    import { settingStore } from 'src/settings/settings';
+  import { settingStore } from 'src/settings/settings';
   import type { CharacterSheetContext, NpcSheetContext } from 'src/types/types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';

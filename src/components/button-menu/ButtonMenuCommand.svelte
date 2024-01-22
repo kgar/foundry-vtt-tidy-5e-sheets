@@ -2,7 +2,7 @@
   import { createEventDispatcher, getContext } from 'svelte';
   import ButtonMenuItem from './ButtonMenuItem.svelte';
   import type { ButtonMenuContext } from './button-menu-types';
-    import { settingStore } from 'src/settings/settings';
+  import { settingStore } from 'src/settings/settings';
 
   export let iconClass: string = '';
   export let useIconColumn: boolean = true;

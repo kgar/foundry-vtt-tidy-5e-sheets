@@ -3,7 +3,7 @@
   import ItemCreateButton from '../item-list/ItemCreateButton.svelte';
   import { ActorItemRuntime } from 'src/runtime/ActorItemRuntime';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-    import { settingStore } from 'src/settings/settings';
+  import { settingStore } from 'src/settings/settings';
 
   export let section: any;
   export let actor: Actor5e;

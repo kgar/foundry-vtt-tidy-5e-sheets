@@ -1,6 +1,6 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-    import { settingStore } from 'src/settings/settings';
+  import { settingStore } from 'src/settings/settings';
   import { type ActorSheetContext } from 'src/types/types';
   import { coalesce } from 'src/utils/formatting';
   import { getContext } from 'svelte';

@@ -1,6 +1,6 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-    import { settingStore } from 'src/settings/settings';
+  import { settingStore } from 'src/settings/settings';
   import type { ItemLayoutMode } from 'src/types/types';
   import { createEventDispatcher } from 'svelte';
 
@@ -14,11 +14,11 @@
           iconClass: 'fas fa-th-list toggle-list',
         }
       : mode === 'list'
-      ? {
-          title: localize('T5EK.GridLayout'),
-          iconClass: 'fas fa-th-large toggle-grid',
-        }
-      : null;
+        ? {
+            title: localize('T5EK.GridLayout'),
+            iconClass: 'fas fa-th-large toggle-grid',
+          }
+        : null;
 
   const localize = FoundryAdapter.localize;
   const dispatcher = createEventDispatcher<{ toggle: void }>();
