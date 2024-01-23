@@ -24,6 +24,8 @@ declare global {
   var FilePicker: any;
   var FormApplication: any;
   var foundry: any;
+  var fromUuid: any;
+  var fromUuidSync: any;
   var game: any;
   var HandlebarsHelpers: any;
   var Hooks: any;

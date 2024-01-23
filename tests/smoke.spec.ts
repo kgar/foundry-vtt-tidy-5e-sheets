@@ -1,11 +1,23 @@
 import { test, expect, type Page } from '@playwright/test';
-import { delay } from 'src/utils/asynchrony';
+import type { TestData } from './test-types';
+import { applyFoundryTestConfig } from './setups/test-configs';
+import { initializeTestActors } from './setups/test-actors';
+import { ChatMessageHelpers } from './helpers/chat-message';
 
 let page: Page;
+let testData: TestData;
+
 test.beforeAll(async ({ browser }) => {
+  const context = await browser.newContext({
+    viewport: {
+      width: 1920,
+      height: 1080,
+    },
+  });
+
   test.setTimeout(1000 * 60 * 10);
 
-  page = await browser.newPage();
+  page = await context.newPage();
   await page.goto(process.env.BASE_URL ?? '');
 
   if (page.url().endsWith('join')) {
@@ -77,62 +89,54 @@ test.beforeAll(async ({ browser }) => {
   // Ensure Tidy is active
   await page.locator('[id="chat-message"]').waitFor({ state: 'visible' });
 
-  const inGameTourCloseAction = page.locator(
-    '.tour-center-step [data-action="exit"]'
-  );
-  if (await inGameTourCloseAction.isVisible()) {
-    await inGameTourCloseAction.click();
+  try {
+    const inGameTourCloseAction = page.locator(
+      '.tour-center-step [data-action="exit"]'
+    );
+    await inGameTourCloseAction.click({ timeout: 2500 });
+  } catch (e) {
+    // ignore, because it may not be here.
   }
 
-  const tidyIsActive = await isTidyActive(page);
-  if (!tidyIsActive) {
-    await page.evaluate(() => {
-      new ModuleManagement().render(true);
-    });
-    const kgarModuleCheckbox = page.locator(
-      '[id="module-management"] [name="tidy5e-sheet-kgar"]'
-    );
-    kgarModuleCheckbox.waitFor({ state: 'visible' });
-    await kgarModuleCheckbox.setChecked(true);
-    await page.click('[id="module-management"] [type="submit"]');
-    await page.click('[data-button="yes"]');
-    await delay(3000);
-  }
+  await applyFoundryTestConfig(page);
+  await page.reload();
 
   await page.locator('[id="chat-message"]').waitFor({ state: 'visible' });
-  await page.click('[aria-label="Clear Chat Log"]');
-  await page.click('[data-button="yes"]');
+  await ChatMessageHelpers.clearChatMessages(page);
 
-  // Set default sheets to Tidy
-  await page.evaluate(async () => {
-    await game.settings.set('core', 'sheetClasses', {
-      Actor: {
-        character: 'dnd5e.Tidy5eCharacterSheet',
-        npc: 'dnd5e.Tidy5eNpcSheet',
-        vehicle: 'dnd5e.Tidy5eVehicleSheet',
-      },
-      Item: {
-        weapon: 'dnd5e.Tidy5eKgarItemSheet',
-        equipment: 'dnd5e.Tidy5eKgarItemSheet',
-        consumable: 'dnd5e.Tidy5eKgarItemSheet',
-        tool: 'dnd5e.Tidy5eKgarItemSheet',
-        loot: 'dnd5e.Tidy5eKgarItemSheet',
-        race: 'dnd5e.Tidy5eKgarItemSheet',
-        background: 'dnd5e.Tidy5eKgarItemSheet',
-        class: 'dnd5e.Tidy5eKgarItemSheet',
-        subclass: 'dnd5e.Tidy5eKgarItemSheet',
-        spell: 'dnd5e.Tidy5eKgarItemSheet',
-        feat: 'dnd5e.Tidy5eKgarItemSheet',
-        backpack: 'dnd5e.Tidy5eKgarItemSheet',
-      },
-    });
-  });
+  const testActorData = await initializeTestActors(page);
+  testData = { ...testActorData };
 
-  // TODO: Clear and set up actor/item data
+  expect(await isTidyActive(page)).toBeTruthy();
 });
 
-test('tidy 5e sheets are active', async () => {
-  expect(await isTidyActive(page)).toBeTruthy();
+test.beforeEach(async () => {
+  await ChatMessageHelpers.clearChatMessages(page);
+});
+
+test('smoke test: roll strength check', async () => {
+  await page.evaluate((testData) => {
+    game.actors.get(testData.akraId).sheet.render(true);
+  }, testData);
+
+  await page
+    .locator('[data-ability="str"] [data-tidy-sheet-part="ability-roller"]')
+    .click();
+
+  await page.locator('[data-button="test"]').click();
+
+  const testRollId = crypto.randomUUID();
+  await page.fill('[name="bonus"]', `0[${testRollId}]`);
+  await page.locator('[data-button="advantage"]').click();
+
+  await page.locator('a[data-tab="chat"]').click();
+
+  const testRoll = page.locator(
+    `[id="chat-log"] [data-message-id]:has-text("${testRollId}")`
+  );
+
+  expect(await testRoll.count()).toBe(1);
+  expect(await testRoll.innerText()).toContain('Strength Ability Check');
 });
 
 async function isTidyActive(page: Page) {
