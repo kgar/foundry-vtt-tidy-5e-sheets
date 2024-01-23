@@ -1,8 +1,27 @@
 import { test, expect, type Page } from '@playwright/test';
+import { delay } from 'src/utils/asynchrony';
 
+let page: Page;
 test.beforeAll(async ({ browser }) => {
-  let page = await browser.newPage();
-  await page.goto('http://localhost:30001/');
+  test.setTimeout(1000 * 60 * 10);
+
+  page = await browser.newPage();
+  await page.goto(process.env.BASE_URL ?? '');
+
+  if (page.url().endsWith('join')) {
+    await page.locator('button[name="shutdown"]').waitFor({ state: 'visible' });
+
+    if (await page.isVisible('[name="adminPassword"]')) {
+      await page.fill(
+        '[name="adminPassword"]',
+        process.env.ADMIN_PASSWORD ?? ''
+      );
+    }
+
+    await page.click('button[name="shutdown"]');
+
+    await page.goto(`${process.env.BASE_URL}/auth` ?? '');
+  }
 
   await page.fill('[name="adminPassword"]', process.env.ADMIN_PASSWORD ?? '');
   await page.click('button[value="adminAuth"]');
@@ -34,36 +53,53 @@ test.beforeAll(async ({ browser }) => {
   }
 
   // Create test world
-  if (page.url().endsWith('setup')) {
-    await page.getByText('Create World').click();
-    await page.fill('form [name="title"]', 'Automated Testing');
-    await page.selectOption('form [name="system"]', { value: 'dnd5e' });
-    await page.getByText('Create World').click();
-    await page.waitForSelector('[data-package-id="automated-testing"]');
-    await page.click(
-      '[data-package-id="automated-testing"] [data-action="worldLaunch"]'
-    );
-  }
+  await page.getByText('Create World').click();
+  await page.fill('form [name="title"]', 'Automated Testing');
+  await page.selectOption('form [name="system"]', { value: 'dnd5e' });
+  await page.click('#world-config [type="submit"]');
+  await page
+    .locator('[data-package-id="automated-testing"]')
+    .waitFor({ state: 'visible' });
+  await page.hover('[data-package-id="automated-testing"]');
+  await page.click(
+    '[data-package-id="automated-testing"] [data-action="worldLaunch"]'
+  );
 
   // Log in as gamemaster
-  await page.selectOption('[name="userid"]', { label: 'Gamemaster' });
-  await page.click('[type="submit"]');
+  await page.locator('[name="userid"]').waitFor({ state: 'visible' });
+  const userIdSelect = page.locator('[name="userid"]');
+  await userIdSelect.selectOption({ label: 'Gamemaster' });
+  // Trigger the needed change detection in Foundry so we can log in.
+  await userIdSelect.click({ delay: 100 });
+  await userIdSelect.click({ delay: 100 });
+  await page.locator('[name="join"]').click({ delay: 150 });
 
   // Ensure Tidy is active
+  await page.locator('[id="chat-message"]').waitFor({ state: 'visible' });
+
+  const inGameTourCloseAction = page.locator(
+    '.tour-center-step [data-action="exit"]'
+  );
+  if (await inGameTourCloseAction.isVisible()) {
+    await inGameTourCloseAction.click();
+  }
+
   const tidyIsActive = await isTidyActive(page);
   if (!tidyIsActive) {
     await page.evaluate(() => {
       new ModuleManagement().render(true);
     });
-    await page.setChecked(
-      '[id="module-list"] [name="tidy5e-sheet-kgar"]',
-      true
+    const kgarModuleCheckbox = page.locator(
+      '[id="module-management"] [name="tidy5e-sheet-kgar"]'
     );
-    await page.click('[id="module-list"] [type="submit"]');
+    kgarModuleCheckbox.waitFor({ state: 'visible' });
+    await kgarModuleCheckbox.setChecked(true);
+    await page.click('[id="module-management"] [type="submit"]');
     await page.click('[data-button="yes"]');
+    await delay(3000);
   }
 
-  await page.waitForSelector('.vtt.game.system-dnd5e');
+  await page.locator('[id="chat-message"]').waitFor({ state: 'visible' });
   await page.click('[aria-label="Clear Chat Log"]');
   await page.click('[data-button="yes"]');
 
@@ -95,7 +131,7 @@ test.beforeAll(async ({ browser }) => {
   // TODO: Clear and set up actor/item data
 });
 
-test('tidy 5e sheets are active', async ({ page }) => {
+test('tidy 5e sheets are active', async () => {
   expect(await isTidyActive(page)).toBeTruthy();
 });
 
