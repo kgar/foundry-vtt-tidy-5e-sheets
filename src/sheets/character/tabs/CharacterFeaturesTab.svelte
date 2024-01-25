@@ -129,7 +129,11 @@
                   {item}
                 >
                   {#if item.type === 'subclass'}&rdsh;{/if}
-                  <span data-tidy-item-name={item.name}>{item.name}</span>
+                  <span
+                    data-tidy-item-name={item.name}
+                    data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_NAME}
+                    >{item.name}</span
+                  >
                 </ItemName>
               </ItemTableCell>
 
