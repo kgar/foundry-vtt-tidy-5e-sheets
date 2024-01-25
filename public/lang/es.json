@@ -1,555 +1,643 @@
 {
-  "T5EK.T5EKSheet": "Tidy 5e Character Sheet",
-  "T5EK.T5EKNPC": "Tidy 5e NPC Sheet",
-  "T5EK.T5EKItemSheet": "Tidy 5e Item Sheet",
-  "T5EK.T5EKVehicle": "Tidy 5e Vechicle Sheet",
-  "T5EK.PlayerName": "Nombre del jugador",
-  "T5EK.Gender": "Gender",
-  "T5EK.Age": "Edad",
-  "T5EK.Weight": "Peso",
-  "T5EK.Height": "Altura",
-  "T5EK.Eyes": "Ojos",
-  "T5EK.Skin": "Piel",
-  "T5EK.Hair": "Pelo",
-  "T5EK.EditActorImage": "click izquierdo: editar imagen",
-  "T5EK.ShowActorImage": "click derecho: mostrar ilustración del pj",
-  "T5EK.ShowPortraitArt": "mostrar retrato",
-  "T5EK.ShowTokenArt": "mostrar token",
-  "T5EK.ShowItemImage": "right click: show item art",
-  "T5EK.ShowItemArt": "show image",
-
-  "T5EK.StandardExhaustion0": "Sin efectos perjudiciales",
-  "T5EK.StandardExhaustion1": "Desventaja en pruebas de característica",
-  "T5EK.StandardExhaustion2": "Velocidad reducida a la mitad",
-  "T5EK.StandardExhaustion3": "Desventaja en tiradas de ataque y de salvación",
-  "T5EK.StandardExhaustion4": "Puntos de golpe máximos reducidos a la mitad",
-  "T5EK.StandardExhaustion5": "Velocidad reducida a 0",
-  "T5EK.StandardExhaustion6": "Muerte",
-
-  "T5EK.OneDnDExhaustion0": null,
-  "T5EK.OneDnDExhaustion1": null,
-  "T5EK.OneDnDExhaustion2": null,
-  "T5EK.OneDnDExhaustion3": null,
-  "T5EK.OneDnDExhaustion4": null,
-  "T5EK.OneDnDExhaustion5": null,
-  "T5EK.OneDnDExhaustion6": null,
-  "T5EK.OneDnDExhaustion7": null,
-  "T5EK.OneDnDExhaustion8": null,
-  "T5EK.OneDnDExhaustion9": null,
-  "T5EK.OneDnDExhaustion10": null,
-  "T5EK.OneDnDExhaustion11": null,
-
-  "T5EK.StandardVehicleExhaustion0": null,
-  "T5EK.StandardVehicleExhaustion1": null,
-  "T5EK.StandardVehicleExhaustion2": null,
-  "T5EK.StandardVehicleExhaustion3": null,
-  "T5EK.StandardVehicleExhaustion4": null,
-  "T5EK.StandardVehicleExhaustion5": null,
-  "T5EK.StandardVehicleExhaustion6": null,
-
-  "T5EK.AbbrInitiative": "Ini",
-
-  "T5EK.RestHint": "Tomar un descanso",
-  "T5EK.ShortRest": "Descanso corto",
-  "T5EK.LongRest": "Descanso largo",
-  "T5EK.HitDiceRollAverage": "Right Click: Average",
-
-  "T5EK.JournalTabName": "Diario",
-
-  "T5EK.RestoreOnRest": "Recuperar tras descanso",
-
-  "T5EK.JournalPersonsOfInterest": "Personas de interés",
-  "T5EK.JournalLocationsOfInterest": "Lugares de interés",
-  "T5EK.JournalQuests": "Misiones",
-  "T5EK.JournalMisc": "Miscelánea",
-  "T5EK.JournalEntries": "Entradas del diario",
-  "T5EK.TogglePersonalityInfo": "Alternar información de personalidad",
-
-  "T5EK.SheetEdit.Enable.Hint": null,
-  "T5EK.SheetEdit.Disable.Hint": null,
-  "T5EK.SheetEdit.Description": "Alternar la visibilidad de los botones añadir/eliminar de las secciones vacías",
-
-  "T5EK.SheetLock.Unlock.Hint": null,
-  "T5EK.SheetLock.Lock.Hint": null,
-  "T5EK.SheetLock.Description": null,
-
-  "T5EK.ContextMenuActionEquip": "Equipar Objeto",
-  "T5EK.ContextMenuActionUnequip": "Desequipar Objeto",
-  "T5EK.ContextMenuActionAttune": "Sintonizarse al Objeto",
-  "T5EK.ContextMenuActionUnattune": "Romper Sintonización",
-  "T5EK.ContextMenuActionPrepare": "Preparar Conjuro",
-  "T5EK.ContextMenuActionUnprepare": "Eliminar Preparación",
-  "T5EK.ContextMenuActionEdit": null,
-  "T5EK.ContextMenuActionDelete": null,
-
-  "T5EK.EmptySection": "Esta sección está vacía. Desbloquea la hoja para editarla.",
-  "T5EK.GMOnlyEdit": "Solo tu DJ puede editar esta sección.",
-
-  "T5EK.AttunementWarning": "Aviso de sintonización: ¡No puedes sintonizar más de {número} objetos!",
-  "T5EK.AttunementItems": "Objetos sintonizados",
-  "T5EK.AttunementMax": "Máximo de sintonización",
-
-  "T5EK.GridLayout": "Diseño de cuadrícula",
-  "T5EK.ListLayout": "Diseño de lista",
-  "T5EK.LayoutNotSupported": null,
-
-  "T5EK.Encumbrance": "Estorbo",
-
-  "T5EK.AddFavorite": "Añadir Favorito",
-  "T5EK.Favorite": "Favorito",
-  "T5EK.RemoveFavorite": "Eliminar Favorito",
-
-  "T5EK.ShowNotProficientSkills": null,
-  "T5EK.HideNotProficientSkills": null,
-  "T5EK.ShowEmptyTraits": null,
-  "T5EK.HideEmptyTraits": null,
-
-  "T5EK.Abilities": "Características",
-
-  "T5EK.Environment": "Entorno",
-
-  "T5EK.Search": null,
-  "T5EK.SearchClear": null,
-  "T5EK.SearchHint": "Comienza a escribir lo que estás buscando.",
-
-  "T5EK.ItemCardsKeyHint": "hold Key to interact with card.",
-  "T5EK.ItemCardsMouseHint": "middle mouse to view/edit item.",
-
-  "T5EK.AbbrMod": "Mod",
-  "T5EK.AbbrSavingThrow": "Salvación",
-  "T5EK.SpellAttackMod": "Mod de ataque",
-  "T5EK.PreparedSpells": "Conjuros preparados",
-  "T5EK.PreparedSpellsMax": "Máximo de conjuros preparados",
-
-  "T5EK.TokenLinked": "Token vinculado a actor",
-  "T5EK.TokenUnlinked": "Token no vinculado a actor",
-
-  "T5EK.ItemDetailsHeadline": "Texto de reglas/ambientación",
-
-  "T5EK.SpellClass": null,
-
-  "T5EK.Class.Artificer": null,
-  "T5EK.Class.Barbarian": null,
-  "T5EK.Class.Bard": null,
-  "T5EK.Class.Cleric": null,
-  "T5EK.Class.Custom": null,
-  "T5EK.Class.Druid": null,
-  "T5EK.Class.Fighter": null,
-  "T5EK.Class.Monk": null,
-  "T5EK.Class.Paladin": null,
-  "T5EK.Class.Ranger": null,
-  "T5EK.Class.Rogue": null,
-  "T5EK.Class.Sorcerer": null,
-  "T5EK.Class.Warlock": null,
-  "T5EK.Class.Wizard": null,
-
-  "T5EK.OriginSummaryConfig": null,
-
-  "T5EK.Settings.MulticlassSpellbookFilterLabel": null,
-
-  "T5EK.Settings.SheetMenu": {
-    "name": null,
-    "hint": null,
-    "label": "Opciones de la hoja",
-    "title": "Opciones de la hoja de T5EK"
-  },
-  "T5EK.Settings.TabPlayers": {
-    "tabLabel": "Jugadores",
-    "header": "Hojas de los Personajes jugadores"
-  },
-  "T5EK.Settings.TabNPCs": {
-    "tabLabel": null,
-    "header": null
-  },
-  "T5EK.Settings.TabVehicles": {
-    "tabLabel": null,
-    "header": null
-  },
-  "T5EK.Settings.TabGM": {
-    "tabLabel": "Opciones del GM",
-    "header": "Opciones de la hoha de GM"
-  },
-  "T5EK.Settings.TabLocks": {
-    "tabLabel": null,
-    "header": null,
-    "hint": null,
-    "hint2": null,
-    "labelGeneralLocks": null,
-    "labelInventoryLocks": null,
-    "labelFeaturesLocks": null
-  },
-  "T5EK.Settings.TabInfo": {
-    "tabLabel": "Info",
-    "header": "Info"
-  },
-  "T5EK.Settings.ItemCardsForAllItems": {
-    "name": "Mostrar las tarjetas de informacíon del objeto de los objetos en todos los disenõs.",
-    "hint": "Desactívalo si quieres que las tarjetas de información del objeto solo salgan en el diseño de cuadrícula."
-  },
-  "T5EK.Settings.ItemCardsForNPCs": {
-    "name": "Mostrar las tarjetas de información del objeto en PNJs/vehículos.",
-    "hint": "Desactívalo si no quieres que las tarjetas de información del objeto salgan en las fichas de PNJs/vehículos."
-  },
-  "T5EK.Settings.ItemCardsAreFloating": {
-    "name": "Las tarjetas de información del objeto flotan junto al cursor.",
-    "hint": "Actívalo para separar las tarjetas de información del objeto de la ficha y hacer que floten al lado del cursor. Es mejor utilizarlo con retardo. Útil cuando la ficha está en una nueva pestaña."
-  },
-  "T5EK.Settings.ItemCardsDelay": {
-    "name": "Retardo en mostrar las tarjetas de información del objeto",
-    "hint": "La Tarjeta de Información se mostrará al mantener el ratón sobre un objeto durante el valor en milisegundos (0 = no hay retardo, 300 es el valor por defecto)"
-  },
-  "T5EK.Settings.ItemCardsFixKey": {
-    "name": "Tecla a mantener para la interacción con la Tarjeta de Información.",
-    "hint": "Introduce una tecla (p. ej: x) para interactuar con la tarjeta de información del objeto. Puede tratarse de cualquier tecla excepto las teclas de función (ctrl, alt, etc.)"
-  },
-  "T5EK.Settings.DefaultTheme": {
-    "name": null,
-    "hint": null
-  },
-  "T5EK.Settings.SheetTheme": {
-    "name": "T5EK color del tema",
-    "hint": "Utiliza el tema por defecto de color claro u oscuro de T5EK.",
-    "default": null,
-    "light": null,
-    "dark": null
-  },
-
-  "T5EK.Settings.UseClassicControls": {
-    "name": "Utilizar los controles clásicos de los objetos en el diseño de lista",
-    "hint": "Muestra siempre los botones de los objetos y desactiva el menú del botón derecho. Sólo se aplica para el inventario de objetos/conjuros del PJ en el listado."
-  },
-  "T5EK.Settings.ShowIconsNextToTheItemName": {
-    "name": null,
-    "hint": null
-  },
-  "T5EK.Settings.ShowTraitLabels": {
-    "name": "Mostrar etiquetas de los rasgos",
-    "hint": "Por defecto sólo se muestran los iconos de los rasgos. Actívalo para mostrar también las etiquetas."
-  },
-  "T5EK.Settings.ShowPlayerName": {
-    "name": "Mostrar nombre del Jugador.",
-    "hint": "Permite mostrar un campo para el nombre del jugador debajo del nombre del personaje."
-  },
-  "T5EK.Settings.ShowClassList": {
-    "name": null,
-    "hint": null
-  },
-  "T5EK.Settings.InspirationAnimation": {
-    "name": "Indicador de inspiración sin animación",
-    "hint": "Actívalo para quitar la animación de brillo del Indicador de inspiración."
-  },
-  "T5EK.Settings.HideIfZero": {
-    "name": "Ocultar el medidor de cansancio e inspiración con 0",
-    "hint": "Actívalo para ocultar el medidor de cansancio e inspiración si se encuentra a 0. Se mostrará al pasar el ratón."
-  },
-  "T5EK.Settings.ShowInspirationOnHover": {
-    "name": "Mostrar el indicador de inspiración sólo al pasar por encima",
-    "hint": "Actívalo para mostrar el indicador de inspiración sólo al pasar el ratón por encima del retrato."
-  },
-  "T5EK.Settings.ShowExhaustionOnHover": {
-    "name": "Mostrar el medidor de cansancio sólo al pasar por encima",
-    "hint": "Actívalo para mostrar el medidor de cansancio al pasar el ratón por encima del retrato."
-  },
-  "T5EK.Settings.UseHpBar": {
-    "name": null,
-    "hint": null
-  },
-  "T5EK.Settings.UseHpOverlay": {
-    "name": null,
-    "hint": null
-  },
-  "T5EK.Settings.ToggleEmptyCharacterTraits": {
-    "name": "Alternar rasgos de personaje vacíos",
-    "hint": "Por defecto los rasgos vacíos siempre están visibles. Actívalo para añadir un botón de activación."
-  },
-  "T5EK.Settings.MoveTraitsBelowResources": {
-    "name": "Mover los rasgos debajo de los recursos",
-    "hint": "Permite mover los rasgos de la parte izquierda debajo de los recursos."
-  },
-  "T5EK.Settings.ShowEquippedAmmoOnly": {
-    "name": null,
-    "hint": null
-  },
-  "T5EK.Settings.AlwaysShowTraits": {
-    "name": "Mostrar siempre los rasgos",
-    "hint": "Por defecto, los rasgos vacíos se ocultan mediante un botón de activación. Actívalo para no ocultarlos nunca."
-  },
-  "T5EK.Settings.AlwaysShowSkills": {
-    "name": "Mostrar siempre las habilidades",
-    "hint": "Por defecto, las habilidades no competentes se ocultan mediante un botón de activación. Actívalo para no ocultarlo nunca."
-  },
-  "T5EK.Settings.ShowNPCSpellbookTab": {
-    "name": null,
-    "hint": null
-  },
-  "T5EK.Settings.ShowActiveEffectsMarker": {
-    "name": "Mostrar un marcador de Efectos Activos en los objetos.",
-    "hint": "Actívalo si quieres ver si los objetos tienen efectos activos en ellos (solo en diseño de lista)."
-  },
-  "T5EK.Settings.UseContextMenu": {
-    "name": null,
-    "hint": null
-  },
-  "T5EK.Settings.ShowExpandedLimitedView": {
-    "name": "Ampliar la vista limitada para las hojas de personaje",
-    "hint": "Muestra toda la hoja de personaje (menos el diario) a los jugadores con permiso limitado."
-  },
-  "T5EK.Settings.UseCircularPortraitStyle": {
-    "name": "Estilo de retrato redondo.",
-    "hint": "Selecciona activar los retratos/iconos redondos para los actores.",
-    "all": "Todos los actores",
-    "pc": "PJs",
-    "npc": "PNJs/Vehículos",
-    "none": "ninguno",
-    "default": "ninguno"
-  },
-  "T5EK.Settings.UseTotalSheetLock": {
-    "name": "Bloquar los campos sensibles.",
-    "hint": "Actívalo para evitar cambiar accidentalmente valores sensibles, en su mayoría estáticos."
-  },
-  "T5EK.Settings.LimitEffectsManagementToGM": {
-    "name": "Sólo el DJ puede editar los efectos activos.",
-    "hint": "Actívalo para impedir que los jugadores editen los efectos activos en sus hojas. Seguirán viendo los efectos aplicados."
-  },
-  "T5EK.Settings.AlwaysShowItemQuantity": {
-    "name": "Mostrar siempre la cantidad de objetos.",
-    "hint": "Actívalo para no ocultar nunca la cantidad de objetos."
-  },
-  "T5EK.Settings.UseInspiration": {
-    "name": null,
-    "hint": null
-  },
-  "T5EK.Settings.UseVehicleMotion": {
-    "name": null,
-    "hint": null
-  },
-  "T5EK.Settings.UseExhaustion": {
-    "name": null,
-    "hint": null
-  },
-  "T5EK.Settings.UseNPCRest": {
-    "name": "Descanso para los PNJs.",
-    "hint": "Actívalo para mostrar los iconos/botones de descanso en las hojas de los PNJs."
-  },
-  "T5EK.Settings.ShowNPCRestInChat": {
-    "name": null,
-    "hint": null
-  },
-  "T5EK.Settings.ShowNPCActorLinkMarker": {
-    "name": "Indicar los PNJs vinculados/desvinculados.",
-    "hint": "Añade un borde coloreado y un icono a las hojas de los PNJs vinculados/desvinculados.",
-    "default": "Sin marcador de vínculo (por defecto)",
-    "unlinked": "Resaltar los tokens desvinculados",
-    "linked": "Resaltar los tokens vinculados",
-    "both": "Resaltar los tokens vinculados y no vinculados"
-  },
-  "T5EK.Settings.InitialSheetTab": {
-    "name": null,
-    "hint": null
-  },
-  "T5EK.Settings.HideDeathSavesFromPlayers": {
-    "name": null,
-    "hint": null
-  },
-  "T5EK.Settings.UseSpellSlotMarker": {
-    "name": null,
-    "hint": null
-  },
-  "T5EK.Settings.UseCharacterEncumbranceBar": {
-    "name": null,
-    "hint": null
-  },
-  "T5EK.Settings.UseNPCEncumbranceBar": {
-    "name": null,
-    "hint": null
-  },
-  "T5EK.Settings.UseVehicleEncumbranceBar": {
-    "name": null,
-    "hint": null
-  },
-  "T5EK.Settings.NPCSheetWidth": {
-    "name": null,
-    "hint": null
-  },
-  "T5EK.Settings.PlayerSheetWidth": {
-    "name": null,
-    "hint": null
-  },
-  "T5EK.Settings.VehicleSheetWidth": {
-    "name": null,
-    "hint": null
-  },
-  "T5EK.Settings.UseMulticlassSpellbookFilter": {
-    "name": null,
-    "hint": null
-  },
-  "T5EK.Settings.UseSpellClassIcons": {
-    "name": null,
-    "hint": null
-  },
-  "T5EK.Settings.SpellClassFilterAdditionalClasses": {
-    "name": null,
-    "hint": null
-  },
-  "T5EK.Settings.AllowCantripsToBePrepared": {
-    "name": null,
-    "hint": null
-  },
-  "T5EK.Settings.LockMoneyChanges": {
-    "name": null,
-    "hint": null
-  },
-  "T5EK.Settings.LockExpChanges": {
-    "name": null,
-    "hint": null
-  },
-  "T5EK.Settings.LockHpMaxChanges": {
-    "name": null,
-    "hint": null
-  },
-  "T5EK.Settings.LockLevelSelector": {
-    "name": null,
-    "hint": null
-  },
-  "T5EK.Settings.LockConfigureSheet": {
-    "name": null,
-    "hint": null
-  },
-  "T5EK.Settings.LockItemQuantity": {
-    "name": null,
-    "hint": null
-  },
-  "T5EK.Settings.ColorPickerEnabled": {
-    "name": null,
-    "hint": null
-  },
-  "T5EK.Settings.ColorPickerPrimaryAccent": {
-    "name": null
-  },
-  "T5EK.Settings.ColorPickerEquipped": {
-    "name": null
-  },
-  "T5EK.Settings.ColorPickerHpBar": {
-    "name": null
-  },
-  "T5EK.Settings.ColorPickerEquippedOutline": {
-    "name": null
-  },
-  "T5EK.Settings.ColorPickerEquippedAccent": {
-    "name": null
-  },
-  "T5EK.Settings.ColorPickerPrepared": {
-    "name": null
-  },
-  "T5EK.Settings.ColorPickerPreparedOutline": {
-    "name": null
-  },
-  "T5EK.Settings.ColorPickerPreparedAccent": {
-    "name": null
-  },
-  "T5EK.Settings.ColorPickerPact": {
-    "name": null
-  },
-  "T5EK.Settings.ColorPickerPactOutline": {
-    "name": null
-  },
-  "T5EK.Settings.ColorPickerPactAccent": {
-    "name": null
-  },
-  "T5EK.Settings.ColorPickerAtWill": {
-    "name": null
-  },
-  "T5EK.Settings.ColorPickerAtWillOutline": {
-    "name": null
-  },
-  "T5EK.Settings.ColorPickerAtWillAccent": {
-    "name": null
-  },
-  "T5EK.Settings.ColorPickerInnate": {
-    "name": null
-  },
-  "T5EK.Settings.ColorPickerInnateOutline": {
-    "name": null
-  },
-  "T5EK.Settings.ColorPickerInnateAccent": {
-    "name": null
-  },
-  "T5EK.Settings.ColorPickerAlwaysPrepared": {
-    "name": null
-  },
-  "T5EK.Settings.ColorPickerAlwaysPreparedOutline": {
-    "name": null
-  },
-  "T5EK.Settings.ColorPickerAlwaysPreparedAccent": {
-    "name": null
-  },
-  "T5EK.Settings.AllowHpMaxOverride": {
-    "name": null,
-    "hint": null
-  },
-  "T5EK.Settings.Reset": {
-    "name": null,
-    "hint": null,
-    "dialogs": {
-      "title": null,
-      "content": null,
-      "confirm": null,
-      "cancel": null
-    }
-  },
-  "T5EK.Settings.Debug": {
-    "name": null,
-    "hint": null
-  },
-  "T5EK.Settings.SortFavoriteItemsAlphabetically": {
-    "name": null,
-    "hint": null
-  },
-  "T5EK.Settings.PermanentlyUnlockCharacterSheetForGM": {
-    "name": null,
-    "hint": null,
-    "title": null
-  },
-  "T5EK.Settings.PermanentlyUnlockNPCSheetForGM": {
-    "name": null,
-    "hint": null,
-    "title": null
-  },
-  "T5EK.Settings.PermanentlyUnlockVehicleSheetForGM": {
-    "name": null,
-    "hint": null,
-    "title": null
-  },
-  "T5EK.ThemeSettings": {
-    "SheetMenu": {
-      "name": null,
-      "buttonLabel": null,
-      "hint": null
+    "T5EK.T5EKSheet": "Tidy 5e Character Sheet",
+    "T5EK.T5EKNPC": "Tidy 5e NPC Sheet",
+    "T5EK.T5EKItemSheet": "Tidy 5e Item Sheet",
+    "T5EK.T5EKVehicle": "Tidy 5e Vechicle Sheet",
+    "T5EK.PlayerName": "Nombre del jugador",
+    "T5EK.Gender": "Gender",
+    "T5EK.Age": "Edad",
+    "T5EK.Weight": "Peso",
+    "T5EK.Height": "Altura",
+    "T5EK.Eyes": "Ojos",
+    "T5EK.Skin": "Piel",
+    "T5EK.Hair": "Pelo",
+    "T5EK.EditActorImage": "click izquierdo: editar imagen",
+    "T5EK.ShowActorImage": "click derecho: mostrar ilustración del pj",
+    "T5EK.ShowPortraitArt": "mostrar retrato",
+    "T5EK.ShowTokenArt": "mostrar token",
+    "T5EK.ShowItemImage": "right click: show item art",
+    "T5EK.ShowItemArt": "show image",
+    "T5EK.StandardExhaustion0": "Sin efectos perjudiciales",
+    "T5EK.StandardExhaustion1": "Desventaja en pruebas de característica",
+    "T5EK.StandardExhaustion2": "Velocidad reducida a la mitad",
+    "T5EK.StandardExhaustion3": "Desventaja en tiradas de ataque y de salvación",
+    "T5EK.StandardExhaustion4": "Puntos de golpe máximos reducidos a la mitad",
+    "T5EK.StandardExhaustion5": "Velocidad reducida a 0",
+    "T5EK.StandardExhaustion6": "Muerte",
+    "T5EK.OneDnDExhaustion0": "Sin efectos negativos",
+    "T5EK.OneDnDExhaustion1": "-1 a todas las pruebas de D20 y CD de salvación de hechizos",
+    "T5EK.OneDnDExhaustion2": "-2 a todas las pruebas de D20 y CD de salvación de hechizos",
+    "T5EK.OneDnDExhaustion3": "-3 a todas las pruebas de D20 y CD de salvación de hechizos",
+    "T5EK.OneDnDExhaustion4": "-4 a todas las pruebas de D20 y CD de salvación de hechizos",
+    "T5EK.OneDnDExhaustion5": "-5 a todas las pruebas de D20 y CD de salvación de hechizos",
+    "T5EK.OneDnDExhaustion6": "-6 a todas las pruebas de D20 y CD de salvación de hechizos",
+    "T5EK.OneDnDExhaustion7": "-7 a todas las pruebas de D20 y CD de salvación de hechizos",
+    "T5EK.OneDnDExhaustion8": "-8 a todas las pruebas de D20 y CD de salvación de hechizos",
+    "T5EK.OneDnDExhaustion9": "-9 a todas las pruebas de D20 y CD de salvación de hechizos",
+    "T5EK.OneDnDExhaustion10": "-10 a todas las pruebas de D20 y CD de salvación de hechizos",
+    "T5EK.OneDnDExhaustion11": "Muerte",
+    "T5EK.StandardVehicleExhaustion0": "Sin efectos negativos",
+    "T5EK.StandardVehicleExhaustion1": "Desventaja en pruebas de habilidad",
+    "T5EK.StandardVehicleExhaustion2": "Velocidad reducida a la mitad",
+    "T5EK.StandardVehicleExhaustion3": "Desventaja en las tiradas de ataque y salvación",
+    "T5EK.StandardVehicleExhaustion4": "Puntos de salud máximos reducidos a la mitad",
+    "T5EK.StandardVehicleExhaustion5": "Velocidad reducida a 0",
+    "T5EK.StandardVehicleExhaustion6": "Los puntos de salud caen a 0 y el vehículo se avería",
+    "T5EK.AbbrInitiative": "Ini",
+    "T5EK.RestHint": "Tomar un descanso",
+    "T5EK.ShortRest": "Descanso corto",
+    "T5EK.LongRest": "Descanso largo",
+    "T5EK.HitDiceRollAverage": "Right Click: Average",
+    "T5EK.JournalTabName": "Diario",
+    "T5EK.RestoreOnRest": "Recuperar tras descanso",
+    "T5EK.JournalPersonsOfInterest": "Personas de interés",
+    "T5EK.JournalLocationsOfInterest": "Lugares de interés",
+    "T5EK.JournalQuests": "Misiones",
+    "T5EK.JournalMisc": "Miscelánea",
+    "T5EK.JournalEntries": "Entradas del diario",
+    "T5EK.TogglePersonalityInfo": "Alternar información de personalidad",
+    "T5EK.SheetEdit.Enable.Hint": "Habilitar edición - {description}",
+    "T5EK.SheetEdit.Disable.Hint": "Deshabilitar edición - {description}",
+    "T5EK.SheetEdit.Description": "Alternar la visibilidad de los botones añadir/eliminar de las secciones vacías",
+    "T5EK.SheetLock.Unlock.Hint": "Desbloquear - {desription}",
+    "T5EK.SheetLock.Lock.Hint": "Bloquear - {description}",
+    "T5EK.SheetLock.Description": "Alterna el bloqueo para campos sensibles que no deberían cambiar con frecuencia",
+    "T5EK.ContextMenuActionEquip": "Equipar Objeto",
+    "T5EK.ContextMenuActionUnequip": "Desequipar Objeto",
+    "T5EK.ContextMenuActionAttune": "Sintonizarse al Objeto",
+    "T5EK.ContextMenuActionUnattune": "Romper Sintonización",
+    "T5EK.ContextMenuActionPrepare": "Preparar Conjuro",
+    "T5EK.ContextMenuActionUnprepare": "Eliminar Preparación",
+    "T5EK.ContextMenuActionEdit": "Editar",
+    "T5EK.ContextMenuActionDelete": "Eliminar",
+    "T5EK.EmptySection": "Esta sección está vacía. Desbloquea la hoja para editarla.",
+    "T5EK.GMOnlyEdit": "Solo tu DJ puede editar esta sección.",
+    "T5EK.AttunementWarning": "Aviso de sintonización: ¡No puedes sintonizar más de {número} objetos!",
+    "T5EK.AttunementItems": "Objetos sintonizados",
+    "T5EK.AttunementMax": "Máximo de sintonización",
+    "T5EK.GridLayout": "Diseño de cuadrícula",
+    "T5EK.ListLayout": "Diseño de lista",
+    "T5EK.LayoutNotSupported": null,
+    "T5EK.Encumbrance": "Estorbo",
+    "T5EK.AddFavorite": "Añadir Favorito",
+    "T5EK.Favorite": "Favorito",
+    "T5EK.RemoveFavorite": "Eliminar Favorito",
+    "T5EK.ShowNotProficientSkills": "mostrar no competente",
+    "T5EK.HideNotProficientSkills": "ocultar no competente",
+    "T5EK.ShowEmptyTraits": "mostrar/editar rasgos vacíos",
+    "T5EK.HideEmptyTraits": null,
+    "T5EK.Abilities": "Características",
+    "T5EK.Environment": "Entorno",
+    "T5EK.Search": "buscar",
+    "T5EK.SearchClear": "limpiar búsqueda",
+    "T5EK.SearchHint": "Comienza a escribir lo que estás buscando.",
+    "T5EK.ItemCardsKeyHint": "hold Key to interact with card.",
+    "T5EK.ItemCardsMouseHint": "middle mouse to view/edit item.",
+    "T5EK.AbbrMod": "Mod",
+    "T5EK.AbbrSavingThrow": "Salvación",
+    "T5EK.SpellAttackMod": "Modificador de ataque con hechizo",
+    "T5EK.PreparedSpells": "Conjuros preparados",
+    "T5EK.PreparedSpellsMax": "Máximo de conjuros preparados",
+    "T5EK.TokenLinked": "Token vinculado a actor",
+    "T5EK.TokenUnlinked": "Token no vinculado a actor",
+    "T5EK.ItemDetailsHeadline": "Texto de reglas/ambientación",
+    "T5EK.SpellClass": "Clase de hechizo",
+    "T5EK.Class.Artificer": "Artífice",
+    "T5EK.Class.Barbarian": "Bárbaro",
+    "T5EK.Class.Bard": "Bardo",
+    "T5EK.Class.Cleric": "Clérigo",
+    "T5EK.Class.Custom": "Personalizado",
+    "T5EK.Class.Druid": "Druída",
+    "T5EK.Class.Fighter": "Luchador",
+    "T5EK.Class.Monk": "Monje",
+    "T5EK.Class.Paladin": "Paladín",
+    "T5EK.Class.Ranger": "Explorador",
+    "T5EK.Class.Rogue": "Pícaro",
+    "T5EK.Class.Sorcerer": "Hechicero",
+    "T5EK.Class.Warlock": "Brujo",
+    "T5EK.Class.Wizard": "Mago",
+    "T5EK.OriginSummaryConfig": null,
+    "T5EK.Settings.MulticlassSpellbookFilterLabel": "Filtro de hechizos de multiclase",
+    "T5EK.Settings.SheetMenu": {
+        "name": "Configuración de T5EK",
+        "hint": "Personaliza tu propia versión de T5EK",
+        "label": "Opciones de la hoja",
+        "title": "Opciones de la hoja de T5EK"
     },
-    "Sheet": {
-      "title": null,
-      "header": null,
-      "useDefaultLightColors": null,
-      "useDefaultDarkColors": null,
-      "export": null,
-      "import": null,
-      "importDropHint": null,
-      "importError": null,
-      "importSuccess": null,
-      "menuLabel": null,
-      "explanation": null
+    "T5EK.Settings.TabPlayers": {
+        "tabLabel": "Jugadores",
+        "header": "Hojas de los Personajes jugadores"
+    },
+    "T5EK.Settings.TabNPCs": {
+        "tabLabel": "PNJs",
+        "header": "Hojas de PNJ"
+    },
+    "T5EK.Settings.TabVehicles": {
+        "tabLabel": "Vehículos",
+        "header": "Hojas de vehículo"
+    },
+    "T5EK.Settings.TabGM": {
+        "tabLabel": "Opciones del GM",
+        "header": "Opciones de la hoha de GM"
+    },
+    "T5EK.Settings.TabLocks": {
+        "tabLabel": null,
+        "header": "Opciones de bloqueo",
+        "hint": "Evita que los jugadores realicen cambios en aspectos de sus hojas de personaje que deberían cambiar con poca frecuencia. Opcionalmente, oculta algunos elementos que no deseas utilizar en absoluto.",
+        "hint2": "Importante: las funciones de bloqueo de las hojas están destinadas a guiar el uso de las hojas del jugador y ayudar a evitar errores como agregar o quitar accidentalmente una competencia de tirada de salvación. La configuración de bloqueo de las hojas no proporciona un bloqueo seguro contra jugadores con intenciones maliciosas.",
+        "labelGeneralLocks": "Bloqueos generales",
+        "labelInventoryLocks": "Bloqueos de inventario",
+        "labelFeaturesLocks": "Bloqueos de rasgos"
+    },
+    "T5EK.Settings.TabInfo": {
+        "tabLabel": "Info",
+        "header": "Info",
+        "PatreonLink": "{urlStart}Patreon{urlEnd}",
+        "Header": "Info",
+        "MaintainerParagraph": "T5EK es mantenido por {urlStart}kgar{urlEnd}.",
+        "GithubParagraph": "¿Tienes una idea? ¿Algo no funciona? Envía un {urlStart}Problema de Github{urlEnd}.",
+        "DiscordParagraph": "{urlStart}Servidor de discord de T5EK{urlEnd}: Discute nuevas ideas, obtén ayuda de otros y realiza un seguimiento del progreso de este módulo.",
+        "LocalizationParagraph": "{urlStart}Foundry Hub Weblate{urlEnd}: ¿Localizas contenido web? ¡A T5EK le vendría bien tu ayuda! Vé al sitio web de Weblate para ver nuestro progreso de localización en varios idiomas. Este módulo acepta traducciones de nuevos idiomas y modificaciones a traducciones existentes.",
+        "FinancialSupportHeader": "Maneras de apoyar T5EK",
+        "FinancialSupportParagraph": "Si te gusta T5EK y quieres apoyar económicamente, aquí tienes algunas formas de hacerlo:",
+        "KoFiLink": "{urlStart}Ko-Fi{urlEnd}"
+    },
+    "T5EK.Settings.ItemCardsForAllItems": {
+        "name": "Mostrar las tarjetas de informacíon del objeto de los objetos en todos los disenõs.",
+        "hint": "Desactívalo si quieres que las tarjetas de información del objeto solo salgan en el diseño de cuadrícula."
+    },
+    "T5EK.Settings.ItemCardsForNPCs": {
+        "name": "Mostrar las tarjetas de información del objeto en PNJs/vehículos.",
+        "hint": "Desactívalo si no quieres que las tarjetas de información del objeto salgan en las fichas de PNJs/vehículos."
+    },
+    "T5EK.Settings.ItemCardsAreFloating": {
+        "name": "Las tarjetas de información del objeto flotan junto al cursor.",
+        "hint": "Actívalo para separar las tarjetas de información del objeto de la ficha y hacer que floten al lado del cursor. Es mejor utilizarlo con retardo. Útil cuando la ficha está en una nueva pestaña."
+    },
+    "T5EK.Settings.ItemCardsDelay": {
+        "name": "Retardo en mostrar las tarjetas de información del objeto",
+        "hint": "La Tarjeta de Información se mostrará al mantener el ratón sobre un objeto durante el valor en milisegundos (0 = no hay retardo, 300 es el valor por defecto)"
+    },
+    "T5EK.Settings.ItemCardsFixKey": {
+        "name": "Tecla a mantener para la interacción con la Tarjeta de Información.",
+        "hint": "Introduce una tecla (p. ej: x) para interactuar con la tarjeta de información del objeto. Puede tratarse de cualquier tecla excepto las teclas de función (ctrl, alt, etc.)"
+    },
+    "T5EK.Settings.DefaultTheme": {
+        "name": "Tema de color predeterminado",
+        "hint": "El tema predeterminado para todos los usuarios que no tienen un tema específico seleccionado."
+    },
+    "T5EK.Settings.SheetTheme": {
+        "name": "T5EK color del tema",
+        "hint": "Utiliza el tema por defecto de color claro u oscuro de T5EK.",
+        "default": "Predeterminado",
+        "light": "Claro",
+        "dark": "Oscuro"
+    },
+    "T5EK.Settings.UseClassicControls": {
+        "name": "Utilizar los controles clásicos de los objetos en el diseño de lista",
+        "hint": "Muestra siempre los botones de los objetos y desactiva el menú del botón derecho. Sólo se aplica para el inventario de objetos/conjuros del PJ en el listado."
+    },
+    "T5EK.Settings.ShowIconsNextToTheItemName": {
+        "name": "Mostrar nombre de los iconos de objetos",
+        "hint": "Muestra iconos de soporte junto al nombre del elemento (Favorito, Sintonización, etc.)."
+    },
+    "T5EK.Settings.ShowTraitLabels": {
+        "name": "Mostrar etiquetas de los rasgos",
+        "hint": "Por defecto sólo se muestran los iconos de los rasgos. Actívalo para mostrar también las etiquetas."
+    },
+    "T5EK.Settings.ShowPlayerName": {
+        "name": "Mostrar nombre del Jugador.",
+        "hint": "Permite mostrar un campo para el nombre del jugador debajo del nombre del personaje."
+    },
+    "T5EK.Settings.ShowClassList": {
+        "name": "Mostrar lista de clases",
+        "hint": "Mostrar lista de clases bajo el nombre del personaje."
+    },
+    "T5EK.Settings.InspirationAnimation": {
+        "name": "Indicador de inspiración sin animación",
+        "hint": "Actívalo para quitar la animación de brillo del Indicador de inspiración."
+    },
+    "T5EK.Settings.HideIfZero": {
+        "name": "Ocultar el medidor de cansancio e inspiración con 0",
+        "hint": "Actívalo para ocultar el medidor de cansancio e inspiración si se encuentra a 0. Se mostrará al pasar el ratón."
+    },
+    "T5EK.Settings.ShowInspirationOnHover": {
+        "name": "Mostrar el indicador de inspiración sólo al pasar por encima",
+        "hint": "Actívalo para mostrar el indicador de inspiración sólo al pasar el ratón por encima del retrato."
+    },
+    "T5EK.Settings.ShowExhaustionOnHover": {
+        "name": "Mostrar el medidor de cansancio sólo al pasar por encima",
+        "hint": "Actívalo para mostrar el medidor de cansancio al pasar el ratón por encima del retrato."
+    },
+    "T5EK.Settings.UseHpBar": {
+        "name": "Utilizar barra de PS",
+        "hint": "Mostrar una barra de colores indicando los PS restantes. Los números de salud seguirán siendo visibles."
+    },
+    "T5EK.Settings.UseHpOverlay": {
+        "name": "Utilizar superposición de vida",
+        "hint": "Muestra una superposición de PS de colores."
+    },
+    "T5EK.Settings.ToggleEmptyCharacterTraits": {
+        "name": "Alternar rasgos de personaje vacíos",
+        "hint": "Por defecto los rasgos vacíos siempre están visibles. Actívalo para añadir un botón de activación."
+    },
+    "T5EK.Settings.MoveTraitsBelowResources": {
+        "name": "Mover los rasgos debajo de los recursos",
+        "hint": "Permite mover los rasgos de la parte izquierda debajo de los recursos."
+    },
+    "T5EK.Settings.ShowEquippedAmmoOnly": {
+        "name": "Mostrar solo munición equipada",
+        "hint": "Muestra solo la munición equipada actualmente en el selector de munición del arma."
+    },
+    "T5EK.Settings.AlwaysShowTraits": {
+        "name": "Mostrar siempre los rasgos",
+        "hint": "Por defecto, los rasgos vacíos se ocultan mediante un botón de activación. Actívalo para no ocultarlos nunca."
+    },
+    "T5EK.Settings.AlwaysShowSkills": {
+        "name": "Mostrar siempre las habilidades",
+        "hint": "Por defecto, las habilidades no competentes se ocultan mediante un botón de activación. Actívalo para no ocultarlo nunca."
+    },
+    "T5EK.Settings.ShowNPCSpellbookTab": {
+        "name": "Muestra la pestaña de hechizos",
+        "hint": "Muestra la pestaña de hechizos para los PNJs. Desactivar para mover la sección de hechizos a la pestaña de atributos."
+    },
+    "T5EK.Settings.ShowActiveEffectsMarker": {
+        "name": "Mostrar un marcador de Efectos Activos en los objetos.",
+        "hint": "Actívalo si quieres ver si los objetos tienen efectos activos en ellos (solo en diseño de lista)."
+    },
+    "T5EK.Settings.UseContextMenu": {
+        "name": "Utilizar menú contextual",
+        "hint": "Activa los menús contextuales en objetos con clic derecho."
+    },
+    "T5EK.Settings.ShowExpandedLimitedView": {
+        "name": "Ampliar la vista limitada para las hojas de personaje",
+        "hint": "Muestra toda la hoja de personaje (menos el diario) a los jugadores con permiso limitado."
+    },
+    "T5EK.Settings.UseCircularPortraitStyle": {
+        "name": "Estilo de retrato redondo.",
+        "hint": "Selecciona activar los retratos/iconos redondos para los actores.",
+        "all": "Todos los actores",
+        "pc": "PJs",
+        "npc": "PNJs/Vehículos",
+        "none": "ninguno",
+        "default": "ninguno"
+    },
+    "T5EK.Settings.UseTotalSheetLock": {
+        "name": "Bloquar los campos sensibles.",
+        "hint": "Actívalo para evitar cambiar accidentalmente valores sensibles, en su mayoría estáticos."
+    },
+    "T5EK.Settings.LimitEffectsManagementToGM": {
+        "name": "Sólo el DJ puede editar los efectos activos.",
+        "hint": "Actívalo para impedir que los jugadores editen los efectos activos en sus hojas. Seguirán viendo los efectos aplicados."
+    },
+    "T5EK.Settings.AlwaysShowItemQuantity": {
+        "name": "Mostrar siempre la cantidad de objetos.",
+        "hint": "Actívalo para no ocultar nunca la cantidad de objetos."
+    },
+    "T5EK.Settings.UseInspiration": {
+        "name": "Utilizar seguimiento de inspiración",
+        "hint": "Muestra un seguimiento de inspiración en le perfil del personaje."
+    },
+    "T5EK.Settings.UseVehicleMotion": {
+        "name": "Utilizar el seguimiento del movimiento del vehículo",
+        "hint": "Muestra un seguimiento del movimiento en el perfil del vehículo."
+    },
+    "T5EK.Settings.UseExhaustion": {
+        "name": "Utilizar seguimiento de agotamiento",
+        "hint": "Muestra un seguimiento de agotamiento para personajes, PNJs y vehículos."
+    },
+    "T5EK.Settings.UseNPCRest": {
+        "name": "Descanso para los PNJs.",
+        "hint": "Actívalo para mostrar los iconos/botones de descanso en las hojas de los PNJs."
+    },
+    "T5EK.Settings.ShowNPCRestInChat": {
+        "name": "Mostrar descanso de PNJ en el chat",
+        "hint": "Muestra una tarjeta de chat cuando un PNJ descansa."
+    },
+    "T5EK.Settings.ShowNPCActorLinkMarker": {
+        "name": "Indicar los PNJs vinculados/desvinculados.",
+        "hint": "Añade un borde coloreado y un icono a las hojas de los PNJs vinculados/desvinculados.",
+        "default": "Sin marcador de vínculo (por defecto)",
+        "unlinked": "Resaltar los tokens desvinculados",
+        "linked": "Resaltar los tokens vinculados",
+        "both": "Resaltar los tokens vinculados y no vinculados"
+    },
+    "T5EK.Settings.InitialSheetTab": {
+        "name": "Pestaña inicial en hoja",
+        "hint": "Muestra la pestaña indicada al abrir una hoja por primera vez."
+    },
+    "T5EK.Settings.HideDeathSavesFromPlayers": {
+        "name": "Ocultar salvaciones de muerte a los jugadores",
+        "hint": "Hace que las salvaciones de muerte y los resultados de las salvaciones de muerte sean visibles solo para el DM."
+    },
+    "T5EK.Settings.UseSpellSlotMarker": {
+        "name": "Usar marcador para espacios de hechizo",
+        "hint": "Muestra marcadores de espacios de hechizo (puntos) encima de las secciones de hechizos niveladas en el libro de hechizos."
+    },
+    "T5EK.Settings.UseCharacterEncumbranceBar": {
+        "name": null,
+        "hint": "Muestra una barra de estorbo en las hojas de personaje."
+    },
+    "T5EK.Settings.UseNPCEncumbranceBar": {
+        "name": "Utilizar barra de estorbo en PNJs",
+        "hint": "Muestra una barra de estorbo en las hojas de PNJ."
+    },
+    "T5EK.Settings.UseVehicleEncumbranceBar": {
+        "name": "Utilizar barra de estorbo en vehículos",
+        "hint": "Muestra una barra de estorbo en las hojas de vehículos."
+    },
+    "T5EK.Settings.NPCSheetWidth": {
+        "name": "Anchura de hoja de PNJ predeterminada",
+        "hint": "El ancho de la hoja de PNJen píxeles cuando se muestra la hoja por primera vez. Requiere una actualización para que surta efecto. Predeterminado: 740."
+    },
+    "T5EK.Settings.PlayerSheetWidth": {
+        "name": "Anchura de hoja de jugador",
+        "hint": "El ancho de la hoja de personaje del jugador en píxeles cuando se muestra la hoja por primera vez. Requiere una actualización para que surta efecto. Predeterminado: 740."
+    },
+    "T5EK.Settings.VehicleSheetWidth": {
+        "name": "Anchura de hoja de vehículo",
+        "hint": "El ancho de la hoja del vehículo en píxeles al mostrar la hoja por primera vez. Requiere una actualización para que surta efecto. Predeterminado: 740."
+    },
+    "T5EK.Settings.UseMulticlassSpellbookFilter": {
+        "name": "Usar filtro de hechizos multiclase",
+        "hint": "Permite filtrar hechizos por clase en la pestaña de hechizos. El hechizo debe estar asociado con una clase usando el selector de clase en la hoja de edición de hechizos."
+    },
+    "T5EK.Settings.UseSpellClassIcons": {
+        "name": "Utilizar el icono de clase para hechizos",
+        "hint": "Muestra la imagen de la clase en los hechizos en lugar de la imagen propia del hechizo. El hechizo debe estar asociado con una clase usando el selector de clase en la hoja de edición de hechizos. Cuando se hace multiclase, esta característica distingue qué hechizos pertenecen a qué clase."
+    },
+    "T5EK.Settings.SpellClassFilterAdditionalClasses": {
+        "name": "Clases adicionales para el filtrado de hechizos multiclase",
+        "hint": "Coloca clases adicionales en el filtro de hechizos multiclase. Agrega clases al menú desplegable con esta sintaxis \"id1|name1,id2|name2\", p. \"occultist|Occultist,alchemist|Alchemist\""
+    },
+    "T5EK.Settings.AllowCantripsToBePrepared": {
+        "name": "Permitir preparación de trucos",
+        "hint": "La regla opcional \"fórmulas de trucos\" de TCE permite a los magos preparar trucos después de un descanso largo de la misma manera que lo hacen con los hechizos nivelados. Los trucos preparados no cuentan para el total de hechizos preparados."
+    },
+    "T5EK.Settings.LockMoneyChanges": {
+        "name": "Bloquear moneda",
+        "hint": "Previene a los no-DMs hacer cambios en las monedas."
+    },
+    "T5EK.Settings.LockExpChanges": {
+        "name": "Bloquear experiencia",
+        "hint": "Previene a los no-DMs hacer cambios en la experiencia."
+    },
+    "T5EK.Settings.LockHpMaxChanges": {
+        "name": "Bloquear cambios a PS máximos",
+        "hint": "Previene a los no-DMs hacer cambios en los PS máximos."
+    },
+    "T5EK.Settings.LockLevelSelector": {
+        "name": "Bloquear selector de nivel",
+        "hint": "Previene que los no-DMs cambien los niveles de jugador con el selector de nivel de clase."
+    },
+    "T5EK.Settings.LockConfigureSheet": {
+        "name": "Bloquear selección de hoja",
+        "hint": null
+    },
+    "T5EK.Settings.LockItemQuantity": {
+        "name": "Bloquear cantidad de objetos",
+        "hint": "Previene a los no-DMs hacer cambios en la cantidad de objetos."
+    },
+    "T5EK.Settings.ColorPickerEnabled": {
+        "name": "Utilizar colores de tema personalizados",
+        "hint": "Mostrar colores de tema personalizados"
+    },
+    "T5EK.Settings.ColorPickerPrimaryAccent": {
+        "name": "Acento primario"
+    },
+    "T5EK.Settings.ColorPickerEquipped": {
+        "name": "Equipado"
+    },
+    "T5EK.Settings.ColorPickerHpBar": {
+        "name": "Barras de PS"
+    },
+    "T5EK.Settings.ColorPickerEquippedOutline": {
+        "name": null
+    },
+    "T5EK.Settings.ColorPickerEquippedAccent": {
+        "name": null
+    },
+    "T5EK.Settings.ColorPickerPrepared": {
+        "name": null
+    },
+    "T5EK.Settings.ColorPickerPreparedOutline": {
+        "name": null
+    },
+    "T5EK.Settings.ColorPickerPreparedAccent": {
+        "name": null
+    },
+    "T5EK.Settings.ColorPickerPact": {
+        "name": "Pacto"
+    },
+    "T5EK.Settings.ColorPickerPactOutline": {
+        "name": null
+    },
+    "T5EK.Settings.ColorPickerPactAccent": {
+        "name": null
+    },
+    "T5EK.Settings.ColorPickerAtWill": {
+        "name": "A voluntad"
+    },
+    "T5EK.Settings.ColorPickerAtWillOutline": {
+        "name": null
+    },
+    "T5EK.Settings.ColorPickerAtWillAccent": {
+        "name": null
+    },
+    "T5EK.Settings.ColorPickerInnate": {
+        "name": "Innato"
+    },
+    "T5EK.Settings.ColorPickerInnateOutline": {
+        "name": null
+    },
+    "T5EK.Settings.ColorPickerInnateAccent": {
+        "name": null
+    },
+    "T5EK.Settings.ColorPickerAlwaysPrepared": {
+        "name": "Siempre preparado"
+    },
+    "T5EK.Settings.ColorPickerAlwaysPreparedOutline": {
+        "name": null
+    },
+    "T5EK.Settings.ColorPickerAlwaysPreparedAccent": {
+        "name": null
+    },
+    "T5EK.Settings.AllowHpMaxOverride": {
+        "name": "Permitir sobreescribir PS máximos en el personaje",
+        "hint": "Permite al DM cambiar manualmente los PS máximos en la hoja de personaje."
+    },
+    "T5EK.Settings.Reset": {
+        "name": "Restablecer la configuración predeterminada",
+        "hint": "Esto restablecerá todas las configuraciones a las predeterminadas del sistema de juego activo. Esto afecta únicamente a las configuraciones de ámbito \"mundo\", como las opciones de GM.",
+        "dialogs": {
+            "title": "Restablecer la configuración del módulo",
+            "content": "¿Está seguro de que deseas restablecer todas las configuraciones del módulo a los valores predeterminados del sistema actual? <strong>Esto no se puede deshacer.</strong>",
+            "confirm": "Restablecer la configuración del módulo",
+            "cancel": "Cancelar"
+        }
+    },
+    "T5EK.Settings.Debug": {
+        "name": "Habilitar la depuración",
+        "hint": "Imprime mensajes de depuración en la consola."
+    },
+    "T5EK.Settings.SortFavoriteItemsAlphabetically": {
+        "name": "Ordenar favoritos alfabéticamente",
+        "hint": "Ordena los favoritos alfabéticamente."
+    },
+    "T5EK.Settings.PermanentlyUnlockCharacterSheetForGM": {
+        "name": "Hoja de personaje: Siempre desbloqueado para el DM",
+        "hint": "Trate la hoja de personaje como si siempre estuviera desbloqueada, independientemente de la configuración de bloqueo. El DM siempre puede editar el personaje, pero también puede alternar entre bloqueo y desbloqueo para un jugador que también posee el personaje.",
+        "title": "Esta hoja siempre está desbloqueada para el DM, independientemente de la configuración de bloqueo."
+    },
+    "T5EK.Settings.PermanentlyUnlockNPCSheetForGM": {
+        "name": "Hoja de PNJ: Siempre desbloqueado para el DM",
+        "hint": "Trata la hoja de PNJ como si siempre estuviera desbloqueada, independientemente de la configuración de bloqueo. El DM siempre puede editar el PNJ, pero también puede alternar entre bloqueo y desbloqueo para un jugador que también es propietario del PNJ.",
+        "title": "Esta hoja siempre está desbloqueada para el DM, independientemente de la configuración de bloqueo."
+    },
+    "T5EK.Settings.PermanentlyUnlockVehicleSheetForGM": {
+        "name": "Ficha del vehículo: Siempre desbloqueado para el DM",
+        "hint": "Trata la ficha del vehículo como si estuviera siempre desbloqueada, independientemente de la configuración de bloqueo. El DM siempre puede editar el vehículo, pero también puede alternar entre bloquear y desbloquear para un jugador que también sea propietario del vehículo.",
+        "title": "Esta hoja siempre está desbloqueada para el DM, independientemente de la configuración de bloqueo."
+    },
+    "T5EK.ThemeSettings": {
+        "SheetMenu": {
+            "name": "Configuración del tema Tidy",
+            "buttonLabel": "Configuración del tema",
+            "hint": "Personaliza los colores de T5EK."
+        },
+        "Sheet": {
+            "title": "Configuración del tema",
+            "header": "Colores de tema personalizados",
+            "useDefaultLightColors": "Claro predeterminado",
+            "useDefaultDarkColors": "Oscuro predeterminado",
+            "export": "Exportar",
+            "import": "Importar",
+            "importDropHint": "Sugerencia: puedes arrastrar un archivo \".tidy5e-theme\" a este formulario para importarlo.",
+            "importError": "Error al importar el tema. Consulta la consola para obtener más detalles.",
+            "importSuccess": "¡Tema importado exitosamente!",
+            "menuLabel": "Menú",
+            "explanation": "Seleccione qué color deseas utilizar para cada opción. El valor \"#00000000\" equivale a desactivar el color."
+        }
+    },
+    "T5EK.FavoriteSpellLevelLabel": "Nivel de hechizo {number}",
+    "T5EK.ApplyChanges": "Aplicar cambios",
+    "T5EK.SaveChanges": "Guardar cambios",
+    "T5EK.VehicleInMotion": "El vehículo está en movimiento",
+    "T5EK.VehicleMotionless": "El vehículo está inmóvil",
+    "T5EK.TotalCrewCount": "Tripulación total",
+    "T5EK.ActionsPerTurn": "Acciones por turno",
+    "T5EK.SheetMenu": {
+        "label": "Menú",
+        "themeLabel": "Tema"
+    },
+    "T5EK.ActiveEffectsMarkerTitle": "Este objeto tiene efectos activos",
+    "T5EK.Settings.ToggleEmptyCharacterSkills": {
+        "hint": "Añade un botón para mostrar/ocultar habilidades vacías."
+    },
+    "T5EK.Settings.DefaultSheetTabs": {
+        "AvailableHeader": "Pestañas disponibles",
+        "SelectedHeader": "Pestañas seleccionadas",
+        "name": "Pestaña predeterminada en hoja",
+        "hint": "Determina qué pestañas se mostrarán y en qué orden de forma predeterminada. Se aplica cuando no se han realizado selecciones de pestañas para un actor.",
+        "AtLeastOneTabRequiredErrorMessage": "Pestañas predeterminadas: se requiere al menos una pestaña para cada tipo de actor."
+    },
+    "T5EK.Settings.ActionList.Header": "Lista de acciones",
+    "T5EK.Settings.ActionListLimitActionsToCantrips": {
+        "name": "Limitar acciones a trucos",
+        "hint": "En lugar de mostrar todos los hechizos que causan daño en la pestaña/panel de acciones de forma predeterminada, se limita solo a trucos. Este es el comportamiento predeterminado de D&DBeyond."
+    },
+    "T5EK.Settings.ActionListIncludeSpellsWithActiveEffects": {
+        "name": "Incluir hechizos con efectos activos como acciones",
+        "hint": "Incluye hechizos con efectos activos adjuntos (por ejemplo, Piel de corteza) en la pestaña/panel de acciones de forma predeterminada."
+    },
+    "T5EK.Settings.Exhaustion": {
+        "useStandardExhaustion": "Utilizar agotamiento estandar",
+        "useOneDnDExhaustion": "Utilizar agotamiento de One D&D",
+        "AtLeastOneLevelRequiredErrorMessage": "Se requiere al menos un nivel de agotamiento.",
+        "options.specific.levels.hint": "Determina el número máximo de niveles de agotamiento.",
+        "options.specific.levels.tooltip.hint": "Información para este nivel de agotamiento. Las claves de localización también funcionan.",
+        "options.open.text": "Entrada de número abierto",
+        "options.open.explanation": "Muestra al usuario una entrada numérica para escribir niveles de agotamiento.",
+        "Header": "Agotamiento",
+        "name": "Configuración de agotamiento",
+        "hint": "Determina cómo se configura y presenta el agotamiento no vehicular en las hojas de personajes y PNJ.",
+        "options.specific.text": "Niveles específicos",
+        "options.specific.levels.name": "Niveles totales"
+    },
+    "T5EK.UseDefault": "Utilizar predeterminado",
+    "T5EK.Reset": "Restablecer",
+    "T5EK.Settings.UseDefaultSheetAttributeTabbing": {
+        "hint": "La hoja 5e predeterminada permite tabular desde una entrada de atributo a la siguiente ocultando los controles a su alrededor en orden de tabulación. Habilitar esto replica ese comportamiento. Esta configuración se ignora si \"Usar compatibilidad con teclado accesible\" está desactivado."
+    },
+    "T5EK.Settings.UseDefaultSheetHpTabbing": {
+        "name": "Usar la tabulación de PS de la hoja predeterminada",
+        "hint": "La hoja 5e predeterminada permite tabular desde la entrada de PS actual hasta la entrada PS temporal actual. Habilitar esto replica ese comportamiento. Esta configuración se ignora si \"Usar compatibilidad con teclado accesible\" está desactivado."
+    },
+    "T5EK.Settings.ActionListIncludeMinuteLongSpellsAsActions": {
+        "name": "Incluir hechizos de un minuto como acciones",
+        "hint": "Incluye hechizos con una duración de un minuto o menos (por ejemplo, 1 ronda) y un tiempo de activación de 1 acción o 1 acción adicional (por ejemplo, bendecir, azotar, ordenar) en la pestaña/panel de acciones de forma predeterminada."
+    },
+    "T5EK.Settings.ActionListIncludeConsumables": {
+        "hint": "Incluye consumibles que tienen un coste de activación (Acción, Acción de bonificación, etc.) en la lista de acciones de forma predeterminada.",
+        "name": "Incluir consumible como acciones"
+    },
+    "T5EK.Settings.ActionListScaleCantripDamage": {
+        "name": "Mostrar daño escalado de trucos (experimental)",
+        "hint": "Escala el daño del truco para que coincida con el nivel actual del PJ o la calificación de desafío del PNJ."
+    },
+    "T5EK.Actions": {
+        "OverriddenSetOverrideTrue": "Agregar a la lista de acciones (Shifts+clic para borrar la sustitución)",
+        "ResetActionDefault": "Restablecer acción predeterminada",
+        "TabName": "Acciones",
+        "OverriddenSetOverrideFalse": "Eliminar de la lista de acciones (Shift+Clic para borrar la sustitución)",
+        "SetOverrideFalse": "Eliminar de la lista de acciones",
+        "SetOverrideTrue": "Agregar a la lista de acciones"
+    },
+    "T5EK.Inventory.Weight.Tooltip": "Peso: {weight} {weightUnit}",
+    "T5EK.TabSelection": {
+        "Explanation": "Cualquier pestaña que el usuario o la hoja hayan configurado para no ver (por ejemplo, deshabilitar el diario en la configuración) seguirán sin aparecer en la hoja, incluso si están seleccionadas.",
+        "Title": "Selección de pestaña: {documentName}",
+        "MenuOptionText": "Selección de pestaña",
+        "AvailableHeader": "Pestañas disponibles",
+        "SelectedHeader": "Pestañas seleccionadas",
+        "UnsupportedDocumentErrorMessage": "El tipo de documento {documentType} no está configurado actualmente para la selección de pestañas.",
+        "AtLeastOneRequiredErrorMessage": "Se requiere al menos una pestaña."
+    },
+    "T5EK.Listbox": {
+        "MoveAllLeft": "Mover todo hacia la izquierda",
+        "MoveAllRight": "Mover todo hacia la derecha",
+        "MoveUp": "Mover arriba (Alt + tecla arriba)",
+        "MoveDown": "Mover abajo(Alt + tecla abajo)",
+        "MoveLeft": "Mover izquierda (Espacio)",
+        "MoveRight": "Mover derecha (Espacio)"
+    },
+    "T5EK.Settings.UseAccessibleKeyboardSupport": {
+        "name": "Utilizar la compatibilidad con teclado accesible",
+        "hint": "Permite a los usuarios desplazarse por la mayoría de los botones/comandos de T5EK y ejecutarlos con teclas de acceso rápido del teclado basadas en botones convencionales. Nota: cuando se enfoca en un botón en Foundry, las combinaciones de teclas de \"Configurar controles\" no responden. Si un módulo usa esta función de Foundry para los controles en las hojas, como el uso de elementos mientras se mantiene presionada una tecla especial, habilitar esta opción de T5EK interferirá con esas combinaciones de teclas."
+    },
+    "T5EK.Settings.VehicleExhaustion": {
+        "name": "Configuración de agotamiento vehicular",
+        "hint": "Determina cómo se configura y presenta el agotamiento del vehículo en la ficha del vehículo.",
+        "AtLeastOneLevelRequiredErrorMessage": "Se requiere al menos un nivel de agotamiento del vehículo.",
+        "Header": "Agotamiento del vehículo"
+    },
+    "T5EK.Tidy5eSheet": "Hoja de personaje T5EK",
+    "T5EK.Tidy5eNPC": "Hoja de PNJ T5EK",
+    "T5EK.Tidy5eItemSheet": "Hoja de objeto T5EK",
+    "T5EK.Tidy5eVehicle": "Hoja de vehículo T5EK",
+    "T5EK.HitDC": "Impacto / CD",
+    "T5EK.Inventory.Weight.Text": "{weight} {weightUnit}",
+    "T5EK.EnvironmentTooltip": "Ambiente: {environment}",
+    "T5EK.AttackMod": "Modificador de ataque",
+    "T5EK.MeleeSpellAttackMod": "Modificador de ataque con hechizo cuerpo a cuerpo",
+    "T5EK.RangedSpellAttackMod": "Modificador de ataque con hechizo a distancia",
+    "T5EK.MaxPreparedSpellsConfig": {
+        "Title": "Configuración de máximo de hechizos preparados: {actorName}",
+        "ExamplesHeader": "Formulas de ejemplo",
+        "ButtonTooltip": "Configurar máximo de hechizos preparados",
+        "MoreFormulas": "Más formulas"
+    },
+    "T5EK.Settings.TabFeatures": {
+        "tabLabel": "Rasgos"
     }
-  },
-  "T5EK.FavoriteSpellLevelLabel": null,
-  "T5EK.ApplyChanges": null,
-  "T5EK.SaveChanges": null,
-  "T5EK.VehicleInMotion": null,
-  "T5EK.VehicleMotionless": null,
-  "T5EK.TotalCrewCount": null,
-  "T5EK.ActionsPerTurn": null,
-  "T5EK.SheetMenu": {
-    "label": null,
-    "themeLabel": null
-  },
-  "T5EK.ActiveEffectsMarkerTitle": null
 }
