@@ -22,7 +22,7 @@
     }
   }
 
-  // Item Name
+  // Item Name - Column or Cell
   .item-name {
     flex: 2;
     margin: 0;
@@ -87,15 +87,27 @@
         margin: 0;
         white-space: nowrap;
         overflow-x: hidden;
+        font-weight: normal;
+        font-size: 0.75rem;
       }
 
       .item-image {
-        flex: 0 0 30px;
-        height: 30px;
+        flex: 0 0 var(--t5ek-image-size-override, 1.5rem);
+        height: var(--t5ek-image-size-override, 1.5rem);
         background-size: cover;
         background-position: 50% 0;
         border: none;
-        margin-right: 5px;
+        margin-right: 0.3125rem;
+        border-radius: .3125rem 0 0 .3125rem;
+      }
+
+      &.rollable:hover .item-image {
+        background-image: url('../../icons/svg/d20-black.svg') !important;
+        filter: opacity(0.25);
+      }
+
+      &.rollable .item-image:hover {
+        filter: opacity(1);
       }
     }
 
@@ -140,6 +152,7 @@
       text-align: left;
       font-size: 0.75rem;
     }
+
     .item-name {
       line-height: normal;
       white-space: nowrap;
@@ -150,13 +163,16 @@
       color: var(--t5ek-tertiary-color);
     }
   }
-}
 
-&.actor .items-list {
+  // Sundries
   .spell-slots {
     display: flex;
     align-items: center;
     height: 1rem;
     flex: 0;
+
+    > input:first-child {
+      text-align: right;
+    }
   }
 }
