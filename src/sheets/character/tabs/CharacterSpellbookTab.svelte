@@ -39,13 +39,16 @@
     FoundryAdapter.tryGetFlag($context.actor, 'classFilter') ?? '';
 
   function tryFilterByClass(spells: any[]) {
-    if (!$settingStore.useMulticlassSpellbookFilter || selectedClassFilter === '') {
+    if (
+      !$settingStore.useMulticlassSpellbookFilter ||
+      selectedClassFilter === ''
+    ) {
       return spells;
     }
 
     return spells.filter(
       (spell) =>
-        FoundryAdapter.tryGetFlag(spell, 'parentClass') === selectedClassFilter
+        FoundryAdapter.tryGetFlag(spell, 'parentClass') === selectedClassFilter,
     );
   }
 
@@ -54,7 +57,7 @@
   $: noSpells =
     $context.spellbook.reduce(
       (count: number, section: any) => count + section.spells.length,
-      0
+      0,
     ) === 0;
 </script>
 
@@ -99,14 +102,11 @@
   {:else}
     {#each $context.spellbook as section (section.label)}
       {@const filteredSpells = tryFilterByClass(
-        FoundryAdapter.getFilteredItems(searchCriteria, section.spells)
+        FoundryAdapter.getFilteredItems(searchCriteria, section.spells),
       )}
       {#if (searchCriteria.trim() === '' && $context.unlocked) || filteredSpells.length > 0}
         {#if layoutMode === 'list'}
-          <SpellbookList
-            spells={filteredSpells}
-            {section}
-          />
+          <SpellbookList spells={filteredSpells} {section} />
         {:else}
           <SpellbookGrid spells={filteredSpells} {section} />
         {/if}
