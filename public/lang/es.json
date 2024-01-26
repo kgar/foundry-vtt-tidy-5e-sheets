@@ -77,7 +77,7 @@
     "T5EK.AttunementMax": "Máximo de sintonización",
     "T5EK.GridLayout": "Diseño de cuadrícula",
     "T5EK.ListLayout": "Diseño de lista",
-    "T5EK.LayoutNotSupported": null,
+    "T5EK.LayoutNotSupported": "No se admite el modo diseño",
     "T5EK.Encumbrance": "Estorbo",
     "T5EK.AddFavorite": "Añadir Favorito",
     "T5EK.Favorite": "Favorito",
@@ -85,7 +85,7 @@
     "T5EK.ShowNotProficientSkills": "mostrar no competente",
     "T5EK.HideNotProficientSkills": "ocultar no competente",
     "T5EK.ShowEmptyTraits": "mostrar/editar rasgos vacíos",
-    "T5EK.HideEmptyTraits": null,
+    "T5EK.HideEmptyTraits": "ocultar características vacías",
     "T5EK.Abilities": "Características",
     "T5EK.Environment": "Entorno",
     "T5EK.Search": "buscar",
@@ -116,7 +116,7 @@
     "T5EK.Class.Sorcerer": "Hechicero",
     "T5EK.Class.Warlock": "Brujo",
     "T5EK.Class.Wizard": "Mago",
-    "T5EK.OriginSummaryConfig": null,
+    "T5EK.OriginSummaryConfig": "Configuración del resumen de origen: {actorName}",
     "T5EK.Settings.MulticlassSpellbookFilterLabel": "Filtro de hechizos de multiclase",
     "T5EK.Settings.SheetMenu": {
         "name": "Configuración de T5EK",
@@ -141,7 +141,7 @@
         "header": "Opciones de la hoha de GM"
     },
     "T5EK.Settings.TabLocks": {
-        "tabLabel": null,
+        "tabLabel": "Bloqueos",
         "header": "Opciones de bloqueo",
         "hint": "Evita que los jugadores realicen cambios en aspectos de sus hojas de personaje que deberían cambiar con poca frecuencia. Opcionalmente, oculta algunos elementos que no deseas utilizar en absoluto.",
         "hint2": "Importante: las funciones de bloqueo de las hojas están destinadas a guiar el uso de las hojas del jugador y ayudar a evitar errores como agregar o quitar accidentalmente una competencia de tirada de salvación. La configuración de bloqueo de las hojas no proporciona un bloqueo seguro contra jugadores con intenciones maliciosas.",
@@ -160,7 +160,8 @@
         "LocalizationParagraph": "{urlStart}Foundry Hub Weblate{urlEnd}: ¿Localizas contenido web? ¡A T5EK le vendría bien tu ayuda! Vé al sitio web de Weblate para ver nuestro progreso de localización en varios idiomas. Este módulo acepta traducciones de nuevos idiomas y modificaciones a traducciones existentes.",
         "FinancialSupportHeader": "Maneras de apoyar T5EK",
         "FinancialSupportParagraph": "Si te gusta T5EK y quieres apoyar económicamente, aquí tienes algunas formas de hacerlo:",
-        "KoFiLink": "{urlStart}Ko-Fi{urlEnd}"
+        "KoFiLink": "{urlStart}Ko-Fi{urlEnd}",
+        "BuyMeACoffeeLink": "{urlStart}Buy Me a Coffee{urlEnd}"
     },
     "T5EK.Settings.ItemCardsForAllItems": {
         "name": "Mostrar las tarjetas de informacíon del objeto de los objetos en todos los disenõs.",
