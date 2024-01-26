@@ -186,6 +186,10 @@ export const CONSTANTS = {
      */
     ITEM_USE_COMMAND: 'item-use-command',
     /**
+     * A containing element for a series of item lists or grids.
+     */
+    ITEMS_CONTAINER: 'items-container',
+    /**
      * The element which contains the modifier text for melee spell attacks.
      */
     MELEE_SPELL_ATTACK_MOD: 'melee-spell-attack-mod',
@@ -198,6 +202,10 @@ export const CONSTANTS = {
      * The sheet header row where the sheet name appears.
      */
     NAME_HEADER_ROW: 'name-header-row',
+    /**
+     * A containing element for a series of item lists related to the NPC Abilities tab.
+     */
+    NPC_ABILITIES_CONTAINER: 'npc-abilities-list',
     /**
      * The element which contains the modifier text for ranged spell attacks.
      */

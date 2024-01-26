@@ -14,6 +14,7 @@
   import NoSpells from 'src/sheets/actor/NoSpells.svelte';
   import Notice from '../../../components/notice/Notice.svelte';
   import { settingStore } from 'src/settings/settings';
+  import { CONSTANTS } from 'src/constants';
 
   let context = getContext<Readable<CharacterSheetContext>>('context');
 
@@ -96,7 +97,10 @@
   <ItemFilterLayoutToggle mode={layoutMode} on:toggle={() => toggleLayout()} />
 </ItemFilters>
 
-<div class="scroll-container flex-column small-gap">
+<div
+  class="scroll-container flex-column small-gap"
+  data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEMS_CONTAINER}
+>
   {#if noSpellLevels}
     <NoSpells editable={$context.unlocked} />
   {:else}

@@ -71,7 +71,7 @@
       <Traits toggleable={!$settingStore.alwaysShowNpcTraits} />
     {/if}
   </div>
-  <div class="main-panel">
+  <div class="main-panel" data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.NPC_ABILITIES_CONTAINER}>
     <NpcLegendaryActions />
     {#if $settingStore.moveTraitsBelowNpcResources}
       <Traits toggleable={!$settingStore.alwaysShowNpcTraits} />

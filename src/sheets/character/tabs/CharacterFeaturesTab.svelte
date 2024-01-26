@@ -58,7 +58,10 @@
   </ItemFilterOption>
 </ItemFilters>
 
-<div class="scroll-container flex-column small-gap">
+<div
+  class="scroll-container flex-column small-gap"
+  data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEMS_CONTAINER}
+>
   {#if noFeatures && !$context.unlocked}
     <Notice>{localize('T5EK.EmptySection')}</Notice>
   {:else}
