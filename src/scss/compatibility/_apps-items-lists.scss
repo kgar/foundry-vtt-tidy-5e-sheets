@@ -151,3 +151,12 @@
     }
   }
 }
+
+&.actor .items-list {
+  .spell-slots {
+    display: flex;
+    align-items: center;
+    height: 1rem;
+    flex: 0;
+  }
+}
