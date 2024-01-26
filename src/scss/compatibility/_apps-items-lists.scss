@@ -98,7 +98,7 @@
         background-position: 50% 0;
         border: none;
         margin-right: 0.3125rem;
-        border-radius: .3125rem 0 0 .3125rem;
+        border-radius: 0.3125rem 0 0 0.3125rem;
       }
 
       &.rollable:hover .item-image {
@@ -173,6 +173,9 @@
 
     > input:first-child {
       text-align: right;
+    }
+    > input:last-child {
+      text-align: left;
     }
   }
 }
