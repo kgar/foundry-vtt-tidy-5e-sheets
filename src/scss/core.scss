@@ -179,3 +179,45 @@
     @import './partials/buttons';
   }
 }
+
+// TODO: Provide Items List compatibility styles for the Item Image d20 on hover
+// .tidy5e-kgar.sheet.actor .inventory-list .item .item-name.rollable .item-image:hover
+
+// TODO: Send styles to Magic Items when ready
+
+.tidy5e-kgar.sheet.actor .spell-rechargeable {
+  flex: 0 0 11.25rem;
+  text-align: center;
+}
+
+.tidy5e-kgar.sheet.actor .spell-level {
+  flex: 0 0 3.75rem;
+  text-align: center;
+}
+
+.tidy5e-kgar.sheet.actor .spell-consumption {
+  flex: 0 0 5rem;
+  text-align: center;
+}
+
+.tidy5e-kgar.sheet.actor .spell-upcast {
+  flex: 0 0 3.75rem;
+  text-align: center;
+}
+
+.tidy5e-kgar.sheet.actor .magic-items-spells-content .spell-slots > * {
+  flex: 0;
+}
+
+.tidy5e-kgar.sheet.actor
+  :is(.magic-items-spells-content, .magic-items-feats-content)
+  .magic-items-head
+  h3 {
+  font-size: 0.8125rem;
+}
+
+.tidy5e-kgar.sheet.actor
+  :is(.magic-items-spells-content, .magic-items-feats-content)
+  .magic-items-head {
+  margin: 0 0 0.5rem 0.5rem;
+}
