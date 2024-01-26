@@ -4,6 +4,7 @@ import { get, writable } from 'svelte/store';
 import TypeNotFoundSheet from './item/TypeNotFoundSheet.svelte';
 import type { SheetStats, SheetTabCacheable, Tab } from 'src/types/types';
 import {
+  applySheetAttributesToWindow,
   applyTitleToWindow,
   maintainCustomContentInputFocus,
 } from 'src/utils/applications';
@@ -14,6 +15,7 @@ import { isNil } from 'src/utils/data';
 import { ItemSheetRuntime } from 'src/runtime/item/ItemSheetRuntime';
 import { TabManager } from 'src/runtime/tab/TabManager';
 import { CustomContentRenderer } from './CustomContentRenderer';
+import { SettingsProvider } from 'src/settings/settings';
 
 export class Tidy5eKgarItemSheet
   extends dnd5e.applications.item.ItemSheet5e
@@ -159,6 +161,12 @@ export class Tidy5eKgarItemSheet
     if (force) {
       this.component?.$destroy();
       await super._render(force, options);
+      applySheetAttributesToWindow(
+        this.item.documentName,
+        this.item.type,
+        SettingsProvider.settings.colorScheme.get(),
+        this.element.get(0)
+      );
       await this.renderCustomContent({ data, isFullRender: true });
       Hooks.callAll(
         'tidy5e-sheet.renderItemSheet',

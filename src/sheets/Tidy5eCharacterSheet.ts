@@ -19,7 +19,7 @@ import {
   type TidyResource,
 } from 'src/types/types';
 import {
-  applyModuleSheetDataAttributeToWindow,
+  applySheetAttributesToWindow,
   applyThemeDataAttributeToWindow,
   applyTitleToWindow,
   blurUntabbableButtonsOnClick,
@@ -456,8 +456,9 @@ export class Tidy5eCharacterSheet
       this._saveScrollPositions(this.element);
       this._destroySvelteComponent();
       await super._render(force, options);
-      applyModuleSheetDataAttributeToWindow(this.element.get(0));
-      applyThemeDataAttributeToWindow(
+      applySheetAttributesToWindow(
+        this.actor.documentName,
+        this.actor.type,
         SettingsProvider.settings.colorScheme.get(),
         this.element.get(0)
       );
