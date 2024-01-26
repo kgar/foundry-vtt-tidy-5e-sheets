@@ -16,6 +16,7 @@
   import EncumbranceBar from 'src/sheets/actor/EncumbranceBar.svelte';
   import TabFooter from 'src/sheets/actor/TabFooter.svelte';
   import { settingStore } from 'src/settings/settings';
+    import { CONSTANTS } from 'src/constants';
 
   let context = getContext<Readable<CharacterSheetContext>>('context');
 
@@ -59,7 +60,10 @@
   <ItemFilterLayoutToggle mode={layoutMode} on:toggle={() => toggleLayout()} />
 </ItemFilters>
 
-<div class="scroll-container flex-column small-gap">
+<div
+  class="scroll-container flex-column small-gap"
+  data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEMS_CONTAINER}
+>
   {#if noItems && !$context.unlocked}
     <Notice>{localize('T5EK.EmptySection')}</Notice>
   {:else}

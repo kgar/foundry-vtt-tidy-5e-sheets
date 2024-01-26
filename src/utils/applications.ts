@@ -37,8 +37,16 @@ export function applyThemeDataAttributeToWindow(
   }
 }
 
-export function applyModuleSheetDataAttributeToWindow(element?: HTMLElement) {
+export function applySheetAttributesToWindow(
+  documentName: string,
+  type: string,
+  themeId: string,
+  element?: HTMLElement
+) {
   element?.setAttribute('data-sheet-module', 'tidy5e-sheet');
+  element?.setAttribute('data-document-name', documentName);
+  element?.setAttribute('data-document-type', type);
+  applyThemeDataAttributeToWindow(themeId, element);
 }
 
 export async function maintainCustomContentInputFocus(

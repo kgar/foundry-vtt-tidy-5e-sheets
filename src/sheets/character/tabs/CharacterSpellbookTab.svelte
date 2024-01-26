@@ -14,6 +14,7 @@
   import NoSpells from 'src/sheets/actor/NoSpells.svelte';
   import Notice from '../../../components/notice/Notice.svelte';
   import { settingStore } from 'src/settings/settings';
+  import { CONSTANTS } from 'src/constants';
 
   let context = getContext<Readable<CharacterSheetContext>>('context');
 
@@ -39,13 +40,16 @@
     FoundryAdapter.tryGetFlag($context.actor, 'classFilter') ?? '';
 
   function tryFilterByClass(spells: any[]) {
-    if (!$settingStore.useMulticlassSpellbookFilter || selectedClassFilter === '') {
+    if (
+      !$settingStore.useMulticlassSpellbookFilter ||
+      selectedClassFilter === ''
+    ) {
       return spells;
     }
 
     return spells.filter(
       (spell) =>
-        FoundryAdapter.tryGetFlag(spell, 'parentClass') === selectedClassFilter
+        FoundryAdapter.tryGetFlag(spell, 'parentClass') === selectedClassFilter,
     );
   }
 
@@ -54,7 +58,7 @@
   $: noSpells =
     $context.spellbook.reduce(
       (count: number, section: any) => count + section.spells.length,
-      0
+      0,
     ) === 0;
 </script>
 
@@ -93,20 +97,20 @@
   <ItemFilterLayoutToggle mode={layoutMode} on:toggle={() => toggleLayout()} />
 </ItemFilters>
 
-<div class="scroll-container flex-column small-gap">
+<div
+  class="scroll-container flex-column small-gap"
+  data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEMS_CONTAINER}
+>
   {#if noSpellLevels}
     <NoSpells editable={$context.unlocked} />
   {:else}
     {#each $context.spellbook as section (section.label)}
       {@const filteredSpells = tryFilterByClass(
-        FoundryAdapter.getFilteredItems(searchCriteria, section.spells)
+        FoundryAdapter.getFilteredItems(searchCriteria, section.spells),
       )}
       {#if (searchCriteria.trim() === '' && $context.unlocked) || filteredSpells.length > 0}
         {#if layoutMode === 'list'}
-          <SpellbookList
-            spells={filteredSpells}
-            {section}
-          />
+          <SpellbookList spells={filteredSpells} {section} />
         {:else}
           <SpellbookGrid spells={filteredSpells} {section} />
         {/if}

@@ -170,9 +170,25 @@ export const CONSTANTS = {
      */
     ITEM_CREATE_COMMAND: 'item-create-command',
     /**
+     * An element which contains the name of an item.
+     */
+    ITEM_NAME: 'item-name',
+    /**
+     * A list-based tabular representation of items (e.g., equipment, loot, spells, etc.).
+     */
+    ITEM_TABLE: 'item-table',
+    /**
+     * A row in an item table.
+     */
+    ITEM_TABLE_ROW: 'item-table-row',
+    /**
      * An interactable control which the user can execute to use an item (e.g., consumable, feature, loot, spell, weapon, etc.).
      */
     ITEM_USE_COMMAND: 'item-use-command',
+    /**
+     * A containing element for a series of item lists or grids.
+     */
+    ITEMS_CONTAINER: 'items-container',
     /**
      * The element which contains the modifier text for melee spell attacks.
      */
@@ -186,6 +202,10 @@ export const CONSTANTS = {
      * The sheet header row where the sheet name appears.
      */
     NAME_HEADER_ROW: 'name-header-row',
+    /**
+     * A containing element for a series of item lists related to the NPC Abilities tab.
+     */
+    NPC_ABILITIES_CONTAINER: 'npc-abilities-list',
     /**
      * The element which contains the modifier text for ranged spell attacks.
      */

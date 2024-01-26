@@ -167,7 +167,10 @@
                   cssClass="extra-small-gap"
                   {item}
                 >
-                  <span class="truncate" data-tidy-item-name={item.name}
+                  <span
+                    class="truncate"
+                    data-tidy-item-name={item.name}
+                    data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_NAME}
                     >{item.name}</span
                   >
                   <ListItemQuantity {item} {ctx} />

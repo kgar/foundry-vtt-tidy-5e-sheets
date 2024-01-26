@@ -58,7 +58,10 @@
   </ItemFilterOption>
 </ItemFilters>
 
-<div class="scroll-container flex-column small-gap">
+<div
+  class="scroll-container flex-column small-gap"
+  data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEMS_CONTAINER}
+>
   {#if noFeatures && !$context.unlocked}
     <Notice>{localize('T5EK.EmptySection')}</Notice>
   {:else}
@@ -129,7 +132,11 @@
                   {item}
                 >
                   {#if item.type === 'subclass'}&rdsh;{/if}
-                  <span data-tidy-item-name={item.name}>{item.name}</span>
+                  <span
+                    data-tidy-item-name={item.name}
+                    data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_NAME}
+                    >{item.name}</span
+                  >
                 </ItemName>
               </ItemTableCell>
 

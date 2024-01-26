@@ -69,6 +69,7 @@
                 <div class="flex-1 min-width-0">
                   <div
                     data-tidy-item-name={actionItem.item.name}
+                    data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_NAME}
                     class="truncate"
                   >
                     {actionItem.item.name}

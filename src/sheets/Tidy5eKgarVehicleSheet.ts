@@ -14,7 +14,7 @@ import { writable } from 'svelte/store';
 import VehicleSheet from './vehicle/VehicleSheet.svelte';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
 import {
-  applyModuleSheetDataAttributeToWindow,
+  applySheetAttributesToWindow,
   applyThemeDataAttributeToWindow,
   applyTitleToWindow,
   blurUntabbableButtonsOnClick,
@@ -198,10 +198,11 @@ export class Tidy5eVehicleSheet
       this._saveScrollPositions(this.element);
       this._destroySvelteComponent();
       await super._render(force, options);
-      applyModuleSheetDataAttributeToWindow(this.element.get(0));
-      applyThemeDataAttributeToWindow(
+      applySheetAttributesToWindow(
+        this.actor.documentName,
+        this.actor.type,
         SettingsProvider.settings.colorScheme.get(),
-        this.element.get(0)
+        this.element.get(0),
       );
       await this.renderCustomContent({ data, isFullRender: true });
       Hooks.callAll(
