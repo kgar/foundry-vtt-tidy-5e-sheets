@@ -393,7 +393,7 @@
     },
     "T5EK.Settings.LockConfigureSheet": {
         "name": "Bloquear selección de hoja",
-        "hint": null
+        "hint": "Impide que las personas que no son GM seleccionen otro diseño de hoja."
     },
     "T5EK.Settings.LockItemQuantity": {
         "name": "Bloquear cantidad de objetos",
@@ -533,7 +533,8 @@
     },
     "T5EK.ActiveEffectsMarkerTitle": "Este objeto tiene efectos activos",
     "T5EK.Settings.ToggleEmptyCharacterSkills": {
-        "hint": "Añade un botón para mostrar/ocultar habilidades vacías."
+        "hint": "Añade un botón para mostrar/ocultar habilidades vacías.",
+        "name": "Alternar habilidades vacías del personaje"
     },
     "T5EK.Settings.DefaultSheetTabs": {
         "AvailableHeader": "Pestañas disponibles",
