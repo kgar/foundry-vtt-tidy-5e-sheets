@@ -77,15 +77,15 @@
     "T5EK.AttunementMax": "Máximo de sintonización",
     "T5EK.GridLayout": "Diseño de cuadrícula",
     "T5EK.ListLayout": "Diseño de lista",
-    "T5EK.LayoutNotSupported": "No se admite el modo diseño",
+    "T5EK.LayoutNotSupported": "Modo de diseño no soportado",
     "T5EK.Encumbrance": "Estorbo",
     "T5EK.AddFavorite": "Añadir Favorito",
     "T5EK.Favorite": "Favorito",
     "T5EK.RemoveFavorite": "Eliminar Favorito",
     "T5EK.ShowNotProficientSkills": "mostrar no competente",
     "T5EK.HideNotProficientSkills": "ocultar no competente",
-    "T5EK.ShowEmptyTraits": "mostrar/editar rasgos vacíos",
-    "T5EK.HideEmptyTraits": "ocultar características vacías",
+    "T5EK.ShowEmptyTraits": "mostrar/editar elementos vacíos",
+    "T5EK.HideEmptyTraits": "ocultar elementos vacíos",
     "T5EK.Abilities": "Características",
     "T5EK.Environment": "Entorno",
     "T5EK.Search": "buscar",
@@ -161,7 +161,7 @@
         "FinancialSupportHeader": "Maneras de apoyar T5EK",
         "FinancialSupportParagraph": "Si te gusta T5EK y quieres apoyar económicamente, aquí tienes algunas formas de hacerlo:",
         "KoFiLink": "{urlStart}Ko-Fi{urlEnd}",
-        "BuyMeACoffeeLink": "{urlStart}Buy Me a Coffee{urlEnd}"
+        "BuyMeACoffeeLink": "{urlStart}Cómprame un Coffee{urlEnd}"
     },
     "T5EK.Settings.ItemCardsForAllItems": {
         "name": "Mostrar las tarjetas de informacíon del objeto de los objetos en todos los disenõs.",
@@ -419,7 +419,7 @@
         "name": null
     },
     "T5EK.Settings.ColorPickerPrepared": {
-        "name": null
+        "name": "Preparado"
     },
     "T5EK.Settings.ColorPickerPreparedOutline": {
         "name": null
@@ -564,12 +564,14 @@
         "name": "Configuración de agotamiento",
         "hint": "Determina cómo se configura y presenta el agotamiento no vehicular en las hojas de personajes y PNJ.",
         "options.specific.text": "Niveles específicos",
-        "options.specific.levels.name": "Niveles totales"
+        "options.specific.levels.name": "Niveles totales",
+        "options.specific.levels.tooltip.name": "Información de nivel de agotamiento {level}"
     },
     "T5EK.UseDefault": "Utilizar predeterminado",
     "T5EK.Reset": "Restablecer",
     "T5EK.Settings.UseDefaultSheetAttributeTabbing": {
-        "hint": "La hoja 5e predeterminada permite tabular desde una entrada de atributo a la siguiente ocultando los controles a su alrededor en orden de tabulación. Habilitar esto replica ese comportamiento. Esta configuración se ignora si \"Usar compatibilidad con teclado accesible\" está desactivado."
+        "hint": "La hoja 5e predeterminada permite tabular desde una entrada de atributo a la siguiente ocultando los controles a su alrededor en orden de tabulación. Habilitar esto replica ese comportamiento. Esta configuración se ignora si \"Usar compatibilidad con teclado accesible\" está desactivado.",
+        "name": "Usar tabulación de atributo de la hoja predeterminada"
     },
     "T5EK.Settings.UseDefaultSheetHpTabbing": {
         "name": "Usar la tabulación de PS de la hoja predeterminada",
