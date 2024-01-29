@@ -21,7 +21,7 @@
     "T5EK.StandardExhaustion1": "Desventaja en pruebas de característica",
     "T5EK.StandardExhaustion2": "Velocidad reducida a la mitad",
     "T5EK.StandardExhaustion3": "Desventaja en tiradas de ataque y de salvación",
-    "T5EK.StandardExhaustion4": "Puntos de golpe máximos reducidos a la mitad",
+    "T5EK.StandardExhaustion4": "Puntos de salud máximos reducidos a la mitad",
     "T5EK.StandardExhaustion5": "Velocidad reducida a 0",
     "T5EK.StandardExhaustion6": "Muerte",
     "T5EK.OneDnDExhaustion0": "Sin efectos negativos",
@@ -66,19 +66,19 @@
     "T5EK.ContextMenuActionUnequip": "Desequipar Objeto",
     "T5EK.ContextMenuActionAttune": "Sintonizarse al Objeto",
     "T5EK.ContextMenuActionUnattune": "Romper Sintonización",
-    "T5EK.ContextMenuActionPrepare": "Preparar Conjuro",
+    "T5EK.ContextMenuActionPrepare": "Preparar",
     "T5EK.ContextMenuActionUnprepare": "Eliminar Preparación",
     "T5EK.ContextMenuActionEdit": "Editar",
     "T5EK.ContextMenuActionDelete": "Eliminar",
     "T5EK.EmptySection": "Esta sección está vacía. Desbloquea la hoja para editarla.",
-    "T5EK.GMOnlyEdit": "Solo tu DJ puede editar esta sección.",
+    "T5EK.GMOnlyEdit": "Solo tu DM puede editar esta sección.",
     "T5EK.AttunementWarning": "Aviso de sintonización: ¡No puedes sintonizar más de {número} objetos!",
     "T5EK.AttunementItems": "Objetos sintonizados",
     "T5EK.AttunementMax": "Máximo de sintonización",
     "T5EK.GridLayout": "Diseño de cuadrícula",
     "T5EK.ListLayout": "Diseño de lista",
     "T5EK.LayoutNotSupported": "Modo de diseño no compatible",
-    "T5EK.Encumbrance": "Estorbo",
+    "T5EK.Encumbrance": "Carga",
     "T5EK.AddFavorite": "Añadir Favorito",
     "T5EK.Favorite": "Favorito",
     "T5EK.RemoveFavorite": "Eliminar Favorito",
@@ -90,14 +90,14 @@
     "T5EK.Environment": "Entorno",
     "T5EK.Search": "buscar",
     "T5EK.SearchClear": "limpiar búsqueda",
-    "T5EK.SearchHint": "Comienza a escribir lo que estás buscando.",
-    "T5EK.ItemCardsKeyHint": "hold Key to interact with card.",
-    "T5EK.ItemCardsMouseHint": "middle mouse to view/edit item.",
+    "T5EK.SearchHint": "Comienza a escribir lo que estás buscando",
+    "T5EK.ItemCardsKeyHint": "Mantén la tecla para interactuar con la carta",
+    "T5EK.ItemCardsMouseHint": "Botón central del ratón para ver/editar el objeto",
     "T5EK.AbbrMod": "Mod",
     "T5EK.AbbrSavingThrow": "Salvación",
     "T5EK.SpellAttackMod": "Modificador de ataque con hechizo",
-    "T5EK.PreparedSpells": "Conjuros preparados",
-    "T5EK.PreparedSpellsMax": "Máximo de conjuros preparados",
+    "T5EK.PreparedSpells": "Hechizos preparados",
+    "T5EK.PreparedSpellsMax": "Máximo de hechizos preparados (Nota: no utilizar el modo 'Sobrescribir' en el efecto activo)",
     "T5EK.TokenLinked": "Token vinculado a actor",
     "T5EK.TokenUnlinked": "Token no vinculado a actor",
     "T5EK.ItemDetailsHeadline": "Texto de reglas/ambientación",
@@ -164,15 +164,15 @@
         "BuyMeACoffeeLink": "{urlStart}Cómprame un Coffee{urlEnd}"
     },
     "T5EK.Settings.ItemCardsForAllItems": {
-        "name": "Mostrar las tarjetas de informacíon del objeto de los objetos en todos los disenõs.",
+        "name": "Mostrar las tarjetas de información en todos los diseños",
         "hint": "Desactívalo si quieres que las tarjetas de información del objeto solo salgan en el diseño de cuadrícula."
     },
     "T5EK.Settings.ItemCardsForNPCs": {
-        "name": "Mostrar las tarjetas de información del objeto en PNJs/vehículos.",
+        "name": "Mostrar las tarjetas de información del objeto en PNJs/vehículos",
         "hint": "Desactívalo si no quieres que las tarjetas de información del objeto salgan en las fichas de PNJs/vehículos."
     },
     "T5EK.Settings.ItemCardsAreFloating": {
-        "name": "Las tarjetas de información del objeto flotan junto al cursor.",
+        "name": "Las tarjetas de información del objeto flotan junto al cursor",
         "hint": "Actívalo para separar las tarjetas de información del objeto de la ficha y hacer que floten al lado del cursor. Es mejor utilizarlo con retardo. Útil cuando la ficha está en una nueva pestaña."
     },
     "T5EK.Settings.ItemCardsDelay": {
@@ -180,7 +180,7 @@
         "hint": "La Tarjeta de Información se mostrará al mantener el ratón sobre un objeto durante el valor en milisegundos (0 = no hay retardo, 300 es el valor por defecto)"
     },
     "T5EK.Settings.ItemCardsFixKey": {
-        "name": "Tecla a mantener para la interacción con la Tarjeta de Información.",
+        "name": "Tecla a mantener para la interacción con la Tarjeta de Información",
         "hint": "Introduce una tecla (p. ej: x) para interactuar con la tarjeta de información del objeto. Puede tratarse de cualquier tecla excepto las teclas de función (ctrl, alt, etc.)"
     },
     "T5EK.Settings.DefaultTheme": {
@@ -207,7 +207,7 @@
         "hint": "Por defecto sólo se muestran los iconos de los rasgos. Actívalo para mostrar también las etiquetas."
     },
     "T5EK.Settings.ShowPlayerName": {
-        "name": "Mostrar nombre del Jugador.",
+        "name": "Mostrar nombre del jugador",
         "hint": "Permite mostrar un campo para el nombre del jugador debajo del nombre del personaje."
     },
     "T5EK.Settings.ShowClassList": {
@@ -235,7 +235,7 @@
         "hint": "Mostrar una barra de colores indicando los PS restantes. Los números de salud seguirán siendo visibles."
     },
     "T5EK.Settings.UseHpOverlay": {
-        "name": "Utilizar superposición de vida",
+        "name": "Utilizar superposición de salud",
         "hint": "Muestra una superposición de PS de colores."
     },
     "T5EK.Settings.ToggleEmptyCharacterTraits": {
@@ -263,7 +263,7 @@
         "hint": "Muestra la pestaña de hechizos para los PNJs. Desactivar para mover la sección de hechizos a la pestaña de atributos."
     },
     "T5EK.Settings.ShowActiveEffectsMarker": {
-        "name": "Mostrar un marcador de Efectos Activos en los objetos.",
+        "name": "Mostrar un marcador de Efectos Activos en los objetos",
         "hint": "Actívalo si quieres ver si los objetos tienen efectos activos en ellos (solo en diseño de lista)."
     },
     "T5EK.Settings.UseContextMenu": {
@@ -275,24 +275,24 @@
         "hint": "Muestra toda la hoja de personaje (menos el diario) a los jugadores con permiso limitado."
     },
     "T5EK.Settings.UseCircularPortraitStyle": {
-        "name": "Estilo de retrato redondo.",
+        "name": "Estilo de retrato redondo",
         "hint": "Selecciona activar los retratos/iconos redondos para los actores.",
         "all": "Todos los actores",
         "pc": "PJs",
         "npc": "PNJs/Vehículos",
-        "none": "ninguno",
+        "none": "Ninguno",
         "default": "ninguno"
     },
     "T5EK.Settings.UseTotalSheetLock": {
-        "name": "Bloquar los campos sensibles.",
+        "name": "Bloquear los campos sensibles",
         "hint": "Actívalo para evitar cambiar accidentalmente valores sensibles, en su mayoría estáticos."
     },
     "T5EK.Settings.LimitEffectsManagementToGM": {
-        "name": "Sólo el DJ puede editar los efectos activos.",
+        "name": "Sólo el DM puede editar los efectos activos",
         "hint": "Actívalo para impedir que los jugadores editen los efectos activos en sus hojas. Seguirán viendo los efectos aplicados."
     },
     "T5EK.Settings.AlwaysShowItemQuantity": {
-        "name": "Mostrar siempre la cantidad de objetos.",
+        "name": "Mostrar siempre la cantidad de objetos",
         "hint": "Actívalo para no ocultar nunca la cantidad de objetos."
     },
     "T5EK.Settings.UseInspiration": {
@@ -308,7 +308,7 @@
         "hint": "Muestra un seguimiento de agotamiento para personajes, PNJs y vehículos."
     },
     "T5EK.Settings.UseNPCRest": {
-        "name": "Descanso para los PNJs.",
+        "name": "Descanso para los PNJs",
         "hint": "Actívalo para mostrar los iconos/botones de descanso en las hojas de los PNJs."
     },
     "T5EK.Settings.ShowNPCRestInChat": {
@@ -316,7 +316,7 @@
         "hint": "Muestra una tarjeta de chat cuando un PNJ descansa."
     },
     "T5EK.Settings.ShowNPCActorLinkMarker": {
-        "name": "Indicar los PNJs vinculados/desvinculados.",
+        "name": "Indicar los PNJs vinculados/desvinculados",
         "hint": "Añade un borde coloreado y un icono a las hojas de los PNJs vinculados/desvinculados.",
         "default": "Sin marcador de vínculo (por defecto)",
         "unlinked": "Resaltar los tokens desvinculados",
@@ -336,15 +336,15 @@
         "hint": "Muestra marcadores de espacios de hechizo (puntos) encima de las secciones de hechizos niveladas en el libro de hechizos."
     },
     "T5EK.Settings.UseCharacterEncumbranceBar": {
-        "name": "Usar la barra de carga de caracteres",
-        "hint": "Muestra una barra de estorbo en las hojas de personaje."
+        "name": "Usar la barra de carga de personaje",
+        "hint": "Muestra una barra de carga en las hojas de personaje."
     },
     "T5EK.Settings.UseNPCEncumbranceBar": {
-        "name": "Utilizar barra de estorbo en PNJs",
+        "name": "Utilizar barra de carga en PNJs",
         "hint": "Muestra una barra de estorbo en las hojas de PNJ."
     },
     "T5EK.Settings.UseVehicleEncumbranceBar": {
-        "name": "Utilizar barra de estorbo en vehículos",
+        "name": "Utilizar barra de carga en vehículos",
         "hint": "Muestra una barra de estorbo en las hojas de vehículos."
     },
     "T5EK.Settings.NPCSheetWidth": {
