@@ -336,7 +336,7 @@
         "hint": "Muestra marcadores de espacios de hechizo (puntos) encima de las secciones de hechizos niveladas en el libro de hechizos."
     },
     "T5EK.Settings.UseCharacterEncumbranceBar": {
-        "name": null,
+        "name": "Usar la barra de carga de caracteres",
         "hint": "Muestra una barra de estorbo en las hojas de personaje."
     },
     "T5EK.Settings.UseNPCEncumbranceBar": {
