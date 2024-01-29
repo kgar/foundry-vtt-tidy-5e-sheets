@@ -86,14 +86,15 @@
 <style lang="scss">
   .spell-slot-markers {
     display: flex;
+    flex-wrap: wrap;
     gap: 0.125rem;
-    margin-top: -0.125rem;
     align-items: center;
 
     .dot {
       margin: 0;
       padding: 0;
       line-height: normal;
+      flex-basis: 0.75rem;
       width: 0.75rem;
       height: 0.75rem;
       border-radius: 50%;
