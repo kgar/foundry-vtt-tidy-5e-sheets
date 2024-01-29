@@ -64,11 +64,21 @@ function getEnabledContent<TContext>(
   context: TContext,
   registeredContent: RegisteredContent<any>[]
 ) {
-  return [...registeredContent].filter(
-    (c) =>
-      isNil(c.enabled) ||
-      (typeof c.enabled === 'function' && c.enabled(context))
-  );
+  return [...registeredContent].filter((c) => {
+    try {
+      return (
+        isNil(c.enabled) ||
+        (typeof c.enabled === 'function' && c.enabled(context))
+      );
+    } catch (e) {
+      error(
+        'Unable to check custom content to determine if it is enabled because of an error',
+        false,
+        e
+      );
+      return false;
+    }
+  });
 }
 
 async function mapRenderableContent(
