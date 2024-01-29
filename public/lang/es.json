@@ -4,19 +4,19 @@
     "T5EK.T5EKItemSheet": "Tidy 5e Item Sheet",
     "T5EK.T5EKVehicle": "Tidy 5e Vechicle Sheet",
     "T5EK.PlayerName": "Nombre del jugador",
-    "T5EK.Gender": "Gender",
+    "T5EK.Gender": "Género",
     "T5EK.Age": "Edad",
     "T5EK.Weight": "Peso",
     "T5EK.Height": "Altura",
     "T5EK.Eyes": "Ojos",
     "T5EK.Skin": "Piel",
     "T5EK.Hair": "Pelo",
-    "T5EK.EditActorImage": "click izquierdo: editar imagen",
-    "T5EK.ShowActorImage": "click derecho: mostrar ilustración del pj",
-    "T5EK.ShowPortraitArt": "mostrar retrato",
-    "T5EK.ShowTokenArt": "mostrar token",
-    "T5EK.ShowItemImage": "right click: show item art",
-    "T5EK.ShowItemArt": "show image",
+    "T5EK.EditActorImage": "Clic izquierdo: editar imagen",
+    "T5EK.ShowActorImage": "Clic derecho: mostrar ilustración del personaje",
+    "T5EK.ShowPortraitArt": "Mostrar retrato",
+    "T5EK.ShowTokenArt": "Mostrar token",
+    "T5EK.ShowItemImage": "Clic derecho: mostrar arte del objeto",
+    "T5EK.ShowItemArt": "Mostrar imagen",
     "T5EK.StandardExhaustion0": "Sin efectos perjudiciales",
     "T5EK.StandardExhaustion1": "Desventaja en pruebas de característica",
     "T5EK.StandardExhaustion2": "Velocidad reducida a la mitad",
@@ -47,7 +47,7 @@
     "T5EK.RestHint": "Tomar un descanso",
     "T5EK.ShortRest": "Descanso corto",
     "T5EK.LongRest": "Descanso largo",
-    "T5EK.HitDiceRollAverage": "Right Click: Average",
+    "T5EK.HitDiceRollAverage": "Clic derecho: aplicar promedio",
     "T5EK.JournalTabName": "Diario",
     "T5EK.RestoreOnRest": "Recuperar tras descanso",
     "T5EK.JournalPersonsOfInterest": "Personas de interés",
@@ -77,7 +77,7 @@
     "T5EK.AttunementMax": "Máximo de sintonización",
     "T5EK.GridLayout": "Diseño de cuadrícula",
     "T5EK.ListLayout": "Diseño de lista",
-    "T5EK.LayoutNotSupported": "Modo de diseño no soportado",
+    "T5EK.LayoutNotSupported": "Modo de diseño no compatible",
     "T5EK.Encumbrance": "Estorbo",
     "T5EK.AddFavorite": "Añadir Favorito",
     "T5EK.Favorite": "Favorito",
@@ -116,7 +116,7 @@
     "T5EK.Class.Sorcerer": "Hechicero",
     "T5EK.Class.Warlock": "Brujo",
     "T5EK.Class.Wizard": "Mago",
-    "T5EK.OriginSummaryConfig": "Configuración del resumen de origen: {actorName}",
+    "T5EK.OriginSummaryConfig": "Configuración de resumen de origen: {actorName}",
     "T5EK.Settings.MulticlassSpellbookFilterLabel": "Filtro de hechizos de multiclase",
     "T5EK.Settings.SheetMenu": {
         "name": "Configuración de T5EK",
@@ -413,55 +413,55 @@
         "name": "Barras de PS"
     },
     "T5EK.Settings.ColorPickerEquippedOutline": {
-        "name": null
+        "name": "Trazado de Equipado"
     },
     "T5EK.Settings.ColorPickerEquippedAccent": {
-        "name": null
+        "name": "Acento de Equipado"
     },
     "T5EK.Settings.ColorPickerPrepared": {
         "name": "Preparado"
     },
     "T5EK.Settings.ColorPickerPreparedOutline": {
-        "name": null
+        "name": "Trazado de Preparado"
     },
     "T5EK.Settings.ColorPickerPreparedAccent": {
-        "name": null
+        "name": "Acento de Preparado"
     },
     "T5EK.Settings.ColorPickerPact": {
         "name": "Pacto"
     },
     "T5EK.Settings.ColorPickerPactOutline": {
-        "name": null
+        "name": "Trazado de Pacto"
     },
     "T5EK.Settings.ColorPickerPactAccent": {
-        "name": null
+        "name": "Acento de Pacto"
     },
     "T5EK.Settings.ColorPickerAtWill": {
         "name": "A voluntad"
     },
     "T5EK.Settings.ColorPickerAtWillOutline": {
-        "name": null
+        "name": "Trazado de A Voluntad"
     },
     "T5EK.Settings.ColorPickerAtWillAccent": {
-        "name": null
+        "name": "Acento de A Voluntad"
     },
     "T5EK.Settings.ColorPickerInnate": {
         "name": "Innato"
     },
     "T5EK.Settings.ColorPickerInnateOutline": {
-        "name": null
+        "name": "Trazado de Innato"
     },
     "T5EK.Settings.ColorPickerInnateAccent": {
-        "name": null
+        "name": "Acento de Innato"
     },
     "T5EK.Settings.ColorPickerAlwaysPrepared": {
         "name": "Siempre preparado"
     },
     "T5EK.Settings.ColorPickerAlwaysPreparedOutline": {
-        "name": null
+        "name": "Trazado de Siempre Preparado"
     },
     "T5EK.Settings.ColorPickerAlwaysPreparedAccent": {
-        "name": null
+        "name": "Acento de Siempre Preparado"
     },
     "T5EK.Settings.AllowHpMaxOverride": {
         "name": "Permitir sobreescribir PS máximos en el personaje",
