@@ -89,6 +89,7 @@
     flex-wrap: wrap;
     gap: 0.125rem;
     align-items: center;
+    flex: 0 1 auto;
 
     .dot {
       margin: 0;

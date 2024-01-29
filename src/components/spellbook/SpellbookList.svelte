@@ -26,9 +26,10 @@
   import ItemFavoriteControl from '../item-list/controls/ItemFavoriteControl.svelte';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
-  import SpellbookItemCardContent from '../item-info-card/SpellbookItemCardContent.svelte';
   import { settingStore } from 'src/settings/settings';
   import ActionFilterOverrideControl from '../item-list/controls/ActionFilterOverrideControl.svelte';
+  import SectionHeaderContentTab from '../item-header/SpellSectionHeaderToolbarContent.svelte';
+  import SpellSectionHeaderToolbar from '../item-header/SpellSectionHeaderToolbar.svelte';
 
   let context =
     getContext<Readable<CharacterSheetContext | NpcSheetContext>>('context');
@@ -54,21 +55,20 @@
 </script>
 
 <section class="spellbook-list-section {cssClass}">
-  <div
-    class="flex-row extra-small-gap justify-content-space-between"
-    style="align-items: flex-end; margin-bottom: 0.125rem; margin-left: 0.0625rem; margin-right: 0.0625rem;"
-  >
-    {#if section.usesSlots}
-      <div class="fred" style="flex: 0 1 auto; padding: 0.125rem 0.5rem;">
+  {#if section.usesSlots}
+    <SpellSectionHeaderToolbar>
+      <svelte:fragment slot="left-content">
+        <SectionHeaderContentTab class="flex-0">
+          <SpellSlotUses {section} />
+        </SectionHeaderContentTab>
         {#if $settingStore.useSpellSlotMarker}
-          <SpellSlotMarkers {section} />
+          <SectionHeaderContentTab class="flex-row">
+            <SpellSlotMarkers {section} />
+          </SectionHeaderContentTab>
         {/if}
-      </div>
-      <div class="fred">
-        <SpellSlotUses {section} />
-      </div>
-    {/if}
-  </div>
+      </svelte:fragment>
+    </SpellSectionHeaderToolbar>
+  {/if}
   <ItemTable>
     <ItemTableHeaderRow>
       <ItemTableColumn primary={true}>
@@ -227,22 +227,5 @@
     line-height: 0.75rem;
     flex: 0 0 3.75rem;
     white-space: nowrap;
-  }
-
-  .fred {
-    // flex: 0 0 max-content;
-    flex: 0;
-    // min-width: 7.5rem;
-    display: flex;
-    align-items: center;
-    padding: 0.125rem 1.25rem 0.125rem 1.25rem;
-    border-radius: 0.3125rem 0.3125rem 0 0;
-    font-weight: 400;
-    line-height: 1.125rem;
-    border: none;
-    font-size: 0.75rem;
-    background: var(--t5ek-faintest-color);
-    color: var(--t5ek-secondary-color);
-    min-height: 1.25rem;
   }
 </style>
