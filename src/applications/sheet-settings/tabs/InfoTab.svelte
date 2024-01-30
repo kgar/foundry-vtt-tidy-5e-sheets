@@ -28,7 +28,7 @@
 </p>
 <p>
   {@html localize('T5EK.Settings.TabInfo.LocalizationParagraph', {
-    urlStart: '<a href="https://weblate.foundryvtt-hub.com/" target="_blank">',
+    urlStart: '<a href="https://hosted.weblate.org/projects/foundry-vtt-tidy-5e-sheets/" target="_blank">',
     urlEnd: '</a>',
   })}
 </p>

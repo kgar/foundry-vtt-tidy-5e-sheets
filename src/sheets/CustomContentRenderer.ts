@@ -30,6 +30,11 @@ export class CustomContentRenderer {
       customContent,
     } = params;
 
+    if (!element?.get(0)) {
+      debug('Element not available when it normally should be', params);
+      return;
+    }
+
     element
       .get(0)
       .querySelectorAll(CONSTANTS.HTML_DYNAMIC_RENDERING_ATTRIBUTE_SELECTOR)
