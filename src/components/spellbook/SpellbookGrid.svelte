@@ -9,14 +9,13 @@
   import ItemTable from '../item-list/ItemTable.svelte';
   import ItemTableColumn from '../item-list/ItemTableColumn.svelte';
   import ItemTableHeaderRow from '../item-list/ItemTableHeaderRow.svelte';
-  import SpellSlotMarkers from '../spellbook/SpellSlotMarkers.svelte';
-  import SpellSlotUses from '../spellbook/SpellSlotUses.svelte';
   import type { Item5e } from 'src/types/item';
   import GridPaneFavoriteIcon from '../item-grid/GridPaneFavoriteIcon.svelte';
   import { getContext } from 'svelte';
   import type { Readable, Writable } from 'svelte/store';
   import { settingStore } from 'src/settings/settings';
   import { ActorItemRuntime } from 'src/runtime/ActorItemRuntime';
+  import SpellSectionHeaderToolbar from '../item-header/SpellSectionHeaderToolbar.svelte';
 
   export let section: any;
   export let spells: Item5e[];
@@ -69,18 +68,13 @@
 </script>
 
 <section class="spellbook-grid {cssClass}">
+  <SpellSectionHeaderToolbar {section} />
   <ItemTable>
     <ItemTableHeaderRow>
       <ItemTableColumn primary={true}>
         <span class="spell-primary-column-label">
           {section.label}
         </span>
-        {#if section.usesSlots}
-          {#if $settingStore.useSpellSlotMarker}
-            <SpellSlotMarkers {section} />
-          {/if}
-          <SpellSlotUses {section} />
-        {/if}
       </ItemTableColumn>
     </ItemTableHeaderRow>
     <div class="spells">

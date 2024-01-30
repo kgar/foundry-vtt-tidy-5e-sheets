@@ -1,10 +1,28 @@
-<!-- TODO: Consider inlining the components here, since this one component will go out to all spellbook item lists/grids. -->
+<script lang="ts">
+  import { settingStore } from 'src/settings/settings';
+  import SpellSectionHeaderToolbarContent from './SpellSectionHeaderToolbarContent.svelte';
+  import SpellSlotMarkers from '../spellbook/SpellSlotMarkers.svelte';
+  import SpellSlotUses from '../spellbook/SpellSlotUses.svelte';
+
+  export let section: any;
+</script>
+
+<!-- TODO: Use logic to only show the toolbar if there are slots and/or custom content -->
 <div class="item-header-toolbar">
   <div class="left">
-    <slot name="left-content" />
+    {#if section.usesSlots}
+      <SpellSectionHeaderToolbarContent class="flex-0">
+        <SpellSlotUses {section} />
+      </SpellSectionHeaderToolbarContent>
+    {/if}
+    {#if section.usesSlots && $settingStore.useSpellSlotMarker}
+      <SpellSectionHeaderToolbarContent class="flex-row">
+        <SpellSlotMarkers {section} />
+      </SpellSectionHeaderToolbarContent>
+    {/if}
   </div>
   <div class="right">
-    <slot name="right-content" />
+    <!-- TODO: Add API support for custom stuff here -->
   </div>
 </div>
 

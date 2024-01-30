@@ -20,15 +20,12 @@
   import ItemUses from '../item-list/ItemUses.svelte';
   import SpellComponents from './SpellComponents.svelte';
   import SpellPrepareControl from '../spellbook/SpellPrepareControl.svelte';
-  import SpellSlotMarkers from '../spellbook/SpellSlotMarkers.svelte';
-  import SpellSlotUses from '../spellbook/SpellSlotUses.svelte';
   import InlineFavoriteIcon from '../item-list/InlineFavoriteIcon.svelte';
   import ItemFavoriteControl from '../item-list/controls/ItemFavoriteControl.svelte';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import { settingStore } from 'src/settings/settings';
   import ActionFilterOverrideControl from '../item-list/controls/ActionFilterOverrideControl.svelte';
-  import SectionHeaderContentTab from '../item-header/SpellSectionHeaderToolbarContent.svelte';
   import SpellSectionHeaderToolbar from '../item-header/SpellSectionHeaderToolbar.svelte';
 
   let context =
@@ -55,20 +52,7 @@
 </script>
 
 <section class="spellbook-list-section {cssClass}">
-  {#if section.usesSlots}
-    <SpellSectionHeaderToolbar>
-      <svelte:fragment slot="left-content">
-        <SectionHeaderContentTab class="flex-0">
-          <SpellSlotUses {section} />
-        </SectionHeaderContentTab>
-        {#if $settingStore.useSpellSlotMarker}
-          <SectionHeaderContentTab class="flex-row">
-            <SpellSlotMarkers {section} />
-          </SectionHeaderContentTab>
-        {/if}
-      </svelte:fragment>
-    </SpellSectionHeaderToolbar>
-  {/if}
+  <SpellSectionHeaderToolbar {section} />
   <ItemTable>
     <ItemTableHeaderRow>
       <ItemTableColumn primary={true}>
