@@ -151,12 +151,9 @@
         {#if includeSchool}
           <ItemTableCell
             baseWidth={spellSchoolBaseWidth}
-            title="{localize('DND5E.SpellSchool')}: {spell.labels.school}"
+            title={spell.labels.school ?? ''}
           >
-            <i
-              class={SpellSchool.getSchoolIcon(spell.system.school)}
-              title={spell.labels.school ?? ''}
-            ></i>
+            <i class={SpellSchool.getIcon(spell.system.school)}></i>
           </ItemTableCell>
         {/if}
         <ItemTableCell

@@ -11,7 +11,11 @@ export class SpellSchool {
   };
   static fallbackIcon = 'fas fa-hat-wizard';
 
-  static getSchoolIcon(schoolKey: string) {
+  static getIcon(schoolKey: string) {
     return SpellSchool.iconsMap[schoolKey] ?? SpellSchool.fallbackIcon;
+  }
+
+  static setIcon(schoolKey: string, iconClass: string) {
+    SpellSchool.iconsMap[schoolKey] = iconClass;
   }
 }

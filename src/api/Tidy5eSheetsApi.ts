@@ -29,6 +29,7 @@ import { CONSTANTS } from 'src/constants';
 import { CustomContentManager } from 'src/runtime/content/CustomContentManager';
 import { ActorItemApi } from './actor-item/ActorItemApi';
 import { ActorPortraitApi } from './actor-portrait/ActorPortraitApi';
+import { SpellSchool } from 'src/features/spell-school/SpellSchool';
 
 /**
  * The Tidy 5e Sheets API. The API becomes available after the hook `tidy5e-sheet.ready` is called.
@@ -664,6 +665,8 @@ export class Tidy5eSheetsApi {
 
     VehicleSheetRuntime.registerTab(registeredTab);
   }
+
+  spellSchool = SpellSchool;
 
   /**
    * Wraps the provided HTML so that Tidy will remove the content when handling document changes.
