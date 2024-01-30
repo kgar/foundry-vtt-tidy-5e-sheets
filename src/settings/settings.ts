@@ -955,6 +955,24 @@ export function createSettings() {
         },
       },
 
+      spellSlotTracker: {
+        options: {
+          name: 'T5EK.Settings.SpellSlotTracker.name',
+          hint: 'T5EK.Settings.SpellSlotTracker.hint',
+          scope: 'world',
+          config: false,
+          default: 'pips',
+          type: String,
+          choices: {
+            [CONSTANTS.SPELL_SLOT_TRACKER_OPTION_PIPS]: 'T5EK.Settings.SpellSlotTracker.PipsOption',
+            [CONSTANTS.SPELL_SLOT_TRACKER_OPTION_NUMBERS]: 'T5EK.Settings.SpellSlotTracker.NumbersOption',
+          },
+        },
+        get() {
+          return FoundryAdapter.getTidySetting<string>('spellSlotTracker');
+        },
+      },
+
       useCharacterEncumbranceBar: {
         options: {
           name: 'T5EK.Settings.UseCharacterEncumbranceBar.name',

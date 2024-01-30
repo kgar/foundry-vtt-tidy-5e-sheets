@@ -271,4 +271,6 @@ export const CONSTANTS = {
      */
     TOOLS_LIST: 'tools-list',
   },
+  SPELL_SLOT_TRACKER_OPTION_PIPS: 'pips',
+  SPELL_SLOT_TRACKER_OPTION_NUMBERS: 'numbers',
 } as const;

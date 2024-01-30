@@ -24,11 +24,12 @@
     id="hideDeathSavesFromPlayers"
   />
 
-  <CheckboxSetting
-    bind:value={$context.settings.useSpellSlotMarker}
-    name={'T5EK.Settings.UseSpellSlotMarker.name'}
-    hint={'T5EK.Settings.UseSpellSlotMarker.hint'}
-    id="useSpellSlotMarker"
+  <SelectSetting
+    bind:value={$context.settings.spellSlotTracker}
+    name={SettingsProvider.settings.spellSlotTracker.options.name}
+    hint={SettingsProvider.settings.spellSlotTracker.options.hint}
+    id="spellSlotTracker"
+    options={SettingsProvider.settings.spellSlotTracker.options.choices}
   />
 
   <CheckboxSetting

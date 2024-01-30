@@ -3,6 +3,7 @@
   import SpellSectionHeaderToolbarContent from './SpellSectionHeaderToolbarContent.svelte';
   import SpellSlotMarkers from '../spellbook/SpellSlotMarkers.svelte';
   import SpellSlotUses from '../spellbook/SpellSlotUses.svelte';
+  import { CONSTANTS } from 'src/constants';
 
   export let section: any;
 </script>
@@ -10,12 +11,12 @@
 <!-- TODO: Use logic to only show the toolbar if there are slots and/or custom content -->
 <div class="item-header-toolbar">
   <div class="left">
-    {#if section.usesSlots}
+    {#if section.usesSlots && $settingStore.spellSlotTracker === CONSTANTS.SPELL_SLOT_TRACKER_OPTION_NUMBERS}
       <SpellSectionHeaderToolbarContent class="flex-0">
         <SpellSlotUses {section} />
       </SpellSectionHeaderToolbarContent>
     {/if}
-    {#if section.usesSlots && $settingStore.useSpellSlotMarker}
+    {#if section.usesSlots && $settingStore.spellSlotTracker === CONSTANTS.SPELL_SLOT_TRACKER_OPTION_PIPS}
       <SpellSectionHeaderToolbarContent class="flex-row">
         <SpellSlotMarkers {section} />
       </SpellSectionHeaderToolbarContent>
