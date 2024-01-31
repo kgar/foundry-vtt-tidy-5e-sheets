@@ -29,7 +29,7 @@ import { CONSTANTS } from 'src/constants';
 import { CustomContentManager } from 'src/runtime/content/CustomContentManager';
 import { ActorItemApi } from './actor-item/ActorItemApi';
 import { ActorPortraitApi } from './actor-portrait/ActorPortraitApi';
-import { SpellSchool } from 'src/features/spell-school/SpellSchool';
+import { SpellSchoolApi } from './spell-school/SpellSchoolApi';
 
 /**
  * The Tidy 5e Sheets API. The API becomes available after the hook `tidy5e-sheet.ready` is called.
@@ -666,7 +666,8 @@ export class Tidy5eSheetsApi {
     VehicleSheetRuntime.registerTab(registeredTab);
   }
 
-  spellSchool = SpellSchool;
+  /**{@inheritDoc SpellSchoolApi} */
+  spellSchool = new SpellSchoolApi();
 
   /**
    * Wraps the provided HTML so that Tidy will remove the content when handling document changes.
@@ -686,7 +687,7 @@ export class Tidy5eSheetsApi {
    *   const api = game.modules.get('tidy5e-sheet-kgar').api;
    *   const actorEmoji = data.actor.system.currency.pp > 0 ? '💹' : '📉';
    *   let iconHtml = api.useHandlebarsRendering(`<h1>${actorEmoji}</h1>`);
-   *   // 👆 This HTML looks like `<div style="display: contents;" data-tidy-render-scheme="handlebars"><h1>📉</h1></div>` 
+   *   // 👆 This HTML looks like `<div style="display: contents;" data-tidy-render-scheme="handlebars"><h1>📉</h1></div>`
    *   // if the actor doesn't have at least 1 platinum.
    *   // Tidy will remove this each time the sheet would normally re-render, and it will add it back.
    *   // When the actor have more than 0 platinum, stonks will rise.
