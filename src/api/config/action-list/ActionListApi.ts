@@ -2,6 +2,8 @@ import { ActionListRuntime } from 'src/runtime/action-list/ActionListRuntime';
 
 /**
  * API functionality related to the Actions List feature.
+ * 
+ * @category Configuration
  */
 export class ActionListApi {
   /**
