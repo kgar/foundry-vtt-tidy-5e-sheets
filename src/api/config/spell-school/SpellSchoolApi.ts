@@ -12,7 +12,7 @@ export class SpellSchoolApi {
    * @param schoolKey the key that represents a spell school, e.g. "abj" for Abjuration, "nec" for Necromancy, and "trs" for Transmutation
    * @param iconClass a class string for an `<i>` element
    */
-  static setIcon(schoolKey: string, iconClass: string) {
+  setIcon(schoolKey: string, iconClass: string) {
     SpellSchool.setIcon(schoolKey, iconClass);
   }
 }
