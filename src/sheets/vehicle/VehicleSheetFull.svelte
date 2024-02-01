@@ -32,9 +32,9 @@
 
   $: sizes = <DropdownListOption[]>Object.entries(
     $context.config.actorSizes,
-  ).map(([abbreviation, size]) => ({
-    value: abbreviation,
-    text: size as string,
+  ).map(([key, size]: [string, any]) => ({
+    value: key,
+    text: size.label,
   }));
 
   $: currentSize = <DropdownListOption>{
