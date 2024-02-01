@@ -148,7 +148,7 @@ export interface ItemSummaryCommandExecuteParams {
  * A command, eventually rendered as a control like a button or a menu item, which can be executed on behalf of an actor when accessing actor portrait menu options.
  */
 /** @category Configuration */
-export interface PortraitContextMenuCommand {
+export interface PortraitMenuCommand {
   /**
    * A label to use when displaying the command. Localization keys also work.
    */
@@ -166,7 +166,7 @@ export interface PortraitContextMenuCommand {
    * @param params contextual information to assist with determining whether a command is appropriate for a particular actor
    * @returns whether to include this command in the UI for the target actor
    */
-  enabled?: (params: PortraitContextMenuCommandEnabledParams) => boolean;
+  enabled?: (params: PortraitMenuCommandEnabledParams) => boolean;
   /**
    * An optional callback to allow for executing logic when a user executes the command.
    * @param params contextual information to assist with determining whether a command is appropriate for a particular actor
@@ -176,14 +176,14 @@ export interface PortraitContextMenuCommand {
    * It is up to the user to execute commands, such as clicking a button that represents the command. This is the general-purpose event handler for that button click.
    * Note that the command may instead be a menu item or other control for other scenarios, depending on the sheet and version of Tidy 5e.
    */
-  execute?: (params: PortraitContextMenuCommandExecuteParams) => void;
+  execute?: (params: PortraitMenuCommandExecuteParams) => void;
 }
 
 /**
  * Contextual information to assist with determining whether a command is appropriate for a particular actor
  */
 /** @category Configuration */
-export interface PortraitContextMenuCommandEnabledParams {
+export interface PortraitMenuCommandEnabledParams {
   /**
    * The actor for which the command will show.
    */
@@ -194,7 +194,7 @@ export interface PortraitContextMenuCommandEnabledParams {
  * Contextual information related to the actor for which the target command was executed.
  */
 /** @category Configuration */
-export interface PortraitContextMenuCommandExecuteParams {
+export interface PortraitMenuCommandExecuteParams {
   /**
    * The actor for which the command was executed.
    */
