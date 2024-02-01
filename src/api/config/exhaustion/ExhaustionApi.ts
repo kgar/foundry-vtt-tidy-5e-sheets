@@ -1,5 +1,5 @@
 import { SettingsProvider } from 'src/settings/settings';
-import type { UseSpecificLevelExhaustionParams } from '../api.types';
+import type { UseSpecificLevelExhaustionParams } from '../../api.types';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type {
   OpenExhaustionConfig,
@@ -8,6 +8,8 @@ import type {
 
 /**
  * API functionality related to the Exhaustion feature.
+ * 
+ * @category Configuration
  */
 export class ExhaustionApi {
   /**

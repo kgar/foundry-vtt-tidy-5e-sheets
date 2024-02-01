@@ -1,8 +1,10 @@
 import { ActorItemRuntime } from 'src/runtime/ActorItemRuntime';
-import type { ActorItemSectionFooterCommand } from '../api.types';
+import type { ActorItemSectionFooterCommand } from '../../api.types';
 
 /**
  * API functionality related to Actor-owned items.
+ * 
+ * @category Configuration
  */
 export class ActorItemApi {
   /**

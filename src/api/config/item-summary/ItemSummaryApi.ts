@@ -1,5 +1,5 @@
 import { ItemSummaryRuntime } from 'src/runtime/ItemSummaryRuntime';
-import type { ItemSummaryCommand } from '../api.types';
+import type { ItemSummaryCommand } from '../../api.types';
 
 /**
  * API functionality related to the Item Summary.
@@ -8,6 +8,8 @@ import type { ItemSummaryCommand } from '../api.types';
  * The item summary makes multiple appearances in Tidy 5e Sheets.
  * Particularly, it shows up when expanding an item table row or when
  * flying out an item info card.
+ * 
+ * @category Configuration
  */
 export class ItemSummaryApi {
   /**

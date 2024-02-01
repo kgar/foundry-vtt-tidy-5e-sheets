@@ -1,4 +1,4 @@
-import { HandlebarsTemplateRenderer } from 'src/api/HandlebarsTemplateRenderer';
+import { HandlebarsTemplateRenderer } from 'src/runtime/HandlebarsTemplateRenderer';
 import { HandlebarsTab } from 'src/api/tab/HandlebarsTab';
 import { HtmlTab } from 'src/api/tab/HtmlTab';
 import type { HtmlTabContent, Tab } from 'src/types/types';
