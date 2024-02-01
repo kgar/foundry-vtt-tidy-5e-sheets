@@ -9,6 +9,7 @@ import type { Actor5e } from 'src/types/types';
 /**
  * Data provided after custom content has been prepared for rendering.
  */
+/** @category Content */
 export interface OnContentReadyParams extends OnRenderParams {
   /**
    * An HTML string that is ready to be rendered to the sheet.
@@ -19,6 +20,7 @@ export interface OnContentReadyParams extends OnRenderParams {
 /**
  * Data provided during the rendering of this item document sheet.
  */
+/** @category Shared */
 export interface OnRenderParams {
   /**
    * The sheet application instance.
@@ -43,16 +45,19 @@ export interface OnRenderParams {
  * - `"handlebars"` - render on each change detection cycle (actor data changed, setting data changed, embedded item changed, etc.)
  * - `"force"`, `undefined`, or any other unspecified value - render when the `render` function is called with `force=true`, i.e. a full re-render
  */
+/** @category Shared */
 export type RenderScheme = 'handlebars' | 'force';
 
 /**
  * The currently supported tab types.
  */
+/** @category Tabs */
 export type SupportedTab = HtmlTab | HandlebarsTab | SvelteTab;
 
 /**
  * Options for registering an actor tab.
  */
+/** @category Tabs */
 export interface ActorTabRegistrationOptions {
   /**
    * An optional sheet layout or layouts (default: 'all')
@@ -68,11 +73,13 @@ export interface ActorTabRegistrationOptions {
 /**
  * The currently supported custom content types.
  */
+/** @category Content */
 export type SupportedContent = HtmlContent | HandlebarsContent;
 
 /**
  * Options for registering content.
  */
+/** @category Content */
 export interface ContentRegistrationOptions {
   layout?: SheetLayout | SheetLayout[];
 }
@@ -80,6 +87,7 @@ export interface ContentRegistrationOptions {
 /**
  * A command, such as a button or a menu item, which can be executed on behalf of an item.
  */
+/** @category Configuration */
 export interface ItemSummaryCommand {
   /**
    * A label to use when displaying the command. Localization keys also work.
@@ -117,6 +125,7 @@ export interface ItemSummaryCommand {
 /**
  * Contextual information to assist with determining whether a command is appropriate for a particular item
  */
+/** @category Configuration */
 export interface ItemSummaryCommandEnabledParams {
   /**
    * The item for which the command will show.
@@ -127,6 +136,7 @@ export interface ItemSummaryCommandEnabledParams {
 /**
  * Contextual information related to the item for which the target command was executed.
  */
+/** @category Configuration */
 export interface ItemSummaryCommandExecuteParams {
   /**
    * The item for which the command was executed.
@@ -137,6 +147,7 @@ export interface ItemSummaryCommandExecuteParams {
 /**
  * A command, eventually rendered as a control like a button or a menu item, which can be executed on behalf of an actor when accessing actor portrait menu options.
  */
+/** @category Configuration */
 export interface PortraitContextMenuCommand {
   /**
    * A label to use when displaying the command. Localization keys also work.
@@ -171,6 +182,7 @@ export interface PortraitContextMenuCommand {
 /**
  * Contextual information to assist with determining whether a command is appropriate for a particular actor
  */
+/** @category Configuration */
 export interface PortraitContextMenuCommandEnabledParams {
   /**
    * The actor for which the command will show.
@@ -181,6 +193,7 @@ export interface PortraitContextMenuCommandEnabledParams {
 /**
  * Contextual information related to the actor for which the target command was executed.
  */
+/** @category Configuration */
 export interface PortraitContextMenuCommandExecuteParams {
   /**
    * The actor for which the command was executed.
@@ -195,6 +208,7 @@ export interface PortraitContextMenuCommandExecuteParams {
 /**
  * A command, eventually rendered as a control like a button or a menu item, which can be executed on behalf of an actor item section.
  */
+/** @category Configuration */
 export interface ActorItemSectionFooterCommand {
   /**
    * Optional label to use when displaying the command. Localization keys also work.
@@ -229,6 +243,7 @@ export interface ActorItemSectionFooterCommand {
   execute?: (params: ActorItemSectionFooterCommandExecuteParams) => void;
 }
 
+/** @category Configuration */
 export interface ActorItemSectionFooterCommandEnabledParams {
   /**
    * The actor for whom the command will show.
@@ -240,6 +255,7 @@ export interface ActorItemSectionFooterCommandEnabledParams {
   section: any;
 }
 
+/** @category Configuration */
 export interface ActorItemSectionFooterCommandExecuteParams {
   /**
    * The actor for whom the command was executed.
@@ -258,6 +274,7 @@ export interface ActorItemSectionFooterCommandExecuteParams {
 /**
  * Information needed to configure specific-level exhaustion.
  */
+/** @category Configuration */
 export interface UseSpecificLevelExhaustionParams {
   /**
    * The max number of levels. If not specified or less than 1, will default to `1`.
@@ -289,6 +306,7 @@ export interface UseSpecificLevelExhaustionParams {
  * @remarks
  * This interface leverages the API for [Element: insertAdjacentHTML() method](https://developer.mozilla.org/en-US/docs/Web/API/Element/insertAdjacentHTML).
  */
+/** @category Content */
 export interface CustomContentInjectParams {
   /**
    * A string representing the position relative to the element.

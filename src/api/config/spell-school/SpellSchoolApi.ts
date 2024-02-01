@@ -3,6 +3,8 @@ import { SpellSchool } from "src/features/spell-school/SpellSchool";
 /**
  * Allows for configuration related to Spell Schools.
  * Currently, [FontAwesome](https://fontawesome.com/) and [RPG Awesome](https://nagoshiashumari.github.io/Rpg-Awesome/) icons are officially supported.
+ * 
+ * @category Configuration
  */
 export class SpellSchoolApi {
   /**

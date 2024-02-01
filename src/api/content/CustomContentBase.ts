@@ -5,6 +5,7 @@ import type {
   RenderScheme,
 } from '../api.types';
 
+/** @category Content */
 export abstract class CustomContentBase {
   /** {@inheritDoc CustomContentInjectParams} */
   abstract injectParams?: CustomContentInjectParams;

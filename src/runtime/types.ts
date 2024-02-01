@@ -5,7 +5,7 @@ import type {
   OnRenderParams,
   RenderScheme,
 } from 'src/api';
-import type { HandlebarsTemplateRenderer } from 'src/api/HandlebarsTemplateRenderer';
+import type { HandlebarsTemplateRenderer } from 'src/runtime/HandlebarsTemplateRenderer';
 import type { Item5e } from 'src/types/item';
 import type {
   HtmlRuntimeContent,
@@ -44,6 +44,7 @@ export type RegisteredTab<TContext> = {
 /**
  * One of the supported layouts of Tidy 5e sheets.
  */
+/** @category Shared */
 export type SheetLayout = 'all' | 'classic';
 
 export type RegisteredItemSummaryCommand = {
