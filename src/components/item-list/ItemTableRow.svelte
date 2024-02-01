@@ -187,29 +187,37 @@
       display: flex;
       flex-direction: row;
       flex-wrap: wrap;
+
+      --t5ek-item-table-row-background: transparent;
       &.prepared {
-        background-color: var(--t5ek-prepared-background);
+        --t5ek-item-table-row-background: var(--t5ek-prepared-background);
       }
 
       &.always-prepared {
-        background-color: var(--t5ek-alwaysprepared-background);
+        --t5ek-item-table-row-background: var(--t5ek-alwaysprepared-background);
       }
 
       &.pact {
-        background-color: var(--t5ek-pact-background);
+        --t5ek-item-table-row-background: var(--t5ek-pact-background);
       }
 
       &.at-will {
-        background-color: var(--t5ek-atwill-background);
+        --t5ek-item-table-row-background: var(--t5ek-atwill-background);
       }
 
       &.innate {
-        background-color: var(--t5ek-innate-background);
+        --t5ek-item-table-row-background: var(--t5ek-innate-background);
       }
 
       &.equipped {
-        background: var(--t5ek-equipped-background);
+        --t5ek-item-table-row-background: var(--t5ek-equipped-background);
       }
+
+      background: linear-gradient(
+        to right,
+        transparent,
+        var(--t5ek-item-table-row-background)
+      );
 
       &.magic-item {
         box-shadow: 0 0 0 0.0625rem
