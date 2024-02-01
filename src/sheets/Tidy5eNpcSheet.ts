@@ -372,22 +372,23 @@ export class Tidy5eNpcSheet
   }
 
   onToggleFilter(setName: string, filterName: string) {
-    const set = this._filters[setName];
-    if (!set) {
-      error(`Unable to find filter set for '${setName}'. Filtering failed.`);
-      return;
-    }
-    if (set.has(filterName)) {
-      set.delete(filterName);
-    } else {
-      set.add(filterName);
-    }
+    // const set = this._filters[setName];
+    // if (!set) {
+    //   error(`Unable to find filter set for '${setName}'. Filtering failed.`);
+    //   return;
+    // }
+    // if (set.has(filterName)) {
+    //   set.delete(filterName);
+    // } else {
+    //   set.add(filterName);
+    // }
 
-    return this.render();
+    // return this.render();
   }
 
   isFilterActive(setName: string, filterName: string): boolean {
-    return this._filters[setName]?.has(filterName) === true;
+    // return this._filters[setName]?.has(filterName) === true;
+    return false;
   }
 
   async _render(force?: boolean, options = {}) {

@@ -39,7 +39,7 @@
 
   $: currentSize = <DropdownListOption>{
     value: $context.system.traits.size,
-    text: $context.config.actorSizes[$context.system.traits.size],
+    text: $context.config.actorSizes[$context.system.traits.size]?.label,
   };
 
   $: abilities = Object.entries<any>($context.abilities);

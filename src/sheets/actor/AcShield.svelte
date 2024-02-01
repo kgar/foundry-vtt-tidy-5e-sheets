@@ -1,6 +1,6 @@
 <script lang="ts">
   import AcShieldBase from './AcShieldBase.svelte';
-  import { getContext } from 'svelte';
+  import { getContext, onMount } from 'svelte';
   import type { Readable } from 'svelte/store';
   import type { ActorSheetContext } from 'src/types/types';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
@@ -17,13 +17,19 @@
   export let cssClass: string = '';
 
   let context = getContext<Readable<ActorSheetContext>>('context');
+
+  let acShieldButton: HTMLElement;
+
+  onMount(() => {
+    $context.actor.sheet._applyAttributionTooltips(acShieldButton);
+  });
 </script>
 
 <AcShieldBase {cssClass}>
   <button
+    bind:this={acShieldButton}
     type="button"
     on:click={() => FoundryAdapter.renderArmorConfig($context.actor)}
-    on:mouseover={(ev) => $context.actor.sheet._onPropertyAttribution(ev)}
     on:focus
     class="config-button attribute-value transparent-button"
     data-attribution="attributes.ac"

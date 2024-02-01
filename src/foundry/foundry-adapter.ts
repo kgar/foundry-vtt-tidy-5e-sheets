@@ -1128,7 +1128,7 @@ export const FoundryAdapter = {
       : game.dnd5e.config.abilityActivationTypes[activationType];
   },
   lookupDamageType(type: string) {
-    return game.dnd5e.config.damageTypes[type];
+    return game.dnd5e.config.damageTypes[type]?.label;
   },
   lookupHealingType(type: string) {
     return game.dnd5e.config.healingTypes[type];
