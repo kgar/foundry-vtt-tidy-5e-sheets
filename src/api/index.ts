@@ -3,6 +3,7 @@ export * from './actor-item/ActorItemApi';
 export * from './actor-portrait/ActorPortraitApi';
 export * from './api.types';
 export * from './ApiConstants';
+export * from './config/ConfigApi';
 export * from './content/CustomContentBase';
 export * from './content/HandlebarsContent';
 export * from './content/HtmlContent';

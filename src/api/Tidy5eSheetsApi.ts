@@ -8,7 +8,6 @@ import { NpcSheetRuntime } from 'src/runtime/NpcSheetRuntime';
 import { VehicleSheetRuntime } from 'src/runtime/VehicleSheetRuntime';
 import { TabManager } from 'src/runtime/tab/TabManager';
 import type { TabId } from './tab/CustomTabBase';
-import { ActionListApi } from './action-list/ActionListApi';
 import { Tidy5eCharacterSheet } from 'src/sheets/Tidy5eCharacterSheet';
 import { Tidy5eNpcSheet } from 'src/sheets/Tidy5eNpcSheet';
 import { Tidy5eVehicleSheet } from 'src/sheets/Tidy5eKgarVehicleSheet';
@@ -27,9 +26,7 @@ import { HtmlContent } from './content/HtmlContent';
 import { HandlebarsContent } from './content/HandlebarsContent';
 import { CONSTANTS } from 'src/constants';
 import { CustomContentManager } from 'src/runtime/content/CustomContentManager';
-import { ActorItemApi } from './actor-item/ActorItemApi';
-import { ActorPortraitApi } from './actor-portrait/ActorPortraitApi';
-import { SpellSchoolApi } from './spell-school/SpellSchoolApi';
+import { ConfigApi } from './config/ConfigApi';
 
 /**
  * The Tidy 5e Sheets API. The API becomes available after the hook `tidy5e-sheet.ready` is called.
@@ -73,13 +70,28 @@ export class Tidy5eSheetsApi {
   }
 
   /** {@inheritDoc ActionListApi} */
-  actionList = new ActionListApi();
+  /** @deprecated api.actionList API has been moved to api.config.actionList */
+  get actionList() {
+    warn('api.actionList API has been moved to api.config.actionList');
+    return this.config.actionList;
+  }
 
   /** {@inheritDoc ActorItemApi} */
-  actorItem = new ActorItemApi();
+  /** @deprecated api.actorItem API has been moved to api.config.actorItem */
+  get actorItem() {
+    warn('api.actorItem API has been moved to api.config.actorItem');
+    return this.config.actorItem;
+  }
 
   /** {@inheritDoc ActorPortraitApi} */
-  actorPortrait = new ActorPortraitApi();
+  /** @deprecated api.actorPortrait API has been moved to api.config.actorPortrait */
+  get actorPortrait() {
+    warn('api.actorPortrait API has been moved to api.config.actorPortrait');
+    return this.config.actorPortrait;
+  }
+
+  /** {@inheritDoc ConfigApi} */
+  config = new ConfigApi();
 
   /**
    * Constants for a variety of uses.
@@ -665,9 +677,6 @@ export class Tidy5eSheetsApi {
 
     VehicleSheetRuntime.registerTab(registeredTab);
   }
-
-  /**{@inheritDoc SpellSchoolApi} */
-  spellSchool = new SpellSchoolApi();
 
   /**
    * Wraps the provided HTML so that Tidy will remove the content when handling document changes.
