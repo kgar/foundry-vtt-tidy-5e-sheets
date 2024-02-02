@@ -188,7 +188,7 @@
       flex-direction: row;
       flex-wrap: wrap;
 
-      // TODO: Eliminate the CSS class injection; set the background color via an inline style with a color taken from a function, rather than using the classes. Put the variable assignment outside of the item table row so that scripters can set the CSS variable on the row itself.
+      // TODO: Eliminate the CSS class injection; set the background color CSS variable via an inline style with a color taken from a function, rather than using the classes. Put the variable assignment outside of the item table row so that scripters can set the CSS variable on the row itself.
       --t5ek-item-table-row-background: transparent;
       &.prepared {
         --t5ek-item-table-row-background: var(--t5ek-prepared-background);
