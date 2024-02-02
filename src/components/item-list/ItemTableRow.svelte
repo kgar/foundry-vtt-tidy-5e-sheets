@@ -139,7 +139,7 @@
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <div
-  class="item-table-row {cssClass}"
+  class="item-table-row-container"
   class:show-item-count-on-hover={!$settingStore.alwaysShowItemQuantity}
   data-context-menu={contextMenu?.type}
   data-context-menu-entity-id={contextMenu?.id}
@@ -152,17 +152,16 @@
   data-tidy-item-table-row
   data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_TABLE_ROW}
 >
-  <slot {toggleSummary} />
+  <div class="item-table-row {cssClass ?? ''}">
+    <slot {toggleSummary} />
+  </div>
   {#if showSummary && chatData}
     <ItemSummary {chatData} {useTransition} {item} />
   {/if}
 </div>
 
 <style lang="scss">
-  .item-table-row {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+  .item-table-row-container {
     position: relative;
     border-radius: 0.3125rem;
     margin: 0.125rem 0 0.125rem 0.5rem;
@@ -170,35 +169,6 @@
 
     &:global(.context) {
       box-shadow: 0 0 0.1875rem 0.0625rem var(--t5ek-primary-accent-color) inset;
-    }
-
-    &.prepared {
-      background-color: var(--t5ek-prepared-background);
-    }
-
-    &.always-prepared {
-      background-color: var(--t5ek-alwaysprepared-background);
-    }
-
-    &.pact {
-      background-color: var(--t5ek-pact-background);
-    }
-
-    &.at-will {
-      background-color: var(--t5ek-atwill-background);
-    }
-
-    &.innate {
-      background-color: var(--t5ek-innate-background);
-    }
-
-    &.equipped {
-      background: var(--t5ek-equipped-background);
-    }
-
-    &.magic-item {
-      box-shadow: 0 0 0 0.0625rem
-        var(--t5ek-faint-magic-item-list-row-accent-color) inset;
     }
 
     &.show-item-count-on-hover :global(.item-quantity) {
@@ -211,6 +181,49 @@
     &.show-item-count-on-hover :global(.item-quantity:focus-within) {
       width: auto;
       opacity: 1;
+    }
+
+    .item-table-row {
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+
+      // TODO: Eliminate the CSS class injection; set the background color CSS variable via an inline style with a color taken from a function, rather than using the classes. Put the variable assignment outside of the item table row so that scripters can set the CSS variable on the row itself.
+      --t5ek-item-table-row-background: transparent;
+      &.prepared {
+        --t5ek-item-table-row-background: var(--t5ek-prepared-background);
+      }
+
+      &.always-prepared {
+        --t5ek-item-table-row-background: var(--t5ek-alwaysprepared-background);
+      }
+
+      &.pact {
+        --t5ek-item-table-row-background: var(--t5ek-pact-background);
+      }
+
+      &.at-will {
+        --t5ek-item-table-row-background: var(--t5ek-atwill-background);
+      }
+
+      &.innate {
+        --t5ek-item-table-row-background: var(--t5ek-innate-background);
+      }
+
+      &.equipped {
+        --t5ek-item-table-row-background: var(--t5ek-equipped-background);
+      }
+
+      background: linear-gradient(
+        to right,
+        var(--t5ek-item-table-row-background),
+        transparent 120%
+      );
+
+      &.magic-item {
+        box-shadow: 0 0 0 0.0625rem
+          var(--t5ek-faint-magic-item-list-row-accent-color) inset;
+      }
     }
   }
 </style>
