@@ -602,6 +602,12 @@
   "T5EK.Settings.ColorPickerAlwaysPreparedAccent": {
     "name": "Always Prepared Accent"
   },
+  "T5EK.Settings.ColorPickerScrollbarThumb": {
+    "name": "Scrollbar Thumb"
+  },
+  "T5EK.Settings.ColorPickerScrollbarTrack": {
+    "name": "Scrollbar Track"
+  },
   "T5EK.Settings.AllowHpMaxOverride": {
     "name": "Allow HP Max Override on Character",
     "hint": "Allows the GM to manually change max HP on the character sheet."
