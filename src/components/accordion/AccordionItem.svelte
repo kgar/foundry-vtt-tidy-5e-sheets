@@ -3,6 +3,7 @@
   import type { AccordionCtxType } from './Accordion.svelte';
   import { writable } from 'svelte/store';
   import { settingStore } from 'src/settings/settings';
+  import ExpandableContainer from 'src/components/expandable/ExpandableContainer.svelte';
 
   export let open: boolean = false;
 
@@ -38,15 +39,11 @@
     </button>
   </h2>
 
-  <div
-    class="accordion-item-content-animation-wrapper"
-    class:open
-    role="presentation"
-  >
-    <div class="accordion-item-content" class:open>
+  <ExpandableContainer expanded={open}>
+    <div class="accordion-item-content">
       <slot />
     </div>
-  </div>
+  </ExpandableContainer>
 </section>
 
 <style lang="scss">
@@ -77,17 +74,7 @@
     }
   }
 
-  .accordion-item-content-animation-wrapper {
-    display: grid;
-    grid-template-rows: 0fr;
-    &.open {
-      grid-template-rows: 1fr;
-    }
-    transition: grid-template-rows 0.2s ease;
-  }
-
   .accordion-item-content {
-    overflow-y: hidden;
     padding-left: 0.25rem;
 
     &.hidden {
