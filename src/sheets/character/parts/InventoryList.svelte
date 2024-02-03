@@ -60,137 +60,141 @@
 
 <section class="inventory-list-section">
   <ItemTable>
-    <ItemTableHeaderRow>
-      <ItemTableColumn primary={true}>
-        {primaryColumnName}
-      </ItemTableColumn>
-      {#if includeWeightColumn}
-        <ItemTableColumn
-          title="{localize('DND5E.Weight')} ({weightUnit})"
-          baseWidth="4rem"
-        >
-          <i class="fas fa-weight-hanging" />
+    <svelte:fragment slot="header">
+      <ItemTableHeaderRow>
+        <ItemTableColumn primary={true}>
+          {primaryColumnName}
         </ItemTableColumn>
-      {/if}
-      <ItemTableColumn title={localize('DND5E.Charges')} baseWidth="3.125rem">
-        <i class="fas fa-bolt" />
-      </ItemTableColumn>
-      <ItemTableColumn baseWidth="7.5rem">
-        {localize('DND5E.Usage')}
-      </ItemTableColumn>
-      {#if $context.editable && $context.useClassicControls && !lockControls}
-        <ItemTableColumn baseWidth={classicControlsBaseWidth} />
-      {/if}
-    </ItemTableHeaderRow>
-    {#each items as item (item.id)}
-      {@const ctx = $context.itemContext[item.id]}
-      <ItemTableRow
-        {item}
-        on:mousedown={(event) =>
-          FoundryAdapter.editOnMiddleClick(event.detail, item)}
-        contextMenu={{
-          type: CONSTANTS.CONTEXT_MENU_TYPE_ITEMS,
-          id: item.id,
-        }}
-        let:toggleSummary
-        cssClass={getInventoryRowClasses(item)}
-      >
-        <ItemTableCell primary={true} title={item.name}>
-          <ItemUseButton disabled={!$context.editable} {item} />
-          <ItemName
-            on:toggle={() => toggleSummary($context.actor)}
-            cssClass="extra-small-gap"
-            {item}
-          >
-            <span
-              class="truncate"
-              data-tidy-item-name={item.name}
-              data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_NAME}
-              >{item.name}</span
-            >
-            {#if item.system?.properties?.amm}
-              <span class="ammo">
-                <AmmoSelector {item} />
-              </span>
-            {/if}
-            <ListItemQuantity {item} {ctx} />
-          </ItemName>
-        </ItemTableCell>
-        {#if $settingStore.showIconsNextToTheItemName}
-          <ItemTableCell cssClass="no-border">
-            {#if ctx?.attunement}
-              <div class="item-detail attunement">
-                <i
-                  class="item-state-icon fas {ctx.attunement.icon} {ctx
-                    .attunement.cls}"
-                  title={localize(ctx.attunement.title)}
-                />
-              </div>
-            {/if}
-          </ItemTableCell>
-          {#if FoundryAdapter.tryGetFlag(item, 'favorite') && allowFavoriteIconNextToName}
-            <InlineFavoriteIcon />
-          {/if}
-        {/if}
         {#if includeWeightColumn}
-          {@const weight = ctx?.totalWeight ?? item.system.weight}
-          <ItemTableCell
+          <ItemTableColumn
+            title="{localize('DND5E.Weight')} ({weightUnit})"
             baseWidth="4rem"
-            title={localize('T5EK.Inventory.Weight.Tooltip', {
-              weight: weight,
-              weightUnit: weightUnit,
-            })}
           >
-            <span class="truncate">
-              {localize('T5EK.Inventory.Weight.Text', {
+            <i class="fas fa-weight-hanging" />
+          </ItemTableColumn>
+        {/if}
+        <ItemTableColumn title={localize('DND5E.Charges')} baseWidth="3.125rem">
+          <i class="fas fa-bolt" />
+        </ItemTableColumn>
+        <ItemTableColumn baseWidth="7.5rem">
+          {localize('DND5E.Usage')}
+        </ItemTableColumn>
+        {#if $context.editable && $context.useClassicControls && !lockControls}
+          <ItemTableColumn baseWidth={classicControlsBaseWidth} />
+        {/if}
+      </ItemTableHeaderRow>
+    </svelte:fragment>
+    <svelte:fragment slot="body">
+      {#each items as item (item.id)}
+        {@const ctx = $context.itemContext[item.id]}
+        <ItemTableRow
+          {item}
+          on:mousedown={(event) =>
+            FoundryAdapter.editOnMiddleClick(event.detail, item)}
+          contextMenu={{
+            type: CONSTANTS.CONTEXT_MENU_TYPE_ITEMS,
+            id: item.id,
+          }}
+          let:toggleSummary
+          cssClass={getInventoryRowClasses(item)}
+        >
+          <ItemTableCell primary={true} title={item.name}>
+            <ItemUseButton disabled={!$context.editable} {item} />
+            <ItemName
+              on:toggle={() => toggleSummary($context.actor)}
+              cssClass="extra-small-gap"
+              {item}
+            >
+              <span
+                class="truncate"
+                data-tidy-item-name={item.name}
+                data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_NAME}
+                >{item.name}</span
+              >
+              {#if item.system?.properties?.amm}
+                <span class="ammo">
+                  <AmmoSelector {item} />
+                </span>
+              {/if}
+              <ListItemQuantity {item} {ctx} />
+            </ItemName>
+          </ItemTableCell>
+          {#if $settingStore.showIconsNextToTheItemName}
+            <ItemTableCell cssClass="no-border">
+              {#if ctx?.attunement}
+                <div class="item-detail attunement">
+                  <i
+                    class="item-state-icon fas {ctx.attunement.icon} {ctx
+                      .attunement.cls}"
+                    title={localize(ctx.attunement.title)}
+                  />
+                </div>
+              {/if}
+            </ItemTableCell>
+            {#if FoundryAdapter.tryGetFlag(item, 'favorite') && allowFavoriteIconNextToName}
+              <InlineFavoriteIcon />
+            {/if}
+          {/if}
+          {#if includeWeightColumn}
+            {@const weight = ctx?.totalWeight ?? item.system.weight}
+            <ItemTableCell
+              baseWidth="4rem"
+              title={localize('T5EK.Inventory.Weight.Tooltip', {
                 weight: weight,
                 weightUnit: weightUnit,
               })}
-            </span>
-          </ItemTableCell>
-        {/if}
-        <ItemTableCell baseWidth="3.125rem" title={localize('DND5E.Uses')}>
-          {#if ctx?.hasUses}
-            <ItemUses {item} />
-          {:else}
-            <ItemAddUses {item} />
+            >
+              <span class="truncate">
+                {localize('T5EK.Inventory.Weight.Text', {
+                  weight: weight,
+                  weightUnit: weightUnit,
+                })}
+              </span>
+            </ItemTableCell>
           {/if}
-        </ItemTableCell>
-        <ItemTableCell baseWidth="7.5rem" title={localize('DND5E.Usage')}>
-          {#if item.system.activation?.type}
-            {item.labels.activation}
-          {/if}
-        </ItemTableCell>
-        {#if $context.editable && $context.useClassicControls && !lockControls}
-          <ItemTableCell baseWidth={classicControlsBaseWidth}>
-            <ItemControls>
-              {#if ctx?.attunement}
-                <AttuneControl {item} {ctx} />
-              {:else}
-                <span role="presentation" />
-              {/if}
-              {#if ctx?.canToggle}
-                <EquipControl {item} {ctx} />
-              {:else}
-                <span role="presentation" />
-              {/if}
-              <ItemFavoriteControl {item} />
-              <ItemEditControl {item} />
-              {#if $context.unlocked}
-                <ItemDuplicateControl {item} />
-                <ItemDeleteControl {item} />
-              {/if}
-              {#if $context.useActionsFeature}
-                <ActionFilterOverrideControl {item} />
-              {/if}
-            </ItemControls>
+          <ItemTableCell baseWidth="3.125rem" title={localize('DND5E.Uses')}>
+            {#if ctx?.hasUses}
+              <ItemUses {item} />
+            {:else}
+              <ItemAddUses {item} />
+            {/if}
           </ItemTableCell>
-        {/if}
-      </ItemTableRow>
-    {/each}
-    {#if $context.unlocked && section}
-      <ItemTableFooter actor={$context.actor} {section} isItem={true} />
-    {/if}
+          <ItemTableCell baseWidth="7.5rem" title={localize('DND5E.Usage')}>
+            {#if item.system.activation?.type}
+              {item.labels.activation}
+            {/if}
+          </ItemTableCell>
+          {#if $context.editable && $context.useClassicControls && !lockControls}
+            <ItemTableCell baseWidth={classicControlsBaseWidth}>
+              <ItemControls>
+                {#if ctx?.attunement}
+                  <AttuneControl {item} {ctx} />
+                {:else}
+                  <span role="presentation" />
+                {/if}
+                {#if ctx?.canToggle}
+                  <EquipControl {item} {ctx} />
+                {:else}
+                  <span role="presentation" />
+                {/if}
+                <ItemFavoriteControl {item} />
+                <ItemEditControl {item} />
+                {#if $context.unlocked}
+                  <ItemDuplicateControl {item} />
+                  <ItemDeleteControl {item} />
+                {/if}
+                {#if $context.useActionsFeature}
+                  <ActionFilterOverrideControl {item} />
+                {/if}
+              </ItemControls>
+            </ItemTableCell>
+          {/if}
+        </ItemTableRow>
+      {/each}
+      {#if $context.unlocked && section}
+        <ItemTableFooter actor={$context.actor} {section} isItem={true} />
+      {/if}
+    </svelte:fragment>
   </ItemTable>
 </section>
 

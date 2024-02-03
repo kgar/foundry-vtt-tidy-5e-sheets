@@ -72,184 +72,191 @@
       )}
       {#if (searchCriteria.trim() === '' && $context.unlocked) || filteredItems.length > 0}
         <ItemTable>
-          <ItemTableHeaderRow>
-            <ItemTableColumn primary={true}>
-              {localize(section.label)}
-            </ItemTableColumn>
-            {#if section.showUsesColumn}
-              <ItemTableColumn baseWidth="3.125rem">
-                {localize('DND5E.Uses')}
+          <svelte:fragment slot="header">
+            <ItemTableHeaderRow>
+              <ItemTableColumn primary={true}>
+                {localize(section.label)}
               </ItemTableColumn>
-            {/if}
-            {#if section.showUsagesColumn}
-              <ItemTableColumn baseWidth="7.5rem">
-                {localize('DND5E.Usage')}
-              </ItemTableColumn>
-            {/if}
-            {#if section.showSourceColumn}
-              <ItemTableColumn baseWidth="7.5rem">
-                {localize('DND5E.Source')}
-              </ItemTableColumn>
-            {/if}
-            {#if section.showLevelColumn}
-              <ItemTableColumn baseWidth="7.5rem">
-                {localize('DND5E.Level')}
-              </ItemTableColumn>
-            {/if}
-            {#if section.showRequirementsColumn}
-              <ItemTableColumn baseWidth="7.5rem">
-                {localize('DND5E.Requirements')}
-              </ItemTableColumn>
-            {/if}
-            {#if section.columns}
-              {#each section.columns as column (column.property)}
-                <ItemTableColumn cssClass={column.css ?? ''}>
-                  {localize(column.label)}
-                </ItemTableColumn>
-              {/each}
-            {/if}
-            {#if $context.editable && $context.useClassicControls}
-              <ItemTableColumn baseWidth={classicControlsBaseWidth} />
-            {/if}
-          </ItemTableHeaderRow>
-          {#each FoundryAdapter.getFilteredItems(searchCriteria, section.items) as item (item.id)}
-            {@const ctx = $context.itemContext[item.id]}
-            <ItemTableRow
-              {item}
-              let:toggleSummary
-              on:mousedown={(event) =>
-                FoundryAdapter.editOnMiddleClick(event.detail, item)}
-              contextMenu={{
-                type: CONSTANTS.CONTEXT_MENU_TYPE_ITEMS,
-                id: item.id,
-              }}
-            >
-              <ItemTableCell primary={true}>
-                <ItemUseButton disabled={!$context.editable} {item} />
-                <ItemName
-                  on:toggle={() => toggleSummary($context.actor)}
-                  hasChildren={false}
-                  {item}
-                >
-                  {#if item.type === 'subclass'}&rdsh;{/if}
-                  <span
-                    data-tidy-item-name={item.name}
-                    data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_NAME}
-                    >{item.name}</span
-                  >
-                </ItemName>
-              </ItemTableCell>
-
-              <!-- TODO: Handle more gracefully -->
-              {#if $settingStore.showIconsNextToTheItemName && FoundryAdapter.tryGetFlag(item, 'favorite')}
-                <InlineFavoriteIcon />
-              {/if}
-
               {#if section.showUsesColumn}
-                <ItemTableCell baseWidth="3.125rem">
-                  {#if ctx?.isOnCooldown}
-                    <RechargeControl {item} />
-                  {:else if item.system.recharge.value}
-                    <i class="fas fa-bolt" title={localize('DND5E.Charged')} />
-                  {:else if ctx?.hasUses}
-                    <ItemUses {item} />
-                  {:else}
-                    <ItemAddUses {item} />
-                  {/if}
-                </ItemTableCell>
+                <ItemTableColumn baseWidth="3.125rem">
+                  {localize('DND5E.Uses')}
+                </ItemTableColumn>
               {/if}
               {#if section.showUsagesColumn}
-                <ItemTableCell baseWidth="7.5rem">
-                  {#if item.system.activation.type}
-                    {item.labels.activation}
-                  {/if}
-                </ItemTableCell>
+                <ItemTableColumn baseWidth="7.5rem">
+                  {localize('DND5E.Usage')}
+                </ItemTableColumn>
               {/if}
               {#if section.showSourceColumn}
-                <ItemTableCell baseWidth="7.5rem">
-                  <span class="truncate" title={item.system.source.label}
-                    >{item.system.source.label}</span
-                  >
-                </ItemTableCell>
+                <ItemTableColumn baseWidth="7.5rem">
+                  {localize('DND5E.Source')}
+                </ItemTableColumn>
               {/if}
               {#if section.showLevelColumn}
-                <ItemTableCell baseWidth="7.5rem">
-                  {#if item.type === 'class'}
-                    <select
-                      on:change={(event) =>
-                        FoundryAdapter.onLevelChange(
-                          event,
-                          item,
-                          $context.actor,
-                        )}
-                      disabled={!$context.editable ||
-                        $context.lockLevelSelector}
-                    >
-                      {#each getAvailableLevels(item.id) as availableLevel}
-                        <option
-                          value={availableLevel.delta}
-                          disabled={availableLevel.disabled || undefined}
-                          selected={availableLevel.delta === 0}
-                        >
-                          {localize('DND5E.LevelNumber', {
-                            level: availableLevel.level,
-                          })}
-                          {#if availableLevel.delta}
-                            ({formatAsModifier(availableLevel.delta)})
-                          {/if}
-                        </option>
-                      {/each}
-                    </select>
-                  {/if}
-                </ItemTableCell>
+                <ItemTableColumn baseWidth="7.5rem">
+                  {localize('DND5E.Level')}
+                </ItemTableColumn>
               {/if}
               {#if section.showRequirementsColumn}
-                <ItemTableCell baseWidth="7.5rem">
-                  <span class="truncate" title={item.system.requirements ?? ''}
-                    >{item.system.requirements ?? ''}</span
-                  >
-                </ItemTableCell>
+                <ItemTableColumn baseWidth="7.5rem">
+                  {localize('DND5E.Requirements')}
+                </ItemTableColumn>
               {/if}
               {#if section.columns}
                 {#each section.columns as column (column.property)}
-                  {@const itemPropertyValue =
-                    FoundryAdapter.getProperty(item, item.property) ??
-                    FoundryAdapter.getProperty(item, ctx?.property) ??
-                    ''}
-                  <ItemTableCell>
-                    {#if column.editable}
-                      <DtypeInput
-                        document={item}
-                        field={item.property ?? ctx?.property}
-                        value={itemPropertyValue}
-                        dtype={column.editable}
-                      />
-                    {:else}
-                      {itemPropertyValue}
-                    {/if}
-                  </ItemTableCell>
+                  <ItemTableColumn cssClass={column.css ?? ''}>
+                    {localize(column.label)}
+                  </ItemTableColumn>
                 {/each}
               {/if}
               {#if $context.editable && $context.useClassicControls}
-                <ItemTableCell baseWidth={classicControlsBaseWidth}>
-                  {#if item.type !== 'class'}
-                    <ItemFavoriteControl {item} />
-                  {/if}
-                  <ItemEditControl {item} />
-                  {#if $context.unlocked}
-                    <ItemDuplicateControl {item} />
-                    <ItemDeleteControl {item} />
-                  {/if}
-                  {#if $context.useActionsFeature}
-                    <ActionFilterOverrideControl {item} />
-                  {/if}
-                </ItemTableCell>
+                <ItemTableColumn baseWidth={classicControlsBaseWidth} />
               {/if}
-            </ItemTableRow>
-          {/each}
-          {#if $context.unlocked}
-            <ItemTableFooter {section} actor={$context.actor} isItem={true} />
-          {/if}
+            </ItemTableHeaderRow>
+          </svelte:fragment>
+          <svelte:fragment slot="body">
+            {#each FoundryAdapter.getFilteredItems(searchCriteria, section.items) as item (item.id)}
+              {@const ctx = $context.itemContext[item.id]}
+              <ItemTableRow
+                {item}
+                let:toggleSummary
+                on:mousedown={(event) =>
+                  FoundryAdapter.editOnMiddleClick(event.detail, item)}
+                contextMenu={{
+                  type: CONSTANTS.CONTEXT_MENU_TYPE_ITEMS,
+                  id: item.id,
+                }}
+              >
+                <ItemTableCell primary={true}>
+                  <ItemUseButton disabled={!$context.editable} {item} />
+                  <ItemName
+                    on:toggle={() => toggleSummary($context.actor)}
+                    hasChildren={false}
+                    {item}
+                  >
+                    {#if item.type === 'subclass'}&rdsh;{/if}
+                    <span
+                      data-tidy-item-name={item.name}
+                      data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_NAME}
+                      >{item.name}</span
+                    >
+                  </ItemName>
+                </ItemTableCell>
+                <!-- TODO: Handle more gracefully -->
+                {#if $settingStore.showIconsNextToTheItemName && FoundryAdapter.tryGetFlag(item, 'favorite')}
+                  <InlineFavoriteIcon />
+                {/if}
+                {#if section.showUsesColumn}
+                  <ItemTableCell baseWidth="3.125rem">
+                    {#if ctx?.isOnCooldown}
+                      <RechargeControl {item} />
+                    {:else if item.system.recharge.value}
+                      <i
+                        class="fas fa-bolt"
+                        title={localize('DND5E.Charged')}
+                      />
+                    {:else if ctx?.hasUses}
+                      <ItemUses {item} />
+                    {:else}
+                      <ItemAddUses {item} />
+                    {/if}
+                  </ItemTableCell>
+                {/if}
+                {#if section.showUsagesColumn}
+                  <ItemTableCell baseWidth="7.5rem">
+                    {#if item.system.activation.type}
+                      {item.labels.activation}
+                    {/if}
+                  </ItemTableCell>
+                {/if}
+                {#if section.showSourceColumn}
+                  <ItemTableCell baseWidth="7.5rem">
+                    <span class="truncate" title={item.system.source.label}
+                      >{item.system.source.label}</span
+                    >
+                  </ItemTableCell>
+                {/if}
+                {#if section.showLevelColumn}
+                  <ItemTableCell baseWidth="7.5rem">
+                    {#if item.type === 'class'}
+                      <select
+                        on:change={(event) =>
+                          FoundryAdapter.onLevelChange(
+                            event,
+                            item,
+                            $context.actor,
+                          )}
+                        disabled={!$context.editable ||
+                          $context.lockLevelSelector}
+                      >
+                        {#each getAvailableLevels(item.id) as availableLevel}
+                          <option
+                            value={availableLevel.delta}
+                            disabled={availableLevel.disabled || undefined}
+                            selected={availableLevel.delta === 0}
+                          >
+                            {localize('DND5E.LevelNumber', {
+                              level: availableLevel.level,
+                            })}
+                            {#if availableLevel.delta}
+                              ({formatAsModifier(availableLevel.delta)})
+                            {/if}
+                          </option>
+                        {/each}
+                      </select>
+                    {/if}
+                  </ItemTableCell>
+                {/if}
+                {#if section.showRequirementsColumn}
+                  <ItemTableCell baseWidth="7.5rem">
+                    <span
+                      class="truncate"
+                      title={item.system.requirements ?? ''}
+                      >{item.system.requirements ?? ''}</span
+                    >
+                  </ItemTableCell>
+                {/if}
+                {#if section.columns}
+                  {#each section.columns as column (column.property)}
+                    {@const itemPropertyValue =
+                      FoundryAdapter.getProperty(item, item.property) ??
+                      FoundryAdapter.getProperty(item, ctx?.property) ??
+                      ''}
+                    <ItemTableCell>
+                      {#if column.editable}
+                        <DtypeInput
+                          document={item}
+                          field={item.property ?? ctx?.property}
+                          value={itemPropertyValue}
+                          dtype={column.editable}
+                        />
+                      {:else}
+                        {itemPropertyValue}
+                      {/if}
+                    </ItemTableCell>
+                  {/each}
+                {/if}
+                {#if $context.editable && $context.useClassicControls}
+                  <ItemTableCell baseWidth={classicControlsBaseWidth}>
+                    {#if item.type !== 'class'}
+                      <ItemFavoriteControl {item} />
+                    {/if}
+                    <ItemEditControl {item} />
+                    {#if $context.unlocked}
+                      <ItemDuplicateControl {item} />
+                      <ItemDeleteControl {item} />
+                    {/if}
+                    {#if $context.useActionsFeature}
+                      <ActionFilterOverrideControl {item} />
+                    {/if}
+                  </ItemTableCell>
+                {/if}
+              </ItemTableRow>
+            {/each}
+            {#if $context.unlocked}
+              <ItemTableFooter {section} actor={$context.actor} isItem={true} />
+            {/if}
+          </svelte:fragment>
         </ItemTable>
       {/if}
     {/each}

@@ -82,14 +82,16 @@
 </script>
 
 <ItemTable>
-  <ItemTableHeaderRow>
-    <ItemTableColumn primary={true}>
-      <span class="inventory-primary-column-label">
-        {localize(section.label)} ({items.length})
-      </span>
-    </ItemTableColumn>
-  </ItemTableHeaderRow>
-  <div class="items">
+  <svelte:fragment slot="header">
+    <ItemTableHeaderRow>
+      <ItemTableColumn primary={true}>
+        <span class="inventory-primary-column-label">
+          {localize(section.label)} ({items.length})
+        </span>
+      </ItemTableColumn>
+    </ItemTableHeaderRow>
+  </svelte:fragment>
+  <div class="items" slot="body">
     {#each items as item (item.id)}
       {@const ctx = $context.itemContext[item.id]}
 

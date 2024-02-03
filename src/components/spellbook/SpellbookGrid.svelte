@@ -70,20 +70,22 @@
 
 <section class="spellbook-grid {cssClass}">
   <ItemTable>
-    <ItemTableHeaderRow>
-      <ItemTableColumn primary={true}>
-        <span class="spell-primary-column-label">
-          {section.label}
-        </span>
-        {#if section.usesSlots}
-          {#if $settingStore.useSpellSlotMarker}
-            <SpellSlotMarkers {section} />
+    <svelte:fragment slot="header">
+      <ItemTableHeaderRow>
+        <ItemTableColumn primary={true}>
+          <span class="spell-primary-column-label">
+            {section.label}
+          </span>
+          {#if section.usesSlots}
+            {#if $settingStore.useSpellSlotMarker}
+              <SpellSlotMarkers {section} />
+            {/if}
+            <SpellSlotUses {section} />
           {/if}
-          <SpellSlotUses {section} />
-        {/if}
-      </ItemTableColumn>
-    </ItemTableHeaderRow>
-    <div class="spells">
+        </ItemTableColumn>
+      </ItemTableHeaderRow>
+    </svelte:fragment>
+    <div class="spells" slot="body">
       {#each spells as spell}
         {@const spellImgUrl = FoundryAdapter.getSpellImageUrl($context, spell)}
         <button

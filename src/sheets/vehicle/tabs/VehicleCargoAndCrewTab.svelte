@@ -111,153 +111,154 @@
     {@const cardTemplate = itemCardTemplates[section.dataset.type] ?? null}
     {#if $context.unlocked || section.items.length}
       <ItemTable>
-        <ItemTableHeaderRow>
-          <ItemTableColumn primary={true}>
-            {localize(section.label)}
-          </ItemTableColumn>
-          {#each section.columns as column}
-            {#if section.editableName || !columnsToSkipForClickableRows.includes(column.property)}
-              <ItemTableColumn
-                cssClass="items-header-{column.css}"
-                baseWidth={baseWidths[column.property] ?? '3.125rem'}
-              >
-                {column.label}
-              </ItemTableColumn>
-            {/if}
-          {/each}
-          {#if $context.editable && ((!section.editableName && $context.useClassicControls) || ($context.unlocked && section.editableName))}
-            <ItemTableColumn
-              baseWidth={section.editableName
-                ? classicControlsEditableRowBaseWidth
-                : classicControlsBaseWidth}
-            />
-          {/if}
-        </ItemTableHeaderRow>
-        {#each section.items as item, index (item.id ?? index)}
-          {@const ctx = $context.itemContext[item.id]}
-          <ItemTableRow
-            let:toggleSummary
-            on:mousedown={(event) =>
-              FoundryAdapter.editOnMiddleClick(event.detail, item)}
-            contextMenu={section.editableName
-              ? null
-              : {
-                  type: CONSTANTS.CONTEXT_MENU_TYPE_ITEMS,
-                  id: item.id,
-                }}
-            {item}
-            cssClass={FoundryAdapter.getInventoryRowClasses(item, ctx)}
-          >
-            <ItemTableCell primary={true}>
-              {#if section.editableName}
-                <TextInput
-                  document={item}
-                  field="name"
-                  selectOnFocus={true}
-                  onSaveChange={(ev) => saveSection(ev, index, 'name', section)}
-                  value={item.name}
-                  cssClass="editable-name"
-                  disabled={!$context.editable}
-                  attributes={{ 'data-tidy-item-name': item.name }}
-                />
-              {:else}
-                <ItemUseButton disabled={!$context.editable} {item} />
-                <ItemName
-                  on:toggle={() => toggleSummary($context.actor)}
-                  cssClass="extra-small-gap"
-                  {item}
+        <svelte:fragment slot="header">
+          <ItemTableHeaderRow>
+            <ItemTableColumn primary={true}>
+              {localize(section.label)}
+            </ItemTableColumn>
+            {#each section.columns as column}
+              {#if section.editableName || !columnsToSkipForClickableRows.includes(column.property)}
+                <ItemTableColumn
+                  cssClass="items-header-{column.css}"
+                  baseWidth={baseWidths[column.property] ?? '3.125rem'}
                 >
-                  <span
-                    class="truncate"
-                    data-tidy-item-name={item.name}
-                    data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_NAME}
-                    >{item.name}</span
-                  >
-                  <ListItemQuantity {item} {ctx} />
-                </ItemName>
+                  {column.label}
+                </ItemTableColumn>
               {/if}
-            </ItemTableCell>
-            {#if section.columns}
-              {#each section.columns as column}
-                {#if section.editableName || !columnsToSkipForClickableRows.includes(column.property)}
-                  {@const isNumber = column.editable === 'Number'}
-                  {@const fallback = isNumber ? '0' : ''}
-                  {@const value =
-                    FoundryAdapter.getProperty(
-                      item,
-                      column.property,
-                    )?.toString() ??
-                    FoundryAdapter.getProperty(
-                      ctx,
-                      column.property,
-                    )?.toString() ??
-                    fallback}
-                  <ItemTableCell
-                    baseWidth={baseWidths[column.property] ?? '3.125rem'}
-                  >
-                    {#if column.editable}
-                      <TextInput
-                        document={item}
-                        field={column.property}
-                        allowDeltaChanges={isNumber}
-                        selectOnFocus={true}
-                        {value}
-                        onSaveChange={(ev) =>
-                          saveSection(ev, index, column.property, section)}
-                        disabled={!$context.editable ||
-                          (column.property === 'quantity' &&
-                            $context.lockItemQuantity)}
-                      />
-                    {:else}
-                      {FoundryAdapter.getProperty(item, column.property) ??
-                        FoundryAdapter.getProperty(ctx, column.property) ??
-                        fallback}
-                    {/if}
-                  </ItemTableCell>
-                {/if}
-              {/each}
-            {/if}
+            {/each}
             {#if $context.editable && ((!section.editableName && $context.useClassicControls) || ($context.unlocked && section.editableName))}
-              <ItemTableCell
+              <ItemTableColumn
                 baseWidth={section.editableName
                   ? classicControlsEditableRowBaseWidth
                   : classicControlsBaseWidth}
-              >
-                <ItemControls>
-                  {#if !section.editableName}
-                    <ItemEditControl {item} />
-                  {/if}
-
-                  {#if $context.unlocked && !section.editableName}
-                    <ItemDuplicateControl {item} />
-                  {/if}
-
-                  {#if $context.unlocked}
-                    <ItemDeleteControl
-                      onDelete={() =>
-                        !section.editableName ||
-                        deleteCrewOrPassenger(section, index)}
-                      {item}
-                    />
-                  {/if}
-
-                  {#if $context.unlocked && !section.editableName && $context.useActionsFeature}
-                    <ActionFilterOverrideControl {item} />
-                  {/if}
-                </ItemControls>
-              </ItemTableCell>
+              />
             {/if}
-          </ItemTableRow>
-        {/each}
-        {#if $context.unlocked && section.dataset}
-          <ItemTableFooter
-            actor={$context.actor}
-            {section}
-            create={() => onItemCreate(section.dataset.type)}
-            isItem={section.dataset.type !== 'crew' &&
-              section.dataset.type !== 'passengers'}
-          />
-        {/if}
+          </ItemTableHeaderRow>
+        </svelte:fragment>
+        <svelte:fragment slot="body">
+          {#each section.items as item, index (item.id ?? index)}
+            {@const ctx = $context.itemContext[item.id]}
+            <ItemTableRow
+              let:toggleSummary
+              on:mousedown={(event) =>
+                FoundryAdapter.editOnMiddleClick(event.detail, item)}
+              contextMenu={section.editableName
+                ? null
+                : {
+                    type: CONSTANTS.CONTEXT_MENU_TYPE_ITEMS,
+                    id: item.id,
+                  }}
+              {item}
+              cssClass={FoundryAdapter.getInventoryRowClasses(item, ctx)}
+            >
+              <ItemTableCell primary={true}>
+                {#if section.editableName}
+                  <TextInput
+                    document={item}
+                    field="name"
+                    selectOnFocus={true}
+                    onSaveChange={(ev) => saveSection(ev, index, 'name', section)}
+                    value={item.name}
+                    cssClass="editable-name"
+                    disabled={!$context.editable}
+                    attributes={{ 'data-tidy-item-name': item.name }}
+                  />
+                {:else}
+                  <ItemUseButton disabled={!$context.editable} {item} />
+                  <ItemName
+                    on:toggle={() => toggleSummary($context.actor)}
+                    cssClass="extra-small-gap"
+                    {item}
+                  >
+                    <span
+                      class="truncate"
+                      data-tidy-item-name={item.name}
+                      data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_NAME}
+                      >{item.name}</span
+                    >
+                    <ListItemQuantity {item} {ctx} />
+                  </ItemName>
+                {/if}
+              </ItemTableCell>
+              {#if section.columns}
+                {#each section.columns as column}
+                  {#if section.editableName || !columnsToSkipForClickableRows.includes(column.property)}
+                    {@const isNumber = column.editable === 'Number'}
+                    {@const fallback = isNumber ? '0' : ''}
+                    {@const value =
+                      FoundryAdapter.getProperty(
+                        item,
+                        column.property,
+                      )?.toString() ??
+                      FoundryAdapter.getProperty(
+                        ctx,
+                        column.property,
+                      )?.toString() ??
+                      fallback}
+                    <ItemTableCell
+                      baseWidth={baseWidths[column.property] ?? '3.125rem'}
+                    >
+                      {#if column.editable}
+                        <TextInput
+                          document={item}
+                          field={column.property}
+                          allowDeltaChanges={isNumber}
+                          selectOnFocus={true}
+                          {value}
+                          onSaveChange={(ev) =>
+                            saveSection(ev, index, column.property, section)}
+                          disabled={!$context.editable ||
+                            (column.property === 'quantity' &&
+                              $context.lockItemQuantity)}
+                        />
+                      {:else}
+                        {FoundryAdapter.getProperty(item, column.property) ??
+                          FoundryAdapter.getProperty(ctx, column.property) ??
+                          fallback}
+                      {/if}
+                    </ItemTableCell>
+                  {/if}
+                {/each}
+              {/if}
+              {#if $context.editable && ((!section.editableName && $context.useClassicControls) || ($context.unlocked && section.editableName))}
+                <ItemTableCell
+                  baseWidth={section.editableName
+                    ? classicControlsEditableRowBaseWidth
+                    : classicControlsBaseWidth}
+                >
+                  <ItemControls>
+                    {#if !section.editableName}
+                      <ItemEditControl {item} />
+                    {/if}
+                    {#if $context.unlocked && !section.editableName}
+                      <ItemDuplicateControl {item} />
+                    {/if}
+                    {#if $context.unlocked}
+                      <ItemDeleteControl
+                        onDelete={() =>
+                          !section.editableName ||
+                          deleteCrewOrPassenger(section, index)}
+                        {item}
+                      />
+                    {/if}
+                    {#if $context.unlocked && !section.editableName && $context.useActionsFeature}
+                      <ActionFilterOverrideControl {item} />
+                    {/if}
+                  </ItemControls>
+                </ItemTableCell>
+              {/if}
+            </ItemTableRow>
+          {/each}
+          {#if $context.unlocked && section.dataset}
+            <ItemTableFooter
+              actor={$context.actor}
+              {section}
+              create={() => onItemCreate(section.dataset.type)}
+              isItem={section.dataset.type !== 'crew' &&
+                section.dataset.type !== 'passengers'}
+            />
+          {/if}
+        </svelte:fragment>
       </ItemTable>
     {/if}
   {/each}

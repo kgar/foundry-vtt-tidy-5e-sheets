@@ -37,90 +37,92 @@
     {#each effectSections as section}
       {#if ($context.unlocked && $context.allowEffectsManagement) || section.effects.length > 0}
         <ItemTable>
-          <ItemTableHeaderRow>
-            <ItemTableColumn primary={true}>
-              {localize(section.label)}
-            </ItemTableColumn>
-            <ItemTableColumn baseWidth="12.5rem">
-              {localize('DND5E.Source')}
-            </ItemTableColumn>
-            <ItemTableColumn baseWidth="7.5rem">
-              {localize('DND5E.Duration')}
-            </ItemTableColumn>
-            {#if $context.editable && $context.useClassicControls && $context.allowEffectsManagement}
-              <ItemTableColumn baseWidth={classicControlsBaseWidth} />
-            {/if}
-          </ItemTableHeaderRow>
-          {#each section.effects as effect}
-            <ItemTableRow
-              on:mousedown={(event) =>
-                FoundryAdapter.editOnMiddleClick(event.detail, effect)}
-              contextMenu={{
-                type: CONSTANTS.CONTEXT_MENU_TYPE_EFFECTS,
-                id: effect.id,
-              }}
-              {effect}
-            >
-              <ItemTableCell
-                primary={true}
-                attributes={{
-                  'data-tidy-effect-name-container': true,
-                  'data-effect-id': effect.id,
-                }}
-              >
-                <ItemImage src={effect.icon} />
-                <span
-                  class="align-self-center truncate"
-                  data-tidy-effect-name={effect.name}>{effect.name}</span
-                >
-              </ItemTableCell>
-              <ItemTableCell baseWidth="12.5rem"
-                >{effect.sourceName ?? ''}</ItemTableCell
-              >
-              <ItemTableCell baseWidth="7.5rem"
-                >{effect.duration.label ?? ''}</ItemTableCell
-              >
-
+          <svelte:fragment slot="header">
+            <ItemTableHeaderRow>
+              <ItemTableColumn primary={true}>
+                {localize(section.label)}
+              </ItemTableColumn>
+              <ItemTableColumn baseWidth="12.5rem">
+                {localize('DND5E.Source')}
+              </ItemTableColumn>
+              <ItemTableColumn baseWidth="7.5rem">
+                {localize('DND5E.Duration')}
+              </ItemTableColumn>
               {#if $context.editable && $context.useClassicControls && $context.allowEffectsManagement}
-                <ItemTableCell baseWidth={classicControlsBaseWidth}>
-                  <ItemControls>
-                    <ItemControl
-                      on:click={() =>
-                        effect.update({ disabled: !effect.disabled })}
-                      title={effect.disabled
-                        ? localize('DND5E.EffectEnable')
-                        : localize('DND5E.EffectDisable')}
-                      iconCssClass="fas {effect.disabled
-                        ? 'fa-check'
-                        : 'fa-times'}"
-                    />
-                    <ItemControl
-                      on:click={() => effect.sheet.render(true)}
-                      title={localize('DND5E.EffectEdit')}
-                      iconCssClass="fas fa-edit"
-                    />
-
-                    {#if $context.unlocked}
-                      <ItemControl
-                        on:click={() => effect.deleteDialog()}
-                        title={localize('DND5E.EffectDelete')}
-                        iconCssClass="fas fa-trash"
-                      />
-                    {/if}
-                  </ItemControls>
-                </ItemTableCell>
+                <ItemTableColumn baseWidth={classicControlsBaseWidth} />
               {/if}
-            </ItemTableRow>
-          {/each}
-          {#if $context.unlocked && $context.allowEffectsManagement}
-            <ItemTableFooter
-              actor={$context.actor}
-              {section}
-              create={() =>
-                FoundryAdapter.addEffect(section.type, $context.actor)}
-              isItem={false}
-            />
-          {/if}
+            </ItemTableHeaderRow>
+          </svelte:fragment>
+          <svelte:fragment slot="body">
+            {#each section.effects as effect}
+              <ItemTableRow
+                on:mousedown={(event) =>
+                  FoundryAdapter.editOnMiddleClick(event.detail, effect)}
+                contextMenu={{
+                  type: CONSTANTS.CONTEXT_MENU_TYPE_EFFECTS,
+                  id: effect.id,
+                }}
+                {effect}
+              >
+                <ItemTableCell
+                  primary={true}
+                  attributes={{
+                    'data-tidy-effect-name-container': true,
+                    'data-effect-id': effect.id,
+                  }}
+                >
+                  <ItemImage src={effect.icon} />
+                  <span
+                    class="align-self-center truncate"
+                    data-tidy-effect-name={effect.name}>{effect.name}</span
+                  >
+                </ItemTableCell>
+                <ItemTableCell baseWidth="12.5rem"
+                  >{effect.sourceName ?? ''}</ItemTableCell
+                >
+                <ItemTableCell baseWidth="7.5rem"
+                  >{effect.duration.label ?? ''}</ItemTableCell
+                >
+                {#if $context.editable && $context.useClassicControls && $context.allowEffectsManagement}
+                  <ItemTableCell baseWidth={classicControlsBaseWidth}>
+                    <ItemControls>
+                      <ItemControl
+                        on:click={() =>
+                          effect.update({ disabled: !effect.disabled })}
+                        title={effect.disabled
+                          ? localize('DND5E.EffectEnable')
+                          : localize('DND5E.EffectDisable')}
+                        iconCssClass="fas {effect.disabled
+                          ? 'fa-check'
+                          : 'fa-times'}"
+                      />
+                      <ItemControl
+                        on:click={() => effect.sheet.render(true)}
+                        title={localize('DND5E.EffectEdit')}
+                        iconCssClass="fas fa-edit"
+                      />
+                      {#if $context.unlocked}
+                        <ItemControl
+                          on:click={() => effect.deleteDialog()}
+                          title={localize('DND5E.EffectDelete')}
+                          iconCssClass="fas fa-trash"
+                        />
+                      {/if}
+                    </ItemControls>
+                  </ItemTableCell>
+                {/if}
+              </ItemTableRow>
+            {/each}
+            {#if $context.unlocked && $context.allowEffectsManagement}
+              <ItemTableFooter
+                actor={$context.actor}
+                {section}
+                create={() =>
+                  FoundryAdapter.addEffect(section.type, $context.actor)}
+                isItem={false}
+              />
+            {/if}
+          </svelte:fragment>
         </ItemTable>
       {/if}
     {/each}
