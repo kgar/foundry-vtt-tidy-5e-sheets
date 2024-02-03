@@ -2,20 +2,13 @@
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { settingStore } from 'src/settings/settings';
-  import type {
-    CharacterSheetContext,
-    NpcSheetContext,
-    VehicleSheetContext,
-  } from 'src/types/types';
+  import type { ActorSheetContext } from 'src/types/types';
   import { createEventDispatcher, getContext } from 'svelte';
   import { quadInOut } from 'svelte/easing';
   import type { Readable } from 'svelte/store';
   import { slide } from 'svelte/transition';
 
-  let context =
-    getContext<
-      Readable<CharacterSheetContext | VehicleSheetContext | NpcSheetContext>
-    >('context');
+  let context = getContext<Readable<ActorSheetContext>>('context');
   export let title: string;
   export let configureButtonTitle: string;
   export let iconCssClass: string | undefined = undefined;
@@ -33,7 +26,11 @@
   $: show = traitsExpanded || tags.length > 0 || tools.length > 0;
 </script>
 
-<div class="trait-form-group {traitCssClass ?? ''}" class:hidden={!show}>
+<div
+  class="trait-form-group {traitCssClass ?? ''}"
+  class:hidden={!show}
+  data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ACTOR_TRAIT}
+>
   <span class="trait-icon" aria-label={title} {title}>
     {#if iconCssClass !== undefined}
       <i class={iconCssClass} />
