@@ -22,10 +22,10 @@
     background: var(--t5ek-sheet-background);
   }
 
-  /* Scrollbars for Firefox 🦊 */
   * {
     scrollbar-width: thin;
-    scrollbar-color: #782e22 #0000;
+    scrollbar-color: var(--t5ek-scrollbar-thumb-color)
+      var(--t5ek-scrollbar-track-color);
   }
 
   &.settings {

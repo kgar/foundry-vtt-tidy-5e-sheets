@@ -1828,6 +1828,38 @@ export function createSettings() {
         },
         representsCssVariable: '--t5ek-alwaysprepared-accent-color',
       },
+      colorPickerScrollbarThumb: {
+        options: {
+          name: 'T5EK.Settings.ColorPickerScrollbarThumb.name',
+          scope: 'client',
+          type: String,
+          default:
+            defaultLightTheme.variables['--t5ek-scrollbar-thumb-color'],
+          config: false,
+        },
+        get() {
+          return FoundryAdapter.getTidySetting<string>(
+            'colorPickerScrollbarThumb'
+          );
+        },
+        representsCssVariable: '--t5ek-scrollbar-thumb-color',
+      },
+      colorPickerScrollbarTrack: {
+        options: {
+          name: 'T5EK.Settings.ColorPickerScrollbarTrack.name',
+          scope: 'client',
+          type: String,
+          default:
+            defaultLightTheme.variables['--t5ek-scrollbar-track-color'],
+          config: false,
+        },
+        get() {
+          return FoundryAdapter.getTidySetting<string>(
+            'colorPickerScrollbarTrack'
+          );
+        },
+        representsCssVariable: '--t5ek-scrollbar-track-color',
+      },
 
       debug: {
         options: {

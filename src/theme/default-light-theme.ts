@@ -139,6 +139,8 @@ export const defaultLightTheme: Tidy5eTheme = {
     '--t5ek-tab-strip-border-color': 'rgba(0, 0, 0, 0.25)',
     '--t5ek-active-tab-background': 'transparent',
     '--t5ek-tab-background': 'var(--t5ek-header-background)',
+    '--t5ek-scrollbar-thumb-color': '#782e22',
+    '--t5ek-scrollbar-track-color': '#0000',
   },
   type: 'light',
 };
