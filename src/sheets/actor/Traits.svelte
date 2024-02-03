@@ -9,6 +9,7 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import { settingStore } from 'src/settings/settings';
+  import { error } from 'src/utils/logging';
 
   let context =
     getContext<
@@ -199,6 +200,33 @@ c28,32.6,51.5,72.7,62,91.7c2.8,5,9.9,5.1,12.8,0.2c14-23.3,44.3-83.4,44.3-166.9C4
         FoundryAdapter.renderToolSelector($context.actor)}
       {traitsExpanded}
     />
+  {/if}
+
+  {#if $context.customActorTraits?.length}
+    {#each $context.customActorTraits as trait}
+      <TraitSection
+        title={trait.title}
+        iconCssClass={trait.iconClass}
+        configureButtonTitle={trait.openConfigurationTooltip ?? ''}
+        on:onConfigureClicked={(ev) => {
+          try {
+            trait.openConfiguration?.({
+              app: $context.actor.sheet,
+              data: $context,
+              element: $context.actor.sheet.element.get(0),
+              event: ev.detail,
+            });
+          } catch (e) {
+            error(
+              'An error occurred while handling trait configuration click event',
+              false,
+              e,
+            );
+          }
+        }}
+        traitsExpanded={trait.alwaysShow || traitsExpanded}
+      />
+    {/each}
   {/if}
 
   {#if toggleable}

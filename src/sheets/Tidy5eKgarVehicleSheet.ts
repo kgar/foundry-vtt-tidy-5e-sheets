@@ -33,6 +33,7 @@ import { isNil } from 'src/utils/data';
 import { CustomContentRenderer } from './CustomContentRenderer';
 import { getBaseActorSheet5e } from 'src/utils/class-inheritance';
 import { ActorPortraitRuntime } from 'src/runtime/ActorPortraitRuntime';
+import { CustomActorTraitsRuntime } from 'src/runtime/actor-traits/CustomActorTraitsRuntime';
 
 export class Tidy5eVehicleSheet
   extends dnd5e.applications.actor.ActorSheet5eVehicle
@@ -115,6 +116,9 @@ export class Tidy5eVehicleSheet
         ActorPortraitRuntime.getEnabledPortraitMenuCommands(this.actor),
       allowEffectsManagement: true,
       appId: this.appId,
+      customActorTraits: CustomActorTraitsRuntime.getEnabledTraits(
+        defaultDocumentContext
+      ),
       customContent: await VehicleSheetRuntime.getContent(
         defaultDocumentContext
       ),
@@ -202,7 +206,7 @@ export class Tidy5eVehicleSheet
         this.actor.documentName,
         this.actor.type,
         SettingsProvider.settings.colorScheme.get(),
-        this.element.get(0),
+        this.element.get(0)
       );
       await this.renderCustomContent({ data, isFullRender: true });
       Hooks.callAll(

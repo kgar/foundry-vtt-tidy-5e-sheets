@@ -99,3 +99,21 @@ export type RegisteredActorItemSectionFooterCommandExecuteParams = {
   section: any;
   event: Event;
 };
+
+export type RegisteredCustomActorTrait = {
+  title: string;
+  alwaysShow?: boolean;
+  openConfiguration?: (params: RegisteredTraitOpenConfigurationParams) => void;
+  openConfigurationTooltip?: string;
+  enabled?: (params: RegisteredTraitEnabledParams) => boolean;
+  iconClass?: string;
+};
+export type RegisteredTraitEnabledParams = {
+  context: any;
+};
+export type RegisteredTraitOpenConfigurationParams = {
+  app: any;
+  element: HTMLElement;
+  data: any;
+  event: Event;
+};

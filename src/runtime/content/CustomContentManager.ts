@@ -66,10 +66,7 @@ function getEnabledContent<TContext>(
 ) {
   return [...registeredContent].filter((c) => {
     try {
-      return (
-        isNil(c.enabled) ||
-        (typeof c.enabled === 'function' && c.enabled(context))
-      );
+      return c.enabled?.(context) ?? true;
     } catch (e) {
       error(
         'Unable to check custom content to determine if it is enabled because of an error',

@@ -37,6 +37,7 @@ import { isNil } from 'src/utils/data';
 import { CustomContentRenderer } from './CustomContentRenderer';
 import { ActorPortraitRuntime } from 'src/runtime/ActorPortraitRuntime';
 import { calculateSpellAttackAndDc } from 'src/utils/formula';
+import { CustomActorTraitsRuntime } from 'src/runtime/actor-traits/CustomActorTraitsRuntime';
 
 export class Tidy5eCharacterSheet
   extends dnd5e.applications.actor.ActorSheet5eCharacter
@@ -217,6 +218,9 @@ export class Tidy5eCharacterSheet
           async: true,
           relativeTo: this.actor,
         }
+      ),
+      customActorTraits: CustomActorTraitsRuntime.getEnabledTraits(
+        defaultDocumentContext
       ),
       customContent: await CharacterSheetRuntime.getContent(
         defaultDocumentContext
