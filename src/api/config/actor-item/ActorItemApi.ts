@@ -14,7 +14,7 @@ export class ActorItemApi {
    * @example Registering a command that sorts items
    * ```js
    * Hooks.once('tidy5e-sheet.ready', (api) => {
-   *   api.actorItem.registerSectionFooterCommands([
+   *   api.config.actorItem.registerSectionFooterCommands([
    *     {
    *       enabled: (params) =>
    *         params.section.items?.length > 1 || params.section.spells?.length > 1,

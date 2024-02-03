@@ -19,7 +19,7 @@ export class ItemSummaryApi {
    * @example Registering commands that show for specific actor types
    * ```js
    * Hooks.once('tidy5e-sheet.ready', (api) => {
-   *   api.itemSummary.registerCommands([
+   *   api.config.itemSummary.registerCommands([
    *     {
    *       label: 'Character Button',
    *       enabled: (params) => params.item.actor?.type === 'character',
@@ -49,7 +49,7 @@ export class ItemSummaryApi {
    * @example Displaying a button for versatile weapons only
    * ```js
    * Hooks.once('tidy5e-sheet.ready', (api) => {
-   *   api.itemSummary.registerCommands([
+   *   api.config.itemSummary.registerCommands([
    *     {
    *       label: 'Versatile Weapon Button',
    *       enabled: (params) =>

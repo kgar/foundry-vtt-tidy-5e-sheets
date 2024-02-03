@@ -14,7 +14,7 @@ export class ActorPortraitApi {
    * @example Registering a command
    * ```js
    * Hooks.once("tidy5e-sheet.ready", (api) => {
-   *   api.actorPortrait.registerMenuCommands([
+   *   api.config.actorPortrait.registerMenuCommands([
    *     {
    *       label: "Test",
    *       iconClass: "fa-solid fa-flask",
