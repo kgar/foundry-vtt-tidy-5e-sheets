@@ -548,4 +548,12 @@ export const themeVariables = {
     type: 'todo',
     group: 'todo',
   },
+  '--t5ek-scrollbar-thumb-color': {
+    type: 'todo',
+    group: 'todo',
+  },
+  '--t5ek-scrollbar-track-color': {
+    type: 'todo',
+    group: 'todo',
+  },
 };

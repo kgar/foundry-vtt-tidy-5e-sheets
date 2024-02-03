@@ -143,6 +143,8 @@ export const defaultDarkTheme: Tidy5eTheme = {
     '--t5ek-tabs-background': 'var(--t5ek-header-background)',
     '--t5ek-active-tab-background': 'var(--t5ek-sheet-background)',
     '--t5ek-tab-background': 'transparent',
+    '--t5ek-scrollbar-thumb-color': '#782e22',
+    '--t5ek-scrollbar-track-color': '#0000',
   },
   type: 'dark',
 };
