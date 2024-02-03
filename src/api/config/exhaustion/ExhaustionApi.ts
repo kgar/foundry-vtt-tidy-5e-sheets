@@ -1,5 +1,5 @@
 import { SettingsProvider } from 'src/settings/settings';
-import type { UseSpecificLevelExhaustionParams } from '../api.types';
+import type { UseSpecificLevelExhaustionParams } from '../../api.types';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type {
   OpenExhaustionConfig,
@@ -8,6 +8,8 @@ import type {
 
 /**
  * API functionality related to the Exhaustion feature.
+ * 
+ * @category Configuration
  */
 export class ExhaustionApi {
   /**
@@ -17,7 +19,7 @@ export class ExhaustionApi {
    * @example
    * ```js
    * Hooks.once('tidy5e-sheet.ready', async (api) => {
-   *   await api.exhaustion.useOpenNumberExhaustion();
+   *   await api.config.exhaustion.useOpenNumberExhaustion();
    * });
    * ```
    */
@@ -36,7 +38,7 @@ export class ExhaustionApi {
    * @example Setting 3-level exhaustion
    * ```js
    * Hooks.once('tidy5e-sheet.ready', async (api) => {
-   *   await api.exhaustion.useSpecificLevelExhaustion({
+   *   await api.config.exhaustion.useSpecificLevelExhaustion({
    *     totalLevels: 3,
    *     hints: [
    *       'No exhaustion',
@@ -66,7 +68,7 @@ export class ExhaustionApi {
    * @example
    * ```js
    * Hooks.once('tidy5e-sheet.ready', async (api) => {
-   *   await api.exhaustion.useOpenNumberVehicleExhaustion();
+   *   await api.config.exhaustion.useOpenNumberVehicleExhaustion();
    * });
    * ```
    */
@@ -85,7 +87,7 @@ export class ExhaustionApi {
    * @example Setting 3-level vehicle exhaustion
    * ```js
    * Hooks.once('tidy5e-sheet.ready', async (api) => {
-   *   await api.exhaustion.useSpecificLevelVehicleExhaustion({
+   *   await api.config.exhaustion.useSpecificLevelVehicleExhaustion({
    *     totalLevels: 3,
    *     hints: ['Ship shape', 'A shape', "Uh oh, it's falling apart", 'Borked'],
    *   });

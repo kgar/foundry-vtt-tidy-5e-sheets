@@ -5,7 +5,7 @@ import type {
   OnRenderParams,
   RenderScheme,
 } from 'src/api';
-import type { HandlebarsTemplateRenderer } from 'src/api/HandlebarsTemplateRenderer';
+import type { HandlebarsTemplateRenderer } from 'src/runtime/HandlebarsTemplateRenderer';
 import type { Item5e } from 'src/types/item';
 import type {
   HtmlRuntimeContent,
@@ -44,6 +44,7 @@ export type RegisteredTab<TContext> = {
 /**
  * One of the supported layouts of Tidy 5e sheets.
  */
+/** @category Shared */
 export type SheetLayout = 'all' | 'classic';
 
 export type RegisteredItemSummaryCommand = {
@@ -96,5 +97,23 @@ export type RegisteredActorItemSectionFooterCommandEnabledParams = {
 export type RegisteredActorItemSectionFooterCommandExecuteParams = {
   actor: Actor5e;
   section: any;
+  event: Event;
+};
+
+export type RegisteredCustomActorTrait = {
+  title: string;
+  alwaysShow?: boolean;
+  openConfiguration?: (params: RegisteredTraitOpenConfigurationParams) => void;
+  openConfigurationTooltip?: string;
+  enabled?: (params: RegisteredTraitEnabledParams) => boolean;
+  iconClass?: string;
+};
+export type RegisteredTraitEnabledParams = {
+  context: any;
+};
+export type RegisteredTraitOpenConfigurationParams = {
+  app: any;
+  element: HTMLElement;
+  data: any;
   event: Event;
 };

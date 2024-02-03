@@ -14,7 +14,7 @@ import { writable } from 'svelte/store';
 import VehicleSheet from './vehicle/VehicleSheet.svelte';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
 import {
-  applyModuleSheetDataAttributeToWindow,
+  applySheetAttributesToWindow,
   applyThemeDataAttributeToWindow,
   applyTitleToWindow,
   blurUntabbableButtonsOnClick,
@@ -33,6 +33,7 @@ import { isNil } from 'src/utils/data';
 import { CustomContentRenderer } from './CustomContentRenderer';
 import { getBaseActorSheet5e } from 'src/utils/class-inheritance';
 import { ActorPortraitRuntime } from 'src/runtime/ActorPortraitRuntime';
+import { CustomActorTraitsRuntime } from 'src/runtime/actor-traits/CustomActorTraitsRuntime';
 
 export class Tidy5eVehicleSheet
   extends dnd5e.applications.actor.ActorSheet5eVehicle
@@ -115,6 +116,9 @@ export class Tidy5eVehicleSheet
         ActorPortraitRuntime.getEnabledPortraitMenuCommands(this.actor),
       allowEffectsManagement: true,
       appId: this.appId,
+      customActorTraits: CustomActorTraitsRuntime.getEnabledTraits(
+        defaultDocumentContext
+      ),
       customContent: await VehicleSheetRuntime.getContent(
         defaultDocumentContext
       ),
@@ -198,8 +202,9 @@ export class Tidy5eVehicleSheet
       this._saveScrollPositions(this.element);
       this._destroySvelteComponent();
       await super._render(force, options);
-      applyModuleSheetDataAttributeToWindow(this.element.get(0));
-      applyThemeDataAttributeToWindow(
+      applySheetAttributesToWindow(
+        this.actor.documentName,
+        this.actor.type,
         SettingsProvider.settings.colorScheme.get(),
         this.element.get(0)
       );

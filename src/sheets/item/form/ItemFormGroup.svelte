@@ -13,7 +13,7 @@
   let context = getContext<Readable<ItemSheetContext>>('context');
 </script>
 
-<div class="form-group {cssClass}">
+<div class="form-group {cssClass}" data-form-group-for={field ?? null}>
   {#if labelText !== null}
     <label for={inputId}>{labelText} <slot name="inside-after-label" /></label>
   {/if}

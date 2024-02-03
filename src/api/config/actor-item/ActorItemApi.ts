@@ -1,8 +1,10 @@
 import { ActorItemRuntime } from 'src/runtime/ActorItemRuntime';
-import type { ActorItemSectionFooterCommand } from '../api.types';
+import type { ActorItemSectionFooterCommand } from '../../api.types';
 
 /**
  * API functionality related to Actor-owned items.
+ * 
+ * @category Configuration
  */
 export class ActorItemApi {
   /**
@@ -12,7 +14,7 @@ export class ActorItemApi {
    * @example Registering a command that sorts items
    * ```js
    * Hooks.once('tidy5e-sheet.ready', (api) => {
-   *   api.actorItem.registerSectionFooterCommands([
+   *   api.config.actorItem.registerSectionFooterCommands([
    *     {
    *       enabled: (params) =>
    *         params.section.items?.length > 1 || params.section.spells?.length > 1,

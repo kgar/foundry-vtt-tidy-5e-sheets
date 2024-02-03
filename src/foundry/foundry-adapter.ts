@@ -62,12 +62,14 @@ export const FoundryAdapter = {
 
     return game.i18n.localize(value);
   },
-  addEffect(effectType: string, actor: Actor5e) {
-    actor.createEmbeddedDocuments('ActiveEffect', [
+  // TODO: Extract a dedicated ActiveEffectManager or the like
+  addEffect(effectType: string, owner: any) {
+    const isActor = owner instanceof Actor;
+    return owner.createEmbeddedDocuments('ActiveEffect', [
       {
-        label: game.i18n.localize('DND5E.EffectNew'),
-        icon: 'icons/svg/aura.svg',
-        origin: actor.uuid,
+        label: isActor ? game.i18n.localize('DND5E.EffectNew') : owner.name,
+        icon: isActor ? 'icons/svg/aura.svg' : owner.img,
+        origin: owner.uuid,
         'duration.rounds': effectType === 'temporary' ? 1 : undefined,
         disabled: effectType === 'inactive',
       },

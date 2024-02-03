@@ -25,15 +25,7 @@
 
     const owner = $context.item;
 
-    return owner.createEmbeddedDocuments('ActiveEffect', [
-      {
-        label: FoundryAdapter.localize('DND5E.EffectNew'),
-        icon: 'icons/svg/aura.svg',
-        origin: owner.uuid,
-        'duration.rounds': section.type === 'temporary' ? 1 : undefined,
-        disabled: section.type === 'inactive',
-      },
-    ]);
+    return FoundryAdapter.addEffect(section.type, owner);
   }
 
   function handleMiddleClickToEdit(event: MouseEvent, effect: any) {

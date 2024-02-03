@@ -2,6 +2,8 @@ import { ActionListRuntime } from 'src/runtime/action-list/ActionListRuntime';
 
 /**
  * API functionality related to the Actions List feature.
+ * 
+ * @category Configuration
  */
 export class ActionListApi {
   /**
@@ -10,7 +12,7 @@ export class ActionListApi {
    * @example Treating Midi-QoL reaction sub-types like a reaction
    * ```js
    * Hooks.once('tidy5e-sheet.ready', (api) => {
-   *   api.actionList.mapActivationTypesToSections({
+   *   api.config.actionList.mapActivationTypesToSections({
    *     reactionpreattack: 'reaction',
    *     reactiondamage: 'reaction',
    *     reactionmanual: 'reaction',

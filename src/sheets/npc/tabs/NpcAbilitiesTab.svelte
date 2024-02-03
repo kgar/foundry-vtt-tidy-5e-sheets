@@ -71,7 +71,10 @@
       <Traits toggleable={!$settingStore.alwaysShowNpcTraits} />
     {/if}
   </div>
-  <div class="main-panel">
+  <div
+    class="main-panel"
+    data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.NPC_ABILITIES_CONTAINER}
+  >
     <NpcLegendaryActions />
     {#if $settingStore.moveTraitsBelowNpcResources}
       <Traits toggleable={!$settingStore.alwaysShowNpcTraits} />
@@ -115,7 +118,10 @@
                   cssClass="extra-small-gap"
                   {item}
                 >
-                  <span class="truncate" data-tidy-item-name={item.name}
+                  <span
+                    class="truncate"
+                    data-tidy-item-name={item.name}
+                    data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_NAME}
                     >{item.name}</span
                   >
                   {#if item.system?.properties?.amm}
@@ -194,38 +200,39 @@
         </h2>
       {/if}
 
-      {#if !noSpellLevels || showNoSpellsView}
-        <div class="flex-1 flex-column small-padding-bottom no-gap">
-          {#if noSpellLevels}
-            <NoSpells cssClass="flex-1" editable={$context.unlocked} />
-          {:else}
-            <div class="flex-1 small-padding-bottom flex-column small-gap">
-              {#each $context.spellbook as section (section.label)}
-                {#if layoutMode === 'list'}
-                  <SpellbookList
-                    spells={section.spells}
-                    {section}
-                    allowFavorites={false}
-                    includeRange={false}
-                    includeSchool={false}
-                    spellComponentsBaseWidth="3.125rem"
-                    targetBaseWidth="5.625rem"
-                    usageBaseWidth="5.625rem"
-                  />
-                {:else}
-                  <SpellbookGrid spells={section.spells} {section} />
-                {/if}
-              {/each}
-            </div>
-          {/if}
+      <div
+        class="flex-1 flex-column small-padding-bottom no-gap"
+        class:hidden={noSpellLevels && !showNoSpellsView}
+      >
+        {#if noSpellLevels}
+          <NoSpells cssClass="flex-1" editable={$context.unlocked} />
+        {:else}
+          <div class="flex-1 small-padding-bottom flex-column small-gap">
+            {#each $context.spellbook as section (section.label)}
+              {#if layoutMode === 'list'}
+                <SpellbookList
+                  spells={section.spells}
+                  {section}
+                  allowFavorites={false}
+                  includeRange={false}
+                  includeSchool={false}
+                  spellComponentsBaseWidth="3.125rem"
+                  targetBaseWidth="5.625rem"
+                  usageBaseWidth="5.625rem"
+                />
+              {:else}
+                <SpellbookGrid spells={section.spells} {section} />
+              {/if}
+            {/each}
+          </div>
+        {/if}
 
-          <SpellbookFooter
-            includeAttackMod={false}
-            includePreparedSpells={false}
-            cssClass="npc-abilities-spellbook-footer"
-          />
-        </div>
-      {/if}
+        <SpellbookFooter
+          includeAttackMod={false}
+          includePreparedSpells={false}
+          cssClass="npc-abilities-spellbook-footer"
+        />
+      </div>
     {/if}
   </div>
 </section>

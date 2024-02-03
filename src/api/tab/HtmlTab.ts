@@ -27,6 +27,7 @@ import {
  * });
  * ```
  */
+/** @category Tabs */
 export class HtmlTab extends CustomTabBase {
   title: CustomTabTitle = '';
   tabId: TabId = '';

@@ -29,6 +29,7 @@
   import SpellbookItemCardContent from '../item-info-card/SpellbookItemCardContent.svelte';
   import { settingStore } from 'src/settings/settings';
   import ActionFilterOverrideControl from '../item-list/controls/ActionFilterOverrideControl.svelte';
+  import { SpellSchool } from 'src/features/spell-school/SpellSchool';
 
   let context =
     getContext<Readable<CharacterSheetContext | NpcSheetContext>>('context');
@@ -45,6 +46,8 @@
   export let usageBaseWidth: string = '7.5rem';
   export let controlsBaseWidthLocked: string = '5.3125rem';
   export let controlsBaseWidthUnlocked: string = '7.5rem';
+
+  var spellSchoolBaseWidth = '2rem';
 
   const localize = FoundryAdapter.localize;
 
@@ -75,7 +78,7 @@
       </ItemTableColumn>
       {#if includeSchool}
         <ItemTableColumn
-          baseWidth="5.625rem"
+          baseWidth={spellSchoolBaseWidth}
           title={localize('DND5E.SpellSchool')}
         >
           <i class="fas fa-hat-wizard" />
@@ -126,7 +129,10 @@
             on:toggle={() => toggleSummary($context.actor)}
             item={spell}
           >
-            <span class="truncate" data-tidy-item-name={spell.name}
+            <span
+              class="truncate"
+              data-tidy-item-name={spell.name}
+              data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_NAME}
               >{spell.name}</span
             >
           </ItemName>
@@ -144,10 +150,10 @@
         </ItemTableCell>
         {#if includeSchool}
           <ItemTableCell
-            baseWidth="5.625rem"
-            title="{localize('DND5E.SpellSchool')}: {spell.labels.school}"
+            baseWidth={spellSchoolBaseWidth}
+            title={spell.labels.school ?? ''}
           >
-            <span class="truncate">{spell.labels.school ?? ''}</span>
+            <i class={SpellSchool.getIcon(spell.system.school)}></i>
           </ItemTableCell>
         {/if}
         <ItemTableCell

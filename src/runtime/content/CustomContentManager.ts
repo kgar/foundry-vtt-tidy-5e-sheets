@@ -1,7 +1,7 @@
 import type { CustomContent, HtmlRuntimeContent } from 'src/types/types';
 import type { RegisteredContent } from '../types';
 import { isNil } from 'src/utils/data';
-import { HandlebarsTemplateRenderer } from 'src/api/HandlebarsTemplateRenderer';
+import { HandlebarsTemplateRenderer } from 'src/runtime/HandlebarsTemplateRenderer';
 import { error } from 'src/utils/logging';
 import type { SheetLayout, SupportedContent } from 'src/api';
 import { HandlebarsContent } from 'src/api/content/HandlebarsContent';
@@ -64,11 +64,18 @@ function getEnabledContent<TContext>(
   context: TContext,
   registeredContent: RegisteredContent<any>[]
 ) {
-  return [...registeredContent].filter(
-    (c) =>
-      isNil(c.enabled) ||
-      (typeof c.enabled === 'function' && c.enabled(context))
-  );
+  return [...registeredContent].filter((c) => {
+    try {
+      return c.enabled?.(context) ?? true;
+    } catch (e) {
+      error(
+        'Unable to check custom content to determine if it is enabled because of an error',
+        false,
+        e
+      );
+      return false;
+    }
+  });
 }
 
 async function mapRenderableContent(

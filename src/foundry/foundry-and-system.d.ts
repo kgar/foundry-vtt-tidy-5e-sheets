@@ -9,6 +9,7 @@
 
 declare global {
   var $: any;
+  var Actor: any;
   var Actors: any;
   var Application: any;
   var AudioHelper: any;
