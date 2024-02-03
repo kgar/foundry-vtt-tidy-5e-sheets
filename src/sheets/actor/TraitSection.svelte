@@ -2,20 +2,13 @@
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { settingStore } from 'src/settings/settings';
-  import type {
-    CharacterSheetContext,
-    NpcSheetContext,
-    VehicleSheetContext,
-  } from 'src/types/types';
+  import type { ActorSheetContext } from 'src/types/types';
   import { createEventDispatcher, getContext } from 'svelte';
   import { quadInOut } from 'svelte/easing';
   import type { Readable } from 'svelte/store';
   import { slide } from 'svelte/transition';
 
-  let context =
-    getContext<
-      Readable<CharacterSheetContext | VehicleSheetContext | NpcSheetContext>
-    >('context');
+  let context = getContext<Readable<ActorSheetContext>>('context');
   export let title: string;
   export let configureButtonTitle: string;
   export let iconCssClass: string | undefined = undefined;
@@ -33,120 +26,125 @@
   $: show = traitsExpanded || tags.length > 0 || tools.length > 0;
 </script>
 
-<div class="trait-form-group {traitCssClass ?? ''}" class:hidden={!show}>
-  <span class="trait-icon" aria-label={title} {title}>
-    {#if iconCssClass !== undefined}
-      <i class={iconCssClass} />
-    {/if}
-    <slot name="custom-icon" />
-  </span>
-  <div class="trait-label-and-list">
-    {#if $settingStore.showTraitLabels}
-      <span class="trait-label">{title}</span>
-    {/if}
-    {#if tags.length}
-      <ul class="trait-list traits">
-        {#each tags as [key, value]}
-          <li class="trait-tag {key}">{value}</li>
-        {/each}
-      </ul>
-    {/if}
-    {#if tools.length}
-      <ul
-        class="trait-list tools"
-        data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.TOOLS_LIST}
+{#if show}
+  <div
+    class="trait-form-group {traitCssClass ?? ''}"
+    data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ACTOR_TRAIT}
+  >
+    <span class="trait-icon" aria-label={title} {title}>
+      {#if iconCssClass !== undefined}
+        <i class={iconCssClass} />
+      {/if}
+      <slot name="custom-icon" />
+    </span>
+    <div class="trait-label-and-list">
+      {#if $settingStore.showTraitLabels}
+        <span class="trait-label">{title}</span>
+      {/if}
+      {#if tags.length}
+        <ul class="trait-list traits">
+          {#each tags as [key, value]}
+            <li class="trait-tag {key}">{value}</li>
+          {/each}
+        </ul>
+      {/if}
+      {#if tools.length}
+        <ul
+          class="trait-list tools"
+          data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.TOOLS_LIST}
+        >
+          {#each tools as [key, tool]}
+            <li
+              class="tool"
+              data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.TOOL_CONTAINER}
+              data-key={key}
+            >
+              {#if $context.editable && !$context.lockSensitiveFields}
+                <button
+                  type="button"
+                  class="tool-proficiency-toggle inline-transparent-button"
+                  title={tool.hover}
+                  on:click|stopPropagation|preventDefault={(event) =>
+                    FoundryAdapter.cycleProficiency(
+                      $context.actor,
+                      key,
+                      tool.value,
+                      'tools',
+                    )}
+                  on:contextmenu|stopPropagation|preventDefault={(event) =>
+                    FoundryAdapter.cycleProficiency(
+                      $context.actor,
+                      key,
+                      tool.value,
+                      'tools',
+                      true,
+                    )}
+                  data-tidy-sheet-part={CONSTANTS.SHEET_PARTS
+                    .TOOL_PROFICIENCY_TOGGLE}
+                  tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+                >
+                  {@html tool.icon}
+                </button>
+              {:else}
+                <span title={tool.hover} class="tool-proficiency-readonly"
+                  >{@html tool.icon}</span
+                >
+              {/if}
+
+              {#if $context.editable}
+                <button
+                  type="button"
+                  class="tool-check-roller inline-transparent-button rollable"
+                  on:click={(event) =>
+                    $context.actor.rollToolCheck(key, { event })}
+                  data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.TOOL_ROLLER}
+                  tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+                >
+                  {tool.label}
+                </button>
+              {:else}
+                <span class="tool-check-roller">
+                  {tool.label}
+                </span>
+              {/if}
+
+              {#if traitsExpanded && $context.editable && !$context.lockSensitiveFields}
+                <button
+                  type="button"
+                  class="tool-proficiency-editor inline-icon-button"
+                  title={localize('DND5E.ToolConfigure')}
+                  on:click|stopPropagation|preventDefault={() =>
+                    FoundryAdapter.renderProficiencyConfig(
+                      $context.actor,
+                      'tools',
+                      key,
+                    )}
+                  data-tidy-sheet-part={CONSTANTS.SHEET_PARTS
+                    .TOOL_CONFIGURATION_CONTROL}
+                  tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+                >
+                  <i class="fas fa-cog" />
+                </button>
+              {/if}
+            </li>
+          {/each}
+        </ul>
+      {/if}
+    </div>
+    {#if traitsExpanded && $context.editable && !$context.lockSensitiveFields}
+      <button
+        type="button"
+        class="trait-editor inline-icon-button flex-row align-items-flex-start justify-content-center"
+        title={configureButtonTitle}
+        on:click|stopPropagation|preventDefault={(event) =>
+          dispatcher('onConfigureClicked', event)}
+        tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
       >
-        {#each tools as [key, tool]}
-          <li
-            class="tool"
-            data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.TOOL_CONTAINER}
-            data-key={key}
-          >
-            {#if $context.editable && !$context.lockSensitiveFields}
-              <button
-                type="button"
-                class="tool-proficiency-toggle inline-transparent-button"
-                title={tool.hover}
-                on:click|stopPropagation|preventDefault={(event) =>
-                  FoundryAdapter.cycleProficiency(
-                    $context.actor,
-                    key,
-                    tool.value,
-                    'tools',
-                  )}
-                on:contextmenu|stopPropagation|preventDefault={(event) =>
-                  FoundryAdapter.cycleProficiency(
-                    $context.actor,
-                    key,
-                    tool.value,
-                    'tools',
-                    true,
-                  )}
-                data-tidy-sheet-part={CONSTANTS.SHEET_PARTS
-                  .TOOL_PROFICIENCY_TOGGLE}
-                tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
-              >
-                {@html tool.icon}
-              </button>
-            {:else}
-              <span title={tool.hover} class="tool-proficiency-readonly"
-                >{@html tool.icon}</span
-              >
-            {/if}
-
-            {#if $context.editable}
-              <button
-                type="button"
-                class="tool-check-roller inline-transparent-button rollable"
-                on:click={(event) =>
-                  $context.actor.rollToolCheck(key, { event })}
-                data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.TOOL_ROLLER}
-                tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
-              >
-                {tool.label}
-              </button>
-            {:else}
-              <span class="tool-check-roller">
-                {tool.label}
-              </span>
-            {/if}
-
-            {#if traitsExpanded && $context.editable && !$context.lockSensitiveFields}
-              <button
-                type="button"
-                class="tool-proficiency-editor inline-icon-button"
-                title={localize('DND5E.ToolConfigure')}
-                on:click|stopPropagation|preventDefault={() =>
-                  FoundryAdapter.renderProficiencyConfig(
-                    $context.actor,
-                    'tools',
-                    key,
-                  )}
-                data-tidy-sheet-part={CONSTANTS.SHEET_PARTS
-                  .TOOL_CONFIGURATION_CONTROL}
-                tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
-              >
-                <i class="fas fa-cog" />
-              </button>
-            {/if}
-          </li>
-        {/each}
-      </ul>
+        <i class="fas fa-pencil-alt" />
+      </button>
     {/if}
   </div>
-  {#if traitsExpanded && $context.editable && !$context.lockSensitiveFields}
-    <button
-      type="button"
-      class="trait-editor inline-icon-button flex-row align-items-flex-start justify-content-center"
-      title={configureButtonTitle}
-      on:click|stopPropagation|preventDefault={(event) =>
-        dispatcher('onConfigureClicked', event)}
-      tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
-    >
-      <i class="fas fa-pencil-alt" />
-    </button>
-  {/if}
-</div>
+{/if}
 
 <style lang="scss">
   .trait-form-group {

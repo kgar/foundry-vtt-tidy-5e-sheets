@@ -109,166 +109,130 @@ export const CONSTANTS = {
   /** The attribute which indicates a particular part of a sheet. */
   SHEET_PART_ATTRIBUTE: 'data-tidy-sheet-part',
   SHEET_PARTS: {
-    /**
-     * An interactable control that can open configuration settings for a target ability.
-     */
+    /** An interactable control that can open configuration settings for a target ability. */
     ABILITY_CONFIGURATION_CONTROL: 'ability-configuration-control',
-    /**
-     * An interactable toggle for ability saving throw proficiency.
-     */
+
+    /** An interactable toggle for ability saving throw proficiency. */
     ABILITY_SAVE_PROFICIENCY_TOGGLE: 'ability-save-proficiency-toggle',
-    /**
-     * An ability score (e.g., "str", "dex", "wis", etc.), whether readonly or editable.
-     */
+
+    /** An ability score (e.g., "str", "dex", "wis", etc.), whether readonly or editable. */
     ABILITY_SCORE: 'ability-score',
-    /**
-     * A rollable/interactable element which rolls an ability save.
-     */
+
+    /** A rollable/interactable element which rolls an ability save. */
     ABILITY_SAVE_ROLLER: 'ability-save-roller',
-    /**
-     * A container for a given ability score (e.g., "str", "dex", "wis", etc.).
-     */
+
+    /** A container for a given ability score (e.g., "str", "dex", "wis", etc.). */
     ABILITY_SCORE_CONTAINER: 'ability-score-container',
-    /**
-     * A rollable/interactable element which rolls an ability save or test.
-     */
+
+    /** A rollable/interactable element which rolls an ability save or test. */
     ABILITY_ROLLER: 'ability-roller',
-    /**
-     * A rollable/interactable element which rolls an ability test.
-     */
+
+    /** A rollable/interactable element which rolls an ability test. */
     ABILITY_TEST_ROLLER: 'ability-test-roller',
-    /**
-     * A container for all form fields related to a given damage part.
-     */
+
+    /** An actor trait container, such as Senses, Languages, or Tools */
+    ACTOR_TRAIT: 'actor-trait',
+
+    /** A container for all form fields related to a given damage part. */
     DAMAGE_PART_CONTAINER: 'damage-part-container',
-    /**
-     * An interactable control which the user can execute to delete a damage part to an item.
-     */
+
+    /** An interactable control which the user can execute to delete a damage part to an item. */
     DAMAGE_PART_DELETE_COMMAND: 'damage-part-delete-command',
-    /**
-     * An input element which contains a damage part formula, usually for an item.
-     */
+
+    /** An input element which contains a damage part formula, usually for an item. */
     DAMAGE_PART_FORMULA: 'damage-part-formula',
-    /**
-     * An input element which represents the damage type of a damage part, usually for an item.
-     */
+
+    /** An input element which represents the damage type of a damage part, usually for an item. */
     DAMAGE_PART_TYPE: 'damage-part-type',
-    /**
-     * An input for the number of failed death saves an actor has.
-     */
+
+    /** An input for the number of failed death saves an actor has. */
     DEATH_SAVE_FAILURES: 'death-save-failures',
-    /**
-     * A rollable/interactable element which rolls a death saving throw.
-     */
+
+    /** A rollable/interactable element which rolls a death saving throw. */
     DEATH_SAVE_ROLLER: 'death-save-roller',
-    /**
-     * An input for the number of successful death saves an actor has.
-     */
+
+    /** An input for the number of successful death saves an actor has. */
     DEATH_SAVE_SUCCESSES: 'death-save-successes',
-    /**
-     * An interactable control which the user can execute to create an item (e.g., consumable, feature, loot, spell, weapon, etc.).
-     */
+
+    /** An interactable control which the user can execute to create an item (e.g., consumable, feature, loot, spell, weapon, etc.). */
     ITEM_CREATE_COMMAND: 'item-create-command',
-    /**
-     * An element which contains the name of an item.
-     */
+
+    /** An element which contains the name of an item. */
     ITEM_NAME: 'item-name',
-    /**
-     * A list-based tabular representation of items (e.g., equipment, loot, spells, etc.).
-     */
+
+    /** A list-based tabular representation of items (e.g., equipment, loot, spells, etc.). */
     ITEM_TABLE: 'item-table',
-    /**
-     * A row in an item table.
-     */
+
+    /** A row in an item table. */
     ITEM_TABLE_ROW: 'item-table-row',
-    /**
-     * An interactable control which the user can execute to use an item (e.g., consumable, feature, loot, spell, weapon, etc.).
-     */
+
+    /** An interactable control which the user can execute to use an item (e.g., consumable, feature, loot, spell, weapon, etc.). */
     ITEM_USE_COMMAND: 'item-use-command',
-    /**
-     * A containing element for a series of item lists or grids.
-     */
+
+    /** A containing element for a series of item lists or grids. */
     ITEMS_CONTAINER: 'items-container',
-    /**
-     * The element which contains the modifier text for melee spell attacks.
-     */
+
+    /** The element which contains the modifier text for melee spell attacks. */
     MELEE_SPELL_ATTACK_MOD: 'melee-spell-attack-mod',
+
     /**
      * A container for a sheet name. The sheet name is usually in input, and its container has some additional styles associated with it.
      * The container typically sits in a sheet header row with other header-related elements.
      */
     NAME_CONTAINER: 'name-container',
-    /**
-     * The sheet header row where the sheet name appears.
-     */
+
+    /** The sheet header row where the sheet name appears. */
     NAME_HEADER_ROW: 'name-header-row',
-    /**
-     * A containing element for a series of item lists related to the NPC Abilities tab.
-     */
+
+    /** A containing element for a series of item lists related to the NPC Abilities tab. */
     NPC_ABILITIES_CONTAINER: 'npc-abilities-list',
-    /**
-     * The element which contains the modifier text for ranged spell attacks.
-     */
+
+    /** The element which contains the modifier text for ranged spell attacks. */
     RANGED_SPELL_ATTACK_MOD: 'ranged-spell-attack-mod',
-    /**
-     * A container for a single resource (first, second, third, etc.).
-     */
+
+    /** A container for a single resource (first, second, third, etc.). */
     RESOURCE: 'resource',
-    /**
-     * The container where all known resources (first, second, third, etc.) are kept.
-     */
+
+    /** The container where all known resources (first, second, third, etc.) are kept. */
     RESOURCES_CONTAINER: 'resources-container',
-    /**
-     * An interactable control that can open configuration settings for a target skill.
-     */
+
+    /** An interactable control that can open configuration settings for a target skill. */
     SKILL_CONFIGURATION_CONTROL: 'skill-configuration-control',
-    /**
-     * A container for a single skill, including its roller, proficiency toggle, and any other elements related to the skill.
-     */
+
+    /** A container for a single skill, including its roller, proficiency toggle, and any other elements related to the skill. */
     SKILL_CONTAINER: 'skill-container',
-    /**
-     * An interactable toggle for skill proficiency.
-     */
+
+    /** An interactable toggle for skill proficiency. */
     SKILL_PROFICIENCY_TOGGLE: 'skill-proficiency-toggle',
-    /**
-     * A rollable/interactable element which rolls a skill check.
-     */
+
+    /** A rollable/interactable element which rolls a skill check. */
     SKILL_ROLLER: 'skill-roller',
-    /**
-     * A list of skills for the target actor.
-     */
+
+    /** A list of skills for the target actor. */
     SKILLS_LIST: 'skills-list',
-    /**
-     * An interactable toggle for showing/hiding unproficienct skills.
-     */
+
+    /** An interactable toggle for showing/hiding unproficienct skills. */
     SKILLS_SHOW_PROFICIENT_TOGGLE: 'skills-show-proficiency-toggle',
-    /**
-     * The element which contains the modifier text for spell attacks in general. This field is shown when melee and ranged spell attack mods are the same.
-     */
+
+    /** The element which contains the modifier text for spell attacks in general. This field is shown when melee and ranged spell attack mods are the same. */
     SPELL_ATTACK_MOD: 'spell-attack-mod',
-    /**
-     * The element which contains spell DC.
-     */
+
+    /** The element which contains spell DC. */
     SPELL_DC: 'spell-dc',
-    /**
-     * An interactable control that can open configuration settings for a target tool.
-     */
+
+    /** An interactable control that can open configuration settings for a target tool. */
     TOOL_CONFIGURATION_CONTROL: 'tool-configuration-control',
-    /**
-     * A container for a single tool, including its roller, proficiency toggle, and any other elements related to the tool.
-     */
+
+    /** A container for a single tool, including its roller, proficiency toggle, and any other elements related to the tool. */
     TOOL_CONTAINER: 'tool-container',
-    /**
-     * An interactable toggle for tool proficiency.
-     */
+
+    /** An interactable toggle for tool proficiency. */
     TOOL_PROFICIENCY_TOGGLE: 'tool-proficiency-toggle',
-    /**
-     * A rollable/interactable element which rolls a tool check.
-     */
+
+    /** A rollable/interactable element which rolls a tool check. */
     TOOL_ROLLER: 'tool-roller',
-    /**
-     * A list of tools for the target actor.
-     */
+
+    /** A list of tools for the target actor. */
     TOOLS_LIST: 'tools-list',
   },
 } as const;
