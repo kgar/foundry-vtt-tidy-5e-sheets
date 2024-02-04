@@ -9,8 +9,6 @@ export async function migrateAlphaFlagsToV1() {
       for (let item of actor.items) {
         await transferFlagData(item);
       }
-
-      ui.notifications.info(`${actor.name}: Transfer complete!`);
     } catch (e) {
       const message = `${actor.name}: Transfer failed. See devtools console error for more details.`;
       ui.notifications.error(message, { permanent: true });

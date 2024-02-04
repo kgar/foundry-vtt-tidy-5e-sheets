@@ -12,10 +12,10 @@
 
 Remember to localize all this...
 
-<button on:click={() => confirm(migrateOgFlagsToV1)}
+<button type="button" on:click={() => confirm(migrateOgFlagsToV1)}
   >Migrate Document Flags</button
 >
-<button on:click={() => confirm(migrateOgSettingsToV1)}
+<button type="button" on:click={() => confirm(migrateOgSettingsToV1)}
   >Migrate GM Settings</button
 >
 
@@ -23,10 +23,10 @@ Remember to localize all this...
 
 Remember to localize all this...
 
-<button on:click={() => confirm(migrateAlphaFlagsToV1)}
+<button type="button" on:click={() => confirm(migrateAlphaFlagsToV1)}
   >Migrate Document Flags</button
 >
-<button on:click={() => confirm(migrateAlphaSettingsToV1)}
+<button type="button" on:click={() => confirm(migrateAlphaSettingsToV1)}
   >Migrate GM Settings</button
 >
 

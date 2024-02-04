@@ -11,10 +11,6 @@ export async function migrateOgFlagsToV1() {
 
   for (let actor of game.actors) {
     try {
-      ui.notifications.info(
-        `${actor.name}: Transferring Tidy data from ${CONSTANTS.ALPHA_MODULE_ID} to ${CONSTANTS.MODULE_ID}...`
-      );
-
       let update: Record<string, any> = {};
 
       for (let diff of flagDifferences) {
