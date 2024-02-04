@@ -6,7 +6,7 @@ import {resolve} from 'path';
 const {ensureDir, existsSync, readJSONSync, remove, symlink} = fs;
 const argv = yargs(hideBin(process.argv)).argv;
 
-const moduleDirectory = 'tidy5e-sheet-kgar';
+const moduleDirectory = 'tidy5e-sheet';
 const buildDirectory = './dist';
 
 /**

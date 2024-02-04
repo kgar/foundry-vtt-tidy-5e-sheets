@@ -55,15 +55,3 @@ async function transferFlagData(document: any) {
     },
   });
 }
-
-/* 
-SCRATCH:
-const moduleId = 'tidy5e-sheet';
-const alphaModuleId = 'tidy5e-sheet-kgar';
-const document = game.actors.get('inJZfC6VehiU1Dfx');
-await document.update({
-    flags: {
-        [moduleId]: structuredClone(document.flags[alphaModuleId])
-    }
-});
-*/

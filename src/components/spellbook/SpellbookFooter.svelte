@@ -148,7 +148,7 @@
 </TabFooter>
 
 <style lang="scss">
-  :global(.tidy5e-kgar .spellbook-footer) {
+  :global(.tidy5e-sheet .spellbook-footer) {
     min-height: 2.5rem;
   }
 

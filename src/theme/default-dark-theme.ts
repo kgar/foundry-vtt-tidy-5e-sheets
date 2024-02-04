@@ -72,9 +72,9 @@ export const defaultDarkTheme: Tidy5eTheme = {
     '--t5ek-context-outline-color': 'rgba(0, 0, 0, 0.4)',
     '--t5ek-context-shadow-color': 'rgba(0, 0, 0, 0.65)',
     '--t5ek-check-default-background-image':
-      "url('../../modules/tidy5e-sheet-kgar/images/check-dark-unchecked.svg')",
+      "url('../../modules/tidy5e-sheet/images/check-dark-unchecked.svg')",
     '--t5ek-check-checked-background-image':
-      "url('../../modules/tidy5e-sheet-kgar/images/check-light-checked.svg')",
+      "url('../../modules/tidy5e-sheet/images/check-light-checked.svg')",
     '--t5ek-checkbox-font-color': 'rgba(255, 255, 255, 0.8)',
     '--t5ek-checkbox-outline-color': 'rgba(50, 50, 50, 1)',
     '--t5ek-checkbox-unchecked-color': 'rgba(75, 75, 75, 1)',

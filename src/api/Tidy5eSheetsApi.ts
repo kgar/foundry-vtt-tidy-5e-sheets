@@ -36,21 +36,13 @@ import { ConfigApi } from './config/ConfigApi';
  * });
  * ```
  *
- * @example Getting the API from the alpha module
- * ```js
- * game.modules.get('tidy5e-sheet-kgar').api
- * ```
- *
- * @example Getting the API from the official Tidy 5e Sheets module
+ * @example Getting the API from the module
  * ```js
  * game.modules.get('tidy5e-sheet').api
  * ```
  *
  * @remarks
- * It is recommended to retrieve the API from the `tidy5e-sheet.ready` hook.
- *
- * The `game.modules.get('tidy5e-sheet').api` approach only works when the original module AND the alpha module are active.
- * This requirement will last until the alpha sheets become the official replacement and assume the module ID "tidy5e-sheet".
+ * It is recommended to retrieve the API from the `tidy5e-sheet.ready` hook, since the hook guarantees that the API has been initialized.
  *
  * @category Main
  */
@@ -701,7 +693,7 @@ export class Tidy5eSheetsApi {
    * @example Injecting dynamic HTML through Tidy actor sheet render hook
    * ```js
    * Hooks.on('tidy5e-sheet.renderActorSheet', (app, element, data) => {
-   *   const api = game.modules.get('tidy5e-sheet-kgar').api;
+   *   const api = game.modules.get('tidy5e-sheet').api;
    *   const actorEmoji = data.actor.system.currency.pp > 0 ? '💹' : '📉';
    *   let iconHtml = api.useHandlebarsRendering(`<h1>${actorEmoji}</h1>`);
    *   // 👆 This HTML looks like `<div style="display: contents;" data-tidy-render-scheme="handlebars"><h1>📉</h1></div>`

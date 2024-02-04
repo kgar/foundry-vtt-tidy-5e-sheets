@@ -60,7 +60,7 @@
 {#if $context.viewableWarnings.length}
   <ActorWarnings warnings={$context.viewableWarnings} />
 {/if}
-<header class="tidy5e-kgar-sheet-header flex-row">
+<header class="tidy5e-sheet-header flex-row">
   <div class="flex-0">
     <CharacterProfile />
   </div>
@@ -248,7 +248,7 @@
 </section>
 
 <style lang="scss">
-  .tidy5e-kgar-sheet-header {
+  .tidy5e-sheet-header {
     display: flex;
     justify-content: center;
     padding: 0.625rem 1rem 1rem 1rem;

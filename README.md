@@ -56,10 +56,10 @@ Manual installation instructions:
 4. Click 'Install' and wait for installation to complete
 5. Enable the module in your game using the "Manage Module" button.
 6. Select the sheet layout from these options, depending on which sheet you are using:
-   - Tidy 5e kgar Character Sheet
-   - Tidy 5e kgar NPC Sheet
-   - Tidy 5e kgar Vehicle Sheet
-   - Tidy 5e kgar Item Sheet
+   - Tidy 5e Character Sheet
+   - Tidy 5e NPC Sheet
+   - Tidy 5e Vehicle Sheet
+   - Tidy 5e Item Sheet
 
 ## Behold, D&D 5e Sheets for Foundry VTT!
 
