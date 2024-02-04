@@ -1,4 +1,5 @@
 import { CONSTANTS } from 'src/constants';
+import { error } from 'src/utils/logging';
 
 type SettingMap = {
   v1Key: string;
@@ -115,10 +116,21 @@ export async function migrateOgSettingsToV1() {
         ? mappedSetting.convert(setting.value)
         : setting.value;
 
-      await game.settings.set(CONSTANTS.MODULE_ID, mappedSetting.v1Key, value);
+      if (
+        game.settings.settings.has(
+          `${CONSTANTS.MODULE_ID}.${mappedSetting.v1Key}`
+        )
+      ) {
+        await game.settings.set(
+          CONSTANTS.MODULE_ID,
+          mappedSetting.v1Key,
+          value
+        );
+      }
     } catch (e) {
       const message = `An error occurred while remapping setting "${setting.key}"`;
       ui.notifications.error(message, { permanent: true });
+      error(message, false, e);
     }
   }
 }

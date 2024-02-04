@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { migrateAlphaFlagsToV1 } from 'src/migrations/v1/alpha-flags-to-v1';
-  import { migrateAlphaSettingsToV1 } from 'src/migrations/v1/alpha-settings-to-v1';
-  import { migrateOgFlagsToV1 } from 'src/migrations/v1/og-flags-to-v1';
-  import { migrateOgSettingsToV1 } from 'src/migrations/v1/og-settings-to-v1';
+  import { migrateAlphaFlagsToV1 } from 'src/applications/migrations/v1/alpha-flags-to-v1';
+  import { migrateAlphaSettingsToV1 } from 'src/applications/migrations/v1/alpha-settings-to-v1';
+  import { migrateOgFlagsToV1 } from 'src/applications/migrations/v1/og-flags-to-v1';
+  import { migrateOgSettingsToV1 } from 'src/applications/migrations/v1/og-settings-to-v1';
   import { getContext } from 'svelte';
 
   const confirm = getContext<(onYes: () => void) => void>('confirm');

@@ -1,4 +1,5 @@
 import { CONSTANTS } from 'src/constants';
+import { error } from 'src/utils/logging';
 
 export async function migrateOgFlagsToV1() {
   // Flags to update
@@ -34,11 +35,12 @@ export async function migrateOgFlagsToV1() {
 
       ui.notifications.info(`${actor.name}: Transfer complete!`);
     } catch (e) {
+      const message = `${actor.name}: Transfer failed. See devtools console error for more details.`;
       ui.notifications.error(
-        `${actor.name}: Transfer failed. See devtools console error for more details.`,
+        message,
         { permanent: true }
       );
-      console.error(e);
+      error(message, false, e);
     }
   }
   // Go through each NPC sheet that is editable
