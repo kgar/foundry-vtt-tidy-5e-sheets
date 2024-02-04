@@ -17,6 +17,7 @@ import { NpcSheetRuntime } from 'src/runtime/NpcSheetRuntime';
 import { CharacterSheetRuntime } from 'src/runtime/CharacterSheetRuntime';
 import { VehicleSheetRuntime } from 'src/runtime/VehicleSheetRuntime';
 import { TabManager } from 'src/runtime/tab/TabManager';
+import { MigrationsApplication } from 'src/applications/migrations/MigrationsApplication';
 
 export type Tidy5eSettings = {
   [settingKey: string]: Tidy5eSetting;
@@ -108,7 +109,7 @@ export function createSettings() {
           name: `T5EK.Settings.SheetMenu.name`,
           label: 'T5EK.Settings.SheetMenu.label',
           hint: `T5EK.Settings.SheetMenu.hint`,
-          icon: 'fas fa-cog',
+          icon: 'fa-solid fa-cog',
           type: SheetSettingsFormApplication,
           restricted: false,
         },
@@ -118,7 +119,7 @@ export function createSettings() {
           name: `T5EK.ThemeSettings.SheetMenu.name`,
           label: 'T5EK.ThemeSettings.SheetMenu.buttonLabel',
           hint: `T5EK.ThemeSettings.SheetMenu.hint`,
-          icon: 'fas fa-palette',
+          icon: 'fa-solid fa-palette',
           type: ThemeSettingsFormApplication,
           restricted: false,
         },
@@ -127,8 +128,17 @@ export function createSettings() {
         options: {
           name: `T5EK.Settings.Reset.name`,
           hint: `T5EK.Settings.Reset.hint`,
-          icon: 'fas fa-database',
+          icon: 'fa-solid fa-database',
           type: ResetSettingsDialog,
+          restricted: true,
+        },
+      },
+      migrations: {
+        options: {
+          name: `T5EK.Settings.Migrations.name`,
+          hint: `T5EK.Settings.Migrations.hint`,
+          icon: 'fa-solid fa-right-left',
+          type: MigrationsApplication,
           restricted: true,
         },
       },
@@ -1833,8 +1843,7 @@ export function createSettings() {
           name: 'T5EK.Settings.ColorPickerScrollbarThumb.name',
           scope: 'client',
           type: String,
-          default:
-            defaultLightTheme.variables['--t5ek-scrollbar-thumb-color'],
+          default: defaultLightTheme.variables['--t5ek-scrollbar-thumb-color'],
           config: false,
         },
         get() {
@@ -1849,8 +1858,7 @@ export function createSettings() {
           name: 'T5EK.Settings.ColorPickerScrollbarTrack.name',
           scope: 'client',
           type: String,
-          default:
-            defaultLightTheme.variables['--t5ek-scrollbar-track-color'],
+          default: defaultLightTheme.variables['--t5ek-scrollbar-track-color'],
           config: false,
         },
         get() {
