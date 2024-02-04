@@ -1,7 +1,7 @@
 {
   "id": "tidy5e-sheet",
-  "title": "Tidy 5e Sheets Kgar Alpha",
-  "description": "D&D 5e sheet layouts for Foundry VTT, focused on a clean UI, user ergonomics, and extensibility. **This is an alpha testing module that is subject to numerous breaking changes and rapid updates.**",
+  "title": "Tidy 5e Sheets",
+  "description": "D&D 5e sheet layouts for Foundry VTT, focused on a clean UI, user ergonomics, and extensibility.",
   "version": "0.0a",
   "authors": [
     {
