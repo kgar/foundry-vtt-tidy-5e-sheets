@@ -4,10 +4,6 @@ import { error } from 'src/utils/logging';
 export async function migrateAlphaFlagsToV1() {
   for (let actor of game.actors) {
     try {
-      ui.notifications.info(
-        `${actor.name}: Transferring Tidy data from ${CONSTANTS.ALPHA_MODULE_ID} to ${CONSTANTS.MODULE_ID}...`
-      );
-
       await transferFlagData(actor);
 
       for (let item of actor.items) {
@@ -17,32 +13,22 @@ export async function migrateAlphaFlagsToV1() {
       ui.notifications.info(`${actor.name}: Transfer complete!`);
     } catch (e) {
       const message = `${actor.name}: Transfer failed. See devtools console error for more details.`;
-      ui.notifications.error(
-        message,
-        { permanent: true }
-      );
+      ui.notifications.error(message, { permanent: true });
       error(message, false, e);
     }
   }
 
   for (let item of game.items) {
     try {
-      ui.notifications.info(
-        `${item.name}: Transferring Tidy data from ${CONSTANTS.ALPHA_MODULE_ID} to ${CONSTANTS.MODULE_ID}...`
-      );
-
       await transferFlagData(item);
-
-      ui.notifications.info(`${item.name}: Transfer complete!`);
     } catch (e) {
       const message = `${item.name}: Transfer failed. See devtools console error for more details.`;
-      ui.notifications.error(
-        message,
-        { permanent: true }
-      );
+      ui.notifications.error(message, { permanent: true });
       error(message, false, e);
     }
   }
+
+  ui.notifications.info('Flag migration complete.');
 }
 
 async function transferFlagData(document: any) {

@@ -18,4 +18,7 @@ export async function migrateAlphaSettingsToV1() {
       error(message, false, e);
     }
   }
+
+  ui.notifications.info('Setting migration complete.');
+  
 }

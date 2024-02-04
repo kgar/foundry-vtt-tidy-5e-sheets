@@ -133,4 +133,6 @@ export async function migrateOgSettingsToV1() {
       error(message, false, e);
     }
   }
+
+  ui.notifications.info('Setting migration complete.');
 }
