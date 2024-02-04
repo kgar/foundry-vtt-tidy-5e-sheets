@@ -1,5 +1,6 @@
-const moduleId = 'tidy5e-sheet-kgar';
+const moduleId = 'tidy5e-sheet';
 export const CONSTANTS = {
+  ALPHA_MODULE_ID: 'tidy5e-sheet-kgar',
   MODULE_ID: moduleId,
   DND5E_SYSTEM_ID: 'dnd5e',
   // TODO: inject moduleId variable when this module overtakes the original
