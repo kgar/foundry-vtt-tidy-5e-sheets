@@ -20,7 +20,7 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-<h2>{localize('T5EK.Settings.TabVehicles.header')}</h2>
+<h2>{localize('TIDY5E.Settings.TabVehicles.header')}</h2>
 {#if userIsGm}
   <SelectSetting
     options={SettingsProvider.settings.initialVehicleSheetTab.options.choices()}
@@ -33,9 +33,9 @@
   <ListboxSetting
     name={SettingsProvider.settings.defaultVehicleSheetTabs.options.name}
     hint={SettingsProvider.settings.defaultVehicleSheetTabs.options.hint}
-    leftHeader="T5EK.Settings.DefaultSheetTabs.AvailableHeader"
+    leftHeader="TIDY5E.Settings.DefaultSheetTabs.AvailableHeader"
     bind:leftItems={$context.defaultVehicleTabs.available}
-    rightHeader="T5EK.Settings.DefaultSheetTabs.SelectedHeader"
+    rightHeader="TIDY5E.Settings.DefaultSheetTabs.SelectedHeader"
     bind:rightItems={$context.defaultVehicleTabs.selected}
     labelProp="label"
     valueProp="id"
@@ -47,7 +47,7 @@
           functions.resetDefaultTabs(context, CONSTANTS.SHEET_TYPE_VEHICLE)}
       >
         <i class="fas fa-rotate-right" />
-        {localize('T5EK.Reset')}
+        {localize('TIDY5E.Reset')}
       </button>
     </div>
   </ListboxSetting>
@@ -62,21 +62,21 @@
 
 <CheckboxSetting
   bind:value={$context.settings.useHpBarVehicle}
-  name={'T5EK.Settings.UseHpBar.name'}
-  hint={'T5EK.Settings.UseHpBar.hint'}
+  name={'TIDY5E.Settings.UseHpBar.name'}
+  hint={'TIDY5E.Settings.UseHpBar.hint'}
   id="useHpBarVehicle"
 />
 
 <CheckboxSetting
   bind:value={$context.settings.useHpOverlayVehicle}
-  name={'T5EK.Settings.UseHpOverlay.name'}
-  hint={'T5EK.Settings.UseHpOverlay.hint'}
+  name={'TIDY5E.Settings.UseHpOverlay.name'}
+  hint={'TIDY5E.Settings.UseHpOverlay.hint'}
   id="useHpOverlayVehicle"
 />
 
 <NumberInputSetting
   bind:value={$context.settings.vehicleSheetWidth}
-  name={'T5EK.Settings.VehicleSheetWidth.name'}
-  hint={'T5EK.Settings.VehicleSheetWidth.hint'}
+  name={'TIDY5E.Settings.VehicleSheetWidth.name'}
+  hint={'TIDY5E.Settings.VehicleSheetWidth.hint'}
   id="vehicleSheetWidth"
 />

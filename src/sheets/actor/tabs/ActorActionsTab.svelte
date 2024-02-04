@@ -32,7 +32,7 @@
             >{localize('DND5E.Range')}</ItemTableColumn
           >
           <ItemTableColumn baseWidth="5rem"
-            >{localize('T5EK.HitDC')}</ItemTableColumn
+            >{localize('TIDY5E.HitDC')}</ItemTableColumn
           >
           <ItemTableColumn baseWidth="7.5rem"
             >{localize('DND5E.Damage')}</ItemTableColumn

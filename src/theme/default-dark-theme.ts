@@ -2,7 +2,7 @@ import { CONSTANTS } from 'src/constants';
 import type { Tidy5eTheme } from 'src/types/theme';
 
 export const defaultDarkTheme: Tidy5eTheme = {
-  name: 'T5EK.Settings.SheetTheme.dark',
+  name: 'TIDY5E.Settings.SheetTheme.dark',
   id: CONSTANTS.THEME_ID_DEFAULT_DARK,
   description: 'The default Tidy 5e Dark theme.',
   variables: {

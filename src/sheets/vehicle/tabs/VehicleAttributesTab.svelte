@@ -73,7 +73,7 @@
   <div class="main-panel flex-column small-gap">
     {#if noFeatures && !$context.unlocked}
       <Notice>
-        {localize('T5EK.EmptySection')}
+        {localize('TIDY5E.EmptySection')}
       </Notice>
     {:else}
       {#each $context.features as section}

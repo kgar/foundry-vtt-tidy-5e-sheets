@@ -6,15 +6,15 @@ export class ResetSettingsDialog extends FormApplication {
   constructor(...args: any[]) {
     super(...args);
     return new Dialog({
-      title: FoundryAdapter.localize(`T5EK.Settings.Reset.dialogs.title`),
+      title: FoundryAdapter.localize(`TIDY5E.Settings.Reset.dialogs.title`),
       content:
         '<p style="margin-bottom:1rem;">' +
-        FoundryAdapter.localize(`T5EK.Settings.Reset.dialogs.content`) +
+        FoundryAdapter.localize(`TIDY5E.Settings.Reset.dialogs.content`) +
         '</p>',
       buttons: {
         confirm: {
           icon: '<i class="fas fa-check"></i>',
-          label: FoundryAdapter.localize(`T5EK.Settings.Reset.dialogs.confirm`),
+          label: FoundryAdapter.localize(`TIDY5E.Settings.Reset.dialogs.confirm`),
           callback: async () => {
             const storedSettings = game.settings.storage
               .get('world')
@@ -31,7 +31,7 @@ export class ResetSettingsDialog extends FormApplication {
         },
         cancel: {
           icon: '<i class="fas fa-times"></i>',
-          label: FoundryAdapter.localize(`T5EK.Settings.Reset.dialogs.cancel`),
+          label: FoundryAdapter.localize(`TIDY5E.Settings.Reset.dialogs.cancel`),
         },
       },
       default: 'cancel',

@@ -106,9 +106,9 @@ export function createSettings() {
     menus: {
       userMenu: {
         options: {
-          name: `T5EK.Settings.SheetMenu.name`,
-          label: 'T5EK.Settings.SheetMenu.label',
-          hint: `T5EK.Settings.SheetMenu.hint`,
+          name: `TIDY5E.Settings.SheetMenu.name`,
+          label: 'TIDY5E.Settings.SheetMenu.label',
+          hint: `TIDY5E.Settings.SheetMenu.hint`,
           icon: 'fa-solid fa-cog',
           type: SheetSettingsFormApplication,
           restricted: false,
@@ -116,9 +116,9 @@ export function createSettings() {
       },
       theme: {
         options: {
-          name: `T5EK.ThemeSettings.SheetMenu.name`,
-          label: 'T5EK.ThemeSettings.SheetMenu.buttonLabel',
-          hint: `T5EK.ThemeSettings.SheetMenu.hint`,
+          name: `TIDY5E.ThemeSettings.SheetMenu.name`,
+          label: 'TIDY5E.ThemeSettings.SheetMenu.buttonLabel',
+          hint: `TIDY5E.ThemeSettings.SheetMenu.hint`,
           icon: 'fa-solid fa-palette',
           type: ThemeSettingsFormApplication,
           restricted: false,
@@ -126,8 +126,8 @@ export function createSettings() {
       },
       resetAllSettings: {
         options: {
-          name: `T5EK.Settings.Reset.name`,
-          hint: `T5EK.Settings.Reset.hint`,
+          name: `TIDY5E.Settings.Reset.name`,
+          hint: `TIDY5E.Settings.Reset.hint`,
           icon: 'fa-solid fa-database',
           type: ResetSettingsDialog,
           restricted: true,
@@ -135,8 +135,8 @@ export function createSettings() {
       },
       migrations: {
         options: {
-          name: `T5EK.Settings.Migrations.name`,
-          hint: `T5EK.Settings.Migrations.hint`,
+          name: `TIDY5E.Settings.Migrations.name`,
+          hint: `TIDY5E.Settings.Migrations.hint`,
           icon: 'fa-solid fa-right-left',
           type: MigrationsApplication,
           restricted: true,
@@ -146,8 +146,8 @@ export function createSettings() {
     settings: {
       defaultTheme: {
         options: {
-          name: 'T5EK.Settings.DefaultTheme.name',
-          hint: 'T5EK.Settings.DefaultTheme.hint',
+          name: 'TIDY5E.Settings.DefaultTheme.name',
+          hint: 'TIDY5E.Settings.DefaultTheme.hint',
           scope: 'world',
           config: true,
           type: String,
@@ -170,8 +170,8 @@ export function createSettings() {
       // Color Theme
       colorScheme: {
         options: {
-          name: 'T5EK.Settings.SheetTheme.name',
-          hint: 'T5EK.Settings.SheetTheme.hint',
+          name: 'TIDY5E.Settings.SheetTheme.name',
+          hint: 'TIDY5E.Settings.SheetTheme.hint',
           scope: 'client',
           config: true,
           type: String,
@@ -204,8 +204,8 @@ export function createSettings() {
       // Context Menu
       useContextMenu: {
         options: {
-          name: 'T5EK.Settings.UseContextMenu.name',
-          hint: 'T5EK.Settings.UseContextMenu.hint',
+          name: 'TIDY5E.Settings.UseContextMenu.name',
+          hint: 'TIDY5E.Settings.UseContextMenu.hint',
           scope: 'client',
           config: false,
           default: true,
@@ -220,8 +220,8 @@ export function createSettings() {
 
       initialCharacterSheetTab: {
         options: {
-          name: 'T5EK.Settings.InitialSheetTab.name',
-          hint: 'T5EK.Settings.InitialSheetTab.hint',
+          name: 'TIDY5E.Settings.InitialSheetTab.name',
+          hint: 'TIDY5E.Settings.InitialSheetTab.hint',
           scope: 'world',
           config: false,
           type: String,
@@ -240,8 +240,8 @@ export function createSettings() {
 
       defaultCharacterSheetTabs: {
         options: {
-          name: 'T5EK.Settings.DefaultSheetTabs.name',
-          hint: 'T5EK.Settings.DefaultSheetTabs.hint',
+          name: 'TIDY5E.Settings.DefaultSheetTabs.name',
+          hint: 'TIDY5E.Settings.DefaultSheetTabs.hint',
           scope: 'world',
           config: false,
           type: Array,
@@ -264,8 +264,8 @@ export function createSettings() {
 
       useClassicControlsForCharacter: {
         options: {
-          name: 'T5EK.Settings.UseClassicControls.name',
-          hint: 'T5EK.Settings.UseClassicControls.hint',
+          name: 'TIDY5E.Settings.UseClassicControls.name',
+          hint: 'TIDY5E.Settings.UseClassicControls.hint',
           scope: 'client',
           config: false,
           default: true,
@@ -280,8 +280,8 @@ export function createSettings() {
 
       showIconsNextToTheItemName: {
         options: {
-          name: 'T5EK.Settings.ShowIconsNextToTheItemName.name',
-          hint: 'T5EK.Settings.ShowIconsNextToTheItemName.hint',
+          name: 'TIDY5E.Settings.ShowIconsNextToTheItemName.name',
+          hint: 'TIDY5E.Settings.ShowIconsNextToTheItemName.hint',
           scope: 'client',
           config: false,
           default: true,
@@ -297,8 +297,8 @@ export function createSettings() {
       // Item Info Cards
       itemCardsForAllItems: {
         options: {
-          name: 'T5EK.Settings.ItemCardsForAllItems.name',
-          hint: 'T5EK.Settings.ItemCardsForAllItems.hint',
+          name: 'TIDY5E.Settings.ItemCardsForAllItems.name',
+          hint: 'TIDY5E.Settings.ItemCardsForAllItems.hint',
           scope: 'client',
           config: true,
           default: true,
@@ -311,8 +311,8 @@ export function createSettings() {
 
       itemCardsForNpcs: {
         options: {
-          name: 'T5EK.Settings.ItemCardsForNPCs.name',
-          hint: 'T5EK.Settings.ItemCardsForNPCs.hint',
+          name: 'TIDY5E.Settings.ItemCardsForNPCs.name',
+          hint: 'TIDY5E.Settings.ItemCardsForNPCs.hint',
           scope: 'world',
           config: true,
           default: true,
@@ -325,8 +325,8 @@ export function createSettings() {
 
       itemCardsAreFloating: {
         options: {
-          name: 'T5EK.Settings.ItemCardsAreFloating.name',
-          hint: 'T5EK.Settings.ItemCardsAreFloating.hint',
+          name: 'TIDY5E.Settings.ItemCardsAreFloating.name',
+          hint: 'TIDY5E.Settings.ItemCardsAreFloating.hint',
           scope: 'client',
           config: true,
           default: false,
@@ -339,8 +339,8 @@ export function createSettings() {
 
       itemCardsDelay: {
         options: {
-          name: 'T5EK.Settings.ItemCardsDelay.name',
-          hint: 'T5EK.Settings.ItemCardsDelay.hint',
+          name: 'TIDY5E.Settings.ItemCardsDelay.name',
+          hint: 'TIDY5E.Settings.ItemCardsDelay.hint',
           scope: 'client',
           config: true,
           default: 300,
@@ -353,8 +353,8 @@ export function createSettings() {
 
       useAccessibleKeyboardSupport: {
         options: {
-          name: 'T5EK.Settings.UseAccessibleKeyboardSupport.name',
-          hint: 'T5EK.Settings.UseAccessibleKeyboardSupport.hint',
+          name: 'TIDY5E.Settings.UseAccessibleKeyboardSupport.name',
+          hint: 'TIDY5E.Settings.UseAccessibleKeyboardSupport.hint',
           scope: 'world',
           config: true,
           default: false,
@@ -369,8 +369,8 @@ export function createSettings() {
 
       useDefaultSheetAttributeTabbing: {
         options: {
-          name: 'T5EK.Settings.UseDefaultSheetAttributeTabbing.name',
-          hint: 'T5EK.Settings.UseDefaultSheetAttributeTabbing.hint',
+          name: 'TIDY5E.Settings.UseDefaultSheetAttributeTabbing.name',
+          hint: 'TIDY5E.Settings.UseDefaultSheetAttributeTabbing.hint',
           scope: 'client',
           config: true,
           default: false,
@@ -385,8 +385,8 @@ export function createSettings() {
 
       useDefaultSheetHpTabbing: {
         options: {
-          name: 'T5EK.Settings.UseDefaultSheetHpTabbing.name',
-          hint: 'T5EK.Settings.UseDefaultSheetHpTabbing.hint',
+          name: 'TIDY5E.Settings.UseDefaultSheetHpTabbing.name',
+          hint: 'TIDY5E.Settings.UseDefaultSheetHpTabbing.hint',
           scope: 'client',
           config: true,
           default: false,
@@ -401,8 +401,8 @@ export function createSettings() {
 
       itemCardsFixKey: {
         options: {
-          name: 'T5EK.Settings.ItemCardsFixKey.name',
-          hint: 'T5EK.Settings.ItemCardsFixKey.hint',
+          name: 'TIDY5E.Settings.ItemCardsFixKey.name',
+          hint: 'TIDY5E.Settings.ItemCardsFixKey.hint',
           scope: 'world',
           config: false,
           default: 'x',
@@ -416,8 +416,8 @@ export function createSettings() {
       //Show trait labels
       showTraitLabels: {
         options: {
-          name: 'T5EK.Settings.ShowTraitLabels.name',
-          hint: 'T5EK.Settings.ShowTraitLabels.hint',
+          name: 'TIDY5E.Settings.ShowTraitLabels.name',
+          hint: 'TIDY5E.Settings.ShowTraitLabels.hint',
           scope: 'world',
           config: false,
           default: true,
@@ -433,8 +433,8 @@ export function createSettings() {
       // PC Sheet Settings
       showClassList: {
         options: {
-          name: 'T5EK.Settings.ShowClassList.name',
-          hint: 'T5EK.Settings.ShowClassList.hint',
+          name: 'TIDY5E.Settings.ShowClassList.name',
+          hint: 'TIDY5E.Settings.ShowClassList.hint',
           scope: 'client',
           config: false,
           default: true,
@@ -447,8 +447,8 @@ export function createSettings() {
 
       animateInspiration: {
         options: {
-          name: 'T5EK.Settings.InspirationAnimation.name',
-          hint: 'T5EK.Settings.InspirationAnimation.hint',
+          name: 'TIDY5E.Settings.InspirationAnimation.name',
+          hint: 'TIDY5E.Settings.InspirationAnimation.hint',
           scope: 'client',
           config: false,
           default: true,
@@ -461,8 +461,8 @@ export function createSettings() {
 
       hideIfZero: {
         options: {
-          name: 'T5EK.Settings.HideIfZero.name',
-          hint: 'T5EK.Settings.HideIfZero.hint',
+          name: 'TIDY5E.Settings.HideIfZero.name',
+          hint: 'TIDY5E.Settings.HideIfZero.hint',
           scope: 'client',
           config: false,
           default: false,
@@ -475,8 +475,8 @@ export function createSettings() {
 
       showInspirationOnHover: {
         options: {
-          name: 'T5EK.Settings.ShowInspirationOnHover.name',
-          hint: 'T5EK.Settings.ShowInspirationOnHover.hint',
+          name: 'TIDY5E.Settings.ShowInspirationOnHover.name',
+          hint: 'TIDY5E.Settings.ShowInspirationOnHover.hint',
           scope: 'client',
           config: false,
           default: false,
@@ -491,8 +491,8 @@ export function createSettings() {
 
       showExhaustionOnHover: {
         options: {
-          name: 'T5EK.Settings.ShowExhaustionOnHover.name',
-          hint: 'T5EK.Settings.ShowExhaustionOnHover.hint',
+          name: 'TIDY5E.Settings.ShowExhaustionOnHover.name',
+          hint: 'TIDY5E.Settings.ShowExhaustionOnHover.hint',
           scope: 'client',
           config: false,
           default: false,
@@ -507,8 +507,8 @@ export function createSettings() {
 
       useHpBar: {
         options: {
-          name: 'T5EK.Settings.UseHpBar.name',
-          hint: 'T5EK.Settings.UseHpBar.hint',
+          name: 'TIDY5E.Settings.UseHpBar.name',
+          hint: 'TIDY5E.Settings.UseHpBar.hint',
           scope: 'client',
           config: false,
           default: true,
@@ -521,8 +521,8 @@ export function createSettings() {
 
       useHpOverlay: {
         options: {
-          name: 'T5EK.Settings.UseHpOverlay.name',
-          hint: 'T5EK.Settings.UseHpOverlay.hint',
+          name: 'TIDY5E.Settings.UseHpOverlay.name',
+          hint: 'TIDY5E.Settings.UseHpOverlay.hint',
           scope: 'client',
           config: false,
           default: true,
@@ -535,8 +535,8 @@ export function createSettings() {
 
       toggleEmptyCharacterSkills: {
         options: {
-          name: 'T5EK.Settings.ToggleEmptyCharacterSkills.name',
-          hint: 'T5EK.Settings.ToggleEmptyCharacterSkills.hint',
+          name: 'TIDY5E.Settings.ToggleEmptyCharacterSkills.name',
+          hint: 'TIDY5E.Settings.ToggleEmptyCharacterSkills.hint',
           scope: 'client',
           config: false,
           default: false,
@@ -551,8 +551,8 @@ export function createSettings() {
 
       toggleEmptyCharacterTraits: {
         options: {
-          name: 'T5EK.Settings.ToggleEmptyCharacterTraits.name',
-          hint: 'T5EK.Settings.ToggleEmptyCharacterTraits.hint',
+          name: 'TIDY5E.Settings.ToggleEmptyCharacterTraits.name',
+          hint: 'TIDY5E.Settings.ToggleEmptyCharacterTraits.hint',
           scope: 'client',
           config: false,
           default: false,
@@ -567,8 +567,8 @@ export function createSettings() {
 
       moveTraitsBelowCharacterResources: {
         options: {
-          name: 'T5EK.Settings.MoveTraitsBelowResources.name',
-          hint: 'T5EK.Settings.MoveTraitsBelowResources.hint',
+          name: 'TIDY5E.Settings.MoveTraitsBelowResources.name',
+          hint: 'TIDY5E.Settings.MoveTraitsBelowResources.hint',
           scope: 'client',
           config: false,
           default: false,
@@ -583,8 +583,8 @@ export function createSettings() {
 
       showEquippedAmmoOnly: {
         options: {
-          name: 'T5EK.Settings.ShowEquippedAmmoOnly.name',
-          hint: 'T5EK.Settings.ShowEquippedAmmoOnly.hint',
+          name: 'TIDY5E.Settings.ShowEquippedAmmoOnly.name',
+          hint: 'TIDY5E.Settings.ShowEquippedAmmoOnly.hint',
           scope: 'client',
           config: false,
           default: false,
@@ -598,8 +598,8 @@ export function createSettings() {
       // NPC Sheet Settings
       initialNpcSheetTab: {
         options: {
-          name: 'T5EK.Settings.InitialSheetTab.name',
-          hint: 'T5EK.Settings.InitialSheetTab.hint',
+          name: 'TIDY5E.Settings.InitialSheetTab.name',
+          hint: 'TIDY5E.Settings.InitialSheetTab.hint',
           scope: 'world',
           config: false,
           type: String,
@@ -616,8 +616,8 @@ export function createSettings() {
 
       defaultNpcSheetTabs: {
         options: {
-          name: 'T5EK.Settings.DefaultSheetTabs.name',
-          hint: 'T5EK.Settings.DefaultSheetTabs.hint',
+          name: 'TIDY5E.Settings.DefaultSheetTabs.name',
+          hint: 'TIDY5E.Settings.DefaultSheetTabs.hint',
           scope: 'world',
           config: false,
           type: Array,
@@ -636,8 +636,8 @@ export function createSettings() {
 
       useClassicControlsForNpc: {
         options: {
-          name: 'T5EK.Settings.UseClassicControls.name',
-          hint: 'T5EK.Settings.UseClassicControls.hint',
+          name: 'TIDY5E.Settings.UseClassicControls.name',
+          hint: 'TIDY5E.Settings.UseClassicControls.hint',
           scope: 'client',
           config: false,
           default: true,
@@ -652,8 +652,8 @@ export function createSettings() {
 
       moveTraitsBelowNpcResources: {
         options: {
-          name: 'T5EK.Settings.MoveTraitsBelowResources.name',
-          hint: 'T5EK.Settings.MoveTraitsBelowResources.hint',
+          name: 'TIDY5E.Settings.MoveTraitsBelowResources.name',
+          hint: 'TIDY5E.Settings.MoveTraitsBelowResources.hint',
           scope: 'client',
           config: false,
           default: false,
@@ -668,8 +668,8 @@ export function createSettings() {
 
       useHpBarNpc: {
         options: {
-          name: 'T5EK.Settings.UseHpBar.name',
-          hint: 'T5EK.Settings.UseHpBar.hint',
+          name: 'TIDY5E.Settings.UseHpBar.name',
+          hint: 'TIDY5E.Settings.UseHpBar.hint',
           scope: 'client',
           config: false,
           default: true,
@@ -682,8 +682,8 @@ export function createSettings() {
 
       useHpOverlayNpc: {
         options: {
-          name: 'T5EK.Settings.UseHpOverlay.name',
-          hint: 'T5EK.Settings.UseHpOverlay.hint',
+          name: 'TIDY5E.Settings.UseHpOverlay.name',
+          hint: 'TIDY5E.Settings.UseHpOverlay.hint',
           scope: 'client',
           config: false,
           default: true,
@@ -696,8 +696,8 @@ export function createSettings() {
 
       alwaysShowNpcTraits: {
         options: {
-          name: 'T5EK.Settings.AlwaysShowTraits.name',
-          hint: 'T5EK.Settings.AlwaysShowTraits.hint',
+          name: 'TIDY5E.Settings.AlwaysShowTraits.name',
+          hint: 'TIDY5E.Settings.AlwaysShowTraits.hint',
           scope: 'client',
           config: false,
           default: false,
@@ -710,8 +710,8 @@ export function createSettings() {
 
       alwaysShowNpcSkills: {
         options: {
-          name: 'T5EK.Settings.AlwaysShowSkills.name',
-          hint: 'T5EK.Settings.AlwaysShowSkills.hint',
+          name: 'TIDY5E.Settings.AlwaysShowSkills.name',
+          hint: 'TIDY5E.Settings.AlwaysShowSkills.hint',
           scope: 'client',
           config: false,
           default: false,
@@ -724,8 +724,8 @@ export function createSettings() {
 
       showSpellbookTabNpc: {
         options: {
-          name: 'T5EK.Settings.ShowNPCSpellbookTab.name',
-          hint: 'T5EK.Settings.ShowNPCSpellbookTab.hint',
+          name: 'TIDY5E.Settings.ShowNPCSpellbookTab.name',
+          hint: 'TIDY5E.Settings.ShowNPCSpellbookTab.hint',
           scope: 'client',
           config: false,
           default: true,
@@ -740,8 +740,8 @@ export function createSettings() {
 
       initialVehicleSheetTab: {
         options: {
-          name: 'T5EK.Settings.InitialSheetTab.name',
-          hint: 'T5EK.Settings.InitialSheetTab.hint',
+          name: 'TIDY5E.Settings.InitialSheetTab.name',
+          hint: 'TIDY5E.Settings.InitialSheetTab.hint',
           scope: 'world',
           config: false,
           type: String,
@@ -760,8 +760,8 @@ export function createSettings() {
 
       defaultVehicleSheetTabs: {
         options: {
-          name: 'T5EK.Settings.DefaultSheetTabs.name',
-          hint: 'T5EK.Settings.DefaultSheetTabs.hint',
+          name: 'TIDY5E.Settings.DefaultSheetTabs.name',
+          hint: 'TIDY5E.Settings.DefaultSheetTabs.hint',
           scope: 'world',
           config: false,
           type: Array,
@@ -781,8 +781,8 @@ export function createSettings() {
 
       useClassicControlsForVehicle: {
         options: {
-          name: 'T5EK.Settings.UseClassicControls.name',
-          hint: 'T5EK.Settings.UseClassicControls.hint',
+          name: 'TIDY5E.Settings.UseClassicControls.name',
+          hint: 'TIDY5E.Settings.UseClassicControls.hint',
           scope: 'client',
           config: false,
           default: true,
@@ -797,8 +797,8 @@ export function createSettings() {
 
       useHpBarVehicle: {
         options: {
-          name: 'T5EK.Settings.UseHpBar.name',
-          hint: 'T5EK.Settings.UseHpBar.hint',
+          name: 'TIDY5E.Settings.UseHpBar.name',
+          hint: 'TIDY5E.Settings.UseHpBar.hint',
           scope: 'client',
           config: false,
           default: true,
@@ -811,8 +811,8 @@ export function createSettings() {
 
       useHpOverlayVehicle: {
         options: {
-          name: 'T5EK.Settings.UseHpOverlay.name',
-          hint: 'T5EK.Settings.UseHpOverlay.hint',
+          name: 'TIDY5E.Settings.UseHpOverlay.name',
+          hint: 'TIDY5E.Settings.UseHpOverlay.hint',
           scope: 'client',
           config: false,
           default: true,
@@ -829,8 +829,8 @@ export function createSettings() {
       // Show Player Name
       showPlayerName: {
         options: {
-          name: 'T5EK.Settings.ShowPlayerName.name',
-          hint: 'T5EK.Settings.ShowPlayerName.hint',
+          name: 'TIDY5E.Settings.ShowPlayerName.name',
+          hint: 'TIDY5E.Settings.ShowPlayerName.hint',
           scope: 'world',
           config: false,
           default: false,
@@ -844,8 +844,8 @@ export function createSettings() {
       // Expanded Sheet
       showExpandedLimitedView: {
         options: {
-          name: 'T5EK.Settings.ShowExpandedLimitedView.name',
-          hint: 'T5EK.Settings.ShowExpandedLimitedView.hint',
+          name: 'TIDY5E.Settings.ShowExpandedLimitedView.name',
+          hint: 'TIDY5E.Settings.ShowExpandedLimitedView.hint',
           scope: 'world',
           config: false,
           default: false,
@@ -862,20 +862,20 @@ export function createSettings() {
       // Portrait Style
       useCircularPortraitStyle: {
         options: {
-          name: 'T5EK.Settings.UseCircularPortraitStyle.name',
-          hint: 'T5EK.Settings.UseCircularPortraitStyle.hint',
+          name: 'TIDY5E.Settings.UseCircularPortraitStyle.name',
+          hint: 'TIDY5E.Settings.UseCircularPortraitStyle.hint',
           scope: 'world',
           config: false,
           type: String,
           choices: {
             [CONSTANTS.CIRCULAR_PORTRAIT_OPTION_NONE]:
-              'T5EK.Settings.UseCircularPortraitStyle.none',
+              'TIDY5E.Settings.UseCircularPortraitStyle.none',
             [CONSTANTS.CIRCULAR_PORTRAIT_OPTION_CHARACTER]:
-              'T5EK.Settings.UseCircularPortraitStyle.pc',
+              'TIDY5E.Settings.UseCircularPortraitStyle.pc',
             [CONSTANTS.CIRCULAR_PORTRAIT_OPTION_NPCVEHICLE]:
-              'T5EK.Settings.UseCircularPortraitStyle.npc',
+              'TIDY5E.Settings.UseCircularPortraitStyle.npc',
             [CONSTANTS.CIRCULAR_PORTRAIT_OPTION_ALL]:
-              'T5EK.Settings.UseCircularPortraitStyle.all',
+              'TIDY5E.Settings.UseCircularPortraitStyle.all',
           },
           default: CONSTANTS.CIRCULAR_PORTRAIT_OPTION_ALL,
         },
@@ -889,8 +889,8 @@ export function createSettings() {
       // Total Edit Lock
       useTotalSheetLock: {
         options: {
-          name: 'T5EK.Settings.UseTotalSheetLock.name',
-          hint: 'T5EK.Settings.UseTotalSheetLock.hint',
+          name: 'TIDY5E.Settings.UseTotalSheetLock.name',
+          hint: 'TIDY5E.Settings.UseTotalSheetLock.hint',
           scope: 'world',
           config: false,
           default: false,
@@ -903,8 +903,8 @@ export function createSettings() {
 
       permanentlyUnlockCharacterSheetForGm: {
         options: {
-          name: 'T5EK.Settings.PermanentlyUnlockCharacterSheetForGM.name',
-          hint: 'T5EK.Settings.PermanentlyUnlockCharacterSheetForGM.hint',
+          name: 'TIDY5E.Settings.PermanentlyUnlockCharacterSheetForGM.name',
+          hint: 'TIDY5E.Settings.PermanentlyUnlockCharacterSheetForGM.hint',
           scope: 'world',
           config: false,
           default: false,
@@ -919,8 +919,8 @@ export function createSettings() {
 
       limitEffectsManagementToGm: {
         options: {
-          name: 'T5EK.Settings.LimitEffectsManagementToGM.name',
-          hint: 'T5EK.Settings.LimitEffectsManagementToGM.hint',
+          name: 'TIDY5E.Settings.LimitEffectsManagementToGM.name',
+          hint: 'TIDY5E.Settings.LimitEffectsManagementToGM.hint',
           scope: 'world',
           config: false,
           default: false,
@@ -936,8 +936,8 @@ export function createSettings() {
       // Hidden Death Saves
       hideDeathSavesFromPlayers: {
         options: {
-          name: 'T5EK.Settings.HideDeathSavesFromPlayers.name',
-          hint: 'T5EK.Settings.HideDeathSavesFromPlayers.hint',
+          name: 'TIDY5E.Settings.HideDeathSavesFromPlayers.name',
+          hint: 'TIDY5E.Settings.HideDeathSavesFromPlayers.hint',
           scope: 'world',
           config: false,
           default: false,
@@ -953,8 +953,8 @@ export function createSettings() {
       // Hide marker spell slot
       useSpellSlotMarker: {
         options: {
-          name: 'T5EK.Settings.UseSpellSlotMarker.name',
-          hint: 'T5EK.Settings.UseSpellSlotMarker.hint',
+          name: 'TIDY5E.Settings.UseSpellSlotMarker.name',
+          hint: 'TIDY5E.Settings.UseSpellSlotMarker.hint',
           scope: 'world',
           config: false,
           default: true,
@@ -967,8 +967,8 @@ export function createSettings() {
 
       useCharacterEncumbranceBar: {
         options: {
-          name: 'T5EK.Settings.UseCharacterEncumbranceBar.name',
-          hint: 'T5EK.Settings.UseCharacterEncumbranceBar.hint',
+          name: 'TIDY5E.Settings.UseCharacterEncumbranceBar.name',
+          hint: 'TIDY5E.Settings.UseCharacterEncumbranceBar.hint',
           scope: 'world',
           config: false,
           default: true,
@@ -983,8 +983,8 @@ export function createSettings() {
 
       useNpcEncumbranceBar: {
         options: {
-          name: 'T5EK.Settings.UseNPCEncumbranceBar.name',
-          hint: 'T5EK.Settings.UseNPCEncumbranceBar.hint',
+          name: 'TIDY5E.Settings.UseNPCEncumbranceBar.name',
+          hint: 'TIDY5E.Settings.UseNPCEncumbranceBar.hint',
           scope: 'world',
           config: false,
           default: false,
@@ -997,8 +997,8 @@ export function createSettings() {
 
       useVehicleEncumbranceBar: {
         options: {
-          name: 'T5EK.Settings.UseVehicleEncumbranceBar.name',
-          hint: 'T5EK.Settings.UseVehicleEncumbranceBar.hint',
+          name: 'TIDY5E.Settings.UseVehicleEncumbranceBar.name',
+          hint: 'TIDY5E.Settings.UseVehicleEncumbranceBar.hint',
           scope: 'world',
           config: false,
           default: true,
@@ -1014,8 +1014,8 @@ export function createSettings() {
       // Item quantity
       alwaysShowItemQuantity: {
         options: {
-          name: 'T5EK.Settings.AlwaysShowItemQuantity.name',
-          hint: 'T5EK.Settings.AlwaysShowItemQuantity.hint',
+          name: 'TIDY5E.Settings.AlwaysShowItemQuantity.name',
+          hint: 'TIDY5E.Settings.AlwaysShowItemQuantity.hint',
           scope: 'world',
           config: false,
           default: false,
@@ -1030,8 +1030,8 @@ export function createSettings() {
 
       useExhaustion: {
         options: {
-          name: 'T5EK.Settings.UseExhaustion.name',
-          hint: 'T5EK.Settings.UseExhaustion.hint',
+          name: 'TIDY5E.Settings.UseExhaustion.name',
+          hint: 'TIDY5E.Settings.UseExhaustion.hint',
           scope: 'world',
           config: false,
           default: true,
@@ -1044,8 +1044,8 @@ export function createSettings() {
 
       useCharacterInspiration: {
         options: {
-          name: 'T5EK.Settings.UseInspiration.name',
-          hint: 'T5EK.Settings.UseInspiration.hint',
+          name: 'TIDY5E.Settings.UseInspiration.name',
+          hint: 'TIDY5E.Settings.UseInspiration.hint',
           scope: 'world',
           config: false,
           default: true,
@@ -1060,8 +1060,8 @@ export function createSettings() {
 
       useVehicleMotion: {
         options: {
-          name: 'T5EK.Settings.UseVehicleMotion.name',
-          hint: 'T5EK.Settings.UseVehicleMotion.hint',
+          name: 'TIDY5E.Settings.UseVehicleMotion.name',
+          hint: 'TIDY5E.Settings.UseVehicleMotion.hint',
           scope: 'world',
           config: false,
           default: true,
@@ -1075,8 +1075,8 @@ export function createSettings() {
       // NPC Resting
       useNpcRest: {
         options: {
-          name: 'T5EK.Settings.UseNPCRest.name',
-          hint: 'T5EK.Settings.UseNPCRest.hint',
+          name: 'TIDY5E.Settings.UseNPCRest.name',
+          hint: 'TIDY5E.Settings.UseNPCRest.hint',
           scope: 'world',
           config: false,
           default: false,
@@ -1089,8 +1089,8 @@ export function createSettings() {
 
       showNpcRestInChat: {
         options: {
-          name: 'T5EK.Settings.ShowNPCRestInChat.name',
-          hint: 'T5EK.Settings.ShowNPCRestInChat.hint',
+          name: 'TIDY5E.Settings.ShowNPCRestInChat.name',
+          hint: 'TIDY5E.Settings.ShowNPCRestInChat.hint',
           scope: 'world',
           config: false,
           default: true,
@@ -1104,15 +1104,15 @@ export function createSettings() {
       // Link Marker
       showNpcActorLinkMarker: {
         options: {
-          name: 'T5EK.Settings.ShowNPCActorLinkMarker.name',
-          hint: 'T5EK.Settings.ShowNPCActorLinkMarker.hint',
+          name: 'TIDY5E.Settings.ShowNPCActorLinkMarker.name',
+          hint: 'TIDY5E.Settings.ShowNPCActorLinkMarker.hint',
           scope: 'world',
           config: false,
           type: String,
           choices: {
-            default: 'T5EK.Settings.ShowNPCActorLinkMarker.default',
-            unlinked: 'T5EK.Settings.ShowNPCActorLinkMarker.unlinked',
-            both: 'T5EK.Settings.ShowNPCActorLinkMarker.both',
+            default: 'TIDY5E.Settings.ShowNPCActorLinkMarker.default',
+            unlinked: 'TIDY5E.Settings.ShowNPCActorLinkMarker.unlinked',
+            both: 'TIDY5E.Settings.ShowNPCActorLinkMarker.both',
           },
           default: 'default',
         },
@@ -1126,8 +1126,8 @@ export function createSettings() {
       // Show if item has active effects
       showActiveEffectsMarker: {
         options: {
-          name: 'T5EK.Settings.ShowActiveEffectsMarker.name',
-          hint: 'T5EK.Settings.ShowActiveEffectsMarker.hint',
+          name: 'TIDY5E.Settings.ShowActiveEffectsMarker.name',
+          hint: 'TIDY5E.Settings.ShowActiveEffectsMarker.hint',
           scope: 'world',
           config: false,
           default: false,
@@ -1143,8 +1143,8 @@ export function createSettings() {
       // Default width for player sheet
       playerSheetWidth: {
         options: {
-          name: 'T5EK.Settings.PlayerSheetWidth.name',
-          hint: 'T5EK.Settings.PlayerSheetWidth.hint',
+          name: 'TIDY5E.Settings.PlayerSheetWidth.name',
+          hint: 'TIDY5E.Settings.PlayerSheetWidth.hint',
           scope: 'client',
           config: false,
           type: Number,
@@ -1158,8 +1158,8 @@ export function createSettings() {
       // Default width for NPC sheet
       npcSheetWidth: {
         options: {
-          name: 'T5EK.Settings.NPCSheetWidth.name',
-          hint: 'T5EK.Settings.NPCSheetWidth.hint',
+          name: 'TIDY5E.Settings.NPCSheetWidth.name',
+          hint: 'TIDY5E.Settings.NPCSheetWidth.hint',
           scope: 'client',
           config: false,
           type: Number,
@@ -1172,8 +1172,8 @@ export function createSettings() {
 
       permanentlyUnlockNpcSheetForGm: {
         options: {
-          name: 'T5EK.Settings.PermanentlyUnlockNPCSheetForGM.name',
-          hint: 'T5EK.Settings.PermanentlyUnlockNPCSheetForGM.hint',
+          name: 'TIDY5E.Settings.PermanentlyUnlockNPCSheetForGM.name',
+          hint: 'TIDY5E.Settings.PermanentlyUnlockNPCSheetForGM.hint',
           scope: 'world',
           config: false,
           default: false,
@@ -1190,8 +1190,8 @@ export function createSettings() {
 
       vehicleSheetWidth: {
         options: {
-          name: 'T5EK.Settings.VehicleSheetWidth.name',
-          hint: 'T5EK.Settings.VehicleSheetWidth.hint',
+          name: 'TIDY5E.Settings.VehicleSheetWidth.name',
+          hint: 'TIDY5E.Settings.VehicleSheetWidth.hint',
           scope: 'client',
           config: false,
           type: Number,
@@ -1204,8 +1204,8 @@ export function createSettings() {
 
       permanentlyUnlockVehicleSheetForGm: {
         options: {
-          name: 'T5EK.Settings.PermanentlyUnlockVehicleSheetForGM.name',
-          hint: 'T5EK.Settings.PermanentlyUnlockVehicleSheetForGM.hint',
+          name: 'TIDY5E.Settings.PermanentlyUnlockVehicleSheetForGM.name',
+          hint: 'TIDY5E.Settings.PermanentlyUnlockVehicleSheetForGM.hint',
           scope: 'world',
           config: false,
           default: false,
@@ -1222,8 +1222,8 @@ export function createSettings() {
 
       sortFavoriteItemsAlphabetically: {
         options: {
-          name: 'T5EK.Settings.SortFavoriteItemsAlphabetically.name',
-          hint: 'T5EK.Settings.SortFavoriteItemsAlphabetically.hint',
+          name: 'TIDY5E.Settings.SortFavoriteItemsAlphabetically.name',
+          hint: 'TIDY5E.Settings.SortFavoriteItemsAlphabetically.hint',
           scope: 'world',
           config: false,
           default: false,
@@ -1239,8 +1239,8 @@ export function createSettings() {
       // Locks
       lockMoneyChanges: {
         options: {
-          name: 'T5EK.Settings.LockMoneyChanges.name',
-          hint: 'T5EK.Settings.LockMoneyChanges.hint',
+          name: 'TIDY5E.Settings.LockMoneyChanges.name',
+          hint: 'TIDY5E.Settings.LockMoneyChanges.hint',
           scope: 'world',
           config: false,
           default: false,
@@ -1253,8 +1253,8 @@ export function createSettings() {
 
       lockExpChanges: {
         options: {
-          name: 'T5EK.Settings.LockExpChanges.name',
-          hint: 'T5EK.Settings.LockExpChanges.hint',
+          name: 'TIDY5E.Settings.LockExpChanges.name',
+          hint: 'TIDY5E.Settings.LockExpChanges.hint',
           scope: 'world',
           config: false,
           default: false,
@@ -1267,8 +1267,8 @@ export function createSettings() {
 
       lockHpMaxChanges: {
         options: {
-          name: 'T5EK.Settings.LockHpMaxChanges.name',
-          hint: 'T5EK.Settings.LockHpMaxChanges.hint',
+          name: 'TIDY5E.Settings.LockHpMaxChanges.name',
+          hint: 'TIDY5E.Settings.LockHpMaxChanges.hint',
           scope: 'world',
           config: false,
           default: false,
@@ -1281,8 +1281,8 @@ export function createSettings() {
 
       lockLevelSelector: {
         options: {
-          name: 'T5EK.Settings.LockLevelSelector.name',
-          hint: 'T5EK.Settings.LockLevelSelector.hint',
+          name: 'TIDY5E.Settings.LockLevelSelector.name',
+          hint: 'TIDY5E.Settings.LockLevelSelector.hint',
           scope: 'world',
           config: false,
           default: false,
@@ -1295,8 +1295,8 @@ export function createSettings() {
 
       lockConfigureSheet: {
         options: {
-          name: 'T5EK.Settings.LockConfigureSheet.name',
-          hint: 'T5EK.Settings.LockConfigureSheet.hint',
+          name: 'TIDY5E.Settings.LockConfigureSheet.name',
+          hint: 'TIDY5E.Settings.LockConfigureSheet.hint',
           scope: 'world',
           config: false,
           default: false,
@@ -1309,8 +1309,8 @@ export function createSettings() {
 
       lockItemQuantity: {
         options: {
-          name: 'T5EK.Settings.LockItemQuantity.name',
-          hint: 'T5EK.Settings.LockItemQuantity.hint',
+          name: 'TIDY5E.Settings.LockItemQuantity.name',
+          hint: 'TIDY5E.Settings.LockItemQuantity.hint',
           scope: 'world',
           config: false,
           default: false,
@@ -1324,8 +1324,8 @@ export function createSettings() {
       // Other
       allowCantripsToBePrepared: {
         options: {
-          name: 'T5EK.Settings.AllowCantripsToBePrepared.name',
-          hint: 'T5EK.Settings.AllowCantripsToBePrepared.hint',
+          name: 'TIDY5E.Settings.AllowCantripsToBePrepared.name',
+          hint: 'TIDY5E.Settings.AllowCantripsToBePrepared.hint',
           scope: 'world',
           config: false,
           default: false,
@@ -1340,8 +1340,8 @@ export function createSettings() {
 
       useMulticlassSpellbookFilter: {
         options: {
-          name: 'T5EK.Settings.UseMulticlassSpellbookFilter.name',
-          hint: 'T5EK.Settings.UseMulticlassSpellbookFilter.hint',
+          name: 'TIDY5E.Settings.UseMulticlassSpellbookFilter.name',
+          hint: 'TIDY5E.Settings.UseMulticlassSpellbookFilter.hint',
           scope: 'client',
           config: false,
           default: false,
@@ -1356,8 +1356,8 @@ export function createSettings() {
 
       useSpellClassFilterIcons: {
         options: {
-          name: 'T5EK.Settings.UseSpellClassIcons.name',
-          hint: 'T5EK.Settings.UseSpellClassIcons.hint',
+          name: 'TIDY5E.Settings.UseSpellClassIcons.name',
+          hint: 'TIDY5E.Settings.UseSpellClassIcons.hint',
           scope: 'client',
           config: false,
           default: false,
@@ -1372,8 +1372,8 @@ export function createSettings() {
 
       spellClassFilterAdditionalClasses: {
         options: {
-          name: 'T5EK.Settings.SpellClassFilterAdditionalClasses.name',
-          hint: 'T5EK.Settings.SpellClassFilterAdditionalClasses.hint',
+          name: 'TIDY5E.Settings.SpellClassFilterAdditionalClasses.name',
+          hint: 'TIDY5E.Settings.SpellClassFilterAdditionalClasses.hint',
           scope: 'client',
           config: false,
           default: '',
@@ -1388,8 +1388,8 @@ export function createSettings() {
 
       allowHpMaxOverride: {
         options: {
-          name: 'T5EK.Settings.AllowHpMaxOverride.name',
-          hint: 'T5EK.Settings.AllowHpMaxOverride.hint',
+          name: 'TIDY5E.Settings.AllowHpMaxOverride.name',
+          hint: 'TIDY5E.Settings.AllowHpMaxOverride.hint',
           scope: 'world',
           config: false,
           default: false,
@@ -1404,8 +1404,8 @@ export function createSettings() {
 
       actionListLimitActionsToCantrips: {
         options: {
-          name: 'T5EK.Settings.ActionListLimitActionsToCantrips.name',
-          hint: 'T5EK.Settings.ActionListLimitActionsToCantrips.hint',
+          name: 'TIDY5E.Settings.ActionListLimitActionsToCantrips.name',
+          hint: 'TIDY5E.Settings.ActionListLimitActionsToCantrips.hint',
           scope: 'client',
           config: false,
           default: false,
@@ -1420,8 +1420,8 @@ export function createSettings() {
 
       actionListIncludeMinuteLongSpellsAsActions: {
         options: {
-          name: 'T5EK.Settings.ActionListIncludeMinuteLongSpellsAsActions.name',
-          hint: 'T5EK.Settings.ActionListIncludeMinuteLongSpellsAsActions.hint',
+          name: 'TIDY5E.Settings.ActionListIncludeMinuteLongSpellsAsActions.name',
+          hint: 'TIDY5E.Settings.ActionListIncludeMinuteLongSpellsAsActions.hint',
           scope: 'client',
           config: false,
           default: true,
@@ -1436,8 +1436,8 @@ export function createSettings() {
 
       actionListIncludeSpellsWithActiveEffects: {
         options: {
-          name: 'T5EK.Settings.ActionListIncludeSpellsWithActiveEffects.name',
-          hint: 'T5EK.Settings.ActionListIncludeSpellsWithActiveEffects.hint',
+          name: 'TIDY5E.Settings.ActionListIncludeSpellsWithActiveEffects.name',
+          hint: 'TIDY5E.Settings.ActionListIncludeSpellsWithActiveEffects.hint',
           scope: 'client',
           config: false,
           default: true,
@@ -1452,8 +1452,8 @@ export function createSettings() {
 
       actionListIncludeConsumables: {
         options: {
-          name: 'T5EK.Settings.ActionListIncludeConsumables.name',
-          hint: 'T5EK.Settings.ActionListIncludeConsumables.hint',
+          name: 'TIDY5E.Settings.ActionListIncludeConsumables.name',
+          hint: 'TIDY5E.Settings.ActionListIncludeConsumables.hint',
           scope: 'client',
           config: false,
           default: true,
@@ -1468,8 +1468,8 @@ export function createSettings() {
 
       actionListScaleCantripDamage: {
         options: {
-          name: 'T5EK.Settings.ActionListScaleCantripDamage.name',
-          hint: 'T5EK.Settings.ActionListScaleCantripDamage.hint',
+          name: 'TIDY5E.Settings.ActionListScaleCantripDamage.name',
+          hint: 'TIDY5E.Settings.ActionListScaleCantripDamage.hint',
           scope: 'client',
           config: false,
           default: true,
@@ -1486,8 +1486,8 @@ export function createSettings() {
 
       exhaustionConfig: {
         options: {
-          name: 'T5EK.Settings.Exhaustion.name',
-          hint: 'T5EK.Settings.Exhaustion.hint',
+          name: 'TIDY5E.Settings.Exhaustion.name',
+          hint: 'TIDY5E.Settings.Exhaustion.hint',
           scope: 'world',
           config: false,
           default: getStandardExhaustionConfig(),
@@ -1502,8 +1502,8 @@ export function createSettings() {
 
       vehicleExhaustionConfig: {
         options: {
-          name: 'T5EK.Settings.VehicleExhaustion.name',
-          hint: 'T5EK.Settings.VehicleExhaustion.hint',
+          name: 'TIDY5E.Settings.VehicleExhaustion.name',
+          hint: 'TIDY5E.Settings.VehicleExhaustion.hint',
           scope: 'world',
           config: false,
           default: getStandardVehicleExhaustionConfig(),
@@ -1520,8 +1520,8 @@ export function createSettings() {
 
       colorPickerEnabled: {
         options: {
-          name: 'T5EK.Settings.ColorPickerEnabled.name',
-          hint: 'T5EK.Settings.ColorPickerEnabled.hint',
+          name: 'TIDY5E.Settings.ColorPickerEnabled.name',
+          hint: 'TIDY5E.Settings.ColorPickerEnabled.hint',
           scope: 'client',
           type: Boolean,
           default: false,
@@ -1534,7 +1534,7 @@ export function createSettings() {
 
       colorPickerPrimaryAccent: {
         options: {
-          name: 'T5EK.Settings.ColorPickerPrimaryAccent.name',
+          name: 'TIDY5E.Settings.ColorPickerPrimaryAccent.name',
           scope: 'client',
           type: String,
           default: defaultLightTheme.variables['--t5ek-primary-accent-color'],
@@ -1549,7 +1549,7 @@ export function createSettings() {
       },
       colorPickerHpBar: {
         options: {
-          name: 'T5EK.Settings.ColorPickerHpBar.name',
+          name: 'TIDY5E.Settings.ColorPickerHpBar.name',
           scope: 'client',
           type: String,
           default: defaultLightTheme.variables['--t5ek-hp-bar-color'],
@@ -1562,7 +1562,7 @@ export function createSettings() {
       },
       colorPickerEquipped: {
         options: {
-          name: 'T5EK.Settings.ColorPickerEquipped.name',
+          name: 'TIDY5E.Settings.ColorPickerEquipped.name',
           scope: 'client',
           type: String,
           default: defaultLightTheme.variables['--t5ek-equipped-background'],
@@ -1575,7 +1575,7 @@ export function createSettings() {
       },
       colorPickerEquippedOutline: {
         options: {
-          name: 'T5EK.Settings.ColorPickerEquippedOutline.name',
+          name: 'TIDY5E.Settings.ColorPickerEquippedOutline.name',
           scope: 'client',
           type: String,
           default:
@@ -1593,7 +1593,7 @@ export function createSettings() {
       },
       colorPickerEquippedAccent: {
         options: {
-          name: 'T5EK.Settings.ColorPickerEquippedAccent.name',
+          name: 'TIDY5E.Settings.ColorPickerEquippedAccent.name',
           scope: 'client',
           type: String,
           default:
@@ -1612,7 +1612,7 @@ export function createSettings() {
 
       colorPickerPrepared: {
         options: {
-          name: 'T5EK.Settings.ColorPickerPrepared.name',
+          name: 'TIDY5E.Settings.ColorPickerPrepared.name',
           scope: 'client',
           type: String,
           default: defaultLightTheme.variables['--t5ek-prepared-background'],
@@ -1625,7 +1625,7 @@ export function createSettings() {
       },
       colorPickerPreparedOutline: {
         options: {
-          name: 'T5EK.Settings.ColorPickerPreparedOutline.name',
+          name: 'TIDY5E.Settings.ColorPickerPreparedOutline.name',
           scope: 'client',
           type: String,
           default:
@@ -1643,7 +1643,7 @@ export function createSettings() {
       },
       colorPickerPreparedAccent: {
         options: {
-          name: 'T5EK.Settings.ColorPickerPreparedAccent.name',
+          name: 'TIDY5E.Settings.ColorPickerPreparedAccent.name',
           scope: 'client',
           type: String,
           default:
@@ -1662,7 +1662,7 @@ export function createSettings() {
 
       colorPickerPact: {
         options: {
-          name: 'T5EK.Settings.ColorPickerPact.name',
+          name: 'TIDY5E.Settings.ColorPickerPact.name',
           scope: 'client',
           type: String,
           default: defaultLightTheme.variables['--t5ek-pact-background'],
@@ -1675,7 +1675,7 @@ export function createSettings() {
       },
       colorPickerPactOutline: {
         options: {
-          name: 'T5EK.Settings.ColorPickerPactOutline.name',
+          name: 'TIDY5E.Settings.ColorPickerPactOutline.name',
           scope: 'client',
           type: String,
           default: defaultLightTheme.variables['--t5ek-pact-outline-color'],
@@ -1690,7 +1690,7 @@ export function createSettings() {
       },
       colorPickerPactAccent: {
         options: {
-          name: 'T5EK.Settings.ColorPickerPactAccent.name',
+          name: 'TIDY5E.Settings.ColorPickerPactAccent.name',
           scope: 'client',
           type: String,
           default: defaultLightTheme.variables['--t5ek-pact-accent-color'],
@@ -1704,7 +1704,7 @@ export function createSettings() {
 
       colorPickerAtWill: {
         options: {
-          name: 'T5EK.Settings.ColorPickerAtWill.name',
+          name: 'TIDY5E.Settings.ColorPickerAtWill.name',
           scope: 'client',
           type: String,
           default: defaultLightTheme.variables['--t5ek-atwill-background'],
@@ -1717,7 +1717,7 @@ export function createSettings() {
       },
       colorPickerAtWillOutline: {
         options: {
-          name: 'T5EK.Settings.ColorPickerAtWillOutline.name',
+          name: 'TIDY5E.Settings.ColorPickerAtWillOutline.name',
           scope: 'client',
           type: String,
           default: defaultLightTheme.variables['--t5ek-atwill-outline-color'],
@@ -1732,7 +1732,7 @@ export function createSettings() {
       },
       colorPickerAtWillAccent: {
         options: {
-          name: 'T5EK.Settings.ColorPickerAtWillAccent.name',
+          name: 'TIDY5E.Settings.ColorPickerAtWillAccent.name',
           scope: 'client',
           type: String,
           default: defaultLightTheme.variables['--t5ek-atwill-accent-color'],
@@ -1748,7 +1748,7 @@ export function createSettings() {
 
       colorPickerInnate: {
         options: {
-          name: 'T5EK.Settings.ColorPickerInnate.name',
+          name: 'TIDY5E.Settings.ColorPickerInnate.name',
           scope: 'client',
           type: String,
           default: defaultLightTheme.variables['--t5ek-innate-background'],
@@ -1761,7 +1761,7 @@ export function createSettings() {
       },
       colorPickerInnateOutline: {
         options: {
-          name: 'T5EK.Settings.ColorPickerInnateOutline.name',
+          name: 'TIDY5E.Settings.ColorPickerInnateOutline.name',
           scope: 'client',
           type: String,
           default: defaultLightTheme.variables['--t5ek-innate-outline'],
@@ -1776,7 +1776,7 @@ export function createSettings() {
       },
       colorPickerInnateAccent: {
         options: {
-          name: 'T5EK.Settings.ColorPickerInnateAccent.name',
+          name: 'TIDY5E.Settings.ColorPickerInnateAccent.name',
           scope: 'client',
           type: String,
           default: defaultLightTheme.variables['--t5ek-innate-accent'],
@@ -1792,7 +1792,7 @@ export function createSettings() {
 
       colorPickerAlwaysPrepared: {
         options: {
-          name: 'T5EK.Settings.ColorPickerAlwaysPrepared.name',
+          name: 'TIDY5E.Settings.ColorPickerAlwaysPrepared.name',
           scope: 'client',
           type: String,
           default:
@@ -1808,7 +1808,7 @@ export function createSettings() {
       },
       colorPickerAlwaysPreparedOutline: {
         options: {
-          name: 'T5EK.Settings.ColorPickerAlwaysPreparedOutline.name',
+          name: 'TIDY5E.Settings.ColorPickerAlwaysPreparedOutline.name',
           scope: 'client',
           type: String,
           default:
@@ -1824,7 +1824,7 @@ export function createSettings() {
       },
       colorPickerAlwaysPreparedAccent: {
         options: {
-          name: 'T5EK.Settings.ColorPickerAlwaysPreparedAccent.name',
+          name: 'TIDY5E.Settings.ColorPickerAlwaysPreparedAccent.name',
           scope: 'client',
           type: String,
           default:
@@ -1840,7 +1840,7 @@ export function createSettings() {
       },
       colorPickerScrollbarThumb: {
         options: {
-          name: 'T5EK.Settings.ColorPickerScrollbarThumb.name',
+          name: 'TIDY5E.Settings.ColorPickerScrollbarThumb.name',
           scope: 'client',
           type: String,
           default: defaultLightTheme.variables['--t5ek-scrollbar-thumb-color'],
@@ -1855,7 +1855,7 @@ export function createSettings() {
       },
       colorPickerScrollbarTrack: {
         options: {
-          name: 'T5EK.Settings.ColorPickerScrollbarTrack.name',
+          name: 'TIDY5E.Settings.ColorPickerScrollbarTrack.name',
           scope: 'client',
           type: String,
           default: defaultLightTheme.variables['--t5ek-scrollbar-track-color'],
@@ -1871,8 +1871,8 @@ export function createSettings() {
 
       debug: {
         options: {
-          name: `T5EK.Settings.Debug.name`,
-          hint: `T5EK.Settings.Debug.hint`,
+          name: `TIDY5E.Settings.Debug.name`,
+          hint: `TIDY5E.Settings.Debug.hint`,
           scope: 'client',
           config: true,
           default: false,

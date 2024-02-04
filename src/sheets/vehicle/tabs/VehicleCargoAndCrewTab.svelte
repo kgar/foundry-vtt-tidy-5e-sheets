@@ -102,7 +102,7 @@
 
 {#if noCargoOrCrew && !$context.unlocked}
   <Notice>
-    {localize('T5EK.EmptySection')}
+    {localize('TIDY5E.EmptySection')}
   </Notice>
 {/if}
 

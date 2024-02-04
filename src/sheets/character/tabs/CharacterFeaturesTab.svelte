@@ -46,7 +46,7 @@
 </script>
 
 <ItemFilters>
-  <ItemFilterSearch bind:searchCriteria placeholder={localize('T5EK.Search')} />
+  <ItemFilterSearch bind:searchCriteria placeholder={localize('TIDY5E.Search')} />
   <ItemFilterOption setName="features" filterName="action">
     {localize('DND5E.Action')}
   </ItemFilterOption>
@@ -63,7 +63,7 @@
   data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEMS_CONTAINER}
 >
   {#if noFeatures && !$context.unlocked}
-    <Notice>{localize('T5EK.EmptySection')}</Notice>
+    <Notice>{localize('TIDY5E.EmptySection')}</Notice>
   {:else}
     {#each $context.features as section (section.label)}
       {@const filteredItems = FoundryAdapter.getFilteredItems(

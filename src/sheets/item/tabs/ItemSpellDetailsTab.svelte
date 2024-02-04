@@ -31,7 +31,7 @@
 
 {#if $settingStore.useMulticlassSpellbookFilter}
   <ItemFormGroup
-    labelText={localize('T5EK.SpellClass')}
+    labelText={localize('TIDY5E.SpellClass')}
     field="flags.{CONSTANTS.MODULE_ID}.parentClass"
     let:inputId
   >

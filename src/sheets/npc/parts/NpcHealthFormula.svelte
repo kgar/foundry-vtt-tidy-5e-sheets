@@ -45,7 +45,7 @@
   <button
     type="button"
     title="{localize('DND5E.HitDiceRoll')}/{localize(
-      'T5EK.HitDiceRollAverage',
+      'TIDY5E.HitDiceRollAverage',
     )}"
     on:click={rollNpcHp}
     on:contextmenu={calcAverageHitDie}

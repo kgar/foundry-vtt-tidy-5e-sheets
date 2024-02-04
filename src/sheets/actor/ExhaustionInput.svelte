@@ -29,7 +29,7 @@
 <div
   class="exhaustion-container {cssClass}"
   class:only-show-on-hover={onlyShowOnHover}
-  title={localize('T5EK.Settings.Exhaustion.Header')}
+  title={localize('TIDY5E.Settings.Exhaustion.Header')}
   style="--t5ek-exhaustion-input-font-size: {inputFontSize}"
 >
   <div class="exhaustion-wrap {radiusClass}">

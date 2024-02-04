@@ -22,7 +22,7 @@
 <div
   class="motion {cssClass}"
   class:is-in-motion={motion}
-  title={localize(motion ? 'T5EK.VehicleInMotion' : 'T5EK.VehicleMotionless')}
+  title={localize(motion ? 'TIDY5E.VehicleInMotion' : 'TIDY5E.VehicleMotionless')}
 >
   <Checkbox
     checkboxCssClass="motion-toggle"

@@ -68,9 +68,9 @@
       class="actor-image"
       src={actor.img}
       alt={actor.name}
-      title={localize('T5EK.EditActorImage') +
+      title={localize('TIDY5E.EditActorImage') +
         ' / ' +
-        localize('T5EK.ShowActorImage')}
+        localize('TIDY5E.ShowActorImage')}
     />
   </div>
   {#if showPortraitMenu}

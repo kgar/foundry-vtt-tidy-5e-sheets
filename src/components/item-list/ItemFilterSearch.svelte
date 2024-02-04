@@ -31,7 +31,7 @@
   });
 </script>
 
-<li class="filter-search {cssClass}" title={localize('T5EK.SearchHint')}>
+<li class="filter-search {cssClass}" title={localize('TIDY5E.SearchHint')}>
   <input
     type="text"
     {placeholder}
@@ -41,7 +41,7 @@
   <button
     type="button"
     class="clear-search inline-icon-button"
-    title={localize('T5EK.SearchClear')}
+    title={localize('TIDY5E.SearchClear')}
     style:display={searchCriteria === '' ? 'none' : undefined}
     on:click|preventDefault|stopPropagation={() => clearSearch()}
     tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}

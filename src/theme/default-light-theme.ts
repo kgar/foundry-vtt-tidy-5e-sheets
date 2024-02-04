@@ -2,7 +2,7 @@ import { CONSTANTS } from 'src/constants';
 import type { Tidy5eTheme } from 'src/types/theme';
 
 export const defaultLightTheme: Tidy5eTheme = {
-  name: 'T5EK.Settings.SheetTheme.light',
+  name: 'TIDY5E.Settings.SheetTheme.light',
   id: CONSTANTS.THEME_ID_DEFAULT_LIGHT,
   description: 'The default Tidy 5e Light theme.',
   variables: {

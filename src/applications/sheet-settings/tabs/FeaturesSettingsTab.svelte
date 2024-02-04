@@ -19,7 +19,7 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-<h2>{localize('T5EK.Settings.ActionList.Header')}</h2>
+<h2>{localize('TIDY5E.Settings.ActionList.Header')}</h2>
 
 <CheckboxSetting
   bind:value={$context.settings.actionListLimitActionsToCantrips}
@@ -61,7 +61,7 @@
 />
 
 {#if userIsGm}
-  <h2>{localize('T5EK.Settings.Exhaustion.Header')}</h2>
+  <h2>{localize('TIDY5E.Settings.Exhaustion.Header')}</h2>
 
   <article class="setting buttons">
     <button
@@ -69,23 +69,23 @@
       on:click={() =>
         ($context.exhaustionConfig = getStandardExhaustionConfig())}
     >
-      {localize('T5EK.Settings.Exhaustion.useStandardExhaustion')}
+      {localize('TIDY5E.Settings.Exhaustion.useStandardExhaustion')}
     </button>
     <button
       type="button"
       on:click={() => ($context.exhaustionConfig = getOneDnDExhaustionConfig())}
     >
-      {localize('T5EK.Settings.Exhaustion.useOneDnDExhaustion')}
+      {localize('TIDY5E.Settings.Exhaustion.useOneDnDExhaustion')}
     </button>
   </article>
 
   <ExhaustionSetting
-    name="T5EK.Settings.Exhaustion.name"
-    hint="T5EK.Settings.Exhaustion.hint"
+    name="TIDY5E.Settings.Exhaustion.name"
+    hint="TIDY5E.Settings.Exhaustion.hint"
     bind:config={$context.exhaustionConfig}
   />
 
-  <h2>{localize('T5EK.Settings.VehicleExhaustion.Header')}</h2>
+  <h2>{localize('TIDY5E.Settings.VehicleExhaustion.Header')}</h2>
 
   <article class="setting buttons">
     <button
@@ -94,13 +94,13 @@
         ($context.vehicleExhaustionConfig =
           getStandardVehicleExhaustionConfig())}
     >
-      {localize('T5EK.Settings.Exhaustion.useStandardExhaustion')}
+      {localize('TIDY5E.Settings.Exhaustion.useStandardExhaustion')}
     </button>
   </article>
 
   <ExhaustionSetting
-    name="T5EK.Settings.VehicleExhaustion.name"
-    hint="T5EK.Settings.VehicleExhaustion.hint"
+    name="TIDY5E.Settings.VehicleExhaustion.name"
+    hint="TIDY5E.Settings.VehicleExhaustion.hint"
     bind:config={$context.vehicleExhaustionConfig}
   />
 {/if}

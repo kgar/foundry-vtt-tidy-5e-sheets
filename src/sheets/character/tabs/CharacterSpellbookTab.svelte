@@ -66,7 +66,7 @@
   <ItemFilterSearch
     bind:searchCriteria
     cssClass="align-self-flex-end"
-    placeholder={localize('T5EK.Search')}
+    placeholder={localize('TIDY5E.Search')}
   />
   {#if $settingStore.useMulticlassSpellbookFilter}
     <li class="spellbook-class-filter">
@@ -119,7 +119,7 @@
   {/if}
 
   {#if noSpells && !$context.unlocked}
-    <Notice>{localize('T5EK.EmptySection')}</Notice>
+    <Notice>{localize('TIDY5E.EmptySection')}</Notice>
   {/if}
 </div>
 

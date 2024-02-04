@@ -146,7 +146,7 @@
           field="flags.{CONSTANTS.MODULE_ID}.playerName"
           value={playerName}
           cssClass="player-name"
-          placeholder={localize('T5EK.PlayerName')}
+          placeholder={localize('TIDY5E.PlayerName')}
           dataMaxLength={40}
           editable={$context.editable && !$context.lockSensitiveFields}
         />
@@ -207,7 +207,7 @@
           <button
             type="button"
             class="inline-icon-button"
-            title={localize('T5EK.OriginSummaryConfig')}
+            title={localize('TIDY5E.OriginSummaryConfig')}
             on:click={() =>
               new ActorOriginSummaryConfigFormApplication(
                 $context.actor,
@@ -236,7 +236,7 @@
       <AllowEditLock
         hint={$settingStore.permanentlyUnlockCharacterSheetForGm &&
         FoundryAdapter.userIsGm()
-          ? localize('T5EK.Settings.PermanentlyUnlockCharacterSheetForGM.title')
+          ? localize('TIDY5E.Settings.PermanentlyUnlockCharacterSheetForGM.title')
           : null}
       />
     {/if}
