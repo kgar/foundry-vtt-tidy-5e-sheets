@@ -1,8 +1,6 @@
 import { CONSTANTS } from 'src/constants';
 
 export async function migrateAlphaFlagsToV1() {
-  // Search for all sheet types at the global level
-  // Change the `tidy5e-kgar` namespace to `tidy5e`
   for (let actor of game.actors) {
     try {
       ui.notifications.info(
