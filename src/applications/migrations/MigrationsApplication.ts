@@ -3,7 +3,16 @@ import SvelteFormApplicationBase from '../SvelteFormApplicationBase';
 import Migrations from './Migrations.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
-export class MigrationsApplication extends SvelteFormApplicationBase {
+export type ConfirmMigrationFunction = (onYes: () => void) => void;
+
+interface ConfirmsMigrations {
+  confirm: ConfirmMigrationFunction;
+}
+
+export class MigrationsApplication
+  extends SvelteFormApplicationBase
+  implements ConfirmsMigrations
+{
   static get defaultOptions() {
     return FoundryAdapter.mergeObject(super.defaultOptions, {
       title: FoundryAdapter.localize('TIDY5E.Settings.Migrations.dialogTitle'),
