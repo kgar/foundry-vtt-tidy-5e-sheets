@@ -39,7 +39,7 @@ Completely rewritten from the ground up, based on the [Tidy5e Sheet](https://git
 
 ## Community Discord
 
-Join us on [discord](https://discord.gg/865zzNscRA) and help determine the future of Tidy 5e Sheets.
+Join us on the [Tidy 5e Sheets community discord](https://discord.gg/865zzNscRA) to receive insider updates, dream up new features, report bugs more easily than github, and much more.
 
 ## Installation
 

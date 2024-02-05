@@ -136,6 +136,7 @@ export function createSettings() {
       migrations: {
         options: {
           name: `TIDY5E.Settings.Migrations.name`,
+          label: 'TIDY5E.Settings.Migrations.buttonLabel',
           hint: `TIDY5E.Settings.Migrations.hint`,
           icon: 'fa-solid fa-right-left',
           type: MigrationsApplication,
