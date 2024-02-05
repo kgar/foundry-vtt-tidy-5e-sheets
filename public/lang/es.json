@@ -188,7 +188,7 @@
         "hint": "El tema predeterminado para todos los usuarios que no tienen un tema específico seleccionado."
     },
     "TIDY5E.Settings.SheetTheme": {
-        "name": "T5E color del tema",
+        "name": "Tema de color",
         "hint": "Utiliza el tema por defecto de color claro u oscuro de T5E.",
         "default": "Predeterminado",
         "light": "Claro",
@@ -643,5 +643,36 @@
     },
     "TIDY5E.Settings.TabFeatures": {
         "tabLabel": "Rasgos"
+    },
+    "TIDY5E.Settings.Migrations": {
+        "name": "Migraciones",
+        "buttonLabel": "Migrar datos de T5E",
+        "dialogTitle": "Migrar datos de T5E",
+        "migrationBeginningMessage": "Migrando datos. Por favor, no refresques la pagina hasta que haya finalizado.",
+        "migrationErrorMessage": "Error detectado. Verifica los detalles en la consola de desarrollo.",
+        "migrateGmSettingsButtonLabel": "Migrar configuración de DM",
+        "migrateDocumentFlagsButtonLabel": "Migrar indicadores de datos de documento",
+        "migrateConfirmMessage1": "¿Estás seguro de querer llevar acabo esta migración?",
+        "v1": {
+            "originalHeader": "Hoja T5E Original",
+            "alphaHeader": "Hojas T5E Alpha",
+            "alphaExplanation1": "Migra la configuración de DM y los indicadores de datos de la hoja Tidy desde T5E Alpha. La mayoría de las diferencias en los datos provienen de las banderas de datos de la hoja. La migración de banderas Alpha se dirige a actores de nivel superior, elementos de actores de nivel superior y elementos de nivel superior. Esto traerá datos biográficos, favoritos y otros indicadores de datos Alpha específicos de la hoja.",
+            "alphaExplanation2": "{boldStart}Nota{boldEnd}: esta migración no afecta el contenidos de compendio.",
+            "mainExplanation1": "No es necesario migrar datos al nuevo módulo T5E para poder utilizarlo. En el peor de los casos, si eres un usuario original de T5E e ignoras las migraciones, deberás volver a aplicar la configuración a tu gusto.",
+            "mainExplanation2": "{boldStart}Nota{boldEnd}: La configuración del cliente no forma parte de esta migración. Ya ha cambiado bastante la forma en la que funcionan las configuraciones del cliente en T5E, por lo que se recomienda echar un nuevo vistazo a las configuraciones del cliente.",
+            "originalExplanation": "Migra la configuración de DM y los indicadores de datos de la hoja Tidy de la hoja T5E original. La mayoría de las diferencias en los datos provienen de configuraciones de DM. Si migras tu configuración y adviertes que una configuración no es de tu agrado, simplemente cámbiala desde el menú de configuración."
+        },
+        "hint": "Si eras usuario del módulo T5E original o de las hojas Alpha, opcionalmente utiliza este menú de Migraciones para migrar la configuración de DM y los datos de la hoja T5E.",
+        "migrateConfirmTitle": "Confirmar migración",
+        "migrationCompleteMessage": "Migración completada.",
+        "migrateConfirmButtonNo": "Cancelar",
+        "migrateConfirmMessage2": "{boldStart}Nota{boldEnd}: recuerda hacer una {boldStart}copia de seguridad de tus datos{boldEnd}.",
+        "migrateConfirmButtonYes": "Migrar"
+    },
+    "TIDY5E.Settings.ColorPickerScrollbarTrack": {
+        "name": "Trayectoria de la barra de desplazamiento"
+    },
+    "TIDY5E.Settings.ColorPickerScrollbarThumb": {
+        "name": "Cabezal de la barra de desplazamiento"
     }
 }
