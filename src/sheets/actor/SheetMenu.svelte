@@ -19,8 +19,8 @@
 <ButtonMenu
   position="bottom"
   anchor="right"
-  ariaLabel={localize('T5EK.SheetMenu.label')}
-  title={localize('T5EK.SheetMenu.label')}
+  ariaLabel={localize('TIDY5E.SheetMenu.label')}
+  title={localize('TIDY5E.SheetMenu.label')}
   iconClass="fas fa-ellipsis-vertical"
 >
   <ThemeSelectorButtonMenuCommand />
@@ -29,13 +29,13 @@
     on:click={() => ApplicationsManager.openSheetSettings(defaultSettingsTab)}
     iconClass="fas fa-cog"
   >
-    {localize('T5EK.Settings.SheetMenu.label')}
+    {localize('TIDY5E.Settings.SheetMenu.label')}
   </ButtonMenuCommand>
   <ButtonMenuCommand
     on:click={() => ApplicationsManager.openThemeSettings()}
     iconClass="fas fa-palette"
   >
-    {localize('T5EK.ThemeSettings.Sheet.title')}
+    {localize('TIDY5E.ThemeSettings.Sheet.title')}
   </ButtonMenuCommand>
   {#if $context.owner}
     <ButtonMenuCommand
@@ -44,7 +44,7 @@
       iconClass="fas fa-file-invoice"
       disabled={!$context.editable}
     >
-      {localize('T5EK.TabSelection.MenuOptionText')}
+      {localize('TIDY5E.TabSelection.MenuOptionText')}
     </ButtonMenuCommand>
   {/if}
 </ButtonMenu>

@@ -68,24 +68,24 @@ export function simplifyFormula(
 export function getMaxPreparedSpellsSampleFormulas(): MaxPreparedSpellFormula[] {
   return [
     {
-      label: 'T5EK.Class.Artificer',
+      label: 'TIDY5E.Class.Artificer',
       value: '@abilities.int.mod + floor(@classes.artificer.levels / 2)',
     },
     {
-      label: 'T5EK.Class.Cleric',
+      label: 'TIDY5E.Class.Cleric',
       value: '@abilities.wis.mod + @classes.cleric.levels',
     },
     {
-      label: 'T5EK.Class.Druid',
+      label: 'TIDY5E.Class.Druid',
       value: '@abilities.wis.mod + @classes.druid.levels',
     },
     {
-      label: 'T5EK.Class.Paladin',
+      label: 'TIDY5E.Class.Paladin',
       value: '@abilities.cha.mod + floor(@classes.paladin.levels / 2)',
     },
-    { label: 'T5EK.Class.Ranger', value: 'ceil(@classes.ranger.levels/2)+1' },
+    { label: 'TIDY5E.Class.Ranger', value: 'ceil(@classes.ranger.levels/2)+1' },
     {
-      label: 'T5EK.Class.Wizard',
+      label: 'TIDY5E.Class.Wizard',
       value: '@abilities.int.mod + @classes.wizard.levels',
     },
   ];

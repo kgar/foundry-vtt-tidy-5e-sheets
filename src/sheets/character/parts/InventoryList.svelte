@@ -139,13 +139,13 @@
             {@const weight = ctx?.totalWeight ?? item.system.weight}
             <ItemTableCell
               baseWidth="4rem"
-              title={localize('T5EK.Inventory.Weight.Tooltip', {
+              title={localize('TIDY5E.Inventory.Weight.Tooltip', {
                 weight: weight,
                 weightUnit: weightUnit,
               })}
             >
               <span class="truncate">
-                {localize('T5EK.Inventory.Weight.Text', {
+                {localize('TIDY5E.Inventory.Weight.Text', {
                   weight: weight,
                   weightUnit: weightUnit,
                 })}

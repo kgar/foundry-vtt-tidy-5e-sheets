@@ -25,14 +25,14 @@
       <select id="exhaustionConfigType-{appId}" bind:value={config.type}>
         <SelectOptions
           data={{
-            specific: 'T5EK.Settings.Exhaustion.options.specific.text',
-            open: 'T5EK.Settings.Exhaustion.options.open.text',
+            specific: 'TIDY5E.Settings.Exhaustion.options.specific.text',
+            open: 'TIDY5E.Settings.Exhaustion.options.open.text',
           }}
         ></SelectOptions>
       </select>
       {#if config.type === 'open'}
         <p class="tidy5e-notes">
-          {localize('T5EK.Settings.Exhaustion.options.open.explanation')}
+          {localize('TIDY5E.Settings.Exhaustion.options.open.explanation')}
         </p>
       {/if}
     </div>
@@ -45,11 +45,11 @@
       <div class="description">
         <label for="exhaustionConfigTypeLevels-{appId}"
           >{localize(
-            'T5EK.Settings.Exhaustion.options.specific.levels.name',
+            'TIDY5E.Settings.Exhaustion.options.specific.levels.name',
           )}</label
         >
         <p class="tidy5e-notes">
-          {localize('T5EK.Settings.Exhaustion.options.specific.levels.hint')}
+          {localize('TIDY5E.Settings.Exhaustion.options.specific.levels.hint')}
         </p>
       </div>
       <div class="settings-group">
@@ -69,7 +69,7 @@
               class="flex-row small-gap align-items-center"
             >
               {localize(
-                'T5EK.Settings.Exhaustion.options.specific.levels.tooltip.name',
+                'TIDY5E.Settings.Exhaustion.options.specific.levels.tooltip.name',
                 {
                   level: i,
                 },
@@ -78,7 +78,7 @@
             </label>
             <p class="tidy5e-notes">
               {localize(
-                'T5EK.Settings.Exhaustion.options.specific.levels.tooltip.hint',
+                'TIDY5E.Settings.Exhaustion.options.specific.levels.tooltip.hint',
               )}
             </p>
           </div>

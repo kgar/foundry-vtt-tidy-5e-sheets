@@ -78,7 +78,7 @@ export class Tidy5eCharacterSheet
   static get defaultOptions() {
     return FoundryAdapter.mergeObject(super.defaultOptions, {
       classes: [
-        'tidy5e-kgar',
+        'tidy5e-sheet',
         'sheet',
         'actor',
         CONSTANTS.SHEET_TYPE_CHARACTER,

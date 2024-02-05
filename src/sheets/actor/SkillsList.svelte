@@ -154,9 +154,9 @@
         tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
       >
         {#if showAllSkills}
-          {localize('T5EK.HideNotProficientSkills')}
+          {localize('TIDY5E.HideNotProficientSkills')}
         {:else}
-          {localize('T5EK.ShowNotProficientSkills')}
+          {localize('TIDY5E.ShowNotProficientSkills')}
         {/if}</button
       >
     </div>

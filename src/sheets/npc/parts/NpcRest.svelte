@@ -13,7 +13,7 @@
 <div
   class="rest-container"
   class:has-rounded-portrait={$context.useRoundedPortraitStyle}
-  title={localize('T5EK.RestHint')}
+  title={localize('TIDY5E.RestHint')}
 >
   <div class="resting">
     <span class="resting-icon">
@@ -22,7 +22,7 @@
     <button
       type="button"
       class="rest short-rest inline-icon-button"
-      title={localize('T5EK.ShortRest')}
+      title={localize('TIDY5E.ShortRest')}
       on:click={(ev) => $context.shortRest(ev)}
       disabled={!$context.editable}
       tabindex={!$settingStore.useDefaultSheetHpTabbing &&
@@ -35,7 +35,7 @@
     <button
       type="button"
       class="rest long-rest inline-icon-button"
-      title={localize('T5EK.LongRest')}
+      title={localize('TIDY5E.LongRest')}
       on:click={(ev) => $context.longRest(ev)}
       disabled={!$context.editable}
       tabindex={!$settingStore.useDefaultSheetHpTabbing &&

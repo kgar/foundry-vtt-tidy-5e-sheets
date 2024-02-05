@@ -255,7 +255,7 @@
     flex: 1;
   }
 
-  :global(.tidy5e-kgar .abilities-footer) {
+  :global(.tidy5e-sheet .abilities-footer) {
     flex: 0;
   }
 

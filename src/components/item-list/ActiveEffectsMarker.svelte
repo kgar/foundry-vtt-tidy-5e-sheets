@@ -4,7 +4,7 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-<span class="ae-marker" title={localize('T5EK.ActiveEffectsMarkerTitle')}>
+<span class="ae-marker" title={localize('TIDY5E.ActiveEffectsMarkerTitle')}>
   Æ
 </span>
 

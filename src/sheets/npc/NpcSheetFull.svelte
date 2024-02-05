@@ -64,12 +64,12 @@
         {#if $context.tokenState === 'linked'}
           <i
             class="link-state fas fa-link"
-            title={localize('T5EK.TokenLinked')}
+            title={localize('TIDY5E.TokenLinked')}
           />
         {:else if $context.tokenState === 'unlinked'}
           <i
             class="link-state fas fa-unlink"
-            title={localize('T5EK.TokenUnlinked')}
+            title={localize('TIDY5E.TokenUnlinked')}
           />
         {/if}
 
@@ -132,7 +132,7 @@
                 <InlineCreatureType />
                 <span
                   class="environment"
-                  title={localize('T5EK.EnvironmentTooltip', {
+                  title={localize('TIDY5E.EnvironmentTooltip', {
                     environment: $context.system.details.environment,
                   })}
                 >
@@ -168,7 +168,7 @@
                 new ActorOriginSummaryConfigFormApplication(
                   $context.actor,
                 ).render(true)}
-              title={localize('T5EK.OriginSummaryConfig')}
+              title={localize('TIDY5E.OriginSummaryConfig')}
               tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
             >
               <i class="fas fa-cog" />
@@ -192,7 +192,7 @@
         <AllowEditLock
           hint={$settingStore.permanentlyUnlockNpcSheetForGm &&
           FoundryAdapter.userIsGm()
-            ? localize('T5EK.Settings.PermanentlyUnlockNPCSheetForGM.title')
+            ? localize('TIDY5E.Settings.PermanentlyUnlockNPCSheetForGM.title')
             : null}
         />
       {/if}

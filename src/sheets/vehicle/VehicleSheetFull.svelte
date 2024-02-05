@@ -130,7 +130,7 @@
                 $context.actor,
               ).render(true)}
             class="origin-summary-tidy inline-icon-button"
-            title={localize('T5EK.OriginSummaryConfig')}
+            title={localize('TIDY5E.OriginSummaryConfig')}
             tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
           >
             <i class="fas fa-cog" />
@@ -163,7 +163,7 @@
       <AllowEditLock
         hint={$settingStore.permanentlyUnlockVehicleSheetForGm &&
         FoundryAdapter.userIsGm()
-          ? localize('T5EK.Settings.PermanentlyUnlockVehicleSheetForGM.title')
+          ? localize('TIDY5E.Settings.PermanentlyUnlockVehicleSheetForGM.title')
           : null}
       />
     {/if}

@@ -67,7 +67,7 @@
     on:mouseleave={() => (viewingConfig = false)}
   >
     <div class="resource-rest">
-      <h4>{localize('T5EK.RestoreOnRest')}</h4>
+      <h4>{localize('TIDY5E.RestoreOnRest')}</h4>
       <input
         id="{$context.appId}-{resource.name}-sr"
         type="checkbox"
@@ -82,7 +82,7 @@
       <label
         for="{$context.appId}-{resource.name}-sr"
         class="checkbox"
-        title={localize('T5EK.ShortRest')}
+        title={localize('TIDY5E.ShortRest')}
       >
         {localize('DND5E.RestS')}
       </label>
@@ -100,7 +100,7 @@
       <label
         for="{$context.appId}-{resource.name}-lr"
         class="checkbox"
-        title={localize('T5EK.LongRest')}
+        title={localize('TIDY5E.LongRest')}
       >
         {localize('DND5E.RestL')}
       </label>

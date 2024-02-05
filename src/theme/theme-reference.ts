@@ -7,7 +7,7 @@ export function getCoreThemes(includeDefault: boolean) {
   let themes: Record<string, string> = {};
 
   if (includeDefault) {
-    themes[CONSTANTS.THEME_ID_DEFAULT] = 'T5EK.Settings.SheetTheme.default';
+    themes[CONSTANTS.THEME_ID_DEFAULT] = 'TIDY5E.Settings.SheetTheme.default';
   }
 
   themes[CONSTANTS.THEME_ID_DEFAULT_LIGHT] = defaultLightTheme.name;

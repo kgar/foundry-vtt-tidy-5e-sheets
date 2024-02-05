@@ -12,7 +12,7 @@
 <div
   class="encumbrance"
   class:encumbered={$context.encumbrance.encumbered}
-  title={localize('T5EK.Encumbrance')}
+  title={localize('TIDY5E.Encumbrance')}
 >
   <span class="encumbrance-bar" style="width:{$context.encumbrance.pct}%" />
   <span class="encumbrance-label"

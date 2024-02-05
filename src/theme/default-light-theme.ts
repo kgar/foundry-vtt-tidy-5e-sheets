@@ -2,7 +2,7 @@ import { CONSTANTS } from 'src/constants';
 import type { Tidy5eTheme } from 'src/types/theme';
 
 export const defaultLightTheme: Tidy5eTheme = {
-  name: 'T5EK.Settings.SheetTheme.light',
+  name: 'TIDY5E.Settings.SheetTheme.light',
   id: CONSTANTS.THEME_ID_DEFAULT_LIGHT,
   description: 'The default Tidy 5e Light theme.',
   variables: {
@@ -72,9 +72,9 @@ export const defaultLightTheme: Tidy5eTheme = {
     '--t5ek-context-outline-color': 'rgba(0, 0, 0, 0.4)',
     '--t5ek-context-shadow-color': 'rgba(0, 0, 0, 0.65)',
     '--t5ek-check-default-background-image':
-      "url('../../modules/tidy5e-sheet-kgar/images/check-dark-unchecked.svg')",
+      "url('../../modules/tidy5e-sheet/images/check-dark-unchecked.svg')",
     '--t5ek-check-checked-background-image':
-      "url('../../modules/tidy5e-sheet-kgar/images/check-dark-checked.svg')",
+      "url('../../modules/tidy5e-sheet/images/check-dark-checked.svg')",
     '--t5ek-checkbox-font-color': 'rgba(0, 0, 0, 0.9)',
     '--t5ek-checkbox-outline-color': 'rgba(150, 150, 150, 1)',
     '--t5ek-checkbox-unchecked-color': '#d8d7d1',

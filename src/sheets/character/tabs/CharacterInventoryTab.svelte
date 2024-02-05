@@ -44,7 +44,7 @@
 </script>
 
 <ItemFilters>
-  <ItemFilterSearch bind:searchCriteria placeholder={localize('T5EK.Search')} />
+  <ItemFilterSearch bind:searchCriteria placeholder={localize('TIDY5E.Search')} />
   <ItemFilterOption filterName="action" setName="inventory">
     {localize('DND5E.Action')}
   </ItemFilterOption>
@@ -65,7 +65,7 @@
   data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEMS_CONTAINER}
 >
   {#if noItems && !$context.unlocked}
-    <Notice>{localize('T5EK.EmptySection')}</Notice>
+    <Notice>{localize('TIDY5E.EmptySection')}</Notice>
   {:else}
     {#each $context.inventory as section (section.label)}
       {@const filteredItems = FoundryAdapter.getFilteredItems(
@@ -101,7 +101,7 @@
       <i class="attunement-icon fas fa-sun" />
       <span
         class="attuned-items-current"
-        title={localize('T5EK.AttunementItems')}
+        title={localize('TIDY5E.AttunementItems')}
         >{$context.system.attributes.attunement.value}</span
       >
       /
@@ -113,11 +113,11 @@
           cssClass="attuned-items-max"
           value={$context.system.attributes.attunement.max}
           placeholder="0"
-          title={localize('T5EK.AttunementMax')}
+          title={localize('TIDY5E.AttunementMax')}
           disabled={!$context.editable || $context.lockSensitiveFields}
         />
       {:else}
-        <span class="attuned-items-max" title={localize('T5EK.AttunementMax')}
+        <span class="attuned-items-max" title={localize('TIDY5E.AttunementMax')}
           >{$context.system.attributes.attunement.max}</span
         >
       {/if}

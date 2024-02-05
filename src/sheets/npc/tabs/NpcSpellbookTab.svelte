@@ -39,7 +39,7 @@
   <ItemFilterSearch
     bind:searchCriteria
     cssClass="align-self-flex-end"
-    placeholder={localize('T5EK.Search')}
+    placeholder={localize('TIDY5E.Search')}
   />
   <ItemFilterOption setName="spellbook" filterName="action">
     {localize('DND5E.Action')}

@@ -15,19 +15,19 @@
 </script>
 
 {#if userIsGm}
-  <h2>{localize('T5EK.Settings.TabGM.header')}</h2>
+  <h2>{localize('TIDY5E.Settings.TabGM.header')}</h2>
 
   <CheckboxSetting
     bind:value={$context.settings.hideDeathSavesFromPlayers}
-    name={'T5EK.Settings.HideDeathSavesFromPlayers.name'}
-    hint={'T5EK.Settings.HideDeathSavesFromPlayers.hint'}
+    name={'TIDY5E.Settings.HideDeathSavesFromPlayers.name'}
+    hint={'TIDY5E.Settings.HideDeathSavesFromPlayers.hint'}
     id="hideDeathSavesFromPlayers"
   />
 
   <CheckboxSetting
     bind:value={$context.settings.useSpellSlotMarker}
-    name={'T5EK.Settings.UseSpellSlotMarker.name'}
-    hint={'T5EK.Settings.UseSpellSlotMarker.hint'}
+    name={'TIDY5E.Settings.UseSpellSlotMarker.name'}
+    hint={'TIDY5E.Settings.UseSpellSlotMarker.hint'}
     id="useSpellSlotMarker"
   />
 
@@ -54,121 +54,121 @@
 
   <CheckboxSetting
     bind:value={$context.settings.showPlayerName}
-    name={'T5EK.Settings.ShowPlayerName.name'}
-    hint={'T5EK.Settings.ShowPlayerName.hint'}
+    name={'TIDY5E.Settings.ShowPlayerName.name'}
+    hint={'TIDY5E.Settings.ShowPlayerName.hint'}
     id="showPlayerName"
   />
 
   <CheckboxSetting
     bind:value={$context.settings.sortFavoriteItemsAlphabetically}
-    name={'T5EK.Settings.SortFavoriteItemsAlphabetically.name'}
-    hint={'T5EK.Settings.SortFavoriteItemsAlphabetically.hint'}
+    name={'TIDY5E.Settings.SortFavoriteItemsAlphabetically.name'}
+    hint={'TIDY5E.Settings.SortFavoriteItemsAlphabetically.hint'}
     id="sortFavoriteItemsAlphabetically"
   />
 
   <CheckboxSetting
     bind:value={$context.settings.showExpandedLimitedView}
-    name={'T5EK.Settings.ShowExpandedLimitedView.name'}
-    hint={'T5EK.Settings.ShowExpandedLimitedView.hint'}
+    name={'TIDY5E.Settings.ShowExpandedLimitedView.name'}
+    hint={'TIDY5E.Settings.ShowExpandedLimitedView.hint'}
     id="showExpandedLimitedView"
   />
 
   <TextInputSetting
     bind:value={$context.settings.itemCardsFixKey}
-    name={'T5EK.Settings.ItemCardsFixKey.name'}
-    hint={'T5EK.Settings.ItemCardsFixKey.hint'}
+    name={'TIDY5E.Settings.ItemCardsFixKey.name'}
+    hint={'TIDY5E.Settings.ItemCardsFixKey.hint'}
     id="itemCardsFixKey"
   />
 
   <SelectSetting
     options={SettingsProvider.settings.useCircularPortraitStyle.options.choices}
     bind:value={$context.settings.useCircularPortraitStyle}
-    name={'T5EK.Settings.UseCircularPortraitStyle.name'}
-    hint={'T5EK.Settings.UseCircularPortraitStyle.hint'}
+    name={'TIDY5E.Settings.UseCircularPortraitStyle.name'}
+    hint={'TIDY5E.Settings.UseCircularPortraitStyle.hint'}
     id="useCircularPortraitStyle"
   />
 
   <CheckboxSetting
     bind:value={$context.settings.permanentlyUnlockCharacterSheetForGm}
-    name={'T5EK.Settings.PermanentlyUnlockCharacterSheetForGM.name'}
-    hint={'T5EK.Settings.PermanentlyUnlockCharacterSheetForGM.hint'}
+    name={'TIDY5E.Settings.PermanentlyUnlockCharacterSheetForGM.name'}
+    hint={'TIDY5E.Settings.PermanentlyUnlockCharacterSheetForGM.hint'}
     id="permanentlyUnlockCharacterSheetForGm"
   />
 
   <CheckboxSetting
     bind:value={$context.settings.permanentlyUnlockNpcSheetForGm}
-    name={'T5EK.Settings.PermanentlyUnlockNPCSheetForGM.name'}
-    hint={'T5EK.Settings.PermanentlyUnlockNPCSheetForGM.hint'}
+    name={'TIDY5E.Settings.PermanentlyUnlockNPCSheetForGM.name'}
+    hint={'TIDY5E.Settings.PermanentlyUnlockNPCSheetForGM.hint'}
     id="permanentlyUnlockNpcSheetForGm"
   />
 
   <CheckboxSetting
     bind:value={$context.settings.permanentlyUnlockVehicleSheetForGm}
-    name={'T5EK.Settings.PermanentlyUnlockVehicleSheetForGM.name'}
-    hint={'T5EK.Settings.PermanentlyUnlockVehicleSheetForGM.hint'}
+    name={'TIDY5E.Settings.PermanentlyUnlockVehicleSheetForGM.name'}
+    hint={'TIDY5E.Settings.PermanentlyUnlockVehicleSheetForGM.hint'}
     id="permanentlyUnlockVehicleSheetForGm"
   />
 
   <CheckboxSetting
     bind:value={$context.settings.limitEffectsManagementToGm}
-    name={'T5EK.Settings.LimitEffectsManagementToGM.name'}
-    hint={'T5EK.Settings.LimitEffectsManagementToGM.hint'}
+    name={'TIDY5E.Settings.LimitEffectsManagementToGM.name'}
+    hint={'TIDY5E.Settings.LimitEffectsManagementToGM.hint'}
     id="limitEffectsManagementToGm"
   />
 
   <CheckboxSetting
     bind:value={$context.settings.alwaysShowItemQuantity}
-    name={'T5EK.Settings.AlwaysShowItemQuantity.name'}
-    hint={'T5EK.Settings.AlwaysShowItemQuantity.hint'}
+    name={'TIDY5E.Settings.AlwaysShowItemQuantity.name'}
+    hint={'TIDY5E.Settings.AlwaysShowItemQuantity.hint'}
     id="alwaysShowItemQuantity"
   />
 
   <CheckboxSetting
     bind:value={$context.settings.useCharacterInspiration}
-    name={'T5EK.Settings.UseInspiration.name'}
-    hint={'T5EK.Settings.UseInspiration.hint'}
+    name={'TIDY5E.Settings.UseInspiration.name'}
+    hint={'TIDY5E.Settings.UseInspiration.hint'}
     id="useCharacterInspiration"
   />
 
   <CheckboxSetting
     bind:value={$context.settings.useVehicleMotion}
-    name={'T5EK.Settings.UseVehicleMotion.name'}
-    hint={'T5EK.Settings.UseVehicleMotion.hint'}
+    name={'TIDY5E.Settings.UseVehicleMotion.name'}
+    hint={'TIDY5E.Settings.UseVehicleMotion.hint'}
     id="useVehicleMotion"
   />
 
   <CheckboxSetting
     bind:value={$context.settings.useExhaustion}
-    name={'T5EK.Settings.UseExhaustion.name'}
-    hint={'T5EK.Settings.UseExhaustion.hint'}
+    name={'TIDY5E.Settings.UseExhaustion.name'}
+    hint={'TIDY5E.Settings.UseExhaustion.hint'}
     id="useExhaustion"
   />
 
   <CheckboxSetting
     bind:value={$context.settings.showTraitLabels}
-    name={'T5EK.Settings.ShowTraitLabels.name'}
-    hint={'T5EK.Settings.ShowTraitLabels.hint'}
+    name={'TIDY5E.Settings.ShowTraitLabels.name'}
+    hint={'TIDY5E.Settings.ShowTraitLabels.hint'}
     id="showTraitLabels"
   />
 
   <CheckboxSetting
     bind:value={$context.settings.allowCantripsToBePrepared}
-    name={'T5EK.Settings.AllowCantripsToBePrepared.name'}
-    hint={'T5EK.Settings.AllowCantripsToBePrepared.hint'}
+    name={'TIDY5E.Settings.AllowCantripsToBePrepared.name'}
+    hint={'TIDY5E.Settings.AllowCantripsToBePrepared.hint'}
     id="allowCantripsToBePrepared"
   />
 
   <CheckboxSetting
     bind:value={$context.settings.allowHpMaxOverride}
-    name={'T5EK.Settings.AllowHpMaxOverride.name'}
-    hint={'T5EK.Settings.AllowHpMaxOverride.hint'}
+    name={'TIDY5E.Settings.AllowHpMaxOverride.name'}
+    hint={'TIDY5E.Settings.AllowHpMaxOverride.hint'}
     id="allowHpMaxOverride"
   />
 
   <CheckboxSetting
     bind:value={$context.settings.showActiveEffectsMarker}
-    name={'T5EK.Settings.ShowActiveEffectsMarker.name'}
-    hint={'T5EK.Settings.ShowActiveEffectsMarker.hint'}
+    name={'TIDY5E.Settings.ShowActiveEffectsMarker.name'}
+    hint={'TIDY5E.Settings.ShowActiveEffectsMarker.hint'}
     id="showActiveEffectsMarker"
   />
 {/if}

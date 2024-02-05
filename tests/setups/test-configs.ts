@@ -30,7 +30,7 @@ export async function applyFoundryTestConfig(page: Page) {
 
     // Ensure Tidy is activated
     const settings = game.settings.get('core', 'moduleConfiguration');
-    settings['tidy5e-sheet-kgar'] = true;
+    settings['tidy5e-sheet'] = true;
     await game.settings.set('core', 'moduleConfiguration', { ...settings });
   });
 }

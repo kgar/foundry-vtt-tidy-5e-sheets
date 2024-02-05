@@ -30,7 +30,7 @@ export default class ThemeSettingsFormApplication extends SvelteFormApplicationB
     return {
       ...super.defaultOptions,
       height: 750,
-      title: 'T5EK.ThemeSettings.Sheet.title',
+      title: 'TIDY5E.ThemeSettings.Sheet.title',
       width: 400,
       submitOnClose: false,
       minimizable: true,
