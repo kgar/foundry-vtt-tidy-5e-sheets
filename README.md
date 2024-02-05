@@ -12,11 +12,11 @@ D&D 5e sheet layouts for Foundry VTT, focused on a clean UI, user ergonomics, an
 Completely rewritten from the ground up, based on the [Tidy5e Sheet](https://github.com/sdenec/tidy5e-sheet) module by [sdenec](https://github.com/sdenec) and [4535992](https://github.com/p4535992).
 
 > [!IMPORTANT]
-> **Version Tidy 1.0 is coming soon.**
+> **Tidy v1.0 is coming soon.**
 >
 > This is the beta release of the Tidy 5e Sheets module.
 >
-> During beta, onboarding tools are being developed so that users can users of the original Tidy 5e Sheets and users of the Alpha sheets can be migrated to the official version 1.0 Tidy 5e Sheets.
+> During beta, onboarding tools are being developed so that users of the original Tidy 5e Sheets and of the Alpha sheets can migrate their sheet data and GM settings to the official version 1.0 Tidy 5e Sheets.
 
 > [!NOTE]
 > **dnd5e 3.0.0 Support Coming Soon**
@@ -45,7 +45,8 @@ Join us on the [Tidy 5e Sheets community discord](https://discord.gg/865zzNscRA)
 
 During beta testing, this module is installable manually by URL. It is not included in the Foundry modules list.
 
-> **NOTE**: Uninstall original Tidy5e Sheet before installing this module.
+> [!IMPORTANT]
+> Uninstall original Tidy5e Sheet before installing this module.
 
 Manual installation instructions:
 
