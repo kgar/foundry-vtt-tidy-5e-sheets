@@ -28,11 +28,11 @@
 
 <div class="scroll-container flex-column small-gap">
   {#if !$context.allowEffectsManagement && $context.unlocked}
-    <Notice>{localize('T5EK.GMOnlyEdit')}</Notice>
+    <Notice>{localize('TIDY5E.GMOnlyEdit')}</Notice>
   {/if}
 
   {#if noEffects && !$context.unlocked && $context.allowEffectsManagement}
-    <Notice>{localize('T5EK.EmptySection')}</Notice>
+    <Notice>{localize('TIDY5E.EmptySection')}</Notice>
   {:else}
     {#each effectSections as section}
       {#if ($context.unlocked && $context.allowEffectsManagement) || section.effects.length > 0}

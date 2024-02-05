@@ -10,12 +10,12 @@
   $: toggleButtonPresentation =
     mode === 'grid'
       ? {
-          title: localize('T5EK.ListLayout'),
+          title: localize('TIDY5E.ListLayout'),
           iconClass: 'fas fa-th-list toggle-list',
         }
       : mode === 'list'
         ? {
-            title: localize('T5EK.GridLayout'),
+            title: localize('TIDY5E.GridLayout'),
             iconClass: 'fas fa-th-large toggle-grid',
           }
         : null;
@@ -36,7 +36,7 @@
       <i class={toggleButtonPresentation?.iconClass} />
     </button>
   {:else}
-    <span title={localize('T5EK.LayoutNotSupported')}>😞</span>
+    <span title={localize('TIDY5E.LayoutNotSupported')}>😞</span>
   {/if}
 </svelte:element>
 

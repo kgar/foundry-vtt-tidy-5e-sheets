@@ -16,7 +16,7 @@ export class NpcSheetRuntime {
   private static _content: RegisteredContent<NpcSheetContext>[] = [];
   private static _tabs: RegisteredTab<NpcSheetContext>[] = [
     {
-      title: 'T5EK.Actions.TabName',
+      title: 'TIDY5E.Actions.TabName',
       content: {
         component: ActorActionsTab,
         type: 'svelte',
@@ -26,7 +26,7 @@ export class NpcSheetRuntime {
     },
     {
       id: CONSTANTS.TAB_NPC_ABILITIES,
-      title: 'T5EK.Abilities',
+      title: 'TIDY5E.Abilities',
       content: {
         component: NpcAbilitiesTab,
         type: 'svelte',
@@ -64,7 +64,7 @@ export class NpcSheetRuntime {
     },
     {
       id: 'journal',
-      title: 'T5EK.JournalTabName',
+      title: 'TIDY5E.JournalTabName',
       content: {
         component: ActorJournalTab,
         type: 'svelte',

@@ -20,7 +20,7 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-<h2>{localize('T5EK.Settings.TabNPCs.header')}</h2>
+<h2>{localize('TIDY5E.Settings.TabNPCs.header')}</h2>
 {#if userIsGm}
   <SelectSetting
     options={SettingsProvider.settings.initialNpcSheetTab.options.choices()}
@@ -33,9 +33,9 @@
   <ListboxSetting
     name={SettingsProvider.settings.defaultNpcSheetTabs.options.name}
     hint={SettingsProvider.settings.defaultNpcSheetTabs.options.hint}
-    leftHeader="T5EK.Settings.DefaultSheetTabs.AvailableHeader"
+    leftHeader="TIDY5E.Settings.DefaultSheetTabs.AvailableHeader"
     bind:leftItems={$context.defaultNpcTabs.available}
-    rightHeader="T5EK.Settings.DefaultSheetTabs.SelectedHeader"
+    rightHeader="TIDY5E.Settings.DefaultSheetTabs.SelectedHeader"
     bind:rightItems={$context.defaultNpcTabs.selected}
     labelProp="label"
     valueProp="id"
@@ -47,7 +47,7 @@
           functions.resetDefaultTabs(context, CONSTANTS.SHEET_TYPE_NPC)}
       >
         <i class="fas fa-rotate-right" />
-        {localize('T5EK.Reset')}
+        {localize('TIDY5E.Reset')}
       </button>
     </div>
   </ListboxSetting>
@@ -63,76 +63,76 @@
 {#if userIsGm}
   <CheckboxSetting
     bind:value={$context.settings.useNpcRest}
-    name={'T5EK.Settings.UseNPCRest.name'}
-    hint={'T5EK.Settings.UseNPCRest.hint'}
+    name={'TIDY5E.Settings.UseNPCRest.name'}
+    hint={'TIDY5E.Settings.UseNPCRest.hint'}
     id="useNpcRest"
   />
 
   <CheckboxSetting
     bind:value={$context.settings.showNpcRestInChat}
-    name={'T5EK.Settings.ShowNPCRestInChat.name'}
-    hint={'T5EK.Settings.ShowNPCRestInChat.hint'}
+    name={'TIDY5E.Settings.ShowNPCRestInChat.name'}
+    hint={'TIDY5E.Settings.ShowNPCRestInChat.hint'}
     id="showNpcRestInChat"
   />
 
   <SelectSetting
     options={{
-      default: 'T5EK.Settings.ShowNPCActorLinkMarker.default',
-      unlinked: 'T5EK.Settings.ShowNPCActorLinkMarker.unlinked',
-      both: 'T5EK.Settings.ShowNPCActorLinkMarker.both',
+      default: 'TIDY5E.Settings.ShowNPCActorLinkMarker.default',
+      unlinked: 'TIDY5E.Settings.ShowNPCActorLinkMarker.unlinked',
+      both: 'TIDY5E.Settings.ShowNPCActorLinkMarker.both',
     }}
     bind:value={$context.settings.showNpcActorLinkMarker}
-    name="T5EK.Settings.ShowNPCActorLinkMarker.name"
-    hint="T5EK.Settings.ShowNPCActorLinkMarker.hint"
+    name="TIDY5E.Settings.ShowNPCActorLinkMarker.name"
+    hint="TIDY5E.Settings.ShowNPCActorLinkMarker.hint"
     id="showNpcActorLinkMarker"
   />
 {/if}
 
 <CheckboxSetting
   bind:value={$context.settings.useHpBarNpc}
-  name={'T5EK.Settings.UseHpBar.name'}
-  hint={'T5EK.Settings.UseHpBar.hint'}
+  name={'TIDY5E.Settings.UseHpBar.name'}
+  hint={'TIDY5E.Settings.UseHpBar.hint'}
   id="useHpBarNpc"
 />
 
 <CheckboxSetting
   bind:value={$context.settings.useHpOverlayNpc}
-  name={'T5EK.Settings.UseHpOverlay.name'}
-  hint={'T5EK.Settings.UseHpOverlay.hint'}
+  name={'TIDY5E.Settings.UseHpOverlay.name'}
+  hint={'TIDY5E.Settings.UseHpOverlay.hint'}
   id="useHpOverlayNpc"
 />
 
 <CheckboxSetting
   bind:value={$context.settings.alwaysShowNpcTraits}
-  name={'T5EK.Settings.AlwaysShowTraits.name'}
-  hint={'T5EK.Settings.AlwaysShowTraits.hint'}
+  name={'TIDY5E.Settings.AlwaysShowTraits.name'}
+  hint={'TIDY5E.Settings.AlwaysShowTraits.hint'}
   id="alwaysShowNpcTraits"
 />
 
 <CheckboxSetting
   bind:value={$context.settings.moveTraitsBelowNpcResources}
-  name={'T5EK.Settings.MoveTraitsBelowResources.name'}
-  hint={'T5EK.Settings.MoveTraitsBelowResources.hint'}
+  name={'TIDY5E.Settings.MoveTraitsBelowResources.name'}
+  hint={'TIDY5E.Settings.MoveTraitsBelowResources.hint'}
   id="moveTraitsBelowNpcResources"
 />
 
 <CheckboxSetting
   bind:value={$context.settings.alwaysShowNpcSkills}
-  name={'T5EK.Settings.AlwaysShowSkills.name'}
-  hint={'T5EK.Settings.AlwaysShowSkills.hint'}
+  name={'TIDY5E.Settings.AlwaysShowSkills.name'}
+  hint={'TIDY5E.Settings.AlwaysShowSkills.hint'}
   id="alwaysShowNpcSkills"
 />
 
 <CheckboxSetting
   bind:value={$context.settings.showSpellbookTabNpc}
-  name={'T5EK.Settings.ShowNPCSpellbookTab.name'}
-  hint={'T5EK.Settings.ShowNPCSpellbookTab.hint'}
+  name={'TIDY5E.Settings.ShowNPCSpellbookTab.name'}
+  hint={'TIDY5E.Settings.ShowNPCSpellbookTab.hint'}
   id="showSpellbookTabNpc"
 />
 
 <NumberInputSetting
   bind:value={$context.settings.npcSheetWidth}
-  name={'T5EK.Settings.NPCSheetWidth.name'}
-  hint={'T5EK.Settings.NPCSheetWidth.hint'}
+  name={'TIDY5E.Settings.NPCSheetWidth.name'}
+  hint={'TIDY5E.Settings.NPCSheetWidth.hint'}
   id="npcSheetWidth"
 />

@@ -17,7 +17,7 @@
 
 <ButtonMenuItem cssClass="flex-column extra-small-gap">
   <label class="theme-label" for="sheet-menu-{idSuffix}">
-    {localize('T5EK.SheetMenu.themeLabel')}
+    {localize('TIDY5E.SheetMenu.themeLabel')}
   </label>
   <select
     id="sheet-menu-{idSuffix}"

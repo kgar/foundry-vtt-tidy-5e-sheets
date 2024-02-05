@@ -102,7 +102,7 @@
 
 {#if noCargoOrCrew && !$context.unlocked}
   <Notice>
-    {localize('T5EK.EmptySection')}
+    {localize('TIDY5E.EmptySection')}
   </Notice>
 {/if}
 
@@ -274,7 +274,7 @@
 </TabFooter>
 
 <style lang="scss">
-  :global(.tidy5e-kgar.vehicle input.editable-name) {
+  :global(.tidy5e-sheet.vehicle input.editable-name) {
     padding: 0 0.25rem;
   }
 </style>

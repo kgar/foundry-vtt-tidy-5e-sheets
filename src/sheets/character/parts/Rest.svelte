@@ -12,13 +12,13 @@
 
 <div class="rest-container" class:rounded={$context.useRoundedPortraitStyle}>
   <div class="resting">
-    <span class="resting-icon" title={localize('T5EK.RestHint')}
+    <span class="resting-icon" title={localize('TIDY5E.RestHint')}
       ><i class="rest-icon fas fa-bed" /></span
     >
     <button
       type="button"
       class="rest icon-button"
-      title={localize('T5EK.ShortRest')}
+      title={localize('TIDY5E.ShortRest')}
       on:click={(event) => $context.actor.sheet.onShortRest(event)}
       disabled={!$context.editable}
       tabindex={!$settingStore.useDefaultSheetHpTabbing &&
@@ -31,7 +31,7 @@
     <button
       type="button"
       class="rest icon-button"
-      title={localize('T5EK.LongRest')}
+      title={localize('TIDY5E.LongRest')}
       on:click={(event) => $context.actor.sheet.onLongRest(event)}
       disabled={!$context.editable}
       tabindex={!$settingStore.useDefaultSheetHpTabbing &&

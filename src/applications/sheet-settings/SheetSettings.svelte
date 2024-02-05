@@ -26,7 +26,7 @@
   tabs = [
     {
       id: CONSTANTS.TAB_SETTINGS_PLAYERS,
-      title: 'T5EK.Settings.TabPlayers.tabLabel',
+      title: 'TIDY5E.Settings.TabPlayers.tabLabel',
       content: {
         component: PlayerSettingsTab,
         type: 'svelte',
@@ -34,7 +34,7 @@
     },
     {
       id: CONSTANTS.TAB_SETTINGS_NPCS,
-      title: 'T5EK.Settings.TabNPCs.tabLabel',
+      title: 'TIDY5E.Settings.TabNPCs.tabLabel',
       content: {
         component: NpcSettingsTab,
         type: 'svelte',
@@ -42,7 +42,7 @@
     },
     {
       id: CONSTANTS.TAB_SETTINGS_VEHICLES,
-      title: 'T5EK.Settings.TabVehicles.tabLabel',
+      title: 'TIDY5E.Settings.TabVehicles.tabLabel',
       content: {
         component: VehicleSettingsTab,
         type: 'svelte',
@@ -54,7 +54,7 @@
     tabs.push(
       {
         id: CONSTANTS.TAB_SETTINGS_GM,
-        title: 'T5EK.Settings.TabGM.tabLabel',
+        title: 'TIDY5E.Settings.TabGM.tabLabel',
         content: {
           component: GmOptionsSettingsTab,
           type: 'svelte',
@@ -62,7 +62,7 @@
       },
       {
         id: CONSTANTS.TAB_SETTINGS_LOCKS,
-        title: 'T5EK.Settings.TabLocks.tabLabel',
+        title: 'TIDY5E.Settings.TabLocks.tabLabel',
         content: {
           component: LockSettingsTab,
           type: 'svelte',
@@ -73,7 +73,7 @@
 
   tabs.push({
     id: CONSTANTS.TAB_SETTINGS_FEATURES,
-    title: 'T5EK.Settings.TabFeatures.tabLabel',
+    title: 'TIDY5E.Settings.TabFeatures.tabLabel',
     content: {
       component: FeaturesSettingsTab,
       type: 'svelte',
@@ -82,7 +82,7 @@
 
   tabs.push({
     id: CONSTANTS.TAB_SETTINGS_INFO,
-    title: 'T5EK.Settings.TabInfo.tabLabel',
+    title: 'TIDY5E.Settings.TabInfo.tabLabel',
     content: {
       component: InfoTab,
       type: 'svelte',
@@ -131,7 +131,7 @@
       disabled={applyingChanges}
     >
       <i class="fas fa-save" />
-      {localize('T5EK.SaveChanges')}
+      {localize('TIDY5E.SaveChanges')}
     </button>
     <button
       type="button"
@@ -140,7 +140,7 @@
       disabled={applyingChanges}
     >
       <i class="fas fa-check" />
-      {localize('T5EK.ApplyChanges')}
+      {localize('TIDY5E.ApplyChanges')}
     </button>
   </div>
 </div>

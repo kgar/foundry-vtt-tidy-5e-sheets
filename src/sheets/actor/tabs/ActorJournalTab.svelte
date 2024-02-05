@@ -35,7 +35,7 @@
             field="flags.{CONSTANTS.MODULE_ID}.notes1.name"
             value={FoundryAdapter.tryGetFlag($context.actor, 'notes1.name') ??
               ''}
-            placeholder={localize('T5EK.JournalPersonsOfInterest')}
+            placeholder={localize('TIDY5E.JournalPersonsOfInterest')}
             selectOnFocus={true}
             stopChangePropagation={true}
             disabled={!$context.editable}
@@ -61,7 +61,7 @@
             field="flags.{CONSTANTS.MODULE_ID}.notes2.name"
             value={FoundryAdapter.tryGetFlag($context.actor, 'notes2.name') ??
               ''}
-            placeholder={localize('T5EK.JournalLocationsOfInterest')}
+            placeholder={localize('TIDY5E.JournalLocationsOfInterest')}
             selectOnFocus={true}
             stopChangePropagation={true}
             disabled={!$context.editable}
@@ -87,7 +87,7 @@
             field="flags.{CONSTANTS.MODULE_ID}.notes3.name"
             value={FoundryAdapter.tryGetFlag($context.actor, 'notes3.name') ??
               ''}
-            placeholder={localize('T5EK.JournalQuests')}
+            placeholder={localize('TIDY5E.JournalQuests')}
             selectOnFocus={true}
             stopChangePropagation={true}
             disabled={!$context.editable}
@@ -113,7 +113,7 @@
             field="flags.{CONSTANTS.MODULE_ID}.notes4.name"
             value={FoundryAdapter.tryGetFlag($context.actor, 'notes4.name') ??
               ''}
-            placeholder={localize('T5EK.JournalMisc')}
+            placeholder={localize('TIDY5E.JournalMisc')}
             selectOnFocus={true}
             stopChangePropagation={true}
             disabled={!$context.editable}
@@ -138,7 +138,7 @@
       ) ?? ''}
     >
       <article class="journal-notes" use:activateProseMirrorListeners>
-        <div class="section-titles">{localize('T5EK.JournalEntries')}</div>
+        <div class="section-titles">{localize('TIDY5E.JournalEntries')}</div>
         <SheetEditor
           content={$context.notesEnrichedHtml}
           target="flags.{CONSTANTS.MODULE_ID}.notes.value"

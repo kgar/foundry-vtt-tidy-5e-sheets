@@ -39,12 +39,12 @@
 
       {#if includeAttackMod}
         <span>|</span>
-        <span>{FoundryAdapter.localize('T5EK.AttackMod')}:</span>
+        <span>{FoundryAdapter.localize('TIDY5E.AttackMod')}:</span>
 
         {#if $context.spellCalculations.rangedMod !== $context.spellCalculations.meleeMod}
           <div
             data-tooltip="{FoundryAdapter.localize(
-              'T5EK.RangedSpellAttackMod',
+              'TIDY5E.RangedSpellAttackMod',
             )}: {$context.spellCalculations.rangedTooltip}"
             class="spell-attack-mod-container"
           >
@@ -61,7 +61,7 @@
           </div>
           <div
             data-tooltip="{FoundryAdapter.localize(
-              'T5EK.MeleeSpellAttackMod',
+              'TIDY5E.MeleeSpellAttackMod',
             )}: {$context.spellCalculations.meleeTooltip}"
             class="spell-attack-mod-container"
           >
@@ -78,7 +78,7 @@
         {:else}
           <div
             data-tooltip="{FoundryAdapter.localize(
-              'T5EK.SpellAttackMod',
+              'TIDY5E.SpellAttackMod',
             )}: {$context.spellCalculations.rangedTooltip}"
             class="spell-attack-mod-container"
           >
@@ -101,11 +101,11 @@
       class="transparent-button secondary-footer-field highlight-on-hover"
       on:click={() =>
         new MaxPreparedSpellsConfigFormApplication($context.actor).render(true)}
-      title={localize('T5EK.MaxPreparedSpellsConfig.ButtonTooltip')}
+      title={localize('TIDY5E.MaxPreparedSpellsConfig.ButtonTooltip')}
       disabled={!$context.editable || $context.lockSensitiveFields}
       tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
     >
-      <p>{localize('T5EK.PreparedSpells')}</p>
+      <p>{localize('TIDY5E.PreparedSpells')}</p>
       <span class="spells-prepared">{$context.preparedSpells ?? 0}</span>
       /
       <span class="spells-max-prepared"
@@ -148,7 +148,7 @@
 </TabFooter>
 
 <style lang="scss">
-  :global(.tidy5e-kgar .spellbook-footer) {
+  :global(.tidy5e-sheet .spellbook-footer) {
     min-height: 2.5rem;
   }
 

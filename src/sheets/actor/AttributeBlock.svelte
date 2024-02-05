@@ -127,9 +127,9 @@
       </button>
     {/if}
   </div>
-  <span class="mod-label ability-mod-label">{localize('T5EK.AbbrMod')}</span>
+  <span class="mod-label ability-mod-label">{localize('TIDY5E.AbbrMod')}</span>
   <span class="mod-label save-mod-label"
-    >{localize('T5EK.AbbrSavingThrow')}</span
+    >{localize('TIDY5E.AbbrSavingThrow')}</span
   >
 </div>
 

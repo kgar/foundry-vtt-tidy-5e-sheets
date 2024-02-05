@@ -237,9 +237,9 @@ c28,32.6,51.5,72.7,62,91.7c2.8,5,9.9,5.1,12.8,0.2c14-23.3,44.3-83.4,44.3-166.9C4
       tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
     >
       {#if traitsExpanded}
-        {localize('T5EK.HideEmptyTraits')}
+        {localize('TIDY5E.HideEmptyTraits')}
       {:else}
-        {localize('T5EK.ShowEmptyTraits')}
+        {localize('TIDY5E.ShowEmptyTraits')}
       {/if}
     </button>
   {/if}

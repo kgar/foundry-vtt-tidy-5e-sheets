@@ -28,7 +28,7 @@
     <ItemTableHeaderRow>
       <ItemTableColumn primary={true}>
         {#if section.dataset['preparation.mode'] === CONSTANTS.SPELL_PREPARATION_MODE_PREPARED && section.dataset.level > 0}
-          {localize('T5EK.FavoriteSpellLevelLabel', {
+          {localize('TIDY5E.FavoriteSpellLevelLabel', {
             number: section.dataset.level,
           })}
         {:else}

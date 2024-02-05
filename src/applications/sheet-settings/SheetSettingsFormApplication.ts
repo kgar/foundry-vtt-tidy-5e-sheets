@@ -36,7 +36,7 @@ export class SheetSettingsFormApplication extends SvelteFormApplicationBase {
     return {
       ...super.defaultOptions,
       height: 750,
-      title: 'T5EK.Settings.SheetMenu.title',
+      title: 'TIDY5E.Settings.SheetMenu.title',
       width: 750,
       classes: [...super.defaultOptions.classes, 'settings'],
     };
@@ -150,7 +150,7 @@ export class SheetSettingsFormApplication extends SvelteFormApplicationBase {
       valid = false;
       error(
         FoundryAdapter.localize(
-          'T5EK.Settings.DefaultSheetTabs.AtLeastOneTabRequiredErrorMessage'
+          'TIDY5E.Settings.DefaultSheetTabs.AtLeastOneTabRequiredErrorMessage'
         ),
         true
       );
@@ -163,7 +163,7 @@ export class SheetSettingsFormApplication extends SvelteFormApplicationBase {
       valid = false;
       error(
         FoundryAdapter.localize(
-          'T5EK.Settings.Exhaustion.AtLeastOneLevelRequiredErrorMessage'
+          'TIDY5E.Settings.Exhaustion.AtLeastOneLevelRequiredErrorMessage'
         ),
         true
       );
@@ -176,7 +176,7 @@ export class SheetSettingsFormApplication extends SvelteFormApplicationBase {
       valid = false;
       error(
         FoundryAdapter.localize(
-          'T5EK.Settings.VehicleExhaustion.AtLeastOneLevelRequiredErrorMessage'
+          'TIDY5E.Settings.VehicleExhaustion.AtLeastOneLevelRequiredErrorMessage'
         ),
         true
       );

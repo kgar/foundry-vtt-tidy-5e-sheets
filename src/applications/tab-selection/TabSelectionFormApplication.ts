@@ -45,7 +45,7 @@ export default class TabSelectionFormApplication extends SvelteFormApplicationBa
 
     error(
       FoundryAdapter.localize(
-        'T5EK.TabSelection.UnsupportedDocumentErrorMessage',
+        'TIDY5E.TabSelection.UnsupportedDocumentErrorMessage',
         { documentType: this.actor.type }
       )
     );
@@ -63,7 +63,7 @@ export default class TabSelectionFormApplication extends SvelteFormApplicationBa
 
     error(
       FoundryAdapter.localize(
-        'T5EK.TabSelection.UnsupportedDocumentErrorMessage',
+        'TIDY5E.TabSelection.UnsupportedDocumentErrorMessage',
         { documentType: this.actor.type }
       )
     );
@@ -94,7 +94,7 @@ export default class TabSelectionFormApplication extends SvelteFormApplicationBa
   }
 
   get title() {
-    return FoundryAdapter.localize('T5EK.TabSelection.Title', {
+    return FoundryAdapter.localize('TIDY5E.TabSelection.Title', {
       documentName: this.actor.name,
     });
   }
@@ -137,7 +137,7 @@ export default class TabSelectionFormApplication extends SvelteFormApplicationBa
     if (context.selected.length === 0) {
       error(
         FoundryAdapter.localize(
-          'T5EK.TabSelection.AtLeastOneRequiredErrorMessage'
+          'TIDY5E.TabSelection.AtLeastOneRequiredErrorMessage'
         ),
         true
       );

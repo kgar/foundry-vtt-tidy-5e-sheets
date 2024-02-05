@@ -18,14 +18,14 @@
   $: descriptionVariable =
     hint ??
     ($settingStore.useTotalSheetLock
-      ? localize('T5EK.SheetLock.Description')
-      : localize('T5EK.SheetEdit.Description'));
+      ? localize('TIDY5E.SheetLock.Description')
+      : localize('TIDY5E.SheetEdit.Description'));
   $: lockHintVariable = $settingStore.useTotalSheetLock
-    ? 'T5EK.SheetLock.Unlock.Hint'
-    : 'T5EK.SheetEdit.Enable.Hint';
+    ? 'TIDY5E.SheetLock.Unlock.Hint'
+    : 'TIDY5E.SheetEdit.Enable.Hint';
   $: unlockHintVariable = $settingStore.useTotalSheetLock
-    ? 'T5EK.SheetLock.Lock.Hint'
-    : 'T5EK.SheetEdit.Disable.Hint';
+    ? 'TIDY5E.SheetLock.Lock.Hint'
+    : 'TIDY5E.SheetEdit.Disable.Hint';
   $: unlockTitle = localize(unlockHintVariable, {
     description: descriptionVariable,
   });

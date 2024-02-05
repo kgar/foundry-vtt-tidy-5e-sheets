@@ -16,7 +16,7 @@ export function applyTheme(
   colorPickerEnabledOverride: boolean | null = null
 ) {
   try {
-    const styleTagId = 'tidy5e-sheet-kgar-theme';
+    const styleTagId = 'tidy5e-sheet-theme';
     let existingThemeStyle = document.getElementById(styleTagId);
 
     if (existingThemeStyle) {

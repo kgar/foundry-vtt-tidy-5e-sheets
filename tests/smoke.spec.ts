@@ -141,6 +141,6 @@ test('smoke test: roll strength check', async () => {
 
 async function isTidyActive(page: Page) {
   return await page.evaluate(() => {
-    return game.modules.get('tidy5e-sheet-kgar')?.active === true;
+    return game.modules.get('tidy5e-sheet')?.active === true;
   });
 }
