@@ -6,7 +6,7 @@ import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 export class MigrationsApplication extends SvelteFormApplicationBase {
   static get defaultOptions() {
     return FoundryAdapter.mergeObject(super.defaultOptions, {
-      title: FoundryAdapter.localize("TIDY5E.Settings.Migrations.dialogTitle"),
+      title: FoundryAdapter.localize('TIDY5E.Settings.Migrations.dialogTitle'),
       width: 650,
       height: 500,
     });
@@ -21,19 +21,33 @@ export class MigrationsApplication extends SvelteFormApplicationBase {
 
   confirm(onYes: () => void) {
     const dlg = new Dialog({
-      title: `Test`,
-      content: 'To Do: Put some content here.',
+      title: FoundryAdapter.localize(
+        'TIDY5E.Settings.Migrations.migrateConfirmTitle'
+      ),
+      content: `
+        <p>${FoundryAdapter.localize(
+          'TIDY5E.Settings.Migrations.migrateConfirmMessage1'
+        )}</p>
+        <p><em>${FoundryAdapter.localize(
+          'TIDY5E.Settings.Migrations.migrateConfirmMessage2',
+          { boldStart: '<strong>', boldEnd: '</strong>' }
+        )}</em></p>
+      `,
       buttons: {
         yes: {
           icon: '<i class="fas fa-right-left"></i>',
-          label: 'Localize Migrate',
+          label: FoundryAdapter.localize(
+            'TIDY5E.Settings.Migrations.migrateConfirmButtonYes'
+          ),
           callback: () => {
             onYes();
           },
         },
         cancel: {
           icon: '<i class="fas fa-times"></i>',
-          label: 'Localize cancel',
+          label: FoundryAdapter.localize(
+            'TIDY5E.Settings.Migrations.migrateConfirmButtonNo'
+          ),
         },
       },
       default: 'yes',
