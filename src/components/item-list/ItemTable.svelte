@@ -1,8 +1,20 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
   import ExpandableContainer from 'src/components/expandable/ExpandableContainer.svelte';
+  import { setContext } from 'svelte';
+  import { ExpandCollapseService } from 'src/features/expand-collapse/ExpandCollapseService';
 
-  let open: boolean = true;
+  export let toggleable: boolean = true;
+
+  const expandCollapseService = new ExpandCollapseService({
+    // TODO: Reference a malleable state store for whether this particular table was expanded
+    expanded: true,
+    toggleable,
+  });
+
+  setContext(ExpandCollapseService.contextKey, expandCollapseService);
+
+  $: expandedState = expandCollapseService.state;
 </script>
 
 <section
@@ -11,18 +23,10 @@
 >
   <!-- svelte-ignore a11y-no-static-element-interactions -->
   <!-- svelte-ignore a11y-click-events-have-key-events -->
-  <div class="item-table-head" on:click={(ev) => (open = !open)}>
-    <slot name="header" />
-  </div>
-  <ExpandableContainer expanded={open}>
+  <slot name="header" />
+  <ExpandableContainer expanded={$expandedState.expanded}>
     <div class="item-table-body">
       <slot name="body" />
     </div>
   </ExpandableContainer>
 </section>
-
-<style lang="scss">
-  .item-table-head {
-    cursor: pointer;
-  }
-</style>

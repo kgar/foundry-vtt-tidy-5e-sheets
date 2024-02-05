@@ -155,6 +155,9 @@ export const CONSTANTS = {
     /** An input for the number of successful death saves an actor has. */
     DEATH_SAVE_SUCCESSES: 'death-save-successes',
 
+    /** An interactable element which toggles a view */
+    EXPANSION_TOGGLE: 'table-expansion-toggle',
+
     /** An interactable control which the user can execute to create an item (e.g., consumable, feature, loot, spell, weapon, etc.). */
     ITEM_CREATE_COMMAND: 'item-create-command',
 

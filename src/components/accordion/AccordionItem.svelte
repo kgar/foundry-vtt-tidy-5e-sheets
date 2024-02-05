@@ -4,6 +4,7 @@
   import { writable } from 'svelte/store';
   import { settingStore } from 'src/settings/settings';
   import ExpandableContainer from 'src/components/expandable/ExpandableContainer.svelte';
+  import { CONSTANTS } from 'src/constants';
 
   export let open: boolean = false;
 
@@ -30,6 +31,7 @@
       class="accordion-item-toggle transparent-button"
       type="button"
       on:click={() => toggle()}
+      data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.EXPANSION_TOGGLE}
       tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
     >
       <span class="accordion-arrow" class:open
