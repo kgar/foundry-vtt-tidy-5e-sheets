@@ -14,6 +14,7 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import Notice from 'src/components/notice/Notice.svelte';
+  import { declareLocation } from 'src/types/location-awareness';
 
   let context = getContext<Readable<ActorSheetContext>>('context');
 
@@ -24,6 +25,8 @@
 
   $: noEffects =
     effectSections.some((section: any) => section.effects.length > 0) === false;
+
+  declareLocation('effects');
 </script>
 
 <div class="scroll-container flex-column small-gap">
@@ -36,7 +39,7 @@
   {:else}
     {#each effectSections as section}
       {#if ($context.unlocked && $context.allowEffectsManagement) || section.effects.length > 0}
-        <ItemTable>
+        <ItemTable location={section.label}>
           <svelte:fragment slot="header">
             <ItemTableHeaderRow>
               <ItemTableColumn primary={true}>

@@ -28,6 +28,7 @@
   import DtypeInput from '../../../components/inputs/DtypeInput.svelte';
   import RechargeControl from 'src/components/item-list/controls/RechargeControl.svelte';
   import ActionFilterOverrideControl from 'src/components/item-list/controls/ActionFilterOverrideControl.svelte';
+  import { declareLocation } from 'src/types/location-awareness';
 
   let context = getContext<Readable<CharacterSheetContext>>('context');
 
@@ -43,10 +44,15 @@
   }
 
   let searchCriteria: string = '';
+
+  declareLocation('features');
 </script>
 
 <ItemFilters>
-  <ItemFilterSearch bind:searchCriteria placeholder={localize('TIDY5E.Search')} />
+  <ItemFilterSearch
+    bind:searchCriteria
+    placeholder={localize('TIDY5E.Search')}
+  />
   <ItemFilterOption setName="features" filterName="action">
     {localize('DND5E.Action')}
   </ItemFilterOption>
@@ -71,7 +77,7 @@
         section.items,
       )}
       {#if (searchCriteria.trim() === '' && $context.unlocked) || filteredItems.length > 0}
-        <ItemTable>
+        <ItemTable location={section.label}>
           <svelte:fragment slot="header">
             <ItemTableHeaderRow>
               <ItemTableColumn primary={true}>

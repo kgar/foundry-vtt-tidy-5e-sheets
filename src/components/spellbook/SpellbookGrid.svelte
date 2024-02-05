@@ -17,6 +17,7 @@
   import type { Readable, Writable } from 'svelte/store';
   import { settingStore } from 'src/settings/settings';
   import { ActorItemRuntime } from 'src/runtime/ActorItemRuntime';
+  import { declareLocation } from 'src/types/location-awareness';
 
   export let section: any;
   export let spells: Item5e[];
@@ -66,10 +67,12 @@
     const dragData = item.toDragData();
     event.dataTransfer?.setData('text/plain', JSON.stringify(dragData));
   }
+
+  declareLocation('spellbook-grid-view');
 </script>
 
 <section class="spellbook-grid {cssClass}">
-  <ItemTable>
+  <ItemTable location={section.label}>
     <svelte:fragment slot="header">
       <ItemTableHeaderRow>
         <ItemTableColumn primary={true}>

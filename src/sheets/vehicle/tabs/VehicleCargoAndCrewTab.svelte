@@ -94,10 +94,6 @@
 
     return false;
   }
-
-  const itemCardTemplates: Record<string, ItemCardContentComponent> = {
-    loot: InventoryItemCardContent,
-  };
 </script>
 
 {#if noCargoOrCrew && !$context.unlocked}
@@ -108,9 +104,8 @@
 
 <div class="scroll-container flex-column small-gap">
   {#each $context.cargo as section}
-    {@const cardTemplate = itemCardTemplates[section.dataset.type] ?? null}
     {#if $context.unlocked || section.items.length}
-      <ItemTable>
+      <ItemTable location={section.label}>
         <svelte:fragment slot="header">
           <ItemTableHeaderRow>
             <ItemTableColumn primary={true}>
@@ -157,7 +152,8 @@
                     document={item}
                     field="name"
                     selectOnFocus={true}
-                    onSaveChange={(ev) => saveSection(ev, index, 'name', section)}
+                    onSaveChange={(ev) =>
+                      saveSection(ev, index, 'name', section)}
                     value={item.name}
                     cssClass="editable-name"
                     disabled={!$context.editable}

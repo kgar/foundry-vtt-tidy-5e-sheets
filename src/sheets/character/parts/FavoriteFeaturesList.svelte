@@ -15,6 +15,7 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import RechargeControl from 'src/components/item-list/controls/RechargeControl.svelte';
+    import { declareLocation } from 'src/types/location-awareness';
 
   let context = getContext<Readable<CharacterSheetContext>>('context');
   export let items: Item5e[] = [];
@@ -22,7 +23,7 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-<ItemTable>
+<ItemTable location="features">
   <svelte:fragment slot="header">
     <ItemTableHeaderRow>
       <ItemTableColumn primary={true}>

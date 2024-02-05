@@ -24,7 +24,7 @@
 </script>
 
 <section class="spellbook-list-section">
-  <ItemTable>
+  <ItemTable location={section.label}>
     <svelte:fragment slot="header">
       <ItemTableHeaderRow>
         <ItemTableColumn primary={true}>

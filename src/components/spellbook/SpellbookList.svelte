@@ -26,10 +26,10 @@
   import ItemFavoriteControl from '../item-list/controls/ItemFavoriteControl.svelte';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
-  import SpellbookItemCardContent from '../item-info-card/SpellbookItemCardContent.svelte';
   import { settingStore } from 'src/settings/settings';
   import ActionFilterOverrideControl from '../item-list/controls/ActionFilterOverrideControl.svelte';
   import { SpellSchool } from 'src/features/spell-school/SpellSchool';
+  import { declareLocation } from 'src/types/location-awareness';
 
   let context =
     getContext<Readable<CharacterSheetContext | NpcSheetContext>>('context');
@@ -54,10 +54,12 @@
   $: classicControlsBaseWidth = $context.unlocked
     ? controlsBaseWidthUnlocked
     : controlsBaseWidthLocked;
+
+  declareLocation('spellbook-list-view');
 </script>
 
 <section class="spellbook-list-section {cssClass}">
-  <ItemTable>
+  <ItemTable location={section.label}>
     <svelte:fragment slot="header">
       <ItemTableHeaderRow>
         <ItemTableColumn primary={true}>

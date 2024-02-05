@@ -17,6 +17,7 @@
   import TextInput from '../../../components/inputs/TextInput.svelte';
   import { settingStore } from 'src/settings/settings';
   import { ActorItemRuntime } from 'src/runtime/ActorItemRuntime';
+  import { declareLocation } from 'src/types/location-awareness';
 
   export let section: any;
   export let items: Item5e[];
@@ -79,9 +80,11 @@
     const dragData = item.toDragData();
     event.dataTransfer?.setData('text/plain', JSON.stringify(dragData));
   }
+
+  declareLocation('inventory-grid');
 </script>
 
-<ItemTable>
+<ItemTable location={section.label}>
   <svelte:fragment slot="header">
     <ItemTableHeaderRow>
       <ItemTableColumn primary={true}>

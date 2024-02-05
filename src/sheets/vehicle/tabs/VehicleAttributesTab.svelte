@@ -28,6 +28,7 @@
   import ResourceWithBar from 'src/components/bar/ResourceWithBar.svelte';
   import RechargeControl from 'src/components/item-list/controls/RechargeControl.svelte';
   import ActionFilterOverrideControl from 'src/components/item-list/controls/ActionFilterOverrideControl.svelte';
+  import { declareLocation } from 'src/types/location-awareness';
 
   let context = getContext<Readable<VehicleSheetContext>>('context');
 
@@ -59,6 +60,8 @@
   $: noFeatures = !$context.features.some(
     (section: any) => section.items.length,
   );
+
+  declareLocation('attributes');
 </script>
 
 <div class="attributes-tab-contents" data-tidy-track-scroll-y>
@@ -78,7 +81,7 @@
     {:else}
       {#each $context.features as section}
         {#if $context.unlocked || section.items.length}
-          <ItemTable>
+          <ItemTable location={section.label}>
             <svelte:fragment slot="header">
               <ItemTableHeaderRow>
                 <ItemTableColumn primary={true}>

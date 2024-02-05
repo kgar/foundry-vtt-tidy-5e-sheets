@@ -28,14 +28,13 @@
   import SpellbookFooter from 'src/components/spellbook/SpellbookFooter.svelte';
   import ItemFilterLayoutToggle from 'src/components/item-list/ItemFilterLayoutToggle.svelte';
   import SpellbookGrid from 'src/components/spellbook/SpellbookGrid.svelte';
-  import type { ItemCardContentComponent } from 'src/types/item';
-  import InventoryItemCardContent from 'src/components/item-info-card/InventoryItemCardContent.svelte';
   import { settingStore } from 'src/settings/settings';
   import EncumbranceBar from '../../actor/EncumbranceBar.svelte';
   import TabFooter from '../../actor/TabFooter.svelte';
   import AmmoSelector from '../../actor/AmmoSelector.svelte';
   import RechargeControl from 'src/components/item-list/controls/RechargeControl.svelte';
   import ActionFilterOverrideControl from 'src/components/item-list/controls/ActionFilterOverrideControl.svelte';
+    import { declareLocation } from 'src/types/location-awareness';
 
   let context = getContext<Readable<NpcSheetContext>>('context');
 
@@ -57,6 +56,8 @@
 
   let showNoSpellsView = false;
   const localize = FoundryAdapter.localize;
+
+  declareLocation('abilities');
 </script>
 
 <section class="npc-abilities-content" data-tidy-track-scroll-y>
@@ -81,7 +82,7 @@
     {/if}
     {#each $context.features as section}
       {#if $context.unlocked || section.items.length}
-        <ItemTable>
+        <ItemTable location={section.label}>
           <svelte:fragment slot="header">
             <ItemTableHeaderRow>
               <ItemTableColumn primary={true}>

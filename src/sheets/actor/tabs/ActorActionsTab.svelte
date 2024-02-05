@@ -14,16 +14,19 @@
   import { damageTypeIconMap } from 'src/features/actions/actions';
   import RechargeControl from 'src/components/item-list/controls/RechargeControl.svelte';
   import ActionFilterOverrideControl from 'src/components/item-list/controls/ActionFilterOverrideControl.svelte';
+  import { declareLocation } from 'src/types/location-awareness';
 
   let context = getContext<Readable<ActorSheetContext>>('context');
 
   const localize = FoundryAdapter.localize;
+
+  declareLocation('actions');
 </script>
 
 <div class="actions-tab-container scroll-container flex-column small-gap">
   {#each Object.entries($context.actions) as [actionType, itemSet] (actionType)}
     {#if itemSet.size}
-      <ItemTable>
+      <ItemTable location={actionType}>
         <svelte:fragment slot="header">
           <ItemTableHeaderRow>
             <ItemTableColumn primary={true}>

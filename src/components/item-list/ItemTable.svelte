@@ -3,7 +3,9 @@
   import ExpandableContainer from 'src/components/expandable/ExpandableContainer.svelte';
   import { setContext } from 'svelte';
   import { ExpandCollapseService } from 'src/features/expand-collapse/ExpandCollapseService';
+  import { declareLocation } from 'src/types/location-awareness';
 
+  export let location: string;
   export let toggleable: boolean = true;
 
   const expandCollapseService = new ExpandCollapseService({
@@ -15,6 +17,8 @@
   setContext(ExpandCollapseService.contextKey, expandCollapseService);
 
   $: expandedState = expandCollapseService.state;
+
+  declareLocation('item-table', location);
 </script>
 
 <section
