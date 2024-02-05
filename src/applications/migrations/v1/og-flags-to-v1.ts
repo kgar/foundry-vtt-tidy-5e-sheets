@@ -1,4 +1,5 @@
 import { CONSTANTS } from 'src/constants';
+import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { error } from 'src/utils/logging';
 
 export async function migrateOgFlagsToV1() {
@@ -29,10 +30,19 @@ export async function migrateOgFlagsToV1() {
       }
     } catch (e) {
       const message = `${actor.name}: Transfer failed. See devtools console error for more details.`;
-      ui.notifications.error(message, { permanent: true });
+      ui.notifications.error(
+        FoundryAdapter.localize(
+          'TIDY5E.Settings.Migrations.migrationErrorMessage'
+        ),
+        { permanent: true }
+      );
       error(message, false, e);
     }
   }
 
-  ui.notifications.info('Flag migration complete.');
+  ui.notifications.info(
+    FoundryAdapter.localize(
+      'TIDY5E.Settings.Migrations.migrationCompleteMessage'
+    )
+  );
 }

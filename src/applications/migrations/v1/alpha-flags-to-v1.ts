@@ -1,4 +1,5 @@
 import { CONSTANTS } from 'src/constants';
+import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { error } from 'src/utils/logging';
 
 export async function migrateAlphaFlagsToV1() {
@@ -11,7 +12,12 @@ export async function migrateAlphaFlagsToV1() {
       }
     } catch (e) {
       const message = `${actor.name}: Transfer failed. See devtools console error for more details.`;
-      ui.notifications.error(message, { permanent: true });
+      ui.notifications.error(
+        FoundryAdapter.localize(
+          'TIDY5E.Settings.Migrations.migrationErrorMessage'
+        ),
+        { permanent: true }
+      );
       error(message, false, e);
     }
   }
@@ -21,12 +27,21 @@ export async function migrateAlphaFlagsToV1() {
       await transferFlagData(item);
     } catch (e) {
       const message = `${item.name}: Transfer failed. See devtools console error for more details.`;
-      ui.notifications.error(message, { permanent: true });
+      ui.notifications.error(
+        FoundryAdapter.localize(
+          'TIDY5E.Settings.Migrations.migrationErrorMessage'
+        ),
+        { permanent: true }
+      );
       error(message, false, e);
     }
   }
 
-  ui.notifications.info('Flag migration complete.');
+  ui.notifications.info(
+    FoundryAdapter.localize(
+      'TIDY5E.Settings.Migrations.migrationCompleteMessage'
+    )
+  );
 }
 
 async function transferFlagData(document: any) {

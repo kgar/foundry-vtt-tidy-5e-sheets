@@ -1,4 +1,5 @@
 import { CONSTANTS } from 'src/constants';
+import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { error } from 'src/utils/logging';
 
 export async function migrateAlphaSettingsToV1() {
@@ -14,11 +15,19 @@ export async function migrateAlphaSettingsToV1() {
       }
     } catch (e) {
       const message = `An error occurred while remapping setting "${setting.key}"`;
-      ui.notifications.error(message, { permanent: true });
+      ui.notifications.error(
+        FoundryAdapter.localize(
+          'TIDY5E.Settings.Migrations.migrationErrorMessage'
+        ),
+        { permanent: true }
+      );
       error(message, false, e);
     }
   }
 
-  ui.notifications.info('Setting migration complete.');
-  
+  ui.notifications.info(
+    FoundryAdapter.localize(
+      'TIDY5E.Settings.Migrations.migrationCompleteMessage'
+    )
+  );
 }
