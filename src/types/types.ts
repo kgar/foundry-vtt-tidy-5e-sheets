@@ -302,3 +302,15 @@ export type MaxPreparedSpellFormula = {
   label: string;
   value: string;
 };
+
+
+export type ItemTableToggleCacheable = {
+  onItemTableToggle: OnItemTableToggleFn;
+}
+
+export type OnItemTableToggleFn = (location: string, expanded: boolean) => void;
+
+/**
+ * A map from location to item table toggle states.
+ */
+export type LocationToItemTableToggleMap = Map<string, boolean>;

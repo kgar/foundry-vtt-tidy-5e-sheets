@@ -17,6 +17,8 @@ import {
   type ExpandedItemIdToLocationsMap,
   type ExpandedItemData,
   type TidyResource,
+  type ItemTableToggleCacheable,
+  type LocationToItemTableToggleMap,
 } from 'src/types/types';
 import {
   applySheetAttributesToWindow,
@@ -44,7 +46,8 @@ export class Tidy5eCharacterSheet
   implements
     SheetTabCacheable,
     SheetExpandedItemsCacheable,
-    SearchFilterCacheable
+    SearchFilterCacheable,
+    ItemTableToggleCacheable
 {
   context = writable<CharacterSheetContext>();
   stats = writable<SheetStats>({
@@ -55,6 +58,7 @@ export class Tidy5eCharacterSheet
   searchFilters: LocationToSearchTextMap = new Map<string, string>();
   expandedItems: ExpandedItemIdToLocationsMap = new Map<string, Set<string>>();
   expandedItemData: ExpandedItemData = new Map<string, ItemChatData>();
+  itemTableToggles: LocationToItemTableToggleMap = new Map<string, boolean>();
 
   constructor(...args: any[]) {
     super(...args);
@@ -105,6 +109,8 @@ export class Tidy5eCharacterSheet
         ['onItemToggled', this.onItemToggled.bind(this)],
         ['searchFilters', new Map(this.searchFilters)],
         ['onSearch', this.onSearch.bind(this)],
+        ['itemTableToggles', new Map(this.itemTableToggles)],
+        ['onItemTableToggle', this.onItemTableToggle.bind(this)],
         ['location', ''],
         ['expandedItems', new Map(this.expandedItems)],
         ['expandedItemData', new Map(this.expandedItemData)],
@@ -578,6 +584,14 @@ export class Tidy5eCharacterSheet
       text,
     });
     this.searchFilters.set(location, text);
+  }
+
+  /* -------------------------------------------- */
+  /* ItemTableToggleCacheable
+  /* -------------------------------------------- */
+  onItemTableToggle(location: string, expanded: boolean): void {
+    debug('Toggled Item Table', { location, expanded });
+    this.itemTableToggles.set(location, expanded);
   }
 }
 
