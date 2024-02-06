@@ -76,7 +76,7 @@
       text: 'DND5E.Action',
     },
     {
-      filterName: 'action',
+      filterName: 'bonus',
       setName: 'features',
       text: 'DND5E.BonusAction',
     },
