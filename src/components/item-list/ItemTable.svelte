@@ -5,6 +5,7 @@
   import { ExpandCollapseService } from 'src/features/expand-collapse/ExpandCollapseService';
   import { declareLocation } from 'src/types/location-awareness';
   import { ExpandAllCollapseAllService } from 'src/features/expand-collapse/ExpandAllCollapseAllService';
+  import { isNil } from 'src/utils/data';
 
   export let location: string;
   export let toggleable: boolean = true;
@@ -23,11 +24,15 @@
 
   const expandAllCollapseAllSignal = ExpandAllCollapseAllService.getSignal();
 
-  onMount(() => {
-    return expandAllCollapseAllSignal?.subscribe((signal) => {
-      expandCollapseService.set(signal?.command === 'expand');
-    });
-  });
+  $: {
+    // First-time use, it should not toggle anything.
+    const isInitialValue = isNil($expandAllCollapseAllSignal?.command, '');
+    if (!isInitialValue) {
+      expandCollapseService.set(
+        $expandAllCollapseAllSignal?.command === 'expand',
+      );
+    }
+  }
 </script>
 
 <section

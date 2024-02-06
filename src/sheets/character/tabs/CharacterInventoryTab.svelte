@@ -1,11 +1,7 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { type CharacterSheetContext } from 'src/types/types';
-  import ItemFilters from '../../../components/item-list/ItemFilters.svelte';
-  import ItemFilterSearch from '../../../components/item-list/ItemFilterSearch.svelte';
-  import ItemFilterOption from '../../../components/item-list/ItemFilterOption.svelte';
   import type { ItemLayoutMode } from 'src/types/types';
-  import ItemFilterLayoutToggle from '../../../components/item-list/ItemFilterLayoutToggle.svelte';
   import InventoryList from '../parts/InventoryList.svelte';
   import InventoryGrid from '../parts/InventoryGrid.svelte';
   import { getContext } from 'svelte';
@@ -18,6 +14,11 @@
   import { settingStore } from 'src/settings/settings';
   import { CONSTANTS } from 'src/constants';
   import { ExpandAllCollapseAllService } from 'src/features/expand-collapse/ExpandAllCollapseAllService';
+  import UtilityBar from 'src/components/utility-bar/UtilityBar.svelte';
+  import Search from 'src/components/utility-bar/Search.svelte';
+  import type { UtilityBarCommandParams } from 'src/components/utility-bar/types';
+  import UtilityBarCommand from 'src/components/utility-bar/UtilityBarCommand.svelte';
+  import TempUtilityBarToggle from 'src/components/utility-bar/TempUtilityBarToggle.svelte';
 
   let context = getContext<Readable<CharacterSheetContext>>('context');
 
@@ -44,41 +45,60 @@
     false;
 
   const expandAllCollapseAllService = ExpandAllCollapseAllService.initService();
+
+  let utilityBarCommands: UtilityBarCommandParams[] = [];
+  $: utilityBarCommands = [
+    {
+      title: 'Expand All',
+      iconClass: 'fas fa-angles-down',
+      execute: () => expandAllCollapseAllService.expandAll(),
+    },
+    {
+      title: 'Collapse All',
+      iconClass: 'fas fa-angles-up',
+      execute: () => expandAllCollapseAllService.collapseAll(),
+    },
+    {
+      title: localize('TIDY5E.ListLayout'),
+      iconClass: 'fas fa-th-list toggle-list',
+      visible: layoutMode === 'grid',
+      execute: () => toggleLayout(),
+    },
+    {
+      title: localize('TIDY5E.GridLayout'),
+      iconClass: 'fas fa-th-large toggle-grid',
+      visible: layoutMode === 'list',
+      execute: () => toggleLayout(),
+    },
+  ];
 </script>
 
-<ItemFilters>
-  <svelte:fragment slot="left-side-controls">
-    <button
-      type="button"
-      on:click={() => expandAllCollapseAllService.expandAll()}
-      title="Expand All"
-      class="inline-icon-button"><i class="fas fa-angles-down"></i></button
-    >
-    <button
-      type="button"
-      title="Collapse All"
-      on:click={() => expandAllCollapseAllService.collapseAll()}
-      class="inline-icon-button"><i class="fas fa-angles-up"></i></button
-    >
-  </svelte:fragment>
-  <ItemFilterSearch
-    bind:searchCriteria
-    placeholder={localize('TIDY5E.Search')}
-  />
-  <ItemFilterOption filterName="action" setName="inventory">
-    {localize('DND5E.Action')}
-  </ItemFilterOption>
-  <ItemFilterOption filterName="bonus" setName="inventory">
-    {localize('DND5E.BonusAction')}
-  </ItemFilterOption>
-  <ItemFilterOption filterName="reaction" setName="inventory">
-    {localize('DND5E.Reaction')}
-  </ItemFilterOption>
-  <ItemFilterOption filterName="equipped" setName="inventory">
-    {localize('DND5E.Equipped')}
-  </ItemFilterOption>
-  <ItemFilterLayoutToggle mode={layoutMode} on:toggle={() => toggleLayout()} />
-</ItemFilters>
+<UtilityBar>
+  <Search bind:value={searchCriteria} />
+  <div class="bar-toggles flex-row extra-small-gap">
+    <TempUtilityBarToggle filterName="action" setName="inventory">
+      {localize('DND5E.Action')}
+    </TempUtilityBarToggle>
+    <TempUtilityBarToggle filterName="bonus" setName="inventory">
+      {localize('DND5E.BonusAction')}
+    </TempUtilityBarToggle>
+    <TempUtilityBarToggle filterName="reaction" setName="inventory">
+      {localize('DND5E.Reaction')}
+    </TempUtilityBarToggle>
+    <TempUtilityBarToggle filterName="equipped" setName="inventory">
+      {localize('DND5E.Equipped')}
+    </TempUtilityBarToggle>
+  </div>
+  {#each utilityBarCommands as command (command.title)}
+    <UtilityBarCommand
+      title={command.title}
+      iconClass={command.iconClass}
+      text={command.text}
+      visible={command.visible ?? true}
+      on:execute={(ev) => command.execute?.(ev.detail)}
+    />
+  {/each}
+</UtilityBar>
 
 <div
   class="scroll-container flex-column small-gap"

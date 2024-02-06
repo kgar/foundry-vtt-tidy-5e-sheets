@@ -200,6 +200,15 @@ export const CONSTANTS = {
     /** The container where all known resources (first, second, third, etc.) are kept. */
     RESOURCES_CONTAINER: 'resources-container',
 
+    /** An interactable element that can clear the search input it is associated with. */
+    SEARCH_CLEAR: 'search-clear',
+
+    /** A container for a search input and its search clearing interactable element. */
+    SEARCH_CONTAINER: 'search-container',
+
+    /** A user input for performing searches. */
+    SEARCH_INPUT: 'search-input',
+
     /** An interactable control that can open configuration settings for a target skill. */
     SKILL_CONFIGURATION_CONTROL: 'skill-configuration-control',
 
