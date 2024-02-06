@@ -1,7 +1,7 @@
 <script lang="ts">
   import { isNil } from 'src/utils/data';
   import { createEventDispatcher } from 'svelte';
-  import type { UtilityBarCommandExecuteEvent } from './types';
+  import type { UtilityToolbarCommandExecuteEvent } from './types';
     import { settingStore } from 'src/settings/settings';
 
   export let title: string | undefined = undefined;
@@ -10,7 +10,7 @@
   export let visible: boolean = true;
 
   const dispatcher = createEventDispatcher<{
-    execute: UtilityBarCommandExecuteEvent;
+    execute: UtilityToolbarCommandExecuteEvent;
   }>();
 </script>
 

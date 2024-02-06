@@ -15,6 +15,12 @@
   import Notice from '../../../components/notice/Notice.svelte';
   import { settingStore } from 'src/settings/settings';
   import { CONSTANTS } from 'src/constants';
+  import UtilityToolbar from 'src/components/utility-bar/UtilityToolbar.svelte';
+  import Search from 'src/components/utility-bar/Search.svelte';
+  import UtilityBarCommand from 'src/components/utility-bar/UtilityToolbarCommand.svelte';
+  import UtilityFilters from 'src/components/utility-bar/UtilityItemFilters.svelte';
+  import type { UtilityToolbarCommandParams } from 'src/components/utility-bar/types';
+  import { ExpandAllCollapseAllService } from 'src/features/expand-collapse/ExpandAllCollapseAllService';
 
   let context = getContext<Readable<CharacterSheetContext>>('context');
 
@@ -60,43 +66,71 @@
       (count: number, section: any) => count + section.spells.length,
       0,
     ) === 0;
+
+  const expandAllCollapseAllService = ExpandAllCollapseAllService.initService();
+  let utilityBarCommands: UtilityToolbarCommandParams[] = [];
+  $: utilityBarCommands = [
+    {
+      title: 'Expand All',
+      iconClass: 'fas fa-angles-down',
+      execute: () => expandAllCollapseAllService.expandAll(),
+    },
+    {
+      title: 'Collapse All',
+      iconClass: 'fas fa-angles-up',
+      execute: () => expandAllCollapseAllService.collapseAll(),
+    },
+    {
+      title: localize('TIDY5E.ListLayout'),
+      iconClass: 'fas fa-th-list toggle-list',
+      visible: layoutMode === 'grid',
+      execute: () => toggleLayout(),
+    },
+    {
+      title: localize('TIDY5E.GridLayout'),
+      iconClass: 'fas fa-th-large toggle-grid',
+      visible: layoutMode === 'list',
+      execute: () => toggleLayout(),
+    },
+  ];
+
+  const filters = [
+    { setName: 'spellbook', filterName: 'action', text: 'DND5E.Action' },
+    { setName: 'spellbook', filterName: 'bonus', text: 'DND5E.BonusAction' },
+    { setName: 'spellbook', filterName: 'reaction', text: 'DND5E.Reaction' },
+    {
+      setName: 'spellbook',
+      filterName: 'concentration',
+      text: 'DND5E.AbbreviationConc',
+    },
+    { setName: 'spellbook', filterName: 'ritual', text: 'DND5E.Ritual' },
+    {
+      setName: 'spellbook',
+      filterName: 'prepared',
+      // TODO: Devise a callback alternative option for text which provides (app, element, data), so text can be data-driven if needed
+      text: 'DND5E.Prepared' /* {#if $context.preparedSpells > 0} ({$context.preparedSpells}) {/if} */,
+    },
+  ];
 </script>
 
-<ItemFilters>
-  <ItemFilterSearch
-    bind:searchCriteria
-    cssClass="align-self-flex-end"
-    placeholder={localize('TIDY5E.Search')}
-  />
+<UtilityToolbar>
+  <Search bind:value={searchCriteria} />
   {#if $settingStore.useMulticlassSpellbookFilter}
-    <li class="spellbook-class-filter">
+    <div class="spellbook-class-filter">
       <SpellbookClassFilter />
-    </li>
+    </div>
   {/if}
-  <ItemFilterOption setName="spellbook" filterName="action">
-    {localize('DND5E.Action')}
-  </ItemFilterOption>
-  <ItemFilterOption setName="spellbook" filterName="bonus">
-    {localize('DND5E.BonusAction')}
-  </ItemFilterOption>
-  <ItemFilterOption setName="spellbook" filterName="reaction">
-    {localize('DND5E.Reaction')}
-  </ItemFilterOption>
-  <ItemFilterOption setName="spellbook" filterName="concentration">
-    {localize('DND5E.AbbreviationConc')}
-  </ItemFilterOption>
-  <ItemFilterOption setName="spellbook" filterName="ritual">
-    {localize('DND5E.Ritual')}
-  </ItemFilterOption>
-  <ItemFilterOption setName="spellbook" filterName="prepared">
-    {localize('DND5E.Prepared')}
-    {#if $context.preparedSpells > 0}
-      ({$context.preparedSpells})
-    {/if}
-  </ItemFilterOption>
-  <ItemFilterLayoutToggle mode={layoutMode} on:toggle={() => toggleLayout()} />
-</ItemFilters>
-
+  <UtilityFilters {filters} />
+  {#each utilityBarCommands as command (command.title)}
+    <UtilityBarCommand
+      title={command.title}
+      iconClass={command.iconClass}
+      text={command.text}
+      visible={command.visible ?? true}
+      on:execute={(ev) => command.execute?.(ev.detail)}
+    />
+  {/each}
+</UtilityToolbar>
 <div
   class="scroll-container flex-column small-gap"
   data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEMS_CONTAINER}

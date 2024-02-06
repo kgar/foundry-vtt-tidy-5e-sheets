@@ -1,13 +1,19 @@
-export interface UtilityBarCommandParams {
+export interface UtilityToolbarCommandParams {
   title?: string;
   text?: string;
   iconClass?: string;
   context?: any;
-  execute?: (detail: UtilityBarCommandExecuteEvent) => void;
+  execute?: (detail: UtilityToolbarCommandExecuteEvent) => void;
   disabled?: boolean;
   visible?: boolean;
 }
 
-export interface UtilityBarCommandExecuteEvent {
+export interface UtilityToolbarCommandExecuteEvent {
   event: Event;
+}
+
+export interface UtilityItemFilterParams {
+  filterName: string;
+  setName: string;
+  text: string;
 }

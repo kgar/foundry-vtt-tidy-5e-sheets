@@ -3,14 +3,14 @@
 </script>
 
 <section
-  class="utility-bar"
+  class="utility-toolbar"
   data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.UTILITY_TOOLBAR}
 >
   <slot />
 </section>
 
 <style lang="scss">
-  .utility-bar {
+  .utility-toolbar {
     --vertical-padding: 0.375rem;
     display: flex;
     gap: 0.5rem;

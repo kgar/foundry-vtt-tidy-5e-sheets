@@ -14,11 +14,14 @@
   import { settingStore } from 'src/settings/settings';
   import { CONSTANTS } from 'src/constants';
   import { ExpandAllCollapseAllService } from 'src/features/expand-collapse/ExpandAllCollapseAllService';
-  import UtilityBar from 'src/components/utility-bar/UtilityBar.svelte';
+  import UtilityToolbar from 'src/components/utility-bar/UtilityToolbar.svelte';
   import Search from 'src/components/utility-bar/Search.svelte';
-  import type { UtilityBarCommandParams } from 'src/components/utility-bar/types';
-  import UtilityBarCommand from 'src/components/utility-bar/UtilityBarCommand.svelte';
-  import TempUtilityBarToggle from 'src/components/utility-bar/TempUtilityBarToggle.svelte';
+  import type {
+    UtilityToolbarCommandParams,
+    UtilityItemFilterParams,
+  } from 'src/components/utility-bar/types';
+  import UtilityToolbarCommand from 'src/components/utility-bar/UtilityToolbarCommand.svelte';
+  import UtilityFilters from 'src/components/utility-bar/UtilityItemFilters.svelte';
 
   let context = getContext<Readable<CharacterSheetContext>>('context');
 
@@ -46,7 +49,7 @@
 
   const expandAllCollapseAllService = ExpandAllCollapseAllService.initService();
 
-  let utilityBarCommands: UtilityBarCommandParams[] = [];
+  let utilityBarCommands: UtilityToolbarCommandParams[] = [];
   $: utilityBarCommands = [
     {
       title: 'Expand All',
@@ -71,26 +74,36 @@
       execute: () => toggleLayout(),
     },
   ];
+
+  const filters: UtilityItemFilterParams[] = [
+    {
+      filterName: 'action',
+      setName: 'inventory',
+      text: 'DND5E.Action',
+    },
+    {
+      filterName: 'bonus',
+      setName: 'inventory',
+      text: 'DND5E.BonusAction',
+    },
+    {
+      filterName: 'reaction',
+      setName: 'inventory',
+      text: 'DND5E.Reaction',
+    },
+    {
+      filterName: 'equipped',
+      setName: 'inventory',
+      text: 'DND5E.Equipped',
+    },
+  ];
 </script>
 
-<UtilityBar>
+<UtilityToolbar>
   <Search bind:value={searchCriteria} />
-  <div class="bar-toggles flex-row extra-small-gap">
-    <TempUtilityBarToggle filterName="action" setName="inventory">
-      {localize('DND5E.Action')}
-    </TempUtilityBarToggle>
-    <TempUtilityBarToggle filterName="bonus" setName="inventory">
-      {localize('DND5E.BonusAction')}
-    </TempUtilityBarToggle>
-    <TempUtilityBarToggle filterName="reaction" setName="inventory">
-      {localize('DND5E.Reaction')}
-    </TempUtilityBarToggle>
-    <TempUtilityBarToggle filterName="equipped" setName="inventory">
-      {localize('DND5E.Equipped')}
-    </TempUtilityBarToggle>
-  </div>
+  <UtilityFilters {filters} />
   {#each utilityBarCommands as command (command.title)}
-    <UtilityBarCommand
+    <UtilityToolbarCommand
       title={command.title}
       iconClass={command.iconClass}
       text={command.text}
@@ -98,7 +111,7 @@
       on:execute={(ev) => command.execute?.(ev.detail)}
     />
   {/each}
-</UtilityBar>
+</UtilityToolbar>
 
 <div
   class="scroll-container flex-column small-gap"
