@@ -16,9 +16,6 @@
   import ItemName from '../../../components/item-list/ItemName.svelte';
   import ItemUses from '../../../components/item-list/ItemUses.svelte';
   import ItemAddUses from '../../../components/item-list/ItemAddUses.svelte';
-  import ItemFilters from '../../../components/item-list/ItemFilters.svelte';
-  import ItemFilterSearch from '../../../components/item-list/ItemFilterSearch.svelte';
-  import ItemFilterOption from '../../../components/item-list/ItemFilterOption.svelte';
   import InlineFavoriteIcon from '../../../components/item-list/InlineFavoriteIcon.svelte';
   import ItemFavoriteControl from '../../../components/item-list/controls/ItemFavoriteControl.svelte';
   import { getContext } from 'svelte';
@@ -29,6 +26,15 @@
   import RechargeControl from 'src/components/item-list/controls/RechargeControl.svelte';
   import ActionFilterOverrideControl from 'src/components/item-list/controls/ActionFilterOverrideControl.svelte';
   import { declareLocation } from 'src/types/location-awareness';
+  import { ExpandAllCollapseAllService } from 'src/features/expand-collapse/ExpandAllCollapseAllService';
+  import UtilityToolbar from 'src/components/utility-bar/UtilityToolbar.svelte';
+  import Search from 'src/components/utility-bar/Search.svelte';
+  import type {
+    UtilityToolbarCommandParams,
+    UtilityItemFilterParams,
+  } from 'src/components/utility-bar/types';
+  import UtilityToolbarCommand from 'src/components/utility-bar/UtilityToolbarCommand.svelte';
+  import UtilityFilters from 'src/components/utility-bar/UtilityItemFilters.svelte';
 
   let context = getContext<Readable<CharacterSheetContext>>('context');
 
@@ -46,23 +52,55 @@
   let searchCriteria: string = '';
 
   declareLocation('features');
+
+  const expandAllCollapseAllService = ExpandAllCollapseAllService.initService();
+
+  let utilityBarCommands: UtilityToolbarCommandParams[] = [];
+  $: utilityBarCommands = [
+    {
+      title: 'Expand All',
+      iconClass: 'fas fa-angles-down',
+      execute: () => expandAllCollapseAllService.expandAll(),
+    },
+    {
+      title: 'Collapse All',
+      iconClass: 'fas fa-angles-up',
+      execute: () => expandAllCollapseAllService.collapseAll(),
+    },
+  ];
+
+  const filters: UtilityItemFilterParams[] = [
+    {
+      filterName: 'action',
+      setName: 'features',
+      text: 'DND5E.Action',
+    },
+    {
+      filterName: 'action',
+      setName: 'features',
+      text: 'DND5E.BonusAction',
+    },
+    {
+      filterName: 'reaction',
+      setName: 'features',
+      text: 'DND5E.Reaction',
+    },
+  ];
 </script>
 
-<ItemFilters>
-  <ItemFilterSearch
-    bind:searchCriteria
-    placeholder={localize('TIDY5E.Search')}
-  />
-  <ItemFilterOption setName="features" filterName="action">
-    {localize('DND5E.Action')}
-  </ItemFilterOption>
-  <ItemFilterOption setName="features" filterName="bonus">
-    {localize('DND5E.BonusAction')}
-  </ItemFilterOption>
-  <ItemFilterOption setName="features" filterName="reaction">
-    {localize('DND5E.Reaction')}
-  </ItemFilterOption>
-</ItemFilters>
+<UtilityToolbar>
+  <Search bind:value={searchCriteria} />
+  <UtilityFilters {filters} />
+  {#each utilityBarCommands as command (command.title)}
+    <UtilityToolbarCommand
+      title={command.title}
+      iconClass={command.iconClass}
+      text={command.text}
+      visible={command.visible ?? true}
+      on:execute={(ev) => command.execute?.(ev.detail)}
+    />
+  {/each}
+</UtilityToolbar>
 
 <div
   class="scroll-container flex-column small-gap"
