@@ -16,7 +16,8 @@
   import EncumbranceBar from 'src/sheets/actor/EncumbranceBar.svelte';
   import TabFooter from 'src/sheets/actor/TabFooter.svelte';
   import { settingStore } from 'src/settings/settings';
-    import { CONSTANTS } from 'src/constants';
+  import { CONSTANTS } from 'src/constants';
+  import { ExpandAllCollapseAllService } from 'src/features/expand-collapse/ExpandAllCollapseAllService';
 
   let context = getContext<Readable<CharacterSheetContext>>('context');
 
@@ -41,10 +42,29 @@
   $: noItems =
     $context.inventory.some((section: any) => section.items.length > 0) ===
     false;
+
+  const expandAllCollapseAllService = ExpandAllCollapseAllService.initService();
 </script>
 
 <ItemFilters>
-  <ItemFilterSearch bind:searchCriteria placeholder={localize('TIDY5E.Search')} />
+  <svelte:fragment slot="left-side-controls">
+    <button
+      type="button"
+      on:click={() => expandAllCollapseAllService.expandAll()}
+      title="Expand All"
+      class="inline-icon-button"><i class="fas fa-angles-down"></i></button
+    >
+    <button
+      type="button"
+      title="Collapse All"
+      on:click={() => expandAllCollapseAllService.collapseAll()}
+      class="inline-icon-button"><i class="fas fa-angles-up"></i></button
+    >
+  </svelte:fragment>
+  <ItemFilterSearch
+    bind:searchCriteria
+    placeholder={localize('TIDY5E.Search')}
+  />
   <ItemFilterOption filterName="action" setName="inventory">
     {localize('DND5E.Action')}
   </ItemFilterOption>

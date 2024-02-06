@@ -4,7 +4,21 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-<div class="item-filters">
+<!-- 
+  TODO: Rework ItemFilters to be conceptually the TabContentToolbar 
+  It should 
+  - Provide a search (input[type="search"]) on the left that flexes to consume all unused space
+  - various commands after the search (extendable by modules via API, gradually shrinking search)
+  - Expand All / Collapse All
+  - Filter funnel w/ menu for filters in A5e style; start with initial set of filters but also with exclude as an option; cycle forward with left click and backward with right click
+  - Grid layout toggle
+
+  The controls should all be data-driven. There should be some internal flag to denote the module-provided ones.
+-->
+<div class="item-filters flex-row justify-content-space-between {$$props.class ?? ''}">
+  <div class="left-side-controls flex-row small-gap">
+    <slot name="left-side-controls" />
+  </div>
   <ul class="filter-list">
     <li class="filter-title" title={localize('DND5E.Filter')}>
       <i class="fas fa-filter" />

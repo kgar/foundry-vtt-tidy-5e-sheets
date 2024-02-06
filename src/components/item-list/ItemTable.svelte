@@ -1,9 +1,10 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
   import ExpandableContainer from 'src/components/expandable/ExpandableContainer.svelte';
-  import { setContext } from 'svelte';
+  import { onMount, setContext } from 'svelte';
   import { ExpandCollapseService } from 'src/features/expand-collapse/ExpandCollapseService';
   import { declareLocation } from 'src/types/location-awareness';
+  import { ExpandAllCollapseAllService } from 'src/features/expand-collapse/ExpandAllCollapseAllService';
 
   export let location: string;
   export let toggleable: boolean = true;
@@ -19,6 +20,14 @@
   $: expandedState = expandCollapseService.state;
 
   declareLocation('item-table', location);
+
+  const expandAllCollapseAllSignal = ExpandAllCollapseAllService.getSignal();
+
+  onMount(() => {
+    return expandAllCollapseAllSignal?.subscribe((signal) => {
+      expandCollapseService.set(signal?.command === 'expand');
+    });
+  });
 </script>
 
 <section

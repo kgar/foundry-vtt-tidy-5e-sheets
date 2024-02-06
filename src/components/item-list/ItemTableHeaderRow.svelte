@@ -1,7 +1,6 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
   import { ExpandCollapseService } from 'src/features/expand-collapse/ExpandCollapseService';
-  import { settingStore } from 'src/settings/settings';
   import { isUserInteractable } from 'src/utils/element';
   import { getContext } from 'svelte';
 
@@ -66,8 +65,9 @@
     }
 
     .expand-indicator {
+      color: var(--t5ek-tertiary-color);
       transition: transform 0.2s;
-      margin-right: 0.25rem;
+      margin-right: 0.325rem;
       align-self: basline;
 
       &.expanded {
