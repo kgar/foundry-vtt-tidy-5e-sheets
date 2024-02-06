@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { CONSTANTS } from 'src/constants';
+  import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { LocationToSearchTextMap, OnSearchFn } from 'src/types/types';
   import { getContext, onMount } from 'svelte';
@@ -26,7 +26,10 @@
   });
 </script>
 
-<div class="search-container" data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.SEARCH_CONTAINER}>
+<div
+  class="search-container"
+  data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.SEARCH_CONTAINER}
+>
   <input
     class="search"
     type="text"
@@ -56,13 +59,11 @@
       border-radius: 0.3125rem;
       padding-left: 0.25rem;
       padding-right: 0.25rem;
-      border: 0.0625rem solid var(--t5ek-separator-color);
+      border: 0.0625rem solid var(--t5ek-light-color);
       font-size: 0.75rem;
 
-      &::-webkit-search-cancel-button {
-        -webkit-appearance: none;
-        width: 0;
-        height: 0;
+      &:focus, &:hover {
+        border-color: none;
       }
     }
 
