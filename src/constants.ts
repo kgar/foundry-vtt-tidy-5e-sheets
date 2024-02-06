@@ -247,5 +247,8 @@ export const CONSTANTS = {
 
     /** A list of tools for the target actor. */
     TOOLS_LIST: 'tools-list',
+
+    /** A toolbar that usually sits at the top of a section of content, providing features like search, filtering, etc. */
+    UTILITY_TOOLBAR: 'utility-toolbar',
   },
 } as const;
