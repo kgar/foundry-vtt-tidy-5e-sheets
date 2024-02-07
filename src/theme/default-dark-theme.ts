@@ -17,7 +17,7 @@ export const defaultDarkTheme: Tidy5eTheme = {
     '--t5e-primary-color': 'rgba(255, 255, 255, 0.8)',
     '--t5e-secondary-color': 'rgba(255, 255, 255, 0.65)',
     '--t5e-tertiary-color': 'rgba(255, 255, 255, 0.4)',
-    '--t5e-primary-accent-color': 'rgba(255, 100, 0, 1)',
+    '--t5e-primary-accent-color': 'hsl(23.53, 80%, 50%)',
     '--spell-level-button-available-slots-text-color': 'white',
     '--t5e-white': 'rgba(0, 0, 0, 1)',
     '--t5e-faint-white': 'rgba(255, 255, 255, 0.2)',
