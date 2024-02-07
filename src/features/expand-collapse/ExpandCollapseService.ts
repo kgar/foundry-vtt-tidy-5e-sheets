@@ -1,6 +1,6 @@
-import type { OnItemTableToggleFn } from 'src/types/types';
 import { getContext, setContext } from 'svelte';
 import { writable, type Readable, type Writable } from 'svelte/store';
+import type { OnItemTableToggleFn } from '../caching/ItemTableToggleCacheService';
 
 export type ExpandCollapseServiceState = {
   expanded: boolean;

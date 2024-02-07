@@ -9,6 +9,9 @@ type ItemTableToggleCacheServiceConstructorParams = {
   documentId: string;
 };
 
+export type OnItemTableToggleFn =
+  ItemTableToggleCacheService['onItemTableToggle'];
+
 export class ItemTableToggleCacheService {
   private _keyParams: UserDocumentSessionStorageKeyParams;
 

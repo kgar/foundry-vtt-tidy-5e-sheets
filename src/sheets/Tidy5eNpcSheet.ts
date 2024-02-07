@@ -9,10 +9,8 @@ import type {
   SheetTabCacheable,
   ExpandedItemIdToLocationsMap,
   ExpandedItemData,
-  ItemTableToggleCacheable,
-  LocationToItemTableToggleMap,
 } from 'src/types/types';
-import { get, writable } from 'svelte/store';
+import { writable } from 'svelte/store';
 import NpcSheet from './npc/NpcSheet.svelte';
 import { CONSTANTS } from 'src/constants';
 import {
