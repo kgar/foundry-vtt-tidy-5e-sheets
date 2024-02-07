@@ -17,8 +17,6 @@ import {
   type ExpandedItemIdToLocationsMap,
   type ExpandedItemData,
   type TidyResource,
-  type ItemTableToggleCacheable,
-  type LocationToItemTableToggleMap,
 } from 'src/types/types';
 import {
   applySheetAttributesToWindow,
@@ -40,15 +38,14 @@ import { CustomContentRenderer } from './CustomContentRenderer';
 import { ActorPortraitRuntime } from 'src/runtime/ActorPortraitRuntime';
 import { calculateSpellAttackAndDc } from 'src/utils/formula';
 import { CustomActorTraitsRuntime } from 'src/runtime/actor-traits/CustomActorTraitsRuntime';
-import { SessionStorageManager } from 'src/utils/session-storage';
+import { ItemTableToggleCacheService } from 'src/features/caching/ItemTableToggleCacheService';
 
 export class Tidy5eCharacterSheet
   extends dnd5e.applications.actor.ActorSheet5eCharacter
   implements
     SheetTabCacheable,
     SheetExpandedItemsCacheable,
-    SearchFilterCacheable,
-    ItemTableToggleCacheable
+    SearchFilterCacheable
 {
   context = writable<CharacterSheetContext>();
   stats = writable<SheetStats>({
@@ -59,17 +56,15 @@ export class Tidy5eCharacterSheet
   searchFilters: LocationToSearchTextMap = new Map<string, string>();
   expandedItems: ExpandedItemIdToLocationsMap = new Map<string, Set<string>>();
   expandedItemData: ExpandedItemData = new Map<string, ItemChatData>();
-  itemTableToggles: LocationToItemTableToggleMap;
+  itemTableTogglesCache: ItemTableToggleCacheService;
 
   constructor(...args: any[]) {
     super(...args);
 
-    this.itemTableToggles =
-      SessionStorageManager.getMap({
-        userId: game.user.id,
-        documentId: this.actor.id,
-        feature: 'item-table-toggles',
-      }) ?? new Map<string, boolean>();
+    this.itemTableTogglesCache = new ItemTableToggleCacheService({
+      userId: game.user.id,
+      documentId: this.actor.id,
+    });
 
     settingStore.subscribe(() => {
       this.getData().then((context) => this.context.set(context));
@@ -117,8 +112,16 @@ export class Tidy5eCharacterSheet
         ['onItemToggled', this.onItemToggled.bind(this)],
         ['searchFilters', new Map(this.searchFilters)],
         ['onSearch', this.onSearch.bind(this)],
-        ['itemTableToggles', new Map(this.itemTableToggles)],
-        ['onItemTableToggle', this.onItemTableToggle.bind(this)],
+        [
+          'itemTableToggles',
+          new Map(this.itemTableTogglesCache.itemTableToggles),
+        ],
+        [
+          'onItemTableToggle',
+          this.itemTableTogglesCache.onItemTableToggle.bind(
+            this.itemTableTogglesCache
+          ),
+        ],
         ['location', ''],
         ['expandedItems', new Map(this.expandedItems)],
         ['expandedItemData', new Map(this.expandedItemData)],
@@ -592,22 +595,6 @@ export class Tidy5eCharacterSheet
       text,
     });
     this.searchFilters.set(location, text);
-  }
-
-  /* -------------------------------------------- */
-  /* ItemTableToggleCacheable
-  /* -------------------------------------------- */
-  onItemTableToggle(location: string, expanded: boolean): void {
-    debug('Toggled Item Table', { location, expanded });
-    this.itemTableToggles.set(location, expanded);
-    SessionStorageManager.storeMap(
-      {
-        userId: game.user.id,
-        documentId: this.actor.id,
-        feature: 'item-table-toggles',
-      },
-      this.itemTableToggles
-    );
   }
 }
 
