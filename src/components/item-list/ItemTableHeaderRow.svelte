@@ -2,11 +2,8 @@
   import { CONSTANTS } from 'src/constants';
   import { ExpandCollapseService } from 'src/features/expand-collapse/ExpandCollapseService';
   import { isUserInteractable } from 'src/utils/element';
-  import { getContext } from 'svelte';
 
-  const expandCollapseService = getContext<ExpandCollapseService>(
-    ExpandCollapseService.contextKey,
-  );
+  const expandCollapseService = ExpandCollapseService.getService();
 
   function handleHeaderRowClick(ev: MouseEvent) {
     if (!$expandState.toggleable) {

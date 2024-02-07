@@ -67,4 +67,8 @@ export class ExpandCollapseService {
     setContext(ExpandCollapseService.contextKey, service);
     return service;
   }
+
+  static getService() {
+    return getContext<ExpandCollapseService>(ExpandCollapseService.contextKey);
+  }
 }
