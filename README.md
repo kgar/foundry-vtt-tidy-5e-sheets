@@ -113,7 +113,7 @@ If you are experiencing a bug or have an idea for a new feature, submit a [githu
 
 ## Module Compatibility
 
-If a module not compatible with Tidy 5e Sheets, submit a [github issue](https://github.com/kgar/foundry-vtt-tidy-5e-sheets/issues), and the author will work with other module authors to established compatibility.
+If a module not compatible with Tidy 5e Sheets, submit a [github issue](https://github.com/kgar/foundry-vtt-tidy-5e-sheets/issues), and the author will work with other module authors to establish compatibility.
 
 
 ## Tidy 5e Sheets Manifesto
