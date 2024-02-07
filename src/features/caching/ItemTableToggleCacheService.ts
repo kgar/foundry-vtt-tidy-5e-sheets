@@ -1,7 +1,3 @@
-import type {
-  ItemTableToggleCacheable,
-  LocationToItemTableToggleMap,
-} from 'src/types/types';
 import { debug } from 'src/utils/logging';
 import {
   SessionStorageManager,
@@ -13,10 +9,10 @@ type ItemTableToggleCacheServiceConstructorParams = {
   documentId: string;
 };
 
-export class ItemTableToggleCacheService implements ItemTableToggleCacheable {
+export class ItemTableToggleCacheService {
   private _keyParams: UserDocumentSessionStorageKeyParams;
 
-  itemTableToggles: LocationToItemTableToggleMap;
+  itemTableToggles: Map<string, boolean>;
 
   constructor(params: ItemTableToggleCacheServiceConstructorParams) {
     this._keyParams = {
