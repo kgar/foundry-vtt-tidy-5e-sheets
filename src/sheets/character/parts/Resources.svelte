@@ -19,7 +19,7 @@
 
 <style lang="scss">
   .resources {
-    border: 0.0625rem solid var(--t5ek-faint-color);
+    border: 0.0625rem solid var(--t5e-faint-color);
     border-radius: 0.3125rem;
     display: flex;
     flex-wrap: wrap;

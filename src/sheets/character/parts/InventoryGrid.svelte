@@ -248,21 +248,21 @@
       height: 3.125rem;
       position: relative;
       margin: 0.1875rem;
-      box-shadow: 0 0 0.0625rem 0.0625rem var(--t5ek-light-color);
+      box-shadow: 0 0 0.0625rem 0.0625rem var(--t5e-light-color);
       border-radius: 0.3125rem;
 
       &.context {
-        border: 0.0625rem solid var(--t5ek-primary-accent-color);
+        border: 0.0625rem solid var(--t5e-primary-accent-color);
       }
 
       &.equipped {
         box-shadow: 0 0 0 0.125rem
-          var(--t5ek-equipped-item-grid-tile-outline-color);
-        background: var(--t5ek-equipped-background);
+          var(--t5e-equipped-item-grid-tile-outline-color);
+        background: var(--t5e-equipped-background);
 
         .item-image {
           box-shadow: 0 0 0.0625rem 0.0625rem inset
-            var(--t5ek-equipped-item-grid-tile-accent-color);
+            var(--t5e-equipped-item-grid-tile-accent-color);
           border-radius: 0.3125rem;
         }
       }
@@ -271,17 +271,17 @@
       &.magic-item {
         .item-image {
           box-shadow:
-            0 0 0 0.0625rem var(--t5ek-magic-accent-color) inset,
-            0 0 0.1875rem 0.125rem var(--t5ek-magic-accent-color) inset;
+            0 0 0 0.0625rem var(--t5e-magic-accent-color) inset,
+            0 0 0.1875rem 0.125rem var(--t5e-magic-accent-color) inset;
           border-radius: 0.3125rem;
         }
 
         &.equipped .item-image {
           box-shadow:
-            0 0 0rem 0.0625rem var(--t5ek-magic-item-grid-tile-outline-color)
+            0 0 0rem 0.0625rem var(--t5e-magic-item-grid-tile-outline-color)
               inset,
-            0 0 0 0.0625rem var(--t5ek-magic-accent-color) inset,
-            0 0 0.1875rem 0.125rem var(--t5ek-magic-accent-color) inset;
+            0 0 0 0.0625rem var(--t5e-magic-accent-color) inset,
+            0 0 0.1875rem 0.125rem var(--t5e-magic-accent-color) inset;
           border: none;
         }
       }
@@ -292,20 +292,20 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        color: var(--t5ek-attuned-item-grid-icon-color);
+        color: var(--t5e-attuned-item-grid-icon-color);
         width: 0.8125rem;
         height: 0.8125rem;
-        background: var(--t5ek-magic-accent-color);
+        background: var(--t5e-magic-accent-color);
         position: absolute;
         top: -0.0625rem;
         right: -0.0625rem;
         border-radius: 50%;
-        box-shadow: 0 0 0.1875rem 0.0625rem var(--t5ek-magic-accent-color);
+        box-shadow: 0 0 0.1875rem 0.0625rem var(--t5e-magic-accent-color);
 
         &.not-attuned {
-          background: var(--t5ek-attunement-required-color);
+          background: var(--t5e-attunement-required-color);
           box-shadow: 0 0 0.1875rem 0.0625rem
-            var(--t5ek-attunement-required-color);
+            var(--t5e-attunement-required-color);
         }
       }
 
@@ -330,7 +330,7 @@
         background-size: cover;
 
         i {
-          color: var(--t5ek-tertiary-color);
+          color: var(--t5e-tertiary-color);
           text-align: center;
           font-size: 1.125rem;
           display: none;
@@ -346,7 +346,7 @@
       }
 
       .item-name:hover .item-image:hover i {
-        color: var(--t5ek-primary-font-color);
+        color: var(--t5e-primary-font-color);
       }
 
       &:global(.show-item-count-on-hover :is(.item-uses, .item-quantity)) {
@@ -380,7 +380,7 @@
           :global(input) {
             height: 0.875rem;
             text-shadow: 0 0 0.3125rem
-              var(--t5ek-inventory-grid-image-contrast-text-shadow-color);
+              var(--t5e-inventory-grid-image-contrast-text-shadow-color);
             text-align: right;
             min-width: 0;
             width: 1rem;
@@ -401,15 +401,15 @@
             font-size: 0.5rem;
             margin-right: 0.0625rem;
             text-shadow: 0 0 0.3125rem
-              var(--t5ek-inventory-grid-image-contrast-text-shadow-color);
+              var(--t5e-inventory-grid-image-contrast-text-shadow-color);
           }
         }
       }
 
       .item-name:hover ~ .item-stats :global(input) {
-        color: var(--t5ek-primary-font-color);
+        color: var(--t5e-primary-font-color);
         text-shadow: 0 0 0.3125rem
-          var(--t5ek-inventory-grid-hover-use-item-contrast-text-shadow-color);
+          var(--t5e-inventory-grid-hover-use-item-contrast-text-shadow-color);
       }
     }
 
@@ -427,10 +427,10 @@
         white-space: nowrap;
         height: 100%;
         font-size: 1.5rem;
-        color: var(--t5ek-faint-color);
+        color: var(--t5e-faint-color);
 
         &:hover {
-          color: var(--t5ek-tertiary-color);
+          color: var(--t5e-tertiary-color);
         }
       }
     }

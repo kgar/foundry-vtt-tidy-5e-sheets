@@ -283,10 +283,10 @@
     transform: translateY(-50%);
     width: 0;
     height: var(--card-height);
-    background: var(--t5ek-item-info-card-background);
+    background: var(--t5e-item-info-card-background);
     border-radius: 0.3125rem 0 0 0.3125rem;
     z-index: -10;
-    box-shadow: 0 0 0.3125rem var(--t5ek-item-info-card-box-shadow-color);
+    box-shadow: 0 0 0.3125rem var(--t5e-item-info-card-box-shadow-color);
     transition: width 0.2s ease;
     overflow: hidden;
 
@@ -315,7 +315,7 @@
       display: flex;
       height: 100%;
       flex-direction: column;
-      border-right: 0.0625rem solid var(--t5ek-faint-color);
+      border-right: 0.0625rem solid var(--t5e-faint-color);
     }
 
     .item-info-card-hints {
@@ -325,13 +325,13 @@
       font-style: italic;
 
       .frozen .key {
-        background: var(--t5ek-primary-accent-color);
+        background: var(--t5e-primary-accent-color);
       }
 
       .key {
         display: inline-block;
-        background: var(--t5ek-primary-font-color);
-        color: var(--t5ek-background);
+        background: var(--t5e-primary-font-color);
+        color: var(--t5e-background);
         border-radius: 0.1875rem;
         font-style: normal;
         padding: 0 0.25rem;

@@ -195,10 +195,10 @@
       margin-left: 0.1875rem;
       padding-left: 0.625rem;
       border-radius: 0.3125rem;
-      background: var(--t5ek-faint-color);
+      background: var(--t5e-faint-color);
 
       .attunement-icon {
-        color: var(--t5ek-primary-accent-color);
+        color: var(--t5e-primary-accent-color);
       }
 
       &.overattuned {
@@ -207,7 +207,7 @@
 
       @keyframes overflowing-with-arcane-power {
         0% {
-          box-shadow: 0 0 0 0 var(--t5ek-primary-accent-color);
+          box-shadow: 0 0 0 0 var(--t5e-primary-accent-color);
         }
         100% {
           box-shadow: 0 0 0 0.375rem rgba(0, 0, 0, 0);
@@ -231,7 +231,7 @@
 
       :global(input) {
         font-size: 1rem;
-        font-family: var(--t5ek-body-font-family);
+        font-family: var(--t5e-body-font-family);
       }
     }
   }

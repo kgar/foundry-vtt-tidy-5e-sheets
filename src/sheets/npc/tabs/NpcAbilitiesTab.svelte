@@ -290,10 +290,10 @@
       padding: 0 0.25rem 0.125rem 0;
       margin-top: 0.5rem;
       line-height: 1;
-      border: 0.0625rem solid var(--t5ek-light-color);
+      border: 0.0625rem solid var(--t5e-light-color);
       border-left: none;
       border-right: none;
-      font-family: var(--t5ek-title-font-family);
+      font-family: var(--t5e-title-font-family);
       font-weight: 700;
       font-size: 1.125rem;
 

@@ -65,11 +65,11 @@
       justify-content: center;
       align-items: center;
       font-size: 1.25rem;
-      color: var(--t5ek-icon-font-color);
+      color: var(--t5e-icon-font-color);
       cursor: pointer;
-      box-shadow: 0 0 0.625rem var(--t5ek-icon-shadow-color) inset;
-      border: 0.0625rem solid var(--t5ek-icon-outline-color);
-      background: var(--t5ek-icon-background);
+      box-shadow: 0 0 0.625rem var(--t5e-icon-shadow-color) inset;
+      border: 0.0625rem solid var(--t5e-icon-outline-color);
+      background: var(--t5e-icon-background);
     }
 
     :global(label i) {
@@ -84,21 +84,21 @@
     }
 
     :global(label:hover) {
-      color: var(--t5ek-vehicle-motion-hover-color);
+      color: var(--t5e-vehicle-motion-hover-color);
       text-shadow: 0 0 0.3125rem
-        var(--t5ek-vehicle-motion-text-shadow-hover-color);
+        var(--t5e-vehicle-motion-text-shadow-hover-color);
     }
   }
 
   .is-in-motion {
     :global(label) {
-      color: var(--t5ek-activated-profile-toggle-color);
-      text-shadow: 0 0 0.625rem var(--t5ek-vehicle-in-motion-text-shadow-color);
-      background: var(--t5ek-vehicle-in-motion-background);
+      color: var(--t5e-activated-profile-toggle-color);
+      text-shadow: 0 0 0.625rem var(--t5e-vehicle-in-motion-text-shadow-color);
+      background: var(--t5e-vehicle-in-motion-background);
     }
 
     :global(label i.animate) {
-      color: var(--t5ek-activated-profile-toggle-color);
+      color: var(--t5e-activated-profile-toggle-color);
       animation: boat 5s linear infinite;
     }
   }

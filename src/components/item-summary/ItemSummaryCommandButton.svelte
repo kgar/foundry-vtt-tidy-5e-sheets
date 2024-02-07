@@ -27,9 +27,9 @@
     line-height: 1rem;
     padding: 0.125rem 0.25rem;
     border-radius: 0.3125rem;
-    background: var(--t5ek-content-entity-link-background);
-    color: var(--t5ek-content-entity-link-color);
-    border: 0.0625rem solid var(--t5ek-separator-color);
+    background: var(--t5e-content-entity-link-background);
+    color: var(--t5e-content-entity-link-color);
+    border: 0.0625rem solid var(--t5e-separator-color);
     font-size: 0.75rem;
     margin: 0;
 
@@ -38,15 +38,15 @@
     gap: 0.25rem;
 
     i {
-      color: var(--t5ek-content-entity-link-color);
+      color: var(--t5e-content-entity-link-color);
     }
 
     &:hover {
-      color: var(--t5ek-content-entity-link-hover-color);
-      background: var(--t5ek-content-entity-link-hover-background);
+      color: var(--t5e-content-entity-link-hover-color);
+      background: var(--t5e-content-entity-link-hover-background);
 
       i {
-        color: var(--t5ek-content-entity-link-hover-color);
+        color: var(--t5e-content-entity-link-hover-color);
       }
     }
   }

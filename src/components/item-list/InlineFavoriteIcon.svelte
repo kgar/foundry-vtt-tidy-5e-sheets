@@ -11,7 +11,7 @@
 <style lang="scss">
   .is-favorite {
     font-size: 0.75rem;
-    color: var(--t5ek-secondary-color);
+    color: var(--t5e-secondary-color);
     display: flex;
     align-items: center;
     justify-content: center;

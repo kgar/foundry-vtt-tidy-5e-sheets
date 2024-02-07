@@ -97,13 +97,13 @@
       width: 0.75rem;
       height: 0.75rem;
       border-radius: 50%;
-      background-color: var(--t5ek-primary-accent-color);
-      border: 0.0625rem solid var(--t5ek-separator-color);
+      background-color: var(--t5e-primary-accent-color);
+      border: 0.0625rem solid var(--t5e-separator-color);
       transition: background-color 0.3s ease;
 
       &:is(:hover, :focus-visible),
       &.change {
-        background-color: var(--t5ek-warning-accent-color);
+        background-color: var(--t5e-warning-accent-color);
       }
 
       &.empty {
@@ -111,7 +111,7 @@
 
         &:is(:hover, :focus-visible),
         &.change {
-          background-color: var(--t5ek-prepared-background);
+          background-color: var(--t5e-prepared-background);
         }
       }
     }

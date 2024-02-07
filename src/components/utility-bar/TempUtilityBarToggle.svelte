@@ -30,7 +30,7 @@
     background: none;
     border: none;
     border-radius: 0;
-    border-bottom: 0.1875rem solid var(--t5ek-separator-color);
+    border-bottom: 0.1875rem solid var(--t5e-separator-color);
     line-height: unset;
     text-wrap: nowrap;
 
@@ -39,11 +39,11 @@
 
     &:hover {
       background: none;
-      border-bottom: 0.1875rem solid var(--t5ek-tertiary-color);
+      border-bottom: 0.1875rem solid var(--t5e-tertiary-color);
     }
 
     &.active {
-      border-bottom: 0.1875rem solid var(--t5ek-primary-color);
+      border-bottom: 0.1875rem solid var(--t5e-primary-color);
     }
   }
 </style>

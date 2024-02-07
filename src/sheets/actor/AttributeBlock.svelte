@@ -152,13 +152,13 @@
       padding: 0;
       opacity: initial;
       font-size: 0.625rem;
-      box-shadow: 0 0 0 0.0625rem var(--t5ek-tertiary-color);
+      box-shadow: 0 0 0 0.0625rem var(--t5e-tertiary-color);
       border-radius: 0.3125rem;
 
       &:hover {
         border-radius: 0;
         box-shadow: 0 0 0 0.0625rem
-          var(--t5ek-ability-modifiers-hover-label-background);
+          var(--t5e-ability-modifiers-hover-label-background);
       }
 
       &:hover ~ .mod-label {
@@ -172,8 +172,8 @@
     }
 
     .ability-mod {
-      background: var(--t5ek-ability-accent-background);
-      color: var(--t5ek-ability-mod-text-color);
+      background: var(--t5e-ability-accent-background);
+      color: var(--t5e-ability-mod-text-color);
       border-radius: 0.3125rem 0 0 0.3125rem;
     }
 
@@ -192,8 +192,8 @@
 
     .ability-mod:hover,
     .ability-save:hover {
-      background: var(--t5ek-primary-accent-color);
-      color: var(--t5ek-ability-mod-save-text-hover-color);
+      background: var(--t5e-primary-accent-color);
+      color: var(--t5e-ability-mod-save-text-hover-color);
     }
 
     &:hover .ability-mod,
@@ -206,8 +206,8 @@
       position: absolute;
       top: 2.9375rem; // This is far too precise; can we make this more relative to its target?
       display: none;
-      background: var(--t5ek-ability-modifiers-hover-label-background);
-      color: var(--t5ek-ability-modifiers-label-text-color);
+      background: var(--t5e-ability-modifiers-hover-label-background);
+      color: var(--t5e-ability-modifiers-label-text-color);
       font-size: 0.625rem;
       height: 1.0625rem; // This is far too precise; can we make this more relative to its target?
       padding: 0.1875rem 0.25rem 0.125rem 0.25rem; // this padding is providing the positioning of the text. Can we do this in flexbox?
@@ -256,10 +256,10 @@
       bottom: -0.9375rem;
       right: calc(50% - 0.75rem);
       font-size: 0.625rem;
-      color: var(--t5ek-tertiary-color);
+      color: var(--t5e-tertiary-color);
 
       &:hover {
-        color: var(--t5ek-primary-color);
+        color: var(--t5e-primary-color);
       }
     }
   }

@@ -70,7 +70,7 @@
 
 <style lang="scss">
   .callout-banner {
-    background: var(--t5ek-faintest-color);
+    background: var(--t5e-faintest-color);
     margin: -0.5rem -0.5rem 1rem -0.5rem;
     padding: 0.5rem 1rem;
   }

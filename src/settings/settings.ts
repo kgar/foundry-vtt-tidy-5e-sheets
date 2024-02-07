@@ -1538,7 +1538,7 @@ export function createSettings() {
           name: 'TIDY5E.Settings.ColorPickerPrimaryAccent.name',
           scope: 'client',
           type: String,
-          default: defaultLightTheme.variables['--t5ek-primary-accent-color'],
+          default: defaultLightTheme.variables['--t5e-primary-accent-color'],
           config: false,
         },
         get() {
@@ -1546,33 +1546,33 @@ export function createSettings() {
             'colorPickerPrimaryAccent'
           );
         },
-        representsCssVariable: '--t5ek-primary-accent-color',
+        representsCssVariable: '--t5e-primary-accent-color',
       },
       colorPickerHpBar: {
         options: {
           name: 'TIDY5E.Settings.ColorPickerHpBar.name',
           scope: 'client',
           type: String,
-          default: defaultLightTheme.variables['--t5ek-hp-bar-color'],
+          default: defaultLightTheme.variables['--t5e-hp-bar-color'],
           config: false,
         },
         get() {
           return FoundryAdapter.getTidySetting<string>('colorPickerHpBar');
         },
-        representsCssVariable: '--t5ek-hp-bar-color',
+        representsCssVariable: '--t5e-hp-bar-color',
       },
       colorPickerEquipped: {
         options: {
           name: 'TIDY5E.Settings.ColorPickerEquipped.name',
           scope: 'client',
           type: String,
-          default: defaultLightTheme.variables['--t5ek-equipped-background'],
+          default: defaultLightTheme.variables['--t5e-equipped-background'],
           config: false,
         },
         get() {
           return FoundryAdapter.getTidySetting<string>('colorPickerEquipped');
         },
-        representsCssVariable: '--t5ek-equipped-background',
+        representsCssVariable: '--t5e-equipped-background',
       },
       colorPickerEquippedOutline: {
         options: {
@@ -1581,7 +1581,7 @@ export function createSettings() {
           type: String,
           default:
             defaultLightTheme.variables[
-              '--t5ek-equipped-item-grid-tile-outline-color'
+              '--t5e-equipped-item-grid-tile-outline-color'
             ],
           config: false,
         },
@@ -1590,7 +1590,7 @@ export function createSettings() {
             'colorPickerEquippedOutline'
           );
         },
-        representsCssVariable: '--t5ek-equipped-item-grid-tile-outline-color',
+        representsCssVariable: '--t5e-equipped-item-grid-tile-outline-color',
       },
       colorPickerEquippedAccent: {
         options: {
@@ -1599,7 +1599,7 @@ export function createSettings() {
           type: String,
           default:
             defaultLightTheme.variables[
-              '--t5ek-equipped-item-grid-tile-accent-color'
+              '--t5e-equipped-item-grid-tile-accent-color'
             ],
           config: false,
         },
@@ -1608,7 +1608,7 @@ export function createSettings() {
             'colorPickerEquippedAccent'
           );
         },
-        representsCssVariable: '--t5ek-equipped-item-grid-tile-accent-color',
+        representsCssVariable: '--t5e-equipped-item-grid-tile-accent-color',
       },
 
       colorPickerPrepared: {
@@ -1616,13 +1616,13 @@ export function createSettings() {
           name: 'TIDY5E.Settings.ColorPickerPrepared.name',
           scope: 'client',
           type: String,
-          default: defaultLightTheme.variables['--t5ek-prepared-background'],
+          default: defaultLightTheme.variables['--t5e-prepared-background'],
           config: false,
         },
         get() {
           return FoundryAdapter.getTidySetting<string>('colorPickerPrepared');
         },
-        representsCssVariable: '--t5ek-prepared-background',
+        representsCssVariable: '--t5e-prepared-background',
       },
       colorPickerPreparedOutline: {
         options: {
@@ -1631,7 +1631,7 @@ export function createSettings() {
           type: String,
           default:
             defaultLightTheme.variables[
-              '--t5ek-prepared-item-grid-tile-outline-color'
+              '--t5e-prepared-item-grid-tile-outline-color'
             ],
           config: false,
         },
@@ -1640,7 +1640,7 @@ export function createSettings() {
             'colorPickerPreparedOutline'
           );
         },
-        representsCssVariable: '--t5ek-prepared-item-grid-tile-outline-color',
+        representsCssVariable: '--t5e-prepared-item-grid-tile-outline-color',
       },
       colorPickerPreparedAccent: {
         options: {
@@ -1649,7 +1649,7 @@ export function createSettings() {
           type: String,
           default:
             defaultLightTheme.variables[
-              '--t5ek-prepared-item-grid-tile-accent-color'
+              '--t5e-prepared-item-grid-tile-accent-color'
             ],
           config: false,
         },
@@ -1658,7 +1658,7 @@ export function createSettings() {
             'colorPickerPreparedAccent'
           );
         },
-        representsCssVariable: '--t5ek-prepared-item-grid-tile-accent-color',
+        representsCssVariable: '--t5e-prepared-item-grid-tile-accent-color',
       },
 
       colorPickerPact: {
@@ -1666,20 +1666,20 @@ export function createSettings() {
           name: 'TIDY5E.Settings.ColorPickerPact.name',
           scope: 'client',
           type: String,
-          default: defaultLightTheme.variables['--t5ek-pact-background'],
+          default: defaultLightTheme.variables['--t5e-pact-background'],
           config: false,
         },
         get() {
           return FoundryAdapter.getTidySetting<string>('colorPickerPact');
         },
-        representsCssVariable: '--t5ek-pact-background',
+        representsCssVariable: '--t5e-pact-background',
       },
       colorPickerPactOutline: {
         options: {
           name: 'TIDY5E.Settings.ColorPickerPactOutline.name',
           scope: 'client',
           type: String,
-          default: defaultLightTheme.variables['--t5ek-pact-outline-color'],
+          default: defaultLightTheme.variables['--t5e-pact-outline-color'],
           config: false,
         },
         get() {
@@ -1687,20 +1687,20 @@ export function createSettings() {
             'colorPickerPactOutline'
           );
         },
-        representsCssVariable: '--t5ek-pact-outline-color',
+        representsCssVariable: '--t5e-pact-outline-color',
       },
       colorPickerPactAccent: {
         options: {
           name: 'TIDY5E.Settings.ColorPickerPactAccent.name',
           scope: 'client',
           type: String,
-          default: defaultLightTheme.variables['--t5ek-pact-accent-color'],
+          default: defaultLightTheme.variables['--t5e-pact-accent-color'],
           config: false,
         },
         get() {
           return FoundryAdapter.getTidySetting<string>('colorPickerPactAccent');
         },
-        representsCssVariable: '--t5ek-pact-accent-color',
+        representsCssVariable: '--t5e-pact-accent-color',
       },
 
       colorPickerAtWill: {
@@ -1708,20 +1708,20 @@ export function createSettings() {
           name: 'TIDY5E.Settings.ColorPickerAtWill.name',
           scope: 'client',
           type: String,
-          default: defaultLightTheme.variables['--t5ek-atwill-background'],
+          default: defaultLightTheme.variables['--t5e-atwill-background'],
           config: false,
         },
         get() {
           return FoundryAdapter.getTidySetting<string>('colorPickerAtWill');
         },
-        representsCssVariable: '--t5ek-atwill-background',
+        representsCssVariable: '--t5e-atwill-background',
       },
       colorPickerAtWillOutline: {
         options: {
           name: 'TIDY5E.Settings.ColorPickerAtWillOutline.name',
           scope: 'client',
           type: String,
-          default: defaultLightTheme.variables['--t5ek-atwill-outline-color'],
+          default: defaultLightTheme.variables['--t5e-atwill-outline-color'],
           config: false,
         },
         get() {
@@ -1729,14 +1729,14 @@ export function createSettings() {
             'colorPickerAtWillOutline'
           );
         },
-        representsCssVariable: '--t5ek-atwill-outline-color',
+        representsCssVariable: '--t5e-atwill-outline-color',
       },
       colorPickerAtWillAccent: {
         options: {
           name: 'TIDY5E.Settings.ColorPickerAtWillAccent.name',
           scope: 'client',
           type: String,
-          default: defaultLightTheme.variables['--t5ek-atwill-accent-color'],
+          default: defaultLightTheme.variables['--t5e-atwill-accent-color'],
           config: false,
         },
         get() {
@@ -1744,7 +1744,7 @@ export function createSettings() {
             'colorPickerAtWillAccent'
           );
         },
-        representsCssVariable: '--t5ek-atwill-accent-color',
+        representsCssVariable: '--t5e-atwill-accent-color',
       },
 
       colorPickerInnate: {
@@ -1752,20 +1752,20 @@ export function createSettings() {
           name: 'TIDY5E.Settings.ColorPickerInnate.name',
           scope: 'client',
           type: String,
-          default: defaultLightTheme.variables['--t5ek-innate-background'],
+          default: defaultLightTheme.variables['--t5e-innate-background'],
           config: false,
         },
         get() {
           return FoundryAdapter.getTidySetting<string>('colorPickerInnate');
         },
-        representsCssVariable: '--t5ek-innate-background',
+        representsCssVariable: '--t5e-innate-background',
       },
       colorPickerInnateOutline: {
         options: {
           name: 'TIDY5E.Settings.ColorPickerInnateOutline.name',
           scope: 'client',
           type: String,
-          default: defaultLightTheme.variables['--t5ek-innate-outline'],
+          default: defaultLightTheme.variables['--t5e-innate-outline'],
           config: false,
         },
         get() {
@@ -1773,14 +1773,14 @@ export function createSettings() {
             'colorPickerInnateOutline'
           );
         },
-        representsCssVariable: '--t5ek-innate-outline',
+        representsCssVariable: '--t5e-innate-outline',
       },
       colorPickerInnateAccent: {
         options: {
           name: 'TIDY5E.Settings.ColorPickerInnateAccent.name',
           scope: 'client',
           type: String,
-          default: defaultLightTheme.variables['--t5ek-innate-accent'],
+          default: defaultLightTheme.variables['--t5e-innate-accent'],
           config: false,
         },
         get() {
@@ -1788,7 +1788,7 @@ export function createSettings() {
             'colorPickerInnateAccent'
           );
         },
-        representsCssVariable: '--t5ek-innate-accent',
+        representsCssVariable: '--t5e-innate-accent',
       },
 
       colorPickerAlwaysPrepared: {
@@ -1797,7 +1797,7 @@ export function createSettings() {
           scope: 'client',
           type: String,
           default:
-            defaultLightTheme.variables['--t5ek-alwaysprepared-background'],
+            defaultLightTheme.variables['--t5e-alwaysprepared-background'],
           config: false,
         },
         get() {
@@ -1805,7 +1805,7 @@ export function createSettings() {
             'colorPickerAlwaysPrepared'
           );
         },
-        representsCssVariable: '--t5ek-alwaysprepared-background',
+        representsCssVariable: '--t5e-alwaysprepared-background',
       },
       colorPickerAlwaysPreparedOutline: {
         options: {
@@ -1813,7 +1813,7 @@ export function createSettings() {
           scope: 'client',
           type: String,
           default:
-            defaultLightTheme.variables['--t5ek-alwaysprepared-outline-color'],
+            defaultLightTheme.variables['--t5e-alwaysprepared-outline-color'],
           config: false,
         },
         get() {
@@ -1821,7 +1821,7 @@ export function createSettings() {
             'colorPickerAlwaysPreparedOutline'
           );
         },
-        representsCssVariable: '--t5ek-alwaysprepared-outline-color',
+        representsCssVariable: '--t5e-alwaysprepared-outline-color',
       },
       colorPickerAlwaysPreparedAccent: {
         options: {
@@ -1829,7 +1829,7 @@ export function createSettings() {
           scope: 'client',
           type: String,
           default:
-            defaultLightTheme.variables['--t5ek-alwaysprepared-accent-color'],
+            defaultLightTheme.variables['--t5e-alwaysprepared-accent-color'],
           config: false,
         },
         get() {
@@ -1837,14 +1837,14 @@ export function createSettings() {
             'colorPickerAlwaysPreparedAccent'
           );
         },
-        representsCssVariable: '--t5ek-alwaysprepared-accent-color',
+        representsCssVariable: '--t5e-alwaysprepared-accent-color',
       },
       colorPickerScrollbarThumb: {
         options: {
           name: 'TIDY5E.Settings.ColorPickerScrollbarThumb.name',
           scope: 'client',
           type: String,
-          default: defaultLightTheme.variables['--t5ek-scrollbar-thumb-color'],
+          default: defaultLightTheme.variables['--t5e-scrollbar-thumb-color'],
           config: false,
         },
         get() {
@@ -1852,14 +1852,14 @@ export function createSettings() {
             'colorPickerScrollbarThumb'
           );
         },
-        representsCssVariable: '--t5ek-scrollbar-thumb-color',
+        representsCssVariable: '--t5e-scrollbar-thumb-color',
       },
       colorPickerScrollbarTrack: {
         options: {
           name: 'TIDY5E.Settings.ColorPickerScrollbarTrack.name',
           scope: 'client',
           type: String,
-          default: defaultLightTheme.variables['--t5ek-scrollbar-track-color'],
+          default: defaultLightTheme.variables['--t5e-scrollbar-track-color'],
           config: false,
         },
         get() {
@@ -1867,7 +1867,7 @@ export function createSettings() {
             'colorPickerScrollbarTrack'
           );
         },
-        representsCssVariable: '--t5ek-scrollbar-track-color',
+        representsCssVariable: '--t5e-scrollbar-track-color',
       },
 
       debug: {

@@ -19,14 +19,14 @@
 
 .tidy5e-sheet {
   &.sheet form {
-    color: var(--t5ek-primary-font-color);
-    background: var(--t5ek-sheet-background);
+    color: var(--t5e-primary-font-color);
+    background: var(--t5e-sheet-background);
   }
 
   * {
     scrollbar-width: thin;
-    scrollbar-color: var(--t5ek-scrollbar-thumb-color)
-      var(--t5ek-scrollbar-track-color);
+    scrollbar-color: var(--t5e-scrollbar-thumb-color)
+      var(--t5e-scrollbar-track-color);
   }
 
   &.settings {
@@ -40,8 +40,8 @@
   @import './compatibility/tabs';
 
   select option {
-    color: var(--t5ek-primary-font-color);
-    background: var(--t5ek-background);
+    color: var(--t5e-primary-font-color);
+    background: var(--t5e-background);
   }
 
   // Enrichers
@@ -51,20 +51,20 @@
   a.roll-link {
     padding: 0.0625rem 0.25rem 0 0.25rem;
     border-radius: 0.3125rem;
-    background: var(--t5ek-content-entity-link-background);
-    color: var(--t5ek-content-entity-link-color);
-    border: 0.0625rem solid var(--t5ek-separator-color);
+    background: var(--t5e-content-entity-link-background);
+    color: var(--t5e-content-entity-link-color);
+    border: 0.0625rem solid var(--t5e-separator-color);
 
     i {
-      color: var(--t5ek-content-entity-link-color);
+      color: var(--t5e-content-entity-link-color);
     }
 
     &:hover {
-      color: var(--t5ek-content-entity-link-hover-color);
-      background: var(--t5ek-content-entity-link-hover-background);
+      color: var(--t5e-content-entity-link-hover-color);
+      background: var(--t5e-content-entity-link-hover-background);
 
       i {
-        color: var(--t5ek-content-entity-link-hover-color);
+        color: var(--t5e-content-entity-link-hover-color);
       }
     }
   }
@@ -110,8 +110,8 @@
     border-radius: 50%;
   }
 
-  .t5ek-warning-color {
-    color: var(--t5ek-warning-accent-color);
+  .t5e-warning-color {
+    color: var(--t5e-warning-accent-color);
   }
 
   .hidden {
@@ -128,12 +128,12 @@
   }
 
   .highlight-on-hover:is(:hover, :focus-visible) {
-    color: var(--t5ek-primary-accent-color);
+    color: var(--t5e-primary-accent-color);
   }
 
   select {
     height: auto;
-    font-family: var(--t5ek-body-font-family);
+    font-family: var(--t5e-body-font-family);
   }
 
   .truncate {
@@ -143,11 +143,11 @@
   }
 
   i.not-attuned {
-    color: var(--t5ek-attunement-required-color);
+    color: var(--t5e-attunement-required-color);
   }
 
   i.attuned {
-    color: var(--t5ek-attuned-color);
+    color: var(--t5e-attuned-color);
   }
 
   .item-properties {
@@ -161,8 +161,8 @@
   .tag {
     display: inline-block;
     padding: 0.125rem 0.25rem;
-    background: var(--t5ek-faint-color);
-    border: 0.0625rem solid var(--t5ek-separator-color);
+    background: var(--t5e-faint-color);
+    border: 0.0625rem solid var(--t5e-separator-color);
     white-space: nowrap;
     line-height: 1rem;
     border-radius: 0.3125rem;

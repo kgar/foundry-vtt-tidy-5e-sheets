@@ -37,7 +37,7 @@
       justify-content: center;
       svg {
         path {
-          fill: var(--t5ek-light-color);
+          fill: var(--t5e-light-color);
         }
       }
       margin: 0 auto;

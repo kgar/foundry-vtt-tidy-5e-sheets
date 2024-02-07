@@ -72,11 +72,11 @@
     overflow: hidden;
     border-radius: 0 0.3125rem 0 0.3125rem;
     transition: width 0.3s ease;
-    background: var(--t5ek-icon-background);
+    background: var(--t5e-icon-background);
     display: flex;
-    box-shadow: 0 0 0.625rem var(--t5ek-icon-shadow-color) inset;
-    border: 0.0625rem solid var(--t5ek-icon-outline-color);
-    color: var(--t5ek-icon-font-color);
+    box-shadow: 0 0 0.625rem var(--t5e-icon-shadow-color) inset;
+    border: 0.0625rem solid var(--t5e-icon-outline-color);
+    color: var(--t5e-icon-font-color);
 
     .resting-icon {
       flex: 0 0 2rem;
