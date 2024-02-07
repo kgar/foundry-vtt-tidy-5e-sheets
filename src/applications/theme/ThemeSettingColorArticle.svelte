@@ -97,7 +97,7 @@
 
 <style lang="scss">
   article {
-    background: var(--t5ek-faintest-color);
+    background: var(--t5e-faintest-color);
     border-radius: 0.3125rem;
     margin: 0.125rem 0;
     padding: 0.25rem;
@@ -124,13 +124,13 @@
 
     :global(:is(.color-picker .wrapper)) {
       color: unset;
-      box-shadow: 0 0 0.25rem 0.125rem var(--t5ek-light-color);
-      background: var(--t5ek-background);
+      box-shadow: 0 0 0.25rem 0.125rem var(--t5e-light-color);
+      background: var(--t5e-background);
     }
 
     :global(:is(.color-picker .wrapper input)) {
-      background: var(--t5ek-faintest-color);
-      color: var(--t5ek-primary-font-color);
+      background: var(--t5e-faintest-color);
+      color: var(--t5e-primary-font-color);
     }
   }
 </style>

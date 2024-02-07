@@ -5,16 +5,16 @@
   min-width: 11.25rem;
   max-width: 11.25rem;
   left: 0;
-  color: var(--t5ek-primary-font-color);
+  color: var(--t5e-primary-font-color);
   max-height: 12.6875rem;
-  background: var(--t5ek-background);
-  border: 0.0625rem solid var(--t5ek-context-outline-color);
+  background: var(--t5e-background);
+  border: 0.0625rem solid var(--t5e-context-outline-color);
   position: absolute;
   z-index: 100;
   border-radius: 0.3125rem;
   padding: 0.0625rem 0.125rem;
   overflow-y: auto;
-  box-shadow: 0 0 0.3125rem var(--t5ek-context-shadow-color);
+  box-shadow: 0 0 0.3125rem var(--t5e-context-shadow-color);
 
   a,
   li {
@@ -36,11 +36,11 @@
     }
 
     &.active {
-      color: var(--t5ek-attunement-required-color);
+      color: var(--t5e-attunement-required-color);
 
       &:hover {
-        background: var(--t5ek-warning-accent-color);
-        color: var(--t5ek-warning-accent-contrast-color);
+        background: var(--t5e-warning-accent-color);
+        color: var(--t5e-warning-accent-contrast-color);
       }
     }
 
@@ -55,9 +55,9 @@
     }
 
     &:hover {
-      box-shadow: 0 0 0.125rem var(--t5ek-tertiary-color),
-        0 0 0 0.0625rem var(--t5ek-tertiary-color) inset;
-      color: var(--t5ek-primary-accent-color);
+      box-shadow: 0 0 0.125rem var(--t5e-tertiary-color),
+        0 0 0 0.0625rem var(--t5e-tertiary-color) inset;
+      color: var(--t5e-primary-accent-color);
       text-shadow: none;
     }
 
@@ -68,19 +68,19 @@
     }
 
     &.warning {
-      background: var(--t5ek-warning-accent-color);
-      color: var(--t5ek-warning-accent-contrast-color);
+      background: var(--t5e-warning-accent-color);
+      color: var(--t5e-warning-accent-contrast-color);
 
       &:hover {
-        background: var(--t5ek-warning-accent-color);
-        color: var(--t5ek-warning-accent-contrast-color);
+        background: var(--t5e-warning-accent-color);
+        color: var(--t5e-warning-accent-contrast-color);
       }
     }
   }
 
   .context-divider {
     margin: 0.0625rem 0 0 0;
-    border-top: 0.0625rem solid var(--t5ek-light-color);
+    border-top: 0.0625rem solid var(--t5e-light-color);
     border-bottom: none;
 
     + .context-divider {
@@ -97,8 +97,8 @@
     .button {
       border: none;
       border-radius: 0;
-      background: var(--t5ek-tertiary-color);
-      color: var(--t5ek-background);
+      background: var(--t5e-tertiary-color);
+      color: var(--t5e-background);
       display: flex;
       align-items: center;
       padding: 0.25rem 0.5rem 0.25rem 0.375rem;
@@ -109,7 +109,7 @@
       font-size: 0.75rem;
 
       &:hover {
-        background: var(--t5ek-secondary-color);
+        background: var(--t5e-secondary-color);
       }
 
       i {

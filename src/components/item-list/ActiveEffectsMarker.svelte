@@ -15,8 +15,8 @@
     font-size: 0.75rem;
     line-height: 0.9375rem;
     font-weight: 600;
-    background: var(--t5ek-warning-accent-color);
-    color: var(--t5ek-warning-accent-contrast-color);
+    background: var(--t5e-warning-accent-color);
+    color: var(--t5e-warning-accent-contrast-color);
     border-radius: 0.1875rem;
     flex: 0;
     align-self: center;

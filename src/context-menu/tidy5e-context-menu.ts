@@ -104,7 +104,7 @@ function getActiveEffectContextOptions(effect: any) {
       },
       {
         name: 'DND5E.ContextMenuActionDelete',
-        icon: `<i class="fas fa-trash fa-fw t5ek-warning-color"></i>`,
+        icon: `<i class="fas fa-trash fa-fw t5e-warning-color"></i>`,
         callback: () => effect.deleteDialog(),
       },
     ]);
@@ -179,7 +179,7 @@ function getItemContextOptions(item: Item5e) {
         ? 'TIDY5E.ContextMenuActionUnattune'
         : 'TIDY5E.ContextMenuActionAttune',
       icon: isAttuned
-        ? "<i class='fas fa-sun fa-fw' style='color: var(--t5ek-warning-accent-color);'></i>"
+        ? "<i class='fas fa-sun fa-fw' style='color: var(--t5e-warning-accent-color);'></i>"
         : "<i class='fas fa-sun fa-fw'></i>",
       callback: () =>
         item.update({
@@ -202,7 +202,7 @@ function getItemContextOptions(item: Item5e) {
         ? 'TIDY5E.ContextMenuActionUnequip'
         : 'TIDY5E.ContextMenuActionEquip',
       icon: isEquipped
-        ? "<i class='fas fa-user-alt fa-fw' style='color: var(--t5ek-warning-accent-color);'></i> "
+        ? "<i class='fas fa-user-alt fa-fw' style='color: var(--t5e-warning-accent-color);'></i> "
         : "<i class='fas fa-user-alt fa-fw'></i> ",
       callback: () => item.update({ 'system.equipped': !isEquipped }),
     });
@@ -234,7 +234,7 @@ function getItemContextOptions(item: Item5e) {
     options.push({
       name: isFav ? 'TIDY5E.RemoveFavorite' : 'TIDY5E.AddFavorite',
       icon: isFav
-        ? `<i class='fas ${favoriteIcon} fa-fw' style='color: var(--t5ek-warning-accent-color)'></i>`
+        ? `<i class='fas ${favoriteIcon} fa-fw' style='color: var(--t5e-warning-accent-color)'></i>`
         : `<i class='fas ${favoriteIcon} fa-fw inactive'></i>`,
       callback: () => {
         // const item_id = ev[0].dataset.itemId; //ev.currentTarget.closest('[data-item-id]').dataset.itemId;
@@ -274,7 +274,7 @@ function getItemContextOptions(item: Item5e) {
       });
       options.push({
         name: 'TIDY5E.ContextMenuActionDelete',
-        icon: "<i class='fas fa-trash fa-fw' style='color: var(--t5ek-warning-accent-color);'></i>",
+        icon: "<i class='fas fa-trash fa-fw' style='color: var(--t5e-warning-accent-color);'></i>",
         callback: () => FoundryAdapter.onActorItemDelete(actor, item),
       });
     }
@@ -303,7 +303,7 @@ function getItemContextOptions(item: Item5e) {
       });
       options.push({
         name: 'DND5E.ContextMenuActionDelete',
-        icon: "<i class='fas fa-trash fa-fw' style='color: var(--t5ek-warning-accent-color);'></i>",
+        icon: "<i class='fas fa-trash fa-fw' style='color: var(--t5e-warning-accent-color);'></i>",
         callback: () => FoundryAdapter.onActorItemDelete(actor, item),
       });
     }
@@ -316,7 +316,7 @@ function getItemContextOptions(item: Item5e) {
         ? 'TIDY5E.Actions.SetOverrideFalse'
         : 'TIDY5E.Actions.SetOverrideTrue',
       icon: active
-        ? '<i class="fas fa-fist-raised" style="color: var(--t5ek-warning-accent-color)"></i>'
+        ? '<i class="fas fa-fist-raised" style="color: var(--t5e-warning-accent-color)"></i>'
         : '<i class="fas fa-fist-raised"></i>',
       callback: () => {
         toggleActionFilterOverride(item);
@@ -328,7 +328,7 @@ function getItemContextOptions(item: Item5e) {
     if (overridden) {
       options.push({
         name: 'TIDY5E.Actions.ResetActionDefault',
-        icon: '<i class="fas fa-fist-raised" style="color: var(--t5ek-warning-accent-color)"></i>',
+        icon: '<i class="fas fa-fist-raised" style="color: var(--t5e-warning-accent-color)"></i>',
         callback: () => {
           FoundryAdapter.unsetFlag(item, 'action-filter-override');
         },

@@ -61,7 +61,7 @@
       border-radius: 0.3125rem;
       padding-left: 0.25rem;
       padding-right: 0.25rem;
-      border: 0.0625rem solid var(--t5ek-light-color);
+      border: 0.0625rem solid var(--t5e-light-color);
       font-size: 0.75rem;
 
       &:focus,
@@ -74,7 +74,7 @@
       position: absolute;
       right: 0.375rem;
       top: 0.5rem;
-      color: var(--t5ek-tertiary-color);
+      color: var(--t5e-tertiary-color);
       font-size: 0.75rem;
     }
   }

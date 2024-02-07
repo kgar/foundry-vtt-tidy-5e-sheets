@@ -16,10 +16,10 @@
   }
 
   .faint {
-    background: var(--t5ek-faint-color);
+    background: var(--t5e-faint-color);
   }
 
   .light {
-    background: var(--t5ek-separator-color);
+    background: var(--t5e-separator-color);
   }
 </style>

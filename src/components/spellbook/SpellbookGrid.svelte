@@ -184,71 +184,71 @@
         height: 3.125rem;
         position: relative;
         margin: 0.1875rem;
-        box-shadow: 0 0 0.0625rem 0.0625rem var(--t5ek-light-color);
+        box-shadow: 0 0 0.0625rem 0.0625rem var(--t5e-light-color);
         border-radius: 0.3125rem;
 
         &.context {
-          border: 0.0625rem solid var(--t5ek-primary-accent-color);
+          border: 0.0625rem solid var(--t5e-primary-accent-color);
         }
 
         &.preparable {
           .spell-image {
-            box-shadow: 0 0 0 0.125rem inset var(--t5ek-prepareable-color);
+            box-shadow: 0 0 0 0.125rem inset var(--t5e-prepareable-color);
             border-radius: 0.3125rem;
           }
         }
 
         &.prepared {
           box-shadow: 0 0 0 0.125rem
-            var(--t5ek-prepared-item-grid-tile-outline-color);
-          background-color: var(--t5ek-equipped-background);
+            var(--t5e-prepared-item-grid-tile-outline-color);
+          background-color: var(--t5e-equipped-background);
 
           .spell-image {
             box-shadow: 0 0 0.0625rem 0.0625rem inset
-              var(--t5ek-prepared-item-grid-tile-accent-color);
+              var(--t5e-prepared-item-grid-tile-accent-color);
             border-radius: 0.3125rem;
           }
         }
 
         &.pact {
-          box-shadow: 0 0 0 0.125rem var(--t5ek-pact-outline-color);
-          background-color: var(--t5ek-pact-background);
+          box-shadow: 0 0 0 0.125rem var(--t5e-pact-outline-color);
+          background-color: var(--t5e-pact-background);
 
           .spell-image {
             box-shadow: 0 0 0.0625rem 0.0625rem inset
-              var(--t5ek-pact-accent-color);
+              var(--t5e-pact-accent-color);
             border-radius: 0.3125rem;
           }
         }
 
         &.at-will {
-          box-shadow: 0 0 0 0.125rem var(--t5ek-atwill-outline-color);
-          background-color: var(--t5ek-atwill-background);
+          box-shadow: 0 0 0 0.125rem var(--t5e-atwill-outline-color);
+          background-color: var(--t5e-atwill-background);
 
           .spell-image {
             box-shadow: 0 0 0.0625rem 0.0625rem inset
-              var(--t5ek-atwill-accent-color);
+              var(--t5e-atwill-accent-color);
             border-radius: 0.3125rem;
           }
         }
 
         &.innate {
-          box-shadow: 0 0 0 0.125rem var(--t5ek-innate-outline);
-          background-color: var(--t5ek-innate-background);
+          box-shadow: 0 0 0 0.125rem var(--t5e-innate-outline);
+          background-color: var(--t5e-innate-background);
 
           .spell-image {
-            box-shadow: 0 0 0.0625rem 0.0625rem inset var(--t5ek-innate-accent);
+            box-shadow: 0 0 0.0625rem 0.0625rem inset var(--t5e-innate-accent);
             border-radius: 0.3125rem;
           }
         }
 
         &.always-prepared {
-          box-shadow: 0 0 0 0.125rem var(--t5ek-alwaysprepared-outline-color);
-          background-color: var(--t5ek-alwaysprepared-background);
+          box-shadow: 0 0 0 0.125rem var(--t5e-alwaysprepared-outline-color);
+          background-color: var(--t5e-alwaysprepared-background);
 
           .spell-image {
             box-shadow: 0 0 0.0625rem 0.0625rem inset
-              var(--t5ek-alwaysprepared-accent-color);
+              var(--t5e-alwaysprepared-accent-color);
           }
         }
 
@@ -273,7 +273,7 @@
           background-size: cover;
 
           i {
-            color: var(--t5ek-tertiary-color);
+            color: var(--t5e-tertiary-color);
             text-align: center;
             font-size: 1.125rem;
             display: none;
@@ -289,7 +289,7 @@
         }
 
         .spell-name:hover .spell-image:hover i {
-          color: var(--t5ek-primary-font-color);
+          color: var(--t5e-primary-font-color);
         }
       }
       .spells-footer {
@@ -306,10 +306,10 @@
           white-space: nowrap;
           height: 100%;
           font-size: 1.5rem;
-          color: var(--t5ek-faint-color);
+          color: var(--t5e-faint-color);
 
           &:hover {
-            color: var(--t5ek-tertiary-color);
+            color: var(--t5e-tertiary-color);
           }
         }
       }

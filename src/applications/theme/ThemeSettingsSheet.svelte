@@ -24,8 +24,8 @@
         trySetRootCssVariable(
           color.cssVariable,
           $context[color.key]?.toString(),
-          $context.colorPickerEnabled
-        )
+          $context.colorPickerEnabled,
+        ),
       );
     } else {
       clearTidy5eRootCssVariables();
@@ -40,7 +40,10 @@
 
   async function processImportFile(file: File) {
     try {
-      const result = await readFileAsText(file);
+      let result = await readFileAsText(file);
+
+      // Provides backward compatibility with the alpha themes.
+      result = result.replaceAll(`"--t5ek-`, `"--t5e-`);
 
       const theme = JSON.parse(result) as Tidy5eThemeDataV1;
 
@@ -52,7 +55,7 @@
 
       const storeUpdateData = extractSettingsUpdateDeltaFromTheme(
         theme,
-        themeableColors
+        themeableColors,
       );
 
       context.update((settings) => ({
@@ -60,13 +63,17 @@
         ...storeUpdateData,
       }));
 
-      ui.notifications.info(localize('TIDY5E.ThemeSettings.Sheet.importSuccess'));
+      ui.notifications.info(
+        localize('TIDY5E.ThemeSettings.Sheet.importSuccess'),
+      );
     } catch (e) {
-      ui.notifications.error(localize('TIDY5E.ThemeSettings.Sheet.importError'));
+      ui.notifications.error(
+        localize('TIDY5E.ThemeSettings.Sheet.importError'),
+      );
       error(
         'An error occurred while attempting to import a theme file. See the devtools console for more details.',
         true,
-        e
+        e,
       );
     }
   }
@@ -74,7 +81,7 @@
   function onDrop(
     ev: DragEvent & {
       currentTarget: EventTarget & HTMLElement;
-    }
+    },
   ) {
     let file = getSingleFileFromDropEvent(ev);
 
@@ -151,7 +158,7 @@
 
     .drop-hint {
       font-size: 0.75rem;
-      color: var(--t5ek-secondary-color);
+      color: var(--t5e-secondary-color);
     }
 
     .theme-settings-form {

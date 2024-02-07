@@ -60,16 +60,16 @@
     align-items: center;
     justify-content: center;
     white-space: nowrap;
-    background: var(--t5ek-tab-background);
+    background: var(--t5e-tab-background);
     border: 0.0625rem solid transparent;
-    border-bottom: 0.0625rem solid var(--t5ek-tab-strip-border-color);
+    border-bottom: 0.0625rem solid var(--t5e-tab-strip-border-color);
     font-size: 0.8125rem;
     text-align: left;
     height: 1.625rem;
 
     .lock-button {
-      background: var(--t5ek-sheet-unlocked-icon-background);
-      color: var(--t5ek-sheet-lock-icon-color);
+      background: var(--t5e-sheet-unlocked-icon-background);
+      color: var(--t5e-sheet-lock-icon-color);
       border-radius: 0.1875rem;
       width: 1.375rem;
       border: none;
@@ -78,11 +78,11 @@
       transition: color 0.3s ease;
 
       &.editing-enabled {
-        background: var(--t5ek-sheet-locked-icon-background);
+        background: var(--t5e-sheet-locked-icon-background);
       }
 
       &:hover {
-        color: var(--t5ek-sheet-lock-icon-hover-color);
+        color: var(--t5e-sheet-lock-icon-hover-color);
       }
 
       i {

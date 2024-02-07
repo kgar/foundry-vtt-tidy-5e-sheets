@@ -165,10 +165,10 @@
     position: relative;
     border-radius: 0.3125rem;
     margin: 0.125rem 0 0.125rem 0.5rem;
-    background: var(--t5ek-faintest-color);
+    background: var(--t5e-faintest-color);
 
     &:global(.context) {
-      box-shadow: 0 0 0.1875rem 0.0625rem var(--t5ek-primary-accent-color) inset;
+      box-shadow: 0 0 0.1875rem 0.0625rem var(--t5e-primary-accent-color) inset;
     }
 
     &.show-item-count-on-hover :global(.item-quantity) {
@@ -190,40 +190,40 @@
       border-radius: 0.3125rem;
 
       // TODO: Eliminate the CSS class injection; set the background color CSS variable via an inline style with a color taken from a function, rather than using the classes. Put the variable assignment outside of the item table row so that scripters can set the CSS variable on the row itself.
-      --t5ek-item-table-row-background: transparent;
+      --t5e-item-table-row-background: transparent;
       &.prepared {
-        --t5ek-item-table-row-background: var(--t5ek-prepared-background);
+        --t5e-item-table-row-background: var(--t5e-prepared-background);
       }
 
       &.always-prepared {
-        --t5ek-item-table-row-background: var(--t5ek-alwaysprepared-background);
+        --t5e-item-table-row-background: var(--t5e-alwaysprepared-background);
       }
 
       &.pact {
-        --t5ek-item-table-row-background: var(--t5ek-pact-background);
+        --t5e-item-table-row-background: var(--t5e-pact-background);
       }
 
       &.at-will {
-        --t5ek-item-table-row-background: var(--t5ek-atwill-background);
+        --t5e-item-table-row-background: var(--t5e-atwill-background);
       }
 
       &.innate {
-        --t5ek-item-table-row-background: var(--t5ek-innate-background);
+        --t5e-item-table-row-background: var(--t5e-innate-background);
       }
 
       &.equipped {
-        --t5ek-item-table-row-background: var(--t5ek-equipped-background);
+        --t5e-item-table-row-background: var(--t5e-equipped-background);
       }
 
       background: linear-gradient(
         to right,
-        var(--t5ek-item-table-row-background),
+        var(--t5e-item-table-row-background),
         transparent 120%
       );
 
       &.magic-item {
         box-shadow: 0 0 0 0.0625rem
-          var(--t5ek-faint-magic-item-list-row-accent-color) inset;
+          var(--t5e-faint-magic-item-list-row-accent-color) inset;
       }
     }
   }

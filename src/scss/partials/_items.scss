@@ -11,7 +11,7 @@
     overflow: hidden;
 
     .hint {
-      color: var(--t5ek-secondary-color);
+      color: var(--t5e-secondary-color);
     }
   }
 }
@@ -26,7 +26,7 @@ button {
   }
 
   &:focus-visible {
-    box-shadow: var(--t5ek-focus-visible-box-shadow);
+    box-shadow: var(--t5e-focus-visible-box-shadow);
   }
 }
 
@@ -34,13 +34,13 @@ input[type='checkbox'],
 button,
 select {
   cursor: pointer;
-  font-family: var(--t5ek-body-font-family);
+  font-family: var(--t5e-body-font-family);
 }
 
 button,
 select {
   border: none;
-  color: var(--t5ek-primary-font-color);
+  color: var(--t5e-primary-font-color);
 }
 
 select {
@@ -53,17 +53,17 @@ select {
 }
 
 :is(input[type='text'], input[type='number'], textarea) {
-  color: var(--t5ek-primary-font-color);
+  color: var(--t5e-primary-font-color);
 }
 
 :is(input[type='text'], input[type='number'], textarea)::placeholder {
-  color: var(--t5ek-secondary-color);
+  color: var(--t5e-secondary-color);
 }
 
 :is(input[type='text'], input[type='number'], textarea):hover,
 :is(input[type='text'], input[type='number'], textarea):focus {
   border: none;
-  box-shadow: 0 0 0 0.0625rem var(--t5ek-primary-accent-color) inset;
+  box-shadow: 0 0 0 0.0625rem var(--t5e-primary-accent-color) inset;
 }
 
 input[type='checkbox'] {
@@ -73,7 +73,7 @@ input[type='checkbox'] {
 .sheet-header {
   flex: 0 0 5rem;
   padding: 1rem;
-  background: var(--t5ek-header-background);
+  background: var(--t5e-header-background);
   align-items: flex-start;
 
   .item-image {
@@ -97,14 +97,14 @@ input[type='checkbox'] {
       }
 
       button {
-        background: var(--t5ek-background);
-        color: var(--t5ek-primary-font-color);
+        background: var(--t5e-background);
+        color: var(--t5e-primary-font-color);
         border: none;
         margin: 0.0625rem 0;
         padding: 0.25rem 0.375rem;
         line-height: 1;
         font-size: 0.75rem;
-        border: 0.0625rem solid var(--t5ek-light-color);
+        border: 0.0625rem solid var(--t5e-light-color);
         border-radius: 0.3125rem;
         text-align: center;
       }
@@ -134,21 +134,21 @@ input[type='checkbox'] {
       font-size: 1.5rem;
       height: 100%;
       width: 100%;
-      font-family: var(--t5ek-title-font-family);
+      font-family: var(--t5e-title-font-family);
       background: transparent;
     }
   }
 
   .item-subtitle {
     padding: 0.125rem 0.25rem;
-    background: var(--t5ek-faint-color);
+    background: var(--t5e-faint-color);
     border-radius: 0.3125rem;
-    color: var(--t5ek-tertiary-color);
+    color: var(--t5e-tertiary-color);
     display: flex;
     align-items: flex-end;
     height: 1.25rem;
     flex: 0 0 0.0625rem;
-    font-family: var(--t5ek-title-font-family);
+    font-family: var(--t5e-title-font-family);
     white-space: nowrap;
 
     > * + * {
@@ -159,24 +159,24 @@ input[type='checkbox'] {
       margin: 0;
       font-size: 1.25rem;
       line-height: 1rem;
-      color: var(--t5ek-secondary-color);
+      color: var(--t5e-secondary-color);
     }
 
     .item-status {
       font-size: 1rem;
       line-height: 0.875rem;
-      color: var(--t5ek-tertiary-color);
+      color: var(--t5e-tertiary-color);
       white-space: nowrap;
     }
   }
 
   .summary {
-    border: 0.0625rem solid var(--t5ek-separator-color);
+    border: 0.0625rem solid var(--t5e-separator-color);
     border-left: none;
     border-right: none;
     display: flex;
     font-size: 0.8125rem;
-    font-family: var(--t5ek-body-font-family);
+    font-family: var(--t5e-body-font-family);
     height: 1.375rem;
     flex: 0 0 100%;
     list-style: none;
@@ -185,7 +185,7 @@ input[type='checkbox'] {
     width: 100%;
 
     li {
-      border-left: 0.0625rem solid var(--t5ek-faint-color);
+      border-left: 0.0625rem solid var(--t5e-faint-color);
       line-height: 1.25rem;
       font-weight: 600;
       min-width: 0; // needed for flex children that truncate overflow
@@ -234,7 +234,7 @@ input[type='checkbox'] {
     .form-group {
       margin: 0;
       padding: 0;
-      color: var(--t5ek-secondary-color);
+      color: var(--t5e-secondary-color);
       font-size: 0.8125rem;
       background: none;
 
@@ -273,12 +273,12 @@ input[type='checkbox'] {
 
       li {
         margin: 0 0 0.125rem 0;
-        border: 0.0625rem solid var(--t5ek-faint-color);
+        border: 0.0625rem solid var(--t5e-faint-color);
         border-radius: 0.3125rem;
         font-size: 0.6875rem;
         line-height: 1rem;
         padding: 0 0.125rem;
-        background: var(--t5ek-faintest-color);
+        background: var(--t5e-faintest-color);
         text-align: center;
       }
     }
@@ -313,7 +313,7 @@ input[type='checkbox'] {
 
     [contenteditable='true']:hover,
     [contenteditable='true']:focus {
-      box-shadow: 0 0 0 0.0625rem var(--t5ek-primary-accent-color) inset;
+      box-shadow: 0 0 0 0.0625rem var(--t5e-primary-accent-color) inset;
     }
 
     .editor {
@@ -395,9 +395,9 @@ input[type='checkbox'] {
     margin: 0.5rem 0.375rem 0.25rem 0.375rem;
     font-size: 1.125rem;
     line-height: 1rem;
-    font-family: var(--t5ek-title-font-family);
+    font-family: var(--t5e-title-font-family);
     font-weight: 600;
-    color: var(--t5ek-primary-font-color);
+    color: var(--t5e-primary-font-color);
 
     &:first-child {
       margin-top: 0;
@@ -411,7 +411,7 @@ input[type='checkbox'] {
       margin-top: 0.125rem;
     }
     padding: 0.1875rem;
-    background: var(--t5ek-faintest-color);
+    background: var(--t5e-faintest-color);
     border-radius: 0.3125rem;
 
     .form-fields {
@@ -438,7 +438,7 @@ input[type='checkbox'] {
       line-height: 1.25rem;
       font-size: 0.8125rem;
       font-weight: 600;
-      color: var(--t5ek-secondary-color);
+      color: var(--t5e-secondary-color);
       white-space: nowrap;
 
       &.checkbox {
@@ -449,22 +449,22 @@ input[type='checkbox'] {
         display: flex;
         border-radius: 0.1875rem;
         overflow: hidden;
-        border: 0.0625rem solid var(--t5ek-checkbox-outline-color);
-        background: var(--t5ek-checkbox-checked-color);
+        border: 0.0625rem solid var(--t5e-checkbox-outline-color);
+        background: var(--t5e-checkbox-checked-color);
         height: 1.25rem;
         cursor: pointer;
-        color: var(--t5ek-checkbox-font-color);
+        color: var(--t5e-checkbox-font-color);
         font-size: 0.8125rem;
         line-height: 1rem;
         flex: 0 0 calc(100% / 4 - 0.0625rem);
         font-weight: 400;
 
         &:hover {
-          background: var(--t5ek-checkbox-checked-color);
+          background: var(--t5e-checkbox-checked-color);
         }
 
         &:hover input::after {
-          background: var(--t5ek-checkbox-checked-color);
+          background: var(--t5e-checkbox-checked-color);
         }
       }
 
@@ -476,18 +476,18 @@ input[type='checkbox'] {
 
     :where(select),
     :where(:is(input[type='text'], input[type='number'], textarea)) {
-      background: var(--t5ek-item-input-background);
+      background: var(--t5e-item-input-background);
       height: 1.25rem;
       font-size: 0.8125rem;
 
       &:hover {
-        background: var(--t5ek-item-input-hover-background);
+        background: var(--t5e-item-input-hover-background);
       }
     }
 
     input:disabled {
       background: transparent;
-      color: var(--t5ek-secondary-color);
+      color: var(--t5e-secondary-color);
 
       &:hover {
         border: none !important;
@@ -505,7 +505,7 @@ input[type='checkbox'] {
         top: 0;
         left: 0;
         z-index: -1;
-        background: var(--t5ek-checkbox-unchecked-color);
+        background: var(--t5e-checkbox-unchecked-color);
         width: 100%;
         height: 100%;
         cursor: pointer;
@@ -539,7 +539,7 @@ input[type='checkbox'] {
     select:focus,
     textarea {
       border: none;
-      box-shadow: 0 0 0 0.0625rem var(--t5ek-primary-accent-color) inset;
+      box-shadow: 0 0 0 0.0625rem var(--t5e-primary-accent-color) inset;
     }
   }
 }
@@ -563,8 +563,8 @@ input[type='checkbox'] {
       padding: 0.325rem 0 0.25rem 0.375rem;
       line-height: 0.75rem;
       font-size: 0.75rem;
-      background: var(--t5ek-table-header-row-color);
-      box-shadow: 0 0 0.1875rem inset var(--t5ek-table-header-row-border-color);
+      background: var(--t5e-table-header-row-color);
+      box-shadow: 0 0 0.1875rem inset var(--t5e-table-header-row-border-color);
       border-radius: 0.3125rem;
 
       h1,
@@ -594,7 +594,7 @@ input[type='checkbox'] {
       }
 
       div:not(.item-name, .item-checkmark) {
-        color: var(--t5ek-tertiary-color);
+        color: var(--t5e-tertiary-color);
       }
     }
 
@@ -620,19 +620,19 @@ input[type='checkbox'] {
       display: flex;
       justify-content: center;
       align-items: center;
-      color: var(--t5ek-tertiary-color);
+      color: var(--t5e-tertiary-color);
 
       &:hover {
-        color: var(--t5ek-secondary-color);
+        color: var(--t5e-secondary-color);
       }
     }
 
     .item {
-      background: var(--t5ek-faintest-color);
+      background: var(--t5e-faintest-color);
       margin: 0.125rem 0;
       border-radius: 0.3125rem;
       font-size: 0.75rem;
-      color: var(--t5ek-primary-font-color);
+      color: var(--t5e-primary-font-color);
 
       &:where(.advancement-item) {
         :where(.item-controls) {
@@ -650,7 +650,7 @@ input[type='checkbox'] {
       }
 
       div:not(.item-name) {
-        border-left: 0.0625rem solid var(--t5ek-faint-color);
+        border-left: 0.0625rem solid var(--t5e-faint-color);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -680,8 +680,8 @@ input[type='checkbox'] {
         border: none;
 
         * {
-          color: var(--t5ek-primary-font-color);
-          fill: var(--t5ek-primary-font-color);
+          color: var(--t5e-primary-font-color);
+          fill: var(--t5e-primary-font-color);
         }
 
         svg {
@@ -698,10 +698,10 @@ input[type='checkbox'] {
   -moz-appearance: none;
   appearance: none;
   background: none;
-  border: 0.0625rem solid var(--t5ek-tertiary-color);
-  box-shadow: 0 0 0.125rem var(--t5ek-light-color) inset;
+  border: 0.0625rem solid var(--t5e-tertiary-color);
+  box-shadow: 0 0 0.125rem var(--t5e-light-color) inset;
   border-radius: 0.1875rem;
-  background-image: var(--t5ek-check-default-background-image);
+  background-image: var(--t5e-check-default-background-image);
   background-repeat: no-repeat;
   background-position: center;
   background-size: 60%;
@@ -714,15 +714,15 @@ label input[type='checkbox'] {
 }
 
 input[type='checkbox']:checked {
-  background: var(--t5ek-checkbox-checked-color);
-  background-image: var(--t5ek-check-checked-background-image);
+  background: var(--t5e-checkbox-checked-color);
+  background-image: var(--t5e-check-checked-background-image);
   background-size: 60%;
   background-repeat: no-repeat;
   background-position: center;
 }
 
 .checkbox input[type='checkbox']:checked {
-  background-image: var(--t5ek-check-checked-background-image);
+  background-image: var(--t5e-check-checked-background-image);
 }
 
 label input[type='checkbox']:checked {
@@ -734,7 +734,7 @@ label input[type='checkbox']:checked {
   font-weight: 600;
   display: flex;
   justify-content: space-between;
-  font-family: var(--t5ek-title-font-family);
+  font-family: var(--t5e-title-font-family);
   font-size: 1.125rem;
 }
 
@@ -748,14 +748,14 @@ label input[type='checkbox']:checked {
   background: none;
   margin: 0;
   padding: 0.125rem 0.5rem;
-  color: var(--t5ek-tertiary-color);
-  font-family: var(--t5ek-body-font-family);
+  color: var(--t5e-tertiary-color);
+  font-family: var(--t5e-body-font-family);
   font-size: 0.8125rem;
 
   transition: color 0.2s ease;
 
   &:hover {
-    color: var(--t5ek-icon-hover-color);
+    color: var(--t5e-icon-hover-color);
   }
 
   // &::after {
@@ -772,7 +772,7 @@ label input[type='checkbox']:checked {
   li {
     margin-top: 0.125rem;
     width: 100%;
-    border-bottom: 0.0625rem solid var(--t5ek-faint-color);
+    border-bottom: 0.0625rem solid var(--t5e-faint-color);
     padding-bottom: 0.125rem;
 
     &:first-child {
@@ -797,11 +797,11 @@ label input[type='checkbox']:checked {
     }
 
     .item-checkmark {
-      color: var(--t5ek-secondary-color);
+      color: var(--t5e-secondary-color);
     }
 
     .item-warning {
-      color: var(--t5ek-warning-accent-color);
+      color: var(--t5e-warning-accent-color);
     }
   }
 
@@ -815,7 +815,7 @@ label input[type='checkbox']:checked {
     max-height: 1.875rem;
     &,
     path {
-      fill: var(--t5ek-secondary-color);
+      fill: var(--t5e-secondary-color);
     }
   }
 

@@ -128,8 +128,8 @@
     position: relative;
     border: none;
     border-radius: 0;
-    border-left: 0.0625rem solid var(--t5ek-faint-color);
-    border-top: 0.0625rem solid var(--t5ek-faint-color);
+    border-left: 0.0625rem solid var(--t5e-faint-color);
+    border-top: 0.0625rem solid var(--t5e-faint-color);
     flex: 1 0 33%;
 
     &:nth-child(3n + 1) {
@@ -154,7 +154,7 @@
       display: flex;
       justify-content: flex-end;
       align-items: flex-end;
-      background-color: var(--t5ek-sheet-background);
+      background-color: var(--t5e-sheet-background);
       overflow: hidden;
 
       .resource-options {
@@ -163,7 +163,7 @@
         padding: 0.125rem;
         bottom: 0;
         font-size: 0.75rem;
-        color: var(--t5ek-tertiary-color);
+        color: var(--t5e-tertiary-color);
         transition: color 0.3s ease;
       }
 
@@ -180,14 +180,14 @@
           margin: 0.25rem 0 0 0;
           font-size: 0.75rem;
           line-height: 1;
-          color: var(--t5ek-secondary-color);
+          color: var(--t5e-secondary-color);
           flex: 0 0 100%;
           text-align: center;
         }
       }
 
       label.checkbox {
-        border: 0.0625rem solid var(--t5ek-light-color);
+        border: 0.0625rem solid var(--t5e-light-color);
         padding: 0.1875rem;
         margin: 0 0.125rem;
         border-radius: 0.3125rem;
@@ -199,7 +199,7 @@
         line-height: 1rem;
 
         &:hover {
-          background-color: var(--t5ek-light-color);
+          background-color: var(--t5e-light-color);
         }
       }
 
@@ -208,8 +208,8 @@
       }
 
       input:checked + label.checkbox {
-        background: var(--t5ek-tertiary-color);
-        color: var(--t5ek-background);
+        background: var(--t5e-tertiary-color);
+        color: var(--t5e-background);
       }
 
       &.active,
@@ -226,20 +226,20 @@
         }
 
         .resource-options {
-          color: var(--t5ek-secondary-color);
+          color: var(--t5e-secondary-color);
         }
       }
 
       &.active {
         .resource-options {
-          color: var(--t5ek-primary-accent-color);
+          color: var(--t5e-primary-accent-color);
         }
       }
     }
 
     .resource-name {
       :global(input) {
-        font-family: var(--t5ek-title-font-family);
+        font-family: var(--t5e-title-font-family);
         font-weight: 700;
         font-size: 1rem;
         text-align: center;
@@ -255,7 +255,7 @@
       align-items: center;
       height: 1.375rem;
       line-height: 1.5625rem;
-      font-family: var(--t5ek-title-font-family);
+      font-family: var(--t5e-title-font-family);
     }
 
     .resource-value.multiple {

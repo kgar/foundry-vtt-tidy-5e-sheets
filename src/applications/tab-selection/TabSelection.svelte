@@ -69,7 +69,7 @@
     text-align: center;
     i {
       font-size: 1.5rem;
-      color: var(--t5ek-secondary-color);
+      color: var(--t5e-secondary-color);
     }
   }
 </style>

@@ -103,7 +103,7 @@
       content: attr(data-placeholder);
       pointer-events: none;
       display: block; // For Firefox
-      color: var(--t5ek-tertiary-color);
+      color: var(--t5e-tertiary-color);
     }
   }
 </style>

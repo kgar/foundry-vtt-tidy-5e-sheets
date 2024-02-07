@@ -91,7 +91,7 @@
 
     .config-button {
       font-size: 0.625rem;
-      color: var(--t5ek-tertiary-color);
+      color: var(--t5e-tertiary-color);
       display: flex;
       justify-content: center;
       align-items: flex-end;

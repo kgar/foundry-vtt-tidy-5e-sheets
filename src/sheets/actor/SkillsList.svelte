@@ -165,7 +165,7 @@
 
 <style lang="scss">
   .skills-list {
-    border: 0.0625rem solid var(--t5ek-faint-color);
+    border: 0.0625rem solid var(--t5e-faint-color);
     border-radius: 0.3125rem;
     overflow: visible;
     padding: 0;
@@ -185,7 +185,7 @@
       flex-wrap: nowrap;
 
       &:nth-child(even) {
-        background: var(--t5ek-faint-color);
+        background: var(--t5e-faint-color);
       }
 
       .tidy5e-skill-name {
@@ -202,9 +202,9 @@
         margin: 0;
         padding: 0;
         font-size: 0.625rem;
-        color: var(--t5ek-tertiary-color);
+        color: var(--t5e-tertiary-color);
         &:hover {
-          color: var(--t5ek-primary-color);
+          color: var(--t5e-primary-color);
         }
       }
 
@@ -214,15 +214,15 @@
 
       .skill-proficiency {
         font-size: 0.625rem;
-        color: var(--t5ek-tertiary-color);
+        color: var(--t5e-tertiary-color);
       }
 
       .skill-proficiency-toggle {
         font-size: 0.625rem;
-        color: var(--t5ek-tertiary-color);
+        color: var(--t5e-tertiary-color);
 
         &:hover {
-          color: var(--t5ek-primary-font-color);
+          color: var(--t5e-primary-font-color);
         }
 
         i {
@@ -237,7 +237,7 @@
       }
 
       .skill-passive {
-        color: var(--t5ek-tertiary-color);
+        color: var(--t5e-tertiary-color);
       }
 
       .skill-ability {
@@ -250,16 +250,16 @@
   .skills-list-container .toggle-proficient {
     font-size: 0.625rem;
     text-transform: capitalize;
-    border: 0.0625rem solid var(--t5ek-faint-color);
+    border: 0.0625rem solid var(--t5e-faint-color);
     border-top: none;
     padding: 0.125rem 0.5rem;
     border-radius: 0 0 0.3125rem 0.3125rem;
     cursor: pointer;
-    color: var(--t5ek-secondary-color);
+    color: var(--t5e-secondary-color);
     white-space: nowrap;
 
     &:hover {
-      color: var(--t5ek-primary-font-color);
+      color: var(--t5e-primary-font-color);
     }
   }
 </style>

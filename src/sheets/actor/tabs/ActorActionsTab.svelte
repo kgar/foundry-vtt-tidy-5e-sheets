@@ -205,7 +205,7 @@
 
 <style lang="scss">
   .actions-tab-container {
-    --t5ek-image-size-override: 2rem;
+    --t5e-image-size-override: 2rem;
 
     :global(.item-table-row) {
       min-height: 2rem;
@@ -227,6 +227,6 @@
   }
 
   small {
-    color: var(--t5ek-tertiary-color);
+    color: var(--t5e-tertiary-color);
   }
 </style>

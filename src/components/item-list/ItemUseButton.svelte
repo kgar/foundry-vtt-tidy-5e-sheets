@@ -42,8 +42,8 @@
 <style lang="scss">
   .item-image {
     align-self: center;
-    flex: 0 0 var(--t5ek-image-size-override, 1.5rem);
-    height: var(--t5ek-image-size-override, 1.5rem);
+    flex: 0 0 var(--t5e-image-size-override, 1.5rem);
+    height: var(--t5e-image-size-override, 1.5rem);
     background-size: cover;
     display: flex;
     flex-direction: row;
@@ -56,12 +56,12 @@
       opacity: 0;
 
       i {
-        color: var(--t5ek-tertiary-color);
+        color: var(--t5e-tertiary-color);
         font-size: 1.125rem;
       }
 
       &:is(:hover, :focus-visible) i {
-        color: var(--t5ek-primary-font-color);
+        color: var(--t5e-primary-font-color);
       }
     }
 

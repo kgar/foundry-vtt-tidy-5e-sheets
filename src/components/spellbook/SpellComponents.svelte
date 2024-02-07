@@ -16,8 +16,8 @@
 
 <style lang="scss">
   .spell-component.spell-tag {
-    color: var(--t5ek-background);
-    background: var(--t5ek-tertiary-color);
+    color: var(--t5e-background);
+    background: var(--t5e-tertiary-color);
     border-radius: 0.125rem;
     padding: 0.0625rem 0.0625rem 0 0.0625rem;
     margin: 0 0 0 0.0625rem;

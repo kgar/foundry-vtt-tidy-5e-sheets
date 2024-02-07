@@ -6,4 +6,4 @@
   export let percentage: number | null = null;
 </script>
 
-<Bar {value} {max} {percentage} color="var(--t5ek-hp-bar-color)" />
+<Bar {value} {max} {percentage} color="var(--t5e-hp-bar-color)" />

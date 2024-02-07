@@ -156,7 +156,7 @@
     }
 
     :global(i) {
-      color: var(--t5ek-tertiary-color);
+      color: var(--t5e-tertiary-color);
       line-height: 1rem;
       vertical-align: middle;
     }
@@ -172,7 +172,7 @@
     .trait-editor:hover i,
     .tool-proficiency-editor:hover i,
     .tool-proficiency-toggle:hover :global(i) {
-      color: var(--t5ek-secondary-color);
+      color: var(--t5e-secondary-color);
       text-shadow: none;
     }
 
@@ -182,7 +182,7 @@
       .trait-label {
         font-size: 0.75rem;
         font-weight: 700;
-        color: var(--t5ek-secondary-color);
+        color: var(--t5e-secondary-color);
       }
 
       .trait-list {
@@ -218,10 +218,10 @@
         display: inline-flex;
         align-items: center;
         gap: 0.25rem;
-        background-color: var(--t5ek-faintest-color);
+        background-color: var(--t5e-faintest-color);
         padding: 0 0.125rem;
         border-radius: 0.25rem;
-        border: 0.0625rem solid var(--t5ek-tertiary-color);
+        border: 0.0625rem solid var(--t5e-tertiary-color);
       }
     }
   }

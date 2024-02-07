@@ -55,9 +55,9 @@
 
   .accordion-item-header {
     padding: 0.25rem;
-    background-color: var(--t5ek-table-header-row-color);
+    background-color: var(--t5e-table-header-row-color);
     margin: 0;
-    border: 0.0625rem solid var(--t5ek-table-header-row-color);
+    border: 0.0625rem solid var(--t5e-table-header-row-color);
     border-radius: 0.1875rem;
   }
 
