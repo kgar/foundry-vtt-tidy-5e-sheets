@@ -14,15 +14,14 @@
     --vertical-padding: 0.375rem;
     display: flex;
     gap: 0.5rem;
-    padding-right: 0.25rem;
     align-items: center;
     border-bottom: 0.0625rem solid var(--t5ek-separator-color);
+    margin-bottom: 0.25rem;
     margin-left: -1rem;
     margin-right: -0.25rem;
     margin-top: calc(var(--vertical-padding) - var(--t5e-tab-padding-top));
-    padding-right: 1.75rem;
     padding-bottom: var(--vertical-padding);
     padding-left: 1rem;
-    margin-bottom: 0.25rem;
+    padding-right: 1.75rem;
   }
 </style>
