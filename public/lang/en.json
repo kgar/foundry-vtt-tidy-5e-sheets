@@ -608,6 +608,9 @@
   "TIDY5E.Settings.ColorPickerScrollbarTrack": {
     "name": "Scrollbar Track"
   },
+  "TIDY5E.Settings.ColorPickerMagicAccent": {
+    "name": "Magic Item Accent Outline"
+  },
   "TIDY5E.Settings.AllowHpMaxOverride": {
     "name": "Allow HP Max Override on Character",
     "hint": "Allows the GM to manually change max HP on the character sheet."

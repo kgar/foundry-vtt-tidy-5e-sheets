@@ -278,7 +278,7 @@
 
         &.equipped .item-image {
           box-shadow:
-            0 0 0rem 0.0625rem var(--t5e-magic-item-grid-tile-outline-color)
+            0 0 0rem 0.0625rem var(--t5e-magic-accent-color)
               inset,
             0 0 0 0.0625rem var(--t5e-magic-accent-color) inset,
             0 0 0.1875rem 0.125rem var(--t5e-magic-accent-color) inset;

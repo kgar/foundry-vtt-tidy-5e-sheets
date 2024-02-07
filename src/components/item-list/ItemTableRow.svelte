@@ -222,8 +222,7 @@
       );
 
       &.magic-item {
-        box-shadow: 0 0 0 0.0625rem
-          var(--t5e-faint-magic-item-list-row-accent-color) inset;
+        box-shadow: 0 0 0 0.0625rem var(--t5e-magic-accent-color) inset;
       }
     }
   }
