@@ -10,10 +10,12 @@
   import { settingStore } from 'src/settings/settings';
   import { CONSTANTS } from 'src/constants';
 
-  export let abbreviation: string;
+  export let id: string;
   export let ability: any;
   export let useSavingThrowProficiency: boolean;
   export let useConfigurationOption: boolean;
+
+  $: abbreviation = CONFIG.DND5E.abilities[id]?.abbreviation ?? id;
 
   let context = getContext<Readable<ActorSheetContext>>('context');
 
@@ -23,13 +25,12 @@
 <div
   class="wrapper"
   data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ABILITY_SCORE_CONTAINER}
-  data-ability={abbreviation}
+  data-ability={id}
 >
   <BlockTitle
     title={ability.label}
     text={abbreviation}
-    on:roll={(event) =>
-      $context.actor.rollAbility(abbreviation, { event: event.detail })}
+    on:roll={(event) => $context.actor.rollAbility(id, { event: event.detail })}
     hideFromTabOrder={$settingStore.useDefaultSheetAttributeTabbing ||
       !$settingStore.useAccessibleKeyboardSupport}
     attributes={{
@@ -39,7 +40,7 @@
   <BlockScore>
     <TextInput
       document={$context.actor}
-      field="system.abilities.{abbreviation}.value"
+      field="system.abilities.{id}.value"
       value={ability.value}
       placeholder="10"
       selectOnFocus={true}
@@ -56,8 +57,7 @@
       class="ability-mod transparent-button"
       class:rollable={$context.editable}
       title={localize('DND5E.AbilityModifier')}
-      on:click={(event) =>
-        $context.actor.rollAbilityTest(abbreviation, { event })}
+      on:click={(event) => $context.actor.rollAbilityTest(id, { event })}
       tabindex={!$settingStore.useDefaultSheetAttributeTabbing &&
       $settingStore.useAccessibleKeyboardSupport
         ? 0
@@ -72,8 +72,7 @@
       class="ability-save transparent-button"
       class:rollable={$context.editable}
       title={localize('DND5E.ActionSave')}
-      on:click={(event) =>
-        $context.actor.rollAbilitySave(abbreviation, { event })}
+      on:click={(event) => $context.actor.rollAbilitySave(id, { event })}
       tabindex={!$settingStore.useDefaultSheetAttributeTabbing &&
       $settingStore.useAccessibleKeyboardSupport
         ? 0
@@ -91,7 +90,7 @@
           class="proficiency-toggle inline-icon-button"
           on:click={() =>
             $context.actor.update({
-              [`system.abilities.${abbreviation}.proficient`]:
+              [`system.abilities.${id}.proficient`]:
                 1 - parseInt(ability.proficient),
             })}
           tabindex={!$settingStore.useDefaultSheetAttributeTabbing &&
@@ -115,7 +114,7 @@
         class="config-button inline-icon-button"
         title={localize('DND5E.AbilityConfigure')}
         on:click={() =>
-          FoundryAdapter.renderActorAbilityConfig($context.actor, abbreviation)}
+          FoundryAdapter.renderActorAbilityConfig($context.actor, id)}
         tabindex={!$settingStore.useDefaultSheetAttributeTabbing &&
         $settingStore.useAccessibleKeyboardSupport
           ? 0

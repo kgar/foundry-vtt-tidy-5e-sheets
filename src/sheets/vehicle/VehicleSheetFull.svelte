@@ -147,7 +147,7 @@
         <VerticalLineSeparator />
         <div>
           <AttributeBlock
-            abbreviation={id}
+            id={id}
             {ability}
             useConfigurationOption={false}
             useSavingThrowProficiency={false}
