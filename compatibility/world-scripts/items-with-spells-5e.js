@@ -17,7 +17,7 @@ const pathToItemsWithSpells =
 
 // World Scripter integration 😉
 const api =
-  game.modules.get('tidy5e-sheet')?.api;
+  game.modules?.get('tidy5e-sheet')?.api;
 
 if (api) {
   addItemsWithSpellsTab(api);
