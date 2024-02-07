@@ -15,27 +15,36 @@ export class SessionStorageManager {
     keyParams: UserDocumentSessionStorageKeyParams,
     map: Map<Key, Value>
   ) {
-    const serializedMap = JSON.stringify(Array.from(map.entries()));
-    sessionStorage.setItem(
-      SessionStorageManager._createKey(keyParams),
-      serializedMap
-    );
+    try {
+      const serializedMap = JSON.stringify(Array.from(map.entries()));
+      sessionStorage.setItem(
+        SessionStorageManager._createKey(keyParams),
+        serializedMap
+      );
+    } catch (e) {
+      error(
+        'An error occurred while storing cached data in session storage',
+        false,
+        e
+      );
+      debug('Troubleshooting information', { keyParams, map });
+    }
   }
 
   static getMap<Key, Value>(
     keyParams: UserDocumentSessionStorageKeyParams
   ): Map<Key, Value> | undefined {
-    const data = sessionStorage.getItem(
-      SessionStorageManager._createKey(keyParams)
-    );
-    if (!data) {
-      return undefined;
-    }
-
     try {
-      return new Map(JSON.parse(data));
+      const data = sessionStorage.getItem(
+        SessionStorageManager._createKey(keyParams)
+      );
+      return data ? new Map(JSON.parse(data)) : undefined;
     } catch (e) {
-      error('An error occurred while fetching cached map data', false, e);
+      error(
+        'An error occurred while fetching cached data in session storage',
+        false,
+        e
+      );
       debug('Troubleshooting information', { keyParams });
     }
   }
