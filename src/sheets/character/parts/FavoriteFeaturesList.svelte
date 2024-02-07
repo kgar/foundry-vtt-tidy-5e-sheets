@@ -15,7 +15,6 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import RechargeControl from 'src/components/item-list/controls/RechargeControl.svelte';
-    import { declareLocation } from 'src/types/location-awareness';
 
   let context = getContext<Readable<CharacterSheetContext>>('context');
   export let items: Item5e[] = [];
