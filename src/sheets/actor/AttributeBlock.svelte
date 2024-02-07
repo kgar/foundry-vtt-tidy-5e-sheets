@@ -235,8 +235,6 @@
     .proficiency-toggle-readonly {
       position: absolute;
       font-size: 0.625rem;
-      opacity: 0.4;
-      transition: opacity 0.3s ease;
       left: calc(50% - 0.75rem);
       bottom: -0.875rem;
       line-height: 0.625rem;

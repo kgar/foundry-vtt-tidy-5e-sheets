@@ -47,9 +47,7 @@ export const defaultLightTheme: Tidy5eTheme = {
     '--t5e-alwaysprepared-background': 'rgba(0, 0, 255, 0.15)',
     '--t5e-alwaysprepared-outline-color': 'rgba(65, 105, 225, 1)',
     '--t5e-alwaysprepared-accent-color': 'rgba(0, 191, 255, 1)',
-    '--t5e-magic-accent-color': 'rgba(255, 255, 0, 1)',
-    '--t5e-faint-magic-item-list-row-accent-color': 'rgba(255, 255, 0, 0.6)',
-    '--t5e-magic-item-grid-tile-outline-color': 'rgba(175, 255, 47, 1)',
+    '--t5e-magic-accent-color': '#ada11a',
     '--t5e-attunement-required-color': 'var(--t5e-light-color)',
     '--t5e-attuned-color': 'var(--t5e-primary-accent-color)',
     '--t5e-attuned-item-grid-icon-color': 'rgba(0, 0, 0, 0.4)',
@@ -97,8 +95,7 @@ export const defaultLightTheme: Tidy5eTheme = {
     '--t5e-death-save-backdrop-background': 'rgba(255, 0, 0, 0.5)',
     '--t5e-death-save-text-shadow-color': 'rgb(34, 34, 34)',
     '--t5e-hp-overlay-background': 'rgba(255, 0, 0, 1)',
-    '--t5e-inventory-grid-image-contrast-text-shadow-color':
-      'rgba(0, 0, 0, 1)',
+    '--t5e-inventory-grid-image-contrast-text-shadow-color': 'rgba(0, 0, 0, 1)',
     '--t5e-inventory-grid-hover-use-item-contrast-text-shadow-color':
       'rgba(255, 255, 255, 1)',
     '--t5e-item-info-card-background': "url('../../ui/parchment.jpg')",
@@ -141,6 +138,8 @@ export const defaultLightTheme: Tidy5eTheme = {
     '--t5e-tab-background': 'var(--t5e-header-background)',
     '--t5e-scrollbar-thumb-color': '#782e22',
     '--t5e-scrollbar-track-color': '#0000',
+    '--t5e-spell-pip-active-background': 'var(--t5e-primary-accent-color)',
+    '--t5e-spell-pip-empty-background': 'transparent',
   },
   type: 'light',
 };

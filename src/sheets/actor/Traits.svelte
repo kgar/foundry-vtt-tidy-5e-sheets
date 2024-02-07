@@ -100,7 +100,7 @@
     <TraitSection
       traitCssClass={$context.traits.traits?.dv?.cssClass ?? ''}
       title={localize('DND5E.DamVuln')}
-      iconCssClass="far fa-heart-broken"
+      iconCssClass="fas fa-heart-broken"
       tags={Object.entries($context.traits.traits.dv.selected)}
       configureButtonTitle={localize('DND5E.TraitConfig', {
         trait: localize('DND5E.DamVuln'),

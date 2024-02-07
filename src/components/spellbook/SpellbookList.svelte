@@ -20,7 +20,7 @@
   import ItemUses from '../item-list/ItemUses.svelte';
   import SpellComponents from './SpellComponents.svelte';
   import SpellPrepareControl from '../spellbook/SpellPrepareControl.svelte';
-  import SpellSlotMarkers from '../spellbook/SpellSlotMarkers.svelte';
+  import SpellPips from './SpellPips.svelte';
   import SpellSlotUses from '../spellbook/SpellSlotUses.svelte';
   import InlineFavoriteIcon from '../item-list/InlineFavoriteIcon.svelte';
   import ItemFavoriteControl from '../item-list/controls/ItemFavoriteControl.svelte';
@@ -68,7 +68,7 @@
           </span>
           {#if section.usesSlots}
             {#if $settingStore.useSpellSlotMarker}
-              <SpellSlotMarkers {section} />
+              <SpellPips {section} />
             {/if}
             <SpellSlotUses {section} />
           {/if}

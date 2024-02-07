@@ -9,7 +9,7 @@
   import ItemTable from '../item-list/ItemTable.svelte';
   import ItemTableColumn from '../item-list/ItemTableColumn.svelte';
   import ItemTableHeaderRow from '../item-list/ItemTableHeaderRow.svelte';
-  import SpellSlotMarkers from '../spellbook/SpellSlotMarkers.svelte';
+  import SpellPips from './SpellPips.svelte';
   import SpellSlotUses from '../spellbook/SpellSlotUses.svelte';
   import type { Item5e } from 'src/types/item';
   import GridPaneFavoriteIcon from '../item-grid/GridPaneFavoriteIcon.svelte';
@@ -81,7 +81,7 @@
           </span>
           {#if section.usesSlots}
             {#if $settingStore.useSpellSlotMarker}
-              <SpellSlotMarkers {section} />
+              <SpellPips {section} />
             {/if}
             <SpellSlotUses {section} />
           {/if}

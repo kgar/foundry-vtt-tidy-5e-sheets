@@ -17,7 +17,7 @@ export const defaultDarkTheme: Tidy5eTheme = {
     '--t5e-primary-color': 'rgba(255, 255, 255, 0.8)',
     '--t5e-secondary-color': 'rgba(255, 255, 255, 0.65)',
     '--t5e-tertiary-color': 'rgba(255, 255, 255, 0.4)',
-    '--t5e-primary-accent-color': 'rgba(255, 100, 0, 1)',
+    '--t5e-primary-accent-color': 'hsl(23.53, 80%, 50%)',
     '--spell-level-button-available-slots-text-color': 'white',
     '--t5e-white': 'rgba(0, 0, 0, 1)',
     '--t5e-faint-white': 'rgba(255, 255, 255, 0.2)',
@@ -47,9 +47,7 @@ export const defaultDarkTheme: Tidy5eTheme = {
     '--t5e-alwaysprepared-background': 'rgba(0, 100, 255, 0.3)',
     '--t5e-alwaysprepared-outline-color': 'rgba(65, 105, 225, 1)',
     '--t5e-alwaysprepared-accent-color': 'rgba(0, 191, 255, 1)',
-    '--t5e-magic-accent-color': 'rgba(255, 255, 0, 1)',
-    '--t5e-faint-magic-item-list-row-accent-color': 'rgba(255, 255, 0, 0.6)',
-    '--t5e-magic-item-grid-tile-outline-color': 'rgba(175, 255, 47, 1)',
+    '--t5e-magic-accent-color': '#ada11a',
     '--t5e-attunement-required-color': 'var(--t5e-light-color)',
     '--t5e-attuned-color': 'var(--t5e-primary-accent-color)',
     '--t5e-attuned-item-grid-icon-color': 'rgba(0, 0, 0, 0.4)',
@@ -97,8 +95,7 @@ export const defaultDarkTheme: Tidy5eTheme = {
     '--t5e-death-save-backdrop-background': 'rgba(255, 0, 0, 0.5)',
     '--t5e-death-save-text-shadow-color': 'rgb(34, 34, 34)',
     '--t5e-hp-overlay-background': 'rgba(255, 0, 0, 1)',
-    '--t5e-inventory-grid-image-contrast-text-shadow-color':
-      'rgba(0, 0, 0, 1)',
+    '--t5e-inventory-grid-image-contrast-text-shadow-color': 'rgba(0, 0, 0, 1)',
     '--t5e-inventory-grid-hover-use-item-contrast-text-shadow-color':
       'rgba(255, 255, 255, 1)',
     '--t5e-sheet-background': 'var(--t5e-background)',
@@ -145,6 +142,8 @@ export const defaultDarkTheme: Tidy5eTheme = {
     '--t5e-tab-background': 'transparent',
     '--t5e-scrollbar-thumb-color': '#782e22',
     '--t5e-scrollbar-track-color': '#0000',
+    '--t5e-spell-pip-active-background': 'var(--t5e-primary-accent-color)',
+    '--t5e-spell-pip-empty-background': 'var(--t5e-faint-color)',
   },
   type: 'dark',
 };

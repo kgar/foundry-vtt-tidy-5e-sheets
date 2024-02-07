@@ -192,14 +192,6 @@ export const themeVariables = {
     type: 'todo',
     group: 'todo',
   },
-  '--t5e-faint-magic-item-list-row-accent-color': {
-    type: 'todo',
-    group: 'todo',
-  },
-  '--t5e-magic-item-grid-tile-outline-color': {
-    type: 'todo',
-    group: 'todo',
-  },
   '--t5e-attunement-required-color': {
     type: 'todo',
     group: 'todo',
@@ -553,6 +545,14 @@ export const themeVariables = {
     group: 'todo',
   },
   '--t5e-scrollbar-track-color': {
+    type: 'todo',
+    group: 'todo',
+  },
+  '--t5e-spell-pip-active-background': {
+    type: 'todo',
+    group: 'todo',
+  },
+  '--t5e-spell-pip-empty-background': {
     type: 'todo',
     group: 'todo',
   },

@@ -1869,6 +1869,21 @@ export function createSettings() {
         },
         representsCssVariable: '--t5e-scrollbar-track-color',
       },
+      colorPickerMagicAccent: {
+        options: {
+          name: 'TIDY5E.Settings.ColorPickerMagicAccent.name',
+          scope: 'client',
+          type: String,
+          default: defaultLightTheme.variables['--t5e-magic-accent-color'],
+          config: false,
+        },
+        get() {
+          return FoundryAdapter.getTidySetting<string>(
+            'colorPickerMagicAccent'
+          );
+        },
+        representsCssVariable: '--t5e-magic-accent-color',
+      },
 
       debug: {
         options: {
