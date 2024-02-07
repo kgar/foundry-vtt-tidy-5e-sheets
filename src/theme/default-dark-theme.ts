@@ -97,8 +97,7 @@ export const defaultDarkTheme: Tidy5eTheme = {
     '--t5e-death-save-backdrop-background': 'rgba(255, 0, 0, 0.5)',
     '--t5e-death-save-text-shadow-color': 'rgb(34, 34, 34)',
     '--t5e-hp-overlay-background': 'rgba(255, 0, 0, 1)',
-    '--t5e-inventory-grid-image-contrast-text-shadow-color':
-      'rgba(0, 0, 0, 1)',
+    '--t5e-inventory-grid-image-contrast-text-shadow-color': 'rgba(0, 0, 0, 1)',
     '--t5e-inventory-grid-hover-use-item-contrast-text-shadow-color':
       'rgba(255, 255, 255, 1)',
     '--t5e-sheet-background': 'var(--t5e-background)',
@@ -145,6 +144,8 @@ export const defaultDarkTheme: Tidy5eTheme = {
     '--t5e-tab-background': 'transparent',
     '--t5e-scrollbar-thumb-color': '#782e22',
     '--t5e-scrollbar-track-color': '#0000',
+    '--t5e-spell-pip-active-background': 'var(--t5e-primary-accent-color)',
+    '--t5e-spell-pip-empty-background': 'var(--t5e-faint-color)',
   },
   type: 'dark',
 };

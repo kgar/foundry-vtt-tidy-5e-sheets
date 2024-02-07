@@ -556,4 +556,12 @@ export const themeVariables = {
     type: 'todo',
     group: 'todo',
   },
+  '--t5e-spell-pip-active-background': {
+    type: 'todo',
+    group: 'todo',
+  },
+  '--t5e-spell-pip-empty-background': {
+    type: 'todo',
+    group: 'todo',
+  },
 };
