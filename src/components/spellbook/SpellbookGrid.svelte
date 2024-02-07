@@ -17,6 +17,7 @@
   import type { Readable, Writable } from 'svelte/store';
   import { settingStore } from 'src/settings/settings';
   import { ActorItemRuntime } from 'src/runtime/ActorItemRuntime';
+  import { declareLocation } from 'src/types/location-awareness';
 
   export let section: any;
   export let spells: Item5e[];
@@ -66,24 +67,28 @@
     const dragData = item.toDragData();
     event.dataTransfer?.setData('text/plain', JSON.stringify(dragData));
   }
+
+  declareLocation('spellbook-grid-view');
 </script>
 
 <section class="spellbook-grid {cssClass}">
-  <ItemTable>
-    <ItemTableHeaderRow>
-      <ItemTableColumn primary={true}>
-        <span class="spell-primary-column-label">
-          {section.label}
-        </span>
-        {#if section.usesSlots}
-          {#if $settingStore.useSpellSlotMarker}
-            <SpellSlotMarkers {section} />
+  <ItemTable location={section.label}>
+    <svelte:fragment slot="header">
+      <ItemTableHeaderRow>
+        <ItemTableColumn primary={true}>
+          <span class="spell-primary-column-label">
+            {section.label}
+          </span>
+          {#if section.usesSlots}
+            {#if $settingStore.useSpellSlotMarker}
+              <SpellSlotMarkers {section} />
+            {/if}
+            <SpellSlotUses {section} />
           {/if}
-          <SpellSlotUses {section} />
-        {/if}
-      </ItemTableColumn>
-    </ItemTableHeaderRow>
-    <div class="spells">
+        </ItemTableColumn>
+      </ItemTableHeaderRow>
+    </svelte:fragment>
+    <div class="spells" slot="body">
       {#each spells as spell}
         {@const spellImgUrl = FoundryAdapter.getSpellImageUrl($context, spell)}
         <button

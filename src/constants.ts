@@ -155,6 +155,9 @@ export const CONSTANTS = {
     /** An input for the number of successful death saves an actor has. */
     DEATH_SAVE_SUCCESSES: 'death-save-successes',
 
+    /** An interactable element which toggles a view */
+    EXPANSION_TOGGLE: 'table-expansion-toggle',
+
     /** An interactable control which the user can execute to create an item (e.g., consumable, feature, loot, spell, weapon, etc.). */
     ITEM_CREATE_COMMAND: 'item-create-command',
 
@@ -197,6 +200,15 @@ export const CONSTANTS = {
     /** The container where all known resources (first, second, third, etc.) are kept. */
     RESOURCES_CONTAINER: 'resources-container',
 
+    /** An interactable element that can clear the search input it is associated with. */
+    SEARCH_CLEAR: 'search-clear',
+
+    /** A container for a search input and its search clearing interactable element. */
+    SEARCH_CONTAINER: 'search-container',
+
+    /** A user input for performing searches. */
+    SEARCH_INPUT: 'search-input',
+
     /** An interactable control that can open configuration settings for a target skill. */
     SKILL_CONFIGURATION_CONTROL: 'skill-configuration-control',
 
@@ -235,5 +247,8 @@ export const CONSTANTS = {
 
     /** A list of tools for the target actor. */
     TOOLS_LIST: 'tools-list',
+
+    /** A toolbar that usually sits at the top of a section of content, providing features like search, filtering, etc. */
+    UTILITY_TOOLBAR: 'utility-toolbar',
   },
 } as const;

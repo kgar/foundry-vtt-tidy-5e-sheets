@@ -1,11 +1,7 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { type CharacterSheetContext } from 'src/types/types';
-  import ItemFilters from '../../../components/item-list/ItemFilters.svelte';
-  import ItemFilterSearch from '../../../components/item-list/ItemFilterSearch.svelte';
-  import ItemFilterOption from '../../../components/item-list/ItemFilterOption.svelte';
   import type { ItemLayoutMode } from 'src/types/types';
-  import ItemFilterLayoutToggle from '../../../components/item-list/ItemFilterLayoutToggle.svelte';
   import InventoryList from '../parts/InventoryList.svelte';
   import InventoryGrid from '../parts/InventoryGrid.svelte';
   import { getContext } from 'svelte';
@@ -16,7 +12,16 @@
   import EncumbranceBar from 'src/sheets/actor/EncumbranceBar.svelte';
   import TabFooter from 'src/sheets/actor/TabFooter.svelte';
   import { settingStore } from 'src/settings/settings';
-    import { CONSTANTS } from 'src/constants';
+  import { CONSTANTS } from 'src/constants';
+  import { ExpandAllCollapseAllService } from 'src/features/expand-collapse/ExpandAllCollapseAllService';
+  import UtilityToolbar from 'src/components/utility-bar/UtilityToolbar.svelte';
+  import Search from 'src/components/utility-bar/Search.svelte';
+  import type {
+    UtilityToolbarCommandParams,
+    UtilityItemFilterParams,
+  } from 'src/components/utility-bar/types';
+  import UtilityToolbarCommand from 'src/components/utility-bar/UtilityToolbarCommand.svelte';
+  import UtilityFilters from 'src/components/utility-bar/UtilityItemFilters.svelte';
 
   let context = getContext<Readable<CharacterSheetContext>>('context');
 
@@ -41,24 +46,72 @@
   $: noItems =
     $context.inventory.some((section: any) => section.items.length > 0) ===
     false;
+
+  const expandAllCollapseAllService = ExpandAllCollapseAllService.initService();
+
+  let utilityBarCommands: UtilityToolbarCommandParams[] = [];
+  $: utilityBarCommands = [
+    {
+      title: 'Expand All',
+      iconClass: 'fas fa-angles-down',
+      execute: () => expandAllCollapseAllService.expandAll(),
+    },
+    {
+      title: 'Collapse All',
+      iconClass: 'fas fa-angles-up',
+      execute: () => expandAllCollapseAllService.collapseAll(),
+    },
+    {
+      title: localize('TIDY5E.ListLayout'),
+      iconClass: 'fas fa-th-list toggle-list',
+      visible: layoutMode === 'grid',
+      execute: () => toggleLayout(),
+    },
+    {
+      title: localize('TIDY5E.GridLayout'),
+      iconClass: 'fas fa-th-large toggle-grid',
+      visible: layoutMode === 'list',
+      execute: () => toggleLayout(),
+    },
+  ];
+
+  const filters: UtilityItemFilterParams[] = [
+    {
+      filterName: 'action',
+      setName: 'inventory',
+      text: 'DND5E.Action',
+    },
+    {
+      filterName: 'bonus',
+      setName: 'inventory',
+      text: 'DND5E.BonusAction',
+    },
+    {
+      filterName: 'reaction',
+      setName: 'inventory',
+      text: 'DND5E.Reaction',
+    },
+    {
+      filterName: 'equipped',
+      setName: 'inventory',
+      text: 'DND5E.Equipped',
+    },
+  ];
 </script>
 
-<ItemFilters>
-  <ItemFilterSearch bind:searchCriteria placeholder={localize('TIDY5E.Search')} />
-  <ItemFilterOption filterName="action" setName="inventory">
-    {localize('DND5E.Action')}
-  </ItemFilterOption>
-  <ItemFilterOption filterName="bonus" setName="inventory">
-    {localize('DND5E.BonusAction')}
-  </ItemFilterOption>
-  <ItemFilterOption filterName="reaction" setName="inventory">
-    {localize('DND5E.Reaction')}
-  </ItemFilterOption>
-  <ItemFilterOption filterName="equipped" setName="inventory">
-    {localize('DND5E.Equipped')}
-  </ItemFilterOption>
-  <ItemFilterLayoutToggle mode={layoutMode} on:toggle={() => toggleLayout()} />
-</ItemFilters>
+<UtilityToolbar>
+  <Search bind:value={searchCriteria} />
+  <UtilityFilters {filters} />
+  {#each utilityBarCommands as command (command.title)}
+    <UtilityToolbarCommand
+      title={command.title}
+      iconClass={command.iconClass}
+      text={command.text}
+      visible={command.visible ?? true}
+      on:execute={(ev) => command.execute?.(ev.detail)}
+    />
+  {/each}
+</UtilityToolbar>
 
 <div
   class="scroll-container flex-column small-gap"

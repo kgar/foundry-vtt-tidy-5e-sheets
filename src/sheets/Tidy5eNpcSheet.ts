@@ -10,7 +10,7 @@ import type {
   ExpandedItemIdToLocationsMap,
   ExpandedItemData,
 } from 'src/types/types';
-import { get, writable } from 'svelte/store';
+import { writable } from 'svelte/store';
 import NpcSheet from './npc/NpcSheet.svelte';
 import { CONSTANTS } from 'src/constants';
 import {
@@ -38,6 +38,8 @@ import { CustomContentRenderer } from './CustomContentRenderer';
 import { ActorPortraitRuntime } from 'src/runtime/ActorPortraitRuntime';
 import { calculateSpellAttackAndDc } from 'src/utils/formula';
 import { CustomActorTraitsRuntime } from 'src/runtime/actor-traits/CustomActorTraitsRuntime';
+import { SessionStorageManager } from 'src/utils/session-storage';
+import { ItemTableToggleCacheService } from 'src/features/caching/ItemTableToggleCacheService';
 
 export class Tidy5eNpcSheet
   extends dnd5e.applications.actor.ActorSheet5eNPC
@@ -55,9 +57,15 @@ export class Tidy5eNpcSheet
   searchFilters: LocationToSearchTextMap = new Map<string, string>();
   expandedItems: ExpandedItemIdToLocationsMap = new Map<string, Set<string>>();
   expandedItemData: ExpandedItemData = new Map<string, ItemChatData>();
+  itemTableTogglesCache: ItemTableToggleCacheService;
 
   constructor(...args: any[]) {
     super(...args);
+
+    this.itemTableTogglesCache = new ItemTableToggleCacheService({
+      userId: game.user.id,
+      documentId: this.actor.id,
+    });
 
     settingStore.subscribe(() => {
       this.getData().then((context) => this.context.set(context));
@@ -102,6 +110,16 @@ export class Tidy5eNpcSheet
         ['location', ''],
         ['expandedItems', new Map(this.expandedItems)],
         ['expandedItemData', new Map(this.expandedItemData)],
+        [
+          'itemTableToggles',
+          new Map(this.itemTableTogglesCache.itemTableToggles),
+        ],
+        [
+          'onItemTableToggle',
+          this.itemTableTogglesCache.onItemTableToggle.bind(
+            this.itemTableTogglesCache
+          ),
+        ],
       ]),
     });
 

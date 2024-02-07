@@ -17,6 +17,7 @@
   import TextInput from '../../../components/inputs/TextInput.svelte';
   import { settingStore } from 'src/settings/settings';
   import { ActorItemRuntime } from 'src/runtime/ActorItemRuntime';
+  import { declareLocation } from 'src/types/location-awareness';
 
   export let section: any;
   export let items: Item5e[];
@@ -79,17 +80,21 @@
     const dragData = item.toDragData();
     event.dataTransfer?.setData('text/plain', JSON.stringify(dragData));
   }
+
+  declareLocation('inventory-grid');
 </script>
 
-<ItemTable>
-  <ItemTableHeaderRow>
-    <ItemTableColumn primary={true}>
-      <span class="inventory-primary-column-label">
-        {localize(section.label)} ({items.length})
-      </span>
-    </ItemTableColumn>
-  </ItemTableHeaderRow>
-  <div class="items">
+<ItemTable location={section.label}>
+  <svelte:fragment slot="header">
+    <ItemTableHeaderRow>
+      <ItemTableColumn primary={true}>
+        <span class="inventory-primary-column-label">
+          {localize(section.label)} ({items.length})
+        </span>
+      </ItemTableColumn>
+    </ItemTableHeaderRow>
+  </svelte:fragment>
+  <div class="items" slot="body">
     {#each items as item (item.id)}
       {@const ctx = $context.itemContext[item.id]}
 

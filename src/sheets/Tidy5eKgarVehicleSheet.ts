@@ -34,6 +34,7 @@ import { CustomContentRenderer } from './CustomContentRenderer';
 import { getBaseActorSheet5e } from 'src/utils/class-inheritance';
 import { ActorPortraitRuntime } from 'src/runtime/ActorPortraitRuntime';
 import { CustomActorTraitsRuntime } from 'src/runtime/actor-traits/CustomActorTraitsRuntime';
+import { ItemTableToggleCacheService } from 'src/features/caching/ItemTableToggleCacheService';
 
 export class Tidy5eVehicleSheet
   extends dnd5e.applications.actor.ActorSheet5eVehicle
@@ -47,9 +48,15 @@ export class Tidy5eVehicleSheet
   currentTabId: string;
   expandedItems: ExpandedItemIdToLocationsMap = new Map<string, Set<string>>();
   expandedItemData: ExpandedItemData = new Map<string, ItemChatData>();
+  itemTableTogglesCache: ItemTableToggleCacheService;
 
   constructor(...args: any[]) {
     super(...args);
+
+    this.itemTableTogglesCache = new ItemTableToggleCacheService({
+      userId: game.user.id,
+      documentId: this.actor.id,
+    });
 
     settingStore.subscribe(() => {
       this.getData().then((context) => this.context.set(context));
@@ -92,6 +99,16 @@ export class Tidy5eVehicleSheet
         ['location', ''],
         ['expandedItems', new Map(this.expandedItems)],
         ['expandedItemData', new Map(this.expandedItemData)],
+        [
+          'itemTableToggles',
+          new Map(this.itemTableTogglesCache.itemTableToggles),
+        ],
+        [
+          'onItemTableToggle',
+          this.itemTableTogglesCache.onItemTableToggle.bind(
+            this.itemTableTogglesCache
+          ),
+        ],
       ]),
     });
 
