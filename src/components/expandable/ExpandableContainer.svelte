@@ -17,8 +17,11 @@
 
     transition: grid-template-rows 0.2s ease;
 
-    :global(> *) {
-      overflow-y: hidden;
+    // Problem: it's not animating when opening.
+    &:not(.expanded) {
+      :global(> *) {
+        overflow-y: hidden;
+      }
     }
   }
 </style>
