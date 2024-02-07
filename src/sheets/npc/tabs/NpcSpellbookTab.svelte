@@ -40,12 +40,12 @@
   let utilityBarCommands: UtilityToolbarCommandParams[] = [];
   $: utilityBarCommands = [
     {
-      title: 'Expand All',
+      title: localize('TIDY5E.Commands.ExpandAll'),
       iconClass: 'fas fa-angles-down',
       execute: () => expandAllCollapseAllService.expandAll(),
     },
     {
-      title: 'Collapse All',
+      title: localize('TIDY5E.Commands.CollapseAll'),
       iconClass: 'fas fa-angles-up',
       execute: () => expandAllCollapseAllService.collapseAll(),
     },

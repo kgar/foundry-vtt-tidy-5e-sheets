@@ -703,5 +703,7 @@
     "label": "Menu",
     "themeLabel": "Theme"
   },
-  "TIDY5E.ActiveEffectsMarkerTitle": "This item has active effects"
+  "TIDY5E.ActiveEffectsMarkerTitle": "This item has active effects",
+  "TIDY5E.Commands.ExpandAll": "Expand All",
+  "TIDY5E.Commands.CollapseAll": "Collapse All"
 }
