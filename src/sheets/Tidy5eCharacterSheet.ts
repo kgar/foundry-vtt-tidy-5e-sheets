@@ -40,6 +40,7 @@ import { CustomContentRenderer } from './CustomContentRenderer';
 import { ActorPortraitRuntime } from 'src/runtime/ActorPortraitRuntime';
 import { calculateSpellAttackAndDc } from 'src/utils/formula';
 import { CustomActorTraitsRuntime } from 'src/runtime/actor-traits/CustomActorTraitsRuntime';
+import { SessionStorageManager } from 'src/utils/session-storage';
 
 export class Tidy5eCharacterSheet
   extends dnd5e.applications.actor.ActorSheet5eCharacter
@@ -58,10 +59,17 @@ export class Tidy5eCharacterSheet
   searchFilters: LocationToSearchTextMap = new Map<string, string>();
   expandedItems: ExpandedItemIdToLocationsMap = new Map<string, Set<string>>();
   expandedItemData: ExpandedItemData = new Map<string, ItemChatData>();
-  itemTableToggles: LocationToItemTableToggleMap = new Map<string, boolean>();
+  itemTableToggles: LocationToItemTableToggleMap;
 
   constructor(...args: any[]) {
     super(...args);
+
+    this.itemTableToggles =
+      SessionStorageManager.getMap({
+        userId: game.user.id,
+        documentId: this.actor.id,
+        feature: 'item-table-toggles',
+      }) ?? new Map<string, boolean>();
 
     settingStore.subscribe(() => {
       this.getData().then((context) => this.context.set(context));
@@ -592,6 +600,14 @@ export class Tidy5eCharacterSheet
   onItemTableToggle(location: string, expanded: boolean): void {
     debug('Toggled Item Table', { location, expanded });
     this.itemTableToggles.set(location, expanded);
+    SessionStorageManager.storeMap(
+      {
+        userId: game.user.id,
+        documentId: this.actor.id,
+        feature: 'item-table-toggles',
+      },
+      this.itemTableToggles
+    );
   }
 }
 

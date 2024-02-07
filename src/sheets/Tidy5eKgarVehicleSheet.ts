@@ -9,6 +9,8 @@ import type {
   ExpandedItemData,
   ExpandedItemIdToLocationsMap,
   VehicleSheetContext,
+  ItemTableToggleCacheable,
+  LocationToItemTableToggleMap,
 } from 'src/types/types';
 import { writable } from 'svelte/store';
 import VehicleSheet from './vehicle/VehicleSheet.svelte';
@@ -34,10 +36,14 @@ import { CustomContentRenderer } from './CustomContentRenderer';
 import { getBaseActorSheet5e } from 'src/utils/class-inheritance';
 import { ActorPortraitRuntime } from 'src/runtime/ActorPortraitRuntime';
 import { CustomActorTraitsRuntime } from 'src/runtime/actor-traits/CustomActorTraitsRuntime';
+import { SessionStorageManager } from 'src/utils/session-storage';
 
 export class Tidy5eVehicleSheet
   extends dnd5e.applications.actor.ActorSheet5eVehicle
-  implements SheetTabCacheable, SheetExpandedItemsCacheable
+  implements
+    SheetTabCacheable,
+    SheetExpandedItemsCacheable,
+    ItemTableToggleCacheable
 {
   context = writable<VehicleSheetContext>();
   stats = writable<SheetStats>({
@@ -47,9 +53,17 @@ export class Tidy5eVehicleSheet
   currentTabId: string;
   expandedItems: ExpandedItemIdToLocationsMap = new Map<string, Set<string>>();
   expandedItemData: ExpandedItemData = new Map<string, ItemChatData>();
+  itemTableToggles: LocationToItemTableToggleMap;
 
   constructor(...args: any[]) {
     super(...args);
+
+    this.itemTableToggles =
+      SessionStorageManager.getMap({
+        userId: game.user.id,
+        documentId: this.actor.id,
+        feature: 'item-table-toggles',
+      }) ?? new Map<string, boolean>();
 
     settingStore.subscribe(() => {
       this.getData().then((context) => this.context.set(context));
@@ -92,6 +106,8 @@ export class Tidy5eVehicleSheet
         ['location', ''],
         ['expandedItems', new Map(this.expandedItems)],
         ['expandedItemData', new Map(this.expandedItemData)],
+        ['itemTableToggles', new Map(this.itemTableToggles)],
+        ['onItemTableToggle', this.onItemTableToggle.bind(this)],
       ]),
     });
 
@@ -354,5 +370,21 @@ export class Tidy5eVehicleSheet
     debug('Item Toggled', {
       expandedItems: this.expandedItems,
     });
+  }
+
+  /* -------------------------------------------- */
+  /* ItemTableToggleCacheable
+  /* -------------------------------------------- */
+  onItemTableToggle(location: string, expanded: boolean): void {
+    debug('Toggled Item Table', { location, expanded });
+    this.itemTableToggles.set(location, expanded);
+    SessionStorageManager.storeMap(
+      {
+        userId: game.user.id,
+        documentId: this.actor.id,
+        feature: 'item-table-toggles',
+      },
+      this.itemTableToggles
+    );
   }
 }

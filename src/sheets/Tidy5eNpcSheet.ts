@@ -9,6 +9,8 @@ import type {
   SheetTabCacheable,
   ExpandedItemIdToLocationsMap,
   ExpandedItemData,
+  ItemTableToggleCacheable,
+  LocationToItemTableToggleMap,
 } from 'src/types/types';
 import { get, writable } from 'svelte/store';
 import NpcSheet from './npc/NpcSheet.svelte';
@@ -38,13 +40,15 @@ import { CustomContentRenderer } from './CustomContentRenderer';
 import { ActorPortraitRuntime } from 'src/runtime/ActorPortraitRuntime';
 import { calculateSpellAttackAndDc } from 'src/utils/formula';
 import { CustomActorTraitsRuntime } from 'src/runtime/actor-traits/CustomActorTraitsRuntime';
+import { SessionStorageManager } from 'src/utils/session-storage';
 
 export class Tidy5eNpcSheet
   extends dnd5e.applications.actor.ActorSheet5eNPC
   implements
     SheetTabCacheable,
     SheetExpandedItemsCacheable,
-    SearchFilterCacheable
+    SearchFilterCacheable,
+    ItemTableToggleCacheable
 {
   context = writable<NpcSheetContext>();
   stats = writable<SheetStats>({
@@ -55,9 +59,17 @@ export class Tidy5eNpcSheet
   searchFilters: LocationToSearchTextMap = new Map<string, string>();
   expandedItems: ExpandedItemIdToLocationsMap = new Map<string, Set<string>>();
   expandedItemData: ExpandedItemData = new Map<string, ItemChatData>();
+  itemTableToggles: LocationToItemTableToggleMap;
 
   constructor(...args: any[]) {
     super(...args);
+
+    this.itemTableToggles =
+      SessionStorageManager.getMap({
+        userId: game.user.id,
+        documentId: this.actor.id,
+        feature: 'item-table-toggles',
+      }) ?? new Map<string, boolean>();
 
     settingStore.subscribe(() => {
       this.getData().then((context) => this.context.set(context));
@@ -102,6 +114,8 @@ export class Tidy5eNpcSheet
         ['location', ''],
         ['expandedItems', new Map(this.expandedItems)],
         ['expandedItemData', new Map(this.expandedItemData)],
+        ['itemTableToggles', new Map(this.itemTableToggles)],
+        ['onItemTableToggle', this.onItemTableToggle.bind(this)],
       ]),
     });
 
@@ -812,5 +826,21 @@ export class Tidy5eNpcSheet
       text,
     });
     this.searchFilters.set(location, text);
+  }
+
+  /* -------------------------------------------- */
+  /* ItemTableToggleCacheable
+  /* -------------------------------------------- */
+  onItemTableToggle(location: string, expanded: boolean): void {
+    debug('Toggled Item Table', { location, expanded });
+    this.itemTableToggles.set(location, expanded);
+    SessionStorageManager.storeMap(
+      {
+        userId: game.user.id,
+        documentId: this.actor.id,
+        feature: 'item-table-toggles',
+      },
+      this.itemTableToggles
+    );
   }
 }
