@@ -13,7 +13,7 @@ export class AboutApplication extends SvelteFormApplicationBase {
   }
 
   get title() {
-    return FoundryAdapter.localize('TIDY5E.Settings.Info.tabLabel');
+    return FoundryAdapter.localize('TIDY5E.Settings.About.dialogTitle');
   }
 
   createComponent(node: HTMLElement): SvelteComponent<any, any, any> {

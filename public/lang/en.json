@@ -640,7 +640,7 @@
   "TIDY5E.Settings.About": {
     "name": "About",
     "buttonLabel": "About Tidy 5e Sheets",
-    "dialogTitle": "About",
+    "dialogTitle": "About Tidy 5e Sheets",
     "hint": "Information about the Tidy 5e Sheets module.",
     "logoAltText": "A heater shield with four stars and the words 'Tidy 5e' on the front.",
     "MaintainerParagraph": "Tidy 5e Sheets are maintained by {urlStart}kgar{urlEnd}.",
