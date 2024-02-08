@@ -9,7 +9,7 @@
   import type {
     SettingsSheetContext,
     SettingsSheetFunctions,
-  } from '../SheetSettings.types';
+  } from '../ClientSettings.types';
   import ListboxSetting from '../parts/ListboxSetting.svelte';
   import { CONSTANTS } from 'src/constants';
 

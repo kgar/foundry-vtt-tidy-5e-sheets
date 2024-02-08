@@ -1,6 +1,6 @@
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type { SvelteComponent } from 'svelte';
-import SheetSettings from './SheetSettings.svelte';
+import SheetSettings from './ClientSettings.svelte';
 import { writable, type Writable } from 'svelte/store';
 import {
   getCurrentSettings,
@@ -17,7 +17,7 @@ import type {
   SettingsSheetContext,
   SettingsSheetFunctions,
   SettingsSheetStore,
-} from './SheetSettings.types';
+} from './ClientSettings.types';
 import { NpcSheetRuntime } from 'src/runtime/NpcSheetRuntime';
 import { CharacterSheetRuntime } from 'src/runtime/CharacterSheetRuntime';
 import { VehicleSheetRuntime } from 'src/runtime/VehicleSheetRuntime';

@@ -4,7 +4,7 @@
   import type { Writable } from 'svelte/store';
   import { SettingsProvider } from 'src/settings/settings';
   import CheckboxSetting from '../parts/CheckboxSetting.svelte';
-  import type { SettingsSheetContext } from '../SheetSettings.types';
+  import type { SettingsSheetContext } from '../ClientSettings.types';
   import ExhaustionSetting from '../parts/ExhaustionSetting.svelte';
   import {
     getOneDnDExhaustionConfig,

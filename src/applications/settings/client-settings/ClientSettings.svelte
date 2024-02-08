@@ -15,7 +15,7 @@
   import type {
     SettingsSheetFunctions,
     SettingsSheetStore,
-  } from './SheetSettings.types';
+  } from './ClientSettings.types';
 
   let selectedTabId: string;
   let context = getContext<SettingsSheetStore>('context');
