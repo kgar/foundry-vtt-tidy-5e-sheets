@@ -2,7 +2,7 @@ import { HandlebarsTemplateRenderer } from 'src/runtime/HandlebarsTemplateRender
 import { HandlebarsTab } from 'src/api/tab/HandlebarsTab';
 import { HtmlTab } from 'src/api/tab/HtmlTab';
 import type { HtmlTabContent, Tab } from 'src/types/types';
-import { error } from 'src/utils/logging';
+import { debug, error } from 'src/utils/logging';
 import { CONSTANTS } from 'src/constants';
 import { isNil } from 'src/utils/data';
 import type { RegisteredTab, SheetLayout } from '../types';
@@ -132,11 +132,21 @@ function getOrderedEnabledSheetTabs<TContext>(
   context: TContext,
   registeredTabs: RegisteredTab<TContext>[]
 ) {
-  return [...registeredTabs].filter(
-    (t) =>
-      isNil(t.enabled) ||
-      (typeof t.enabled === 'function' && t.enabled(context))
-  );
+  return [...registeredTabs].filter((t) => {
+    try {
+      return (
+        isNil(t.enabled) ||
+        (typeof t.enabled === 'function' && t.enabled(context))
+      );
+    } catch (e) {
+      error(
+        'An error occurred while determining if a tab should be enabled.',
+        false,
+        e
+      );
+      debug('Tab-enabled error troubleshooting info', { tab: t });
+    }
+  });
 }
 
 async function getTabContent(data: any, tab: RegisteredTab<any>) {
