@@ -22,7 +22,7 @@ export type ThemeSettingsSheetFunctions = {
   exportTheme(settings: CurrentSettings): void;
 };
 
-export default class ThemeSettingsFormApplication extends SvelteFormApplicationBase {
+export class ThemeSettingsFormApplication extends SvelteFormApplicationBase {
   themeableColors: ThemeColorSetting[] = getThemeableColors();
   context: Writable<CurrentSettings> = writable(getCurrentSettings());
 

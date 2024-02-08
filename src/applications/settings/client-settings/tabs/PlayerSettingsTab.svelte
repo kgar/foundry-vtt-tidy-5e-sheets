@@ -6,53 +6,16 @@
   import CheckboxSetting from 'src/applications/settings/parts/CheckboxSetting.svelte';
   import NumberInputSetting from 'src/applications/settings/parts/NumberInputSetting.svelte';
   import TextInputSetting from 'src/applications/settings/parts/TextInputSetting.svelte';
-  import SelectSetting from '../parts/SelectSetting.svelte';
   import type {
     SettingsSheetContext,
-    SettingsSheetFunctions,
   } from '../ClientSettings.types';
-  import ListboxSetting from '../parts/ListboxSetting.svelte';
-  import { CONSTANTS } from 'src/constants';
 
   let context = getContext<Writable<SettingsSheetContext>>('context');
-  let functions = getContext<SettingsSheetFunctions>('functions');
 
-  const userIsGm = FoundryAdapter.userIsGm();
   const localize = FoundryAdapter.localize;
 </script>
 
 <h2>{localize('TIDY5E.Settings.TabPlayers.header')}</h2>
-{#if userIsGm}
-  <SelectSetting
-    options={SettingsProvider.settings.initialCharacterSheetTab.options.choices()}
-    bind:value={$context.settings.initialCharacterSheetTab}
-    name={SettingsProvider.settings.initialCharacterSheetTab.options.name}
-    hint={SettingsProvider.settings.initialCharacterSheetTab.options.hint}
-    id="initialCharacterSheetTab"
-  />
-
-  <ListboxSetting
-    name={SettingsProvider.settings.defaultCharacterSheetTabs.options.name}
-    hint={SettingsProvider.settings.defaultCharacterSheetTabs.options.hint}
-    leftHeader="TIDY5E.Settings.DefaultSheetTabs.AvailableHeader"
-    bind:leftItems={$context.defaultCharacterTabs.available}
-    rightHeader="TIDY5E.Settings.DefaultSheetTabs.SelectedHeader"
-    bind:rightItems={$context.defaultCharacterTabs.selected}
-    labelProp="label"
-    valueProp="id"
-  >
-    <div slot="below-listbox">
-      <button
-        type="button"
-        on:click={() =>
-          functions.resetDefaultTabs(context, CONSTANTS.SHEET_TYPE_CHARACTER)}
-      >
-        <i class="fas fa-rotate-right" />
-        {localize('TIDY5E.Reset')}
-      </button>
-    </div>
-  </ListboxSetting>
-{/if}
 
 <CheckboxSetting
   bind:value={$context.settings.useClassicControlsForCharacter}

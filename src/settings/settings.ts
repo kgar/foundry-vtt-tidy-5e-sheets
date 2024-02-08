@@ -7,7 +7,8 @@ import { defaultLightTheme } from 'src/theme/default-light-theme';
 import { getCoreThemes, themeVariables } from 'src/theme/theme-reference';
 import { SheetSettingsFormApplication } from 'src/applications/settings/client-settings/ClientSettingsFormApplication';
 import { writable, type Writable } from 'svelte/store';
-import ThemeSettingsFormApplication from 'src/applications/theme/ThemeSettingsFormApplication';
+import { WorldSettingsFormApplication } from 'src/applications/settings/world-settings/WorldSettingsFormApplication';
+import { ThemeSettingsFormApplication } from 'src/applications/theme/ThemeSettingsFormApplication';
 import {
   getStandardExhaustionConfig,
   getStandardVehicleExhaustionConfig,
@@ -18,6 +19,7 @@ import { CharacterSheetRuntime } from 'src/runtime/CharacterSheetRuntime';
 import { VehicleSheetRuntime } from 'src/runtime/VehicleSheetRuntime';
 import { TabManager } from 'src/runtime/tab/TabManager';
 import { MigrationsApplication } from 'src/applications/migrations/MigrationsApplication';
+import { InfoApplication } from 'src/applications/settings/info/InfoApplication';
 
 export type Tidy5eSettings = {
   [settingKey: string]: Tidy5eSetting;
@@ -104,6 +106,16 @@ export let settingStore: Writable<CurrentSettings>;
 export function createSettings() {
   return {
     menus: {
+      worldSettings: {
+        options: {
+          name: `TIDY5E.WorldSettings.SheetMenu.name`,
+          label: 'TIDY5E.WorldSettings.SheetMenu.label',
+          hint: `TIDY5E.WorldSettings.SheetMenu.hint`,
+          icon: 'fa-solid fa-cog',
+          type: WorldSettingsFormApplication,
+          restricted: true,
+        },
+      },
       userMenu: {
         options: {
           name: `TIDY5E.Settings.SheetMenu.name`,
@@ -140,6 +152,16 @@ export function createSettings() {
           hint: `TIDY5E.Settings.Migrations.hint`,
           icon: 'fa-solid fa-right-left',
           type: MigrationsApplication,
+          restricted: true,
+        },
+      },
+      info: {
+        options: {
+          name: `TIDY5E.Info.SheetMenu.name`,
+          label: 'TIDY5E.Info.SheetMenu.label',
+          hint: `TIDY5E.Info.SheetMenu.hint`,
+          icon: 'fa-solid fa-cog',
+          type: InfoApplication,
           restricted: true,
         },
       },

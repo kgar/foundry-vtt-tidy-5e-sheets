@@ -1,10 +1,10 @@
 import SvelteFormApplicationBase from 'src/applications/SvelteFormApplicationBase';
 import type { SvelteComponent } from 'svelte';
-import WorldSettings from './WorldSettings.svelte';
+import Info from './Info.svelte';
 
-export class WorldSettingsFormApplication extends SvelteFormApplicationBase {
+export class InfoApplication extends SvelteFormApplicationBase {
   createComponent(node: HTMLElement): SvelteComponent<any, any, any> {
-    return new WorldSettings({
+    return new Info({
       target: node,
     });
   }

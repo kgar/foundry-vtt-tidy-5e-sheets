@@ -5,10 +5,7 @@
   import PlayerSettingsTab from './tabs/PlayerSettingsTab.svelte';
   import NpcSettingsTab from './tabs/NpcSettingsTab.svelte';
   import VehicleSettingsTab from './tabs/VehicleSettingsTab.svelte';
-  import GmOptionsSettingsTab from './tabs/GmOptionsSettingsTab.svelte';
-  import LockSettingsTab from './tabs/LockSettingsTab.svelte';
   import FeaturesSettingsTab from './tabs/FeaturesSettingsTab.svelte';
-  import InfoTab from './tabs/InfoTab.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getContext } from 'svelte';
   import { CONSTANTS } from 'src/constants';
@@ -50,41 +47,11 @@
     },
   ];
 
-  if (FoundryAdapter.userIsGm()) {
-    tabs.push(
-      {
-        id: CONSTANTS.TAB_SETTINGS_GM,
-        title: 'TIDY5E.Settings.TabGM.tabLabel',
-        content: {
-          component: GmOptionsSettingsTab,
-          type: 'svelte',
-        },
-      },
-      {
-        id: CONSTANTS.TAB_SETTINGS_LOCKS,
-        title: 'TIDY5E.Settings.TabLocks.tabLabel',
-        content: {
-          component: LockSettingsTab,
-          type: 'svelte',
-        },
-      },
-    );
-  }
-
   tabs.push({
     id: CONSTANTS.TAB_SETTINGS_FEATURES,
     title: 'TIDY5E.Settings.TabFeatures.tabLabel',
     content: {
       component: FeaturesSettingsTab,
-      type: 'svelte',
-    },
-  });
-
-  tabs.push({
-    id: CONSTANTS.TAB_SETTINGS_INFO,
-    title: 'TIDY5E.Settings.TabInfo.tabLabel',
-    content: {
-      component: InfoTab,
       type: 'svelte',
     },
   });

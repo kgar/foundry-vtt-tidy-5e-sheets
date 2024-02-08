@@ -3,18 +3,10 @@
   import { getContext } from 'svelte';
   import type { Writable } from 'svelte/store';
   import { SettingsProvider } from 'src/settings/settings';
-  import CheckboxSetting from '../parts/CheckboxSetting.svelte';
+  import CheckboxSetting from '../../parts/CheckboxSetting.svelte';
   import type { SettingsSheetContext } from '../ClientSettings.types';
-  import ExhaustionSetting from '../parts/ExhaustionSetting.svelte';
-  import {
-    getOneDnDExhaustionConfig,
-    getStandardExhaustionConfig,
-    getStandardVehicleExhaustionConfig,
-  } from 'src/features/exhaustion/exhaustion';
 
   let context = getContext<Writable<SettingsSheetContext>>('context');
-
-  let userIsGm = FoundryAdapter.userIsGm();
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -59,48 +51,3 @@
   hint={SettingsProvider.settings.actionListScaleCantripDamage.options.hint}
   id="actionListScaleCantripDamage"
 />
-
-{#if userIsGm}
-  <h2>{localize('TIDY5E.Settings.Exhaustion.Header')}</h2>
-
-  <article class="setting buttons">
-    <button
-      type="button"
-      on:click={() =>
-        ($context.exhaustionConfig = getStandardExhaustionConfig())}
-    >
-      {localize('TIDY5E.Settings.Exhaustion.useStandardExhaustion')}
-    </button>
-    <button
-      type="button"
-      on:click={() => ($context.exhaustionConfig = getOneDnDExhaustionConfig())}
-    >
-      {localize('TIDY5E.Settings.Exhaustion.useOneDnDExhaustion')}
-    </button>
-  </article>
-
-  <ExhaustionSetting
-    name="TIDY5E.Settings.Exhaustion.name"
-    hint="TIDY5E.Settings.Exhaustion.hint"
-    bind:config={$context.exhaustionConfig}
-  />
-
-  <h2>{localize('TIDY5E.Settings.VehicleExhaustion.Header')}</h2>
-
-  <article class="setting buttons">
-    <button
-      type="button"
-      on:click={() =>
-        ($context.vehicleExhaustionConfig =
-          getStandardVehicleExhaustionConfig())}
-    >
-      {localize('TIDY5E.Settings.Exhaustion.useStandardExhaustion')}
-    </button>
-  </article>
-
-  <ExhaustionSetting
-    name="TIDY5E.Settings.VehicleExhaustion.name"
-    hint="TIDY5E.Settings.VehicleExhaustion.hint"
-    bind:config={$context.vehicleExhaustionConfig}
-  />
-{/if}
