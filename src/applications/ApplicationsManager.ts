@@ -1,4 +1,4 @@
-import { SheetSettingsFormApplication } from './sheet-settings/SheetSettingsFormApplication';
+import { SheetSettingsFormApplication } from './settings/SheetSettingsFormApplication';
 import ThemeSettingsFormApplication from './theme/ThemeSettingsFormApplication';
 import { CONSTANTS } from 'src/constants';
 
