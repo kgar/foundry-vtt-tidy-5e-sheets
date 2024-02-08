@@ -178,10 +178,6 @@
     "labelInventoryLocks": null,
     "labelFeaturesLocks": null
   },
-  "TIDY5E.Settings.TabInfo": {
-    "tabLabel": null,
-    "header": null
-  },
   "TIDY5E.Settings.ItemCardsForAllItems": {
     "name": null,
     "hint": null

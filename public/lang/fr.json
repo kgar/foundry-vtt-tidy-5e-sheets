@@ -178,10 +178,6 @@
     "labelInventoryLocks": null,
     "labelFeaturesLocks": null
   },
-  "TIDY5E.Settings.TabInfo": {
-    "tabLabel": "Informations",
-    "header": "Informations"
-  },
   "TIDY5E.Settings.ItemCardsForAllItems": {
     "name": "Montrer la carte d'information des éléments dans toutes les mise en page",
     "hint": "Désactiver cette option pour afficher la carte d'information uniquement en mode grille."

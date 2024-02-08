@@ -145,11 +145,13 @@
         "labelInventoryLocks": "Bloqueos de inventario",
         "labelFeaturesLocks": "Bloqueos de rasgos"
     },
-    "TIDY5E.Settings.TabInfo": {
-        "tabLabel": "Info",
-        "header": "Info",
+    "TIDY5E.Settings.About": {
+        "name": "Info",
+        "buttonLabel": "Info",
+        "dialogTitle": "Info",
+        "hint": null,
+        "logoAltText": null,
         "PatreonLink": "{urlStart}Patreon{urlEnd}",
-        "Header": "Info",
         "MaintainerParagraph": "T5E es mantenido por {urlStart}kgar{urlEnd}.",
         "GithubParagraph": "¿Tienes una idea? ¿Algo no funciona? Envía un {urlStart}Problema de Github{urlEnd}.",
         "DiscordParagraph": "{urlStart}Servidor de discord de T5E{urlEnd}: Discute nuevas ideas, obtén ayuda de otros y realiza un seguimiento del progreso de este módulo.",

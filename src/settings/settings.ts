@@ -19,7 +19,7 @@ import { CharacterSheetRuntime } from 'src/runtime/CharacterSheetRuntime';
 import { VehicleSheetRuntime } from 'src/runtime/VehicleSheetRuntime';
 import { TabManager } from 'src/runtime/tab/TabManager';
 import { MigrationsApplication } from 'src/applications/migrations/MigrationsApplication';
-import { InfoApplication } from 'src/applications/settings/info/InfoApplication';
+import { AboutApplication } from 'src/applications/settings/about/AboutApplication';
 
 export type Tidy5eSettings = {
   [settingKey: string]: Tidy5eSetting;
@@ -155,14 +155,14 @@ export function createSettings() {
           restricted: true,
         },
       },
-      info: {
+      about: {
         options: {
-          name: `TIDY5E.Info.SheetMenu.name`,
-          label: 'TIDY5E.Info.SheetMenu.label',
-          hint: `TIDY5E.Info.SheetMenu.hint`,
-          icon: 'fa-solid fa-cog',
-          type: InfoApplication,
-          restricted: true,
+          name: `TIDY5E.Settings.About.name`,
+          label: 'TIDY5E.Settings.About.buttonLabel',
+          hint: `TIDY5E.Settings.About.hint`,
+          icon: 'fa-solid fa-question',
+          type: AboutApplication,
+          restricted: false,
         },
       },
     },

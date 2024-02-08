@@ -178,10 +178,6 @@
     "labelInventoryLocks": "所持品ロック",
     "labelFeaturesLocks": "機能ロック"
   },
-  "TIDY5E.Settings.TabInfo": {
-    "tabLabel": "情報",
-    "header": "情報"
-  },
   "TIDY5E.Settings.ItemCardsForAllItems": {
     "name": "アイテム情報のカードをすべてのシートで表示するすべてのｼｰﾄでアイテム情報カード表示機能を使用",
     "hint": "アイテム情報をすべてのシートで表示する必要が無い場合は無効にしくてださい。(再読み込みが発生します)"

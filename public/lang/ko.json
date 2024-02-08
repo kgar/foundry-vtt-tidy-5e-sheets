@@ -178,10 +178,6 @@
     "labelInventoryLocks": null,
     "labelFeaturesLocks": null
   },
-  "TIDY5E.Settings.TabInfo": {
-    "tabLabel": "정보",
-    "header": "정보"
-  },
   "TIDY5E.Settings.ItemCardsForAllItems": {
     "name": "모든 레이아웃에 아이템 정보 카드 표시",
     "hint": "슬라이드 아웃 정보 카드만을 원할 경우 활성화 할 것. 비활성화시 격자 레이아웃 정보 카드가 나온다."

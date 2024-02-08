@@ -225,19 +225,6 @@
   "TIDY5E.Settings.TabFeatures": {
     "tabLabel": "Features"
   },
-  "TIDY5E.Settings.TabInfo": {
-    "tabLabel": "Info",
-    "Header": "Info",
-    "MaintainerParagraph": "Tidy 5e Sheets are maintained by {urlStart}kgar{urlEnd}.",
-    "GithubParagraph": "Do you have a feature idea? Is something wrong? Submit a {urlStart}Github Issue{urlEnd}.",
-    "DiscordParagraph": "{urlStart}Tidy 5e Sheets Discord Server{urlEnd}: Discuss new feature ideas, get help from others, and track progress of this module.",
-    "LocalizationParagraph": "{urlStart}Foundry Hub Weblate{urlEnd}: Do you localize web content? Tidy 5e Sheets could use your help! Go to the Weblate website to see our localization progress in various languages. This module is accepting new language translations and modifications to existing translations.",
-    "FinancialSupportHeader": "Ways to Support Tidy 5e Sheets",
-    "FinancialSupportParagraph": "If you like Tidy 5e Sheets and want to support it financially, here are some ways to do it:",
-    "BuyMeACoffeeLink": "{urlStart}Buy Me a Coffee{urlEnd}",
-    "KoFiLink": "{urlStart}Ko-Fi{urlEnd}",
-    "PatreonLink": "{urlStart}Patreon{urlEnd}"
-  },
   "TIDY5E.Settings.ItemCardsForAllItems": {
     "name": "Show Item Cards in All Layouts",
     "hint": "When this setting is disabled, item cards only show in the grid."
@@ -649,6 +636,22 @@
       "alphaExplanation1": "Migrate GM settings and Tidy sheet data flags from the Alpha Tidy 5e Sheets. Most of the differences in data are from the sheet data flags. The Alpha flags migration targets top-level actors, top-level actors' items, and top-level items. This will bring in biographical data, favorites, and other sheet-specific Alpha data flags.",
       "alphaExplanation2": "{boldStart}Note{boldEnd}: this migration does not affect compendium content."
     }
+  },
+  "TIDY5E.Settings.About": {
+    "name": "About",
+    "buttonLabel": "About Tidy 5e Sheets",
+    "dialogTitle": "About",
+    "hint": "Information about the Tidy 5e Sheets module.",
+    "logoAltText": "A heater shield with four stars and the words 'Tidy 5e' on the front.",
+    "MaintainerParagraph": "Tidy 5e Sheets are maintained by {urlStart}kgar{urlEnd}.",
+    "GithubParagraph": "Do you have a feature idea? Is something wrong? Submit a {urlStart}Github Issue{urlEnd}.",
+    "DiscordParagraph": "{urlStart}Tidy 5e Sheets Discord Server{urlEnd}: Discuss new feature ideas, get help from others, and track progress of this module.",
+    "LocalizationParagraph": "{urlStart}Weblate{urlEnd}: Do you localize web content? Tidy 5e Sheets could use your help! Go to the Weblate website to see our localization progress in various languages. This module is accepting new language translations and modifications to existing translations.",
+    "FinancialSupportHeader": "Ways to Support Tidy 5e Sheets",
+    "FinancialSupportParagraph": "If you like Tidy 5e Sheets and want to support it financially, here are some ways to do it:",
+    "BuyMeACoffeeLink": "{urlStart}Buy Me a Coffee{urlEnd}",
+    "KoFiLink": "{urlStart}Ko-Fi{urlEnd}",
+    "PatreonLink": "{urlStart}Patreon{urlEnd}"
   },
   "TIDY5E.Settings.Debug": {
     "name": "Enable Debugging",

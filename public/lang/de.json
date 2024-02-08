@@ -178,10 +178,6 @@
     "labelInventoryLocks": null,
     "labelFeaturesLocks": null
   },
-  "TIDY5E.Settings.TabInfo": {
-    "tabLabel": "Info",
-    "header": "Info"
-  },
   "TIDY5E.Settings.ItemCardsForAllItems": {
     "name": "Zeigen Gegenstand-Infokarten in allen Ansichten.",
     "hint": "Deaktivieren, um die Infokarten nur in der Rasteransicht anzuzeigen."

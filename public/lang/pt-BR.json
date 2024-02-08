@@ -149,10 +149,6 @@
         "labelInventoryLocks": null,
         "labelFeaturesLocks": null
     },
-    "TIDY5E.Settings.TabInfo": {
-        "tabLabel": "Info",
-        "header": "Info"
-    },
     "TIDY5E.Settings.ItemCardsForAllItems": {
         "name": "Show item info cards in all layouts.",
         "hint": "Disable if you only want the slide out item info cards in grid layout."
