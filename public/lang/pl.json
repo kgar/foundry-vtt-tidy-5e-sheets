@@ -46,15 +46,14 @@
         "AtLeastOneRequiredErrorMessage": "Co najmniej jedna zakładka jest wymagana.",
         "Explanation": "Wszystkie zakładki, które są skonfigurowane tak, że użytkownik lub karta nie mogą ich zobaczyć (np. wyłączona zakładka \"Dziennik\" w ustawieniach), nie pojawią się na karcie, nawet jeśli są zaznaczone."
     },
-    "TIDY5E.Settings.TabVehicles": {
+    "TIDY5E.UserSettings.TabVehicles": {
         "tabLabel": "Pojazdy",
         "header": "Karty Pojazdów"
     },
-    "TIDY5E.Settings.TabGM": {
-        "tabLabel": "Ustawienia MG",
-        "header": "Opcje Karty MG"
+    "TIDY5E.WorldSettings.TabMisc": {
+        "tabLabel": "Ustawienia MG"
     },
-    "TIDY5E.Settings.TabLocks": {
+    "TIDY5E.WorldSettings.TabSheetLock": {
         "tabLabel": "Blokady",
         "header": "Ustawienia blokad"
     },
@@ -159,17 +158,17 @@
         "MoveAllRight": "Przenieś wszystko w prawo"
     },
     "TIDY5E.Settings.MulticlassSpellbookFilterLabel": "Filtr Księgi Czarów dla Multiklasowości",
-    "TIDY5E.Settings.SheetMenu": {
+    "TIDY5E.UserSettings.Menu": {
         "name": "Ustawienia Karty Tidy",
         "hint": "Stwórz swoją własną wersję Karty Tidy 5e",
         "label": "Ustawienia Karty",
         "title": "Ustawienia Karty T5E"
     },
-    "TIDY5E.Settings.TabPlayers": {
+    "TIDY5E.UserSettings.TabPlayers": {
         "tabLabel": "Gracze",
         "header": "Karty Postaci Graczy"
     },
-    "TIDY5E.Settings.TabNPCs": {
+    "TIDY5E.UserSettings.TabNPCs": {
         "header": "Karty Postaci Niezależnych",
         "tabLabel": "Postaci Niezależne"
     }

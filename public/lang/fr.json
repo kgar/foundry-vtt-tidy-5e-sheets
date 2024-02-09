@@ -147,29 +147,28 @@
 
   "TIDY5E.Settings.MulticlassSpellbookFilterLabel": null,
 
-  "TIDY5E.Settings.SheetMenu": {
+  "TIDY5E.UserSettings.Menu": {
     "name": null,
     "hint": null,
     "label": "Configuration des feuilles",
     "title": "Configuration des feuilles Tidy5e"
   },
-  "TIDY5E.Settings.TabPlayers": {
+  "TIDY5E.UserSettings.TabPlayers": {
     "tabLabel": "Joueur",
     "header": "Option des feuilles de joueur"
   },
-  "TIDY5E.Settings.TabNPCs": {
+  "TIDY5E.UserSettings.TabNPCs": {
     "tabLabel": null,
     "header": null
   },
-  "TIDY5E.Settings.TabVehicles": {
+  "TIDY5E.UserSettings.TabVehicles": {
     "tabLabel": null,
     "header": null
   },
-  "TIDY5E.Settings.TabGM": {
-    "tabLabel": "Options MJ",
-    "header": "Options pour le MJ"
+  "TIDY5E.WorldSettings.TabMisc": {
+    "tabLabel": "Options MJ"
   },
-  "TIDY5E.Settings.TabLocks": {
+  "TIDY5E.WorldSettings.TabSheetLock": {
     "tabLabel": null,
     "header": null,
     "hint": null,
@@ -177,10 +176,6 @@
     "labelGeneralLocks": null,
     "labelInventoryLocks": null,
     "labelFeaturesLocks": null
-  },
-  "TIDY5E.Settings.TabInfo": {
-    "tabLabel": "Informations",
-    "header": "Informations"
   },
   "TIDY5E.Settings.ItemCardsForAllItems": {
     "name": "Montrer la carte d'information des éléments dans toutes les mise en page",

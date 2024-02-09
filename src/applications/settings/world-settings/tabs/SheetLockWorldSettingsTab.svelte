@@ -1,20 +1,39 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import CheckboxSetting from 'src/applications/sheet-settings/parts/CheckboxSetting.svelte';
+  import CheckboxSetting from 'src/applications/settings/parts/CheckboxSetting.svelte';
   import { getContext } from 'svelte';
-  import type { Writable } from 'svelte/store';
-  import type { SettingsSheetContext } from '../SheetSettings.types';
+  import type { WorldSettingsContextStore } from '../WorldSettings.types';
 
-  let context = getContext<Writable<SettingsSheetContext>>('context');
+  const context = getContext<WorldSettingsContextStore>('context');
 
-  const userIsGm = FoundryAdapter.userIsGm();
   const localize = FoundryAdapter.localize;
 </script>
 
-{#if userIsGm}
-  <h2>{localize('TIDY5E.Settings.TabLocks.header')}</h2>
-  <p class="tab-notes">{localize('TIDY5E.Settings.TabLocks.hint')}</p>
-  <p class="tab-notes">{localize('TIDY5E.Settings.TabLocks.hint2')}</p>
+<div class="settings-form">
+  <CheckboxSetting
+    bind:value={$context.settings.permanentlyUnlockCharacterSheetForGm}
+    name={'TIDY5E.Settings.PermanentlyUnlockCharacterSheetForGM.name'}
+    hint={'TIDY5E.Settings.PermanentlyUnlockCharacterSheetForGM.hint'}
+    id="permanentlyUnlockCharacterSheetForGm"
+  />
+
+  <CheckboxSetting
+    bind:value={$context.settings.permanentlyUnlockNpcSheetForGm}
+    name={'TIDY5E.Settings.PermanentlyUnlockNPCSheetForGM.name'}
+    hint={'TIDY5E.Settings.PermanentlyUnlockNPCSheetForGM.hint'}
+    id="permanentlyUnlockNpcSheetForGm"
+  />
+
+  <CheckboxSetting
+    bind:value={$context.settings.permanentlyUnlockVehicleSheetForGm}
+    name={'TIDY5E.Settings.PermanentlyUnlockVehicleSheetForGM.name'}
+    hint={'TIDY5E.Settings.PermanentlyUnlockVehicleSheetForGM.hint'}
+    id="permanentlyUnlockVehicleSheetForGm"
+  />
+
+  <h2>{localize('TIDY5E.WorldSettings.TabSheetLock.header')}</h2>
+  <p class="tab-notes">{localize('TIDY5E.WorldSettings.TabSheetLock.hint')}</p>
+  <p class="tab-notes">{localize('TIDY5E.WorldSettings.TabSheetLock.hint2')}</p>
 
   <CheckboxSetting
     bind:value={$context.settings.useTotalSheetLock}
@@ -23,7 +42,7 @@
     id="useTotalSheetLock"
   />
 
-  <h3>{localize('TIDY5E.Settings.TabLocks.labelGeneralLocks')}</h3>
+  <h3>{localize('TIDY5E.WorldSettings.TabSheetLock.labelGeneralLocks')}</h3>
 
   <CheckboxSetting
     bind:value={$context.settings.lockExpChanges}
@@ -46,7 +65,7 @@
     id="lockConfigureSheet"
   />
 
-  <h3>{localize('TIDY5E.Settings.TabLocks.labelInventoryLocks')}</h3>
+  <h3>{localize('TIDY5E.WorldSettings.TabSheetLock.labelInventoryLocks')}</h3>
 
   <CheckboxSetting
     bind:value={$context.settings.lockMoneyChanges}
@@ -55,7 +74,7 @@
     id="lockMoneyChanges"
   />
 
-  <h3>{localize('TIDY5E.Settings.TabLocks.labelFeaturesLocks')}</h3>
+  <h3>{localize('TIDY5E.WorldSettings.TabSheetLock.labelFeaturesLocks')}</h3>
 
   <CheckboxSetting
     bind:value={$context.settings.lockLevelSelector}
@@ -70,4 +89,7 @@
     hint={'TIDY5E.Settings.LockItemQuantity.hint'}
     id="lockItemQuantity"
   />
-{/if}
+</div>
+
+<style lang="scss">
+</style>

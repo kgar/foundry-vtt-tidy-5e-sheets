@@ -147,29 +147,28 @@
 
   "TIDY5E.Settings.MulticlassSpellbookFilterLabel": null,
 
-  "TIDY5E.Settings.SheetMenu": {
+  "TIDY5E.UserSettings.Menu": {
     "name": null,
     "hint": null,
     "label": "시트 설정",
     "title": "Tidy5e 시트 설정"
   },
-  "TIDY5E.Settings.TabPlayers": {
+  "TIDY5E.UserSettings.TabPlayers": {
     "tabLabel": "플레이어",
     "header": "플레이어 캐릭터 시트"
   },
-  "TIDY5E.Settings.TabNPCs": {
+  "TIDY5E.UserSettings.TabNPCs": {
     "tabLabel": null,
     "header": null
   },
-  "TIDY5E.Settings.TabVehicles": {
+  "TIDY5E.UserSettings.TabVehicles": {
     "tabLabel": null,
     "header": null
   },
-  "TIDY5E.Settings.TabGM": {
-    "tabLabel": "GM 옵션",
-    "header": "GM 시트 옵션"
+  "TIDY5E.WorldSettings.TabMisc": {
+    "tabLabel": "GM 옵션"
   },
-  "TIDY5E.Settings.TabLocks": {
+  "TIDY5E.WorldSettings.TabSheetLock": {
     "tabLabel": null,
     "header": null,
     "hint": null,
@@ -177,10 +176,6 @@
     "labelGeneralLocks": null,
     "labelInventoryLocks": null,
     "labelFeaturesLocks": null
-  },
-  "TIDY5E.Settings.TabInfo": {
-    "tabLabel": "정보",
-    "header": "정보"
   },
   "TIDY5E.Settings.ItemCardsForAllItems": {
     "name": "모든 레이아웃에 아이템 정보 카드 표시",

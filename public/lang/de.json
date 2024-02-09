@@ -147,29 +147,28 @@
 
   "TIDY5E.Settings.MulticlassSpellbookFilterLabel": null,
 
-  "TIDY5E.Settings.SheetMenu": {
+  "TIDY5E.UserSettings.Menu": {
     "name": null,
     "hint": null,
     "label": "Einstellungen für Charakterbögen",
     "title": "Tidy5e Einstellungen für Charakterbögen"
   },
-  "TIDY5E.Settings.TabPlayers": {
+  "TIDY5E.UserSettings.TabPlayers": {
     "tabLabel": "Spieler",
     "header": "Spieler Charakterbögen"
   },
-  "TIDY5E.Settings.TabNPCs": {
+  "TIDY5E.UserSettings.TabNPCs": {
     "tabLabel": null,
     "header": null
   },
-  "TIDY5E.Settings.TabVehicles": {
+  "TIDY5E.UserSettings.TabVehicles": {
     "tabLabel": null,
     "header": null
   },
-  "TIDY5E.Settings.TabGM": {
-    "tabLabel": "SL Einstellungen",
-    "header": "SL Bogeneinstellungen"
+  "TIDY5E.WorldSettings.TabMisc": {
+    "tabLabel": "SL Einstellungen"
   },
-  "TIDY5E.Settings.TabLocks": {
+  "TIDY5E.WorldSettings.TabSheetLock": {
     "tabLabel": null,
     "header": null,
     "hint": null,
@@ -177,10 +176,6 @@
     "labelGeneralLocks": null,
     "labelInventoryLocks": null,
     "labelFeaturesLocks": null
-  },
-  "TIDY5E.Settings.TabInfo": {
-    "tabLabel": "Info",
-    "header": "Info"
   },
   "TIDY5E.Settings.ItemCardsForAllItems": {
     "name": "Zeigen Gegenstand-Infokarten in allen Ansichten.",

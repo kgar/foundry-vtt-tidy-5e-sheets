@@ -5,9 +5,10 @@ import type { GetFunctionReturnType } from 'src/types/types';
 import { applyTheme, getTheme } from 'src/theme/theme';
 import { defaultLightTheme } from 'src/theme/default-light-theme';
 import { getCoreThemes, themeVariables } from 'src/theme/theme-reference';
-import { SheetSettingsFormApplication } from 'src/applications/sheet-settings/SheetSettingsFormApplication';
+import { UserSettingsFormApplication } from 'src/applications/settings/user-settings/UserSettingsFormApplication';
 import { writable, type Writable } from 'svelte/store';
-import ThemeSettingsFormApplication from 'src/applications/theme/ThemeSettingsFormApplication';
+import { WorldSettingsFormApplication } from 'src/applications/settings/world-settings/WorldSettingsFormApplication';
+import { ThemeSettingsFormApplication } from 'src/applications/theme/ThemeSettingsFormApplication';
 import {
   getStandardExhaustionConfig,
   getStandardVehicleExhaustionConfig,
@@ -18,6 +19,7 @@ import { CharacterSheetRuntime } from 'src/runtime/CharacterSheetRuntime';
 import { VehicleSheetRuntime } from 'src/runtime/VehicleSheetRuntime';
 import { TabManager } from 'src/runtime/tab/TabManager';
 import { MigrationsApplication } from 'src/applications/migrations/MigrationsApplication';
+import { AboutApplication } from 'src/applications/settings/about/AboutApplication';
 
 export type Tidy5eSettings = {
   [settingKey: string]: Tidy5eSetting;
@@ -104,13 +106,23 @@ export let settingStore: Writable<CurrentSettings>;
 export function createSettings() {
   return {
     menus: {
+      worldSettings: {
+        options: {
+          name: `TIDY5E.WorldSettings.Menu.name`,
+          label: 'TIDY5E.WorldSettings.Menu.label',
+          hint: `TIDY5E.WorldSettings.Menu.hint`,
+          icon: 'fa-solid fa-globe',
+          type: WorldSettingsFormApplication,
+          restricted: true,
+        },
+      },
       userMenu: {
         options: {
-          name: `TIDY5E.Settings.SheetMenu.name`,
-          label: 'TIDY5E.Settings.SheetMenu.label',
-          hint: `TIDY5E.Settings.SheetMenu.hint`,
-          icon: 'fa-solid fa-cog',
-          type: SheetSettingsFormApplication,
+          name: `TIDY5E.UserSettings.Menu.name`,
+          label: 'TIDY5E.UserSettings.Menu.label',
+          hint: `TIDY5E.UserSettings.Menu.hint`,
+          icon: 'fa-solid fa-user-gear',
+          type: UserSettingsFormApplication,
           restricted: false,
         },
       },
@@ -141,6 +153,16 @@ export function createSettings() {
           icon: 'fa-solid fa-right-left',
           type: MigrationsApplication,
           restricted: true,
+        },
+      },
+      about: {
+        options: {
+          name: `TIDY5E.Settings.About.name`,
+          label: 'TIDY5E.Settings.About.buttonLabel',
+          hint: `TIDY5E.Settings.About.hint`,
+          icon: 'fa-solid fa-question',
+          type: AboutApplication,
+          restricted: false,
         },
       },
     },
@@ -429,9 +451,6 @@ export function createSettings() {
         },
       },
 
-      // Settings Menu
-
-      // PC Sheet Settings
       showClassList: {
         options: {
           name: 'TIDY5E.Settings.ShowClassList.name',
@@ -596,7 +615,6 @@ export function createSettings() {
         },
       },
 
-      // NPC Sheet Settings
       initialNpcSheetTab: {
         options: {
           name: 'TIDY5E.Settings.InitialSheetTab.name',
@@ -737,8 +755,6 @@ export function createSettings() {
         },
       },
 
-      // Vehicle Sheet Settings
-
       initialVehicleSheetTab: {
         options: {
           name: 'TIDY5E.Settings.InitialSheetTab.name',
@@ -824,10 +840,6 @@ export function createSettings() {
         },
       },
 
-      //
-      // GM Options
-      //
-      // Show Player Name
       showPlayerName: {
         options: {
           name: 'TIDY5E.Settings.ShowPlayerName.name',
@@ -859,8 +871,6 @@ export function createSettings() {
         },
       },
 
-      // Portrait Settings
-      // Portrait Style
       useCircularPortraitStyle: {
         options: {
           name: 'TIDY5E.Settings.UseCircularPortraitStyle.name',
@@ -887,7 +897,6 @@ export function createSettings() {
         },
       },
 
-      // Total Edit Lock
       useTotalSheetLock: {
         options: {
           name: 'TIDY5E.Settings.UseTotalSheetLock.name',
@@ -934,7 +943,6 @@ export function createSettings() {
         },
       },
 
-      // Hidden Death Saves
       hideDeathSavesFromPlayers: {
         options: {
           name: 'TIDY5E.Settings.HideDeathSavesFromPlayers.name',
@@ -951,7 +959,6 @@ export function createSettings() {
         },
       },
 
-      // Hide marker spell slot
       useSpellSlotMarker: {
         options: {
           name: 'TIDY5E.Settings.UseSpellSlotMarker.name',
@@ -1012,7 +1019,6 @@ export function createSettings() {
         },
       },
 
-      // Item quantity
       alwaysShowItemQuantity: {
         options: {
           name: 'TIDY5E.Settings.AlwaysShowItemQuantity.name',
@@ -1073,7 +1079,6 @@ export function createSettings() {
         },
       },
 
-      // NPC Resting
       useNpcRest: {
         options: {
           name: 'TIDY5E.Settings.UseNPCRest.name',
@@ -1102,7 +1107,6 @@ export function createSettings() {
         },
       },
 
-      // Link Marker
       showNpcActorLinkMarker: {
         options: {
           name: 'TIDY5E.Settings.ShowNPCActorLinkMarker.name',
@@ -1124,7 +1128,6 @@ export function createSettings() {
         },
       },
 
-      // Show if item has active effects
       showActiveEffectsMarker: {
         options: {
           name: 'TIDY5E.Settings.ShowActiveEffectsMarker.name',
@@ -1141,7 +1144,6 @@ export function createSettings() {
         },
       },
 
-      // Default width for player sheet
       playerSheetWidth: {
         options: {
           name: 'TIDY5E.Settings.PlayerSheetWidth.name',
@@ -1156,7 +1158,6 @@ export function createSettings() {
         },
       },
 
-      // Default width for NPC sheet
       npcSheetWidth: {
         options: {
           name: 'TIDY5E.Settings.NPCSheetWidth.name',
@@ -1186,8 +1187,6 @@ export function createSettings() {
           );
         },
       },
-
-      // Default width for vehicle sheet
 
       vehicleSheetWidth: {
         options: {
@@ -1219,8 +1218,6 @@ export function createSettings() {
         },
       },
 
-      // Favorites
-
       sortFavoriteItemsAlphabetically: {
         options: {
           name: 'TIDY5E.Settings.SortFavoriteItemsAlphabetically.name',
@@ -1237,7 +1234,6 @@ export function createSettings() {
         },
       },
 
-      // Locks
       lockMoneyChanges: {
         options: {
           name: 'TIDY5E.Settings.LockMoneyChanges.name',
@@ -1322,7 +1318,6 @@ export function createSettings() {
         },
       },
 
-      // Other
       allowCantripsToBePrepared: {
         options: {
           name: 'TIDY5E.Settings.AllowCantripsToBePrepared.name',
@@ -1400,8 +1395,6 @@ export function createSettings() {
           return FoundryAdapter.getTidySetting<boolean>('allowHpMaxOverride');
         },
       },
-
-      // Actions List
 
       actionListLimitActionsToCantrips: {
         options: {
@@ -1483,12 +1476,10 @@ export function createSettings() {
         },
       },
 
-      // Exhaustion
-
       exhaustionConfig: {
         options: {
-          name: 'TIDY5E.Settings.Exhaustion.name',
-          hint: 'TIDY5E.Settings.Exhaustion.hint',
+          name: 'TIDY5E.WorldSettings.Exhaustion.name',
+          hint: 'TIDY5E.WorldSettings.Exhaustion.hint',
           scope: 'world',
           config: false,
           default: getStandardExhaustionConfig(),
@@ -1503,8 +1494,8 @@ export function createSettings() {
 
       vehicleExhaustionConfig: {
         options: {
-          name: 'TIDY5E.Settings.VehicleExhaustion.name',
-          hint: 'TIDY5E.Settings.VehicleExhaustion.hint',
+          name: 'TIDY5E.WorldSettings.VehicleExhaustion.name',
+          hint: 'TIDY5E.WorldSettings.VehicleExhaustion.hint',
           scope: 'world',
           config: false,
           default: getStandardVehicleExhaustionConfig(),
@@ -1516,8 +1507,6 @@ export function createSettings() {
           );
         },
       },
-
-      // Color customization
 
       colorPickerEnabled: {
         options: {

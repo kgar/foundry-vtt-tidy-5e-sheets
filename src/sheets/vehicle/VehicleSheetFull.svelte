@@ -78,7 +78,7 @@
           dataMaxLength={40}
         />
       </div>
-      <SheetMenu defaultSettingsTab={CONSTANTS.TAB_SETTINGS_VEHICLES} />
+      <SheetMenu defaultSettingsTab={CONSTANTS.TAB_USER_SETTINGS_VEHICLES} />
     </div>
     <HorizontalLineSeparator borderColor="light" />
     <div class="origin-summary">

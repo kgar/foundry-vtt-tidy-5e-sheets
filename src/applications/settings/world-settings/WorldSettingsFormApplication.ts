@@ -1,44 +1,40 @@
-import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-import type { SvelteComponent } from 'svelte';
-import SheetSettings from './SheetSettings.svelte';
-import { writable, type Writable } from 'svelte/store';
-import {
-  getCurrentSettings,
-  type CurrentSettings,
-  type Tidy5eSettingKey,
-  SettingsProvider,
-} from 'src/settings/settings';
-import { debug, error } from 'src/utils/logging';
-import { CONSTANTS } from 'src/constants';
 import SvelteFormApplicationBase from 'src/applications/SvelteFormApplicationBase';
-import type { RegisteredTab } from 'src/runtime/types';
+import type { SvelteComponent } from 'svelte';
+import WorldSettings from './WorldSettings.svelte';
+import {
+  SettingsProvider,
+  getCurrentSettings,
+  type Tidy5eSettingKey,
+  type CurrentSettings,
+} from 'src/settings/settings';
 import type {
   DefaultTabSelectionFields,
-  SettingsSheetContext,
-  SettingsSheetFunctions,
-  SettingsSheetStore,
-} from './SheetSettings.types';
-import { NpcSheetRuntime } from 'src/runtime/NpcSheetRuntime';
+  WorldSettingsContext,
+  WorldSettingsContextStore,
+  WorldSettingsFunctions,
+} from './WorldSettings.types';
+import type { RegisteredTab } from 'src/runtime/types';
 import { CharacterSheetRuntime } from 'src/runtime/CharacterSheetRuntime';
+import { NpcSheetRuntime } from 'src/runtime/NpcSheetRuntime';
 import { VehicleSheetRuntime } from 'src/runtime/VehicleSheetRuntime';
+import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { TabManager } from 'src/runtime/tab/TabManager';
+import { debug, error } from 'src/utils/logging';
+import { writable } from 'svelte/store';
+import { CONSTANTS } from 'src/constants';
 
-export class SheetSettingsFormApplication extends SvelteFormApplicationBase {
-  initialTabId: string;
+export class WorldSettingsFormApplication extends SvelteFormApplicationBase {
   unchangedSettings?: CurrentSettings;
-
-  constructor(initialTabId: string, ...args: any[]) {
-    super(...args);
-    this.initialTabId = initialTabId ?? CONSTANTS.TAB_SETTINGS_PLAYERS;
-  }
 
   static get defaultOptions() {
     return {
       ...super.defaultOptions,
       height: 750,
-      title: 'TIDY5E.Settings.SheetMenu.title',
+      title: 'TIDY5E.WorldSettings.Menu.title',
       width: 750,
       classes: [...super.defaultOptions.classes, 'settings'],
+      id: 'tidy-5e-sheets-world-settings',
+      popOut: true,
     };
   }
 
@@ -46,11 +42,51 @@ export class SheetSettingsFormApplication extends SvelteFormApplicationBase {
     return FoundryAdapter.getTemplate('empty-form-template.hbs');
   }
 
-  getData() {
+  getData(): WorldSettingsContext {
     const currentSettings = getCurrentSettings();
 
     return {
-      settings: currentSettings,
+      settings: {
+        hideDeathSavesFromPlayers: currentSettings.hideDeathSavesFromPlayers,
+        useSpellSlotMarker: currentSettings.useSpellSlotMarker,
+        useCharacterEncumbranceBar: currentSettings.useCharacterEncumbranceBar,
+        useNpcEncumbranceBar: currentSettings.useNpcEncumbranceBar,
+        useVehicleEncumbranceBar: currentSettings.useVehicleEncumbranceBar,
+        showPlayerName: currentSettings.showPlayerName,
+        sortFavoriteItemsAlphabetically:
+          currentSettings.sortFavoriteItemsAlphabetically,
+        showExpandedLimitedView: currentSettings.showExpandedLimitedView,
+        itemCardsFixKey: currentSettings.itemCardsFixKey,
+        useCircularPortraitStyle: currentSettings.useCircularPortraitStyle,
+        permanentlyUnlockCharacterSheetForGm:
+          currentSettings.permanentlyUnlockCharacterSheetForGm,
+        permanentlyUnlockNpcSheetForGm:
+          currentSettings.permanentlyUnlockNpcSheetForGm,
+        permanentlyUnlockVehicleSheetForGm:
+          currentSettings.permanentlyUnlockVehicleSheetForGm,
+        limitEffectsManagementToGm: currentSettings.limitEffectsManagementToGm,
+        alwaysShowItemQuantity: currentSettings.alwaysShowItemQuantity,
+        useCharacterInspiration: currentSettings.useCharacterInspiration,
+        useVehicleMotion: currentSettings.useVehicleMotion,
+        useExhaustion: currentSettings.useExhaustion,
+        showTraitLabels: currentSettings.showTraitLabels,
+        allowCantripsToBePrepared: currentSettings.allowCantripsToBePrepared,
+        allowHpMaxOverride: currentSettings.allowHpMaxOverride,
+        showActiveEffectsMarker: currentSettings.showActiveEffectsMarker,
+        useTotalSheetLock: currentSettings.useTotalSheetLock,
+        lockExpChanges: currentSettings.lockExpChanges,
+        lockHpMaxChanges: currentSettings.lockHpMaxChanges,
+        lockConfigureSheet: currentSettings.lockConfigureSheet,
+        lockMoneyChanges: currentSettings.lockMoneyChanges,
+        lockLevelSelector: currentSettings.lockLevelSelector,
+        lockItemQuantity: currentSettings.lockItemQuantity,
+        initialNpcSheetTab: currentSettings.initialNpcSheetTab,
+        useNpcRest: currentSettings.useNpcRest,
+        showNpcRestInChat: currentSettings.showNpcRestInChat,
+        showNpcActorLinkMarker: currentSettings.showNpcActorLinkMarker,
+        initialCharacterSheetTab: currentSettings.initialCharacterSheetTab,
+        initialVehicleSheetTab: currentSettings.initialVehicleSheetTab,
+      },
       defaultCharacterTabs: this.mapTabSelectionFields(
         CharacterSheetRuntime.getAllRegisteredTabs(),
         currentSettings.defaultCharacterSheetTabs
@@ -77,23 +113,19 @@ export class SheetSettingsFormApplication extends SvelteFormApplicationBase {
   createComponent(node: HTMLElement): SvelteComponent<any, any, any> {
     const data = this.getData();
 
-    this.cacheSettingsForChangeTracking(data.settings);
+    debug('World Settings context data', data);
 
-    debug('Sheet Settings context data', data);
-
-    return new SheetSettings({
+    return new WorldSettings({
       target: node,
       context: new Map<any, any>([
-        ['context', writable(data) satisfies SettingsSheetStore],
+        ['context', writable(data) satisfies WorldSettingsContextStore],
         [
           'functions',
           {
             save: this.saveChangedSettings.bind(this),
             apply: this.applyChangedSettings.bind(this),
-            mapTabSelectionFields: this.mapTabSelectionFields.bind(this),
-            validate: this.validate.bind(this),
             resetDefaultTabs: this.resetDefaultTabs.bind(this),
-          } satisfies SettingsSheetFunctions,
+          } satisfies WorldSettingsFunctions,
         ],
         ['appId', this.appId],
       ]),
@@ -127,19 +159,7 @@ export class SheetSettingsFormApplication extends SvelteFormApplicationBase {
     };
   }
 
-  /**
-    Detect settings drift from the point in time when the sheet was opened,
-    rather than differences with the live settings upon saving/applying changes.
-    This ensures that the only settings which are updated are those that
-    the user actually changed during editing this form.
-    Otherwise, for example, a user could open this form, change the color scheme from another form,
-    and then save this form, causing the color scheme to revert back.
-  */
-  private cacheSettingsForChangeTracking(currentSettings: CurrentSettings) {
-    this.unchangedSettings = structuredClone(currentSettings);
-  }
-
-  validate(context: SettingsSheetContext) {
+  validate(context: WorldSettingsContext) {
     let valid = true;
 
     if (
@@ -163,7 +183,7 @@ export class SheetSettingsFormApplication extends SvelteFormApplicationBase {
       valid = false;
       error(
         FoundryAdapter.localize(
-          'TIDY5E.Settings.Exhaustion.AtLeastOneLevelRequiredErrorMessage'
+          'TIDY5E.WorldSettings.Exhaustion.AtLeastOneLevelRequiredErrorMessage'
         ),
         true
       );
@@ -176,7 +196,7 @@ export class SheetSettingsFormApplication extends SvelteFormApplicationBase {
       valid = false;
       error(
         FoundryAdapter.localize(
-          'TIDY5E.Settings.VehicleExhaustion.AtLeastOneLevelRequiredErrorMessage'
+          'TIDY5E.WorldSettings.VehicleExhaustion.AtLeastOneLevelRequiredErrorMessage'
         ),
         true
       );
@@ -187,13 +207,8 @@ export class SheetSettingsFormApplication extends SvelteFormApplicationBase {
     return valid;
   }
 
-  async applyChangedSettings(context: SettingsSheetContext) {
+  async applyChangedSettings(context: WorldSettingsContext) {
     if (!this.validate(context)) {
-      return false;
-    }
-
-    if (!this.unchangedSettings) {
-      error('Unable to apply changed settings due to a sheet error', true);
       return false;
     }
 
@@ -212,7 +227,7 @@ export class SheetSettingsFormApplication extends SvelteFormApplicationBase {
         );
     }
 
-    const newSettings: CurrentSettings = {
+    const newSettings: Partial<CurrentSettings> = {
       ...context.settings,
       defaultCharacterSheetTabs: context.defaultCharacterTabs.selected.map(
         (t) => t.id
@@ -225,9 +240,11 @@ export class SheetSettingsFormApplication extends SvelteFormApplicationBase {
       vehicleExhaustionConfig: context.vehicleExhaustionConfig,
     };
 
-    const keys = Object.keys(this.unchangedSettings) as Tidy5eSettingKey[];
+    const currentSettings = getCurrentSettings();
+
+    const keys = Object.keys(newSettings) as Tidy5eSettingKey[];
     for (let key of keys) {
-      const currentValue = this.unchangedSettings[key];
+      const currentValue = currentSettings[key];
       const newValue = newSettings[key];
       if (currentValue !== newValue) {
         await FoundryAdapter.setTidySetting(key, newValue);
@@ -235,12 +252,10 @@ export class SheetSettingsFormApplication extends SvelteFormApplicationBase {
       }
     }
 
-    this.cacheSettingsForChangeTracking(newSettings);
-
     return true;
   }
 
-  async saveChangedSettings(context: SettingsSheetContext) {
+  async saveChangedSettings(context: WorldSettingsContext) {
     const changesApplied = await this.applyChangedSettings(context);
 
     if (!changesApplied) {
@@ -250,13 +265,10 @@ export class SheetSettingsFormApplication extends SvelteFormApplicationBase {
     this.close();
   }
 
-  resetDefaultTabs(
-    context$: Writable<SettingsSheetContext>,
-    actorType: string
-  ) {
+  resetDefaultTabs(store: WorldSettingsContextStore, actorType: string) {
     switch (actorType) {
       case CONSTANTS.SHEET_TYPE_CHARACTER:
-        context$.update((context) => {
+        store.update((context) => {
           context.defaultCharacterTabs = this.mapTabSelectionFields(
             CharacterSheetRuntime.getAllRegisteredTabs(),
             [
@@ -268,7 +280,7 @@ export class SheetSettingsFormApplication extends SvelteFormApplicationBase {
         });
         break;
       case CONSTANTS.SHEET_TYPE_NPC:
-        context$.update((context) => {
+        store.update((context) => {
           context.defaultNpcTabs = this.mapTabSelectionFields(
             NpcSheetRuntime.getAllRegisteredTabs(),
             [...SettingsProvider.settings.defaultNpcSheetTabs.options.default]
@@ -277,7 +289,7 @@ export class SheetSettingsFormApplication extends SvelteFormApplicationBase {
         });
         break;
       case CONSTANTS.SHEET_TYPE_VEHICLE:
-        context$.update((context) => {
+        store.update((context) => {
           context.defaultVehicleTabs = this.mapTabSelectionFields(
             VehicleSheetRuntime.getAllRegisteredTabs(),
             [

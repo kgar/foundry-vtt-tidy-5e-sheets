@@ -118,29 +118,28 @@
     "TIDY5E.Class.Wizard": null,
     "TIDY5E.OriginSummaryConfig": null,
     "TIDY5E.Settings.MulticlassSpellbookFilterLabel": null,
-    "TIDY5E.Settings.SheetMenu": {
+    "TIDY5E.UserSettings.Menu": {
         "name": null,
         "hint": null,
         "label": "Configurações da Ficha",
         "title": "Configurações da Ficha do Tidy5e"
     },
-    "TIDY5E.Settings.TabPlayers": {
+    "TIDY5E.UserSettings.TabPlayers": {
         "tabLabel": "Players",
         "header": "Player Character Sheets"
     },
-    "TIDY5E.Settings.TabNPCs": {
+    "TIDY5E.UserSettings.TabNPCs": {
         "tabLabel": null,
         "header": null
     },
-    "TIDY5E.Settings.TabVehicles": {
+    "TIDY5E.UserSettings.TabVehicles": {
         "tabLabel": null,
         "header": null
     },
-    "TIDY5E.Settings.TabGM": {
-        "tabLabel": "GM Options",
-        "header": "GM Sheet Options"
+    "TIDY5E.WorldSettings.TabMisc": {
+        "tabLabel": "GM Options"
     },
-    "TIDY5E.Settings.TabLocks": {
+    "TIDY5E.WorldSettings.TabSheetLock": {
         "tabLabel": null,
         "header": null,
         "hint": null,
@@ -148,10 +147,6 @@
         "labelGeneralLocks": null,
         "labelInventoryLocks": null,
         "labelFeaturesLocks": null
-    },
-    "TIDY5E.Settings.TabInfo": {
-        "tabLabel": "Info",
-        "header": "Info"
     },
     "TIDY5E.Settings.ItemCardsForAllItems": {
         "name": "Show item info cards in all layouts.",

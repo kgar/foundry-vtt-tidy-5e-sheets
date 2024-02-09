@@ -147,29 +147,28 @@
 
   "TIDY5E.Settings.MulticlassSpellbookFilterLabel": "マルチクラス呪文書フィルター",
 
-  "TIDY5E.Settings.SheetMenu": {
+  "TIDY5E.UserSettings.Menu": {
     "name": "Tidy Sheet設定",
     "hint": "キャラクターシートの見た目を自由にカスタマイズしましょう！",
     "label": "シート設定",
     "title": "Tidy5eシート設定"
   },
-  "TIDY5E.Settings.TabPlayers": {
+  "TIDY5E.UserSettings.TabPlayers": {
     "tabLabel": "プレイヤー",
     "header": "プレイヤーキャラクターシート"
   },
-  "TIDY5E.Settings.TabNPCs": {
+  "TIDY5E.UserSettings.TabNPCs": {
     "tabLabel": null,
     "header": null
   },
-  "TIDY5E.Settings.TabVehicles": {
+  "TIDY5E.UserSettings.TabVehicles": {
     "tabLabel": null,
     "header": null
   },
-  "TIDY5E.Settings.TabGM": {
-    "tabLabel": "GMオプション",
-    "header": "GMｼｰﾄ･ｵﾌﾟｼｮﾝ"
+  "TIDY5E.WorldSettings.TabMisc": {
+    "tabLabel": "GMオプション"
   },
-  "TIDY5E.Settings.TabLocks": {
+  "TIDY5E.WorldSettings.TabSheetLock": {
     "tabLabel": "ロック",
     "header": "ロック設定",
     "hint": "シートの中であんまり使わない場所をPLが間違って変更するのを防いだり、そもそも表示したくないものを隠すためのオプションをここで提供しています。何をロックするのか、誰が使って良いのかを権限で完全に管理できます。",
@@ -177,10 +176,6 @@
     "labelGeneralLocks": "一般ロック",
     "labelInventoryLocks": "所持品ロック",
     "labelFeaturesLocks": "機能ロック"
-  },
-  "TIDY5E.Settings.TabInfo": {
-    "tabLabel": "情報",
-    "header": "情報"
   },
   "TIDY5E.Settings.ItemCardsForAllItems": {
     "name": "アイテム情報のカードをすべてのシートで表示するすべてのｼｰﾄでアイテム情報カード表示機能を使用",

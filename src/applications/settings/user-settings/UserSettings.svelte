@@ -5,44 +5,41 @@
   import PlayerSettingsTab from './tabs/PlayerSettingsTab.svelte';
   import NpcSettingsTab from './tabs/NpcSettingsTab.svelte';
   import VehicleSettingsTab from './tabs/VehicleSettingsTab.svelte';
-  import GmOptionsSettingsTab from './tabs/GmOptionsSettingsTab.svelte';
-  import LockSettingsTab from './tabs/LockSettingsTab.svelte';
-  import FeaturesSettingsTab from './tabs/FeaturesSettingsTab.svelte';
-  import InfoTab from './tabs/InfoTab.svelte';
+  import ActionsListSettingsTab from './tabs/ActionsListSettingsTab.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getContext } from 'svelte';
   import { CONSTANTS } from 'src/constants';
   import type {
-    SettingsSheetFunctions,
-    SettingsSheetStore,
-  } from './SheetSettings.types';
+    UserSettingsFunctions,
+    UserSettingsStore,
+  } from './UserSettings.types';
 
-  let selectedTabId: string;
-  let context = getContext<SettingsSheetStore>('context');
-  let functions = getContext<SettingsSheetFunctions>('functions');
+  let selectedTabId = getContext<string>('initialTabId');
+  let context = getContext<UserSettingsStore>('context');
+  let functions = getContext<UserSettingsFunctions>('functions');
 
   let tabs: Tab[] = [];
 
   tabs = [
     {
-      id: CONSTANTS.TAB_SETTINGS_PLAYERS,
-      title: 'TIDY5E.Settings.TabPlayers.tabLabel',
+      id: CONSTANTS.TAB_USER_SETTINGS_PLAYERS,
+      title: 'TIDY5E.UserSettings.TabPlayers.tabLabel',
       content: {
         component: PlayerSettingsTab,
         type: 'svelte',
       },
     },
     {
-      id: CONSTANTS.TAB_SETTINGS_NPCS,
-      title: 'TIDY5E.Settings.TabNPCs.tabLabel',
+      id: CONSTANTS.TAB_USER_SETTINGS_NPCS,
+      title: 'TIDY5E.UserSettings.TabNPCs.tabLabel',
       content: {
         component: NpcSettingsTab,
         type: 'svelte',
       },
     },
     {
-      id: CONSTANTS.TAB_SETTINGS_VEHICLES,
-      title: 'TIDY5E.Settings.TabVehicles.tabLabel',
+      id: CONSTANTS.TAB_USER_SETTINGS_VEHICLES,
+      title: 'TIDY5E.UserSettings.TabVehicles.tabLabel',
       content: {
         component: VehicleSettingsTab,
         type: 'svelte',
@@ -50,41 +47,11 @@
     },
   ];
 
-  if (FoundryAdapter.userIsGm()) {
-    tabs.push(
-      {
-        id: CONSTANTS.TAB_SETTINGS_GM,
-        title: 'TIDY5E.Settings.TabGM.tabLabel',
-        content: {
-          component: GmOptionsSettingsTab,
-          type: 'svelte',
-        },
-      },
-      {
-        id: CONSTANTS.TAB_SETTINGS_LOCKS,
-        title: 'TIDY5E.Settings.TabLocks.tabLabel',
-        content: {
-          component: LockSettingsTab,
-          type: 'svelte',
-        },
-      },
-    );
-  }
-
   tabs.push({
-    id: CONSTANTS.TAB_SETTINGS_FEATURES,
-    title: 'TIDY5E.Settings.TabFeatures.tabLabel',
+    id: CONSTANTS.TAB_USER_SETTINGS_ACTIONS_LIST,
+    title: 'TIDY5E.UserSettings.TabActionsList.tabLabel',
     content: {
-      component: FeaturesSettingsTab,
-      type: 'svelte',
-    },
-  });
-
-  tabs.push({
-    id: CONSTANTS.TAB_SETTINGS_INFO,
-    title: 'TIDY5E.Settings.TabInfo.tabLabel',
-    content: {
-      component: InfoTab,
+      component: ActionsListSettingsTab,
       type: 'svelte',
     },
   });
