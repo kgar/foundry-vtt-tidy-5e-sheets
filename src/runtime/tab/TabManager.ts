@@ -124,7 +124,13 @@ export class TabManager {
   }
 
   static getTabTitle(tab: { title: CustomTabTitle }) {
-    return typeof tab.title === 'function' ? tab.title() : tab.title;
+    try {
+      return typeof tab.title === 'function' ? tab.title() : tab.title;
+    } catch (e) {
+      error('An error occurred while getting the tab title', false, e);
+      debug('Tab title error troubleshooting info', { tab });
+      return '';
+    }
   }
 }
 

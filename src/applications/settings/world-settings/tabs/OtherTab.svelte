@@ -28,63 +28,63 @@
 <h2>{localize('TIDY5E.Settings.TabGM.header')}</h2>
 
 <CheckboxSetting
-  bind:value={$context.hideDeathSavesFromPlayers}
+  bind:value={$context.settings.hideDeathSavesFromPlayers}
   name={'TIDY5E.Settings.HideDeathSavesFromPlayers.name'}
   hint={'TIDY5E.Settings.HideDeathSavesFromPlayers.hint'}
   id="hideDeathSavesFromPlayers"
 />
 
 <CheckboxSetting
-  bind:value={$context.useSpellSlotMarker}
+  bind:value={$context.settings.useSpellSlotMarker}
   name={'TIDY5E.Settings.UseSpellSlotMarker.name'}
   hint={'TIDY5E.Settings.UseSpellSlotMarker.hint'}
   id="useSpellSlotMarker"
 />
 
 <CheckboxSetting
-  bind:value={$context.useCharacterEncumbranceBar}
+  bind:value={$context.settings.useCharacterEncumbranceBar}
   name={SettingsProvider.settings.useCharacterEncumbranceBar.options.name}
   hint={SettingsProvider.settings.useCharacterEncumbranceBar.options.hint}
   id="useCharacterEncumbranceBar"
 />
 
 <CheckboxSetting
-  bind:value={$context.useNpcEncumbranceBar}
+  bind:value={$context.settings.useNpcEncumbranceBar}
   name={SettingsProvider.settings.useNpcEncumbranceBar.options.name}
   hint={SettingsProvider.settings.useNpcEncumbranceBar.options.hint}
   id="useNpcEncumbranceBar"
 />
 
 <CheckboxSetting
-  bind:value={$context.useVehicleEncumbranceBar}
+  bind:value={$context.settings.useVehicleEncumbranceBar}
   name={SettingsProvider.settings.useVehicleEncumbranceBar.options.name}
   hint={SettingsProvider.settings.useVehicleEncumbranceBar.options.hint}
   id="useVehicleEncumbranceBar"
 />
 
 <CheckboxSetting
-  bind:value={$context.showPlayerName}
+  bind:value={$context.settings.showPlayerName}
   name={'TIDY5E.Settings.ShowPlayerName.name'}
   hint={'TIDY5E.Settings.ShowPlayerName.hint'}
   id="showPlayerName"
 />
 
 <CheckboxSetting
-  bind:value={$context.sortFavoriteItemsAlphabetically}
+  bind:value={$context.settings.sortFavoriteItemsAlphabetically}
   name={'TIDY5E.Settings.SortFavoriteItemsAlphabetically.name'}
   hint={'TIDY5E.Settings.SortFavoriteItemsAlphabetically.hint'}
   id="sortFavoriteItemsAlphabetically"
 />
 
 <CheckboxSetting
-  bind:value={$context.showExpandedLimitedView}
+  bind:value={$context.settings.showExpandedLimitedView}
   name={'TIDY5E.Settings.ShowExpandedLimitedView.name'}
   hint={'TIDY5E.Settings.ShowExpandedLimitedView.hint'}
   id="showExpandedLimitedView"
 />
 
 <TextInputSetting
-  bind:value={$context.itemCardsFixKey}
+  bind:value={$context.settings.itemCardsFixKey}
   name={'TIDY5E.Settings.ItemCardsFixKey.name'}
   hint={'TIDY5E.Settings.ItemCardsFixKey.hint'}
   id="itemCardsFixKey"
@@ -92,91 +92,91 @@
 
 <SelectSetting
   options={SettingsProvider.settings.useCircularPortraitStyle.options.choices}
-  bind:value={$context.useCircularPortraitStyle}
+  bind:value={$context.settings.useCircularPortraitStyle}
   name={'TIDY5E.Settings.UseCircularPortraitStyle.name'}
   hint={'TIDY5E.Settings.UseCircularPortraitStyle.hint'}
   id="useCircularPortraitStyle"
 />
 
 <CheckboxSetting
-  bind:value={$context.permanentlyUnlockCharacterSheetForGm}
+  bind:value={$context.settings.permanentlyUnlockCharacterSheetForGm}
   name={'TIDY5E.Settings.PermanentlyUnlockCharacterSheetForGM.name'}
   hint={'TIDY5E.Settings.PermanentlyUnlockCharacterSheetForGM.hint'}
   id="permanentlyUnlockCharacterSheetForGm"
 />
 
 <CheckboxSetting
-  bind:value={$context.permanentlyUnlockNpcSheetForGm}
+  bind:value={$context.settings.permanentlyUnlockNpcSheetForGm}
   name={'TIDY5E.Settings.PermanentlyUnlockNPCSheetForGM.name'}
   hint={'TIDY5E.Settings.PermanentlyUnlockNPCSheetForGM.hint'}
   id="permanentlyUnlockNpcSheetForGm"
 />
 
 <CheckboxSetting
-  bind:value={$context.permanentlyUnlockVehicleSheetForGm}
+  bind:value={$context.settings.permanentlyUnlockVehicleSheetForGm}
   name={'TIDY5E.Settings.PermanentlyUnlockVehicleSheetForGM.name'}
   hint={'TIDY5E.Settings.PermanentlyUnlockVehicleSheetForGM.hint'}
   id="permanentlyUnlockVehicleSheetForGm"
 />
 
 <CheckboxSetting
-  bind:value={$context.limitEffectsManagementToGm}
+  bind:value={$context.settings.limitEffectsManagementToGm}
   name={'TIDY5E.Settings.LimitEffectsManagementToGM.name'}
   hint={'TIDY5E.Settings.LimitEffectsManagementToGM.hint'}
   id="limitEffectsManagementToGm"
 />
 
 <CheckboxSetting
-  bind:value={$context.alwaysShowItemQuantity}
+  bind:value={$context.settings.alwaysShowItemQuantity}
   name={'TIDY5E.Settings.AlwaysShowItemQuantity.name'}
   hint={'TIDY5E.Settings.AlwaysShowItemQuantity.hint'}
   id="alwaysShowItemQuantity"
 />
 
 <CheckboxSetting
-  bind:value={$context.useCharacterInspiration}
+  bind:value={$context.settings.useCharacterInspiration}
   name={'TIDY5E.Settings.UseInspiration.name'}
   hint={'TIDY5E.Settings.UseInspiration.hint'}
   id="useCharacterInspiration"
 />
 
 <CheckboxSetting
-  bind:value={$context.useVehicleMotion}
+  bind:value={$context.settings.useVehicleMotion}
   name={'TIDY5E.Settings.UseVehicleMotion.name'}
   hint={'TIDY5E.Settings.UseVehicleMotion.hint'}
   id="useVehicleMotion"
 />
 
 <CheckboxSetting
-  bind:value={$context.useExhaustion}
+  bind:value={$context.settings.useExhaustion}
   name={'TIDY5E.Settings.UseExhaustion.name'}
   hint={'TIDY5E.Settings.UseExhaustion.hint'}
   id="useExhaustion"
 />
 
 <CheckboxSetting
-  bind:value={$context.showTraitLabels}
+  bind:value={$context.settings.showTraitLabels}
   name={'TIDY5E.Settings.ShowTraitLabels.name'}
   hint={'TIDY5E.Settings.ShowTraitLabels.hint'}
   id="showTraitLabels"
 />
 
 <CheckboxSetting
-  bind:value={$context.allowCantripsToBePrepared}
+  bind:value={$context.settings.allowCantripsToBePrepared}
   name={'TIDY5E.Settings.AllowCantripsToBePrepared.name'}
   hint={'TIDY5E.Settings.AllowCantripsToBePrepared.hint'}
   id="allowCantripsToBePrepared"
 />
 
 <CheckboxSetting
-  bind:value={$context.allowHpMaxOverride}
+  bind:value={$context.settings.allowHpMaxOverride}
   name={'TIDY5E.Settings.AllowHpMaxOverride.name'}
   hint={'TIDY5E.Settings.AllowHpMaxOverride.hint'}
   id="allowHpMaxOverride"
 />
 
 <CheckboxSetting
-  bind:value={$context.showActiveEffectsMarker}
+  bind:value={$context.settings.showActiveEffectsMarker}
   name={'TIDY5E.Settings.ShowActiveEffectsMarker.name'}
   hint={'TIDY5E.Settings.ShowActiveEffectsMarker.hint'}
   id="showActiveEffectsMarker"
@@ -228,7 +228,7 @@
 <p class="tab-notes">{localize('TIDY5E.Settings.TabLocks.hint2')}</p>
 
 <CheckboxSetting
-  bind:value={$context.useTotalSheetLock}
+  bind:value={$context.settings.useTotalSheetLock}
   name={'TIDY5E.Settings.UseTotalSheetLock.name'}
   hint={'TIDY5E.Settings.UseTotalSheetLock.hint'}
   id="useTotalSheetLock"
@@ -237,21 +237,21 @@
 <h3>{localize('TIDY5E.Settings.TabLocks.labelGeneralLocks')}</h3>
 
 <CheckboxSetting
-  bind:value={$context.lockExpChanges}
+  bind:value={$context.settings.lockExpChanges}
   name={'TIDY5E.Settings.LockExpChanges.name'}
   hint={'TIDY5E.Settings.LockExpChanges.hint'}
   id="lockExpChanges"
 />
 
 <CheckboxSetting
-  bind:value={$context.lockHpMaxChanges}
+  bind:value={$context.settings.lockHpMaxChanges}
   name={'TIDY5E.Settings.LockHpMaxChanges.name'}
   hint={'TIDY5E.Settings.LockHpMaxChanges.hint'}
   id="lockHpMaxChanges"
 />
 
 <CheckboxSetting
-  bind:value={$context.lockConfigureSheet}
+  bind:value={$context.settings.lockConfigureSheet}
   name={'TIDY5E.Settings.LockConfigureSheet.name'}
   hint={'TIDY5E.Settings.LockConfigureSheet.hint'}
   id="lockConfigureSheet"
@@ -260,7 +260,7 @@
 <h3>{localize('TIDY5E.Settings.TabLocks.labelInventoryLocks')}</h3>
 
 <CheckboxSetting
-  bind:value={$context.lockMoneyChanges}
+  bind:value={$context.settings.lockMoneyChanges}
   name={'TIDY5E.Settings.LockMoneyChanges.name'}
   hint={'TIDY5E.Settings.LockMoneyChanges.hint'}
   id="lockMoneyChanges"
@@ -269,14 +269,14 @@
 <h3>{localize('TIDY5E.Settings.TabLocks.labelFeaturesLocks')}</h3>
 
 <CheckboxSetting
-  bind:value={$context.lockLevelSelector}
+  bind:value={$context.settings.lockLevelSelector}
   name={'TIDY5E.Settings.LockLevelSelector.name'}
   hint={'TIDY5E.Settings.LockLevelSelector.hint'}
   id="lockLevelSelector"
 />
 
 <CheckboxSetting
-  bind:value={$context.lockItemQuantity}
+  bind:value={$context.settings.lockItemQuantity}
   name={'TIDY5E.Settings.LockItemQuantity.name'}
   hint={'TIDY5E.Settings.LockItemQuantity.hint'}
   id="lockItemQuantity"
@@ -285,7 +285,7 @@
 <!-- NPC -->
 <SelectSetting
   options={SettingsProvider.settings.initialNpcSheetTab.options.choices()}
-  bind:value={$context.initialNpcSheetTab}
+  bind:value={$context.settings.initialNpcSheetTab}
   name={SettingsProvider.settings.initialNpcSheetTab.options.name}
   hint={SettingsProvider.settings.initialNpcSheetTab.options.hint}
   id="initialNpcSheetTab"
@@ -314,14 +314,14 @@
 </ListboxSetting>
 
 <CheckboxSetting
-  bind:value={$context.useNpcRest}
+  bind:value={$context.settings.useNpcRest}
   name={'TIDY5E.Settings.UseNPCRest.name'}
   hint={'TIDY5E.Settings.UseNPCRest.hint'}
   id="useNpcRest"
 />
 
 <CheckboxSetting
-  bind:value={$context.showNpcRestInChat}
+  bind:value={$context.settings.showNpcRestInChat}
   name={'TIDY5E.Settings.ShowNPCRestInChat.name'}
   hint={'TIDY5E.Settings.ShowNPCRestInChat.hint'}
   id="showNpcRestInChat"
@@ -333,7 +333,7 @@
     unlinked: 'TIDY5E.Settings.ShowNPCActorLinkMarker.unlinked',
     both: 'TIDY5E.Settings.ShowNPCActorLinkMarker.both',
   }}
-  bind:value={$context.showNpcActorLinkMarker}
+  bind:value={$context.settings.showNpcActorLinkMarker}
   name="TIDY5E.Settings.ShowNPCActorLinkMarker.name"
   hint="TIDY5E.Settings.ShowNPCActorLinkMarker.hint"
   id="showNpcActorLinkMarker"
@@ -343,7 +343,7 @@
 
 <SelectSetting
   options={SettingsProvider.settings.initialCharacterSheetTab.options.choices()}
-  bind:value={$context.initialCharacterSheetTab}
+  bind:value={$context.settings.initialCharacterSheetTab}
   name={SettingsProvider.settings.initialCharacterSheetTab.options.name}
   hint={SettingsProvider.settings.initialCharacterSheetTab.options.hint}
   id="initialCharacterSheetTab"
@@ -374,7 +374,7 @@
 <!-- Vehicles -->
 <SelectSetting
   options={SettingsProvider.settings.initialVehicleSheetTab.options.choices()}
-  bind:value={$context.initialVehicleSheetTab}
+  bind:value={$context.settings.initialVehicleSheetTab}
   name={SettingsProvider.settings.initialVehicleSheetTab.options.name}
   hint={SettingsProvider.settings.initialVehicleSheetTab.options.hint}
   id="initialVehicleSheetTab"
