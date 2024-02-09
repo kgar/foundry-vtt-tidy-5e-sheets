@@ -147,7 +147,7 @@
 
   "TIDY5E.Settings.MulticlassSpellbookFilterLabel": null,
 
-  "TIDY5E.Settings.SheetMenu": {
+  "TIDY5E.UserSettings.Menu": {
     "name": null,
     "hint": null,
     "label": "Configuration des feuilles",

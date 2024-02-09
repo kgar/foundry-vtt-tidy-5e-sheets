@@ -26,16 +26,16 @@
   <ThemeSelectorButtonMenuCommand />
   <ButtonMenuDivider />
   <ButtonMenuCommand
-    on:click={() => ApplicationsManager.openSheetSettings(defaultSettingsTab)}
+    on:click={() => ApplicationsManager.openUserSettings(defaultSettingsTab)}
     iconClass="fas fa-cog"
   >
-    {localize('TIDY5E.Settings.SheetMenu.label')}
+    {localize('TIDY5E.UserSettings.Menu.label')}
   </ButtonMenuCommand>
   <ButtonMenuCommand
     on:click={() => ApplicationsManager.openThemeSettings()}
     iconClass="fas fa-palette"
   >
-    {localize('TIDY5E.ThemeSettings.Sheet.title')}
+    {localize('TIDY5E.ThemeSettings.SheetMenu.buttonLabel')}
   </ButtonMenuCommand>
   {#if $context.owner}
     <ButtonMenuCommand

@@ -10,13 +10,13 @@
   import { getContext } from 'svelte';
   import { CONSTANTS } from 'src/constants';
   import type {
-    SettingsSheetFunctions,
-    SettingsSheetStore,
-  } from './ClientSettings.types';
+    UserSettingsFunctions,
+    UserSettingsStore,
+  } from './UserSettings.types';
 
   let selectedTabId: string;
-  let context = getContext<SettingsSheetStore>('context');
-  let functions = getContext<SettingsSheetFunctions>('functions');
+  let context = getContext<UserSettingsStore>('context');
+  let functions = getContext<UserSettingsFunctions>('functions');
 
   let tabs: Tab[] = [];
 

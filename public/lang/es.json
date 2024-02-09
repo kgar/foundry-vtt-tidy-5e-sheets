@@ -114,7 +114,7 @@
     "TIDY5E.Class.Wizard": "Mago",
     "TIDY5E.OriginSummaryConfig": "Configuración de resumen de origen: {actorName}",
     "TIDY5E.Settings.MulticlassSpellbookFilterLabel": "Filtro de hechizos de multiclase",
-    "TIDY5E.Settings.SheetMenu": {
+    "TIDY5E.UserSettings.Menu": {
         "name": "Configuración de T5E",
         "hint": "Personaliza tu propia versión de T5E",
         "label": "Opciones de la hoja",

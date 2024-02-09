@@ -244,11 +244,11 @@
     "title": "World Settings (GM Only)"
   },
 
-  "TIDY5E.Settings.SheetMenu": {
+  "TIDY5E.UserSettings.Menu": {
     "name": "User Settings",
     "hint": "Customize your own version of Tidy 5e Sheets. These settings are saved to your browser and apply to your sheets.",
     "label": "User Settings",
-    "title": "User Settings ({userName})"
+    "title": "User Settings: {userName}"
   },
   "TIDY5E.Settings.TabPlayers": {
     "tabLabel": "Players",
@@ -702,7 +702,7 @@
       "hint": "Customize the colors of Tidy 5e Sheets."
     },
     "Sheet": {
-      "title": "Theme Settings",
+      "title": "Theme Settings: {userName}",
       "header": "Custom Theme Colors",
       "useDefaultLightColors": "Default Light",
       "useDefaultDarkColors": "Default Dark",

@@ -5,9 +5,9 @@
   import type { Writable } from 'svelte/store';
   import { SettingsProvider } from 'src/settings/settings';
   import NumberInputSetting from 'src/applications/settings/parts/NumberInputSetting.svelte';
-  import type { SettingsSheetContext } from '../ClientSettings.types';
+  import type { UserSettingsContext } from '../UserSettings.types';
 
-  let context = getContext<Writable<SettingsSheetContext>>('context');
+  let context = getContext<Writable<UserSettingsContext>>('context');
   const localize = FoundryAdapter.localize;
 </script>
 
@@ -22,21 +22,21 @@
 
 <CheckboxSetting
   bind:value={$context.settings.useHpBarVehicle}
-  name={'TIDY5E.Settings.UseHpBar.name'}
-  hint={'TIDY5E.Settings.UseHpBar.hint'}
+  name={SettingsProvider.settings.useHpBarVehicle.options.name}
+  hint={SettingsProvider.settings.useHpBarVehicle.options.hint}
   id="useHpBarVehicle"
 />
 
 <CheckboxSetting
   bind:value={$context.settings.useHpOverlayVehicle}
-  name={'TIDY5E.Settings.UseHpOverlay.name'}
-  hint={'TIDY5E.Settings.UseHpOverlay.hint'}
+  name={SettingsProvider.settings.useHpOverlayVehicle.options.name}
+  hint={SettingsProvider.settings.useHpOverlayVehicle.options.hint}
   id="useHpOverlayVehicle"
 />
 
 <NumberInputSetting
   bind:value={$context.settings.vehicleSheetWidth}
-  name={'TIDY5E.Settings.VehicleSheetWidth.name'}
-  hint={'TIDY5E.Settings.VehicleSheetWidth.hint'}
+  name={SettingsProvider.settings.vehicleSheetWidth.options.name}
+  hint={SettingsProvider.settings.vehicleSheetWidth.options.hint}
   id="vehicleSheetWidth"
 />

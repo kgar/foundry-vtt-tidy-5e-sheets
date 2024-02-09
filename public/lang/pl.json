@@ -158,7 +158,7 @@
         "MoveAllRight": "Przenieś wszystko w prawo"
     },
     "TIDY5E.Settings.MulticlassSpellbookFilterLabel": "Filtr Księgi Czarów dla Multiklasowości",
-    "TIDY5E.Settings.SheetMenu": {
+    "TIDY5E.UserSettings.Menu": {
         "name": "Ustawienia Karty Tidy",
         "hint": "Stwórz swoją własną wersję Karty Tidy 5e",
         "label": "Ustawienia Karty",

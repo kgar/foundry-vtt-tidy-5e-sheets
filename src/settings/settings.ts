@@ -5,7 +5,7 @@ import type { GetFunctionReturnType } from 'src/types/types';
 import { applyTheme, getTheme } from 'src/theme/theme';
 import { defaultLightTheme } from 'src/theme/default-light-theme';
 import { getCoreThemes, themeVariables } from 'src/theme/theme-reference';
-import { SheetSettingsFormApplication } from 'src/applications/settings/user-settings/ClientSettingsFormApplication';
+import { UserSettingsFormApplication } from 'src/applications/settings/user-settings/UserSettingsFormApplication';
 import { writable, type Writable } from 'svelte/store';
 import { WorldSettingsFormApplication } from 'src/applications/settings/world-settings/WorldSettingsFormApplication';
 import { ThemeSettingsFormApplication } from 'src/applications/theme/ThemeSettingsFormApplication';
@@ -118,11 +118,11 @@ export function createSettings() {
       },
       userMenu: {
         options: {
-          name: `TIDY5E.Settings.SheetMenu.name`,
-          label: 'TIDY5E.Settings.SheetMenu.label',
-          hint: `TIDY5E.Settings.SheetMenu.hint`,
+          name: `TIDY5E.UserSettings.Menu.name`,
+          label: 'TIDY5E.UserSettings.Menu.label',
+          hint: `TIDY5E.UserSettings.Menu.hint`,
           icon: 'fa-solid fa-user-gear',
-          type: SheetSettingsFormApplication,
+          type: UserSettingsFormApplication,
           restricted: false,
         },
       },
@@ -451,9 +451,6 @@ export function createSettings() {
         },
       },
 
-      // Settings Menu
-
-      // PC Sheet Settings
       showClassList: {
         options: {
           name: 'TIDY5E.Settings.ShowClassList.name',
@@ -618,7 +615,6 @@ export function createSettings() {
         },
       },
 
-      // NPC Sheet Settings
       initialNpcSheetTab: {
         options: {
           name: 'TIDY5E.Settings.InitialSheetTab.name',
@@ -759,8 +755,6 @@ export function createSettings() {
         },
       },
 
-      // Vehicle Sheet Settings
-
       initialVehicleSheetTab: {
         options: {
           name: 'TIDY5E.Settings.InitialSheetTab.name',
@@ -846,10 +840,6 @@ export function createSettings() {
         },
       },
 
-      //
-      // GM Options
-      //
-      // Show Player Name
       showPlayerName: {
         options: {
           name: 'TIDY5E.Settings.ShowPlayerName.name',
@@ -881,8 +871,6 @@ export function createSettings() {
         },
       },
 
-      // Portrait Settings
-      // Portrait Style
       useCircularPortraitStyle: {
         options: {
           name: 'TIDY5E.Settings.UseCircularPortraitStyle.name',
@@ -909,7 +897,6 @@ export function createSettings() {
         },
       },
 
-      // Total Edit Lock
       useTotalSheetLock: {
         options: {
           name: 'TIDY5E.Settings.UseTotalSheetLock.name',
@@ -956,7 +943,6 @@ export function createSettings() {
         },
       },
 
-      // Hidden Death Saves
       hideDeathSavesFromPlayers: {
         options: {
           name: 'TIDY5E.Settings.HideDeathSavesFromPlayers.name',
@@ -973,7 +959,6 @@ export function createSettings() {
         },
       },
 
-      // Hide marker spell slot
       useSpellSlotMarker: {
         options: {
           name: 'TIDY5E.Settings.UseSpellSlotMarker.name',
@@ -1034,7 +1019,6 @@ export function createSettings() {
         },
       },
 
-      // Item quantity
       alwaysShowItemQuantity: {
         options: {
           name: 'TIDY5E.Settings.AlwaysShowItemQuantity.name',
@@ -1095,7 +1079,6 @@ export function createSettings() {
         },
       },
 
-      // NPC Resting
       useNpcRest: {
         options: {
           name: 'TIDY5E.Settings.UseNPCRest.name',
@@ -1124,7 +1107,6 @@ export function createSettings() {
         },
       },
 
-      // Link Marker
       showNpcActorLinkMarker: {
         options: {
           name: 'TIDY5E.Settings.ShowNPCActorLinkMarker.name',
@@ -1146,7 +1128,6 @@ export function createSettings() {
         },
       },
 
-      // Show if item has active effects
       showActiveEffectsMarker: {
         options: {
           name: 'TIDY5E.Settings.ShowActiveEffectsMarker.name',
@@ -1163,7 +1144,6 @@ export function createSettings() {
         },
       },
 
-      // Default width for player sheet
       playerSheetWidth: {
         options: {
           name: 'TIDY5E.Settings.PlayerSheetWidth.name',
@@ -1178,7 +1158,6 @@ export function createSettings() {
         },
       },
 
-      // Default width for NPC sheet
       npcSheetWidth: {
         options: {
           name: 'TIDY5E.Settings.NPCSheetWidth.name',
@@ -1208,8 +1187,6 @@ export function createSettings() {
           );
         },
       },
-
-      // Default width for vehicle sheet
 
       vehicleSheetWidth: {
         options: {
@@ -1241,8 +1218,6 @@ export function createSettings() {
         },
       },
 
-      // Favorites
-
       sortFavoriteItemsAlphabetically: {
         options: {
           name: 'TIDY5E.Settings.SortFavoriteItemsAlphabetically.name',
@@ -1259,7 +1234,6 @@ export function createSettings() {
         },
       },
 
-      // Locks
       lockMoneyChanges: {
         options: {
           name: 'TIDY5E.Settings.LockMoneyChanges.name',
@@ -1344,7 +1318,6 @@ export function createSettings() {
         },
       },
 
-      // Other
       allowCantripsToBePrepared: {
         options: {
           name: 'TIDY5E.Settings.AllowCantripsToBePrepared.name',
@@ -1422,8 +1395,6 @@ export function createSettings() {
           return FoundryAdapter.getTidySetting<boolean>('allowHpMaxOverride');
         },
       },
-
-      // Actions List
 
       actionListLimitActionsToCantrips: {
         options: {
@@ -1505,8 +1476,6 @@ export function createSettings() {
         },
       },
 
-      // Exhaustion
-
       exhaustionConfig: {
         options: {
           name: 'TIDY5E.WorldSettings.Exhaustion.name',
@@ -1538,8 +1507,6 @@ export function createSettings() {
           );
         },
       },
-
-      // Color customization
 
       colorPickerEnabled: {
         options: {

@@ -118,7 +118,7 @@
     "TIDY5E.Class.Wizard": null,
     "TIDY5E.OriginSummaryConfig": null,
     "TIDY5E.Settings.MulticlassSpellbookFilterLabel": null,
-    "TIDY5E.Settings.SheetMenu": {
+    "TIDY5E.UserSettings.Menu": {
         "name": null,
         "hint": null,
         "label": "Configurações da Ficha",

@@ -4,9 +4,9 @@
   import type { Writable } from 'svelte/store';
   import { SettingsProvider } from 'src/settings/settings';
   import CheckboxSetting from '../../parts/CheckboxSetting.svelte';
-  import type { SettingsSheetContext } from '../ClientSettings.types';
+  import type { UserSettingsContext } from '../UserSettings.types';
 
-  let context = getContext<Writable<SettingsSheetContext>>('context');
+  let context = getContext<Writable<UserSettingsContext>>('context');
 
   const localize = FoundryAdapter.localize;
 </script>

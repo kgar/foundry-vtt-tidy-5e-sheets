@@ -30,7 +30,6 @@ export class ThemeSettingsFormApplication extends SvelteFormApplicationBase {
     return {
       ...super.defaultOptions,
       height: 750,
-      title: 'TIDY5E.ThemeSettings.Sheet.title',
       width: 400,
       submitOnClose: false,
       minimizable: true,
@@ -38,6 +37,12 @@ export class ThemeSettingsFormApplication extends SvelteFormApplicationBase {
       popOut: true,
       resizable: true,
     };
+  }
+
+  get title() {
+    return FoundryAdapter.localize('TIDY5E.ThemeSettings.Sheet.title', {
+      userName: game.user.name,
+    });
   }
 
   createComponent(node: HTMLElement): SvelteComponent<any, any, any> {

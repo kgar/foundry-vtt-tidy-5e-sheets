@@ -147,7 +147,7 @@
 
   "TIDY5E.Settings.MulticlassSpellbookFilterLabel": "マルチクラス呪文書フィルター",
 
-  "TIDY5E.Settings.SheetMenu": {
+  "TIDY5E.UserSettings.Menu": {
     "name": "Tidy Sheet設定",
     "hint": "キャラクターシートの見た目を自由にカスタマイズしましょう！",
     "label": "シート設定",

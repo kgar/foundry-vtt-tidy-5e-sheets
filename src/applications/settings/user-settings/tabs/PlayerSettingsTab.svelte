@@ -6,11 +6,9 @@
   import CheckboxSetting from 'src/applications/settings/parts/CheckboxSetting.svelte';
   import NumberInputSetting from 'src/applications/settings/parts/NumberInputSetting.svelte';
   import TextInputSetting from 'src/applications/settings/parts/TextInputSetting.svelte';
-  import type {
-    SettingsSheetContext,
-  } from '../ClientSettings.types';
+  import type { UserSettingsContext } from '../UserSettings.types';
 
-  let context = getContext<Writable<SettingsSheetContext>>('context');
+  let context = getContext<Writable<UserSettingsContext>>('context');
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -26,99 +24,101 @@
 
 <CheckboxSetting
   bind:value={$context.settings.showClassList}
-  name={'TIDY5E.Settings.ShowClassList.name'}
-  hint={'TIDY5E.Settings.ShowClassList.hint'}
+  name={SettingsProvider.settings.showClassList.options.name}
+  hint={SettingsProvider.settings.showClassList.options.hint}
   id="showClassList"
 />
 
 <CheckboxSetting
   bind:value={$context.settings.animateInspiration}
-  name={'TIDY5E.Settings.InspirationAnimation.name'}
-  hint={'TIDY5E.Settings.InspirationAnimation.hint'}
+  name={SettingsProvider.settings.animateInspiration.options.name}
+  hint={SettingsProvider.settings.animateInspiration.options.hint}
   id="animateInspiration"
 />
 
 <CheckboxSetting
   bind:value={$context.settings.hideIfZero}
-  name={'TIDY5E.Settings.HideIfZero.name'}
-  hint={'TIDY5E.Settings.HideIfZero.hint'}
+  name={SettingsProvider.settings.hideIfZero.options.name}
+  hint={SettingsProvider.settings.hideIfZero.options.hint}
   id="hideIfZero"
 />
 
 <CheckboxSetting
   bind:value={$context.settings.showInspirationOnHover}
-  name={'TIDY5E.Settings.ShowInspirationOnHover.name'}
-  hint={'TIDY5E.Settings.ShowInspirationOnHover.hint'}
+  name={SettingsProvider.settings.showInspirationOnHover.options.name}
+  hint={SettingsProvider.settings.showInspirationOnHover.options.hint}
   id="showInspirationOnHover"
 />
 
 <CheckboxSetting
   bind:value={$context.settings.showExhaustionOnHover}
-  name={'TIDY5E.Settings.ShowExhaustionOnHover.name'}
-  hint={'TIDY5E.Settings.ShowExhaustionOnHover.hint'}
+  name={SettingsProvider.settings.showExhaustionOnHover.options.name}
+  hint={SettingsProvider.settings.showExhaustionOnHover.options.hint}
   id="showExhaustionOnHover"
 />
 
 <CheckboxSetting
   bind:value={$context.settings.useHpBar}
-  name={'TIDY5E.Settings.UseHpBar.name'}
-  hint={'TIDY5E.Settings.UseHpBar.hint'}
+  name={SettingsProvider.settings.useHpBar.options.name}
+  hint={SettingsProvider.settings.useHpBar.options.hint}
   id="useHpBar"
 />
 
 <CheckboxSetting
   bind:value={$context.settings.useHpOverlay}
-  name={'TIDY5E.Settings.UseHpOverlay.name'}
-  hint={'TIDY5E.Settings.UseHpOverlay.hint'}
+  name={SettingsProvider.settings.useHpOverlay.options.name}
+  hint={SettingsProvider.settings.useHpOverlay.options.hint}
   id="useHpOverlay"
 />
 
 <CheckboxSetting
   bind:value={$context.settings.toggleEmptyCharacterSkills}
-  name={'TIDY5E.Settings.ToggleEmptyCharacterSkills.name'}
-  hint={'TIDY5E.Settings.ToggleEmptyCharacterSkills.hint'}
+  name={SettingsProvider.settings.toggleEmptyCharacterSkills.options.name}
+  hint={SettingsProvider.settings.toggleEmptyCharacterSkills.options.hint}
   id="toggleEmptyCharacterSkills"
 />
 
 <CheckboxSetting
   bind:value={$context.settings.toggleEmptyCharacterTraits}
-  name={'TIDY5E.Settings.ToggleEmptyCharacterTraits.name'}
-  hint={'TIDY5E.Settings.ToggleEmptyCharacterTraits.hint'}
+  name={SettingsProvider.settings.toggleEmptyCharacterTraits.options.name}
+  hint={SettingsProvider.settings.toggleEmptyCharacterTraits.options.hint}
   id="toggleEmptyCharacterTraits"
 />
 
 <CheckboxSetting
   bind:value={$context.settings.moveTraitsBelowCharacterResources}
-  name={'TIDY5E.Settings.MoveTraitsBelowResources.name'}
-  hint={'TIDY5E.Settings.MoveTraitsBelowResources.hint'}
+  name={SettingsProvider.settings.moveTraitsBelowCharacterResources.options
+    .name}
+  hint={SettingsProvider.settings.moveTraitsBelowCharacterResources.options
+    .hint}
   id="moveTraitsBelowCharacterResources"
 />
 
 <CheckboxSetting
   bind:value={$context.settings.showEquippedAmmoOnly}
-  name={'TIDY5E.Settings.ShowEquippedAmmoOnly.name'}
-  hint={'TIDY5E.Settings.ShowEquippedAmmoOnly.hint'}
+  name={SettingsProvider.settings.showEquippedAmmoOnly.options.name}
+  hint={SettingsProvider.settings.showEquippedAmmoOnly.options.hint}
   id="showEquippedAmmoOnly"
 />
 
 <NumberInputSetting
   bind:value={$context.settings.playerSheetWidth}
-  name={'TIDY5E.Settings.PlayerSheetWidth.name'}
-  hint={'TIDY5E.Settings.PlayerSheetWidth.hint'}
+  name={SettingsProvider.settings.playerSheetWidth.options.name}
+  hint={SettingsProvider.settings.playerSheetWidth.options.hint}
   id="playerSheetWidth"
 />
 
 <CheckboxSetting
   bind:value={$context.settings.useContextMenu}
-  name={'TIDY5E.Settings.UseContextMenu.name'}
-  hint={'TIDY5E.Settings.UseContextMenu.hint'}
+  name={SettingsProvider.settings.useContextMenu.options.name}
+  hint={SettingsProvider.settings.useContextMenu.options.hint}
   id="useContextMenu"
 />
 
 <CheckboxSetting
   bind:value={$context.settings.showIconsNextToTheItemName}
-  name={'TIDY5E.Settings.ShowIconsNextToTheItemName.name'}
-  hint={'TIDY5E.Settings.ShowIconsNextToTheItemName.hint'}
+  name={SettingsProvider.settings.showIconsNextToTheItemName.options.name}
+  hint={SettingsProvider.settings.showIconsNextToTheItemName.options.hint}
   id="showIconsNextToTheItemName"
 />
 
@@ -126,22 +126,24 @@
 
 <CheckboxSetting
   bind:value={$context.settings.useMulticlassSpellbookFilter}
-  name={'TIDY5E.Settings.UseMulticlassSpellbookFilter.name'}
-  hint={'TIDY5E.Settings.UseMulticlassSpellbookFilter.hint'}
+  name={SettingsProvider.settings.useMulticlassSpellbookFilter.options.name}
+  hint={SettingsProvider.settings.useMulticlassSpellbookFilter.options.hint}
   id="useMulticlassSpellbookFilter"
 />
 
 <CheckboxSetting
   bind:value={$context.settings.useSpellClassFilterIcons}
-  name={'TIDY5E.Settings.UseSpellClassIcons.name'}
-  hint={'TIDY5E.Settings.UseSpellClassIcons.hint'}
+  name={SettingsProvider.settings.useSpellClassFilterIcons.options.name}
+  hint={SettingsProvider.settings.useSpellClassFilterIcons.options.hint}
   id="useSpellClassFilterIcons"
 />
 
 <!-- TODO: Make a little crud-based admin interface for adding / removing these additional classes -->
 <TextInputSetting
   bind:value={$context.settings.spellClassFilterAdditionalClasses}
-  name={'TIDY5E.Settings.SpellClassFilterAdditionalClasses.name'}
-  hint={'TIDY5E.Settings.SpellClassFilterAdditionalClasses.hint'}
+  name={SettingsProvider.settings.spellClassFilterAdditionalClasses.options
+    .name}
+  hint={SettingsProvider.settings.spellClassFilterAdditionalClasses.options
+    .hint}
   id="spellClassFilterAdditionalClasses"
 />

@@ -5,17 +5,11 @@
   import { getContext } from 'svelte';
   import type { Writable } from 'svelte/store';
   import { SettingsProvider } from 'src/settings/settings';
-  import SelectSetting from 'src/applications/settings/parts/SelectSetting.svelte';
-  import type {
-    SettingsSheetContext,
-    SettingsSheetFunctions,
-  } from '../ClientSettings.types';
-  
+  import type { UserSettingsContext } from '../UserSettings.types';
 
-  let context = getContext<Writable<SettingsSheetContext>>('context');
-  let functions = getContext<SettingsSheetFunctions>('functions');
+  let context = getContext<Writable<UserSettingsContext>>('context');
 
-    const localize = FoundryAdapter.localize;
+  const localize = FoundryAdapter.localize;
 </script>
 
 <h2>{localize('TIDY5E.Settings.TabNPCs.header')}</h2>
@@ -29,49 +23,49 @@
 
 <CheckboxSetting
   bind:value={$context.settings.useHpBarNpc}
-  name={'TIDY5E.Settings.UseHpBar.name'}
-  hint={'TIDY5E.Settings.UseHpBar.hint'}
+  name={SettingsProvider.settings.useHpBarNpc.options.name}
+  hint={SettingsProvider.settings.useHpBarNpc.options.hint}
   id="useHpBarNpc"
 />
 
 <CheckboxSetting
   bind:value={$context.settings.useHpOverlayNpc}
-  name={'TIDY5E.Settings.UseHpOverlay.name'}
-  hint={'TIDY5E.Settings.UseHpOverlay.hint'}
+  name={SettingsProvider.settings.useHpOverlayNpc.options.name}
+  hint={SettingsProvider.settings.useHpOverlayNpc.options.hint}
   id="useHpOverlayNpc"
 />
 
 <CheckboxSetting
   bind:value={$context.settings.alwaysShowNpcTraits}
-  name={'TIDY5E.Settings.AlwaysShowTraits.name'}
-  hint={'TIDY5E.Settings.AlwaysShowTraits.hint'}
+  name={SettingsProvider.settings.alwaysShowNpcTraits.options.name}
+  hint={SettingsProvider.settings.alwaysShowNpcTraits.options.hint}
   id="alwaysShowNpcTraits"
 />
 
 <CheckboxSetting
   bind:value={$context.settings.moveTraitsBelowNpcResources}
-  name={'TIDY5E.Settings.MoveTraitsBelowResources.name'}
-  hint={'TIDY5E.Settings.MoveTraitsBelowResources.hint'}
+  name={SettingsProvider.settings.moveTraitsBelowNpcResources.options.name}
+  hint={SettingsProvider.settings.moveTraitsBelowNpcResources.options.hint}
   id="moveTraitsBelowNpcResources"
 />
 
 <CheckboxSetting
   bind:value={$context.settings.alwaysShowNpcSkills}
-  name={'TIDY5E.Settings.AlwaysShowSkills.name'}
-  hint={'TIDY5E.Settings.AlwaysShowSkills.hint'}
+  name={SettingsProvider.settings.alwaysShowNpcSkills.options.name}
+  hint={SettingsProvider.settings.alwaysShowNpcSkills.options.hint}
   id="alwaysShowNpcSkills"
 />
 
 <CheckboxSetting
   bind:value={$context.settings.showSpellbookTabNpc}
-  name={'TIDY5E.Settings.ShowNPCSpellbookTab.name'}
-  hint={'TIDY5E.Settings.ShowNPCSpellbookTab.hint'}
+  name={SettingsProvider.settings.showSpellbookTabNpc.options.name}
+  hint={SettingsProvider.settings.showSpellbookTabNpc.options.hint}
   id="showSpellbookTabNpc"
 />
 
 <NumberInputSetting
   bind:value={$context.settings.npcSheetWidth}
-  name={'TIDY5E.Settings.NPCSheetWidth.name'}
-  hint={'TIDY5E.Settings.NPCSheetWidth.hint'}
+  name={SettingsProvider.settings.npcSheetWidth.options.name}
+  hint={SettingsProvider.settings.npcSheetWidth.options.hint}
   id="npcSheetWidth"
 />
