@@ -5,7 +5,7 @@ import type { GetFunctionReturnType } from 'src/types/types';
 import { applyTheme, getTheme } from 'src/theme/theme';
 import { defaultLightTheme } from 'src/theme/default-light-theme';
 import { getCoreThemes, themeVariables } from 'src/theme/theme-reference';
-import { SheetSettingsFormApplication } from 'src/applications/settings/client-settings/ClientSettingsFormApplication';
+import { SheetSettingsFormApplication } from 'src/applications/settings/user-settings/ClientSettingsFormApplication';
 import { writable, type Writable } from 'svelte/store';
 import { WorldSettingsFormApplication } from 'src/applications/settings/world-settings/WorldSettingsFormApplication';
 import { ThemeSettingsFormApplication } from 'src/applications/theme/ThemeSettingsFormApplication';
