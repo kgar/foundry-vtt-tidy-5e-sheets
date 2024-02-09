@@ -14,7 +14,7 @@
     UserSettingsStore,
   } from './UserSettings.types';
 
-  let selectedTabId: string;
+  let selectedTabId = getContext<string>('initialTabId');
   let context = getContext<UserSettingsStore>('context');
   let functions = getContext<UserSettingsFunctions>('functions');
 

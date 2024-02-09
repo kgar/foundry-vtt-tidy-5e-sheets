@@ -118,6 +118,7 @@ export class UserSettingsFormApplication extends SvelteFormApplicationBase {
           } satisfies UserSettingsFunctions,
         ],
         ['appId', this.appId],
+        ['initialTabId', this.initialTabId],
       ]),
     });
   }
@@ -138,8 +139,6 @@ export class UserSettingsFormApplication extends SvelteFormApplicationBase {
 
     return valid;
   }
-
-  
 
   async applyChangedSettings(context: UserSettingsContext) {
     if (!this.validate(context)) {
