@@ -1509,8 +1509,8 @@ export function createSettings() {
 
       exhaustionConfig: {
         options: {
-          name: 'TIDY5E.Settings.Exhaustion.name',
-          hint: 'TIDY5E.Settings.Exhaustion.hint',
+          name: 'TIDY5E.WorldSettings.Exhaustion.name',
+          hint: 'TIDY5E.WorldSettings.Exhaustion.hint',
           scope: 'world',
           config: false,
           default: getStandardExhaustionConfig(),
@@ -1525,8 +1525,8 @@ export function createSettings() {
 
       vehicleExhaustionConfig: {
         options: {
-          name: 'TIDY5E.Settings.VehicleExhaustion.name',
-          hint: 'TIDY5E.Settings.VehicleExhaustion.hint',
+          name: 'TIDY5E.WorldSettings.VehicleExhaustion.name',
+          hint: 'TIDY5E.WorldSettings.VehicleExhaustion.hint',
           scope: 'world',
           config: false,
           default: getStandardVehicleExhaustionConfig(),

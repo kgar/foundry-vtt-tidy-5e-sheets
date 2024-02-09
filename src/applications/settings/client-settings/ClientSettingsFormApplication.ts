@@ -168,7 +168,7 @@ export class SheetSettingsFormApplication extends SvelteFormApplicationBase {
       valid = false;
       error(
         FoundryAdapter.localize(
-          'TIDY5E.Settings.Exhaustion.AtLeastOneLevelRequiredErrorMessage'
+          'TIDY5E.WorldSettings.Exhaustion.AtLeastOneLevelRequiredErrorMessage'
         ),
         true
       );
@@ -181,7 +181,7 @@ export class SheetSettingsFormApplication extends SvelteFormApplicationBase {
       valid = false;
       error(
         FoundryAdapter.localize(
-          'TIDY5E.Settings.VehicleExhaustion.AtLeastOneLevelRequiredErrorMessage'
+          'TIDY5E.WorldSettings.VehicleExhaustion.AtLeastOneLevelRequiredErrorMessage'
         ),
         true
       );

@@ -132,11 +132,10 @@
         "tabLabel": "Vehículos",
         "header": "Hojas de vehículo"
     },
-    "TIDY5E.Settings.TabGM": {
-        "tabLabel": "Opciones del GM",
-        "header": "Opciones de la hoha de GM"
+    "TIDY5E.WorldSettings.TabMisc": {
+        "tabLabel": "Opciones del GM"
     },
-    "TIDY5E.Settings.TabLocks": {
+    "TIDY5E.WorldSettings.TabSheetLock": {
         "tabLabel": "Bloqueos",
         "header": "Opciones de bloqueo",
         "hint": "Evita que los jugadores realicen cambios en aspectos de sus hojas de personaje que deberían cambiar con poca frecuencia. Opcionalmente, oculta algunos elementos que no deseas utilizar en absoluto.",
@@ -550,7 +549,7 @@
         "name": "Incluir hechizos con efectos activos como acciones",
         "hint": "Incluye hechizos con efectos activos adjuntos (por ejemplo, Piel de corteza) en la pestaña/panel de acciones de forma predeterminada."
     },
-    "TIDY5E.Settings.Exhaustion": {
+    "TIDY5E.WorldSettings.Exhaustion": {
         "useStandardExhaustion": "Utilizar agotamiento estandar",
         "useOneDnDExhaustion": "Utilizar agotamiento de One D&D",
         "AtLeastOneLevelRequiredErrorMessage": "Se requiere al menos un nivel de agotamiento.",
@@ -617,7 +616,7 @@
         "name": "Utilizar la compatibilidad con teclado accesible",
         "hint": "Permite a los usuarios desplazarse por la mayoría de los botones/comandos de T5E y ejecutarlos con teclas de acceso rápido del teclado basadas en botones convencionales. Nota: cuando se enfoca en un botón en Foundry, las combinaciones de teclas de \"Configurar controles\" no responden. Si un módulo usa esta función de Foundry para los controles en las hojas, como el uso de elementos mientras se mantiene presionada una tecla especial, habilitar esta opción de T5E interferirá con esas combinaciones de teclas."
     },
-    "TIDY5E.Settings.VehicleExhaustion": {
+    "TIDY5E.WorldSettings.VehicleExhaustion": {
         "name": "Configuración de agotamiento vehicular",
         "hint": "Determina cómo se configura y presenta el agotamiento del vehículo en la ficha del vehículo.",
         "AtLeastOneLevelRequiredErrorMessage": "Se requiere al menos un nivel de agotamiento del vehículo.",

@@ -8,11 +8,11 @@
   <a href="https://foundryvtt.com/packages/tidy5e-sheet/" target="_blank">
     <img
       class="logo"
-      src="../modules/tidy5e-sheet/images/tidy-5e-logo.png"
+      src="../modules/tidy5e-sheet/images/tidy-5e-logo.svg"
       alt={localize('TIDY5E.Settings.About.logoAltText')}
     />
   </a>
-  <p>
+  <p class="banner-text">
     {@html localize('TIDY5E.Settings.About.MaintainerParagraph', {
       urlStart: '<a href="https://github.com/kgar" target="_blank">',
       urlEnd: '</a>',
@@ -83,5 +83,20 @@
 
   .logo {
     max-width: 7.5rem;
+    animation: TheShining 16s infinite;
+  }
+
+  @keyframes TheShining {
+    0% {
+      filter: drop-shadow(0 0 0.625rem var(--t5e-primary-accent-color));
+    }
+    50% {
+      filter: drop-shadow(0 0 5rem var(--t5e-primary-accent-color))
+        hue-rotate(90deg);
+    }
+    100% {
+      filter: drop-shadow(0 0 0.625rem var(--t5e-primary-accent-color))
+        hue-rotate(360deg);
+    }
   }
 </style>

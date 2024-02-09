@@ -1,7 +1,12 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
   import type { Tab } from 'src/types/types';
-  import OtherTab from './tabs/OtherTab.svelte';
+  import MiscWorldSettingsTab from './tabs/MiscWorldSettingsTab.svelte';
+  import CharacterWorldSettingsTab from './tabs/CharacterWorldSettingsTab.svelte';
+  import NpcWorldSettingsTab from './tabs/NpcWorldSettingsTab.svelte';
+  import VehicleWorldSettingsTab from './tabs/VehicleWorldSettingsTab.svelte';
+  import ExhaustionWorldSettingsTab from './tabs/ExhaustionWorldSettingsTab.svelte';
+  import SheetLockWorldSettingsTab from './tabs/SheetLockWorldSettingsTab.svelte';
   import { getContext } from 'svelte';
   import type {
     WorldSettingsContextStore,
@@ -17,10 +22,50 @@
 
   let tabs: Tab[] = [
     {
-      id: CONSTANTS.TAB_SETTINGS_GM,
-      title: 'TIDY5E.Settings.TabPlayers.tabLabel',
+      id: CONSTANTS.TAB_WORLD_SETTINGS_MISC,
+      title: 'TIDY5E.WorldSettings.TabMisc.tabLabel',
       content: {
-        component: OtherTab,
+        component: MiscWorldSettingsTab,
+        type: 'svelte',
+      },
+    },
+    {
+      id: CONSTANTS.TAB_WORLD_SETTINGS_CHARACTER,
+      title: 'TIDY5E.WorldSettings.TabCharacter.tabLabel',
+      content: {
+        component: CharacterWorldSettingsTab,
+        type: 'svelte',
+      },
+    },
+    {
+      id: CONSTANTS.TAB_WORLD_SETTINGS_NPC,
+      title: 'TIDY5E.WorldSettings.TabNpc.tabLabel',
+      content: {
+        component: NpcWorldSettingsTab,
+        type: 'svelte',
+      },
+    },
+    {
+      id: CONSTANTS.TAB_WORLD_SETTINGS_VEHICLE,
+      title: 'TIDY5E.WorldSettings.TabVehicle.tabLabel',
+      content: {
+        component: VehicleWorldSettingsTab,
+        type: 'svelte',
+      },
+    },
+    {
+      id: CONSTANTS.TAB_WORLD_SETTINGS_EXHAUSTION,
+      title: 'TIDY5E.WorldSettings.TabExhaustion.tabLabel',
+      content: {
+        component: ExhaustionWorldSettingsTab,
+        type: 'svelte',
+      },
+    },
+    {
+      id: CONSTANTS.TAB_WORLD_SETTINGS_SHEETLOCK,
+      title: 'TIDY5E.WorldSettings.TabSheetLock.tabLabel',
+      content: {
+        component: SheetLockWorldSettingsTab,
         type: 'svelte',
       },
     },

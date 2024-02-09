@@ -50,11 +50,10 @@
         "tabLabel": "Pojazdy",
         "header": "Karty Pojazdów"
     },
-    "TIDY5E.Settings.TabGM": {
-        "tabLabel": "Ustawienia MG",
-        "header": "Opcje Karty MG"
+    "TIDY5E.WorldSettings.TabMisc": {
+        "tabLabel": "Ustawienia MG"
     },
-    "TIDY5E.Settings.TabLocks": {
+    "TIDY5E.WorldSettings.TabSheetLock": {
         "tabLabel": "Blokady",
         "header": "Ustawienia blokad"
     },

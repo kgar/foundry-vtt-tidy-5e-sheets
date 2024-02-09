@@ -165,11 +165,10 @@
     "tabLabel": null,
     "header": null
   },
-  "TIDY5E.Settings.TabGM": {
-    "tabLabel": "Options MJ",
-    "header": "Options pour le MJ"
+  "TIDY5E.WorldSettings.TabMisc": {
+    "tabLabel": "Options MJ"
   },
-  "TIDY5E.Settings.TabLocks": {
+  "TIDY5E.WorldSettings.TabSheetLock": {
     "tabLabel": null,
     "header": null,
     "hint": null,

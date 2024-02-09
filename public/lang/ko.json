@@ -165,11 +165,10 @@
     "tabLabel": null,
     "header": null
   },
-  "TIDY5E.Settings.TabGM": {
-    "tabLabel": "GM 옵션",
-    "header": "GM 시트 옵션"
+  "TIDY5E.WorldSettings.TabMisc": {
+    "tabLabel": "GM 옵션"
   },
-  "TIDY5E.Settings.TabLocks": {
+  "TIDY5E.WorldSettings.TabSheetLock": {
     "tabLabel": null,
     "header": null,
     "hint": null,

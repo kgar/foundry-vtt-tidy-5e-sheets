@@ -165,11 +165,10 @@
     "tabLabel": null,
     "header": null
   },
-  "TIDY5E.Settings.TabGM": {
-    "tabLabel": "JM Opciók",
-    "header": "JM Lap Opciók"
+  "TIDY5E.WorldSettings.TabMisc": {
+    "tabLabel": "JM Opciók"
   },
-  "TIDY5E.Settings.TabLocks": {
+  "TIDY5E.WorldSettings.TabSheetLock": {
     "tabLabel": null,
     "header": null,
     "hint": null,

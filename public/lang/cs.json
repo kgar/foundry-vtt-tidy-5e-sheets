@@ -165,11 +165,10 @@
     "tabLabel": null,
     "header": null
   },
-  "TIDY5E.Settings.TabGM": {
-    "tabLabel": "Nastavení PJ",
-    "header": "Nastavení Deníků PJ"
+  "TIDY5E.WorldSettings.TabMisc": {
+    "tabLabel": "Nastavení PJ"
   },
-  "TIDY5E.Settings.TabLocks": {
+  "TIDY5E.WorldSettings.TabSheetLock": {
     "tabLabel": null,
     "header": null,
     "hint": null,

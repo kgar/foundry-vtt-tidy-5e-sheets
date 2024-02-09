@@ -189,6 +189,52 @@
     "MoveAllRight": "Move all to the right"
   },
 
+  "TIDY5E.WorldSettings.TabCharacter": {
+    "tabLabel": "Character"
+  },
+  "TIDY5E.WorldSettings.TabNpc": {
+    "tabLabel": "NPC"
+  },
+  "TIDY5E.WorldSettings.TabVehicle": {
+    "tabLabel": "Vehicle"
+  },
+  "TIDY5E.WorldSettings.TabExhaustion": {
+    "tabLabel": "Exhaustion"
+  },
+  "TIDY5E.WorldSettings.Exhaustion": {
+    "Header": "Character/NPC Exhaustion",
+    "name": "Exhaustion Configuration",
+    "hint": "Determines how non-vehicle exhaustion is configured and presented on the character and NPC sheets.",
+    "options.specific.text": "Specific Levels",
+    "options.specific.levels.name": "Total Levels",
+    "options.specific.levels.hint": "Determines the maximum number of levels of exhaustion.",
+    "options.specific.levels.tooltip.name": "Exhaustion Level {level} Tooltip",
+    "options.specific.levels.tooltip.hint": "Tooltip for this level of exhaustion. Localization keys also work.",
+    "options.open.text": "Open Number Input",
+    "options.open.explanation": "Shows the user a numeric input for entering levels of exhaustion.",
+    "useStandardExhaustion": "Use Standard Exhaustion",
+    "useOneDnDExhaustion": "Use One D&D Exhaustion",
+    "AtLeastOneLevelRequiredErrorMessage": "At least one exhaustion level is required."
+  },
+  "TIDY5E.WorldSettings.VehicleExhaustion": {
+    "Header": "Vehicle Exhaustion",
+    "name": "Vehicular Exhaustion Configuration",
+    "hint": "Determines how vehicle exhaustion is configured and presented on the vehicle sheet.",
+    "AtLeastOneLevelRequiredErrorMessage": "At least one vehicle exhaustion level is required."
+  },
+  "TIDY5E.WorldSettings.TabSheetLock": {
+    "tabLabel": "Sheet Lock",
+    "header": "Lock Options",
+    "hint": "Prevent players from making changes to aspects of their character sheets that should change infrequently. Optionally hide some elements that you don't want to use at all.",
+    "hint2": "Important: sheet lock features are intended to guide player sheet use and to help prevent mistakes such as accidentally adding/removing a saving throw proficiency. Sheet lock settings do not provide a secure lockdown against players with malicious intent.",
+    "labelGeneralLocks": "General Locks",
+    "labelInventoryLocks": "Inventory Locks",
+    "labelFeaturesLocks": "Features Locks"
+  },
+  "TIDY5E.WorldSettings.TabMisc": {
+    "tabLabel": "GM Options"
+  },
+
   "TIDY5E.Settings.MulticlassSpellbookFilterLabel": "Multiclass Spellbook Filter",
 
   "TIDY5E.WorldSettings.Menu": {
@@ -215,19 +261,6 @@
   "TIDY5E.Settings.TabVehicles": {
     "tabLabel": "Vehicles",
     "header": "Vehicle Sheets"
-  },
-  "TIDY5E.Settings.TabGM": {
-    "tabLabel": "GM Options",
-    "header": "GM Sheet Options"
-  },
-  "TIDY5E.Settings.TabLocks": {
-    "tabLabel": "Locks",
-    "header": "Lock Options",
-    "hint": "Prevent players from making changes to aspects of their character sheets that should change infrequently. Optionally hide some elements that you don't want to use at all.",
-    "hint2": "Important: sheet lock features are intended to guide player sheet use and to help prevent mistakes such as accidentally adding/removing a saving throw proficiency. Sheet lock settings do not provide a secure lockdown against players with malicious intent.",
-    "labelGeneralLocks": "General Locks",
-    "labelInventoryLocks": "Inventory Locks",
-    "labelFeaturesLocks": "Features Locks"
   },
   "TIDY5E.Settings.TabFeatures": {
     "tabLabel": "Features"
@@ -510,27 +543,6 @@
   "TIDY5E.Settings.ActionListScaleCantripDamage": {
     "name": "Show Scaled Cantrip Damage (experimental)",
     "hint": "Scales cantrip damage to match the PC's current level or the NPC's challenge rating."
-  },
-  "TIDY5E.Settings.Exhaustion": {
-    "Header": "Exhaustion",
-    "name": "Exhaustion Configuration",
-    "hint": "Determines how non-vehicle exhaustion is configured and presented on the character and NPC sheets.",
-    "options.specific.text": "Specific Levels",
-    "options.specific.levels.name": "Total Levels",
-    "options.specific.levels.hint": "Determines the maximum number of levels of exhaustion.",
-    "options.specific.levels.tooltip.name": "Exhaustion Level {level} Tooltip",
-    "options.specific.levels.tooltip.hint": "Tooltip for this level of exhaustion. Localization keys also work.",
-    "options.open.text": "Open Number Input",
-    "options.open.explanation": "Shows the user a numeric input for entering levels of exhaustion.",
-    "useStandardExhaustion": "Use Standard Exhaustion",
-    "useOneDnDExhaustion": "Use One D&D Exhaustion",
-    "AtLeastOneLevelRequiredErrorMessage": "At least one exhaustion level is required."
-  },
-  "TIDY5E.Settings.VehicleExhaustion": {
-    "Header": "Vehicle Exhaustion",
-    "name": "Vehicular Exhaustion Configuration",
-    "hint": "Determines how vehicle exhaustion is configured and presented on the vehicle sheet.",
-    "AtLeastOneLevelRequiredErrorMessage": "At least one vehicle exhaustion level is required."
   },
   "TIDY5E.Settings.ColorPickerEnabled": {
     "name": "Use Custom Theme Colors",

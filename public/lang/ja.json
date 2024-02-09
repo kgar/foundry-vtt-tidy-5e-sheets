@@ -165,11 +165,10 @@
     "tabLabel": null,
     "header": null
   },
-  "TIDY5E.Settings.TabGM": {
-    "tabLabel": "GMオプション",
-    "header": "GMｼｰﾄ･ｵﾌﾟｼｮﾝ"
+  "TIDY5E.WorldSettings.TabMisc": {
+    "tabLabel": "GMオプション"
   },
-  "TIDY5E.Settings.TabLocks": {
+  "TIDY5E.WorldSettings.TabSheetLock": {
     "tabLabel": "ロック",
     "header": "ロック設定",
     "hint": "シートの中であんまり使わない場所をPLが間違って変更するのを防いだり、そもそも表示したくないものを隠すためのオプションをここで提供しています。何をロックするのか、誰が使って良いのかを権限で完全に管理できます。",
