@@ -191,11 +191,18 @@
 
   "TIDY5E.Settings.MulticlassSpellbookFilterLabel": "Multiclass Spellbook Filter",
 
+  "TIDY5E.WorldSettings.Menu": {
+    "name": "World Settings",
+    "hint": "Adjust world-level settings to customize the Tidy 5e Sheets experience. These settings are saved to this Foundry world and apply to all relevant Tidy 5e Sheets content.",
+    "label": "World Settings",
+    "title": "World Settings (GM Only)"
+  },
+
   "TIDY5E.Settings.SheetMenu": {
-    "name": "Tidy Sheet Settings",
-    "hint": "Customize your own version of Tidy 5e Sheets",
-    "label": "Sheet Settings",
-    "title": "Tidy 5e Sheet Settings"
+    "name": "User Settings",
+    "hint": "Customize your own version of Tidy 5e Sheets. These settings are saved to your browser and apply to your sheets.",
+    "label": "User Settings",
+    "title": "User Settings ({userName})"
   },
   "TIDY5E.Settings.TabPlayers": {
     "tabLabel": "Players",

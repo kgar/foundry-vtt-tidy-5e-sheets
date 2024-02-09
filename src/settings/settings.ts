@@ -108,10 +108,10 @@ export function createSettings() {
     menus: {
       worldSettings: {
         options: {
-          name: `TIDY5E.WorldSettings.SheetMenu.name`,
-          label: 'TIDY5E.WorldSettings.SheetMenu.label',
-          hint: `TIDY5E.WorldSettings.SheetMenu.hint`,
-          icon: 'fa-solid fa-cog',
+          name: `TIDY5E.WorldSettings.Menu.name`,
+          label: 'TIDY5E.WorldSettings.Menu.label',
+          hint: `TIDY5E.WorldSettings.Menu.hint`,
+          icon: 'fa-solid fa-globe',
           type: WorldSettingsFormApplication,
           restricted: true,
         },
@@ -121,7 +121,7 @@ export function createSettings() {
           name: `TIDY5E.Settings.SheetMenu.name`,
           label: 'TIDY5E.Settings.SheetMenu.label',
           hint: `TIDY5E.Settings.SheetMenu.hint`,
-          icon: 'fa-solid fa-cog',
+          icon: 'fa-solid fa-user-gear',
           type: SheetSettingsFormApplication,
           restricted: false,
         },

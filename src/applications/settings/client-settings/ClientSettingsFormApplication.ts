@@ -36,7 +36,6 @@ export class SheetSettingsFormApplication extends SvelteFormApplicationBase {
     return {
       ...super.defaultOptions,
       height: 750,
-      title: 'TIDY5E.Settings.SheetMenu.title',
       width: 750,
       classes: [...super.defaultOptions.classes, 'settings'],
     };
@@ -44,6 +43,12 @@ export class SheetSettingsFormApplication extends SvelteFormApplicationBase {
 
   get template() {
     return FoundryAdapter.getTemplate('empty-form-template.hbs');
+  }
+  
+  get title() {
+    return FoundryAdapter.localize('TIDY5E.Settings.SheetMenu.title', {
+      userName: game.user.name,
+    });
   }
 
   getData() {
