@@ -24,7 +24,7 @@ export class ApplicationsManager {
    */
   static openUserSettings(initialTab?: string): UserSettingsFormApplication {
     ApplicationsManager._userSettings ??= new UserSettingsFormApplication(
-      CONSTANTS.TAB_SETTINGS_PLAYERS
+      CONSTANTS.TAB_USER_SETTINGS_PLAYERS
     );
 
     if (initialTab) {

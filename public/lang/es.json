@@ -120,15 +120,15 @@
         "label": "Opciones de la hoja",
         "title": "Opciones de la hoja de T5E"
     },
-    "TIDY5E.Settings.TabPlayers": {
+    "TIDY5E.UserSettings.TabPlayers": {
         "tabLabel": "Jugadores",
         "header": "Hojas de los Personajes jugadores"
     },
-    "TIDY5E.Settings.TabNPCs": {
+    "TIDY5E.UserSettings.TabNPCs": {
         "tabLabel": "PNJs",
         "header": "Hojas de PNJ"
     },
-    "TIDY5E.Settings.TabVehicles": {
+    "TIDY5E.UserSettings.TabVehicles": {
         "tabLabel": "Vehículos",
         "header": "Hojas de vehículo"
     },
@@ -638,7 +638,7 @@
         "ButtonTooltip": "Configurar máximo de hechizos preparados",
         "MoreFormulas": "Más formulas"
     },
-    "TIDY5E.Settings.TabFeatures": {
+    "TIDY5E.UserSettings.TabActionsList": {
         "tabLabel": "Rasgos"
     },
     "TIDY5E.Settings.Migrations": {

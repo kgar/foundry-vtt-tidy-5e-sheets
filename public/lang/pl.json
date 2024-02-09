@@ -46,7 +46,7 @@
         "AtLeastOneRequiredErrorMessage": "Co najmniej jedna zakładka jest wymagana.",
         "Explanation": "Wszystkie zakładki, które są skonfigurowane tak, że użytkownik lub karta nie mogą ich zobaczyć (np. wyłączona zakładka \"Dziennik\" w ustawieniach), nie pojawią się na karcie, nawet jeśli są zaznaczone."
     },
-    "TIDY5E.Settings.TabVehicles": {
+    "TIDY5E.UserSettings.TabVehicles": {
         "tabLabel": "Pojazdy",
         "header": "Karty Pojazdów"
     },
@@ -164,11 +164,11 @@
         "label": "Ustawienia Karty",
         "title": "Ustawienia Karty T5E"
     },
-    "TIDY5E.Settings.TabPlayers": {
+    "TIDY5E.UserSettings.TabPlayers": {
         "tabLabel": "Gracze",
         "header": "Karty Postaci Graczy"
     },
-    "TIDY5E.Settings.TabNPCs": {
+    "TIDY5E.UserSettings.TabNPCs": {
         "header": "Karty Postaci Niezależnych",
         "tabLabel": "Postaci Niezależne"
     }

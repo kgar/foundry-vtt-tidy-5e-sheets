@@ -13,7 +13,7 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-<h2>{localize('TIDY5E.Settings.TabPlayers.header')}</h2>
+<h2>{localize('TIDY5E.UserSettings.TabPlayers.header')}</h2>
 
 <CheckboxSetting
   bind:value={$context.settings.useClassicControlsForCharacter}

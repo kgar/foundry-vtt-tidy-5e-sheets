@@ -153,15 +153,15 @@
     "label": "시트 설정",
     "title": "Tidy5e 시트 설정"
   },
-  "TIDY5E.Settings.TabPlayers": {
+  "TIDY5E.UserSettings.TabPlayers": {
     "tabLabel": "플레이어",
     "header": "플레이어 캐릭터 시트"
   },
-  "TIDY5E.Settings.TabNPCs": {
+  "TIDY5E.UserSettings.TabNPCs": {
     "tabLabel": null,
     "header": null
   },
-  "TIDY5E.Settings.TabVehicles": {
+  "TIDY5E.UserSettings.TabVehicles": {
     "tabLabel": null,
     "header": null
   },

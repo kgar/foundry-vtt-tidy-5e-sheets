@@ -106,7 +106,7 @@
               selectOnFocus={true}
             />
           </div>
-          <SheetMenu defaultSettingsTab={CONSTANTS.TAB_SETTINGS_NPCS} />
+          <SheetMenu defaultSettingsTab={CONSTANTS.TAB_USER_SETTINGS_NPCS} />
         </div>
       </div>
       <HorizontalLineSeparator borderColor="light" />

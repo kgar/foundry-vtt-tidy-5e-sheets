@@ -21,7 +21,7 @@ export class UserSettingsFormApplication extends SvelteFormApplicationBase {
 
   constructor(initialTabId: string, ...args: any[]) {
     super(...args);
-    this.initialTabId = initialTabId ?? CONSTANTS.TAB_SETTINGS_PLAYERS;
+    this.initialTabId = initialTabId ?? CONSTANTS.TAB_USER_SETTINGS_PLAYERS;
   }
 
   static get defaultOptions() {

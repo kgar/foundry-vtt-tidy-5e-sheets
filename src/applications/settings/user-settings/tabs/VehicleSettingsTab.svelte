@@ -11,7 +11,7 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-<h2>{localize('TIDY5E.Settings.TabVehicles.header')}</h2>
+<h2>{localize('TIDY5E.UserSettings.TabVehicles.header')}</h2>
 
 <CheckboxSetting
   bind:value={$context.settings.useClassicControlsForVehicle}

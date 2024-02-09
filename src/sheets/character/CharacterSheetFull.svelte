@@ -133,7 +133,7 @@
           {localize('DND5E.AbbreviationLevel')}
           {$context.system.details.level}
         </h2>
-        <SheetMenu defaultSettingsTab={CONSTANTS.TAB_SETTINGS_PLAYERS} />
+        <SheetMenu defaultSettingsTab={CONSTANTS.TAB_USER_SETTINGS_PLAYERS} />
       </div>
     </div>
 
