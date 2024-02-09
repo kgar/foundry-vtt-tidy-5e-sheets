@@ -34,6 +34,7 @@ export class ThemeSettingsFormApplication extends SvelteFormApplicationBase {
       width: 400,
       submitOnClose: false,
       minimizable: true,
+      id: 'tidy-5e-sheets-theme-settings',
       popOut: true,
       resizable: true,
     };

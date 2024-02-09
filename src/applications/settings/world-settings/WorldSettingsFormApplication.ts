@@ -33,6 +33,8 @@ export class WorldSettingsFormApplication extends SvelteFormApplicationBase {
       title: 'TIDY5E.WorldSettings.Menu.title',
       width: 750,
       classes: [...super.defaultOptions.classes, 'settings'],
+      id: 'tidy-5e-sheets-world-settings',
+      popOut: true,
     };
   }
 

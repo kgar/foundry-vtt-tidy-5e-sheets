@@ -38,13 +38,15 @@ export class SheetSettingsFormApplication extends SvelteFormApplicationBase {
       height: 750,
       width: 750,
       classes: [...super.defaultOptions.classes, 'settings'],
+      id: 'tidy-5e-sheets-user-settings',
+      popOut: true,
     };
   }
 
   get template() {
     return FoundryAdapter.getTemplate('empty-form-template.hbs');
   }
-  
+
   get title() {
     return FoundryAdapter.localize('TIDY5E.Settings.SheetMenu.title', {
       userName: game.user.name,

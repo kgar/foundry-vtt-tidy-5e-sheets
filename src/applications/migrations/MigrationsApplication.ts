@@ -18,6 +18,8 @@ export class MigrationsApplication
       title: FoundryAdapter.localize('TIDY5E.Settings.Migrations.dialogTitle'),
       width: 650,
       height: 500,
+      id: 'tidy-5e-sheets-migrations',
+      popOut: true,
     });
   }
 

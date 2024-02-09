@@ -9,6 +9,8 @@ export class AboutApplication extends SvelteFormApplicationBase {
       width: 450,
       height: 'auto',
       sheetConfig: false,
+      id: 'tidy-5e-sheets-about-window',
+      popOut: true,
     });
   }
 
