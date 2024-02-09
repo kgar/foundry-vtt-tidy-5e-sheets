@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import { ActiveEffectsHelper } from 'src/utils/active-effect';
   import { buildDataset } from 'src/utils/data';
 
   export let value: number | null = null;
@@ -26,7 +28,7 @@
   async function saveChange(
     event: Event & {
       currentTarget: EventTarget & HTMLInputElement;
-    }
+    },
   ) {
     const proposedValueToSave = parseFloat(event.currentTarget.value);
 
@@ -44,6 +46,13 @@
       theInput.select();
     }
   }
+
+  $: activeEffectApplied = ActiveEffectsHelper.isActiveEffectAppliedToField(
+    document,
+    field,
+  );
+
+  const localize = FoundryAdapter.localize;
 </script>
 
 <input
@@ -56,8 +65,10 @@
   {max}
   {placeholder}
   on:change={saveChange}
-  data-tooltip={tooltip}
-  {disabled}
+  data-tooltip={activeEffectApplied
+    ? localize('DND5E.ActiveEffectOverrideWarning')
+    : tooltip}
+  disabled={disabled || activeEffectApplied}
   {readonly}
   class={cssClass}
   {maxlength}
