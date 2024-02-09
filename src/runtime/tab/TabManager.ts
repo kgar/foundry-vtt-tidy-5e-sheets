@@ -151,6 +151,7 @@ function getOrderedEnabledSheetTabs<TContext>(
         e
       );
       debug('Tab-enabled error troubleshooting info', { tab: t });
+      return false;
     }
   });
 }
