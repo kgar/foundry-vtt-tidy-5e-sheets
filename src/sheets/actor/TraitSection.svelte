@@ -3,11 +3,10 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { settingStore } from 'src/settings/settings';
   import type { ActorSheetContext } from 'src/types/types';
+  import { ActiveEffectsHelper } from 'src/utils/active-effect';
   import { createEventDispatcher, getContext } from 'svelte';
-  import { quadInOut } from 'svelte/easing';
   import type { Readable } from 'svelte/store';
-  import { slide } from 'svelte/transition';
-
+  
   let context = getContext<Readable<ActorSheetContext>>('context');
   export let title: string;
   export let configureButtonTitle: string;
@@ -60,6 +59,11 @@
               data-key={key}
             >
               {#if $context.editable && !$context.lockSensitiveFields}
+                {@const activeEffectApplied =
+                  ActiveEffectsHelper.isActiveEffectAppliedToField(
+                    $context.actor,
+                    `system.tools.${key}.value`,
+                  )}
                 <button
                   type="button"
                   class="tool-proficiency-toggle inline-transparent-button"
@@ -82,6 +86,10 @@
                   data-tidy-sheet-part={CONSTANTS.SHEET_PARTS
                     .TOOL_PROFICIENCY_TOGGLE}
                   tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+                  disabled={activeEffectApplied}
+                  data-tooltip={activeEffectApplied
+                    ? localize('DND5E.ActiveEffectOverrideWarning')
+                    : null}
                 >
                   {@html tool.icon}
                 </button>

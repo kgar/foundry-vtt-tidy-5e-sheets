@@ -9,6 +9,7 @@
   import type { ActorSheetContext } from 'src/types/types';
   import { settingStore } from 'src/settings/settings';
   import { CONSTANTS } from 'src/constants';
+  import { ActiveEffectsHelper } from 'src/utils/active-effect';
 
   export let id: string;
   export let ability: any;
@@ -20,6 +21,11 @@
   let context = getContext<Readable<ActorSheetContext>>('context');
 
   const localize = FoundryAdapter.localize;
+
+  $: activeEffectApplied = ActiveEffectsHelper.isActiveEffectAppliedToField(
+    $context.actor,
+    `system.abilities.${id}.proficient`,
+  );
 </script>
 
 <div
@@ -99,12 +105,20 @@
             : -1}
           data-tidy-sheet-part={CONSTANTS.SHEET_PARTS
             .ABILITY_SAVE_PROFICIENCY_TOGGLE}
+          disabled={activeEffectApplied}
+          data-tooltip={activeEffectApplied
+            ? localize('DND5E.ActiveEffectOverrideWarning')
+            : null}
         >
           {@html ability.icon}
         </button>
       {:else}
-        <span title={ability.hover} class="proficiency-toggle-readonly"
-          >{@html ability.icon}</span
+        <span
+          title={ability.hover}
+          class="proficiency-toggle-readonly"
+          data-tooltip={activeEffectApplied
+            ? localize('DND5E.ActiveEffectOverrideWarning')
+            : null}>{@html ability.icon}</span
         >
       {/if}
     {/if}
