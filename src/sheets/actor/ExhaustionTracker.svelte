@@ -18,6 +18,7 @@
   export let level: number;
   export let onlyShowOnHover: boolean = false;
   export let exhaustionConfig: SpecificExhaustionConfig;
+  export let isActiveEffectApplied: boolean;
 
   let iconsWithSeverities: IconWithSeverity[];
   $: {
@@ -75,8 +76,11 @@
             class:colorized={i <= level}
             title={localize(exhaustionConfig.hints[i] ?? '')}
             on:click={() => dispatch('levelSelected', { level: i })}
-            disabled={!$context.editable}
+            disabled={!$context.editable || isActiveEffectApplied}
             tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+            data-tooltip={isActiveEffectApplied
+              ? localize('DND5E.ActiveEffectOverrideWarning')
+              : null}
           >
             {i}
           </button>

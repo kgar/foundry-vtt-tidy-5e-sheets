@@ -7,6 +7,7 @@
   export let radiusClass: PortraitCharmRadiusClass;
   export let level: number;
   export let onlyShowOnHover: boolean = false;
+  export let isActiveEffectApplied: boolean = false;
 
   const localize = FoundryAdapter.localize;
   const dispatch = createEventDispatcher<{
@@ -39,6 +40,10 @@
       bind:value={level}
       placeholder="0"
       on:focus={(ev) => ev.currentTarget.select()}
+      disabled={isActiveEffectApplied}
+      data-tooltip={isActiveEffectApplied
+        ? localize('DND5E.ActiveEffectOverrideWarning')
+        : null}
     />
   </div>
 </div>

@@ -13,6 +13,7 @@
   import { CONSTANTS } from 'src/constants';
   import { settingStore } from 'src/settings/settings';
   import ExhaustionInput from 'src/sheets/actor/ExhaustionInput.svelte';
+  import { ActiveEffectsHelper } from 'src/utils/active-effect';
 
   let context = getContext<Readable<NpcSheetContext>>('context');
 
@@ -44,12 +45,20 @@
       radiusClass={$context.useRoundedPortraitStyle ? 'rounded' : 'top-left'}
       on:levelSelected={onLevelSelected}
       exhaustionConfig={$settingStore.exhaustionConfig}
+      isActiveEffectApplied={ActiveEffectsHelper.isActiveEffectAppliedToField(
+        $context.actor,
+        'flags.tidy5e-sheet.exhaustion',
+      )}
     />
   {:else if $settingStore.useExhaustion && $settingStore.exhaustionConfig.type === 'open'}
     <ExhaustionInput
       level={FoundryAdapter.tryGetFlag($context.actor, 'exhaustion') ?? 0}
       radiusClass={$context.useRoundedPortraitStyle ? 'rounded' : 'top-left'}
       on:levelSelected={onLevelSelected}
+      isActiveEffectApplied={ActiveEffectsHelper.isActiveEffectAppliedToField(
+        $context.actor,
+        'flags.tidy5e-sheet.exhaustion',
+      )}
     />
   {/if}
 

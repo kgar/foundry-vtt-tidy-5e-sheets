@@ -13,6 +13,7 @@
   import ActorProfile from 'src/sheets/actor/ActorProfile.svelte';
   import { settingStore } from 'src/settings/settings';
   import ExhaustionInput from 'src/sheets/actor/ExhaustionInput.svelte';
+  import { ActiveEffectsHelper } from 'src/utils/active-effect';
 
   let context = getContext<Readable<CharacterSheetContext>>('context');
 
@@ -49,6 +50,10 @@
         ($settingStore.hideIfZero &&
           $context.system.attributes.exhaustion === 0)}
       exhaustionConfig={$settingStore.exhaustionConfig}
+      isActiveEffectApplied={ActiveEffectsHelper.isActiveEffectAppliedToField(
+        $context.actor,
+        'system.attributes.exhaustion',
+      )}
     />
   {:else if $settingStore.useExhaustion && $settingStore.exhaustionConfig.type === 'open'}
     <ExhaustionInput
@@ -58,6 +63,10 @@
       onlyShowOnHover={$settingStore.showExhaustionOnHover ||
         ($settingStore.hideIfZero &&
           $context.system.attributes.exhaustion === 0)}
+      isActiveEffectApplied={ActiveEffectsHelper.isActiveEffectAppliedToField(
+        $context.actor,
+        'system.attributes.exhaustion',
+      )}
     />
   {/if}
 
