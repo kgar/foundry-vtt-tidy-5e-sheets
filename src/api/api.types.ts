@@ -55,6 +55,14 @@ export type RenderScheme = 'handlebars' | 'force';
 export type SupportedTab = HtmlTab | HandlebarsTab | SvelteTab;
 
 /**
+ * Options for registering an item tab.
+ */
+export interface ItemTabRegistrationOptions {
+  /** When set to `true`, whenever this tab is navigated to, the window height will automatically adjust to match the content height. */
+  autoHeight?: boolean;
+}
+
+/**
  * Options for registering an actor tab.
  */
 /** @category Tabs */

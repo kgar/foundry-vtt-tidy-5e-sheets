@@ -270,5 +270,17 @@ export class Tidy5eKgarItemSheet
 
   onTabSelected(tabId: string) {
     this.currentTabId = tabId;
+    const tabs = get(this.context)?.tabs ?? [];
+    setTimeout(() => {
+      this._handleAutoHeightTabs(tabs);
+    });
+  }
+
+  private _handleAutoHeightTabs(tabs: Tab[]) {
+    const currentTabSettings = tabs.find((t) => t.id === this.currentTabId);
+    if (currentTabSettings?.autoHeight) {
+      this._saveScrollPositions(this.element);
+      this.setPosition({ height: 'auto' });
+    }
   }
 }

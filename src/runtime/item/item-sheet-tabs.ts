@@ -40,6 +40,7 @@ const itemSheetTabs: Record<string, Tab> = {
       cssClass: 'detail-tab-contents',
       type: 'svelte',
     },
+    autoHeight: true,
   },
   /**
    * Details form for class items.
@@ -52,6 +53,7 @@ const itemSheetTabs: Record<string, Tab> = {
       cssClass: 'detail-tab-contents',
       type: 'svelte',
     },
+    autoHeight: true,
   },
   /**
    * Details form for consumable items.
@@ -64,6 +66,7 @@ const itemSheetTabs: Record<string, Tab> = {
       cssClass: 'detail-tab-contents',
       type: 'svelte',
     },
+    autoHeight: true,
   },
   /**
    * Description editor and a header for mechanics/flavor.
@@ -112,6 +115,7 @@ const itemSheetTabs: Record<string, Tab> = {
       cssClass: 'detail-tab-contents',
       type: 'svelte',
     },
+    autoHeight: true,
   },
   /**
    * Details form for feat items.
@@ -124,6 +128,7 @@ const itemSheetTabs: Record<string, Tab> = {
       cssClass: 'detail-tab-contents',
       type: 'svelte',
     },
+    autoHeight: true,
   },
   /**
    * Details form for loot.
@@ -136,6 +141,7 @@ const itemSheetTabs: Record<string, Tab> = {
       cssClass: 'detail-tab-contents',
       type: 'svelte',
     },
+    autoHeight: true,
   },
   /**
    * A sidebar with race properties and configuration buttons, and a description editor.
@@ -160,6 +166,7 @@ const itemSheetTabs: Record<string, Tab> = {
       cssClass: 'detail-tab-contents',
       type: 'svelte',
     },
+    autoHeight: true,
   },
   /**
    * Details form for subclass items.
@@ -172,6 +179,7 @@ const itemSheetTabs: Record<string, Tab> = {
       cssClass: 'detail-tab-contents',
       type: 'svelte',
     },
+    autoHeight: true,
   },
   /**
    * Details form for tool items.
@@ -184,6 +192,7 @@ const itemSheetTabs: Record<string, Tab> = {
       cssClass: 'detail-tab-contents',
       type: 'svelte',
     },
+    autoHeight: true,
   },
   /**
    * Details form for weapon items.
@@ -196,6 +205,7 @@ const itemSheetTabs: Record<string, Tab> = {
       cssClass: 'detail-tab-contents',
       type: 'svelte',
     },
+    autoHeight: true,
   },
 } as const;
 

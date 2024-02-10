@@ -39,6 +39,7 @@ export type RegisteredTab<TContext> = {
   tabContentsClasses?: string[];
   getData?: (data: any) => any | Promise<any>;
   activateDefaultSheetListeners?: boolean;
+  autoHeight?: boolean;
 };
 
 /**
