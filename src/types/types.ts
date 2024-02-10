@@ -51,6 +51,7 @@ export type Tab<
   content: SvelteTabContent<T> | HtmlTabContent;
   onRender?: (params: OnRenderTabParams) => void;
   activateDefaultSheetListeners?: boolean;
+  autoHeight?: boolean;
 };
 
 export type CustomContent = {

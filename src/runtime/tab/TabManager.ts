@@ -21,12 +21,13 @@ export class TabManager {
 
     for (let sheetTab of enabledTabs) {
       try {
-        let tab = {
+        let tab: Tab = {
           id: sheetTab.id,
           title: TabManager.getTabTitle(sheetTab),
           onRender: sheetTab.onRender,
           content: await getTabContent(context, sheetTab),
           activateDefaultSheetListeners: sheetTab.activateDefaultSheetListeners,
+          autoHeight: sheetTab.autoHeight,
         };
 
         tabs.push(tab);
@@ -56,7 +57,7 @@ export class TabManager {
     }
 
     // Add any other validation as needed.
-
+    
     return true;
   }
 

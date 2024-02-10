@@ -18,6 +18,7 @@ import type {
   ActorTabRegistrationOptions,
   ContentRegistrationOptions,
   SupportedContent,
+  ItemTabRegistrationOptions,
 } from './api.types';
 import ApiConstants from './ApiConstants';
 import { HtmlContent } from './content/HtmlContent';
@@ -554,10 +555,27 @@ export class Tidy5eSheetsApi {
    * });
    * ```
    *
+   * @example Register an item tab with autoHeight, similar to how Details item tabs work.
+   * ```js
+   * Hooks.once("tidy5e-sheet.ready", (api) => {
+   *   api.registerItemTab(
+   *     new api.models.HtmlTab({
+   *       title: "My Item Tab",
+   *       tabId: "my-module-id-my-item-tab",
+   *       html: "<h1>LOREM! IPSUM! FIREBALLLLLL!!</h1><h1>LOREM! IPSUM! FIREBALLLLLL!!</h1><h1>LOREM! IPSUM! FIREBALLLLLL!!</h1><h1>LOREM! IPSUM! FIREBALLLLLL!!</h1><h1>LOREM! IPSUM! FIREBALLLLLL!!</h1><h1>LOREM! IPSUM! FIREBALLLLLL!!</h1><h1>LOREM! IPSUM! FIREBALLLLLL!!</h1><h1>LOREM! IPSUM! FIREBALLLLLL!!</h1><h1>LOREM! IPSUM! FIREBALLLLLL!!</h1><h1>LOREM! IPSUM! FIREBALLLLLL!!</h1><h1>LOREM! IPSUM! FIREBALLLLLL!!</h1><h1>LOREM! IPSUM! FIREBALLLLLL!!</h1><h1>LOREM! IPSUM! FIREBALLLLLL!!</h1><h1>LOREM! IPSUM! FIREBALLLLLL!!</h1><h1>LOREM! IPSUM! FIREBALLLLLL!!</h1><h1>LOREM! IPSUM! FIREBALLLLLL!!</h1><h1>LOREM! IPSUM! FIREBALLLLLL!!</h1><h2>🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥</h2>",
+   *     }),
+   *     { autoHeight: true } // 👈 With Auto Height set to `true`, the item window will stretch as tall as it can to match the content height when this tab is viewed.
+   *   );
+   * });
+   * ```
+   *
    * @remarks
    * A tab ID is always required (see {@link TabId}).
    */
-  registerItemTab(tab: SupportedTab): void {
+  registerItemTab(
+    tab: SupportedTab,
+    options?: ItemTabRegistrationOptions
+  ): void {
     if (!TabManager.validateTab(tab)) {
       return;
     }
@@ -567,6 +585,10 @@ export class Tidy5eSheetsApi {
     if (!registeredTab) {
       warn('Unable to register tab. Tab type not supported');
       return;
+    }
+
+    if (options?.autoHeight) {
+      registeredTab.autoHeight = options.autoHeight;
     }
 
     ItemSheetRuntime.registerTab(registeredTab);
