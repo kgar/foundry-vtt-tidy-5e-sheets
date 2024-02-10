@@ -9,6 +9,7 @@
   export let dataset: Record<string, unknown> | null = null;
   export let title: string | null = null;
   export let disabled: boolean = false;
+  export let blankValue: any = null;
 
   $: draftValue = value?.toString() ?? '';
   $: datasetAttributes = buildDataset(dataset);
@@ -21,7 +22,7 @@
     const targetValue = event.currentTarget.value;
 
     document.update({
-      [field]: targetValue !== '' ? targetValue : null,
+      [field]: targetValue !== '' ? targetValue : blankValue,
     });
 
     draftValue = value?.toString() ?? '';

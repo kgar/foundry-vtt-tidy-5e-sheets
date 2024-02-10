@@ -127,6 +127,7 @@ export type NpcSheetContext = {
   flawEnrichedHtml: string;
   hideEmptySpellbook: boolean;
   idealEnrichedHtml: string;
+  maxPreparedSpellsTotal: number;
   notes1EnrichedHtml: string;
   notes2EnrichedHtml: string;
   notes3EnrichedHtml: string;
