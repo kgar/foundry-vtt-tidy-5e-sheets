@@ -41,7 +41,7 @@
       field="system.activation.type"
       disabled={!$context.editable}
     >
-      <option value="">{localize('DND5E.None')}</option>
+      <option value=""></option>
       <SelectOptions data={$context.config.abilityActivationTypes} />
     </Select>
   </div>
