@@ -7,20 +7,20 @@
     line-height: initial;
     padding: 0.125rem 0.25rem;
     border-radius: 0.1875rem;
-    color: var(--t5ek-secondary-color);
+    color: var(--t5e-secondary-color);
     border: none;
     text-align: center;
-    background: var(--t5ek-faint-color);
+    background: var(--t5e-faint-color);
 
     &.primary {
-      color: var(--t5ek-primary-color);
+      color: var(--t5e-primary-color);
     }
 
     &:hover {
-      color: var(--t5ek-primary-color);
+      color: var(--t5e-primary-color);
 
       &.primary {
-        color: var(--t5ek-primary-accent-color);
+        color: var(--t5e-primary-accent-color);
       }
     }
 
@@ -32,16 +32,16 @@
   .button-menu-list {
     position: absolute;
     z-index: 1;
-    box-shadow: 0 0 0.3125rem var(--t5ek-context-shadow-color);
+    box-shadow: 0 0 0.3125rem var(--t5e-context-shadow-color);
     display: flex;
     flex-direction: column;
     gap: 0.25rem;
-    background: var(--t5ek-button-menu-background);
+    background: var(--t5e-button-menu-background);
     border-radius: 0.3125rem;
     margin: 0;
     padding: 0.5rem 0;
     list-style: none;
-    outline: 0.0625rem solid var(--t5ek-faint-color);
+    outline: 0.0625rem solid var(--t5e-faint-color);
 
     .button-menu-item {
       &:not(.button-menu-command-li) {
@@ -69,7 +69,7 @@
         white-space: nowrap;
 
         &:hover {
-          background: var(--t5ek-button-menu-hover-color);
+          background: var(--t5e-button-menu-hover-color);
         }
 
         > .icon-container {
@@ -83,10 +83,10 @@
   .button-menu-divider {
     background: linear-gradient(
       90deg,
-      var(--t5ek-button-menu-divider-color),
+      var(--t5e-button-menu-divider-color),
       transparent
     );
-    background: var(--t5ek-button-menu-divider-color);
+    background: var(--t5e-button-menu-divider-color);
     height: 0.0625rem;
     border-radius: 0.0625rem;
   }

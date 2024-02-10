@@ -45,7 +45,7 @@
   position="bottom"
   anchor="right"
   openerPadding="0.125rem 0.5rem"
-  buttonText={localize('T5EK.ThemeSettings.Sheet.menuLabel')}
+  buttonText={localize('TIDY5E.ThemeSettings.Sheet.menuLabel')}
 >
   <ThemeSelectorButtonMenuCommand />
   <ButtonMenuDivider />
@@ -53,27 +53,27 @@
     on:click={() => fileImportInput.click()}
     iconClass="fas fa-file-import"
   >
-    {localize('T5EK.ThemeSettings.Sheet.import')}
+    {localize('TIDY5E.ThemeSettings.Sheet.import')}
   </ButtonMenuCommand>
   <ButtonMenuCommand
     on:click={() => functions.exportTheme($context)}
     iconClass="fas fa-file-export"
   >
-    {localize('T5EK.ThemeSettings.Sheet.export')}
+    {localize('TIDY5E.ThemeSettings.Sheet.export')}
   </ButtonMenuCommand>
   <ButtonMenuCommand
     on:click={() =>
       functions.useExistingThemeColors(CONSTANTS.THEME_ID_DEFAULT_LIGHT)}
     iconClass="fas fa-sun"
   >
-    {localize('T5EK.ThemeSettings.Sheet.useDefaultLightColors')}
+    {localize('TIDY5E.ThemeSettings.Sheet.useDefaultLightColors')}
   </ButtonMenuCommand>
   <ButtonMenuCommand
     on:click={() =>
       functions.useExistingThemeColors(CONSTANTS.THEME_ID_DEFAULT_DARK)}
     iconClass="fas fa-moon"
   >
-    {localize('T5EK.ThemeSettings.Sheet.useDefaultDarkColors')}
+    {localize('TIDY5E.ThemeSettings.Sheet.useDefaultDarkColors')}
   </ButtonMenuCommand>
 </ButtonMenu>
 <input

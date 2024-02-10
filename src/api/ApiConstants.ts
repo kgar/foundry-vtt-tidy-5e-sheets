@@ -1,5 +1,6 @@
 import { CONSTANTS } from 'src/constants';
 
+/** @category Constants */
 const ApiConstants = {
   TAB_ID_CHARACTER_ATTRIBUTES: CONSTANTS.TAB_CHARACTER_ATTRIBUTES,
   TAB_ID_CHARACTER_INVENTORY: CONSTANTS.TAB_CHARACTER_INVENTORY,

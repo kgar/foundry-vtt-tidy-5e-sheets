@@ -69,7 +69,7 @@
     input {
       width: 50%;
       padding: 0 0.125rem 0 0;
-      color: var(--t5ek-secondary-color);
+      color: var(--t5e-secondary-color);
       line-height: 1;
       height: 100%;
 

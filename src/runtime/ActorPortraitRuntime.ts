@@ -9,7 +9,7 @@ import { error } from 'src/utils/logging';
 export class ActorPortraitRuntime {
   private static _portraitMenuCommands: RegisteredPortraitMenuCommand[] = [
     {
-      label: 'T5EK.ShowPortraitArt',
+      label: 'TIDY5E.ShowPortraitArt',
       execute: (params: RegisteredPortraitMenuCommandExecuteParams) => {
         FoundryAdapter.renderImagePopout(params.actor.img, {
           title: 'Portrait: ' + params.actor.name,
@@ -19,7 +19,7 @@ export class ActorPortraitRuntime {
       },
     },
     {
-      label: 'T5EK.ShowTokenArt',
+      label: 'TIDY5E.ShowTokenArt',
       execute: (params: RegisteredPortraitMenuCommandExecuteParams) => {
         FoundryAdapter.renderImagePopout(
           params.actor.prototypeToken.texture.src,

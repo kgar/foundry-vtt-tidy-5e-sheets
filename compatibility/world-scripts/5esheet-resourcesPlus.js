@@ -15,8 +15,7 @@
 
 // World Scripter integration 😉
 const api =
-  game.modules.get('tidy5e-sheet')?.api ??
-  game.modules.get('tidy5e-sheet-kgar').api;
+  game.modules?.get('tidy5e-sheet')?.api;
 
 if (api) {
   wireUpResourcesPlus();

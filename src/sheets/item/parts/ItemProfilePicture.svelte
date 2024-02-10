@@ -43,7 +43,7 @@
     class="profile"
     src={$context.item.img}
     alt={$context.item.name}
-    title="{localize('T5EK.EditActorImage')} / {localize('T5EK.ShowItemImage')}"
+    title="{localize('TIDY5E.EditActorImage')} / {localize('TIDY5E.ShowItemImage')}"
     on:click={(event) =>
       openItemImagePicker(event.currentTarget, $context.item)}
     on:contextmenu={() => (hideImageMenu = !hideImageMenu)}
@@ -53,7 +53,7 @@
       class="showItemArt"
       on:click={() => showItemArt($context.item)}
       tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
-      >{localize('T5EK.ShowItemArt')}</button
+      >{localize('TIDY5E.ShowItemArt')}</button
     >
   </div>
 </div>

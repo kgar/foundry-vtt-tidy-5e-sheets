@@ -45,7 +45,7 @@
   <button
     type="button"
     title="{localize('DND5E.HitDiceRoll')}/{localize(
-      'T5EK.HitDiceRollAverage',
+      'TIDY5E.HitDiceRollAverage',
     )}"
     on:click={rollNpcHp}
     on:contextmenu={calcAverageHitDie}
@@ -79,9 +79,9 @@
     bottom: 0rem;
 
     .formula-edit {
-      background: var(--t5ek-icon-background);
-      box-shadow: 0 0 0.625rem var(--t5ek-icon-shadow-color) inset;
-      border: 0.0625rem solid var(--t5ek-icon-outline-color);
+      background: var(--t5e-icon-background);
+      box-shadow: 0 0 0.625rem var(--t5e-icon-shadow-color) inset;
+      border: 0.0625rem solid var(--t5e-icon-outline-color);
       display: none;
       justify-content: center;
       align-items: center;
@@ -120,7 +120,7 @@
       transition: color 0.3s ease;
 
       &:hover {
-        color: var(--t5ek-primary-accent-color);
+        color: var(--t5e-primary-accent-color);
       }
     }
   }

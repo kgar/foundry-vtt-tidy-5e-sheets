@@ -40,7 +40,7 @@
       <article>
         <ul class="character-details">
           <li>
-            <span>{localize('T5EK.Gender')}:</span>
+            <span>{localize('TIDY5E.Gender')}:</span>
             <ContentEditableFormField
               element="span"
               editable={$context.editable && !$context.lockSensitiveFields}
@@ -51,7 +51,7 @@
             />
           </li>
           <li>
-            <span>{localize('T5EK.Age')}:</span>
+            <span>{localize('TIDY5E.Age')}:</span>
             <ContentEditableFormField
               element="span"
               editable={$context.editable && !$context.lockSensitiveFields}
@@ -63,7 +63,7 @@
             />
           </li>
           <li>
-            <span>{localize('T5EK.Height')}:</span>
+            <span>{localize('TIDY5E.Height')}:</span>
             <ContentEditableFormField
               element="span"
               editable={$context.editable && !$context.lockSensitiveFields}
@@ -75,7 +75,7 @@
             />
           </li>
           <li>
-            <span>{localize('T5EK.Weight')}:</span>
+            <span>{localize('TIDY5E.Weight')}:</span>
             <ContentEditableFormField
               element="span"
               editable={$context.editable && !$context.lockSensitiveFields}
@@ -87,7 +87,7 @@
             />
           </li>
           <li>
-            <span>{localize('T5EK.Eyes')}:</span>
+            <span>{localize('TIDY5E.Eyes')}:</span>
             <ContentEditableFormField
               element="span"
               editable={$context.editable && !$context.lockSensitiveFields}
@@ -99,7 +99,7 @@
             />
           </li>
           <li>
-            <span>{localize('T5EK.Skin')}:</span>
+            <span>{localize('TIDY5E.Skin')}:</span>
             <ContentEditableFormField
               element="span"
               editable={$context.editable && !$context.lockSensitiveFields}
@@ -111,7 +111,7 @@
             />
           </li>
           <li>
-            <span>{localize('T5EK.Hair')}:</span>
+            <span>{localize('TIDY5E.Hair')}:</span>
             <ContentEditableFormField
               element="span"
               editable={$context.editable && !$context.lockSensitiveFields}
@@ -130,7 +130,7 @@
         type="button"
         on:click={togglePersonalityInfo}
         class="toggle-personality-info"
-        title={localize('T5EK.TogglePersonalityInfo')}
+        title={localize('TIDY5E.TogglePersonalityInfo')}
         tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
       >
         {#if showNpcPersonalityInfo}
@@ -325,14 +325,14 @@
       color 0.3s ease,
       transform 0.3s ease;
     padding: 1.25rem 0.25rem;
-    background: var(--t5ek-faint-color);
+    background: var(--t5e-faint-color);
     border-radius: 0.1875rem;
     margin-right: 0.25rem;
-    color: var(--t5ek-tertiary-color);
+    color: var(--t5e-tertiary-color);
     cursor: pointer;
 
     &:hover {
-      color: var(--t5ek-secondary-color);
+      color: var(--t5e-secondary-color);
     }
   }
 </style>

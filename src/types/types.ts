@@ -6,7 +6,10 @@ import type {
   RenderScheme,
 } from 'src/api/api.types';
 import type { HtmlContent } from 'src/api/content/HtmlContent';
-import type { RegisteredPortraitMenuCommand } from 'src/runtime/types';
+import type {
+  RegisteredCustomActorTrait,
+  RegisteredPortraitMenuCommand,
+} from 'src/runtime/types';
 
 export type Actor5e = any;
 
@@ -58,6 +61,8 @@ export type CustomContent = {
   onRender?: (params: OnRenderParams) => void;
   activateDefaultSheetListeners?: boolean;
 };
+
+export type RenderableCustomActorTrait = RegisteredCustomActorTrait;
 
 export type ClassSummary = {
   class?: string;
@@ -181,6 +186,7 @@ export type ActorSheetContext = {
   actorPortraitCommands: RegisteredPortraitMenuCommand[];
   allowEffectsManagement: boolean;
   appId: string;
+  customActorTraits: RenderableCustomActorTrait[];
   customContent: CustomContent[];
   /**
    * Whether or not the sheet can be edited, regardless of lock/sensitive field settings.

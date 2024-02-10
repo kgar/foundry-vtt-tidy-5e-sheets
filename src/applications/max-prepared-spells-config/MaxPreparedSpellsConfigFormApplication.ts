@@ -62,7 +62,7 @@ export class MaxPreparedSpellsConfigFormApplication extends SvelteFormApplicatio
   }
 
   get title() {
-    return FoundryAdapter.localize('T5EK.MaxPreparedSpellsConfig.Title', {
+    return FoundryAdapter.localize('TIDY5E.MaxPreparedSpellsConfig.Title', {
       actorName: this.actor.name,
     });
   }

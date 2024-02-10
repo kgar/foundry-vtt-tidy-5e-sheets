@@ -19,7 +19,7 @@
 <div class="wrapper">
   <BlockTitle
     title={localize('DND5E.Initiative')}
-    text={localize('T5EK.AbbrInitiative')}
+    text={localize('TIDY5E.AbbrInitiative')}
     on:roll={(event) =>
       $context.actor.rollInitiativeDialog({ event: event.detail })}
   />
@@ -27,7 +27,7 @@
     <span>{formatAsModifier(initiative.total)}</span>
   </BlockScore>
   <label class="ini-bonus" for="{$context.appId}-initiative-mod">
-    <span>{localize('T5EK.AbbrMod')}</span>
+    <span>{localize('TIDY5E.AbbrMod')}</span>
     <TextInput
       document={$context.actor}
       field="system.attributes.init.bonus"
@@ -91,7 +91,7 @@
 
     .config-button {
       font-size: 0.625rem;
-      color: var(--t5ek-tertiary-color);
+      color: var(--t5e-tertiary-color);
       display: flex;
       justify-content: center;
       align-items: flex-end;

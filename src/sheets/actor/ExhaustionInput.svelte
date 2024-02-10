@@ -29,8 +29,8 @@
 <div
   class="exhaustion-container {cssClass}"
   class:only-show-on-hover={onlyShowOnHover}
-  title={localize('T5EK.Settings.Exhaustion.Header')}
-  style="--t5ek-exhaustion-input-font-size: {inputFontSize}"
+  title={localize('TIDY5E.WorldSettings.Exhaustion.Header')}
+  style="--t5e-exhaustion-input-font-size: {inputFontSize}"
 >
   <div class="exhaustion-wrap {radiusClass}">
     <input
@@ -50,17 +50,17 @@
     left: 0;
     height: 2.125rem;
     width: 2.125rem;
-    color: var(--t5ek-icon-font-color);
+    color: var(--t5e-icon-font-color);
 
     .exhaustion-wrap {
       height: 2.125rem;
       width: 2.125rem;
       overflow: hidden;
-      background: var(--t5ek-icon-background);
+      background: var(--t5e-icon-background);
       display: flex;
       align-items: center;
-      box-shadow: 0 0 0.625rem var(--t5ek-icon-shadow-color) inset;
-      border: 0.0625rem solid var(--t5ek-icon-outline-color);
+      box-shadow: 0 0 0.625rem var(--t5e-icon-shadow-color) inset;
+      border: 0.0625rem solid var(--t5e-icon-outline-color);
 
       &.rounded {
         border-radius: 1.25rem;
@@ -70,14 +70,14 @@
         height: 100%;
         width: 100%;
         text-align: center;
-        font-size: var(--t5ek-exhaustion-input-font-size);
+        font-size: var(--t5e-exhaustion-input-font-size);
         border-radius: 1.25rem;
-        color: var(--t5ek-tertiary-color);
+        color: var(--t5e-tertiary-color);
         transition: color 0.3s ease;
-        font-family: var(--t5ek-title-font-family);
+        font-family: var(--t5e-title-font-family);
 
         &:focus {
-          color: var(--t5ek-primary-font-color);
+          color: var(--t5e-primary-font-color);
         }
       }
     }

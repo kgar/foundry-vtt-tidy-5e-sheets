@@ -23,17 +23,17 @@
     class="flex-1"
   >
     <h2 class="minimal" slot="left-header">
-      {localize('T5EK.TabSelection.AvailableHeader')}
+      {localize('TIDY5E.TabSelection.AvailableHeader')}
     </h2>
     <h2 class="minimal" slot="right-header">
-      {localize('T5EK.TabSelection.SelectedHeader')}
+      {localize('TIDY5E.TabSelection.SelectedHeader')}
     </h2>
   </SelectionListbox>
   <p class="flex-row align-items-center no-gap">
     <span class="extra-info-icon-container"
       ><i class="fas fa-info-circle"></i></span
     >
-    <span>{localize('T5EK.TabSelection.Explanation')}</span>
+    <span>{localize('TIDY5E.TabSelection.Explanation')}</span>
   </p>
   <div class="flex-row small-gap">
     <button
@@ -42,7 +42,7 @@
       on:click={(ev) => useDefault()}
     >
       <i class="fas fa-rotate-right" />
-      {localize('T5EK.UseDefault')}
+      {localize('TIDY5E.UseDefault')}
     </button>
     <button
       type="submit"
@@ -50,7 +50,7 @@
       on:click={(ev) => validate() || ev.preventDefault()}
     >
       <i class="fas fa-save" />
-      {localize('T5EK.SaveChanges')}
+      {localize('TIDY5E.SaveChanges')}
     </button>
     <button
       type="button"
@@ -58,7 +58,7 @@
       on:click={() => validate() && apply()}
     >
       <i class="fas fa-check" />
-      {localize('T5EK.ApplyChanges')}
+      {localize('TIDY5E.ApplyChanges')}
     </button>
   </div>
 </section>
@@ -69,7 +69,7 @@
     text-align: center;
     i {
       font-size: 1.5rem;
-      color: var(--t5ek-secondary-color);
+      color: var(--t5e-secondary-color);
     }
   }
 </style>

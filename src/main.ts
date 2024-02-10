@@ -7,26 +7,27 @@ import { Tidy5eNpcSheet } from './sheets/Tidy5eNpcSheet';
 import { Tidy5eVehicleSheet } from './sheets/Tidy5eKgarVehicleSheet';
 import { CONSTANTS } from './constants';
 import { Tidy5eSheetsApi } from './api/Tidy5eSheetsApi';
+import '../public/rpg-awesome/style/rpg-awesome.min.css';
 
 FoundryAdapter.registerActorSheet(
   Tidy5eCharacterSheet,
   [CONSTANTS.SHEET_TYPE_CHARACTER],
-  'T5EK.Tidy5eSheet'
+  'TIDY5E.Tidy5eSheet'
 );
 
 FoundryAdapter.registerActorSheet(
   Tidy5eNpcSheet,
   [CONSTANTS.SHEET_TYPE_NPC],
-  'T5EK.Tidy5eNPC'
+  'TIDY5E.Tidy5eNPC'
 );
 
 FoundryAdapter.registerActorSheet(
   Tidy5eVehicleSheet,
   [CONSTANTS.SHEET_TYPE_VEHICLE],
-  'T5EK.Tidy5eVehicle'
+  'TIDY5E.Tidy5eVehicle'
 );
 
-FoundryAdapter.registerItemSheet(Tidy5eKgarItemSheet, 'T5EK.Tidy5eItemSheet');
+FoundryAdapter.registerItemSheet(Tidy5eKgarItemSheet, 'TIDY5E.Tidy5eItemSheet');
 
 Hooks.once('ready', async () => {
   initSettings();

@@ -22,7 +22,7 @@ export type ThemeSettingsSheetFunctions = {
   exportTheme(settings: CurrentSettings): void;
 };
 
-export default class ThemeSettingsFormApplication extends SvelteFormApplicationBase {
+export class ThemeSettingsFormApplication extends SvelteFormApplicationBase {
   themeableColors: ThemeColorSetting[] = getThemeableColors();
   context: Writable<CurrentSettings> = writable(getCurrentSettings());
 
@@ -30,13 +30,19 @@ export default class ThemeSettingsFormApplication extends SvelteFormApplicationB
     return {
       ...super.defaultOptions,
       height: 750,
-      title: 'T5EK.ThemeSettings.Sheet.title',
       width: 400,
       submitOnClose: false,
       minimizable: true,
+      id: 'tidy-5e-sheets-theme-settings',
       popOut: true,
       resizable: true,
     };
+  }
+
+  get title() {
+    return FoundryAdapter.localize('TIDY5E.ThemeSettings.Sheet.title', {
+      userName: game.user.name,
+    });
   }
 
   createComponent(node: HTMLElement): SvelteComponent<any, any, any> {

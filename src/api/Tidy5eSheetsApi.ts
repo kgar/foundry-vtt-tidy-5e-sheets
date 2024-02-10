@@ -8,7 +8,6 @@ import { NpcSheetRuntime } from 'src/runtime/NpcSheetRuntime';
 import { VehicleSheetRuntime } from 'src/runtime/VehicleSheetRuntime';
 import { TabManager } from 'src/runtime/tab/TabManager';
 import type { TabId } from './tab/CustomTabBase';
-import { ActionListApi } from './action-list/ActionListApi';
 import { Tidy5eCharacterSheet } from 'src/sheets/Tidy5eCharacterSheet';
 import { Tidy5eNpcSheet } from 'src/sheets/Tidy5eNpcSheet';
 import { Tidy5eVehicleSheet } from 'src/sheets/Tidy5eKgarVehicleSheet';
@@ -21,14 +20,11 @@ import type {
   SupportedContent,
 } from './api.types';
 import ApiConstants from './ApiConstants';
-import { ItemSummaryApi } from './item-summary/ItemSummaryApi';
-import { ExhaustionApi } from './exhaustion/ExhaustionApi';
 import { HtmlContent } from './content/HtmlContent';
 import { HandlebarsContent } from './content/HandlebarsContent';
 import { CONSTANTS } from 'src/constants';
 import { CustomContentManager } from 'src/runtime/content/CustomContentManager';
-import { ActorItemApi } from './actor-item/ActorItemApi';
-import { ActorPortraitApi } from './actor-portrait/ActorPortraitApi';
+import { ConfigApi } from './config/ConfigApi';
 
 /**
  * The Tidy 5e Sheets API. The API becomes available after the hook `tidy5e-sheet.ready` is called.
@@ -40,21 +36,15 @@ import { ActorPortraitApi } from './actor-portrait/ActorPortraitApi';
  * });
  * ```
  *
- * @example Getting the API from the alpha module
- * ```js
- * game.modules.get('tidy5e-sheet-kgar').api
- * ```
- *
- * @example Getting the API from the official Tidy 5e Sheets module
+ * @example Getting the API from the module
  * ```js
  * game.modules.get('tidy5e-sheet').api
  * ```
  *
  * @remarks
- * It is recommended to retrieve the API from the `tidy5e-sheet.ready` hook.
+ * It is recommended to retrieve the API from the `tidy5e-sheet.ready` hook, since the hook guarantees that the API has been initialized.
  *
- * The `game.modules.get('tidy5e-sheet').api` approach only works when the original module AND the alpha module are active.
- * This requirement will last until the alpha sheets become the official replacement and assume the module ID "tidy5e-sheet".
+ * @category Main
  */
 export class Tidy5eSheetsApi {
   private static _instance: Tidy5eSheetsApi;
@@ -72,13 +62,28 @@ export class Tidy5eSheetsApi {
   }
 
   /** {@inheritDoc ActionListApi} */
-  actionList = new ActionListApi();
+  /** @deprecated api.actionList API has been moved to api.config.actionList */
+  get actionList() {
+    warn('api.actionList API has been moved to api.config.actionList');
+    return this.config.actionList;
+  }
 
   /** {@inheritDoc ActorItemApi} */
-  actorItem = new ActorItemApi();
+  /** @deprecated api.actorItem API has been moved to api.config.actorItem */
+  get actorItem() {
+    warn('api.actorItem API has been moved to api.config.actorItem');
+    return this.config.actorItem;
+  }
 
   /** {@inheritDoc ActorPortraitApi} */
-  actorPortrait = new ActorPortraitApi();
+  /** @deprecated api.actorPortrait API has been moved to api.config.actorPortrait */
+  get actorPortrait() {
+    warn('api.actorPortrait API has been moved to api.config.actorPortrait');
+    return this.config.actorPortrait;
+  }
+
+  /** {@inheritDoc ConfigApi} */
+  config = new ConfigApi();
 
   /**
    * Constants for a variety of uses.
@@ -100,7 +105,11 @@ export class Tidy5eSheetsApi {
   }
 
   /** {@inheritDoc ExhaustionApi} */
-  exhaustion = new ExhaustionApi();
+  /** @deprecated api.exhaustion API has been moved to api.config.exhaustion */
+  get exhaustion() {
+    warn('api.exhaustion API has been moved to api.config.exhaustion');
+    return this.config.exhaustion;
+  }
 
   /**
    * Determines whether the provided sheet is a Tidy 5e Character sheet.
@@ -153,7 +162,11 @@ export class Tidy5eSheetsApi {
   }
 
   /**{@inheritDoc ItemSummaryApi} */
-  itemSummary = new ItemSummaryApi();
+  /** @deprecated api.itemSummary API has been moved to api.config.actorPortrait */
+  get itemSummary() {
+    warn('api.itemSummary API has been moved to api.config.actorPortrait');
+    return this.config.itemSummary;
+  }
 
   /**
    * Various models can be used for API calls.
@@ -680,10 +693,10 @@ export class Tidy5eSheetsApi {
    * @example Injecting dynamic HTML through Tidy actor sheet render hook
    * ```js
    * Hooks.on('tidy5e-sheet.renderActorSheet', (app, element, data) => {
-   *   const api = game.modules.get('tidy5e-sheet-kgar').api;
+   *   const api = game.modules.get('tidy5e-sheet').api;
    *   const actorEmoji = data.actor.system.currency.pp > 0 ? '💹' : '📉';
    *   let iconHtml = api.useHandlebarsRendering(`<h1>${actorEmoji}</h1>`);
-   *   // 👆 This HTML looks like `<div style="display: contents;" data-tidy-render-scheme="handlebars"><h1>📉</h1></div>` 
+   *   // 👆 This HTML looks like `<div style="display: contents;" data-tidy-render-scheme="handlebars"><h1>📉</h1></div>`
    *   // if the actor doesn't have at least 1 platinum.
    *   // Tidy will remove this each time the sheet would normally re-render, and it will add it back.
    *   // When the actor have more than 0 platinum, stonks will rise.

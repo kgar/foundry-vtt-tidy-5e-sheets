@@ -150,14 +150,14 @@
       </div>
       <HorizontalLineSeparator />
       <div class="counter action-summary">
-        <h4>{localize('T5EK.TotalCrewCount')}</h4>
+        <h4>{localize('TIDY5E.TotalCrewCount')}</h4>
         <div class="counter-value" title={crewTallyDescription}>
           {totalCrew}
         </div>
       </div>
       <HorizontalLineSeparator />
       <div class="counter action-summary">
-        <h4>{localize('T5EK.ActionsPerTurn')}</h4>
+        <h4>{localize('TIDY5E.ActionsPerTurn')}</h4>
         <div class="counter-value">
           {actionsPerTurn}
         </div>
@@ -174,7 +174,7 @@
   }
 
   .counters {
-    background: var(--t5ek-faint-color);
+    background: var(--t5e-faint-color);
     border-radius: 0.3125rem;
     padding: 0.25rem 0.5rem;
     font-size: 0.75rem;

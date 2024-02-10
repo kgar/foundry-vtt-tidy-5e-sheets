@@ -52,12 +52,12 @@
   {:else if $context.isNpc}
     <div class="environment form-field">
       <label for="environment-edit-{appId}"
-        >{localize('T5EK.Environment')}</label
+        >{localize('TIDY5E.Environment')}</label
       >
       <input
         id="environment-edit-{appId}"
         type="text"
-        placeholder={localize('T5EK.Environment')}
+        placeholder={localize('TIDY5E.Environment')}
         bind:value={$context.environment}
       />
     </div>

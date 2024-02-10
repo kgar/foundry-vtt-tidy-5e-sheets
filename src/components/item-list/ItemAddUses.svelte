@@ -36,7 +36,7 @@
 
     &:hover {
       opacity: 1;
-      color: var(--t5ek-secondary-color);
+      color: var(--t5e-secondary-color);
     }
   }
 </style>

@@ -68,7 +68,7 @@
     display: flex;
     flex: 0 0 0.0625rem;
     align-items: center;
-    color: var(--t5ek-secondary-color);
+    color: var(--t5e-secondary-color);
     border-radius: 0.3125rem;
     padding: 0 0.3125rem;
 
@@ -92,7 +92,7 @@
 
     .spell-slot-max-override {
       margin: 0 0 0 0.25rem;
-      color: var(--t5ek-tertiary-color);
+      color: var(--t5e-tertiary-color);
       line-height: 0.75rem;
       height: 0.75rem;
     }

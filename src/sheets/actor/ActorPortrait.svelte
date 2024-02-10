@@ -68,9 +68,9 @@
       class="actor-image"
       src={actor.img}
       alt={actor.name}
-      title={localize('T5EK.EditActorImage') +
+      title={localize('TIDY5E.EditActorImage') +
         ' / ' +
-        localize('T5EK.ShowActorImage')}
+        localize('TIDY5E.ShowActorImage')}
     />
   </div>
   {#if showPortraitMenu}
@@ -118,15 +118,15 @@
     left: 0;
     bottom: 0;
     width: 100%;
-    background: var(--t5ek-hp-overlay-background);
+    background: var(--t5e-hp-overlay-background);
     transition: height 0.5s ease-in-out;
     mix-blend-mode: multiply;
     height: var(--overlay-height);
   }
 
   .actor-image {
-    background: var(--t5ek-icon-background);
-    box-shadow: 0 0 0.625rem var(--t5ek-icon-shadow-color) inset;
+    background: var(--t5e-icon-background);
+    box-shadow: 0 0 0.625rem var(--t5e-icon-shadow-color) inset;
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -157,14 +157,14 @@
     flex-direction: column;
 
     .portrait-menu-item {
-      background: var(--t5ek-background);
-      color: var(--t5ek-primary-font-color);
+      background: var(--t5e-background);
+      color: var(--t5e-primary-font-color);
       border: none;
       margin: 0.0625rem 0;
       padding: 0.25rem 0.375rem;
       line-height: 1;
       font-size: 0.75rem;
-      border: 0.0625rem solid var(--t5ek-light-color);
+      border: 0.0625rem solid var(--t5e-light-color);
       border-radius: 0.3125rem;
       display: flex;
       align-items: center;
@@ -172,8 +172,8 @@
       gap: 0.25rem;
 
       &:hover {
-        background: var(--t5ek-background);
-        color: var(--t5ek-primary-accent-color);
+        background: var(--t5e-background);
+        color: var(--t5e-primary-accent-color);
       }
     }
   }

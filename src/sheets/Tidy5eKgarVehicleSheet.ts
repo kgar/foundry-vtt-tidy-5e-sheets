@@ -33,6 +33,8 @@ import { isNil } from 'src/utils/data';
 import { CustomContentRenderer } from './CustomContentRenderer';
 import { getBaseActorSheet5e } from 'src/utils/class-inheritance';
 import { ActorPortraitRuntime } from 'src/runtime/ActorPortraitRuntime';
+import { CustomActorTraitsRuntime } from 'src/runtime/actor-traits/CustomActorTraitsRuntime';
+import { ItemTableToggleCacheService } from 'src/features/caching/ItemTableToggleCacheService';
 
 export class Tidy5eVehicleSheet
   extends dnd5e.applications.actor.ActorSheet5eVehicle
@@ -46,9 +48,15 @@ export class Tidy5eVehicleSheet
   currentTabId: string;
   expandedItems: ExpandedItemIdToLocationsMap = new Map<string, Set<string>>();
   expandedItemData: ExpandedItemData = new Map<string, ItemChatData>();
+  itemTableTogglesCache: ItemTableToggleCacheService;
 
   constructor(...args: any[]) {
     super(...args);
+
+    this.itemTableTogglesCache = new ItemTableToggleCacheService({
+      userId: game.user.id,
+      documentId: this.actor.id,
+    });
 
     settingStore.subscribe(() => {
       this.getData().then((context) => this.context.set(context));
@@ -67,7 +75,7 @@ export class Tidy5eVehicleSheet
 
   static get defaultOptions() {
     return FoundryAdapter.mergeObject(super.defaultOptions, {
-      classes: ['tidy5e-kgar', 'sheet', 'actor', CONSTANTS.SHEET_TYPE_VEHICLE],
+      classes: ['tidy5e-sheet', 'sheet', 'actor', CONSTANTS.SHEET_TYPE_VEHICLE],
       height: 840,
       width: SettingsProvider.settings.vehicleSheetWidth.get(),
       scrollY: ['[data-tidy-track-scroll-y]', '.scroll-container'],
@@ -91,6 +99,16 @@ export class Tidy5eVehicleSheet
         ['location', ''],
         ['expandedItems', new Map(this.expandedItems)],
         ['expandedItemData', new Map(this.expandedItemData)],
+        [
+          'itemTableToggles',
+          new Map(this.itemTableTogglesCache.itemTableToggles),
+        ],
+        [
+          'onItemTableToggle',
+          this.itemTableTogglesCache.onItemTableToggle.bind(
+            this.itemTableTogglesCache
+          ),
+        ],
       ]),
     });
 
@@ -115,6 +133,9 @@ export class Tidy5eVehicleSheet
         ActorPortraitRuntime.getEnabledPortraitMenuCommands(this.actor),
       allowEffectsManagement: true,
       appId: this.appId,
+      customActorTraits: CustomActorTraitsRuntime.getEnabledTraits(
+        defaultDocumentContext
+      ),
       customContent: await VehicleSheetRuntime.getContent(
         defaultDocumentContext
       ),
@@ -202,7 +223,7 @@ export class Tidy5eVehicleSheet
         this.actor.documentName,
         this.actor.type,
         SettingsProvider.settings.colorScheme.get(),
-        this.element.get(0),
+        this.element.get(0)
       );
       await this.renderCustomContent({ data, isFullRender: true });
       Hooks.callAll(

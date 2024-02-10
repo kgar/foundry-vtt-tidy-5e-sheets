@@ -31,6 +31,7 @@ import { CustomTabBase, type CustomTabTitle } from './CustomTabBase';
  * });
  * ```
  */
+/** @category Tabs */
 export class SvelteTab extends CustomTabBase {
   /**
    * A reference to the `.svelte` component.

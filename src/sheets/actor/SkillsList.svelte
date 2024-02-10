@@ -62,83 +62,85 @@
       {@const showSkill =
         skillRef.skill && (showAllSkills || skillRef.skill.value > 0)}
 
-      <li
-        class="proficiency-row skill"
-        class:proficient={skillRef.skill.value}
-        class:hidden={!showSkill}
-        data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.SKILL_CONTAINER}
-        data-key={skillRef.key}
-      >
-        {#if $context.editable && !$context.lockSensitiveFields}
-          <button
-            type="button"
-            class="configure-proficiency inline-icon-button"
-            on:click={() =>
-              FoundryAdapter.renderProficiencyConfig(
-                $context.actor,
-                'skills',
-                skillRef.key,
-              )}
-            title={localize('DND5E.SkillConfigure')}
-            data-tidy-sheet-part={CONSTANTS.SHEET_PARTS
-              .SKILL_CONFIGURATION_CONTROL}
-            tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
-          >
-            <i class="fas fa-cog" />
-          </button>
-          <button
-            type="button"
-            class="skill-proficiency-toggle inline-icon-button"
-            on:click={() =>
-              FoundryAdapter.cycleProficiency(
-                $context.actor,
-                skillRef.key,
-                skillRef.skill?.value,
-                'skills',
-              )}
-            on:contextmenu={() =>
-              FoundryAdapter.cycleProficiency(
-                $context.actor,
-                skillRef.key,
-                skillRef.skill?.value,
-                'skills',
-                true,
-              )}
-            title={skillRef.skill.hover}
-            data-tidy-sheet-part={CONSTANTS.SHEET_PARTS
-              .SKILL_PROFICIENCY_TOGGLE}
-            tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
-            >{@html skillRef.skill.icon}</button
-          >
-        {:else}
-          <span class="skill-proficiency" title={skillRef.skill.hover}
-            >{@html skillRef.skill.icon}</span
-          >
-        {/if}
-        {#if $context.editable}
-          <button
-            type="button"
-            class="tidy5e-skill-name transparent-button rollable"
-            on:click={(event) =>
-              $context.actor.rollSkill(skillRef.key, { event })}
-            data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.SKILL_ROLLER}
-            tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
-          >
-            {skillRef.skill.label}
-          </button>
-        {:else}
-          <span class="tidy5e-skill-name">
-            {skillRef.skill.label}
-          </span>
-        {/if}
-        <span class="skill-ability">{skillRef.skill.abbreviation}</span>
-        <span class="skill-mod">{formatAsModifier(skillRef.skill.total)}</span>
-        <span
-          class="skill-passive"
-          title="{skillRef.skill.label} ({localize('DND5E.Passive')})"
-          >({skillRef.skill.passive})</span
+      {#if showSkill}
+        <li
+          class="proficiency-row skill"
+          class:proficient={skillRef.skill.value}
+          data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.SKILL_CONTAINER}
+          data-key={skillRef.key}
         >
-      </li>
+          {#if $context.editable && !$context.lockSensitiveFields}
+            <button
+              type="button"
+              class="configure-proficiency inline-icon-button"
+              on:click={() =>
+                FoundryAdapter.renderProficiencyConfig(
+                  $context.actor,
+                  'skills',
+                  skillRef.key,
+                )}
+              title={localize('DND5E.SkillConfigure')}
+              data-tidy-sheet-part={CONSTANTS.SHEET_PARTS
+                .SKILL_CONFIGURATION_CONTROL}
+              tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+            >
+              <i class="fas fa-cog" />
+            </button>
+            <button
+              type="button"
+              class="skill-proficiency-toggle inline-icon-button"
+              on:click={() =>
+                FoundryAdapter.cycleProficiency(
+                  $context.actor,
+                  skillRef.key,
+                  skillRef.skill?.value,
+                  'skills',
+                )}
+              on:contextmenu={() =>
+                FoundryAdapter.cycleProficiency(
+                  $context.actor,
+                  skillRef.key,
+                  skillRef.skill?.value,
+                  'skills',
+                  true,
+                )}
+              title={skillRef.skill.hover}
+              data-tidy-sheet-part={CONSTANTS.SHEET_PARTS
+                .SKILL_PROFICIENCY_TOGGLE}
+              tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+              >{@html skillRef.skill.icon}</button
+            >
+          {:else}
+            <span class="skill-proficiency" title={skillRef.skill.hover}
+              >{@html skillRef.skill.icon}</span
+            >
+          {/if}
+          {#if $context.editable}
+            <button
+              type="button"
+              class="tidy5e-skill-name transparent-button rollable"
+              on:click={(event) =>
+                $context.actor.rollSkill(skillRef.key, { event })}
+              data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.SKILL_ROLLER}
+              tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+            >
+              {skillRef.skill.label}
+            </button>
+          {:else}
+            <span class="tidy5e-skill-name">
+              {skillRef.skill.label}
+            </span>
+          {/if}
+          <span class="skill-ability">{skillRef.skill.abbreviation}</span>
+          <span class="skill-mod">{formatAsModifier(skillRef.skill.total)}</span
+          >
+          <span
+            class="skill-passive"
+            title="{skillRef.skill.label} ({localize('DND5E.Passive')})"
+            >({skillRef.skill.passive})</span
+          >
+        </li>
+      {/if}
     {/each}
   </ul>
   {#if toggleable}
@@ -152,9 +154,9 @@
         tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
       >
         {#if showAllSkills}
-          {localize('T5EK.HideNotProficientSkills')}
+          {localize('TIDY5E.HideNotProficientSkills')}
         {:else}
-          {localize('T5EK.ShowNotProficientSkills')}
+          {localize('TIDY5E.ShowNotProficientSkills')}
         {/if}</button
       >
     </div>
@@ -163,7 +165,7 @@
 
 <style lang="scss">
   .skills-list {
-    border: 0.0625rem solid var(--t5ek-faint-color);
+    border: 0.0625rem solid var(--t5e-faint-color);
     border-radius: 0.3125rem;
     overflow: visible;
     padding: 0;
@@ -182,12 +184,8 @@
       height: 1.125rem;
       flex-wrap: nowrap;
 
-      &.hidden {
-        display: none;
-      }
-
       &:nth-child(even) {
-        background: var(--t5ek-faint-color);
+        background: var(--t5e-faint-color);
       }
 
       .tidy5e-skill-name {
@@ -204,9 +202,9 @@
         margin: 0;
         padding: 0;
         font-size: 0.625rem;
-        color: var(--t5ek-tertiary-color);
+        color: var(--t5e-tertiary-color);
         &:hover {
-          color: var(--t5ek-primary-color);
+          color: var(--t5e-primary-color);
         }
       }
 
@@ -216,15 +214,15 @@
 
       .skill-proficiency {
         font-size: 0.625rem;
-        color: var(--t5ek-tertiary-color);
+        color: var(--t5e-tertiary-color);
       }
 
       .skill-proficiency-toggle {
         font-size: 0.625rem;
-        color: var(--t5ek-tertiary-color);
+        color: var(--t5e-tertiary-color);
 
         &:hover {
-          color: var(--t5ek-primary-font-color);
+          color: var(--t5e-primary-font-color);
         }
 
         i {
@@ -239,7 +237,7 @@
       }
 
       .skill-passive {
-        color: var(--t5ek-tertiary-color);
+        color: var(--t5e-tertiary-color);
       }
 
       .skill-ability {
@@ -252,16 +250,16 @@
   .skills-list-container .toggle-proficient {
     font-size: 0.625rem;
     text-transform: capitalize;
-    border: 0.0625rem solid var(--t5ek-faint-color);
+    border: 0.0625rem solid var(--t5e-faint-color);
     border-top: none;
     padding: 0.125rem 0.5rem;
     border-radius: 0 0 0.3125rem 0.3125rem;
     cursor: pointer;
-    color: var(--t5ek-secondary-color);
+    color: var(--t5e-secondary-color);
     white-space: nowrap;
 
     &:hover {
-      color: var(--t5ek-primary-font-color);
+      color: var(--t5e-primary-font-color);
     }
   }
 </style>

@@ -77,13 +77,13 @@
   ul.listbox {
     margin: 0;
     padding: 0;
-    border: 0.0625rem solid var(--t5ek-light-color);
+    border: 0.0625rem solid var(--t5e-light-color);
     overflow-y: auto;
     max-height: inherit;
     height: 100%;
 
     &:focus-visible {
-      outline: 1px solid var(--t5ek-primary-accent-color);
+      outline: 1px solid var(--t5e-primary-accent-color);
     }
   }
   .listbox li {
@@ -91,14 +91,14 @@
     padding: 0.5rem;
   }
   .listbox [role='option'].focused {
-    background-color: var(--t5ek-faint-color);
+    background-color: var(--t5e-faint-color);
   }
 
   .listbox [role='option']:hover {
-    background: var(--t5ek-faintest-color);
+    background: var(--t5e-faintest-color);
   }
 
   .listbox [role='option'].focused:hover {
-    background-color: var(--t5ek-faint-color);
+    background-color: var(--t5e-faint-color);
   }
 </style>

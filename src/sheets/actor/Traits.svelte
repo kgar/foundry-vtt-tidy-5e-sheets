@@ -9,6 +9,7 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import { settingStore } from 'src/settings/settings';
+  import { error } from 'src/utils/logging';
 
   let context =
     getContext<
@@ -99,7 +100,7 @@
     <TraitSection
       traitCssClass={$context.traits.traits?.dv?.cssClass ?? ''}
       title={localize('DND5E.DamVuln')}
-      iconCssClass="far fa-heart-broken"
+      iconCssClass="fas fa-heart-broken"
       tags={Object.entries($context.traits.traits.dv.selected)}
       configureButtonTitle={localize('DND5E.TraitConfig', {
         trait: localize('DND5E.DamVuln'),
@@ -201,6 +202,33 @@ c28,32.6,51.5,72.7,62,91.7c2.8,5,9.9,5.1,12.8,0.2c14-23.3,44.3-83.4,44.3-166.9C4
     />
   {/if}
 
+  {#if $context.customActorTraits?.length}
+    {#each $context.customActorTraits as trait}
+      <TraitSection
+        title={trait.title}
+        iconCssClass={trait.iconClass}
+        configureButtonTitle={trait.openConfigurationTooltip ?? ''}
+        on:onConfigureClicked={(ev) => {
+          try {
+            trait.openConfiguration?.({
+              app: $context.actor.sheet,
+              data: $context,
+              element: $context.actor.sheet.element.get(0),
+              event: ev.detail,
+            });
+          } catch (e) {
+            error(
+              'An error occurred while handling trait configuration click event',
+              false,
+              e,
+            );
+          }
+        }}
+        traitsExpanded={trait.alwaysShow || traitsExpanded}
+      />
+    {/each}
+  {/if}
+
   {#if toggleable}
     <button
       type="button"
@@ -209,9 +237,9 @@ c28,32.6,51.5,72.7,62,91.7c2.8,5,9.9,5.1,12.8,0.2c14-23.3,44.3-83.4,44.3-166.9C4
       tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
     >
       {#if traitsExpanded}
-        {localize('T5EK.HideEmptyTraits')}
+        {localize('TIDY5E.HideEmptyTraits')}
       {:else}
-        {localize('T5EK.ShowEmptyTraits')}
+        {localize('TIDY5E.ShowEmptyTraits')}
       {/if}
     </button>
   {/if}
@@ -233,7 +261,7 @@ c28,32.6,51.5,72.7,62,91.7c2.8,5,9.9,5.1,12.8,0.2c14-23.3,44.3-83.4,44.3-166.9C4
 
 <style lang="scss">
   .traits {
-    border: 0.0625rem solid var(--t5ek-faint-color);
+    border: 0.0625rem solid var(--t5e-faint-color);
     border-radius: 0.3125rem 0.3125rem 0 0;
     overflow: visible;
     position: relative;
@@ -244,7 +272,7 @@ c28,32.6,51.5,72.7,62,91.7c2.8,5,9.9,5.1,12.8,0.2c14-23.3,44.3-83.4,44.3-166.9C4
     }
 
     :global(.trait-form-group:nth-child(even)) {
-      background: var(--t5ek-faint-color);
+      background: var(--t5e-faint-color);
     }
 
     svg {
@@ -252,7 +280,7 @@ c28,32.6,51.5,72.7,62,91.7c2.8,5,9.9,5.1,12.8,0.2c14-23.3,44.3-83.4,44.3-166.9C4
       width: 0.875rem;
 
       path {
-        fill: var(--t5ek-tertiary-color);
+        fill: var(--t5e-tertiary-color);
       }
     }
 
@@ -261,16 +289,16 @@ c28,32.6,51.5,72.7,62,91.7c2.8,5,9.9,5.1,12.8,0.2c14-23.3,44.3-83.4,44.3-166.9C4
       display: inline-block;
       top: calc(100% + 0.0625rem);
       left: -0.0625rem;
-      border: 0.0625rem solid var(--t5ek-faint-color);
+      border: 0.0625rem solid var(--t5e-faint-color);
       border-top: 0;
       border-radius: 0 0 0.1875rem 0.1875rem;
       padding: 0.125rem 0.25rem;
       font-size: 0.625rem;
-      color: var(--t5ek-secondary-color);
+      color: var(--t5e-secondary-color);
     }
 
     .toggle-traits:hover {
-      color: var(--t5ek-primary-font-color);
+      color: var(--t5e-primary-font-color);
     }
 
     .configure-special-traits {
@@ -279,7 +307,7 @@ c28,32.6,51.5,72.7,62,91.7c2.8,5,9.9,5.1,12.8,0.2c14-23.3,44.3-83.4,44.3-166.9C4
       display: inline-block;
       top: calc(100% + 0.0625rem);
       right: -0.0625rem;
-      border: 0.0625rem solid var(--t5ek-faint-color);
+      border: 0.0625rem solid var(--t5e-faint-color);
       border-top: 0;
       border-radius: 0 0 0.1875rem 0.1875rem;
       padding: 0.125rem 0.25rem;

@@ -55,7 +55,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    font-family: var(--t5ek-title-font-family);
+    font-family: var(--t5e-title-font-family);
 
     :global(.resource-value),
     :global(.resource-max) {

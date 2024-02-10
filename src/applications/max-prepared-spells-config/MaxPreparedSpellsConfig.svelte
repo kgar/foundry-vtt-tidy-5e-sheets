@@ -24,7 +24,7 @@
     />
   </div>
   <div role="presentation">
-    <h3>{localize('T5EK.MaxPreparedSpellsConfig.ExamplesHeader')}</h3>
+    <h3>{localize('TIDY5E.MaxPreparedSpellsConfig.ExamplesHeader')}</h3>
     <p class="flex-row flex-wrap sample-formulas">
       {#each $context.formulas as formula}
         <button
@@ -40,7 +40,7 @@
       <a
         target="_blank"
         href="https://github.com/kgar/foundry-vtt-tidy-5e-sheets/wiki/Max-Prepared-Spells-Formulas"
-        >{localize('T5EK.MaxPreparedSpellsConfig.MoreFormulas')}</a
+        >{localize('TIDY5E.MaxPreparedSpellsConfig.MoreFormulas')}</a
       >
     </p>
   </div>

@@ -15,7 +15,7 @@ export class VehicleSheetRuntime {
   private static _content: RegisteredContent<VehicleSheetContext>[] = [];
   private static _tabs: RegisteredTab<VehicleSheetContext>[] = [
     {
-      title: 'T5EK.Actions.TabName',
+      title: 'TIDY5E.Actions.TabName',
       content: {
         component: ActorActionsTab,
         type: 'svelte',
