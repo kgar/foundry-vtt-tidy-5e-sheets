@@ -1,6 +1,8 @@
 <script lang="ts">
   import { processInputChangeDelta } from 'src/utils/form';
   import { buildDataset } from 'src/utils/data';
+  import { ActiveEffectsHelper } from 'src/utils/active-effect';
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
   type OnSaveChangeFn = (
     event: Event & {
@@ -71,6 +73,13 @@
       }
     });
   }
+
+  $: activeEffectApplied = ActiveEffectsHelper.isActiveEffectAppliedToField(
+    document,
+    field,
+  );
+
+  const localize = FoundryAdapter.localize;
 </script>
 
 <input
@@ -79,13 +88,15 @@
   {id}
   bind:value={draftValue}
   {placeholder}
-  data-tooltip={tooltip}
+  data-tooltip={activeEffectApplied
+    ? localize('DND5E.ActiveEffectOverrideWarning')
+    : tooltip}
   {...actualDataset}
   class={cssClass}
   {maxlength}
   aria-describedby={ariaDescribedBy}
   {title}
-  {disabled}
+  disabled={disabled || activeEffectApplied}
   on:change={(ev) => onSaveChange(ev) && saveChange(ev)}
   on:click
   on:keypress

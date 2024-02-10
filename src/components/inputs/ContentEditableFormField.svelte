@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import { ActiveEffectsHelper } from 'src/utils/active-effect';
   import { toNumber } from 'src/utils/numbers';
 
   export let element: keyof HTMLElementTagNameMap;
@@ -56,9 +58,16 @@
       selection?.addRange(range);
     }
   }
+
+  $: activeEffectApplied = ActiveEffectsHelper.isActiveEffectAppliedToField(
+    document,
+    field,
+  );
+
+  const localize = FoundryAdapter.localize;
 </script>
 
-{#if editable}
+{#if editable && !activeEffectApplied}
   <svelte:element
     this={element}
     bind:this={_el}
@@ -83,6 +92,9 @@
     class={cssClass}
     {title}
     data-tidy-field={field}
+    data-tooltip={activeEffectApplied
+      ? localize('DND5E.ActiveEffectOverrideWarning')
+      : null}
   >
     {value}
   </svelte:element>

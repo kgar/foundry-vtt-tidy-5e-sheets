@@ -28,6 +28,7 @@ declare global {
   var fromUuid: any;
   var fromUuidSync: any;
   var game: any;
+  var getProperty: any;
   var HandlebarsHelpers: any;
   var Hooks: any;
   var ImagePopout: any;

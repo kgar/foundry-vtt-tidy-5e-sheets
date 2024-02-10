@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import { ActiveEffectsHelper } from 'src/utils/active-effect';
   import { buildDataset } from 'src/utils/data';
 
   export let value: unknown;
@@ -17,7 +19,7 @@
   function saveChange(
     event: Event & {
       currentTarget: EventTarget & HTMLSelectElement;
-    }
+    },
   ) {
     const targetValue = event.currentTarget.value;
 
@@ -27,16 +29,25 @@
 
     draftValue = value?.toString() ?? '';
   }
+
+  $: activeEffectApplied = ActiveEffectsHelper.isActiveEffectAppliedToField(
+    document,
+    field,
+  );
+
+  const localize = FoundryAdapter.localize;
 </script>
 
 <select
   {id}
   bind:value={draftValue}
-  data-tooltip={tooltip}
+  data-tooltip={activeEffectApplied
+    ? localize('DND5E.ActiveEffectOverrideWarning')
+    : tooltip}
   on:change={document && saveChange}
   {title}
   {...datasetAttributes}
-  {disabled}
+  disabled={disabled || activeEffectApplied}
   data-tidy-field={field}
 >
   <slot />

@@ -4,6 +4,7 @@
   import { settingStore } from 'src/settings/settings';
   import type { Actor5e } from 'src/types/types';
   import type { CharacterSheetContext, NpcSheetContext } from 'src/types/types';
+  import { ActiveEffectsHelper } from 'src/utils/active-effect';
   import { formatAsModifier } from 'src/utils/formatting';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
@@ -70,6 +71,11 @@
           data-key={skillRef.key}
         >
           {#if $context.editable && !$context.lockSensitiveFields}
+            {@const activeEffectApplied =
+              ActiveEffectsHelper.isActiveEffectAppliedToField(
+                $context.actor,
+                `system.skills.${skillRef.key}.value`,
+              )}
             <button
               type="button"
               class="configure-proficiency inline-icon-button"
@@ -108,7 +114,10 @@
               data-tidy-sheet-part={CONSTANTS.SHEET_PARTS
                 .SKILL_PROFICIENCY_TOGGLE}
               tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
-              >{@html skillRef.skill.icon}</button
+              disabled={activeEffectApplied}
+              data-tooltip={activeEffectApplied
+                ? localize('DND5E.ActiveEffectOverrideWarning')
+                : null}>{@html skillRef.skill.icon}</button
             >
           {:else}
             <span class="skill-proficiency" title={skillRef.skill.hover}

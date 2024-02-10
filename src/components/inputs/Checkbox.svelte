@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import { ActiveEffectsHelper } from 'src/utils/active-effect';
   import { buildDataset } from 'src/utils/data';
 
   export let value: number | null = null;
@@ -26,6 +28,13 @@
 
     draftValue = value;
   }
+
+  $: activeEffectApplied = ActiveEffectsHelper.isActiveEffectAppliedToField(
+    document,
+    field,
+  );
+
+  const localize = FoundryAdapter.localize;
 </script>
 
 <!-- TODO: Make label wrapper conditional when Svelte 5 snippets come out -->
@@ -37,10 +46,13 @@
       bind:value={draftValue}
       {checked}
       on:change={saveChange}
-      {disabled}
+      disabled={disabled || activeEffectApplied}
       {...datasetAttributes}
       class={checkboxCssClass}
       data-tidy-field={field}
+      data-tooltip={activeEffectApplied
+        ? localize('DND5E.ActiveEffectOverrideWarning')
+        : null}
     />
     <slot />
   </label>
@@ -52,7 +64,10 @@
     {checked}
     on:change={saveChange}
     {title}
-    {disabled}
+    disabled={disabled || activeEffectApplied}
+    data-tooltip={activeEffectApplied
+      ? localize('DND5E.ActiveEffectOverrideWarning')
+      : null}
     {...datasetAttributes}
     class={checkboxCssClass}
     data-tidy-field={field}
