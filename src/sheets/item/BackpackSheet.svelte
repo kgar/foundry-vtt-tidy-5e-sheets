@@ -51,6 +51,7 @@
           document={$context.item}
           value={$context.item.system.rarity}
           disabled={!$context.editable}
+          blankValue=""
         >
           <SelectOptions data={$context.config.itemRarity} blank="" />
         </Select>

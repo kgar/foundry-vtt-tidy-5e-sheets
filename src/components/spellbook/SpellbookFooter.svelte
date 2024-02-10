@@ -120,6 +120,7 @@
       field="system.attributes.spellcasting"
       value={$context.system.attributes.spellcasting}
       disabled={!$context.editable || $context.lockSensitiveFields}
+      blankValue=""
     >
       <option value="" selected={!$context.system.attributes.spellcasting}
         >{localize('DND5E.None')}</option

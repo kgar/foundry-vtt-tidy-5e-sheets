@@ -137,6 +137,25 @@ export class Tidy5eNpcSheet
       (!unlocked && SettingsProvider.settings.useTotalSheetLock.get()) ||
       !defaultDocumentContext.editable;
 
+    let maxPreparedSpellsTotal = 0;
+    try {
+      const formula =
+        FoundryAdapter.tryGetFlag(
+          this.actor,
+          'maxPreparedSpells'
+        )?.toString() ?? '';
+
+      if (formula?.trim() !== '') {
+        const roll = await Roll.create(
+          formula,
+          this.actor.getRollData()
+        ).evaluate({ async: true });
+        maxPreparedSpellsTotal = roll.total;
+      }
+    } catch (e) {
+      error('Unable to calculate max prepared spells', false, e);
+    }
+
     const context = {
       ...defaultDocumentContext,
       actions: getActorActions(this.actor),
@@ -230,6 +249,7 @@ export class Tidy5eNpcSheet
       lockItemQuantity: FoundryAdapter.shouldLockItemQuantity(),
       lockLevelSelector: FoundryAdapter.shouldLockLevelSelector(),
       lockMoneyChanges: FoundryAdapter.shouldLockMoneyChanges(),
+      maxPreparedSpellsTotal,
       notes1EnrichedHtml: await FoundryAdapter.enrichHtml(
         FoundryAdapter.getProperty<string>(
           this.actor,
