@@ -671,5 +671,7 @@
     },
     "TIDY5E.Settings.ColorPickerScrollbarThumb": {
         "name": "Cabezal de la barra de desplazamiento"
-    }
+    },
+    "TIDY5E.Commands.CollapseAll": "Contraer todo",
+    "TIDY5E.Commands.ExpandAll": "Expandir todo"
 }
