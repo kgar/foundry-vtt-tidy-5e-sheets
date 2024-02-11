@@ -9,6 +9,7 @@
   import { MaxPreparedSpellsConfigFormApplication } from 'src/applications/max-prepared-spells-config/MaxPreparedSpellsConfigFormApplication';
   import { CONSTANTS } from 'src/constants';
   import { settingStore } from 'src/settings/settings';
+  import { rollRawSpellAttack } from 'src/utils/formula';
 
   let context =
     getContext<Readable<CharacterSheetContext | NpcSheetContext>>('context');
@@ -22,63 +23,6 @@
     abbr: a[0],
     ...a[1],
   }));
-
-  function fred(ev: MouseEvent, attackType: 'rsak' | 'msak' = 'rsak') {
-    // TODO: Localize
-    let title = `${$context.actor.name} - Spell Attack Roll`;
-
-    const rollData: Record<string, string> = {};
-    const parts: string[] = [];
-
-    // Ability score modifier
-    const spellcastingAbility = $context.actor.system.attributes.spellcasting;
-    const spellcastingMod =
-      $context.actor.system.abilities[spellcastingAbility]?.mod;
-    if (spellcastingAbility !== 'none' && spellcastingMod) {
-      parts.push('@mod');
-      rollData.mod = spellcastingMod;
-    }
-
-    // Add proficiency bonus.
-    parts.push('@prof');
-    rollData.prof = $context.actor.system.attributes.prof;
-
-    // Actor-level global bonus to attack rolls
-    const actorBonusAttack =
-      $context.actor.system.bonuses?.[attackType]?.attack;
-    if (actorBonusAttack) {
-      parts.push(actorBonusAttack);
-    }
-
-    const rollConfig = foundry.utils.mergeObject(
-      {
-        actor: $context.actor,
-        data: rollData,
-        critical: $context.actor.flags['dnd5e']?.spellCriticalThreshold,
-        title,
-        flavor: title,
-        elvenAccuracy: $context.actor.flags['dnd5e']?.elvenAccuracy ?? false,
-        halflingLucky: $context.actor.flags['dnd5e']?.halflingLucky ?? false,
-        dialogOptions: {
-          width: 400,
-          top: ev ? ev.clientY - 80 : null,
-          left: ev ? ev.clientX + 40 : null,
-        },
-        messageData: {
-          'flags.dnd5e.roll': {
-            type: 'attack',
-            // itemId: this.id,
-            // itemUuid: this.uuid,
-          },
-          speaker: ChatMessage.getSpeaker({ actor: $context.actor }),
-        },
-        event: ev,
-      },
-      {},
-    );
-    rollConfig.parts = parts;
-    dnd5e.dice.d20Roll(rollConfig);
-  }
 </script>
 
 <TabFooter cssClass="{cssClass} spellbook-footer" mode="horizontal">
@@ -101,12 +45,12 @@
         {#if $context.spellCalculations.rangedMod !== $context.spellCalculations.meleeMod}
           <button
             type="button"
-            on:click={(ev) => fred(ev, 'rsak')}
+            on:click={(ev) => rollRawSpellAttack(ev, $context.actor, 'rsak')}
             tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
             data-tooltip="{FoundryAdapter.localize(
               'TIDY5E.RangedSpellAttackMod',
             )}: {$context.spellCalculations.rangedTooltip}"
-            class="inline-transparent-button spell-attack-mod-button"
+            class="inline-transparent-button spell-attack-mod-button rollable"
           >
             <i class="fa-solid fa-wand-magic-sparkles"></i>
             <span
@@ -121,12 +65,12 @@
           </button>
           <button
             type="button"
-            on:click={(ev) => fred(ev, 'msak')}
+            on:click={(ev) => rollRawSpellAttack(ev, $context.actor, 'msak')}
             tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
             data-tooltip="{FoundryAdapter.localize(
               'TIDY5E.MeleeSpellAttackMod',
             )}: {$context.spellCalculations.meleeTooltip}"
-            class="inline-transparent-button spell-attack-mod-button"
+            class="inline-transparent-button spell-attack-mod-button rollable"
           >
             <i class="fa-solid fa-hand-sparkles"></i>
             <span
@@ -141,12 +85,12 @@
         {:else}
           <button
             type="button"
-            on:click={(ev) => fred(ev)}
+            on:click={(ev) => rollRawSpellAttack(ev, $context.actor)}
             tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
             data-tooltip="{FoundryAdapter.localize(
               'TIDY5E.SpellAttackMod',
             )}: {$context.spellCalculations.rangedTooltip}"
-            class="inline-transparent-button spell-attack-mod-button"
+            class="inline-transparent-button spell-attack-mod-button rollable"
           >
             <span
               class="spell-attack-mod"
@@ -236,11 +180,6 @@
   .spell-attack-mod-button {
     font-family: var(--t5e-title-font-family);
     font-weight: 700;
-
-    // TODO: Use rollable?
-    &:hover {
-      color: var(--t5e-primary-accent-color);
-    }
   }
 
   .spell-attack-mod-button i {
