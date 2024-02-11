@@ -673,5 +673,20 @@
         "name": "Cabezal de la barra de desplazamiento"
     },
     "TIDY5E.Commands.CollapseAll": "Contraer todo",
-    "TIDY5E.Commands.ExpandAll": "Expandir todo"
+    "TIDY5E.Commands.ExpandAll": "Expandir todo",
+    "TIDY5E.WorldSettings.TabNpc": {
+        "tabLabel": "NPC"
+    },
+    "TIDY5E.WorldSettings.TabVehicle": {
+        "tabLabel": "Vehículo"
+    },
+    "TIDY5E.WorldSettings.TabCharacter": {
+        "tabLabel": "Caracteres"
+    },
+    "TIDY5E.WorldSettings.TabExhaustion": {
+        "tabLabel": "Agotamiento"
+    },
+    "TIDY5E.WorldSettings.Menu": {
+        "name": "Ajustes globales"
+    }
 }
