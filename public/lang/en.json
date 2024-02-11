@@ -440,7 +440,7 @@
   },
   "TIDY5E.Settings.ShowNPCActorLinkMarker": {
     "name": "Mark Linked/Unlinked NPCs",
-    "hint": "Adds a colored border and icon to linked/unliked NPC sheets.",
+    "hint": "Adds a colored border and icon to linked/unlinked NPC sheets.",
     "default": "No link marker (default)",
     "unlinked": "Highlight unlinked tokens",
     "linked": "Highlight linked tokens",
