@@ -109,7 +109,7 @@
     "conflicts": []
   },
   "url": "https://github.com/kgar/foundry-vtt-tidy-5e-sheets",
-  "download": "https://github.com/kgar/foundry-vtt-tidy-5e-sheets/releases/download/v0.1.0-alpha/module.zip",
+  "download": "https://github.com/kgar/foundry-vtt-tidy-5e-sheets/releases/download/v1.0.0/module.zip",
   "manifest": "https://github.com/kgar/foundry-vtt-tidy-5e-sheets/releases/latest/download/module.json",
   "readme": "https://github.com/kgar/foundry-vtt-tidy-5e-sheets/blob/main/README.md",
   "bugs": "https://github.com/kgar/foundry-vtt-tidy-5e-sheets/issues",
