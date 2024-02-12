@@ -4,7 +4,7 @@ import { debug, error } from 'src/utils/logging';
 import { SettingsProvider, settingStore } from 'src/settings/settings';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
 import { CONSTANTS } from 'src/constants';
-import { writable } from 'svelte/store';
+import { get, writable } from 'svelte/store';
 import {
   type ItemCardStore,
   type CharacterSheetContext,
@@ -39,6 +39,8 @@ import { ActorPortraitRuntime } from 'src/runtime/ActorPortraitRuntime';
 import { calculateSpellAttackAndDc } from 'src/utils/formula';
 import { CustomActorTraitsRuntime } from 'src/runtime/actor-traits/CustomActorTraitsRuntime';
 import { ItemTableToggleCacheService } from 'src/features/caching/ItemTableToggleCacheService';
+import { ItemFilterService } from 'src/features/filtering/ItemFilterService';
+import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
 
 export class Tidy5eCharacterSheet
   extends dnd5e.applications.actor.ActorSheet5eCharacter
@@ -57,6 +59,7 @@ export class Tidy5eCharacterSheet
   expandedItems: ExpandedItemIdToLocationsMap = new Map<string, Set<string>>();
   expandedItemData: ExpandedItemData = new Map<string, ItemChatData>();
   itemTableTogglesCache: ItemTableToggleCacheService;
+  itemFilterService: ItemFilterService;
 
   constructor(...args: any[]) {
     super(...args);
@@ -66,12 +69,17 @@ export class Tidy5eCharacterSheet
       documentId: this.actor.id,
     });
 
+    this.itemFilterService = new ItemFilterService();
+
+    this.itemFilterService.filterData$.subscribe(() => {
+      this.render();
+    });
+
     settingStore.subscribe(() => {
-      this.getData().then((context) => this.context.set(context));
-      applyThemeDataAttributeToWindow(
-        SettingsProvider.settings.colorScheme.get(),
-        this.element?.get(0)
-      );
+      // TODO: Thoroughly test this.
+      // TODO: Test for unintentional multiple subscriptions when switching between sheets.
+      debug("Debug test. Setting store updated.");
+      this.render();
     });
 
     this.currentTabId =
@@ -111,6 +119,10 @@ export class Tidy5eCharacterSheet
         ['onTabSelected', this.onTabSelected.bind(this)],
         ['onItemToggled', this.onItemToggled.bind(this)],
         ['searchFilters', new Map(this.searchFilters)],
+        [
+          'onFilter',
+          this.itemFilterService.onFilter.bind(this.itemFilterService),
+        ],
         ['onSearch', this.onSearch.bind(this)],
         [
           'itemTableToggles',
@@ -133,6 +145,37 @@ export class Tidy5eCharacterSheet
 
   async getData(options = {}) {
     const defaultDocumentContext = await super.getData(this.options);
+
+    // Apply new filters
+    for (let section of defaultDocumentContext.inventory) {
+      let filteredItems = [];
+      for (let item of section.items) {
+        if (this.itemFilterService.includeItem(item, 'inventory')) {
+          filteredItems.push(item);
+        }
+      }
+      section.items = filteredItems;
+    }
+
+    for (let section of defaultDocumentContext.spellbook) {
+      let filteredItems = [];
+      for (let item of section.spells) {
+        if (this.itemFilterService.includeItem(item, 'spellbook')) {
+          filteredItems.push(item);
+        }
+      }
+      section.spells = filteredItems;
+    }
+
+    for (let section of defaultDocumentContext.features) {
+      let filteredItems = [];
+      for (let item of section.items) {
+        if (this.itemFilterService.includeItem(item, 'features')) {
+          filteredItems.push(item);
+        }
+      }
+      section.items = filteredItems;
+    }
 
     const unlocked =
       FoundryAdapter.isActorSheetUnlocked(this.actor) &&
@@ -190,6 +233,8 @@ export class Tidy5eCharacterSheet
     } catch (e) {
       error('Unable to calculate max prepared spells', false, e);
     }
+
+    const itemFilterData = get(this.itemFilterService.filterData$);
 
     const context: CharacterSheetContext = {
       ...defaultDocumentContext,
@@ -266,6 +311,22 @@ export class Tidy5eCharacterSheet
           relativeTo: this.actor,
         }
       ),
+      itemFilterData: {
+        inventory: [
+          {
+            ...ItemFilterRuntime.getFilter('action'),
+            value: itemFilterData['inventory']?.['action'] ?? null,
+          },
+          {
+            ...ItemFilterRuntime.getFilter('bonus'),
+            value: itemFilterData['inventory']?.['bonus'] ?? null,
+          },
+          {
+            ...ItemFilterRuntime.getFilter('reaction'),
+            value: itemFilterData['inventory']?.['reaction'] ?? null,
+          },
+        ],
+      },
       lockExpChanges: FoundryAdapter.shouldLockExpChanges(),
       lockHpMaxChanges: FoundryAdapter.shouldLockHpMaxChanges(),
       lockItemQuantity: FoundryAdapter.shouldLockItemQuantity(),

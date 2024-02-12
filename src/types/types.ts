@@ -10,6 +10,10 @@ import type {
   RegisteredCustomActorTrait,
   RegisteredPortraitMenuCommand,
 } from 'src/runtime/types';
+import type {
+  ItemFilterData,
+  ItemFilterGroup,
+} from 'src/features/filtering/ItemFilterService';
 
 export type Actor5e = any;
 
@@ -202,6 +206,7 @@ export type ActorSheetContext = {
    */
   healthPercentage: number;
   itemContext: any;
+  itemFilters: any; // 🚫 debug; take it out!
   lockExpChanges: boolean;
   lockHpMaxChanges: boolean;
   /**

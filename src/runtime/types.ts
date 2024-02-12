@@ -118,3 +118,9 @@ export type RegisteredTraitOpenConfigurationParams = {
   data: any;
   event: Event;
 };
+
+export type ItemFilter = {
+  name: string;
+  predicate: (item: Item5e) => boolean;
+  text: string;
+};

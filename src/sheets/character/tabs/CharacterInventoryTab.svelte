@@ -22,6 +22,7 @@
   } from 'src/components/utility-bar/types';
   import UtilityToolbarCommand from 'src/components/utility-bar/UtilityToolbarCommand.svelte';
   import UtilityFilters from 'src/components/utility-bar/UtilityItemFilters.svelte';
+  import UtilityItemFiltersV2 from 'src/components/utility-bar/UtilityItemFiltersV2.svelte';
 
   let context = getContext<Readable<CharacterSheetContext>>('context');
 
@@ -101,7 +102,7 @@
 
 <UtilityToolbar>
   <Search bind:value={searchCriteria} />
-  <UtilityFilters {filters} />
+  <UtilityItemFiltersV2 filterGroupName="inventory" />
   {#each utilityBarCommands as command (command.title)}
     <UtilityToolbarCommand
       title={command.title}

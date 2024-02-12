@@ -1,3 +1,5 @@
+import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
+import type { ItemFilter } from 'src/runtime/types';
 import type { Item5e } from 'src/types/item';
 import { writable, type Readable, type Writable } from 'svelte/store';
 
@@ -19,31 +21,28 @@ import { writable, type Readable, type Writable } from 'svelte/store';
 }
 */
 
-type ItemFilter = {
-  name: string;
-  predicate: (item: Item5e) => boolean;
-};
 type ItemFilterName = ItemFilter['name'];
-type FilterGroup = Record<ItemFilterName, boolean | undefined>;
-type FilterGroupName = string;
-type FilterData = Record<FilterGroupName, FilterGroup>;
+export type ItemFilterGroup = Record<ItemFilterName, boolean | undefined>;
+type ItemFilterGroupName = string;
+export type ItemFilterData = Record<ItemFilterGroupName, ItemFilterGroup>;
 
 export class ItemFilterService {
-  private _filterData: FilterData;
+  // Maybe svelte runes will make this easier?
+  private _filterData: ItemFilterData;
 
-  private _itemFilterChange$: Writable<number>;
+  private _filterDataStore: Writable<ItemFilterData>;
 
-  get itemFilterChange$(): Readable<number> {
-    return this._itemFilterChange$;
+  get filterData$(): Readable<ItemFilterData> {
+    return this._filterDataStore;
   }
 
   // TODO: Have sheets send in what they have in session storage upon construction
-  constructor(filterData: FilterData = {}) {
+  constructor(filterData: ItemFilterData = {}) {
     this._filterData = filterData;
-    this._itemFilterChange$ = writable(Math.random());
+    this._filterDataStore = writable(this._filterData);
   }
 
-  includeItem(item: Item5e, filterGroup: FilterGroupName): boolean {
+  includeItem(item: Item5e, filterGroup: ItemFilterGroupName): boolean {
     const group = this._getGroup(filterGroup);
 
     for (let [filterName, value] of Object.entries(group)) {
@@ -51,7 +50,12 @@ export class ItemFilterService {
         continue;
       }
 
-      const filter = getFilter(filterName);
+      const filter = ItemFilterRuntime.getFilter(filterName);
+
+      if (!filter) {
+        continue;
+      }
+
       if (filter.predicate(item) !== value) {
         return false;
       }
@@ -61,7 +65,7 @@ export class ItemFilterService {
   }
 
   onFilter(
-    filterGroup: FilterGroupName,
+    filterGroup: ItemFilterGroupName,
     filterName: ItemFilterName,
     value: boolean | null
   ) {
@@ -79,7 +83,7 @@ export class ItemFilterService {
     }
   }
 
-  private _getGroup(filterGroup: FilterGroupName) {
+  private _getGroup(filterGroup: ItemFilterGroupName) {
     let group = this._filterData[filterGroup];
 
     if (!group) {
@@ -90,11 +94,6 @@ export class ItemFilterService {
   }
 
   private _notifyOfChange() {
-    this._itemFilterChange$.set(Math.random());
+    this._filterDataStore.set(this._filterData);
   }
-}
-
-// TODO: Move to Item Filter Runtime
-function getFilter(filterName: ItemFilterName): ItemFilter {
-  throw new Error('implement');
 }
