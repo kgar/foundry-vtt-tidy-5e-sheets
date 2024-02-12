@@ -171,5 +171,6 @@
     "TIDY5E.UserSettings.TabNPCs": {
         "header": "Karty Postaci Niezależnych",
         "tabLabel": "Postaci Niezależne"
-    }
+    },
+    "TIDY5E.StandardVehicleExhaustion2": "Szybkość zmniejszona o połowę"
 }
