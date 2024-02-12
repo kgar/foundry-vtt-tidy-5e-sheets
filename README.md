@@ -12,23 +12,20 @@ D&D 5e sheet layouts for Foundry VTT, focused on a clean UI, user ergonomics, an
 Completely rewritten from the ground up, based on the [Tidy5e Sheet](https://github.com/sdenec/tidy5e-sheet) module by [sdenec](https://github.com/sdenec) and [4535992](https://github.com/p4535992).
 
 > [!IMPORTANT]
-> **Tidy v1.0 is coming soon.**
+> **Tidy 5e Sheets version 1 is here!**
 >
-> This is the beta release of the Tidy 5e Sheets module.
+> The Tidy 5e Sheets rewrite has passed through open beta and is now generally available.
 >
-> During beta, onboarding tools are being developed so that users of the original Tidy 5e Sheets and of the Alpha sheets can migrate their sheet data and GM settings to the official version 1.0 Tidy 5e Sheets.
+> For users of the original "Tidy5e Sheet" module, you will see a number of differences, but this module aims to carry forward the goals of the original sheets and continue to add new features.
+>
+> See the [migration notes from the initial V1 release](<https://github.com/kgar/foundry-vtt-tidy-5e-sheets/releases/tag/v1.0.0>) for instructions on how to migrate GM/World settings into the new sheets. Migration is not required in order to use the module.
 
 > [!NOTE]
 > **dnd5e 3.0.0 Support Coming Soon**
 >
-> Tidy 5e Sheets is a rewrite that has been months in the making and is almost done. However, because the module is still headed for V1, it was not quite ready when the excellent dnd5e version 3.0.0 was released.
+> Development on Tidy 5e Sheets for dnd5e 3.x has begun. When a minimum level of compatibility is achieved, the module will start out somewhat feature-light in comparison to the default sheets, and it will progressively grow into the new features available.
 >
-> The author of this module is working to bring Tidy to 3.0.0, but only after Tidy itself goes to V1 in dnd5e 2.4.1.
-
-> [!WARNING]
-> **To use the beta: Uninstall the original Tidy5e Sheet.**
-> 
-> Beta Tidy cannot be used side-by-side with original Tidy. They use the same module ID and will cause issues if both are installed. 
+> Once Tidy 5e Sheets goes to dnd5e 3.x, a final version of dnd5e 2.4.x support will be available indefinitely, but all subsequent development efforts will continue to keep in-step with the default sheets.
 
 ---
 
@@ -43,10 +40,8 @@ Join us on the [Tidy 5e Sheets community discord](https://discord.gg/865zzNscRA)
 
 ## Installation
 
-During beta testing, this module is installable manually by URL. It is not included in the Foundry modules list.
-
-> [!IMPORTANT]
-> Uninstall original Tidy5e Sheet before installing this module.
+It is preferable to install this module through Foundry, the Forge bazaar, or a similar interface for official Foundry pacakges.
+However, for those who wish to test the latest features before they release, this module is installable manually by URL.
 
 Manual installation instructions:
 
