@@ -88,6 +88,11 @@
       "lang": "hu",
       "name": "Magyar",
       "path": "lang/hu.json"
+    },
+    {
+      "lang": "pl",
+      "name": "Polski",
+      "path": "lang/pl.json"
     }
   ],
   "compatibility": {
