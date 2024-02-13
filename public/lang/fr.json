@@ -1,549 +1,520 @@
 {
-  "TIDY5E.Tidy5eSheet": "Tidy 5e Character Sheet",
-  "TIDY5E.Tidy5eNPC": "Tidy 5e NPC Sheet",
-  "TIDY5E.Tidy5eItemSheet": "Tidy 5e Item Sheet",
-  "TIDY5E.Tidy5eVehicle": "Tidy 5e Vechicle Sheet",
-  "TIDY5E.PlayerName": "Nom du joueur",
-  "TIDY5E.Gender": "Genre",
-  "TIDY5E.Age": "Age",
-  "TIDY5E.Weight": "Poids",
-  "TIDY5E.Height": "Taille",
-  "TIDY5E.Eyes": "Yeux",
-  "TIDY5E.Skin": "Peau",
-  "TIDY5E.Hair": "Cheveux",
-  "TIDY5E.EditActorImage": "Clic gauche : éditer l'image",
-  "TIDY5E.ShowActorImage": "Clic droit : voir l'image du personnage",
-  "TIDY5E.ShowPortraitArt": "Voir le portrait",
-  "TIDY5E.ShowTokenArt": "Voir le token",
-  "TIDY5E.ShowItemImage": "right click: show item art",
-  "TIDY5E.ShowItemArt": "show image",
-
-  "TIDY5E.StandardExhaustion0": "Aucun effet négatifs",
-  "TIDY5E.StandardExhaustion1": "Désavantage aux tests de caractéristiques",
-  "TIDY5E.StandardExhaustion2": "Vitesse réduite de moitié",
-  "TIDY5E.StandardExhaustion3": "Désavantage aux jets d'attaques et jets de sauvegardes",
-  "TIDY5E.StandardExhaustion4": "Points de vie maximum réduit de moitié",
-  "TIDY5E.StandardExhaustion5": "Vitesse réduite à 0",
-  "TIDY5E.StandardExhaustion6": "Mort",
-
-  "TIDY5E.OneDnDExhaustion0": null,
-  "TIDY5E.OneDnDExhaustion1": null,
-  "TIDY5E.OneDnDExhaustion2": null,
-  "TIDY5E.OneDnDExhaustion3": null,
-  "TIDY5E.OneDnDExhaustion4": null,
-  "TIDY5E.OneDnDExhaustion5": null,
-  "TIDY5E.OneDnDExhaustion6": null,
-  "TIDY5E.OneDnDExhaustion7": null,
-  "TIDY5E.OneDnDExhaustion8": null,
-  "TIDY5E.OneDnDExhaustion9": null,
-  "TIDY5E.OneDnDExhaustion10": null,
-  "TIDY5E.OneDnDExhaustion11": null,
-
-  "TIDY5E.StandardVehicleExhaustion0": null,
-  "TIDY5E.StandardVehicleExhaustion1": null,
-  "TIDY5E.StandardVehicleExhaustion2": null,
-  "TIDY5E.StandardVehicleExhaustion3": null,
-  "TIDY5E.StandardVehicleExhaustion4": null,
-  "TIDY5E.StandardVehicleExhaustion5": null,
-  "TIDY5E.StandardVehicleExhaustion6": null,
-
-  "TIDY5E.AbbrInitiative": "Ini",
-
-  "TIDY5E.RestHint": "Se reposer",
-  "TIDY5E.ShortRest": "Repos Court",
-  "TIDY5E.LongRest": "Repos Long",
-  "TIDY5E.HitDiceRollAverage": "Right Click: Average",
-
-  "TIDY5E.JournalTabName": "Journal",
-
-  "TIDY5E.RestoreOnRest": "Restaurer lors d'un repos",
-
-  "TIDY5E.JournalPersonsOfInterest": "Personnages importants",
-  "TIDY5E.JournalLocationsOfInterest": "Lieux importants",
-  "TIDY5E.JournalQuests": "Quêtes",
-  "TIDY5E.JournalMisc": "Divers",
-  "TIDY5E.JournalEntries": "Journal de bord",
-  "TIDY5E.TogglePersonalityInfo": "Afficher / masquer les informations sur la personnalité",
-
-  "TIDY5E.SheetEdit.Enable.Hint": null,
-  "TIDY5E.SheetEdit.Disable.Hint": null,
-  "TIDY5E.SheetEdit.Description": "Visibilité des boutons d'ajout/suppression et des sections vides",
-
-  "TIDY5E.SheetLock.Unlock.Hint": null,
-  "TIDY5E.SheetLock.Lock.Hint": null,
-  "TIDY5E.SheetLock.Description": null,
-
-  "TIDY5E.ContextMenuActionEquip": "Équiper objet",
-  "TIDY5E.ContextMenuActionUnequip": "Déséquiper objet",
-  "TIDY5E.ContextMenuActionAttune": "Se lier à l'objet",
-  "TIDY5E.ContextMenuActionUnattune": "Briser le lien",
-  "TIDY5E.ContextMenuActionPrepare": "Préparer le sort",
-  "TIDY5E.ContextMenuActionUnprepare": "Supprimer la préparation",
-  "TIDY5E.ContextMenuActionEdit": null,
-  "TIDY5E.ContextMenuActionDelete": null,
-
-  "TIDY5E.EmptySection": "Cette section est vide. Déverrouiller la feuille pour la modifier.",
-  "TIDY5E.GMOnlyEdit": "Seul votre MJ peut modifier cette section.",
-
-  "TIDY5E.AttunementWarning": "Attention : Vous ne pouvez pas vous lier à plus de {number} objets !",
-  "TIDY5E.AttunementItems": "Objets liés",
-  "TIDY5E.AttunementMax": "Liens maximum",
-
-  "TIDY5E.GridLayout": "Affichage grille",
-  "TIDY5E.ListLayout": "Affichage liste",
-  "TIDY5E.LayoutNotSupported": null,
-
-  "TIDY5E.Encumbrance": "Encombrement",
-
-  "TIDY5E.AddFavorite": "Ajouter aux Favoris",
-  "TIDY5E.RemoveFavorite": "Enlever des Favoris",
-  "TIDY5E.Favorite": "Favori",
-
-  "TIDY5E.ShowNotProficientSkills": null,
-  "TIDY5E.HideNotProficientSkills": null,
-  "TIDY5E.ShowEmptyTraits": null,
-  "TIDY5E.HideEmptyTraits": null,
-
-  "TIDY5E.Abilities": "Caractéristiques",
-
-  "TIDY5E.Environment": "Environnement",
-
-  "TIDY5E.Search": null,
-  "TIDY5E.SearchClear": null,
-  "TIDY5E.SearchHint": "Saisir votre recherche",
-
-  "TIDY5E.ItemCardsKeyHint": "Maintenir la touche pour interagir avec la carte.",
-  "TIDY5E.ItemCardsMouseHint": "Clic central de la souris pour voir / éditer.",
-
-  "TIDY5E.AbbrMod": "Mod",
-  "TIDY5E.AbbrSavingThrow": "Sauvegarde",
-  "TIDY5E.SpellAttackMod": "Bonus d'attaque",
-  "TIDY5E.PreparedSpells": "Sorts préparés",
-  "TIDY5E.PreparedSpellsMax": "Maximum de sorts préparés",
-
-  "TIDY5E.TokenLinked": "Token lié à l'acteur",
-  "TIDY5E.TokenUnlinked": "Token non lié à l'acteur",
-
-  "TIDY5E.ItemDetailsHeadline": "Mécanique / Contexte",
-
-  "TIDY5E.SpellClass": null,
-
-  "TIDY5E.Class.Artificer": null,
-  "TIDY5E.Class.Barbarian": null,
-  "TIDY5E.Class.Bard": null,
-  "TIDY5E.Class.Cleric": null,
-  "TIDY5E.Class.Custom": null,
-  "TIDY5E.Class.Druid": null,
-  "TIDY5E.Class.Fighter": null,
-  "TIDY5E.Class.Monk": null,
-  "TIDY5E.Class.Paladin": null,
-  "TIDY5E.Class.Ranger": null,
-  "TIDY5E.Class.Rogue": null,
-  "TIDY5E.Class.Sorcerer": null,
-  "TIDY5E.Class.Warlock": null,
-  "TIDY5E.Class.Wizard": null,
-
-  "TIDY5E.OriginSummaryConfig": null,
-
-  "TIDY5E.Settings.MulticlassSpellbookFilterLabel": null,
-
-  "TIDY5E.UserSettings.Menu": {
-    "name": null,
-    "hint": null,
-    "label": "Configuration des feuilles",
-    "title": "Configuration des feuilles Tidy5e"
-  },
-  "TIDY5E.UserSettings.TabPlayers": {
-    "tabLabel": "Joueur",
-    "header": "Option des feuilles de joueur"
-  },
-  "TIDY5E.UserSettings.TabNPCs": {
-    "tabLabel": null,
-    "header": null
-  },
-  "TIDY5E.UserSettings.TabVehicles": {
-    "tabLabel": null,
-    "header": null
-  },
-  "TIDY5E.WorldSettings.TabMisc": {
-    "tabLabel": "Options MJ"
-  },
-  "TIDY5E.WorldSettings.TabSheetLock": {
-    "tabLabel": null,
-    "header": null,
-    "hint": null,
-    "hint2": null,
-    "labelGeneralLocks": null,
-    "labelInventoryLocks": null,
-    "labelFeaturesLocks": null
-  },
-  "TIDY5E.Settings.ItemCardsForAllItems": {
-    "name": "Montrer la carte d'information des éléments dans toutes les mise en page",
-    "hint": "Désactiver cette option pour afficher la carte d'information uniquement en mode grille."
-  },
-  "TIDY5E.Settings.ItemCardsForNPCs": {
-    "name": "Montrer la carte d'information des éléments pour les PNJs / véhicules",
-    "hint": "Désactiver cette option pour masquer la carte d'information pour les PNJs / véhicules."
-  },
-  "TIDY5E.Settings.ItemCardsAreFloating": {
-    "name": "Carte d'information flottante",
-    "hint": "Activer cette option pour détacher la carte d'information et l'afficher près du curseur (fonctionne mieux avec un délai ou quand la fiche est en pop-up)."
-  },
-  "TIDY5E.Settings.ItemCardsDelay": {
-    "name": "Délai avant l'affichage de la carte d'information",
-    "hint": "La carte d'information s'affichera au survol d'un élément après un délai en millisecondes (0 = pas de délai, 300 par défaut)."
-  },
-  "TIDY5E.Settings.ItemCardsFixKey": {
-    "name": "Touche à maintenir pour interagir avec la carte d'information",
-    "hint": "Saisir une touche (par exemple : x) à utiliser pour l'interaction avec la carte d'information. Il peut s'agir de n'importe quelle touche, à l'exception des touches de fonction (ctrl, alt, etc.)."
-  },
-  "TIDY5E.Settings.DefaultTheme": {
-    "name": null,
-    "hint": null
-  },
-  "TIDY5E.Settings.SheetTheme": {
-    "name": "Thème Tidy5e",
-    "hint": "Utiliser le thème de couleur clair ou foncé par défaut de Tidy5e.",
-    "default": null,
-    "light": null,
-    "dark": null
-  },
-  "TIDY5E.Settings.UseClassicControls": {
-    "name": "Contrôles classiques en mode liste",
-    "hint": "Toujours afficher les option de contrôle des éléments et désactive le menu du clic droit. Ne s'applique qu'à l'inventaire des objets / sorts du PJ en mode liste."
-  },
-  "TIDY5E.Settings.ShowIconsNextToTheItemName": {
-    "name": null,
-    "hint": null
-  },
-  "TIDY5E.Settings.ShowTraitLabels": {
-    "name": "Afficher les noms de traits",
-    "hint": "Par défaut, seules des icones sont affichées pour les traits. Activer cette option pour afficher les noms également."
-  },
-  "TIDY5E.Settings.ShowPlayerName": {
-    "name": "Afficher le nom du joueur",
-    "hint": "Activer cette option pour afficher le nom du joueur en dessous de celui de son personnage."
-  },
-  "TIDY5E.Settings.ShowClassList": {
-    "name": null,
-    "hint": null
-  },
-  "TIDY5E.Settings.InspirationAnimation": {
-    "name": "Pas d'animation de l'indicateur d'inspiration",
-    "hint": "Activer cette option pour masquer l'animation lumineuse de l'indicateur d'inspiration."
-  },
-  "TIDY5E.Settings.HideIfZero": {
-    "name": "Cacher l'épuisement et l'inspiration lorsqu'ils ne sont pas affectés",
-    "hint": "Activer cette option pour masquer l'épuisment si son niveau est de 0 et l'inspiration si elle n'est pas donnée."
-  },
-  "TIDY5E.Settings.ShowInspirationOnHover": {
-    "name": "Afficher l'indicateur d'inspiration uniquement au survol",
-    "hint": "Activer cette option pour rendre l'indicateur d'inspiration visible uniquement au survol du portrait avec la souris."
-  },
-  "TIDY5E.Settings.ShowExhaustionOnHover": {
-    "name": "Afficher l'indicateur d'épuisement uniquement au survol",
-    "hint": "Activer cette option pour rendre l'indicateur d'épuisement visible uniquement au survol du portrait avec la souris."
-  },
-  "TIDY5E.Settings.UseHpBar": {
-    "name": null,
-    "hint": null
-  },
-  "TIDY5E.Settings.UseHpOverlay": {
-    "name": null,
-    "hint": null
-  },
-  "TIDY5E.Settings.ToggleEmptyCharacterTraits": {
-    "name": "Afficher un bouton de bascule de l'affichage des traits",
-    "hint": "Activer cette option pour afficher un bouton de bascule de l'affichage des traits."
-  },
-  "TIDY5E.Settings.MoveTraitsBelowResources": {
-    "name": "Déplacer les traits sous les ressources",
-    "hint": "Activer cette option pour afficher les traits sous les ressources."
-  },
-  "TIDY5E.Settings.ShowEquippedAmmoOnly": {
-    "name": null,
-    "hint": null
-  },
-  "TIDY5E.Settings.AlwaysShowTraits": {
-    "name": "Toujours montrer les traits",
-    "hint": "Par défaut, les traits vides sont masqués et affichables vie un bouton. Activer cette option pour ne jamais les masquer."
-  },
-  "TIDY5E.Settings.AlwaysShowSkills": {
-    "name": "Toujours montrer les caractéristiques",
-    "hint": "Par défaut, les caractéristiques sans compétence sont masquées et affichables vie un bouton. Activer cette option pour ne jamais les masquer."
-  },
-  "TIDY5E.Settings.ShowNPCSpellbookTab": {
-    "name": null,
-    "hint": null
-  },
-  "TIDY5E.Settings.ShowActiveEffectsMarker": {
-    "name": "Afficher le marqueru d'effet actif sur les objets",
-    "hint": "Activer cette option pour visualiser les objets avec un effet actif (uniquement pour la vue liste)."
-  },
-  "TIDY5E.Settings.UseContextMenu": {
-    "name": null,
-    "hint": null
-  },
-  "TIDY5E.Settings.ShowExpandedLimitedView": {
-    "name": "Vue étendue pour la feuille limitée",
-    "hint": "Activer cette option pour afficher l'intégralité de la feuille de personnage (sans l'onglet Notes Privées) pour les joueurs ayant une autorisation limitée pour cet acteur."
-  },
-  "TIDY5E.Settings.UseCircularPortraitStyle": {
-    "name": "Utiliser des portraits ronds",
-    "hint": "Activer cette option pour pour utiliser des portraits ronds.",
-    "all": "Tous les acteurs",
-    "pc": "PJs",
-    "npc": "PNJs / véhicules",
-    "none": "Aucun",
-    "default": "Aucun"
-  },
-  "TIDY5E.Settings.UseTotalSheetLock": {
-    "name": "Verrouiller les champs sensibles.",
-    "hint": "Activer cette option pour prévenir les modifications de champs sensibles."
-  },
-  "TIDY5E.Settings.LimitEffectsManagementToGM": {
-    "name": "Seul le MJ peut éditer les effets actifs",
-    "hint": "Activer cette option pour interdire aux joueurs de modifier les effets actifs sur leur feuille. Ils verront toujours les effets appliqués."
-  },
-  "TIDY5E.Settings.AlwaysShowItemQuantity": {
-    "name": "Toujours montrer la quantité des objets",
-    "hint": "Activer cette option pour ne jamais masquer la quantité des objets."
-  },
-  "TIDY5E.Settings.UseInspiration": {
-    "name": null,
-    "hint": null
-  },
-  "TIDY5E.Settings.UseVehicleMotion": {
-    "name": null,
-    "hint": null
-  },
-  "TIDY5E.Settings.UseExhaustion": {
-    "name": null,
-    "hint": null
-  },
-  "TIDY5E.Settings.UseNPCRest": {
-    "name": "Repos pour les PNJs",
-    "hint": "Activer cette option pour afficher le bouton de repos sur les feuilles de PNJs."
-  },
-  "TIDY5E.Settings.ShowNPCRestInChat": {
-    "name": null,
-    "hint": null
-  },
-  "TIDY5E.Settings.ShowNPCActorLinkMarker": {
-    "name": "Marquer les PNJs liés / non liés",
-    "hint": "Ajoute un contour coloré et une icone pour les feuilles de PNJs liés / non liés",
-    "default": "Aucun marqueur de lien (par défaut)",
-    "unlinked": "Mise en évidence des tokens non liés",
-    "linked": "Mise en évidence des tokens liés",
-    "both": "Mise en évidence des tokens liés ET non liés"
-  },
-  "TIDY5E.Settings.InitialSheetTab": {
-    "name": null,
-    "hint": null
-  },
-  "TIDY5E.Settings.HideDeathSavesFromPlayers": {
-    "name": null,
-    "hint": null
-  },
-  "TIDY5E.Settings.UseSpellSlotMarker": {
-    "name": null,
-    "hint": null
-  },
-  "TIDY5E.Settings.UseCharacterEncumbranceBar": {
-    "name": null,
-    "hint": null
-  },
-  "TIDY5E.Settings.UseNPCEncumbranceBar": {
-    "name": null,
-    "hint": null
-  },
-  "TIDY5E.Settings.UseVehicleEncumbranceBar": {
-    "name": null,
-    "hint": null
-  },
-  "TIDY5E.Settings.NPCSheetWidth": {
-    "name": null,
-    "hint": null
-  },
-  "TIDY5E.Settings.PlayerSheetWidth": {
-    "name": null,
-    "hint": null
-  },
-  "TIDY5E.Settings.VehicleSheetWidth": {
-    "name": null,
-    "hint": null
-  },
-  "TIDY5E.Settings.UseMulticlassSpellbookFilter": {
-    "name": null,
-    "hint": null
-  },
-  "TIDY5E.Settings.UseSpellClassIcons": {
-    "name": null,
-    "hint": null
-  },
-  "TIDY5E.Settings.SpellClassFilterAdditionalClasses": {
-    "name": null,
-    "hint": null
-  },
-  "TIDY5E.Settings.AllowCantripsToBePrepared": {
-    "name": null,
-    "hint": null
-  },
-  "TIDY5E.Settings.LockMoneyChanges": {
-    "name": null,
-    "hint": null
-  },
-  "TIDY5E.Settings.LockExpChanges": {
-    "name": null,
-    "hint": null
-  },
-  "TIDY5E.Settings.LockHpMaxChanges": {
-    "name": null,
-    "hint": null
-  },
-  "TIDY5E.Settings.LockLevelSelector": {
-    "name": null,
-    "hint": null
-  },
-  "TIDY5E.Settings.LockConfigureSheet": {
-    "name": null,
-    "hint": null
-  },
-  "TIDY5E.Settings.LockItemQuantity": {
-    "name": null,
-    "hint": null
-  },
-  "TIDY5E.Settings.ColorPickerEnabled": {
-    "name": null,
-    "hint": null
-  },
-  "TIDY5E.Settings.ColorPickerPrimaryAccent": {
-    "name": null
-  },
-  "TIDY5E.Settings.ColorPickerEquipped": {
-    "name": null
-  },
-  "TIDY5E.Settings.ColorPickerHpBar": {
-    "name": null
-  },
-  "TIDY5E.Settings.ColorPickerEquippedOutline": {
-    "name": null
-  },
-  "TIDY5E.Settings.ColorPickerEquippedAccent": {
-    "name": null
-  },
-  "TIDY5E.Settings.ColorPickerPrepared": {
-    "name": null
-  },
-  "TIDY5E.Settings.ColorPickerPreparedOutline": {
-    "name": null
-  },
-  "TIDY5E.Settings.ColorPickerPreparedAccent": {
-    "name": null
-  },
-  "TIDY5E.Settings.ColorPickerPact": {
-    "name": null
-  },
-  "TIDY5E.Settings.ColorPickerPactOutline": {
-    "name": null
-  },
-  "TIDY5E.Settings.ColorPickerPactAccent": {
-    "name": null
-  },
-  "TIDY5E.Settings.ColorPickerAtWill": {
-    "name": null
-  },
-  "TIDY5E.Settings.ColorPickerAtWillOutline": {
-    "name": null
-  },
-  "TIDY5E.Settings.ColorPickerAtWillAccent": {
-    "name": null
-  },
-  "TIDY5E.Settings.ColorPickerInnate": {
-    "name": null
-  },
-  "TIDY5E.Settings.ColorPickerInnateOutline": {
-    "name": null
-  },
-  "TIDY5E.Settings.ColorPickerInnateAccent": {
-    "name": null
-  },
-  "TIDY5E.Settings.ColorPickerAlwaysPrepared": {
-    "name": null
-  },
-  "TIDY5E.Settings.ColorPickerAlwaysPreparedOutline": {
-    "name": null
-  },
-  "TIDY5E.Settings.ColorPickerAlwaysPreparedAccent": {
-    "name": null
-  },
-  "TIDY5E.Settings.AllowHpMaxOverride": {
-    "name": null,
-    "hint": null
-  },
-  "TIDY5E.Settings.Reset": {
-    "name": null,
-    "hint": null,
-    "dialogs": {
-      "title": null,
-      "content": null,
-      "confirm": null,
-      "cancel": null
-    }
-  },
-  "TIDY5E.Settings.Debug": {
-    "name": null,
-    "hint": null
-  },
-  "TIDY5E.Settings.SortFavoriteItemsAlphabetically": {
-    "name": null,
-    "hint": null
-  },
-  "TIDY5E.Settings.PermanentlyUnlockCharacterSheetForGM": {
-    "name": null,
-    "hint": null,
-    "title": null
-  },
-  "TIDY5E.Settings.PermanentlyUnlockNPCSheetForGM": {
-    "name": null,
-    "hint": null,
-    "title": null
-  },
-  "TIDY5E.Settings.PermanentlyUnlockVehicleSheetForGM": {
-    "name": null,
-    "hint": null,
-    "title": null
-  },
-  "TIDY5E.ThemeSettings": {
-    "SheetMenu": {
-      "name": null,
-      "buttonLabel": null,
-      "hint": null
+    "TIDY5E.Tidy5eSheet": "Tidy 5e Character Sheet",
+    "TIDY5E.Tidy5eNPC": "Tidy 5e NPC Sheet",
+    "TIDY5E.Tidy5eItemSheet": "Tidy 5e Item Sheet",
+    "TIDY5E.Tidy5eVehicle": "Tidy 5e Vechicle Sheet",
+    "TIDY5E.PlayerName": "Nom du joueur",
+    "TIDY5E.Gender": "Genre",
+    "TIDY5E.Age": "Age",
+    "TIDY5E.Weight": "Poids",
+    "TIDY5E.Height": "Taille",
+    "TIDY5E.Eyes": "Yeux",
+    "TIDY5E.Skin": "Peau",
+    "TIDY5E.Hair": "Cheveux",
+    "TIDY5E.EditActorImage": "Clic gauche : éditer l'image",
+    "TIDY5E.ShowActorImage": "Clic droit : voir l'image du personnage",
+    "TIDY5E.ShowPortraitArt": "Voir le portrait",
+    "TIDY5E.ShowTokenArt": "Voir le token",
+    "TIDY5E.ShowItemImage": "right click: show item art",
+    "TIDY5E.ShowItemArt": "show image",
+    "TIDY5E.StandardExhaustion0": "Aucun effet négatifs",
+    "TIDY5E.StandardExhaustion1": "Désavantage aux tests de caractéristiques",
+    "TIDY5E.StandardExhaustion2": "Vitesse réduite de moitié",
+    "TIDY5E.StandardExhaustion3": "Désavantage aux jets d'attaques et jets de sauvegardes",
+    "TIDY5E.StandardExhaustion4": "Points de vie maximum réduit de moitié",
+    "TIDY5E.StandardExhaustion5": "Vitesse réduite à 0",
+    "TIDY5E.StandardExhaustion6": "Mort",
+    "TIDY5E.OneDnDExhaustion0": null,
+    "TIDY5E.OneDnDExhaustion1": null,
+    "TIDY5E.OneDnDExhaustion2": null,
+    "TIDY5E.OneDnDExhaustion3": null,
+    "TIDY5E.OneDnDExhaustion4": null,
+    "TIDY5E.OneDnDExhaustion5": null,
+    "TIDY5E.OneDnDExhaustion6": null,
+    "TIDY5E.OneDnDExhaustion7": null,
+    "TIDY5E.OneDnDExhaustion8": null,
+    "TIDY5E.OneDnDExhaustion9": null,
+    "TIDY5E.OneDnDExhaustion10": null,
+    "TIDY5E.OneDnDExhaustion11": null,
+    "TIDY5E.StandardVehicleExhaustion0": null,
+    "TIDY5E.StandardVehicleExhaustion1": null,
+    "TIDY5E.StandardVehicleExhaustion2": null,
+    "TIDY5E.StandardVehicleExhaustion3": null,
+    "TIDY5E.StandardVehicleExhaustion4": null,
+    "TIDY5E.StandardVehicleExhaustion5": null,
+    "TIDY5E.StandardVehicleExhaustion6": null,
+    "TIDY5E.AbbrInitiative": "Ini",
+    "TIDY5E.RestHint": "Se reposer",
+    "TIDY5E.ShortRest": "Repos Court",
+    "TIDY5E.LongRest": "Repos Long",
+    "TIDY5E.HitDiceRollAverage": "Right Click: Average",
+    "TIDY5E.JournalTabName": "Journal",
+    "TIDY5E.RestoreOnRest": "Restaurer lors d'un repos",
+    "TIDY5E.JournalPersonsOfInterest": "Personnages importants",
+    "TIDY5E.JournalLocationsOfInterest": "Lieux importants",
+    "TIDY5E.JournalQuests": "Quêtes",
+    "TIDY5E.JournalMisc": "Divers",
+    "TIDY5E.JournalEntries": "Journal de bord",
+    "TIDY5E.TogglePersonalityInfo": "Afficher / masquer les informations sur la personnalité",
+    "TIDY5E.SheetEdit.Enable.Hint": null,
+    "TIDY5E.SheetEdit.Disable.Hint": null,
+    "TIDY5E.SheetEdit.Description": "Visibilité des boutons d'ajout/suppression et des sections vides",
+    "TIDY5E.SheetLock.Unlock.Hint": null,
+    "TIDY5E.SheetLock.Lock.Hint": null,
+    "TIDY5E.SheetLock.Description": null,
+    "TIDY5E.ContextMenuActionEquip": "Équiper objet",
+    "TIDY5E.ContextMenuActionUnequip": "Déséquiper objet",
+    "TIDY5E.ContextMenuActionAttune": "Se lier à l'objet",
+    "TIDY5E.ContextMenuActionUnattune": "Briser le lien",
+    "TIDY5E.ContextMenuActionPrepare": "Préparer le sort",
+    "TIDY5E.ContextMenuActionUnprepare": "Supprimer la préparation",
+    "TIDY5E.ContextMenuActionEdit": null,
+    "TIDY5E.ContextMenuActionDelete": null,
+    "TIDY5E.EmptySection": "Cette section est vide. Déverrouiller la feuille pour la modifier.",
+    "TIDY5E.GMOnlyEdit": "Seul votre MJ peut modifier cette section.",
+    "TIDY5E.AttunementWarning": "Attention : Vous ne pouvez pas vous lier à plus de {number} objets !",
+    "TIDY5E.AttunementItems": "Objets liés",
+    "TIDY5E.AttunementMax": "Liens maximum",
+    "TIDY5E.GridLayout": "Affichage grille",
+    "TIDY5E.ListLayout": "Affichage liste",
+    "TIDY5E.LayoutNotSupported": null,
+    "TIDY5E.Encumbrance": "Encombrement",
+    "TIDY5E.AddFavorite": "Ajouter aux Favoris",
+    "TIDY5E.RemoveFavorite": "Enlever des Favoris",
+    "TIDY5E.Favorite": "Favori",
+    "TIDY5E.ShowNotProficientSkills": null,
+    "TIDY5E.HideNotProficientSkills": null,
+    "TIDY5E.ShowEmptyTraits": null,
+    "TIDY5E.HideEmptyTraits": null,
+    "TIDY5E.Abilities": "Caractéristiques",
+    "TIDY5E.Environment": "Environnement",
+    "TIDY5E.Search": null,
+    "TIDY5E.SearchClear": null,
+    "TIDY5E.SearchHint": "Saisir votre recherche",
+    "TIDY5E.ItemCardsKeyHint": "Maintenir la touche pour interagir avec la carte.",
+    "TIDY5E.ItemCardsMouseHint": "Clic central de la souris pour voir / éditer.",
+    "TIDY5E.AbbrMod": "Mod",
+    "TIDY5E.AbbrSavingThrow": "Sauvegarde",
+    "TIDY5E.SpellAttackMod": "Bonus d'attaque",
+    "TIDY5E.PreparedSpells": "Sorts préparés",
+    "TIDY5E.PreparedSpellsMax": "Maximum de sorts préparés",
+    "TIDY5E.TokenLinked": "Token lié à l'acteur",
+    "TIDY5E.TokenUnlinked": "Token non lié à l'acteur",
+    "TIDY5E.ItemDetailsHeadline": "Mécanique / Contexte",
+    "TIDY5E.SpellClass": null,
+    "TIDY5E.Class.Artificer": null,
+    "TIDY5E.Class.Barbarian": null,
+    "TIDY5E.Class.Bard": null,
+    "TIDY5E.Class.Cleric": null,
+    "TIDY5E.Class.Custom": null,
+    "TIDY5E.Class.Druid": null,
+    "TIDY5E.Class.Fighter": null,
+    "TIDY5E.Class.Monk": null,
+    "TIDY5E.Class.Paladin": null,
+    "TIDY5E.Class.Ranger": null,
+    "TIDY5E.Class.Rogue": null,
+    "TIDY5E.Class.Sorcerer": null,
+    "TIDY5E.Class.Warlock": null,
+    "TIDY5E.Class.Wizard": null,
+    "TIDY5E.OriginSummaryConfig": null,
+    "TIDY5E.Settings.MulticlassSpellbookFilterLabel": null,
+    "TIDY5E.UserSettings.Menu": {
+        "name": null,
+        "hint": null,
+        "label": "Configuration des feuilles",
+        "title": "Configuration des feuilles Tidy5e"
     },
-    "Sheet": {
-      "title": null,
-      "header": null,
-      "useDefaultLightColors": null,
-      "useDefaultDarkColors": null,
-      "export": null,
-      "import": null,
-      "importDropHint": null,
-      "importError": null,
-      "importSuccess": null,
-      "menuLabel": null,
-      "explanation": null
-    }
-  },
-  "TIDY5E.FavoriteSpellLevelLabel": null,
-  "TIDY5E.ApplyChanges": null,
-  "TIDY5E.SaveChanges": null,
-  "TIDY5E.VehicleInMotion": null,
-  "TIDY5E.VehicleMotionless": null,
-  "TIDY5E.TotalCrewCount": null,
-  "TIDY5E.ActionsPerTurn": null,
-  "TIDY5E.SheetMenu": {
-    "label": null,
-    "themeLabel": null
-  },
-  "TIDY5E.ActiveEffectsMarkerTitle": null
+    "TIDY5E.UserSettings.TabPlayers": {
+        "tabLabel": "Joueur",
+        "header": "Option des feuilles de joueur"
+    },
+    "TIDY5E.UserSettings.TabNPCs": {
+        "tabLabel": null,
+        "header": null
+    },
+    "TIDY5E.UserSettings.TabVehicles": {
+        "tabLabel": null,
+        "header": null
+    },
+    "TIDY5E.WorldSettings.TabMisc": {
+        "tabLabel": "Options MJ"
+    },
+    "TIDY5E.WorldSettings.TabSheetLock": {
+        "tabLabel": null,
+        "header": null,
+        "hint": null,
+        "hint2": null,
+        "labelGeneralLocks": null,
+        "labelInventoryLocks": null,
+        "labelFeaturesLocks": null
+    },
+    "TIDY5E.Settings.ItemCardsForAllItems": {
+        "name": "Montrer la carte d'information des éléments dans toutes les mise en page",
+        "hint": "Désactiver cette option pour afficher la carte d'information uniquement en mode grille."
+    },
+    "TIDY5E.Settings.ItemCardsForNPCs": {
+        "name": "Montrer la carte d'information des éléments pour les PNJs / véhicules",
+        "hint": "Désactiver cette option pour masquer la carte d'information pour les PNJs / véhicules."
+    },
+    "TIDY5E.Settings.ItemCardsAreFloating": {
+        "name": "Carte d'information flottante",
+        "hint": "Activer cette option pour détacher la carte d'information et l'afficher près du curseur (fonctionne mieux avec un délai ou quand la fiche est en pop-up)."
+    },
+    "TIDY5E.Settings.ItemCardsDelay": {
+        "name": "Délai avant l'affichage de la carte d'information",
+        "hint": "La carte d'information s'affichera au survol d'un élément après un délai en millisecondes (0 = pas de délai, 300 par défaut)."
+    },
+    "TIDY5E.Settings.ItemCardsFixKey": {
+        "name": "Touche à maintenir pour interagir avec la carte d'information",
+        "hint": "Saisir une touche (par exemple : x) à utiliser pour l'interaction avec la carte d'information. Il peut s'agir de n'importe quelle touche, à l'exception des touches de fonction (ctrl, alt, etc.)."
+    },
+    "TIDY5E.Settings.DefaultTheme": {
+        "name": null,
+        "hint": null
+    },
+    "TIDY5E.Settings.SheetTheme": {
+        "name": "Thème Tidy5e",
+        "hint": "Utiliser le thème de couleur clair ou foncé par défaut de Tidy5e.",
+        "default": null,
+        "light": null,
+        "dark": null
+    },
+    "TIDY5E.Settings.UseClassicControls": {
+        "name": "Contrôles classiques en mode liste",
+        "hint": "Toujours afficher les option de contrôle des éléments et désactive le menu du clic droit. Ne s'applique qu'à l'inventaire des objets / sorts du PJ en mode liste."
+    },
+    "TIDY5E.Settings.ShowIconsNextToTheItemName": {
+        "name": null,
+        "hint": null
+    },
+    "TIDY5E.Settings.ShowTraitLabels": {
+        "name": "Afficher les noms de traits",
+        "hint": "Par défaut, seules des icones sont affichées pour les traits. Activer cette option pour afficher les noms également."
+    },
+    "TIDY5E.Settings.ShowPlayerName": {
+        "name": "Afficher le nom du joueur",
+        "hint": "Activer cette option pour afficher le nom du joueur en dessous de celui de son personnage."
+    },
+    "TIDY5E.Settings.ShowClassList": {
+        "name": null,
+        "hint": null
+    },
+    "TIDY5E.Settings.InspirationAnimation": {
+        "name": "Pas d'animation de l'indicateur d'inspiration",
+        "hint": "Activer cette option pour masquer l'animation lumineuse de l'indicateur d'inspiration."
+    },
+    "TIDY5E.Settings.HideIfZero": {
+        "name": "Cacher l'épuisement et l'inspiration lorsqu'ils ne sont pas affectés",
+        "hint": "Activer cette option pour masquer l'épuisment si son niveau est de 0 et l'inspiration si elle n'est pas donnée."
+    },
+    "TIDY5E.Settings.ShowInspirationOnHover": {
+        "name": "Afficher l'indicateur d'inspiration uniquement au survol",
+        "hint": "Activer cette option pour rendre l'indicateur d'inspiration visible uniquement au survol du portrait avec la souris."
+    },
+    "TIDY5E.Settings.ShowExhaustionOnHover": {
+        "name": "Afficher l'indicateur d'épuisement uniquement au survol",
+        "hint": "Activer cette option pour rendre l'indicateur d'épuisement visible uniquement au survol du portrait avec la souris."
+    },
+    "TIDY5E.Settings.UseHpBar": {
+        "name": null,
+        "hint": null
+    },
+    "TIDY5E.Settings.UseHpOverlay": {
+        "name": null,
+        "hint": null
+    },
+    "TIDY5E.Settings.ToggleEmptyCharacterTraits": {
+        "name": "Afficher un bouton de bascule de l'affichage des traits",
+        "hint": "Activer cette option pour afficher un bouton de bascule de l'affichage des traits."
+    },
+    "TIDY5E.Settings.MoveTraitsBelowResources": {
+        "name": "Déplacer les traits sous les ressources",
+        "hint": "Activer cette option pour afficher les traits sous les ressources."
+    },
+    "TIDY5E.Settings.ShowEquippedAmmoOnly": {
+        "name": null,
+        "hint": null
+    },
+    "TIDY5E.Settings.AlwaysShowTraits": {
+        "name": "Toujours montrer les traits",
+        "hint": "Par défaut, les traits vides sont masqués et affichables vie un bouton. Activer cette option pour ne jamais les masquer."
+    },
+    "TIDY5E.Settings.AlwaysShowSkills": {
+        "name": "Toujours montrer les caractéristiques",
+        "hint": "Par défaut, les caractéristiques sans compétence sont masquées et affichables vie un bouton. Activer cette option pour ne jamais les masquer."
+    },
+    "TIDY5E.Settings.ShowNPCSpellbookTab": {
+        "name": null,
+        "hint": null
+    },
+    "TIDY5E.Settings.ShowActiveEffectsMarker": {
+        "name": "Afficher le marqueru d'effet actif sur les objets",
+        "hint": "Activer cette option pour visualiser les objets avec un effet actif (uniquement pour la vue liste)."
+    },
+    "TIDY5E.Settings.UseContextMenu": {
+        "name": null,
+        "hint": null
+    },
+    "TIDY5E.Settings.ShowExpandedLimitedView": {
+        "name": "Vue étendue pour la feuille limitée",
+        "hint": "Activer cette option pour afficher l'intégralité de la feuille de personnage (sans l'onglet Notes Privées) pour les joueurs ayant une autorisation limitée pour cet acteur."
+    },
+    "TIDY5E.Settings.UseCircularPortraitStyle": {
+        "name": "Utiliser des portraits ronds",
+        "hint": "Activer cette option pour pour utiliser des portraits ronds.",
+        "all": "Tous les acteurs",
+        "pc": "PJs",
+        "npc": "PNJs / véhicules",
+        "none": "Aucun",
+        "default": "Aucun"
+    },
+    "TIDY5E.Settings.UseTotalSheetLock": {
+        "name": "Verrouiller les champs sensibles.",
+        "hint": "Activer cette option pour prévenir les modifications de champs sensibles."
+    },
+    "TIDY5E.Settings.LimitEffectsManagementToGM": {
+        "name": "Seul le MJ peut éditer les effets actifs",
+        "hint": "Activer cette option pour interdire aux joueurs de modifier les effets actifs sur leur feuille. Ils verront toujours les effets appliqués."
+    },
+    "TIDY5E.Settings.AlwaysShowItemQuantity": {
+        "name": "Toujours montrer la quantité des objets",
+        "hint": "Activer cette option pour ne jamais masquer la quantité des objets."
+    },
+    "TIDY5E.Settings.UseInspiration": {
+        "name": null,
+        "hint": null
+    },
+    "TIDY5E.Settings.UseVehicleMotion": {
+        "name": null,
+        "hint": null
+    },
+    "TIDY5E.Settings.UseExhaustion": {
+        "name": null,
+        "hint": null
+    },
+    "TIDY5E.Settings.UseNPCRest": {
+        "name": "Repos pour les PNJs",
+        "hint": "Activer cette option pour afficher le bouton de repos sur les feuilles de PNJs."
+    },
+    "TIDY5E.Settings.ShowNPCRestInChat": {
+        "name": null,
+        "hint": null
+    },
+    "TIDY5E.Settings.ShowNPCActorLinkMarker": {
+        "name": "Marquer les PNJs liés / non liés",
+        "hint": "Ajoute un contour coloré et une icone pour les feuilles de PNJs liés / non liés",
+        "default": "Aucun marqueur de lien (par défaut)",
+        "unlinked": "Mise en évidence des tokens non liés",
+        "linked": "Mise en évidence des tokens liés",
+        "both": "Mise en évidence des tokens liés ET non liés"
+    },
+    "TIDY5E.Settings.InitialSheetTab": {
+        "name": null,
+        "hint": null
+    },
+    "TIDY5E.Settings.HideDeathSavesFromPlayers": {
+        "name": null,
+        "hint": null
+    },
+    "TIDY5E.Settings.UseSpellSlotMarker": {
+        "name": null,
+        "hint": null
+    },
+    "TIDY5E.Settings.UseCharacterEncumbranceBar": {
+        "name": null,
+        "hint": null
+    },
+    "TIDY5E.Settings.UseNPCEncumbranceBar": {
+        "name": null,
+        "hint": null
+    },
+    "TIDY5E.Settings.UseVehicleEncumbranceBar": {
+        "name": null,
+        "hint": null
+    },
+    "TIDY5E.Settings.NPCSheetWidth": {
+        "name": null,
+        "hint": null
+    },
+    "TIDY5E.Settings.PlayerSheetWidth": {
+        "name": null,
+        "hint": null
+    },
+    "TIDY5E.Settings.VehicleSheetWidth": {
+        "name": null,
+        "hint": null
+    },
+    "TIDY5E.Settings.UseMulticlassSpellbookFilter": {
+        "name": null,
+        "hint": null
+    },
+    "TIDY5E.Settings.UseSpellClassIcons": {
+        "name": null,
+        "hint": null
+    },
+    "TIDY5E.Settings.SpellClassFilterAdditionalClasses": {
+        "name": null,
+        "hint": null
+    },
+    "TIDY5E.Settings.AllowCantripsToBePrepared": {
+        "name": null,
+        "hint": null
+    },
+    "TIDY5E.Settings.LockMoneyChanges": {
+        "name": null,
+        "hint": null
+    },
+    "TIDY5E.Settings.LockExpChanges": {
+        "name": null,
+        "hint": null
+    },
+    "TIDY5E.Settings.LockHpMaxChanges": {
+        "name": null,
+        "hint": null
+    },
+    "TIDY5E.Settings.LockLevelSelector": {
+        "name": null,
+        "hint": null
+    },
+    "TIDY5E.Settings.LockConfigureSheet": {
+        "name": null,
+        "hint": null
+    },
+    "TIDY5E.Settings.LockItemQuantity": {
+        "name": null,
+        "hint": null
+    },
+    "TIDY5E.Settings.ColorPickerEnabled": {
+        "name": null,
+        "hint": null
+    },
+    "TIDY5E.Settings.ColorPickerPrimaryAccent": {
+        "name": null
+    },
+    "TIDY5E.Settings.ColorPickerEquipped": {
+        "name": null
+    },
+    "TIDY5E.Settings.ColorPickerHpBar": {
+        "name": null
+    },
+    "TIDY5E.Settings.ColorPickerEquippedOutline": {
+        "name": null
+    },
+    "TIDY5E.Settings.ColorPickerEquippedAccent": {
+        "name": null
+    },
+    "TIDY5E.Settings.ColorPickerPrepared": {
+        "name": null
+    },
+    "TIDY5E.Settings.ColorPickerPreparedOutline": {
+        "name": null
+    },
+    "TIDY5E.Settings.ColorPickerPreparedAccent": {
+        "name": null
+    },
+    "TIDY5E.Settings.ColorPickerPact": {
+        "name": null
+    },
+    "TIDY5E.Settings.ColorPickerPactOutline": {
+        "name": null
+    },
+    "TIDY5E.Settings.ColorPickerPactAccent": {
+        "name": null
+    },
+    "TIDY5E.Settings.ColorPickerAtWill": {
+        "name": null
+    },
+    "TIDY5E.Settings.ColorPickerAtWillOutline": {
+        "name": null
+    },
+    "TIDY5E.Settings.ColorPickerAtWillAccent": {
+        "name": null
+    },
+    "TIDY5E.Settings.ColorPickerInnate": {
+        "name": null
+    },
+    "TIDY5E.Settings.ColorPickerInnateOutline": {
+        "name": null
+    },
+    "TIDY5E.Settings.ColorPickerInnateAccent": {
+        "name": null
+    },
+    "TIDY5E.Settings.ColorPickerAlwaysPrepared": {
+        "name": null
+    },
+    "TIDY5E.Settings.ColorPickerAlwaysPreparedOutline": {
+        "name": null
+    },
+    "TIDY5E.Settings.ColorPickerAlwaysPreparedAccent": {
+        "name": null
+    },
+    "TIDY5E.Settings.AllowHpMaxOverride": {
+        "name": null,
+        "hint": null
+    },
+    "TIDY5E.Settings.Reset": {
+        "name": null,
+        "hint": null,
+        "dialogs": {
+            "title": null,
+            "content": null,
+            "confirm": null,
+            "cancel": null
+        }
+    },
+    "TIDY5E.Settings.Debug": {
+        "name": null,
+        "hint": null
+    },
+    "TIDY5E.Settings.SortFavoriteItemsAlphabetically": {
+        "name": null,
+        "hint": null
+    },
+    "TIDY5E.Settings.PermanentlyUnlockCharacterSheetForGM": {
+        "name": null,
+        "hint": null,
+        "title": null
+    },
+    "TIDY5E.Settings.PermanentlyUnlockNPCSheetForGM": {
+        "name": null,
+        "hint": null,
+        "title": null
+    },
+    "TIDY5E.Settings.PermanentlyUnlockVehicleSheetForGM": {
+        "name": null,
+        "hint": null,
+        "title": null
+    },
+    "TIDY5E.ThemeSettings": {
+        "SheetMenu": {
+            "name": null,
+            "buttonLabel": null,
+            "hint": null
+        },
+        "Sheet": {
+            "title": null,
+            "header": null,
+            "useDefaultLightColors": null,
+            "useDefaultDarkColors": null,
+            "export": null,
+            "import": null,
+            "importDropHint": null,
+            "importError": null,
+            "importSuccess": null,
+            "menuLabel": null,
+            "explanation": null
+        }
+    },
+    "TIDY5E.FavoriteSpellLevelLabel": null,
+    "TIDY5E.ApplyChanges": null,
+    "TIDY5E.SaveChanges": null,
+    "TIDY5E.VehicleInMotion": null,
+    "TIDY5E.VehicleMotionless": null,
+    "TIDY5E.TotalCrewCount": null,
+    "TIDY5E.ActionsPerTurn": null,
+    "TIDY5E.SheetMenu": {
+        "label": null,
+        "themeLabel": null
+    },
+    "TIDY5E.ActiveEffectsMarkerTitle": null
 }
