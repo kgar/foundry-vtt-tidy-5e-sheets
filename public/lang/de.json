@@ -309,48 +309,48 @@
         "both": "Verknüpfte und unverknüpfte Figuren hervorheben"
     },
     "TIDY5E.Settings.InitialSheetTab": {
-        "name": null,
-        "hint": null
+        "name": "Initiale Bogenregisterkarte",
+        "hint": "Zeigt die angegebene Registerkarte an, wenn ein Spielbogen zum ersten Mal geöffnet wird."
     },
     "TIDY5E.Settings.HideDeathSavesFromPlayers": {
-        "name": "Verstecke Todesrettungswürfe vor Spielern.",
-        "hint": "Aktivieren, damit Todesrettungswürfe und deren Ergebnisse nur vom SL gesehen werden können."
+        "name": "Verberge Todesrettungswürfe vor Spielern",
+        "hint": "Macht Todesrettungswürfe und -ergebnisse nur für den SL sichtbar."
     },
     "TIDY5E.Settings.UseSpellSlotMarker": {
-        "name": null,
-        "hint": null
+        "name": "Markierung für Zauberplätze verwenden",
+        "hint": "Zeigt Zauberplatzmarkierungen (Punkte) über den Abschnitten mit abgestuften Zaubern im Zauberbuch an."
     },
     "TIDY5E.Settings.UseCharacterEncumbranceBar": {
-        "name": null,
-        "hint": null
+        "name": "Charakterbelastungsleiste verwenden",
+        "hint": "Zeigt einen Lastenbalken auf dem Charakterbogen an."
     },
     "TIDY5E.Settings.UseNPCEncumbranceBar": {
-        "name": null,
-        "hint": null
+        "name": "NSC-Belastungsleiste verwenden",
+        "hint": "Zeigt einen Lastenbalken auf NSC-Bögen an."
     },
     "TIDY5E.Settings.UseVehicleEncumbranceBar": {
-        "name": null,
-        "hint": null
+        "name": "Fahrzeug-Beladungsleiste verwenden",
+        "hint": "Zeigt einen Beladungsbalken auf Fahrzeugbögen an."
     },
     "TIDY5E.Settings.NPCSheetWidth": {
-        "name": "Standard Breite des NSC Bogens.",
-        "hint": "Die Breite des NSC Bogens in Pixeln, benötigt ein Neuladen der Seite (standard 740)."
+        "name": "Standardbreite NSC-Bogen",
+        "hint": "Die Breite des NSC-Bogens in Pixeln, wenn der Bogen zum ersten Mal angezeigt wird. Erfordert eine Aktualisierung, um wirksam zu werden. Standard: 740."
     },
     "TIDY5E.Settings.PlayerSheetWidth": {
-        "name": "Standard Breite des Spieler Bogens.",
-        "hint": "Die Breite des Spieler Bogens in Pixeln, benötigt ein Neuladen der Seite (standard 740)."
+        "name": "Standardbreite SC-Bogen",
+        "hint": "Die Breite des SC-Bogens in Pixeln, wenn der Bogen zum ersten Mal angezeigt wird. Erfordert eine Aktualisierung, um wirksam zu werden. Standard: 740."
     },
     "TIDY5E.Settings.VehicleSheetWidth": {
-        "name": null,
-        "hint": null
+        "name": "Standardbereite Fahrzeugbogen",
+        "hint": "Die Breite des Fahrzeug-Bogens in Pixeln, wenn der Bogen zum ersten Mal angezeigt wird. Erfordert eine Aktualisierung, um wirksam zu werden. Standard: 740."
     },
     "TIDY5E.Settings.UseMulticlassSpellbookFilter": {
-        "name": null,
-        "hint": null
+        "name": "Multiklassen-Zauberbuchfilter verwenden",
+        "hint": "Ermöglicht das Filtern von Zaubern nach Klassen in der Registerkarte Zauberbuch. Der Zauber muss einer Klasse zugeordnet werden, indem die Klassenauswahl auf dem Zauberbearbeitungsblatt verwendet wird."
     },
     "TIDY5E.Settings.UseSpellClassIcons": {
-        "name": null,
-        "hint": null
+        "name": "Zauberklassensymbol für Zaubersprüche verwenden",
+        "hint": "Zeigt das Bild der Zauberklasse auf den Zaubersprüchen anstelle des eigenen Bildes des Zaubers. Der Zauber muss einer Klasse zugeordnet werden, indem der Klassenwähler auf dem Zauberbearbeitungsbogen benutzt wird. Bei Mehrfachklassen-Charaktere lässt sich mit dieser Funktion auf einen Blick erkennen, welche Zaubersprüche zu welcher Klasse gehören."
     },
     "TIDY5E.Settings.SpellClassFilterAdditionalClasses": {
         "name": null,
@@ -618,5 +618,12 @@
         "hint": "Der 5e-Standardbogen erlaubt das Wechseln von einer Attributeingabe zur nächsten, indem es die Steuerelemente um sie herum aus der Tabulatorreihenfolge ausblendet. Durch Aktivierung wird dieses Verhalten nachgebildet. Diese Einstellung wird ignoriert, wenn \"Unterstützung für barrierefreie Tastaturen verwenden\" ausgeschaltet ist."
     },
     "TIDY5E.Inventory.Weight.Text": "{gewicht} {maßeinheitGewicht}",
-    "TIDY5E.ActorMeleeSpellAttackFlavorText": "Nahkampfzauberangriff"
+    "TIDY5E.ActorMeleeSpellAttackFlavorText": "Nahkampfzauberangriff",
+    "TIDY5E.Settings.DefaultSheetTabs": {
+        "name": "Standard-Bogenregisterkarten",
+        "AvailableHeader": "Verfügbare Registerkarten",
+        "SelectedHeader": "Ausgewählte Registerkarten",
+        "hint": "Bestimmt, welche Registerkarten standardmäßig angezeigt werden und in welcher Reihenfolge. Gilt, wenn für einen Akteur keine Registerkartenauswahl getroffen wurde.",
+        "AtLeastOneTabRequiredErrorMessage": "Standard-Registerkarten: Für jeden Akteurstyp ist mindestens eine Registerkarte erforderlich."
+    }
 }

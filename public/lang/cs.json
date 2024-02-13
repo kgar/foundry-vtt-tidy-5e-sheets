@@ -1,549 +1,520 @@
 {
-  "TIDY5E.Tidy5eSheet": "Tidy 5e Character Sheet",
-  "TIDY5E.Tidy5eNPC": "Tidy 5e NPC Sheet",
-  "TIDY5E.Tidy5eItemSheet": "Tidy 5e Item Sheet",
-  "TIDY5E.Tidy5eVehicle": "Tidy 5e Vechicle Sheet",
-  "TIDY5E.PlayerName": "Jméno Hráče",
-  "TIDY5E.Gender": "Gender",
-  "TIDY5E.Age": "Věk",
-  "TIDY5E.Weight": "Váha",
-  "TIDY5E.Height": "Výška",
-  "TIDY5E.Eyes": "Oči",
-  "TIDY5E.Skin": "Kůže",
-  "TIDY5E.Hair": "Vlasy",
-  "TIDY5E.EditActorImage": "Levý klik: Upravit obrázek",
-  "TIDY5E.ShowActorImage": "Pravý klik: Ukázat obrázek postavy",
-  "TIDY5E.ShowPortraitArt": "ukázat portrét",
-  "TIDY5E.ShowTokenArt": "ukázat žeton",
-  "TIDY5E.ShowItemImage": "right click: show item art",
-  "TIDY5E.ShowItemArt": "show image",
-
-  "TIDY5E.StandardExhaustion0": "Bez negativních účinků",
-  "TIDY5E.StandardExhaustion1": "Nevýhoda na ověření vlastností",
-  "TIDY5E.StandardExhaustion2": "Poloviční rychlost",
-  "TIDY5E.StandardExhaustion3": "Nevýhoda na hod na útok a záchranné hody",
-  "TIDY5E.StandardExhaustion4": "Poloviční maximální počet životů",
-  "TIDY5E.StandardExhaustion5": "Rychlost zredukována na 0",
-  "TIDY5E.StandardExhaustion6": "Smrt",
-
-  "TIDY5E.OneDnDExhaustion0": null,
-  "TIDY5E.OneDnDExhaustion1": null,
-  "TIDY5E.OneDnDExhaustion2": null,
-  "TIDY5E.OneDnDExhaustion3": null,
-  "TIDY5E.OneDnDExhaustion4": null,
-  "TIDY5E.OneDnDExhaustion5": null,
-  "TIDY5E.OneDnDExhaustion6": null,
-  "TIDY5E.OneDnDExhaustion7": null,
-  "TIDY5E.OneDnDExhaustion8": null,
-  "TIDY5E.OneDnDExhaustion9": null,
-  "TIDY5E.OneDnDExhaustion10": null,
-  "TIDY5E.OneDnDExhaustion11": null,
-
-  "TIDY5E.StandardVehicleExhaustion0": null,
-  "TIDY5E.StandardVehicleExhaustion1": null,
-  "TIDY5E.StandardVehicleExhaustion2": null,
-  "TIDY5E.StandardVehicleExhaustion3": null,
-  "TIDY5E.StandardVehicleExhaustion4": null,
-  "TIDY5E.StandardVehicleExhaustion5": null,
-  "TIDY5E.StandardVehicleExhaustion6": null,
-
-  "TIDY5E.AbbrInitiative": "Ini",
-
-  "TIDY5E.RestHint": "Odpočívat",
-  "TIDY5E.ShortRest": "Krátký odpočinek",
-  "TIDY5E.LongRest": "Důkladný odpočinek",
-  "TIDY5E.HitDiceRollAverage": "Right Click: Average",
-
-  "TIDY5E.JournalTabName": "Deník",
-
-  "TIDY5E.RestoreOnRest": "Obnovit při odpočinku",
-
-  "TIDY5E.JournalPersonsOfInterest": "Zájmové osoby",
-  "TIDY5E.JournalLocationsOfInterest": "Zájmové lokace",
-  "TIDY5E.JournalQuests": "Úkoly",
-  "TIDY5E.JournalMisc": "Různé",
-  "TIDY5E.JournalEntries": "Záznamy deníku",
-  "TIDY5E.TogglePersonalityInfo": "Přepnout informace o osobnosti",
-
-  "TIDY5E.SheetEdit.Enable.Hint": null,
-  "TIDY5E.SheetEdit.Disable.Hint": null,
-  "TIDY5E.SheetEdit.Description": "Přepne viditelnost tlačítek přidat/smazat a prázdných sekcí",
-
-  "TIDY5E.SheetLock.Unlock.Hint": null,
-  "TIDY5E.SheetLock.Lock.Hint": null,
-  "TIDY5E.SheetLock.Description": null,
-
-  "TIDY5E.ContextMenuActionEquip": "Vybavit Předmět",
-  "TIDY5E.ContextMenuActionUnequip": "Odvybavit Předmět",
-  "TIDY5E.ContextMenuActionAttune": "Sladit se s Předmětem",
-  "TIDY5E.ContextMenuActionUnattune": "Ukončit Sladění",
-  "TIDY5E.ContextMenuActionPrepare": "Připravit Kouzlo",
-  "TIDY5E.ContextMenuActionUnprepare": "Odstranit Připravení",
-  "TIDY5E.ContextMenuActionEdit": null,
-  "TIDY5E.ContextMenuActionDelete": null,
-
-  "TIDY5E.EmptySection": "Tato sekce je prázdná. Pro úpravy odemkněte deník.",
-  "TIDY5E.GMOnlyEdit": "Pouze váš PJ může upravovat tuto sekci.",
-
-  "TIDY5E.AttunementWarning": "Varování: Nemůžete se sladit s více než {number} předměty!",
-  "TIDY5E.AttunementItems": "Sladěné předměty",
-  "TIDY5E.AttunementMax": "Maximální sladění",
-
-  "TIDY5E.GridLayout": "Mřížkové rozvržení",
-  "TIDY5E.ListLayout": "Seznamové rozvržení",
-  "TIDY5E.LayoutNotSupported": null,
-
-  "TIDY5E.Encumbrance": "Zatížení",
-
-  "TIDY5E.AddFavorite": "Přidat do oblíbených",
-  "TIDY5E.Favorite": "Oblíbený",
-  "TIDY5E.RemoveFavorite": "Odebrat z oblíbených",
-
-  "TIDY5E.ShowNotProficientSkills": null,
-  "TIDY5E.HideNotProficientSkills": null,
-  "TIDY5E.ShowEmptyTraits": null,
-  "TIDY5E.HideEmptyTraits": null,
-
-  "TIDY5E.Abilities": "Vlastnosti",
-
-  "TIDY5E.Environment": "Prostředí",
-
-  "TIDY5E.Search": null,
-  "TIDY5E.SearchClear": null,
-  "TIDY5E.SearchHint": "Začněte psát název toho, co hledáte.",
-
-  "TIDY5E.ItemCardsKeyHint": "drž Klávesu pro interakci s kartou.",
-  "TIDY5E.ItemCardsMouseHint": "prostřední tlačítko pro zobrazení/editaci předmětu.",
-
-  "TIDY5E.AbbrMod": "Oprava",
-  "TIDY5E.AbbrSavingThrow": "Uložit",
-  "TIDY5E.SpellAttackMod": "Modifikace útoku",
-  "TIDY5E.PreparedSpells": "Připravená kouzla",
-  "TIDY5E.PreparedSpellsMax": "Maximum pro připravená kouzla",
-
-  "TIDY5E.TokenLinked": "Žeton je propojený s aktorem",
-  "TIDY5E.TokenUnlinked": "Žeton není propojený s aktorem",
-
-  "TIDY5E.ItemDetailsHeadline": "Mechaniky/Popisek",
-
-  "TIDY5E.SpellClass": null,
-
-  "TIDY5E.Class.Artificer": null,
-  "TIDY5E.Class.Barbarian": null,
-  "TIDY5E.Class.Bard": null,
-  "TIDY5E.Class.Cleric": null,
-  "TIDY5E.Class.Custom": null,
-  "TIDY5E.Class.Druid": null,
-  "TIDY5E.Class.Fighter": null,
-  "TIDY5E.Class.Monk": null,
-  "TIDY5E.Class.Paladin": null,
-  "TIDY5E.Class.Ranger": null,
-  "TIDY5E.Class.Rogue": null,
-  "TIDY5E.Class.Sorcerer": null,
-  "TIDY5E.Class.Warlock": null,
-  "TIDY5E.Class.Wizard": null,
-
-  "TIDY5E.OriginSummaryConfig": null,
-
-  "TIDY5E.Settings.MulticlassSpellbookFilterLabel": null,
-
-  "TIDY5E.UserSettings.Menu": {
-    "name": null,
-    "hint": null,
-    "label": "Nastavení deníků",
-    "title": "Tidy5e Nastavení Deníků"
-  },
-  "TIDY5E.UserSettings.TabPlayers": {
-    "tabLabel": "Hráči",
-    "header": "Deníky Hráčských Postav"
-  },
-  "TIDY5E.UserSettings.TabNPCs": {
-    "tabLabel": null,
-    "header": null
-  },
-  "TIDY5E.UserSettings.TabVehicles": {
-    "tabLabel": null,
-    "header": null
-  },
-  "TIDY5E.WorldSettings.TabMisc": {
-    "tabLabel": "Nastavení PJ"
-  },
-  "TIDY5E.WorldSettings.TabSheetLock": {
-    "tabLabel": null,
-    "header": null,
-    "hint": null,
-    "hint2": null,
-    "labelGeneralLocks": null,
-    "labelInventoryLocks": null,
-    "labelFeaturesLocks": null
-  },
-  "TIDY5E.Settings.ItemCardsForAllItems": {
-    "name": "Zobrazit info karty předmětů ve všech rozvrženích.",
-    "hint": "Vypni, pokud chceš, aby info karty předmětů vyjížděly pouze v mřížkovém rozvržení."
-  },
-  "TIDY5E.Settings.ItemCardsForNPCs": {
-    "name": "Zobrazit info karty předmětů pro CP/dopravní prostředky.",
-    "hint": "Vypni, pokud nechceš, aby info karty předmětů vyjížděly pro CP/dopravní prostředky."
-  },
-  "TIDY5E.Settings.ItemCardsAreFloating": {
-    "name": "Info karta předmětu plovoucí vedle kurzoru.",
-    "hint": "Zapni, aby se info karta předmětu odepla z deníku a zobrazila se jako plovoucí rámeček u kurzoru. Toto je nejlépe použít se spožděným zobrazením. Také užitečné, pokud je deník ve vlastním okně."
-  },
-  "TIDY5E.Settings.ItemCardsDelay": {
-    "name": "Zpozdi zobrazení info karet.",
-    "hint": "Info Karta se zobrazí při najetí na předmět po dobu delší než hodnota v milisekundách (0 = bez spoždění, 300 je standard)."
-  },
-  "TIDY5E.Settings.ItemCardsFixKey": {
-    "name": "Klávesa, jejimž držení se interaguje s Kartou Předmětu.",
-    "hint": "Uveďte klávesu (např.: x) použitou pro interakci s kartou předmětu. Může se jednat o kteroukoliv klávesu kromě funkčních kláves (ctrl, alt, atd.)"
-  },
-  "TIDY5E.Settings.DefaultTheme": {
-    "name": null,
-    "hint": null
-  },
-  "TIDY5E.Settings.SheetTheme": {
-    "name": "Barevné schéma pro Tidy5e.",
-    "hint": "Použije buď výchozí světlé nebo alternativní tmavé barevné schéma pro Tidy5e.",
-    "default": null,
-    "light": null,
-    "dark": null
-  },
-  "TIDY5E.Settings.UseClassicControls": {
-    "name": "Použít klasické ovládání předmětů v seznamu.",
-    "hint": "Vždy zobrazit ovládací prvky předmětů a zakázat kontextové menu. Platí pouze pro inventář předmětů/kouzel hráčů v seznamovém rozvržení."
-  },
-  "TIDY5E.Settings.ShowIconsNextToTheItemName": {
-    "name": null,
-    "hint": null
-  },
-  "TIDY5E.Settings.ShowTraitLabels": {
-    "name": "Zobrazit popisky rysů.",
-    "hint": "Ve výchozím nastavení se zobrazují pouze ikony rysů. Povolte pro zobrazení popisků."
-  },
-  "TIDY5E.Settings.ShowPlayerName": {
-    "name": "Zobrazit jméno hráče.",
-    "hint": "Zaškrtnutím zobrazíte pole s jménem hráče pod jménem postavy."
-  },
-  "TIDY5E.Settings.ShowClassList": {
-    "name": null,
-    "hint": null
-  },
-  "TIDY5E.Settings.InspirationAnimation": {
-    "name": "Žádná animace indikátoru inspirace.",
-    "hint": "Zaškrtnutím deaktivujete zářící animaci indikátoru inspirace."
-  },
-  "TIDY5E.Settings.HideIfZero": {
-    "name": "Skrýt únavu a inspiraci, pokud nejsou dostupné (0).",
-    "hint": "Zaškrtnutím skryje únavu a inspiraci, pokud mají hodnotu 0. Objeví se při najetí myší."
-  },
-  "TIDY5E.Settings.ShowInspirationOnHover": {
-    "name": "Zobrazit ukazatel inspirace jen při najetí myši.",
-    "hint": "Zaškrtnutím bude ukazatel inspirace viditelný pouze při najetí myši na portrét."
-  },
-  "TIDY5E.Settings.ShowExhaustionOnHover": {
-    "name": "Zobrazit ukazatel únavy jen při najetí myši.",
-    "hint": "Zaškrtnutím bude ukazatel únavy viditelný pouze při najetí myši na portrét."
-  },
-  "TIDY5E.Settings.UseHpBar": {
-    "name": null,
-    "hint": null
-  },
-  "TIDY5E.Settings.UseHpOverlay": {
-    "name": null,
-    "hint": null
-  },
-  "TIDY5E.Settings.ToggleEmptyCharacterTraits": {
-    "name": "Přepínání prázdných rysů postavy.",
-    "hint": "V základním nastavení jsou prázdné rysy vždy viditelné. Zaškrtněte pro přidání tlačítka pro přepnutí prázdných rysů."
-  },
-  "TIDY5E.Settings.MoveTraitsBelowResources": {
-    "name": "Přesunout rysy pod zdroje.",
-    "hint": "Zaškrtněte pro přesunutí rysů z levé strany pod zdroje."
-  },
-  "TIDY5E.Settings.ShowEquippedAmmoOnly": {
-    "name": null,
-    "hint": null
-  },
-  "TIDY5E.Settings.AlwaysShowTraits": {
-    "name": "Vždy zobrazovat rysy.",
-    "hint": "V základním nastavení jsou prázdné rysy skryty přepínacím tlačítkem. Zaškrtněte, aby se nikdy neskrývaly."
-  },
-  "TIDY5E.Settings.AlwaysShowSkills": {
-    "name": "Vždy zobrazovat dovednosti.",
-    "hint": "V základním nastavení jsou dovednosti bez zdatnosti skryty přepínacím tlačítkem. Zaškrtněte, aby se nikdy neskrývaly."
-  },
-  "TIDY5E.Settings.ShowNPCSpellbookTab": {
-    "name": null,
-    "hint": null
-  },
-  "TIDY5E.Settings.ShowActiveEffectsMarker": {
-    "name": "Zobrazovat na předmětech Značku Aktivního Efektu.",
-    "hint": "Zaškrtněte, pokud chcete vidět, zda mají předměty na sobě aktivní efekt (pouze v řádkovém zobrazení)."
-  },
-  "TIDY5E.Settings.UseContextMenu": {
-    "name": null,
-    "hint": null
-  },
-  "TIDY5E.Settings.ShowExpandedLimitedView": {
-    "name": "Rozšířené Omezené zobrazení pro deník postav.",
-    "hint": "Zobrazí celý deník postavy (kromě poznámek) hráčům s Omezeným oprávněním."
-  },
-  "TIDY5E.Settings.UseCircularPortraitStyle": {
-    "name": "Kruhový styl portrétu.",
-    "hint": "Zvolte pro zapnutí kruhových portrétů/ikon pro aktory.",
-    "all": "Všichni aktoři",
-    "pc": "Hráči",
-    "npc": "CP/Dop. prostředky",
-    "none": "žádné",
-    "default": "žádné"
-  },
-  "TIDY5E.Settings.UseTotalSheetLock": {
-    "name": "Zamknout citlivá pole.",
-    "hint": "Zaškrtněte, aby se zabránilo nechtěné změně citlivých, povětšinou neměnných hodnot."
-  },
-  "TIDY5E.Settings.LimitEffectsManagementToGM": {
-    "name": "Pouze PJ může upravovat aktivní efekty.",
-    "hint": "Zašrtnutím zakáže hráčům upravovat aktivní efekty ve svých denících. Pořád však uvidí aplikované efekty."
-  },
-  "TIDY5E.Settings.AlwaysShowItemQuantity": {
-    "name": "Vždy zobrazovat množství předmětů.",
-    "hint": "Povolte pokud se nemá skrývat množství předmětů."
-  },
-  "TIDY5E.Settings.UseInspiration": {
-    "name": null,
-    "hint": null
-  },
-  "TIDY5E.Settings.UseVehicleMotion": {
-    "name": null,
-    "hint": null
-  },
-  "TIDY5E.Settings.UseExhaustion": {
-    "name": null,
-    "hint": null
-  },
-  "TIDY5E.Settings.UseNPCRest": {
-    "name": "Odpočinek pro CP.",
-    "hint": "Povolí zobrazení ikony/tlačítek pro odpočinek v denících cizích postav."
-  },
-  "TIDY5E.Settings.ShowNPCRestInChat": {
-    "name": null,
-    "hint": null
-  },
-  "TIDY5E.Settings.ShowNPCActorLinkMarker": {
-    "name": "Označit propojené/nepropojené cizí postavy.",
-    "hint": "Přidá barevné ohraničení a ikonu na propojené/nepropojené deníky cizích postav.",
-    "default": "Bez označení propojení (výchozí)",
-    "unlinked": "Zvýraznit nepropojené žetony",
-    "linked": "Zvýraznit propojené žetony.",
-    "both": "Zvýraznit propojené a nepropojené žetony"
-  },
-  "TIDY5E.Settings.InitialSheetTab": {
-    "name": null,
-    "hint": null
-  },
-  "TIDY5E.Settings.HideDeathSavesFromPlayers": {
-    "name": null,
-    "hint": null
-  },
-  "TIDY5E.Settings.UseSpellSlotMarker": {
-    "name": null,
-    "hint": null
-  },
-  "TIDY5E.Settings.UseCharacterEncumbranceBar": {
-    "name": null,
-    "hint": null
-  },
-  "TIDY5E.Settings.UseNPCEncumbranceBar": {
-    "name": null,
-    "hint": null
-  },
-  "TIDY5E.Settings.UseVehicleEncumbranceBar": {
-    "name": null,
-    "hint": null
-  },
-  "TIDY5E.Settings.NPCSheetWidth": {
-    "name": null,
-    "hint": null
-  },
-  "TIDY5E.Settings.PlayerSheetWidth": {
-    "name": null,
-    "hint": null
-  },
-  "TIDY5E.Settings.VehicleSheetWidth": {
-    "name": null,
-    "hint": null
-  },
-  "TIDY5E.Settings.UseMulticlassSpellbookFilter": {
-    "name": null,
-    "hint": null
-  },
-  "TIDY5E.Settings.UseSpellClassIcons": {
-    "name": null,
-    "hint": null
-  },
-  "TIDY5E.Settings.SpellClassFilterAdditionalClasses": {
-    "name": null,
-    "hint": null
-  },
-  "TIDY5E.Settings.AllowCantripsToBePrepared": {
-    "name": null,
-    "hint": null
-  },
-  "TIDY5E.Settings.LockMoneyChanges": {
-    "name": null,
-    "hint": null
-  },
-  "TIDY5E.Settings.LockExpChanges": {
-    "name": null,
-    "hint": null
-  },
-  "TIDY5E.Settings.LockHpMaxChanges": {
-    "name": null,
-    "hint": null
-  },
-  "TIDY5E.Settings.LockLevelSelector": {
-    "name": null,
-    "hint": null
-  },
-  "TIDY5E.Settings.LockConfigureSheet": {
-    "name": null,
-    "hint": null
-  },
-  "TIDY5E.Settings.LockItemQuantity": {
-    "name": null,
-    "hint": null
-  },
-  "TIDY5E.Settings.ColorPickerEnabled": {
-    "name": null,
-    "hint": null
-  },
-  "TIDY5E.Settings.ColorPickerPrimaryAccent": {
-    "name": null
-  },
-  "TIDY5E.Settings.ColorPickerEquipped": {
-    "name": null
-  },
-  "TIDY5E.Settings.ColorPickerHpBar": {
-    "name": null
-  },
-  "TIDY5E.Settings.ColorPickerEquippedOutline": {
-    "name": null
-  },
-  "TIDY5E.Settings.ColorPickerEquippedAccent": {
-    "name": null
-  },
-  "TIDY5E.Settings.ColorPickerPrepared": {
-    "name": null
-  },
-  "TIDY5E.Settings.ColorPickerPreparedOutline": {
-    "name": null
-  },
-  "TIDY5E.Settings.ColorPickerPreparedAccent": {
-    "name": null
-  },
-  "TIDY5E.Settings.ColorPickerPact": {
-    "name": null
-  },
-  "TIDY5E.Settings.ColorPickerPactOutline": {
-    "name": null
-  },
-  "TIDY5E.Settings.ColorPickerPactAccent": {
-    "name": null
-  },
-  "TIDY5E.Settings.ColorPickerAtWill": {
-    "name": null
-  },
-  "TIDY5E.Settings.ColorPickerAtWillOutline": {
-    "name": null
-  },
-  "TIDY5E.Settings.ColorPickerAtWillAccent": {
-    "name": null
-  },
-  "TIDY5E.Settings.ColorPickerInnate": {
-    "name": null
-  },
-  "TIDY5E.Settings.ColorPickerInnateOutline": {
-    "name": null
-  },
-  "TIDY5E.Settings.ColorPickerInnateAccent": {
-    "name": null
-  },
-  "TIDY5E.Settings.ColorPickerAlwaysPrepared": {
-    "name": null
-  },
-  "TIDY5E.Settings.ColorPickerAlwaysPreparedOutline": {
-    "name": null
-  },
-  "TIDY5E.Settings.ColorPickerAlwaysPreparedAccent": {
-    "name": null
-  },
-  "TIDY5E.Settings.AllowHpMaxOverride": {
-    "name": null,
-    "hint": null
-  },
-  "TIDY5E.Settings.Reset": {
-    "name": null,
-    "hint": null,
-    "dialogs": {
-      "title": null,
-      "content": null,
-      "confirm": null,
-      "cancel": null
-    }
-  },
-  "TIDY5E.Settings.Debug": {
-    "name": null,
-    "hint": null
-  },
-  "TIDY5E.Settings.SortFavoriteItemsAlphabetically": {
-    "name": null,
-    "hint": null
-  },
-  "TIDY5E.Settings.PermanentlyUnlockCharacterSheetForGM": {
-    "name": null,
-    "hint": null,
-    "title": null
-  },
-  "TIDY5E.Settings.PermanentlyUnlockNPCSheetForGM": {
-    "name": null,
-    "hint": null,
-    "title": null
-  },
-  "TIDY5E.Settings.PermanentlyUnlockVehicleSheetForGM": {
-    "name": null,
-    "hint": null,
-    "title": null
-  },
-  "TIDY5E.ThemeSettings": {
-    "SheetMenu": {
-      "name": null,
-      "buttonLabel": null,
-      "hint": null
+    "TIDY5E.Tidy5eSheet": "Tidy 5e Character Sheet",
+    "TIDY5E.Tidy5eNPC": "Tidy 5e NPC Sheet",
+    "TIDY5E.Tidy5eItemSheet": "Tidy 5e Item Sheet",
+    "TIDY5E.Tidy5eVehicle": "Tidy 5e Vechicle Sheet",
+    "TIDY5E.PlayerName": "Jméno Hráče",
+    "TIDY5E.Gender": "Gender",
+    "TIDY5E.Age": "Věk",
+    "TIDY5E.Weight": "Váha",
+    "TIDY5E.Height": "Výška",
+    "TIDY5E.Eyes": "Oči",
+    "TIDY5E.Skin": "Kůže",
+    "TIDY5E.Hair": "Vlasy",
+    "TIDY5E.EditActorImage": "Levý klik: Upravit obrázek",
+    "TIDY5E.ShowActorImage": "Pravý klik: Ukázat obrázek postavy",
+    "TIDY5E.ShowPortraitArt": "ukázat portrét",
+    "TIDY5E.ShowTokenArt": "ukázat žeton",
+    "TIDY5E.ShowItemImage": "right click: show item art",
+    "TIDY5E.ShowItemArt": "show image",
+    "TIDY5E.StandardExhaustion0": "Bez negativních účinků",
+    "TIDY5E.StandardExhaustion1": "Nevýhoda na ověření vlastností",
+    "TIDY5E.StandardExhaustion2": "Poloviční rychlost",
+    "TIDY5E.StandardExhaustion3": "Nevýhoda na hod na útok a záchranné hody",
+    "TIDY5E.StandardExhaustion4": "Poloviční maximální počet životů",
+    "TIDY5E.StandardExhaustion5": "Rychlost zredukována na 0",
+    "TIDY5E.StandardExhaustion6": "Smrt",
+    "TIDY5E.OneDnDExhaustion0": null,
+    "TIDY5E.OneDnDExhaustion1": null,
+    "TIDY5E.OneDnDExhaustion2": null,
+    "TIDY5E.OneDnDExhaustion3": null,
+    "TIDY5E.OneDnDExhaustion4": null,
+    "TIDY5E.OneDnDExhaustion5": null,
+    "TIDY5E.OneDnDExhaustion6": null,
+    "TIDY5E.OneDnDExhaustion7": null,
+    "TIDY5E.OneDnDExhaustion8": null,
+    "TIDY5E.OneDnDExhaustion9": null,
+    "TIDY5E.OneDnDExhaustion10": null,
+    "TIDY5E.OneDnDExhaustion11": null,
+    "TIDY5E.StandardVehicleExhaustion0": null,
+    "TIDY5E.StandardVehicleExhaustion1": null,
+    "TIDY5E.StandardVehicleExhaustion2": null,
+    "TIDY5E.StandardVehicleExhaustion3": null,
+    "TIDY5E.StandardVehicleExhaustion4": null,
+    "TIDY5E.StandardVehicleExhaustion5": null,
+    "TIDY5E.StandardVehicleExhaustion6": null,
+    "TIDY5E.AbbrInitiative": "Ini",
+    "TIDY5E.RestHint": "Odpočívat",
+    "TIDY5E.ShortRest": "Krátký odpočinek",
+    "TIDY5E.LongRest": "Důkladný odpočinek",
+    "TIDY5E.HitDiceRollAverage": "Right Click: Average",
+    "TIDY5E.JournalTabName": "Deník",
+    "TIDY5E.RestoreOnRest": "Obnovit při odpočinku",
+    "TIDY5E.JournalPersonsOfInterest": "Zájmové osoby",
+    "TIDY5E.JournalLocationsOfInterest": "Zájmové lokace",
+    "TIDY5E.JournalQuests": "Úkoly",
+    "TIDY5E.JournalMisc": "Různé",
+    "TIDY5E.JournalEntries": "Záznamy deníku",
+    "TIDY5E.TogglePersonalityInfo": "Přepnout informace o osobnosti",
+    "TIDY5E.SheetEdit.Enable.Hint": null,
+    "TIDY5E.SheetEdit.Disable.Hint": null,
+    "TIDY5E.SheetEdit.Description": "Přepne viditelnost tlačítek přidat/smazat a prázdných sekcí",
+    "TIDY5E.SheetLock.Unlock.Hint": null,
+    "TIDY5E.SheetLock.Lock.Hint": null,
+    "TIDY5E.SheetLock.Description": null,
+    "TIDY5E.ContextMenuActionEquip": "Vybavit Předmět",
+    "TIDY5E.ContextMenuActionUnequip": "Odvybavit Předmět",
+    "TIDY5E.ContextMenuActionAttune": "Sladit se s Předmětem",
+    "TIDY5E.ContextMenuActionUnattune": "Ukončit Sladění",
+    "TIDY5E.ContextMenuActionPrepare": "Připravit Kouzlo",
+    "TIDY5E.ContextMenuActionUnprepare": "Odstranit Připravení",
+    "TIDY5E.ContextMenuActionEdit": null,
+    "TIDY5E.ContextMenuActionDelete": null,
+    "TIDY5E.EmptySection": "Tato sekce je prázdná. Pro úpravy odemkněte deník.",
+    "TIDY5E.GMOnlyEdit": "Pouze váš PJ může upravovat tuto sekci.",
+    "TIDY5E.AttunementWarning": "Varování: Nemůžete se sladit s více než {number} předměty!",
+    "TIDY5E.AttunementItems": "Sladěné předměty",
+    "TIDY5E.AttunementMax": "Maximální sladění",
+    "TIDY5E.GridLayout": "Mřížkové rozvržení",
+    "TIDY5E.ListLayout": "Seznamové rozvržení",
+    "TIDY5E.LayoutNotSupported": null,
+    "TIDY5E.Encumbrance": "Zatížení",
+    "TIDY5E.AddFavorite": "Přidat do oblíbených",
+    "TIDY5E.Favorite": "Oblíbený",
+    "TIDY5E.RemoveFavorite": "Odebrat z oblíbených",
+    "TIDY5E.ShowNotProficientSkills": null,
+    "TIDY5E.HideNotProficientSkills": null,
+    "TIDY5E.ShowEmptyTraits": null,
+    "TIDY5E.HideEmptyTraits": null,
+    "TIDY5E.Abilities": "Vlastnosti",
+    "TIDY5E.Environment": "Prostředí",
+    "TIDY5E.Search": null,
+    "TIDY5E.SearchClear": null,
+    "TIDY5E.SearchHint": "Začněte psát název toho, co hledáte.",
+    "TIDY5E.ItemCardsKeyHint": "drž Klávesu pro interakci s kartou.",
+    "TIDY5E.ItemCardsMouseHint": "prostřední tlačítko pro zobrazení/editaci předmětu.",
+    "TIDY5E.AbbrMod": "Oprava",
+    "TIDY5E.AbbrSavingThrow": "Uložit",
+    "TIDY5E.SpellAttackMod": "Modifikace útoku",
+    "TIDY5E.PreparedSpells": "Připravená kouzla",
+    "TIDY5E.PreparedSpellsMax": "Maximum pro připravená kouzla",
+    "TIDY5E.TokenLinked": "Žeton je propojený s aktorem",
+    "TIDY5E.TokenUnlinked": "Žeton není propojený s aktorem",
+    "TIDY5E.ItemDetailsHeadline": "Mechaniky/Popisek",
+    "TIDY5E.SpellClass": null,
+    "TIDY5E.Class.Artificer": null,
+    "TIDY5E.Class.Barbarian": null,
+    "TIDY5E.Class.Bard": null,
+    "TIDY5E.Class.Cleric": null,
+    "TIDY5E.Class.Custom": null,
+    "TIDY5E.Class.Druid": null,
+    "TIDY5E.Class.Fighter": null,
+    "TIDY5E.Class.Monk": null,
+    "TIDY5E.Class.Paladin": null,
+    "TIDY5E.Class.Ranger": null,
+    "TIDY5E.Class.Rogue": null,
+    "TIDY5E.Class.Sorcerer": null,
+    "TIDY5E.Class.Warlock": null,
+    "TIDY5E.Class.Wizard": null,
+    "TIDY5E.OriginSummaryConfig": null,
+    "TIDY5E.Settings.MulticlassSpellbookFilterLabel": null,
+    "TIDY5E.UserSettings.Menu": {
+        "name": null,
+        "hint": null,
+        "label": "Nastavení deníků",
+        "title": "Tidy5e Nastavení Deníků"
     },
-    "Sheet": {
-      "title": null,
-      "header": null,
-      "useDefaultLightColors": null,
-      "useDefaultDarkColors": null,
-      "export": null,
-      "import": null,
-      "importDropHint": null,
-      "importError": null,
-      "importSuccess": null,
-      "menuLabel": null,
-      "explanation": null
-    }
-  },
-  "TIDY5E.FavoriteSpellLevelLabel": null,
-  "TIDY5E.ApplyChanges": null,
-  "TIDY5E.SaveChanges": null,
-  "TIDY5E.VehicleInMotion": null,
-  "TIDY5E.VehicleMotionless": null,
-  "TIDY5E.TotalCrewCount": null,
-  "TIDY5E.ActionsPerTurn": null,
-  "TIDY5E.SheetMenu": {
-    "label": null,
-    "themeLabel": null
-  },
-  "TIDY5E.ActiveEffectsMarkerTitle": null
+    "TIDY5E.UserSettings.TabPlayers": {
+        "tabLabel": "Hráči",
+        "header": "Deníky Hráčských Postav"
+    },
+    "TIDY5E.UserSettings.TabNPCs": {
+        "tabLabel": null,
+        "header": null
+    },
+    "TIDY5E.UserSettings.TabVehicles": {
+        "tabLabel": null,
+        "header": null
+    },
+    "TIDY5E.WorldSettings.TabMisc": {
+        "tabLabel": "Nastavení PJ"
+    },
+    "TIDY5E.WorldSettings.TabSheetLock": {
+        "tabLabel": null,
+        "header": null,
+        "hint": null,
+        "hint2": null,
+        "labelGeneralLocks": null,
+        "labelInventoryLocks": null,
+        "labelFeaturesLocks": null
+    },
+    "TIDY5E.Settings.ItemCardsForAllItems": {
+        "name": "Zobrazit info karty předmětů ve všech rozvrženích.",
+        "hint": "Vypni, pokud chceš, aby info karty předmětů vyjížděly pouze v mřížkovém rozvržení."
+    },
+    "TIDY5E.Settings.ItemCardsForNPCs": {
+        "name": "Zobrazit info karty předmětů pro CP/dopravní prostředky.",
+        "hint": "Vypni, pokud nechceš, aby info karty předmětů vyjížděly pro CP/dopravní prostředky."
+    },
+    "TIDY5E.Settings.ItemCardsAreFloating": {
+        "name": "Info karta předmětu plovoucí vedle kurzoru.",
+        "hint": "Zapni, aby se info karta předmětu odepla z deníku a zobrazila se jako plovoucí rámeček u kurzoru. Toto je nejlépe použít se spožděným zobrazením. Také užitečné, pokud je deník ve vlastním okně."
+    },
+    "TIDY5E.Settings.ItemCardsDelay": {
+        "name": "Zpozdi zobrazení info karet.",
+        "hint": "Info Karta se zobrazí při najetí na předmět po dobu delší než hodnota v milisekundách (0 = bez spoždění, 300 je standard)."
+    },
+    "TIDY5E.Settings.ItemCardsFixKey": {
+        "name": "Klávesa, jejimž držení se interaguje s Kartou Předmětu.",
+        "hint": "Uveďte klávesu (např.: x) použitou pro interakci s kartou předmětu. Může se jednat o kteroukoliv klávesu kromě funkčních kláves (ctrl, alt, atd.)"
+    },
+    "TIDY5E.Settings.DefaultTheme": {
+        "name": null,
+        "hint": null
+    },
+    "TIDY5E.Settings.SheetTheme": {
+        "name": "Barevné schéma pro Tidy5e.",
+        "hint": "Použije buď výchozí světlé nebo alternativní tmavé barevné schéma pro Tidy5e.",
+        "default": null,
+        "light": null,
+        "dark": null
+    },
+    "TIDY5E.Settings.UseClassicControls": {
+        "name": "Použít klasické ovládání předmětů v seznamu.",
+        "hint": "Vždy zobrazit ovládací prvky předmětů a zakázat kontextové menu. Platí pouze pro inventář předmětů/kouzel hráčů v seznamovém rozvržení."
+    },
+    "TIDY5E.Settings.ShowIconsNextToTheItemName": {
+        "name": null,
+        "hint": null
+    },
+    "TIDY5E.Settings.ShowTraitLabels": {
+        "name": "Zobrazit popisky rysů.",
+        "hint": "Ve výchozím nastavení se zobrazují pouze ikony rysů. Povolte pro zobrazení popisků."
+    },
+    "TIDY5E.Settings.ShowPlayerName": {
+        "name": "Zobrazit jméno hráče.",
+        "hint": "Zaškrtnutím zobrazíte pole s jménem hráče pod jménem postavy."
+    },
+    "TIDY5E.Settings.ShowClassList": {
+        "name": null,
+        "hint": null
+    },
+    "TIDY5E.Settings.InspirationAnimation": {
+        "name": "Žádná animace indikátoru inspirace.",
+        "hint": "Zaškrtnutím deaktivujete zářící animaci indikátoru inspirace."
+    },
+    "TIDY5E.Settings.HideIfZero": {
+        "name": "Skrýt únavu a inspiraci, pokud nejsou dostupné (0).",
+        "hint": "Zaškrtnutím skryje únavu a inspiraci, pokud mají hodnotu 0. Objeví se při najetí myší."
+    },
+    "TIDY5E.Settings.ShowInspirationOnHover": {
+        "name": "Zobrazit ukazatel inspirace jen při najetí myši.",
+        "hint": "Zaškrtnutím bude ukazatel inspirace viditelný pouze při najetí myši na portrét."
+    },
+    "TIDY5E.Settings.ShowExhaustionOnHover": {
+        "name": "Zobrazit ukazatel únavy jen při najetí myši.",
+        "hint": "Zaškrtnutím bude ukazatel únavy viditelný pouze při najetí myši na portrét."
+    },
+    "TIDY5E.Settings.UseHpBar": {
+        "name": null,
+        "hint": null
+    },
+    "TIDY5E.Settings.UseHpOverlay": {
+        "name": null,
+        "hint": null
+    },
+    "TIDY5E.Settings.ToggleEmptyCharacterTraits": {
+        "name": "Přepínání prázdných rysů postavy.",
+        "hint": "V základním nastavení jsou prázdné rysy vždy viditelné. Zaškrtněte pro přidání tlačítka pro přepnutí prázdných rysů."
+    },
+    "TIDY5E.Settings.MoveTraitsBelowResources": {
+        "name": "Přesunout rysy pod zdroje.",
+        "hint": "Zaškrtněte pro přesunutí rysů z levé strany pod zdroje."
+    },
+    "TIDY5E.Settings.ShowEquippedAmmoOnly": {
+        "name": null,
+        "hint": null
+    },
+    "TIDY5E.Settings.AlwaysShowTraits": {
+        "name": "Vždy zobrazovat rysy.",
+        "hint": "V základním nastavení jsou prázdné rysy skryty přepínacím tlačítkem. Zaškrtněte, aby se nikdy neskrývaly."
+    },
+    "TIDY5E.Settings.AlwaysShowSkills": {
+        "name": "Vždy zobrazovat dovednosti.",
+        "hint": "V základním nastavení jsou dovednosti bez zdatnosti skryty přepínacím tlačítkem. Zaškrtněte, aby se nikdy neskrývaly."
+    },
+    "TIDY5E.Settings.ShowNPCSpellbookTab": {
+        "name": null,
+        "hint": null
+    },
+    "TIDY5E.Settings.ShowActiveEffectsMarker": {
+        "name": "Zobrazovat na předmětech Značku Aktivního Efektu.",
+        "hint": "Zaškrtněte, pokud chcete vidět, zda mají předměty na sobě aktivní efekt (pouze v řádkovém zobrazení)."
+    },
+    "TIDY5E.Settings.UseContextMenu": {
+        "name": null,
+        "hint": null
+    },
+    "TIDY5E.Settings.ShowExpandedLimitedView": {
+        "name": "Rozšířené Omezené zobrazení pro deník postav.",
+        "hint": "Zobrazí celý deník postavy (kromě poznámek) hráčům s Omezeným oprávněním."
+    },
+    "TIDY5E.Settings.UseCircularPortraitStyle": {
+        "name": "Kruhový styl portrétu.",
+        "hint": "Zvolte pro zapnutí kruhových portrétů/ikon pro aktory.",
+        "all": "Všichni aktoři",
+        "pc": "Hráči",
+        "npc": "CP/Dop. prostředky",
+        "none": "žádné",
+        "default": "žádné"
+    },
+    "TIDY5E.Settings.UseTotalSheetLock": {
+        "name": "Zamknout citlivá pole.",
+        "hint": "Zaškrtněte, aby se zabránilo nechtěné změně citlivých, povětšinou neměnných hodnot."
+    },
+    "TIDY5E.Settings.LimitEffectsManagementToGM": {
+        "name": "Pouze PJ může upravovat aktivní efekty.",
+        "hint": "Zašrtnutím zakáže hráčům upravovat aktivní efekty ve svých denících. Pořád však uvidí aplikované efekty."
+    },
+    "TIDY5E.Settings.AlwaysShowItemQuantity": {
+        "name": "Vždy zobrazovat množství předmětů.",
+        "hint": "Povolte pokud se nemá skrývat množství předmětů."
+    },
+    "TIDY5E.Settings.UseInspiration": {
+        "name": null,
+        "hint": null
+    },
+    "TIDY5E.Settings.UseVehicleMotion": {
+        "name": null,
+        "hint": null
+    },
+    "TIDY5E.Settings.UseExhaustion": {
+        "name": null,
+        "hint": null
+    },
+    "TIDY5E.Settings.UseNPCRest": {
+        "name": "Odpočinek pro CP.",
+        "hint": "Povolí zobrazení ikony/tlačítek pro odpočinek v denících cizích postav."
+    },
+    "TIDY5E.Settings.ShowNPCRestInChat": {
+        "name": null,
+        "hint": null
+    },
+    "TIDY5E.Settings.ShowNPCActorLinkMarker": {
+        "name": "Označit propojené/nepropojené cizí postavy.",
+        "hint": "Přidá barevné ohraničení a ikonu na propojené/nepropojené deníky cizích postav.",
+        "default": "Bez označení propojení (výchozí)",
+        "unlinked": "Zvýraznit nepropojené žetony",
+        "linked": "Zvýraznit propojené žetony.",
+        "both": "Zvýraznit propojené a nepropojené žetony"
+    },
+    "TIDY5E.Settings.InitialSheetTab": {
+        "name": null,
+        "hint": null
+    },
+    "TIDY5E.Settings.HideDeathSavesFromPlayers": {
+        "name": null,
+        "hint": null
+    },
+    "TIDY5E.Settings.UseSpellSlotMarker": {
+        "name": null,
+        "hint": null
+    },
+    "TIDY5E.Settings.UseCharacterEncumbranceBar": {
+        "name": null,
+        "hint": null
+    },
+    "TIDY5E.Settings.UseNPCEncumbranceBar": {
+        "name": null,
+        "hint": null
+    },
+    "TIDY5E.Settings.UseVehicleEncumbranceBar": {
+        "name": null,
+        "hint": null
+    },
+    "TIDY5E.Settings.NPCSheetWidth": {
+        "name": null,
+        "hint": null
+    },
+    "TIDY5E.Settings.PlayerSheetWidth": {
+        "name": null,
+        "hint": null
+    },
+    "TIDY5E.Settings.VehicleSheetWidth": {
+        "name": null,
+        "hint": null
+    },
+    "TIDY5E.Settings.UseMulticlassSpellbookFilter": {
+        "name": null,
+        "hint": null
+    },
+    "TIDY5E.Settings.UseSpellClassIcons": {
+        "name": null,
+        "hint": null
+    },
+    "TIDY5E.Settings.SpellClassFilterAdditionalClasses": {
+        "name": null,
+        "hint": null
+    },
+    "TIDY5E.Settings.AllowCantripsToBePrepared": {
+        "name": null,
+        "hint": null
+    },
+    "TIDY5E.Settings.LockMoneyChanges": {
+        "name": null,
+        "hint": null
+    },
+    "TIDY5E.Settings.LockExpChanges": {
+        "name": null,
+        "hint": null
+    },
+    "TIDY5E.Settings.LockHpMaxChanges": {
+        "name": null,
+        "hint": null
+    },
+    "TIDY5E.Settings.LockLevelSelector": {
+        "name": null,
+        "hint": null
+    },
+    "TIDY5E.Settings.LockConfigureSheet": {
+        "name": null,
+        "hint": null
+    },
+    "TIDY5E.Settings.LockItemQuantity": {
+        "name": null,
+        "hint": null
+    },
+    "TIDY5E.Settings.ColorPickerEnabled": {
+        "name": null,
+        "hint": null
+    },
+    "TIDY5E.Settings.ColorPickerPrimaryAccent": {
+        "name": null
+    },
+    "TIDY5E.Settings.ColorPickerEquipped": {
+        "name": null
+    },
+    "TIDY5E.Settings.ColorPickerHpBar": {
+        "name": null
+    },
+    "TIDY5E.Settings.ColorPickerEquippedOutline": {
+        "name": null
+    },
+    "TIDY5E.Settings.ColorPickerEquippedAccent": {
+        "name": null
+    },
+    "TIDY5E.Settings.ColorPickerPrepared": {
+        "name": null
+    },
+    "TIDY5E.Settings.ColorPickerPreparedOutline": {
+        "name": null
+    },
+    "TIDY5E.Settings.ColorPickerPreparedAccent": {
+        "name": null
+    },
+    "TIDY5E.Settings.ColorPickerPact": {
+        "name": null
+    },
+    "TIDY5E.Settings.ColorPickerPactOutline": {
+        "name": null
+    },
+    "TIDY5E.Settings.ColorPickerPactAccent": {
+        "name": null
+    },
+    "TIDY5E.Settings.ColorPickerAtWill": {
+        "name": null
+    },
+    "TIDY5E.Settings.ColorPickerAtWillOutline": {
+        "name": null
+    },
+    "TIDY5E.Settings.ColorPickerAtWillAccent": {
+        "name": null
+    },
+    "TIDY5E.Settings.ColorPickerInnate": {
+        "name": null
+    },
+    "TIDY5E.Settings.ColorPickerInnateOutline": {
+        "name": null
+    },
+    "TIDY5E.Settings.ColorPickerInnateAccent": {
+        "name": null
+    },
+    "TIDY5E.Settings.ColorPickerAlwaysPrepared": {
+        "name": null
+    },
+    "TIDY5E.Settings.ColorPickerAlwaysPreparedOutline": {
+        "name": null
+    },
+    "TIDY5E.Settings.ColorPickerAlwaysPreparedAccent": {
+        "name": null
+    },
+    "TIDY5E.Settings.AllowHpMaxOverride": {
+        "name": null,
+        "hint": null
+    },
+    "TIDY5E.Settings.Reset": {
+        "name": null,
+        "hint": null,
+        "dialogs": {
+            "title": null,
+            "content": null,
+            "confirm": null,
+            "cancel": null
+        }
+    },
+    "TIDY5E.Settings.Debug": {
+        "name": null,
+        "hint": null
+    },
+    "TIDY5E.Settings.SortFavoriteItemsAlphabetically": {
+        "name": null,
+        "hint": null
+    },
+    "TIDY5E.Settings.PermanentlyUnlockCharacterSheetForGM": {
+        "name": null,
+        "hint": null,
+        "title": null
+    },
+    "TIDY5E.Settings.PermanentlyUnlockNPCSheetForGM": {
+        "name": null,
+        "hint": null,
+        "title": null
+    },
+    "TIDY5E.Settings.PermanentlyUnlockVehicleSheetForGM": {
+        "name": null,
+        "hint": null,
+        "title": null
+    },
+    "TIDY5E.ThemeSettings": {
+        "SheetMenu": {
+            "name": null,
+            "buttonLabel": null,
+            "hint": null
+        },
+        "Sheet": {
+            "title": null,
+            "header": null,
+            "useDefaultLightColors": null,
+            "useDefaultDarkColors": null,
+            "export": null,
+            "import": null,
+            "importDropHint": null,
+            "importError": null,
+            "importSuccess": null,
+            "menuLabel": null,
+            "explanation": null
+        }
+    },
+    "TIDY5E.FavoriteSpellLevelLabel": null,
+    "TIDY5E.ApplyChanges": null,
+    "TIDY5E.SaveChanges": null,
+    "TIDY5E.VehicleInMotion": null,
+    "TIDY5E.VehicleMotionless": null,
+    "TIDY5E.TotalCrewCount": null,
+    "TIDY5E.ActionsPerTurn": null,
+    "TIDY5E.SheetMenu": {
+        "label": null,
+        "themeLabel": null
+    },
+    "TIDY5E.ActiveEffectsMarkerTitle": null
 }
