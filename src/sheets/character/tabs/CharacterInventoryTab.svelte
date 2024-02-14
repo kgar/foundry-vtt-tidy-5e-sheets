@@ -16,12 +16,8 @@
   import { ExpandAllCollapseAllService } from 'src/features/expand-collapse/ExpandAllCollapseAllService';
   import UtilityToolbar from 'src/components/utility-bar/UtilityToolbar.svelte';
   import Search from 'src/components/utility-bar/Search.svelte';
-  import type {
-    UtilityToolbarCommandParams,
-    UtilityItemFilterParams,
-  } from 'src/components/utility-bar/types';
+  import type { UtilityToolbarCommandParams } from 'src/components/utility-bar/types';
   import UtilityToolbarCommand from 'src/components/utility-bar/UtilityToolbarCommand.svelte';
-  import UtilityFilters from 'src/components/utility-bar/UtilityItemFilters.svelte';
   import UtilityItemFiltersV2 from 'src/components/utility-bar/UtilityItemFiltersV2.svelte';
 
   let context = getContext<Readable<CharacterSheetContext>>('context');
@@ -75,34 +71,11 @@
       execute: () => toggleLayout(),
     },
   ];
-
-  const filters: UtilityItemFilterParams[] = [
-    {
-      filterName: 'action',
-      setName: 'inventory',
-      text: 'DND5E.Action',
-    },
-    {
-      filterName: 'bonus',
-      setName: 'inventory',
-      text: 'DND5E.BonusAction',
-    },
-    {
-      filterName: 'reaction',
-      setName: 'inventory',
-      text: 'DND5E.Reaction',
-    },
-    {
-      filterName: 'equipped',
-      setName: 'inventory',
-      text: 'DND5E.Equipped',
-    },
-  ];
 </script>
 
 <UtilityToolbar>
   <Search bind:value={searchCriteria} />
-  <UtilityItemFiltersV2 filterGroupName="inventory" />
+  <UtilityItemFiltersV2 filterGroupName={CONSTANTS.TAB_CHARACTER_INVENTORY} />
   {#each utilityBarCommands as command (command.title)}
     <UtilityToolbarCommand
       title={command.title}
