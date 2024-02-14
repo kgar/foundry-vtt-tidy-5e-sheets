@@ -38,8 +38,8 @@ import { CustomContentRenderer } from './CustomContentRenderer';
 import { ActorPortraitRuntime } from 'src/runtime/ActorPortraitRuntime';
 import { calculateSpellAttackAndDc } from 'src/utils/formula';
 import { CustomActorTraitsRuntime } from 'src/runtime/actor-traits/CustomActorTraitsRuntime';
-import { SessionStorageManager } from 'src/utils/session-storage';
 import { ItemTableToggleCacheService } from 'src/features/caching/ItemTableToggleCacheService';
+import { ItemFilterService } from 'src/features/filtering/ItemFilterService';
 
 export class Tidy5eNpcSheet
   extends dnd5e.applications.actor.ActorSheet5eNPC
@@ -58,6 +58,7 @@ export class Tidy5eNpcSheet
   expandedItems: ExpandedItemIdToLocationsMap = new Map<string, Set<string>>();
   expandedItemData: ExpandedItemData = new Map<string, ItemChatData>();
   itemTableTogglesCache: ItemTableToggleCacheService;
+  itemFilterService: ItemFilterService;
 
   constructor(...args: any[]) {
     super(...args);
@@ -65,6 +66,12 @@ export class Tidy5eNpcSheet
     this.itemTableTogglesCache = new ItemTableToggleCacheService({
       userId: game.user.id,
       documentId: this.actor.id,
+    });
+
+    this.itemFilterService = new ItemFilterService({}, this.actor);
+
+    this.itemFilterService.filterData$.subscribe(() => {
+      this.render();
     });
 
     settingStore.subscribe(() => {
@@ -106,6 +113,10 @@ export class Tidy5eNpcSheet
         ['onTabSelected', this.onTabSelected.bind(this)],
         ['onItemToggled', this.onItemToggled.bind(this)],
         ['searchFilters', new Map(this.searchFilters)],
+        [
+          'onFilter',
+          this.itemFilterService.onFilter.bind(this.itemFilterService),
+        ],
         ['onSearch', this.onSearch.bind(this)],
         ['location', ''],
         ['expandedItems', new Map(this.expandedItems)],
@@ -128,6 +139,19 @@ export class Tidy5eNpcSheet
 
   async getData(options = {}) {
     const defaultDocumentContext = await super.getData(this.options);
+
+    // Apply new filters
+    for (let section of defaultDocumentContext.spellbook) {
+      let filteredItems = [];
+      for (let item of section.spells) {
+        if (
+          this.itemFilterService.includeItem(item, CONSTANTS.TAB_NPC_SPELLBOOK)
+        ) {
+          filteredItems.push(item);
+        }
+      }
+      section.spells = filteredItems;
+    }
 
     const unlocked =
       FoundryAdapter.isActorSheetUnlocked(this.actor) &&
@@ -156,13 +180,14 @@ export class Tidy5eNpcSheet
       error('Unable to calculate max prepared spells', false, e);
     }
 
-    const context = {
+    const context: NpcSheetContext = {
       ...defaultDocumentContext,
       actions: getActorActions(this.actor),
       activateFoundryJQueryListeners: (node: HTMLElement) => {
         this._activateCoreListeners($(node));
         super.activateListeners($(node));
       },
+      actorItemFilterData: this.itemFilterService.getActorItemFilterData(),
       actorPortraitCommands:
         ActorPortraitRuntime.getEnabledPortraitMenuCommands(this.actor),
       allowEffectsManagement: true,
