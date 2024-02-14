@@ -28,26 +28,33 @@
       : ''}"
     position="bottom"
     anchor="right"
-    title={localize('TIDY5E.ItemFilters.MenuTooltip.NoActiveFilters')}
+    title={localize('TIDY5E.ItemFilters.MenuTooltip.Filters')}
     bind:open={menuOpen}
+    menuElement="div"
   >
-    <section class="filter-section">
-      {#each filters as filter (filter.text)}
-        <FilterToggleButton {filterGroupName} {filter}>
-          {localize(filter.text)}
-        </FilterToggleButton>
-      {/each}
+    <section class="filter-group">
+      <h4 class="filter-group-header">
+        {localize('TIDY5E.ItemFilters.MenuTooltip.Filters')}
+      </h4>
+      <div class="filters">
+        {#each filters as filter (filter.text)}
+          <FilterToggleButton {filterGroupName} {filter}>
+            {localize(filter.text)}
+          </FilterToggleButton>
+        {/each}
+      </div>
     </section>
     <ButtonMenuDivider />
     <section class="filter-footer flex-row justify-content-center">
       <button
         type="button"
-        class="clear-all-button flex-row extra-small-gap align-items-center"
+        class="clear-all-button pill-button flex-row extra-small-gap align-items-center"
         on:click={(ev) => {
           onFilterClearAll(filterGroupName);
           menuOpen = false;
         }}
-        ><i class="fas fa-filter-slash"></i>
+      >
+        <i class="fas fa-filter-slash"></i>
         {localize('TIDY5E.ItemFilters.ClearAll')}</button
       >
     </section>
@@ -61,12 +68,19 @@
     :global(.filter-menu-button.has-active-filters) {
       color: var(--t5e-primary-accent-color);
     }
+    :global(.filter-menu-button.has-active-filters:hover) {
+      color: var(--t5e-primary-accent-color);
+    }
   }
 
-  .filter-section {
+  .filters {
     display: flex;
     flex-wrap: wrap;
     gap: 0.25rem;
+
+    :global(> *) {
+      flex: 0;
+    }
   }
 
   section {
@@ -76,11 +90,16 @@
   // TODO: In _buttons.scss, create the pill-button and inline-pill-button classes ;)
   .clear-all-button {
     flex: 1;
-    border-color: var(--t5e-faint-color);
-    border-radius: 0.3125rem;
+    display: flex;
+    justify-content: center;
+  }
 
-    // i {
-    font-size: 0.75rem;
-    // }
+  section {
+    min-width: 18.75rem;
+    max-width: 31.25rem;
+  }
+
+  .filter-group-header {
+    margin-block-end: 0.5rem;
   }
 </style>
