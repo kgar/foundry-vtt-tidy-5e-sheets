@@ -97,3 +97,30 @@
     background: var(--t5e-light-color);
   }
 }
+
+@mixin pill-button-base {
+  line-height: 1.25rem;
+  transition: color 0.3s ease, transform 0.3s ease;
+  background: var(--t5e-faintest-color);
+  border-width: 0.0625rem;
+  border-color: var(--t5e-faint-color);
+  border-radius: 0.3125rem;
+  font-size: 0.75rem;
+  text-wrap: nowrap;
+
+  &:hover {
+    background: var(--t5e-light-color);
+  }
+
+  &:not(:focus-visible) {
+    box-shadow: none;
+  }
+
+  &:focus-visible {
+    box-shadow: var(--t5e-focus-visible-box-shadow);
+  }
+}
+
+.pill-button {
+  @include pill-button-base();
+}
