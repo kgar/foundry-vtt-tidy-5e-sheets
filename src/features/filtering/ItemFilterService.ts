@@ -1,6 +1,7 @@
 import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
 import type { ItemFilter } from 'src/runtime/types';
 import type { Item5e } from 'src/types/item';
+import type { Actor5e } from 'src/types/types';
 import { writable, type Readable, type Writable } from 'svelte/store';
 
 /*
@@ -25,6 +26,10 @@ type ItemFilterName = ItemFilter['name'];
 export type ItemFilterGroup = Record<ItemFilterName, boolean | undefined>;
 type ItemFilterGroupName = string;
 export type ItemFilterData = Record<ItemFilterGroupName, ItemFilterGroup>;
+export type ActorItemFilterData = Record<
+  string,
+  (ItemFilter & { value: true | false | null })[]
+>;
 
 export class ItemFilterService {
   // Maybe svelte runes will make this easier?
@@ -32,14 +37,17 @@ export class ItemFilterService {
 
   private _filterDataStore: Writable<ItemFilterData>;
 
+  private _actor: Actor5e;
+
   get filterData$(): Readable<ItemFilterData> {
     return this._filterDataStore;
   }
 
   // TODO: Have sheets send in what they have in session storage upon construction
-  constructor(filterData: ItemFilterData = {}) {
+  constructor(filterData: ItemFilterData = {}, actor: Actor5e) {
     this._filterData = filterData;
     this._filterDataStore = writable(this._filterData);
+    this._actor = actor;
   }
 
   includeItem(item: Item5e, filterGroup: ItemFilterGroupName): boolean {
@@ -95,5 +103,21 @@ export class ItemFilterService {
 
   private _notifyOfChange() {
     this._filterDataStore.set(this._filterData);
+  }
+
+  getActorItemFilterData(): ActorItemFilterData {
+    const actorFilters = ItemFilterRuntime.getActorFilters(this._actor);
+    const actorItemFilterData: ActorItemFilterData = {};
+    for (let [tab, filters] of Object.entries(actorFilters)) {
+      actorItemFilterData[tab] ??= [];
+      for (let filter of filters) {
+        actorItemFilterData[tab].push({
+          ...filter,
+          value: this._filterData[tab]?.[filter.name] ?? null,
+        });
+      }
+    }
+
+    return actorItemFilterData;
   }
 }
