@@ -5,14 +5,12 @@ import type {
   OnRenderParams,
   RenderScheme,
 } from 'src/api/api.types';
-import type { HtmlContent } from 'src/api/content/HtmlContent';
 import type {
   RegisteredCustomActorTrait,
   RegisteredPortraitMenuCommand,
 } from 'src/runtime/types';
 import type {
-  ItemFilterData,
-  ItemFilterGroup,
+  ActorItemFilterData,
 } from 'src/features/filtering/ItemFilterService';
 
 export type Actor5e = any;
@@ -189,6 +187,7 @@ export type ExtensibleComponent = {
 export type ActorSheetContext = {
   actions: ActorActions;
   actor: Actor5e;
+  actorItemFilterData: ActorItemFilterData;
   actorPortraitCommands: RegisteredPortraitMenuCommand[];
   allowEffectsManagement: boolean;
   appId: string;
@@ -206,7 +205,6 @@ export type ActorSheetContext = {
    */
   healthPercentage: number;
   itemContext: any;
-  itemFilters: any; // 🚫 debug; take it out!
   lockExpChanges: boolean;
   lockHpMaxChanges: boolean;
   /**
