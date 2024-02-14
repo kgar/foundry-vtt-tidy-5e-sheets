@@ -77,7 +77,7 @@ export class Tidy5eVehicleSheet
     return FoundryAdapter.mergeObject(super.defaultOptions, {
       classes: ['tidy5e-sheet', 'sheet', 'actor', CONSTANTS.SHEET_TYPE_VEHICLE],
       height: 840,
-      width: SettingsProvider.settings.vehicleSheetWidth.get(),
+      width: SettingsProvider?.settings.vehicleSheetWidth.get() ?? 740,
       scrollY: ['[data-tidy-track-scroll-y]', '.scroll-container'],
     });
   }

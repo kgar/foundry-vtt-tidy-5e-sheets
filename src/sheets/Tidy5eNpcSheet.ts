@@ -93,7 +93,7 @@ export class Tidy5eNpcSheet
     return FoundryAdapter.mergeObject(super.defaultOptions, {
       classes: ['tidy5e-sheet', 'sheet', 'actor', CONSTANTS.SHEET_TYPE_NPC],
       height: 840,
-      width: SettingsProvider.settings.npcSheetWidth.get(),
+      width: SettingsProvider?.settings.npcSheetWidth.get() ?? 740,
       scrollY: ['[data-tidy-track-scroll-y]', '.scroll-container'],
     });
   }

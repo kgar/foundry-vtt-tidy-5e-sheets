@@ -97,7 +97,7 @@ export class Tidy5eCharacterSheet
         CONSTANTS.SHEET_TYPE_CHARACTER,
       ],
       height: 840,
-      width: SettingsProvider.settings.playerSheetWidth.get(),
+      width: SettingsProvider?.settings.playerSheetWidth.get() ?? 740,
       scrollY: ['[data-tidy-track-scroll-y]', '.scroll-container'],
     });
   }
