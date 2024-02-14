@@ -1,5 +1,6 @@
 <script lang="ts">
   import type { ItemFilterService } from 'src/features/filtering/ItemFilterService';
+  import { settingStore } from 'src/settings/settings';
   import { getContext } from 'svelte';
 
   export let filter: any;
@@ -29,6 +30,7 @@
   class:exclude={filter.value === false}
   on:click={() => cycleFilterForward(filter.name, filter.value)}
   on:contextmenu={() => cycleFilterBackward(filter.name, filter.value)}
+  tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
 >
   <slot />
 </button>
