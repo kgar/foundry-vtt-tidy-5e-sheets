@@ -1,73 +1,58 @@
+import { CONSTANTS } from 'src/constants';
 import type { ItemFilter } from '../types';
+import { defaultItemFilters } from './default-item-filters';
+import type { Actor5e } from 'src/types/types';
 
 export class ItemFilterRuntime {
-  static _filters: Map<ItemFilter['name'], ItemFilter> = new Map([
-    [
-      'action',
-      {
-        name: 'action',
-        predicate: (item) => item.system.activation?.type === 'action',
-        text: 'DND5E.Action',
-      },
-    ],
-    [
-      'bonus',
-      {
-        name: 'bonus',
-        predicate: (item) => item.system.activation?.type === 'bonus',
-        text: 'DND5E.BonusAction',
-      },
-    ],
-    [
-      'reaction',
-      {
-        name: 'reaction',
-        predicate: (item) => item.system.activation?.type === 'reaction',
-        text: 'DND5E.Reaction',
-      },
-    ],
-    [
-      'ritual',
-      {
-        name: 'ritual',
-        predicate: (item) => item.system.components?.ritual === true,
-        text: 'DND5E.Ritual',
-      },
-    ],
-    [
-      'concentration',
-      {
-        name: 'concentration',
-        predicate: (item) => item.system.components?.concentration === true,
-        text: 'DND5E.AbbreviationConc',
-      },
-    ],
-    [
-      'prepared',
-      {
-        name: 'prepared',
-        predicate: (item) => {
-          return (
-            item.system.level === 0 ||
-            ['innate', 'always'].includes(item.system.preparation.mode) ||
-            item.actor?.type === 'npc' ||
-            item.system.preparation.prepared
-          );
-        },
-        text: 'DND5E.Prepared',
-      },
-    ],
-    [
-      'equipped',
-      {
-        name: 'equipped',
-        predicate: (item) => item.system.equipped === true,
-        text: 'DND5E.Equipped',
-      },
-    ],
-  ]);
+  static _registeredItemFilters: Record<string, ItemFilter> = {
+    ...defaultItemFilters,
+  };
 
-  static getFilter(filterName: ItemFilter['name']) {
-    return ItemFilterRuntime._filters.get(filterName);
+  static _actorTabFilters: Record<string, Record<string, ItemFilter[]>> = {
+    [CONSTANTS.SHEET_TYPE_CHARACTER]: {
+      [CONSTANTS.TAB_CHARACTER_INVENTORY]: [
+        defaultItemFilters.action,
+        defaultItemFilters.bonus,
+        defaultItemFilters.reaction,
+        defaultItemFilters.equipped,
+      ],
+      [CONSTANTS.TAB_CHARACTER_SPELLBOOK]: [
+        defaultItemFilters.action,
+        defaultItemFilters.bonus,
+        defaultItemFilters.reaction,
+        defaultItemFilters.concentration,
+        defaultItemFilters.prepared,
+      ],
+      [CONSTANTS.TAB_CHARACTER_FEATURES]: [
+        defaultItemFilters.action,
+        defaultItemFilters.bonus,
+        defaultItemFilters.reaction,
+      ],
+    },
+    [CONSTANTS.SHEET_TYPE_NPC]: {
+      [CONSTANTS.TAB_NPC_SPELLBOOK]: [
+        defaultItemFilters.action,
+        defaultItemFilters.bonus,
+        defaultItemFilters.reaction,
+        defaultItemFilters.concentration,
+        defaultItemFilters.prepared,
+      ],
+      [CONSTANTS.TAB_NPC_ABILITIES]: [
+        defaultItemFilters.action,
+        defaultItemFilters.bonus,
+        defaultItemFilters.reaction,
+      ],
+    },
+    [CONSTANTS.SHEET_TYPE_VEHICLE]: {
+      // No filters yet ☹
+    },
+  };
+
+  static getFilter(filterName: ItemFilter['name']): ItemFilter | undefined {
+    return ItemFilterRuntime._registeredItemFilters[filterName];
+  }
+
+  static getActorFilters(actor: Actor5e): Record<string, ItemFilter[]> {
+    return this._actorTabFilters[actor.type] ?? {};
   }
 }
