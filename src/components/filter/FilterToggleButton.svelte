@@ -25,7 +25,7 @@
 
 <button
   type="button"
-  class="transparent-inline-button filter-option"
+  class="filter-option"
   class:include={filter.value === true}
   class:exclude={filter.value === false}
   on:click={() => cycleFilterForward(filter.name, filter.value)}
@@ -37,14 +37,20 @@
 
 <style lang="scss">
   .filter-option {
-    vertical-align: top;
+    --filter-option-background: pink;
+    --filter-option-hover: blue;
+    --filter-option-include: green;
+    --filter-option-exclude: red;
+
+    // vertical-align: top;
     font-size: 0.75rem;
-    padding: 0.25rem 0.5rem;
+    padding: 0.25rem;
     flex: 0;
     background: none;
     border: none;
-    border-radius: 0;
-    border-bottom: 0.1875rem solid var(--t5e-separator-color);
+    border-radius: 5px;
+    background-color: var(--filter-option-background);
+    // border-bottom: 0.1875rem solid var(--t5e-separator-color);
     line-height: unset;
     text-wrap: nowrap;
 
@@ -52,16 +58,15 @@
     align-items: flex-start;
 
     &:hover {
-      background: none;
-      border-bottom: 0.1875rem solid var(--t5e-tertiary-color);
+      background-color: var(--filter-option-hover);
     }
 
     &.include {
-      border-bottom: 0.1875rem solid var(--t5e-primary-color);
+      background-color: var(--filter-option-include);
     }
 
     &.exclude {
-      border-bottom: 0.1875rem solid var(--t5e-warning-accent-color);
+      background-color: var(--filter-option-exclude);
     }
   }
 </style>

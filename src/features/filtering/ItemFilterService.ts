@@ -2,6 +2,7 @@ import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
 import type { ItemFilter } from 'src/runtime/types';
 import type { Item5e } from 'src/types/item';
 import type { Actor5e } from 'src/types/types';
+import { isNil } from 'src/utils/data';
 import { writable, type Readable, type Writable } from 'svelte/store';
 
 /*
@@ -89,6 +90,16 @@ export class ItemFilterService {
     } finally {
       this._notifyOfChange();
     }
+  }
+
+  onFilterClearAll(filterGroup?: ItemFilterGroupName) {
+    if (!isNil(filterGroup, '')) {
+      delete this._filterData[filterGroup!];
+    } else {
+      this._filterData = {};
+    }
+
+    this._notifyOfChange();
   }
 
   private _getGroup(filterGroup: ItemFilterGroupName) {

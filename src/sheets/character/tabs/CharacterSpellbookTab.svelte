@@ -14,9 +14,9 @@
   import UtilityToolbar from 'src/components/utility-bar/UtilityToolbar.svelte';
   import Search from 'src/components/utility-bar/Search.svelte';
   import UtilityBarCommand from 'src/components/utility-bar/UtilityToolbarCommand.svelte';
-  import UtilityItemFiltersV2 from 'src/components/utility-bar/UtilityItemFiltersV2.svelte';
   import type { UtilityToolbarCommandParams } from 'src/components/utility-bar/types';
   import { ExpandAllCollapseAllService } from 'src/features/expand-collapse/ExpandAllCollapseAllService';
+  import FilterMenu from 'src/components/filter/FilterMenu.svelte';
 
   let context = getContext<Readable<CharacterSheetContext>>('context');
 
@@ -98,7 +98,7 @@
       <SpellbookClassFilter />
     </div>
   {/if}
-  <UtilityItemFiltersV2 filterGroupName={CONSTANTS.TAB_CHARACTER_SPELLBOOK} />
+  <FilterMenu filterGroupName={CONSTANTS.TAB_CHARACTER_SPELLBOOK} />
   {#each utilityBarCommands as command (command.title)}
     <UtilityBarCommand
       title={command.title}

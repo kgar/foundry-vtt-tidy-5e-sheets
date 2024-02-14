@@ -117,6 +117,10 @@ export class Tidy5eNpcSheet
           'onFilter',
           this.itemFilterService.onFilter.bind(this.itemFilterService),
         ],
+        [
+          'onFilterClearAll',
+          this.itemFilterService.onFilterClearAll.bind(this.itemFilterService),
+        ],
         ['onSearch', this.onSearch.bind(this)],
         ['location', ''],
         ['expandedItems', new Map(this.expandedItems)],

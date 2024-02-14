@@ -18,7 +18,7 @@
   import Search from 'src/components/utility-bar/Search.svelte';
   import type { UtilityToolbarCommandParams } from 'src/components/utility-bar/types';
   import UtilityToolbarCommand from 'src/components/utility-bar/UtilityToolbarCommand.svelte';
-  import UtilityItemFiltersV2 from 'src/components/utility-bar/UtilityItemFiltersV2.svelte';
+  import FilterMenu from 'src/components/filter/FilterMenu.svelte';
 
   let context = getContext<Readable<CharacterSheetContext>>('context');
 
@@ -75,7 +75,7 @@
 
 <UtilityToolbar>
   <Search bind:value={searchCriteria} />
-  <UtilityItemFiltersV2 filterGroupName={CONSTANTS.TAB_CHARACTER_INVENTORY} />
+  <FilterMenu filterGroupName={CONSTANTS.TAB_CHARACTER_INVENTORY} />
   {#each utilityBarCommands as command (command.title)}
     <UtilityToolbarCommand
       title={command.title}

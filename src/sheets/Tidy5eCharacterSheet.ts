@@ -121,6 +121,10 @@ export class Tidy5eCharacterSheet
           'onFilter',
           this.itemFilterService.onFilter.bind(this.itemFilterService),
         ],
+        [
+          'onFilterClearAll',
+          this.itemFilterService.onFilterClearAll.bind(this.itemFilterService),
+        ],
         ['onSearch', this.onSearch.bind(this)],
         [
           'itemTableToggles',
