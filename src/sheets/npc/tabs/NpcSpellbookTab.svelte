@@ -10,9 +10,10 @@
   import UtilityToolbar from 'src/components/utility-bar/UtilityToolbar.svelte';
   import Search from 'src/components/utility-bar/Search.svelte';
   import UtilityBarCommand from 'src/components/utility-bar/UtilityToolbarCommand.svelte';
-  import UtilityFilters from 'src/components/utility-bar/UtilityItemFilters.svelte';
+  import UtilityItemFiltersV2 from 'src/components/utility-bar/UtilityItemFiltersV2.svelte';
   import type { UtilityToolbarCommandParams } from 'src/components/utility-bar/types';
   import { ExpandAllCollapseAllService } from 'src/features/expand-collapse/ExpandAllCollapseAllService';
+  import { CONSTANTS } from 'src/constants';
 
   let context = getContext<Readable<NpcSheetContext>>('context');
 
@@ -62,29 +63,11 @@
       execute: () => toggleLayout(),
     },
   ];
-
-  const filters = [
-    { setName: 'spellbook', filterName: 'action', text: 'DND5E.Action' },
-    { setName: 'spellbook', filterName: 'bonus', text: 'DND5E.BonusAction' },
-    { setName: 'spellbook', filterName: 'reaction', text: 'DND5E.Reaction' },
-    {
-      setName: 'spellbook',
-      filterName: 'concentration',
-      text: 'DND5E.AbbreviationConc',
-    },
-    { setName: 'spellbook', filterName: 'ritual', text: 'DND5E.Ritual' },
-    {
-      setName: 'spellbook',
-      filterName: 'prepared',
-      // TODO: Devise a callback alternative option for text which provides (app, element, data), so text can be data-driven if needed
-      text: 'DND5E.Prepared' /* {#if $context.preparedSpells > 0} ({$context.preparedSpells}) {/if} */,
-    },
-  ];
 </script>
 
 <UtilityToolbar>
   <Search bind:value={searchCriteria} />
-  <UtilityFilters {filters} />
+  <UtilityItemFiltersV2 filterGroupName={CONSTANTS.TAB_NPC_SPELLBOOK} />
   {#each utilityBarCommands as command (command.title)}
     <UtilityBarCommand
       title={command.title}
