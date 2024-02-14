@@ -9,7 +9,7 @@
 
   const localize = FoundryAdapter.localize;
   const context = getContext<Readable<ActorSheetContext>>('context');
-  $: filters = $context.itemFilterData['inventory'];
+  $: filters = $context.actorItemFilterData[filterGroupName];
 </script>
 
 {#if filters.length}
