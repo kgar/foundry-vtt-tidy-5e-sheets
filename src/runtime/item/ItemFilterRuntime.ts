@@ -15,12 +15,17 @@ export class ItemFilterRuntime {
         defaultItemFilters.bonus,
         defaultItemFilters.reaction,
         defaultItemFilters.equipped,
+        // Item Rarities
       ],
       [CONSTANTS.TAB_CHARACTER_SPELLBOOK]: [
         defaultItemFilters.action,
         defaultItemFilters.bonus,
         defaultItemFilters.reaction,
+        defaultItemFilters.verbal,
+        defaultItemFilters.somatic,
+        defaultItemFilters.material,
         defaultItemFilters.concentration,
+        defaultItemFilters.ritual,
         defaultItemFilters.prepared,
       ],
       [CONSTANTS.TAB_CHARACTER_FEATURES]: [
@@ -34,7 +39,11 @@ export class ItemFilterRuntime {
         defaultItemFilters.action,
         defaultItemFilters.bonus,
         defaultItemFilters.reaction,
+        defaultItemFilters.verbal,
+        defaultItemFilters.somatic,
+        defaultItemFilters.material,
         defaultItemFilters.concentration,
+        defaultItemFilters.ritual,
         defaultItemFilters.prepared,
       ],
       [CONSTANTS.TAB_NPC_ABILITIES]: [
