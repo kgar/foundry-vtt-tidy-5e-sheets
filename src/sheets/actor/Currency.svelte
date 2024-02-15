@@ -17,11 +17,7 @@
   }));
 
   function confirmConvertCurrency() {
-    return FoundryAdapter.dialogConfirm({
-      title: `${localize('DND5E.CurrencyConvert')}`,
-      content: `<p>${localize('DND5E.CurrencyConvertHint')}</p>`,
-      yes: () => $context.actor.convertCurrency(),
-    });
+    new dnd5e.applications.CurrencyManager(actor).render(true);
   }
 
   function abbreviateCurrency(currencyKey: string) {
@@ -61,7 +57,7 @@
       <button
         type="button"
         class="currency-convert"
-        title={localize('DND5E.CurrencyConvertHint')}
+        title={localize('DND5E.Currency')}
         on:click|stopPropagation|preventDefault={() => confirmConvertCurrency()}
         disabled={!$context.editable}
         tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
