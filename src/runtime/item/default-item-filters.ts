@@ -1,4 +1,4 @@
-import type { ItemFilter } from '../types';
+import type { ItemFilter } from './item.types';
 
 export const defaultItemFilters = {
   action: {

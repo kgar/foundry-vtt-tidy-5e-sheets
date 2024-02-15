@@ -6,10 +6,10 @@ import type {
   RenderScheme,
 } from 'src/api/api.types';
 import type {
-  ActorFilters,
   RegisteredCustomActorTrait,
   RegisteredPortraitMenuCommand,
 } from 'src/runtime/types';
+import type { ActorFilters } from 'src/runtime/item/item.types';
 
 export type Actor5e = any;
 

@@ -3,7 +3,7 @@ import type {
   ActorTypesToFilterTabs,
   FilterTabsToCategories,
   ItemFilter,
-} from '../types';
+} from './item.types';
 import {
   defaultItemFilters,
   getAttunementFilters,
@@ -95,8 +95,7 @@ export class ItemFilterRuntime {
     },
   };
 
-  static getFilter(filterName: ItemFilter['name']): ItemFilter | undefined {
-    // TODO: Figure out how to materialize registered item filters
+static getFilter(filterName: ItemFilter['name']): ItemFilter | undefined {
     return ItemFilterRuntime._registeredItemFilters[filterName];
   }
 
