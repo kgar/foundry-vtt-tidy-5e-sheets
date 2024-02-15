@@ -12,7 +12,7 @@ import { writable, type Readable, type Writable } from 'svelte/store';
   inventory: {
     action: true,
     reaction: false,
-    bonus: null, // Just exclude nulls
+    // nulls are just excluded
     equipped: true,
   },
   spellbook: {
@@ -25,10 +25,9 @@ import { writable, type Readable, type Writable } from 'svelte/store';
 */
 
 type ItemFilterName = ItemFilter['name'];
-export type ItemFilters = Record<ItemFilterName, boolean | undefined>;
-
+type ItemFilters = Record<ItemFilterName, boolean | undefined>;
 type ItemFilterGroupName = string;
-export type ItemFilterData = Record<ItemFilterGroupName, ItemFilters>;
+type ItemFilterData = Record<ItemFilterGroupName, ItemFilters>;
 
 export class ItemFilterService {
   // Maybe svelte runes will make this easier?
