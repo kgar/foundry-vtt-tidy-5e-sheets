@@ -118,3 +118,4 @@ export type RegisteredTraitOpenConfigurationParams = {
   data: any;
   event: Event;
 };
+

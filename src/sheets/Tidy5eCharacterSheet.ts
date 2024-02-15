@@ -20,7 +20,6 @@ import {
 } from 'src/types/types';
 import {
   applySheetAttributesToWindow,
-  applyThemeDataAttributeToWindow,
   applyTitleToWindow,
   blurUntabbableButtonsOnClick,
   maintainCustomContentInputFocus,
@@ -39,6 +38,8 @@ import { ActorPortraitRuntime } from 'src/runtime/ActorPortraitRuntime';
 import { calculateSpellAttackAndDc } from 'src/utils/formula';
 import { CustomActorTraitsRuntime } from 'src/runtime/actor-traits/CustomActorTraitsRuntime';
 import { ItemTableToggleCacheService } from 'src/features/caching/ItemTableToggleCacheService';
+import { ItemFilterService } from 'src/features/filtering/ItemFilterService';
+import { StoreSubscriptionsService } from 'src/features/store/StoreSubscriptionsService';
 
 export class Tidy5eCharacterSheet
   extends dnd5e.applications.actor.ActorSheet5eCharacter
@@ -57,22 +58,20 @@ export class Tidy5eCharacterSheet
   expandedItems: ExpandedItemIdToLocationsMap = new Map<string, Set<string>>();
   expandedItemData: ExpandedItemData = new Map<string, ItemChatData>();
   itemTableTogglesCache: ItemTableToggleCacheService;
+  itemFilterService: ItemFilterService;
+  subscriptionsService: StoreSubscriptionsService;
 
   constructor(...args: any[]) {
     super(...args);
+
+    this.subscriptionsService = new StoreSubscriptionsService();
 
     this.itemTableTogglesCache = new ItemTableToggleCacheService({
       userId: game.user.id,
       documentId: this.actor.id,
     });
 
-    settingStore.subscribe(() => {
-      this.getData().then((context) => this.context.set(context));
-      applyThemeDataAttributeToWindow(
-        SettingsProvider.settings.colorScheme.get(),
-        this.element?.get(0)
-      );
-    });
+    this.itemFilterService = new ItemFilterService({}, this.actor);
 
     this.currentTabId =
       SettingsProvider.settings.initialCharacterSheetTab.get();
@@ -91,13 +90,26 @@ export class Tidy5eCharacterSheet
         CONSTANTS.SHEET_TYPE_CHARACTER,
       ],
       height: 840,
-      width: SettingsProvider.settings.playerSheetWidth.get(),
+      width: SettingsProvider?.settings.playerSheetWidth.get() ?? 740,
       scrollY: ['[data-tidy-track-scroll-y]', '.scroll-container'],
     });
   }
 
   component: SvelteComponent | undefined;
   activateListeners(html: { get: (index: 0) => HTMLElement }) {
+    let first = true;
+    this.subscriptionsService.registerSubscriptions(
+      this.itemFilterService.filterData$.subscribe(() => {
+        if (first) return;
+        this.render();
+      }),
+      settingStore.subscribe(() => {
+        if (first) return;
+        this.render();
+      })
+    );
+    first = false;
+
     const node = html.get(0);
     this.card.set({ sheet: node, item: null, itemCardContentTemplate: null });
 
@@ -111,6 +123,14 @@ export class Tidy5eCharacterSheet
         ['onTabSelected', this.onTabSelected.bind(this)],
         ['onItemToggled', this.onItemToggled.bind(this)],
         ['searchFilters', new Map(this.searchFilters)],
+        [
+          'onFilter',
+          this.itemFilterService.onFilter.bind(this.itemFilterService),
+        ],
+        [
+          'onFilterClearAll',
+          this.itemFilterService.onFilterClearAll.bind(this.itemFilterService),
+        ],
         ['onSearch', this.onSearch.bind(this)],
         [
           'itemTableToggles',
@@ -133,6 +153,31 @@ export class Tidy5eCharacterSheet
 
   async getData(options = {}) {
     const defaultDocumentContext = await super.getData(this.options);
+
+    // Apply new filters
+    for (let section of defaultDocumentContext.inventory) {
+      // TODO: When I fully take over section preparation, move this filter() step higher up so that it is not looping in individual sections
+      section.items = this.itemFilterService.filter(
+        section.items,
+        CONSTANTS.TAB_CHARACTER_INVENTORY
+      );
+    }
+
+    for (let section of defaultDocumentContext.spellbook) {
+      // TODO: When I fully take over section preparation, move this filter() step higher up so that it is not looping in individual sections
+      section.spells = this.itemFilterService.filter(
+        section.spells,
+        CONSTANTS.TAB_CHARACTER_SPELLBOOK
+      );
+    }
+
+    for (let section of defaultDocumentContext.features) {
+      // TODO: When I fully take over section preparation, move this filter() step higher up so that it is not looping in individual sections
+      section.items = this.itemFilterService.filter(
+        section.items,
+        CONSTANTS.TAB_CHARACTER_FEATURES
+      );
+    }
 
     const unlocked =
       FoundryAdapter.isActorSheetUnlocked(this.actor) &&
@@ -244,6 +289,7 @@ export class Tidy5eCharacterSheet
       ),
       editable: defaultDocumentContext.editable,
       features: sections,
+      filterData: this.itemFilterService.getActorItemFilterData(),
       flawEnrichedHtml: await FoundryAdapter.enrichHtml(
         this.actor.system.details.flaw,
         {
@@ -434,6 +480,7 @@ export class Tidy5eCharacterSheet
 
   close(options: unknown = {}) {
     this._destroySvelteComponent();
+    this.subscriptionsService.unsubscribeAll();
     return super.close(options);
   }
 

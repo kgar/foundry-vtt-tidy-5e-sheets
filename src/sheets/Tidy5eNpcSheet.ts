@@ -15,7 +15,6 @@ import NpcSheet from './npc/NpcSheet.svelte';
 import { CONSTANTS } from 'src/constants';
 import {
   applySheetAttributesToWindow,
-  applyThemeDataAttributeToWindow,
   applyTitleToWindow,
   blurUntabbableButtonsOnClick,
   maintainCustomContentInputFocus,
@@ -38,8 +37,9 @@ import { CustomContentRenderer } from './CustomContentRenderer';
 import { ActorPortraitRuntime } from 'src/runtime/ActorPortraitRuntime';
 import { calculateSpellAttackAndDc } from 'src/utils/formula';
 import { CustomActorTraitsRuntime } from 'src/runtime/actor-traits/CustomActorTraitsRuntime';
-import { SessionStorageManager } from 'src/utils/session-storage';
 import { ItemTableToggleCacheService } from 'src/features/caching/ItemTableToggleCacheService';
+import { ItemFilterService } from 'src/features/filtering/ItemFilterService';
+import { StoreSubscriptionsService } from 'src/features/store/StoreSubscriptionsService';
 
 export class Tidy5eNpcSheet
   extends dnd5e.applications.actor.ActorSheet5eNPC
@@ -58,22 +58,20 @@ export class Tidy5eNpcSheet
   expandedItems: ExpandedItemIdToLocationsMap = new Map<string, Set<string>>();
   expandedItemData: ExpandedItemData = new Map<string, ItemChatData>();
   itemTableTogglesCache: ItemTableToggleCacheService;
+  itemFilterService: ItemFilterService;
+  subscriptionsService: StoreSubscriptionsService;
 
   constructor(...args: any[]) {
     super(...args);
+
+    this.subscriptionsService = new StoreSubscriptionsService();
 
     this.itemTableTogglesCache = new ItemTableToggleCacheService({
       userId: game.user.id,
       documentId: this.actor.id,
     });
 
-    settingStore.subscribe(() => {
-      this.getData().then((context) => this.context.set(context));
-      applyThemeDataAttributeToWindow(
-        SettingsProvider.settings.colorScheme.get(),
-        this.element?.get(0)
-      );
-    });
+    this.itemFilterService = new ItemFilterService({}, this.actor);
 
     this.currentTabId = SettingsProvider.settings.initialNpcSheetTab.get();
   }
@@ -86,13 +84,26 @@ export class Tidy5eNpcSheet
     return FoundryAdapter.mergeObject(super.defaultOptions, {
       classes: ['tidy5e-sheet', 'sheet', 'actor', CONSTANTS.SHEET_TYPE_NPC],
       height: 840,
-      width: SettingsProvider.settings.npcSheetWidth.get(),
+      width: SettingsProvider?.settings.npcSheetWidth.get() ?? 740,
       scrollY: ['[data-tidy-track-scroll-y]', '.scroll-container'],
     });
   }
 
   component: SvelteComponent | undefined;
   activateListeners(html: { get: (index: 0) => HTMLElement }) {
+    let first = true;
+    this.subscriptionsService.registerSubscriptions(
+      this.itemFilterService.filterData$.subscribe(() => {
+        if (first) return;
+        this.render();
+      }),
+      settingStore.subscribe(() => {
+        if (first) return;
+        this.render();
+      })
+    );
+    first = false;
+
     const node = html.get(0);
     this.card.set({ sheet: node, item: null, itemCardContentTemplate: null });
 
@@ -106,6 +117,14 @@ export class Tidy5eNpcSheet
         ['onTabSelected', this.onTabSelected.bind(this)],
         ['onItemToggled', this.onItemToggled.bind(this)],
         ['searchFilters', new Map(this.searchFilters)],
+        [
+          'onFilter',
+          this.itemFilterService.onFilter.bind(this.itemFilterService),
+        ],
+        [
+          'onFilterClearAll',
+          this.itemFilterService.onFilterClearAll.bind(this.itemFilterService),
+        ],
         ['onSearch', this.onSearch.bind(this)],
         ['location', ''],
         ['expandedItems', new Map(this.expandedItems)],
@@ -128,6 +147,14 @@ export class Tidy5eNpcSheet
 
   async getData(options = {}) {
     const defaultDocumentContext = await super.getData(this.options);
+
+    // Apply new filters
+    for (let section of defaultDocumentContext.spellbook) {
+      section.spells = this.itemFilterService.filter(
+        section.spells,
+        CONSTANTS.TAB_NPC_SPELLBOOK
+      );
+    }
 
     const unlocked =
       FoundryAdapter.isActorSheetUnlocked(this.actor) &&
@@ -156,7 +183,7 @@ export class Tidy5eNpcSheet
       error('Unable to calculate max prepared spells', false, e);
     }
 
-    const context = {
+    const context: NpcSheetContext = {
       ...defaultDocumentContext,
       actions: getActorActions(this.actor),
       activateFoundryJQueryListeners: (node: HTMLElement) => {
@@ -211,6 +238,7 @@ export class Tidy5eNpcSheet
         SettingsProvider.settings.useClassicControlsForNpc.get(),
       encumbrance: this.actor.system.attributes.encumbrance,
       editable: defaultDocumentContext.editable,
+      filterData: this.itemFilterService.getActorItemFilterData(),
       flawEnrichedHtml: await FoundryAdapter.enrichHtml(
         FoundryAdapter.getProperty<string>(
           this.actor,
@@ -805,6 +833,7 @@ export class Tidy5eNpcSheet
 
   close(options: unknown = {}) {
     this._destroySvelteComponent();
+    this.subscriptionsService.unsubscribeAll();
     return super.close(options);
   }
 

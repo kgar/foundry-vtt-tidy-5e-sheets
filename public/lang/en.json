@@ -736,5 +736,8 @@
   },
   "TIDY5E.ActiveEffectsMarkerTitle": "This item has active effects",
   "TIDY5E.Commands.ExpandAll": "Expand All",
-  "TIDY5E.Commands.CollapseAll": "Collapse All"
+  "TIDY5E.Commands.CollapseAll": "Collapse All",
+  "TIDY5E.ItemFilters.MenuTooltip.Filters": "Filters",
+  "TIDY5E.ItemFilters.ClearAll": "Clear All",
+  "TIDY5E.ItemFilters.Category.Miscellaneous": "Miscellaneous"
 }

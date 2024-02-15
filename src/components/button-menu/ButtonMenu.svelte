@@ -18,6 +18,7 @@
   export let buttonText: string = '';
   export let iconClass: string | StatefulIconClass | null = null;
   export let wrapperClass: string | null = null;
+  export let listClass: string | null = null;
   export let buttonClass: string | null = null;
   export let openerPadding: string | null = null;
   export let ariaLabel: string | null = null;
@@ -25,6 +26,7 @@
   export let gap: string | false = '0.25rem';
   export let position: ButtonMenuPosition = 'bottom';
   export let anchor: ButtonMenuAnchor = 'center';
+  export let menuElement: keyof HTMLElementTagNameMap = 'ul';
 
   let openerEl: HTMLElement;
   let menuStyles: string = '';
@@ -53,14 +55,14 @@
   }
 </script>
 
-<div class="button-menu-wrapper {wrapperClass}">
+<div class="button-menu-wrapper {wrapperClass ?? ''}">
   <button
     type="button"
     on:click={() => (open = !open)}
     aria-label={ariaLabel}
     bind:this={openerEl}
     {title}
-    class="button-menu-opener {buttonClass}"
+    class="button-menu-opener {buttonClass ?? ''}"
     style:padding={openerPadding}
     tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
   >
@@ -71,14 +73,15 @@
   </button>
 
   {#if open}
-    <ul
-      class="button-menu-list"
+    <svelte:element
+      this={menuElement}
+      class="button-menu-list {listClass ?? ''}"
       use:clickOutside
       on:outsideclick={() => close()}
       style={menuStyles}
       use:positionMenu
     >
       <slot />
-    </ul>
+    </svelte:element>
   {/if}
 </div>

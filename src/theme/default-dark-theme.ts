@@ -127,7 +127,7 @@ export const defaultDarkTheme: Tidy5eTheme = {
     '--t5e-encumbrance-bar-text-shadow-color': '#000',
     '--t5e-button-menu-background': 'var(--t5e-sheet-background)',
     '--t5e-button-menu-hover-color': 'var(--t5e-faint-color)',
-    '--t5e-button-menu-divider-color': 'var(--t5e-tertiary-color)',
+    '--t5e-button-menu-divider-color': 'var(--t5e-separator-color)',
     '--t5e-focus-visible-box-shadow':
       '-0.0625rem -0.0625rem 0 var(--t5e-primary-accent-color), -0.0625rem 0.0625rem 0 var(--t5e-primary-accent-color), 0.0625rem 0.0625rem 0 var(--t5e-primary-accent-color), 0.0625rem -0.0625rem 0 var(--t5e-primary-accent-color)',
     '--t5e-button-background': 'var(--t5e-faintest-color)',
