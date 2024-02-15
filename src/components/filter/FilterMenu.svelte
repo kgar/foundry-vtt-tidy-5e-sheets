@@ -80,7 +80,8 @@
   .filters {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.25rem;
+    gap: 0.125rem;
+    row-gap: 0.3125rem;
 
     :global(> *) {
       flex: 0;
