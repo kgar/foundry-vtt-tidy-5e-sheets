@@ -263,7 +263,7 @@
   .npc-abilities-content {
     display: flex;
     flex-direction: row;
-    gap: 1.5rem;
+    gap: 0.5rem;
     padding-right: 0.75rem;
     overflow-y: scroll;
 
