@@ -48,34 +48,34 @@ export class ItemFilterService {
     this._actor = actor;
   }
 
-  includeItem(item: Item5e, filterGroup: ItemFilterGroupName): boolean {
-    try {
-      const group = this._getGroup(filterGroup);
+  filter(items: Item5e[], filterGroup: ItemFilterGroupName): Item5e[] {
+    const group = this._getGroup(filterGroup) ?? {};
 
-      for (let [filterName, value] of Object.entries(group)) {
-        if (value === null) {
-          continue;
-        }
+    const filters = Object.entries(group)
+      .map(([filterName, _]) => {
+        return ItemFilterRuntime.getFilter(filterName);
+      })
+      .filter((f) => typeof f?.predicate === 'function');
 
-        const filter = ItemFilterRuntime.getFilter(filterName);
-
-        if (!filter) {
-          continue;
-        }
-
-        if (filter.predicate(item) !== value) {
-          return false;
-        }
-      }
-    } catch (e) {
-      error(
-        'An error occurred while determining whether to include an item.',
-        false,
-        e
-      );
-      debug('Item include error troubleshooting info', { item, filterGroup });
+    if (!filters.length) {
+      return items;
     }
-    return true;
+
+    return items.filter((item) => {
+      try {
+        // TODO: Expand this for allowing for different modes (AND, OR, NOR, XOR, etc.) for advanced users.
+        let include = true;
+        for (let filter of filters) {
+          include &&= filter?.predicate(item) === true;
+        }
+        return include;
+      } catch (e) {
+        error('An error occurred while filtering an item', false, e);
+        debug('Item filtering error troubleshooting info', { item, filters });
+      }
+
+      return true;
+    });
   }
 
   onFilter(

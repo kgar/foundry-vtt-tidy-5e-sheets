@@ -156,48 +156,27 @@ export class Tidy5eCharacterSheet
 
     // Apply new filters
     for (let section of defaultDocumentContext.inventory) {
-      let filteredItems = [];
-      for (let item of section.items) {
-        if (
-          this.itemFilterService.includeItem(
-            item,
-            CONSTANTS.TAB_CHARACTER_INVENTORY
-          )
-        ) {
-          filteredItems.push(item);
-        }
-      }
-      section.items = filteredItems;
+      // TODO: When I fully take over section preparation, move this filter() step higher up so that it is not looping in individual sections
+      section.items = this.itemFilterService.filter(
+        section.items,
+        CONSTANTS.TAB_CHARACTER_INVENTORY
+      );
     }
 
     for (let section of defaultDocumentContext.spellbook) {
-      let filteredItems = [];
-      for (let item of section.spells) {
-        if (
-          this.itemFilterService.includeItem(
-            item,
-            CONSTANTS.TAB_CHARACTER_SPELLBOOK
-          )
-        ) {
-          filteredItems.push(item);
-        }
-      }
-      section.spells = filteredItems;
+      // TODO: When I fully take over section preparation, move this filter() step higher up so that it is not looping in individual sections
+      section.spells = this.itemFilterService.filter(
+        section.spells,
+        CONSTANTS.TAB_CHARACTER_SPELLBOOK
+      );
     }
 
     for (let section of defaultDocumentContext.features) {
-      let filteredItems = [];
-      for (let item of section.items) {
-        if (
-          this.itemFilterService.includeItem(
-            item,
-            CONSTANTS.TAB_CHARACTER_FEATURES
-          )
-        ) {
-          filteredItems.push(item);
-        }
-      }
-      section.items = filteredItems;
+      // TODO: When I fully take over section preparation, move this filter() step higher up so that it is not looping in individual sections
+      section.items = this.itemFilterService.filter(
+        section.items,
+        CONSTANTS.TAB_CHARACTER_FEATURES
+      );
     }
 
     const unlocked =

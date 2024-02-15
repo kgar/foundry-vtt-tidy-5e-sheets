@@ -51,8 +51,8 @@ export class ItemFilterRuntime {
           defaultItemFilters.verbal,
           defaultItemFilters.somatic,
           defaultItemFilters.material,
-          defaultItemFilters.concentration,
           defaultItemFilters.ritual,
+          defaultItemFilters.concentration,
         ],
         'DND5E.SpellPreparationMode': [defaultItemFilters.prepared],
         'DND5E.SpellSchool': () => getSpellSchoolFilters(),
@@ -95,7 +95,7 @@ export class ItemFilterRuntime {
     },
   };
 
-static getFilter(filterName: ItemFilter['name']): ItemFilter | undefined {
+  static getFilter(filterName: ItemFilter['name']): ItemFilter | undefined {
     return ItemFilterRuntime._registeredItemFilters[filterName];
   }
 

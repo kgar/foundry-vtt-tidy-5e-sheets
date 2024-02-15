@@ -15,7 +15,6 @@ import NpcSheet from './npc/NpcSheet.svelte';
 import { CONSTANTS } from 'src/constants';
 import {
   applySheetAttributesToWindow,
-  applyThemeDataAttributeToWindow,
   applyTitleToWindow,
   blurUntabbableButtonsOnClick,
   maintainCustomContentInputFocus,
@@ -151,15 +150,10 @@ export class Tidy5eNpcSheet
 
     // Apply new filters
     for (let section of defaultDocumentContext.spellbook) {
-      let filteredItems = [];
-      for (let item of section.spells) {
-        if (
-          this.itemFilterService.includeItem(item, CONSTANTS.TAB_NPC_SPELLBOOK)
-        ) {
-          filteredItems.push(item);
-        }
-      }
-      section.spells = filteredItems;
+      section.spells = this.itemFilterService.filter(
+        section.spells,
+        CONSTANTS.TAB_NPC_SPELLBOOK
+      );
     }
 
     const unlocked =
