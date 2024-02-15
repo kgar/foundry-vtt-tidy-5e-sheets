@@ -46,6 +46,7 @@
     font-size: 0.75rem;
     background: none;
     text-wrap: nowrap;
+    text-transform: capitalize;
 
     &.include,
     &.include:hover {
