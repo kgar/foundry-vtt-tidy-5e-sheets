@@ -1,25 +1,22 @@
 <script lang="ts">
   import type { ItemFilterService } from 'src/features/filtering/ItemFilterService';
   import { settingStore } from 'src/settings/settings';
+  import {
+    cycleNullTrueFalseForward,
+    cycleNullTrueFalseBackward,
+  } from 'src/utils/value-cycling';
   import { getContext } from 'svelte';
 
   export let filter: any;
   export let filterGroupName: string;
   const onFilter = getContext<ItemFilterService['onFilter']>('onFilter');
 
-  // TODO: Extract null/true/false cycling into its own set of universal functions.
-  const filterCycle = [null, true, false];
-
   function cycleFilterForward(name: string, currentValue: boolean | null) {
-    const currentValueIndex = filterCycle.indexOf(currentValue);
-    const newValue = filterCycle[(currentValueIndex + 1) % filterCycle.length];
-    onFilter(filterGroupName, name, newValue);
+    onFilter(filterGroupName, name, cycleNullTrueFalseForward(currentValue));
   }
 
   function cycleFilterBackward(name: string, currentValue: boolean | null) {
-    const currentValueIndex = filterCycle.indexOf(currentValue);
-    const newValue = filterCycle.at(currentValueIndex - 1);
-    onFilter(filterGroupName, name, newValue ?? null);
+    onFilter(filterGroupName, name, cycleNullTrueFalseBackward(currentValue));
   }
 </script>
 
