@@ -92,7 +92,6 @@
     padding: 0.25rem 0.5rem;
   }
 
-  // TODO: In _buttons.scss, create the pill-button and inline-pill-button classes ;)
   .clear-all-button {
     flex: 1;
     display: flex;
