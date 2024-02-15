@@ -39,6 +39,7 @@ import { calculateSpellAttackAndDc } from 'src/utils/formula';
 import { CustomActorTraitsRuntime } from 'src/runtime/actor-traits/CustomActorTraitsRuntime';
 import { ItemTableToggleCacheService } from 'src/features/caching/ItemTableToggleCacheService';
 import { ItemFilterService } from 'src/features/filtering/ItemFilterService';
+import { StoreSubscriptionsService } from 'src/features/store/StoreSubscriptionsService';
 
 export class Tidy5eCharacterSheet
   extends dnd5e.applications.actor.ActorSheet5eCharacter
@@ -58,9 +59,12 @@ export class Tidy5eCharacterSheet
   expandedItemData: ExpandedItemData = new Map<string, ItemChatData>();
   itemTableTogglesCache: ItemTableToggleCacheService;
   itemFilterService: ItemFilterService;
+  subscriptionsService: StoreSubscriptionsService;
 
   constructor(...args: any[]) {
     super(...args);
+
+    this.subscriptionsService = new StoreSubscriptionsService();
 
     this.itemTableTogglesCache = new ItemTableToggleCacheService({
       userId: game.user.id,
@@ -68,17 +72,6 @@ export class Tidy5eCharacterSheet
     });
 
     this.itemFilterService = new ItemFilterService({}, this.actor);
-
-    this.itemFilterService.filterData$.subscribe(() => {
-      this.render();
-    });
-
-    settingStore.subscribe(() => {
-      // TODO: Thoroughly test this.
-      // TODO: Test for unintentional multiple subscriptions when switching between sheets.
-      debug('Debug test. Setting store updated.');
-      this.render();
-    });
 
     this.currentTabId =
       SettingsProvider.settings.initialCharacterSheetTab.get();
@@ -104,6 +97,19 @@ export class Tidy5eCharacterSheet
 
   component: SvelteComponent | undefined;
   activateListeners(html: { get: (index: 0) => HTMLElement }) {
+    let first = true;
+    this.subscriptionsService.registerSubscriptions(
+      this.itemFilterService.filterData$.subscribe(() => {
+        if (first) return;
+        this.render();
+      }),
+      settingStore.subscribe(() => {
+        if (first) return;
+        this.render();
+      })
+    );
+    first = false;
+
     const node = html.get(0);
     this.card.set({ sheet: node, item: null, itemCardContentTemplate: null });
 
@@ -495,6 +501,7 @@ export class Tidy5eCharacterSheet
 
   close(options: unknown = {}) {
     this._destroySvelteComponent();
+    this.subscriptionsService.unsubscribeAll();
     return super.close(options);
   }
 

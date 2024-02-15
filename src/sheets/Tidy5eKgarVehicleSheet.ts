@@ -35,6 +35,7 @@ import { getBaseActorSheet5e } from 'src/utils/class-inheritance';
 import { ActorPortraitRuntime } from 'src/runtime/ActorPortraitRuntime';
 import { CustomActorTraitsRuntime } from 'src/runtime/actor-traits/CustomActorTraitsRuntime';
 import { ItemTableToggleCacheService } from 'src/features/caching/ItemTableToggleCacheService';
+import { StoreSubscriptionsService } from 'src/features/store/StoreSubscriptionsService';
 
 export class Tidy5eVehicleSheet
   extends dnd5e.applications.actor.ActorSheet5eVehicle
@@ -49,21 +50,16 @@ export class Tidy5eVehicleSheet
   expandedItems: ExpandedItemIdToLocationsMap = new Map<string, Set<string>>();
   expandedItemData: ExpandedItemData = new Map<string, ItemChatData>();
   itemTableTogglesCache: ItemTableToggleCacheService;
+  subscriptionsService: StoreSubscriptionsService;
 
   constructor(...args: any[]) {
     super(...args);
 
+    this.subscriptionsService = new StoreSubscriptionsService();
+
     this.itemTableTogglesCache = new ItemTableToggleCacheService({
       userId: game.user.id,
       documentId: this.actor.id,
-    });
-
-    settingStore.subscribe(() => {
-      this.getData().then((context) => this.context.set(context));
-      applyThemeDataAttributeToWindow(
-        SettingsProvider.settings.colorScheme.get(),
-        this.element?.get(0)
-      );
     });
 
     this.currentTabId = SettingsProvider.settings.initialVehicleSheetTab.get();
@@ -84,6 +80,15 @@ export class Tidy5eVehicleSheet
 
   component: SvelteComponent | undefined;
   activateListeners(html: { get: (index: 0) => HTMLElement }) {
+    let first = true;
+    this.subscriptionsService.registerSubscriptions(
+      settingStore.subscribe(() => {
+        if (first) return;
+        this.render();
+      })
+    );
+    first = false;
+
     const node = html.get(0);
     this.card.set({ sheet: node, item: null, itemCardContentTemplate: null });
 
@@ -330,6 +335,7 @@ export class Tidy5eVehicleSheet
 
   close(options: unknown = {}) {
     this._destroySvelteComponent();
+    this.subscriptionsService.unsubscribeAll();
     return super.close(options);
   }
 
