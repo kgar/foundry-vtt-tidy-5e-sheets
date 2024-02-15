@@ -8,14 +8,16 @@
   import type { ItemFilterService } from 'src/features/filtering/ItemFilterService';
   import ButtonMenuDivider from 'src/components/button-menu/ButtonMenuDivider.svelte';
 
-  export let filterGroupName: string;
+  export let tabId: string;
 
   const localize = FoundryAdapter.localize;
   const context = getContext<Readable<ActorSheetContext>>('context');
   const onFilterClearAll =
     getContext<ItemFilterService['onFilterClearAll']>('onFilterClearAll');
-  $: filters = $context.actorItemFilterData[filterGroupName];
-  $: hasActiveFilters = filters.some((f) => f.value !== null);
+  $: categories = $context.filterData[tabId];
+  $: hasActiveFilters = Object.entries(categories).some(([_, filters]) =>
+    filters.some((f) => f.value !== null),
+  );
 
   $: menuOpen = false;
 </script>
@@ -25,32 +27,34 @@
     iconClass="fas fa-filter"
     buttonClass="inline-icon-button filter-menu-button {hasActiveFilters
       ? 'has-active-filters'
-      : ''}"
+      : ''} {menuOpen ? 'menu-is-open' : ''}"
     position="bottom"
     anchor="right"
     title={localize('TIDY5E.ItemFilters.MenuTooltip.Filters')}
     bind:open={menuOpen}
     menuElement="div"
   >
-    <section class="filter-group">
-      <h4 class="filter-group-header">
-        {localize('TIDY5E.ItemFilters.MenuTooltip.Filters')}
-      </h4>
-      <div class="filters">
-        {#each filters as filter (filter.text)}
-          <FilterToggleButton {filterGroupName} {filter}>
-            {localize(filter.text)}
-          </FilterToggleButton>
-        {/each}
-      </div>
-    </section>
+    {#each Object.entries(categories) as [category, filters] (category)}
+      <section class="filter-group">
+        <h4 class="filter-group-header">
+          {localize(category)}
+        </h4>
+        <div class="filters">
+          {#each filters as filter (filter.text)}
+            <FilterToggleButton filterGroupName={tabId} {filter}>
+              {localize(filter.text)}
+            </FilterToggleButton>
+          {/each}
+        </div>
+      </section>
+    {/each}
     <ButtonMenuDivider />
     <section class="filter-footer flex-row justify-content-center">
       <button
         type="button"
         class="clear-all-button pill-button flex-row extra-small-gap align-items-center"
         on:click={(ev) => {
-          onFilterClearAll(filterGroupName);
+          onFilterClearAll(tabId);
           menuOpen = false;
         }}
       >

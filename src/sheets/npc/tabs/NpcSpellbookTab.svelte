@@ -67,7 +67,7 @@
 
 <UtilityToolbar>
   <Search bind:value={searchCriteria} />
-  <FilterMenu filterGroupName={CONSTANTS.TAB_NPC_SPELLBOOK} />
+  <FilterMenu tabId={CONSTANTS.TAB_NPC_SPELLBOOK} />
   {#each utilityBarCommands as command (command.title)}
     <UtilityBarCommand
       title={command.title}

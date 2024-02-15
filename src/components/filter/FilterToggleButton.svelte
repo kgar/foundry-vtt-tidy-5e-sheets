@@ -37,8 +37,11 @@
 
 <style lang="scss">
   .filter-option.pill-button {
-    --filter-option-include-color: var(--t5e-light-color);
-    --filter-option-exclude-color: var(--t5e-warning-accent-color);
+    // TODO: Extract to color picker settings
+    --filter-option-include-background: var(--t5e-tertiary-color);
+    --filter-option-include-color: white;
+    --filter-option-exclude-background: var(--t5e-warning-accent-color);
+    --filter-option-exclude-color: white;
 
     font-size: 0.75rem;
     background: none;
@@ -46,12 +49,14 @@
 
     &.include,
     &.include:hover {
-      background-color: var(--filter-option-include-color);
+      color: var(--filter-option-include-color);
+      background: var(--filter-option-include-background);
     }
 
     &.exclude,
     &.exclude:hover {
-      background-color: var(--filter-option-exclude-color);
+      color: var(--filter-option-exclude-color);
+      background: var(--filter-option-exclude-background);
     }
   }
 </style>

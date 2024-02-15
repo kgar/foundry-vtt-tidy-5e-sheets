@@ -6,12 +6,10 @@ import type {
   RenderScheme,
 } from 'src/api/api.types';
 import type {
+  ActorFilters,
   RegisteredCustomActorTrait,
   RegisteredPortraitMenuCommand,
 } from 'src/runtime/types';
-import type {
-  ActorItemFilterData,
-} from 'src/features/filtering/ItemFilterService';
 
 export type Actor5e = any;
 
@@ -187,7 +185,6 @@ export type ExtensibleComponent = {
 export type ActorSheetContext = {
   actions: ActorActions;
   actor: Actor5e;
-  actorItemFilterData: ActorItemFilterData;
   actorPortraitCommands: RegisteredPortraitMenuCommand[];
   allowEffectsManagement: boolean;
   appId: string;
@@ -198,6 +195,7 @@ export type ActorSheetContext = {
    * When this boolean is `false`, then the sheet is effectively hard locked.
    */
   editable: boolean;
+  filterData: ActorFilters;
   /**
    * Represents remaining health as a percentage within the range of `0` to `100`.
    *

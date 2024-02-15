@@ -191,7 +191,6 @@ export class Tidy5eNpcSheet
         this._activateCoreListeners($(node));
         super.activateListeners($(node));
       },
-      actorItemFilterData: this.itemFilterService.getActorItemFilterData(),
       actorPortraitCommands:
         ActorPortraitRuntime.getEnabledPortraitMenuCommands(this.actor),
       allowEffectsManagement: true,
@@ -240,6 +239,7 @@ export class Tidy5eNpcSheet
         SettingsProvider.settings.useClassicControlsForNpc.get(),
       encumbrance: this.actor.system.attributes.encumbrance,
       editable: defaultDocumentContext.editable,
+      filterData: this.itemFilterService.getActorItemFilterData(),
       flawEnrichedHtml: await FoundryAdapter.enrichHtml(
         FoundryAdapter.getProperty<string>(
           this.actor,

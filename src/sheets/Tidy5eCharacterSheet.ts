@@ -259,7 +259,6 @@ export class Tidy5eCharacterSheet
       },
       actions: getActorActions(this.actor),
       actorClassesToImages: getActorClassesToImages(this.actor),
-      actorItemFilterData: this.itemFilterService.getActorItemFilterData(),
       actorPortraitCommands:
         ActorPortraitRuntime.getEnabledPortraitMenuCommands(this.actor),
       allowEffectsManagement: FoundryAdapter.allowCharacterEffectsManagement(
@@ -305,6 +304,7 @@ export class Tidy5eCharacterSheet
       ),
       editable: defaultDocumentContext.editable,
       features: sections,
+      filterData: this.itemFilterService.getActorItemFilterData(),
       flawEnrichedHtml: await FoundryAdapter.enrichHtml(
         this.actor.system.details.flaw,
         {

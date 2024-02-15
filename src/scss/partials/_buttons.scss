@@ -101,6 +101,7 @@
 @mixin pill-button-base {
   line-height: 1.25rem;
   transition: color 0.3s ease, transform 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.3s ease;
   background: var(--t5e-faintest-color);
   border-width: 0.0625rem;
   border-color: var(--t5e-faint-color);

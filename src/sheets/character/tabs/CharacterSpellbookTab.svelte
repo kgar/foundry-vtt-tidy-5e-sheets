@@ -98,7 +98,7 @@
       <SpellbookClassFilter />
     </div>
   {/if}
-  <FilterMenu filterGroupName={CONSTANTS.TAB_CHARACTER_SPELLBOOK} />
+  <FilterMenu tabId={CONSTANTS.TAB_CHARACTER_SPELLBOOK} />
   {#each utilityBarCommands as command (command.title)}
     <UtilityBarCommand
       title={command.title}

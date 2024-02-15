@@ -75,7 +75,7 @@
 
 <UtilityToolbar>
   <Search bind:value={searchCriteria} />
-  <FilterMenu filterGroupName={CONSTANTS.TAB_CHARACTER_INVENTORY} />
+  <FilterMenu tabId={CONSTANTS.TAB_CHARACTER_INVENTORY} />
   {#each utilityBarCommands as command (command.title)}
     <UtilityToolbarCommand
       title={command.title}

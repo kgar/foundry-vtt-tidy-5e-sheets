@@ -69,7 +69,7 @@
 
 <UtilityToolbar>
   <Search bind:value={searchCriteria} />
-  <FilterMenu filterGroupName={CONSTANTS.TAB_CHARACTER_FEATURES} />
+  <FilterMenu tabId={CONSTANTS.TAB_CHARACTER_FEATURES} />
   {#each utilityBarCommands as command (command.title)}
     <UtilityToolbarCommand
       title={command.title}

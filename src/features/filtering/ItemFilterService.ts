@@ -1,5 +1,5 @@
 import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
-import type { ItemFilter } from 'src/runtime/types';
+import type { ActorFilters, ItemFilter } from 'src/runtime/types';
 import type { Item5e } from 'src/types/item';
 import type { Actor5e } from 'src/types/types';
 import { isNil } from 'src/utils/data';
@@ -24,13 +24,10 @@ import { writable, type Readable, type Writable } from 'svelte/store';
 */
 
 type ItemFilterName = ItemFilter['name'];
-export type ItemFilterGroup = Record<ItemFilterName, boolean | undefined>;
+export type ItemFilters = Record<ItemFilterName, boolean | undefined>;
+
 type ItemFilterGroupName = string;
-export type ItemFilterData = Record<ItemFilterGroupName, ItemFilterGroup>;
-export type ActorItemFilterData = Record<
-  string,
-  (ItemFilter & { value: true | false | null })[]
->;
+export type ItemFilterData = Record<ItemFilterGroupName, ItemFilters>;
 
 export class ItemFilterService {
   // Maybe svelte runes will make this easier?
@@ -116,16 +113,19 @@ export class ItemFilterService {
     this._filterDataStore.set(this._filterData);
   }
 
-  getActorItemFilterData(): ActorItemFilterData {
+  getActorItemFilterData(): ActorFilters {
     const actorFilters = ItemFilterRuntime.getActorFilters(this._actor);
-    const actorItemFilterData: ActorItemFilterData = {};
-    for (let [tab, filters] of Object.entries(actorFilters)) {
-      actorItemFilterData[tab] ??= [];
-      for (let filter of filters) {
-        actorItemFilterData[tab].push({
-          ...filter,
-          value: this._filterData[tab]?.[filter.name] ?? null,
-        });
+    const actorItemFilterData: ActorFilters = {};
+    for (let [tab, categories] of Object.entries(actorFilters)) {
+      actorItemFilterData[tab] ??= {};
+      for (let [category, filters] of Object.entries(categories)) {
+        actorItemFilterData[tab][category] ??= [];
+        for (let filter of filters) {
+          actorItemFilterData[tab][category].push({
+            ...filter,
+            value: this._filterData[tab]?.[filter.name] ?? null,
+          });
+        }
       }
     }
 

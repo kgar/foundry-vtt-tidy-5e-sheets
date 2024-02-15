@@ -123,5 +123,21 @@ export type ItemFilter = {
   name: string;
   predicate: (item: Item5e) => boolean;
   text: string;
-  group?: string;
 };
+
+// TODO: Consider putting this into the item-filters directory
+
+type Category = string;
+type TabId = string;
+type ActorType = string;
+export type FilterCategoriesToFilters = Record<Category, ItemFilter[]>;
+// TODO: Find a better name for this
+type ConfiguredItemFilter = (ItemFilter & {
+  value: boolean | null;
+});
+
+export type FilterTabsToCategories = Record<TabId, FilterCategoriesToFilters>;
+export type ActorTypesToFilterTabs = Record<ActorType, FilterTabsToCategories>;
+
+type ActorFilterCategories = Record<Category, ConfiguredItemFilter[]>;
+export type ActorFilters = Record<TabId, ActorFilterCategories>;
