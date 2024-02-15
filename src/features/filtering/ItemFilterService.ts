@@ -51,13 +51,16 @@ export class ItemFilterService {
   filter(items: Item5e[], filterGroup: ItemFilterGroupName): Item5e[] {
     const group = this._getGroup(filterGroup) ?? {};
 
-    const filters = Object.entries(group)
-      .map(([filterName, _]) => {
-        return ItemFilterRuntime.getFilter(filterName);
+    const filterConfigs = Object.entries(group)
+      .map(([filterName, value]) => {
+        return {
+          filter: ItemFilterRuntime.getFilter(filterName),
+          value
+        };
       })
-      .filter((f) => typeof f?.predicate === 'function');
+      .filter((f) => typeof f.filter?.predicate === 'function');
 
-    if (!filters.length) {
+    if (!filterConfigs.length) {
       return items;
     }
 
@@ -65,13 +68,13 @@ export class ItemFilterService {
       try {
         // TODO: Expand this for allowing for different modes (AND, OR, NOR, XOR, etc.) for advanced users.
         let include = true;
-        for (let filter of filters) {
-          include &&= filter?.predicate(item) === true;
+        for (let filterConfig of filterConfigs) {
+          include &&= filterConfig.filter?.predicate(item) === filterConfig.value;
         }
         return include;
       } catch (e) {
         error('An error occurred while filtering an item', false, e);
-        debug('Item filtering error troubleshooting info', { item, filters });
+        debug('Item filtering error troubleshooting info', { item, filters: filterConfigs });
       }
 
       return true;
