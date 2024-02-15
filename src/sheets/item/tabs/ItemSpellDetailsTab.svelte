@@ -20,9 +20,30 @@
     $settingStore.spellClassFilterAdditionalClasses,
   );
 
-  $: spellComponents = Object.entries($context.spellComponents) as Iterable<
+  $: spellProperties = Object.entries($context.properties) as Iterable<
     [string, any]
   >;
+
+  // TODO: Handle this in a more universal way, such as, .... i dunno .... saving all the data each time we save. Live and learn 🤷‍♂️
+  function getSpellPropertiesToSave(
+    ev: Event & { currentTarget: HTMLInputElement },
+    keyToSave: string,
+  ) {
+    const allProperties = $context.properties;
+    const propertiesToSave = Object.entries(allProperties)
+      .filter(
+        ([key, value]: [string, any]) => key !== keyToSave && value.selected,
+      )
+      .map(([key, _]) => key);
+
+    if (ev.currentTarget.checked) {
+      propertiesToSave.push(keyToSave);
+    }
+
+    return {
+      'system.properties': propertiesToSave,
+    };
+  }
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -86,17 +107,17 @@
   cssClass="spell-components stacked"
   labelText={localize('DND5E.SpellComponents')}
 >
-  {#each spellComponents as [key, component]}
-    {@const checked = $context.system.components[key]}
+  {#each spellProperties as [key, property]}
     <Checkbox
-      id="{$context.appId}-system-components-{key}"
+      id="{$context.appId}-system-properties-{key}"
       labelCssClass="checkbox"
       document={$context.item}
-      field="system.components.{key}"
-      {checked}
+      field="system.properties.{key}"
+      checked={property.selected}
       disabled={!$context.editable}
+      onDataPreparing={(ev) => getSpellPropertiesToSave(ev, key)}
     >
-      {component.label}
+      {property.label}
     </Checkbox>
   {/each}
 </ItemFormGroup>
