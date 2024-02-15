@@ -105,3 +105,28 @@ export function getSpellSchoolFiltersAsObject(): Record<string, ItemFilter> {
     {}
   );
 }
+
+export function getAttunementFilters(): ItemFilter[] {
+  return [
+    {
+      name: 'attunement-required',
+      predicate: (item) => item.system.attunement === 1,
+      text: CONFIG.DND5E.attunements[1],
+    },
+    {
+      name: 'attuned',
+      predicate: (item) => item.system.attunement === 2,
+      text: CONFIG.DND5E.attunements[2],
+    },
+  ];
+}
+
+export function getAttunementFiltersAsObject(): Record<string, ItemFilter> {
+  return getAttunementFilters().reduce<Record<string, ItemFilter>>(
+    (prev, curr) => {
+      prev[curr.name] = curr;
+      return prev;
+    },
+    {}
+  );
+}

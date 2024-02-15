@@ -6,6 +6,8 @@ import type {
 } from '../types';
 import {
   defaultItemFilters,
+  getAttunementFilters,
+  getAttunementFiltersAsObject,
   getItemRarityFilters,
   getItemRarityFiltersAsObject,
   getSpellSchoolFilters,
@@ -19,6 +21,7 @@ export class ItemFilterRuntime {
   static init() {
     ItemFilterRuntime._registeredItemFilters = {
       ...defaultItemFilters,
+      ...getAttunementFiltersAsObject(),
       ...getItemRarityFiltersAsObject(),
       ...getSpellSchoolFiltersAsObject(),
     };
@@ -31,11 +34,11 @@ export class ItemFilterRuntime {
           defaultItemFilters.action,
           defaultItemFilters.bonus,
           defaultItemFilters.reaction,
-          // Item Rarities
         ],
         'DND5E.Rarity': () => getItemRarityFilters(),
-        'TIDY5E.ItemFilters.Category.Miscellaneous': [
+        'TIDY5E.ItemFilters.Category.Miscellaneous': () => [
           defaultItemFilters.equipped,
+          ...getAttunementFilters(),
         ],
       },
       [CONSTANTS.TAB_CHARACTER_SPELLBOOK]: {
