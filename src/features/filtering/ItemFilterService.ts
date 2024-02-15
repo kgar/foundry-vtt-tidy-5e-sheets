@@ -3,6 +3,7 @@ import type { ActorFilters, ItemFilter } from 'src/runtime/types';
 import type { Item5e } from 'src/types/item';
 import type { Actor5e } from 'src/types/types';
 import { isNil } from 'src/utils/data';
+import { debug, error } from 'src/utils/logging';
 import { writable, type Readable, type Writable } from 'svelte/store';
 
 /*
@@ -49,24 +50,32 @@ export class ItemFilterService {
   }
 
   includeItem(item: Item5e, filterGroup: ItemFilterGroupName): boolean {
-    const group = this._getGroup(filterGroup);
+    try {
+      const group = this._getGroup(filterGroup);
 
-    for (let [filterName, value] of Object.entries(group)) {
-      if (value === null) {
-        continue;
+      for (let [filterName, value] of Object.entries(group)) {
+        if (value === null) {
+          continue;
+        }
+
+        const filter = ItemFilterRuntime.getFilter(filterName);
+
+        if (!filter) {
+          continue;
+        }
+
+        if (filter.predicate(item) !== value) {
+          return false;
+        }
       }
-
-      const filter = ItemFilterRuntime.getFilter(filterName);
-
-      if (!filter) {
-        continue;
-      }
-
-      if (filter.predicate(item) !== value) {
-        return false;
-      }
+    } catch (e) {
+      error(
+        'An error occurred while determining whether to include an item.',
+        false,
+        e
+      );
+      debug('Item include error troubleshooting info', { item, filterGroup });
     }
-
     return true;
   }
 
@@ -116,11 +125,14 @@ export class ItemFilterService {
   getActorItemFilterData(): ActorFilters {
     const actorFilters = ItemFilterRuntime.getActorFilters(this._actor);
     const actorItemFilterData: ActorFilters = {};
+
     for (let [tab, categories] of Object.entries(actorFilters)) {
       actorItemFilterData[tab] ??= {};
+
       for (let [category, filters] of Object.entries(categories)) {
         actorItemFilterData[tab][category] ??= [];
         const effectiveFilters = Array.isArray(filters) ? filters : filters();
+
         for (let filter of effectiveFilters) {
           actorItemFilterData[tab][category].push({
             ...filter,
