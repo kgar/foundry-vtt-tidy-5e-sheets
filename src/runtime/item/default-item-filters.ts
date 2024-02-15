@@ -82,3 +82,26 @@ export function getItemRarityFiltersAsObject(): Record<string, ItemFilter> {
     {}
   );
 }
+
+export function getSpellSchoolFilters(): ItemFilter[] {
+  const itemRarity = CONFIG.DND5E.spellSchools as Record<string, string>;
+
+  return Object.entries(itemRarity).map<ItemFilter>(
+    ([key, text]) =>
+      ({
+        name: key,
+        predicate: (item) => item.system.school === key,
+        text: text,
+      } satisfies ItemFilter)
+  );
+}
+
+export function getSpellSchoolFiltersAsObject(): Record<string, ItemFilter> {
+  return getSpellSchoolFilters().reduce<Record<string, ItemFilter>>(
+    (prev, curr) => {
+      prev[curr.name] = curr;
+      return prev;
+    },
+    {}
+  );
+}

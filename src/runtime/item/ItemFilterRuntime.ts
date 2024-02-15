@@ -8,6 +8,8 @@ import {
   defaultItemFilters,
   getItemRarityFilters,
   getItemRarityFiltersAsObject,
+  getSpellSchoolFilters,
+  getSpellSchoolFiltersAsObject,
 } from './default-item-filters';
 import type { Actor5e } from 'src/types/types';
 
@@ -18,6 +20,7 @@ export class ItemFilterRuntime {
     ItemFilterRuntime._registeredItemFilters = {
       ...defaultItemFilters,
       ...getItemRarityFiltersAsObject(),
+      ...getSpellSchoolFiltersAsObject(),
     };
   }
 
@@ -49,6 +52,7 @@ export class ItemFilterRuntime {
           defaultItemFilters.ritual,
         ],
         'DND5E.SpellPreparationMode': [defaultItemFilters.prepared],
+        'DND5E.SpellSchool': () => getSpellSchoolFilters(),
       },
       [CONSTANTS.TAB_CHARACTER_FEATURES]: {
         'DND5E.ItemActivationCost': [
@@ -73,6 +77,7 @@ export class ItemFilterRuntime {
           defaultItemFilters.ritual,
         ],
         'DND5E.SpellPreparationMode': [defaultItemFilters.prepared],
+        'DND5E.SpellSchool': () => getSpellSchoolFilters(),
       },
       [CONSTANTS.TAB_NPC_ABILITIES]: {
         'DND5E.ItemActivationCost': [
