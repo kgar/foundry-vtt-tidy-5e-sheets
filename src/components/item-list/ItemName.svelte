@@ -43,7 +43,7 @@
     }
 
     &:focus-visible {
-      outline: 0.0625rem solid var(--t5ek-primary-accent-color);
+      outline: 0.0625rem solid var(--t5e-primary-accent-color);
     }
   }
 </style>

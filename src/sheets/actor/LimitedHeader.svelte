@@ -24,7 +24,7 @@
     align-items: center;
     gap: 0.625rem;
     padding: 0.625rem 1rem;
-    background: var(--t5ek-header-background);
+    background: var(--t5e-header-background);
 
     .profile {
       width: 9.375rem;
@@ -36,14 +36,14 @@
         height: 100%;
         border-radius: 0.3125rem;
         overflow: hidden;
-        border: 0.0625rem solid var(--t5ek-icon-outline-color);
+        border: 0.0625rem solid var(--t5e-icon-outline-color);
 
         &.rounded {
           border-radius: 50%;
         }
 
         img {
-          background: var(--t5ek-icon-background);
+          background: var(--t5e-icon-background);
         }
       }
     }

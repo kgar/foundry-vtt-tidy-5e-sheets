@@ -16,6 +16,7 @@ declare global {
   var ChatMessage: any;
   var CONFIG: any;
   var ContextMenu: any;
+  var DefaultSheetsConfig: any;
   var debounce: any;
   var Dialog: any;
   var dnd5e: any;
@@ -24,13 +25,17 @@ declare global {
   var FilePicker: any;
   var FormApplication: any;
   var foundry: any;
+  var fromUuid: any;
+  var fromUuidSync: any;
   var game: any;
+  var getProperty: any;
   var HandlebarsHelpers: any;
   var Hooks: any;
   var ImagePopout: any;
   var isEmpty: any;
   var Items: any;
   var mergeObject: any;
+  var ModuleManagement: any;
   var NumericTerm: any;
   var renderTemplate: any;
   var Roll: any;

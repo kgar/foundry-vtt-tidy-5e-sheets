@@ -4,7 +4,7 @@
   export let value: number | null | undefined = null;
   export let max: number | null | undefined = null;
   export let percentage: number | null = null;
-  export let color: string = 'var(--t5ek-hp-bar-color)';
+  export let color: string = 'var(--t5e-hp-bar-color)';
   export let cssClass: string | null = null;
 
   $: barPercentage = percentage ?? getPercentage(value, max);

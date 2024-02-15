@@ -58,9 +58,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background: var(--t5ek-icon-background);
-    box-shadow: 0 0 0.3125rem var(--t5ek-icon-shadow-color) inset;
-    border: 0.0625rem solid var(--t5ek-icon-outline-color);
+    background: var(--t5e-icon-background);
+    box-shadow: 0 0 0.3125rem var(--t5e-icon-shadow-color) inset;
+    border: 0.0625rem solid var(--t5e-icon-outline-color);
     width: inherit;
     height: inherit;
     font-family: inherit;

@@ -13,12 +13,12 @@
     const flagValue = FoundryAdapter.tryGetFlag(item, 'action-filter-override');
     const titleKey =
       flagValue === true
-        ? 'T5EK.Actions.OverriddenSetOverrideFalse'
+        ? 'TIDY5E.Actions.OverriddenSetOverrideFalse'
         : flagValue === false
-          ? 'T5EK.Actions.OverriddenSetOverrideTrue'
+          ? 'TIDY5E.Actions.OverriddenSetOverrideTrue'
           : isItemInActionList(item)
-            ? 'T5EK.Actions.SetOverrideFalse'
-            : 'T5EK.Actions.SetOverrideTrue';
+            ? 'TIDY5E.Actions.SetOverrideFalse'
+            : 'TIDY5E.Actions.SetOverrideTrue';
 
     title = localize(titleKey);
   }

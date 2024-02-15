@@ -9,27 +9,34 @@
   import type { ActorSheetContext } from 'src/types/types';
   import { settingStore } from 'src/settings/settings';
   import { CONSTANTS } from 'src/constants';
+  import { ActiveEffectsHelper } from 'src/utils/active-effect';
 
-  export let abbreviation: string;
+  export let id: string;
   export let ability: any;
   export let useSavingThrowProficiency: boolean;
   export let useConfigurationOption: boolean;
 
+  $: abbreviation = CONFIG.DND5E.abilities[id]?.abbreviation ?? id;
+
   let context = getContext<Readable<ActorSheetContext>>('context');
 
   const localize = FoundryAdapter.localize;
+
+  $: activeEffectApplied = ActiveEffectsHelper.isActiveEffectAppliedToField(
+    $context.actor,
+    `system.abilities.${id}.proficient`,
+  );
 </script>
 
 <div
   class="wrapper"
   data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ABILITY_SCORE_CONTAINER}
-  data-ability={abbreviation}
+  data-ability={id}
 >
   <BlockTitle
     title={ability.label}
     text={abbreviation}
-    on:roll={(event) =>
-      $context.actor.rollAbility(abbreviation, { event: event.detail })}
+    on:roll={(event) => $context.actor.rollAbility(id, { event: event.detail })}
     hideFromTabOrder={$settingStore.useDefaultSheetAttributeTabbing ||
       !$settingStore.useAccessibleKeyboardSupport}
     attributes={{
@@ -39,7 +46,7 @@
   <BlockScore>
     <TextInput
       document={$context.actor}
-      field="system.abilities.{abbreviation}.value"
+      field="system.abilities.{id}.value"
       value={ability.value}
       placeholder="10"
       selectOnFocus={true}
@@ -56,8 +63,7 @@
       class="ability-mod transparent-button"
       class:rollable={$context.editable}
       title={localize('DND5E.AbilityModifier')}
-      on:click={(event) =>
-        $context.actor.rollAbilityTest(abbreviation, { event })}
+      on:click={(event) => $context.actor.rollAbilityTest(id, { event })}
       tabindex={!$settingStore.useDefaultSheetAttributeTabbing &&
       $settingStore.useAccessibleKeyboardSupport
         ? 0
@@ -72,8 +78,7 @@
       class="ability-save transparent-button"
       class:rollable={$context.editable}
       title={localize('DND5E.ActionSave')}
-      on:click={(event) =>
-        $context.actor.rollAbilitySave(abbreviation, { event })}
+      on:click={(event) => $context.actor.rollAbilitySave(id, { event })}
       tabindex={!$settingStore.useDefaultSheetAttributeTabbing &&
       $settingStore.useAccessibleKeyboardSupport
         ? 0
@@ -91,7 +96,7 @@
           class="proficiency-toggle inline-icon-button"
           on:click={() =>
             $context.actor.update({
-              [`system.abilities.${abbreviation}.proficient`]:
+              [`system.abilities.${id}.proficient`]:
                 1 - parseInt(ability.proficient),
             })}
           tabindex={!$settingStore.useDefaultSheetAttributeTabbing &&
@@ -100,12 +105,20 @@
             : -1}
           data-tidy-sheet-part={CONSTANTS.SHEET_PARTS
             .ABILITY_SAVE_PROFICIENCY_TOGGLE}
+          disabled={activeEffectApplied}
+          data-tooltip={activeEffectApplied
+            ? localize('DND5E.ActiveEffectOverrideWarning')
+            : null}
         >
           {@html ability.icon}
         </button>
       {:else}
-        <span title={ability.hover} class="proficiency-toggle-readonly"
-          >{@html ability.icon}</span
+        <span
+          title={ability.hover}
+          class="proficiency-toggle-readonly"
+          data-tooltip={activeEffectApplied
+            ? localize('DND5E.ActiveEffectOverrideWarning')
+            : null}>{@html ability.icon}</span
         >
       {/if}
     {/if}
@@ -115,7 +128,7 @@
         class="config-button inline-icon-button"
         title={localize('DND5E.AbilityConfigure')}
         on:click={() =>
-          FoundryAdapter.renderActorAbilityConfig($context.actor, abbreviation)}
+          FoundryAdapter.renderActorAbilityConfig($context.actor, id)}
         tabindex={!$settingStore.useDefaultSheetAttributeTabbing &&
         $settingStore.useAccessibleKeyboardSupport
           ? 0
@@ -127,9 +140,9 @@
       </button>
     {/if}
   </div>
-  <span class="mod-label ability-mod-label">{localize('T5EK.AbbrMod')}</span>
+  <span class="mod-label ability-mod-label">{localize('TIDY5E.AbbrMod')}</span>
   <span class="mod-label save-mod-label"
-    >{localize('T5EK.AbbrSavingThrow')}</span
+    >{localize('TIDY5E.AbbrSavingThrow')}</span
   >
 </div>
 
@@ -153,13 +166,13 @@
       padding: 0;
       opacity: initial;
       font-size: 0.625rem;
-      box-shadow: 0 0 0 0.0625rem var(--t5ek-tertiary-color);
+      box-shadow: 0 0 0 0.0625rem var(--t5e-tertiary-color);
       border-radius: 0.3125rem;
 
       &:hover {
         border-radius: 0;
         box-shadow: 0 0 0 0.0625rem
-          var(--t5ek-ability-modifiers-hover-label-background);
+          var(--t5e-ability-modifiers-hover-label-background);
       }
 
       &:hover ~ .mod-label {
@@ -173,8 +186,8 @@
     }
 
     .ability-mod {
-      background: var(--t5ek-ability-accent-background);
-      color: var(--t5ek-ability-mod-text-color);
+      background: var(--t5e-ability-accent-background);
+      color: var(--t5e-ability-mod-text-color);
       border-radius: 0.3125rem 0 0 0.3125rem;
     }
 
@@ -193,8 +206,8 @@
 
     .ability-mod:hover,
     .ability-save:hover {
-      background: var(--t5ek-primary-accent-color);
-      color: var(--t5ek-ability-mod-save-text-hover-color);
+      background: var(--t5e-primary-accent-color);
+      color: var(--t5e-ability-mod-save-text-hover-color);
     }
 
     &:hover .ability-mod,
@@ -207,8 +220,8 @@
       position: absolute;
       top: 2.9375rem; // This is far too precise; can we make this more relative to its target?
       display: none;
-      background: var(--t5ek-ability-modifiers-hover-label-background);
-      color: var(--t5ek-ability-modifiers-label-text-color);
+      background: var(--t5e-ability-modifiers-hover-label-background);
+      color: var(--t5e-ability-modifiers-label-text-color);
       font-size: 0.625rem;
       height: 1.0625rem; // This is far too precise; can we make this more relative to its target?
       padding: 0.1875rem 0.25rem 0.125rem 0.25rem; // this padding is providing the positioning of the text. Can we do this in flexbox?
@@ -236,8 +249,6 @@
     .proficiency-toggle-readonly {
       position: absolute;
       font-size: 0.625rem;
-      opacity: 0.4;
-      transition: opacity 0.3s ease;
       left: calc(50% - 0.75rem);
       bottom: -0.875rem;
       line-height: 0.625rem;
@@ -257,10 +268,10 @@
       bottom: -0.9375rem;
       right: calc(50% - 0.75rem);
       font-size: 0.625rem;
-      color: var(--t5ek-tertiary-color);
+      color: var(--t5e-tertiary-color);
 
       &:hover {
-        color: var(--t5ek-primary-color);
+        color: var(--t5e-primary-color);
       }
     }
   }

@@ -12,13 +12,13 @@
 
 <div class="rest-container" class:rounded={$context.useRoundedPortraitStyle}>
   <div class="resting">
-    <span class="resting-icon" title={localize('T5EK.RestHint')}
+    <span class="resting-icon" title={localize('TIDY5E.RestHint')}
       ><i class="rest-icon fas fa-bed" /></span
     >
     <button
       type="button"
       class="rest icon-button"
-      title={localize('T5EK.ShortRest')}
+      title={localize('TIDY5E.ShortRest')}
       on:click={(event) => $context.actor.sheet.onShortRest(event)}
       disabled={!$context.editable}
       tabindex={!$settingStore.useDefaultSheetHpTabbing &&
@@ -31,7 +31,7 @@
     <button
       type="button"
       class="rest icon-button"
-      title={localize('T5EK.LongRest')}
+      title={localize('TIDY5E.LongRest')}
       on:click={(event) => $context.actor.sheet.onLongRest(event)}
       disabled={!$context.editable}
       tabindex={!$settingStore.useDefaultSheetHpTabbing &&
@@ -72,11 +72,11 @@
     overflow: hidden;
     border-radius: 0 0.3125rem 0 0.3125rem;
     transition: width 0.3s ease;
-    background: var(--t5ek-icon-background);
+    background: var(--t5e-icon-background);
     display: flex;
-    box-shadow: 0 0 0.625rem var(--t5ek-icon-shadow-color) inset;
-    border: 0.0625rem solid var(--t5ek-icon-outline-color);
-    color: var(--t5ek-icon-font-color);
+    box-shadow: 0 0 0.625rem var(--t5e-icon-shadow-color) inset;
+    border: 0.0625rem solid var(--t5e-icon-outline-color);
+    color: var(--t5e-icon-font-color);
 
     .resting-icon {
       flex: 0 0 2rem;

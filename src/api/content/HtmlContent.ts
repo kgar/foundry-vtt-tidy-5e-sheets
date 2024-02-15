@@ -6,6 +6,7 @@ import type {
 } from '../api.types';
 import { CustomContentBase } from './CustomContentBase';
 
+/** @category Content */
 export class HtmlContent extends CustomContentBase {
   injectParams?: CustomContentInjectParams | undefined;
   /**

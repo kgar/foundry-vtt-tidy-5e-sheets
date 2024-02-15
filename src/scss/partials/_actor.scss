@@ -6,8 +6,8 @@
 .window-content {
   padding: 0;
   margin: 0;
-  color: var(--t5ek-primary-font-color);
-  font-family: var(--t5ek-body-font-family);
+  color: var(--t5e-primary-font-color);
+  font-family: var(--t5e-body-font-family);
 
   form {
     height: 100%;
@@ -16,7 +16,7 @@
 }
 
 .note-entries article {
-  background: var(--t5ek-faintest-color);
+  background: var(--t5e-faintest-color);
   border-radius: 0.3125rem;
   padding: 0.5rem;
   position: relative;
@@ -44,13 +44,13 @@
     }
 
     &:focus-visible {
-      box-shadow: var(--t5ek-focus-visible-box-shadow);
+      box-shadow: var(--t5e-focus-visible-box-shadow);
     }
   }
 
   .section-titles {
     font-weight: 700;
-    border-bottom: 0.0625rem solid var(--t5ek-light-color);
+    border-bottom: 0.0625rem solid var(--t5e-light-color);
     padding-bottom: 0.25rem;
     margin-bottom: 0.5rem;
     flex: 0 0 0.0625rem;
@@ -99,7 +99,7 @@
     }
 
     &:focus-visible {
-      box-shadow: var(--t5ek-focus-visible-box-shadow);
+      box-shadow: var(--t5e-focus-visible-box-shadow);
     }
   }
 
@@ -146,17 +146,17 @@
   }
 
   .tox-editor-header {
-    border-bottom: 0.0625rem solid var(--t5ek-faint-color);
+    border-bottom: 0.0625rem solid var(--t5e-faint-color);
   }
 
   .tox-toolbar-overlord,
   .tox-toolbar__primary {
-    background: var(--t5ek-tinymce-toolbar-background);
-    background-color: var(--t5ek-tinymce-toolbar-background);
+    background: var(--t5e-tinymce-toolbar-background);
+    background-color: var(--t5e-tinymce-toolbar-background);
   }
 
   .tox .tox-overlord button {
-    color: var(--t5ek-tinyme-toolbar-button-color);
+    color: var(--t5e-tinyme-toolbar-button-color);
   }
 
   .editor-content {
@@ -179,29 +179,29 @@
 
 .tox-sidebar-wrap {
   padding: 0.5rem;
-  background: var(--t5ek-tinymce-sidebar-background);
+  background: var(--t5e-tinymce-sidebar-background);
 }
 
 .prosemirror menu {
   button:hover {
-    background: var(--t5ek-prosemirror-button-color);
+    background: var(--t5e-prosemirror-button-color);
   }
   .pm-dropdown {
-    background: var(--t5ek-prosemirror-button-color);
+    background: var(--t5e-prosemirror-button-color);
 
     ul {
-      background: var(--t5ek-prosemirror-button-color);
+      background: var(--t5e-prosemirror-button-color);
     }
 
     li:hover {
-      background: var(--t5ek-prosemirror-dropdown-item-hover-color);
+      background: var(--t5e-prosemirror-dropdown-item-hover-color);
     }
   }
 }
 
 .prosemirror menu button:hover,
 .prosemirror menu button.active {
-  color: var(--t5ek-primary-font-color);
+  color: var(--t5e-primary-font-color);
 }
 
 h1,
@@ -218,7 +218,7 @@ h4 {
 .attribute-name,
 .header-attribute .value,
 .attribute-value {
-  font-family: var(--t5ek-title-font-family);
+  font-family: var(--t5e-title-font-family);
 }
 
 // general elements
@@ -233,7 +233,7 @@ h4 {
 
 .rollable:hover {
   text-shadow: none;
-  color: var(--t5ek-primary-accent-color);
+  color: var(--t5e-primary-accent-color);
 }
 
 .window-content a:hover {
@@ -295,6 +295,11 @@ input {
   border-radius: 0.1875rem;
   background: none;
   transition: background 0.3s ease, border-color 0.3s ease;
+
+  &:disabled:hover {
+    // This counteracts an effect where hover causes disabled input values to jitter.
+    border-width: 0.0625rem;
+  }
 }
 
 input[type='checkbox'],
@@ -302,14 +307,14 @@ input[type='radio'],
 button,
 select {
   cursor: pointer;
-  color: var(--t5ek-primary-font-color);
+  color: var(--t5e-primary-font-color);
 
   &:not(:focus-visible) {
     box-shadow: none;
   }
 
   &:focus-visible {
-    box-shadow: var(--t5ek-focus-visible-box-shadow);
+    box-shadow: var(--t5e-focus-visible-box-shadow);
   }
 }
 
@@ -319,7 +324,7 @@ input[type='number'],
 textarea {
   box-shadow: 0 0 0 0.1875rem transparent inset;
   transition: box-shadow 0.3s ease;
-  color: var(--t5ek-primary-font-color);
+  color: var(--t5e-primary-font-color);
 }
 
 [contenteditable='true']:hover,
@@ -329,7 +334,7 @@ input[type='text']:focus,
 input[type='number']:hover,
 input[type='number']:focus,
 textarea {
-  box-shadow: 0 0 0 0.0625rem var(--t5ek-primary-accent-color) inset;
+  box-shadow: 0 0 0 0.0625rem var(--t5e-primary-accent-color) inset;
 }
 
 input[disabled],
@@ -346,10 +351,10 @@ textarea[disabled]:hover {
 }
 
 :is(input[type='text'], input[type='number'], textarea)::placeholder {
-  color: var(--t5ek-secondary-color);
+  color: var(--t5e-secondary-color);
 }
 
 button:hover,
 select:hover {
-  background: var(--t5ek-faint-color);
+  background: var(--t5e-faint-color);
 }

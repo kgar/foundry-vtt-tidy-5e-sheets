@@ -64,12 +64,12 @@
         {#if $context.tokenState === 'linked'}
           <i
             class="link-state fas fa-link"
-            title={localize('T5EK.TokenLinked')}
+            title={localize('TIDY5E.TokenLinked')}
           />
         {:else if $context.tokenState === 'unlinked'}
           <i
             class="link-state fas fa-unlink"
-            title={localize('T5EK.TokenUnlinked')}
+            title={localize('TIDY5E.TokenUnlinked')}
           />
         {/if}
 
@@ -106,7 +106,7 @@
               selectOnFocus={true}
             />
           </div>
-          <SheetMenu defaultSettingsTab={CONSTANTS.TAB_SETTINGS_NPCS} />
+          <SheetMenu defaultSettingsTab={CONSTANTS.TAB_USER_SETTINGS_NPCS} />
         </div>
       </div>
       <HorizontalLineSeparator borderColor="light" />
@@ -132,7 +132,7 @@
                 <InlineCreatureType />
                 <span
                   class="environment"
-                  title={localize('T5EK.EnvironmentTooltip', {
+                  title={localize('TIDY5E.EnvironmentTooltip', {
                     environment: $context.system.details.environment,
                   })}
                 >
@@ -168,7 +168,7 @@
                 new ActorOriginSummaryConfigFormApplication(
                   $context.actor,
                 ).render(true)}
-              title={localize('T5EK.OriginSummaryConfig')}
+              title={localize('TIDY5E.OriginSummaryConfig')}
               tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
             >
               <i class="fas fa-cog" />
@@ -192,7 +192,7 @@
         <AllowEditLock
           hint={$settingStore.permanentlyUnlockNpcSheetForGm &&
           FoundryAdapter.userIsGm()
-            ? localize('T5EK.Settings.PermanentlyUnlockNPCSheetForGM.title')
+            ? localize('TIDY5E.Settings.PermanentlyUnlockNPCSheetForGM.title')
             : null}
         />
       {/if}
@@ -217,18 +217,18 @@
     }
 
     &.linked {
-      box-shadow: 0 0 0.25rem 0.125rem var(--t5ek-linked-accent-color) inset;
+      box-shadow: 0 0 0.25rem 0.125rem var(--t5e-linked-accent-color) inset;
 
       .link-state.fa-link {
-        background: var(--t5ek-linked-light-color);
+        background: var(--t5e-linked-light-color);
       }
     }
 
     &.unlinked {
-      box-shadow: 0 0 0.25rem 0.125rem var(--t5ek-unlinked-accent-color) inset;
+      box-shadow: 0 0 0.25rem 0.125rem var(--t5e-unlinked-accent-color) inset;
 
       .link-state.fa-unlink {
-        background: var(--t5ek-unlinked-light-color);
+        background: var(--t5e-unlinked-light-color);
       }
     }
   }
@@ -239,7 +239,7 @@
     gap: 1rem;
     justify-content: center;
     padding: 0.625rem 1rem 1rem 1rem;
-    background: var(--t5ek-header-background);
+    background: var(--t5e-header-background);
   }
 
   .level-information {
@@ -247,21 +247,21 @@
     flex-direction: row;
     gap: 0.25rem;
     align-items: stretch;
-    font-family: var(--t5ek-title-font-family);
+    font-family: var(--t5e-title-font-family);
     font-weight: 700;
 
     .xp {
       font-size: 1rem;
       margin-right: 0.25rem;
-      color: var(--t5ek-secondary-color);
+      color: var(--t5e-secondary-color);
       white-space: nowrap;
       align-self: center;
     }
     .level {
       padding: 0.25rem 0.375rem;
       border-radius: 0.1875rem;
-      background: var(--t5ek-faint-color);
-      color: var(--t5ek-secondary-color);
+      background: var(--t5e-faint-color);
+      color: var(--t5e-secondary-color);
       font-size: 1.25rem;
       line-height: 1;
       height: 1.5rem;
@@ -272,7 +272,7 @@
       }
     }
     :global(.level [contenteditable]) {
-      color: var(--t5ek-secondary-color);
+      color: var(--t5e-secondary-color);
     }
   }
 

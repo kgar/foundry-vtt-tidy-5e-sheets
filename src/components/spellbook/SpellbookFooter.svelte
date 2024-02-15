@@ -9,6 +9,7 @@
   import { MaxPreparedSpellsConfigFormApplication } from 'src/applications/max-prepared-spells-config/MaxPreparedSpellsConfigFormApplication';
   import { CONSTANTS } from 'src/constants';
   import { settingStore } from 'src/settings/settings';
+  import { rollRawSpellAttack } from 'src/utils/formula';
 
   let context =
     getContext<Readable<CharacterSheetContext | NpcSheetContext>>('context');
@@ -39,14 +40,17 @@
 
       {#if includeAttackMod}
         <span>|</span>
-        <span>{FoundryAdapter.localize('T5EK.AttackMod')}:</span>
+        <span>{FoundryAdapter.localize('TIDY5E.AttackMod')}:</span>
 
         {#if $context.spellCalculations.rangedMod !== $context.spellCalculations.meleeMod}
-          <div
+          <button
+            type="button"
+            on:click={(ev) => rollRawSpellAttack(ev, $context.actor, 'rsak')}
+            tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
             data-tooltip="{FoundryAdapter.localize(
-              'T5EK.RangedSpellAttackMod',
+              'TIDY5E.RangedSpellAttackMod',
             )}: {$context.spellCalculations.rangedTooltip}"
-            class="spell-attack-mod-container"
+            class="inline-transparent-button spell-attack-mod-button rollable"
           >
             <i class="fa-solid fa-wand-magic-sparkles"></i>
             <span
@@ -58,12 +62,15 @@
             >
               {$context.spellCalculations.rangedMod}
             </span>
-          </div>
-          <div
+          </button>
+          <button
+            type="button"
+            on:click={(ev) => rollRawSpellAttack(ev, $context.actor, 'msak')}
+            tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
             data-tooltip="{FoundryAdapter.localize(
-              'T5EK.MeleeSpellAttackMod',
+              'TIDY5E.MeleeSpellAttackMod',
             )}: {$context.spellCalculations.meleeTooltip}"
-            class="spell-attack-mod-container"
+            class="inline-transparent-button spell-attack-mod-button rollable"
           >
             <i class="fa-solid fa-hand-sparkles"></i>
             <span
@@ -74,13 +81,16 @@
             >
               {$context.spellCalculations.meleeMod}
             </span>
-          </div>
+          </button>
         {:else}
-          <div
+          <button
+            type="button"
+            on:click={(ev) => rollRawSpellAttack(ev, $context.actor)}
+            tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
             data-tooltip="{FoundryAdapter.localize(
-              'T5EK.SpellAttackMod',
+              'TIDY5E.SpellAttackMod',
             )}: {$context.spellCalculations.rangedTooltip}"
-            class="spell-attack-mod-container"
+            class="inline-transparent-button spell-attack-mod-button rollable"
           >
             <span
               class="spell-attack-mod"
@@ -90,7 +100,7 @@
             >
               {$context.spellCalculations.rangedMod}
             </span>
-          </div>
+          </button>
         {/if}
       {/if}
     </div>
@@ -101,11 +111,11 @@
       class="transparent-button secondary-footer-field highlight-on-hover"
       on:click={() =>
         new MaxPreparedSpellsConfigFormApplication($context.actor).render(true)}
-      title={localize('T5EK.MaxPreparedSpellsConfig.ButtonTooltip')}
+      title={localize('TIDY5E.MaxPreparedSpellsConfig.ButtonTooltip')}
       disabled={!$context.editable || $context.lockSensitiveFields}
       tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
     >
-      <p>{localize('T5EK.PreparedSpells')}</p>
+      <p>{localize('TIDY5E.PreparedSpells')}</p>
       <span class="spells-prepared">{$context.preparedSpells ?? 0}</span>
       /
       <span class="spells-max-prepared"
@@ -120,6 +130,7 @@
       field="system.attributes.spellcasting"
       value={$context.system.attributes.spellcasting}
       disabled={!$context.editable || $context.lockSensitiveFields}
+      blankValue=""
     >
       <option value="" selected={!$context.system.attributes.spellcasting}
         >{localize('DND5E.None')}</option
@@ -148,7 +159,7 @@
 </TabFooter>
 
 <style lang="scss">
-  :global(.tidy5e-kgar .spellbook-footer) {
+  :global(.tidy5e-sheet .spellbook-footer) {
     min-height: 2.5rem;
   }
 
@@ -159,20 +170,25 @@
     font-size: 0.75rem;
   }
 
-  .spell-attack-mod-container,
+  .spell-attack-mod-button,
   .dc-container {
     display: flex;
     align-items: center;
     gap: 0.125rem;
   }
 
-  .spell-attack-mod-container i {
+  .spell-attack-mod-button {
+    font-family: var(--t5e-title-font-family);
+    font-weight: 700;
+  }
+
+  .spell-attack-mod-button i {
     font-size: 1rem;
   }
 
   h3 {
     font-size: 1.25rem;
-    font-family: var(--t5ek-title-font-family);
+    font-family: var(--t5e-title-font-family);
   }
 
   p {
@@ -184,7 +200,7 @@
   .spellcasting-attribute :global(select) {
     height: 1.1875rem;
     font-size: 0.75rem;
-    font-family: var(--t5ek-body-font-family);
+    font-family: var(--t5e-body-font-family);
   }
 
   .spellcasting-level-container :global(.spellcasting-level) {

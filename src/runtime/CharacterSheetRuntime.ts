@@ -22,7 +22,7 @@ export class CharacterSheetRuntime {
   private static _content: RegisteredContent<CharacterSheetContext>[] = [];
   private static _tabs: RegisteredTab<CharacterSheetContext>[] = [
     {
-      title: 'T5EK.Actions.TabName',
+      title: 'TIDY5E.Actions.TabName',
       content: {
         component: ActorActionsTab,
         type: 'svelte',
@@ -86,7 +86,7 @@ export class CharacterSheetRuntime {
     },
     {
       id: CONSTANTS.TAB_CHARACTER_JOURNAL,
-      title: 'T5EK.JournalTabName',
+      title: 'TIDY5E.JournalTabName',
       content: {
         component: ActorJournalTab,
         type: 'svelte',

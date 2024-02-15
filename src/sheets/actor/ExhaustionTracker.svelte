@@ -18,6 +18,7 @@
   export let level: number;
   export let onlyShowOnHover: boolean = false;
   export let exhaustionConfig: SpecificExhaustionConfig;
+  export let isActiveEffectApplied: boolean;
 
   let iconsWithSeverities: IconWithSeverity[];
   $: {
@@ -55,7 +56,7 @@
 <div
   class="exhaustion-container {severityClass} {cssClass}"
   class:only-show-on-hover={onlyShowOnHover}
-  style="--t5ek-exhaustion-expanded-width: {exhaustionExpandedWidth}"
+  style="--t5e-exhaustion-expanded-width: {exhaustionExpandedWidth}"
 >
   <div class="exhaustion-wrap {radiusClass}">
     <div
@@ -75,8 +76,11 @@
             class:colorized={i <= level}
             title={localize(exhaustionConfig.hints[i] ?? '')}
             on:click={() => dispatch('levelSelected', { level: i })}
-            disabled={!$context.editable}
+            disabled={!$context.editable || isActiveEffectApplied}
             tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+            data-tooltip={isActiveEffectApplied
+              ? localize('DND5E.ActiveEffectOverrideWarning')
+              : null}
           >
             {i}
           </button>
@@ -97,7 +101,7 @@
     height: 2.125rem;
     width: 2.125rem;
     z-index: 1;
-    color: var(--t5ek-icon-font-color);
+    color: var(--t5e-icon-font-color);
 
     .level-display {
       display: block;
@@ -107,9 +111,9 @@
       text-align: center;
       font-size: 0.875rem;
       position: absolute;
-      background: var(--t5ek-icon-background);
-      box-shadow: 0 0 0.5rem var(--t5ek-icon-shadow-color) inset;
-      border: 0.0625rem solid var(--t5ek-icon-outline-color);
+      background: var(--t5e-icon-background);
+      box-shadow: 0 0 0.5rem var(--t5e-icon-shadow-color) inset;
+      border: 0.0625rem solid var(--t5e-icon-outline-color);
       top: -0.125rem;
       left: -0.125rem;
       border-radius: 50%;
@@ -118,7 +122,7 @@
 
     &:hover .exhaustion-wrap,
     .exhaustion-wrap:has(button:focus-visible) {
-      width: var(--t5ek-exhaustion-expanded-width);
+      width: var(--t5e-exhaustion-expanded-width);
     }
 
     .exhaustion-wrap {
@@ -126,10 +130,10 @@
       width: 2.125rem;
       overflow: hidden;
       transition: width 0.3s ease;
-      background: var(--t5ek-icon-background);
+      background: var(--t5e-icon-background);
       display: flex;
-      box-shadow: 0 0 0.625rem var(--t5ek-icon-shadow-color) inset;
-      border: 0.0625rem solid var(--t5ek-icon-outline-color);
+      box-shadow: 0 0 0.625rem var(--t5e-icon-shadow-color) inset;
+      border: 0.0625rem solid var(--t5e-icon-outline-color);
 
       &.rounded {
         border-radius: 1.25rem;
@@ -163,8 +167,8 @@
             border-radius: 0;
 
             &:is(:hover, :focus-visible) {
-              background: var(--t5ek-tertiary-color);
-              color: var(--t5ek-primary-font-color);
+              background: var(--t5e-tertiary-color);
+              color: var(--t5e-primary-font-color);
             }
           }
         }
@@ -172,7 +176,7 @@
     }
 
     .exhaustion-levels .exhaustion-level-option:not(.colorized) {
-      background: var(--t5ek-light-color);
+      background: var(--t5e-light-color);
     }
 
     &.severity-0 .colorized {
@@ -180,18 +184,18 @@
     }
 
     &.severity-1 .colorized {
-      background: var(--t5ek-exhaustion-severity1-background);
-      color: var(--t5ek-exhaustion-severity1-color);
+      background: var(--t5e-exhaustion-severity1-background);
+      color: var(--t5e-exhaustion-severity1-color);
     }
 
     &.severity-2 .colorized {
-      background: var(--t5ek-exhaustion-severity2-background);
-      color: var(--t5ek-exhaustion-severity2-color);
+      background: var(--t5e-exhaustion-severity2-background);
+      color: var(--t5e-exhaustion-severity2-color);
     }
 
     &.severity-3 .colorized {
-      background: var(--t5ek-exhaustion-severity3-background);
-      color: var(--t5ek-exhaustion-severity3-color);
+      background: var(--t5e-exhaustion-severity3-background);
+      color: var(--t5e-exhaustion-severity3-color);
     }
   }
 </style>

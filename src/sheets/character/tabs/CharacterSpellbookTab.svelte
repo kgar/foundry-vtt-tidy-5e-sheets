@@ -1,10 +1,6 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { CharacterSheetContext, ItemLayoutMode } from 'src/types/types';
-  import ItemFilterSearch from '../../../components/item-list/ItemFilterSearch.svelte';
-  import ItemFilters from '../../../components/item-list/ItemFilters.svelte';
-  import ItemFilterOption from '../../../components/item-list/ItemFilterOption.svelte';
-  import ItemFilterLayoutToggle from '../../../components/item-list/ItemFilterLayoutToggle.svelte';
   import SpellbookList from '../../../components/spellbook/SpellbookList.svelte';
   import SpellbookFooter from '../../../components/spellbook/SpellbookFooter.svelte';
   import SpellbookGrid from '../../../components/spellbook/SpellbookGrid.svelte';
@@ -15,6 +11,12 @@
   import Notice from '../../../components/notice/Notice.svelte';
   import { settingStore } from 'src/settings/settings';
   import { CONSTANTS } from 'src/constants';
+  import UtilityToolbar from 'src/components/utility-bar/UtilityToolbar.svelte';
+  import Search from 'src/components/utility-bar/Search.svelte';
+  import UtilityBarCommand from 'src/components/utility-bar/UtilityToolbarCommand.svelte';
+  import type { UtilityToolbarCommandParams } from 'src/components/utility-bar/types';
+  import { ExpandAllCollapseAllService } from 'src/features/expand-collapse/ExpandAllCollapseAllService';
+  import FilterMenu from 'src/components/filter/FilterMenu.svelte';
 
   let context = getContext<Readable<CharacterSheetContext>>('context');
 
@@ -60,43 +62,53 @@
       (count: number, section: any) => count + section.spells.length,
       0,
     ) === 0;
+
+  const expandAllCollapseAllService = ExpandAllCollapseAllService.initService();
+  let utilityBarCommands: UtilityToolbarCommandParams[] = [];
+  $: utilityBarCommands = [
+    {
+      title: localize('TIDY5E.Commands.ExpandAll'),
+      iconClass: 'fas fa-angles-down',
+      execute: () => expandAllCollapseAllService.expandAll(),
+    },
+    {
+      title: localize('TIDY5E.Commands.CollapseAll'),
+      iconClass: 'fas fa-angles-up',
+      execute: () => expandAllCollapseAllService.collapseAll(),
+    },
+    {
+      title: localize('TIDY5E.ListLayout'),
+      iconClass: 'fas fa-th-list toggle-list',
+      visible: layoutMode === 'grid',
+      execute: () => toggleLayout(),
+    },
+    {
+      title: localize('TIDY5E.GridLayout'),
+      iconClass: 'fas fa-th-large toggle-grid',
+      visible: layoutMode === 'list',
+      execute: () => toggleLayout(),
+    },
+  ];
 </script>
 
-<ItemFilters>
-  <ItemFilterSearch
-    bind:searchCriteria
-    cssClass="align-self-flex-end"
-    placeholder={localize('T5EK.Search')}
-  />
+<UtilityToolbar>
+  <Search bind:value={searchCriteria} />
   {#if $settingStore.useMulticlassSpellbookFilter}
-    <li class="spellbook-class-filter">
+    <div class="spellbook-class-filter">
       <SpellbookClassFilter />
-    </li>
+    </div>
   {/if}
-  <ItemFilterOption setName="spellbook" filterName="action">
-    {localize('DND5E.Action')}
-  </ItemFilterOption>
-  <ItemFilterOption setName="spellbook" filterName="bonus">
-    {localize('DND5E.BonusAction')}
-  </ItemFilterOption>
-  <ItemFilterOption setName="spellbook" filterName="reaction">
-    {localize('DND5E.Reaction')}
-  </ItemFilterOption>
-  <ItemFilterOption setName="spellbook" filterName="concentration">
-    {localize('DND5E.AbbreviationConc')}
-  </ItemFilterOption>
-  <ItemFilterOption setName="spellbook" filterName="ritual">
-    {localize('DND5E.Ritual')}
-  </ItemFilterOption>
-  <ItemFilterOption setName="spellbook" filterName="prepared">
-    {localize('DND5E.Prepared')}
-    {#if $context.preparedSpells > 0}
-      ({$context.preparedSpells})
-    {/if}
-  </ItemFilterOption>
-  <ItemFilterLayoutToggle mode={layoutMode} on:toggle={() => toggleLayout()} />
-</ItemFilters>
-
+  <FilterMenu tabId={CONSTANTS.TAB_CHARACTER_SPELLBOOK} />
+  {#each utilityBarCommands as command (command.title)}
+    <UtilityBarCommand
+      title={command.title}
+      iconClass={command.iconClass}
+      text={command.text}
+      visible={command.visible ?? true}
+      on:execute={(ev) => command.execute?.(ev.detail)}
+    />
+  {/each}
+</UtilityToolbar>
 <div
   class="scroll-container flex-column small-gap"
   data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEMS_CONTAINER}
@@ -119,7 +131,7 @@
   {/if}
 
   {#if noSpells && !$context.unlocked}
-    <Notice>{localize('T5EK.EmptySection')}</Notice>
+    <Notice>{localize('TIDY5E.EmptySection')}</Notice>
   {/if}
 </div>
 

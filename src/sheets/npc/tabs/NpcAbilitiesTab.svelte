@@ -28,14 +28,13 @@
   import SpellbookFooter from 'src/components/spellbook/SpellbookFooter.svelte';
   import ItemFilterLayoutToggle from 'src/components/item-list/ItemFilterLayoutToggle.svelte';
   import SpellbookGrid from 'src/components/spellbook/SpellbookGrid.svelte';
-  import type { ItemCardContentComponent } from 'src/types/item';
-  import InventoryItemCardContent from 'src/components/item-info-card/InventoryItemCardContent.svelte';
   import { settingStore } from 'src/settings/settings';
   import EncumbranceBar from '../../actor/EncumbranceBar.svelte';
   import TabFooter from '../../actor/TabFooter.svelte';
   import AmmoSelector from '../../actor/AmmoSelector.svelte';
   import RechargeControl from 'src/components/item-list/controls/RechargeControl.svelte';
   import ActionFilterOverrideControl from 'src/components/item-list/controls/ActionFilterOverrideControl.svelte';
+  import { declareLocation } from 'src/types/location-awareness';
 
   let context = getContext<Readable<NpcSheetContext>>('context');
 
@@ -57,6 +56,8 @@
 
   let showNoSpellsView = false;
   const localize = FoundryAdapter.localize;
+
+  declareLocation('abilities');
 </script>
 
 <section class="npc-abilities-content" data-tidy-track-scroll-y>
@@ -81,94 +82,101 @@
     {/if}
     {#each $context.features as section}
       {#if $context.unlocked || section.items.length}
-        <ItemTable>
-          <ItemTableHeaderRow>
-            <ItemTableColumn primary={true}>
-              {localize(section.label)}
-            </ItemTableColumn>
-            {#if section.hasActions}
-              <ItemTableColumn baseWidth="3.125rem">
-                {localize('DND5E.Uses')}
+        <ItemTable location={section.label}>
+          <svelte:fragment slot="header">
+            <ItemTableHeaderRow>
+              <ItemTableColumn primary={true}>
+                {localize(section.label)}
               </ItemTableColumn>
-              <ItemTableColumn baseWidth="7.5rem">
-                {localize('DND5E.Usage')}
-              </ItemTableColumn>
-            {/if}
-            {#if $context.editable && $context.useClassicControls}
-              <ItemTableColumn baseWidth="7.5rem" />
-            {/if}
-          </ItemTableHeaderRow>
-          {#each section.items as item}
-            {@const ctx = $context.itemContext[item.id]}
-            <ItemTableRow
-              let:toggleSummary
-              on:mousedown={(event) =>
-                FoundryAdapter.editOnMiddleClick(event.detail, item)}
-              contextMenu={{
-                type: CONSTANTS.CONTEXT_MENU_TYPE_ITEMS,
-                id: item.id,
-              }}
-              {item}
-              cssClass={FoundryAdapter.getInventoryRowClasses(item, ctx)}
-            >
-              <ItemTableCell primary={true}>
-                <ItemUseButton disabled={!$context.editable} {item} />
-                <ItemName
-                  on:toggle={() => toggleSummary($context.actor)}
-                  cssClass="extra-small-gap"
-                  {item}
-                >
-                  <span
-                    class="truncate"
-                    data-tidy-item-name={item.name}
-                    data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_NAME}
-                    >{item.name}</span
-                  >
-                  {#if item.system?.properties?.amm}
-                    <span class="ammo">
-                      <AmmoSelector {item} />
-                    </span>
-                  {/if}
-                  <ListItemQuantity {item} {ctx} />
-                </ItemName>
-              </ItemTableCell>
               {#if section.hasActions}
-                <ItemTableCell baseWidth="3.125rem">
-                  {#if ctx?.isOnCooldown}
-                    <RechargeControl {item} />
-                  {:else if item.system.recharge?.value}
-                    <i class="fas fa-bolt" title={localize('DND5E.Charged')} />
-                  {:else if ctx?.hasUses}
-                    <ItemUses {item} />
-                  {:else}
-                    <ItemAddUses {item} />
-                  {/if}
-                </ItemTableCell>
-                <ItemTableCell baseWidth="7.5rem">
-                  {#if item.system.activation.type}
-                    {item.labels.activation}
-                  {/if}
-                </ItemTableCell>
+                <ItemTableColumn baseWidth="3.125rem">
+                  {localize('DND5E.Uses')}
+                </ItemTableColumn>
+                <ItemTableColumn baseWidth="7.5rem">
+                  {localize('DND5E.Usage')}
+                </ItemTableColumn>
               {/if}
               {#if $context.editable && $context.useClassicControls}
-                <ItemTableCell baseWidth="7.5rem">
-                  <ItemControls>
-                    <ItemEditControl {item} />
-                    {#if $context.unlocked}
-                      <ItemDuplicateControl {item} />
-                      <ItemDeleteControl {item} />
-                    {/if}
-                    {#if $context.useActionsFeature}
-                      <ActionFilterOverrideControl {item} />
-                    {/if}
-                  </ItemControls>
-                </ItemTableCell>
+                <ItemTableColumn baseWidth="7.5rem" />
               {/if}
-            </ItemTableRow>
-          {/each}
-          {#if $context.unlocked && section.dataset}
-            <ItemTableFooter actor={$context.actor} {section} isItem={true} />
-          {/if}
+            </ItemTableHeaderRow>
+          </svelte:fragment>
+          <svelte:fragment slot="body">
+            {#each section.items as item}
+              {@const ctx = $context.itemContext[item.id]}
+              <ItemTableRow
+                let:toggleSummary
+                on:mousedown={(event) =>
+                  FoundryAdapter.editOnMiddleClick(event.detail, item)}
+                contextMenu={{
+                  type: CONSTANTS.CONTEXT_MENU_TYPE_ITEMS,
+                  id: item.id,
+                }}
+                {item}
+                cssClass={FoundryAdapter.getInventoryRowClasses(item, ctx)}
+              >
+                <ItemTableCell primary={true}>
+                  <ItemUseButton disabled={!$context.editable} {item} />
+                  <ItemName
+                    on:toggle={() => toggleSummary($context.actor)}
+                    cssClass="extra-small-gap"
+                    {item}
+                  >
+                    <span
+                      class="truncate"
+                      data-tidy-item-name={item.name}
+                      data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_NAME}
+                      >{item.name}</span
+                    >
+                    {#if item.system?.properties?.amm}
+                      <span class="ammo">
+                        <AmmoSelector {item} />
+                      </span>
+                    {/if}
+                    <ListItemQuantity {item} {ctx} />
+                  </ItemName>
+                </ItemTableCell>
+                {#if section.hasActions}
+                  <ItemTableCell baseWidth="3.125rem">
+                    {#if ctx?.isOnCooldown}
+                      <RechargeControl {item} />
+                    {:else if item.system.recharge?.value}
+                      <i
+                        class="fas fa-bolt"
+                        title={localize('DND5E.Charged')}
+                      />
+                    {:else if ctx?.hasUses}
+                      <ItemUses {item} />
+                    {:else}
+                      <ItemAddUses {item} />
+                    {/if}
+                  </ItemTableCell>
+                  <ItemTableCell baseWidth="7.5rem">
+                    {#if item.system.activation.type}
+                      {item.labels.activation}
+                    {/if}
+                  </ItemTableCell>
+                {/if}
+                {#if $context.editable && $context.useClassicControls}
+                  <ItemTableCell baseWidth="7.5rem">
+                    <ItemControls>
+                      <ItemEditControl {item} />
+                      {#if $context.unlocked}
+                        <ItemDuplicateControl {item} />
+                        <ItemDeleteControl {item} />
+                      {/if}
+                      {#if $context.useActionsFeature}
+                        <ActionFilterOverrideControl {item} />
+                      {/if}
+                    </ItemControls>
+                  </ItemTableCell>
+                {/if}
+              </ItemTableRow>
+            {/each}
+            {#if $context.unlocked && section.dataset}
+              <ItemTableFooter actor={$context.actor} {section} isItem={true} />
+            {/if}
+          </svelte:fragment>
         </ItemTable>
       {/if}
     {/each}
@@ -248,7 +256,7 @@
     flex: 1;
   }
 
-  :global(.tidy5e-kgar .abilities-footer) {
+  :global(.tidy5e-sheet .abilities-footer) {
     flex: 0;
   }
 
@@ -282,10 +290,10 @@
       padding: 0 0.25rem 0.125rem 0;
       margin-top: 0.5rem;
       line-height: 1;
-      border: 0.0625rem solid var(--t5ek-light-color);
+      border: 0.0625rem solid var(--t5e-light-color);
       border-left: none;
       border-right: none;
-      font-family: var(--t5ek-title-font-family);
+      font-family: var(--t5e-title-font-family);
       font-weight: 700;
       font-size: 1.125rem;
 

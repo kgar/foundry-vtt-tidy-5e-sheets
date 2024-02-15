@@ -17,7 +17,7 @@
 
 <RerenderAfterFormSubmission andOnValueChange={$context.item.system.description.value}>
   <article class="editor-container" use:activateProseMirrorListeners>
-    <h2 class="details-headline">{localize('T5EK.ItemDetailsHeadline')}</h2>
+    <h2 class="details-headline">{localize('TIDY5E.ItemDetailsHeadline')}</h2>
     <SheetEditor
       content={$context.enriched.description}
       editable={$context.editable}

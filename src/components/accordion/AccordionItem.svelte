@@ -3,6 +3,8 @@
   import type { AccordionCtxType } from './Accordion.svelte';
   import { writable } from 'svelte/store';
   import { settingStore } from 'src/settings/settings';
+  import ExpandableContainer from 'src/components/expandable/ExpandableContainer.svelte';
+  import { CONSTANTS } from 'src/constants';
 
   export let open: boolean = false;
 
@@ -29,6 +31,7 @@
       class="accordion-item-toggle transparent-button"
       type="button"
       on:click={() => toggle()}
+      data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.EXPANSION_TOGGLE}
       tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
     >
       <span class="accordion-arrow" class:open
@@ -38,15 +41,11 @@
     </button>
   </h2>
 
-  <div
-    class="accordion-item-content-animation-wrapper"
-    class:open
-    role="presentation"
-  >
-    <div class="accordion-item-content" class:open>
+  <ExpandableContainer expanded={open}>
+    <div class="accordion-item-content">
       <slot />
     </div>
-  </div>
+  </ExpandableContainer>
 </section>
 
 <style lang="scss">
@@ -56,9 +55,9 @@
 
   .accordion-item-header {
     padding: 0.25rem;
-    background-color: var(--t5ek-table-header-row-color);
+    background-color: var(--t5e-table-header-row-color);
     margin: 0;
-    border: 0.0625rem solid var(--t5ek-table-header-row-color);
+    border: 0.0625rem solid var(--t5e-table-header-row-color);
     border-radius: 0.1875rem;
   }
 
@@ -77,17 +76,7 @@
     }
   }
 
-  .accordion-item-content-animation-wrapper {
-    display: grid;
-    grid-template-rows: 0fr;
-    &.open {
-      grid-template-rows: 1fr;
-    }
-    transition: grid-template-rows 0.2s ease;
-  }
-
   .accordion-item-content {
-    overflow-y: hidden;
     padding-left: 0.25rem;
 
     &.hidden {

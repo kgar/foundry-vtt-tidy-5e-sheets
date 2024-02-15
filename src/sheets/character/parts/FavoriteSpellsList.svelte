@@ -24,76 +24,86 @@
 </script>
 
 <section class="spellbook-list-section">
-  <ItemTable>
-    <ItemTableHeaderRow>
-      <ItemTableColumn primary={true}>
-        {#if section.dataset['preparation.mode'] === CONSTANTS.SPELL_PREPARATION_MODE_PREPARED && section.dataset.level > 0}
-          {localize('T5EK.FavoriteSpellLevelLabel', {
-            number: section.dataset.level,
-          })}
-        {:else}
-          <span class="spell-primary-column-label">
-            {section.label}
-          </span>
-        {/if}
-        {#if section.usesSlots}
-          <SpellSlotUses {section} />
-        {/if}
-      </ItemTableColumn>
-      <ItemTableColumn
-        baseWidth="4.375rem"
-        title={localize('DND5E.SpellComponents')}
-      >
-        <i class="fas fa-mortar-pestle" />
-      </ItemTableColumn>
-      <ItemTableColumn title={localize('DND5E.SpellUsage')} baseWidth="7.5rem">
-        {localize('DND5E.Usage')}
-      </ItemTableColumn>
-    </ItemTableHeaderRow>
-    {#each spells as spell}
-      {@const spellImgUrl = FoundryAdapter.getSpellImageUrl($context, spell)}
-      <ItemTableRow
-        item={spell}
-        on:mousedown={(event) =>
-          FoundryAdapter.editOnMiddleClick(event.detail, spell)}
-        contextMenu={{
-          type: CONSTANTS.CONTEXT_MENU_TYPE_ITEMS,
-          id: spell.id,
-        }}
-        let:toggleSummary
-        cssClass={FoundryAdapter.getSpellRowClasses(spell)}
-      >
-        <ItemTableCell primary={true}>
-          <ItemUseButton
-            disabled={!$context.editable}
-            item={spell}
-            imgUrlOverride={spellImgUrl}
-          />
-          <ItemName
-            on:toggle={() => toggleSummary($context.actor)}
-            item={spell}
-          >
-            <span
-              class="truncate"
-              data-tidy-item-name={spell.name}
-              data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_NAME}
-              >{spell.name}</span
+  <ItemTable location={section.label}>
+    <svelte:fragment slot="header">
+      <ItemTableHeaderRow>
+        <ItemTableColumn primary={true}>
+          {#if section.dataset['preparation.mode'] === CONSTANTS.SPELL_PREPARATION_MODE_PREPARED && section.dataset.level > 0}
+            {localize('TIDY5E.FavoriteSpellLevelLabel', {
+              number: section.dataset.level,
+            })}
+          {:else}
+            <span class="spell-primary-column-label">
+              {section.label}
+            </span>
+          {/if}
+          {#if section.usesSlots}
+            <SpellSlotUses {section} />
+          {/if}
+        </ItemTableColumn>
+        <ItemTableColumn
+          baseWidth="4.375rem"
+          title={localize('DND5E.SpellComponents')}
+        >
+          <i class="fas fa-mortar-pestle" />
+        </ItemTableColumn>
+        <ItemTableColumn
+          title={localize('DND5E.SpellUsage')}
+          baseWidth="7.5rem"
+        >
+          {localize('DND5E.Usage')}
+        </ItemTableColumn>
+      </ItemTableHeaderRow>
+    </svelte:fragment>
+    <svelte:fragment slot="body">
+      {#each spells as spell}
+        {@const spellImgUrl = FoundryAdapter.getSpellImageUrl($context, spell)}
+        <ItemTableRow
+          item={spell}
+          on:mousedown={(event) =>
+            FoundryAdapter.editOnMiddleClick(event.detail, spell)}
+          contextMenu={{
+            type: CONSTANTS.CONTEXT_MENU_TYPE_ITEMS,
+            id: spell.id,
+          }}
+          let:toggleSummary
+          cssClass={FoundryAdapter.getSpellRowClasses(spell)}
+        >
+          <ItemTableCell primary={true}>
+            <ItemUseButton
+              disabled={!$context.editable}
+              item={spell}
+              imgUrlOverride={spellImgUrl}
+            />
+            <ItemName
+              on:toggle={() => toggleSummary($context.actor)}
+              item={spell}
             >
-          </ItemName>
-        </ItemTableCell>
-        {#if spell.system.uses.per}
-          <ItemTableCell baseWidth="3.125rem">
-            <ItemUses item={spell} />
+              <span
+                class="truncate"
+                data-tidy-item-name={spell.name}
+                data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_NAME}
+                >{spell.name}</span
+              >
+            </ItemName>
           </ItemTableCell>
-        {/if}
-        <ItemTableCell baseWidth="4.375rem" cssClass="no-gap">
-          <SpellComponents {spell} />
-        </ItemTableCell>
-        <ItemTableCell baseWidth="7.5rem" title={localize('DND5E.SpellUsage')}>
-          {spell.labels.activation}
-        </ItemTableCell>
-      </ItemTableRow>
-    {/each}
+          {#if spell.system.uses.per}
+            <ItemTableCell baseWidth="3.125rem">
+              <ItemUses item={spell} />
+            </ItemTableCell>
+          {/if}
+          <ItemTableCell baseWidth="4.375rem" cssClass="no-gap">
+            <SpellComponents {spell} />
+          </ItemTableCell>
+          <ItemTableCell
+            baseWidth="7.5rem"
+            title={localize('DND5E.SpellUsage')}
+          >
+            {spell.labels.activation}
+          </ItemTableCell>
+        </ItemTableRow>
+      {/each}
+    </svelte:fragment>
   </ItemTable>
 </section>
 

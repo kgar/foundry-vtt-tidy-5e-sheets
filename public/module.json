@@ -1,7 +1,7 @@
 {
-  "id": "tidy5e-sheet-kgar",
-  "title": "Tidy 5e Sheets Kgar Alpha",
-  "description": "D&D 5e sheet layouts for Foundry VTT, focused on a clean UI, user ergonomics, and extensibility. **This is an alpha testing module that is subject to numerous breaking changes and rapid updates.**",
+  "id": "tidy5e-sheet",
+  "title": "Tidy 5e Sheets",
+  "description": "D&D 5e sheet layouts for Foundry VTT, focused on a clean UI, user ergonomics, and extensibility.",
   "version": "0.0a",
   "authors": [
     {
@@ -88,6 +88,11 @@
       "lang": "hu",
       "name": "Magyar",
       "path": "lang/hu.json"
+    },
+    {
+      "lang": "pl",
+      "name": "Polski",
+      "path": "lang/pl.json"
     }
   ],
   "compatibility": {
@@ -109,7 +114,7 @@
     "conflicts": []
   },
   "url": "https://github.com/kgar/foundry-vtt-tidy-5e-sheets",
-  "download": "https://github.com/kgar/foundry-vtt-tidy-5e-sheets/releases/download/v0.1.0-alpha/module.zip",
+  "download": "https://github.com/kgar/foundry-vtt-tidy-5e-sheets/releases/download/v1.0.0/module.zip",
   "manifest": "https://github.com/kgar/foundry-vtt-tidy-5e-sheets/releases/latest/download/module.json",
   "readme": "https://github.com/kgar/foundry-vtt-tidy-5e-sheets/blob/main/README.md",
   "bugs": "https://github.com/kgar/foundry-vtt-tidy-5e-sheets/issues",

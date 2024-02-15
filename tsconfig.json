@@ -12,7 +12,7 @@
     "isolatedModules": true,
     "types": ["svelte", "node"],
     "strictNullChecks": true,
-	"esModuleInterop": true,
+    "esModuleInterop": true,
     "lib": ["DOM", "ESNext"]
   },
   "include": ["**/*.ts"]

@@ -12,7 +12,7 @@ export default abstract class SvelteFormApplicationBase extends FormApplication 
   static get defaultOptions() {
     return {
       ...super.defaultOptions,
-      classes: ['tidy5e-kgar', 'application-shell'],
+      classes: ['tidy5e-sheet', 'application-shell'],
       submitOnClose: false,
       minimizable: true,
       popOut: true,

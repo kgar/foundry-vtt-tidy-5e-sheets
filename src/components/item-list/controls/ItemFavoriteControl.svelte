@@ -7,7 +7,7 @@
 
   $: active = FoundryAdapter.isDocumentFavorited(item);
   $: title = FoundryAdapter.localize(
-    active ? 'T5EK.RemoveFavorite' : 'T5EK.AddFavorite'
+    active ? 'TIDY5E.RemoveFavorite' : 'TIDY5E.AddFavorite'
   );
 </script>
 

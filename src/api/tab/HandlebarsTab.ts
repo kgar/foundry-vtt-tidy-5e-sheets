@@ -30,6 +30,7 @@ import {
  * });
  * ```
  */
+/** @category Tabs */
 export class HandlebarsTab extends CustomTabBase {
   title: CustomTabTitle = '';
   tabId: TabId = '';

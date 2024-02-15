@@ -5,8 +5,11 @@ import type {
   OnRenderParams,
   RenderScheme,
 } from 'src/api/api.types';
-import type { HtmlContent } from 'src/api/content/HtmlContent';
-import type { RegisteredPortraitMenuCommand } from 'src/runtime/types';
+import type {
+  RegisteredCustomActorTrait,
+  RegisteredPortraitMenuCommand,
+} from 'src/runtime/types';
+import type { ActorFilters } from 'src/runtime/item/item.types';
 
 export type Actor5e = any;
 
@@ -48,6 +51,7 @@ export type Tab<
   content: SvelteTabContent<T> | HtmlTabContent;
   onRender?: (params: OnRenderTabParams) => void;
   activateDefaultSheetListeners?: boolean;
+  autoHeight?: boolean;
 };
 
 export type CustomContent = {
@@ -58,6 +62,8 @@ export type CustomContent = {
   onRender?: (params: OnRenderParams) => void;
   activateDefaultSheetListeners?: boolean;
 };
+
+export type RenderableCustomActorTrait = RegisteredCustomActorTrait;
 
 export type ClassSummary = {
   class?: string;
@@ -122,6 +128,7 @@ export type NpcSheetContext = {
   flawEnrichedHtml: string;
   hideEmptySpellbook: boolean;
   idealEnrichedHtml: string;
+  maxPreparedSpellsTotal: number;
   notes1EnrichedHtml: string;
   notes2EnrichedHtml: string;
   notes3EnrichedHtml: string;
@@ -181,12 +188,14 @@ export type ActorSheetContext = {
   actorPortraitCommands: RegisteredPortraitMenuCommand[];
   allowEffectsManagement: boolean;
   appId: string;
+  customActorTraits: RenderableCustomActorTrait[];
   customContent: CustomContent[];
   /**
    * Whether or not the sheet can be edited, regardless of lock/sensitive field settings.
    * When this boolean is `false`, then the sheet is effectively hard locked.
    */
   editable: boolean;
+  filterData: ActorFilters;
   /**
    * Represents remaining health as a percentage within the range of `0` to `100`.
    *

@@ -108,10 +108,10 @@
     justify-content: center;
     flex-direction: row;
     flex-wrap: wrap;
-    background: var(--t5ek-tabs-background);
+    background: var(--t5e-tabs-background);
 
     .tab-option {
-      background: var(--t5ek-tab-background);
+      background: var(--t5e-tab-background);
       font-size: 0.8125rem;
       text-align: left;
       flex: 1 1 auto;
@@ -119,12 +119,12 @@
       border-top-right-radius: 0.1875rem;
 
       &:hover {
-        background: var(--t5ek-tab-background);
-        color: var(--t5ek-primary-accent-color);
+        background: var(--t5e-tab-background);
+        color: var(--t5e-primary-accent-color);
       }
 
       &.active {
-        background: var(--t5ek-active-tab-background);
+        background: var(--t5e-active-tab-background);
         font-weight: 700;
         cursor: default;
         text-shadow: none;
@@ -141,7 +141,7 @@
       .tab-option {
         height: 1.625rem;
         padding: 0.3125rem 0.5rem 0 0.5rem;
-        border-bottom: 0.0625rem solid var(--t5ek-tab-strip-border-color);
+        border-bottom: 0.0625rem solid var(--t5e-tab-strip-border-color);
         border-bottom-left-radius: 0;
         border-bottom-right-radius: 0;
 
@@ -160,7 +160,7 @@
         }
 
         &.active {
-          border: 0.0625rem solid var(--t5ek-tab-strip-border-color);
+          border: 0.0625rem solid var(--t5e-tab-strip-border-color);
           border-bottom-color: transparent;
         }
       }
@@ -180,7 +180,7 @@
         border-top: none;
         border-left: none;
         border-bottom: none;
-        border-right: 0.0625rem solid var(--t5ek-tab-strip-border-color);
+        border-right: 0.0625rem solid var(--t5e-tab-strip-border-color);
         transition: border-left-width 0.125s;
         border-top-right-radius: 0;
         border-bottom-right-radius: 0;
@@ -190,10 +190,10 @@
         }
 
         &.active {
-          border: 0.0625rem solid var(--t5ek-tab-strip-border-color);
+          border: 0.0625rem solid var(--t5e-tab-strip-border-color);
           border-right-color: transparent;
           border-left-width: 0.25rem;
-          border-left-color: var(--t5ek-primary-accent-color);
+          border-left-color: var(--t5e-primary-accent-color);
           border-top-left-radius: 0.3125rem;
           border-bottom-left-radius: 0.3125rem;
         }

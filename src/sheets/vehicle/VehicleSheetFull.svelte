@@ -78,7 +78,7 @@
           dataMaxLength={40}
         />
       </div>
-      <SheetMenu defaultSettingsTab={CONSTANTS.TAB_SETTINGS_VEHICLES} />
+      <SheetMenu defaultSettingsTab={CONSTANTS.TAB_USER_SETTINGS_VEHICLES} />
     </div>
     <HorizontalLineSeparator borderColor="light" />
     <div class="origin-summary">
@@ -130,7 +130,7 @@
                 $context.actor,
               ).render(true)}
             class="origin-summary-tidy inline-icon-button"
-            title={localize('T5EK.OriginSummaryConfig')}
+            title={localize('TIDY5E.OriginSummaryConfig')}
             tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
           >
             <i class="fas fa-cog" />
@@ -147,7 +147,7 @@
         <VerticalLineSeparator />
         <div>
           <AttributeBlock
-            abbreviation={id}
+            id={id}
             {ability}
             useConfigurationOption={false}
             useSavingThrowProficiency={false}
@@ -163,7 +163,7 @@
       <AllowEditLock
         hint={$settingStore.permanentlyUnlockVehicleSheetForGm &&
         FoundryAdapter.userIsGm()
-          ? localize('T5EK.Settings.PermanentlyUnlockVehicleSheetForGM.title')
+          ? localize('TIDY5E.Settings.PermanentlyUnlockVehicleSheetForGM.title')
           : null}
       />
     {/if}
@@ -180,7 +180,7 @@
     gap: 1rem;
     justify-content: center;
     padding: 0.625rem 1rem 1rem 1rem;
-    background: var(--t5ek-header-background);
+    background: var(--t5e-header-background);
 
     .actor-name-row {
       margin-bottom: 0.125rem;

@@ -8,6 +8,7 @@
   import type { Readable } from 'svelte/store';
   import TextInput from '../inputs/TextInput.svelte';
   import { settingStore } from 'src/settings/settings';
+  import { ActiveEffectsHelper } from 'src/utils/active-effect';
 
   export let section: any;
   let context =
@@ -16,6 +17,12 @@
   const localize = FoundryAdapter.localize;
 
   let overrideMode = false;
+
+  $: activeEffectAppliedToOverride =
+    ActiveEffectsHelper.isActiveEffectAppliedToField(
+      $context.actor,
+      `system.spells.${section.prop}.override`,
+    );
 </script>
 
 <div class="spell-slots-detail">
@@ -49,7 +56,7 @@
     >
       {section.slots}
     </span>
-    {#if $context.editable && !$context.lockSensitiveFields}
+    {#if $context.editable && !$context.lockSensitiveFields && !activeEffectAppliedToOverride}
       <button
         type="button"
         class="spell-slot-max-override icon-button"
@@ -68,7 +75,7 @@
     display: flex;
     flex: 0 0 0.0625rem;
     align-items: center;
-    color: var(--t5ek-secondary-color);
+    color: var(--t5e-secondary-color);
     border-radius: 0.3125rem;
     padding: 0 0.3125rem;
 
@@ -92,7 +99,7 @@
 
     .spell-slot-max-override {
       margin: 0 0 0 0.25rem;
-      color: var(--t5ek-tertiary-color);
+      color: var(--t5e-tertiary-color);
       line-height: 0.75rem;
       height: 0.75rem;
     }

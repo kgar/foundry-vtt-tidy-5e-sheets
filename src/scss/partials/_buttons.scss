@@ -16,7 +16,7 @@
   }
 
   &:focus-visible {
-    box-shadow: var(--t5ek-focus-visible-box-shadow);
+    box-shadow: var(--t5e-focus-visible-box-shadow);
   }
 }
 
@@ -34,11 +34,11 @@
 @mixin icon-button-base {
   @include transparent-button-base();
 
-  color: var(--t5ek-icon-font-color);
+  color: var(--t5e-icon-font-color);
 
   &:hover,
   &:focus-visible {
-    color: var(--t5ek-icon-hover-color);
+    color: var(--t5e-icon-hover-color);
   }
 }
 
@@ -56,26 +56,26 @@
 .icon-button {
   @include transparent-button-base();
 
-  color: var(--t5ek-icon-font-color);
+  color: var(--t5e-icon-font-color);
 
   &:hover,
   &:focus-visible {
-    color: var(--t5ek-icon-hover-color);
+    color: var(--t5e-icon-hover-color);
   }
 }
 
 .item-list-button {
   @include transparent-button-base();
   font-size: 0.75rem;
-  color: var(--t5ek-secondary-color);
+  color: var(--t5e-secondary-color);
 
   &.inactive {
-    color: var(--t5ek-light-color);
+    color: var(--t5e-light-color);
   }
 
   &:hover,
   &:focus-visible {
-    color: var(--t5ek-primary-font-color);
+    color: var(--t5e-primary-font-color);
   }
 }
 
@@ -88,12 +88,40 @@
   line-height: 1.125rem;
   border: none;
   font-size: 0.75rem;
-  background: var(--t5ek-faintest-color);
-  color: var(--t5ek-secondary-color);
+  background: var(--t5e-faintest-color);
+  color: var(--t5e-secondary-color);
   text-align: center;
 
   &:hover,
   &:focus-visible {
-    background: var(--t5ek-light-color);
+    background: var(--t5e-light-color);
   }
+}
+
+@mixin pill-button-base {
+  line-height: 1.25rem;
+  transition: color 0.3s ease, transform 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  background: var(--t5e-faintest-color);
+  border-width: 0.0625rem;
+  border-color: var(--t5e-faint-color);
+  border-radius: 0.3125rem;
+  font-size: 0.75rem;
+  text-wrap: nowrap;
+
+  &:hover {
+    background: var(--t5e-light-color);
+  }
+
+  &:not(:focus-visible) {
+    box-shadow: none;
+  }
+
+  &:focus-visible {
+    box-shadow: var(--t5e-focus-visible-box-shadow);
+  }
+}
+
+.pill-button {
+  @include pill-button-base();
 }

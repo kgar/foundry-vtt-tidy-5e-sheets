@@ -68,24 +68,24 @@ export function simplifyFormula(
 export function getMaxPreparedSpellsSampleFormulas(): MaxPreparedSpellFormula[] {
   return [
     {
-      label: 'T5EK.Class.Artificer',
+      label: 'TIDY5E.Class.Artificer',
       value: '@abilities.int.mod + floor(@classes.artificer.levels / 2)',
     },
     {
-      label: 'T5EK.Class.Cleric',
+      label: 'TIDY5E.Class.Cleric',
       value: '@abilities.wis.mod + @classes.cleric.levels',
     },
     {
-      label: 'T5EK.Class.Druid',
+      label: 'TIDY5E.Class.Druid',
       value: '@abilities.wis.mod + @classes.druid.levels',
     },
     {
-      label: 'T5EK.Class.Paladin',
+      label: 'TIDY5E.Class.Paladin',
       value: '@abilities.cha.mod + floor(@classes.paladin.levels / 2)',
     },
-    { label: 'T5EK.Class.Ranger', value: 'ceil(@classes.ranger.levels/2)+1' },
+    { label: 'TIDY5E.Class.Ranger', value: 'ceil(@classes.ranger.levels/2)+1' },
     {
-      label: 'T5EK.Class.Wizard',
+      label: 'TIDY5E.Class.Wizard',
       value: '@abilities.int.mod + @classes.wizard.levels',
     },
   ];
@@ -259,4 +259,82 @@ export function getDcTooltip(actor: Actor5e) {
   }
 
   return tooltip;
+}
+
+type RawSpellAttackType = 'rsak' | 'msak';
+
+export function rollRawSpellAttack(
+  ev: MouseEvent,
+  actor: Actor5e,
+  attackType?: RawSpellAttackType
+) {
+  let titleKey =
+    attackType === 'rsak'
+      ? 'TIDY5E.ActorRangedSpellAttackTitle'
+      : attackType === 'msak'
+      ? 'TIDY5E.ActorMeleeSpellAttackTitle'
+      : 'TIDY5E.ActorSpellAttackTitle';
+
+  let title = FoundryAdapter.localize(titleKey, {
+    actorName: actor.name,
+  });
+
+  let flavorKey =
+    attackType === 'rsak'
+      ? 'TIDY5E.ActorRangedSpellAttackFlavorText'
+      : attackType === 'msak'
+      ? 'TIDY5E.ActorMeleeSpellAttackFlavorText'
+      : 'TIDY5E.ActorSpellAttackFlavorText';
+
+  let flavor = FoundryAdapter.localize(flavorKey);
+
+  const effectiveAttackType = attackType ?? 'rsak';
+
+  const rollData: Record<string, string> = {};
+  const parts: string[] = [];
+
+  // Ability score modifier
+  const spellcastingAbility = actor.system.attributes.spellcasting;
+  const spellcastingMod = actor.system.abilities[spellcastingAbility]?.mod;
+  if (spellcastingAbility !== 'none' && spellcastingMod) {
+    parts.push('@mod');
+    rollData.mod = spellcastingMod;
+  }
+
+  // Add proficiency bonus.
+  parts.push('@prof');
+  rollData.prof = actor.system.attributes.prof;
+
+  // Actor-level global bonus to attack rolls
+  const actorBonusAttack = actor.system.bonuses?.[effectiveAttackType]?.attack;
+  if (actorBonusAttack) {
+    parts.push(actorBonusAttack);
+  }
+
+  const rollConfig = foundry.utils.mergeObject(
+    {
+      actor: actor,
+      data: rollData,
+      critical: actor.flags['dnd5e']?.spellCriticalThreshold,
+      title: title,
+      flavor: flavor,
+      elvenAccuracy: actor.flags['dnd5e']?.elvenAccuracy ?? false,
+      halflingLucky: actor.flags['dnd5e']?.halflingLucky ?? false,
+      dialogOptions: {
+        width: 400,
+        top: ev ? ev.clientY - 80 : null,
+        left: ev ? ev.clientX + 40 : null,
+      },
+      messageData: {
+        'flags.dnd5e.roll': {
+          type: 'attack',
+        },
+        speaker: ChatMessage.getSpeaker({ actor: actor }),
+      },
+      event: ev,
+    },
+    {}
+  );
+  rollConfig.parts = parts;
+  dnd5e.dice.d20Roll(rollConfig);
 }

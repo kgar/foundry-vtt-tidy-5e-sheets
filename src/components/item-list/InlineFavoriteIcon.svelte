@@ -4,14 +4,14 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-<div class="is-favorite" title={localize('T5EK.Favorite')}>
+<div class="is-favorite" title={localize('TIDY5E.Favorite')}>
   <i class="fas fa-bookmark icon-fav" />
 </div>
 
 <style lang="scss">
   .is-favorite {
     font-size: 0.75rem;
-    color: var(--t5ek-secondary-color);
+    color: var(--t5e-secondary-color);
     display: flex;
     align-items: center;
     justify-content: center;

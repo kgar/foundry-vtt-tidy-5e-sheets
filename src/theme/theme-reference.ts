@@ -7,7 +7,7 @@ export function getCoreThemes(includeDefault: boolean) {
   let themes: Record<string, string> = {};
 
   if (includeDefault) {
-    themes[CONSTANTS.THEME_ID_DEFAULT] = 'T5EK.Settings.SheetTheme.default';
+    themes[CONSTANTS.THEME_ID_DEFAULT] = 'TIDY5E.Settings.SheetTheme.default';
   }
 
   themes[CONSTANTS.THEME_ID_DEFAULT_LIGHT] = defaultLightTheme.name;
@@ -28,47 +28,47 @@ export function getThemes(): Record<string, Tidy5eTheme> {
 }
 
 export const themeVariables = {
-  '--t5ek-title-font-family': {
+  '--t5e-title-font-family': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-body-font-family': {
+  '--t5e-body-font-family': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-primary-font-color': {
+  '--t5e-primary-font-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-background': {
+  '--t5e-background': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-faintest-color': {
+  '--t5e-faintest-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-faint-color': {
+  '--t5e-faint-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-light-color': {
+  '--t5e-light-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-primary-color': {
+  '--t5e-primary-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-secondary-color': {
+  '--t5e-secondary-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-tertiary-color': {
+  '--t5e-tertiary-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-primary-accent-color': {
+  '--t5e-primary-accent-color': {
     type: 'todo',
     group: 'todo',
   },
@@ -76,475 +76,483 @@ export const themeVariables = {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-white': {
+  '--t5e-white': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-faint-white': {
+  '--t5e-faint-white': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-linked-accent-color': {
+  '--t5e-linked-accent-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-unlinked-accent-color': {
+  '--t5e-unlinked-accent-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-linked-light-color': {
+  '--t5e-linked-light-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-unlinked-light-color': {
+  '--t5e-unlinked-light-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-sheet-unlocked-icon-background': {
+  '--t5e-sheet-unlocked-icon-background': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-sheet-locked-icon-background': {
+  '--t5e-sheet-locked-icon-background': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-header-background': {
+  '--t5e-header-background': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-prepareable-color': {
+  '--t5e-prepareable-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-equipped-background': {
+  '--t5e-equipped-background': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-equipped-item-grid-tile-outline-color': {
+  '--t5e-equipped-item-grid-tile-outline-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-equipped-item-grid-tile-accent-color': {
+  '--t5e-equipped-item-grid-tile-accent-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-prepared-background': {
+  '--t5e-prepared-background': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-prepared-item-grid-tile-outline-color': {
+  '--t5e-prepared-item-grid-tile-outline-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-prepared-item-grid-tile-accent-color': {
+  '--t5e-prepared-item-grid-tile-accent-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-pact-background': {
+  '--t5e-pact-background': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-pact-outline-color': {
+  '--t5e-pact-outline-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-pact-accent-color': {
+  '--t5e-pact-accent-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-atwill-background': {
+  '--t5e-atwill-background': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-atwill-outline-color': {
+  '--t5e-atwill-outline-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-atwill-accent-color': {
+  '--t5e-atwill-accent-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-innate-background': {
+  '--t5e-innate-background': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-innate-outline': {
+  '--t5e-innate-outline': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-innate-accent': {
+  '--t5e-innate-accent': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-alwaysprepared-background': {
+  '--t5e-alwaysprepared-background': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-alwaysprepared-outline-color': {
+  '--t5e-alwaysprepared-outline-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-alwaysprepared-accent-color': {
+  '--t5e-alwaysprepared-accent-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-magic-accent-color': {
+  '--t5e-magic-accent-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-faint-magic-item-list-row-accent-color': {
+  '--t5e-attunement-required-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-magic-item-grid-tile-outline-color': {
+  '--t5e-attuned-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-attunement-required-color': {
+  '--t5e-attuned-item-grid-icon-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-attuned-color': {
+  '--t5e-xp-bar-background': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-attuned-item-grid-icon-color': {
+  '--t5e-encumbrance-bar-background': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-xp-bar-background': {
+  '--t5e-encumbrance-bar-outline-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-encumbrance-bar-background': {
+  '--t5e-encumbrance-outline-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-encumbrance-bar-outline-color': {
+  '--t5e-warning-accent-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-encumbrance-outline-color': {
+  '--t5e-warning-accent-contrast-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-warning-accent-color': {
+  '--t5e-icon-background': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-warning-accent-contrast-color': {
+  '--t5e-icon-shadow-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-icon-background': {
+  '--t5e-icon-outline-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-icon-shadow-color': {
+  '--t5e-icon-font-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-icon-outline-color': {
+  '--t5e-icon-hover-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-icon-font-color': {
+  '--t5e-ability-modifiers-hover-label-background': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-icon-hover-color': {
+  '--t5e-exhaustion-severity1-background': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-ability-modifiers-hover-label-background': {
+  '--t5e-exhaustion-severity2-background': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-exhaustion-severity1-background': {
+  '--t5e-exhaustion-severity3-background': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-exhaustion-severity2-background': {
+  '--t5e-ability-accent-background': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-exhaustion-severity3-background': {
+  '--t5e-context-outline-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-ability-accent-background': {
+  '--t5e-context-shadow-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-context-outline-color': {
+  '--t5e-check-default-background-image': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-context-shadow-color': {
+  '--t5e-check-checked-background-image': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-check-default-background-image': {
+  '--t5e-checkbox-font-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-check-checked-background-image': {
+  '--t5e-checkbox-outline-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-checkbox-font-color': {
+  '--t5e-checkbox-unchecked-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-checkbox-outline-color': {
+  '--t5e-checkbox-checked-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-checkbox-unchecked-color': {
+  '--t5e-item-input-background': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-checkbox-checked-color': {
+  '--t5e-item-input-hover-background': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-item-input-background': {
+  '--t5e-encumbrance-text-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-item-input-hover-background': {
+  '--t5e-death-save-icon-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-encumbrance-text-color': {
+  '--t5e-inspiration-hover-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-death-save-icon-color': {
+  '--t5e-inspiration-text-shadow-hover-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-inspiration-hover-color': {
+  '--t5e-inspiration-inspired-text-shadow-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-inspiration-text-shadow-hover-color': {
+  '--t5e-inspiration-inspired-background': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-inspiration-inspired-text-shadow-color': {
+  '--t5e-vehicle-motion-hover-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-inspiration-inspired-background': {
+  '--t5e-vehicle-motion-text-shadow-hover-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-vehicle-motion-hover-color': {
+  '--t5e-vehicle-in-motion-text-shadow-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-vehicle-motion-text-shadow-hover-color': {
+  '--t5e-vehicle-in-motion-background': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-vehicle-in-motion-text-shadow-color': {
+  '--t5e-hp-bar-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-vehicle-in-motion-background': {
+  '--t5e-resource-bar-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-hp-bar-color': {
+  '--t5e-death-save-backdrop-background': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-resource-bar-color': {
+  '--t5e-death-save-text-shadow-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-death-save-backdrop-background': {
+  '--t5e-hp-overlay-background': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-death-save-text-shadow-color': {
+  '--t5e-inventory-grid-image-contrast-text-shadow-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-hp-overlay-background': {
+  '--t5e-inventory-grid-hover-use-item-contrast-text-shadow-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-inventory-grid-image-contrast-text-shadow-color': {
+  '--t5e-sheet-background': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-inventory-grid-hover-use-item-contrast-text-shadow-color': {
-    type: 'todo',
-    group: 'todo',
-  },
-  '--t5ek-sheet-background': {
-    type: 'todo',
-    group: 'todo',
-  },
-  '--t5ek-item-info-card-background': {
+  '--t5e-item-info-card-background': {
     type: 'todo',
     group: 'todo,',
   },
-  '--t5ek-content-entity-link-color': {
+  '--t5e-content-entity-link-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-content-entity-link-hover-color': {
+  '--t5e-content-entity-link-hover-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-content-entity-link-background': {
+  '--t5e-content-entity-link-background': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-content-entity-link-hover-background': {
+  '--t5e-content-entity-link-hover-background': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-activated-profile-toggle-color': {
+  '--t5e-activated-profile-toggle-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-exhaustion-severity1-color': {
+  '--t5e-exhaustion-severity1-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-exhaustion-severity2-color': {
+  '--t5e-exhaustion-severity2-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-exhaustion-severity3-color': {
+  '--t5e-exhaustion-severity3-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-death-save-text-color': {
+  '--t5e-death-save-text-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-tinymce-toolbar-background': {
+  '--t5e-tinymce-toolbar-background': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-tinymce-sidebar-background': {
+  '--t5e-tinymce-sidebar-background': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-tinyme-toolbar-button-color': {
+  '--t5e-tinyme-toolbar-button-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-prosemirror-button-color': {
+  '--t5e-prosemirror-button-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-prosemirror-dropdown-item-hover-color': {
+  '--t5e-prosemirror-dropdown-item-hover-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-item-info-card-box-shadow-color': {
+  '--t5e-item-info-card-box-shadow-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-sheet-lock-icon-color': {
+  '--t5e-sheet-lock-icon-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-grid-pane-favorite-icon-color': {
+  '--t5e-grid-pane-favorite-icon-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-settings-dialog-box-shadow-color': {
+  '--t5e-settings-dialog-box-shadow-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-sheet-lock-icon-hover-color': {
+  '--t5e-sheet-lock-icon-hover-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-settings-dialog-border-color': {
+  '--t5e-settings-dialog-border-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-spell-level-button-border-color': {
+  '--t5e-spell-level-button-border-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-ability-modifiers-label-text-color': {
+  '--t5e-ability-modifiers-label-text-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-ability-mod-text-color': {
+  '--t5e-ability-mod-text-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-ability-mod-save-text-hover-color': {
+  '--t5e-ability-mod-save-text-hover-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-encumbrance-bar-text-shadow-color': {
+  '--t5e-encumbrance-bar-text-shadow-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-button-menu-background': {
+  '--t5e-button-menu-background': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-button-menu-hover-color': {
+  '--t5e-button-menu-hover-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-button-menu-divider-color': {
+  '--t5e-button-menu-divider-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-focus-visible-box-shadow': {
+  '--t5e-focus-visible-box-shadow': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-button-background': {
+  '--t5e-button-background': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-button-hover-background': {
+  '--t5e-button-hover-background': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-button-disabled-color': {
+  '--t5e-button-disabled-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-separator-color': {
+  '--t5e-separator-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-table-header-row-color': {
+  '--t5e-table-header-row-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-table-header-row-border-color': {
+  '--t5e-table-header-row-border-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-tab-strip-border-color': {
+  '--t5e-tab-strip-border-color': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-tabs-background': {
+  '--t5e-tabs-background': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-active-tab-background': {
+  '--t5e-active-tab-background': {
     type: 'todo',
     group: 'todo',
   },
-  '--t5ek-tab-background': {
+  '--t5e-tab-background': {
+    type: 'todo',
+    group: 'todo',
+  },
+  '--t5e-scrollbar-thumb-color': {
+    type: 'todo',
+    group: 'todo',
+  },
+  '--t5e-scrollbar-track-color': {
+    type: 'todo',
+    group: 'todo',
+  },
+  '--t5e-spell-pip-active-background': {
+    type: 'todo',
+    group: 'todo',
+  },
+  '--t5e-spell-pip-empty-background': {
     type: 'todo',
     group: 'todo',
   },

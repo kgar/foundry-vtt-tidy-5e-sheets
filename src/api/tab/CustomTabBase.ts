@@ -21,14 +21,18 @@ import type { RenderScheme } from '../api.types';
  * ```
  * "my-module-id-my-spellbook-tab"
  * ```
+ * 
+ * @category Tabs
  */
 export type TabId = string;
 
+/** @category Tabs */
 export type CustomTabTitle = string | (() => string);
 
 /**
  * The basis of all custom registered tabs.
  */
+/** @category Tabs */
 export abstract class CustomTabBase {
   /**
    * The title to display on the tab. Accepts localization keys and plain text.

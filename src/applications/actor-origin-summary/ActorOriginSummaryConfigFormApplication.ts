@@ -88,7 +88,7 @@ export default class ActorOriginSummaryConfigFormApplication extends SvelteFormA
   }
 
   get title() {
-    return FoundryAdapter.localize('T5EK.OriginSummaryConfig', {
+    return FoundryAdapter.localize('TIDY5E.OriginSummaryConfig', {
       actorName: this.actor.name,
     });
   }
