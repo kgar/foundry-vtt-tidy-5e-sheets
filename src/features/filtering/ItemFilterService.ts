@@ -120,7 +120,8 @@ export class ItemFilterService {
       actorItemFilterData[tab] ??= {};
       for (let [category, filters] of Object.entries(categories)) {
         actorItemFilterData[tab][category] ??= [];
-        for (let filter of filters) {
+        const effectiveFilters = Array.isArray(filters) ? filters : filters();
+        for (let filter of effectiveFilters) {
           actorItemFilterData[tab][category].push({
             ...filter,
             value: this._filterData[tab]?.[filter.name] ?? null,

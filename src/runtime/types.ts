@@ -130,14 +130,17 @@ export type ItemFilter = {
 type Category = string;
 type TabId = string;
 type ActorType = string;
-export type FilterCategoriesToFilters = Record<Category, ItemFilter[]>;
-// TODO: Find a better name for this
-type ConfiguredItemFilter = (ItemFilter & {
-  value: boolean | null;
-});
+export type FilterCategoriesToFilters = Record<
+  Category,
+  ItemFilter[] | (() => ItemFilter[])
+>;
 
 export type FilterTabsToCategories = Record<TabId, FilterCategoriesToFilters>;
 export type ActorTypesToFilterTabs = Record<ActorType, FilterTabsToCategories>;
 
+// TODO: Find a better name for this
+type ConfiguredItemFilter = ItemFilter & {
+  value: boolean | null;
+};
 type ActorFilterCategories = Record<Category, ConfiguredItemFilter[]>;
 export type ActorFilters = Record<TabId, ActorFilterCategories>;

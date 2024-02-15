@@ -28,7 +28,7 @@ export const defaultItemFilters = {
   },
   verbal: {
     name: 'verbal',
-    predicate: (item) => item.system.components?.verbal === true,
+    predicate: (item) => item.system.components?.vocal === true,
     text: 'DND5E.ComponentVerbal',
   },
   somatic: {
@@ -59,3 +59,26 @@ export const defaultItemFilters = {
     text: 'DND5E.Equipped',
   },
 } as const satisfies Record<string, ItemFilter>;
+
+export function getItemRarityFilters(): ItemFilter[] {
+  const itemRarity = CONFIG.DND5E.itemRarity as Record<string, string>;
+
+  return Object.entries(itemRarity).map<ItemFilter>(
+    ([key, text]) =>
+      ({
+        name: key,
+        predicate: (item) => item.system.rarity === key,
+        text: text,
+      } satisfies ItemFilter)
+  );
+}
+
+export function getItemRarityFiltersAsObject(): Record<string, ItemFilter> {
+  return getItemRarityFilters().reduce<Record<string, ItemFilter>>(
+    (prev, curr) => {
+      prev[curr.name] = curr;
+      return prev;
+    },
+    {}
+  );
+}

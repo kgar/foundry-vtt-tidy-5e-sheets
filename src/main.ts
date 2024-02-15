@@ -8,6 +8,7 @@ import { Tidy5eVehicleSheet } from './sheets/Tidy5eKgarVehicleSheet';
 import { CONSTANTS } from './constants';
 import { Tidy5eSheetsApi } from './api/Tidy5eSheetsApi';
 import '../public/rpg-awesome/style/rpg-awesome.min.css';
+import { initRuntime } from './runtime/runtime-init';
 
 FoundryAdapter.registerActorSheet(
   Tidy5eCharacterSheet,
@@ -31,6 +32,7 @@ FoundryAdapter.registerItemSheet(Tidy5eKgarItemSheet, 'TIDY5E.Tidy5eItemSheet');
 
 Hooks.once('ready', async () => {
   initSettings();
+  initRuntime();
 
   const tidy5eModule = FoundryAdapter.getModule(CONSTANTS.MODULE_ID);
   const api = Tidy5eSheetsApi._getApi();

@@ -1,12 +1,25 @@
 import { CONSTANTS } from 'src/constants';
-import type { ActorTypesToFilterTabs, FilterTabsToCategories, ItemFilter } from '../types';
-import { defaultItemFilters } from './default-item-filters';
+import type {
+  ActorTypesToFilterTabs,
+  FilterTabsToCategories,
+  ItemFilter,
+} from '../types';
+import {
+  defaultItemFilters,
+  getItemRarityFilters,
+  getItemRarityFiltersAsObject,
+} from './default-item-filters';
 import type { Actor5e } from 'src/types/types';
 
 export class ItemFilterRuntime {
-  static _registeredItemFilters: Record<string, ItemFilter> = {
-    ...defaultItemFilters,
-  };
+  static _registeredItemFilters: Record<string, ItemFilter> = {};
+
+  static init() {
+    ItemFilterRuntime._registeredItemFilters = {
+      ...defaultItemFilters,
+      ...getItemRarityFiltersAsObject(),
+    };
+  }
 
   static _actorTabFilters: ActorTypesToFilterTabs = {
     [CONSTANTS.SHEET_TYPE_CHARACTER]: {
@@ -17,6 +30,7 @@ export class ItemFilterRuntime {
           defaultItemFilters.reaction,
           // Item Rarities
         ],
+        'DND5E.Rarity': () => getItemRarityFilters(),
         'TIDY5E.ItemFilters.Category.Miscellaneous': [
           defaultItemFilters.equipped,
         ],
@@ -74,10 +88,11 @@ export class ItemFilterRuntime {
   };
 
   static getFilter(filterName: ItemFilter['name']): ItemFilter | undefined {
+    // TODO: Figure out how to materialize registered item filters
     return ItemFilterRuntime._registeredItemFilters[filterName];
   }
 
   static getActorFilters(actor: Actor5e): FilterTabsToCategories {
-    return this._actorTabFilters[actor.type] ?? {};
+    return ItemFilterRuntime._actorTabFilters[actor.type] ?? {};
   }
 }
