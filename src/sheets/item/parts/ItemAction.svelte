@@ -176,10 +176,16 @@
         >
           <option value="">{localize('DND5E.None')}</option>
           <optgroup label={localize('DND5E.Damage')}>
-            <SelectOptions data={$context.config.damageTypes} />
+            <SelectOptions
+              data={$context.config.damageTypes}
+              labelProp="label"
+            />
           </optgroup>
           <optgroup label={localize('DND5E.Healing')}>
-            <SelectOptions data={$context.config.healingTypes} />
+            <SelectOptions
+              data={$context.config.healingTypes}
+              labelProp="label"
+            />
           </optgroup>
         </select>
         <button

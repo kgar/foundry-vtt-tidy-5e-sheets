@@ -46,7 +46,7 @@
     </div>
 
     <ul class="summary flexrow">
-      <li>{$context.config.consumableTypes[$context.system.consumableType]}</li>
+      <li>{$context.itemType}</li>
       <li>
         <Select
           document={$context.item}

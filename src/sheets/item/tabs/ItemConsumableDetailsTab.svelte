@@ -11,7 +11,6 @@
   import ItemFormGroup from '../form/ItemFormGroup.svelte';
 
   let context = getContext<Readable<ItemSheetContext>>('context');
-
   const localize = FoundryAdapter.localize;
 </script>
 
@@ -19,19 +18,41 @@
 
 <ItemFormGroup
   labelText={localize('DND5E.ItemConsumableType')}
-  field="system.consumableType"
+  field="system.type.value"
   let:inputId
 >
   <Select
     id={inputId}
     document={$context.item}
-    field="system.consumableType"
-    value={$context.system.consumableType}
+    field="system.type.value"
+    value={$context.system.type.value}
     disabled={!$context.editable}
   >
-    <SelectOptions data={$context.config.consumableTypes} />
+    <SelectOptions data={$context.config.consumableTypes} labelProp="label" />
   </Select>
 </ItemFormGroup>
+{#if $context.itemSubtypes}
+  {@const consumableSubTypeLabel = localize('DND5E.ItemConsumableSubtype', {
+    category:
+      $context.config.consumableTypes[$context.system.type.value]?.label,
+  })}
+
+  <ItemFormGroup
+    labelText={consumableSubTypeLabel}
+    field="system.type.subtype"
+    let:inputId
+  >
+    <Select
+      id={inputId}
+      document={$context.item}
+      field="system.type.subtype"
+      value={$context.system.type.subtype}
+      disabled={!$context.editable}
+    >
+      <SelectOptions data={$context.itemSubtypes} blank="" />
+    </Select>
+  </ItemFormGroup>
+{/if}
 
 <ItemFormGroup
   labelText={localize('DND5E.Attunement')}
