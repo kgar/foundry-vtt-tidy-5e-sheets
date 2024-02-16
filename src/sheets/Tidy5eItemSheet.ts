@@ -101,7 +101,7 @@ export class Tidy5eKgarItemSheet
       },
       {
         content: defaultDocumentContext.enriched.unidentified,
-        field: 'system.description.unidentified',
+        field: 'system.unidentified.description',
         label: FoundryAdapter.localize('DND5E.DescriptionUnidentified'),
       },
       {
