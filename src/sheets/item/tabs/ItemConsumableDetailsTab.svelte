@@ -11,6 +11,9 @@
   import ItemFormGroup from '../form/ItemFormGroup.svelte';
 
   let context = getContext<Readable<ItemSheetContext>>('context');
+
+  $: properties = Object.entries<any>($context.properties);
+
   const localize = FoundryAdapter.localize;
 </script>
 
@@ -95,25 +98,24 @@
   </Checkbox>
 </ItemFormGroup>
 
-{#if $context.system.consumableType === 'ammo'}
-  <ItemFormGroup
-    cssClass="stacked weapon-properties"
-    labelText={localize('DND5E.ItemAmmoProperties')}
-  >
-    {#each Object.entries($context.config.physicalWeaponProperties) as [prop, name]}
-      {@const checked = $context.system.properties[prop]}
-      <Checkbox
-        labelCssClass="checkbox"
-        document={$context.item}
-        field="system.properties.{prop}"
-        {checked}
-        disabled={!$context.editable}
-      >
-        {name}
-      </Checkbox>
-    {/each}
-  </ItemFormGroup>
-{/if}
+<ItemFormGroup
+  cssClass="stacked weapon-properties"
+  labelText={$context.system.type.value === 'ammo'
+    ? localize('DND5E.ItemAmmoProperties')
+    : localize('DND5E.ItemConsumableProperties')}
+>
+  {#each properties as [key, property]}
+    <Checkbox
+      labelCssClass="checkbox"
+      document={$context.item}
+      field="system.properties.{key}"
+      checked={property.selected}
+      disabled={!$context.editable}
+    >
+      {property.label}
+    </Checkbox>
+  {/each}
+</ItemFormGroup>
 
 <h3 class="form-header">{localize('DND5E.ItemConsumableUsage')}</h3>
 

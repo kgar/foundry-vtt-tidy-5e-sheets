@@ -284,7 +284,7 @@
     </div>
   </ItemFormGroup>
 
-  {#if $context.system.uses.per === 'charges'}
+  {#if $context.isFormulaRecharge}
     <ItemFormGroup
       labelText={localize('DND5E.RecoveryFormula')}
       field="system.uses.recovery"

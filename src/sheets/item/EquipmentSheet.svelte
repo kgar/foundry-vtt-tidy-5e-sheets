@@ -11,6 +11,7 @@
   import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
   import Source from '../shared/Source.svelte';
   import { CONSTANTS } from 'src/constants';
+    import ItemIdentifiableName from './parts/ItemIdentifiableName.svelte';
 
   let context = getContext<Readable<ItemSheetContext>>('context');
 
@@ -30,14 +31,7 @@
       class="charname"
       data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.NAME_CONTAINER}
     >
-      <TextInput
-        document={$context.item}
-        field="name"
-        value={$context.item.name}
-        attributes={{ 'data-tidy-item-name': $context.item.name }}
-        placeholder={localize('DND5E.ItemName')}
-        disabled={!$context.editable}
-      />
+      <ItemIdentifiableName />
     </h1>
 
     <div class="item-subtitle">
