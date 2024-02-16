@@ -35,7 +35,6 @@
 
     <div class="item-subtitle">
       <h4 class="item-type">{$context.itemType ?? ''}</h4>
-      <span class="item-status">{$context.itemStatus ?? ''}</span>
     </div>
 
     <ul class="summary flexrow">
@@ -67,7 +66,9 @@
         checked={$context.system.equipped}
         disabled={!$context.editable}
       >
-        {localize('DND5E.Equipped')}
+        {$context.system.equipped
+          ? localize('DND5E.Equipped')
+          : localize('DND5E.Unequipped')}
       </Checkbox>
 
       <Checkbox
@@ -77,7 +78,9 @@
         checked={$context.system.identified}
         disabled={!$context.editable}
       >
-        {localize('DND5E.Identified')}
+        {$context.system.identified
+          ? localize('DND5E.Identified')
+          : localize('DND5E.Unidentified.Title')}
       </Checkbox>
     </div>
   </div>

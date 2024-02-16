@@ -77,9 +77,9 @@ input[type='checkbox'] {
   align-items: flex-start;
 
   .item-image {
-    flex: 0 0 5rem;
-    width: 5rem;
-    height: 5rem;
+    flex: 0 0 5.75rem;
+    width: 5.75rem;
+    height: 5.75rem;
     position: relative;
 
     .item-menu {
@@ -112,11 +112,12 @@ input[type='checkbox'] {
   }
 
   img.profile {
-    flex: 0 0 5rem;
-    width: 5rem;
-    height: 5rem;
+    flex: 0 0 5.75rem;
+    width: 5.75rem;
+    height: 5.75rem;
     border-radius: 0.3125rem;
     margin-right: 0;
+    object-fit: cover;
   }
 
   .header-details {

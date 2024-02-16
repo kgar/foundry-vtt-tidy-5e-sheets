@@ -5,13 +5,13 @@ label.fred-box {
   color: var(--t5e-checkbox-font-color);
   cursor: pointer;
   display: flex;
-  flex: 0 0 calc(100% / 4 - 0.0625rem);
   font-size: 0.8125rem;
   font-weight: 400;
   height: 1.25rem;
   line-height: 1rem;
   overflow: hidden;
   padding: 0.0625rem;
+  padding-right: 1.5rem;
   position: relative;
   white-space: nowrap;
   z-index: 1;
@@ -59,8 +59,6 @@ label.fred-box {
     &:checked::after {
       display: none;
     }
-
-    
 
     &:checked {
       background: var(--t5e-checkbox-checked-color);
