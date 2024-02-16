@@ -179,5 +179,6 @@
   &.sheet form,
   &.application-shell {
     @import './partials/buttons';
+    @import './partials/checkboxes';
   }
 }

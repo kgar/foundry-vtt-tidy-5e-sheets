@@ -11,11 +11,12 @@
   import Source from '../shared/Source.svelte';
   import { CONSTANTS } from 'src/constants';
   import ItemIdentifiableName from './parts/ItemIdentifiableName.svelte';
+  import Checkbox from 'src/components/inputs/Checkbox.svelte';
 
   let context = getContext<Readable<ItemSheetContext>>('context');
 
   let selectedTabId: string;
-
+  const localize = FoundryAdapter.localize;
 </script>
 
 <header class="sheet-header flexrow gap">
@@ -58,6 +59,27 @@
         />
       </li>
     </ul>
+    <div class="flex-row no-gap">
+      <Checkbox
+        labelCssClass="fred-box"
+        document={$context.item}
+        field="system.equipped"
+        checked={$context.system.equipped}
+        disabled={!$context.editable}
+      >
+        {localize('DND5E.Equipped')}
+      </Checkbox>
+
+      <Checkbox
+        labelCssClass="fred-box"
+        document={$context.item}
+        field="system.identified"
+        checked={$context.system.identified}
+        disabled={!$context.editable}
+      >
+        {localize('DND5E.Identified')}
+      </Checkbox>
+    </div>
   </div>
 </header>
 <Tabs bind:selectedTabId tabs={$context.tabs} />
