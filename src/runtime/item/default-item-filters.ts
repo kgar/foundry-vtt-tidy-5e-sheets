@@ -84,9 +84,9 @@ export function getItemRarityFiltersAsObject(): Record<string, ItemFilter> {
 }
 
 export function getSpellSchoolFilters(): ItemFilter[] {
-  const itemRarity = CONFIG.DND5E.spellSchools as Record<string, any>;
+  const spellSchools = CONFIG.DND5E.spellSchools as Record<string, any>;
 
-  return Object.entries(itemRarity).map<ItemFilter>(
+  return Object.entries(spellSchools).map<ItemFilter>(
     ([key, schoolData]) =>
       ({
         name: key,

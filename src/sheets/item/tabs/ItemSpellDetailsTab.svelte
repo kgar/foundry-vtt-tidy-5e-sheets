@@ -99,7 +99,11 @@
     value={$context.system.school}
     disabled={!$context.editable}
   >
-    <SelectOptions data={$context.config.spellSchools} blank="" />
+    <SelectOptions
+      data={$context.config.spellSchools}
+      labelProp="label"
+      blank=""
+    />
   </Select>
 </ItemFormGroup>
 
