@@ -26,14 +26,14 @@
 </h3>
 
 <ItemFormGroup
-  field="system.armor.type"
+  field="system.type.value"
   labelText={localize('DND5E.ItemEquipmentType')}
   let:inputId
 >
   <Select
     id={inputId}
-    value={$context.system.armor.type}
-    field="system.armor.type"
+    value={$context.system.type.value}
+    field="system.type.value"
     document={$context.item}
     disabled={!$context.editable}
   >
@@ -52,8 +52,8 @@
 >
   <Select
     id={inputId}
-    value={$context.system.baseItem}
-    field="system.baseItem"
+    value={$context.system.type.baseItem}
+    field="system.type.baseItem"
     document={$context.item}
     disabled={!$context.editable}
   >
@@ -77,20 +77,39 @@
       <SelectOptions data={$context.config.attunements} />
     </Select>
   </ItemFormGroup>
+
+  <ItemFormGroup labelText={localize('DND5E.Proficiency')}>
+    <Select
+      document={$context.item}
+      field="system.proficient"
+      value={$context.system.proficient}
+      disabled={!$context.editable}
+    >
+      <SelectOptions
+        data={$context.config.weaponAndArmorProficiencyLevels}
+        blank={localize('DND5E.Automatic')}
+      />
+    </Select>
+  </ItemFormGroup>
 {/if}
 
-<ItemFormGroup labelText={localize('DND5E.Proficiency')}>
-  <Select
-    document={$context.item}
-    field="system.proficient"
-    value={$context.system.proficient}
-    disabled={!$context.editable}
-  >
-    <SelectOptions
-      data={$context.config.weaponAndArmorProficiencyLevels}
-      blank={localize('DND5E.Automatic')}
-    />
-  </Select>
+<ItemFormGroup
+  cssClass="stacked weapon-properties"
+  labelText={localize('DND5E.ItemEquipmentProperties')}
+>
+  {#each properties as [key, property]}
+    <Checkbox
+      labelCssClass="checkbox"
+      document={$context.item}
+      field="system.properties.{key}"
+      checked={property.selected}
+      disabled={!$context.editable}
+      onDataPreparing={(ev) =>
+        mapPropertiesToSave($context.properties, ev, key)}
+    >
+      {property.label}
+    </Checkbox>
+  {/each}
 </ItemFormGroup>
 
 {#if $context.system.isArmor || $context.system.isMountable}
@@ -143,25 +162,6 @@
       value={$context.system.strength}
       disabled={!$context.editable}
     />
-  </ItemFormGroup>
-
-  <ItemFormGroup
-    cssClass="stacked weapon-properties"
-    labelText={localize('DND5E.ItemEquipmentProperties')}
-  >
-    {#each properties as [key, property]}
-      <Checkbox
-        labelCssClass="checkbox"
-        document={$context.item}
-        field="system.properties.{key}"
-        checked={property.selected}
-        disabled={!$context.editable}
-        onDataPreparing={(ev) =>
-          mapPropertiesToSave($context.properties, ev, key)}
-      >
-        {property.label}
-      </Checkbox>
-    {/each}
   </ItemFormGroup>
 {/if}
 

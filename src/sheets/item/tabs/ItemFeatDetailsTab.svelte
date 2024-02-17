@@ -10,8 +10,11 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import Select from 'src/components/inputs/Select.svelte';
   import ItemFormGroup from '../form/ItemFormGroup.svelte';
+  import { mapPropertiesToSave } from 'src/utils/system-properties';
 
   let context = getContext<Readable<ItemSheetContext>>('context');
+
+  $: properties = Object.entries<any>($context.properties);
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -29,7 +32,7 @@
     field="system.type.value"
     value={$context.system.type.value}
     disabled={!$context.editable}
-    >
+  >
     <SelectOptions
       data={$context.config.featureTypes}
       labelProp="label"
@@ -38,9 +41,10 @@
   </Select>
 </ItemFormGroup>
 
-{#if $context.featureSubtypes}
+{#if $context.itemSubtypes}
   {@const category =
     $context.config.featureTypes[$context.system.type.value]?.label}
+
   <ItemFormGroup
     labelText={localize('DND5E.ItemFeatureSubtype', { category })}
     field="system.type.subtype"
@@ -52,11 +56,30 @@
       field="system.type.subtype"
       value={$context.system.type.subtype}
       disabled={!$context.editable}
-      >
-      <SelectOptions data={$context.featureSubtypes} blank="" />
+    >
+      <SelectOptions data={$context.itemSubtypes} blank="" />
     </Select>
   </ItemFormGroup>
 {/if}
+
+<ItemFormGroup
+  cssClass="stacked weapon-properties"
+  labelText={localize('DND5E.ItemEquipmentProperties')}
+>
+  {#each properties as [key, property]}
+    <Checkbox
+      labelCssClass="checkbox"
+      document={$context.item}
+      field="system.properties.{key}"
+      checked={property.selected}
+      disabled={!$context.editable}
+      onDataPreparing={(ev) =>
+        mapPropertiesToSave($context.properties, ev, key)}
+    >
+      {property.label}
+    </Checkbox>
+  {/each}
+</ItemFormGroup>
 
 <h3 class="form-header">{localize('DND5E.FeatureUsage')}</h3>
 
@@ -78,7 +101,7 @@
         placeholder={localize('DND5E.FeatureRechargeResult')}
         value={$context.system.recharge.value}
         disabled={!$context.editable}
-        />
+      />
 
       <Checkbox
         id="{$context.appId}-system-recharge-charged"
@@ -87,7 +110,7 @@
         field="system.recharge.charged"
         checked={$context.system.recharge.charged}
         disabled={!$context.editable}
-        >
+      >
         {localize('DND5E.Charged')}
       </Checkbox>
     </div>

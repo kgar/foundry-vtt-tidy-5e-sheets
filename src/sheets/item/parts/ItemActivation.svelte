@@ -22,7 +22,7 @@
   let:inputId
 >
   <div class="form-fields">
-    {#if $context.system.activation.type}
+    {#if $context.system.activation.type && !$context.isCostlessAction}
       <NumberInput
         id={inputId}
         value={$context.system.activation.cost}
