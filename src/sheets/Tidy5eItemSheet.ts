@@ -93,23 +93,24 @@ export class Tidy5eKgarItemSheet
   async getData(options = {}) {
     const defaultDocumentContext = await super.getData(this.options);
 
-    const itemDescriptions: ItemDescription[] = [
-      {
-        content: defaultDocumentContext.enriched.description,
-        field: 'system.description.value',
-        label: FoundryAdapter.localize('DND5E.Description'),
-      },
-      {
+    const itemDescriptions: ItemDescription[] = [];
+    itemDescriptions.push({
+      content: defaultDocumentContext.enriched.description,
+      field: 'system.description.value',
+      label: FoundryAdapter.localize('DND5E.Description'),
+    });
+    if (defaultDocumentContext.isIdentifiable && FoundryAdapter.userIsGm()) {
+      itemDescriptions.push({
         content: defaultDocumentContext.enriched.unidentified,
         field: 'system.unidentified.description',
         label: FoundryAdapter.localize('DND5E.DescriptionUnidentified'),
-      },
-      {
-        content: defaultDocumentContext.enriched.chat,
-        field: 'system.description.chat',
-        label: FoundryAdapter.localize('DND5E.DescriptionChat'),
-      },
-    ];
+      });
+    }
+    itemDescriptions.push({
+      content: defaultDocumentContext.enriched.chat,
+      field: 'system.description.chat',
+      label: FoundryAdapter.localize('DND5E.DescriptionChat'),
+    });
 
     const eligibleCustomTabs = ItemSheetRuntime.getCustomItemTabs(
       defaultDocumentContext

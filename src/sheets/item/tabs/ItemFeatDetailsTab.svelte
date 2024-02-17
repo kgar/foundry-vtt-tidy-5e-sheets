@@ -11,10 +11,9 @@
   import Select from 'src/components/inputs/Select.svelte';
   import ItemFormGroup from '../form/ItemFormGroup.svelte';
   import { mapPropertiesToSave } from 'src/utils/system-properties';
+  import ItemProperties from '../parts/ItemProperties.svelte';
 
   let context = getContext<Readable<ItemSheetContext>>('context');
-
-  $: properties = Object.entries<any>($context.properties);
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -66,19 +65,7 @@
   cssClass="stacked weapon-properties"
   labelText={localize('DND5E.ItemEquipmentProperties')}
 >
-  {#each properties as [key, property]}
-    <Checkbox
-      labelCssClass="checkbox"
-      document={$context.item}
-      field="system.properties.{key}"
-      checked={property.selected}
-      disabled={!$context.editable}
-      onDataPreparing={(ev) =>
-        mapPropertiesToSave($context.properties, ev, key)}
-    >
-      {property.label}
-    </Checkbox>
-  {/each}
+  <ItemProperties />
 </ItemFormGroup>
 
 <h3 class="form-header">{localize('DND5E.FeatureUsage')}</h3>
