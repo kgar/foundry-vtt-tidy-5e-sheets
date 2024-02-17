@@ -14,20 +14,6 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-<ItemFormGroup cssClass="stacked" labelText={localize('DND5E.ItemToolStatus')}>
-  <div class="form-fields">
-    <Checkbox
-    labelCssClass="checkbox"
-      document={$context.item}
-      field="system.equipped"
-      checked={$context.system.equipped}
-      disabled={!$context.editable}
-      >
-      {localize('DND5E.Equipped')}
-    </Checkbox>
-  </div>
-</ItemFormGroup>
-
 <ItemFormGroup
   labelText={localize('DND5E.ItemToolType')}
   field="system.toolType"

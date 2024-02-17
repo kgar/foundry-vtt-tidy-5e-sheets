@@ -11,7 +11,8 @@
   import TabContents from 'src/components/tabs/TabContents.svelte';
   import Source from '../shared/Source.svelte';
   import { CONSTANTS } from 'src/constants';
-    import ItemIdentifiableName from './parts/ItemIdentifiableName.svelte';
+  import ItemIdentifiableName from './parts/ItemIdentifiableName.svelte';
+  import Checkbox from 'src/components/inputs/Checkbox.svelte';
 
   let context = getContext<Readable<ItemSheetContext>>('context');
 
@@ -58,6 +59,19 @@
         />
       </li>
     </ul>
+    <div class="flex-row no-gap">
+      <Checkbox
+        labelCssClass="green-checkbox"
+        document={$context.item}
+        field="system.identified"
+        checked={$context.system.identified}
+        disabled={!$context.editable}
+      >
+        {$context.system.identified
+          ? localize('DND5E.Identified')
+          : localize('DND5E.Unidentified.Title')}
+      </Checkbox>
+    </div>
   </div>
 </header>
 <Tabs bind:selectedTabId tabs={$context.tabs} />

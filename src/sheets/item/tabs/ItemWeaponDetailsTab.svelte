@@ -81,33 +81,6 @@
       />
     </Select>
   </ItemFormGroup>
-
-  <ItemFormGroup
-    cssClass="stacked"
-    labelText={localize('DND5E.ItemWeaponStatus')}
-  >
-    <div class="form-fields">
-      <Checkbox
-        labelCssClass="checkbox"
-        document={$context.item}
-        field="system.equipped"
-        checked={$context.system.equipped}
-        disabled={!$context.editable}
-        >
-        {localize('DND5E.Equipped')}</Checkbox
-      >
-
-      <Checkbox
-        labelCssClass="checkbox"
-        document={$context.item}
-        field="system.identified"
-        checked={$context.system.identified}
-        disabled={!$context.editable}
-        >
-        {localize('DND5E.Identified')}
-      </Checkbox>
-    </div>
-  </ItemFormGroup>
 {/if}
 
 <ItemFormGroup
