@@ -37,18 +37,11 @@
 
     <div class="item-subtitle">
       <h4 class="item-type">{$context.itemType ?? ''}</h4>
-      <span class="item-status">{$context.itemStatus ?? ''}</span>
     </div>
 
     <ul class="summary flexrow">
       <li>
-        {#if $context.system.toolType}
-          {@const toolType =
-            $context.config.toolTypes[$context.system.toolType]}
-          {toolType}
-        {:else}
-          {localize('ITEM.TypeTool')}
-        {/if}
+        {$context.system.type.label}
       </li>
       <li>
         <Select

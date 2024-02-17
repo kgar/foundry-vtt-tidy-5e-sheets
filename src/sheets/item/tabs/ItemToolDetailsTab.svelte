@@ -7,7 +7,6 @@
   import Select from 'src/components/inputs/Select.svelte';
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import ItemFormGroup from '../form/ItemFormGroup.svelte';
-  import Checkbox from 'src/components/inputs/Checkbox.svelte';
   import ItemProperties from '../parts/ItemProperties.svelte';
 
   let context = getContext<Readable<ItemSheetContext>>('context');
@@ -17,14 +16,14 @@
 
 <ItemFormGroup
   labelText={localize('DND5E.ItemToolType')}
-  field="system.toolType"
+  field="system.type.value"
   let:inputId
 >
   <Select
     id={inputId}
     document={$context.item}
-    field="system.toolType"
-    value={$context.system.toolType}
+    field="system.type.value"
+    value={$context.system.type.value}
     disabled={!$context.editable}
   >
     <SelectOptions data={$context.config.toolTypes} blank="" />
@@ -33,14 +32,14 @@
 
 <ItemFormGroup
   labelText={localize('DND5E.ItemToolBase')}
-  field="system.baseItem"
+  field="system.type.baseItem"
   let:inputId
 >
   <Select
     id={inputId}
     document={$context.item}
-    field="system.baseItem"
-    value={$context.system.baseItem}
+    field="system.type.baseItem"
+    value={$context.system.type.baseItem}
     disabled={!$context.editable}
   >
     <SelectOptions data={$context.baseItems} blank="" />
