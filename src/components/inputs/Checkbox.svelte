@@ -25,7 +25,7 @@
   $: draftValue = value;
   $: datasetAttributes = buildDataset(dataset);
 
-  function saveChange(
+  async function saveChange(
     event: Event & {
       currentTarget: EventTarget & HTMLInputElement;
     },
@@ -34,7 +34,7 @@
       [field]: value ?? event.currentTarget.checked,
     };
 
-    document.update(data);
+    await document.update(data);
 
     draftValue = value;
   }

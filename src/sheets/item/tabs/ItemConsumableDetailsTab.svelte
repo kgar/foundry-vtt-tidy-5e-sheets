@@ -9,6 +9,7 @@
   import Select from 'src/components/inputs/Select.svelte';
   import Checkbox from 'src/components/inputs/Checkbox.svelte';
   import ItemFormGroup from '../form/ItemFormGroup.svelte';
+  import { mapPropertiesToSave } from 'src/utils/system-properties';
 
   let context = getContext<Readable<ItemSheetContext>>('context');
 
@@ -86,6 +87,8 @@
       field="system.properties.{key}"
       checked={property.selected}
       disabled={!$context.editable}
+      onDataPreparing={(ev) =>
+        mapPropertiesToSave($context.properties, ev, key)}
     >
       {property.label}
     </Checkbox>
