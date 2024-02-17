@@ -202,7 +202,9 @@
                           selectOnFocus={true}
                           {value}
                           onSaveChange={(ev) =>
-                            saveSection(ev, index, column.property, section)}
+                            item.id ||
+                            (!item.id &&
+                              saveSection(ev, index, column.property, section))}
                           disabled={!$context.editable ||
                             (column.property === 'quantity' &&
                               $context.lockItemQuantity)}
