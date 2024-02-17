@@ -6,7 +6,6 @@
   import TabContents from 'src/components/tabs/TabContents.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import ItemProfilePicture from './parts/ItemProfilePicture.svelte';
-  import TextInput from 'src/components/inputs/TextInput.svelte';
   import Select from 'src/components/inputs/Select.svelte';
   import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
   import Source from '../shared/Source.svelte';
@@ -37,11 +36,10 @@
 
     <div class="item-subtitle">
       <h4 class="item-type">{$context.itemType ?? ''}</h4>
-      <span class="item-status">{$context.itemStatus ?? ''}</span>
     </div>
 
     <ul class="summary flexrow">
-      <li>{$context.itemType}</li>
+      <li>{$context.system.type.label}</li>
       <li>
         <Select
           document={$context.item}
