@@ -30,6 +30,7 @@
 
   $: damageParts = [...$context.system.damage.parts];
 
+  // TODO: Leverage a more generalize data batching scheme and plug in the proper components instead of raw elements.
   function saveDamageFormulae() {
     $context.item.update({
       'system.damage.parts': damageParts,
@@ -219,6 +220,7 @@
           field="system.damage.versatile"
           disabled={!$context.editable}
           additionalDataToSave={{
+            // TODO: Use more universal/generalized batch saving scheme that shares the same logic between here and the related properties.
             'system.damage.parts': damageParts,
           }}
         />

@@ -41,8 +41,7 @@
       field="system.activation.type"
       disabled={!$context.editable}
     >
-      <option value=""></option>
-      <SelectOptions data={$context.config.abilityActivationTypes} />
+      <SelectOptions data={$context.config.abilityActivationTypes} blank="" />
     </Select>
   </div>
 </ItemFormGroup>
