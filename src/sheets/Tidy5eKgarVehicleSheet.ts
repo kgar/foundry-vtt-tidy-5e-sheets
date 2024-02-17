@@ -328,7 +328,7 @@ export class Tidy5eVehicleSheet
     // Skip the default vehicle sheet handler, as we are handling all use cases.
     const baseActor5eClass = getBaseActorSheet5e(this);
     if (baseActor5eClass) {
-      return baseActor5eClass._onDropSingleItem(itemData);
+      return baseActor5eClass._onDropSingleItem.call(this, itemData);
     }
   }
 
