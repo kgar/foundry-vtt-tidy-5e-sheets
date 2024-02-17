@@ -8,6 +8,7 @@
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import ItemFormGroup from '../form/ItemFormGroup.svelte';
   import Checkbox from 'src/components/inputs/Checkbox.svelte';
+  import ItemProperties from '../parts/ItemProperties.svelte';
 
   let context = getContext<Readable<ItemSheetContext>>('context');
 
@@ -25,7 +26,7 @@
     field="system.toolType"
     value={$context.system.toolType}
     disabled={!$context.editable}
-    >
+  >
     <SelectOptions data={$context.config.toolTypes} blank="" />
   </Select>
 </ItemFormGroup>
@@ -41,9 +42,16 @@
     field="system.baseItem"
     value={$context.system.baseItem}
     disabled={!$context.editable}
-    >
+  >
     <SelectOptions data={$context.baseItems} blank="" />
   </Select>
+</ItemFormGroup>
+
+<ItemFormGroup
+  cssClass="stacked tool-properties"
+  labelText={localize('DND5E.ItemToolProperties')}
+>
+  <ItemProperties />
 </ItemFormGroup>
 
 <ItemFormGroup
@@ -57,7 +65,7 @@
     field="system.attunement"
     value={$context.system.attunement}
     disabled={!$context.editable}
-    >
+  >
     <SelectOptions data={$context.config.attunements} />
   </Select>
 </ItemFormGroup>
@@ -73,7 +81,7 @@
     field="system.proficient"
     value={$context.system.proficient}
     disabled={!$context.editable}
-    >
+  >
     <SelectOptions
       data={$context.config.proficiencyLevels}
       blank={localize('DND5E.Automatic')}
@@ -92,7 +100,7 @@
     field="system.ability"
     value={$context.system.ability}
     disabled={!$context.editable}
-    >
+  >
     <SelectOptions
       data={$context.config.abilities}
       labelProp="label"
@@ -113,7 +121,7 @@
     value={$context.system.bonus}
     dataset={{ formulaEditor: true }}
     disabled={!$context.editable}
-    />
+  />
 </ItemFormGroup>
 
 <ItemFormGroup
@@ -128,5 +136,5 @@
     field="system.chatFlavor"
     value={$context.system.chatFlavor}
     disabled={!$context.editable}
-    />
+  />
 </ItemFormGroup>
