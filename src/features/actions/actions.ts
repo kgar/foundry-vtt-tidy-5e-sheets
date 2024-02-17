@@ -17,7 +17,6 @@ const itemTypeSortValues: Record<string, number> = {
   spell: 4,
   consumable: 5,
   tool: 6,
-  backpack: 7,
   class: 8,
   loot: 9,
 };

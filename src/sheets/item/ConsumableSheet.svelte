@@ -60,7 +60,7 @@
     </ul>
     <div class="flex-row no-gap">
       <Checkbox
-        labelCssClass="fred-box"
+        labelCssClass="green-checkbox"
         document={$context.item}
         field="system.equipped"
         checked={$context.system.equipped}
@@ -72,7 +72,7 @@
       </Checkbox>
 
       <Checkbox
-        labelCssClass="fred-box"
+        labelCssClass="green-checkbox"
         document={$context.item}
         field="system.identified"
         checked={$context.system.identified}

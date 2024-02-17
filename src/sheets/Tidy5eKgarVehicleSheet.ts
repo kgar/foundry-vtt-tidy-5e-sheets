@@ -307,7 +307,6 @@ export class Tidy5eVehicleSheet
       'consumable',
       'tool',
       'loot',
-      'backpack',
     ];
     const isCargo =
       cargoTypes.includes(itemData.type) &&

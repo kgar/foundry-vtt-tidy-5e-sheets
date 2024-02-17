@@ -8,7 +8,6 @@ export function getItemCardContentTemplate(item: Item5e) {
   switch (item?.type) {
     case 'spell':
       return SpellbookItemCardContent;
-    case 'backpack':
     case 'equipment':
     case 'consumable':
     case 'tool':
