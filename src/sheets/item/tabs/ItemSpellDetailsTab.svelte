@@ -13,37 +13,13 @@
   import ItemFormGroup from '../form/ItemFormGroup.svelte';
   import { CONSTANTS } from 'src/constants';
   import { settingStore } from 'src/settings/settings';
+  import ItemProperties from '../parts/ItemProperties.svelte';
 
   let context = getContext<Readable<ItemSheetContext>>('context');
 
   const allClasses = FoundryAdapter.getAllClassesDropdownOptions(
     $settingStore.spellClassFilterAdditionalClasses,
   );
-
-  $: spellProperties = Object.entries($context.properties) as Iterable<
-    [string, any]
-  >;
-
-  // TODO: Handle this in a more universal way, such as, .... i dunno .... saving all the data each time we save. Live and learn 🤷‍♂️
-  function getSpellPropertiesToSave(
-    ev: Event & { currentTarget: HTMLInputElement },
-    keyToSave: string,
-  ) {
-    const allProperties = $context.properties;
-    const propertiesToSave = Object.entries(allProperties)
-      .filter(
-        ([key, value]: [string, any]) => key !== keyToSave && value.selected,
-      )
-      .map(([key, _]) => key);
-
-    if (ev.currentTarget.checked) {
-      propertiesToSave.push(keyToSave);
-    }
-
-    return {
-      'system.properties': propertiesToSave,
-    };
-  }
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -111,19 +87,7 @@
   cssClass="spell-components stacked"
   labelText={localize('DND5E.SpellComponents')}
 >
-  {#each spellProperties as [key, property]}
-    <Checkbox
-      id="{$context.appId}-system-properties-{key}"
-      labelCssClass="checkbox"
-      document={$context.item}
-      field="system.properties.{key}"
-      checked={property.selected}
-      disabled={!$context.editable}
-      onDataPreparing={(ev) => getSpellPropertiesToSave(ev, key)}
-    >
-      {property.label}
-    </Checkbox>
-  {/each}
+  <ItemProperties />
 </ItemFormGroup>
 
 <ItemFormGroup
