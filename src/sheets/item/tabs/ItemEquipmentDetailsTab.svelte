@@ -15,6 +15,8 @@
 
   let context = getContext<Readable<ItemSheetContext>>('context');
 
+  $: properties = Object.entries<any>($context.properties);
+
   const localize = FoundryAdapter.localize;
 </script>
 
@@ -33,7 +35,7 @@
     field="system.armor.type"
     document={$context.item}
     disabled={!$context.editable}
-    >
+  >
     <option value="" />
     <optgroup label={localize('DND5E.Armor')}>
       <SelectOptions data={$context.config.armorTypes} />
@@ -53,7 +55,7 @@
     field="system.baseItem"
     document={$context.item}
     disabled={!$context.editable}
-    >
+  >
     <SelectOptions data={$context.baseItems} blank="" />
   </Select>
 </ItemFormGroup>
@@ -70,7 +72,7 @@
       field="system.attunement"
       document={$context.item}
       disabled={!$context.editable}
-      >
+    >
       <SelectOptions data={$context.config.attunements} />
     </Select>
   </ItemFormGroup>
@@ -82,7 +84,7 @@
     field="system.proficient"
     value={$context.system.proficient}
     disabled={!$context.editable}
-    >
+  >
     <SelectOptions
       data={$context.config.weaponAndArmorProficiencyLevels}
       blank={localize('DND5E.Automatic')}
@@ -103,7 +105,7 @@
       field="system.armor.value"
       document={$context.item}
       disabled={!$context.editable}
-      />
+    />
   </ItemFormGroup>
 {/if}
 
@@ -121,7 +123,7 @@
       document={$context.item}
       value={$context.system.armor.dex}
       disabled={!$context.editable}
-      />
+    />
   </ItemFormGroup>
 {/if}
 
@@ -139,22 +141,26 @@
       document={$context.item}
       value={$context.system.strength}
       disabled={!$context.editable}
-      />
+    />
   </ItemFormGroup>
 
   <ItemFormGroup
-    field="system.stealth"
-    labelText={localize('DND5E.ItemEquipmentStealthDisav')}
-    let:inputId
+    cssClass="stacked weapon-properties"
+    labelText={localize('DND5E.ItemEquipmentProperties')}
   >
-    <Checkbox
-      id={inputId}
-      field="system.stealth"
-      document={$context.item}
-      checked={$context.system.stealth}
-      disabled={!$context.editable}
-      />
+    {#each properties as [key, property]}
+      <Checkbox
+        labelCssClass="checkbox"
+        document={$context.item}
+        field="system.properties.{key}"
+        checked={property.selected}
+        disabled={!$context.editable}
+      >
+        {property.label}
+      </Checkbox>
+    {/each}
   </ItemFormGroup>
+
 {/if}
 
 {#if $context.system.isMountable}
@@ -167,14 +173,14 @@
         field="system.speed.value"
         document={$context.item}
         disabled={!$context.editable}
-        />
+      />
       <span class="sep">{localize('DND5E.FeetAbbr')}</span>
       <TextInput
         field="system.speed.conditions"
         document={$context.item}
         value={$context.system.speed.conditions}
         disabled={!$context.editable}
-        />
+      />
     </div>
   </ItemFormGroup>
 {/if}

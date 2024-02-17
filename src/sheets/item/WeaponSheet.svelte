@@ -41,7 +41,7 @@
     </div>
 
     <ul class="summary flexrow">
-      <li>{$context.config.weaponTypes[$context.system.weaponType] ?? ''}</li>
+      <li>{$context.itemType}</li>
       <li>
         <Select
           document={$context.item}
