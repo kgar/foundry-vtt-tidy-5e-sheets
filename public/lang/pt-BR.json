@@ -640,6 +640,10 @@
         "hint": "Inclui feitiços com efeitos ativos anexados (por exemplo, Pele de Árvore) na guia/painel Ações por padrão."
     },
     "TIDY5E.Settings.ActionListIncludeConsumables": {
-        "name": "Incluir consumíveis como ações"
+        "name": "Incluir consumíveis como ações",
+        "hint": "Inclui consumíveis que têm um custo de ativação (ação, ação bônus, etc.) na lista de ações por padrão."
+    },
+    "TIDY5E.Settings.ActionListScaleCantripDamage": {
+        "name": "Mostrar dano de Truque escalado (experimental)"
     }
 }
