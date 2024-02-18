@@ -301,7 +301,14 @@ export class Tidy5eVehicleSheet
   }
 
   async _onDropSingleItem(itemData: any) {
-    const cargoTypes = ['weapon', 'equipment', 'consumable', 'tool', 'loot'];
+    const cargoTypes = [
+      'weapon',
+      'equipment',
+      'consumable',
+      'tool',
+      'loot',
+      'container',
+    ];
     const isCargo =
       cargoTypes.includes(itemData.type) &&
       this.currentTabId === CONSTANTS.TAB_VEHICLE_CARGO_AND_CREW;

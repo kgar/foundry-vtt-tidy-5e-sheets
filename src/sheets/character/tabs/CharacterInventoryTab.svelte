@@ -149,7 +149,7 @@
         >
       {/if}
     </div>
-    <Currency actor={$context.actor} />
+    <Currency document={$context.actor} />
   </div>
 
   {#if $settingStore.useCharacterEncumbranceBar}

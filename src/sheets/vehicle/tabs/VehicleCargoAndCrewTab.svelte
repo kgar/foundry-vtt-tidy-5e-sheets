@@ -278,7 +278,7 @@
 
 <TabFooter mode="vertical">
   <div class="currency">
-    <Currency actor={$context.actor} />
+    <Currency document={$context.actor} />
   </div>
 
   {#if $settingStore.useVehicleEncumbranceBar}

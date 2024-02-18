@@ -3,6 +3,8 @@ import ItemActiveEffectsTab from '../../sheets/item/tabs/ItemActiveEffectsTab.sv
 import ItemAdvancementTab from '../../sheets/item/tabs/ItemAdvancementTab.svelte';
 import ItemClassDetailsTab from '../../sheets/item/tabs/ItemClassDetailsTab.svelte';
 import ItemConsumableDetailsTab from '../../sheets/item/tabs/ItemConsumableDetailsTab.svelte';
+import ItemContainerContentsTab from '../../sheets/item/tabs/ItemContainerContentsTab.svelte';
+import ItemContainerDetailsTab from '../../sheets/item/tabs/ItemContainerDetailsTab.svelte';
 import ItemDescriptionTab from '../../sheets/item/tabs/ItemDescriptionTab.svelte';
 import ItemDescriptionWithSidebarTab from '../../sheets/item/tabs/ItemDescriptionWithSidebarTab.svelte';
 import ItemEquipmentDetailsTab from '../../sheets/item/tabs/ItemEquipmentDetailsTab.svelte';
@@ -49,6 +51,25 @@ const itemSheetTabs: Record<string, Tab> = {
     title: 'DND5E.Details',
     content: {
       component: ItemConsumableDetailsTab,
+      cssClass: 'detail-tab-contents',
+      type: 'svelte',
+    },
+    autoHeight: true,
+  },
+  containerContents: {
+    id: CONSTANTS.TAB_ITEM_CONTENTS_ID,
+    title: 'DND5E.Contents',
+    content: {
+      component: ItemContainerContentsTab,
+      cssClass: 'detail-tab-contents',
+      type: 'svelte',
+    },
+  },
+  containerDetails: {
+    id: CONSTANTS.TAB_ITEM_DETAILS_ID,
+    title: 'DND5E.Details',
+    content: {
+      component: ItemContainerDetailsTab,
       cssClass: 'detail-tab-contents',
       type: 'svelte',
     },

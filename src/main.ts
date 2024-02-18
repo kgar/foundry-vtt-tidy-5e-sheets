@@ -9,6 +9,7 @@ import { CONSTANTS } from './constants';
 import { Tidy5eSheetsApi } from './api/Tidy5eSheetsApi';
 import '../public/rpg-awesome/style/rpg-awesome.min.css';
 import { initRuntime } from './runtime/runtime-init';
+import { Tidy5eKgarContainerSheet } from './sheets/Tidy5eContainerSheet';
 
 FoundryAdapter.registerActorSheet(
   Tidy5eCharacterSheet,
@@ -29,6 +30,16 @@ FoundryAdapter.registerActorSheet(
 );
 
 FoundryAdapter.registerItemSheet(Tidy5eKgarItemSheet, 'TIDY5E.Tidy5eItemSheet');
+
+DocumentSheetConfig.unregisterSheet(Item, 'dnd5e', Tidy5eKgarItemSheet, {
+  types: ['container'],
+});
+
+DocumentSheetConfig.registerSheet(Item, 'dnd5e', Tidy5eKgarContainerSheet, {
+  makeDefault: true,
+  types: [CONSTANTS.SHEET_TYPE_CONTAINER],
+  label: 'TIDY5E.Tidy5eContainerSheet',
+});
 
 Hooks.once('ready', async () => {
   initSettings();

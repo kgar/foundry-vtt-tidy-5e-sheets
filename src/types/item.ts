@@ -39,3 +39,15 @@ export type ItemCardContentComponent = ComponentType<
     any
   >
 >;
+
+export type ContainerSheetContext = {
+  appId: string;
+  activateFoundryJQueryListeners: (node: HTMLElement) => void;
+  itemDescriptions: ItemDescription[];
+  lockItemQuantity: boolean;
+  customContent: CustomContent[];
+  originalContext: unknown;
+  owner: boolean;
+  tabs: Tab[];
+  viewableWarnings: DocumentPreparationWarning[];
+} & Record<string, any>;

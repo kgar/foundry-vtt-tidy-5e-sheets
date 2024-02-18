@@ -53,6 +53,10 @@
   async function onMouseEnter(event: Event) {
     Hooks.callAll(CONSTANTS.HOOK_TIDY5E_SHEETS_ITEM_HOVER_ON, event, item);
 
+    if (!card) {
+      return;
+    }
+
     if (!item?.getChatData || !$settingStore.itemCardsForAllItems) {
       return;
     }
@@ -66,6 +70,10 @@
 
   async function onMouseLeave(event: Event) {
     Hooks.callAll(CONSTANTS.HOOK_TIDY5E_SHEETS_ITEM_HOVER_OFF, event, item);
+
+    if (!card) {
+      return;
+    }
 
     card.update((card) => {
       card.item = null;

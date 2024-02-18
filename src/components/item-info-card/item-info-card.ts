@@ -10,6 +10,7 @@ export function getItemCardContentTemplate(item: Item5e) {
       return SpellbookItemCardContent;
     case 'equipment':
     case 'consumable':
+    case 'container':
     case 'tool':
     case 'loot':
       return InventoryItemCardContent;

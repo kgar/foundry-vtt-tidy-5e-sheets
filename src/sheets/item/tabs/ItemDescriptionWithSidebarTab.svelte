@@ -11,6 +11,7 @@
   import ItemDescriptions from '../parts/ItemDescriptions.svelte';
   import RerenderAfterFormSubmission from 'src/components/utility/RerenderAfterFormSubmission.svelte';
   import OpenSheetEditor from 'src/components/editor/OpenSheetEditor.svelte';
+  import { CONSTANTS } from 'src/constants';
 
   let context = getContext<Readable<ItemSheetContext>>('context');
 
@@ -45,22 +46,24 @@
 >
   <div class="item-properties">
     {#if $context.isPhysical}
-      <div class="form-group">
-        <label for="{$context.appId}-{$context.item.id}-quantity"
-          >{localize('DND5E.Quantity')}</label
-        >
-        <NumberInput
-          id="{$context.appId}-{$context.item.id}-quantity"
-          value={$context.system.quantity}
-          field="system.quantity"
-          document={$context.item}
-          step="1"
-          disabled={!$context.editable || $context.lockItemQuantity}
-          selectOnFocus={true}
-        />
-      </div>
+      {#if $context.item.type !== CONSTANTS.ITEM_TYPE_CONTAINER}
+        <div class="form-group">
+          <label for="{$context.appId}-{$context.item.id}-quantity"
+            >{localize('DND5E.Quantity')}</label
+          >
+          <NumberInput
+            id="{$context.appId}-{$context.item.id}-quantity"
+            value={$context.system.quantity}
+            field="system.quantity"
+            document={$context.item}
+            step="1"
+            disabled={!$context.editable || $context.lockItemQuantity}
+            selectOnFocus={true}
+          />
+        </div>
 
-      <HorizontalLineSeparator />
+        <HorizontalLineSeparator />
+      {/if}
 
       <div class="form-group">
         <label for="{$context.appId}-{$context.item.id}-weight"

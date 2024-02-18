@@ -1,17 +1,17 @@
 <script lang="ts">
+  import { CONSTANTS } from 'src/constants';
   import ItemProfilePicture from './parts/ItemProfilePicture.svelte';
-  import type { ItemSheetContext } from 'src/types/item';
-  import type { Readable } from 'svelte/store';
+  import ItemIdentifiableName from './parts/ItemIdentifiableName.svelte';
   import { getContext } from 'svelte';
+  import type { Readable } from 'svelte/store';
+  import type { ItemSheetContext } from 'src/types/item';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import Select from 'src/components/inputs/Select.svelte';
   import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
   import Checkbox from 'src/components/inputs/Checkbox.svelte';
+  import Source from '../shared/Source.svelte';
   import Tabs from 'src/components/tabs/Tabs.svelte';
   import TabContents from 'src/components/tabs/TabContents.svelte';
-  import Source from '../shared/Source.svelte';
-  import { CONSTANTS } from 'src/constants';
-  import ItemIdentifiableName from './parts/ItemIdentifiableName.svelte';
 
   let context = getContext<Readable<ItemSheetContext>>('context');
 
@@ -20,7 +20,8 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-<header class="sheet-header loot-header flexrow gap">
+<!-- Header -->
+<header class="sheet-header container-header flexrow gap">
   <ItemProfilePicture />
   <div
     class="header-details flexrow small-gap"
@@ -32,12 +33,9 @@
     >
       <ItemIdentifiableName />
     </h1>
-
     <div class="item-subtitle">
       <h4 class="item-type">{$context.itemType ?? ''}</h4>
-      <span class="item-status">{$context.itemStatus ?? ''}</span>
     </div>
-
     <ul class="summary flexrow">
       <li>
         <Select
@@ -62,6 +60,18 @@
       <Checkbox
         labelCssClass="green-checkbox"
         document={$context.item}
+        field="system.equipped"
+        checked={$context.system.equipped}
+        disabled={!$context.editable}
+      >
+        {$context.system.equipped
+          ? localize('DND5E.Equipped')
+          : localize('DND5E.Unequipped')}
+      </Checkbox>
+
+      <Checkbox
+        labelCssClass="green-checkbox"
+        document={$context.item}
         field="system.identified"
         checked={$context.system.identified}
         disabled={!$context.editable}
@@ -73,7 +83,12 @@
     </div>
   </div>
 </header>
+
 <Tabs bind:selectedTabId tabs={$context.tabs} />
+
 <section class="tidy-sheet-body">
   <TabContents tabs={$context.tabs} {selectedTabId} />
 </section>
+
+<style lang="scss">
+</style>

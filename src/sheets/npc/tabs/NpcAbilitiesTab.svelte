@@ -245,7 +245,7 @@
   </div>
 </section>
 <TabFooter mode="vertical" cssClass="abilities-footer">
-  <Currency actor={$context.actor} />
+  <Currency document={$context.actor} />
   {#if $settingStore.useNpcEncumbranceBar}
     <EncumbranceBar />
   {/if}
