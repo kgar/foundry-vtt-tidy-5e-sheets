@@ -636,6 +636,10 @@
         "hint": "Inclui magias com uma duração de um minuto ou menos (por exemplo, 1 rodada) e um tempo de ativação de 1 Ação ou 1 Ação Bônus (por exemplo, Bênção, Maldição, Comando) na aba/ painel de Ações por padrão."
     },
     "TIDY5E.Settings.ActionListIncludeSpellsWithActiveEffects": {
-        "name": "Inclui magias com efeitos ativos como Ações"
+        "name": "Inclui magias com efeitos ativos como Ações",
+        "hint": "Inclui feitiços com efeitos ativos anexados (por exemplo, Pele de Árvore) na guia/painel Ações por padrão."
+    },
+    "TIDY5E.Settings.ActionListIncludeConsumables": {
+        "name": "Incluir consumíveis como ações"
     }
 }
