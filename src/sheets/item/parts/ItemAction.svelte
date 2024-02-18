@@ -30,7 +30,7 @@
 
   $: damageParts = [...$context.system.damage.parts];
 
-  // TODO: Leverage a more generalize data batching scheme and plug in the proper components instead of raw elements.
+  // TODO: Leverage a more generalized data batching scheme and plug in the proper components instead of raw elements.
   function saveDamageFormulae() {
     $context.item.update({
       'system.damage.parts': damageParts,
