@@ -632,6 +632,10 @@
         "hint": "Em vez de mostrar todas as magias que causam dano na aba de Ações por padrão, limita-se apenas aos truques. Este é o comportamento padrão do D&D Beyond."
     },
     "TIDY5E.Settings.ActionListIncludeMinuteLongSpellsAsActions": {
-        "name": "Inclui magias com duração de um minuto como Ações"
+        "name": "Inclui magias com duração de um minuto como Ações",
+        "hint": "Inclui magias com uma duração de um minuto ou menos (por exemplo, 1 rodada) e um tempo de ativação de 1 Ação ou 1 Ação Bônus (por exemplo, Bênção, Maldição, Comando) na aba/ painel de Ações por padrão."
+    },
+    "TIDY5E.Settings.ActionListIncludeSpellsWithActiveEffects": {
+        "name": "Inclui magias com efeitos ativos como Ações"
     }
 }
