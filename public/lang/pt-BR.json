@@ -628,6 +628,10 @@
     },
     "TIDY5E.Settings.ActionList.Header": "Lista de ações",
     "TIDY5E.Settings.ActionListLimitActionsToCantrips": {
-        "name": "Limitar as ações aos Truques"
+        "name": "Limitar as ações aos Truques",
+        "hint": "Em vez de mostrar todas as magias que causam dano na aba de Ações por padrão, limita-se apenas aos truques. Este é o comportamento padrão do D&D Beyond."
+    },
+    "TIDY5E.Settings.ActionListIncludeMinuteLongSpellsAsActions": {
+        "name": "Inclui magias com duração de um minuto como Ações"
     }
 }
