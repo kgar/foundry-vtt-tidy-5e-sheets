@@ -386,22 +386,22 @@
     },
     "TIDY5E.Settings.ColorPickerEnabled": {
         "name": "Usar cores personalizadas do tema",
-        "hint": null
+        "hint": "Mostra cores personalizadas do tema"
     },
     "TIDY5E.Settings.ColorPickerPrimaryAccent": {
-        "name": null
+        "name": "Sotaque primário"
     },
     "TIDY5E.Settings.ColorPickerEquipped": {
-        "name": null
+        "name": "Equipado"
     },
     "TIDY5E.Settings.ColorPickerHpBar": {
         "name": "Barra de PV"
     },
     "TIDY5E.Settings.ColorPickerEquippedOutline": {
-        "name": null
+        "name": "Contorno equipado"
     },
     "TIDY5E.Settings.ColorPickerEquippedAccent": {
-        "name": null
+        "name": "Destaque equipado"
     },
     "TIDY5E.Settings.ColorPickerPrepared": {
         "name": null
@@ -463,60 +463,60 @@
         }
     },
     "TIDY5E.Settings.Debug": {
-        "name": null,
-        "hint": null
+        "name": "Ativar depuração",
+        "hint": "Imprime mensagens de depuração no console."
     },
     "TIDY5E.Settings.SortFavoriteItemsAlphabetically": {
-        "name": null,
-        "hint": null
+        "name": "Classificar os favoritos em ordem alfabética",
+        "hint": "Classifica os favoritos em ordem alfabética."
     },
     "TIDY5E.Settings.PermanentlyUnlockCharacterSheetForGM": {
-        "name": null,
-        "hint": null,
-        "title": null
+        "name": "Ficha de personagem: Sempre desbloqueado para o GM",
+        "hint": "Trate a ficha do personagem como se ela estivesse sempre desbloqueada, independentemente da configuração de bloqueio. O GM sempre pode editar o personagem, mas também pode alternar o bloqueio/desbloqueio para um jogador que também possua o personagem.",
+        "title": "Essa ficha está sempre desbloqueada para o GM, independentemente da configuração de bloqueio."
     },
     "TIDY5E.Settings.PermanentlyUnlockNPCSheetForGM": {
-        "name": null,
-        "hint": null,
-        "title": null
+        "name": "Ficha de PNJ: Sempre desbloqueada para o MJ",
+        "hint": "Trate a ficha do NPC como se ela estivesse sempre desbloqueada, independentemente da configuração de bloqueio. O MJ sempre pode editar o PNJ, mas também pode alternar o bloqueio/desbloqueio para um jogador que também possua o PNJ.",
+        "title": "Essa planilha está sempre desbloqueada para o MJ, independentemente da configuração de bloqueio."
     },
     "TIDY5E.Settings.PermanentlyUnlockVehicleSheetForGM": {
-        "name": null,
-        "hint": null,
-        "title": null
+        "name": "Ficha do veículo: Sempre desbloqueado para o MJ",
+        "hint": "Trate a ficha do veículo como se ele estivesse sempre desbloqueado, independentemente da configuração de bloqueio. O MJ sempre pode editar o veículo, mas também pode alternar o bloqueio/desbloqueio para um jogador que também seja proprietário do veículo.",
+        "title": "Essa planilha está sempre desbloqueada para o MJ, independentemente da configuração de bloqueio."
     },
     "TIDY5E.ThemeSettings": {
         "SheetMenu": {
-            "name": null,
-            "buttonLabel": null,
-            "hint": null
+            "name": "Configurações de temas",
+            "buttonLabel": "Configurações de tema",
+            "hint": "Personalize as cores do Tidy 5e Sheets."
         },
         "Sheet": {
-            "title": null,
-            "header": null,
-            "useDefaultLightColors": null,
-            "useDefaultDarkColors": null,
-            "export": null,
-            "import": null,
-            "importDropHint": null,
-            "importError": null,
-            "importSuccess": null,
-            "menuLabel": null,
-            "explanation": null
+            "title": "Configurações do tema: {userName}",
+            "header": "Cores personalizadas do tema",
+            "useDefaultLightColors": "Padrão Claro",
+            "useDefaultDarkColors": "Padrão Escuro",
+            "export": "Exportar",
+            "import": "Importar",
+            "importDropHint": "Dica: Você pode arrastar um arquivo \".tidy5e-theme\" para esse formulário para importá-lo.",
+            "importError": "Falha na importação do tema. Consulte o console para obter mais detalhes.",
+            "importSuccess": "O tema foi importado com sucesso!",
+            "menuLabel": "Menu",
+            "explanation": "Selecione a cor que você deseja usar para cada opção. O valor \"#00000000\" é equivalente a desativar a cor."
         }
     },
-    "TIDY5E.FavoriteSpellLevelLabel": null,
-    "TIDY5E.ApplyChanges": null,
-    "TIDY5E.SaveChanges": null,
-    "TIDY5E.VehicleInMotion": null,
-    "TIDY5E.VehicleMotionless": null,
-    "TIDY5E.TotalCrewCount": null,
-    "TIDY5E.ActionsPerTurn": null,
+    "TIDY5E.FavoriteSpellLevelLabel": "Nível do feitiço {number}",
+    "TIDY5E.ApplyChanges": "Aplicar alterações",
+    "TIDY5E.SaveChanges": "Salvar alterações",
+    "TIDY5E.VehicleInMotion": "O veículo está em movimento",
+    "TIDY5E.VehicleMotionless": "O veículo está imóvel",
+    "TIDY5E.TotalCrewCount": "Tripulação total",
+    "TIDY5E.ActionsPerTurn": "Ações por turno",
     "TIDY5E.SheetMenu": {
-        "label": null,
-        "themeLabel": null
+        "label": "Menu",
+        "themeLabel": "Tema"
     },
-    "TIDY5E.ActiveEffectsMarkerTitle": null,
+    "TIDY5E.ActiveEffectsMarkerTitle": "Este item tem efeitos ativos",
     "TIDY5E.WorldSettings.Exhaustion": {
         "hint": "Determina como a exaustão não relacionada a veículos é configurada e apresentada nas fichas de personagem e de PNJ.",
         "options.specific.levels.name": "Níveis totais",
@@ -646,5 +646,46 @@
     "TIDY5E.Settings.ActionListScaleCantripDamage": {
         "name": "Mostrar dano de Truque escalado (experimental)",
         "hint": "Escala o dano de truques para corresponder ao nível atual do PC ou à classificação de desafio do PNJ."
-    }
+    },
+    "TIDY5E.Settings.About": {
+        "MaintainerParagraph": "As ficha do Tidy 5e são mantidas por {urlStart}kgar{urlEnd}.",
+        "logoAltText": "Um escudo protetor com quatro estrelas e as palavras \"Tidy 5e\" na frente.",
+        "LocalizationParagraph": "{urlStart}Weblate{urlEnd}: Você localiza o conteúdo da Web? O Tidy 5e Sheets precisa de sua ajuda! Acesse o site do Weblate para ver o progresso de nossa localização em vários idiomas. Este módulo está aceitando novas traduções de idiomas e modificações nas traduções existentes.",
+        "dialogTitle": "Sobre o Tidy 5e Sheets",
+        "hint": "Informações sobre o módulo Tidy 5e Sheets.",
+        "GithubParagraph": "Você tem uma ideia de recurso? Há algo errado? Envie um {urlStart}Github Issue{urlEnd}.",
+        "DiscordParagraph": "{Servidor de Discórdia do Tidy 5e Sheets{urlEnd}: Discuta ideias de novos recursos, obtenha ajuda de outras pessoas e acompanhe o progresso deste módulo.",
+        "FinancialSupportHeader": "Maneiras de apoiar o Tidy 5e Sheets",
+        "FinancialSupportParagraph": "Se você gosta do Tidy 5e Sheets e deseja apoiá-lo financeiramente, aqui estão algumas maneiras de fazê-lo:",
+        "BuyMeACoffeeLink": "{urlStart}Buy Me a Coffee{urlEnd}",
+        "KoFiLink": "{urlStart}Ko-Fi{urlEnd}",
+        "PatreonLink": "{urlStart}Patreon{urlEnd}",
+        "name": "Sobre",
+        "buttonLabel": "Sobre o Tidy 5e Sheets"
+    },
+    "TIDY5E.ItemFilters.MenuTooltip.Filters": "Filtros",
+    "TIDY5E.ItemFilters.Category.Miscellaneous": "Diversos",
+    "TIDY5E.Settings.Migrations": {
+        "v1": {
+            "alphaExplanation2": "{boldStart}Observação{boldEnd}: essa migração não afeta o conteúdo do compêndio.",
+            "mainExplanation1": "Não é necessário migrar os dados para o novo módulo Tidy 5e Sheets para poder usá-lo. Na pior das hipóteses, se você for um usuário original do Tidy5e Sheet e pular as migrações, precisará reaplicar as configurações de acordo com o seu gosto.",
+            "mainExplanation2": "{boldStart}Nota{boldEnd}: As configurações do cliente não fazem parte dessa migração. Não houve mudanças suficientes na forma como as configurações do cliente funcionam no Tidy, portanto, é recomendável dar uma nova olhada nas configurações do cliente.",
+            "originalHeader": "Ficha Tidy5e original",
+            "originalExplanation": "Migrar as configurações do MJ e os sinalizadores de dados da ficha Tidy da ficha Tidy5e original. A maioria das diferenças nos dados vem das configurações do MJ. Se você migrar suas configurações e achar que uma configuração não é do seu agrado, basta alterar as configurações no menu de configurações.",
+            "alphaHeader": "Fichas Tidy 5e Alphas",
+            "alphaExplanation1": "Migrar configurações de MJ e sinalizadores de dados da ficha Tidy5e das fichas Tidy 5e Alpha. A maioria das diferenças nos dados vem dos sinalizadores de dados da ficha. A migração dos sinalizadores do Alfa tem como alvo os atores de nível superior, os itens dos atores de nível superior e os itens de nível superior. Isso trará dados biográficos, favoritos e outros sinalizadores de dados Alfa específicos da planilha."
+        },
+        "buttonLabel": "Migrar dados Tidy",
+        "dialogTitle": "Migrar dados Tidy",
+        "migrateConfirmMessage2": "{boldStart}Nota{boldEnd}: lembre-se sempre de {boldStart}fazer backup de seus dados.{boldEnd}.",
+        "migrateConfirmButtonYes": "Migrar",
+        "migrateConfirmButtonNo": "Cancelar",
+        "migrateConfirmMessage1": "Tem certeza de que deseja realizar essa migração?",
+        "migrateConfirmTitle": "Confirmar migração"
+    },
+    "TIDY5E.Reset": "Redefinir",
+    "TIDY5E.UseDefault": "Usar padrão",
+    "TIDY5E.ItemFilters.ClearAll": "Limpar tudo",
+    "TIDY5E.Commands.CollapseAll": "Recolher tudo",
+    "TIDY5E.Commands.ExpandAll": "Expandir tudo"
 }
