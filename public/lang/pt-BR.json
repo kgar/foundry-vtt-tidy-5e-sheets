@@ -385,7 +385,7 @@
         "hint": "Impede que não-MJs façam alterações na quantidade do item."
     },
     "TIDY5E.Settings.ColorPickerEnabled": {
-        "name": "Usar cores personalizadas do tema",
+        "name": "Usar Cores Personalizadas do Tema",
         "hint": "Mostra cores personalizadas do tema"
     },
     "TIDY5E.Settings.ColorPickerPrimaryAccent": {
@@ -404,62 +404,62 @@
         "name": "Destaque equipado"
     },
     "TIDY5E.Settings.ColorPickerPrepared": {
-        "name": null
+        "name": "Preparado"
     },
     "TIDY5E.Settings.ColorPickerPreparedOutline": {
-        "name": null
+        "name": "Contorno Preparado"
     },
     "TIDY5E.Settings.ColorPickerPreparedAccent": {
-        "name": null
+        "name": "Destaque Preparado"
     },
     "TIDY5E.Settings.ColorPickerPact": {
-        "name": null
+        "name": "Pacto"
     },
     "TIDY5E.Settings.ColorPickerPactOutline": {
-        "name": null
+        "name": "Contorno de Pacto"
     },
     "TIDY5E.Settings.ColorPickerPactAccent": {
-        "name": null
+        "name": "Destaque de Pacto"
     },
     "TIDY5E.Settings.ColorPickerAtWill": {
-        "name": null
+        "name": "À Vontade"
     },
     "TIDY5E.Settings.ColorPickerAtWillOutline": {
-        "name": null
+        "name": "Contorno de Uso Livre"
     },
     "TIDY5E.Settings.ColorPickerAtWillAccent": {
-        "name": null
+        "name": "Destaque de Uso Livre"
     },
     "TIDY5E.Settings.ColorPickerInnate": {
-        "name": null
+        "name": "Inato"
     },
     "TIDY5E.Settings.ColorPickerInnateOutline": {
-        "name": null
+        "name": "Contorno Inato"
     },
     "TIDY5E.Settings.ColorPickerInnateAccent": {
-        "name": null
+        "name": "Destaque Inato"
     },
     "TIDY5E.Settings.ColorPickerAlwaysPrepared": {
-        "name": null
+        "name": "Sempre Preparado"
     },
     "TIDY5E.Settings.ColorPickerAlwaysPreparedOutline": {
-        "name": null
+        "name": "Contorno Sempre Preparado"
     },
     "TIDY5E.Settings.ColorPickerAlwaysPreparedAccent": {
-        "name": null
+        "name": "Destaque Sempre Preparado"
     },
     "TIDY5E.Settings.AllowHpMaxOverride": {
         "name": "Permitir Substituição de PV Máx. no Personagem",
         "hint": "Permite que o Mestre altere manualmente os PV máximos na ficha do personagem."
     },
     "TIDY5E.Settings.Reset": {
-        "name": null,
-        "hint": null,
+        "name": "Redefinir Configurações para o Padrão",
+        "hint": "Isso redefinirá todas as configurações de volta para o padrão do sistema de jogo ativo. Isso afeta apenas as configurações de escopo \"mundo\", como opções do mestre.",
         "dialogs": {
-            "title": null,
-            "content": null,
-            "confirm": null,
-            "cancel": null
+            "title": "Redefinir Configurações do Módulo",
+            "content": "Você tem certeza de que deseja redefinir todas as configurações do módulo para os padrões do sistema atual? <strong>Isso não pode ser desfeito.</strong>",
+            "confirm": "Redefinir Configurações do Módulo",
+            "cancel": "Cancelar"
         }
     },
     "TIDY5E.Settings.Debug": {
@@ -681,11 +681,27 @@
         "migrateConfirmButtonYes": "Migrar",
         "migrateConfirmButtonNo": "Cancelar",
         "migrateConfirmMessage1": "Tem certeza de que deseja realizar essa migração?",
-        "migrateConfirmTitle": "Confirmar migração"
+        "migrateConfirmTitle": "Confirmar migração",
+        "name": "Migrações",
+        "hint": "Se você era um usuário do módulo original Tidy5e Sheet ou das planilhas Alpha, opcionalmente use este menu de Migrações para migrar suas configurações de Mestre e dados da planilha Tidy.",
+        "migrationBeginningMessage": "Migrando dados. Por favor, não atualize a página até que esteja concluído.",
+        "migrationErrorMessage": "Ocorreu um erro. Mais detalhes estão no console de desenvolvimento.",
+        "migrationCompleteMessage": "Migração concluída.",
+        "migrateDocumentFlagsButtonLabel": "Migrar Marcadores do Documento",
+        "migrateGmSettingsButtonLabel": "Migrar Configurações do Mestre"
     },
     "TIDY5E.Reset": "Redefinir",
     "TIDY5E.UseDefault": "Usar padrão",
     "TIDY5E.ItemFilters.ClearAll": "Limpar tudo",
     "TIDY5E.Commands.CollapseAll": "Recolher tudo",
-    "TIDY5E.Commands.ExpandAll": "Expandir tudo"
+    "TIDY5E.Commands.ExpandAll": "Expandir tudo",
+    "TIDY5E.Settings.ColorPickerScrollbarThumb": {
+        "name": "Polegar da Barra de Rolagem"
+    },
+    "TIDY5E.Settings.ColorPickerScrollbarTrack": {
+        "name": "Trilha da Barra de Rolagem"
+    },
+    "TIDY5E.Settings.ColorPickerMagicAccent": {
+        "name": "Contorno de Destaque de Item Mágico"
+    }
 }
