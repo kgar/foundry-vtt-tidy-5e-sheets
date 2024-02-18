@@ -641,7 +641,7 @@
     },
     "TIDY5E.Settings.ActionListIncludeConsumables": {
         "name": "Incluir Consumíveis como Ações",
-        "hint": "Inclui consumíveis que têm um custo de ativação (ação, ação bônus, etc.) na lista de ações por padrão."
+        "hint": "Inclui consumíveis que têm um custo de ativação (Ação, Ação Bônus, etc.) na lista de Ações por padrão."
     },
     "TIDY5E.Settings.ActionListScaleCantripDamage": {
         "name": "Mostrar dano de Truque escalado (experimental)",
