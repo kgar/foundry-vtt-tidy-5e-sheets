@@ -385,7 +385,7 @@
         "hint": "Impede que não-MJs façam alterações na quantidade do item."
     },
     "TIDY5E.Settings.ColorPickerEnabled": {
-        "name": null,
+        "name": "Usar cores personalizadas do tema",
         "hint": null
     },
     "TIDY5E.Settings.ColorPickerPrimaryAccent": {
@@ -644,6 +644,7 @@
         "hint": "Inclui consumíveis que têm um custo de ativação (ação, ação bônus, etc.) na lista de ações por padrão."
     },
     "TIDY5E.Settings.ActionListScaleCantripDamage": {
-        "name": "Mostrar dano de Truque escalado (experimental)"
+        "name": "Mostrar dano de Truque escalado (experimental)",
+        "hint": "Escala o dano de truques para corresponder ao nível atual do PC ou à classificação de desafio do PNJ."
     }
 }
