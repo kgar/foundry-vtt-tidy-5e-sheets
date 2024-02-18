@@ -640,7 +640,7 @@ export const FoundryAdapter = {
     actor: Actor5e,
     options: any
   ): Promise<unknown | null> {
-    const death = actor.flags[CONSTANTS.MODULE_ID].death ?? {};
+    const death = actor.flags[CONSTANTS.MODULE_ID]?.death ?? {};
 
     // Display a warning if we are not at zero HP or if we already have reached 3
     if (
