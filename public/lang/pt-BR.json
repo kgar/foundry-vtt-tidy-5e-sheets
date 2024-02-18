@@ -378,11 +378,11 @@
     },
     "TIDY5E.Settings.LockConfigureSheet": {
         "name": "Bloquear seleção de ficha",
-        "hint": null
+        "hint": "Impede que os não-MJs selecionem outro layout de ficha."
     },
     "TIDY5E.Settings.LockItemQuantity": {
-        "name": null,
-        "hint": null
+        "name": "Bloquear Quantidade de Item",
+        "hint": "Impede que não-MJs façam alterações na quantidade do item."
     },
     "TIDY5E.Settings.ColorPickerEnabled": {
         "name": null,
@@ -625,5 +625,9 @@
     },
     "TIDY5E.UserSettings.TabActionsList": {
         "tabLabel": "Lista de Ações"
+    },
+    "TIDY5E.Settings.ActionList.Header": "Lista de ações",
+    "TIDY5E.Settings.ActionListLimitActionsToCantrips": {
+        "name": "Limitar as ações aos Truques"
     }
 }
