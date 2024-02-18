@@ -82,10 +82,6 @@
     flex-wrap: wrap;
     gap: 0.125rem;
     row-gap: 0.3125rem;
-
-    :global(> *) {
-      flex: 0;
-    }
   }
 
   section {
