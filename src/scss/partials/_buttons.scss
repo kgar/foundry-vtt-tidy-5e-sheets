@@ -107,7 +107,7 @@
   border-color: var(--t5e-faint-color);
   border-radius: 0.3125rem;
   font-size: 0.75rem;
-  text-wrap: nowrap;
+  width: auto;
 
   &:hover {
     background: var(--t5e-light-color);

@@ -1,5 +1,6 @@
 <script lang="ts">
   import type { ItemFilterService } from 'src/features/filtering/ItemFilterService';
+  import type { ConfiguredItemFilter } from 'src/runtime/item/item.types';
   import { settingStore } from 'src/settings/settings';
   import {
     cycleNullTrueFalseForward,
@@ -7,7 +8,7 @@
   } from 'src/utils/value-cycling';
   import { getContext } from 'svelte';
 
-  export let filter: any;
+  export let filter: ConfiguredItemFilter;
   export let filterGroupName: string;
   const onFilter = getContext<ItemFilterService['onFilter']>('onFilter');
 
@@ -22,12 +23,13 @@
 
 <button
   type="button"
-  class="filter-option pill-button"
+  class="filter-option pill-button truncate"
   class:include={filter.value === true}
   class:exclude={filter.value === false}
   on:click={() => cycleFilterForward(filter.name, filter.value)}
   on:contextmenu={() => cycleFilterBackward(filter.name, filter.value)}
   tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+  title={filter.text}
 >
   <slot />
 </button>
@@ -42,7 +44,6 @@
 
     font-size: 0.75rem;
     background: none;
-    text-wrap: nowrap;
     text-transform: capitalize;
 
     &.include,

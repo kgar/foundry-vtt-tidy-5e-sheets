@@ -15,7 +15,7 @@ export class SpellSchoolApi {
    * @example Changing the transmutation icon to some nice coins.
    * ```js
    * Hooks.once("tidy5e-sheet.ready", (api) => {
-   *   api.config.spellSchools.setIcon('trs', 'fa-solid fa-coins');
+   *   api.config.spellSchool.setIcon('trs', 'fa-solid fa-coins');
    * });
    * ```
    */
