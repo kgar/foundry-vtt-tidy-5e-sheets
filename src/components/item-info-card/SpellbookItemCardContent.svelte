@@ -25,9 +25,9 @@
 
 <div class="info-card {spellRowClasses}" data-item-id={item._id}>
   <p class="info-card-name">{item.name}</p>
-  {#if item.labels.school || ($context.owner && canPrepare)}
+  {#if item.labels?.school || ($context.owner && canPrepare)}
     <div class="info-card-states">
-      <span>{item.labels.school ?? ''}</span>
+      <span>{item.labels?.school ?? ''}</span>
       {#if $context.owner}
         {#if canPrepare}
           <span>{ctx?.toggleTitle ?? ''}</span>

@@ -6,7 +6,7 @@ import type { Item5e } from 'src/types/item';
 import type { ActionItem, Actor5e, ActorActions } from 'src/types/types';
 import { isNil } from 'src/utils/data';
 import { scaleCantripDamageFormula, simplifyFormula } from 'src/utils/formula';
-import { error } from 'src/utils/logging';
+import { debug, error } from 'src/utils/logging';
 
 export type ActionSets = Record<string, Set<ActionItem>>;
 
@@ -110,47 +110,64 @@ export function isItemInActionList(item: Item5e): boolean {
 }
 
 function mapActionItem(item: Item5e): ActionItem {
-  let calculatedDerivedDamage = Array.isArray(item.labels.derivedDamage)
-    ? [...item.labels.derivedDamage].map(
-        ({ formula, label, damageType }: any, i: number) => {
-          const rawDamagePartFormula = item.system.damage?.parts[i]?.[0];
+  try {
+    let calculatedDerivedDamage = Array.isArray(item.labels.derivedDamage)
+      ? [...item.labels.derivedDamage].map(
+          ({ formula, label, damageType }: any, i: number) => {
+            const rawDamagePartFormula = item.system.damage?.parts[i]?.[0];
 
-          if (rawDamagePartFormula?.trim() === '') {
-            formula = '';
+            if (rawDamagePartFormula?.trim() === '') {
+              formula = '';
+            }
+
+            formula = simplifyFormula(formula, true);
+
+            const damageHealingTypeLabel =
+              FoundryAdapter.lookupDamageType(damageType) ??
+              FoundryAdapter.lookupHealingType(damageType) ??
+              '';
+
+            if (
+              item.type === 'spell' &&
+              item.system.scaling?.mode === 'cantrip' &&
+              SettingsProvider.settings.actionListScaleCantripDamage.get()
+            ) {
+              formula = scaleCantripDamageFormula(item, formula);
+              label = `${formula} ${damageHealingTypeLabel}`;
+            }
+
+            return {
+              label,
+              formula,
+              damageType,
+              damageHealingTypeLabel,
+            };
           }
+        )
+      : [];
 
-          formula = simplifyFormula(formula, true);
+    return {
+      item,
+      typeLabel: FoundryAdapter.localize(`ITEM.Type${item.type.titleCase()}`),
+      calculatedDerivedDamage,
+      ...getRangeTitles(item),
+    };
+  } catch (e) {
+    error(
+      'An error occurred while processing an item for the action list',
+      false,
+      e
+    );
+    debug('Action list mapping error troubleshooting info', { item });
 
-          const damageHealingTypeLabel =
-            FoundryAdapter.lookupDamageType(damageType) ??
-            FoundryAdapter.lookupHealingType(damageType) ??
-            '';
-
-          if (
-            item.type === 'spell' &&
-            item.system.scaling?.mode === 'cantrip' &&
-            SettingsProvider.settings.actionListScaleCantripDamage.get()
-          ) {
-            formula = scaleCantripDamageFormula(item, formula);
-            label = `${formula} ${damageHealingTypeLabel}`;
-          }
-
-          return {
-            label,
-            formula,
-            damageType,
-            damageHealingTypeLabel,
-          };
-        }
-      )
-    : [];
-
-  return {
-    item,
-    typeLabel: FoundryAdapter.localize(`ITEM.Type${item.type.titleCase()}`),
-    calculatedDerivedDamage,
-    ...getRangeTitles(item),
-  };
+    return {
+      item,
+      typeLabel: FoundryAdapter.localize(`ITEM.Type${item.type.titleCase()}`),
+      calculatedDerivedDamage: [],
+      rangeTitle: '',
+      rangeSubtitle: '',
+    };
+  }
 }
 
 function getRangeTitles(item: Item5e): {
@@ -158,7 +175,7 @@ function getRangeTitles(item: Item5e): {
   rangeSubtitle: string | null;
 } {
   const rangeSubtitle =
-    item.system.target?.type !== 'self' && item.labels.target
+    item.system.target?.type !== 'self' && item.labels?.target
       ? item.labels.target
       : null;
 
