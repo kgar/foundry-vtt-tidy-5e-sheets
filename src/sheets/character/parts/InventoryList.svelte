@@ -161,7 +161,7 @@
           </ItemTableCell>
           <ItemTableCell baseWidth="7.5rem" title={localize('DND5E.Usage')}>
             {#if item.system.activation?.type}
-              {item.labels.activation}
+              {item.labels?.activation ?? ''}
             {/if}
           </ItemTableCell>
           {#if $context.editable && $context.useClassicControls && !lockControls}

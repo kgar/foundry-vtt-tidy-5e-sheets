@@ -163,7 +163,7 @@
                     </ItemTableCell>
                     <ItemTableCell baseWidth="7.5rem">
                       {#if item.system.activation.type}
-                        <span>{item.labels.activation}</span>
+                        <span>{item.labels?.activation ?? ''}</span>
                       {/if}
                     </ItemTableCell>
                   {/if}
