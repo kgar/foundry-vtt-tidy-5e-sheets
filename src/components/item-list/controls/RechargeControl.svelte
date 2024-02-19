@@ -13,7 +13,7 @@
 <button
   type="button"
   class="item-list-button"
-  title={item.labels.recharge}
+  title={item.labels?.recharge ?? ''}
   on:click={() => item.rollRecharge()}
   disabled={!$context.owner}
   tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
