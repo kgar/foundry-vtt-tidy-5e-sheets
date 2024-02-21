@@ -1,20 +1,34 @@
+import { CONSTANTS } from 'src/constants';
 import type { ItemFilter } from './item.types';
 
 export const defaultItemFilters = {
   action: {
     name: 'action',
-    predicate: (item) => item.system.activation?.type === 'action',
+    predicate: (item) =>
+      item.system.activation?.type === CONSTANTS.ACTIVATION_COST_ACTION,
     text: 'DND5E.Action',
   },
   bonus: {
     name: 'bonus',
-    predicate: (item) => item.system.activation?.type === 'bonus',
+    predicate: (item) =>
+      item.system.activation?.type === CONSTANTS.ACTIVATION_COST_BONUS,
     text: 'DND5E.BonusAction',
   },
   reaction: {
     name: 'reaction',
-    predicate: (item) => item.system.activation?.type === 'reaction',
+    predicate: (item) =>
+      item.system.activation?.type === CONSTANTS.ACTIVATION_COST_REACTION,
     text: 'DND5E.Reaction',
+  },
+  activationCostOther: {
+    name: 'activationCostOther',
+    predicate: (item) =>
+      ![
+        CONSTANTS.ACTIVATION_COST_ACTION,
+        CONSTANTS.ACTIVATION_COST_BONUS,
+        CONSTANTS.ACTIVATION_COST_REACTION,
+      ].includes(item.system.activation?.type),
+    text: 'TIDY5E.ItemFilters.Filter.Other',
   },
   ritual: {
     name: 'ritual',
