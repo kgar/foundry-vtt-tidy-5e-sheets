@@ -72,6 +72,10 @@ export function getMaxPreparedSpellsSampleFormulas(): MaxPreparedSpellFormula[] 
       value: '@abilities.int.mod + floor(@classes.artificer.levels / 2)',
     },
     {
+      label: 'TIDY5E.Class.Bard',
+      value: 'max(@classes.bard.levels + 3, (min(floor(@classes.bard.levels/10),1) * (14 + min(floor(@classes.bard.levels/11),1) + min(floor(@classes.bard.levels/13),1) + (min(floor(@classes.bard.levels/14),1) * 2) + min(floor(@classes.bard.levels/15),1) + min(floor(@classes.bard.levels/17),1) + (min(floor(@classes.bard.levels/18),1) * 2))))',
+    },
+    {
       label: 'TIDY5E.Class.Cleric',
       value: '@abilities.wis.mod + @classes.cleric.levels',
     },
@@ -84,6 +88,11 @@ export function getMaxPreparedSpellsSampleFormulas(): MaxPreparedSpellFormula[] 
       value: '@abilities.cha.mod + floor(@classes.paladin.levels / 2)',
     },
     { label: 'TIDY5E.Class.Ranger', value: 'ceil(@classes.ranger.levels/2)+1' },
+    {
+      label: 'TIDY5E.Class.Sorcerer',
+      value:
+        'min(@classes.sorcerer.levels + 1, 12 + min(floor(@classes.sorcerer.levels/13),1) + min(floor(@classes.sorcerer.levels/15),1) + min(floor(@classes.sorcerer.levels/17),1))',
+    },
     {
       label: 'TIDY5E.Class.Wizard',
       value: '@abilities.int.mod + @classes.wizard.levels',
