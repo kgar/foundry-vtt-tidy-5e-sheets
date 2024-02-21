@@ -9,6 +9,8 @@ import type {
   SheetTabCacheable,
   ExpandedItemIdToLocationsMap,
   ExpandedItemData,
+  MessageBus,
+  MessageBusMessage,
 } from 'src/types/types';
 import { writable } from 'svelte/store';
 import NpcSheet from './npc/NpcSheet.svelte';
@@ -60,6 +62,7 @@ export class Tidy5eNpcSheet
   itemTableTogglesCache: ItemTableToggleCacheService;
   itemFilterService: ItemFilterService;
   subscriptionsService: StoreSubscriptionsService;
+  messageBus: MessageBus = writable<MessageBusMessage | undefined>();
 
   constructor(...args: any[]) {
     super(...args);
@@ -100,6 +103,9 @@ export class Tidy5eNpcSheet
       settingStore.subscribe(() => {
         if (first) return;
         this.render();
+      }),
+      this.messageBus.subscribe((m) => {
+        debug('Message bus message received', m);
       })
     );
     first = false;
@@ -111,6 +117,7 @@ export class Tidy5eNpcSheet
       target: node,
       context: new Map<any, any>([
         ['context', this.context],
+        ['messageBus', this.messageBus],
         ['stats', this.stats],
         ['card', this.card],
         ['currentTabId', this.currentTabId],

@@ -1,7 +1,7 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { type CharacterSheetContext } from 'src/types/types';
-  import type { ItemLayoutMode } from 'src/types/types';
+  import type { ItemLayoutMode, MessageBus } from 'src/types/types';
   import InventoryList from '../parts/InventoryList.svelte';
   import InventoryGrid from '../parts/InventoryGrid.svelte';
   import { getContext } from 'svelte';
@@ -13,7 +13,6 @@
   import TabFooter from 'src/sheets/actor/TabFooter.svelte';
   import { settingStore } from 'src/settings/settings';
   import { CONSTANTS } from 'src/constants';
-  import { ExpandAllCollapseAllService } from 'src/features/expand-collapse/ExpandAllCollapseAllService';
   import UtilityToolbar from 'src/components/utility-bar/UtilityToolbar.svelte';
   import Search from 'src/components/utility-bar/Search.svelte';
   import type { UtilityToolbarCommandParams } from 'src/components/utility-bar/types';
@@ -44,19 +43,27 @@
     $context.inventory.some((section: any) => section.items.length > 0) ===
     false;
 
-  const expandAllCollapseAllService = ExpandAllCollapseAllService.initService();
+  const messageBus = getContext<MessageBus>('messageBus');
 
   let utilityBarCommands: UtilityToolbarCommandParams[] = [];
   $: utilityBarCommands = [
     {
       title: localize('TIDY5E.Commands.ExpandAll'),
       iconClass: 'fas fa-angles-down',
-      execute: () => expandAllCollapseAllService.expandAll(),
+      execute: () =>
+        messageBus.set({
+          tabId: CONSTANTS.TAB_CHARACTER_INVENTORY,
+          message: 'expand-all',
+        }),
     },
     {
       title: localize('TIDY5E.Commands.CollapseAll'),
       iconClass: 'fas fa-angles-up',
-      execute: () => expandAllCollapseAllService.collapseAll(),
+      execute: () =>
+        messageBus.set({
+          tabId: CONSTANTS.TAB_CHARACTER_INVENTORY,
+          message: 'collapse-all',
+        }),
     },
     {
       title: localize('TIDY5E.ListLayout'),

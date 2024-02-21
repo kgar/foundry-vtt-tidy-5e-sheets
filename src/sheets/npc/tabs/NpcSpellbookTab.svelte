@@ -3,7 +3,11 @@
   import SpellbookGrid from 'src/components/spellbook/SpellbookGrid.svelte';
   import SpellbookList from 'src/components/spellbook/SpellbookList.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { ItemLayoutMode, NpcSheetContext } from 'src/types/types';
+  import type {
+    ItemLayoutMode,
+    MessageBus,
+    NpcSheetContext,
+  } from 'src/types/types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import NoSpells from '../../actor/NoSpells.svelte';
@@ -11,7 +15,6 @@
   import Search from 'src/components/utility-bar/Search.svelte';
   import UtilityBarCommand from 'src/components/utility-bar/UtilityToolbarCommand.svelte';
   import type { UtilityToolbarCommandParams } from 'src/components/utility-bar/types';
-  import { ExpandAllCollapseAllService } from 'src/features/expand-collapse/ExpandAllCollapseAllService';
   import { CONSTANTS } from 'src/constants';
   import FilterMenu from 'src/components/filter/FilterMenu.svelte';
 
@@ -37,18 +40,27 @@
 
   $: noSpellLevels = !$context.spellbook.length;
 
-  const expandAllCollapseAllService = ExpandAllCollapseAllService.initService();
+  const messageBus = getContext<MessageBus>('messageBus');
+
   let utilityBarCommands: UtilityToolbarCommandParams[] = [];
   $: utilityBarCommands = [
     {
       title: localize('TIDY5E.Commands.ExpandAll'),
       iconClass: 'fas fa-angles-down',
-      execute: () => expandAllCollapseAllService.expandAll(),
+      execute: () =>
+        messageBus.set({
+          tabId: CONSTANTS.TAB_NPC_SPELLBOOK,
+          message: 'expand-all',
+        }),
     },
     {
       title: localize('TIDY5E.Commands.CollapseAll'),
       iconClass: 'fas fa-angles-up',
-      execute: () => expandAllCollapseAllService.collapseAll(),
+      execute: () =>
+        messageBus.set({
+          tabId: CONSTANTS.TAB_NPC_SPELLBOOK,
+          message: 'collapse-all',
+        }),
     },
     {
       title: localize('TIDY5E.ListLayout'),

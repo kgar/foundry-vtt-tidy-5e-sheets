@@ -10,6 +10,7 @@ import type {
   RegisteredPortraitMenuCommand,
 } from 'src/runtime/types';
 import type { ActorFilters } from 'src/runtime/item/item.types';
+import type { Writable } from 'svelte/store';
 
 export type Actor5e = any;
 
@@ -181,6 +182,17 @@ export type ExtensibleComponent = {
   cssClasses: string[];
   dataset: Record<string, string>;
 };
+
+export type SortModeAlphabetical = 'a';
+export type SortModeManual = 'm';
+export type SortMode = SortModeAlphabetical | SortModeManual;
+
+export type MessageBus = Writable<MessageBusMessage | undefined>;
+
+export type MessageBusMessage =
+  | { tabId: string; message: 'expand-all' }
+  | { tabId: string; message: 'collapse-all' }
+  | { tabId: string; message: 'sort'; sortMode: SortMode };
 
 export type ActorSheetContext = {
   actions: ActorActions;

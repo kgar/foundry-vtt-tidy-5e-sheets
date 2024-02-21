@@ -1,6 +1,10 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { CharacterSheetContext, ItemLayoutMode } from 'src/types/types';
+  import type {
+    CharacterSheetContext,
+    ItemLayoutMode,
+    MessageBus,
+  } from 'src/types/types';
   import SpellbookList from '../../../components/spellbook/SpellbookList.svelte';
   import SpellbookFooter from '../../../components/spellbook/SpellbookFooter.svelte';
   import SpellbookGrid from '../../../components/spellbook/SpellbookGrid.svelte';
@@ -15,7 +19,6 @@
   import Search from 'src/components/utility-bar/Search.svelte';
   import UtilityBarCommand from 'src/components/utility-bar/UtilityToolbarCommand.svelte';
   import type { UtilityToolbarCommandParams } from 'src/components/utility-bar/types';
-  import { ExpandAllCollapseAllService } from 'src/features/expand-collapse/ExpandAllCollapseAllService';
   import FilterMenu from 'src/components/filter/FilterMenu.svelte';
 
   let context = getContext<Readable<CharacterSheetContext>>('context');
@@ -63,18 +66,27 @@
       0,
     ) === 0;
 
-  const expandAllCollapseAllService = ExpandAllCollapseAllService.initService();
+  const messageBus = getContext<MessageBus>('messageBus');
+
   let utilityBarCommands: UtilityToolbarCommandParams[] = [];
   $: utilityBarCommands = [
     {
       title: localize('TIDY5E.Commands.ExpandAll'),
       iconClass: 'fas fa-angles-down',
-      execute: () => expandAllCollapseAllService.expandAll(),
+      execute: () =>
+        messageBus.set({
+          tabId: CONSTANTS.TAB_CHARACTER_SPELLBOOK,
+          message: 'expand-all',
+        }),
     },
     {
       title: localize('TIDY5E.Commands.CollapseAll'),
       iconClass: 'fas fa-angles-up',
-      execute: () => expandAllCollapseAllService.collapseAll(),
+      execute: () =>
+        messageBus.set({
+          tabId: CONSTANTS.TAB_CHARACTER_SPELLBOOK,
+          message: 'collapse-all',
+        }),
     },
     {
       title: localize('TIDY5E.ListLayout'),

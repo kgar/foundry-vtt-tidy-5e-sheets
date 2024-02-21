@@ -17,6 +17,8 @@ import {
   type ExpandedItemIdToLocationsMap,
   type ExpandedItemData,
   type TidyResource,
+  type MessageBusMessage,
+  type MessageBus,
 } from 'src/types/types';
 import {
   applySheetAttributesToWindow,
@@ -60,6 +62,7 @@ export class Tidy5eCharacterSheet
   itemTableTogglesCache: ItemTableToggleCacheService;
   itemFilterService: ItemFilterService;
   subscriptionsService: StoreSubscriptionsService;
+  messageBus: MessageBus = writable<MessageBusMessage | undefined>();
 
   constructor(...args: any[]) {
     super(...args);
@@ -106,6 +109,9 @@ export class Tidy5eCharacterSheet
       settingStore.subscribe(() => {
         if (first) return;
         this.render();
+      }),
+      this.messageBus.subscribe((m) => {
+        debug('Message bus message received', m);
       })
     );
     first = false;
@@ -117,6 +123,7 @@ export class Tidy5eCharacterSheet
       target: node,
       context: new Map<any, any>([
         ['context', this.context],
+        ['messageBus', this.messageBus],
         ['stats', this.stats],
         ['card', this.card],
         ['currentTabId', this.currentTabId],
