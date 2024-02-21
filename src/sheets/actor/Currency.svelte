@@ -2,7 +2,7 @@
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { settingStore } from 'src/settings/settings';
-    import type { Item5e, ItemSheetContext } from 'src/types/item';
+  import type { Item5e, ItemSheetContext } from 'src/types/item';
   import type { Actor5e } from 'src/types/types';
   import type { ActorSheetContext } from 'src/types/types';
   import { getContext } from 'svelte';
@@ -10,7 +10,8 @@
 
   export let document: Actor5e | Item5e;
 
-  let context = getContext<Readable<ActorSheetContext | ItemSheetContext>>('context');
+  let context =
+    getContext<Readable<ActorSheetContext | ItemSheetContext>>('context');
 
   $: currencies = Object.entries(document.system.currency).map((e) => ({
     key: e[0],
@@ -36,7 +37,7 @@
         title={$context.config.currencies[currency.key]?.label}
       >
         <TextInput
-          document={document}
+          {document}
           field="system.currency.{currency.key}"
           id="{$context.appId}-system.currency.{currency.key}"
           value={currency.value}
