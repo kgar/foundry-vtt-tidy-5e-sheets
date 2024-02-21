@@ -148,8 +148,8 @@
         "name": "Info",
         "buttonLabel": "Info",
         "dialogTitle": "Info",
-        "hint": null,
-        "logoAltText": null,
+        "hint": "Información sobre el módulo Tidy 5e Sheets.",
+        "logoAltText": "Un escudo calefactor con cuatro estrellas y las palabras \"Tidy 5e\" en la parte delantera.",
         "PatreonLink": "{urlStart}Patreon{urlEnd}",
         "MaintainerParagraph": "T5E es mantenido por {urlStart}kgar{urlEnd}.",
         "GithubParagraph": "¿Tienes una idea? ¿Algo no funciona? Envía un {urlStart}Problema de Github{urlEnd}.",
@@ -314,7 +314,7 @@
     },
     "TIDY5E.Settings.ShowNPCActorLinkMarker": {
         "name": "Indicar los PNJs vinculados/desvinculados",
-        "hint": "Añade un borde coloreado y un icono a las hojas de los PNJs vinculados/desvinculados.",
+        "hint": "Agrega un borde de color y un ícono a las hojas de NPC vinculadas/desvinculadas.",
         "default": "Sin marcador de vínculo (por defecto)",
         "unlinked": "Resaltar los tokens desvinculados",
         "linked": "Resaltar los tokens vinculados",
@@ -504,7 +504,7 @@
             "hint": "Personaliza los colores de T5E."
         },
         "Sheet": {
-            "title": "Configuración del tema",
+            "title": "Configuración del tema: {userName}",
             "header": "Colores de tema personalizados",
             "useDefaultLightColors": "Claro predeterminado",
             "useDefaultDarkColors": "Oscuro predeterminado",
@@ -687,6 +687,18 @@
         "tabLabel": "Agotamiento"
     },
     "TIDY5E.WorldSettings.Menu": {
-        "name": "Ajustes globales"
-    }
+        "name": "Ajustes globales",
+        "hint": "Ajusta la configuración a nivel mundial para personalizar la experiencia de Tidy 5e Sheets. Estas configuraciones se guardan en este mundo de Foundry y se aplican a todo el contenido relevante de Tidy 5e Sheets.",
+        "label": "Ajustes globales",
+        "title": "Ajustes globales (solo GM)"
+    },
+    "TIDY5E.ItemFilters.MenuTooltip.Filters": "Filtros",
+    "TIDY5E.ItemFilters.Category.Miscellaneous": "Variado",
+    "TIDY5E.ItemFilters.ClearAll": "Borrar todo",
+    "TIDY5E.ActorSpellAttackTitle": "{actorName} - Ataque con hechizos",
+    "TIDY5E.ActorSpellAttackFlavorText": "Ataque con hechizos",
+    "TIDY5E.ActorMeleeSpellAttackTitle": "{actorName} - Ataque cuerpo a cuerpo con hechizos",
+    "TIDY5E.ActorMeleeSpellAttackFlavorText": "Ataque de hechizo cuerpo a cuerpo",
+    "TIDY5E.ActorRangedSpellAttackTitle": "{actorName} - Ataque de Hechizo a Distancia",
+    "TIDY5E.ActorRangedSpellAttackFlavorText": "Ataque de hechizo a distancia"
 }
