@@ -30,10 +30,12 @@ FoundryAdapter.registerActorSheet(
 
 FoundryAdapter.registerItemSheet(Tidy5eKgarItemSheet, 'TIDY5E.Tidy5eItemSheet');
 
-Hooks.once('ready', async () => {
+Hooks.once('init', () => {
   initSettings();
   initRuntime();
+});
 
+Hooks.once('ready', async () => {
   const tidy5eModule = FoundryAdapter.getModule(CONSTANTS.MODULE_ID);
   const api = Tidy5eSheetsApi._getApi();
   tidy5eModule.api = api;
