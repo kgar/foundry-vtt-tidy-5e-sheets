@@ -45,7 +45,6 @@
               field="flags.{CONSTANTS.MODULE_ID}.age"
               value={FoundryAdapter.tryGetFlag($context.actor, 'age') ?? ''}
               cssClass="detail-input"
-              dataMaxLength={5}
             />
           </li>
           <li>
@@ -57,7 +56,6 @@
               field="flags.{CONSTANTS.MODULE_ID}.height"
               value={FoundryAdapter.tryGetFlag($context.actor, 'height') ?? ''}
               cssClass="detail-input"
-              dataMaxLength={20}
             />
           </li>
           <li>
@@ -69,7 +67,6 @@
               field="flags.{CONSTANTS.MODULE_ID}.weight"
               value={FoundryAdapter.tryGetFlag($context.actor, 'weight') ?? ''}
               cssClass="detail-input"
-              dataMaxLength={20}
             />
           </li>
           <li>
@@ -81,7 +78,6 @@
               field="flags.{CONSTANTS.MODULE_ID}.eyes"
               value={FoundryAdapter.tryGetFlag($context.actor, 'eyes') ?? ''}
               cssClass="detail-input"
-              dataMaxLength={40}
             />
           </li>
           <li>
@@ -93,7 +89,6 @@
               field="flags.{CONSTANTS.MODULE_ID}.skin"
               value={FoundryAdapter.tryGetFlag($context.actor, 'skin') ?? ''}
               cssClass="detail-input"
-              dataMaxLength={40}
             />
           </li>
           <li>
@@ -105,7 +100,6 @@
               field="flags.{CONSTANTS.MODULE_ID}.hair"
               value={FoundryAdapter.tryGetFlag($context.actor, 'hair') ?? ''}
               cssClass="detail-input"
-              dataMaxLength={40}
             />
           </li>
         </ul>
