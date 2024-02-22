@@ -43,6 +43,7 @@ import { CustomActorTraitsRuntime } from 'src/runtime/actor-traits/CustomActorTr
 import { ItemTableToggleCacheService } from 'src/features/caching/ItemTableToggleCacheService';
 import { ItemFilterService } from 'src/features/filtering/ItemFilterService';
 import { StoreSubscriptionsService } from 'src/features/store/StoreSubscriptionsService';
+import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
 
 export class Tidy5eCharacterSheet
   extends dnd5e.applications.actor.ActorSheet5eCharacter
@@ -86,6 +87,8 @@ export class Tidy5eCharacterSheet
   }
 
   static get defaultOptions() {
+    const { width, height } =
+      SheetPreferencesService.getByType(CONSTANTS.SHEET_TYPE_CHARACTER) ?? {};
     return FoundryAdapter.mergeObject(super.defaultOptions, {
       classes: [
         'tidy5e-sheet',
@@ -93,8 +96,8 @@ export class Tidy5eCharacterSheet
         'actor',
         CONSTANTS.SHEET_TYPE_CHARACTER,
       ],
-      height: 840,
-      width: SettingsProvider?.settings.playerSheetWidth.get() ?? 740,
+      width: width ?? 740,
+      height: height ?? 810,
       scrollY: ['[data-tidy-track-scroll-y]', '.scroll-container'],
     });
   }
@@ -246,9 +249,49 @@ export class Tidy5eCharacterSheet
 
     // TODO: Make a builder for this
     // TODO: Extract to runtime?
+    const characterPreferences = SheetPreferencesService.getByType(
+      CONSTANTS.SHEET_TYPE_CHARACTER
+    );
+    const inventorySortMode =
+      characterPreferences.tabs?.[CONSTANTS.TAB_CHARACTER_INVENTORY]?.sort ??
+      'm';
+    const spellbookSortMode =
+      characterPreferences.tabs?.[CONSTANTS.TAB_CHARACTER_SPELLBOOK]?.sort ??
+      'm';
+    const featureSortMode =
+      characterPreferences.tabs?.[CONSTANTS.TAB_CHARACTER_FEATURES]?.sort ??
+      'm';
     let utilities: Utilities = {
       [CONSTANTS.TAB_CHARACTER_INVENTORY]: {
         utilityToolbarCommands: [
+          {
+            title: FoundryAdapter.localize('SIDEBAR.SortModeAlpha'),
+            iconClass: 'fa-solid fa-arrow-down-a-z',
+            execute: async () => {
+              await SheetPreferencesService.setActorTypeTabPreference(
+                CONSTANTS.SHEET_TYPE_CHARACTER,
+                CONSTANTS.TAB_CHARACTER_INVENTORY,
+                'sort',
+                'm'
+              );
+              this.render();
+            },
+            visible: inventorySortMode === 'a',
+          },
+          {
+            title: FoundryAdapter.localize('SIDEBAR.SortModeManual'),
+            iconClass: 'fa-solid fa-arrow-down-short-wide',
+            execute: async () => {
+              await SheetPreferencesService.setActorTypeTabPreference(
+                CONSTANTS.SHEET_TYPE_CHARACTER,
+                CONSTANTS.TAB_CHARACTER_INVENTORY,
+                'sort',
+                'a'
+              );
+              this.render();
+            },
+            visible: inventorySortMode === 'm',
+          },
           {
             title: FoundryAdapter.localize('TIDY5E.Commands.ExpandAll'),
             iconClass: 'fas fa-angles-down',
@@ -290,6 +333,34 @@ export class Tidy5eCharacterSheet
       [CONSTANTS.TAB_CHARACTER_SPELLBOOK]: {
         utilityToolbarCommands: [
           {
+            title: FoundryAdapter.localize('SIDEBAR.SortModeAlpha'),
+            iconClass: 'fa-solid fa-arrow-down-a-z',
+            execute: async () => {
+              await SheetPreferencesService.setActorTypeTabPreference(
+                CONSTANTS.SHEET_TYPE_CHARACTER,
+                CONSTANTS.TAB_CHARACTER_SPELLBOOK,
+                'sort',
+                'm'
+              );
+              this.render();
+            },
+            visible: spellbookSortMode === 'a',
+          },
+          {
+            title: FoundryAdapter.localize('SIDEBAR.SortModeManual'),
+            iconClass: 'fa-solid fa-arrow-down-short-wide',
+            execute: async () => {
+              await SheetPreferencesService.setActorTypeTabPreference(
+                CONSTANTS.SHEET_TYPE_CHARACTER,
+                CONSTANTS.TAB_CHARACTER_SPELLBOOK,
+                'sort',
+                'a'
+              );
+              this.render();
+            },
+            visible: spellbookSortMode === 'm',
+          },
+          {
             title: FoundryAdapter.localize('TIDY5E.Commands.ExpandAll'),
             iconClass: 'fas fa-angles-down',
             execute: () =>
@@ -329,24 +400,34 @@ export class Tidy5eCharacterSheet
       },
       [CONSTANTS.TAB_CHARACTER_FEATURES]: {
         utilityToolbarCommands: [
-          // {
-          //   title: FoundryAdapter.localize('SIDEBAR.SortModeAlpha'),
-          //   iconClass: 'fa-solid fa-arrow-down-a-z',
-          //   execute: () => {
-          //     this.sortModes[CONSTANTS.TAB_CHARACTER_FEATURES] = 'm';
-          //     this.render();
-          //   },
-          //   visible: featureSortMode === 'a',
-          // },
-          // {
-          //   title: FoundryAdapter.localize('SIDEBAR.SortModeManual'),
-          //   iconClass: 'fa-solid fa-arrow-down-short-wide',
-          //   execute: () => {
-          //     this.sortModes[CONSTANTS.TAB_CHARACTER_FEATURES] = 'a';
-          //     this.render();
-          //   },
-          //   visible: featureSortMode === 'm',
-          // },
+          {
+            title: FoundryAdapter.localize('SIDEBAR.SortModeAlpha'),
+            iconClass: 'fa-solid fa-arrow-down-a-z',
+            execute: async () => {
+              await SheetPreferencesService.setActorTypeTabPreference(
+                CONSTANTS.SHEET_TYPE_CHARACTER,
+                CONSTANTS.TAB_CHARACTER_FEATURES,
+                'sort',
+                'm'
+              );
+              this.render();
+            },
+            visible: featureSortMode === 'a',
+          },
+          {
+            title: FoundryAdapter.localize('SIDEBAR.SortModeManual'),
+            iconClass: 'fa-solid fa-arrow-down-short-wide',
+            execute: async () => {
+              await SheetPreferencesService.setActorTypeTabPreference(
+                CONSTANTS.SHEET_TYPE_CHARACTER,
+                CONSTANTS.TAB_CHARACTER_FEATURES,
+                'sort',
+                'a'
+              );
+              this.render();
+            },
+            visible: featureSortMode === 'm',
+          },
           {
             title: FoundryAdapter.localize('TIDY5E.Commands.ExpandAll'),
             iconClass: 'fas fa-angles-down',
@@ -739,6 +820,21 @@ export class Tidy5eCharacterSheet
 
   _disableFields(...args: any[]) {
     debug('Ignoring call to disable fields. Delegating to Tidy Sheets...');
+  }
+
+  _onResize(event: any) {
+    super._onResize(event);
+    const { width, height } = this.position;
+    SheetPreferencesService.setActorTypePreference(
+      CONSTANTS.SHEET_TYPE_CHARACTER,
+      'width',
+      width
+    );
+    SheetPreferencesService.setActorTypePreference(
+      CONSTANTS.SHEET_TYPE_CHARACTER,
+      'height',
+      height
+    );
   }
 
   /* -------------------------------------------- */
