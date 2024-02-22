@@ -11,6 +11,7 @@ import type {
 } from 'src/runtime/types';
 import type { ActorFilters } from 'src/runtime/item/item.types';
 import type { Writable } from 'svelte/store';
+import type { UtilityToolbarCommandParams } from 'src/components/utility-bar/types';
 
 export type Actor5e = any;
 
@@ -118,6 +119,7 @@ export type CharacterSheetContext = {
   notesEnrichedHtml: string;
   spellCalculations: SpellCalculations;
   traitEnrichedHtml: string;
+  utilities: Utilities;
 } & ActorSheetContext &
   Record<string, any>;
 
@@ -139,6 +141,7 @@ export type NpcSheetContext = {
   showSpellbookTab: boolean;
   spellCalculations: SpellCalculations;
   traitEnrichedHtml: string;
+  utilities: Utilities;
 } & ActorSheetContext &
   Record<string, any>;
 
@@ -193,6 +196,14 @@ export type MessageBusMessage =
   | { tabId: string; message: 'expand-all' }
   | { tabId: string; message: 'collapse-all' }
   | { tabId: string; message: 'sort'; sortMode: SortMode };
+
+export type Utilities = Record<
+  string,
+  {
+    utilityToolbarCommands?: UtilityToolbarCommandParams[];
+    // sortMode: SortMode;
+  }
+>;
 
 export type ActorSheetContext = {
   actions: ActorActions;

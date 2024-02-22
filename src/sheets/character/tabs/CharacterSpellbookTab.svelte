@@ -1,10 +1,6 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type {
-    CharacterSheetContext,
-    ItemLayoutMode,
-    MessageBus,
-  } from 'src/types/types';
+  import type { CharacterSheetContext, ItemLayoutMode } from 'src/types/types';
   import SpellbookList from '../../../components/spellbook/SpellbookList.svelte';
   import SpellbookFooter from '../../../components/spellbook/SpellbookFooter.svelte';
   import SpellbookGrid from '../../../components/spellbook/SpellbookGrid.svelte';
@@ -17,8 +13,7 @@
   import { CONSTANTS } from 'src/constants';
   import UtilityToolbar from 'src/components/utility-bar/UtilityToolbar.svelte';
   import Search from 'src/components/utility-bar/Search.svelte';
-  import UtilityBarCommand from 'src/components/utility-bar/UtilityToolbarCommand.svelte';
-  import type { UtilityToolbarCommandParams } from 'src/components/utility-bar/types';
+  import UtilityToolbarCommand from 'src/components/utility-bar/UtilityToolbarCommand.svelte';
   import FilterMenu from 'src/components/filter/FilterMenu.svelte';
 
   let context = getContext<Readable<CharacterSheetContext>>('context');
@@ -31,15 +26,6 @@
   $: layoutMode = FoundryAdapter.tryGetFlag($context.actor, 'spellbook-grid')
     ? 'grid'
     : 'list';
-
-  function toggleLayout() {
-    if (layoutMode === 'grid') {
-      FoundryAdapter.unsetFlag($context.actor, 'spellbook-grid');
-      return;
-    }
-
-    FoundryAdapter.setFlag($context.actor, 'spellbook-grid', true);
-  }
 
   $: selectedClassFilter =
     FoundryAdapter.tryGetFlag($context.actor, 'classFilter') ?? '';
@@ -66,41 +52,9 @@
       0,
     ) === 0;
 
-  const messageBus = getContext<MessageBus>('messageBus');
-
-  let utilityBarCommands: UtilityToolbarCommandParams[] = [];
-  $: utilityBarCommands = [
-    {
-      title: localize('TIDY5E.Commands.ExpandAll'),
-      iconClass: 'fas fa-angles-down',
-      execute: () =>
-        messageBus.set({
-          tabId: CONSTANTS.TAB_CHARACTER_SPELLBOOK,
-          message: 'expand-all',
-        }),
-    },
-    {
-      title: localize('TIDY5E.Commands.CollapseAll'),
-      iconClass: 'fas fa-angles-up',
-      execute: () =>
-        messageBus.set({
-          tabId: CONSTANTS.TAB_CHARACTER_SPELLBOOK,
-          message: 'collapse-all',
-        }),
-    },
-    {
-      title: localize('TIDY5E.ListLayout'),
-      iconClass: 'fas fa-th-list toggle-list',
-      visible: layoutMode === 'grid',
-      execute: () => toggleLayout(),
-    },
-    {
-      title: localize('TIDY5E.GridLayout'),
-      iconClass: 'fas fa-th-large toggle-grid',
-      visible: layoutMode === 'list',
-      execute: () => toggleLayout(),
-    },
-  ];
+  $: utilityBarCommands =
+    $context.utilities[CONSTANTS.TAB_CHARACTER_SPELLBOOK]
+      ?.utilityToolbarCommands ?? [];
 </script>
 
 <UtilityToolbar>
@@ -112,7 +66,7 @@
   {/if}
   <FilterMenu tabId={CONSTANTS.TAB_CHARACTER_SPELLBOOK} />
   {#each utilityBarCommands as command (command.title)}
-    <UtilityBarCommand
+    <UtilityToolbarCommand
       title={command.title}
       iconClass={command.iconClass}
       text={command.text}

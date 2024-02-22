@@ -19,6 +19,7 @@ import {
   type TidyResource,
   type MessageBusMessage,
   type MessageBus,
+  type Utilities,
 } from 'src/types/types';
 import {
   applySheetAttributesToWindow,
@@ -243,6 +244,134 @@ export class Tidy5eCharacterSheet
       error('Unable to calculate max prepared spells', false, e);
     }
 
+    // TODO: Make a builder for this
+    // TODO: Extract to runtime?
+    let utilities: Utilities = {
+      [CONSTANTS.TAB_CHARACTER_INVENTORY]: {
+        utilityToolbarCommands: [
+          {
+            title: FoundryAdapter.localize('TIDY5E.Commands.ExpandAll'),
+            iconClass: 'fas fa-angles-down',
+            execute: () =>
+              // TODO: Use app.messageBus
+              this.messageBus.set({
+                tabId: CONSTANTS.TAB_CHARACTER_INVENTORY,
+                message: 'expand-all',
+              }),
+          },
+          {
+            title: FoundryAdapter.localize('TIDY5E.Commands.CollapseAll'),
+            iconClass: 'fas fa-angles-up',
+            execute: () =>
+              // TODO: Use app.messageBus
+              this.messageBus.set({
+                tabId: CONSTANTS.TAB_CHARACTER_INVENTORY,
+                message: 'collapse-all',
+              }),
+          },
+          {
+            title: FoundryAdapter.localize('TIDY5E.ListLayout'),
+            iconClass: 'fas fa-th-list toggle-list',
+            visible: !FoundryAdapter.tryGetFlag(this.actor, 'inventory-grid'),
+            execute: () => {
+              FoundryAdapter.setFlag(this.actor, 'inventory-grid', true);
+            },
+          },
+          {
+            title: FoundryAdapter.localize('TIDY5E.GridLayout'),
+            iconClass: 'fas fa-th-large toggle-grid',
+            visible: !!FoundryAdapter.tryGetFlag(this.actor, 'inventory-grid'),
+            execute: () => {
+              FoundryAdapter.unsetFlag(this.actor, 'inventory-grid');
+            },
+          },
+        ],
+      },
+      [CONSTANTS.TAB_CHARACTER_SPELLBOOK]: {
+        utilityToolbarCommands: [
+          {
+            title: FoundryAdapter.localize('TIDY5E.Commands.ExpandAll'),
+            iconClass: 'fas fa-angles-down',
+            execute: () =>
+              // TODO: Use app.messageBus
+              this.messageBus.set({
+                tabId: CONSTANTS.TAB_CHARACTER_SPELLBOOK,
+                message: 'expand-all',
+              }),
+          },
+          {
+            title: FoundryAdapter.localize('TIDY5E.Commands.CollapseAll'),
+            iconClass: 'fas fa-angles-up',
+            execute: () =>
+              // TODO: Use app.messageBus
+              this.messageBus.set({
+                tabId: CONSTANTS.TAB_CHARACTER_SPELLBOOK,
+                message: 'collapse-all',
+              }),
+          },
+          {
+            title: FoundryAdapter.localize('TIDY5E.ListLayout'),
+            iconClass: 'fas fa-th-list toggle-list',
+            visible: !FoundryAdapter.tryGetFlag(this.actor, 'spellbook-grid'),
+            execute: () => {
+              FoundryAdapter.setFlag(this.actor, 'spellbook-grid', true);
+            },
+          },
+          {
+            title: FoundryAdapter.localize('TIDY5E.GridLayout'),
+            iconClass: 'fas fa-th-large toggle-grid',
+            visible: !!FoundryAdapter.tryGetFlag(this.actor, 'spellbook-grid'),
+            execute: () => {
+              FoundryAdapter.unsetFlag(this.actor, 'spellbook-grid');
+            },
+          },
+        ],
+      },
+      [CONSTANTS.TAB_CHARACTER_FEATURES]: {
+        utilityToolbarCommands: [
+          // {
+          //   title: FoundryAdapter.localize('SIDEBAR.SortModeAlpha'),
+          //   iconClass: 'fa-solid fa-arrow-down-a-z',
+          //   execute: () => {
+          //     this.sortModes[CONSTANTS.TAB_CHARACTER_FEATURES] = 'm';
+          //     this.render();
+          //   },
+          //   visible: featureSortMode === 'a',
+          // },
+          // {
+          //   title: FoundryAdapter.localize('SIDEBAR.SortModeManual'),
+          //   iconClass: 'fa-solid fa-arrow-down-short-wide',
+          //   execute: () => {
+          //     this.sortModes[CONSTANTS.TAB_CHARACTER_FEATURES] = 'a';
+          //     this.render();
+          //   },
+          //   visible: featureSortMode === 'm',
+          // },
+          {
+            title: FoundryAdapter.localize('TIDY5E.Commands.ExpandAll'),
+            iconClass: 'fas fa-angles-down',
+            execute: () =>
+              // TODO: Use app.messageBus
+              this.messageBus.set({
+                tabId: CONSTANTS.TAB_CHARACTER_FEATURES,
+                message: 'expand-all',
+              }),
+          },
+          {
+            title: FoundryAdapter.localize('TIDY5E.Commands.CollapseAll'),
+            iconClass: 'fas fa-angles-up',
+            execute: () =>
+              // TODO: Use app.messageBus
+              this.messageBus.set({
+                tabId: CONSTANTS.TAB_CHARACTER_FEATURES,
+                message: 'collapse-all',
+              }),
+          },
+        ],
+        // sortMode: this.sortModes[CONSTANTS.TAB_CHARACTER_FEATURES] ?? 'm',
+      },
+    };
+
     const context: CharacterSheetContext = {
       ...defaultDocumentContext,
       activateFoundryJQueryListeners: (node: HTMLElement) => {
@@ -411,6 +540,7 @@ export class Tidy5eCharacterSheet
         CONSTANTS.CIRCULAR_PORTRAIT_OPTION_ALL as string,
         CONSTANTS.CIRCULAR_PORTRAIT_OPTION_CHARACTER as string,
       ].includes(SettingsProvider.settings.useCircularPortraitStyle.get()),
+      utilities: utilities,
       viewableWarnings:
         defaultDocumentContext.warnings?.filter(
           (w: any) => !isNil(w.message?.trim(), '')

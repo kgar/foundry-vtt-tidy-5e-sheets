@@ -49,29 +49,9 @@
 
   declareLocation('features');
 
-  const messageBus = getContext<MessageBus>('messageBus');
-
-  let utilityBarCommands: UtilityToolbarCommandParams[] = [];
-  $: utilityBarCommands = [
-    {
-      title: localize('TIDY5E.Commands.ExpandAll'),
-      iconClass: 'fas fa-angles-down',
-      execute: () =>
-        messageBus.set({
-          tabId: CONSTANTS.TAB_CHARACTER_FEATURES,
-          message: 'expand-all',
-        }),
-    },
-    {
-      title: localize('TIDY5E.Commands.CollapseAll'),
-      iconClass: 'fas fa-angles-up',
-      execute: () =>
-        messageBus.set({
-          tabId: CONSTANTS.TAB_CHARACTER_FEATURES,
-          message: 'collapse-all',
-        }),
-    },
-  ];
+  $: utilityBarCommands =
+    $context.utilities[CONSTANTS.TAB_CHARACTER_FEATURES]
+      ?.utilityToolbarCommands ?? [];
 </script>
 
 <UtilityToolbar>

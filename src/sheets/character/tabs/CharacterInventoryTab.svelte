@@ -1,7 +1,7 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { type CharacterSheetContext } from 'src/types/types';
-  import type { ItemLayoutMode, MessageBus } from 'src/types/types';
+  import type { ItemLayoutMode } from 'src/types/types';
   import InventoryList from '../parts/InventoryList.svelte';
   import InventoryGrid from '../parts/InventoryGrid.svelte';
   import { getContext } from 'svelte';
@@ -15,7 +15,6 @@
   import { CONSTANTS } from 'src/constants';
   import UtilityToolbar from 'src/components/utility-bar/UtilityToolbar.svelte';
   import Search from 'src/components/utility-bar/Search.svelte';
-  import type { UtilityToolbarCommandParams } from 'src/components/utility-bar/types';
   import UtilityToolbarCommand from 'src/components/utility-bar/UtilityToolbarCommand.svelte';
   import FilterMenu from 'src/components/filter/FilterMenu.svelte';
 
@@ -30,54 +29,13 @@
     ? 'grid'
     : 'list';
 
-  function toggleLayout() {
-    if (layoutMode === 'grid') {
-      FoundryAdapter.unsetFlag($context.actor, 'inventory-grid');
-      return;
-    }
-
-    FoundryAdapter.setFlag($context.actor, 'inventory-grid', true);
-  }
-
   $: noItems =
     $context.inventory.some((section: any) => section.items.length > 0) ===
     false;
 
-  const messageBus = getContext<MessageBus>('messageBus');
-
-  let utilityBarCommands: UtilityToolbarCommandParams[] = [];
-  $: utilityBarCommands = [
-    {
-      title: localize('TIDY5E.Commands.ExpandAll'),
-      iconClass: 'fas fa-angles-down',
-      execute: () =>
-        messageBus.set({
-          tabId: CONSTANTS.TAB_CHARACTER_INVENTORY,
-          message: 'expand-all',
-        }),
-    },
-    {
-      title: localize('TIDY5E.Commands.CollapseAll'),
-      iconClass: 'fas fa-angles-up',
-      execute: () =>
-        messageBus.set({
-          tabId: CONSTANTS.TAB_CHARACTER_INVENTORY,
-          message: 'collapse-all',
-        }),
-    },
-    {
-      title: localize('TIDY5E.ListLayout'),
-      iconClass: 'fas fa-th-list toggle-list',
-      visible: layoutMode === 'grid',
-      execute: () => toggleLayout(),
-    },
-    {
-      title: localize('TIDY5E.GridLayout'),
-      iconClass: 'fas fa-th-large toggle-grid',
-      visible: layoutMode === 'list',
-      execute: () => toggleLayout(),
-    },
-  ];
+  $: utilityBarCommands =
+    $context.utilities[CONSTANTS.TAB_CHARACTER_INVENTORY]
+      ?.utilityToolbarCommands ?? [];
 </script>
 
 <UtilityToolbar>

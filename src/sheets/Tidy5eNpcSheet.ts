@@ -11,6 +11,7 @@ import type {
   ExpandedItemData,
   MessageBus,
   MessageBusMessage,
+  Utilities,
 } from 'src/types/types';
 import { writable } from 'svelte/store';
 import NpcSheet from './npc/NpcSheet.svelte';
@@ -189,6 +190,49 @@ export class Tidy5eNpcSheet
     } catch (e) {
       error('Unable to calculate max prepared spells', false, e);
     }
+
+    let utilities: Utilities = {
+      [CONSTANTS.TAB_NPC_SPELLBOOK]: {
+        utilityToolbarCommands: [
+          {
+            title: FoundryAdapter.localize('TIDY5E.Commands.ExpandAll'),
+            iconClass: 'fas fa-angles-down',
+            execute: () =>
+              // TODO: Use app.messageBus
+              this.messageBus.set({
+                tabId: CONSTANTS.TAB_NPC_SPELLBOOK,
+                message: 'expand-all',
+              }),
+          },
+          {
+            title: FoundryAdapter.localize('TIDY5E.Commands.CollapseAll'),
+            iconClass: 'fas fa-angles-up',
+            execute: () =>
+              // TODO: Use app.messageBus
+              this.messageBus.set({
+                tabId: CONSTANTS.TAB_NPC_SPELLBOOK,
+                message: 'collapse-all',
+              }),
+          },
+          {
+            title: FoundryAdapter.localize('TIDY5E.ListLayout'),
+            iconClass: 'fas fa-th-list toggle-list',
+            visible: !FoundryAdapter.tryGetFlag(this.actor, 'spellbook-grid'),
+            execute: () => {
+              FoundryAdapter.setFlag(this.actor, 'spellbook-grid', true);
+            },
+          },
+          {
+            title: FoundryAdapter.localize('TIDY5E.GridLayout'),
+            iconClass: 'fas fa-th-large toggle-grid',
+            visible: !!FoundryAdapter.tryGetFlag(this.actor, 'spellbook-grid'),
+            execute: () => {
+              FoundryAdapter.unsetFlag(this.actor, 'spellbook-grid');
+            },
+          },
+        ],
+      },
+    };
 
     const context: NpcSheetContext = {
       ...defaultDocumentContext,
@@ -370,6 +414,7 @@ export class Tidy5eNpcSheet
         CONSTANTS.CIRCULAR_PORTRAIT_OPTION_ALL as string,
         CONSTANTS.CIRCULAR_PORTRAIT_OPTION_NPCVEHICLE as string,
       ].includes(SettingsProvider.settings.useCircularPortraitStyle.get()),
+      utilities: utilities,
       viewableWarnings:
         defaultDocumentContext.warnings?.filter(
           (w: any) => !isNil(w.message?.trim(), '')
