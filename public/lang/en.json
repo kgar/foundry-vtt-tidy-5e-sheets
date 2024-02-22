@@ -739,5 +739,6 @@
   "TIDY5E.Commands.CollapseAll": "Collapse All",
   "TIDY5E.ItemFilters.MenuTooltip.Filters": "Filters",
   "TIDY5E.ItemFilters.ClearAll": "Clear All",
-  "TIDY5E.ItemFilters.Category.Miscellaneous": "Miscellaneous"
+  "TIDY5E.ItemFilters.Category.Miscellaneous": "Miscellaneous",
+  "TIDY5E.ItemFilters.Filter.Other": "Other"
 }

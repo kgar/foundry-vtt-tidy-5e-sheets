@@ -46,6 +46,7 @@ export class ItemFilterRuntime {
           defaultItemFilters.action,
           defaultItemFilters.bonus,
           defaultItemFilters.reaction,
+          defaultItemFilters.activationCostOther,
         ],
         'DND5E.SpellComponents': [
           defaultItemFilters.verbal,
@@ -71,6 +72,7 @@ export class ItemFilterRuntime {
           defaultItemFilters.action,
           defaultItemFilters.bonus,
           defaultItemFilters.reaction,
+          defaultItemFilters.activationCostOther,
         ],
         'DND5E.SpellComponents': [
           defaultItemFilters.verbal,

@@ -55,7 +55,7 @@ export class ItemFilterService {
       .map(([filterName, value]) => {
         return {
           filter: ItemFilterRuntime.getFilter(filterName),
-          value
+          value,
         };
       })
       .filter((f) => typeof f.filter?.predicate === 'function');
@@ -69,12 +69,16 @@ export class ItemFilterService {
         // TODO: Expand this for allowing for different modes (AND, OR, NOR, XOR, etc.) for advanced users.
         let include = true;
         for (let filterConfig of filterConfigs) {
-          include &&= filterConfig.filter?.predicate(item) === filterConfig.value;
+          include &&=
+            filterConfig.filter?.predicate(item) === filterConfig.value;
         }
         return include;
       } catch (e) {
         error('An error occurred while filtering an item', false, e);
-        debug('Item filtering error troubleshooting info', { item, filters: filterConfigs });
+        debug('Item filtering error troubleshooting info', {
+          item,
+          filters: filterConfigs,
+        });
       }
 
       return true;
@@ -136,10 +140,24 @@ export class ItemFilterService {
         const effectiveFilters = Array.isArray(filters) ? filters : filters();
 
         for (let filter of effectiveFilters) {
-          actorItemFilterData[tab][category].push({
-            ...filter,
-            value: this._filterData[tab]?.[filter.name] ?? null,
-          });
+          try {
+            actorItemFilterData[tab][category].push({
+              ...filter,
+              value: this._filterData[tab]?.[filter.name] ?? null,
+            });
+          } catch (e) {
+            error(
+              'An error occurred while setting up actor item filter data',
+              false,
+              e
+            );
+            debug('Actor item filter data error troubleshooting info', {
+              tab,
+              category,
+              filter,
+              effectiveFilters,
+            });
+          }
         }
       }
     }

@@ -251,4 +251,7 @@ export const CONSTANTS = {
     /** A toolbar that usually sits at the top of a section of content, providing features like search, filtering, etc. */
     UTILITY_TOOLBAR: 'utility-toolbar',
   },
+  ACTIVATION_COST_ACTION: 'action',
+  ACTIVATION_COST_BONUS: 'bonus',
+  ACTIVATION_COST_REACTION: 'reaction',
 } as const;
