@@ -87,8 +87,6 @@ export class Tidy5eCharacterSheet
   }
 
   static get defaultOptions() {
-    const { width, height } =
-      SheetPreferencesService.getByType(CONSTANTS.SHEET_TYPE_CHARACTER) ?? {};
     return FoundryAdapter.mergeObject(super.defaultOptions, {
       classes: [
         'tidy5e-sheet',
@@ -96,8 +94,8 @@ export class Tidy5eCharacterSheet
         'actor',
         CONSTANTS.SHEET_TYPE_CHARACTER,
       ],
-      width: width ?? 740,
-      height: height ?? 810,
+      width: 740,
+      height: 810,
       scrollY: ['[data-tidy-track-scroll-y]', '.scroll-container'],
     });
   }
@@ -739,6 +737,14 @@ export class Tidy5eCharacterSheet
     this.context.set(data);
 
     if (force) {
+      const { width, height } =
+        SheetPreferencesService.getByType(CONSTANTS.SHEET_TYPE_CHARACTER) ?? {};
+      this.position = {
+        ...this.position,
+        width: width ?? this.position.width,
+        height: height ?? this.position.height,
+      };
+
       this._saveScrollPositions(this.element);
       this._destroySvelteComponent();
       await super._render(force, options);

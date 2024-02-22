@@ -86,12 +86,10 @@ export class Tidy5eNpcSheet
   }
 
   static get defaultOptions() {
-    const { width, height } =
-      SheetPreferencesService.getByType(CONSTANTS.SHEET_TYPE_NPC) ?? {};
     return FoundryAdapter.mergeObject(super.defaultOptions, {
       classes: ['tidy5e-sheet', 'sheet', 'actor', CONSTANTS.SHEET_TYPE_NPC],
-      width: width ?? 740,
-      height: height ?? 810,
+      width: 740,
+      height: 810,
       scrollY: ['[data-tidy-track-scroll-y]', '.scroll-container'],
     });
   }
@@ -556,6 +554,14 @@ export class Tidy5eNpcSheet
     this.context.set(data);
 
     if (force) {
+      const { width, height } =
+        SheetPreferencesService.getByType(CONSTANTS.SHEET_TYPE_NPC) ?? {};
+      this.position = {
+        ...this.position,
+        width: width ?? this.position.width,
+        height: height ?? this.position.height,
+      };
+      
       this._saveScrollPositions(this.element);
       this._destroySvelteComponent();
       await super._render(force, options);
