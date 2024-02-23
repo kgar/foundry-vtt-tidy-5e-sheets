@@ -151,7 +151,7 @@
                     >
                     {#if item.isOriginalClass}<i
                         title={localize('DND5E.ClassOriginal')}
-                        class="fas fa-crown"
+                        class="fas fa-crown primary-accent-color"
                       ></i>{/if}
                   </ItemName>
                 </ItemTableCell>
