@@ -9,7 +9,6 @@ import { CONSTANTS } from './constants';
 import { Tidy5eSheetsApi } from './api/Tidy5eSheetsApi';
 import '../public/rpg-awesome/style/rpg-awesome.min.css';
 import { initRuntime } from './runtime/runtime-init';
-import { SheetPreferencesService } from './features/user-preferences/SheetPreferencesService';
 
 FoundryAdapter.registerActorSheet(
   Tidy5eCharacterSheet,
@@ -34,7 +33,6 @@ FoundryAdapter.registerItemSheet(Tidy5eKgarItemSheet, 'TIDY5E.Tidy5eItemSheet');
 Hooks.once('init', () => {
   initSettings();
   initRuntime();
-  SheetPreferencesService.init();
 });
 
 Hooks.once('ready', async () => {
