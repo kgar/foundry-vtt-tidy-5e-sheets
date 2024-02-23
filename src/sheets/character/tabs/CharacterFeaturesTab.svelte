@@ -51,6 +51,13 @@
   $: utilityBarCommands =
     $context.utilities[CONSTANTS.TAB_CHARACTER_FEATURES]
       ?.utilityToolbarCommands ?? [];
+
+  const featuresThatExcludeDuplicate = new Set<string>([
+    CONSTANTS.ITEM_TYPE_CLASS,
+    CONSTANTS.ITEM_TYPE_SUBCLASS,
+    CONSTANTS.ITEM_TYPE_RACE,
+    CONSTANTS.ITEM_TYPE_BACKGROUND,
+  ]);
 </script>
 
 <UtilityToolbar>
@@ -254,7 +261,9 @@
                     <ItemFavoriteControl {item} />
                     <ItemEditControl {item} />
                     {#if $context.unlocked}
-                      <ItemDuplicateControl {item} />
+                      {#if !featuresThatExcludeDuplicate.has(item.type)}
+                        <ItemDuplicateControl {item} />
+                      {/if}
                       <ItemDeleteControl {item} />
                     {/if}
                     {#if $context.useActionsFeature}
