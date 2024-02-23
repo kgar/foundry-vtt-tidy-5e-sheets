@@ -167,7 +167,7 @@
               {skillRef.skill.label}
             </span>
           {/if}
-          {#if $context.unlocked}
+          {#if $context.unlocked && $context.editable}
             <InlineTextDropdownList
               options={abilities}
               selected={{
