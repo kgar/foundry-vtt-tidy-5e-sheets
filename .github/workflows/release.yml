@@ -46,3 +46,5 @@ jobs:
           artifacts: './dist/module.json, ./dist/module.zip'
           tag: ${{ github.event.release.tag_name }}
           body: ${{ github.event.release.body }}
+          prerelease: ${{ github.event.release.prerelease }}
+          makeLatest: ${{ !github.event.release.prerelease }}
