@@ -1200,17 +1200,13 @@ export const FoundryAdapter = {
     }
   },
   countPreparedSpells(items: Item5e[]) {
-    return items.filter((item: Item5e) => {
-      if (item.type !== CONSTANTS.ITEM_TYPE_SPELL) {
-        return false;
-      }
-
-      const prep = item.system.preparation;
-      return (
+    return items.filter(
+      (item: Item5e) =>
+        item.type === CONSTANTS.ITEM_TYPE_SPELL &&
         item.system.level > 0 &&
-        prep.mode === CONSTANTS.SPELL_PREPARATION_MODE_PREPARED &&
-        prep.prepared
-      );
-    }).length;
+        item.system.preparation.mode ===
+          CONSTANTS.SPELL_PREPARATION_MODE_PREPARED &&
+        item.system.preparation.prepared
+    ).length;
   },
 };
