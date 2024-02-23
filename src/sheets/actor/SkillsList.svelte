@@ -174,7 +174,7 @@
                 value: skillRef.skill.abbreviation,
               }}
               buttonClass="skill-ability"
-              title="Hello, world!"
+              title={$context.abilities?.[skillRef.ability]?.label}
               on:optionClicked={(ev) => onSkillAbilityChange(ev, skillRef)}
             />
           {:else}
