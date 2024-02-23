@@ -235,7 +235,6 @@ export class Tidy5eCharacterSheet
               return prev;
             }, []);
         }
-        // TODO: When dealing with classes, just sort the classes and then rejoin their subclasses to the sorted classes.
         section.items = features;
       }
     } catch (e) {
