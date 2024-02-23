@@ -1,7 +1,7 @@
 import { CONSTANTS } from 'src/constants';
+import type { SortMode } from 'src/types/types';
 import { writable, type Readable, type Writable } from 'svelte/store';
 
-type SortMode = 'a' | 'm';
 
 type SheetTypeTabPreferences = {
   sort?: SortMode;

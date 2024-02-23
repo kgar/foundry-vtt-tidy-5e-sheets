@@ -201,7 +201,6 @@ export type Utilities = Record<
   string,
   {
     utilityToolbarCommands?: UtilityToolbarCommandParams[];
-    // sortMode: SortMode;
   }
 >;
 
