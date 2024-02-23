@@ -37,9 +37,8 @@
     }),
   );
 
-  let abilities: DropdownListOption[] = [];
-  $: abilities = Object.entries<any>(CONFIG.DND5E.abilities).map(
-    ([key, { label }]) => ({ value: key, text: label }),
+  $: abilities = FoundryAdapter.getAbilitiesAsDropdownOptions(
+    $context.abilities,
   );
 
   const localize = FoundryAdapter.localize;

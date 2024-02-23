@@ -19,10 +19,9 @@
 
   const localize = FoundryAdapter.localize;
 
-  $: abilities = Object.entries($context.abilities).map((a: any) => ({
-    abbr: a[0],
-    ...a[1],
-  }));
+  $: abilities = FoundryAdapter.getAbilitiesAsDropdownOptions(
+    $context.abilities,
+  );
 </script>
 
 <TabFooter cssClass="{cssClass} spellbook-footer" mode="horizontal">
@@ -136,7 +135,7 @@
         >{localize('DND5E.None')}</option
       >
       {#each abilities as ability}
-        <option value={ability.abbr}>{ability.label}</option>
+        <option value={ability.value}>{ability.text}</option>
       {/each}
     </Select>
   </div>
