@@ -28,7 +28,6 @@
   import { declareLocation } from 'src/types/location-awareness';
   import UtilityToolbar from 'src/components/utility-bar/UtilityToolbar.svelte';
   import Search from 'src/components/utility-bar/Search.svelte';
-  import type { UtilityToolbarCommandParams } from 'src/components/utility-bar/types';
   import UtilityToolbarCommand from 'src/components/utility-bar/UtilityToolbarCommand.svelte';
   import FilterMenu from 'src/components/filter/FilterMenu.svelte';
 
@@ -52,6 +51,13 @@
   $: utilityBarCommands =
     $context.utilities[CONSTANTS.TAB_CHARACTER_FEATURES]
       ?.utilityToolbarCommands ?? [];
+
+  const featuresThatExcludeDuplicate = new Set<string>([
+    CONSTANTS.ITEM_TYPE_CLASS,
+    CONSTANTS.ITEM_TYPE_SUBCLASS,
+    CONSTANTS.ITEM_TYPE_RACE,
+    CONSTANTS.ITEM_TYPE_BACKGROUND,
+  ]);
 </script>
 
 <UtilityToolbar>
@@ -150,6 +156,10 @@
                       data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_NAME}
                       >{item.name}</span
                     >
+                    {#if item.isOriginalClass}<i
+                        title={localize('DND5E.ClassOriginal')}
+                        class="fas fa-crown primary-accent-color"
+                      ></i>{/if}
                   </ItemName>
                 </ItemTableCell>
                 <!-- TODO: Handle more gracefully -->
@@ -248,12 +258,12 @@
                 {/if}
                 {#if $context.editable && $context.useClassicControls}
                   <ItemTableCell baseWidth={classicControlsBaseWidth}>
-                    {#if item.type !== 'class'}
-                      <ItemFavoriteControl {item} />
-                    {/if}
+                    <ItemFavoriteControl {item} />
                     <ItemEditControl {item} />
                     {#if $context.unlocked}
-                      <ItemDuplicateControl {item} />
+                      {#if !featuresThatExcludeDuplicate.has(item.type)}
+                        <ItemDuplicateControl {item} />
+                      {/if}
                       <ItemDeleteControl {item} />
                     {/if}
                     {#if $context.useActionsFeature}

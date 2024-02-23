@@ -180,41 +180,72 @@ export class Tidy5eCharacterSheet
       characterPreferences.tabs?.[CONSTANTS.TAB_CHARACTER_FEATURES]?.sort ??
       'm';
 
-    // Apply new filters
-    for (let section of defaultDocumentContext.inventory) {
-      // TODO: When I fully take over section preparation, move this filter() step higher up so that it is not looping in individual sections
-      let inventory = this.itemFilterService.filter(
-        section.items,
-        CONSTANTS.TAB_CHARACTER_INVENTORY
-      );
-      if (inventorySortMode === 'a') {
-        inventory = inventory.toSorted((a, b) => a.name.localeCompare(b.name));
+    try {
+      for (let section of defaultDocumentContext.inventory) {
+        // TODO: When I fully take over section preparation, move this filter() step higher up so that it is not looping in individual sections
+        let inventory = this.itemFilterService.filter(
+          section.items,
+          CONSTANTS.TAB_CHARACTER_INVENTORY
+        );
+        if (inventorySortMode === 'a') {
+          inventory = inventory.toSorted((a, b) =>
+            a.name.localeCompare(b.name)
+          );
+        }
+        section.items = inventory;
       }
-      section.items = inventory;
-    }
 
-    for (let section of defaultDocumentContext.spellbook) {
-      // TODO: When I fully take over section preparation, move this filter() step higher up so that it is not looping in individual sections
-      let spellbook = this.itemFilterService.filter(
-        section.spells,
-        CONSTANTS.TAB_CHARACTER_SPELLBOOK
-      );
-      if (spellbookSortMode === 'a') {
-        spellbook = spellbook.toSorted((a, b) => a.name.localeCompare(b.name));
+      for (let section of defaultDocumentContext.spellbook) {
+        // TODO: When I fully take over section preparation, move this filter() step higher up so that it is not looping in individual sections
+        let spellbook = this.itemFilterService.filter(
+          section.spells,
+          CONSTANTS.TAB_CHARACTER_SPELLBOOK
+        );
+        if (spellbookSortMode === 'a') {
+          spellbook = spellbook.toSorted((a, b) =>
+            a.name.localeCompare(b.name)
+          );
+        }
+        section.spells = spellbook;
       }
-      section.spells = spellbook;
-    }
 
-    for (let section of defaultDocumentContext.features) {
-      // TODO: When I fully take over section preparation, move this filter() step higher up so that it is not looping in individual sections
-      let features = this.itemFilterService.filter(
-        section.items,
-        CONSTANTS.TAB_CHARACTER_FEATURES
-      );
-      if (featureSortMode === 'a') {
-        features = features.toSorted((a, b) => a.name.localeCompare(b.name));
+      for (let section of defaultDocumentContext.features) {
+        // TODO: When I fully take over section preparation, move this filter() step higher up so that it is not looping in individual sections
+        let features = this.itemFilterService.filter(
+          section.items,
+          CONSTANTS.TAB_CHARACTER_FEATURES
+        );
+        if (featureSortMode === 'a' && !section.isClass) {
+          features = features.toSorted((a, b) => a.name.localeCompare(b.name));
+        }
+        if (featureSortMode === 'a' && section.isClass) {
+          features = features
+            .filter((f) => f.type === CONSTANTS.ITEM_TYPE_CLASS)
+            .toSorted((a, b) => a.name.localeCompare(b.name))
+            .reduce((prev, classItem) => {
+              prev.push(classItem);
+              const subclass = features.find(
+                (f) =>
+                  f.type === CONSTANTS.ITEM_TYPE_SUBCLASS &&
+                  f.system.classIdentifier === classItem.system.identifier
+              );
+              if (subclass) {
+                prev.push(subclass);
+              }
+              return prev;
+            }, []);
+        }
+        section.items = features;
       }
-      section.items = features;
+    } catch (e) {
+      error(
+        'An error occurred while sorting and filtering section data',
+        false,
+        e
+      );
+      debug('Sorting/Filtering error troubleshooting info', {
+        defaultDocumentContext,
+      });
     }
 
     const unlocked =

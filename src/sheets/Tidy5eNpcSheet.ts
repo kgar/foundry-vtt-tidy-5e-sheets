@@ -166,16 +166,28 @@ export class Tidy5eNpcSheet
     const spellbookSortMode =
       npcPreferences.tabs?.[CONSTANTS.TAB_NPC_SPELLBOOK]?.sort ?? 'm';
 
-    // Apply new filters
-    for (let section of defaultDocumentContext.spellbook) {
-      let spellbook = this.itemFilterService.filter(
-        section.spells,
-        CONSTANTS.TAB_NPC_SPELLBOOK
-      );
-      if (spellbookSortMode === 'a') {
-        spellbook = spellbook.toSorted((a, b) => a.name.localeCompare(b.name));
+    try {
+      for (let section of defaultDocumentContext.spellbook) {
+        let spellbook = this.itemFilterService.filter(
+          section.spells,
+          CONSTANTS.TAB_NPC_SPELLBOOK
+        );
+        if (spellbookSortMode === 'a') {
+          spellbook = spellbook.toSorted((a, b) =>
+            a.name.localeCompare(b.name)
+          );
+        }
+        section.spells = spellbook;
       }
-      section.spells = spellbook;
+    } catch (e) {
+      error(
+        'An error occurred while sorting and filtering section data',
+        false,
+        e
+      );
+      debug('Sorting/Filtering error troubleshooting info', {
+        defaultDocumentContext,
+      });
     }
 
     const unlocked =
@@ -432,6 +444,9 @@ export class Tidy5eNpcSheet
         }
       ),
       owner: this.actor.isOwner,
+      preparedSpells: FoundryAdapter.countPreparedSpells(
+        defaultDocumentContext.items
+      ),
       rollDeathSave: this._rollDeathSave.bind(this),
       shortRest: this._onShortRest.bind(this),
       showLimitedSheet: FoundryAdapter.showLimitedSheet(this.actor),

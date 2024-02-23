@@ -811,8 +811,8 @@ label input[type='checkbox']:checked {
   }
 
   .item-image.svg svg {
-    max-width: 1.875rem;
-    max-height: 1.875rem;
+    max-width: 1.5rem;
+    max-height: 1.5rem;
     &,
     path {
       fill: var(--t5e-secondary-color);

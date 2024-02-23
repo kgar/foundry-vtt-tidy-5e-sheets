@@ -137,6 +137,7 @@ export type NpcSheetContext = {
   notes3EnrichedHtml: string;
   notes4EnrichedHtml: string;
   notesEnrichedHtml: string;
+  preparedSpells: number;
   shortRest: (event: Event) => Promise<void>;
   showSpellbookTab: boolean;
   spellCalculations: SpellCalculations;
