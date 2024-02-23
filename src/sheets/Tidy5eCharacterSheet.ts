@@ -211,9 +211,27 @@ export class Tidy5eCharacterSheet
         section.items,
         CONSTANTS.TAB_CHARACTER_FEATURES
       );
-      if (featureSortMode === 'a') {
+      if (featureSortMode === 'a' && !section.isClass) {
         features = features.toSorted((a, b) => a.name.localeCompare(b.name));
       }
+      if (featureSortMode === 'a' && section.isClass) {
+        features = features
+          .filter((f) => f.type === CONSTANTS.ITEM_TYPE_CLASS)
+          .toSorted((a, b) => a.name.localeCompare(b.name))
+          .reduce((prev, classItem) => {
+            prev.push(classItem);
+            const subclass = features.find(
+              (f) =>
+                f.type === CONSTANTS.ITEM_TYPE_SUBCLASS &&
+                f.system.classIdentifier === classItem.system.identifier
+            );
+            if (subclass) {
+              prev.push(subclass);
+            }
+            return prev;
+          }, []);
+      }
+      // TODO: When dealing with classes, just sort the classes and then rejoin their subclasses to the sorted classes.
       section.items = features;
     }
 
