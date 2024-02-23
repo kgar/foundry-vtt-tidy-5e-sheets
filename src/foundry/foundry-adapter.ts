@@ -1199,4 +1199,18 @@ export const FoundryAdapter = {
       return [];
     }
   },
+  countPreparedSpells(items: Item5e[]) {
+    return items.filter((item: Item5e) => {
+      if (item.type !== CONSTANTS.ITEM_TYPE_SPELL) {
+        return false;
+      }
+
+      const prep = item.system.preparation;
+      return (
+        item.system.level > 0 &&
+        prep.mode === CONSTANTS.SPELL_PREPARATION_MODE_PREPARED &&
+        prep.prepared
+      );
+    }).length;
+  },
 };

@@ -432,6 +432,9 @@ export class Tidy5eNpcSheet
         }
       ),
       owner: this.actor.isOwner,
+      preparedSpells: FoundryAdapter.countPreparedSpells(
+        defaultDocumentContext.items
+      ),
       rollDeathSave: this._rollDeathSave.bind(this),
       shortRest: this._onShortRest.bind(this),
       showLimitedSheet: FoundryAdapter.showLimitedSheet(this.actor),
