@@ -1,8 +1,9 @@
 <script lang="ts">
+  import InlineTextDropdownList from 'src/components/inputs/InlineTextDropdownList.svelte';
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { settingStore } from 'src/settings/settings';
-  import type { Actor5e } from 'src/types/types';
+  import type { Actor5e, DropdownListOption } from 'src/types/types';
   import type { CharacterSheetContext, NpcSheetContext } from 'src/types/types';
   import { ActiveEffectsHelper } from 'src/utils/active-effect';
   import { formatAsModifier } from 'src/utils/formatting';
@@ -35,6 +36,12 @@
       skill: getSkill(s[0]),
     }),
   );
+
+  let abilities: DropdownListOption[] = [];
+  $: abilities = Object.entries<any>(CONFIG.DND5E.abilities).map(
+    ([key, { label }]) => ({ value: key, text: label }),
+  );
+
   const localize = FoundryAdapter.localize;
 
   function getSkill(key: string): any | null {
@@ -51,6 +58,26 @@
     }
 
     actor.update({ [toggleField]: !expanded });
+  }
+
+  function onSkillAbilityChange(
+    ev: CustomEvent<DropdownListOption>,
+    skillRef: {
+      key: string;
+      label: string;
+      ability: string;
+      skill: any | null;
+    },
+  ): void {
+    $context.actor.update({
+      system: {
+        skills: {
+          [skillRef.key]: {
+            ability: ev.detail.value,
+          },
+        },
+      },
+    });
   }
 </script>
 
@@ -140,7 +167,21 @@
               {skillRef.skill.label}
             </span>
           {/if}
-          <span class="skill-ability">{skillRef.skill.abbreviation}</span>
+          {#if $context.unlocked}
+            <InlineTextDropdownList
+              options={abilities}
+              selected={{
+                text: skillRef.skill.abbreviation,
+                value: skillRef.skill.abbreviation,
+              }}
+              buttonClass="skill-ability"
+              title="Hello, world!"
+              on:optionClicked={(ev) => onSkillAbilityChange(ev, skillRef)}
+            />
+          {:else}
+            <span class="skill-ability">{skillRef.skill.abbreviation}</span>
+          {/if}
+
           <span class="skill-mod">{formatAsModifier(skillRef.skill.total)}</span
           >
           <span
@@ -249,9 +290,11 @@
         color: var(--t5e-tertiary-color);
       }
 
-      .skill-ability {
+      :global(.skill-ability) {
         flex: 0 0 1.5rem;
+        width: 1.5rem;
         text-transform: capitalize;
+        text-align: left;
       }
     }
   }
