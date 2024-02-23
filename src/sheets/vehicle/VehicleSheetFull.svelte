@@ -25,6 +25,7 @@
   import ActorWarnings from '../actor/ActorWarnings.svelte';
   import InlineSource from '../shared/InlineSource.svelte';
   import ActorOriginSummaryConfigFormApplication from 'src/applications/actor-origin-summary/ActorOriginSummaryConfigFormApplication';
+  import ActorName from '../actor/ActorName.svelte';
 
   let selectedTabId: string;
 
@@ -67,16 +68,7 @@
         class="actor-name"
         data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.NAME_CONTAINER}
       >
-        <ContentEditableFormField
-          element="h1"
-          document={$context.actor}
-          field="name"
-          value={$context.actor.name}
-          editable={$context.editable && !$context.lockSensitiveFields}
-          spellcheck={false}
-          placeholder={localize('DND5E.Name')}
-          dataMaxLength={40}
-        />
+        <ActorName />
       </div>
       <SheetMenu defaultSettingsTab={CONSTANTS.TAB_USER_SETTINGS_VEHICLES} />
     </div>
@@ -147,7 +139,7 @@
         <VerticalLineSeparator />
         <div>
           <AttributeBlock
-            id={id}
+            {id}
             {ability}
             useConfigurationOption={false}
             useSavingThrowProficiency={false}
