@@ -33,10 +33,3 @@
   hint={SettingsProvider.settings.useHpOverlayVehicle.options.hint}
   id="useHpOverlayVehicle"
 />
-
-<NumberInputSetting
-  bind:value={$context.settings.vehicleSheetWidth}
-  name={SettingsProvider.settings.vehicleSheetWidth.options.name}
-  hint={SettingsProvider.settings.vehicleSheetWidth.options.hint}
-  id="vehicleSheetWidth"
-/>

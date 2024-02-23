@@ -477,18 +477,6 @@
     "name": "Use Vehicle Encumbrance Bar",
     "hint": "Shows an encumbrance bar on vehicle sheets."
   },
-  "TIDY5E.Settings.NPCSheetWidth": {
-    "name": "Default NPC Sheet Width",
-    "hint": "The width of the NPC sheet in pixels when showing the sheet for the first time. Requires a refresh to take effect. Default: 740."
-  },
-  "TIDY5E.Settings.PlayerSheetWidth": {
-    "name": "Default Player Sheet Width",
-    "hint": "The width of the player character sheet in pixels when showing the sheet for the first time. Requires a refresh to take effect. Default: 740."
-  },
-  "TIDY5E.Settings.VehicleSheetWidth": {
-    "name": "Default Vehicle Sheet Width",
-    "hint": "The width of the vehicle sheet in pixels when showing the sheet for the first time. Requires a refresh to take effect. Default: 740."
-  },
   "TIDY5E.Settings.UseMulticlassSpellbookFilter": {
     "name": "Use Multiclass Spellbook Filter",
     "hint": "Allows filtering spells by class in the spellbook tab. The spell must be associated with a class using the Class selector on the spell edit sheet."

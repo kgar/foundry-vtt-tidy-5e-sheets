@@ -8,6 +8,7 @@
   export let selected: DropdownListOption;
   export let isOpen = false;
   export let title: string | null = null;
+  export let buttonClass: string = '';
 
   const dispatch = createEventDispatcher<{
     optionClicked: DropdownListOption;
@@ -24,7 +25,7 @@
   ariaLabel={title}
   {title}
   buttonText={selected.text}
-  buttonClass="inline-transparent-button primary"
+  buttonClass="inline-transparent-button primary {buttonClass}"
 >
   {#each options as option}
     <ButtonMenuCommand

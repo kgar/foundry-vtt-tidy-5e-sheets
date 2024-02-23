@@ -1,6 +1,6 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { type CharacterSheetContext } from 'src/types/types';
+  import { type CharacterSheetContext, type MessageBus } from 'src/types/types';
   import { formatAsModifier } from 'src/utils/formatting';
   import ItemEditControl from '../../../components/item-list/controls/ItemEditControl.svelte';
   import ItemDuplicateControl from '../../../components/item-list/controls/ItemDuplicateControl.svelte';
@@ -26,10 +26,8 @@
   import RechargeControl from 'src/components/item-list/controls/RechargeControl.svelte';
   import ActionFilterOverrideControl from 'src/components/item-list/controls/ActionFilterOverrideControl.svelte';
   import { declareLocation } from 'src/types/location-awareness';
-  import { ExpandAllCollapseAllService } from 'src/features/expand-collapse/ExpandAllCollapseAllService';
   import UtilityToolbar from 'src/components/utility-bar/UtilityToolbar.svelte';
   import Search from 'src/components/utility-bar/Search.svelte';
-  import type { UtilityToolbarCommandParams } from 'src/components/utility-bar/types';
   import UtilityToolbarCommand from 'src/components/utility-bar/UtilityToolbarCommand.svelte';
   import FilterMenu from 'src/components/filter/FilterMenu.svelte';
 
@@ -50,21 +48,16 @@
 
   declareLocation('features');
 
-  const expandAllCollapseAllService = ExpandAllCollapseAllService.initService();
+  $: utilityBarCommands =
+    $context.utilities[CONSTANTS.TAB_CHARACTER_FEATURES]
+      ?.utilityToolbarCommands ?? [];
 
-  let utilityBarCommands: UtilityToolbarCommandParams[] = [];
-  $: utilityBarCommands = [
-    {
-      title: localize('TIDY5E.Commands.ExpandAll'),
-      iconClass: 'fas fa-angles-down',
-      execute: () => expandAllCollapseAllService.expandAll(),
-    },
-    {
-      title: localize('TIDY5E.Commands.CollapseAll'),
-      iconClass: 'fas fa-angles-up',
-      execute: () => expandAllCollapseAllService.collapseAll(),
-    },
-  ];
+  const featuresThatExcludeDuplicate = new Set<string>([
+    CONSTANTS.ITEM_TYPE_CLASS,
+    CONSTANTS.ITEM_TYPE_SUBCLASS,
+    CONSTANTS.ITEM_TYPE_RACE,
+    CONSTANTS.ITEM_TYPE_BACKGROUND,
+  ]);
 </script>
 
 <UtilityToolbar>
@@ -163,6 +156,10 @@
                       data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_NAME}
                       >{item.name}</span
                     >
+                    {#if item.isOriginalClass}<i
+                        title={localize('DND5E.ClassOriginal')}
+                        class="fas fa-crown primary-accent-color"
+                      ></i>{/if}
                   </ItemName>
                 </ItemTableCell>
                 <!-- TODO: Handle more gracefully -->
@@ -261,12 +258,12 @@
                 {/if}
                 {#if $context.editable && $context.useClassicControls}
                   <ItemTableCell baseWidth={classicControlsBaseWidth}>
-                    {#if item.type !== 'class'}
-                      <ItemFavoriteControl {item} />
-                    {/if}
+                    <ItemFavoriteControl {item} />
                     <ItemEditControl {item} />
                     {#if $context.unlocked}
-                      <ItemDuplicateControl {item} />
+                      {#if !featuresThatExcludeDuplicate.has(item.type)}
+                        <ItemDuplicateControl {item} />
+                      {/if}
                       <ItemDeleteControl {item} />
                     {/if}
                     {#if $context.useActionsFeature}

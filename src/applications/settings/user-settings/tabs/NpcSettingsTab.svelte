@@ -62,10 +62,3 @@
   hint={SettingsProvider.settings.showSpellbookTabNpc.options.hint}
   id="showSpellbookTabNpc"
 />
-
-<NumberInputSetting
-  bind:value={$context.settings.npcSheetWidth}
-  name={SettingsProvider.settings.npcSheetWidth.options.name}
-  hint={SettingsProvider.settings.npcSheetWidth.options.hint}
-  id="npcSheetWidth"
-/>
