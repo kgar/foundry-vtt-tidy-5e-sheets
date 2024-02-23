@@ -29,12 +29,15 @@
 
   let skillRefs: SkillRef[];
   $: skillRefs = Array.from(Object.entries($context.config.skills)).map(
-    (s: [key: string, value: any]) => ({
-      key: s[0],
-      label: s[1]['label'],
-      ability: s[1]['ability'],
-      skill: getSkill(s[0]),
-    }),
+    ([key, { label }]: [string, any]) => {
+      const skill = getSkill(key);
+      return {
+        key: key,
+        label: label,
+        ability: skill.ability,
+        skill: skill,
+      };
+    },
   );
 
   $: abilities = FoundryAdapter.getAbilitiesAsDropdownOptions(
@@ -174,7 +177,7 @@
                 value: skillRef.skill.abbreviation,
               }}
               buttonClass="skill-ability"
-              title="Hello, world!"
+              title={$context.abilities?.[skillRef.ability]?.label}
               on:optionClicked={(ev) => onSkillAbilityChange(ev, skillRef)}
             />
           {:else}
