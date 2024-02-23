@@ -113,7 +113,11 @@ export class Tidy5eCharacterSheet
         this.render();
       }),
       this.messageBus.subscribe((m) => {
-        debug('Message bus message received', m);
+        debug('Message bus message received', {
+          app: this,
+          actor: this.actor,
+          message: m,
+        });
       })
     );
     first = false;
