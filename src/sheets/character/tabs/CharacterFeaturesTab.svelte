@@ -28,7 +28,6 @@
   import { declareLocation } from 'src/types/location-awareness';
   import UtilityToolbar from 'src/components/utility-bar/UtilityToolbar.svelte';
   import Search from 'src/components/utility-bar/Search.svelte';
-  import type { UtilityToolbarCommandParams } from 'src/components/utility-bar/types';
   import UtilityToolbarCommand from 'src/components/utility-bar/UtilityToolbarCommand.svelte';
   import FilterMenu from 'src/components/filter/FilterMenu.svelte';
 
@@ -150,6 +149,10 @@
                       data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_NAME}
                       >{item.name}</span
                     >
+                    {#if item.isOriginalClass}<i
+                        title={localize('DND5E.ClassOriginal')}
+                        class="fas fa-crown"
+                      ></i>{/if}
                   </ItemName>
                 </ItemTableCell>
                 <!-- TODO: Handle more gracefully -->
