@@ -36,6 +36,7 @@ import { ActorPortraitRuntime } from 'src/runtime/ActorPortraitRuntime';
 import { CustomActorTraitsRuntime } from 'src/runtime/actor-traits/CustomActorTraitsRuntime';
 import { ItemTableToggleCacheService } from 'src/features/caching/ItemTableToggleCacheService';
 import { StoreSubscriptionsService } from 'src/features/store/StoreSubscriptionsService';
+import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
 
 export class Tidy5eVehicleSheet
   extends dnd5e.applications.actor.ActorSheet5eVehicle
@@ -70,10 +71,13 @@ export class Tidy5eVehicleSheet
   }
 
   static get defaultOptions() {
+    const { width, height } =
+      SheetPreferencesService.getByType(CONSTANTS.SHEET_TYPE_VEHICLE) ?? {};
+
     return FoundryAdapter.mergeObject(super.defaultOptions, {
       classes: ['tidy5e-sheet', 'sheet', 'actor', CONSTANTS.SHEET_TYPE_VEHICLE],
-      height: 840,
-      width: SettingsProvider?.settings.vehicleSheetWidth.get() ?? 740,
+      width: width ?? 740,
+      height: height ?? 810,
       scrollY: ['[data-tidy-track-scroll-y]', '.scroll-container'],
     });
   }
@@ -221,6 +225,14 @@ export class Tidy5eVehicleSheet
     this.context.set(data);
 
     if (force) {
+      const { width, height } =
+        SheetPreferencesService.getByType(CONSTANTS.SHEET_TYPE_VEHICLE) ?? {};
+      this.position = {
+        ...this.position,
+        width: width ?? this.position.width,
+        height: height ?? this.position.height,
+      };
+
       this._saveScrollPositions(this.element);
       this._destroySvelteComponent();
       await super._render(force, options);
@@ -349,6 +361,21 @@ export class Tidy5eVehicleSheet
 
   _disableFields(...args: any[]) {
     debug('Ignoring call to disable fields. Delegating to Tidy Sheets...');
+  }
+
+  _onResize(event: any) {
+    super._onResize(event);
+    const { width, height } = this.position;
+    SheetPreferencesService.setActorTypePreference(
+      CONSTANTS.SHEET_TYPE_VEHICLE,
+      'width',
+      width
+    );
+    SheetPreferencesService.setActorTypePreference(
+      CONSTANTS.SHEET_TYPE_VEHICLE,
+      'height',
+      height
+    );
   }
 
   /* -------------------------------------------- */

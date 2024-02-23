@@ -9,15 +9,11 @@
   import NoSpells from '../../actor/NoSpells.svelte';
   import UtilityToolbar from 'src/components/utility-bar/UtilityToolbar.svelte';
   import Search from 'src/components/utility-bar/Search.svelte';
-  import UtilityBarCommand from 'src/components/utility-bar/UtilityToolbarCommand.svelte';
-  import type { UtilityToolbarCommandParams } from 'src/components/utility-bar/types';
-  import { ExpandAllCollapseAllService } from 'src/features/expand-collapse/ExpandAllCollapseAllService';
+  import UtilityToolbarCommand from 'src/components/utility-bar/UtilityToolbarCommand.svelte';
   import { CONSTANTS } from 'src/constants';
   import FilterMenu from 'src/components/filter/FilterMenu.svelte';
 
   let context = getContext<Readable<NpcSheetContext>>('context');
-
-  const localize = FoundryAdapter.localize;
 
   let searchCriteria: string = '';
 
@@ -26,50 +22,18 @@
     ? 'grid'
     : 'list';
 
-  function toggleLayout() {
-    if (layoutMode === 'grid') {
-      FoundryAdapter.unsetFlag($context.actor, 'spellbook-grid');
-      return;
-    }
-
-    FoundryAdapter.setFlag($context.actor, 'spellbook-grid', true);
-  }
-
   $: noSpellLevels = !$context.spellbook.length;
 
-  const expandAllCollapseAllService = ExpandAllCollapseAllService.initService();
-  let utilityBarCommands: UtilityToolbarCommandParams[] = [];
-  $: utilityBarCommands = [
-    {
-      title: localize('TIDY5E.Commands.ExpandAll'),
-      iconClass: 'fas fa-angles-down',
-      execute: () => expandAllCollapseAllService.expandAll(),
-    },
-    {
-      title: localize('TIDY5E.Commands.CollapseAll'),
-      iconClass: 'fas fa-angles-up',
-      execute: () => expandAllCollapseAllService.collapseAll(),
-    },
-    {
-      title: localize('TIDY5E.ListLayout'),
-      iconClass: 'fas fa-th-list toggle-list',
-      visible: layoutMode === 'grid',
-      execute: () => toggleLayout(),
-    },
-    {
-      title: localize('TIDY5E.GridLayout'),
-      iconClass: 'fas fa-th-large toggle-grid',
-      visible: layoutMode === 'list',
-      execute: () => toggleLayout(),
-    },
-  ];
+  $: utilityBarCommands =
+    $context.utilities[CONSTANTS.TAB_NPC_SPELLBOOK]?.utilityToolbarCommands ??
+    [];
 </script>
 
 <UtilityToolbar>
   <Search bind:value={searchCriteria} />
   <FilterMenu tabId={CONSTANTS.TAB_NPC_SPELLBOOK} />
   {#each utilityBarCommands as command (command.title)}
-    <UtilityBarCommand
+    <UtilityToolbarCommand
       title={command.title}
       iconClass={command.iconClass}
       text={command.text}

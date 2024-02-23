@@ -68,8 +68,6 @@ export class UserSettingsFormApplication extends SvelteFormApplicationBase {
           currentSettings.moveTraitsBelowCharacterResources,
         moveTraitsBelowNpcResources:
           currentSettings.moveTraitsBelowNpcResources,
-        npcSheetWidth: currentSettings.npcSheetWidth,
-        playerSheetWidth: currentSettings.playerSheetWidth,
         showClassList: currentSettings.showClassList,
         showEquippedAmmoOnly: currentSettings.showEquippedAmmoOnly,
         showExhaustionOnHover: currentSettings.showExhaustionOnHover,
@@ -95,7 +93,6 @@ export class UserSettingsFormApplication extends SvelteFormApplicationBase {
         useMulticlassSpellbookFilter:
           currentSettings.useMulticlassSpellbookFilter,
         useSpellClassFilterIcons: currentSettings.useSpellClassFilterIcons,
-        vehicleSheetWidth: currentSettings.vehicleSheetWidth,
       },
     };
   }

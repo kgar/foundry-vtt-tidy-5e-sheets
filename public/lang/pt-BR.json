@@ -332,18 +332,6 @@
         "name": "Usar a barra de ônus do veículo",
         "hint": "Mostra uma barra de ônus nas fichas de veículo."
     },
-    "TIDY5E.Settings.NPCSheetWidth": {
-        "name": "Largura padrão da ficha de PNJ",
-        "hint": "A largura da planilha do PNJ em pixels quando a planilha é exibida pela primeira vez. Requer uma atualização para ter efeito. Padrão: 740."
-    },
-    "TIDY5E.Settings.PlayerSheetWidth": {
-        "name": "Largura padrão da ficha do jogador",
-        "hint": "A largura da ficha do personagem do jogador em pixels quando a ficha é exibida pela primeira vez. Requer uma atualização para ter efeito. Padrão: 740."
-    },
-    "TIDY5E.Settings.VehicleSheetWidth": {
-        "name": "Largura padrão da ficha do veículo",
-        "hint": "A largura da ficha do veículo em pixels ao mostrar a ficha pela primeira vez. Requer uma atualização para ter efeito. Padrão: 740."
-    },
     "TIDY5E.Settings.UseMulticlassSpellbookFilter": {
         "name": "Usar filtro de livro de feitiços multiclasse",
         "hint": "Permite filtrar os feitiços por classe na guia do livro de feitiços. O feitiço deve ser associado a uma classe usando o seletor Classe na folha de edição de feitiços."

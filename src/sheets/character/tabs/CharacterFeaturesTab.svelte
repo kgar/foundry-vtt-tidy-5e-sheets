@@ -1,6 +1,6 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { type CharacterSheetContext } from 'src/types/types';
+  import { type CharacterSheetContext, type MessageBus } from 'src/types/types';
   import { formatAsModifier } from 'src/utils/formatting';
   import ItemEditControl from '../../../components/item-list/controls/ItemEditControl.svelte';
   import ItemDuplicateControl from '../../../components/item-list/controls/ItemDuplicateControl.svelte';
@@ -26,7 +26,6 @@
   import RechargeControl from 'src/components/item-list/controls/RechargeControl.svelte';
   import ActionFilterOverrideControl from 'src/components/item-list/controls/ActionFilterOverrideControl.svelte';
   import { declareLocation } from 'src/types/location-awareness';
-  import { ExpandAllCollapseAllService } from 'src/features/expand-collapse/ExpandAllCollapseAllService';
   import UtilityToolbar from 'src/components/utility-bar/UtilityToolbar.svelte';
   import Search from 'src/components/utility-bar/Search.svelte';
   import type { UtilityToolbarCommandParams } from 'src/components/utility-bar/types';
@@ -50,21 +49,9 @@
 
   declareLocation('features');
 
-  const expandAllCollapseAllService = ExpandAllCollapseAllService.initService();
-
-  let utilityBarCommands: UtilityToolbarCommandParams[] = [];
-  $: utilityBarCommands = [
-    {
-      title: localize('TIDY5E.Commands.ExpandAll'),
-      iconClass: 'fas fa-angles-down',
-      execute: () => expandAllCollapseAllService.expandAll(),
-    },
-    {
-      title: localize('TIDY5E.Commands.CollapseAll'),
-      iconClass: 'fas fa-angles-up',
-      execute: () => expandAllCollapseAllService.collapseAll(),
-    },
-  ];
+  $: utilityBarCommands =
+    $context.utilities[CONSTANTS.TAB_CHARACTER_FEATURES]
+      ?.utilityToolbarCommands ?? [];
 </script>
 
 <UtilityToolbar>

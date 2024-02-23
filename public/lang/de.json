@@ -332,18 +332,6 @@
         "name": "Fahrzeug-Beladungsleiste verwenden",
         "hint": "Zeigt einen Beladungsbalken auf Fahrzeugbögen an."
     },
-    "TIDY5E.Settings.NPCSheetWidth": {
-        "name": "Standardbreite NSC-Bogen",
-        "hint": "Die Breite des NSC-Bogens in Pixeln, wenn der Bogen zum ersten Mal angezeigt wird. Erfordert eine Aktualisierung, um wirksam zu werden. Standard: 740."
-    },
-    "TIDY5E.Settings.PlayerSheetWidth": {
-        "name": "Standardbreite SC-Bogen",
-        "hint": "Die Breite des SC-Bogens in Pixeln, wenn der Bogen zum ersten Mal angezeigt wird. Erfordert eine Aktualisierung, um wirksam zu werden. Standard: 740."
-    },
-    "TIDY5E.Settings.VehicleSheetWidth": {
-        "name": "Standardbereite Fahrzeugbogen",
-        "hint": "Die Breite des Fahrzeug-Bogens in Pixeln, wenn der Bogen zum ersten Mal angezeigt wird. Erfordert eine Aktualisierung, um wirksam zu werden. Standard: 740."
-    },
     "TIDY5E.Settings.UseMulticlassSpellbookFilter": {
         "name": "Multiklassen-Zauberbuchfilter verwenden",
         "hint": "Ermöglicht das Filtern von Zaubern nach Klassen in der Registerkarte Zauberbuch. Der Zauber muss einer Klasse zugeordnet werden, indem die Klassenauswahl auf dem Zauberbearbeitungsblatt verwendet wird."
