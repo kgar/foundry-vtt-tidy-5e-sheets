@@ -251,9 +251,7 @@
                 {/if}
                 {#if $context.editable && $context.useClassicControls}
                   <ItemTableCell baseWidth={classicControlsBaseWidth}>
-                    {#if item.type !== 'class'}
-                      <ItemFavoriteControl {item} />
-                    {/if}
+                    <ItemFavoriteControl {item} />
                     <ItemEditControl {item} />
                     {#if $context.unlocked}
                       <ItemDuplicateControl {item} />
