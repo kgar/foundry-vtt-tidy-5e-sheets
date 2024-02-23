@@ -163,29 +163,54 @@ export class Tidy5eCharacterSheet
   async getData(options = {}) {
     const defaultDocumentContext = await super.getData(this.options);
 
+    const characterPreferences = SheetPreferencesService.getByType(
+      this.actor.type
+    );
+    const inventorySortMode =
+      characterPreferences.tabs?.[CONSTANTS.TAB_CHARACTER_INVENTORY]?.sort ??
+      'm';
+    const spellbookSortMode =
+      characterPreferences.tabs?.[CONSTANTS.TAB_CHARACTER_SPELLBOOK]?.sort ??
+      'm';
+    const featureSortMode =
+      characterPreferences.tabs?.[CONSTANTS.TAB_CHARACTER_FEATURES]?.sort ??
+      'm';
+
     // Apply new filters
     for (let section of defaultDocumentContext.inventory) {
       // TODO: When I fully take over section preparation, move this filter() step higher up so that it is not looping in individual sections
-      section.items = this.itemFilterService.filter(
+      let inventory = this.itemFilterService.filter(
         section.items,
         CONSTANTS.TAB_CHARACTER_INVENTORY
       );
+      if (inventorySortMode === 'a') {
+        inventory = inventory.toSorted((a, b) => a.name.localeCompare(b.name));
+      }
+      section.items = inventory;
     }
 
     for (let section of defaultDocumentContext.spellbook) {
       // TODO: When I fully take over section preparation, move this filter() step higher up so that it is not looping in individual sections
-      section.spells = this.itemFilterService.filter(
+      let spellbook = this.itemFilterService.filter(
         section.spells,
         CONSTANTS.TAB_CHARACTER_SPELLBOOK
       );
+      if (spellbookSortMode === 'a') {
+        spellbook = spellbook.toSorted((a, b) => a.name.localeCompare(b.name));
+      }
+      section.spells = spellbook;
     }
 
     for (let section of defaultDocumentContext.features) {
       // TODO: When I fully take over section preparation, move this filter() step higher up so that it is not looping in individual sections
-      section.items = this.itemFilterService.filter(
+      let features = this.itemFilterService.filter(
         section.items,
         CONSTANTS.TAB_CHARACTER_FEATURES
       );
+      if (featureSortMode === 'a') {
+        features = features.toSorted((a, b) => a.name.localeCompare(b.name));
+      }
+      section.items = features;
     }
 
     const unlocked =
@@ -247,18 +272,6 @@ export class Tidy5eCharacterSheet
 
     // TODO: Make a builder for this
     // TODO: Extract to runtime?
-    const characterPreferences = SheetPreferencesService.getByType(
-      CONSTANTS.SHEET_TYPE_CHARACTER
-    );
-    const inventorySortMode =
-      characterPreferences.tabs?.[CONSTANTS.TAB_CHARACTER_INVENTORY]?.sort ??
-      'm';
-    const spellbookSortMode =
-      characterPreferences.tabs?.[CONSTANTS.TAB_CHARACTER_SPELLBOOK]?.sort ??
-      'm';
-    const featureSortMode =
-      characterPreferences.tabs?.[CONSTANTS.TAB_CHARACTER_FEATURES]?.sort ??
-      'm';
     let utilities: Utilities = {
       [CONSTANTS.TAB_CHARACTER_INVENTORY]: {
         utilityToolbarCommands: [
@@ -267,7 +280,7 @@ export class Tidy5eCharacterSheet
             iconClass: 'fa-solid fa-arrow-down-a-z',
             execute: async () => {
               await SheetPreferencesService.setActorTypeTabPreference(
-                CONSTANTS.SHEET_TYPE_CHARACTER,
+                this.actor.type,
                 CONSTANTS.TAB_CHARACTER_INVENTORY,
                 'sort',
                 'm'
@@ -281,7 +294,7 @@ export class Tidy5eCharacterSheet
             iconClass: 'fa-solid fa-arrow-down-short-wide',
             execute: async () => {
               await SheetPreferencesService.setActorTypeTabPreference(
-                CONSTANTS.SHEET_TYPE_CHARACTER,
+                this.actor.type,
                 CONSTANTS.TAB_CHARACTER_INVENTORY,
                 'sort',
                 'a'
@@ -335,7 +348,7 @@ export class Tidy5eCharacterSheet
             iconClass: 'fa-solid fa-arrow-down-a-z',
             execute: async () => {
               await SheetPreferencesService.setActorTypeTabPreference(
-                CONSTANTS.SHEET_TYPE_CHARACTER,
+                this.actor.type,
                 CONSTANTS.TAB_CHARACTER_SPELLBOOK,
                 'sort',
                 'm'
@@ -349,7 +362,7 @@ export class Tidy5eCharacterSheet
             iconClass: 'fa-solid fa-arrow-down-short-wide',
             execute: async () => {
               await SheetPreferencesService.setActorTypeTabPreference(
-                CONSTANTS.SHEET_TYPE_CHARACTER,
+                this.actor.type,
                 CONSTANTS.TAB_CHARACTER_SPELLBOOK,
                 'sort',
                 'a'
@@ -403,7 +416,7 @@ export class Tidy5eCharacterSheet
             iconClass: 'fa-solid fa-arrow-down-a-z',
             execute: async () => {
               await SheetPreferencesService.setActorTypeTabPreference(
-                CONSTANTS.SHEET_TYPE_CHARACTER,
+                this.actor.type,
                 CONSTANTS.TAB_CHARACTER_FEATURES,
                 'sort',
                 'm'
@@ -417,7 +430,7 @@ export class Tidy5eCharacterSheet
             iconClass: 'fa-solid fa-arrow-down-short-wide',
             execute: async () => {
               await SheetPreferencesService.setActorTypeTabPreference(
-                CONSTANTS.SHEET_TYPE_CHARACTER,
+                this.actor.type,
                 CONSTANTS.TAB_CHARACTER_FEATURES,
                 'sort',
                 'a'
@@ -738,7 +751,7 @@ export class Tidy5eCharacterSheet
 
     if (force) {
       const { width, height } =
-        SheetPreferencesService.getByType(CONSTANTS.SHEET_TYPE_CHARACTER) ?? {};
+        SheetPreferencesService.getByType(this.actor.type) ?? {};
       this.position = {
         ...this.position,
         width: width ?? this.position.width,
@@ -832,12 +845,12 @@ export class Tidy5eCharacterSheet
     super._onResize(event);
     const { width, height } = this.position;
     SheetPreferencesService.setActorTypePreference(
-      CONSTANTS.SHEET_TYPE_CHARACTER,
+      this.actor.type,
       'width',
       width
     );
     SheetPreferencesService.setActorTypePreference(
-      CONSTANTS.SHEET_TYPE_CHARACTER,
+      this.actor.type,
       'height',
       height
     );

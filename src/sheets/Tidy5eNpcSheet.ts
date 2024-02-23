@@ -157,12 +157,21 @@ export class Tidy5eNpcSheet
   async getData(options = {}) {
     const defaultDocumentContext = await super.getData(this.options);
 
+    const npcPreferences = SheetPreferencesService.getByType(this.actor.type);
+
+    const spellbookSortMode =
+      npcPreferences.tabs?.[CONSTANTS.TAB_NPC_SPELLBOOK]?.sort ?? 'm';
+
     // Apply new filters
     for (let section of defaultDocumentContext.spellbook) {
-      section.spells = this.itemFilterService.filter(
+      let spellbook = this.itemFilterService.filter(
         section.spells,
         CONSTANTS.TAB_NPC_SPELLBOOK
       );
+      if (spellbookSortMode === 'a') {
+        spellbook = spellbook.toSorted((a, b) => a.name.localeCompare(b.name));
+      }
+      section.spells = spellbook;
     }
 
     const unlocked =
@@ -192,13 +201,6 @@ export class Tidy5eNpcSheet
       error('Unable to calculate max prepared spells', false, e);
     }
 
-    const npcPreferences = SheetPreferencesService.getByType(
-      CONSTANTS.SHEET_TYPE_NPC
-    );
-
-    const spellbookSortMode =
-      npcPreferences.tabs?.[CONSTANTS.TAB_NPC_SPELLBOOK]?.sort ?? 'm';
-
     let utilities: Utilities = {
       [CONSTANTS.TAB_NPC_SPELLBOOK]: {
         utilityToolbarCommands: [
@@ -207,7 +209,7 @@ export class Tidy5eNpcSheet
             iconClass: 'fa-solid fa-arrow-down-a-z',
             execute: async () => {
               await SheetPreferencesService.setActorTypeTabPreference(
-                CONSTANTS.SHEET_TYPE_NPC,
+                this.actor.type,
                 CONSTANTS.TAB_NPC_SPELLBOOK,
                 'sort',
                 'm'
@@ -221,7 +223,7 @@ export class Tidy5eNpcSheet
             iconClass: 'fa-solid fa-arrow-down-short-wide',
             execute: async () => {
               await SheetPreferencesService.setActorTypeTabPreference(
-                CONSTANTS.SHEET_TYPE_NPC,
+                this.actor.type,
                 CONSTANTS.TAB_NPC_SPELLBOOK,
                 'sort',
                 'a'
@@ -555,13 +557,13 @@ export class Tidy5eNpcSheet
 
     if (force) {
       const { width, height } =
-        SheetPreferencesService.getByType(CONSTANTS.SHEET_TYPE_NPC) ?? {};
+        SheetPreferencesService.getByType(this.actor.type) ?? {};
       this.position = {
         ...this.position,
         width: width ?? this.position.width,
         height: height ?? this.position.height,
       };
-      
+
       this._saveScrollPositions(this.element);
       this._destroySvelteComponent();
       await super._render(force, options);
@@ -941,12 +943,12 @@ export class Tidy5eNpcSheet
     super._onResize(event);
     const { width, height } = this.position;
     SheetPreferencesService.setActorTypePreference(
-      CONSTANTS.SHEET_TYPE_NPC,
+      this.actor.type,
       'width',
       width
     );
     SheetPreferencesService.setActorTypePreference(
-      CONSTANTS.SHEET_TYPE_NPC,
+      this.actor.type,
       'height',
       height
     );
