@@ -344,18 +344,6 @@
         "name": "Utilizar barra de carga en vehículos",
         "hint": "Muestra una barra de estorbo en las hojas de vehículos."
     },
-    "TIDY5E.Settings.NPCSheetWidth": {
-        "name": "Anchura de hoja de PNJ predeterminada",
-        "hint": "El ancho de la hoja de PNJen píxeles cuando se muestra la hoja por primera vez. Requiere una actualización para que surta efecto. Predeterminado: 740."
-    },
-    "TIDY5E.Settings.PlayerSheetWidth": {
-        "name": "Anchura de hoja de jugador",
-        "hint": "El ancho de la hoja de personaje del jugador en píxeles cuando se muestra la hoja por primera vez. Requiere una actualización para que surta efecto. Predeterminado: 740."
-    },
-    "TIDY5E.Settings.VehicleSheetWidth": {
-        "name": "Anchura de hoja de vehículo",
-        "hint": "El ancho de la hoja del vehículo en píxeles al mostrar la hoja por primera vez. Requiere una actualización para que surta efecto. Predeterminado: 740."
-    },
     "TIDY5E.Settings.UseMulticlassSpellbookFilter": {
         "name": "Usar filtro de hechizos multiclase",
         "hint": "Permite filtrar hechizos por clase en la pestaña de hechizos. El hechizo debe estar asociado con una clase usando el selector de clase en la hoja de edición de hechizos."

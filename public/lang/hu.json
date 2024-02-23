@@ -332,18 +332,6 @@
         "name": null,
         "hint": null
     },
-    "TIDY5E.Settings.NPCSheetWidth": {
-        "name": "Alapértelmezett NJK lap szélesség.",
-        "hint": "Az NJK lap szélessége pixelekben, újratöltés szükséges (alapértelmezett 740)."
-    },
-    "TIDY5E.Settings.PlayerSheetWidth": {
-        "name": "Alapértelmezett JK lap szélesség.",
-        "hint": "Az JK lap szélessége pixelekben, újratöltés szükséges (alapértelmezett 740)."
-    },
-    "TIDY5E.Settings.VehicleSheetWidth": {
-        "name": "Alapértelmezett jármű lap szélesség.",
-        "hint": "A jármű lap szélessége pixelekben, újratöltés szükséges (alapértelmezett 740)."
-    },
     "TIDY5E.Settings.UseMulticlassSpellbookFilter": {
         "name": null,
         "hint": null

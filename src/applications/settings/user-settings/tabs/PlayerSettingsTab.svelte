@@ -101,13 +101,6 @@
   id="showEquippedAmmoOnly"
 />
 
-<NumberInputSetting
-  bind:value={$context.settings.playerSheetWidth}
-  name={SettingsProvider.settings.playerSheetWidth.options.name}
-  hint={SettingsProvider.settings.playerSheetWidth.options.hint}
-  id="playerSheetWidth"
-/>
-
 <CheckboxSetting
   bind:value={$context.settings.useContextMenu}
   name={SettingsProvider.settings.useContextMenu.options.name}

@@ -16,6 +16,7 @@ import { ItemSheetRuntime } from 'src/runtime/item/ItemSheetRuntime';
 import { TabManager } from 'src/runtime/tab/TabManager';
 import { CustomContentRenderer } from './CustomContentRenderer';
 import { SettingsProvider } from 'src/settings/settings';
+import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
 
 export class Tidy5eKgarItemSheet
   extends dnd5e.applications.item.ItemSheet5e
@@ -29,13 +30,6 @@ export class Tidy5eKgarItemSheet
 
   constructor(item: Item5e, ...args: any[]) {
     super(item, ...args);
-
-    if (this.object.type === 'class') {
-      this.options.width = this.position.width = 600;
-      this.options.height = this.position.height = 680;
-    } else if (this.object.type === 'subclass') {
-      this.options.height = this.position.height = 540;
-    }
   }
 
   get template() {
@@ -160,6 +154,13 @@ export class Tidy5eKgarItemSheet
     this.context.set(data);
 
     if (force) {
+      const width = SheetPreferencesService.getByType(this.item.type)?.width;
+
+      this.position = {
+        ...this.position,
+        width: width ?? this.position.width,
+      };
+
       this.component?.$destroy();
       await super._render(force, options);
       applySheetAttributesToWindow(
@@ -263,6 +264,16 @@ export class Tidy5eKgarItemSheet
 
   _disableFields(...args: any[]) {
     debug('Ignoring call to disable fields. Delegating to Tidy Sheets...');
+  }
+
+  _onResize(event: any) {
+    super._onResize(event);
+    const { width } = this.position;
+    SheetPreferencesService.setActorTypePreference(
+      this.item.type,
+      'width',
+      width
+    );
   }
 
   /* -------------------------------------------- */

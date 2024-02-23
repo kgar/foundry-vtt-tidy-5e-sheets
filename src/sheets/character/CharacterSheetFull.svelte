@@ -24,6 +24,7 @@
   import { settingStore } from 'src/settings/settings';
   import InlineCreatureType from '../shared/InlineCreatureType.svelte';
   import ActorOriginSummaryConfigFormApplication from 'src/applications/actor-origin-summary/ActorOriginSummaryConfigFormApplication';
+  import ActorName from '../actor/ActorName.svelte';
 
   let selectedTabId: string;
   let context = getContext<Readable<CharacterSheetContext>>('context');
@@ -74,16 +75,7 @@
         class="actor-name"
         data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.NAME_CONTAINER}
       >
-        <ContentEditableFormField
-          element="h1"
-          document={$context.actor}
-          editable={$context.editable && !$context.lockSensitiveFields}
-          spellcheck={false}
-          placeholder={localize('DND5E.Name')}
-          dataMaxLength={40}
-          value={$context.actor.name}
-          field="name"
-        />
+        <ActorName />
       </div>
 
       <div class="flex-row extra-small-gap align-items-stretch">
@@ -236,7 +228,9 @@
       <AllowEditLock
         hint={$settingStore.permanentlyUnlockCharacterSheetForGm &&
         FoundryAdapter.userIsGm()
-          ? localize('TIDY5E.Settings.PermanentlyUnlockCharacterSheetForGM.title')
+          ? localize(
+              'TIDY5E.Settings.PermanentlyUnlockCharacterSheetForGM.title',
+            )
           : null}
       />
     {/if}

@@ -2,7 +2,7 @@
   import type { Tab } from 'src/types/types';
   import { declareLocation } from 'src/types/location-awareness';
   import { CONSTANTS } from 'src/constants';
-  import { getAllContexts, getContext, onMount } from 'svelte';
+  import { getAllContexts, getContext, onMount, setContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import { error } from 'src/utils/logging';
 
@@ -14,6 +14,7 @@
   const allContexts = getAllContexts();
 
   declareLocation('tab', tab.id);
+  setContext('tabId', tab.id);
 
   $: useCoreListenersClass = tab.activateDefaultSheetListeners
     ? CONSTANTS.CLASS_TIDY_USE_CORE_LISTENERS

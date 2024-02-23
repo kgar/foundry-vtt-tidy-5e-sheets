@@ -1144,34 +1144,6 @@ export function createSettings() {
         },
       },
 
-      playerSheetWidth: {
-        options: {
-          name: 'TIDY5E.Settings.PlayerSheetWidth.name',
-          hint: 'TIDY5E.Settings.PlayerSheetWidth.hint',
-          scope: 'client',
-          config: false,
-          type: Number,
-          default: 740,
-        },
-        get() {
-          return FoundryAdapter.getTidySetting<number>('playerSheetWidth');
-        },
-      },
-
-      npcSheetWidth: {
-        options: {
-          name: 'TIDY5E.Settings.NPCSheetWidth.name',
-          hint: 'TIDY5E.Settings.NPCSheetWidth.hint',
-          scope: 'client',
-          config: false,
-          type: Number,
-          default: 740,
-        },
-        get() {
-          return FoundryAdapter.getTidySetting<number>('npcSheetWidth');
-        },
-      },
-
       permanentlyUnlockNpcSheetForGm: {
         options: {
           name: 'TIDY5E.Settings.PermanentlyUnlockNPCSheetForGM.name',
@@ -1185,20 +1157,6 @@ export function createSettings() {
           return FoundryAdapter.getTidySetting<boolean>(
             'permanentlyUnlockNpcSheetForGm'
           );
-        },
-      },
-
-      vehicleSheetWidth: {
-        options: {
-          name: 'TIDY5E.Settings.VehicleSheetWidth.name',
-          hint: 'TIDY5E.Settings.VehicleSheetWidth.hint',
-          scope: 'client',
-          config: false,
-          type: Number,
-          default: 740,
-        },
-        get() {
-          return FoundryAdapter.getTidySetting<number>('vehicleSheetWidth');
         },
       },
 
