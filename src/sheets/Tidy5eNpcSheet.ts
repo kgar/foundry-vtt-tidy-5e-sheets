@@ -163,16 +163,34 @@ export class Tidy5eNpcSheet
 
     const npcPreferences = SheetPreferencesService.getByType(this.actor.type);
 
+    const abilitiesSortMode =
+      npcPreferences.tabs?.[CONSTANTS.TAB_NPC_ABILITIES]?.sort ?? 'm';
+
     const spellbookSortMode =
       npcPreferences.tabs?.[CONSTANTS.TAB_NPC_SPELLBOOK]?.sort ?? 'm';
 
     try {
+      for (let section of defaultDocumentContext.features) {
+        let features = this.itemFilterService.filter(
+          section.items,
+          CONSTANTS.TAB_NPC_ABILITIES
+        );
+        if (abilitiesSortMode === 'a') {
+          features = features.toSorted((a, b) => a.name.localeCompare(b.name));
+        }
+        section.items = features;
+      }
+
       for (let section of defaultDocumentContext.spellbook) {
         let spellbook = this.itemFilterService.filter(
           section.spells,
           CONSTANTS.TAB_NPC_SPELLBOOK
         );
-        if (spellbookSortMode === 'a') {
+        if (
+          spellbookSortMode === 'a' ||
+          (!SettingsProvider.settings.showSpellbookTabNpc &&
+            abilitiesSortMode === 'a')
+        ) {
           spellbook = spellbook.toSorted((a, b) =>
             a.name.localeCompare(b.name)
           );
@@ -218,6 +236,71 @@ export class Tidy5eNpcSheet
     }
 
     let utilities: Utilities = {
+      [CONSTANTS.TAB_NPC_ABILITIES]: {
+        utilityToolbarCommands: [
+          {
+            title: 'TODO: Not Legendary',
+            iconClass: 'ra ra-player',
+            execute: async () => {},
+            visible: !FoundryAdapter.tryGetFlag(this.actor, 'isLegendary'),
+          },
+          {
+            title: 'TODO: Legendary',
+            iconClass: 'ra ra-monster-skull',
+            execute: async () => {},
+            visible:
+              FoundryAdapter.tryGetFlag(this.actor, 'isLegendary') === true,
+          },
+          {
+            title: FoundryAdapter.localize('SIDEBAR.SortModeAlpha'),
+            iconClass: 'fa-solid fa-arrow-down-a-z',
+            execute: async () => {
+              await SheetPreferencesService.setActorTypeTabPreference(
+                this.actor.type,
+                CONSTANTS.TAB_NPC_ABILITIES,
+                'sort',
+                'm'
+              );
+              this.render();
+            },
+            visible: abilitiesSortMode === 'a',
+          },
+          {
+            title: FoundryAdapter.localize('SIDEBAR.SortModeManual'),
+            iconClass: 'fa-solid fa-arrow-down-short-wide',
+            execute: async () => {
+              await SheetPreferencesService.setActorTypeTabPreference(
+                this.actor.type,
+                CONSTANTS.TAB_NPC_ABILITIES,
+                'sort',
+                'a'
+              );
+              this.render();
+            },
+            visible: abilitiesSortMode === 'm',
+          },
+          {
+            title: FoundryAdapter.localize('TIDY5E.Commands.ExpandAll'),
+            iconClass: 'fas fa-angles-down',
+            execute: () =>
+              // TODO: Use app.messageBus
+              this.messageBus.set({
+                tabId: CONSTANTS.TAB_NPC_ABILITIES,
+                message: 'expand-all',
+              }),
+          },
+          {
+            title: FoundryAdapter.localize('TIDY5E.Commands.CollapseAll'),
+            iconClass: 'fas fa-angles-up',
+            execute: () =>
+              // TODO: Use app.messageBus
+              this.messageBus.set({
+                tabId: CONSTANTS.TAB_NPC_ABILITIES,
+                message: 'collapse-all',
+              }),
+          },
+        ],
+      },
       [CONSTANTS.TAB_NPC_SPELLBOOK]: {
         utilityToolbarCommands: [
           {

@@ -35,10 +35,19 @@
   import RechargeControl from 'src/components/item-list/controls/RechargeControl.svelte';
   import ActionFilterOverrideControl from 'src/components/item-list/controls/ActionFilterOverrideControl.svelte';
   import { declareLocation } from 'src/types/location-awareness';
+  import UtilityToolbar from 'src/components/utility-bar/UtilityToolbar.svelte';
+  import UtilityToolbarCommand from 'src/components/utility-bar/UtilityToolbarCommand.svelte';
+  import Search from 'src/components/utility-bar/Search.svelte';
+  import FilterMenu from 'src/components/filter/FilterMenu.svelte';
 
   let context = getContext<Readable<NpcSheetContext>>('context');
 
   $: noSpellLevels = !$context.spellbook.length;
+
+  $: utilityBarCommands =
+    $context.utilities[CONSTANTS.TAB_NPC_ABILITIES]?.utilityToolbarCommands ??
+    [];
+  let searchCriteria: string = '';
 
   function toggleLayout() {
     if (layoutMode === 'grid') {
@@ -76,12 +85,29 @@
     class="main-panel"
     data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.NPC_ABILITIES_CONTAINER}
   >
+    <UtilityToolbar class="abilities-toolbar" fred={false}>
+      <Search bind:value={searchCriteria} />
+      <FilterMenu tabId={CONSTANTS.TAB_NPC_ABILITIES} />
+      {#each utilityBarCommands as command (command.title)}
+        <UtilityToolbarCommand
+          title={command.title}
+          iconClass={command.iconClass}
+          text={command.text}
+          visible={command.visible ?? true}
+          on:execute={(ev) => command.execute?.(ev.detail)}
+        />
+      {/each}
+    </UtilityToolbar>
     <NpcLegendaryActions />
     {#if $settingStore.moveTraitsBelowNpcResources}
       <Traits toggleable={!$settingStore.alwaysShowNpcTraits} />
     {/if}
     {#each $context.features as section}
       {#if $context.unlocked || section.items.length}
+        {@const filteredItems = FoundryAdapter.getFilteredItems(
+          searchCriteria,
+          section.items,
+        )}
         <ItemTable location={section.label}>
           <svelte:fragment slot="header">
             <ItemTableHeaderRow>
@@ -102,7 +128,7 @@
             </ItemTableHeaderRow>
           </svelte:fragment>
           <svelte:fragment slot="body">
-            {#each section.items as item}
+            {#each filteredItems as item}
               {@const ctx = $context.itemContext[item.id]}
               <ItemTableRow
                 let:toggleSummary
@@ -326,6 +352,10 @@
     }
     :global(.npc-abilities-spellbook-footer input) {
       height: 1.125rem;
+    }
+
+    :global(.abilities-toolbar) {
+      padding-bottom: 0.5rem;
     }
   }
 </style>
