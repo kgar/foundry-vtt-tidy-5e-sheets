@@ -98,7 +98,7 @@
     class="main-panel"
     data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.NPC_ABILITIES_CONTAINER}
   >
-    {#if $context.legendary}
+    {#if $context.showLegendaryToolbar}
       <NpcLegendaryActions />
     {/if}
     {#if $settingStore.moveTraitsBelowNpcResources}

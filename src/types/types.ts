@@ -131,7 +131,6 @@ export type NpcSheetContext = {
   flawEnrichedHtml: string;
   hideEmptySpellbook: boolean;
   idealEnrichedHtml: string;
-  legendary: boolean;
   maxPreparedSpellsTotal: number;
   notes1EnrichedHtml: string;
   notes2EnrichedHtml: string;
@@ -140,6 +139,7 @@ export type NpcSheetContext = {
   notesEnrichedHtml: string;
   preparedSpells: number;
   shortRest: (event: Event) => Promise<void>;
+  showLegendaryToolbar: boolean;
   showSpellbookTab: boolean;
   spellCalculations: SpellCalculations;
   traitEnrichedHtml: string;

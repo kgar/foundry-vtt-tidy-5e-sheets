@@ -235,25 +235,49 @@ export class Tidy5eNpcSheet
       error('Unable to calculate max prepared spells', false, e);
     }
 
+    const showLegendaryToolbarFlagValue = FoundryAdapter.tryGetFlag(
+      this.actor,
+      'show-legendary-toolbar'
+    );
+    const res = this.actor.system.resources;
+    const showLegendaryToolbar =
+      showLegendaryToolbarFlagValue === true ||
+      (showLegendaryToolbarFlagValue === undefined &&
+        ((res.legact?.max ?? 0) > 0 ||
+          (res.legres?.max ?? 0) > 0 ||
+          res.lair?.value === true ||
+          res.lair?.initiative !== null));
+
     let utilities: Utilities = {
       [CONSTANTS.TAB_NPC_ABILITIES]: {
         utilityToolbarCommands: [
           {
-            title: 'TODO: Not Legendary',
+            title: FoundryAdapter.localize(
+              'TIDY5E.Commands.ShowLegendaryToolbar'
+            ),
             iconClass: 'ra ra-player',
             execute: async () => {
-              await FoundryAdapter.setFlag(this.actor, 'legendary', true);
+              await FoundryAdapter.setFlag(
+                this.actor,
+                'show-legendary-toolbar',
+                true
+              );
             },
-            visible: !FoundryAdapter.tryGetFlag(this.actor, 'legendary'),
+            visible: !showLegendaryToolbar,
           },
           {
-            title: 'TODO: Legendary',
+            title: FoundryAdapter.localize(
+              'TIDY5E.Commands.HideLegendaryToolbar'
+            ),
             iconClass: 'ra ra-monster-skull',
             execute: async () => {
-              await FoundryAdapter.unsetFlag(this.actor, 'legendary');
+              await FoundryAdapter.setFlag(
+                this.actor,
+                'show-legendary-toolbar',
+                false
+              );
             },
-            visible:
-              FoundryAdapter.tryGetFlag(this.actor, 'legendary') === true,
+            visible: showLegendaryToolbar,
           },
           {
             title: FoundryAdapter.localize('SIDEBAR.SortModeAlpha'),
@@ -462,7 +486,7 @@ export class Tidy5eNpcSheet
           relativeTo: this.actor,
         }
       ),
-      legendary: FoundryAdapter.tryGetFlag(this.actor, 'legendary') === true,
+      showLegendaryToolbar: showLegendaryToolbar,
       lockSensitiveFields: lockSensitiveFields,
       longRest: this._onLongRest.bind(this),
       lockExpChanges: FoundryAdapter.shouldLockExpChanges(),
