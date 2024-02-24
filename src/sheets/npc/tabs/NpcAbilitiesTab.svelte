@@ -245,9 +245,13 @@
         {:else}
           <div class="flex-1 small-padding-bottom flex-column small-gap">
             {#each $context.spellbook as section (section.label)}
+              {@const filteredSpells = FoundryAdapter.getFilteredItems(
+                searchCriteria,
+                section.spells,
+              )}
               {#if layoutMode === 'list'}
                 <SpellbookList
-                  spells={section.spells}
+                  spells={filteredSpells}
                   {section}
                   allowFavorites={false}
                   includeRange={false}
@@ -257,7 +261,7 @@
                   usageBaseWidth="5.625rem"
                 />
               {:else}
-                <SpellbookGrid spells={section.spells} {section} />
+                <SpellbookGrid spells={filteredSpells} {section} />
               {/if}
             {/each}
           </div>

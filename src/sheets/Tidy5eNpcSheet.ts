@@ -44,6 +44,7 @@ import { ItemTableToggleCacheService } from 'src/features/caching/ItemTableToggl
 import { ItemFilterService } from 'src/features/filtering/ItemFilterService';
 import { StoreSubscriptionsService } from 'src/features/store/StoreSubscriptionsService';
 import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
+import { getStandardSpellSchoolFilterCategories } from 'src/runtime/item/default-item-filters';
 
 export class Tidy5eNpcSheet
   extends dnd5e.applications.actor.ActorSheet5eNPC
@@ -182,20 +183,22 @@ export class Tidy5eNpcSheet
       }
 
       for (let section of defaultDocumentContext.spellbook) {
-        let spellbook = this.itemFilterService.filter(
-          section.spells,
-          CONSTANTS.TAB_NPC_SPELLBOOK
-        );
-        if (
-          spellbookSortMode === 'a' ||
-          (!SettingsProvider.settings.showSpellbookTabNpc.get() &&
-            abilitiesSortMode === 'a')
-        ) {
-          spellbook = spellbook.toSorted((a, b) =>
-            a.name.localeCompare(b.name)
-          );
+        const showSpellbookTab =
+          SettingsProvider.settings.showSpellbookTabNpc.get();
+
+        const tabName = showSpellbookTab
+          ? CONSTANTS.TAB_NPC_SPELLBOOK
+          : CONSTANTS.TAB_NPC_ABILITIES;
+
+        const sortMode = showSpellbookTab
+          ? spellbookSortMode
+          : abilitiesSortMode;
+
+        let spells = this.itemFilterService.filter(section.spells, tabName);
+        if (sortMode === 'a') {
+          spells = spells.toSorted((a, b) => a.name.localeCompare(b.name));
         }
-        section.spells = spellbook;
+        section.spells = spells;
       }
     } catch (e) {
       error(

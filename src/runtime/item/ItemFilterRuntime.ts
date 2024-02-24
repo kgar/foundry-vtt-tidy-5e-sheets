@@ -31,9 +31,9 @@ export class ItemFilterRuntime {
     [CONSTANTS.SHEET_TYPE_CHARACTER]: {
       [CONSTANTS.TAB_CHARACTER_INVENTORY]: {
         'DND5E.ItemActivationCost': [
-          defaultItemFilters.action,
-          defaultItemFilters.bonus,
-          defaultItemFilters.reaction,
+          defaultItemFilters.activationCostAction,
+          defaultItemFilters.activationCostBonus,
+          defaultItemFilters.activationCostReaction,
         ],
         'DND5E.Rarity': () => getItemRarityFilters(),
         'TIDY5E.ItemFilters.Category.Miscellaneous': () => [
@@ -46,9 +46,9 @@ export class ItemFilterRuntime {
       },
       [CONSTANTS.TAB_CHARACTER_FEATURES]: {
         'DND5E.ItemActivationCost': [
-          defaultItemFilters.action,
-          defaultItemFilters.bonus,
-          defaultItemFilters.reaction,
+          defaultItemFilters.activationCostAction,
+          defaultItemFilters.activationCostBonus,
+          defaultItemFilters.activationCostReaction,
         ],
       },
     },
@@ -57,13 +57,17 @@ export class ItemFilterRuntime {
         ...getStandardSpellSchoolFilterCategories(),
       },
       [CONSTANTS.TAB_NPC_ABILITIES]: {
+        // TODO: Upgrade the filter system so that it's easier to dynamically graft in additional filter sets rather than hardcoding them in
+        ...getStandardSpellSchoolFilterCategories(),
         'DND5E.ItemActivationCost': [
-          defaultItemFilters.action,
-          defaultItemFilters.bonus,
-          defaultItemFilters.reaction,
-          // Legendary/Mythical/Lair/etc.
+          defaultItemFilters.activationCostAction,
+          defaultItemFilters.activationCostBonus,
+          defaultItemFilters.activationCostReaction,
+          defaultItemFilters.activationCostLegendary,
+          defaultItemFilters.activationCostMythic,
+          defaultItemFilters.activationCostLair,
+          defaultItemFilters.activationCostOther,
         ],
-        // Spells, but limit them to only when the spellbook tab is hidden
       },
     },
     [CONSTANTS.SHEET_TYPE_VEHICLE]: {
