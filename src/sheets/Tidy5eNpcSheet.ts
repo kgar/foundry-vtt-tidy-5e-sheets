@@ -188,7 +188,7 @@ export class Tidy5eNpcSheet
         );
         if (
           spellbookSortMode === 'a' ||
-          (!SettingsProvider.settings.showSpellbookTabNpc &&
+          (!SettingsProvider.settings.showSpellbookTabNpc.get() &&
             abilitiesSortMode === 'a')
         ) {
           spellbook = spellbook.toSorted((a, b) =>
@@ -241,15 +241,19 @@ export class Tidy5eNpcSheet
           {
             title: 'TODO: Not Legendary',
             iconClass: 'ra ra-player',
-            execute: async () => {},
-            visible: !FoundryAdapter.tryGetFlag(this.actor, 'isLegendary'),
+            execute: async () => {
+              await FoundryAdapter.setFlag(this.actor, 'legendary', true);
+            },
+            visible: !FoundryAdapter.tryGetFlag(this.actor, 'legendary'),
           },
           {
             title: 'TODO: Legendary',
             iconClass: 'ra ra-monster-skull',
-            execute: async () => {},
+            execute: async () => {
+              await FoundryAdapter.unsetFlag(this.actor, 'legendary');
+            },
             visible:
-              FoundryAdapter.tryGetFlag(this.actor, 'isLegendary') === true,
+              FoundryAdapter.tryGetFlag(this.actor, 'legendary') === true,
           },
           {
             title: FoundryAdapter.localize('SIDEBAR.SortModeAlpha'),
@@ -458,6 +462,7 @@ export class Tidy5eNpcSheet
           relativeTo: this.actor,
         }
       ),
+      legendary: FoundryAdapter.tryGetFlag(this.actor, 'legendary') === true,
       lockSensitiveFields: lockSensitiveFields,
       longRest: this._onLongRest.bind(this),
       lockExpChanges: FoundryAdapter.shouldLockExpChanges(),
