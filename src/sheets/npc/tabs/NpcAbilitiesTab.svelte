@@ -69,8 +69,21 @@
   declareLocation('abilities');
 </script>
 
-<section class="npc-abilities-content">
-  <div class="side-panel" style="overflow-y: auto;" data-tidy-track-scroll-y>
+<UtilityToolbar class="abilities-toolbar">
+  <Search bind:value={searchCriteria} />
+  <FilterMenu tabId={CONSTANTS.TAB_NPC_ABILITIES} />
+  {#each utilityBarCommands as command (command.title)}
+    <UtilityToolbarCommand
+      title={command.title}
+      iconClass={command.iconClass}
+      text={command.text}
+      visible={command.visible ?? true}
+      on:execute={(ev) => command.execute?.(ev.detail)}
+    />
+  {/each}
+</UtilityToolbar>
+<section class="npc-abilities-content" data-tidy-track-scroll-y>
+  <div class="side-panel">
     <SkillsList
       actor={$context.actor}
       toggleable={!$settingStore.alwaysShowNpcSkills}
@@ -85,199 +98,178 @@
     class="main-panel"
     data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.NPC_ABILITIES_CONTAINER}
   >
-    <div style="padding-right: 1.5rem;">
-      <UtilityToolbar class="abilities-toolbar" fred={false}>
-        <Search bind:value={searchCriteria} />
-        <FilterMenu tabId={CONSTANTS.TAB_NPC_ABILITIES} />
-        {#each utilityBarCommands as command (command.title)}
-          <UtilityToolbarCommand
-            title={command.title}
-            iconClass={command.iconClass}
-            text={command.text}
-            visible={command.visible ?? true}
-            on:execute={(ev) => command.execute?.(ev.detail)}
-          />
-        {/each}
-      </UtilityToolbar>
-      {#if $context.legendary}
-        <NpcLegendaryActions />
-      {/if}
-    </div>
-    <div class="flex-column small-gap" style="overflow-y: scroll; padding-right: 0.75rem;" data-tidy-track-scroll-y>
-      {#if $settingStore.moveTraitsBelowNpcResources}
-        <Traits toggleable={!$settingStore.alwaysShowNpcTraits} />
-      {/if}
-      {#each $context.features as section}
-        {#if $context.unlocked || section.items.length}
-          {@const filteredItems = FoundryAdapter.getFilteredItems(
-            searchCriteria,
-            section.items,
-          )}
-          <ItemTable location={section.label}>
-            <svelte:fragment slot="header">
-              <ItemTableHeaderRow>
-                <ItemTableColumn primary={true}>
-                  {localize(section.label)}
+    {#if $context.legendary}
+      <NpcLegendaryActions />
+    {/if}
+    {#if $settingStore.moveTraitsBelowNpcResources}
+      <Traits toggleable={!$settingStore.alwaysShowNpcTraits} />
+    {/if}
+    {#each $context.features as section}
+      {#if $context.unlocked || section.items.length}
+        {@const filteredItems = FoundryAdapter.getFilteredItems(
+          searchCriteria,
+          section.items,
+        )}
+        <ItemTable location={section.label}>
+          <svelte:fragment slot="header">
+            <ItemTableHeaderRow>
+              <ItemTableColumn primary={true}>
+                {localize(section.label)}
+              </ItemTableColumn>
+              {#if section.hasActions}
+                <ItemTableColumn baseWidth="3.125rem">
+                  {localize('DND5E.Uses')}
                 </ItemTableColumn>
+                <ItemTableColumn baseWidth="7.5rem">
+                  {localize('DND5E.Usage')}
+                </ItemTableColumn>
+              {/if}
+              {#if $context.editable && $context.useClassicControls}
+                <ItemTableColumn baseWidth="7.5rem" />
+              {/if}
+            </ItemTableHeaderRow>
+          </svelte:fragment>
+          <svelte:fragment slot="body">
+            {#each filteredItems as item}
+              {@const ctx = $context.itemContext[item.id]}
+              <ItemTableRow
+                let:toggleSummary
+                on:mousedown={(event) =>
+                  FoundryAdapter.editOnMiddleClick(event.detail, item)}
+                contextMenu={{
+                  type: CONSTANTS.CONTEXT_MENU_TYPE_ITEMS,
+                  id: item.id,
+                }}
+                {item}
+                cssClass={FoundryAdapter.getInventoryRowClasses(item, ctx)}
+              >
+                <ItemTableCell primary={true}>
+                  <ItemUseButton disabled={!$context.editable} {item} />
+                  <ItemName
+                    on:toggle={() => toggleSummary($context.actor)}
+                    cssClass="extra-small-gap"
+                    {item}
+                  >
+                    <span
+                      class="truncate"
+                      data-tidy-item-name={item.name}
+                      data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_NAME}
+                      >{item.name}</span
+                    >
+                    {#if item.system?.properties?.amm}
+                      <span class="ammo">
+                        <AmmoSelector {item} />
+                      </span>
+                    {/if}
+                    <ListItemQuantity {item} {ctx} />
+                  </ItemName>
+                </ItemTableCell>
                 {#if section.hasActions}
-                  <ItemTableColumn baseWidth="3.125rem">
-                    {localize('DND5E.Uses')}
-                  </ItemTableColumn>
-                  <ItemTableColumn baseWidth="7.5rem">
-                    {localize('DND5E.Usage')}
-                  </ItemTableColumn>
+                  <ItemTableCell baseWidth="3.125rem">
+                    {#if ctx?.isOnCooldown}
+                      <RechargeControl {item} />
+                    {:else if item.system.recharge?.value}
+                      <i
+                        class="fas fa-bolt"
+                        title={localize('DND5E.Charged')}
+                      />
+                    {:else if ctx?.hasUses}
+                      <ItemUses {item} />
+                    {:else}
+                      <ItemAddUses {item} />
+                    {/if}
+                  </ItemTableCell>
+                  <ItemTableCell baseWidth="7.5rem">
+                    {#if item.system.activation.type}
+                      {item.labels.activation}
+                    {/if}
+                  </ItemTableCell>
                 {/if}
                 {#if $context.editable && $context.useClassicControls}
-                  <ItemTableColumn baseWidth="7.5rem" />
-                {/if}
-              </ItemTableHeaderRow>
-            </svelte:fragment>
-            <svelte:fragment slot="body">
-              {#each filteredItems as item}
-                {@const ctx = $context.itemContext[item.id]}
-                <ItemTableRow
-                  let:toggleSummary
-                  on:mousedown={(event) =>
-                    FoundryAdapter.editOnMiddleClick(event.detail, item)}
-                  contextMenu={{
-                    type: CONSTANTS.CONTEXT_MENU_TYPE_ITEMS,
-                    id: item.id,
-                  }}
-                  {item}
-                  cssClass={FoundryAdapter.getInventoryRowClasses(item, ctx)}
-                >
-                  <ItemTableCell primary={true}>
-                    <ItemUseButton disabled={!$context.editable} {item} />
-                    <ItemName
-                      on:toggle={() => toggleSummary($context.actor)}
-                      cssClass="extra-small-gap"
-                      {item}
-                    >
-                      <span
-                        class="truncate"
-                        data-tidy-item-name={item.name}
-                        data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_NAME}
-                        >{item.name}</span
-                      >
-                      {#if item.system?.properties?.amm}
-                        <span class="ammo">
-                          <AmmoSelector {item} />
-                        </span>
+                  <ItemTableCell baseWidth="7.5rem">
+                    <ItemControls>
+                      <ItemEditControl {item} />
+                      {#if $context.unlocked}
+                        <ItemDuplicateControl {item} />
+                        <ItemDeleteControl {item} />
                       {/if}
-                      <ListItemQuantity {item} {ctx} />
-                    </ItemName>
+                      {#if $context.useActionsFeature}
+                        <ActionFilterOverrideControl {item} />
+                      {/if}
+                    </ItemControls>
                   </ItemTableCell>
-                  {#if section.hasActions}
-                    <ItemTableCell baseWidth="3.125rem">
-                      {#if ctx?.isOnCooldown}
-                        <RechargeControl {item} />
-                      {:else if item.system.recharge?.value}
-                        <i
-                          class="fas fa-bolt"
-                          title={localize('DND5E.Charged')}
-                        />
-                      {:else if ctx?.hasUses}
-                        <ItemUses {item} />
-                      {:else}
-                        <ItemAddUses {item} />
-                      {/if}
-                    </ItemTableCell>
-                    <ItemTableCell baseWidth="7.5rem">
-                      {#if item.system.activation.type}
-                        {item.labels.activation}
-                      {/if}
-                    </ItemTableCell>
-                  {/if}
-                  {#if $context.editable && $context.useClassicControls}
-                    <ItemTableCell baseWidth="7.5rem">
-                      <ItemControls>
-                        <ItemEditControl {item} />
-                        {#if $context.unlocked}
-                          <ItemDuplicateControl {item} />
-                          <ItemDeleteControl {item} />
-                        {/if}
-                        {#if $context.useActionsFeature}
-                          <ActionFilterOverrideControl {item} />
-                        {/if}
-                      </ItemControls>
-                    </ItemTableCell>
-                  {/if}
-                </ItemTableRow>
-              {/each}
-              {#if $context.unlocked && section.dataset}
-                <ItemTableFooter
-                  actor={$context.actor}
-                  {section}
-                  isItem={true}
-                />
-              {/if}
-            </svelte:fragment>
-          </ItemTable>
-        {/if}
-      {/each}
-      {#if !$settingStore.showSpellbookTabNpc}
-        {#if noSpellLevels}
-          <h2>
-            <button
-              type="button"
-              class="transparent-button spellbook-title toggle-spellbook"
-              on:click={() => (showNoSpellsView = !showNoSpellsView)}
-              tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
-            >
-              {localize('DND5E.Spellbook')}
-              {#if showNoSpellsView}
-                <i class="fas fa-caret-up" />
-              {:else}
-                <i class="fas fa-caret-down" />
-              {/if}
-            </button>
-          </h2>
-        {:else}
-          <h2 class="spellbook-title">
-            <span>{localize('DND5E.Spellbook')}</span>
-            <ItemFilterLayoutToggle
-              mode={layoutMode}
-              element="span"
-              on:toggle={() => toggleLayout()}
-            />
-          </h2>
-        {/if}
-
-        <div
-          class="flex-1 flex-column small-padding-bottom no-gap"
-          class:hidden={noSpellLevels && !showNoSpellsView}
-        >
-          {#if noSpellLevels}
-            <NoSpells cssClass="flex-1" editable={$context.unlocked} />
-          {:else}
-            <div class="flex-1 small-padding-bottom flex-column small-gap">
-              {#each $context.spellbook as section (section.label)}
-                {#if layoutMode === 'list'}
-                  <SpellbookList
-                    spells={section.spells}
-                    {section}
-                    allowFavorites={false}
-                    includeRange={false}
-                    includeSchool={false}
-                    spellComponentsBaseWidth="3.125rem"
-                    targetBaseWidth="5.625rem"
-                    usageBaseWidth="5.625rem"
-                  />
-                {:else}
-                  <SpellbookGrid spells={section.spells} {section} />
                 {/if}
-              {/each}
-            </div>
-          {/if}
-
-          <SpellbookFooter
-            includeAttackMod={false}
-            includePreparedSpells={false}
-            cssClass="npc-abilities-spellbook-footer"
-          />
-        </div>
+              </ItemTableRow>
+            {/each}
+            {#if $context.unlocked && section.dataset}
+              <ItemTableFooter actor={$context.actor} {section} isItem={true} />
+            {/if}
+          </svelte:fragment>
+        </ItemTable>
       {/if}
-    </div>
+    {/each}
+    {#if !$settingStore.showSpellbookTabNpc}
+      {#if noSpellLevels}
+        <h2>
+          <button
+            type="button"
+            class="transparent-button spellbook-title toggle-spellbook"
+            on:click={() => (showNoSpellsView = !showNoSpellsView)}
+            tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+          >
+            {localize('DND5E.Spellbook')}
+            {#if showNoSpellsView}
+              <i class="fas fa-caret-up" />
+            {:else}
+              <i class="fas fa-caret-down" />
+            {/if}
+          </button>
+        </h2>
+      {:else}
+        <h2 class="spellbook-title">
+          <span>{localize('DND5E.Spellbook')}</span>
+          <ItemFilterLayoutToggle
+            mode={layoutMode}
+            element="span"
+            on:toggle={() => toggleLayout()}
+          />
+        </h2>
+      {/if}
+
+      <div
+        class="flex-1 flex-column small-padding-bottom no-gap"
+        class:hidden={noSpellLevels && !showNoSpellsView}
+      >
+        {#if noSpellLevels}
+          <NoSpells cssClass="flex-1" editable={$context.unlocked} />
+        {:else}
+          <div class="flex-1 small-padding-bottom flex-column small-gap">
+            {#each $context.spellbook as section (section.label)}
+              {#if layoutMode === 'list'}
+                <SpellbookList
+                  spells={section.spells}
+                  {section}
+                  allowFavorites={false}
+                  includeRange={false}
+                  includeSchool={false}
+                  spellComponentsBaseWidth="3.125rem"
+                  targetBaseWidth="5.625rem"
+                  usageBaseWidth="5.625rem"
+                />
+              {:else}
+                <SpellbookGrid spells={section.spells} {section} />
+              {/if}
+            {/each}
+          </div>
+        {/if}
+
+        <SpellbookFooter
+          includeAttackMod={false}
+          includePreparedSpells={false}
+          cssClass="npc-abilities-spellbook-footer"
+        />
+      </div>
+    {/if}
   </div>
 </section>
 <TabFooter mode="vertical" cssClass="abilities-footer">
@@ -299,11 +291,12 @@
   .npc-abilities-content {
     display: flex;
     flex-direction: row;
-    gap: 0.75rem;
-    overflow-y: hidden;
+    gap: 1.5rem;
+    padding-right: 0.75rem;
+    overflow-y: scroll;
 
     > .side-panel {
-      flex: 0 0 14rem;
+      flex: 0 0 13.75rem;
       display: flex;
       flex-direction: column;
       gap: 0.5rem;
@@ -361,10 +354,6 @@
     }
     :global(.npc-abilities-spellbook-footer input) {
       height: 1.125rem;
-    }
-
-    :global(.abilities-toolbar) {
-      padding-bottom: 0.5rem;
     }
   }
 </style>
