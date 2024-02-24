@@ -10,8 +10,8 @@ import {
   getAttunementFiltersAsObject,
   getItemRarityFilters,
   getItemRarityFiltersAsObject,
-  getSpellSchoolFilters,
   getSpellSchoolFiltersAsObject,
+  getStandardSpellSchoolFilterCategories,
 } from './default-item-filters';
 import type { Actor5e } from 'src/types/types';
 
@@ -42,21 +42,7 @@ export class ItemFilterRuntime {
         ],
       },
       [CONSTANTS.TAB_CHARACTER_SPELLBOOK]: {
-        'DND5E.ItemActivationCost': [
-          defaultItemFilters.action,
-          defaultItemFilters.bonus,
-          defaultItemFilters.reaction,
-          defaultItemFilters.activationCostOther,
-        ],
-        'DND5E.SpellComponents': [
-          defaultItemFilters.verbal,
-          defaultItemFilters.somatic,
-          defaultItemFilters.material,
-          defaultItemFilters.ritual,
-          defaultItemFilters.concentration,
-        ],
-        'DND5E.SpellPreparationMode': [defaultItemFilters.prepared],
-        'DND5E.SpellSchool': () => getSpellSchoolFilters(),
+        ...getStandardSpellSchoolFilterCategories(),
       },
       [CONSTANTS.TAB_CHARACTER_FEATURES]: {
         'DND5E.ItemActivationCost': [
@@ -68,28 +54,16 @@ export class ItemFilterRuntime {
     },
     [CONSTANTS.SHEET_TYPE_NPC]: {
       [CONSTANTS.TAB_NPC_SPELLBOOK]: {
-        'DND5E.ItemActivationCost': [
-          defaultItemFilters.action,
-          defaultItemFilters.bonus,
-          defaultItemFilters.reaction,
-          defaultItemFilters.activationCostOther,
-        ],
-        'DND5E.SpellComponents': [
-          defaultItemFilters.verbal,
-          defaultItemFilters.somatic,
-          defaultItemFilters.material,
-          defaultItemFilters.concentration,
-          defaultItemFilters.ritual,
-        ],
-        'DND5E.SpellPreparationMode': [defaultItemFilters.prepared],
-        'DND5E.SpellSchool': () => getSpellSchoolFilters(),
+        ...getStandardSpellSchoolFilterCategories(),
       },
       [CONSTANTS.TAB_NPC_ABILITIES]: {
         'DND5E.ItemActivationCost': [
           defaultItemFilters.action,
           defaultItemFilters.bonus,
           defaultItemFilters.reaction,
+          // Legendary/Mythical/Lair/etc.
         ],
+        // Spells, but limit them to only when the spellbook tab is hidden
       },
     },
     [CONSTANTS.SHEET_TYPE_VEHICLE]: {

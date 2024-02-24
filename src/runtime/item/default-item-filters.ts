@@ -1,5 +1,5 @@
 import { CONSTANTS } from 'src/constants';
-import type { ItemFilter } from './item.types';
+import type { FilterCategoriesToFilters, ItemFilter } from './item.types';
 
 export const defaultItemFilters = {
   action: {
@@ -143,4 +143,24 @@ export function getAttunementFiltersAsObject(): Record<string, ItemFilter> {
     },
     {}
   );
+}
+
+export function getStandardSpellSchoolFilterCategories(): FilterCategoriesToFilters {
+  return {
+    'DND5E.ItemActivationCost': [
+      defaultItemFilters.action,
+      defaultItemFilters.bonus,
+      defaultItemFilters.reaction,
+      defaultItemFilters.activationCostOther,
+    ],
+    'DND5E.SpellComponents': [
+      defaultItemFilters.verbal,
+      defaultItemFilters.somatic,
+      defaultItemFilters.material,
+      defaultItemFilters.concentration,
+      defaultItemFilters.ritual,
+    ],
+    'DND5E.SpellPreparationMode': [defaultItemFilters.prepared],
+    'DND5E.SpellSchool': () => getSpellSchoolFilters(),
+  };
 }
