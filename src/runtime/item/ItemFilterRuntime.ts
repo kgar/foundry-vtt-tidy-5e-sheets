@@ -10,8 +10,8 @@ import {
   getAttunementFiltersAsObject,
   getItemRarityFilters,
   getItemRarityFiltersAsObject,
-  getSpellSchoolFilters,
   getSpellSchoolFiltersAsObject,
+  getStandardSpellSchoolFilterCategories,
 } from './default-item-filters';
 import type { Actor5e } from 'src/types/types';
 
@@ -31,9 +31,9 @@ export class ItemFilterRuntime {
     [CONSTANTS.SHEET_TYPE_CHARACTER]: {
       [CONSTANTS.TAB_CHARACTER_INVENTORY]: {
         'DND5E.ItemActivationCost': [
-          defaultItemFilters.action,
-          defaultItemFilters.bonus,
-          defaultItemFilters.reaction,
+          defaultItemFilters.activationCostAction,
+          defaultItemFilters.activationCostBonus,
+          defaultItemFilters.activationCostReaction,
         ],
         'DND5E.Rarity': () => getItemRarityFilters(),
         'TIDY5E.ItemFilters.Category.Miscellaneous': () => [
@@ -42,53 +42,31 @@ export class ItemFilterRuntime {
         ],
       },
       [CONSTANTS.TAB_CHARACTER_SPELLBOOK]: {
-        'DND5E.ItemActivationCost': [
-          defaultItemFilters.action,
-          defaultItemFilters.bonus,
-          defaultItemFilters.reaction,
-          defaultItemFilters.activationCostOther,
-        ],
-        'DND5E.SpellComponents': [
-          defaultItemFilters.verbal,
-          defaultItemFilters.somatic,
-          defaultItemFilters.material,
-          defaultItemFilters.ritual,
-          defaultItemFilters.concentration,
-        ],
-        'DND5E.SpellPreparationMode': [defaultItemFilters.prepared],
-        'DND5E.SpellSchool': () => getSpellSchoolFilters(),
+        ...getStandardSpellSchoolFilterCategories(),
       },
       [CONSTANTS.TAB_CHARACTER_FEATURES]: {
         'DND5E.ItemActivationCost': [
-          defaultItemFilters.action,
-          defaultItemFilters.bonus,
-          defaultItemFilters.reaction,
+          defaultItemFilters.activationCostAction,
+          defaultItemFilters.activationCostBonus,
+          defaultItemFilters.activationCostReaction,
         ],
       },
     },
     [CONSTANTS.SHEET_TYPE_NPC]: {
       [CONSTANTS.TAB_NPC_SPELLBOOK]: {
-        'DND5E.ItemActivationCost': [
-          defaultItemFilters.action,
-          defaultItemFilters.bonus,
-          defaultItemFilters.reaction,
-          defaultItemFilters.activationCostOther,
-        ],
-        'DND5E.SpellComponents': [
-          defaultItemFilters.verbal,
-          defaultItemFilters.somatic,
-          defaultItemFilters.material,
-          defaultItemFilters.concentration,
-          defaultItemFilters.ritual,
-        ],
-        'DND5E.SpellPreparationMode': [defaultItemFilters.prepared],
-        'DND5E.SpellSchool': () => getSpellSchoolFilters(),
+        ...getStandardSpellSchoolFilterCategories(),
       },
       [CONSTANTS.TAB_NPC_ABILITIES]: {
+        // TODO: Upgrade the filter system so that it's easier to dynamically graft in additional filter sets rather than hardcoding them in
+        ...getStandardSpellSchoolFilterCategories(),
         'DND5E.ItemActivationCost': [
-          defaultItemFilters.action,
-          defaultItemFilters.bonus,
-          defaultItemFilters.reaction,
+          defaultItemFilters.activationCostAction,
+          defaultItemFilters.activationCostBonus,
+          defaultItemFilters.activationCostReaction,
+          defaultItemFilters.activationCostLegendary,
+          defaultItemFilters.activationCostMythic,
+          defaultItemFilters.activationCostLair,
+          defaultItemFilters.activationCostOther,
         ],
       },
     },

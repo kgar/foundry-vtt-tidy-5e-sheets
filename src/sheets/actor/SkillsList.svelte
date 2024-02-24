@@ -161,11 +161,12 @@
                 $context.actor.rollSkill(skillRef.key, { event })}
               data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.SKILL_ROLLER}
               tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+              title={skillRef.skill.label}
             >
               {skillRef.skill.label}
             </button>
           {:else}
-            <span class="tidy5e-skill-name">
+            <span class="tidy5e-skill-name" title={skillRef.skill.label}>
               {skillRef.skill.label}
             </span>
           {/if}
@@ -243,6 +244,7 @@
       .tidy5e-skill-name {
         font-size: 0.75rem;
         line-height: 0.875rem;
+        overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
         flex: 1;

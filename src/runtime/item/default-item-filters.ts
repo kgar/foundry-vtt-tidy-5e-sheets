@@ -1,24 +1,42 @@
 import { CONSTANTS } from 'src/constants';
-import type { ItemFilter } from './item.types';
+import type { FilterCategoriesToFilters, ItemFilter } from './item.types';
 
 export const defaultItemFilters = {
-  action: {
-    name: 'action',
+  activationCostAction: {
+    name: 'activationCostAction',
     predicate: (item) =>
       item.system.activation?.type === CONSTANTS.ACTIVATION_COST_ACTION,
     text: 'DND5E.Action',
   },
-  bonus: {
-    name: 'bonus',
+  activationCostBonus: {
+    name: 'activationCostBonus',
     predicate: (item) =>
       item.system.activation?.type === CONSTANTS.ACTIVATION_COST_BONUS,
     text: 'DND5E.BonusAction',
   },
-  reaction: {
-    name: 'reaction',
+  activationCostReaction: {
+    name: 'activationCostReaction',
     predicate: (item) =>
       item.system.activation?.type === CONSTANTS.ACTIVATION_COST_REACTION,
     text: 'DND5E.Reaction',
+  },
+  activationCostLegendary: {
+    name: 'activationCostLegendary',
+    predicate: (item) =>
+      item.system.activation?.type === CONSTANTS.ACTIVATION_COST_LEGENDARY,
+    text: 'DND5E.LegendaryActionLabel',
+  },
+  activationCostMythic: {
+    name: 'activationCostMythic',
+    predicate: (item) =>
+      item.system.activation?.type === CONSTANTS.ACTIVATION_COST_MYTHIC,
+    text: 'DND5E.MythicActionLabel',
+  },
+  activationCostLair: {
+    name: 'activationCostLair',
+    predicate: (item) =>
+      item.system.activation?.type === CONSTANTS.ACTIVATION_COST_LAIR,
+    text: 'DND5E.LairActionLabel',
   },
   activationCostOther: {
     name: 'activationCostOther',
@@ -143,4 +161,24 @@ export function getAttunementFiltersAsObject(): Record<string, ItemFilter> {
     },
     {}
   );
+}
+
+export function getStandardSpellSchoolFilterCategories(): FilterCategoriesToFilters {
+  return {
+    'DND5E.ItemActivationCost': [
+      defaultItemFilters.activationCostAction,
+      defaultItemFilters.activationCostBonus,
+      defaultItemFilters.activationCostReaction,
+      defaultItemFilters.activationCostOther,
+    ],
+    'DND5E.SpellComponents': [
+      defaultItemFilters.verbal,
+      defaultItemFilters.somatic,
+      defaultItemFilters.material,
+      defaultItemFilters.concentration,
+      defaultItemFilters.ritual,
+    ],
+    'DND5E.SpellPreparationMode': [defaultItemFilters.prepared],
+    'DND5E.SpellSchool': () => getSpellSchoolFilters(),
+  };
 }
