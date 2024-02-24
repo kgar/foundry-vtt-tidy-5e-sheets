@@ -691,5 +691,6 @@
     },
     "TIDY5E.Settings.ColorPickerMagicAccent": {
         "name": "Contorno de Destaque de Item Mágico"
-    }
+    },
+    "TIDY5E.ItemFilters.Filter.Other": "Outro"
 }
