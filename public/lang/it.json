@@ -47,7 +47,7 @@
     "TIDY5E.RestHint": "Riposati",
     "TIDY5E.ShortRest": "Riposo Breve",
     "TIDY5E.LongRest": "Riposo Lungo",
-    "TIDY5E.HitDiceRollAverage": "Right Click: Average",
+    "TIDY5E.HitDiceRollAverage": "Tasto Destro: usa valore medio",
     "TIDY5E.JournalTabName": "Diario",
     "TIDY5E.RestoreOnRest": "Ripristina dopo un riposo",
     "TIDY5E.JournalPersonsOfInterest": "Persone di interesse",
@@ -76,8 +76,8 @@
     "TIDY5E.AttunementItems": "Oggetti Sincronizzati",
     "TIDY5E.AttunementMax": "Massimi Sincronizzati",
     "TIDY5E.GridLayout": "Layout a Griglia",
-    "TIDY5E.ListLayout": "Layout a Lista",
-    "TIDY5E.LayoutNotSupported": "Layout mode non supportato",
+    "TIDY5E.ListLayout": "Layout ad Elenco",
+    "TIDY5E.LayoutNotSupported": "Modalità Layout non supportata",
     "TIDY5E.Encumbrance": "Ingombro",
     "TIDY5E.AddFavorite": "Aggiungi ai Preferiti",
     "TIDY5E.Favorite": "Preferito",
@@ -346,7 +346,7 @@
     },
     "TIDY5E.Settings.AllowCantripsToBePrepared": {
         "name": "Consenti la preparazione dei trucchetti",
-        "hint": "La regola opzionale \"formule di trucchetti\" dal Calderone di Tutto di Tasha consente ai maghi di preparare trucchetti dopo un lungo riposo nello stesso modo in cui lo fanno con gli incantesimi livellati. I trucchetti preparati non contano nel totale degli incantesimi preparati."
+        "hint": "La regola opzionale \"formule di trucchetti\" dal Calderone Omnicomprensivo di Tasha consente ai maghi di preparare trucchetti dopo un lungo riposo nello stesso modo in cui lo fanno con gli incantesimi livellati. I trucchetti preparati non contano nel totale degli incantesimi preparati."
     },
     "TIDY5E.Settings.LockMoneyChanges": {
         "name": "Blocca valuta",
