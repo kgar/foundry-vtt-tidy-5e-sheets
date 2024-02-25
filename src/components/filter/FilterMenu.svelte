@@ -95,8 +95,8 @@
   }
 
   section {
-    min-width: 30rem;
-    max-width: 40rem;
+    min-width: 18.75rem;
+    max-width: 31.25rem;
   }
 
   .filter-group-header {
