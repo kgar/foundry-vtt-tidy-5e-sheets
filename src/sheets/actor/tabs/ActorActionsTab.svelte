@@ -15,13 +15,36 @@
   import RechargeControl from 'src/components/item-list/controls/RechargeControl.svelte';
   import ActionFilterOverrideControl from 'src/components/item-list/controls/ActionFilterOverrideControl.svelte';
   import { declareLocation } from 'src/types/location-awareness';
+  import UtilityToolbar from 'src/components/utility-bar/UtilityToolbar.svelte';
+  import UtilityToolbarCommand from 'src/components/utility-bar/UtilityToolbarCommand.svelte';
+  import Search from 'src/components/utility-bar/Search.svelte';
+  import FilterMenu from 'src/components/filter/FilterMenu.svelte';
 
   let context = getContext<Readable<ActorSheetContext>>('context');
+
+  let searchCriteria: string = '';
+  $: utilityBarCommands =
+    $context.utilities[CONSTANTS.TAB_ACTOR_ACTIONS]?.utilityToolbarCommands ??
+    [];
 
   const localize = FoundryAdapter.localize;
 
   declareLocation('actions');
 </script>
+
+<UtilityToolbar class="abilities-toolbar">
+  <Search bind:value={searchCriteria} />
+  <FilterMenu tabId={CONSTANTS.TAB_ACTOR_ACTIONS} />
+  {#each utilityBarCommands as command (command.title)}
+    <UtilityToolbarCommand
+      title={command.title}
+      iconClass={command.iconClass}
+      text={command.text}
+      visible={command.visible ?? true}
+      on:execute={(ev) => command.execute?.(ev.detail)}
+    />
+  {/each}
+</UtilityToolbar>
 
 <div class="actions-tab-container scroll-container flex-column small-gap">
   {#each Object.entries($context.actions) as [actionType, itemSet] (actionType)}
@@ -47,7 +70,11 @@
           </ItemTableHeaderRow>
         </svelte:fragment>
         <svelte:fragment slot="body">
-          {#each itemSet as actionItem (actionItem.item.id)}
+          {@const filteredActionItems = FoundryAdapter.getFilteredActionItems(
+            searchCriteria,
+            itemSet,
+          )}
+          {#each filteredActionItems as actionItem (actionItem.item.id)}
             <ItemTableRow
               item={actionItem.item}
               on:mousedown={(event) =>

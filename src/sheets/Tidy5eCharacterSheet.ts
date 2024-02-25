@@ -179,6 +179,8 @@ export class Tidy5eCharacterSheet
     const featureSortMode =
       characterPreferences.tabs?.[CONSTANTS.TAB_CHARACTER_FEATURES]?.sort ??
       'm';
+    const actionListSortMode =
+      characterPreferences.tabs?.[CONSTANTS.TAB_ACTOR_ACTIONS]?.sort ?? 'm';
 
     try {
       for (let section of defaultDocumentContext.inventory) {
@@ -495,7 +497,58 @@ export class Tidy5eCharacterSheet
               }),
           },
         ],
-        // sortMode: this.sortModes[CONSTANTS.TAB_CHARACTER_FEATURES] ?? 'm',
+      },
+      [CONSTANTS.TAB_ACTOR_ACTIONS]: {
+        utilityToolbarCommands: [
+          {
+            title: FoundryAdapter.localize('SIDEBAR.SortModeAlpha'),
+            iconClass: 'fa-solid fa-arrow-down-a-z',
+            execute: async () => {
+              await SheetPreferencesService.setActorTypeTabPreference(
+                this.actor.type,
+                CONSTANTS.TAB_ACTOR_ACTIONS,
+                'sort',
+                'm'
+              );
+              this.render();
+            },
+            visible: actionListSortMode === 'a',
+          },
+          {
+            title: FoundryAdapter.localize('TIDY5E.SortMode.ActionListDefault'),
+            iconClass: 'fa-solid fa-arrow-down-short-wide',
+            execute: async () => {
+              await SheetPreferencesService.setActorTypeTabPreference(
+                this.actor.type,
+                CONSTANTS.TAB_ACTOR_ACTIONS,
+                'sort',
+                'a'
+              );
+              this.render();
+            },
+            visible: actionListSortMode === 'm',
+          },
+          {
+            title: FoundryAdapter.localize('TIDY5E.Commands.ExpandAll'),
+            iconClass: 'fas fa-angles-down',
+            execute: () =>
+              // TODO: Use app.messageBus
+              this.messageBus.set({
+                tabId: CONSTANTS.TAB_ACTOR_ACTIONS,
+                message: 'expand-all',
+              }),
+          },
+          {
+            title: FoundryAdapter.localize('TIDY5E.Commands.CollapseAll'),
+            iconClass: 'fas fa-angles-up',
+            execute: () =>
+              // TODO: Use app.messageBus
+              this.messageBus.set({
+                tabId: CONSTANTS.TAB_ACTOR_ACTIONS,
+                message: 'collapse-all',
+              }),
+          },
+        ],
       },
     };
 
@@ -505,7 +558,7 @@ export class Tidy5eCharacterSheet
         this._activateCoreListeners($(node));
         super.activateListeners($(node));
       },
-      actions: getActorActions(this.actor),
+      actions: getActorActions(this.actor, this.itemFilterService),
       actorClassesToImages: getActorClassesToImages(this.actor),
       actorPortraitCommands:
         ActorPortraitRuntime.getEnabledPortraitMenuCommands(this.actor),

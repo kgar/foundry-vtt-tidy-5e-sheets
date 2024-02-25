@@ -6,7 +6,9 @@ import type { Item5e } from 'src/types/item';
 import type { ActionItem, Actor5e, ActorActions } from 'src/types/types';
 import { isNil } from 'src/utils/data';
 import { scaleCantripDamageFormula, simplifyFormula } from 'src/utils/formula';
-import { error } from 'src/utils/logging';
+import { debug, error } from 'src/utils/logging';
+import { SheetPreferencesService } from '../user-preferences/SheetPreferencesService';
+import type { ItemFilterService } from '../filtering/ItemFilterService';
 
 export type ActionSets = Record<string, Set<ActionItem>>;
 
@@ -22,21 +24,45 @@ const itemTypeSortValues: Record<string, number> = {
   loot: 9,
 };
 
-export function getActorActions(actor: Actor5e): ActorActions {
-  const filteredItems = actor.items
-    .filter(isItemInActionList)
-    .sort((a: Item5e, b: Item5e) => {
-      if (a.type !== b.type) {
-        return itemTypeSortValues[a.type] - itemTypeSortValues[b.type];
-      }
-      if (a.type === 'spell' && b.type === 'spell') {
-        return a.system.level - b.system.level;
-      }
-      return (a.sort || 0) - (b.sort || 0);
-    })
-    .map((item: Item5e) => mapActionItem(item));
+export function getActorActions(
+  actor: Actor5e,
+  itemFilterService: ItemFilterService
+): ActorActions {
+  try {
+    const sheetPreferences = SheetPreferencesService.getByType(actor.type);
 
-  return buildActionSets(filteredItems);
+    const actionSortMode =
+      sheetPreferences.tabs?.[CONSTANTS.TAB_ACTOR_ACTIONS]?.sort ?? 'm';
+
+    let filteredItems = actor.items.filter(isItemInActionList);
+
+    filteredItems = itemFilterService.filter(
+      filteredItems,
+      CONSTANTS.TAB_ACTOR_ACTIONS
+    );
+
+    filteredItems = filteredItems
+      .sort((a: Item5e, b: Item5e) => {
+        if (actionSortMode === 'a') {
+          return a.name.localeCompare(b.name);
+        }
+
+        // Sort by Arbitrary Action List Rules
+        if (a.type !== b.type) {
+          return itemTypeSortValues[a.type] - itemTypeSortValues[b.type];
+        }
+        if (a.type === 'spell' && b.type === 'spell') {
+          return a.system.level - b.system.level;
+        }
+        return (a.sort || 0) - (b.sort || 0);
+      })
+      .map((item: Item5e) => mapActionItem(item));
+
+    return buildActionSets(filteredItems);
+  } catch (e) {
+    error('An error occurred while getting actions', false, e);
+    return {};
+  }
 }
 
 export function isItemInActionList(item: Item5e): boolean {

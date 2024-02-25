@@ -1,5 +1,9 @@
 import { CONSTANTS } from 'src/constants';
-import type { FilterCategoriesToFilters, ItemFilter } from './item.types';
+import type {
+  FilterCategoriesToFilters,
+  FilterTabsToCategories,
+  ItemFilter,
+} from './item.types';
 
 export const defaultItemFilters = {
   activationCostAction: {
@@ -165,12 +169,6 @@ export function getAttunementFiltersAsObject(): Record<string, ItemFilter> {
 
 export function getStandardSpellSchoolFilterCategories(): FilterCategoriesToFilters {
   return {
-    'DND5E.ItemActivationCost': [
-      defaultItemFilters.activationCostAction,
-      defaultItemFilters.activationCostBonus,
-      defaultItemFilters.activationCostReaction,
-      defaultItemFilters.activationCostOther,
-    ],
     'DND5E.SpellComponents': [
       defaultItemFilters.verbal,
       defaultItemFilters.somatic,
@@ -180,5 +178,20 @@ export function getStandardSpellSchoolFilterCategories(): FilterCategoriesToFilt
     ],
     'DND5E.SpellPreparationMode': [defaultItemFilters.prepared],
     'DND5E.SpellSchool': () => getSpellSchoolFilters(),
+  };
+}
+
+export function getActionListFilterCategories(): FilterCategoriesToFilters {
+  return {
+    'DND5E.ItemActivationCost': [
+      defaultItemFilters.activationCostAction,
+      defaultItemFilters.activationCostBonus,
+      defaultItemFilters.activationCostReaction,
+      defaultItemFilters.activationCostLegendary,
+      defaultItemFilters.activationCostMythic,
+      defaultItemFilters.activationCostLair,
+      defaultItemFilters.activationCostOther,
+    ],
+    ...getStandardSpellSchoolFilterCategories(),
   };
 }
