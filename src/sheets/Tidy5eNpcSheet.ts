@@ -720,25 +720,6 @@ export class Tidy5eNpcSheet
     return super._onDropSingleItem(...args);
   }
 
-  onToggleFilter(setName: string, filterName: string) {
-    const set = this._filters[setName];
-    if (!set) {
-      error(`Unable to find filter set for '${setName}'. Filtering failed.`);
-      return;
-    }
-    if (set.has(filterName)) {
-      set.delete(filterName);
-    } else {
-      set.add(filterName);
-    }
-
-    return this.render();
-  }
-
-  isFilterActive(setName: string, filterName: string): boolean {
-    return this._filters[setName]?.has(filterName) === true;
-  }
-
   async _render(force?: boolean, options = {}) {
     await this.setExpandedItemData();
     const data = await this.getData();

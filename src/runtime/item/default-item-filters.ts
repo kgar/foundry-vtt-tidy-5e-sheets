@@ -82,9 +82,9 @@ export const defaultItemFilters = {
     predicate: (item) => {
       return (
         item.system.level === 0 ||
-        ['innate', 'always'].includes(item.system.preparation.mode) ||
+        ['innate', 'always'].includes(item.system.preparation?.mode) ||
         item.actor?.type === 'npc' ||
-        item.system.preparation.prepared
+        item.system.preparation?.prepared
       );
     },
     text: 'DND5E.Prepared',

@@ -10,13 +10,15 @@ import type {
   ExpandedItemIdToLocationsMap,
   VehicleSheetContext,
   Utilities,
+  MessageBus,
+  MessageBusMessage,
+  SearchFilterCacheable,
 } from 'src/types/types';
 import { writable } from 'svelte/store';
 import VehicleSheet from './vehicle/VehicleSheet.svelte';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
 import {
   applySheetAttributesToWindow,
-  applyThemeDataAttributeToWindow,
   applyTitleToWindow,
   blurUntabbableButtonsOnClick,
   maintainCustomContentInputFocus,
@@ -42,7 +44,10 @@ import { ItemFilterService } from 'src/features/filtering/ItemFilterService';
 
 export class Tidy5eVehicleSheet
   extends dnd5e.applications.actor.ActorSheet5eVehicle
-  implements SheetTabCacheable, SheetExpandedItemsCacheable
+  implements
+    SheetTabCacheable,
+    SheetExpandedItemsCacheable,
+    SearchFilterCacheable
 {
   context = writable<VehicleSheetContext>();
   stats = writable<SheetStats>({
@@ -55,6 +60,7 @@ export class Tidy5eVehicleSheet
   itemTableTogglesCache: ItemTableToggleCacheService;
   subscriptionsService: StoreSubscriptionsService;
   itemFilterService: ItemFilterService;
+  messageBus: MessageBus = writable<MessageBusMessage | undefined>();
 
   constructor(...args: any[]) {
     super(...args);
@@ -91,9 +97,20 @@ export class Tidy5eVehicleSheet
   activateListeners(html: { get: (index: 0) => HTMLElement }) {
     let first = true;
     this.subscriptionsService.registerSubscriptions(
+      this.itemFilterService.filterData$.subscribe(() => {
+        if (first) return;
+        this.render();
+      }),
       settingStore.subscribe(() => {
         if (first) return;
         this.render();
+      }),
+      this.messageBus.subscribe((m) => {
+        debug('Message bus message received', {
+          app: this,
+          actor: this.actor,
+          message: m,
+        });
       })
     );
     first = false;
@@ -105,8 +122,17 @@ export class Tidy5eVehicleSheet
       target: node,
       context: new Map<any, any>([
         ['context', this.context],
+        ['messageBus', this.messageBus],
         ['stats', this.stats],
         ['card', this.card],
+        [
+          'onFilter',
+          this.itemFilterService.onFilter.bind(this.itemFilterService),
+        ],
+        [
+          'onFilterClearAll',
+          this.itemFilterService.onFilterClearAll.bind(this.itemFilterService),
+        ],
         ['currentTabId', this.currentTabId],
         ['onTabSelected', this.onTabSelected.bind(this)],
         ['onItemToggled', this.onItemToggled.bind(this)],
@@ -473,5 +499,17 @@ export class Tidy5eVehicleSheet
     debug('Item Toggled', {
       expandedItems: this.expandedItems,
     });
+  }
+
+  /* -------------------------------------------- */
+  /* SearchFilterCacheable
+  /* -------------------------------------------- */
+
+  onSearch(location: string, text: string): void {
+    debug('Searched', {
+      location,
+      text,
+    });
+    this.searchFilters.set(location, text);
   }
 }

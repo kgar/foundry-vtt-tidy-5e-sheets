@@ -268,7 +268,7 @@ function getActivationType(
     return customMapping;
   }
 
-  if (activationTypeSortValues[activationType]) {
+  if (activationType in activationTypeSortValues) {
     return activationType;
   }
 
