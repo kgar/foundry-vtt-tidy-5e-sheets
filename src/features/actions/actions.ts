@@ -24,6 +24,17 @@ const itemTypeSortValues: Record<string, number> = {
   loot: 9,
 };
 
+const activationTypeSortValues: Record<string, number> = {
+  action: 1,
+  bonus: 2,
+  reaction: 3,
+  legendary: 4,
+  mythic: 5,
+  lair: 6,
+  crew: 7,
+  special: 8,
+};
+
 export function getActorActions(
   actor: Actor5e,
   itemFilterService: ItemFilterService
@@ -208,27 +219,44 @@ function hasRange(item: Item5e): boolean {
   return !isNil(item.system.range?.units);
 }
 
-function buildActionSets(filteredItems: any) {
+function buildActionSets(filteredItems: any): ActionSets {
   const customMappings = ActionListRuntime.getActivationTypeMappings();
-  return filteredItems.reduce((acc: ActionSets, actionItem: ActionItem) => {
-    try {
-      const activationType = getActivationType(
-        actionItem.item.system.activation?.type,
-        customMappings
-      );
-      if (!acc[activationType]) {
-        acc[activationType] = new Set<ActionItem>();
+
+  // Build action sets based on what items are available.
+  let actionSets = filteredItems.reduce(
+    (acc: ActionSets, actionItem: ActionItem) => {
+      try {
+        const activationType = getActivationType(
+          actionItem.item.system.activation?.type,
+          customMappings
+        );
+        if (!acc[activationType]) {
+          acc[activationType] = new Set<ActionItem>();
+        }
+        acc[activationType].add(actionItem);
+        return acc;
+      } catch (e) {
+        error('error trying to digest item', true, {
+          name: actionItem.item.name,
+          e,
+        });
+        return acc;
       }
-      acc[activationType].add(actionItem);
-      return acc;
-    } catch (e) {
-      error('error trying to digest item', true, {
-        name: actionItem.item.name,
-        e,
-      });
-      return acc;
-    }
-  }, {});
+    },
+    {}
+  );
+
+  // Sort action sets deterministically.
+  return Object.keys(actionSets)
+    .sort(
+      (a, b) =>
+        (activationTypeSortValues[a] || Number.MAX_VALUE) -
+        (activationTypeSortValues[b] || Number.MAX_VALUE)
+    )
+    .reduce<ActionSets>((result, key) => {
+      result[key] = actionSets[key];
+      return result;
+    }, {});
 }
 
 function getActivationType(
@@ -240,19 +268,11 @@ function getActivationType(
     return customMapping;
   }
 
-  switch (activationType) {
-    case 'action':
-    case 'bonus':
-    case 'crew':
-    case 'lair':
-    case 'legendary':
-    case 'mythic':
-    case 'special':
-    case 'reaction':
-      return activationType;
-    default:
-      return 'other';
+  if (activationTypeSortValues[activationType]) {
+    return activationType;
   }
+
+  return 'other';
 }
 
 function isActiveItem(activationType: string) {
