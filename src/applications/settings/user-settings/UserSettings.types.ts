@@ -14,8 +14,6 @@ export type UserSettingsContext = {
     hideIfZero: CurrentSettings['hideIfZero'];
     moveTraitsBelowCharacterResources: CurrentSettings['moveTraitsBelowCharacterResources'];
     moveTraitsBelowNpcResources: CurrentSettings['moveTraitsBelowNpcResources'];
-    npcSheetWidth: CurrentSettings['npcSheetWidth'];
-    playerSheetWidth: CurrentSettings['playerSheetWidth'];
     showClassList: CurrentSettings['showClassList'];
     showEquippedAmmoOnly: CurrentSettings['showEquippedAmmoOnly'];
     showExhaustionOnHover: CurrentSettings['showExhaustionOnHover'];
@@ -37,7 +35,6 @@ export type UserSettingsContext = {
     useHpOverlayVehicle: CurrentSettings['useHpOverlayVehicle'];
     useMulticlassSpellbookFilter: CurrentSettings['useMulticlassSpellbookFilter'];
     useSpellClassFilterIcons: CurrentSettings['useSpellClassFilterIcons'];
-    vehicleSheetWidth: CurrentSettings['vehicleSheetWidth'];
   };
 };
 

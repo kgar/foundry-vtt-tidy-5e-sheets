@@ -41,10 +41,22 @@ DocumentSheetConfig.registerSheet(Item, 'dnd5e', Tidy5eKgarContainerSheet, {
   label: 'TIDY5E.Tidy5eContainerSheet',
 });
 
-Hooks.once('ready', async () => {
+DocumentSheetConfig.unregisterSheet(Item, 'dnd5e', Tidy5eKgarItemSheet, {
+  types: ['container'],
+});
+
+DocumentSheetConfig.registerSheet(Item, 'dnd5e', Tidy5eKgarContainerSheet, {
+  makeDefault: true,
+  types: [CONSTANTS.SHEET_TYPE_CONTAINER],
+  label: 'TIDY5E.Tidy5eContainerSheet',
+});
+
+Hooks.once('init', () => {
   initSettings();
   initRuntime();
+});
 
+Hooks.once('ready', async () => {
   const tidy5eModule = FoundryAdapter.getModule(CONSTANTS.MODULE_ID);
   const api = Tidy5eSheetsApi._getApi();
   tidy5eModule.api = api;

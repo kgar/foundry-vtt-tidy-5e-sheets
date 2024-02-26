@@ -9,13 +9,16 @@ import type {
   ExpandedItemData,
   ExpandedItemIdToLocationsMap,
   VehicleSheetContext,
+  Utilities,
+  MessageBus,
+  MessageBusMessage,
+  SearchFilterCacheable,
 } from 'src/types/types';
 import { writable } from 'svelte/store';
 import VehicleSheet from './vehicle/VehicleSheet.svelte';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
 import {
   applySheetAttributesToWindow,
-  applyThemeDataAttributeToWindow,
   applyTitleToWindow,
   blurUntabbableButtonsOnClick,
   maintainCustomContentInputFocus,
@@ -36,10 +39,15 @@ import { ActorPortraitRuntime } from 'src/runtime/ActorPortraitRuntime';
 import { CustomActorTraitsRuntime } from 'src/runtime/actor-traits/CustomActorTraitsRuntime';
 import { ItemTableToggleCacheService } from 'src/features/caching/ItemTableToggleCacheService';
 import { StoreSubscriptionsService } from 'src/features/store/StoreSubscriptionsService';
+import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
+import { ItemFilterService } from 'src/features/filtering/ItemFilterService';
 
 export class Tidy5eVehicleSheet
   extends dnd5e.applications.actor.ActorSheet5eVehicle
-  implements SheetTabCacheable, SheetExpandedItemsCacheable
+  implements
+    SheetTabCacheable,
+    SheetExpandedItemsCacheable,
+    SearchFilterCacheable
 {
   context = writable<VehicleSheetContext>();
   stats = writable<SheetStats>({
@@ -51,6 +59,8 @@ export class Tidy5eVehicleSheet
   expandedItemData: ExpandedItemData = new Map<string, ItemChatData>();
   itemTableTogglesCache: ItemTableToggleCacheService;
   subscriptionsService: StoreSubscriptionsService;
+  itemFilterService: ItemFilterService;
+  messageBus: MessageBus = writable<MessageBusMessage | undefined>();
 
   constructor(...args: any[]) {
     super(...args);
@@ -62,6 +72,8 @@ export class Tidy5eVehicleSheet
       documentId: this.actor.id,
     });
 
+    this.itemFilterService = new ItemFilterService({}, this.actor);
+
     this.currentTabId = SettingsProvider.settings.initialVehicleSheetTab.get();
   }
 
@@ -70,10 +82,13 @@ export class Tidy5eVehicleSheet
   }
 
   static get defaultOptions() {
+    const { width, height } =
+      SheetPreferencesService.getByType(CONSTANTS.SHEET_TYPE_VEHICLE) ?? {};
+
     return FoundryAdapter.mergeObject(super.defaultOptions, {
       classes: ['tidy5e-sheet', 'sheet', 'actor', CONSTANTS.SHEET_TYPE_VEHICLE],
-      height: 840,
-      width: SettingsProvider?.settings.vehicleSheetWidth.get() ?? 740,
+      width: width ?? 740,
+      height: height ?? 810,
       scrollY: ['[data-tidy-track-scroll-y]', '.scroll-container'],
     });
   }
@@ -82,9 +97,20 @@ export class Tidy5eVehicleSheet
   activateListeners(html: { get: (index: 0) => HTMLElement }) {
     let first = true;
     this.subscriptionsService.registerSubscriptions(
+      this.itemFilterService.filterData$.subscribe(() => {
+        if (first) return;
+        this.render();
+      }),
       settingStore.subscribe(() => {
         if (first) return;
         this.render();
+      }),
+      this.messageBus.subscribe((m) => {
+        debug('Message bus message received', {
+          app: this,
+          actor: this.actor,
+          message: m,
+        });
       })
     );
     first = false;
@@ -96,8 +122,17 @@ export class Tidy5eVehicleSheet
       target: node,
       context: new Map<any, any>([
         ['context', this.context],
+        ['messageBus', this.messageBus],
         ['stats', this.stats],
         ['card', this.card],
+        [
+          'onFilter',
+          this.itemFilterService.onFilter.bind(this.itemFilterService),
+        ],
+        [
+          'onFilterClearAll',
+          this.itemFilterService.onFilterClearAll.bind(this.itemFilterService),
+        ],
         ['currentTabId', this.currentTabId],
         ['onTabSelected', this.onTabSelected.bind(this)],
         ['onItemToggled', this.onItemToggled.bind(this)],
@@ -127,9 +162,71 @@ export class Tidy5eVehicleSheet
       FoundryAdapter.isActorSheetUnlocked(this.actor) &&
       defaultDocumentContext.editable;
 
+    const vehiclePreferences = SheetPreferencesService.getByType(
+      this.actor.type
+    );
+
+    const actionListSortMode =
+      vehiclePreferences.tabs?.[CONSTANTS.TAB_ACTOR_ACTIONS]?.sort ?? 'm';
+
+    const utilities: Utilities = {
+      [CONSTANTS.TAB_ACTOR_ACTIONS]: {
+        utilityToolbarCommands: [
+          {
+            title: FoundryAdapter.localize('SIDEBAR.SortModeAlpha'),
+            iconClass: 'fa-solid fa-arrow-down-a-z',
+            execute: async () => {
+              await SheetPreferencesService.setActorTypeTabPreference(
+                this.actor.type,
+                CONSTANTS.TAB_ACTOR_ACTIONS,
+                'sort',
+                'm'
+              );
+              this.render();
+            },
+            visible: actionListSortMode === 'a',
+          },
+          {
+            title: FoundryAdapter.localize('TIDY5E.SortMode.ActionListDefault'),
+            iconClass: 'fa-solid fa-arrow-down-short-wide',
+            execute: async () => {
+              await SheetPreferencesService.setActorTypeTabPreference(
+                this.actor.type,
+                CONSTANTS.TAB_ACTOR_ACTIONS,
+                'sort',
+                'a'
+              );
+              this.render();
+            },
+            visible: actionListSortMode === 'm',
+          },
+          {
+            title: FoundryAdapter.localize('TIDY5E.Commands.ExpandAll'),
+            iconClass: 'fas fa-angles-down',
+            execute: () =>
+              // TODO: Use app.messageBus
+              this.messageBus.set({
+                tabId: CONSTANTS.TAB_ACTOR_ACTIONS,
+                message: 'expand-all',
+              }),
+          },
+          {
+            title: FoundryAdapter.localize('TIDY5E.Commands.CollapseAll'),
+            iconClass: 'fas fa-angles-up',
+            execute: () =>
+              // TODO: Use app.messageBus
+              this.messageBus.set({
+                tabId: CONSTANTS.TAB_ACTOR_ACTIONS,
+                message: 'collapse-all',
+              }),
+          },
+        ],
+      },
+    };
+
     const context = {
       ...defaultDocumentContext,
-      actions: getActorActions(this.actor),
+      actions: getActorActions(this.actor, this.itemFilterService),
       activateFoundryJQueryListeners: (node: HTMLElement) => {
         this._activateCoreListeners($(node));
         getBaseActorSheet5e(this).activateListeners.call(this, $(node));
@@ -144,6 +241,7 @@ export class Tidy5eVehicleSheet
       customContent: await VehicleSheetRuntime.getContent(
         defaultDocumentContext
       ),
+      filterData: this.itemFilterService.getActorItemFilterData(),
       useClassicControls:
         SettingsProvider.settings.useClassicControlsForVehicle.get(),
       editable: defaultDocumentContext.editable,
@@ -168,6 +266,7 @@ export class Tidy5eVehicleSheet
         CONSTANTS.CIRCULAR_PORTRAIT_OPTION_ALL as string,
         CONSTANTS.CIRCULAR_PORTRAIT_OPTION_NPCVEHICLE as string,
       ].includes(SettingsProvider.settings.useCircularPortraitStyle.get()),
+      utilities: utilities,
       viewableWarnings:
         defaultDocumentContext.warnings?.filter(
           (w: any) => !isNil(w.message?.trim(), '')
@@ -221,6 +320,14 @@ export class Tidy5eVehicleSheet
     this.context.set(data);
 
     if (force) {
+      const { width, height } =
+        SheetPreferencesService.getByType(CONSTANTS.SHEET_TYPE_VEHICLE) ?? {};
+      this.position = {
+        ...this.position,
+        width: width ?? this.position.width,
+        height: height ?? this.position.height,
+      };
+
       this._saveScrollPositions(this.element);
       this._destroySvelteComponent();
       await super._render(force, options);
@@ -351,6 +458,21 @@ export class Tidy5eVehicleSheet
     debug('Ignoring call to disable fields. Delegating to Tidy Sheets...');
   }
 
+  _onResize(event: any) {
+    super._onResize(event);
+    const { width, height } = this.position;
+    SheetPreferencesService.setActorTypePreference(
+      CONSTANTS.SHEET_TYPE_VEHICLE,
+      'width',
+      width
+    );
+    SheetPreferencesService.setActorTypePreference(
+      CONSTANTS.SHEET_TYPE_VEHICLE,
+      'height',
+      height
+    );
+  }
+
   /* -------------------------------------------- */
   /* SheetTabCacheable
   /* -------------------------------------------- */
@@ -377,5 +499,17 @@ export class Tidy5eVehicleSheet
     debug('Item Toggled', {
       expandedItems: this.expandedItems,
     });
+  }
+
+  /* -------------------------------------------- */
+  /* SearchFilterCacheable
+  /* -------------------------------------------- */
+
+  onSearch(location: string, text: string): void {
+    debug('Searched', {
+      location,
+      text,
+    });
+    this.searchFilters.set(location, text);
   }
 }

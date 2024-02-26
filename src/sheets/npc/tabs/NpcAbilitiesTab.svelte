@@ -35,10 +35,19 @@
   import RechargeControl from 'src/components/item-list/controls/RechargeControl.svelte';
   import ActionFilterOverrideControl from 'src/components/item-list/controls/ActionFilterOverrideControl.svelte';
   import { declareLocation } from 'src/types/location-awareness';
+  import UtilityToolbar from 'src/components/utility-bar/UtilityToolbar.svelte';
+  import UtilityToolbarCommand from 'src/components/utility-bar/UtilityToolbarCommand.svelte';
+  import Search from 'src/components/utility-bar/Search.svelte';
+  import FilterMenu from 'src/components/filter/FilterMenu.svelte';
 
   let context = getContext<Readable<NpcSheetContext>>('context');
 
   $: noSpellLevels = !$context.spellbook.length;
+
+  $: utilityBarCommands =
+    $context.utilities[CONSTANTS.TAB_NPC_ABILITIES]?.utilityToolbarCommands ??
+    [];
+  let searchCriteria: string = '';
 
   function toggleLayout() {
     if (layoutMode === 'grid') {
@@ -60,6 +69,19 @@
   declareLocation('abilities');
 </script>
 
+<UtilityToolbar class="abilities-toolbar">
+  <Search bind:value={searchCriteria} />
+  <FilterMenu tabId={CONSTANTS.TAB_NPC_ABILITIES} />
+  {#each utilityBarCommands as command (command.title)}
+    <UtilityToolbarCommand
+      title={command.title}
+      iconClass={command.iconClass}
+      text={command.text}
+      visible={command.visible ?? true}
+      on:execute={(ev) => command.execute?.(ev.detail)}
+    />
+  {/each}
+</UtilityToolbar>
 <section class="npc-abilities-content" data-tidy-track-scroll-y>
   <div class="side-panel">
     <SkillsList
@@ -76,12 +98,18 @@
     class="main-panel"
     data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.NPC_ABILITIES_CONTAINER}
   >
-    <NpcLegendaryActions />
+    {#if $context.showLegendaryToolbar}
+      <NpcLegendaryActions />
+    {/if}
     {#if $settingStore.moveTraitsBelowNpcResources}
       <Traits toggleable={!$settingStore.alwaysShowNpcTraits} />
     {/if}
     {#each $context.features as section}
       {#if $context.unlocked || section.items.length}
+        {@const filteredItems = FoundryAdapter.getFilteredItems(
+          searchCriteria,
+          section.items,
+        )}
         <ItemTable location={section.label}>
           <svelte:fragment slot="header">
             <ItemTableHeaderRow>
@@ -102,7 +130,7 @@
             </ItemTableHeaderRow>
           </svelte:fragment>
           <svelte:fragment slot="body">
-            {#each section.items as item}
+            {#each filteredItems as item}
               {@const ctx = $context.itemContext[item.id]}
               <ItemTableRow
                 let:toggleSummary
@@ -217,9 +245,13 @@
         {:else}
           <div class="flex-1 small-padding-bottom flex-column small-gap">
             {#each $context.spellbook as section (section.label)}
+              {@const filteredSpells = FoundryAdapter.getFilteredItems(
+                searchCriteria,
+                section.spells,
+              )}
               {#if layoutMode === 'list'}
                 <SpellbookList
-                  spells={section.spells}
+                  spells={filteredSpells}
                   {section}
                   allowFavorites={false}
                   includeRange={false}
@@ -229,7 +261,7 @@
                   usageBaseWidth="5.625rem"
                 />
               {:else}
-                <SpellbookGrid spells={section.spells} {section} />
+                <SpellbookGrid spells={filteredSpells} {section} />
               {/if}
             {/each}
           </div>

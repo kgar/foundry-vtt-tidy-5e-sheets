@@ -1,4 +1,5 @@
 import type {
+  ActionItem,
   ActorSheetContext,
   CharacterSheetContext,
   ClassSummary,
@@ -9,7 +10,7 @@ import { CONSTANTS } from '../constants';
 import type { Actor5e } from 'src/types/types';
 import type { Item5e } from 'src/types/item';
 import { SettingsProvider } from 'src/settings/settings';
-import { debug, warn } from 'src/utils/logging';
+import { debug, error, warn } from 'src/utils/logging';
 import { clamp } from 'src/utils/numbers';
 
 export const FoundryAdapter = {
@@ -424,6 +425,13 @@ export const FoundryAdapter = {
       (x: any) =>
         searchCriteria.trim() === '' ||
         x.name.toLowerCase().includes(searchCriteria.toLowerCase())
+    );
+  },
+  getFilteredActionItems(searchCriteria: string, items: Set<ActionItem>) {
+    return Array.from(items).filter(
+      (x: ActionItem) =>
+        searchCriteria.trim() === '' ||
+        x.item?.name?.toLowerCase().includes(searchCriteria.toLowerCase())
     );
   },
   getAllClassesDropdownOptions(
@@ -1182,5 +1190,31 @@ export const FoundryAdapter = {
     });
 
     return true;
+  },
+  getAbilitiesAsDropdownOptions(abilities: any): DropdownListOption[] {
+    try {
+      return Object.entries<any>(abilities).map(([key, { label }]) => ({
+        value: key,
+        text: label,
+      }));
+    } catch (e) {
+      error(
+        'An error occurred while mapping abilities as dropdown items',
+        false,
+        e
+      );
+      debug('Dropdown mapping error troubleshooting info', { abilities });
+      return [];
+    }
+  },
+  countPreparedSpells(items: Item5e[]) {
+    return items.filter(
+      (item: Item5e) =>
+        item.type === CONSTANTS.ITEM_TYPE_SPELL &&
+        item.system.level > 0 &&
+        item.system.preparation.mode ===
+          CONSTANTS.SPELL_PREPARATION_MODE_PREPARED &&
+        item.system.preparation.prepared
+    ).length;
   },
 };

@@ -9,6 +9,9 @@ import type {
   SheetTabCacheable,
   ExpandedItemIdToLocationsMap,
   ExpandedItemData,
+  MessageBus,
+  MessageBusMessage,
+  Utilities,
 } from 'src/types/types';
 import { writable } from 'svelte/store';
 import NpcSheet from './npc/NpcSheet.svelte';
@@ -40,6 +43,8 @@ import { CustomActorTraitsRuntime } from 'src/runtime/actor-traits/CustomActorTr
 import { ItemTableToggleCacheService } from 'src/features/caching/ItemTableToggleCacheService';
 import { ItemFilterService } from 'src/features/filtering/ItemFilterService';
 import { StoreSubscriptionsService } from 'src/features/store/StoreSubscriptionsService';
+import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
+import { getStandardSpellSchoolFilterCategories } from 'src/runtime/item/default-item-filters';
 
 export class Tidy5eNpcSheet
   extends dnd5e.applications.actor.ActorSheet5eNPC
@@ -60,6 +65,7 @@ export class Tidy5eNpcSheet
   itemTableTogglesCache: ItemTableToggleCacheService;
   itemFilterService: ItemFilterService;
   subscriptionsService: StoreSubscriptionsService;
+  messageBus: MessageBus = writable<MessageBusMessage | undefined>();
 
   constructor(...args: any[]) {
     super(...args);
@@ -83,8 +89,8 @@ export class Tidy5eNpcSheet
   static get defaultOptions() {
     return FoundryAdapter.mergeObject(super.defaultOptions, {
       classes: ['tidy5e-sheet', 'sheet', 'actor', CONSTANTS.SHEET_TYPE_NPC],
-      height: 840,
-      width: SettingsProvider?.settings.npcSheetWidth.get() ?? 740,
+      width: 740,
+      height: 810,
       scrollY: ['[data-tidy-track-scroll-y]', '.scroll-container'],
     });
   }
@@ -100,6 +106,13 @@ export class Tidy5eNpcSheet
       settingStore.subscribe(() => {
         if (first) return;
         this.render();
+      }),
+      this.messageBus.subscribe((m) => {
+        debug('Message bus message received', {
+          app: this,
+          actor: this.actor,
+          message: m,
+        });
       })
     );
     first = false;
@@ -111,6 +124,7 @@ export class Tidy5eNpcSheet
       target: node,
       context: new Map<any, any>([
         ['context', this.context],
+        ['messageBus', this.messageBus],
         ['stats', this.stats],
         ['card', this.card],
         ['currentTabId', this.currentTabId],
@@ -148,12 +162,56 @@ export class Tidy5eNpcSheet
   async getData(options = {}) {
     const defaultDocumentContext = await super.getData(this.options);
 
-    // Apply new filters
-    for (let section of defaultDocumentContext.spellbook) {
-      section.spells = this.itemFilterService.filter(
-        section.spells,
-        CONSTANTS.TAB_NPC_SPELLBOOK
+    const npcPreferences = SheetPreferencesService.getByType(this.actor.type);
+
+    const abilitiesSortMode =
+      npcPreferences.tabs?.[CONSTANTS.TAB_NPC_ABILITIES]?.sort ?? 'm';
+
+    const spellbookSortMode =
+      npcPreferences.tabs?.[CONSTANTS.TAB_NPC_SPELLBOOK]?.sort ?? 'm';
+
+    const actionListSortMode =
+      npcPreferences.tabs?.[CONSTANTS.TAB_ACTOR_ACTIONS]?.sort ?? 'm';
+
+    try {
+      for (let section of defaultDocumentContext.features) {
+        let features = this.itemFilterService.filter(
+          section.items,
+          CONSTANTS.TAB_NPC_ABILITIES
+        );
+        if (abilitiesSortMode === 'a') {
+          features = features.toSorted((a, b) => a.name.localeCompare(b.name));
+        }
+        section.items = features;
+      }
+
+      for (let section of defaultDocumentContext.spellbook) {
+        const showSpellbookTab =
+          SettingsProvider.settings.showSpellbookTabNpc.get();
+
+        const tabName = showSpellbookTab
+          ? CONSTANTS.TAB_NPC_SPELLBOOK
+          : CONSTANTS.TAB_NPC_ABILITIES;
+
+        const sortMode = showSpellbookTab
+          ? spellbookSortMode
+          : abilitiesSortMode;
+
+        let spells = this.itemFilterService.filter(section.spells, tabName);
+        if (sortMode === 'a') {
+          spells = spells.toSorted((a, b) => a.name.localeCompare(b.name));
+        }
+        section.spells = spells;
+      }
+    } catch (e) {
+      error(
+        'An error occurred while sorting and filtering section data',
+        false,
+        e
       );
+      debug('Sorting/Filtering error troubleshooting info', {
+        defaultDocumentContext,
+      });
     }
 
     const unlocked =
@@ -183,9 +241,225 @@ export class Tidy5eNpcSheet
       error('Unable to calculate max prepared spells', false, e);
     }
 
+    const showLegendaryToolbarFlagValue = FoundryAdapter.tryGetFlag(
+      this.actor,
+      'show-legendary-toolbar'
+    );
+    const res = this.actor.system.resources;
+    const showLegendaryToolbar =
+      showLegendaryToolbarFlagValue === true ||
+      (showLegendaryToolbarFlagValue === undefined &&
+        ((res.legact?.max ?? 0) > 0 ||
+          (res.legres?.max ?? 0) > 0 ||
+          res.lair?.value === true ||
+          res.lair?.initiative !== null));
+
+    let utilities: Utilities = {
+      [CONSTANTS.TAB_NPC_ABILITIES]: {
+        utilityToolbarCommands: [
+          {
+            title: FoundryAdapter.localize(
+              'TIDY5E.Commands.ShowLegendaryToolbar'
+            ),
+            iconClass: 'ra ra-player',
+            execute: async () => {
+              await FoundryAdapter.setFlag(
+                this.actor,
+                'show-legendary-toolbar',
+                true
+              );
+            },
+            visible: !showLegendaryToolbar,
+          },
+          {
+            title: FoundryAdapter.localize(
+              'TIDY5E.Commands.HideLegendaryToolbar'
+            ),
+            iconClass: 'ra ra-monster-skull',
+            execute: async () => {
+              await FoundryAdapter.setFlag(
+                this.actor,
+                'show-legendary-toolbar',
+                false
+              );
+            },
+            visible: showLegendaryToolbar,
+          },
+          {
+            title: FoundryAdapter.localize('SIDEBAR.SortModeAlpha'),
+            iconClass: 'fa-solid fa-arrow-down-a-z',
+            execute: async () => {
+              await SheetPreferencesService.setActorTypeTabPreference(
+                this.actor.type,
+                CONSTANTS.TAB_NPC_ABILITIES,
+                'sort',
+                'm'
+              );
+              this.render();
+            },
+            visible: abilitiesSortMode === 'a',
+          },
+          {
+            title: FoundryAdapter.localize('SIDEBAR.SortModeManual'),
+            iconClass: 'fa-solid fa-arrow-down-short-wide',
+            execute: async () => {
+              await SheetPreferencesService.setActorTypeTabPreference(
+                this.actor.type,
+                CONSTANTS.TAB_NPC_ABILITIES,
+                'sort',
+                'a'
+              );
+              this.render();
+            },
+            visible: abilitiesSortMode === 'm',
+          },
+          {
+            title: FoundryAdapter.localize('TIDY5E.Commands.ExpandAll'),
+            iconClass: 'fas fa-angles-down',
+            execute: () =>
+              // TODO: Use app.messageBus
+              this.messageBus.set({
+                tabId: CONSTANTS.TAB_NPC_ABILITIES,
+                message: 'expand-all',
+              }),
+          },
+          {
+            title: FoundryAdapter.localize('TIDY5E.Commands.CollapseAll'),
+            iconClass: 'fas fa-angles-up',
+            execute: () =>
+              // TODO: Use app.messageBus
+              this.messageBus.set({
+                tabId: CONSTANTS.TAB_NPC_ABILITIES,
+                message: 'collapse-all',
+              }),
+          },
+        ],
+      },
+      [CONSTANTS.TAB_NPC_SPELLBOOK]: {
+        utilityToolbarCommands: [
+          {
+            title: FoundryAdapter.localize('SIDEBAR.SortModeAlpha'),
+            iconClass: 'fa-solid fa-arrow-down-a-z',
+            execute: async () => {
+              await SheetPreferencesService.setActorTypeTabPreference(
+                this.actor.type,
+                CONSTANTS.TAB_NPC_SPELLBOOK,
+                'sort',
+                'm'
+              );
+              this.render();
+            },
+            visible: spellbookSortMode === 'a',
+          },
+          {
+            title: FoundryAdapter.localize('SIDEBAR.SortModeManual'),
+            iconClass: 'fa-solid fa-arrow-down-short-wide',
+            execute: async () => {
+              await SheetPreferencesService.setActorTypeTabPreference(
+                this.actor.type,
+                CONSTANTS.TAB_NPC_SPELLBOOK,
+                'sort',
+                'a'
+              );
+              this.render();
+            },
+            visible: spellbookSortMode === 'm',
+          },
+          {
+            title: FoundryAdapter.localize('TIDY5E.Commands.ExpandAll'),
+            iconClass: 'fas fa-angles-down',
+            execute: () =>
+              // TODO: Use app.messageBus
+              this.messageBus.set({
+                tabId: CONSTANTS.TAB_NPC_SPELLBOOK,
+                message: 'expand-all',
+              }),
+          },
+          {
+            title: FoundryAdapter.localize('TIDY5E.Commands.CollapseAll'),
+            iconClass: 'fas fa-angles-up',
+            execute: () =>
+              // TODO: Use app.messageBus
+              this.messageBus.set({
+                tabId: CONSTANTS.TAB_NPC_SPELLBOOK,
+                message: 'collapse-all',
+              }),
+          },
+          {
+            title: FoundryAdapter.localize('TIDY5E.ListLayout'),
+            iconClass: 'fas fa-th-list toggle-list',
+            visible: !FoundryAdapter.tryGetFlag(this.actor, 'spellbook-grid'),
+            execute: () => {
+              FoundryAdapter.setFlag(this.actor, 'spellbook-grid', true);
+            },
+          },
+          {
+            title: FoundryAdapter.localize('TIDY5E.GridLayout'),
+            iconClass: 'fas fa-th-large toggle-grid',
+            visible: !!FoundryAdapter.tryGetFlag(this.actor, 'spellbook-grid'),
+            execute: () => {
+              FoundryAdapter.unsetFlag(this.actor, 'spellbook-grid');
+            },
+          },
+        ],
+      },
+      [CONSTANTS.TAB_ACTOR_ACTIONS]: {
+        utilityToolbarCommands: [
+          {
+            title: FoundryAdapter.localize('SIDEBAR.SortModeAlpha'),
+            iconClass: 'fa-solid fa-arrow-down-a-z',
+            execute: async () => {
+              await SheetPreferencesService.setActorTypeTabPreference(
+                this.actor.type,
+                CONSTANTS.TAB_ACTOR_ACTIONS,
+                'sort',
+                'm'
+              );
+              this.render();
+            },
+            visible: actionListSortMode === 'a',
+          },
+          {
+            title: FoundryAdapter.localize('TIDY5E.SortMode.ActionListDefault'),
+            iconClass: 'fa-solid fa-arrow-down-short-wide',
+            execute: async () => {
+              await SheetPreferencesService.setActorTypeTabPreference(
+                this.actor.type,
+                CONSTANTS.TAB_ACTOR_ACTIONS,
+                'sort',
+                'a'
+              );
+              this.render();
+            },
+            visible: actionListSortMode === 'm',
+          },
+          {
+            title: FoundryAdapter.localize('TIDY5E.Commands.ExpandAll'),
+            iconClass: 'fas fa-angles-down',
+            execute: () =>
+              // TODO: Use app.messageBus
+              this.messageBus.set({
+                tabId: CONSTANTS.TAB_ACTOR_ACTIONS,
+                message: 'expand-all',
+              }),
+          },
+          {
+            title: FoundryAdapter.localize('TIDY5E.Commands.CollapseAll'),
+            iconClass: 'fas fa-angles-up',
+            execute: () =>
+              // TODO: Use app.messageBus
+              this.messageBus.set({
+                tabId: CONSTANTS.TAB_ACTOR_ACTIONS,
+                message: 'collapse-all',
+              }),
+          },
+        ],
+      },
+    };
+
     const context: NpcSheetContext = {
       ...defaultDocumentContext,
-      actions: getActorActions(this.actor),
+      actions: getActorActions(this.actor, this.itemFilterService),
       activateFoundryJQueryListeners: (node: HTMLElement) => {
         this._activateCoreListeners($(node));
         super.activateListeners($(node));
@@ -270,6 +544,7 @@ export class Tidy5eNpcSheet
           relativeTo: this.actor,
         }
       ),
+      showLegendaryToolbar: showLegendaryToolbar,
       lockSensitiveFields: lockSensitiveFields,
       longRest: this._onLongRest.bind(this),
       lockExpChanges: FoundryAdapter.shouldLockExpChanges(),
@@ -339,6 +614,9 @@ export class Tidy5eNpcSheet
         }
       ),
       owner: this.actor.isOwner,
+      preparedSpells: FoundryAdapter.countPreparedSpells(
+        defaultDocumentContext.items
+      ),
       rollDeathSave: this._rollDeathSave.bind(this),
       shortRest: this._onShortRest.bind(this),
       showLimitedSheet: FoundryAdapter.showLimitedSheet(this.actor),
@@ -363,6 +641,7 @@ export class Tidy5eNpcSheet
         CONSTANTS.CIRCULAR_PORTRAIT_OPTION_ALL as string,
         CONSTANTS.CIRCULAR_PORTRAIT_OPTION_NPCVEHICLE as string,
       ].includes(SettingsProvider.settings.useCircularPortraitStyle.get()),
+      utilities: utilities,
       viewableWarnings:
         defaultDocumentContext.warnings?.filter(
           (w: any) => !isNil(w.message?.trim(), '')
@@ -447,6 +726,14 @@ export class Tidy5eNpcSheet
     this.context.set(data);
 
     if (force) {
+      const { width, height } =
+        SheetPreferencesService.getByType(this.actor.type) ?? {};
+      this.position = {
+        ...this.position,
+        width: width ?? this.position.width,
+        height: height ?? this.position.height,
+      };
+
       this._saveScrollPositions(this.element);
       this._destroySvelteComponent();
       await super._render(force, options);
@@ -820,6 +1107,21 @@ export class Tidy5eNpcSheet
 
   _disableFields(...args: any[]) {
     debug('Ignoring call to disable fields. Delegating to Tidy Sheets...');
+  }
+
+  _onResize(event: any) {
+    super._onResize(event);
+    const { width, height } = this.position;
+    SheetPreferencesService.setActorTypePreference(
+      this.actor.type,
+      'width',
+      width
+    );
+    SheetPreferencesService.setActorTypePreference(
+      this.actor.type,
+      'height',
+      height
+    );
   }
 
   /* -------------------------------------------- */

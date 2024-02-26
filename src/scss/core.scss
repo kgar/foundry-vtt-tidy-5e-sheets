@@ -185,4 +185,14 @@
     @import './partials/buttons';
     @import './partials/checkboxes';
   }
+
+  // TODO: Make a whole suite of classes in a dedicated partial that can set colors, backgrounds, background-colors, etc., for the theme colors.
+  .primary-accent-color {
+    color: var(--t5e-primary-accent-color);
+  }
+
+  // TODO: Make a whole suite of classes in a dedicated partial that can set colors, backgrounds, background-colors, etc., for the theme colors.
+  .primary-accent-color {
+    color: var(--t5e-primary-accent-color);
+  }
 }

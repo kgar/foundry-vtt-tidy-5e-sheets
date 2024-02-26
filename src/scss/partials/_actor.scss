@@ -269,10 +269,11 @@ ul {
 
 .actor-name {
   flex: 1;
-  word-break: break-word;
-  h1 {
+  input {
     font-size: 1.5rem;
-    padding: 0 0.25rem;
+    padding-left: 0.1875rem;
+    padding-right: 0.1875rem;
+    font-weight: 700;
   }
 }
 

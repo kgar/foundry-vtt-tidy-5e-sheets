@@ -42,9 +42,9 @@ jobs:
         with:
           allowUpdates: true # set this to false if you want to prevent updating existing releases
           name: ${{ github.event.release.name }}
-          draft: false
-          prerelease: false
           token: ${{ secrets.GITHUB_TOKEN }}
           artifacts: './dist/module.json, ./dist/module.zip'
           tag: ${{ github.event.release.tag_name }}
           body: ${{ github.event.release.body }}
+          prerelease: ${{ github.event.release.prerelease }}
+          makeLatest: ${{ !github.event.release.prerelease }}

@@ -1,8 +1,9 @@
 <script lang="ts">
+  import InlineTextDropdownList from 'src/components/inputs/InlineTextDropdownList.svelte';
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { settingStore } from 'src/settings/settings';
-  import type { Actor5e } from 'src/types/types';
+  import type { Actor5e, DropdownListOption } from 'src/types/types';
   import type { CharacterSheetContext, NpcSheetContext } from 'src/types/types';
   import { ActiveEffectsHelper } from 'src/utils/active-effect';
   import { formatAsModifier } from 'src/utils/formatting';
@@ -28,13 +29,21 @@
 
   let skillRefs: SkillRef[];
   $: skillRefs = Array.from(Object.entries($context.config.skills)).map(
-    (s: [key: string, value: any]) => ({
-      key: s[0],
-      label: s[1]['label'],
-      ability: s[1]['ability'],
-      skill: getSkill(s[0]),
-    }),
+    ([key, { label }]: [string, any]) => {
+      const skill = getSkill(key);
+      return {
+        key: key,
+        label: label,
+        ability: skill.ability,
+        skill: skill,
+      };
+    },
   );
+
+  $: abilities = FoundryAdapter.getAbilitiesAsDropdownOptions(
+    $context.abilities,
+  );
+
   const localize = FoundryAdapter.localize;
 
   function getSkill(key: string): any | null {
@@ -51,6 +60,26 @@
     }
 
     actor.update({ [toggleField]: !expanded });
+  }
+
+  function onSkillAbilityChange(
+    ev: CustomEvent<DropdownListOption>,
+    skillRef: {
+      key: string;
+      label: string;
+      ability: string;
+      skill: any | null;
+    },
+  ): void {
+    $context.actor.update({
+      system: {
+        skills: {
+          [skillRef.key]: {
+            ability: ev.detail.value,
+          },
+        },
+      },
+    });
   }
 </script>
 
@@ -132,15 +161,30 @@
                 $context.actor.rollSkill(skillRef.key, { event })}
               data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.SKILL_ROLLER}
               tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+              title={skillRef.skill.label}
             >
               {skillRef.skill.label}
             </button>
           {:else}
-            <span class="tidy5e-skill-name">
+            <span class="tidy5e-skill-name" title={skillRef.skill.label}>
               {skillRef.skill.label}
             </span>
           {/if}
-          <span class="skill-ability">{skillRef.skill.abbreviation}</span>
+          {#if $context.unlocked && $context.editable}
+            <InlineTextDropdownList
+              options={abilities}
+              selected={{
+                text: skillRef.skill.abbreviation,
+                value: skillRef.skill.abbreviation,
+              }}
+              buttonClass="skill-ability"
+              title={$context.abilities?.[skillRef.ability]?.label}
+              on:optionClicked={(ev) => onSkillAbilityChange(ev, skillRef)}
+            />
+          {:else}
+            <span class="skill-ability">{skillRef.skill.abbreviation}</span>
+          {/if}
+
           <span class="skill-mod">{formatAsModifier(skillRef.skill.total)}</span
           >
           <span
@@ -200,6 +244,7 @@
       .tidy5e-skill-name {
         font-size: 0.75rem;
         line-height: 0.875rem;
+        overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
         flex: 1;
@@ -249,9 +294,11 @@
         color: var(--t5e-tertiary-color);
       }
 
-      .skill-ability {
+      :global(.skill-ability) {
         flex: 0 0 1.5rem;
+        width: 1.5rem;
         text-transform: capitalize;
+        text-align: left;
       }
     }
   }

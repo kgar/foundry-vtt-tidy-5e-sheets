@@ -3,27 +3,29 @@
   import ExpandableContainer from 'src/components/expandable/ExpandableContainer.svelte';
   import { ExpandCollapseService } from 'src/features/expand-collapse/ExpandCollapseService';
   import { declareLocation } from 'src/types/location-awareness';
-  import { ExpandAllCollapseAllService } from 'src/features/expand-collapse/ExpandAllCollapseAllService';
-  import { isNil } from 'src/utils/data';
+  import { getContext } from 'svelte';
+  import type { MessageBus } from 'src/types/types';
 
   export let location: string;
   export let toggleable: boolean = true;
 
+  const messageBus = getContext<MessageBus>('messageBus');
+  const tabId = getContext<string | undefined>('tabId');
   declareLocation('item-table', location);
-  
+
   const expandCollapseService = ExpandCollapseService.initService(toggleable);
-  
+
   $: expandedState = expandCollapseService.state;
 
-  const expandAllCollapseAllSignal = ExpandAllCollapseAllService.getSignal();
-
   $: {
-    // First-time use, it should not toggle anything.
-    const isInitialValue = isNil($expandAllCollapseAllSignal?.command, '');
-    if (!isInitialValue) {
-      expandCollapseService.set(
-        $expandAllCollapseAllSignal?.command === 'expand',
-      );
+    if ($messageBus?.tabId === tabId && $messageBus?.message === 'expand-all') {
+      expandCollapseService.set(true);
+    }
+    if (
+      $messageBus?.tabId === tabId &&
+      $messageBus?.message === 'collapse-all'
+    ) {
+      expandCollapseService.set(false);
     }
   }
 </script>

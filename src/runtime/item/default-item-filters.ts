@@ -1,20 +1,68 @@
-import type { ItemFilter } from './item.types';
+import { CONSTANTS } from 'src/constants';
+import type {
+  FilterCategoriesToFilters,
+  FilterTabsToCategories,
+  ItemFilter,
+} from './item.types';
 
 export const defaultItemFilters = {
-  action: {
-    name: 'action',
-    predicate: (item) => item.system.activation?.type === 'action',
+  activationCostAction: {
+    name: 'activationCostAction',
+    predicate: (item) =>
+      item.system.activation?.type === CONSTANTS.ACTIVATION_COST_ACTION,
     text: 'DND5E.Action',
   },
-  bonus: {
-    name: 'bonus',
-    predicate: (item) => item.system.activation?.type === 'bonus',
+  activationCostBonus: {
+    name: 'activationCostBonus',
+    predicate: (item) =>
+      item.system.activation?.type === CONSTANTS.ACTIVATION_COST_BONUS,
     text: 'DND5E.BonusAction',
   },
-  reaction: {
-    name: 'reaction',
-    predicate: (item) => item.system.activation?.type === 'reaction',
+  activationCostReaction: {
+    name: 'activationCostReaction',
+    predicate: (item) =>
+      item.system.activation?.type === CONSTANTS.ACTIVATION_COST_REACTION,
     text: 'DND5E.Reaction',
+  },
+  activationCostLegendary: {
+    name: 'activationCostLegendary',
+    predicate: (item) =>
+      item.system.activation?.type === CONSTANTS.ACTIVATION_COST_LEGENDARY,
+    text: 'DND5E.LegendaryActionLabel',
+  },
+  activationCostMythic: {
+    name: 'activationCostMythic',
+    predicate: (item) =>
+      item.system.activation?.type === CONSTANTS.ACTIVATION_COST_MYTHIC,
+    text: 'DND5E.MythicActionLabel',
+  },
+  activationCostLair: {
+    name: 'activationCostLair',
+    predicate: (item) =>
+      item.system.activation?.type === CONSTANTS.ACTIVATION_COST_LAIR,
+    text: 'DND5E.LairActionLabel',
+  },
+  activationCostCrew: {
+    name: 'activationCostCrew',
+    predicate: (item) =>
+      item.system.activation?.type === CONSTANTS.ACTIVATION_COST_CREW,
+    text: 'DND5E.VehicleCrewAction',
+  },
+  activationCostSpecial: {
+    name: 'activationCostSpecial',
+    predicate: (item) =>
+      item.system.activation?.type === CONSTANTS.ACTIVATION_COST_SPECIAL,
+    text: 'DND5E.Special',
+  },
+  activationCostOther: {
+    name: 'activationCostOther',
+    predicate: (item) =>
+      ![
+        CONSTANTS.ACTIVATION_COST_ACTION,
+        CONSTANTS.ACTIVATION_COST_BONUS,
+        CONSTANTS.ACTIVATION_COST_REACTION,
+      ].includes(item.system.activation?.type),
+    text: 'TIDY5E.ItemFilters.Filter.Other',
   },
   ritual: {
     name: 'ritual',
@@ -46,9 +94,9 @@ export const defaultItemFilters = {
     predicate: (item) => {
       return (
         item.system.level === 0 ||
-        ['innate', 'always'].includes(item.system.preparation.mode) ||
+        ['innate', 'always'].includes(item.system.preparation?.mode) ||
         item.actor?.type === 'npc' ||
-        item.system.preparation.prepared
+        item.system.preparation?.prepared
       );
     },
     text: 'DND5E.Prepared',
@@ -129,4 +177,34 @@ export function getAttunementFiltersAsObject(): Record<string, ItemFilter> {
     },
     {}
   );
+}
+
+export function getStandardSpellSchoolFilterCategories(): FilterCategoriesToFilters {
+  return {
+    'DND5E.SpellComponents': [
+      defaultItemFilters.verbal,
+      defaultItemFilters.somatic,
+      defaultItemFilters.material,
+      defaultItemFilters.concentration,
+      defaultItemFilters.ritual,
+    ],
+    'DND5E.SpellPreparationMode': [defaultItemFilters.prepared],
+    'DND5E.SpellSchool': () => getSpellSchoolFilters(),
+  };
+}
+
+export function getActionListFilterCategories(): FilterCategoriesToFilters {
+  return {
+    'DND5E.ItemActivationCost': [
+      defaultItemFilters.activationCostAction,
+      defaultItemFilters.activationCostBonus,
+      defaultItemFilters.activationCostReaction,
+      defaultItemFilters.activationCostLegendary,
+      defaultItemFilters.activationCostMythic,
+      defaultItemFilters.activationCostLair,
+      defaultItemFilters.activationCostCrew,
+      defaultItemFilters.activationCostSpecial,
+    ],
+    ...getStandardSpellSchoolFilterCategories(),
+  };
 }
