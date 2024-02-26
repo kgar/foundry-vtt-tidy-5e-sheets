@@ -170,6 +170,9 @@ export class Tidy5eNpcSheet
     const spellbookSortMode =
       npcPreferences.tabs?.[CONSTANTS.TAB_NPC_SPELLBOOK]?.sort ?? 'm';
 
+    const actionListSortMode =
+      npcPreferences.tabs?.[CONSTANTS.TAB_ACTOR_ACTIONS]?.sort ?? 'm';
+
     try {
       for (let section of defaultDocumentContext.features) {
         let features = this.itemFilterService.filter(
@@ -400,11 +403,63 @@ export class Tidy5eNpcSheet
           },
         ],
       },
+      [CONSTANTS.TAB_ACTOR_ACTIONS]: {
+        utilityToolbarCommands: [
+          {
+            title: FoundryAdapter.localize('SIDEBAR.SortModeAlpha'),
+            iconClass: 'fa-solid fa-arrow-down-a-z',
+            execute: async () => {
+              await SheetPreferencesService.setActorTypeTabPreference(
+                this.actor.type,
+                CONSTANTS.TAB_ACTOR_ACTIONS,
+                'sort',
+                'm'
+              );
+              this.render();
+            },
+            visible: actionListSortMode === 'a',
+          },
+          {
+            title: FoundryAdapter.localize('TIDY5E.SortMode.ActionListDefault'),
+            iconClass: 'fa-solid fa-arrow-down-short-wide',
+            execute: async () => {
+              await SheetPreferencesService.setActorTypeTabPreference(
+                this.actor.type,
+                CONSTANTS.TAB_ACTOR_ACTIONS,
+                'sort',
+                'a'
+              );
+              this.render();
+            },
+            visible: actionListSortMode === 'm',
+          },
+          {
+            title: FoundryAdapter.localize('TIDY5E.Commands.ExpandAll'),
+            iconClass: 'fas fa-angles-down',
+            execute: () =>
+              // TODO: Use app.messageBus
+              this.messageBus.set({
+                tabId: CONSTANTS.TAB_ACTOR_ACTIONS,
+                message: 'expand-all',
+              }),
+          },
+          {
+            title: FoundryAdapter.localize('TIDY5E.Commands.CollapseAll'),
+            iconClass: 'fas fa-angles-up',
+            execute: () =>
+              // TODO: Use app.messageBus
+              this.messageBus.set({
+                tabId: CONSTANTS.TAB_ACTOR_ACTIONS,
+                message: 'collapse-all',
+              }),
+          },
+        ],
+      },
     };
 
     const context: NpcSheetContext = {
       ...defaultDocumentContext,
-      actions: getActorActions(this.actor),
+      actions: getActorActions(this.actor, this.itemFilterService),
       activateFoundryJQueryListeners: (node: HTMLElement) => {
         this._activateCoreListeners($(node));
         super.activateListeners($(node));
@@ -663,25 +718,6 @@ export class Tidy5eNpcSheet
 
   async _onDropSingleItem(...args: any[]) {
     return super._onDropSingleItem(...args);
-  }
-
-  onToggleFilter(setName: string, filterName: string) {
-    const set = this._filters[setName];
-    if (!set) {
-      error(`Unable to find filter set for '${setName}'. Filtering failed.`);
-      return;
-    }
-    if (set.has(filterName)) {
-      set.delete(filterName);
-    } else {
-      set.add(filterName);
-    }
-
-    return this.render();
-  }
-
-  isFilterActive(setName: string, filterName: string): boolean {
-    return this._filters[setName]?.has(filterName) === true;
   }
 
   async _render(force?: boolean, options = {}) {

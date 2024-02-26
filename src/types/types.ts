@@ -147,7 +147,10 @@ export type NpcSheetContext = {
 } & ActorSheetContext &
   Record<string, any>;
 
-export type VehicleSheetContext = {} & ActorSheetContext & Record<string, any>;
+export type VehicleSheetContext = {
+  utilities: Utilities;
+} & ActorSheetContext &
+  Record<string, any>;
 
 export type DerivedDamage = {
   label: string;

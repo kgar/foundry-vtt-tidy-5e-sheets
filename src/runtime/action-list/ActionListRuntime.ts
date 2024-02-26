@@ -1,5 +1,5 @@
 export class ActionListRuntime {
-  private static _activationTypeMappings = {};
+  private static _activationTypeMappings: Record<string, string> = {};
 
   static addActivationTypeMappings(mappings: Record<string, string>) {
     ActionListRuntime._activationTypeMappings = mergeObject(

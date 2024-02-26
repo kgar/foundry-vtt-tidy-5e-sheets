@@ -723,6 +723,7 @@
     "themeLabel": "Theme"
   },
   "TIDY5E.ActiveEffectsMarkerTitle": "This item has active effects",
+  "TIDY5E.SortMode.ActionListDefault": "Default Action List Sort",
   "TIDY5E.Commands.ExpandAll": "Expand All",
   "TIDY5E.Commands.CollapseAll": "Collapse All",
   "TIDY5E.ItemFilters.MenuTooltip.Filters": "Filters",

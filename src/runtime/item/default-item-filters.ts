@@ -1,5 +1,9 @@
 import { CONSTANTS } from 'src/constants';
-import type { FilterCategoriesToFilters, ItemFilter } from './item.types';
+import type {
+  FilterCategoriesToFilters,
+  FilterTabsToCategories,
+  ItemFilter,
+} from './item.types';
 
 export const defaultItemFilters = {
   activationCostAction: {
@@ -37,6 +41,18 @@ export const defaultItemFilters = {
     predicate: (item) =>
       item.system.activation?.type === CONSTANTS.ACTIVATION_COST_LAIR,
     text: 'DND5E.LairActionLabel',
+  },
+  activationCostCrew: {
+    name: 'activationCostCrew',
+    predicate: (item) =>
+      item.system.activation?.type === CONSTANTS.ACTIVATION_COST_CREW,
+    text: 'DND5E.VehicleCrewAction',
+  },
+  activationCostSpecial: {
+    name: 'activationCostSpecial',
+    predicate: (item) =>
+      item.system.activation?.type === CONSTANTS.ACTIVATION_COST_SPECIAL,
+    text: 'DND5E.Special',
   },
   activationCostOther: {
     name: 'activationCostOther',
@@ -78,9 +94,9 @@ export const defaultItemFilters = {
     predicate: (item) => {
       return (
         item.system.level === 0 ||
-        ['innate', 'always'].includes(item.system.preparation.mode) ||
+        ['innate', 'always'].includes(item.system.preparation?.mode) ||
         item.actor?.type === 'npc' ||
-        item.system.preparation.prepared
+        item.system.preparation?.prepared
       );
     },
     text: 'DND5E.Prepared',
@@ -165,12 +181,6 @@ export function getAttunementFiltersAsObject(): Record<string, ItemFilter> {
 
 export function getStandardSpellSchoolFilterCategories(): FilterCategoriesToFilters {
   return {
-    'DND5E.ItemActivationCost': [
-      defaultItemFilters.activationCostAction,
-      defaultItemFilters.activationCostBonus,
-      defaultItemFilters.activationCostReaction,
-      defaultItemFilters.activationCostOther,
-    ],
     'DND5E.SpellComponents': [
       defaultItemFilters.verbal,
       defaultItemFilters.somatic,
@@ -180,5 +190,21 @@ export function getStandardSpellSchoolFilterCategories(): FilterCategoriesToFilt
     ],
     'DND5E.SpellPreparationMode': [defaultItemFilters.prepared],
     'DND5E.SpellSchool': () => getSpellSchoolFilters(),
+  };
+}
+
+export function getActionListFilterCategories(): FilterCategoriesToFilters {
+  return {
+    'DND5E.ItemActivationCost': [
+      defaultItemFilters.activationCostAction,
+      defaultItemFilters.activationCostBonus,
+      defaultItemFilters.activationCostReaction,
+      defaultItemFilters.activationCostLegendary,
+      defaultItemFilters.activationCostMythic,
+      defaultItemFilters.activationCostLair,
+      defaultItemFilters.activationCostCrew,
+      defaultItemFilters.activationCostSpecial,
+    ],
+    ...getStandardSpellSchoolFilterCategories(),
   };
 }

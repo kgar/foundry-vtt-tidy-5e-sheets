@@ -6,6 +6,7 @@ import type {
 } from './item.types';
 import {
   defaultItemFilters,
+  getActionListFilterCategories,
   getAttunementFilters,
   getAttunementFiltersAsObject,
   getItemRarityFilters,
@@ -42,6 +43,12 @@ export class ItemFilterRuntime {
         ],
       },
       [CONSTANTS.TAB_CHARACTER_SPELLBOOK]: {
+        'DND5E.ItemActivationCost': [
+          defaultItemFilters.activationCostAction,
+          defaultItemFilters.activationCostBonus,
+          defaultItemFilters.activationCostReaction,
+          defaultItemFilters.activationCostOther,
+        ],
         ...getStandardSpellSchoolFilterCategories(),
       },
       [CONSTANTS.TAB_CHARACTER_FEATURES]: {
@@ -51,14 +58,20 @@ export class ItemFilterRuntime {
           defaultItemFilters.activationCostReaction,
         ],
       },
+      [CONSTANTS.TAB_ACTOR_ACTIONS]: { ...getActionListFilterCategories() },
     },
     [CONSTANTS.SHEET_TYPE_NPC]: {
       [CONSTANTS.TAB_NPC_SPELLBOOK]: {
+        'DND5E.ItemActivationCost': [
+          defaultItemFilters.activationCostAction,
+          defaultItemFilters.activationCostBonus,
+          defaultItemFilters.activationCostReaction,
+          defaultItemFilters.activationCostOther,
+        ],
         ...getStandardSpellSchoolFilterCategories(),
       },
       [CONSTANTS.TAB_NPC_ABILITIES]: {
         // TODO: Upgrade the filter system so that it's easier to dynamically graft in additional filter sets rather than hardcoding them in
-        ...getStandardSpellSchoolFilterCategories(),
         'DND5E.ItemActivationCost': [
           defaultItemFilters.activationCostAction,
           defaultItemFilters.activationCostBonus,
@@ -68,10 +81,12 @@ export class ItemFilterRuntime {
           defaultItemFilters.activationCostLair,
           defaultItemFilters.activationCostOther,
         ],
+        ...getStandardSpellSchoolFilterCategories(),
       },
+      [CONSTANTS.TAB_ACTOR_ACTIONS]: { ...getActionListFilterCategories() },
     },
     [CONSTANTS.SHEET_TYPE_VEHICLE]: {
-      // No filters yet ☹
+      [CONSTANTS.TAB_ACTOR_ACTIONS]: { ...getActionListFilterCategories() },
     },
   };
 
