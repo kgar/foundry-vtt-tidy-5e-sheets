@@ -1,4 +1,5 @@
 import type {
+  ActionItem,
   ActorSheetContext,
   CharacterSheetContext,
   ClassSummary,
@@ -424,6 +425,13 @@ export const FoundryAdapter = {
       (x: any) =>
         searchCriteria.trim() === '' ||
         x.name.toLowerCase().includes(searchCriteria.toLowerCase())
+    );
+  },
+  getFilteredActionItems(searchCriteria: string, items: Set<ActionItem>) {
+    return Array.from(items).filter(
+      (x: ActionItem) =>
+        searchCriteria.trim() === '' ||
+        x.item?.name?.toLowerCase().includes(searchCriteria.toLowerCase())
     );
   },
   getAllClassesDropdownOptions(

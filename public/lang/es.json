@@ -68,7 +68,7 @@
     "TIDY5E.ContextMenuActionDelete": "Eliminar",
     "TIDY5E.EmptySection": "Esta sección está vacía. Desbloquea la hoja para editarla.",
     "TIDY5E.GMOnlyEdit": "Solo tu DM puede editar esta sección.",
-    "TIDY5E.AttunementWarning": "Aviso de sintonización: ¡No puedes sintonizar más de {número} objetos!",
+    "TIDY5E.AttunementWarning": "Aviso de sintonización: ¡No puedes sintonizar más de {número} objetos.",
     "TIDY5E.AttunementItems": "Objetos sintonizados",
     "TIDY5E.AttunementMax": "Máximo de sintonización",
     "TIDY5E.GridLayout": "Diseño de cuadrícula",
@@ -116,7 +116,7 @@
     "TIDY5E.Settings.MulticlassSpellbookFilterLabel": "Filtro de hechizos de multiclase",
     "TIDY5E.UserSettings.Menu": {
         "name": "Configuración de T5E",
-        "hint": "Personaliza tu propia versión de T5E",
+        "hint": "Personaliza tu propia versión de T5E.",
         "label": "Opciones de la hoja",
         "title": "Opciones de la hoja de T5E"
     },
@@ -145,9 +145,9 @@
         "labelFeaturesLocks": "Bloqueos de rasgos"
     },
     "TIDY5E.Settings.About": {
-        "name": "Info",
-        "buttonLabel": "Info",
-        "dialogTitle": "Info",
+        "name": "Acerca de",
+        "buttonLabel": "Acerca de Tidy 5e Sheets",
+        "dialogTitle": "Acerca de Tidy 5e Sheets",
         "hint": "Información sobre el módulo Tidy 5e Sheets.",
         "logoAltText": "Un escudo calefactor con cuatro estrellas y las palabras \"Tidy 5e\" en la parte delantera.",
         "PatreonLink": "{urlStart}Patreon{urlEnd}",
@@ -174,11 +174,11 @@
     },
     "TIDY5E.Settings.ItemCardsDelay": {
         "name": "Retardo en mostrar las tarjetas de información del objeto",
-        "hint": "La Tarjeta de Información se mostrará al mantener el ratón sobre un objeto durante el valor en milisegundos (0 = no hay retardo, 300 es el valor por defecto)"
+        "hint": "La Tarjeta de Información se mostrará al mantener el ratón sobre un objeto durante el valor en milisegundos (0 = no hay retardo, 300 es el valor por defecto)."
     },
     "TIDY5E.Settings.ItemCardsFixKey": {
         "name": "Tecla a mantener para la interacción con la Tarjeta de Información",
-        "hint": "Introduce una tecla (p. ej: x) para interactuar con la tarjeta de información del objeto. Puede tratarse de cualquier tecla excepto las teclas de función (ctrl, alt, etc.)"
+        "hint": "Introduce una tecla (p. ej: x) para interactuar con la tarjeta de información del objeto. Puede tratarse de cualquier tecla excepto las teclas de función (ctrl, alt, etc.)."
     },
     "TIDY5E.Settings.DefaultTheme": {
         "name": "Tema de color predeterminado",
@@ -545,7 +545,7 @@
         "options.specific.levels.tooltip.hint": "Información para este nivel de agotamiento. Las claves de localización también funcionan.",
         "options.open.text": "Entrada de número abierto",
         "options.open.explanation": "Muestra al usuario una entrada numérica para escribir niveles de agotamiento.",
-        "Header": "Agotamiento",
+        "Header": "Agotamiento del personaje/NPC",
         "name": "Configuración de agotamiento",
         "hint": "Determina cómo se configura y presenta el agotamiento no vehicular en las hojas de personajes y PNJ.",
         "options.specific.text": "Niveles específicos",
@@ -688,5 +688,9 @@
     "TIDY5E.ActorMeleeSpellAttackTitle": "{actorName} - Ataque cuerpo a cuerpo con hechizos",
     "TIDY5E.ActorMeleeSpellAttackFlavorText": "Ataque de hechizo cuerpo a cuerpo",
     "TIDY5E.ActorRangedSpellAttackTitle": "{actorName} - Ataque de Hechizo a Distancia",
-    "TIDY5E.ActorRangedSpellAttackFlavorText": "Ataque de hechizo a distancia"
+    "TIDY5E.ActorRangedSpellAttackFlavorText": "Ataque de hechizo a distancia",
+    "TIDY5E.ItemFilters.Filter.Other": "Otro",
+    "TIDY5E.Settings.ColorPickerMagicAccent": {
+        "name": "Esquema de acento del objeto mágico"
+    }
 }

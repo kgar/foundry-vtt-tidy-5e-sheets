@@ -139,6 +139,7 @@ export type NpcSheetContext = {
   notesEnrichedHtml: string;
   preparedSpells: number;
   shortRest: (event: Event) => Promise<void>;
+  showLegendaryToolbar: boolean;
   showSpellbookTab: boolean;
   spellCalculations: SpellCalculations;
   traitEnrichedHtml: string;
@@ -146,7 +147,10 @@ export type NpcSheetContext = {
 } & ActorSheetContext &
   Record<string, any>;
 
-export type VehicleSheetContext = {} & ActorSheetContext & Record<string, any>;
+export type VehicleSheetContext = {
+  utilities: Utilities;
+} & ActorSheetContext &
+  Record<string, any>;
 
 export type DerivedDamage = {
   label: string;
