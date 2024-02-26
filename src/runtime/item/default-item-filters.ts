@@ -42,6 +42,18 @@ export const defaultItemFilters = {
       item.system.activation?.type === CONSTANTS.ACTIVATION_COST_LAIR,
     text: 'DND5E.LairActionLabel',
   },
+  activationCostCrew: {
+    name: 'activationCostCrew',
+    predicate: (item) =>
+      item.system.activation?.type === CONSTANTS.ACTIVATION_COST_CREW,
+    text: 'DND5E.VehicleCrewAction',
+  },
+  activationCostSpecial: {
+    name: 'activationCostSpecial',
+    predicate: (item) =>
+      item.system.activation?.type === CONSTANTS.ACTIVATION_COST_SPECIAL,
+    text: 'DND5E.Special',
+  },
   activationCostOther: {
     name: 'activationCostOther',
     predicate: (item) =>
@@ -190,7 +202,8 @@ export function getActionListFilterCategories(): FilterCategoriesToFilters {
       defaultItemFilters.activationCostLegendary,
       defaultItemFilters.activationCostMythic,
       defaultItemFilters.activationCostLair,
-      defaultItemFilters.activationCostOther,
+      defaultItemFilters.activationCostCrew,
+      defaultItemFilters.activationCostSpecial,
     ],
     ...getStandardSpellSchoolFilterCategories(),
   };
