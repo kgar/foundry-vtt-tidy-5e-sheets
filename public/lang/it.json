@@ -47,7 +47,7 @@
     "TIDY5E.RestHint": "Riposati",
     "TIDY5E.ShortRest": "Riposo Breve",
     "TIDY5E.LongRest": "Riposo Lungo",
-    "TIDY5E.HitDiceRollAverage": "Right Click: Average",
+    "TIDY5E.HitDiceRollAverage": "Tasto Destro: usa valore medio",
     "TIDY5E.JournalTabName": "Diario",
     "TIDY5E.RestoreOnRest": "Ripristina dopo un riposo",
     "TIDY5E.JournalPersonsOfInterest": "Persone di interesse",
@@ -76,8 +76,8 @@
     "TIDY5E.AttunementItems": "Oggetti Sincronizzati",
     "TIDY5E.AttunementMax": "Massimi Sincronizzati",
     "TIDY5E.GridLayout": "Layout a Griglia",
-    "TIDY5E.ListLayout": "Layout a Lista",
-    "TIDY5E.LayoutNotSupported": "Layout mode non supportato",
+    "TIDY5E.ListLayout": "Layout ad Elenco",
+    "TIDY5E.LayoutNotSupported": "Modalità Layout non supportata",
     "TIDY5E.Encumbrance": "Ingombro",
     "TIDY5E.AddFavorite": "Aggiungi ai Preferiti",
     "TIDY5E.Favorite": "Preferito",
@@ -346,7 +346,7 @@
     },
     "TIDY5E.Settings.AllowCantripsToBePrepared": {
         "name": "Consenti la preparazione dei trucchetti",
-        "hint": "La regola opzionale \"formule di trucchetti\" dal Calderone di Tutto di Tasha consente ai maghi di preparare trucchetti dopo un lungo riposo nello stesso modo in cui lo fanno con gli incantesimi livellati. I trucchetti preparati non contano nel totale degli incantesimi preparati."
+        "hint": "La regola opzionale \"formule di trucchetti\" dal Calderone Omnicomprensivo di Tasha consente ai maghi di preparare trucchetti dopo un lungo riposo nello stesso modo in cui lo fanno con gli incantesimi livellati. I trucchetti preparati non contano nel totale degli incantesimi preparati."
     },
     "TIDY5E.Settings.LockMoneyChanges": {
         "name": "Blocca valuta",
@@ -593,8 +593,8 @@
         "name": "Colore Bordo Oggetto Magico"
     },
     "TIDY5E.Settings.About": {
-        "buttonLabel": "Su Tidy 5e Sheets",
-        "dialogTitle": "Su Tidy 5e Sheets",
+        "buttonLabel": "Info Tidy 5e Sheets",
+        "dialogTitle": "Info Tidy 5e Sheets",
         "hint": "Informazioni sul modulo Tidy 5e Sheets.",
         "logoAltText": "Uno scudo con quattro stelle e la scritta \"Tidy 5e\" sul davanti.",
         "MaintainerParagraph": "Tidy 5e Sheets sono mantenuti da {urlStart}kgar{urlEnd}.",
@@ -606,7 +606,7 @@
         "PatreonLink": "{urlStart}Patreon{urlEnd}",
         "FinancialSupportParagraph": "Se ti piace Tidy 5e Sheets e vuoi sostenerlo finanziariamente, ecco alcuni modi per farlo:",
         "LocalizationParagraph": "{urlStart}Weblate{urlEnd}: Traduci contenuto web? Tidy 5e Sheets può usare il tuo aiuto! Vai al sito web Weblate per vedere i nostri progressi nella localizzazione in varie lingue. Questo modulo accetta traduzioni in nuove lingue e modifiche alle traduzioni esistenti.",
-        "name": "Su"
+        "name": "Info"
     },
     "TIDY5E.UseDefault": "Usa Predefinito",
     "TIDY5E.Reset": "Ripristina",
@@ -670,7 +670,7 @@
         "hint": "Il foglio 5e predefinito consente la tabulazione della tastiera dall'input di un attributo a quello successivo nascondendo i controlli attorno ad essi dall'ordine di tabulazione. Abilitarlo replica quel comportamento. Questa impostazione viene ignorata se \"Utilizza supporto tastiera accessibile\" è disattivato."
     },
     "TIDY5E.Settings.UseDefaultSheetHpTabbing": {
-        "name": "tilizza la scheda predefinita dei PF da tastiera",
+        "name": "Utilizza la scheda predefinita dei PF da tastiera",
         "hint": "Il foglio 5e predefinito consente il tabulazione della tastiera dall'input HP corrente all'input HP temporaneo corrente. Abilitarlo replica quel comportamento. Questa impostazione viene ignorata se \"Utilizza supporto tastiera accessibile\" è disattivato."
     },
     "TIDY5E.Settings.ToggleEmptyCharacterSkills": {
