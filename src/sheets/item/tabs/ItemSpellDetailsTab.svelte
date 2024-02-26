@@ -13,16 +13,13 @@
   import ItemFormGroup from '../form/ItemFormGroup.svelte';
   import { CONSTANTS } from 'src/constants';
   import { settingStore } from 'src/settings/settings';
+  import ItemProperties from '../parts/ItemProperties.svelte';
 
   let context = getContext<Readable<ItemSheetContext>>('context');
 
   const allClasses = FoundryAdapter.getAllClassesDropdownOptions(
     $settingStore.spellClassFilterAdditionalClasses,
   );
-
-  $: spellComponents = Object.entries($context.spellComponents) as Iterable<
-    [string, any]
-  >;
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -78,7 +75,11 @@
     value={$context.system.school}
     disabled={!$context.editable}
   >
-    <SelectOptions data={$context.config.spellSchools} blank="" />
+    <SelectOptions
+      data={$context.config.spellSchools}
+      labelProp="label"
+      blank=""
+    />
   </Select>
 </ItemFormGroup>
 
@@ -86,19 +87,7 @@
   cssClass="spell-components stacked"
   labelText={localize('DND5E.SpellComponents')}
 >
-  {#each spellComponents as [key, component]}
-    {@const checked = $context.system.components[key]}
-    <Checkbox
-      id="{$context.appId}-system-components-{key}"
-      labelCssClass="checkbox"
-      document={$context.item}
-      field="system.components.{key}"
-      {checked}
-      disabled={!$context.editable}
-    >
-      {component.label}
-    </Checkbox>
-  {/each}
+  <ItemProperties />
 </ItemFormGroup>
 
 <ItemFormGroup

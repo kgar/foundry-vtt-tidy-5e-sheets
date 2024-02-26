@@ -3,7 +3,6 @@ import EquipmentSheet from 'src/sheets/item/EquipmentSheet.svelte';
 import type { CustomContent, Tab } from 'src/types/types';
 import itemSheetTabs from './item-sheet-tabs';
 import BackgroundSheet from 'src/sheets/item/BackgroundSheet.svelte';
-import BackpackSheet from 'src/sheets/item/BackpackSheet.svelte';
 import ClassSheet from 'src/sheets/item/ClassSheet.svelte';
 import ConsumableSheet from 'src/sheets/item/ConsumableSheet.svelte';
 import FeatSheet from 'src/sheets/item/FeatSheet.svelte';
@@ -57,13 +56,6 @@ export class ItemSheetRuntime {
     [CONSTANTS.ITEM_TYPE_BACKGROUND]: {
       Sheet: BackgroundSheet,
       defaultTabs: () => [itemSheetTabs.description, itemSheetTabs.advancement],
-    },
-    [CONSTANTS.ITEM_TYPE_BACKPACK]: {
-      Sheet: BackpackSheet,
-      defaultTabs: () => [
-        itemSheetTabs.descriptionWithSidebar,
-        itemSheetTabs.backpackDetails,
-      ],
     },
     [CONSTANTS.ITEM_TYPE_CLASS]: {
       Sheet: ClassSheet,

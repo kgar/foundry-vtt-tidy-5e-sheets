@@ -30,6 +30,7 @@
 
   $: damageParts = [...$context.system.damage.parts];
 
+  // TODO: Leverage a more generalized data batching scheme and plug in the proper components instead of raw elements.
   function saveDamageFormulae() {
     $context.item.update({
       'system.damage.parts': damageParts,
@@ -176,10 +177,16 @@
         >
           <option value="">{localize('DND5E.None')}</option>
           <optgroup label={localize('DND5E.Damage')}>
-            <SelectOptions data={$context.config.damageTypes} />
+            <SelectOptions
+              data={$context.config.damageTypes}
+              labelProp="label"
+            />
           </optgroup>
           <optgroup label={localize('DND5E.Healing')}>
-            <SelectOptions data={$context.config.healingTypes} />
+            <SelectOptions
+              data={$context.config.healingTypes}
+              labelProp="label"
+            />
           </optgroup>
         </select>
         <button
@@ -213,6 +220,7 @@
           field="system.damage.versatile"
           disabled={!$context.editable}
           additionalDataToSave={{
+            // TODO: Use more universal/generalized batch saving scheme that shares the same logic between here and the related properties.
             'system.damage.parts': damageParts,
           }}
         />

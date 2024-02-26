@@ -111,14 +111,14 @@
                       {#if actionItem.item.type !== CONSTANTS.ITEM_TYPE_SPELL}
                         {actionItem.typeLabel}
                       {:else if actionItem.item.type === 'spell' && actionItem.item.system.level !== 0}
-                        {actionItem.item.labels.level ?? ''}
-                        {actionItem.item.labels.school ?? ''}
+                        {actionItem.item.labels?.level ?? ''}
+                        {actionItem.item.labels?.school ?? ''}
                         {#if spellClass}
                           • {localize(spellClass)}
                         {/if}
                       {:else}
-                        {actionItem.item.labels.school ?? ''}
-                        {actionItem.item.labels.level ?? ''}
+                        {actionItem.item.labels?.school ?? ''}
+                        {actionItem.item.labels?.level ?? ''}
                         {#if spellClass}
                           • {localize(spellClass)}
                         {/if}
@@ -179,14 +179,14 @@
               </ItemTableCell>
               <ItemTableCell baseWidth="5rem" cssClass="flex-column no-gap">
                 <!-- HIT / DC -->
-                {#if actionItem.item.labels.save || actionItem.item.labels.toHit}
-                  {#if actionItem.item.labels.save !== '' && actionItem.item.labels.save !== undefined}
+                {#if actionItem.item.labels?.save || actionItem.item.labels?.toHit}
+                  {#if actionItem.item.labels?.save !== '' && actionItem.item.labels?.save !== undefined}
                     {@const saveAbilityLabel =
                       FoundryAdapter.lookupAbility(
                         actionItem.item.system.save.ability,
                       )?.label ?? ''}
                     <span
-                      title={actionItem.item.labels.save ?? ''}
+                      title={actionItem.item.labels?.save ?? ''}
                       class="flex-column-truncate"
                     >
                       {localize('DND5E.AbbreviationDC')}
@@ -196,8 +196,8 @@
                       >{saveAbilityLabel}</small
                     >
                   {:else}
-                    <span title={actionItem.item.labels.toHit ?? ''}
-                      >{actionItem.item.labels.toHit ?? ''}</span
+                    <span title={actionItem.item.labels?.toHit ?? ''}
+                      >{actionItem.item.labels?.toHit ?? ''}</span
                     >
                   {/if}
                 {/if}

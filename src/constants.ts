@@ -10,7 +10,6 @@ export const CONSTANTS = {
   HOOK_TIDY5E_SHEETS_ITEM_HOVER_OFF: `tidy5e-sheet.itemHoverOff`,
   ITEM_TYPE_EQUIPMENT: 'equipment',
   ITEM_TYPE_BACKGROUND: 'background',
-  ITEM_TYPE_BACKPACK: 'backpack',
   ITEM_TYPE_CLASS: 'class',
   ITEM_TYPE_CONSUMABLE: 'consumable',
   ITEM_TYPE_FEAT: 'feat',

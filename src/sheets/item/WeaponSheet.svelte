@@ -6,11 +6,12 @@
   import TabContents from 'src/components/tabs/TabContents.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import ItemProfilePicture from './parts/ItemProfilePicture.svelte';
-  import TextInput from 'src/components/inputs/TextInput.svelte';
   import Select from 'src/components/inputs/Select.svelte';
   import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
   import Source from '../shared/Source.svelte';
   import { CONSTANTS } from 'src/constants';
+  import ItemIdentifiableName from './parts/ItemIdentifiableName.svelte';
+  import Checkbox from 'src/components/inputs/Checkbox.svelte';
 
   let context = getContext<Readable<ItemSheetContext>>('context');
 
@@ -30,23 +31,15 @@
       class="charname"
       data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.NAME_CONTAINER}
     >
-      <TextInput
-        document={$context.item}
-        field="name"
-        value={$context.item.name}
-        attributes={{ 'data-tidy-item-name': $context.item.name }}
-        placeholder={localize('DND5E.ItemName')}
-        disabled={!$context.editable}
-      />
+      <ItemIdentifiableName />
     </h1>
 
     <div class="item-subtitle">
       <h4 class="item-type">{$context.itemType ?? ''}</h4>
-      <span class="item-status">{$context.itemStatus ?? ''}</span>
     </div>
 
     <ul class="summary flexrow">
-      <li>{$context.config.weaponTypes[$context.system.weaponType] ?? ''}</li>
+      <li>{$context.system.type.label}</li>
       <li>
         <Select
           document={$context.item}
@@ -66,6 +59,31 @@
         />
       </li>
     </ul>
+    <div class="flex-row no-gap">
+      <Checkbox
+        labelCssClass="green-checkbox"
+        document={$context.item}
+        field="system.equipped"
+        checked={$context.system.equipped}
+        disabled={!$context.editable}
+      >
+        {$context.system.equipped
+          ? localize('DND5E.Equipped')
+          : localize('DND5E.Unequipped')}
+      </Checkbox>
+
+      <Checkbox
+        labelCssClass="green-checkbox"
+        document={$context.item}
+        field="system.identified"
+        checked={$context.system.identified}
+        disabled={!$context.editable}
+      >
+        {$context.system.identified
+          ? localize('DND5E.Identified')
+          : localize('DND5E.Unidentified.Title')}
+      </Checkbox>
+    </div>
   </div>
 </header>
 <Tabs bind:selectedTabId tabs={$context.tabs} />

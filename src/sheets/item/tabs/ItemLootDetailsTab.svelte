@@ -6,6 +6,7 @@
   import ItemFormGroup from '../form/ItemFormGroup.svelte';
   import Select from 'src/components/inputs/Select.svelte';
   import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
+  import ItemProperties from '../parts/ItemProperties.svelte';
 
   let context = getContext<Readable<ItemSheetContext>>('context');
 
@@ -55,3 +56,10 @@
     </Select>
   </ItemFormGroup>
 {/if}
+
+<ItemFormGroup
+  cssClass="stacked loot-properties"
+  labelText={localize('DND5E.ItemLootProperties')}
+>
+  <ItemProperties />
+</ItemFormGroup>

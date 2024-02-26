@@ -12,6 +12,8 @@
   import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
   import Checkbox from 'src/components/inputs/Checkbox.svelte';
   import TextInput from 'src/components/inputs/TextInput.svelte';
+  import { mapPropertiesToSave } from 'src/utils/system-properties';
+  import ItemProperties from '../parts/ItemProperties.svelte';
 
   let context = getContext<Readable<ItemSheetContext>>('context');
 
@@ -23,17 +25,17 @@
 </h3>
 
 <ItemFormGroup
-  field="system.armor.type"
+  field="system.type.value"
   labelText={localize('DND5E.ItemEquipmentType')}
   let:inputId
 >
   <Select
     id={inputId}
-    value={$context.system.armor.type}
-    field="system.armor.type"
+    value={$context.system.type.value}
+    field="system.type.value"
     document={$context.item}
     disabled={!$context.editable}
-    >
+  >
     <option value="" />
     <optgroup label={localize('DND5E.Armor')}>
       <SelectOptions data={$context.config.armorTypes} />
@@ -49,11 +51,11 @@
 >
   <Select
     id={inputId}
-    value={$context.system.baseItem}
-    field="system.baseItem"
+    value={$context.system.type.baseItem}
+    field="system.type.baseItem"
     document={$context.item}
     disabled={!$context.editable}
-    >
+  >
     <SelectOptions data={$context.baseItems} blank="" />
   </Select>
 </ItemFormGroup>
@@ -70,49 +72,31 @@
       field="system.attunement"
       document={$context.item}
       disabled={!$context.editable}
-      >
+    >
       <SelectOptions data={$context.config.attunements} />
+    </Select>
+  </ItemFormGroup>
+
+  <ItemFormGroup labelText={localize('DND5E.Proficiency')}>
+    <Select
+      document={$context.item}
+      field="system.proficient"
+      value={$context.system.proficient}
+      disabled={!$context.editable}
+    >
+      <SelectOptions
+        data={$context.config.weaponAndArmorProficiencyLevels}
+        blank={localize('DND5E.Automatic')}
+      />
     </Select>
   </ItemFormGroup>
 {/if}
 
-<ItemFormGroup labelText={localize('DND5E.Proficiency')}>
-  <Select
-    document={$context.item}
-    field="system.proficient"
-    value={$context.system.proficient}
-    disabled={!$context.editable}
-    >
-    <SelectOptions
-      data={$context.config.weaponAndArmorProficiencyLevels}
-      blank={localize('DND5E.Automatic')}
-    />
-  </Select>
-</ItemFormGroup>
-
 <ItemFormGroup
-  cssClass="stacked"
-  labelText={localize('DND5E.ItemEquipmentStatus')}
+  cssClass="stacked weapon-properties"
+  labelText={localize('DND5E.ItemEquipmentProperties')}
 >
-  <Checkbox
-    checked={$context.system.equipped}
-    labelCssClass="checkbox"
-    field="system.equipped"
-    document={$context.item}
-    disabled={!$context.editable}
-    >
-    {localize('DND5E.Equipped')}
-  </Checkbox>
-
-  <Checkbox
-    checked={$context.system.identified}
-    labelCssClass="checkbox"
-    field="system.identified"
-    document={$context.item}
-    disabled={!$context.editable}
-    >
-    {localize('DND5E.Identified')}
-  </Checkbox>
+  <ItemProperties />
 </ItemFormGroup>
 
 {#if $context.system.isArmor || $context.system.isMountable}
@@ -128,7 +112,7 @@
       field="system.armor.value"
       document={$context.item}
       disabled={!$context.editable}
-      />
+    />
   </ItemFormGroup>
 {/if}
 
@@ -146,7 +130,7 @@
       document={$context.item}
       value={$context.system.armor.dex}
       disabled={!$context.editable}
-      />
+    />
   </ItemFormGroup>
 {/if}
 
@@ -164,21 +148,7 @@
       document={$context.item}
       value={$context.system.strength}
       disabled={!$context.editable}
-      />
-  </ItemFormGroup>
-
-  <ItemFormGroup
-    field="system.stealth"
-    labelText={localize('DND5E.ItemEquipmentStealthDisav')}
-    let:inputId
-  >
-    <Checkbox
-      id={inputId}
-      field="system.stealth"
-      document={$context.item}
-      checked={$context.system.stealth}
-      disabled={!$context.editable}
-      />
+    />
   </ItemFormGroup>
 {/if}
 
@@ -192,14 +162,14 @@
         field="system.speed.value"
         document={$context.item}
         disabled={!$context.editable}
-        />
+      />
       <span class="sep">{localize('DND5E.FeetAbbr')}</span>
       <TextInput
         field="system.speed.conditions"
         document={$context.item}
         value={$context.system.speed.conditions}
         disabled={!$context.editable}
-        />
+      />
     </div>
   </ItemFormGroup>
 {/if}

@@ -126,7 +126,7 @@
   .attunement-and-currency {
     display: flex;
     flex: 0 0 1.875rem;
-    gap: 1.25rem;
+    gap: 0.5rem;
 
     .attuned-items-counter {
       display: flex;

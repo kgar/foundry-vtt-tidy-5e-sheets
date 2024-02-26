@@ -66,27 +66,27 @@ export const defaultItemFilters = {
   },
   ritual: {
     name: 'ritual',
-    predicate: (item) => item.system.components?.ritual === true,
+    predicate: (item) => item.system.properties.has('ritual'),
     text: 'DND5E.Ritual',
   },
   concentration: {
     name: 'concentration',
-    predicate: (item) => item.system.components?.concentration === true,
+    predicate: (item) => item.system.properties.has('concentration'),
     text: 'DND5E.Concentration',
   },
   verbal: {
     name: 'verbal',
-    predicate: (item) => item.system.components?.vocal === true,
+    predicate: (item) => item.system.properties.has('vocal'),
     text: 'DND5E.ComponentVerbal',
   },
   somatic: {
     name: 'somatic',
-    predicate: (item) => item.system.components?.somatic === true,
+    predicate: (item) => item.system.properties.has('somatic'),
     text: 'DND5E.ComponentSomatic',
   },
   material: {
     name: 'material',
-    predicate: (item) => item.system.components?.material === true,
+    predicate: (item) => item.system.properties.has('material'),
     text: 'DND5E.ComponentMaterial',
   },
   prepared: {
@@ -132,14 +132,14 @@ export function getItemRarityFiltersAsObject(): Record<string, ItemFilter> {
 }
 
 export function getSpellSchoolFilters(): ItemFilter[] {
-  const itemRarity = CONFIG.DND5E.spellSchools as Record<string, string>;
+  const spellSchools = CONFIG.DND5E.spellSchools as Record<string, any>;
 
-  return Object.entries(itemRarity).map<ItemFilter>(
-    ([key, text]) =>
+  return Object.entries(spellSchools).map<ItemFilter>(
+    ([key, schoolData]) =>
       ({
         name: key,
         predicate: (item) => item.system.school === key,
-        text: text,
+        text: schoolData.label,
       } satisfies ItemFilter)
   );
 }

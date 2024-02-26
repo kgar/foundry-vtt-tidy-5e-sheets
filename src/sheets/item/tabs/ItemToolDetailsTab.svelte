@@ -7,57 +7,50 @@
   import Select from 'src/components/inputs/Select.svelte';
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import ItemFormGroup from '../form/ItemFormGroup.svelte';
-  import Checkbox from 'src/components/inputs/Checkbox.svelte';
+  import ItemProperties from '../parts/ItemProperties.svelte';
 
   let context = getContext<Readable<ItemSheetContext>>('context');
 
   const localize = FoundryAdapter.localize;
 </script>
 
-<ItemFormGroup cssClass="stacked" labelText={localize('DND5E.ItemToolStatus')}>
-  <div class="form-fields">
-    <Checkbox
-    labelCssClass="checkbox"
-      document={$context.item}
-      field="system.equipped"
-      checked={$context.system.equipped}
-      disabled={!$context.editable}
-      >
-      {localize('DND5E.Equipped')}
-    </Checkbox>
-  </div>
-</ItemFormGroup>
-
 <ItemFormGroup
   labelText={localize('DND5E.ItemToolType')}
-  field="system.toolType"
+  field="system.type.value"
   let:inputId
 >
   <Select
     id={inputId}
     document={$context.item}
-    field="system.toolType"
-    value={$context.system.toolType}
+    field="system.type.value"
+    value={$context.system.type.value}
     disabled={!$context.editable}
-    >
+  >
     <SelectOptions data={$context.config.toolTypes} blank="" />
   </Select>
 </ItemFormGroup>
 
 <ItemFormGroup
   labelText={localize('DND5E.ItemToolBase')}
-  field="system.baseItem"
+  field="system.type.baseItem"
   let:inputId
 >
   <Select
     id={inputId}
     document={$context.item}
-    field="system.baseItem"
-    value={$context.system.baseItem}
+    field="system.type.baseItem"
+    value={$context.system.type.baseItem}
     disabled={!$context.editable}
-    >
+  >
     <SelectOptions data={$context.baseItems} blank="" />
   </Select>
+</ItemFormGroup>
+
+<ItemFormGroup
+  cssClass="stacked tool-properties"
+  labelText={localize('DND5E.ItemToolProperties')}
+>
+  <ItemProperties />
 </ItemFormGroup>
 
 <ItemFormGroup
@@ -71,7 +64,7 @@
     field="system.attunement"
     value={$context.system.attunement}
     disabled={!$context.editable}
-    >
+  >
     <SelectOptions data={$context.config.attunements} />
   </Select>
 </ItemFormGroup>
@@ -87,7 +80,7 @@
     field="system.proficient"
     value={$context.system.proficient}
     disabled={!$context.editable}
-    >
+  >
     <SelectOptions
       data={$context.config.proficiencyLevels}
       blank={localize('DND5E.Automatic')}
@@ -106,7 +99,7 @@
     field="system.ability"
     value={$context.system.ability}
     disabled={!$context.editable}
-    >
+  >
     <SelectOptions
       data={$context.config.abilities}
       labelProp="label"
@@ -127,7 +120,7 @@
     value={$context.system.bonus}
     dataset={{ formulaEditor: true }}
     disabled={!$context.editable}
-    />
+  />
 </ItemFormGroup>
 
 <ItemFormGroup
@@ -142,5 +135,5 @@
     field="system.chatFlavor"
     value={$context.system.chatFlavor}
     disabled={!$context.editable}
-    />
+  />
 </ItemFormGroup>

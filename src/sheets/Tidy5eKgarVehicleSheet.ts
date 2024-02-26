@@ -229,7 +229,7 @@ export class Tidy5eVehicleSheet
       actions: getActorActions(this.actor, this.itemFilterService),
       activateFoundryJQueryListeners: (node: HTMLElement) => {
         this._activateCoreListeners($(node));
-        super.activateListeners($(node));
+        getBaseActorSheet5e(this).activateListeners.call(this, $(node));
       },
       actorPortraitCommands:
         ActorPortraitRuntime.getEnabledPortraitMenuCommands(this.actor),
@@ -408,14 +408,7 @@ export class Tidy5eVehicleSheet
   }
 
   async _onDropSingleItem(itemData: any) {
-    const cargoTypes = [
-      'weapon',
-      'equipment',
-      'consumable',
-      'tool',
-      'loot',
-      'backpack',
-    ];
+    const cargoTypes = ['weapon', 'equipment', 'consumable', 'tool', 'loot'];
     const isCargo =
       cargoTypes.includes(itemData.type) &&
       this.currentTabId === CONSTANTS.TAB_VEHICLE_CARGO_AND_CREW;
@@ -436,7 +429,7 @@ export class Tidy5eVehicleSheet
     // Skip the default vehicle sheet handler, as we are handling all use cases.
     const baseActor5eClass = getBaseActorSheet5e(this);
     if (baseActor5eClass) {
-      return baseActor5eClass._onDropSingleItem(itemData);
+      return baseActor5eClass._onDropSingleItem.call(this, itemData);
     }
   }
 

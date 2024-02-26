@@ -17,11 +17,7 @@
   }));
 
   function confirmConvertCurrency() {
-    return FoundryAdapter.dialogConfirm({
-      title: `${localize('DND5E.CurrencyConvert')}`,
-      content: `<p>${localize('DND5E.CurrencyConvertHint')}</p>`,
-      yes: () => $context.actor.convertCurrency(),
-    });
+    new dnd5e.applications.CurrencyManager(actor).render(true);
   }
 
   function abbreviateCurrency(currencyKey: string) {
@@ -33,9 +29,6 @@
 
 <div class="inventory-currency">
   <ol class="currency">
-    <li class="currency-header" title={localize('DND5E.Currency')}>
-      <i class="fas fa-coins" />
-    </li>
     {#each currencies as currency}
       <li
         class="currency-item {currency.key}"
@@ -61,12 +54,12 @@
       <button
         type="button"
         class="currency-convert"
-        title={localize('DND5E.CurrencyConvertHint')}
+        title={localize('DND5E.CurrencyManager.Title')}
         on:click|stopPropagation|preventDefault={() => confirmConvertCurrency()}
         disabled={!$context.editable}
         tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
       >
-        <i class="fas fa-funnel-dollar" />
+        <i class="fas fa-coins" />
       </button>
     </li>
   </ol>
@@ -82,15 +75,7 @@
       list-style: none;
       gap: 0.5rem;
       margin: 0.25rem 0;
-
-      .currency-header {
-        flex: 0 0 0.8125rem;
-        text-align: center;
-
-        i {
-          font-size: 1.25rem;
-        }
-      }
+      padding: 0;
 
       .currency-item {
         display: flex;

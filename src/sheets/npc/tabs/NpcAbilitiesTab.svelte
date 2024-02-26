@@ -181,7 +181,7 @@
                   </ItemTableCell>
                   <ItemTableCell baseWidth="7.5rem">
                     {#if item.system.activation.type}
-                      {item.labels.activation}
+                      {item.labels?.activation ?? ''}
                     {/if}
                   </ItemTableCell>
                 {/if}
@@ -295,7 +295,7 @@
   .npc-abilities-content {
     display: flex;
     flex-direction: row;
-    gap: 1.5rem;
+    gap: 0.5rem;
     padding-right: 0.75rem;
     overflow-y: scroll;
 

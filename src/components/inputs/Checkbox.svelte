@@ -3,6 +3,13 @@
   import { ActiveEffectsHelper } from 'src/utils/active-effect';
   import { buildDataset } from 'src/utils/data';
 
+  // TODO: File this away somewhere.
+  type SvelteInputEvent = (
+    event: Event & {
+      currentTarget: EventTarget & HTMLInputElement;
+    },
+  ) => any;
+
   export let value: number | null = null;
   export let checked: boolean = false;
   export let field: string;
@@ -13,18 +20,21 @@
   export let dataset: Record<string, unknown> | null = null;
   export let labelCssClass: string | null = null;
   export let checkboxCssClass: string | null = null;
+  export let onDataPreparing: SvelteInputEvent | null = null;
 
   $: draftValue = value;
   $: datasetAttributes = buildDataset(dataset);
 
-  function saveChange(
+  async function saveChange(
     event: Event & {
       currentTarget: EventTarget & HTMLInputElement;
     },
   ) {
-    document.update({
+    let data: any = onDataPreparing?.(event) ?? {
       [field]: value ?? event.currentTarget.checked,
-    });
+    };
+
+    await document.update(data);
 
     draftValue = value;
   }

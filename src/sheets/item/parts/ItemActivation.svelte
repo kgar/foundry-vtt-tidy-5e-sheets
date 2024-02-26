@@ -22,7 +22,7 @@
   let:inputId
 >
   <div class="form-fields">
-    {#if $context.system.activation.type}
+    {#if $context.system.activation.type && !$context.isCostlessAction}
       <NumberInput
         id={inputId}
         value={$context.system.activation.cost}
@@ -41,8 +41,7 @@
       field="system.activation.type"
       disabled={!$context.editable}
     >
-      <option value=""></option>
-      <SelectOptions data={$context.config.abilityActivationTypes} />
+      <SelectOptions data={$context.config.abilityActivationTypes} blank="" />
     </Select>
   </div>
 </ItemFormGroup>
@@ -284,7 +283,7 @@
     </div>
   </ItemFormGroup>
 
-  {#if $context.system.uses.per === 'charges'}
+  {#if $context.isFormulaRecharge}
     <ItemFormGroup
       labelText={localize('DND5E.RecoveryFormula')}
       field="system.uses.recovery"

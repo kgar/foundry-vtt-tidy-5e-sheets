@@ -39,9 +39,13 @@
   @import './compatibility/apps-active-effects';
   @import './compatibility/tabs';
 
-  select option {
+  select :is(option, optgroup) {
     color: var(--t5e-primary-font-color);
     background: var(--t5e-background);
+  }
+
+  select optgroup {
+    background: var(--t5e-table-header-row-color);
   }
 
   // Enrichers
@@ -179,6 +183,12 @@
   &.sheet form,
   &.application-shell {
     @import './partials/buttons';
+    @import './partials/checkboxes';
+  }
+
+  // TODO: Make a whole suite of classes in a dedicated partial that can set colors, backgrounds, background-colors, etc., for the theme colors.
+  .primary-accent-color {
+    color: var(--t5e-primary-accent-color);
   }
 
   // TODO: Make a whole suite of classes in a dedicated partial that can set colors, backgrounds, background-colors, etc., for the theme colors.

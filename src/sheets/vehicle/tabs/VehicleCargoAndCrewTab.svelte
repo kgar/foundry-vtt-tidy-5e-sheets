@@ -52,7 +52,7 @@
     return FoundryAdapter.createItem({ type }, actor);
   }
 
-  function saveSection(
+  function saveNonItemSectionData(
     ev: Event & { currentTarget: HTMLInputElement },
     index: number,
     field: keyof CargoOrCrewItem,
@@ -153,7 +153,7 @@
                     field="name"
                     selectOnFocus={true}
                     onSaveChange={(ev) =>
-                      saveSection(ev, index, 'name', section)}
+                      saveNonItemSectionData(ev, index, 'name', section)}
                     value={item.name}
                     cssClass="editable-name"
                     disabled={!$context.editable}
@@ -194,7 +194,7 @@
                     <ItemTableCell
                       baseWidth={baseWidths[column.property] ?? '3.125rem'}
                     >
-                      {#if column.editable}
+                      {#if column.editable && !item.id}
                         <TextInput
                           document={item}
                           field={column.property}
@@ -202,7 +202,23 @@
                           selectOnFocus={true}
                           {value}
                           onSaveChange={(ev) =>
-                            saveSection(ev, index, column.property, section)}
+                            saveNonItemSectionData(
+                              ev,
+                              index,
+                              column.property,
+                              section,
+                            )}
+                          disabled={!$context.editable ||
+                            (column.property === 'quantity' &&
+                              $context.lockItemQuantity)}
+                        />
+                      {:else if column.editable && item.id}
+                        <TextInput
+                          document={item}
+                          field={column.property}
+                          allowDeltaChanges={isNumber}
+                          selectOnFocus={true}
+                          {value}
                           disabled={!$context.editable ||
                             (column.property === 'quantity' &&
                               $context.lockItemQuantity)}

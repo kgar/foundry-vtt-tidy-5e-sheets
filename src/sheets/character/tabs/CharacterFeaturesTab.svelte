@@ -185,7 +185,7 @@
                 {#if section.showUsagesColumn}
                   <ItemTableCell baseWidth="7.5rem">
                     {#if item.system.activation.type}
-                      {item.labels.activation}
+                      {item.labels?.activation ?? ''}
                     {/if}
                   </ItemTableCell>
                 {/if}
