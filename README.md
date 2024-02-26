@@ -12,20 +12,9 @@ D&D 5e sheet layouts for Foundry VTT, focused on a clean UI, user ergonomics, an
 Completely rewritten from the ground up, based on the [Tidy5e Sheet](https://github.com/sdenec/tidy5e-sheet) module by [sdenec](https://github.com/sdenec) and [4535992](https://github.com/p4535992).
 
 > [!IMPORTANT]
-> **Tidy 5e Sheets version 1 is here!**
+> **Tidy 5e Sheets version 2 (dnd5e 3.0.x) is here!**
 >
-> The Tidy 5e Sheets rewrite has passed through open beta and is now generally available.
->
-> For users of the original "Tidy5e Sheet" module, you will see a number of differences, but this module aims to carry forward the goals of the original sheets and continue to add new features.
->
-> See the [migration notes from the initial V1 release](<https://github.com/kgar/foundry-vtt-tidy-5e-sheets/releases/tag/v1.0.0>) for instructions on how to migrate GM/World settings into the new sheets. Migration is not required in order to use the module.
-
-> [!NOTE]
-> **dnd5e 3.0.0 Support Coming Soon**
->
-> Development on Tidy 5e Sheets for dnd5e 3.x has begun. When a minimum level of compatibility is achieved, the module will start out somewhat feature-light in comparison to the default sheets, and it will progressively grow into the new features available.
->
-> Once Tidy 5e Sheets goes to dnd5e 3.x, a final version of dnd5e 2.4.x support will be available indefinitely, but all subsequent development efforts will continue to keep in-step with the default sheets.
+> The Tidy 5e Sheets rewrite is now compatible with dnd5e 3.0.x. All development efforts will now continue in step with the default sheets.
 
 ---
 
@@ -41,14 +30,15 @@ Join us on the [Tidy 5e Sheets community discord](https://discord.gg/865zzNscRA)
 ## Installation
 
 It is preferable to install this module through Foundry, the Forge bazaar, or a similar interface for official Foundry pacakges.
-However, for those who wish to test the latest features before they release, this module is installable manually by URL.
+However, if you are also able to install via URL.
 
 Manual installation instructions:
 
 1. Inside the Foundry "Configuration and Setup" screen, click "Add-on Modules"
 2. Click "Install Module"
-3. In the "Manifest URL" field, paste the following url:
+3. In the "Manifest URL" field, paste in a manifest URL. The "Latest Stable" URL is: 
    `https://github.com/kgar/foundry-vtt-tidy-5e-sheets/releases/latest/download/module.json`
+   - See [the foundry package page](<https://foundryvtt.com/packages/tidy5e-sheet/>) for Last Versions for different dnd5e system versions.
 4. Click 'Install' and wait for installation to complete
 5. Enable the module in your game using the "Manage Module" button.
 6. Select the sheet layout from these options, depending on which sheet you are using:

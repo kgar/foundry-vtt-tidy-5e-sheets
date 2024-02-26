@@ -96,8 +96,8 @@
     }
   ],
   "compatibility": {
-    "minimum": "10",
-    "verified": "11"
+    "minimum": "11.315",
+    "verified": "11.315"
   },
   "relationships": {
     "systems": [
