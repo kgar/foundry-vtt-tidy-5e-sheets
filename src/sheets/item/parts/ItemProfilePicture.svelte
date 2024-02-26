@@ -50,6 +50,7 @@
   />
   <div class="item-menu" class:hidden={hideImageMenu}>
     <button
+      type="button"
       class="showItemArt"
       on:click={() => showItemArt($context.item)}
       tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
