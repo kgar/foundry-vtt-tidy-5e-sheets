@@ -254,4 +254,9 @@ export const CONSTANTS = {
   ACTIVATION_COST_ACTION: 'action',
   ACTIVATION_COST_BONUS: 'bonus',
   ACTIVATION_COST_REACTION: 'reaction',
+  ACTIVATION_COST_LEGENDARY: 'legendary',
+  ACTIVATION_COST_MYTHIC: 'mythic',
+  ACTIVATION_COST_LAIR: 'lair',
+  ACTIVATION_COST_CREW: 'crew',
+  ACTIVATION_COST_SPECIAL: 'special',
 } as const;

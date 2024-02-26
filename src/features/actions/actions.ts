@@ -7,6 +7,8 @@ import type { ActionItem, Actor5e, ActorActions } from 'src/types/types';
 import { isNil } from 'src/utils/data';
 import { scaleCantripDamageFormula, simplifyFormula } from 'src/utils/formula';
 import { debug, error } from 'src/utils/logging';
+import { SheetPreferencesService } from '../user-preferences/SheetPreferencesService';
+import type { ItemFilterService } from '../filtering/ItemFilterService';
 
 export type ActionSets = Record<string, Set<ActionItem>>;
 
@@ -21,21 +23,56 @@ const itemTypeSortValues: Record<string, number> = {
   loot: 9,
 };
 
-export function getActorActions(actor: Actor5e): ActorActions {
-  const filteredItems = actor.items
-    .filter(isItemInActionList)
-    .sort((a: Item5e, b: Item5e) => {
-      if (a.type !== b.type) {
-        return itemTypeSortValues[a.type] - itemTypeSortValues[b.type];
-      }
-      if (a.type === 'spell' && b.type === 'spell') {
-        return a.system.level - b.system.level;
-      }
-      return (a.sort || 0) - (b.sort || 0);
-    })
-    .map((item: Item5e) => mapActionItem(item));
+const activationTypeSortValues: Record<string, number> = {
+  action: 1,
+  bonus: 2,
+  reaction: 3,
+  legendary: 4,
+  mythic: 5,
+  lair: 6,
+  crew: 7,
+  special: 8,
+};
 
-  return buildActionSets(filteredItems);
+export function getActorActions(
+  actor: Actor5e,
+  itemFilterService: ItemFilterService
+): ActorActions {
+  try {
+    const sheetPreferences = SheetPreferencesService.getByType(actor.type);
+
+    const actionSortMode =
+      sheetPreferences.tabs?.[CONSTANTS.TAB_ACTOR_ACTIONS]?.sort ?? 'm';
+
+    let filteredItems = actor.items.filter(isItemInActionList);
+
+    filteredItems = itemFilterService.filter(
+      filteredItems,
+      CONSTANTS.TAB_ACTOR_ACTIONS
+    );
+
+    filteredItems = filteredItems
+      .sort((a: Item5e, b: Item5e) => {
+        if (actionSortMode === 'a') {
+          return a.name.localeCompare(b.name);
+        }
+
+        // Sort by Arbitrary Action List Rules
+        if (a.type !== b.type) {
+          return itemTypeSortValues[a.type] - itemTypeSortValues[b.type];
+        }
+        if (a.type === 'spell' && b.type === 'spell') {
+          return a.system.level - b.system.level;
+        }
+        return (a.sort || 0) - (b.sort || 0);
+      })
+      .map((item: Item5e) => mapActionItem(item));
+
+    return buildActionSets(filteredItems);
+  } catch (e) {
+    error('An error occurred while getting actions', false, e);
+    return {};
+  }
 }
 
 export function isItemInActionList(item: Item5e): boolean {
@@ -198,27 +235,44 @@ function hasRange(item: Item5e): boolean {
   return !isNil(item.system.range?.units);
 }
 
-function buildActionSets(filteredItems: any) {
+function buildActionSets(filteredItems: any): ActionSets {
   const customMappings = ActionListRuntime.getActivationTypeMappings();
-  return filteredItems.reduce((acc: ActionSets, actionItem: ActionItem) => {
-    try {
-      const activationType = getActivationType(
-        actionItem.item.system.activation?.type,
-        customMappings
-      );
-      if (!acc[activationType]) {
-        acc[activationType] = new Set<ActionItem>();
+
+  // Build action sets based on what items are available.
+  let actionSets = filteredItems.reduce(
+    (acc: ActionSets, actionItem: ActionItem) => {
+      try {
+        const activationType = getActivationType(
+          actionItem.item.system.activation?.type,
+          customMappings
+        );
+        if (!acc[activationType]) {
+          acc[activationType] = new Set<ActionItem>();
+        }
+        acc[activationType].add(actionItem);
+        return acc;
+      } catch (e) {
+        error('error trying to digest item', true, {
+          name: actionItem.item.name,
+          e,
+        });
+        return acc;
       }
-      acc[activationType].add(actionItem);
-      return acc;
-    } catch (e) {
-      error('error trying to digest item', true, {
-        name: actionItem.item.name,
-        e,
-      });
-      return acc;
-    }
-  }, {});
+    },
+    {}
+  );
+
+  // Sort action sets deterministically.
+  return Object.keys(actionSets)
+    .sort(
+      (a, b) =>
+        (activationTypeSortValues[a] || Number.MAX_VALUE) -
+        (activationTypeSortValues[b] || Number.MAX_VALUE)
+    )
+    .reduce<ActionSets>((result, key) => {
+      result[key] = actionSets[key];
+      return result;
+    }, {});
 }
 
 function getActivationType(
@@ -230,19 +284,11 @@ function getActivationType(
     return customMapping;
   }
 
-  switch (activationType) {
-    case 'action':
-    case 'bonus':
-    case 'crew':
-    case 'lair':
-    case 'legendary':
-    case 'mythic':
-    case 'special':
-    case 'reaction':
-      return activationType;
-    default:
-      return 'other';
+  if (activationType in activationTypeSortValues) {
+    return activationType;
   }
+
+  return 'other';
 }
 
 function isActiveItem(activationType: string) {

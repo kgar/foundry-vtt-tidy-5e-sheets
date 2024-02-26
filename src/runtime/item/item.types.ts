@@ -21,5 +21,5 @@ export type ActorTypesToFilterTabs = Record<ActorType, FilterTabsToCategories>;
 export type ConfiguredItemFilter = ItemFilter & {
   value: boolean | null;
 };
-type ActorFilterCategories = Record<Category, ConfiguredItemFilter[]>;
+export type ActorFilterCategories = Record<Category, ConfiguredItemFilter[]>;
 export type ActorFilters = Record<TabId, ActorFilterCategories>;

@@ -3,7 +3,7 @@
 </script>
 
 <section
-  class="utility-toolbar"
+  class="utility-toolbar {$$props.class ?? ''}"
   data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.UTILITY_TOOLBAR}
 >
   <slot />
