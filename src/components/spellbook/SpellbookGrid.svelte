@@ -22,7 +22,11 @@
   export let section: any;
   export let spells: Item5e[];
   export let cssClass: string | null = null;
-  export let filteredItemIdSet: Set<string> | null = null;
+  /**
+   * An optional subset of item IDs which will hide all other items not included in this set. 
+   * Useful for showing only search results, for example.
+   */
+  export let visibleItemIdSubset: Set<string> | null = null;
 
   let context =
     getContext<Readable<CharacterSheetContext | NpcSheetContext>>('context');
@@ -93,7 +97,7 @@
       {#each spells as spell}
         {@const spellImgUrl = FoundryAdapter.getSpellImageUrl($context, spell)}
         {@const hidden =
-          filteredItemIdSet !== null && !filteredItemIdSet.has(spell.id)}
+          visibleItemIdSubset !== null && !visibleItemIdSubset.has(spell.id)}
         <button
           type="button"
           class="spell {FoundryAdapter.getSpellRowClasses(spell)} icon-button"

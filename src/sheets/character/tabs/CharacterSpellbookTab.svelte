@@ -84,15 +84,15 @@
   {:else}
     {#each $context.spellbook as section (section.label)}
       {@const classSpells = tryFilterByClass(section.spells)}
-      {@const filteredItemIdSet = FoundryAdapter.searchItems(
+      {@const visibleItemIdSubset = FoundryAdapter.searchItems(
         searchCriteria,
         classSpells,
       )}
-      {#if (searchCriteria.trim() === '' && $context.unlocked) || filteredItemIdSet.size > 0}
+      {#if (searchCriteria.trim() === '' && $context.unlocked) || visibleItemIdSubset.size > 0}
         {#if layoutMode === 'list'}
-          <SpellbookList spells={classSpells} {section} {filteredItemIdSet} />
+          <SpellbookList spells={classSpells} {section} {visibleItemIdSubset} />
         {:else}
-          <SpellbookGrid spells={classSpells} {section} {filteredItemIdSet} />
+          <SpellbookGrid spells={classSpells} {section} {visibleItemIdSubset} />
         {/if}
       {/if}
     {/each}

@@ -106,7 +106,7 @@
     {/if}
     {#each $context.features as section}
       {#if $context.unlocked || section.items.length}
-        {@const filteredItemIdSet = FoundryAdapter.searchItems(
+        {@const visibleItemIdSubset = FoundryAdapter.searchItems(
           searchCriteria,
           section.items,
         )}
@@ -142,8 +142,8 @@
                 }}
                 {item}
                 cssClass={FoundryAdapter.getInventoryRowClasses(item, ctx)}
-                hidden={filteredItemIdSet !== null &&
-                  !filteredItemIdSet.has(item.id)}
+                hidden={visibleItemIdSubset !== null &&
+                  !visibleItemIdSubset.has(item.id)}
               >
                 <ItemTableCell primary={true}>
                   <ItemUseButton disabled={!$context.editable} {item} />
@@ -247,7 +247,7 @@
         {:else}
           <div class="flex-1 small-padding-bottom flex-column small-gap">
             {#each $context.spellbook as section (section.label)}
-              {@const filteredItemIdSet = FoundryAdapter.searchItems(
+              {@const visibleItemIdSubset = FoundryAdapter.searchItems(
                 searchCriteria,
                 section.spells,
               )}
@@ -261,13 +261,13 @@
                   spellComponentsBaseWidth="3.125rem"
                   targetBaseWidth="5.625rem"
                   usageBaseWidth="5.625rem"
-                  {filteredItemIdSet}
+                  {visibleItemIdSubset}
                 />
               {:else}
                 <SpellbookGrid
                   spells={section.spells}
                   {section}
-                  {filteredItemIdSet}
+                  {visibleItemIdSubset}
                 />
               {/if}
             {/each}

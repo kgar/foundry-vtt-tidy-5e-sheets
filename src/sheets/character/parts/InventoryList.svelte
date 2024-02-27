@@ -35,7 +35,11 @@
   export let lockControls: boolean = false;
   export let allowFavoriteIconNextToName: boolean = true;
   export let includeWeightColumn: boolean = true;
-  export let filteredItemIdSet: Set<string> | null = null;
+  /**
+   * An optional subset of item IDs which will hide all other items not included in this set.
+   * Useful for showing only search results, for example.
+   */
+  export let visibleItemIdSubset: Set<string> | null = null;
 
   let context = getContext<Readable<CharacterSheetContext>>('context');
 
@@ -98,7 +102,8 @@
           }}
           let:toggleSummary
           cssClass={getInventoryRowClasses(item)}
-          hidden={filteredItemIdSet !== null && !filteredItemIdSet.has(item.id)}
+          hidden={visibleItemIdSubset !== null &&
+            !visibleItemIdSubset.has(item.id)}
         >
           <ItemTableCell primary={true} title={item.name}>
             <ItemUseButton disabled={!$context.editable} {item} />

@@ -82,11 +82,11 @@
     <Notice>{localize('TIDY5E.EmptySection')}</Notice>
   {:else}
     {#each $context.features as section (section.label)}
-      {@const filteredItemIdSet = FoundryAdapter.searchItems(
+      {@const visibleItemIdSubset = FoundryAdapter.searchItems(
         searchCriteria,
         section.items,
       )}
-      {#if (searchCriteria.trim() === '' && $context.unlocked) || filteredItemIdSet.size > 0}
+      {#if (searchCriteria.trim() === '' && $context.unlocked) || visibleItemIdSubset.size > 0}
         <ItemTable location={section.label}>
           <svelte:fragment slot="header">
             <ItemTableHeaderRow>
@@ -142,7 +142,7 @@
                   type: CONSTANTS.CONTEXT_MENU_TYPE_ITEMS,
                   id: item.id,
                 }}
-                hidden={!filteredItemIdSet.has(item.id)}
+                hidden={!visibleItemIdSubset.has(item.id)}
               >
                 <ItemTableCell primary={true}>
                   <ItemUseButton disabled={!$context.editable} {item} />

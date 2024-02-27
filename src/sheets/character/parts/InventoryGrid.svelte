@@ -1,6 +1,5 @@
 <script lang="ts">
   import type {
-    ActorSheetContext,
     CharacterSheetContext,
     ItemCardStore,
     NpcSheetContext,
@@ -21,8 +20,11 @@
 
   export let section: any;
   export let items: Item5e[];
-  export let filteredItemIdSet: Set<string> | null = null;
-
+  /**
+   * An optional subset of item IDs which will hide all other items not included in this set.
+   * Useful for showing only search results, for example.
+   */
+  export let visibleItemIdSubset: Set<string> | null = null;
   let context =
     getContext<Readable<CharacterSheetContext | NpcSheetContext>>('context');
   let card = getContext<Writable<ItemCardStore>>('card');
@@ -90,7 +92,8 @@
     <ItemTableHeaderRow>
       <ItemTableColumn primary={true}>
         <span class="inventory-primary-column-label">
-          {localize(section.label)} ({filteredItemIdSet?.size ?? items.length})
+          {localize(section.label)} ({visibleItemIdSubset?.size ??
+            items.length})
         </span>
       </ItemTableColumn>
     </ItemTableHeaderRow>
@@ -99,7 +102,7 @@
     {#each items as item (item.id)}
       {@const ctx = $context.itemContext[item.id]}
       {@const hidden =
-        filteredItemIdSet !== null && !filteredItemIdSet.has(item.id)}
+        visibleItemIdSubset !== null && !visibleItemIdSubset.has(item.id)}
       <button
         type="button"
         class="item {getInventoryRowClasses(item)} transparent-button"
