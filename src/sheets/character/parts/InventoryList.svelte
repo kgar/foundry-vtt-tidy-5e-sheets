@@ -35,6 +35,7 @@
   export let lockControls: boolean = false;
   export let allowFavoriteIconNextToName: boolean = true;
   export let includeWeightColumn: boolean = true;
+  export let filteredItemIdSet: Set<string> | null = null;
 
   let context = getContext<Readable<CharacterSheetContext>>('context');
 
@@ -97,6 +98,7 @@
           }}
           let:toggleSummary
           cssClass={getInventoryRowClasses(item)}
+          hidden={filteredItemIdSet !== null && !filteredItemIdSet.has(item.id)}
         >
           <ItemTableCell primary={true} title={item.name}>
             <ItemUseButton disabled={!$context.editable} {item} />

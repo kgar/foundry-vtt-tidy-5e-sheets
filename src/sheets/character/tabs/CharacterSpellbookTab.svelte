@@ -83,14 +83,16 @@
     <NoSpells editable={$context.unlocked} />
   {:else}
     {#each $context.spellbook as section (section.label)}
-      {@const filteredSpells = tryFilterByClass(
-        FoundryAdapter.getFilteredItems(searchCriteria, section.spells),
+      {@const classSpells = tryFilterByClass(section.spells)}
+      {@const filteredItemIdSet = FoundryAdapter.getFilteredItemIdSet(
+        searchCriteria,
+        classSpells,
       )}
-      {#if (searchCriteria.trim() === '' && $context.unlocked) || filteredSpells.length > 0}
+      {#if (searchCriteria.trim() === '' && $context.unlocked) || filteredItemIdSet.size > 0}
         {#if layoutMode === 'list'}
-          <SpellbookList spells={filteredSpells} {section} />
+          <SpellbookList spells={classSpells} {section} {filteredItemIdSet} />
         {:else}
-          <SpellbookGrid spells={filteredSpells} {section} />
+          <SpellbookGrid spells={classSpells} {section} {filteredItemIdSet} />
         {/if}
       {/if}
     {/each}
