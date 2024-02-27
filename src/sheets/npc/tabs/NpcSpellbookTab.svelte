@@ -48,19 +48,24 @@
     <NoSpells editable={$context.unlocked} />
   {:else}
     {#each $context.spellbook as section (section.label)}
-      {@const filteredSpells = FoundryAdapter.getFilteredItems(
+      {@const filteredItemIdSet = FoundryAdapter.getFilteredItemIdSet(
         searchCriteria,
         section.spells,
       )}
-      {#if (searchCriteria.trim() === '' && $context.unlocked) || filteredSpells.length > 0}
+      {#if (searchCriteria.trim() === '' && $context.unlocked) || filteredItemIdSet.size > 0}
         {#if layoutMode === 'list'}
           <SpellbookList
             allowFavorites={false}
-            spells={filteredSpells}
+            spells={section.spells}
             {section}
+            {filteredItemIdSet}
           />
         {:else}
-          <SpellbookGrid spells={filteredSpells} {section} />
+          <SpellbookGrid
+            spells={section.spells}
+            {section}
+            {filteredItemIdSet}
+          />
         {/if}
       {/if}
     {/each}

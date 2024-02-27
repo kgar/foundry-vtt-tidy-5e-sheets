@@ -37,6 +37,7 @@
   export let spells: any[];
   export let allowFavorites: boolean = true;
   export let cssClass: string | null = null;
+  export let filteredItemIdSet: Set<string> | null = null;
 
   // TODO: replace this with column specification array default and then allow the caller to customize the table.
   export let includeSchool: boolean = true;
@@ -123,6 +124,8 @@
           }}
           let:toggleSummary
           cssClass={FoundryAdapter.getSpellRowClasses(spell)}
+          hidden={filteredItemIdSet !== null &&
+            !filteredItemIdSet.has(spell.id)}
         >
           <ItemTableCell primary={true}>
             <ItemUseButton

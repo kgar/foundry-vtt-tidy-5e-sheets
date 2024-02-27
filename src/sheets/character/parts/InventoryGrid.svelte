@@ -21,6 +21,7 @@
 
   export let section: any;
   export let items: Item5e[];
+  export let filteredItemIdSet: Set<string> | null = null;
 
   let context =
     getContext<Readable<CharacterSheetContext | NpcSheetContext>>('context');
@@ -89,7 +90,7 @@
     <ItemTableHeaderRow>
       <ItemTableColumn primary={true}>
         <span class="inventory-primary-column-label">
-          {localize(section.label)} ({items.length})
+          {localize(section.label)} ({filteredItemIdSet?.size ?? items.length})
         </span>
       </ItemTableColumn>
     </ItemTableHeaderRow>
@@ -97,11 +98,14 @@
   <div class="items" slot="body">
     {#each items as item (item.id)}
       {@const ctx = $context.itemContext[item.id]}
-
+      {@const hidden =
+        filteredItemIdSet !== null && !filteredItemIdSet.has(item.id)}
       <button
         type="button"
         class="item {getInventoryRowClasses(item)} transparent-button"
         class:show-item-count-on-hover={!$settingStore.alwaysShowItemQuantity}
+        class:hidden
+        aria-hidden={hidden}
         data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
         data-context-menu-entity-id={item.id}
         on:click={(event) =>
@@ -278,8 +282,7 @@
 
         &.equipped .item-image {
           box-shadow:
-            0 0 0rem 0.0625rem var(--t5e-magic-accent-color)
-              inset,
+            0 0 0rem 0.0625rem var(--t5e-magic-accent-color) inset,
             0 0 0 0.0625rem var(--t5e-magic-accent-color) inset,
             0 0 0.1875rem 0.125rem var(--t5e-magic-accent-color) inset;
           border: none;

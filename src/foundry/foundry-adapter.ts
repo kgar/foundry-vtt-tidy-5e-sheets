@@ -420,11 +420,15 @@ export const FoundryAdapter = {
 
     return classImage ?? spell.img;
   },
-  getFilteredItems(searchCriteria: string, items: Item5e[]) {
-    return items.filter(
-      (x: any) =>
-        searchCriteria.trim() === '' ||
-        x.name.toLowerCase().includes(searchCriteria.toLowerCase())
+  getFilteredItemIdSet(searchCriteria: string, items: Item5e[]): Set<string> {
+    return new Set(
+      items
+        .filter(
+          (x: any) =>
+            searchCriteria.trim() === '' ||
+            x.name.toLowerCase().includes(searchCriteria.toLowerCase())
+        )
+        .map((x) => x.id)
     );
   },
   getFilteredActionItems(searchCriteria: string, items: Set<ActionItem>) {
