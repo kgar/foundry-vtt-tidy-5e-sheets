@@ -297,7 +297,7 @@ export const FoundryAdapter = {
   getInventoryRowClasses(item: Item5e, ctx?: any, extras?: string[]): string {
     const itemClasses: string[] = [];
 
-    if (FoundryAdapter.getProperty(item, 'system.properties.mgc')) {
+    if (item?.system?.properties?.has('mgc')) {
       itemClasses.push('magic-item');
     }
 
@@ -420,11 +420,15 @@ export const FoundryAdapter = {
 
     return classImage ?? spell.img;
   },
-  getFilteredItems(searchCriteria: string, items: Item5e[]) {
-    return items.filter(
-      (x: any) =>
-        searchCriteria.trim() === '' ||
-        x.name.toLowerCase().includes(searchCriteria.toLowerCase())
+  searchItems(searchCriteria: string, items: Item5e[]): Set<string> {
+    return new Set(
+      items
+        .filter(
+          (item: any) =>
+            searchCriteria.trim() === '' ||
+            item.name.toLowerCase().includes(searchCriteria.toLowerCase())
+        )
+        .map((item) => item.id)
     );
   },
   getFilteredActionItems(searchCriteria: string, items: Set<ActionItem>) {

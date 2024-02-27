@@ -18,7 +18,7 @@
 
 <div
   class="info-card {item.attunement?.cls ?? ''}"
-  class:magic-item={item.system.properties?.mgc}
+  class:magic-item={item.system.properties?.has('mgc')}
   class:equipped={item.system.equipped}
   data-item-id={item._id}
 >

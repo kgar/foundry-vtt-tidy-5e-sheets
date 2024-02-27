@@ -35,6 +35,11 @@
   export let lockControls: boolean = false;
   export let allowFavoriteIconNextToName: boolean = true;
   export let includeWeightColumn: boolean = true;
+  /**
+   * An optional subset of item IDs which will hide all other items not included in this set.
+   * Useful for showing only search results, for example.
+   */
+  export let visibleItemIdSubset: Set<string> | null = null;
 
   let context = getContext<Readable<CharacterSheetContext>>('context');
 
@@ -97,6 +102,8 @@
           }}
           let:toggleSummary
           cssClass={getInventoryRowClasses(item)}
+          hidden={visibleItemIdSubset !== null &&
+            !visibleItemIdSubset.has(item.id)}
         >
           <ItemTableCell primary={true} title={item.name}>
             <ItemUseButton disabled={!$context.editable} {item} />
@@ -111,7 +118,7 @@
                 data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_NAME}
                 >{item.name}</span
               >
-              {#if item.system?.properties?.amm}
+              {#if item.system?.properties?.has('amm')}
                 <span class="ammo">
                   <AmmoSelector {item} />
                 </span>
