@@ -111,7 +111,7 @@
                 data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_NAME}
                 >{item.name}</span
               >
-              {#if item.system?.properties?.amm}
+              {#if item.system?.properties?.has('amm')}
                 <span class="ammo">
                   <AmmoSelector {item} />
                 </span>
