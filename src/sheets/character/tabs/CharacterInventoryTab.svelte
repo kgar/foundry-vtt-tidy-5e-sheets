@@ -60,22 +60,27 @@
     <Notice>{localize('TIDY5E.EmptySection')}</Notice>
   {:else}
     {#each $context.inventory as section (section.label)}
-      {@const filteredItems = FoundryAdapter.getFilteredItems(
+      {@const visibleItemIdSubset = FoundryAdapter.searchItems(
         searchCriteria,
         section.items,
       )}
-      {#if (searchCriteria.trim() === '' && $context.unlocked) || filteredItems.length > 0}
+      {#if (searchCriteria.trim() === '' && $context.unlocked) || visibleItemIdSubset.size > 0}
         {#if layoutMode === 'list'}
           <InventoryList
             primaryColumnName="{localize(
               section.label,
-            )} ({filteredItems.length})"
-            items={filteredItems}
+            )} ({visibleItemIdSubset.size})"
             extraInventoryRowClasses={section.css}
             {section}
+            items={section.items}
+            {visibleItemIdSubset}
           />
         {:else}
-          <InventoryGrid items={filteredItems} {section} />
+          <InventoryGrid
+            items={section.items}
+            {section}
+            {visibleItemIdSubset}
+          />
         {/if}
       {/if}
     {/each}

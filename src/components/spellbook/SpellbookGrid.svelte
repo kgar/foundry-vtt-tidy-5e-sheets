@@ -22,6 +22,11 @@
   export let section: any;
   export let spells: Item5e[];
   export let cssClass: string | null = null;
+  /**
+   * An optional subset of item IDs which will hide all other items not included in this set. 
+   * Useful for showing only search results, for example.
+   */
+  export let visibleItemIdSubset: Set<string> | null = null;
 
   let context =
     getContext<Readable<CharacterSheetContext | NpcSheetContext>>('context');
@@ -91,9 +96,13 @@
     <div class="spells" slot="body">
       {#each spells as spell}
         {@const spellImgUrl = FoundryAdapter.getSpellImageUrl($context, spell)}
+        {@const hidden =
+          visibleItemIdSubset !== null && !visibleItemIdSubset.has(spell.id)}
         <button
           type="button"
           class="spell {FoundryAdapter.getSpellRowClasses(spell)} icon-button"
+          class:hidden
+          aria-hidden={hidden}
           data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
           data-context-menu-entity-id={spell.id}
           on:click={(event) =>
@@ -114,7 +123,6 @@
           {#if FoundryAdapter.tryGetFlag(spell, 'favorite')}
             <GridPaneFavoriteIcon />
           {/if}
-
           <div class="spell-name">
             <div
               class="spell-image"

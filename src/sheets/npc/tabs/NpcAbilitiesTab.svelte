@@ -106,7 +106,7 @@
     {/if}
     {#each $context.features as section}
       {#if $context.unlocked || section.items.length}
-        {@const filteredItems = FoundryAdapter.getFilteredItems(
+        {@const visibleItemIdSubset = FoundryAdapter.searchItems(
           searchCriteria,
           section.items,
         )}
@@ -130,7 +130,7 @@
             </ItemTableHeaderRow>
           </svelte:fragment>
           <svelte:fragment slot="body">
-            {#each filteredItems as item}
+            {#each section.items as item}
               {@const ctx = $context.itemContext[item.id]}
               <ItemTableRow
                 let:toggleSummary
@@ -142,6 +142,8 @@
                 }}
                 {item}
                 cssClass={FoundryAdapter.getInventoryRowClasses(item, ctx)}
+                hidden={visibleItemIdSubset !== null &&
+                  !visibleItemIdSubset.has(item.id)}
               >
                 <ItemTableCell primary={true}>
                   <ItemUseButton disabled={!$context.editable} {item} />
@@ -245,13 +247,13 @@
         {:else}
           <div class="flex-1 small-padding-bottom flex-column small-gap">
             {#each $context.spellbook as section (section.label)}
-              {@const filteredSpells = FoundryAdapter.getFilteredItems(
+              {@const visibleItemIdSubset = FoundryAdapter.searchItems(
                 searchCriteria,
                 section.spells,
               )}
               {#if layoutMode === 'list'}
                 <SpellbookList
-                  spells={filteredSpells}
+                  spells={section.spells}
                   {section}
                   allowFavorites={false}
                   includeRange={false}
@@ -259,9 +261,14 @@
                   spellComponentsBaseWidth="3.125rem"
                   targetBaseWidth="5.625rem"
                   usageBaseWidth="5.625rem"
+                  {visibleItemIdSubset}
                 />
               {:else}
-                <SpellbookGrid spells={filteredSpells} {section} />
+                <SpellbookGrid
+                  spells={section.spells}
+                  {section}
+                  {visibleItemIdSubset}
+                />
               {/if}
             {/each}
           </div>

@@ -22,6 +22,7 @@
   export let contextMenu: { type: string; id: string } | null = null;
   export let cssClass: string = '';
   export let itemCardContentTemplate: ItemCardContentComponent | null = null;
+  export let hidden: boolean = false;
 
   $: draggable = item ?? effect;
 
@@ -141,6 +142,8 @@
 <div
   class="item-table-row-container"
   class:show-item-count-on-hover={!$settingStore.alwaysShowItemQuantity}
+  class:hidden
+  aria-hidden={hidden}
   data-context-menu={contextMenu?.type}
   data-context-menu-entity-id={contextMenu?.id}
   on:mousedown={(event) => dispatcher('mousedown', event)}
