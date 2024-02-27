@@ -19,10 +19,9 @@
 
 .tidy5e-sheet {
   .window-content {
-    // background: url(/images/parchment-tidy-5e.webp) repeat;
-    background: url(/systems/dnd5e/ui/texture1.webp) no-repeat top center / 150%
-        auto,
-      #f1ebe8 url(/systems/dnd5e/ui/texture2.webp) no-repeat bottom center /
+    background: url(images/parchment-texture-top.webp) no-repeat top center /
+        150% auto,
+      #f1ebe8 url(images/parchment-texture-bottom.webp) no-repeat bottom center /
         150% auto;
   }
 

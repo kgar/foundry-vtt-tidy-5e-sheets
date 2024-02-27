@@ -10,7 +10,7 @@ export const defaultLightTheme: Tidy5eTheme = {
       "'Modesto Condensed', 'Palatino Linotype', serif",
     '--t5e-body-font-family': "'Signika', sans-serif",
     '--t5e-primary-font-color': 'rgba(0, 0, 0, 0.9)',
-    '--t5e-background': 'rgba(236, 233, 223, 1)',
+    '--t5e-background': '#f1ebe8',
     '--t5e-faintest-color': 'rgba(0, 0, 0, 0.05)',
     '--t5e-faint-color': 'rgba(0, 0, 0, 0.1)',
     '--t5e-light-color': 'rgba(0, 0, 0, 0.25)',
@@ -98,7 +98,7 @@ export const defaultLightTheme: Tidy5eTheme = {
     '--t5e-inventory-grid-image-contrast-text-shadow-color': 'rgba(0, 0, 0, 1)',
     '--t5e-inventory-grid-hover-use-item-contrast-text-shadow-color':
       'rgba(255, 255, 255, 1)',
-    '--t5e-item-info-card-background': "url('../../ui/parchment.jpg')",
+    '--t5e-item-info-card-background': `url(images/parchment-texture-top.webp) no-repeat top center / 150% auto, #f1ebe8 url(images/parchment-texture-bottom.webp) no-repeat bottom center / 150% auto;`,
     '--t5e-content-entity-link-color': 'var(--t5e-primary-font-color)',
     '--t5e-content-entity-link-hover-color': 'var(--t5e-white)',
     '--t5e-content-entity-link-background': 'var(--t5e-faintest-color)',
