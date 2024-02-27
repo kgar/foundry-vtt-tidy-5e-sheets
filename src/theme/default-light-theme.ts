@@ -98,7 +98,7 @@ export const defaultLightTheme: Tidy5eTheme = {
     '--t5e-inventory-grid-image-contrast-text-shadow-color': 'rgba(0, 0, 0, 1)',
     '--t5e-inventory-grid-hover-use-item-contrast-text-shadow-color':
       'rgba(255, 255, 255, 1)',
-    '--t5e-item-info-card-background': `url(images/parchment-texture-top.webp) no-repeat top center / 150% auto, #f1ebe8 url(images/parchment-texture-bottom.webp) no-repeat bottom center / 150% auto;`,
+    '--t5e-item-info-card-background': `url(../../modules/tidy5e-sheet/images/parchment-texture-top.webp) no-repeat top center / 150% auto, #f1ebe8 url(../../modules/tidy5e-sheet/images/parchment-texture-bottom.webp) no-repeat bottom center / 150% auto;`,
     '--t5e-content-entity-link-color': 'var(--t5e-primary-font-color)',
     '--t5e-content-entity-link-hover-color': 'var(--t5e-white)',
     '--t5e-content-entity-link-background': 'var(--t5e-faintest-color)',
