@@ -84,7 +84,7 @@
   {:else}
     {#each $context.spellbook as section (section.label)}
       {@const classSpells = tryFilterByClass(section.spells)}
-      {@const filteredItemIdSet = FoundryAdapter.getFilteredItemIdSet(
+      {@const filteredItemIdSet = FoundryAdapter.searchItems(
         searchCriteria,
         classSpells,
       )}

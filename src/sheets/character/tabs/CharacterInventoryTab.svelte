@@ -60,7 +60,7 @@
     <Notice>{localize('TIDY5E.EmptySection')}</Notice>
   {:else}
     {#each $context.inventory as section (section.label)}
-      {@const filteredItemIdSet = FoundryAdapter.getFilteredItemIdSet(
+      {@const filteredItemIdSet = FoundryAdapter.searchItems(
         searchCriteria,
         section.items,
       )}

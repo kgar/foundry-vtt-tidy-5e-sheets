@@ -420,7 +420,7 @@ export const FoundryAdapter = {
 
     return classImage ?? spell.img;
   },
-  getFilteredItemIdSet(searchCriteria: string, items: Item5e[]): Set<string> {
+  searchItems(searchCriteria: string, items: Item5e[]): Set<string> {
     return new Set(
       items
         .filter(

@@ -48,7 +48,7 @@
     <NoSpells editable={$context.unlocked} />
   {:else}
     {#each $context.spellbook as section (section.label)}
-      {@const filteredItemIdSet = FoundryAdapter.getFilteredItemIdSet(
+      {@const filteredItemIdSet = FoundryAdapter.searchItems(
         searchCriteria,
         section.spells,
       )}
