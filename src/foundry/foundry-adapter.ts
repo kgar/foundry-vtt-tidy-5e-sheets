@@ -424,11 +424,11 @@ export const FoundryAdapter = {
     return new Set(
       items
         .filter(
-          (x: any) =>
+          (item: any) =>
             searchCriteria.trim() === '' ||
-            x.name.toLowerCase().includes(searchCriteria.toLowerCase())
+            item.name.toLowerCase().includes(searchCriteria.toLowerCase())
         )
-        .map((x) => x.id)
+        .map((item) => item.id)
     );
   },
   getFilteredActionItems(searchCriteria: string, items: Set<ActionItem>) {
