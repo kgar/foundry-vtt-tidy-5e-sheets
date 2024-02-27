@@ -334,6 +334,7 @@
         border-radius: 0;
         background-repeat: no-repeat;
         background-size: cover;
+        background-position: 50% 0;
 
         i {
           color: var(--t5e-tertiary-color);

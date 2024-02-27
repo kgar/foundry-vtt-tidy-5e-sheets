@@ -45,6 +45,7 @@
     flex: 0 0 var(--t5e-image-size-override, 1.5rem);
     height: var(--t5e-image-size-override, 1.5rem);
     background-size: cover;
+    background-position: 50% 0;
     display: flex;
     flex-direction: row;
     align-items: center;
