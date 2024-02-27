@@ -18,14 +18,14 @@
     },
     ...$context.actor.items
       .filter(
-        (x: any) =>
-          x.system.consumableType === 'ammo' &&
-          (!$settingStore.showEquippedAmmoOnly || x.system.equipped),
+        (item: any) =>
+          item.system.type?.value === 'ammo' &&
+          (!$settingStore.showEquippedAmmoOnly || item.system.equipped),
       )
-      .map((x: any) => ({
-        text: `${x.name} (${x.system.quantity})`,
-        value: x.id,
-        ammo: x,
+      .map((item: any) => ({
+        text: `${item.name} (${item.system.quantity})`,
+        value: item.id,
+        ammo: item,
       })),
   ];
 

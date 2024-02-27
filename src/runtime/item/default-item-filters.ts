@@ -1,9 +1,5 @@
 import { CONSTANTS } from 'src/constants';
-import type {
-  FilterCategoriesToFilters,
-  FilterTabsToCategories,
-  ItemFilter,
-} from './item.types';
+import type { FilterCategoriesToFilters, ItemFilter } from './item.types';
 
 export const defaultItemFilters = {
   activationCostAction: {

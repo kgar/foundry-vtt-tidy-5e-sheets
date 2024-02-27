@@ -297,7 +297,7 @@ export const FoundryAdapter = {
   getInventoryRowClasses(item: Item5e, ctx?: any, extras?: string[]): string {
     const itemClasses: string[] = [];
 
-    if (FoundryAdapter.getProperty(item, 'system.properties.mgc')) {
+    if (item?.system?.properties?.has('mgc')) {
       itemClasses.push('magic-item');
     }
 

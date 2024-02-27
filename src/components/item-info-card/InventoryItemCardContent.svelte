@@ -20,7 +20,7 @@
 
 <div
   class="info-card {item.attunement?.cls ?? ''}"
-  class:magic-item={item.system.properties?.mgc}
+  class:magic-item={item.system.properties?.has('mgc')}
   class:equipped={item.system.equipped}
   data-item-id={item._id}
   data-item-index={item._id}
@@ -28,16 +28,16 @@
   <p class="info-card-name">
     {item.name}
   </p>
-  {#if item.system.properties?.amm}
+  {#if item.system.properties?.has('amm')}
     <p class="ammo-switch" data-id={item._id}>
       <AmmoSelector {item} />
     </p>
     <HorizontalLineSeparator borderColor="faint" />
   {/if}
 
-  {#if item.system.properties?.mgc || ctx?.attunement}
+  {#if item.system.properties?.has('mgc') || ctx?.attunement}
     <div class="info-card-states">
-      {#if item.system.properties?.mgc}
+      {#if item.system.properties?.has('mgc')}
         <span class="flex-row extra-small-gap align-items-center"
           ><i class="fas fa-magic" />Magic Item</span
         >
