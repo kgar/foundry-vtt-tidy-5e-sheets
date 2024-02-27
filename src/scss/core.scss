@@ -18,6 +18,13 @@
 }
 
 .tidy5e-sheet {
+  .window-content {
+    background: url(../../modules/tidy5e-sheet/images/parchment-texture-top.webp) no-repeat top center /
+        150% auto,
+      #f1ebe8 url(../../modules/tidy5e-sheet/images/parchment-texture-bottom.webp) no-repeat bottom center /
+        150% auto;
+  }
+
   &.sheet form {
     color: var(--t5e-primary-font-color);
     background: var(--t5e-sheet-background);
