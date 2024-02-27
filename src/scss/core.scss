@@ -18,6 +18,14 @@
 }
 
 .tidy5e-sheet {
+  .window-content {
+    // background: url(/images/parchment-tidy-5e.webp) repeat;
+    background: url(/systems/dnd5e/ui/texture1.webp) no-repeat top center / 150%
+        auto,
+      #f1ebe8 url(/systems/dnd5e/ui/texture2.webp) no-repeat bottom center /
+        150% auto;
+  }
+
   &.sheet form {
     color: var(--t5e-primary-font-color);
     background: var(--t5e-sheet-background);
