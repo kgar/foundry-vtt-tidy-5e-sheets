@@ -38,9 +38,23 @@
     text: size.label,
   }));
 
-  $: currentSize = <DropdownListOption>{
+  let currentSize: DropdownListOption;
+  $: currentSize = {
     value: $context.system.traits.size,
     text: $context.config.actorSizes[$context.system.traits.size]?.label,
+  };
+
+  $: vehicleTypes = <DropdownListOption[]>Object.entries(
+    $context.config.vehicleTypes,
+  ).map(([key, label]: [string, any]) => ({
+    value: key,
+    text: label,
+  }));
+
+  let currentVehicleType: DropdownListOption;
+  $: currentVehicleType = {
+    value: $context.system.vehicleType,
+    text: $context.config.vehicleTypes[$context.system.vehicleType],
   };
 
   $: abilities = Object.entries<any>($context.abilities);
@@ -90,12 +104,26 @@
         {/if}
       </div>
       <span>&#8226;</span>
+      <div class="flex-row extra-small-gap">
+        {#if $context.editable}
+          <InlineTextDropdownList
+            options={vehicleTypes}
+            selected={currentVehicleType}
+            on:optionClicked={(event) =>
+              $context.actor.update({
+                'system.vehicleType': event.detail.value,
+              })}
+            title={localize('DND5E.VehicleType')}
+          />
+        {:else}
+          <span title={localize('DND5E.VehicleType')}
+            >{currentVehicleType.text}</span
+          >
+        {/if}
+      </div>
+      <span>&#8226;</span>
       {#key $context.lockSensitiveFields}
         <DelimitedTruncatedContent cssClass="flex-1">
-          <span class="flex-row extra-small-gap align-items-center">
-            <span>{localize('DND5E.Vehicle')}</span>
-          </span>
-
           <ContentEditableFormField
             element="span"
             document={$context.actor}
