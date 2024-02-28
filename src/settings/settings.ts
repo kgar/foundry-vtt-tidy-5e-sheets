@@ -2,7 +2,7 @@ import { CONSTANTS } from '../constants';
 import { FoundryAdapter } from '../foundry/foundry-adapter';
 import { ResetSettingsDialog } from './ResetSettingsDialog';
 import type { GetFunctionReturnType } from 'src/types/types';
-import { applyTheme, getTheme } from 'src/theme/theme';
+import { applyTheme, getThemeOrDefault } from 'src/theme/theme';
 import { defaultLightTheme } from 'src/theme/default-light-theme';
 import { getCoreThemes, themeVariables } from 'src/theme/theme-reference';
 import { UserSettingsFormApplication } from 'src/applications/settings/user-settings/UserSettingsFormApplication';
@@ -177,7 +177,7 @@ export function createSettings() {
           choices: () => getCoreThemes(false),
           default: CONSTANTS.THEME_ID_DEFAULT_LIGHT,
           onChange: (data: string) => {
-            const theme = getTheme(data) ?? null;
+            const theme = getThemeOrDefault(data);
 
             const colorScheme = SettingsProvider.settings.colorScheme.get();
 
@@ -204,19 +204,8 @@ export function createSettings() {
             data: string,
             colorPickerEnabledOverride: boolean | null = null
           ) => {
-            const theme = getTheme(data) ?? null;
-
-            if (theme === null) {
-              const defaultThemeId =
-                SettingsProvider.settings.defaultTheme.get();
-
-              const defaultTheme = getTheme(defaultThemeId) ?? null;
-
-              defaultTheme &&
-                applyTheme(defaultTheme, colorPickerEnabledOverride);
-            } else {
-              applyTheme(theme, colorPickerEnabledOverride);
-            }
+            const theme = getThemeOrDefault(data);
+            applyTheme(theme, colorPickerEnabledOverride);
           },
         },
         get() {
