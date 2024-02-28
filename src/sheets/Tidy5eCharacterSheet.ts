@@ -813,74 +813,83 @@ export class Tidy5eCharacterSheet
     });
   }
 
-  rendering = false;
-  
-
+  renderMutex: Promise<void> = Promise.resolve();
   async _render(force?: boolean, options = {}) {
-    if (this.rendering) {
-      // Reject multiple calls to render while currently in the process of rendering.
+    // await last render to complete
+    debug('Render Mutex Debug: Awaiting acquiring render mutex');
+    let currentMutex = this.renderMutex;
+    
+    this.renderMutex = new Promise(async (resolve) => {
+      try {
+        // try render
+        await currentMutex;
+        debug('Render Mutex Debug: Rendering');
+        await this._tryRenderSheet(force, options);
+      } finally {
+        // resolve the render request and allow others to pass through
+        debug('Render Mutex Debug: Resolving and unlocking for next render call');
+        resolve();
+      }
+    });
+  }
+
+  private async _tryRenderSheet(force?: boolean, options = {}) {
+    this.rendering = true;
+    await this.setExpandedItemData();
+    const data = await this.getData();
+    this.context.set(data);
+
+    if (force) {
+      const { width, height } =
+        SheetPreferencesService.getByType(this.actor.type) ?? {};
+      this.position = {
+        ...this.position,
+        width: width ?? this.position.width,
+        height: height ?? this.position.height,
+      };
+
+      this._saveScrollPositions(this.element);
+      this._destroySvelteComponent();
+      await super._render(force, options);
+      applySheetAttributesToWindow(
+        this.actor.documentName,
+        this.actor.type,
+        SettingsProvider.settings.colorScheme.get(),
+        this.element.get(0)
+      );
+      await this.renderCustomContent({ data, isFullRender: true });
+      Hooks.callAll(
+        'tidy5e-sheet.renderActorSheet',
+        this,
+        this.element.get(0),
+        data,
+        true
+      );
+      CustomContentRenderer.wireCompatibilityEventListeners(
+        this.element,
+        super.activateListeners,
+        this
+      );
+      blurUntabbableButtonsOnClick(this.element);
       return;
     }
-    try {
-      this.rendering = true;
-      await this.setExpandedItemData();
-      const data = await this.getData();
-      this.context.set(data);
 
-      if (force) {
-        const { width, height } =
-          SheetPreferencesService.getByType(this.actor.type) ?? {};
-        this.position = {
-          ...this.position,
-          width: width ?? this.position.width,
-          height: height ?? this.position.height,
-        };
-
-        this._saveScrollPositions(this.element);
-        this._destroySvelteComponent();
-        await super._render(force, options);
-        applySheetAttributesToWindow(
-          this.actor.documentName,
-          this.actor.type,
-          SettingsProvider.settings.colorScheme.get(),
-          this.element.get(0)
-        );
-        await this.renderCustomContent({ data, isFullRender: true });
-        Hooks.callAll(
-          'tidy5e-sheet.renderActorSheet',
-          this,
-          this.element.get(0),
-          data,
-          true
-        );
-        CustomContentRenderer.wireCompatibilityEventListeners(
-          this.element,
-          super.activateListeners,
-          this
-        );
-        blurUntabbableButtonsOnClick(this.element);
-        return;
-      }
-
-      await maintainCustomContentInputFocus(this, async () => {
-        applyTitleToWindow(this.title, this.element.get(0));
-        await this.renderCustomContent({ data, isFullRender: false });
-        Hooks.callAll(
-          'tidy5e-sheet.renderActorSheet',
-          this,
-          this.element.get(0),
-          data,
-          false
-        );
-        CustomContentRenderer.wireCompatibilityEventListeners(
-          this.element,
-          super.activateListeners,
-          this
-        );
-      });
-    } finally {
-      this.rendering = false;
-    }
+    await maintainCustomContentInputFocus(this, async () => {
+      applyTitleToWindow(this.title, this.element.get(0));
+      await this.renderCustomContent({ data, isFullRender: false });
+      Hooks.callAll(
+        'tidy5e-sheet.renderActorSheet',
+        this,
+        this.element.get(0),
+        data,
+        false
+      );
+      CustomContentRenderer.wireCompatibilityEventListeners(
+        this.element,
+        super.activateListeners,
+        this
+      );
+    });
   }
 
   private async renderCustomContent(args: {
