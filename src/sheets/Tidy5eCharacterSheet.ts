@@ -44,6 +44,7 @@ import { ItemTableToggleCacheService } from 'src/features/caching/ItemTableToggl
 import { ItemFilterService } from 'src/features/filtering/ItemFilterService';
 import { StoreSubscriptionsService } from 'src/features/store/StoreSubscriptionsService';
 import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
+import { AsyncMutex } from 'src/utils/mutex';
 
 export class Tidy5eCharacterSheet
   extends dnd5e.applications.actor.ActorSheet5eCharacter
@@ -813,27 +814,14 @@ export class Tidy5eCharacterSheet
     });
   }
 
-  renderMutex: Promise<void> = Promise.resolve();
+  private _renderMutex = new AsyncMutex();
   async _render(force?: boolean, options = {}) {
-    // await last render to complete
-    debug('Render Mutex Debug: Awaiting acquiring render mutex');
-    let currentMutex = this.renderMutex;
-    
-    this.renderMutex = new Promise(async (resolve) => {
-      try {
-        // try render
-        await currentMutex;
-        debug('Render Mutex Debug: Rendering');
-        await this._tryRenderSheet(force, options);
-      } finally {
-        // resolve the render request and allow others to pass through
-        debug('Render Mutex Debug: Resolving and unlocking for next render call');
-        resolve();
-      }
+    await this._renderMutex.lock(async () => {
+      await this._renderSheet(force, options);
     });
   }
 
-  private async _tryRenderSheet(force?: boolean, options = {}) {
+  private async _renderSheet(force?: boolean, options = {}) {
     this.rendering = true;
     await this.setExpandedItemData();
     const data = await this.getData();

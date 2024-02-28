@@ -41,6 +41,7 @@ import { ItemTableToggleCacheService } from 'src/features/caching/ItemTableToggl
 import { StoreSubscriptionsService } from 'src/features/store/StoreSubscriptionsService';
 import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
 import { ItemFilterService } from 'src/features/filtering/ItemFilterService';
+import { AsyncMutex } from 'src/utils/mutex';
 
 export class Tidy5eVehicleSheet
   extends dnd5e.applications.actor.ActorSheet5eVehicle
@@ -314,7 +315,14 @@ export class Tidy5eVehicleSheet
     }
   }
 
+  private _renderMutex = new AsyncMutex();
   async _render(force?: boolean, options = {}) {
+    await this._renderMutex.lock(async () => {
+      await this._renderSheet(force, options);
+    });
+  }
+
+  private async _renderSheet(force?: boolean, options = {}) {
     await this.setExpandedItemData();
     const data = await this.getData();
     this.context.set(data);

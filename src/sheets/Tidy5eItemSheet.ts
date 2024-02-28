@@ -17,6 +17,7 @@ import { TabManager } from 'src/runtime/tab/TabManager';
 import { CustomContentRenderer } from './CustomContentRenderer';
 import { SettingsProvider } from 'src/settings/settings';
 import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
+import { AsyncMutex } from 'src/utils/mutex';
 
 export class Tidy5eKgarItemSheet
   extends dnd5e.applications.item.ItemSheet5e
@@ -149,7 +150,14 @@ export class Tidy5eKgarItemSheet
     return context;
   }
 
+  private _renderMutex = new AsyncMutex();
   async _render(force?: boolean, options = {}) {
+    await this._renderMutex.lock(async () => {
+      await this._renderSheet(force, options);
+    });
+  }
+
+  private async _renderSheet(force?: boolean, options = {}) {
     const data = await this.getData();
     this.context.set(data);
 
