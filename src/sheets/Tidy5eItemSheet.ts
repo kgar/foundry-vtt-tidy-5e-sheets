@@ -193,7 +193,7 @@ export class Tidy5eKgarItemSheet
       return;
     }
 
-    maintainCustomContentInputFocus(this, async () => {
+    await maintainCustomContentInputFocus(this, async () => {
       applyTitleToWindow(this.title, this.element.get(0));
       await this.renderCustomContent({ data, isFullRender: false });
       Hooks.callAll(
