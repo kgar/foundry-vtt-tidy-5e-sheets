@@ -44,7 +44,7 @@ import { ItemTableToggleCacheService } from 'src/features/caching/ItemTableToggl
 import { ItemFilterService } from 'src/features/filtering/ItemFilterService';
 import { StoreSubscriptionsService } from 'src/features/store/StoreSubscriptionsService';
 import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
-import { getStandardSpellSchoolFilterCategories } from 'src/runtime/item/default-item-filters';
+import { AsyncMutex } from 'src/utils/mutex';
 
 export class Tidy5eNpcSheet
   extends dnd5e.applications.actor.ActorSheet5eNPC
@@ -720,7 +720,14 @@ export class Tidy5eNpcSheet
     return super._onDropSingleItem(...args);
   }
 
+  private _renderMutex = new AsyncMutex();
   async _render(force?: boolean, options = {}) {
+    await this._renderMutex.lock(async () => {
+      await this._renderSheet(force, options);
+    });
+  }
+
+  private async _renderSheet(force?: boolean, options = {}) {
     await this.setExpandedItemData();
     const data = await this.getData();
     this.context.set(data);
@@ -760,7 +767,7 @@ export class Tidy5eNpcSheet
       return;
     }
 
-    maintainCustomContentInputFocus(this, async () => {
+    await maintainCustomContentInputFocus(this, async () => {
       applyTitleToWindow(this.title, this.element.get(0));
       await this.renderCustomContent({ data, isFullRender: false });
       Hooks.callAll(

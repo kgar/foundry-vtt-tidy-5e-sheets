@@ -44,6 +44,7 @@ import { ItemTableToggleCacheService } from 'src/features/caching/ItemTableToggl
 import { ItemFilterService } from 'src/features/filtering/ItemFilterService';
 import { StoreSubscriptionsService } from 'src/features/store/StoreSubscriptionsService';
 import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
+import { AsyncMutex } from 'src/utils/mutex';
 
 export class Tidy5eCharacterSheet
   extends dnd5e.applications.actor.ActorSheet5eCharacter
@@ -813,7 +814,15 @@ export class Tidy5eCharacterSheet
     });
   }
 
+  private _renderMutex = new AsyncMutex();
   async _render(force?: boolean, options = {}) {
+    await this._renderMutex.lock(async () => {
+      await this._renderSheet(force, options);
+    });
+  }
+
+  private async _renderSheet(force?: boolean, options = {}) {
+    this.rendering = true;
     await this.setExpandedItemData();
     const data = await this.getData();
     this.context.set(data);
@@ -853,7 +862,7 @@ export class Tidy5eCharacterSheet
       return;
     }
 
-    maintainCustomContentInputFocus(this, async () => {
+    await maintainCustomContentInputFocus(this, async () => {
       applyTitleToWindow(this.title, this.element.get(0));
       await this.renderCustomContent({ data, isFullRender: false });
       Hooks.callAll(

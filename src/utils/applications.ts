@@ -64,7 +64,7 @@ export async function maintainCustomContentInputFocus(
   }
 }
 
-export async function blurUntabbableButtonsOnClick(element: any /* jQuery */) {
+export function blurUntabbableButtonsOnClick(element: any /* jQuery */) {
   element
     .off('click.tidy-keyboard-accessibility', '[tabindex="-1"]')
     .on('click.tidy-keyboard-accessibility', '[tabindex="-1"]', (ev: any) => {
