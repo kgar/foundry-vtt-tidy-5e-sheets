@@ -6,10 +6,10 @@ import type {
 import { themeVariables } from './theme-reference';
 import { debug } from 'src/utils/logging';
 import { SettingsProvider } from 'src/settings/settings';
-import { getKeyedObjectEntries as getKeyedObjectEntries } from 'src/utils/iteration';
 import { defaultDarkTheme } from './default-dark-theme';
 import { defaultLightTheme } from './default-light-theme';
 import { Colord } from 'colord';
+import { CONSTANTS } from 'src/constants';
 
 export function applyTheme(
   theme: Tidy5eTheme,
@@ -97,12 +97,18 @@ export function getThemeableColors(): ThemeColorSetting[] {
     }));
 }
 
-export function getTheme(themeId: string) {
+export function getThemeOrDefault(themeId: string): Tidy5eTheme {
+  if (themeId === CONSTANTS.THEME_ID_DEFAULT) {
+    const defaultThemeId = SettingsProvider.settings.defaultTheme.get();
+    themeId = defaultThemeId;
+  }
+
   const themes: Record<string, Tidy5eTheme> = {
     light: defaultLightTheme,
     dark: defaultDarkTheme,
     // TODO: Aggregate all other available themes
   };
+
   return themes[themeId] ?? defaultLightTheme;
 }
 

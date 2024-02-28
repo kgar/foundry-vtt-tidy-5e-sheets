@@ -5,7 +5,7 @@ import {
 } from 'src/settings/settings';
 import {
   applyCurrentTheme,
-  getTheme,
+  getThemeOrDefault,
   getThemeableColors,
 } from 'src/theme/theme';
 import type { ThemeColorSetting, Tidy5eThemeDataV1 } from 'src/types/theme';
@@ -86,7 +86,7 @@ export class ThemeSettingsFormApplication extends SvelteFormApplicationBase {
   }
 
   useExistingThemeColors(themeId: string) {
-    const targetTheme = getTheme(themeId);
+    const targetTheme = getThemeOrDefault(themeId);
 
     const colorsToUpdate = this.themeableColors.reduce<Record<string, unknown>>(
       (prev, color) => {
