@@ -4,7 +4,7 @@
   export let conceal: boolean;
 </script>
 
-<div role="presentation" class="obscurable-parent inert-animation-container">
+<div role="presentation" class="concealing-parent inert-animation-container">
   <div role="presentation" inert={conceal}>
     <slot />
   </div>
@@ -14,7 +14,7 @@
 </div>
 
 <style lang="scss">
-  .obscurable-parent {
+  .concealing-parent {
     flex: 1;
     position: relative;
   }
