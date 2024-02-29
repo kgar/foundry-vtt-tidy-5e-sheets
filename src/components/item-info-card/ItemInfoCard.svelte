@@ -13,12 +13,12 @@
   import { settingStore } from 'src/settings/settings';
   import { getItemCardContentTemplate } from './item-info-card';
   import { ItemSummaryRuntime } from 'src/runtime/ItemSummaryRuntime';
-  import ItemSummaryCommandButton from '../item-summary/ItemSummaryCommandButton.svelte';
   import ItemSummaryCommandButtonList from '../item-summary/ItemSummaryCommandButtonList.svelte';
 
   // Fix Key
   let frozen: boolean = false;
   $: fixKey = $settingStore.itemCardsFixKey?.toUpperCase();
+  $: concealDetails = FoundryAdapter.concealDetails(item);
 
   function detectFixStart(ev: KeyboardEvent) {
     if (frozen) {
@@ -240,7 +240,7 @@
             <HorizontalLineSeparator />
             <div
               class="item-properties"
-              inert={FoundryAdapter.concealDetails(item)}
+              inert={concealDetails}
             >
               {#each specialProps as prop}
                 <span class="tag">{prop}</span>
@@ -251,7 +251,7 @@
             <HorizontalLineSeparator />
             <div
               class="item-properties"
-              inert={FoundryAdapter.concealDetails(item)}
+              inert={concealDetails}
             >
               {#each itemProps as prop}
                 <span class="tag">{prop}</span>

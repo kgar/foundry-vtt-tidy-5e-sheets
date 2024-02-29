@@ -214,4 +214,37 @@
   .inert-animation-container > * {
     transition: filter 0.75s ease, transform 0.75s ease, padding 0.75s ease;
   }
+
+  .unidentified-glyph {
+    pointer-events: none;
+    position: absolute;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.5s;
+
+    &.conceal:not(.hidden) {
+      opacity: 1;
+    }
+
+    &.no-transition {
+      transition: none;
+    }
+
+    i {
+      color: white;
+      text-shadow: black 0 0 0.25rem, black 0 0 0.25rem, black 0 0 0.25rem,
+        black 0 0 0.5rem, black 0 0 0.5rem;
+    }
+  }
+
+  .italic {
+    font-style: italic;
+  }
+
+  .no-pointer-events {
+    pointer-events: none;
+  }
 }

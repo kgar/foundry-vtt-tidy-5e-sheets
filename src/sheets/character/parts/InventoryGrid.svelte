@@ -103,6 +103,7 @@
       {@const ctx = $context.itemContext[item.id]}
       {@const hidden =
         visibleItemIdSubset !== null && !visibleItemIdSubset.has(item.id)}
+      {@const concealDetails = FoundryAdapter.concealDetails(item)}
       <button
         type="button"
         class="item {getInventoryRowClasses(item)} transparent-button"
@@ -126,9 +127,27 @@
         data-item-id={item.id}
         tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
       >
+        <div class="item-name">
+          <div
+            class="item-image"
+            class:conceal={concealDetails}
+            style="background-image: url('{item.img}');"
+          >
+            <i class="fa fa-dice-d20" />
+          </div>
+          <div
+            role="presentation"
+            aria-hidden="true"
+            class="unidentified-glyph no-transition"
+            class:conceal={concealDetails}
+          >
+            <i class="fas fa-question" />
+          </div>
+        </div>
+
         {#if ctx?.attunement}
           <i
-            class="fas fa-sun icon-attuned {ctx.attunement?.cls ?? ''}"
+            class="fas fa-sun icon-attuned {ctx.attunement?.cls ?? ''} no-pointer-events"
             title={localize(ctx.attunement?.title)}
           />
         {/if}
@@ -149,12 +168,6 @@
             <i class="fas fa-edit fa-fw" />
           </button>
         {/if}
-
-        <div class="item-name">
-          <div class="item-image" style="background-image: url('{item.img}');">
-            <i class="fa fa-dice-d20" />
-          </div>
-        </div>
 
         <div class="item-stats">
           <div
@@ -250,9 +263,11 @@
     display: flex;
     flex-wrap: wrap;
 
+    --item-width-height: 3.125rem;
+
     .item {
-      width: 3.125rem;
-      height: 3.125rem;
+      width: var(--item-width-height);
+      height: var(--item-width-height);
       position: relative;
       margin: 0.1875rem;
       box-shadow: 0 0 0.0625rem 0.0625rem var(--t5e-light-color);
@@ -342,6 +357,10 @@
           font-size: 1.125rem;
           display: none;
         }
+
+        &.conceal {
+          filter: grayscale(100%);
+        }
       }
 
       &:not([disabled]):hover .item-name .item-image {
@@ -352,8 +371,20 @@
         }
       }
 
-      .item-name:hover .item-image:hover i {
-        color: var(--t5e-primary-font-color);
+      &:hover {
+        .unidentified-glyph {
+          display: none;
+        }
+      }
+
+      .unidentified-glyph {
+        font-size: calc(var(--item-width-height) - 1.5rem);
+      }
+
+      .item-name:hover {
+        .item-image:hover i {
+          color: var(--t5e-primary-font-color);
+        }
       }
 
       &:global(.show-item-count-on-hover :is(.item-uses, .item-quantity)) {

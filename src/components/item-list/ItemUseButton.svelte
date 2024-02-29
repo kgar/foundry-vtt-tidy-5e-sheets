@@ -21,7 +21,17 @@
   class:item-use-button-has-focus={buttonIsFocused}
   style="background-image: url('{imgUrlOverride ?? item.img}')"
   class:show-roll={!disabled && $showRoll}
+  class:conceal={FoundryAdapter.concealDetails(item)}
 >
+  <div
+    role="presentation"
+    aria-hidden="true"
+    class="unidentified-glyph no-transition"
+    class:conceal={FoundryAdapter.concealDetails(item)}
+    class:hidden={$showRoll}
+  >
+    <i class="fas fa-question" />
+  </div>
   {#if !disabled}
     <button
       type="button"
@@ -73,6 +83,14 @@
       .item-use-button {
         opacity: 1;
       }
+    }
+
+    &.conceal {
+      filter: grayscale(100%);
+    }
+
+    .unidentified-glyph {
+      font-size: calc(var(--t5e-image-size-override, 1.5rem) - 0.75rem);
     }
   }
 </style>

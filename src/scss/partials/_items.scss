@@ -109,15 +109,24 @@ input[type='checkbox'] {
         text-align: center;
       }
     }
-  }
 
-  img.profile {
-    flex: 0 0 5.75rem;
-    width: 5.75rem;
-    height: 5.75rem;
-    border-radius: 0.3125rem;
-    margin-right: 0;
-    object-fit: cover;
+    img.profile {
+      flex: 0 0 5.75rem;
+      width: 5.75rem;
+      height: 5.75rem;
+      border-radius: 0.3125rem;
+      margin-right: 0;
+      object-fit: cover;
+      transition: filter 0.75s;
+
+      &.conceal {
+        filter: grayscale(100%);
+      }
+    }
+
+    .unidentified-glyph i {
+      font-size: 3rem;
+    }
   }
 
   .header-details {

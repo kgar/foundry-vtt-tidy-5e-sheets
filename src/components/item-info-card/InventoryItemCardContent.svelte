@@ -13,6 +13,7 @@
   let context = getContext<Readable<CharacterSheetContext>>('context');
 
   $: ctx = $context.itemContext?.[item.id];
+  $: concealDetails = FoundryAdapter.concealDetails(item);
 
   const localize = FoundryAdapter.localize;
   const weightUnit = FoundryAdapter.getWeightUnit();
@@ -65,7 +66,7 @@
       {item.system.quantity}
       {#if item.system.price.value}
         &times;
-        {#if FoundryAdapter.concealDetails(item)}
+        {#if concealDetails}
           {localize('DND5E.Unidentified.Value')}
         {:else}
           {item.system.price.value}
