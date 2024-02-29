@@ -26,6 +26,7 @@ export type Item5e = any;
 
 export type ItemChatData = {
   description: { value: string };
+  unidentified: { description: string };
   properties: string[];
 };
 

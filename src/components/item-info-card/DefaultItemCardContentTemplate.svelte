@@ -33,9 +33,13 @@
     </div>
     <HorizontalLineSeparator borderColor="faint" />
   {/if}
-  <div class="description-wrap" inert={concealDetails}>
+  <div class="description-wrap">
     <div class="info-card-description">
-      {@html chatData.description.value}
+      {#if concealDetails}
+        {@html chatData.unidentified.description}
+      {:else}
+        {@html chatData.description.value}
+      {/if}
     </div>
   </div>
 
