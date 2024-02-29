@@ -238,7 +238,10 @@
         >
           {#if specialProps.length}
             <HorizontalLineSeparator />
-            <div class="item-properties">
+            <div
+              class="item-properties"
+              inert={FoundryAdapter.concealDetails(item)}
+            >
               {#each specialProps as prop}
                 <span class="tag">{prop}</span>
               {/each}
@@ -246,7 +249,10 @@
           {/if}
           {#if itemProps.length}
             <HorizontalLineSeparator />
-            <div class="item-properties">
+            <div
+              class="item-properties"
+              inert={FoundryAdapter.concealDetails(item)}
+            >
               {#each itemProps as prop}
                 <span class="tag">{prop}</span>
               {/each}

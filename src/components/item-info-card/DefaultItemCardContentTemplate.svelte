@@ -32,7 +32,7 @@
     </div>
     <HorizontalLineSeparator borderColor="faint" />
   {/if}
-  <div class="description-wrap">
+  <div class="description-wrap" inert={FoundryAdapter.concealDetails(item)}>
     <div class="info-card-description">
       {@html chatData.description.value}
     </div>

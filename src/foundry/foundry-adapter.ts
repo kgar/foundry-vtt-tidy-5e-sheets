@@ -1221,4 +1221,7 @@ export const FoundryAdapter = {
         item.system.preparation.prepared
     ).length;
   },
+  concealDetails(item: Item5e | null | undefined) {
+    return !game.user.isGM && item?.system?.identified === false;
+  },
 };

@@ -839,14 +839,3 @@ label input[type='checkbox']:checked {
   margin: 0;
   padding: 0 0.325rem;
 }
-
-/* Unidentified Item Concealment */
-[inert] {
-  filter: blur(0.1875rem);
-  padding: 0.375rem;
-}
-
-// Use this class on an element that toggles inertness, and it will add animation.
-.inert-animation-container > * {
-  transition: filter 0.75s ease, transform 0.75s ease, padding 0.75s ease;
-}
