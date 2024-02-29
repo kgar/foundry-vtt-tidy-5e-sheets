@@ -5,6 +5,7 @@
   import type { Item5e } from 'src/types/item';
   import { ItemSummaryRuntime } from 'src/runtime/ItemSummaryRuntime';
   import HorizontalLineSeparator from '../layout/HorizontalLineSeparator.svelte';
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
   export let chatData: { description: { value: string }; properties: string[] };
   export let item: Item5e;
@@ -19,6 +20,7 @@
     easing: quadInOut,
   }}
   class="item-summary"
+  inert={FoundryAdapter.concealDetails(item)}
 >
   {@html chatData.description.value}
 

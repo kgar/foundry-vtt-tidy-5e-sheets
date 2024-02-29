@@ -12,6 +12,7 @@
   let context = getContext<Readable<ActorSheetContext>>('context');
 
   $: ctx = $context.itemContext[item.id];
+  $: concealDetails = FoundryAdapter.concealDetails(item);
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -32,7 +33,7 @@
     </div>
     <HorizontalLineSeparator borderColor="faint" />
   {/if}
-  <div class="description-wrap">
+  <div class="description-wrap" inert={concealDetails}>
     <div class="info-card-description">
       {@html chatData.description.value}
     </div>

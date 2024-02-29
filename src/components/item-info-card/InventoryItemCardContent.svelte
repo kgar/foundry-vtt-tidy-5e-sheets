@@ -13,6 +13,7 @@
   let context = getContext<Readable<CharacterSheetContext>>('context');
 
   $: ctx = $context.itemContext?.[item.id];
+  $: concealDetails = FoundryAdapter.concealDetails(item);
 
   const localize = FoundryAdapter.localize;
   const weightUnit = FoundryAdapter.getWeightUnit();
@@ -64,8 +65,13 @@
       ><b>{localize('DND5E.Quantity')}:</b>
       {item.system.quantity}
       {#if item.system.price.value}
-        &times; {item.system.price.value}
-        {item.system.price.denomination}
+        &times;
+        {#if concealDetails}
+          {localize('DND5E.Unidentified.Value')}
+        {:else}
+          {item.system.price.value}
+          {item.system.price.denomination}
+        {/if}
       {/if}
     </span>
   </div>
@@ -79,7 +85,7 @@
     </div>
     <HorizontalLineSeparator borderColor="faint" />
   {/if}
-  <div class="description-wrap">
+  <div class="description-wrap" inert={FoundryAdapter.concealDetails(item)}>
     <div class="info-card-description">
       {@html chatData.description.value}
     </div>
