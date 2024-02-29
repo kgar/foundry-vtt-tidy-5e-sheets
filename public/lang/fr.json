@@ -61,7 +61,7 @@
     "TIDY5E.SheetEdit.Description": "Visibilité des boutons d'ajout/suppression et des sections vides",
     "TIDY5E.SheetLock.Unlock.Hint": "Déverrouiller - {description}",
     "TIDY5E.SheetLock.Lock.Hint": "Vérrouiller - {description}",
-    "TIDY5E.SheetLock.Description": null,
+    "TIDY5E.SheetLock.Description": "Basculer le verrouillage des champs sensibles qui ne doivent pas être modifiés souvent",
     "TIDY5E.ContextMenuActionEquip": "Équiper objet",
     "TIDY5E.ContextMenuActionUnequip": "Déséquiper objet",
     "TIDY5E.ContextMenuActionAttune": "Se lier à l'objet",
@@ -101,26 +101,26 @@
     "TIDY5E.TokenLinked": "Token lié à l'acteur",
     "TIDY5E.TokenUnlinked": "Token non lié à l'acteur",
     "TIDY5E.ItemDetailsHeadline": "Mécanique / Contexte",
-    "TIDY5E.SpellClass": null,
-    "TIDY5E.Class.Artificer": null,
-    "TIDY5E.Class.Barbarian": null,
-    "TIDY5E.Class.Bard": null,
-    "TIDY5E.Class.Cleric": null,
-    "TIDY5E.Class.Custom": null,
-    "TIDY5E.Class.Druid": null,
-    "TIDY5E.Class.Fighter": null,
-    "TIDY5E.Class.Monk": null,
-    "TIDY5E.Class.Paladin": null,
-    "TIDY5E.Class.Ranger": null,
-    "TIDY5E.Class.Rogue": null,
-    "TIDY5E.Class.Sorcerer": null,
-    "TIDY5E.Class.Warlock": null,
-    "TIDY5E.Class.Wizard": null,
+    "TIDY5E.SpellClass": "Classe de sort",
+    "TIDY5E.Class.Artificer": "Artificier",
+    "TIDY5E.Class.Barbarian": "Barbare",
+    "TIDY5E.Class.Bard": "Barde",
+    "TIDY5E.Class.Cleric": "Clerc",
+    "TIDY5E.Class.Custom": "Sur mesure",
+    "TIDY5E.Class.Druid": "Druide",
+    "TIDY5E.Class.Fighter": "Guerrier",
+    "TIDY5E.Class.Monk": "Moine",
+    "TIDY5E.Class.Paladin": "Paladin",
+    "TIDY5E.Class.Ranger": "Rodeur",
+    "TIDY5E.Class.Rogue": "Roublard",
+    "TIDY5E.Class.Sorcerer": "Sorcier",
+    "TIDY5E.Class.Warlock": "Occultiste",
+    "TIDY5E.Class.Wizard": "Magicien",
     "TIDY5E.OriginSummaryConfig": null,
-    "TIDY5E.Settings.MulticlassSpellbookFilterLabel": null,
+    "TIDY5E.Settings.MulticlassSpellbookFilterLabel": "Filtre de sortilèges multi-classes",
     "TIDY5E.UserSettings.Menu": {
-        "name": null,
-        "hint": null,
+        "name": "Paramètres utilisateur",
+        "hint": "Personnalisez votre propre version des Feuilles Tidy 5e. Ces paramètres sont enregistrés dans votre navigateur et s'appliquent à vos feuilles.",
         "label": "Configuration des feuilles",
         "title": "Configuration des feuilles Tidy5e"
     },
@@ -129,24 +129,24 @@
         "header": "Option des feuilles de joueur"
     },
     "TIDY5E.UserSettings.TabNPCs": {
-        "tabLabel": null,
-        "header": null
+        "tabLabel": "PNJs",
+        "header": "Feuilles PNJ"
     },
     "TIDY5E.UserSettings.TabVehicles": {
-        "tabLabel": null,
-        "header": null
+        "tabLabel": "Véhicules",
+        "header": "Feuilles de véhicules"
     },
     "TIDY5E.WorldSettings.TabMisc": {
         "tabLabel": "Options MJ"
     },
     "TIDY5E.WorldSettings.TabSheetLock": {
-        "tabLabel": null,
-        "header": null,
-        "hint": null,
-        "hint2": null,
-        "labelGeneralLocks": null,
-        "labelInventoryLocks": null,
-        "labelFeaturesLocks": null
+        "tabLabel": "Verrouillage de la feuille",
+        "header": "Options de verrouillage",
+        "hint": "Empêcher les joueurs de modifier des aspects de leur feuille de personnage qui devraient changer rarement. Cachez éventuellement certains éléments que vous ne souhaitez pas utiliser du tout.",
+        "hint2": "Important : les fonctions de verrouillage des feuilles sont destinées à guider l'utilisation des feuilles par les joueurs et à éviter les erreurs telles que l'ajout ou la suppression accidentelle d'une compétence ou de jet de sauvegarde. Les paramètres de verrouillage des feuilles n'offrent pas de protection contre les joueurs mal intentionnés.",
+        "labelGeneralLocks": "Verrouillages général",
+        "labelInventoryLocks": "Verrouillage de l'inventaire",
+        "labelFeaturesLocks": "Verrouillages des caractéristiques"
     },
     "TIDY5E.Settings.ItemCardsForAllItems": {
         "name": "Montrer la carte d'information des éléments dans toutes les mise en page",
@@ -169,23 +169,23 @@
         "hint": "Saisir une touche (par exemple : x) à utiliser pour l'interaction avec la carte d'information. Il peut s'agir de n'importe quelle touche, à l'exception des touches de fonction (ctrl, alt, etc.)."
     },
     "TIDY5E.Settings.DefaultTheme": {
-        "name": null,
-        "hint": null
+        "name": "Thème de couleur par défaut",
+        "hint": "Thème par défaut pour tous les utilisateurs qui n'ont pas sélectionné de thème spécifique."
     },
     "TIDY5E.Settings.SheetTheme": {
         "name": "Thème Tidy5e",
         "hint": "Utiliser le thème de couleur clair ou foncé par défaut de Tidy5e.",
-        "default": null,
-        "light": null,
-        "dark": null
+        "default": "Défaut",
+        "light": "Lumineux",
+        "dark": "Sombre"
     },
     "TIDY5E.Settings.UseClassicControls": {
         "name": "Contrôles classiques en mode liste",
         "hint": "Toujours afficher les option de contrôle des éléments et désactive le menu du clic droit. Ne s'applique qu'à l'inventaire des objets / sorts du PJ en mode liste."
     },
     "TIDY5E.Settings.ShowIconsNextToTheItemName": {
-        "name": null,
-        "hint": null
+        "name": "Afficher les icônes des noms d'objets",
+        "hint": "Affiche des icônes de soutien à côté du nom de l'objet (favori, synchronisé, etc.)."
     },
     "TIDY5E.Settings.ShowTraitLabels": {
         "name": "Afficher les noms de traits",
@@ -196,8 +196,8 @@
         "hint": "Activer cette option pour afficher le nom du joueur en dessous de celui de son personnage."
     },
     "TIDY5E.Settings.ShowClassList": {
-        "name": null,
-        "hint": null
+        "name": "Afficher la liste des classes",
+        "hint": "Affiche la liste des classes sous le nom du personnage."
     },
     "TIDY5E.Settings.InspirationAnimation": {
         "name": "Pas d'animation de l'indicateur d'inspiration",
@@ -216,12 +216,12 @@
         "hint": "Activer cette option pour rendre l'indicateur d'épuisement visible uniquement au survol du portrait avec la souris."
     },
     "TIDY5E.Settings.UseHpBar": {
-        "name": null,
-        "hint": null
+        "name": "Utiliser la barre de PV",
+        "hint": "Affiche une barre colorée indiquant les PV restants. Les chiffres de santé restent visibles."
     },
     "TIDY5E.Settings.UseHpOverlay": {
-        "name": null,
-        "hint": null
+        "name": "Utiliser la superposition de santé",
+        "hint": "Affiche une superposition PV colorée."
     },
     "TIDY5E.Settings.ToggleEmptyCharacterTraits": {
         "name": "Afficher un bouton de bascule de l'affichage des traits",
@@ -232,8 +232,8 @@
         "hint": "Activer cette option pour afficher les traits sous les ressources."
     },
     "TIDY5E.Settings.ShowEquippedAmmoOnly": {
-        "name": null,
-        "hint": null
+        "name": "Montrer les munitions équipées uniquement",
+        "hint": "N'affiche que les munitions actuellement équipées dans le sélecteur de munitions de l'arme."
     },
     "TIDY5E.Settings.AlwaysShowTraits": {
         "name": "Toujours montrer les traits",
@@ -244,16 +244,16 @@
         "hint": "Par défaut, les caractéristiques sans compétence sont masquées et affichables vie un bouton. Activer cette option pour ne jamais les masquer."
     },
     "TIDY5E.Settings.ShowNPCSpellbookTab": {
-        "name": null,
-        "hint": null
+        "name": "Afficher l'onglet Livre de sort",
+        "hint": "Affiche un onglet de livre de sorts pour les PNJ. Désactiver pour déplacer la section du livre de sorts vers l'onglet Attributs."
     },
     "TIDY5E.Settings.ShowActiveEffectsMarker": {
         "name": "Afficher le marqueru d'effet actif sur les objets",
         "hint": "Activer cette option pour visualiser les objets avec un effet actif (uniquement pour la vue liste)."
     },
     "TIDY5E.Settings.UseContextMenu": {
-        "name": null,
-        "hint": null
+        "name": "Utiliser le menu contextuel",
+        "hint": "Active le menu contextuel du clic droit sur les éléments."
     },
     "TIDY5E.Settings.ShowExpandedLimitedView": {
         "name": "Vue étendue pour la feuille limitée",
@@ -281,11 +281,11 @@
         "hint": "Activer cette option pour ne jamais masquer la quantité des objets."
     },
     "TIDY5E.Settings.UseInspiration": {
-        "name": null,
-        "hint": null
+        "name": "Utiliser le suivi de l'inspiration",
+        "hint": "Affiche un indicateur d'inspiration sur le profil du personnage."
     },
     "TIDY5E.Settings.UseVehicleMotion": {
-        "name": null,
+        "name": "Utiliser l'indicateur des déplacements des véhicules",
         "hint": null
     },
     "TIDY5E.Settings.UseExhaustion": {
@@ -518,5 +518,91 @@
     "TIDY5E.ActorMeleeSpellAttackFlavorText": "Attaque de sort au contact",
     "TIDY5E.ActorRangedSpellAttackFlavorText": "Attaque de sort à distance",
     "TIDY5E.ActorSpellAttackTitle": "{actorName} - Attaque de sort",
-    "TIDY5E.ActorSpellAttackFlavorText": "Attaque de sort"
+    "TIDY5E.ActorSpellAttackFlavorText": "Attaque de sort",
+    "TIDY5E.TabSelection": {
+        "Explanation": "Les onglets que l'utilisateur ou la feuille sont configurés pour ne pas les voir (par exemple, en désactivant le journal dans les paramètres de configuration) n'apparaîtront pas sur la feuille, même s'ils sont sélectionnés.",
+        "MenuOptionText": "Onglet de sélection",
+        "Title": "Onglet de sélection: {documentName}",
+        "AvailableHeader": "Onglets disponible",
+        "SelectedHeader": "Onglets sélectionnés",
+        "UnsupportedDocumentErrorMessage": "Le type de document {documentType} n'est pas actuellement configuré pour la sélection d'onglets.",
+        "AtLeastOneRequiredErrorMessage": "Au moins un onglet est requis."
+    },
+    "TIDY5E.Listbox": {
+        "MoveRight": "Déplacer vers la droite (Espace)",
+        "MoveUp": "Déplacer vers le haut (Alt + touche fléchée vers le haut)",
+        "MoveDown": "Déplacement vers le bas (Alt + touche fléchée vers le bas)",
+        "MoveAllLeft": "Déplacer tout vers la gauche",
+        "MoveAllRight": "Déplacer tout vers la droite",
+        "MoveLeft": "Déplacement vers la gauche (Espace)"
+    },
+    "TIDY5E.WorldSettings.Exhaustion": {
+        "options.specific.levels.tooltip.name": "Niveau d'épuisement {level} Info-bulle",
+        "options.specific.levels.tooltip.hint": "Infobulle pour ce niveau d'épuisement. Les touches de localisation fonctionnent également.",
+        "Header": "Personnage/PNJ Épuisement",
+        "name": "Configuration de l'épuisement",
+        "hint": "Détermine comment l'épuisement hors véhicule est configuré et présenté sur les feuilles de personnage et de PNJ.",
+        "options.specific.text": "Niveaux spécifiques",
+        "options.specific.levels.name": "Niveaux totaux",
+        "options.specific.levels.hint": "Détermine le nombre maximum de niveaux d'épuisement.",
+        "options.open.explanation": "Présente à l'utilisateur une entrée numérique pour saisir les niveaux d'épuisement.",
+        "useStandardExhaustion": "Utilisation Standard de l'épuisement",
+        "useOneDnDExhaustion": "Utilisation de l'épuisement de One D&D",
+        "AtLeastOneLevelRequiredErrorMessage": "Au moins un niveau d'épuisement est requis."
+    },
+    "TIDY5E.MaxPreparedSpellsConfig": {
+        "Title": "Configuration Max de sorts préparer: {actorName}",
+        "ExamplesHeader": "Exemple de formules",
+        "ButtonTooltip": "Configuration Max des sorts préparés",
+        "MoreFormulas": "Plus de formules"
+    },
+    "TIDY5E.UserSettings.TabActionsList": {
+        "tabLabel": "Liste des actions"
+    },
+    "TIDY5E.Settings.UseAccessibleKeyboardSupport": {
+        "name": "Utiliser le support de clavier accessible",
+        "hint": "Permet aux utilisateurs de parcourir la plupart des boutons/commandes des feuilles Tidy 5e et de les exécuter à l'aide de touches de raccourci clavier conventionnelles basées sur des boutons. Remarque : lorsque l'utilisateur se concentre sur un bouton dans Foundry, les raccourcis clavier de \"Configurer les contrôles\" ne répondent pas. Si un module utilise cette fonctionnalité de Foundry pour les contrôles sur les feuilles, comme l'utilisation d'éléments en maintenant une touche spéciale, l'activation de cette option de Tidy 5e Sheets interférera avec ces raccourcis clavier."
+    },
+    "TIDY5E.Settings.ToggleEmptyCharacterSkills": {
+        "name": "Afficher les compétences des personnages vides",
+        "hint": "Ajout d'un bouton pour basculer afficher/masquer les compétences vides."
+    },
+    "TIDY5E.MeleeSpellAttackMod": "Modificateur d'attaque de sort",
+    "TIDY5E.HitDC": "Dés de vie",
+    "TIDY5E.AttackMod": "Modificateur d'attaque",
+    "TIDY5E.RangedSpellAttackMod": "Modificateur d'attaque de sort à distance",
+    "TIDY5E.ActorMeleeSpellAttackTitle": "{actorName} - Attaque sort de mêlée",
+    "TIDY5E.ActorRangedSpellAttackTitle": "{actorName} - Attaque de sort à distance",
+    "TIDY5E.WorldSettings.TabCharacter": {
+        "tabLabel": "Personnage"
+    },
+    "TIDY5E.WorldSettings.TabNpc": {
+        "tabLabel": "PNJ"
+    },
+    "TIDY5E.WorldSettings.TabVehicle": {
+        "tabLabel": "Véhicule"
+    },
+    "TIDY5E.WorldSettings.TabExhaustion": {
+        "tabLabel": "Épuisement"
+    },
+    "TIDY5E.WorldSettings.VehicleExhaustion": {
+        "Header": "Épuisement du véhicule",
+        "name": "Configuration de l'épuisement des véhicules",
+        "hint": "Détermine comment l'épuisement du véhicule est configuré et présenté sur la fiche du véhicule.",
+        "AtLeastOneLevelRequiredErrorMessage": "Au moins un niveau d'épuisement du véhicule est requis."
+    },
+    "TIDY5E.WorldSettings.Menu": {
+        "name": "Paramètres du monde",
+        "hint": "Ajustez les paramètres au niveau du monde pour personnaliser l'expérience de Tidy 5e Sheets. Ces paramètres sont enregistrés dans ce monde de Foundry et s'appliquent à tous les contenus pertinents de Tidy 5e Sheets.",
+        "label": "Paramètres du monde",
+        "title": "Paramètres du monde (MD seulement)"
+    },
+    "TIDY5E.Settings.UseDefaultSheetHpTabbing": {
+        "name": "Utiliser la tabulation par défaut du clavier pour les PV",
+        "hint": "La feuille 5e par défaut permet la tabulation du clavier de l'entrée des PV actuels à l'entrée PV temporaire actuels. L'activation de ce paramètre reproduit ce comportement. Ce paramètre est ignoré si l'option \"Utiliser le support de clavier accessible\" est désactivée."
+    },
+    "TIDY5E.Settings.UseDefaultSheetAttributeTabbing": {
+        "name": "Utiliser l'attribut par défaut de la feuille pour la tabulation au clavier",
+        "hint": "La feuille 5e par défaut permet la tabulation au clavier d'une entrée d'attribut à la suivante en cachant les contrôles autour d'eux de l'ordre de tabulation. L'activation de ce paramètre reproduit ce comportement. Ce paramètre est ignoré si l'option \"Utiliser un support clavier accessible\" est désactivée."
+    }
 }
