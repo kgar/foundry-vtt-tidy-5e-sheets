@@ -211,7 +211,7 @@
   }
 
   /* Use this class on the parent of an inert element, and it will add a transition animation. */
-  .inert-animation-container > * {
+  .inert-animation-container > *, .animate-inert {
     transition: filter 0.75s ease, transform 0.75s ease, padding 0.75s ease;
   }
 

@@ -2,16 +2,17 @@
   import { slide } from 'svelte/transition';
   import { quadInOut } from 'svelte/easing';
   import ItemSummaryCommandButtonList from '../item-summary/ItemSummaryCommandButtonList.svelte';
-  import type { Item5e } from 'src/types/item';
+  import type { Item5e, ItemChatData } from 'src/types/item';
   import { ItemSummaryRuntime } from 'src/runtime/ItemSummaryRuntime';
   import HorizontalLineSeparator from '../layout/HorizontalLineSeparator.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
-  export let chatData: { description: { value: string }; properties: string[] };
+  export let chatData: ItemChatData;
   export let item: Item5e;
   export let useTransition: boolean;
 
   $: itemSummaryCommands = ItemSummaryRuntime.getItemSummaryCommands(item);
+  $: concealDetails = FoundryAdapter.concealDetails(item);
 </script>
 
 <div
@@ -20,9 +21,12 @@
     easing: quadInOut,
   }}
   class="item-summary"
-  inert={FoundryAdapter.concealDetails(item)}
 >
-  {@html chatData.description.value}
+  {#if concealDetails}
+    {@html chatData.unidentified.description}
+  {:else}
+    {@html chatData.description.value}
+  {/if}
 
   {#if itemSummaryCommands.length}
     <HorizontalLineSeparator />
@@ -33,7 +37,7 @@
 
   {#if chatData.properties}
     <HorizontalLineSeparator />
-    <div class="item-properties">
+    <div class="item-properties" inert={concealDetails}>
       {#each chatData.properties as prop}<span class="tag">{prop}</span>{/each}
     </div>
   {/if}

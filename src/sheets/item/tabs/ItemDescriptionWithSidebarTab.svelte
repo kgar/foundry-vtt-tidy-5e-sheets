@@ -120,7 +120,7 @@
       <h4 class="properties-header">
         {localize('DND5E.Attack')}/{localize('DND5E.Damage')}
       </h4>
-      <ol class="properties-list" inert={$context.concealDetails}>
+      <ol class="properties-list animate-inert" inert={$context.concealDetails}>
         {#if $context.labels.save}
           <li>
             {$context.labels.save}
