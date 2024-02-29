@@ -20,9 +20,9 @@
     place-content: start center;
 
     div {
-      margin-block-start: 4em;
+      margin-block-start: 4rem;
       margin-inline: auto;
-      padding: 2em;
+      padding: 2rem;
       border: 0.0625rem solid var(--t5e-separator-color);
       border-radius: 0.25rem;
       box-shadow: 0 0 0.75rem rgb(0 0 0 / 45%);
