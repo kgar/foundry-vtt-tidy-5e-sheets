@@ -21,8 +21,8 @@
     ($context.actor?.system?.attributes?.hp?.value ?? 0) <= 0 &&
     $context.actor?.system?.attributes?.hp?.max !== 0;
 
-  function onLevelSelected(event: CustomEvent<{ level: number }>) {
-    $context.actor.update({
+  async function onLevelSelected(event: CustomEvent<{ level: number }>) {
+    await $context.actor.update({
       'system.attributes.exhaustion': event.detail.level,
     });
   }

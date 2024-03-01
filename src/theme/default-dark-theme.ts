@@ -144,6 +144,7 @@ export const defaultDarkTheme: Tidy5eTheme = {
     '--t5e-scrollbar-track-color': '#0000',
     '--t5e-spell-pip-active-background': 'var(--t5e-primary-accent-color)',
     '--t5e-spell-pip-empty-background': 'var(--t5e-faint-color)',
+    '--t5e-switch-slider-color': '#DDD',
   },
   type: 'dark',
 };

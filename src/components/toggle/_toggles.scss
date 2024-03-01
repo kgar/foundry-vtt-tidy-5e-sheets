@@ -1,0 +1,69 @@
+.tidy-condition-toggle {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  cursor: pointer;
+  background-color: var(--t5e-faintest-color);
+  padding: 0.25rem 0.25rem 0.25rem 0.5rem;
+  font-size: 0.75rem;
+  color: var(--t5e-tertiary-color);
+  height: 100%;
+
+  --icon-fill: var(--t5e-tertiary-color);
+  --icon-width: 1rem;
+  --icon-height: 1rem;
+  --tidy-switch-scale: 0.6;
+
+  &.active {
+    --icon-fill: var(--t5e-primary-font-color);
+    color: var(--t5e-primary-font-color);
+  }
+
+  &:hover {
+    background-color: var(--t5e-faint-color);
+  }
+}
+
+.tidy-switch {
+  display: flex;
+  align-items: center;
+
+  --tidy-switch-scale-internal: var(--tidy-switch-scale, 1);
+
+  button {
+    width: calc(2.625rem * var(--tidy-switch-scale-internal));
+    height: calc(1.375rem * var(--tidy-switch-scale-internal));
+    position: relative;
+    background-color: var(--t5e-faint-color);
+    border: none;
+    transition: background-color 0.25s ease;
+    border-radius: calc(1.375rem * var(--tidy-switch-scale-internal));
+
+    &::before {
+      content: '';
+      position: absolute;
+      width: calc(1.125rem * var(--tidy-switch-scale-internal));
+      height: calc(1.125rem * var(--tidy-switch-scale-internal));
+      background: var(--t5e-switch-slider-color);
+      top: calc(0.125rem * var(--tidy-switch-scale-internal));
+      right: calc(1.375rem * var(--tidy-switch-scale-internal));
+      transition: transform 0.3s;
+      border-radius: 100%;
+    }
+
+    &[aria-checked='true'] {
+      background-color: var(--t5e-primary-accent-color);
+
+      &::before {
+        transform: translateX(
+          calc(1.25rem * var(--tidy-switch-scale-internal))
+        );
+        transition: transform 0.3s;
+      }
+    }
+
+    &:focus-visible {
+      outline: 0.0625rem solid var(--t5e-primary-accent-color);
+    }
+  }
+}

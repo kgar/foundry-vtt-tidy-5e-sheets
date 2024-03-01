@@ -1242,4 +1242,16 @@ export const FoundryAdapter = {
       keepId: true,
     });
   },
+  getEffect({
+    document,
+    effectId,
+    parentId,
+  }: {
+    document: any;
+    effectId: string;
+    parentId?: string;
+  }) {
+    if (!parentId) return document.effects.get(effectId);
+    return document.items.get(parentId).effects.get(effectId);
+  },
 };

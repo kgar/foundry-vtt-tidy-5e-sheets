@@ -40,6 +40,7 @@ import ConditionToggle from 'src/components/toggle/ConditionToggle.svelte';
 <style lang="scss">
   .conditions-list {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(10.3125rem, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(12.5rem, 1fr));
+    gap: 0.125rem;
   }
 </style>

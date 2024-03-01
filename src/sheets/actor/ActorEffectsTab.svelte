@@ -75,14 +75,14 @@
                     'data-effect-id': effect.id,
                   }}
                 >
-                  <ItemImage src={effect.icon} />
+                  <ItemImage src={effect.img} />
                   <span
                     class="align-self-center truncate"
                     data-tidy-effect-name={effect.name}>{effect.name}</span
                   >
                 </ItemTableCell>
                 <ItemTableCell baseWidth="12.5rem"
-                  >{effect.sourceName ?? ''}</ItemTableCell
+                  >{effect.source.name ?? ''}</ItemTableCell
                 >
                 <ItemTableCell baseWidth="7.5rem"
                   >{effect.duration.label ?? ''}</ItemTableCell
@@ -92,7 +92,11 @@
                     <ItemControls>
                       <ItemControl
                         on:click={() =>
-                          effect.update({ disabled: !effect.disabled })}
+                          FoundryAdapter.getEffect({
+                            document: $context.actor,
+                            effectId: effect.id,
+                            parentId: effect.parentId,
+                          }).update({ disabled: !effect.disabled })}
                         title={effect.disabled
                           ? localize('DND5E.EffectEnable')
                           : localize('DND5E.EffectDisable')}
@@ -101,13 +105,23 @@
                           : 'fa-times'}"
                       />
                       <ItemControl
-                        on:click={() => effect.sheet.render(true)}
+                        on:click={() =>
+                          FoundryAdapter.getEffect({
+                            document: $context.actor,
+                            effectId: effect.id,
+                            parentId: effect.parentId,
+                          }).sheet.render(true)}
                         title={localize('DND5E.EffectEdit')}
                         iconCssClass="fas fa-edit"
                       />
                       {#if $context.unlocked}
                         <ItemControl
-                          on:click={() => effect.deleteDialog()}
+                          on:click={() =>
+                            FoundryAdapter.getEffect({
+                              document: $context.actor,
+                              effectId: effect.id,
+                              parentId: effect.parentId,
+                            }).deleteDialog()}
                           title={localize('DND5E.EffectDelete')}
                           iconCssClass="fas fa-trash"
                         />

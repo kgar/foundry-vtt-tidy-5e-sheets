@@ -1,23 +1,40 @@
 <script lang="ts">
   import type { Dnd5eActorCondition } from 'src/foundry/foundry-and-system';
   import { getContext } from 'svelte';
-  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { ActorSheetContext } from 'src/types/types';
   import type { Readable } from 'svelte/store';
+  import TidySwitch from './TidySwitch.svelte';
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import { debug, error } from 'src/utils/logging';
 
-  const appId = getContext<string>('appId');
   const context = getContext<Readable<ActorSheetContext>>('context');
 
   export let condition: Dnd5eActorCondition;
+
+  let switchOn = !condition.disabled;
+
+  async function handleChange(originalValue: boolean) {
+    try {
+      await FoundryAdapter.toggleCondition($context.actor, condition);
+    } catch (e) {
+      error('An error occurred while toggling a condition', false, e);
+      debug('Condition toggle error troubleshooting info', {
+        condition,
+        state: switchOn,
+      });
+      switchOn = originalValue;
+    }
+  }
 </script>
 
-<label class="green-checkbox" for="{appId}-{condition.id}">
-  <input
-    type="checkbox"
-    checked={!condition.disabled}
-    id="{appId}-{condition.id}"
-    on:change={() => FoundryAdapter.toggleCondition($context.actor, condition)}
-  />
-
-  {condition.name}
-</label>
+<TidySwitch
+  class="flex-row small-gap tidy-condition-toggle {switchOn
+    ? 'active'
+    : 'inactive'}"
+  bind:value={switchOn}
+  on:change={(ev) => handleChange(ev.detail.originalValue)}
+  title={condition.name}
+>
+  <dnd5e-icon src={condition.icon} />
+  <span class="flex-1 truncate">{condition.name}</span>
+</TidySwitch>
