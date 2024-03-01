@@ -45,4 +45,12 @@ declare global {
   var ui: any;
 }
 
+export type Dnd5eActorCondition = {
+  name: string;
+  id: string;
+  icon: string;
+  disabled: boolean;
+  reference?: string;
+};
+
 export {};

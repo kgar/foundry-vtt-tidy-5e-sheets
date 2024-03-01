@@ -1,4 +1,8 @@
 <script lang="ts">
+  import ItemTable from 'src/components/item-list/ItemTable.svelte';
+    import ItemTableColumn from 'src/components/item-list/ItemTableColumn.svelte';
+    import ItemTableHeaderRow from 'src/components/item-list/ItemTableHeaderRow.svelte';
+import ConditionToggle from 'src/components/toggle/ConditionToggle.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { ActorSheetContext } from 'src/types/types';
   import { getContext } from 'svelte';
@@ -9,11 +13,15 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-<section class="items-list">
-  <div class="item-section card">
-    <div class="items-header header">
-      <h3 class="item-name">{localize('DND5E.Conditions')}</h3>
-    </div>
+<ItemTable location="test">
+  <svelte:fragment slot="header">
+    <ItemTableHeaderRow>
+      <ItemTableColumn primary={true}>
+        {localize('DND5E.Conditions')}
+      </ItemTableColumn>
+    </ItemTableHeaderRow>
+  </svelte:fragment>
+  <svelte:fragment slot="body">
     <ul class="conditions-list unlist">
       {#each $context.conditions as condition}
         <li
@@ -21,21 +29,17 @@
           class:active={!condition.disabled}
           data-uuid={condition.reference}
           data-condition-id={condition.id}
-          on:click={ev => FoundryAdapter.toggleCondition($context.actor, condition)}
         >
-          <div class="icon">
-            <dnd5e-icon src={condition.icon}></dnd5e-icon>
-          </div>
-          <div class="name-stacked">
-            <span class="title">{condition.name}</span>
-          </div>
-          {#if condition.disabled}
-            <i class="fas fa-toggle-off"></i>
-          {:else}
-            <i class="fas fa-toggle-on"></i>
-          {/if}
+          <ConditionToggle {condition} />
         </li>
       {/each}
     </ul>
-  </div>
-</section>
+  </svelte:fragment>
+</ItemTable>
+
+<style lang="scss">
+  .conditions-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(10.3125rem, 1fr));
+  }
+</style>
