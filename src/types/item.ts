@@ -1,9 +1,11 @@
 import type { ComponentType, SvelteComponent } from 'svelte';
 import type { CustomContent, Tab } from './types';
 import type { DocumentPreparationWarning } from './types';
+import type { RegisteredEquipmentTypeGroup } from 'src/runtime/item/item.types';
 
 export type ItemSheetContext = {
   customContent: CustomContent[];
+  customEquipmentTypeGroups: RegisteredEquipmentTypeGroup[];
   /**
    * Represents remaining health as a percentage within the range of `0` to `100`.
    */
