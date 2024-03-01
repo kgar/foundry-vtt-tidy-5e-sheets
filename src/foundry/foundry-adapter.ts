@@ -1224,4 +1224,22 @@ export const FoundryAdapter = {
   concealDetails(item: Item5e | null | undefined) {
     return !game.user.isGM && item?.system?.identified === false;
   },
+  async toggleCondition(document: Actor5e, condition: any) {
+    const existing = document.effects.get(
+      dnd5e.utils.staticID(`dnd5e${condition.id}`)
+    );
+
+    if (existing) {
+      return existing.delete();
+    }
+
+    const effect = await ActiveEffect.implementation.fromStatusEffect(
+      condition.id
+    );
+
+    return ActiveEffect.implementation.create(effect, {
+      parent: document,
+      keepId: true,
+    });
+  },
 };

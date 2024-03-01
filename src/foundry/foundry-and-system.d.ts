@@ -9,6 +9,7 @@
 
 declare global {
   var $: any;
+  var ActiveEffect: any;
   var Actor: any;
   var Actors: any;
   var Application: any;

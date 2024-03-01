@@ -553,6 +553,29 @@ export class Tidy5eCharacterSheet
       },
     };
 
+    // Effects & Conditions
+    // TODO: Actually document the type in Tidy; I should really do it.
+    const conditionIds = new Set();
+    const conditions = Object.entries<any>(CONFIG.DND5E.conditionTypes).reduce<any>(
+      (arr, [k, c]) => {
+        if (k === 'diseased') return arr; // Filter out diseased as it's not a real condition.
+        const { label: name, icon, reference } = c;
+        const id = dnd5e.utils.staticID(`dnd5e${k}`);
+        conditionIds.add(id);
+        const existing = this.actor.effects.get(id);
+        const { disabled, img } = existing ?? {};
+        arr.push({
+          name,
+          reference,
+          id: k,
+          icon: img ?? icon,
+          disabled: existing ? disabled : !this.actor.statuses.has(k),
+        });
+        return arr;
+      },
+      []
+    );
+
     const context: CharacterSheetContext = {
       ...defaultDocumentContext,
       activateFoundryJQueryListeners: (node: HTMLElement) => {
@@ -598,6 +621,7 @@ export class Tidy5eCharacterSheet
           relativeTo: this.actor,
         }
       ),
+      conditions: conditions,
       customActorTraits: CustomActorTraitsRuntime.getEnabledTraits(
         defaultDocumentContext
       ),
