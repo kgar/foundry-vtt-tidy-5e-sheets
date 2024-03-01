@@ -23,3 +23,8 @@ export type ConfiguredItemFilter = ItemFilter & {
 };
 export type ActorFilterCategories = Record<Category, ConfiguredItemFilter[]>;
 export type ActorFilters = Record<TabId, ActorFilterCategories>;
+
+export type RegisteredEquipmentTypeGroup = {
+  label: string;
+  types: Record<string, string>;
+};

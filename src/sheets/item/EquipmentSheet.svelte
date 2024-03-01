@@ -41,7 +41,7 @@
     </div>
 
     <ul class="summary flexrow">
-      <li>{$context.itemType}</li>
+      <li>{$context.system.type.label}</li>
       <li>
         {#if $context.concealDetails}
           <span>{localize('DND5E.Unidentified.Title')}</span>

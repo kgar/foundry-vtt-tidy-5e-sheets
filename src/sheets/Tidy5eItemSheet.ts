@@ -128,6 +128,8 @@ export class Tidy5eKgarItemSheet
         super.activateListeners($(node));
       },
       customContent: await ItemSheetRuntime.getContent(defaultDocumentContext),
+      customEquipmentTypeGroups:
+        ItemSheetRuntime.getCustomEquipmentTypeGroups(),
       healthPercentage: getPercentage(
         this.item?.system?.hp?.value,
         this.item?.system?.hp?.max
