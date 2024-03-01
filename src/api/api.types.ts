@@ -337,3 +337,40 @@ export interface CustomContentInjectParams {
    */
   selector: string;
 }
+
+/**
+ * A custom equipment type group, to be rendered in the Equipment Type section of the Item Sheet.
+ *
+ * @example Custom Helmet Types
+ * ```js
+ * {
+ *   label: 'Helmet',
+ *   types: {
+ *     clothhat: 'Clothings Helmet',
+ *     lighthat: 'Light Helmet',
+ *     mediumhat: 'Medium Helmet',
+ *     heavyhat: 'Heavy Helmet',
+ * }
+ * ```
+ *
+ * @example Custom Helmet Types (with Localization Keys)
+ * ```js
+ * {
+ *   label: 'MyModuleId.HelmetType.Label',
+ *   types: {
+ *     clothhat: 'MyModuleId.HelmetType.ClothingsHelmet.Label',
+ *     lighthat: 'MyModuleId.HelmetType.LightHelmet.Label',
+ *     mediumhat: 'MyModuleId.HelmetType.MediumHelmet.Label',
+ *     heavyhat: 'MyModuleId.HelmetType.HeavyHelmet.Label',
+ * }
+ * ```
+ */
+export type EquipmentTypeGroup = {
+  /** A group label. Localization keys also work. */
+  label: string;
+  /**
+   * An object where the key is the equipment type ID, and the value is the label text. 
+   * Localization keys also work.
+   */
+  types: Record<string, string>;
+};

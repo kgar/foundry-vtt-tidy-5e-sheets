@@ -40,6 +40,11 @@
       <optgroup label={localize('DND5E.Armor')}>
         <SelectOptions data={$context.config.armorTypes} />
       </optgroup>
+      {#each $context.customEquipmentTypeGroups as group}
+      <optgroup label={localize(group.label)}>
+        <SelectOptions data={group.types} />
+      </optgroup>
+      {/each}
       <SelectOptions data={$context.config.miscEquipmentTypes} />
     </Select>
   </ItemFormGroup>
