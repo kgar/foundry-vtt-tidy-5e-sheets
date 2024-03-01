@@ -95,7 +95,6 @@ export const defaultItemFilters = {
       return (
         item.system.level === 0 ||
         ['innate', 'always'].includes(item.system.preparation?.mode) ||
-        item.actor?.type === 'npc' ||
         item.system.preparation?.prepared
       );
     },
