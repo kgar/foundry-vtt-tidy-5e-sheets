@@ -7,6 +7,7 @@ export * from './config/actor-traits/ActorTraitsApi';
 export * from './config/actor-traits/types';
 export * from './config/ConfigApi';
 export * from './config/exhaustion/ExhaustionApi';
+export * from './config/item/ItemConfigApi';
 export * from './config/item-summary/ItemSummaryApi';
 export * from './config/spell-school/SpellSchoolApi';
 export * from './content/CustomContentBase';
