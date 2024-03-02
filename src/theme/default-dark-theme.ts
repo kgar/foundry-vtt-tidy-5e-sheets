@@ -76,7 +76,7 @@ export const defaultDarkTheme: Tidy5eTheme = {
     '--t5e-checkbox-font-color': 'rgba(255, 255, 255, 0.8)',
     '--t5e-checkbox-outline-color': 'rgba(50, 50, 50, 1)',
     '--t5e-checkbox-unchecked-color': 'rgba(75, 75, 75, 1)',
-    '--t5e-checkbox-checked-color': 'rgba(0, 255, 0, 0.5)',
+    '--t5e-checkbox-checked-color': 'hsl(120deg 100% 40% / 50%)',
     '--t5e-item-input-background': 'rgba(255, 255, 255, 0.1)',
     '--t5e-item-input-hover-background': 'rgba(255, 255, 255, 0.2)',
     '--t5e-encumbrance-text-color': 'rgba(238, 238, 238, 1)',

@@ -20,7 +20,7 @@ label.green-checkbox {
     background: var(--t5e-checkbox-checked-color);
   }
 
-  &:hover input::after {
+  &:hover input[type="checkbox"]::after {
     background: var(--t5e-checkbox-checked-color);
   }
 
