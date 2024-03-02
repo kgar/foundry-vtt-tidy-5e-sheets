@@ -39,6 +39,7 @@
   bind:value={switchOn}
   on:change={(ev) => handleChange(ev.detail.originalValue)}
   title={condition.name}
+  disabled={!$context.editable}
 >
   <Dnd5eIcon src={condition.icon} />
   <span class="flex-1 truncate">{condition.name}</span>

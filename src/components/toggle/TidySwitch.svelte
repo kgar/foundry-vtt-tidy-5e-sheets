@@ -3,6 +3,7 @@
   import { createEventDispatcher } from 'svelte';
 
   export let value: boolean = false;
+  export let disabled: boolean = false;
 
   const switchLabelId = `switch-${Math.random()}-label`;
   const dispatcher = createEventDispatcher<{
@@ -10,7 +11,7 @@
   }>();
 
   function handleClick(
-    ev: MouseEvent & {
+    _: MouseEvent & {
       currentTarget: EventTarget & HTMLButtonElement;
     },
   ) {
@@ -33,5 +34,6 @@
     aria-checked={value}
     aria-labelledby={switchLabelId}
     tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+    {disabled}
   ></button>
 </label>
