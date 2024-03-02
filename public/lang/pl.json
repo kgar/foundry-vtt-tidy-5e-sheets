@@ -65,7 +65,7 @@
     "TIDY5E.AbbrMod": "Mod.",
     "TIDY5E.MeleeSpellAttackMod": "Modyfikator do rzutu na atak czarem wręcz",
     "TIDY5E.SpellClass": "Rodzaj czaru",
-    "TIDY5E.Class.Bard": "",
+    "TIDY5E.Class.Bard": "Bard",
     "TIDY5E.Class.Rogue": "Łotr",
     "TIDY5E.MaxPreparedSpellsConfig": {
         "ButtonTooltip": "Konfiguruj maks. liczbę przygotowanych czarów",
@@ -172,5 +172,66 @@
         "header": "Karty Postaci Niezależnych",
         "tabLabel": "Postaci Niezależne"
     },
-    "TIDY5E.StandardVehicleExhaustion2": "Szybkość zmniejszona o połowę"
+    "TIDY5E.StandardVehicleExhaustion2": "Szybkość zmniejszona o połowę",
+    "TIDY5E.StandardVehicleExhaustion3": "Utrudnienie w testach Ataków i Rzutach Obronnych",
+    "TIDY5E.StandardVehicleExhaustion1": "Utrudnienie w Testach Cech",
+    "TIDY5E.StandardVehicleExhaustion4": "Zmniejszenie maksymalnej ilości PW o połowę",
+    "TIDY5E.StandardVehicleExhaustion5": "Prędkość zmniejszona do 0",
+    "TIDY5E.StandardVehicleExhaustion6": "PW spadają do 0 i pojazd się psuje",
+    "TIDY5E.AbbrInitiative": "Ini",
+    "TIDY5E.HitDC": "Trafienie/ST",
+    "TIDY5E.FavoriteSpellLevelLabel": "Poziom Czaru {number}",
+    "TIDY5E.ItemFilters.Category.Miscellaneous": "Różne",
+    "TIDY5E.ActorSpellAttackTitle": "{actorName} - Test Ataku Czarem",
+    "TIDY5E.Class.Druid": "Druid",
+    "TIDY5E.WorldSettings.TabExhaustion": {
+        "tabLabel": "Wyczerpanie"
+    },
+    "TIDY5E.WorldSettings.TabVehicle": {
+        "tabLabel": "Pojazd"
+    },
+    "TIDY5E.ActorMeleeSpellAttackTitle": "{actorName} - Test Ataku Czarem Wręcz",
+    "TIDY5E.ActorMeleeSpellAttackFlavorText": "Test Ataku Czarem Wręcz",
+    "TIDY5E.WorldSettings.Exhaustion": {
+        "options.open.explanation": "Pokazuje użytkownikowi liczbową wartość przy wprowadzaniu poziomu Wyczerpania.",
+        "Header": "Wyczerpanie Postać/BN",
+        "name": "Konfiguracja Wyczerpania",
+        "hint": "Ustala w jaki sposób Wyczerpanie nie-pojazdów jest konfigurowane i pokazane na kartach postaci graczy i BNów.",
+        "options.specific.text": "Dane Poziomy",
+        "options.specific.levels.name": "Całkowite Poziomy",
+        "options.specific.levels.hint": "Ustawia maksymalną wartość poziomów Wyczerpania.",
+        "options.specific.levels.tooltip.name": "Opis Poziomu {level} Wyczerpania",
+        "options.specific.levels.tooltip.hint": "Opis dla tego poziomu Wyczerpania. Klawisze skrótów również działają.",
+        "useStandardExhaustion": "Użyj standardowego Wyczerpania"
+    },
+    "TIDY5E.ActionsPerTurn": "Akcje na Turę",
+    "TIDY5E.SheetMenu": {
+        "label": "Menu",
+        "themeLabel": "Motyw"
+    },
+    "TIDY5E.Commands.CollapseAll": "Zwiń wszystko",
+    "TIDY5E.ActorSpellAttackFlavorText": "Test Ataku Czarem",
+    "TIDY5E.ActorRangedSpellAttackTitle": "{actorName} - Test Ataku Dystansowego Czarem",
+    "TIDY5E.ActorRangedSpellAttackFlavorText": "Test Ataku Dystansowego Czarem",
+    "TIDY5E.WorldSettings.TabCharacter": {
+        "tabLabel": "Postać"
+    },
+    "TIDY5E.WorldSettings.TabNpc": {
+        "tabLabel": "BN"
+    },
+    "TIDY5E.ApplyChanges": "Zastosuj zmiany",
+    "TIDY5E.SaveChanges": "Zapisz zmiany",
+    "TIDY5E.UseDefault": "Użyj domyślnych",
+    "TIDY5E.Reset": "Resetuj",
+    "TIDY5E.VehicleInMotion": "Pojazd w ruchu",
+    "TIDY5E.VehicleMotionless": "Pojazd w bezruchu",
+    "TIDY5E.TotalCrewCount": "Całkowita załoga",
+    "TIDY5E.ActiveEffectsMarkerTitle": "Ten przedmiot ma Aktywne Efekty",
+    "TIDY5E.Commands.ExpandAll": "Rozwiń wszystko",
+    "TIDY5E.SortMode.ActionListDefault": "Domyślne sortowanie listy Akcji",
+    "TIDY5E.ItemFilters.MenuTooltip.Filters": "Filtry",
+    "TIDY5E.Commands.ShowLegendaryToolbar": "Pokaż pasek zdolności Legendarnych",
+    "TIDY5E.Commands.HideLegendaryToolbar": "Ukryj pasek zdolności Legendarnych",
+    "TIDY5E.ItemFilters.ClearAll": "Wyczyść wszystko",
+    "TIDY5E.ItemFilters.Filter.Other": "Inne"
 }
