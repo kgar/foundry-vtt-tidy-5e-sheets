@@ -15,7 +15,7 @@
   import type { Readable } from 'svelte/store';
   import Notice from 'src/components/notice/Notice.svelte';
   import { declareLocation } from 'src/types/location-awareness';
-  import ActorConditions from '../../actor/ActorConditions.svelte';
+  import CharacterConditions from '../parts/CharacterConditions.svelte';
 
   let context = getContext<Readable<ActorSheetContext>>('context');
 
@@ -146,6 +146,6 @@
     {/each}
   {/if}
   {#if $context.conditions}
-    <ActorConditions />
+    <CharacterConditions />
   {/if}
 </div>

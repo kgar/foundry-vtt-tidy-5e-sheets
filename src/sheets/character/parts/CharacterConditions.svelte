@@ -4,11 +4,11 @@
   import ItemTableHeaderRow from 'src/components/item-list/ItemTableHeaderRow.svelte';
   import ConditionToggle from 'src/components/toggle/ConditionToggle.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { ActorSheetContext } from 'src/types/types';
+  import type { CharacterSheetContext } from 'src/types/types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
 
-  let context = getContext<Readable<ActorSheetContext>>('context');
+  let context = getContext<Readable<CharacterSheetContext>>('context');
 
   const localize = FoundryAdapter.localize;
 </script>
