@@ -21,13 +21,13 @@
   class:item-use-button-has-focus={buttonIsFocused}
   style="background-image: url('{imgUrlOverride ?? item.img}')"
   class:show-roll={!disabled && $showRoll}
-  class:conceal={FoundryAdapter.concealDetails(item)}
+  class:conceal={item.system.identified === false}
 >
   <div
     role="presentation"
     aria-hidden="true"
     class="unidentified-glyph no-transition"
-    class:conceal={FoundryAdapter.concealDetails(item)}
+    class:conceal={item.system.identified === false}
     class:hidden={$showRoll}
   >
     <i class="fas fa-question" />

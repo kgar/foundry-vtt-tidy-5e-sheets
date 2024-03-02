@@ -35,6 +35,7 @@
         attributes={{ 'data-tidy-item-name': $context.item.name }}
         placeholder={localize('DND5E.SpellName')}
         disabled={!$context.editable}
+        title={$context.item.name}
       />
     </h1>
 

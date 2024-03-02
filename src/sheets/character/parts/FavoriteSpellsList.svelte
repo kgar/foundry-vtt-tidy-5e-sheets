@@ -69,7 +69,7 @@
           let:toggleSummary
           cssClass={FoundryAdapter.getSpellRowClasses(spell)}
         >
-          <ItemTableCell primary={true}>
+          <ItemTableCell primary={true} title={spell.name}>
             <ItemUseButton
               disabled={!$context.editable}
               item={spell}

@@ -23,7 +23,7 @@
   class="item-name truncate {cssClass}"
   class:has-children={hasChildren}
   on:keypress={(ev) => ev.key === 'Enter' && dispatcher('toggle', ev)}
-  class:italic={FoundryAdapter.concealDetails(item)}
+  class:italic={item.system.identified === false}
 >
   <slot />
 </span>

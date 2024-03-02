@@ -105,7 +105,7 @@
           hidden={visibleItemIdSubset !== null &&
             !visibleItemIdSubset.has(item.id)}
         >
-          <ItemTableCell primary={true} title={item.name}>
+          <ItemTableCell primary={true} title={FoundryAdapter.getIdentifiedName(item)}>
             <ItemUseButton disabled={!$context.editable} {item} />
             <ItemName
               on:toggle={() => toggleSummary($context.actor)}
