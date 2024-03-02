@@ -134,6 +134,9 @@ export const CONSTANTS = {
     /** An actor trait container, such as Senses, Languages, or Tools */
     ACTOR_TRAIT: 'actor-trait',
 
+    /** A control for toggling a condition */
+    CONDITION_TOGGLE: 'condition-toggle',
+    
     /** A container for all form fields related to a given damage part. */
     DAMAGE_PART_CONTAINER: 'damage-part-container',
 

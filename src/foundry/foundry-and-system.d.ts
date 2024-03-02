@@ -9,6 +9,7 @@
 
 declare global {
   var $: any;
+  var ActiveEffect: any;
   var Actor: any;
   var Actors: any;
   var Application: any;
@@ -43,5 +44,13 @@ declare global {
   var TextEditor: any;
   var ui: any;
 }
+
+export type Dnd5eActorCondition = {
+  name: string;
+  id: string;
+  icon: string;
+  disabled: boolean;
+  reference?: string;
+};
 
 export {};

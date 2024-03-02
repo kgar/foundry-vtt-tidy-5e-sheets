@@ -140,6 +140,7 @@ export const defaultLightTheme: Tidy5eTheme = {
     '--t5e-scrollbar-track-color': '#0000',
     '--t5e-spell-pip-active-background': 'var(--t5e-primary-accent-color)',
     '--t5e-spell-pip-empty-background': 'transparent',
+    '--t5e-switch-slider-color': '#FFF',
   },
   type: 'light',
 };
