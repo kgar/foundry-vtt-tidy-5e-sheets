@@ -10,7 +10,7 @@
   $: source = FoundryAdapter.getProperty<any>(document, keyPath);
 
   $: text = !isNil(source?.label, '') ? source.label : 'Source';
-  $: usePlaceholder = source?.label === '';
+  $: usePlaceholder = isNil(source?.label, '');
 </script>
 
 {#if editable}
