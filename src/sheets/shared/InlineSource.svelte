@@ -1,6 +1,7 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { settingStore } from 'src/settings/settings';
+  import { isNil } from 'src/utils/data';
 
   export let document: any;
   export let keyPath: string;
@@ -8,8 +9,8 @@
 
   $: source = FoundryAdapter.getProperty<any>(document, keyPath);
 
-  $: text = source.label !== '' ? source.label : 'Source';
-  $: usePlaceholder = source.label === '';
+  $: text = !isNil(source?.label, '') ? source.label : 'Source';
+  $: usePlaceholder = isNil(source?.label, '');
 </script>
 
 {#if editable}
