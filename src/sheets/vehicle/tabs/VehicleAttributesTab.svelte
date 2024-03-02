@@ -119,7 +119,6 @@
             <svelte:fragment slot="body">
               {#each section.items as item (item.id)}
                 {@const ctx = $context.itemContext[item.id]}
-                {@const identifiedName = FoundryAdapter.getIdentifiedName(item)}
                 <ItemTableRow
                   let:toggleSummary
                   on:mousedown={(event) =>
@@ -131,7 +130,7 @@
                   {item}
                   cssClass={FoundryAdapter.getInventoryRowClasses(item, ctx)}
                 >
-                  <ItemTableCell primary={true} title={identifiedName}>
+                  <ItemTableCell primary={true} title={item.name}>
                     <ItemUseButton disabled={!$context.editable} {item} />
                     <ItemName
                       on:toggle={() => toggleSummary($context.actor)}
