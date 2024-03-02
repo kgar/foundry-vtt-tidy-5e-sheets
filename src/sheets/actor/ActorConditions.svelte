@@ -13,7 +13,7 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-<ItemTable location="test">
+<ItemTable location="conditions">
   <svelte:fragment slot="header">
     <ItemTableHeaderRow>
       <ItemTableColumn primary={true}>
