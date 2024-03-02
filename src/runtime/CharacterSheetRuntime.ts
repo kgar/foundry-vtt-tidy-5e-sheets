@@ -7,7 +7,7 @@ import CharacterAttributesTab from 'src/sheets/character/tabs/CharacterAttribute
 import CharacterInventoryTab from 'src/sheets/character/tabs/CharacterInventoryTab.svelte';
 import CharacterSpellbookTab from 'src/sheets/character/tabs/CharacterSpellbookTab.svelte';
 import CharacterFeaturesTab from 'src/sheets/character/tabs/CharacterFeaturesTab.svelte';
-import ActorEffectsTab from 'src/sheets/actor/ActorEffectsTab.svelte';
+import CharacterEffectsTab from 'src/sheets/character/tabs/CharacterEffectsTab.svelte';
 import CharacterBiographyTab from 'src/sheets/character/tabs/CharacterBiographyTab.svelte';
 import ActorJournalTab from 'src/sheets/actor/tabs/ActorJournalTab.svelte';
 import ActorActionsTab from 'src/sheets/actor/tabs/ActorActionsTab.svelte';
@@ -70,7 +70,7 @@ export class CharacterSheetRuntime {
       id: CONSTANTS.TAB_CHARACTER_EFFECTS,
       title: 'DND5E.Effects',
       content: {
-        component: ActorEffectsTab,
+        component: CharacterEffectsTab,
         type: 'svelte',
       },
       layout: 'classic',
