@@ -103,7 +103,6 @@
       {@const ctx = $context.itemContext[item.id]}
       {@const hidden =
         visibleItemIdSubset !== null && !visibleItemIdSubset.has(item.id)}
-      {@const concealDetails = FoundryAdapter.concealDetails(item)}
       <button
         type="button"
         class="item {getInventoryRowClasses(item)} transparent-button"
@@ -130,7 +129,7 @@
         <div class="item-name">
           <div
             class="item-image"
-            class:conceal={concealDetails}
+            class:conceal={item.system.identified === false}
             style="background-image: url('{item.img}');"
           >
             <i class="fa fa-dice-d20" />
@@ -139,7 +138,7 @@
             role="presentation"
             aria-hidden="true"
             class="unidentified-glyph no-transition"
-            class:conceal={concealDetails}
+            class:conceal={item.system.identified === false}
           >
             <i class="fas fa-question" />
           </div>
@@ -147,7 +146,8 @@
 
         {#if ctx?.attunement}
           <i
-            class="fas fa-sun icon-attuned {ctx.attunement?.cls ?? ''} no-pointer-events"
+            class="fas fa-sun icon-attuned {ctx.attunement?.cls ??
+              ''} no-pointer-events"
             title={localize(ctx.attunement?.title)}
           />
         {/if}

@@ -131,7 +131,7 @@
           hidden={visibleItemIdSubset !== null &&
             !visibleItemIdSubset.has(spell.id)}
         >
-          <ItemTableCell primary={true}>
+          <ItemTableCell primary={true} title={spell.name}>
             <ItemUseButton
               disabled={!$context.editable}
               item={spell}

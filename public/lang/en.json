@@ -731,5 +731,6 @@
   "TIDY5E.Commands.HideLegendaryToolbar": "Hide Legendary Toolbar",
   "TIDY5E.ItemFilters.ClearAll": "Clear All",
   "TIDY5E.ItemFilters.Category.Miscellaneous": "Miscellaneous",
-  "TIDY5E.ItemFilters.Filter.Other": "Other"
+  "TIDY5E.ItemFilters.Filter.Other": "Other",
+  "TIDY5E.GMOnly.Message": "GM Only: {message}"
 }

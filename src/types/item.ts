@@ -10,6 +10,7 @@ export type ItemSheetContext = {
    * Represents remaining health as a percentage within the range of `0` to `100`.
    */
   healthPercentage: number;
+  identifiedName: string;
   itemDescriptions: ItemDescription[];
   lockItemQuantity: boolean;
   originalContext: unknown;

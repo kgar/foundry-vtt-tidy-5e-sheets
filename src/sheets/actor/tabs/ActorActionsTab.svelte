@@ -104,6 +104,7 @@
                       data-tidy-item-name={actionItem.item.name}
                       data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_NAME}
                       class="truncate"
+                      title={actionItem.item.name}
                     >
                       {actionItem.item.name}
                     </div>

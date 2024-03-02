@@ -146,7 +146,7 @@
               {item}
               cssClass={FoundryAdapter.getInventoryRowClasses(item, ctx)}
             >
-              <ItemTableCell primary={true}>
+              <ItemTableCell primary={true} title={item.name}>
                 {#if section.editableName}
                   <TextInput
                     document={item}

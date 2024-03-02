@@ -8,7 +8,7 @@ import {
   applyTitleToWindow,
   maintainCustomContentInputFocus,
 } from 'src/utils/applications';
-import { debug } from 'src/utils/logging';
+import { debug, error } from 'src/utils/logging';
 import type { SvelteComponent } from 'svelte';
 import { getPercentage } from 'src/utils/numbers';
 import { isNil } from 'src/utils/data';
@@ -134,6 +134,7 @@ export class Tidy5eKgarItemSheet
         this.item?.system?.hp?.value,
         this.item?.system?.hp?.max
       ),
+      identifiedName: FoundryAdapter.getIdentifiedName(this.item),
       itemDescriptions,
       lockItemQuantity: FoundryAdapter.shouldLockItemQuantity(),
       originalContext: defaultDocumentContext,

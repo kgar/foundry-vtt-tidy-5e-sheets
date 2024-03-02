@@ -35,6 +35,7 @@
         value={$context.item.name}
         attributes={{ 'data-tidy-item-name': $context.item.name }}
         disabled={!$context.editable}
+        title={$context.item.name}
       />
     </h1>
 

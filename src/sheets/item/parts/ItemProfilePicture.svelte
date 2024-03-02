@@ -42,7 +42,7 @@
   <!-- TODO: Figure out if there is an accessible way to provide this feature. -->
   <img
     class="profile"
-    class:conceal={$context.concealDetails}
+    class:conceal={$context.item.system.identified === false}
     src={$context.item.img}
     alt={$context.item.name}
     title="{localize('TIDY5E.EditActorImage')} / {localize(
@@ -56,7 +56,7 @@
     role="presentation"
     aria-hidden="true"
     class="unidentified-glyph"
-    class:conceal={$context.concealDetails}
+    class:conceal={$context.item.system.identified === false}
   >
     <i class="fas fa-question" />
   </div>

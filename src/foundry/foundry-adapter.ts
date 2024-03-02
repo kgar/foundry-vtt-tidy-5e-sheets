@@ -1224,6 +1224,24 @@ export const FoundryAdapter = {
   concealDetails(item: Item5e | null | undefined) {
     return !game.user.isGM && item?.system?.identified === false;
   },
+  getIdentifiedName(item: Item5e): string {
+    if (!FoundryAdapter.userIsGm() || item?.system?.identified !== false) {
+      return item.name;
+    }
+
+    try {
+      return FoundryAdapter.localize('TIDY5E.GMOnly.Message', {
+        message: item.toJSON().name,
+      });
+    } catch (e) {
+      error(
+        'An error occurred while getting the identified name of this item for the GM',
+        false,
+        e
+      );
+      return '';
+    }
+  },
   async toggleCondition(document: Actor5e, condition: any) {
     const existing = document.effects.get(
       dnd5e.utils.staticID(`dnd5e${condition.id}`)

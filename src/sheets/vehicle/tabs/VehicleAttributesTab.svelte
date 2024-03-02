@@ -130,7 +130,7 @@
                   {item}
                   cssClass={FoundryAdapter.getInventoryRowClasses(item, ctx)}
                 >
-                  <ItemTableCell primary={true}>
+                  <ItemTableCell primary={true} title={item.name}>
                     <ItemUseButton disabled={!$context.editable} {item} />
                     <ItemName
                       on:toggle={() => toggleSummary($context.actor)}

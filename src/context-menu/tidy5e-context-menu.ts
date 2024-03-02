@@ -40,7 +40,11 @@ function onItemContext(element: HTMLElement) {
 
     // TODO: Leverage the API to aggregate any registered context menu options; pass in the context of the current item for reference.
     ui.context.menuItems = getActiveEffectContextOptions(effect);
-    Hooks.call("dnd5e.getActiveEffectContextOptions", effect, ui.context.menuItems);
+    Hooks.call(
+      'dnd5e.getActiveEffectContextOptions',
+      effect,
+      ui.context.menuItems
+    );
   }
   // Items
   else if (contextMenuType === CONSTANTS.CONTEXT_MENU_TYPE_ITEMS) {
@@ -49,7 +53,7 @@ function onItemContext(element: HTMLElement) {
 
     // TODO: Leverage the API to aggregate any registered context menu options; pass in the context of the current item for reference.
     ui.context.menuItems = getItemContextOptions(item);
-    Hooks.call("dnd5e.getItemContextOptions", item, ui.context.menuItems);
+    Hooks.call('dnd5e.getItemContextOptions', item, ui.context.menuItems);
   } else {
     warn(
       `Unable to show context menu. The menu type ${contextMenuType} is not supported. Put a [data-context-menu] attribute on the target entity and implement the handler where this warning appears.`
@@ -223,6 +227,14 @@ function getItemContextOptions(item: Item5e) {
           item.update({ 'system.preparation.prepared': !isPrepared }),
       });
     }
+  }
+
+  if (item.system.identified === false) {
+    options.push({
+      name: 'DND5E.Identify',
+      icon: "<i class='fas fa-magnifying-glass fa-fw'></i>",
+      callback: () => item.update({ 'system.identified': true }),
+    });
   }
 
   if (isCharacter) {
