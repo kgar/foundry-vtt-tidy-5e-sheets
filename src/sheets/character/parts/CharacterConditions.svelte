@@ -22,7 +22,7 @@
     </ItemTableHeaderRow>
   </svelte:fragment>
   <svelte:fragment slot="body">
-    <ul class="conditions-list unlist">
+    <ul class="conditions-list">
       {#each $context.conditions as condition (condition.id)}
         <li
           class="condition"
