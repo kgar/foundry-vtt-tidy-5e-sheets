@@ -7,7 +7,7 @@
   import Dnd5eIcon from 'src/components/icon/Dnd5eIcon.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { debug, error } from 'src/utils/logging';
-    import { CONSTANTS } from 'src/constants';
+  import { CONSTANTS } from 'src/constants';
 
   const context = getContext<Readable<ActorSheetContext>>('context');
 
