@@ -1,8 +1,8 @@
 <script lang="ts">
   import ItemTable from 'src/components/item-list/ItemTable.svelte';
-    import ItemTableColumn from 'src/components/item-list/ItemTableColumn.svelte';
-    import ItemTableHeaderRow from 'src/components/item-list/ItemTableHeaderRow.svelte';
-import ConditionToggle from 'src/components/toggle/ConditionToggle.svelte';
+  import ItemTableColumn from 'src/components/item-list/ItemTableColumn.svelte';
+  import ItemTableHeaderRow from 'src/components/item-list/ItemTableHeaderRow.svelte';
+  import ConditionToggle from 'src/components/toggle/ConditionToggle.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { ActorSheetContext } from 'src/types/types';
   import { getContext } from 'svelte';
@@ -23,7 +23,7 @@ import ConditionToggle from 'src/components/toggle/ConditionToggle.svelte';
   </svelte:fragment>
   <svelte:fragment slot="body">
     <ul class="conditions-list unlist">
-      {#each $context.conditions as condition}
+      {#each $context.conditions as condition (condition.id)}
         <li
           class="condition"
           class:active={!condition.disabled}
