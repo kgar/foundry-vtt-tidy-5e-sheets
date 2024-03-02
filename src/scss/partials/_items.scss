@@ -408,6 +408,8 @@ input[type='checkbox'] {
     font-family: var(--t5e-title-font-family);
     font-weight: 600;
     color: var(--t5e-primary-font-color);
+    border-top: 0.0625rem solid var(--t5e-separator-color);
+    border-bottom: 0.0625rem solid var(--t5e-separator-color);
 
     &:first-child {
       margin-top: 0;
@@ -437,6 +439,16 @@ input[type='checkbox'] {
       display: flex;
       flex-wrap: wrap;
       gap: 0.0625rem;
+
+      &:has(label.checkbox) {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(10.625rem, 1fr));
+        gap: 0.125rem;
+
+        > label:not(.checkbox) {
+          grid-column: 1 / -1;
+        }
+      }
     }
 
     span {
@@ -466,7 +478,6 @@ input[type='checkbox'] {
         color: var(--t5e-checkbox-font-color);
         font-size: 0.8125rem;
         line-height: 1rem;
-        flex: 0 0 calc(100% / 4 - 0.0625rem);
         font-weight: 400;
 
         &:hover {
