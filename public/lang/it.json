@@ -692,5 +692,8 @@
         "name": "Includere gli incantesimi con effetti attivi come azioni",
         "hint": "Include incantesimi con effetti attivi associati (ad esempio Barkskin) nella scheda/pannello Azioni per impostazione predefinita."
     },
-    "TIDY5E.ItemFilters.Filter.Other": "Altro"
+    "TIDY5E.ItemFilters.Filter.Other": "Altro",
+    "TIDY5E.SortMode.ActionListDefault": "Ordinamento elenco azioni predefinito",
+    "TIDY5E.Commands.HideLegendaryToolbar": "Nascondi Barra Leggendaria",
+    "TIDY5E.Commands.ShowLegendaryToolbar": "Mostra Barra Leggendaria"
 }
