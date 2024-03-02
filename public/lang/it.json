@@ -695,5 +695,6 @@
     "TIDY5E.ItemFilters.Filter.Other": "Altro",
     "TIDY5E.SortMode.ActionListDefault": "Ordinamento elenco azioni predefinito",
     "TIDY5E.Commands.HideLegendaryToolbar": "Nascondi Barra Leggendaria",
-    "TIDY5E.Commands.ShowLegendaryToolbar": "Mostra Barra Leggendaria"
+    "TIDY5E.Commands.ShowLegendaryToolbar": "Mostra Barra Leggendaria",
+    "TIDY5E.GMOnly.Message": "Solo per il DM: {message}"
 }
