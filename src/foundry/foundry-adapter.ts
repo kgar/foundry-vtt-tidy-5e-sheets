@@ -1230,7 +1230,9 @@ export const FoundryAdapter = {
     }
 
     try {
-      return item.toJSON().name;
+      return FoundryAdapter.localize('TIDY5E.GMOnly.Message', {
+        message: item.toJSON().name,
+      });
     } catch (e) {
       error(
         'An error occurred while getting the identified name of this item for the GM',
