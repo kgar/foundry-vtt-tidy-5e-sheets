@@ -19,13 +19,13 @@
     <TextInput
       {document}
       field={keyPathToCustom}
-      value={source.custom}
+      value={source?.custom}
       placeholder={localize('DND5E.Source')}
       cssClass="source-custom"
     />
   {:else}
-    <span class="source-label truncate" title={source.label ?? ''}
-      >{source.label ?? ''}</span
+    <span class="source-label truncate" title={source?.label ?? ''}
+      >{source?.label ?? ''}</span
     >
   {/if}
   {#if editable}

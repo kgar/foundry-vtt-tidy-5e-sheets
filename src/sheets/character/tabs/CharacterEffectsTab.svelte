@@ -82,10 +82,10 @@
                   >
                 </ItemTableCell>
                 <ItemTableCell baseWidth="12.5rem"
-                  >{effect.source.name ?? ''}</ItemTableCell
+                  >{effect.source?.name ?? ''}</ItemTableCell
                 >
                 <ItemTableCell baseWidth="7.5rem"
-                  >{effect.duration.label ?? ''}</ItemTableCell
+                  >{effect.duration?.label ?? ''}</ItemTableCell
                 >
                 {#if $context.editable && $context.useClassicControls && $context.allowEffectsManagement}
                   <ItemTableCell baseWidth={classicControlsBaseWidth}>

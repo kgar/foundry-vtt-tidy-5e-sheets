@@ -192,8 +192,8 @@
                 {/if}
                 {#if section.showSourceColumn}
                   <ItemTableCell baseWidth="7.5rem">
-                    <span class="truncate" title={item.system.source.label}
-                      >{item.system.source.label}</span
+                    <span class="truncate" title={item.system.source?.label}
+                      >{item.system.source?.label}</span
                     >
                   </ItemTableCell>
                 {/if}
