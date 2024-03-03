@@ -445,7 +445,7 @@
         "hint": "Cette opération réinitialise tous les paramètres du système de jeu actif à leur valeur par défaut. Cela n'affecte que les paramètres du \"monde\", tels que les options du MJ.",
         "dialogs": {
             "title": "Réinitialisation des paramètres du module",
-            "content": "Êtes-vous sûr de vouloir réinitialiser tous les paramètres du module aux valeurs par défaut du système actuel? <strong>Il n'est pas possible de revenir en arrière. </strong>",
+            "content": "Êtes-vous sûr de vouloir réinitialiser tous les paramètres du module aux valeurs par défaut du système actuel? <strong>Il n'est pas possible de revenir en arrière.</strong>",
             "confirm": "Réinitialisation des paramètres du module",
             "cancel": "Annuler"
         }
