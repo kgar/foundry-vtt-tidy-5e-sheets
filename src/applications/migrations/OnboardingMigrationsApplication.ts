@@ -1,6 +1,6 @@
 import type { SvelteComponent } from 'svelte';
 import SvelteFormApplicationBase from '../SvelteFormApplicationBase';
-import Migrations from './Migrations.svelte';
+import OnboardingMigrations from './OnboardingMigrations.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
 export type ConfirmMigrationFunction = (onYes: () => void) => void;
@@ -9,7 +9,7 @@ interface ConfirmsMigrations {
   confirm: ConfirmMigrationFunction;
 }
 
-export class MigrationsApplication
+export class OnboardingMigrationsApplication
   extends SvelteFormApplicationBase
   implements ConfirmsMigrations
 {
@@ -24,7 +24,7 @@ export class MigrationsApplication
   }
 
   createComponent(node: HTMLElement): SvelteComponent<any, any, any> {
-    return new Migrations({
+    return new OnboardingMigrations({
       target: node,
       context: new Map<any, any>([['confirm', this.confirm]]),
     });

@@ -9,11 +9,22 @@
   import type { Readable } from 'svelte/store';
   import type { ActorSheetContext } from 'src/types/types';
   import { ApplicationsManager } from 'src/applications/ApplicationsManager';
+  import { settingStore } from 'src/settings/settings';
+  import SheetMigrationsFormApplication from 'src/applications/migrations/sheet-migrations/SheetMigrationsFormApplication';
+  import { CONSTANTS } from 'src/constants';
   export let defaultSettingsTab: string | undefined = undefined;
 
   const localize = FoundryAdapter.localize;
 
   let context = getContext<Readable<ActorSheetContext>>('context');
+
+  $: showSheetMigrationsOption =
+    (FoundryAdapter.userIsGm() &&
+      $settingStore.showSheetMigrationsMenu ===
+        CONSTANTS.SHEET_SETTINGS_OPTION_GM_ONLY) ||
+    ($context.owner &&
+      $settingStore.showSheetMigrationsMenu ===
+        CONSTANTS.SHEET_SETTINGS_OPTION_GM_AND_OWNERS);
 </script>
 
 <ButtonMenu
@@ -45,6 +56,15 @@
       disabled={!$context.editable}
     >
       {localize('TIDY5E.TabSelection.MenuOptionText')}
+    </ButtonMenuCommand>
+  {/if}
+  {#if showSheetMigrationsOption}
+    <ButtonMenuCommand
+      on:click={() =>
+        new SheetMigrationsFormApplication($context.actor).render(true)}
+      iconClass="fa-solid fa-right-left"
+    >
+      {localize('TIDY5E.SheetMigrations.MenuOptionText')}
     </ButtonMenuCommand>
   {/if}
 </ButtonMenu>
