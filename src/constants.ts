@@ -136,7 +136,7 @@ export const CONSTANTS = {
 
     /** A control for toggling a condition */
     CONDITION_TOGGLE: 'condition-toggle',
-    
+
     /** A container for all form fields related to a given damage part. */
     DAMAGE_PART_CONTAINER: 'damage-part-container',
 
@@ -262,4 +262,7 @@ export const CONSTANTS = {
   ACTIVATION_COST_LAIR: 'lair',
   ACTIVATION_COST_CREW: 'crew',
   ACTIVATION_COST_SPECIAL: 'special',
+  SHEET_SETTINGS_OPTION_NONE: 'none',
+  SHEET_SETTINGS_OPTION_GM_ONLY: 'gm-only',
+  SHEET_SETTINGS_OPTION_GM_AND_OWNERS: 'gm-and-owners',
 } as const;

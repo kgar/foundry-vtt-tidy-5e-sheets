@@ -186,6 +186,21 @@
     "Explanation": "Any tabs that the user or sheet are configured not to see (e.g., disabling the journal in config settings) will still not appear on the sheet, even if selected."
   },
 
+  "TIDY5E.SheetMigrations": {
+    "Title": "Sheet Migrations: {documentNameOrType}",
+    "MenuOptionText": "Sheet Migrations",
+    "NotificationMessage": "New sheet data migrations are available.",
+    "Introduction": "The following migrations are available for {actorNameOrType}:",
+    "NoMigrations": "No migrations are available.",
+    "OptionOverwrite.Text": "Overwrite",
+    "OptionOverwrite.Tooltip": "Enable to overwrite existing sheet data. If unchecked, only empty data will receive migrated Tidy data.",
+    "OptionApplyAll.Text": "Apply to All Relevant Sheets",
+    "OptionApplyAll.Tooltip": "Apply this migration to all sheets that are able to receive this migration. The other options selected here will be applied to all migrated sheets.",
+    "OptionDeleteFlags.Text": "Delete Affected Tidy Flags",
+    "OptionDeleteFlags.Tooltip": "When migrating from custom Tidy flag data to official system data, the flags remain in place. Check this option to remove those flags.",
+    "ButtonMigration.Text": "Migrate"
+  },
+
   "TIDY5E.Listbox": {
     "MoveUp": "Move Up (Alt + Up arrow key)",
     "MoveDown": "Move down (Alt + Down arrow key)",
@@ -302,6 +317,13 @@
   "TIDY5E.Settings.ItemCardsFixKey": {
     "name": "Item Card Fix Key",
     "hint": "Hold this keyboard character (for example, the \"x\" key) while viewing an item card to keep it visible and allow for interaction."
+  },
+  "TIDY5E.Settings.ShowSheetMigrationsMenu": {
+    "name": "Show Sheet Migrations Menu",
+    "hint": "Some migrations can be done per individual sheet. This setting controls who can see the Sheet Migrations menu.",
+    "OptionNone.Text": "Do Not Show",
+    "OptionGMOnly.Text": "GM Only",
+    "OptionGMAndOwners.Text": "GM and Sheet Owner"
   },
   "TIDY5E.Settings.DefaultTheme": {
     "name": "Default Color Theme",
@@ -732,5 +754,6 @@
   "TIDY5E.ItemFilters.ClearAll": "Clear All",
   "TIDY5E.ItemFilters.Category.Miscellaneous": "Miscellaneous",
   "TIDY5E.ItemFilters.Filter.Other": "Other",
-  "TIDY5E.GMOnly.Message": "GM Only: {message}"
+  "TIDY5E.GMOnly.Message": "GM Only: {message}",
+  "TIDY5E.ReminderToBackUp": "Always remember to back up your world."
 }
