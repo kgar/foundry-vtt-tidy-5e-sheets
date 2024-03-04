@@ -695,6 +695,5 @@
     },
     "TIDY5E.Commands.ShowLegendaryToolbar": "Mostrar barra de herramientas legendaria",
     "TIDY5E.Commands.HideLegendaryToolbar": "Ocultar barra de herramientas legendaria",
-    "TIDY5E.SortMode.ActionListDefault": "Forma de ordenar por defecto la lista de acciones",
-    "TIDY5E.GMOnly.Message": "Solo GM: {message}"
+    "TIDY5E.SortMode.ActionListDefault": "Forma de ordenar por defecto la lista de acciones"
 }
