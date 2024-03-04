@@ -15,9 +15,9 @@ export default class SheetMigrationsFormApplication extends SvelteFormApplicatio
   static get defaultOptions() {
     return {
       ...super.defaultOptions,
-      height: 550,
+      height: 'auto',
       width: 750,
-      classes: [...super.defaultOptions.classes, 'tab-selection'],
+      classes: [...super.defaultOptions.classes, 'sheet-migrations'],
       resizable: true,
     };
   }

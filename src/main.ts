@@ -1,7 +1,7 @@
 import { FoundryAdapter } from './foundry/foundry-adapter';
 import { Tidy5eCharacterSheet } from './sheets/Tidy5eCharacterSheet';
 import './scss/core.scss';
-import { initSettings } from './settings/settings';
+import { SettingsProvider, initSettings } from './settings/settings';
 import { Tidy5eKgarItemSheet } from './sheets/Tidy5eItemSheet';
 import { Tidy5eNpcSheet } from './sheets/Tidy5eNpcSheet';
 import { Tidy5eVehicleSheet } from './sheets/Tidy5eKgarVehicleSheet';
@@ -9,15 +9,8 @@ import { CONSTANTS } from './constants';
 import { Tidy5eSheetsApi } from './api/Tidy5eSheetsApi';
 import '../public/rpg-awesome/style/rpg-awesome.min.css';
 import { initRuntime } from './runtime/runtime-init';
-
-/**
- * A tally that represents the number of migrations that have been added to Tidy.
- * This field is used by the developer to control whether a migration notification appears for the GM.
- * When the GM indicates "Do Not Show Again," the migration tally is saved to world config,
- * to prevent the dialog from showing until the next round of migrations.
- * The number of times this tally advances is not as important as the fact that it advances at least once for any release that contains at least one new migration.
- */
-const MigrationTally = 1;
+import MigrationNotificationFormApplication from './applications/migrations/notification/MigrationNotificationFormApplication';
+import { MigrationTally } from './applications/migrations/MigrationTally';
 
 FoundryAdapter.registerActorSheet(
   Tidy5eCharacterSheet,
@@ -56,4 +49,11 @@ Hooks.once('ready', async () => {
   }
 
   Hooks.callAll(CONSTANTS.HOOK_TIDY5E_SHEETS_READY, api);
+
+  if (
+    FoundryAdapter.userIsGm() &&
+    SettingsProvider.settings.migrationsConfirmationTally.get() < MigrationTally
+  ) {
+    new MigrationNotificationFormApplication().render(true);
+  }
 });

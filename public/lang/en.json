@@ -182,19 +182,20 @@
   "TIDY5E.SheetMigrations": {
     "Title": "Sheet Migrations: {documentNameOrType}",
     "MenuOptionText": "Sheet Migrations",
-    "NotificationMessage": "New sheet data migrations are available.",
     "Introduction": "The following migrations are available for {actorNameOrType}:",
     "NoMigrations": "No migrations are available.",
-    "OptionOverwrite.Text": "Overwrite",
-    "OptionOverwrite.Tooltip": "Enable to overwrite existing sheet data. If unchecked, only empty data will receive migrated Tidy data.",
-    "OptionApplyAll.Text": "Apply to All Relevant Sheets",
-    "OptionApplyAll.Tooltip": "Apply this migration to all sheets that are able to receive this migration. The other options selected here will be applied to all migrated sheets.",
-    "OptionDeleteFlags.Text": "Delete Affected Tidy Flags",
-    "OptionDeleteFlags.Tooltip": "When migrating from custom Tidy flag data to official system data, the flags remain in place. Check this option to remove those flags.",
-    "ButtonMigration.Text": "Migrate",
-    "Notification.SheetMigrationsAvailable.Message": "The following sheet migrations are now available in the sheet menu:",
+    "Notification.SheetMigrationsAvailable.Title": "Tidy 5e Sheets: Migrations Available",
+    "Notification.SheetMigrationsAvailable.Explanation": "New sheet data migrations are available. To view sheet migrations, open any Tidy sheet and select the sheet menu's \"Sheet Migrations\" menu option.",
+    "Notification.SheetMigrationsAvailable.Explanation2": "Note: Migrations move data that was originally stored by Tidy 5e Sheets into the system's officially supported data fields. If you are not missing data on your sheets after updating Tidy 5e Sheets, then no migration is required.",
     "Notification.SheetMigrationsAvailable.Button.DoNotShowAgain": "Do Not Show Again",
-    "Notification.SheetMigrationsAvailable.DoNotShowAgain.ConfirmMessage": "Confirmed. This message with not show again until there is another available migration."
+    "Notification.SheetMigrationsAvailable.DoNotShowAgain.ConfirmMessage": "Confirmed. This message will not show again until there is another available migration.",
+    "OptionOverwrite.Text": "Overwrite",
+    "OptionOverwrite.Tooltip": "Enable to overwrite existing sheet data. If unchecked, only empty system fields will receive migrated Tidy data.",
+    "OptionApplyAll.Text": "Apply to All Relevant Sheets",
+    "OptionApplyAll.Tooltip": "Apply this migration to all sheets that are able to receive this migration. The other options selected here will also be applied to all migrated sheets.",
+    "OptionDeleteFlags.Text": "Delete Affected Tidy Flags",
+    "OptionDeleteFlags.Tooltip": "When migrating from custom Tidy flag data to official system data, the flags remain in place by default. Check this option to remove those flags.",
+    "ButtonMigration.Text": "Migrate"
   },
 
   "TIDY5E.Listbox": {

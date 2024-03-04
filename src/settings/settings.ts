@@ -177,7 +177,7 @@ export function createSettings() {
           default: 0,
         },
         get() {
-          return FoundryAdapter.getTidySetting<string>(
+          return FoundryAdapter.getTidySetting<number>(
             'migrationsConfirmationTally'
           );
         },
