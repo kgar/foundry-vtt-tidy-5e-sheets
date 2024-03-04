@@ -4,6 +4,7 @@
   import type { Actor5e } from 'src/types/types';
   import { error } from 'src/utils/logging';
   import { migrateBiographicalFlagsToV2Data } from '../migrations/v2/biographical-flags-to-v2';
+  import { MigrationUtilities } from '../migrations/MigrationUtilities';
 
   export let actor: Actor5e | undefined;
   let migrating = false;
@@ -14,25 +15,27 @@
   const localize = FoundryAdapter.localize;
 
   async function migrate() {
-    try {
-      migrating = true;
-      ui.notifications.info(localize('TIDY5E.Settings.Migrations'));
-      const actorsToMigrate = applyAll
-        ? Array.from(game.actors).filter(
-            (a: Actor5e) => a.type === CONSTANTS.SHEET_TYPE_CHARACTER,
-          )
-        : [actor];
-      for (let actor of actorsToMigrate) {
-        migrateActor(actor);
+    MigrationUtilities.confirmMigration(async () => {
+      try {
+        migrating = true;
+        ui.notifications.info(localize('TIDY5E.Settings.Migrations'));
+        const actorsToMigrate = applyAll
+          ? Array.from(game.actors).filter(
+              (a: Actor5e) => a.type === CONSTANTS.SHEET_TYPE_CHARACTER,
+            )
+          : [actor];
+        for (let actor of actorsToMigrate) {
+          migrateActor(actor);
+        }
+      } finally {
+        migrating = false;
+        ui.notifications.info(
+          FoundryAdapter.localize(
+            'TIDY5E.Settings.Migrations.migrationCompleteMessage',
+          ),
+        );
       }
-    } finally {
-      migrating = false;
-      ui.notifications.info(
-        FoundryAdapter.localize(
-          'TIDY5E.Settings.Migrations.migrationCompleteMessage',
-        ),
-      );
-    }
+    });
   }
 
   async function migrateActor(actor: Actor5e) {
