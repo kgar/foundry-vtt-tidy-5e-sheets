@@ -40,7 +40,7 @@
       <article>
         <ul class="character-details">
           <li>
-            <span>{localize('TIDY5E.Gender')}:</span>
+            <span>{localize('DND5E.Gender')}:</span>
             <ContentEditableFormField
               element="span"
               editable={$context.editable && !$context.lockSensitiveFields}
@@ -51,7 +51,7 @@
             />
           </li>
           <li>
-            <span>{localize('TIDY5E.Age')}:</span>
+            <span>{localize('DND5E.Age')}:</span>
             <ContentEditableFormField
               element="span"
               editable={$context.editable && !$context.lockSensitiveFields}
@@ -63,7 +63,7 @@
             />
           </li>
           <li>
-            <span>{localize('TIDY5E.Height')}:</span>
+            <span>{localize('DND5E.Height')}:</span>
             <ContentEditableFormField
               element="span"
               editable={$context.editable && !$context.lockSensitiveFields}
@@ -75,7 +75,7 @@
             />
           </li>
           <li>
-            <span>{localize('TIDY5E.Weight')}:</span>
+            <span>{localize('DND5E.Weight')}:</span>
             <ContentEditableFormField
               element="span"
               editable={$context.editable && !$context.lockSensitiveFields}
@@ -87,7 +87,7 @@
             />
           </li>
           <li>
-            <span>{localize('TIDY5E.Eyes')}:</span>
+            <span>{localize('DND5E.Eyes')}:</span>
             <ContentEditableFormField
               element="span"
               editable={$context.editable && !$context.lockSensitiveFields}
@@ -99,7 +99,7 @@
             />
           </li>
           <li>
-            <span>{localize('TIDY5E.Skin')}:</span>
+            <span>{localize('DND5E.Skin')}:</span>
             <ContentEditableFormField
               element="span"
               editable={$context.editable && !$context.lockSensitiveFields}
@@ -111,7 +111,7 @@
             />
           </li>
           <li>
-            <span>{localize('TIDY5E.Hair')}:</span>
+            <span>{localize('DND5E.Hair')}:</span>
             <ContentEditableFormField
               element="span"
               editable={$context.editable && !$context.lockSensitiveFields}
