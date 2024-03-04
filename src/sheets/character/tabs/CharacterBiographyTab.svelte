@@ -108,6 +108,18 @@
               cssClass="detail-input"
             />
           </li>
+          <li>
+            <span>{localize('DND5E.Faith')}:</span>
+            <ContentEditableFormField
+              selectOnFocus={true}
+              element="span"
+              editable={$context.editable && !$context.lockSensitiveFields}
+              document={$context.actor}
+              field="system.details.faith"
+              value={$context.system.details.faith ?? ''}
+              cssClass="detail-input"
+            />
+          </li>
         </ul>
       </article>
     </div>
