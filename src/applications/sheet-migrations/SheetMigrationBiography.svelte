@@ -1,13 +1,57 @@
 <script lang="ts">
+  import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { Actor5e } from 'src/types/types';
+  import { error } from 'src/utils/logging';
+  import { migrateBiographicalFlagsToV2Data } from '../migrations/v2/biographical-flags-to-v2';
 
   export let actor: Actor5e | undefined;
+  let migrating = false;
   let overwrite = false;
   let applyAll = false;
   let deleteFlags = false;
 
   const localize = FoundryAdapter.localize;
+
+  async function migrate() {
+    try {
+      migrating = true;
+      ui.notifications.info(localize('TIDY5E.Settings.Migrations'));
+      const actorsToMigrate = applyAll
+        ? Array.from(game.actors).filter(
+            (a: Actor5e) => a.type === CONSTANTS.SHEET_TYPE_CHARACTER,
+          )
+        : [actor];
+      for (let actor of actorsToMigrate) {
+        migrateActor(actor);
+      }
+    } finally {
+      migrating = false;
+      ui.notifications.info(
+        FoundryAdapter.localize(
+          'TIDY5E.Settings.Migrations.migrationCompleteMessage',
+        ),
+      );
+    }
+  }
+
+  async function migrateActor(actor: Actor5e) {
+    try {
+      migrateBiographicalFlagsToV2Data({
+        document: actor,
+        clearBiographicalFlagData: deleteFlags,
+        overwrite: overwrite,
+      });
+    } catch (e) {
+      error('An error occurred while migrating biographical data', false, e);
+      ui.notifications.error(
+        FoundryAdapter.localize(
+          'TIDY5E.Settings.Migrations.migrationErrorMessage',
+        ),
+        { permanent: true },
+      );
+    }
+  }
 </script>
 
 <h2>{localize('DND5E.Biography')}</h2>
@@ -26,7 +70,7 @@
       class="green-checkbox"
       data-tooltip={localize('TIDY5E.SheetMigrations.OptionOverwrite.Tooltip')}
     >
-      <input type="checkbox" bind:checked={overwrite} />
+      <input type="checkbox" bind:checked={overwrite} disabled={migrating} />
       {localize('TIDY5E.SheetMigrations.OptionOverwrite.Text')}
     </label>
 
@@ -35,7 +79,7 @@
         class="green-checkbox"
         data-tooltip={localize('TIDY5E.SheetMigrations.OptionApplyAll.Tooltip')}
       >
-        <input type="checkbox" bind:checked={applyAll} />
+        <input type="checkbox" bind:checked={applyAll} disabled={migrating} />
         {localize('TIDY5E.GMOnly.Message', {
           message: localize('TIDY5E.SheetMigrations.OptionApplyAll.Text'),
         })}
@@ -48,10 +92,12 @@
         'TIDY5E.SheetMigrations.OptionDeleteFlags.Tooltip',
       )}
     >
-      <input type="checkbox" bind:checked={deleteFlags} />
+      <input type="checkbox" bind:checked={deleteFlags} disabled={migrating} />
 
       {localize('TIDY5E.SheetMigrations.OptionDeleteFlags.Text')}
     </label>
   </div>
-  <button>{localize('TIDY5E.SheetMigrations.ButtonMigration.Text')}</button>
+  <button type="button" on:click={(ev) => migrate()} disabled={migrating}
+    >{localize('TIDY5E.SheetMigrations.ButtonMigration.Text')}</button
+  >
 </div>
