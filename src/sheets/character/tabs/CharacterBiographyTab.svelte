@@ -3,7 +3,6 @@
   import SheetEditor from 'src/components/editor/SheetEditor.svelte';
   import ContentEditableFormField from '../../../components/inputs/ContentEditableFormField.svelte';
   import type { CharacterSheetContext } from 'src/types/types';
-  import { CONSTANTS } from 'src/constants';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import RerenderAfterFormSubmission from '../../../components/utility/RerenderAfterFormSubmission.svelte';
@@ -28,77 +27,84 @@
           <li>
             <span>{localize('DND5E.Gender')}:</span>
             <ContentEditableFormField
+              selectOnFocus={true}
               element="span"
               editable={$context.editable && !$context.lockSensitiveFields}
               document={$context.actor}
-              field="flags.{CONSTANTS.MODULE_ID}.gender"
-              value={FoundryAdapter.tryGetFlag($context.actor, 'gender') ?? ''}
+              field="system.details.gender"
+              value={$context.system.details.gender ?? ''}
               cssClass="detail-input"
             />
           </li>
           <li>
             <span>{localize('DND5E.Age')}:</span>
             <ContentEditableFormField
+              selectOnFocus={true}
               element="span"
               editable={$context.editable && !$context.lockSensitiveFields}
               document={$context.actor}
-              field="flags.{CONSTANTS.MODULE_ID}.age"
-              value={FoundryAdapter.tryGetFlag($context.actor, 'age') ?? ''}
+              field="system.details.age"
+              value={$context.system.details.age ?? ''}
               cssClass="detail-input"
             />
           </li>
           <li>
             <span>{localize('DND5E.Height')}:</span>
             <ContentEditableFormField
+              selectOnFocus={true}
               element="span"
               editable={$context.editable && !$context.lockSensitiveFields}
               document={$context.actor}
-              field="flags.{CONSTANTS.MODULE_ID}.height"
-              value={FoundryAdapter.tryGetFlag($context.actor, 'height') ?? ''}
+              field="system.details.height"
+              value={$context.system.details.height ?? ''}
               cssClass="detail-input"
             />
           </li>
           <li>
             <span>{localize('DND5E.Weight')}:</span>
             <ContentEditableFormField
+              selectOnFocus={true}
               element="span"
               editable={$context.editable && !$context.lockSensitiveFields}
               document={$context.actor}
-              field="flags.{CONSTANTS.MODULE_ID}.weight"
-              value={FoundryAdapter.tryGetFlag($context.actor, 'weight') ?? ''}
+              field="system.details.weight"
+              value={$context.system.details.weight ?? ''}
               cssClass="detail-input"
             />
           </li>
           <li>
             <span>{localize('DND5E.Eyes')}:</span>
             <ContentEditableFormField
+              selectOnFocus={true}
               element="span"
               editable={$context.editable && !$context.lockSensitiveFields}
               document={$context.actor}
-              field="flags.{CONSTANTS.MODULE_ID}.eyes"
-              value={FoundryAdapter.tryGetFlag($context.actor, 'eyes') ?? ''}
+              field="system.details.eyes"
+              value={$context.system.details.eyes ?? ''}
               cssClass="detail-input"
             />
           </li>
           <li>
             <span>{localize('DND5E.Skin')}:</span>
             <ContentEditableFormField
+              selectOnFocus={true}
               element="span"
               editable={$context.editable && !$context.lockSensitiveFields}
               document={$context.actor}
-              field="flags.{CONSTANTS.MODULE_ID}.skin"
-              value={FoundryAdapter.tryGetFlag($context.actor, 'skin') ?? ''}
+              field="system.details.skin"
+              value={$context.system.details.skin ?? ''}
               cssClass="detail-input"
             />
           </li>
           <li>
             <span>{localize('DND5E.Hair')}:</span>
             <ContentEditableFormField
+              selectOnFocus={true}
               element="span"
               editable={$context.editable && !$context.lockSensitiveFields}
               document={$context.actor}
-              field="flags.{CONSTANTS.MODULE_ID}.hair"
-              value={FoundryAdapter.tryGetFlag($context.actor, 'hair') ?? ''}
+              field="system.details.hair"
+              value={$context.system.details.hair ?? ''}
               cssClass="detail-input"
             />
           </li>

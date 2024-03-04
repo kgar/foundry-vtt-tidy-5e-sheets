@@ -18,7 +18,9 @@
     MigrationUtilities.confirmMigration(async () => {
       try {
         migrating = true;
-        ui.notifications.info(localize('TIDY5E.Settings.Migrations'));
+        ui.notifications.info(
+          localize('TIDY5E.Settings.Migrations.migrationBeginningMessage'),
+        );
         const actorsToMigrate = applyAll
           ? Array.from(game.actors).filter(
               (a: Actor5e) => a.type === CONSTANTS.SHEET_TYPE_CHARACTER,
@@ -34,6 +36,9 @@
             'TIDY5E.Settings.Migrations.migrationCompleteMessage',
           ),
         );
+        overwrite = false;
+        applyAll = false;
+        deleteFlags = false;
       }
     });
   }
