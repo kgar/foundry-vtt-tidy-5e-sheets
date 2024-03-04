@@ -1,5 +1,5 @@
 import type { SvelteComponent } from 'svelte';
-import SvelteFormApplicationBase from '../SvelteFormApplicationBase';
+import SvelteFormApplicationBase from '../../SvelteFormApplicationBase';
 import type { Actor5e } from 'src/types/types';
 import SheetMigrations from './SheetMigrations.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';

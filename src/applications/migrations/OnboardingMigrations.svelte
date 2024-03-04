@@ -5,7 +5,7 @@
   import { migrateOgSettingsToV1 } from 'src/applications/migrations/v1/og-settings-to-v1';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getContext } from 'svelte';
-  import type { ConfirmMigrationFunction } from './MigrationsApplication';
+  import type { ConfirmMigrationFunction } from './OnboardingMigrationsApplication';
 
   const confirm = getContext<ConfirmMigrationFunction>('confirm');
   const localize = FoundryAdapter.localize;

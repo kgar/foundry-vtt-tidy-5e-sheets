@@ -191,7 +191,10 @@
     "OptionApplyAll.Tooltip": "Apply this migration to all sheets that are able to receive this migration. The other options selected here will be applied to all migrated sheets.",
     "OptionDeleteFlags.Text": "Delete Affected Tidy Flags",
     "OptionDeleteFlags.Tooltip": "When migrating from custom Tidy flag data to official system data, the flags remain in place. Check this option to remove those flags.",
-    "ButtonMigration.Text": "Migrate"
+    "ButtonMigration.Text": "Migrate",
+    "Notification.SheetMigrationsAvailable.Message": "The following sheet migrations are now available in the sheet menu:",
+    "Notification.SheetMigrationsAvailable.Button.DoNotShowAgain": "Do Not Show Again",
+    "Notification.SheetMigrationsAvailable.DoNotShowAgain.ConfirmMessage": "Confirmed. This message with not show again until there is another available migration."
   },
 
   "TIDY5E.Listbox": {
@@ -641,7 +644,7 @@
     }
   },
   "TIDY5E.Settings.Migrations": {
-    "name": "Migrations",
+    "name": "Onboarding Migrations",
     "buttonLabel": "Migrate Tidy Data",
     "dialogTitle": "Migrate Tidy Data",
     "hint": "If you were a user of the original Tidy5e Sheet module or the Alpha sheets, optionally use this Migrations menu to migrate your GM settings and Tidy sheet data.",

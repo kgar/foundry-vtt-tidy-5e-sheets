@@ -10,7 +10,7 @@
   import type { ActorSheetContext } from 'src/types/types';
   import { ApplicationsManager } from 'src/applications/ApplicationsManager';
   import { settingStore } from 'src/settings/settings';
-  import SheetMigrationsFormApplication from 'src/applications/sheet-migrations/SheetMigrationsFormApplication';
+  import SheetMigrationsFormApplication from 'src/applications/migrations/sheet-migrations/SheetMigrationsFormApplication';
   import { CONSTANTS } from 'src/constants';
   export let defaultSettingsTab: string | undefined = undefined;
 

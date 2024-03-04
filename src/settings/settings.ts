@@ -18,7 +18,7 @@ import { NpcSheetRuntime } from 'src/runtime/NpcSheetRuntime';
 import { CharacterSheetRuntime } from 'src/runtime/CharacterSheetRuntime';
 import { VehicleSheetRuntime } from 'src/runtime/VehicleSheetRuntime';
 import { TabManager } from 'src/runtime/tab/TabManager';
-import { MigrationsApplication } from 'src/applications/migrations/MigrationsApplication';
+import { OnboardingMigrationsApplication } from 'src/applications/migrations/OnboardingMigrationsApplication';
 import { AboutApplication } from 'src/applications/settings/about/AboutApplication';
 
 export type Tidy5eSettings = {
@@ -151,7 +151,7 @@ export function createSettings() {
           label: 'TIDY5E.Settings.Migrations.buttonLabel',
           hint: `TIDY5E.Settings.Migrations.hint`,
           icon: 'fa-solid fa-right-left',
-          type: MigrationsApplication,
+          type: OnboardingMigrationsApplication,
           restricted: true,
         },
       },
@@ -167,6 +167,21 @@ export function createSettings() {
       },
     },
     settings: {
+      migrationsConfirmationTally: {
+        options: {
+          name: 'Migrations Confirmation Tally',
+          hint: 'Developer Only: This field tells the developer when was the last time the GM indicated "Do Not Show Again" for a migration notification. This is so Tidy does not notify of migrations until a new migration has become available. A migration tick counter increments each release where a migration has become available.',
+          scope: 'world',
+          config: false,
+          type: Number,
+          default: 0,
+        },
+        get() {
+          return FoundryAdapter.getTidySetting<string>(
+            'migrationsConfirmationTally'
+          );
+        },
+      },
       showSheetMigrationsMenu: {
         options: {
           name: 'TIDY5E.Settings.ShowSheetMigrationsMenu.name',

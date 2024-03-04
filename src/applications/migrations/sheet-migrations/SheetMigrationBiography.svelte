@@ -3,8 +3,8 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { Actor5e } from 'src/types/types';
   import { error } from 'src/utils/logging';
-  import { migrateBiographicalFlagsToV2Data } from '../migrations/v2/biographical-flags-to-v2';
-  import { MigrationUtilities } from '../migrations/MigrationUtilities';
+  import { migrateBiographicalFlagsToV2Data } from '../v2/biographical-flags-to-v2';
+  import { MigrationUtilities } from '../MigrationUtilities';
 
   export let actor: Actor5e | undefined;
   let migrating = false;
