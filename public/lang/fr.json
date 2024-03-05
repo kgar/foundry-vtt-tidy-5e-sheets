@@ -635,7 +635,7 @@
         "migrateConfirmButtonNo": "Annuler",
         "migrateDocumentFlagsButtonLabel": "Migrer les indicateurs des documents",
         "migrationCompleteMessage": "Migration terminée.",
-        "name": "Migrations",
+        "name": "Panneau des Migrations",
         "hint": "Si vous avez utilisé le module original Tidy5e Sheet ou les feuilles Alpha, vous pouvez éventuellement utiliser ce menu Migrations pour migrer vos paramètres MJ et les données de vos feuilles Tidy."
     },
     "TIDY5E.Settings.ActionListIncludeMinuteLongSpellsAsActions": {
@@ -713,5 +713,7 @@
         "OptionGMAndOwners.Text": "MJ et propriétaire de la feuille",
         "name": "Afficher le menu des migrations de feuilles",
         "hint": "Certaines migrations peuvent être effectuées par feuille individuelle. Ce paramètre détermine qui peut voir le menu Migrations de feuilles."
-    }
+    },
+    "TIDY5E.GMOnly.Message": "MJ seulement : {message}",
+    "TIDY5E.ReminderToBackUp": "N'oubliez jamais de sauvegarder votre monde."
 }
