@@ -34,7 +34,7 @@
   const dispatcher = createEventDispatcher<{ mousedown: MouseEvent }>();
   const location = getContext<string>('location');
 
-  let card = getContext<Writable<ItemCardStore>>('card');
+  let card: Writable<ItemCardStore> | undefined = getContext<Writable<ItemCardStore>>('card');
   let showSummary = false;
   let chatData: ItemChatData | undefined;
   let useTransition: boolean = false;
@@ -58,7 +58,7 @@
       return;
     }
 
-    card.update((card) => {
+    card?.update((card) => {
       card.item = item;
       card.itemCardContentTemplate = itemCardContentTemplate;
       return card;
@@ -68,7 +68,7 @@
   async function onMouseLeave(event: Event) {
     Hooks.callAll(CONSTANTS.HOOK_TIDY5E_SHEETS_ITEM_HOVER_OFF, event, item);
 
-    card.update((card) => {
+    card?.update((card) => {
       card.item = null;
       card.itemCardContentTemplate = null;
       return card;
@@ -83,7 +83,7 @@
     // Don't show cards while dragging
     onMouseLeave(event);
 
-    card.update((card) => {
+    card?.update((card) => {
       return card;
     });
 
