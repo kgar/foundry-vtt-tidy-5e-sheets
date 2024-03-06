@@ -1,14 +1,14 @@
 <script lang="ts">
-  import ItemTable from 'src/components/item-list/ItemTable.svelte';
-  import ItemTableColumn from 'src/components/item-list/ItemTableColumn.svelte';
-  import ItemTableRow from 'src/components/item-list/ItemTableRow.svelte';
-  import ItemTableHeaderRow from 'src/components/item-list/ItemTableHeaderRow.svelte';
+  import ItemTable from 'src/components/item-list/v1/ItemTable.svelte';
+  import ItemTableColumn from 'src/components/item-list/v1/ItemTableColumn.svelte';
+  import ItemTableRow from 'src/components/item-list/v1/ItemTableRow.svelte';
+  import ItemTableHeaderRow from 'src/components/item-list/v1/ItemTableHeaderRow.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { CargoOrCrewItem, VehicleSheetContext } from 'src/types/types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import { CONSTANTS } from 'src/constants';
-  import ItemTableCell from 'src/components/item-list/ItemTableCell.svelte';
+  import ItemTableCell from 'src/components/item-list/v1/ItemTableCell.svelte';
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import ItemUseButton from 'src/components/item-list/ItemUseButton.svelte';
   import ItemName from 'src/components/item-list/ItemName.svelte';

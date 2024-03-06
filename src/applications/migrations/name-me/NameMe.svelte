@@ -1,10 +1,10 @@
 <script lang="ts">
   import TidySwitch from 'src/components/toggle/TidySwitch.svelte';
   import type { FigureItOut } from './FigureItOut';
-  import ItemTable from 'src/components/item-list/ItemTable.svelte';
-  import ItemTableCell from 'src/components/item-list/ItemTableCell.svelte';
-  import ItemTableHeaderRow from 'src/components/item-list/ItemTableHeaderRow.svelte';
-  import ItemTableRow from 'src/components/item-list/ItemTableRow.svelte';
+  import ItemTable from 'src/components/item-list/v1/ItemTable.svelte';
+  import ItemTableCell from 'src/components/item-list/v1/ItemTableCell.svelte';
+  import ItemTableHeaderRow from 'src/components/item-list/v1/ItemTableHeaderRow.svelte';
+  import ItemTableRow from 'src/components/item-list/v1/ItemTableRow.svelte';
 
   export let figureItOut: FigureItOut<any>;
 

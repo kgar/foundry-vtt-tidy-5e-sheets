@@ -10,12 +10,12 @@
   import ItemDuplicateControl from '../item-list/controls/ItemDuplicateControl.svelte';
   import ItemEditControl from '../item-list/controls/ItemEditControl.svelte';
   import ItemName from '../item-list/ItemName.svelte';
-  import ItemTable from '../item-list/ItemTable.svelte';
-  import ItemTableCell from '../item-list/ItemTableCell.svelte';
-  import ItemTableColumn from '../item-list/ItemTableColumn.svelte';
+  import ItemTable from '../item-list/v1/ItemTable.svelte';
+  import ItemTableCell from '../item-list/v1/ItemTableCell.svelte';
+  import ItemTableColumn from '../item-list/v1/ItemTableColumn.svelte';
   import ItemTableFooter from '../item-list/ItemTableFooter.svelte';
-  import ItemTableHeaderRow from '../item-list/ItemTableHeaderRow.svelte';
-  import ItemTableRow from '../item-list/ItemTableRow.svelte';
+  import ItemTableHeaderRow from '../item-list/v1/ItemTableHeaderRow.svelte';
+  import ItemTableRow from '../item-list/v1/ItemTableRow.svelte';
   import ItemUseButton from '../item-list/ItemUseButton.svelte';
   import ItemUses from '../item-list/ItemUses.svelte';
   import SpellComponents from './SpellComponents.svelte';

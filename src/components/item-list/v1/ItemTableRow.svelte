@@ -1,6 +1,6 @@
 <script lang="ts">
   import { type Actor5e, type OnItemToggledFn } from 'src/types/types';
-  import ItemSummary from '../item-list/ItemSummary.svelte';
+  import ItemSummary from '../ItemSummary.svelte';
   import { warn } from 'src/utils/logging';
   import { createEventDispatcher, getContext, onMount } from 'svelte';
   import type {
