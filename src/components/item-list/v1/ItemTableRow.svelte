@@ -152,7 +152,7 @@
   on:dragstart={handleDragStart}
   draggable={!!draggable}
   data-item-id={item?.id}
-  data-tidy-item-table-row
+  data-tidy-table-row
   data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_TABLE_ROW}
   data-tidy-item-type={item?.type ?? 'unknown'}
 >

@@ -13,7 +13,7 @@
     SettingsProvider.settings.migrationsConfirmationTally.get();
 
   const migrations = [
-    { label: localize('DND5E.Biography'), migrationTallyVersion: 1 },
+    { label: localize('TIDY5E.SheetMigrations.CharacterBiography.sectionTitle'), migrationTallyVersion: 1 },
   ];
 </script>
 

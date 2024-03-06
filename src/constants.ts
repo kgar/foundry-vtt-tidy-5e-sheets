@@ -236,6 +236,9 @@ export const CONSTANTS = {
     /** The element which contains spell DC. */
     SPELL_DC: 'spell-dc',
 
+    /** A row in a table. */
+    TABLE_ROW: 'table-row',
+
     /** An interactable control that can open configuration settings for a target tool. */
     TOOL_CONFIGURATION_CONTROL: 'tool-configuration-control',
 

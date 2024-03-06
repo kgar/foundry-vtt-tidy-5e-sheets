@@ -1,7 +1,12 @@
 & {
-  --t5e-tab-padding-top: 1rem;
-  --t5e-tab-padding-right: 0.25rem;
-  --t5e-tab-padding-bottom: 1rem;
-  --t5e-tab-padding-left: 1rem;
+  // Tabs
+  --t5e-tab-contents-padding-top: 1rem;
+  --t5e-tab-contents-padding-right: 0.25rem;
+  --t5e-tab-contents-padding-bottom: 1rem;
+  --t5e-tab-contents-padding-left: 1rem;
+
+  // Tidy Item Tables (V2)
+  --t5e-tidy-table-cell-min-height: 1.5rem;
+
   // TODO: Extract more standard measurements to include here
 }

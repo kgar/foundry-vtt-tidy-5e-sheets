@@ -179,6 +179,8 @@
     "Explanation": "Any tabs that the user or sheet are configured not to see (e.g., disabling the journal in config settings) will still not appear on the sheet, even if selected."
   },
 
+  "TIDY5E.ButtonConfirm.Text": "Confirm",
+
   "TIDY5E.SheetMigrations": {
     "Title": "Sheet Migrations: {documentNameOrType}",
     "MenuOptionText": "Sheet Migrations",
@@ -189,13 +191,24 @@
     "Notification.SheetMigrationsAvailable.Explanation2": "Note: Migrations move data that was originally stored by Tidy 5e Sheets into the system's officially supported data fields. If you are not missing data on your sheets after updating Tidy 5e Sheets, then no migration is required.",
     "Notification.SheetMigrationsAvailable.Button.DoNotShowAgain": "Do Not Show Again",
     "Notification.SheetMigrationsAvailable.DoNotShowAgain.ConfirmMessage": "Confirmed. This message will not show again until there is another available migration.",
+    "OptionsHeader": "Migration Options",
     "OptionOverwrite.Text": "Overwrite",
     "OptionOverwrite.Tooltip": "Enable to overwrite existing sheet data. If unchecked, only empty system fields will receive migrated Tidy data.",
     "OptionApplyMultiple.Text": "Apply to All Multiple Sheets",
     "OptionApplyMultiple.Tooltip": "Choose from all relevant sheets and apply this migration to them. The other options selected here will also be applied to all migrated sheets.",
     "OptionDeleteFlags.Text": "Delete Affected Tidy Flags",
     "OptionDeleteFlags.Tooltip": "When migrating from custom Tidy flag data to official system data, the flags remain in place by default. Check this option to remove those flags.",
-    "ButtonMigration.Text": "Migrate"
+    "ButtonMigration.Text": "Migrate",
+    "CharacterBiography": {
+      "sectionTitle": "Character Biography",
+      "selectionDialogTitle": "Migration: Character Biography"
+    }
+  },
+
+  "TIDY5E.MigrationSelectionDialog": {
+    "TotalSelectedLabel": "Total Selected: {total}",
+    "SelectColumnText": "To Migrate",
+    "SelectAllNoneTooltip": "Select all or none"
   },
 
   "TIDY5E.Listbox": {

@@ -11,6 +11,8 @@ import '../public/rpg-awesome/style/rpg-awesome.min.css';
 import { initRuntime } from './runtime/runtime-init';
 import MigrationNotificationFormApplication from './applications/migrations/notification/MigrationNotificationFormApplication';
 import { MigrationTally } from './applications/migrations/MigrationTally';
+import BulkMigrations from './applications/migrations/BulkMigrations.svelte';
+import { BulkMigrationsApplication } from './applications/migrations/BulkMigrationsApplication';
 
 FoundryAdapter.registerActorSheet(
   Tidy5eCharacterSheet,
@@ -56,4 +58,8 @@ Hooks.once('ready', async () => {
   ) {
     new MigrationNotificationFormApplication().render(true);
   }
+
+  // DEBUG: REMOVE
+  await FoundryAdapter.setTidySetting('migrationsConfirmationTally', 0);
+  new BulkMigrationsApplication().render(true);
 });

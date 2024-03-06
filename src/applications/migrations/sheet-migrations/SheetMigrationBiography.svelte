@@ -5,8 +5,8 @@
   import { migrateBiographicalFlagsToV2Data } from '../v2/biographical-flags-to-v2';
   import { MigrationUtilities } from '../MigrationUtilities';
   import { CONSTANTS } from 'src/constants';
-  import type { FigureItOut, FigureItOutOption } from '../name-me/FigureItOut';
-  import { NameMeApplication } from '../name-me/NameMeApplication';
+
+  import { MigrationSelectionApplication } from '../migration-selection/MigrationSelectionApplication';
 
   /** Optionally target a single actor. Else, present as a bulk migration. */
   export let actor: Actor5e | null = null;
@@ -45,28 +45,16 @@
       return;
     }
 
-    // Do Bulk Migration
-    try {
-      const figureItOutOptions = Array.from<any>(game.actors)
-        .filter((a) => a.type === CONSTANTS.SHEET_TYPE_CHARACTER)
-        .map<FigureItOutOption<Actor5e>>((a) => ({
-          fields: [
-            {
-              text: a.name,
-              onClick: (target: Actor5e) => target.sheet.render(true),
-            },
-            {
-              text: 'Test',
-            },
-          ],
-          id: a.id,
-          selected: true,
-          target: a,
-        }));
+    promptBulkMigration();
+  }
 
-      new NameMeApplication(
+  function promptBulkMigration() {
+    try {
+      const actorsToMigrate = Array.from<any>(game.actors).filter(
+        (a) => a.type === CONSTANTS.SHEET_TYPE_CHARACTER,
+      );
+      new MigrationSelectionApplication<Actor5e>(
         {
-          options: figureItOutOptions,
           onConfirm: async (selected) => {
             migrating = true;
             ui.notifications.info(
@@ -74,6 +62,19 @@
             );
             migrateActors(selected);
           },
+          columns: [
+            {
+              cellWidth: 'primary',
+              field: {
+                propPath: 'name',
+                onClick: (target: Actor5e) => target.sheet.render(true),
+              },
+              name: localize(
+                'TIDY5E.MigrationSelectionDialog.SelectColumnText',
+              ),
+            },
+          ],
+          documents: actorsToMigrate,
         },
         () => {
           migrating = false;
@@ -125,8 +126,8 @@
   }
 </script>
 
-<h2>{localize('DND5E.Biography')}</h2>
-<div class="flex-column">
+<section>
+  <h2>{localize('TIDY5E.SheetMigrations.CharacterBiography.sectionTitle')}</h2>
   <ul>
     <li>{localize('DND5E.Age')}</li>
     <li>{localize('DND5E.Eyes')}</li>
@@ -136,7 +137,8 @@
     <li>{localize('DND5E.Skin')}</li>
     <li>{localize('DND5E.Weight')}</li>
   </ul>
-  <div class="grid-auto-columns">
+  <h3>{localize('TIDY5E.SheetMigrations.OptionsHeader')}</h3>
+  <div class="options grid-auto-columns">
     <label
       class="green-checkbox"
       data-tooltip={localize('TIDY5E.SheetMigrations.OptionOverwrite.Tooltip')}
@@ -174,7 +176,29 @@
       {localize('TIDY5E.SheetMigrations.OptionDeleteFlags.Text')}
     </label>
   </div>
+
   <button type="button" on:click={(ev) => migrate()} disabled={migrating}
     >{localize('TIDY5E.SheetMigrations.ButtonMigration.Text')}</button
   >
-</div>
+</section>
+
+<style lang="scss">
+  section {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  ul {
+    // flex: 1;
+  }
+
+  .options {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  button {
+    margin-top: auto;
+  }
+</style>

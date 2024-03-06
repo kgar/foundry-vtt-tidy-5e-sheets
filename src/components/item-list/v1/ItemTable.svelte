@@ -31,7 +31,7 @@
 </script>
 
 <section
-  class="item-table"
+  class="item-table {$$restProps.class ?? ''}"
   data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_TABLE}
 >
   <!-- svelte-ignore a11y-no-static-element-interactions -->

@@ -1,99 +1,81 @@
 <script lang="ts">
-  import { migrateAlphaFlagsToV1 } from 'src/applications/migrations/v1/alpha-flags-to-v1';
-  import { migrateAlphaSettingsToV1 } from 'src/applications/migrations/v1/alpha-settings-to-v1';
-  import { migrateOgFlagsToV1 } from 'src/applications/migrations/v1/og-flags-to-v1';
-  import { migrateOgSettingsToV1 } from 'src/applications/migrations/v1/og-settings-to-v1';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { getContext } from 'svelte';
-  import type { ConfirmMigrationFunction } from './BulkMigrationsApplication';
-  import Accordion from 'src/components/accordion/Accordion.svelte';
-  import AccordionItem from 'src/components/accordion/AccordionItem.svelte';
   import SheetMigrationBiography from './sheet-migrations/SheetMigrationBiography.svelte';
+  import V1OnboardingMigration from './v1/V1OnboardingMigration.svelte';
+  import Notice from 'src/components/notice/Notice.svelte';
+  import type { Tab } from 'src/types/types';
+  import Tabs from 'src/components/tabs/Tabs.svelte';
+  import TabContents from 'src/components/tabs/TabContents.svelte';
 
-  const confirm = getContext<ConfirmMigrationFunction>('confirm');
+  let selectedTabId = 'character-bio';
+
   const localize = FoundryAdapter.localize;
+
+  const tabs: Tab[] = [
+    {
+      id: 'character-bio',
+      title: 'TIDY5E.SheetMigrations.CharacterBiography.sectionTitle',
+      content: {
+        component: SheetMigrationBiography,
+        type: 'svelte',
+        getProps: () => ({ actor: undefined }),
+      },
+    },
+    {
+      id: 'v1-onboarding',
+      title: 'TIDY5E.Settings.Migrations.v1.sectionTitle',
+      content: {
+        component: V1OnboardingMigration,
+        type: 'svelte',
+      },
+    },
+  ];
 </script>
 
-<Accordion multiple={true}>
-  <AccordionItem open={true}>
-    <svelte:fragment slot="header">
-      {localize('DND5E.Biography')}
-    </svelte:fragment>
-    <SheetMigrationBiography actor={undefined} />
-  </AccordionItem>
-  <AccordionItem>
-    <svelte:fragment slot="header">
-      {localize('TIDY5E.Settings.Migrations.v1.sectionTitle')}
-    </svelte:fragment>
-    <div class="flex-row align-items-center callout-banner">
-      <div>
-        <p>
-          {@html localize('TIDY5E.Settings.Migrations.v1.mainExplanation1')}
-        </p>
-        <p>
-          {@html localize('TIDY5E.Settings.Migrations.v1.mainExplanation2', {
-            boldStart: '<b>',
-            boldEnd: '</b>',
-          })}
-        </p>
-      </div>
-    </div>
-    <h2 class="flex-row align-items-center">
-      <i class="fas fa-scroll"></i>{@html localize(
-        'TIDY5E.Settings.Migrations.v1.originalHeader',
-      )}
-    </h2>
-    <p>{@html localize('TIDY5E.Settings.Migrations.v1.originalExplanation')}</p>
-    <div class="flex-row extra-small-gap">
-      <button type="button" on:click={() => confirm(migrateOgFlagsToV1)}>
-        <i class="fas fa-flag"></i>
-        {@html localize(
-          'TIDY5E.Settings.Migrations.migrateDocumentFlagsButtonLabel',
-        )}
-      </button>
-      <button type="button" on:click={() => confirm(migrateOgSettingsToV1)}>
-        <i class="fas fa-cog"></i>
-        {@html localize(
-          'TIDY5E.Settings.Migrations.migrateGmSettingsButtonLabel',
-        )}
-      </button>
-    </div>
+<!-- <Notice>
+  {localize('TIDY5E.ReminderToBackUp')}
+</Notice> -->
+<div class="bulk-migrations-container">
+  <div role="presentation" class="vertical-tab-container flex-column no-gap">
+    <Tabs {tabs} bind:selectedTabId orientation="vertical" />
+    <div role="presentation" class="remaining-vertical-space" />
+  </div>
 
-    <h2 class="flex-row align-items-center">
-      <i class="fas fa-flask"></i>{@html localize(
-        'TIDY5E.Settings.Migrations.v1.alphaHeader',
-      )}
-    </h2>
-    <p>
-      {@html localize('TIDY5E.Settings.Migrations.v1.alphaExplanation1')}
-    </p>
-    <p>
-      {@html localize('TIDY5E.Settings.Migrations.v1.alphaExplanation2', {
-        boldStart: '<b>',
-        boldEnd: '</b>',
-      })}
-    </p>
-    <div class="flex-row extra-small-gap">
-      <button type="button" on:click={() => confirm(migrateAlphaFlagsToV1)}>
-        <i class="fas fa-flag"></i>
-        {@html localize(
-          'TIDY5E.Settings.Migrations.migrateDocumentFlagsButtonLabel',
-        )}
-      </button>
-      <button type="button" on:click={() => confirm(migrateAlphaSettingsToV1)}>
-        <i class="fas fa-cog"></i>
-        {@html localize(
-          'TIDY5E.Settings.Migrations.migrateGmSettingsButtonLabel',
-        )}
-      </button>
-    </div>
-  </AccordionItem>
-</Accordion>
+  <TabContents {tabs} {selectedTabId} cssClass="tidy-sheet-body" />
+</div>
 
 <style lang="scss">
-  .callout-banner {
-    background: var(--t5e-faintest-color);
-    margin: -0.5rem -0.5rem 1rem -0.5rem;
-    padding: 0.5rem 1rem;
+  .bulk-migrations-container {
+    height: 100%;
+    display: grid;
+    grid-template-areas:
+      'nav    body'
+      'nav    body';
+    grid-template-rows: 1fr auto;
+    grid-template-columns: 12.5rem 1fr;
+    gap: 0.5rem;
+  }
+
+  .vertical-tab-container {
+    grid-area: nav;
+    margin-top: -0.5rem;
+    margin-left: -0.5rem;
+    margin-bottom: -0.5rem;
+  }
+
+  :global(.tidy-sheet-body) {
+    grid-area: body;
+    overflow-y: scroll;
+    padding-top: 0.5rem;
+    padding-right: 0.5rem;
+    margin-right: -0.25rem;
+    flex: 1;
+  }
+
+  .remaining-vertical-space {
+    margin-right: -0.0625rem;
+    border-right: 0.0625rem solid var(--t5e-tab-strip-border-color);
+    flex: 1;
+    background-color: var(--t5e-header-background);
   }
 </style>
