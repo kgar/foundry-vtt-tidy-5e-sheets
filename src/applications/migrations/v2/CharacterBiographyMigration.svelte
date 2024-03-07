@@ -1,7 +1,7 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { Actor5e } from 'src/types/types';
-  import { error } from 'src/utils/logging';
+  import { debug, error } from 'src/utils/logging';
   import { migrateBiographicalFlagsToV2Data } from './biographical-flags-to-v2';
   import { CONSTANTS } from 'src/constants';
 
@@ -74,13 +74,19 @@
 
   async function migrateActor(actor: Actor5e) {
     try {
+      debug(`Migrating actor ${actor?.name}...`);
       migrateBiographicalFlagsToV2Data({
         document: actor,
         clearBiographicalFlagData: deleteFlags,
         overwrite: overwrite,
       });
+      debug(`Actor ${actor?.name} migration successful!`);
     } catch (e) {
-      error('An error occurred while migrating biographical data', false, e);
+      error(
+        `An error occurred while migrating biographical data for ${actor?.name}`,
+        false,
+        e,
+      );
       ui.notifications.error(
         FoundryAdapter.localize(
           'TIDY5E.Settings.Migrations.migrationErrorMessage',

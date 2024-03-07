@@ -8,7 +8,8 @@
   import { CONSTANTS } from 'src/constants';
   import Notice from 'src/components/notice/Notice.svelte';
 
-  export let selectedTabId: string = CONSTANTS.TAB_MIGRATIONS_CHARACTER_BIOGRAPHY;
+  export let selectedTabId: string =
+    CONSTANTS.TAB_MIGRATIONS_CHARACTER_BIOGRAPHY;
 
   const localize = FoundryAdapter.localize;
 
@@ -19,7 +20,6 @@
       content: {
         component: CharacterBiographyMigration,
         type: 'svelte',
-        getProps: () => ({ actor: undefined }),
       },
     },
     {
