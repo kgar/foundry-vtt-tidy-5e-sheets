@@ -17,7 +17,7 @@ export default class MigrationNotificationFormApplication extends SvelteFormAppl
 
   get title() {
     return FoundryAdapter.localize(
-      'TIDY5E.SheetMigrations.Notification.SheetMigrationsAvailable.Title'
+      'TIDY5E.Settings.Migrations.Notification.Title'
     );
   }
 
@@ -38,7 +38,7 @@ export default class MigrationNotificationFormApplication extends SvelteFormAppl
 
     ui.notifications.info(
       FoundryAdapter.localize(
-        'TIDY5E.SheetMigrations.Notification.SheetMigrationsAvailable.DoNotShowAgain.ConfirmMessage'
+        'TIDY5E.Settings.Migrations.Notification.DoNotShowAgain.ConfirmMessage'
       ),
       { permanent: true }
     );

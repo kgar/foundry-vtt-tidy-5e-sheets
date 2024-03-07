@@ -2,53 +2,18 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { Actor5e } from 'src/types/types';
   import { error } from 'src/utils/logging';
-  import { migrateBiographicalFlagsToV2Data } from '../v2/biographical-flags-to-v2';
-  import { MigrationUtilities } from '../MigrationUtilities';
+  import { migrateBiographicalFlagsToV2Data } from './biographical-flags-to-v2';
   import { CONSTANTS } from 'src/constants';
 
   import { MigrationSelectionApplication } from '../migration-selection/MigrationSelectionApplication';
 
-  /** Optionally target a single actor. Else, present as a bulk migration. */
-  export let actor: Actor5e | null = null;
-
-  $: applyAllDefault = actor !== null ? false : true;
-
   let migrating = false;
   let overwrite = false;
-  let applyAll = false;
-  $: applyAll = applyAllDefault;
   let deleteFlags = false;
 
   const localize = FoundryAdapter.localize;
 
   async function migrate() {
-    if (!applyAll) {
-      MigrationUtilities.confirmMigration(async () => {
-        try {
-          migrating = true;
-          ui.notifications.info(
-            localize('TIDY5E.Settings.Migrations.migrationBeginningMessage'),
-          );
-          migrateActor(actor);
-        } finally {
-          migrating = false;
-          ui.notifications.info(
-            FoundryAdapter.localize(
-              'TIDY5E.Settings.Migrations.migrationCompleteMessage',
-            ),
-          );
-          overwrite = false;
-          applyAll = applyAllDefault;
-          deleteFlags = false;
-        }
-      });
-      return;
-    }
-
-    promptBulkMigration();
-  }
-
-  function promptBulkMigration() {
     try {
       const actorsToMigrate = Array.from<any>(game.actors).filter(
         (a) => a.type === CONSTANTS.SHEET_TYPE_CHARACTER,
@@ -103,7 +68,6 @@
 
   function resetOptions() {
     overwrite = false;
-    applyAll = applyAllDefault;
     deleteFlags = false;
   }
 
@@ -127,7 +91,7 @@
 </script>
 
 <section>
-  <h2>{localize('TIDY5E.SheetMigrations.CharacterBiography.sectionTitle')}</h2>
+  <h2>{localize('TIDY5E.Settings.Migrations.CharacterBiography.sectionTitle')}</h2>
   <ul>
     <li>{localize('DND5E.Age')}</li>
     <li>{localize('DND5E.Eyes')}</li>
@@ -137,48 +101,30 @@
     <li>{localize('DND5E.Skin')}</li>
     <li>{localize('DND5E.Weight')}</li>
   </ul>
-  <h3>{localize('TIDY5E.SheetMigrations.OptionsHeader')}</h3>
+  <h3>{localize('TIDY5E.Settings.Migrations.OptionsHeader')}</h3>
   <div class="options grid-auto-columns">
     <label
       class="green-checkbox"
-      data-tooltip={localize('TIDY5E.SheetMigrations.OptionOverwrite.Tooltip')}
+      data-tooltip={localize('TIDY5E.Settings.Migrations.OptionOverwrite.Tooltip')}
     >
       <input type="checkbox" bind:checked={overwrite} disabled={migrating} />
-      {localize('TIDY5E.SheetMigrations.OptionOverwrite.Text')}
+      {localize('TIDY5E.Settings.Migrations.OptionOverwrite.Text')}
     </label>
-
-    {#if FoundryAdapter.userIsGm() && actor}
-      <label
-        class="green-checkbox"
-        data-tooltip={localize(
-          'TIDY5E.SheetMigrations.OptionApplyMultiple.Tooltip',
-        )}
-      >
-        <input
-          type="checkbox"
-          bind:checked={applyAll}
-          disabled={migrating || !actor}
-        />
-        {localize('TIDY5E.GMOnly.Message', {
-          message: localize('TIDY5E.SheetMigrations.OptionApplyMultiple.Text'),
-        })}
-      </label>
-    {/if}
 
     <label
       class="green-checkbox"
       data-tooltip={localize(
-        'TIDY5E.SheetMigrations.OptionDeleteFlags.Tooltip',
+        'TIDY5E.Settings.Migrations.OptionDeleteFlags.Tooltip',
       )}
     >
       <input type="checkbox" bind:checked={deleteFlags} disabled={migrating} />
 
-      {localize('TIDY5E.SheetMigrations.OptionDeleteFlags.Text')}
+      {localize('TIDY5E.Settings.Migrations.OptionDeleteFlags.Text')}
     </label>
   </div>
 
   <button type="button" on:click={(ev) => migrate()} disabled={migrating}
-    >{localize('TIDY5E.SheetMigrations.ButtonMigration.Text')}</button
+    >{localize('TIDY5E.Settings.Migrations.ButtonMigration.Text')}</button
   >
 </section>
 
@@ -187,10 +133,6 @@
     height: 100%;
     display: flex;
     flex-direction: column;
-  }
-
-  ul {
-    // flex: 1;
   }
 
   .options {

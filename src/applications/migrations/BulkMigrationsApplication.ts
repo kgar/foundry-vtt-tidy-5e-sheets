@@ -13,6 +13,14 @@ export class BulkMigrationsApplication
   extends SvelteFormApplicationBase
   implements ConfirmsMigrations
 {
+  _selectedTabId?: string;
+
+  constructor(selectedTabId?: string) {
+    super();
+
+    this._selectedTabId = selectedTabId;
+  }
+
   static get defaultOptions() {
     return FoundryAdapter.mergeObject(super.defaultOptions, {
       title: FoundryAdapter.localize('TIDY5E.Settings.Migrations.dialogTitle'),
@@ -27,6 +35,9 @@ export class BulkMigrationsApplication
     return new BulkMigrations({
       target: node,
       context: new Map<any, any>([['confirm', this.confirm]]),
+      props: {
+        selectedTabId: this._selectedTabId,
+      },
     });
   }
 

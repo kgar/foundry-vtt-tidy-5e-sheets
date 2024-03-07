@@ -182,29 +182,6 @@ export function createSettings() {
           );
         },
       },
-      showSheetMigrationsMenu: {
-        options: {
-          name: 'TIDY5E.Settings.ShowSheetMigrationsMenu.name',
-          hint: 'TIDY5E.Settings.ShowSheetMigrationsMenu.hint',
-          scope: 'world',
-          config: true,
-          type: String,
-          default: CONSTANTS.SHEET_SETTINGS_OPTION_GM_ONLY,
-          choices: () => ({
-            [CONSTANTS.SHEET_SETTINGS_OPTION_NONE]:
-              'TIDY5E.Settings.ShowSheetMigrationsMenu.OptionNone.Text',
-            [CONSTANTS.SHEET_SETTINGS_OPTION_GM_ONLY]:
-              'TIDY5E.Settings.ShowSheetMigrationsMenu.OptionGMOnly.Text',
-            [CONSTANTS.SHEET_SETTINGS_OPTION_GM_AND_OWNERS]:
-              'TIDY5E.Settings.ShowSheetMigrationsMenu.OptionGMAndOwners.Text',
-          }),
-        },
-        get() {
-          return FoundryAdapter.getTidySetting<string>(
-            'showSheetMigrationsMenu'
-          );
-        },
-      },
       defaultTheme: {
         options: {
           name: 'TIDY5E.Settings.DefaultTheme.name',

@@ -31,7 +31,7 @@ export class MigrationSelectionApplication<
 
   get title() {
     return FoundryAdapter.localize(
-      'TIDY5E.SheetMigrations.CharacterBiography.selectionDialogTitle'
+      'TIDY5E.Settings.Migrations.CharacterBiography.selectionDialogTitle'
     );
   }
 

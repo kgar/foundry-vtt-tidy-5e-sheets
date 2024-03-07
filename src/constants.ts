@@ -62,6 +62,8 @@ export const CONSTANTS = {
   TAB_CHARACTER_EFFECTS: 'effects',
   TAB_CHARACTER_BIOGRAPHY: 'biography',
   TAB_CHARACTER_JOURNAL: 'journal',
+  TAB_MIGRATIONS_V1_ONBOARDING: 'v1-onboarding',
+  TAB_MIGRATIONS_CHARACTER_BIOGRAPHY: 'character-bio',
   TAB_NPC_ABILITIES: 'attributes',
   TAB_NPC_SPELLBOOK: 'spellbook',
   TAB_NPC_EFFECTS: 'effects',
