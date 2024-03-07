@@ -557,7 +557,7 @@
         "name": "Traccia della barra di scorrimento"
     },
     "TIDY5E.Settings.Migrations": {
-        "name": "Migrazioni",
+        "name": "Sistemazione Migrazioni",
         "buttonLabel": "Migrare Dati di Tidy",
         "dialogTitle": "Migrare dati di Tidy",
         "migrationBeginningMessage": "Migrazione dei dati. Si prega di non aggiornare la pagina fino al termine.",
@@ -689,5 +689,31 @@
     "TIDY5E.SortMode.ActionListDefault": "Ordinamento elenco azioni predefinito",
     "TIDY5E.Commands.HideLegendaryToolbar": "Nascondi Barra Leggendaria",
     "TIDY5E.Commands.ShowLegendaryToolbar": "Mostra Barra Leggendaria",
-    "TIDY5E.GMOnly.Message": "Solo per il DM: {message}"
+    "TIDY5E.GMOnly.Message": "Solo per il DM: {message}",
+    "TIDY5E.SheetMigrations": {
+        "Notification.SheetMigrationsAvailable.Title": "Schede Tidy 5e: Migrazioni Disponibili",
+        "Notification.SheetMigrationsAvailable.Explanation": "Sono disponibili nuove migrazioni dei dati delle schede. Per visualizzare le migrazioni delle schede, aprire qualsiasi scheda Tidy e selezionare l'opzione del menu \"Migrazioni Schede\".",
+        "OptionOverwrite.Text": "Sovrascrivi",
+        "OptionOverwrite.Tooltip": "Abilita la sovrascrittura dei dati del foglio esistente. Se deselezionato, solo i campi di sistema vuoti riceveranno i dati Tidy migrati.",
+        "OptionApplyAll.Text": "Applica a tutte le Schede pertinenti",
+        "ButtonMigration.Text": "Migrare",
+        "MenuOptionText": "Migrazioni schede",
+        "Title": "Migrazioni Schede: {documentNameOrType}",
+        "Introduction": "Le seguenti migrazioni sono disponibili per {actorNameOrType}:",
+        "NoMigrations": "Migrazioni non disponibili.",
+        "Notification.SheetMigrationsAvailable.Explanation2": "NB: Le migrazioni spostano i dati originariamente archiviati da Tidy 5e Sheets nei campi dati ufficialmente supportati dal sistema. Se non mancano dati sui tuoi fogli dopo l'aggiornamento di Tidy 5e Sheets, non è necessaria alcuna migrazione.",
+        "Notification.SheetMigrationsAvailable.Button.DoNotShowAgain": "Non Mostrare Ancora",
+        "Notification.SheetMigrationsAvailable.DoNotShowAgain.ConfirmMessage": "Confermato. Questo messaggio non verrà più visualizzato finché non sarà disponibile un'altra migrazione.",
+        "OptionApplyAll.Tooltip": "Applica questa migrazione a tutte le schede che sono in grado di riceverla. Le altre opzioni selezionate qui verranno applicate anche a tutte le schede migrate.",
+        "OptionDeleteFlags.Text": "Elimina i flag Tidy interessati",
+        "OptionDeleteFlags.Tooltip": "Durante la migrazione dai dati dei flag Tidy personalizzati ai dati del sistema ufficiale, i flag rimangono al loro posto per impostazione predefinita. Seleziona questa opzione per rimuovere questi flag."
+    },
+    "TIDY5E.Settings.ShowSheetMigrationsMenu": {
+        "OptionNone.Text": "Non Mostrare",
+        "OptionGMOnly.Text": "Solo DM",
+        "OptionGMAndOwners.Text": "DM e Proprietario Scheda",
+        "name": "Mostra Menu Migrazioni delle Schede",
+        "hint": "Alcune migrazioni possono essere eseguite per singola scheda. Questa impostazione controlla chi può vedere il menu Migrazioni delle Schede."
+    },
+    "TIDY5E.ReminderToBackUp": "Ricorda sempre di fare un salvataggio del tuo mondo."
 }

@@ -438,7 +438,7 @@
         "hint": "Cette opération réinitialise tous les paramètres du système de jeu actif à leur valeur par défaut. Cela n'affecte que les paramètres du \"monde\", tels que les options du MJ.",
         "dialogs": {
             "title": "Réinitialisation des paramètres du module",
-            "content": "Êtes-vous sûr de vouloir réinitialiser tous les paramètres du module aux valeurs par défaut du système actuel? <strong>Il n'est pas possible de revenir en arrière. </strong>",
+            "content": "Êtes-vous sûr de vouloir réinitialiser tous les paramètres du module aux valeurs par défaut du système actuel? <strong>Il n'est pas possible de revenir en arrière.</strong>",
             "confirm": "Réinitialisation des paramètres du module",
             "cancel": "Annuler"
         }
@@ -635,7 +635,7 @@
         "migrateConfirmButtonNo": "Annuler",
         "migrateDocumentFlagsButtonLabel": "Migrer les indicateurs des documents",
         "migrationCompleteMessage": "Migration terminée.",
-        "name": "Migrations",
+        "name": "Panneau des Migrations",
         "hint": "Si vous avez utilisé le module original Tidy5e Sheet ou les feuilles Alpha, vous pouvez éventuellement utiliser ce menu Migrations pour migrer vos paramètres MJ et les données de vos feuilles Tidy."
     },
     "TIDY5E.Settings.ActionListIncludeMinuteLongSpellsAsActions": {
@@ -688,5 +688,32 @@
     },
     "TIDY5E.Settings.ColorPickerMagicAccent": {
         "name": "Surbrillance contours objet magique"
-    }
+    },
+    "TIDY5E.SheetMigrations": {
+        "MenuOptionText": "Migrations de feuilles",
+        "Notification.SheetMigrationsAvailable.DoNotShowAgain.ConfirmMessage": "Confirmé. Ce message ne s'affichera plus jusqu'à ce qu'une autre migration soit disponible.",
+        "Notification.SheetMigrationsAvailable.Explanation2": "Note : Les migrations déplacent les données qui étaient à l'origine stockées par Tidy 5e Sheets dans les champs de données officiellement pris en charge par le système. S'il ne manque pas de données sur vos feuilles après la mise à jour de Tidy 5e Sheets, aucune migration n'est nécessaire.",
+        "OptionApplyAll.Tooltip": "Appliquer cette migration à toutes les feuilles qui peuvent recevoir cette migration. Les autres options sélectionnées ici seront également appliquées à toutes les feuilles migrées.",
+        "ButtonMigration.Text": "Migrer",
+        "Title": "Migrations des feuilles : {documentNameOrType}",
+        "Introduction": "Les migrations suivantes sont disponibles pour {actorNameOrType}:",
+        "NoMigrations": "Aucune migration n'est disponible.",
+        "Notification.SheetMigrationsAvailable.Title": "Feuilles Tidy 5e : Migrations disponibles",
+        "Notification.SheetMigrationsAvailable.Explanation": "De nouvelles migrations de données de feuilles sont disponibles. Pour visualiser les migrations de feuilles, ouvrez n'importe quelle feuille Tidy et sélectionnez l'option \"Migrations de feuilles\" dans le menu de la feuille.",
+        "Notification.SheetMigrationsAvailable.Button.DoNotShowAgain": "Ne pas montrer à nouveau",
+        "OptionOverwrite.Text": "Écraser",
+        "OptionOverwrite.Tooltip": "Permet d'écraser les données de la feuille existante. Si cette option n'est pas cochée, seuls les champs vides du système recevront les données Tidy migrées.",
+        "OptionApplyAll.Text": "Appliquer à toutes les fiches concernées",
+        "OptionDeleteFlags.Text": "Supprimer les indicateurs Tidy affectés",
+        "OptionDeleteFlags.Tooltip": "Lors de la migration des données personnalisées de Tidy vers les données officielles du système, les indicateurs restent en place par défaut. Cochez cette option pour supprimer ces indicateurs."
+    },
+    "TIDY5E.Settings.ShowSheetMigrationsMenu": {
+        "OptionNone.Text": "Ne pas montrer",
+        "OptionGMOnly.Text": "MJ seulement",
+        "OptionGMAndOwners.Text": "MJ et propriétaire de la feuille",
+        "name": "Afficher le menu des migrations de feuilles",
+        "hint": "Certaines migrations peuvent être effectuées par feuille individuelle. Ce paramètre détermine qui peut voir le menu Migrations de feuilles."
+    },
+    "TIDY5E.GMOnly.Message": "MJ seulement : {message}",
+    "TIDY5E.ReminderToBackUp": "N'oubliez jamais de sauvegarder votre monde."
 }
