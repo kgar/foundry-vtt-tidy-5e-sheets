@@ -26,7 +26,7 @@ export class BulkMigrationsApplication
       title: FoundryAdapter.localize('TIDY5E.Settings.Migrations.dialogTitle'),
       width: 650,
       height: 500,
-      id: 'tidy-5e-sheets-migrations',
+      id: 'tidy-5e-sheets-bulk-migrations',
       popOut: true,
     });
   }

@@ -23,7 +23,7 @@ export class MigrationSelectionApplication<
     return FoundryAdapter.mergeObject(super.defaultOptions, {
       width: 650,
       height: 500,
-      id: 'tidy-5e-sheets-migrations',
+      id: 'tidy-5e-sheets-migration-selection',
       popOut: true,
     });
   }
