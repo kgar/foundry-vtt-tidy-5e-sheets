@@ -35,7 +35,7 @@
                 onClick: (target: Actor5e) => target.sheet.render(true),
               },
               name: localize(
-                'TIDY5E.MigrationSelectionDialog.SelectColumnText',
+                'TIDY5E.Settings.Migrations.Selection.SelectColumnText',
               ),
             },
           ],

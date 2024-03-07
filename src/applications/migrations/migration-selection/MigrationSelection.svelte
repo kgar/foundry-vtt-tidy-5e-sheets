@@ -50,7 +50,7 @@
               bind:checked={allSelected}
               on:click={() => toggleAll()}
               title={localize(
-                'TIDY5E.MigrationSelectionDialog.SelectAllNoneTooltip',
+                'TIDY5E.Settings.Migrations.Selection.SelectAllNoneTooltip',
               )}
             />
           </ItemTableHeaderCellV2>
@@ -96,7 +96,7 @@
   </div>
   <footer>
     <p>
-      {localize('TIDY5E.MigrationSelectionDialog.TotalSelectedLabel', {
+      {localize('TIDY5E.Settings.Migrations.Selection.TotalSelectedLabel', {
         total: totalSelected,
       })}
     </p>

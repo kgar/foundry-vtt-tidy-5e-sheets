@@ -181,12 +181,6 @@
 
   "TIDY5E.ButtonConfirm.Text": "Confirm",
 
-  "TIDY5E.MigrationSelectionDialog": {
-    "TotalSelectedLabel": "Total Selected: {total}",
-    "SelectColumnText": "To Migrate",
-    "SelectAllNoneTooltip": "Select all or none"
-  },
-
   "TIDY5E.Listbox": {
     "MoveUp": "Move Up (Alt + Up arrow key)",
     "MoveDown": "Move down (Alt + Down arrow key)",
@@ -666,6 +660,11 @@
     "CharacterBiography": {
       "sectionTitle": "Character Biography",
       "selectionDialogTitle": "Migration: Character Biography"
+    },
+    "Selection": {
+      "TotalSelectedLabel": "Total Selected: {total}",
+      "SelectColumnText": "To Migrate",
+      "SelectAllNoneTooltip": "Select all or none"
     }
   },
   "TIDY5E.Settings.About": {
