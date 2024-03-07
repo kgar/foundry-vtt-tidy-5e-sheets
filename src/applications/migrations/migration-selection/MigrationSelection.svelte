@@ -5,18 +5,25 @@
   import ItemTableHeaderCellV2 from 'src/components/item-list/v2/ItemTableHeaderCellV2.svelte';
   import ItemTableHeaderRowV2 from 'src/components/item-list/v2/ItemTableHeaderRowV2.svelte';
   import ItemTableRowV2 from 'src/components/item-list/v2/ItemTableRowV2.svelte';
+  import Search from 'src/components/utility-bar/Search.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
   export let params: SelectableMigrationSelectionParams<any>;
 
-  function onMigrateClicked() {
-    const selectedTargets = params.selectables
-      .filter((t) => t.selected)
-      .map((t) => t.document);
-    params.onConfirm(selectedTargets);
-  }
+  let searchCriteria: string = '';
+
+  $: visibleSelectablesIdSubset = new Set<string>(
+    params.selectables
+      .filter(
+        (s) =>
+          searchCriteria.trim() === '' ||
+          s.document.name?.toLowerCase().includes(searchCriteria.toLowerCase()),
+      )
+      .map((d) => d.document.id),
+  );
 
   let gridTemplateColumns: string;
+
   $: {
     gridTemplateColumns = `/* Select */ 2.5rem`;
     params.columns.forEach((c) => {
@@ -27,6 +34,13 @@
   $: totalSelected = params.selectables.filter((t) => t.selected).length;
   $: allSelected = totalSelected >= params.selectables.length;
 
+  function onMigrateClicked() {
+    const selectedTargets = params.selectables
+      .filter((t) => t.selected)
+      .map((t) => t.document);
+    params.onConfirm(selectedTargets);
+  }
+
   function toggleAll() {
     const targetState = !allSelected;
     params.selectables.forEach((o) => (o.selected = targetState));
@@ -35,8 +49,11 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-<section class="name-me-container">
-  <div class="scroll-container">
+<section>
+  <div role="presentation" class="search-container">
+    <Search bind:value={searchCriteria} />
+  </div>
+  <div role="presentation" class="scroll-container">
     <ItemTableV2
       location="bulk-selection"
       toggleable={false}
@@ -63,7 +80,9 @@
       </svelte:fragment>
       <svelte:fragment slot="body">
         {#each params.selectables as selectable}
-          <ItemTableRowV2>
+          <ItemTableRowV2
+            hidden={!visibleSelectablesIdSubset.has(selectable.document.id)}
+          >
             <ItemTableCellV2>
               <input type="checkbox" bind:checked={selectable.selected} />
             </ItemTableCellV2>
@@ -116,6 +135,10 @@
     > .scroll-container {
       flex: 1;
     }
+  }
+
+  .search-container {
+    margin-block-end: 0.5rem;
   }
 
   footer {

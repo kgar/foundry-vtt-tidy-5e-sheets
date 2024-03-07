@@ -61,6 +61,10 @@
   border-radius: 0.3125rem;
   margin: 0.125rem 0 0.125rem 0.5rem;
   background: var(--t5e-faintest-color);
+
+  &.hidden {
+    display: none;
+  }
 }
 
 .tidy-table-row {

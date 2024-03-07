@@ -36,7 +36,8 @@
     text: string;
   };
 
-  const bioFields: FlagBioField[] = [
+  let bioFields: FlagBioField[] = [];
+  $: bioFields = [
     {
       flag: 'gender',
       value: FoundryAdapter.tryGetFlag($context.actor, 'gender'),
