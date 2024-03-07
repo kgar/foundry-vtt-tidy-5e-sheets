@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { CONSTANTS } from 'src/constants';
+  import { CONSTANTS } from 'src/constants';
   import { writable } from 'svelte/store';
 
   export let primary: boolean = false;
