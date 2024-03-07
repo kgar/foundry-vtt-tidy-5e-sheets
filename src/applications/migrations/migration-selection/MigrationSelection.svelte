@@ -1,10 +1,10 @@
 <script lang="ts">
   import type { SelectableMigrationSelectionParams } from './migration-selection.types';
-  import ItemTableV2 from 'src/components/item-list/v1/ItemTable.svelte';
-  import ItemTableCellV2 from 'src/components/item-list/v2/ItemTableCellV2.svelte';
-  import ItemTableHeaderCellV2 from 'src/components/item-list/v2/ItemTableHeaderCellV2.svelte';
-  import ItemTableHeaderRowV2 from 'src/components/item-list/v2/ItemTableHeaderRowV2.svelte';
-  import ItemTableRowV2 from 'src/components/item-list/v2/ItemTableRowV2.svelte';
+  import TidyTableV2 from 'src/components/item-list/v2/TidyTableV2.svelte';
+  import TidyTableCellV2 from 'src/components/item-list/v2/TidyTableCellV2.svelte';
+  import TidyTableHeaderCellV2 from 'src/components/item-list/v2/TidyTableHeaderCellV2.svelte';
+  import TidyTableHeaderRowV2 from 'src/components/item-list/v2/TidyTableHeaderRowV2.svelte';
+  import TidyTableRowV2 from 'src/components/item-list/v2/TidyTableRowV2.svelte';
   import Search from 'src/components/utility-bar/Search.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
@@ -54,14 +54,14 @@
     <Search bind:value={searchCriteria} />
   </div>
   <div role="presentation" class="scroll-container">
-    <ItemTableV2
+    <TidyTableV2
       location="bulk-selection"
       toggleable={false}
       --grid-template-columns={gridTemplateColumns}
     >
       <svelte:fragment slot="header">
-        <ItemTableHeaderRowV2>
-          <ItemTableHeaderCellV2>
+        <TidyTableHeaderRowV2>
+          <TidyTableHeaderCellV2>
             <input
               type="checkbox"
               bind:checked={allSelected}
@@ -70,28 +70,28 @@
                 'TIDY5E.Settings.Migrations.Selection.SelectAllNoneTooltip',
               )}
             />
-          </ItemTableHeaderCellV2>
+          </TidyTableHeaderCellV2>
           {#each params.columns as column}
-            <ItemTableHeaderCellV2 primary={column?.cellWidth === 'primary'}>
+            <TidyTableHeaderCellV2 primary={column?.cellWidth === 'primary'}>
               {column.name}
-            </ItemTableHeaderCellV2>
+            </TidyTableHeaderCellV2>
           {/each}
-        </ItemTableHeaderRowV2>
+        </TidyTableHeaderRowV2>
       </svelte:fragment>
       <svelte:fragment slot="body">
         {#each params.selectables as selectable}
-          <ItemTableRowV2
+          <TidyTableRowV2
             hidden={!visibleSelectablesIdSubset.has(selectable.document.id)}
           >
-            <ItemTableCellV2>
+            <TidyTableCellV2>
               <input type="checkbox" bind:checked={selectable.selected} />
-            </ItemTableCellV2>
+            </TidyTableCellV2>
             {#each params.columns as column}
               {@const text = FoundryAdapter.getProperty(
                 selectable.document,
                 column.field.propPath,
               )}
-              <ItemTableCellV2
+              <TidyTableCellV2
                 primary={column?.cellWidth === 'primary'}
                 class="flex-row small-gap"
               >
@@ -106,12 +106,12 @@
                 {:else}
                   <div>{text}</div>
                 {/if}
-              </ItemTableCellV2>
+              </TidyTableCellV2>
             {/each}
-          </ItemTableRowV2>
+          </TidyTableRowV2>
         {/each}
       </svelte:fragment>
-    </ItemTableV2>
+    </TidyTableV2>
   </div>
   <footer>
     <p>
