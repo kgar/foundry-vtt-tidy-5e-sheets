@@ -8,7 +8,7 @@
   import { CONSTANTS } from 'src/constants';
   import Notice from 'src/components/notice/Notice.svelte';
 
-  export let selectedTabId = 'character-bio';
+  export let selectedTabId = CONSTANTS.TAB_MIGRATIONS_CHARACTER_BIOGRAPHY;
 
   const localize = FoundryAdapter.localize;
 
