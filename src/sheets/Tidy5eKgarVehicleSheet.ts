@@ -208,7 +208,7 @@ export class Tidy5eVehicleSheet
               // TODO: Use app.messageBus
               this.messageBus.set({
                 tabId: CONSTANTS.TAB_ACTOR_ACTIONS,
-                message: 'expand-all',
+                message: CONSTANTS.MESSAGE_BUS_EXPAND_ALL,
               }),
           },
           {
@@ -218,7 +218,7 @@ export class Tidy5eVehicleSheet
               // TODO: Use app.messageBus
               this.messageBus.set({
                 tabId: CONSTANTS.TAB_ACTOR_ACTIONS,
-                message: 'collapse-all',
+                message: CONSTANTS.MESSAGE_BUS_COLLAPSE_ALL,
               }),
           },
         ],

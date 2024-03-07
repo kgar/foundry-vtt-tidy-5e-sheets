@@ -349,7 +349,7 @@ export class Tidy5eCharacterSheet
               // TODO: Use app.messageBus
               this.messageBus.set({
                 tabId: CONSTANTS.TAB_CHARACTER_INVENTORY,
-                message: 'expand-all',
+                message: CONSTANTS.MESSAGE_BUS_EXPAND_ALL,
               }),
           },
           {
@@ -359,7 +359,7 @@ export class Tidy5eCharacterSheet
               // TODO: Use app.messageBus
               this.messageBus.set({
                 tabId: CONSTANTS.TAB_CHARACTER_INVENTORY,
-                message: 'collapse-all',
+                message: CONSTANTS.MESSAGE_BUS_COLLAPSE_ALL,
               }),
           },
           {
@@ -417,7 +417,7 @@ export class Tidy5eCharacterSheet
               // TODO: Use app.messageBus
               this.messageBus.set({
                 tabId: CONSTANTS.TAB_CHARACTER_SPELLBOOK,
-                message: 'expand-all',
+                message: CONSTANTS.MESSAGE_BUS_EXPAND_ALL,
               }),
           },
           {
@@ -427,7 +427,7 @@ export class Tidy5eCharacterSheet
               // TODO: Use app.messageBus
               this.messageBus.set({
                 tabId: CONSTANTS.TAB_CHARACTER_SPELLBOOK,
-                message: 'collapse-all',
+                message: CONSTANTS.MESSAGE_BUS_COLLAPSE_ALL,
               }),
           },
           {
@@ -485,7 +485,7 @@ export class Tidy5eCharacterSheet
               // TODO: Use app.messageBus
               this.messageBus.set({
                 tabId: CONSTANTS.TAB_CHARACTER_FEATURES,
-                message: 'expand-all',
+                message: CONSTANTS.MESSAGE_BUS_EXPAND_ALL,
               }),
           },
           {
@@ -495,7 +495,7 @@ export class Tidy5eCharacterSheet
               // TODO: Use app.messageBus
               this.messageBus.set({
                 tabId: CONSTANTS.TAB_CHARACTER_FEATURES,
-                message: 'collapse-all',
+                message: CONSTANTS.MESSAGE_BUS_COLLAPSE_ALL,
               }),
           },
         ],
@@ -537,7 +537,7 @@ export class Tidy5eCharacterSheet
               // TODO: Use app.messageBus
               this.messageBus.set({
                 tabId: CONSTANTS.TAB_ACTOR_ACTIONS,
-                message: 'expand-all',
+                message: CONSTANTS.MESSAGE_BUS_EXPAND_ALL,
               }),
           },
           {
@@ -547,7 +547,7 @@ export class Tidy5eCharacterSheet
               // TODO: Use app.messageBus
               this.messageBus.set({
                 tabId: CONSTANTS.TAB_ACTOR_ACTIONS,
-                message: 'collapse-all',
+                message: CONSTANTS.MESSAGE_BUS_COLLAPSE_ALL,
               }),
           },
         ],

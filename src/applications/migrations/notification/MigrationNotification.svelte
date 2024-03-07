@@ -3,6 +3,7 @@
   import { getContext } from 'svelte';
   import type MigrationNotificationFormApplication from './MigrationNotificationFormApplication';
   import { SettingsProvider } from 'src/settings/settings';
+  import { BulkMigrationsApplication } from '../BulkMigrationsApplication';
 
   const localize = FoundryAdapter.localize;
 
@@ -13,18 +14,26 @@
     SettingsProvider.settings.migrationsConfirmationTally.get();
 
   const migrations = [
-    { label: localize('DND5E.Biography'), migrationTallyVersion: 1 },
+    {
+      label: localize(
+        'TIDY5E.Settings.Migrations.CharacterBiography.sectionTitle',
+      ),
+      migrationTallyVersion: 1,
+      onClick: () =>
+        new BulkMigrationsApplication('character-bio').render(true),
+    },
   ];
 </script>
 
 <div class="flex-column">
   <p>
-    {localize(
-      'TIDY5E.SheetMigrations.Notification.SheetMigrationsAvailable.Explanation',
-    )}
+    {@html localize('TIDY5E.Settings.Migrations.Notification.Explanation', {
+      boldStart: '<b>',
+      boldEnd: '</b>',
+    })}
     <i
       data-tooltip={localize(
-        'TIDY5E.SheetMigrations.Notification.SheetMigrationsAvailable.Explanation2',
+        'TIDY5E.Settings.Migrations.Notification.Explanation2',
       )}
       class="fas fa-question-circle"
     ></i>
@@ -37,7 +46,13 @@
         {#if isNew}
           <i class="new-icon fas fa-star" />
         {/if}
-        <span>{migration.label}</span>
+        <button
+          type="button"
+          class="inline-transparent-button highlight-on-hover"
+          on:click={() => migration.onClick()}
+        >
+          <span>{migration.label}</span>
+        </button>
         {#if isNew}
           <hr />
         {/if}
@@ -48,7 +63,7 @@
   <div class="button-bar flex-row no-gap">
     <button type="button" on:click={() => confirm()}
       >{localize(
-        'TIDY5E.SheetMigrations.Notification.SheetMigrationsAvailable.Button.DoNotShowAgain',
+        'TIDY5E.Settings.Migrations.Notification.Button.DoNotShowAgain',
       )}</button
     >
   </div>

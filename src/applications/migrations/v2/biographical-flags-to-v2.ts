@@ -1,4 +1,3 @@
-import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { isNil } from 'src/utils/data';
 
 type TidyFlagToSystemMigrationMapping = {

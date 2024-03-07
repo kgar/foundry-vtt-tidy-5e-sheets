@@ -1,9 +1,9 @@
 <script lang="ts">
-  import ItemTable from 'src/components/item-list/ItemTable.svelte';
-  import ItemTableColumn from 'src/components/item-list/ItemTableColumn.svelte';
-  import ItemTableHeaderRow from 'src/components/item-list/ItemTableHeaderRow.svelte';
-  import ItemTableRow from 'src/components/item-list/ItemTableRow.svelte';
-  import ItemTableCell from 'src/components/item-list/ItemTableCell.svelte';
+  import ItemTable from 'src/components/item-list/v1/ItemTable.svelte';
+  import ItemTableColumn from 'src/components/item-list/v1/ItemTableColumn.svelte';
+  import ItemTableHeaderRow from 'src/components/item-list/v1/ItemTableHeaderRow.svelte';
+  import ItemTableRow from 'src/components/item-list/v1/ItemTableRow.svelte';
+  import ItemTableCell from 'src/components/item-list/v1/ItemTableCell.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { ActorSheetContext } from 'src/types/types';
   import { getContext } from 'svelte';

@@ -19,7 +19,7 @@
   let nav: HTMLElement;
 
   function selectTab(tab: Tab) {
-    const sheet = $context.actor?.sheet ?? $context.item?.sheet;
+    const sheet = $context?.actor?.sheet ?? $context?.item?.sheet;
     if (sheet && !FoundryAdapter.onTabSelecting(sheet, tab.id)) {
       return;
     }

@@ -179,24 +179,7 @@
     "Explanation": "Any tabs that the user or sheet are configured not to see (e.g., disabling the journal in config settings) will still not appear on the sheet, even if selected."
   },
 
-  "TIDY5E.SheetMigrations": {
-    "Title": "Sheet Migrations: {documentNameOrType}",
-    "MenuOptionText": "Sheet Migrations",
-    "Introduction": "The following migrations are available for {actorNameOrType}:",
-    "NoMigrations": "No migrations are available.",
-    "Notification.SheetMigrationsAvailable.Title": "Tidy 5e Sheets: Migrations Available",
-    "Notification.SheetMigrationsAvailable.Explanation": "New sheet data migrations are available. To view sheet migrations, open any Tidy sheet and select the sheet menu's \"Sheet Migrations\" menu option.",
-    "Notification.SheetMigrationsAvailable.Explanation2": "Note: Migrations move data that was originally stored by Tidy 5e Sheets into the system's officially supported data fields. If you are not missing data on your sheets after updating Tidy 5e Sheets, then no migration is required.",
-    "Notification.SheetMigrationsAvailable.Button.DoNotShowAgain": "Do Not Show Again",
-    "Notification.SheetMigrationsAvailable.DoNotShowAgain.ConfirmMessage": "Confirmed. This message will not show again until there is another available migration.",
-    "OptionOverwrite.Text": "Overwrite",
-    "OptionOverwrite.Tooltip": "Enable to overwrite existing sheet data. If unchecked, only empty system fields will receive migrated Tidy data.",
-    "OptionApplyAll.Text": "Apply to All Relevant Sheets",
-    "OptionApplyAll.Tooltip": "Apply this migration to all sheets that are able to receive this migration. The other options selected here will also be applied to all migrated sheets.",
-    "OptionDeleteFlags.Text": "Delete Affected Tidy Flags",
-    "OptionDeleteFlags.Tooltip": "When migrating from custom Tidy flag data to official system data, the flags remain in place by default. Check this option to remove those flags.",
-    "ButtonMigration.Text": "Migrate"
-  },
+  "TIDY5E.ButtonConfirm.Text": "Confirm",
 
   "TIDY5E.Listbox": {
     "MoveUp": "Move Up (Alt + Up arrow key)",
@@ -314,13 +297,6 @@
   "TIDY5E.Settings.ItemCardsFixKey": {
     "name": "Item Card Fix Key",
     "hint": "Hold this keyboard character (for example, the \"x\" key) while viewing an item card to keep it visible and allow for interaction."
-  },
-  "TIDY5E.Settings.ShowSheetMigrationsMenu": {
-    "name": "Show Sheet Migrations Menu",
-    "hint": "Some migrations can be done per individual sheet. This setting controls who can see the Sheet Migrations menu.",
-    "OptionNone.Text": "Do Not Show",
-    "OptionGMOnly.Text": "GM Only",
-    "OptionGMAndOwners.Text": "GM and Sheet Owner"
   },
   "TIDY5E.Settings.DefaultTheme": {
     "name": "Default Color Theme",
@@ -645,7 +621,7 @@
     }
   },
   "TIDY5E.Settings.Migrations": {
-    "name": "Onboarding Migrations",
+    "name": "Migrations",
     "buttonLabel": "Migrate Tidy Data",
     "dialogTitle": "Migrate Tidy Data",
     "hint": "If you were a user of the original Tidy5e Sheet module or the Alpha sheets, optionally use this Migrations menu to migrate your GM settings and Tidy sheet data.",
@@ -660,6 +636,7 @@
     "migrateConfirmButtonYes": "Migrate",
     "migrateConfirmButtonNo": "Cancel",
     "v1": {
+      "sectionTitle": "Tidy V1 Onboarding Migrations",
       "mainExplanation1": "Migrating data to the new Tidy 5e Sheets module is not required in order to use it. Worst-case, if you are an original Tidy5e Sheet user and skip migrations, you will need to re-apply your settings to your liking.",
       "mainExplanation2": "{boldStart}Note{boldEnd}: Client Settings are not a part of this migration. Enough has changed about how client settings work in Tidy, so it is recommended to take a fresh look at client settings.",
       "originalHeader": "Original Tidy5e Sheet",
@@ -667,6 +644,28 @@
       "alphaHeader": "Alpha Tidy 5e Sheets",
       "alphaExplanation1": "Migrate GM settings and Tidy sheet data flags from the Alpha Tidy 5e Sheets. Most of the differences in data are from the sheet data flags. The Alpha flags migration targets top-level actors, top-level actors' items, and top-level items. This will bring in biographical data, favorites, and other sheet-specific Alpha data flags.",
       "alphaExplanation2": "{boldStart}Note{boldEnd}: this migration does not affect compendium content."
+    },
+    "Notification": {
+      "Title": "Tidy 5e Sheets: Migrations Available",
+      "Explanation": "New Tidy 5e Sheets data migrations are available. Check the {boldStart}config settings Migrations menu{boldEnd} to learn more.",
+      "Explanation2": "Note: Migrations move data that was originally stored by Tidy 5e Sheets into the system's officially supported data fields. If you are not missing data on your sheets after updating Tidy 5e Sheets, then no migration is required.",
+      "Button.DoNotShowAgain": "Do Not Show Again",
+      "DoNotShowAgain.ConfirmMessage": "Confirmed. This message will not show again until there is another available migration."
+    },
+    "OptionsHeader": "Migration Options",
+    "OptionOverwrite.Text": "Overwrite",
+    "OptionOverwrite.Tooltip": "Enable to overwrite existing sheet data. If unchecked, only empty system fields will receive migrated Tidy data.",
+    "OptionDeleteFlags.Text": "Delete Affected Tidy Flags",
+    "OptionDeleteFlags.Tooltip": "When migrating from custom Tidy flag data to official system data, the flags remain in place by default. Check this option to remove those flags.",
+    "ButtonMigration.Text": "Migrate",
+    "CharacterBiography": {
+      "sectionTitle": "Character Biography",
+      "selectionDialogTitle": "Migration: Character Biography"
+    },
+    "Selection": {
+      "TotalSelectedLabel": "Total Selected: {total}",
+      "ToMigrate": "To Migrate",
+      "SelectAllNoneTooltip": "Select all or none"
     }
   },
   "TIDY5E.Settings.About": {

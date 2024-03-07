@@ -9,7 +9,12 @@ import { SettingsProvider } from 'src/settings/settings';
 // 0 = none, warnings = 1, debug = 2, all = 3
 export function debug(msg: string, args?: any) {
   if (SettingsProvider.settings.debug.get()) {
-    console.log(`DEBUG | ${CONSTANTS.MODULE_ID} | ${msg}`, args);
+    let formattedMsg = `DEBUG | ${CONSTANTS.MODULE_ID} | ${msg}`;
+    if (args !== undefined) {
+      console.log(formattedMsg, args);
+    } else {
+      console.log(formattedMsg);
+    }
   }
 }
 export function log(message: string, args?: any) {

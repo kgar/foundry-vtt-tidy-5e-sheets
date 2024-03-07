@@ -18,7 +18,7 @@ import { NpcSheetRuntime } from 'src/runtime/NpcSheetRuntime';
 import { CharacterSheetRuntime } from 'src/runtime/CharacterSheetRuntime';
 import { VehicleSheetRuntime } from 'src/runtime/VehicleSheetRuntime';
 import { TabManager } from 'src/runtime/tab/TabManager';
-import { OnboardingMigrationsApplication } from 'src/applications/migrations/OnboardingMigrationsApplication';
+import { BulkMigrationsApplication } from 'src/applications/migrations/BulkMigrationsApplication';
 import { AboutApplication } from 'src/applications/settings/about/AboutApplication';
 
 export type Tidy5eSettings = {
@@ -151,7 +151,7 @@ export function createSettings() {
           label: 'TIDY5E.Settings.Migrations.buttonLabel',
           hint: `TIDY5E.Settings.Migrations.hint`,
           icon: 'fa-solid fa-right-left',
-          type: OnboardingMigrationsApplication,
+          type: BulkMigrationsApplication,
           restricted: true,
         },
       },
@@ -179,29 +179,6 @@ export function createSettings() {
         get() {
           return FoundryAdapter.getTidySetting<number>(
             'migrationsConfirmationTally'
-          );
-        },
-      },
-      showSheetMigrationsMenu: {
-        options: {
-          name: 'TIDY5E.Settings.ShowSheetMigrationsMenu.name',
-          hint: 'TIDY5E.Settings.ShowSheetMigrationsMenu.hint',
-          scope: 'world',
-          config: true,
-          type: String,
-          default: CONSTANTS.SHEET_SETTINGS_OPTION_GM_ONLY,
-          choices: () => ({
-            [CONSTANTS.SHEET_SETTINGS_OPTION_NONE]:
-              'TIDY5E.Settings.ShowSheetMigrationsMenu.OptionNone.Text',
-            [CONSTANTS.SHEET_SETTINGS_OPTION_GM_ONLY]:
-              'TIDY5E.Settings.ShowSheetMigrationsMenu.OptionGMOnly.Text',
-            [CONSTANTS.SHEET_SETTINGS_OPTION_GM_AND_OWNERS]:
-              'TIDY5E.Settings.ShowSheetMigrationsMenu.OptionGMAndOwners.Text',
-          }),
-        },
-        get() {
-          return FoundryAdapter.getTidySetting<string>(
-            'showSheetMigrationsMenu'
           );
         },
       },

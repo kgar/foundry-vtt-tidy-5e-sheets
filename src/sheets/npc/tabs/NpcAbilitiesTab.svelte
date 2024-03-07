@@ -5,12 +5,12 @@
   import type { Readable } from 'svelte/store';
   import type { ItemLayoutMode, NpcSheetContext } from 'src/types/types';
   import Currency from '../../actor/Currency.svelte';
-  import ItemTableHeaderRow from 'src/components/item-list/ItemTableHeaderRow.svelte';
-  import ItemTable from 'src/components/item-list/ItemTable.svelte';
-  import ItemTableColumn from 'src/components/item-list/ItemTableColumn.svelte';
+  import ItemTableHeaderRow from 'src/components/item-list/v1/ItemTableHeaderRow.svelte';
+  import ItemTable from 'src/components/item-list/v1/ItemTable.svelte';
+  import ItemTableColumn from 'src/components/item-list/v1/ItemTableColumn.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import ItemTableRow from 'src/components/item-list/ItemTableRow.svelte';
-  import ItemTableCell from 'src/components/item-list/ItemTableCell.svelte';
+  import ItemTableRow from 'src/components/item-list/v1/ItemTableRow.svelte';
+  import ItemTableCell from 'src/components/item-list/v1/ItemTableCell.svelte';
   import { CONSTANTS } from 'src/constants';
   import ItemUseButton from 'src/components/item-list/ItemUseButton.svelte';
   import ItemName from 'src/components/item-list/ItemName.svelte';

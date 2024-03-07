@@ -12,6 +12,7 @@ import type {
 import type { ActorFilters } from 'src/runtime/item/item.types';
 import type { Writable } from 'svelte/store';
 import type { UtilityToolbarCommandParams } from 'src/components/utility-bar/types';
+import type { CONSTANTS } from 'src/constants';
 
 export type Actor5e = any;
 
@@ -198,9 +199,8 @@ export type SortMode = SortModeAlphabetical | SortModeManual;
 export type MessageBus = Writable<MessageBusMessage | undefined>;
 
 export type MessageBusMessage =
-  | { tabId: string; message: 'expand-all' }
-  | { tabId: string; message: 'collapse-all' }
-  | { tabId: string; message: 'sort'; sortMode: SortMode };
+  | { tabId: string; message: typeof CONSTANTS.MESSAGE_BUS_EXPAND_ALL }
+  | { tabId: string; message: typeof CONSTANTS.MESSAGE_BUS_COLLAPSE_ALL };
 
 export type Utilities = Record<
   string,

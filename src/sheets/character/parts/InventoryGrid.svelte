@@ -5,9 +5,9 @@
     NpcSheetContext,
   } from 'src/types/types';
   import type { Item5e } from 'src/types/item';
-  import ItemTable from '../../../components/item-list/ItemTable.svelte';
-  import ItemTableHeaderRow from '../../../components/item-list/ItemTableHeaderRow.svelte';
-  import ItemTableColumn from '../../../components/item-list/ItemTableColumn.svelte';
+  import ItemTable from '../../../components/item-list/v1/ItemTable.svelte';
+  import ItemTableHeaderRow from '../../../components/item-list/v1/ItemTableHeaderRow.svelte';
+  import ItemTableColumn from '../../../components/item-list/v1/ItemTableColumn.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { CONSTANTS } from 'src/constants';
   import GridPaneFavoriteIcon from '../../../components/item-grid/GridPaneFavoriteIcon.svelte';

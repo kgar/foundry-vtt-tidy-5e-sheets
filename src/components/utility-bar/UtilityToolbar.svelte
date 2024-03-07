@@ -19,7 +19,7 @@
     margin-bottom: 0.25rem;
     margin-left: -1rem;
     margin-right: -0.25rem;
-    margin-top: calc(var(--vertical-padding) - var(--t5e-tab-padding-top));
+    margin-top: calc(var(--vertical-padding) - var(--t5e-tab-contents-padding-top));
     padding-bottom: var(--vertical-padding);
     padding-left: 1rem;
     padding-right: 1.75rem;

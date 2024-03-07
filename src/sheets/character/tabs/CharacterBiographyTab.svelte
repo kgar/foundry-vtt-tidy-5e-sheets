@@ -17,7 +17,8 @@
 
   type SystemBioField = { field: string; value: string; text: string };
 
-  const bioFields: SystemBioField[] = [
+  let bioFields: SystemBioField[] = [];
+  $: bioFields = [
     {
       field: 'system.details.gender',
       value: $context.system.details.gender,

@@ -5,15 +5,19 @@
   import { migrateOgSettingsToV1 } from 'src/applications/migrations/v1/og-settings-to-v1';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getContext } from 'svelte';
-  import type { ConfirmMigrationFunction } from './OnboardingMigrationsApplication';
+  import type { ConfirmMigrationFunction } from '../BulkMigrationsApplication';
+
+  const localize = FoundryAdapter.localize;
 
   const confirm = getContext<ConfirmMigrationFunction>('confirm');
-  const localize = FoundryAdapter.localize;
 </script>
 
+<h2>{localize('TIDY5E.Settings.Migrations.v1.sectionTitle')}</h2>
 <div class="flex-row align-items-center callout-banner">
   <div>
-    <p>{@html localize('TIDY5E.Settings.Migrations.v1.mainExplanation1')}</p>
+    <p>
+      {@html localize('TIDY5E.Settings.Migrations.v1.mainExplanation1')}
+    </p>
     <p>
       {@html localize('TIDY5E.Settings.Migrations.v1.mainExplanation2', {
         boldStart: '<b>',
