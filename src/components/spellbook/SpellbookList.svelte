@@ -30,6 +30,7 @@
   import ActionFilterOverrideControl from '../item-list/controls/ActionFilterOverrideControl.svelte';
   import { SpellSchool } from 'src/features/spell-school/SpellSchool';
   import { declareLocation } from 'src/types/location-awareness';
+  import Dnd5eIcon from '../icon/Dnd5eIcon.svelte';
 
   let context =
     getContext<Readable<CharacterSheetContext | NpcSheetContext>>('context');
@@ -161,11 +162,21 @@
             <SpellComponents {spell} />
           </ItemTableCell>
           {#if includeSchool}
+            {@const icon = SpellSchool.getIcon(spell.system.school)}
             <ItemTableCell
               baseWidth={spellSchoolBaseWidth}
               title={spell.labels.school ?? ''}
             >
-              <i class={SpellSchool.getIcon(spell.system.school)}></i>
+              {#if typeof icon === 'string'}
+                <i class="spell-school-icon {icon}"></i>
+              {:else}
+                <Dnd5eIcon
+                  --icon-fill="var(--spell-school-icon-fill)"
+                  --icon-width="var(--spell-school-icon-width)"
+                  --icon-height="var(--spell-school-icon-height)"
+                  src={icon.iconSrc}
+                />
+              {/if}
             </ItemTableCell>
           {/if}
           <ItemTableCell
@@ -234,5 +245,18 @@
     line-height: 0.75rem;
     flex: 0 0 3.75rem;
     white-space: nowrap;
+  }
+
+  .spellbook-list-section {
+    --spell-school-icon-fill: var(--t5e-secondary-color);
+    --spell-school-icon-width: 1rem;
+    --spell-school-icon-height: 1rem;
+
+    .spell-school-icon {
+      color: var(--t5e-secondary-color);
+      font-size: 1rem;
+      margin: 0;
+      padding: 0;
+    }
   }
 </style>

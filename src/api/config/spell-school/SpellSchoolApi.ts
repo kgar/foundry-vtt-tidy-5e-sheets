@@ -1,4 +1,5 @@
 import { SpellSchool } from 'src/features/spell-school/SpellSchool';
+import type { SupportedSpellSchoolIcon } from './spell-school.types';
 
 /**
  * Allows for configuration related to Spell Schools.
@@ -19,7 +20,7 @@ export class SpellSchoolApi {
    * });
    * ```
    */
-  setIcon(schoolKey: string, iconClass: string) {
+  setIcon(schoolKey: string, iconClass: SupportedSpellSchoolIcon) {
     SpellSchool.setIcon(schoolKey, iconClass);
   }
 }
