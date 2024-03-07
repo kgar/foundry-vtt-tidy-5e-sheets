@@ -21,7 +21,6 @@ export class MigrationSelectionApplication<
 
   static get defaultOptions() {
     return FoundryAdapter.mergeObject(super.defaultOptions, {
-      title: FoundryAdapter.localize('TIDY5E.Settings.Migrations.dialogTitle'),
       width: 650,
       height: 500,
       id: 'tidy-5e-sheets-migrations',
@@ -30,8 +29,9 @@ export class MigrationSelectionApplication<
   }
 
   get title() {
-    return FoundryAdapter.localize(
-      'TIDY5E.Settings.Migrations.CharacterBiography.selectionDialogTitle'
+    return (
+      this._params.title ??
+      FoundryAdapter.localize('TIDY5E.Settings.Migrations.dialogTitle')
     );
   }
 

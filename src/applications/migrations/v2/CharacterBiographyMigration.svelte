@@ -34,12 +34,13 @@
                 propPath: 'name',
                 onClick: (target: Actor5e) => target.sheet.render(true),
               },
-              name: localize(
-                'TIDY5E.Settings.Migrations.Selection.SelectColumnText',
-              ),
+              name: localize('TIDY5E.Settings.Migrations.Selection.ToMigrate'),
             },
           ],
           documents: actorsToMigrate,
+          title: FoundryAdapter.localize(
+            'TIDY5E.Settings.Migrations.CharacterBiography.selectionDialogTitle',
+          ),
         },
         () => {
           migrating = false;
@@ -91,7 +92,9 @@
 </script>
 
 <section>
-  <h2>{localize('TIDY5E.Settings.Migrations.CharacterBiography.sectionTitle')}</h2>
+  <h2>
+    {localize('TIDY5E.Settings.Migrations.CharacterBiography.sectionTitle')}
+  </h2>
   <ul>
     <li>{localize('DND5E.Age')}</li>
     <li>{localize('DND5E.Eyes')}</li>
@@ -105,7 +108,9 @@
   <div class="options grid-auto-columns">
     <label
       class="green-checkbox"
-      data-tooltip={localize('TIDY5E.Settings.Migrations.OptionOverwrite.Tooltip')}
+      data-tooltip={localize(
+        'TIDY5E.Settings.Migrations.OptionOverwrite.Tooltip',
+      )}
     >
       <input type="checkbox" bind:checked={overwrite} disabled={migrating} />
       {localize('TIDY5E.Settings.Migrations.OptionOverwrite.Text')}

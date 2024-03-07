@@ -11,6 +11,7 @@ export interface MigrationSelectionParams<T> {
     field: SimpleTextMigrationField<T>;
   }[];
   documents: T[];
+  title?: string;
 }
 
 export type SelectableMigrationSelectionParams<T> = {

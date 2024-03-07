@@ -645,12 +645,13 @@
       "alphaExplanation1": "Migrate GM settings and Tidy sheet data flags from the Alpha Tidy 5e Sheets. Most of the differences in data are from the sheet data flags. The Alpha flags migration targets top-level actors, top-level actors' items, and top-level items. This will bring in biographical data, favorites, and other sheet-specific Alpha data flags.",
       "alphaExplanation2": "{boldStart}Note{boldEnd}: this migration does not affect compendium content."
     },
-    "NoMigrations": "No migrations are available.",
-    "Notification.Title": "Tidy 5e Sheets: Migrations Available",
-    "Notification.Explanation": "New Tidy 5e Sheets data migrations are available. Check the {boldStart}config settings Migrations menu{boldEnd} to learn more.",
-    "Notification.Explanation2": "Note: Migrations move data that was originally stored by Tidy 5e Sheets into the system's officially supported data fields. If you are not missing data on your sheets after updating Tidy 5e Sheets, then no migration is required.",
-    "Notification.Button.DoNotShowAgain": "Do Not Show Again",
-    "Notification.DoNotShowAgain.ConfirmMessage": "Confirmed. This message will not show again until there is another available migration.",
+    "Notification": {
+      "Title": "Tidy 5e Sheets: Migrations Available",
+      "Explanation": "New Tidy 5e Sheets data migrations are available. Check the {boldStart}config settings Migrations menu{boldEnd} to learn more.",
+      "Explanation2": "Note: Migrations move data that was originally stored by Tidy 5e Sheets into the system's officially supported data fields. If you are not missing data on your sheets after updating Tidy 5e Sheets, then no migration is required.",
+      "Button.DoNotShowAgain": "Do Not Show Again",
+      "DoNotShowAgain.ConfirmMessage": "Confirmed. This message will not show again until there is another available migration."
+    },
     "OptionsHeader": "Migration Options",
     "OptionOverwrite.Text": "Overwrite",
     "OptionOverwrite.Tooltip": "Enable to overwrite existing sheet data. If unchecked, only empty system fields will receive migrated Tidy data.",
@@ -663,7 +664,7 @@
     },
     "Selection": {
       "TotalSelectedLabel": "Total Selected: {total}",
-      "SelectColumnText": "To Migrate",
+      "ToMigrate": "To Migrate",
       "SelectAllNoneTooltip": "Select all or none"
     }
   },
