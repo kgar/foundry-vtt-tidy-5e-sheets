@@ -18,12 +18,12 @@
   $: expandedState = expandCollapseService.state;
 
   $: {
-    if ($messageBus?.tabId === tabId && $messageBus?.message === 'expand-all') {
+    if ($messageBus?.tabId === tabId && $messageBus?.message === CONSTANTS.MESSAGE_BUS_EXPAND_ALL) {
       expandCollapseService.set(true);
     }
     if (
       $messageBus?.tabId === tabId &&
-      $messageBus?.message === 'collapse-all'
+      $messageBus?.message === CONSTANTS.MESSAGE_BUS_COLLAPSE_ALL
     ) {
       expandCollapseService.set(false);
     }

@@ -1,6 +1,3 @@
-.tidy-table {
-}
-
 .tidy-table-header-row,
 .tidy-table-row {
   display: grid;
@@ -68,7 +65,7 @@
 
 .tidy-table-row {
   border-radius: 0.3125rem;
-  
+
   --t5e-item-table-row-background-internal: var(
     --t5e-item-table-row-background,
     transparent

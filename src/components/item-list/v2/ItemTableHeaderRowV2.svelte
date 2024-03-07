@@ -34,12 +34,13 @@
   class="tidy-table-header-row"
   class:toggleable={$expandState.toggleable}
   on:click={handleHeaderRowClick}
-  data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.EXPANSION_TOGGLE}
+  data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.TABLE_HEADER_ROW}
 >
   {#if $expandState.toggleable}
     <i
       class="expand-indicator fas fa-angle-right"
       class:expanded={$expandState.expanded}
+      data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.EXPANSION_TOGGLE}
     ></i>
   {/if}
   <slot />

@@ -19,6 +19,8 @@ export const CONSTANTS = {
   ITEM_TYPE_TOOL: 'tool',
   ITEM_TYPE_WEAPON: 'weapon',
   ITEM_TYPE_RACE: 'race',
+  MESSAGE_BUS_COLLAPSE_ALL: 'collapse-all',
+  MESSAGE_BUS_EXPAND_ALL: 'expand-all',
   /**
    * Main button pressed, usually the left button or the un-initialized state
    */
@@ -237,6 +239,15 @@ export const CONSTANTS = {
 
     /** The element which contains spell DC. */
     SPELL_DC: 'spell-dc',
+
+    /** A cell in a table row. */
+    TABLE_CELL: 'table-cell',
+
+    /** A cell in a table's header row. */
+    TABLE_HEADER_CELL: 'table-header-cell',
+
+    /** The header row in a table. */
+    TABLE_HEADER_ROW: 'table-header-row',
 
     /** A row in a table. */
     TABLE_ROW: 'table-row',

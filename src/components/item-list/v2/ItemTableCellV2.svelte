@@ -1,10 +1,8 @@
 <script lang="ts">
-  import { CONSTANTS } from 'src/constants';
-  import { setContext } from 'svelte';
+    import { CONSTANTS } from 'src/constants';
   import { writable } from 'svelte/store';
 
   export let primary: boolean = false;
-  export let cssClass: string = '';
   export let title: string | undefined = undefined;
 
   const isHovering = writable<boolean>(false);
@@ -20,12 +18,13 @@
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <div
-  class="tidy-table-cell {cssClass}"
+  class="tidy-table-cell {$$restProps.class ?? ''}"
   class:primary
   {title}
+  data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.TABLE_CELL}
   on:mouseenter={mouseEnter}
   on:mouseleave={mouseLeave}
-  {...$$props.attributes}
+  {...$$restProps.attributes}
 >
   <slot {isHovering} />
 </div>

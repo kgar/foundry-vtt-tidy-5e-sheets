@@ -320,7 +320,7 @@ export class Tidy5eNpcSheet
               // TODO: Use app.messageBus
               this.messageBus.set({
                 tabId: CONSTANTS.TAB_NPC_ABILITIES,
-                message: 'expand-all',
+                message: CONSTANTS.MESSAGE_BUS_EXPAND_ALL,
               }),
           },
           {
@@ -330,7 +330,7 @@ export class Tidy5eNpcSheet
               // TODO: Use app.messageBus
               this.messageBus.set({
                 tabId: CONSTANTS.TAB_NPC_ABILITIES,
-                message: 'collapse-all',
+                message: CONSTANTS.MESSAGE_BUS_COLLAPSE_ALL,
               }),
           },
         ],
@@ -372,7 +372,7 @@ export class Tidy5eNpcSheet
               // TODO: Use app.messageBus
               this.messageBus.set({
                 tabId: CONSTANTS.TAB_NPC_SPELLBOOK,
-                message: 'expand-all',
+                message: CONSTANTS.MESSAGE_BUS_EXPAND_ALL,
               }),
           },
           {
@@ -382,7 +382,7 @@ export class Tidy5eNpcSheet
               // TODO: Use app.messageBus
               this.messageBus.set({
                 tabId: CONSTANTS.TAB_NPC_SPELLBOOK,
-                message: 'collapse-all',
+                message: CONSTANTS.MESSAGE_BUS_COLLAPSE_ALL,
               }),
           },
           {
@@ -440,7 +440,7 @@ export class Tidy5eNpcSheet
               // TODO: Use app.messageBus
               this.messageBus.set({
                 tabId: CONSTANTS.TAB_ACTOR_ACTIONS,
-                message: 'expand-all',
+                message: CONSTANTS.MESSAGE_BUS_EXPAND_ALL,
               }),
           },
           {
@@ -450,7 +450,7 @@ export class Tidy5eNpcSheet
               // TODO: Use app.messageBus
               this.messageBus.set({
                 tabId: CONSTANTS.TAB_ACTOR_ACTIONS,
-                message: 'collapse-all',
+                message: CONSTANTS.MESSAGE_BUS_COLLAPSE_ALL,
               }),
           },
         ],

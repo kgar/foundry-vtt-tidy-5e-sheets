@@ -74,7 +74,7 @@
               )}
               <ItemTableCellV2
                 primary={column?.cellWidth === 'primary'}
-                cssClass="flex-row small-gap"
+                class="flex-row small-gap"
               >
                 {#if column.field.onClick}
                   <button
