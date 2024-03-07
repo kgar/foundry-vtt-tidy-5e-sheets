@@ -1,8 +1,29 @@
 <script lang="ts">
+  import { onMount } from 'svelte';
+
   export let expanded: boolean = true;
+
+  let overflowYHidden = !expanded;
+  let expandableContainer: HTMLElement;
+
+  onMount(() => {
+    expandableContainer.addEventListener('transitionstart', () => {
+      overflowYHidden = true;
+    });
+
+    expandableContainer.addEventListener('transitionend', () => {
+      overflowYHidden = !expanded;
+    });
+  });
 </script>
 
-<div class="expandable" class:expanded role="presentation">
+<div
+  bind:this={expandableContainer}
+  class="expandable"
+  class:expanded
+  class:overflow-y-hidden={overflowYHidden}
+  role="presentation"
+>
   <slot />
 </div>
 
@@ -16,12 +37,9 @@
     }
 
     transition: grid-template-rows 0.2s ease;
+  }
 
-    // Problem: it's not animating when opening.
-    &:not(.expanded) {
-      :global(> *) {
-        overflow-y: hidden;
-      }
-    }
+  .overflow-y-hidden :global(> *) {
+    overflow-y: hidden;
   }
 </style>
