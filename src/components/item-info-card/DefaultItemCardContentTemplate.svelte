@@ -12,13 +12,14 @@
   let context = getContext<Readable<ActorSheetContext>>('context');
 
   $: ctx = $context.itemContext[item.id];
+  $: concealDetails = FoundryAdapter.concealDetails(item);
 
   const localize = FoundryAdapter.localize;
 </script>
 
 <div
   class="info-card {item.attunement?.cls ?? ''}"
-  class:magic-item={item.system.properties?.mgc}
+  class:magic-item={item.system.properties?.has('mgc')}
   class:equipped={item.system.equipped}
   data-item-id={item._id}
 >
@@ -34,7 +35,11 @@
   {/if}
   <div class="description-wrap">
     <div class="info-card-description">
-      {@html chatData.description.value}
+      {#if concealDetails}
+        {@html chatData.unidentified.description}
+      {:else}
+        {@html chatData.description.value}
+      {/if}
     </div>
   </div>
 

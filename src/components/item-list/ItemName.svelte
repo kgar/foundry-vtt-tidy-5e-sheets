@@ -3,6 +3,7 @@
   import type { Item5e } from 'src/types/item';
   import { createEventDispatcher } from 'svelte';
   import ActiveEffectsMarker from './ActiveEffectsMarker.svelte';
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
   export let cssClass: string = '';
   export let hasChildren = true;
@@ -22,6 +23,7 @@
   class="item-name truncate {cssClass}"
   class:has-children={hasChildren}
   on:keypress={(ev) => ev.key === 'Enter' && dispatcher('toggle', ev)}
+  class:italic={item.system.identified === false}
 >
   <slot />
 </span>

@@ -1,11 +1,11 @@
 <script lang="ts">
   import type { Item5e } from 'src/types/item';
   import type { CharacterSheetContext } from 'src/types/types';
-  import ItemTable from '../../../components/item-list/ItemTable.svelte';
-  import ItemTableHeaderRow from '../../../components/item-list/ItemTableHeaderRow.svelte';
-  import ItemTableColumn from '../../../components/item-list/ItemTableColumn.svelte';
-  import ItemTableRow from '../../../components/item-list/ItemTableRow.svelte';
-  import ItemTableCell from '../../../components/item-list/ItemTableCell.svelte';
+  import ItemTable from '../../../components/item-list/v1/ItemTable.svelte';
+  import ItemTableHeaderRow from '../../../components/item-list/v1/ItemTableHeaderRow.svelte';
+  import ItemTableColumn from '../../../components/item-list/v1/ItemTableColumn.svelte';
+  import ItemTableRow from '../../../components/item-list/v1/ItemTableRow.svelte';
+  import ItemTableCell from '../../../components/item-list/v1/ItemTableCell.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { CONSTANTS } from 'src/constants';
   import ItemAddUses from '../../../components/item-list/ItemAddUses.svelte';
@@ -49,7 +49,7 @@
           id: item.id,
         }}
       >
-        <ItemTableCell primary={true}>
+        <ItemTableCell primary={true} title={item.name}>
           <ItemUseButton disabled={!$context.editable} {item} />
           <ItemName
             on:toggle={() => toggleSummary($context.actor)}

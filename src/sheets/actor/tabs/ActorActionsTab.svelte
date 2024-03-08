@@ -1,9 +1,9 @@
 <script lang="ts">
-  import ItemTable from 'src/components/item-list/ItemTable.svelte';
-  import ItemTableColumn from 'src/components/item-list/ItemTableColumn.svelte';
-  import ItemTableHeaderRow from 'src/components/item-list/ItemTableHeaderRow.svelte';
-  import ItemTableRow from 'src/components/item-list/ItemTableRow.svelte';
-  import ItemTableCell from 'src/components/item-list/ItemTableCell.svelte';
+  import ItemTable from 'src/components/item-list/v1/ItemTable.svelte';
+  import ItemTableColumn from 'src/components/item-list/v1/ItemTableColumn.svelte';
+  import ItemTableHeaderRow from 'src/components/item-list/v1/ItemTableHeaderRow.svelte';
+  import ItemTableRow from 'src/components/item-list/v1/ItemTableRow.svelte';
+  import ItemTableCell from 'src/components/item-list/v1/ItemTableCell.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { ActorSheetContext } from 'src/types/types';
   import { getContext } from 'svelte';
@@ -11,7 +11,6 @@
   import ItemName from 'src/components/item-list/ItemName.svelte';
   import { CONSTANTS } from 'src/constants';
   import ItemUseButton from 'src/components/item-list/ItemUseButton.svelte';
-  import { damageTypeIconMap } from 'src/features/actions/actions';
   import RechargeControl from 'src/components/item-list/controls/RechargeControl.svelte';
   import ActionFilterOverrideControl from 'src/components/item-list/controls/ActionFilterOverrideControl.svelte';
   import { declareLocation } from 'src/types/location-awareness';
@@ -19,6 +18,8 @@
   import UtilityToolbarCommand from 'src/components/utility-bar/UtilityToolbarCommand.svelte';
   import Search from 'src/components/utility-bar/Search.svelte';
   import FilterMenu from 'src/components/filter/FilterMenu.svelte';
+  import { Actions } from 'src/features/actions/actions';
+  import Dnd5eIcon from 'src/components/icon/Dnd5eIcon.svelte';
 
   let context = getContext<Readable<ActorSheetContext>>('context');
 
@@ -30,6 +31,8 @@
   const localize = FoundryAdapter.localize;
 
   declareLocation('actions');
+
+  const damageHealingTypeIconMap = Actions.damageAndHealingTypesIconSrcMap;
 </script>
 
 <UtilityToolbar class="abilities-toolbar">
@@ -104,6 +107,7 @@
                       data-tidy-item-name={actionItem.item.name}
                       data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_NAME}
                       class="truncate"
+                      title={actionItem.item.name}
                     >
                       {actionItem.item.name}
                     </div>
@@ -202,18 +206,22 @@
                   {/if}
                 {/if}
               </ItemTableCell>
-              <ItemTableCell baseWidth="7.5rem" cssClass="flex-wrap">
+              <ItemTableCell
+                baseWidth="7.5rem"
+                cssClass="flex-wrap flex-row small-gap extra-small-row-gap"
+              >
                 <!-- Damage -->
                 {#each actionItem.calculatedDerivedDamage ?? [] as entry, i}
+                  {@const iconSrc = damageHealingTypeIconMap[entry.damageType]}
                   <div
                     title={entry.label ??
                       entry.formula + entry.damageHealingTypeLabel}
-                    class="truncate"
+                    class="truncate flex-row align-items-flex-end extra-small-gap"
                   >
-                    {entry.formula}
-                    <span
-                      >{@html damageTypeIconMap[entry.damageType] ?? ''}</span
-                    >
+                    <span>{entry.formula}</span>
+                    {#if iconSrc}
+                      <Dnd5eIcon src={iconSrc} />
+                    {/if}
                   </div>
                 {/each}
               </ItemTableCell>
@@ -237,6 +245,10 @@
     :global(.item-table-row) {
       min-height: 2rem;
     }
+
+    --icon-fill: var(--t5e-secondary-color);
+    --icon-width: 1rem;
+    --icon-height: 1rem;
   }
 
   .flex-column-truncate {

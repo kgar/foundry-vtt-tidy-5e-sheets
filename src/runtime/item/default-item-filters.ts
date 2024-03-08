@@ -1,9 +1,5 @@
 import { CONSTANTS } from 'src/constants';
-import type {
-  FilterCategoriesToFilters,
-  FilterTabsToCategories,
-  ItemFilter,
-} from './item.types';
+import type { FilterCategoriesToFilters, ItemFilter } from './item.types';
 
 export const defaultItemFilters = {
   activationCostAction: {
@@ -95,7 +91,6 @@ export const defaultItemFilters = {
       return (
         item.system.level === 0 ||
         ['innate', 'always'].includes(item.system.preparation?.mode) ||
-        item.actor?.type === 'npc' ||
         item.system.preparation?.prepared
       );
     },

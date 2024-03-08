@@ -13,6 +13,7 @@
   let context = getContext<Readable<CharacterSheetContext>>('context');
 
   $: ctx = $context.itemContext?.[item.id];
+  $: concealDetails = FoundryAdapter.concealDetails(item);
 
   const localize = FoundryAdapter.localize;
   const weightUnit = FoundryAdapter.getWeightUnit();
@@ -20,7 +21,7 @@
 
 <div
   class="info-card {item.attunement?.cls ?? ''}"
-  class:magic-item={item.system.properties?.mgc}
+  class:magic-item={item.system.properties?.has('mgc')}
   class:equipped={item.system.equipped}
   data-item-id={item._id}
   data-item-index={item._id}
@@ -28,16 +29,16 @@
   <p class="info-card-name">
     {item.name}
   </p>
-  {#if item.system.properties?.amm}
+  {#if item.system.properties?.has('amm')}
     <p class="ammo-switch" data-id={item._id}>
       <AmmoSelector {item} />
     </p>
     <HorizontalLineSeparator borderColor="faint" />
   {/if}
 
-  {#if item.system.properties?.mgc || ctx?.attunement}
+  {#if item.system.properties?.has('mgc') || ctx?.attunement}
     <div class="info-card-states">
-      {#if item.system.properties?.mgc}
+      {#if item.system.properties?.has('mgc')}
         <span class="flex-row extra-small-gap align-items-center"
           ><i class="fas fa-magic" />Magic Item</span
         >
@@ -64,8 +65,13 @@
       ><b>{localize('DND5E.Quantity')}:</b>
       {item.system.quantity}
       {#if item.system.price.value}
-        &times; {item.system.price.value}
-        {item.system.price.denomination}
+        &times;
+        {#if concealDetails}
+          {localize('DND5E.Unidentified.Value')}
+        {:else}
+          {item.system.price.value}
+          {item.system.price.denomination}
+        {/if}
       {/if}
     </span>
   </div>
@@ -81,7 +87,11 @@
   {/if}
   <div class="description-wrap">
     <div class="info-card-description">
-      {@html chatData.description.value}
+      {#if concealDetails}
+        {@html chatData.unidentified.description}
+      {:else}
+        {@html chatData.description.value}
+      {/if}
     </div>
   </div>
 

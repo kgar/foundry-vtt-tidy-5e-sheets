@@ -17,10 +17,13 @@ import type { ComponentType } from 'svelte';
 import type { RegisteredContent, RegisteredTab } from '../types';
 import type { ItemSheetContext } from 'src/types/item';
 import { CustomContentManager } from '../content/CustomContentManager';
+import type { RegisteredEquipmentTypeGroup } from './item.types';
 
 export class ItemSheetRuntime {
   private static _content: RegisteredContent<ItemSheetContext>[] = [];
   private static _customTabs: RegisteredTab<ItemSheetContext>[] = [];
+  private static _customItemEquipmentTypeGroups: RegisteredEquipmentTypeGroup[] =
+    [];
 
   static async getContent(context: ItemSheetContext): Promise<CustomContent[]> {
     return await CustomContentManager.prepareContentForRender(
@@ -137,6 +140,14 @@ export class ItemSheetRuntime {
       ],
     },
   };
+
+  static registerCustomEquipmentTypeGroup(group: RegisteredEquipmentTypeGroup) {
+    this._customItemEquipmentTypeGroups.push(group);
+  }
+
+  static getCustomEquipmentTypeGroups() {
+    return [...this._customItemEquipmentTypeGroups];
+  }
 }
 
 type ItemSheetInfo = {

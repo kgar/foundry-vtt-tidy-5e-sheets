@@ -54,7 +54,7 @@ export class ItemSummaryApi {
    *       label: 'Versatile Weapon Button',
    *       enabled: (params) =>
    *         params.item.type === 'weapon' &&
-   *         params.item.system?.properties?.ver &&
+   *         params.item.system?.properties?.has('ver') &&
    *         params.item.system?.damage?.versatile,
    *       iconClass: 'fa-solid fa-hands-praying',
    *       execute: (params) => {

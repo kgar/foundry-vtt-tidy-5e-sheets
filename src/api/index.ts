@@ -8,6 +8,8 @@ export * from './config/actor-traits/types';
 export * from './config/ConfigApi';
 export * from './config/exhaustion/ExhaustionApi';
 export * from './config/item-summary/ItemSummaryApi';
+export * from './config/item/ItemConfigApi';
+export * from './config/spell-school/spell-school.types';
 export * from './config/spell-school/SpellSchoolApi';
 export * from './content/CustomContentBase';
 export * from './content/HandlebarsContent';

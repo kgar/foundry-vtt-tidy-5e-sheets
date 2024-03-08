@@ -44,6 +44,8 @@ import { ItemTableToggleCacheService } from 'src/features/caching/ItemTableToggl
 import { ItemFilterService } from 'src/features/filtering/ItemFilterService';
 import { StoreSubscriptionsService } from 'src/features/store/StoreSubscriptionsService';
 import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
+import { AsyncMutex } from 'src/utils/mutex';
+import type { Dnd5eActorCondition } from 'src/foundry/foundry-and-system';
 
 export class Tidy5eCharacterSheet
   extends dnd5e.applications.actor.ActorSheet5eCharacter
@@ -347,7 +349,7 @@ export class Tidy5eCharacterSheet
               // TODO: Use app.messageBus
               this.messageBus.set({
                 tabId: CONSTANTS.TAB_CHARACTER_INVENTORY,
-                message: 'expand-all',
+                message: CONSTANTS.MESSAGE_BUS_EXPAND_ALL,
               }),
           },
           {
@@ -357,7 +359,7 @@ export class Tidy5eCharacterSheet
               // TODO: Use app.messageBus
               this.messageBus.set({
                 tabId: CONSTANTS.TAB_CHARACTER_INVENTORY,
-                message: 'collapse-all',
+                message: CONSTANTS.MESSAGE_BUS_COLLAPSE_ALL,
               }),
           },
           {
@@ -415,7 +417,7 @@ export class Tidy5eCharacterSheet
               // TODO: Use app.messageBus
               this.messageBus.set({
                 tabId: CONSTANTS.TAB_CHARACTER_SPELLBOOK,
-                message: 'expand-all',
+                message: CONSTANTS.MESSAGE_BUS_EXPAND_ALL,
               }),
           },
           {
@@ -425,7 +427,7 @@ export class Tidy5eCharacterSheet
               // TODO: Use app.messageBus
               this.messageBus.set({
                 tabId: CONSTANTS.TAB_CHARACTER_SPELLBOOK,
-                message: 'collapse-all',
+                message: CONSTANTS.MESSAGE_BUS_COLLAPSE_ALL,
               }),
           },
           {
@@ -483,7 +485,7 @@ export class Tidy5eCharacterSheet
               // TODO: Use app.messageBus
               this.messageBus.set({
                 tabId: CONSTANTS.TAB_CHARACTER_FEATURES,
-                message: 'expand-all',
+                message: CONSTANTS.MESSAGE_BUS_EXPAND_ALL,
               }),
           },
           {
@@ -493,7 +495,7 @@ export class Tidy5eCharacterSheet
               // TODO: Use app.messageBus
               this.messageBus.set({
                 tabId: CONSTANTS.TAB_CHARACTER_FEATURES,
-                message: 'collapse-all',
+                message: CONSTANTS.MESSAGE_BUS_COLLAPSE_ALL,
               }),
           },
         ],
@@ -535,7 +537,7 @@ export class Tidy5eCharacterSheet
               // TODO: Use app.messageBus
               this.messageBus.set({
                 tabId: CONSTANTS.TAB_ACTOR_ACTIONS,
-                message: 'expand-all',
+                message: CONSTANTS.MESSAGE_BUS_EXPAND_ALL,
               }),
           },
           {
@@ -545,12 +547,68 @@ export class Tidy5eCharacterSheet
               // TODO: Use app.messageBus
               this.messageBus.set({
                 tabId: CONSTANTS.TAB_ACTOR_ACTIONS,
-                message: 'collapse-all',
+                message: CONSTANTS.MESSAGE_BUS_COLLAPSE_ALL,
               }),
           },
         ],
       },
     };
+
+    // Effects & Conditions
+    const conditionIds = new Set();
+    const conditions = Object.entries<any>(CONFIG.DND5E.conditionTypes).reduce<
+      Dnd5eActorCondition[]
+    >((arr, [k, c]) => {
+      if (k === 'diseased') return arr; // Filter out diseased as it's not a real condition.
+      const { label: name, icon, reference } = c;
+      const id = dnd5e.utils.staticID(`dnd5e${k}`);
+      conditionIds.add(id);
+      const existing = this.actor.effects.get(id);
+      const { disabled, img } = existing ?? {};
+      arr.push({
+        name,
+        reference,
+        id: k,
+        icon: img ?? icon,
+        disabled: existing ? disabled : !this.actor.statuses.has(k),
+      });
+      return arr;
+    }, []);
+
+    for (const category of Object.values(
+      defaultDocumentContext.effects as any[]
+    )) {
+      category.effects = await category.effects.reduce(
+        async (arr: any[], effect: any) => {
+          effect.updateDuration();
+          if (conditionIds.has(effect.id) && !effect.duration.remaining)
+            return arr;
+          const { id, name, img, disabled, duration } = effect;
+          let source = await effect.getSource();
+          // If the source is an ActiveEffect from another Actor, note the source as that Actor instead.
+          if (
+            source instanceof dnd5e.documents.ActiveEffect5e &&
+            source.target !== this.object
+          ) {
+            source = source.target;
+          }
+          arr = await arr;
+          arr.push({
+            id,
+            name,
+            img,
+            disabled,
+            duration,
+            source,
+            parentId: effect.target === effect.parent ? null : effect.parent.id,
+            durationParts: duration.remaining ? duration.label.split(', ') : [],
+            hasTooltip: source instanceof dnd5e.documents.Item5e,
+          });
+          return arr;
+        },
+        []
+      );
+    }
 
     const context: CharacterSheetContext = {
       ...defaultDocumentContext,
@@ -597,6 +655,7 @@ export class Tidy5eCharacterSheet
           relativeTo: this.actor,
         }
       ),
+      conditions: conditions,
       customActorTraits: CustomActorTraitsRuntime.getEnabledTraits(
         defaultDocumentContext
       ),
@@ -813,7 +872,15 @@ export class Tidy5eCharacterSheet
     });
   }
 
+  private _renderMutex = new AsyncMutex();
   async _render(force?: boolean, options = {}) {
+    await this._renderMutex.lock(async () => {
+      await this._renderSheet(force, options);
+    });
+  }
+
+  private async _renderSheet(force?: boolean, options = {}) {
+    this.rendering = true;
     await this.setExpandedItemData();
     const data = await this.getData();
     this.context.set(data);
@@ -853,7 +920,7 @@ export class Tidy5eCharacterSheet
       return;
     }
 
-    maintainCustomContentInputFocus(this, async () => {
+    await maintainCustomContentInputFocus(this, async () => {
       applyTitleToWindow(this.title, this.element.get(0));
       await this.renderCustomContent({ data, isFullRender: false });
       Hooks.callAll(

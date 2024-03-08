@@ -6,9 +6,9 @@
     type ItemCardStore,
     type NpcSheetContext,
   } from 'src/types/types';
-  import ItemTable from '../item-list/ItemTable.svelte';
-  import ItemTableColumn from '../item-list/ItemTableColumn.svelte';
-  import ItemTableHeaderRow from '../item-list/ItemTableHeaderRow.svelte';
+  import ItemTable from '../item-list/v1/ItemTable.svelte';
+  import ItemTableColumn from '../item-list/v1/ItemTableColumn.svelte';
+  import ItemTableHeaderRow from '../item-list/v1/ItemTableHeaderRow.svelte';
   import SpellPips from './SpellPips.svelte';
   import SpellSlotUses from '../spellbook/SpellSlotUses.svelte';
   import type { Item5e } from 'src/types/item';
@@ -22,6 +22,11 @@
   export let section: any;
   export let spells: Item5e[];
   export let cssClass: string | null = null;
+  /**
+   * An optional subset of item IDs which will hide all other items not included in this set. 
+   * Useful for showing only search results, for example.
+   */
+  export let visibleItemIdSubset: Set<string> | null = null;
 
   let context =
     getContext<Readable<CharacterSheetContext | NpcSheetContext>>('context');
@@ -91,9 +96,13 @@
     <div class="spells" slot="body">
       {#each spells as spell}
         {@const spellImgUrl = FoundryAdapter.getSpellImageUrl($context, spell)}
+        {@const hidden =
+          visibleItemIdSubset !== null && !visibleItemIdSubset.has(spell.id)}
         <button
           type="button"
           class="spell {FoundryAdapter.getSpellRowClasses(spell)} icon-button"
+          class:hidden
+          aria-hidden={hidden}
           data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
           data-context-menu-entity-id={spell.id}
           on:click={(event) =>
@@ -114,7 +123,6 @@
           {#if FoundryAdapter.tryGetFlag(spell, 'favorite')}
             <GridPaneFavoriteIcon />
           {/if}
-
           <div class="spell-name">
             <div
               class="spell-image"
@@ -271,6 +279,7 @@
           border-radius: 0;
           background-repeat: no-repeat;
           background-size: cover;
+          background-position: 50% 0;
 
           i {
             color: var(--t5e-tertiary-color);

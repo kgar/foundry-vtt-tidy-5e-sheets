@@ -5,12 +5,12 @@
   import type { Readable } from 'svelte/store';
   import type { ItemLayoutMode, NpcSheetContext } from 'src/types/types';
   import Currency from '../../actor/Currency.svelte';
-  import ItemTableHeaderRow from 'src/components/item-list/ItemTableHeaderRow.svelte';
-  import ItemTable from 'src/components/item-list/ItemTable.svelte';
-  import ItemTableColumn from 'src/components/item-list/ItemTableColumn.svelte';
+  import ItemTableHeaderRow from 'src/components/item-list/v1/ItemTableHeaderRow.svelte';
+  import ItemTable from 'src/components/item-list/v1/ItemTable.svelte';
+  import ItemTableColumn from 'src/components/item-list/v1/ItemTableColumn.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import ItemTableRow from 'src/components/item-list/ItemTableRow.svelte';
-  import ItemTableCell from 'src/components/item-list/ItemTableCell.svelte';
+  import ItemTableRow from 'src/components/item-list/v1/ItemTableRow.svelte';
+  import ItemTableCell from 'src/components/item-list/v1/ItemTableCell.svelte';
   import { CONSTANTS } from 'src/constants';
   import ItemUseButton from 'src/components/item-list/ItemUseButton.svelte';
   import ItemName from 'src/components/item-list/ItemName.svelte';
@@ -106,7 +106,7 @@
     {/if}
     {#each $context.features as section}
       {#if $context.unlocked || section.items.length}
-        {@const filteredItems = FoundryAdapter.getFilteredItems(
+        {@const visibleItemIdSubset = FoundryAdapter.searchItems(
           searchCriteria,
           section.items,
         )}
@@ -130,7 +130,7 @@
             </ItemTableHeaderRow>
           </svelte:fragment>
           <svelte:fragment slot="body">
-            {#each filteredItems as item}
+            {#each section.items as item}
               {@const ctx = $context.itemContext[item.id]}
               <ItemTableRow
                 let:toggleSummary
@@ -142,8 +142,10 @@
                 }}
                 {item}
                 cssClass={FoundryAdapter.getInventoryRowClasses(item, ctx)}
+                hidden={visibleItemIdSubset !== null &&
+                  !visibleItemIdSubset.has(item.id)}
               >
-                <ItemTableCell primary={true}>
+                <ItemTableCell primary={true} title={item.name}>
                   <ItemUseButton disabled={!$context.editable} {item} />
                   <ItemName
                     on:toggle={() => toggleSummary($context.actor)}
@@ -156,7 +158,7 @@
                       data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_NAME}
                       >{item.name}</span
                     >
-                    {#if item.system?.properties?.amm}
+                    {#if item.system?.properties?.has('amm')}
                       <span class="ammo">
                         <AmmoSelector {item} />
                       </span>
@@ -245,13 +247,13 @@
         {:else}
           <div class="flex-1 small-padding-bottom flex-column small-gap">
             {#each $context.spellbook as section (section.label)}
-              {@const filteredSpells = FoundryAdapter.getFilteredItems(
+              {@const visibleItemIdSubset = FoundryAdapter.searchItems(
                 searchCriteria,
                 section.spells,
               )}
               {#if layoutMode === 'list'}
                 <SpellbookList
-                  spells={filteredSpells}
+                  spells={section.spells}
                   {section}
                   allowFavorites={false}
                   includeRange={false}
@@ -259,9 +261,14 @@
                   spellComponentsBaseWidth="3.125rem"
                   targetBaseWidth="5.625rem"
                   usageBaseWidth="5.625rem"
+                  {visibleItemIdSubset}
                 />
               {:else}
-                <SpellbookGrid spells={filteredSpells} {section} />
+                <SpellbookGrid
+                  spells={section.spells}
+                  {section}
+                  {visibleItemIdSubset}
+                />
               {/if}
             {/each}
           </div>

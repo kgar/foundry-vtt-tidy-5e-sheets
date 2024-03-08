@@ -3,11 +3,11 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { type CharacterSheetContext } from 'src/types/types';
   import ItemName from '../../../components/item-list/ItemName.svelte';
-  import ItemTable from '../../../components/item-list/ItemTable.svelte';
-  import ItemTableCell from '../../../components/item-list/ItemTableCell.svelte';
-  import ItemTableColumn from '../../../components/item-list/ItemTableColumn.svelte';
-  import ItemTableHeaderRow from '../../../components/item-list/ItemTableHeaderRow.svelte';
-  import ItemTableRow from '../../../components/item-list/ItemTableRow.svelte';
+  import ItemTable from '../../../components/item-list/v1/ItemTable.svelte';
+  import ItemTableCell from '../../../components/item-list/v1/ItemTableCell.svelte';
+  import ItemTableColumn from '../../../components/item-list/v1/ItemTableColumn.svelte';
+  import ItemTableHeaderRow from '../../../components/item-list/v1/ItemTableHeaderRow.svelte';
+  import ItemTableRow from '../../../components/item-list/v1/ItemTableRow.svelte';
   import ItemUseButton from '../../../components/item-list/ItemUseButton.svelte';
   import ItemUses from '../../../components/item-list/ItemUses.svelte';
   import SpellComponents from '../../../components/spellbook/SpellComponents.svelte';
@@ -69,7 +69,7 @@
           let:toggleSummary
           cssClass={FoundryAdapter.getSpellRowClasses(spell)}
         >
-          <ItemTableCell primary={true}>
+          <ItemTableCell primary={true} title={spell.name}>
             <ItemUseButton
               disabled={!$context.editable}
               item={spell}

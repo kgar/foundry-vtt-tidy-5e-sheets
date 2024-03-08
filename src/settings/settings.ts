@@ -2,7 +2,7 @@ import { CONSTANTS } from '../constants';
 import { FoundryAdapter } from '../foundry/foundry-adapter';
 import { ResetSettingsDialog } from './ResetSettingsDialog';
 import type { GetFunctionReturnType } from 'src/types/types';
-import { applyTheme, getTheme } from 'src/theme/theme';
+import { applyTheme, getThemeOrDefault } from 'src/theme/theme';
 import { defaultLightTheme } from 'src/theme/default-light-theme';
 import { getCoreThemes, themeVariables } from 'src/theme/theme-reference';
 import { UserSettingsFormApplication } from 'src/applications/settings/user-settings/UserSettingsFormApplication';
@@ -18,7 +18,7 @@ import { NpcSheetRuntime } from 'src/runtime/NpcSheetRuntime';
 import { CharacterSheetRuntime } from 'src/runtime/CharacterSheetRuntime';
 import { VehicleSheetRuntime } from 'src/runtime/VehicleSheetRuntime';
 import { TabManager } from 'src/runtime/tab/TabManager';
-import { MigrationsApplication } from 'src/applications/migrations/MigrationsApplication';
+import { BulkMigrationsApplication } from 'src/applications/migrations/BulkMigrationsApplication';
 import { AboutApplication } from 'src/applications/settings/about/AboutApplication';
 
 export type Tidy5eSettings = {
@@ -151,7 +151,7 @@ export function createSettings() {
           label: 'TIDY5E.Settings.Migrations.buttonLabel',
           hint: `TIDY5E.Settings.Migrations.hint`,
           icon: 'fa-solid fa-right-left',
-          type: MigrationsApplication,
+          type: BulkMigrationsApplication,
           restricted: true,
         },
       },
@@ -167,6 +167,21 @@ export function createSettings() {
       },
     },
     settings: {
+      migrationsConfirmationTally: {
+        options: {
+          name: 'Migrations Confirmation Tally',
+          hint: 'Developer Only: This field tells the developer when was the last time the GM indicated "Do Not Show Again" for a migration notification. This is so Tidy does not notify of migrations until a new migration has become available. A migration tick counter increments each release where a migration has become available.',
+          scope: 'world',
+          config: false,
+          type: Number,
+          default: 0,
+        },
+        get() {
+          return FoundryAdapter.getTidySetting<number>(
+            'migrationsConfirmationTally'
+          );
+        },
+      },
       defaultTheme: {
         options: {
           name: 'TIDY5E.Settings.DefaultTheme.name',
@@ -177,7 +192,7 @@ export function createSettings() {
           choices: () => getCoreThemes(false),
           default: CONSTANTS.THEME_ID_DEFAULT_LIGHT,
           onChange: (data: string) => {
-            const theme = getTheme(data) ?? null;
+            const theme = getThemeOrDefault(data);
 
             const colorScheme = SettingsProvider.settings.colorScheme.get();
 
@@ -204,19 +219,8 @@ export function createSettings() {
             data: string,
             colorPickerEnabledOverride: boolean | null = null
           ) => {
-            const theme = getTheme(data) ?? null;
-
-            if (theme === null) {
-              const defaultThemeId =
-                SettingsProvider.settings.defaultTheme.get();
-
-              const defaultTheme = getTheme(defaultThemeId) ?? null;
-
-              defaultTheme &&
-                applyTheme(defaultTheme, colorPickerEnabledOverride);
-            } else {
-              applyTheme(theme, colorPickerEnabledOverride);
-            }
+            const theme = getThemeOrDefault(data);
+            applyTheme(theme, colorPickerEnabledOverride);
           },
         },
         get() {

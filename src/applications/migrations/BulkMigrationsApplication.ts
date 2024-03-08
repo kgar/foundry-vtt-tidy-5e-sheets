@@ -1,6 +1,6 @@
 import type { SvelteComponent } from 'svelte';
 import SvelteFormApplicationBase from '../SvelteFormApplicationBase';
-import Migrations from './Migrations.svelte';
+import BulkMigrations from './BulkMigrations.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
 export type ConfirmMigrationFunction = (onYes: () => void) => void;
@@ -9,24 +9,35 @@ interface ConfirmsMigrations {
   confirm: ConfirmMigrationFunction;
 }
 
-export class MigrationsApplication
+export class BulkMigrationsApplication
   extends SvelteFormApplicationBase
   implements ConfirmsMigrations
 {
+  _selectedTabId?: string;
+
+  constructor(selectedTabId?: string) {
+    super();
+
+    this._selectedTabId = selectedTabId;
+  }
+
   static get defaultOptions() {
     return FoundryAdapter.mergeObject(super.defaultOptions, {
       title: FoundryAdapter.localize('TIDY5E.Settings.Migrations.dialogTitle'),
       width: 650,
       height: 500,
-      id: 'tidy-5e-sheets-migrations',
+      id: 'tidy-5e-sheets-bulk-migrations',
       popOut: true,
     });
   }
 
   createComponent(node: HTMLElement): SvelteComponent<any, any, any> {
-    return new Migrations({
+    return new BulkMigrations({
       target: node,
       context: new Map<any, any>([['confirm', this.confirm]]),
+      props: {
+        selectedTabId: this._selectedTabId,
+      },
     });
   }
 

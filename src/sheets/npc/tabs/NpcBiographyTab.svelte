@@ -29,6 +29,56 @@
       !showNpcPersonalityInfo,
     );
   }
+
+  type FlagBioField = {
+    flag: string;
+    value: string | undefined | null;
+    text: string;
+  };
+
+  let bioFields: FlagBioField[] = [];
+  $: bioFields = [
+    {
+      flag: 'gender',
+      value: FoundryAdapter.tryGetFlag($context.actor, 'gender'),
+      text: 'DND5E.Gender',
+    },
+    {
+      flag: 'age',
+      value: FoundryAdapter.tryGetFlag($context.actor, 'age'),
+      text: 'DND5E.Age',
+    },
+    {
+      flag: 'height',
+      value: FoundryAdapter.tryGetFlag($context.actor, 'height'),
+      text: 'DND5E.Height',
+    },
+    {
+      flag: 'weight',
+      value: FoundryAdapter.tryGetFlag($context.actor, 'weight'),
+      text: 'DND5E.Weight',
+    },
+    {
+      flag: 'eyes',
+      value: FoundryAdapter.tryGetFlag($context.actor, 'eyes'),
+      text: 'DND5E.Eyes',
+    },
+    {
+      flag: 'skin',
+      value: FoundryAdapter.tryGetFlag($context.actor, 'skin'),
+      text: 'DND5E.Skin',
+    },
+    {
+      flag: 'hair',
+      value: FoundryAdapter.tryGetFlag($context.actor, 'hair'),
+      text: 'DND5E.Hair',
+    },
+    {
+      flag: 'faith',
+      value: FoundryAdapter.tryGetFlag($context.actor, 'faith'),
+      text: 'DND5E.Faith',
+    },
+  ];
 </script>
 
 <div class="scroll-container">
@@ -39,89 +89,20 @@
     >
       <article>
         <ul class="character-details">
-          <li>
-            <span>{localize('TIDY5E.Gender')}:</span>
-            <ContentEditableFormField
-              element="span"
-              editable={$context.editable && !$context.lockSensitiveFields}
-              document={$context.actor}
-              field="flags.{CONSTANTS.MODULE_ID}.gender"
-              value={FoundryAdapter.tryGetFlag($context.actor, 'gender') ?? ''}
-              cssClass="detail-input"
-            />
-          </li>
-          <li>
-            <span>{localize('TIDY5E.Age')}:</span>
-            <ContentEditableFormField
-              element="span"
-              editable={$context.editable && !$context.lockSensitiveFields}
-              document={$context.actor}
-              field="flags.{CONSTANTS.MODULE_ID}.age"
-              value={FoundryAdapter.tryGetFlag($context.actor, 'age') ?? ''}
-              cssClass="detail-input"
-              dataMaxLength={5}
-            />
-          </li>
-          <li>
-            <span>{localize('TIDY5E.Height')}:</span>
-            <ContentEditableFormField
-              element="span"
-              editable={$context.editable && !$context.lockSensitiveFields}
-              document={$context.actor}
-              field="flags.{CONSTANTS.MODULE_ID}.height"
-              value={FoundryAdapter.tryGetFlag($context.actor, 'height') ?? ''}
-              cssClass="detail-input"
-              dataMaxLength={20}
-            />
-          </li>
-          <li>
-            <span>{localize('TIDY5E.Weight')}:</span>
-            <ContentEditableFormField
-              element="span"
-              editable={$context.editable && !$context.lockSensitiveFields}
-              document={$context.actor}
-              field="flags.{CONSTANTS.MODULE_ID}.weight"
-              value={FoundryAdapter.tryGetFlag($context.actor, 'weight') ?? ''}
-              cssClass="detail-input"
-              dataMaxLength={20}
-            />
-          </li>
-          <li>
-            <span>{localize('TIDY5E.Eyes')}:</span>
-            <ContentEditableFormField
-              element="span"
-              editable={$context.editable && !$context.lockSensitiveFields}
-              document={$context.actor}
-              field="flags.{CONSTANTS.MODULE_ID}.eyes"
-              value={FoundryAdapter.tryGetFlag($context.actor, 'eyes') ?? ''}
-              cssClass="detail-input"
-              dataMaxLength={40}
-            />
-          </li>
-          <li>
-            <span>{localize('TIDY5E.Skin')}:</span>
-            <ContentEditableFormField
-              element="span"
-              editable={$context.editable && !$context.lockSensitiveFields}
-              document={$context.actor}
-              field="flags.{CONSTANTS.MODULE_ID}.skin"
-              value={FoundryAdapter.tryGetFlag($context.actor, 'skin') ?? ''}
-              cssClass="detail-input"
-              dataMaxLength={40}
-            />
-          </li>
-          <li>
-            <span>{localize('TIDY5E.Hair')}:</span>
-            <ContentEditableFormField
-              element="span"
-              editable={$context.editable && !$context.lockSensitiveFields}
-              document={$context.actor}
-              field="flags.{CONSTANTS.MODULE_ID}.hair"
-              value={FoundryAdapter.tryGetFlag($context.actor, 'hair') ?? ''}
-              cssClass="detail-input"
-              dataMaxLength={40}
-            />
-          </li>
+          {#each bioFields as bioField (bioField.flag)}
+            <li>
+              <span>{localize(bioField.text)}:</span>
+              <ContentEditableFormField
+                selectOnFocus={true}
+                element="span"
+                editable={$context.editable && !$context.lockSensitiveFields}
+                document={$context.actor}
+                field="flags.{CONSTANTS.MODULE_ID}.{bioField.flag}"
+                value={bioField.value ?? ''}
+                cssClass="detail-input"
+              />
+            </li>
+          {/each}
         </ul>
       </article>
     </div>

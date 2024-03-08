@@ -10,12 +10,12 @@
   import ItemDuplicateControl from '../item-list/controls/ItemDuplicateControl.svelte';
   import ItemEditControl from '../item-list/controls/ItemEditControl.svelte';
   import ItemName from '../item-list/ItemName.svelte';
-  import ItemTable from '../item-list/ItemTable.svelte';
-  import ItemTableCell from '../item-list/ItemTableCell.svelte';
-  import ItemTableColumn from '../item-list/ItemTableColumn.svelte';
+  import ItemTable from '../item-list/v1/ItemTable.svelte';
+  import ItemTableCell from '../item-list/v1/ItemTableCell.svelte';
+  import ItemTableColumn from '../item-list/v1/ItemTableColumn.svelte';
   import ItemTableFooter from '../item-list/ItemTableFooter.svelte';
-  import ItemTableHeaderRow from '../item-list/ItemTableHeaderRow.svelte';
-  import ItemTableRow from '../item-list/ItemTableRow.svelte';
+  import ItemTableHeaderRow from '../item-list/v1/ItemTableHeaderRow.svelte';
+  import ItemTableRow from '../item-list/v1/ItemTableRow.svelte';
   import ItemUseButton from '../item-list/ItemUseButton.svelte';
   import ItemUses from '../item-list/ItemUses.svelte';
   import SpellComponents from './SpellComponents.svelte';
@@ -30,6 +30,7 @@
   import ActionFilterOverrideControl from '../item-list/controls/ActionFilterOverrideControl.svelte';
   import { SpellSchool } from 'src/features/spell-school/SpellSchool';
   import { declareLocation } from 'src/types/location-awareness';
+  import Dnd5eIcon from '../icon/Dnd5eIcon.svelte';
 
   let context =
     getContext<Readable<CharacterSheetContext | NpcSheetContext>>('context');
@@ -37,6 +38,11 @@
   export let spells: any[];
   export let allowFavorites: boolean = true;
   export let cssClass: string | null = null;
+  /**
+   * An optional subset of item IDs which will hide all other items not included in this set.
+   * Useful for showing only search results, for example.
+   */
+  export let visibleItemIdSubset: Set<string> | null = null;
 
   // TODO: replace this with column specification array default and then allow the caller to customize the table.
   export let includeSchool: boolean = true;
@@ -123,8 +129,10 @@
           }}
           let:toggleSummary
           cssClass={FoundryAdapter.getSpellRowClasses(spell)}
+          hidden={visibleItemIdSubset !== null &&
+            !visibleItemIdSubset.has(spell.id)}
         >
-          <ItemTableCell primary={true}>
+          <ItemTableCell primary={true} title={spell.name}>
             <ItemUseButton
               disabled={!$context.editable}
               item={spell}
@@ -154,11 +162,21 @@
             <SpellComponents {spell} />
           </ItemTableCell>
           {#if includeSchool}
+            {@const icon = SpellSchool.getIcon(spell.system.school)}
             <ItemTableCell
               baseWidth={spellSchoolBaseWidth}
               title={spell.labels.school ?? ''}
             >
-              <i class={SpellSchool.getIcon(spell.system.school)}></i>
+              {#if typeof icon === 'string'}
+                <i class="spell-school-icon {icon}"></i>
+              {:else}
+                <Dnd5eIcon
+                  --icon-fill="var(--t5e-spell-school-icon-fill)"
+                  --icon-width="var(--t5e-spell-school-icon-width)"
+                  --icon-height="var(--t5e-spell-school-icon-height)"
+                  src={icon.iconSrc}
+                />
+              {/if}
             </ItemTableCell>
           {/if}
           <ItemTableCell
@@ -227,5 +245,14 @@
     line-height: 0.75rem;
     flex: 0 0 3.75rem;
     white-space: nowrap;
+  }
+
+  .spellbook-list-section {
+    .spell-school-icon {
+      color: var(--t5e-secondary-color);
+      font-size: var(--t5e-spell-school-font-icon-size);
+      margin: 0;
+      padding: 0;
+    }
   }
 </style>

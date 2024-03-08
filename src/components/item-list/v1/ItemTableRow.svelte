@@ -1,6 +1,6 @@
 <script lang="ts">
   import { type Actor5e, type OnItemToggledFn } from 'src/types/types';
-  import ItemSummary from '../item-list/ItemSummary.svelte';
+  import ItemSummary from '../ItemSummary.svelte';
   import { warn } from 'src/utils/logging';
   import { createEventDispatcher, getContext, onMount } from 'svelte';
   import type {
@@ -22,6 +22,7 @@
   export let contextMenu: { type: string; id: string } | null = null;
   export let cssClass: string = '';
   export let itemCardContentTemplate: ItemCardContentComponent | null = null;
+  export let hidden: boolean = false;
 
   $: draggable = item ?? effect;
 
@@ -33,7 +34,7 @@
   const dispatcher = createEventDispatcher<{ mousedown: MouseEvent }>();
   const location = getContext<string>('location');
 
-  let card = getContext<Writable<ItemCardStore>>('card');
+  let card: Writable<ItemCardStore> | undefined = getContext<Writable<ItemCardStore>>('card');
   let showSummary = false;
   let chatData: ItemChatData | undefined;
   let useTransition: boolean = false;
@@ -53,15 +54,11 @@
   async function onMouseEnter(event: Event) {
     Hooks.callAll(CONSTANTS.HOOK_TIDY5E_SHEETS_ITEM_HOVER_ON, event, item);
 
-    if (!card) {
-      return;
-    }
-
     if (!item?.getChatData || !$settingStore.itemCardsForAllItems) {
       return;
     }
 
-    card.update((card) => {
+    card?.update((card) => {
       card.item = item;
       card.itemCardContentTemplate = itemCardContentTemplate;
       return card;
@@ -71,11 +68,7 @@
   async function onMouseLeave(event: Event) {
     Hooks.callAll(CONSTANTS.HOOK_TIDY5E_SHEETS_ITEM_HOVER_OFF, event, item);
 
-    if (!card) {
-      return;
-    }
-
-    card.update((card) => {
+    card?.update((card) => {
       card.item = null;
       card.itemCardContentTemplate = null;
       return card;
@@ -90,7 +83,7 @@
     // Don't show cards while dragging
     onMouseLeave(event);
 
-    card.update((card) => {
+    card?.update((card) => {
       return card;
     });
 
@@ -149,6 +142,8 @@
 <div
   class="item-table-row-container"
   class:show-item-count-on-hover={!$settingStore.alwaysShowItemQuantity}
+  class:hidden
+  aria-hidden={hidden}
   data-context-menu={contextMenu?.type}
   data-context-menu-entity-id={contextMenu?.id}
   on:mousedown={(event) => dispatcher('mousedown', event)}
@@ -157,8 +152,9 @@
   on:dragstart={handleDragStart}
   draggable={!!draggable}
   data-item-id={item?.id}
-  data-tidy-item-table-row
+  data-tidy-table-row
   data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_TABLE_ROW}
+  data-tidy-item-type={item?.type ?? 'unknown'}
 >
   <div class="item-table-row {cssClass ?? ''}">
     <slot {toggleSummary} />

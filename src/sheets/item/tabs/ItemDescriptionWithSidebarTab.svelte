@@ -11,6 +11,7 @@
   import ItemDescriptions from '../parts/ItemDescriptions.svelte';
   import RerenderAfterFormSubmission from 'src/components/utility/RerenderAfterFormSubmission.svelte';
   import OpenSheetEditor from 'src/components/editor/OpenSheetEditor.svelte';
+  import SheetEditor from 'src/components/editor/SheetEditor.svelte';
   import { CONSTANTS } from 'src/constants';
 
   let context = getContext<Readable<ItemSheetContext>>('context');
@@ -38,6 +39,10 @@
   }
 
   const localize = FoundryAdapter.localize;
+
+  function activateProseMirrorListeners(node: HTMLElement) {
+    $context.activateFoundryJQueryListeners(node);
+  }
 </script>
 
 <div
@@ -86,27 +91,31 @@
         <label for="{$context.appId}-{$context.item.id}-price"
           >{localize('DND5E.Price')}</label
         >
-        <NumberInput
-          id="{$context.appId}-{$context.item.id}-price"
-          value={$context.system.price.value}
-          step="any"
-          field="system.price.value"
-          document={$context.item}
-          disabled={!$context.editable}
-          selectOnFocus={true}
-        />
-        <Select
-          value={$context.system.price.denomination}
-          field="system.price.denomination"
-          document={$context.item}
-          disabled={!$context.editable}
-        >
-          <SelectOptions
-            data={$context.config.currencies}
-            valueProp="abbreviation"
-            labelProp="abbreviation"
+        {#if $context.concealDetails}
+          <span>{localize('DND5E.Unidentified.Value')}</span>
+        {:else}
+          <NumberInput
+            id="{$context.appId}-{$context.item.id}-price"
+            value={$context.system.price.value}
+            step="any"
+            field="system.price.value"
+            document={$context.item}
+            disabled={!$context.editable}
+            selectOnFocus={true}
           />
-        </Select>
+          <Select
+            value={$context.system.price.denomination}
+            field="system.price.denomination"
+            document={$context.item}
+            disabled={!$context.editable}
+          >
+            <SelectOptions
+              data={$context.config.currencies}
+              valueProp="abbreviation"
+              labelProp="abbreviation"
+            />
+          </Select>
+        {/if}
       </div>
     {/if}
 
@@ -114,7 +123,7 @@
       <h4 class="properties-header">
         {localize('DND5E.Attack')}/{localize('DND5E.Damage')}
       </h4>
-      <ol class="properties-list">
+      <ol class="properties-list animate-inert" inert={$context.concealDetails}>
         {#if $context.labels.save}
           <li>
             {$context.labels.save}
@@ -138,9 +147,9 @@
     {/if}
 
     {#if $context.itemProperties.length}
-      <section>
+      <section class="inert-animation-container">
         <h4 class="properties-header">{localize('DND5E.Properties')}</h4>
-        <ol class="properties-list">
+        <ol class="properties-list" inert={$context.concealDetails}>
           {#each $context.itemProperties as prop}
             <li>{prop}</li>
           {/each}
@@ -151,10 +160,24 @@
 
   <VerticalLineSeparator />
 
-  <ItemDescriptions
-    on:edit={(ev) => edit(ev.detail.valueToEdit, ev.detail.fieldToEdit)}
-    renderDescriptions={!editing}
-  />
+  {#if FoundryAdapter.userIsGm() || $context.isIdentified}
+    <ItemDescriptions
+      on:edit={(ev) => edit(ev.detail.valueToEdit, ev.detail.fieldToEdit)}
+      renderDescriptions={!editing}
+    />
+  {:else if $context.editable || $context.system.unidentified.description}
+    <RerenderAfterFormSubmission
+      andOnValueChange={$context.enriched.unidentified}
+    >
+      <div class="flexrow" role="presentation" use:activateProseMirrorListeners>
+        <SheetEditor
+          content={$context.enriched.unidentified}
+          editable={$context.editable}
+          target="system.unidentified.description"
+        />
+      </div>
+    </RerenderAfterFormSubmission>
+  {/if}
 </div>
 
 {#if editing}

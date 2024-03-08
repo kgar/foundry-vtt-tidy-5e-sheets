@@ -17,6 +17,7 @@
     attributes={{ 'data-tidy-item-name': $context.item.name }}
     placeholder={localize('DND5E.ItemName')}
     disabled={!$context.editable}
+    title={$context.item.name}
   />
 {:else}
   <TextInput
@@ -28,5 +29,6 @@
     }}
     placeholder={localize('DND5E.NameUnidentified')}
     disabled={!$context.editable}
+    title={$context.identifiedName}
   />
 {/if}

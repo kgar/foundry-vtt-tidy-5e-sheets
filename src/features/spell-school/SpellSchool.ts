@@ -1,5 +1,7 @@
+import type { SupportedSpellSchoolIcon } from 'src/api/config/spell-school/spell-school.types';
+
 export class SpellSchool {
-  protected static _iconsMap: Record<string, string> = {
+  protected static _iconsMap: Record<string, SupportedSpellSchoolIcon> = {
     abj: 'ra ra-shield',
     con: 'ra ra-tentacle',
     div: 'ra ra-crystal-ball',
@@ -12,11 +14,11 @@ export class SpellSchool {
 
   static fallbackIcon = 'fas fa-hat-wizard';
 
-  static getIcon(schoolKey: string) {
+  static getIcon(schoolKey: string): SupportedSpellSchoolIcon {
     return SpellSchool._iconsMap[schoolKey] ?? SpellSchool.fallbackIcon;
   }
 
-  static setIcon(schoolKey: string, iconClass: string) {
+  static setIcon(schoolKey: string, iconClass: SupportedSpellSchoolIcon) {
     SpellSchool._iconsMap[schoolKey] = iconClass;
   }
 }

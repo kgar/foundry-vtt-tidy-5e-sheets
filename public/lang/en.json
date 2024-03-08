@@ -4,13 +4,6 @@
   "TIDY5E.Tidy5eItemSheet": "Tidy 5e Item Sheet",
   "TIDY5E.Tidy5eVehicle": "Tidy 5e Vehicle Sheet",
   "TIDY5E.PlayerName": "Player Name",
-  "TIDY5E.Gender": "Gender",
-  "TIDY5E.Age": "Age",
-  "TIDY5E.Weight": "Weight",
-  "TIDY5E.Height": "Height",
-  "TIDY5E.Eyes": "Eyes",
-  "TIDY5E.Skin": "Skin",
-  "TIDY5E.Hair": "Hair",
   "TIDY5E.EditActorImage": "left click: edit image",
   "TIDY5E.ShowActorImage": "right click: show character art",
   "TIDY5E.ShowPortraitArt": "show portrait",
@@ -185,6 +178,8 @@
     "AtLeastOneRequiredErrorMessage": "At least one tab is required.",
     "Explanation": "Any tabs that the user or sheet are configured not to see (e.g., disabling the journal in config settings) will still not appear on the sheet, even if selected."
   },
+
+  "TIDY5E.ButtonConfirm.Text": "Confirm",
 
   "TIDY5E.Listbox": {
     "MoveUp": "Move Up (Alt + Up arrow key)",
@@ -641,6 +636,7 @@
     "migrateConfirmButtonYes": "Migrate",
     "migrateConfirmButtonNo": "Cancel",
     "v1": {
+      "sectionTitle": "Tidy V1 Onboarding Migrations",
       "mainExplanation1": "Migrating data to the new Tidy 5e Sheets module is not required in order to use it. Worst-case, if you are an original Tidy5e Sheet user and skip migrations, you will need to re-apply your settings to your liking.",
       "mainExplanation2": "{boldStart}Note{boldEnd}: Client Settings are not a part of this migration. Enough has changed about how client settings work in Tidy, so it is recommended to take a fresh look at client settings.",
       "originalHeader": "Original Tidy5e Sheet",
@@ -648,6 +644,28 @@
       "alphaHeader": "Alpha Tidy 5e Sheets",
       "alphaExplanation1": "Migrate GM settings and Tidy sheet data flags from the Alpha Tidy 5e Sheets. Most of the differences in data are from the sheet data flags. The Alpha flags migration targets top-level actors, top-level actors' items, and top-level items. This will bring in biographical data, favorites, and other sheet-specific Alpha data flags.",
       "alphaExplanation2": "{boldStart}Note{boldEnd}: this migration does not affect compendium content."
+    },
+    "Notification": {
+      "Title": "Tidy 5e Sheets: Migrations Available",
+      "Explanation": "New Tidy 5e Sheets data migrations are available. Check the {boldStart}config settings Migrations menu{boldEnd} to learn more.",
+      "Explanation2": "Note: Migrations move data that was originally stored by Tidy 5e Sheets into the system's officially supported data fields. If you are not missing data on your sheets after updating Tidy 5e Sheets, then no migration is required.",
+      "Button.DoNotShowAgain": "Do Not Show Again",
+      "DoNotShowAgain.ConfirmMessage": "Confirmed. This message will not show again until there is another available migration."
+    },
+    "OptionsHeader": "Migration Options",
+    "OptionOverwrite.Text": "Overwrite",
+    "OptionOverwrite.Tooltip": "Enable to overwrite existing sheet data. If unchecked, only empty system fields will receive migrated Tidy data.",
+    "OptionDeleteFlags.Text": "Delete Affected Tidy Flags",
+    "OptionDeleteFlags.Tooltip": "When migrating from custom Tidy flag data to official system data, the flags remain in place by default. Check this option to remove those flags.",
+    "ButtonMigration.Text": "Migrate",
+    "CharacterBiography": {
+      "sectionTitle": "Character Biography",
+      "selectionDialogTitle": "Migration: Character Biography"
+    },
+    "Selection": {
+      "TotalSelectedLabel": "Total Selected: {total}",
+      "ToMigrate": "To Migrate",
+      "SelectAllNoneTooltip": "Select all or none"
     }
   },
   "TIDY5E.Settings.About": {
@@ -731,5 +749,7 @@
   "TIDY5E.Commands.HideLegendaryToolbar": "Hide Legendary Toolbar",
   "TIDY5E.ItemFilters.ClearAll": "Clear All",
   "TIDY5E.ItemFilters.Category.Miscellaneous": "Miscellaneous",
-  "TIDY5E.ItemFilters.Filter.Other": "Other"
+  "TIDY5E.ItemFilters.Filter.Other": "Other",
+  "TIDY5E.GMOnly.Message": "GM Only: {message}",
+  "TIDY5E.ReminderToBackUp": "Always remember to back up your world."
 }

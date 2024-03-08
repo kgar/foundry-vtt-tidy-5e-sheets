@@ -5,11 +5,11 @@
   import type { Readable } from 'svelte/store';
   import type { VehicleSheetContext } from 'src/types/types';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import ItemTable from 'src/components/item-list/ItemTable.svelte';
-  import ItemTableHeaderRow from 'src/components/item-list/ItemTableHeaderRow.svelte';
-  import ItemTableColumn from 'src/components/item-list/ItemTableColumn.svelte';
-  import ItemTableRow from 'src/components/item-list/ItemTableRow.svelte';
-  import ItemTableCell from 'src/components/item-list/ItemTableCell.svelte';
+  import ItemTable from 'src/components/item-list/v1/ItemTable.svelte';
+  import ItemTableHeaderRow from 'src/components/item-list/v1/ItemTableHeaderRow.svelte';
+  import ItemTableColumn from 'src/components/item-list/v1/ItemTableColumn.svelte';
+  import ItemTableRow from 'src/components/item-list/v1/ItemTableRow.svelte';
+  import ItemTableCell from 'src/components/item-list/v1/ItemTableCell.svelte';
   import { CONSTANTS } from 'src/constants';
   import ItemName from 'src/components/item-list/ItemName.svelte';
   import ItemUseButton from 'src/components/item-list/ItemUseButton.svelte';
@@ -130,7 +130,7 @@
                   {item}
                   cssClass={FoundryAdapter.getInventoryRowClasses(item, ctx)}
                 >
-                  <ItemTableCell primary={true}>
+                  <ItemTableCell primary={true} title={item.name}>
                     <ItemUseButton disabled={!$context.editable} {item} />
                     <ItemName
                       on:toggle={() => toggleSummary($context.actor)}

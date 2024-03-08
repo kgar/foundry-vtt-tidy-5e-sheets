@@ -301,23 +301,27 @@ function isActiveItem(activationType: string) {
   return true;
 }
 
-export const damageTypeIconMap: Record<string, string> = {
-  acid: '<i class="fas fa-hand-holding-water"></i>',
-  bludgeoning: '<i class="fas fa-gavel"></i>',
-  cold: '<i class="fas fa-snowflake"></i>',
-  fire: '<i class="fas fa-fire-alt"></i>',
-  force: '<i class="fas fa-hat-wizard"></i>',
-  lightning: '<i class="fas fa-bolt"></i>',
-  necrotic: '<i class="fas fa-skull"></i>',
-  piercing: '<i class="fas fa-thumbtack"></i>',
-  poison: '<i class="fas fa-skull-crossbones"></i>',
-  psychic: '<i class="fas fa-brain"></i>',
-  radiant: '<i class="fas fa-sun"></i>',
-  slashing: '<i class="fas fa-cut"></i>',
-  thunder: '<i class="fas fa-wind"></i>',
-  healing: '<i class="fas fa-heart"></i>',
-  temphp: '<i class="fas fa-shield-alt"></i>',
-};
+// TODO: Put more Actions stuff into the static class
+export class Actions {
+  static get damageAndHealingTypesIconSrcMap(): Record<string, string> {
+    const damageTypes = Object.entries(CONFIG.DND5E.damageTypes).reduce<
+      Record<string, string>
+    >((obj, [key, damageType]: [string, any]) => {
+      obj[key] = damageType.icon;
+      return obj;
+    }, {});
+    const healingTypes = Object.entries(CONFIG.DND5E.healingTypes).reduce<
+      Record<string, string>
+    >((obj, [key, damageType]: [string, any]) => {
+      obj[key] = damageType.icon;
+      return obj;
+    }, {});
+    return {
+      ...damageTypes,
+      ...healingTypes,
+    };
+  }
+}
 
 export function actorUsesActionFeature(actor: Actor5e) {
   const selectedTabIds = FoundryAdapter.tryGetFlag<string[] | undefined>(

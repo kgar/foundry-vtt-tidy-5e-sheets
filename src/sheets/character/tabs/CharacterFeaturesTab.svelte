@@ -5,12 +5,12 @@
   import ItemEditControl from '../../../components/item-list/controls/ItemEditControl.svelte';
   import ItemDuplicateControl from '../../../components/item-list/controls/ItemDuplicateControl.svelte';
   import ItemDeleteControl from '../../../components/item-list/controls/ItemDeleteControl.svelte';
-  import ItemTable from '../../../components/item-list/ItemTable.svelte';
-  import ItemTableHeaderRow from '../../../components/item-list/ItemTableHeaderRow.svelte';
-  import ItemTableRow from '../../../components/item-list/ItemTableRow.svelte';
+  import ItemTable from '../../../components/item-list/v1/ItemTable.svelte';
+  import ItemTableHeaderRow from '../../../components/item-list/v1/ItemTableHeaderRow.svelte';
+  import ItemTableRow from '../../../components/item-list/v1/ItemTableRow.svelte';
   import ItemTableFooter from '../../../components/item-list/ItemTableFooter.svelte';
-  import ItemTableCell from '../../../components/item-list/ItemTableCell.svelte';
-  import ItemTableColumn from '../../../components/item-list/ItemTableColumn.svelte';
+  import ItemTableCell from '../../../components/item-list/v1/ItemTableCell.svelte';
+  import ItemTableColumn from '../../../components/item-list/v1/ItemTableColumn.svelte';
   import ItemUseButton from '../../../components/item-list/ItemUseButton.svelte';
   import { CONSTANTS } from 'src/constants';
   import ItemName from '../../../components/item-list/ItemName.svelte';
@@ -82,11 +82,11 @@
     <Notice>{localize('TIDY5E.EmptySection')}</Notice>
   {:else}
     {#each $context.features as section (section.label)}
-      {@const filteredItems = FoundryAdapter.getFilteredItems(
+      {@const visibleItemIdSubset = FoundryAdapter.searchItems(
         searchCriteria,
         section.items,
       )}
-      {#if (searchCriteria.trim() === '' && $context.unlocked) || filteredItems.length > 0}
+      {#if (searchCriteria.trim() === '' && $context.unlocked) || visibleItemIdSubset.size > 0}
         <ItemTable location={section.label}>
           <svelte:fragment slot="header">
             <ItemTableHeaderRow>
@@ -131,7 +131,7 @@
             </ItemTableHeaderRow>
           </svelte:fragment>
           <svelte:fragment slot="body">
-            {#each FoundryAdapter.getFilteredItems(searchCriteria, section.items) as item (item.id)}
+            {#each section.items as item (item.id)}
               {@const ctx = $context.itemContext[item.id]}
               <ItemTableRow
                 {item}
@@ -142,8 +142,9 @@
                   type: CONSTANTS.CONTEXT_MENU_TYPE_ITEMS,
                   id: item.id,
                 }}
+                hidden={!visibleItemIdSubset.has(item.id)}
               >
-                <ItemTableCell primary={true}>
+                <ItemTableCell primary={true} title={item.name}>
                   <ItemUseButton disabled={!$context.editable} {item} />
                   <ItemName
                     on:toggle={() => toggleSummary($context.actor)}
@@ -191,8 +192,8 @@
                 {/if}
                 {#if section.showSourceColumn}
                   <ItemTableCell baseWidth="7.5rem">
-                    <span class="truncate" title={item.system.source.label}
-                      >{item.system.source.label}</span
+                    <span class="truncate" title={item.system.source?.label}
+                      >{item.system.source?.label}</span
                     >
                   </ItemTableCell>
                 {/if}

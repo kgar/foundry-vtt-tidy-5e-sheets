@@ -1,12 +1,12 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { Item5e } from 'src/types/item';
-  import ItemTable from '../../../components/item-list/ItemTable.svelte';
-  import ItemTableHeaderRow from '../../../components/item-list/ItemTableHeaderRow.svelte';
-  import ItemTableRow from '../../../components/item-list/ItemTableRow.svelte';
+  import ItemTable from '../../../components/item-list/v1/ItemTable.svelte';
+  import ItemTableHeaderRow from '../../../components/item-list/v1/ItemTableHeaderRow.svelte';
+  import ItemTableRow from '../../../components/item-list/v1/ItemTableRow.svelte';
   import ItemTableFooter from '../../../components/item-list/ItemTableFooter.svelte';
-  import ItemTableColumn from '../../../components/item-list/ItemTableColumn.svelte';
-  import ItemTableCell from '../../../components/item-list/ItemTableCell.svelte';
+  import ItemTableColumn from '../../../components/item-list/v1/ItemTableColumn.svelte';
+  import ItemTableCell from '../../../components/item-list/v1/ItemTableCell.svelte';
   import ItemUseButton from '../../../components/item-list/ItemUseButton.svelte';
   import ItemName from '../../../components/item-list/ItemName.svelte';
   import { CONSTANTS } from 'src/constants';
@@ -35,6 +35,11 @@
   export let lockControls: boolean = false;
   export let allowFavoriteIconNextToName: boolean = true;
   export let includeWeightColumn: boolean = true;
+  /**
+   * An optional subset of item IDs which will hide all other items not included in this set.
+   * Useful for showing only search results, for example.
+   */
+  export let visibleItemIdSubset: Set<string> | null = null;
 
   let context = getContext<Readable<CharacterSheetContext>>('context');
 
@@ -97,6 +102,8 @@
           }}
           let:toggleSummary
           cssClass={getInventoryRowClasses(item)}
+          hidden={visibleItemIdSubset !== null &&
+            !visibleItemIdSubset.has(item.id)}
         >
           <ItemTableCell primary={true} title={item.name}>
             <ItemUseButton disabled={!$context.editable} {item} />
@@ -111,7 +118,7 @@
                 data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_NAME}
                 >{item.name}</span
               >
-              {#if item.system?.properties?.amm}
+              {#if item.system?.properties?.has('amm')}
                 <span class="ammo">
                   <AmmoSelector {item} />
                 </span>

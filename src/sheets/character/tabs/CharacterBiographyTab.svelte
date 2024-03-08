@@ -3,7 +3,6 @@
   import SheetEditor from 'src/components/editor/SheetEditor.svelte';
   import ContentEditableFormField from '../../../components/inputs/ContentEditableFormField.svelte';
   import type { CharacterSheetContext } from 'src/types/types';
-  import { CONSTANTS } from 'src/constants';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import RerenderAfterFormSubmission from '../../../components/utility/RerenderAfterFormSubmission.svelte';
@@ -15,6 +14,52 @@
   function activateProseMirrorListeners(node: HTMLElement) {
     $context.activateFoundryJQueryListeners(node);
   }
+
+  type SystemBioField = { field: string; value: string; text: string };
+
+  let bioFields: SystemBioField[] = [];
+  $: bioFields = [
+    {
+      field: 'system.details.gender',
+      value: $context.system.details.gender,
+      text: 'DND5E.Gender',
+    },
+    {
+      field: 'system.details.age',
+      value: $context.system.details.age,
+      text: 'DND5E.Age',
+    },
+    {
+      field: 'system.details.height',
+      value: $context.system.details.height,
+      text: 'DND5E.Height',
+    },
+    {
+      field: 'system.details.weight',
+      value: $context.system.details.weight,
+      text: 'DND5E.Weight',
+    },
+    {
+      field: 'system.details.eyes',
+      value: $context.system.details.eyes,
+      text: 'DND5E.Eyes',
+    },
+    {
+      field: 'system.details.skin',
+      value: $context.system.details.skin,
+      text: 'DND5E.Skin',
+    },
+    {
+      field: 'system.details.hair',
+      value: $context.system.details.hair,
+      text: 'DND5E.Hair',
+    },
+    {
+      field: 'system.details.faith',
+      value: $context.system.details.faith,
+      text: 'DND5E.Faith',
+    },
+  ];
 </script>
 
 <div class="scroll-container">
@@ -25,83 +70,20 @@
     >
       <article>
         <ul class="character-details">
-          <li>
-            <span>{localize('TIDY5E.Gender')}:</span>
-            <ContentEditableFormField
-              element="span"
-              editable={$context.editable && !$context.lockSensitiveFields}
-              document={$context.actor}
-              field="flags.{CONSTANTS.MODULE_ID}.gender"
-              value={FoundryAdapter.tryGetFlag($context.actor, 'gender') ?? ''}
-              cssClass="detail-input"
-            />
-          </li>
-          <li>
-            <span>{localize('TIDY5E.Age')}:</span>
-            <ContentEditableFormField
-              element="span"
-              editable={$context.editable && !$context.lockSensitiveFields}
-              document={$context.actor}
-              field="flags.{CONSTANTS.MODULE_ID}.age"
-              value={FoundryAdapter.tryGetFlag($context.actor, 'age') ?? ''}
-              cssClass="detail-input"
-            />
-          </li>
-          <li>
-            <span>{localize('TIDY5E.Height')}:</span>
-            <ContentEditableFormField
-              element="span"
-              editable={$context.editable && !$context.lockSensitiveFields}
-              document={$context.actor}
-              field="flags.{CONSTANTS.MODULE_ID}.height"
-              value={FoundryAdapter.tryGetFlag($context.actor, 'height') ?? ''}
-              cssClass="detail-input"
-            />
-          </li>
-          <li>
-            <span>{localize('TIDY5E.Weight')}:</span>
-            <ContentEditableFormField
-              element="span"
-              editable={$context.editable && !$context.lockSensitiveFields}
-              document={$context.actor}
-              field="flags.{CONSTANTS.MODULE_ID}.weight"
-              value={FoundryAdapter.tryGetFlag($context.actor, 'weight') ?? ''}
-              cssClass="detail-input"
-            />
-          </li>
-          <li>
-            <span>{localize('TIDY5E.Eyes')}:</span>
-            <ContentEditableFormField
-              element="span"
-              editable={$context.editable && !$context.lockSensitiveFields}
-              document={$context.actor}
-              field="flags.{CONSTANTS.MODULE_ID}.eyes"
-              value={FoundryAdapter.tryGetFlag($context.actor, 'eyes') ?? ''}
-              cssClass="detail-input"
-            />
-          </li>
-          <li>
-            <span>{localize('TIDY5E.Skin')}:</span>
-            <ContentEditableFormField
-              element="span"
-              editable={$context.editable && !$context.lockSensitiveFields}
-              document={$context.actor}
-              field="flags.{CONSTANTS.MODULE_ID}.skin"
-              value={FoundryAdapter.tryGetFlag($context.actor, 'skin') ?? ''}
-              cssClass="detail-input"
-            />
-          </li>
-          <li>
-            <span>{localize('TIDY5E.Hair')}:</span>
-            <ContentEditableFormField
-              element="span"
-              editable={$context.editable && !$context.lockSensitiveFields}
-              document={$context.actor}
-              field="flags.{CONSTANTS.MODULE_ID}.hair"
-              value={FoundryAdapter.tryGetFlag($context.actor, 'hair') ?? ''}
-              cssClass="detail-input"
-            />
-          </li>
+          {#each bioFields as bioField (bioField.field)}
+            <li>
+              <span>{localize(bioField.text)}:</span>
+              <ContentEditableFormField
+                selectOnFocus={true}
+                element="span"
+                editable={$context.editable && !$context.lockSensitiveFields}
+                document={$context.actor}
+                field={bioField.field}
+                value={bioField.value ?? ''}
+                cssClass="detail-input"
+              />
+            </li>
+          {/each}
         </ul>
       </article>
     </div>

@@ -4,6 +4,7 @@
   import type { Item5e, ItemSheetContext } from 'src/types/item';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
+  import { fade } from 'svelte/transition';
 
   let context = getContext<Readable<ItemSheetContext>>('context');
 
@@ -41,13 +42,24 @@
   <!-- TODO: Figure out if there is an accessible way to provide this feature. -->
   <img
     class="profile"
+    class:conceal={$context.item.system.identified === false}
     src={$context.item.img}
     alt={$context.item.name}
-    title="{localize('TIDY5E.EditActorImage')} / {localize('TIDY5E.ShowItemImage')}"
+    title="{localize('TIDY5E.EditActorImage')} / {localize(
+      'TIDY5E.ShowItemImage',
+    )}"
     on:click={(event) =>
       openItemImagePicker(event.currentTarget, $context.item)}
     on:contextmenu={() => (hideImageMenu = !hideImageMenu)}
   />
+  <div
+    role="presentation"
+    aria-hidden="true"
+    class="unidentified-glyph"
+    class:conceal={$context.item.system.identified === false}
+  >
+    <i class="fas fa-question" />
+  </div>
   <div class="item-menu" class:hidden={hideImageMenu}>
     <button
       type="button"

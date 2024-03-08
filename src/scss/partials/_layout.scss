@@ -44,6 +44,10 @@
   gap: 0.25rem;
 }
 
+.extra-small-row-gap {
+  row-gap: 0.25rem;
+}
+
 .no-gap {
   gap: 0;
 }
@@ -102,4 +106,21 @@
 
 .min-width-0 {
   min-width: 0;
+}
+
+.grid-auto-columns {
+  --grid-auto-columns-min-width-internal: var(
+    --grid-auto-columns-min-width,
+    10.5rem
+  );
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(var(--grid-auto-columns-min-width-internal), 1fr)
+  );
+  gap: 0.125rem;
+}
+
+.columns-span-all {
+  grid-column: 1 / -1;
 }

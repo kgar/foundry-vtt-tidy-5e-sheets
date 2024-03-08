@@ -297,7 +297,7 @@ export const FoundryAdapter = {
   getInventoryRowClasses(item: Item5e, ctx?: any, extras?: string[]): string {
     const itemClasses: string[] = [];
 
-    if (FoundryAdapter.getProperty(item, 'system.properties.mgc')) {
+    if (item?.system?.properties?.has('mgc')) {
       itemClasses.push('magic-item');
     }
 
@@ -420,11 +420,15 @@ export const FoundryAdapter = {
 
     return classImage ?? spell.img;
   },
-  getFilteredItems(searchCriteria: string, items: Item5e[]) {
-    return items.filter(
-      (x: any) =>
-        searchCriteria.trim() === '' ||
-        x.name.toLowerCase().includes(searchCriteria.toLowerCase())
+  searchItems(searchCriteria: string, items: Item5e[]): Set<string> {
+    return new Set(
+      items
+        .filter(
+          (item: any) =>
+            searchCriteria.trim() === '' ||
+            item.name.toLowerCase().includes(searchCriteria.toLowerCase())
+        )
+        .map((item) => item.id)
     );
   },
   getFilteredActionItems(searchCriteria: string, items: Set<ActionItem>) {
@@ -1216,5 +1220,56 @@ export const FoundryAdapter = {
           CONSTANTS.SPELL_PREPARATION_MODE_PREPARED &&
         item.system.preparation.prepared
     ).length;
+  },
+  concealDetails(item: Item5e | null | undefined) {
+    return !game.user.isGM && item?.system?.identified === false;
+  },
+  getIdentifiedName(item: Item5e): string {
+    if (!FoundryAdapter.userIsGm() || item?.system?.identified !== false) {
+      return item.name;
+    }
+
+    try {
+      return FoundryAdapter.localize('TIDY5E.GMOnly.Message', {
+        message: item.toJSON().name,
+      });
+    } catch (e) {
+      error(
+        'An error occurred while getting the identified name of this item for the GM',
+        false,
+        e
+      );
+      return '';
+    }
+  },
+  async toggleCondition(document: Actor5e, condition: any) {
+    const existing = document.effects.get(
+      dnd5e.utils.staticID(`dnd5e${condition.id}`)
+    );
+
+    if (existing) {
+      return existing.delete();
+    }
+
+    const effect = await ActiveEffect.implementation.fromStatusEffect(
+      condition.id
+    );
+
+    return ActiveEffect.implementation.create(effect, {
+      parent: document,
+      keepId: true,
+    });
+  },
+  getEffect({
+    document,
+    effectId,
+    parentId,
+  }: {
+    document: any;
+    effectId: string;
+    parentId?: string;
+  }) {
+    if (!parentId) return document.effects.get(effectId);
+    return document.items.get(parentId).effects.get(effectId);
   },
 };
