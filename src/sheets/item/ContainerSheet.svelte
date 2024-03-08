@@ -20,9 +20,9 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-<!-- Header -->
 <header class="sheet-header container-header flexrow gap">
   <ItemProfilePicture />
+
   <div
     class="header-details flexrow small-gap"
     data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.NAME_HEADER_ROW}
@@ -33,26 +33,32 @@
     >
       <ItemIdentifiableName />
     </h1>
+
     <div class="item-subtitle">
       <h4 class="item-type">{$context.itemType ?? ''}</h4>
     </div>
+
     <ul class="summary flexrow">
       <li>
-        <Select
-          document={$context.item}
-          field="system.rarity"
-          value={$context.system.rarity}
-          disabled={!$context.editable}
-          blankValue=""
-        >
-          <SelectOptions data={$context.config.itemRarity} blank="" />
-        </Select>
+        {#if $context.concealDetails}
+          <span>{localize('DND5E.Unidentified.Title')}</span>
+        {:else}
+          <Select
+            document={$context.item}
+            field="system.rarity"
+            value={$context.system.rarity}
+            disabled={!$context.editable}
+            blankValue=""
+          >
+            <SelectOptions data={$context.config.itemRarity} blank="" />
+          </Select>
+        {/if}
       </li>
       <li class="flex-row">
         <Source
           document={$context.item}
           keyPath="system.source"
-          editable={$context.editable}
+          editable={$context.editable && !$context.concealDetails}
         />
       </li>
     </ul>
