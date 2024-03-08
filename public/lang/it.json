@@ -557,7 +557,7 @@
         "name": "Traccia della barra di scorrimento"
     },
     "TIDY5E.Settings.Migrations": {
-        "name": "Sistemazione Migrazioni",
+        "name": "Migrazioni",
         "buttonLabel": "Migrare Dati di Tidy",
         "dialogTitle": "Migrare dati di Tidy",
         "migrationBeginningMessage": "Migrazione dei dati. Si prega di non aggiornare la pagina fino al termine.",
@@ -572,14 +572,37 @@
             "originalExplanation": "Migrare le impostazioni DM e i flag di dati del foglio Tidy dal foglio Tidy5e originale. La maggior parte delle differenze nei dati derivano dalle impostazioni DM. Se esegui la migrazione delle tue impostazioni e trovi che un'impostazione non è di tuo gradimento, modifica semplicemente le impostazioni dal menu delle impostazioni di configurazione.",
             "mainExplanation2": "{boldStart}NB{boldEnd}: le impostazioni del client non fanno parte di questa migrazione. È cambiato abbastanza sul modo in cui funzionano le impostazioni del client in Tidy, quindi si consiglia di dare uno sguardo nuovo alle impostazioni del client.",
             "alphaExplanation1": "Migrare le impostazioni DM e i flag dei dati del foglio Tidy da Alpha Tidy 5e Sheets. La maggior parte delle differenze nei dati derivano dai flag dei dati del foglio. La migrazione dei flag Alpha prende di mira i personaggi di livello superiore, gli elementi dei personaggi di livello superiore e gli elementi di livello superiore. Ciò porterà dati biografici, preferiti e altri flag di dati Alpha specifici del foglio.",
-            "alphaExplanation2": "{boldStart}NB{boldEnd}: questa migrazione non influisce sul contenuto del compendio."
+            "alphaExplanation2": "{boldStart}NB{boldEnd}: questa migrazione non influisce sul contenuto del compendio.",
+            "sectionTitle": "Migrazioni Schede Tidy V1"
         },
         "hint": "Se eri un utente del modulo Tidy5e Sheet originale o dei fogli Alpha, facoltativamente utilizza questo menu Migrazioni per migrare le impostazioni DM e i dati del foglio Tidy.",
         "migrationErrorMessage": "Si è verificato un errore. Maggiori dettagli sono nella console di sviluppo.",
         "migrationCompleteMessage": "Migrazione completa.",
         "migrateDocumentFlagsButtonLabel": "Migrazione dei flag del documento",
         "migrateConfirmButtonYes": "Migrare",
-        "migrateConfirmButtonNo": "Annulla"
+        "migrateConfirmButtonNo": "Annulla",
+        "Notification": {
+            "Title": "Schede Tidy 5e: Migrazioni Disponibili",
+            "Explanation": "Sono disponibili le nuove migrazioni dei dati di Tidy 5e Sheets. Verifica il {boldStart}Menu di Configurazione delle Migrazioni{boldEnd} per saperne di più.",
+            "Button.DoNotShowAgain": "Non mostrare più",
+            "DoNotShowAgain.ConfirmMessage": "Confermato. Questo messaggio non verrà più visualizzato finché non sarà disponibile un'altra migrazione.",
+            "Explanation2": "NB: Le migrazioni spostano i dati originariamente archiviati da Tidy 5e Sheets nei campi dati ufficialmente supportati dal sistema. Se non mancano dati sulle tue schede dopo l'aggiornamento di Tidy 5e Sheets, non è necessaria alcuna migrazione."
+        },
+        "OptionsHeader": "Opzioni di Migrazione",
+        "OptionOverwrite.Text": "Sovrascrivi",
+        "OptionOverwrite.Tooltip": "Abilita la sovrascrittura dei dati del foglio esistente. Se deselezionato, solo i campi di sistema vuoti riceveranno i dati Tidy migrati.",
+        "OptionDeleteFlags.Text": "Elimina i flag Tidy interessati",
+        "OptionDeleteFlags.Tooltip": "Durante la migrazione dai dati dei flag Tidy personalizzati ai dati del sistema ufficiale, i flag rimangono al loro posto per impostazione predefinita. Seleziona questa opzione per rimuovere questi flag.",
+        "ButtonMigration.Text": "Migrare",
+        "CharacterBiography": {
+            "sectionTitle": "Biografia del Personaggio",
+            "selectionDialogTitle": "Migrazione: Biografia del Personaggio"
+        },
+        "Selection": {
+            "ToMigrate": "Per Migrare",
+            "TotalSelectedLabel": "Totale Selezionato: {total}",
+            "SelectAllNoneTooltip": "Seleziona tutti o nessuno"
+        }
     },
     "TIDY5E.ItemFilters.MenuTooltip.Filters": "Filtri",
     "TIDY5E.Settings.ColorPickerMagicAccent": {
@@ -715,5 +738,6 @@
         "name": "Mostra Menu Migrazioni delle Schede",
         "hint": "Alcune migrazioni possono essere eseguite per singola scheda. Questa impostazione controlla chi può vedere il menu Migrazioni delle Schede."
     },
-    "TIDY5E.ReminderToBackUp": "Ricorda sempre di fare un salvataggio del tuo mondo."
+    "TIDY5E.ReminderToBackUp": "Ricorda sempre di fare un salvataggio del tuo mondo.",
+    "TIDY5E.ButtonConfirm.Text": "Conferma"
 }
