@@ -1272,4 +1272,7 @@ export const FoundryAdapter = {
     if (!parentId) return document.effects.get(effectId);
     return document.items.get(parentId).effects.get(effectId);
   },
+  canUseItem(item: Item5e) {
+    return !(!item.actor || !item.actor.isOwner || item.actor.pack);
+  },
 };

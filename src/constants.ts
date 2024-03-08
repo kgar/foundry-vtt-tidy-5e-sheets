@@ -8,6 +8,8 @@ export const CONSTANTS = {
   HOOK_TIDY5E_SHEETS_PREPARE_RESOURCES: `tidy5e-sheet.prepareResources`,
   HOOK_TIDY5E_SHEETS_ITEM_HOVER_ON: `tidy5e-sheet.itemHoverOn`,
   HOOK_TIDY5E_SHEETS_ITEM_HOVER_OFF: `tidy5e-sheet.itemHoverOff`,
+  ITEM_CAPACITY_TYPE_ITEMS: 'items',
+  ITEM_CAPACITY_TYPE_WEIGHT: 'weight',
   ITEM_TYPE_EQUIPMENT: 'equipment',
   ITEM_TYPE_BACKGROUND: 'background',
   ITEM_TYPE_CLASS: 'class',
