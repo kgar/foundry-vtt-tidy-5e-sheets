@@ -22,6 +22,7 @@ declare global {
   var Dialog: any;
   var dnd5e: any;
   var DocumentSheet: any;
+  var DocumentSheetConfig: any;
   var expandObject: any;
   var FilePicker: any;
   var FormApplication: any;
@@ -34,6 +35,7 @@ declare global {
   var Hooks: any;
   var ImagePopout: any;
   var isEmpty: any;
+  var Item: any;
   var Items: any;
   var mergeObject: any;
   var ModuleManagement: any;
