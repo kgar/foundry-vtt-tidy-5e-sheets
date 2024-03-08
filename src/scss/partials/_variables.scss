@@ -8,5 +8,11 @@
   // Tidy Item Tables (V2)
   --t5e-tidy-table-cell-min-height: 1.5rem;
 
+  // Spellbook School Icons
+  --t5e-spell-school-icon-fill: var(--t5e-secondary-color);
+  --t5e-spell-school-icon-width: 1rem;
+  --t5e-spell-school-icon-height: 1rem;
+  --t5e-spell-school-font-icon-size: 1rem;
+
   // TODO: Extract more standard measurements to include here
 }
