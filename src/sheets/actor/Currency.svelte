@@ -108,13 +108,13 @@
         .currency-convert {
           line-height: var(--currency-line-height);
           border: none;
-          background: var(--t5e-tertiary-color);
-          color: var(--t5e-background);
+          background: var(--t5e-faintest-color);
+          color: var(--t5e-secondary-color);
           border-radius: 0.3125rem;
           padding: 0 0.375rem;
 
           &:hover {
-            background: var(--t5e-secondary-color);
+            background: var(--t5e-light-color);
           }
         }
 

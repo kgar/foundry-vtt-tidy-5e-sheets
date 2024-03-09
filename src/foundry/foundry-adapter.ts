@@ -1275,4 +1275,16 @@ export const FoundryAdapter = {
   canUseItem(item: Item5e) {
     return !(!item.actor || !item.actor.isOwner || item.actor.pack);
   },
+  useClassicControls(document: any) {
+    return (
+      (document.type === CONSTANTS.SHEET_TYPE_CHARACTER &&
+        SettingsProvider.settings.useClassicControlsForCharacter.get()) ||
+      (document.type === CONSTANTS.SHEET_TYPE_NPC &&
+        SettingsProvider.settings.useClassicControlsForNpc.get()) ||
+      (document.type === CONSTANTS.SHEET_TYPE_VEHICLE &&
+        SettingsProvider.settings.useClassicControlsForVehicle.get()) ||
+      // Temporary stopgap: When we don't recognize a supported document for Classic Controls options, fall back to the character user setting
+      SettingsProvider.settings.useClassicControlsForCharacter.get()
+    );
+  },
 };
