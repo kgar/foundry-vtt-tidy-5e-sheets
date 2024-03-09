@@ -638,14 +638,37 @@
             "alphaExplanation2": "{boldStart}Nota{boldEnd}: esta migración no afecta el contenidos de compendio.",
             "mainExplanation1": "No es necesario migrar datos al nuevo módulo T5E para poder utilizarlo. En el peor de los casos, si eres un usuario original de T5E e ignoras las migraciones, deberás volver a aplicar la configuración a tu gusto.",
             "mainExplanation2": "{boldStart}Nota{boldEnd}: La configuración del cliente no forma parte de esta migración. Ya ha cambiado bastante la forma en la que funcionan las configuraciones del cliente en T5E, por lo que se recomienda echar un nuevo vistazo a las configuraciones del cliente.",
-            "originalExplanation": "Migra la configuración de DM y los indicadores de datos de la hoja Tidy de la hoja T5E original. La mayoría de las diferencias en los datos provienen de configuraciones de DM. Si migras tu configuración y adviertes que una configuración no es de tu agrado, simplemente cámbiala desde el menú de configuración."
+            "originalExplanation": "Migra la configuración de DM y los indicadores de datos de la hoja Tidy de la hoja T5E original. La mayoría de las diferencias en los datos provienen de configuraciones de DM. Si migras tu configuración y adviertes que una configuración no es de tu agrado, simplemente cámbiala desde el menú de configuración.",
+            "sectionTitle": "Inicio de las migraciones de Tidy V1"
         },
         "hint": "Si eras usuario del módulo T5E original o de las hojas Alpha, opcionalmente utiliza este menú de Migraciones para migrar la configuración de DM y los datos de la hoja T5E.",
         "migrateConfirmTitle": "Confirmar migración",
         "migrationCompleteMessage": "Migración completada.",
         "migrateConfirmButtonNo": "Cancelar",
         "migrateConfirmMessage2": "{boldStart}Nota{boldEnd}: recuerda hacer una {boldStart}copia de seguridad de tus datos{boldEnd}.",
-        "migrateConfirmButtonYes": "Migrar"
+        "migrateConfirmButtonYes": "Migrar",
+        "Notification": {
+            "Title": "Tarjetas Tidy 5e: Migraciones disponibles",
+            "Explanation": "Ya están disponibles las nuevas migraciones de datos de Tidy 5e Sheets. Consulte el menú Migraciones de {boldStart}configuración{boldEnd} para obtener más información.",
+            "Explanation2": "Nota: Las migraciones mueven los datos almacenados originalmente por las Hojas Tidy 5e a los campos de datos oficialmente soportados por el sistema. Si no le faltan datos en sus hojas después de actualizar Hojas Tidy 5e, entonces no es necesaria ninguna migración.",
+            "Button.DoNotShowAgain": "No volver a mostrar",
+            "DoNotShowAgain.ConfirmMessage": "Confirmado. Este mensaje no volverá a aparecer hasta que haya otra migración disponible."
+        },
+        "OptionsHeader": "Opciones de migración",
+        "OptionOverwrite.Text": "Sobrescribir",
+        "OptionOverwrite.Tooltip": "Habilitar para sobrescribir los datos de hoja existentes. Si no está marcada, sólo los campos vacíos del sistema recibirán los datos Tidy migrados.",
+        "OptionDeleteFlags.Text": "Borrar los indicadores Tidy afectados",
+        "OptionDeleteFlags.Tooltip": "Al migrar de los datos de banderas personalizados de Tidy a los datos oficiales del sistema, las banderas permanecen en su lugar por defecto. Marque esta opción para eliminar esas banderas.",
+        "ButtonMigration.Text": "Migrar",
+        "CharacterBiography": {
+            "sectionTitle": "Biografía del personaje",
+            "selectionDialogTitle": "Migración: Biografía de los personajes"
+        },
+        "Selection": {
+            "TotalSelectedLabel": "Total seleccionado: {total}",
+            "ToMigrate": "Para migrar",
+            "SelectAllNoneTooltip": "Seleccionar todos o ninguno"
+        }
     },
     "TIDY5E.Settings.ColorPickerScrollbarTrack": {
         "name": "Trayectoria de la barra de desplazamiento"
@@ -689,5 +712,7 @@
     "TIDY5E.Commands.ShowLegendaryToolbar": "Mostrar barra de herramientas legendaria",
     "TIDY5E.Commands.HideLegendaryToolbar": "Ocultar barra de herramientas legendaria",
     "TIDY5E.SortMode.ActionListDefault": "Forma de ordenar por defecto la lista de acciones",
-    "TIDY5E.GMOnly.Message": "Solo GM: {message}"
+    "TIDY5E.GMOnly.Message": "Solo GM: {message}",
+    "TIDY5E.ReminderToBackUp": "Recuerda siempre hacer copias de seguridad de tu mundo.",
+    "TIDY5E.ButtonConfirm.Text": "Confirmar"
 }
