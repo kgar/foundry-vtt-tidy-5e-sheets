@@ -46,7 +46,10 @@
 <style lang="scss">
   .item-summary {
     flex: 0 0 100%;
-    padding: 0 0.5rem 0.5rem 0.5rem;
+    padding-top: var(--item-summary-padding-top, 0);
+    padding-right: var(--item-summary-padding-right, 0.5rem);
+    padding-bottom: var(--item-summary-padding-bottom, 0.5rem);
+    padding-left: var(--item-summary-padding-left, 0.5rem);
     border-top: 0.0625rem solid var(--t5e-faint-color);
     font-size: 0.75rem;
 

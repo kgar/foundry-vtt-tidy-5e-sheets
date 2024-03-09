@@ -4,6 +4,7 @@
   import TidyTableHeaderRow from 'src/components/table/TidyTableHeaderRow.svelte';
   import TidyTableHeaderCell from 'src/components/table/TidyTableHeaderCell.svelte';
   import TidyTableRow from 'src/components/table/TidyTableRow.svelte';
+  import ItemTableRowV2 from 'src/components/item-list/v2/ItemTableRowV2.svelte';
   import TidyTableCell from 'src/components/table/TidyTableCell.svelte';
   import ItemUseButton from 'src/components/item-list/ItemUseButton.svelte';
   import { CONSTANTS } from 'src/constants';
@@ -92,14 +93,18 @@
         {#each section.items as item (item.id)}
           {@const ctx = $context.itemContext[item.id]}
           {@const weight = ctx?.totalWeight ?? item.system.weight}
-          <TidyTableRow hidden={!visibleItemIdSubset.has(item.id)}>
+          <ItemTableRowV2
+            {item}
+            hidden={!visibleItemIdSubset.has(item.id)}
+            let:toggleSummary
+          >
             <TidyTableCell class="flex-row extra-small-gap">
               <ItemUseButton
                 disabled={!FoundryAdapter.canUseItem(item)}
                 {item}
               />
               <ItemName
-                on:toggle={() => alert('Toggle summary!')}
+                on:toggle={() => toggleSummary()}
                 cssClass="extra-small-gap"
                 {item}
               >
@@ -143,8 +148,7 @@
                 {/each}
               </TidyTableCell>
             {/if}
-            <svelte:fragment slot="after-row"></svelte:fragment>
-          </TidyTableRow>
+          </ItemTableRowV2>
         {/each}
       </svelte:fragment>
     </TidyTable>
