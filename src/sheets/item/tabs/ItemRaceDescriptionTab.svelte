@@ -6,6 +6,7 @@
   import type { Readable } from 'svelte/store';
   import ItemDescription from './ItemDescriptionTab.svelte';
   import { settingStore } from 'src/settings/settings';
+  import { CONSTANTS } from 'src/constants';
 
   let context = getContext<Readable<ItemSheetContext>>('context');
 
@@ -17,7 +18,10 @@
 </script>
 
 <div class="item-description flexrow align-items-stretch small-gap">
-  <div class="item-properties">
+  <div
+    class="item-properties"
+    data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_SHEET_PROPERTIES}
+  >
     <h4 class="properties-header flex-row justify-content-space-between">
       {localize('DND5E.Type')}
       {#if $context.editable}

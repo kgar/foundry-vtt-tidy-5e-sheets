@@ -6,6 +6,7 @@
   import { ItemSummaryRuntime } from 'src/runtime/ItemSummaryRuntime';
   import HorizontalLineSeparator from '../layout/HorizontalLineSeparator.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import { CONSTANTS } from 'src/constants';
 
   export let chatData: ItemChatData;
   export let item: Item5e;
@@ -21,6 +22,7 @@
     easing: quadInOut,
   }}
   class="item-summary"
+  data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_SUMMARY}
 >
   {#if concealDetails}
     {@html chatData.unidentified.description}
@@ -30,14 +32,18 @@
 
   {#if itemSummaryCommands.length}
     <HorizontalLineSeparator />
-    <div class="item-properties">
+    <div class="inline-wrapped-elements">
       <ItemSummaryCommandButtonList {item} />
     </div>
   {/if}
 
   {#if chatData.properties}
     <HorizontalLineSeparator />
-    <div class="item-properties" inert={concealDetails}>
+    <div
+      class="inline-wrapped-elements"
+      inert={concealDetails}
+      data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_PROPERTY_LIST}
+    >
       {#each chatData.properties as prop}<span class="tag">{prop}</span>{/each}
     </div>
   {/if}
@@ -63,12 +69,12 @@
     }
   }
 
-  .item-properties {
+  .inline-wrapped-elements {
     margin-top: 0.25rem;
     margin-bottom: 0.25rem;
   }
 
-  .item-properties:last-of-type {
+  .inline-wrapped-elements:last-of-type {
     margin-bottom: 0;
   }
 </style>

@@ -49,7 +49,10 @@
   class="item-description flexrow align-items-stretch small-gap"
   class:hidden={editing}
 >
-  <div class="item-properties">
+  <div
+    class="item-properties"
+    data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_SHEET_PROPERTIES}
+  >
     {#if $context.isPhysical}
       {#if $context.item.type !== CONSTANTS.ITEM_TYPE_CONTAINER}
         <div class="form-group">

@@ -164,11 +164,11 @@
     color: var(--t5e-attuned-color);
   }
 
-  .item-properties {
+  .inline-wrapped-elements {
+    display: flex;
     justify-content: flex-start;
     flex-wrap: wrap;
     border: none;
-    display: flex;
     gap: 0.125rem;
   }
 

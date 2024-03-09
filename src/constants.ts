@@ -185,6 +185,15 @@ export const CONSTANTS = {
     /** An interactable control which the user can execute to use an item (e.g., consumable, feature, loot, spell, weapon, etc.). */
     ITEM_USE_COMMAND: 'item-use-command',
 
+    /** A series of properties related to an item, to be found on item summaries, item cards, and other locations where read-only item information is given. */
+    ITEM_PROPERTY_LIST: 'item-property-list',
+
+    /** A series of properties related to an item, viewed from that item's sheet. These include read-only properties, currency value, and other situational input. */
+    ITEM_SHEET_PROPERTIES: 'item-sheet-properties',
+
+    /** A summary of an item, usually taken from the item's chat data. */
+    ITEM_SUMMARY: 'item-summary',
+
     /** A containing element for a series of item lists or grids. */
     ITEMS_CONTAINER: 'items-container',
 

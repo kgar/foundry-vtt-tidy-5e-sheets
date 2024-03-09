@@ -171,7 +171,7 @@
     <slot {toggleSummary} />
 
     <svelte:fragment slot="after-row">
-      <ExpandableContainer expanded={showSummary && !!chatData}>
+      <ExpandableContainer expanded={showSummary}>
         <ItemSummary
           chatData={chatData ?? emptyChatData}
           {useTransition}
@@ -181,10 +181,3 @@
     </svelte:fragment>
   </TidyTableRow>
 </div>
-
-<style lang="scss">
-  .item-table-row {
-    --item-summary-padding-top: 0;
-    --item-summary-padding-bottom: 0;
-  }
-</style>
