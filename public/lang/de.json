@@ -507,7 +507,7 @@
         "OverriddenSetOverrideFalse": "Aus Aktionsliste entfernen (Umschalt+Klick um Überschreibung zu löschen)"
     },
     "TIDY5E.HitDC": "Treffer / SG",
-    "TIDY5E.Inventory.Weight.Tooltip": "Gewicht: {gewicht} {maßeinheitGewicht}",
+    "TIDY5E.Inventory.Weight.Tooltip": "Gewicht: {weight} {weightUnit}",
     "TIDY5E.EnvironmentTooltip": "Habitat: {habitat}",
     "TIDY5E.AttackMod": "Angriffsmodifikator",
     "TIDY5E.MeleeSpellAttackMod": "Nahkampfzauberangriffsmodifikator",
@@ -516,9 +516,9 @@
         "MenuOptionText": "Reiter Auswahl",
         "AvailableHeader": "Verfügbare Reiter",
         "SelectedHeader": "Ausgewählte Reiter",
-        "UnsupportedDocumentErrorMessage": "Der Dokumenttyp {dokumentTyp} ist derzeit nicht für die Reiterauswahl eingerichtet.",
+        "UnsupportedDocumentErrorMessage": "Der Dokumenttyp {documentType} ist derzeit nicht für die Reiterauswahl eingerichtet.",
         "Explanation": "Alle Reiter, für die der Benutzer oder der Bogen so konfiguriert sind, dass sie nicht angezeigt werden (z. B. durch Deaktivieren des Journals in den Konfigurationseinstellungen), werden selbst dann nicht auf dem Bogen angezeigt, wenn sie ausgewählt sind.",
-        "Title": "Reiter Auswahl: {dokumentName}",
+        "Title": "Reiter Auswahl: {documentName}",
         "AtLeastOneRequiredErrorMessage": "Mindestens ein Reiter erforderlich."
     },
     "TIDY5E.Listbox": {
@@ -549,11 +549,11 @@
     },
     "TIDY5E.ActorSpellAttackTitle": "{actorName} - Zauberangriff",
     "TIDY5E.ActorSpellAttackFlavorText": "Zauberangriff",
-    "TIDY5E.ActorMeleeSpellAttackTitle": "{acteurName} - Nahkampfzauberangriff",
-    "TIDY5E.ActorRangedSpellAttackTitle": "{akteurName} - Fernkampfzauberangriff",
+    "TIDY5E.ActorMeleeSpellAttackTitle": "{actorName} - Nahkampfzauberangriff",
+    "TIDY5E.ActorRangedSpellAttackTitle": "{actorName} - Fernkampfzauberangriff",
     "TIDY5E.ActorRangedSpellAttackFlavorText": "Fernkampfzauberangriff",
     "TIDY5E.MaxPreparedSpellsConfig": {
-        "Title": "Konfiguration maximal vorbereiteter Zaubersprüche: {akteurName}",
+        "Title": "Konfiguration maximal vorbereiteter Zaubersprüche: {actorName}",
         "ExamplesHeader": "Beispielformeln",
         "ButtonTooltip": "Maximal vorbereitete Zaubersprüche konfigurieren",
         "MoreFormulas": "Mehr Formeln"
@@ -598,7 +598,7 @@
         "name": "Standard-Tabulator für Bogenattribute verwenden",
         "hint": "Der 5e-Standardbogen erlaubt das Wechseln von einer Attributeingabe zur nächsten, indem es die Steuerelemente um sie herum aus der Tabulatorreihenfolge ausblendet. Durch Aktivierung wird dieses Verhalten nachgebildet. Diese Einstellung wird ignoriert, wenn \"Unterstützung für barrierefreie Tastaturen verwenden\" ausgeschaltet ist."
     },
-    "TIDY5E.Inventory.Weight.Text": "{gewicht} {maßeinheitGewicht}",
+    "TIDY5E.Inventory.Weight.Text": "{weight} {weightUnit}",
     "TIDY5E.ActorMeleeSpellAttackFlavorText": "Nahkampfzauberangriff",
     "TIDY5E.Settings.DefaultSheetTabs": {
         "name": "Standard-Bogenregisterkarten",
