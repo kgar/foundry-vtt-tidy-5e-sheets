@@ -1,11 +1,11 @@
 <script lang="ts">
   import ItemName from 'src/components/item-list/ItemName.svelte';
   import ItemTable from 'src/components/item-list/v1/ItemTable.svelte';
-  import TidyTableV2 from 'src/components/item-list/v2/TidyTableV2.svelte';
-  import TidyTableHeaderRowV2 from 'src/components/item-list/v2/TidyTableHeaderRowV2.svelte';
-  import TidyTableHeaderCellV2 from 'src/components/item-list/v2/TidyTableHeaderCellV2.svelte';
-  import TidyTableRowV2 from 'src/components/item-list/v2/TidyTableRowV2.svelte';
-  import TidyTableCellV2 from 'src/components/item-list/v2/TidyTableCellV2.svelte';
+  import TidyTableV2 from 'src/components/table/TidyTable.svelte';
+  import TidyTableHeaderRowV2 from 'src/components/table/TidyTableHeaderRow.svelte';
+  import TidyTableHeaderCellV2 from 'src/components/table/TidyTableHeaderCell.svelte';
+  import TidyTableRowV2 from 'src/components/table/TidyTableRow.svelte';
+  import TidyTableCellV2 from 'src/components/table/TidyTableCell.svelte';
   import ItemTableColumn from 'src/components/item-list/v1/ItemTableColumn.svelte';
   import ItemTableHeaderRow from 'src/components/item-list/v1/ItemTableHeaderRow.svelte';
   import ItemTableRow from 'src/components/item-list/v1/ItemTableRow.svelte';

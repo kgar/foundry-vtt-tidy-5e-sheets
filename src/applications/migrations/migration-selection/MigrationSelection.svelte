@@ -1,10 +1,10 @@
 <script lang="ts">
   import type { SelectableMigrationSelectionParams } from './migration-selection.types';
-  import TidyTableV2 from 'src/components/item-list/v2/TidyTableV2.svelte';
-  import TidyTableCellV2 from 'src/components/item-list/v2/TidyTableCellV2.svelte';
-  import TidyTableHeaderCellV2 from 'src/components/item-list/v2/TidyTableHeaderCellV2.svelte';
-  import TidyTableHeaderRowV2 from 'src/components/item-list/v2/TidyTableHeaderRowV2.svelte';
-  import TidyTableRowV2 from 'src/components/item-list/v2/TidyTableRowV2.svelte';
+  import TidyTableV2 from 'src/components/table/TidyTable.svelte';
+  import TidyTableCellV2 from 'src/components/table/TidyTableCell.svelte';
+  import TidyTableHeaderCellV2 from 'src/components/table/TidyTableHeaderCell.svelte';
+  import TidyTableHeaderRowV2 from 'src/components/table/TidyTableHeaderRow.svelte';
+  import TidyTableRowV2 from 'src/components/table/TidyTableRow.svelte';
   import Search from 'src/components/utility-bar/Search.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
