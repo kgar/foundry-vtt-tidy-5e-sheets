@@ -6,13 +6,14 @@
 
   export let item: any;
   export let onDelete: OnDelete = () => true;
+  export let deleteFn: Function = () =>
+    FoundryAdapter.onActorItemDelete(item.actor, item);
 
   const localize = FoundryAdapter.localize;
 </script>
 
 <ItemControl
   iconCssClass="fas fa-trash fa-fw"
-  on:click={() =>
-    onDelete() && FoundryAdapter.onActorItemDelete(item.actor, item)}
+  on:click={() => onDelete() && deleteFn()}
   title={localize('DND5E.ItemDelete')}
 />
