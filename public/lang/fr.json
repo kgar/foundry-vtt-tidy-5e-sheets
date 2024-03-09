@@ -438,7 +438,7 @@
         "hint": "Cette opération réinitialise tous les paramètres du système de jeu actif à leur valeur par défaut. Cela n'affecte que les paramètres du \"monde\", tels que les options du MJ.",
         "dialogs": {
             "title": "Réinitialisation des paramètres du module",
-            "content": "Êtes-vous sûr de vouloir réinitialiser tous les paramètres du module aux valeurs par défaut du système actuel? <strong>Il n'est pas possible de revenir en arrière.</strong>",
+            "content": "Êtes-vous sûr de vouloir réinitialiser tous les paramètres du module aux valeurs par défaut du système actuel ? <strong>Il n'est pas possible de revenir en arrière.</strong>",
             "confirm": "Réinitialisation des paramètres du module",
             "cancel": "Annuler"
         }
@@ -628,15 +628,38 @@
             "alphaHeader": "Feuilles Alpha Tidy 5e",
             "originalExplanation": "La migration des paramètres du MJ et des indicateurs de données de la feuille Tidy à partir de la feuille Tidy5e originale. La plupart des différences dans les données proviennent des paramètres du MJ. Si vous migrez vos paramètres et que vous constatez qu'un paramètre ne vous convient pas, il vous suffit de le modifier à partir du menu de configuration.",
             "mainExplanation2": "{boldStart}Note{boldEnd} : Les paramètres du client ne font pas partie de cette migration. La façon dont les paramètres des clients fonctionnent dans Tidy n'a pas changé, il est donc recommandé de jeter un nouveau coup d'œil aux paramètres des clients.",
-            "alphaExplanation1": "La migration des paramètres MJ et des indicateurs de données des feuilles Tidy depuis les feuilles Alpha Tidy 5e. La plupart des différences de données proviennent des drapeaux de données des feuilles. La migration des indicateurs Alpha cible les acteurs de premier niveau, les objets des acteurs de premier niveau et les objets de premier niveau. Cela apportera des données biographiques, des favoris et d'autres indicateurs de données Alpha spécifiques à la feuille."
+            "alphaExplanation1": "La migration des paramètres MJ et des indicateurs de données des feuilles Tidy depuis les feuilles Alpha Tidy 5e. La plupart des différences de données proviennent des drapeaux de données des feuilles. La migration des indicateurs Alpha cible les acteurs de premier niveau, les objets des acteurs de premier niveau et les objets de premier niveau. Cela apportera des données biographiques, des favoris et d'autres indicateurs de données Alpha spécifiques à la feuille.",
+            "sectionTitle": "Accueil des migrations de Tidy V1"
         },
         "migrationErrorMessage": "Une erreur s'est produite. Plus de détails dans la console.",
         "buttonLabel": "Migrer des données de Tidy5e",
         "migrateConfirmButtonNo": "Annuler",
         "migrateDocumentFlagsButtonLabel": "Migrer les indicateurs des documents",
         "migrationCompleteMessage": "Migration terminée.",
-        "name": "Panneau des Migrations",
-        "hint": "Si vous avez utilisé le module original Tidy5e Sheet ou les feuilles Alpha, vous pouvez éventuellement utiliser ce menu Migrations pour migrer vos paramètres MJ et les données de vos feuilles Tidy."
+        "name": "Migrations",
+        "hint": "Si vous avez utilisé le module original Tidy5e Sheet ou les feuilles Alpha, vous pouvez éventuellement utiliser ce menu Migrations pour migrer vos paramètres MJ et les données de vos feuilles Tidy.",
+        "Notification": {
+            "Title": "Feuilles Tidy 5e : Migrations disponibles",
+            "Explanation": "De nouvelles migrations de données Tidy 5e Sheets sont disponibles. Consultez le menu {boldStart}paramètres de configuration des Migrations{boldEnd} pour en savoir plus.",
+            "Button.DoNotShowAgain": "Ne pas montrer à nouveau",
+            "DoNotShowAgain.ConfirmMessage": "Confirmé. Ce message ne s'affichera plus jusqu'à ce qu'une autre migration soit disponible.",
+            "Explanation2": "Note : Les migrations déplacent les données qui étaient à l'origine stockées par Tidy 5e Sheets dans les champs de données officiellement pris en charge par le système. S'il ne manque pas de données sur vos feuilles après la mise à jour de Tidy 5e Sheets, aucune migration n'est nécessaire."
+        },
+        "OptionsHeader": "Options de migrations",
+        "OptionOverwrite.Text": "Écraser",
+        "OptionOverwrite.Tooltip": "Permet d'écraser les données de la feuille existante. Si cette option n'est pas cochée, seuls les champs vides du système recevront les données Tidy migrées.",
+        "OptionDeleteFlags.Text": "Supprimer les indicateurs Tidy affectés",
+        "ButtonMigration.Text": "Migrer",
+        "CharacterBiography": {
+            "sectionTitle": "Biographie du personnage",
+            "selectionDialogTitle": "Migration : Biographie du personnage"
+        },
+        "Selection": {
+            "TotalSelectedLabel": "Total sélectionné : {total}",
+            "ToMigrate": "Pour migrer",
+            "SelectAllNoneTooltip": "Sélectionner tous ou aucun"
+        },
+        "OptionDeleteFlags.Tooltip": "Lors de la migration des données des indicateurs Tidy personnalisées vers les données officielles du système, les indicateurs restent en place par défaut. Cochez cette option pour supprimer ces indicateurs."
     },
     "TIDY5E.Settings.ActionListIncludeMinuteLongSpellsAsActions": {
         "name": "Inclure des sorts d'une durée d'une minute dans les actions",
@@ -715,5 +738,6 @@
         "hint": "Certaines migrations peuvent être effectuées par feuille individuelle. Ce paramètre détermine qui peut voir le menu Migrations de feuilles."
     },
     "TIDY5E.GMOnly.Message": "MJ seulement : {message}",
-    "TIDY5E.ReminderToBackUp": "N'oubliez jamais de sauvegarder votre monde."
+    "TIDY5E.ReminderToBackUp": "N'oubliez jamais de sauvegarder votre monde.",
+    "TIDY5E.ButtonConfirm.Text": "Confirmer"
 }

@@ -3,7 +3,7 @@
     "TIDY5E.Tidy5eNPC": "Tidy 5e NPC Sheet",
     "TIDY5E.Tidy5eItemSheet": "Tidy 5e Item Sheet",
     "TIDY5E.Tidy5eVehicle": "Tidy 5e Vechicle Sheet",
-    "TIDY5E.PlayerName": "Player Name",
+    "TIDY5E.PlayerName": "Spieler Name",
     "TIDY5E.EditActorImage": "Linksklick: Bild bearbeiten",
     "TIDY5E.ShowActorImage": "Rechtsklick: Charakter-Bilder zeigen",
     "TIDY5E.ShowPortraitArt": "zeige Portrait",
@@ -49,11 +49,11 @@
     "TIDY5E.JournalMisc": "Verschiedenes",
     "TIDY5E.JournalEntries": "Tagebucheinträge",
     "TIDY5E.TogglePersonalityInfo": "Persönlichkeits-Infos umschalten",
-    "TIDY5E.SheetEdit.Enable.Hint": "Editieren erlauben - {beschreibung}",
-    "TIDY5E.SheetEdit.Disable.Hint": "Bearbeiten deaktivieren - {beschreibung}",
+    "TIDY5E.SheetEdit.Enable.Hint": "Editieren erlauben - {description}",
+    "TIDY5E.SheetEdit.Disable.Hint": "Bearbeiten deaktivieren - {description}",
     "TIDY5E.SheetEdit.Description": "Schaltet Sichtbarkeit von Hinzufügen/Löschen Buttons und leeren Sektionen um.",
-    "TIDY5E.SheetLock.Unlock.Hint": "Entsperren  - {beschreibung}",
-    "TIDY5E.SheetLock.Lock.Hint": null,
+    "TIDY5E.SheetLock.Unlock.Hint": "Entsperren - {description}",
+    "TIDY5E.SheetLock.Lock.Hint": "Sperren - {description}",
     "TIDY5E.SheetLock.Description": "Sperre für sensible Felder, die sich nicht oft ändern sollten, umschalten",
     "TIDY5E.ContextMenuActionEquip": "Gegenstand anlegen",
     "TIDY5E.ContextMenuActionUnequip": "Gegenstand Ablegen",
@@ -241,7 +241,7 @@
         "hint": "Zeigt ein Zauberbuchreiter für NSCe. Deaktivieren, um das Zauberbuch in den Reiter \"Attribute\" zu verschieben."
     },
     "TIDY5E.Settings.ShowActiveEffectsMarker": {
-        "name": "Zeige Marker für Elemente mit Aktiven Effekten.",
+        "name": "Markierung für aktive Effekte anzeigen",
         "hint": "Zeigt eine Markierung für Elemente der Listenansicht an, die Aktive Effekte haben."
     },
     "TIDY5E.Settings.UseContextMenu": {
@@ -295,7 +295,7 @@
     },
     "TIDY5E.Settings.ShowNPCActorLinkMarker": {
         "name": "Verknüpfte/unverknüpfte NSCe markieren",
-        "hint": "Fügt eine farbige Umrandung und ein Symbol zu verknüpfte/unverknüpfte NSC-Bögen hinzu.",
+        "hint": "Fügt eine farbige Umrandung und ein Symbol zu verknüpften/unverknüpften NSC-Bögen hinzu.",
         "default": "Kein Verknüpfungsmarker (standard)",
         "unlinked": "Unverknüpfte Figuren hervorheben",
         "linked": "Verknüpfte Figuren hervorheben",
@@ -338,7 +338,7 @@
         "hint": null
     },
     "TIDY5E.Settings.AllowCantripsToBePrepared": {
-        "name": null,
+        "name": "Vorbereiten von Zaubertricks erlauben",
         "hint": null
     },
     "TIDY5E.Settings.LockMoneyChanges": {
@@ -346,11 +346,11 @@
         "hint": null
     },
     "TIDY5E.Settings.LockExpChanges": {
-        "name": null,
+        "name": "Erfahrungspunkte sperren",
         "hint": null
     },
     "TIDY5E.Settings.LockHpMaxChanges": {
-        "name": null,
+        "name": "Änderung maximaler TP sperren",
         "hint": null
     },
     "TIDY5E.Settings.LockLevelSelector": {
@@ -358,11 +358,11 @@
         "hint": null
     },
     "TIDY5E.Settings.LockConfigureSheet": {
-        "name": null,
+        "name": "Charakterbogen Auswahl sperren",
         "hint": null
     },
     "TIDY5E.Settings.LockItemQuantity": {
-        "name": null,
+        "name": "Gegenstandsmengen sperren",
         "hint": null
     },
     "TIDY5E.Settings.ColorPickerEnabled": {
@@ -373,10 +373,10 @@
         "name": null
     },
     "TIDY5E.Settings.ColorPickerEquipped": {
-        "name": null
+        "name": "Ausgerüstet"
     },
     "TIDY5E.Settings.ColorPickerHpBar": {
-        "name": null
+        "name": "TP Balken"
     },
     "TIDY5E.Settings.ColorPickerEquippedOutline": {
         "name": null
@@ -385,7 +385,7 @@
         "name": null
     },
     "TIDY5E.Settings.ColorPickerPrepared": {
-        "name": null
+        "name": "Vorbereitet"
     },
     "TIDY5E.Settings.ColorPickerPreparedOutline": {
         "name": null
@@ -394,7 +394,7 @@
         "name": null
     },
     "TIDY5E.Settings.ColorPickerPact": {
-        "name": null
+        "name": "Pakt"
     },
     "TIDY5E.Settings.ColorPickerPactOutline": {
         "name": null
@@ -421,7 +421,7 @@
         "name": null
     },
     "TIDY5E.Settings.ColorPickerAlwaysPrepared": {
-        "name": null
+        "name": "Immer vorbereitet"
     },
     "TIDY5E.Settings.ColorPickerAlwaysPreparedOutline": {
         "name": null
@@ -430,26 +430,26 @@
         "name": null
     },
     "TIDY5E.Settings.AllowHpMaxOverride": {
-        "name": null,
-        "hint": null
+        "name": "Überschreiben der maximalen TP erlauben",
+        "hint": "Erlaubt es dem SL maximale TP auf dem Charakterbogen zu überschreiben."
     },
     "TIDY5E.Settings.Reset": {
-        "name": null,
+        "name": "Einstellungen zurücksetzen",
         "hint": null,
         "dialogs": {
-            "title": null,
+            "title": "Modul Einstellungen zurücksetzen",
             "content": null,
-            "confirm": null,
-            "cancel": null
+            "confirm": "Modul Einstellungen zurücksetzen",
+            "cancel": "Abbrechen"
         }
     },
     "TIDY5E.Settings.Debug": {
-        "name": null,
-        "hint": null
+        "name": "Debugging aktivieren",
+        "hint": "Zeigt Debugging Nachrichten in der Konsole an."
     },
     "TIDY5E.Settings.SortFavoriteItemsAlphabetically": {
-        "name": null,
-        "hint": null
+        "name": "Favoriten alphabetisch sortieren",
+        "hint": "Sortiert Favoriten alphabetisch."
     },
     "TIDY5E.Settings.PermanentlyUnlockCharacterSheetForGM": {
         "name": null,
@@ -475,14 +475,14 @@
         "Sheet": {
             "title": null,
             "header": null,
-            "useDefaultLightColors": null,
-            "useDefaultDarkColors": null,
-            "export": null,
-            "import": null,
+            "useDefaultLightColors": "Standard Hell",
+            "useDefaultDarkColors": "Standard Dunkel",
+            "export": "Exportieren",
+            "import": "Importieren",
             "importDropHint": null,
             "importError": null,
             "importSuccess": null,
-            "menuLabel": null,
+            "menuLabel": "Menü",
             "explanation": null
         }
     },
@@ -492,9 +492,9 @@
     "TIDY5E.VehicleInMotion": null,
     "TIDY5E.VehicleMotionless": null,
     "TIDY5E.TotalCrewCount": null,
-    "TIDY5E.ActionsPerTurn": null,
+    "TIDY5E.ActionsPerTurn": "Aktionen pro Zug",
     "TIDY5E.SheetMenu": {
-        "label": null,
+        "label": "Menü",
         "themeLabel": null
     },
     "TIDY5E.ActiveEffectsMarkerTitle": null,
@@ -547,7 +547,7 @@
         "name": "Konfiguration Fahrzeugverschleiß",
         "hint": "Legt fest, wie der Fahrzeugverschleiß konfiguriert und auf dem Fahrzeugbogen dargestellt wird."
     },
-    "TIDY5E.ActorSpellAttackTitle": "{akteurName} - Zauberangriff",
+    "TIDY5E.ActorSpellAttackTitle": "{actorName} - Zauberangriff",
     "TIDY5E.ActorSpellAttackFlavorText": "Zauberangriff",
     "TIDY5E.ActorMeleeSpellAttackTitle": "{acteurName} - Nahkampfzauberangriff",
     "TIDY5E.ActorRangedSpellAttackTitle": "{akteurName} - Fernkampfzauberangriff",
@@ -606,5 +606,50 @@
         "SelectedHeader": "Ausgewählte Registerkarten",
         "hint": "Bestimmt, welche Registerkarten standardmäßig angezeigt werden und in welcher Reihenfolge. Gilt, wenn für einen Akteur keine Registerkartenauswahl getroffen wurde.",
         "AtLeastOneTabRequiredErrorMessage": "Standard-Registerkarten: Für jeden Akteurstyp ist mindestens eine Registerkarte erforderlich."
-    }
+    },
+    "TIDY5E.ItemFilters.MenuTooltip.Filters": "Filter",
+    "TIDY5E.ItemFilters.Category.Miscellaneous": "Sonstiges",
+    "TIDY5E.Settings.ActionListScaleCantripDamage": {
+        "name": "Zaubertricks mit skalierendem Schaden anzeigen (experimentell)"
+    },
+    "TIDY5E.Settings.Migrations": {
+        "name": "Migrationen",
+        "buttonLabel": "Tidy Daten migrieren",
+        "hint": "Falls du ein Nutzer des originalen Tidy 5e Sheet Moduls oder der Alpha Sheets warst, kannst du dieses Migrations Menü nutzen, um deine SL Einstellungen sowie deine Tidy Sheet Daten zu migrieren.",
+        "migrateConfirmMessage1": "Bist du dir sicher das du diese Migration ausführen möchtest?",
+        "migrationCompleteMessage": "Migration abgeschlossen.",
+        "dialogTitle": "Tidy Daten migrieren",
+        "migrationErrorMessage": "Ein Fehler ist aufgetreten. Weitere Details findest du in der Dev-Konsole.",
+        "migrateGmSettingsButtonLabel": "SL Einstellungen migrieren",
+        "migrateConfirmTitle": "Migration bestätigen",
+        "migrateConfirmButtonYes": "Migrieren",
+        "migrateConfirmButtonNo": "Abbrechen",
+        "migrationBeginningMessage": "Datenmigration. Bitte aktualisiere nicht die Seite bis die Migration abgeschlossen ist.",
+        "v1": {
+            "mainExplanation1": "Das Migrieren von Daten zu den neuen Tidy 5e Sheets ist zur Nutzung nicht erforderlich. Im schlimmsten Falle, solltest du ein Nutzer des originalen Tidy5e Sheets sein, und diesen Schritt überspringen, wirst du deine Einstellungen erneut abschließen müssen.",
+            "alphaHeader": "Alpha Tidy 5e Sheets"
+        },
+        "Notification": {
+            "Button.DoNotShowAgain": "Nicht erneut anzeigen"
+        },
+        "OptionOverwrite.Text": "Überschreiben"
+    },
+    "TIDY5E.Settings.About": {
+        "FinancialSupportHeader": "Tidy 5e Sheets unterstützen",
+        "hint": "Informationen über das Tidy 5e Sheet Modul.",
+        "GithubParagraph": "Hast du eine Idee für eine Funktion? Stimmt etwas nicht? Hier kannst du ein {urlStart}Github Issue{urlEnd} einreichen.",
+        "DiscordParagraph": "{urlStart}Tidy 5e Sheets Discord Server{urlEnd}: Diskutiere neue Funktionen, lass dir von anderen helfen, und beobachte wie sich dieses Modul entwickelt.",
+        "LocalizationParagraph": "{urlStart}Weblate{urlEnd}: Übersetzt du Internetinhalte? Tidy 5e Sheets könnte deine Hilfe gebrauchen! Auf der Weblate Website kannst du unseren Übersetzungsstatus in verschiedene Sprachen sehen. Dieses Modul akzeptiert Übersetzungen in neue Sprachen sowie Modifikationen zu bereits existierenden Übersetzungen.",
+        "FinancialSupportParagraph": "Falls du Tidy 5e Sheets magst und das Projekt finanziell unterstützen möchtest, findest du hier ein paar Möglichkeiten dafür:",
+        "KoFiLink": "{urlStart}Ko-Fi{urlEnd}",
+        "PatreonLink": "{urlStart}Patreon{urlEnd}"
+    },
+    "TIDY5E.ItemFilters.Filter.Other": "Anderes",
+    "TIDY5E.ButtonConfirm.Text": "Bestätigen",
+    "TIDY5E.Settings.ActionList.Header": "Aktionsliste",
+    "TIDY5E.Settings.ActionListLimitActionsToCantrips": {
+        "name": "Aktionen auf Zaubertricks begrenzen"
+    },
+    "TIDY5E.Commands.ExpandAll": "Alle ausklappen",
+    "TIDY5E.Commands.CollapseAll": "Alle einklappen"
 }
