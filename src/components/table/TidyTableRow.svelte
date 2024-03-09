@@ -18,4 +18,7 @@
   >
     <slot />
   </div>
+
+  <!-- Consider an alternative: don't require content to be nested within this component in order to be associated visually with the target row. -->
+  <slot name="after-row" />
 </div>
