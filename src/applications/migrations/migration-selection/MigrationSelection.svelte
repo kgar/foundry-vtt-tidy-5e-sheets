@@ -1,10 +1,10 @@
 <script lang="ts">
   import type { SelectableMigrationSelectionParams } from './migration-selection.types';
-  import TidyTableV2 from 'src/components/table/TidyTable.svelte';
-  import TidyTableCellV2 from 'src/components/table/TidyTableCell.svelte';
-  import TidyTableHeaderCellV2 from 'src/components/table/TidyTableHeaderCell.svelte';
-  import TidyTableHeaderRowV2 from 'src/components/table/TidyTableHeaderRow.svelte';
-  import TidyTableRowV2 from 'src/components/table/TidyTableRow.svelte';
+  import TidyTable from 'src/components/table/TidyTable.svelte';
+  import TidyTableCell from 'src/components/table/TidyTableCell.svelte';
+  import TidyTableHeaderCell from 'src/components/table/TidyTableHeaderCell.svelte';
+  import TidyTableHeaderRow from 'src/components/table/TidyTableHeaderRow.svelte';
+  import TidyTableRow from 'src/components/table/TidyTableRow.svelte';
   import Search from 'src/components/utility-bar/Search.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
@@ -54,14 +54,14 @@
     <Search bind:value={searchCriteria} />
   </div>
   <div role="presentation" class="scroll-container">
-    <TidyTableV2
+    <TidyTable
       location="bulk-selection"
       toggleable={false}
       --grid-template-columns={gridTemplateColumns}
     >
       <svelte:fragment slot="header">
-        <TidyTableHeaderRowV2>
-          <TidyTableHeaderCellV2>
+        <TidyTableHeaderRow>
+          <TidyTableHeaderCell>
             <input
               type="checkbox"
               bind:checked={allSelected}
@@ -70,28 +70,28 @@
                 'TIDY5E.Settings.Migrations.Selection.SelectAllNoneTooltip',
               )}
             />
-          </TidyTableHeaderCellV2>
+          </TidyTableHeaderCell>
           {#each params.columns as column}
-            <TidyTableHeaderCellV2 primary={column?.cellWidth === 'primary'}>
+            <TidyTableHeaderCell primary={column?.cellWidth === 'primary'}>
               {column.name}
-            </TidyTableHeaderCellV2>
+            </TidyTableHeaderCell>
           {/each}
-        </TidyTableHeaderRowV2>
+        </TidyTableHeaderRow>
       </svelte:fragment>
       <svelte:fragment slot="body">
         {#each params.selectables as selectable}
-          <TidyTableRowV2
+          <TidyTableRow
             hidden={!visibleSelectablesIdSubset.has(selectable.document.id)}
           >
-            <TidyTableCellV2>
+            <TidyTableCell>
               <input type="checkbox" bind:checked={selectable.selected} />
-            </TidyTableCellV2>
+            </TidyTableCell>
             {#each params.columns as column}
               {@const text = FoundryAdapter.getProperty(
                 selectable.document,
                 column.field.propPath,
               )}
-              <TidyTableCellV2
+              <TidyTableCell
                 primary={column?.cellWidth === 'primary'}
                 class="flex-row small-gap"
               >
@@ -106,12 +106,12 @@
                 {:else}
                   <div>{text}</div>
                 {/if}
-              </TidyTableCellV2>
+              </TidyTableCell>
             {/each}
-          </TidyTableRowV2>
+          </TidyTableRow>
         {/each}
       </svelte:fragment>
-    </TidyTableV2>
+    </TidyTable>
   </div>
   <footer>
     <p>
