@@ -181,3 +181,35 @@
     </svelte:fragment>
   </TidyTableRow>
 </div>
+
+<style lang="scss">
+  .item-table-row {
+    :global(.tidy-table-row.prepared) {
+      --t5e-tidy-table-row-background: var(--t5e-prepared-background);
+    }
+
+    :global(.tidy-table-row.always-prepared) {
+      --t5e-tidy-table-row-background: var(--t5e-alwaysprepared-background);
+    }
+
+    :global(.tidy-table-row.pact) {
+      --t5e-tidy-table-row-background: var(--t5e-pact-background);
+    }
+
+    :global(.tidy-table-row.at-will) {
+      --t5e-tidy-table-row-background: var(--t5e-atwill-background);
+    }
+
+    :global(.tidy-table-row.innate) {
+      --t5e-tidy-table-row-background: var(--t5e-innate-background);
+    }
+
+    :global(.tidy-table-row.equipped) {
+      --t5e-tidy-table-row-background: var(--t5e-equipped-background);
+    }
+
+    :global(.tidy-table-row.magic-item) {
+      box-shadow: 0 0 0 0.0625rem var(--t5e-magic-accent-color) inset;
+    }
+  }
+</style>

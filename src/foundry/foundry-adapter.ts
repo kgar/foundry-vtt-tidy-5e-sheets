@@ -1287,4 +1287,23 @@ export const FoundryAdapter = {
       SettingsProvider.settings.useClassicControlsForCharacter.get()
     );
   },
+  attunementContextRequired: {
+    icon: 'fa-sun',
+    cls: 'not-attuned',
+    title: 'DND5E.AttunementRequired',
+  },
+  attunementContextAttune: {
+    icon: 'fa-sun',
+    cls: 'attuned',
+    title: 'DND5E.AttunementAttuned',
+  },
+  getAttunementContext(
+    item: Item5e
+  ): { icon: string; cls: string; title: string } | undefined {
+    return item.system.attunement === CONFIG.DND5E.attunementTypes.REQUIRED
+      ? FoundryAdapter.attunementContextRequired
+      : item.system.attunement === CONFIG.DND5E.attunementTypes.ATTUNED
+      ? FoundryAdapter.attunementContextAttune
+      : undefined;
+  },
 };

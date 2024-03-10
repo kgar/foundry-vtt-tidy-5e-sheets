@@ -70,14 +70,14 @@
 .tidy-table-row {
   border-radius: 0.3125rem;
 
-  --t5e-item-table-row-background-internal: var(
-    --t5e-item-table-row-background,
+  --t5e-tidy-table-row-background-internal: var(
+    --t5e-tidy-table-row-background,
     transparent
   );
 
   background: linear-gradient(
     to right,
-    var(--t5e-item-table-row-background),
+    var(--t5e-tidy-table-row-background),
     transparent 120%
   );
 }

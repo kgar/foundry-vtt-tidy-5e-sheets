@@ -1,9 +1,7 @@
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+import type { ContainerSheetContext, ItemDescription } from 'src/types/item';
 import type {
-  ContainerSheetContext,
-  ItemDescription,
-} from 'src/types/item';
-import type {
+  ItemCardStore,
   SheetStats,
   SheetTabCacheable,
   Tab,
@@ -32,6 +30,7 @@ export class Tidy5eKgarContainerSheet
     lastSubmissionTime: null,
   });
   currentTabId: string | undefined = undefined;
+  card = writable<ItemCardStore>();
 
   get template() {
     return FoundryAdapter.getTemplate('empty-form-template-for-items.hbs');
@@ -47,9 +46,12 @@ export class Tidy5eKgarContainerSheet
   activateListeners(html: any) {
     const node = html.get(0);
 
+    this.card.set({ sheet: node, item: null, itemCardContentTemplate: null });
+
     const context = new Map<any, any>([
       ['context', this.context],
       ['stats', this.stats],
+      ['card', this.card],
       ['currentTabId', this.currentTabId],
       ['onTabSelected', this.onTabSelected.bind(this)],
     ]);

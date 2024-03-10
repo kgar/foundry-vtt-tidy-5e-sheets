@@ -218,16 +218,16 @@
       &.equipped {
         --t5e-item-table-row-background: var(--t5e-equipped-background);
       }
+      
+      &.magic-item {
+        box-shadow: 0 0 0 0.0625rem var(--t5e-magic-accent-color) inset;
+      }
 
       background: linear-gradient(
         to right,
         var(--t5e-item-table-row-background),
         transparent 120%
       );
-
-      &.magic-item {
-        box-shadow: 0 0 0 0.0625rem var(--t5e-magic-accent-color) inset;
-      }
     }
   }
 </style>

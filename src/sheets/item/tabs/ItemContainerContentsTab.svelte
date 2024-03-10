@@ -93,9 +93,14 @@
         {#each section.items as item (item.id)}
           {@const ctx = $context.itemContext[item.id]}
           {@const weight = ctx?.totalWeight ?? item.system.weight}
+          {@const attunementContext = FoundryAdapter.getAttunementContext(item)}
           <ItemTableRowV2
             {item}
             hidden={!visibleItemIdSubset.has(item.id)}
+            rowClass={FoundryAdapter.getInventoryRowClasses(
+              item,
+              $context.itemContext[item.id],
+            )}
             let:toggleSummary
           >
             <TidyTableCell class="flex-row extra-small-gap">
@@ -115,6 +120,13 @@
                   >{item.name}</span
                 >
               </ItemName>
+              {#if attunementContext}
+                <i
+                  style="margin-left: auto; align-self: center;"
+                  class="item-state-icon fas {attunementContext.icon} {attunementContext.cls}"
+                  title={localize(attunementContext.title)}
+                />
+              {/if}
             </TidyTableCell>
             <TidyTableCell
               title={localize('TIDY5E.Inventory.Weight.Text', {
@@ -152,44 +164,6 @@
         {/each}
       </svelte:fragment>
     </TidyTable>
-    <!-- <ItemTable location={section.label} toggleable={false}>
-      <svelte:fragment slot="header">
-        <ItemTableHeaderRow>
-          <ItemTableColumn primary={true}>
-            {localize(section.label)} ({section.items.length})
-          </ItemTableColumn>
-        </ItemTableHeaderRow>
-      </svelte:fragment>
-      <svelte:fragment slot="body">
-        {#each section.items as item (item.id)}
-          {@const ctx = $context.itemContext[item.id]}
-          <ItemTableRow
-            {item}
-            on:mousedown={(event) =>
-              FoundryAdapter.editOnMiddleClick(event.detail, item)}
-            contextMenu={{
-              type: CONSTANTS.CONTEXT_MENU_TYPE_ITEMS,
-              id: item.id,
-            }}
-            let:toggleSummary
-          >
-            <ItemUseButton disabled={true} {item} />
-            <ItemName
-              on:toggle={() => toggleSummary($context.item)}
-              cssClass="extra-small-gap"
-              {item}
-            >
-              <span
-                class="truncate"
-                data-tidy-item-name={item.name}
-                data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_NAME}
-                >{item.name}</span
-              >
-            </ItemName>
-          </ItemTableRow>
-        {/each}
-      </svelte:fragment>
-    </ItemTable> -->
   </section>
   <footer class="container-contents-footer">
     <CapacityBar />

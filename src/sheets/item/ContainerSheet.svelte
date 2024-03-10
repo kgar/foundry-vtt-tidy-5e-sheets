@@ -12,6 +12,7 @@
   import Source from '../shared/Source.svelte';
   import Tabs from 'src/components/tabs/Tabs.svelte';
   import TabContents from 'src/components/tabs/TabContents.svelte';
+  import ItemInfoCard from 'src/components/item-info-card/ItemInfoCard.svelte';
 
   let context = getContext<Readable<ItemSheetContext>>('context');
 
@@ -19,6 +20,8 @@
 
   const localize = FoundryAdapter.localize;
 </script>
+
+<ItemInfoCard />
 
 <header class="sheet-header container-header flexrow gap">
   <ItemProfilePicture />

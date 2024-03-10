@@ -83,8 +83,8 @@
 
   &:where(.actor) {
     @import './partials/actor';
-    @import './partials/item-card';
   }
+  @import './partials/item-card';
 
   &:is(.character, .npc, .vehicle) form {
     display: flex;
