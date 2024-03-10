@@ -1,4 +1,4 @@
-import { CONSTANTS } from "src/constants";
+import { CONSTANTS } from 'src/constants';
 
 /**
  * A specialized subclass of ContextMenu that places the menu in a fixed position.
@@ -11,7 +11,13 @@ export default class ContextMenu5e extends ContextMenu {
 
   /** @override */
   _setPosition([html], [target]) {
-    document.body.appendChild(html);
+    const appNode = target.closest('[data-appId]');
+    const appId = parseInt(appNode.getAttribute('data-appId'));
+    const isPoppedOut = !isNaN(appId) && PopoutModule.singleton.poppedOut.has(appId);
+    const insertTargetNode = isPoppedOut
+      ? PopoutModule.singleton.poppedOut.get(appId).window.document.body
+      : document.body;
+    insertTargetNode.appendChild(html);
     const { clientWidth, clientHeight } = document.documentElement;
     const { width, height } = html.getBoundingClientRect();
 
