@@ -11,6 +11,8 @@
 
   let context = getContext<Readable<ActorSheetContext>>('context');
 
+  export let isLazyMoneyActive:boolean = game.modules.get("lazymoney")?.active || false;
+
   $: currencies = Object.entries(actor.system.currency).map((e) => ({
     key: e[0],
     value: e[1] as any,
@@ -18,6 +20,18 @@
 
   function confirmConvertCurrency() {
     new dnd5e.applications.CurrencyManager(actor).render(true);
+  }
+
+  function onChangeCurrencyValue(
+    ev: Event & { currentTarget: HTMLInputElement }, 
+    currencyDenom: string) {
+    const value = ev.currentTarget.value;
+    game.modules.get('lazymoney').api.manageCurrencyAsync({
+        actor: actor,
+        currencyValue: value,
+        currencyDenom: currencyDenom
+    });
+    return false;
   }
 
   function abbreviateCurrency(currencyKey: string) {
@@ -34,6 +48,18 @@
         class="currency-item {currency.key}"
         title={$context.labels.currencies[currency.key]}
       >
+        {#if isLazyMoneyActive }
+        <TextInput
+          document={actor}
+          field="system.currency.{currency.key}"
+          id="{$context.appId}-system.currency.{currency.key}"
+          value={currency.value}
+          allowDeltaChanges={true}
+          selectOnFocus={true}
+          disabled={!$context.editable || $context.lockMoneyChanges}
+          onSaveChange={(ev) => onChangeCurrencyValue(ev, currency.key)}
+        />
+        {:else}
         <TextInput
           document={actor}
           field="system.currency.{currency.key}"
@@ -43,6 +69,7 @@
           selectOnFocus={true}
           disabled={!$context.editable || $context.lockMoneyChanges}
         />
+        {/if}
         <label
           for="{$context.appId}-system.currency.{currency.key}"
           class="denomination {currency.key}"
