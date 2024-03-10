@@ -18,6 +18,17 @@ export function initTidy5eContextMenu(
     onOpen: onItemContext.bind(sheet),
   });
 }
+
+export function initTidy5eContextMenuV2(
+  sheet: any,
+  html: any,
+  contextMenuSelector: string = '[data-context-menu]'
+) {
+  FoundryAdapter.createContextMenuV2(html, contextMenuSelector, [], {
+    onOpen: onItemContext.bind(sheet),
+  });
+}
+
 /**
  * Handle activation of a context menu for an embedded Item or ActiveEffect document.
  * Dynamically populate the array of context menu options.
@@ -26,14 +37,14 @@ export function initTidy5eContextMenu(
  */
 function onItemContext(element: HTMLElement) {
   const contextMenuType = element.getAttribute('data-context-menu');
-  const id = element.getAttribute('data-context-menu-entity-id');
+  const uuid = element.getAttribute('data-context-menu-document-uuid');
   // TODO: rewrite context menu so that it's better integrated with the rest of Tidy 5e Sheets.
   // @ts-ignore
   const that: any = this as any;
 
   // Active Effects
   if (contextMenuType === CONSTANTS.CONTEXT_MENU_TYPE_EFFECTS) {
-    const effect = that.actor.effects.get(id);
+    const effect = fromUuidSync(uuid);
     if (!effect) {
       return;
     }
@@ -48,7 +59,7 @@ function onItemContext(element: HTMLElement) {
   }
   // Items
   else if (contextMenuType === CONSTANTS.CONTEXT_MENU_TYPE_ITEMS) {
-    const item = that.actor.items.get(id);
+    const item = fromUuidSync(uuid);
     if (!item) return;
 
     // TODO: Leverage the API to aggregate any registered context menu options; pass in the context of the current item for reference.
@@ -129,14 +140,16 @@ function canEditEffect(effect: any) {
  * @protected
  */
 function getItemContextOptions(item: Item5e) {
-  const actor = item.actor ? item.actor : item.parent;
-  if (!actor?.isOwner || !SettingsProvider.settings.useContextMenu.get()) {
+  if (!item?.isOwner || !SettingsProvider.settings.useContextMenu.get()) {
     return [];
   }
 
+  const itemParent = item.actor ? item.actor : item.parent;
+  const itemParentIsActor =
+    itemParent?.documentName === CONSTANTS.DOCUMENT_NAME_ACTOR;
+  const isUnlocked =
+    !itemParentIsActor || FoundryAdapter.isActorSheetUnlocked(itemParent);
   let options = [];
-
-  const isCharacter = actor.type === CONSTANTS.SHEET_TYPE_CHARACTER;
 
   let toggleTitle = '';
   let canToggle = false;
@@ -237,7 +250,7 @@ function getItemContextOptions(item: Item5e) {
     });
   }
 
-  if (isCharacter) {
+  if (itemParentIsActor) {
     // Add favorites to context menu
     let isFav = FoundryAdapter.isDocumentFavorited(item);
 
@@ -268,7 +281,7 @@ function getItemContextOptions(item: Item5e) {
       icon: "<i class='fas fa-pencil-alt fa-fw'></i>",
       callback: () => item.sheet.render(true),
     });
-    if (FoundryAdapter.isActorSheetUnlocked(actor)) {
+    if (isUnlocked) {
       options.push({
         name: 'DND5E.ContextMenuActionDuplicate',
         icon: "<i class='fas fa-copy fa-fw'></i>",
@@ -287,7 +300,7 @@ function getItemContextOptions(item: Item5e) {
       options.push({
         name: 'TIDY5E.ContextMenuActionDelete',
         icon: "<i class='fas fa-trash fa-fw' style='color: var(--t5e-warning-accent-color);'></i>",
-        callback: () => FoundryAdapter.onActorItemDelete(actor, item),
+        callback: () => FoundryAdapter.onActorItemDelete(itemParent, item),
       });
     }
   } else {
@@ -297,7 +310,7 @@ function getItemContextOptions(item: Item5e) {
       callback: () => item.sheet.render(true),
     });
 
-    if (FoundryAdapter.isActorSheetUnlocked(actor)) {
+    if (isUnlocked) {
       options.push({
         name: 'DND5E.ContextMenuActionDuplicate',
         icon: "<i class='fas fa-copy fa-fw'></i>",
@@ -316,12 +329,12 @@ function getItemContextOptions(item: Item5e) {
       options.push({
         name: 'DND5E.ContextMenuActionDelete',
         icon: "<i class='fas fa-trash fa-fw' style='color: var(--t5e-warning-accent-color);'></i>",
-        callback: () => FoundryAdapter.onActorItemDelete(actor, item),
+        callback: () => FoundryAdapter.onActorItemDelete(itemParent, item),
       });
     }
   }
 
-  if (actorUsesActionFeature(actor)) {
+  if (itemParentIsActor && actorUsesActionFeature(itemParent)) {
     const active = isItemInActionList(item);
     options.push({
       name: active

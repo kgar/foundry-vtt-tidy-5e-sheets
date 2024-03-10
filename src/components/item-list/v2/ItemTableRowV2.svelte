@@ -22,7 +22,7 @@
 
   export let item: Item5e | null = null;
   export let effect: any | null = null;
-  export let contextMenu: { type: string; id: string } | null = null;
+  export let contextMenu: { type: string; uuid: string } | null = null;
   export let rowClass: string = '';
   export let itemCardContentTemplate: ItemCardContentComponent | null = null;
   export let hidden: boolean = false;
@@ -153,7 +153,7 @@
     {hidden}
     rowContainerAttributes={{
       ['data-context-menu']: contextMenu?.type,
-      ['data-context-menu-entity-id']: contextMenu?.id,
+      ['data-context-menu-document-uuid']: contextMenu?.uuid,
       ['data-item-id']: item?.id,
       ['data-tidy-table-row']: '',
       ['data-tidy-sheet-part']: CONSTANTS.SHEET_PARTS.ITEM_TABLE_ROW,

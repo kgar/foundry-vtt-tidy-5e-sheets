@@ -1,0 +1,126 @@
+body #context-menu.tidy5e-sheet.floating {
+  display: none;
+  width: 100%;
+  height: max-content;
+  min-width: 11.25rem;
+  max-width: 11.25rem;
+  left: 0;
+  color: var(--t5e-primary-font-color);
+  max-height: 12.6875rem;
+  background: var(--t5e-background);
+  border: 0.0625rem solid var(--t5e-context-outline-color);
+  position: absolute;
+  z-index: var(--z-index-tooltip);
+  border-radius: 0.3125rem;
+  padding: 0.0625rem 0.125rem;
+  overflow-y: auto;
+  box-shadow: 0 0 0.3125rem var(--t5e-context-shadow-color);
+
+  a,
+  li {
+    display: flex;
+    align-items: center;
+    padding: 0.25rem 0.5rem 0.25rem 0.375rem;
+    margin: 0.0625rem 0;
+    white-space: nowrap;
+    line-height: 1;
+    font-weight: 400;
+    font-size: 0.75rem;
+
+    &:first-child {
+      border-radius: 0.1875rem 0.1875rem 0 0;
+    }
+
+    &:last-child {
+      border-radius: 0 0 0.1875rem 0.1875rem;
+    }
+
+    &.active {
+      color: var(--t5e-attunement-required-color);
+
+      &:hover {
+        background: var(--t5e-warning-accent-color);
+        color: var(--t5e-warning-accent-contrast-color);
+      }
+    }
+
+    .icon-on,
+    &.active .icon-off {
+      display: none;
+    }
+
+    .icon-off,
+    &.active .icon-on {
+      display: inline-block;
+    }
+
+    &:hover {
+      box-shadow: 0 0 0.125rem var(--t5e-tertiary-color),
+        0 0 0 0.0625rem var(--t5e-tertiary-color) inset;
+      color: var(--t5e-primary-accent-color);
+      text-shadow: none;
+    }
+
+    i {
+      margin-right: 0.25rem;
+      width: 1rem;
+      text-align: center;
+    }
+
+    &.warning {
+      background: var(--t5e-warning-accent-color);
+      color: var(--t5e-warning-accent-contrast-color);
+
+      &:hover {
+        background: var(--t5e-warning-accent-color);
+        color: var(--t5e-warning-accent-contrast-color);
+      }
+    }
+  }
+
+  .context-divider {
+    margin: 0.0625rem 0 0 0;
+    border-top: 0.0625rem solid var(--t5e-light-color);
+    border-bottom: none;
+
+    + .context-divider {
+      display: none;
+    }
+
+    &:first-child,
+    &:last-child {
+      display: none;
+    }
+  }
+
+  .item-buttons {
+    .button {
+      border: none;
+      border-radius: 0;
+      background: var(--t5e-tertiary-color);
+      color: var(--t5e-background);
+      display: flex;
+      align-items: center;
+      padding: 0.25rem 0.5rem 0.25rem 0.375rem;
+      margin: 0.0625rem 0;
+      white-space: nowrap;
+      line-height: 1;
+      font-weight: 400;
+      font-size: 0.75rem;
+
+      &:hover {
+        background: var(--t5e-secondary-color);
+      }
+
+      i {
+        margin-right: 0.25rem;
+        width: 1rem;
+        text-align: center;
+      }
+    }
+
+    & > .button:first-child {
+      border-radius: 0.1875rem 0.1875rem 0 0;
+    }
+  }
+}

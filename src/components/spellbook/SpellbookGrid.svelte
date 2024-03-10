@@ -104,7 +104,7 @@
           class:hidden
           aria-hidden={hidden}
           data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
-          data-context-menu-entity-id={spell.id}
+          data-context-menu-document-uuid={spell.uuid}
           on:click={(event) =>
             FoundryAdapter.actorTryUseItem(spell, {}, { event })}
           on:contextmenu={(event) =>

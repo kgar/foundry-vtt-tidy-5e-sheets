@@ -102,6 +102,10 @@
               $context.itemContext[item.id],
             )}
             let:toggleSummary
+            contextMenu={{
+              type: CONSTANTS.CONTEXT_MENU_TYPE_ITEMS,
+              uuid: item.uuid,
+            }}
           >
             <TidyTableCell class="flex-row extra-small-gap">
               <ItemUseButton

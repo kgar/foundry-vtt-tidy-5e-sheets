@@ -3,6 +3,7 @@ export const CONSTANTS = {
   ALPHA_MODULE_ID: 'tidy5e-sheet-kgar',
   MODULE_ID: moduleId,
   DND5E_SYSTEM_ID: 'dnd5e',
+  DOCUMENT_NAME_ACTOR: 'Actor',
   // TODO: inject moduleId variable when this module overtakes the original
   HOOK_TIDY5E_SHEETS_READY: `tidy5e-sheet.ready`,
   HOOK_TIDY5E_SHEETS_PREPARE_RESOURCES: `tidy5e-sheet.prepareResources`,

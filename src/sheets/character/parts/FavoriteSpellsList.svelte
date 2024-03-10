@@ -64,7 +64,7 @@
             FoundryAdapter.editOnMiddleClick(event.detail, spell)}
           contextMenu={{
             type: CONSTANTS.CONTEXT_MENU_TYPE_ITEMS,
-            id: spell.id,
+            uuid: spell.uuid,
           }}
           let:toggleSummary
           cssClass={FoundryAdapter.getSpellRowClasses(spell)}

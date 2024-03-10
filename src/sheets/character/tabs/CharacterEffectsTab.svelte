@@ -64,7 +64,7 @@
                   FoundryAdapter.editOnMiddleClick(event.detail, effect)}
                 contextMenu={{
                   type: CONSTANTS.CONTEXT_MENU_TYPE_EFFECTS,
-                  id: effect.id,
+                  uuid: effect.uuid,
                 }}
                 {effect}
               >

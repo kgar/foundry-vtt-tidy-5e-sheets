@@ -20,6 +20,7 @@ import { TabManager } from 'src/runtime/tab/TabManager';
 import { isNil } from 'src/utils/data';
 import type { SvelteComponent } from 'svelte';
 import ContainerSheet from './item/ContainerSheet.svelte';
+import { initTidy5eContextMenu, initTidy5eContextMenuV2 } from 'src/context-menu/tidy5e-context-menu';
 
 export class Tidy5eKgarContainerSheet
   extends dnd5e.applications.item.ContainerSheet
@@ -61,22 +62,7 @@ export class Tidy5eKgarContainerSheet
       context: context,
     });
 
-    // Advancement context menu
-    const contextOptions = this._getAdvancementContextMenuOptions();
-    /**
-     * A hook event that fires when the context menu for the advancements list is constructed.
-     * @function dnd5e.getItemAdvancementContext
-     * @memberof hookEvents
-     * @param {jQuery} html                      The HTML element to which the context options are attached.
-     * @param {ContextMenuEntry[]} entryOptions  The context menu entries.
-     */
-    Hooks.call('dnd5e.getItemAdvancementContext', html, contextOptions);
-    if (contextOptions)
-      FoundryAdapter.createContextMenu(
-        html,
-        '.advancement-item',
-        contextOptions
-      );
+    initTidy5eContextMenuV2(this, html);
   }
 
   async getData(options = {}) {

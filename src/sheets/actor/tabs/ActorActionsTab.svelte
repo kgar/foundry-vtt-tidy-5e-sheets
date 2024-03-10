@@ -84,7 +84,7 @@
                 FoundryAdapter.editOnMiddleClick(event.detail, actionItem.item)}
               contextMenu={{
                 type: CONSTANTS.CONTEXT_MENU_TYPE_ITEMS,
-                id: actionItem.item.id,
+                uuid: actionItem.item.uuid,
               }}
               let:toggleSummary
             >

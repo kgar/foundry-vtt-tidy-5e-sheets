@@ -12,6 +12,7 @@ import type { Item5e } from 'src/types/item';
 import { SettingsProvider } from 'src/settings/settings';
 import { debug, error, warn } from 'src/utils/logging';
 import { clamp } from 'src/utils/numbers';
+import ContextMenu5e from 'src/context-menu/ContextMenu5e';
 
 export const FoundryAdapter = {
   isFoundryV10() {
@@ -539,7 +540,7 @@ export const FoundryAdapter = {
       FoundryAdapter.setFlag(document, 'favorite', true);
     }
   },
-  isActorSheetUnlocked(actor: any) {
+  isActorSheetUnlocked(actor: any): boolean {
     return (
       (actor.isOwner && FoundryAdapter.isSheetUnlocked(actor)) ||
       (FoundryAdapter.userIsGm() &&
@@ -990,6 +991,9 @@ export const FoundryAdapter = {
   },
   createContextMenu(...args: any[]): any {
     return new ContextMenu(...args);
+  },
+  createContextMenuV2(...args: any[]): any {
+    return new ContextMenu5e(...args);
   },
   createAdvancementSelectionDialog(item: any) {
     return game.dnd5e.applications.advancement.AdvancementSelection.createDialog(

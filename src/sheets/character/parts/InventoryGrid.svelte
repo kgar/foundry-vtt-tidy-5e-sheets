@@ -110,7 +110,7 @@
         class:hidden
         aria-hidden={hidden}
         data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
-        data-context-menu-entity-id={item.id}
+        data-context-menu-document-uuid={item.uuid}
         on:click={(event) =>
           $context.editable &&
           FoundryAdapter.actorTryUseItem(item, {}, { event })}

@@ -19,7 +19,7 @@
 
   export let item: Item5e | null = null;
   export let effect: any | null = null;
-  export let contextMenu: { type: string; id: string } | null = null;
+  export let contextMenu: { type: string; uuid: string } | null = null;
   export let cssClass: string = '';
   export let itemCardContentTemplate: ItemCardContentComponent | null = null;
   export let hidden: boolean = false;
@@ -145,7 +145,7 @@
   class:hidden
   aria-hidden={hidden}
   data-context-menu={contextMenu?.type}
-  data-context-menu-entity-id={contextMenu?.id}
+  data-context-menu-document-uuid={contextMenu?.uuid}
   on:mousedown={(event) => dispatcher('mousedown', event)}
   on:mouseenter={onMouseEnter}
   on:mouseleave={onMouseLeave}

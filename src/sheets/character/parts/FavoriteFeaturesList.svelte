@@ -46,7 +46,7 @@
           FoundryAdapter.editOnMiddleClick(event.detail, item)}
         contextMenu={{
           type: CONSTANTS.CONTEXT_MENU_TYPE_ITEMS,
-          id: item.id,
+          uuid: item.uuid,
         }}
       >
         <ItemTableCell primary={true} title={item.name}>
