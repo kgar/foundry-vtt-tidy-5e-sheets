@@ -1,6 +1,6 @@
 import { CONSTANTS } from 'src/constants';
 import type {
-  ActorTypesToFilterTabs,
+  DocumentTypesToFilterTabs,
   FilterTabsToCategories,
   ItemFilter,
 } from './item.types';
@@ -14,7 +14,6 @@ import {
   getSpellSchoolFiltersAsObject,
   getStandardSpellSchoolFilterCategories,
 } from './default-item-filters';
-import type { Actor5e } from 'src/types/types';
 
 export class ItemFilterRuntime {
   static _registeredItemFilters: Record<string, ItemFilter> = {};
@@ -28,7 +27,7 @@ export class ItemFilterRuntime {
     };
   }
 
-  static _actorTabFilters: ActorTypesToFilterTabs = {
+  static _documentTabFilters: DocumentTypesToFilterTabs = {
     [CONSTANTS.SHEET_TYPE_CHARACTER]: {
       [CONSTANTS.TAB_CHARACTER_INVENTORY]: {
         'DND5E.ItemActivationCost': [
@@ -88,13 +87,27 @@ export class ItemFilterRuntime {
     [CONSTANTS.SHEET_TYPE_VEHICLE]: {
       [CONSTANTS.TAB_ACTOR_ACTIONS]: { ...getActionListFilterCategories() },
     },
+    [CONSTANTS.SHEET_TYPE_CONTAINER]: {
+      [CONSTANTS.TAB_CONTAINER_CONTENTS]: {
+        'DND5E.ItemActivationCost': [
+          defaultItemFilters.activationCostAction,
+          defaultItemFilters.activationCostBonus,
+          defaultItemFilters.activationCostReaction,
+        ],
+        'DND5E.Rarity': () => getItemRarityFilters(),
+        'TIDY5E.ItemFilters.Category.Miscellaneous': () => [
+          defaultItemFilters.equipped,
+          ...getAttunementFilters(),
+        ],
+      },
+    },
   };
 
   static getFilter(filterName: ItemFilter['name']): ItemFilter | undefined {
     return ItemFilterRuntime._registeredItemFilters[filterName];
   }
 
-  static getActorFilters(actor: Actor5e): FilterTabsToCategories {
-    return ItemFilterRuntime._actorTabFilters[actor.type] ?? {};
+  static getDocumentFilters(document: any): FilterTabsToCategories {
+    return ItemFilterRuntime._documentTabFilters[document.type] ?? {};
   }
 }

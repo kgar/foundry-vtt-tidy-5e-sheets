@@ -1,7 +1,6 @@
 import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
-import type { ActorFilters, ItemFilter } from 'src/runtime/item/item.types';
+import type { DocumentFilters, ItemFilter } from 'src/runtime/item/item.types';
 import type { Item5e } from 'src/types/item.types';
-import type { Actor5e } from 'src/types/types';
 import { isNil } from 'src/utils/data';
 import { debug, error } from 'src/utils/logging';
 import { writable, type Readable, type Writable } from 'svelte/store';
@@ -35,17 +34,17 @@ export class ItemFilterService {
 
   private _filterDataStore: Writable<ItemFilterData>;
 
-  private _actor: Actor5e;
+  private _document: any;
 
   get filterData$(): Readable<ItemFilterData> {
     return this._filterDataStore;
   }
 
   // TODO: Have sheets send in what they have in session storage upon construction
-  constructor(filterData: ItemFilterData = {}, actor: Actor5e) {
+  constructor(filterData: ItemFilterData = {}, document: any) {
     this._filterData = filterData;
     this._filterDataStore = writable(this._filterData);
-    this._actor = actor;
+    this._document = document;
   }
 
   filter(items: Item5e[], filterGroup: ItemFilterGroupName): Item5e[] {
@@ -128,30 +127,32 @@ export class ItemFilterService {
     this._filterDataStore.set(this._filterData);
   }
 
-  getActorItemFilterData(): ActorFilters {
-    const actorFilters = ItemFilterRuntime.getActorFilters(this._actor);
-    const actorItemFilterData: ActorFilters = {};
+  getDocumentItemFilterData(): DocumentFilters {
+    const documentFilters = ItemFilterRuntime.getDocumentFilters(
+      this._document
+    );
+    const documentItemFilterData: DocumentFilters = {};
 
-    for (let [tab, categories] of Object.entries(actorFilters)) {
-      actorItemFilterData[tab] ??= {};
+    for (let [tab, categories] of Object.entries(documentFilters)) {
+      documentItemFilterData[tab] ??= {};
 
       for (let [category, filters] of Object.entries(categories)) {
-        actorItemFilterData[tab][category] ??= [];
+        documentItemFilterData[tab][category] ??= [];
         const effectiveFilters = Array.isArray(filters) ? filters : filters();
 
         for (let filter of effectiveFilters) {
           try {
-            actorItemFilterData[tab][category].push({
+            documentItemFilterData[tab][category].push({
               ...filter,
               value: this._filterData[tab]?.[filter.name] ?? null,
             });
           } catch (e) {
             error(
-              'An error occurred while setting up actor item filter data',
+              'An error occurred while setting up document item filter data',
               false,
               e
             );
-            debug('Actor item filter data error troubleshooting info', {
+            debug('Document item filter data error troubleshooting info', {
               tab,
               category,
               filter,
@@ -162,6 +163,6 @@ export class ItemFilterService {
       }
     }
 
-    return actorItemFilterData;
+    return documentItemFilterData;
   }
 }

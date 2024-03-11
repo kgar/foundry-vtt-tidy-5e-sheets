@@ -1,7 +1,7 @@
 import type { ComponentType, SvelteComponent } from 'svelte';
 import type { CustomContent, Tab, Utilities } from './types';
 import type { DocumentPreparationWarning } from './types';
-import type { ActorFilters, RegisteredEquipmentTypeGroup } from 'src/runtime/item/item.types';
+import type { DocumentFilters, RegisteredEquipmentTypeGroup } from 'src/runtime/item/item.types';
 
 export type ItemSheetContext = {
   customContent: CustomContent[];
@@ -47,7 +47,7 @@ export type ItemCardContentComponent = ComponentType<
 export type ContainerSheetContext = {
   appId: string;
   activateFoundryJQueryListeners: (node: HTMLElement) => void;
-  filterData: ActorFilters;
+  filterData: DocumentFilters;
   itemDescriptions: ItemDescription[];
   lockItemQuantity: boolean;
   customContent: CustomContent[];

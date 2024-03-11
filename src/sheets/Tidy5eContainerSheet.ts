@@ -91,12 +91,20 @@ export class Tidy5eKgarContainerSheet
     this.card.set({ sheet: node, item: null, itemCardContentTemplate: null });
 
     const context = new Map<any, any>([
-      ['context', this.context],
-      ['messageBus', this.messageBus],
-      ['stats', this.stats],
       ['card', this.card],
+      ['context', this.context],
       ['currentTabId', this.currentTabId],
+      ['messageBus', this.messageBus],
+      [
+        'onFilter',
+        this.itemFilterService.onFilter.bind(this.itemFilterService),
+      ],
+      [
+        'onFilterClearAll',
+        this.itemFilterService.onFilterClearAll.bind(this.itemFilterService),
+      ],
       ['onTabSelected', this.onTabSelected.bind(this)],
+      ['stats', this.stats],
     ]);
 
     this.component = new ContainerSheet({
@@ -180,14 +188,28 @@ export class Tidy5eKgarContainerSheet
             iconClass: 'fa-solid fa-arrow-down-a-z',
             execute: async () => {
               await SheetPreferencesService.setDocumentTypeTabPreference(
-                this.actor.type,
-                CONSTANTS.TAB_CHARACTER_INVENTORY,
+                this.item.type,
+                CONSTANTS.TAB_CONTAINER_CONTENTS,
                 'sort',
                 'm'
               );
               this.render();
             },
             visible: contentsSortMode === 'a',
+          },
+          {
+            title: FoundryAdapter.localize('SIDEBAR.SortModeManual'),
+            iconClass: 'fa-solid fa-arrow-down-short-wide',
+            execute: async () => {
+              await SheetPreferencesService.setDocumentTypeTabPreference(
+                this.item.type,
+                CONSTANTS.TAB_CONTAINER_CONTENTS,
+                'sort',
+                'a'
+              );
+              this.render();
+            },
+            visible: contentsSortMode === 'm',
           },
         ],
       },
@@ -202,7 +224,7 @@ export class Tidy5eKgarContainerSheet
         super.activateListeners($(node));
       },
       customContent: await ItemSheetRuntime.getContent(defaultDocumentContext),
-      filterData: this.itemFilterService.getActorItemFilterData(),
+      filterData: this.itemFilterService.getDocumentItemFilterData(),
       itemDescriptions,
       lockItemQuantity: FoundryAdapter.shouldLockItemQuantity(),
       originalContext: defaultDocumentContext,

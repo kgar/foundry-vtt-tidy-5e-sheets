@@ -9,7 +9,7 @@ import type {
   RegisteredCustomActorTrait,
   RegisteredPortraitMenuCommand,
 } from 'src/runtime/types';
-import type { ActorFilters } from 'src/runtime/item/item.types';
+import type { DocumentFilters } from 'src/runtime/item/item.types';
 import type { Writable } from 'svelte/store';
 import type { UtilityToolbarCommandParams } from 'src/components/utility-bar/types';
 import type { CONSTANTS } from 'src/constants';
@@ -222,7 +222,7 @@ export type ActorSheetContext = {
    * When this boolean is `false`, then the sheet is effectively hard locked.
    */
   editable: boolean;
-  filterData: ActorFilters;
+  filterData: DocumentFilters;
   /**
    * Represents remaining health as a percentage within the range of `0` to `100`.
    *

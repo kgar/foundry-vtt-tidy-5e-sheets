@@ -16,7 +16,7 @@
     getContext<Readable<ActorSheetContext | ContainerSheetContext>>('context');
   const onFilterClearAll =
     getContext<ItemFilterService['onFilterClearAll']>('onFilterClearAll');
-  $: categories = $context.filterData[tabId];
+  $: categories = $context.filterData[tabId] ?? {};
   $: hasActiveFilters = Object.entries(categories).some(([_, filters]) =>
     filters.some((f) => f.value !== null),
   );

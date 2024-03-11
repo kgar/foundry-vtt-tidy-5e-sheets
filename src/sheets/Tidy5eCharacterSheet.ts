@@ -664,7 +664,7 @@ export class Tidy5eCharacterSheet
       ),
       editable: defaultDocumentContext.editable,
       features: sections,
-      filterData: this.itemFilterService.getActorItemFilterData(),
+      filterData: this.itemFilterService.getDocumentItemFilterData(),
       flawEnrichedHtml: await FoundryAdapter.enrichHtml(
         this.actor.system.details.flaw,
         {

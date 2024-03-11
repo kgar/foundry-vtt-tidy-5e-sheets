@@ -242,7 +242,7 @@ export class Tidy5eVehicleSheet
       customContent: await VehicleSheetRuntime.getContent(
         defaultDocumentContext
       ),
-      filterData: this.itemFilterService.getActorItemFilterData(),
+      filterData: this.itemFilterService.getDocumentItemFilterData(),
       useClassicControls:
         SettingsProvider.settings.useClassicControlsForVehicle.get(),
       editable: defaultDocumentContext.editable,

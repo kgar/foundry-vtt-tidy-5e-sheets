@@ -8,21 +8,21 @@ export type ItemFilter = {
 
 type Category = string;
 type TabId = string;
-type ActorType = string;
+type DocumentType = string;
 export type FilterCategoriesToFilters = Record<
   Category,
   ItemFilter[] | (() => ItemFilter[])
 >;
 
 export type FilterTabsToCategories = Record<TabId, FilterCategoriesToFilters>;
-export type ActorTypesToFilterTabs = Record<ActorType, FilterTabsToCategories>;
+export type DocumentTypesToFilterTabs = Record<DocumentType, FilterTabsToCategories>;
 
 // TODO: Find a better name for this
 export type ConfiguredItemFilter = ItemFilter & {
   value: boolean | null;
 };
-export type ActorFilterCategories = Record<Category, ConfiguredItemFilter[]>;
-export type ActorFilters = Record<TabId, ActorFilterCategories>;
+export type DocumentFilterCategories = Record<Category, ConfiguredItemFilter[]>;
+export type DocumentFilters = Record<TabId, DocumentFilterCategories>;
 
 export type RegisteredEquipmentTypeGroup = {
   label: string;
