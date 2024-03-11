@@ -1,44 +1,86 @@
 <script lang="ts">
-  import type { ContainerPanelItemContext } from 'src/types/types';
+  import type {
+    ContainerPanelItemContext,
+    ItemCardStore,
+  } from 'src/types/types';
   import CapacityBar from '../container/CapacityBar.svelte';
   import { CONSTANTS } from 'src/constants';
+  import type { Writable } from 'svelte/store';
+  import { getContext } from 'svelte';
+  import type { Item5e } from 'src/types/item.types';
+  import { settingStore } from 'src/settings/settings';
 
   export let containerPanelItems: ContainerPanelItemContext[] = [];
+
+  let card: Writable<ItemCardStore> | undefined =
+    getContext<Writable<ItemCardStore>>('card');
+
+  async function onMouseEnter(event: Event, item: Item5e) {
+    Hooks.callAll(CONSTANTS.HOOK_TIDY5E_SHEETS_ITEM_HOVER_ON, event, item);
+
+    if (!item?.getChatData || !$settingStore.itemCardsForAllItems) {
+      return;
+    }
+
+    card?.update((card) => {
+      card.item = item;
+      return card;
+    });
+  }
+
+  async function onMouseLeave(event: Event, item: Item5e) {
+    Hooks.callAll(CONSTANTS.HOOK_TIDY5E_SHEETS_ITEM_HOVER_OFF, event, item);
+
+    card?.update((card) => {
+      card.item = null;
+      card.itemCardContentTemplate = null;
+      return card;
+    });
+  }
+
+  function handleDragStart(event: DragEvent, item: Item5e) {
+    // Don't show cards while dragging
+    onMouseLeave(event, item);
+
+    card?.update((card) => {
+      return card;
+    });
+
+    const dragData = item.toDragData();
+    event.dataTransfer?.setData('text/plain', JSON.stringify(dragData));
+  }
 </script>
 
 <ul class="containers">
-  {#each containerPanelItems as containerPanelItems (containerPanelItems.container.id)}
+  {#each containerPanelItems as { container, ...capacity } (container.id)}
     <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
     <li
       draggable="true"
-      data-item-id={containerPanelItems.container.id}
-      on:dragstart={(event) => {
-        const dragData = containerPanelItems.container.toDragData();
-        event.dataTransfer?.setData('text/plain', JSON.stringify(dragData));
-      }}
+      data-item-id={container.id}
+      on:dragstart={(ev) => handleDragStart(ev, container)}
+      on:mouseenter={(ev) => onMouseEnter(ev, container)}
+      on:mouseleave={(ev) => onMouseLeave(ev, container)}
       class="container"
-      title={containerPanelItems.container.system.identified === false
-        ? containerPanelItems.container.system.unidentified.name
-        : containerPanelItems.container.name}
+      title={container.system.identified === false
+        ? container.system.unidentified.name
+        : container.name}
     >
       <button
         class="transparent-button"
-        on:click={() => containerPanelItems.container.sheet.render(true)}
+        on:click={() => container.sheet.render(true)}
         data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
-        data-context-menu-document-uuid={containerPanelItems.container.uuid}
+        data-context-menu-document-uuid={container.uuid}
       >
         <div
           class="container-image"
-          class:conceal={containerPanelItems.container.system.identified ===
-            false}
-          style="background-image: url('{containerPanelItems.container.img}')"
+          class:conceal={container.system.identified === false}
+          style="background-image: url('{container.img}')"
         >
           <div
             role="presentation"
             aria-hidden="true"
             class="unidentified-glyph"
-            class:conceal={containerPanelItems.container.system.identified ===
-              false}
+            class:conceal={container.system.identified === false}
           >
             <i class="fas fa-question" />
           </div>
@@ -46,8 +88,8 @@
       </button>
       <CapacityBar
         showLabel={false}
-        container={containerPanelItems.container}
-        capacity={containerPanelItems}
+        {container}
+        {capacity}
         --capacity-bar-height="0.5rem"
         --capacity-bar-container-border-radius="0 0 3px 3px"
       />
