@@ -1307,4 +1307,27 @@ export const FoundryAdapter = {
       ? FoundryAdapter.attunementContextAttune
       : undefined;
   },
+  async identifyAllItemsForContainer(container: any, items: Item5e[]) {
+    const updates = items.map((i) => ({
+      _id: i.id,
+      'system.identified': true,
+    }));
+    await Item.updateDocuments(updates, {
+      parent: container.actor,
+      pack: container.pack,
+    });
+  },
+  async markAllItemsAsUnidentifiedForContainer(
+    container: any,
+    items: Item5e[]
+  ) {
+    const updates = items.map((i) => ({
+      _id: i.id,
+      'system.identified': false,
+    }));
+    await Item.updateDocuments(updates, {
+      parent: container.actor,
+      pack: container.pack,
+    });
+  },
 };
