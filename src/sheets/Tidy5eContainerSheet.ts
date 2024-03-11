@@ -1,12 +1,18 @@
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type {
   ContainerSheetContext,
+  ItemChatData,
   ItemDescription,
 } from 'src/types/item.types';
 import type {
+  ExpandedItemData,
+  ExpandedItemIdToLocationsMap,
   ItemCardStore,
+  LocationToSearchTextMap,
   MessageBus,
   MessageBusMessage,
+  SearchFilterCacheable,
+  SheetExpandedItemsCacheable,
   SheetStats,
   SheetTabCacheable,
   Tab,
@@ -31,16 +37,23 @@ import { ItemFilterService } from 'src/features/filtering/ItemFilterService';
 import { StoreSubscriptionsService } from 'src/features/store/StoreSubscriptionsService';
 import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
 import { CONSTANTS } from 'src/constants';
+import { AsyncMutex } from 'src/utils/mutex';
 
 export class Tidy5eKgarContainerSheet
   extends dnd5e.applications.item.ContainerSheet
-  implements SheetTabCacheable
+  implements
+    SheetTabCacheable,
+    SheetExpandedItemsCacheable,
+    SearchFilterCacheable
 {
   context = writable<ContainerSheetContext>();
   stats = writable<SheetStats>({
     lastSubmissionTime: null,
   });
   currentTabId: string | undefined = undefined;
+  searchFilters: LocationToSearchTextMap = new Map<string, string>();
+  expandedItems: ExpandedItemIdToLocationsMap = new Map<string, Set<string>>();
+  expandedItemData: ExpandedItemData = new Map<string, ItemChatData>();
   card = writable<ItemCardStore>();
   itemFilterService: ItemFilterService;
   subscriptionsService: StoreSubscriptionsService;
@@ -94,6 +107,8 @@ export class Tidy5eKgarContainerSheet
       ['card', this.card],
       ['context', this.context],
       ['currentTabId', this.currentTabId],
+      ['expandedItems', new Map(this.expandedItems)],
+      ['expandedItemData', new Map(this.expandedItemData)],
       ['messageBus', this.messageBus],
       [
         'onFilter',
@@ -103,7 +118,11 @@ export class Tidy5eKgarContainerSheet
         'onFilterClearAll',
         this.itemFilterService.onFilterClearAll.bind(this.itemFilterService),
       ],
+      ['onItemToggled', this.onItemToggled.bind(this)],
+      ['onSearch', this.onSearch.bind(this)],
       ['onTabSelected', this.onTabSelected.bind(this)],
+      ['searchFilters', new Map(this.searchFilters)],
+
       ['stats', this.stats],
     ]);
 
@@ -243,7 +262,30 @@ export class Tidy5eKgarContainerSheet
     return context;
   }
 
+  private async setExpandedItemData() {
+    this.expandedItemData.clear();
+    const contents = await this.item.system.contents;
+
+    for (const id of this.expandedItems.keys()) {
+      const item = contents.get(id);
+      if (item) {
+        this.expandedItemData.set(
+          id,
+          await item.getChatData({ secrets: this.item.isOwner })
+        );
+      }
+    }
+  }
+
+  private _renderMutex = new AsyncMutex();
   async _render(force?: boolean, options = {}) {
+    await this._renderMutex.lock(async () => {
+      await this._renderSheet(force, options);
+    });
+  }
+
+  private async _renderSheet(force?: boolean, options = {}) {
+    await this.setExpandedItemData();
     const data = await this.getData();
     this.context.set(data);
 
@@ -366,5 +408,37 @@ export class Tidy5eKgarContainerSheet
       this._saveScrollPositions(this.element);
       this.setPosition({ height: 'auto' });
     }
+  }
+
+  /* -------------------------------------------- */
+  /* SheetExpandedItemsCacheable
+  /* -------------------------------------------- */
+
+  onItemToggled(itemId: string, isVisible: boolean, location: string) {
+    const locationSet =
+      this.expandedItems.get(itemId) ??
+      this.expandedItems.set(itemId, new Set<string>()).get(itemId);
+
+    if (isVisible) {
+      locationSet?.add(location);
+    } else {
+      locationSet?.delete(location);
+    }
+
+    debug('Item Toggled', {
+      expandedItems: this.expandedItems,
+    });
+  }
+
+  /* -------------------------------------------- */
+  /* SearchFilterCacheable
+  /* -------------------------------------------- */
+
+  onSearch(location: string, text: string): void {
+    debug('Searched', {
+      location,
+      text,
+    });
+    this.searchFilters.set(location, text);
   }
 }

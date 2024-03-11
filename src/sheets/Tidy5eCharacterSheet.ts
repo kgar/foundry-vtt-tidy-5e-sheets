@@ -136,7 +136,6 @@ export class Tidy5eCharacterSheet
         ['card', this.card],
         ['currentTabId', this.currentTabId],
         ['onTabSelected', this.onTabSelected.bind(this)],
-        ['onItemToggled', this.onItemToggled.bind(this)],
         ['searchFilters', new Map(this.searchFilters)],
         [
           'onFilter',
@@ -147,6 +146,7 @@ export class Tidy5eCharacterSheet
           this.itemFilterService.onFilterClearAll.bind(this.itemFilterService),
         ],
         ['onSearch', this.onSearch.bind(this)],
+        ['onItemToggled', this.onItemToggled.bind(this)],
         [
           'itemTableToggles',
           new Map(this.itemTableTogglesCache.itemTableToggles),
@@ -880,7 +880,6 @@ export class Tidy5eCharacterSheet
   }
 
   private async _renderSheet(force?: boolean, options = {}) {
-    this.rendering = true;
     await this.setExpandedItemData();
     const data = await this.getData();
     this.context.set(data);
