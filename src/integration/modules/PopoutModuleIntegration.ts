@@ -35,6 +35,10 @@ export class PopoutModuleIntegration implements ModuleIntegrationBase {
           'click',
           () => {
             ui.context?.close();
+            // Remove the "context" class from any Tidy content, since some things may be decorated by that class.
+            poppedOutBody
+              .querySelectorAll('[data-context-menu]')
+              .forEach((el: HTMLElement) => el.classList.remove('context'));
           },
           { once: true }
         );

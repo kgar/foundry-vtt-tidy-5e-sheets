@@ -12,22 +12,21 @@
     ExpandedItemIdToLocationsMap,
     OnItemToggledFn,
     ItemCardStore,
-    Actor5e,
   } from 'src/types/types';
   import { warn } from 'src/utils/logging';
   import { getContext, createEventDispatcher, onMount } from 'svelte';
   import type { Writable } from 'svelte/store';
   import ItemSummary from '../ItemSummary.svelte';
   import ExpandableContainer from 'src/components/expandable/ExpandableContainer.svelte';
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
   export let item: Item5e | null = null;
-  export let effect: any | null = null;
   export let contextMenu: { type: string; uuid: string } | null = null;
   export let rowClass: string = '';
   export let itemCardContentTemplate: ItemCardContentComponent | null = null;
   export let hidden: boolean = false;
 
-  $: draggable = item ?? effect;
+  $: draggable = item;
 
   const emptyChatData: ItemChatData = {
     description: { value: '' },
@@ -163,7 +162,8 @@
       draggable: !!draggable,
     }}
     {rowClass}
-    on:mousedown={(event) => dispatcher('mousedown', event)}
+    on:mousedown={(event) =>
+      item && FoundryAdapter.editOnMiddleClick(event, item)}
     on:mouseenter={onMouseEnter}
     on:mouseleave={onMouseLeave}
     on:dragstart={handleDragStart}
