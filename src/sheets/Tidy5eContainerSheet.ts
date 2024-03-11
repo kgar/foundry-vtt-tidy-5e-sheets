@@ -1,12 +1,18 @@
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-import type { ContainerSheetContext, ItemDescription } from 'src/types/item';
+import type {
+  ContainerSheetContext,
+  ItemDescription,
+} from 'src/types/item.types';
 import type {
   ItemCardStore,
+  MessageBus,
+  MessageBusMessage,
   SheetStats,
   SheetTabCacheable,
   Tab,
+  Utilities,
 } from 'src/types/types';
-import { debug } from 'src/utils/logging';
+import { debug, error } from 'src/utils/logging';
 import { get, writable } from 'svelte/store';
 import { CustomContentRenderer } from './CustomContentRenderer';
 import {
@@ -14,13 +20,17 @@ import {
   applyTitleToWindow,
   maintainCustomContentInputFocus,
 } from 'src/utils/applications';
-import { SettingsProvider } from 'src/settings/settings';
+import { SettingsProvider, settingStore } from 'src/settings/settings';
 import { ItemSheetRuntime } from 'src/runtime/item/ItemSheetRuntime';
 import { TabManager } from 'src/runtime/tab/TabManager';
 import { isNil } from 'src/utils/data';
 import type { SvelteComponent } from 'svelte';
 import ContainerSheet from './item/ContainerSheet.svelte';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
+import { ItemFilterService } from 'src/features/filtering/ItemFilterService';
+import { StoreSubscriptionsService } from 'src/features/store/StoreSubscriptionsService';
+import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
+import { CONSTANTS } from 'src/constants';
 
 export class Tidy5eKgarContainerSheet
   extends dnd5e.applications.item.ContainerSheet
@@ -32,6 +42,17 @@ export class Tidy5eKgarContainerSheet
   });
   currentTabId: string | undefined = undefined;
   card = writable<ItemCardStore>();
+  itemFilterService: ItemFilterService;
+  subscriptionsService: StoreSubscriptionsService;
+  messageBus: MessageBus = writable<MessageBusMessage | undefined>();
+
+  constructor(...args: any[]) {
+    super(...args);
+
+    this.subscriptionsService = new StoreSubscriptionsService();
+
+    this.itemFilterService = new ItemFilterService({}, this.item);
+  }
 
   get template() {
     return FoundryAdapter.getTemplate('empty-form-template-for-items.hbs');
@@ -45,12 +66,33 @@ export class Tidy5eKgarContainerSheet
 
   component: SvelteComponent | undefined;
   activateListeners(html: any) {
+    let first = true;
+    this.subscriptionsService.registerSubscriptions(
+      this.itemFilterService.filterData$.subscribe(() => {
+        if (first) return;
+        this.render();
+      }),
+      settingStore.subscribe(() => {
+        if (first) return;
+        this.render();
+      }),
+      this.messageBus.subscribe((m) => {
+        debug('Message bus message received', {
+          app: this,
+          actor: this.actor,
+          message: m,
+        });
+      })
+    );
+    first = false;
+
     const node = html.get(0);
 
     this.card.set({ sheet: node, item: null, itemCardContentTemplate: null });
 
     const context = new Map<any, any>([
       ['context', this.context],
+      ['messageBus', this.messageBus],
       ['stats', this.stats],
       ['card', this.card],
       ['currentTabId', this.currentTabId],
@@ -67,6 +109,35 @@ export class Tidy5eKgarContainerSheet
 
   async getData(options = {}) {
     const defaultDocumentContext = await super.getData(this.options);
+
+    const containerPreferences = SheetPreferencesService.getByType(
+      this.item.type
+    );
+
+    const contentsSortMode =
+      containerPreferences.tabs?.[CONSTANTS.TAB_CONTAINER_CONTENTS]?.sort ??
+      'm';
+
+    try {
+      // TODO: When I fully take over section preparation, move this filter() step higher up so that it is not looping in individual sections
+      let contents = this.itemFilterService.filter(
+        defaultDocumentContext.inventory.contents.items,
+        CONSTANTS.TAB_CONTAINER_CONTENTS
+      );
+      if (contentsSortMode === 'a') {
+        contents = contents.toSorted((a, b) => a.name.localeCompare(b.name));
+      }
+      defaultDocumentContext.inventory.contents.items = contents;
+    } catch (e) {
+      error(
+        'An error occurred while sorting and filtering section data',
+        false,
+        e
+      );
+      debug('Sorting/Filtering error troubleshooting info', {
+        defaultDocumentContext,
+      });
+    }
 
     const itemDescriptions: ItemDescription[] = [];
     itemDescriptions.push({
@@ -100,6 +171,29 @@ export class Tidy5eKgarContainerSheet
 
     tabs.push(...customTabs);
 
+    // Utilities
+    let utilities: Utilities = {
+      [CONSTANTS.TAB_CONTAINER_CONTENTS]: {
+        utilityToolbarCommands: [
+          {
+            title: FoundryAdapter.localize('SIDEBAR.SortModeAlpha'),
+            iconClass: 'fa-solid fa-arrow-down-a-z',
+            execute: async () => {
+              await SheetPreferencesService.setDocumentTypeTabPreference(
+                this.actor.type,
+                CONSTANTS.TAB_CHARACTER_INVENTORY,
+                'sort',
+                'm'
+              );
+              this.render();
+            },
+            visible: contentsSortMode === 'a',
+          },
+        ],
+      },
+    };
+
+    // Context Data
     const context: ContainerSheetContext = {
       ...defaultDocumentContext,
       appId: this.appId,
@@ -108,10 +202,12 @@ export class Tidy5eKgarContainerSheet
         super.activateListeners($(node));
       },
       customContent: await ItemSheetRuntime.getContent(defaultDocumentContext),
+      filterData: this.itemFilterService.getActorItemFilterData(),
       itemDescriptions,
       lockItemQuantity: FoundryAdapter.shouldLockItemQuantity(),
       originalContext: defaultDocumentContext,
       tabs: tabs,
+      utilities: utilities,
       viewableWarnings:
         defaultDocumentContext.warnings?.filter(
           (w: any) => !isNil(w.message?.trim(), '')

@@ -11,13 +11,13 @@
   import ItemTableHeaderRow from '../item-list/v1/ItemTableHeaderRow.svelte';
   import SpellPips from './SpellPips.svelte';
   import SpellSlotUses from '../spellbook/SpellSlotUses.svelte';
-  import type { Item5e } from 'src/types/item';
+  import type { Item5e } from 'src/types/item.types';
   import GridPaneFavoriteIcon from '../item-grid/GridPaneFavoriteIcon.svelte';
   import { getContext } from 'svelte';
   import type { Readable, Writable } from 'svelte/store';
   import { settingStore } from 'src/settings/settings';
   import { ActorItemRuntime } from 'src/runtime/ActorItemRuntime';
-  import { declareLocation } from 'src/types/location-awareness';
+  import { declareLocation } from 'src/types/location-awareness.types';
 
   export let section: any;
   export let spells: Item5e[];

@@ -1,4 +1,4 @@
-import type { Item5e } from 'src/types/item';
+import type { Item5e } from 'src/types/item.types';
 import { debug, error } from './logging';
 import type {
   Actor5e,

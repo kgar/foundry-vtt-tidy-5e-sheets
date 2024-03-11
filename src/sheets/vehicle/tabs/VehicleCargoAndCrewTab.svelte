@@ -22,7 +22,7 @@
   import ItemDuplicateControl from 'src/components/item-list/controls/ItemDuplicateControl.svelte';
   import ItemEditControl from 'src/components/item-list/controls/ItemEditControl.svelte';
   import ItemControls from 'src/components/item-list/controls/ItemControls.svelte';
-  import type { ItemCardContentComponent } from 'src/types/item';
+  import type { ItemCardContentComponent } from 'src/types/item.types';
   import InventoryItemCardContent from 'src/components/item-info-card/InventoryItemCardContent.svelte';
   import { settingStore } from 'src/settings/settings';
   import ActionFilterOverrideControl from 'src/components/item-list/controls/ActionFilterOverrideControl.svelte';

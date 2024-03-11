@@ -29,7 +29,7 @@
   import { settingStore } from 'src/settings/settings';
   import ActionFilterOverrideControl from '../item-list/controls/ActionFilterOverrideControl.svelte';
   import { SpellSchool } from 'src/features/spell-school/SpellSchool';
-  import { declareLocation } from 'src/types/location-awareness';
+  import { declareLocation } from 'src/types/location-awareness.types';
   import Dnd5eIcon from '../icon/Dnd5eIcon.svelte';
 
   let context =

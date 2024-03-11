@@ -13,7 +13,7 @@
     Item5e,
     ItemCardContentComponent,
     ItemChatData,
-  } from 'src/types/item';
+  } from 'src/types/item.types';
   import { settingStore } from 'src/settings/settings';
   import { CONSTANTS } from 'src/constants';
 

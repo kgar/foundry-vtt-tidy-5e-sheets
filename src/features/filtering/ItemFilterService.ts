@@ -1,6 +1,6 @@
 import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
 import type { ActorFilters, ItemFilter } from 'src/runtime/item/item.types';
-import type { Item5e } from 'src/types/item';
+import type { Item5e } from 'src/types/item.types';
 import type { Actor5e } from 'src/types/types';
 import { isNil } from 'src/utils/data';
 import { debug, error } from 'src/utils/logging';

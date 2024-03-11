@@ -29,7 +29,7 @@ import { getPercentage, isLessThanOneIsOne } from 'src/utils/numbers';
 import NpcShortRestDialog from 'src/dialogs/NpcShortRestDialog';
 import LongRestDialog from 'src/dialogs/NpcLongRestDialog';
 import type { SvelteComponent } from 'svelte';
-import type { ItemChatData } from 'src/types/item';
+import type { ItemChatData } from 'src/types/item.types';
 import { NpcSheetRuntime } from 'src/runtime/NpcSheetRuntime';
 import {
   actorUsesActionFeature,
@@ -289,7 +289,7 @@ export class Tidy5eNpcSheet
             title: FoundryAdapter.localize('SIDEBAR.SortModeAlpha'),
             iconClass: 'fa-solid fa-arrow-down-a-z',
             execute: async () => {
-              await SheetPreferencesService.setActorTypeTabPreference(
+              await SheetPreferencesService.setDocumentTypeTabPreference(
                 this.actor.type,
                 CONSTANTS.TAB_NPC_ABILITIES,
                 'sort',
@@ -303,7 +303,7 @@ export class Tidy5eNpcSheet
             title: FoundryAdapter.localize('SIDEBAR.SortModeManual'),
             iconClass: 'fa-solid fa-arrow-down-short-wide',
             execute: async () => {
-              await SheetPreferencesService.setActorTypeTabPreference(
+              await SheetPreferencesService.setDocumentTypeTabPreference(
                 this.actor.type,
                 CONSTANTS.TAB_NPC_ABILITIES,
                 'sort',
@@ -341,7 +341,7 @@ export class Tidy5eNpcSheet
             title: FoundryAdapter.localize('SIDEBAR.SortModeAlpha'),
             iconClass: 'fa-solid fa-arrow-down-a-z',
             execute: async () => {
-              await SheetPreferencesService.setActorTypeTabPreference(
+              await SheetPreferencesService.setDocumentTypeTabPreference(
                 this.actor.type,
                 CONSTANTS.TAB_NPC_SPELLBOOK,
                 'sort',
@@ -355,7 +355,7 @@ export class Tidy5eNpcSheet
             title: FoundryAdapter.localize('SIDEBAR.SortModeManual'),
             iconClass: 'fa-solid fa-arrow-down-short-wide',
             execute: async () => {
-              await SheetPreferencesService.setActorTypeTabPreference(
+              await SheetPreferencesService.setDocumentTypeTabPreference(
                 this.actor.type,
                 CONSTANTS.TAB_NPC_SPELLBOOK,
                 'sort',
@@ -409,7 +409,7 @@ export class Tidy5eNpcSheet
             title: FoundryAdapter.localize('SIDEBAR.SortModeAlpha'),
             iconClass: 'fa-solid fa-arrow-down-a-z',
             execute: async () => {
-              await SheetPreferencesService.setActorTypeTabPreference(
+              await SheetPreferencesService.setDocumentTypeTabPreference(
                 this.actor.type,
                 CONSTANTS.TAB_ACTOR_ACTIONS,
                 'sort',
@@ -423,7 +423,7 @@ export class Tidy5eNpcSheet
             title: FoundryAdapter.localize('TIDY5E.SortMode.ActionListDefault'),
             iconClass: 'fa-solid fa-arrow-down-short-wide',
             execute: async () => {
-              await SheetPreferencesService.setActorTypeTabPreference(
+              await SheetPreferencesService.setDocumentTypeTabPreference(
                 this.actor.type,
                 CONSTANTS.TAB_ACTOR_ACTIONS,
                 'sort',
@@ -1119,12 +1119,12 @@ export class Tidy5eNpcSheet
   _onResize(event: any) {
     super._onResize(event);
     const { width, height } = this.position;
-    SheetPreferencesService.setActorTypePreference(
+    SheetPreferencesService.setDocumentTypePreference(
       this.actor.type,
       'width',
       width
     );
-    SheetPreferencesService.setActorTypePreference(
+    SheetPreferencesService.setDocumentTypePreference(
       this.actor.type,
       'height',
       height

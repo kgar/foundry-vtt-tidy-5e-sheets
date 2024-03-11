@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { ItemSheetContext } from 'src/types/item';
+  import type { ItemSheetContext } from 'src/types/item.types';
   import type { Readable } from 'svelte/store';
   import { getContext } from 'svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';

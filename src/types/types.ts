@@ -1,5 +1,5 @@
 import type { ComponentType, SvelteComponent } from 'svelte';
-import type { Item5e, ItemCardContentComponent, ItemChatData } from './item';
+import type { Item5e, ItemCardContentComponent, ItemChatData } from './item.types';
 import type {
   OnContentReadyParams,
   OnRenderParams,

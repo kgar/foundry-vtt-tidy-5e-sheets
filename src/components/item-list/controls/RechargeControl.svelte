@@ -1,6 +1,6 @@
 <script lang="ts">
   import { settingStore } from 'src/settings/settings';
-  import type { Item5e } from 'src/types/item';
+  import type { Item5e } from 'src/types/item.types';
   import type { ActorSheetContext } from 'src/types/types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';

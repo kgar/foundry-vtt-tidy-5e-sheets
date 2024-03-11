@@ -3,7 +3,7 @@
   import type { CurrentSettings } from 'src/settings/settings';
   import { getContext, onDestroy } from 'svelte';
   import type { Writable } from 'svelte/store';
-  import type { ThemeColorSetting, Tidy5eThemeDataV1 } from 'src/types/theme';
+  import type { ThemeColorSetting, Tidy5eThemeDataV1 } from 'src/types/theme.types';
   import { applyCurrentTheme } from 'src/theme/theme';
   import { error } from 'src/utils/logging';
   import ThemeSettingSheetMenu from './ThemeSettingSheetMenu.svelte';

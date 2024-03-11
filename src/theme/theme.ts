@@ -2,7 +2,7 @@ import type {
   ThemeColorSetting,
   Tidy5eTheme as Tidy5eTheme,
   Tidy5eThemeDataV1,
-} from 'src/types/theme';
+} from 'src/types/theme.types';
 import { themeVariables } from './theme-reference';
 import { debug } from 'src/utils/logging';
 import { SettingsProvider } from 'src/settings/settings';

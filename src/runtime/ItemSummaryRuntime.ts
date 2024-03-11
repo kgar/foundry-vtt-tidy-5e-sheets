@@ -1,6 +1,6 @@
 import type { ItemSummaryCommand } from 'src/api';
 import type { RegisteredItemSummaryCommand } from './types';
-import type { Item5e } from 'src/types/item';
+import type { Item5e } from 'src/types/item.types';
 
 export class ItemSummaryRuntime {
   private static _itemSummaryCommands: RegisteredItemSummaryCommand[] = [];

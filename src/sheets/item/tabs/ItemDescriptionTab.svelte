@@ -2,7 +2,7 @@
   import RerenderAfterFormSubmission from 'src/components/utility/RerenderAfterFormSubmission.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import SheetEditor from 'src/components/editor/SheetEditor.svelte';
-  import type { ItemSheetContext } from 'src/types/item';
+  import type { ItemSheetContext } from 'src/types/item.types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
 

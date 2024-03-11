@@ -2,7 +2,7 @@
   import { slide } from 'svelte/transition';
   import { quadInOut } from 'svelte/easing';
   import ItemSummaryCommandButtonList from '../item-summary/ItemSummaryCommandButtonList.svelte';
-  import type { Item5e, ItemChatData } from 'src/types/item';
+  import type { Item5e, ItemChatData } from 'src/types/item.types';
   import { ItemSummaryRuntime } from 'src/runtime/ItemSummaryRuntime';
   import HorizontalLineSeparator from '../layout/HorizontalLineSeparator.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';

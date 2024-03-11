@@ -26,7 +26,7 @@ import {
 import type { SvelteComponent } from 'svelte';
 import { debug } from 'src/utils/logging';
 import { getPercentage } from 'src/utils/numbers';
-import type { ItemChatData } from 'src/types/item';
+import type { ItemChatData } from 'src/types/item.types';
 import { VehicleSheetRuntime } from 'src/runtime/VehicleSheetRuntime';
 import {
   actorUsesActionFeature,
@@ -177,7 +177,7 @@ export class Tidy5eVehicleSheet
             title: FoundryAdapter.localize('SIDEBAR.SortModeAlpha'),
             iconClass: 'fa-solid fa-arrow-down-a-z',
             execute: async () => {
-              await SheetPreferencesService.setActorTypeTabPreference(
+              await SheetPreferencesService.setDocumentTypeTabPreference(
                 this.actor.type,
                 CONSTANTS.TAB_ACTOR_ACTIONS,
                 'sort',
@@ -191,7 +191,7 @@ export class Tidy5eVehicleSheet
             title: FoundryAdapter.localize('TIDY5E.SortMode.ActionListDefault'),
             iconClass: 'fa-solid fa-arrow-down-short-wide',
             execute: async () => {
-              await SheetPreferencesService.setActorTypeTabPreference(
+              await SheetPreferencesService.setDocumentTypeTabPreference(
                 this.actor.type,
                 CONSTANTS.TAB_ACTOR_ACTIONS,
                 'sort',
@@ -469,12 +469,12 @@ export class Tidy5eVehicleSheet
   _onResize(event: any) {
     super._onResize(event);
     const { width, height } = this.position;
-    SheetPreferencesService.setActorTypePreference(
+    SheetPreferencesService.setDocumentTypePreference(
       CONSTANTS.SHEET_TYPE_VEHICLE,
       'width',
       width
     );
-    SheetPreferencesService.setActorTypePreference(
+    SheetPreferencesService.setDocumentTypePreference(
       CONSTANTS.SHEET_TYPE_VEHICLE,
       'height',
       height

@@ -1,7 +1,7 @@
 <script lang="ts">
   import VerticalLineSeparator from 'src/components/layout/VerticalLineSeparator.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { ItemSheetContext } from 'src/types/item';
+  import type { ItemSheetContext } from 'src/types/item.types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import ItemDescription from './ItemDescriptionTab.svelte';

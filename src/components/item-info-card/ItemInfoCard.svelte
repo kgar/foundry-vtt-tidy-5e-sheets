@@ -4,7 +4,7 @@
     Item5e,
     ItemCardContentComponent,
     ItemChatData,
-  } from 'src/types/item';
+  } from 'src/types/item.types';
   import type { ItemCardStore } from 'src/types/types';
   import { getContext, onDestroy, onMount } from 'svelte';
   import type { Writable } from 'svelte/store';

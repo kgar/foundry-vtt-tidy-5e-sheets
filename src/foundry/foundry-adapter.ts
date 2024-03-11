@@ -8,7 +8,7 @@ import type {
 } from 'src/types/types';
 import { CONSTANTS } from '../constants';
 import type { Actor5e } from 'src/types/types';
-import type { Item5e } from 'src/types/item';
+import type { Item5e } from 'src/types/item.types';
 import { SettingsProvider } from 'src/settings/settings';
 import { debug, error, warn } from 'src/utils/logging';
 import { clamp } from 'src/utils/numbers';

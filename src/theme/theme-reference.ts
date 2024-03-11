@@ -1,7 +1,7 @@
 import { CONSTANTS } from 'src/constants';
 import { defaultDarkTheme } from './default-dark-theme';
 import { defaultLightTheme } from './default-light-theme';
-import type { Tidy5eTheme } from 'src/types/theme';
+import type { Tidy5eTheme } from 'src/types/theme.types';
 
 export function getCoreThemes(includeDefault: boolean) {
   let themes: Record<string, string> = {};

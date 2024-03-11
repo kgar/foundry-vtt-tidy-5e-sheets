@@ -1,4 +1,4 @@
-import type { Item5e } from 'src/types/item';
+import type { Item5e } from 'src/types/item.types';
 
 export type ItemFilter = {
   name: string;

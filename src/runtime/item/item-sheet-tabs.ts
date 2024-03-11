@@ -57,7 +57,7 @@ const itemSheetTabs: Record<string, Tab> = {
     autoHeight: true,
   },
   containerContents: {
-    id: CONSTANTS.TAB_ITEM_CONTENTS_ID,
+    id: CONSTANTS.TAB_CONTAINER_CONTENTS,
     title: 'DND5E.Contents',
     content: {
       component: ItemContainerContentsTab,

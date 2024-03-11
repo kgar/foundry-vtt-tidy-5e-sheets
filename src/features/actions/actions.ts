@@ -2,7 +2,7 @@ import { CONSTANTS } from 'src/constants';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { ActionListRuntime } from 'src/runtime/action-list/ActionListRuntime';
 import { SettingsProvider } from 'src/settings/settings';
-import type { Item5e } from 'src/types/item';
+import type { Item5e } from 'src/types/item.types';
 import type { ActionItem, Actor5e, ActorActions } from 'src/types/types';
 import { isNil } from 'src/utils/data';
 import { scaleCantripDamageFormula, simplifyFormula } from 'src/utils/formula';

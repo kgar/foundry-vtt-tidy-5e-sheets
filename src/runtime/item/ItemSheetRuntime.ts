@@ -15,7 +15,7 @@ import WeaponSheet from 'src/sheets/item/WeaponSheet.svelte';
 import RaceSheet from 'src/sheets/item/RaceSheet.svelte';
 import type { ComponentType } from 'svelte';
 import type { RegisteredContent, RegisteredTab } from '../types';
-import type { ItemSheetContext } from 'src/types/item';
+import type { ItemSheetContext } from 'src/types/item.types';
 import { CustomContentManager } from '../content/CustomContentManager';
 import type { RegisteredEquipmentTypeGroup } from './item.types';
 

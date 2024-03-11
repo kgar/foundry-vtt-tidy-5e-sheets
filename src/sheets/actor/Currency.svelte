@@ -2,7 +2,7 @@
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { settingStore } from 'src/settings/settings';
-  import type { Item5e, ItemSheetContext } from 'src/types/item';
+  import type { Item5e, ItemSheetContext } from 'src/types/item.types';
   import type { Actor5e } from 'src/types/types';
   import type { ActorSheetContext } from 'src/types/types';
   import { getContext } from 'svelte';

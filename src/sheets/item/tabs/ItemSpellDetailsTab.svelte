@@ -1,7 +1,7 @@
 <script lang="ts">
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
-  import type { ItemSheetContext } from 'src/types/item';
+  import type { ItemSheetContext } from 'src/types/item.types';
   import Select from 'src/components/inputs/Select.svelte';
   import Checkbox from 'src/components/inputs/Checkbox.svelte';
   import ItemActivation from '../parts/ItemActivation.svelte';

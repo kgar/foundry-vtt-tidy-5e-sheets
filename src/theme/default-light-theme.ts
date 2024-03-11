@@ -1,5 +1,5 @@
 import { CONSTANTS } from 'src/constants';
-import type { Tidy5eTheme } from 'src/types/theme';
+import type { Tidy5eTheme } from 'src/types/theme.types';
 
 export const defaultLightTheme: Tidy5eTheme = {
   name: 'TIDY5E.Settings.SheetTheme.light',

@@ -6,7 +6,7 @@ import type {
   RenderScheme,
 } from 'src/api';
 import type { HandlebarsTemplateRenderer } from 'src/runtime/HandlebarsTemplateRenderer';
-import type { Item5e } from 'src/types/item';
+import type { Item5e } from 'src/types/item.types';
 import type {
   HtmlRuntimeContent,
   Actor5e,

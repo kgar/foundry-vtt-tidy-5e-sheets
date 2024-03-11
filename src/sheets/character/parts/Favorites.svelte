@@ -3,7 +3,7 @@
   import InventoryList from './InventoryList.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import FavoriteFeaturesList from './FavoriteFeaturesList.svelte';
-  import type { Item5e } from 'src/types/item';
+  import type { Item5e } from 'src/types/item.types';
   import FavoriteSpellsList from 'src/sheets/character/parts/FavoriteSpellsList.svelte';
   import { settingStore } from 'src/settings/settings';
   import { getContext } from 'svelte';

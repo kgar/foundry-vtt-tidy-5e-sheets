@@ -3,13 +3,12 @@
   import TidyTable from 'src/components/table/TidyTable.svelte';
   import TidyTableHeaderRow from 'src/components/table/TidyTableHeaderRow.svelte';
   import TidyTableHeaderCell from 'src/components/table/TidyTableHeaderCell.svelte';
-  import TidyTableRow from 'src/components/table/TidyTableRow.svelte';
   import ItemTableRowV2 from 'src/components/item-list/v2/ItemTableRowV2.svelte';
   import TidyTableCell from 'src/components/table/TidyTableCell.svelte';
   import ItemUseButton from 'src/components/item-list/ItemUseButton.svelte';
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { Item5e, ItemSheetContext } from 'src/types/item';
+  import type { Item5e, ItemSheetContext } from 'src/types/item.types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import CapacityBar from 'src/sheets/container/CapacityBar.svelte';
@@ -18,7 +17,9 @@
   import ItemDeleteControl from 'src/components/item-list/controls/ItemDeleteControl.svelte';
   import ItemEditControl from 'src/components/item-list/controls/ItemEditControl.svelte';
   import UtilityToolbar from 'src/components/utility-bar/UtilityToolbar.svelte';
+  import UtilityToolbarCommand from 'src/components/utility-bar/UtilityToolbarCommand.svelte';
   import Search from 'src/components/utility-bar/Search.svelte';
+  import FilterMenu from 'src/components/filter/FilterMenu.svelte';
 
   let context = getContext<Readable<ItemSheetContext>>('context');
 
@@ -57,6 +58,10 @@
     searchCriteria,
     section.items,
   );
+
+  $: utilityBarCommands =
+    $context.utilities[CONSTANTS.TAB_CONTAINER_CONTENTS]
+      ?.utilityToolbarCommands ?? [];
 </script>
 
 <div class="container-contents-wrapper">
@@ -66,6 +71,16 @@
 
   <UtilityToolbar>
     <Search bind:value={searchCriteria}></Search>
+    <FilterMenu tabId={CONSTANTS.TAB_CONTAINER_CONTENTS} />
+    {#each utilityBarCommands as command (command.title)}
+      <UtilityToolbarCommand
+        title={command.title}
+        iconClass={command.iconClass}
+        text={command.text}
+        visible={command.visible ?? true}
+        on:execute={(ev) => command.execute?.(ev.detail)}
+      />
+    {/each}
   </UtilityToolbar>
 
   <section

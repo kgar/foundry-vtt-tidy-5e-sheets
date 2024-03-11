@@ -29,7 +29,7 @@ import {
 } from 'src/utils/applications';
 import type { SvelteComponent } from 'svelte';
 import { getPercentage } from 'src/utils/numbers';
-import type { ItemChatData } from 'src/types/item';
+import type { ItemChatData } from 'src/types/item.types';
 import { CharacterSheetRuntime } from 'src/runtime/CharacterSheetRuntime';
 import {
   actorUsesActionFeature,
@@ -318,7 +318,7 @@ export class Tidy5eCharacterSheet
             title: FoundryAdapter.localize('SIDEBAR.SortModeAlpha'),
             iconClass: 'fa-solid fa-arrow-down-a-z',
             execute: async () => {
-              await SheetPreferencesService.setActorTypeTabPreference(
+              await SheetPreferencesService.setDocumentTypeTabPreference(
                 this.actor.type,
                 CONSTANTS.TAB_CHARACTER_INVENTORY,
                 'sort',
@@ -332,7 +332,7 @@ export class Tidy5eCharacterSheet
             title: FoundryAdapter.localize('SIDEBAR.SortModeManual'),
             iconClass: 'fa-solid fa-arrow-down-short-wide',
             execute: async () => {
-              await SheetPreferencesService.setActorTypeTabPreference(
+              await SheetPreferencesService.setDocumentTypeTabPreference(
                 this.actor.type,
                 CONSTANTS.TAB_CHARACTER_INVENTORY,
                 'sort',
@@ -386,7 +386,7 @@ export class Tidy5eCharacterSheet
             title: FoundryAdapter.localize('SIDEBAR.SortModeAlpha'),
             iconClass: 'fa-solid fa-arrow-down-a-z',
             execute: async () => {
-              await SheetPreferencesService.setActorTypeTabPreference(
+              await SheetPreferencesService.setDocumentTypeTabPreference(
                 this.actor.type,
                 CONSTANTS.TAB_CHARACTER_SPELLBOOK,
                 'sort',
@@ -400,7 +400,7 @@ export class Tidy5eCharacterSheet
             title: FoundryAdapter.localize('SIDEBAR.SortModeManual'),
             iconClass: 'fa-solid fa-arrow-down-short-wide',
             execute: async () => {
-              await SheetPreferencesService.setActorTypeTabPreference(
+              await SheetPreferencesService.setDocumentTypeTabPreference(
                 this.actor.type,
                 CONSTANTS.TAB_CHARACTER_SPELLBOOK,
                 'sort',
@@ -454,7 +454,7 @@ export class Tidy5eCharacterSheet
             title: FoundryAdapter.localize('SIDEBAR.SortModeAlpha'),
             iconClass: 'fa-solid fa-arrow-down-a-z',
             execute: async () => {
-              await SheetPreferencesService.setActorTypeTabPreference(
+              await SheetPreferencesService.setDocumentTypeTabPreference(
                 this.actor.type,
                 CONSTANTS.TAB_CHARACTER_FEATURES,
                 'sort',
@@ -468,7 +468,7 @@ export class Tidy5eCharacterSheet
             title: FoundryAdapter.localize('SIDEBAR.SortModeManual'),
             iconClass: 'fa-solid fa-arrow-down-short-wide',
             execute: async () => {
-              await SheetPreferencesService.setActorTypeTabPreference(
+              await SheetPreferencesService.setDocumentTypeTabPreference(
                 this.actor.type,
                 CONSTANTS.TAB_CHARACTER_FEATURES,
                 'sort',
@@ -506,7 +506,7 @@ export class Tidy5eCharacterSheet
             title: FoundryAdapter.localize('SIDEBAR.SortModeAlpha'),
             iconClass: 'fa-solid fa-arrow-down-a-z',
             execute: async () => {
-              await SheetPreferencesService.setActorTypeTabPreference(
+              await SheetPreferencesService.setDocumentTypeTabPreference(
                 this.actor.type,
                 CONSTANTS.TAB_ACTOR_ACTIONS,
                 'sort',
@@ -520,7 +520,7 @@ export class Tidy5eCharacterSheet
             title: FoundryAdapter.localize('TIDY5E.SortMode.ActionListDefault'),
             iconClass: 'fa-solid fa-arrow-down-short-wide',
             execute: async () => {
-              await SheetPreferencesService.setActorTypeTabPreference(
+              await SheetPreferencesService.setDocumentTypeTabPreference(
                 this.actor.type,
                 CONSTANTS.TAB_ACTOR_ACTIONS,
                 'sort',
@@ -980,12 +980,12 @@ export class Tidy5eCharacterSheet
   _onResize(event: any) {
     super._onResize(event);
     const { width, height } = this.position;
-    SheetPreferencesService.setActorTypePreference(
+    SheetPreferencesService.setDocumentTypePreference(
       this.actor.type,
       'width',
       width
     );
-    SheetPreferencesService.setActorTypePreference(
+    SheetPreferencesService.setDocumentTypePreference(
       this.actor.type,
       'height',
       height

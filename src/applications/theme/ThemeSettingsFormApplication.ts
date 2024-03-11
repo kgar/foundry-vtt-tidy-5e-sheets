@@ -8,7 +8,7 @@ import {
   getThemeOrDefault,
   getThemeableColors,
 } from 'src/theme/theme';
-import type { ThemeColorSetting, Tidy5eThemeDataV1 } from 'src/types/theme';
+import type { ThemeColorSetting, Tidy5eThemeDataV1 } from 'src/types/theme.types';
 import type { SvelteComponent } from 'svelte';
 import { get, writable, type Writable } from 'svelte/store';
 import ThemeSettingsSheet from './ThemeSettingsSheet.svelte';
