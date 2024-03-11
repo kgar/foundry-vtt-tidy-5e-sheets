@@ -11,7 +11,9 @@ const moduleIntegrations: ModuleIntegrationBase[] = [
 export function setupModuleIntegrations(api: Tidy5eSheetsApi) {
   moduleIntegrations.forEach((m) => {
     try {
-      m.init(api);
+      if (game.modules.get(m.moduleId)?.active) {
+        m.init(api);
+      }
     } catch (e) {
       error(`Module integration failed for ${m.moduleId}`, false, e);
     }
