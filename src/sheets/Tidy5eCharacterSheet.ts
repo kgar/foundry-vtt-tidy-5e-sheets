@@ -20,6 +20,8 @@ import {
   type MessageBusMessage,
   type MessageBus,
   type Utilities,
+  type ContainerPanelItemContext,
+  type ContainerCapacityContext,
 } from 'src/types/types';
 import {
   applySheetAttributesToWindow,
@@ -29,7 +31,7 @@ import {
 } from 'src/utils/applications';
 import type { SvelteComponent } from 'svelte';
 import { getPercentage } from 'src/utils/numbers';
-import type { ItemChatData } from 'src/types/item.types';
+import type { Item5e, ItemChatData } from 'src/types/item.types';
 import { CharacterSheetRuntime } from 'src/runtime/CharacterSheetRuntime';
 import {
   actorUsesActionFeature,
@@ -343,6 +345,32 @@ export class Tidy5eCharacterSheet
             visible: inventorySortMode === 'm',
           },
           {
+            title: FoundryAdapter.localize(
+              'TIDY5E.Commands.HideContainerPanel'
+            ),
+            iconClass: `fas fa-boxes-stacked min-width-1rem`,
+            execute: () => {
+              FoundryAdapter.unsetFlag(this.actor, 'showContainerPanel');
+            },
+            visible: !!FoundryAdapter.tryGetFlag(
+              this.actor,
+              'showContainerPanel'
+            ),
+          },
+          {
+            title: FoundryAdapter.localize(
+              'TIDY5E.Commands.ShowContainerPanel'
+            ),
+            iconClass: `fas fa-box min-width-1rem`,
+            execute: () => {
+              FoundryAdapter.setFlag(this.actor, 'showContainerPanel', true);
+            },
+            visible: !FoundryAdapter.tryGetFlag(
+              this.actor,
+              'showContainerPanel'
+            ),
+          },
+          {
             title: FoundryAdapter.localize('TIDY5E.Commands.ExpandAll'),
             iconClass: 'fas fa-angles-down',
             execute: () =>
@@ -610,6 +638,30 @@ export class Tidy5eCharacterSheet
       );
     }
 
+    let containerPanelItems: ContainerPanelItemContext[] = [];
+    try {
+      let containers = Array.from<Item5e>(
+        this.actor.items
+          .values()
+          .filter((i: Item5e) => i.type === CONSTANTS.ITEM_TYPE_CONTAINER)
+      ).toSorted((a: Item5e, b: Item5e) => a.sort - b.sort);
+
+      for (let container of containers) {
+        const capacity =
+          (await container.system.computeCapacity()) as ContainerCapacityContext;
+        containerPanelItems.push({
+          container,
+          ...capacity,
+        });
+      }
+    } catch (e) {
+      error(
+        'An error occurred while preparing containers for the container panel',
+        false,
+        e
+      );
+    }
+
     const context: CharacterSheetContext = {
       ...defaultDocumentContext,
       activateFoundryJQueryListeners: (node: HTMLElement) => {
@@ -656,6 +708,7 @@ export class Tidy5eCharacterSheet
         }
       ),
       conditions: conditions,
+      containerPanelItems: containerPanelItems,
       customActorTraits: CustomActorTraitsRuntime.getEnabledTraits(
         defaultDocumentContext
       ),
@@ -758,6 +811,11 @@ export class Tidy5eCharacterSheet
       ),
       originalContext: defaultDocumentContext,
       owner: this.actor.isOwner,
+      showContainerPanel:
+        FoundryAdapter.tryGetFlag(this.actor, 'showContainerPanel') === true &&
+        Array.from(this.actor.items).some(
+          (i: Item5e) => i.type === CONSTANTS.ITEM_TYPE_CONTAINER
+        ),
       showLimitedSheet: FoundryAdapter.showLimitedSheet(this.actor),
       spellCalculations: calculateSpellAttackAndDc(this.actor),
       tabs: [],

@@ -1,18 +1,19 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { ContainerSheetContext } from 'src/types/item.types';
-  import { getContext } from 'svelte';
-  import type { Readable } from 'svelte/store';
+  import type { Item5e } from 'src/types/item.types';
+  import type { ContainerCapacityContext } from 'src/types/types';
 
-  let context = getContext<Readable<ContainerSheetContext>>('context');
+  export let container: Item5e;
+  export let capacity: ContainerCapacityContext;
+  export let showLabel = true;
 
   $: readableValue =
-    $context.system.capacity.type === CONSTANTS.ITEM_CAPACITY_TYPE_WEIGHT
-      ? ($context.capacity.value ?? 0).toFixed(2)
-      : Math.ceil($context.capacity.value ?? 0);
+    container.system.capacity.type === CONSTANTS.ITEM_CAPACITY_TYPE_WEIGHT
+      ? (capacity.value ?? 0).toFixed(2)
+      : Math.ceil(capacity.value ?? 0);
 
-  $: capacityLabel = `${readableValue}/${$context.capacity.max} ${$context.capacity.units}`;
+  $: capacityLabel = `${readableValue}/${capacity.max} ${capacity.units}`;
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -24,20 +25,22 @@
   title={capacityLabel}
   aria-valuetext={capacityLabel}
   aria-valuemin="0"
-  aria-valuenow={$context.capacity.value}
-  aria-valuemax={$context.capacity.max}
-  style="--percentage: {Math.round($context.capacity.pct)}%"
+  aria-valuenow={capacity.value}
+  aria-valuemax={capacity.max}
+  style="--percentage: {Math.round(capacity.pct)}%"
 >
-  <span class="capacity-label">
-    {capacityLabel}
-  </span>
+  {#if showLabel}
+    <span class="capacity-label">
+      {capacityLabel}
+    </span>
+  {/if}
 </div>
 
 <style lang="scss">
   .tidy-capacity {
     position: relative;
-    height: 1rem;
-    border-radius: 0.1875rem;
+    height: var(--capacity-bar-height, 1rem);
+    border-radius: var(--capacity-bar-container-border-radius, 0.1875rem);
     background: var(--t5e-capacity-container-background);
     border: 1px solid var(--t5e-capacity-container-border-color);
 
@@ -51,6 +54,7 @@
       border: 1px solid var(--t5e-capacity-border-color);
       border-radius: 2px;
       background: var(--t5e-capacity-background);
+      transition: width 0.5s ease;
     }
 
     .capacity-label {

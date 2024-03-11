@@ -225,7 +225,7 @@
     </TidyTable>
   </section>
   <footer class="container-contents-footer">
-    <CapacityBar />
+    <CapacityBar container={$context.item} capacity={$context.capacity} />
   </footer>
 </div>
 

@@ -92,6 +92,10 @@
     <svelte:fragment slot="body">
       {#each items as item (item.id)}
         {@const ctx = $context.itemContext[item.id]}
+        {@const itemName =
+          item.system.identified === false
+            ? item.system.unidentified.name
+            : item.name}
         <ItemTableRow
           {item}
           on:mousedown={(event) =>
@@ -105,7 +109,7 @@
           hidden={visibleItemIdSubset !== null &&
             !visibleItemIdSubset.has(item.id)}
         >
-          <ItemTableCell primary={true} title={item.name}>
+          <ItemTableCell primary={true} title={itemName}>
             <ItemUseButton disabled={!$context.editable} {item} />
             <ItemName
               on:toggle={() => toggleSummary($context.actor)}
@@ -114,9 +118,9 @@
             >
               <span
                 class="truncate"
-                data-tidy-item-name={item.name}
+                data-tidy-item-name={itemName}
                 data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_NAME}
-                >{item.name}</span
+                >{itemName}</span
               >
               {#if item.system?.properties?.has('amm')}
                 <span class="ammo">

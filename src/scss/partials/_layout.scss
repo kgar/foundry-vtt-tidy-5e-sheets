@@ -112,6 +112,10 @@
   min-width: 0;
 }
 
+.min-width-1rem {
+  min-width: 1rem;
+}
+
 .grid-auto-columns {
   --grid-auto-columns-min-width-internal: var(
     --grid-auto-columns-min-width,

@@ -17,6 +17,8 @@
   import Search from 'src/components/utility-bar/Search.svelte';
   import UtilityToolbarCommand from 'src/components/utility-bar/UtilityToolbarCommand.svelte';
   import FilterMenu from 'src/components/filter/FilterMenu.svelte';
+  import ContainerPanel from 'src/sheets/shared/ContainerPanel.svelte';
+  import ExpandableContainer from 'src/components/expandable/ExpandableContainer.svelte';
 
   let context = getContext<Readable<CharacterSheetContext>>('context');
 
@@ -59,6 +61,12 @@
   {#if noItems && !$context.unlocked}
     <Notice>{localize('TIDY5E.EmptySection')}</Notice>
   {:else}
+    <ExpandableContainer
+      expanded={$context.showContainerPanel &&
+        !!$context.containerPanelItems.length}
+    >
+      <ContainerPanel containerPanelItems={$context.containerPanelItems} />
+    </ExpandableContainer>
     {#each $context.inventory as section (section.label)}
       {@const visibleItemIdSubset = FoundryAdapter.searchItems(
         searchCriteria,

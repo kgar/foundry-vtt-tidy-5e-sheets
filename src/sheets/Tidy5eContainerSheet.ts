@@ -244,6 +244,7 @@ export class Tidy5eKgarContainerSheet
       },
       customContent: await ItemSheetRuntime.getContent(defaultDocumentContext),
       filterData: this.itemFilterService.getDocumentItemFilterData(),
+      identifiedName: FoundryAdapter.getIdentifiedName(this.item),
       itemDescriptions,
       lockItemQuantity: FoundryAdapter.shouldLockItemQuantity(),
       originalContext: defaultDocumentContext,

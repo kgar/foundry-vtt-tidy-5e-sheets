@@ -747,6 +747,8 @@
   "TIDY5E.ItemFilters.MenuTooltip.Filters": "Filters",
   "TIDY5E.Commands.ShowLegendaryToolbar": "Show Legendary Toolbar",
   "TIDY5E.Commands.HideLegendaryToolbar": "Hide Legendary Toolbar",
+  "TIDY5E.Commands.ShowContainerPanel": "Show Container Panel",
+  "TIDY5E.Commands.HideContainerPanel": "Hide Container Panel",
   "TIDY5E.ItemFilters.ClearAll": "Clear All",
   "TIDY5E.ItemFilters.Category.Miscellaneous": "Miscellaneous",
   "TIDY5E.ItemFilters.Filter.Other": "Other",

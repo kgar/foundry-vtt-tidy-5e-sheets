@@ -1,5 +1,9 @@
 import type { ComponentType, SvelteComponent } from 'svelte';
-import type { Item5e, ItemCardContentComponent, ItemChatData } from './item.types';
+import type {
+  Item5e,
+  ItemCardContentComponent,
+  ItemChatData,
+} from './item.types';
 import type {
   OnContentReadyParams,
   OnRenderParams,
@@ -109,6 +113,7 @@ export type CharacterSheetContext = {
   appearanceEnrichedHtml: string;
   biographyEnrichedHtml: string;
   bondEnrichedHtml: string;
+  containerPanelItems: ContainerPanelItemContext[];
   features: CharacterFeatureSection[];
   flawEnrichedHtml: string;
   idealEnrichedHtml: string;
@@ -118,6 +123,7 @@ export type CharacterSheetContext = {
   notes3EnrichedHtml: string;
   notes4EnrichedHtml: string;
   notesEnrichedHtml: string;
+  showContainerPanel: boolean;
   spellCalculations: SpellCalculations;
   traitEnrichedHtml: string;
   utilities: Utilities;
@@ -331,4 +337,15 @@ export type ExpandedItemData = Map<string, ItemChatData>;
 export type MaxPreparedSpellFormula = {
   label: string;
   value: string;
+};
+
+export type ContainerPanelItemContext = {
+  container: Item5e;
+} & ContainerCapacityContext;
+
+export type ContainerCapacityContext = {
+  max: number;
+  pct: number;
+  value: number;
+  units: string;
 };
