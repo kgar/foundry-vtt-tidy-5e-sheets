@@ -751,5 +751,8 @@
   "TIDY5E.ItemFilters.Category.Miscellaneous": "Miscellaneous",
   "TIDY5E.ItemFilters.Filter.Other": "Other",
   "TIDY5E.GMOnly.Message": "GM Only: {message}",
-  "TIDY5E.ReminderToBackUp": "Always remember to back up your world."
+  "TIDY5E.ReminderToBackUp": "Always remember to back up your world.",
+  "TIDY5E.Utilities.GMTools": "GM Tools",
+  "TIDY5E.Utilities.IdentifyAll": "Identify All Items",
+  "TIDY5E.Utilities.MarkAllAsUnidentified": "Mark All Items as Unidentified"
 }
