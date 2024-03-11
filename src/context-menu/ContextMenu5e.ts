@@ -1,4 +1,4 @@
-import { CONSTANTS } from 'src/constants';
+import type { ContextMenuPositionInfo } from './context-menu.types';
 
 /**
  * A specialized subclass of ContextMenu that places the menu in a fixed position.
@@ -10,19 +10,28 @@ export default class ContextMenu5e extends ContextMenu {
   }
 
   /** @override */
-  _setPosition([html], [target]) {
-    const appNode = target.closest('[data-appId]');
-    const appId = parseInt(appNode.getAttribute('data-appId'));
-    const isPoppedOut = !isNaN(appId) && PopoutModule.singleton.poppedOut.has(appId);
-    const insertTargetNode = isPoppedOut
-      ? PopoutModule.singleton.poppedOut.get(appId).window.document.body
-      : document.body;
-    insertTargetNode.appendChild(html);
+  _setPosition([html]: [html: HTMLElement], [target]: [target: HTMLElement]) {
+    const positionInfo: ContextMenuPositionInfo = {
+      insertTarget: document.body,
+      html: html,
+      target: target,
+    };
+
+    if (
+      !Hooks.call(
+        'tidy5e-sheet.prepareFloatingContextMenuPosition',
+        positionInfo
+      )
+    ) {
+      return;
+    }
+
+    positionInfo.insertTarget.appendChild(html);
     const { clientWidth, clientHeight } = document.documentElement;
     const { width, height } = html.getBoundingClientRect();
 
     // TODO: Improve core ContextMenu class to provide this event rather than using the global event.
-    const { clientX, clientY } = window.event;
+    const { clientX, clientY } = window.event as MouseEvent;
     const left = Math.min(clientX, clientWidth - width);
     this._expandUp = clientY + height > clientHeight;
     // html.classList.add('dnd5e2');

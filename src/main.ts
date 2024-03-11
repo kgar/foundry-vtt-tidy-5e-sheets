@@ -12,6 +12,7 @@ import { initRuntime } from './runtime/runtime-init';
 import MigrationNotificationFormApplication from './applications/migrations/notification/MigrationNotificationFormApplication';
 import { MigrationTally } from './applications/migrations/MigrationTally';
 import { Tidy5eKgarContainerSheet } from './sheets/Tidy5eContainerSheet';
+import { setupModuleIntegrations } from './integration/integration';
 
 FoundryAdapter.registerActorSheet(
   Tidy5eCharacterSheet,
@@ -70,6 +71,8 @@ Hooks.once('ready', async () => {
   }
 
   Hooks.callAll(CONSTANTS.HOOK_TIDY5E_SHEETS_READY, api);
+
+  setupModuleIntegrations(api);
 
   if (
     FoundryAdapter.userIsGm() &&

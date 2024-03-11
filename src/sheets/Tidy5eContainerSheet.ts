@@ -20,7 +20,7 @@ import { TabManager } from 'src/runtime/tab/TabManager';
 import { isNil } from 'src/utils/data';
 import type { SvelteComponent } from 'svelte';
 import ContainerSheet from './item/ContainerSheet.svelte';
-import { initTidy5eContextMenu, initTidy5eContextMenuV2 } from 'src/context-menu/tidy5e-context-menu';
+import { initTidy5eContextMenuV2 } from 'src/context-menu/tidy5e-context-menu';
 
 export class Tidy5eKgarContainerSheet
   extends dnd5e.applications.item.ContainerSheet

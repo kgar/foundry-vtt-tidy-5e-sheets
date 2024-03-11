@@ -112,9 +112,10 @@
                 disabled={!FoundryAdapter.canUseItem(item)}
                 {item}
               />
+              <!-- This is generally what we want in Tidy Tables / Item Table V2; consider breaking of ItemNameV2 to propagate and replace the old ItemName gradually. -->
               <ItemName
                 on:toggle={() => toggleSummary()}
-                cssClass="extra-small-gap"
+                cssClass="align-self-stretch flex-row align-items-center"
                 {item}
               >
                 <span
