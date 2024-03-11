@@ -20,6 +20,8 @@
   import UtilityToolbarCommand from 'src/components/utility-bar/UtilityToolbarCommand.svelte';
   import Search from 'src/components/utility-bar/Search.svelte';
   import FilterMenu from 'src/components/filter/FilterMenu.svelte';
+  import ButtonMenu from 'src/components/button-menu/ButtonMenu.svelte';
+  import ButtonMenuCommand from 'src/components/button-menu/ButtonMenuCommand.svelte';
 
   let context = getContext<Readable<ItemSheetContext>>('context');
 
@@ -62,6 +64,8 @@
   $: utilityBarCommands =
     $context.utilities[CONSTANTS.TAB_CONTAINER_CONTENTS]
       ?.utilityToolbarCommands ?? [];
+
+  $: menuOpen = false;
 </script>
 
 <div class="container-contents-wrapper">
@@ -81,6 +85,41 @@
         on:execute={(ev) => command.execute?.(ev.detail)}
       />
     {/each}
+
+    {#if FoundryAdapter.userIsGm()}
+      <ButtonMenu
+        iconClass="ra ra-fairy-wand"
+        buttonClass="inline-icon-button {menuOpen ? 'menu-is-open' : ''}"
+        position="bottom"
+        anchor="right"
+        title={localize('TIDY5E.Utilities.GMTools')}
+        bind:open={menuOpen}
+        menuElement="div"
+      >
+        <ButtonMenuCommand
+          on:click={() => {
+            FoundryAdapter.identifyAllItemsForContainer(
+              $context.item,
+              section.items,
+            );
+          }}
+          iconClass="fas fa-magnifying-glass"
+        >
+          {localize('TIDY5E.Utilities.IdentifyAll')}
+        </ButtonMenuCommand>
+        <ButtonMenuCommand
+          on:click={() => {
+            FoundryAdapter.markAllItemsAsUnidentifiedForContainer(
+              $context.item,
+              section.items,
+            );
+          }}
+          iconClass="fas fa-question"
+        >
+          {localize('TIDY5E.Utilities.MarkAllAsUnidentified')}
+        </ButtonMenuCommand>
+      </ButtonMenu>
+    {/if}
   </UtilityToolbar>
 
   <section
