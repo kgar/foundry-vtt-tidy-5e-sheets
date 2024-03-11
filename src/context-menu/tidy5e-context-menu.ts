@@ -19,16 +19,6 @@ export function initTidy5eContextMenu(
   });
 }
 
-export function initTidy5eContextMenuV2(
-  sheet: any,
-  html: any,
-  contextMenuSelector: string = '[data-context-menu]'
-) {
-  FoundryAdapter.createContextMenuV2(html, contextMenuSelector, [], {
-    onOpen: onItemContext.bind(sheet),
-  });
-}
-
 /**
  * Handle activation of a context menu for an embedded Item or ActiveEffect document.
  * Dynamically populate the array of context menu options.

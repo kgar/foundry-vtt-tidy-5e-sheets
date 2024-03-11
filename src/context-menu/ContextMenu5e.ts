@@ -27,14 +27,12 @@ export default class ContextMenu5e extends ContextMenu {
     }
 
     positionInfo.insertTarget.appendChild(html);
-    const { clientWidth, clientHeight } = document.documentElement;
+    const { clientWidth, clientHeight } = positionInfo.insertTarget;
     const { width, height } = html.getBoundingClientRect();
 
-    // TODO: Improve core ContextMenu class to provide this event rather than using the global event.
     const { clientX, clientY } = window.event as MouseEvent;
-    const left = Math.min(clientX, clientWidth - width);
+    const left = Math.min(clientX + 1, clientWidth - width);
     this._expandUp = clientY + height > clientHeight;
-    // html.classList.add('dnd5e2');
     html.classList.add('floating');
     html.classList.add('tidy5e-sheet');
     html.classList.toggle('expand-up', this._expandUp);

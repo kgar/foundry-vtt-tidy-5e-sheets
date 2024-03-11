@@ -990,9 +990,6 @@ export const FoundryAdapter = {
     return TextEditor.enrichHTML(value, options);
   },
   createContextMenu(...args: any[]): any {
-    return new ContextMenu(...args);
-  },
-  createContextMenuV2(...args: any[]): any {
     return new ContextMenu5e(...args);
   },
   createAdvancementSelectionDialog(item: any) {
