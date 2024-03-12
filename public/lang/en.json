@@ -224,6 +224,15 @@
     "hint": "Determines how vehicle exhaustion is configured and presented on the vehicle sheet.",
     "AtLeastOneLevelRequiredErrorMessage": "At least one vehicle exhaustion level is required."
   },
+  "TIDY5E.WorldSettings.TabItem": {
+    "tabLabel": "Item"
+  },
+  "TIDY5E.WorldSettings.ItemIdentificationPermission": {
+    "name": "Item Identification Permission",
+    "hint": "Determines which type of user is able to access the UI controls for identifying items.",
+    "options.GmOnly": "GM Only",
+    "options.GmAndOwners": "GM and Item Owners"
+  },
   "TIDY5E.WorldSettings.TabSheetLock": {
     "tabLabel": "Sheet Lock",
     "header": "Lock Options",
