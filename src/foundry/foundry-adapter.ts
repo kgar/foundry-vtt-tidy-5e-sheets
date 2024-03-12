@@ -427,7 +427,12 @@ export const FoundryAdapter = {
         .filter(
           (item: any) =>
             searchCriteria.trim() === '' ||
-            item.name.toLowerCase().includes(searchCriteria.toLowerCase())
+            (item.system.identified === false &&
+              item.system.unidentified?.name
+                ?.toLowerCase()
+                .includes(searchCriteria.toLowerCase())) ||
+            (item.system.identified !== false &&
+              item.name.toLowerCase().includes(searchCriteria.toLowerCase()))
         )
         .map((item) => item.id)
     );

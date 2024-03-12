@@ -9,8 +9,15 @@
   import { getContext } from 'svelte';
   import type { Item5e } from 'src/types/item.types';
   import { settingStore } from 'src/settings/settings';
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
   export let containerPanelItems: ContainerPanelItemContext[] = [];
+  export let searchCriteria: string = '';
+
+  $: visibleContainersIdsSubset = FoundryAdapter.searchItems(
+    searchCriteria,
+    containerPanelItems.map((c) => c.container),
+  );
 
   let card: Writable<ItemCardStore> | undefined =
     getContext<Writable<ItemCardStore>>('card');
@@ -64,6 +71,8 @@
       title={container.system.identified === false
         ? container.system.unidentified.name
         : container.name}
+      class:hidden={!visibleContainersIdsSubset.has(container.id)}
+      aria-hidden={!visibleContainersIdsSubset.has(container.id)}
     >
       <button
         class="transparent-button"
@@ -101,31 +110,38 @@
   .containers {
     flex: 1;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(4.5rem, max-content));
-    gap: 0.25rem;
-  }
+    grid-template-columns: repeat(
+      auto-fit,
+      minmax(var(--t5e-container-panel-item-size), max-content)
+    );
+    gap: 0.375rem;
 
-  .container {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-  }
+    .container {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
 
-  .container-image {
-    aspect-ratio: 1;
-    border: 0.0625rem solid var(--t5e-separator-color);
-    border-radius: 0.1875rem 0.1875rem 0 0;
-    background-color: var(--t5e-light-color);
-    background-size: cover;
-    background-position: 50% 0;
-    transition: filter 0.75s;
-
-    &.conceal {
-      filter: grayscale(100%);
+      &.hidden {
+        display: none;
+      }
     }
-  }
 
-  .unidentified-glyph {
-    font-size: 2.5rem;
+    .container-image {
+      aspect-ratio: 1;
+      border: 0.0625rem solid var(--t5e-separator-color);
+      border-radius: 0.1875rem 0.1875rem 0 0;
+      background-color: var(--t5e-light-color);
+      background-size: cover;
+      background-position: 50% 0;
+      transition: filter 0.75s;
+
+      &.conceal {
+        filter: grayscale(100%);
+      }
+    }
+
+    .unidentified-glyph {
+      font-size: calc(var(--t5e-container-panel-item-size) / 2);
+    }
   }
 </style>

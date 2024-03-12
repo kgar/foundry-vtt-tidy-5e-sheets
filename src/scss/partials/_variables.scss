@@ -12,9 +12,14 @@
   --t5e-capacity-container-background: var(--t5e-light-color);
   --t5e-capacity-container-border-color: var(--t5e-separator-color);
   --t5e-capacity-text-color: var(--t5e-encumbrance-text-color);
-  --t5e-capacity-bar-text-shadow-color: var(--t5e-encumbrance-bar-text-shadow-color);
+  --t5e-capacity-bar-text-shadow-color: var(
+    --t5e-encumbrance-bar-text-shadow-color
+  );
   --t5e-capacity-background: var(--t5e-encumbrance-bar-background);
   --t5e-capacity-border-color: var(--t5e-encumbrance-bar-outline-color);
+
+  // Container Panel
+  --t5e-container-panel-item-size: 3.125rem;
 
   // Spellbook School Icons
   --t5e-spell-school-icon-fill: var(--t5e-secondary-color);

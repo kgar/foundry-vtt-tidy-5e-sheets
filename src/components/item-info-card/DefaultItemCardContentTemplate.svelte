@@ -23,7 +23,11 @@
   class:equipped={item.system.equipped}
   data-item-id={item._id}
 >
-  <p class="info-card-name">{item.name}</p>
+  <p class="info-card-name">
+    {item.system.identified === false
+      ? item.system.unidentified.name
+      : item.name}
+  </p>
   {#if ctx?.hasUses}
     <div class="info-card-amount">
       <span

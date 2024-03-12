@@ -65,7 +65,10 @@
       expanded={$context.showContainerPanel &&
         !!$context.containerPanelItems.length}
     >
-      <ContainerPanel containerPanelItems={$context.containerPanelItems} />
+      <ContainerPanel
+        containerPanelItems={$context.containerPanelItems}
+        {searchCriteria}
+      />
     </ExpandableContainer>
     {#each $context.inventory as section (section.label)}
       {@const visibleItemIdSubset = FoundryAdapter.searchItems(

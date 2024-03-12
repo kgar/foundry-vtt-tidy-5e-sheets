@@ -27,7 +27,9 @@
   data-item-index={item._id}
 >
   <p class="info-card-name">
-    {item.name}
+    {item.system.identified === false
+      ? item.system.unidentified.name
+      : item.name}
   </p>
   {#if item.system.properties?.has('amm')}
     <p class="ammo-switch" data-id={item._id}>
