@@ -75,17 +75,19 @@
           : localize('DND5E.Unequipped')}
       </Checkbox>
 
-      <Checkbox
-        labelCssClass="green-checkbox"
-        document={$context.item}
-        field="system.identified"
-        checked={$context.system.identified}
-        disabled={!$context.editable}
-      >
-        {$context.system.identified
-          ? localize('DND5E.Identified')
-          : localize('DND5E.Unidentified.Title')}
-      </Checkbox>
+      {#if FoundryAdapter.canIdentify($context.item)}
+        <Checkbox
+          labelCssClass="green-checkbox"
+          document={$context.item}
+          field="system.identified"
+          checked={$context.system.identified}
+          disabled={!$context.editable}
+        >
+          {$context.system.identified
+            ? localize('DND5E.Identified')
+            : localize('DND5E.Unidentified.Title')}
+        </Checkbox>
+      {/if}
     </div>
   </div>
 </header>

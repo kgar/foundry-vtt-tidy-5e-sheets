@@ -5,6 +5,7 @@
   import CharacterWorldSettingsTab from './tabs/CharacterWorldSettingsTab.svelte';
   import NpcWorldSettingsTab from './tabs/NpcWorldSettingsTab.svelte';
   import VehicleWorldSettingsTab from './tabs/VehicleWorldSettingsTab.svelte';
+  import ItemWorldSettingsTab from './tabs/ItemWorldSettingsTab.svelte';
   import ExhaustionWorldSettingsTab from './tabs/ExhaustionWorldSettingsTab.svelte';
   import SheetLockWorldSettingsTab from './tabs/SheetLockWorldSettingsTab.svelte';
   import { getContext } from 'svelte';
@@ -50,6 +51,14 @@
       title: 'TIDY5E.WorldSettings.TabVehicle.tabLabel',
       content: {
         component: VehicleWorldSettingsTab,
+        type: 'svelte',
+      },
+    },
+    {
+      id: CONSTANTS.TAB_WORLD_SETTINGS_ITEM,
+      title: 'TIDY5E.WorldSettings.TabItem.tabLabel',
+      content: {
+        component: ItemWorldSettingsTab,
         type: 'svelte',
       },
     },

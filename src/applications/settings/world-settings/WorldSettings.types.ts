@@ -39,6 +39,7 @@ export type WorldSettingsContext = {
     showNpcActorLinkMarker: CurrentSettings['showNpcActorLinkMarker'];
     initialCharacterSheetTab: CurrentSettings['initialCharacterSheetTab'];
     initialVehicleSheetTab: CurrentSettings['initialVehicleSheetTab'];
+    itemIdentificationPermission: CurrentSettings['itemIdentificationPermission'];
   };
   defaultNpcTabs: DefaultTabSelectionFields;
   defaultCharacterTabs: DefaultTabSelectionFields;
