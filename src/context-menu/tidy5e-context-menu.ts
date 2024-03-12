@@ -232,7 +232,7 @@ function getItemContextOptions(item: Item5e) {
     }
   }
 
-  if (item.system.identified === false) {
+  if (item.system.identified === false && FoundryAdapter.canIdentify(item)) {
     options.push({
       name: 'DND5E.Identify',
       icon: "<i class='fas fa-magnifying-glass fa-fw'></i>",
