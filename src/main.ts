@@ -14,45 +14,67 @@ import { MigrationTally } from './applications/migrations/MigrationTally';
 import { Tidy5eKgarContainerSheet } from './sheets/Tidy5eContainerSheet';
 import { setupModuleIntegrations } from './integration/integration';
 
-FoundryAdapter.registerActorSheet(
+DocumentSheetConfig.registerSheet(
+  Actor,
+  CONSTANTS.DND5E_SYSTEM_ID,
   Tidy5eCharacterSheet,
-  [CONSTANTS.SHEET_TYPE_CHARACTER],
-  'TIDY5E.Tidy5eSheet'
+  {
+    types: [CONSTANTS.SHEET_TYPE_CHARACTER],
+    label: 'TIDY5E.Tidy5eSheet',
+  }
 );
 
-FoundryAdapter.registerActorSheet(
+DocumentSheetConfig.registerSheet(
+  Actor,
+  CONSTANTS.DND5E_SYSTEM_ID,
   Tidy5eNpcSheet,
-  [CONSTANTS.SHEET_TYPE_NPC],
-  'TIDY5E.Tidy5eNPC'
+  {
+    types: [CONSTANTS.SHEET_TYPE_NPC],
+    label: 'TIDY5E.Tidy5eNPC',
+  }
 );
 
-FoundryAdapter.registerActorSheet(
+DocumentSheetConfig.registerSheet(
+  Actor,
+  CONSTANTS.DND5E_SYSTEM_ID,
   Tidy5eVehicleSheet,
-  [CONSTANTS.SHEET_TYPE_VEHICLE],
-  'TIDY5E.Tidy5eVehicle'
+  {
+    types: [CONSTANTS.SHEET_TYPE_VEHICLE],
+    label: 'TIDY5E.Tidy5eVehicle',
+  }
 );
 
-FoundryAdapter.registerItemSheet(Tidy5eKgarItemSheet, 'TIDY5E.Tidy5eItemSheet');
+DocumentSheetConfig.registerSheet(
+  Item,
+  CONSTANTS.DND5E_SYSTEM_ID,
+  Tidy5eKgarItemSheet,
+  {
+    types: [
+      CONSTANTS.ITEM_TYPE_BACKGROUND,
+      CONSTANTS.ITEM_TYPE_CLASS,
+      CONSTANTS.ITEM_TYPE_CONSUMABLE,
+      CONSTANTS.ITEM_TYPE_EQUIPMENT,
+      CONSTANTS.ITEM_TYPE_FEAT,
+      CONSTANTS.ITEM_TYPE_LOOT,
+      CONSTANTS.ITEM_TYPE_RACE,
+      CONSTANTS.ITEM_TYPE_SPELL,
+      CONSTANTS.ITEM_TYPE_SUBCLASS,
+      CONSTANTS.ITEM_TYPE_TOOL,
+      CONSTANTS.ITEM_TYPE_WEAPON,
+    ],
+    label: 'TIDY5E.Tidy5eItemSheet',
+  }
+);
 
-DocumentSheetConfig.unregisterSheet(Item, 'dnd5e', Tidy5eKgarItemSheet, {
-  types: ['container'],
-});
-
-DocumentSheetConfig.registerSheet(Item, 'dnd5e', Tidy5eKgarContainerSheet, {
-  makeDefault: true,
-  types: [CONSTANTS.SHEET_TYPE_CONTAINER],
-  label: 'TIDY5E.Tidy5eContainerSheet',
-});
-
-DocumentSheetConfig.unregisterSheet(Item, 'dnd5e', Tidy5eKgarItemSheet, {
-  types: ['container'],
-});
-
-DocumentSheetConfig.registerSheet(Item, 'dnd5e', Tidy5eKgarContainerSheet, {
-  makeDefault: true,
-  types: [CONSTANTS.SHEET_TYPE_CONTAINER],
-  label: 'TIDY5E.Tidy5eContainerSheet',
-});
+DocumentSheetConfig.registerSheet(
+  Item,
+  CONSTANTS.DND5E_SYSTEM_ID,
+  Tidy5eKgarContainerSheet,
+  {
+    types: [CONSTANTS.SHEET_TYPE_CONTAINER],
+    label: 'TIDY5E.Tidy5eContainerSheet',
+  }
+);
 
 Hooks.once('init', () => {
   initSettings();

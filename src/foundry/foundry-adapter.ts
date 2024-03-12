@@ -630,17 +630,6 @@ export const FoundryAdapter = {
   getGameActor(id: string): any | undefined {
     return game.actors.get(id);
   },
-  registerActorSheet(sheet: any, types: string[], label: string) {
-    Actors.registerSheet(CONSTANTS.DND5E_SYSTEM_ID, sheet, {
-      types,
-      label,
-    });
-  },
-  registerItemSheet(sheet: any, label: string) {
-    Items.registerSheet(CONSTANTS.DND5E_SYSTEM_ID, sheet, {
-      label,
-    });
-  },
   getModule(moduleId: string): any | undefined {
     return game.modules.get(moduleId);
   },
