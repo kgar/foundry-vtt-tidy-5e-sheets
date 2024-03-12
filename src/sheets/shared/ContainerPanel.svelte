@@ -115,6 +115,7 @@
       minmax(var(--t5e-container-panel-item-size), max-content)
     );
     gap: 0.375rem;
+    margin-left: 0.1875rem;
 
     .container {
       display: flex;
