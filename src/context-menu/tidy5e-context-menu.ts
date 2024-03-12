@@ -240,7 +240,9 @@ function getItemContextOptions(item: Item5e) {
     });
   }
 
-  if (itemParentIsActor) {
+  const isCharacter =
+    itemParentIsActor && itemParent.type === CONSTANTS.SHEET_TYPE_CHARACTER;
+  if (isCharacter) {
     // Add favorites to context menu
     let isFav = FoundryAdapter.isDocumentFavorited(item);
 
