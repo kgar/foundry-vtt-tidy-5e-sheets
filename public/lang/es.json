@@ -714,5 +714,11 @@
     "TIDY5E.SortMode.ActionListDefault": "Forma de ordenar por defecto la lista de acciones",
     "TIDY5E.GMOnly.Message": "Solo GM: {message}",
     "TIDY5E.ReminderToBackUp": "Recuerda siempre hacer copias de seguridad de tu mundo.",
-    "TIDY5E.ButtonConfirm.Text": "Confirmar"
+    "TIDY5E.ButtonConfirm.Text": "Confirmar",
+    "TIDY5E.Commands.HideContainerPanel": "Ocultar el panel del contenedor",
+    "TIDY5E.Utilities.MarkAllAsUnidentified": "Marcar todos los artículos como no identificados",
+    "TIDY5E.Tidy5eContainerSheet": "Hoja contenedora Tidy 5e",
+    "TIDY5E.Commands.ShowContainerPanel": "Mostrar panel del contenedor",
+    "TIDY5E.Utilities.GMTools": "Herramientas GM",
+    "TIDY5E.Utilities.IdentifyAll": "Identificar todos los artículos"
 }
