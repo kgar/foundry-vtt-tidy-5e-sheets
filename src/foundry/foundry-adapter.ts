@@ -1324,4 +1324,12 @@ export const FoundryAdapter = {
       pack: container.pack,
     });
   },
+  canIdentify(item: Item5e) {
+    return (
+      FoundryAdapter.userIsGm() ||
+      (SettingsProvider.settings.itemIdentificationPermission.get() ===
+        CONSTANTS.SHEET_SETTINGS_OPTION_GM_AND_OWNERS &&
+        item.isOwner)
+    );
+  },
 };
