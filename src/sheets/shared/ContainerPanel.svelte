@@ -62,6 +62,7 @@
   {#each containerPanelItems as { container, ...capacity } (container.id)}
     <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
     <li
+      style="position: relative"
       draggable="true"
       data-item-id={container.id}
       on:dragstart={(ev) => handleDragStart(ev, container)}
@@ -118,6 +119,7 @@
     margin-left: 0.1875rem;
 
     .container {
+      position: relative; // 👈 required for correct drag preview
       display: flex;
       flex-direction: column;
       height: 100%;
