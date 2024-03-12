@@ -146,7 +146,7 @@
     margin-right: -0.5rem;
     padding-left: 0.5rem;
     padding-right: 0.5rem;
-    border-top: 1px solid var(--t5e-faint-color);
+    border-top: 0.0625rem solid var(--t5e-faint-color);
   }
 
   input[type='checkbox'] {

@@ -101,7 +101,7 @@
         {container}
         {capacity}
         --capacity-bar-height="0.5rem"
-        --capacity-bar-container-border-radius="0 0 3px 3px"
+        --capacity-bar-container-border-radius="0 0 0.1875rem 0.1875rem"
       />
     </li>
   {/each}

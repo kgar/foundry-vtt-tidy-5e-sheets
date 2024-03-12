@@ -44,17 +44,17 @@
     height: var(--capacity-bar-height, 1rem);
     border-radius: var(--capacity-bar-container-border-radius, 0.1875rem);
     background: var(--t5e-capacity-container-background);
-    border: 1px solid var(--t5e-capacity-container-border-color);
+    border: 0.0625rem solid var(--t5e-capacity-container-border-color);
 
     &:not(.empty)::before {
       content: '';
       position: absolute;
       inline-size: var(--percentage);
       inset: 0;
-      max-inline-size: calc(100% - 4px);
-      margin: 1px;
-      border: 1px solid var(--t5e-capacity-border-color);
-      border-radius: 2px;
+      max-inline-size: calc(100% - 0.25rem);
+      margin: 0.0625rem;
+      border: 0.0625rem solid var(--t5e-capacity-border-color);
+      border-radius: 0.125rem;
       background: var(--t5e-capacity-background);
       transition: width 0.5s ease;
     }
