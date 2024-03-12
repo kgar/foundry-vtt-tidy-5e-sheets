@@ -12,7 +12,7 @@ import type { Item5e } from 'src/types/item.types';
 import { SettingsProvider } from 'src/settings/settings';
 import { debug, error, warn } from 'src/utils/logging';
 import { clamp } from 'src/utils/numbers';
-import ContextMenu5e from 'src/context-menu/ContextMenu5e';
+import FloatingContextMenu from 'src/context-menu/FloatingContextMenu';
 
 export const FoundryAdapter = {
   isFoundryV10() {
@@ -995,7 +995,7 @@ export const FoundryAdapter = {
     return TextEditor.enrichHTML(value, options);
   },
   createContextMenu(...args: any[]): any {
-    return new ContextMenu5e(...args);
+    return new FloatingContextMenu(...args);
   },
   createAdvancementSelectionDialog(item: any) {
     return game.dnd5e.applications.advancement.AdvancementSelection.createDialog(
