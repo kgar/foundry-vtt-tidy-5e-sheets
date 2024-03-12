@@ -2,7 +2,7 @@
   import { isNil } from 'src/utils/data';
   import { createEventDispatcher } from 'svelte';
   import type { UtilityToolbarCommandExecuteEvent } from './types';
-    import { settingStore } from 'src/settings/settings';
+  import { settingStore } from 'src/settings/settings';
 
   export let title: string | undefined = undefined;
   export let iconClass: string | undefined = undefined;

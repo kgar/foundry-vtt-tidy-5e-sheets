@@ -1,7 +1,7 @@
 <script lang="ts">
   import { ItemSummaryRuntime } from 'src/runtime/ItemSummaryRuntime';
   import ItemSummaryCommandButton from './ItemSummaryCommandButton.svelte';
-  import type { Item5e } from 'src/types/item';
+  import type { Item5e } from 'src/types/item.types';
 
   export let item: Item5e;
 

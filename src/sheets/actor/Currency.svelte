@@ -2,22 +2,24 @@
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { settingStore } from 'src/settings/settings';
+  import type { Item5e, ItemSheetContext } from 'src/types/item.types';
   import type { Actor5e } from 'src/types/types';
   import type { ActorSheetContext } from 'src/types/types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
 
-  export let actor: Actor5e;
+  export let document: Actor5e | Item5e;
 
-  let context = getContext<Readable<ActorSheetContext>>('context');
+  let context =
+    getContext<Readable<ActorSheetContext | ItemSheetContext>>('context');
 
-  $: currencies = Object.entries(actor.system.currency).map((e) => ({
+  $: currencies = Object.entries(document.system.currency).map((e) => ({
     key: e[0],
     value: e[1] as any,
   }));
 
   function confirmConvertCurrency() {
-    new dnd5e.applications.CurrencyManager(actor).render(true);
+    new dnd5e.applications.CurrencyManager(document).render(true);
   }
 
   function abbreviateCurrency(currencyKey: string) {
@@ -32,10 +34,10 @@
     {#each currencies as currency}
       <li
         class="currency-item {currency.key}"
-        title={$context.labels.currencies[currency.key]}
+        title={$context.config.currencies[currency.key]?.label}
       >
         <TextInput
-          document={actor}
+          {document}
           field="system.currency.{currency.key}"
           id="{$context.appId}-system.currency.{currency.key}"
           value={currency.value}
@@ -106,13 +108,13 @@
         .currency-convert {
           line-height: var(--currency-line-height);
           border: none;
-          background: var(--t5e-tertiary-color);
-          color: var(--t5e-background);
+          background: var(--t5e-faintest-color);
+          color: var(--t5e-secondary-color);
           border-radius: 0.3125rem;
           padding: 0 0.375rem;
 
           &:hover {
-            background: var(--t5e-secondary-color);
+            background: var(--t5e-light-color);
           }
         }
 

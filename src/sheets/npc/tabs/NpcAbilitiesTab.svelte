@@ -34,7 +34,7 @@
   import AmmoSelector from '../../actor/AmmoSelector.svelte';
   import RechargeControl from 'src/components/item-list/controls/RechargeControl.svelte';
   import ActionFilterOverrideControl from 'src/components/item-list/controls/ActionFilterOverrideControl.svelte';
-  import { declareLocation } from 'src/types/location-awareness';
+  import { declareLocation } from 'src/types/location-awareness.types';
   import UtilityToolbar from 'src/components/utility-bar/UtilityToolbar.svelte';
   import UtilityToolbarCommand from 'src/components/utility-bar/UtilityToolbarCommand.svelte';
   import Search from 'src/components/utility-bar/Search.svelte';
@@ -138,7 +138,7 @@
                   FoundryAdapter.editOnMiddleClick(event.detail, item)}
                 contextMenu={{
                   type: CONSTANTS.CONTEXT_MENU_TYPE_ITEMS,
-                  id: item.id,
+                  uuid: item.uuid,
                 }}
                 {item}
                 cssClass={FoundryAdapter.getInventoryRowClasses(item, ctx)}
@@ -284,7 +284,7 @@
   </div>
 </section>
 <TabFooter mode="vertical" cssClass="abilities-footer">
-  <Currency actor={$context.actor} />
+  <Currency document={$context.actor} />
   {#if $settingStore.useNpcEncumbranceBar}
     <EncumbranceBar />
   {/if}

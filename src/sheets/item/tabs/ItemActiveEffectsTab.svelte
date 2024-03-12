@@ -3,7 +3,7 @@
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { settingStore } from 'src/settings/settings';
-  import type { ItemSheetContext } from 'src/types/item';
+  import type { ItemSheetContext } from 'src/types/item.types';
   import type { CharacterSheetContext } from 'src/types/types';
   import { warn } from 'src/utils/logging';
   import { getContext } from 'svelte';

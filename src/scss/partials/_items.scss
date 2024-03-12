@@ -849,6 +849,14 @@ label input[type='checkbox']:checked {
   }
 }
 
+/* Container Overrides */
+
+&.container {
+  .tidy-sheet-body:has(.tidy-tab.contents.active) {
+    padding: 0;
+  }
+}
+
 /* Compatibility Styles */
 .form-group :has(.damage-control) {
   clear: both;

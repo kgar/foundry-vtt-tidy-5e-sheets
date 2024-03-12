@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { Tab } from 'src/types/types';
-  import { declareLocation } from 'src/types/location-awareness';
+  import { declareLocation } from 'src/types/location-awareness.types';
   import { CONSTANTS } from 'src/constants';
   import { getAllContexts, getContext, onMount, setContext } from 'svelte';
   import type { Readable } from 'svelte/store';

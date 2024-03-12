@@ -4,7 +4,7 @@
     Item5e,
     ItemCardContentComponent,
     ItemChatData,
-  } from 'src/types/item';
+  } from 'src/types/item.types';
   import type { ItemCardStore } from 'src/types/types';
   import { getContext, onDestroy, onMount } from 'svelte';
   import type { Writable } from 'svelte/store';
@@ -14,6 +14,7 @@
   import { getItemCardContentTemplate } from './item-info-card';
   import { ItemSummaryRuntime } from 'src/runtime/ItemSummaryRuntime';
   import ItemSummaryCommandButtonList from '../item-summary/ItemSummaryCommandButtonList.svelte';
+  import { CONSTANTS } from 'src/constants';
 
   // Fix Key
   let frozen: boolean = false;
@@ -239,7 +240,8 @@
           {#if specialProps.length}
             <HorizontalLineSeparator />
             <div
-              class="item-properties"
+              class="inline-wrapped-elements"
+              data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_PROPERTY_LIST}
               inert={concealDetails}
             >
               {#each specialProps as prop}
@@ -250,7 +252,8 @@
           {#if itemProps.length}
             <HorizontalLineSeparator />
             <div
-              class="item-properties"
+              class="inline-wrapped-elements"
+              data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_PROPERTY_LIST}
               inert={concealDetails}
             >
               {#each itemProps as prop}
@@ -260,7 +263,7 @@
           {/if}
           {#if itemSummaryCommands.length}
             <HorizontalLineSeparator />
-            <div class="item-properties">
+            <div class="inline-wrapped-elements">
               <ItemSummaryCommandButtonList {item} />
             </div>
           {/if}

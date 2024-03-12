@@ -1,6 +1,6 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { ThemeColorSetting } from 'src/types/theme';
+  import type { ThemeColorSetting } from 'src/types/theme.types';
   import { getContext, onMount } from 'svelte';
   import ColorPicker from 'svelte-awesome-color-picker';
   import type { Writable } from 'svelte/store';

@@ -88,6 +88,10 @@
   align-self: center;
 }
 
+.align-self-stretch {
+  align-self: stretch;
+}
+
 .text-align-right {
   text-align: right;
 }
@@ -106,6 +110,10 @@
 
 .min-width-0 {
   min-width: 0;
+}
+
+.min-width-1rem {
+  min-width: 1rem;
 }
 
 .grid-auto-columns {

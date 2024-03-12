@@ -1,7 +1,7 @@
 <script lang="ts">
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
-  import type { ItemSheetContext } from 'src/types/item';
+  import type { ItemSheetContext } from 'src/types/item.types';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
   import Select from 'src/components/inputs/Select.svelte';

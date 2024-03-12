@@ -14,7 +14,7 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import Notice from 'src/components/notice/Notice.svelte';
-  import { declareLocation } from 'src/types/location-awareness';
+  import { declareLocation } from 'src/types/location-awareness.types';
   import CharacterConditions from '../parts/CharacterConditions.svelte';
 
   let context = getContext<Readable<ActorSheetContext>>('context');
@@ -64,7 +64,7 @@
                   FoundryAdapter.editOnMiddleClick(event.detail, effect)}
                 contextMenu={{
                   type: CONSTANTS.CONTEXT_MENU_TYPE_EFFECTS,
-                  id: effect.id,
+                  uuid: effect.uuid,
                 }}
                 {effect}
               >

@@ -1,6 +1,6 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { Item5e, ItemChatData } from 'src/types/item';
+  import type { Item5e, ItemChatData } from 'src/types/item.types';
   import HorizontalLineSeparator from '../layout/HorizontalLineSeparator.svelte';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
@@ -27,7 +27,9 @@
   data-item-index={item._id}
 >
   <p class="info-card-name">
-    {item.name}
+    {item.system.identified === false
+      ? item.system.unidentified.name
+      : item.name}
   </p>
   {#if item.system.properties?.has('amm')}
     <p class="ammo-switch" data-id={item._id}>

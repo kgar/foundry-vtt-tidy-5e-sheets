@@ -1,6 +1,6 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { Item5e } from 'src/types/item';
+  import type { Item5e } from 'src/types/item.types';
   import ItemTable from '../../../components/item-list/v1/ItemTable.svelte';
   import ItemTableHeaderRow from '../../../components/item-list/v1/ItemTableHeaderRow.svelte';
   import ItemTableRow from '../../../components/item-list/v1/ItemTableRow.svelte';
@@ -92,20 +92,24 @@
     <svelte:fragment slot="body">
       {#each items as item (item.id)}
         {@const ctx = $context.itemContext[item.id]}
+        {@const itemName =
+          item.system.identified === false
+            ? item.system.unidentified.name
+            : item.name}
         <ItemTableRow
           {item}
           on:mousedown={(event) =>
             FoundryAdapter.editOnMiddleClick(event.detail, item)}
           contextMenu={{
             type: CONSTANTS.CONTEXT_MENU_TYPE_ITEMS,
-            id: item.id,
+            uuid: item.uuid,
           }}
           let:toggleSummary
           cssClass={getInventoryRowClasses(item)}
           hidden={visibleItemIdSubset !== null &&
             !visibleItemIdSubset.has(item.id)}
         >
-          <ItemTableCell primary={true} title={item.name}>
+          <ItemTableCell primary={true} title={itemName}>
             <ItemUseButton disabled={!$context.editable} {item} />
             <ItemName
               on:toggle={() => toggleSummary($context.actor)}
@@ -114,9 +118,9 @@
             >
               <span
                 class="truncate"
-                data-tidy-item-name={item.name}
+                data-tidy-item-name={itemName}
                 data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_NAME}
-                >{item.name}</span
+                >{itemName}</span
               >
               {#if item.system?.properties?.has('amm')}
                 <span class="ammo">

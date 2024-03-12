@@ -2,6 +2,7 @@
   "TIDY5E.Tidy5eSheet": "Tidy 5e Character Sheet",
   "TIDY5E.Tidy5eNPC": "Tidy 5e NPC Sheet",
   "TIDY5E.Tidy5eItemSheet": "Tidy 5e Item Sheet",
+  "TIDY5E.Tidy5eContainerSheet": "Tidy 5e Container Sheet",
   "TIDY5E.Tidy5eVehicle": "Tidy 5e Vehicle Sheet",
   "TIDY5E.PlayerName": "Player Name",
   "TIDY5E.EditActorImage": "left click: edit image",
@@ -747,9 +748,14 @@
   "TIDY5E.ItemFilters.MenuTooltip.Filters": "Filters",
   "TIDY5E.Commands.ShowLegendaryToolbar": "Show Legendary Toolbar",
   "TIDY5E.Commands.HideLegendaryToolbar": "Hide Legendary Toolbar",
+  "TIDY5E.Commands.ShowContainerPanel": "Show Container Panel",
+  "TIDY5E.Commands.HideContainerPanel": "Hide Container Panel",
   "TIDY5E.ItemFilters.ClearAll": "Clear All",
   "TIDY5E.ItemFilters.Category.Miscellaneous": "Miscellaneous",
   "TIDY5E.ItemFilters.Filter.Other": "Other",
   "TIDY5E.GMOnly.Message": "GM Only: {message}",
-  "TIDY5E.ReminderToBackUp": "Always remember to back up your world."
+  "TIDY5E.ReminderToBackUp": "Always remember to back up your world.",
+  "TIDY5E.Utilities.GMTools": "GM Tools",
+  "TIDY5E.Utilities.IdentifyAll": "Identify All Items",
+  "TIDY5E.Utilities.MarkAllAsUnidentified": "Mark All Items as Unidentified"
 }

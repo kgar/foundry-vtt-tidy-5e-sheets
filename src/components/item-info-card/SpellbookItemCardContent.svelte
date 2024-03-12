@@ -1,6 +1,6 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { Item5e, ItemChatData } from 'src/types/item';
+  import type { Item5e, ItemChatData } from 'src/types/item.types';
   import HorizontalLineSeparator from '../layout/HorizontalLineSeparator.svelte';
   import type { Readable } from 'svelte/store';
   import { getContext } from 'svelte';

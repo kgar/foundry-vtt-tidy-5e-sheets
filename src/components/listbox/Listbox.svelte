@@ -83,7 +83,7 @@
     height: 100%;
 
     &:focus-visible {
-      outline: 1px solid var(--t5e-primary-accent-color);
+      outline: 0.0625rem solid var(--t5e-primary-accent-color);
     }
   }
   .listbox li {

@@ -2,10 +2,11 @@
   import { slide } from 'svelte/transition';
   import { quadInOut } from 'svelte/easing';
   import ItemSummaryCommandButtonList from '../item-summary/ItemSummaryCommandButtonList.svelte';
-  import type { Item5e, ItemChatData } from 'src/types/item';
+  import type { Item5e, ItemChatData } from 'src/types/item.types';
   import { ItemSummaryRuntime } from 'src/runtime/ItemSummaryRuntime';
   import HorizontalLineSeparator from '../layout/HorizontalLineSeparator.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import { CONSTANTS } from 'src/constants';
 
   export let chatData: ItemChatData;
   export let item: Item5e;
@@ -21,6 +22,7 @@
     easing: quadInOut,
   }}
   class="item-summary"
+  data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_SUMMARY}
 >
   {#if concealDetails}
     {@html chatData.unidentified.description}
@@ -30,14 +32,18 @@
 
   {#if itemSummaryCommands.length}
     <HorizontalLineSeparator />
-    <div class="item-properties">
+    <div class="inline-wrapped-elements">
       <ItemSummaryCommandButtonList {item} />
     </div>
   {/if}
 
   {#if chatData.properties}
     <HorizontalLineSeparator />
-    <div class="item-properties" inert={concealDetails}>
+    <div
+      class="inline-wrapped-elements"
+      inert={concealDetails}
+      data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_PROPERTY_LIST}
+    >
       {#each chatData.properties as prop}<span class="tag">{prop}</span>{/each}
     </div>
   {/if}
@@ -46,7 +52,10 @@
 <style lang="scss">
   .item-summary {
     flex: 0 0 100%;
-    padding: 0 0.5rem 0.5rem 0.5rem;
+    padding-top: var(--item-summary-padding-top, 0);
+    padding-right: var(--item-summary-padding-right, 0.5rem);
+    padding-bottom: var(--item-summary-padding-bottom, 0.25rem);
+    padding-left: var(--item-summary-padding-left, 0.5rem);
     border-top: 0.0625rem solid var(--t5e-faint-color);
     font-size: 0.75rem;
 
@@ -60,12 +69,12 @@
     }
   }
 
-  .item-properties {
+  .inline-wrapped-elements {
     margin-top: 0.25rem;
     margin-bottom: 0.25rem;
   }
 
-  .item-properties:last-of-type {
+  .inline-wrapped-elements:last-of-type {
     margin-bottom: 0;
   }
 </style>

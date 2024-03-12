@@ -17,6 +17,8 @@
   import Search from 'src/components/utility-bar/Search.svelte';
   import UtilityToolbarCommand from 'src/components/utility-bar/UtilityToolbarCommand.svelte';
   import FilterMenu from 'src/components/filter/FilterMenu.svelte';
+  import ContainerPanel from 'src/sheets/shared/ContainerPanel.svelte';
+  import ExpandableContainer from 'src/components/expandable/ExpandableContainer.svelte';
 
   let context = getContext<Readable<CharacterSheetContext>>('context');
 
@@ -53,12 +55,25 @@
 </UtilityToolbar>
 
 <div
-  class="scroll-container flex-column small-gap"
+  class="tidy-inventory-container scroll-container flex-column small-gap"
   data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEMS_CONTAINER}
 >
   {#if noItems && !$context.unlocked}
     <Notice>{localize('TIDY5E.EmptySection')}</Notice>
   {:else}
+    {@const containerPanelExpanded =
+      $context.showContainerPanel && !!$context.containerPanelItems.length}
+    <ExpandableContainer
+      expanded={containerPanelExpanded}
+      class="container-panel-wrapper {containerPanelExpanded
+        ? 'container-panel-expanded'
+        : ''}"
+    >
+      <ContainerPanel
+        containerPanelItems={$context.containerPanelItems}
+        {searchCriteria}
+      />
+    </ExpandableContainer>
     {#each $context.inventory as section (section.label)}
       {@const visibleItemIdSubset = FoundryAdapter.searchItems(
         searchCriteria,
@@ -119,7 +134,7 @@
         >
       {/if}
     </div>
-    <Currency actor={$context.actor} />
+    <Currency document={$context.actor} />
   </div>
 
   {#if $settingStore.useCharacterEncumbranceBar}
@@ -178,5 +193,10 @@
         font-family: var(--t5e-body-font-family);
       }
     }
+  }
+
+  .tidy-inventory-container
+    :global(.container-panel-wrapper:not(.container-panel-expanded)) {
+    margin-bottom: -0.5rem;
   }
 </style>

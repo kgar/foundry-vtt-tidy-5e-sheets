@@ -1,11 +1,12 @@
 <script lang="ts">
   import VerticalLineSeparator from 'src/components/layout/VerticalLineSeparator.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { ItemSheetContext } from 'src/types/item';
+  import type { ItemSheetContext } from 'src/types/item.types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import ItemDescription from './ItemDescriptionTab.svelte';
   import { settingStore } from 'src/settings/settings';
+  import { CONSTANTS } from 'src/constants';
 
   let context = getContext<Readable<ItemSheetContext>>('context');
 
@@ -17,7 +18,10 @@
 </script>
 
 <div class="item-description flexrow align-items-stretch small-gap">
-  <div class="item-properties">
+  <div
+    class="item-properties"
+    data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_SHEET_PROPERTIES}
+  >
     <h4 class="properties-header flex-row justify-content-space-between">
       {localize('DND5E.Type')}
       {#if $context.editable}

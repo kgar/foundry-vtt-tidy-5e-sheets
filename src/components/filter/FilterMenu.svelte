@@ -7,14 +7,16 @@
   import FilterToggleButton from './FilterToggleButton.svelte';
   import type { ItemFilterService } from 'src/features/filtering/ItemFilterService';
   import ButtonMenuDivider from 'src/components/button-menu/ButtonMenuDivider.svelte';
+  import type { ContainerSheetContext } from 'src/types/item.types';
 
   export let tabId: string;
 
   const localize = FoundryAdapter.localize;
-  const context = getContext<Readable<ActorSheetContext>>('context');
+  const context =
+    getContext<Readable<ActorSheetContext | ContainerSheetContext>>('context');
   const onFilterClearAll =
     getContext<ItemFilterService['onFilterClearAll']>('onFilterClearAll');
-  $: categories = $context.filterData[tabId];
+  $: categories = $context.filterData[tabId] ?? {};
   $: hasActiveFilters = Object.entries(categories).some(([_, filters]) =>
     filters.some((f) => f.value !== null),
   );

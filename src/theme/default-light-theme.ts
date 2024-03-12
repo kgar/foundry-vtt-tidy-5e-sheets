@@ -1,5 +1,5 @@
 import { CONSTANTS } from 'src/constants';
-import type { Tidy5eTheme } from 'src/types/theme';
+import type { Tidy5eTheme } from 'src/types/theme.types';
 
 export const defaultLightTheme: Tidy5eTheme = {
   name: 'TIDY5E.Settings.SheetTheme.light',
@@ -53,8 +53,10 @@ export const defaultLightTheme: Tidy5eTheme = {
     '--t5e-attuned-item-grid-icon-color': 'rgba(0, 0, 0, 0.4)',
     '--t5e-xp-bar-background': 'rgba(94, 225, 146, 1)',
     '--t5e-encumbrance-bar-background': 'rgba(108, 138, 165, 1)',
-    '--t5e-encumbrance-bar-outline-color': 'rgba(205, 228, 255, 1)',
+    '--t5e-encumbrance-bar-outline-color': 'var(--t5e-separator-color)',
     '--t5e-encumbrance-outline-color': 'rgba(0, 0, 0, 0.9)',
+    '--t5e-encumbrance-text-color': 'rgba(238, 238, 238, 1)',
+    '--t5e-encumbrance-bar-text-shadow-color': '#000',
     '--t5e-warning-accent-color': 'rgba(255, 0, 0, 0.6)',
     '--t5e-warning-accent-contrast-color': 'rgba(255, 255, 255, 0.8)',
     '--t5e-icon-background': 'rgba(236, 233, 223, 1)',
@@ -79,7 +81,6 @@ export const defaultLightTheme: Tidy5eTheme = {
     '--t5e-checkbox-checked-color': 'rgba(0, 255, 0, 0.3)',
     '--t5e-item-input-background': 'rgba(255, 255, 255, 0.3)',
     '--t5e-item-input-hover-background': 'rgba(255, 255, 255, 0.5)',
-    '--t5e-encumbrance-text-color': 'rgba(238, 238, 238, 1)',
     '--t5e-death-save-icon-color': 'rgba(255, 255, 255, 0.75)',
     '--t5e-death-save-text-color': 'white',
     '--t5e-inspiration-hover-color': 'rgba(255, 255, 255, 0.75)',
@@ -121,7 +122,6 @@ export const defaultLightTheme: Tidy5eTheme = {
     '--t5e-ability-modifiers-label-text-color': '#fff',
     '--t5e-ability-mod-text-color': '#fff',
     '--t5e-ability-mod-save-text-hover-color': '#fff',
-    '--t5e-encumbrance-bar-text-shadow-color': '#000',
     '--t5e-button-menu-background': 'var(--t5e-background)',
     '--t5e-button-menu-hover-color': 'var(--t5e-faint-color)',
     '--t5e-button-menu-divider-color': 'var(--t5e-separator-color)',

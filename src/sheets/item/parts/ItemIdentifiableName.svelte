@@ -2,7 +2,7 @@
   import { getContext } from 'svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { Readable } from 'svelte/store';
-  import type { ItemSheetContext } from 'src/types/item';
+  import type { ItemSheetContext } from 'src/types/item.types';
   import TextInput from 'src/components/inputs/TextInput.svelte';
 
   let context = getContext<Readable<ItemSheetContext>>('context');

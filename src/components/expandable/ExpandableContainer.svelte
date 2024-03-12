@@ -19,12 +19,14 @@
 
 <div
   bind:this={expandableContainer}
-  class="expandable"
+  class="expandable {$$restProps.class ?? ''}"
   class:expanded
   class:overflow-y-hidden={overflowYHidden}
   role="presentation"
 >
-  <slot />
+  <div role="presentation" class="expandable-child-animation-wrapper">
+    <slot />
+  </div>
 </div>
 
 <style lang="scss">

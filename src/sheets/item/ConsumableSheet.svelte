@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { ItemSheetContext } from 'src/types/item';
+  import type { ItemSheetContext } from 'src/types/item.types';
   import Tabs from 'src/components/tabs/Tabs.svelte';
   import type { Readable } from 'svelte/store';
   import TabContents from 'src/components/tabs/TabContents.svelte';

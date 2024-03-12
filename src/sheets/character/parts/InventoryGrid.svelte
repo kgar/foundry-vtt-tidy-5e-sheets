@@ -4,7 +4,7 @@
     ItemCardStore,
     NpcSheetContext,
   } from 'src/types/types';
-  import type { Item5e } from 'src/types/item';
+  import type { Item5e } from 'src/types/item.types';
   import ItemTable from '../../../components/item-list/v1/ItemTable.svelte';
   import ItemTableHeaderRow from '../../../components/item-list/v1/ItemTableHeaderRow.svelte';
   import ItemTableColumn from '../../../components/item-list/v1/ItemTableColumn.svelte';
@@ -16,7 +16,7 @@
   import TextInput from '../../../components/inputs/TextInput.svelte';
   import { settingStore } from 'src/settings/settings';
   import { ActorItemRuntime } from 'src/runtime/ActorItemRuntime';
-  import { declareLocation } from 'src/types/location-awareness';
+  import { declareLocation } from 'src/types/location-awareness.types';
 
   export let section: any;
   export let items: Item5e[];
@@ -110,7 +110,7 @@
         class:hidden
         aria-hidden={hidden}
         data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
-        data-context-menu-entity-id={item.id}
+        data-context-menu-document-uuid={item.uuid}
         on:click={(event) =>
           $context.editable &&
           FoundryAdapter.actorTryUseItem(item, {}, { event })}

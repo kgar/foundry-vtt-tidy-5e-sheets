@@ -1,6 +1,6 @@
 <script lang="ts">
   import { settingStore } from 'src/settings/settings';
-  import type { Item5e } from 'src/types/item';
+  import type { Item5e } from 'src/types/item.types';
   import { createEventDispatcher } from 'svelte';
   import ActiveEffectsMarker from './ActiveEffectsMarker.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';

@@ -8,10 +8,11 @@ import type {
 } from 'src/types/types';
 import { CONSTANTS } from '../constants';
 import type { Actor5e } from 'src/types/types';
-import type { Item5e } from 'src/types/item';
+import type { Item5e } from 'src/types/item.types';
 import { SettingsProvider } from 'src/settings/settings';
 import { debug, error, warn } from 'src/utils/logging';
 import { clamp } from 'src/utils/numbers';
+import FloatingContextMenu from 'src/context-menu/FloatingContextMenu';
 
 export const FoundryAdapter = {
   isFoundryV10() {
@@ -426,7 +427,12 @@ export const FoundryAdapter = {
         .filter(
           (item: any) =>
             searchCriteria.trim() === '' ||
-            item.name.toLowerCase().includes(searchCriteria.toLowerCase())
+            (item.system.identified === false &&
+              item.system.unidentified?.name
+                ?.toLowerCase()
+                .includes(searchCriteria.toLowerCase())) ||
+            (item.system.identified !== false &&
+              item.name.toLowerCase().includes(searchCriteria.toLowerCase()))
         )
         .map((item) => item.id)
     );
@@ -539,7 +545,7 @@ export const FoundryAdapter = {
       FoundryAdapter.setFlag(document, 'favorite', true);
     }
   },
-  isActorSheetUnlocked(actor: any) {
+  isActorSheetUnlocked(actor: any): boolean {
     return (
       (actor.isOwner && FoundryAdapter.isSheetUnlocked(actor)) ||
       (FoundryAdapter.userIsGm() &&
@@ -623,17 +629,6 @@ export const FoundryAdapter = {
   },
   getGameActor(id: string): any | undefined {
     return game.actors.get(id);
-  },
-  registerActorSheet(sheet: any, types: string[], label: string) {
-    Actors.registerSheet(CONSTANTS.DND5E_SYSTEM_ID, sheet, {
-      types,
-      label,
-    });
-  },
-  registerItemSheet(sheet: any, label: string) {
-    Items.registerSheet(CONSTANTS.DND5E_SYSTEM_ID, sheet, {
-      label,
-    });
   },
   getModule(moduleId: string): any | undefined {
     return game.modules.get(moduleId);
@@ -989,7 +984,7 @@ export const FoundryAdapter = {
     return TextEditor.enrichHTML(value, options);
   },
   createContextMenu(...args: any[]): any {
-    return new ContextMenu(...args);
+    return new FloatingContextMenu(...args);
   },
   createAdvancementSelectionDialog(item: any) {
     return game.dnd5e.applications.advancement.AdvancementSelection.createDialog(
@@ -1271,5 +1266,62 @@ export const FoundryAdapter = {
   }) {
     if (!parentId) return document.effects.get(effectId);
     return document.items.get(parentId).effects.get(effectId);
+  },
+  canUseItem(item: Item5e) {
+    return !(!item.actor || !item.actor.isOwner || item.actor.pack);
+  },
+  useClassicControls(document: any) {
+    return (
+      (document.type === CONSTANTS.SHEET_TYPE_CHARACTER &&
+        SettingsProvider.settings.useClassicControlsForCharacter.get()) ||
+      (document.type === CONSTANTS.SHEET_TYPE_NPC &&
+        SettingsProvider.settings.useClassicControlsForNpc.get()) ||
+      (document.type === CONSTANTS.SHEET_TYPE_VEHICLE &&
+        SettingsProvider.settings.useClassicControlsForVehicle.get()) ||
+      // Temporary stopgap: When we don't recognize a supported document for Classic Controls options, fall back to the character user setting
+      SettingsProvider.settings.useClassicControlsForCharacter.get()
+    );
+  },
+  attunementContextRequired: {
+    icon: 'fa-sun',
+    cls: 'not-attuned',
+    title: 'DND5E.AttunementRequired',
+  },
+  attunementContextAttune: {
+    icon: 'fa-sun',
+    cls: 'attuned',
+    title: 'DND5E.AttunementAttuned',
+  },
+  getAttunementContext(
+    item: Item5e
+  ): { icon: string; cls: string; title: string } | undefined {
+    return item.system.attunement === CONFIG.DND5E.attunementTypes.REQUIRED
+      ? FoundryAdapter.attunementContextRequired
+      : item.system.attunement === CONFIG.DND5E.attunementTypes.ATTUNED
+      ? FoundryAdapter.attunementContextAttune
+      : undefined;
+  },
+  async identifyAllItemsForContainer(container: any, items: Item5e[]) {
+    const updates = items.map((i) => ({
+      _id: i.id,
+      'system.identified': true,
+    }));
+    await Item.updateDocuments(updates, {
+      parent: container.actor,
+      pack: container.pack,
+    });
+  },
+  async markAllItemsAsUnidentifiedForContainer(
+    container: any,
+    items: Item5e[]
+  ) {
+    const updates = items.map((i) => ({
+      _id: i.id,
+      'system.identified': false,
+    }));
+    await Item.updateDocuments(updates, {
+      parent: container.actor,
+      pack: container.pack,
+    });
   },
 };

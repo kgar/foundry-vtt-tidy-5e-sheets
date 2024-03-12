@@ -2,7 +2,7 @@
   import { getContext } from 'svelte';
   import ItemSpellcasting from '../parts/ItemSpellcasting.svelte';
   import type { Readable } from 'svelte/store';
-  import type { ItemSheetContext } from 'src/types/item';
+  import type { ItemSheetContext } from 'src/types/item.types';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import ItemFormGroup from '../form/ItemFormGroup.svelte';
   import TextInput from 'src/components/inputs/TextInput.svelte';

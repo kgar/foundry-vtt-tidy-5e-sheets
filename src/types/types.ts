@@ -1,5 +1,9 @@
 import type { ComponentType, SvelteComponent } from 'svelte';
-import type { Item5e, ItemCardContentComponent, ItemChatData } from './item';
+import type {
+  Item5e,
+  ItemCardContentComponent,
+  ItemChatData,
+} from './item.types';
 import type {
   OnContentReadyParams,
   OnRenderParams,
@@ -9,7 +13,7 @@ import type {
   RegisteredCustomActorTrait,
   RegisteredPortraitMenuCommand,
 } from 'src/runtime/types';
-import type { ActorFilters } from 'src/runtime/item/item.types';
+import type { DocumentFilters } from 'src/runtime/item/item.types';
 import type { Writable } from 'svelte/store';
 import type { UtilityToolbarCommandParams } from 'src/components/utility-bar/types';
 import type { CONSTANTS } from 'src/constants';
@@ -109,6 +113,7 @@ export type CharacterSheetContext = {
   appearanceEnrichedHtml: string;
   biographyEnrichedHtml: string;
   bondEnrichedHtml: string;
+  containerPanelItems: ContainerPanelItemContext[];
   features: CharacterFeatureSection[];
   flawEnrichedHtml: string;
   idealEnrichedHtml: string;
@@ -118,6 +123,7 @@ export type CharacterSheetContext = {
   notes3EnrichedHtml: string;
   notes4EnrichedHtml: string;
   notesEnrichedHtml: string;
+  showContainerPanel: boolean;
   spellCalculations: SpellCalculations;
   traitEnrichedHtml: string;
   utilities: Utilities;
@@ -222,7 +228,7 @@ export type ActorSheetContext = {
    * When this boolean is `false`, then the sheet is effectively hard locked.
    */
   editable: boolean;
-  filterData: ActorFilters;
+  filterData: DocumentFilters;
   /**
    * Represents remaining health as a percentage within the range of `0` to `100`.
    *
@@ -331,4 +337,15 @@ export type ExpandedItemData = Map<string, ItemChatData>;
 export type MaxPreparedSpellFormula = {
   label: string;
   value: string;
+};
+
+export type ContainerPanelItemContext = {
+  container: Item5e;
+} & ContainerCapacityContext;
+
+export type ContainerCapacityContext = {
+  max: number;
+  pct: number;
+  value: number;
+  units: string;
 };

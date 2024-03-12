@@ -1,4 +1,4 @@
-import type { Item5e } from 'src/types/item';
+import type { Item5e } from 'src/types/item.types';
 import DefaultItemCardContentTemplate from './DefaultItemCardContentTemplate.svelte';
 import SpellbookItemCardContent from './SpellbookItemCardContent.svelte';
 import InventoryItemCardContent from './InventoryItemCardContent.svelte';
@@ -10,6 +10,7 @@ export function getItemCardContentTemplate(item: Item5e) {
       return SpellbookItemCardContent;
     case 'equipment':
     case 'consumable':
+    case 'container':
     case 'tool':
     case 'loot':
       return InventoryItemCardContent;

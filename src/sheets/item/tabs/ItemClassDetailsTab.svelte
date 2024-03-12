@@ -5,7 +5,7 @@
   import ItemSpellcasting from '../parts/ItemSpellcasting.svelte';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
-  import type { ItemSheetContext } from 'src/types/item';
+  import type { ItemSheetContext } from 'src/types/item.types';
   import ItemFormGroup from '../form/ItemFormGroup.svelte';
   import TextInput from 'src/components/inputs/TextInput.svelte';
 

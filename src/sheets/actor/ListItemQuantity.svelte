@@ -1,6 +1,6 @@
 <script lang="ts">
   import TextInput from 'src/components/inputs/TextInput.svelte';
-  import type { Item5e } from 'src/types/item';
+  import type { Item5e } from 'src/types/item.types';
   import type { ActorSheetContext } from 'src/types/types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';

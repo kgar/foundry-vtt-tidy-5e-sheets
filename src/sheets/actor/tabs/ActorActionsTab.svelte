@@ -13,7 +13,7 @@
   import ItemUseButton from 'src/components/item-list/ItemUseButton.svelte';
   import RechargeControl from 'src/components/item-list/controls/RechargeControl.svelte';
   import ActionFilterOverrideControl from 'src/components/item-list/controls/ActionFilterOverrideControl.svelte';
-  import { declareLocation } from 'src/types/location-awareness';
+  import { declareLocation } from 'src/types/location-awareness.types';
   import UtilityToolbar from 'src/components/utility-bar/UtilityToolbar.svelte';
   import UtilityToolbarCommand from 'src/components/utility-bar/UtilityToolbarCommand.svelte';
   import Search from 'src/components/utility-bar/Search.svelte';
@@ -84,7 +84,7 @@
                 FoundryAdapter.editOnMiddleClick(event.detail, actionItem.item)}
               contextMenu={{
                 type: CONSTANTS.CONTEXT_MENU_TYPE_ITEMS,
-                id: actionItem.item.id,
+                uuid: actionItem.item.uuid,
               }}
               let:toggleSummary
             >

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { Item5e } from 'src/types/item';
+  import type { Item5e } from 'src/types/item.types';
   import ItemControl from './ItemControl.svelte';
   import { isItemInActionList, toggleActionFilterOverride } from 'src/features/actions/actions';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';

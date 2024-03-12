@@ -39,7 +39,7 @@ import type {
  */
 export class SheetPreferencesService {
 
-  static async setActorTypeTabPreference<
+  static async setDocumentTypeTabPreference<
     K extends keyof SheetTypeTabPreferences,
     V extends SheetTypeTabPreferences[K]
   >(documentType: string, tabId: string, property: K, value: V) {
@@ -50,7 +50,7 @@ export class SheetPreferencesService {
     );
   }
 
-  static async setActorTypePreference<
+  static async setDocumentTypePreference<
     K extends keyof SheetPreference,
     V extends SheetPreference[K]
   >(documentType: string, property: K, value: V) {

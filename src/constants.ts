@@ -3,22 +3,26 @@ export const CONSTANTS = {
   ALPHA_MODULE_ID: 'tidy5e-sheet-kgar',
   MODULE_ID: moduleId,
   DND5E_SYSTEM_ID: 'dnd5e',
+  DOCUMENT_NAME_ACTOR: 'Actor',
   // TODO: inject moduleId variable when this module overtakes the original
   HOOK_TIDY5E_SHEETS_READY: `tidy5e-sheet.ready`,
   HOOK_TIDY5E_SHEETS_PREPARE_RESOURCES: `tidy5e-sheet.prepareResources`,
   HOOK_TIDY5E_SHEETS_ITEM_HOVER_ON: `tidy5e-sheet.itemHoverOn`,
   HOOK_TIDY5E_SHEETS_ITEM_HOVER_OFF: `tidy5e-sheet.itemHoverOff`,
-  ITEM_TYPE_EQUIPMENT: 'equipment',
+  ITEM_CAPACITY_TYPE_ITEMS: 'items',
+  ITEM_CAPACITY_TYPE_WEIGHT: 'weight',
   ITEM_TYPE_BACKGROUND: 'background',
   ITEM_TYPE_CLASS: 'class',
   ITEM_TYPE_CONSUMABLE: 'consumable',
+  ITEM_TYPE_CONTAINER: 'container',
+  ITEM_TYPE_EQUIPMENT: 'equipment',
   ITEM_TYPE_FEAT: 'feat',
   ITEM_TYPE_LOOT: 'loot',
+  ITEM_TYPE_RACE: 'race',
   ITEM_TYPE_SPELL: 'spell',
   ITEM_TYPE_SUBCLASS: 'subclass',
   ITEM_TYPE_TOOL: 'tool',
   ITEM_TYPE_WEAPON: 'weapon',
-  ITEM_TYPE_RACE: 'race',
   MESSAGE_BUS_COLLAPSE_ALL: 'collapse-all',
   MESSAGE_BUS_EXPAND_ALL: 'expand-all',
   /**
@@ -53,6 +57,7 @@ export const CONSTANTS = {
     custom: 'TIDY5E.Class.Custom',
   },
   TAB_OPTION_CLASS: 'tab-option',
+  TAB_CONTAINER_CONTENTS: 'contents',
   TAB_ITEM_DESCRIPTION_ID: 'description',
   TAB_ITEM_DETAILS_ID: 'details',
   TAB_ITEM_ADVANCEMENT_ID: 'advancement',
@@ -93,6 +98,7 @@ export const CONSTANTS = {
   SHEET_TYPE_CHARACTER: 'character',
   SHEET_TYPE_NPC: 'npc',
   SHEET_TYPE_VEHICLE: 'vehicle',
+  SHEET_TYPE_CONTAINER: 'container',
   SHEET_LAYOUT_ALL: 'all',
   SHEET_LAYOUT_CLASSIC: 'classic',
   CIRCULAR_PORTRAIT_OPTION_ALL: 'all',
@@ -179,6 +185,15 @@ export const CONSTANTS = {
 
     /** An interactable control which the user can execute to use an item (e.g., consumable, feature, loot, spell, weapon, etc.). */
     ITEM_USE_COMMAND: 'item-use-command',
+
+    /** A series of properties related to an item, to be found on item summaries, item cards, and other locations where read-only item information is given. */
+    ITEM_PROPERTY_LIST: 'item-property-list',
+
+    /** A series of properties related to an item, viewed from that item's sheet. These include read-only properties, currency value, and other situational input. */
+    ITEM_SHEET_PROPERTIES: 'item-sheet-properties',
+
+    /** A summary of an item, usually taken from the item's chat data. */
+    ITEM_SUMMARY: 'item-summary',
 
     /** A containing element for a series of item lists or grids. */
     ITEMS_CONTAINER: 'items-container',

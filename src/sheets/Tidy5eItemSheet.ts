@@ -1,5 +1,5 @@
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-import type { Item5e, ItemDescription, ItemSheetContext } from 'src/types/item';
+import type { Item5e, ItemDescription, ItemSheetContext } from 'src/types/item.types';
 import { get, writable } from 'svelte/store';
 import TypeNotFoundSheet from './item/TypeNotFoundSheet.svelte';
 import type { SheetStats, SheetTabCacheable, Tab } from 'src/types/types';
@@ -280,7 +280,7 @@ export class Tidy5eKgarItemSheet
   _onResize(event: any) {
     super._onResize(event);
     const { width } = this.position;
-    SheetPreferencesService.setActorTypePreference(
+    SheetPreferencesService.setDocumentTypePreference(
       this.item.type,
       'width',
       width

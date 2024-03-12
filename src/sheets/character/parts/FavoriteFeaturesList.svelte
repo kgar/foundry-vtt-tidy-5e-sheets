@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { Item5e } from 'src/types/item';
+  import type { Item5e } from 'src/types/item.types';
   import type { CharacterSheetContext } from 'src/types/types';
   import ItemTable from '../../../components/item-list/v1/ItemTable.svelte';
   import ItemTableHeaderRow from '../../../components/item-list/v1/ItemTableHeaderRow.svelte';
@@ -46,7 +46,7 @@
           FoundryAdapter.editOnMiddleClick(event.detail, item)}
         contextMenu={{
           type: CONSTANTS.CONTEXT_MENU_TYPE_ITEMS,
-          id: item.id,
+          uuid: item.uuid,
         }}
       >
         <ItemTableCell primary={true} title={item.name}>

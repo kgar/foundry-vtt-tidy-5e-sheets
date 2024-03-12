@@ -5,7 +5,7 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
-  import type { ItemSheetContext } from 'src/types/item';
+  import type { ItemSheetContext } from 'src/types/item.types';
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import Source from '../shared/Source.svelte';
   import { CONSTANTS } from 'src/constants';

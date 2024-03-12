@@ -22,7 +22,7 @@
   import ItemDuplicateControl from 'src/components/item-list/controls/ItemDuplicateControl.svelte';
   import ItemEditControl from 'src/components/item-list/controls/ItemEditControl.svelte';
   import ItemControls from 'src/components/item-list/controls/ItemControls.svelte';
-  import type { ItemCardContentComponent } from 'src/types/item';
+  import type { ItemCardContentComponent } from 'src/types/item.types';
   import InventoryItemCardContent from 'src/components/item-info-card/InventoryItemCardContent.svelte';
   import { settingStore } from 'src/settings/settings';
   import ActionFilterOverrideControl from 'src/components/item-list/controls/ActionFilterOverrideControl.svelte';
@@ -141,7 +141,7 @@
                 ? null
                 : {
                     type: CONSTANTS.CONTEXT_MENU_TYPE_ITEMS,
-                    id: item.id,
+                    uuid: item.uuid,
                   }}
               {item}
               cssClass={FoundryAdapter.getInventoryRowClasses(item, ctx)}
@@ -278,7 +278,7 @@
 
 <TabFooter mode="vertical">
   <div class="currency">
-    <Currency actor={$context.actor} />
+    <Currency document={$context.actor} />
   </div>
 
   {#if $settingStore.useVehicleEncumbranceBar}

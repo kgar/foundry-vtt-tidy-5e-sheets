@@ -1,5 +1,5 @@
 <script lang="ts">
-  import type { ItemSheetContext } from 'src/types/item';
+  import type { ItemSheetContext } from 'src/types/item.types';
   import { createEventDispatcher, getContext, tick } from 'svelte';
   import type { Readable } from 'svelte/store';
   import Accordion from 'src/components/accordion/Accordion.svelte';

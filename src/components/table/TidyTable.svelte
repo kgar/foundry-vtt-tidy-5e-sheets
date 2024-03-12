@@ -2,7 +2,7 @@
   import { CONSTANTS } from 'src/constants';
   import ExpandableContainer from 'src/components/expandable/ExpandableContainer.svelte';
   import { ExpandCollapseService } from 'src/features/expand-collapse/ExpandCollapseService';
-  import { declareLocation } from 'src/types/location-awareness';
+  import { declareLocation } from 'src/types/location-awareness.types';
   import { getContext } from 'svelte';
   import type { MessageBus } from 'src/types/types';
 

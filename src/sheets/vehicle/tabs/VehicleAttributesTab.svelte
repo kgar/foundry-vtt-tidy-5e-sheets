@@ -28,7 +28,7 @@
   import ResourceWithBar from 'src/components/bar/ResourceWithBar.svelte';
   import RechargeControl from 'src/components/item-list/controls/RechargeControl.svelte';
   import ActionFilterOverrideControl from 'src/components/item-list/controls/ActionFilterOverrideControl.svelte';
-  import { declareLocation } from 'src/types/location-awareness';
+  import { declareLocation } from 'src/types/location-awareness.types';
 
   let context = getContext<Readable<VehicleSheetContext>>('context');
 
@@ -125,7 +125,7 @@
                     FoundryAdapter.editOnMiddleClick(event.detail, item)}
                   contextMenu={{
                     type: CONSTANTS.CONTEXT_MENU_TYPE_ITEMS,
-                    id: item.id,
+                    uuid: item.uuid,
                   }}
                   {item}
                   cssClass={FoundryAdapter.getInventoryRowClasses(item, ctx)}
