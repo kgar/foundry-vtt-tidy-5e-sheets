@@ -15,6 +15,7 @@
 
   $: capacityLabel = `${readableValue}/${capacity.max} ${capacity.units}`;
 
+  $: percentage = Math.round(capacity.pct);
   const localize = FoundryAdapter.localize;
 </script>
 
@@ -27,7 +28,8 @@
   aria-valuemin="0"
   aria-valuenow={capacity.value}
   aria-valuemax={capacity.max}
-  style="--percentage: {Math.round(capacity.pct)}%"
+  style="--percentage: {percentage}%"
+  class:empty={percentage === 0}
 >
   {#if showLabel}
     <span class="capacity-label">
@@ -44,7 +46,7 @@
     background: var(--t5e-capacity-container-background);
     border: 1px solid var(--t5e-capacity-container-border-color);
 
-    &::before {
+    &:not(.empty)::before {
       content: '';
       position: absolute;
       inline-size: var(--percentage);
