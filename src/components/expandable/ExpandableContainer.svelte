@@ -19,7 +19,7 @@
 
 <div
   bind:this={expandableContainer}
-  class="expandable"
+  class="expandable {$$restProps.class ?? ''}"
   class:expanded
   class:overflow-y-hidden={overflowYHidden}
   role="presentation"

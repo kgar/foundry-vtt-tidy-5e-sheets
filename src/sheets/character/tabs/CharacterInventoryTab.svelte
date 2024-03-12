@@ -55,15 +55,19 @@
 </UtilityToolbar>
 
 <div
-  class="scroll-container flex-column small-gap"
+  class="tidy-inventory-container scroll-container flex-column small-gap"
   data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEMS_CONTAINER}
 >
   {#if noItems && !$context.unlocked}
     <Notice>{localize('TIDY5E.EmptySection')}</Notice>
   {:else}
+    {@const containerPanelExpanded =
+      $context.showContainerPanel && !!$context.containerPanelItems.length}
     <ExpandableContainer
-      expanded={$context.showContainerPanel &&
-        !!$context.containerPanelItems.length}
+      expanded={containerPanelExpanded}
+      class="container-panel-wrapper {containerPanelExpanded
+        ? 'container-panel-expanded'
+        : ''}"
     >
       <ContainerPanel
         containerPanelItems={$context.containerPanelItems}
@@ -189,5 +193,10 @@
         font-family: var(--t5e-body-font-family);
       }
     }
+  }
+
+  .tidy-inventory-container
+    :global(.container-panel-wrapper:not(.container-panel-expanded)) {
+    margin-bottom: -0.5rem;
   }
 </style>
