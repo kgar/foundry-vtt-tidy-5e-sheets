@@ -1470,6 +1470,28 @@ export function createSettings() {
         },
       },
 
+      itemIdentificationPermission: {
+        options: {
+          name: 'TIDY5E.WorldSettings.ItemIdentificationPermission.name',
+          hint: 'TIDY5E.WorldSettings.ItemIdentificationPermission.hint',
+          scope: 'world',
+          type: String,
+          default: CONSTANTS.SHEET_SETTINGS_OPTION_GM_AND_OWNERS,
+          config: false,
+          choices: {
+            [CONSTANTS.SHEET_SETTINGS_OPTION_GM_AND_OWNERS]:
+              'TIDY5E.WorldSettings.ItemIdentificationPermission.options.GmAndOwners',
+            [CONSTANTS.SHEET_SETTINGS_OPTION_GM_ONLY]:
+              'TIDY5E.WorldSettings.ItemIdentificationPermission.options.GmOnly',
+          },
+        },
+        get() {
+          return FoundryAdapter.getTidySetting<string>(
+            'itemIdentificationPermission'
+          );
+        },
+      },
+
       colorPickerEnabled: {
         options: {
           name: 'TIDY5E.Settings.ColorPickerEnabled.name',
