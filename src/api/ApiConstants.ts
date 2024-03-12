@@ -33,6 +33,7 @@ const ApiConstants = {
    * ```js
    * // Every time Tidy renders, whether a full render or a partial
    * Hooks.on("tidy5e-sheet.renderActorSheet", (sheet, element, data) => {
+   *   const api = game.modules.get('tidy5e-sheet').api;
    *   const selector = api.getSheetPartSelector(
    *     api.constants.SHEET_PARTS.RESOURCES_CONTAINER
    *   );
@@ -40,7 +41,7 @@ const ApiConstants = {
    *   element
    *     .querySelector(selector)
    *     // inject some HTML
-   *     .insertAdjacentHTML(
+   *     ?.insertAdjacentHTML(
    *       // put it as the first element inside the resources container; see https://developer.mozilla.org/en-US/docs/Web/API/Element/insertAdjacentHTML#afterbegin
    *       "afterbegin",
    *       // here's my content
