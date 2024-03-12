@@ -4,7 +4,7 @@ import type { ContextMenuPositionInfo } from './context-menu.types';
  * A specialized subclass of ContextMenu that places the menu in a fixed position.
  * @extends {ContextMenu}
  */
-export default class ContextMenu5e extends ContextMenu {
+export default class FloatingContextMenu extends ContextMenu {
   constructor(...args: any[]) {
     super(...args);
   }
