@@ -302,7 +302,7 @@ export const FoundryAdapter = {
       itemClasses.push('magic-item');
     }
 
-    if (ctx?.attunement?.cls) {
+    if (ctx?.attunement?.cls && !FoundryAdapter.concealDetails(item)) {
       itemClasses.push(ctx.attunement.cls);
     }
 

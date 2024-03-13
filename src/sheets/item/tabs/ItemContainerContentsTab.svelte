@@ -147,7 +147,6 @@
         {#each section.items as item (item.id)}
           {@const ctx = $context.itemContext[item.id]}
           {@const weight = ctx?.totalWeight ?? item.system.weight}
-          {@const attunementContext = FoundryAdapter.getAttunementContext(item)}
           <ItemTableRowV2
             {item}
             hidden={!visibleItemIdSubset.has(item.id)}
@@ -179,12 +178,17 @@
                   >{item.name}</span
                 >
               </ItemName>
-              {#if attunementContext}
-                <i
-                  style="margin-left: auto; align-self: center;"
-                  class="item-state-icon fas {attunementContext.icon} {attunementContext.cls}"
-                  title={localize(attunementContext.title)}
-                />
+              {#if !FoundryAdapter.concealDetails(item)}
+                {@const attunementContext =
+                  FoundryAdapter.getAttunementContext(item)}
+
+                {#if attunementContext}
+                  <i
+                    style="margin-left: auto; align-self: center;"
+                    class="item-state-icon fas {attunementContext.icon} {attunementContext.cls}"
+                    title={localize(attunementContext.title)}
+                  />
+                {/if}
               {/if}
             </TidyTableCell>
             <TidyTableCell
