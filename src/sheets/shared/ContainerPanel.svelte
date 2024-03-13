@@ -80,6 +80,7 @@
         on:click={() => container.sheet.render(true)}
         data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
         data-context-menu-document-uuid={container.uuid}
+        disabled={!FoundryAdapter.userIsGm() && !container.isOwner}
       >
         <div
           class="container-image"
