@@ -70,6 +70,7 @@ export const defaultItemFilters = {
     name: 'concentration',
     predicate: (item) => item.system.properties.has('concentration'),
     text: 'DND5E.Concentration',
+    abbreviation: 'DND5E.AbbreviationConc',
   },
   verbal: {
     name: 'verbal',

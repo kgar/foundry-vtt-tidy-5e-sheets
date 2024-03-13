@@ -26,7 +26,7 @@
 
 <button
   type="button"
-  class="filter-option pill-button truncate"
+  class="filter-option truncate"
   class:include={filter.value === true}
   class:exclude={filter.value === false}
   on:click={() => cycleFilterForward(filter.name, filter.value)}
@@ -38,27 +38,41 @@
 </button>
 
 <style lang="scss">
-  .filter-option.pill-button {
-    // TODO: Extract to color picker settings
-    --t5e-filter-option-include-button-background: var(--t5e-tertiary-color);
-    --t5e-filter-option-include-button-text-color: white;
-    --t5e-filter-option-exclude-button-text-color: white;
-    --t5e-filter-option-exclude-button-background: var(--t5e-warning-accent-color);
-
+  button.filter-option {
     font-size: 0.75rem;
     background: none;
     text-transform: capitalize;
+    border-radius: 0;
+    width: auto;
+    border: none;
+    border-bottom-width: 0.1875rem;
+    border-bottom-style: solid;
+    border-bottom-color: var(
+      --t5e-filter-option-neutral-pin-border-bottom-color
+    );
+    line-height: normal;
+    padding: 0.25rem 0.125rem;
+    margin: 0;
+
+    &:hover {
+      background: inherit;
+      border-bottom-color: var(
+        --t5e-filter-option-neutral-pin-hover-border-bottom-color
+      );
+    }
 
     &.include,
     &.include:hover {
-      color: var(--t5e-filter-option-include-button-text-color);
-      background: var(--t5e-filter-option-include-button-background);
+      border-bottom-color: var(
+        --t5e-filter-option-include-pin-border-bottom-color
+      );
     }
 
     &.exclude,
     &.exclude:hover {
-      color: var(--t5e-filter-option-exclude-button-text-color);
-      background: var(--t5e-filter-option-exclude-button-background);
+      border-bottom-color: var(
+        --t5e-filter-option-exclude-pin-border-bottom-color
+      );
     }
   }
 </style>

@@ -4,6 +4,8 @@ export type ItemFilter = {
   name: string;
   predicate: (item: Item5e) => boolean;
   text: string;
+  /** Used for scenarios where space is limited and an abbreviation is available. */
+  abbreviation?: string;
 };
 
 type Category = string;

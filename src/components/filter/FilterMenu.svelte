@@ -72,10 +72,7 @@
     display: contents;
 
     :global(.filter-menu-button.has-active-filters) {
-      color: var(--t5e-primary-accent-color);
-    }
-    :global(.filter-menu-button.has-active-filters:hover) {
-      color: var(--t5e-primary-accent-color);
+      color: var(--t5e-icon-hover-color);
     }
   }
 
