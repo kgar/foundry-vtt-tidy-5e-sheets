@@ -138,7 +138,7 @@
           <TidyTableHeaderCell>
             {localize('DND5E.QuantityAbbr')}
           </TidyTableHeaderCell>
-          {#if useClassicControls}
+          {#if $context.editable && useClassicControls}
             <TidyTableHeaderCell></TidyTableHeaderCell>
           {/if}
         </TidyTableHeaderRow>
@@ -213,7 +213,7 @@
                 allowDeltaChanges={true}
               />
             </TidyTableCell>
-            {#if useClassicControls}
+            {#if $context.editable && useClassicControls}
               <TidyTableCell>
                 {#each classicControls as control}
                   <svelte:component
