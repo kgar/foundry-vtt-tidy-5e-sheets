@@ -1,5 +1,7 @@
 import { CONSTANTS } from 'src/constants';
 import type {
+  ConfiguredItemFilter,
+  DocumentFilters,
   DocumentTypesToFilterTabs,
   FilterTabsToCategories,
   ItemFilter,
@@ -14,6 +16,7 @@ import {
   getSpellSchoolFiltersAsObject,
   getStandardSpellSchoolFilterCategories,
 } from './default-item-filters';
+import { debug, error } from 'src/utils/logging';
 
 export class ItemFilterRuntime {
   static _registeredItemFilters: Record<string, ItemFilter> = {};
@@ -173,5 +176,39 @@ export class ItemFilterRuntime {
 
   static getDocumentFilters(document: any): FilterTabsToCategories {
     return ItemFilterRuntime._documentTabFilters[document.type] ?? {};
+  }
+
+  static getPinnedFiltersForTab(
+    filterPins: Record<string, Set<string>>,
+    filterData: DocumentFilters,
+    tabId: string
+  ) {
+    let pinnedFilters: ConfiguredItemFilter[] = [];
+
+    try {
+      let tabFilterPins = filterPins[tabId] ?? new Set<string>();
+
+      pinnedFilters = Object.values(filterData[tabId] ?? {}).reduce(
+        (pins, category) => {
+          return pins.concat(
+            ...category.filter((c) => tabFilterPins.has(c.name))
+          );
+        },
+        []
+      );
+    } catch (e) {
+      error(
+        `An error occurred while searching for pinned filters on the ${tabId} tab.`,
+        false,
+        e
+      );
+      debug('Filter pins error troubleshooting info', {
+        filterData,
+        filterPins,
+        tabId,
+      });
+    }
+
+    return pinnedFilters;
   }
 }

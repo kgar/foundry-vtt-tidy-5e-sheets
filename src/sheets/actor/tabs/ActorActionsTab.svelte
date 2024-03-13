@@ -20,6 +20,8 @@
   import FilterMenu from 'src/components/filter/FilterMenu.svelte';
   import { Actions } from 'src/features/actions/actions';
   import Dnd5eIcon from 'src/components/icon/Dnd5eIcon.svelte';
+  import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
+  import PinnedFilterToggles from 'src/components/filter/PinnedFilterToggles.svelte';
 
   let context = getContext<Readable<ActorSheetContext>>('context');
 
@@ -37,6 +39,14 @@
 
 <UtilityToolbar class="abilities-toolbar">
   <Search bind:value={searchCriteria} />
+  <PinnedFilterToggles
+    filterGroupName={CONSTANTS.TAB_ACTOR_ACTIONS}
+    filters={ItemFilterRuntime.getPinnedFiltersForTab(
+      $context.filterPins,
+      $context.filterData,
+      CONSTANTS.TAB_ACTOR_ACTIONS,
+    )}
+  />
   <FilterMenu tabId={CONSTANTS.TAB_ACTOR_ACTIONS} />
   {#each utilityBarCommands as command (command.title)}
     <UtilityToolbarCommand
