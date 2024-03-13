@@ -739,5 +739,20 @@
     },
     "TIDY5E.GMOnly.Message": "MJ seulement : {message}",
     "TIDY5E.ReminderToBackUp": "N'oubliez jamais de sauvegarder votre monde.",
-    "TIDY5E.ButtonConfirm.Text": "Confirmer"
+    "TIDY5E.ButtonConfirm.Text": "Confirmer",
+    "TIDY5E.WorldSettings.TabItem": {
+        "tabLabel": "objet"
+    },
+    "TIDY5E.WorldSettings.ItemIdentificationPermission": {
+        "name": "Autorisation d'identification de l'objet",
+        "hint": "Détermine le type d'utilisateur qui peut accéder aux contrôles de l'interface utilisateur pour l'identification des éléments.",
+        "options.GmOnly": "MJ seulement",
+        "options.GmAndOwners": "MJ et propriétaires des objets"
+    },
+    "TIDY5E.Commands.ShowContainerPanel": "Afficher le panneau conteneur",
+    "TIDY5E.Tidy5eContainerSheet": "Feuille de conteneur Tidy 5e",
+    "TIDY5E.Commands.HideContainerPanel": "Masquer le panneau conteneur",
+    "TIDY5E.Utilities.GMTools": "Outils du MJ",
+    "TIDY5E.Utilities.IdentifyAll": "Identifier tous les éléments",
+    "TIDY5E.Utilities.MarkAllAsUnidentified": "Marquer tous les éléments comme non identifiés"
 }

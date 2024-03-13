@@ -76,6 +76,7 @@
       aria-hidden={!visibleContainersIdsSubset.has(container.id)}
     >
       <button
+        type="button"
         class="transparent-button"
         on:click={() => container.sheet.render(true)}
         data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}

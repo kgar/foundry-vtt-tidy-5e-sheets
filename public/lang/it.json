@@ -739,5 +739,20 @@
         "hint": "Alcune migrazioni possono essere eseguite per singola scheda. Questa impostazione controlla chi può vedere il menu Migrazioni delle Schede."
     },
     "TIDY5E.ReminderToBackUp": "Ricorda sempre di fare un salvataggio del tuo mondo.",
-    "TIDY5E.ButtonConfirm.Text": "Conferma"
+    "TIDY5E.ButtonConfirm.Text": "Conferma",
+    "TIDY5E.WorldSettings.ItemIdentificationPermission": {
+        "hint": "Determina quale tipo di utente può accedere ai controlli dell'interfaccia per identificare gli oggetti.",
+        "name": "Permesso Identificazione Oggetto",
+        "options.GmOnly": "Solo DM",
+        "options.GmAndOwners": "DM e Proprietari Oggetti"
+    },
+    "TIDY5E.Tidy5eContainerSheet": "Scheda Contenitore Tidy 5e",
+    "TIDY5E.WorldSettings.TabItem": {
+        "tabLabel": "Oggetto"
+    },
+    "TIDY5E.Commands.ShowContainerPanel": "Mostra Pannello Contenitori",
+    "TIDY5E.Commands.HideContainerPanel": "Nascondi Pannello Contenitori",
+    "TIDY5E.Utilities.GMTools": "Strumenti DM",
+    "TIDY5E.Utilities.IdentifyAll": "Identifica tutti gli Oggetti",
+    "TIDY5E.Utilities.MarkAllAsUnidentified": "Contrassegna tutti gli oggetti come non identificati"
 }
