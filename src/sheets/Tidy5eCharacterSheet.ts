@@ -48,6 +48,7 @@ import { StoreSubscriptionsService } from 'src/features/store/StoreSubscriptions
 import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
 import { AsyncMutex } from 'src/utils/mutex';
 import type { Dnd5eActorCondition } from 'src/foundry/foundry-and-system';
+import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
 
 export class Tidy5eCharacterSheet
   extends dnd5e.applications.actor.ActorSheet5eCharacter
@@ -722,6 +723,7 @@ export class Tidy5eCharacterSheet
       editable: defaultDocumentContext.editable,
       features: sections,
       filterData: this.itemFilterService.getDocumentItemFilterData(),
+      filterPins: ItemFilterRuntime.defaultFilterPins[this.actor.type],
       flawEnrichedHtml: await FoundryAdapter.enrichHtml(
         this.actor.system.details.flaw,
         {

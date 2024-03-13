@@ -27,6 +27,70 @@ export class ItemFilterRuntime {
     };
   }
 
+  static defaultFilterPins: Record<string, Record<string, Set<string>>> = {
+    [CONSTANTS.SHEET_TYPE_CHARACTER]: {
+      [CONSTANTS.TAB_CHARACTER_INVENTORY]: new Set<string>([
+        defaultItemFilters.activationCostAction.name,
+        defaultItemFilters.activationCostBonus.name,
+        defaultItemFilters.activationCostReaction.name,
+        defaultItemFilters.equipped.name,
+      ]),
+      [CONSTANTS.TAB_CHARACTER_FEATURES]: new Set<string>([
+        defaultItemFilters.activationCostAction.name,
+        defaultItemFilters.activationCostBonus.name,
+        defaultItemFilters.activationCostReaction.name,
+      ]),
+      [CONSTANTS.TAB_CHARACTER_SPELLBOOK]: new Set<string>([
+        defaultItemFilters.activationCostAction.name,
+        defaultItemFilters.activationCostBonus.name,
+        defaultItemFilters.activationCostReaction.name,
+        defaultItemFilters.concentration.name,
+        defaultItemFilters.ritual.name,
+        defaultItemFilters.prepared.name,
+      ]),
+      [CONSTANTS.TAB_ACTOR_ACTIONS]: new Set<string>([
+        defaultItemFilters.activationCostAction.name,
+        defaultItemFilters.activationCostBonus.name,
+        defaultItemFilters.activationCostReaction.name,
+      ]),
+    },
+    [CONSTANTS.SHEET_TYPE_NPC]: {
+      [CONSTANTS.TAB_NPC_ABILITIES]: new Set<string>([
+        defaultItemFilters.activationCostAction.name,
+        defaultItemFilters.activationCostBonus.name,
+        defaultItemFilters.activationCostReaction.name,
+      ]),
+      [CONSTANTS.TAB_NPC_SPELLBOOK]: new Set<string>([
+        defaultItemFilters.activationCostAction.name,
+        defaultItemFilters.activationCostBonus.name,
+        defaultItemFilters.activationCostReaction.name,
+        defaultItemFilters.concentration.name,
+        defaultItemFilters.ritual.name,
+        defaultItemFilters.prepared.name,
+      ]),
+      [CONSTANTS.TAB_ACTOR_ACTIONS]: new Set<string>([
+        defaultItemFilters.activationCostAction.name,
+        defaultItemFilters.activationCostBonus.name,
+        defaultItemFilters.activationCostReaction.name,
+      ]),
+    },
+    [CONSTANTS.SHEET_TYPE_VEHICLE]: {
+      [CONSTANTS.TAB_ACTOR_ACTIONS]: new Set<string>([
+        defaultItemFilters.activationCostAction.name,
+        defaultItemFilters.activationCostBonus.name,
+        defaultItemFilters.activationCostReaction.name,
+      ]),
+    },
+    [CONSTANTS.SHEET_TYPE_CONTAINER]: {
+      [CONSTANTS.TAB_CONTAINER_CONTENTS]: new Set<string>([
+        defaultItemFilters.activationCostAction.name,
+        defaultItemFilters.activationCostBonus.name,
+        defaultItemFilters.activationCostReaction.name,
+        defaultItemFilters.equipped.name,
+      ]),
+    },
+  };
+
   static _documentTabFilters: DocumentTypesToFilterTabs = {
     [CONSTANTS.SHEET_TYPE_CHARACTER]: {
       [CONSTANTS.TAB_CHARACTER_INVENTORY]: {

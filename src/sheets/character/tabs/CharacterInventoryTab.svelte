@@ -19,6 +19,8 @@
   import FilterMenu from 'src/components/filter/FilterMenu.svelte';
   import ContainerPanel from 'src/sheets/shared/ContainerPanel.svelte';
   import ExpandableContainer from 'src/components/expandable/ExpandableContainer.svelte';
+  import type { ConfiguredItemFilter } from 'src/runtime/item/item.types';
+  import FilterToggleButton from 'src/components/filter/FilterToggleButton.svelte';
 
   let context = getContext<Readable<CharacterSheetContext>>('context');
 
@@ -38,10 +40,35 @@
   $: utilityBarCommands =
     $context.utilities[CONSTANTS.TAB_CHARACTER_INVENTORY]
       ?.utilityToolbarCommands ?? [];
+
+  let pinnedFilters: ConfiguredItemFilter[] = [];
+  $: {
+    let inventoryFilterPins =
+      $context.filterPins[CONSTANTS.TAB_CHARACTER_INVENTORY] ??
+      new Set<string>();
+
+    pinnedFilters = Object.values(
+      $context.filterData[CONSTANTS.TAB_CHARACTER_INVENTORY],
+    ).reduce((pins, category) => {
+      return pins.concat(
+        ...category.filter((c) => inventoryFilterPins.has(c.name)),
+      );
+    }, []);
+  }
 </script>
 
 <UtilityToolbar>
   <Search bind:value={searchCriteria} />
+  <div role="presentation" class="flex-row extra-small-gap">
+    {#each pinnedFilters as pinnedFilter}
+      <FilterToggleButton
+        filterGroupName={CONSTANTS.TAB_CHARACTER_INVENTORY}
+        filter={pinnedFilter}
+      >
+        {localize(pinnedFilter.text)}
+      </FilterToggleButton>
+    {/each}
+  </div>
   <FilterMenu tabId={CONSTANTS.TAB_CHARACTER_INVENTORY} />
   {#each utilityBarCommands as command (command.title)}
     <UtilityToolbarCommand
