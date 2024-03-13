@@ -720,5 +720,14 @@
     "TIDY5E.Tidy5eContainerSheet": "Hoja contenedora Tidy 5e",
     "TIDY5E.Commands.ShowContainerPanel": "Mostrar panel del contenedor",
     "TIDY5E.Utilities.GMTools": "Herramientas GM",
-    "TIDY5E.Utilities.IdentifyAll": "Identificar todos los artículos"
+    "TIDY5E.Utilities.IdentifyAll": "Identificar todos los artículos",
+    "TIDY5E.WorldSettings.TabItem": {
+        "tabLabel": "Artículo"
+    },
+    "TIDY5E.WorldSettings.ItemIdentificationPermission": {
+        "name": "Permiso de identificación de artículos",
+        "options.GmOnly": "Solo GM",
+        "options.GmAndOwners": "GM y propietarios de artículos",
+        "hint": "Determina qué tipo de usuario puede acceder a los controles de la interfaz de usuario para identificar elementos."
+    }
 }
