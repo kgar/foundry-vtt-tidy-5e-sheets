@@ -26,7 +26,7 @@
 
 <button
   type="button"
-  class="filter-option pill-button truncate"
+  class="filter-toggle-button pill-button truncate"
   class:include={filter.value === true}
   class:exclude={filter.value === false}
   on:click={() => cycleFilterForward(filter.name, filter.value)}
@@ -36,29 +36,3 @@
 >
   <slot />
 </button>
-
-<style lang="scss">
-  .filter-option.pill-button {
-    // TODO: Extract to color picker settings
-    --t5e-filter-option-include-button-background: var(--t5e-tertiary-color);
-    --t5e-filter-option-include-button-text-color: white;
-    --t5e-filter-option-exclude-button-text-color: white;
-    --t5e-filter-option-exclude-button-background: var(--t5e-warning-accent-color);
-
-    font-size: 0.75rem;
-    background: none;
-    text-transform: capitalize;
-
-    &.include,
-    &.include:hover {
-      color: var(--t5e-filter-option-include-button-text-color);
-      background: var(--t5e-filter-option-include-button-background);
-    }
-
-    &.exclude,
-    &.exclude:hover {
-      color: var(--t5e-filter-option-exclude-button-text-color);
-      background: var(--t5e-filter-option-exclude-button-background);
-    }
-  }
-</style>

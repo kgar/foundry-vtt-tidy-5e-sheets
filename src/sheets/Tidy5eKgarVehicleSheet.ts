@@ -42,6 +42,7 @@ import { StoreSubscriptionsService } from 'src/features/store/StoreSubscriptions
 import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
 import { ItemFilterService } from 'src/features/filtering/ItemFilterService';
 import { AsyncMutex } from 'src/utils/mutex';
+import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
 
 export class Tidy5eVehicleSheet
   extends dnd5e.applications.actor.ActorSheet5eVehicle
@@ -243,6 +244,7 @@ export class Tidy5eVehicleSheet
         defaultDocumentContext
       ),
       filterData: this.itemFilterService.getDocumentItemFilterData(),
+      filterPins: ItemFilterRuntime.defaultFilterPins[this.actor.type],
       useClassicControls:
         SettingsProvider.settings.useClassicControlsForVehicle.get(),
       editable: defaultDocumentContext.editable,

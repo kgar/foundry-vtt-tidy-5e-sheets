@@ -183,19 +183,18 @@ export class ItemFilterRuntime {
     filterData: DocumentFilters,
     tabId: string
   ) {
-    let pinnedFilters: ConfiguredItemFilter[] = [];
+    let pinnedFilters = new Map<string, ConfiguredItemFilter>();
 
     try {
       let tabFilterPins = filterPins[tabId] ?? new Set<string>();
 
-      pinnedFilters = Object.values(filterData[tabId] ?? {}).reduce(
-        (pins, category) => {
-          return pins.concat(
-            ...category.filter((c) => tabFilterPins.has(c.name))
-          );
-        },
-        []
-      );
+      for (let categoryFilters of Object.values(filterData[tabId] ?? {})) {
+        for (let filter of categoryFilters) {
+          if (tabFilterPins.has(filter.name)) {
+            pinnedFilters.set(filter.name, filter);
+          }
+        }
+      }
     } catch (e) {
       error(
         `An error occurred while searching for pinned filters on the ${tabId} tab.`,
@@ -209,6 +208,6 @@ export class ItemFilterRuntime {
       });
     }
 
-    return pinnedFilters;
+    return Array.from(pinnedFilters.values());
   }
 }

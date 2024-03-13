@@ -19,10 +19,3 @@
   </div>
 {/if}
 
-<style lang="scss">
-  .pinned-filter-toggles {
-    display: flex;
-    flex-direction: row;
-    gap: 0.125rem;
-  }
-</style>

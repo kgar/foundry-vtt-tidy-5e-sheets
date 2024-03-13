@@ -38,6 +38,7 @@ import { StoreSubscriptionsService } from 'src/features/store/StoreSubscriptions
 import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
 import { CONSTANTS } from 'src/constants';
 import { AsyncMutex } from 'src/utils/mutex';
+import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
 
 export class Tidy5eKgarContainerSheet
   extends dnd5e.applications.item.ContainerSheet
@@ -244,6 +245,7 @@ export class Tidy5eKgarContainerSheet
       },
       customContent: await ItemSheetRuntime.getContent(defaultDocumentContext),
       filterData: this.itemFilterService.getDocumentItemFilterData(),
+      filterPins: ItemFilterRuntime.defaultFilterPins[this.item.type],
       identifiedName: FoundryAdapter.getIdentifiedName(this.item),
       itemDescriptions,
       lockItemQuantity: FoundryAdapter.shouldLockItemQuantity(),

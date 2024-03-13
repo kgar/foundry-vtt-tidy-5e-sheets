@@ -39,6 +39,8 @@
   import UtilityToolbarCommand from 'src/components/utility-bar/UtilityToolbarCommand.svelte';
   import Search from 'src/components/utility-bar/Search.svelte';
   import FilterMenu from 'src/components/filter/FilterMenu.svelte';
+  import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
+  import PinnedFilterToggles from 'src/components/filter/PinnedFilterToggles.svelte';
 
   let context = getContext<Readable<NpcSheetContext>>('context');
 
@@ -71,6 +73,14 @@
 
 <UtilityToolbar class="abilities-toolbar">
   <Search bind:value={searchCriteria} />
+  <PinnedFilterToggles
+    filterGroupName={CONSTANTS.TAB_NPC_ABILITIES}
+    filters={ItemFilterRuntime.getPinnedFiltersForTab(
+      $context.filterPins,
+      $context.filterData,
+      CONSTANTS.TAB_NPC_ABILITIES,
+    )}
+  />
   <FilterMenu tabId={CONSTANTS.TAB_NPC_ABILITIES} />
   {#each utilityBarCommands as command (command.title)}
     <UtilityToolbarCommand

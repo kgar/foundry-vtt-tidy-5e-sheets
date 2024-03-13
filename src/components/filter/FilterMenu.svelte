@@ -66,39 +66,3 @@
     </section>
   </ButtonMenu>
 </div>
-
-<style lang="scss">
-  .filter-menu {
-    display: contents;
-
-    :global(.filter-menu-button.has-active-filters) {
-      color: var(--t5e-icon-hover-color);
-    }
-  }
-
-  .filters {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.125rem;
-    row-gap: 0.3125rem;
-  }
-
-  section {
-    padding: 0.25rem 0.5rem;
-  }
-
-  .clear-all-button {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-  }
-
-  section {
-    min-width: 18.75rem;
-    max-width: 31.25rem;
-  }
-
-  .filter-group-header {
-    margin-block-end: 0.5rem;
-  }
-</style>
