@@ -170,17 +170,11 @@ function getItemContextOptions(item: Item5e) {
   // Toggle Attunement State
   if (
     'attunement' in item.system &&
-    item.system.attunement !== CONFIG.DND5E.attunementTypes.NONE
+    item.system.attunement !== CONFIG.DND5E.attunementTypes.NONE &&
+    !FoundryAdapter.concealDetails(item)
   ) {
     const isAttuned =
       item.system.attunement === CONFIG.DND5E.attunementTypes.ATTUNED;
-    // options.push({
-    //   name: isAttuned ? "DND5E.ContextMenuActionUnattune" : "DND5E.ContextMenuActionAttune",
-    //   icon: "<i class='fas fa-sun fa-fw'></i>",
-    //   callback: () => item.update({
-    //     "system.attunement": CONFIG.DND5E.attunementTypes[isAttuned ? "REQUIRED" : "ATTUNED"]
-    //   })
-    // });
     options.push({
       name: isAttuned
         ? 'TIDY5E.ContextMenuActionUnattune'
@@ -198,11 +192,6 @@ function getItemContextOptions(item: Item5e) {
 
   // Toggle Equipped State
   if ('equipped' in item.system) {
-    // options.push({
-    //   name: item.system.equipped ? "DND5E.ContextMenuActionUnequip" : "DND5E.ContextMenuActionEquip",
-    //   icon: "<i class='fas fa-shield-alt fa-fw'></i>",
-    //   callback: () => item.update({"system.equipped": !item.system.equipped})
-    // });
     const isEquipped = item.system.equipped;
     options.push({
       name: isEquipped

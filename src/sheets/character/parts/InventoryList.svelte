@@ -132,7 +132,7 @@
           </ItemTableCell>
           {#if $settingStore.showIconsNextToTheItemName}
             <ItemTableCell cssClass="no-border">
-              {#if ctx?.attunement}
+              {#if ctx?.attunement && !FoundryAdapter.concealDetails(item)}
                 <div class="item-detail attunement">
                   <i
                     class="item-state-icon fas {ctx.attunement.icon} {ctx
@@ -178,7 +178,7 @@
           {#if $context.editable && $context.useClassicControls && !lockControls}
             <ItemTableCell baseWidth={classicControlsBaseWidth}>
               <ItemControls>
-                {#if ctx?.attunement}
+                {#if ctx?.attunement && !FoundryAdapter.concealDetails(item)}
                   <AttuneControl {item} {ctx} />
                 {:else}
                   <span role="presentation" />

@@ -45,7 +45,7 @@
           ><i class="fas fa-magic" />Magic Item</span
         >
       {/if}
-      {#if ctx?.attunement}
+      {#if ctx?.attunement && !concealDetails}
         <span
           class="flex-row extra-small-gap align-items-center info-attuned {ctx
             .attunement.cls ?? ''}"

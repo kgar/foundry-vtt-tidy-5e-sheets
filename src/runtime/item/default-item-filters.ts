@@ -1,5 +1,6 @@
 import { CONSTANTS } from 'src/constants';
 import type { FilterCategoriesToFilters, ItemFilter } from './item.types';
+import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
 export const defaultItemFilters = {
   activationCostAction: {
@@ -110,7 +111,8 @@ export function getItemRarityFilters(): ItemFilter[] {
     ([key, text]) =>
       ({
         name: key,
-        predicate: (item) => item.system.rarity === key,
+        predicate: (item) =>
+          !FoundryAdapter.concealDetails(item) && item.system.rarity === key,
         text: text,
       } satisfies ItemFilter)
   );
@@ -153,12 +155,14 @@ export function getAttunementFilters(): ItemFilter[] {
   return [
     {
       name: 'attunement-required',
-      predicate: (item) => item.system.attunement === 1,
+      predicate: (item) =>
+        !FoundryAdapter.concealDetails(item) && item.system.attunement === 1,
       text: CONFIG.DND5E.attunements[1],
     },
     {
       name: 'attuned',
-      predicate: (item) => item.system.attunement === 2,
+      predicate: (item) =>
+        !FoundryAdapter.concealDetails(item) && item.system.attunement === 2,
       text: CONFIG.DND5E.attunements[2],
     },
   ];
