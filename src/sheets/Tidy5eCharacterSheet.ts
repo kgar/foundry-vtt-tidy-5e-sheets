@@ -643,7 +643,11 @@ export class Tidy5eCharacterSheet
       let containers = Array.from<Item5e>(
         this.actor.items
           .values()
-          .filter((i: Item5e) => i.type === CONSTANTS.ITEM_TYPE_CONTAINER)
+          .filter(
+            (i: Item5e) =>
+              i.type === CONSTANTS.ITEM_TYPE_CONTAINER &&
+              !this.actor.items.has(i.system.container)
+          )
       ).toSorted((a: Item5e, b: Item5e) => a.sort - b.sort);
 
       for (let container of containers) {
