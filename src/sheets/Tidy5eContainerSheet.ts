@@ -205,7 +205,7 @@ export class Tidy5eKgarContainerSheet
         utilityToolbarCommands: [
           {
             title: FoundryAdapter.localize('SIDEBAR.SortModeAlpha'),
-            iconClass: 'fa-solid fa-arrow-down-a-z',
+            iconClass: 'fa-solid fa-arrow-down-a-z fa-fw',
             execute: async () => {
               await SheetPreferencesService.setDocumentTypeTabPreference(
                 this.item.type,
@@ -219,7 +219,7 @@ export class Tidy5eKgarContainerSheet
           },
           {
             title: FoundryAdapter.localize('SIDEBAR.SortModeManual'),
-            iconClass: 'fa-solid fa-arrow-down-short-wide',
+            iconClass: 'fa-solid fa-arrow-down-short-wide fa-fw',
             execute: async () => {
               await SheetPreferencesService.setDocumentTypeTabPreference(
                 this.item.type,

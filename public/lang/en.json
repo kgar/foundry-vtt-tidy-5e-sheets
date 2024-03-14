@@ -8,6 +8,7 @@
   "TIDY5E.EditActorImage": "Left Click: Edit Image",
   "TIDY5E.ShowActorImage": "Right Click: Show Character Art",
   "TIDY5E.ShowPortraitArt": "Show Portrait",
+  "TIDY5E.PortraitTitle": "Portrait: {subject}",
   "TIDY5E.ShowTokenArt": "Show Token",
   "TIDY5E.ShowItemImage": "Right Click: Show Item Art",
   "TIDY5E.ShowItemArt": "Show Image",

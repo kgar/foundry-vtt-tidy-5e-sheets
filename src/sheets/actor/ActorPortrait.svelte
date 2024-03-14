@@ -1,10 +1,11 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
+  import FloatingContextMenu from 'src/context-menu/FloatingContextMenu';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { settingStore } from 'src/settings/settings';
   import { type Actor5e } from 'src/types/types';
   import type { ActorSheetContext } from 'src/types/types';
-  import { getContext } from 'svelte';
+  import { isNil } from 'src/utils/data';
+  import { getContext, onMount } from 'svelte';
   import type { Readable } from 'svelte/store';
 
   export let actor: Actor5e;
@@ -12,7 +13,6 @@
 
   let context = getContext<Readable<ActorSheetContext>>('context');
 
-  let showPortraitMenu = false;
   const localize = FoundryAdapter.localize;
 
   function openPortraitPicker(
@@ -44,17 +44,33 @@
       case CONSTANTS.MOUSE_BUTTON_MAIN:
         openPortraitPicker(event);
         break;
-      case CONSTANTS.MOUSE_BUTTON_AUXILIARY:
-        break;
-      case CONSTANTS.MOUSE_BUTTON_SECONDARY:
-        showPortraitMenu = !showPortraitMenu;
-        break;
     }
   }
+
+  let portraitContainer: HTMLElement;
+  onMount(() => {
+    new FloatingContextMenu(
+      FoundryAdapter.getJqueryWrappedElement(portraitContainer),
+      '.portrait',
+      [],
+      {
+        onOpen: () => {
+          ui.context.menuItems = $context.actorPortraitCommands.map((c) => ({
+            name: c.label,
+            icon: !isNil(c.iconClass, '')
+              ? `<i class="${c.iconClass}"></i>`
+              : '',
+            callback: () => c.execute?.({ actor, context: $context }),
+          }));
+        },
+      },
+    );
+  });
 </script>
 
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <div
+  bind:this={portraitContainer}
   class="portrait"
   class:round-portrait={$context.useRoundedPortraitStyle}
   on:mousedown={onPortraitClick}
@@ -73,25 +89,6 @@
         localize('TIDY5E.ShowActorImage')}
     />
   </div>
-  {#if showPortraitMenu}
-    <div class="portrait-menu">
-      {#each $context.actorPortraitCommands as command}
-        <button
-          type="button"
-          class="portrait-menu-item"
-          on:mousedown={(ev) => ev.stopImmediatePropagation()}
-          on:click={(ev) => command.execute?.({ actor, context: $context })}
-          title={command.tooltip}
-          tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
-        >
-          {#if command.iconClass}
-            <i class={command.iconClass}></i>
-          {/if}
-          {localize(command.label ?? '')}
-        </button>
-      {/each}
-    </div>
-  {/if}
 </div>
 
 <style lang="scss">
@@ -143,38 +140,5 @@
   .portrait.round-portrait .actor-image-wrap,
   .portrait.round-portrait .actor-image {
     border-radius: 50%;
-  }
-
-  .portrait-menu {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 0.75rem;
-    line-height: 1;
-    white-space: nowrap;
-    display: flex;
-    flex-direction: column;
-
-    .portrait-menu-item {
-      background: var(--t5e-background);
-      color: var(--t5e-primary-font-color);
-      border: none;
-      margin: 0.0625rem 0;
-      padding: 0.25rem 0.375rem;
-      line-height: 1;
-      font-size: 0.75rem;
-      border: 0.0625rem solid var(--t5e-light-color);
-      border-radius: 0.3125rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.25rem;
-
-      &:hover {
-        background: var(--t5e-background);
-        color: var(--t5e-primary-accent-color);
-      }
-    }
   }
 </style>

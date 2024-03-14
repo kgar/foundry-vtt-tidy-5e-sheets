@@ -176,7 +176,7 @@ export class Tidy5eVehicleSheet
         utilityToolbarCommands: [
           {
             title: FoundryAdapter.localize('SIDEBAR.SortModeAlpha'),
-            iconClass: 'fa-solid fa-arrow-down-a-z',
+            iconClass: 'fa-solid fa-arrow-down-a-z fa-fw',
             execute: async () => {
               await SheetPreferencesService.setDocumentTypeTabPreference(
                 this.actor.type,
@@ -190,7 +190,7 @@ export class Tidy5eVehicleSheet
           },
           {
             title: FoundryAdapter.localize('TIDY5E.SortMode.ActionListDefault'),
-            iconClass: 'fa-solid fa-arrow-down-short-wide',
+            iconClass: 'fa-solid fa-arrow-down-short-wide fa-fw',
             execute: async () => {
               await SheetPreferencesService.setDocumentTypeTabPreference(
                 this.actor.type,
