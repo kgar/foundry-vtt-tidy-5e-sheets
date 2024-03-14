@@ -90,7 +90,6 @@
     "TIDY5E.AbbrSavingThrow": "내성굴림",
     "TIDY5E.SpellAttackMod": "공격 수정치",
     "TIDY5E.PreparedSpells": "준비된 주문",
-    "TIDY5E.PreparedSpellsMax": "준비할 최대 주문",
     "TIDY5E.TokenLinked": "액터에 연결된 토큰",
     "TIDY5E.TokenUnlinked": "액터에 연결되지 않은 토큰",
     "TIDY5E.ItemDetailsHeadline": "메커닉/플레이버 텍스트",

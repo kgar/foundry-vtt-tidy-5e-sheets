@@ -86,7 +86,6 @@
     "TIDY5E.AbbrSavingThrow": "Salvación",
     "TIDY5E.SpellAttackMod": "Modificador de ataque con hechizo",
     "TIDY5E.PreparedSpells": "Hechizos preparados",
-    "TIDY5E.PreparedSpellsMax": "Máximo de hechizos preparados (Nota: no utilizar el modo 'Sobrescribir' en el efecto activo)",
     "TIDY5E.TokenLinked": "Token vinculado a actor",
     "TIDY5E.TokenUnlinked": "Token no vinculado a actor",
     "TIDY5E.ItemDetailsHeadline": "Texto de reglas/ambientación",
