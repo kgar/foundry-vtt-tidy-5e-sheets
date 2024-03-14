@@ -729,5 +729,6 @@
         "options.GmOnly": "Solo GM",
         "options.GmAndOwners": "GM y propietarios de artículos",
         "hint": "Determina qué tipo de usuario puede acceder a los controles de la interfaz de usuario para identificar elementos."
-    }
+    },
+    "TIDY5E.ItemFilters.CanUse": "Se puede utilizar"
 }
