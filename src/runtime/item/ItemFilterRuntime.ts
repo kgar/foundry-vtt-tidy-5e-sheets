@@ -1,5 +1,7 @@
 import { CONSTANTS } from 'src/constants';
 import type {
+  ConfiguredItemFilter,
+  DocumentFilters,
   DocumentTypesToFilterTabs,
   FilterTabsToCategories,
   ItemFilter,
@@ -14,6 +16,7 @@ import {
   getSpellSchoolFiltersAsObject,
   getStandardSpellSchoolFilterCategories,
 } from './default-item-filters';
+import { debug, error } from 'src/utils/logging';
 
 export class ItemFilterRuntime {
   static _registeredItemFilters: Record<string, ItemFilter> = {};
@@ -26,6 +29,71 @@ export class ItemFilterRuntime {
       ...getSpellSchoolFiltersAsObject(),
     };
   }
+
+  static defaultFilterPins: Record<string, Record<string, Set<string>>> = {
+    [CONSTANTS.SHEET_TYPE_CHARACTER]: {
+      [CONSTANTS.TAB_CHARACTER_INVENTORY]: new Set<string>([
+        defaultItemFilters.activationCostAction.name,
+        defaultItemFilters.activationCostBonus.name,
+        defaultItemFilters.activationCostReaction.name,
+        defaultItemFilters.equipped.name,
+      ]),
+      [CONSTANTS.TAB_CHARACTER_FEATURES]: new Set<string>([
+        defaultItemFilters.activationCostAction.name,
+        defaultItemFilters.activationCostBonus.name,
+        defaultItemFilters.activationCostReaction.name,
+        defaultItemFilters.canUse.name,
+      ]),
+      [CONSTANTS.TAB_CHARACTER_SPELLBOOK]: new Set<string>([
+        defaultItemFilters.activationCostAction.name,
+        defaultItemFilters.activationCostBonus.name,
+        defaultItemFilters.activationCostReaction.name,
+        defaultItemFilters.concentration.name,
+        defaultItemFilters.ritual.name,
+        defaultItemFilters.canCastSpell.name,
+      ]),
+      [CONSTANTS.TAB_ACTOR_ACTIONS]: new Set<string>([
+        defaultItemFilters.activationCostAction.name,
+        defaultItemFilters.activationCostBonus.name,
+        defaultItemFilters.activationCostReaction.name,
+      ]),
+    },
+    [CONSTANTS.SHEET_TYPE_NPC]: {
+      [CONSTANTS.TAB_NPC_ABILITIES]: new Set<string>([
+        defaultItemFilters.activationCostAction.name,
+        defaultItemFilters.activationCostBonus.name,
+        defaultItemFilters.activationCostReaction.name,
+      ]),
+      [CONSTANTS.TAB_NPC_SPELLBOOK]: new Set<string>([
+        defaultItemFilters.activationCostAction.name,
+        defaultItemFilters.activationCostBonus.name,
+        defaultItemFilters.activationCostReaction.name,
+        defaultItemFilters.concentration.name,
+        defaultItemFilters.ritual.name,
+        defaultItemFilters.canCastSpell.name,
+      ]),
+      [CONSTANTS.TAB_ACTOR_ACTIONS]: new Set<string>([
+        defaultItemFilters.activationCostAction.name,
+        defaultItemFilters.activationCostBonus.name,
+        defaultItemFilters.activationCostReaction.name,
+      ]),
+    },
+    [CONSTANTS.SHEET_TYPE_VEHICLE]: {
+      [CONSTANTS.TAB_ACTOR_ACTIONS]: new Set<string>([
+        defaultItemFilters.activationCostAction.name,
+        defaultItemFilters.activationCostBonus.name,
+        defaultItemFilters.activationCostReaction.name,
+      ]),
+    },
+    [CONSTANTS.SHEET_TYPE_CONTAINER]: {
+      [CONSTANTS.TAB_CONTAINER_CONTENTS]: new Set<string>([
+        defaultItemFilters.activationCostAction.name,
+        defaultItemFilters.activationCostBonus.name,
+        defaultItemFilters.activationCostReaction.name,
+        defaultItemFilters.equipped.name,
+      ]),
+    },
+  };
 
   static _documentTabFilters: DocumentTypesToFilterTabs = {
     [CONSTANTS.SHEET_TYPE_CHARACTER]: {
@@ -55,6 +123,9 @@ export class ItemFilterRuntime {
           defaultItemFilters.activationCostAction,
           defaultItemFilters.activationCostBonus,
           defaultItemFilters.activationCostReaction,
+        ],
+        'TIDY5E.ItemFilters.Category.Miscellaneous': () => [
+          defaultItemFilters.canUse,
         ],
       },
       [CONSTANTS.TAB_ACTOR_ACTIONS]: { ...getActionListFilterCategories() },
@@ -109,5 +180,38 @@ export class ItemFilterRuntime {
 
   static getDocumentFilters(document: any): FilterTabsToCategories {
     return ItemFilterRuntime._documentTabFilters[document.type] ?? {};
+  }
+
+  static getPinnedFiltersForTab(
+    filterPins: Record<string, Set<string>>,
+    filterData: DocumentFilters,
+    tabId: string
+  ) {
+    let pinnedFilters = new Map<string, ConfiguredItemFilter>();
+
+    try {
+      let tabFilterPins = filterPins[tabId] ?? new Set<string>();
+
+      for (let categoryFilters of Object.values(filterData[tabId] ?? {})) {
+        for (let filter of categoryFilters) {
+          if (tabFilterPins.has(filter.name)) {
+            pinnedFilters.set(filter.name, filter);
+          }
+        }
+      }
+    } catch (e) {
+      error(
+        `An error occurred while searching for pinned filters on the ${tabId} tab.`,
+        false,
+        e
+      );
+      debug('Filter pins error troubleshooting info', {
+        filterData,
+        filterPins,
+        tabId,
+      });
+    }
+
+    return Array.from(pinnedFilters.values());
   }
 }

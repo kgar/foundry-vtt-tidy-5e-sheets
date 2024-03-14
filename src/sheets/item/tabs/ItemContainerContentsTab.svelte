@@ -22,6 +22,8 @@
   import FilterMenu from 'src/components/filter/FilterMenu.svelte';
   import ButtonMenu from 'src/components/button-menu/ButtonMenu.svelte';
   import ButtonMenuCommand from 'src/components/button-menu/ButtonMenuCommand.svelte';
+  import PinnedFilterToggles from 'src/components/filter/PinnedFilterToggles.svelte';
+  import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
 
   let context = getContext<Readable<ItemSheetContext>>('context');
 
@@ -75,6 +77,14 @@
 
   <UtilityToolbar>
     <Search bind:value={searchCriteria}></Search>
+    <PinnedFilterToggles
+      filterGroupName={CONSTANTS.TAB_CONTAINER_CONTENTS}
+      filters={ItemFilterRuntime.getPinnedFiltersForTab(
+        $context.filterPins,
+        $context.filterData,
+        CONSTANTS.TAB_CONTAINER_CONTENTS,
+      )}
+    />
     <FilterMenu tabId={CONSTANTS.TAB_CONTAINER_CONTENTS} />
     {#each utilityBarCommands as command (command.title)}
       <UtilityToolbarCommand

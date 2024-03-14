@@ -26,7 +26,7 @@
 
 <button
   type="button"
-  class="filter-toggle-button pill-button truncate"
+  class="pinned-filter-toggle truncate"
   class:include={filter.value === true}
   class:exclude={filter.value === false}
   on:click={() => cycleFilterForward(filter.name, filter.value)}

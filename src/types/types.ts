@@ -229,6 +229,7 @@ export type ActorSheetContext = {
    */
   editable: boolean;
   filterData: DocumentFilters;
+  filterPins: Record<string, Set<string>>;
   /**
    * Represents remaining health as a percentage within the range of `0` to `100`.
    *

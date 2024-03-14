@@ -9,6 +9,7 @@ import { scaleCantripDamageFormula, simplifyFormula } from 'src/utils/formula';
 import { debug, error } from 'src/utils/logging';
 import { SheetPreferencesService } from '../user-preferences/SheetPreferencesService';
 import type { ItemFilterService } from '../filtering/ItemFilterService';
+import { SpellUtils } from 'src/utils/SpellUtils';
 
 export type ActionSets = Record<string, Set<ActionItem>>;
 
@@ -105,11 +106,10 @@ export function isItemInActionList(item: Item5e): boolean {
         SettingsProvider.settings.actionListLimitActionsToCantrips.get();
 
       // only exclude spells which need to be prepared but aren't
-      const notPrepared =
-        item.system.preparation?.mode === 'prepared' &&
-        !item.system.preparation?.prepared;
-      const isCantrip = item.system.level === 0;
-      if (!isCantrip && (limitToCantrips || notPrepared)) {
+      if (
+        !SpellUtils.isCantrip(item) &&
+        (limitToCantrips || SpellUtils.isUnprepared(item))
+      ) {
         return false;
       }
       const isReaction = item.system.activation?.type === 'reaction';

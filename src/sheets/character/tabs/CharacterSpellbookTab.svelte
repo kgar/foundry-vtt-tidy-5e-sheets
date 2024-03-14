@@ -15,6 +15,8 @@
   import Search from 'src/components/utility-bar/Search.svelte';
   import UtilityToolbarCommand from 'src/components/utility-bar/UtilityToolbarCommand.svelte';
   import FilterMenu from 'src/components/filter/FilterMenu.svelte';
+  import PinnedFilterToggles from 'src/components/filter/PinnedFilterToggles.svelte';
+  import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
 
   let context = getContext<Readable<CharacterSheetContext>>('context');
 
@@ -64,6 +66,14 @@
       <SpellbookClassFilter />
     </div>
   {/if}
+  <PinnedFilterToggles
+    filterGroupName={CONSTANTS.TAB_NPC_SPELLBOOK}
+    filters={ItemFilterRuntime.getPinnedFiltersForTab(
+      $context.filterPins,
+      $context.filterData,
+      CONSTANTS.TAB_CHARACTER_SPELLBOOK,
+    )}
+  />
   <FilterMenu tabId={CONSTANTS.TAB_CHARACTER_SPELLBOOK} />
   {#each utilityBarCommands as command (command.title)}
     <UtilityToolbarCommand

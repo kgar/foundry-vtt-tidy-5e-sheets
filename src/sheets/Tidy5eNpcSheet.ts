@@ -45,6 +45,7 @@ import { ItemFilterService } from 'src/features/filtering/ItemFilterService';
 import { StoreSubscriptionsService } from 'src/features/store/StoreSubscriptionsService';
 import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
 import { AsyncMutex } from 'src/utils/mutex';
+import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
 
 export class Tidy5eNpcSheet
   extends dnd5e.applications.actor.ActorSheet5eNPC
@@ -513,6 +514,7 @@ export class Tidy5eNpcSheet
       encumbrance: this.actor.system.attributes.encumbrance,
       editable: defaultDocumentContext.editable,
       filterData: this.itemFilterService.getDocumentItemFilterData(),
+      filterPins: ItemFilterRuntime.defaultFilterPins[this.actor.type],
       flawEnrichedHtml: await FoundryAdapter.enrichHtml(
         FoundryAdapter.getProperty<string>(
           this.actor,

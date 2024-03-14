@@ -39,6 +39,9 @@
   import UtilityToolbarCommand from 'src/components/utility-bar/UtilityToolbarCommand.svelte';
   import Search from 'src/components/utility-bar/Search.svelte';
   import FilterMenu from 'src/components/filter/FilterMenu.svelte';
+  import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
+  import PinnedFilterToggles from 'src/components/filter/PinnedFilterToggles.svelte';
+  import ExpandableContainer from 'src/components/expandable/ExpandableContainer.svelte';
 
   let context = getContext<Readable<NpcSheetContext>>('context');
 
@@ -71,6 +74,14 @@
 
 <UtilityToolbar class="abilities-toolbar">
   <Search bind:value={searchCriteria} />
+  <PinnedFilterToggles
+    filterGroupName={CONSTANTS.TAB_NPC_ABILITIES}
+    filters={ItemFilterRuntime.getPinnedFiltersForTab(
+      $context.filterPins,
+      $context.filterData,
+      CONSTANTS.TAB_NPC_ABILITIES,
+    )}
+  />
   <FilterMenu tabId={CONSTANTS.TAB_NPC_ABILITIES} />
   {#each utilityBarCommands as command (command.title)}
     <UtilityToolbarCommand
@@ -98,9 +109,14 @@
     class="main-panel"
     data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.NPC_ABILITIES_CONTAINER}
   >
-    {#if $context.showLegendaryToolbar}
+    <ExpandableContainer
+      expanded={$context.showLegendaryToolbar}
+      class="legendary-wrapper {$context.showLegendaryToolbar
+        ? 'legendary-expanded'
+        : ''}"
+    >
       <NpcLegendaryActions />
-    {/if}
+    </ExpandableContainer>
     {#if $settingStore.moveTraitsBelowNpcResources}
       <Traits toggleable={!$settingStore.alwaysShowNpcTraits} />
     {/if}
@@ -366,5 +382,9 @@
     :global(.npc-abilities-spellbook-footer input) {
       height: 1.125rem;
     }
+  }
+
+  .main-panel :global(.legendary-wrapper:not(.legendary-expanded)) {
+    margin-bottom: -0.5rem;
   }
 </style>

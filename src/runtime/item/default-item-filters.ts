@@ -1,6 +1,8 @@
 import { CONSTANTS } from 'src/constants';
 import type { FilterCategoriesToFilters, ItemFilter } from './item.types';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+import { SpellUtils } from 'src/utils/SpellUtils';
+import { ItemUtils } from 'src/utils/ItemUtils';
 
 export const defaultItemFilters = {
   activationCostAction: {
@@ -70,6 +72,7 @@ export const defaultItemFilters = {
     name: 'concentration',
     predicate: (item) => item.system.properties.has('concentration'),
     text: 'DND5E.Concentration',
+    abbreviation: 'DND5E.AbbreviationConc',
   },
   verbal: {
     name: 'verbal',
@@ -89,13 +92,32 @@ export const defaultItemFilters = {
   prepared: {
     name: 'prepared',
     predicate: (item) => {
+      const isPreparedCantrip =
+        SpellUtils.isCantrip(item) && SpellUtils.isCantripPrepared(item);
+
       return (
-        item.system.level === 0 ||
-        ['innate', 'always'].includes(item.system.preparation?.mode) ||
-        item.system.preparation?.prepared
+        isPreparedCantrip ||
+        SpellUtils.isAlwaysPrepared(item) ||
+        SpellUtils.isInnate(item) ||
+        SpellUtils.isPrepared(item)
       );
     },
     text: 'DND5E.Prepared',
+  },
+  canCastSpell: {
+    name: 'canCastSpell',
+    predicate: (item) => {
+      return (
+        item.type === CONSTANTS.ITEM_TYPE_SPELL &&
+        (SpellUtils.isCastableCantrip(item) || SpellUtils.isCastableSpell(item))
+      );
+    },
+    text: 'TIDY5E.ItemFilters.CanCast',
+  },
+  canUse: {
+    name: 'canUse',
+    predicate: (item) => ItemUtils.hasAvailableUses(item),
+    text: 'TIDY5E.ItemFilters.CanUse',
   },
   equipped: {
     name: 'equipped',
@@ -187,7 +209,10 @@ export function getStandardSpellSchoolFilterCategories(): FilterCategoriesToFilt
       defaultItemFilters.concentration,
       defaultItemFilters.ritual,
     ],
-    'DND5E.SpellPreparationMode': [defaultItemFilters.prepared],
+    'DND5E.SpellPreparationMode': [
+      defaultItemFilters.prepared,
+      defaultItemFilters.canCastSpell,
+    ],
     'DND5E.SpellSchool': () => getSpellSchoolFilters(),
   };
 }

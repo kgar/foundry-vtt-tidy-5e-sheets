@@ -19,6 +19,8 @@
   import FilterMenu from 'src/components/filter/FilterMenu.svelte';
   import ContainerPanel from 'src/sheets/shared/ContainerPanel.svelte';
   import ExpandableContainer from 'src/components/expandable/ExpandableContainer.svelte';
+  import PinnedFilterToggles from 'src/components/filter/PinnedFilterToggles.svelte';
+  import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
 
   let context = getContext<Readable<CharacterSheetContext>>('context');
 
@@ -42,6 +44,14 @@
 
 <UtilityToolbar>
   <Search bind:value={searchCriteria} />
+  <PinnedFilterToggles
+    filterGroupName={CONSTANTS.TAB_CHARACTER_INVENTORY}
+    filters={ItemFilterRuntime.getPinnedFiltersForTab(
+      $context.filterPins,
+      $context.filterData,
+      CONSTANTS.TAB_CHARACTER_INVENTORY,
+    )}
+  />
   <FilterMenu tabId={CONSTANTS.TAB_CHARACTER_INVENTORY} />
   {#each utilityBarCommands as command (command.title)}
     <UtilityToolbarCommand
