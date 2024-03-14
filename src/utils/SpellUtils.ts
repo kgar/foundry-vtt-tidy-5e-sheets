@@ -1,6 +1,6 @@
 import { SettingsProvider } from 'src/settings/settings';
 import type { Item5e } from 'src/types/item.types';
-import { ItemUtils } from './item';
+import { ItemUtils } from './ItemUtils';
 import { CONSTANTS } from 'src/constants';
 
 export class SpellUtils {
@@ -11,17 +11,22 @@ export class SpellUtils {
 
   /** The cantrip is castable. If cantrip preparation is turned on, then require the cantrip to be prepared to be castable. */
   static isCastableCantrip(item: Item5e) {
-    const prepareCantrips =
-      SettingsProvider.settings.allowCantripsToBePrepared.get();
     return (
       SpellUtils.isCantrip(item) &&
-      (!prepareCantrips ||
-        (prepareCantrips && SpellUtils.isPrepared(item)) ||
+      (SpellUtils.isCantripPrepared(item) ||
         SpellUtils.isAlwaysPrepared(item) ||
-        SpellUtils.isAtWill(item) ||
-        SpellUtils.isInnate(item) ||
-        ItemUtils.hasUses(item))
+        SpellUtils.isUnlimitedAtWill(item) ||
+        SpellUtils.isUnlimitedInnate(item) ||
+        ItemUtils.hasAvailableUses(item))
     );
+  }
+
+  /** While the Cantrip Formulas rule is enabled, this cantrip must have prepared status. If the rule is not enabled, a cantrip is always prepared.  */
+  static isCantripPrepared(item: Item5e) {
+    const prepareCantrips =
+      SettingsProvider.settings.allowCantripsToBePrepared.get();
+
+    return !prepareCantrips || (prepareCantrips && SpellUtils.isPrepared(item));
   }
 
   /** Spell is castable in this moment. */
@@ -30,13 +35,14 @@ export class SpellUtils {
       SpellUtils.isSpell(item) &&
       (SpellUtils.isPrepared(item) ||
         SpellUtils.isAlwaysPrepared(item) ||
-        SpellUtils.isAtWill(item) ||
-        SpellUtils.isInnate(item) ||
-        ItemUtils.hasUses(item) ||
+        SpellUtils.isUnlimitedAtWill(item) ||
+        SpellUtils.isUnlimitedInnate(item) ||
+        ItemUtils.hasAvailableUses(item) ||
         SpellUtils.isPactMagic(item))
     );
   }
 
+  /** A spell item with a non-cantrip level. */
   static isSpell(item: any) {
     return item.type === CONSTANTS.ITEM_TYPE_SPELL && item.system.level > 0;
   }
@@ -48,6 +54,11 @@ export class SpellUtils {
     );
   }
 
+  /** Is an At-Will spell with no limit on uses. */
+  static isUnlimitedAtWill(item: any): boolean {
+    return SpellUtils.isAtWill(item) && !ItemUtils.hasConfiguredUses(item);
+  }
+
   /** Is an At-Will spell. */
   static isAtWill(item: any): boolean {
     return (
@@ -55,6 +66,11 @@ export class SpellUtils {
     );
   }
 
+  /** Is an Innate spell with no limit on uses. */
+  static isUnlimitedInnate(item: any): boolean {
+    return SpellUtils.isInnate(item) && !ItemUtils.hasConfiguredUses(item);
+  }
+  
   /** Is an Innate spell. */
   static isInnate(item: any): boolean {
     return (
@@ -62,6 +78,7 @@ export class SpellUtils {
     );
   }
 
+  /** Is pact magic. */
   static isPactMagic(item: Item5e) {
     return (
       item.system.preparation?.mode === CONSTANTS.SPELL_PREPARATION_MODE_PACT

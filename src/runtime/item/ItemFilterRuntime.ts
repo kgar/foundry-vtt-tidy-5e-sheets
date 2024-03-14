@@ -49,7 +49,7 @@ export class ItemFilterRuntime {
         defaultItemFilters.activationCostReaction.name,
         defaultItemFilters.concentration.name,
         defaultItemFilters.ritual.name,
-        defaultItemFilters.prepared.name,
+        defaultItemFilters.canCastSpell.name,
       ]),
       [CONSTANTS.TAB_ACTOR_ACTIONS]: new Set<string>([
         defaultItemFilters.activationCostAction.name,
@@ -69,7 +69,7 @@ export class ItemFilterRuntime {
         defaultItemFilters.activationCostReaction.name,
         defaultItemFilters.concentration.name,
         defaultItemFilters.ritual.name,
-        defaultItemFilters.prepared.name,
+        defaultItemFilters.canCastSpell.name,
       ]),
       [CONSTANTS.TAB_ACTOR_ACTIONS]: new Set<string>([
         defaultItemFilters.activationCostAction.name,
