@@ -11,12 +11,12 @@
     mode === 'grid'
       ? {
           title: localize('TIDY5E.ListLayout'),
-          iconClass: 'fas fa-th-list toggle-list',
+          iconClass: 'fas fa-th-list fa-fw toggle-list',
         }
       : mode === 'list'
         ? {
             title: localize('TIDY5E.GridLayout'),
-            iconClass: 'fas fa-th-large toggle-grid',
+            iconClass: 'fas fa-th-large fa-fw toggle-grid',
           }
         : null;
 

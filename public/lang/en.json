@@ -5,12 +5,14 @@
   "TIDY5E.Tidy5eContainerSheet": "Tidy 5e Container Sheet",
   "TIDY5E.Tidy5eVehicle": "Tidy 5e Vehicle Sheet",
   "TIDY5E.PlayerName": "Player Name",
-  "TIDY5E.EditActorImage": "left click: edit image",
-  "TIDY5E.ShowActorImage": "right click: show character art",
-  "TIDY5E.ShowPortraitArt": "show portrait",
-  "TIDY5E.ShowTokenArt": "show token",
-  "TIDY5E.ShowItemImage": "right click: show item art",
-  "TIDY5E.ShowItemArt": "show image",
+  "TIDY5E.EditActorImage": "Left Click: Edit Image",
+  "TIDY5E.ShowActorImage": "Right Click: Show Character Art",
+  "TIDY5E.ShowPortraitArt": "Show Portrait",
+  "TIDY5E.PortraitTitle": "Portrait: {subject}",
+  "TIDY5E.ItemImageTitle": "Item: {subject}",
+  "TIDY5E.ShowTokenArt": "Show Token",
+  "TIDY5E.ShowItemImage": "Right Click: Show Item Art",
+  "TIDY5E.ShowItemArt": "Show Image",
 
   "TIDY5E.StandardExhaustion0": "No negative effects",
   "TIDY5E.StandardExhaustion1": "Disadvantage on Ability Checks",
@@ -46,7 +48,7 @@
   "TIDY5E.RestHint": "Rest",
   "TIDY5E.ShortRest": "Short Rest",
   "TIDY5E.LongRest": "Long Rest",
-  "TIDY5E.HitDiceRollAverage": "right click: apply average",
+  "TIDY5E.HitDiceRollAverage": "Right Click: Apply Average",
 
   "TIDY5E.JournalTabName": "Journal",
 
@@ -61,7 +63,7 @@
 
   "TIDY5E.HitDC": "Hit / DC",
 
-  "TIDY5E.RestoreOnRest": "Restore on rest",
+  "TIDY5E.RestoreOnRest": "Restore on Rest",
 
   "TIDY5E.JournalPersonsOfInterest": "Persons of Interest",
   "TIDY5E.JournalLocationsOfInterest": "Locations of Interest",
@@ -107,18 +109,18 @@
   "TIDY5E.Favorite": "Favorite",
   "TIDY5E.RemoveFavorite": "Remove Favorite",
 
-  "TIDY5E.ShowNotProficientSkills": "show not proficient",
-  "TIDY5E.HideNotProficientSkills": "hide not proficient",
-  "TIDY5E.ShowEmptyTraits": "show/edit empty traits",
-  "TIDY5E.HideEmptyTraits": "hide empty traits",
+  "TIDY5E.ShowNotProficientSkills": "Show Not Proficient",
+  "TIDY5E.HideNotProficientSkills": "Hide Not Proficient",
+  "TIDY5E.ShowEmptyTraits": "Show/Edit Empty Traits",
+  "TIDY5E.HideEmptyTraits": "Hide Empty Traits",
 
   "TIDY5E.Abilities": "Abilities",
 
   "TIDY5E.Environment": "Environment",
   "TIDY5E.EnvironmentTooltip": "Environment: {environment}",
 
-  "TIDY5E.Search": "search",
-  "TIDY5E.SearchClear": "clear search",
+  "TIDY5E.Search": "Search",
+  "TIDY5E.SearchClear": "Clear Search",
   "TIDY5E.SearchHint": "Start typing to show search results",
 
   "TIDY5E.ItemCardsKeyHint": "hold key to interact with card",
@@ -137,7 +139,6 @@
   "TIDY5E.MeleeSpellAttackMod": "Melee Spell Attack Mod",
   "TIDY5E.RangedSpellAttackMod": "Ranged Spell Attack Mod",
   "TIDY5E.PreparedSpells": "Prepared spells",
-  "TIDY5E.PreparedSpellsMax": "Maximum for prepared spells (Note: do not use 'Override' mode on the active effect')",
 
   "TIDY5E.TokenLinked": "Token linked to actor",
   "TIDY5E.TokenUnlinked": "Token not linked to actor",

@@ -319,7 +319,7 @@ export class Tidy5eCharacterSheet
         utilityToolbarCommands: [
           {
             title: FoundryAdapter.localize('SIDEBAR.SortModeAlpha'),
-            iconClass: 'fa-solid fa-arrow-down-a-z',
+            iconClass: 'fa-solid fa-arrow-down-a-z fa-fw',
             execute: async () => {
               await SheetPreferencesService.setDocumentTypeTabPreference(
                 this.actor.type,
@@ -333,7 +333,7 @@ export class Tidy5eCharacterSheet
           },
           {
             title: FoundryAdapter.localize('SIDEBAR.SortModeManual'),
-            iconClass: 'fa-solid fa-arrow-down-short-wide',
+            iconClass: 'fa-solid fa-arrow-down-short-wide fa-fw',
             execute: async () => {
               await SheetPreferencesService.setDocumentTypeTabPreference(
                 this.actor.type,
@@ -349,7 +349,7 @@ export class Tidy5eCharacterSheet
             title: FoundryAdapter.localize(
               'TIDY5E.Commands.HideContainerPanel'
             ),
-            iconClass: `fas fa-boxes-stacked min-width-1rem`,
+            iconClass: `fas fa-boxes-stacked fa-fw`,
             execute: () => {
               FoundryAdapter.unsetFlag(this.actor, 'showContainerPanel');
             },
@@ -362,7 +362,7 @@ export class Tidy5eCharacterSheet
             title: FoundryAdapter.localize(
               'TIDY5E.Commands.ShowContainerPanel'
             ),
-            iconClass: `fas fa-box min-width-1rem`,
+            iconClass: `fas fa-box fa-fw`,
             execute: () => {
               FoundryAdapter.setFlag(this.actor, 'showContainerPanel', true);
             },
@@ -393,7 +393,7 @@ export class Tidy5eCharacterSheet
           },
           {
             title: FoundryAdapter.localize('TIDY5E.ListLayout'),
-            iconClass: 'fas fa-th-list toggle-list',
+            iconClass: 'fas fa-th-list fa-fw toggle-list',
             visible: !FoundryAdapter.tryGetFlag(this.actor, 'inventory-grid'),
             execute: () => {
               FoundryAdapter.setFlag(this.actor, 'inventory-grid', true);
@@ -401,7 +401,7 @@ export class Tidy5eCharacterSheet
           },
           {
             title: FoundryAdapter.localize('TIDY5E.GridLayout'),
-            iconClass: 'fas fa-th-large toggle-grid',
+            iconClass: 'fas fa-th-large fa-fw toggle-grid',
             visible: !!FoundryAdapter.tryGetFlag(this.actor, 'inventory-grid'),
             execute: () => {
               FoundryAdapter.unsetFlag(this.actor, 'inventory-grid');
@@ -413,7 +413,7 @@ export class Tidy5eCharacterSheet
         utilityToolbarCommands: [
           {
             title: FoundryAdapter.localize('SIDEBAR.SortModeAlpha'),
-            iconClass: 'fa-solid fa-arrow-down-a-z',
+            iconClass: 'fa-solid fa-arrow-down-a-z fa-fw',
             execute: async () => {
               await SheetPreferencesService.setDocumentTypeTabPreference(
                 this.actor.type,
@@ -427,7 +427,7 @@ export class Tidy5eCharacterSheet
           },
           {
             title: FoundryAdapter.localize('SIDEBAR.SortModeManual'),
-            iconClass: 'fa-solid fa-arrow-down-short-wide',
+            iconClass: 'fa-solid fa-arrow-down-short-wide fa-fw',
             execute: async () => {
               await SheetPreferencesService.setDocumentTypeTabPreference(
                 this.actor.type,
@@ -461,7 +461,7 @@ export class Tidy5eCharacterSheet
           },
           {
             title: FoundryAdapter.localize('TIDY5E.ListLayout'),
-            iconClass: 'fas fa-th-list toggle-list',
+            iconClass: 'fas fa-th-list fa-fw toggle-list',
             visible: !FoundryAdapter.tryGetFlag(this.actor, 'spellbook-grid'),
             execute: () => {
               FoundryAdapter.setFlag(this.actor, 'spellbook-grid', true);
@@ -469,7 +469,7 @@ export class Tidy5eCharacterSheet
           },
           {
             title: FoundryAdapter.localize('TIDY5E.GridLayout'),
-            iconClass: 'fas fa-th-large toggle-grid',
+            iconClass: 'fas fa-th-large fa-fw toggle-grid',
             visible: !!FoundryAdapter.tryGetFlag(this.actor, 'spellbook-grid'),
             execute: () => {
               FoundryAdapter.unsetFlag(this.actor, 'spellbook-grid');
@@ -481,7 +481,7 @@ export class Tidy5eCharacterSheet
         utilityToolbarCommands: [
           {
             title: FoundryAdapter.localize('SIDEBAR.SortModeAlpha'),
-            iconClass: 'fa-solid fa-arrow-down-a-z',
+            iconClass: 'fa-solid fa-arrow-down-a-z fa-fw',
             execute: async () => {
               await SheetPreferencesService.setDocumentTypeTabPreference(
                 this.actor.type,
@@ -495,7 +495,7 @@ export class Tidy5eCharacterSheet
           },
           {
             title: FoundryAdapter.localize('SIDEBAR.SortModeManual'),
-            iconClass: 'fa-solid fa-arrow-down-short-wide',
+            iconClass: 'fa-solid fa-arrow-down-short-wide fa-fw',
             execute: async () => {
               await SheetPreferencesService.setDocumentTypeTabPreference(
                 this.actor.type,
@@ -533,7 +533,7 @@ export class Tidy5eCharacterSheet
         utilityToolbarCommands: [
           {
             title: FoundryAdapter.localize('SIDEBAR.SortModeAlpha'),
-            iconClass: 'fa-solid fa-arrow-down-a-z',
+            iconClass: 'fa-solid fa-arrow-down-a-z fa-fw',
             execute: async () => {
               await SheetPreferencesService.setDocumentTypeTabPreference(
                 this.actor.type,
@@ -547,7 +547,7 @@ export class Tidy5eCharacterSheet
           },
           {
             title: FoundryAdapter.localize('TIDY5E.SortMode.ActionListDefault'),
-            iconClass: 'fa-solid fa-arrow-down-short-wide',
+            iconClass: 'fa-solid fa-arrow-down-short-wide fa-fw',
             execute: async () => {
               await SheetPreferencesService.setDocumentTypeTabPreference(
                 this.actor.type,

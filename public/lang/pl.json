@@ -126,7 +126,6 @@
     "TIDY5E.SpellAttackMod": "Modyfikator do Ataku Czarem",
     "TIDY5E.RangedSpellAttackMod": "Modyfikator do rzutu na atak czarem dystansowym",
     "TIDY5E.PreparedSpells": "Przygotowane czary",
-    "TIDY5E.PreparedSpellsMax": "Maksymalna liczba przygotowanych czarów (Notka: nie używać trybu 'Override' na aktywnym efekcie')",
     "TIDY5E.TokenLinked": "Żeton przypisany do aktora",
     "TIDY5E.TokenUnlinked": "Żeton nie przypisany do aktora",
     "TIDY5E.ItemDetailsHeadline": "Mechanika/Opis działania",

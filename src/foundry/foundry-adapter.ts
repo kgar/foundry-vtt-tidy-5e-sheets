@@ -1332,4 +1332,7 @@ export const FoundryAdapter = {
         item.isOwner)
     );
   },
+  getJqueryWrappedElement(el: HTMLElement) {
+    return $(el);
+  },
 };

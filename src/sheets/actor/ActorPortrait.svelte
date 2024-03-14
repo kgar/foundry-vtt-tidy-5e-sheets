@@ -1,18 +1,19 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { settingStore } from 'src/settings/settings';
   import { type Actor5e } from 'src/types/types';
-  import type { ActorSheetContext } from 'src/types/types';
+  import type { ActorSheetContext, ContextMenuOption } from 'src/types/types';
+  import { isNil } from 'src/utils/data';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
+  import FloatingContextMenu from 'src/components/context-menu/FloatingContextMenu.svelte';
+  import { debug, error } from 'src/utils/logging';
 
   export let actor: Actor5e;
   export let useHpOverlay: boolean;
 
   let context = getContext<Readable<ActorSheetContext>>('context');
 
-  let showPortraitMenu = false;
   const localize = FoundryAdapter.localize;
 
   function openPortraitPicker(
@@ -44,25 +45,48 @@
       case CONSTANTS.MOUSE_BUTTON_MAIN:
         openPortraitPicker(event);
         break;
-      case CONSTANTS.MOUSE_BUTTON_AUXILIARY:
-        break;
-      case CONSTANTS.MOUSE_BUTTON_SECONDARY:
-        showPortraitMenu = !showPortraitMenu;
-        break;
+    }
+  }
+
+  let portraitContainer: HTMLElement;
+  // TODO: Consider sending context menu options down through document context in the first place.
+  let contextMenuOptions: ContextMenuOption[] = [];
+  $: {
+    try {
+      contextMenuOptions = $context.actorPortraitCommands.map((c) => ({
+        name: c.label ?? '',
+        icon: !isNil(c.iconClass, '') ? `<i class="${c.iconClass}"></i>` : '',
+        callback: () => c.execute?.({ actor, context: $context }),
+      }));
+    } catch (e) {
+      error('An error occurred while getting context menu options', false, e);
+      debug('Context menu option error troubleshooting info', {
+        portraitContainer,
+        commands: $context.actorPortraitCommands,
+      });
     }
   }
 </script>
 
+<FloatingContextMenu
+  containingElement={portraitContainer}
+  targetSelector="[data-tidy-sheet-part={CONSTANTS.SHEET_PARTS
+    .ACTOR_PORTRAIT_CONTAINER}]"
+  options={contextMenuOptions}
+></FloatingContextMenu>
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <div
+  bind:this={portraitContainer}
   class="portrait"
   class:round-portrait={$context.useRoundedPortraitStyle}
   on:mousedown={onPortraitClick}
+  data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ACTOR_PORTRAIT_CONTAINER}
 >
   <div
     class="actor-image-wrap"
     class:overlay={useHpOverlay}
     style="--overlay-height: calc(100% - {$context.healthPercentage}%)"
+    data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ACTOR_PORTRAIT_HEALTH_OVERLAY}
   >
     <img
       class="actor-image"
@@ -71,27 +95,9 @@
       title={localize('TIDY5E.EditActorImage') +
         ' / ' +
         localize('TIDY5E.ShowActorImage')}
+      data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ACTOR_PORTRAIT_IMAGE}
     />
   </div>
-  {#if showPortraitMenu}
-    <div class="portrait-menu">
-      {#each $context.actorPortraitCommands as command}
-        <button
-          type="button"
-          class="portrait-menu-item"
-          on:mousedown={(ev) => ev.stopImmediatePropagation()}
-          on:click={(ev) => command.execute?.({ actor, context: $context })}
-          title={command.tooltip}
-          tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
-        >
-          {#if command.iconClass}
-            <i class={command.iconClass}></i>
-          {/if}
-          {localize(command.label ?? '')}
-        </button>
-      {/each}
-    </div>
-  {/if}
 </div>
 
 <style lang="scss">
@@ -143,38 +149,5 @@
   .portrait.round-portrait .actor-image-wrap,
   .portrait.round-portrait .actor-image {
     border-radius: 50%;
-  }
-
-  .portrait-menu {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 0.75rem;
-    line-height: 1;
-    white-space: nowrap;
-    display: flex;
-    flex-direction: column;
-
-    .portrait-menu-item {
-      background: var(--t5e-background);
-      color: var(--t5e-primary-font-color);
-      border: none;
-      margin: 0.0625rem 0;
-      padding: 0.25rem 0.375rem;
-      line-height: 1;
-      font-size: 0.75rem;
-      border: 0.0625rem solid var(--t5e-light-color);
-      border-radius: 0.3125rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.25rem;
-
-      &:hover {
-        background: var(--t5e-background);
-        color: var(--t5e-primary-accent-color);
-      }
-    }
   }
 </style>

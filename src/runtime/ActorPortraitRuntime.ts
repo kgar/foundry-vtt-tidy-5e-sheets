@@ -12,11 +12,14 @@ export class ActorPortraitRuntime {
       label: 'TIDY5E.ShowPortraitArt',
       execute: (params: RegisteredPortraitMenuCommandExecuteParams) => {
         FoundryAdapter.renderImagePopout(params.actor.img, {
-          title: 'Portrait: ' + params.actor.name,
+          title: FoundryAdapter.localize('TIDY5E.PortraitTitle', {
+            subject: params.actor.name,
+          }),
           shareable: true,
           uuid: params.actor.uuid,
-        }).render(true);
+        });
       },
+      iconClass: 'fa-solid fa-image fa-fw'
     },
     {
       label: 'TIDY5E.ShowTokenArt',
@@ -24,12 +27,15 @@ export class ActorPortraitRuntime {
         FoundryAdapter.renderImagePopout(
           params.actor.prototypeToken.texture.src,
           {
-            title: 'Portrait: ' + params.actor.name,
+            title: FoundryAdapter.localize('TIDY5E.PortraitTitle', {
+              subject: params.actor.name,
+            }),
             shareable: true,
             uuid: params.actor.uuid,
           }
-        ).render(true);
+        );
       },
+      iconClass: 'fa-regular fa-circle-user fa-fw'
     },
   ];
 

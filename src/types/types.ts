@@ -350,3 +350,9 @@ export type ContainerCapacityContext = {
   value: number;
   units: string;
 };
+
+export type ContextMenuOption = {
+  name: string;
+  icon?: string;
+  callback?: () => void;
+}
