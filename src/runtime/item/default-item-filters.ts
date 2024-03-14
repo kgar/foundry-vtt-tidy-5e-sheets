@@ -2,7 +2,7 @@ import { CONSTANTS } from 'src/constants';
 import type { FilterCategoriesToFilters, ItemFilter } from './item.types';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { SpellUtils } from 'src/utils/SpellUtils';
-import { SettingsProvider } from 'src/settings/settings';
+import { ItemUtils } from 'src/utils/ItemUtils';
 
 export const defaultItemFilters = {
   activationCostAction: {
@@ -113,6 +113,11 @@ export const defaultItemFilters = {
       );
     },
     text: 'TIDY5E.ItemFilters.CanCast',
+  },
+  canUse: {
+    name: 'canUse',
+    predicate: (item) => ItemUtils.hasAvailableUses(item),
+    text: 'TIDY5E.ItemFilters.CanUse',
   },
   equipped: {
     name: 'equipped',

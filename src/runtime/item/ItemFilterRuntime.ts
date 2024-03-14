@@ -42,6 +42,7 @@ export class ItemFilterRuntime {
         defaultItemFilters.activationCostAction.name,
         defaultItemFilters.activationCostBonus.name,
         defaultItemFilters.activationCostReaction.name,
+        defaultItemFilters.canUse.name,
       ]),
       [CONSTANTS.TAB_CHARACTER_SPELLBOOK]: new Set<string>([
         defaultItemFilters.activationCostAction.name,
@@ -122,6 +123,9 @@ export class ItemFilterRuntime {
           defaultItemFilters.activationCostAction,
           defaultItemFilters.activationCostBonus,
           defaultItemFilters.activationCostReaction,
+        ],
+        'TIDY5E.ItemFilters.Category.Miscellaneous': () => [
+          defaultItemFilters.canUse,
         ],
       },
       [CONSTANTS.TAB_ACTOR_ACTIONS]: { ...getActionListFilterCategories() },
