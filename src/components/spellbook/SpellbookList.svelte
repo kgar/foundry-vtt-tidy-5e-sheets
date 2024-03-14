@@ -31,6 +31,7 @@
   import { SpellSchool } from 'src/features/spell-school/SpellSchool';
   import { declareLocation } from 'src/types/location-awareness.types';
   import Dnd5eIcon from '../icon/Dnd5eIcon.svelte';
+  import SpellSlotConfigButton from './SpellSlotConfigButton.svelte';
 
   let context =
     getContext<Readable<CharacterSheetContext | NpcSheetContext>>('context');
@@ -77,6 +78,10 @@
               <SpellPips {section} />
             {/if}
             <SpellSlotUses {section} />
+
+            {#if section.usesSlots && $context.unlocked && !FoundryAdapter.useClassicControls($context.actor)}
+              <SpellSlotConfigButton />
+            {/if}
           {/if}
         </ItemTableColumn>
         <ItemTableColumn
@@ -111,7 +116,11 @@
           {localize('DND5E.Usage')}
         </ItemTableColumn>
         {#if $context.editable && $context.useClassicControls}
-          <ItemTableColumn baseWidth={classicControlsBaseWidth} />
+          <ItemTableColumn baseWidth={classicControlsBaseWidth}>
+            {#if section.usesSlots && $context.unlocked && FoundryAdapter.useClassicControls($context.actor)}
+              <SpellSlotConfigButton />
+            {/if}
+          </ItemTableColumn>
         {/if}
       </ItemTableHeaderRow>
     </svelte:fragment>

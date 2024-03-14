@@ -18,12 +18,13 @@
   import { settingStore } from 'src/settings/settings';
   import { ActorItemRuntime } from 'src/runtime/ActorItemRuntime';
   import { declareLocation } from 'src/types/location-awareness.types';
+  import SpellSlotConfigButton from './SpellSlotConfigButton.svelte';
 
   export let section: any;
   export let spells: Item5e[];
   export let cssClass: string | null = null;
   /**
-   * An optional subset of item IDs which will hide all other items not included in this set. 
+   * An optional subset of item IDs which will hide all other items not included in this set.
    * Useful for showing only search results, for example.
    */
   export let visibleItemIdSubset: Set<string> | null = null;
@@ -89,6 +90,9 @@
               <SpellPips {section} />
             {/if}
             <SpellSlotUses {section} />
+            {#if section.usesSlots && $context.unlocked}
+              <SpellSlotConfigButton />
+            {/if}
           {/if}
         </ItemTableColumn>
       </ItemTableHeaderRow>
