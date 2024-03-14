@@ -1,16 +1,15 @@
 <script lang="ts">
+  import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { settingStore } from 'src/settings/settings';
   import type { Item5e, ItemSheetContext } from 'src/types/item.types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
-  import { fade } from 'svelte/transition';
+  import FloatingContextMenu from 'src/components/context-menu/FloatingContextMenu.svelte';
+  import type { ContextMenuOption } from 'src/types/types';
 
   let context = getContext<Readable<ItemSheetContext>>('context');
 
   const localize = FoundryAdapter.localize;
-
-  let hideImageMenu = true;
 
   function openItemImagePicker(target: HTMLImageElement, item: Item5e) {
     const rect = target.getBoundingClientRect();
@@ -27,16 +26,37 @@
   }
 
   function showItemArt(item: Item5e) {
-    hideImageMenu = true;
     FoundryAdapter.renderImagePopout(item.img, {
-      title: 'Item: ' + item.name,
+      title: FoundryAdapter.localize('TIDY5E.ItemImageTitle', {
+        subject: item.name,
+      }),
       shareable: true,
       uuid: item.uuid,
     });
   }
+
+  let itemImageContainer: HTMLElement;
+  let contextMenuOptions: ContextMenuOption[] = [];
+  $: contextMenuOptions = [
+    {
+      name: 'TIDY5E.ShowItemArt',
+      icon: '<i class="fa-solid fa-image fa-fw"></i>',
+      callback: () => showItemArt($context.item),
+    },
+  ];
 </script>
 
-<div class="item-image item-image-show-item-art">
+<FloatingContextMenu
+  containingElement={itemImageContainer}
+  targetSelector="[data-tidy-sheet-part={CONSTANTS.SHEET_PARTS
+    .ITEM_IMAGE_CONTAINER}]"
+  options={contextMenuOptions}
+></FloatingContextMenu>
+<div
+  class="item-image item-image-show-item-art"
+  data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_IMAGE_CONTAINER}
+  bind:this={itemImageContainer}
+>
   <!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
   <!-- svelte-ignore a11y-click-events-have-key-events -->
   <!-- TODO: Figure out if there is an accessible way to provide this feature. -->
@@ -50,7 +70,7 @@
     )}"
     on:click={(event) =>
       openItemImagePicker(event.currentTarget, $context.item)}
-    on:contextmenu={() => (hideImageMenu = !hideImageMenu)}
+    data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_IMAGE}
   />
   <div
     role="presentation"
@@ -59,14 +79,5 @@
     class:conceal={$context.item.system.identified === false}
   >
     <i class="fas fa-question" />
-  </div>
-  <div class="item-menu" class:hidden={hideImageMenu}>
-    <button
-      type="button"
-      class="showItemArt"
-      on:click={() => showItemArt($context.item)}
-      tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
-      >{localize('TIDY5E.ShowItemArt')}</button
-    >
   </div>
 </div>

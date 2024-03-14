@@ -124,6 +124,9 @@ export const CONSTANTS = {
     /** An interactable control that can open configuration settings for a target ability. */
     ABILITY_CONFIGURATION_CONTROL: 'ability-configuration-control',
 
+    /** A rollable/interactable element which rolls an ability save or test. */
+    ABILITY_ROLLER: 'ability-roller',
+
     /** An interactable toggle for ability saving throw proficiency. */
     ABILITY_SAVE_PROFICIENCY_TOGGLE: 'ability-save-proficiency-toggle',
 
@@ -136,11 +139,17 @@ export const CONSTANTS = {
     /** A container for a given ability score (e.g., "str", "dex", "wis", etc.). */
     ABILITY_SCORE_CONTAINER: 'ability-score-container',
 
-    /** A rollable/interactable element which rolls an ability save or test. */
-    ABILITY_ROLLER: 'ability-roller',
-
     /** A rollable/interactable element which rolls an ability test. */
     ABILITY_TEST_ROLLER: 'ability-test-roller',
+
+    /** A container which houses an actor portrait and other parts related to actor portrait features. */
+    ACTOR_PORTRAIT_CONTAINER: 'actor-portrait-container',
+
+    /** An overlay element for an actor portrait which provides a visual representation of remaining health. */
+    ACTOR_PORTRAIT_HEALTH_OVERLAY: 'actor-portrait-health-overlay',
+
+    /** An actor portrait image element. */
+    ACTOR_PORTRAIT_IMAGE: 'actor-portrait-image',
 
     /** An actor trait container, such as Senses, Languages, or Tools */
     ACTOR_TRAIT: 'actor-trait',
@@ -174,6 +183,12 @@ export const CONSTANTS = {
 
     /** An interactable control which the user can execute to create an item (e.g., consumable, feature, loot, spell, weapon, etc.). */
     ITEM_CREATE_COMMAND: 'item-create-command',
+
+    /** An image element for an item. */
+    ITEM_IMAGE: 'item-image',
+
+    /** The container element for an item image. */
+    ITEM_IMAGE_CONTAINER: 'item-image-container',
 
     /** An element which contains the name of an item. */
     ITEM_NAME: 'item-name',
