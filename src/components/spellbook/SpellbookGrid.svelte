@@ -98,7 +98,7 @@
           visibleItemIdSubset !== null && !visibleItemIdSubset.has(spell.id)}
         <button
           type="button"
-          class="spell {FoundryAdapter.getSpellRowClasses(spell)} icon-button"
+          class="spell {FoundryAdapter.getSpellRowClasses(spell)} transparent-button"
           class:hidden
           aria-hidden={hidden}
           data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
