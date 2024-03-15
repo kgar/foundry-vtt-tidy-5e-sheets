@@ -320,10 +320,6 @@
         "name": "Ocultar salvaciones de muerte a los jugadores",
         "hint": "Hace que las salvaciones de muerte y los resultados de las salvaciones de muerte sean visibles solo para el DM."
     },
-    "TIDY5E.Settings.UseSpellSlotMarker": {
-        "name": "Usar marcador para espacios de hechizo",
-        "hint": "Muestra marcadores de espacios de hechizo (puntos) encima de las secciones de hechizos niveladas en el libro de hechizos."
-    },
     "TIDY5E.Settings.UseCharacterEncumbranceBar": {
         "name": "Usar la barra de carga de personaje",
         "hint": "Muestra una barra de carga en las hojas de personaje."

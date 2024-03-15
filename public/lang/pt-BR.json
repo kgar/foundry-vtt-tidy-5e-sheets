@@ -308,10 +308,6 @@
         "name": "Ocultar os salvamentos contra a morte dos jogadores",
         "hint": "Torna os salvamentos contra a morte e os resultados dos salvamentos contra a morte visíveis apenas para o GM."
     },
-    "TIDY5E.Settings.UseSpellSlotMarker": {
-        "name": "Usar marcador de espaços para feitiços",
-        "hint": "Mostra marcadores de espaços para feitiços (pontos) acima das seções de feitiços nivelados no livro de feitiços."
-    },
     "TIDY5E.Settings.UseCharacterEncumbranceBar": {
         "name": "Usar barra de ônus",
         "hint": "Mostra uma barra de ônus nas fichas de personagem."

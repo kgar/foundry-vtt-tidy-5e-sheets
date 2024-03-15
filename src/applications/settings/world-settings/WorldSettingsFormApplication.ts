@@ -48,7 +48,6 @@ export class WorldSettingsFormApplication extends SvelteFormApplicationBase {
     return {
       settings: {
         hideDeathSavesFromPlayers: currentSettings.hideDeathSavesFromPlayers,
-        useSpellSlotMarker: currentSettings.useSpellSlotMarker,
         useCharacterEncumbranceBar: currentSettings.useCharacterEncumbranceBar,
         useNpcEncumbranceBar: currentSettings.useNpcEncumbranceBar,
         useVehicleEncumbranceBar: currentSettings.useVehicleEncumbranceBar,

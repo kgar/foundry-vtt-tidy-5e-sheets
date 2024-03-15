@@ -86,10 +86,10 @@
             {section.label}
           </span>
           {#if section.usesSlots}
-            {#if FoundryAdapter.useSpellSlotPips($context.actor)}
+            {#if $context.spellSlotTrackerMode === CONSTANTS.SPELL_SLOT_TRACKER_MODE_PIPS}
               <SpellPips {section} />
             {/if}
-            {#if FoundryAdapter.useSpellSlotValueMax($context.actor)}
+            {#if $context.spellSlotTrackerMode === CONSTANTS.SPELL_SLOT_TRACKER_MODE_VALUE_MAX}
               <SpellSlotUses {section} />
             {/if}
             {#if section.usesSlots && $context.unlocked}

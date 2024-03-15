@@ -308,10 +308,6 @@
         "name": "Halál elleni mentők elrejtése a Játékosok elől.",
         "hint": "Kapcsold be, hogy a halál elleni mentőket csak a JM láthassa."
     },
-    "TIDY5E.Settings.UseSpellSlotMarker": {
-        "name": null,
-        "hint": null
-    },
     "TIDY5E.Settings.UseCharacterEncumbranceBar": {
         "name": null,
         "hint": null

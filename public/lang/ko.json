@@ -308,10 +308,6 @@
         "name": "죽음 내성 굴림을 플레이어로부터 숨김",
         "hint": "활성화시 GM에게만 죽음 내성 굴림과 그 결과가 표시된다."
     },
-    "TIDY5E.Settings.UseSpellSlotMarker": {
-        "name": null,
-        "hint": null
-    },
     "TIDY5E.Settings.UseCharacterEncumbranceBar": {
         "name": null,
         "hint": null

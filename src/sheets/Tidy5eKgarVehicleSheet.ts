@@ -43,6 +43,7 @@ import { SheetPreferencesService } from 'src/features/user-preferences/SheetPref
 import { ItemFilterService } from 'src/features/filtering/ItemFilterService';
 import { AsyncMutex } from 'src/utils/mutex';
 import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
+import { SheetPreferencesRuntime } from 'src/runtime/user-preferences/SheetPreferencesRuntime';
 
 export class Tidy5eVehicleSheet
   extends dnd5e.applications.actor.ActorSheet5eVehicle
@@ -113,6 +114,10 @@ export class Tidy5eVehicleSheet
           actor: this.actor,
           message: m,
         });
+      }),
+      SheetPreferencesRuntime.getStore().subscribe(() => {
+        if (first) return;
+        this.render();
       })
     );
     first = false;
@@ -184,7 +189,6 @@ export class Tidy5eVehicleSheet
                 'sort',
                 'm'
               );
-              this.render();
             },
             visible: actionListSortMode === 'a',
           },
@@ -198,7 +202,6 @@ export class Tidy5eVehicleSheet
                 'sort',
                 'a'
               );
-              this.render();
             },
             visible: actionListSortMode === 'm',
           },

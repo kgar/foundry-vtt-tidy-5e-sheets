@@ -963,20 +963,6 @@ export function createSettings() {
         },
       },
 
-      useSpellSlotMarker: {
-        options: {
-          name: 'TIDY5E.Settings.UseSpellSlotMarker.name',
-          hint: 'TIDY5E.Settings.UseSpellSlotMarker.hint',
-          scope: 'world',
-          config: false,
-          default: true,
-          type: Boolean,
-        },
-        get() {
-          return FoundryAdapter.getTidySetting<boolean>('useSpellSlotMarker');
-        },
-      },
-
       useCharacterEncumbranceBar: {
         options: {
           name: 'TIDY5E.Settings.UseCharacterEncumbranceBar.name',

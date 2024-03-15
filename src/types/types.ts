@@ -125,6 +125,9 @@ export type CharacterSheetContext = {
   notesEnrichedHtml: string;
   showContainerPanel: boolean;
   spellCalculations: SpellCalculations;
+  spellSlotTrackerMode:
+    | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_PIPS
+    | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_VALUE_MAX;
   traitEnrichedHtml: string;
   utilities: Utilities;
 } & ActorSheetContext &
@@ -149,6 +152,9 @@ export type NpcSheetContext = {
   showLegendaryToolbar: boolean;
   showSpellbookTab: boolean;
   spellCalculations: SpellCalculations;
+  spellSlotTrackerMode:
+    | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_PIPS
+    | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_VALUE_MAX;
   traitEnrichedHtml: string;
   utilities: Utilities;
 } & ActorSheetContext &
@@ -355,4 +361,4 @@ export type ContextMenuOption = {
   name: string;
   icon?: string;
   callback?: () => void;
-}
+};
