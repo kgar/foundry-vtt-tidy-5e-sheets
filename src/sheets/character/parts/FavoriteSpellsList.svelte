@@ -11,10 +11,9 @@
   import ItemUseButton from '../../../components/item-list/ItemUseButton.svelte';
   import ItemUses from '../../../components/item-list/ItemUses.svelte';
   import SpellComponents from '../../../components/spellbook/SpellComponents.svelte';
-  import SpellSlotUses from '../../../components/spellbook/SpellSlotUses.svelte';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
-  import SpellbookItemCardContent from '../../../components/item-info-card/SpellbookItemCardContent.svelte';
+  import SpellSlotManagement from 'src/components/spellbook/SpellSlotManagement.svelte';
 
   let context = getContext<Readable<CharacterSheetContext>>('context');
   export let section: any;
@@ -38,7 +37,7 @@
             </span>
           {/if}
           {#if section.usesSlots}
-            <SpellSlotUses {section} />
+            <SpellSlotManagement {section} />
           {/if}
         </ItemTableColumn>
         <ItemTableColumn

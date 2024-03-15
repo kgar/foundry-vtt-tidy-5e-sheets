@@ -84,9 +84,7 @@
             {section.label}
           </span>
           {#if section.usesSlots}
-            {#if section.usesSlots}
-              <SpellSlotManagement {section} />
-            {/if}
+            <SpellSlotManagement {section} />
           {/if}
         </ItemTableColumn>
       </ItemTableHeaderRow>
@@ -98,7 +96,9 @@
           visibleItemIdSubset !== null && !visibleItemIdSubset.has(spell.id)}
         <button
           type="button"
-          class="spell {FoundryAdapter.getSpellRowClasses(spell)} transparent-button"
+          class="spell {FoundryAdapter.getSpellRowClasses(
+            spell,
+          )} transparent-button"
           class:hidden
           aria-hidden={hidden}
           data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}

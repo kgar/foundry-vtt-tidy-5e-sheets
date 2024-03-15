@@ -20,7 +20,7 @@
   {#if $context.spellSlotTrackerMode === CONSTANTS.SPELL_SLOT_TRACKER_MODE_VALUE_MAX}
     <SpellSlotUses {section} />
   {/if}
-  {#if section.usesSlots && $context.unlocked}
+  {#if $context.unlocked}
     <SpellSlotConfigButton />
   {/if}
 </div>
