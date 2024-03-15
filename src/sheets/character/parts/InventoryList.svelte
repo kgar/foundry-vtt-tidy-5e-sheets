@@ -27,6 +27,7 @@
   import AmmoSelector from '../../actor/AmmoSelector.svelte';
   import { settingStore } from 'src/settings/settings';
   import ActionFilterOverrideControl from 'src/components/item-list/controls/ActionFilterOverrideControl.svelte';
+  import { coalesce } from 'src/utils/formatting';
 
   export let primaryColumnName: string;
   export let items: Item5e[];
@@ -94,7 +95,10 @@
         {@const ctx = $context.itemContext[item.id]}
         {@const itemName =
           item.system.identified === false
-            ? item.system.unidentified.name
+            ? coalesce(
+                item.system.unidentified.name,
+                localize('DND5E.Unidentified.Title'),
+              )
             : item.name}
         <ItemTableRow
           {item}
