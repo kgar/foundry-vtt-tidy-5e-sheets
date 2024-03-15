@@ -318,6 +318,37 @@ export class Tidy5eNpcSheet
             visible: abilitiesSortMode === 'm',
           },
           {
+            title: 'Spell Pips',
+            iconClass: 'fa-regular fa-circle-dot fa-fw',
+            execute: async () => {
+              await SheetPreferencesService.setDocumentTypePreference(
+                this.actor.type,
+                CONSTANTS.SPELL_SLOT_TRACKER_MODE_PREFERENCE,
+                CONSTANTS.SPELL_SLOT_TRACKER_MODE_VALUE_MAX
+              );
+            },
+            visible:
+              !SettingsProvider.settings.showSpellbookTabNpc.get() &&
+              (npcPreferences?.spellSlotTrackerMode ??
+                CONSTANTS.SPELL_SLOT_TRACKER_MODE_PIPS) ===
+                CONSTANTS.SPELL_SLOT_TRACKER_MODE_PIPS,
+          },
+          {
+            title: 'Spell Value/Max',
+            iconClass: 'fa-regular fa-square fa-fw',
+            execute: async () => {
+              await SheetPreferencesService.setDocumentTypePreference(
+                this.actor.type,
+                CONSTANTS.SPELL_SLOT_TRACKER_MODE_PREFERENCE,
+                CONSTANTS.SPELL_SLOT_TRACKER_MODE_PIPS
+              );
+            },
+            visible:
+              !SettingsProvider.settings.showSpellbookTabNpc.get() &&
+              npcPreferences?.spellSlotTrackerMode ===
+                CONSTANTS.SPELL_SLOT_TRACKER_MODE_VALUE_MAX,
+          },
+          {
             title: FoundryAdapter.localize('TIDY5E.Commands.ExpandAll'),
             iconClass: 'fas fa-angles-down',
             execute: () =>
