@@ -5,6 +5,7 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import type { ActorSheetContext } from 'src/types/types';
+  import { coalesce } from 'src/utils/formatting';
 
   export let item: Item5e;
   export let chatData: ItemChatData;
@@ -25,7 +26,10 @@
 >
   <p class="info-card-name">
     {item.system.identified === false
-      ? item.system.unidentified.name
+      ? coalesce(
+          item.system.unidentified.name,
+          localize('DND5E.Unidentified.Title'),
+        )
       : item.name}
   </p>
   {#if ctx?.hasUses}

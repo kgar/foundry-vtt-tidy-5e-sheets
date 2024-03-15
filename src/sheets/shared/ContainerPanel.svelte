@@ -10,6 +10,7 @@
   import type { Item5e } from 'src/types/item.types';
   import { settingStore } from 'src/settings/settings';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import { coalesce } from 'src/utils/formatting';
 
   export let containerPanelItems: ContainerPanelItemContext[] = [];
   export let searchCriteria: string = '';
@@ -70,7 +71,10 @@
       on:mouseleave={(ev) => onMouseLeave(ev, container)}
       class="container"
       title={container.system.identified === false
-        ? container.system.unidentified.name
+        ? coalesce(
+            container.system.unidentified.name,
+            FoundryAdapter.localize('DND5E.Unidentified.Title'),
+          )
         : container.name}
       class:hidden={!visibleContainersIdsSubset.has(container.id)}
       aria-hidden={!visibleContainersIdsSubset.has(container.id)}
