@@ -86,10 +86,12 @@
             {section.label}
           </span>
           {#if section.usesSlots}
-            {#if $settingStore.useSpellSlotMarker}
+            {#if FoundryAdapter.useSpellSlotPips($context.actor)}
               <SpellPips {section} />
             {/if}
-            <SpellSlotUses {section} />
+            {#if FoundryAdapter.useSpellSlotValueMax($context.actor)}
+              <SpellSlotUses {section} />
+            {/if}
             {#if section.usesSlots && $context.unlocked}
               <SpellSlotConfigButton />
             {/if}

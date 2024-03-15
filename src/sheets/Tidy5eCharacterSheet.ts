@@ -440,6 +440,26 @@ export class Tidy5eCharacterSheet
             visible: spellbookSortMode === 'm',
           },
           {
+            title: 'Spell Pips',
+            iconClass: 'fa-regular fa-circle-dot fa-fw',
+            execute: () => {
+              FoundryAdapter.setFlag(
+                this.actor,
+                'spellSlotTrackerMode',
+                'numbers'
+              );
+            },
+            visible: FoundryAdapter.useSpellSlotPips(this.actor),
+          },
+          {
+            title: 'Spell Value/Max',
+            iconClass: 'fa-regular fa-square fa-fw',
+            execute: () => {
+              FoundryAdapter.setFlag(this.actor, 'spellSlotTrackerMode', 'pips');
+            },
+            visible: FoundryAdapter.useSpellSlotValueMax(this.actor),
+          },
+          {
             title: FoundryAdapter.localize('TIDY5E.Commands.ExpandAll'),
             iconClass: 'fas fa-angles-down',
             execute: () =>

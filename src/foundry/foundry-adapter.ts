@@ -1355,4 +1355,12 @@ export const FoundryAdapter = {
   openSpellSlotsConfig(actor: Actor5e) {
     new dnd5e.applications.actor.ActorSpellSlotsConfig(actor).render(true);
   },
+  useSpellSlotPips(actor: Actor5e) {
+    return [null, undefined, 'pips'].includes(
+      FoundryAdapter.tryGetFlag(actor, 'spellSlotTrackerMode')
+    );
+  },
+  useSpellSlotValueMax(actor: Actor5e) {
+    return FoundryAdapter.tryGetFlag(actor, 'spellSlotTrackerMode') === 'numbers';
+  },
 };
