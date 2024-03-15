@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { settingStore } from 'src/settings/settings';
   import type { Item5e } from 'src/types/item.types';
   import type { ActorSheetContext } from 'src/types/types';
@@ -28,29 +29,12 @@
         ammo: item,
       })),
   ];
-
-  function onAmmoChange(item: Item5e, ammoId: string) {
-    const ammo = item.actor?.items.find((i: any) => i.id === ammoId);
-
-    item.update({
-      system: {
-        consume: {
-          amount: !ammo
-            ? null
-            : !!item.system.consume?.amount
-              ? item.system.consume.amount
-              : 1,
-          target: !ammo ? '' : ammo.id,
-          type: !ammo ? '' : ammo.system.consumableType,
-        },
-      },
-    });
-  }
 </script>
 
 <select
   on:click|stopPropagation
-  on:change={(event) => onAmmoChange(item, event.currentTarget.value)}
+  on:change={(event) =>
+    FoundryAdapter.onAmmoChange(item, event.currentTarget.value)}
   disabled={!$context.editable}
 >
   {#each ammos as ammo}
