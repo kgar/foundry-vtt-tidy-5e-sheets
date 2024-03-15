@@ -90,7 +90,7 @@
 
       <HorizontalLineSeparator />
 
-      <div class="form-group">
+      <div class="form-group stacked">
         <label for="{$context.appId}-{$context.item.id}-price"
           >{localize('DND5E.Price')}</label
         >
@@ -105,6 +105,7 @@
             document={$context.item}
             disabled={!$context.editable}
             selectOnFocus={true}
+            cssClass="large-value"
           />
           <Select
             value={$context.system.price.denomination}
