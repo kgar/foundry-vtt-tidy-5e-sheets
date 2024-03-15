@@ -1,14 +1,10 @@
 <script lang="ts">
-  import { settingStore } from 'src/settings/settings';
   import type { CharacterSheetContext, NpcSheetContext } from 'src/types/types';
-  import { getContext } from 'svelte';
+  import { getContext, type ComponentProps } from 'svelte';
   import type { Readable } from 'svelte/store';
+  import SpellPip from './SpellPip.svelte';
 
-  type SpellSlotMarkerDot = {
-    index: number;
-    isEmpty: boolean;
-    willChange: boolean;
-  };
+  type SpellPipProps = ComponentProps<SpellPip> & { index: number };
 
   let context =
     getContext<Readable<CharacterSheetContext | NpcSheetContext>>('context');
@@ -43,41 +39,39 @@
 
   function onMouseEnterDot(index: number) {
     targetedDotIndex = index;
-    dots = generateDots();
+    pips = generatePips();
   }
 
   function onMouseLeaveDot(index: number) {
     targetedDotIndex = null;
-    dots = generateDots();
+    pips = generatePips();
   }
 
-  function generateDots(): SpellSlotMarkerDot[] {
+  function generatePips(): SpellPipProps[] {
     return Array.from({ length: section.slots }, (x, i) => ({
       index: i,
       isEmpty: isEmpty(i),
       willChange: willChange(i),
+      disabled: !$context.editable,
     }));
   }
 
-  let dots: SpellSlotMarkerDot[];
-  $: section, (dots = generateDots());
+  let pips: SpellPipProps[];
+  $: section, (pips = generatePips());
 </script>
 
 {#if section.slots > 0}
   <div class="spell-slot-markers">
-    {#each dots as dot}
-      <button
-        type="button"
-        class="dot"
-        class:empty={dot.isEmpty}
-        class:change={dot.willChange}
-        on:click={() => onSpellMarkerClick(section, dot.index)}
-        on:mouseenter={() => onMouseEnterDot(dot.index)}
-        on:mouseleave={() => onMouseLeaveDot(dot.index)}
-        on:focusin={() => onMouseEnterDot(dot.index)}
-        on:focusout={() => onMouseLeaveDot(dot.index)}
-        disabled={!$context.editable}
-        tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+    {#each pips as pip}
+      <SpellPip
+        disabled={pip.disabled}
+        isEmpty={pip.isEmpty}
+        willChange={pip.willChange}
+        on:click={() => onSpellMarkerClick(section, pip.index)}
+        on:mouseenter={() => onMouseEnterDot(pip.index)}
+        on:mouseleave={() => onMouseLeaveDot(pip.index)}
+        on:focusin={() => onMouseEnterDot(pip.index)}
+        on:focusout={() => onMouseLeaveDot(pip.index)}
       />
     {/each}
   </div>
@@ -89,31 +83,5 @@
     gap: 0.125rem;
     margin-top: -0.125rem;
     align-items: center;
-
-    .dot {
-      margin: 0;
-      padding: 0;
-      line-height: normal;
-      width: 0.75rem;
-      height: 0.75rem;
-      border-radius: 50%;
-      background-color: var(--t5e-spell-pip-active-background);
-      border: 0.0625rem solid var(--t5e-separator-color);
-      transition: background-color 0.3s ease;
-
-      &:is(:hover, :focus-visible),
-      &.change {
-        background-color: var(--t5e-warning-accent-color);
-      }
-
-      &.empty {
-        background: var(--t5e-spell-pip-empty-background);
-
-        &:is(:hover, :focus-visible),
-        &.change {
-          background-color: var(--t5e-prepared-background);
-        }
-      }
-    }
   }
 </style>

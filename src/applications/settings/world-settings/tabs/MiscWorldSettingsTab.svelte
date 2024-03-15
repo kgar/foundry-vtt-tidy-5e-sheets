@@ -17,13 +17,6 @@
 />
 
 <CheckboxSetting
-  bind:value={$context.settings.useSpellSlotMarker}
-  name={'TIDY5E.Settings.UseSpellSlotMarker.name'}
-  hint={'TIDY5E.Settings.UseSpellSlotMarker.hint'}
-  id="useSpellSlotMarker"
-/>
-
-<CheckboxSetting
   bind:value={$context.settings.showExpandedLimitedView}
   name={'TIDY5E.Settings.ShowExpandedLimitedView.name'}
   hint={'TIDY5E.Settings.ShowExpandedLimitedView.hint'}

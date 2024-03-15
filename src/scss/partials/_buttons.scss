@@ -34,11 +34,18 @@
 @mixin icon-button-base {
   @include transparent-button-base();
 
-  color: var(--t5e-icon-font-color);
+  &,
+  i {
+    transition: color 0.3s ease, transform 0.3s ease;
+    color: var(--t5e-icon-font-color);
+  }
 
-  &:hover,
-  &:focus-visible {
-    color: var(--t5e-icon-hover-color);
+  &,
+  i {
+    &:hover,
+    &:focus-visible {
+      color: var(--t5e-icon-hover-color);
+    }
   }
 }
 

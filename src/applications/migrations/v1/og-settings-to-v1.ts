@@ -45,11 +45,6 @@ const settingsMap: SettingMap[] = [
     ogKey: 'hiddenDeathSavesEnabled',
   },
   {
-    v1Key: 'useSpellSlotMarker',
-    ogKey: 'hideSpellSlotMarker',
-    convert: (setting: any) => !setting,
-  },
-  {
     v1Key: 'alwaysShowItemQuantity',
     ogKey: 'quantityAlwaysShownEnabled',
   },

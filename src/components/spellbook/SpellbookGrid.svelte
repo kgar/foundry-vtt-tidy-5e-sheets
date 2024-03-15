@@ -9,8 +9,6 @@
   import ItemTable from '../item-list/v1/ItemTable.svelte';
   import ItemTableColumn from '../item-list/v1/ItemTableColumn.svelte';
   import ItemTableHeaderRow from '../item-list/v1/ItemTableHeaderRow.svelte';
-  import SpellPips from './SpellPips.svelte';
-  import SpellSlotUses from '../spellbook/SpellSlotUses.svelte';
   import type { Item5e } from 'src/types/item.types';
   import GridPaneFavoriteIcon from '../item-grid/GridPaneFavoriteIcon.svelte';
   import { getContext } from 'svelte';
@@ -18,12 +16,13 @@
   import { settingStore } from 'src/settings/settings';
   import { ActorItemRuntime } from 'src/runtime/ActorItemRuntime';
   import { declareLocation } from 'src/types/location-awareness.types';
+  import SpellSlotManagement from './SpellSlotManagement.svelte';
 
   export let section: any;
   export let spells: Item5e[];
   export let cssClass: string | null = null;
   /**
-   * An optional subset of item IDs which will hide all other items not included in this set. 
+   * An optional subset of item IDs which will hide all other items not included in this set.
    * Useful for showing only search results, for example.
    */
   export let visibleItemIdSubset: Set<string> | null = null;
@@ -85,10 +84,7 @@
             {section.label}
           </span>
           {#if section.usesSlots}
-            {#if $settingStore.useSpellSlotMarker}
-              <SpellPips {section} />
-            {/if}
-            <SpellSlotUses {section} />
+            <SpellSlotManagement {section} />
           {/if}
         </ItemTableColumn>
       </ItemTableHeaderRow>
@@ -100,7 +96,9 @@
           visibleItemIdSubset !== null && !visibleItemIdSubset.has(spell.id)}
         <button
           type="button"
-          class="spell {FoundryAdapter.getSpellRowClasses(spell)} icon-button"
+          class="spell {FoundryAdapter.getSpellRowClasses(
+            spell,
+          )} transparent-button"
           class:hidden
           aria-hidden={hidden}
           data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}

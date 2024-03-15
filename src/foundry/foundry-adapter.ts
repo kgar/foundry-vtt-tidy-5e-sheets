@@ -1352,4 +1352,7 @@ export const FoundryAdapter = {
       },
     });
   },
+  openSpellSlotsConfig(actor: Actor5e) {
+    new dnd5e.applications.actor.ActorSpellSlotsConfig(actor).render(true);
+  },
 };

@@ -308,10 +308,6 @@
         "name": "PLから死亡セーヴを隠す",
         "hint": "有効化することで死亡セーヴの結果をGMのみ表示します。"
     },
-    "TIDY5E.Settings.UseSpellSlotMarker": {
-        "name": null,
-        "hint": null
-    },
     "TIDY5E.Settings.UseCharacterEncumbranceBar": {
         "name": null,
         "hint": null

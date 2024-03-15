@@ -2,7 +2,7 @@
   export let primary: boolean = false;
   export let baseWidth: string | null = null;
   export let title: string | null = null;
-  export let cssClass: string | null = null;
+  export let cssClass: string | null = '';
 </script>
 
 <div

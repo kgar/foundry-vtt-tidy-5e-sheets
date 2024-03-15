@@ -308,10 +308,6 @@
         "name": "Cacher les jets de sauvegardes de mort aux joueurs",
         "hint": "Rend les jets de sauvegardes de mort et les résultats des jets de sauvegardes de mort visibles uniquement par le MJ."
     },
-    "TIDY5E.Settings.UseSpellSlotMarker": {
-        "name": "Utiliser le marqueur d'emplacement de sort",
-        "hint": "Affiche les marqueurs d'emplacements de sorts (points) au-dessus des sections de sorts de niveau dans le livre de sorts."
-    },
     "TIDY5E.Settings.UseCharacterEncumbranceBar": {
         "name": "Utiliser la barre d'encombrement des personnages",
         "hint": "Affiche une barre d'encombrement sur les feuilles de personnage."

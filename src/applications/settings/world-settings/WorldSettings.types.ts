@@ -5,7 +5,6 @@ import type { Writable } from 'svelte/store';
 export type WorldSettingsContext = {
   settings: {
     hideDeathSavesFromPlayers: CurrentSettings['hideDeathSavesFromPlayers'];
-    useSpellSlotMarker: CurrentSettings['useSpellSlotMarker'];
     useCharacterEncumbranceBar: CurrentSettings['useCharacterEncumbranceBar'];
     useNpcEncumbranceBar: CurrentSettings['useNpcEncumbranceBar'];
     useVehicleEncumbranceBar: CurrentSettings['useVehicleEncumbranceBar'];

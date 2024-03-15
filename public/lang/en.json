@@ -467,10 +467,6 @@
     "name": "Hide Death Saves From Players",
     "hint": "Makes death saves and death save results visible only to the GM."
   },
-  "TIDY5E.Settings.UseSpellSlotMarker": {
-    "name": "Use Spell Slot Marker",
-    "hint": "Shows spell slot markers (dots) above leveled spell sections in the spellbook."
-  },
   "TIDY5E.Settings.UseCharacterEncumbranceBar": {
     "name": "Use Character Encumbrance Bar",
     "hint": "Shows an encumbrance bar on character sheets."

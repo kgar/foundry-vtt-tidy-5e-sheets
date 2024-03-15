@@ -20,8 +20,6 @@
   import ItemUses from '../item-list/ItemUses.svelte';
   import SpellComponents from './SpellComponents.svelte';
   import SpellPrepareControl from '../spellbook/SpellPrepareControl.svelte';
-  import SpellPips from './SpellPips.svelte';
-  import SpellSlotUses from '../spellbook/SpellSlotUses.svelte';
   import InlineFavoriteIcon from '../item-list/InlineFavoriteIcon.svelte';
   import ItemFavoriteControl from '../item-list/controls/ItemFavoriteControl.svelte';
   import { getContext } from 'svelte';
@@ -31,6 +29,7 @@
   import { SpellSchool } from 'src/features/spell-school/SpellSchool';
   import { declareLocation } from 'src/types/location-awareness.types';
   import Dnd5eIcon from '../icon/Dnd5eIcon.svelte';
+  import SpellSlotManagement from './SpellSlotManagement.svelte';
 
   let context =
     getContext<Readable<CharacterSheetContext | NpcSheetContext>>('context');
@@ -73,10 +72,7 @@
             {section.label}
           </span>
           {#if section.usesSlots}
-            {#if $settingStore.useSpellSlotMarker}
-              <SpellPips {section} />
-            {/if}
-            <SpellSlotUses {section} />
+            <SpellSlotManagement {section} />
           {/if}
         </ItemTableColumn>
         <ItemTableColumn

@@ -49,6 +49,7 @@ import { SheetPreferencesService } from 'src/features/user-preferences/SheetPref
 import { AsyncMutex } from 'src/utils/mutex';
 import type { Dnd5eActorCondition } from 'src/foundry/foundry-and-system';
 import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
+import { SheetPreferencesRuntime } from 'src/runtime/user-preferences/SheetPreferencesRuntime';
 
 export class Tidy5eCharacterSheet
   extends dnd5e.applications.actor.ActorSheet5eCharacter
@@ -123,6 +124,10 @@ export class Tidy5eCharacterSheet
           actor: this.actor,
           message: m,
         });
+      }),
+      SheetPreferencesRuntime.getStore().subscribe(() => {
+        if (first) return;
+        this.render();
       })
     );
     first = false;
@@ -327,7 +332,6 @@ export class Tidy5eCharacterSheet
                 'sort',
                 'm'
               );
-              this.render();
             },
             visible: inventorySortMode === 'a',
           },
@@ -341,7 +345,6 @@ export class Tidy5eCharacterSheet
                 'sort',
                 'a'
               );
-              this.render();
             },
             visible: inventorySortMode === 'm',
           },
@@ -421,7 +424,6 @@ export class Tidy5eCharacterSheet
                 'sort',
                 'm'
               );
-              this.render();
             },
             visible: spellbookSortMode === 'a',
           },
@@ -435,9 +437,37 @@ export class Tidy5eCharacterSheet
                 'sort',
                 'a'
               );
-              this.render();
             },
             visible: spellbookSortMode === 'm',
+          },
+          {
+            title: 'Spell Pips',
+            iconClass: 'fa-regular fa-circle-dot fa-fw',
+            execute: async () => {
+              await SheetPreferencesService.setDocumentTypePreference(
+                this.actor.type,
+                CONSTANTS.SPELL_SLOT_TRACKER_MODE_PREFERENCE,
+                CONSTANTS.SPELL_SLOT_TRACKER_MODE_VALUE_MAX
+              );
+            },
+            visible:
+              (characterPreferences?.spellSlotTrackerMode ??
+                CONSTANTS.SPELL_SLOT_TRACKER_MODE_PIPS) ===
+              CONSTANTS.SPELL_SLOT_TRACKER_MODE_PIPS,
+          },
+          {
+            title: 'Spell Value/Max',
+            iconClass: 'fa-regular fa-square fa-fw',
+            execute: async () => {
+              await SheetPreferencesService.setDocumentTypePreference(
+                this.actor.type,
+                CONSTANTS.SPELL_SLOT_TRACKER_MODE_PREFERENCE,
+                CONSTANTS.SPELL_SLOT_TRACKER_MODE_PIPS
+              );
+            },
+            visible:
+              characterPreferences?.spellSlotTrackerMode ===
+              CONSTANTS.SPELL_SLOT_TRACKER_MODE_VALUE_MAX,
           },
           {
             title: FoundryAdapter.localize('TIDY5E.Commands.ExpandAll'),
@@ -489,7 +519,6 @@ export class Tidy5eCharacterSheet
                 'sort',
                 'm'
               );
-              this.render();
             },
             visible: featureSortMode === 'a',
           },
@@ -503,7 +532,6 @@ export class Tidy5eCharacterSheet
                 'sort',
                 'a'
               );
-              this.render();
             },
             visible: featureSortMode === 'm',
           },
@@ -541,7 +569,6 @@ export class Tidy5eCharacterSheet
                 'sort',
                 'm'
               );
-              this.render();
             },
             visible: actionListSortMode === 'a',
           },
@@ -555,7 +582,6 @@ export class Tidy5eCharacterSheet
                 'sort',
                 'a'
               );
-              this.render();
             },
             visible: actionListSortMode === 'm',
           },
@@ -822,6 +848,9 @@ export class Tidy5eCharacterSheet
         ),
       showLimitedSheet: FoundryAdapter.showLimitedSheet(this.actor),
       spellCalculations: calculateSpellAttackAndDc(this.actor),
+      spellSlotTrackerMode:
+        characterPreferences.spellSlotTrackerMode ??
+        CONSTANTS.SPELL_SLOT_TRACKER_MODE_PIPS,
       tabs: [],
       tidyResources: tidyResources,
       traitEnrichedHtml: await FoundryAdapter.enrichHtml(

@@ -46,6 +46,7 @@ import { StoreSubscriptionsService } from 'src/features/store/StoreSubscriptions
 import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
 import { AsyncMutex } from 'src/utils/mutex';
 import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
+import { SheetPreferencesRuntime } from 'src/runtime/user-preferences/SheetPreferencesRuntime';
 
 export class Tidy5eNpcSheet
   extends dnd5e.applications.actor.ActorSheet5eNPC
@@ -114,6 +115,10 @@ export class Tidy5eNpcSheet
           actor: this.actor,
           message: m,
         });
+      }),
+      SheetPreferencesRuntime.getStore().subscribe(() => {
+        if (first) return;
+        this.render();
       })
     );
     first = false;
@@ -296,7 +301,6 @@ export class Tidy5eNpcSheet
                 'sort',
                 'm'
               );
-              this.render();
             },
             visible: abilitiesSortMode === 'a',
           },
@@ -310,9 +314,39 @@ export class Tidy5eNpcSheet
                 'sort',
                 'a'
               );
-              this.render();
             },
             visible: abilitiesSortMode === 'm',
+          },
+          {
+            title: 'Spell Pips',
+            iconClass: 'fa-regular fa-circle-dot fa-fw',
+            execute: async () => {
+              await SheetPreferencesService.setDocumentTypePreference(
+                this.actor.type,
+                CONSTANTS.SPELL_SLOT_TRACKER_MODE_PREFERENCE,
+                CONSTANTS.SPELL_SLOT_TRACKER_MODE_VALUE_MAX
+              );
+            },
+            visible:
+              !SettingsProvider.settings.showSpellbookTabNpc.get() &&
+              (npcPreferences?.spellSlotTrackerMode ??
+                CONSTANTS.SPELL_SLOT_TRACKER_MODE_PIPS) ===
+                CONSTANTS.SPELL_SLOT_TRACKER_MODE_PIPS,
+          },
+          {
+            title: 'Spell Value/Max',
+            iconClass: 'fa-regular fa-square fa-fw',
+            execute: async () => {
+              await SheetPreferencesService.setDocumentTypePreference(
+                this.actor.type,
+                CONSTANTS.SPELL_SLOT_TRACKER_MODE_PREFERENCE,
+                CONSTANTS.SPELL_SLOT_TRACKER_MODE_PIPS
+              );
+            },
+            visible:
+              !SettingsProvider.settings.showSpellbookTabNpc.get() &&
+              npcPreferences?.spellSlotTrackerMode ===
+                CONSTANTS.SPELL_SLOT_TRACKER_MODE_VALUE_MAX,
           },
           {
             title: FoundryAdapter.localize('TIDY5E.Commands.ExpandAll'),
@@ -348,7 +382,6 @@ export class Tidy5eNpcSheet
                 'sort',
                 'm'
               );
-              this.render();
             },
             visible: spellbookSortMode === 'a',
           },
@@ -362,9 +395,37 @@ export class Tidy5eNpcSheet
                 'sort',
                 'a'
               );
-              this.render();
             },
             visible: spellbookSortMode === 'm',
+          },
+          {
+            title: 'Spell Pips',
+            iconClass: 'fa-regular fa-circle-dot fa-fw',
+            execute: async () => {
+              await SheetPreferencesService.setDocumentTypePreference(
+                this.actor.type,
+                CONSTANTS.SPELL_SLOT_TRACKER_MODE_PREFERENCE,
+                CONSTANTS.SPELL_SLOT_TRACKER_MODE_VALUE_MAX
+              );
+            },
+            visible:
+              (npcPreferences?.spellSlotTrackerMode ??
+                CONSTANTS.SPELL_SLOT_TRACKER_MODE_PIPS) ===
+              CONSTANTS.SPELL_SLOT_TRACKER_MODE_PIPS,
+          },
+          {
+            title: 'Spell Value/Max',
+            iconClass: 'fa-regular fa-square fa-fw',
+            execute: async () => {
+              await SheetPreferencesService.setDocumentTypePreference(
+                this.actor.type,
+                CONSTANTS.SPELL_SLOT_TRACKER_MODE_PREFERENCE,
+                CONSTANTS.SPELL_SLOT_TRACKER_MODE_PIPS
+              );
+            },
+            visible:
+              npcPreferences?.spellSlotTrackerMode ===
+              CONSTANTS.SPELL_SLOT_TRACKER_MODE_VALUE_MAX,
           },
           {
             title: FoundryAdapter.localize('TIDY5E.Commands.ExpandAll'),
@@ -416,7 +477,6 @@ export class Tidy5eNpcSheet
                 'sort',
                 'm'
               );
-              this.render();
             },
             visible: actionListSortMode === 'a',
           },
@@ -430,7 +490,6 @@ export class Tidy5eNpcSheet
                 'sort',
                 'a'
               );
-              this.render();
             },
             visible: actionListSortMode === 'm',
           },
@@ -623,6 +682,9 @@ export class Tidy5eNpcSheet
       shortRest: this._onShortRest.bind(this),
       showLimitedSheet: FoundryAdapter.showLimitedSheet(this.actor),
       spellCalculations: calculateSpellAttackAndDc(this.actor),
+      spellSlotTrackerMode:
+        npcPreferences.spellSlotTrackerMode ??
+        CONSTANTS.SPELL_SLOT_TRACKER_MODE_PIPS,
       tabs: [],
       tokenState: this.#getTokenState(),
       traitEnrichedHtml: await FoundryAdapter.enrichHtml(

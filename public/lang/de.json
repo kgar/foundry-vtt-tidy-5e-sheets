@@ -308,10 +308,6 @@
         "name": "Verberge Todesrettungswürfe vor Spielern",
         "hint": "Macht Todesrettungswürfe und -ergebnisse nur für den SL sichtbar."
     },
-    "TIDY5E.Settings.UseSpellSlotMarker": {
-        "name": "Markierung für Zauberplätze verwenden",
-        "hint": "Zeigt Zauberplatzmarkierungen (Punkte) über den Abschnitten mit abgestuften Zaubern im Zauberbuch an."
-    },
     "TIDY5E.Settings.UseCharacterEncumbranceBar": {
         "name": "Charakterbelastungsleiste verwenden",
         "hint": "Zeigt einen Lastenbalken auf dem Charakterbogen an."

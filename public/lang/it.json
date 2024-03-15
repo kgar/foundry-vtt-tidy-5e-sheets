@@ -308,10 +308,6 @@
         "name": "Nascondi ai Giocatori i Tiri Salvezza sulla Morte",
         "hint": "Rendi visibili Tiri Salvezza su Morte ed i loro risultati solo al DM."
     },
-    "TIDY5E.Settings.UseSpellSlotMarker": {
-        "name": "Usa Segnalino Slot Incantesimo",
-        "hint": "Mostra gli indicatori degli slot degli incantesimi (punti) sopra le sezioni degli incantesimi livellate nel libro degli incantesimi."
-    },
     "TIDY5E.Settings.UseCharacterEncumbranceBar": {
         "name": "Usa la barra di ingombro del personaggio",
         "hint": "Mostra una barra degli ingombri sulle schede dei personaggi."
