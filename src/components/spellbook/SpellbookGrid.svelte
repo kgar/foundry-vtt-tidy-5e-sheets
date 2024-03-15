@@ -9,8 +9,6 @@
   import ItemTable from '../item-list/v1/ItemTable.svelte';
   import ItemTableColumn from '../item-list/v1/ItemTableColumn.svelte';
   import ItemTableHeaderRow from '../item-list/v1/ItemTableHeaderRow.svelte';
-  import SpellPips from './SpellPips.svelte';
-  import SpellSlotUses from '../spellbook/SpellSlotUses.svelte';
   import type { Item5e } from 'src/types/item.types';
   import GridPaneFavoriteIcon from '../item-grid/GridPaneFavoriteIcon.svelte';
   import { getContext } from 'svelte';
@@ -18,7 +16,7 @@
   import { settingStore } from 'src/settings/settings';
   import { ActorItemRuntime } from 'src/runtime/ActorItemRuntime';
   import { declareLocation } from 'src/types/location-awareness.types';
-  import SpellSlotConfigButton from './SpellSlotConfigButton.svelte';
+  import SpellSlotManagement from './SpellSlotManagement.svelte';
 
   export let section: any;
   export let spells: Item5e[];
@@ -86,14 +84,8 @@
             {section.label}
           </span>
           {#if section.usesSlots}
-            {#if $context.spellSlotTrackerMode === CONSTANTS.SPELL_SLOT_TRACKER_MODE_PIPS}
-              <SpellPips {section} />
-            {/if}
-            {#if $context.spellSlotTrackerMode === CONSTANTS.SPELL_SLOT_TRACKER_MODE_VALUE_MAX}
-              <SpellSlotUses {section} />
-            {/if}
-            {#if section.usesSlots && $context.unlocked}
-              <SpellSlotConfigButton />
+            {#if section.usesSlots}
+              <SpellSlotManagement {section} />
             {/if}
           {/if}
         </ItemTableColumn>

@@ -19,5 +19,5 @@
   on:click={() => FoundryAdapter.openSpellSlotsConfig($context.actor)}
   tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
 >
-  <i class="fas fa-cog" />
+  <i class="fas fa-pencil" />
 </button>

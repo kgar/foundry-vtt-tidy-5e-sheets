@@ -20,8 +20,6 @@
   import ItemUses from '../item-list/ItemUses.svelte';
   import SpellComponents from './SpellComponents.svelte';
   import SpellPrepareControl from '../spellbook/SpellPrepareControl.svelte';
-  import SpellPips from './SpellPips.svelte';
-  import SpellSlotUses from '../spellbook/SpellSlotUses.svelte';
   import InlineFavoriteIcon from '../item-list/InlineFavoriteIcon.svelte';
   import ItemFavoriteControl from '../item-list/controls/ItemFavoriteControl.svelte';
   import { getContext } from 'svelte';
@@ -31,7 +29,7 @@
   import { SpellSchool } from 'src/features/spell-school/SpellSchool';
   import { declareLocation } from 'src/types/location-awareness.types';
   import Dnd5eIcon from '../icon/Dnd5eIcon.svelte';
-  import SpellSlotConfigButton from './SpellSlotConfigButton.svelte';
+  import SpellSlotManagement from './SpellSlotManagement.svelte';
 
   let context =
     getContext<Readable<CharacterSheetContext | NpcSheetContext>>('context');
@@ -74,16 +72,7 @@
             {section.label}
           </span>
           {#if section.usesSlots}
-            {#if $context.spellSlotTrackerMode === CONSTANTS.SPELL_SLOT_TRACKER_MODE_PIPS}
-              <SpellPips {section} />
-            {/if}
-            {#if $context.spellSlotTrackerMode === CONSTANTS.SPELL_SLOT_TRACKER_MODE_VALUE_MAX}
-              <SpellSlotUses {section} />
-            {/if}
-
-            {#if section.usesSlots && $context.unlocked && !FoundryAdapter.useClassicControls($context.actor)}
-              <SpellSlotConfigButton />
-            {/if}
+            <SpellSlotManagement {section} />
           {/if}
         </ItemTableColumn>
         <ItemTableColumn
@@ -118,11 +107,7 @@
           {localize('DND5E.Usage')}
         </ItemTableColumn>
         {#if $context.editable && $context.useClassicControls}
-          <ItemTableColumn baseWidth={classicControlsBaseWidth}>
-            {#if section.usesSlots && $context.unlocked && FoundryAdapter.useClassicControls($context.actor)}
-              <SpellSlotConfigButton />
-            {/if}
-          </ItemTableColumn>
+          <ItemTableColumn baseWidth={classicControlsBaseWidth} />
         {/if}
       </ItemTableHeaderRow>
     </svelte:fragment>
