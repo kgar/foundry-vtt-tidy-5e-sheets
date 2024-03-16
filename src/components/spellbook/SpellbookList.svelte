@@ -46,11 +46,11 @@
   // TODO: replace this with column specification array default and then allow the caller to customize the table.
   export let includeSchool: boolean = true;
   export let includeRange: boolean = true;
-  export let spellComponentsBaseWidth: string = '4.375rem';
+  export let spellComponentsBaseWidth: string = '3.75rem';
   export let targetBaseWidth: string = '7.5rem';
   export let usageBaseWidth: string = '7.5rem';
-  export let controlsBaseWidthLocked: string = '5.3125rem';
-  export let controlsBaseWidthUnlocked: string = '7.5rem';
+  export let controlsBaseWidthLocked: string = '4.375rem';
+  export let controlsBaseWidthUnlocked: string = '5.625rem';
 
   var spellSchoolBaseWidth = '2rem';
 
@@ -212,7 +212,6 @@
                 {/if}
                 <ItemEditControl item={spell} />
                 {#if $context.unlocked}
-                  <ItemDuplicateControl item={spell} />
                   <ItemDeleteControl item={spell} />
                 {/if}
                 {#if $context.useActionsFeature}

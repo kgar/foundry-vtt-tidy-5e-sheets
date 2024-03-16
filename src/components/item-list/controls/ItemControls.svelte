@@ -9,7 +9,6 @@
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
-    min-width: 5.3125rem;
     font-size: 0.75rem;
     gap: 0.125rem;
 
