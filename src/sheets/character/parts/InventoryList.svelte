@@ -13,7 +13,6 @@
   import ItemUses from '../../../components/item-list/ItemUses.svelte';
   import ItemAddUses from '../../../components/item-list/ItemAddUses.svelte';
   import ItemControls from '../../../components/item-list/controls/ItemControls.svelte';
-  import ItemDuplicateControl from '../../../components/item-list/controls/ItemDuplicateControl.svelte';
   import ItemDeleteControl from '../../../components/item-list/controls/ItemDeleteControl.svelte';
   import ItemEditControl from '../../../components/item-list/controls/ItemEditControl.svelte';
   import EquipControl from '../../../components/item-list/controls/EquipControl.svelte';
@@ -209,7 +208,6 @@
                 <ItemFavoriteControl {item} />
                 <ItemEditControl {item} />
                 {#if $context.unlocked}
-                  <ItemDuplicateControl {item} />
                   <ItemDeleteControl {item} />
                 {/if}
                 {#if $context.useActionsFeature}
