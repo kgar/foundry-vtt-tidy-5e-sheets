@@ -4,10 +4,9 @@
   import {
     type CharacterSheetContext,
     type NpcSheetContext,
+    type RenderableClassicControl,
   } from 'src/types/types';
-  import ItemControls from '../item-list/controls/ItemControls.svelte';
   import ItemDeleteControl from '../item-list/controls/ItemDeleteControl.svelte';
-  import ItemDuplicateControl from '../item-list/controls/ItemDuplicateControl.svelte';
   import ItemEditControl from '../item-list/controls/ItemEditControl.svelte';
   import ItemName from '../item-list/ItemName.svelte';
   import ItemTable from '../item-list/v1/ItemTable.svelte';
@@ -30,6 +29,8 @@
   import { declareLocation } from 'src/types/location-awareness.types';
   import Dnd5eIcon from '../icon/Dnd5eIcon.svelte';
   import SpellSlotManagement from './SpellSlotManagement.svelte';
+  import type { Item5e } from 'src/types/item.types';
+  import ClassicControls from 'src/sheets/shared/ClassicControls.svelte';
 
   let context =
     getContext<Readable<CharacterSheetContext | NpcSheetContext>>('context');
@@ -49,16 +50,60 @@
   export let spellComponentsBaseWidth: string = '3.75rem';
   export let targetBaseWidth: string = '7.5rem';
   export let usageBaseWidth: string = '7.5rem';
-  export let controlsBaseWidthLocked: string = '4.375rem';
-  export let controlsBaseWidthUnlocked: string = '5.625rem';
 
   var spellSchoolBaseWidth = '2rem';
 
+  let controls: RenderableClassicControl[] = [];
+  $: {
+    controls = [
+      {
+        component: SpellPrepareControl,
+        props: (item: Item5e, ctx: any) => ({
+          spell: item,
+          ctx,
+        }),
+        visible: (item: Item5e, _: any) => FoundryAdapter.canPrepareSpell(item),
+      },
+    ];
+
+    if (allowFavorites) {
+      controls.push({
+        component: ItemFavoriteControl,
+        props: (item: Item5e, ctx: any) => ({
+          spell: item,
+        }),
+      });
+    }
+
+    controls.push({
+      component: ItemEditControl,
+      props: (item: Item5e, _: any) => ({
+        item,
+      }),
+    });
+
+    if ($context.unlocked) {
+      controls.push({
+        component: ItemDeleteControl,
+        props: (item: Item5e, _: any) => ({
+          item,
+        }),
+      });
+    }
+
+    if ($context.useActionsFeature) {
+      controls.push({
+        component: ActionFilterOverrideControl,
+        props: (item: Item5e, _: any) => ({
+          item,
+        }),
+      });
+    }
+  }
+
   const localize = FoundryAdapter.localize;
 
-  $: classicControlsBaseWidth = $context.unlocked
-    ? controlsBaseWidthUnlocked
-    : controlsBaseWidthLocked;
+  $: classicControlsColumnWidth = `${controls.length * 1.25}rem`;
 
   declareLocation('spellbook-list-view');
 </script>
@@ -107,7 +152,7 @@
           {localize('DND5E.Usage')}
         </ItemTableColumn>
         {#if $context.editable && $context.useClassicControls}
-          <ItemTableColumn baseWidth={classicControlsBaseWidth} />
+          <ItemTableColumn baseWidth={classicControlsColumnWidth} />
         {/if}
       </ItemTableHeaderRow>
     </svelte:fragment>
@@ -200,24 +245,8 @@
             {spell.labels.activation}
           </ItemTableCell>
           {#if $context.editable && $context.useClassicControls}
-            <ItemTableCell baseWidth={classicControlsBaseWidth}>
-              <ItemControls>
-                {#if FoundryAdapter.canPrepareSpell(spell)}
-                  <SpellPrepareControl {ctx} {spell} />
-                {:else}
-                  <span />
-                {/if}
-                {#if allowFavorites}
-                  <ItemFavoriteControl item={spell} />
-                {/if}
-                <ItemEditControl item={spell} />
-                {#if $context.unlocked}
-                  <ItemDeleteControl item={spell} />
-                {/if}
-                {#if $context.useActionsFeature}
-                  <ActionFilterOverrideControl item={spell} />
-                {/if}
-              </ItemControls>
+            <ItemTableCell baseWidth={classicControlsColumnWidth}>
+              <ClassicControls {controls} item={spell} {ctx} />
             </ItemTableCell>
           {/if}
         </ItemTableRow>
