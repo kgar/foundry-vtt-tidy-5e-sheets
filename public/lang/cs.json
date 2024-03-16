@@ -268,10 +268,6 @@
         "name": "Pouze PJ může upravovat aktivní efekty.",
         "hint": "Zašrtnutím zakáže hráčům upravovat aktivní efekty ve svých denících. Pořád však uvidí aplikované efekty."
     },
-    "TIDY5E.Settings.AlwaysShowItemQuantity": {
-        "name": "Vždy zobrazovat množství předmětů.",
-        "hint": "Povolte pokud se nemá skrývat množství předmětů."
-    },
     "TIDY5E.Settings.UseInspiration": {
         "name": null,
         "hint": null

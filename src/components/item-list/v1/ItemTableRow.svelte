@@ -141,7 +141,6 @@
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <div
   class="item-table-row-container"
-  class:show-item-count-on-hover={!$settingStore.alwaysShowItemQuantity}
   class:hidden
   aria-hidden={hidden}
   data-context-menu={contextMenu?.type}
@@ -173,18 +172,6 @@
 
     &:global(.context) {
       box-shadow: 0 0 0.1875rem 0.0625rem var(--t5e-primary-accent-color) inset;
-    }
-
-    &.show-item-count-on-hover :global(.item-quantity) {
-      opacity: 0;
-      width: 0;
-      transition: opacity 0.3s ease;
-    }
-
-    &.show-item-count-on-hover:hover :global(.item-quantity),
-    &.show-item-count-on-hover :global(.item-quantity:focus-within) {
-      width: auto;
-      opacity: 1;
     }
 
     .item-table-row {

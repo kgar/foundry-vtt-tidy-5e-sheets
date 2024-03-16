@@ -268,10 +268,6 @@
         "name": "Só o mestre pode editar efeitos ativos",
         "hint": "Habilite para negar aos jogadores a edição dos efeitos ativos em suas fichas. Eles ainda verão os efeitos aplicados."
     },
-    "TIDY5E.Settings.AlwaysShowItemQuantity": {
-        "name": "Sempre mostrar a quantidade dos itens",
-        "hint": "Habilite para nunca esconder a quantidade de itens."
-    },
     "TIDY5E.Settings.UseInspiration": {
         "name": "Use o rastreador de inspiração",
         "hint": "Mostra um rastreador de inspiração no perfil do personagem."

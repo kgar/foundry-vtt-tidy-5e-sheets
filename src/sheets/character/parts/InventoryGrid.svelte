@@ -106,7 +106,6 @@
       <button
         type="button"
         class="item {getInventoryRowClasses(item)} transparent-button"
-        class:show-item-count-on-hover={!$settingStore.alwaysShowItemQuantity}
         class:hidden
         aria-hidden={hidden}
         data-context-menu={CONSTANTS.CONTEXT_MENU_TYPE_ITEMS}
@@ -385,18 +384,6 @@
         .item-image:hover i {
           color: var(--t5e-primary-font-color);
         }
-      }
-
-      &:global(.show-item-count-on-hover :is(.item-uses, .item-quantity)) {
-        opacity: 0;
-        transition: opacity 0.3s ease;
-      }
-
-      &:global(.show-item-count-on-hover:hover :is(.item-uses, .item-quantity)),
-      &:global(
-          .show-item-count-on-hover :is(.item-uses, .item-quantity):focus-within
-        ) {
-        opacity: 1;
       }
 
       .item-stats {

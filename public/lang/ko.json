@@ -268,10 +268,6 @@
         "name": "GM만이 활성화 효과를 편집 가능",
         "hint": "플레이어의 시트 활성화 효과 편집을 거부한다. 적용된 활성화 효과는 볼 수 있다."
     },
-    "TIDY5E.Settings.AlwaysShowItemQuantity": {
-        "name": "항상 아이템 수량 표시",
-        "hint": "활성화시 아이템 수량을 숨기지 않는다."
-    },
     "TIDY5E.Settings.UseInspiration": {
         "name": null,
         "hint": null

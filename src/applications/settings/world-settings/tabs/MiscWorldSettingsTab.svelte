@@ -46,13 +46,6 @@
 />
 
 <CheckboxSetting
-  bind:value={$context.settings.alwaysShowItemQuantity}
-  name={'TIDY5E.Settings.AlwaysShowItemQuantity.name'}
-  hint={'TIDY5E.Settings.AlwaysShowItemQuantity.hint'}
-  id="alwaysShowItemQuantity"
-/>
-
-<CheckboxSetting
   bind:value={$context.settings.showTraitLabels}
   name={'TIDY5E.Settings.ShowTraitLabels.name'}
   hint={'TIDY5E.Settings.ShowTraitLabels.hint'}
