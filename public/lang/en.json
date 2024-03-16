@@ -420,10 +420,6 @@
     "name": "Limit Active Effects Management to GMs",
     "hint": "Limits permission to edit or toggle active effects to GMs only."
   },
-  "TIDY5E.Settings.AlwaysShowItemQuantity": {
-    "name": "Always Show Item Quantity",
-    "hint": "Shows item quantity on list views even when not hovered."
-  },
   "TIDY5E.Settings.UseInspiration": {
     "name": "Use Inspiration Tracker",
     "hint": "Shows an inspiration tracker on the character profile."

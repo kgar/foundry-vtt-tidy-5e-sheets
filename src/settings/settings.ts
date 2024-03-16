@@ -1009,22 +1009,6 @@ export function createSettings() {
         },
       },
 
-      alwaysShowItemQuantity: {
-        options: {
-          name: 'TIDY5E.Settings.AlwaysShowItemQuantity.name',
-          hint: 'TIDY5E.Settings.AlwaysShowItemQuantity.hint',
-          scope: 'world',
-          config: false,
-          default: false,
-          type: Boolean,
-        },
-        get() {
-          return FoundryAdapter.getTidySetting<boolean>(
-            'alwaysShowItemQuantity'
-          );
-        },
-      },
-
       useExhaustion: {
         options: {
           name: 'TIDY5E.Settings.UseExhaustion.name',

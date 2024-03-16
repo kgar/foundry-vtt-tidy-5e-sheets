@@ -12,7 +12,6 @@
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import ItemUseButton from 'src/components/item-list/ItemUseButton.svelte';
   import ItemName from 'src/components/item-list/ItemName.svelte';
-  import ListItemQuantity from '../../actor/ListItemQuantity.svelte';
   import ItemTableFooter from 'src/components/item-list/ItemTableFooter.svelte';
   import Notice from 'src/components/notice/Notice.svelte';
   import Currency from '../../actor/Currency.svelte';
@@ -22,8 +21,6 @@
   import ItemDuplicateControl from 'src/components/item-list/controls/ItemDuplicateControl.svelte';
   import ItemEditControl from 'src/components/item-list/controls/ItemEditControl.svelte';
   import ItemControls from 'src/components/item-list/controls/ItemControls.svelte';
-  import type { ItemCardContentComponent } from 'src/types/item.types';
-  import InventoryItemCardContent from 'src/components/item-info-card/InventoryItemCardContent.svelte';
   import { settingStore } from 'src/settings/settings';
   import ActionFilterOverrideControl from 'src/components/item-list/controls/ActionFilterOverrideControl.svelte';
 
@@ -37,8 +34,6 @@
     price: '4.375rem',
     weight: '3.75rem',
   };
-
-  let columnsToSkipForClickableRows = ['system.quantity'];
 
   const localize = FoundryAdapter.localize;
 
@@ -112,14 +107,12 @@
               {localize(section.label)}
             </ItemTableColumn>
             {#each section.columns as column}
-              {#if section.editableName || !columnsToSkipForClickableRows.includes(column.property)}
-                <ItemTableColumn
-                  cssClass="items-header-{column.css}"
-                  baseWidth={baseWidths[column.property] ?? '3.125rem'}
-                >
-                  {column.label}
-                </ItemTableColumn>
-              {/if}
+              <ItemTableColumn
+                cssClass="items-header-{column.css}"
+                baseWidth={baseWidths[column.property] ?? '3.125rem'}
+              >
+                {column.label}
+              </ItemTableColumn>
             {/each}
             {#if $context.editable && ((!section.editableName && $context.useClassicControls) || ($context.unlocked && section.editableName))}
               <ItemTableColumn
@@ -172,64 +165,61 @@
                       data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_NAME}
                       >{item.name}</span
                     >
-                    <ListItemQuantity {item} {ctx} />
                   </ItemName>
                 {/if}
               </ItemTableCell>
               {#if section.columns}
                 {#each section.columns as column}
-                  {#if section.editableName || !columnsToSkipForClickableRows.includes(column.property)}
-                    {@const isNumber = column.editable === 'Number'}
-                    {@const fallback = isNumber ? '0' : ''}
-                    {@const value =
-                      FoundryAdapter.getProperty(
-                        item,
-                        column.property,
-                      )?.toString() ??
-                      FoundryAdapter.getProperty(
-                        ctx,
-                        column.property,
-                      )?.toString() ??
-                      fallback}
-                    <ItemTableCell
-                      baseWidth={baseWidths[column.property] ?? '3.125rem'}
-                    >
-                      {#if column.editable && !item.id}
-                        <TextInput
-                          document={item}
-                          field={column.property}
-                          allowDeltaChanges={isNumber}
-                          selectOnFocus={true}
-                          {value}
-                          onSaveChange={(ev) =>
-                            saveNonItemSectionData(
-                              ev,
-                              index,
-                              column.property,
-                              section,
-                            )}
-                          disabled={!$context.editable ||
-                            (column.property === 'quantity' &&
-                              $context.lockItemQuantity)}
-                        />
-                      {:else if column.editable && item.id}
-                        <TextInput
-                          document={item}
-                          field={column.property}
-                          allowDeltaChanges={isNumber}
-                          selectOnFocus={true}
-                          {value}
-                          disabled={!$context.editable ||
-                            (column.property === 'quantity' &&
-                              $context.lockItemQuantity)}
-                        />
-                      {:else}
-                        {FoundryAdapter.getProperty(item, column.property) ??
-                          FoundryAdapter.getProperty(ctx, column.property) ??
-                          fallback}
-                      {/if}
-                    </ItemTableCell>
-                  {/if}
+                  {@const isNumber = column.editable === 'Number'}
+                  {@const fallback = isNumber ? '0' : ''}
+                  {@const value =
+                    FoundryAdapter.getProperty(
+                      item,
+                      column.property,
+                    )?.toString() ??
+                    FoundryAdapter.getProperty(
+                      ctx,
+                      column.property,
+                    )?.toString() ??
+                    fallback}
+                  <ItemTableCell
+                    baseWidth={baseWidths[column.property] ?? '3.125rem'}
+                  >
+                    {#if column.editable && !item.id}
+                      <TextInput
+                        document={item}
+                        field={column.property}
+                        allowDeltaChanges={isNumber}
+                        selectOnFocus={true}
+                        {value}
+                        onSaveChange={(ev) =>
+                          saveNonItemSectionData(
+                            ev,
+                            index,
+                            column.property,
+                            section,
+                          )}
+                        disabled={!$context.editable ||
+                          (column.property === 'quantity' &&
+                            $context.lockItemQuantity)}
+                      />
+                    {:else if column.editable && item.id}
+                      <TextInput
+                        document={item}
+                        field={column.property}
+                        allowDeltaChanges={isNumber}
+                        selectOnFocus={true}
+                        {value}
+                        disabled={!$context.editable ||
+                          (column.property === 'quantity' &&
+                            $context.lockItemQuantity)}
+                      />
+                    {:else}
+                      {FoundryAdapter.getProperty(item, column.property) ??
+                        FoundryAdapter.getProperty(ctx, column.property) ??
+                        fallback}
+                    {/if}
+                  </ItemTableCell>
                 {/each}
               {/if}
               {#if $context.editable && ((!section.editableName && $context.useClassicControls) || ($context.unlocked && section.editableName))}

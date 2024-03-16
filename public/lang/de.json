@@ -268,10 +268,6 @@
         "name": "\"Aktive Effekte\"-Management auf SL beschränken",
         "hint": "Die Berechtigung, Aktive Effekte zu bearbeiten oder umzuschalten, wird auf SL beschränkt. Spieler sehen weiterhin die angewandten Effekte."
     },
-    "TIDY5E.Settings.AlwaysShowItemQuantity": {
-        "name": "Gegenstandsmenge immer anzeigen",
-        "hint": "Zeigt die Gegenstandsmenge in der Listenansicht an, auch wenn der Mauszeiger nicht darauf zeigt."
-    },
     "TIDY5E.Settings.UseInspiration": {
         "name": "Inspirationsindikator verwenden",
         "hint": "Zeigt einen Inspirationsindikator auf dem Charakterprofil an."

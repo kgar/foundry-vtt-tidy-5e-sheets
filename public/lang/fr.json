@@ -268,10 +268,6 @@
         "name": "Seul le MJ peut éditer les effets actifs",
         "hint": "Activer cette option pour interdire aux joueurs de modifier les effets actifs sur leur feuille. Ils verront toujours les effets appliqués."
     },
-    "TIDY5E.Settings.AlwaysShowItemQuantity": {
-        "name": "Toujours montrer la quantité des objets",
-        "hint": "Activer cette option pour ne jamais masquer la quantité des objets."
-    },
     "TIDY5E.Settings.UseInspiration": {
         "name": "Utiliser le suivi de l'inspiration",
         "hint": "Affiche un indicateur d'inspiration sur le profil du personnage."

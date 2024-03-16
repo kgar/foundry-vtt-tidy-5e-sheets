@@ -23,11 +23,11 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import type { CharacterSheetContext } from 'src/types/types';
-  import ListItemQuantity from 'src/sheets/actor/ListItemQuantity.svelte';
   import AmmoSelector from '../../actor/AmmoSelector.svelte';
   import { settingStore } from 'src/settings/settings';
   import ActionFilterOverrideControl from 'src/components/item-list/controls/ActionFilterOverrideControl.svelte';
   import { coalesce } from 'src/utils/formatting';
+    import TextInput from 'src/components/inputs/TextInput.svelte';
 
   export let primaryColumnName: string;
   export let items: Item5e[];
@@ -85,6 +85,9 @@
         <ItemTableColumn baseWidth="7.5rem">
           {localize('DND5E.Usage')}
         </ItemTableColumn>
+        <ItemTableColumn baseWidth="3rem">
+          {localize('DND5E.QuantityAbbr')}
+        </ItemTableColumn>
         {#if $context.editable && $context.useClassicControls && !lockControls}
           <ItemTableColumn baseWidth={classicControlsBaseWidth} />
         {/if}
@@ -131,7 +134,6 @@
                   <AmmoSelector {item} />
                 </span>
               {/if}
-              <ListItemQuantity {item} {ctx} />
             </ItemName>
           </ItemTableCell>
           {#if $settingStore.showIconsNextToTheItemName}
@@ -178,6 +180,18 @@
             {#if item.system.activation?.type}
               {item.labels?.activation ?? ''}
             {/if}
+          </ItemTableCell>
+          <ItemTableCell baseWidth="3rem">
+            <TextInput
+              document={item}
+              field="system.quantity"
+              value={item.system.quantity}
+              selectOnFocus={true}
+              disabled={!$context.editable || $context.lockItemQuantity}
+              placeholder="0"
+              allowDeltaChanges={true}
+              cssClass="text-align-center"
+            />
           </ItemTableCell>
           {#if $context.editable && $context.useClassicControls && !lockControls}
             <ItemTableCell baseWidth={classicControlsBaseWidth}>

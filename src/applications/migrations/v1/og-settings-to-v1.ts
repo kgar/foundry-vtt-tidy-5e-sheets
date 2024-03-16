@@ -45,10 +45,6 @@ const settingsMap: SettingMap[] = [
     ogKey: 'hiddenDeathSavesEnabled',
   },
   {
-    v1Key: 'alwaysShowItemQuantity',
-    ogKey: 'quantityAlwaysShownEnabled',
-  },
-  {
     v1Key: 'useExhaustion',
     ogKey: 'exhaustionDisabled',
     convert: (setting: any) => !setting,

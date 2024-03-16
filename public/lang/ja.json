@@ -268,10 +268,6 @@
         "name": "GMだけが有効化された効果を編集可能",
         "hint": "プレイヤーによる、自身のシート上にある有効化された効果の編集を禁止します。GM以外は適用されている効果の確認ができます。"
     },
-    "TIDY5E.Settings.AlwaysShowItemQuantity": {
-        "name": "常にアイテム数量を表示する",
-        "hint": "アイテム数量を常に表示にします。"
-    },
     "TIDY5E.Settings.UseInspiration": {
         "name": null,
         "hint": null

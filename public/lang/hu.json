@@ -268,10 +268,6 @@
         "name": "Csak JM szerkesztheti az aktív hatásokat.",
         "hint": "Kapcsold be, hogy elutasítsa a játékosok aktív hatás szerkesztési szándékait a lapjaikon. Ettől még látni fogják az aktív hatásokat."
     },
-    "TIDY5E.Settings.AlwaysShowItemQuantity": {
-        "name": "Mindig mutassa a tételek mennyiségét.",
-        "hint": "Kapcsold be, hogy sose rejtse el a tételek mennyiségét."
-    },
     "TIDY5E.Settings.UseInspiration": {
         "name": null,
         "hint": null

@@ -64,7 +64,6 @@ export class WorldSettingsFormApplication extends SvelteFormApplicationBase {
         permanentlyUnlockVehicleSheetForGm:
           currentSettings.permanentlyUnlockVehicleSheetForGm,
         limitEffectsManagementToGm: currentSettings.limitEffectsManagementToGm,
-        alwaysShowItemQuantity: currentSettings.alwaysShowItemQuantity,
         useCharacterInspiration: currentSettings.useCharacterInspiration,
         useVehicleMotion: currentSettings.useVehicleMotion,
         useExhaustion: currentSettings.useExhaustion,

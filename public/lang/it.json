@@ -268,10 +268,6 @@
         "name": "Solo il GM può modificare gli effetti attivi",
         "hint": "Seleziona per evitare che i giocatori modifichino gli effetti attivi sulle loro schede. Continueranno comunque a vedere gli effetti applicati."
     },
-    "TIDY5E.Settings.AlwaysShowItemQuantity": {
-        "name": "Mostra sempre la quantità nell'inventario",
-        "hint": "Seleziona per non nascondere mai la quantità nell'inventario."
-    },
     "TIDY5E.Settings.UseInspiration": {
         "name": "Utilizza il monitoraggio dell'ispirazione",
         "hint": "Mostra un tracker di ispirazione sul profilo del personaggio."

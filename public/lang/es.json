@@ -280,10 +280,6 @@
         "name": "Sólo el DM puede editar los efectos activos",
         "hint": "Actívalo para impedir que los jugadores editen los efectos activos en sus hojas. Seguirán viendo los efectos aplicados."
     },
-    "TIDY5E.Settings.AlwaysShowItemQuantity": {
-        "name": "Mostrar siempre la cantidad de objetos",
-        "hint": "Actívalo para no ocultar nunca la cantidad de objetos."
-    },
     "TIDY5E.Settings.UseInspiration": {
         "name": "Utilizar seguimiento de inspiración",
         "hint": "Muestra un seguimiento de inspiración en le perfil del personaje."

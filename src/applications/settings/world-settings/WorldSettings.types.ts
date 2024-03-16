@@ -17,7 +17,6 @@ export type WorldSettingsContext = {
     permanentlyUnlockNpcSheetForGm: CurrentSettings['permanentlyUnlockNpcSheetForGm'];
     permanentlyUnlockVehicleSheetForGm: CurrentSettings['permanentlyUnlockVehicleSheetForGm'];
     limitEffectsManagementToGm: CurrentSettings['limitEffectsManagementToGm'];
-    alwaysShowItemQuantity: CurrentSettings['alwaysShowItemQuantity'];
     useCharacterInspiration: CurrentSettings['useCharacterInspiration'];
     useVehicleMotion: CurrentSettings['useVehicleMotion'];
     useExhaustion: CurrentSettings['useExhaustion'];
