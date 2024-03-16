@@ -14,7 +14,6 @@
   import { CONSTANTS } from 'src/constants';
   import ItemUseButton from 'src/components/item-list/ItemUseButton.svelte';
   import ItemName from 'src/components/item-list/ItemName.svelte';
-  import ListItemQuantity from '../../actor/ListItemQuantity.svelte';
   import ItemAddUses from 'src/components/item-list/ItemAddUses.svelte';
   import ItemDeleteControl from 'src/components/item-list/controls/ItemDeleteControl.svelte';
   import ItemDuplicateControl from 'src/components/item-list/controls/ItemDuplicateControl.svelte';
@@ -42,6 +41,7 @@
   import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
   import PinnedFilterToggles from 'src/components/filter/PinnedFilterToggles.svelte';
   import ExpandableContainer from 'src/components/expandable/ExpandableContainer.svelte';
+  import TextInput from 'src/components/inputs/TextInput.svelte';
 
   let context = getContext<Readable<NpcSheetContext>>('context');
 
@@ -140,6 +140,11 @@
                   {localize('DND5E.Usage')}
                 </ItemTableColumn>
               {/if}
+              {#if section.dataset.type === 'loot'}
+                <ItemTableColumn baseWidth="3rem">
+                  {localize('DND5E.QuantityAbbr')}
+                </ItemTableColumn>
+              {/if}
               {#if $context.editable && $context.useClassicControls}
                 <ItemTableColumn baseWidth="7.5rem" />
               {/if}
@@ -179,7 +184,6 @@
                         <AmmoSelector {item} />
                       </span>
                     {/if}
-                    <ListItemQuantity {item} {ctx} />
                   </ItemName>
                 </ItemTableCell>
                 {#if section.hasActions}
@@ -201,6 +205,20 @@
                     {#if item.system.activation.type}
                       {item.labels?.activation ?? ''}
                     {/if}
+                  </ItemTableCell>
+                {/if}
+                {#if section.dataset.type === 'loot'}
+                  <ItemTableCell baseWidth="3rem">
+                    <TextInput
+                      document={item}
+                      field="system.quantity"
+                      value={item.system.quantity}
+                      selectOnFocus={true}
+                      disabled={!$context.editable || $context.lockItemQuantity}
+                      placeholder="0"
+                      allowDeltaChanges={true}
+                      cssClass="text-align-center"
+                    />
                   </ItemTableCell>
                 {/if}
                 {#if $context.editable && $context.useClassicControls}

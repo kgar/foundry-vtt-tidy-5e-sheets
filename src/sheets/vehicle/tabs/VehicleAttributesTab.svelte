@@ -13,7 +13,6 @@
   import { CONSTANTS } from 'src/constants';
   import ItemName from 'src/components/item-list/ItemName.svelte';
   import ItemUseButton from 'src/components/item-list/ItemUseButton.svelte';
-  import ListItemQuantity from '../../actor/ListItemQuantity.svelte';
   import ItemTableFooter from 'src/components/item-list/ItemTableFooter.svelte';
   import ItemUses from 'src/components/item-list/ItemUses.svelte';
   import ItemAddUses from 'src/components/item-list/ItemAddUses.svelte';
@@ -41,8 +40,6 @@
     'system.hp.value': '4.375rem',
     threshold: '2.5rem',
   };
-
-  let columnsToSkip = ['system.quantity'];
 
   let alternateColumnHeaderContent: Record<string, string> = {
     threshold: `<i class="fas fa-heart-crack" title="${localize(
@@ -97,18 +94,16 @@
                 {/if}
                 {#if section.columns}
                   {#each section.columns as column}
-                    {#if !columnsToSkip.includes(column.property)}
-                      <ItemTableColumn
-                        cssClass="items-header-{column.css}"
-                        baseWidth={baseWidths[column.property] ?? '3.125rem'}
-                      >
-                        {#if alternateColumnHeaderContent[column.property]}
-                          {@html alternateColumnHeaderContent[column.property]}
-                        {:else}
-                          {column.label}
-                        {/if}
-                      </ItemTableColumn>
-                    {/if}
+                    <ItemTableColumn
+                      cssClass="items-header-{column.css}"
+                      baseWidth={baseWidths[column.property] ?? '3.125rem'}
+                    >
+                      {#if alternateColumnHeaderContent[column.property]}
+                        {@html alternateColumnHeaderContent[column.property]}
+                      {:else}
+                        {column.label}
+                      {/if}
+                    </ItemTableColumn>
                   {/each}
                 {/if}
                 {#if $context.editable && $context.useClassicControls}
@@ -143,7 +138,6 @@
                         data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_NAME}
                         >{item.name}</span
                       >
-                      <ListItemQuantity {item} {ctx} />
                     </ItemName>
                   </ItemTableCell>
                   {#if section.hasActions}
@@ -191,7 +185,7 @@
                             />
                           </div>
                         </ItemTableCell>
-                      {:else if !columnsToSkip.includes(column.property)}
+                      {:else}
                         {@const isNumber = column.editable === 'Number'}
                         {@const fallback = isNumber ? '0' : ''}
                         {@const value =
