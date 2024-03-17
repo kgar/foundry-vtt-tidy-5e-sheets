@@ -3,7 +3,11 @@
   import Traits from '../../actor/Traits.svelte';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
-  import type { ItemLayoutMode, NpcSheetContext } from 'src/types/types';
+  import type {
+    ItemLayoutMode,
+    NpcSheetContext,
+    RenderableClassicControl,
+  } from 'src/types/types';
   import Currency from '../../actor/Currency.svelte';
   import ItemTableHeaderRow from 'src/components/item-list/v1/ItemTableHeaderRow.svelte';
   import ItemTable from 'src/components/item-list/v1/ItemTable.svelte';
@@ -16,10 +20,8 @@
   import ItemName from 'src/components/item-list/ItemName.svelte';
   import ItemAddUses from 'src/components/item-list/ItemAddUses.svelte';
   import ItemDeleteControl from 'src/components/item-list/controls/ItemDeleteControl.svelte';
-  import ItemDuplicateControl from 'src/components/item-list/controls/ItemDuplicateControl.svelte';
   import ItemEditControl from 'src/components/item-list/controls/ItemEditControl.svelte';
   import ItemUses from 'src/components/item-list/ItemUses.svelte';
-  import ItemControls from 'src/components/item-list/controls/ItemControls.svelte';
   import ItemTableFooter from 'src/components/item-list/ItemTableFooter.svelte';
   import NpcLegendaryActions from '../parts/NpcLegendaryActions.svelte';
   import SpellbookList from 'src/components/spellbook/SpellbookList.svelte';
@@ -42,6 +44,7 @@
   import PinnedFilterToggles from 'src/components/filter/PinnedFilterToggles.svelte';
   import ExpandableContainer from 'src/components/expandable/ExpandableContainer.svelte';
   import TextInput from 'src/components/inputs/TextInput.svelte';
+  import ClassicControls from 'src/sheets/shared/ClassicControls.svelte';
 
   let context = getContext<Readable<NpcSheetContext>>('context');
 
@@ -70,6 +73,33 @@
   const localize = FoundryAdapter.localize;
 
   declareLocation('abilities');
+
+  let controls: RenderableClassicControl[] = [];
+  $: {
+    controls = [
+      {
+        component: ItemEditControl,
+        props: (item) => ({ item }),
+      },
+    ];
+
+    if ($context.unlocked) {
+      controls.push({
+        component: ItemDeleteControl,
+        props: (item) => ({ item }),
+      });
+    }
+
+    if ($context.useActionsFeature) {
+      controls.push({
+        component: ActionFilterOverrideControl,
+        props: (item) => ({ item }),
+      });
+    }
+  }
+
+  let classicControlsIconWidth = 1.25;
+  $: classicControlsColumnWidth = `${classicControlsIconWidth * controls.length}rem`;
 </script>
 
 <UtilityToolbar class="abilities-toolbar">
@@ -146,7 +176,7 @@
                 </ItemTableColumn>
               {/if}
               {#if $context.editable && $context.useClassicControls}
-                <ItemTableColumn baseWidth="7.5rem" />
+                <ItemTableColumn baseWidth={classicControlsColumnWidth} />
               {/if}
             </ItemTableHeaderRow>
           </svelte:fragment>
@@ -222,17 +252,8 @@
                   </ItemTableCell>
                 {/if}
                 {#if $context.editable && $context.useClassicControls}
-                  <ItemTableCell baseWidth="7.5rem">
-                    <ItemControls>
-                      <ItemEditControl {item} />
-                      {#if $context.unlocked}
-                        <ItemDuplicateControl {item} />
-                        <ItemDeleteControl {item} />
-                      {/if}
-                      {#if $context.useActionsFeature}
-                        <ActionFilterOverrideControl {item} />
-                      {/if}
-                    </ItemControls>
+                  <ItemTableCell baseWidth={classicControlsColumnWidth}>
+                    <ClassicControls {controls} {item} />
                   </ItemTableCell>
                 {/if}
               </ItemTableRow>

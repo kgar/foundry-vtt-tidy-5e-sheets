@@ -70,7 +70,7 @@
       controls.push({
         component: ItemFavoriteControl,
         props: (item: Item5e, ctx: any) => ({
-          spell: item,
+          item,
         }),
       });
     }
