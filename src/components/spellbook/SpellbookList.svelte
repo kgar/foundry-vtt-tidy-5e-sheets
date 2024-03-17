@@ -58,18 +58,18 @@
     controls = [
       {
         component: SpellPrepareControl,
-        props: (item: Item5e, ctx: any) => ({
+        props: (item, ctx) => ({
           spell: item,
           ctx,
         }),
-        visible: (item: Item5e, _: any) => FoundryAdapter.canPrepareSpell(item),
+        visible: (item: Item5e) => FoundryAdapter.canPrepareSpell(item),
       },
     ];
 
     if (allowFavorites) {
       controls.push({
         component: ItemFavoriteControl,
-        props: (item: Item5e, ctx: any) => ({
+        props: (item) => ({
           item,
         }),
       });
@@ -77,7 +77,7 @@
 
     controls.push({
       component: ItemEditControl,
-      props: (item: Item5e, _: any) => ({
+      props: (item: Item5e) => ({
         item,
       }),
     });
@@ -85,7 +85,7 @@
     if ($context.unlocked) {
       controls.push({
         component: ItemDeleteControl,
-        props: (item: Item5e, _: any) => ({
+        props: (item: Item5e) => ({
           item,
         }),
       });
@@ -94,7 +94,7 @@
     if ($context.useActionsFeature) {
       controls.push({
         component: ActionFilterOverrideControl,
-        props: (item: Item5e, _: any) => ({
+        props: (item: Item5e) => ({
           item,
         }),
       });

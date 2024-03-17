@@ -57,20 +57,20 @@
     controls.push(
       {
         component: AttuneControl,
-        props: (item: Item5e, ctx: any) => ({
+        props: (item, ctx) => ({
           item,
           ctx,
         }),
-        visible: (item: Item5e, ctx: any) =>
+        visible: (item, ctx) =>
           ctx?.attunement && !FoundryAdapter.concealDetails(item),
       },
       {
         component: EquipControl,
-        props: (item: Item5e, ctx: any) => ({
+        props: (item, ctx) => ({
           item,
           ctx,
         }),
-        visible: (item: Item5e, ctx: any) => ctx?.canToggle === true,
+        visible: (_, ctx) => ctx?.canToggle === true,
       },
       {
         component: ItemFavoriteControl,

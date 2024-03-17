@@ -365,6 +365,6 @@ export type ContextMenuOption = {
 
 export type RenderableClassicControl = {
   component: ComponentType;
-  props?: (item: Item5e, ctx: any) => Record<string, unknown>;
-  visible?: (item: Item5e, ctx: any) => boolean;
+  props?: (item: Item5e, ctx?: any) => Record<string, unknown>;
+  visible?: (item: Item5e, ctx?: any) => boolean;
 };
