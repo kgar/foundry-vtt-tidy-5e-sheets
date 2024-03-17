@@ -62,7 +62,7 @@
           spell: item,
           ctx,
         }),
-        visible: (item: Item5e) => FoundryAdapter.canPrepareSpell(item),
+        visible: ({ item }) => FoundryAdapter.canPrepareSpell(item),
       },
     ];
 
