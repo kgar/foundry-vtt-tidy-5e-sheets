@@ -90,7 +90,7 @@
                   <ItemTableCell baseWidth={classicControlsBaseWidth}>
                     <ItemControls>
                       <ItemControl
-                        on:click={() =>
+                        onclick={() =>
                           effect.update({ disabled: !effect.disabled })}
                         title={effect.disabled
                           ? localize('DND5E.EffectEnable')
@@ -100,13 +100,13 @@
                           : 'fa-times'}"
                       />
                       <ItemControl
-                        on:click={() => effect.sheet.render(true)}
+                        onclick={() => effect.sheet.render(true)}
                         title={localize('DND5E.EffectEdit')}
                         iconCssClass="fas fa-edit"
                       />
                       {#if $context.unlocked}
                         <ItemControl
-                          on:click={() => effect.deleteDialog()}
+                          onclick={() => effect.deleteDialog()}
                           title={localize('DND5E.EffectDelete')}
                           iconCssClass="fas fa-trash"
                         />

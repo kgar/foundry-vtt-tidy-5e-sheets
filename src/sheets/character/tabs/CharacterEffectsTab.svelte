@@ -91,7 +91,7 @@
                   <ItemTableCell baseWidth={classicControlsBaseWidth}>
                     <ItemControls>
                       <ItemControl
-                        on:click={() =>
+                        onclick={() =>
                           FoundryAdapter.getEffect({
                             document: $context.actor,
                             effectId: effect.id,
@@ -105,7 +105,7 @@
                           : 'fa-times'}"
                       />
                       <ItemControl
-                        on:click={() =>
+                        onclick={() =>
                           FoundryAdapter.getEffect({
                             document: $context.actor,
                             effectId: effect.id,
@@ -116,7 +116,7 @@
                       />
                       {#if $context.unlocked}
                         <ItemControl
-                          on:click={() =>
+                          onclick={() =>
                             FoundryAdapter.getEffect({
                               document: $context.actor,
                               effectId: effect.id,

@@ -7,7 +7,7 @@
 
   $: active = FoundryAdapter.isDocumentFavorited(item);
   $: title = FoundryAdapter.localize(
-    active ? 'TIDY5E.RemoveFavorite' : 'TIDY5E.AddFavorite'
+    active ? 'TIDY5E.RemoveFavorite' : 'TIDY5E.AddFavorite',
   );
 </script>
 
@@ -15,5 +15,5 @@
   iconCssClass="fas fa-bookmark"
   {active}
   {title}
-  on:click={() => FoundryAdapter.toggleFavorite(item)}
+  onclick={() => FoundryAdapter.toggleFavorite(item)}
 />

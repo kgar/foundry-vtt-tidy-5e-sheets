@@ -10,7 +10,7 @@
   iconCssClass="fas fa-user-alt {ctx?.toggleClass}"
   title={ctx?.toggleTitle}
   active={ctx?.toggleClass === 'active'}
-  on:click={(ev) =>
+  onclick={() =>
     item.update({
       ['system.crewed']: !item.system.crewed,
     })}

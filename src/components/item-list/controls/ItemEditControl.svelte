@@ -10,5 +10,5 @@
 <ItemControl
   iconCssClass="fas fa-edit fa-fw"
   title={localize('DND5E.ItemEdit')}
-  on:click={() => item.sheet.render(true)}
+  onclick={() => item.sheet.render(true)}
 />

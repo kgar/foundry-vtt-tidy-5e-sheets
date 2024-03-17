@@ -30,7 +30,7 @@
   iconCssClass="fas fa-fist-raised"
   {active}
   {title}
-  on:click={(ev) =>
+  onclick={(ev) =>
     ev.shiftKey
       ? FoundryAdapter.unsetFlag(item, 'action-filter-override')
       : toggleActionFilterOverride(item)}

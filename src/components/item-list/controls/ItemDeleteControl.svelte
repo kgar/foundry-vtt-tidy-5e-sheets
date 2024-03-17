@@ -14,6 +14,6 @@
 
 <ItemControl
   iconCssClass="fas fa-trash fa-fw"
-  on:click={() => onDelete() && deleteFn()}
+  onclick={() => onDelete() && deleteFn()}
   title={localize('DND5E.ItemDelete')}
 />
