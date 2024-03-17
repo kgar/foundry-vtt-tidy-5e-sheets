@@ -50,37 +50,37 @@
   const weightUnit = FoundryAdapter.getWeightUnit();
 
   // TODO: Assign these controls to the inventory prop in `getData()`. Leave room for the API to inject additional controls.
-  let controls: RenderableClassicControl[] = [];
+  let controls: RenderableClassicControl<{ item: Item5e; ctx: any }>[] = [];
 
   $: {
     controls = [];
     controls.push(
       {
         component: AttuneControl,
-        props: (item, ctx) => ({
+        props: ({ item, ctx }) => ({
           item,
           ctx,
         }),
-        visible: (item, ctx) =>
+        visible: ({ item, ctx }) =>
           ctx?.attunement && !FoundryAdapter.concealDetails(item),
       },
       {
         component: EquipControl,
-        props: (item, ctx) => ({
+        props: ({ item, ctx }) => ({
           item,
           ctx,
         }),
-        visible: (_, ctx) => ctx?.canToggle === true,
+        visible: ({ ctx }) => ctx?.canToggle === true,
       },
       {
         component: ItemFavoriteControl,
-        props: (item: Item5e, _: any) => ({
+        props: ({ item }) => ({
           item,
         }),
       },
       {
         component: ItemEditControl,
-        props: (item: Item5e, _: any) => ({
+        props: ({ item }) => ({
           item,
         }),
       },
@@ -89,7 +89,7 @@
     if ($context.unlocked) {
       controls.push({
         component: ItemDeleteControl,
-        props: (item: Item5e, _: any) => ({
+        props: ({ item }) => ({
           item,
         }),
       });
@@ -98,7 +98,7 @@
     if ($context.useActionsFeature) {
       controls.push({
         component: ActionFilterOverrideControl,
-        props: (item: Item5e, _: any) => ({
+        props: ({ item }) => ({
           item,
         }),
       });
@@ -255,7 +255,7 @@
           </ItemTableCell>
           {#if $context.editable && $context.useClassicControls && !lockControls}
             <ItemTableCell baseWidth={classicControlsColumnWidth}>
-              <ClassicControls {controls} {item} {ctx} />
+              <ClassicControls {controls} params={{ item: item, ctx: ctx }} />
             </ItemTableCell>
           {/if}
         </ItemTableRow>

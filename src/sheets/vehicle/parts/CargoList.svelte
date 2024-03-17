@@ -32,13 +32,13 @@
     weight: '3.75rem',
   };
 
-  let controls: RenderableClassicControl[] = [];
+  let controls: RenderableClassicControl<{ item: Item5e }>[] = [];
 
   $: {
     controls = [
       {
         component: ItemEditControl,
-        props: (item: Item5e) => ({
+        props: ({ item }) => ({
           item,
         }),
       },
@@ -47,7 +47,7 @@
     if ($context.unlocked) {
       controls.push({
         component: ItemDeleteControl,
-        props: (item: Item5e) => ({
+        props: ({ item }) => ({
           item,
         }),
       });
@@ -56,7 +56,7 @@
     if ($context.useActionsFeature) {
       controls.push({
         component: ActionFilterOverrideControl,
-        props: (item: Item5e) => ({
+        props: ({ item }) => ({
           item,
         }),
       });
@@ -150,7 +150,7 @@
         {/if}
         {#if $context.editable && $context.useClassicControls}
           <ItemTableCell baseWidth={classicControlsColumnWidth}>
-            <ClassicControls {controls} {item} {ctx} />
+            <ClassicControls {controls} params={{ item: item }} />
           </ItemTableCell>
         {/if}
       </ItemTableRow>

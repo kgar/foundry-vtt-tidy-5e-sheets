@@ -1,19 +1,14 @@
-<script lang="ts">
-  import type { Item5e } from 'src/types/item.types';
+<script lang="ts" generics="TParam">
   import type { RenderableClassicControl } from 'src/types/types';
 
-  export let controls: RenderableClassicControl[];
-  export let item: Item5e;
-  export let ctx: any = undefined;
+  export let controls: RenderableClassicControl<TParam>[];
+  export let params: TParam;
 </script>
 
 <div class="tidy5e-classic-controls">
   {#each controls as control}
-    {#if control.visible === undefined || control.visible(item, ctx)}
-      <svelte:component
-        this={control.component}
-        {...control.props?.(item, ctx)}
-      />
+    {#if control.visible === undefined || control.visible(params)}
+      <svelte:component this={control.component} {...control.props?.(params)} />
     {:else}
       <span>&nbsp;</span>
     {/if}

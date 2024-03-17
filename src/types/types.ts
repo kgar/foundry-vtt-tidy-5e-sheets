@@ -363,8 +363,8 @@ export type ContextMenuOption = {
   callback?: () => void;
 };
 
-export type RenderableClassicControl = {
+export type RenderableClassicControl<TParams> = {
   component: ComponentType;
-  props?: (item: Item5e, ctx?: any) => Record<string, unknown>;
-  visible?: (item: Item5e, ctx?: any) => boolean;
+  props?: (params: TParams) => Record<string, unknown>;
+  visible?: (params: TParams) => boolean;
 };

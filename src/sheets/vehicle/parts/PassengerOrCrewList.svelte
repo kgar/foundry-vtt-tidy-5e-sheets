@@ -1,6 +1,5 @@
 <script lang="ts">
   import ItemTableFooter from 'src/components/item-list/ItemTableFooter.svelte';
-  import ItemControls from 'src/components/item-list/controls/ItemControls.svelte';
   import ItemDeleteControl from 'src/components/item-list/controls/ItemDeleteControl.svelte';
   import ItemTable from 'src/components/item-list/v1/ItemTable.svelte';
   import ItemTableCell from 'src/components/item-list/v1/ItemTableCell.svelte';
@@ -9,12 +8,15 @@
   import ItemTableRow from 'src/components/item-list/v1/ItemTableRow.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type {
+    CargoOrCrewItem,
     CargoOrCrewItem as CrewOrPassengerEntry,
+    RenderableClassicControl,
     VehicleSheetContext,
   } from 'src/types/types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import TextInput from 'src/components/inputs/TextInput.svelte';
+  import ClassicControls from 'src/sheets/shared/ClassicControls.svelte';
 
   export let section: any;
 
@@ -73,6 +75,26 @@
     const cargo = foundry.utils.deepClone(actor.system.cargo[type]);
     cargo.push(FoundryAdapter.getNewCargo());
     return actor.update({ [`system.cargo.${type}`]: cargo });
+  }
+
+  let controls: RenderableClassicControl<{
+    item: CargoOrCrewItem;
+    index: number;
+    section: any;
+  }>[] = [];
+
+  $: {
+    controls = [];
+
+    if ($context.unlocked) {
+      controls.push({
+        component: ItemDeleteControl,
+        props: ({ item, index, section }) => ({
+          onDelete: () => deleteCrewOrPassenger(section, index),
+          item: item,
+        }),
+      });
+    }
   }
 
   const localize = FoundryAdapter.localize;
@@ -148,14 +170,10 @@
         {/if}
         {#if $context.editable && $context.unlocked}
           <ItemTableCell baseWidth={classicControlsEditableRowBaseWidth}>
-            <ItemControls>
-              {#if $context.unlocked}
-                <ItemDeleteControl
-                  onDelete={() => deleteCrewOrPassenger(section, index)}
-                  {item}
-                />
-              {/if}
-            </ItemControls>
+            <ClassicControls
+              {controls}
+              params={{ item: item, index: index, section: section }}
+            />
           </ItemTableCell>
         {/if}
       </ItemTableRow>

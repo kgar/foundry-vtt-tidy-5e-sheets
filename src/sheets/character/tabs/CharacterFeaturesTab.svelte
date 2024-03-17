@@ -34,6 +34,8 @@
   import FilterMenu from 'src/components/filter/FilterMenu.svelte';
   import PinnedFilterToggles from 'src/components/filter/PinnedFilterToggles.svelte';
   import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
+  import type { Item5e } from 'src/types/item.types';
+  import ClassicControls from 'src/sheets/shared/ClassicControls.svelte';
 
   let context = getContext<Readable<CharacterSheetContext>>('context');
 
@@ -55,30 +57,30 @@
     $context.utilities[CONSTANTS.TAB_CHARACTER_FEATURES]
       ?.utilityToolbarCommands ?? [];
 
-  let controls: RenderableClassicControl[] = [];
+  let controls: RenderableClassicControl<{ item: Item5e }>[] = [];
   $: {
     controls = [
       {
         component: ItemFavoriteControl,
-        props: (item) => ({ item }),
+        props: ({ item }) => ({ item }),
       },
       {
         component: ItemEditControl,
-        props: (item) => ({ item }),
+        props: ({ item }) => ({ item }),
       },
     ];
 
     if ($context.unlocked) {
       controls.push({
         component: ItemDeleteControl,
-        props: (item) => ({ item }),
+        props: ({ item }) => ({ item }),
       });
     }
 
     if ($context.useActionsFeature) {
       controls.push({
         component: ActionFilterOverrideControl,
-        props: (item) => ({ item }),
+        props: ({ item }) => ({ item }),
       });
     }
   }
@@ -295,14 +297,7 @@
                 {/if}
                 {#if $context.editable && $context.useClassicControls}
                   <ItemTableCell baseWidth={classicControlsColumnWidth}>
-                    <ItemFavoriteControl {item} />
-                    <ItemEditControl {item} />
-                    {#if $context.unlocked}
-                      <ItemDeleteControl {item} />
-                    {/if}
-                    {#if $context.useActionsFeature}
-                      <ActionFilterOverrideControl {item} />
-                    {/if}
+                    <ClassicControls {controls} params={{ item: item }} />
                   </ItemTableCell>
                 {/if}
               </ItemTableRow>

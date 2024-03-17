@@ -53,12 +53,12 @@
 
   var spellSchoolBaseWidth = '2rem';
 
-  let controls: RenderableClassicControl[] = [];
+  let controls: RenderableClassicControl<{ item: Item5e; ctx: any }>[] = [];
   $: {
     controls = [
       {
         component: SpellPrepareControl,
-        props: (item, ctx) => ({
+        props: ({ item, ctx }) => ({
           spell: item,
           ctx,
         }),
@@ -69,7 +69,7 @@
     if (allowFavorites) {
       controls.push({
         component: ItemFavoriteControl,
-        props: (item) => ({
+        props: ({ item }) => ({
           item,
         }),
       });
@@ -77,7 +77,7 @@
 
     controls.push({
       component: ItemEditControl,
-      props: (item: Item5e) => ({
+      props: ({ item }) => ({
         item,
       }),
     });
@@ -85,7 +85,7 @@
     if ($context.unlocked) {
       controls.push({
         component: ItemDeleteControl,
-        props: (item: Item5e) => ({
+        props: ({ item }) => ({
           item,
         }),
       });
@@ -94,7 +94,7 @@
     if ($context.useActionsFeature) {
       controls.push({
         component: ActionFilterOverrideControl,
-        props: (item: Item5e) => ({
+        props: ({ item }) => ({
           item,
         }),
       });
@@ -246,7 +246,7 @@
           </ItemTableCell>
           {#if $context.editable && $context.useClassicControls}
             <ItemTableCell baseWidth={classicControlsColumnWidth}>
-              <ClassicControls {controls} item={spell} {ctx} />
+              <ClassicControls {controls} params={{ item: spell, ctx: ctx }} />
             </ItemTableCell>
           {/if}
         </ItemTableRow>

@@ -45,6 +45,7 @@
   import ExpandableContainer from 'src/components/expandable/ExpandableContainer.svelte';
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import ClassicControls from 'src/sheets/shared/ClassicControls.svelte';
+  import type { Item5e } from 'src/types/item.types';
 
   let context = getContext<Readable<NpcSheetContext>>('context');
 
@@ -74,26 +75,26 @@
 
   declareLocation('abilities');
 
-  let controls: RenderableClassicControl[] = [];
+  let controls: RenderableClassicControl<{ item: Item5e }>[] = [];
   $: {
     controls = [
       {
         component: ItemEditControl,
-        props: (item) => ({ item }),
+        props: ({ item }) => ({ item }),
       },
     ];
 
     if ($context.unlocked) {
       controls.push({
         component: ItemDeleteControl,
-        props: (item) => ({ item }),
+        props: ({ item }) => ({ item }),
       });
     }
 
     if ($context.useActionsFeature) {
       controls.push({
         component: ActionFilterOverrideControl,
-        props: (item) => ({ item }),
+        props: ({ item }) => ({ item }),
       });
     }
   }
@@ -253,7 +254,7 @@
                 {/if}
                 {#if $context.editable && $context.useClassicControls}
                   <ItemTableCell baseWidth={classicControlsColumnWidth}>
-                    <ClassicControls {controls} {item} />
+                    <ClassicControls {controls} params={{ item }} />
                   </ItemTableCell>
                 {/if}
               </ItemTableRow>
