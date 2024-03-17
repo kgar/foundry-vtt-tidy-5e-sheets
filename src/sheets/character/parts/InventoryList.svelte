@@ -103,7 +103,6 @@
         }),
       });
     }
-    controls = controls; // Triggers reactivity; use a rune in Svelte 5
   }
 
   let classicControlsIconWidth = 1.25;

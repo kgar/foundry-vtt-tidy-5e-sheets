@@ -3,7 +3,10 @@
   import Traits from '../../actor/Traits.svelte';
   import VehicleAttributes from '../parts/VehicleAttributes.svelte';
   import type { Readable } from 'svelte/store';
-  import type { VehicleSheetContext } from 'src/types/types';
+  import type {
+    RenderableClassicControl,
+    VehicleSheetContext,
+  } from 'src/types/types';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import ItemTable from 'src/components/item-list/v1/ItemTable.svelte';
   import ItemTableHeaderRow from 'src/components/item-list/v1/ItemTableHeaderRow.svelte';
@@ -17,17 +20,17 @@
   import ItemUses from 'src/components/item-list/ItemUses.svelte';
   import ItemAddUses from 'src/components/item-list/ItemAddUses.svelte';
   import TextInput from 'src/components/inputs/TextInput.svelte';
-  import ItemControls from 'src/components/item-list/controls/ItemControls.svelte';
-  import ItemDuplicateControl from 'src/components/item-list/controls/ItemDuplicateControl.svelte';
   import ItemDeleteControl from 'src/components/item-list/controls/ItemDeleteControl.svelte';
   import ItemEditControl from 'src/components/item-list/controls/ItemEditControl.svelte';
-  import ItemControl from 'src/components/item-list/controls/ItemControl.svelte';
   import Notice from 'src/components/notice/Notice.svelte';
   import HpBar from '../../../components/bar/HpBar.svelte';
   import ResourceWithBar from 'src/components/bar/ResourceWithBar.svelte';
   import RechargeControl from 'src/components/item-list/controls/RechargeControl.svelte';
   import ActionFilterOverrideControl from 'src/components/item-list/controls/ActionFilterOverrideControl.svelte';
   import { declareLocation } from 'src/types/location-awareness.types';
+  import ItemCrewedControl from 'src/sheets/vehicle/parts/ItemCrewedControl.svelte';
+  import type { Item5e } from 'src/types/item.types';
+  import ClassicControls from 'src/sheets/shared/ClassicControls.svelte';
 
   let context = getContext<Readable<VehicleSheetContext>>('context');
 
@@ -47,18 +50,54 @@
     )}"></i>`,
   };
 
-  const controlsBaseWidthLocked: string = '5.3125rem';
-  const controlsBaseWidthUnlocked: string = '7.5rem';
-
-  $: classicControlsBaseWidth = $context.unlocked
-    ? controlsBaseWidthUnlocked
-    : controlsBaseWidthLocked;
-
   $: noFeatures = !$context.features.some(
     (section: any) => section.items.length,
   );
 
   declareLocation('attributes');
+
+  let controls: RenderableClassicControl[] = [];
+
+  $: {
+    controls = [];
+    controls.push(
+      {
+        component: ItemCrewedControl,
+        props: (item: Item5e, ctx: any) => ({
+          item,
+          ctx,
+        }),
+      },
+      {
+        component: ItemEditControl,
+        props: (item: Item5e, _: any) => ({
+          item,
+        }),
+      },
+    );
+
+    if ($context.unlocked) {
+      controls.push({
+        component: ItemDeleteControl,
+        props: (item: Item5e, _: any) => ({
+          item,
+        }),
+      });
+    }
+
+    if ($context.useActionsFeature) {
+      controls.push({
+        component: ActionFilterOverrideControl,
+        props: (item: Item5e, _: any) => ({
+          item,
+        }),
+      });
+    }
+  }
+
+  let classicControlsIconWidth = 1.25;
+
+  $: classicControlsColumnWidth = `${classicControlsIconWidth * controls.length}rem`;
 </script>
 
 <div class="attributes-tab-contents" data-tidy-track-scroll-y>
@@ -107,7 +146,7 @@
                   {/each}
                 {/if}
                 {#if $context.editable && $context.useClassicControls}
-                  <ItemTableColumn baseWidth={classicControlsBaseWidth} />
+                  <ItemTableColumn baseWidth={classicControlsColumnWidth} />
                 {/if}
               </ItemTableHeaderRow>
             </svelte:fragment>
@@ -226,26 +265,8 @@
                     {/each}
                   {/if}
                   {#if $context.editable && $context.useClassicControls}
-                    <ItemTableCell baseWidth={classicControlsBaseWidth}>
-                      <ItemControls>
-                        <ItemControl
-                          iconCssClass="fas fa-user-alt {ctx?.toggleClass}"
-                          title={ctx?.toggleTitle}
-                          active={ctx?.toggleClass === 'active'}
-                          on:click={(ev) =>
-                            item.update({
-                              ['system.crewed']: !item.system.crewed,
-                            })}
-                        />
-                        <ItemEditControl {item} />
-                        {#if $context.unlocked}
-                          <ItemDuplicateControl {item} />
-                          <ItemDeleteControl {item} />
-                        {/if}
-                        {#if $context.useActionsFeature}
-                          <ActionFilterOverrideControl {item} />
-                        {/if}
-                      </ItemControls>
+                    <ItemTableCell baseWidth={classicControlsColumnWidth}>
+                      <ClassicControls {controls} {item} {ctx} />
                     </ItemTableCell>
                   {/if}
                 </ItemTableRow>
