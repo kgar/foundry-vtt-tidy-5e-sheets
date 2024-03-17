@@ -1,9 +1,11 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { type CharacterSheetContext, type MessageBus } from 'src/types/types';
+  import {
+    type CharacterSheetContext,
+    type RenderableClassicControl,
+  } from 'src/types/types';
   import { formatAsModifier } from 'src/utils/formatting';
   import ItemEditControl from '../../../components/item-list/controls/ItemEditControl.svelte';
-  import ItemDuplicateControl from '../../../components/item-list/controls/ItemDuplicateControl.svelte';
   import ItemDeleteControl from '../../../components/item-list/controls/ItemDeleteControl.svelte';
   import ItemTable from '../../../components/item-list/v1/ItemTable.svelte';
   import ItemTableHeaderRow from '../../../components/item-list/v1/ItemTableHeaderRow.svelte';
@@ -32,11 +34,12 @@
   import FilterMenu from 'src/components/filter/FilterMenu.svelte';
   import PinnedFilterToggles from 'src/components/filter/PinnedFilterToggles.svelte';
   import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
+  import type { Item5e } from 'src/types/item.types';
+  import ClassicControls from 'src/sheets/shared/ClassicControls.svelte';
 
   let context = getContext<Readable<CharacterSheetContext>>('context');
 
   const localize = FoundryAdapter.localize;
-  $: classicControlsBaseWidth = $context.unlocked ? '7.5rem' : '5.3125rem';
 
   $: noFeatures =
     $context.features.some((section: any) => section.items.length > 0) ===
@@ -54,12 +57,37 @@
     $context.utilities[CONSTANTS.TAB_CHARACTER_FEATURES]
       ?.utilityToolbarCommands ?? [];
 
-  const featuresThatExcludeDuplicate = new Set<string>([
-    CONSTANTS.ITEM_TYPE_CLASS,
-    CONSTANTS.ITEM_TYPE_SUBCLASS,
-    CONSTANTS.ITEM_TYPE_RACE,
-    CONSTANTS.ITEM_TYPE_BACKGROUND,
-  ]);
+  let controls: RenderableClassicControl<{ item: Item5e }>[] = [];
+  $: {
+    controls = [
+      {
+        component: ItemFavoriteControl,
+        props: ({ item }) => ({ item }),
+      },
+      {
+        component: ItemEditControl,
+        props: ({ item }) => ({ item }),
+      },
+    ];
+
+    if ($context.unlocked) {
+      controls.push({
+        component: ItemDeleteControl,
+        props: ({ item }) => ({ item }),
+      });
+    }
+
+    if ($context.useActionsFeature) {
+      controls.push({
+        component: ActionFilterOverrideControl,
+        props: ({ item }) => ({ item }),
+      });
+    }
+  }
+
+  let classicControlsIconWidth = 1.25;
+
+  $: classicControlsColumnWidth = `${classicControlsIconWidth * controls.length}rem`;
 </script>
 
 <UtilityToolbar>
@@ -136,7 +164,7 @@
                 {/each}
               {/if}
               {#if $context.editable && $context.useClassicControls}
-                <ItemTableColumn baseWidth={classicControlsBaseWidth} />
+                <ItemTableColumn baseWidth={classicControlsColumnWidth} />
               {/if}
             </ItemTableHeaderRow>
           </svelte:fragment>
@@ -268,18 +296,8 @@
                   {/each}
                 {/if}
                 {#if $context.editable && $context.useClassicControls}
-                  <ItemTableCell baseWidth={classicControlsBaseWidth}>
-                    <ItemFavoriteControl {item} />
-                    <ItemEditControl {item} />
-                    {#if $context.unlocked}
-                      {#if !featuresThatExcludeDuplicate.has(item.type)}
-                        <ItemDuplicateControl {item} />
-                      {/if}
-                      <ItemDeleteControl {item} />
-                    {/if}
-                    {#if $context.useActionsFeature}
-                      <ActionFilterOverrideControl {item} />
-                    {/if}
+                  <ItemTableCell baseWidth={classicControlsColumnWidth}>
+                    <ClassicControls {controls} params={{ item: item }} />
                   </ItemTableCell>
                 {/if}
               </ItemTableRow>

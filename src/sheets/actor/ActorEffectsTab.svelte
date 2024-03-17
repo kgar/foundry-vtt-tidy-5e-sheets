@@ -1,6 +1,9 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { type ActorSheetContext } from 'src/types/types';
+  import {
+    type ActorSheetContext,
+    type RenderableClassicControl,
+  } from 'src/types/types';
   import ItemTable from '../../components/item-list/v1/ItemTable.svelte';
   import ItemTableHeaderRow from '../../components/item-list/v1/ItemTableHeaderRow.svelte';
   import ItemTableRow from '../../components/item-list/v1/ItemTableRow.svelte';
@@ -10,23 +13,63 @@
   import ItemTableCell from '../../components/item-list/v1/ItemTableCell.svelte';
   import ItemControl from '../../components/item-list/controls/ItemControl.svelte';
   import { CONSTANTS } from 'src/constants';
-  import ItemControls from '../../components/item-list/controls/ItemControls.svelte';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import Notice from 'src/components/notice/Notice.svelte';
   import { declareLocation } from 'src/types/location-awareness.types';
+  import ClassicControls from '../shared/ClassicControls.svelte';
 
   let context = getContext<Readable<ActorSheetContext>>('context');
 
   const localize = FoundryAdapter.localize;
 
   $: effectSections = Object.values<any>($context.effects);
-  $: classicControlsBaseWidth = $context.unlocked ? '7.5rem' : '5.3125rem';
 
   $: noEffects =
     effectSections.some((section: any) => section.effects.length > 0) === false;
 
   declareLocation('effects');
+  
+  let controls: RenderableClassicControl<{ effect: any }>[] = [];
+
+  $: {
+    controls = [];
+    controls.push(
+      {
+        component: ItemControl,
+        props: ({ effect }) => ({
+          onclick: () => effect.update({ disabled: !effect.disabled }),
+          title: effect.disabled
+            ? localize('DND5E.EffectEnable')
+            : localize('DND5E.EffectDisable'),
+          iconCssClass: `fas ${effect.disabled ? 'fa-check' : 'fa-times'}`,
+        }),
+      },
+      {
+        component: ItemControl,
+        props: ({ effect }) => ({
+          onclick: () => effect.sheet.render(true),
+          title: localize('DND5E.EffectEdit'),
+          iconCssClass: 'fas fa-edit',
+        }),
+      },
+    );
+
+    if ($context.unlocked) {
+      controls.push({
+        component: ItemControl,
+        props: ({ effect }) => ({
+          onclick: () => effect.deleteDialog(),
+          title: localize('DND5E.EffectDelete'),
+          iconCssClass: 'fas fa-trash',
+        }),
+      });
+    }
+  }
+
+  let classicControlsIconWidth = 1.25;
+
+  $: classicControlsColumnWidth = `${classicControlsIconWidth * controls.length}rem`;
 </script>
 
 <div class="scroll-container flex-column small-gap">
@@ -52,7 +95,7 @@
                 {localize('DND5E.Duration')}
               </ItemTableColumn>
               {#if $context.editable && $context.useClassicControls && $context.allowEffectsManagement}
-                <ItemTableColumn baseWidth={classicControlsBaseWidth} />
+                <ItemTableColumn baseWidth={classicControlsColumnWidth} />
               {/if}
             </ItemTableHeaderRow>
           </svelte:fragment>
@@ -87,31 +130,8 @@
                   >{effect.duration.label ?? ''}</ItemTableCell
                 >
                 {#if $context.editable && $context.useClassicControls && $context.allowEffectsManagement}
-                  <ItemTableCell baseWidth={classicControlsBaseWidth}>
-                    <ItemControls>
-                      <ItemControl
-                        on:click={() =>
-                          effect.update({ disabled: !effect.disabled })}
-                        title={effect.disabled
-                          ? localize('DND5E.EffectEnable')
-                          : localize('DND5E.EffectDisable')}
-                        iconCssClass="fas {effect.disabled
-                          ? 'fa-check'
-                          : 'fa-times'}"
-                      />
-                      <ItemControl
-                        on:click={() => effect.sheet.render(true)}
-                        title={localize('DND5E.EffectEdit')}
-                        iconCssClass="fas fa-edit"
-                      />
-                      {#if $context.unlocked}
-                        <ItemControl
-                          on:click={() => effect.deleteDialog()}
-                          title={localize('DND5E.EffectDelete')}
-                          iconCssClass="fas fa-trash"
-                        />
-                      {/if}
-                    </ItemControls>
+                  <ItemTableCell baseWidth={classicControlsColumnWidth}>
+                    <ClassicControls {controls} params={{ effect: effect }} />
                   </ItemTableCell>
                 {/if}
               </ItemTableRow>

@@ -5,6 +5,13 @@
   export let iconCssClass: string;
   export let title: string | undefined = undefined;
   export let active = true;
+  export let onclick:
+    | ((
+        ev: MouseEvent & {
+          currentTarget: EventTarget & HTMLButtonElement;
+        },
+      ) => any)
+    | undefined = undefined;
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -13,7 +20,7 @@
   type="button"
   class="item-list-button"
   class:inactive={!active}
-  on:click
+  on:click={onclick}
   title={title !== undefined ? localize(title) : ''}
   tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
 >

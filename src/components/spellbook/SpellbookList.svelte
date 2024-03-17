@@ -4,10 +4,9 @@
   import {
     type CharacterSheetContext,
     type NpcSheetContext,
+    type RenderableClassicControl,
   } from 'src/types/types';
-  import ItemControls from '../item-list/controls/ItemControls.svelte';
   import ItemDeleteControl from '../item-list/controls/ItemDeleteControl.svelte';
-  import ItemDuplicateControl from '../item-list/controls/ItemDuplicateControl.svelte';
   import ItemEditControl from '../item-list/controls/ItemEditControl.svelte';
   import ItemName from '../item-list/ItemName.svelte';
   import ItemTable from '../item-list/v1/ItemTable.svelte';
@@ -30,6 +29,8 @@
   import { declareLocation } from 'src/types/location-awareness.types';
   import Dnd5eIcon from '../icon/Dnd5eIcon.svelte';
   import SpellSlotManagement from './SpellSlotManagement.svelte';
+  import type { Item5e } from 'src/types/item.types';
+  import ClassicControls from 'src/sheets/shared/ClassicControls.svelte';
 
   let context =
     getContext<Readable<CharacterSheetContext | NpcSheetContext>>('context');
@@ -46,19 +47,63 @@
   // TODO: replace this with column specification array default and then allow the caller to customize the table.
   export let includeSchool: boolean = true;
   export let includeRange: boolean = true;
-  export let spellComponentsBaseWidth: string = '4.375rem';
+  export let spellComponentsBaseWidth: string = '3.75rem';
   export let targetBaseWidth: string = '7.5rem';
   export let usageBaseWidth: string = '7.5rem';
-  export let controlsBaseWidthLocked: string = '5.3125rem';
-  export let controlsBaseWidthUnlocked: string = '7.5rem';
 
   var spellSchoolBaseWidth = '2rem';
 
+  let controls: RenderableClassicControl<{ item: Item5e; ctx: any }>[] = [];
+  $: {
+    controls = [
+      {
+        component: SpellPrepareControl,
+        props: ({ item, ctx }) => ({
+          spell: item,
+          ctx,
+        }),
+        visible: ({ item }) => FoundryAdapter.canPrepareSpell(item),
+      },
+    ];
+
+    if (allowFavorites) {
+      controls.push({
+        component: ItemFavoriteControl,
+        props: ({ item }) => ({
+          item,
+        }),
+      });
+    }
+
+    controls.push({
+      component: ItemEditControl,
+      props: ({ item }) => ({
+        item,
+      }),
+    });
+
+    if ($context.unlocked) {
+      controls.push({
+        component: ItemDeleteControl,
+        props: ({ item }) => ({
+          item,
+        }),
+      });
+    }
+
+    if ($context.useActionsFeature) {
+      controls.push({
+        component: ActionFilterOverrideControl,
+        props: ({ item }) => ({
+          item,
+        }),
+      });
+    }
+  }
+
   const localize = FoundryAdapter.localize;
 
-  $: classicControlsBaseWidth = $context.unlocked
-    ? controlsBaseWidthUnlocked
-    : controlsBaseWidthLocked;
+  $: classicControlsColumnWidth = `${controls.length * 1.25}rem`;
 
   declareLocation('spellbook-list-view');
 </script>
@@ -107,7 +152,7 @@
           {localize('DND5E.Usage')}
         </ItemTableColumn>
         {#if $context.editable && $context.useClassicControls}
-          <ItemTableColumn baseWidth={classicControlsBaseWidth} />
+          <ItemTableColumn baseWidth={classicControlsColumnWidth} />
         {/if}
       </ItemTableHeaderRow>
     </svelte:fragment>
@@ -200,25 +245,8 @@
             {spell.labels.activation}
           </ItemTableCell>
           {#if $context.editable && $context.useClassicControls}
-            <ItemTableCell baseWidth={classicControlsBaseWidth}>
-              <ItemControls>
-                {#if FoundryAdapter.canPrepareSpell(spell)}
-                  <SpellPrepareControl {ctx} {spell} />
-                {:else}
-                  <span />
-                {/if}
-                {#if allowFavorites}
-                  <ItemFavoriteControl item={spell} />
-                {/if}
-                <ItemEditControl item={spell} />
-                {#if $context.unlocked}
-                  <ItemDuplicateControl item={spell} />
-                  <ItemDeleteControl item={spell} />
-                {/if}
-                {#if $context.useActionsFeature}
-                  <ActionFilterOverrideControl item={spell} />
-                {/if}
-              </ItemControls>
+            <ItemTableCell baseWidth={classicControlsColumnWidth}>
+              <ClassicControls {controls} params={{ item: spell, ctx: ctx }} />
             </ItemTableCell>
           {/if}
         </ItemTableRow>

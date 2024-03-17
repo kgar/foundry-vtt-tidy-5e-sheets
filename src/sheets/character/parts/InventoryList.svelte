@@ -12,8 +12,6 @@
   import { CONSTANTS } from 'src/constants';
   import ItemUses from '../../../components/item-list/ItemUses.svelte';
   import ItemAddUses from '../../../components/item-list/ItemAddUses.svelte';
-  import ItemControls from '../../../components/item-list/controls/ItemControls.svelte';
-  import ItemDuplicateControl from '../../../components/item-list/controls/ItemDuplicateControl.svelte';
   import ItemDeleteControl from '../../../components/item-list/controls/ItemDeleteControl.svelte';
   import ItemEditControl from '../../../components/item-list/controls/ItemEditControl.svelte';
   import EquipControl from '../../../components/item-list/controls/EquipControl.svelte';
@@ -22,12 +20,16 @@
   import ItemFavoriteControl from '../../../components/item-list/controls/ItemFavoriteControl.svelte';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
-  import type { CharacterSheetContext } from 'src/types/types';
+  import type {
+    CharacterSheetContext,
+    RenderableClassicControl,
+  } from 'src/types/types';
   import AmmoSelector from '../../actor/AmmoSelector.svelte';
   import { settingStore } from 'src/settings/settings';
   import ActionFilterOverrideControl from 'src/components/item-list/controls/ActionFilterOverrideControl.svelte';
   import { coalesce } from 'src/utils/formatting';
-    import TextInput from 'src/components/inputs/TextInput.svelte';
+  import TextInput from 'src/components/inputs/TextInput.svelte';
+  import ClassicControls from 'src/sheets/shared/ClassicControls.svelte';
 
   export let primaryColumnName: string;
   export let items: Item5e[];
@@ -47,7 +49,65 @@
   const localize = FoundryAdapter.localize;
   const weightUnit = FoundryAdapter.getWeightUnit();
 
-  $: classicControlsBaseWidth = $context.unlocked ? '7.5rem' : '5.3125rem';
+  // TODO: Assign these controls to the inventory prop in `getData()`. Leave room for the API to inject additional controls.
+  let controls: RenderableClassicControl<{ item: Item5e; ctx: any }>[] = [];
+
+  $: {
+    controls = [];
+    controls.push(
+      {
+        component: AttuneControl,
+        props: ({ item, ctx }) => ({
+          item,
+          ctx,
+        }),
+        visible: ({ item, ctx }) =>
+          ctx?.attunement && !FoundryAdapter.concealDetails(item),
+      },
+      {
+        component: EquipControl,
+        props: ({ item, ctx }) => ({
+          item,
+          ctx,
+        }),
+        visible: ({ ctx }) => ctx?.canToggle === true,
+      },
+      {
+        component: ItemFavoriteControl,
+        props: ({ item }) => ({
+          item,
+        }),
+      },
+      {
+        component: ItemEditControl,
+        props: ({ item }) => ({
+          item,
+        }),
+      },
+    );
+
+    if ($context.unlocked) {
+      controls.push({
+        component: ItemDeleteControl,
+        props: ({ item }) => ({
+          item,
+        }),
+      });
+    }
+
+    if ($context.useActionsFeature) {
+      controls.push({
+        component: ActionFilterOverrideControl,
+        props: ({ item }) => ({
+          item,
+        }),
+      });
+    }
+  }
+
+  let classicControlsIconWidth = 1.25;
+
+  $: classicControlsColumnWidth = `${classicControlsIconWidth * controls.length}rem`;
 
   function getInventoryRowClasses(item: Item5e) {
     const extras: string[] = [];
@@ -89,7 +149,7 @@
           {localize('DND5E.QuantityAbbr')}
         </ItemTableColumn>
         {#if $context.editable && $context.useClassicControls && !lockControls}
-          <ItemTableColumn baseWidth={classicControlsBaseWidth} />
+          <ItemTableColumn baseWidth={classicControlsColumnWidth} />
         {/if}
       </ItemTableHeaderRow>
     </svelte:fragment>
@@ -194,28 +254,8 @@
             />
           </ItemTableCell>
           {#if $context.editable && $context.useClassicControls && !lockControls}
-            <ItemTableCell baseWidth={classicControlsBaseWidth}>
-              <ItemControls>
-                {#if ctx?.attunement && !FoundryAdapter.concealDetails(item)}
-                  <AttuneControl {item} {ctx} />
-                {:else}
-                  <span role="presentation" />
-                {/if}
-                {#if ctx?.canToggle}
-                  <EquipControl {item} {ctx} />
-                {:else}
-                  <span role="presentation" />
-                {/if}
-                <ItemFavoriteControl {item} />
-                <ItemEditControl {item} />
-                {#if $context.unlocked}
-                  <ItemDuplicateControl {item} />
-                  <ItemDeleteControl {item} />
-                {/if}
-                {#if $context.useActionsFeature}
-                  <ActionFilterOverrideControl {item} />
-                {/if}
-              </ItemControls>
+            <ItemTableCell baseWidth={classicControlsColumnWidth}>
+              <ClassicControls {controls} params={{ item: item, ctx: ctx }} />
             </ItemTableCell>
           {/if}
         </ItemTableRow>

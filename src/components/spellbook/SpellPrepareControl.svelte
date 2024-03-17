@@ -21,5 +21,5 @@
   title={ctx?.toggleTitle}
   iconCssClass="fas fa-book"
   active={spell.system.preparation.prepared}
-  on:click={toggleSpellPreparation}
+  onclick={toggleSpellPreparation}
 />

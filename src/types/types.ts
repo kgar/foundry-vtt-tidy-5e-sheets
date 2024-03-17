@@ -1,4 +1,4 @@
-import type { ComponentType, SvelteComponent } from 'svelte';
+import type { ComponentProps, ComponentType, SvelteComponent } from 'svelte';
 import type {
   Item5e,
   ItemCardContentComponent,
@@ -361,4 +361,10 @@ export type ContextMenuOption = {
   name: string;
   icon?: string;
   callback?: () => void;
+};
+
+export type RenderableClassicControl<TParams> = {
+  component: ComponentType;
+  props?: (params: TParams) => Record<string, unknown>;
+  visible?: (params: TParams) => boolean;
 };

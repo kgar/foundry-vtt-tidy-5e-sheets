@@ -19,7 +19,13 @@
   });
 
   function handlePipAnimation(isEmpty: boolean) {
-    if (!animatePips) {
+    if (
+      // Don't animate when the pip is still initializing
+      !animatePips ||
+      // Don't animate when the pip is not visible, as it will cause the pip to animate every time it becomes visible, until toggle manually
+      // Note: offsetParent === null when the pip is hidden because of an ancestor being hidden (e.g., the tab isn't selected)
+      !pipEl.offsetParent
+    ) {
       return;
     }
     animateExpended = isEmpty;
@@ -40,6 +46,11 @@
   on:mouseleave
   on:focusin
   on:focusout
+  on:transitionend={() => {
+    // Prevent unwanted additional animations after the pip effect has ended.
+    animateExpended = false;
+    animateRestored = false;
+  }}
   {disabled}
   tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
 />

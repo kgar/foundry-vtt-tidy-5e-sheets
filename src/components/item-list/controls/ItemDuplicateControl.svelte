@@ -9,7 +9,7 @@
 
 <ItemControl
   iconCssClass="fas fa-copy fa-fw"
-  on:click={() =>
+  onclick={() =>
     item.clone(
       {
         name: localize('DOCUMENT.CopyOf', {

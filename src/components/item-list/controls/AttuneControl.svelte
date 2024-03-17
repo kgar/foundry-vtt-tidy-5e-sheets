@@ -36,5 +36,5 @@
   title={ctx?.attunement?.title}
   iconCssClass="fas fa-sun {!isAttuned ? 'not-attuned' : 'attuned'}"
   active={isAttuned}
-  on:click={toggleAttuned}
+  onclick={toggleAttuned}
 />
