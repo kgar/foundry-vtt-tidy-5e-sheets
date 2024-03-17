@@ -40,6 +40,10 @@
   on:mouseleave
   on:focusin
   on:focusout
+  on:transitionend={() => {
+    animateExpended = false;
+    animateRestored = false;
+  }}
   {disabled}
   tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
 />
