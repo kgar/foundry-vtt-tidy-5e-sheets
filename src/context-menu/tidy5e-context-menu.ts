@@ -27,14 +27,21 @@ export function initTidy5eContextMenu(
  */
 function onItemContext(element: HTMLElement) {
   const contextMenuType = element.getAttribute('data-context-menu');
-  const uuid = element.getAttribute('data-context-menu-document-uuid');
   // TODO: rewrite context menu so that it's better integrated with the rest of Tidy 5e Sheets.
   // @ts-ignore
   const that: any = this as any;
 
   // Active Effects
   if (contextMenuType === CONSTANTS.CONTEXT_MENU_TYPE_EFFECTS) {
-    const effect = fromUuidSync(uuid);
+    const effectId = element.getAttribute('data-effect-id') ?? '';
+    const parentId = element.getAttribute('data-parent-id') ?? '';
+
+    const effect = FoundryAdapter.getEffect({
+      document: that.document,
+      effectId: effectId,
+      parentId: parentId,
+    });
+    
     if (!effect) {
       return;
     }
@@ -49,6 +56,7 @@ function onItemContext(element: HTMLElement) {
   }
   // Items
   else if (contextMenuType === CONSTANTS.CONTEXT_MENU_TYPE_ITEMS) {
+    const uuid = element.getAttribute('data-context-menu-document-uuid');
     const item = fromUuidSync(uuid);
     if (!item) return;
 
