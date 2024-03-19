@@ -145,6 +145,8 @@
   aria-hidden={hidden}
   data-context-menu={contextMenu?.type}
   data-context-menu-document-uuid={contextMenu?.uuid}
+  data-effect-id={effect?.id}
+  data-parent-id={effect?.parentId}
   on:mousedown={(event) => dispatcher('mousedown', event)}
   on:mouseenter={onMouseEnter}
   on:mouseleave={onMouseLeave}
