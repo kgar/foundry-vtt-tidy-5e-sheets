@@ -1099,7 +1099,7 @@ export class Tidy5eCharacterSheet
    * @param {object} context  Context data for display.
    * @protected
    */
-  protected _prepareItem(item: Item5e, context: CharacterSheetContext) {
+  protected _prepareItem(item: Item5e, context: CharacterItemContext) {
     if (item.type === 'spell') {
       const prep = item.system.preparation || {};
       const isAlways = prep.mode === 'always';

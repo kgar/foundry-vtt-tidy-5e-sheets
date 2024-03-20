@@ -415,7 +415,7 @@ export const FoundryAdapter = {
 
     const parentClass = FoundryAdapter.tryGetFlag<string>(spell, 'parentClass');
 
-    const classImage = parentClass
+    const classImage = parentClass && 'actorClassesToImages' in context
       ? context.actorClassesToImages[parentClass]
       : undefined;
 

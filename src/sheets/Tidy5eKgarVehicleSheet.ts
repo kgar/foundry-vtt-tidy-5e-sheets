@@ -487,7 +487,7 @@ export class Tidy5eVehicleSheet
    * @param {object} context  Display context for the item.
    * @protected
    */
-  _prepareCrewedItem(item: Item5e, context: VehicleSheetContext) {
+  _prepareCrewedItem(item: Item5e, context: VehicleItemContext) {
     // Determine crewed status
     const isCrewed = item.system.crewed;
     context.toggleClass = isCrewed ? 'active' : '';

@@ -160,6 +160,7 @@ export type CharacterSheetContext = {
   features: CharacterFeatureSection[];
   flawEnrichedHtml: string;
   idealEnrichedHtml: string;
+  inventory: InventorySection[];
   maxPreparedSpellsTotal: number;
   notes1EnrichedHtml: string;
   notes2EnrichedHtml: string;
@@ -167,6 +168,8 @@ export type CharacterSheetContext = {
   notes4EnrichedHtml: string;
   notesEnrichedHtml: string;
   showContainerPanel: boolean;
+  preparedSpells: number;
+  spellbook: ; // 👈 type this, lives in applications/actor/base-sheet.mjs#L375
   spellCalculations: SpellCalculations;
   spellSlotTrackerMode:
     | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_PIPS
@@ -312,7 +315,11 @@ export type ActorSheetContext = {
   useClassicControls: boolean;
   useRoundedPortraitStyle: boolean;
   viewableWarnings: DocumentPreparationWarning[];
-} & Record<string, any>;
+  warnings: DocumentPreparationWarning[];
+}
+// TODO: Re-enable when targeted types are added
+// & Record<string, any>
+;
 
 export type DocumentPreparationWarning = Partial<{
   message: string;
