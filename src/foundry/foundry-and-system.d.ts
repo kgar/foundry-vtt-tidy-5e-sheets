@@ -45,6 +45,18 @@ declare global {
   var RollTerm: any;
   var TextEditor: any;
   var ui: any;
+
+  interface ArrayConstructor {
+    fromRange: (n: number, min?: number) => number[];
+  }
+
+  interface Array {
+    findSplice: <T>(find: (item: T) => boolean, replace?: T) => any;
+  }
+
+  interface NumberConstructor {
+    isNumeric: (n: any) => boolean;
+  }
 }
 
 export type Dnd5eActorCondition = {
