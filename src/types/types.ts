@@ -128,6 +128,28 @@ export type FeatureSection = {
   dataset: Record<string, string>;
 };
 
+export type VehicleCargoSection = {
+  label: string;
+  items: Item5e[];
+  css?: string;
+  editableName?: boolean;
+  dataset: Record<string, string>;
+  columns: SimpleEditableColumn[];
+};
+
+export type VehicleFeatureSection = {
+  crewable?: boolean;
+  columns?: SimpleEditableColumn[];
+} & FeatureSection;
+
+export type SimpleEditableColumn = {
+  label: string;
+  css?: string;
+  property: string;
+  maxProperty?: string;
+  editable?: string;
+};
+
 export type CharacterSheetContext = {
   actorClassesToImages: Record<string, string>;
   allowMaxHpOverride: boolean;
@@ -151,15 +173,14 @@ export type CharacterSheetContext = {
     | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_VALUE_MAX;
   traitEnrichedHtml: string;
   utilities: Utilities;
-} & ActorSheetContext &
-  Record<string, any>;
+} & ActorSheetContext;
 
 export type NpcSheetContext = {
   appearanceEnrichedHtml: string;
   biographyEnrichedHtml: string;
   bondEnrichedHtml: string;
   encumbrance: any;
-  features:FeatureSection[];
+  features: FeatureSection[];
   flawEnrichedHtml: string;
   hideEmptySpellbook: boolean;
   idealEnrichedHtml: string;
@@ -179,13 +200,11 @@ export type NpcSheetContext = {
     | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_VALUE_MAX;
   traitEnrichedHtml: string;
   utilities: Utilities;
-} & ActorSheetContext &
-  Record<string, any>;
+} & ActorSheetContext;
 
 export type VehicleSheetContext = {
   utilities: Utilities;
-} & ActorSheetContext &
-  Record<string, any>;
+} & ActorSheetContext;
 
 export type DerivedDamage = {
   label: string;

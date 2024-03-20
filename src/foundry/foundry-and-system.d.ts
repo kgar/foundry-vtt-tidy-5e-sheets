@@ -54,8 +54,19 @@ declare global {
     findSplice: <T>(find: (item: T) => boolean, replace?: T) => any;
   }
 
+  interface Math {
+    clamped: (num: number, min: number, max: number) => number;
+  }
+
   interface NumberConstructor {
     isNumeric: (n: any) => boolean;
+  }
+
+  interface Number {
+    toNearest: <T extends keyof Math>(
+      interval: number,
+      method: T = 'round'
+    ) => number;
   }
 }
 

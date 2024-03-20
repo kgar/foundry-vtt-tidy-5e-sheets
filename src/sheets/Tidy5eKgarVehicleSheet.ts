@@ -13,6 +13,10 @@ import type {
   MessageBus,
   MessageBusMessage,
   SearchFilterCacheable,
+  VehicleCargoSection,
+  VehicleFeatureSection,
+  SimpleEditableColumn,
+  Actor5e,
 } from 'src/types/types';
 import { writable } from 'svelte/store';
 import VehicleSheet from './vehicle/VehicleSheet.svelte';
@@ -26,7 +30,7 @@ import {
 import type { SvelteComponent } from 'svelte';
 import { debug } from 'src/utils/logging';
 import { getPercentage } from 'src/utils/numbers';
-import type { ItemChatData } from 'src/types/item.types';
+import type { Item5e, ItemChatData } from 'src/types/item.types';
 import { VehicleSheetRuntime } from 'src/runtime/VehicleSheetRuntime';
 import {
   actorUsesActionFeature,
@@ -305,6 +309,239 @@ export class Tidy5eVehicleSheet
     debug('Vehicle Sheet context data', context);
 
     return context;
+  }
+
+  protected _prepareItems(context: VehicleSheetContext) {
+    const cargoColumns: SimpleEditableColumn[] = [
+      {
+        label: game.i18n.localize('DND5E.Quantity'),
+        css: 'item-qty',
+        property: 'quantity',
+        editable: 'Number',
+      },
+    ];
+
+    const equipmentColumns: SimpleEditableColumn[] = [
+      {
+        label: game.i18n.localize('DND5E.Quantity'),
+        css: 'item-qty',
+        property: 'system.quantity',
+        editable: 'Number',
+      },
+      {
+        label: game.i18n.localize('DND5E.AC'),
+        css: 'item-ac',
+        property: 'system.armor.value',
+      },
+      {
+        label: game.i18n.localize('DND5E.HP'),
+        css: 'item-hp',
+        property: 'system.hp.value',
+        maxProperty: 'system.hp.max',
+        editable: 'Number',
+      },
+      {
+        label: game.i18n.localize('DND5E.Threshold'),
+        css: 'item-threshold',
+        property: 'threshold',
+      },
+    ];
+
+    const features: Record<string, VehicleFeatureSection> = {
+      actions: {
+        label: game.i18n.localize('DND5E.ActionPl'),
+        items: [],
+        hasActions: true,
+        crewable: true,
+        dataset: { type: 'feat', 'activation.type': 'crew' },
+        columns: [
+          {
+            label: game.i18n.localize('DND5E.Cover'),
+            css: 'item-cover',
+            property: 'cover',
+          },
+        ],
+      },
+      equipment: {
+        label: game.i18n.localize(CONFIG.Item.typeLabels.equipment),
+        items: [],
+        crewable: true,
+        dataset: { type: 'equipment', 'type.value': 'vehicle' },
+        columns: equipmentColumns,
+      },
+      passive: {
+        label: game.i18n.localize('DND5E.Features'),
+        items: [],
+        dataset: { type: 'feat' },
+      },
+      reactions: {
+        label: game.i18n.localize('DND5E.ReactionPl'),
+        items: [],
+        dataset: { type: 'feat', 'activation.type': 'reaction' },
+      },
+      weapons: {
+        label: game.i18n.localize(`${CONFIG.Item.typeLabels.weapon}Pl`),
+        items: [],
+        crewable: true,
+        dataset: { type: 'weapon', 'weapon-type': 'siege' },
+        columns: equipmentColumns,
+      },
+    };
+
+    context.items.forEach((item) => {
+      const { uses, recharge } = item.system;
+      const ctx = (context.itemContext[item.id] ??= {});
+      ctx.canToggle = false;
+      ctx.hasUses = uses && uses.max > 0;
+      ctx.isOnCooldown =
+        recharge && !!recharge.value && recharge.charged === false;
+      ctx.isDepleted = item.isOnCooldown && uses.per && uses.value > 0;
+    });
+
+    const cargo: Record<string, VehicleCargoSection> = {
+      crew: {
+        label: game.i18n.localize('DND5E.VehicleCrew'),
+        items: context.actor.system.cargo.crew,
+        css: 'cargo-row crew',
+        editableName: true,
+        dataset: { type: 'crew' },
+        columns: cargoColumns,
+      },
+      passengers: {
+        label: game.i18n.localize('DND5E.VehiclePassengers'),
+        items: context.actor.system.cargo.passengers,
+        css: 'cargo-row passengers',
+        editableName: true,
+        dataset: { type: 'passengers' },
+        columns: cargoColumns,
+      },
+      cargo: {
+        label: game.i18n.localize('DND5E.VehicleCargo'),
+        items: [],
+        dataset: { type: 'loot' },
+        columns: [
+          {
+            label: game.i18n.localize('DND5E.Quantity'),
+            css: 'item-qty',
+            property: 'system.quantity',
+            editable: 'Number',
+          },
+          {
+            label: game.i18n.localize('DND5E.Price'),
+            css: 'item-price',
+            property: 'system.price.value',
+            editable: 'Number',
+          },
+          {
+            label: game.i18n.localize('DND5E.Weight'),
+            css: 'item-weight',
+            property: 'system.weight',
+            editable: 'Number',
+          },
+        ],
+      },
+    };
+
+    // Classify items owned by the vehicle and compute total cargo weight
+    let totalWeight = 0;
+    for (const item of context.items) {
+      const ctx = (context.itemContext[item.id] ??= {});
+      this._prepareCrewedItem(item, ctx);
+
+      // Handle cargo explicitly
+      const isCargo = item.flags.dnd5e?.vehicleCargo === true;
+      if (isCargo) {
+        totalWeight += item.system.totalWeight ?? 0;
+        cargo.cargo.items.push(item);
+        continue;
+      }
+
+      // Handle non-cargo item types
+      switch (item.type) {
+        case 'weapon':
+          features.weapons.items.push(item);
+          break;
+        case 'equipment':
+          features.equipment.items.push(item);
+          break;
+        case 'feat':
+          const act = item.system.activation;
+          if (!act.type || act.type === 'none')
+            features.passive.items.push(item);
+          else if (act.type === 'reaction') features.reactions.items.push(item);
+          else features.actions.items.push(item);
+          break;
+        default:
+          totalWeight += item.system.totalWeight ?? 0;
+          cargo.cargo.items.push(item);
+      }
+    }
+
+    // Update the rendering context data
+    context.inventoryFilters = false;
+    context.features = Object.values(features);
+    context.cargo = Object.values(cargo);
+    context.encumbrance = this._computeEncumbrance(totalWeight, context);
+  }
+
+  /**
+   * Prepare items that are mounted to a vehicle and require one or more crew to operate.
+   * @param {object} item     Copy of the item data being prepared for display.
+   * @param {object} context  Display context for the item.
+   * @protected
+   */
+  _prepareCrewedItem(item: Item5e, context: VehicleSheetContext) {
+    // Determine crewed status
+    const isCrewed = item.system.crewed;
+    context.toggleClass = isCrewed ? 'active' : '';
+    context.toggleTitle = game.i18n.localize(
+      `DND5E.${isCrewed ? 'Crewed' : 'Uncrewed'}`
+    );
+
+    // Handle crew actions
+    if (item.type === 'feat' && item.system.activation.type === 'crew') {
+      context.cover = game.i18n.localize(
+        `DND5E.${item.system.cover ? 'CoverTotal' : 'None'}`
+      );
+      if (item.system.cover === 0.5) context.cover = '½';
+      else if (item.system.cover === 0.75) context.cover = '¾';
+      else if (item.system.cover === null) context.cover = '—';
+    }
+
+    // Prepare vehicle weapons
+    if (item.type === 'equipment' || item.type === 'weapon') {
+      context.threshold = item.system.hp.dt ? item.system.hp.dt : '—';
+    }
+  }
+
+  /**
+   * Compute the total weight of the vehicle's cargo.
+   * @param {number} totalWeight    The cumulative item weight from inventory items
+   * @param {object} actorData      The data object for the Actor being rendered
+   * @returns {{max: number, value: number, pct: number}}
+   * @private
+   */
+  _computeEncumbrance(totalWeight: number, actorData: Actor5e) {
+    // Compute currency weight
+    const totalCoins = Object.values(
+      // TODO: Use dnd5e types ... one day ...
+      actorData.system.currency as Record<string, number>
+    ).reduce((acc: number, denom: number) => acc + denom, 0);
+
+    const currencyPerWeight = game.settings.get('dnd5e', 'metricWeightUnits')
+      ? CONFIG.DND5E.encumbrance.currencyPerWeight.metric
+      : CONFIG.DND5E.encumbrance.currencyPerWeight.imperial;
+    totalWeight += totalCoins / currencyPerWeight;
+
+    // Vehicle weights are an order of magnitude greater.
+    totalWeight /= game.settings.get('dnd5e', 'metricWeightUnits')
+      ? CONFIG.DND5E.encumbrance.vehicleWeightMultiplier.metric
+      : CONFIG.DND5E.encumbrance.vehicleWeightMultiplier.imperial;
+
+    // Compute overall encumbrance
+    const max = actorData.system.attributes.capacity.cargo;
+    const pct = Math.clamped((totalWeight * 100) / max, 0, 100);
+    return { value: totalWeight.toNearest(0.1), max, pct };
   }
 
   private async setExpandedItemData() {

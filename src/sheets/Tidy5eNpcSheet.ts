@@ -773,7 +773,6 @@ export class Tidy5eNpcSheet
         const { quantity, uses, recharge, target } = item.system;
         const ctx = (context.itemContext[item.id] ??= {});
         ctx.isStack = Number.isNumeric(quantity) && quantity !== 1;
-        ctx.isExpanded = this._expanded.has(item.id);
         ctx.hasUses = uses && uses.max > 0;
         ctx.isOnCooldown =
           recharge && !!recharge.value && recharge.charged === false;

@@ -939,9 +939,6 @@ export class Tidy5eCharacterSheet
             },
           }[item.system.attunement];
 
-          // Prepare data needed to display expanded sections
-          ctx.isExpanded = this._expanded.has(item.id);
-
           // Item usage
           ctx.hasUses = item.hasLimitedUses;
           ctx.isOnCooldown =
