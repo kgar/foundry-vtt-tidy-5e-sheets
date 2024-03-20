@@ -199,7 +199,9 @@
           <button
             type="button"
             class="inline-icon-button"
-            title={localize('TIDY5E.OriginSummaryConfig')}
+            title={localize('TIDY5E.OriginSummaryConfig', {
+              actorName: $context.actor.name,
+            })}
             on:click={() =>
               new ActorOriginSummaryConfigFormApplication(
                 $context.actor,
