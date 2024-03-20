@@ -22,6 +22,10 @@ import {
   type Utilities,
   type ContainerPanelItemContext,
   type ContainerCapacityContext,
+  type ActorInventoryTypes,
+  type ItemPartitions,
+  type FeatureSection,
+  type CharacterFeatureSection,
 } from 'src/types/types';
 import {
   applySheetAttributesToWindow,
@@ -288,15 +292,6 @@ export class Tidy5eCharacterSheet
       tidyResources,
       this.actor
     );
-
-    const sections = defaultDocumentContext.features.map((section: any) => ({
-      ...section,
-      showLevelColumn: !section.hasActions && section.isClass,
-      showRequirementsColumn: !section.isClass && !section.columns?.length,
-      showSourceColumn: !section.columns?.length,
-      showUsagesColumn: section.hasActions,
-      showUsesColumn: section.hasActions,
-    }));
 
     let maxPreparedSpellsTotal = 0;
     try {
@@ -745,7 +740,6 @@ export class Tidy5eCharacterSheet
         defaultDocumentContext
       ),
       editable: defaultDocumentContext.editable,
-      features: sections,
       filterData: this.itemFilterService.getDocumentItemFilterData(),
       filterPins: ItemFilterRuntime.defaultFilterPins[this.actor.type],
       flawEnrichedHtml: await FoundryAdapter.enrichHtml(
@@ -903,6 +897,235 @@ export class Tidy5eCharacterSheet
     debug('Character Sheet context data', context);
 
     return context;
+  }
+
+  protected _prepareItems(context: CharacterSheetContext) {
+    // Categorize items as inventory, spellbook, features, and classes
+    const inventory: ActorInventoryTypes = {};
+    for (const type of [
+      'weapon',
+      'equipment',
+      'consumable',
+      'tool',
+      'container',
+      'loot',
+    ]) {
+      inventory[type] = {
+        label: `${CONFIG.Item.typeLabels[type]}Pl`,
+        items: [],
+        dataset: { type },
+      };
+    }
+
+    // Partition items by category
+    let { items, spells, feats, races, backgrounds, classes, subclasses } =
+      context.items.reduce(
+        (obj: ItemPartitions, item: Item5e) => {
+          const { quantity, uses, recharge } = item.system;
+
+          // Item details
+          const ctx = (context.itemContext[item.id] ??= {});
+          ctx.isStack = Number.isNumeric(quantity) && quantity !== 1;
+          ctx.attunement = {
+            [CONFIG.DND5E.attunementTypes.REQUIRED]: {
+              icon: 'fa-sun',
+              cls: 'not-attuned',
+              title: 'DND5E.AttunementRequired',
+            },
+            [CONFIG.DND5E.attunementTypes.ATTUNED]: {
+              icon: 'fa-sun',
+              cls: 'attuned',
+              title: 'DND5E.AttunementAttuned',
+            },
+          }[item.system.attunement];
+
+          // Prepare data needed to display expanded sections
+          ctx.isExpanded = this._expanded.has(item.id);
+
+          // Item usage
+          ctx.hasUses = item.hasLimitedUses;
+          ctx.isOnCooldown =
+            recharge && !!recharge.value && recharge.charged === false;
+          ctx.isDepleted = ctx.isOnCooldown && ctx.hasUses && uses.value > 0;
+          ctx.hasTarget = item.hasAreaTarget || item.hasIndividualTarget;
+
+          // Unidentified items
+          ctx.concealDetails =
+            !game.user.isGM && item.system.identified === false;
+
+          // Item grouping
+          const [originId] =
+            item.getFlag('dnd5e', 'advancementOrigin')?.split('.') ?? [];
+          const group = this.actor.items.get(originId);
+          switch (group?.type) {
+            case 'race':
+              ctx.group = 'race';
+              break;
+            case 'background':
+              ctx.group = 'background';
+              break;
+            case 'class':
+              ctx.group = group.identifier;
+              break;
+            case 'subclass':
+              ctx.group = group.class?.identifier ?? 'other';
+              break;
+            default:
+              ctx.group = 'other';
+          }
+
+          // Individual item preparation
+          this._prepareItem(item, ctx);
+
+          // Classify items into types
+          if (item.type === 'spell') obj.spells.push(item);
+          else if (item.type === 'feat') obj.feats.push(item);
+          else if (item.type === 'race') obj.races.push(item);
+          else if (item.type === 'background') obj.backgrounds.push(item);
+          else if (item.type === 'class') obj.classes.push(item);
+          else if (item.type === 'subclass') obj.subclasses.push(item);
+          else if (Object.keys(inventory).includes(item.type))
+            obj.items.push(item);
+          return obj;
+        },
+        {
+          items: [],
+          spells: [],
+          feats: [],
+          races: [],
+          backgrounds: [],
+          classes: [],
+          subclasses: [],
+        }
+      );
+
+    // Organize items
+    for (let i of items) {
+      const ctx = (context.itemContext[i.id] ??= {});
+      ctx.totalWeight = i.system.totalWeight?.toNearest(0.1);
+      inventory[i.type].items.push(i);
+    }
+
+    // Organize Spellbook and count the number of prepared spells (excluding always, at will, etc...)
+    const spellbook = this._prepareSpellbook(context, spells);
+    const nPrepared = spells.filter((spell) => {
+      const prep = spell.system.preparation;
+      return (
+        spell.system.level > 0 && prep.mode === 'prepared' && prep.prepared
+      );
+    }).length;
+
+    // Sort classes and interleave matching subclasses, put unmatched subclasses into features so they don't disappear
+    classes.sort((a, b) => b.system.levels - a.system.levels);
+    const maxLevelDelta =
+      CONFIG.DND5E.maxLevel - this.actor.system.details.level;
+    classes = classes.reduce((arr, cls) => {
+      const ctx = (context.itemContext[cls.id] ??= {});
+      ctx.availableLevels = Array.fromRange(CONFIG.DND5E.maxLevel + 1)
+        .slice(1)
+        .map((level) => {
+          const delta = level - cls.system.levels;
+          return { level, delta, disabled: delta > maxLevelDelta };
+        });
+      ctx.prefixedImage = cls.img ? foundry.utils.getRoute(cls.img) : null;
+      arr.push(cls);
+      const identifier =
+        cls.system.identifier || cls.name.slugify({ strict: true });
+      const subclass = subclasses.findSplice(
+        (s: Item5e) => s.system.classIdentifier === identifier
+      );
+      if (subclass) arr.push(subclass);
+      return arr;
+    }, []);
+    for (const subclass of subclasses) {
+      feats.push(subclass);
+      const message = game.i18n.format('DND5E.SubclassMismatchWarn', {
+        name: subclass.name,
+        class: subclass.system.classIdentifier,
+      });
+      context.warnings.push({ message, type: 'warning' });
+    }
+
+    // Organize Features
+    const features: Record<string, CharacterFeatureSection> = {
+      race: {
+        label: CONFIG.Item.typeLabels.race,
+        items: races,
+        hasActions: false,
+        dataset: { type: 'race' },
+        showRequirementsColumn: true,
+      },
+      background: {
+        label: CONFIG.Item.typeLabels.background,
+        items: backgrounds,
+        hasActions: false,
+        dataset: { type: 'background' },
+        showRequirementsColumn: true,
+      },
+      classes: {
+        label: `${CONFIG.Item.typeLabels.class}Pl`,
+        items: classes,
+        hasActions: false,
+        dataset: { type: 'class' },
+        isClass: true,
+        showLevelColumn: true,
+      },
+      active: {
+        label: 'DND5E.FeatureActive',
+        items: [],
+        hasActions: true,
+        dataset: { type: 'feat', 'activation.type': 'action' },
+        showRequirementsColumn: true,
+        showUsagesColumn: true,
+        showUsesColumn: true,
+      },
+      passive: {
+        label: 'DND5E.FeaturePassive',
+        items: [],
+        hasActions: false,
+        dataset: { type: 'feat' },
+        showRequirementsColumn: true,
+      },
+    };
+    for (const feat of feats) {
+      if (feat.system.activation?.type) features.active.items.push(feat);
+      else features.passive.items.push(feat);
+    }
+
+    // Assign and return
+    context.inventoryFilters = true;
+    context.inventory = Object.values(inventory);
+    context.spellbook = spellbook;
+    context.preparedSpells = nPrepared;
+    context.features = Object.values(features);
+  }
+
+  /**
+   * A helper method to establish the displayed preparation state for an item.
+   * @param {Item5e} item     Item being prepared for display.
+   * @param {object} context  Context data for display.
+   * @protected
+   */
+  _prepareItem(item: Item5e, context: CharacterSheetContext) {
+    if (item.type === 'spell') {
+      const prep = item.system.preparation || {};
+      const isAlways = prep.mode === 'always';
+      const isPrepared = !!prep.prepared;
+      context.toggleClass = isPrepared ? 'active' : '';
+      if (isAlways) context.toggleClass = 'fixed';
+      if (isAlways)
+        context.toggleTitle = CONFIG.DND5E.spellPreparationModes.always;
+      else if (isPrepared)
+        context.toggleTitle = CONFIG.DND5E.spellPreparationModes.prepared;
+      else context.toggleTitle = game.i18n.localize('DND5E.SpellUnprepared');
+    } else {
+      const isActive = !!item.system.equipped;
+      context.toggleClass = isActive ? 'active' : '';
+      context.toggleTitle = game.i18n.localize(
+        isActive ? 'DND5E.Equipped' : 'DND5E.Unequipped'
+      );
+      context.canToggle = 'equipped' in item.system;
+    }
   }
 
   private async setExpandedItemData() {

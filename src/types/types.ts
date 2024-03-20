@@ -85,16 +85,12 @@ export type ItemCardStore = {
 };
 
 export type CharacterFeatureSection = {
-  label: string;
-  columns: any;
-  items: any;
-  dataset: any;
-  showUsesColumn: boolean;
-  showUsagesColumn: boolean;
-  showLevelColumn: boolean;
-  showSourceColumn: boolean;
-  showRequirementsColumn: boolean;
-};
+  isClass?: boolean;
+  showUsesColumn?: boolean;
+  showUsagesColumn?: boolean;
+  showLevelColumn?: boolean;
+  showRequirementsColumn?: boolean;
+} & FeatureSection;
 
 export type SpellCalculations = {
   dc: string;
@@ -105,6 +101,31 @@ export type SpellCalculations = {
   meleeMod: string;
   meleeTooltip: string;
   meleeHasBonus: boolean;
+};
+
+export type ActorInventoryTypes = Record<string, InventorySection>;
+
+export type InventorySection = {
+  label: string;
+  items: Item5e[];
+  dataset: Record<string, string>;
+};
+
+export type ItemPartitions = {
+  items: Item5e[];
+  spells: Item5e[];
+  feats: Item5e[];
+  races: Item5e[];
+  backgrounds: Item5e[];
+  classes: Item5e[];
+  subclasses: Item5e[];
+};
+
+export type FeatureSection = {
+  label: string;
+  items: Item5e[];
+  hasActions: boolean;
+  dataset: Record<string, string>;
 };
 
 export type CharacterSheetContext = {
@@ -242,6 +263,8 @@ export type ActorSheetContext = {
    * Note: This calculation ignores temp HP / temp HP Max, because the stock 5e sheets count 0 hp (ignoring all temp values) as incapacitated. Tidy 5e sheets carries this principle forward with health percentage calculation.
    */
   healthPercentage: number;
+  /** All items without a container. */
+  items: Item5e[];
   itemContext: any;
   lockExpChanges: boolean;
   lockHpMaxChanges: boolean;
