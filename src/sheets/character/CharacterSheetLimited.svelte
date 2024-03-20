@@ -10,10 +10,6 @@
   let context = getContext<Readable<NpcSheetContext>>('context');
 
   const localize = FoundryAdapter.localize;
-
-  function activateProseMirrorListeners(node: HTMLElement) {
-    $context.activateFoundryJQueryListeners(node);
-  }
 </script>
 
 <div class="limited-character">
@@ -23,7 +19,7 @@
       <RerenderAfterFormSubmission
         andOnValueChange={$context.system.details.biography.value}
       >
-        <article class="appearance-notes" use:activateProseMirrorListeners>
+        <article class="appearance-notes" use:$context.activateEditors>
           <div class="section-titles biopage">
             {localize('DND5E.Appearance')}
           </div>
@@ -33,7 +29,7 @@
             editable={$context.editable}
           />
         </article>
-        <article class="biography-notes" use:activateProseMirrorListeners>
+        <article class="biography-notes" use:$context.activateEditors>
           <div class="section-titles">
             {localize('DND5E.Background')}/{localize('DND5E.Biography')}
           </div>

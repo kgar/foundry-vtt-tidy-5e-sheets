@@ -11,10 +11,6 @@
 
   const localize = FoundryAdapter.localize;
 
-  function activateProseMirrorListeners(node: HTMLElement) {
-    $context.activateFoundryJQueryListeners(node);
-  }
-
   type SystemBioField = { field: string; value: string; text: string };
 
   let bioFields: SystemBioField[] = [];
@@ -95,7 +91,7 @@
         <RerenderAfterFormSubmission
           andOnValueChange={$context.system.details.trait}
         >
-          <article use:activateProseMirrorListeners>
+          <article use:$context.activateEditors>
             <div class="section-titles biopage">
               {localize('DND5E.PersonalityTraits')}
             </div>
@@ -110,7 +106,7 @@
         <RerenderAfterFormSubmission
           andOnValueChange={$context.system.details.ideal}
         >
-          <article use:activateProseMirrorListeners>
+          <article use:$context.activateEditors>
             <div class="section-titles biopage">{localize('DND5E.Ideals')}</div>
             <SheetEditor
               content={$context.idealEnrichedHtml}
@@ -122,7 +118,7 @@
         <RerenderAfterFormSubmission
           andOnValueChange={$context.system.details.bond}
         >
-          <article use:activateProseMirrorListeners>
+          <article use:$context.activateEditors>
             <div class="section-titles biopage">{localize('DND5E.Bonds')}</div>
             <SheetEditor
               content={$context.bondEnrichedHtml}
@@ -134,7 +130,7 @@
         <RerenderAfterFormSubmission
           andOnValueChange={$context.system.details.flaw}
         >
-          <article use:activateProseMirrorListeners>
+          <article use:$context.activateEditors>
             <div class="section-titles biopage">{localize('DND5E.Flaws')}</div>
             <SheetEditor
               content={$context.flawEnrichedHtml}
@@ -152,7 +148,7 @@
         <RerenderAfterFormSubmission
           andOnValueChange={$context.system.details.appearance}
         >
-          <article class="appearance-notes" use:activateProseMirrorListeners>
+          <article class="appearance-notes" use:$context.activateEditors>
             <div class="section-titles biopage">
               {localize('DND5E.Appearance')}
             </div>
@@ -166,7 +162,7 @@
         <RerenderAfterFormSubmission
           andOnValueChange={$context.system.details.biography.value}
         >
-          <article class="biography-notes" use:activateProseMirrorListeners>
+          <article class="biography-notes" use:$context.activateEditors>
             <div class="section-titles">
               {localize('DND5E.Background')}/{localize('DND5E.Biography')}
             </div>

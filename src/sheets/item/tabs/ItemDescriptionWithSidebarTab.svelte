@@ -23,7 +23,7 @@
       return;
     }
 
-    $context.activateFoundryJQueryListeners(node);
+    $context.activateEditors(node);
     editorIsActive = true;
   }
 
@@ -39,10 +39,6 @@
   }
 
   const localize = FoundryAdapter.localize;
-
-  function activateProseMirrorListeners(node: HTMLElement) {
-    $context.activateFoundryJQueryListeners(node);
-  }
 </script>
 
 <div
@@ -173,7 +169,7 @@
     <RerenderAfterFormSubmission
       andOnValueChange={$context.enriched.unidentified}
     >
-      <div class="flexrow" role="presentation" use:activateProseMirrorListeners>
+      <div class="flexrow" role="presentation" use:$context.activateEditors>
         <SheetEditor
           content={$context.enriched.unidentified}
           editable={$context.editable}

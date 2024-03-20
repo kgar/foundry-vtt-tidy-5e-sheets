@@ -123,10 +123,7 @@ export class Tidy5eKgarItemSheet
     const context: ItemSheetContext = {
       ...defaultDocumentContext,
       appId: this.appId,
-      activateFoundryJQueryListeners: (node: HTMLElement) => {
-        this._activateCoreListeners($(node));
-        super.activateListeners($(node));
-      },
+      activateEditors: (node) => FoundryAdapter.activateEditors(node, this),
       customContent: await ItemSheetRuntime.getContent(defaultDocumentContext),
       customEquipmentTypeGroups:
         ItemSheetRuntime.getCustomEquipmentTypeGroups(),

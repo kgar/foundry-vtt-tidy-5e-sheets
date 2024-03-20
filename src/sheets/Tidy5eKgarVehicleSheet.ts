@@ -233,13 +233,10 @@ export class Tidy5eVehicleSheet
       },
     };
 
-    const context = {
+    const context: VehicleSheetContext = {
       ...defaultDocumentContext,
       actions: getActorActions(this.actor, this.itemFilterService),
-      activateFoundryJQueryListeners: (node: HTMLElement) => {
-        this._activateCoreListeners($(node));
-        getBaseActorSheet5e(this).activateListeners.call(this, $(node));
-      },
+      activateEditors: (node) => FoundryAdapter.activateEditors(node, this),
       actorPortraitCommands:
         ActorPortraitRuntime.getEnabledPortraitMenuCommands(this.actor),
       allowEffectsManagement: true,

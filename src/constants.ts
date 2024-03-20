@@ -315,4 +315,5 @@ export const CONSTANTS = {
   SHEET_SETTINGS_OPTION_NONE: 'none',
   SHEET_SETTINGS_OPTION_GM_ONLY: 'gm-only',
   SHEET_SETTINGS_OPTION_GM_AND_OWNERS: 'gm-and-owners',
+  TEXT_EDITOR_ACTIVATION_ELEMENT_SELECTOR: '.editor-content[data-edit]',
 } as const;

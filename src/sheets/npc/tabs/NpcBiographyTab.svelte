@@ -14,10 +14,6 @@
 
   const localize = FoundryAdapter.localize;
 
-  function activateProseMirrorListeners(node: HTMLElement) {
-    $context.activateFoundryJQueryListeners(node);
-  }
-
   $: showNpcPersonalityInfo =
     FoundryAdapter.tryGetFlag($context.actor, 'showNpcPersonalityInfo') ??
     false;
@@ -132,7 +128,7 @@
                 'trait',
               ) ?? ''}
             >
-              <article use:activateProseMirrorListeners>
+              <article use:$context.activateEditors>
                 <div class="section-titles biopage">
                   {localize('DND5E.PersonalityTraits')}
                 </div>
@@ -149,7 +145,7 @@
                 'ideal',
               ) ?? ''}
             >
-              <article use:activateProseMirrorListeners>
+              <article use:$context.activateEditors>
                 <div class="section-titles biopage">
                   {localize('DND5E.Ideals')}
                 </div>
@@ -166,7 +162,7 @@
                 'bond',
               ) ?? ''}
             >
-              <article use:activateProseMirrorListeners>
+              <article use:$context.activateEditors>
                 <div class="section-titles biopage">
                   {localize('DND5E.Bonds')}
                 </div>
@@ -183,7 +179,7 @@
                 'flaw',
               ) ?? ''}
             >
-              <article use:activateProseMirrorListeners>
+              <article use:$context.activateEditors>
                 <div class="section-titles biopage">
                   {localize('DND5E.Flaws')}
                 </div>
@@ -206,7 +202,7 @@
               'appearance',
             ) ?? ''}
           >
-            <article class="appearance-notes" use:activateProseMirrorListeners>
+            <article class="appearance-notes" use:$context.activateEditors>
               <div class="section-titles biopage">
                 {localize('DND5E.Appearance')}
               </div>
@@ -220,7 +216,7 @@
           <RerenderAfterFormSubmission
             andOnValueChange={$context.system.details.biography.value}
           >
-            <article class="biography-notes" use:activateProseMirrorListeners>
+            <article class="biography-notes" use:$context.activateEditors>
               <div class="section-titles">
                 {localize('DND5E.Background')}/{localize('DND5E.Biography')}
               </div>

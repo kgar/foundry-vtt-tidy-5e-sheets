@@ -264,6 +264,7 @@ export type Utilities = Record<
 
 export type ActorSheetContext = {
   actions: ActorActions;
+  activateEditors: (node: HTMLElement) => void;
   actor: Actor5e;
   actorPortraitCommands: RegisteredPortraitMenuCommand[];
   allowEffectsManagement: boolean;
@@ -311,18 +312,13 @@ export type ActorSheetContext = {
   useClassicControls: boolean;
   useRoundedPortraitStyle: boolean;
   viewableWarnings: DocumentPreparationWarning[];
-} & JQueryHooksSheetIntegration &
-  Record<string, any>;
+} & Record<string, any>;
 
 export type DocumentPreparationWarning = Partial<{
   message: string;
   link: string;
   type: string;
 }>;
-
-export type JQueryHooksSheetIntegration = {
-  activateFoundryJQueryListeners: (html: HTMLElement) => Promise<void>;
-};
 
 export type DropdownListOption = { value: any; text: string };
 

@@ -4,6 +4,7 @@ import type { DocumentPreparationWarning } from './types';
 import type { DocumentFilters, RegisteredEquipmentTypeGroup } from 'src/runtime/item/item.types';
 
 export type ItemSheetContext = {
+  activateEditors: (node: HTMLElement) => void;
   customContent: CustomContent[];
   customEquipmentTypeGroups: RegisteredEquipmentTypeGroup[];
   /**
@@ -45,8 +46,8 @@ export type ItemCardContentComponent = ComponentType<
 >;
 
 export type ContainerSheetContext = {
+  activateEditors: (node: HTMLElement) => void;
   appId: string;
-  activateFoundryJQueryListeners: (node: HTMLElement) => void;
   filterData: DocumentFilters;
   itemDescriptions: ItemDescription[];
   lockItemQuantity: boolean;

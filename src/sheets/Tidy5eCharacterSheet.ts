@@ -688,10 +688,7 @@ export class Tidy5eCharacterSheet
 
     const context: CharacterSheetContext = {
       ...defaultDocumentContext,
-      activateFoundryJQueryListeners: (node: HTMLElement) => {
-        this._activateCoreListeners($(node));
-        super.activateListeners($(node));
-      },
+      activateEditors: (node) => FoundryAdapter.activateEditors(node, this),
       actions: getActorActions(this.actor, this.itemFilterService),
       actorClassesToImages: getActorClassesToImages(this.actor),
       actorPortraitCommands:

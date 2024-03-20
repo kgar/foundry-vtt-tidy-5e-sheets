@@ -521,10 +521,7 @@ export class Tidy5eNpcSheet
     const context: NpcSheetContext = {
       ...defaultDocumentContext,
       actions: getActorActions(this.actor, this.itemFilterService),
-      activateFoundryJQueryListeners: (node: HTMLElement) => {
-        this._activateCoreListeners($(node));
-        super.activateListeners($(node));
-      },
+      activateEditors: (node) => FoundryAdapter.activateEditors(node, this),
       actorPortraitCommands:
         ActorPortraitRuntime.getEnabledPortraitMenuCommands(this.actor),
       allowEffectsManagement: true,

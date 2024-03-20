@@ -239,10 +239,7 @@ export class Tidy5eKgarContainerSheet
     const context: ContainerSheetContext = {
       ...defaultDocumentContext,
       appId: this.appId,
-      activateFoundryJQueryListeners: (node: HTMLElement) => {
-        this._activateCoreListeners($(node));
-        super.activateListeners($(node));
-      },
+      activateEditors: (node) => FoundryAdapter.activateEditors(node, this),
       customContent: await ItemSheetRuntime.getContent(defaultDocumentContext),
       filterData: this.itemFilterService.getDocumentItemFilterData(),
       filterPins: ItemFilterRuntime.defaultFilterPins[this.item.type],
