@@ -12,6 +12,7 @@ import type {
   MessageBus,
   MessageBusMessage,
   Utilities,
+  FeatureSection,
 } from 'src/types/types';
 import { writable } from 'svelte/store';
 import NpcSheet from './npc/NpcSheet.svelte';
@@ -737,6 +738,73 @@ export class Tidy5eNpcSheet
     debug('NPC Sheet context data', context);
 
     return context;
+  }
+
+  protected _prepareItems(context: NpcSheetContext) {
+    // Categorize Items as Features and Spells
+    const features: Record<string, FeatureSection> = {
+      weapons: {
+        label: game.i18n.localize('DND5E.AttackPl'),
+        items: [],
+        hasActions: true,
+        dataset: { type: 'weapon', 'weapon-type': 'natural' },
+      },
+      actions: {
+        label: game.i18n.localize('DND5E.ActionPl'),
+        items: [],
+        hasActions: true,
+        dataset: { type: 'feat', 'activation.type': 'action' },
+      },
+      passive: {
+        label: game.i18n.localize('DND5E.Features'),
+        items: [],
+        dataset: { type: 'feat' },
+      },
+      equipment: {
+        label: game.i18n.localize('DND5E.Inventory'),
+        items: [],
+        dataset: { type: 'loot' },
+      },
+    };
+
+    // Start by classifying items into groups for rendering
+    let [spells, other] = context.items.reduce(
+      (arr, item) => {
+        const { quantity, uses, recharge, target } = item.system;
+        const ctx = (context.itemContext[item.id] ??= {});
+        ctx.isStack = Number.isNumeric(quantity) && quantity !== 1;
+        ctx.isExpanded = this._expanded.has(item.id);
+        ctx.hasUses = uses && uses.max > 0;
+        ctx.isOnCooldown =
+          recharge && !!recharge.value && recharge.charged === false;
+        ctx.isDepleted = item.isOnCooldown && uses.per && uses.value > 0;
+        ctx.hasTarget = !!target && !['none', ''].includes(target.type);
+        ctx.canToggle = false;
+        if (item.type === 'spell') arr[0].push(item);
+        else arr[1].push(item);
+        return arr;
+      },
+      [[], []]
+    );
+
+    // Apply item filters
+    
+
+    // Organize Spellbook
+    const spellbook = this._prepareSpellbook(context, spells);
+
+    // Organize Features
+    for (let item of other) {
+      if (item.type === 'weapon') features.weapons.items.push(item);
+      else if (item.type === 'feat') {
+        if (item.system.activation.type) features.actions.items.push(item);
+        else features.passive.items.push(item);
+      } else features.equipment.items.push(item);
+    }
+
+    // Assign and return
+    context.features = Object.values(features);
+    context.spellbook = spellbook;
   }
 
   private async setExpandedItemData() {

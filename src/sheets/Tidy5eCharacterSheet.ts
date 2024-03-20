@@ -1093,7 +1093,6 @@ export class Tidy5eCharacterSheet
     }
 
     // Assign and return
-    context.inventoryFilters = true;
     context.inventory = Object.values(inventory);
     context.spellbook = spellbook;
     context.preparedSpells = nPrepared;
@@ -1106,7 +1105,7 @@ export class Tidy5eCharacterSheet
    * @param {object} context  Context data for display.
    * @protected
    */
-  _prepareItem(item: Item5e, context: CharacterSheetContext) {
+  protected _prepareItem(item: Item5e, context: CharacterSheetContext) {
     if (item.type === 'spell') {
       const prep = item.system.preparation || {};
       const isAlways = prep.mode === 'always';

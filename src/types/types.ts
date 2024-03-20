@@ -124,7 +124,7 @@ export type ItemPartitions = {
 export type FeatureSection = {
   label: string;
   items: Item5e[];
-  hasActions: boolean;
+  hasActions?: boolean;
   dataset: Record<string, string>;
 };
 
@@ -159,6 +159,7 @@ export type NpcSheetContext = {
   biographyEnrichedHtml: string;
   bondEnrichedHtml: string;
   encumbrance: any;
+  features:FeatureSection[];
   flawEnrichedHtml: string;
   hideEmptySpellbook: boolean;
   idealEnrichedHtml: string;
