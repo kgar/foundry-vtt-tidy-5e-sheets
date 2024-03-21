@@ -239,7 +239,8 @@ export class Tidy5eKgarContainerSheet
     const context: ContainerSheetContext = {
       ...defaultDocumentContext,
       appId: this.appId,
-      activateEditors: (node) => FoundryAdapter.activateEditors(node, this),
+      activateEditors: (node, options) =>
+        FoundryAdapter.activateEditors(node, this, options?.bindSecrets),
       customContent: await ItemSheetRuntime.getContent(defaultDocumentContext),
       filterData: this.itemFilterService.getDocumentItemFilterData(),
       filterPins: ItemFilterRuntime.defaultFilterPins[this.item.type],

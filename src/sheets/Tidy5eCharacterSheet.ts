@@ -688,7 +688,8 @@ export class Tidy5eCharacterSheet
 
     const context: CharacterSheetContext = {
       ...defaultDocumentContext,
-      activateEditors: (node) => FoundryAdapter.activateEditors(node, this),
+      activateEditors: (node, options) =>
+        FoundryAdapter.activateEditors(node, this, options?.bindSecrets),
       actions: getActorActions(this.actor, this.itemFilterService),
       actorClassesToImages: getActorClassesToImages(this.actor),
       actorPortraitCommands:

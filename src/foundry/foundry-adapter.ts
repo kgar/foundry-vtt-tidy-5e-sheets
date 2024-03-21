@@ -1355,7 +1355,7 @@ export const FoundryAdapter = {
   openSpellSlotsConfig(actor: Actor5e) {
     new dnd5e.applications.actor.ActorSpellSlotsConfig(actor).render(true);
   },
-  activateEditors(node: HTMLElement, sheet: any) {
+  activateEditors(node: HTMLElement, sheet: any, bindSecrets: boolean = true) {
     try {
       const nodes = node.matches(
         CONSTANTS.TEXT_EDITOR_ACTIVATION_ELEMENT_SELECTOR
@@ -1369,6 +1369,9 @@ export const FoundryAdapter = {
 
       for (let editorDiv of nodes) {
         sheet._activateEditor(editorDiv);
+      }
+      if (bindSecrets) {
+        sheet._secrets.forEach((s: any) => s.bind(node));
       }
     } catch (e) {
       error('An error occurred while activating text editors', false, e);

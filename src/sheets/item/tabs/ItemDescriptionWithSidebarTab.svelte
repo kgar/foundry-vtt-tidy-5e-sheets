@@ -23,7 +23,7 @@
       return;
     }
 
-    $context.activateEditors(node);
+    $context.activateEditors(node, { bindSecrets: false });
     editorIsActive = true;
   }
 

@@ -267,7 +267,10 @@ export type Utilities = Record<
 
 export type ActorSheetContext = {
   actions: ActorActions;
-  activateEditors: (node: HTMLElement) => void;
+  activateEditors: (
+    node: HTMLElement,
+    options?: { bindSecrets?: boolean }
+  ) => void;
   actor: Actor5e;
   actorPortraitCommands: RegisteredPortraitMenuCommand[];
   allowEffectsManagement: boolean;

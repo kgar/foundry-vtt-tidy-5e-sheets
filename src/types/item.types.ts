@@ -1,10 +1,16 @@
 import type { ComponentType, SvelteComponent } from 'svelte';
 import type { CustomContent, Tab, Utilities } from './types';
 import type { DocumentPreparationWarning } from './types';
-import type { DocumentFilters, RegisteredEquipmentTypeGroup } from 'src/runtime/item/item.types';
+import type {
+  DocumentFilters,
+  RegisteredEquipmentTypeGroup,
+} from 'src/runtime/item/item.types';
 
 export type ItemSheetContext = {
-  activateEditors: (node: HTMLElement) => void;
+  activateEditors: (
+    node: HTMLElement,
+    options?: { bindSecrets?: boolean }
+  ) => void;
   customContent: CustomContent[];
   customEquipmentTypeGroups: RegisteredEquipmentTypeGroup[];
   /**
@@ -46,7 +52,10 @@ export type ItemCardContentComponent = ComponentType<
 >;
 
 export type ContainerSheetContext = {
-  activateEditors: (node: HTMLElement) => void;
+  activateEditors: (
+    node: HTMLElement,
+    options?: { bindSecrets?: boolean }
+  ) => void;
   appId: string;
   filterData: DocumentFilters;
   itemDescriptions: ItemDescription[];

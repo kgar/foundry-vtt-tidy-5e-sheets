@@ -236,7 +236,8 @@ export class Tidy5eVehicleSheet
     const context: VehicleSheetContext = {
       ...defaultDocumentContext,
       actions: getActorActions(this.actor, this.itemFilterService),
-      activateEditors: (node) => FoundryAdapter.activateEditors(node, this),
+      activateEditors: (node, options) =>
+        FoundryAdapter.activateEditors(node, this, options?.bindSecrets),
       actorPortraitCommands:
         ActorPortraitRuntime.getEnabledPortraitMenuCommands(this.actor),
       allowEffectsManagement: true,

@@ -521,7 +521,8 @@ export class Tidy5eNpcSheet
     const context: NpcSheetContext = {
       ...defaultDocumentContext,
       actions: getActorActions(this.actor, this.itemFilterService),
-      activateEditors: (node) => FoundryAdapter.activateEditors(node, this),
+      activateEditors: (node, options) =>
+        FoundryAdapter.activateEditors(node, this, options?.bindSecrets),
       actorPortraitCommands:
         ActorPortraitRuntime.getEnabledPortraitMenuCommands(this.actor),
       allowEffectsManagement: true,
@@ -784,7 +785,6 @@ export class Tidy5eNpcSheet
     );
 
     // Apply item filters
-    
 
     // Organize Spellbook
     const spellbook = this._prepareSpellbook(context, spells);

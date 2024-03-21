@@ -1,5 +1,9 @@
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-import type { Item5e, ItemDescription, ItemSheetContext } from 'src/types/item.types';
+import type {
+  Item5e,
+  ItemDescription,
+  ItemSheetContext,
+} from 'src/types/item.types';
 import { get, writable } from 'svelte/store';
 import TypeNotFoundSheet from './item/TypeNotFoundSheet.svelte';
 import type { SheetStats, SheetTabCacheable, Tab } from 'src/types/types';
@@ -123,7 +127,8 @@ export class Tidy5eKgarItemSheet
     const context: ItemSheetContext = {
       ...defaultDocumentContext,
       appId: this.appId,
-      activateEditors: (node) => FoundryAdapter.activateEditors(node, this),
+      activateEditors: (node, options) =>
+        FoundryAdapter.activateEditors(node, this, options?.bindSecrets),
       customContent: await ItemSheetRuntime.getContent(defaultDocumentContext),
       customEquipmentTypeGroups:
         ItemSheetRuntime.getCustomEquipmentTypeGroups(),
