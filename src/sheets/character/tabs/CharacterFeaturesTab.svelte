@@ -176,7 +176,10 @@
                     hasChildren={false}
                     {item}
                   >
-                    {#if item.type === 'subclass'}&rdsh;{/if}
+                    {#if section.isClass && item.type === 'subclass'}&rdsh;{/if}
+                    {#if !section.isClass && item.type === 'subclass'}
+                      <i class="fa-solid fa-link-slash align-self-center"></i>
+                    {/if}
                     <span
                       data-tidy-item-name={item.name}
                       data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_NAME}
@@ -196,7 +199,7 @@
                   <ItemTableCell baseWidth="3.125rem">
                     {#if ctx?.isOnCooldown}
                       <RechargeControl {item} />
-                    {:else if item.system.recharge.value}
+                    {:else if item.system.recharge?.value}
                       <i
                         class="fas fa-bolt"
                         title={localize('DND5E.Charged')}
