@@ -24,8 +24,8 @@ import {
   type ContainerCapacityContext,
   type ActorInventoryTypes,
   type ItemPartitions,
-  type FeatureSection,
   type CharacterFeatureSection,
+  type CharacterItemContext,
 } from 'src/types/types';
 import {
   applySheetAttributesToWindow,

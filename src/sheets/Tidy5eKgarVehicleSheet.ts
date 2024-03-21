@@ -17,6 +17,8 @@ import type {
   VehicleFeatureSection,
   SimpleEditableColumn,
   Actor5e,
+  VehicleEncumbrance,
+  VehicleItemContext,
 } from 'src/types/types';
 import { writable } from 'svelte/store';
 import VehicleSheet from './vehicle/VehicleSheet.svelte';
@@ -476,7 +478,6 @@ export class Tidy5eVehicleSheet
     }
 
     // Update the rendering context data
-    context.inventoryFilters = false;
     context.features = Object.values(features);
     context.cargo = Object.values(cargo);
     context.encumbrance = this._computeEncumbrance(totalWeight, context);
@@ -519,7 +520,10 @@ export class Tidy5eVehicleSheet
    * @returns {{max: number, value: number, pct: number}}
    * @private
    */
-  _computeEncumbrance(totalWeight: number, actorData: Actor5e) {
+  _computeEncumbrance(
+    totalWeight: number,
+    actorData: Actor5e
+  ): VehicleEncumbrance {
     // Compute currency weight
     const totalCoins = Object.values(
       // TODO: Use dnd5e types ... one day ...

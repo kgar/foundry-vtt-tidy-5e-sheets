@@ -150,6 +150,27 @@ export type SimpleEditableColumn = {
   editable?: string;
 };
 
+export type SpellbookSection = {
+  order: number;
+  label: string;
+  usesSlots: boolean;
+  canCreate: boolean;
+  canPrepare: boolean;
+  spells: Item5e[];
+  uses: number; // verify
+  slots: number; // verify
+  override: number;
+  dataset: { type: 'spell'; level: number; preparationMode: string };
+  prop: string;
+  editable: boolean;
+};
+
+export type CharacterItemContext = {
+  toggleClass?: string;
+  toggleTitle?: string;
+  canToggle?: boolean;
+};
+
 export type CharacterSheetContext = {
   actorClassesToImages: Record<string, string>;
   allowMaxHpOverride: boolean;
@@ -169,7 +190,7 @@ export type CharacterSheetContext = {
   notesEnrichedHtml: string;
   showContainerPanel: boolean;
   preparedSpells: number;
-  spellbook: ; // 👈 type this, lives in applications/actor/base-sheet.mjs#L375
+  spellbook: SpellbookSection[];
   spellCalculations: SpellCalculations;
   spellSlotTrackerMode:
     | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_PIPS
@@ -197,6 +218,7 @@ export type NpcSheetContext = {
   shortRest: (event: Event) => Promise<void>;
   showLegendaryToolbar: boolean;
   showSpellbookTab: boolean;
+  spellbook: SpellbookSection[];
   spellCalculations: SpellCalculations;
   spellSlotTrackerMode:
     | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_PIPS
@@ -205,7 +227,19 @@ export type NpcSheetContext = {
   utilities: Utilities;
 } & ActorSheetContext;
 
+export type VehicleItemContext = {
+  toggleClass: string;
+  toggleTitle: string;
+  cover?: string;
+  threshold?: number | string;
+};
+
+export type VehicleEncumbrance = { max: number; value: number; pct: number };
+
 export type VehicleSheetContext = {
+  cargo: VehicleCargoSection[];
+  encumbrance: VehicleEncumbrance;
+  features: VehicleFeatureSection[];
   utilities: Utilities;
 } & ActorSheetContext;
 
@@ -319,10 +353,7 @@ export type ActorSheetContext = {
   useRoundedPortraitStyle: boolean;
   viewableWarnings: DocumentPreparationWarning[];
   warnings: DocumentPreparationWarning[];
-}
-// TODO: Re-enable when targeted types are added
-// & Record<string, any>
-;
+} & Record<string, any>;
 
 export type DocumentPreparationWarning = Partial<{
   message: string;

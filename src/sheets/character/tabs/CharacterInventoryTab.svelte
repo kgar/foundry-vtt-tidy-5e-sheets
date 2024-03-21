@@ -95,7 +95,6 @@
             primaryColumnName="{localize(
               section.label,
             )} ({visibleItemIdSubset.size})"
-            extraInventoryRowClasses={section.css}
             {section}
             items={section.items}
             {visibleItemIdSubset}

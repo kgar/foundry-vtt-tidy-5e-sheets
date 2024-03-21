@@ -358,7 +358,9 @@ export const FoundryAdapter = {
 
     return classes.join(' ');
   },
-  getSpellAttackModAndTooltip(context: ActorSheetContext) {
+  getSpellAttackModAndTooltip(
+    context: CharacterSheetContext | NpcSheetContext
+  ) {
     let actor = context.actor;
     let formula = Roll.replaceFormulaData(
       actor.system.bonuses.rsak.attack,
@@ -415,9 +417,10 @@ export const FoundryAdapter = {
 
     const parentClass = FoundryAdapter.tryGetFlag<string>(spell, 'parentClass');
 
-    const classImage = parentClass && 'actorClassesToImages' in context
-      ? context.actorClassesToImages[parentClass]
-      : undefined;
+    const classImage =
+      parentClass && 'actorClassesToImages' in context
+        ? context.actorClassesToImages[parentClass]
+        : undefined;
 
     return classImage ?? spell.img;
   },
