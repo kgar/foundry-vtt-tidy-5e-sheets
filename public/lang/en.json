@@ -761,5 +761,12 @@
   "TIDY5E.ReminderToBackUp": "Always remember to back up your world.",
   "TIDY5E.Utilities.GMTools": "GM Tools",
   "TIDY5E.Utilities.IdentifyAll": "Identify All Items",
-  "TIDY5E.Utilities.MarkAllAsUnidentified": "Mark All Items as Unidentified"
+  "TIDY5E.Utilities.MarkAllAsUnidentified": "Mark All Items as Unidentified",
+  "TIDY5E.Section": {
+    "Default": "Default Section",
+    "Label": "Section",
+    "Tooltip": "Specify a custom section for this item when placed in an actor sheet, or leave it blank for default behavior.",
+    "ActionLabel": "Action Section",
+    "ActionTooltip": "Specify a custom section for this item when placed in the Actions tab, or leave it blank for default behavior."
+  }
 }

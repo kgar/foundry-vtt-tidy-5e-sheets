@@ -159,12 +159,12 @@ input[type='checkbox'] {
     display: flex;
     font-size: 0.8125rem;
     font-family: var(--t5e-body-font-family);
-    height: 1.375rem;
     flex: 0 0 100%;
     list-style: none;
     margin: 0;
     padding: 0;
     width: 100%;
+    align-items: center;
 
     li {
       border-left: 0.0625rem solid var(--t5e-faint-color);
@@ -227,15 +227,41 @@ input[type='checkbox'] {
         margin: 0;
       }
 
-      input,
-      select {
-        flex: 0 0 2.5rem;
-        text-align: right;
-        background: none;
+      input {
+        flex: 0 0 3rem;
 
         &.large-value {
           flex: 1;
-          padding: 0 3px;
+          padding: 0 0.1875rem;
+        }
+      }
+
+      select {
+        flex: 0 0 2.5rem;
+      }
+
+      input,
+      select {
+        text-align: right;
+        background: none;
+      }
+
+      &.section {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        margin-top: 0;
+        margin-bottom: 0;
+
+        label {
+          font-weight: 500;
+        }
+
+        input,
+        select {
+          text-align: left;
+          padding: 0.325rem 0.25rem;
+          flex-basis: auto;
         }
       }
     }

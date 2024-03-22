@@ -16,6 +16,8 @@
   import OpenSheetEditor from 'src/components/editor/OpenSheetEditor.svelte';
   import SheetEditor from 'src/components/editor/SheetEditor.svelte';
   import { CONSTANTS } from 'src/constants';
+  import ItemFormGroup from '../form/ItemFormGroup.svelte';
+  import TextInput from 'src/components/inputs/TextInput.svelte';
 
   let context =
     getContext<Readable<ItemSheetContext | ContainerSheetContext>>('context');
@@ -160,6 +162,39 @@
         </ol>
       </section>
     {/if}
+
+    <ItemFormGroup
+      labelText={localize('TIDY5E.Section.Label')}
+      field="flags.{CONSTANTS.MODULE_ID}.section"
+      cssClass="section"
+      let:inputId
+    >
+      <TextInput
+        document={$context.item}
+        field="flags.{CONSTANTS.MODULE_ID}.section"
+        id={inputId}
+        placeholder={localize('TIDY5E.Section.Default')}
+        value={FoundryAdapter.tryGetFlag($context.item, 'section') ?? ''}
+        selectOnFocus={true}
+        title={localize('TIDY5E.Section.Tooltip')}
+      ></TextInput>
+    </ItemFormGroup>
+    <ItemFormGroup
+      labelText={localize('TIDY5E.Section.ActionLabel')}
+      field="flags.{CONSTANTS.MODULE_ID}.actionSection"
+      cssClass="section"
+      let:inputId
+    >
+      <TextInput
+        document={$context.item}
+        field="flags.{CONSTANTS.MODULE_ID}.actionSection"
+        id={inputId}
+        placeholder={localize('TIDY5E.Section.Default')}
+        value={FoundryAdapter.tryGetFlag($context.item, 'actionSection') ?? ''}
+        selectOnFocus={true}
+        title={localize('TIDY5E.Section.ActionTooltip')}
+      ></TextInput>
+    </ItemFormGroup>
   </div>
 
   <VerticalLineSeparator />
