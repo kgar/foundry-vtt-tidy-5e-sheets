@@ -30,7 +30,7 @@ import { getPercentage, isLessThanOneIsOne } from 'src/utils/numbers';
 import NpcShortRestDialog from 'src/dialogs/NpcShortRestDialog';
 import LongRestDialog from 'src/dialogs/NpcLongRestDialog';
 import type { SvelteComponent } from 'svelte';
-import type { ItemChatData } from 'src/types/item.types';
+import type { Item5e, ItemChatData } from 'src/types/item.types';
 import { NpcSheetRuntime } from 'src/runtime/NpcSheetRuntime';
 import {
   actorUsesActionFeature,
@@ -179,47 +179,6 @@ export class Tidy5eNpcSheet
 
     const actionListSortMode =
       npcPreferences.tabs?.[CONSTANTS.TAB_ACTOR_ACTIONS]?.sort ?? 'm';
-
-    try {
-      for (let section of defaultDocumentContext.features) {
-        let features = this.itemFilterService.filter(
-          section.items,
-          CONSTANTS.TAB_NPC_ABILITIES
-        );
-        if (abilitiesSortMode === 'a') {
-          features = features.toSorted((a, b) => a.name.localeCompare(b.name));
-        }
-        section.items = features;
-      }
-
-      for (let section of defaultDocumentContext.spellbook) {
-        const showSpellbookTab =
-          SettingsProvider.settings.showSpellbookTabNpc.get();
-
-        const tabName = showSpellbookTab
-          ? CONSTANTS.TAB_NPC_SPELLBOOK
-          : CONSTANTS.TAB_NPC_ABILITIES;
-
-        const sortMode = showSpellbookTab
-          ? spellbookSortMode
-          : abilitiesSortMode;
-
-        let spells = this.itemFilterService.filter(section.spells, tabName);
-        if (sortMode === 'a') {
-          spells = spells.toSorted((a, b) => a.name.localeCompare(b.name));
-        }
-        section.spells = spells;
-      }
-    } catch (e) {
-      error(
-        'An error occurred while sorting and filtering section data',
-        false,
-        e
-      );
-      debug('Sorting/Filtering error troubleshooting info', {
-        defaultDocumentContext,
-      });
-    }
 
     const unlocked =
       FoundryAdapter.isActorSheetUnlocked(this.actor) &&
@@ -784,9 +743,43 @@ export class Tidy5eNpcSheet
       [[], []]
     );
 
-    // Apply item filters
+    const showSpellbookTab =
+      SettingsProvider.settings.showSpellbookTabNpc.get();
+
+    const spellbookTabId = showSpellbookTab
+      ? CONSTANTS.TAB_NPC_SPELLBOOK
+      : CONSTANTS.TAB_NPC_ABILITIES;
+
+    const npcPreferences = SheetPreferencesService.getByType(this.actor.type);
+
+    const abilitiesSortMode =
+      npcPreferences.tabs?.[CONSTANTS.TAB_NPC_ABILITIES]?.sort ?? 'm';
+
+    const spellbookSortMode =
+      npcPreferences.tabs?.[spellbookTabId]?.sort ?? 'm';
+
+    // Organize Abilities Sections
+    // Filter Abilities section contents
+    other = this.itemFilterService.filter(other, CONSTANTS.TAB_NPC_ABILITIES);
+
+    // Sort Abilities section contents
+    if (abilitiesSortMode === 'a') {
+      other = other.toSorted((a: Item5e, b: Item5e) =>
+        a.name.localeCompare(b.name)
+      );
+    }
 
     // Organize Spellbook
+    // Filter spells
+    spells = this.itemFilterService.filter(spells, spellbookTabId);
+
+    // Sort spells
+    if (spellbookSortMode === 'a') {
+      spells = spells.toSorted((a: Item5e, b: Item5e) =>
+        a.name.localeCompare(b.name)
+      );
+    }
+
     const spellbook = this._prepareSpellbook(context, spells);
 
     // Organize Features
