@@ -163,38 +163,41 @@
       </section>
     {/if}
 
-    <ItemFormGroup
-      labelText={localize('TIDY5E.Section.Label')}
-      field="flags.{CONSTANTS.MODULE_ID}.section"
-      cssClass="section"
-      let:inputId
-    >
-      <TextInput
-        document={$context.item}
+    <div class="flex-column small-gap">
+      <ItemFormGroup
+        labelText={localize('TIDY5E.Section.Label')}
         field="flags.{CONSTANTS.MODULE_ID}.section"
-        id={inputId}
-        placeholder={localize('TIDY5E.Section.Default')}
-        value={FoundryAdapter.tryGetFlag($context.item, 'section') ?? ''}
-        selectOnFocus={true}
-        title={localize('TIDY5E.Section.Tooltip')}
-      ></TextInput>
-    </ItemFormGroup>
-    <ItemFormGroup
-      labelText={localize('TIDY5E.Section.ActionLabel')}
-      field="flags.{CONSTANTS.MODULE_ID}.actionSection"
-      cssClass="section"
-      let:inputId
-    >
-      <TextInput
-        document={$context.item}
+        cssClass="section"
+        let:inputId
+      >
+        <TextInput
+          document={$context.item}
+          field="flags.{CONSTANTS.MODULE_ID}.section"
+          id={inputId}
+          placeholder={localize('TIDY5E.Section.Default')}
+          value={FoundryAdapter.tryGetFlag($context.item, 'section') ?? ''}
+          selectOnFocus={true}
+          title={localize('TIDY5E.Section.Tooltip')}
+        ></TextInput>
+      </ItemFormGroup>
+      <ItemFormGroup
+        labelText={localize('TIDY5E.Section.ActionLabel')}
         field="flags.{CONSTANTS.MODULE_ID}.actionSection"
-        id={inputId}
-        placeholder={localize('TIDY5E.Section.Default')}
-        value={FoundryAdapter.tryGetFlag($context.item, 'actionSection') ?? ''}
-        selectOnFocus={true}
-        title={localize('TIDY5E.Section.ActionTooltip')}
-      ></TextInput>
-    </ItemFormGroup>
+        cssClass="section"
+        let:inputId
+      >
+        <TextInput
+          document={$context.item}
+          field="flags.{CONSTANTS.MODULE_ID}.actionSection"
+          id={inputId}
+          placeholder={localize('TIDY5E.Section.Default')}
+          value={FoundryAdapter.tryGetFlag($context.item, 'actionSection') ??
+            ''}
+          selectOnFocus={true}
+          title={localize('TIDY5E.Section.ActionTooltip')}
+        ></TextInput>
+      </ItemFormGroup>
+    </div>
   </div>
 
   <VerticalLineSeparator />
