@@ -51,6 +51,11 @@ export type ItemCardContentComponent = ComponentType<
   >
 >;
 
+export type ContainerItemContext = {
+  totalWeight?: number;
+  isStack?: boolean;
+};
+
 export type ContainerSheetContext = {
   activateEditors: (
     node: HTMLElement,
@@ -58,6 +63,7 @@ export type ContainerSheetContext = {
   ) => void;
   appId: string;
   filterData: DocumentFilters;
+  itemContext: Record<string, ContainerItemContext>;
   itemDescriptions: ItemDescription[];
   lockItemQuantity: boolean;
   customContent: CustomContent[];

@@ -143,11 +143,11 @@
           </div>
         </div>
 
-        {#if ctx?.attunement && !FoundryAdapter.concealDetails(item)}
+        {#if 'attunement' in ctx && !FoundryAdapter.concealDetails(item)}
           <i
             class="fas fa-sun icon-attuned {ctx.attunement?.cls ??
               ''} no-pointer-events"
-            title={localize(ctx.attunement?.title)}
+            title={localize(ctx.attunement?.title ?? '')}
           />
         {/if}
 

@@ -857,18 +857,7 @@ export class Tidy5eCharacterSheet
           // Item details
           const ctx = (context.itemContext[item.id] ??= {});
           ctx.isStack = Number.isNumeric(quantity) && quantity !== 1;
-          ctx.attunement = {
-            [CONFIG.DND5E.attunementTypes.REQUIRED]: {
-              icon: 'fa-sun',
-              cls: 'not-attuned',
-              title: 'DND5E.AttunementRequired',
-            },
-            [CONFIG.DND5E.attunementTypes.ATTUNED]: {
-              icon: 'fa-sun',
-              cls: 'attuned',
-              title: 'DND5E.AttunementAttuned',
-            },
-          }[item.system.attunement];
+          ctx.attunement = FoundryAdapter.getAttunementContext(item);
 
           // Item usage
           ctx.hasUses = item.hasLimitedUses;

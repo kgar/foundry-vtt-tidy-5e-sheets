@@ -8,7 +8,7 @@
   import ItemUseButton from 'src/components/item-list/ItemUseButton.svelte';
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { Item5e, ItemSheetContext } from 'src/types/item.types';
+  import type { ContainerSheetContext, Item5e } from 'src/types/item.types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import CapacityBar from 'src/sheets/container/CapacityBar.svelte';
@@ -25,7 +25,7 @@
   import PinnedFilterToggles from 'src/components/filter/PinnedFilterToggles.svelte';
   import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
 
-  let context = getContext<Readable<ItemSheetContext>>('context');
+  let context = getContext<Readable<ContainerSheetContext>>('context');
 
   let searchCriteria = '';
 

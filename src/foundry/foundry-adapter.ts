@@ -1,6 +1,6 @@
 import type {
   ActionItem,
-  ActorSheetContext,
+  AttunementContext,
   CharacterSheetContext,
   ClassSummary,
   DropdownListOption,
@@ -1295,9 +1295,7 @@ export const FoundryAdapter = {
     cls: 'attuned',
     title: 'DND5E.AttunementAttuned',
   },
-  getAttunementContext(
-    item: Item5e
-  ): { icon: string; cls: string; title: string } | undefined {
+  getAttunementContext(item: Item5e): AttunementContext | undefined {
     return item.system.attunement === CONFIG.DND5E.attunementTypes.REQUIRED
       ? FoundryAdapter.attunementContextRequired
       : item.system.attunement === CONFIG.DND5E.attunementTypes.ATTUNED

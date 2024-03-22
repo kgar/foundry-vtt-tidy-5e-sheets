@@ -165,10 +165,29 @@ export type SpellbookSection = {
   editable: boolean;
 };
 
+export type AvailableLevel = {
+  level: number;
+  delta: number;
+  disabled: boolean;
+};
+
+export type AttunementContext = { icon: string; cls: string; title: string };
+
 export type CharacterItemContext = {
+  attunement?: AttunementContext;
+  availableLevels?: AvailableLevel[];
+  canToggle?: boolean;
+  concealDetails?: boolean;
+  group?: string;
+  hasTarget?: boolean;
+  hasUses?: boolean;
+  isDepleted?: boolean;
+  isOnCooldown?: boolean;
+  isStack?: boolean;
+  prefixedImage?: string;
   toggleClass?: string;
   toggleTitle?: string;
-  canToggle?: boolean;
+  totalWeight?: number;
 };
 
 export type CharacterSheetContext = {
@@ -182,6 +201,7 @@ export type CharacterSheetContext = {
   flawEnrichedHtml: string;
   idealEnrichedHtml: string;
   inventory: InventorySection[];
+  itemContext: Record<string, CharacterItemContext>;
   maxPreparedSpellsTotal: number;
   notes1EnrichedHtml: string;
   notes2EnrichedHtml: string;
@@ -199,6 +219,16 @@ export type CharacterSheetContext = {
   utilities: Utilities;
 } & ActorSheetContext;
 
+export type NpcItemContext = {
+  canToggle?: boolean;
+  hasTarget?: boolean;
+  hasUses?: boolean;
+  isDepleted?: boolean;
+  isOnCooldown?: boolean;
+  isStack?: boolean;
+  toggleTitle?: string;
+};
+
 export type NpcSheetContext = {
   appearanceEnrichedHtml: string;
   biographyEnrichedHtml: string;
@@ -208,6 +238,7 @@ export type NpcSheetContext = {
   flawEnrichedHtml: string;
   hideEmptySpellbook: boolean;
   idealEnrichedHtml: string;
+  itemContext: Record<string, NpcItemContext>;
   maxPreparedSpellsTotal: number;
   notes1EnrichedHtml: string;
   notes2EnrichedHtml: string;
@@ -228,10 +259,14 @@ export type NpcSheetContext = {
 } & ActorSheetContext;
 
 export type VehicleItemContext = {
-  toggleClass: string;
-  toggleTitle: string;
+  canToggle?: boolean;
   cover?: string;
+  hasUses?: boolean;
+  isDepleted?: boolean;
+  isOnCooldown?: boolean;
   threshold?: number | string;
+  toggleClass?: string;
+  toggleTitle?: string;
 };
 
 export type VehicleEncumbrance = { max: number; value: number; pct: number };
@@ -240,6 +275,7 @@ export type VehicleSheetContext = {
   cargo: VehicleCargoSection[];
   encumbrance: VehicleEncumbrance;
   features: VehicleFeatureSection[];
+  itemContext: Record<string, VehicleItemContext>;
   utilities: Utilities;
 } & ActorSheetContext;
 
@@ -326,7 +362,6 @@ export type ActorSheetContext = {
   healthPercentage: number;
   /** All items without a container. */
   items: Item5e[];
-  itemContext: any;
   lockExpChanges: boolean;
   lockHpMaxChanges: boolean;
   /**

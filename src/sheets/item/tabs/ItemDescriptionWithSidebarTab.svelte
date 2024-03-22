@@ -3,7 +3,10 @@
   import Select from 'src/components/inputs/Select.svelte';
   import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { ItemSheetContext } from 'src/types/item.types';
+  import type {
+    ContainerSheetContext,
+    ItemSheetContext,
+  } from 'src/types/item.types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import HorizontalLineSeparator from 'src/components/layout/HorizontalLineSeparator.svelte';
@@ -14,7 +17,8 @@
   import SheetEditor from 'src/components/editor/SheetEditor.svelte';
   import { CONSTANTS } from 'src/constants';
 
-  let context = getContext<Readable<ItemSheetContext>>('context');
+  let context =
+    getContext<Readable<ItemSheetContext | ContainerSheetContext>>('context');
 
   function onEditorActivation(node: HTMLElement) {
     if (editorIsActive) {

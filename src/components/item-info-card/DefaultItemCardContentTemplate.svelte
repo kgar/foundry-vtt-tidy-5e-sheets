@@ -1,18 +1,34 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { Item5e, ItemChatData } from 'src/types/item.types';
+  import type {
+    ContainerSheetContext,
+    Item5e,
+    ItemChatData,
+  } from 'src/types/item.types';
   import HorizontalLineSeparator from '../layout/HorizontalLineSeparator.svelte';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
-  import type { ActorSheetContext } from 'src/types/types';
+  import type {
+    ActorSheetContext,
+    CharacterSheetContext,
+    VehicleSheetContext,
+  } from 'src/types/types';
   import { coalesce } from 'src/utils/formatting';
 
   export let item: Item5e;
   export let chatData: ItemChatData;
 
-  let context = getContext<Readable<ActorSheetContext>>('context');
+  let context =
+    getContext<
+      Readable<
+        | CharacterSheetContext
+        | ActorSheetContext
+        | VehicleSheetContext
+        | ContainerSheetContext
+      >
+    >('context');
 
-  $: ctx = $context.itemContext[item.id];
+  $: ctx = $context.itemContext[item.id] = {};
   $: concealDetails = FoundryAdapter.concealDetails(item);
 
   const localize = FoundryAdapter.localize;
@@ -32,7 +48,7 @@
         )
       : item.name}
   </p>
-  {#if ctx?.hasUses}
+  {#if 'hasUses' in ctx && ctx.hasUses}
     <div class="info-card-amount">
       <span
         ><i class="fas fa-bolt" /><b>{localize('DND5E.Charges')}:</b>
