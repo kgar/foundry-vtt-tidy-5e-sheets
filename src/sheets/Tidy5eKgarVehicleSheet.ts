@@ -312,6 +312,7 @@ export class Tidy5eVehicleSheet
   }
 
   protected _prepareItems(context: VehicleSheetContext) {
+    // TODO: Replace with Tidy Column Selection implementation
     const cargoColumns: SimpleEditableColumn[] = [
       {
         label: game.i18n.localize('DND5E.Quantity'),
@@ -321,6 +322,7 @@ export class Tidy5eVehicleSheet
       },
     ];
 
+    // TODO: Replace with Tidy Column Selection implementation
     const equipmentColumns: SimpleEditableColumn[] = [
       {
         label: game.i18n.localize('DND5E.Quantity'),
