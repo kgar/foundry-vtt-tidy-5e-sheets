@@ -24,6 +24,7 @@
   import ButtonMenuCommand from 'src/components/button-menu/ButtonMenuCommand.svelte';
   import PinnedFilterToggles from 'src/components/filter/PinnedFilterToggles.svelte';
   import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
+  import InlineFavoriteIcon from 'src/components/item-list/InlineFavoriteIcon.svelte';
 
   let context = getContext<Readable<ContainerSheetContext>>('context');
 
@@ -195,10 +196,13 @@
                 {#if attunementContext}
                   <i
                     style="margin-left: auto; align-self: center;"
-                    class="item-state-icon fas {attunementContext.icon} {attunementContext.cls}"
+                    class="item-state-icon fas {attunementContext.icon} {attunementContext.cls} fa-fw"
                     title={localize(attunementContext.title)}
                   />
                 {/if}
+              {/if}
+              {#if FoundryAdapter.isDocumentFavorited(item)}
+                <InlineFavoriteIcon />
               {/if}
             </TidyTableCell>
             <TidyTableCell

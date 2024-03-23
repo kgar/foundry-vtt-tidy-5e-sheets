@@ -23,9 +23,10 @@ import {
   type ContainerPanelItemContext,
   type ContainerCapacityContext,
   type ActorInventoryTypes,
-  type ItemPartitions,
+  type CharacterItemPartitions,
   type CharacterFeatureSection,
   type CharacterItemContext,
+  type SpellbookSection,
 } from 'src/types/types';
 import {
   applySheetAttributesToWindow,
@@ -54,6 +55,7 @@ import { AsyncMutex } from 'src/utils/mutex';
 import type { Dnd5eActorCondition } from 'src/foundry/foundry-and-system';
 import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
 import { SheetPreferencesRuntime } from 'src/runtime/user-preferences/SheetPreferencesRuntime';
+import { CharacterSheetSections } from 'src/features/sections/CharacterSheetSections';
 
 export class Tidy5eCharacterSheet
   extends dnd5e.applications.actor.ActorSheet5eCharacter
@@ -833,88 +835,110 @@ export class Tidy5eCharacterSheet
   protected _prepareItems(context: CharacterSheetContext) {
     // Categorize items as inventory, spellbook, features, and classes
     const inventory: ActorInventoryTypes = {};
-    for (const type of [
-      'weapon',
-      'equipment',
-      'consumable',
-      'tool',
-      'container',
-      'loot',
-    ]) {
+    const favoriteInventory: ActorInventoryTypes = {};
+    for (const type of CharacterSheetSections.inventoryItemTypes) {
       inventory[type] = {
         label: `${CONFIG.Item.typeLabels[type]}Pl`,
         items: [],
         dataset: { type },
+        canCreate: true,
+      };
+      favoriteInventory[type] = {
+        label: `${CONFIG.Item.typeLabels[type]}Pl`,
+        items: [],
+        dataset: { type },
+        canCreate: false,
       };
     }
 
     // Partition items by category
-    let { items, spells, feats, races, backgrounds, classes, subclasses } =
-      context.items.reduce(
-        (obj: ItemPartitions, item: Item5e) => {
-          const { quantity, uses, recharge } = item.system;
+    let {
+      items,
+      spells,
+      feats,
+      races,
+      backgrounds,
+      classes,
+      subclasses,
+      favorites,
+    } = Array.from(this.actor.items).reduce(
+      (
+        obj: CharacterItemPartitions & { favorites: CharacterItemPartitions },
+        item: Item5e
+      ) => {
+        const { quantity, uses, recharge } = item.system;
 
-          // Item details
-          const ctx = (context.itemContext[item.id] ??= {});
-          ctx.isStack = Number.isNumeric(quantity) && quantity !== 1;
-          ctx.attunement = FoundryAdapter.getAttunementContext(item);
+        // Item details
+        const ctx = (context.itemContext[item.id] ??= {});
+        ctx.isStack = Number.isNumeric(quantity) && quantity !== 1;
+        ctx.attunement = FoundryAdapter.getAttunementContext(item);
 
-          // Item usage
-          ctx.hasUses = item.hasLimitedUses;
-          ctx.isOnCooldown =
-            recharge && !!recharge.value && recharge.charged === false;
-          ctx.isDepleted = ctx.isOnCooldown && ctx.hasUses && uses.value > 0;
-          ctx.hasTarget = item.hasAreaTarget || item.hasIndividualTarget;
+        // Item usage
+        ctx.hasUses = item.hasLimitedUses;
+        ctx.isOnCooldown =
+          recharge && !!recharge.value && recharge.charged === false;
+        ctx.isDepleted = ctx.isOnCooldown && ctx.hasUses && uses.value > 0;
+        ctx.hasTarget = item.hasAreaTarget || item.hasIndividualTarget;
 
-          // Unidentified items
-          ctx.concealDetails =
-            !game.user.isGM && item.system.identified === false;
+        // Unidentified items
+        ctx.concealDetails =
+          !game.user.isGM && item.system.identified === false;
 
-          // Item grouping
-          const [originId] =
-            item.getFlag('dnd5e', 'advancementOrigin')?.split('.') ?? [];
-          const group = this.actor.items.get(originId);
-          switch (group?.type) {
-            case 'race':
-              ctx.group = 'race';
-              break;
-            case 'background':
-              ctx.group = 'background';
-              break;
-            case 'class':
-              ctx.group = group.identifier;
-              break;
-            case 'subclass':
-              ctx.group = group.class?.identifier ?? 'other';
-              break;
-            default:
-              ctx.group = 'other';
-          }
-
-          // Individual item preparation
-          this._prepareItem(item, ctx);
-
-          // Classify items into types
-          if (item.type === 'spell') obj.spells.push(item);
-          else if (item.type === 'feat') obj.feats.push(item);
-          else if (item.type === 'race') obj.races.push(item);
-          else if (item.type === 'background') obj.backgrounds.push(item);
-          else if (item.type === 'class') obj.classes.push(item);
-          else if (item.type === 'subclass') obj.subclasses.push(item);
-          else if (Object.keys(inventory).includes(item.type))
-            obj.items.push(item);
-          return obj;
-        },
-        {
-          items: [],
-          spells: [],
-          feats: [],
-          races: [],
-          backgrounds: [],
-          classes: [],
-          subclasses: [],
+        // Item grouping
+        const [originId] =
+          item.getFlag('dnd5e', 'advancementOrigin')?.split('.') ?? [];
+        const group = this.actor.items.get(originId);
+        switch (group?.type) {
+          case 'race':
+            ctx.group = 'race';
+            break;
+          case 'background':
+            ctx.group = 'background';
+            break;
+          case 'class':
+            ctx.group = group.identifier;
+            break;
+          case 'subclass':
+            ctx.group = group.class?.identifier ?? 'other';
+            break;
+          default:
+            ctx.group = 'other';
         }
-      );
+
+        // Individual item preparation
+        this._prepareItem(item, ctx);
+
+        const isWithinContainer = this.actor.items.has(item.system.container);
+        // Classify items into types
+        if (!isWithinContainer) {
+          this._partitionItem(item, obj, inventory);
+        }
+
+        if (FoundryAdapter.isDocumentFavorited(item)) {
+          this._partitionItem(item, obj.favorites, favoriteInventory);
+        }
+
+        return obj;
+      },
+      {
+        items: [] as Item5e[],
+        spells: [] as Item5e[],
+        feats: [] as Item5e[],
+        races: [] as Item5e[],
+        backgrounds: [] as Item5e[],
+        classes: [] as Item5e[],
+        subclasses: [] as Item5e[],
+        favorites: {
+          items: [] as Item5e[],
+          spells: [] as Item5e[],
+          feats: [] as Item5e[],
+          races: [] as Item5e[],
+          backgrounds: [] as Item5e[],
+          classes: [] as Item5e[],
+          subclasses: [] as Item5e[],
+        },
+      }
+    );
 
     const characterPreferences = SheetPreferencesService.getByType(
       this.actor.type
@@ -944,6 +968,12 @@ export class Tidy5eCharacterSheet
       inventory[i.type].items.push(i);
     }
 
+    for (let i of favorites.items) {
+      const ctx = (context.itemContext[i.id] ??= {});
+      ctx.totalWeight = i.system.totalWeight?.toNearest(0.1);
+      favoriteInventory[i.type].items.push(i);
+    }
+
     // Organize Spellbook and count the number of prepared spells (excluding always, at will, cantrips, etc...)
     // Count prepared spells
     const nPrepared = spells.filter((spell) => {
@@ -971,30 +1001,14 @@ export class Tidy5eCharacterSheet
     // Section spells
     // TODO: Intercept with CCSS feature set
     const spellbook = this._prepareSpellbook(context, spells);
+    const favoriteSpellbook = this._prepareSpellbook(context, favorites.spells);
 
     // Organize Features
     // Sub-item groupings and validation
-    // Classes: Interleave matching subclasses and put unmatched subclasses into features so they don't disappear
-    const maxLevelDelta =
-      CONFIG.DND5E.maxLevel - this.actor.system.details.level;
-    classes = classes.reduce((arr, cls) => {
-      const ctx = (context.itemContext[cls.id] ??= {});
-      ctx.availableLevels = Array.fromRange(CONFIG.DND5E.maxLevel + 1)
-        .slice(1)
-        .map((level) => {
-          const delta = level - cls.system.levels;
-          return { level, delta, disabled: delta > maxLevelDelta };
-        });
-      ctx.prefixedImage = cls.img ? foundry.utils.getRoute(cls.img) : null;
-      arr.push(cls);
-      const identifier =
-        cls.system.identifier || cls.name.slugify({ strict: true });
-      const subclass = subclasses.findSplice(
-        (s: Item5e) => s.system.classIdentifier === identifier
-      );
-      if (subclass) arr.push(subclass);
-      return arr;
-    }, []);
+    // Classes: Interleave matching subclasses
+    classes = this._correlateClassesAndSubclasses(context, classes, subclasses);
+
+    // Put unmatched subclasses into features so they don't disappear
     for (const subclass of subclasses) {
       feats.push(subclass);
       const message = game.i18n.format('DND5E.SubclassMismatchWarn', {
@@ -1002,6 +1016,16 @@ export class Tidy5eCharacterSheet
         class: subclass.system.classIdentifier,
       });
       context.warnings.push({ message, type: 'warning' });
+    }
+
+    favorites.classes = this._correlateClassesAndSubclasses(
+      context,
+      favorites.classes,
+      favorites.subclasses
+    );
+
+    for (const subclass of favorites.subclasses) {
+      favorites.classes.push(subclass);
     }
 
     // Filter Features
@@ -1055,7 +1079,52 @@ export class Tidy5eCharacterSheet
 
     // Section features
     // TODO: Intercept with CCSS feature set
-    const features: Record<string, CharacterFeatureSection> = {
+    const features: Record<string, CharacterFeatureSection> =
+      this._buildFeaturesSections(races, backgrounds, classes, feats);
+
+    const favoriteFeatures: Record<string, CharacterFeatureSection> =
+      this._buildFeaturesSections(
+        favorites.races,
+        favorites.backgrounds,
+        favorites.classes,
+        favorites.feats
+      );
+
+    // Assign and return
+    context.inventory = Object.values(inventory);
+    context.spellbook = spellbook;
+    context.preparedSpells = nPrepared;
+    context.features = Object.values(features);
+    context.favorites = [
+      ...Object.values(favoriteInventory)
+        .filter((i) => i.items.length)
+        .map((i) => ({
+          ...i,
+          type: CONSTANTS.TAB_CHARACTER_INVENTORY,
+        })),
+      ...Object.values(favoriteFeatures)
+        .filter((i) => i.items.length)
+        .map((i) => ({
+          ...i,
+          type: CONSTANTS.TAB_CHARACTER_FEATURES,
+        })),
+      ...favoriteSpellbook
+        .filter((s: SpellbookSection) => s.spells.length)
+        .map((s: SpellbookSection) => ({
+          ...s,
+          type: CONSTANTS.TAB_CHARACTER_SPELLBOOK,
+        })),
+    ];
+  }
+
+  // TODO: Consider moving to the static class CharacterSheetSections
+  private _buildFeaturesSections(
+    races: any[],
+    backgrounds: any[],
+    classes: any[],
+    feats: any[]
+  ): Record<string, CharacterFeatureSection> {
+    return {
       race: {
         label: CONFIG.Item.typeLabels.race,
         items: races,
@@ -1095,12 +1164,57 @@ export class Tidy5eCharacterSheet
         showRequirementsColumn: true,
       },
     };
+  }
 
-    // Assign and return
-    context.inventory = Object.values(inventory);
-    context.spellbook = spellbook;
-    context.preparedSpells = nPrepared;
-    context.features = Object.values(features);
+  // TODO: Consider moving to the static class CharacterSheetSections
+  private _partitionItem(
+    item: any,
+    obj: CharacterItemPartitions,
+    inventory: ActorInventoryTypes
+  ) {
+    if (item.type === 'spell') {
+      obj.spells.push(item);
+    } else if (item.type === 'feat') {
+      obj.feats.push(item);
+    } else if (item.type === 'race') {
+      obj.races.push(item);
+    } else if (item.type === 'background') {
+      obj.backgrounds.push(item);
+    } else if (item.type === 'class') {
+      obj.classes.push(item);
+    } else if (item.type === 'subclass') {
+      obj.subclasses.push(item);
+    } else if (Object.keys(inventory).includes(item.type)) {
+      obj.items.push(item);
+    }
+  }
+
+  // TODO: Consider moving to the static class CharacterSheetSections
+  private _correlateClassesAndSubclasses(
+    context: CharacterSheetContext,
+    classes: Item5e[],
+    subclasses: Item5e[]
+  ) {
+    const maxLevelDelta =
+      CONFIG.DND5E.maxLevel - this.actor.system.details.level;
+    return classes.reduce((arr, cls) => {
+      const ctx = (context.itemContext[cls.id] ??= {});
+      ctx.availableLevels = Array.fromRange(CONFIG.DND5E.maxLevel + 1)
+        .slice(1)
+        .map((level) => {
+          const delta = level - cls.system.levels;
+          return { level, delta, disabled: delta > maxLevelDelta };
+        });
+      ctx.prefixedImage = cls.img ? foundry.utils.getRoute(cls.img) : null;
+      arr.push(cls);
+      const identifier =
+        cls.system.identifier || cls.name.slugify({ strict: true });
+      const subclass = subclasses.findSplice(
+        (s: Item5e) => s.system.classIdentifier === identifier
+      );
+      if (subclass) arr.push(subclass);
+      return arr;
+    }, []);
   }
 
   /**

@@ -109,9 +109,10 @@ export type InventorySection = {
   label: string;
   items: Item5e[];
   dataset: Record<string, string>;
+  canCreate?: boolean;
 };
 
-export type ItemPartitions = {
+export type CharacterItemPartitions = {
   items: Item5e[];
   spells: Item5e[];
   feats: Item5e[];
@@ -190,6 +191,13 @@ export type CharacterItemContext = {
   totalWeight?: number;
 };
 
+export type FavoriteSection =
+  | (InventorySection & { type: typeof CONSTANTS.TAB_CHARACTER_INVENTORY })
+  | (SpellbookSection & { type: typeof CONSTANTS.TAB_CHARACTER_SPELLBOOK })
+  | (CharacterFeatureSection & {
+      type: typeof CONSTANTS.TAB_CHARACTER_FEATURES;
+    });
+
 export type CharacterSheetContext = {
   actorClassesToImages: Record<string, string>;
   allowMaxHpOverride: boolean;
@@ -197,6 +205,7 @@ export type CharacterSheetContext = {
   biographyEnrichedHtml: string;
   bondEnrichedHtml: string;
   containerPanelItems: ContainerPanelItemContext[];
+  favorites: FavoriteSection[];
   features: CharacterFeatureSection[];
   flawEnrichedHtml: string;
   idealEnrichedHtml: string;
@@ -360,6 +369,9 @@ export type ActorSheetContext = {
    * Note: This calculation ignores temp HP / temp HP Max, because the stock 5e sheets count 0 hp (ignoring all temp values) as incapacitated. Tidy 5e sheets carries this principle forward with health percentage calculation.
    */
   healthPercentage: number;
+  isCharacter: boolean;
+  isNPC: boolean;
+  isVehicle: boolean;
   /** All items without a container. */
   items: Item5e[];
   lockExpChanges: boolean;
