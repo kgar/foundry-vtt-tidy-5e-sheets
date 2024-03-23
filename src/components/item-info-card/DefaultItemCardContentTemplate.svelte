@@ -28,7 +28,7 @@
       >
     >('context');
 
-  $: ctx = $context.itemContext[item.id] = {};
+  $: ctx = $context.itemContext[item.id] ?? {};
   $: concealDetails = FoundryAdapter.concealDetails(item);
 
   const localize = FoundryAdapter.localize;
