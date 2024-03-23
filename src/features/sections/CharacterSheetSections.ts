@@ -1,7 +1,7 @@
 import { CONSTANTS } from 'src/constants';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type { Item5e } from 'src/types/item.types';
-import type { InventorySection } from 'src/types/types';
+import type { InventorySection, SpellbookSection } from 'src/types/types';
 
 export class CharacterSheetSections {
   static get inventoryItemTypes() {
@@ -46,5 +46,45 @@ export class SheetSections {
 
   static tryGetCustomSection(item: Item5e): string {
     return FoundryAdapter.tryGetFlag<string>(item, 'section')?.trim() ?? '';
+  }
+
+  static generateCustomSpellbookSections(
+    spells: Item5e[],
+    options: Partial<SpellbookSection>
+  ) {
+    const customSpellbook: Record<string, SpellbookSection> = {};
+    spells.forEach((s) =>
+      SheetSections.applySpellToSection(customSpellbook, s, options)
+    );
+    return Object.values(customSpellbook);
+  }
+
+  static applySpellToSection(
+    spellbook: Record<string, SpellbookSection>,
+    spell: Item5e,
+    options: Partial<SpellbookSection>
+  ) {
+    const customSectionName = SheetSections.tryGetCustomSection(spell);
+
+    if (!customSectionName) {
+      // TODO: Eventually absorb core spellbook section prep to this service
+      return;
+    }
+
+    const customSection: SpellbookSection = (spellbook[customSectionName] ??= {
+      dataset: { [SheetSections.sectionPropertyPath]: customSectionName },
+      spells: [],
+      label: customSectionName,
+      canCreate: true,
+      canPrepare: true,
+      usesSlots: false,
+      custom: {
+        creationItemTypes: [CONSTANTS.ITEM_TYPE_SPELL],
+      },
+
+      ...options,
+    });
+
+    customSection.spells.push(spell);
   }
 }

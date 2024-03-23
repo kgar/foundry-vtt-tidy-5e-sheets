@@ -157,18 +157,18 @@ export type SimpleEditableColumn = {
 };
 
 export type SpellbookSection = {
-  order: number;
+  order?: number;
   label: string;
   usesSlots: boolean;
   canCreate: boolean;
   canPrepare: boolean;
   spells: Item5e[];
-  uses: number; // verify
-  slots: number; // verify
-  override: number;
-  dataset: { type: 'spell'; level: number; preparationMode: string };
-  prop: string;
-  editable: boolean;
+  uses?: number;
+  slots?: number;
+  override?: number;
+  dataset: Record<string, string>;
+  prop?: string;
+  custom?: CustomSectionOptions;
 };
 
 export type AvailableLevel = {

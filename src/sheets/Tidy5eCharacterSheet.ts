@@ -55,7 +55,10 @@ import { AsyncMutex } from 'src/utils/mutex';
 import type { Dnd5eActorCondition } from 'src/foundry/foundry-and-system';
 import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
 import { SheetPreferencesRuntime } from 'src/runtime/user-preferences/SheetPreferencesRuntime';
-import { CharacterSheetSections } from 'src/features/sections/CharacterSheetSections';
+import {
+  CharacterSheetSections,
+  SheetSections,
+} from 'src/features/sections/CharacterSheetSections';
 
 export class Tidy5eCharacterSheet
   extends dnd5e.applications.actor.ActorSheet5eCharacter
@@ -963,7 +966,6 @@ export class Tidy5eCharacterSheet
     }
 
     // Section the items by type
-    // TODO: Intercept with CCSS feature set
     for (let i of items) {
       const ctx = (context.itemContext[i.id] ??= {});
       ctx.totalWeight = i.system.totalWeight?.toNearest(0.1);
@@ -1005,9 +1007,33 @@ export class Tidy5eCharacterSheet
     }
 
     // Section spells
-    // TODO: Intercept with CCSS feature set
-    const spellbook = this._prepareSpellbook(context, spells);
-    const favoriteSpellbook = this._prepareSpellbook(context, favorites.spells);
+    // TODO: Take over `_prepareSpellbook` and put in `SheetSections`; have custom sectioning built right into the process.
+    const customSectionSpells = spells.filter((s) =>
+      SheetSections.tryGetCustomSection(s)
+    );
+    spells = spells.filter((s) => !SheetSections.tryGetCustomSection(s));
+    const spellbook = [
+      ...this._prepareSpellbook(context, spells),
+      ...SheetSections.generateCustomSpellbookSections(customSectionSpells, {
+        canCreate: true,
+      }),
+    ];
+
+    const customSectionFavoriteSpells = favorites.spells.filter((s) =>
+      SheetSections.tryGetCustomSection(s)
+    );
+    favorites.spells = favorites.spells.filter(
+      (s) => !SheetSections.tryGetCustomSection(s)
+    );
+    const favoriteSpellbook = [
+      ...this._prepareSpellbook(context, favorites.spells),
+      ...SheetSections.generateCustomSpellbookSections(
+        customSectionFavoriteSpells,
+        {
+          canCreate: false,
+        }
+      ),
+    ];
 
     // Organize Features
     // Sub-item groupings and validation
