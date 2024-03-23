@@ -110,6 +110,7 @@ export type InventorySection = {
   items: Item5e[];
   dataset: Record<string, string>;
   canCreate?: boolean;
+  custom?: boolean;
 };
 
 export type CharacterItemPartitions = {

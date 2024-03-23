@@ -35,7 +35,7 @@
       <InventoryList
         {section}
         {items}
-        primaryColumnName="{localize(section.label)} ({items.length})"
+        primaryColumnName={localize(section.label)}
         lockControls={true}
         allowFavoriteIconNextToName={false}
         includeWeightColumn={false}

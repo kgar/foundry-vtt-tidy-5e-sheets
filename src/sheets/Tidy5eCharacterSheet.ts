@@ -967,13 +967,17 @@ export class Tidy5eCharacterSheet
     for (let i of items) {
       const ctx = (context.itemContext[i.id] ??= {});
       ctx.totalWeight = i.system.totalWeight?.toNearest(0.1);
-      inventory[i.type].items.push(i);
+      CharacterSheetSections.applyInventoryItemToSection(inventory, i, {
+        canCreate: true,
+      });
     }
 
     for (let i of favorites.items) {
       const ctx = (context.itemContext[i.id] ??= {});
       ctx.totalWeight = i.system.totalWeight?.toNearest(0.1);
-      favoriteInventory[i.type].items.push(i);
+      CharacterSheetSections.applyInventoryItemToSection(favoriteInventory, i, {
+        canCreate: false,
+      });
     }
 
     // Organize Spellbook and count the number of prepared spells (excluding always, at will, cantrips, etc...)
