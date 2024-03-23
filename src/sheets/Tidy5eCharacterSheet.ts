@@ -861,74 +861,68 @@ export class Tidy5eCharacterSheet
       classes,
       subclasses,
       favorites,
-    } = Array.from(this.actor.items).reduce(
-      (
-        obj: CharacterItemPartitions & { favorites: CharacterItemPartitions },
-        item: Item5e
-      ) => {
-        const { quantity, uses, recharge } = item.system;
+    } = Array.from(this.actor.items)
+      .toSorted((a: Item5e, b: Item5e) => (a.sort || 0) - (b.sort || 0))
+      .reduce(
+        (
+          obj: CharacterItemPartitions & { favorites: CharacterItemPartitions },
+          item: Item5e
+        ) => {
+          const { quantity, uses, recharge } = item.system;
 
-        // Item details
-        const ctx = (context.itemContext[item.id] ??= {});
-        ctx.isStack = Number.isNumeric(quantity) && quantity !== 1;
-        ctx.attunement = FoundryAdapter.getAttunementContext(item);
+          // Item details
+          const ctx = (context.itemContext[item.id] ??= {});
+          ctx.isStack = Number.isNumeric(quantity) && quantity !== 1;
+          ctx.attunement = FoundryAdapter.getAttunementContext(item);
 
-        // Item usage
-        ctx.hasUses = item.hasLimitedUses;
-        ctx.isOnCooldown =
-          recharge && !!recharge.value && recharge.charged === false;
-        ctx.isDepleted = ctx.isOnCooldown && ctx.hasUses && uses.value > 0;
-        ctx.hasTarget = item.hasAreaTarget || item.hasIndividualTarget;
+          // Item usage
+          ctx.hasUses = item.hasLimitedUses;
+          ctx.isOnCooldown =
+            recharge && !!recharge.value && recharge.charged === false;
+          ctx.isDepleted = ctx.isOnCooldown && ctx.hasUses && uses.value > 0;
+          ctx.hasTarget = item.hasAreaTarget || item.hasIndividualTarget;
 
-        // Unidentified items
-        ctx.concealDetails =
-          !game.user.isGM && item.system.identified === false;
+          // Unidentified items
+          ctx.concealDetails =
+            !game.user.isGM && item.system.identified === false;
 
-        // Item grouping
-        const [originId] =
-          item.getFlag('dnd5e', 'advancementOrigin')?.split('.') ?? [];
-        const group = this.actor.items.get(originId);
-        switch (group?.type) {
-          case 'race':
-            ctx.group = 'race';
-            break;
-          case 'background':
-            ctx.group = 'background';
-            break;
-          case 'class':
-            ctx.group = group.identifier;
-            break;
-          case 'subclass':
-            ctx.group = group.class?.identifier ?? 'other';
-            break;
-          default:
-            ctx.group = 'other';
-        }
+          // Item grouping
+          const [originId] =
+            item.getFlag('dnd5e', 'advancementOrigin')?.split('.') ?? [];
+          const group = this.actor.items.get(originId);
+          switch (group?.type) {
+            case 'race':
+              ctx.group = 'race';
+              break;
+            case 'background':
+              ctx.group = 'background';
+              break;
+            case 'class':
+              ctx.group = group.identifier;
+              break;
+            case 'subclass':
+              ctx.group = group.class?.identifier ?? 'other';
+              break;
+            default:
+              ctx.group = 'other';
+          }
 
-        // Individual item preparation
-        this._prepareItem(item, ctx);
+          // Individual item preparation
+          this._prepareItem(item, ctx);
 
-        const isWithinContainer = this.actor.items.has(item.system.container);
-        // Classify items into types
-        if (!isWithinContainer) {
-          this._partitionItem(item, obj, inventory);
-        }
+          const isWithinContainer = this.actor.items.has(item.system.container);
+          // Classify items into types
+          if (!isWithinContainer) {
+            this._partitionItem(item, obj, inventory);
+          }
 
-        if (FoundryAdapter.isDocumentFavorited(item)) {
-          this._partitionItem(item, obj.favorites, favoriteInventory);
-        }
+          if (FoundryAdapter.isDocumentFavorited(item)) {
+            this._partitionItem(item, obj.favorites, favoriteInventory);
+          }
 
-        return obj;
-      },
-      {
-        items: [] as Item5e[],
-        spells: [] as Item5e[],
-        feats: [] as Item5e[],
-        races: [] as Item5e[],
-        backgrounds: [] as Item5e[],
-        classes: [] as Item5e[],
-        subclasses: [] as Item5e[],
-        favorites: {
+          return obj;
+        },
+        {
           items: [] as Item5e[],
           spells: [] as Item5e[],
           feats: [] as Item5e[],
@@ -936,9 +930,17 @@ export class Tidy5eCharacterSheet
           backgrounds: [] as Item5e[],
           classes: [] as Item5e[],
           subclasses: [] as Item5e[],
-        },
-      }
-    );
+          favorites: {
+            items: [] as Item5e[],
+            spells: [] as Item5e[],
+            feats: [] as Item5e[],
+            races: [] as Item5e[],
+            backgrounds: [] as Item5e[],
+            classes: [] as Item5e[],
+            subclasses: [] as Item5e[],
+          },
+        }
+      );
 
     const characterPreferences = SheetPreferencesService.getByType(
       this.actor.type
