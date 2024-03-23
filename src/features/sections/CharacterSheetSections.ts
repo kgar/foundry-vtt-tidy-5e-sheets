@@ -25,7 +25,9 @@ export class CharacterSheetSections {
       items: [],
       label: customSectionName,
       canCreate: true,
-      custom: true,
+      custom: {
+        creationItemTypes: CharacterSheetSections.inventoryItemTypes,
+      },
       ...customSectionOptions,
     });
 

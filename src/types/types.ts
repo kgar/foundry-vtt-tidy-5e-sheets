@@ -105,12 +105,16 @@ export type SpellCalculations = {
 
 export type ActorInventoryTypes = Record<string, InventorySection>;
 
+export type CustomSectionOptions = {
+  creationItemTypes: string[];
+};
+
 export type InventorySection = {
   label: string;
   items: Item5e[];
   dataset: Record<string, string>;
   canCreate?: boolean;
-  custom?: boolean;
+  custom?: CustomSectionOptions;
 };
 
 export type CharacterItemPartitions = {
