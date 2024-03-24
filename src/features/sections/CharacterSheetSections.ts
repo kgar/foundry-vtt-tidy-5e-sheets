@@ -1,7 +1,11 @@
 import { CONSTANTS } from 'src/constants';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type { Item5e } from 'src/types/item.types';
-import type { InventorySection, SpellbookSection } from 'src/types/types';
+import type {
+  CharacterFeatureSection,
+  InventorySection,
+  SpellbookSection,
+} from 'src/types/types';
 
 export class CharacterSheetSections {
   static get inventoryItemTypes() {
@@ -32,6 +36,41 @@ export class CharacterSheetSections {
     });
 
     customSection.items.push(item);
+  }
+
+  static applyCharacterFeatureToSection(
+    features: Record<string, CharacterFeatureSection>,
+    feat: Item5e,
+    customSectionOptions: Partial<CharacterFeatureSection>
+  ) {
+    const customSectionName = SheetSections.tryGetCustomSection(feat);
+
+    if (!customSectionName) {
+      return;
+    }
+
+    const customSection: CharacterFeatureSection = (features[
+      customSectionName
+    ] ??= {
+      label: customSectionName,
+      items: [],
+      hasActions: true,
+      dataset: {
+        [SheetSections.sectionPropertyPath]: customSectionName,
+        type: CONSTANTS.ITEM_TYPE_FEAT,
+      },
+      isClass: false,
+      canCreate: true,
+      showUsesColumn: true,
+      showUsagesColumn: true,
+      showRequirementsColumn: true,
+      custom: {
+        creationItemTypes: [CONSTANTS.ITEM_TYPE_FEAT],
+      },
+      ...customSectionOptions,
+    });
+
+    customSection.items.push(feat);
   }
 }
 

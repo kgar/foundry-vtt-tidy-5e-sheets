@@ -90,6 +90,8 @@ export type CharacterFeatureSection = {
   showUsagesColumn?: boolean;
   showLevelColumn?: boolean;
   showRequirementsColumn?: boolean;
+  canCreate: boolean;
+  custom?: CustomSectionOptions;
 } & FeatureSection;
 
 export type SpellCalculations = {
@@ -113,7 +115,7 @@ export type InventorySection = {
   label: string;
   items: Item5e[];
   dataset: Record<string, string>;
-  canCreate?: boolean;
+  canCreate: boolean;
   custom?: CustomSectionOptions;
 };
 

@@ -600,12 +600,8 @@ export class Tidy5eCharacterSheet
 
     let containerPanelItems: ContainerPanelItemContext[] = [];
     try {
-      let containers = Array.from<Item5e>(this.actor.items.values())
-        .filter(
-          (i: Item5e) =>
-            i.type === CONSTANTS.ITEM_TYPE_CONTAINER &&
-            !this.actor.items.has(i.system.container)
-        )
+      let containers = defaultDocumentContext.items
+        .filter((i: Item5e) => i.type === CONSTANTS.ITEM_TYPE_CONTAINER)
         .toSorted((a: Item5e, b: Item5e) => a.sort - b.sort);
 
       for (let container of containers) {
@@ -773,7 +769,7 @@ export class Tidy5eCharacterSheet
       owner: this.actor.isOwner,
       showContainerPanel:
         FoundryAdapter.tryGetFlag(this.actor, 'showContainerPanel') === true &&
-        Array.from(this.actor.items).some(
+        Array.from(defaultDocumentContext.items).some(
           (i: Item5e) => i.type === CONSTANTS.ITEM_TYPE_CONTAINER
         ),
       showLimitedSheet: FoundryAdapter.showLimitedSheet(this.actor),
@@ -1112,14 +1108,17 @@ export class Tidy5eCharacterSheet
     // Section features
     // TODO: Intercept with CCSS feature set
     const features: Record<string, CharacterFeatureSection> =
-      this._buildFeaturesSections(races, backgrounds, classes, feats);
+      this._buildFeaturesSections(races, backgrounds, classes, feats, {
+        canCreate: true,
+      });
 
     const favoriteFeatures: Record<string, CharacterFeatureSection> =
       this._buildFeaturesSections(
         favorites.races,
         favorites.backgrounds,
         favorites.classes,
-        favorites.feats
+        favorites.feats,
+        { canCreate: false }
       );
 
     // Assign and return
@@ -1154,15 +1153,23 @@ export class Tidy5eCharacterSheet
     races: any[],
     backgrounds: any[],
     classes: any[],
-    feats: any[]
+    feats: any[],
+    options: Partial<CharacterFeatureSection>
   ): Record<string, CharacterFeatureSection> {
-    return {
+    const customFeats = feats.filter((f) =>
+      SheetSections.tryGetCustomSection(f)
+    );
+    feats = feats.filter((f) => !SheetSections.tryGetCustomSection(f));
+
+    const features = {
       race: {
         label: CONFIG.Item.typeLabels.race,
         items: races,
         hasActions: false,
         dataset: { type: 'race' },
         showRequirementsColumn: true,
+        canCreate: true,
+        ...options,
       },
       background: {
         label: CONFIG.Item.typeLabels.background,
@@ -1170,6 +1177,8 @@ export class Tidy5eCharacterSheet
         hasActions: false,
         dataset: { type: 'background' },
         showRequirementsColumn: true,
+        canCreate: true,
+        ...options,
       },
       classes: {
         label: `${CONFIG.Item.typeLabels.class}Pl`,
@@ -1178,6 +1187,8 @@ export class Tidy5eCharacterSheet
         dataset: { type: 'class' },
         isClass: true,
         showLevelColumn: true,
+        canCreate: true,
+        ...options,
       },
       active: {
         label: 'DND5E.FeatureActive',
@@ -1187,6 +1198,8 @@ export class Tidy5eCharacterSheet
         showRequirementsColumn: true,
         showUsagesColumn: true,
         showUsesColumn: true,
+        canCreate: true,
+        ...options,
       },
       passive: {
         label: 'DND5E.FeaturePassive',
@@ -1194,8 +1207,20 @@ export class Tidy5eCharacterSheet
         hasActions: false,
         dataset: { type: 'feat' },
         showRequirementsColumn: true,
+        canCreate: true,
+        ...options,
       },
     };
+
+    customFeats.forEach((f) =>
+      CharacterSheetSections.applyCharacterFeatureToSection(
+        features,
+        f,
+        options
+      )
+    );
+
+    return features;
   }
 
   // TODO: Consider moving to the static class CharacterSheetSections
