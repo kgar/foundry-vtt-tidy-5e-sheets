@@ -10,6 +10,7 @@ import { debug, error } from 'src/utils/logging';
 import { SheetPreferencesService } from '../user-preferences/SheetPreferencesService';
 import type { ItemFilterService } from '../filtering/ItemFilterService';
 import { SpellUtils } from 'src/utils/SpellUtils';
+import { SheetSections } from '../sections/CharacterSheetSections';
 
 export type ActionSets = Record<string, Set<ActionItem>>;
 
@@ -47,11 +48,13 @@ export function getActorActions(
 
     let filteredItems = actor.items.filter(isItemInActionList);
 
+    // Filter actions
     filteredItems = itemFilterService.filter(
       filteredItems,
       CONSTANTS.TAB_ACTOR_ACTIONS
     );
 
+    // Sort actions
     filteredItems = filteredItems
       .sort((a: Item5e, b: Item5e) => {
         if (actionSortMode === 'a') {
@@ -242,10 +245,22 @@ function buildActionSets(filteredItems: any): ActionSets {
   let actionSets = filteredItems.reduce(
     (acc: ActionSets, actionItem: ActionItem) => {
       try {
-        const activationType = getActivationType(
-          actionItem.item.system.activation?.type,
-          customMappings
+        /* 
+          Priority 1: Custom Action Sections
+          Priority 2: Custom Mappings via the Tidy API
+          Priority 3: Item Activation Type
+        */
+        const customActionSection = SheetSections.tryGetCustomActionSection(
+          actionItem.item
         );
+
+        const activationType = customActionSection
+          ? customActionSection
+          : getActivationType(
+              actionItem.item.system.activation?.type,
+              customMappings
+            );
+
         if (!acc[activationType]) {
           acc[activationType] = new Set<ActionItem>();
         }

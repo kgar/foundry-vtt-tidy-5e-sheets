@@ -66,7 +66,8 @@
         <svelte:fragment slot="header">
           <ItemTableHeaderRow>
             <ItemTableColumn primary={true}>
-              {FoundryAdapter.getActivationTypeLabel(actionType)}
+              {FoundryAdapter.getActivationTypeLabel(actionType) ??
+                localize(actionType)}
             </ItemTableColumn>
             <ItemTableColumn baseWidth="6.25rem"
               >{localize('DND5E.Range')}</ItemTableColumn

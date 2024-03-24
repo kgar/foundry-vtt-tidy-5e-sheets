@@ -79,12 +79,34 @@ export class SheetSections {
     return 'section';
   }
 
+  static get actionSectionProperty() {
+    return 'actionSection';
+  }
+
   static get sectionPropertyPath() {
     return `flags.${CONSTANTS.MODULE_ID}.${SheetSections.sectionProperty}`;
   }
 
+  static get actionSectionPropertyPath() {
+    return `flags.${CONSTANTS.MODULE_ID}.${SheetSections.actionSectionProperty}`;
+  }
+
   static tryGetCustomSection(item: Item5e): string {
-    return FoundryAdapter.tryGetFlag<string>(item, 'section')?.trim() ?? '';
+    return (
+      FoundryAdapter.tryGetFlag<string>(
+        item,
+        SheetSections.sectionProperty
+      )?.trim() ?? ''
+    );
+  }
+
+  static tryGetCustomActionSection(item: Item5e): string {
+    return (
+      FoundryAdapter.tryGetFlag<string>(
+        item,
+        SheetSections.actionSectionProperty
+      )?.trim() ?? ''
+    );
   }
 
   static generateCustomSpellbookSections(

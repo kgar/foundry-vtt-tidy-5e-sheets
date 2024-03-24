@@ -18,6 +18,7 @@
   import { CONSTANTS } from 'src/constants';
   import ItemFormGroup from '../form/ItemFormGroup.svelte';
   import TextInput from 'src/components/inputs/TextInput.svelte';
+  import { SheetSections } from 'src/features/sections/CharacterSheetSections';
 
   let context =
     getContext<Readable<ItemSheetContext | ContainerSheetContext>>('context');
@@ -166,33 +167,38 @@
     <div class="flex-column small-gap">
       <ItemFormGroup
         labelText={localize('TIDY5E.Section.Label')}
-        field="flags.{CONSTANTS.MODULE_ID}.section"
+        field={SheetSections.sectionPropertyPath}
         cssClass="section"
         let:inputId
       >
         <TextInput
           document={$context.item}
-          field="flags.{CONSTANTS.MODULE_ID}.section"
+          field={SheetSections.sectionPropertyPath}
           id={inputId}
           placeholder={localize('TIDY5E.Section.Default')}
-          value={FoundryAdapter.tryGetFlag($context.item, 'section') ?? ''}
+          value={FoundryAdapter.tryGetFlag(
+            $context.item,
+            SheetSections.sectionProperty,
+          ) ?? ''}
           selectOnFocus={true}
           title={localize('TIDY5E.Section.Tooltip')}
         ></TextInput>
       </ItemFormGroup>
       <ItemFormGroup
         labelText={localize('TIDY5E.Section.ActionLabel')}
-        field="flags.{CONSTANTS.MODULE_ID}.actionSection"
+        field={SheetSections.actionSectionPropertyPath}
         cssClass="section"
         let:inputId
       >
         <TextInput
           document={$context.item}
-          field="flags.{CONSTANTS.MODULE_ID}.actionSection"
+          field={SheetSections.actionSectionPropertyPath}
           id={inputId}
           placeholder={localize('TIDY5E.Section.Default')}
-          value={FoundryAdapter.tryGetFlag($context.item, 'actionSection') ??
-            ''}
+          value={FoundryAdapter.tryGetFlag(
+            $context.item,
+            SheetSections.actionSectionProperty,
+          ) ?? ''}
           selectOnFocus={true}
           title={localize('TIDY5E.Section.ActionTooltip')}
         ></TextInput>
