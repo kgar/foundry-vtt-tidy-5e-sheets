@@ -788,10 +788,24 @@ export class Tidy5eNpcSheet
       );
     }
 
-    const spellbook = this._prepareSpellbook(context, spells);
+    // Section spells
+    // TODO: Take over `_prepareSpellbook` and put in `SheetSections`; have custom sectioning built right into the process.
+    const customSectionSpells = spells.filter((s: Item5e) =>
+      SheetSections.tryGetCustomSection(s)
+    );
+    spells = spells.filter(
+      (s: Item5e) => !SheetSections.tryGetCustomSection(s)
+    );
+    const spellbook = [
+      ...this._prepareSpellbook(context, spells),
+      ...SheetSections.generateCustomSpellbookSections(customSectionSpells, {
+        canCreate: true,
+      }),
+    ];
 
     // Organize Features
     for (let item of other) {
+      // Handle custom section, if present
       if (SheetSections.tryGetCustomSection(item)) {
         NpcSheetSections.applyAbilityToSection(features, item, {
           canCreate: true,
