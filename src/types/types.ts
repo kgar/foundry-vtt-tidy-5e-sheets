@@ -108,6 +108,7 @@ export type SpellCalculations = {
 export type ActorInventoryTypes = Record<string, InventorySection>;
 
 export type CustomSectionOptions = {
+  section: string;
   creationItemTypes: string[];
 };
 
@@ -234,6 +235,11 @@ export type CharacterSheetContext = {
   traitEnrichedHtml: string;
   utilities: Utilities;
 } & ActorSheetContext;
+
+export type NpcAbilitySection = {
+  canCreate: boolean;
+  custom?: CustomSectionOptions
+} & FeatureSection;
 
 export type NpcItemContext = {
   canToggle?: boolean;

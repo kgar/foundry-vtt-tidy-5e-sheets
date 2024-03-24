@@ -12,7 +12,7 @@ import type {
   MessageBus,
   MessageBusMessage,
   Utilities,
-  FeatureSection,
+  NpcAbilitySection,
 } from 'src/types/types';
 import { writable } from 'svelte/store';
 import NpcSheet from './npc/NpcSheet.svelte';
@@ -48,6 +48,10 @@ import { SheetPreferencesService } from 'src/features/user-preferences/SheetPref
 import { AsyncMutex } from 'src/utils/mutex';
 import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
 import { SheetPreferencesRuntime } from 'src/runtime/user-preferences/SheetPreferencesRuntime';
+import {
+  NpcSheetSections,
+  SheetSections,
+} from 'src/features/sections/CharacterSheetSections';
 
 export class Tidy5eNpcSheet
   extends dnd5e.applications.actor.ActorSheet5eNPC
@@ -699,28 +703,32 @@ export class Tidy5eNpcSheet
 
   protected _prepareItems(context: NpcSheetContext) {
     // Categorize Items as Features and Spells
-    const features: Record<string, FeatureSection> = {
+    const features: Record<string, NpcAbilitySection> = {
       weapons: {
         label: game.i18n.localize('DND5E.AttackPl'),
         items: [],
         hasActions: true,
         dataset: { type: 'weapon', 'weapon-type': 'natural' },
+        canCreate: true,
       },
       actions: {
         label: game.i18n.localize('DND5E.ActionPl'),
         items: [],
         hasActions: true,
         dataset: { type: 'feat', 'activation.type': 'action' },
+        canCreate: true,
       },
       passive: {
         label: game.i18n.localize('DND5E.Features'),
         items: [],
         dataset: { type: 'feat' },
+        canCreate: true,
       },
       equipment: {
         label: game.i18n.localize('DND5E.Inventory'),
         items: [],
         dataset: { type: 'loot' },
+        canCreate: true,
       },
     };
 
@@ -784,7 +792,11 @@ export class Tidy5eNpcSheet
 
     // Organize Features
     for (let item of other) {
-      if (item.type === 'weapon') features.weapons.items.push(item);
+      if (SheetSections.tryGetCustomSection(item)) {
+        NpcSheetSections.applyAbilityToSection(features, item, {
+          canCreate: true,
+        });
+      } else if (item.type === 'weapon') features.weapons.items.push(item);
       else if (item.type === 'feat') {
         if (item.system.activation.type) features.actions.items.push(item);
         else features.passive.items.push(item);

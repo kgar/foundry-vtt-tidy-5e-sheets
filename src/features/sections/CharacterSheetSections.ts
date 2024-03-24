@@ -4,12 +4,19 @@ import type { Item5e } from 'src/types/item.types';
 import type {
   CharacterFeatureSection,
   InventorySection,
+  NpcAbilitySection,
   SpellbookSection,
 } from 'src/types/types';
 
 export class CharacterSheetSections {
   static get inventoryItemTypes() {
-    return ['weapon', 'equipment', 'consumable', 'tool', 'container', 'loot'];
+    return [
+      CONSTANTS.ITEM_TYPE_WEAPON,
+      CONSTANTS.ITEM_TYPE_EQUIPMENT,
+      CONSTANTS.ITEM_TYPE_TOOL,
+      CONSTANTS.ITEM_TYPE_CONTAINER,
+      CONSTANTS.ITEM_TYPE_LOOT,
+    ];
   }
 
   static applyInventoryItemToSection(
@@ -30,6 +37,7 @@ export class CharacterSheetSections {
       label: customSectionName,
       canCreate: true,
       custom: {
+        section: customSectionName,
         creationItemTypes: CharacterSheetSections.inventoryItemTypes,
       },
       ...customSectionOptions,
@@ -65,7 +73,50 @@ export class CharacterSheetSections {
       showUsagesColumn: true,
       showRequirementsColumn: true,
       custom: {
+        section: customSectionName,
         creationItemTypes: [CONSTANTS.ITEM_TYPE_FEAT],
+      },
+      ...customSectionOptions,
+    });
+
+    customSection.items.push(feat);
+  }
+}
+
+export class NpcSheetSections {
+  static get abilitiesItemTypes() {
+    return [
+      CONSTANTS.ITEM_TYPE_WEAPON,
+      CONSTANTS.ITEM_TYPE_EQUIPMENT,
+      CONSTANTS.ITEM_TYPE_TOOL,
+      CONSTANTS.ITEM_TYPE_CONTAINER,
+      CONSTANTS.ITEM_TYPE_LOOT,
+      CONSTANTS.ITEM_TYPE_FEAT,
+    ];
+  }
+
+  static applyAbilityToSection(
+    abilities: Record<string, NpcAbilitySection>,
+    feat: Item5e,
+    customSectionOptions: Partial<NpcAbilitySection>
+  ) {
+    const customSectionName = SheetSections.tryGetCustomSection(feat);
+
+    if (!customSectionName) {
+      return;
+    }
+
+    const customSection: NpcAbilitySection = (abilities[customSectionName] ??= {
+      label: customSectionName,
+      items: [],
+      hasActions: true,
+      dataset: {
+        [SheetSections.sectionPropertyPath]: customSectionName,
+      },
+      canCreate: true,
+      custom: {
+        section: customSectionName,
+        creationItemTypes: NpcSheetSections.abilitiesItemTypes,
       },
       ...customSectionOptions,
     });
@@ -140,6 +191,7 @@ export class SheetSections {
       canPrepare: true,
       usesSlots: false,
       custom: {
+        section: customSectionName,
         creationItemTypes: [CONSTANTS.ITEM_TYPE_SPELL],
       },
 
