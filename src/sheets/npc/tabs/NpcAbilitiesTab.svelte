@@ -46,6 +46,7 @@
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import ClassicControls from 'src/sheets/shared/ClassicControls.svelte';
   import type { Item5e } from 'src/types/item.types';
+  import LevelUpDropdown from 'src/sheets/actor/LevelUpDropdown.svelte';
 
   let context = getContext<Readable<NpcSheetContext>>('context');
 
@@ -216,6 +217,14 @@
                       </span>
                     {/if}
                   </ItemName>
+                  {#if item.type === 'class'}
+                    <LevelUpDropdown
+                      availableLevels={ctx?.availableLevels}
+                      {item}
+                      disabled={!$context.editable ||
+                        $context.lockLevelSelector}
+                    />
+                  {/if}
                 </ItemTableCell>
                 {#if section.hasActions}
                   <ItemTableCell baseWidth="3.125rem">

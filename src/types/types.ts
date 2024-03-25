@@ -368,3 +368,9 @@ export type RenderableClassicControl<TParams> = {
   props?: (params: TParams) => Record<string, unknown>;
   visible?: (params: TParams) => boolean;
 };
+
+export type AvailableClassLevel = {
+  delta: number;
+  disabled: boolean;
+  level: number;
+};
