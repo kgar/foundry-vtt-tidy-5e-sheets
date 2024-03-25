@@ -1355,4 +1355,9 @@ export const FoundryAdapter = {
   openSpellSlotsConfig(actor: Actor5e) {
     new dnd5e.applications.actor.ActorSpellSlotsConfig(actor).render(true);
   },
+  openSummonConfig(item: Item5e) {
+    new dnd5e.applications.item.SummoningConfig(item).render(
+      true,
+    )
+  }
 };

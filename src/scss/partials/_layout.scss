@@ -32,6 +32,10 @@
   flex-wrap: wrap;
 }
 
+.flex-basis-auto {
+  flex-basis: auto;
+}
+
 .gap {
   gap: 1rem;
 }
@@ -135,4 +139,8 @@
 
 .columns-span-all {
   grid-column: 1 / -1;
+}
+
+.no-wrap {
+  white-space: nowrap;
 }
