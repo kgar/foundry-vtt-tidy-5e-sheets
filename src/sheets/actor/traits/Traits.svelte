@@ -8,7 +8,7 @@
   import { settingStore } from 'src/settings/settings';
   import { error } from 'src/utils/logging';
   import TraitSectionTags from './TraitSectionTags.svelte';
-    import TraitSectionModifications from './TraitSectionModifications.svelte';
+  import TraitSectionModifications from './TraitSectionModifications.svelte';
 
   let context = getContext<Readable<ActorSheetContext>>('context');
   export let toggleable: boolean;
