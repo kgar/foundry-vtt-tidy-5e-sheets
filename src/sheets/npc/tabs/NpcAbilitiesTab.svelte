@@ -1,6 +1,6 @@
 <script lang="ts">
   import SkillsList from 'src/sheets/actor/SkillsList.svelte';
-  import Traits from '../../actor/Traits.svelte';
+  import Traits from '../../actor/traits/Traits.svelte';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import type {

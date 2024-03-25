@@ -1,0 +1,82 @@
+.trait-form-group {
+  display: flex;
+  flex-direction: row;
+
+  &.hidden {
+    display: none;
+  }
+
+  i {
+    color: var(--t5e-tertiary-color);
+    line-height: 1rem;
+    vertical-align: middle;
+  }
+
+  .trait-icon,
+  .trait-editor {
+    flex: 0 0 1.375rem;
+    font-size: 0.75rem;
+    padding: 0.125rem 0 0 0;
+    text-align: center;
+  }
+
+  .trait-editor:hover i,
+  .tool-proficiency-editor:hover i,
+  .tool-proficiency-toggle:hover :global(i) {
+    color: var(--t5e-secondary-color);
+    text-shadow: none;
+  }
+
+  .trait-label-and-list {
+    flex: 1;
+
+    .trait-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--t5e-secondary-color);
+    }
+
+    .trait-list {
+      display: flex;
+      flex-wrap: wrap;
+      column-gap: 0.25rem;
+
+      &:first-child {
+        padding-top: 0.125rem;
+      }
+
+      &.tools {
+        gap: 0.125rem;
+      }
+    }
+
+    .trait-tag,
+    .tool {
+      font-size: 0.75rem;
+    }
+
+    .trait-tag {
+      &::after {
+        content: ',';
+      }
+
+      &:last-child::after {
+        content: none;
+      }
+    }
+
+    .tool {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      background-color: var(--t5e-faintest-color);
+      padding: 0 0.125rem;
+      border-radius: 0.25rem;
+      border: 0.0625rem solid var(--t5e-tertiary-color);
+    }
+  }
+}
+
+.traits .configure-special-traits {
+  font-size: 0.875rem;
+}

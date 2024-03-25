@@ -195,6 +195,7 @@
 
   &.sheet form,
   &.application-shell {
+    @import '../sheets/actor/traits/traits';
     @import './partials/buttons';
     @import './partials/checkboxes';
   }

@@ -1,7 +1,7 @@
 <script lang="ts">
   import type { CharacterSheetContext } from 'src/types/types';
   import SkillsList from '../../actor/SkillsList.svelte';
-  import Traits from '../../actor/Traits.svelte';
+  import Traits from '../../actor/traits/Traits.svelte';
   import Favorites from '../parts/Favorites.svelte';
   import Resources from '../parts/Resources.svelte';
   import { isNil } from 'src/utils/data';
