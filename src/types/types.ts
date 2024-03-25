@@ -374,3 +374,16 @@ export type AvailableClassLevel = {
   disabled: boolean;
   level: number;
 };
+
+export type DamageModificationData = {
+  amount: Record<string, string>;
+  bypasses: Set<string>;
+};
+
+export type ModificationConsequence = 'benefit' | 'detriment' | 'none';
+
+export type DamageModificationContextEntry = {
+  label: string;
+  consequence: ModificationConsequence;
+  icons?: string[];
+};

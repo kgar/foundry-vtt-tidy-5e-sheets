@@ -47,6 +47,7 @@ import { SheetPreferencesService } from 'src/features/user-preferences/SheetPref
 import { AsyncMutex } from 'src/utils/mutex';
 import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
 import { SheetPreferencesRuntime } from 'src/runtime/user-preferences/SheetPreferencesRuntime';
+import { Tidy5eBaseActorSheet } from './Tidy5eBaseActorSheet';
 
 export class Tidy5eNpcSheet
   extends dnd5e.applications.actor.ActorSheet5eNPC
@@ -167,6 +168,8 @@ export class Tidy5eNpcSheet
 
   async getData(options = {}) {
     const defaultDocumentContext = await super.getData(this.options);
+
+    Tidy5eBaseActorSheet.applyCommonContext(defaultDocumentContext);
 
     const npcPreferences = SheetPreferencesService.getByType(this.actor.type);
 

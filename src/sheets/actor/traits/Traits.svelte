@@ -8,6 +8,7 @@
   import { settingStore } from 'src/settings/settings';
   import { error } from 'src/utils/logging';
   import TraitSectionTags from './TraitSectionTags.svelte';
+    import TraitSectionModifications from './TraitSectionModifications.svelte';
 
   let context = getContext<Readable<ActorSheetContext>>('context');
   export let toggleable: boolean;
@@ -122,9 +123,7 @@
   {/if}
 
   {#if $context.traits.traits?.dm}
-    {@const damageModifications = getTags($context.traits.traits.dm?.selected)}
     <TraitSection
-      traitCssClass={$context.traits.traits?.dm?.cssClass ?? ''}
       title={localize('DND5E.DamageModification.Label')}
       iconCssClass="fas fa-heart-circle-plus"
       configureButtonTitle={localize('DND5E.TraitConfig', {
@@ -132,9 +131,10 @@
       })}
       on:onConfigureClicked={() =>
         FoundryAdapter.renderDamageModificationConfig($context.actor)}
-      show={traitsExpanded || !!damageModifications.length}
+      show={traitsExpanded || !!$context.traits.traits.dm.length}
     >
       <!-- TODO: Add TraitSectionModifiers -->
+      <TraitSectionModifications modifications={$context.traits.traits?.dm} />
     </TraitSection>
   {/if}
 

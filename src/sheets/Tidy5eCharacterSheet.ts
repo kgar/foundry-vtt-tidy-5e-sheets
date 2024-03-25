@@ -22,6 +22,8 @@ import {
   type Utilities,
   type ContainerPanelItemContext,
   type ContainerCapacityContext,
+  type DamageModificationData,
+  type DamageModificationContextEntry,
 } from 'src/types/types';
 import {
   applySheetAttributesToWindow,
@@ -50,6 +52,7 @@ import { AsyncMutex } from 'src/utils/mutex';
 import type { Dnd5eActorCondition } from 'src/foundry/foundry-and-system';
 import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
 import { SheetPreferencesRuntime } from 'src/runtime/user-preferences/SheetPreferencesRuntime';
+import { Tidy5eBaseActorSheet } from './Tidy5eBaseActorSheet';
 
 export class Tidy5eCharacterSheet
   extends dnd5e.applications.actor.ActorSheet5eCharacter
@@ -176,6 +179,8 @@ export class Tidy5eCharacterSheet
 
   async getData(options = {}) {
     const defaultDocumentContext = await super.getData(this.options);
+
+    Tidy5eBaseActorSheet.applyCommonContext(defaultDocumentContext);
 
     const characterPreferences = SheetPreferencesService.getByType(
       this.actor.type
