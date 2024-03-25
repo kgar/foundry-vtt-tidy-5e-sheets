@@ -300,6 +300,7 @@
     >
       <div class="form-fields">
         <div
+          role="presentation"
           class="summon-controls flex-row justify-content-space-between flex-wrap extra-small-row-gap"
         >
           <button
