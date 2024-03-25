@@ -133,7 +133,6 @@
         FoundryAdapter.renderDamageModificationConfig($context.actor)}
       show={traitsExpanded || !!$context.traits.traits.dm.length}
     >
-      <!-- TODO: Add TraitSectionModifiers -->
       <TraitSectionModifications modifications={$context.traits.traits?.dm} />
     </TraitSection>
   {/if}
