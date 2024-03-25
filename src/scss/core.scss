@@ -83,6 +83,7 @@
 
   &:where(.actor) {
     @import './partials/actor';
+    @import '../sheets/actor/traits/traits';
   }
   @import './partials/item-card';
 
@@ -195,7 +196,6 @@
 
   &.sheet form,
   &.application-shell {
-    @import '../sheets/actor/traits/traits';
     @import './partials/buttons';
     @import './partials/checkboxes';
   }
