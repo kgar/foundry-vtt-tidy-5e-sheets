@@ -681,7 +681,6 @@ export class Tidy5eNpcSheet
       preparedSpells: FoundryAdapter.countPreparedSpells(
         defaultDocumentContext.items
       ),
-      rollDeathSave: this._rollDeathSave.bind(this),
       shortRest: this._onShortRest.bind(this),
       showLimitedSheet: FoundryAdapter.showLimitedSheet(this.actor),
       spellCalculations: calculateSpellAttackAndDc(this.actor),
@@ -1162,15 +1161,6 @@ export class Tidy5eNpcSheet
 
     // Return data summarizing the rest effects
     return result;
-  }
-
-  /**
-   * Perform a death saving throw, rolling a d20 plus any global save bonuses
-   * @param {object} options          Additional options which modify the roll
-   * @returns {Promise<D20Roll|null>} A Promise which resolves to the Roll instance
-   */
-  async _rollDeathSave(options: Record<string, any> = {}) {
-    return FoundryAdapter.rollNpcDeathSave(this.actor, options);
   }
 
   close(options: unknown = {}) {

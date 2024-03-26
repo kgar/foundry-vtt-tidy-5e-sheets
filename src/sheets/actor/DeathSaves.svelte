@@ -35,7 +35,7 @@
       placeholder="0"
       value={successes}
       maxlength={1}
-      title={localize('DND5E.DeathSave')}
+      title={localize('DND5E.DeathSaveSuccesses')}
       disabled={!$context.editable}
       data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.DEATH_SAVE_SUCCESSES}
     />
@@ -59,6 +59,7 @@
       maxlength={1}
       disabled={!$context.editable}
       data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.DEATH_SAVE_FAILURES}
+      title={localize('DND5E.DeathSaveFailures')}
     />
     <i class="fas fa-times" />
   </div>
@@ -75,8 +76,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    text-shadow: 0 0 0.3125rem 0.0625rem
-      var(--t5e-death-save-text-shadow-color);
+    text-shadow: 0 0 0.3125rem 0.0625rem var(--t5e-death-save-text-shadow-color);
     pointer-events: none;
 
     .death-save-counters {
