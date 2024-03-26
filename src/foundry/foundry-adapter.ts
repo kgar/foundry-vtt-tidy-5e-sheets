@@ -1248,7 +1248,16 @@ export const FoundryAdapter = {
   openSummonConfig(item: Item5e) {
     new dnd5e.applications.item.SummoningConfig(item).render(true);
   },
-  renderDamageModificationConfig(actor: Actor5e) {
+  openDamageModificationConfig(actor: Actor5e) {
     new dnd5e.applications.actor.DamageModificationConfig(actor).render(true);
+  },
+  openActorConcentrationConfig(actor: Actor5e) {
+    new dnd5e.applications.actor.ActorConcentrationConfig(actor).render(true);
+  },
+  isConcentrationEffect(effect: ActiveEffect5e, app: any) {
+    return (
+      app.document instanceof dnd5e.documents.Actor5e &&
+      app._concentration?.effects.has(effect)
+    );
   },
 };

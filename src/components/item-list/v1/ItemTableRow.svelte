@@ -7,6 +7,8 @@
     ItemCardStore,
     ExpandedItemData,
     ExpandedItemIdToLocationsMap,
+    ActiveEffect5e,
+    ActiveEffectContext,
   } from 'src/types/types';
   import type { Writable } from 'svelte/store';
   import type {
@@ -18,7 +20,7 @@
   import { CONSTANTS } from 'src/constants';
 
   export let item: Item5e | null = null;
-  export let effect: any | null = null;
+  export let effect: ActiveEffect5e | ActiveEffectContext | null = null;
   export let contextMenu: { type: string; uuid: string } | null = null;
   export let cssClass: string = '';
   export let itemCardContentTemplate: ItemCardContentComponent | null = null;

@@ -83,9 +83,10 @@ function getActiveEffectContextOptions(effect: any, app: any) {
     return [];
   }
 
-  const isConcentrationEffect =
-    app.document instanceof dnd5e.documents.Actor5e &&
-    app._concentration?.effects.has(effect);
+  const isConcentrationEffect = FoundryAdapter.isConcentrationEffect(
+    effect,
+    app
+  );
 
   let tidy5eKgarContextOptions = [
     {

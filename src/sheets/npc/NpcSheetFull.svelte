@@ -13,7 +13,7 @@
   import { formatAsModifier } from 'src/utils/formatting';
   import DelimitedTruncatedContent from 'src/components/layout/DelimitedTruncatedContent.svelte';
   import HorizontalLineSeparator from 'src/components/layout/HorizontalLineSeparator.svelte';
-  import ActorMovementRow from '../actor/ActorMovementRow.svelte';
+  import ActorMovement from '../actor/ActorMovement.svelte';
   import ActorHeaderStats from '../actor/ActorHeaderStats.svelte';
   import ItemInfoCard from 'src/components/item-info-card/ItemInfoCard.svelte';
   import SheetMenu from '../actor/SheetMenu.svelte';
@@ -23,6 +23,7 @@
   import InlineCreatureType from '../shared/InlineCreatureType.svelte';
   import ActorOriginSummaryConfigFormApplication from 'src/applications/actor-origin-summary/ActorOriginSummaryConfigFormApplication';
   import ActorName from '../actor/ActorName.svelte';
+  import SpecialSaves from '../actor/SpecialSaves.svelte';
 
   let selectedTabId: string;
 
@@ -152,7 +153,7 @@
               $context.system.attributes.prof,
             )}
           </b>
-          {#if $context.editable && !$context.lockSensitiveFields}
+          {#if $context.unlocked}
             <button
               type="button"
               class="origin-summary-tidy inline-icon-button"
@@ -169,7 +170,12 @@
         </div>
       </div>
       <HorizontalLineSeparator borderColor="light" />
-      <ActorMovementRow />
+      <div class="flex-row extra-small-gap justify-content-space-between">
+        <ActorMovement class="flex-1" />
+        {#if $context.hasSpecialSaves}
+          <SpecialSaves />
+        {/if}
+      </div>
       <HorizontalLineSeparator borderColor="light" />
       <ActorHeaderStats
         {abilities}

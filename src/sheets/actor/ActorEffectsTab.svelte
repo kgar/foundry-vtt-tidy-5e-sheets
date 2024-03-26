@@ -18,6 +18,7 @@
   import Notice from 'src/components/notice/Notice.svelte';
   import { declareLocation } from 'src/types/location-awareness.types';
   import ClassicControls from '../shared/ClassicControls.svelte';
+  import EffectToggleControl from 'src/components/item-list/controls/EffectToggleControl.svelte';
 
   let context = getContext<Readable<ActorSheetContext>>('context');
 
@@ -29,20 +30,17 @@
     effectSections.some((section: any) => section.effects.length > 0) === false;
 
   declareLocation('effects');
-  
+
   let controls: RenderableClassicControl<{ effect: any }>[] = [];
 
   $: {
     controls = [];
+
     controls.push(
       {
-        component: ItemControl,
+        component: EffectToggleControl,
         props: ({ effect }) => ({
-          onclick: () => effect.update({ disabled: !effect.disabled }),
-          title: effect.disabled
-            ? localize('DND5E.EffectEnable')
-            : localize('DND5E.EffectDisable'),
-          iconCssClass: `fas ${effect.disabled ? 'fa-check' : 'fa-times'}`,
+          effect: effect,
         }),
       },
       {

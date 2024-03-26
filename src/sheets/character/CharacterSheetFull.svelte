@@ -9,13 +9,14 @@
   import CharacterProfile from './parts/CharacterProfile.svelte';
   import InlineTextDropdownList from '../../components/inputs/InlineTextDropdownList.svelte';
   import ActorWarnings from '../actor/ActorWarnings.svelte';
+  import SpecialSaves from '../actor/SpecialSaves.svelte';
   import { CONSTANTS } from 'src/constants';
   import AllowEditLock from 'src/sheets/actor/AllowEditLock.svelte';
   import Tabs from 'src/components/tabs/Tabs.svelte';
   import TabContents from 'src/components/tabs/TabContents.svelte';
   import type { Readable } from 'svelte/store';
   import ContentEditableFormField from 'src/components/inputs/ContentEditableFormField.svelte';
-  import ActorMovementRow from '../actor/ActorMovementRow.svelte';
+  import ActorMovement from '../actor/ActorMovement.svelte';
   import ActorHeaderStats from '../actor/ActorHeaderStats.svelte';
   import HorizontalLineSeparator from 'src/components/layout/HorizontalLineSeparator.svelte';
   import TextInput from 'src/components/inputs/TextInput.svelte';
@@ -25,6 +26,7 @@
   import InlineCreatureType from '../shared/InlineCreatureType.svelte';
   import ActorOriginSummaryConfigFormApplication from 'src/applications/actor-origin-summary/ActorOriginSummaryConfigFormApplication';
   import ActorName from '../actor/ActorName.svelte';
+  import Dnd5eIcon from 'src/components/icon/Dnd5eIcon.svelte';
 
   let selectedTabId: string;
   let context = getContext<Readable<CharacterSheetContext>>('context');
@@ -195,7 +197,7 @@
         <b>
           {localize('DND5E.Proficiency')}: {$context.labels.proficiency}
         </b>
-        {#if $context.editable && !$context.lockSensitiveFields}
+        {#if $context.unlocked}
           <button
             type="button"
             class="inline-icon-button"
@@ -211,7 +213,15 @@
         {/if}
       </span>
     </section>
-    <ActorMovementRow />
+    <div
+      role="presentation"
+      class="flex-row extra-small-gap justify-content-space-between"
+    >
+      <ActorMovement />
+      {#if $context.hasSpecialSaves}
+        <SpecialSaves />
+      {/if}
+    </div>
     <HorizontalLineSeparator borderColor="light" />
     <!-- AC  -->
     <ActorHeaderStats

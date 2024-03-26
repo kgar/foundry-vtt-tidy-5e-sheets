@@ -19,6 +19,7 @@
   import { declareLocation } from 'src/types/location-awareness.types';
   import CharacterConditions from '../parts/CharacterConditions.svelte';
   import ClassicControls from 'src/sheets/shared/ClassicControls.svelte';
+  import EffectToggleControl from 'src/components/item-list/controls/EffectToggleControl.svelte';
 
   let context = getContext<Readable<ActorSheetContext>>('context');
 
@@ -37,18 +38,9 @@
     controls = [];
     controls.push(
       {
-        component: ItemControl,
+        component: EffectToggleControl,
         props: ({ effect }) => ({
-          onclick: () =>
-            FoundryAdapter.getEffect({
-              document: $context.actor,
-              effectId: effect.id,
-              parentId: effect.parentId,
-            }).update({ disabled: !effect.disabled }),
-          title: effect.disabled
-            ? localize('DND5E.EffectEnable')
-            : localize('DND5E.EffectDisable'),
-          iconCssClass: `fas ${effect.disabled ? 'fa-check' : 'fa-times'}`,
+          effect: effect,
         }),
       },
       {
