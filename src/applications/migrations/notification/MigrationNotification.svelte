@@ -4,6 +4,7 @@
   import type MigrationNotificationFormApplication from './MigrationNotificationFormApplication';
   import { SettingsProvider } from 'src/settings/settings';
   import { BulkMigrationsApplication } from '../BulkMigrationsApplication';
+  import { CONSTANTS } from 'src/constants';
 
   const localize = FoundryAdapter.localize;
 
@@ -15,12 +16,22 @@
 
   const migrations = [
     {
+      label: localize('TIDY5E.Settings.Migrations.NpcDeathSaves.sectionTitle'),
+      migrationTallyVersion: 2,
+      onClick: () =>
+        new BulkMigrationsApplication(
+          CONSTANTS.TAB_MIGRATIONS_NPC_DEATH,
+        ).render(true),
+    },
+    {
       label: localize(
         'TIDY5E.Settings.Migrations.CharacterBiography.sectionTitle',
       ),
       migrationTallyVersion: 1,
       onClick: () =>
-        new BulkMigrationsApplication('character-bio').render(true),
+        new BulkMigrationsApplication(
+          CONSTANTS.TAB_MIGRATIONS_CHARACTER_BIOGRAPHY,
+        ).render(true),
     },
   ];
 </script>

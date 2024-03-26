@@ -1,5 +1,6 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import NpcDeathSavesMigration from './v3/NpcDeathSavesMigration.svelte';
   import CharacterBiographyMigration from './v2/CharacterBiographyMigration.svelte';
   import V1OnboardingMigration from './v1/V1OnboardingMigration.svelte';
   import type { Tab } from 'src/types/types';
@@ -8,12 +9,19 @@
   import { CONSTANTS } from 'src/constants';
   import Notice from 'src/components/notice/Notice.svelte';
 
-  export let selectedTabId: string =
-    CONSTANTS.TAB_MIGRATIONS_CHARACTER_BIOGRAPHY;
+  export let selectedTabId: string = CONSTANTS.TAB_MIGRATIONS_NPC_DEATH;
 
   const localize = FoundryAdapter.localize;
 
   const tabs: Tab[] = [
+    {
+      id: CONSTANTS.TAB_MIGRATIONS_NPC_DEATH,
+      title: 'TIDY5E.Settings.Migrations.CharacterBiography.sectionTitle',
+      content: {
+        component: NpcDeathSavesMigration,
+        type: 'svelte',
+      },
+    },
     {
       id: CONSTANTS.TAB_MIGRATIONS_CHARACTER_BIOGRAPHY,
       title: 'TIDY5E.Settings.Migrations.CharacterBiography.sectionTitle',
