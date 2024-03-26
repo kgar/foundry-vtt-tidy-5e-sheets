@@ -44,6 +44,7 @@ import { ItemFilterService } from 'src/features/filtering/ItemFilterService';
 import { AsyncMutex } from 'src/utils/mutex';
 import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
 import { SheetPreferencesRuntime } from 'src/runtime/user-preferences/SheetPreferencesRuntime';
+import { Tidy5eBaseActorSheet } from './Tidy5eBaseActorSheet';
 
 export class Tidy5eVehicleSheet
   extends dnd5e.applications.actor.ActorSheet5eVehicle
@@ -164,6 +165,8 @@ export class Tidy5eVehicleSheet
 
   async getData(options = {}) {
     const defaultDocumentContext = await super.getData(this.options);
+
+    Tidy5eBaseActorSheet.applyCommonContext(defaultDocumentContext);
 
     const unlocked =
       FoundryAdapter.isActorSheetUnlocked(this.actor) &&

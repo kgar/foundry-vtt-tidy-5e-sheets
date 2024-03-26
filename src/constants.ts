@@ -154,8 +154,11 @@ export const CONSTANTS = {
     /** An actor portrait image element. */
     ACTOR_PORTRAIT_IMAGE: 'actor-portrait-image',
 
-    /** An actor trait container, such as Senses, Languages, or Tools */
+    /** An actor trait container, such as Senses, Languages, or Tools. */
     ACTOR_TRAIT: 'actor-trait',
+
+    /** The specific details of an actor trait container, such as Senses, Languages, or Tools. */
+    ACTOR_TRAIT_DETAILS: 'actor-trait-details',
 
     /** A control for toggling a condition */
     CONDITION_TOGGLE: 'condition-toggle',
