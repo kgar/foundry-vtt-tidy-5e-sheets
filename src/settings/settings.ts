@@ -1462,6 +1462,22 @@ export function createSettings() {
         },
       },
 
+      includeFlagsInSpellScrollCreation: {
+        options: {
+          name: 'TIDY5E.WorldSettings.IncludeFlagsInSpellScrollCreation.name',
+          hint: 'TIDY5E.WorldSettings.IncludeFlagsInSpellScrollCreation.hint',
+          scope: 'world',
+          type: Boolean,
+          default: false,
+          config: false,
+        },
+        get() {
+          return FoundryAdapter.getTidySetting<boolean>(
+            'includeFlagsInSpellScrollCreation'
+          );
+        },
+      },
+
       colorPickerEnabled: {
         options: {
           name: 'TIDY5E.Settings.ColorPickerEnabled.name',

@@ -86,6 +86,8 @@ export class WorldSettingsFormApplication extends SvelteFormApplicationBase {
         initialVehicleSheetTab: currentSettings.initialVehicleSheetTab,
         itemIdentificationPermission:
           currentSettings.itemIdentificationPermission,
+        includeFlagsInSpellScrollCreation:
+          currentSettings.includeFlagsInSpellScrollCreation,
       },
       defaultCharacterTabs: this.mapTabSelectionFields(
         CharacterSheetRuntime.getAllRegisteredTabs(),

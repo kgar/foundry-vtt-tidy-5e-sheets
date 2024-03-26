@@ -952,9 +952,17 @@ export class Tidy5eCharacterSheet
       itemData.type === 'spell' &&
       this.currentTabId === CONSTANTS.TAB_CHARACTER_INVENTORY
     ) {
+      const options: Record<string, unknown> = {};
+
+      if (SettingsProvider.settings.includeFlagsInSpellScrollCreation.get()) {
+        options.flags = itemData.flags;
+      }
+
       const scroll = await dnd5e.documents.Item5e.createScrollFromSpell(
-        itemData
+        itemData,
+        options
       );
+
       return scroll.toObject();
     }
 
