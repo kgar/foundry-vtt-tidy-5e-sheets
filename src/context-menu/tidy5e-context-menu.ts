@@ -170,9 +170,9 @@ function getItemContextOptions(item: Item5e) {
     const isAlways = prep.mode === CONSTANTS.SPELL_PREPARATION_MODE_ALWAYS;
     const isPrepared = !!prep.prepared;
     isActive = isPrepared;
-    if (isAlways) toggleTitle = CONFIG.DND5E.spellPreparationModes.always;
+    if (isAlways) toggleTitle = CONFIG.DND5E.spellPreparationModes.always.label;
     else if (isPrepared)
-      toggleTitle = CONFIG.DND5E.spellPreparationModes.prepared;
+      toggleTitle = CONFIG.DND5E.spellPreparationModes.prepared.label;
     else toggleTitle = FoundryAdapter.localize('DND5E.SpellUnprepared');
 
     canPrepare = item.system.level >= 1;
