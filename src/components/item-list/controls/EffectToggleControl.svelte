@@ -13,14 +13,22 @@ Because the controls are mutually exclusive, it is more ergonomic to distinguish
 
   export let effect: ActiveEffect5e;
 
+  /** Character effects are not the full ActiveEffect5e instance;
+   * they are instead a subset of contextual data.
+   * Also, there are cases when, such as with deleting effects,
+   * that this logic fires immediately as an effect deletion is occurring.
+   * This seems related specifically to character sheets.
+   */
   $: actualEffect =
     effect instanceof dnd5e.documents.ActiveEffect5e
       ? effect
-      : FoundryAdapter.getEffect({
-          document: $context.actor,
-          effectId: effect.id,
-          parentId: effect.parentId,
-        });
+      : !!effect
+        ? FoundryAdapter.getEffect({
+            document: $context.actor,
+            effectId: effect.id,
+            parentId: effect.parentId,
+          })
+        : undefined;
 
   let context = getContext<Readable<ActorSheetContext>>('context');
 
@@ -32,18 +40,22 @@ Because the controls are mutually exclusive, it is more ergonomic to distinguish
   );
 </script>
 
-{#if isConcentration}
-  <ItemControl
-    iconSrc={`systems/dnd5e/icons/svg/break-concentration.svg`}
-    onclick={() => $context.actor.endConcentration(actualEffect)}
-    title={localize('DND5E.ConcentrationBreak')}
-  />
+{#if actualEffect}
+  {#if isConcentration}
+    <ItemControl
+      iconSrc={`systems/dnd5e/icons/svg/break-concentration.svg`}
+      onclick={() => $context.actor.endConcentration(actualEffect)}
+      title={localize('DND5E.ConcentrationBreak')}
+    />
+  {:else}
+    <ItemControl
+      iconCssClass={`fas ${actualEffect.disabled ? 'fa-check' : 'fa-times'}`}
+      onclick={() => actualEffect.update({ disabled: !actualEffect.disabled })}
+      title={actualEffect.disabled
+        ? localize('DND5E.EffectEnable')
+        : localize('DND5E.EffectDisable')}
+    />
+  {/if}
 {:else}
-  <ItemControl
-    iconCssClass={`fas ${actualEffect.disabled ? 'fa-check' : 'fa-times'}`}
-    onclick={() => actualEffect.update({ disabled: !actualEffect.disabled })}
-    title={actualEffect.disabled
-      ? localize('DND5E.EffectEnable')
-      : localize('DND5E.EffectDisable')}
-  />
+  <span>&nbsp;</span>
 {/if}

@@ -25,6 +25,7 @@
   export let cssClass: string = '';
   export let itemCardContentTemplate: ItemCardContentComponent | null = null;
   export let hidden: boolean = false;
+  export let getDragData: (() => any) | null = null;
 
   $: draggable = item ?? effect;
 
@@ -90,8 +91,10 @@
       return card;
     });
 
-    const dragData = draggable.toDragData();
-    event.dataTransfer?.setData('text/plain', JSON.stringify(dragData));
+    const dragData = getDragData?.() ?? draggable.toDragData?.();
+    if (dragData) {
+      event.dataTransfer?.setData('text/plain', JSON.stringify(dragData));
+    }
   }
 
   function restoreItemSummaryIfExpanded() {

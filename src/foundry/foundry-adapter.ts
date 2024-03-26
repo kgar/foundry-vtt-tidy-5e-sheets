@@ -1145,7 +1145,7 @@ export const FoundryAdapter = {
       return effect;
     }
     const parentDocument = document.items.get(parentId);
-    effect = parentDocument.effects.get(effectId);
+    effect = parentDocument?.effects?.get(effectId);
     return (
       effect ??
       FoundryAdapter.tryGetLegacyTransferredEffect(parentDocument, effectId)
@@ -1154,7 +1154,7 @@ export const FoundryAdapter = {
   /** Last-ditch effort to find an effect by ID in a given document. */
   tryGetLegacyTransferredEffect(document: any, effectId: string) {
     return document
-      .allApplicableEffects?.()
+      ?.allApplicableEffects?.()
       .find((e: ActiveEffect5e) => e.id === effectId);
   },
   canUseItem(item: Item5e) {

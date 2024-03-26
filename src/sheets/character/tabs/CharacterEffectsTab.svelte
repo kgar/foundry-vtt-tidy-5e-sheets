@@ -111,11 +111,24 @@
             {#each section.effects as effect}
               <ItemTableRow
                 on:mousedown={(event) =>
-                  FoundryAdapter.editOnMiddleClick(event.detail, effect)}
+                  FoundryAdapter.editOnMiddleClick(
+                    event.detail,
+                    FoundryAdapter.getEffect({
+                      document: $context.actor,
+                      effectId: effect.id,
+                      parentId: effect.parentId,
+                    }),
+                  )}
                 contextMenu={{
                   type: CONSTANTS.CONTEXT_MENU_TYPE_EFFECTS,
                   uuid: effect.uuid,
                 }}
+                getDragData={() =>
+                  FoundryAdapter.getEffect({
+                    document: $context.actor,
+                    effectId: effect.id,
+                    parentId: effect.parentId,
+                  })?.toDragData()}
                 {effect}
               >
                 <ItemTableCell
