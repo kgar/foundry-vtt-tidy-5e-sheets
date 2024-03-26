@@ -130,7 +130,7 @@
         trait: localize('DND5E.DamageModification.Label'),
       })}
       on:onConfigureClicked={() =>
-        FoundryAdapter.renderDamageModificationConfig($context.actor)}
+        FoundryAdapter.openDamageModificationConfig($context.actor)}
       show={traitsExpanded || !!$context.traits.traits.dm.length}
     >
       <TraitSectionModifications modifications={$context.traits.traits?.dm} />

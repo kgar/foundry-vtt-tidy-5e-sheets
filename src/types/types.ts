@@ -221,6 +221,18 @@ export type Utilities = Record<
   }
 >;
 
+type ActorSave = {
+  isConcentration: boolean;
+  label: string;
+  abbr: string;
+  mod: number;
+  sign: string;
+};
+
+type ActorSaves = {
+  concentration?: ActorSave;
+};
+
 export type ActorSheetContext = {
   actions: ActorActions;
   actor: Actor5e;
@@ -236,6 +248,8 @@ export type ActorSheetContext = {
   editable: boolean;
   filterData: DocumentFilters;
   filterPins: Record<string, Set<string>>;
+  /** The actor has special save-based roll buttons to be situationally rendered to the sheet. */
+  hasSpecialSaves?: boolean;
   /**
    * Represents remaining health as a percentage within the range of `0` to `100`.
    *
@@ -257,6 +271,7 @@ export type ActorSheetContext = {
    * The current user owns the actor.
    */
   owner: boolean;
+  saves: ActorSaves;
   showLimitedSheet: boolean;
   tabs: Tab[];
   tidyResources: TidyResource[];
@@ -387,3 +402,9 @@ export type DamageModificationContextEntry = {
   consequence: ModificationConsequence;
   icons?: string[];
 };
+
+// TODO: Get the real typings for this
+export type ActiveEffect5e = any;
+
+// TODO: Get the real typings for this
+export type ActiveEffectContext = any;
