@@ -1,5 +1,6 @@
 import type {
   ActionItem,
+  ActiveEffect5e,
   ActorSheetContext,
   CharacterSheetContext,
   ClassSummary,
@@ -1139,8 +1140,22 @@ export const FoundryAdapter = {
     effectId: string;
     parentId?: string;
   }) {
-    if (!parentId) return document.effects.get(effectId);
-    return document.items.get(parentId).effects.get(effectId);
+    let effect = document.effects?.get(effectId);
+    if (effect) {
+      return effect;
+    }
+    const parentDocument = document.items.get(parentId);
+    effect = parentDocument.effects.get(effectId);
+    return (
+      effect ??
+      FoundryAdapter.tryGetLegacyTransferredEffect(parentDocument, effectId)
+    );
+  },
+  /** Last-ditch effort to find an effect by ID in a given document. */
+  tryGetLegacyTransferredEffect(document: any, effectId: string) {
+    return document
+      .allApplicableEffects?.()
+      .find((e: ActiveEffect5e) => e.id === effectId);
   },
   canUseItem(item: Item5e) {
     return !(!item.actor || !item.actor.isOwner || item.actor.pack);

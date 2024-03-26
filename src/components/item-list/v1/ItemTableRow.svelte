@@ -34,7 +34,8 @@
   const dispatcher = createEventDispatcher<{ mousedown: MouseEvent }>();
   const location = getContext<string>('location');
 
-  let card: Writable<ItemCardStore> | undefined = getContext<Writable<ItemCardStore>>('card');
+  let card: Writable<ItemCardStore> | undefined =
+    getContext<Writable<ItemCardStore>>('card');
   let showSummary = false;
   let chatData: ItemChatData | undefined;
   let useTransition: boolean = false;
@@ -146,7 +147,7 @@
   data-context-menu={contextMenu?.type}
   data-context-menu-document-uuid={contextMenu?.uuid}
   data-effect-id={effect?.id}
-  data-parent-id={effect?.parentId}
+  data-parent-id={effect?.parentId ?? effect?.parent?.id}
   on:mousedown={(event) => dispatcher('mousedown', event)}
   on:mouseenter={onMouseEnter}
   on:mouseleave={onMouseLeave}
@@ -207,7 +208,7 @@
       &.equipped {
         --t5e-item-table-row-background: var(--t5e-equipped-background);
       }
-      
+
       &.magic-item {
         box-shadow: 0 0 0 0.0625rem var(--t5e-magic-accent-color) inset;
       }

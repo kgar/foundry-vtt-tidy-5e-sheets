@@ -387,3 +387,6 @@ export type DamageModificationContextEntry = {
   consequence: ModificationConsequence;
   icons?: string[];
 };
+
+// TODO: Get the real typings for this
+export type ActiveEffect5e = any;

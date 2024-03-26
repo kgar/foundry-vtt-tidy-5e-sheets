@@ -12,6 +12,7 @@ import type {
   MessageBus,
   MessageBusMessage,
   Utilities,
+  ActiveEffect5e,
 } from 'src/types/types';
 import { writable } from 'svelte/store';
 import NpcSheet from './npc/NpcSheet.svelte';
@@ -29,7 +30,7 @@ import { getPercentage, isLessThanOneIsOne } from 'src/utils/numbers';
 import NpcShortRestDialog from 'src/dialogs/NpcShortRestDialog';
 import LongRestDialog from 'src/dialogs/NpcLongRestDialog';
 import type { SvelteComponent } from 'svelte';
-import type { ItemChatData } from 'src/types/item.types';
+import type { Item5e, ItemChatData } from 'src/types/item.types';
 import { NpcSheetRuntime } from 'src/runtime/NpcSheetRuntime';
 import {
   actorUsesActionFeature,
@@ -69,6 +70,16 @@ export class Tidy5eNpcSheet
   itemFilterService: ItemFilterService;
   subscriptionsService: StoreSubscriptionsService;
   messageBus: MessageBus = writable<MessageBusMessage | undefined>();
+
+  /**
+   * The cached concentration information for the character.
+   * @type {{items: Set<Item5e>, effects: Set<ActiveEffect5e>}}
+   * @internal
+   */
+  _concentration: { items: Set<Item5e>; effects: Set<ActiveEffect5e> } = {
+    items: new Set(),
+    effects: new Set(),
+  };
 
   constructor(...args: any[]) {
     super(...args);
@@ -168,6 +179,8 @@ export class Tidy5eNpcSheet
 
   async getData(options = {}) {
     const defaultDocumentContext = await super.getData(this.options);
+
+    this._concentration = this.actor.concentration;
 
     Tidy5eBaseActorSheet.applyCommonContext(defaultDocumentContext);
 
