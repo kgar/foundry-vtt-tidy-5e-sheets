@@ -108,7 +108,7 @@
     try {
       debug(`Migrating actor ${actor?.name}...`);
       migrateNpcDeathFlagsToV2({
-        document: actor,
+        npc: actor,
         overwrite: overwrite,
         clearDeathFlagData: deleteFlags,
       });

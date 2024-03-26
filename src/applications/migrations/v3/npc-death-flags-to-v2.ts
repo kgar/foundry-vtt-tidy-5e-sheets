@@ -7,18 +7,18 @@ type TidyDeath = {
 };
 
 type NpcDeathFlagToV2MigrationParams = {
-  document: Actor5e;
+  npc: Actor5e;
   overwrite: boolean;
   clearDeathFlagData: boolean;
 };
 
 export async function migrateNpcDeathFlagsToV2({
-  document,
+  npc,
   overwrite,
   clearDeathFlagData,
 }: NpcDeathFlagToV2MigrationParams) {
   const tidyDeath = FoundryAdapter.tryGetFlag<TidyDeath | undefined>(
-    document,
+    npc,
     'death'
   );
 
@@ -26,7 +26,11 @@ export async function migrateNpcDeathFlagsToV2({
     return;
   }
 
-  const systemDeath = document.system.attributes.death;
+  const systemDeath = npc.system.attributes?.death;
+
+  if (!systemDeath) {
+    return;
+  }
 
   const update: Record<string, any> = {};
 
@@ -39,10 +43,10 @@ export async function migrateNpcDeathFlagsToV2({
   }
 
   if (Object.keys(systemDeath).length) {
-    await document.update(update);
+    await npc.update(update);
   }
 
   if (clearDeathFlagData) {
-    FoundryAdapter.unsetFlag(document, 'death');
+    FoundryAdapter.unsetFlag(npc, 'death');
   }
 }
