@@ -73,7 +73,7 @@
           </TidyTableHeaderCell>
           {#each params.columns as column}
             <TidyTableHeaderCell primary={column?.cellWidth === 'primary'}>
-              {column.name}
+              {column.name ?? ''}
             </TidyTableHeaderCell>
           {/each}
         </TidyTableHeaderRow>
@@ -87,10 +87,11 @@
               <input type="checkbox" bind:checked={selectable.selected} />
             </TidyTableCell>
             {#each params.columns as column}
-              {@const text = FoundryAdapter.getProperty(
-                selectable.document,
-                column.field.propPath,
-              )}
+              {@const text =
+                FoundryAdapter.getProperty(
+                  selectable.document,
+                  column.field.propPath,
+                ) ?? ''}
               <TidyTableCell
                 primary={column?.cellWidth === 'primary'}
                 class="flex-row small-gap"

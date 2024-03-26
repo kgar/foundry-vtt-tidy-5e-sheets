@@ -665,6 +665,10 @@
       "sectionTitle": "Character Biography",
       "selectionDialogTitle": "Migration: Character Biography"
     },
+    "NpcDeathSaves": {
+      "sectionTitle": "NPC Death Saves",
+      "selectionDialogTitle": "Migration: NPC Death Saves"
+    },
     "Selection": {
       "TotalSelectedLabel": "Total Selected: {total}",
       "ToMigrate": "To Migrate",

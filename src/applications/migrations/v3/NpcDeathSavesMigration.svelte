@@ -36,23 +36,21 @@
             {
               cellWidth: '5rem',
               field: {
-                propPath: `actor.flags["${CONSTANTS.MODULE_ID}"].death.success`,
-                onClick: (target: Actor5e) => target.sheet.render(true),
+                propPath: `flags.${CONSTANTS.MODULE_ID}.death.success`,
               },
               name: localize('DND5E.DeathSaveSuccesses'),
             },
             {
               cellWidth: '5rem',
               field: {
-                propPath: `actor.flags["${CONSTANTS.MODULE_ID}"].death.failure`,
-                onClick: (target: Actor5e) => target.sheet.render(true),
+                propPath: `flags.${CONSTANTS.MODULE_ID}.death.failure`,
               },
               name: localize('DND5E.DeathSaveFailures'),
             },
           ],
           documents: actorsToMigrate,
           title: FoundryAdapter.localize(
-            'TIDY5E.Settings.Migrations.CharacterBiography.selectionDialogTitle',
+            'TIDY5E.Settings.Migrations.NpcDeathSaves.selectionDialogTitle',
           ),
         },
         () => {
@@ -113,16 +111,10 @@
 
 <section>
   <h2>
-    {localize('TIDY5E.Settings.Migrations.CharacterBiography.sectionTitle')}
+    {localize('TIDY5E.Settings.Migrations.NpcDeathSaves.sectionTitle')}
   </h2>
   <ul>
-    <li>{localize('DND5E.Age')}</li>
-    <li>{localize('DND5E.Eyes')}</li>
-    <li>{localize('DND5E.Gender')}</li>
-    <li>{localize('DND5E.Hair')}</li>
-    <li>{localize('DND5E.Height')}</li>
-    <li>{localize('DND5E.Skin')}</li>
-    <li>{localize('DND5E.Weight')}</li>
+    <li>{localize('DND5E.DeathSave')}</li>
   </ul>
   <h3>{localize('TIDY5E.Settings.Migrations.OptionsHeader')}</h3>
   <div class="options grid-auto-columns">

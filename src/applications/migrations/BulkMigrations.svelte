@@ -16,7 +16,7 @@
   const tabs: Tab[] = [
     {
       id: CONSTANTS.TAB_MIGRATIONS_NPC_DEATH,
-      title: 'TIDY5E.Settings.Migrations.CharacterBiography.sectionTitle',
+      title: 'TIDY5E.Settings.Migrations.NpcDeathSaves.sectionTitle',
       content: {
         component: NpcDeathSavesMigration,
         type: 'svelte',
