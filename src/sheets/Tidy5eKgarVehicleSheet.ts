@@ -439,9 +439,17 @@ export class Tidy5eVehicleSheet
 
     // Create a Consumable spell scroll on the Inventory tab
     if (itemData.type === 'spell') {
+      const options: Record<string, unknown> = {};
+
+      if (SettingsProvider.settings.includeFlagsInSpellScrollCreation.get()) {
+        options.flags = itemData.flags;
+      }
+
       const scroll = await dnd5e.documents.Item5e.createScrollFromSpell(
-        itemData
+        itemData,
+        options
       );
+
       return scroll.toObject();
     }
 
