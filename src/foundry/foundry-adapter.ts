@@ -218,22 +218,24 @@ export const FoundryAdapter = {
 
     entityWithSheet.sheet.render(true);
   },
-  createItem(dataset: Record<string, any>, actor: Actor5e) {
+  createItem({ type, ...dataset }: Record<string, any>, actor: Actor5e) {
+    // Check to make sure the newly created class doesn't take player over level cap
     if (
-      dataset.type === 'class' &&
+      type === 'class' &&
       actor.system.details.level + 1 > CONFIG.DND5E.maxLevel
     ) {
       const err = game.i18n.format('DND5E.MaxCharacterLevelExceededWarn', {
         max: CONFIG.DND5E.maxLevel,
       });
-      return ui.notifications.error(err);
+      ui.notifications.error(err);
+      return null;
     }
 
     const itemData = {
       name: FoundryAdapter.localize('DND5E.ItemNew', {
-        type: FoundryAdapter.localize(CONFIG.Item.typeLabels[dataset.type]),
+        type: FoundryAdapter.localize(CONFIG.Item.typeLabels[type]),
       }),
-      type: dataset.type,
+      type,
       system: foundry.utils.expandObject({ ...dataset }),
     };
     delete itemData.system.type;
