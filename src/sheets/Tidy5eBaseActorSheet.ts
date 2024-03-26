@@ -1,5 +1,4 @@
 import type {
-  Actor5e,
   ActorSheetContext,
   DamageModificationContextEntry,
   DamageModificationData,
@@ -38,9 +37,7 @@ export class Tidy5eBaseActorSheet {
         })
         .filter((f) => f);
 
-      if (mods.length) {
-        context.traits.traits.dm = mods;
-      }
+      context.traits.traits.dm = mods;
     }
   }
 }
