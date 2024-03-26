@@ -12,40 +12,61 @@
 
   async function migrate() {
     try {
-      const actorsToMigrate = Array.from<any>(game.actors).filter(
-        (a) => a.type === CONSTANTS.SHEET_TYPE_NPC,
-      );
-      new MigrationSelectionApplication<Actor5e>(
+      const actorsToMigrate = Array.from<any>(game.actors)
+        .filter((a) => a.type === CONSTANTS.SHEET_TYPE_NPC && a.isOwner)
+        .map((a) => ({ actor: a, unlinked: false }));
+      const tokenActors = Array.from(canvas?.scene?.tokens ?? [])
+        .map((t: any) => ({ actor: t.actor, unlinked: true }))
+        .filter(
+          (a) =>
+            a.actor && !a.actor.prototypeToken?.actorLink && a.actor.isOwner,
+        );
+      actorsToMigrate.push(...tokenActors);
+      new MigrationSelectionApplication<{ actor: Actor5e; unlinked: boolean }>(
         {
           onConfirm: async (selected) => {
             migrating = true;
             ui.notifications.info(
               localize('TIDY5E.Settings.Migrations.migrationBeginningMessage'),
             );
-            migrateActors(selected);
+            migrateActors(selected.map((s) => s.actor));
           },
           columns: [
             {
               cellWidth: 'primary',
               field: {
-                propPath: 'name',
-                onClick: (target: Actor5e) => target.sheet.render(true),
+                type: 'simple',
+                propPath: 'actor.name',
+                onClick: (target) => target.actor.sheet.render(true),
               },
               name: localize('TIDY5E.Settings.Migrations.Selection.ToMigrate'),
             },
             {
               cellWidth: '5rem',
               field: {
-                propPath: `flags.${CONSTANTS.MODULE_ID}.death.success`,
+                type: 'simple',
+                propPath: `actor.flags.${CONSTANTS.MODULE_ID}.death.success`,
               },
               name: localize('DND5E.DeathSaveSuccesses'),
             },
             {
               cellWidth: '5rem',
               field: {
-                propPath: `flags.${CONSTANTS.MODULE_ID}.death.failure`,
+                type: 'simple',
+                propPath: `actor.flags.${CONSTANTS.MODULE_ID}.death.failure`,
               },
               name: localize('DND5E.DeathSaveFailures'),
+            },
+            {
+              cellWidth: '10rem',
+              name: '',
+              field: {
+                type: 'contextual',
+                getText: ({ unlinked }) =>
+                  unlinked
+                    ? FoundryAdapter.localize('TIDY5E.TokenUnlinked')
+                    : FoundryAdapter.localize('DOCUMENT.Actor'),
+              },
             },
           ],
           documents: actorsToMigrate,
@@ -80,6 +101,7 @@
 
   function resetOptions() {
     overwrite = false;
+    deleteFlags = false;
   }
 
   async function migrateActor(actor: Actor5e) {
@@ -116,6 +138,7 @@
   <ul>
     <li>{localize('DND5E.DeathSave')}</li>
   </ul>
+  <p>{localize('TIDY5E.Settings.Migrations.UnlinkedExplanation')}</p>
   <h3>{localize('TIDY5E.Settings.Migrations.OptionsHeader')}</h3>
   <div class="options grid-auto-columns">
     <label

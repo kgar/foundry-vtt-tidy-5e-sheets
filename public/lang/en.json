@@ -669,6 +669,7 @@
       "sectionTitle": "NPC Death Saves",
       "selectionDialogTitle": "Migration: NPC Death Saves"
     },
+    "UnlinkedExplanation": "This migration gives the option to migrate unlinked token documents in the current scene. You can run the migration on additional scenes as needed.",
     "Selection": {
       "TotalSelectedLabel": "Total Selected: {total}",
       "ToMigrate": "To Migrate",

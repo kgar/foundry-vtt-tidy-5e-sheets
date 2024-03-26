@@ -31,6 +31,7 @@
             {
               cellWidth: 'primary',
               field: {
+                type: 'simple',
                 propPath: 'name',
                 onClick: (target: Actor5e) => target.sheet.render(true),
               },
