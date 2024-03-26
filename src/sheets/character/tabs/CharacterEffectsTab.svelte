@@ -19,7 +19,7 @@
   import { declareLocation } from 'src/types/location-awareness.types';
   import CharacterConditions from '../parts/CharacterConditions.svelte';
   import ClassicControls from 'src/sheets/shared/ClassicControls.svelte';
-  import EffectToggleControl from 'src/components/item-list/controls/EffectToggleControl.svelte';
+  import ActorEffectToggleControl from 'src/components/item-list/controls/ActorEffectToggleControl.svelte';
 
   let context = getContext<Readable<ActorSheetContext>>('context');
 
@@ -38,7 +38,7 @@
     controls = [];
     controls.push(
       {
-        component: EffectToggleControl,
+        component: ActorEffectToggleControl,
         props: ({ effect }) => ({
           effect: effect,
         }),
