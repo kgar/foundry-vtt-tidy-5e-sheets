@@ -4,8 +4,8 @@
     "TIDY5E.Tidy5eItemSheet": "Tidy 5e feuille d'objet",
     "TIDY5E.Tidy5eVehicle": "Tidy 5e Vechicle Sheet",
     "TIDY5E.PlayerName": "Nom du joueur",
-    "TIDY5E.EditActorImage": "Clic gauche : éditer l'image",
-    "TIDY5E.ShowActorImage": "Clic droit : voir l'image du personnage",
+    "TIDY5E.EditActorImage": "Clic gauche : éditer l'image",
+    "TIDY5E.ShowActorImage": "Clic droit : voir l'image du personnage",
     "TIDY5E.ShowPortraitArt": "Voir le portrait",
     "TIDY5E.ShowTokenArt": "Voir le token",
     "TIDY5E.ShowItemImage": "clic droit : afficher l'image de l'article",
@@ -745,5 +745,9 @@
     "TIDY5E.Commands.HideContainerPanel": "Masquer le panneau conteneur",
     "TIDY5E.Utilities.GMTools": "Outils du MJ",
     "TIDY5E.Utilities.IdentifyAll": "Identifier tous les éléments",
-    "TIDY5E.Utilities.MarkAllAsUnidentified": "Marquer tous les éléments comme non identifiés"
+    "TIDY5E.Utilities.MarkAllAsUnidentified": "Marquer tous les éléments comme non identifiés",
+    "TIDY5E.ItemImageTitle": "Objet: {subject}",
+    "TIDY5E.ItemFilters.CanCast": "Peu incanter",
+    "TIDY5E.ItemFilters.CanUse": "Peu utiliser",
+    "TIDY5E.PortraitTitle": "Portrait: {subject}"
 }
