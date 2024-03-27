@@ -10,10 +10,6 @@
   let context = getContext<Readable<VehicleSheetContext>>('context');
 
   const localize = FoundryAdapter.localize;
-
-  function activateProseMirrorListeners(node: HTMLElement) {
-    $context.activateFoundryJQueryListeners(node);
-  }
 </script>
 
 <div class="limited-vehicle">
@@ -23,7 +19,7 @@
       <RerenderAfterFormSubmission
         andOnValueChange={$context.system.details.biography.value}
       >
-        <article class="biography-notes" use:activateProseMirrorListeners>
+        <article class="biography-notes" use:$context.activateEditors>
           <div class="section-titles">
             {localize('DND5E.Description')}
           </div>

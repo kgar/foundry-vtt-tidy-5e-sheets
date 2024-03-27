@@ -33,8 +33,8 @@
 
   export let primaryColumnName: string;
   export let items: Item5e[];
+  export let section: any;
   export let extraInventoryRowClasses: string = '';
-  export let section: any = undefined;
   export let lockControls: boolean = false;
   export let allowFavoriteIconNextToName: boolean = true;
   export let includeWeightColumn: boolean = true;
@@ -260,7 +260,7 @@
           {/if}
         </ItemTableRow>
       {/each}
-      {#if $context.unlocked && section}
+      {#if $context.unlocked && section.canCreate}
         <ItemTableFooter actor={$context.actor} {section} isItem={true} />
       {/if}
     </svelte:fragment>

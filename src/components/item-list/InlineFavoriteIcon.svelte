@@ -5,7 +5,7 @@
 </script>
 
 <div class="is-favorite" title={localize('TIDY5E.Favorite')}>
-  <i class="fas fa-bookmark icon-fav" />
+  <i class="fas fa-bookmark icon-fav fa-fw" />
 </div>
 
 <style lang="scss">
@@ -15,6 +15,5 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 1rem;
   }
 </style>

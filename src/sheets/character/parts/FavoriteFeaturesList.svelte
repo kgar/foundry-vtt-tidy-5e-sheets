@@ -18,6 +18,7 @@
 
   let context = getContext<Readable<CharacterSheetContext>>('context');
   export let items: Item5e[] = [];
+  export let sectionTitle: string | null = null;
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -26,7 +27,7 @@
   <svelte:fragment slot="header">
     <ItemTableHeaderRow>
       <ItemTableColumn primary={true}>
-        {localize('DND5E.Features')}
+        {localize(sectionTitle ?? 'DND5E.Features')}
       </ItemTableColumn>
       <ItemTableColumn baseWidth="3.125rem">
         {localize('DND5E.Uses')}

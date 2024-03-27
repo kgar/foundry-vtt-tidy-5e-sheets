@@ -11,10 +11,6 @@
   let context = getContext<Readable<CharacterSheetContext>>('context');
 
   const localize = FoundryAdapter.localize;
-
-  function activateProseMirrorListeners(node: HTMLElement) {
-    $context.activateFoundryJQueryListeners(node);
-  }
 </script>
 
 <div class="scroll-container journal-container">
@@ -28,7 +24,7 @@
         'notes1.value',
       ) ?? ''}
     >
-      <article use:activateProseMirrorListeners>
+      <article use:$context.activateEditors>
         <div class="section-titles">
           <TextInput
             document={$context.actor}
@@ -54,7 +50,7 @@
         'notes2.value',
       ) ?? ''}
     >
-      <article use:activateProseMirrorListeners>
+      <article use:$context.activateEditors>
         <div class="section-titles">
           <TextInput
             document={$context.actor}
@@ -80,7 +76,7 @@
         'notes3.value',
       ) ?? ''}
     >
-      <article use:activateProseMirrorListeners>
+      <article use:$context.activateEditors>
         <div class="section-titles">
           <TextInput
             document={$context.actor}
@@ -106,7 +102,7 @@
         'notes4.value',
       ) ?? ''}
     >
-      <article use:activateProseMirrorListeners>
+      <article use:$context.activateEditors>
         <div class="section-titles">
           <TextInput
             document={$context.actor}
@@ -137,7 +133,7 @@
         'notes.value',
       ) ?? ''}
     >
-      <article class="journal-notes" use:activateProseMirrorListeners>
+      <article class="journal-notes" use:$context.activateEditors>
         <div class="section-titles">{localize('TIDY5E.JournalEntries')}</div>
         <SheetEditor
           content={$context.notesEnrichedHtml}

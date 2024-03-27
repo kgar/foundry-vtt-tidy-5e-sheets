@@ -24,6 +24,33 @@
   }
 }
 
+.tidy-property-toggle {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  cursor: pointer;
+  background-color: var(--t5e-faintest-color);
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75rem;
+  color: var(--t5e-tertiary-color);
+  height: 100%;
+  width: var(--property-toggle-width-internal);
+
+  --icon-fill: var(--t5e-tertiary-color);
+  --icon-width: 1rem;
+  --icon-height: 1rem;
+  --tidy-switch-scale: 0.6;
+
+  &.active {
+    --icon-fill: var(--t5e-primary-font-color);
+    color: var(--t5e-primary-font-color);
+  }
+
+  &:hover {
+    background-color: var(--t5e-faint-color);
+  }
+}
+
 .tidy-switch {
   display: flex;
   align-items: center;

@@ -8,7 +8,7 @@
   import ItemUseButton from 'src/components/item-list/ItemUseButton.svelte';
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { Item5e, ItemSheetContext } from 'src/types/item.types';
+  import type { ContainerSheetContext, Item5e } from 'src/types/item.types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import CapacityBar from 'src/sheets/container/CapacityBar.svelte';
@@ -24,8 +24,9 @@
   import ButtonMenuCommand from 'src/components/button-menu/ButtonMenuCommand.svelte';
   import PinnedFilterToggles from 'src/components/filter/PinnedFilterToggles.svelte';
   import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
+  import InlineFavoriteIcon from 'src/components/item-list/InlineFavoriteIcon.svelte';
 
-  let context = getContext<Readable<ItemSheetContext>>('context');
+  let context = getContext<Readable<ContainerSheetContext>>('context');
 
   let searchCriteria = '';
 
@@ -195,10 +196,13 @@
                 {#if attunementContext}
                   <i
                     style="margin-left: auto; align-self: center;"
-                    class="item-state-icon fas {attunementContext.icon} {attunementContext.cls}"
+                    class="item-state-icon fas {attunementContext.icon} {attunementContext.cls} fa-fw"
                     title={localize(attunementContext.title)}
                   />
                 {/if}
+              {/if}
+              {#if FoundryAdapter.isDocumentFavorited(item)}
+                <InlineFavoriteIcon />
               {/if}
             </TidyTableCell>
             <TidyTableCell

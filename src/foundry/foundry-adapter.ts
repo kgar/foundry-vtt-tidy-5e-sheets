@@ -1,7 +1,7 @@
 import type {
   ActionItem,
   ActiveEffect5e,
-  ActorSheetContext,
+  AttunementContext,
   CharacterSheetContext,
   ClassSummary,
   DropdownListOption,
@@ -361,7 +361,9 @@ export const FoundryAdapter = {
 
     return classes.join(' ');
   },
-  getSpellAttackModAndTooltip(context: ActorSheetContext) {
+  getSpellAttackModAndTooltip(
+    context: CharacterSheetContext | NpcSheetContext
+  ) {
     let actor = context.actor;
     let formula = Roll.replaceFormulaData(
       actor.system.bonuses.rsak.attack,
@@ -418,9 +420,10 @@ export const FoundryAdapter = {
 
     const parentClass = FoundryAdapter.tryGetFlag<string>(spell, 'parentClass');
 
-    const classImage = parentClass
-      ? context.actorClassesToImages[parentClass]
-      : undefined;
+    const classImage =
+      parentClass && 'actorClassesToImages' in context
+        ? context.actorClassesToImages[parentClass]
+        : undefined;
 
     return classImage ?? spell.img;
   },
@@ -1184,9 +1187,7 @@ export const FoundryAdapter = {
     cls: 'attuned',
     title: 'DND5E.AttunementAttuned',
   },
-  getAttunementContext(
-    item: Item5e
-  ): { icon: string; cls: string; title: string } | undefined {
+  getAttunementContext(item: Item5e): AttunementContext | undefined {
     return item.system.attunement === CONFIG.DND5E.attunementTypes.REQUIRED
       ? FoundryAdapter.attunementContextRequired
       : item.system.attunement === CONFIG.DND5E.attunementTypes.ATTUNED
@@ -1261,5 +1262,28 @@ export const FoundryAdapter = {
       app.document instanceof dnd5e.documents.Actor5e &&
       app._concentration?.effects.has(effect)
     );
+  },
+  activateEditors(node: HTMLElement, sheet: any, bindSecrets: boolean = true) {
+    try {
+      const nodes = node.matches(
+        CONSTANTS.TEXT_EDITOR_ACTIVATION_ELEMENT_SELECTOR
+      )
+        ? [node]
+        : Array.from(
+            node.querySelectorAll<HTMLElement>(
+              CONSTANTS.TEXT_EDITOR_ACTIVATION_ELEMENT_SELECTOR
+            )
+          );
+
+      for (let editorDiv of nodes) {
+        sheet._activateEditor(editorDiv);
+      }
+      if (bindSecrets) {
+        sheet._secrets.forEach((s: any) => s.bind(node));
+      }
+    } catch (e) {
+      error('An error occurred while activating text editors', false, e);
+      debug('Text editor error trobuleshooting info', { node, sheet });
+    }
   },
 };

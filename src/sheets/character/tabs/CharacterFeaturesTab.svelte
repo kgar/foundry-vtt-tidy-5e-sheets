@@ -24,7 +24,6 @@
   import type { Readable } from 'svelte/store';
   import Notice from '../../../components/notice/Notice.svelte';
   import { settingStore } from 'src/settings/settings';
-  import DtypeInput from '../../../components/inputs/DtypeInput.svelte';
   import RechargeControl from 'src/components/item-list/controls/RechargeControl.svelte';
   import ActionFilterOverrideControl from 'src/components/item-list/controls/ActionFilterOverrideControl.svelte';
   import { declareLocation } from 'src/types/location-awareness.types';
@@ -142,11 +141,6 @@
                   {localize('DND5E.Usage')}
                 </ItemTableColumn>
               {/if}
-              {#if section.showSourceColumn}
-                <ItemTableColumn baseWidth="7.5rem">
-                  {localize('DND5E.Source')}
-                </ItemTableColumn>
-              {/if}
               {#if section.showLevelColumn}
                 <ItemTableColumn baseWidth="7.5rem">
                   {localize('DND5E.Level')}
@@ -156,13 +150,6 @@
                 <ItemTableColumn baseWidth="7.5rem">
                   {localize('DND5E.Requirements')}
                 </ItemTableColumn>
-              {/if}
-              {#if section.columns}
-                {#each section.columns as column (column.property)}
-                  <ItemTableColumn cssClass={column.css ?? ''}>
-                    {localize(column.label)}
-                  </ItemTableColumn>
-                {/each}
               {/if}
               {#if $context.editable && $context.useClassicControls}
                 <ItemTableColumn baseWidth={classicControlsColumnWidth} />
@@ -190,7 +177,10 @@
                     hasChildren={false}
                     {item}
                   >
-                    {#if item.type === 'subclass'}&rdsh;{/if}
+                    {#if section.isClass && item.type === 'subclass'}&rdsh;{/if}
+                    {#if !section.isClass && item.type === 'subclass'}
+                      <i class="fa-solid fa-link-slash align-self-center"></i>
+                    {/if}
                     <span
                       data-tidy-item-name={item.name}
                       data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_NAME}
@@ -210,7 +200,7 @@
                   <ItemTableCell baseWidth="3.125rem">
                     {#if ctx?.isOnCooldown}
                       <RechargeControl {item} />
-                    {:else if item.system.recharge.value}
+                    {:else if item.system.recharge?.value}
                       <i
                         class="fas fa-bolt"
                         title={localize('DND5E.Charged')}
@@ -227,13 +217,6 @@
                     {#if item.system.activation.type}
                       {item.labels?.activation ?? ''}
                     {/if}
-                  </ItemTableCell>
-                {/if}
-                {#if section.showSourceColumn}
-                  <ItemTableCell baseWidth="7.5rem">
-                    <span class="truncate" title={item.system.source?.label}
-                      >{item.system.source?.label}</span
-                    >
                   </ItemTableCell>
                 {/if}
                 {#if section.showLevelColumn}
@@ -256,26 +239,6 @@
                       >{item.system.requirements ?? ''}</span
                     >
                   </ItemTableCell>
-                {/if}
-                {#if section.columns}
-                  {#each section.columns as column (column.property)}
-                    {@const itemPropertyValue =
-                      FoundryAdapter.getProperty(item, item.property) ??
-                      FoundryAdapter.getProperty(item, ctx?.property) ??
-                      ''}
-                    <ItemTableCell>
-                      {#if column.editable}
-                        <DtypeInput
-                          document={item}
-                          field={item.property ?? ctx?.property}
-                          value={itemPropertyValue}
-                          dtype={column.editable}
-                        />
-                      {:else}
-                        {itemPropertyValue}
-                      {/if}
-                    </ItemTableCell>
-                  {/each}
                 {/if}
                 {#if $context.editable && $context.useClassicControls}
                   <ItemTableCell baseWidth={classicControlsColumnWidth}>

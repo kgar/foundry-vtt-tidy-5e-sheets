@@ -23,6 +23,11 @@ import {
   type ContainerPanelItemContext,
   type ContainerCapacityContext,
   type ActiveEffect5e,
+  type ActorInventoryTypes,
+  type CharacterItemPartitions,
+  type CharacterFeatureSection,
+  type CharacterItemContext,
+  type SpellbookSection,
 } from 'src/types/types';
 import {
   applySheetAttributesToWindow,
@@ -52,6 +57,10 @@ import type { Dnd5eActorCondition } from 'src/foundry/foundry-and-system';
 import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
 import { SheetPreferencesRuntime } from 'src/runtime/user-preferences/SheetPreferencesRuntime';
 import { Tidy5eBaseActorSheet } from './Tidy5eBaseActorSheet';
+import {
+  CharacterSheetSections,
+  SheetSections,
+} from 'src/features/sections/CharacterSheetSections';
 
 export class Tidy5eCharacterSheet
   extends dnd5e.applications.actor.ActorSheet5eCharacter
@@ -196,6 +205,7 @@ export class Tidy5eCharacterSheet
     const characterPreferences = SheetPreferencesService.getByType(
       this.actor.type
     );
+
     const inventorySortMode =
       characterPreferences.tabs?.[CONSTANTS.TAB_CHARACTER_INVENTORY]?.sort ??
       'm';
@@ -207,74 +217,6 @@ export class Tidy5eCharacterSheet
       'm';
     const actionListSortMode =
       characterPreferences.tabs?.[CONSTANTS.TAB_ACTOR_ACTIONS]?.sort ?? 'm';
-
-    try {
-      for (let section of defaultDocumentContext.inventory) {
-        // TODO: When I fully take over section preparation, move this filter() step higher up so that it is not looping in individual sections
-        let inventory = this.itemFilterService.filter(
-          section.items,
-          CONSTANTS.TAB_CHARACTER_INVENTORY
-        );
-        if (inventorySortMode === 'a') {
-          inventory = inventory.toSorted((a, b) =>
-            a.name.localeCompare(b.name)
-          );
-        }
-        section.items = inventory;
-      }
-
-      for (let section of defaultDocumentContext.spellbook) {
-        // TODO: When I fully take over section preparation, move this filter() step higher up so that it is not looping in individual sections
-        let spellbook = this.itemFilterService.filter(
-          section.spells,
-          CONSTANTS.TAB_CHARACTER_SPELLBOOK
-        );
-        if (spellbookSortMode === 'a') {
-          spellbook = spellbook.toSorted((a, b) =>
-            a.name.localeCompare(b.name)
-          );
-        }
-        section.spells = spellbook;
-      }
-
-      for (let section of defaultDocumentContext.features) {
-        // TODO: When I fully take over section preparation, move this filter() step higher up so that it is not looping in individual sections
-        let features = this.itemFilterService.filter(
-          section.items,
-          CONSTANTS.TAB_CHARACTER_FEATURES
-        );
-        if (featureSortMode === 'a' && !section.isClass) {
-          features = features.toSorted((a, b) => a.name.localeCompare(b.name));
-        }
-        if (featureSortMode === 'a' && section.isClass) {
-          features = features
-            .filter((f) => f.type === CONSTANTS.ITEM_TYPE_CLASS)
-            .toSorted((a, b) => a.name.localeCompare(b.name))
-            .reduce((prev, classItem) => {
-              prev.push(classItem);
-              const subclass = features.find(
-                (f) =>
-                  f.type === CONSTANTS.ITEM_TYPE_SUBCLASS &&
-                  f.system.classIdentifier === classItem.system.identifier
-              );
-              if (subclass) {
-                prev.push(subclass);
-              }
-              return prev;
-            }, []);
-        }
-        section.items = features;
-      }
-    } catch (e) {
-      error(
-        'An error occurred while sorting and filtering section data',
-        false,
-        e
-      );
-      debug('Sorting/Filtering error troubleshooting info', {
-        defaultDocumentContext,
-      });
-    }
 
     const unlocked =
       FoundryAdapter.isActorSheetUnlocked(this.actor) &&
@@ -304,15 +246,6 @@ export class Tidy5eCharacterSheet
       tidyResources,
       this.actor
     );
-
-    const sections = defaultDocumentContext.features.map((section: any) => ({
-      ...section,
-      showLevelColumn: !section.hasActions && section.isClass,
-      showRequirementsColumn: !section.isClass && !section.columns?.length,
-      showSourceColumn: !section.columns?.length,
-      showUsagesColumn: section.hasActions,
-      showUsesColumn: section.hasActions,
-    }));
 
     let maxPreparedSpellsTotal = 0;
     try {
@@ -683,12 +616,8 @@ export class Tidy5eCharacterSheet
 
     let containerPanelItems: ContainerPanelItemContext[] = [];
     try {
-      let containers = Array.from<Item5e>(this.actor.items.values())
-        .filter(
-          (i: Item5e) =>
-            i.type === CONSTANTS.ITEM_TYPE_CONTAINER &&
-            !this.actor.items.has(i.system.container)
-        )
+      let containers = defaultDocumentContext.items
+        .filter((i: Item5e) => i.type === CONSTANTS.ITEM_TYPE_CONTAINER)
         .toSorted((a: Item5e, b: Item5e) => a.sort - b.sort);
 
       for (let container of containers) {
@@ -709,10 +638,8 @@ export class Tidy5eCharacterSheet
 
     const context: CharacterSheetContext = {
       ...defaultDocumentContext,
-      activateFoundryJQueryListeners: (node: HTMLElement) => {
-        this._activateCoreListeners($(node));
-        super.activateListeners($(node));
-      },
+      activateEditors: (node, options) =>
+        FoundryAdapter.activateEditors(node, this, options?.bindSecrets),
       actions: getActorActions(this.actor, this.itemFilterService),
       actorClassesToImages: getActorClassesToImages(this.actor),
       actorPortraitCommands:
@@ -761,7 +688,6 @@ export class Tidy5eCharacterSheet
         defaultDocumentContext
       ),
       editable: defaultDocumentContext.editable,
-      features: sections,
       filterData: this.itemFilterService.getDocumentItemFilterData(),
       filterPins: ItemFilterRuntime.defaultFilterPins[this.actor.type],
       flawEnrichedHtml: await FoundryAdapter.enrichHtml(
@@ -859,7 +785,7 @@ export class Tidy5eCharacterSheet
       owner: this.actor.isOwner,
       showContainerPanel:
         FoundryAdapter.tryGetFlag(this.actor, 'showContainerPanel') === true &&
-        Array.from(this.actor.items).some(
+        Array.from(defaultDocumentContext.items).some(
           (i: Item5e) => i.type === CONSTANTS.ITEM_TYPE_CONTAINER
         ),
       showLimitedSheet: FoundryAdapter.showLimitedSheet(this.actor),
@@ -919,6 +845,477 @@ export class Tidy5eCharacterSheet
     debug('Character Sheet context data', context);
 
     return context;
+  }
+
+  protected _prepareItems(context: CharacterSheetContext) {
+    // Categorize items as inventory, spellbook, features, and classes
+    const inventory: ActorInventoryTypes = {};
+    const favoriteInventory: ActorInventoryTypes = {};
+    for (const type of CharacterSheetSections.inventoryItemTypes) {
+      inventory[type] = {
+        label: `${CONFIG.Item.typeLabels[type]}Pl`,
+        items: [],
+        dataset: { type },
+        canCreate: true,
+      };
+      favoriteInventory[type] = {
+        label: `${CONFIG.Item.typeLabels[type]}Pl`,
+        items: [],
+        dataset: { type },
+        canCreate: false,
+      };
+    }
+
+    // Partition items by category
+    let {
+      items,
+      spells,
+      feats,
+      races,
+      backgrounds,
+      classes,
+      subclasses,
+      favorites,
+    } = Array.from(this.actor.items)
+      .toSorted((a: Item5e, b: Item5e) => (a.sort || 0) - (b.sort || 0))
+      .reduce(
+        (
+          obj: CharacterItemPartitions & { favorites: CharacterItemPartitions },
+          item: Item5e
+        ) => {
+          const { quantity, uses, recharge } = item.system;
+
+          // Item details
+          const ctx = (context.itemContext[item.id] ??= {});
+          ctx.isStack = Number.isNumeric(quantity) && quantity !== 1;
+          ctx.attunement = FoundryAdapter.getAttunementContext(item);
+
+          // Item usage
+          ctx.hasUses = item.hasLimitedUses;
+          ctx.isOnCooldown =
+            recharge && !!recharge.value && recharge.charged === false;
+          ctx.isDepleted = ctx.isOnCooldown && ctx.hasUses && uses.value > 0;
+          ctx.hasTarget = item.hasAreaTarget || item.hasIndividualTarget;
+
+          // Unidentified items
+          ctx.concealDetails =
+            !game.user.isGM && item.system.identified === false;
+
+          // Item grouping
+          const [originId] =
+            item.getFlag('dnd5e', 'advancementOrigin')?.split('.') ?? [];
+          const group = this.actor.items.get(originId);
+          switch (group?.type) {
+            case 'race':
+              ctx.group = 'race';
+              break;
+            case 'background':
+              ctx.group = 'background';
+              break;
+            case 'class':
+              ctx.group = group.identifier;
+              break;
+            case 'subclass':
+              ctx.group = group.class?.identifier ?? 'other';
+              break;
+            default:
+              ctx.group = 'other';
+          }
+
+          // Individual item preparation
+          this._prepareItem(item, ctx);
+
+          const isWithinContainer = this.actor.items.has(item.system.container);
+          // Classify items into types
+          if (!isWithinContainer) {
+            this._partitionItem(item, obj, inventory);
+          }
+
+          if (FoundryAdapter.isDocumentFavorited(item)) {
+            this._partitionItem(item, obj.favorites, favoriteInventory);
+          }
+
+          return obj;
+        },
+        {
+          items: [] as Item5e[],
+          spells: [] as Item5e[],
+          feats: [] as Item5e[],
+          races: [] as Item5e[],
+          backgrounds: [] as Item5e[],
+          classes: [] as Item5e[],
+          subclasses: [] as Item5e[],
+          favorites: {
+            items: [] as Item5e[],
+            spells: [] as Item5e[],
+            feats: [] as Item5e[],
+            races: [] as Item5e[],
+            backgrounds: [] as Item5e[],
+            classes: [] as Item5e[],
+            subclasses: [] as Item5e[],
+          },
+        }
+      );
+
+    const characterPreferences = SheetPreferencesService.getByType(
+      this.actor.type
+    );
+
+    // Organize items
+    // Filter items
+    items = this.itemFilterService.filter(
+      items,
+      CONSTANTS.TAB_CHARACTER_INVENTORY
+    );
+
+    // Sort items
+    const inventorySortMode =
+      characterPreferences.tabs?.[CONSTANTS.TAB_CHARACTER_INVENTORY]?.sort ??
+      'm';
+
+    if (inventorySortMode === 'a') {
+      items = items.toSorted((a, b) => a.name.localeCompare(b.name));
+    }
+
+    // Section the items by type
+    for (let i of items) {
+      const ctx = (context.itemContext[i.id] ??= {});
+      ctx.totalWeight = i.system.totalWeight?.toNearest(0.1);
+      CharacterSheetSections.applyInventoryItemToSection(inventory, i, {
+        canCreate: true,
+      });
+    }
+
+    for (let i of favorites.items) {
+      const ctx = (context.itemContext[i.id] ??= {});
+      ctx.totalWeight = i.system.totalWeight?.toNearest(0.1);
+      CharacterSheetSections.applyInventoryItemToSection(favoriteInventory, i, {
+        canCreate: false,
+      });
+    }
+
+    // Organize Spellbook and count the number of prepared spells (excluding always, at will, cantrips, etc...)
+    // Count prepared spells
+    const nPrepared = spells.filter((spell) => {
+      const prep = spell.system.preparation;
+      return (
+        spell.system.level > 0 && prep.mode === 'prepared' && prep.prepared
+      );
+    }).length;
+
+    // Filter spells
+    spells = this.itemFilterService.filter(
+      spells,
+      CONSTANTS.TAB_CHARACTER_SPELLBOOK
+    );
+
+    // Sort spells
+    const spellbookSortMode =
+      characterPreferences.tabs?.[CONSTANTS.TAB_CHARACTER_SPELLBOOK]?.sort ??
+      'm';
+
+    if (spellbookSortMode === 'a') {
+      spells = spells.toSorted((a, b) => a.name.localeCompare(b.name));
+    }
+
+    // Section spells
+    // TODO: Take over `_prepareSpellbook` and put in `SheetSections`; have custom sectioning built right into the process.
+    const customSectionSpells = spells.filter((s) =>
+      SheetSections.tryGetCustomSection(s)
+    );
+    spells = spells.filter((s) => !SheetSections.tryGetCustomSection(s));
+    const spellbook = [
+      ...this._prepareSpellbook(context, spells),
+      ...SheetSections.generateCustomSpellbookSections(customSectionSpells, {
+        canCreate: true,
+      }),
+    ];
+
+    const customSectionFavoriteSpells = favorites.spells.filter((s) =>
+      SheetSections.tryGetCustomSection(s)
+    );
+    favorites.spells = favorites.spells.filter(
+      (s) => !SheetSections.tryGetCustomSection(s)
+    );
+    const favoriteSpellbook = [
+      ...this._prepareSpellbook(context, favorites.spells),
+      ...SheetSections.generateCustomSpellbookSections(
+        customSectionFavoriteSpells,
+        {
+          canCreate: false,
+        }
+      ),
+    ];
+
+    // Organize Features
+    // Sub-item groupings and validation
+    // Classes: Interleave matching subclasses
+    classes = this._correlateClassesAndSubclasses(context, classes, subclasses);
+
+    // Put unmatched subclasses into features so they don't disappear
+    for (const subclass of subclasses) {
+      feats.push(subclass);
+      const message = game.i18n.format('DND5E.SubclassMismatchWarn', {
+        name: subclass.name,
+        class: subclass.system.classIdentifier,
+      });
+      context.warnings.push({ message, type: 'warning' });
+    }
+
+    favorites.classes = this._correlateClassesAndSubclasses(
+      context,
+      favorites.classes,
+      favorites.subclasses
+    );
+
+    for (const subclass of favorites.subclasses) {
+      favorites.classes.push(subclass);
+    }
+
+    // Filter Features
+    races = this.itemFilterService.filter(
+      races,
+      CONSTANTS.TAB_CHARACTER_FEATURES
+    );
+    classes = this.itemFilterService.filter(
+      classes,
+      CONSTANTS.TAB_CHARACTER_FEATURES
+    );
+    feats = this.itemFilterService.filter(
+      feats,
+      CONSTANTS.TAB_CHARACTER_FEATURES
+    );
+    backgrounds = this.itemFilterService.filter(
+      backgrounds,
+      CONSTANTS.TAB_CHARACTER_FEATURES
+    );
+
+    // Sort Features
+    const featureSortMode =
+      characterPreferences.tabs?.[CONSTANTS.TAB_CHARACTER_FEATURES]?.sort ??
+      'm';
+
+    if (featureSortMode === 'a') {
+      // Classes optionally have correlated subclasses adjacent to them; re-apply their subclasses after sorting them
+      classes = classes
+        .filter((f) => f.type === CONSTANTS.ITEM_TYPE_CLASS)
+        .toSorted((a, b) => a.name.localeCompare(b.name))
+        .reduce((prev, classItem) => {
+          prev.push(classItem);
+          const subclass = classes.find(
+            (f) =>
+              f.type === CONSTANTS.ITEM_TYPE_SUBCLASS &&
+              f.system.classIdentifier === classItem.system.identifier
+          );
+          if (subclass) {
+            prev.push(subclass);
+          }
+          return prev;
+        }, []);
+      races = races.toSorted((a, b) => a.name.localeCompare(b.name));
+      feats = feats.toSorted((a, b) => a.name.localeCompare(b.name));
+      backgrounds = backgrounds.toSorted((a, b) =>
+        a.name.localeCompare(b.name)
+      );
+    } else if (featureSortMode === 'm') {
+      classes = classes.toSorted((a, b) => b.system.levels - a.system.levels);
+    }
+
+    // Section features
+    // TODO: Intercept with CCSS feature set
+    const features: Record<string, CharacterFeatureSection> =
+      this._buildFeaturesSections(races, backgrounds, classes, feats, {
+        canCreate: true,
+      });
+
+    const favoriteFeatures: Record<string, CharacterFeatureSection> =
+      this._buildFeaturesSections(
+        favorites.races,
+        favorites.backgrounds,
+        favorites.classes,
+        favorites.feats,
+        { canCreate: false }
+      );
+
+    // Assign and return
+    context.inventory = Object.values(inventory);
+    context.spellbook = spellbook;
+    context.preparedSpells = nPrepared;
+    context.features = Object.values(features);
+    context.favorites = [
+      ...Object.values(favoriteInventory)
+        .filter((i) => i.items.length)
+        .map((i) => ({
+          ...i,
+          type: CONSTANTS.TAB_CHARACTER_INVENTORY,
+        })),
+      ...Object.values(favoriteFeatures)
+        .filter((i) => i.items.length)
+        .map((i) => ({
+          ...i,
+          type: CONSTANTS.TAB_CHARACTER_FEATURES,
+        })),
+      ...favoriteSpellbook
+        .filter((s: SpellbookSection) => s.spells.length)
+        .map((s: SpellbookSection) => ({
+          ...s,
+          type: CONSTANTS.TAB_CHARACTER_SPELLBOOK,
+        })),
+    ];
+  }
+
+  // TODO: Consider moving to the static class CharacterSheetSections
+  private _buildFeaturesSections(
+    races: any[],
+    backgrounds: any[],
+    classes: any[],
+    feats: any[],
+    options: Partial<CharacterFeatureSection>
+  ): Record<string, CharacterFeatureSection> {
+    const customFeats = feats.filter((f) =>
+      SheetSections.tryGetCustomSection(f)
+    );
+    feats = feats.filter((f) => !SheetSections.tryGetCustomSection(f));
+
+    const features = {
+      race: {
+        label: CONFIG.Item.typeLabels.race,
+        items: races,
+        hasActions: false,
+        dataset: { type: 'race' },
+        showRequirementsColumn: true,
+        canCreate: true,
+        ...options,
+      },
+      background: {
+        label: CONFIG.Item.typeLabels.background,
+        items: backgrounds,
+        hasActions: false,
+        dataset: { type: 'background' },
+        showRequirementsColumn: true,
+        canCreate: true,
+        ...options,
+      },
+      classes: {
+        label: `${CONFIG.Item.typeLabels.class}Pl`,
+        items: classes,
+        hasActions: false,
+        dataset: { type: 'class' },
+        isClass: true,
+        showLevelColumn: true,
+        canCreate: true,
+        ...options,
+      },
+      active: {
+        label: 'DND5E.FeatureActive',
+        items: feats.filter((feat) => feat.system.activation?.type),
+        hasActions: true,
+        dataset: { type: 'feat', 'activation.type': 'action' },
+        showRequirementsColumn: true,
+        showUsagesColumn: true,
+        showUsesColumn: true,
+        canCreate: true,
+        ...options,
+      },
+      passive: {
+        label: 'DND5E.FeaturePassive',
+        items: feats.filter((feat) => !feat.system.activation?.type),
+        hasActions: false,
+        dataset: { type: 'feat' },
+        showRequirementsColumn: true,
+        canCreate: true,
+        ...options,
+      },
+    };
+
+    customFeats.forEach((f) =>
+      CharacterSheetSections.applyCharacterFeatureToSection(
+        features,
+        f,
+        options
+      )
+    );
+
+    return features;
+  }
+
+  // TODO: Consider moving to the static class CharacterSheetSections
+  private _partitionItem(
+    item: any,
+    obj: CharacterItemPartitions,
+    inventory: ActorInventoryTypes
+  ) {
+    if (item.type === 'spell') {
+      obj.spells.push(item);
+    } else if (item.type === 'feat') {
+      obj.feats.push(item);
+    } else if (item.type === 'race') {
+      obj.races.push(item);
+    } else if (item.type === 'background') {
+      obj.backgrounds.push(item);
+    } else if (item.type === 'class') {
+      obj.classes.push(item);
+    } else if (item.type === 'subclass') {
+      obj.subclasses.push(item);
+    } else if (Object.keys(inventory).includes(item.type)) {
+      obj.items.push(item);
+    }
+  }
+
+  // TODO: Consider moving to the static class CharacterSheetSections
+  private _correlateClassesAndSubclasses(
+    context: CharacterSheetContext,
+    classes: Item5e[],
+    subclasses: Item5e[]
+  ) {
+    const maxLevelDelta =
+      CONFIG.DND5E.maxLevel - this.actor.system.details.level;
+    return classes.reduce((arr, cls) => {
+      const ctx = (context.itemContext[cls.id] ??= {});
+      ctx.availableLevels = Array.fromRange(CONFIG.DND5E.maxLevel + 1)
+        .slice(1)
+        .map((level) => {
+          const delta = level - cls.system.levels;
+          return { level, delta, disabled: delta > maxLevelDelta };
+        });
+      ctx.prefixedImage = cls.img ? foundry.utils.getRoute(cls.img) : null;
+      arr.push(cls);
+      const identifier =
+        cls.system.identifier || cls.name.slugify({ strict: true });
+      const subclass = subclasses.findSplice(
+        (s: Item5e) => s.system.classIdentifier === identifier
+      );
+      if (subclass) arr.push(subclass);
+      return arr;
+    }, []);
+  }
+
+  /**
+   * A helper method to establish the displayed preparation state for an item.
+   * @param {Item5e} item     Item being prepared for display.
+   * @param {object} context  Context data for display.
+   * @protected
+   */
+  protected _prepareItem(item: Item5e, context: CharacterItemContext) {
+    if (item.type === 'spell') {
+      const prep = item.system.preparation || {};
+      const isAlways = prep.mode === 'always';
+      const isPrepared = !!prep.prepared;
+      context.toggleClass = isPrepared ? 'active' : '';
+      if (isAlways) context.toggleClass = 'fixed';
+      if (isAlways)
+        context.toggleTitle = CONFIG.DND5E.spellPreparationModes.always;
+      else if (isPrepared)
+        context.toggleTitle = CONFIG.DND5E.spellPreparationModes.prepared;
+      else context.toggleTitle = game.i18n.localize('DND5E.SpellUnprepared');
+    } else {
+      const isActive = !!item.system.equipped;
+      context.toggleClass = isActive ? 'active' : '';
+      context.toggleTitle = game.i18n.localize(
+        isActive ? 'DND5E.Equipped' : 'DND5E.Unequipped'
+      );
+      context.canToggle = 'equipped' in item.system;
+    }
   }
 
   private async setExpandedItemData() {

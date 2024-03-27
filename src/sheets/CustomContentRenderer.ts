@@ -95,7 +95,7 @@ export class CustomContentRenderer {
         }
 
         if (!tabEl) {
-          warn('Unable to find custom tab content container for render');
+          debug('Unable to find custom tab content container for render');
           return;
         }
 

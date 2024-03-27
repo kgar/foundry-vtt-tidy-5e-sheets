@@ -9,14 +9,10 @@
   let context = getContext<Readable<ItemSheetContext>>('context');
 
   const localize = FoundryAdapter.localize;
-
-  function activateProseMirrorListeners(node: HTMLElement) {
-    $context.activateFoundryJQueryListeners(node);
-  }
 </script>
 
 <RerenderAfterFormSubmission andOnValueChange={$context.item.system.description.value}>
-  <article class="editor-container" use:activateProseMirrorListeners>
+  <article class="editor-container" use:$context.activateEditors>
     <h2 class="details-headline">{localize('TIDY5E.ItemDetailsHeadline')}</h2>
     <SheetEditor
       content={$context.enriched.description}
