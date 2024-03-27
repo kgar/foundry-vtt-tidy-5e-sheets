@@ -123,12 +123,11 @@ input[type='checkbox'] {
 
   .item-subtitle {
     padding: 0.125rem 0.25rem;
-    background: var(--t5e-faint-color);
     border-radius: 0.3125rem;
     color: var(--t5e-tertiary-color);
     display: flex;
+    flex-direction: column;
     align-items: flex-end;
-    height: 1.25rem;
     flex: 0 0 0.0625rem;
     font-family: var(--t5e-title-font-family);
     white-space: nowrap;
