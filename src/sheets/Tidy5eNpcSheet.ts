@@ -28,7 +28,6 @@ import { SettingsProvider, settingStore } from 'src/settings/settings';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
 import { getPercentage, isLessThanOneIsOne } from 'src/utils/numbers';
 import NpcShortRestDialog from 'src/dialogs/NpcShortRestDialog';
-import LongRestDialog from 'src/dialogs/NpcLongRestDialog';
 import type { SvelteComponent } from 'svelte';
 import type { Item5e, ItemChatData } from 'src/types/item.types';
 import { NpcSheetRuntime } from 'src/runtime/NpcSheetRuntime';
@@ -926,14 +925,9 @@ export class Tidy5eNpcSheet
   async _onLongRest(event: Event) {
     event.preventDefault();
     await this._onSubmit(event);
-    if (SettingsProvider.settings.showNpcRestInChat.get()) {
-      let obj = {
-        dialog: true,
-        chat: false,
-      };
-      return this.longRest(obj);
-    }
-    return this.longRest();
+    return this.actor.longRest({
+      chat: SettingsProvider.settings.showNpcRestInChat.get(),
+    });
   }
 
   async _onSubmit(...args: any[]) {
@@ -953,7 +947,7 @@ export class Tidy5eNpcSheet
     config = FoundryAdapter.mergeObject(
       {
         dialog: true,
-        chat: true,
+        chat: SettingsProvider.settings.showNpcRestInChat.get(),
         newDay: false,
         autoHD: false,
         autoHDThreshold: 3,
@@ -990,7 +984,21 @@ export class Tidy5eNpcSheet
           // Return the rest result
           const dhd = hd0; // this.system.attributes.hd - hd0;
           const dhp = this.actor.system.attributes.hp.value - hp0;
-          this._rest(config.chat, config.newDay, false, dhd, dhp);
+
+          const rollData = this.actor.getRollData();
+          const roll_value = await FoundryAdapter.roll(
+            isLessThanOneIsOne(dhd).toString() + 'd6',
+            rollData
+          );
+          const value = roll_value.total;
+          let newHpValue =
+            this.actor.system.attributes.hp.value + Number(value ?? 0);
+          if (newHpValue > this.actor.system.attributes.hp.max) {
+            newHpValue = this.actor.system.attributes.hp.max;
+          }
+          await this.actor.update({ 'system.attributes.hp.value': newHpValue });
+
+          return this.actor._rest(config.chat, config.newDay, false, dhd, dhp);
         }
       } catch (err) {
         error(
@@ -1004,176 +1012,6 @@ export class Tidy5eNpcSheet
       // Automatically spend hit dice
       await this.autoSpendHitDice({ threshold: config.autoHDThreshold });
     }
-  }
-
-  /* -------------------------------------------- */
-
-  /**
-   * Take a long rest, recovering hit points, hit dice, resources, item uses, and spell slots.
-   * @param {RestConfiguration} [config]  Configuration options for a long rest.
-   * @returns {Promise<RestResult>}       A Promise which resolves once the long rest workflow has completed.
-   */
-  async longRest(config: any = {}) {
-    config = FoundryAdapter.mergeObject(
-      {
-        dialog: true,
-        chat: true,
-        newDay: true,
-      },
-      config
-    );
-
-    /**
-     * A hook event that fires before a long rest is started.
-     * @function dnd5e.preLongRest
-     * @memberof hookEvents
-     * @param {Actor5e} actor             The actor that is being rested.
-     * @param {RestConfiguration} config  Configuration options for the rest.
-     * @returns {boolean}                 Explicitly return `false` to prevent the rest from being started.
-     */
-    if (Hooks.call('dnd5e.preLongRest', this.actor, config) === false) return;
-
-    if (!config.dialog) {
-      return;
-    }
-
-    try {
-      const result = await LongRestDialog.longRestDialog({
-        actor: this.actor,
-      });
-
-      if (result.confirmed) {
-        config.newDay = result.newDay === true;
-        return this._rest(config.chat, config.newDay, true);
-      }
-    } catch (err) {
-      error(
-        'An error occurred while attempting a long rest for the NPC. See devtool console for more information.',
-        true,
-        err
-      );
-    }
-  }
-
-  /* -------------------------------------------- */
-
-  /**
-   * Perform all of the changes needed for a short or long rest.
-   *
-   * @param {boolean} chat           Summarize the results of the rest workflow as a chat message.
-   * @param {boolean} newDay         Has a new day occurred during this rest?
-   * @param {boolean} longRest       Is this a long rest?
-   * @param {number} [dhd=0]         Number of hit dice spent during so far during the rest.
-   * @param {number} [dhp=0]         Number of hit points recovered so far during the rest.
-   * @returns {Promise<RestResult>}  Consolidated results of the rest workflow.
-   * @private
-   */
-  async _rest(
-    chat: boolean,
-    newDay: boolean,
-    longRest: boolean,
-    dhd: number = 0,
-    dhp: number = 0
-  ): Promise<unknown> {
-    // Recover hit points & hit dice on long rest
-    if (longRest || newDay) {
-      this.actor.update({
-        'system.attributes.hp.value': Number(
-          this.actor.system.attributes.hp.max ?? 0
-        ),
-      });
-      // Patch for NPC
-      if (this.actor.flags[CONSTANTS.MODULE_ID].exhaustion > 0) {
-        const exhaustion = this.actor.flags[CONSTANTS.MODULE_ID].exhaustion;
-        debug('tidy5e-npc | _rest | exhaustion = ' + exhaustion);
-        await this.actor.update({
-          [`flags.${CONSTANTS.MODULE_ID}.exhaustion`]: exhaustion - 1,
-        });
-      }
-    } else {
-      const rollData = this.actor.getRollData();
-      const roll_value = await FoundryAdapter.roll(
-        isLessThanOneIsOne(dhd).toString() + 'd6',
-        rollData
-      );
-      const value = roll_value.total;
-      let newHpValue =
-        this.actor.system.attributes.hp.value + Number(value ?? 0);
-      if (newHpValue > this.actor.system.attributes.hp.max) {
-        newHpValue = this.actor.system.attributes.hp.max;
-      }
-      await this.actor.update({ 'system.attributes.hp.value': newHpValue });
-    }
-    // TODO for some reason doen't work...i copy and paste the code from the system
-    // return this.actor._rest(chat, newDay, longRest, dhd, dhp);
-    let hitPointsRecovered = 0;
-    let hitPointUpdates = {};
-    let hitDiceRecovered = 0;
-    let hitDiceUpdates = [];
-    const rolls: any[] = [];
-
-    // Recover hit points & hit dice on long rest
-    if (longRest) {
-      ({ updates: hitPointUpdates, hitPointsRecovered } =
-        this.actor._getRestHitPointRecovery());
-      ({ updates: hitDiceUpdates, hitDiceRecovered } =
-        this.actor._getRestHitDiceRecovery());
-    }
-
-    // Figure out the rest of the changes
-    const result: Record<string, unknown> = {
-      dhd: dhd + hitDiceRecovered,
-      dhp: dhp + hitPointsRecovered,
-      updateData: {
-        ...hitPointUpdates,
-        ...this.actor._getRestResourceRecovery({
-          recoverShortRestResources: !longRest,
-          recoverLongRestResources: longRest,
-        }),
-        ...this.actor._getRestSpellRecovery({ recoverSpells: longRest }),
-      },
-      updateItems: [
-        ...hitDiceUpdates,
-        ...(await this.actor._getRestItemUsesRecovery({
-          recoverLongRestUses: longRest,
-          recoverDailyUses: newDay,
-          rolls,
-        })),
-      ],
-      longRest,
-      newDay,
-    };
-    result.rolls = rolls;
-
-    /**
-     * A hook event that fires after rest result is calculated, but before any updates are performed.
-     * @function dnd5e.preRestCompleted
-     * @memberof hookEvents
-     * @param {Actor5e} actor      The actor that is being rested.
-     * @param {RestResult} result  Details on the rest to be completed.
-     * @returns {boolean}          Explicitly return `false` to prevent the rest updates from being performed.
-     */
-    if (Hooks.call('dnd5e.preRestCompleted', this.actor, result) === false)
-      return result;
-
-    // Perform updates
-    await this.actor.update(result.updateData);
-    await this.actor.updateEmbeddedDocuments('Item', result.updateItems);
-
-    // Display a Chat Message summarizing the rest effects
-    if (chat) await this.actor._displayRestResultMessage(result, longRest);
-
-    /**
-     * A hook event that fires when the rest process is completed for an actor.
-     * @function dnd5e.restCompleted
-     * @memberof hookEvents
-     * @param {Actor5e} actor      The actor that just completed resting.
-     * @param {RestResult} result  Details on the rest completed.
-     */
-    Hooks.callAll('dnd5e.restCompleted', this.actor, result);
-
-    // Return data summarizing the rest effects
-    return result;
   }
 
   close(options: unknown = {}) {
