@@ -650,7 +650,12 @@
             "ToMigrate": "Pour migrer",
             "SelectAllNoneTooltip": "Sélectionner tous ou aucun"
         },
-        "OptionDeleteFlags.Tooltip": "Lors de la migration des données des indicateurs Tidy personnalisées vers les données officielles du système, les indicateurs restent en place par défaut. Cochez cette option pour supprimer ces indicateurs."
+        "OptionDeleteFlags.Tooltip": "Lors de la migration des données des indicateurs Tidy personnalisées vers les données officielles du système, les indicateurs restent en place par défaut. Cochez cette option pour supprimer ces indicateurs.",
+        "NpcDeathSaves": {
+            "selectionDialogTitle": "Migration : Sauvegarde contre la mort des PNJ",
+            "sectionTitle": "Sauvegarde contre la mort des PNJ"
+        },
+        "UnlinkedExplanation": "Cette migration offre la possibilité de migrer les documents non liés aux acteurs dans la scène actuelle. Vous pouvez exécuter la migration sur d'autres scènes si nécessaire."
     },
     "TIDY5E.Settings.ActionListIncludeMinuteLongSpellsAsActions": {
         "name": "Inclure des sorts d'une durée d'une minute dans les actions",
@@ -749,5 +754,9 @@
     "TIDY5E.ItemImageTitle": "Objet: {subject}",
     "TIDY5E.ItemFilters.CanCast": "Peu incanter",
     "TIDY5E.ItemFilters.CanUse": "Peu utiliser",
-    "TIDY5E.PortraitTitle": "Portrait: {subject}"
+    "TIDY5E.PortraitTitle": "Portrait: {subject}",
+    "TIDY5E.WorldSettings.IncludeFlagsInSpellScrollCreation": {
+        "name": "Inclure les indicateurs dans la création des parchemins de sorts",
+        "hint": "Les sorts peuvent parfois contenir des données spéciales provenant d'autres modules, qu'il peut être utile de transférer dans un parchemin de sort. Activer pour copier toutes les données basées sur les indicateurs dans le parchemin de sort lors de sa création."
+    }
 }
