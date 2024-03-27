@@ -50,6 +50,7 @@ import { ItemFilterService } from 'src/features/filtering/ItemFilterService';
 import { AsyncMutex } from 'src/utils/mutex';
 import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
 import { SheetPreferencesRuntime } from 'src/runtime/user-preferences/SheetPreferencesRuntime';
+import { Tidy5eBaseActorSheet } from './Tidy5eBaseActorSheet';
 
 export class Tidy5eVehicleSheet
   extends dnd5e.applications.actor.ActorSheet5eVehicle
@@ -170,6 +171,8 @@ export class Tidy5eVehicleSheet
 
   async getData(options = {}) {
     const defaultDocumentContext = await super.getData(this.options);
+
+    Tidy5eBaseActorSheet.applyCommonContext(defaultDocumentContext);
 
     const unlocked =
       FoundryAdapter.isActorSheetUnlocked(this.actor) &&
@@ -677,9 +680,17 @@ export class Tidy5eVehicleSheet
 
     // Create a Consumable spell scroll on the Inventory tab
     if (itemData.type === 'spell') {
+      const options: Record<string, unknown> = {};
+
+      if (SettingsProvider.settings.includeFlagsInSpellScrollCreation.get()) {
+        options.flags = itemData.flags;
+      }
+
       const scroll = await dnd5e.documents.Item5e.createScrollFromSpell(
-        itemData
+        itemData,
+        options
       );
+
       return scroll.toObject();
     }
 

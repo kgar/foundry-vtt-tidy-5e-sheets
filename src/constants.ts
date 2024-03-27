@@ -71,6 +71,7 @@ export const CONSTANTS = {
   TAB_CHARACTER_JOURNAL: 'journal',
   TAB_MIGRATIONS_V1_ONBOARDING: 'v1-onboarding',
   TAB_MIGRATIONS_CHARACTER_BIOGRAPHY: 'character-bio',
+  TAB_MIGRATIONS_NPC_DEATH: 'npc-death',
   TAB_NPC_ABILITIES: 'attributes',
   TAB_NPC_SPELLBOOK: 'spellbook',
   TAB_NPC_EFFECTS: 'effects',
@@ -154,8 +155,11 @@ export const CONSTANTS = {
     /** An actor portrait image element. */
     ACTOR_PORTRAIT_IMAGE: 'actor-portrait-image',
 
-    /** An actor trait container, such as Senses, Languages, or Tools */
+    /** An actor trait container, such as Senses, Languages, or Tools. */
     ACTOR_TRAIT: 'actor-trait',
+
+    /** The specific details of an actor trait container, such as Senses, Languages, or Tools. */
+    ACTOR_TRAIT_DETAILS: 'actor-trait-details',
 
     /** A control for toggling a condition */
     CONDITION_TOGGLE: 'condition-toggle',
@@ -312,6 +316,12 @@ export const CONSTANTS = {
   ACTIVATION_COST_LAIR: 'lair',
   ACTIVATION_COST_CREW: 'crew',
   ACTIVATION_COST_SPECIAL: 'special',
+  LIMITED_USES_PER_CHARGES: 'charges',
+  LIMITED_USES_PER_DAWN: 'dawn',
+  LIMITED_USES_PER_DAY: 'day',
+  LIMITED_USES_PER_DUSK: 'dusk',
+  LIMITED_USES_PER_LONG_REST: 'lr',
+  LIMITED_USES_PER_SHORT_REST: 'sr',
   SHEET_SETTINGS_OPTION_NONE: 'none',
   SHEET_SETTINGS_OPTION_GM_ONLY: 'gm-only',
   SHEET_SETTINGS_OPTION_GM_AND_OWNERS: 'gm-and-owners',

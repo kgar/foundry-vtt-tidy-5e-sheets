@@ -12,6 +12,7 @@ import type {
   MessageBus,
   MessageBusMessage,
   Utilities,
+  ActiveEffect5e,
   NpcAbilitySection,
 } from 'src/types/types';
 import { writable } from 'svelte/store';
@@ -48,6 +49,7 @@ import { SheetPreferencesService } from 'src/features/user-preferences/SheetPref
 import { AsyncMutex } from 'src/utils/mutex';
 import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
 import { SheetPreferencesRuntime } from 'src/runtime/user-preferences/SheetPreferencesRuntime';
+import { Tidy5eBaseActorSheet } from './Tidy5eBaseActorSheet';
 import {
   NpcSheetSections,
   SheetSections,
@@ -73,6 +75,16 @@ export class Tidy5eNpcSheet
   itemFilterService: ItemFilterService;
   subscriptionsService: StoreSubscriptionsService;
   messageBus: MessageBus = writable<MessageBusMessage | undefined>();
+
+  /**
+   * The cached concentration information for the character.
+   * @type {{items: Set<Item5e>, effects: Set<ActiveEffect5e>}}
+   * @internal
+   */
+  _concentration: { items: Set<Item5e>; effects: Set<ActiveEffect5e> } = {
+    items: new Set(),
+    effects: new Set(),
+  };
 
   constructor(...args: any[]) {
     super(...args);
@@ -172,6 +184,10 @@ export class Tidy5eNpcSheet
 
   async getData(options = {}) {
     const defaultDocumentContext = await super.getData(this.options);
+
+    this._concentration = this.actor.concentration;
+
+    Tidy5eBaseActorSheet.applyCommonContext(defaultDocumentContext);
 
     const npcPreferences = SheetPreferencesService.getByType(this.actor.type);
 
@@ -640,7 +656,6 @@ export class Tidy5eNpcSheet
       preparedSpells: FoundryAdapter.countPreparedSpells(
         defaultDocumentContext.items
       ),
-      rollDeathSave: this._rollDeathSave.bind(this),
       shortRest: this._onShortRest.bind(this),
       showLimitedSheet: FoundryAdapter.showLimitedSheet(this.actor),
       spellCalculations: calculateSpellAttackAndDc(this.actor),
@@ -1242,15 +1257,6 @@ export class Tidy5eNpcSheet
 
     // Return data summarizing the rest effects
     return result;
-  }
-
-  /**
-   * Perform a death saving throw, rolling a d20 plus any global save bonuses
-   * @param {object} options          Additional options which modify the roll
-   * @returns {Promise<D20Roll|null>} A Promise which resolves to the Roll instance
-   */
-  async _rollDeathSave(options: Record<string, any> = {}) {
-    return FoundryAdapter.rollNpcDeathSave(this.actor, options);
   }
 
   close(options: unknown = {}) {

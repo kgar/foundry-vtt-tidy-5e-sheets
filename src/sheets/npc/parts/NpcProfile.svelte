@@ -10,7 +10,6 @@
   import NpcRest from './NpcRest.svelte';
   import NpcHealthFormula from './NpcHealthFormula.svelte';
   import ActorProfile from 'src/sheets/actor/ActorProfile.svelte';
-  import { CONSTANTS } from 'src/constants';
   import { settingStore } from 'src/settings/settings';
   import ExhaustionInput from 'src/sheets/actor/ExhaustionInput.svelte';
   import { ActiveEffectsHelper } from 'src/utils/active-effect';
@@ -29,13 +28,12 @@
 <ActorProfile useHpOverlay={$settingStore.useHpOverlayNpc}>
   {#if incapacitated && (!$settingStore.hideDeathSavesFromPlayers || FoundryAdapter.userIsGm())}
     <DeathSaves
-      successes={FoundryAdapter.tryGetFlag($context.actor, 'death.success') ??
-        0}
-      failures={FoundryAdapter.tryGetFlag($context.actor, 'death.failure') ?? 0}
-      successesField="flags.{CONSTANTS.MODULE_ID}.death.success"
-      failuresField="flags.{CONSTANTS.MODULE_ID}.death.failure"
+      successes={$context.system.attributes.death.success}
+      failures={$context.system.attributes.death.failure}
+      successesField="system.attributes.death.success"
+      failuresField="system.attributes.death.failure"
       on:rollDeathSave={(event) =>
-        $context.rollDeathSave({ event: event.detail.mouseEvent })}
+        $context.actor.rollDeathSave({ event: event.detail.mouseEvent })}
       hasHpOverlay={$settingStore.useHpOverlayNpc}
     />
   {/if}

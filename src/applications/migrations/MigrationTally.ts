@@ -6,4 +6,4 @@
  * The number of times this tally advances is not as important as the fact that it advances at least once for any release that contains at least one new migration.
  */
 
-export const MigrationTally = 1 as const;
+export const MigrationTally = 2 as const;

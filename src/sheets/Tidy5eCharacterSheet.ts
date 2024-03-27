@@ -22,6 +22,7 @@ import {
   type Utilities,
   type ContainerPanelItemContext,
   type ContainerCapacityContext,
+  type ActiveEffect5e,
   type ActorInventoryTypes,
   type CharacterItemPartitions,
   type CharacterFeatureSection,
@@ -55,6 +56,7 @@ import { AsyncMutex } from 'src/utils/mutex';
 import type { Dnd5eActorCondition } from 'src/foundry/foundry-and-system';
 import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
 import { SheetPreferencesRuntime } from 'src/runtime/user-preferences/SheetPreferencesRuntime';
+import { Tidy5eBaseActorSheet } from './Tidy5eBaseActorSheet';
 import {
   CharacterSheetSections,
   SheetSections,
@@ -80,6 +82,16 @@ export class Tidy5eCharacterSheet
   itemFilterService: ItemFilterService;
   subscriptionsService: StoreSubscriptionsService;
   messageBus: MessageBus = writable<MessageBusMessage | undefined>();
+
+  /**
+   * The cached concentration information for the character.
+   * @type {{items: Set<Item5e>, effects: Set<ActiveEffect5e>}}
+   * @internal
+   */
+  _concentration: { items: Set<Item5e>; effects: Set<ActiveEffect5e> } = {
+    items: new Set(),
+    effects: new Set(),
+  };
 
   constructor(...args: any[]) {
     super(...args);
@@ -185,6 +197,10 @@ export class Tidy5eCharacterSheet
 
   async getData(options = {}) {
     const defaultDocumentContext = await super.getData(this.options);
+
+    this._concentration = this.actor.concentration;
+
+    Tidy5eBaseActorSheet.applyCommonContext(defaultDocumentContext);
 
     const characterPreferences = SheetPreferencesService.getByType(
       this.actor.type
@@ -1333,9 +1349,17 @@ export class Tidy5eCharacterSheet
       itemData.type === 'spell' &&
       this.currentTabId === CONSTANTS.TAB_CHARACTER_INVENTORY
     ) {
+      const options: Record<string, unknown> = {};
+
+      if (SettingsProvider.settings.includeFlagsInSpellScrollCreation.get()) {
+        options.flags = itemData.flags;
+      }
+
       const scroll = await dnd5e.documents.Item5e.createScrollFromSpell(
-        itemData
+        itemData,
+        options
       );
+
       return scroll.toObject();
     }
 

@@ -29,11 +29,19 @@
 
   // Filters - TODO: Extract these to color picker
   --t5e-filter-option-neutral-pin-border-bottom-color: var(--t5e-faint-color);
-  --t5e-filter-option-neutral-pin-hover-border-bottom-color: var(--t5e-light-color);
-  --t5e-filter-option-include-pin-border-bottom-color: var(--t5e-tertiary-color);
-  --t5e-filter-option-exclude-pin-border-bottom-color: var(--t5e-warning-accent-color);
+  --t5e-filter-option-neutral-pin-hover-border-bottom-color: var(
+    --t5e-light-color
+  );
+  --t5e-filter-option-include-pin-border-bottom-color: var(
+    --t5e-tertiary-color
+  );
+  --t5e-filter-option-exclude-pin-border-bottom-color: var(
+    --t5e-warning-accent-color
+  );
   --t5e-filter-option-include-button-background: var(--t5e-tertiary-color);
-  --t5e-filter-option-exclude-button-background: var(--t5e-warning-accent-color);
+  --t5e-filter-option-exclude-button-background: var(
+    --t5e-warning-accent-color
+  );
   --t5e-filter-option-include-button-text-color: white;
   --t5e-filter-option-exclude-button-text-color: white;
 

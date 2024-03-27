@@ -10,6 +10,7 @@
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import { CONSTANTS } from 'src/constants';
   import { settingStore } from 'src/settings/settings';
+  import Checkbox from 'src/components/inputs/Checkbox.svelte';
 
   let context = getContext<Readable<ItemSheetContext>>('context');
 
@@ -289,6 +290,43 @@
       </Select>
     </div>
   </ItemFormGroup>
+
+  {#if $context.system.actionType === 'summ'}
+    <ItemFormGroup
+      labelText={localize('DND5E.Summoning.Label')}
+      field="summon-config"
+      cssClass="summoning"
+      let:inputId
+    >
+      <div class="form-fields">
+        <div
+          role="presentation"
+          class="summon-controls flex-row justify-content-space-between flex-wrap extra-small-row-gap"
+        >
+          <button
+            id={inputId}
+            type="button"
+            class="inline-transparent-button no-wrap highlight-on-hover"
+            data-action="summoning"
+            tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+            on:click={() => FoundryAdapter.openSummonConfig($context.item)}
+          >
+            <i class="fa-solid fa-gear" aria-hidden="true"></i>
+            {localize('DND5E.Summoning.Action.Configure')}
+          </button>
+
+          <Checkbox
+            document={$context.item}
+            field="system.summons.prompt"
+            checked={$context.system.summons?.prompt === true}
+            title={localize('DND5E.Summoning.Prompt.Hint')}
+            labelCssClass="green-checkbox align-items-center"
+            >{localize('DND5E.Summoning.Prompt.Label')}</Checkbox
+          >
+        </div>
+      </div>
+    </ItemFormGroup>
+  {/if}
 
   <ItemFormGroup
     cssClass="stacked"

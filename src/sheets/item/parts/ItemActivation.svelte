@@ -278,6 +278,7 @@
         <SelectOptions
           data={$context.config.limitedUsePeriods}
           blank={localize('DND5E.None')}
+          labelProp="label"
         />
       </Select>
     </div>

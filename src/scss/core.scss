@@ -83,6 +83,7 @@
 
   &:where(.actor) {
     @import './partials/actor';
+    @import '../sheets/actor/traits/traits';
   }
   @import './partials/item-card';
 

@@ -1,5 +1,6 @@
 import type {
   ActionItem,
+  ActiveEffect5e,
   AttunementContext,
   CharacterSheetContext,
   ClassSummary,
@@ -217,22 +218,24 @@ export const FoundryAdapter = {
 
     entityWithSheet.sheet.render(true);
   },
-  createItem(dataset: Record<string, any>, actor: Actor5e) {
+  createItem({ type, ...dataset }: Record<string, any>, actor: Actor5e) {
+    // Check to make sure the newly created class doesn't take player over level cap
     if (
-      dataset.type === 'class' &&
+      type === 'class' &&
       actor.system.details.level + 1 > CONFIG.DND5E.maxLevel
     ) {
       const err = game.i18n.format('DND5E.MaxCharacterLevelExceededWarn', {
         max: CONFIG.DND5E.maxLevel,
       });
-      return ui.notifications.error(err);
+      ui.notifications.error(err);
+      return null;
     }
 
     const itemData = {
       name: FoundryAdapter.localize('DND5E.ItemNew', {
-        type: FoundryAdapter.localize(CONFIG.Item.typeLabels[dataset.type]),
+        type: FoundryAdapter.localize(CONFIG.Item.typeLabels[type]),
       }),
-      type: dataset.type,
+      type,
       system: foundry.utils.expandObject({ ...dataset }),
     };
     delete itemData.system.type;
@@ -645,131 +648,6 @@ export const FoundryAdapter = {
     rollFnOptions: any = {}
   ): Promise<any> {
     return new Roll(formula, rollData).roll(rollFnOptions);
-  },
-  async rollNpcDeathSave(
-    actor: Actor5e,
-    options: any
-  ): Promise<unknown | null> {
-    const death = actor.flags[CONSTANTS.MODULE_ID]?.death ?? {};
-
-    // Display a warning if we are not at zero HP or if we already have reached 3
-    if (
-      actor.system.attributes.hp.value > 0 ||
-      death.failure >= 3 ||
-      death.success >= 3
-    ) {
-      warn(FoundryAdapter.localize('DND5E.DeathSaveUnnecessary'), true);
-      return null;
-    }
-
-    // Evaluate a global saving throw bonus
-    const speaker = options.speaker || ChatMessage.getSpeaker({ actor: this });
-    const globalBonuses = actor.system.bonuses?.abilities ?? {};
-    const parts = [];
-    const data = actor.getRollData();
-
-    // Diamond Soul adds proficiency
-    if (actor.getFlag('dnd5e', 'diamondSoul')) {
-      parts.push('@prof');
-      data.prof = new dnd5e.documents.Proficiency(
-        actor.system.attributes.prof,
-        1
-      ).term;
-    }
-
-    // Include a global actor ability save bonus
-    if (globalBonuses.save) {
-      parts.push('@saveBonus');
-      data.saveBonus = Roll.replaceFormulaData(globalBonuses.save, data);
-    }
-
-    // Evaluate the roll
-    const flavor = FoundryAdapter.localize('DND5E.DeathSavingThrow');
-    const rollData = FoundryAdapter.mergeObject<any>(
-      {
-        data,
-        title: `${flavor}: ${actor.name}`,
-        flavor,
-        halflingLucky: actor.getFlag('dnd5e', 'halflingLucky'),
-        targetValue: 10,
-        messageData: {
-          speaker: speaker,
-          'flags.dnd5e.roll': { type: 'death' },
-        },
-      },
-      options
-    );
-    rollData.parts = parts.concat(options.parts ?? []);
-
-    const roll = await FoundryAdapter.d20Roll(rollData);
-    if (!roll) return null;
-
-    // Take action depending on the result
-    const details: Record<string, any> = {};
-
-    // Save success
-    if (roll.total >= (roll.options.targetValue ?? 10)) {
-      let successes = (death.success || 0) + 1;
-
-      // Critical Success = revive with 1hp
-      if (roll.isCritical) {
-        details.updates = {
-          [`flags.${CONSTANTS.MODULE_ID}.death.success`]: 0,
-          [`flags.${CONSTANTS.MODULE_ID}.death.failure`]: 0,
-          'system.attributes.hp.value': 1,
-        };
-        details.chatString = 'DND5E.DeathSaveCriticalSuccess';
-      }
-
-      // 3 Successes = survive and reset checks
-      else if (successes === 3) {
-        details.updates = {
-          [`flags.${CONSTANTS.MODULE_ID}.death.success`]: 0,
-          [`flags.${CONSTANTS.MODULE_ID}.death.failure`]: 0,
-        };
-        details.chatString = 'DND5E.DeathSaveSuccess';
-      }
-
-      // Increment successes
-      else
-        details.updates = {
-          [`flags.${CONSTANTS.MODULE_ID}.death.success`]: clamp(
-            successes,
-            0,
-            3
-          ),
-        };
-    }
-
-    // Save failure
-    else {
-      let failures = (death.failure || 0) + (roll.isFumble ? 2 : 1);
-      details.updates = {
-        [`flags.${CONSTANTS.MODULE_ID}.death.failure`]: clamp(failures, 0, 3),
-      };
-      if (failures >= 3) {
-        // 3 Failures = death
-        details.chatString = 'DND5E.DeathSaveFailure';
-      }
-    }
-
-    if (!FoundryAdapter.isEmpty(details.updates))
-      await actor.update(details.updates);
-
-    // Display success/failure chat message
-    if (details.chatString) {
-      let chatData = {
-        content: FoundryAdapter.localize(details.chatString, {
-          name: actor.name,
-        }),
-        speaker,
-      };
-      ChatMessage.applyRollMode(chatData, roll.options.rollMode);
-      await ChatMessage.create(chatData);
-    }
-
-    // Return the rolled result
-    return roll;
   },
   async d20Roll({
     parts = [],
@@ -1267,8 +1145,22 @@ export const FoundryAdapter = {
     effectId: string;
     parentId?: string;
   }) {
-    if (!parentId) return document.effects.get(effectId);
-    return document.items.get(parentId).effects.get(effectId);
+    let effect = document.effects?.get(effectId);
+    if (effect) {
+      return effect;
+    }
+    const parentDocument = document.items.get(parentId);
+    effect = parentDocument?.effects?.get(effectId);
+    return (
+      effect ??
+      FoundryAdapter.tryGetLegacyTransferredEffect(parentDocument, effectId)
+    );
+  },
+  /** Last-ditch effort to find an effect by ID in a given document. */
+  tryGetLegacyTransferredEffect(document: any, effectId: string) {
+    return document
+      ?.allApplicableEffects?.()
+      .find((e: ActiveEffect5e) => e.id === effectId);
   },
   canUseItem(item: Item5e) {
     return !(!item.actor || !item.actor.isOwner || item.actor.pack);
@@ -1355,6 +1247,21 @@ export const FoundryAdapter = {
   },
   openSpellSlotsConfig(actor: Actor5e) {
     new dnd5e.applications.actor.ActorSpellSlotsConfig(actor).render(true);
+  },
+  openSummonConfig(item: Item5e) {
+    new dnd5e.applications.item.SummoningConfig(item).render(true);
+  },
+  openDamageModificationConfig(actor: Actor5e) {
+    new dnd5e.applications.actor.DamageModificationConfig(actor).render(true);
+  },
+  openActorConcentrationConfig(actor: Actor5e) {
+    new dnd5e.applications.actor.ActorConcentrationConfig(actor).render(true);
+  },
+  isConcentrationEffect(effect: ActiveEffect5e, app: any) {
+    return (
+      app.document instanceof dnd5e.documents.Actor5e &&
+      app._concentration?.effects.has(effect)
+    );
   },
   activateEditors(node: HTMLElement, sheet: any, bindSecrets: boolean = true) {
     try {

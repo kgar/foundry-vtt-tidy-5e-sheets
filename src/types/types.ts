@@ -238,7 +238,7 @@ export type CharacterSheetContext = {
 
 export type NpcAbilitySection = {
   canCreate: boolean;
-  custom?: CustomSectionOptions
+  custom?: CustomSectionOptions;
 } & FeatureSection;
 
 export type NpcItemContext = {
@@ -249,6 +249,7 @@ export type NpcItemContext = {
   isOnCooldown?: boolean;
   isStack?: boolean;
   toggleTitle?: string;
+  availableLevels?: AvailableLevel[];
 };
 
 export type NpcSheetContext = {
@@ -357,6 +358,18 @@ export type Utilities = Record<
   }
 >;
 
+type ActorSave = {
+  isConcentration: boolean;
+  label: string;
+  abbr: string;
+  mod: number;
+  sign: string;
+};
+
+type ActorSaves = {
+  concentration?: ActorSave;
+};
+
 export type ActorSheetContext = {
   actions: ActorActions;
   activateEditors: (
@@ -376,6 +389,8 @@ export type ActorSheetContext = {
   editable: boolean;
   filterData: DocumentFilters;
   filterPins: Record<string, Set<string>>;
+  /** The actor has special save-based roll buttons to be situationally rendered to the sheet. */
+  hasSpecialSaves?: boolean;
   /**
    * Represents remaining health as a percentage within the range of `0` to `100`.
    *
@@ -401,6 +416,7 @@ export type ActorSheetContext = {
    * The current user owns the actor.
    */
   owner: boolean;
+  saves: ActorSaves;
   showLimitedSheet: boolean;
   tabs: Tab[];
   tidyResources: TidyResource[];
@@ -508,3 +524,28 @@ export type RenderableClassicControl<TParams> = {
   props?: (params: TParams) => Record<string, unknown>;
   visible?: (params: TParams) => boolean;
 };
+
+export type AvailableClassLevel = {
+  delta: number;
+  disabled: boolean;
+  level: number;
+};
+
+export type DamageModificationData = {
+  amount: Record<string, string>;
+  bypasses: Set<string>;
+};
+
+export type ModificationConsequence = 'benefit' | 'detriment' | 'none';
+
+export type DamageModificationContextEntry = {
+  label: string;
+  consequence: ModificationConsequence;
+  icons?: string[];
+};
+
+// TODO: Get the real typings for this
+export type ActiveEffect5e = any;
+
+// TODO: Get the real typings for this
+export type ActiveEffectContext = any;

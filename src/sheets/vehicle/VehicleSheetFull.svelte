@@ -15,7 +15,7 @@
   import HorizontalLineSeparator from 'src/components/layout/HorizontalLineSeparator.svelte';
   import DelimitedTruncatedContent from 'src/components/layout/DelimitedTruncatedContent.svelte';
   import InlineTextDropdownList from '../../components/inputs/InlineTextDropdownList.svelte';
-  import ActorMovementRow from '../actor/ActorMovementRow.svelte';
+  import ActorMovement from '../actor/ActorMovement.svelte';
   import AcShieldVehicle from '../actor/AcShieldVehicle.svelte';
   import VerticalLineSeparator from 'src/components/layout/VerticalLineSeparator.svelte';
   import AttributeBlock from '../actor/AttributeBlock.svelte';
@@ -159,7 +159,7 @@
       </div>
     </div>
     <HorizontalLineSeparator borderColor="light" />
-    <ActorMovementRow />
+    <ActorMovement />
     <HorizontalLineSeparator borderColor="light" />
     <section class="actor-stats">
       <AcShieldVehicle />

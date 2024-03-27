@@ -166,7 +166,10 @@
       value={$context.system.preparation.mode}
       disabled={!$context.editable}
     >
-      <SelectOptions data={$context.config.spellPreparationModes} />
+      <SelectOptions
+        data={$context.config.spellPreparationModes}
+        labelProp="label"
+      />
     </Select>
   </div>
 </ItemFormGroup>

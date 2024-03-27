@@ -234,6 +234,10 @@
     "options.GmOnly": "GM Only",
     "options.GmAndOwners": "GM and Item Owners"
   },
+  "TIDY5E.WorldSettings.IncludeFlagsInSpellScrollCreation": {
+    "name": "Include Flags in Spell Scroll Creation",
+    "hint": "Spells can sometimes contain special data from other modules which can be useful to carry over into a spell scroll. Enable to copy all flag-based data to the spell scroll upon creation."
+  },
   "TIDY5E.WorldSettings.TabSheetLock": {
     "tabLabel": "Sheet Lock",
     "header": "Lock Options",
@@ -665,6 +669,11 @@
       "sectionTitle": "Character Biography",
       "selectionDialogTitle": "Migration: Character Biography"
     },
+    "NpcDeathSaves": {
+      "sectionTitle": "NPC Death Saves",
+      "selectionDialogTitle": "Migration: NPC Death Saves"
+    },
+    "UnlinkedExplanation": "This migration gives the option to migrate unlinked token documents in the current scene. You can run the migration on additional scenes as needed.",
     "Selection": {
       "TotalSelectedLabel": "Total Selected: {total}",
       "ToMigrate": "To Migrate",

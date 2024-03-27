@@ -19,6 +19,7 @@
   import { declareLocation } from 'src/types/location-awareness.types';
   import CharacterConditions from '../parts/CharacterConditions.svelte';
   import ClassicControls from 'src/sheets/shared/ClassicControls.svelte';
+  import ActorEffectToggleControl from 'src/components/item-list/controls/ActorEffectToggleControl.svelte';
 
   let context = getContext<Readable<ActorSheetContext>>('context');
 
@@ -37,18 +38,9 @@
     controls = [];
     controls.push(
       {
-        component: ItemControl,
+        component: ActorEffectToggleControl,
         props: ({ effect }) => ({
-          onclick: () =>
-            FoundryAdapter.getEffect({
-              document: $context.actor,
-              effectId: effect.id,
-              parentId: effect.parentId,
-            }).update({ disabled: !effect.disabled }),
-          title: effect.disabled
-            ? localize('DND5E.EffectEnable')
-            : localize('DND5E.EffectDisable'),
-          iconCssClass: `fas ${effect.disabled ? 'fa-check' : 'fa-times'}`,
+          effect: effect,
         }),
       },
       {
@@ -119,11 +111,24 @@
             {#each section.effects as effect}
               <ItemTableRow
                 on:mousedown={(event) =>
-                  FoundryAdapter.editOnMiddleClick(event.detail, effect)}
+                  FoundryAdapter.editOnMiddleClick(
+                    event.detail,
+                    FoundryAdapter.getEffect({
+                      document: $context.actor,
+                      effectId: effect.id,
+                      parentId: effect.parentId,
+                    }),
+                  )}
                 contextMenu={{
                   type: CONSTANTS.CONTEXT_MENU_TYPE_EFFECTS,
                   uuid: effect.uuid,
                 }}
+                getDragData={() =>
+                  FoundryAdapter.getEffect({
+                    document: $context.actor,
+                    effectId: effect.id,
+                    parentId: effect.parentId,
+                  })?.toDragData()}
                 {effect}
               >
                 <ItemTableCell

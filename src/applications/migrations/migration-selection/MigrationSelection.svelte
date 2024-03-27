@@ -73,7 +73,7 @@
           </TidyTableHeaderCell>
           {#each params.columns as column}
             <TidyTableHeaderCell primary={column?.cellWidth === 'primary'}>
-              {column.name}
+              {column.name ?? ''}
             </TidyTableHeaderCell>
           {/each}
         </TidyTableHeaderRow>
@@ -87,24 +87,30 @@
               <input type="checkbox" bind:checked={selectable.selected} />
             </TidyTableCell>
             {#each params.columns as column}
-              {@const text = FoundryAdapter.getProperty(
-                selectable.document,
-                column.field.propPath,
-              )}
+              {@const field = column.field}
               <TidyTableCell
                 primary={column?.cellWidth === 'primary'}
                 class="flex-row small-gap"
               >
-                {#if column.field.onClick}
-                  <button
-                    type="button"
-                    on:click={() => column.field.onClick?.(selectable.document)}
-                    class="inline-transparent-button"
-                  >
-                    {text}
-                  </button>
-                {:else}
-                  <div>{text}</div>
+                {#if field.type === 'contextual'}
+                  {field.getText(selectable.document) ?? ''}
+                {:else if column.field.type === 'simple'}
+                  {@const text =
+                    FoundryAdapter.getProperty(
+                      selectable.document,
+                      field.propPath,
+                    ) ?? ''}
+                  {#if field.onClick}
+                    <button
+                      type="button"
+                      on:click={() => field.onClick?.(selectable.document)}
+                      class="inline-transparent-button"
+                    >
+                      {text}
+                    </button>
+                  {:else}
+                    <div>{text}</div>
+                  {/if}
                 {/if}
               </TidyTableCell>
             {/each}

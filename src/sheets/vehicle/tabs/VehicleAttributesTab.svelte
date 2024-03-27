@@ -1,6 +1,6 @@
 <script lang="ts">
   import { getContext } from 'svelte';
-  import Traits from '../../actor/Traits.svelte';
+  import Traits from '../../actor/traits/Traits.svelte';
   import VehicleAttributes from '../parts/VehicleAttributes.svelte';
   import type { Readable } from 'svelte/store';
   import type {

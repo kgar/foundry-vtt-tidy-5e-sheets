@@ -7,6 +7,8 @@
     ItemCardStore,
     ExpandedItemData,
     ExpandedItemIdToLocationsMap,
+    ActiveEffect5e,
+    ActiveEffectContext,
   } from 'src/types/types';
   import type { Writable } from 'svelte/store';
   import type {
@@ -18,11 +20,12 @@
   import { CONSTANTS } from 'src/constants';
 
   export let item: Item5e | null = null;
-  export let effect: any | null = null;
+  export let effect: ActiveEffect5e | ActiveEffectContext | null = null;
   export let contextMenu: { type: string; uuid: string } | null = null;
   export let cssClass: string = '';
   export let itemCardContentTemplate: ItemCardContentComponent | null = null;
   export let hidden: boolean = false;
+  export let getDragData: (() => any) | null = null;
 
   $: draggable = item ?? effect;
 
@@ -34,7 +37,8 @@
   const dispatcher = createEventDispatcher<{ mousedown: MouseEvent }>();
   const location = getContext<string>('location');
 
-  let card: Writable<ItemCardStore> | undefined = getContext<Writable<ItemCardStore>>('card');
+  let card: Writable<ItemCardStore> | undefined =
+    getContext<Writable<ItemCardStore>>('card');
   let showSummary = false;
   let chatData: ItemChatData | undefined;
   let useTransition: boolean = false;
@@ -87,8 +91,10 @@
       return card;
     });
 
-    const dragData = draggable.toDragData();
-    event.dataTransfer?.setData('text/plain', JSON.stringify(dragData));
+    const dragData = getDragData?.() ?? draggable.toDragData?.();
+    if (dragData) {
+      event.dataTransfer?.setData('text/plain', JSON.stringify(dragData));
+    }
   }
 
   function restoreItemSummaryIfExpanded() {
@@ -146,7 +152,7 @@
   data-context-menu={contextMenu?.type}
   data-context-menu-document-uuid={contextMenu?.uuid}
   data-effect-id={effect?.id}
-  data-parent-id={effect?.parentId}
+  data-parent-id={effect?.parentId ?? effect?.parent?.id}
   on:mousedown={(event) => dispatcher('mousedown', event)}
   on:mouseenter={onMouseEnter}
   on:mouseleave={onMouseLeave}
@@ -207,7 +213,7 @@
       &.equipped {
         --t5e-item-table-row-background: var(--t5e-equipped-background);
       }
-      
+
       &.magic-item {
         box-shadow: 0 0 0 0.0625rem var(--t5e-magic-accent-color) inset;
       }

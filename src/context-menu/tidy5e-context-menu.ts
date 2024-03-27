@@ -29,7 +29,7 @@ function onItemContext(element: HTMLElement) {
   const contextMenuType = element.getAttribute('data-context-menu');
   // TODO: rewrite context menu so that it's better integrated with the rest of Tidy 5e Sheets.
   // @ts-ignore
-  const that: any = this as any;
+  const app: any = this as any;
 
   // Active Effects
   if (contextMenuType === CONSTANTS.CONTEXT_MENU_TYPE_EFFECTS) {
@@ -37,17 +37,17 @@ function onItemContext(element: HTMLElement) {
     const parentId = element.getAttribute('data-parent-id') ?? '';
 
     const effect = FoundryAdapter.getEffect({
-      document: that.document,
+      document: app.document,
       effectId: effectId,
       parentId: parentId,
     });
-    
+
     if (!effect) {
       return;
     }
 
     // TODO: Leverage the API to aggregate any registered context menu options; pass in the context of the current item for reference.
-    ui.context.menuItems = getActiveEffectContextOptions(effect);
+    ui.context.menuItems = getActiveEffectContextOptions(effect, app);
     Hooks.call(
       'dnd5e.getActiveEffectContextOptions',
       effect,
@@ -70,7 +70,7 @@ function onItemContext(element: HTMLElement) {
   }
 }
 
-function getActiveEffectContextOptions(effect: any) {
+function getActiveEffectContextOptions(effect: any, app: any) {
   const actor = effect.actor ? effect.actor : effect.parent;
   if (!actor?.isOwner || !SettingsProvider.settings.useContextMenu.get()) {
     return [];
@@ -83,7 +83,37 @@ function getActiveEffectContextOptions(effect: any) {
     return [];
   }
 
+  const isConcentrationEffect = FoundryAdapter.isConcentrationEffect(
+    effect,
+    app
+  );
+
   let tidy5eKgarContextOptions = [
+    {
+      name: 'DND5E.ContextMenuActionEdit',
+      icon: "<i class='fas fas fa-pencil-alt fa-fw'></i>",
+      callback: () => effect.sheet.render(true),
+    },
+    {
+      name: 'DND5E.ContextMenuActionDuplicate',
+      icon: "<i class='fas fa-copy fa-fw'></i>",
+      callback: () =>
+        effect.clone(
+          {
+            name: FoundryAdapter.localize('DOCUMENT.CopyOf', {
+              name: effect.name,
+            }),
+          },
+          { save: true }
+        ),
+      condition: () => canEditEffect(effect),
+    },
+    {
+      name: 'DND5E.ContextMenuActionDelete',
+      icon: `<i class="fas fa-trash fa-fw t5e-warning-color"></i>`,
+      callback: () => effect.deleteDialog(),
+      condition: () => canEditEffect(effect) && !isConcentrationEffect,
+    },
     {
       name: effect.disabled
         ? 'DND5E.ContextMenuActionEnable'
@@ -92,36 +122,17 @@ function getActiveEffectContextOptions(effect: any) {
         ? "<i class='fas fa-check fa-fw'></i>"
         : "<i class='fas fa-times fa-fw'></i>",
       callback: () => effect.update({ disabled: !effect.disabled }),
+      condition: () => effect.isOwner && !isConcentrationEffect,
+      group: 'state',
     },
     {
-      name: 'DND5E.ContextMenuActionEdit',
-      icon: "<i class='fas fas fa-pencil-alt fa-fw'></i>",
-      callback: () => effect.sheet.render(true),
+      name: 'DND5E.ConcentrationBreak',
+      icon: '<dnd5e-icon src="systems/dnd5e/icons/svg/break-concentration.svg"></dnd5e-icon>',
+      condition: () => isConcentrationEffect,
+      callback: () => app.document.endConcentration(effect),
+      group: 'state',
     },
   ];
-
-  if (canEditEffect(effect)) {
-    tidy5eKgarContextOptions = tidy5eKgarContextOptions.concat([
-      {
-        name: 'DND5E.ContextMenuActionDuplicate',
-        icon: "<i class='fas fa-copy fa-fw'></i>",
-        callback: () =>
-          effect.clone(
-            {
-              name: FoundryAdapter.localize('DOCUMENT.CopyOf', {
-                name: effect.name,
-              }),
-            },
-            { save: true }
-          ),
-      },
-      {
-        name: 'DND5E.ContextMenuActionDelete',
-        icon: `<i class="fas fa-trash fa-fw t5e-warning-color"></i>`,
-        callback: () => effect.deleteDialog(),
-      },
-    ]);
-  }
 
   return tidy5eKgarContextOptions;
 }
@@ -159,9 +170,9 @@ function getItemContextOptions(item: Item5e) {
     const isAlways = prep.mode === CONSTANTS.SPELL_PREPARATION_MODE_ALWAYS;
     const isPrepared = !!prep.prepared;
     isActive = isPrepared;
-    if (isAlways) toggleTitle = CONFIG.DND5E.spellPreparationModes.always;
+    if (isAlways) toggleTitle = CONFIG.DND5E.spellPreparationModes.always.label;
     else if (isPrepared)
-      toggleTitle = CONFIG.DND5E.spellPreparationModes.prepared;
+      toggleTitle = CONFIG.DND5E.spellPreparationModes.prepared.label;
     else toggleTitle = FoundryAdapter.localize('DND5E.SpellUnprepared');
 
     canPrepare = item.system.level >= 1;

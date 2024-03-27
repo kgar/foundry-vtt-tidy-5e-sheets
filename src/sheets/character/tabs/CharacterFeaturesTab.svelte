@@ -35,6 +35,7 @@
   import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
   import type { Item5e } from 'src/types/item.types';
   import ClassicControls from 'src/sheets/shared/ClassicControls.svelte';
+  import LevelUpDropdown from 'src/sheets/actor/LevelUpDropdown.svelte';
 
   let context = getContext<Readable<CharacterSheetContext>>('context');
 
@@ -221,31 +222,12 @@
                 {#if section.showLevelColumn}
                   <ItemTableCell baseWidth="7.5rem">
                     {#if item.type === 'class'}
-                      <select
-                        on:change={(event) =>
-                          FoundryAdapter.onLevelChange(
-                            event,
-                            item,
-                            $context.actor,
-                          )}
+                      <LevelUpDropdown
+                        availableLevels={ctx?.availableLevels}
+                        {item}
                         disabled={!$context.editable ||
                           $context.lockLevelSelector}
-                      >
-                        {#each getAvailableLevels(item.id) as availableLevel}
-                          <option
-                            value={availableLevel.delta}
-                            disabled={availableLevel.disabled || undefined}
-                            selected={availableLevel.delta === 0}
-                          >
-                            {localize('DND5E.LevelNumber', {
-                              level: availableLevel.level,
-                            })}
-                            {#if availableLevel.delta}
-                              ({formatAsModifier(availableLevel.delta)})
-                            {/if}
-                          </option>
-                        {/each}
-                      </select>
+                      />
                     {/if}
                   </ItemTableCell>
                 {/if}
