@@ -14,69 +14,69 @@ import { MigrationTally } from './applications/migrations/MigrationTally';
 import { Tidy5eKgarContainerSheet } from './sheets/Tidy5eContainerSheet';
 import { setupModuleIntegrations } from './integration/integration';
 
-DocumentSheetConfig.registerSheet(
-  Actor,
-  CONSTANTS.DND5E_SYSTEM_ID,
-  Tidy5eCharacterSheet,
-  {
-    types: [CONSTANTS.SHEET_TYPE_CHARACTER],
-    label: 'TIDY5E.Tidy5eSheet',
-  }
-);
-
-DocumentSheetConfig.registerSheet(
-  Actor,
-  CONSTANTS.DND5E_SYSTEM_ID,
-  Tidy5eNpcSheet,
-  {
-    types: [CONSTANTS.SHEET_TYPE_NPC],
-    label: 'TIDY5E.Tidy5eNPC',
-  }
-);
-
-DocumentSheetConfig.registerSheet(
-  Actor,
-  CONSTANTS.DND5E_SYSTEM_ID,
-  Tidy5eVehicleSheet,
-  {
-    types: [CONSTANTS.SHEET_TYPE_VEHICLE],
-    label: 'TIDY5E.Tidy5eVehicle',
-  }
-);
-
-DocumentSheetConfig.registerSheet(
-  Item,
-  CONSTANTS.DND5E_SYSTEM_ID,
-  Tidy5eKgarItemSheet,
-  {
-    types: [
-      CONSTANTS.ITEM_TYPE_BACKGROUND,
-      CONSTANTS.ITEM_TYPE_CLASS,
-      CONSTANTS.ITEM_TYPE_CONSUMABLE,
-      CONSTANTS.ITEM_TYPE_EQUIPMENT,
-      CONSTANTS.ITEM_TYPE_FEAT,
-      CONSTANTS.ITEM_TYPE_LOOT,
-      CONSTANTS.ITEM_TYPE_RACE,
-      CONSTANTS.ITEM_TYPE_SPELL,
-      CONSTANTS.ITEM_TYPE_SUBCLASS,
-      CONSTANTS.ITEM_TYPE_TOOL,
-      CONSTANTS.ITEM_TYPE_WEAPON,
-    ],
-    label: 'TIDY5E.Tidy5eItemSheet',
-  }
-);
-
-DocumentSheetConfig.registerSheet(
-  Item,
-  CONSTANTS.DND5E_SYSTEM_ID,
-  Tidy5eKgarContainerSheet,
-  {
-    types: [CONSTANTS.SHEET_TYPE_CONTAINER],
-    label: 'TIDY5E.Tidy5eContainerSheet',
-  }
-);
-
 Hooks.once('init', () => {
+  DocumentSheetConfig.registerSheet(
+    Actor,
+    CONSTANTS.DND5E_SYSTEM_ID,
+    Tidy5eCharacterSheet,
+    {
+      types: [CONSTANTS.SHEET_TYPE_CHARACTER],
+      label: 'TIDY5E.Tidy5eSheet',
+    }
+  );
+  
+  DocumentSheetConfig.registerSheet(
+    Actor,
+    CONSTANTS.DND5E_SYSTEM_ID,
+    Tidy5eNpcSheet,
+    {
+      types: [CONSTANTS.SHEET_TYPE_NPC],
+      label: 'TIDY5E.Tidy5eNPC',
+    }
+  );
+  
+  DocumentSheetConfig.registerSheet(
+    Actor,
+    CONSTANTS.DND5E_SYSTEM_ID,
+    Tidy5eVehicleSheet,
+    {
+      types: [CONSTANTS.SHEET_TYPE_VEHICLE],
+      label: 'TIDY5E.Tidy5eVehicle',
+    }
+  );
+  
+  DocumentSheetConfig.registerSheet(
+    Item,
+    CONSTANTS.DND5E_SYSTEM_ID,
+    Tidy5eKgarItemSheet,
+    {
+      types: [
+        CONSTANTS.ITEM_TYPE_BACKGROUND,
+        CONSTANTS.ITEM_TYPE_CLASS,
+        CONSTANTS.ITEM_TYPE_CONSUMABLE,
+        CONSTANTS.ITEM_TYPE_EQUIPMENT,
+        CONSTANTS.ITEM_TYPE_FEAT,
+        CONSTANTS.ITEM_TYPE_LOOT,
+        CONSTANTS.ITEM_TYPE_RACE,
+        CONSTANTS.ITEM_TYPE_SPELL,
+        CONSTANTS.ITEM_TYPE_SUBCLASS,
+        CONSTANTS.ITEM_TYPE_TOOL,
+        CONSTANTS.ITEM_TYPE_WEAPON,
+      ],
+      label: 'TIDY5E.Tidy5eItemSheet',
+    }
+  );
+  
+  DocumentSheetConfig.registerSheet(
+    Item,
+    CONSTANTS.DND5E_SYSTEM_ID,
+    Tidy5eKgarContainerSheet,
+    {
+      types: [CONSTANTS.SHEET_TYPE_CONTAINER],
+      label: 'TIDY5E.Tidy5eContainerSheet',
+    }
+  );
+  
   initSettings();
   initRuntime();
 });
