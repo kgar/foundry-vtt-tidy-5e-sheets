@@ -24,7 +24,7 @@ Hooks.once('init', () => {
       label: 'TIDY5E.Tidy5eSheet',
     }
   );
-  
+
   DocumentSheetConfig.registerSheet(
     Actor,
     CONSTANTS.DND5E_SYSTEM_ID,
@@ -34,7 +34,7 @@ Hooks.once('init', () => {
       label: 'TIDY5E.Tidy5eNPC',
     }
   );
-  
+
   DocumentSheetConfig.registerSheet(
     Actor,
     CONSTANTS.DND5E_SYSTEM_ID,
@@ -44,7 +44,7 @@ Hooks.once('init', () => {
       label: 'TIDY5E.Tidy5eVehicle',
     }
   );
-  
+
   DocumentSheetConfig.registerSheet(
     Item,
     CONSTANTS.DND5E_SYSTEM_ID,
@@ -66,7 +66,7 @@ Hooks.once('init', () => {
       label: 'TIDY5E.Tidy5eItemSheet',
     }
   );
-  
+
   DocumentSheetConfig.registerSheet(
     Item,
     CONSTANTS.DND5E_SYSTEM_ID,
@@ -76,7 +76,7 @@ Hooks.once('init', () => {
       label: 'TIDY5E.Tidy5eContainerSheet',
     }
   );
-  
+
   initSettings();
   initRuntime();
 });
