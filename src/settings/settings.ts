@@ -20,6 +20,7 @@ import { VehicleSheetRuntime } from 'src/runtime/VehicleSheetRuntime';
 import { TabManager } from 'src/runtime/tab/TabManager';
 import { BulkMigrationsApplication } from 'src/applications/migrations/BulkMigrationsApplication';
 import { AboutApplication } from 'src/applications/settings/about/AboutApplication';
+import { ApplyTidySheetPreferencesApplication } from 'src/applications/sheet-preferences/ApplyTidySheetPreferencesApplication';
 
 export type Tidy5eSettings = {
   [settingKey: string]: Tidy5eSetting;
@@ -152,6 +153,16 @@ export function createSettings() {
           hint: `TIDY5E.Settings.Migrations.hint`,
           icon: 'fa-solid fa-right-left',
           type: BulkMigrationsApplication,
+          restricted: true,
+        },
+      },
+      applyTidySheetPreferences: {
+        options: {
+          name: `TIDY5E.Settings.SheetPreferences.name`,
+          label: 'TIDY5E.Settings.SheetPreferences.buttonLabel',
+          hint: `TIDY5E.Settings.SheetPreferences.hint`,
+          icon: 'fa-solid fa-file-pen',
+          type: ApplyTidySheetPreferencesApplication,
           restricted: true,
         },
       },
