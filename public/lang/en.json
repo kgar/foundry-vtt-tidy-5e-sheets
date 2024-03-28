@@ -652,6 +652,11 @@
       "alphaExplanation1": "Migrate GM settings and Tidy sheet data flags from the Alpha Tidy 5e Sheets. Most of the differences in data are from the sheet data flags. The Alpha flags migration targets top-level actors, top-level actors' items, and top-level items. This will bring in biographical data, favorites, and other sheet-specific Alpha data flags.",
       "alphaExplanation2": "{boldStart}Note{boldEnd}: this migration does not affect compendium content."
     },
+    "TIDY5E.Settings.SheetPreferences": {
+      "name": "Set Tidy as Default Sheet",
+      "hint": "If you would like to set Tidy 5e Sheets as your default for one or more document types, but the core default sheets config menu is not working as expected, use this menu to select your preferences.",
+      "buttonLabel": "Set Tidy as Default Sheet"
+    },
     "Notification": {
       "Title": "Tidy 5e Sheets: Migrations Available",
       "Explanation": "New Tidy 5e Sheets data migrations are available. Check the {boldStart}config settings Migrations menu{boldEnd} to learn more.",
