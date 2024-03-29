@@ -571,7 +571,7 @@ export const FoundryAdapter = {
    * @returns whether the sheet should be editable per the sheet lock feature
    */
   isSheetUnlocked(actor: any) {
-    return FoundryAdapter.tryGetFlag(actor, 'allow-edit') ?? true;
+    return FoundryAdapter.tryGetFlag<boolean>(actor, 'allow-edit') ?? true;
   },
   allowCharacterEffectsManagement(actor: any) {
     return (
