@@ -59,7 +59,11 @@ export class ItemSheetRuntime {
     },
     [CONSTANTS.ITEM_TYPE_BACKGROUND]: {
       Sheet: BackgroundSheet,
-      defaultTabs: () => [itemSheetTabs.description, itemSheetTabs.advancement],
+      defaultTabs: () => [
+        itemSheetTabs.description,
+        itemSheetTabs.backgroundDetails,
+        itemSheetTabs.advancement,
+      ],
     },
     [CONSTANTS.ITEM_TYPE_CLASS]: {
       Sheet: ClassSheet,

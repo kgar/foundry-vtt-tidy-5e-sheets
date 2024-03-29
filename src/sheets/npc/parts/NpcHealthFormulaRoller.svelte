@@ -49,7 +49,7 @@
     )}"
     on:click={rollNpcHp}
     on:contextmenu={calcAverageHitDie}
-    class="roll-hp-formula"
+    class="roll-hp-formula highlight-on-hover"
     tabindex={!$settingStore.useDefaultSheetHpTabbing &&
     $settingStore.useAccessibleKeyboardSupport
       ? 0
@@ -57,19 +57,6 @@
   >
     <i class="fas fa-dice-six" />
   </button>
-  <div class="formula-edit">
-    <TextInput
-      document={$context.actor}
-      field="system.attributes.hp.formula"
-      cssClass="hp-formula"
-      placeholder={localize('DND5E.HPFormula')}
-      value={$context.system.attributes.hp.formula}
-      maxlength={12}
-      title="{localize('DND5E.HPFormula')}: {$context.system.attributes.hp
-        .formula}"
-      disabled={!$context.editable}
-    />
-  </div>
 </div>
 
 <style lang="scss">
@@ -77,35 +64,6 @@
     position: absolute;
     right: 0.4375rem;
     bottom: 0rem;
-
-    .formula-edit {
-      background: var(--t5e-icon-background);
-      box-shadow: 0 0 0.625rem var(--t5e-icon-shadow-color) inset;
-      border: 0.0625rem solid var(--t5e-icon-outline-color);
-      display: none;
-      justify-content: center;
-      align-items: center;
-      position: absolute;
-      bottom: 100%;
-      right: 0;
-      width: 8.5rem;
-      height: 1.25rem;
-      border-radius: 0.3125rem;
-    }
-
-    &:hover .formula-edit,
-    .formula-edit:focus-within {
-      display: flex;
-    }
-
-    :global(.hp-formula) {
-      text-align: center;
-      width: 100%;
-      height: 100%;
-      font-size: 0.75rem;
-      border-radius: 0.3125rem;
-      margin: 0;
-    }
 
     .roll-hp-formula {
       display: flex;
@@ -118,10 +76,6 @@
       padding: 0;
       background: none;
       transition: color 0.3s ease;
-
-      &:hover {
-        color: var(--t5e-primary-accent-color);
-      }
     }
   }
 </style>

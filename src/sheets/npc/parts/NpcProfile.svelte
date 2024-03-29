@@ -8,7 +8,7 @@
   import NpcHitPoints from './NpcHitPoints.svelte';
   import TempHp from 'src/sheets/actor/TempHp.svelte';
   import NpcRest from './NpcRest.svelte';
-  import NpcHealthFormula from './NpcHealthFormula.svelte';
+  import NpcHealthFormulaRoller from './NpcHealthFormulaRoller.svelte';
   import ActorProfile from 'src/sheets/actor/ActorProfile.svelte';
   import { settingStore } from 'src/settings/settings';
   import ExhaustionInput from 'src/sheets/actor/ExhaustionInput.svelte';
@@ -64,6 +64,8 @@
   {#if $settingStore.useNpcRest}
     <NpcRest />
   {/if}
-  <NpcHealthFormula />
+  {#if !$context.system.details.level}
+    <NpcHealthFormulaRoller />
+  {/if}
 </ActorProfile>
 <TempHp />

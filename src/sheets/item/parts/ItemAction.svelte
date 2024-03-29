@@ -81,18 +81,30 @@
   {#if $context.system.hasAttack}
     <ItemFormGroup
       labelText={localize('DND5E.ItemAttackBonus')}
-      field="system.attackBonus"
+      field="system.attack.bonus"
       let:inputId
     >
       <div class="form-fields">
         <TextInput
           id={inputId}
           document={$context.item}
-          field="system.attackBonus"
-          value={$context.system.attackBonus}
+          field="system.attack.bonus"
+          value={$context.system.attack.bonus}
           dataset={{ formulaEditor: true }}
           disabled={!$context.editable}
         />
+        <Checkbox
+          id="{$context.appId}-system-attack-flat"
+          document={$context.item}
+          field="system.attack.flat"
+          checked={$context.system.attack.flat}
+          labelCssClass="checkbox"
+          greenCheckboxWidthOverride="{localize('DND5E.ItemAttackFlat').length +
+            4}ch"
+          title={localize('DND5E.ItemAttackFlatHint')}
+        >
+          {localize('DND5E.ItemAttackFlat')}
+        </Checkbox>
       </div>
     </ItemFormGroup>
 

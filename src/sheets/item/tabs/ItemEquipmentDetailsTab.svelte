@@ -41,9 +41,9 @@
         <SelectOptions data={$context.config.armorTypes} />
       </optgroup>
       {#each $context.customEquipmentTypeGroups as group}
-      <optgroup label={localize(group.label)}>
-        <SelectOptions data={group.types} />
-      </optgroup>
+        <optgroup label={localize(group.label)}>
+          <SelectOptions data={group.types} />
+        </optgroup>
       {/each}
       <SelectOptions data={$context.config.miscEquipmentTypes} />
     </Select>
@@ -119,6 +119,27 @@
         disabled={!$context.editable}
       />
     </ItemFormGroup>
+
+    {#if $context.properties.mgc.selected}
+      <ItemFormGroup
+        labelText={localize('DND5E.MagicalBonus')}
+        field="system.magicalBonus"
+        let:inputId
+      >
+        <div class="form-fields">
+          <NumberInput
+            id={inputId}
+            value={$context.system.magicalBonus}
+            field="system.magicalBonus"
+            document={$context.item}
+            disabled={!$context.editable}
+            min="0"
+            step="1"
+            placeholder="0"
+          />
+        </div>
+      </ItemFormGroup>
+    {/if}
   {/if}
 
   {#if $context.hasDexModifier}

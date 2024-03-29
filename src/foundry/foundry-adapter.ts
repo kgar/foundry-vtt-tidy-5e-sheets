@@ -1256,6 +1256,9 @@ export const FoundryAdapter = {
   openActorConcentrationConfig(actor: Actor5e) {
     new dnd5e.applications.actor.ActorConcentrationConfig(actor).render(true);
   },
+  openStartingEquipmentConfig(item: Item5e) {
+    new dnd5e.applications.item.StartingEquipmentConfig(item).render(true);
+  },
   isConcentrationEffect(effect: ActiveEffect5e, app: any) {
     return (
       app.document instanceof dnd5e.documents.Actor5e &&

@@ -1,6 +1,7 @@
 import { CONSTANTS } from 'src/constants';
 import ItemActiveEffectsTab from '../../sheets/item/tabs/ItemActiveEffectsTab.svelte';
 import ItemAdvancementTab from '../../sheets/item/tabs/ItemAdvancementTab.svelte';
+import ItemBackgroundDetailsTab from '../../sheets/item/tabs/ItemBackgroundDetailsTab.svelte';
 import ItemClassDetailsTab from '../../sheets/item/tabs/ItemClassDetailsTab.svelte';
 import ItemConsumableDetailsTab from '../../sheets/item/tabs/ItemConsumableDetailsTab.svelte';
 import ItemContainerContentsTab from '../../sheets/item/tabs/ItemContainerContentsTab.svelte';
@@ -29,6 +30,19 @@ const itemSheetTabs: Record<string, Tab> = {
       cssClass: 'detail-tab-contents items-list-container',
       type: 'svelte',
     },
+  },
+  /**
+   * Details form for background items.
+   */
+  backgroundDetails: {
+    id: CONSTANTS.TAB_ITEM_DETAILS_ID,
+    title: 'DND5E.Details',
+    content: {
+      component: ItemBackgroundDetailsTab,
+      cssClass: 'detail-tab-contents',
+      type: 'svelte',
+    },
+    autoHeight: true,
   },
   /**
    * Details form for class items.

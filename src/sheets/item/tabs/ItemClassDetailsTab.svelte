@@ -8,6 +8,7 @@
   import type { ItemSheetContext } from 'src/types/item.types';
   import ItemFormGroup from '../form/ItemFormGroup.svelte';
   import TextInput from 'src/components/inputs/TextInput.svelte';
+  import ItemStartingEquipment from '../parts/ItemStartingEquipment.svelte';
 
   let context = getContext<Readable<ItemSheetContext>>('context');
 
@@ -75,3 +76,22 @@
 
 <h3 class="form-header">{localize('DND5E.Spellcasting')}</h3>
 <ItemSpellcasting />
+
+<ItemStartingEquipment />
+
+<ItemFormGroup
+  labelText={localize('DND5E.StartingEquipment.Wealth.Label')}
+  field="system.wealth"
+  let:inputId
+>
+  <div class="form-fields">
+    <TextInput
+      id={inputId}
+      value={$context.system.wealth}
+      field="system.wealth"
+      document={$context.item}
+      disabled={!$context.editable}
+    />
+  </div>
+  <p class="hint">{localize('DND5E.StartingEquipment.Wealth.Hint')}</p>
+</ItemFormGroup>
