@@ -1,13 +1,13 @@
 import {
   actorUsesActionFeature,
   isItemInActionList,
-  toggleActionFilterOverride,
 } from 'src/features/actions/actions';
 import { CONSTANTS } from 'src/constants';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { SettingsProvider } from 'src/settings/settings';
 import type { Item5e } from 'src/types/item.types';
 import { warn } from 'src/utils/logging';
+import { TidyFlags } from 'src/foundry/TidyFlags';
 
 export function initTidy5eContextMenu(
   sheet: any,
@@ -344,18 +344,17 @@ function getItemContextOptions(item: Item5e) {
         ? '<i class="fas fa-fist-raised" style="color: var(--t5e-warning-accent-color)"></i>'
         : '<i class="fas fa-fist-raised"></i>',
       callback: () => {
-        toggleActionFilterOverride(item);
+        TidyFlags.actionFilterOverride.set(item, !isItemInActionList(item));
       },
     });
 
-    const overridden =
-      FoundryAdapter.tryGetFlag(item, 'action-filter-override') !== undefined;
+    const overridden = TidyFlags.actionFilterOverride.get(item) !== undefined;
     if (overridden) {
       options.push({
         name: 'TIDY5E.Actions.ResetActionDefault',
         icon: '<i class="fas fa-fist-raised" style="color: var(--t5e-warning-accent-color)"></i>',
         callback: () => {
-          FoundryAdapter.unsetFlag(item, 'action-filter-override');
+          TidyFlags.actionFilterOverride.unset(item);
         },
       });
     }

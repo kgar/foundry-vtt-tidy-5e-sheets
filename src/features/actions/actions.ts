@@ -11,6 +11,7 @@ import { SheetPreferencesService } from '../user-preferences/SheetPreferencesSer
 import type { ItemFilterService } from '../filtering/ItemFilterService';
 import { SpellUtils } from 'src/utils/SpellUtils';
 import { SheetSections } from '../sections/CharacterSheetSections';
+import { TidyFlags } from 'src/foundry/TidyFlags';
 
 export type ActionSets = Record<string, Set<ActionItem>>;
 
@@ -81,10 +82,7 @@ export function getActorActions(
 
 export function isItemInActionList(item: Item5e): boolean {
   // check our override
-  const override = FoundryAdapter.tryGetFlag<boolean>(
-    item,
-    'action-filter-override'
-  );
+  const override = TidyFlags.actionFilterOverride.get(item);
 
   if (override !== undefined && override !== null) {
     return override;
@@ -358,12 +356,4 @@ export function actorUsesActionFeature(actor: Actor5e) {
       : [];
 
   return defaultTabIds.includes(CONSTANTS.TAB_ACTOR_ACTIONS);
-}
-
-export function toggleActionFilterOverride(item: Item5e) {
-  FoundryAdapter.setFlag(
-    item,
-    'action-filter-override',
-    !isItemInActionList(item)
-  );
 }

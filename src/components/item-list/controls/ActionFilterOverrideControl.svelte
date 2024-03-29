@@ -1,8 +1,9 @@
 <script lang="ts">
   import type { Item5e } from 'src/types/item.types';
   import ItemControl from './ItemControl.svelte';
-  import { isItemInActionList, toggleActionFilterOverride } from 'src/features/actions/actions';
+  import { isItemInActionList } from 'src/features/actions/actions';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import { TidyFlags } from 'src/foundry/TidyFlags';
 
   export let item: Item5e;
 
@@ -10,7 +11,7 @@
 
   let title: string;
   $: {
-    const flagValue = FoundryAdapter.tryGetFlag(item, 'action-filter-override');
+    const flagValue = TidyFlags.actionFilterOverride.get(item);
     const titleKey =
       flagValue === true
         ? 'TIDY5E.Actions.OverriddenSetOverrideFalse'
@@ -32,6 +33,6 @@
   {title}
   onclick={(ev) =>
     ev.shiftKey
-      ? FoundryAdapter.unsetFlag(item, 'action-filter-override')
-      : toggleActionFilterOverride(item)}
+      ? TidyFlags.actionFilterOverride.unset(item)
+      : TidyFlags.actionFilterOverride.set(item, !isItemInActionList(item))}
 />
