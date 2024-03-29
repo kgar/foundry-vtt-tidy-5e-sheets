@@ -196,9 +196,9 @@ export class Tidy5eCharacterSheet
   }
 
   async getData(options = {}) {
-    const defaultDocumentContext = await super.getData(this.options);
-
     this._concentration = this.actor.concentration;
+
+    const defaultDocumentContext = await super.getData(this.options);
 
     Tidy5eBaseActorSheet.applyCommonContext(defaultDocumentContext);
 
@@ -1302,12 +1302,18 @@ export class Tidy5eCharacterSheet
       const isAlways = prep.mode === 'always';
       const isPrepared = !!prep.prepared;
       context.toggleClass = isPrepared ? 'active' : '';
-      if (isAlways) context.toggleClass = 'fixed';
-      if (isAlways)
+      if (isAlways) {
+        context.toggleClass = 'fixed';
         context.toggleTitle = CONFIG.DND5E.spellPreparationModes.always.label;
-      else if (isPrepared)
+      } else if (isPrepared) {
         context.toggleTitle = CONFIG.DND5E.spellPreparationModes.prepared.label;
-      else context.toggleTitle = game.i18n.localize('DND5E.SpellUnprepared');
+      } else {
+        context.toggleTitle = game.i18n.localize('DND5E.SpellUnprepared');
+      }
+
+      if (this._concentration.items.has(item)) {
+        context.concentration = true;
+      }
     } else {
       const isActive = !!item.system.equipped;
       context.toggleClass = isActive ? 'active' : '';

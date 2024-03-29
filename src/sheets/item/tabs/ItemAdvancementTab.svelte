@@ -67,6 +67,7 @@
             type="button"
             class="inline-icon-button"
             title={localize('DND5E.AdvancementControlCreate')}
+            aria-label={localize('DND5E.AdvancementControlCreate')}
             on:click={() =>
               FoundryAdapter.createAdvancementSelectionDialog($context.item)}
             tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
@@ -157,6 +158,7 @@
                 type="button"
                 class="inline-icon-button"
                 title={localize('DND5E.AdvancementControlEdit')}
+                aria-label={localize('DND5E.AdvancementControlEdit')}
                 on:click={() =>
                   FoundryAdapter.editAdvancement(advancement.id, $context.item)}
                 tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
@@ -167,6 +169,7 @@
                 type="button"
                 class="inline-icon-button"
                 title={localize('DND5E.AdvancementControlDelete')}
+                aria-label={localize('DND5E.AdvancementControlDelete')}
                 on:click={() =>
                   FoundryAdapter.deleteAdvancement(
                     advancement.id,

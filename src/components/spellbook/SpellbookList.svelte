@@ -31,6 +31,7 @@
   import SpellSlotManagement from './SpellSlotManagement.svelte';
   import type { Item5e } from 'src/types/item.types';
   import ClassicControls from 'src/sheets/shared/ClassicControls.svelte';
+  import ConcentrationOverlayIcon from './ConcentrationOverlayIcon.svelte';
 
   let context =
     getContext<Readable<CharacterSheetContext | NpcSheetContext>>('context');
@@ -178,7 +179,12 @@
               disabled={!$context.editable}
               item={spell}
               imgUrlOverride={spellImgUrl}
-            />
+              showDiceIconOnHover={!ctx.concentration}
+            >
+              <svelte:fragment slot="after-roll-button">
+                <ConcentrationOverlayIcon {ctx} />
+              </svelte:fragment>
+            </ItemUseButton>
             <ItemName
               on:toggle={() => toggleSummary($context.actor)}
               item={spell}

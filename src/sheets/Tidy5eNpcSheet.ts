@@ -182,9 +182,9 @@ export class Tidy5eNpcSheet
   }
 
   async getData(options = {}) {
-    const defaultDocumentContext = await super.getData(this.options);
-
     this._concentration = this.actor.concentration;
+
+    const defaultDocumentContext = await super.getData(this.options);
 
     Tidy5eBaseActorSheet.applyCommonContext(defaultDocumentContext);
 
@@ -758,8 +758,14 @@ export class Tidy5eNpcSheet
         ctx.isDepleted = item.isOnCooldown && uses.per && uses.value > 0;
         ctx.hasTarget = !!target && !['none', ''].includes(target.type);
         ctx.canToggle = false;
-        if (item.type === 'spell') arr[0].push(item);
-        else arr[1].push(item);
+        if (item.type === 'spell') {
+          if (this._concentration.items.has(item)) {
+            ctx.concentration = true;
+          }
+          arr[0].push(item);
+        } else {
+          arr[1].push(item);
+        }
         return arr;
       },
       [[], []]

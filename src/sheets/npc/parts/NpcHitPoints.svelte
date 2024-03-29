@@ -23,6 +23,7 @@
     maxField="system.attributes.hp.max"
     maxTitle={localize('DND5E.HitPointsMax')}
     maxDisabled={!$context.editable ||
+      $context.system.details.level ||
       $context.lockHpMaxChanges ||
       $context.lockSensitiveFields}
     percentage={$context.healthPercentage}

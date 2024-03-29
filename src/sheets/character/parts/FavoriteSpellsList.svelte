@@ -14,6 +14,7 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import SpellSlotManagement from 'src/components/spellbook/SpellSlotManagement.svelte';
+  import ConcentrationOverlayIcon from 'src/components/spellbook/ConcentrationOverlayIcon.svelte';
 
   let context = getContext<Readable<CharacterSheetContext>>('context');
   export let section: any;
@@ -56,6 +57,7 @@
     </svelte:fragment>
     <svelte:fragment slot="body">
       {#each spells as spell}
+        {@const ctx = $context.itemContext[spell.id]}
         {@const spellImgUrl = FoundryAdapter.getSpellImageUrl($context, spell)}
         <ItemTableRow
           item={spell}
@@ -73,7 +75,11 @@
               disabled={!$context.editable}
               item={spell}
               imgUrlOverride={spellImgUrl}
-            />
+            >
+              <svelte:fragment slot="after-roll-button">
+                <ConcentrationOverlayIcon {ctx} />
+              </svelte:fragment>
+            </ItemUseButton>
             <ItemName
               on:toggle={() => toggleSummary($context.actor)}
               item={spell}

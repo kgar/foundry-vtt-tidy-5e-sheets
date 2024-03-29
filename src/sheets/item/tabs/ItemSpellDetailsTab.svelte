@@ -156,6 +156,8 @@
       field="system.preparation.prepared"
       checked={$context.system.preparation.prepared}
       disabled={!$context.editable}
+      greenCheckboxWidthOverride="{localize('DND5E.SpellPrepared').length +
+            4}ch"
     >
       {localize('DND5E.SpellPrepared')}
     </Checkbox>

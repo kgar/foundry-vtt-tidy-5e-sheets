@@ -23,6 +23,7 @@ export const CONSTANTS = {
   ITEM_TYPE_SUBCLASS: 'subclass',
   ITEM_TYPE_TOOL: 'tool',
   ITEM_TYPE_WEAPON: 'weapon',
+  ITEM_SYSTEM_TYPE_AMMO: 'ammo',
   MESSAGE_BUS_COLLAPSE_ALL: 'collapse-all',
   MESSAGE_BUS_EXPAND_ALL: 'expand-all',
   /**
