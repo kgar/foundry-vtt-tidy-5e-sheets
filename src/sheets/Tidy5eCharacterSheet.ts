@@ -187,9 +187,9 @@ export class Tidy5eCharacterSheet
   }
 
   async getData(options = {}) {
-    const defaultDocumentContext = await super.getData(this.options);
-
     this._concentration = this.actor.concentration;
+
+    const defaultDocumentContext = await super.getData(this.options);
 
     Tidy5eBaseActorSheet.applyCommonContext(defaultDocumentContext);
 
@@ -919,6 +919,12 @@ export class Tidy5eCharacterSheet
     debug('Character Sheet context data', context);
 
     return context;
+  }
+
+  // TODO: Consume in Native CCSS branch
+  protected _prepareItem(item: Item5e, ctx: any) {
+    super._prepareItem(item, ctx);
+    if ( this._concentration.items.has(item) ) ctx.concentration = true;
   }
 
   private async setExpandedItemData() {

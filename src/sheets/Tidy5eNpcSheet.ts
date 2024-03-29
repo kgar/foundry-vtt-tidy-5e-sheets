@@ -177,9 +177,9 @@ export class Tidy5eNpcSheet
   }
 
   async getData(options = {}) {
-    const defaultDocumentContext = await super.getData(this.options);
-
     this._concentration = this.actor.concentration;
+
+    const defaultDocumentContext = await super.getData(this.options);
 
     Tidy5eBaseActorSheet.applyCommonContext(defaultDocumentContext);
 
@@ -751,6 +751,16 @@ export class Tidy5eNpcSheet
     debug('NPC Sheet context data', context);
 
     return context;
+  }
+
+  // TODO: Consume in Native CCSS branch
+  protected _prepareItems(context: NpcSheetContext) {
+    super._prepareItems(context);
+
+    context.items.forEach((item: Item5e) => {
+      const ctx = (context.itemContext[item.id] ??= {});
+      if (this._concentration.items.has(item)) ctx.concentration = true;
+    });
   }
 
   private async setExpandedItemData() {

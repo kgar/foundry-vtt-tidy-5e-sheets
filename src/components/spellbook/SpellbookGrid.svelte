@@ -17,6 +17,7 @@
   import { ActorItemRuntime } from 'src/runtime/ActorItemRuntime';
   import { declareLocation } from 'src/types/location-awareness.types';
   import SpellSlotManagement from './SpellSlotManagement.svelte';
+  import ConcentrationOverlayIcon from './ConcentrationOverlayIcon.svelte';
 
   export let section: any;
   export let spells: Item5e[];
@@ -91,6 +92,7 @@
     </svelte:fragment>
     <div class="spells" slot="body">
       {#each spells as spell}
+        {@const ctx = $context.itemContext[spell.id]}
         {@const spellImgUrl = FoundryAdapter.getSpellImageUrl($context, spell)}
         {@const hidden =
           visibleItemIdSubset !== null && !visibleItemIdSubset.has(spell.id)}
@@ -126,7 +128,10 @@
               class="spell-image"
               style="background-image: url('{spellImgUrl}');"
             >
-              <i class="fa fa-dice-d20" />
+              {#if !ctx.concentration}
+                <i class="fa fa-dice-d20" />
+              {/if}
+              <ConcentrationOverlayIcon --tidy-icon-font-size="1.25rem" {ctx} />
             </div>
           </div>
         </button>
