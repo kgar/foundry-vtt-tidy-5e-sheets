@@ -593,7 +593,12 @@
             "ToMigrate": "Per Migrare",
             "TotalSelectedLabel": "Totale Selezionato: {total}",
             "SelectAllNoneTooltip": "Seleziona tutti o nessuno"
-        }
+        },
+        "NpcDeathSaves": {
+            "selectionDialogTitle": "Migrazione: Tiri Salvezza PNG",
+            "sectionTitle": "Tiri Salvezza PNG"
+        },
+        "UnlinkedExplanation": "Questa migrazione offre la possibilità di migrare i documenti dei token non collegati nella scena corrente. È possibile eseguire la migrazione su scene aggiuntive secondo necessità."
     },
     "TIDY5E.ItemFilters.MenuTooltip.Filters": "Filtri",
     "TIDY5E.Settings.ColorPickerMagicAccent": {
@@ -749,5 +754,9 @@
     "TIDY5E.ItemFilters.CanCast": "Può Lanciare",
     "TIDY5E.ItemFilters.CanUse": "Può Usare",
     "TIDY5E.PortraitTitle": "Ritratto: {subject}",
-    "TIDY5E.ItemImageTitle": "Oggetto: {subject}"
+    "TIDY5E.ItemImageTitle": "Oggetto: {subject}",
+    "TIDY5E.WorldSettings.IncludeFlagsInSpellScrollCreation": {
+        "name": "Includi Flags nella Creazione Pergamene di Incantesimi",
+        "hint": "Gli incantesimi a volte possono contenere dati speciali provenienti da altri moduli che possono essere utili da trasferire in una pergamena di incantesimi. Abilita la copia di tutti i dati basati sui flags nella pergamena dell'incantesimo al momento della creazione."
+    }
 }

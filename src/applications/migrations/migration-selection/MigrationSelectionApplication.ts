@@ -1,7 +1,7 @@
 import type { SvelteComponent } from 'svelte';
 import SvelteFormApplicationBase from '../../SvelteFormApplicationBase';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-import NameMe from './MigrationSelection.svelte';
+import MigrationSelection from './MigrationSelection.svelte';
 import type {
   MigrationSelectionParams,
   SelectableMigrationSelectionParams,
@@ -43,7 +43,7 @@ export class MigrationSelectionApplication<
         selected: true,
       })),
     };
-    return new NameMe({
+    return new MigrationSelection({
       target: node,
       props: {
         params: selectableParams,

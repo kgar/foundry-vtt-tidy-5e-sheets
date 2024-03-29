@@ -17,6 +17,7 @@ declare global {
   var AudioHelper: any;
   var ChatMessage: any;
   var CONFIG: any;
+  var CONST: any;
   var ContextMenu: any;
   var DefaultSheetsConfig: any;
   var debounce: any;
