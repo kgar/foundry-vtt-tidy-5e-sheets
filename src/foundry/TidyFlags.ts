@@ -11,7 +11,7 @@ export class TidyFlags {
    * `undefined` means there is no override and standard Action List logic should be used.
    * */
   static actionFilterOverride = {
-    key: 'action-filter-override',
+    key: 'action-filter-override' as const,
     /** Gets the item's Action Filter Override setting. */
     get(item: Item5e): boolean | undefined {
       return (
@@ -40,7 +40,7 @@ export class TidyFlags {
 
   /** Determines the order of item table sections for a given actor. */
   static actorSectionOrder = {
-    key: 'actor-section-order',
+    key: 'actor-section-order' as const,
     /** Gets the actor's section ordering. `undefined` means to use the default order.  */
     get(actor: Actor5e): ActorSectionOrder | undefined {
       return (
