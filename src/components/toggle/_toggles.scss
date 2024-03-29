@@ -29,6 +29,10 @@
   align-items: center;
 
   --tidy-switch-scale-internal: var(--tidy-switch-scale, 1);
+  --tidy-switch-thumb-transform-duration-internal: var(
+    --tidy-switch-thumb-transform-duration,
+    0.3s
+  );
 
   button {
     width: calc(2.625rem * var(--tidy-switch-scale-internal));
@@ -47,18 +51,36 @@
       background: var(--t5e-switch-slider-color);
       top: calc(0.125rem * var(--tidy-switch-scale-internal));
       right: calc(1.375rem * var(--tidy-switch-scale-internal));
-      transition: transform 0.3s;
+      transition: transform var(--tidy-switch-thumb-transform-duration-internal);
       border-radius: 100%;
+    }
+
+    .thumb-icon {
+      font-size: calc(0.75rem * var(--tidy-switch-scale-internal));
+      position: absolute;
+      color: var(--t5e-primary-accent-color);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: calc(1.125rem * var(--tidy-switch-scale-internal));
+      height: calc(1.125rem * var(--tidy-switch-scale-internal));
+      top: 0;
+      bottom: 0;
+      align-self: center;
+      right: calc(1.375rem * var(--tidy-switch-scale-internal));
+      transition: transform var(--tidy-switch-thumb-transform-duration-internal);
     }
 
     &[aria-checked='true'] {
       background-color: var(--t5e-primary-accent-color);
 
-      &::before {
+      &::before,
+      .thumb-icon {
         transform: translateX(
           calc(1.25rem * var(--tidy-switch-scale-internal))
         );
-        transition: transform 0.3s;
+        transition: transform
+          var(--tidy-switch-thumb-transform-duration-internal);
       }
     }
 

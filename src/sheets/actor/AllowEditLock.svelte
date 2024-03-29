@@ -1,4 +1,5 @@
 <script lang="ts">
+  import TidySwitch from 'src/components/toggle/TidySwitch.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { settingStore } from 'src/settings/settings';
   import type { ActorSheetContext } from 'src/types/types';
@@ -13,7 +14,10 @@
     await FoundryAdapter.setFlag($context.actor, 'allow-edit', !allowEdit);
   }
 
-  $: allowEdit = FoundryAdapter.isSheetUnlocked($context.actor);
+  let allowEdit: boolean;
+  $: {
+    allowEdit = FoundryAdapter.isSheetUnlocked($context.actor);
+  }
 
   $: descriptionVariable =
     hint ??
@@ -37,19 +41,21 @@
 </script>
 
 <div class="toggle-allow-edit">
-  <button
-    type="button"
-    class="lock-button"
-    on:click={() => toggleLock()}
-    class:editing-enabled={allowEdit}
-    tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
-  >
-    {#if allowEdit}
-      <i class="fas fa-lock-open" title={unlockTitle} />
-    {:else}
-      <i class="fas fa-lock" title={lockTitle} />
-    {/if}
-  </button>
+  <TidySwitch
+    --tidy-switch-scale=".875"
+    --tidy-switch-thumb-transform-duration="0.15s"
+    title={allowEdit ? unlockTitle : lockTitle}
+    bind:value={allowEdit}
+    thumbIconClass="{allowEdit ? 'fas fa-unlock' : 'fas fa-lock'} fa-fw"
+    on:change={(e) =>
+      setTimeout(() =>
+        FoundryAdapter.setFlag(
+          $context.actor,
+          'allow-edit',
+          !e.detail.originalValue,
+        ),
+      )}
+  ></TidySwitch>
 </div>
 
 <style lang="scss">
@@ -66,30 +72,5 @@
     font-size: 0.8125rem;
     text-align: left;
     height: 1.625rem;
-
-    .lock-button {
-      background: var(--t5e-sheet-unlocked-icon-background);
-      color: var(--t5e-sheet-lock-icon-color);
-      border-radius: 0.1875rem;
-      width: 1.375rem;
-      border: none;
-      padding: 0;
-      line-height: normal;
-      transition: color 0.3s ease;
-
-      &.editing-enabled {
-        background: var(--t5e-sheet-locked-icon-background);
-      }
-
-      &:hover {
-        color: var(--t5e-sheet-lock-icon-hover-color);
-      }
-
-      i {
-        width: 100%;
-        text-align: center;
-        padding: 0.25rem 0;
-      }
-    }
   }
 </style>
