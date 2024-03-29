@@ -115,7 +115,7 @@
                     'data-effect-id': effect.id,
                   }}
                 >
-                  <ItemImage src={effect.icon} />
+                  <ItemImage src={effect.img ?? effect.icon} />
                   <span
                     class="align-self-center truncate"
                     data-tidy-effect-name={effect.name}>{effect.name}</span

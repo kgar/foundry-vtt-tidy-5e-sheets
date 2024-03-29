@@ -112,7 +112,7 @@
     >
       <NumberInput
         id={inputId}
-        value={$context.system.armor.value}
+        value={$context.source.armor.value}
         step="1"
         field="system.armor.value"
         document={$context.item}

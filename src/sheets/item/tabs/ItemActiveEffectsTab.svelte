@@ -95,7 +95,7 @@
               <div class="item-name effect-name flexrow">
                 <img
                   class="item-image"
-                  src={effect.icon}
+                  src={effect.img ?? effect.icon}
                   alt={effect.name ?? ''}
                 />
                 <h4>{effect.name ?? ''}</h4>
