@@ -123,14 +123,14 @@
     {#if $context.properties.mgc.selected}
       <ItemFormGroup
         labelText={localize('DND5E.MagicalBonus')}
-        field="system.magicalBonus"
+        field="system.armor.magicalBonus"
         let:inputId
       >
         <div class="form-fields">
           <NumberInput
             id={inputId}
-            value={$context.system.magicalBonus}
-            field="system.magicalBonus"
+            value={$context.system.armor.magicalBonus}
+            field="system.armor.magicalBonus"
             document={$context.item}
             disabled={!$context.editable}
             min="0"
