@@ -57,10 +57,9 @@ import type { Dnd5eActorCondition } from 'src/foundry/foundry-and-system';
 import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
 import { SheetPreferencesRuntime } from 'src/runtime/user-preferences/SheetPreferencesRuntime';
 import { Tidy5eBaseActorSheet } from './Tidy5eBaseActorSheet';
-import {
-  CharacterSheetSections,
-  SheetSections,
-} from 'src/features/sections/CharacterSheetSections';
+import { CharacterSheetSections } from 'src/features/sections/CharacterSheetSections';
+import { SheetSections } from 'src/features/sections/SheetSections';
+import { TidyFlags } from 'src/api';
 
 export class Tidy5eCharacterSheet
   extends dnd5e.applications.actor.ActorSheet5eCharacter
@@ -857,12 +856,14 @@ export class Tidy5eCharacterSheet
         items: [],
         dataset: { type },
         canCreate: true,
+        key: type,
       };
       favoriteInventory[type] = {
         label: `${CONFIG.Item.typeLabels[type]}Pl`,
         items: [],
         dataset: { type },
         canCreate: false,
+        key: type,
       };
     }
 
@@ -1137,8 +1138,23 @@ export class Tidy5eCharacterSheet
         { canCreate: false }
       );
 
-    // Assign and return
+    // Assign, sort sections, and return
+    const actorSectionOrder = TidyFlags.actorSectionOrder.get(this.actor);
+
     context.inventory = Object.values(inventory);
+
+    const inventorySectionOrder =
+      actorSectionOrder?.[CONSTANTS.TAB_CHARACTER_INVENTORY];
+
+    if (inventorySectionOrder) {
+      const maxLength = context.inventory.length;
+      const sortMap = new Map(inventorySectionOrder.map((e, i) => [e, i]));
+      context.inventory.sort(
+        (a, b) =>
+          (sortMap.get(a.key) ?? maxLength) - (sortMap.get(b.key) ?? maxLength)
+      );
+    }
+
     context.spellbook = spellbook;
     context.preparedSpells = nPrepared;
     context.features = Object.values(features);
@@ -1177,7 +1193,7 @@ export class Tidy5eCharacterSheet
     );
     feats = feats.filter((f) => !SheetSections.tryGetCustomSection(f));
 
-    const features = {
+    const features: Record<string, CharacterFeatureSection> = {
       race: {
         label: CONFIG.Item.typeLabels.race,
         items: races,
@@ -1185,6 +1201,7 @@ export class Tidy5eCharacterSheet
         dataset: { type: 'race' },
         showRequirementsColumn: true,
         canCreate: true,
+        key: 'race',
         ...options,
       },
       background: {
@@ -1194,6 +1211,7 @@ export class Tidy5eCharacterSheet
         dataset: { type: 'background' },
         showRequirementsColumn: true,
         canCreate: true,
+        key: 'background',
         ...options,
       },
       classes: {
@@ -1204,6 +1222,7 @@ export class Tidy5eCharacterSheet
         isClass: true,
         showLevelColumn: true,
         canCreate: true,
+        key: 'classes',
         ...options,
       },
       active: {
@@ -1215,6 +1234,7 @@ export class Tidy5eCharacterSheet
         showUsagesColumn: true,
         showUsesColumn: true,
         canCreate: true,
+        key: 'active',
         ...options,
       },
       passive: {
@@ -1224,6 +1244,7 @@ export class Tidy5eCharacterSheet
         dataset: { type: 'feat' },
         showRequirementsColumn: true,
         canCreate: true,
+        key: 'passive',
         ...options,
       },
     };

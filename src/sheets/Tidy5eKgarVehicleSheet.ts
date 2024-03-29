@@ -358,6 +358,7 @@ export class Tidy5eVehicleSheet
         items: [],
         hasActions: true,
         crewable: true,
+        key: 'actions',
         dataset: { type: 'feat', 'activation.type': 'crew' },
         columns: [
           {
@@ -373,16 +374,19 @@ export class Tidy5eVehicleSheet
         crewable: true,
         dataset: { type: 'equipment', 'type.value': 'vehicle' },
         columns: equipmentColumns,
+        key: 'equipment',
       },
       passive: {
         label: game.i18n.localize('DND5E.Features'),
         items: [],
         dataset: { type: 'feat' },
+        key: 'passive',
       },
       reactions: {
         label: game.i18n.localize('DND5E.ReactionPl'),
         items: [],
         dataset: { type: 'feat', 'activation.type': 'reaction' },
+        key: 'reactions',
       },
       weapons: {
         label: game.i18n.localize(`${CONFIG.Item.typeLabels.weapon}Pl`),
@@ -390,6 +394,7 @@ export class Tidy5eVehicleSheet
         crewable: true,
         dataset: { type: 'weapon', 'weapon-type': 'siege' },
         columns: equipmentColumns,
+        key: 'weapons',
       },
     };
 

@@ -10,7 +10,7 @@ import { debug, error } from 'src/utils/logging';
 import { SheetPreferencesService } from '../user-preferences/SheetPreferencesService';
 import type { ItemFilterService } from '../filtering/ItemFilterService';
 import { SpellUtils } from 'src/utils/SpellUtils';
-import { SheetSections } from '../sections/CharacterSheetSections';
+import { SheetSections } from '../sections/SheetSections';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 
 export type ActionSets = Record<string, Set<ActionItem>>;

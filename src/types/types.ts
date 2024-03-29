@@ -118,6 +118,7 @@ export type InventorySection = {
   dataset: Record<string, string>;
   canCreate: boolean;
   custom?: CustomSectionOptions;
+  key: string;
 };
 
 export type CharacterItemPartitions = {
@@ -135,6 +136,7 @@ export type FeatureSection = {
   items: Item5e[];
   hasActions?: boolean;
   dataset: Record<string, string>;
+  key: string;
 };
 
 export type VehicleCargoSection = {
@@ -172,6 +174,7 @@ export type SpellbookSection = {
   dataset: Record<string, string>;
   prop?: string;
   custom?: CustomSectionOptions;
+  key: string;
 };
 
 export type AvailableLevel = {

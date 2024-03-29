@@ -18,7 +18,7 @@
   import { CONSTANTS } from 'src/constants';
   import ItemFormGroup from '../form/ItemFormGroup.svelte';
   import TextInput from 'src/components/inputs/TextInput.svelte';
-  import { SheetSections } from 'src/features/sections/CharacterSheetSections';
+  import { SheetSections } from 'src/features/sections/SheetSections';
 
   let context =
     getContext<Readable<ItemSheetContext | ContainerSheetContext>>('context');

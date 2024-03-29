@@ -49,10 +49,8 @@ import { AsyncMutex } from 'src/utils/mutex';
 import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
 import { SheetPreferencesRuntime } from 'src/runtime/user-preferences/SheetPreferencesRuntime';
 import { Tidy5eBaseActorSheet } from './Tidy5eBaseActorSheet';
-import {
-  NpcSheetSections,
-  SheetSections,
-} from 'src/features/sections/CharacterSheetSections';
+import { SheetSections } from 'src/features/sections/SheetSections';
+import { NpcSheetSections } from 'src/features/sections/NpcSheetSections';
 
 export class Tidy5eNpcSheet
   extends dnd5e.applications.actor.ActorSheet5eNPC
@@ -724,6 +722,7 @@ export class Tidy5eNpcSheet
         hasActions: true,
         dataset: { type: 'weapon', 'weapon-type': 'natural' },
         canCreate: true,
+        key: 'weapons',
       },
       actions: {
         label: game.i18n.localize('DND5E.ActionPl'),
@@ -731,18 +730,21 @@ export class Tidy5eNpcSheet
         hasActions: true,
         dataset: { type: 'feat', 'activation.type': 'action' },
         canCreate: true,
+        key: 'actions',
       },
       passive: {
         label: game.i18n.localize('DND5E.Features'),
         items: [],
         dataset: { type: 'feat' },
         canCreate: true,
+        key: 'passive',
       },
       equipment: {
         label: game.i18n.localize('DND5E.Inventory'),
         items: [],
         dataset: { type: 'loot' },
         canCreate: true,
+        key: 'equipment',
       },
     };
 
