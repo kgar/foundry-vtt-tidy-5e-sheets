@@ -14,6 +14,7 @@ import type {
   Utilities,
   ActiveEffect5e,
   NpcAbilitySection,
+  SpellbookSection,
 } from 'src/types/types';
 import { writable } from 'svelte/store';
 import NpcSheet from './npc/NpcSheet.svelte';
@@ -819,7 +820,10 @@ export class Tidy5eNpcSheet
       (s: Item5e) => !SheetSections.tryGetCustomSection(s)
     );
     const spellbook = [
-      ...this._prepareSpellbook(context, spells),
+      ...this._prepareSpellbook(context, spells).map((s: SpellbookSection) => ({
+        ...s,
+        key: s.prop,
+      })),
       ...SheetSections.generateCustomSpellbookSections(customSectionSpells, {
         canCreate: true,
       }),

@@ -1020,13 +1020,19 @@ export class Tidy5eCharacterSheet
     }
 
     // Section spells
-    // TODO: Take over `_prepareSpellbook` and put in `SheetSections`; have custom sectioning built right into the process.
+    // TODO: Take over `_prepareSpellbook` and
+    // - put in `SheetSections`
+    // - have custom sectioning built right into the process
+    // - set up `key` in the spellbook prep code, just like `prop`
     const customSectionSpells = spells.filter((s) =>
       SheetSections.tryGetCustomSection(s)
     );
     spells = spells.filter((s) => !SheetSections.tryGetCustomSection(s));
     const spellbook = [
-      ...this._prepareSpellbook(context, spells),
+      ...this._prepareSpellbook(context, spells).map((s: SpellbookSection) => ({
+        ...s,
+        key: s.prop,
+      })),
       ...SheetSections.generateCustomSpellbookSections(customSectionSpells, {
         canCreate: true,
       }),
