@@ -21,6 +21,12 @@
   export let labelCssClass: string | null = null;
   export let checkboxCssClass: string | null = null;
   export let onDataPreparing: SvelteInputEvent | null = null;
+  // TODO: Get rid of the these horrendous green checkboxes and remove all the code that barely props them up.
+  export let greenCheckboxWidthOverride: string | null = null;
+  $: greenCheckboxStyle =
+    greenCheckboxWidthOverride !== null
+      ? `width: ${greenCheckboxWidthOverride}`
+      : '';
 
   $: draftValue = value;
   $: datasetAttributes = buildDataset(dataset);
@@ -49,7 +55,7 @@
 
 <!-- TODO: Make label wrapper conditional when Svelte 5 snippets come out -->
 {#if $$slots.default}
-  <label class={labelCssClass} {title}>
+  <label class={labelCssClass} {title} style={greenCheckboxStyle}>
     <input
       type="checkbox"
       {id}
@@ -83,3 +89,10 @@
     data-tidy-field={field}
   />
 {/if}
+
+<style lang="scss">
+  label {
+    --tidy-checkbox-width-internal: var(--tidy-checkbox-width, unset);
+    width: var(--tidy-checkbox-width-internal);
+  }
+</style>

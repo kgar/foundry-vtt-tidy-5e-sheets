@@ -10,6 +10,9 @@
   import ItemFormGroup from '../form/ItemFormGroup.svelte';
   import ItemProperties from '../parts/ItemProperties.svelte';
   import ContentConcealer from 'src/components/content-concealment/ContentConcealer.svelte';
+  import { CONSTANTS } from 'src/constants';
+  import TextInput from 'src/components/inputs/TextInput.svelte';
+  import NumberInput from 'src/components/inputs/NumberInput.svelte';
 
   let context = getContext<Readable<ItemSheetContext>>('context');
 
@@ -81,6 +84,27 @@
   >
     <ItemProperties />
   </ItemFormGroup>
+
+  {#if $context.properties.mgc.selected && $context.system.type.value === CONSTANTS.ITEM_SYSTEM_TYPE_AMMO}
+    <ItemFormGroup
+      labelText={localize('DND5E.MagicalBonus')}
+      field="system.magicalBonus"
+      let:inputId
+    >
+      <div class="form-fields">
+        <NumberInput
+          id={inputId}
+          value={$context.system.magicalBonus}
+          field="system.magicalBonus"
+          document={$context.item}
+          disabled={!$context.editable}
+          min="0"
+          step="1"
+          placeholder="0"
+        />
+      </div>
+    </ItemFormGroup>
+  {/if}
 
   <h3 class="form-header">{localize('DND5E.ItemConsumableUsage')}</h3>
 

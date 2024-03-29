@@ -112,6 +112,27 @@
     <ItemMountable />
   {/if}
 
+  {#if $context.properties.mgc.selected}
+    <ItemFormGroup
+      labelText={localize('DND5E.MagicalBonus')}
+      field="system.magicalBonus"
+      let:inputId
+    >
+      <div class="form-fields">
+        <NumberInput
+          id={inputId}
+          value={$context.system.magicalBonus}
+          field="system.magicalBonus"
+          document={$context.item}
+          disabled={!$context.editable}
+          min="0"
+          step="1"
+          placeholder="0"
+        />
+      </div>
+    </ItemFormGroup>
+  {/if}
+
   <h3 class="form-header">{localize('DND5E.ItemWeaponUsage')}</h3>
 
   <ItemActivation />
