@@ -3,7 +3,6 @@ import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type { Item5e } from 'src/types/item.types';
 import type { SpellbookSection } from 'src/types/types';
 
-
 export class SheetSections {
   static get sectionProperty() {
     return 'section';
@@ -44,7 +43,8 @@ export class SheetSections {
     options: Partial<SpellbookSection>
   ) {
     const customSpellbook: Record<string, SpellbookSection> = {};
-    spells.forEach((s) => SheetSections.applySpellToSection(customSpellbook, s, options)
+    spells.forEach((s) =>
+      SheetSections.applySpellToSection(customSpellbook, s, options)
     );
     return Object.values(customSpellbook);
   }
@@ -78,5 +78,23 @@ export class SheetSections {
     });
 
     customSection.spells.push(spell);
+  }
+
+  static sortKeyedSections<T extends { key: string }>(
+    sections: T[],
+    keyOrder: string[] | undefined
+  ) {
+    if (!keyOrder) {
+      return sections;
+    }
+
+    const maxLength = sections.length;
+    const sortMap = new Map(keyOrder.map((e, i) => [e, i]));
+    sections.sort(
+      (a, b) =>
+        (sortMap.get(a.key) ?? maxLength) - (sortMap.get(b.key) ?? maxLength)
+    );
+
+    return sections;
   }
 }

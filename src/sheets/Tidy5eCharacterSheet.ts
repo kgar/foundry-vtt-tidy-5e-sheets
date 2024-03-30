@@ -1147,24 +1147,19 @@ export class Tidy5eCharacterSheet
     // Assign, sort sections, and return
     const actorSectionOrder = TidyFlags.actorSectionOrder.get(this.actor);
 
-    context.inventory = Object.values(inventory);
-
-    const inventorySectionOrder =
-      actorSectionOrder?.[CONSTANTS.TAB_CHARACTER_INVENTORY];
-
-    if (inventorySectionOrder) {
-      const maxLength = context.inventory.length;
-      const sortMap = new Map(inventorySectionOrder.map((e, i) => [e, i]));
-      context.inventory.sort(
-        (a, b) =>
-          (sortMap.get(a.key) ?? maxLength) - (sortMap.get(b.key) ?? maxLength)
-      );
-    }
-
-    context.spellbook = spellbook;
-    context.preparedSpells = nPrepared;
-    context.features = Object.values(features);
-    context.favorites = [
+    context.inventory = SheetSections.sortKeyedSections(
+      Object.values(inventory),
+      actorSectionOrder?.[CONSTANTS.TAB_CHARACTER_INVENTORY]
+    );
+    context.spellbook = SheetSections.sortKeyedSections(
+      spellbook,
+      actorSectionOrder?.[CONSTANTS.TAB_CHARACTER_SPELLBOOK]
+    );
+    context.features = SheetSections.sortKeyedSections(
+      Object.values(features),
+      actorSectionOrder?.[CONSTANTS.TAB_CHARACTER_FEATURES]
+    );
+    const favoriteSections = [
       ...Object.values(favoriteInventory)
         .filter((i) => i.items.length)
         .map((i) => ({
@@ -1184,6 +1179,12 @@ export class Tidy5eCharacterSheet
           type: CONSTANTS.TAB_CHARACTER_SPELLBOOK,
         })),
     ];
+    context.favorites = SheetSections.sortKeyedSections(
+      favoriteSections,
+      actorSectionOrder?.[CONSTANTS.TAB_CHARACTER_ATTRIBUTES]
+    );
+
+    context.preparedSpells = nPrepared;
   }
 
   // TODO: Consider moving to the static class CharacterSheetSections

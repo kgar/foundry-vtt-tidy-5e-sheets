@@ -10,7 +10,6 @@
   export let valueProp: string;
   export let listboxCssClass: string = '';
 
-  let listboxesContainer: HTMLElement;
   $: selectedItemIndex = selectedLeftItemIndex ?? selectedRightItemIndex;
   $: selectedArray =
     selectedLeftItemIndex !== null
@@ -129,25 +128,6 @@
     ) {
       selectedRightItemIndex = rightItems.length ? rightItems.length - 1 : null;
     }
-
-    // TODO: Only scroll into view the items that have scrollbars? Otherwise, making changes causes the tab contents scrollbar outside the control to move the user.
-    // setTimeout(() => {
-    //   listboxesContainer
-    //     .querySelector('[aria-selected="true"]')
-    //     ?.scrollIntoView({ block: 'nearest' });
-
-    //   if (options?.scrollToEnd === 'left') {
-    //     listboxesContainer
-    //       .querySelector('[role="listbox"] li:last-child')
-    //       ?.scrollIntoView({ block: 'end' });
-    //   }
-
-    //   if (options?.scrollToEnd === 'right') {
-    //     listboxesContainer
-    //       .querySelector('[role="listbox"]:last-child li:last-child')
-    //       ?.scrollIntoView({ block: 'end' });
-    //   }
-    // });
   }
 
   function handleLeftListboxKeydown(
@@ -176,10 +156,7 @@
   }
 </script>
 
-<div
-  class="selection-listbox {$$props.class ?? ''}"
-  bind:this={listboxesContainer}
->
+<div class="selection-listbox {$$props.class ?? ''}">
   {#if $$slots['left-header'] || $$slots['right-header']}
     <div class="column-1">
       <slot name="left-header" />
