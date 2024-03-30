@@ -73,7 +73,7 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-<div class="flex-row extra-small-gap {$$restProps.class ?? ''}">
+<div class="flex-row small-gap {$$restProps.class ?? ''}">
   <div class="controls">
     <button
       title={localize('TIDY5E.Listbox.MoveUp')}
