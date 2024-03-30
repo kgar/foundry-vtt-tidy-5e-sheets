@@ -1,16 +1,24 @@
-<script lang="ts">
+<script lang="ts" generics="TItem extends Record<string, unknown>">
   import { createEventDispatcher } from 'svelte';
 
-  export let items: any[];
+  export let items: TItem[];
   export let labelProp: string;
   export let valueProp: string;
   export let selectedItemIndex: number | null = null;
+  export let draggable = false;
 
   let idRandomizer = Math.random().toString().substring(2);
 
   const dispatcher = createEventDispatcher<{
     select: number;
     keydown: KeyboardEvent & { currentTarget: HTMLElement };
+    dragstart: { item: TItem; index: number; event: DragEvent };
+    dragend: { item: TItem; index: number; event: DragEvent };
+    listboxDrop: { event: DragEvent };
+    drop: { item: TItem; index: number; event: DragEvent };
+    dragover: { item: TItem; index: number; event: DragEvent };
+    dragenter: { item: TItem; index: number; event: DragEvent };
+    dragleave: { item: TItem; index: number; event: DragEvent };
   }>();
 
   let listbox: HTMLElement;
@@ -58,6 +66,7 @@
     : null}
   tabindex="0"
   on:keydown={handleListboxKeyDown}
+  on:drop={(ev) => dispatcher('listboxDrop', { event: ev })}
 >
   {#each items as item, i (item[valueProp])}
     <li
@@ -67,6 +76,17 @@
       class:focused={selectedItemIndex === i}
       on:click={() => selectItemAt(i)}
       on:keydown={(ev) => handleListboxKeyDown(ev)}
+      {draggable}
+      on:dragstart={(ev) =>
+        dispatcher('dragstart', { event: ev, item, index: i })}
+      on:dragend={(ev) => dispatcher('dragend', { event: ev, item, index: i })}
+      on:drop={(ev) => dispatcher('drop', { event: ev, item, index: i })}
+      on:dragover={(ev) =>
+        dispatcher('dragover', { event: ev, item, index: i })}
+      on:dragenter={(ev) =>
+        dispatcher('dragenter', { event: ev, item, index: i })}
+      on:dragleave={(ev) =>
+        dispatcher('dragleave', { event: ev, item, index: i })}
     >
       {item[labelProp]}
     </li>
