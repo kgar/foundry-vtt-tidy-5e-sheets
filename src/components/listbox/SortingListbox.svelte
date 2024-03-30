@@ -1,8 +1,8 @@
-<script lang="ts">
+<script lang="ts" generics="TItem extends Record<string, unknown>">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import Listbox from './Listbox.svelte';
 
-  export let items: any[];
+  export let items: TItem[];
   export let selectedItemIndex: number | null = null;
   export let labelProp: string;
   export let valueProp: string;
@@ -70,10 +70,92 @@
     }
   }
 
+  function onDragStart(
+    ev: CustomEvent<{ item: TItem; index: number; event: DragEvent }>,
+  ) {
+    ev.detail.event.dataTransfer?.setData(
+      'text/plain',
+      ev.detail.index.toString(),
+    );
+  }
+
+  function onDragEnter(
+    ev: CustomEvent<{ item: TItem; index: number; event: DragEvent }>,
+  ) {
+    const target = ev.detail.event.currentTarget;
+    if (target instanceof HTMLElement && target.matches('[role="option"]')) {
+      target.classList.add('dragged-over');
+    }
+  }
+  function onDragLeave(
+    ev: CustomEvent<{ item: TItem; index: number; event: DragEvent }>,
+  ) {
+    const target = ev.detail.event.currentTarget;
+    if (target instanceof HTMLElement && target.matches('[role="option"]')) {
+      target.classList.remove('dragged-over');
+    }
+  }
+
+  function onDrop(
+    ev: CustomEvent<{ item: TItem; index: number; event: DragEvent }>,
+  ) {
+    ev.detail.event.stopPropagation();
+    ev.detail.event.preventDefault();
+
+    const draggedIndex = parseInt(
+      ev.detail.event.dataTransfer?.getData('text/plain') ?? '',
+    );
+
+    if (isNaN(draggedIndex)) {
+      return;
+    }
+
+    const theDragged = items.at(draggedIndex);
+
+    if (!theDragged) {
+      return;
+    }
+
+    const targetIndex = ev.detail.index;
+
+    items = items.reduce<TItem[]>((acc, item, index) => {
+      if (index === targetIndex) {
+        acc.push(theDragged);
+      }
+
+      if (index === draggedIndex) {
+        return acc;
+      }
+
+      acc.push(item);
+
+      return acc;
+    }, []);
+
+    selectedItemIndex = targetIndex;
+
+    onDragLeave(ev);
+  }
+
+  function onListboxDrop(ev: CustomEvent<{ event: DragEvent }>) {
+    const draggedIndex = parseInt(
+      ev.detail.event.dataTransfer?.getData('text/plain') ?? '',
+    );
+
+    if (isNaN(draggedIndex)) {
+      return;
+    }
+
+    const theDragged = items.splice(draggedIndex, 1);
+
+    items.push(...theDragged);
+    items = items;
+  }
+
   const localize = FoundryAdapter.localize;
 </script>
 
-<div class="flex-row small-gap {$$restProps.class ?? ''}">
+<div class="sorting-listbox flex-row small-gap {$$restProps.class ?? ''}">
   <div class="controls">
     <button
       title={localize('TIDY5E.Listbox.MoveUp')}
@@ -101,16 +183,31 @@
     bind:selectedItemIndex
     on:keydown={handleListboxKeydown}
     class="flex-1"
+    draggable={true}
+    on:dragstart={(ev) => onDragStart(ev)}
+    on:dragenter={(ev) => onDragEnter(ev)}
+    on:dragleave={(ev) => onDragLeave(ev)}
+    on:drop={(ev) => onDrop(ev)}
+    on:listboxDrop={(ev) => onListboxDrop(ev)}
   />
 </div>
 
 <style lang="scss">
-    .controls {
-        align-self: center;
-        
-        button + button {
-            margin-top: 0.25rem;
-        }
+  .sorting-listbox {
+    :global([role='option']) {
+      transition: padding-top 0.125s ease;
     }
 
+    :global([role='option'].dragged-over) {
+      padding-top: 1rem;
+    }
+  }
+
+  .controls {
+    align-self: center;
+
+    button + button {
+      margin-top: 0.25rem;
+    }
+  }
 </style>
