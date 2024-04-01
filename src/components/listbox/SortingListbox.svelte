@@ -6,6 +6,7 @@
   export let selectedItemIndex: number | null = null;
   export let labelProp: string;
   export let valueProp: string;
+  export let listboxCssClass: string | null = null;
 
   function handleListboxKeydown(
     e: CustomEvent<KeyboardEvent & { currentTarget: HTMLElement }>,
@@ -182,7 +183,7 @@
     {valueProp}
     bind:selectedItemIndex
     on:keydown={handleListboxKeydown}
-    class="flex-1"
+    class="flex-1 {listboxCssClass ?? ''}"
     draggable={true}
     on:dragstart={(ev) => onDragStart(ev)}
     on:dragenter={(ev) => onDragEnter(ev)}

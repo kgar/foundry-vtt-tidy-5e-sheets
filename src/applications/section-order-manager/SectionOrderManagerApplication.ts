@@ -56,6 +56,7 @@ export class SectionOrderManagerApplication extends SvelteFormApplicationBase {
           label: FoundryAdapter.localize(s.label),
         })),
         onConfirm: this.onConfirm.bind(this),
+        useDefault: this.useDefault.bind(this),
       },
     });
   }
@@ -63,6 +64,14 @@ export class SectionOrderManagerApplication extends SvelteFormApplicationBase {
   onConfirm(sections: KeyedAndLabeled[]) {
     const sectionOrder = TidyFlags.actorSectionOrder.get(this.actor) ?? {};
     sectionOrder[this.tabId] = sections.map((s) => s.key);
+    TidyFlags.actorSectionOrder.set(this.actor, sectionOrder);
+    this.close();
+  }
+
+  useDefault() {
+    const sectionOrder = TidyFlags.actorSectionOrder.get(this.actor) ?? {};
+    delete sectionOrder[this.tabId];
+    sectionOrder[`-=${this.tabId}`] = [];
     TidyFlags.actorSectionOrder.set(this.actor, sectionOrder);
     this.close();
   }
