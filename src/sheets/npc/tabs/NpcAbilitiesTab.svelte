@@ -47,6 +47,8 @@
   import ClassicControls from 'src/sheets/shared/ClassicControls.svelte';
   import type { Item5e } from 'src/types/item.types';
   import LevelUpDropdown from 'src/sheets/actor/LevelUpDropdown.svelte';
+  import { SectionOrderManagerApplication } from 'src/applications/section-order-manager/SectionOrderManagerApplication';
+  import { CharacterSheetRuntime } from 'src/runtime/CharacterSheetRuntime';
 
   let context = getContext<Readable<NpcSheetContext>>('context');
 
@@ -125,6 +127,31 @@
     />
   {/each}
 </UtilityToolbar>
+
+<button
+  on:click={() =>
+    new SectionOrderManagerApplication({
+      actor: $context.actor,
+      sections: $context.features,
+      tabId: CONSTANTS.TAB_NPC_ABILITIES,
+      tabTitle: CharacterSheetRuntime.getTabTitle(CONSTANTS.TAB_NPC_ABILITIES),
+    }).render(true)}>😈</button
+>
+
+{#if !$settingStore.showSpellbookTabNpc}
+  <button
+    on:click={() =>
+      new SectionOrderManagerApplication({
+        actor: $context.actor,
+        sections: $context.spellbook,
+        tabId: CONSTANTS.TAB_NPC_SPELLBOOK,
+        tabTitle: CharacterSheetRuntime.getTabTitle(
+          CONSTANTS.TAB_NPC_SPELLBOOK,
+        ),
+      }).render(true)}>🧙‍♂️</button
+  >
+{/if}
+
 <section class="npc-abilities-content" data-tidy-track-scroll-y>
   <div class="side-panel">
     <SkillsList

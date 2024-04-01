@@ -14,6 +14,8 @@
   import FilterMenu from 'src/components/filter/FilterMenu.svelte';
   import PinnedFilterToggles from 'src/components/filter/PinnedFilterToggles.svelte';
   import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
+  import { SectionOrderManagerApplication } from 'src/applications/section-order-manager/SectionOrderManagerApplication';
+  import { CharacterSheetRuntime } from 'src/runtime/CharacterSheetRuntime';
 
   let context = getContext<Readable<NpcSheetContext>>('context');
 
@@ -52,6 +54,16 @@
     />
   {/each}
 </UtilityToolbar>
+
+<button
+  on:click={() =>
+    new SectionOrderManagerApplication({
+      actor: $context.actor,
+      sections: $context.spellbook,
+      tabId: CONSTANTS.TAB_NPC_SPELLBOOK,
+      tabTitle: CharacterSheetRuntime.getTabTitle(CONSTANTS.TAB_NPC_SPELLBOOK),
+    }).render(true)}>🧙‍♂️</button
+>
 
 <div class="scroll-container flex-column small-gap">
   {#if noSpellLevels}

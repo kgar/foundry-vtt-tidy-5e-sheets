@@ -22,6 +22,8 @@
   import Dnd5eIcon from 'src/components/icon/Dnd5eIcon.svelte';
   import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
   import PinnedFilterToggles from 'src/components/filter/PinnedFilterToggles.svelte';
+  import { CharacterSheetRuntime } from 'src/runtime/CharacterSheetRuntime';
+  import { SectionOrderManagerApplication } from 'src/applications/section-order-manager/SectionOrderManagerApplication';
 
   let context = getContext<Readable<ActorSheetContext>>('context');
 
@@ -58,6 +60,16 @@
     />
   {/each}
 </UtilityToolbar>
+
+<!-- <button
+  on:click={() =>
+    new SectionOrderManagerApplication({
+      actor: $context.actor,
+      sections: $context.actions,
+      tabId: CONSTANTS.TAB_NPC_SPELLBOOK,
+      tabTitle: CharacterSheetRuntime.getTabTitle(CONSTANTS.TAB_NPC_SPELLBOOK),
+    }).render(true)}>👊</button
+> -->
 
 <div class="actions-tab-container scroll-container flex-column small-gap">
   {#each Object.entries($context.actions) as [actionType, itemSet] (actionType)}

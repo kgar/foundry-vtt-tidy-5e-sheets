@@ -36,6 +36,8 @@
   import type { Item5e } from 'src/types/item.types';
   import ClassicControls from 'src/sheets/shared/ClassicControls.svelte';
   import LevelUpDropdown from 'src/sheets/actor/LevelUpDropdown.svelte';
+  import { SectionOrderManagerApplication } from 'src/applications/section-order-manager/SectionOrderManagerApplication';
+  import { CharacterSheetRuntime } from 'src/runtime/CharacterSheetRuntime';
 
   let context = getContext<Readable<CharacterSheetContext>>('context');
 
@@ -111,6 +113,18 @@
     />
   {/each}
 </UtilityToolbar>
+
+<button
+  on:click={() =>
+    new SectionOrderManagerApplication({
+      actor: $context.actor,
+      sections: $context.features,
+      tabId: CONSTANTS.TAB_CHARACTER_FEATURES,
+      tabTitle: CharacterSheetRuntime.getTabTitle(
+        CONSTANTS.TAB_CHARACTER_FEATURES,
+      ),
+    }).render(true)}>😈</button
+>
 
 <div
   class="scroll-container flex-column small-gap"
