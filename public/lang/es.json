@@ -594,10 +594,10 @@
         "AtLeastOneLevelRequiredErrorMessage": "Se requiere al menos un nivel de agotamiento del vehículo.",
         "Header": "Agotamiento del vehículo"
     },
-    "TIDY5E.Tidy5eSheet": "Hoja de personaje T5E",
+    "TIDY5E.Tidy5eSheet": "Hoja del personaje de Tidy 5e",
     "TIDY5E.Tidy5eNPC": "Hoja de PNJ T5E",
-    "TIDY5E.Tidy5eItemSheet": "Hoja de objeto T5E",
-    "TIDY5E.Tidy5eVehicle": "Hoja de vehículo T5E",
+    "TIDY5E.Tidy5eItemSheet": "Hoja de artículos Tidy 5e",
+    "TIDY5E.Tidy5eVehicle": "Hoja del vehículo Tidy 5e",
     "TIDY5E.HitDC": "Impacto / CD",
     "TIDY5E.Inventory.Weight.Text": "{weight} {weightUnit}",
     "TIDY5E.EnvironmentTooltip": "Ambiente: {environment}",
@@ -659,7 +659,12 @@
             "TotalSelectedLabel": "Total seleccionado: {total}",
             "ToMigrate": "Para migrar",
             "SelectAllNoneTooltip": "Seleccionar todos o ninguno"
-        }
+        },
+        "NpcDeathSaves": {
+            "sectionTitle": "Salvaciones por muerte de PNJ",
+            "selectionDialogTitle": "Migración: Salvaciones por muerte de PNJ"
+        },
+        "UnlinkedExplanation": "Esta migración ofrece la opción de migrar documentos token no vinculados en la escena actual. Puede ejecutar la migración en escenas adicionales según sea necesario."
     },
     "TIDY5E.Settings.ColorPickerScrollbarTrack": {
         "name": "Trayectoria de la barra de desplazamiento"
@@ -724,5 +729,16 @@
     "TIDY5E.ItemFilters.CanUse": "Se puede utilizar",
     "TIDY5E.ItemFilters.CanCast": "Se puede ejecutar",
     "TIDY5E.PortraitTitle": "Retrato: {subject}",
-    "TIDY5E.ItemImageTitle": "Artículo: {subject}"
+    "TIDY5E.ItemImageTitle": "Artículo: {subject}",
+    "TIDY5E.WorldSettings.IncludeFlagsInSpellScrollCreation": {
+        "hint": "Los hechizos a veces pueden contener datos especiales de otros módulos que pueden ser útiles para llevar a un pergamino de hechizo. Habilitar para copiar todos los datos basados en banderas al pergamino de hechizos en el momento de la creación.",
+        "name": "Incluir las banderas en la creación de pergaminos de hechizos"
+    },
+    "TIDY5E.Settings.SheetPreferences": {
+        "name": "Establecer Tidy como hoja por defecto",
+        "buttonLabel": "Establecer Tidy como hoja por defecto",
+        "explanation": "Seleccione todos los tipos de documentos en los que prefiere que la hojas de Tidy 5e sean las predeterminadas.",
+        "hint": "Si desea establecer las Hojas de Tidy 5e como predeterminadas para uno o más tipos de documentos, pero el menú de configuración de las hojas predeterminadas del núcleo no funciona como se espera, utilice este menú para seleccionar sus preferencias."
+    },
+    "TIDY5E.GenericErrorNotification": "Se ha producido un error al realizar esta acción. Consulte la consola devtools para obtener más detalles."
 }
