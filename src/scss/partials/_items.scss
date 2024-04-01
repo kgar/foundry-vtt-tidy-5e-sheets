@@ -720,6 +720,8 @@ input[type='checkbox']:checked {
 
 .checkbox input[type='checkbox']:checked {
   background-image: var(--t5e-check-checked-background-image);
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 label input[type='checkbox']:checked {
