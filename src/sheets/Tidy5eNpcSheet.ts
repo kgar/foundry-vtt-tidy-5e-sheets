@@ -52,6 +52,7 @@ import { SheetPreferencesRuntime } from 'src/runtime/user-preferences/SheetPrefe
 import { Tidy5eBaseActorSheet } from './Tidy5eBaseActorSheet';
 import { SheetSections } from 'src/features/sections/SheetSections';
 import { NpcSheetSections } from 'src/features/sections/NpcSheetSections';
+import { TidyFlags } from 'src/api';
 
 export class Tidy5eNpcSheet
   extends dnd5e.applications.actor.ActorSheet5eNPC
@@ -843,9 +844,17 @@ export class Tidy5eNpcSheet
       } else features.equipment.items.push(item);
     }
 
-    // Assign and return
-    context.features = Object.values(features);
-    context.spellbook = spellbook;
+    // Assign, sort sections, and return
+    const actorSectionOrder = TidyFlags.actorSectionOrder.get(this.actor);
+
+    context.features = SheetSections.sortKeyedSections(
+      Object.values(features),
+      actorSectionOrder?.[CONSTANTS.TAB_NPC_ABILITIES]
+    );
+    context.spellbook = SheetSections.sortKeyedSections(
+      spellbook,
+      actorSectionOrder?.[CONSTANTS.TAB_NPC_SPELLBOOK]
+    );
   }
 
   private async setExpandedItemData() {
