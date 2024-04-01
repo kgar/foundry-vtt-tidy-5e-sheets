@@ -55,20 +55,23 @@ export class SectionOrderManagerApplication extends SvelteFormApplicationBase {
           key: s.key,
           label: FoundryAdapter.localize(s.label),
         })),
-        onConfirm: this.onConfirm.bind(this),
-        useDefault: this.useDefault.bind(this),
+        onConfirm: this._onConfirm.bind(this),
+        useDefault: this._useDefault.bind(this),
       },
     });
   }
 
-  onConfirm(sections: KeyedAndLabeled[]) {
+  private _onConfirm(sections: KeyedAndLabeled[]) {
     const sectionOrder = TidyFlags.actorSectionOrder.get(this.actor) ?? {};
     sectionOrder[this.tabId] = sections.map((s) => s.key);
     TidyFlags.actorSectionOrder.set(this.actor, sectionOrder);
     this.close();
   }
 
-  useDefault() {
+  private _useDefault() {
+    alert(
+      "TODO: Add confirmation for this. It is, after all, trashing a user's custom section setup."
+    );
     const sectionOrder = TidyFlags.actorSectionOrder.get(this.actor) ?? {};
     delete sectionOrder[this.tabId];
     sectionOrder[`-=${this.tabId}`] = [];

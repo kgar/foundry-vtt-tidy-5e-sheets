@@ -10,6 +10,8 @@
   import { settingStore } from 'src/settings/settings';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { CONSTANTS } from 'src/constants';
+  import { SectionOrderManagerApplication } from 'src/applications/section-order-manager/SectionOrderManagerApplication';
+  import { CharacterSheetRuntime } from 'src/runtime/CharacterSheetRuntime';
 
   let context = getContext<Readable<CharacterSheetContext>>('context');
 
@@ -34,6 +36,18 @@
       {/if}
     </section>
     <section class="main-panel">
+      <button
+        on:click={() =>
+          new SectionOrderManagerApplication({
+            actor: $context.actor,
+            sections: $context.favorites,
+            tabId: CONSTANTS.TAB_CHARACTER_ATTRIBUTES,
+            tabTitle: CharacterSheetRuntime.getTabTitle(
+              CONSTANTS.TAB_CHARACTER_ATTRIBUTES,
+            ),
+          }).render(true)}>😈</button
+      >
+
       {#if showResources}
         <Resources />
       {/if}
