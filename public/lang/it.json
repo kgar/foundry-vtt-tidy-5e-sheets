@@ -758,5 +758,12 @@
     "TIDY5E.WorldSettings.IncludeFlagsInSpellScrollCreation": {
         "name": "Includi Flags nella Creazione Pergamene di Incantesimi",
         "hint": "Gli incantesimi a volte possono contenere dati speciali provenienti da altri moduli che possono essere utili da trasferire in una pergamena di incantesimi. Abilita la copia di tutti i dati basati sui flags nella pergamena dell'incantesimo al momento della creazione."
-    }
+    },
+    "TIDY5E.Settings.SheetPreferences": {
+        "hint": "Se desideri impostare Tidy 5e Sheets come predefinito per uno o più tipi di documenti, ma il menu di configurazione delle schede predefinite principali non funziona come previsto, utilizza questo menu per selezionare le tue preferenze.",
+        "explanation": "Seleziona tutti i tipi di documento in cui preferisci che Tidy 5e Sheets sia quello predefinito.",
+        "name": "Imposta Tidy come scheda predefinita",
+        "buttonLabel": "Imposta Tidy come scheda predefinita"
+    },
+    "TIDY5E.GenericErrorNotification": "Si è verificato un errore durante l'esecuzione di questa azione. Vedi la console devtools per maggiori dettagli."
 }
