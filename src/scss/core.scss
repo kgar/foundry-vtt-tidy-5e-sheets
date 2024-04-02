@@ -57,10 +57,17 @@
   }
 
   // Enrichers
+  .passive-check {
+    text-decoration-color: currentcolor;
+    text-decoration-style: dashed;
+    text-underline-offset: 0.125rem;
+  }
+
   a.entity-link,
-  a.content-link,
-  a.inline-roll,
-  a.roll-link {
+  a.roll-link,
+  a.enricher-action,
+  a:is(.content-link, .inline-roll),
+  .roll-link a {
     padding: 0.0625rem 0.25rem 0 0.25rem;
     border-radius: 0.3125rem;
     background: var(--t5e-content-entity-link-background);
@@ -77,6 +84,16 @@
 
       i {
         color: var(--t5e-content-entity-link-hover-color);
+      }
+    }
+
+    &.broken {
+      border-color: var(--t5e-warning-accent-color);
+      border-style: dashed;
+      &:hover {
+        border-color: transparent;
+        background: var(--t5e-warning-accent-color);
+        color: var(--t5e-warning-accent-contrast-color);
       }
     }
   }
