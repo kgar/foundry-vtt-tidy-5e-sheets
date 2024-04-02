@@ -1024,35 +1024,17 @@ export class Tidy5eCharacterSheet
     // - put in `SheetSections`
     // - have custom sectioning built right into the process
     // - set up `key` in the spellbook prep code, just like `prop`
-    const customSectionSpells = spells.filter((s) =>
-      SheetSections.tryGetCustomSection(s)
-    );
-    spells = spells.filter((s) => !SheetSections.tryGetCustomSection(s));
-    const spellbook = [
-      ...this._prepareSpellbook(context, spells).map((s: SpellbookSection) => ({
-        ...s,
-        key: s.prop,
-      })),
-      ...SheetSections.generateCustomSpellbookSections(customSectionSpells, {
-        canCreate: true,
-      }),
-    ];
+    const spellbook = this._prepareTidySpellbook(context, spells, {
+      canCreate: true,
+    });
 
-    const customSectionFavoriteSpells = favorites.spells.filter((s) =>
-      SheetSections.tryGetCustomSection(s)
+    const favoriteSpellbook = this._prepareTidySpellbook(
+      context,
+      favorites.spells,
+      {
+        canCreate: false,
+      }
     );
-    favorites.spells = favorites.spells.filter(
-      (s) => !SheetSections.tryGetCustomSection(s)
-    );
-    const favoriteSpellbook = [
-      ...this._prepareSpellbook(context, favorites.spells),
-      ...SheetSections.generateCustomSpellbookSections(
-        customSectionFavoriteSpells,
-        {
-          canCreate: false,
-        }
-      ),
-    ];
 
     // Organize Features
     // Sub-item groupings and validation
@@ -1185,6 +1167,29 @@ export class Tidy5eCharacterSheet
     );
 
     context.preparedSpells = nPrepared;
+  }
+
+  private _prepareTidySpellbook(
+    context: CharacterSheetContext,
+    spells: Item5e[],
+    options: Partial<SpellbookSection> = {}
+  ): SpellbookSection[] {
+    const customSectionSpells = spells.filter((s) =>
+      SheetSections.tryGetCustomSection(s)
+    );
+    spells = spells.filter((s) => !SheetSections.tryGetCustomSection(s));
+    return [
+      ...super
+        ._prepareSpellbook(context, spells)
+        .map((s: SpellbookSection) => ({
+          ...s,
+          key: s.prop,
+        })),
+      ...SheetSections.generateCustomSpellbookSections(
+        customSectionSpells,
+        options
+      ),
+    ];
   }
 
   // TODO: Consider moving to the static class CharacterSheetSections

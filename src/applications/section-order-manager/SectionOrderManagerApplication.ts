@@ -69,13 +69,20 @@ export class SectionOrderManagerApplication extends SvelteFormApplicationBase {
   }
 
   private _useDefault() {
-    alert(
-      "TODO: Add confirmation for this. It is, after all, trashing a user's custom section setup."
-    );
-    const sectionOrder = TidyFlags.actorSectionOrder.get(this.actor) ?? {};
-    delete sectionOrder[this.tabId];
-    sectionOrder[`-=${this.tabId}`] = [];
-    TidyFlags.actorSectionOrder.set(this.actor, sectionOrder);
-    this.close();
+    Dialog.confirm({
+      title: FoundryAdapter.localize('TIDY5E.UseDefaultDialog.title'),
+      content: `<p>${FoundryAdapter.localize(
+        'TIDY5E.UseDefaultDialog.text'
+      )}</p>`,
+      yes: () => {
+        const sectionOrder = TidyFlags.actorSectionOrder.get(this.actor) ?? {};
+        delete sectionOrder[this.tabId];
+        sectionOrder[`-=${this.tabId}`] = [];
+        TidyFlags.actorSectionOrder.set(this.actor, sectionOrder);
+        this.close();
+      },
+      no: () => {},
+      defaultYes: false,
+    });
   }
 }

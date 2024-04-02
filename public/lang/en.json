@@ -785,5 +785,9 @@
     "ActionLabel": "Action Section",
     "ActionTooltip": "Specify a custom section for this item when placed in the Actions tab, or leave it blank for default behavior.",
     "ManagerDialogTitle": "Section Order: {tabTitle}"
+  },
+  "TIDY5E.UseDefaultDialog": {
+    "title": "Confirm: Use Default",
+    "text": "Are you sure you wish to use default?"
   }
 }
