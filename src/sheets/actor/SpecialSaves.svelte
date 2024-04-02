@@ -16,9 +16,10 @@
       class="inline-transparent-button flex-row extra-small-gap align-items-center highlight-on-hover"
       on:click={(ev) => $context.actor.rollConcentration({ event: ev })}
     >
-      <Dnd5eIcon src="systems/dnd5e/icons/svg/statuses/concentrating.svg" />
-      {save.label}
-      <span>{save.sign}{save.mod}</span>
+      <!-- <Dnd5eIcon src="systems/dnd5e/icons/svg/statuses/concentrating.svg" /> -->
+      <i class="fas fa-arrow-rotate-left"></i>
+      {save.label}:
+      <span class="special-save-mod">{save.sign}{save.mod}</span>
     </button>
     {#if $context.unlocked}
       <button
@@ -39,5 +40,15 @@
     gap: 0.25rem;
     align-items: center;
     font-size: 0.75rem;
+
+    --icon-fill: var(--t5e-icon-hover-color);
+
+    i {
+      color: var(--t5e-icon-hover-color);
+    }
+
+    button {
+      font-weight: 700;
+    }
   }
 </style>
