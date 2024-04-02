@@ -20,5 +20,8 @@
     opacity: 0.8;
     font-size: var(--tidy-icon-font-size-internal);
     pointer-events: none;
+
+    color: var(--t5e-item-image-icon-overlay-color);
+    text-shadow: var(--t5e-item-image-icon-overlay-text-shadow);
   }
 </style>

@@ -45,5 +45,10 @@
   --t5e-filter-option-include-button-text-color: white;
   --t5e-filter-option-exclude-button-text-color: white;
 
+  // Item Image Overlay
+  --t5e-item-image-icon-overlay-color: white;
+  --t5e-item-image-icon-overlay-text-shadow: #000 0.0625rem 0 0.25rem,
+    #000 0.0625rem 0 0.25rem, #000 0.0625rem 0 0.25rem;
+
   // TODO: Extract more standard measurements to include here
 }
