@@ -60,6 +60,7 @@ import { Tidy5eBaseActorSheet } from './Tidy5eBaseActorSheet';
 import { CharacterSheetSections } from 'src/features/sections/CharacterSheetSections';
 import { SheetSections } from 'src/features/sections/SheetSections';
 import { TidyFlags } from 'src/api';
+import { SectionOrderManagerApplication } from 'src/applications/section-order-manager/SectionOrderManagerApplication';
 
 export class Tidy5eCharacterSheet
   extends dnd5e.applications.actor.ActorSheet5eCharacter
@@ -267,7 +268,27 @@ export class Tidy5eCharacterSheet
 
     // TODO: Make a builder for this
     // TODO: Extract to runtime?
-    let utilities: Utilities = {
+    let utilities: Utilities<CharacterSheetContext> = {
+      [CONSTANTS.TAB_CHARACTER_ATTRIBUTES]: {
+        utilityToolbarCommands: [
+          {
+            title: FoundryAdapter.localize(
+              'TIDY5E.Utilities.ConfigureSections'
+            ),
+            iconClass: 'fas fa-cog',
+            execute: ({ context }) => {
+              new SectionOrderManagerApplication({
+                actor: context.actor,
+                sections: context.favorites,
+                tabId: CONSTANTS.TAB_CHARACTER_ATTRIBUTES,
+                tabTitle: CharacterSheetRuntime.getTabTitle(
+                  CONSTANTS.TAB_CHARACTER_ATTRIBUTES
+                ),
+              }).render(true);
+            },
+          },
+        ],
+      },
       [CONSTANTS.TAB_CHARACTER_INVENTORY]: {
         utilityToolbarCommands: [
           {
@@ -356,6 +377,22 @@ export class Tidy5eCharacterSheet
             visible: !!FoundryAdapter.tryGetFlag(this.actor, 'inventory-grid'),
             execute: () => {
               FoundryAdapter.unsetFlag(this.actor, 'inventory-grid');
+            },
+          },
+          {
+            title: FoundryAdapter.localize(
+              'TIDY5E.Utilities.ConfigureSections'
+            ),
+            iconClass: 'fas fa-cog',
+            execute: ({ context }) => {
+              new SectionOrderManagerApplication({
+                actor: context.actor,
+                sections: context.inventory,
+                tabId: CONSTANTS.TAB_CHARACTER_INVENTORY,
+                tabTitle: CharacterSheetRuntime.getTabTitle(
+                  CONSTANTS.TAB_CHARACTER_INVENTORY
+                ),
+              }).render(true);
             },
           },
         ],
@@ -453,6 +490,22 @@ export class Tidy5eCharacterSheet
               FoundryAdapter.unsetFlag(this.actor, 'spellbook-grid');
             },
           },
+          {
+            title: FoundryAdapter.localize(
+              'TIDY5E.Utilities.ConfigureSections'
+            ),
+            iconClass: 'fas fa-cog',
+            execute: ({ context }) => {
+              new SectionOrderManagerApplication({
+                actor: context.actor,
+                sections: context.spellbook,
+                tabId: CONSTANTS.TAB_CHARACTER_SPELLBOOK,
+                tabTitle: CharacterSheetRuntime.getTabTitle(
+                  CONSTANTS.TAB_CHARACTER_SPELLBOOK
+                ),
+              }).render(true);
+            },
+          },
         ],
       },
       [CONSTANTS.TAB_CHARACTER_FEATURES]: {
@@ -502,6 +555,22 @@ export class Tidy5eCharacterSheet
                 tabId: CONSTANTS.TAB_CHARACTER_FEATURES,
                 message: CONSTANTS.MESSAGE_BUS_COLLAPSE_ALL,
               }),
+          },
+          {
+            title: FoundryAdapter.localize(
+              'TIDY5E.Utilities.ConfigureSections'
+            ),
+            iconClass: 'fas fa-cog',
+            execute: ({ context }) => {
+              new SectionOrderManagerApplication({
+                actor: context.actor,
+                sections: context.features,
+                tabId: CONSTANTS.TAB_CHARACTER_FEATURES,
+                tabTitle: CharacterSheetRuntime.getTabTitle(
+                  CONSTANTS.TAB_CHARACTER_FEATURES
+                ),
+              }).render(true);
+            },
           },
         ],
       },

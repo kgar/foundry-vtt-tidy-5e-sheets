@@ -1,5 +1,9 @@
 <script lang="ts" generics="TItem extends Record<string, unknown>">
+  import { flip } from 'svelte/animate';
+  import { crossfade } from 'svelte/transition';
   import { createEventDispatcher } from 'svelte';
+
+  const [send, receive] = crossfade({});
 
   export let items: TItem[];
   export let labelProp: string;
@@ -87,7 +91,13 @@
         dispatcher('dragenter', { event: ev, item, index: i })}
       on:dragleave={(ev) =>
         dispatcher('dragleave', { event: ev, item, index: i })}
+      animate:flip={{ duration: 150 }}
+      in:receive={{ key: item[valueProp] }}
+      out:send={{ key: item[valueProp] }}
     >
+      {#if draggable}
+        <i class="drag-grip fa-solid fa-grip-lines fa-fw"></i>
+      {/if}
       {item[labelProp]}
     </li>
   {/each}
@@ -109,6 +119,15 @@
   .listbox li {
     list-style-type: none;
     padding: 0.5rem;
+
+    &:has(.drag-grip) {
+      cursor: pointer;
+    }
+
+    .drag-grip {
+      font-size: 10px;
+      color: var(--t5e-tertiary-color);
+    }
   }
   .listbox [role='option'].focused {
     background-color: var(--t5e-faint-color);

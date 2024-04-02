@@ -113,19 +113,6 @@
     />
   {/each}
 </UtilityToolbar>
-
-<button
-  on:click={() =>
-    new SectionOrderManagerApplication({
-      actor: $context.actor,
-      sections: $context.features,
-      tabId: CONSTANTS.TAB_CHARACTER_FEATURES,
-      tabTitle: CharacterSheetRuntime.getTabTitle(
-        CONSTANTS.TAB_CHARACTER_FEATURES,
-      ),
-    }).render(true)}>😈</button
->
-
 <div
   class="scroll-container flex-column small-gap"
   data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEMS_CONTAINER}

@@ -237,7 +237,7 @@ export type CharacterSheetContext = {
     | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_PIPS
     | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_VALUE_MAX;
   traitEnrichedHtml: string;
-  utilities: Utilities;
+  utilities: Utilities<CharacterSheetContext>;
 } & ActorSheetContext;
 
 export type NpcAbilitySection = {
@@ -283,7 +283,7 @@ export type NpcSheetContext = {
     | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_PIPS
     | typeof CONSTANTS.SPELL_SLOT_TRACKER_MODE_VALUE_MAX;
   traitEnrichedHtml: string;
-  utilities: Utilities;
+  utilities: Utilities<NpcSheetContext>;
 } & ActorSheetContext;
 
 export type VehicleItemContext = {
@@ -304,7 +304,7 @@ export type VehicleSheetContext = {
   encumbrance: VehicleEncumbrance;
   features: VehicleFeatureSection[];
   itemContext: Record<string, VehicleItemContext>;
-  utilities: Utilities;
+  utilities: Utilities<VehicleSheetContext>;
 } & ActorSheetContext;
 
 export type DerivedDamage = {
@@ -356,10 +356,10 @@ export type MessageBusMessage =
   | { tabId: string; message: typeof CONSTANTS.MESSAGE_BUS_EXPAND_ALL }
   | { tabId: string; message: typeof CONSTANTS.MESSAGE_BUS_COLLAPSE_ALL };
 
-export type Utilities = Record<
+export type Utilities<TContext> = Record<
   string,
   {
-    utilityToolbarCommands?: UtilityToolbarCommandParams[];
+    utilityToolbarCommands?: UtilityToolbarCommandParams<TContext>[];
   }
 >;
 

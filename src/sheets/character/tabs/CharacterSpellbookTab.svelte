@@ -87,19 +87,6 @@
     />
   {/each}
 </UtilityToolbar>
-
-<button
-  on:click={() =>
-    new SectionOrderManagerApplication({
-      actor: $context.actor,
-      sections: $context.spellbook,
-      tabId: CONSTANTS.TAB_CHARACTER_SPELLBOOK,
-      tabTitle: CharacterSheetRuntime.getTabTitle(
-        CONSTANTS.TAB_CHARACTER_SPELLBOOK,
-      ),
-    }).render(true)}>😈</button
->
-
 <div
   class="scroll-container flex-column small-gap"
   data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEMS_CONTAINER}

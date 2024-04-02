@@ -70,6 +70,6 @@ export type ContainerSheetContext = {
   originalContext: unknown;
   owner: boolean;
   tabs: Tab[];
-  utilities: Utilities;
+  utilities: Utilities<ContainerSheetContext>;
   viewableWarnings: DocumentPreparationWarning[];
 } & Record<string, any>;

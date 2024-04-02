@@ -21,8 +21,6 @@
   import ExpandableContainer from 'src/components/expandable/ExpandableContainer.svelte';
   import PinnedFilterToggles from 'src/components/filter/PinnedFilterToggles.svelte';
   import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
-  import { SectionOrderManagerApplication } from 'src/applications/section-order-manager/SectionOrderManagerApplication';
-  import { CharacterSheetRuntime } from 'src/runtime/CharacterSheetRuntime';
 
   let context = getContext<Readable<CharacterSheetContext>>('context');
 
@@ -65,17 +63,6 @@
     />
   {/each}
 </UtilityToolbar>
-<button
-  on:click={() =>
-    new SectionOrderManagerApplication({
-      actor: $context.actor,
-      sections: $context.inventory,
-      tabId: CONSTANTS.TAB_CHARACTER_INVENTORY,
-      tabTitle: CharacterSheetRuntime.getTabTitle(
-        CONSTANTS.TAB_CHARACTER_INVENTORY,
-      ),
-    }).render(true)}>😈</button
->
 
 <div
   class="tidy-inventory-container scroll-container flex-column small-gap"

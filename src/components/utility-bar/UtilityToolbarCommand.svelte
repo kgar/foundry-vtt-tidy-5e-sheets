@@ -1,13 +1,16 @@
 <script lang="ts">
   import { isNil } from 'src/utils/data';
-  import { createEventDispatcher } from 'svelte';
+  import { createEventDispatcher, getContext } from 'svelte';
   import type { UtilityToolbarCommandExecuteEvent } from './types';
   import { settingStore } from 'src/settings/settings';
+    import type { Readable } from 'svelte/store';
 
   export let title: string | undefined = undefined;
   export let iconClass: string | undefined = undefined;
   export let text: string | undefined = undefined;
   export let visible: boolean = true;
+
+  const context = getContext<Readable<unknown>>('context');
 
   const dispatcher = createEventDispatcher<{
     execute: UtilityToolbarCommandExecuteEvent;
@@ -18,7 +21,7 @@
   type="button"
   class="inline-icon-button"
   class:hidden={!visible}
-  on:click={(ev) => dispatcher('execute', { event: ev })}
+  on:click={(ev) => dispatcher('execute', { event: ev, context: $context })}
   {title}
   tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
 >

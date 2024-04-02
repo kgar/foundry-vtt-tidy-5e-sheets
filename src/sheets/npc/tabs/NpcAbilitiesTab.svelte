@@ -128,16 +128,6 @@
   {/each}
 </UtilityToolbar>
 
-<button
-  on:click={() =>
-    new SectionOrderManagerApplication({
-      actor: $context.actor,
-      sections: $context.features,
-      tabId: CONSTANTS.TAB_NPC_ABILITIES,
-      tabTitle: CharacterSheetRuntime.getTabTitle(CONSTANTS.TAB_NPC_ABILITIES),
-    }).render(true)}>😈</button
->
-
 {#if !$settingStore.showSpellbookTabNpc}
   <button
     on:click={() =>

@@ -778,13 +778,14 @@
   "TIDY5E.Utilities.IdentifyAll": "Identify All Items",
   "TIDY5E.GenericErrorNotification": "An error occurred while performing this action. See the devtools console for more details.",
   "TIDY5E.Utilities.MarkAllAsUnidentified": "Mark All Items as Unidentified",
+  "TIDY5E.Utilities.ConfigureSections": "Configure Sections",
   "TIDY5E.Section": {
     "Default": "Default Section",
     "Label": "Section",
     "Tooltip": "Specify a custom section for this item when placed in an actor sheet, or leave it blank for default behavior.",
     "ActionLabel": "Action Section",
     "ActionTooltip": "Specify a custom section for this item when placed in the Actions tab, or leave it blank for default behavior.",
-    "ManagerDialogTitle": "Section Order: {tabTitle}"
+    "ManagerDialogTitle": "Configure Section: {tabTitle}"
   },
   "TIDY5E.UseDefaultDialog": {
     "title": "Confirm: Use Default",

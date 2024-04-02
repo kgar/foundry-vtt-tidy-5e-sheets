@@ -74,6 +74,7 @@
   function onDragStart(
     ev: CustomEvent<{ item: TItem; index: number; event: DragEvent }>,
   ) {
+    selectedItemIndex = ev.detail.index;
     ev.detail.event.dataTransfer?.setData(
       'text/plain',
       ev.detail.index.toString(),
@@ -133,7 +134,7 @@
       return acc;
     }, []);
 
-    selectedItemIndex = targetIndex;
+    selectedItemIndex = items.indexOf(theDragged);
 
     onDragLeave(ev);
   }

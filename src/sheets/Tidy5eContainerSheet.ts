@@ -200,7 +200,7 @@ export class Tidy5eKgarContainerSheet
     tabs.push(...customTabs);
 
     // Utilities
-    let utilities: Utilities = {
+    let utilities: Utilities<ContainerSheetContext> = {
       [CONSTANTS.TAB_CONTAINER_CONTENTS]: {
         utilityToolbarCommands: [
           {

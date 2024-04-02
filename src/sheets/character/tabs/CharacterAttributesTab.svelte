@@ -36,18 +36,6 @@
       {/if}
     </section>
     <section class="main-panel">
-      <button
-        on:click={() =>
-          new SectionOrderManagerApplication({
-            actor: $context.actor,
-            sections: $context.favorites,
-            tabId: CONSTANTS.TAB_CHARACTER_ATTRIBUTES,
-            tabTitle: CharacterSheetRuntime.getTabTitle(
-              CONSTANTS.TAB_CHARACTER_ATTRIBUTES,
-            ),
-          }).render(true)}>😈</button
-      >
-
       {#if showResources}
         <Resources />
       {/if}

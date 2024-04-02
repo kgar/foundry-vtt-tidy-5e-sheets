@@ -185,7 +185,7 @@ export class Tidy5eVehicleSheet
     const actionListSortMode =
       vehiclePreferences.tabs?.[CONSTANTS.TAB_ACTOR_ACTIONS]?.sort ?? 'm';
 
-    const utilities: Utilities = {
+    const utilities: Utilities<VehicleSheetContext> = {
       [CONSTANTS.TAB_ACTOR_ACTIONS]: {
         utilityToolbarCommands: [
           {

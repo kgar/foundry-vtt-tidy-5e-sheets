@@ -239,7 +239,7 @@ export class Tidy5eNpcSheet
           res.lair?.value === true ||
           res.lair?.initiative !== null));
 
-    let utilities: Utilities = {
+    let utilities: Utilities<NpcSheetContext> = {
       [CONSTANTS.TAB_NPC_ABILITIES]: {
         utilityToolbarCommands: [
           {
