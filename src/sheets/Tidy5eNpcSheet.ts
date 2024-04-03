@@ -53,6 +53,7 @@ import { Tidy5eBaseActorSheet } from './Tidy5eBaseActorSheet';
 import { SheetSections } from 'src/features/sections/SheetSections';
 import { NpcSheetSections } from 'src/features/sections/NpcSheetSections';
 import { TidyFlags } from 'src/api';
+import { SectionOrderManagerApplication } from 'src/applications/section-order-manager/SectionOrderManagerApplication';
 
 export class Tidy5eNpcSheet
   extends dnd5e.applications.actor.ActorSheet5eNPC
@@ -347,6 +348,22 @@ export class Tidy5eNpcSheet
                 message: CONSTANTS.MESSAGE_BUS_COLLAPSE_ALL,
               }),
           },
+          {
+            title: FoundryAdapter.localize(
+              'TIDY5E.Utilities.ConfigureSections'
+            ),
+            iconClass: 'fas fa-cog',
+            execute: ({ context }) => {
+              new SectionOrderManagerApplication({
+                actor: context.actor,
+                sections: context.features,
+                tabId: CONSTANTS.TAB_NPC_ABILITIES,
+                tabTitle: NpcSheetRuntime.getTabTitle(
+                  CONSTANTS.TAB_NPC_ABILITIES
+                ),
+              }).render(true);
+            },
+          },
         ],
       },
       [CONSTANTS.TAB_NPC_SPELLBOOK]: {
@@ -440,6 +457,22 @@ export class Tidy5eNpcSheet
             visible: !!FoundryAdapter.tryGetFlag(this.actor, 'spellbook-grid'),
             execute: () => {
               FoundryAdapter.unsetFlag(this.actor, 'spellbook-grid');
+            },
+          },
+          {
+            title: FoundryAdapter.localize(
+              'TIDY5E.Utilities.ConfigureSections'
+            ),
+            iconClass: 'fas fa-cog',
+            execute: ({ context }) => {
+              new SectionOrderManagerApplication({
+                actor: context.actor,
+                sections: context.spellbook,
+                tabId: CONSTANTS.TAB_NPC_SPELLBOOK,
+                tabTitle: NpcSheetRuntime.getTabTitle(
+                  CONSTANTS.TAB_NPC_SPELLBOOK
+                ),
+              }).render(true);
             },
           },
         ],

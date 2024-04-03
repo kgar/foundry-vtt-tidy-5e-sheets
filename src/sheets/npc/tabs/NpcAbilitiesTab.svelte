@@ -48,7 +48,8 @@
   import type { Item5e } from 'src/types/item.types';
   import LevelUpDropdown from 'src/sheets/actor/LevelUpDropdown.svelte';
   import { SectionOrderManagerApplication } from 'src/applications/section-order-manager/SectionOrderManagerApplication';
-  import { CharacterSheetRuntime } from 'src/runtime/CharacterSheetRuntime';
+  import ItemControl from 'src/components/item-list/controls/ItemControl.svelte';
+  import { NpcSheetRuntime } from 'src/runtime/NpcSheetRuntime';
 
   let context = getContext<Readable<NpcSheetContext>>('context');
 
@@ -127,20 +128,6 @@
     />
   {/each}
 </UtilityToolbar>
-
-{#if !$settingStore.showSpellbookTabNpc}
-  <button
-    on:click={() =>
-      new SectionOrderManagerApplication({
-        actor: $context.actor,
-        sections: $context.spellbook,
-        tabId: CONSTANTS.TAB_NPC_SPELLBOOK,
-        tabTitle: CharacterSheetRuntime.getTabTitle(
-          CONSTANTS.TAB_NPC_SPELLBOOK,
-        ),
-      }).render(true)}>🧙‍♂️</button
-  >
-{/if}
 
 <section class="npc-abilities-content" data-tidy-track-scroll-y>
   <div class="side-panel">
@@ -312,11 +299,26 @@
       {:else}
         <h2 class="spellbook-title">
           <span>{localize('DND5E.Spellbook')}</span>
-          <ItemFilterLayoutToggle
-            mode={layoutMode}
-            element="span"
-            on:toggle={() => toggleLayout()}
-          />
+          <span class="flex-row extra-small-gap">
+            <ItemFilterLayoutToggle
+              mode={layoutMode}
+              element="span"
+              on:toggle={() => toggleLayout()}
+            />
+            <ItemControl
+              iconCssClass="fas fa-cog"
+              title="TIDY5E.Utilities.ConfigureSections"
+              onclick={() =>
+                new SectionOrderManagerApplication({
+                  actor: $context.actor,
+                  sections: $context.spellbook,
+                  tabId: CONSTANTS.TAB_NPC_SPELLBOOK,
+                  tabTitle: NpcSheetRuntime.getTabTitle(
+                    CONSTANTS.TAB_NPC_SPELLBOOK,
+                  ),
+                }).render(true)}
+            />
+          </span>
         </h2>
       {/if}
 

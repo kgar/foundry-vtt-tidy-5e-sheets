@@ -55,16 +55,6 @@
   {/each}
 </UtilityToolbar>
 
-<button
-  on:click={() =>
-    new SectionOrderManagerApplication({
-      actor: $context.actor,
-      sections: $context.spellbook,
-      tabId: CONSTANTS.TAB_NPC_SPELLBOOK,
-      tabTitle: CharacterSheetRuntime.getTabTitle(CONSTANTS.TAB_NPC_SPELLBOOK),
-    }).render(true)}>🧙‍♂️</button
->
-
 <div class="scroll-container flex-column small-gap">
   {#if noSpellLevels}
     <NoSpells editable={$context.unlocked} />
