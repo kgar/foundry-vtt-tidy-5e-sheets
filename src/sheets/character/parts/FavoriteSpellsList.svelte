@@ -1,7 +1,10 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { type CharacterSheetContext } from 'src/types/types';
+  import {
+    type CharacterSheetContext,
+    type SpellbookSection,
+  } from 'src/types/types';
   import ItemName from '../../../components/item-list/ItemName.svelte';
   import ItemTable from '../../../components/item-list/v1/ItemTable.svelte';
   import ItemTableCell from '../../../components/item-list/v1/ItemTableCell.svelte';
@@ -17,7 +20,7 @@
   import ConcentrationOverlayIcon from 'src/components/spellbook/ConcentrationOverlayIcon.svelte';
 
   let context = getContext<Readable<CharacterSheetContext>>('context');
-  export let section: any;
+  export let section: SpellbookSection;
   export let spells: any[];
   /**
    * An optional subset of item IDs which will hide all other items not included in this set.

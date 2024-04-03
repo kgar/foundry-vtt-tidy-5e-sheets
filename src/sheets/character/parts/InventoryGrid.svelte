@@ -1,6 +1,7 @@
 <script lang="ts">
   import type {
     CharacterSheetContext,
+    InventorySection,
     ItemCardStore,
     NpcSheetContext,
   } from 'src/types/types';
@@ -18,7 +19,7 @@
   import { ActorItemRuntime } from 'src/runtime/ActorItemRuntime';
   import { declareLocation } from 'src/types/location-awareness.types';
 
-  export let section: any;
+  export let section: InventorySection;
   export let items: Item5e[];
   /**
    * An optional subset of item IDs which will hide all other items not included in this set.

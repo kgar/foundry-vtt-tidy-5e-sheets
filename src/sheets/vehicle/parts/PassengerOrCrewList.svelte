@@ -9,8 +9,8 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type {
     CargoOrCrewItem,
-    CargoOrCrewItem as CrewOrPassengerEntry,
     RenderableClassicControl,
+    VehicleCargoSection,
     VehicleSheetContext,
   } from 'src/types/types';
   import { getContext } from 'svelte';
@@ -18,7 +18,7 @@
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import ClassicControls from 'src/sheets/shared/ClassicControls.svelte';
 
-  export let section: any;
+  export let section: VehicleCargoSection;
 
   let baseWidths: Record<string, string> = {
     quantity: '5rem',
@@ -33,11 +33,8 @@
   function saveNonItemSectionData(
     ev: Event & { currentTarget: HTMLInputElement },
     index: number,
-    field: keyof CrewOrPassengerEntry,
-    section: {
-      dataset: { type: 'crew' | 'passenger' };
-      items: CrewOrPassengerEntry[];
-    },
+    field: string,
+    section: VehicleCargoSection,
   ) {
     const cargo = foundry.utils.deepClone(
       $context.actor.system.cargo[section.dataset.type],
@@ -58,7 +55,7 @@
     return false;
   }
 
-  function deleteCrewOrPassenger(section: any, index: number) {
+  function deleteCrewOrPassenger(section: VehicleCargoSection, index: number) {
     const cargo = foundry.utils
       .deepClone($context.actor.system.cargo[section.dataset.type])
       .filter((_: unknown, i: number) => i !== index);
@@ -80,7 +77,7 @@
   let controls: RenderableClassicControl<{
     item: CargoOrCrewItem;
     index: number;
-    section: any;
+    section: VehicleCargoSection;
   }>[] = [];
 
   $: {

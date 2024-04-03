@@ -1,7 +1,7 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { type CharacterSheetContext } from 'src/types/types';
-  import type { ItemLayoutMode } from 'src/types/types';
+  import type { InventorySection, ItemLayoutMode } from 'src/types/types';
   import InventoryList from '../parts/InventoryList.svelte';
   import InventoryGrid from '../parts/InventoryGrid.svelte';
   import { getContext } from 'svelte';
@@ -34,7 +34,7 @@
     : 'list';
 
   $: noItems =
-    $context.inventory.some((section: any) => section.items.length > 0) ===
+    $context.inventory.some((section: InventorySection) => section.items.length > 0) ===
     false;
 
   $: utilityBarCommands =

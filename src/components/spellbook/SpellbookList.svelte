@@ -5,6 +5,7 @@
     type CharacterSheetContext,
     type NpcSheetContext,
     type RenderableClassicControl,
+    type SpellbookSection,
   } from 'src/types/types';
   import ItemDeleteControl from '../item-list/controls/ItemDeleteControl.svelte';
   import ItemEditControl from '../item-list/controls/ItemEditControl.svelte';
@@ -35,7 +36,7 @@
 
   let context =
     getContext<Readable<CharacterSheetContext | NpcSheetContext>>('context');
-  export let section: any;
+  export let section: SpellbookSection;
   export let spells: any[];
   export let allowFavorites: boolean = true;
   export let cssClass: string | null = null;

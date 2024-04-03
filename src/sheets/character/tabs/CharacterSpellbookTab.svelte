@@ -1,6 +1,10 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { CharacterSheetContext, ItemLayoutMode } from 'src/types/types';
+  import type {
+    CharacterSheetContext,
+    ItemLayoutMode,
+    SpellbookSection,
+  } from 'src/types/types';
   import SpellbookList from '../../../components/spellbook/SpellbookList.svelte';
   import SpellbookFooter from '../../../components/spellbook/SpellbookFooter.svelte';
   import SpellbookGrid from '../../../components/spellbook/SpellbookGrid.svelte';
@@ -17,8 +21,6 @@
   import FilterMenu from 'src/components/filter/FilterMenu.svelte';
   import PinnedFilterToggles from 'src/components/filter/PinnedFilterToggles.svelte';
   import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
-  import { SectionOrderManagerApplication } from 'src/applications/section-order-manager/SectionOrderManagerApplication';
-  import { CharacterSheetRuntime } from 'src/runtime/CharacterSheetRuntime';
 
   let context = getContext<Readable<CharacterSheetContext>>('context');
 
@@ -52,7 +54,8 @@
 
   $: noSpells =
     $context.spellbook.reduce(
-      (count: number, section: any) => count + section.spells.length,
+      (count: number, section: SpellbookSection) =>
+        count + section.spells.length,
       0,
     ) === 0;
 

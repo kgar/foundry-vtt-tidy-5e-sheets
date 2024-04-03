@@ -416,6 +416,7 @@ export class Tidy5eVehicleSheet
         editableName: true,
         dataset: { type: 'crew' },
         columns: cargoColumns,
+        key: 'crew',
       },
       passengers: {
         label: game.i18n.localize('DND5E.VehiclePassengers'),
@@ -424,6 +425,7 @@ export class Tidy5eVehicleSheet
         editableName: true,
         dataset: { type: 'passengers' },
         columns: cargoColumns,
+        key: 'passengers',
       },
       cargo: {
         label: game.i18n.localize('DND5E.VehicleCargo'),
@@ -449,6 +451,7 @@ export class Tidy5eVehicleSheet
             editable: 'Number',
           },
         ],
+        key: 'cargo',
       },
     };
 

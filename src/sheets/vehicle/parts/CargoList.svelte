@@ -2,6 +2,7 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type {
     RenderableClassicControl,
+    VehicleCargoSection,
     VehicleSheetContext,
   } from 'src/types/types';
   import { getContext } from 'svelte';
@@ -22,7 +23,7 @@
   import type { Item5e } from 'src/types/item.types';
   import ClassicControls from 'src/sheets/shared/ClassicControls.svelte';
 
-  export let section: any;
+  export let section: VehicleCargoSection;
 
   let context = getContext<Readable<VehicleSheetContext>>('context');
 

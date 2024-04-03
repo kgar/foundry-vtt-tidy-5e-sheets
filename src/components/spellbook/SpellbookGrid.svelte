@@ -5,6 +5,7 @@
     type CharacterSheetContext,
     type ItemCardStore,
     type NpcSheetContext,
+    type SpellbookSection,
   } from 'src/types/types';
   import ItemTable from '../item-list/v1/ItemTable.svelte';
   import ItemTableColumn from '../item-list/v1/ItemTableColumn.svelte';
@@ -19,7 +20,7 @@
   import SpellSlotManagement from './SpellSlotManagement.svelte';
   import ConcentrationOverlayIcon from './ConcentrationOverlayIcon.svelte';
 
-  export let section: any;
+  export let section: SpellbookSection;
   export let spells: Item5e[];
   export let cssClass: string | null = null;
   /**

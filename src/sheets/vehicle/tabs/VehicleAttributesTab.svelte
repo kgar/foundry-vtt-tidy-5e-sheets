@@ -5,6 +5,7 @@
   import type { Readable } from 'svelte/store';
   import type {
     RenderableClassicControl,
+    VehicleFeatureSection,
     VehicleSheetContext,
   } from 'src/types/types';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
@@ -51,7 +52,7 @@
   };
 
   $: noFeatures = !$context.features.some(
-    (section: any) => section.items.length,
+    (section: VehicleFeatureSection) => section.items.length,
   );
 
   declareLocation('attributes');

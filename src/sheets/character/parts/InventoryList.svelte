@@ -22,6 +22,7 @@
   import type { Readable } from 'svelte/store';
   import type {
     CharacterSheetContext,
+    InventorySection,
     RenderableClassicControl,
   } from 'src/types/types';
   import AmmoSelector from '../../actor/AmmoSelector.svelte';
@@ -33,7 +34,7 @@
 
   export let primaryColumnName: string;
   export let items: Item5e[];
-  export let section: any;
+  export let section: InventorySection;
   export let extraInventoryRowClasses: string = '';
   export let lockControls: boolean = false;
   export let allowFavoriteIconNextToName: boolean = true;

@@ -1,6 +1,7 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import {
+    type CharacterFeatureSection,
     type CharacterSheetContext,
     type RenderableClassicControl,
   } from 'src/types/types';
@@ -36,15 +37,13 @@
   import type { Item5e } from 'src/types/item.types';
   import ClassicControls from 'src/sheets/shared/ClassicControls.svelte';
   import LevelUpDropdown from 'src/sheets/actor/LevelUpDropdown.svelte';
-  import { SectionOrderManagerApplication } from 'src/applications/section-order-manager/SectionOrderManagerApplication';
-  import { CharacterSheetRuntime } from 'src/runtime/CharacterSheetRuntime';
 
   let context = getContext<Readable<CharacterSheetContext>>('context');
 
   const localize = FoundryAdapter.localize;
 
   $: noFeatures =
-    $context.features.some((section: any) => section.items.length > 0) ===
+    $context.features.some((section: CharacterFeatureSection) => section.items.length > 0) ===
     false;
 
   function getAvailableLevels(id: string) {

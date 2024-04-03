@@ -131,22 +131,24 @@ export type CharacterItemPartitions = {
   subclasses: Item5e[];
 };
 
-export type FeatureSection = {
+export type TidySectionBase = {
   label: string;
-  items: Item5e[];
-  hasActions?: boolean;
-  dataset: Record<string, string>;
+  dataset: Record<string, any>;
+  custom?: CustomSectionOptions;
   key: string;
 };
 
+export type FeatureSection = {
+  items: Item5e[];
+  hasActions?: boolean;
+} & TidySectionBase;
+
 export type VehicleCargoSection = {
-  label: string;
   items: Item5e[];
   css?: string;
   editableName?: boolean;
-  dataset: Record<string, string>;
   columns: SimpleEditableColumn[];
-};
+} & TidySectionBase;
 
 export type VehicleFeatureSection = {
   crewable?: boolean;
@@ -163,7 +165,6 @@ export type SimpleEditableColumn = {
 
 export type SpellbookSection = {
   order?: number;
-  label: string;
   usesSlots: boolean;
   canCreate: boolean;
   canPrepare: boolean;
@@ -171,11 +172,8 @@ export type SpellbookSection = {
   uses?: number;
   slots?: number;
   override?: number;
-  dataset: Record<string, string>;
   prop?: string;
-  custom?: CustomSectionOptions;
-  key: string;
-};
+} & TidySectionBase;
 
 export type AvailableLevel = {
   level: number;
