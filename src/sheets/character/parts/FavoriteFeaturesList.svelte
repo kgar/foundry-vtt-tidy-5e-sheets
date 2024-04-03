@@ -19,6 +19,11 @@
   let context = getContext<Readable<CharacterSheetContext>>('context');
   export let items: Item5e[] = [];
   export let sectionTitle: string | null = null;
+  /**
+   * An optional subset of item IDs which will hide all other items not included in this set.
+   * Useful for showing only search results, for example.
+   */
+  export let visibleItemIdSubset: Set<string> | null = null;
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -49,6 +54,8 @@
           type: CONSTANTS.CONTEXT_MENU_TYPE_ITEMS,
           uuid: item.uuid,
         }}
+        hidden={visibleItemIdSubset !== null &&
+          !visibleItemIdSubset.has(item.id)}
       >
         <ItemTableCell primary={true} title={item.name}>
           <ItemUseButton disabled={!$context.editable} {item} />

@@ -9,7 +9,6 @@ export type WorldSettingsContext = {
     useNpcEncumbranceBar: CurrentSettings['useNpcEncumbranceBar'];
     useVehicleEncumbranceBar: CurrentSettings['useVehicleEncumbranceBar'];
     showPlayerName: CurrentSettings['showPlayerName'];
-    sortFavoriteItemsAlphabetically: CurrentSettings['sortFavoriteItemsAlphabetically'];
     showExpandedLimitedView: CurrentSettings['showExpandedLimitedView'];
     itemCardsFixKey: CurrentSettings['itemCardsFixKey'];
     useCircularPortraitStyle: CurrentSettings['useCircularPortraitStyle'];

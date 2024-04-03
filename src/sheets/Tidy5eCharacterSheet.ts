@@ -206,6 +206,9 @@ export class Tidy5eCharacterSheet
       this.actor.type
     );
 
+    const attributesSortMode =
+      characterPreferences.tabs?.[CONSTANTS.TAB_CHARACTER_ATTRIBUTES]?.sort ??
+      'm';
     const inventorySortMode =
       characterPreferences.tabs?.[CONSTANTS.TAB_CHARACTER_INVENTORY]?.sort ??
       'm';
@@ -271,6 +274,52 @@ export class Tidy5eCharacterSheet
     let utilities: Utilities<CharacterSheetContext> = {
       [CONSTANTS.TAB_CHARACTER_ATTRIBUTES]: {
         utilityToolbarCommands: [
+          {
+            title: FoundryAdapter.localize('SIDEBAR.SortModeAlpha'),
+            iconClass: 'fa-solid fa-arrow-down-a-z fa-fw',
+            execute: async () => {
+              await SheetPreferencesService.setDocumentTypeTabPreference(
+                this.actor.type,
+                CONSTANTS.TAB_CHARACTER_ATTRIBUTES,
+                'sort',
+                'm'
+              );
+            },
+            visible: attributesSortMode === 'a',
+          },
+          {
+            title: FoundryAdapter.localize('SIDEBAR.SortModeManual'),
+            iconClass: 'fa-solid fa-arrow-down-short-wide fa-fw',
+            execute: async () => {
+              await SheetPreferencesService.setDocumentTypeTabPreference(
+                this.actor.type,
+                CONSTANTS.TAB_CHARACTER_ATTRIBUTES,
+                'sort',
+                'a'
+              );
+            },
+            visible: attributesSortMode === 'm',
+          },
+          {
+            title: FoundryAdapter.localize('TIDY5E.Commands.ExpandAll'),
+            iconClass: 'fas fa-angles-down',
+            execute: () =>
+              // TODO: Use app.messageBus
+              this.messageBus.set({
+                tabId: CONSTANTS.TAB_CHARACTER_ATTRIBUTES,
+                message: CONSTANTS.MESSAGE_BUS_EXPAND_ALL,
+              }),
+          },
+          {
+            title: FoundryAdapter.localize('TIDY5E.Commands.CollapseAll'),
+            iconClass: 'fas fa-angles-up',
+            execute: () =>
+              // TODO: Use app.messageBus
+              this.messageBus.set({
+                tabId: CONSTANTS.TAB_CHARACTER_ATTRIBUTES,
+                message: CONSTANTS.MESSAGE_BUS_COLLAPSE_ALL,
+              }),
+          },
           {
             title: FoundryAdapter.localize(
               'TIDY5E.Utilities.ConfigureSections'
@@ -1056,6 +1105,23 @@ export class Tidy5eCharacterSheet
       });
     }
 
+    // Filter Favorite Items
+    favorites.items = this.itemFilterService.filter(
+      favorites.items,
+      CONSTANTS.TAB_CHARACTER_ATTRIBUTES
+    );
+
+    // Sort Favorite Items
+    const attributesSortMode =
+      characterPreferences.tabs?.[CONSTANTS.TAB_CHARACTER_ATTRIBUTES]?.sort ??
+      'm';
+
+    if (attributesSortMode === 'a') {
+      favorites.items = favorites.items.toSorted((a, b) =>
+        a.name.localeCompare(b.name)
+      );
+    }
+
     for (let i of favorites.items) {
       const ctx = (context.itemContext[i.id] ??= {});
       ctx.totalWeight = i.system.totalWeight?.toNearest(0.1);
@@ -1097,6 +1163,20 @@ export class Tidy5eCharacterSheet
       canCreate: true,
     });
 
+    // Filter Favorite Spells
+    favorites.spells = this.itemFilterService.filter(
+      favorites.spells,
+      CONSTANTS.TAB_CHARACTER_ATTRIBUTES
+    );
+
+    // Sort favorite Spells
+    if (attributesSortMode === 'a') {
+      favorites.spells = favorites.spells.toSorted((a, b) =>
+        a.name.localeCompare(b.name)
+      );
+    }
+
+    // Section Favorite Spells
     const favoriteSpellbook = this._prepareTidySpellbook(
       context,
       favorites.spells,
@@ -1179,13 +1259,47 @@ export class Tidy5eCharacterSheet
       classes = classes.toSorted((a, b) => b.system.levels - a.system.levels);
     }
 
-    // Section features
-    // TODO: Intercept with CCSS feature set
+    // Section Features
     const features: Record<string, CharacterFeatureSection> =
       this._buildFeaturesSections(races, backgrounds, classes, feats, {
         canCreate: true,
       });
 
+    // Filter Favorite Features
+    favorites.feats = this.itemFilterService.filter(
+      favorites.feats,
+      CONSTANTS.TAB_CHARACTER_ATTRIBUTES
+    );
+    favorites.classes = this.itemFilterService.filter(
+      favorites.classes,
+      CONSTANTS.TAB_CHARACTER_ATTRIBUTES
+    );
+    favorites.races = this.itemFilterService.filter(
+      favorites.races,
+      CONSTANTS.TAB_CHARACTER_ATTRIBUTES
+    );
+    favorites.backgrounds = this.itemFilterService.filter(
+      favorites.backgrounds,
+      CONSTANTS.TAB_CHARACTER_ATTRIBUTES
+    );
+
+    // Sort Favorite Features
+    if (attributesSortMode === 'a') {
+      favorites.feats = favorites.feats.toSorted((a, b) =>
+        a.name.localeCompare(b.name)
+      );
+      favorites.classes = favorites.classes.toSorted((a, b) =>
+        a.name.localeCompare(b.name)
+      );
+      favorites.races = favorites.races.toSorted((a, b) =>
+        a.name.localeCompare(b.name)
+      );
+      favorites.backgrounds = favorites.backgrounds.toSorted((a, b) =>
+        a.name.localeCompare(b.name)
+      );
+    }
+
+    // Section favorite features
     const favoriteFeatures: Record<string, CharacterFeatureSection> =
       this._buildFeaturesSections(
         favorites.races,

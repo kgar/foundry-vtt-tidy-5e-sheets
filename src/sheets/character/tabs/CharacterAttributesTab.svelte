@@ -74,7 +74,7 @@
       {#if $settingStore.moveTraitsBelowCharacterResources}
         <Traits toggleable={$settingStore.toggleEmptyCharacterTraits} />
       {/if}
-      <Favorites />
+      <Favorites {searchCriteria} />
     </section>
   </div>
 </div>

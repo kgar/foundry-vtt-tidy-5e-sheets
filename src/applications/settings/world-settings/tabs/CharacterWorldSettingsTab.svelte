@@ -63,13 +63,6 @@
   />
 
   <CheckboxSetting
-    bind:value={$context.settings.sortFavoriteItemsAlphabetically}
-    name={'TIDY5E.Settings.SortFavoriteItemsAlphabetically.name'}
-    hint={'TIDY5E.Settings.SortFavoriteItemsAlphabetically.hint'}
-    id="sortFavoriteItemsAlphabetically"
-  />
-
-  <CheckboxSetting
     bind:value={$context.settings.useCharacterInspiration}
     name={'TIDY5E.Settings.UseInspiration.name'}
     hint={'TIDY5E.Settings.UseInspiration.hint'}

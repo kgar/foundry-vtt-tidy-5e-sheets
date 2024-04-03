@@ -19,6 +19,11 @@
   let context = getContext<Readable<CharacterSheetContext>>('context');
   export let section: any;
   export let spells: any[];
+  /**
+   * An optional subset of item IDs which will hide all other items not included in this set.
+   * Useful for showing only search results, for example.
+   */
+  export let visibleItemIdSubset: Set<string> | null = null;
 
   const localize = FoundryAdapter.localize;
 </script>
@@ -69,6 +74,8 @@
           }}
           let:toggleSummary
           cssClass={FoundryAdapter.getSpellRowClasses(spell)}
+          hidden={visibleItemIdSubset !== null &&
+            !visibleItemIdSubset.has(spell.id)}
         >
           <ItemTableCell primary={true} title={spell.name}>
             <ItemUseButton

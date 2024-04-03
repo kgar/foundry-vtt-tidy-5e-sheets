@@ -10,50 +10,52 @@
   import type { Readable } from 'svelte/store';
   import { CONSTANTS } from 'src/constants';
 
+  export let searchCriteria: string = '';
+
   let context = getContext<Readable<CharacterSheetContext>>('context');
 
   const localize = FoundryAdapter.localize;
-
-  function sortByNameIfConfigured(
-    sortAlphabetically: boolean,
-    items: Item5e[],
-  ): Item5e[] {
-    return sortAlphabetically
-      ? items.sort((a, b) => a.name.localeCompare(b.name))
-      : items;
-  }
 </script>
 
 <div class="flex-column small-gap">
   <!--  TODO: Sort favorites based on setting during data item preparation -->
   {#each $context.favorites as section}
     {#if section.type === CONSTANTS.TAB_CHARACTER_INVENTORY}
-      {@const items = sortByNameIfConfigured(
-        $settingStore.sortFavoriteItemsAlphabetically,
+      {@const visibleItemIdSubset = FoundryAdapter.searchItems(
+        searchCriteria,
         section.items,
       )}
       <InventoryList
         {section}
-        {items}
+        items={section.items}
         primaryColumnName={localize(section.label)}
         lockControls={true}
         allowFavoriteIconNextToName={false}
         includeWeightColumn={false}
+        {visibleItemIdSubset}
       />
     {/if}
     {#if section.type === CONSTANTS.TAB_CHARACTER_FEATURES}
-      {@const items = sortByNameIfConfigured(
-        $settingStore.sortFavoriteItemsAlphabetically,
+      {@const visibleItemIdSubset = FoundryAdapter.searchItems(
+        searchCriteria,
         section.items,
       )}
-      <FavoriteFeaturesList sectionTitle={section.label} {items} />
+      <FavoriteFeaturesList
+        sectionTitle={section.label}
+        items={section.items}
+        {visibleItemIdSubset}
+      />
     {/if}
     {#if section.type === CONSTANTS.TAB_CHARACTER_SPELLBOOK}
-      {@const spells = sortByNameIfConfigured(
-        $settingStore.sortFavoriteItemsAlphabetically,
+      {@const visibleItemIdSubset = FoundryAdapter.searchItems(
+        searchCriteria,
         section.spells,
       )}
-      <FavoriteSpellsList {section} {spells} />
+      <FavoriteSpellsList
+        {section}
+        spells={section.spells}
+        {visibleItemIdSubset}
+      />
     {/if}
   {/each}
 </div>

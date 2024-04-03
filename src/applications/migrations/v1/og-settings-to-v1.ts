@@ -80,10 +80,6 @@ const settingsMap: SettingMap[] = [
     ogKey: 'enablePermanentUnlockOnVehicleIfYouAreGM',
   },
   {
-    v1Key: 'sortFavoriteItemsAlphabetically',
-    ogKey: 'enableSortFavoritesItemsAlphabetically',
-  },
-  {
     v1Key: 'allowCantripsToBePrepared',
     ogKey: 'allowCantripToBePreparedOnContext',
   },
