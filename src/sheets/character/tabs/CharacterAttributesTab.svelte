@@ -10,8 +10,12 @@
   import { settingStore } from 'src/settings/settings';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { CONSTANTS } from 'src/constants';
-  import { SectionOrderManagerApplication } from 'src/applications/section-order-manager/SectionOrderManagerApplication';
-  import { CharacterSheetRuntime } from 'src/runtime/CharacterSheetRuntime';
+  import UtilityToolbar from 'src/components/utility-bar/UtilityToolbar.svelte';
+  import UtilityToolbarCommand from 'src/components/utility-bar/UtilityToolbarCommand.svelte';
+  import Search from 'src/components/utility-bar/Search.svelte';
+  import PinnedFilterToggles from 'src/components/filter/PinnedFilterToggles.svelte';
+  import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
+  import FilterMenu from 'src/components/filter/FilterMenu.svelte';
 
   let context = getContext<Readable<CharacterSheetContext>>('context');
 
@@ -20,7 +24,35 @@
     $context.resources.some(
       (x: any) => !isNil(x.value) || !isNil(x.value, '') || !isNil(x.max),
     );
+
+  let searchCriteria: string = '';
+
+  $: utilityBarCommands =
+    $context.utilities[CONSTANTS.TAB_CHARACTER_ATTRIBUTES]
+      ?.utilityToolbarCommands ?? [];
 </script>
+
+<UtilityToolbar>
+  <Search bind:value={searchCriteria} />
+  <PinnedFilterToggles
+    filterGroupName={CONSTANTS.TAB_CHARACTER_ATTRIBUTES}
+    filters={ItemFilterRuntime.getPinnedFiltersForTab(
+      $context.filterPins,
+      $context.filterData,
+      CONSTANTS.TAB_CHARACTER_ATTRIBUTES,
+    )}
+  />
+  <FilterMenu tabId={CONSTANTS.TAB_CHARACTER_ATTRIBUTES} />
+  {#each utilityBarCommands as command (command.title)}
+    <UtilityToolbarCommand
+      title={command.title}
+      iconClass={command.iconClass}
+      text={command.text}
+      visible={command.visible ?? true}
+      on:execute={(ev) => command.execute?.(ev.detail)}
+    />
+  {/each}
+</UtilityToolbar>
 
 <div class="scroll-container">
   <div class="attributes-tab-contents">
