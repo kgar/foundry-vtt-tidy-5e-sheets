@@ -1,8 +1,7 @@
 import { CONSTANTS } from 'src/constants';
 import type { Item5e } from 'src/types/item.types';
 import type { NpcAbilitySection } from 'src/types/types';
-import { SheetSections } from './SheetSections';
-
+import { TidyFlags } from 'src/api';
 
 export class NpcSheetSections {
   static get abilitiesItemTypes() {
@@ -21,7 +20,7 @@ export class NpcSheetSections {
     feat: Item5e,
     customSectionOptions: Partial<NpcAbilitySection>
   ) {
-    const customSectionName = SheetSections.tryGetCustomSection(feat);
+    const customSectionName = TidyFlags.section.get(feat);
 
     if (!customSectionName) {
       return;
@@ -33,7 +32,7 @@ export class NpcSheetSections {
       hasActions: true,
       key: customSectionName,
       dataset: {
-        [SheetSections.sectionPropertyPath]: customSectionName,
+        [TidyFlags.section.prop]: customSectionName,
       },
       canCreate: true,
       custom: {

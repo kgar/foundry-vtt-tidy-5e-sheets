@@ -1,43 +1,9 @@
+import { TidyFlags } from 'src/api';
 import { CONSTANTS } from 'src/constants';
-import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type { Item5e } from 'src/types/item.types';
 import type { SpellbookSection } from 'src/types/types';
 
 export class SheetSections {
-  static get sectionProperty() {
-    return 'section';
-  }
-
-  static get actionSectionProperty() {
-    return 'actionSection';
-  }
-
-  static get sectionPropertyPath() {
-    return `flags.${CONSTANTS.MODULE_ID}.${SheetSections.sectionProperty}`;
-  }
-
-  static get actionSectionPropertyPath() {
-    return `flags.${CONSTANTS.MODULE_ID}.${SheetSections.actionSectionProperty}`;
-  }
-
-  static tryGetCustomSection(item: Item5e): string {
-    return (
-      FoundryAdapter.tryGetFlag<string>(
-        item,
-        SheetSections.sectionProperty
-      )?.trim() ?? ''
-    );
-  }
-
-  static tryGetCustomActionSection(item: Item5e): string {
-    return (
-      FoundryAdapter.tryGetFlag<string>(
-        item,
-        SheetSections.actionSectionProperty
-      )?.trim() ?? ''
-    );
-  }
-
   static generateCustomSpellbookSections(
     spells: Item5e[],
     options: Partial<SpellbookSection>
@@ -54,7 +20,7 @@ export class SheetSections {
     spell: Item5e,
     options: Partial<SpellbookSection>
   ) {
-    const customSectionName = SheetSections.tryGetCustomSection(spell);
+    const customSectionName = TidyFlags.section.get(spell);
 
     if (!customSectionName) {
       // TODO: Eventually absorb core spellbook section prep to this service
@@ -62,7 +28,9 @@ export class SheetSections {
     }
 
     const customSection: SpellbookSection = (spellbook[customSectionName] ??= {
-      dataset: { [SheetSections.sectionPropertyPath]: customSectionName },
+      dataset: {
+        [TidyFlags.section.prop]: customSectionName,
+      },
       spells: [],
       label: customSectionName,
       canCreate: true,

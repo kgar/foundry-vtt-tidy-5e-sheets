@@ -248,7 +248,7 @@ function buildActionSets(filteredItems: any): ActionSets {
           Priority 2: Custom Mappings via the Tidy API
           Priority 3: Item Activation Type
         */
-        const customActionSection = SheetSections.tryGetCustomActionSection(
+        const customActionSection = TidyFlags.actionSection.get(
           actionItem.item
         );
 

@@ -848,10 +848,10 @@ export class Tidy5eNpcSheet
     // Section spells
     // TODO: Take over `_prepareSpellbook` and put in `SheetSections`; have custom sectioning built right into the process.
     const customSectionSpells = spells.filter((s: Item5e) =>
-      SheetSections.tryGetCustomSection(s)
+    TidyFlags.section.get(s)
     );
     spells = spells.filter(
-      (s: Item5e) => !SheetSections.tryGetCustomSection(s)
+      (s: Item5e) => !TidyFlags.section.get(s)
     );
     const spellbook = [
       ...this._prepareSpellbook(context, spells).map((s: SpellbookSection) => ({
@@ -866,7 +866,7 @@ export class Tidy5eNpcSheet
     // Organize Features
     for (let item of other) {
       // Handle custom section, if present
-      if (SheetSections.tryGetCustomSection(item)) {
+      if (TidyFlags.section.get(item)) {
         NpcSheetSections.applyAbilityToSection(features, item, {
           canCreate: true,
         });

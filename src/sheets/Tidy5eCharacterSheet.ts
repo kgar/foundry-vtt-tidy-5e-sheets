@@ -1357,10 +1357,8 @@ export class Tidy5eCharacterSheet
     spells: Item5e[],
     options: Partial<SpellbookSection> = {}
   ): SpellbookSection[] {
-    const customSectionSpells = spells.filter((s) =>
-      SheetSections.tryGetCustomSection(s)
-    );
-    spells = spells.filter((s) => !SheetSections.tryGetCustomSection(s));
+    const customSectionSpells = spells.filter((s) => TidyFlags.section.get(s));
+    spells = spells.filter((s) => !TidyFlags.section.get(s));
     return [
       ...super
         ._prepareSpellbook(context, spells)
@@ -1383,10 +1381,8 @@ export class Tidy5eCharacterSheet
     feats: any[],
     options: Partial<CharacterFeatureSection>
   ): Record<string, CharacterFeatureSection> {
-    const customFeats = feats.filter((f) =>
-      SheetSections.tryGetCustomSection(f)
-    );
-    feats = feats.filter((f) => !SheetSections.tryGetCustomSection(f));
+    const customFeats = feats.filter((f) => TidyFlags.section.get(f));
+    feats = feats.filter((f) => !TidyFlags.section.get(f));
 
     const features: Record<string, CharacterFeatureSection> = {
       race: {

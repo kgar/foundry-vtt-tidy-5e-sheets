@@ -4,7 +4,7 @@ import type {
   CharacterFeatureSection,
   InventorySection,
 } from 'src/types/types';
-import { SheetSections } from './SheetSections';
+import { TidyFlags } from 'src/foundry/TidyFlags';
 
 export class CharacterSheetSections {
   static get inventoryItemTypes() {
@@ -22,7 +22,7 @@ export class CharacterSheetSections {
     item: Item5e,
     customSectionOptions: Partial<InventorySection>
   ) {
-    const customSectionName = SheetSections.tryGetCustomSection(item);
+    const customSectionName = TidyFlags.section.get(item);
 
     if (!customSectionName) {
       inventory[item.type].items.push(item);
@@ -30,7 +30,7 @@ export class CharacterSheetSections {
     }
 
     const customSection: InventorySection = (inventory[customSectionName] ??= {
-      dataset: { [SheetSections.sectionPropertyPath]: customSectionName },
+      dataset: { [TidyFlags.section.prop]: customSectionName },
       items: [],
       label: customSectionName,
       canCreate: true,
@@ -50,7 +50,7 @@ export class CharacterSheetSections {
     feat: Item5e,
     customSectionOptions: Partial<CharacterFeatureSection>
   ) {
-    const customSectionName = SheetSections.tryGetCustomSection(feat);
+    const customSectionName = TidyFlags.section.get(feat);
 
     if (!customSectionName) {
       return;
@@ -63,7 +63,7 @@ export class CharacterSheetSections {
       items: [],
       hasActions: true,
       dataset: {
-        [SheetSections.sectionPropertyPath]: customSectionName,
+        [TidyFlags.section.prop]: customSectionName,
         type: CONSTANTS.ITEM_TYPE_FEAT,
       },
       isClass: false,

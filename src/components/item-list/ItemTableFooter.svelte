@@ -1,5 +1,11 @@
 <script lang="ts" generics="TSection extends TidySectionBase">
-  import type { Actor5e, TidySectionBase } from 'src/types/types';
+  import { TidyFlags } from 'src/api';
+
+  import type {
+    Actor5e,
+    CustomSectionOptions,
+    TidySectionBase,
+  } from 'src/types/types';
   import ItemCreateButton from '../item-list/ItemCreateButton.svelte';
   import { ActorItemRuntime } from 'src/runtime/ActorItemRuntime';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
@@ -18,13 +24,35 @@
     ? ActorItemRuntime.getActorItemSectionCommands({ actor, section })
     : [];
 
+  function createForCustom(custom: CustomSectionOptions) {
+    // TODO: Support fast-forwarding item creation when there's only one type available.
+    // This will require a breaking model change to `dataset`.
+    Item.implementation.createDialog(
+      { ...section.dataset },
+      {
+        parent: actor,
+        pack: actor.pack,
+        types: custom.creationItemTypes,
+      },
+    );
+  }
+
   const localize = FoundryAdapter.localize;
 </script>
 
 <footer class="item-table-footer-row">
   <!-- TODO: Handle custom section item creation -->
   {#if canCreate}
-    <ItemCreateButton dataset={section.dataset} {actor} {create} />
+    {@const custom = section.custom}
+    {#if custom}
+      <ItemCreateButton
+        dataset={section.dataset}
+        {actor}
+        create={() => createForCustom(custom)}
+      />
+    {:else}
+      <ItemCreateButton dataset={section.dataset} {actor} {create} />
+    {/if}
   {/if}
   {#each customCommands as command}
     <button

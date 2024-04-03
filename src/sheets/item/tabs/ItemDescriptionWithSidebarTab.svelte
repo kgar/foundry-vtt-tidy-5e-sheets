@@ -18,7 +18,7 @@
   import { CONSTANTS } from 'src/constants';
   import ItemFormGroup from '../form/ItemFormGroup.svelte';
   import TextInput from 'src/components/inputs/TextInput.svelte';
-  import { SheetSections } from 'src/features/sections/SheetSections';
+  import { TidyFlags } from 'src/foundry/TidyFlags';
 
   let context =
     getContext<Readable<ItemSheetContext | ContainerSheetContext>>('context');
@@ -167,38 +167,32 @@
     <div class="flex-column small-gap">
       <ItemFormGroup
         labelText={localize('TIDY5E.Section.Label')}
-        field={SheetSections.sectionPropertyPath}
+        field={TidyFlags.section.prop}
         cssClass="section"
         let:inputId
       >
         <TextInput
           document={$context.item}
-          field={SheetSections.sectionPropertyPath}
+          field={TidyFlags.section.prop}
           id={inputId}
           placeholder={localize('TIDY5E.Section.Default')}
-          value={FoundryAdapter.tryGetFlag(
-            $context.item,
-            SheetSections.sectionProperty,
-          ) ?? ''}
+          value={TidyFlags.section.get($context.item) ?? ''}
           selectOnFocus={true}
           title={localize('TIDY5E.Section.Tooltip')}
         ></TextInput>
       </ItemFormGroup>
       <ItemFormGroup
         labelText={localize('TIDY5E.Section.ActionLabel')}
-        field={SheetSections.actionSectionPropertyPath}
+        field={TidyFlags.actionSection.prop}
         cssClass="section"
         let:inputId
       >
         <TextInput
           document={$context.item}
-          field={SheetSections.actionSectionPropertyPath}
+          field={TidyFlags.actionSection.prop}
           id={inputId}
           placeholder={localize('TIDY5E.Section.Default')}
-          value={FoundryAdapter.tryGetFlag(
-            $context.item,
-            SheetSections.actionSectionProperty,
-          ) ?? ''}
+          value={TidyFlags.actionSection.get($context.item) ?? ''}
           selectOnFocus={true}
           title={localize('TIDY5E.Section.ActionTooltip')}
         ></TextInput>
