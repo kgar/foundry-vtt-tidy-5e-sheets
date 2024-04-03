@@ -751,12 +751,19 @@
     "TIDY5E.Utilities.GMTools": "Outils du MJ",
     "TIDY5E.Utilities.IdentifyAll": "Identifier tous les éléments",
     "TIDY5E.Utilities.MarkAllAsUnidentified": "Marquer tous les éléments comme non identifiés",
-    "TIDY5E.ItemImageTitle": "Objet: {subject}",
+    "TIDY5E.ItemImageTitle": "Objet : {subject}",
     "TIDY5E.ItemFilters.CanCast": "Peu incanter",
     "TIDY5E.ItemFilters.CanUse": "Peu utiliser",
-    "TIDY5E.PortraitTitle": "Portrait: {subject}",
+    "TIDY5E.PortraitTitle": "Portrait : {subject}",
     "TIDY5E.WorldSettings.IncludeFlagsInSpellScrollCreation": {
         "name": "Inclure les indicateurs dans la création des parchemins de sorts",
         "hint": "Les sorts peuvent parfois contenir des données spéciales provenant d'autres modules, qu'il peut être utile de transférer dans un parchemin de sort. Activer pour copier toutes les données basées sur les indicateurs dans le parchemin de sort lors de sa création."
-    }
+    },
+    "TIDY5E.Settings.SheetPreferences": {
+        "hint": "Si vous souhaitez définir les feuilles Tidy 5e par défaut pour un ou plusieurs types de documents, mais que le menu de configuration des feuilles par défaut ne fonctionne pas comme prévu, utilisez ce menu pour sélectionner vos préférences.",
+        "buttonLabel": "Définir Tidy 5e comme feuille par défaut",
+        "explanation": "Sélectionnez tous les types de documents pour lesquels vous préférez que les feuilles Tidy 5e soient utilisées par défaut.",
+        "name": "Définir Tidy5e comme feuille par défaut"
+    },
+    "TIDY5E.GenericErrorNotification": "Une erreur s'est produite lors de l'exécution de cette action. Voir la console F12 devtools pour plus de détails."
 }
