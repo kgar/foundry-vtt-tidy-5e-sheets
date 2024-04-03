@@ -695,10 +695,6 @@
     "name": "Enable Debugging",
     "hint": "Prints debug messages to the console."
   },
-  "TIDY5E.Settings.SortFavoriteItemsAlphabetically": {
-    "name": "Sort Favorites Alphabetically",
-    "hint": "Sorts favorites alphabetically."
-  },
   "TIDY5E.Settings.PermanentlyUnlockCharacterSheetForGM": {
     "name": "Character Sheet: Always Unlocked for GM",
     "hint": "Treat the character sheet as though it were always unlocked, regardless of the lock setting. The GM can always edit the character, but they can also toggle lock/unlock for a player who also owns the character.",

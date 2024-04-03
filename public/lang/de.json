@@ -438,10 +438,6 @@
         "name": "Debugging aktivieren",
         "hint": "Zeigt Debugging Nachrichten in der Konsole an."
     },
-    "TIDY5E.Settings.SortFavoriteItemsAlphabetically": {
-        "name": "Favoriten alphabetisch sortieren",
-        "hint": "Sortiert Favoriten alphabetisch."
-    },
     "TIDY5E.Settings.PermanentlyUnlockCharacterSheetForGM": {
         "name": null,
         "hint": null,

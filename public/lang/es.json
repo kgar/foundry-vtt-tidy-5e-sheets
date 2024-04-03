@@ -450,10 +450,6 @@
         "name": "Habilitar la depuración",
         "hint": "Imprime mensajes de depuración en la consola."
     },
-    "TIDY5E.Settings.SortFavoriteItemsAlphabetically": {
-        "name": "Ordenar favoritos alfabéticamente",
-        "hint": "Ordena los favoritos alfabéticamente."
-    },
     "TIDY5E.Settings.PermanentlyUnlockCharacterSheetForGM": {
         "name": "Hoja de personaje: Siempre desbloqueado para el DM",
         "hint": "Trate la hoja de personaje como si siempre estuviera desbloqueada, independientemente de la configuración de bloqueo. El DM siempre puede editar el personaje, pero también puede alternar entre bloqueo y desbloqueo para un jugador que también posee el personaje.",
