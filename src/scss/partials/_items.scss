@@ -203,6 +203,7 @@ input[type='checkbox'] {
 .tidy-sheet-body {
   padding: 1rem;
   padding-right: 0.25rem;
+  margin-right: 0;
   overflow: hidden;
 
   .item-properties {
@@ -398,6 +399,10 @@ input[type='checkbox'] {
   overflow: hidden auto;
   height: 100%;
   align-content: flex-start;
+
+  &.effects {
+    padding-right: 0.5rem;
+  }
 
   &.detail-tab-contents, 
   /* Compatibility selector */ & > .tab {
@@ -870,4 +875,15 @@ label input[type='checkbox']:checked {
   float: right;
   margin: 0;
   padding: 0 0.325rem;
+}
+
+ol.info {
+  margin: 0;
+  padding: 0;
+  outline: none;
+
+  li.notification {
+    box-shadow: none;
+    list-style: none;
+  }
 }
