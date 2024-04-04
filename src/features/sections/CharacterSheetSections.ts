@@ -64,7 +64,6 @@ export class CharacterSheetSections {
       hasActions: true,
       dataset: {
         [TidyFlags.section.prop]: customSectionName,
-        type: CONSTANTS.ITEM_TYPE_FEAT,
       },
       isClass: false,
       canCreate: true,

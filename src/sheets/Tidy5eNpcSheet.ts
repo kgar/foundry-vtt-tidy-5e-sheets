@@ -755,7 +755,7 @@ export class Tidy5eNpcSheet
         label: game.i18n.localize('DND5E.AttackPl'),
         items: [],
         hasActions: true,
-        dataset: { type: 'weapon', 'weapon-type': 'natural' },
+        dataset: { type: 'weapon', 'system.weaponType': 'natural' },
         canCreate: true,
         key: 'weapons',
       },
@@ -763,7 +763,7 @@ export class Tidy5eNpcSheet
         label: game.i18n.localize('DND5E.ActionPl'),
         items: [],
         hasActions: true,
-        dataset: { type: 'feat', 'activation.type': 'action' },
+        dataset: { type: 'feat', 'system.activation.type': 'action' },
         canCreate: true,
         key: 'actions',
       },
@@ -848,11 +848,9 @@ export class Tidy5eNpcSheet
     // Section spells
     // TODO: Take over `_prepareSpellbook` and put in `SheetSections`; have custom sectioning built right into the process.
     const customSectionSpells = spells.filter((s: Item5e) =>
-    TidyFlags.section.get(s)
+      TidyFlags.section.get(s)
     );
-    spells = spells.filter(
-      (s: Item5e) => !TidyFlags.section.get(s)
-    );
+    spells = spells.filter((s: Item5e) => !TidyFlags.section.get(s));
     const spellbook = [
       ...this._prepareSpellbook(context, spells).map((s: SpellbookSection) => ({
         ...s,

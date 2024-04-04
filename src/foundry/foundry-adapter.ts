@@ -218,7 +218,7 @@ export const FoundryAdapter = {
 
     entityWithSheet.sheet.render(true);
   },
-  createItem({ type, ...dataset }: Record<string, any>, actor: Actor5e) {
+  createItem({ type, ...data }: Record<string, any>, actor: Actor5e) {
     // Check to make sure the newly created class doesn't take player over level cap
     if (
       type === 'class' &&
@@ -231,14 +231,16 @@ export const FoundryAdapter = {
       return null;
     }
 
-    const itemData = {
-      name: FoundryAdapter.localize('DND5E.ItemNew', {
-        type: FoundryAdapter.localize(CONFIG.Item.typeLabels[type]),
-      }),
-      type,
-      system: foundry.utils.expandObject({ ...dataset }),
-    };
-    delete itemData.system.type;
+    const itemData = foundry.utils.mergeObject(
+      {
+        name: FoundryAdapter.localize('DND5E.ItemNew', {
+          type: FoundryAdapter.localize(CONFIG.Item.typeLabels[type]),
+        }),
+        type,
+      },
+      foundry.utils.expandObject({ ...data })
+    );
+
     return actor.createEmbeddedDocuments('Item', [itemData]);
   },
   async onLevelChange(

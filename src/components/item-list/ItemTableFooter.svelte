@@ -1,6 +1,4 @@
 <script lang="ts" generics="TSection extends TidySectionBase">
-  import { TidyFlags } from 'src/api';
-
   import type {
     Actor5e,
     CustomSectionOptions,
@@ -27,14 +25,25 @@
   function createForCustom(custom: CustomSectionOptions) {
     // TODO: Support fast-forwarding item creation when there's only one type available.
     // This will require a breaking model change to `dataset`.
-    Item.implementation.createDialog(
-      { ...section.dataset },
-      {
-        parent: actor,
-        pack: actor.pack,
-        types: custom.creationItemTypes,
-      },
-    );
+    if (!custom.creationItemTypes.length) {
+      return;
+    }
+
+    if (custom.creationItemTypes.length === 1) {
+      FoundryAdapter.createItem(
+        { type: custom.creationItemTypes[0], ...section.dataset },
+        actor,
+      );
+    } else {
+      Item.implementation.createDialog(
+        { ...section.dataset },
+        {
+          parent: actor,
+          pack: actor.pack,
+          types: custom.creationItemTypes,
+        },
+      );
+    }
   }
 
   const localize = FoundryAdapter.localize;

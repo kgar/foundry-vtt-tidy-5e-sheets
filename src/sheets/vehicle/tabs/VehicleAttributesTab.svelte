@@ -192,11 +192,12 @@
                       {:else if ctx?.hasUses}
                         <ItemUses {item} />
                       {:else}
+                        <!-- TODO: Figure out how to make this work in a custom section. -->
                         <ItemAddUses {item} />
                       {/if}
                     </ItemTableCell>
                     <ItemTableCell baseWidth="7.5rem">
-                      {#if item.system.activation.type}
+                      {#if item.system.activation?.type}
                         <span>{item.labels?.activation ?? ''}</span>
                       {/if}
                     </ItemTableCell>

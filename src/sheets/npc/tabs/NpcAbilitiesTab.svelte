@@ -246,7 +246,7 @@
                     {/if}
                   </ItemTableCell>
                   <ItemTableCell baseWidth="7.5rem">
-                    {#if item.system.activation.type}
+                    {#if item.system.activation?.type}
                       {item.labels?.activation ?? ''}
                     {/if}
                   </ItemTableCell>

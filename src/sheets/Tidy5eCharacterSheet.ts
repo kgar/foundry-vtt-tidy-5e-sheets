@@ -1420,7 +1420,7 @@ export class Tidy5eCharacterSheet
         label: 'DND5E.FeatureActive',
         items: feats.filter((feat) => feat.system.activation?.type),
         hasActions: true,
-        dataset: { type: 'feat', 'activation.type': 'action' },
+        dataset: { type: 'feat', 'system.activation.type': 'action' },
         showRequirementsColumn: true,
         showUsagesColumn: true,
         showUsesColumn: true,
