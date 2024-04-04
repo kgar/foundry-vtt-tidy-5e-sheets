@@ -126,7 +126,7 @@
 </script>
 
 <section class="inventory-list-section">
-  <ItemTable location={section?.label ?? primaryColumnName}>
+  <ItemTable key={section.key}>
     <svelte:fragment slot="header">
       <ItemTableHeaderRow>
         <ItemTableColumn primary={true}>

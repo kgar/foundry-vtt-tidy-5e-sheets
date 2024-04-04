@@ -41,7 +41,7 @@
         section.items,
       )}
       <FavoriteFeaturesList
-        sectionTitle={section.label}
+        {section}
         items={section.items}
         {visibleItemIdSubset}
       />

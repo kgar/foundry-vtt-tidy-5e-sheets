@@ -1,6 +1,9 @@
 <script lang="ts">
   import type { Item5e } from 'src/types/item.types';
-  import type { CharacterSheetContext } from 'src/types/types';
+  import type {
+    CharacterFeatureSection,
+    CharacterSheetContext,
+  } from 'src/types/types';
   import ItemTable from '../../../components/item-list/v1/ItemTable.svelte';
   import ItemTableHeaderRow from '../../../components/item-list/v1/ItemTableHeaderRow.svelte';
   import ItemTableColumn from '../../../components/item-list/v1/ItemTableColumn.svelte';
@@ -18,7 +21,7 @@
 
   let context = getContext<Readable<CharacterSheetContext>>('context');
   export let items: Item5e[] = [];
-  export let sectionTitle: string | null = null;
+  export let section: CharacterFeatureSection;
   /**
    * An optional subset of item IDs which will hide all other items not included in this set.
    * Useful for showing only search results, for example.
@@ -28,11 +31,11 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-<ItemTable location="features">
+<ItemTable key={section.key}>
   <svelte:fragment slot="header">
     <ItemTableHeaderRow>
       <ItemTableColumn primary={true}>
-        {localize(sectionTitle ?? 'DND5E.Features')}
+        {localize(section.label ?? 'DND5E.Features')}
       </ItemTableColumn>
       <ItemTableColumn baseWidth="3.125rem">
         {localize('DND5E.Uses')}

@@ -118,7 +118,7 @@
     {:else}
       {#each $context.features as section}
         {#if $context.unlocked || section.items.length}
-          <ItemTable location={section.label}>
+          <ItemTable key={section.key}>
             <svelte:fragment slot="header">
               <ItemTableHeaderRow>
                 <ItemTableColumn primary={true}>

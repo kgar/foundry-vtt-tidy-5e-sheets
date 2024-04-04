@@ -125,7 +125,7 @@
         section.items,
       )}
       {#if (searchCriteria.trim() === '' && $context.unlocked) || visibleItemIdSubset.size > 0}
-        <ItemTable location={section.label}>
+        <ItemTable key={section.key}>
           <svelte:fragment slot="header">
             <ItemTableHeaderRow>
               <ItemTableColumn primary={true}>

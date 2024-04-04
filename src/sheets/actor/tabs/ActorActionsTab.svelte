@@ -74,7 +74,7 @@
 <div class="actions-tab-container scroll-container flex-column small-gap">
   {#each Object.entries($context.actions) as [actionType, itemSet] (actionType)}
     {#if itemSet.size}
-      <ItemTable location={actionType}>
+      <ItemTable key={actionType}>
         <svelte:fragment slot="header">
           <ItemTableHeaderRow>
             <ItemTableColumn primary={true}>

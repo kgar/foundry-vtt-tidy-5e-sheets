@@ -90,7 +90,7 @@
   {:else}
     {#each effectSections as section}
       {#if ($context.unlocked && $context.allowEffectsManagement) || section.effects.length > 0}
-        <ItemTable location={section.label}>
+        <ItemTable key={section.label}>
           <svelte:fragment slot="header">
             <ItemTableHeaderRow>
               <ItemTableColumn primary={true}>
