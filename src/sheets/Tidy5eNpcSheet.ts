@@ -54,9 +54,10 @@ import { SheetSections } from 'src/features/sections/SheetSections';
 import { NpcSheetSections } from 'src/features/sections/NpcSheetSections';
 import { TidyFlags } from 'src/api';
 import { SectionOrderManagerApplication } from 'src/applications/section-order-manager/SectionOrderManagerApplication';
+import { ActorSheetCustomSectionMixin } from './mixins/Tidy5eBaseActorSheetMixins';
 
 export class Tidy5eNpcSheet
-  extends dnd5e.applications.actor.ActorSheet5eNPC
+  extends ActorSheetCustomSectionMixin(dnd5e.applications.actor.ActorSheet5eNPC)
   implements
     SheetTabCacheable,
     SheetExpandedItemsCacheable,
