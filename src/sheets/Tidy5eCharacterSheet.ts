@@ -1048,13 +1048,18 @@ export class Tidy5eCharacterSheet
           this._prepareItem(item, ctx);
 
           const isWithinContainer = this.actor.items.has(item.system.container);
+
           // Classify items into types
           if (!isWithinContainer) {
-            this._partitionItem(item, obj, inventory);
+            CharacterSheetSections.partitionItem(item, obj, inventory);
           }
 
           if (FoundryAdapter.isDocumentFavorited(item)) {
-            this._partitionItem(item, obj.favorites, favoriteInventory);
+            CharacterSheetSections.partitionItem(
+              item,
+              obj.favorites,
+              favoriteInventory
+            );
           }
 
           return obj;
@@ -1090,15 +1095,6 @@ export class Tidy5eCharacterSheet
       CONSTANTS.TAB_CHARACTER_INVENTORY
     );
 
-    // Sort items
-    const inventorySortMode =
-      characterPreferences.tabs?.[CONSTANTS.TAB_CHARACTER_INVENTORY]?.sort ??
-      'm';
-
-    if (inventorySortMode === 'a') {
-      items = items.toSorted((a, b) => a.name.localeCompare(b.name));
-    }
-
     // Section the items by type
     for (let i of items) {
       const ctx = (context.itemContext[i.id] ??= {});
@@ -1108,23 +1104,30 @@ export class Tidy5eCharacterSheet
       });
     }
 
+    // Sort items
+    const inventorySortMode =
+      characterPreferences.tabs?.[CONSTANTS.TAB_CHARACTER_INVENTORY]?.sort ??
+      'm';
+
+    Object.values(inventory).forEach((section) => {
+      if (inventorySortMode === 'a') {
+        section.items = section.items.toSorted((a, b) =>
+          a.name.localeCompare(b.name)
+        );
+      } else if (inventorySortMode === 'm') {
+        section.items = section.items.toSorted(
+          (a: Item5e, b: Item5e) => (a.sort || 0) - (b.sort || 0)
+        );
+      }
+    });
+
     // Filter Favorite Items
     favorites.items = this.itemFilterService.filter(
       favorites.items,
       CONSTANTS.TAB_CHARACTER_ATTRIBUTES
     );
 
-    // Sort Favorite Items
-    const attributesSortMode =
-      characterPreferences.tabs?.[CONSTANTS.TAB_CHARACTER_ATTRIBUTES]?.sort ??
-      'm';
-
-    if (attributesSortMode === 'a') {
-      favorites.items = favorites.items.toSorted((a, b) =>
-        a.name.localeCompare(b.name)
-      );
-    }
-
+    // Section favorite items by type
     for (let i of favorites.items) {
       const ctx = (context.itemContext[i.id] ??= {});
       ctx.totalWeight = i.system.totalWeight?.toNearest(0.1);
@@ -1132,6 +1135,23 @@ export class Tidy5eCharacterSheet
         canCreate: false,
       });
     }
+
+    // Sort Favorite Items
+    const attributesSortMode =
+      characterPreferences.tabs?.[CONSTANTS.TAB_CHARACTER_ATTRIBUTES]?.sort ??
+      'm';
+
+    Object.values(favoriteInventory).forEach((section) => {
+      if (attributesSortMode === 'a') {
+        section.items = section.items.toSorted((a, b) =>
+          a.name.localeCompare(b.name)
+        );
+      } else if (attributesSortMode === 'm') {
+        section.items = section.items.toSorted(
+          (a: Item5e, b: Item5e) => (a.sort || 0) - (b.sort || 0)
+        );
+      }
+    });
 
     // Organize Spellbook and count the number of prepared spells (excluding always, at will, cantrips, etc...)
     // Count prepared spells
@@ -1148,22 +1168,34 @@ export class Tidy5eCharacterSheet
       CONSTANTS.TAB_CHARACTER_SPELLBOOK
     );
 
+    // Section spells
+    // TODO: Take over `_prepareSpellbook` and
+    // - have custom sectioning built right into the process
+    // - set up `key` in the spellbook prep code, just like `prop`
+    const spellbook = SheetSections.prepareTidySpellbook(
+      context,
+      spells,
+      {
+        canCreate: true,
+      },
+      this
+    );
+
     // Sort spells
     const spellbookSortMode =
       characterPreferences.tabs?.[CONSTANTS.TAB_CHARACTER_SPELLBOOK]?.sort ??
       'm';
 
-    if (spellbookSortMode === 'a') {
-      spells = spells.toSorted((a, b) => a.name.localeCompare(b.name));
-    }
-
-    // Section spells
-    // TODO: Take over `_prepareSpellbook` and
-    // - put in `SheetSections`
-    // - have custom sectioning built right into the process
-    // - set up `key` in the spellbook prep code, just like `prop`
-    const spellbook = this._prepareTidySpellbook(context, spells, {
-      canCreate: true,
+    spellbook.forEach((section) => {
+      if (spellbookSortMode === 'a') {
+        section.spells = section.spells.toSorted((a, b) =>
+          a.name.localeCompare(b.name)
+        );
+      } else if (spellbookSortMode === 'm') {
+        section.spells = section.spells.toSorted(
+          (a: Item5e, b: Item5e) => (a.sort || 0) - (b.sort || 0)
+        );
+      }
     });
 
     // Filter Favorite Spells
@@ -1172,21 +1204,28 @@ export class Tidy5eCharacterSheet
       CONSTANTS.TAB_CHARACTER_ATTRIBUTES
     );
 
-    // Sort favorite Spells
-    if (attributesSortMode === 'a') {
-      favorites.spells = favorites.spells.toSorted((a, b) =>
-        a.name.localeCompare(b.name)
-      );
-    }
-
     // Section Favorite Spells
-    const favoriteSpellbook = this._prepareTidySpellbook(
+    const favoriteSpellbook = SheetSections.prepareTidySpellbook(
       context,
       favorites.spells,
       {
         canCreate: false,
-      }
+      },
+      this
     );
+
+    // Sort favorite Spells
+    favoriteSpellbook.forEach((section) => {
+      if (attributesSortMode === 'a') {
+        section.spells = section.spells.toSorted((a, b) =>
+          a.name.localeCompare(b.name)
+        );
+      } else if (attributesSortMode === 'm') {
+        section.spells = section.spells.toSorted(
+          (a: Item5e, b: Item5e) => (a.sort || 0) - (b.sort || 0)
+        );
+      }
+    });
 
     // Organize Features
     // Sub-item groupings and validation
@@ -1355,27 +1394,6 @@ export class Tidy5eCharacterSheet
     context.preparedSpells = nPrepared;
   }
 
-  private _prepareTidySpellbook(
-    context: CharacterSheetContext,
-    spells: Item5e[],
-    options: Partial<SpellbookSection> = {}
-  ): SpellbookSection[] {
-    const customSectionSpells = spells.filter((s) => TidyFlags.section.get(s));
-    spells = spells.filter((s) => !TidyFlags.section.get(s));
-    return [
-      ...super
-        ._prepareSpellbook(context, spells)
-        .map((s: SpellbookSection) => ({
-          ...s,
-          key: s.prop,
-        })),
-      ...SheetSections.generateCustomSpellbookSections(
-        customSectionSpells,
-        options
-      ),
-    ];
-  }
-
   // TODO: Consider moving to the static class CharacterSheetSections
   private _buildFeaturesSections(
     races: any[],
@@ -1392,7 +1410,7 @@ export class Tidy5eCharacterSheet
         label: CONFIG.Item.typeLabels.race,
         items: races,
         hasActions: false,
-        dataset: { type: 'race' },
+        dataset: { type: CONSTANTS.ITEM_TYPE_RACE },
         showRequirementsColumn: true,
         canCreate: true,
         key: 'race',
@@ -1402,7 +1420,7 @@ export class Tidy5eCharacterSheet
         label: CONFIG.Item.typeLabels.background,
         items: backgrounds,
         hasActions: false,
-        dataset: { type: 'background' },
+        dataset: { type: CONSTANTS.ITEM_TYPE_BACKGROUND },
         showRequirementsColumn: true,
         canCreate: true,
         key: 'background',
@@ -1412,7 +1430,7 @@ export class Tidy5eCharacterSheet
         label: `${CONFIG.Item.typeLabels.class}Pl`,
         items: classes,
         hasActions: false,
-        dataset: { type: 'class' },
+        dataset: { type: CONSTANTS.ITEM_TYPE_CLASS },
         isClass: true,
         showLevelColumn: true,
         canCreate: true,
@@ -1423,7 +1441,10 @@ export class Tidy5eCharacterSheet
         label: 'DND5E.FeatureActive',
         items: feats.filter((feat) => feat.system.activation?.type),
         hasActions: true,
-        dataset: { type: 'feat', 'system.activation.type': 'action' },
+        dataset: {
+          type: CONSTANTS.ITEM_TYPE_FEAT,
+          'system.activation.type': 'action',
+        },
         showRequirementsColumn: true,
         showUsagesColumn: true,
         showUsesColumn: true,
@@ -1435,7 +1456,7 @@ export class Tidy5eCharacterSheet
         label: 'DND5E.FeaturePassive',
         items: feats.filter((feat) => !feat.system.activation?.type),
         hasActions: false,
-        dataset: { type: 'feat' },
+        dataset: { type: CONSTANTS.ITEM_TYPE_FEAT },
         showRequirementsColumn: true,
         canCreate: true,
         key: 'passive',
@@ -1452,29 +1473,6 @@ export class Tidy5eCharacterSheet
     );
 
     return features;
-  }
-
-  // TODO: Consider moving to the static class CharacterSheetSections
-  private _partitionItem(
-    item: any,
-    obj: CharacterItemPartitions,
-    inventory: ActorInventoryTypes
-  ) {
-    if (item.type === 'spell') {
-      obj.spells.push(item);
-    } else if (item.type === 'feat') {
-      obj.feats.push(item);
-    } else if (item.type === 'race') {
-      obj.races.push(item);
-    } else if (item.type === 'background') {
-      obj.backgrounds.push(item);
-    } else if (item.type === 'class') {
-      obj.classes.push(item);
-    } else if (item.type === 'subclass') {
-      obj.subclasses.push(item);
-    } else if (Object.keys(inventory).includes(item.type)) {
-      obj.items.push(item);
-    }
   }
 
   // TODO: Consider moving to the static class CharacterSheetSections
@@ -1512,7 +1510,7 @@ export class Tidy5eCharacterSheet
    * @protected
    */
   protected _prepareItem(item: Item5e, context: CharacterItemContext) {
-    if (item.type === 'spell') {
+    if (item.type === CONSTANTS.ITEM_TYPE_SPELL) {
       const prep = item.system.preparation || {};
       const isAlways = prep.mode === 'always';
       const isPrepared = !!prep.prepared;
@@ -1567,7 +1565,7 @@ export class Tidy5eCharacterSheet
   async _onDropSingleItem(itemData: any) {
     // Create a Consumable spell scroll on the Inventory tab
     if (
-      itemData.type === 'spell' &&
+      itemData.type === CONSTANTS.ITEM_TYPE_SPELL &&
       this.currentTabId === CONSTANTS.TAB_CHARACTER_INVENTORY
     ) {
       const options: Record<string, unknown> = {};
@@ -1768,7 +1766,7 @@ export class Tidy5eCharacterSheet
 function getActorClassesToImages(actor: Actor5e): Record<string, string> {
   let actorClassesToImages: Record<string, string> = {};
   for (let item of actor.items) {
-    if (item.type == 'class') {
+    if (item.type == CONSTANTS.ITEM_TYPE_CLASS) {
       let className = item.name.toLowerCase();
       let classImg = item.img;
       actorClassesToImages[className] = classImg;

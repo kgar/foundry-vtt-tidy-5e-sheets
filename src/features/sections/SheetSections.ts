@@ -1,7 +1,14 @@
 import { TidyFlags } from 'src/api';
 import { CONSTANTS } from 'src/constants';
+import type { Tidy5eCharacterSheet } from 'src/sheets/Tidy5eCharacterSheet';
+import type { Tidy5eNpcSheet } from 'src/sheets/Tidy5eNpcSheet';
 import type { Item5e } from 'src/types/item.types';
-import type { SpellbookSection } from 'src/types/types';
+import type {
+  CharacterSheetContext,
+  CustomSectionOptions,
+  NpcSheetContext,
+  SpellbookSection,
+} from 'src/types/types';
 
 export class SheetSections {
   static generateCustomSpellbookSections(
@@ -27,7 +34,7 @@ export class SheetSections {
       return;
     }
 
-    const customSection: SpellbookSection = (spellbook[customSectionName] ??= {
+    const section: SpellbookSection = (spellbook[customSectionName] ??= {
       dataset: {
         [TidyFlags.section.prop]: customSectionName,
       },
@@ -45,24 +52,79 @@ export class SheetSections {
       ...options,
     });
 
-    customSection.spells.push(spell);
+    section.spells.push(spell);
   }
 
-  static sortKeyedSections<T extends { key: string }>(
-    sections: T[],
-    keyOrder: string[] | undefined
-  ) {
-    if (!keyOrder) {
-      return sections;
-    }
+  static sortKeyedSections<
+    T extends { key: string; custom?: CustomSectionOptions }
+  >(sections: T[], keyOrder: string[] | undefined) {
+    const sortMap = new Map((keyOrder ?? []).map((e, i) => [e, i]));
+    const defaultSortMap = new Map(
+      SheetSections.getDefaultSortOrder(sections).map((e, i) => [e, i])
+    );
 
     const maxLength = sections.length;
-    const sortMap = new Map(keyOrder.map((e, i) => [e, i]));
     sections.sort(
       (a, b) =>
-        (sortMap.get(a.key) ?? maxLength) - (sortMap.get(b.key) ?? maxLength)
+        (sortMap.get(a.key) ?? defaultSortMap.get(a.key) ?? maxLength) -
+        (sortMap.get(b.key) ?? defaultSortMap.get(b.key) ?? maxLength)
     );
 
     return sections;
+  }
+
+  static getDefaultSortOrder<
+    T extends { key: string; custom?: CustomSectionOptions }
+  >(sections: T[]): string[] {
+    const { defaultSections, customSections } = sections.reduce<{
+      defaultSections: string[];
+      customSections: string[];
+    }>(
+      (prev, curr) => {
+        curr.custom
+          ? prev.customSections.push(curr.key)
+          : prev.defaultSections.push(curr.key);
+
+        return prev;
+      },
+      { defaultSections: [], customSections: [] }
+    );
+
+    customSections.sort((a, b) => a.localeCompare(b));
+
+    return [...defaultSections, ...customSections];
+  }
+
+  static prepareTidySpellbook(
+    context: CharacterSheetContext | NpcSheetContext,
+    spells: Item5e[],
+    options: Partial<SpellbookSection> = {},
+    app: Tidy5eCharacterSheet | Tidy5eNpcSheet
+  ): SpellbookSection[] {
+    const customSectionSpells = spells.filter((s) => TidyFlags.section.get(s));
+    spells = spells.filter((s) => !TidyFlags.section.get(s));
+
+    const spellbook: SpellbookSection[] = app
+      ._prepareSpellbook(context, spells)
+      .map((s: SpellbookSection) => ({
+        ...s,
+        key: s.key ?? s.prop,
+      }));
+
+    const spellbookMap = spellbook.reduce<Record<string, SpellbookSection>>(
+      (prev, curr) => {
+        const key = curr.prop ?? '';
+        curr.key = key;
+        prev[key] = curr;
+        return prev;
+      },
+      {}
+    );
+
+    customSectionSpells.forEach((spell) => {
+      SheetSections.applySpellToSection(spellbookMap, spell, options);
+    });
+
+    return spellbook;
   }
 }

@@ -1,7 +1,9 @@
 import { CONSTANTS } from 'src/constants';
 import type { Item5e } from 'src/types/item.types';
 import type {
+  ActorInventoryTypes,
   CharacterFeatureSection,
+  CharacterItemPartitions,
   InventorySection,
 } from 'src/types/types';
 import { TidyFlags } from 'src/foundry/TidyFlags';
@@ -79,5 +81,27 @@ export class CharacterSheetSections {
     });
 
     customSection.items.push(feat);
+  }
+
+  static partitionItem(
+    item: Item5e,
+    partitions: CharacterItemPartitions,
+    inventory: ActorInventoryTypes
+  ) {
+    if (item.type === CONSTANTS.ITEM_TYPE_SPELL) {
+      partitions.spells.push(item);
+    } else if (item.type === CONSTANTS.ITEM_TYPE_FEAT) {
+      partitions.feats.push(item);
+    } else if (item.type === CONSTANTS.ITEM_TYPE_RACE) {
+      partitions.races.push(item);
+    } else if (item.type === CONSTANTS.ITEM_TYPE_BACKGROUND) {
+      partitions.backgrounds.push(item);
+    } else if (item.type === CONSTANTS.ITEM_TYPE_CLASS) {
+      partitions.classes.push(item);
+    } else if (item.type === CONSTANTS.ITEM_TYPE_SUBCLASS) {
+      partitions.subclasses.push(item);
+    } else if (Object.keys(inventory).includes(item.type)) {
+      partitions.items.push(item);
+    }
   }
 }

@@ -849,28 +849,31 @@ export class Tidy5eNpcSheet
     // Filter spells
     spells = this.itemFilterService.filter(spells, spellbookTabId);
 
-    // Sort spells
-    if (spellbookSortMode === 'a') {
-      spells = spells.toSorted((a: Item5e, b: Item5e) =>
-        a.name.localeCompare(b.name)
-      );
-    }
-
     // Section spells
-    // TODO: Take over `_prepareSpellbook` and put in `SheetSections`; have custom sectioning built right into the process.
-    const customSectionSpells = spells.filter((s: Item5e) =>
-      TidyFlags.section.get(s)
-    );
-    spells = spells.filter((s: Item5e) => !TidyFlags.section.get(s));
-    const spellbook = [
-      ...this._prepareSpellbook(context, spells).map((s: SpellbookSection) => ({
-        ...s,
-        key: s.prop,
-      })),
-      ...SheetSections.generateCustomSpellbookSections(customSectionSpells, {
+    // TODO: Take over `_prepareSpellbook` and have custom sectioning built right in
+    const spellbook = SheetSections.prepareTidySpellbook(
+      context,
+      spells,
+      {
         canCreate: true,
-      }),
-    ];
+      },
+      this
+    );
+
+    // Sort spells
+    // TODO: After Tidy takes over spellbook preparation, sorting can return to before section prep and run against all spells as a whole.
+    // For now, it has to run afterward and reapply the manual sort order when relevant.
+    spellbook.forEach((section) => {
+      if (spellbookSortMode === 'a') {
+        section.spells = section.spells.toSorted((a, b) =>
+          a.name.localeCompare(b.name)
+        );
+      } else if (spellbookSortMode === 'm') {
+        section.spells = section.spells.toSorted(
+          (a: Item5e, b: Item5e) => (a.sort || 0) - (b.sort || 0)
+        );
+      }
+    });
 
     // Organize Features
     for (let item of other) {
