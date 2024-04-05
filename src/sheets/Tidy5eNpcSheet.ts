@@ -785,6 +785,8 @@ export class Tidy5eNpcSheet
     };
 
     // Start by classifying items into groups for rendering
+    const maxLevelDelta =
+      CONFIG.DND5E.maxLevel - (this.actor.system.details.level ?? 0);
     let [spells, other] = context.items.reduce(
       (arr, item) => {
         const { quantity, uses, recharge, target } = item.system;
@@ -796,6 +798,14 @@ export class Tidy5eNpcSheet
         ctx.isDepleted = item.isOnCooldown && uses.per && uses.value > 0;
         ctx.hasTarget = !!target && !['none', ''].includes(target.type);
         ctx.canToggle = false;
+        if (item.type === 'class')
+          ctx.availableLevels = Array.fromRange(CONFIG.DND5E.maxLevel, 1).map(
+            (level) => ({
+              level,
+              delta: level - item.system.levels,
+              disabled: level - item.system.levels > maxLevelDelta,
+            })
+          );
         if (item.type === 'spell') {
           if (this._concentration.items.has(item)) {
             ctx.concentration = true;
@@ -869,10 +879,23 @@ export class Tidy5eNpcSheet
         NpcSheetSections.applyAbilityToSection(features, item, {
           canCreate: true,
         });
-      } else if (item.type === 'weapon') features.weapons.items.push(item);
-      else if (item.type === 'feat') {
-        if (item.system.activation.type) features.actions.items.push(item);
-        else features.passive.items.push(item);
+      } else if (item.type === CONSTANTS.ITEM_TYPE_WEAPON)
+        features.weapons.items.push(item);
+      else if (
+        [
+          CONSTANTS.ITEM_TYPE_BACKGROUND,
+          CONSTANTS.ITEM_TYPE_CLASS,
+          CONSTANTS.ITEM_TYPE_FEAT,
+          CONSTANTS.ITEM_TYPE_RACE,
+          CONSTANTS.ITEM_TYPE_SUBCLASS,
+        ].includes(item.type)
+      ) {
+        if (item.system.activation?.type) {
+          features.actions.items.push(item);
+        } else {
+          // TODO: Partition classes/subclasses to their own area; this may have to happen in the original partition of the spells / other arrays.
+          features.passive.items.push(item);
+        }
       } else features.equipment.items.push(item);
     }
 
