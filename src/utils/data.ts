@@ -1,6 +1,6 @@
 const nilValues = [null, undefined] as const;
-export function isNil(x: any, ...or: any[]) {
-  return nilValues.concat(or ?? []).includes(x);
+export function isNil(value: any, ...or: any[]): value is null | undefined {
+  return nilValues.concat(or ?? []).includes(value);
 }
 
 function camelToLowerDashCase(str: string) {
