@@ -1191,11 +1191,11 @@ export class Tidy5eCharacterSheet
       );
 
     // Assign, sort sections, sort items, and return
-    const actorSectionOrder = TidyFlags.actorSectionOrder.get(this.actor);
+    const sectionConfigs = TidyFlags.sectionConfig.get(this.actor);
 
     context.inventory = SheetSections.sortKeyedSections(
       Object.values(inventory),
-      actorSectionOrder?.[CONSTANTS.TAB_CHARACTER_INVENTORY]
+      sectionConfigs?.[CONSTANTS.TAB_CHARACTER_INVENTORY]
     );
 
     const inventorySortMode =
@@ -1215,7 +1215,7 @@ export class Tidy5eCharacterSheet
 
     context.spellbook = SheetSections.sortKeyedSections(
       spellbook,
-      actorSectionOrder?.[CONSTANTS.TAB_CHARACTER_SPELLBOOK]
+      sectionConfigs?.[CONSTANTS.TAB_CHARACTER_SPELLBOOK]
     );
 
     const spellbookSortMode =
@@ -1235,7 +1235,7 @@ export class Tidy5eCharacterSheet
 
     context.features = SheetSections.sortKeyedSections(
       Object.values(features),
-      actorSectionOrder?.[CONSTANTS.TAB_CHARACTER_FEATURES]
+      sectionConfigs?.[CONSTANTS.TAB_CHARACTER_FEATURES]
     );
 
     const featureSortMode =
@@ -1277,7 +1277,7 @@ export class Tidy5eCharacterSheet
 
     context.favorites = SheetSections.sortKeyedSections(
       favoriteSections,
-      actorSectionOrder?.[CONSTANTS.TAB_CHARACTER_ATTRIBUTES]
+      sectionConfigs?.[CONSTANTS.TAB_CHARACTER_ATTRIBUTES]
     );
 
     const attributesSortMode =

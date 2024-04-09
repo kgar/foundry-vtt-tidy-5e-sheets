@@ -62,9 +62,9 @@ export class SectionOrderManagerApplication extends SvelteFormApplicationBase {
   }
 
   private _onConfirm(sections: KeyedAndLabeled[]) {
-    const sectionOrder = TidyFlags.actorSectionOrder.get(this.actor) ?? {};
-    sectionOrder[this.tabId] = sections.map((s) => s.key);
-    TidyFlags.actorSectionOrder.set(this.actor, sectionOrder);
+    const sectionConfig = TidyFlags.sectionConfig.get(this.actor) ?? {};
+    sectionConfig[this.tabId] = sections.map((s, i) => ({ key: s.key, order: i }));
+    TidyFlags.sectionConfig.set(this.actor, sectionConfig);
     this.close();
   }
 
@@ -75,10 +75,10 @@ export class SectionOrderManagerApplication extends SvelteFormApplicationBase {
         'TIDY5E.UseDefaultDialog.text'
       )}</p>`,
       yes: () => {
-        const sectionOrder = TidyFlags.actorSectionOrder.get(this.actor) ?? {};
+        const sectionOrder = TidyFlags.sectionConfig.get(this.actor) ?? {};
         delete sectionOrder[this.tabId];
         sectionOrder[`-=${this.tabId}`] = [];
-        TidyFlags.actorSectionOrder.set(this.actor, sectionOrder);
+        TidyFlags.sectionConfig.set(this.actor, sectionOrder);
         this.close();
       },
       no: () => {},

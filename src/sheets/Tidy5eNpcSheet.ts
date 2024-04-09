@@ -885,11 +885,11 @@ export class Tidy5eNpcSheet
     );
 
     // Assign, sort sections, and return
-    const actorSectionOrder = TidyFlags.actorSectionOrder.get(this.actor);
+    const sectionConfigs = TidyFlags.sectionConfig.get(this.actor);
 
     context.features = SheetSections.sortKeyedSections(
       Object.values(features),
-      actorSectionOrder?.[CONSTANTS.TAB_NPC_ABILITIES]
+      sectionConfigs?.[CONSTANTS.TAB_NPC_ABILITIES]
     );
 
     const abilitiesSortMode =
@@ -909,7 +909,7 @@ export class Tidy5eNpcSheet
 
     context.spellbook = SheetSections.sortKeyedSections(
       spellbook,
-      actorSectionOrder?.[CONSTANTS.TAB_NPC_SPELLBOOK]
+      sectionConfigs?.[CONSTANTS.TAB_NPC_SPELLBOOK]
     );
 
     const showSpellbookTab =

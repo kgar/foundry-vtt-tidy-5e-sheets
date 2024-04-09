@@ -1,4 +1,4 @@
-import { TidyFlags } from 'src/api';
+import { TidyFlags, type SectionConfig } from 'src/api';
 import { CONSTANTS } from 'src/constants';
 import type { Tidy5eCharacterSheet } from 'src/sheets/Tidy5eCharacterSheet';
 import type { Tidy5eNpcSheet } from 'src/sheets/Tidy5eNpcSheet';
@@ -58,8 +58,8 @@ export class SheetSections {
 
   static sortKeyedSections<
     T extends { key: string; custom?: CustomSectionOptions }
-  >(sections: T[], keyOrder: string[] | undefined) {
-    const sortMap = new Map((keyOrder ?? []).map((e, i) => [e, i]));
+  >(sections: T[], sectionConfigs: SectionConfig[] | undefined) {
+    const sortMap = new Map((sectionConfigs ?? []).map((e) => [e.key, e.order]));
     const defaultSortMap = new Map(
       SheetSections.getDefaultSortOrder(sections).map((e, i) => [e, i])
     );

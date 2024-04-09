@@ -1,7 +1,6 @@
 import type { Item5e } from 'src/types/item.types';
 import { FoundryAdapter } from './foundry-adapter';
-import type { Actor5e } from 'src/types/types';
-import type { ActorSectionOrder } from 'src/features/sections/sections.types';
+import type { SheetTabSectionConfigs } from 'src/features/sections/sections.types';
 import { CONSTANTS } from 'src/constants';
 
 /** Manages Tidy flags. */
@@ -61,33 +60,33 @@ export class TidyFlags {
     },
   };
 
-  /** Determines the order of item table sections for a given actor. */
-  static actorSectionOrder = {
-    key: 'actor-section-order' as const,
-    prop: TidyFlags.getFlagPropertyPath('actor-section-order'),
-    /** Gets the actor's section ordering. `undefined` means to use the default order.  */
-    get(actor: Actor5e): ActorSectionOrder | undefined {
+  /** Determines the order of item table sections for a given document sheet. */
+  static sectionConfig = {
+    key: 'sheet-section-config' as const,
+    prop: TidyFlags.getFlagPropertyPath('sheet-section-config'),
+    /** Gets the document sheet's section configuration. `undefined` means to use the default settings. */
+    get(document: any): SheetTabSectionConfigs | undefined {
       return (
-        FoundryAdapter.tryGetFlag<ActorSectionOrder>(
-          actor,
-          TidyFlags.actorSectionOrder.key
+        FoundryAdapter.tryGetFlag<SheetTabSectionConfigs>(
+          document,
+          TidyFlags.sectionConfig.key
         ) ?? undefined
       );
     },
-    /** Sets the actor's section ordering. */
-    set(actor: Actor5e, value: ActorSectionOrder) {
+    /** Sets the document sheet's configuration. */
+    set(document: any, value: SheetTabSectionConfigs) {
       return FoundryAdapter.setFlag(
-        actor,
-        TidyFlags.actorSectionOrder.key,
+        document,
+        TidyFlags.sectionConfig.key,
         value
       );
     },
     /**
-     * Clears the actor's section ordering,
-     * meaning the target actor should use default ordering.
+     * Clears the document sheet's section config,
+     * meaning the target actor should use default settings.
      * */
-    unset(actor: Actor5e) {
-      return FoundryAdapter.unsetFlag(actor, TidyFlags.actorSectionOrder.key);
+    unset(document: any) {
+      return FoundryAdapter.unsetFlag(document, TidyFlags.sectionConfig.key);
     },
   };
 

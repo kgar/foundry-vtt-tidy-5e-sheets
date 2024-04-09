@@ -1,5 +1,11 @@
-/** The ordering of sections for a given actor. */
-export type ActorSectionOrder = {
+export type SectionConfig = {
+  key: string;
+  order: number;
+  show?: boolean;
+}
+
+/** Section configuration for a given actor, arranged by tab IDs. */
+export type SheetTabSectionConfigs = {
   /** A mapping from tab IDs to arrays of section keys, where the arrays represent the order of the sections. */
-  [tabId: string]: string[];
+  [tabId: string]: SectionConfig[];
 };
