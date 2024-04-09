@@ -1163,7 +1163,7 @@ export class Tidy5eCharacterSheet
     );
 
     // Process Special Feature Item Context
-    SheetSections.applyClassItemContext(
+    classes = SheetSections.prepareClassItems(
       context,
       classes,
       subclasses,
@@ -1181,7 +1181,7 @@ export class Tidy5eCharacterSheet
     }
 
     // Process Special Favorite Feature Item Context
-    SheetSections.applyClassItemContext(
+    favorites.classes = SheetSections.prepareClassItems(
       context,
       favorites.classes,
       favorites.subclasses,

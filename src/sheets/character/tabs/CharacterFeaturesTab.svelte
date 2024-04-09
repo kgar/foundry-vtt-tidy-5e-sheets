@@ -177,7 +177,7 @@
                     hasChildren={false}
                     {item}
                   >
-                    {#if section.isClass && item.type === 'subclass'}&rdsh;{/if}
+                    {#if ctx.parent}&rdsh;{/if}
                     {#if !section.isClass && item.type === 'subclass'}
                       <i class="fa-solid fa-link-slash align-self-center"></i>
                     {/if}

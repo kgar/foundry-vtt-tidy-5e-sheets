@@ -209,6 +209,7 @@
                     cssClass="extra-small-gap"
                     {item}
                   >
+                    {#if ctx.parent}&rdsh;{/if}
                     <span
                       class="truncate"
                       data-tidy-item-name={item.name}

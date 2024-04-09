@@ -835,7 +835,7 @@ export class Tidy5eNpcSheet
     const spellbookSortMode =
       npcPreferences.tabs?.[spellbookTabId]?.sort ?? 'm';
 
-    SheetSections.applyClassItemContext(
+    classes = SheetSections.prepareClassItems(
       context,
       classes,
       subclasses,

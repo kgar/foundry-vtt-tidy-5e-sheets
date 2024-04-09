@@ -129,14 +129,15 @@ export class SheetSections {
     return spellbook;
   }
 
-  static applyClassItemContext(
+  static prepareClassItems(
     context: CharacterSheetContext | NpcSheetContext,
     classes: Item5e[],
     subclasses: Item5e[],
     actor: Actor5e
   ) {
     const maxLevelDelta = CONFIG.DND5E.maxLevel - actor.system.details.level;
-    return classes.forEach((cls) => {
+    return classes.reduce((arr, cls) => {
+      arr.push(cls);
       const ctx = (context.itemContext[cls.id] ??= {});
       ctx.availableLevels = Array.fromRange(CONFIG.DND5E.maxLevel + 1)
         .slice(1)
@@ -150,8 +151,11 @@ export class SheetSections {
         (s: Item5e) => s.system.classIdentifier === identifier
       );
       if (subclass) {
-        (ctx.subItems ??= []).push(subclass);
+        arr.push(subclass);
+        const subclassCtx = (context.itemContext[subclass.id] ??= {});
+        subclassCtx.parent = cls;
       }
+      return arr;
     }, []);
   }
 }

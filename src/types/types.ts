@@ -198,7 +198,7 @@ export type CharacterItemContext = {
   toggleTitle?: string;
   totalWeight?: number;
   concentration?: boolean;
-  subItems?: Item5e[];
+  parent?: Item5e;
 };
 
 export type FavoriteSection =
@@ -253,7 +253,7 @@ export type NpcItemContext = {
   toggleTitle?: string;
   availableLevels?: AvailableLevel[];
   concentration?: boolean;
-  subItems?: Item5e[];
+  parent?: Item5e;
 };
 
 export type NpcSheetContext = {
