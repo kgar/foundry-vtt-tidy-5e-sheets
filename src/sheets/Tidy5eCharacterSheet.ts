@@ -1088,12 +1088,6 @@ export class Tidy5eCharacterSheet
     );
 
     // Organize items
-    // Filter items
-    items = this.itemFilterService.filter(
-      items,
-      CONSTANTS.TAB_CHARACTER_INVENTORY
-    );
-
     // Section the items by type
     for (let i of items) {
       const ctx = (context.itemContext[i.id] ??= {});
@@ -1102,12 +1096,6 @@ export class Tidy5eCharacterSheet
         canCreate: true,
       });
     }
-
-    // Filter Favorite Items
-    favorites.items = this.itemFilterService.filter(
-      favorites.items,
-      CONSTANTS.TAB_CHARACTER_ATTRIBUTES
-    );
 
     // Section favorite items by type
     for (let i of favorites.items) {
@@ -1127,12 +1115,6 @@ export class Tidy5eCharacterSheet
       );
     }).length;
 
-    // Filter spells
-    spells = this.itemFilterService.filter(
-      spells,
-      CONSTANTS.TAB_CHARACTER_SPELLBOOK
-    );
-
     // Section spells
     // TODO: Take over `_prepareSpellbook` and
     // - have custom sectioning built right into the process
@@ -1144,12 +1126,6 @@ export class Tidy5eCharacterSheet
         canCreate: true,
       },
       this
-    );
-
-    // Filter Favorite Spells
-    favorites.spells = this.itemFilterService.filter(
-      favorites.spells,
-      CONSTANTS.TAB_CHARACTER_ATTRIBUTES
     );
 
     // Section Favorite Spells
@@ -1192,24 +1168,6 @@ export class Tidy5eCharacterSheet
       favorites.feats.push(subclass);
     }
 
-    // Filter Features
-    races = this.itemFilterService.filter(
-      races,
-      CONSTANTS.TAB_CHARACTER_FEATURES
-    );
-    classes = this.itemFilterService.filter(
-      classes,
-      CONSTANTS.TAB_CHARACTER_FEATURES
-    );
-    feats = this.itemFilterService.filter(
-      feats,
-      CONSTANTS.TAB_CHARACTER_FEATURES
-    );
-    backgrounds = this.itemFilterService.filter(
-      backgrounds,
-      CONSTANTS.TAB_CHARACTER_FEATURES
-    );
-
     // Section Features
     const features: Record<string, CharacterFeatureSection> =
       CharacterSheetSections.buildFeaturesSections(
@@ -1221,24 +1179,6 @@ export class Tidy5eCharacterSheet
           canCreate: true,
         }
       );
-
-    // Filter Favorite Features
-    favorites.feats = this.itemFilterService.filter(
-      favorites.feats,
-      CONSTANTS.TAB_CHARACTER_ATTRIBUTES
-    );
-    favorites.classes = this.itemFilterService.filter(
-      favorites.classes,
-      CONSTANTS.TAB_CHARACTER_ATTRIBUTES
-    );
-    favorites.races = this.itemFilterService.filter(
-      favorites.races,
-      CONSTANTS.TAB_CHARACTER_ATTRIBUTES
-    );
-    favorites.backgrounds = this.itemFilterService.filter(
-      favorites.backgrounds,
-      CONSTANTS.TAB_CHARACTER_ATTRIBUTES
-    );
 
     // Section favorite features
     const favoriteFeatures: Record<string, CharacterFeatureSection> =
@@ -1262,9 +1202,16 @@ export class Tidy5eCharacterSheet
       characterPreferences.tabs?.[CONSTANTS.TAB_CHARACTER_INVENTORY]?.sort ??
       'm';
 
-    context.inventory.forEach((section) =>
-      ItemUtils.sortItems(section.items, inventorySortMode)
-    );
+    context.inventory.forEach((section) => {
+      // Sort Inventory
+      ItemUtils.sortItems(section.items, inventorySortMode);
+      // TODO: Collocate Inventory Sub Items
+      // Filter Inventory
+      section.items = this.itemFilterService.filter(
+        section.items,
+        CONSTANTS.TAB_CHARACTER_INVENTORY
+      );
+    });
 
     context.spellbook = SheetSections.sortKeyedSections(
       spellbook,
@@ -1275,9 +1222,16 @@ export class Tidy5eCharacterSheet
       characterPreferences.tabs?.[CONSTANTS.TAB_CHARACTER_SPELLBOOK]?.sort ??
       'm';
 
-    context.spellbook.forEach((section) =>
-      ItemUtils.sortItems(section.spells, spellbookSortMode)
-    );
+    context.spellbook.forEach((section) => {
+      // Sort Spellbook
+      ItemUtils.sortItems(section.spells, spellbookSortMode);
+      // TODO: Collocate Spellbook Sub Items
+      // Filter Spellbook
+      section.spells = this.itemFilterService.filter(
+        section.spells,
+        CONSTANTS.TAB_CHARACTER_SPELLBOOK
+      );
+    });
 
     context.features = SheetSections.sortKeyedSections(
       Object.values(features),
@@ -1288,9 +1242,17 @@ export class Tidy5eCharacterSheet
       characterPreferences.tabs?.[CONSTANTS.TAB_CHARACTER_FEATURES]?.sort ??
       'm';
 
-    context.features.forEach((section) =>
-      ItemUtils.sortItems(section.items, featureSortMode)
-    );
+    context.features.forEach((section) => {
+      // Sort Features
+      ItemUtils.sortItems(section.items, featureSortMode);
+      // Collocate Feature Sub Items
+      section.items = SheetSections.collocateSubItems(context, section.items);
+      // Filter Features
+      section.items = this.itemFilterService.filter(
+        section.items,
+        CONSTANTS.TAB_CHARACTER_FEATURES
+      );
+    });
 
     const favoriteSections = [
       ...Object.values(favoriteInventory)
@@ -1323,8 +1285,20 @@ export class Tidy5eCharacterSheet
       'm';
 
     context.favorites.forEach((section) => {
-      const items = 'spells' in section ? section.spells : section.items;
+      let items = 'spells' in section ? section.spells : section.items;
+      // Sort Favorites
       ItemUtils.sortItems(items, attributesSortMode);
+      // TODO: Collocate Favorite Sub Items
+      // Filter Favorites
+      items = this.itemFilterService.filter(
+        items,
+        CONSTANTS.TAB_CHARACTER_ATTRIBUTES
+      );
+      if ('spells' in section) {
+        section.spells = items;
+      } else {
+        section.items = items;
+      }
     });
 
     context.preparedSpells = nPrepared;

@@ -158,4 +158,45 @@ export class SheetSections {
       return arr;
     }, []);
   }
+
+  static collocateSubItems(
+    context: CharacterSheetContext | NpcSheetContext,
+    items: Item5e[]
+  ): Item5e[] {
+    const itemContext = context.itemContext;
+    const { parents, parentIdToChildren } = items.reduce<{
+      parents: Item5e[];
+      parentIdToChildren: Map<string, Item5e[]>;
+    }>(
+      (prev, item) => {
+        const parentItem = itemContext[item.id]?.parent;
+        const isChild = !!parentItem;
+        if (isChild) {
+          const children = prev.parentIdToChildren.get(parentItem.id) ?? [];
+          children.push(item);
+          prev.parentIdToChildren.set(parentItem.id, children);
+        } else {
+          prev.parents.push(item);
+        }
+        return prev;
+      },
+      { parents: [], parentIdToChildren: new Map<string, Item5e[]>() }
+    );
+
+    if (parents.length === items.length) {
+      return items;
+    }
+
+    return parents.reduce<Item5e[]>((result, item) => {
+      result.push(item);
+
+      const children = parentIdToChildren.get(item.id);
+
+      if (children) {
+        result.push(...children);
+      }
+
+      return result;
+    }, []);
+  }
 }

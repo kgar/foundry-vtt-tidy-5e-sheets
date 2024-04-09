@@ -55,6 +55,7 @@ import { NpcSheetSections } from 'src/features/sections/NpcSheetSections';
 import { TidyFlags } from 'src/api';
 import { SectionOrderManagerApplication } from 'src/applications/section-order-manager/SectionOrderManagerApplication';
 import { ActorSheetCustomSectionMixin } from './mixins/Tidy5eBaseActorSheetMixins';
+import { ItemUtils } from 'src/utils/ItemUtils';
 
 export class Tidy5eNpcSheet
   extends ActorSheetCustomSectionMixin(dnd5e.applications.actor.ActorSheet5eNPC)
@@ -756,7 +757,10 @@ export class Tidy5eNpcSheet
         label: game.i18n.localize('DND5E.AttackPl'),
         items: [],
         hasActions: true,
-        dataset: { type: 'weapon', 'system.weaponType': 'natural' },
+        dataset: {
+          type: CONSTANTS.ITEM_TYPE_WEAPON,
+          'system.weaponType': 'natural',
+        },
         canCreate: true,
         key: 'weapons',
       },
@@ -764,29 +768,37 @@ export class Tidy5eNpcSheet
         label: game.i18n.localize('DND5E.ActionPl'),
         items: [],
         hasActions: true,
-        dataset: { type: 'feat', 'system.activation.type': 'action' },
+        dataset: {
+          type: CONSTANTS.ITEM_TYPE_FEAT,
+          'system.activation.type': 'action',
+        },
         canCreate: true,
         key: 'actions',
       },
       passive: {
         label: game.i18n.localize('DND5E.Features'),
         items: [],
-        dataset: { type: 'feat' },
+        dataset: { type: CONSTANTS.ITEM_TYPE_FEAT },
         canCreate: true,
         key: 'passive',
       },
       equipment: {
         label: game.i18n.localize('DND5E.Inventory'),
         items: [],
-        dataset: { type: 'loot' },
+        dataset: { type: CONSTANTS.ITEM_TYPE_LOOT },
         canCreate: true,
         key: 'equipment',
+      },
+      classes: {
+        label: `${CONFIG.Item.typeLabels.class}Pl`,
+        items: [],
+        dataset: { type: CONSTANTS.ITEM_TYPE_CLASS },
+        canCreate: true,
+        key: 'classes',
       },
     };
 
     // Start by classifying items into groups for rendering
-    const maxLevelDelta =
-      CONFIG.DND5E.maxLevel - (this.actor.system.details.level ?? 0);
     let { spells, classes, subclasses, other } = context.items.reduce<{
       spells: Item5e[];
       classes: Item5e[];
@@ -820,20 +832,7 @@ export class Tidy5eNpcSheet
       { spells: [], subclasses: [], classes: [], other: [] }
     );
 
-    const showSpellbookTab =
-      SettingsProvider.settings.showSpellbookTabNpc.get();
-
-    const spellbookTabId = showSpellbookTab
-      ? CONSTANTS.TAB_NPC_SPELLBOOK
-      : CONSTANTS.TAB_NPC_ABILITIES;
-
     const npcPreferences = SheetPreferencesService.getByType(this.actor.type);
-
-    const abilitiesSortMode =
-      npcPreferences.tabs?.[CONSTANTS.TAB_NPC_ABILITIES]?.sort ?? 'm';
-
-    const spellbookSortMode =
-      npcPreferences.tabs?.[spellbookTabId]?.sort ?? 'm';
 
     classes = SheetSections.prepareClassItems(
       context,
@@ -842,48 +841,9 @@ export class Tidy5eNpcSheet
       this.actor
     );
 
-    other = [...other, ...classes, ...subclasses];
+    other = [...other, ...subclasses];
 
-    // Organize Abilities Sections
-    // Filter Abilities section contents
-    other = this.itemFilterService.filter(other, CONSTANTS.TAB_NPC_ABILITIES);
-
-    // Sort Abilities section contents
-    if (abilitiesSortMode === 'a') {
-      other = other.toSorted((a: Item5e, b: Item5e) =>
-        a.name.localeCompare(b.name)
-      );
-    }
-
-    // Organize Spellbook
-    // Filter spells
-    spells = this.itemFilterService.filter(spells, spellbookTabId);
-
-    // Section spells
-    // TODO: Take over `_prepareSpellbook` and have custom sectioning built right in
-    const spellbook = SheetSections.prepareTidySpellbook(
-      context,
-      spells,
-      {
-        canCreate: true,
-      },
-      this
-    );
-
-    // Sort spells
-    // TODO: After Tidy takes over spellbook preparation, sorting can return to before section prep and run against all spells as a whole.
-    // For now, it has to run afterward and reapply the manual sort order when relevant.
-    spellbook.forEach((section) => {
-      if (spellbookSortMode === 'a') {
-        section.spells = section.spells.toSorted((a, b) =>
-          a.name.localeCompare(b.name)
-        );
-      } else if (spellbookSortMode === 'm') {
-        section.spells = section.spells.toSorted(
-          (a: Item5e, b: Item5e) => (a.sort || 0) - (b.sort || 0)
-        );
-      }
-    });
+    features.classes.items = classes;
 
     // Organize Features
     for (let item of other) {
@@ -912,6 +872,18 @@ export class Tidy5eNpcSheet
       } else features.equipment.items.push(item);
     }
 
+    // Organize Spellbook
+    // Section spells
+    // TODO: Take over `_prepareSpellbook` and have custom sectioning built right in
+    const spellbook = SheetSections.prepareTidySpellbook(
+      context,
+      spells,
+      {
+        canCreate: true,
+      },
+      this
+    );
+
     // Assign, sort sections, and return
     const actorSectionOrder = TidyFlags.actorSectionOrder.get(this.actor);
 
@@ -919,10 +891,47 @@ export class Tidy5eNpcSheet
       Object.values(features),
       actorSectionOrder?.[CONSTANTS.TAB_NPC_ABILITIES]
     );
+
+    const abilitiesSortMode =
+      npcPreferences.tabs?.[CONSTANTS.TAB_NPC_ABILITIES]?.sort ?? 'm';
+
+    context.features.forEach((section) => {
+      // Sort Features
+      ItemUtils.sortItems(section.items, abilitiesSortMode);
+      // Collocate Feature Sub Items
+      section.items = SheetSections.collocateSubItems(context, section.items);
+      // Filter Features
+      section.items = this.itemFilterService.filter(
+        section.items,
+        CONSTANTS.TAB_NPC_ABILITIES
+      );
+    });
+
     context.spellbook = SheetSections.sortKeyedSections(
       spellbook,
       actorSectionOrder?.[CONSTANTS.TAB_NPC_SPELLBOOK]
     );
+
+    const showSpellbookTab =
+      SettingsProvider.settings.showSpellbookTabNpc.get();
+
+    const spellbookTabId = showSpellbookTab
+      ? CONSTANTS.TAB_NPC_SPELLBOOK
+      : CONSTANTS.TAB_NPC_ABILITIES;
+
+    const spellbookSortMode =
+      npcPreferences.tabs?.[spellbookTabId]?.sort ?? 'm';
+
+    context.spellbook.forEach((section) => {
+      // Sort Spellbook
+      ItemUtils.sortItems(section.spells, spellbookSortMode);
+      // TODO: Collocate Spellbook Sub Items
+      // Filter Spellbook
+      section.spells = this.itemFilterService.filter(
+        section.spells,
+        spellbookTabId
+      );
+    });
   }
 
   private async setExpandedItemData() {
