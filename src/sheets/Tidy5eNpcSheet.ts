@@ -787,8 +787,13 @@ export class Tidy5eNpcSheet
     // Start by classifying items into groups for rendering
     const maxLevelDelta =
       CONFIG.DND5E.maxLevel - (this.actor.system.details.level ?? 0);
-    let [spells, other] = context.items.reduce(
-      (arr, item) => {
+    let { spells, classes, subclasses, other } = context.items.reduce<{
+      spells: Item5e[];
+      classes: Item5e[];
+      subclasses: Item5e[];
+      other: Item5e[];
+    }>(
+      (features, item) => {
         const { quantity, uses, recharge, target } = item.system;
         const ctx = (context.itemContext[item.id] ??= {});
         ctx.isStack = Number.isNumeric(quantity) && quantity !== 1;
@@ -798,25 +803,21 @@ export class Tidy5eNpcSheet
         ctx.isDepleted = item.isOnCooldown && uses.per && uses.value > 0;
         ctx.hasTarget = !!target && !['none', ''].includes(target.type);
         ctx.canToggle = false;
-        if (item.type === 'class')
-          ctx.availableLevels = Array.fromRange(CONFIG.DND5E.maxLevel, 1).map(
-            (level) => ({
-              level,
-              delta: level - item.system.levels,
-              disabled: level - item.system.levels > maxLevelDelta,
-            })
-          );
-        if (item.type === 'spell') {
+        if (item.type === CONSTANTS.ITEM_TYPE_SPELL) {
           if (this._concentration.items.has(item)) {
             ctx.concentration = true;
           }
-          arr[0].push(item);
+          features.spells.push(item);
+        } else if (item.type === CONSTANTS.ITEM_TYPE_CLASS) {
+          features.classes.push(item);
+        } else if (item.type === CONSTANTS.ITEM_TYPE_SUBCLASS) {
+          features.subclasses.push(item);
         } else {
-          arr[1].push(item);
+          features.other.push(item);
         }
-        return arr;
+        return features;
       },
-      [[], []]
+      { spells: [], subclasses: [], classes: [], other: [] }
     );
 
     const showSpellbookTab =
@@ -833,6 +834,15 @@ export class Tidy5eNpcSheet
 
     const spellbookSortMode =
       npcPreferences.tabs?.[spellbookTabId]?.sort ?? 'm';
+
+    SheetSections.applyClassItemContext(
+      context,
+      classes,
+      subclasses,
+      this.actor
+    );
+
+    other = [...other, ...classes, ...subclasses];
 
     // Organize Abilities Sections
     // Filter Abilities section contents

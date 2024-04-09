@@ -4,6 +4,7 @@ import type { Tidy5eCharacterSheet } from 'src/sheets/Tidy5eCharacterSheet';
 import type { Tidy5eNpcSheet } from 'src/sheets/Tidy5eNpcSheet';
 import type { Item5e } from 'src/types/item.types';
 import type {
+  Actor5e,
   CharacterSheetContext,
   CustomSectionOptions,
   NpcSheetContext,
@@ -126,5 +127,31 @@ export class SheetSections {
     });
 
     return spellbook;
+  }
+
+  static applyClassItemContext(
+    context: CharacterSheetContext | NpcSheetContext,
+    classes: Item5e[],
+    subclasses: Item5e[],
+    actor: Actor5e
+  ) {
+    const maxLevelDelta = CONFIG.DND5E.maxLevel - actor.system.details.level;
+    return classes.forEach((cls) => {
+      const ctx = (context.itemContext[cls.id] ??= {});
+      ctx.availableLevels = Array.fromRange(CONFIG.DND5E.maxLevel + 1)
+        .slice(1)
+        .map((level) => {
+          const delta = level - cls.system.levels;
+          return { level, delta, disabled: delta > maxLevelDelta };
+        });
+      const identifier =
+        cls.system.identifier || cls.name.slugify({ strict: true });
+      const subclass = subclasses.findSplice(
+        (s: Item5e) => s.system.classIdentifier === identifier
+      );
+      if (subclass) {
+        (ctx.subItems ??= []).push(subclass);
+      }
+    }, []);
   }
 }

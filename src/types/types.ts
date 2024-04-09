@@ -194,11 +194,11 @@ export type CharacterItemContext = {
   isDepleted?: boolean;
   isOnCooldown?: boolean;
   isStack?: boolean;
-  prefixedImage?: string;
   toggleClass?: string;
   toggleTitle?: string;
   totalWeight?: number;
   concentration?: boolean;
+  subItems?: Item5e[];
 };
 
 export type FavoriteSection =
@@ -253,6 +253,7 @@ export type NpcItemContext = {
   toggleTitle?: string;
   availableLevels?: AvailableLevel[];
   concentration?: boolean;
+  subItems?: Item5e[];
 };
 
 export type NpcSheetContext = {

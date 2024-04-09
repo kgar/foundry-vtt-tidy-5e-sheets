@@ -62,6 +62,7 @@ import { SheetSections } from 'src/features/sections/SheetSections';
 import { TidyFlags } from 'src/api';
 import { SectionOrderManagerApplication } from 'src/applications/section-order-manager/SectionOrderManagerApplication';
 import { ActorSheetCustomSectionMixin } from './mixins/Tidy5eBaseActorSheetMixins';
+import { ItemUtils } from 'src/utils/ItemUtils';
 
 export class Tidy5eCharacterSheet
   extends ActorSheetCustomSectionMixin(
@@ -998,73 +999,79 @@ export class Tidy5eCharacterSheet
       classes,
       subclasses,
       favorites,
-    } = Array.from(this.actor.items)
-      .toSorted((a: Item5e, b: Item5e) => (a.sort || 0) - (b.sort || 0))
-      .reduce(
-        (
-          obj: CharacterItemPartitions & { favorites: CharacterItemPartitions },
-          item: Item5e
-        ) => {
-          const { quantity, uses, recharge } = item.system;
+    } = Array.from(this.actor.items).reduce(
+      (
+        obj: CharacterItemPartitions & { favorites: CharacterItemPartitions },
+        item: Item5e
+      ) => {
+        const { quantity, uses, recharge } = item.system;
 
-          // Item details
-          const ctx = (context.itemContext[item.id] ??= {});
-          ctx.isStack = Number.isNumeric(quantity) && quantity !== 1;
-          ctx.attunement = FoundryAdapter.getAttunementContext(item);
+        // Item details
+        const ctx = (context.itemContext[item.id] ??= {});
+        ctx.isStack = Number.isNumeric(quantity) && quantity !== 1;
+        ctx.attunement = FoundryAdapter.getAttunementContext(item);
 
-          // Item usage
-          ctx.hasUses = item.hasLimitedUses;
-          ctx.isOnCooldown =
-            recharge && !!recharge.value && recharge.charged === false;
-          ctx.isDepleted = ctx.isOnCooldown && ctx.hasUses && uses.value > 0;
-          ctx.hasTarget = item.hasAreaTarget || item.hasIndividualTarget;
+        // Item usage
+        ctx.hasUses = item.hasLimitedUses;
+        ctx.isOnCooldown =
+          recharge && !!recharge.value && recharge.charged === false;
+        ctx.isDepleted = ctx.isOnCooldown && ctx.hasUses && uses.value > 0;
+        ctx.hasTarget = item.hasAreaTarget || item.hasIndividualTarget;
 
-          // Unidentified items
-          ctx.concealDetails =
-            !game.user.isGM && item.system.identified === false;
+        // Unidentified items
+        ctx.concealDetails =
+          !game.user.isGM && item.system.identified === false;
 
-          // Item grouping
-          const [originId] =
-            item.getFlag('dnd5e', 'advancementOrigin')?.split('.') ?? [];
-          const group = this.actor.items.get(originId);
-          switch (group?.type) {
-            case 'race':
-              ctx.group = 'race';
-              break;
-            case 'background':
-              ctx.group = 'background';
-              break;
-            case 'class':
-              ctx.group = group.identifier;
-              break;
-            case 'subclass':
-              ctx.group = group.class?.identifier ?? 'other';
-              break;
-            default:
-              ctx.group = 'other';
-          }
+        // Item grouping
+        const [originId] =
+          item.getFlag('dnd5e', 'advancementOrigin')?.split('.') ?? [];
+        const group = this.actor.items.get(originId);
+        switch (group?.type) {
+          case 'race':
+            ctx.group = 'race';
+            break;
+          case 'background':
+            ctx.group = 'background';
+            break;
+          case 'class':
+            ctx.group = group.identifier;
+            break;
+          case 'subclass':
+            ctx.group = group.class?.identifier ?? 'other';
+            break;
+          default:
+            ctx.group = 'other';
+        }
 
-          // Individual item preparation
-          this._prepareItem(item, ctx);
+        // Individual item preparation
+        this._prepareItem(item, ctx);
 
-          const isWithinContainer = this.actor.items.has(item.system.container);
+        const isWithinContainer = this.actor.items.has(item.system.container);
 
-          // Classify items into types
-          if (!isWithinContainer) {
-            CharacterSheetSections.partitionItem(item, obj, inventory);
-          }
+        // Classify items into types
+        if (!isWithinContainer) {
+          CharacterSheetSections.partitionItem(item, obj, inventory);
+        }
 
-          if (FoundryAdapter.isDocumentFavorited(item)) {
-            CharacterSheetSections.partitionItem(
-              item,
-              obj.favorites,
-              favoriteInventory
-            );
-          }
+        if (FoundryAdapter.isDocumentFavorited(item)) {
+          CharacterSheetSections.partitionItem(
+            item,
+            obj.favorites,
+            favoriteInventory
+          );
+        }
 
-          return obj;
-        },
-        {
+        return obj;
+      },
+      {
+        items: [] as Item5e[],
+        spells: [] as Item5e[],
+        feats: [] as Item5e[],
+        races: [] as Item5e[],
+        backgrounds: [] as Item5e[],
+        classes: [] as Item5e[],
+        subclasses: [] as Item5e[],
+        favorites: {
           items: [] as Item5e[],
           spells: [] as Item5e[],
           feats: [] as Item5e[],
@@ -1072,17 +1079,9 @@ export class Tidy5eCharacterSheet
           backgrounds: [] as Item5e[],
           classes: [] as Item5e[],
           subclasses: [] as Item5e[],
-          favorites: {
-            items: [] as Item5e[],
-            spells: [] as Item5e[],
-            feats: [] as Item5e[],
-            races: [] as Item5e[],
-            backgrounds: [] as Item5e[],
-            classes: [] as Item5e[],
-            subclasses: [] as Item5e[],
-          },
-        }
-      );
+        },
+      }
+    );
 
     const characterPreferences = SheetPreferencesService.getByType(
       this.actor.type
@@ -1104,23 +1103,6 @@ export class Tidy5eCharacterSheet
       });
     }
 
-    // Sort items
-    const inventorySortMode =
-      characterPreferences.tabs?.[CONSTANTS.TAB_CHARACTER_INVENTORY]?.sort ??
-      'm';
-
-    Object.values(inventory).forEach((section) => {
-      if (inventorySortMode === 'a') {
-        section.items = section.items.toSorted((a, b) =>
-          a.name.localeCompare(b.name)
-        );
-      } else if (inventorySortMode === 'm') {
-        section.items = section.items.toSorted(
-          (a: Item5e, b: Item5e) => (a.sort || 0) - (b.sort || 0)
-        );
-      }
-    });
-
     // Filter Favorite Items
     favorites.items = this.itemFilterService.filter(
       favorites.items,
@@ -1135,23 +1117,6 @@ export class Tidy5eCharacterSheet
         canCreate: false,
       });
     }
-
-    // Sort Favorite Items
-    const attributesSortMode =
-      characterPreferences.tabs?.[CONSTANTS.TAB_CHARACTER_ATTRIBUTES]?.sort ??
-      'm';
-
-    Object.values(favoriteInventory).forEach((section) => {
-      if (attributesSortMode === 'a') {
-        section.items = section.items.toSorted((a, b) =>
-          a.name.localeCompare(b.name)
-        );
-      } else if (attributesSortMode === 'm') {
-        section.items = section.items.toSorted(
-          (a: Item5e, b: Item5e) => (a.sort || 0) - (b.sort || 0)
-        );
-      }
-    });
 
     // Organize Spellbook and count the number of prepared spells (excluding always, at will, cantrips, etc...)
     // Count prepared spells
@@ -1181,23 +1146,6 @@ export class Tidy5eCharacterSheet
       this
     );
 
-    // Sort spells
-    const spellbookSortMode =
-      characterPreferences.tabs?.[CONSTANTS.TAB_CHARACTER_SPELLBOOK]?.sort ??
-      'm';
-
-    spellbook.forEach((section) => {
-      if (spellbookSortMode === 'a') {
-        section.spells = section.spells.toSorted((a, b) =>
-          a.name.localeCompare(b.name)
-        );
-      } else if (spellbookSortMode === 'm') {
-        section.spells = section.spells.toSorted(
-          (a: Item5e, b: Item5e) => (a.sort || 0) - (b.sort || 0)
-        );
-      }
-    });
-
     // Filter Favorite Spells
     favorites.spells = this.itemFilterService.filter(
       favorites.spells,
@@ -1214,23 +1162,13 @@ export class Tidy5eCharacterSheet
       this
     );
 
-    // Sort favorite Spells
-    favoriteSpellbook.forEach((section) => {
-      if (attributesSortMode === 'a') {
-        section.spells = section.spells.toSorted((a, b) =>
-          a.name.localeCompare(b.name)
-        );
-      } else if (attributesSortMode === 'm') {
-        section.spells = section.spells.toSorted(
-          (a: Item5e, b: Item5e) => (a.sort || 0) - (b.sort || 0)
-        );
-      }
-    });
-
-    // Organize Features
-    // Sub-item groupings and validation
-    // Classes: Interleave matching subclasses
-    classes = this._correlateClassesAndSubclasses(context, classes, subclasses);
+    // Process Special Feature Item Context
+    SheetSections.applyClassItemContext(
+      context,
+      classes,
+      subclasses,
+      this.actor
+    );
 
     // Put unmatched subclasses into features so they don't disappear
     for (const subclass of subclasses) {
@@ -1242,14 +1180,16 @@ export class Tidy5eCharacterSheet
       context.warnings.push({ message, type: 'warning' });
     }
 
-    favorites.classes = this._correlateClassesAndSubclasses(
+    // Process Special Favorite Feature Item Context
+    SheetSections.applyClassItemContext(
       context,
       favorites.classes,
-      favorites.subclasses
+      favorites.subclasses,
+      this.actor
     );
 
     for (const subclass of favorites.subclasses) {
-      favorites.classes.push(subclass);
+      favorites.feats.push(subclass);
     }
 
     // Filter Features
@@ -1270,42 +1210,17 @@ export class Tidy5eCharacterSheet
       CONSTANTS.TAB_CHARACTER_FEATURES
     );
 
-    // Sort Features
-    const featureSortMode =
-      characterPreferences.tabs?.[CONSTANTS.TAB_CHARACTER_FEATURES]?.sort ??
-      'm';
-
-    if (featureSortMode === 'a') {
-      // Classes optionally have correlated subclasses adjacent to them; re-apply their subclasses after sorting them
-      classes = classes
-        .filter((f) => f.type === CONSTANTS.ITEM_TYPE_CLASS)
-        .toSorted((a, b) => a.name.localeCompare(b.name))
-        .reduce((prev, classItem) => {
-          prev.push(classItem);
-          const subclass = classes.find(
-            (f) =>
-              f.type === CONSTANTS.ITEM_TYPE_SUBCLASS &&
-              f.system.classIdentifier === classItem.system.identifier
-          );
-          if (subclass) {
-            prev.push(subclass);
-          }
-          return prev;
-        }, []);
-      races = races.toSorted((a, b) => a.name.localeCompare(b.name));
-      feats = feats.toSorted((a, b) => a.name.localeCompare(b.name));
-      backgrounds = backgrounds.toSorted((a, b) =>
-        a.name.localeCompare(b.name)
-      );
-    } else if (featureSortMode === 'm') {
-      classes = classes.toSorted((a, b) => b.system.levels - a.system.levels);
-    }
-
     // Section Features
     const features: Record<string, CharacterFeatureSection> =
-      this._buildFeaturesSections(races, backgrounds, classes, feats, {
-        canCreate: true,
-      });
+      CharacterSheetSections.buildFeaturesSections(
+        races,
+        backgrounds,
+        classes,
+        feats,
+        {
+          canCreate: true,
+        }
+      );
 
     // Filter Favorite Features
     favorites.feats = this.itemFilterService.filter(
@@ -1325,25 +1240,9 @@ export class Tidy5eCharacterSheet
       CONSTANTS.TAB_CHARACTER_ATTRIBUTES
     );
 
-    // Sort Favorite Features
-    if (attributesSortMode === 'a') {
-      favorites.feats = favorites.feats.toSorted((a, b) =>
-        a.name.localeCompare(b.name)
-      );
-      favorites.classes = favorites.classes.toSorted((a, b) =>
-        a.name.localeCompare(b.name)
-      );
-      favorites.races = favorites.races.toSorted((a, b) =>
-        a.name.localeCompare(b.name)
-      );
-      favorites.backgrounds = favorites.backgrounds.toSorted((a, b) =>
-        a.name.localeCompare(b.name)
-      );
-    }
-
     // Section favorite features
     const favoriteFeatures: Record<string, CharacterFeatureSection> =
-      this._buildFeaturesSections(
+      CharacterSheetSections.buildFeaturesSections(
         favorites.races,
         favorites.backgrounds,
         favorites.classes,
@@ -1351,21 +1250,48 @@ export class Tidy5eCharacterSheet
         { canCreate: false }
       );
 
-    // Assign, sort sections, and return
+    // Assign, sort sections, sort items, and return
     const actorSectionOrder = TidyFlags.actorSectionOrder.get(this.actor);
 
     context.inventory = SheetSections.sortKeyedSections(
       Object.values(inventory),
       actorSectionOrder?.[CONSTANTS.TAB_CHARACTER_INVENTORY]
     );
+
+    const inventorySortMode =
+      characterPreferences.tabs?.[CONSTANTS.TAB_CHARACTER_INVENTORY]?.sort ??
+      'm';
+
+    context.inventory.forEach((section) =>
+      ItemUtils.sortItems(section.items, inventorySortMode)
+    );
+
     context.spellbook = SheetSections.sortKeyedSections(
       spellbook,
       actorSectionOrder?.[CONSTANTS.TAB_CHARACTER_SPELLBOOK]
     );
+
+    const spellbookSortMode =
+      characterPreferences.tabs?.[CONSTANTS.TAB_CHARACTER_SPELLBOOK]?.sort ??
+      'm';
+
+    context.spellbook.forEach((section) =>
+      ItemUtils.sortItems(section.spells, spellbookSortMode)
+    );
+
     context.features = SheetSections.sortKeyedSections(
       Object.values(features),
       actorSectionOrder?.[CONSTANTS.TAB_CHARACTER_FEATURES]
     );
+
+    const featureSortMode =
+      characterPreferences.tabs?.[CONSTANTS.TAB_CHARACTER_FEATURES]?.sort ??
+      'm';
+
+    context.features.forEach((section) =>
+      ItemUtils.sortItems(section.items, featureSortMode)
+    );
+
     const favoriteSections = [
       ...Object.values(favoriteInventory)
         .filter((i) => i.items.length)
@@ -1386,40 +1312,22 @@ export class Tidy5eCharacterSheet
           type: CONSTANTS.TAB_CHARACTER_SPELLBOOK,
         })),
     ];
+
     context.favorites = SheetSections.sortKeyedSections(
       favoriteSections,
       actorSectionOrder?.[CONSTANTS.TAB_CHARACTER_ATTRIBUTES]
     );
 
-    context.preparedSpells = nPrepared;
-  }
+    const attributesSortMode =
+      characterPreferences.tabs?.[CONSTANTS.TAB_CHARACTER_ATTRIBUTES]?.sort ??
+      'm';
 
-  // TODO: Consider moving to the static class CharacterSheetSections
-  private _correlateClassesAndSubclasses(
-    context: CharacterSheetContext,
-    classes: Item5e[],
-    subclasses: Item5e[]
-  ) {
-    const maxLevelDelta =
-      CONFIG.DND5E.maxLevel - this.actor.system.details.level;
-    return classes.reduce((arr, cls) => {
-      const ctx = (context.itemContext[cls.id] ??= {});
-      ctx.availableLevels = Array.fromRange(CONFIG.DND5E.maxLevel + 1)
-        .slice(1)
-        .map((level) => {
-          const delta = level - cls.system.levels;
-          return { level, delta, disabled: delta > maxLevelDelta };
-        });
-      ctx.prefixedImage = cls.img ? foundry.utils.getRoute(cls.img) : null;
-      arr.push(cls);
-      const identifier =
-        cls.system.identifier || cls.name.slugify({ strict: true });
-      const subclass = subclasses.findSplice(
-        (s: Item5e) => s.system.classIdentifier === identifier
-      );
-      if (subclass) arr.push(subclass);
-      return arr;
-    }, []);
+    context.favorites.forEach((section) => {
+      const items = 'spells' in section ? section.spells : section.items;
+      ItemUtils.sortItems(items, attributesSortMode);
+    });
+
+    context.preparedSpells = nPrepared;
   }
 
   /**
