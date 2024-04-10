@@ -1,7 +1,7 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import SortingListbox from 'src/components/listbox/SortingListbox.svelte';
-  import type { DocumentTabSectionConfigItem } from './document-tab-section-config.types';
+  import type { DocumentTabSectionConfigItem } from './section-config.types';
 
   export let sections: DocumentTabSectionConfigItem[];
   export let onConfirm: (

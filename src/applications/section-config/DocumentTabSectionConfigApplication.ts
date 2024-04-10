@@ -2,13 +2,13 @@ import type { SvelteComponent } from 'svelte';
 import SvelteFormApplicationBase from '../SvelteFormApplicationBase';
 import DocumentTabSectionConfig from './DocumentTabSectionConfig.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-import type { Actor5e } from 'src/types/types';
+import type { Actor5e, TidySectionBase } from 'src/types/types';
 import { TidyFlags, type SectionConfig } from 'src/api';
-import type { DocumentTabSectionConfigItem } from './section-config';
+import type { DocumentTabSectionConfigItem } from './section-config.types';
 
 type SectionConfigConstructorArgs = {
   actor: Actor5e;
-  sections: DocumentTabSectionConfigItem[];
+  sections: TidySectionBase[];
   tabId: string;
   tabTitle: string;
 };
@@ -27,7 +27,11 @@ export class DocumentTabSectionConfigApplication extends SvelteFormApplicationBa
   }: SectionConfigConstructorArgs) {
     super();
     this.actor = actor;
-    this.sections = sections;
+    this.sections = sections.map((section) => ({
+      key: section.key,
+      label: section.label,
+      show: section.show !== false,
+    }));
     this.tabId = tabId;
     this.tabTitle = tabTitle;
   }

@@ -22,8 +22,6 @@
   import Dnd5eIcon from 'src/components/icon/Dnd5eIcon.svelte';
   import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
   import PinnedFilterToggles from 'src/components/filter/PinnedFilterToggles.svelte';
-  import { CharacterSheetRuntime } from 'src/runtime/CharacterSheetRuntime';
-  import { SectionConfigApplication } from 'src/applications/section-order-manager/SectionConfigApplication';
 
   let context = getContext<Readable<ActorSheetContext>>('context');
 
