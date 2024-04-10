@@ -1,21 +1,21 @@
 import type { SvelteComponent } from 'svelte';
 import SvelteFormApplicationBase from '../SvelteFormApplicationBase';
-import SectionOrderManager from './SectionOrderManager.svelte';
+import SectionConfig from './SectionConfig.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type { Actor5e } from 'src/types/types';
-import type { KeyedAndLabeled } from './section-order-manager.types';
+import type { SectionConfigItem } from './section-config.types';
 import { TidyFlags } from 'src/api';
 
-type SectionOrderManagerConstructorArgs = {
+type SectionConfigConstructorArgs = {
   actor: Actor5e;
-  sections: KeyedAndLabeled[];
+  sections: SectionConfigItem[];
   tabId: string;
   tabTitle: string;
 };
 
-export class SectionOrderManagerApplication extends SvelteFormApplicationBase {
+export class SectionConfigApplication extends SvelteFormApplicationBase {
   actor: Actor5e;
-  sections: KeyedAndLabeled[];
+  sections: SectionConfigItem[];
   tabId: string;
   tabTitle: string;
 
@@ -24,7 +24,7 @@ export class SectionOrderManagerApplication extends SvelteFormApplicationBase {
     sections,
     tabId,
     tabTitle,
-  }: SectionOrderManagerConstructorArgs) {
+  }: SectionConfigConstructorArgs) {
     super();
     this.actor = actor;
     this.sections = sections;
@@ -42,18 +42,19 @@ export class SectionOrderManagerApplication extends SvelteFormApplicationBase {
   }
 
   get title() {
-    return FoundryAdapter.localize('TIDY5E.Section.ManagerDialogTitle', {
+    return FoundryAdapter.localize('TIDY5E.Section.ConfigDialog.title', {
       tabTitle: this.tabTitle,
     });
   }
 
   createComponent(node: HTMLElement): SvelteComponent<any, any, any> {
-    return new SectionOrderManager({
+    return new SectionConfig({
       target: node,
       props: {
-        sections: this.sections.map((s: KeyedAndLabeled) => ({
+        sections: this.sections.map((s: SectionConfigItem) => ({
           key: s.key,
           label: FoundryAdapter.localize(s.label),
+          show: s.show,
         })),
         onConfirm: this._onConfirm.bind(this),
         useDefault: this._useDefault.bind(this),
@@ -61,9 +62,13 @@ export class SectionOrderManagerApplication extends SvelteFormApplicationBase {
     });
   }
 
-  private _onConfirm(sections: KeyedAndLabeled[]) {
+  private _onConfirm(sections: SectionConfigItem[]) {
     const sectionConfig = TidyFlags.sectionConfig.get(this.actor) ?? {};
-    sectionConfig[this.tabId] = sections.map((s, i) => ({ key: s.key, order: i }));
+    sectionConfig[this.tabId] = sections.map((s, i) => ({
+      key: s.key,
+      order: i,
+      show: s.show !== false,
+    }));
     TidyFlags.sectionConfig.set(this.actor, sectionConfig);
     this.close();
   }
@@ -75,10 +80,10 @@ export class SectionOrderManagerApplication extends SvelteFormApplicationBase {
         'TIDY5E.UseDefaultDialog.text'
       )}</p>`,
       yes: () => {
-        const sectionOrder = TidyFlags.sectionConfig.get(this.actor) ?? {};
-        delete sectionOrder[this.tabId];
-        sectionOrder[`-=${this.tabId}`] = [];
-        TidyFlags.sectionConfig.set(this.actor, sectionOrder);
+        const sectionConfig = TidyFlags.sectionConfig.get(this.actor) ?? {};
+        delete sectionConfig[this.tabId];
+        sectionConfig[`-=${this.tabId}`] = [];
+        TidyFlags.sectionConfig.set(this.actor, sectionConfig);
         this.close();
       },
       no: () => {},

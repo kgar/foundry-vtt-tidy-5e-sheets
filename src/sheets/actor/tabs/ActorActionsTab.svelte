@@ -23,7 +23,7 @@
   import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
   import PinnedFilterToggles from 'src/components/filter/PinnedFilterToggles.svelte';
   import { CharacterSheetRuntime } from 'src/runtime/CharacterSheetRuntime';
-  import { SectionOrderManagerApplication } from 'src/applications/section-order-manager/SectionOrderManagerApplication';
+  import { SectionConfigApplication } from 'src/applications/section-order-manager/SectionConfigApplication';
 
   let context = getContext<Readable<ActorSheetContext>>('context');
 

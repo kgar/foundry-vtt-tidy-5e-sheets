@@ -78,6 +78,7 @@
       role="option"
       aria-selected={selectedItemIndex === i}
       class:focused={selectedItemIndex === i}
+      class="flex-row small=gap align-items-center"
       on:click={() => selectItemAt(i)}
       on:keydown={(ev) => handleListboxKeyDown(ev)}
       {draggable}
@@ -98,7 +99,9 @@
       {#if draggable}
         <i class="drag-grip fa-solid fa-grip-lines fa-fw"></i>
       {/if}
-      {item[labelProp]}
+      <slot {item}>
+        {item[labelProp]}
+      </slot>
     </li>
   {/each}
 </ul>

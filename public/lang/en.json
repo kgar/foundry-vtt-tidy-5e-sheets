@@ -781,7 +781,11 @@
     "Tooltip": "Specify a custom section for this item when placed in an actor sheet, or leave it blank for default behavior.",
     "ActionLabel": "Action Section",
     "ActionTooltip": "Specify a custom section for this item when placed in the Actions tab, or leave it blank for default behavior.",
-    "ManagerDialogTitle": "Configure Section: {tabTitle}"
+    "ConfigDialog": {
+      "title": "Configure Section: {tabTitle}",
+      "showTooltip": "Show this section",
+      "hideTooltip": "Hide this section"
+    }
   },
   "TIDY5E.UseDefaultDialog": {
     "title": "Confirm: Use Default",

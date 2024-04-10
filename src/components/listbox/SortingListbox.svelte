@@ -191,7 +191,13 @@
     on:dragleave={(ev) => onDragLeave(ev)}
     on:drop={(ev) => onDrop(ev)}
     on:listboxDrop={(ev) => onListboxDrop(ev)}
-  />
+  >
+    <svelte:fragment let:item>
+      <slot {item}>
+        {item[labelProp]}
+      </slot>
+    </svelte:fragment>
+  </Listbox>
 </div>
 
 <style lang="scss">
