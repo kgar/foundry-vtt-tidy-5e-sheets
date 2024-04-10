@@ -60,7 +60,7 @@ import { Tidy5eBaseActorSheet } from './Tidy5eBaseActorSheet';
 import { CharacterSheetSections } from 'src/features/sections/CharacterSheetSections';
 import { SheetSections } from 'src/features/sections/SheetSections';
 import { TidyFlags } from 'src/api';
-import { SectionConfigApplication } from 'src/applications/section-order-manager/SectionConfigApplication';
+import { DocumentTabSectionConfigApplication } from 'src/applications/section-config/DocumentTabSectionConfigApplication';
 import { ActorSheetCustomSectionMixin } from './mixins/Tidy5eBaseActorSheetMixins';
 import { ItemUtils } from 'src/utils/ItemUtils';
 
@@ -330,7 +330,7 @@ export class Tidy5eCharacterSheet
             ),
             iconClass: 'fas fa-cog',
             execute: ({ context }) => {
-              new SectionConfigApplication({
+              new DocumentTabSectionConfigApplication({
                 actor: context.actor,
                 // Provide a way to build the necessary config, perhaps within the application constructor. We've got all the info we need in order to perform the operation.
                 sections: context.favorites,
@@ -439,7 +439,7 @@ export class Tidy5eCharacterSheet
             ),
             iconClass: 'fas fa-cog',
             execute: ({ context }) => {
-              new SectionConfigApplication({
+              new DocumentTabSectionConfigApplication({
                 actor: context.actor,
                 sections: context.inventory,
                 tabId: CONSTANTS.TAB_CHARACTER_INVENTORY,
@@ -550,7 +550,7 @@ export class Tidy5eCharacterSheet
             ),
             iconClass: 'fas fa-cog',
             execute: ({ context }) => {
-              new SectionConfigApplication({
+              new DocumentTabSectionConfigApplication({
                 actor: context.actor,
                 sections: context.spellbook,
                 tabId: CONSTANTS.TAB_CHARACTER_SPELLBOOK,
@@ -616,7 +616,7 @@ export class Tidy5eCharacterSheet
             ),
             iconClass: 'fas fa-cog',
             execute: ({ context }) => {
-              new SectionConfigApplication({
+              new DocumentTabSectionConfigApplication({
                 actor: context.actor,
                 sections: context.features,
                 tabId: CONSTANTS.TAB_CHARACTER_FEATURES,

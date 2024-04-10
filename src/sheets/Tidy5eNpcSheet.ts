@@ -53,7 +53,7 @@ import { Tidy5eBaseActorSheet } from './Tidy5eBaseActorSheet';
 import { SheetSections } from 'src/features/sections/SheetSections';
 import { NpcSheetSections } from 'src/features/sections/NpcSheetSections';
 import { TidyFlags } from 'src/api';
-import { SectionConfigApplication } from 'src/applications/section-order-manager/SectionConfigApplication';
+import { DocumentTabSectionConfigApplication } from 'src/applications/section-config/DocumentTabSectionConfigApplication';
 import { ActorSheetCustomSectionMixin } from './mixins/Tidy5eBaseActorSheetMixins';
 import { ItemUtils } from 'src/utils/ItemUtils';
 
@@ -356,7 +356,7 @@ export class Tidy5eNpcSheet
             ),
             iconClass: 'fas fa-cog',
             execute: ({ context }) => {
-              new SectionConfigApplication({
+              new DocumentTabSectionConfigApplication({
                 actor: context.actor,
                 sections: context.features,
                 tabId: CONSTANTS.TAB_NPC_ABILITIES,
@@ -467,7 +467,7 @@ export class Tidy5eNpcSheet
             ),
             iconClass: 'fas fa-cog',
             execute: ({ context }) => {
-              new SectionConfigApplication({
+              new DocumentTabSectionConfigApplication({
                 actor: context.actor,
                 sections: context.spellbook,
                 tabId: CONSTANTS.TAB_NPC_SPELLBOOK,
