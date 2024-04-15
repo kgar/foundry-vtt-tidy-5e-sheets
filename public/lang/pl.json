@@ -1,8 +1,8 @@
 {
     "TIDY5E.Tidy5eVehicle": "Karta Pojazdu Tidy 5e",
-    "TIDY5E.EditActorImage": "lewy przycisk myszy: edytuj obraz",
+    "TIDY5E.EditActorImage": "Lewy przycisk myszy: edytuj obraz",
     "TIDY5E.ShowTokenArt": "pokaż token",
-    "TIDY5E.ShowActorImage": "prawy przycisk myszy: pokaż portret postaci",
+    "TIDY5E.ShowActorImage": "Prawy przycisk myszy: pokaż portret postaci",
     "TIDY5E.ShowItemImage": "prawy przycisk myszy: pokaż grafikę przedmiotu",
     "TIDY5E.ShowItemArt": "pokaż obraz",
     "TIDY5E.StandardExhaustion1": "Niekorzyść w Rzutach Umiejętności",
@@ -225,5 +225,186 @@
     "TIDY5E.Commands.ShowLegendaryToolbar": "Pokaż pasek zdolności Legendarnych",
     "TIDY5E.Commands.HideLegendaryToolbar": "Ukryj pasek zdolności Legendarnych",
     "TIDY5E.ItemFilters.ClearAll": "Wyczyść wszystko",
-    "TIDY5E.ItemFilters.Filter.Other": "Inne"
+    "TIDY5E.ItemFilters.Filter.Other": "Inne",
+    "TIDY5E.Settings.ColorPickerPact": {
+        "name": "Pakt"
+    },
+    "TIDY5E.Settings.ColorPickerScrollbarTrack": {
+        "name": "Pasek przewijania"
+    },
+    "TIDY5E.Settings.AllowHpMaxOverride": {
+        "name": "Zezwalaj na nadpisywanie maksymalnego PW postaci",
+        "hint": "Umożliwia MG ręczną zmianę maksymalnego PW na karcie postaci."
+    },
+    "TIDY5E.Settings.Reset": {
+        "dialogs": {
+            "cancel": "Anuluj",
+            "title": "Resetowanie ustawień modułu",
+            "confirm": "Resetowanie ustawień modułu",
+            "content": "Czy na pewno chcesz zresetować wszystkie ustawienia modułu do bieżących ustawień domyślnych systemu? <strong>Tego procesu nie można cofnąć.</strong>"
+        },
+        "name": "Przywracanie ustawień domyślnych",
+        "hint": "Spowoduje to zresetowanie wszystkich ustawień z powrotem do domyślnych ustawień aktywnego systemu gry. Ma to wpływ tylko na ustawienia \"ogólne\", takie jak opcje MG."
+    },
+    "TIDY5E.Settings.Migrations": {
+        "migrateGmSettingsButtonLabel": "Migracja ustawień MG",
+        "migrateConfirmMessage1": "Czy na pewno chcesz przeprowadzić tę migrację?",
+        "v1": {
+            "originalHeader": "Oryginalna Tidy5e Sheet",
+            "alphaExplanation2": "{boldStart}Note{boldEnd}: ta migracja nie wpływa na dane w kompendiach.",
+            "mainExplanation2": "{boldStart}Uwaga{boldEnd}: Ustawienia klienta nie są uwzględniane w tej migracji. Wystarczająco dużo zmieniło się w sposobie działania ustawień klienta w Tidy, więc zaleca się powtórne ich ustawienie.",
+            "originalExplanation": "Migracja ustawień MG i flag danych Tidy 5e Sheets z oryginalnego Tidy5e. Większość różnic w danych wynika z ustawień MG. Jeśli po migracji ustawień okaże się, że któreś z nich nie odpowiada, wystarczy zmienić je w menu ustawień konfiguracji.",
+            "alphaExplanation1": "Migracja ustawień MG i flag danych karty Tidy z arkuszy Alpha Tidy 5e. Większość różnic w danych pochodzi z flag karty. Migracja flag Alpha dotyczy aktorów najwyższego poziomu, przedmiotów aktorów najwyższego poziomu i przedmiotów najwyższego poziomu. Spowoduje to przeniesienie danych biograficznych, ulubionych i innych specyficznych dla karty Alpha flag .",
+            "alphaHeader": "Wersja Alfa Tidy 5e Sheets",
+            "sectionTitle": "Tidy V1 Wdrożenie Migracji",
+            "mainExplanation1": "Migracja danych do nowego modułu Tidy 5e Sheets nie jest wymagana do korzystania z niego. W najgorszym przypadku, jeśli jesteś użytkownikiem oryginalnego Tidy5e Sheet i pominąłeś migrację, będziesz musiał ponownie zastosować ustawienia zgodnie z własnymi upodobaniami."
+        },
+        "migrationBeginningMessage": "Migracja danych. Nie odświeżaj strony przed zakończeniem migracji.",
+        "hint": "Jeśli byłeś użytkownikiem oryginalnego modułu Tidy5e Sheet lub arkuszy Alpha, opcjonalnie użyj tego menu Migracje do migracji ustawień MG i danych kart Tidy.",
+        "migrateDocumentFlagsButtonLabel": "Migracja flag dokumentów",
+        "migrationCompleteMessage": "Migracja zakończona.",
+        "buttonLabel": "Migracja danych Tidy",
+        "dialogTitle": "Migracja danych Tidy",
+        "CharacterBiography": {
+            "sectionTitle": "Biografia Postaci",
+            "selectionDialogTitle": "Migracja: Biografia Postaci"
+        },
+        "Notification": {
+            "Title": "Tidy 5e Sheets: Migracja dostępna",
+            "DoNotShowAgain.ConfirmMessage": "Potwierdzono. Ten komunikat nie pojawi się ponownie, dopóki nie będzie dostępnej kolejnej migracji.",
+            "Explanation": "Dostępne są nowe migracje danych Tidy 5e Sheets. Więcej informacji można znaleźć w menu {boldStart}config settings Migrations{boldEnd}.",
+            "Button.DoNotShowAgain": "Nie pokazuj ponownie",
+            "Explanation2": "Uwaga: Migracje przenoszą dane, które były pierwotnie przechowywane przez Tidy 5e Sheets do oficjalnie obsługiwanych pól danych systemu. Jeśli po aktualizacji Tidy 5e nie ma braków w kartach, migracja nie jest wymagana."
+        },
+        "migrateConfirmMessage2": "{boldStart}Uwaga{boldEnd}: zawsze pamiętaj o {boldStart}tworzeniu kopii zapasowych swoich danych{boldEnd}.",
+        "migrateConfirmTitle": "Potwierdź migrację",
+        "migrateConfirmButtonNo": "Anuluj",
+        "migrateConfirmButtonYes": "Migruj",
+        "name": "Migracje",
+        "NpcDeathSaves": {
+            "sectionTitle": "Rzuty Przeciw Śmierci NPC",
+            "selectionDialogTitle": "Migracja: Rzuty Przeciw Śmierci NPC"
+        },
+        "Selection": {
+            "SelectAllNoneTooltip": "Wybierz wszystkie lub żadne",
+            "ToMigrate": "Aby dokonać migracji",
+            "TotalSelectedLabel": "Łączna liczba wybranych: {total}"
+        },
+        "OptionOverwrite.Text": "Nadpisz",
+        "OptionsHeader": "Opcje Migracji",
+        "OptionOverwrite.Tooltip": "Włącz nadpisywanie istniejących danych karty. Jeśli opcja nie jest zaznaczona, tylko puste pola systemowe otrzymają zmigrowane dane Tidy.",
+        "migrationErrorMessage": "Wystąpił błąd. Więcej szczegółów znajduje się w konsoli.",
+        "UnlinkedExplanation": "Ta migracja umożliwia migrację niepowiązanych tokenów w bieżącej scenie. W razie potrzeby migrację można uruchomić na dodatkowych scenach.",
+        "ButtonMigration.Text": "Migruj",
+        "OptionDeleteFlags.Tooltip": "Podczas migracji z niestandardowych flag Tidy do oficjalnych danych systemowych, flagi pozostają domyślnie na swoim miejscu. Zaznacz tę opcję, aby usunąć te flagi.",
+        "OptionDeleteFlags.Text": "Usuń flagi Tidy, które zostały zmienione"
+    },
+    "TIDY5E.Settings.PermanentlyUnlockCharacterSheetForGM": {
+        "name": "Karta postaci: Zawsze odblokowane dla MG",
+        "hint": "Karta postaci powinna być traktowana tak, jakby zawsze była odblokowana, niezależnie od ustawienia blokady. MG może zawsze edytować postać, ale może również przełączyć blokadę/odblokowanie dla gracza, który jest właścicielem postaci.",
+        "title": "Ta karta jest zawsze odblokowana dla MG, niezależnie od ustawienia blokady."
+    },
+    "TIDY5E.ThemeSettings": {
+        "Sheet": {
+            "import": "Importuj",
+            "menuLabel": "Menu",
+            "importError": "Import motywu nie powiódł się. Więcej szczegółów można znaleźć w konsoli.",
+            "importSuccess": "Motyw został pomyślnie zaimportowany!",
+            "importDropHint": "Wskazówka: Możesz przeciągnąć plik \".tidy5e-theme\" na to pole, aby go zaimportować.",
+            "title": "Ustawienia motywu: {userName}",
+            "useDefaultLightColors": "Domyślny Jasny",
+            "useDefaultDarkColors": "Domyślny Ciemny",
+            "export": "Eksportuj",
+            "header": "Niestandardowe kolory motywu",
+            "explanation": "Wybierz kolor, którego chcesz użyć dla każdej opcji. Wartość \"#00000000\" oznacza wyłączenie koloru."
+        },
+        "SheetMenu": {
+            "hint": "Dostosuj kolory Tidy 5e Sheets.",
+            "name": "Ustawienia motywu Tidy",
+            "buttonLabel": "Ustawienia motywu"
+        }
+    },
+    "TIDY5E.Settings.ColorPickerInnateAccent": {
+        "name": "Wrodzone - akcent"
+    },
+    "TIDY5E.Settings.ColorPickerAlwaysPrepared": {
+        "name": "Zawsze przygotowane"
+    },
+    "TIDY5E.Settings.About": {
+        "buttonLabel": "Informacje o Tidy 5e Sheets",
+        "name": "O",
+        "dialogTitle": "Informacje o Tidy 5e Sheets",
+        "DiscordParagraph": "{urlStart}Tidy 5e Sheets Discord Server{urlEnd}: Dyskutuj o pomysłach na nowe funkcje, korzystaj z pomocy innych i śledź postępy prac nad tym modułem.",
+        "KoFiLink": "{urlStart}Ko-Fi{urlEnd}",
+        "BuyMeACoffeeLink": "{urlStart}Buy Me a Coffee{urlEnd}",
+        "FinancialSupportParagraph": "Jeśli podoba ci się Tidy 5e Sheets i chcesz wesprzeć nas finansowo, oto kilka sposobów:",
+        "FinancialSupportHeader": "Sposoby wspierania Tidy 5e Sheets",
+        "hint": "Informacje o module Tidy 5e Sheets.",
+        "MaintainerParagraph": "Tidy 5e Sheets jest utrzymywane przez {urlStart}kgar{urlEnd}.",
+        "logoAltText": "Tarcza z czterema gwiazdkami i napisem \"Tidy 5e\" na przodzie.",
+        "GithubParagraph": "Czy masz pomysł na funkcję? Coś jest nie tak? Zgłoś problem przez {urlStart}Github Issue{urlEnd}.",
+        "PatreonLink": "{urlStart}Patreon{urlEnd}",
+        "LocalizationParagraph": "{urlStart}Weblate{urlEnd}: Czy lubisz tłumaczyć treści internetowe? Tidy 5e Sheets przydałaby się twoja pomoc! Wejdź na stronę Weblate, aby zobaczyć postępy w tłumaczeniu na różne języki. Ta strona umożliwia tworzenie modyfikacje już istniejących tłumaczeń."
+    },
+    "TIDY5E.ReminderToBackUp": "Zawsze pamiętaj o tworzeniu kopii zapasowych swojego świata.",
+    "TIDY5E.GMOnly.Message": "Tylko do MG: {message}",
+    "TIDY5E.Settings.SortFavoriteItemsAlphabetically": {
+        "hint": "Sortuje ulubione alfabetycznie.",
+        "name": "Sortuj ulubione alfabetycznie"
+    },
+    "TIDY5E.Settings.Debug": {
+        "hint": "Wyświetla komunikaty debugowania w konsoli.",
+        "name": "Włącz debugowanie"
+    },
+    "TIDY5E.Settings.PermanentlyUnlockNPCSheetForGM": {
+        "name": "Karta NPC: Zawsze odblokowane dla MG",
+        "hint": "Traktuj tą kartę NPC tak, jakby była zawsze odblokowana, niezależnie od ustawienia blokady. MG może zawsze edytować tego NPC, ale może również przełączyć blokadę/odblokowanie dla gracza, który jest właścicielem NPC.",
+        "title": "Ta karta jest zawsze odblokowana dla MG, niezależnie od ustawienia blokady."
+    },
+    "TIDY5E.Settings.PermanentlyUnlockVehicleSheetForGM": {
+        "title": "Ta karta jest zawsze odblokowana dla MG, niezależnie od ustawienia blokady.",
+        "hint": "Karta pojazdu powinna być traktowana tak, jakby zawsze była odblokowana, niezależnie od ustawienia blokady. MG może zawsze edytować ten pojazd, ale może również przełączyć blokadę/odblokowanie dla gracza, który jest właścicielem pojazdu.",
+        "name": "Karta pojazdu: Zawsze odblokowana dla MG"
+    },
+    "TIDY5E.Settings.ColorPickerInnate": {
+        "name": "Wrodzone"
+    },
+    "TIDY5E.Settings.ColorPickerEquipped": {
+        "name": "Założone"
+    },
+    "TIDY5E.Settings.ColorPickerInnateOutline": {
+        "name": "Wrodzone - zarys"
+    },
+    "TIDY5E.Settings.ColorPickerAlwaysPreparedOutline": {
+        "name": "Zawsze przygotowane - zarys"
+    },
+    "TIDY5E.Settings.ColorPickerPrepared": {
+        "name": "Przygotowane"
+    },
+    "TIDY5E.ItemFilters.CanCast": "Może Rzucić",
+    "TIDY5E.ItemFilters.CanUse": "Może Użyć",
+    "TIDY5E.Utilities.GMTools": "Narzędzia MG",
+    "TIDY5E.Utilities.IdentifyAll": "Zidentyfikuj wszystkie przedmioty",
+    "TIDY5E.Utilities.MarkAllAsUnidentified": "Oznacz wszystkie przedmioty jako niezidentyfikowane",
+    "TIDY5E.Settings.SheetPreferences": {
+        "explanation": "Zaznacz wszystkie typy dokumentów, dla których chcesz, aby Tidy 5e było używane domyślnie.",
+        "buttonLabel": "Ustaw Tidy 5e jako domyślne dla Kart",
+        "hint": "Jeśli chcesz ustawić Tidy 5e Sheets jako domyślne dla jednego lub więcej typów dokumentów, ale menu konfiguracji domyślnych kart nie działa zgodnie z oczekiwaniami, użyj tego menu, aby wybrać ustawienia.",
+        "name": "Ustaw Tidy 5e jako domyślne dla Kart"
+    },
+    "TIDY5E.GenericErrorNotification": "Wystąpił błąd podczas wykonywania tej akcji. Więcej szczegółów można znaleźć w konsoli devtools.",
+    "TIDY5E.Commands.ShowContainerPanel": "Pokaż ustawienia Pojemnika",
+    "TIDY5E.Commands.HideContainerPanel": "Ukryj ustawienia Pojemnika",
+    "TIDY5E.PortraitTitle": "Portret: {subject}",
+    "TIDY5E.ItemImageTitle": "Przedmiot: {subject}",
+    "TIDY5E.Settings.ColorPickerMagicAccent": {
+        "name": "Zarys magicznego przedmiotu"
+    },
+    "TIDY5E.Settings.ColorPickerScrollbarThumb": {
+        "name": "Suwak paska przewijania"
+    },
+    "TIDY5E.Settings.ColorPickerAlwaysPreparedAccent": {
+        "name": "Zawsze przygotowane - akcent"
+    },
+    "TIDY5E.Tidy5eContainerSheet": "Karta Pojemnika Tidy 5e"
 }
