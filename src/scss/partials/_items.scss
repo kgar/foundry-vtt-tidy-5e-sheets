@@ -355,6 +355,10 @@ input[type='checkbox'] {
     }
   }
 
+  .editing-source .editor-container {
+    display: none;
+  }
+
   .editor .editor-content,
   .item-editor-descriptions-html-container {
     p,
