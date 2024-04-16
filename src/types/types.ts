@@ -136,6 +136,7 @@ export type TidySectionBase = {
   dataset: Record<string, any>;
   custom?: CustomSectionOptions;
   key: string;
+  show?: boolean; // default: true
 };
 
 export type FeatureSection = {

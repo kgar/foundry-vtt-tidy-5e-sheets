@@ -1,21 +1,21 @@
 import type { SvelteComponent } from 'svelte';
 import SvelteFormApplicationBase from '../SvelteFormApplicationBase';
-import SectionConfig from './SectionConfig.svelte';
+import DocumentTabSectionConfig from './DocumentTabSectionConfig.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-import type { Actor5e } from 'src/types/types';
-import type { SectionConfigItem } from './section-config.types';
-import { TidyFlags } from 'src/api';
+import type { Actor5e, TidySectionBase } from 'src/types/types';
+import { TidyFlags, type SectionConfig } from 'src/api';
+import type { DocumentTabSectionConfigItem } from './section-config.types';
 
 type SectionConfigConstructorArgs = {
   actor: Actor5e;
-  sections: SectionConfigItem[];
+  sections: TidySectionBase[];
   tabId: string;
   tabTitle: string;
 };
 
-export class SectionConfigApplication extends SvelteFormApplicationBase {
+export class DocumentTabSectionConfigApplication extends SvelteFormApplicationBase {
   actor: Actor5e;
-  sections: SectionConfigItem[];
+  sections: DocumentTabSectionConfigItem[];
   tabId: string;
   tabTitle: string;
 
@@ -27,7 +27,11 @@ export class SectionConfigApplication extends SvelteFormApplicationBase {
   }: SectionConfigConstructorArgs) {
     super();
     this.actor = actor;
-    this.sections = sections;
+    this.sections = sections.map((section) => ({
+      key: section.key,
+      label: section.label,
+      show: section.show !== false,
+    }));
     this.tabId = tabId;
     this.tabTitle = tabTitle;
   }
@@ -48,27 +52,35 @@ export class SectionConfigApplication extends SvelteFormApplicationBase {
   }
 
   createComponent(node: HTMLElement): SvelteComponent<any, any, any> {
-    return new SectionConfig({
+    return new DocumentTabSectionConfig({
       target: node,
       props: {
-        sections: this.sections.map((s: SectionConfigItem) => ({
-          key: s.key,
-          label: FoundryAdapter.localize(s.label),
-          show: s.show,
-        })),
+        sections: this.sections.map((curr: DocumentTabSectionConfigItem) => {
+          return {
+            key: curr.key,
+            label: FoundryAdapter.localize(curr.label),
+            show: curr.show,
+          };
+        }, {}),
         onConfirm: this._onConfirm.bind(this),
         useDefault: this._useDefault.bind(this),
       },
     });
   }
 
-  private _onConfirm(sections: SectionConfigItem[]) {
+  private _onConfirm(sections: DocumentTabSectionConfigItem[]) {
     const sectionConfig = TidyFlags.sectionConfig.get(this.actor) ?? {};
-    sectionConfig[this.tabId] = sections.map((s, i) => ({
-      key: s.key,
-      order: i,
-      show: s.show !== false,
-    }));
+    sectionConfig[this.tabId] = sections.reduce<Record<string, SectionConfig>>(
+      (result, curr, i) => {
+        result[curr.key] = {
+          key: curr.key,
+          order: i,
+          show: curr.show !== false,
+        };
+        return result;
+      },
+      {}
+    );
     TidyFlags.sectionConfig.set(this.actor, sectionConfig);
     this.close();
   }
@@ -82,7 +94,7 @@ export class SectionConfigApplication extends SvelteFormApplicationBase {
       yes: () => {
         const sectionConfig = TidyFlags.sectionConfig.get(this.actor) ?? {};
         delete sectionConfig[this.tabId];
-        sectionConfig[`-=${this.tabId}`] = [];
+        sectionConfig[`-=${this.tabId}`] = {};
         TidyFlags.sectionConfig.set(this.actor, sectionConfig);
         this.close();
       },

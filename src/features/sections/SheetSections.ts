@@ -58,8 +58,13 @@ export class SheetSections {
 
   static sortKeyedSections<
     T extends { key: string; custom?: CustomSectionOptions }
-  >(sections: T[], sectionConfigs: SectionConfig[] | undefined) {
-    const sortMap = new Map((sectionConfigs ?? []).map((e) => [e.key, e.order]));
+  >(
+    sections: T[],
+    sectionConfigs: Record<string, SectionConfig> | undefined
+  ) {
+    const sortMap = new Map(
+      Object.values(sectionConfigs ?? {}).map((e) => [e.key, e.order])
+    );
     const defaultSortMap = new Map(
       SheetSections.getDefaultSortOrder(sections).map((e, i) => [e, i])
     );

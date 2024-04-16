@@ -1,10 +1,12 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { SectionConfigItem } from './section-config.types';
   import SortingListbox from 'src/components/listbox/SortingListbox.svelte';
+  import type { DocumentTabSectionConfigItem } from './section-config.types';
 
-  export let sections: SectionConfigItem[];
-  export let onConfirm: (sections: SectionConfigItem[]) => void | Promise<void>;
+  export let sections: DocumentTabSectionConfigItem[];
+  export let onConfirm: (
+    sections: DocumentTabSectionConfigItem[],
+  ) => void | Promise<void>;
   export let useDefault: () => void | Promise<void>;
 
   const localize = FoundryAdapter.localize;
@@ -78,6 +80,6 @@
 
   .marked-as-hidden {
     font-style: italic;
-    color: var(--t5e-tertiary-color)
+    color: var(--t5e-tertiary-color);
   }
 </style>

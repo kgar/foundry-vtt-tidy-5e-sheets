@@ -47,7 +47,7 @@
   import ClassicControls from 'src/sheets/shared/ClassicControls.svelte';
   import type { Item5e } from 'src/types/item.types';
   import LevelUpDropdown from 'src/sheets/actor/LevelUpDropdown.svelte';
-  import { SectionConfigApplication } from 'src/applications/section-order-manager/SectionConfigApplication';
+  import { DocumentTabSectionConfigApplication } from 'src/applications/section-config/DocumentTabSectionConfigApplication';
   import ItemControl from 'src/components/item-list/controls/ItemControl.svelte';
   import { NpcSheetRuntime } from 'src/runtime/NpcSheetRuntime';
 
@@ -310,7 +310,7 @@
               iconCssClass="fas fa-cog"
               title="TIDY5E.Utilities.ConfigureSections"
               onclick={() =>
-                new SectionConfigApplication({
+                new DocumentTabSectionConfigApplication({
                   actor: $context.actor,
                   sections: $context.spellbook,
                   tabId: CONSTANTS.TAB_NPC_SPELLBOOK,
