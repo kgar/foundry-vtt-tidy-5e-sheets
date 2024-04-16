@@ -271,6 +271,11 @@
   .no-pointer-events {
     pointer-events: none;
   }
+
+  // Prose Mirror
+  .prosemirror.editing-source .editor-container {
+    display: none;
+  }
 }
 
 @import './partials/floating-context-menu';
