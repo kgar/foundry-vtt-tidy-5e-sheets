@@ -128,7 +128,7 @@
     }
 
     .drag-grip {
-      font-size: 10px;
+      font-size: 0.625rem;
       color: var(--t5e-tertiary-color);
     }
   }
