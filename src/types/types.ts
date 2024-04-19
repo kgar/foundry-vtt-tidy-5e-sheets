@@ -113,13 +113,9 @@ export type CustomSectionOptions = {
 };
 
 export type InventorySection = {
-  label: string;
   items: Item5e[];
-  dataset: Record<string, string>;
   canCreate: boolean;
-  custom?: CustomSectionOptions;
-  key: string;
-};
+} & TidySectionBase;
 
 export type CharacterItemPartitions = {
   items: Item5e[];
@@ -136,7 +132,7 @@ export type TidySectionBase = {
   dataset: Record<string, any>;
   custom?: CustomSectionOptions;
   key: string;
-  show?: boolean; // default: true
+  show: boolean; // default: true
 };
 
 export type FeatureSection = {
