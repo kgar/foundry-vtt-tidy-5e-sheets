@@ -57,7 +57,7 @@
     ? `/* Controls */ ${classicControlWidthRems * classicControls.length}rem`
     : '';
 
-  $: gridTemplateColumns = `/* Toggle */ 1rem /* Name */ 1fr /* Weight */ 3rem /* Quantity */ 3rem ${classicControlsWidth}`;
+  $: gridTemplateColumns = `/* Name */ 1fr /* Weight */ 3rem /* Quantity */ 3rem ${classicControlsWidth}`;
 
   $: visibleItemIdSubset = FoundryAdapter.searchItems(
     searchCriteria,
