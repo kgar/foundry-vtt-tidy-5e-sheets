@@ -763,6 +763,7 @@ export class Tidy5eNpcSheet
         },
         canCreate: true,
         key: 'weapons',
+        show: true,
       },
       actions: {
         label: game.i18n.localize('DND5E.ActionPl'),
@@ -774,6 +775,7 @@ export class Tidy5eNpcSheet
         },
         canCreate: true,
         key: 'actions',
+        show: true,
       },
       passive: {
         label: game.i18n.localize('DND5E.Features'),
@@ -781,6 +783,7 @@ export class Tidy5eNpcSheet
         dataset: { type: CONSTANTS.ITEM_TYPE_FEAT },
         canCreate: true,
         key: 'passive',
+        show: true,
       },
       equipment: {
         label: game.i18n.localize('DND5E.Inventory'),
@@ -788,6 +791,7 @@ export class Tidy5eNpcSheet
         dataset: { type: CONSTANTS.ITEM_TYPE_LOOT },
         canCreate: true,
         key: 'equipment',
+        show: true,
       },
       classes: {
         label: `${CONFIG.Item.typeLabels.class}Pl`,
@@ -795,6 +799,7 @@ export class Tidy5eNpcSheet
         dataset: { type: CONSTANTS.ITEM_TYPE_CLASS },
         canCreate: true,
         key: 'classes',
+        show: true,
       },
     };
 

@@ -42,6 +42,7 @@ export class CharacterSheetSections {
         section: customSectionName,
         creationItemTypes: CharacterSheetSections.inventoryItemTypes,
       },
+      show: true,
       ...customSectionOptions,
     });
 
@@ -67,6 +68,7 @@ export class CharacterSheetSections {
         showRequirementsColumn: true,
         canCreate: true,
         key: 'race',
+        show: true,
         ...options,
       },
       background: {
@@ -77,6 +79,7 @@ export class CharacterSheetSections {
         showRequirementsColumn: true,
         canCreate: true,
         key: 'background',
+        show: true,
         ...options,
       },
       classes: {
@@ -88,6 +91,7 @@ export class CharacterSheetSections {
         showLevelColumn: true,
         canCreate: true,
         key: 'classes',
+        show: true,
         ...options,
       },
       active: {
@@ -103,6 +107,7 @@ export class CharacterSheetSections {
         showUsesColumn: true,
         canCreate: true,
         key: 'active',
+        show: true,
         ...options,
       },
       passive: {
@@ -113,6 +118,7 @@ export class CharacterSheetSections {
         showRequirementsColumn: true,
         canCreate: true,
         key: 'passive',
+        show: true,
         ...options,
       },
     };
@@ -158,6 +164,7 @@ export class CharacterSheetSections {
         section: customSectionName,
         creationItemTypes: [CONSTANTS.ITEM_TYPE_FEAT],
       },
+      show: true,
       ...customSectionOptions,
     });
 

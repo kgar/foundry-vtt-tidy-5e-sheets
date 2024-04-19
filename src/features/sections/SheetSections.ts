@@ -49,7 +49,7 @@ export class SheetSections {
         section: customSectionName,
         creationItemTypes: [CONSTANTS.ITEM_TYPE_SPELL],
       },
-
+      show: true,
       ...options,
     });
 
@@ -58,10 +58,7 @@ export class SheetSections {
 
   static sortKeyedSections<
     T extends { key: string; custom?: CustomSectionOptions }
-  >(
-    sections: T[],
-    sectionConfigs: Record<string, SectionConfig> | undefined
-  ) {
+  >(sections: T[], sectionConfigs: Record<string, SectionConfig> | undefined) {
     const sortMap = new Map(
       Object.values(sectionConfigs ?? {}).map((e) => [e.key, e.order])
     );

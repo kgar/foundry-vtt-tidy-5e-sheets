@@ -367,6 +367,7 @@ export class Tidy5eVehicleSheet
             property: 'cover',
           },
         ],
+        show: true,
       },
       equipment: {
         label: game.i18n.localize(CONFIG.Item.typeLabels.equipment),
@@ -375,18 +376,21 @@ export class Tidy5eVehicleSheet
         dataset: { type: 'equipment', 'system.type.value': 'vehicle' },
         columns: equipmentColumns,
         key: 'equipment',
+        show: true,
       },
       passive: {
         label: game.i18n.localize('DND5E.Features'),
         items: [],
         dataset: { type: 'feat' },
         key: 'passive',
+        show: true,
       },
       reactions: {
         label: game.i18n.localize('DND5E.ReactionPl'),
         items: [],
         dataset: { type: 'feat', 'system.activation.type': 'reaction' },
         key: 'reactions',
+        show: true,
       },
       weapons: {
         label: game.i18n.localize(`${CONFIG.Item.typeLabels.weapon}Pl`),
@@ -395,6 +399,7 @@ export class Tidy5eVehicleSheet
         dataset: { type: 'weapon', 'system.weaponType': 'siege' },
         columns: equipmentColumns,
         key: 'weapons',
+        show: true,
       },
     };
 
@@ -417,6 +422,7 @@ export class Tidy5eVehicleSheet
         dataset: { type: 'crew' },
         columns: cargoColumns,
         key: 'crew',
+        show: true,
       },
       passengers: {
         label: game.i18n.localize('DND5E.VehiclePassengers'),
@@ -426,6 +432,7 @@ export class Tidy5eVehicleSheet
         dataset: { type: 'passengers' },
         columns: cargoColumns,
         key: 'passengers',
+        show: true,
       },
       cargo: {
         label: game.i18n.localize('DND5E.VehicleCargo'),
@@ -452,6 +459,7 @@ export class Tidy5eVehicleSheet
           },
         ],
         key: 'cargo',
+        show: true,
       },
     };
 

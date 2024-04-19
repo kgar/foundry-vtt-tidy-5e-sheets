@@ -980,6 +980,7 @@ export class Tidy5eCharacterSheet
         dataset: { type },
         canCreate: true,
         key: type,
+        show: true,
       };
       favoriteInventory[type] = {
         label: `${CONFIG.Item.typeLabels[type]}Pl`,
@@ -987,6 +988,7 @@ export class Tidy5eCharacterSheet
         dataset: { type },
         canCreate: false,
         key: type,
+        show: true,
       };
     }
 

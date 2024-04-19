@@ -39,6 +39,7 @@ export class NpcSheetSections {
         section: customSectionName,
         creationItemTypes: NpcSheetSections.abilitiesItemTypes,
       },
+      show: true,
       ...customSectionOptions,
     });
 
