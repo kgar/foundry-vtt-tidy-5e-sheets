@@ -7,6 +7,7 @@ import type {
 import type {
   ExpandedItemData,
   ExpandedItemIdToLocationsMap,
+  InventorySection,
   ItemCardStore,
   LocationToSearchTextMap,
   MessageBus,
@@ -39,6 +40,10 @@ import { SheetPreferencesService } from 'src/features/user-preferences/SheetPref
 import { CONSTANTS } from 'src/constants';
 import { AsyncMutex } from 'src/utils/mutex';
 import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
+import { DocumentTabSectionConfigApplication } from 'src/applications/section-config/DocumentTabSectionConfigApplication';
+import { ContainerSheetSections } from 'src/features/sections/ContainerSheetSections';
+import { SheetSections } from 'src/features/sections/SheetSections';
+import { TidyFlags } from 'src/foundry/TidyFlags';
 
 export class Tidy5eKgarContainerSheet
   extends dnd5e.applications.item.ContainerSheet
@@ -167,6 +172,33 @@ export class Tidy5eKgarContainerSheet
       });
     }
 
+    // Partition into sections
+    const items = defaultDocumentContext.inventory.contents.items;
+
+    let sections = {
+      contents: { ...defaultDocumentContext.inventory.contents, items: [] },
+    };
+
+    for (let item of items) {
+      ContainerSheetSections.applyContentsItemToSection(sections, item);
+    }
+
+    const sectionConfigs = TidyFlags.sectionConfig.get(this.item);
+
+    // Sort Sections
+    defaultDocumentContext.inventory.sections =
+      SheetSections.sortKeyedSections<InventorySection>(
+        Object.values(sections),
+        sectionConfigs?.[CONSTANTS.TAB_CONTAINER_CONTENTS]
+      );
+
+    // Apply Show/Hide
+    for (let section of defaultDocumentContext.inventory.sections) {
+      section.show =
+        sectionConfigs?.[CONSTANTS.TAB_CONTAINER_CONTENTS]?.[section.key]
+          ?.show !== false;
+    }
+
     const itemDescriptions: ItemDescription[] = [];
     itemDescriptions.push({
       content: defaultDocumentContext.enriched.description,
@@ -230,6 +262,23 @@ export class Tidy5eKgarContainerSheet
               this.render();
             },
             visible: contentsSortMode === 'm',
+          },
+          {
+            title: FoundryAdapter.localize(
+              'TIDY5E.Utilities.ConfigureSections'
+            ),
+            iconClass: 'fas fa-cog',
+            execute: ({ context }) => {
+              new DocumentTabSectionConfigApplication({
+                actor: context.actor,
+                // Provide a way to build the necessary config, perhaps within the application constructor. We've got all the info we need in order to perform the operation.
+                sections: context.favorites,
+                tabId: CONSTANTS.TAB_CONTAINER_CONTENTS,
+                tabTitle: ItemSheetRuntime.getTabTitle(
+                  CONSTANTS.TAB_CONTAINER_CONTENTS
+                ),
+              }).render(true);
+            },
           },
         ],
       },

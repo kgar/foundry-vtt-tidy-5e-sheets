@@ -59,6 +59,7 @@ export const CONSTANTS = {
   },
   TAB_OPTION_CLASS: 'tab-option',
   TAB_CONTAINER_CONTENTS: 'contents',
+  TAB_CONTAINER_SECTION_CONTENTS: 'contents',
   TAB_ITEM_DESCRIPTION_ID: 'description',
   TAB_ITEM_DETAILS_ID: 'details',
   TAB_ITEM_ADVANCEMENT_ID: 'advancement',
