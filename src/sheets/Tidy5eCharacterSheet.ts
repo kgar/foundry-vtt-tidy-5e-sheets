@@ -1208,12 +1208,18 @@ export class Tidy5eCharacterSheet
     context.inventory.forEach((section) => {
       // Sort Inventory
       ItemUtils.sortItems(section.items, inventorySortMode);
+
       // TODO: Collocate Inventory Sub Items
       // Filter Inventory
       section.items = this.itemFilterService.filter(
         section.items,
         CONSTANTS.TAB_CHARACTER_INVENTORY
       );
+
+      // Apply visibility from configuration
+      section.show =
+        sectionConfigs?.[CONSTANTS.TAB_CHARACTER_INVENTORY]?.[section.key]
+          ?.show !== false;
     });
 
     context.spellbook = SheetSections.sortKeyedSections(
@@ -1228,12 +1234,18 @@ export class Tidy5eCharacterSheet
     context.spellbook.forEach((section) => {
       // Sort Spellbook
       ItemUtils.sortItems(section.spells, spellbookSortMode);
+
       // TODO: Collocate Spellbook Sub Items
       // Filter Spellbook
       section.spells = this.itemFilterService.filter(
         section.spells,
         CONSTANTS.TAB_CHARACTER_SPELLBOOK
       );
+
+      // Apply visibility from configuration
+      section.show =
+        sectionConfigs?.[CONSTANTS.TAB_CHARACTER_SPELLBOOK]?.[section.key]
+          ?.show !== false;
     });
 
     context.features = SheetSections.sortKeyedSections(
@@ -1248,13 +1260,20 @@ export class Tidy5eCharacterSheet
     context.features.forEach((section) => {
       // Sort Features
       ItemUtils.sortItems(section.items, featureSortMode);
+
       // Collocate Feature Sub Items
       section.items = SheetSections.collocateSubItems(context, section.items);
+
       // Filter Features
       section.items = this.itemFilterService.filter(
         section.items,
         CONSTANTS.TAB_CHARACTER_FEATURES
       );
+
+      // Apply visibility from configuration
+      section.show =
+        sectionConfigs?.[CONSTANTS.TAB_CHARACTER_FEATURES]?.[section.key]
+          ?.show !== false;
     });
 
     const favoriteSections = [
@@ -1291,6 +1310,7 @@ export class Tidy5eCharacterSheet
       let items = 'spells' in section ? section.spells : section.items;
       // Sort Favorites
       ItemUtils.sortItems(items, attributesSortMode);
+
       // TODO: Collocate Favorite Sub Items
       // Filter Favorites
       items = this.itemFilterService.filter(
@@ -1302,6 +1322,11 @@ export class Tidy5eCharacterSheet
       } else {
         section.items = items;
       }
+
+      // Apply visibility from configuration
+      section.show =
+        sectionConfigs?.[CONSTANTS.TAB_CHARACTER_ATTRIBUTES]?.[section.key]
+          ?.show !== false;
     });
 
     context.preparedSpells = nPrepared;

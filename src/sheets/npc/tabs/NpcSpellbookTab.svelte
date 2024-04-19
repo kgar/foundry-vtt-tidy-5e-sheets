@@ -58,24 +58,26 @@
     <NoSpells editable={$context.unlocked} />
   {:else}
     {#each $context.spellbook as section (section.label)}
-      {@const visibleItemIdSubset = FoundryAdapter.searchItems(
-        searchCriteria,
-        section.spells,
-      )}
-      {#if (searchCriteria.trim() === '' && $context.unlocked) || visibleItemIdSubset.size > 0}
-        {#if layoutMode === 'list'}
-          <SpellbookList
-            allowFavorites={false}
-            spells={section.spells}
-            {section}
-            {visibleItemIdSubset}
-          />
-        {:else}
-          <SpellbookGrid
-            spells={section.spells}
-            {section}
-            {visibleItemIdSubset}
-          />
+      {#if section.show}
+        {@const visibleItemIdSubset = FoundryAdapter.searchItems(
+          searchCriteria,
+          section.spells,
+        )}
+        {#if (searchCriteria.trim() === '' && $context.unlocked) || visibleItemIdSubset.size > 0}
+          {#if layoutMode === 'list'}
+            <SpellbookList
+              allowFavorites={false}
+              spells={section.spells}
+              {section}
+              {visibleItemIdSubset}
+            />
+          {:else}
+            <SpellbookGrid
+              spells={section.spells}
+              {section}
+              {visibleItemIdSubset}
+            />
+          {/if}
         {/if}
       {/if}
     {/each}

@@ -21,6 +21,7 @@
   import FilterMenu from 'src/components/filter/FilterMenu.svelte';
   import PinnedFilterToggles from 'src/components/filter/PinnedFilterToggles.svelte';
   import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
+  import HorizontalLineSeparator from 'src/components/layout/HorizontalLineSeparator.svelte';
 
   let context = getContext<Readable<CharacterSheetContext>>('context');
 
@@ -98,16 +99,26 @@
     <NoSpells editable={$context.unlocked} />
   {:else}
     {#each $context.spellbook as section (section.label)}
-      {@const classSpells = tryFilterByClass(section.spells)}
-      {@const visibleItemIdSubset = FoundryAdapter.searchItems(
-        searchCriteria,
-        classSpells,
-      )}
-      {#if (searchCriteria.trim() === '' && $context.unlocked) || visibleItemIdSubset.size > 0}
-        {#if layoutMode === 'list'}
-          <SpellbookList spells={classSpells} {section} {visibleItemIdSubset} />
-        {:else}
-          <SpellbookGrid spells={classSpells} {section} {visibleItemIdSubset} />
+      {#if section.show}
+        {@const classSpells = tryFilterByClass(section.spells)}
+        {@const visibleItemIdSubset = FoundryAdapter.searchItems(
+          searchCriteria,
+          classSpells,
+        )}
+        {#if (searchCriteria.trim() === '' && $context.unlocked) || visibleItemIdSubset.size > 0}
+          {#if layoutMode === 'list'}
+            <SpellbookList
+              spells={classSpells}
+              {section}
+              {visibleItemIdSubset}
+            />
+          {:else}
+            <SpellbookGrid
+              spells={classSpells}
+              {section}
+              {visibleItemIdSubset}
+            />
+          {/if}
         {/if}
       {/if}
     {/each}

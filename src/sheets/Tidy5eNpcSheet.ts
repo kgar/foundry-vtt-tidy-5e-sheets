@@ -903,13 +903,20 @@ export class Tidy5eNpcSheet
     context.features.forEach((section) => {
       // Sort Features
       ItemUtils.sortItems(section.items, abilitiesSortMode);
+
       // Collocate Feature Sub Items
       section.items = SheetSections.collocateSubItems(context, section.items);
+
       // Filter Features
       section.items = this.itemFilterService.filter(
         section.items,
         CONSTANTS.TAB_NPC_ABILITIES
       );
+
+      // Apply visibility from configuration
+      section.show =
+        sectionConfigs?.[CONSTANTS.TAB_NPC_ABILITIES]?.[section.key]?.show !==
+        false;
     });
 
     context.spellbook = SheetSections.sortKeyedSections(
@@ -930,12 +937,17 @@ export class Tidy5eNpcSheet
     context.spellbook.forEach((section) => {
       // Sort Spellbook
       ItemUtils.sortItems(section.spells, spellbookSortMode);
+
       // TODO: Collocate Spellbook Sub Items
       // Filter Spellbook
       section.spells = this.itemFilterService.filter(
         section.spells,
         spellbookTabId
       );
+
+      // Apply visibility from configuration
+      section.show =
+        sectionConfigs?.[spellbookTabId]?.[section.key]?.show !== false;
     });
   }
 

@@ -34,8 +34,9 @@
     : 'list';
 
   $: noItems =
-    $context.inventory.some((section: InventorySection) => section.items.length > 0) ===
-    false;
+    $context.inventory.some(
+      (section: InventorySection) => section.items.length > 0,
+    ) === false;
 
   $: utilityBarCommands =
     $context.utilities[CONSTANTS.TAB_CHARACTER_INVENTORY]
@@ -85,26 +86,28 @@
       />
     </ExpandableContainer>
     {#each $context.inventory as section (section.label)}
-      {@const visibleItemIdSubset = FoundryAdapter.searchItems(
-        searchCriteria,
-        section.items,
-      )}
-      {#if (searchCriteria.trim() === '' && $context.unlocked) || visibleItemIdSubset.size > 0}
-        {#if layoutMode === 'list'}
-          <InventoryList
-            primaryColumnName="{localize(
-              section.label,
-            )} ({visibleItemIdSubset.size})"
-            {section}
-            items={section.items}
-            {visibleItemIdSubset}
-          />
-        {:else}
-          <InventoryGrid
-            items={section.items}
-            {section}
-            {visibleItemIdSubset}
-          />
+      {#if section.show}
+        {@const visibleItemIdSubset = FoundryAdapter.searchItems(
+          searchCriteria,
+          section.items,
+        )}
+        {#if (searchCriteria.trim() === '' && $context.unlocked) || visibleItemIdSubset.size > 0}
+          {#if layoutMode === 'list'}
+            <InventoryList
+              primaryColumnName="{localize(
+                section.label,
+              )} ({visibleItemIdSubset.size})"
+              {section}
+              items={section.items}
+              {visibleItemIdSubset}
+            />
+          {:else}
+            <InventoryGrid
+              items={section.items}
+              {section}
+              {visibleItemIdSubset}
+            />
+          {/if}
         {/if}
       {/if}
     {/each}
