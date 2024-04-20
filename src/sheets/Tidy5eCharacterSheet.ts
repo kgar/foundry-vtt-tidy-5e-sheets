@@ -331,7 +331,7 @@ export class Tidy5eCharacterSheet
             iconClass: 'fas fa-cog',
             execute: ({ context }) => {
               new DocumentTabSectionConfigApplication({
-                actor: context.actor,
+                document: context.actor,
                 // Provide a way to build the necessary config, perhaps within the application constructor. We've got all the info we need in order to perform the operation.
                 sections: context.favorites,
                 tabId: CONSTANTS.TAB_CHARACTER_ATTRIBUTES,
@@ -440,7 +440,7 @@ export class Tidy5eCharacterSheet
             iconClass: 'fas fa-cog',
             execute: ({ context }) => {
               new DocumentTabSectionConfigApplication({
-                actor: context.actor,
+                document: context.actor,
                 sections: context.inventory,
                 tabId: CONSTANTS.TAB_CHARACTER_INVENTORY,
                 tabTitle: CharacterSheetRuntime.getTabTitle(
@@ -551,7 +551,7 @@ export class Tidy5eCharacterSheet
             iconClass: 'fas fa-cog',
             execute: ({ context }) => {
               new DocumentTabSectionConfigApplication({
-                actor: context.actor,
+                document: context.actor,
                 sections: context.spellbook,
                 tabId: CONSTANTS.TAB_CHARACTER_SPELLBOOK,
                 tabTitle: CharacterSheetRuntime.getTabTitle(
@@ -617,7 +617,7 @@ export class Tidy5eCharacterSheet
             iconClass: 'fas fa-cog',
             execute: ({ context }) => {
               new DocumentTabSectionConfigApplication({
-                actor: context.actor,
+                document: context.actor,
                 sections: context.features,
                 tabId: CONSTANTS.TAB_CHARACTER_FEATURES,
                 tabTitle: CharacterSheetRuntime.getTabTitle(

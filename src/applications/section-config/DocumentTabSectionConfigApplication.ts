@@ -5,28 +5,29 @@ import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type { Actor5e, TidySectionBase } from 'src/types/types';
 import { TidyFlags, type SectionConfig } from 'src/api';
 import type { DocumentTabSectionConfigItem } from './section-config.types';
+import type { Item5e } from 'src/types/item.types';
 
 type SectionConfigConstructorArgs = {
-  actor: Actor5e;
+  document: Actor5e | Item5e;
   sections: TidySectionBase[];
   tabId: string;
   tabTitle: string;
 };
 
 export class DocumentTabSectionConfigApplication extends SvelteFormApplicationBase {
-  actor: Actor5e;
+  document: Actor5e | Item5e;
   sections: DocumentTabSectionConfigItem[];
   tabId: string;
   tabTitle: string;
 
   constructor({
-    actor,
+    document,
     sections,
     tabId,
     tabTitle,
   }: SectionConfigConstructorArgs) {
     super();
-    this.actor = actor;
+    this.document = document;
     this.sections = sections.map((section) => ({
       key: section.key,
       label: section.label,
@@ -69,7 +70,7 @@ export class DocumentTabSectionConfigApplication extends SvelteFormApplicationBa
   }
 
   private _onConfirm(sections: DocumentTabSectionConfigItem[]) {
-    const sectionConfig = TidyFlags.sectionConfig.get(this.actor) ?? {};
+    const sectionConfig = TidyFlags.sectionConfig.get(this.document) ?? {};
     sectionConfig[this.tabId] = sections.reduce<Record<string, SectionConfig>>(
       (result, curr, i) => {
         result[curr.key] = {
@@ -81,7 +82,7 @@ export class DocumentTabSectionConfigApplication extends SvelteFormApplicationBa
       },
       {}
     );
-    TidyFlags.sectionConfig.set(this.actor, sectionConfig);
+    TidyFlags.sectionConfig.set(this.document, sectionConfig);
     this.close();
   }
 
@@ -92,10 +93,10 @@ export class DocumentTabSectionConfigApplication extends SvelteFormApplicationBa
         'TIDY5E.UseDefaultDialog.text'
       )}</p>`,
       yes: () => {
-        const sectionConfig = TidyFlags.sectionConfig.get(this.actor) ?? {};
+        const sectionConfig = TidyFlags.sectionConfig.get(this.document) ?? {};
         delete sectionConfig[this.tabId];
         sectionConfig[`-=${this.tabId}`] = {};
-        TidyFlags.sectionConfig.set(this.actor, sectionConfig);
+        TidyFlags.sectionConfig.set(this.document, sectionConfig);
         this.close();
       },
       no: () => {},

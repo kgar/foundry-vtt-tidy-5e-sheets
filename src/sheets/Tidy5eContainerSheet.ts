@@ -143,6 +143,12 @@ export class Tidy5eKgarContainerSheet
   async getData(options = {}) {
     const defaultDocumentContext = await super.getData(this.options);
 
+    // Backfill required section data
+    Object.assign(defaultDocumentContext.inventory.contents, {
+      show: true,
+      key: CONSTANTS.TAB_CONTAINER_SECTION_CONTENTS,
+    });
+
     const containerPreferences = SheetPreferencesService.getByType(
       this.item.type
     );
@@ -270,9 +276,9 @@ export class Tidy5eKgarContainerSheet
             iconClass: 'fas fa-cog',
             execute: ({ context }) => {
               new DocumentTabSectionConfigApplication({
-                actor: context.actor,
+                document: context.item,
                 // Provide a way to build the necessary config, perhaps within the application constructor. We've got all the info we need in order to perform the operation.
-                sections: context.favorites,
+                sections: context.inventory.sections,
                 tabId: CONSTANTS.TAB_CONTAINER_CONTENTS,
                 tabTitle: ItemSheetRuntime.getTabTitle(
                   CONSTANTS.TAB_CONTAINER_CONTENTS

@@ -318,7 +318,7 @@
               title="TIDY5E.Utilities.ConfigureSections"
               onclick={() =>
                 new DocumentTabSectionConfigApplication({
-                  actor: $context.actor,
+                  document: $context.actor,
                   sections: $context.spellbook,
                   tabId: CONSTANTS.TAB_NPC_SPELLBOOK,
                   tabTitle: NpcSheetRuntime.getTabTitle(

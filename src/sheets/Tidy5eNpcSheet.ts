@@ -357,7 +357,7 @@ export class Tidy5eNpcSheet
             iconClass: 'fas fa-cog',
             execute: ({ context }) => {
               new DocumentTabSectionConfigApplication({
-                actor: context.actor,
+                document: context.actor,
                 sections: context.features,
                 tabId: CONSTANTS.TAB_NPC_ABILITIES,
                 tabTitle: NpcSheetRuntime.getTabTitle(
@@ -468,7 +468,7 @@ export class Tidy5eNpcSheet
             iconClass: 'fas fa-cog',
             execute: ({ context }) => {
               new DocumentTabSectionConfigApplication({
-                actor: context.actor,
+                document: context.actor,
                 sections: context.spellbook,
                 tabId: CONSTANTS.TAB_NPC_SPELLBOOK,
                 tabTitle: NpcSheetRuntime.getTabTitle(

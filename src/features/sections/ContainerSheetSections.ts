@@ -1,4 +1,3 @@
-import { CONSTANTS } from 'src/constants';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import type { Item5e } from 'src/types/item.types';
 import type { InventorySection } from 'src/types/types';
