@@ -76,7 +76,7 @@
 
         {#if section.info}
           <ol class="info">
-            {#each $context.section.info as info}
+            {#each section.info as info}
               <li class="notification info">{info ?? ''}</li>
             {/each}
           </ol>

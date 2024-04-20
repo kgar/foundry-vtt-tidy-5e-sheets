@@ -374,6 +374,10 @@ input[type='checkbox'] {
   height: 100%;
   align-content: flex-start;
 
+  &.effects {
+    padding-right: 0.5rem;
+  }
+
   &.detail-tab-contents, 
   /* Compatibility selector */ & > .tab {
     padding-right: 0.75rem;
@@ -843,4 +847,15 @@ label input[type='checkbox']:checked {
   float: right;
   margin: 0;
   padding: 0 0.325rem;
+}
+
+ol.info {
+  margin: 0;
+  padding: 0;
+  outline: none;
+
+  li.notification {
+    box-shadow: none;
+    list-style: none;
+  }
 }
