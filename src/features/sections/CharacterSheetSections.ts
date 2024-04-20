@@ -7,19 +7,9 @@ import type {
   InventorySection,
 } from 'src/types/types';
 import { TidyFlags } from 'src/foundry/TidyFlags';
+import { Inventory } from './Inventory';
 
 export class CharacterSheetSections {
-  static get inventoryItemTypes() {
-    return [
-      CONSTANTS.ITEM_TYPE_WEAPON,
-      CONSTANTS.ITEM_TYPE_EQUIPMENT,
-      CONSTANTS.ITEM_TYPE_CONSUMABLE,
-      CONSTANTS.ITEM_TYPE_TOOL,
-      CONSTANTS.ITEM_TYPE_CONTAINER,
-      CONSTANTS.ITEM_TYPE_LOOT,
-    ];
-  }
-
   static applyInventoryItemToSection(
     inventory: Record<string, InventorySection>,
     item: Item5e,
@@ -40,7 +30,7 @@ export class CharacterSheetSections {
       key: customSectionName,
       custom: {
         section: customSectionName,
-        creationItemTypes: CharacterSheetSections.inventoryItemTypes,
+        creationItemTypes: Inventory.inventoryItemTypes,
       },
       show: true,
       ...customSectionOptions,

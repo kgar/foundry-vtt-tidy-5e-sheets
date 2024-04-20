@@ -1,5 +1,6 @@
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type {
+  ContainerSection,
   ContainerSheetContext,
   ItemChatData,
   ItemDescription,
@@ -44,6 +45,7 @@ import { DocumentTabSectionConfigApplication } from 'src/applications/section-co
 import { ContainerSheetSections } from 'src/features/sections/ContainerSheetSections';
 import { SheetSections } from 'src/features/sections/SheetSections';
 import { TidyFlags } from 'src/foundry/TidyFlags';
+import { Inventory } from 'src/features/sections/Inventory';
 
 export class Tidy5eKgarContainerSheet
   extends dnd5e.applications.item.ContainerSheet
@@ -181,9 +183,19 @@ export class Tidy5eKgarContainerSheet
     // Partition into sections
     const items = defaultDocumentContext.inventory.contents.items;
 
-    let sections = {
-      contents: { ...defaultDocumentContext.inventory.contents, items: [] },
-    };
+    let sections = Inventory.inventoryItemTypes.reduce<
+      Record<string, ContainerSection>
+    >((acc, itemType) => {
+      acc[itemType] = {
+        items: [],
+        label: Inventory.getInventoryTypeLabel(itemType),
+        dataset: {},
+        key: itemType,
+        show: true,
+      };
+
+      return acc;
+    }, {});
 
     for (let item of items) {
       ContainerSheetSections.applyContentsItemToSection(sections, item);
@@ -192,17 +204,22 @@ export class Tidy5eKgarContainerSheet
     const sectionConfigs = TidyFlags.sectionConfig.get(this.item);
 
     // Sort Sections
+    defaultDocumentContext.inventory.sections = SheetSections.sortKeyedSections(
+      Object.values(sections),
+      sectionConfigs?.[CONSTANTS.TAB_CONTAINER_CONTENTS]
+    );
+
+    // Trim Empty Sections
     defaultDocumentContext.inventory.sections =
-      SheetSections.sortKeyedSections<InventorySection>(
-        Object.values(sections),
-        sectionConfigs?.[CONSTANTS.TAB_CONTAINER_CONTENTS]
+      defaultDocumentContext.inventory.sections.filter(
+        (section: ContainerSection) => section.items.length
       );
 
     // Apply Show/Hide
     for (let section of defaultDocumentContext.inventory.sections) {
       section.show =
         sectionConfigs?.[CONSTANTS.TAB_CONTAINER_CONTENTS]?.[section.key]
-          ?.show !== false;
+          ?.show !== false && section.items.length;
     }
 
     const itemDescriptions: ItemDescription[] = [];

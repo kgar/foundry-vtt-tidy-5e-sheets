@@ -267,12 +267,10 @@
     --utility-toolbar-margin-right: -0.75rem;
     --utility-toolbar-padding-right: 1.25rem;
   }
-  .container-contents-list-section {
-    margin-right: -0.75rem;
-  }
 
   .scroll-container {
     padding-bottom: 0;
+    padding-right: 0.75rem;
   }
 
   .container-contents-footer {

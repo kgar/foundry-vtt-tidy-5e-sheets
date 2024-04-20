@@ -63,6 +63,7 @@ import { TidyFlags } from 'src/api';
 import { DocumentTabSectionConfigApplication } from 'src/applications/section-config/DocumentTabSectionConfigApplication';
 import { ActorSheetCustomSectionMixin } from './mixins/Tidy5eBaseActorSheetMixins';
 import { ItemUtils } from 'src/utils/ItemUtils';
+import { Inventory } from 'src/features/sections/Inventory';
 
 export class Tidy5eCharacterSheet
   extends ActorSheetCustomSectionMixin(
@@ -973,9 +974,9 @@ export class Tidy5eCharacterSheet
     // Categorize items as inventory, spellbook, features, and classes
     const inventory: ActorInventoryTypes = {};
     const favoriteInventory: ActorInventoryTypes = {};
-    for (const type of CharacterSheetSections.inventoryItemTypes) {
+    for (const type of Inventory.inventoryItemTypes) {
       inventory[type] = {
-        label: `${CONFIG.Item.typeLabels[type]}Pl`,
+        label: Inventory.getInventoryTypeLabel(type),
         items: [],
         dataset: { type },
         canCreate: true,
@@ -983,7 +984,7 @@ export class Tidy5eCharacterSheet
         show: true,
       };
       favoriteInventory[type] = {
-        label: `${CONFIG.Item.typeLabels[type]}Pl`,
+        label: Inventory.getInventoryTypeLabel(type),
         items: [],
         dataset: { type },
         canCreate: false,
