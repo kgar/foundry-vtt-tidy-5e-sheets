@@ -1,5 +1,5 @@
 import type { ComponentType, SvelteComponent } from 'svelte';
-import type { CustomContent, Tab, Utilities } from './types';
+import type { CustomContent, Tab, TidySectionBase, Utilities } from './types';
 import type { DocumentPreparationWarning } from './types';
 import type {
   DocumentFilters,
@@ -73,3 +73,5 @@ export type ContainerSheetContext = {
   utilities: Utilities<ContainerSheetContext>;
   viewableWarnings: DocumentPreparationWarning[];
 } & Record<string, any>;
+
+export type ContainerSection = { items: Item5e[] } & TidySectionBase;
