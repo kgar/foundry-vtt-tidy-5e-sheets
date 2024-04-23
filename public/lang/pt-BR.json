@@ -184,6 +184,37 @@
         "useOneDnDExhaustion": "Usar Exaustão do OneD&D",
         "AtLeastOneLevelRequiredErrorMessage": "É necessário pelo menos um nível de exaustão."
     },
+    "TIDY5E.WorldSettings.VehicleExhaustion": {
+        "Header": "Exaustão de Veículo",
+        "name": "Configuração de Exaustão de Veículo",
+        "hint": "Determina como a exaustão do veículo é configurada e apresentada na ficha de veículo.",
+        "AtLeastOneLevelRequiredErrorMessage": "É necessário pelo menos um nível de exaustão de veículo."
+    },
+  "TIDY5E.WorldSettings.TabItem": {
+    "tabLabel": "Item"
+  },
+  "TIDY5E.WorldSettings.ItemIdentificationPermission": {
+    "name": "Permissão de Identificação de Item",
+    "hint": "Determina qual tipo de usuário consegue acessar a os controles de UI para identificar itens.",
+    "options.GmOnly": "Apenas MJ",
+    "options.GmAndOwners": "MJ and Donos do Item"
+  },
+  "TIDY5E.WorldSettings.IncludeFlagsInSpellScrollCreation": {
+    "name": "Incluir Flags na Criação de Pergaminhos de Magia",
+    "hint": "Às vezes, algumas magias podem conter informações especiais de outros módulos, que pode ser útil transportá-la para o pergaminho. Habilite para copiar todas as informações baseadas em flags para o pergaminho, no momento da criação dele."
+  },
+    "TIDY5E.WorldSettings.TabSheetLock": {
+        "tabLabel": "Bloqueio de Ficha",
+        "header": "Opções de Bloqueio",
+        "hint": "Impede que os jogadores façam alterações em aspectos de suas fichas que não devem ser alterados com frequência. Opcionalmente, oculte alguns elementos que você não deseja usar.",
+        "hint2": "Importante: Os recursos de bloqueio de ficha servem para orientar o uso da ficha de jogador e ajudar a evitar erros, como adicionar/remover acidentalmente uma proficiência de salvaguarda. As configurações de bloqueio de ficha não oferecem um bloqueio seguro contra jogadores maliciosos.",
+        "labelGeneralLocks": "Bloqueios Gerais",
+        "labelInventoryLocks": "Bloqueios de Inventário",
+        "labelFeaturesLocks": "Bloqueios de Recursos"
+    },
+    "TIDY5E.WorldSettings.TabMisc": {
+        "tabLabel": "Opções de MJ"
+    },
     "TIDY5E.Settings.MulticlassSpellbookFilterLabel": "Filtro de livro de feitiços multiclasse",
     "TIDY5E.UserSettings.Menu": {
         "name": "Configurações do usuário",
@@ -202,18 +233,6 @@
     "TIDY5E.UserSettings.TabVehicles": {
         "tabLabel": "Veículos",
         "header": "Fichas de Veículo"
-    },
-    "TIDY5E.WorldSettings.TabMisc": {
-        "tabLabel": "Opções de MJ"
-    },
-    "TIDY5E.WorldSettings.TabSheetLock": {
-        "tabLabel": "Bloqueio de Ficha",
-        "header": "Opções de Bloqueio",
-        "hint": "Impede que os jogadores façam alterações em aspectos de suas fichas de personagem que não devem ser alterados com frequência. Opcionalmente, oculte alguns elementos que você não deseja usar.",
-        "hint2": "Importante: Os recursos de bloqueio de planilha destinam-se a orientar o uso da planilha do jogador e a ajudar a evitar erros, como adicionar/remover acidentalmente uma proficiência de salvaguarda. As configurações de bloqueio de planilha não oferecem um bloqueio seguro contra jogadores com intenções maliciosas.",
-        "labelGeneralLocks": "Bloqueios Gerais",
-        "labelInventoryLocks": "Bloqueios de inventário",
-        "labelFeaturesLocks": "Bloqueios de Recursos"
     },
     "TIDY5E.Settings.ItemCardsForAllItems": {
         "name": "Mostrar cartões de item em todos os layouts",
@@ -592,12 +611,6 @@
         "AvailableHeader": "Abas disponíveis",
         "SelectedHeader": "Abas selecionadas",
         "AtLeastOneTabRequiredErrorMessage": "Abas padrão: pelo menos uma aba é necessária para cada tipo de ator."
-    },
-    "TIDY5E.WorldSettings.VehicleExhaustion": {
-        "Header": "Exaustão do Veículo",
-        "name": "Configuração de Exaustão Veicular",
-        "hint": "Determina como a exaustão do veículo é configurada e apresentada na ficha do veículo.",
-        "AtLeastOneLevelRequiredErrorMessage": "É necessário pelo menos um nível de exaustão do veículo."
     },
     "TIDY5E.UserSettings.TabActionsList": {
         "tabLabel": "Lista de Ações"
