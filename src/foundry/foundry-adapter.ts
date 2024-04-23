@@ -150,14 +150,18 @@ export const FoundryAdapter = {
   unsetFlag(flagged: any, flagName: string): Promise<void> {
     return flagged.unsetFlag(CONSTANTS.MODULE_ID, flagName);
   },
+  getClassIdentifier(item: Item5e): string {
+    return item.system.identifier || item.name.slugify({strict: true});
+  },
   getClassAndSubclassSummaries(actor: Actor5e): Map<string, ClassSummary> {
     return actor.items.reduce(
       (map: Map<string, ClassSummary>, item: Item5e) => {
         if (item.type === 'class') {
-          const data: ClassSummary = map.get(item.system.identifier) ?? {};
+          const identifier = FoundryAdapter.getClassIdentifier(item);
+          const data: ClassSummary = map.get(identifier) ?? {};
           data.class = item.name;
           data.level = item.system.levels?.toString();
-          map.set(item.system.identifier, data);
+          map.set(identifier, data);
         }
 
         if (
