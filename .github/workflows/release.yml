@@ -47,7 +47,7 @@ jobs:
           tag: ${{ github.event.release.tag_name }}
           body: ${{ github.event.release.body }}
           prerelease: ${{ github.event.release.prerelease }}
-          makeLatest: ${{ !github.event.release.prerelease }}
+          makeLatest: false
 
       - name: Publish Module to FoundryVTT Website
         if: ${{ !github.event.release.prerelease }}
