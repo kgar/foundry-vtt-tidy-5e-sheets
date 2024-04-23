@@ -70,14 +70,14 @@
 > -->
 
 <div class="actions-tab-container scroll-container flex-column small-gap">
-  {#each Object.entries($context.actions) as [actionType, itemSet] (actionType)}
-    {#if itemSet.size}
-      <ItemTable key={actionType}>
+  {#each $context.actions as section (section.key)}
+    {@const actions = section.actions}
+    {#if section.actions.length}
+      <ItemTable key={section.key}>
         <svelte:fragment slot="header">
           <ItemTableHeaderRow>
             <ItemTableColumn primary={true}>
-              {FoundryAdapter.getActivationTypeLabel(actionType) ??
-                localize(actionType)}
+              {section.label}
             </ItemTableColumn>
             <ItemTableColumn baseWidth="6.25rem"
               >{localize('DND5E.Range')}</ItemTableColumn
@@ -96,7 +96,7 @@
         <svelte:fragment slot="body">
           {@const filteredActionItems = FoundryAdapter.getFilteredActionItems(
             searchCriteria,
-            itemSet,
+            section.actions,
           )}
           {#each filteredActionItems as actionItem (actionItem.item.id)}
             <ItemTableRow

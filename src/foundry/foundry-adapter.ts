@@ -151,7 +151,7 @@ export const FoundryAdapter = {
     return flagged.unsetFlag(CONSTANTS.MODULE_ID, flagName);
   },
   getClassIdentifier(item: Item5e): string {
-    return item.system.identifier || item.name.slugify({strict: true});
+    return item.system.identifier || item.name.slugify({ strict: true });
   },
   getClassAndSubclassSummaries(actor: Actor5e): Map<string, ClassSummary> {
     return actor.items.reduce(
@@ -449,8 +449,8 @@ export const FoundryAdapter = {
         .map((item) => item.id)
     );
   },
-  getFilteredActionItems(searchCriteria: string, items: Set<ActionItem>) {
-    return Array.from(items).filter(
+  getFilteredActionItems(searchCriteria: string, items: ActionItem[]) {
+    return items.filter(
       (x: ActionItem) =>
         searchCriteria.trim() === '' ||
         x.item?.name?.toLowerCase().includes(searchCriteria.toLowerCase())

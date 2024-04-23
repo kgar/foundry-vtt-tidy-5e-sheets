@@ -35,7 +35,7 @@ import type { Item5e, ItemChatData } from 'src/types/item.types';
 import { NpcSheetRuntime } from 'src/runtime/NpcSheetRuntime';
 import {
   actorUsesActionFeature,
-  getActorActions,
+  getActorActionSections,
 } from 'src/features/actions/actions';
 import { isNil } from 'src/utils/data';
 import { CustomContentRenderer } from './CustomContentRenderer';
@@ -533,7 +533,7 @@ export class Tidy5eNpcSheet
 
     const context: NpcSheetContext = {
       ...defaultDocumentContext,
-      actions: getActorActions(this.actor, this.itemFilterService),
+      actions: getActorActionSections(this.actor, this.itemFilterService),
       activateEditors: (node, options) =>
         FoundryAdapter.activateEditors(node, this, options?.bindSecrets),
       actorPortraitCommands:

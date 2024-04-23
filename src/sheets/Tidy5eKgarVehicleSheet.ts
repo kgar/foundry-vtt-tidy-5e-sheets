@@ -36,7 +36,7 @@ import type { Item5e, ItemChatData } from 'src/types/item.types';
 import { VehicleSheetRuntime } from 'src/runtime/VehicleSheetRuntime';
 import {
   actorUsesActionFeature,
-  getActorActions,
+  getActorActionSections,
 } from 'src/features/actions/actions';
 import { isNil } from 'src/utils/data';
 import { CustomContentRenderer } from './CustomContentRenderer';
@@ -240,7 +240,7 @@ export class Tidy5eVehicleSheet
 
     const context: VehicleSheetContext = {
       ...defaultDocumentContext,
-      actions: getActorActions(this.actor, this.itemFilterService),
+      actions: getActorActionSections(this.actor, this.itemFilterService),
       activateEditors: (node, options) =>
         FoundryAdapter.activateEditors(node, this, options?.bindSecrets),
       actorPortraitCommands:

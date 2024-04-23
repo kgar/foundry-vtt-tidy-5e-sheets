@@ -318,13 +318,9 @@ export type ActionItem = {
   rangeSubtitle: string | null;
 };
 
-type ActionSectionTitle = string;
-
 export type ActionSection = { 
   actions: ActionItem[];
  } & TidySectionBase;
-
-export type ActorActions = Record<ActionSectionTitle, Set<ActionItem>>;
 
 export type TidyResource = {
   name: string;
@@ -376,7 +372,7 @@ type ActorSaves = {
 };
 
 export type ActorSheetContext = {
-  actions: ActorActions;
+  actions: ActionSection[];
   activateEditors: (
     node: HTMLElement,
     options?: { bindSecrets?: boolean }

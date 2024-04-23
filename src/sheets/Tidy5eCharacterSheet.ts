@@ -41,7 +41,7 @@ import type { Item5e, ItemChatData } from 'src/types/item.types';
 import { CharacterSheetRuntime } from 'src/runtime/CharacterSheetRuntime';
 import {
   actorUsesActionFeature,
-  getActorActions,
+  getActorActionSections,
 } from 'src/features/actions/actions';
 import { isNil } from 'src/utils/data';
 import { CustomContentRenderer } from './CustomContentRenderer';
@@ -763,7 +763,7 @@ export class Tidy5eCharacterSheet
       ...defaultDocumentContext,
       activateEditors: (node, options) =>
         FoundryAdapter.activateEditors(node, this, options?.bindSecrets),
-      actions: getActorActions(this.actor, this.itemFilterService),
+      actions: getActorActionSections(this.actor, this.itemFilterService),
       actorClassesToImages: getActorClassesToImages(this.actor),
       actorPortraitCommands:
         ActorPortraitRuntime.getEnabledPortraitMenuCommands(this.actor),

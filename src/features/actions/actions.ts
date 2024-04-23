@@ -7,7 +7,6 @@ import type {
   ActionItem,
   ActionSection,
   Actor5e,
-  ActorActions,
 } from 'src/types/types';
 import { isNil } from 'src/utils/data';
 import { scaleCantripDamageFormula, simplifyFormula } from 'src/utils/formula';
@@ -78,58 +77,83 @@ export function getActorActionSections(
       })
       .map((item: Item5e) => mapActionItem(item));
 
-    return buildActionSections(filteredItems);
+    return buildActionSections(actor, filteredItems);
   } catch (e) {
     error('An error occurred while getting actions', false, e);
     return [];
   }
 }
 
-function buildActionSections(items: Item5e[]): ActionSection[] {
-
-}
-
-export function getActorActions(
+function buildActionSections(
   actor: Actor5e,
-  itemFilterService: ItemFilterService
-): ActorActions {
-  try {
-    const sheetPreferences = SheetPreferencesService.getByType(actor.type);
+  actionItems: ActionItem[]
+): ActionSection[] {
+  const customMappings = ActionListRuntime.getActivationTypeMappings();
 
-    const actionSortMode =
-      sheetPreferences.tabs?.[CONSTANTS.TAB_ACTOR_ACTIONS]?.sort ?? 'm';
+  let actionSections: Record<string, ActionSection> = {};
 
-    let filteredItems = actor.items.filter(isItemInActionList);
+  // Initialize the default sections in their default order.
+  Object.keys(itemTypeSortValues).forEach((activationType) => {
+    actionSections[activationType] = {
+      actions: [],
+      dataset: {},
+      label: FoundryAdapter.getActivationTypeLabel(activationType),
+      key: activationType,
+      show: true,
+    };
+  });
 
-    // Filter actions
-    filteredItems = itemFilterService.filter(
-      filteredItems,
-      CONSTANTS.TAB_ACTOR_ACTIONS
-    );
-
-    // Sort actions
-    filteredItems = filteredItems
-      .sort((a: Item5e, b: Item5e) => {
-        if (actionSortMode === 'a') {
-          return a.name.localeCompare(b.name);
-        }
-
-        // Sort by Arbitrary Action List Rules
-        if (a.type !== b.type) {
-          return itemTypeSortValues[a.type] - itemTypeSortValues[b.type];
-        }
-        if (a.type === 'spell' && b.type === 'spell') {
-          return a.system.level - b.system.level;
-        }
-        return (a.sort || 0) - (b.sort || 0);
-      })
-      .map((item: Item5e) => mapActionItem(item));
-
-    return buildActionSets(filteredItems);
-  } catch (e) {
-    error('An error occurred while getting actions', false, e);
-    return {};
+  // partition items into sections
+  for (let actionItem of actionItems) {
+    const customSectionName = TidyFlags.actionSection.get(actionItem.item);
+    if (customSectionName) {
+      const customSection = (actionSections[customSectionName] ??= {
+        actions: [],
+        dataset: {},
+        key: customSectionName,
+        label: FoundryAdapter.localize(customSectionName),
+        show: true,
+        custom: {
+          creationItemTypes: [],
+          section: customSectionName,
+        },
+      });
+      customSection.actions.push(actionItem);
+    } else {
+      const activationType = getActivationType(
+        actionItem.item.system.activation?.type,
+        customMappings
+      );
+      const section = (actionSections[activationType] ??= {
+        actions: [],
+        dataset: {},
+        key: activationType,
+        label: FoundryAdapter.getActivationTypeLabel(activationType),
+        show: true,
+      });
+      section.actions.push(actionItem);
+    }
   }
+
+  const sectionConfigs = TidyFlags.sectionConfig.get(actor);
+  const actorActionsSectionConfig =
+    sectionConfigs?.[CONSTANTS.TAB_ACTOR_ACTIONS];
+
+  // Sort sections
+  let sections = SheetSections.sortKeyedSections(
+    Object.values(actionSections),
+    actorActionsSectionConfig
+  );
+
+  // Remove empty sections
+  sections = sections.filter((section) => section.actions.length);
+
+  // Apply visibility from configuration
+  sections.forEach((section) => {
+    section.show = actorActionsSectionConfig?.[section.key]?.show !== false;
+  });
+
+  return sections;
 }
 
 export function isItemInActionList(item: Item5e): boolean {
@@ -142,19 +166,19 @@ export function isItemInActionList(item: Item5e): boolean {
 
   // perform normal filtering logic
   switch (item.type) {
-    case 'weapon': {
+    case CONSTANTS.ITEM_TYPE_WEAPON: {
       return item.system.equipped;
     }
-    case 'equipment': {
+    case CONSTANTS.ITEM_TYPE_EQUIPMENT: {
       return item.system.equipped && isActiveItem(item.system.activation?.type);
     }
-    case 'consumable': {
+    case CONSTANTS.ITEM_TYPE_CONSUMABLE: {
       return (
         SettingsProvider.settings.actionListIncludeConsumables.get() &&
         isActiveItem(item.system.activation?.type)
       );
     }
-    case 'spell': {
+    case CONSTANTS.ITEM_TYPE_SPELL: {
       const limitToCantrips =
         SettingsProvider.settings.actionListLimitActionsToCantrips.get();
 
@@ -165,8 +189,8 @@ export function isItemInActionList(item: Item5e): boolean {
       ) {
         return false;
       }
-      const isReaction = item.system.activation?.type === 'reaction';
-      const isBonusAction = item.system.activation?.type === 'bonus';
+      const isReaction = item.system.activation?.type === CONSTANTS.ACTIVATION_COST_REACTION;
+      const isBonusAction = item.system.activation?.type === CONSTANTS.ACTIVATION_COST_BONUS;
 
       //ASSUMPTION: If the spell causes damage, it will have damageParts
       const isDamageDealer = item.system.damage?.parts?.length > 0;
@@ -190,7 +214,7 @@ export function isItemInActionList(item: Item5e): boolean {
       }
       return shouldInclude;
     }
-    case 'feat': {
+    case CONSTANTS.ITEM_TYPE_FEAT: {
       return !!item.system.activation?.type;
     }
     default: {
