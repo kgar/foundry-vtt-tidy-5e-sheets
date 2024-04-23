@@ -93,7 +93,7 @@ function buildActionSections(
   let actionSections: Record<string, ActionSection> = {};
 
   // Initialize the default sections in their default order.
-  Object.keys(itemTypeSortValues).forEach((activationType) => {
+  Object.keys(activationTypeSortValues).forEach((activationType) => {
     actionSections[activationType] = {
       actions: [],
       dataset: {},
