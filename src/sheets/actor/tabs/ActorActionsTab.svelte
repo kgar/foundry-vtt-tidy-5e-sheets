@@ -71,8 +71,7 @@
 
 <div class="actions-tab-container scroll-container flex-column small-gap">
   {#each $context.actions as section (section.key)}
-    {@const actions = section.actions}
-    {#if section.actions.length}
+    {#if section.actions.length && section.show}
       <ItemTable key={section.key}>
         <svelte:fragment slot="header">
           <ItemTableHeaderRow>

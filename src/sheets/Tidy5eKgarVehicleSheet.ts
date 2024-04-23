@@ -51,6 +51,7 @@ import { AsyncMutex } from 'src/utils/mutex';
 import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
 import { SheetPreferencesRuntime } from 'src/runtime/user-preferences/SheetPreferencesRuntime';
 import { Tidy5eBaseActorSheet } from './Tidy5eBaseActorSheet';
+import { DocumentTabSectionConfigApplication } from 'src/applications/section-config/DocumentTabSectionConfigApplication';
 
 export class Tidy5eVehicleSheet
   extends dnd5e.applications.actor.ActorSheet5eVehicle
@@ -233,6 +234,22 @@ export class Tidy5eVehicleSheet
                 tabId: CONSTANTS.TAB_ACTOR_ACTIONS,
                 message: CONSTANTS.MESSAGE_BUS_COLLAPSE_ALL,
               }),
+          },
+          {
+            title: FoundryAdapter.localize(
+              'TIDY5E.Utilities.ConfigureSections'
+            ),
+            iconClass: 'fas fa-cog',
+            execute: ({ context }) => {
+              new DocumentTabSectionConfigApplication({
+                document: context.actor,
+                sections: context.actions,
+                tabId: CONSTANTS.TAB_ACTOR_ACTIONS,
+                tabTitle: VehicleSheetRuntime.getTabTitle(
+                  CONSTANTS.TAB_ACTOR_ACTIONS
+                ),
+              }).render(true);
+            },
           },
         ],
       },

@@ -677,6 +677,22 @@ export class Tidy5eCharacterSheet
                 message: CONSTANTS.MESSAGE_BUS_COLLAPSE_ALL,
               }),
           },
+          {
+            title: FoundryAdapter.localize(
+              'TIDY5E.Utilities.ConfigureSections'
+            ),
+            iconClass: 'fas fa-cog',
+            execute: ({ context }) => {
+              new DocumentTabSectionConfigApplication({
+                document: context.actor,
+                sections: context.actions,
+                tabId: CONSTANTS.TAB_ACTOR_ACTIONS,
+                tabTitle: CharacterSheetRuntime.getTabTitle(
+                  CONSTANTS.TAB_ACTOR_ACTIONS
+                ),
+              }).render(true);
+            },
+          },
         ],
       },
     };
