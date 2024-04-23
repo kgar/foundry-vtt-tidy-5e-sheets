@@ -320,6 +320,10 @@ export type ActionItem = {
 
 type ActionSectionTitle = string;
 
+export type ActionSection = { 
+  actions: ActionItem[];
+ } & TidySectionBase;
+
 export type ActorActions = Record<ActionSectionTitle, Set<ActionItem>>;
 
 export type TidyResource = {

@@ -3,7 +3,12 @@ import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { ActionListRuntime } from 'src/runtime/action-list/ActionListRuntime';
 import { SettingsProvider } from 'src/settings/settings';
 import type { Item5e } from 'src/types/item.types';
-import type { ActionItem, Actor5e, ActorActions } from 'src/types/types';
+import type {
+  ActionItem,
+  ActionSection,
+  Actor5e,
+  ActorActions,
+} from 'src/types/types';
 import { isNil } from 'src/utils/data';
 import { scaleCantripDamageFormula, simplifyFormula } from 'src/utils/formula';
 import { debug, error } from 'src/utils/logging';
@@ -36,6 +41,53 @@ const activationTypeSortValues: Record<string, number> = {
   crew: 7,
   special: 8,
 };
+
+export function getActorActionSections(
+  actor: Actor5e,
+  itemFilterService: ItemFilterService
+): ActionSection[] {
+  try {
+    const sheetPreferences = SheetPreferencesService.getByType(actor.type);
+
+    const actionSortMode =
+      sheetPreferences.tabs?.[CONSTANTS.TAB_ACTOR_ACTIONS]?.sort ?? 'm';
+
+    let filteredItems = actor.items.filter(isItemInActionList);
+
+    // Filter actions
+    filteredItems = itemFilterService.filter(
+      filteredItems,
+      CONSTANTS.TAB_ACTOR_ACTIONS
+    );
+
+    // Sort actions
+    filteredItems = filteredItems
+      .sort((a: Item5e, b: Item5e) => {
+        if (actionSortMode === 'a') {
+          return a.name.localeCompare(b.name);
+        }
+
+        // Sort by Arbitrary Action List Rules
+        if (a.type !== b.type) {
+          return itemTypeSortValues[a.type] - itemTypeSortValues[b.type];
+        }
+        if (a.type === 'spell' && b.type === 'spell') {
+          return a.system.level - b.system.level;
+        }
+        return (a.sort || 0) - (b.sort || 0);
+      })
+      .map((item: Item5e) => mapActionItem(item));
+
+    return buildActionSections(filteredItems);
+  } catch (e) {
+    error('An error occurred while getting actions', false, e);
+    return [];
+  }
+}
+
+function buildActionSections(items: Item5e[]): ActionSection[] {
+
+}
 
 export function getActorActions(
   actor: Actor5e,
