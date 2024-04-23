@@ -272,8 +272,8 @@
         "hint": "A ficha padrão permite o uso do tab do PV Atual para PV Temporário. A ativação dessa opção replica esse comportamento. Essa configuração será ignorada se a opção \"Usar Suporte a Teclado Acessível\" estiver desativada."
     },
     "TIDY5E.Settings.ItemCardsFixKey": {
-        "name": "Selecionar Tecla para Cartão de item",
-        "hint": "Segure esse caractere do teclado (por exemplo, a tecla \"x\") enquanto estiver visualizando um cartão de item para mantê-lo visível e permitir a interação."
+        "name": "Tecla de Fixação do Cartão de Item",
+        "hint": "Segure esta tecla (por exemplo, a tecla \"x\") enquanto estiver visualizando um cartão de item para mantê-lo visível e permitir a interação."
     },
     "TIDY5E.Settings.DefaultTheme": {
         "name": "Tema de Cor Padrão",
@@ -287,11 +287,11 @@
         "dark": "Escuro"
     },
     "TIDY5E.Settings.UseClassicControls": {
-        "name": "Usar controles de lista clássicos",
+        "name": "Usar Lista Clássica de Controles",
         "hint": "Mostra os controles na exibição de lista."
     },
     "TIDY5E.Settings.ShowIconsNextToTheItemName": {
-        "name": "Mostrar ícones de nomes de itens",
+        "name": "Mostrar Nome dos Ícones de Itens",
         "hint": "Mostra os ícones de suporte ao lado do nome do item (Favorito, Sintonização, etc.)."
     },
     "TIDY5E.Settings.ShowTraitLabels": {
