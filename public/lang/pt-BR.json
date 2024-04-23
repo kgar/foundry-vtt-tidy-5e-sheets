@@ -215,40 +215,61 @@
     "TIDY5E.WorldSettings.TabMisc": {
         "tabLabel": "Opções de MJ"
     },
-    "TIDY5E.Settings.MulticlassSpellbookFilterLabel": "Filtro de livro de feitiços multiclasse",
+    "TIDY5E.Settings.MulticlassSpellbookFilterLabel": "Filtro de Grimório Multiclasse",
+    "TIDY5E.WorldSettings.Menu": {
+        "name": "Configurações do Mundo",
+        "hint": "Ajuste as configurações de mundo para personalizar a experiência do Tidy 5e Sheets. Essas configurações são salvas nesse mundo do Foundry e se aplicam a todo o conteúdo relevante ao Tidy 5e Sheets.",
+        "label": "Configurações do Mundo",
+        "title": "Configurações do Mundo (Apenas MJ)"
+    },
     "TIDY5E.UserSettings.Menu": {
-        "name": "Configurações do usuário",
-        "hint": "Personalize sua própria versão do Tidy 5e Sheets. Essas configurações são salvas em seu navegador e se aplicam às suas planilhas.",
-        "label": "Configurações do usuário",
-        "title": "Configurações do usuário: {userName}"
+        "name": "Configurações de Usuário",
+        "hint": "Personalize sua própria versão do Tidy 5e Sheets. Essas configurações são salvas em seu navegador e se aplicam às suas fichas.",
+        "label": "Configurações de Usuário",
+        "title": "Configurações de Usuário: {userName}"
     },
     "TIDY5E.UserSettings.TabPlayers": {
         "tabLabel": "Jogadores",
-        "header": "Ficha de Personagem do Jogador"
+        "header": "Fichas de Personagem de Jogador"
     },
     "TIDY5E.UserSettings.TabNPCs": {
-        "tabLabel": "PNJs",
-        "header": "Fichas de PNJs"
+        "tabLabel": "PnJs",
+        "header": "Fichas de PnJs"
     },
     "TIDY5E.UserSettings.TabVehicles": {
         "tabLabel": "Veículos",
-        "header": "Fichas de Veículo"
+        "header": "Fichas de Veículos"
+    },
+    "TIDY5E.UserSettings.TabActionsList": {
+        "tabLabel": "Lista de Ações"
     },
     "TIDY5E.Settings.ItemCardsForAllItems": {
-        "name": "Mostrar cartões de item em todos os layouts",
-        "hint": "Quando essa configuração está desativada, os cartões de item são exibidos apenas na grade."
+        "name": "Mostrar Cartões de Item em Todos os Layouts",
+        "hint": "Se esta configuração estiver desativada, os cartões de item sserão exibidos apenas na grade."
     },
     "TIDY5E.Settings.ItemCardsForNPCs": {
-        "name": "Mostrar cartões de itens para PNJs/veículos",
-        "hint": "Habilite a exibição de cartões de informações de itens para NPCs e veículos."
+        "name": "Mostrar cartões de itens para PnJs/Veículos",
+        "hint": "Habilite para exibir cartões de informações de itens para PnJs e veículos."
     },
     "TIDY5E.Settings.ItemCardsAreFloating": {
-        "name": "Mostrar cartões de itens flutuantes",
+        "name": "Mostrar Cartões de Item Flutuantes",
         "hint": "Habilite para que os cartões de informações do item flutuem ao lado do cursor do mouse. Recomendado: use o delay com esse recurso."
     },
     "TIDY5E.Settings.ItemCardsDelay": {
-        "name": "Atraso do Cartão de item (ms)",
+        "name": "Atraso do Cartão de Item (ms)",
         "hint": "Atrasa a exibição de cartões de itens para os milissegundos (ms) especificados. 0 significa que não há atraso. Padrão: 300."
+    },
+    "TIDY5E.Settings.UseAccessibleKeyboardSupport": {
+        "name": "Use o Suporte de Teclado Acessível",
+        "hint": "Permite que os usuários usem tab na maioria dos botões/comandos no Tidy 5e Sheet e os executem com teclas de atalho convencionais baseadas em botões do teclado. Observação: quando focado em um botão no Foundry, as associações de teclas de \"Configurar Controles\" não respondem. Se um módulo usar esse recurso do Foundry para controles nas fichas, como o uso de itens enquanto mantém pressionada uma tecla, a ativação dessa opção do Tidy 5e Sheets interferirá nessas associações de teclas."
+    },
+    "TIDY5E.Settings.UseDefaultSheetAttributeTabbing": {
+        "name": "Usar Tab Entre Atributos da Ficha Padrão",
+        "hint": "A ficha padrão permite o uso do tab de uma entrada de atributo para a próxima, ocultando os controles em torno deles na ordem do tab. A ativação dessa opção replica esse comportamento. Essa configuração será ignorada se a opção \"Usar Suporte a Teclado Acessível\" estiver desativada."
+    },
+    "TIDY5E.Settings.UseDefaultSheetHpTabbing": {
+        "name": "Usar Tab Entre PVs da Ficha Padrão",
+        "hint": "A ficha padrão permite o uso do tab do PV Atual para PV Temporário. A ativação dessa opção replica esse comportamento. Essa configuração será ignorada se a opção \"Usar Suporte a Teclado Acessível\" estiver desativada."
     },
     "TIDY5E.Settings.ItemCardsFixKey": {
         "name": "Selecionar Tecla para Cartão de item",
@@ -583,24 +604,6 @@
         "themeLabel": "Tema"
     },
     "TIDY5E.ActiveEffectsMarkerTitle": "Este item tem efeitos ativos",
-    "TIDY5E.WorldSettings.Menu": {
-        "name": "Configurações do mundo",
-        "hint": "Ajuste as configurações de mundo para personalizar a experiência do Tidy 5e Sheets. Essas configurações são salvas nesse mundo da Foundry e se aplicam a todo o conteúdo relevante ao Tidy 5e Sheets.",
-        "label": "Configurações do mundo",
-        "title": "Configurações do Mundo (Apenas para MJ)"
-    },
-    "TIDY5E.Settings.UseDefaultSheetAttributeTabbing": {
-        "hint": "A ficha padrão permite a tabulação do teclado de uma entrada de atributo para a próxima, ocultando os controles em torno deles da ordem de tabulação. A ativação dessa opção replica esse comportamento. Essa configuração será ignorada se a opção \"Usar suporte a teclado acessível\" estiver desativada.",
-        "name": "Usar tabulação de teclado de atributo de ficha padrão"
-    },
-    "TIDY5E.Settings.UseAccessibleKeyboardSupport": {
-        "hint": "Permite que os usuários percorram a maioria dos botões/comandos das fichas do Tidy 5e e os executem com teclas de atalho convencionais baseadas em botões do teclado. Observação: quando focado em um botão no Foundry, as associações de teclas de \"Configurar controles\" não respondem. Se um módulo usar esse recurso do Foundry para controles nas fichas, como o uso de itens enquanto mantém pressionada uma tecla especial, a ativação dessa opção do Tidy 5e Sheets interferirá nessas associações de teclas.",
-        "name": "Use o Suporte de Teclado Acessível"
-    },
-    "TIDY5E.Settings.UseDefaultSheetHpTabbing": {
-        "name": "Usar a tabulação padrão do teclado da HP na ficha",
-        "hint": "A ficha padrão permite a tabulação do teclado da entrada HP atual para a entrada HP temporária atual. A ativação dessa opção replica esse comportamento. Essa configuração será ignorada se a opção \"Usar suporte a teclado acessível\" estiver desativada."
-    },
     "TIDY5E.Settings.ToggleEmptyCharacterSkills": {
         "hint": "Adiciona um botão de alternância para mostrar/ocultar habilidades vazias.",
         "name": "Alternar Habilidades Vazias do Personagem"
@@ -611,9 +614,6 @@
         "AvailableHeader": "Abas disponíveis",
         "SelectedHeader": "Abas selecionadas",
         "AtLeastOneTabRequiredErrorMessage": "Abas padrão: pelo menos uma aba é necessária para cada tipo de ator."
-    },
-    "TIDY5E.UserSettings.TabActionsList": {
-        "tabLabel": "Lista de Ações"
     },
     "TIDY5E.Settings.ActionList.Header": "Lista de ações",
     "TIDY5E.Settings.ActionListLimitActionsToCantrips": {
