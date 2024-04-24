@@ -128,7 +128,7 @@ export class SheetSections {
       SheetSections.applySpellToSection(spellbookMap, spell, options);
     });
 
-    return spellbook;
+    return Object.values(spellbookMap);
   }
 
   static prepareClassItems(
