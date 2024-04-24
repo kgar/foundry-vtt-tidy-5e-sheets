@@ -296,14 +296,14 @@
     },
     "TIDY5E.Settings.ShowTraitLabels": {
         "name": "Mostrar Rótulos de Traços",
-        "hint": "Mostra rótulos para características de PC, PNJ e veículo. Desative para mostrar somente os ícones."
+        "hint": "Mostra rótulos para características de PJ, PnJ e Veículo. Desative para mostrar somente os ícones."
     },
     "TIDY5E.Settings.ShowPlayerName": {
         "name": "Mostrar Nome do Jogador",
         "hint": "Mostra um campo para o nome do jogador abaixo do nome do personagem."
     },
     "TIDY5E.Settings.ShowClassList": {
-        "name": "Mostrar lista de classes",
+        "name": "Mostrar Lista de Classes",
         "hint": "Mostra a lista de classes abaixo do nome do personagem."
     },
     "TIDY5E.Settings.InspirationAnimation": {
@@ -311,55 +311,59 @@
         "hint": "Mostra animação de brilho no rastreador de inspiração."
     },
     "TIDY5E.Settings.HideIfZero": {
-        "name": "Ocultar o Rastreador de Exaustão e Inspiração quando em 0",
-        "hint": "Oculta exaustão e inspiração se for 0, mas ainda aparece ao passar o mouse."
+        "name": "Ocultar o Rastreador de Exaustão e Inspiração em 0",
+        "hint": "Oculta exaustão e inspiração se cair a 0 PV, mas ainda aparece ao passar o mouse."
     },
     "TIDY5E.Settings.ShowInspirationOnHover": {
         "name": "Mostrar indicador de inspiração apenas ao passar o cursor",
-        "hint": "Mostra o indicador de inspiração somente ao passar o mouse sobre o retrato."
+        "hint": "Mostra o indicador de inspiração somente ao passar o cursor sobre o retrato."
     },
     "TIDY5E.Settings.ShowExhaustionOnHover": {
-        "name": "Mostrar o indicador de exaustão somente ao pairar o cursor",
+        "name": "Mostrar Indicador de Exaustão Apenas sob Cursor",
         "hint": "Mostra o rastreador de exaustão somente ao passar o cursor sobre o retrato."
     },
     "TIDY5E.Settings.UseHpBar": {
-        "name": "Usar barra de HP",
-        "hint": "Mostra uma barra colorida indicando o HP restante. Os números de saúde ainda estarão visíveis."
+        "name": "Usar Barra de HP",
+        "hint": "Mostra uma barra colorida indicando o HP restante. Os números de vida ainda estarão visíveis."
     },
     "TIDY5E.Settings.UseHpOverlay": {
-        "name": "Use sobreposição de saúde",
+        "name": "Use Sobreposição de Vida",
         "hint": "Mostra uma sobreposição colorida de PV."
     },
+    "TIDY5E.Settings.ToggleEmptyCharacterSkills": {
+        "name": "Alternar Perícias Vazias de Personagem",
+        "hint": "Adiciona um botão de alternância para mostrar/ocultar perícias vazias."
+    },
     "TIDY5E.Settings.ToggleEmptyCharacterTraits": {
-        "name": "Alternar traços de personagem vazios",
-        "hint": "Por padrão, traços vazios são sempre visíveis. Habilite para adicionar um botão que alterna a visibilidade."
+        "name": "Alternar Traços Vazios de Personagem",
+        "hint": "Adiciona um botão de alternância para mostrar/ocultar traços vazios."
     },
     "TIDY5E.Settings.MoveTraitsBelowResources": {
-        "name": "Mover traços para baixo de recursos",
-        "hint": "Habilite para mover traços de personagem do lado esquerdo para o lado direito, abaixo de recursos."
+        "name": "Mover Traços Abaixo de Recursos",
+        "hint": "Posiciona os traços abaixo dos recursos de personagem."
     },
     "TIDY5E.Settings.ShowEquippedAmmoOnly": {
-        "name": "Mostrar apenas munição equipada",
-        "hint": "Mostra apenas a munição equipada no momento no seletor de munição da arma."
+        "name": "Mostrar Apenas Munição Equipada",
+        "hint": "Mostra apenas a munição equipada no seletor de munição da arma."
     },
     "TIDY5E.Settings.AlwaysShowTraits": {
-        "name": "Sempre mostrar traços",
-        "hint": "Por padrão, traços vazios são escondidos por botão de alternância. Habilite para nunca esconder."
+        "name": "Sempre Mostrar Traços",
+        "hint": "Remove o botão de alternância de traços vazios e exibe todos."
     },
     "TIDY5E.Settings.AlwaysShowSkills": {
-        "name": "Sempre mostrar Perícias",
-        "hint": "Por padrão, perícias sem proficiências são escondidas por um botão de alternância. Habilite para nunca esconder."
+        "name": "Sempre Mostrar Perícias",
+        "hint": "Remove o botão de alternância de perícias vazias e exibe todas."
     },
     "TIDY5E.Settings.ShowNPCSpellbookTab": {
-        "name": "Mostrar aba do Livro de feitiços",
-        "hint": "Mostra uma guia de livro de feitiços para PNJs. Desative para mover a seção do livro de feitiços para a guia de Atributos."
+        "name": "Mostrar Aba de Grimório",
+        "hint": "Mostra uma aba de grimório para PnJs. Desative para mover a seção de grimório para a aba Atributos."
     },
     "TIDY5E.Settings.ShowActiveEffectsMarker": {
-        "name": "Mostrar marcador de Efeitos Ativos em itens",
+        "name": "Mostrar Marcador de Efeitos Ativos",
         "hint": "Mostra um marcador para itens de exibição de lista que possuem efeitos ativos."
     },
     "TIDY5E.Settings.UseContextMenu": {
-        "name": "Usar o menu de Contexto",
+        "name": "Usar Menu de Contexto",
         "hint": "Ativa o menu de contexto ao clicar com o botão direito do mouse nos itens."
     },
     "TIDY5E.Settings.ShowExpandedLimitedView": {
@@ -367,85 +371,91 @@
         "hint": "Mostra toda a ficha de personagem (menos o diário) para jogadores com permissão limitada."
     },
     "TIDY5E.Settings.UseCircularPortraitStyle": {
-        "name": "Use Retratos Circulares",
-        "hint": "Escolha para habilitar retratos/ícones redondos para atores.",
+        "name": "Usar Retratos Redondos",
+        "hint": "Mostra retratos/ícones redondos para atores.",
         "all": "Todos os atores",
         "pc": "PJs",
-        "npc": "PNJs/Veículos",
-        "none": "Nenhum",
-        "default": "Nenhum"
+        "npc": "PnJs/Veículos",
+        "none": "Nenhum"
     },
     "TIDY5E.Settings.UseTotalSheetLock": {
-        "name": "Travar campos delicados",
-        "hint": "Habilite para prevenir mudanças acidentais em campos sensíveis e em sua maioria estáticos."
+        "name": "Travar Campos Sensíveis",
+        "hint": "Bloqueia campos alterados com pouca frequência (nome, proficiência, etc) e oculta botões de configuração quando a ficha estiver bloqueada."
     },
     "TIDY5E.Settings.LimitEffectsManagementToGM": {
-        "name": "Só o mestre pode editar efeitos ativos",
-        "hint": "Habilite para negar aos jogadores a edição dos efeitos ativos em suas fichas. Eles ainda verão os efeitos aplicados."
+        "name": "Limitar Gerenciamento de Efeitos Ativos ao MJ",
+        "hint": "Limita a permissão de edição ou alternância de efeitos ativos apenas para MJs."
     },
     "TIDY5E.Settings.UseInspiration": {
-        "name": "Use o rastreador de inspiração",
+        "name": "Usar Rastreador de Inspiração",
         "hint": "Mostra um rastreador de inspiração no perfil do personagem."
     },
     "TIDY5E.Settings.UseVehicleMotion": {
-        "name": "Usar o rastreador de movimento do veículo",
+        "name": "Usar Rastreador de Movimento do Veículo",
         "hint": "Mostra um rastreador de movimento no perfil do veículo."
     },
     "TIDY5E.Settings.UseExhaustion": {
-        "name": "Use o rastreador de exaustão",
-        "hint": "Mostra um rastreador de exaustão para personagens, PNJs e veículos."
+        "name": "Use Rastreador de Exaustão",
+        "hint": "Mostra um rastreador de exaustão para personagens, PnJs e veículos."
     },
     "TIDY5E.Settings.UseNPCRest": {
-        "name": "Usar Descanso de PNJ",
-        "hint": "Habilite para mostrar os botões/ícones de descanso nas fichas de PNJs."
+        "name": "Usar Descanso para PnJ",
+        "hint": "Permite que PnJs façam descanços curtos e longos."
     },
     "TIDY5E.Settings.ShowNPCRestInChat": {
-        "name": "Mostrar descanso do PNJ no bate-papo",
-        "hint": "Mostra um cartão de bate-papo quando um PNJ descansa."
+        "name": "Mostrar Descanso do PnJ no Chat",
+        "hint": "Mostra um cartão no chat quando um PnJ descansa."
     },
     "TIDY5E.Settings.ShowNPCActorLinkMarker": {
-        "name": "Marcar PNJs vinculados/não vinculados",
-        "hint": "Adiciona uma borda colorida e um ícone em fichas de PNJs vinculados/não vinculados.",
-        "default": "Sem marcador de vínculo (padrão)",
+        "name": "Marcar PnJs Vinculados/Não Vinculados",
+        "hint": "Adiciona uma borda colorida e um ícone em fichas de PnJs vinculados/não vinculados.",
+        "default": "Sem marca de vínculo (padrão)",
         "unlinked": "Destacar tokens não vinculados",
         "linked": "Destacar tokens vinculados",
-        "both": "Destacar ambos"
+        "both": "Destacar vinculados e não vinculados"
     },
     "TIDY5E.Settings.InitialSheetTab": {
-        "name": "Aba inicial da ficha",
-        "hint": "Mostra a guia indicada ao abrir uma ficha pela primeira vez."
+        "name": "Aba Inicial da Ficha",
+        "hint": "Mostra a aba indicada ao abrir uma ficha pela primeira vez."
+    },
+    "TIDY5E.Settings.DefaultSheetTabs": {
+        "name": "Abas Padrão de Ficha",
+        "hint": "Determina quais abas serão exibidas e em qual ordem, por padrão. Aplica-se quando nenhuma seleção de aba seja feita para um ator.",
+        "AvailableHeader": "Abas Disponíveis",
+        "SelectedHeader": "Abas Selecionadas",
+        "AtLeastOneTabRequiredErrorMessage": "Abas padrão: pelo menos uma aba é necessária para cada tipo de ator."
     },
     "TIDY5E.Settings.HideDeathSavesFromPlayers": {
-        "name": "Ocultar os salvamentos contra a morte dos jogadores",
-        "hint": "Torna os salvamentos contra a morte e os resultados dos salvamentos contra a morte visíveis apenas para o GM."
+        "name": "Esconder Salvaguardas Contra Morte dos Jogadores",
+        "hint": "Faz com que as rolagens e resultados de Salvaguardas Contra Morte sejam mostradas apenas para o MJ."
     },
     "TIDY5E.Settings.UseCharacterEncumbranceBar": {
-        "name": "Usar barra de ônus",
-        "hint": "Mostra uma barra de ônus nas fichas de personagem."
+        "name": "Usar Barra de Carga para PJ",
+        "hint": "Mostra uma barra de carga nas fichas de personagem."
     },
     "TIDY5E.Settings.UseNPCEncumbranceBar": {
-        "name": "Usar a barra de ônus em PNJ",
-        "hint": "Mostra uma barra de ônus nas fichas dos PNJs."
+        "name": "Usar Barra de Carga para PnJ",
+        "hint": "Mostra uma barra de carga nas fichas de PnJs."
     },
     "TIDY5E.Settings.UseVehicleEncumbranceBar": {
-        "name": "Usar a barra de ônus do veículo",
-        "hint": "Mostra uma barra de ônus nas fichas de veículo."
+        "name": "Usar Barra de Carga para Veiculo",
+        "hint": "Mostra uma barra de carga nas fichas de veículos."
     },
     "TIDY5E.Settings.UseMulticlassSpellbookFilter": {
-        "name": "Usar filtro de livro de feitiços multiclasse",
-        "hint": "Permite filtrar os feitiços por classe na guia do livro de feitiços. O feitiço deve ser associado a uma classe usando o seletor Classe na folha de edição de feitiços."
+        "name": "Usar Filtro de Grimório Multiclasse",
+        "hint": "Permite filtrar as magias por classe, na aba Grimório. A magia deve ser associado a uma classe usando o seletor Classe na ficha da magia."
     },
     "TIDY5E.Settings.UseSpellClassIcons": {
-        "name": "Usar o ícone de classe de feitiço para feitiços",
-        "hint": "Mostra a imagem da classe do feitiço nos feitiços em vez da imagem do próprio feitiço. O feitiço deve ser associado a uma classe usando o seletor de classe na folha de edição de feitiços. Ao fazer multiclasse, esse recurso distingue quais feitiços pertencem a qual classe em um piscar de olhos."
+        "name": "Usar Ícone de Classe de Magia para Magias",
+        "hint": "Mostra a imagem da classe da magia nas magias, ao vez da imagem da própria magia. A magia deve ser associado a uma classe usando o seletor Classe na ficha da magia. Ao fazer multiclasse, esse recurso distingue quais magias pertencem a qual classe em um piscar de olhos."
     },
     "TIDY5E.Settings.SpellClassFilterAdditionalClasses": {
-        "name": "Classes adicionais para filtragem do Livro de Feitiços multiclasse",
-        "hint": "Coloca classes adicionais no filtro do livro de feitiços multiclasse. Adicione classes ao menu suspenso com esta sintaxe \"id1|nome1,id2|nome2\", por exemplo, \"ocultista|Ocultista,alquimista|Alquimista\""
+        "name": "Classes Adicionais para Filtro de Grimório Multiclasse",
+        "hint": "Coloca classes adicionais no filtro de grimório multiclasse. Adicione classes ao menu suspenso com esta sintaxe: \"id1|nome1,id2|nome2\". Por exemplo: \"ocultista|Ocultista,alquimista|Alquimista\"."
     },
     "TIDY5E.Settings.AllowCantripsToBePrepared": {
-        "name": "Permitir a preparação de Truques",
-        "hint": "A regra opcional de \"fórmulas de Truques\" do Caldeirão de Tudo da Tasha permite que os magos preparem Truques após um descanso longo da mesma forma que fazem com as magias de nível. Os Truques preparados não contam para o total de magias preparadas."
+        "name": "Permitir Preparação de Truques",
+        "hint": "A regra opcional \"Fórmulas de Truques\" do O Caldeirão de Todas as Coisas de Tasha, permite que magos preparem truques após um descanso longo da mesma forma que fazem com magias de nível. Truques preparados não contam para o máximo de magias preparadas."
     },
     "TIDY5E.Settings.LockMoneyChanges": {
         "name": "Bloquear dinheiro",
@@ -604,17 +614,6 @@
         "themeLabel": "Tema"
     },
     "TIDY5E.ActiveEffectsMarkerTitle": "Este item tem efeitos ativos",
-    "TIDY5E.Settings.ToggleEmptyCharacterSkills": {
-        "hint": "Adiciona um botão de alternância para mostrar/ocultar habilidades vazias.",
-        "name": "Alternar Habilidades Vazias do Personagem"
-    },
-    "TIDY5E.Settings.DefaultSheetTabs": {
-        "name": "Guias de ficha padrão",
-        "hint": "Determina quais guias serão exibidas e em que ordem por padrão. Aplica-se quando nenhuma seleção de guia tiver sido feita para um ator.",
-        "AvailableHeader": "Abas disponíveis",
-        "SelectedHeader": "Abas selecionadas",
-        "AtLeastOneTabRequiredErrorMessage": "Abas padrão: pelo menos uma aba é necessária para cada tipo de ator."
-    },
     "TIDY5E.Settings.ActionList.Header": "Lista de ações",
     "TIDY5E.Settings.ActionListLimitActionsToCantrips": {
         "name": "Limitar as ações aos Truques",
