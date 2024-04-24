@@ -9,7 +9,9 @@ import type {
   CustomSectionOptions,
   NpcSheetContext,
   SpellbookSection,
+  TidySectionBase,
 } from 'src/types/types';
+import { isNil } from 'src/utils/data';
 
 export class SheetSections {
   static generateCustomSpellbookSections(
@@ -200,5 +202,28 @@ export class SheetSections {
 
       return result;
     }, []);
+  }
+
+  static accountForExternalSections(props: string[], data: Record<string, any>) {
+    props.forEach(prop => {
+      const sectionCollection = data[prop];
+      sectionCollection?.forEach((section: any) => {
+        if (!isNil(section.key)) {
+          return;
+        }
+
+        section.key = SheetSections.getSectionKey(section);
+        section.canCreate = false;
+        section.show = true;
+      }) 
+    })
+  }
+
+  static getSectionKey(section: TidySectionBase) {
+    if (isNil(section.key)) {
+      return `${section.label}-external`;
+    }
+
+    return section.key;
   }
 }

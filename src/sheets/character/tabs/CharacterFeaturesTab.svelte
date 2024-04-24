@@ -120,7 +120,7 @@
   {#if noFeatures && !$context.unlocked}
     <Notice>{localize('TIDY5E.EmptySection')}</Notice>
   {:else}
-    {#each $context.features as section (section.label)}
+    {#each $context.features as section (section.key)}
       {#if section.show}
         {@const visibleItemIdSubset = FoundryAdapter.searchItems(
           searchCriteria,

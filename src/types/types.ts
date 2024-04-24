@@ -133,6 +133,7 @@ export type TidySectionBase = {
   custom?: CustomSectionOptions;
   key: string;
   show: boolean; // default: true
+  isExternal?: boolean;
 };
 
 export type FeatureSection = {

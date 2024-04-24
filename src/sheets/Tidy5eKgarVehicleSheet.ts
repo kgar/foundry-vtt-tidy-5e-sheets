@@ -52,6 +52,7 @@ import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
 import { SheetPreferencesRuntime } from 'src/runtime/user-preferences/SheetPreferencesRuntime';
 import { Tidy5eBaseActorSheet } from './Tidy5eBaseActorSheet';
 import { DocumentTabSectionConfigApplication } from 'src/applications/section-config/DocumentTabSectionConfigApplication';
+import { SheetSections } from 'src/features/sections/SheetSections';
 
 export class Tidy5eVehicleSheet
   extends dnd5e.applications.actor.ActorSheet5eVehicle
@@ -607,6 +608,7 @@ export class Tidy5eVehicleSheet
   private async _renderSheet(force?: boolean, options = {}) {
     await this.setExpandedItemData();
     const data = await this.getData();
+    SheetSections.accountForExternalSections(['features'], data);
     this.context.set(data);
 
     if (force) {

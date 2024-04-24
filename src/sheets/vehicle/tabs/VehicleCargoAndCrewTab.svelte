@@ -31,7 +31,7 @@
 {/if}
 
 <div class="scroll-container flex-column small-gap">
-  {#each $context.cargo as section}
+  {#each $context.cargo as section (section.key)}
     {#if $context.unlocked || section.items.length}
       {#if section.editableName}
         <PassengerOrCrewList {section} />

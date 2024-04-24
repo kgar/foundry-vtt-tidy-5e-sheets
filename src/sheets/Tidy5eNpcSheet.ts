@@ -1022,6 +1022,7 @@ export class Tidy5eNpcSheet
   private async _renderSheet(force?: boolean, options = {}) {
     await this.setExpandedItemData();
     const data = await this.getData();
+    SheetSections.accountForExternalSections(['features', 'spellbook'], data);
     this.context.set(data);
 
     if (force) {

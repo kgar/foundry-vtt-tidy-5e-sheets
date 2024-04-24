@@ -85,7 +85,7 @@
         {searchCriteria}
       />
     </ExpandableContainer>
-    {#each $context.inventory as section (section.label)}
+    {#each $context.inventory as section (section.key)}
       {#if section.show}
         {@const visibleItemIdSubset = FoundryAdapter.searchItems(
           searchCriteria,

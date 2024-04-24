@@ -116,7 +116,7 @@
         {localize('TIDY5E.EmptySection')}
       </Notice>
     {:else}
-      {#each $context.features as section}
+      {#each $context.features as section (section.key)}
         {#if $context.unlocked || section.items.length}
           <ItemTable key={section.key}>
             <svelte:fragment slot="header">

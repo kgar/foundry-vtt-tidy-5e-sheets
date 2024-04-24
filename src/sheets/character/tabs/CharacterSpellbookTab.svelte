@@ -98,7 +98,7 @@
   {#if noSpellLevels}
     <NoSpells editable={$context.unlocked} />
   {:else}
-    {#each $context.spellbook as section (section.label)}
+    {#each $context.spellbook as section (section.key)}
       {#if section.show}
         {@const classSpells = tryFilterByClass(section.spells)}
         {@const visibleItemIdSubset = FoundryAdapter.searchItems(

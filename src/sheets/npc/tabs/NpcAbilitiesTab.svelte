@@ -156,7 +156,7 @@
     {#if $settingStore.moveTraitsBelowNpcResources}
       <Traits toggleable={!$settingStore.alwaysShowNpcTraits} />
     {/if}
-    {#each $context.features as section}
+    {#each $context.features as section (section.key)}
       {#if section.show}
         {#if $context.unlocked || section.items.length}
           {@const visibleItemIdSubset = FoundryAdapter.searchItems(
@@ -338,7 +338,7 @@
           <NoSpells cssClass="flex-1" editable={$context.unlocked} />
         {:else}
           <div class="flex-1 small-padding-bottom flex-column small-gap">
-            {#each $context.spellbook as section (section.label)}
+            {#each $context.spellbook as section (section.key)}
               {#if section.show}
                 {@const visibleItemIdSubset = FoundryAdapter.searchItems(
                   searchCriteria,

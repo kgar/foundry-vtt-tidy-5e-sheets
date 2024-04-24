@@ -1459,6 +1459,10 @@ export class Tidy5eCharacterSheet
   private async _renderSheet(force?: boolean, options = {}) {
     await this.setExpandedItemData();
     const data = await this.getData();
+    SheetSections.accountForExternalSections(
+      ['actions', 'favorites', 'inventory', 'spellbook', 'features'],
+      data
+    );
     this.context.set(data);
 
     if (force) {
