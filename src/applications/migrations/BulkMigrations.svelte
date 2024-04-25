@@ -8,12 +8,21 @@
   import TabContents from 'src/components/tabs/TabContents.svelte';
   import { CONSTANTS } from 'src/constants';
   import Notice from 'src/components/notice/Notice.svelte';
+  import CcssToTidyMigration from './v3/CcssToTidyMigration.svelte';
 
   export let selectedTabId: string = CONSTANTS.TAB_MIGRATIONS_NPC_DEATH;
 
   const localize = FoundryAdapter.localize;
 
   const tabs: Tab[] = [
+    {
+      id: CONSTANTS.TAB_MIGRATIONS_CCSS_TO_TIDY,
+      title: 'TIDY5E.Settings.Migrations.CcssToTidy.sectionTitle',
+      content: {
+        component: CcssToTidyMigration,
+        type: 'svelte',
+      },
+    },
     {
       id: CONSTANTS.TAB_MIGRATIONS_NPC_DEATH,
       title: 'TIDY5E.Settings.Migrations.NpcDeathSaves.sectionTitle',

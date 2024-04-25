@@ -673,12 +673,19 @@
       "sectionTitle": "NPC Death Saves",
       "selectionDialogTitle": "Migration: NPC Death Saves"
     },
+    "CcssToTidy": {
+      "sectionTitle": "CCSS to Tidy 5e",
+      "selectionDialogTitle": "Migration: CCSS to Tidy 5e",
+      "ccss": "CCSS",
+      "section": "Section"
+    },
     "UnlinkedExplanation": "This migration gives the option to migrate unlinked token documents in the current scene. You can run the migration on additional scenes as needed.",
     "Selection": {
       "TotalSelectedLabel": "Total Selected: {total}",
       "ToMigrate": "To Migrate",
       "SelectAllNoneTooltip": "Select all or none"
-    }
+    },
+    "Parent": "Parent"
   },
   "TIDY5E.Settings.SheetPreferences": {
     "name": "Set Tidy as Default Sheet",
