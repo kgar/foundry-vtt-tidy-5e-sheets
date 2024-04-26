@@ -166,11 +166,11 @@
     <label
       class="green-checkbox"
       data-tooltip={localize(
-        'TIDY5E.Settings.Migrations.OptionOverwrite.Tooltip',
+        'TIDY5E.Settings.Migrations.CcssToTidy.overwriteTooltip',
       )}
     >
       <input type="checkbox" bind:checked={overwrite} disabled={migrating} />
-      {localize('TIDY5E.Settings.Migrations.OptionOverwrite.Text')}
+      {localize('TIDY5E.Settings.Migrations.CcssToTidy.overwrite')}
     </label>
     <label
       class="green-checkbox"
