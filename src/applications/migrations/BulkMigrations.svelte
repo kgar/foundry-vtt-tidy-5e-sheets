@@ -10,7 +10,7 @@
   import Notice from 'src/components/notice/Notice.svelte';
   import CcssToTidyMigration from './v3/CcssToTidyMigration.svelte';
 
-  export let selectedTabId: string = CONSTANTS.TAB_MIGRATIONS_NPC_DEATH;
+  export let selectedTabId: string = CONSTANTS.TAB_MIGRATIONS_CCSS_TO_TIDY;
 
   const localize = FoundryAdapter.localize;
 

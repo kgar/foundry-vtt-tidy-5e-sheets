@@ -1,6 +1,5 @@
 import { TidyFlags } from 'src/api';
 import type { Item5e } from 'src/types/item.types';
-import type { Actor5e } from 'src/types/types';
 import { isNil } from 'src/utils/data';
 import { debug, error } from 'src/utils/logging';
 
@@ -10,11 +9,8 @@ type CcssToTidyItemMigrationParams = {
   clearCcssFlagData: boolean;
 };
 
-type CcssToTidyActorMigrationParams = {
-  actor: Actor5e;
-  overwrite: boolean;
-  clearCcssFlagData: boolean;
-};
+export const ccssFlagPropPath =
+  'flags.custom-character-sheet-sections.sectionName' as const;
 
 export async function migrateCcssToTidyForItem({
   item,
@@ -22,9 +18,7 @@ export async function migrateCcssToTidyForItem({
   clearCcssFlagData,
 }: CcssToTidyItemMigrationParams) {
   try {
-    const sectionName = foundry.utils
-      .getProperty(item, 'flags.custom-character-sheet-sections.sectionName')
-      ?.trim();
+    const sectionName = getCcssSectionName(item);
 
     if (isNil(sectionName, '')) {
       return;
@@ -51,12 +45,6 @@ export async function migrateCcssToTidyForItem({
   }
 }
 
-export async function migrateCcssToTidyForActor({
-  actor,
-  overwrite,
-  clearCcssFlagData,
-}: CcssToTidyActorMigrationParams) {
-  actor.items?.forEach((item: Item5e) =>
-    migrateCcssToTidyForItem({ item, overwrite, clearCcssFlagData })
-  );
+export function getCcssSectionName(item: Item5e) {
+  return foundry.utils.getProperty(item, ccssFlagPropPath)?.trim();
 }

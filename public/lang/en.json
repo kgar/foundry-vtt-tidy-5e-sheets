@@ -655,7 +655,7 @@
     "Notification": {
       "Title": "Tidy 5e Sheets: Migrations Available",
       "Explanation": "New Tidy 5e Sheets data migrations are available. Check the {boldStart}config settings Migrations menu{boldEnd} to learn more.",
-      "Explanation2": "Note: Migrations move data that was originally stored by Tidy 5e Sheets into the system's officially supported data fields. If you are not missing data on your sheets after updating Tidy 5e Sheets, then no migration is required.",
+      "Explanation2": "Note: Migrations move data from one place to another. Sometimes, data that was originally stored by Tidy 5e Sheets needs to move into the system's officially supported data fields. In other cases, Tidy may adopt functionality from another module, and as a result, a convenient migration may be provided to ease the transition. If you are not missing data on your sheets after updating Tidy 5e Sheets, then no migration is required.",
       "Button.DoNotShowAgain": "Do Not Show Again",
       "DoNotShowAgain.ConfirmMessage": "Confirmed. This message will not show again until there is another available migration."
     },
@@ -677,7 +677,11 @@
       "sectionTitle": "CCSS to Tidy 5e",
       "selectionDialogTitle": "Migration: CCSS to Tidy 5e",
       "ccss": "CCSS",
-      "section": "Section"
+      "section": "Section",
+      "explanation1": "Tidy 5e now natively supports custom sections and provides additional features around custom sections. This migration will copy Custom Character Sheet Sections (CCSS) section names into Tidy's section setup.",
+      "explanation2": "{boldStart}Note{boldEnd}: CCSS takes priority with custom sectioning. To disable CCSS for an item, be sure to use the option to delete affected flags, or manually clear the CCSS custom section value.",
+      "deleteFlags": "Delete Affected CCSS Flags",
+      "deleteFlagsTooltip": "When migrating from CCSS to Tidy custom sections, the CCSS flags remain in place by default. Check this option to remove those flags."
     },
     "UnlinkedExplanation": "This migration gives the option to migrate unlinked token documents in the current scene. You can run the migration on additional scenes as needed.",
     "Selection": {

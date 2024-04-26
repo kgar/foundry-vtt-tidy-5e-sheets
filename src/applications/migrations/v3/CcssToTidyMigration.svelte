@@ -2,9 +2,14 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { error } from 'src/utils/logging';
   import { MigrationSelectionApplication } from '../migration-selection/MigrationSelectionApplication';
-  import { CONSTANTS } from 'src/constants';
   import type { Item5e } from 'src/types/item.types';
-  import { migrateCcssToTidyForItem } from './ccss-to-tidy';
+  import {
+    ccssFlagPropPath,
+    getCcssSectionName,
+    migrateCcssToTidyForItem,
+  } from './ccss-to-tidy';
+  import { isNil } from 'src/utils/data';
+  import { TidyFlags } from 'src/api';
 
   let migrating = false;
   let overwrite = false;
@@ -13,7 +18,7 @@
   async function migrate() {
     try {
       const actorItemsToMigrate = Array.from<any>(game.actors)
-        .filter((a) => a.type === a.isOwner)
+        .filter((a) => a.isOwner)
         .map((a) => ({ actor: a, unlinked: false }))
         .flatMap((value) =>
           Array.from(value.actor.items).map((item) => ({
@@ -44,7 +49,7 @@
         ...tokenActorItemsToMigrate,
         ...actorItemsToMigrate,
         ...worldItemsToMigrate,
-      ];
+      ].filter((value) => !isNil(getCcssSectionName(value.item), ''));
 
       new MigrationSelectionApplication<{ item: Item5e; unlinked: boolean }>(
         {
@@ -84,7 +89,7 @@
               cellWidth: '8rem',
               field: {
                 type: 'simple',
-                propPath: `item.flags.custom-character-sheet-sections.sectionName`,
+                propPath: `item.${ccssFlagPropPath}`,
               },
               name: localize('TIDY5E.Settings.Migrations.CcssToTidy.ccss'),
             },
@@ -92,7 +97,7 @@
               cellWidth: '8rem',
               field: {
                 type: 'simple',
-                propPath: `item.flags.${CONSTANTS.MODULE_ID}.section`,
+                propPath: `item.${TidyFlags.section.prop}`,
               },
               name: localize('TIDY5E.Settings.Migrations.CcssToTidy.section'),
             },
@@ -101,6 +106,7 @@
               field: {
                 type: 'simple',
                 propPath: `item.parent.name`,
+                onClick: (target) => target.item.parent?.sheet?.render(true),
               },
               name: localize('TIDY5E.Settings.Migrations.Parent'),
             },
@@ -125,8 +131,8 @@
           migrating = false;
         },
         {
-          width: 960
-        }
+          width: 960,
+        },
       ).render(true);
     } catch (e) {
       error('An error occurred while preparing a bulk migration', false, e);
@@ -145,9 +151,15 @@
   <h2>
     {localize('TIDY5E.Settings.Migrations.CcssToTidy.sectionTitle')}
   </h2>
-  <!-- <ul>
-    <li>{localize('DND5E.DeathSave')}</li>
-  </ul> -->
+  <div class="callout-banner">
+    <p>{localize('TIDY5E.Settings.Migrations.CcssToTidy.explanation1')}</p>
+    <p>
+      {@html localize('TIDY5E.Settings.Migrations.CcssToTidy.explanation2', {
+        boldStart: '<strong>',
+        boldEnd: '</strong>',
+      })}
+    </p>
+  </div>
   <p>{localize('TIDY5E.Settings.Migrations.UnlinkedExplanation')}</p>
   <h3>{localize('TIDY5E.Settings.Migrations.OptionsHeader')}</h3>
   <div class="options grid-auto-columns">
@@ -163,12 +175,12 @@
     <label
       class="green-checkbox"
       data-tooltip={localize(
-        'TIDY5E.Settings.Migrations.OptionDeleteFlags.Tooltip',
+        'TIDY5E.Settings.Migrations.CcssToTidy.deleteFlagsTooltip',
       )}
     >
       <input type="checkbox" bind:checked={deleteFlags} disabled={migrating} />
 
-      {localize('TIDY5E.Settings.Migrations.OptionDeleteFlags.Text')}
+      {localize('TIDY5E.Settings.Migrations.CcssToTidy.deleteFlags')}
     </label>
   </div>
 
@@ -191,5 +203,11 @@
 
   button {
     margin-top: auto;
+  }
+
+  .callout-banner {
+    background: var(--t5e-faintest-color);
+    margin: -0.5rem -0.5rem 1rem -0.5rem;
+    padding: 0.5rem 1rem;
   }
 </style>

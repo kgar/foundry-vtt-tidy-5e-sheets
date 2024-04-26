@@ -19,6 +19,7 @@ export class MigrationSelectionApplication<
     options?: any
   ) {
     super(
+      {},
       FoundryAdapter.mergeObject(
         MigrationSelectionApplication.defaultOptions,
         options
