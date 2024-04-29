@@ -1,6 +1,6 @@
 import { test, expect, type Page } from '@playwright/test';
 import type { TestData } from './test-types';
-import { applyFoundryTestConfig } from './projects/setup/world-config';
+//import { applyFoundryTestConfig } from './projects/setup/world-config';
 // import { initializeTestActors } from './setups/test-actors';
 import { ChatMessageHelpers } from './helpers/chat-message';
 
