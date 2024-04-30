@@ -12,7 +12,7 @@ export class GamePage {
   }
 
   async isReady() {
-    await this.page.waitForFunction(() => !!game?.ready);
+    await this.page.waitForFunction(() => !!window['game']?.ready);
   }
 
   async logOut() {
@@ -30,39 +30,42 @@ export class GamePage {
   }
 
   async applyTestConfiguration() {
-    await this.page.evaluate(async () => {
-      // Make all supported sheets Tidy
-      await game.settings.set('core', 'sheetClasses', {
-        Actor: {
-          character: `${CONSTANTS.DND5E_SYSTEM_ID}.Tidy5eCharacterSheet`,
-          npc: `${CONSTANTS.DND5E_SYSTEM_ID}.Tidy5eNpcSheet`,
-          vehicle: `${CONSTANTS.DND5E_SYSTEM_ID}.Tidy5eVehicleSheet`,
-        },
-        Item: {
-          weapon: `${CONSTANTS.DND5E_SYSTEM_ID}.Tidy5eKgarItemSheet`,
-          equipment: `${CONSTANTS.DND5E_SYSTEM_ID}.Tidy5eKgarItemSheet`,
-          consumable: `${CONSTANTS.DND5E_SYSTEM_ID}.Tidy5eKgarItemSheet`,
-          container: `${CONSTANTS.DND5E_SYSTEM_ID}.Tidy5eKgarContainerSheet`,
-          tool: `${CONSTANTS.DND5E_SYSTEM_ID}.Tidy5eKgarItemSheet`,
-          loot: `${CONSTANTS.DND5E_SYSTEM_ID}.Tidy5eKgarItemSheet`,
-          race: `${CONSTANTS.DND5E_SYSTEM_ID}.Tidy5eKgarItemSheet`,
-          background: `${CONSTANTS.DND5E_SYSTEM_ID}.Tidy5eKgarItemSheet`,
-          class: `${CONSTANTS.DND5E_SYSTEM_ID}.Tidy5eKgarItemSheet`,
-          subclass: `${CONSTANTS.DND5E_SYSTEM_ID}.Tidy5eKgarItemSheet`,
-          spell: `${CONSTANTS.DND5E_SYSTEM_ID}.Tidy5eKgarItemSheet`,
-          feat: `${CONSTANTS.DND5E_SYSTEM_ID}.Tidy5eKgarItemSheet`,
-          backpack: `${CONSTANTS.DND5E_SYSTEM_ID}.Tidy5eKgarItemSheet`,
-        },
-      });
+    await this.page.evaluate(
+      async ({ constants }) => {
+        // Make all supported sheets Tidy
+        await game.settings.set('core', 'sheetClasses', {
+          Actor: {
+            character: `${constants.DND5E_SYSTEM_ID}.Tidy5eCharacterSheet`,
+            npc: `${constants.DND5E_SYSTEM_ID}.Tidy5eNpcSheet`,
+            vehicle: `${constants.DND5E_SYSTEM_ID}.Tidy5eVehicleSheet`,
+          },
+          Item: {
+            weapon: `${constants.DND5E_SYSTEM_ID}.Tidy5eKgarItemSheet`,
+            equipment: `${constants.DND5E_SYSTEM_ID}.Tidy5eKgarItemSheet`,
+            consumable: `${constants.DND5E_SYSTEM_ID}.Tidy5eKgarItemSheet`,
+            container: `${constants.DND5E_SYSTEM_ID}.Tidy5eKgarContainerSheet`,
+            tool: `${constants.DND5E_SYSTEM_ID}.Tidy5eKgarItemSheet`,
+            loot: `${constants.DND5E_SYSTEM_ID}.Tidy5eKgarItemSheet`,
+            race: `${constants.DND5E_SYSTEM_ID}.Tidy5eKgarItemSheet`,
+            background: `${constants.DND5E_SYSTEM_ID}.Tidy5eKgarItemSheet`,
+            class: `${constants.DND5E_SYSTEM_ID}.Tidy5eKgarItemSheet`,
+            subclass: `${constants.DND5E_SYSTEM_ID}.Tidy5eKgarItemSheet`,
+            spell: `${constants.DND5E_SYSTEM_ID}.Tidy5eKgarItemSheet`,
+            feat: `${constants.DND5E_SYSTEM_ID}.Tidy5eKgarItemSheet`,
+            backpack: `${constants.DND5E_SYSTEM_ID}.Tidy5eKgarItemSheet`,
+          },
+        });
 
-      // Disable canvas
-      await game.settings.set('core', 'noCanvas', true);
+        // Disable canvas
+        await game.settings.set('core', 'noCanvas', true);
 
-      // Ensure Tidy is activated
-      const settings = game.settings.get('core', 'moduleConfiguration');
-      settings['tidy5e-sheet'] = true;
-      await game.settings.set('core', 'moduleConfiguration', { ...settings });
-    });
+        // Ensure Tidy is activated
+        const settings = game.settings.get('core', 'moduleConfiguration');
+        settings[constants.MODULE_ID] = true;
+        await game.settings.set('core', 'moduleConfiguration', { ...settings });
+      },
+      { constants: CONSTANTS }
+    );
   }
 
   async importStarterHero(
@@ -114,21 +117,24 @@ export class GamePage {
     startsWithName: string,
     overrides: Record<string, any> = {}
   ) {
-    return await this.page.evaluate(async (): Promise<DocumentRef> => {
-      const compendiumDocument = await game.packs.get(packId).getDocuments();
-      const compendiumDocumentData = compendiumDocument
-        .find((d: any) => d.name.startsWith(startsWithName))
-        .toObject();
-      const result = await dnd5e.documents.Actor5e.create(
-        foundry.utils.mergObject(compendiumDocumentData, overrides)
-      );
+    return await this.page.evaluate(
+      async ({ packId, startsWithName, overrides }): Promise<DocumentRef> => {
+        const compendiumDocument = await game.packs.get(packId).getDocuments();
+        const compendiumDocumentData = compendiumDocument
+          .find((d: any) => d.name.startsWith(startsWithName))
+          .toObject();
+        const result = await dnd5e.documents.Actor5e.create(
+          foundry.utils.mergeObject(compendiumDocumentData, overrides)
+        );
 
-      return {
-        id: result.id,
-        uuid: result.uuid,
-        name: result.name,
-      };
-    });
+        return {
+          id: result.id,
+          uuid: result.uuid,
+          name: result.name,
+        };
+      },
+      { packId, startsWithName, overrides }
+    );
   }
 
   async importItemFromCompendium(
@@ -136,20 +142,23 @@ export class GamePage {
     startsWithName: string,
     overrides: Record<string, any> = {}
   ) {
-    return await this.page.evaluate(async (): Promise<DocumentRef> => {
-      const compendiumDocument = await game.packs.get(packId).getDocuments();
-      const compendiumDocumentData = compendiumDocument
-        .find((d: any) => d.name.startsWith(startsWithName))
-        .toObject();
-      const result = await dnd5e.documents.Item5e.create(
-        foundry.utils.mergObject(compendiumDocumentData, overrides)
-      );
+    return await this.page.evaluate(
+      async ({ packId, startsWithName, overrides }): Promise<DocumentRef> => {
+        const compendiumDocument = await game.packs.get(packId).getDocuments();
+        const compendiumDocumentData = compendiumDocument
+          .find((d: any) => d.name.startsWith(startsWithName))
+          .toObject();
+        const result = await dnd5e.documents.Item5e.create(
+          foundry.utils.mergeObject(compendiumDocumentData, overrides)
+        );
 
-      return {
-        id: result.id,
-        uuid: result.uuid,
-        name: result.name,
-      };
-    });
+        return {
+          id: result.id,
+          uuid: result.uuid,
+          name: result.name,
+        };
+      },
+      { packId, startsWithName, overrides }
+    );
   }
 }

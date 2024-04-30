@@ -27,7 +27,7 @@ export async function applySectionsSetups(gamePage: GamePage) {
 
   // Put the character's loot into their backpack
   const characterBackpack = await gamePage.page.evaluate(
-    async (): Promise<DocumentRef> => {
+    async ({ sectionTestCharacter }): Promise<DocumentRef> => {
       const character = await fromUuid(sectionTestCharacter.uuid);
 
       const backpack: any = Array.from(character.items).find(
@@ -54,15 +54,17 @@ export async function applySectionsSetups(gamePage: GamePage) {
         uuid: backpack.uuid,
         name: backpack.name,
       };
-    }
+    },
+    { sectionTestCharacter }
   );
 
   const sectionTestVehicle = await gamePage.page.evaluate(
-    async (): Promise<DocumentRef> => {
+    async ({ constants }): Promise<DocumentRef> => {
       const vehicle = await dnd5e.documents.Actor5e.create({
         name: 'Sections Test Vehicle',
+        type: constants.SHEET_TYPE_VEHICLE,
         flags: {
-          ['tidy5e-sheet.selected-tabs']: [CONSTANTS.TAB_ACTOR_ACTIONS],
+          ['tidy5e-sheet.selected-tabs']: [constants.TAB_ACTOR_ACTIONS],
         },
       });
 
@@ -71,7 +73,8 @@ export async function applySectionsSetups(gamePage: GamePage) {
         uuid: vehicle.uuid,
         name: vehicle.name,
       };
-    }
+    },
+    { constants: CONSTANTS }
   );
 
   sectionTestDataRefs = {

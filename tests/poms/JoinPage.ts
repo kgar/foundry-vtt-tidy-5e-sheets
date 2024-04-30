@@ -26,6 +26,8 @@ export class JoinPage {
     await this.$userNameDropdown.click({ delay: 100 });
     await this.$joinGameBtn.click({ delay: 150 });
 
+    await this.page.waitForLoadState();
+
     const gamePage = new GamePage(this.page);
     await gamePage.isReady();
     return gamePage;

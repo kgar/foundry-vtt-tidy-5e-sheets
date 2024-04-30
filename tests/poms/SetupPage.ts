@@ -21,9 +21,7 @@ export class SetupPage {
 
   constructor(page: Page) {
     this.page = page;
-    this.$createWorldBtn = page.locator(
-      '.window-content form [data-action=worldCreate]'
-    );
+    this.$createWorldBtn = page.locator('[data-action=worldCreate]');
     this.$createWorldTitleInput = page.getByPlaceholder('World Title');
     this.$createWorldGameSystemDropdown = page.locator(
       '.window-content form [name=system]'
@@ -56,8 +54,8 @@ export class SetupPage {
   }
 
   async isReady() {
-    this.$navOptionGameWorlds.waitFor({ state: 'visible' });
-    this.$createWorldBtn.waitFor({ state: 'visible' });
+    await this.$navOptionGameWorlds.waitFor({ state: 'visible' });
+    await this.$createWorldBtn.waitFor({ state: 'visible' });
   }
 
   async ensureTestWorldDeleted() {
@@ -85,19 +83,24 @@ export class SetupPage {
 
   async dnd5eIsInstalled() {
     return await this.page.evaluate(
-      () => !!game?.systems?.get(CONSTANTS.DND5E_SYSTEM_ID)
+      ({ systemId }) => !!game?.systems?.get(systemId),
+      { systemId: CONSTANTS.DND5E_SYSTEM_ID }
     );
   }
 
   async tidy5eSheetIsInstalled() {
     return await this.page.evaluate(
-      () => !!game?.modules?.get(CONSTANTS.MODULE_ID)
+      ({ moduleId }) => !!game?.modules?.get(moduleId),
+      { moduleId: CONSTANTS.MODULE_ID }
     );
   }
 
   async goToTestWorldJoinPage() {
     await this.$worldListItem.hover();
     await this.$playButton.click();
+
+    await this.page.waitForLoadState();
+
     const joinPage = new JoinPage(this.page);
     await joinPage.isReady();
     return joinPage;
