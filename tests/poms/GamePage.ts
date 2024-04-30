@@ -2,14 +2,7 @@ import type { Page } from '@playwright/test';
 import { JoinPage } from './JoinPage';
 import { SetupPage } from './SetupPage';
 import { CONSTANTS } from 'src/constants';
-import { Tidy5eCharacterSheet } from 'src/sheets/Tidy5eCharacterSheet';
-import { Tidy5eKgarContainerSheet } from 'src/sheets/Tidy5eContainerSheet';
-import { Tidy5eKgarItemSheet } from 'src/sheets/Tidy5eItemSheet';
-import { Tidy5eVehicleSheet } from 'src/sheets/Tidy5eKgarVehicleSheet';
-import { Tidy5eNpcSheet } from 'src/sheets/Tidy5eNpcSheet';
 import type { DocumentRef } from '../tests.types';
-import type { Actor5e } from 'src/types/types';
-import type { Item5e } from 'src/types/item.types';
 
 export class GamePage {
   page: Page;
@@ -41,24 +34,24 @@ export class GamePage {
       // Make all supported sheets Tidy
       await game.settings.set('core', 'sheetClasses', {
         Actor: {
-          character: `${CONSTANTS.DND5E_SYSTEM_ID}.${Tidy5eCharacterSheet.name}`,
-          npc: `${CONSTANTS.DND5E_SYSTEM_ID}.${Tidy5eNpcSheet.name}`,
-          vehicle: `${CONSTANTS.DND5E_SYSTEM_ID}.${Tidy5eVehicleSheet.name}`,
+          character: `${CONSTANTS.DND5E_SYSTEM_ID}.Tidy5eCharacterSheet`,
+          npc: `${CONSTANTS.DND5E_SYSTEM_ID}.Tidy5eNpcSheet`,
+          vehicle: `${CONSTANTS.DND5E_SYSTEM_ID}.Tidy5eVehicleSheet`,
         },
         Item: {
-          weapon: `${CONSTANTS.DND5E_SYSTEM_ID}.${Tidy5eKgarItemSheet.name}`,
-          equipment: `${CONSTANTS.DND5E_SYSTEM_ID}.${Tidy5eKgarItemSheet.name}`,
-          consumable: `${CONSTANTS.DND5E_SYSTEM_ID}.${Tidy5eKgarItemSheet.name}`,
-          container: `${CONSTANTS.DND5E_SYSTEM_ID}.${Tidy5eKgarContainerSheet.name}`,
-          tool: `${CONSTANTS.DND5E_SYSTEM_ID}.${Tidy5eKgarItemSheet.name}`,
-          loot: `${CONSTANTS.DND5E_SYSTEM_ID}.${Tidy5eKgarItemSheet.name}`,
-          race: `${CONSTANTS.DND5E_SYSTEM_ID}.${Tidy5eKgarItemSheet.name}`,
-          background: `${CONSTANTS.DND5E_SYSTEM_ID}.${Tidy5eKgarItemSheet.name}`,
-          class: `${CONSTANTS.DND5E_SYSTEM_ID}.${Tidy5eKgarItemSheet.name}`,
-          subclass: `${CONSTANTS.DND5E_SYSTEM_ID}.${Tidy5eKgarItemSheet.name}`,
-          spell: `${CONSTANTS.DND5E_SYSTEM_ID}.${Tidy5eKgarItemSheet.name}`,
-          feat: `${CONSTANTS.DND5E_SYSTEM_ID}.${Tidy5eKgarItemSheet.name}`,
-          backpack: `${CONSTANTS.DND5E_SYSTEM_ID}.${Tidy5eKgarItemSheet.name}`,
+          weapon: `${CONSTANTS.DND5E_SYSTEM_ID}.Tidy5eKgarItemSheet`,
+          equipment: `${CONSTANTS.DND5E_SYSTEM_ID}.Tidy5eKgarItemSheet`,
+          consumable: `${CONSTANTS.DND5E_SYSTEM_ID}.Tidy5eKgarItemSheet`,
+          container: `${CONSTANTS.DND5E_SYSTEM_ID}.Tidy5eKgarContainerSheet`,
+          tool: `${CONSTANTS.DND5E_SYSTEM_ID}.Tidy5eKgarItemSheet`,
+          loot: `${CONSTANTS.DND5E_SYSTEM_ID}.Tidy5eKgarItemSheet`,
+          race: `${CONSTANTS.DND5E_SYSTEM_ID}.Tidy5eKgarItemSheet`,
+          background: `${CONSTANTS.DND5E_SYSTEM_ID}.Tidy5eKgarItemSheet`,
+          class: `${CONSTANTS.DND5E_SYSTEM_ID}.Tidy5eKgarItemSheet`,
+          subclass: `${CONSTANTS.DND5E_SYSTEM_ID}.Tidy5eKgarItemSheet`,
+          spell: `${CONSTANTS.DND5E_SYSTEM_ID}.Tidy5eKgarItemSheet`,
+          feat: `${CONSTANTS.DND5E_SYSTEM_ID}.Tidy5eKgarItemSheet`,
+          backpack: `${CONSTANTS.DND5E_SYSTEM_ID}.Tidy5eKgarItemSheet`,
         },
       });
 
