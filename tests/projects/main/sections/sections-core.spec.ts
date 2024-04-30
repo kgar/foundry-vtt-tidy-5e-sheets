@@ -7,7 +7,6 @@ import { PageHelper } from 'tests/utils/PageHelper';
 import { sectionTestDataRefs } from './sections-setups';
 import type { DocumentRef } from 'tests/tests.types';
 import { SheetHelper } from 'tests/utils/SheetHelper';
-import { TidyFlags } from 'src/api';
 
 let page: Page;
 
@@ -63,7 +62,7 @@ test.describe('Tidy Custom Sections: Core Functionality', async () => {
         const item = await dnd5e.documents.Item5e.create(
           {
             name: itemTestInfo.name,
-            [TidyFlags.actionFilterOverride.prop]: true,
+            [`fixme TidyFlags.actionFilterOverride.prop`]: true,
           },
           { parent: sectionTestDataRefs.sectionTestCharacter.uuid }
         );
@@ -113,10 +112,11 @@ test.describe('Tidy Custom Sections: Core Functionality', async () => {
       await itemSheet.showSheet();
 
       const $sectionInput = itemSheet.$sheet.locator(
-        `[data-tidy-field="${TidyFlags.section.prop}"]`
+        // TODO: Move the flag management code to TidyFlags so it doesn't rely on FoundryAdapter; then restore these references.
+        `[data-tidy-field="${`fixme TidyFlags.section.prop`}"]`
       );
       const $actionSectionInput = itemSheet.$sheet.locator(
-        `[data-tidy-field="${TidyFlags.actionSection.prop}"]`
+        `[data-tidy-field="${`fixme TidyFlags.actionSection.prop`}"]`
       );
 
       const sectionInputIsAvailable = await $sectionInput.isVisible();
