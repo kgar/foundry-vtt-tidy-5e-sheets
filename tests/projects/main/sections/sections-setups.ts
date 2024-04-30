@@ -9,7 +9,11 @@ type SectionsRefs = {
   sectionTestOwnedContainer: DocumentRef;
 };
 
-export let sectionTestDataRefs: SectionsRefs;
+let sectionTestDataRefs: SectionsRefs;
+
+export function getSectionTestDataRefs() {
+  return sectionTestDataRefs;
+}
 
 export async function applySectionsSetups(gamePage: GamePage) {
   const sectionTestCharacter = await gamePage.importStarterHero('Akra', {

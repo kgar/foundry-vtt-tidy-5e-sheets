@@ -4,9 +4,9 @@ import test, { type Page } from '@playwright/test';
 import { CONSTANTS } from 'src/constants';
 import { Inventory } from 'src/features/sections/Inventory';
 import { PageHelper } from 'tests/utils/PageHelper';
-import { sectionTestDataRefs } from './sections-setups';
 import type { DocumentRef } from 'tests/tests.types';
 import { SheetHelper } from 'tests/utils/SheetHelper';
+import { getSectionTestDataRefs } from './sections-setups';
 
 let page: Page;
 
@@ -49,7 +49,11 @@ let itemTypesToTest: {
   },
 ];
 
-test.describe('Tidy Custom Sections: Core Functionality', async () => {
+test('Tidy Custom Sections: Core Functionality', async () => {
+  // TODO: Consider some other options
+  // - saving a file and loading it (more potential to be broken up properly)
+  // - worker-scoped fixture that contains all the setup data (pretty convenient) https://playwright.dev/docs/test-fixtures#worker-scoped-fixtures
+  const sectionTestDataRefs = getSectionTestDataRefs();
   const characterSheet = new SheetHelper(
     page,
     sectionTestDataRefs.sectionTestCharacter
