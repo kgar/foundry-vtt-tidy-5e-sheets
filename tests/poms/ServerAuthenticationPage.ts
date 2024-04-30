@@ -6,6 +6,7 @@ export class ServerAuthenticationPage {
   readonly page: Page;
   readonly $adminPwdInput: Locator;
   readonly $loginButton: Locator;
+  readonly $kickOutPlayersDialogYesBtn: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -17,6 +18,9 @@ export class ServerAuthenticationPage {
       .locator('[type=submit][value=adminAuth]')
       // Or the /join page's server auth form
       .or(this.page.locator('[name="shutdown"]'));
+    this.$kickOutPlayersDialogYesBtn = this.page.locator(
+      '[role=dialog] [data-button="yes"]'
+    );
   }
 
   async goto() {
@@ -35,6 +39,10 @@ export class ServerAuthenticationPage {
     }
 
     await this.$loginButton.click();
+
+    if (await this.$kickOutPlayersDialogYesBtn.isVisible({ timeout: 250 })) {
+      await this.$kickOutPlayersDialogYesBtn.click();
+    }
 
     await this.page.waitForLoadState();
 
