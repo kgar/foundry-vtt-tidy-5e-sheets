@@ -1,66 +1,62 @@
 // To Do: Exercise the core Tidy Custom Item Sections specifications for PC, NPC, and Container
 
-import test, { type Page } from '@playwright/test';
+import { type Page } from '@playwright/test';
 import { CONSTANTS } from 'src/constants';
 import { Inventory } from 'src/features/sections/Inventory';
 import { PageHelper } from 'tests/utils/PageHelper';
+import { sectionsTest } from './sections-test-fixture';
 import type { DocumentRef } from 'tests/tests.types';
 import { SheetHelper } from 'tests/utils/SheetHelper';
-import { getSectionTestDataRefs } from './sections-setups';
 
 let page: Page;
 
-test.beforeAll(async ({ browser }) => {
+sectionsTest.beforeAll(async ({ browser }) => {
   page = await browser.newPage();
-  PageHelper.routeToTestGame(page);
 });
 
-test.afterAll(async () => {
+sectionsTest.afterAll(async () => {
   await page.close();
 });
 
-let itemTypesToTest: {
-  type: string;
-  name: string;
-  tabId: string;
-  customSection: string;
-  customActionSection: string;
-}[] = [
-  ...Inventory.inventoryItemTypes.map((t) => ({
-    type: t,
-    name: `Custom Section Test ${t}`,
-    tabId: CONSTANTS.TAB_CHARACTER_INVENTORY,
-    customSection: `Custom ${t}`,
-    customActionSection: `Custom Action ${t}`,
-  })),
-  {
-    type: CONSTANTS.ITEM_TYPE_SPELL,
-    name: `Custom Section Test ${CONSTANTS.ITEM_TYPE_SPELL}`,
-    tabId: CONSTANTS.TAB_CHARACTER_SPELLBOOK,
-    customSection: `Custom ${CONSTANTS.ITEM_TYPE_SPELL}`,
-    customActionSection: `Custom Action ${CONSTANTS.ITEM_TYPE_SPELL}`,
-  },
-  {
-    type: CONSTANTS.ITEM_TYPE_FEAT,
-    name: `Custom Section Test ${CONSTANTS.ITEM_TYPE_FEAT}`,
-    tabId: CONSTANTS.TAB_CHARACTER_FEATURES,
-    customSection: `Custom ${CONSTANTS.ITEM_TYPE_FEAT}`,
-    customActionSection: `Custom Action ${CONSTANTS.ITEM_TYPE_FEAT}`,
-  },
-];
+sectionsTest.beforeEach(async () => {
+  PageHelper.routeToTestGame(page);
+});
 
-test('Tidy Custom Sections: Core Functionality', async () => {
-  // TODO: Consider some other options
-  // - saving a file and loading it (more potential to be broken up properly)
-  // - worker-scoped fixture that contains all the setup data (pretty convenient) https://playwright.dev/docs/test-fixtures#worker-scoped-fixtures
-  const sectionTestDataRefs = getSectionTestDataRefs();
-  const characterSheet = new SheetHelper(
-    page,
-    sectionTestDataRefs.sectionTestCharacter
-  );
+sectionsTest('Tidy Custom Sections: Core Functionality', async ({ data }) => {
+  let itemTypesToTest: {
+    type: string;
+    name: string;
+    tabId: string;
+    customSection: string;
+    customActionSection: string;
+  }[] = [
+    ...Inventory.inventoryItemTypes.map((t) => ({
+      type: t,
+      name: `Custom Section Test ${t}`,
+      tabId: CONSTANTS.TAB_CHARACTER_INVENTORY,
+      customSection: `Custom ${t}`,
+      customActionSection: `Custom Action ${t}`,
+    })),
+    {
+      type: CONSTANTS.ITEM_TYPE_SPELL,
+      name: `Custom Section Test ${CONSTANTS.ITEM_TYPE_SPELL}`,
+      tabId: CONSTANTS.TAB_CHARACTER_SPELLBOOK,
+      customSection: `Custom ${CONSTANTS.ITEM_TYPE_SPELL}`,
+      customActionSection: `Custom Action ${CONSTANTS.ITEM_TYPE_SPELL}`,
+    },
+    {
+      type: CONSTANTS.ITEM_TYPE_FEAT,
+      name: `Custom Section Test ${CONSTANTS.ITEM_TYPE_FEAT}`,
+      tabId: CONSTANTS.TAB_CHARACTER_FEATURES,
+      customSection: `Custom ${CONSTANTS.ITEM_TYPE_FEAT}`,
+      customActionSection: `Custom Action ${CONSTANTS.ITEM_TYPE_FEAT}`,
+    },
+  ];
+
+  const characterSheet = new SheetHelper(page, data.sectionTestCharacter);
 
   for (let itemTestInfo of itemTypesToTest) {
-    test(`item under test: ${itemTestInfo.name}`, async () => {
+    sectionsTest(`item under test: ${itemTestInfo.name}`, async () => {
       // API create item on actor
       const item = await page.evaluate(async (): Promise<DocumentRef> => {
         const item = await dnd5e.documents.Item5e.create(
@@ -68,7 +64,7 @@ test('Tidy Custom Sections: Core Functionality', async () => {
             name: itemTestInfo.name,
             [`fixme TidyFlags.actionFilterOverride.prop`]: true,
           },
-          { parent: sectionTestDataRefs.sectionTestCharacter.uuid }
+          { parent: data.sectionTestCharacter.uuid }
         );
 
         return {
@@ -89,7 +85,7 @@ test('Tidy Custom Sections: Core Functionality', async () => {
       const itemTableRowTextContent = await $itemTableRow.textContent();
       const theItemUnderTestHasTheExpectedName =
         itemTableRowTextContent?.includes(item.name);
-      test
+      sectionsTest
         .expect(
           theItemUnderTestHasTheExpectedName,
           `item should have been successfully located in item tables`
@@ -105,7 +101,7 @@ test('Tidy Custom Sections: Core Functionality', async () => {
         }
       );
 
-      test
+      sectionsTest
         .expect(
           isInDefaultSection,
           `item should be in default section with key "${itemTestInfo.type}"`
@@ -125,7 +121,7 @@ test('Tidy Custom Sections: Core Functionality', async () => {
 
       const sectionInputIsAvailable = await $sectionInput.isVisible();
 
-      test
+      sectionsTest
         .expect(
           sectionInputIsAvailable,
           'item custom section input is available'
@@ -148,7 +144,7 @@ test('Tidy Custom Sections: Core Functionality', async () => {
         }
       );
 
-      test
+      sectionsTest
         .expect(
           isInCustomSection,
           `item should be in custom section with key "${itemTestInfo.customSection}"`
@@ -160,7 +156,7 @@ test('Tidy Custom Sections: Core Functionality', async () => {
       const actionSectionInputIsAvailable =
         await $actionSectionInput.isVisible();
 
-      test
+      sectionsTest
         .expect(
           actionSectionInputIsAvailable,
           'item custom action section input is available'
@@ -183,7 +179,7 @@ test('Tidy Custom Sections: Core Functionality', async () => {
         }
       );
 
-      test
+      sectionsTest
         .expect(
           isInCustomActionSection,
           `item should be in custom section with key "${itemTestInfo.customActionSection}"`

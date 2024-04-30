@@ -1,6 +1,8 @@
+import test from '@playwright/test';
 import { CONSTANTS } from 'src/constants';
 import type { GamePage } from 'tests/poms/GamePage';
 import type { DocumentRef } from 'tests/tests.types';
+import { PageHelper } from 'tests/utils/PageHelper';
 
 type SectionsRefs = {
   sectionTestCharacter: DocumentRef;
@@ -9,13 +11,23 @@ type SectionsRefs = {
   sectionTestOwnedContainer: DocumentRef;
 };
 
-let sectionTestDataRefs: SectionsRefs;
+/**
+ * A test fixture which contains worker-scoped game data specifically for section tests.
+ */
+export let sectionsTest = test.extend<{}, { data: SectionsRefs }>({
+  data: [
+    async ({ browser }, use) => {
+      const page = await browser.newPage();
+      const gamePage = await PageHelper.routeToTestGame(page);
+      await use(await initSectionsData(gamePage));
+    },
+    { scope: 'worker' },
+  ],
+});
 
-export function getSectionTestDataRefs() {
-  return sectionTestDataRefs;
-}
-
-export async function applySectionsSetups(gamePage: GamePage) {
+export async function initSectionsData(
+  gamePage: GamePage
+): Promise<SectionsRefs> {
   const sectionTestCharacter = await gamePage.importStarterHero('Akra', {
     name: 'Sections Test Character',
     flags: {
@@ -29,9 +41,9 @@ export async function applySectionsSetups(gamePage: GamePage) {
     },
   });
 
-  // Put the character's loot into their backpack
+  // TODO: Put each item item in the backpack
   const characterBackpack = await gamePage.page.evaluate(
-    async ({ sectionTestCharacter }): Promise<DocumentRef> => {
+    async (): Promise<DocumentRef> => {
       const character = await fromUuid(sectionTestCharacter.uuid);
 
       const backpack: any = Array.from(character.items).find(
@@ -58,17 +70,15 @@ export async function applySectionsSetups(gamePage: GamePage) {
         uuid: backpack.uuid,
         name: backpack.name,
       };
-    },
-    { sectionTestCharacter }
+    }
   );
 
   const sectionTestVehicle = await gamePage.page.evaluate(
-    async ({ constants }): Promise<DocumentRef> => {
+    async (): Promise<DocumentRef> => {
       const vehicle = await dnd5e.documents.Actor5e.create({
         name: 'Sections Test Vehicle',
-        type: constants.SHEET_TYPE_VEHICLE,
         flags: {
-          ['tidy5e-sheet.selected-tabs']: [constants.TAB_ACTOR_ACTIONS],
+          ['tidy5e-sheet.selected-tabs']: [CONSTANTS.TAB_ACTOR_ACTIONS],
         },
       });
 
@@ -77,11 +87,10 @@ export async function applySectionsSetups(gamePage: GamePage) {
         uuid: vehicle.uuid,
         name: vehicle.name,
       };
-    },
-    { constants: CONSTANTS }
+    }
   );
 
-  sectionTestDataRefs = {
+  return {
     sectionTestCharacter: sectionTestCharacter,
     sectionTestNpc: await gamePage.importMonster('Lich', {
       name: 'Sections Test NPC',

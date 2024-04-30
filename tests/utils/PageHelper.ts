@@ -43,7 +43,7 @@ export class PageHelper {
     ServerAuthenticationPage | SetupPage | JoinPage | GamePage | undefined
   > {
     await page.waitForLoadState();
-    const gameView = await page.evaluate(() => game?.view);
+    const gameView = await page.evaluate(() => window['game']?.view);
     switch (gameView) {
       case 'auth':
         const authPage = new ServerAuthenticationPage(page);
@@ -67,7 +67,7 @@ export class PageHelper {
 
   static async isLoggedIn(page: Page): Promise<boolean> {
     const gameView = await page.evaluate(() => {
-      return game?.view;
+      return window['game']?.view;
     });
 
     return ['setup', 'join', 'game'].includes(gameView);

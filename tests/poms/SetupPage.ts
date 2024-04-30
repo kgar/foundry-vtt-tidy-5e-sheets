@@ -83,14 +83,14 @@ export class SetupPage {
 
   async dnd5eIsInstalled() {
     return await this.page.evaluate(
-      ({ systemId }) => !!game?.systems?.get(systemId),
+      ({ systemId }) => !!window['game']?.systems?.get(systemId),
       { systemId: CONSTANTS.DND5E_SYSTEM_ID }
     );
   }
 
   async tidy5eSheetIsInstalled() {
     return await this.page.evaluate(
-      ({ moduleId }) => !!game?.modules?.get(moduleId),
+      ({ moduleId }) => !!window['game']?.modules?.get(moduleId),
       { moduleId: CONSTANTS.MODULE_ID }
     );
   }
