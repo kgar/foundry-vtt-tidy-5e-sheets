@@ -19,8 +19,7 @@ export class SheetHelper {
     await this.page.evaluate(
       async ({ ref }) => {
         const actor = await fromUuid(ref.uuid);
-        actor.sheet.render();
-        actor.sheet.bringToFront();
+        await actor.sheet.render(true);
       },
       { ref: this.ref }
     );

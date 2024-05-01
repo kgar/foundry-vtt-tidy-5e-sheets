@@ -9,15 +9,14 @@ const { ADMIN_PASSWORD = 'admin password required' } = process.env;
 export class PageHelper {
   static async routeToTestGame(page: Page): Promise<GamePage> {
     if (page.url() === 'about:blank') {
-      await page.goto('/');
+      await page.goto('/game');
       await page.waitForLoadState();
     }
 
     let currentPage = await this.findCurrentPage(page);
 
     if (currentPage === undefined) {
-      await page.goto('/');
-      await page.waitForLoadState();
+      await page.goto('/game');
       currentPage = await this.findCurrentPage(page);
     }
 
@@ -49,6 +48,7 @@ export class PageHelper {
     ServerAuthenticationPage | SetupPage | JoinPage | GamePage | undefined
   > {
     await page.waitForLoadState();
+    await page.waitForFunction(() => !!window['game']?.view);
     const gameView = await page.evaluate(() => window['game']?.view);
     switch (gameView) {
       case 'auth':

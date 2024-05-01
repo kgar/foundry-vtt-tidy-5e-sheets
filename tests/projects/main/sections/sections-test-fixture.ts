@@ -19,7 +19,9 @@ export let sectionsTest = test.extend<{}, { data: SectionsRefs }>({
     async ({ browser }, use) => {
       const page = await browser.newPage();
       const gamePage = await PageHelper.routeToTestGame(page);
-      await use(await initSectionsData(gamePage));
+      const data = await initSectionsData(gamePage);
+      await page.close();
+      await use(data);
     },
     { scope: 'worker' },
   ],
@@ -75,11 +77,12 @@ export async function initSectionsData(
   );
 
   const sectionTestVehicle = await gamePage.page.evaluate(
-    async (): Promise<DocumentRef> => {
+    async ({ constants }): Promise<DocumentRef> => {
       const vehicle = await dnd5e.documents.Actor5e.create({
         name: 'Sections Test Vehicle',
+        type: 'vehicle',
         flags: {
-          ['tidy5e-sheet.selected-tabs']: [CONSTANTS.TAB_ACTOR_ACTIONS],
+          ['tidy5e-sheet.selected-tabs']: [constants.TAB_ACTOR_ACTIONS],
         },
       });
 
@@ -88,7 +91,8 @@ export async function initSectionsData(
         uuid: vehicle.uuid,
         name: vehicle.name,
       };
-    }
+    },
+    { constants: CONSTANTS }
   );
 
   return {

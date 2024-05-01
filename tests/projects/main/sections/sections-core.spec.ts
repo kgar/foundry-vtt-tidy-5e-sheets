@@ -1,6 +1,5 @@
 // To Do: Exercise the core Tidy Custom Item Sections specifications for PC, NPC, and Container
 
-import { type Page } from '@playwright/test';
 import { CONSTANTS } from 'src/constants';
 import { Inventory } from 'src/features/sections/Inventory';
 import { PageHelper } from 'tests/utils/PageHelper';
@@ -8,21 +7,11 @@ import { sectionsTest } from './sections-test-fixture';
 import type { DocumentRef } from 'tests/tests.types';
 import { SheetHelper } from 'tests/utils/SheetHelper';
 
-let page: Page;
-
-sectionsTest.beforeAll(async ({ browser }) => {
-  page = await browser.newPage();
+sectionsTest.beforeEach(async ({ page }) => {
+  await PageHelper.routeToTestGame(page);
 });
 
-sectionsTest.afterAll(async () => {
-  await page.close();
-});
-
-sectionsTest.beforeEach(async () => {
-  PageHelper.routeToTestGame(page);
-});
-
-sectionsTest('Tidy Custom Sections: Core Functionality', async ({ data }) => {
+sectionsTest.describe('Tidy Custom Sections: Core Functionality', async () => {
   let itemTypesToTest: {
     type: string;
     name: string;
@@ -53,26 +42,30 @@ sectionsTest('Tidy Custom Sections: Core Functionality', async ({ data }) => {
     },
   ];
 
-  const characterSheet = new SheetHelper(page, data.sectionTestCharacter);
-
   for (let itemTestInfo of itemTypesToTest) {
-    sectionsTest(`item under test: ${itemTestInfo.name}`, async () => {
+    sectionsTest(`item: ${itemTestInfo.name}`, async ({ page, data }) => {
+      const characterSheet = new SheetHelper(page, data.sectionTestCharacter);
       // API create item on actor
-      const item = await page.evaluate(async (): Promise<DocumentRef> => {
-        const item = await dnd5e.documents.Item5e.create(
-          {
-            name: itemTestInfo.name,
-            [`fixme TidyFlags.actionFilterOverride.prop`]: true,
-          },
-          { parent: data.sectionTestCharacter.uuid }
-        );
+      const item = await page.evaluate(
+        async ({ itemTestInfo, data }): Promise<DocumentRef> => {
+          const parent = await fromUuid(data.sectionTestCharacter.uuid);
+          const item = await dnd5e.documents.Item5e.create(
+            {
+              name: itemTestInfo.name,
+              type: itemTestInfo.type,
+              [`fixme TidyFlags.actionFilterOverride.prop`]: true,
+            },
+            { parent }
+          );
 
-        return {
-          id: item.id,
-          uuid: item.uuid,
-          name: item.name,
-        };
-      });
+          return {
+            id: item.id,
+            uuid: item.uuid,
+            name: item.name,
+          };
+        },
+        { itemTestInfo, data }
+      );
 
       await characterSheet.showSheet();
 
@@ -92,7 +85,7 @@ sectionsTest('Tidy Custom Sections: Core Functionality', async ({ data }) => {
         )
         .toBeTruthy();
 
-      const isInDefaultSection = $itemTableRow.evaluate(
+      const isInDefaultSection = await $itemTableRow.evaluate(
         (row, { sectionKey }) => {
           return !!row.closest(`[data-tidy-section-key="${sectionKey}"]`);
         },
