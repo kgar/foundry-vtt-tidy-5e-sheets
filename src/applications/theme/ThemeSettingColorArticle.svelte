@@ -67,7 +67,7 @@
   <div class="theme-settings-group flex-row align-items-center extra-small-gap">
     <ColorPicker
       bind:isOpen={colorPickerIsOpen}
-      isPopup={true}
+      isDialog={true}
       label=""
       hex={settingValueToHexaString(
         $context[colorToConfigure.key]?.toString() ?? ''
