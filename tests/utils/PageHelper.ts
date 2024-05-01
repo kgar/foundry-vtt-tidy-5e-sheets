@@ -8,10 +8,16 @@ const { ADMIN_PASSWORD = 'admin password required' } = process.env;
 
 export class PageHelper {
   static async routeToTestGame(page: Page): Promise<GamePage> {
+    if (page.url() === 'about:blank') {
+      await page.goto('/');
+      await page.waitForLoadState();
+    }
+
     let currentPage = await this.findCurrentPage(page);
 
     if (currentPage === undefined) {
-      page.goto('/');
+      await page.goto('/');
+      await page.waitForLoadState();
       currentPage = await this.findCurrentPage(page);
     }
 
