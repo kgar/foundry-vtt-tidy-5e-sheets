@@ -6,12 +6,13 @@ import { PageHelper } from 'tests/utils/PageHelper';
 import { sectionsTest } from './sections-test-fixture';
 import type { DocumentRef } from 'tests/tests.types';
 import { SheetHelper } from 'tests/utils/SheetHelper';
+import { TidyFlags } from 'src/foundry/TidyFlags';
 
 sectionsTest.beforeEach(async ({ page }) => {
   await PageHelper.routeToTestGame(page);
 });
 
-sectionsTest.describe('Tidy Custom Sections: Core Functionality', async () => {
+sectionsTest.describe('Tidy Custom Sections: Core Functionality', () => {
   const itemTypesToTest: {
     type: string;
     name: string;
@@ -78,6 +79,7 @@ sectionsTest.describe('Tidy Custom Sections: Core Functionality', async () => {
       const itemTableRowTextContent = await $itemTableRow.textContent();
       const theItemUnderTestHasTheExpectedName =
         itemTableRowTextContent?.includes(item.name);
+
       sectionsTest
         .expect(
           theItemUnderTestHasTheExpectedName,
@@ -106,10 +108,10 @@ sectionsTest.describe('Tidy Custom Sections: Core Functionality', async () => {
 
       const $sectionInput = itemSheet.$sheet.locator(
         // TODO: Move the flag management code to TidyFlags so it doesn't rely on FoundryAdapter; then restore these references.
-        `[data-tidy-field="${`fixme TidyFlags.section.prop`}"]`
+        `[data-tidy-field="${TidyFlags.section.prop}"]`
       );
       const $actionSectionInput = itemSheet.$sheet.locator(
-        `[data-tidy-field="${`fixme TidyFlags.actionSection.prop`}"]`
+        `[data-tidy-field="${TidyFlags.actionSection.prop}"]`
       );
 
       const sectionInputIsAvailable = await $sectionInput.isVisible();
@@ -117,7 +119,7 @@ sectionsTest.describe('Tidy Custom Sections: Core Functionality', async () => {
       sectionsTest
         .expect(
           sectionInputIsAvailable,
-          'item custom section input is available'
+          'item custom section input must be available'
         )
         .toBeTruthy();
 
@@ -128,7 +130,7 @@ sectionsTest.describe('Tidy Custom Sections: Core Functionality', async () => {
 
       await characterSheet.showSheet();
 
-      const isInCustomSection = $itemTableRow.evaluate(
+      const isInCustomSection = await $itemTableRow.evaluate(
         (row, { sectionKey }) => {
           return !!row.closest(`[data-tidy-section-key="${sectionKey}"]`);
         },
@@ -152,7 +154,7 @@ sectionsTest.describe('Tidy Custom Sections: Core Functionality', async () => {
       sectionsTest
         .expect(
           actionSectionInputIsAvailable,
-          'item custom action section input is available'
+          'item custom action section input must be available'
         )
         .toBeTruthy();
 
