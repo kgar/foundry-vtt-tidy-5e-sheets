@@ -29,7 +29,7 @@ export class GamePage {
     return setupPage;
   }
 
-  async applyTestConfiguration() {
+  async applyTestWorldConfiguration() {
     await this.page.evaluate(
       async ({ constants }) => {
         // Make all supported sheets Tidy
@@ -60,7 +60,16 @@ export class GamePage {
         const settings = game.settings.get('core', 'moduleConfiguration');
         settings[constants.MODULE_ID] = true;
         await game.settings.set('core', 'moduleConfiguration', { ...settings });
+      },
+      { constants: CONSTANTS }
+    );
 
+    await this.page.reload();
+    await this.isReady();
+
+    // With Tidy 5e Sheets active, now set the Tidy-specific client settings for initial use.
+    await this.page.evaluate(
+      async ({ constants }) => {
         // Unless expressly testing migrations, keep the migration tally maxed out
         await game.settings.set(
           constants.MODULE_ID,

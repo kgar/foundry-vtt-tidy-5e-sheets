@@ -50,8 +50,10 @@ async function globalSetup(config: FullConfig) {
   const joinPage = await setupPage.goToTestWorldJoinPage();
   const gamePage = await joinPage.joinAsGm();
 
-  console.log('Global Setup: Applying baseline test setup');
-  await gamePage.applyTestConfiguration();
+  console.log(
+    'Global Setup: Applying baseline test world settings and configuration'
+  );
+  await gamePage.applyTestWorldConfiguration();
   await gamePage.page.reload();
   await gamePage.page.waitForLoadState();
   await gamePage.isReady();
