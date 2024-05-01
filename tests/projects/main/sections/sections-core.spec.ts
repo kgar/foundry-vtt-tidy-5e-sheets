@@ -19,6 +19,7 @@ sectionsTest.describe('Tidy Custom Sections: Core Functionality', () => {
     tabId: string;
     customSection: string;
     customActionSection: string;
+    defaultSection?: string;
   }[] = [
     ...Inventory.inventoryItemTypes.map((t) => ({
       type: t,
@@ -33,6 +34,7 @@ sectionsTest.describe('Tidy Custom Sections: Core Functionality', () => {
       tabId: CONSTANTS.TAB_CHARACTER_SPELLBOOK,
       customSection: `Custom ${CONSTANTS.ITEM_TYPE_SPELL}`,
       customActionSection: `Custom Action ${CONSTANTS.ITEM_TYPE_SPELL}`,
+      defaultSection: 'spell1',
     },
     {
       type: CONSTANTS.ITEM_TYPE_FEAT,
@@ -40,6 +42,7 @@ sectionsTest.describe('Tidy Custom Sections: Core Functionality', () => {
       tabId: CONSTANTS.TAB_CHARACTER_FEATURES,
       customSection: `Custom ${CONSTANTS.ITEM_TYPE_FEAT}`,
       customActionSection: `Custom Action ${CONSTANTS.ITEM_TYPE_FEAT}`,
+      defaultSection: 'passive',
     },
   ];
 
@@ -48,13 +51,17 @@ sectionsTest.describe('Tidy Custom Sections: Core Functionality', () => {
       const characterSheet = new SheetHelper(page, data.sectionTestCharacter);
       // API create item on actor
       const item = await page.evaluate(
-        async ({ itemTestInfo, data }): Promise<DocumentRef> => {
+        async ({
+          itemTestInfo,
+          data,
+          actionOverrideFlagProp,
+        }): Promise<DocumentRef> => {
           const parent = await fromUuid(data.sectionTestCharacter.uuid);
           const item = await dnd5e.documents.Item5e.create(
             {
               name: itemTestInfo.name,
               type: itemTestInfo.type,
-              [`fixme TidyFlags.actionFilterOverride.prop`]: true,
+              [actionOverrideFlagProp]: true,
             },
             { parent }
           );
@@ -65,7 +72,11 @@ sectionsTest.describe('Tidy Custom Sections: Core Functionality', () => {
             name: item.name,
           };
         },
-        { itemTestInfo, data }
+        {
+          itemTestInfo,
+          data,
+          actionOverrideFlagProp: TidyFlags.actionFilterOverride.prop,
+        }
       );
 
       await characterSheet.showSheet();
@@ -73,7 +84,7 @@ sectionsTest.describe('Tidy Custom Sections: Core Functionality', () => {
       await characterSheet.tab(itemTestInfo.tabId);
 
       const $itemTableRow = characterSheet.$sheet.locator(
-        `[data-tab-contents-for="${itemTestInfo.tabId}"] [data-item-id="${item.id}"]`
+        `[data-tab-contents-for="${itemTestInfo.tabId}"] [data-item-id="${item.id}"][data-tidy-table-row]`
       );
 
       const itemTableRowTextContent = await $itemTableRow.textContent();
@@ -92,7 +103,7 @@ sectionsTest.describe('Tidy Custom Sections: Core Functionality', () => {
           return !!row.closest(`[data-tidy-section-key="${sectionKey}"]`);
         },
         {
-          sectionKey: itemTestInfo.type,
+          sectionKey: itemTestInfo.defaultSection ?? itemTestInfo.type,
         }
       );
 
@@ -104,7 +115,10 @@ sectionsTest.describe('Tidy Custom Sections: Core Functionality', () => {
         .toBe(true);
 
       const itemSheet = new SheetHelper(page, item);
+
       await itemSheet.showSheet();
+
+      await itemSheet.tab(CONSTANTS.TAB_ITEM_DESCRIPTION_ID);
 
       const $sectionInput = itemSheet.$sheet.locator(
         // TODO: Move the flag management code to TidyFlags so it doesn't rely on FoundryAdapter; then restore these references.
@@ -114,17 +128,24 @@ sectionsTest.describe('Tidy Custom Sections: Core Functionality', () => {
         `[data-tidy-field="${TidyFlags.actionSection.prop}"]`
       );
 
-      const sectionInputIsAvailable = await $sectionInput.isVisible();
+      await $sectionInput.scrollIntoViewIfNeeded();
 
-      sectionsTest
-        .expect(
-          sectionInputIsAvailable,
-          'item custom section input must be available'
-        )
-        .toBeTruthy();
+      await sectionsTest
+        .expect($sectionInput, 'item custom section input must be available')
+        .toBeVisible();
 
       await $sectionInput.fill(itemTestInfo.customSection);
       await $sectionInput.press('Tab');
+
+      await $actionSectionInput.scrollIntoViewIfNeeded();
+
+      await sectionsTest
+        .expect(
+          $actionSectionInput,
+          'item custom action section input must be available'
+        )
+        .toBeVisible();
+
       await $actionSectionInput.fill(itemTestInfo.customActionSection);
       await $actionSectionInput.press('Tab');
 
@@ -146,18 +167,6 @@ sectionsTest.describe('Tidy Custom Sections: Core Functionality', () => {
         )
         .toBe(true);
 
-      await itemSheet.showSheet();
-
-      const actionSectionInputIsAvailable =
-        await $actionSectionInput.isVisible();
-
-      sectionsTest
-        .expect(
-          actionSectionInputIsAvailable,
-          'item custom action section input must be available'
-        )
-        .toBeTruthy();
-
       await characterSheet.showSheet();
       await characterSheet.tab(CONSTANTS.TAB_ACTOR_ACTIONS);
 
@@ -165,7 +174,7 @@ sectionsTest.describe('Tidy Custom Sections: Core Functionality', () => {
         `[data-tab-contents-for="${CONSTANTS.TAB_ACTOR_ACTIONS}"] [data-item-id="${item.id}"]`
       );
 
-      const isInCustomActionSection = $actionItemTableRow.evaluate(
+      const isInCustomActionSection = await $actionItemTableRow.evaluate(
         (row, { sectionKey }) => {
           return !!row.closest(`[data-tidy-section-key="${sectionKey}"]`);
         },
@@ -179,7 +188,7 @@ sectionsTest.describe('Tidy Custom Sections: Core Functionality', () => {
           isInCustomActionSection,
           `item should be in custom section with key "${itemTestInfo.customActionSection}"`
         )
-        .toBe(true);
+        .toBeTruthy();
     });
   }
 });
