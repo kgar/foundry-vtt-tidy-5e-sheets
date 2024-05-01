@@ -7,6 +7,7 @@
   import SheetEditor from '../../components/editor/SheetEditor.svelte';
   import { CONSTANTS } from 'src/constants';
   import LimitedHeader from '../actor/LimitedHeader.svelte';
+  import { TidyFlags } from 'src/foundry/TidyFlags';
 
   let context = getContext<Readable<NpcSheetContext>>('context');
 
@@ -25,8 +26,7 @@
             {localize('DND5E.Appearance')}
           </div>
           <SheetEditor
-            content={FoundryAdapter.tryGetFlag($context.actor, 'appearance') ??
-              ''}
+            content={TidyFlags.tryGetFlag($context.actor, 'appearance') ?? ''}
             target="flags.{CONSTANTS.MODULE_ID}.appearance"
             editable={$context.editable}
           />

@@ -31,6 +31,7 @@
   import { coalesce } from 'src/utils/formatting';
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import ClassicControls from 'src/sheets/shared/ClassicControls.svelte';
+  import { TidyFlags } from 'src/foundry/TidyFlags';
 
   export let primaryColumnName: string;
   export let items: Item5e[];
@@ -209,7 +210,7 @@
                 </div>
               {/if}
             </ItemTableCell>
-            {#if FoundryAdapter.tryGetFlag(item, 'favorite') && allowFavoriteIconNextToName}
+            {#if TidyFlags.tryGetFlag(item, 'favorite') && allowFavoriteIconNextToName}
               <InlineFavoriteIcon />
             {/if}
           {/if}

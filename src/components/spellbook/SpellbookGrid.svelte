@@ -19,6 +19,7 @@
   import { declareLocation } from 'src/types/location-awareness.types';
   import SpellSlotManagement from './SpellSlotManagement.svelte';
   import ConcentrationOverlayIcon from './ConcentrationOverlayIcon.svelte';
+  import { TidyFlags } from 'src/foundry/TidyFlags';
 
   export let section: SpellbookSection;
   export let spells: Item5e[];
@@ -121,7 +122,7 @@
           data-item-id={spell.id}
           tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
         >
-          {#if FoundryAdapter.tryGetFlag(spell, 'favorite')}
+          {#if TidyFlags.tryGetFlag(spell, 'favorite')}
             <GridPaneFavoriteIcon />
           {/if}
           <div class="spell-name">

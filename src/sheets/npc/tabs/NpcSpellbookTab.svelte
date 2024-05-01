@@ -14,13 +14,14 @@
   import FilterMenu from 'src/components/filter/FilterMenu.svelte';
   import PinnedFilterToggles from 'src/components/filter/PinnedFilterToggles.svelte';
   import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
+  import { TidyFlags } from 'src/foundry/TidyFlags';
 
   let context = getContext<Readable<NpcSheetContext>>('context');
 
   let searchCriteria: string = '';
 
   let layoutMode: ItemLayoutMode;
-  $: layoutMode = FoundryAdapter.tryGetFlag($context.actor, 'spellbook-grid')
+  $: layoutMode = TidyFlags.tryGetFlag($context.actor, 'spellbook-grid')
     ? 'grid'
     : 'list';
 

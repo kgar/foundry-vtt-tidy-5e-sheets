@@ -1,4 +1,4 @@
-import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+import { TidyFlags } from 'src/foundry/TidyFlags';
 import type { Actor5e } from 'src/types/types';
 
 type TidyDeath = {
@@ -17,10 +17,7 @@ export async function migrateNpcDeathFlagsToV2({
   overwrite,
   clearDeathFlagData,
 }: NpcDeathFlagToV2MigrationParams) {
-  const tidyDeath = FoundryAdapter.tryGetFlag<TidyDeath | undefined>(
-    npc,
-    'death'
-  );
+  const tidyDeath = TidyFlags.tryGetFlag<TidyDeath | undefined>(npc, 'death');
 
   if (!tidyDeath) {
     return;
@@ -47,6 +44,6 @@ export async function migrateNpcDeathFlagsToV2({
   }
 
   if (clearDeathFlagData) {
-    FoundryAdapter.unsetFlag(npc, 'death');
+    TidyFlags.unsetFlag(npc, 'death');
   }
 }

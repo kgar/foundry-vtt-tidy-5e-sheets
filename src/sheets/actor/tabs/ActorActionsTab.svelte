@@ -22,6 +22,7 @@
   import Dnd5eIcon from 'src/components/icon/Dnd5eIcon.svelte';
   import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
   import PinnedFilterToggles from 'src/components/filter/PinnedFilterToggles.svelte';
+  import { TidyFlags } from 'src/foundry/TidyFlags';
 
   let context = getContext<Readable<ActorSheetContext>>('context');
 
@@ -119,8 +120,7 @@
                   useActiveEffectsMarker={false}
                 >
                   {@const spellClass = FoundryAdapter.getClassLabel(
-                    FoundryAdapter.tryGetFlag(actionItem.item, 'parentClass') ??
-                      '',
+                    TidyFlags.tryGetFlag(actionItem.item, 'parentClass') ?? '',
                   )}
                   <div class="flex-1 min-width-0">
                     <div

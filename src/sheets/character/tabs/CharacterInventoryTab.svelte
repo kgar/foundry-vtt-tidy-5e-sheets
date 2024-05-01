@@ -21,6 +21,7 @@
   import ExpandableContainer from 'src/components/expandable/ExpandableContainer.svelte';
   import PinnedFilterToggles from 'src/components/filter/PinnedFilterToggles.svelte';
   import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
+  import { TidyFlags } from 'src/foundry/TidyFlags';
 
   let context = getContext<Readable<CharacterSheetContext>>('context');
 
@@ -29,7 +30,7 @@
   let searchCriteria: string = '';
 
   let layoutMode: ItemLayoutMode;
-  $: layoutMode = FoundryAdapter.tryGetFlag($context.actor, 'inventory-grid')
+  $: layoutMode = TidyFlags.tryGetFlag($context.actor, 'inventory-grid')
     ? 'grid'
     : 'list';
 

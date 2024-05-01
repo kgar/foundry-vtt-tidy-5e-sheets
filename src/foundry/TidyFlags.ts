@@ -1,5 +1,4 @@
 import type { Item5e } from 'src/types/item.types';
-import { FoundryAdapter } from './foundry-adapter';
 import type { SheetTabSectionConfigs } from 'src/features/sections/sections.types';
 import { CONSTANTS } from 'src/constants';
 
@@ -20,7 +19,7 @@ export class TidyFlags {
     /** Gets the item's Action Filter Override setting. */
     get(item: Item5e): boolean | undefined {
       return (
-        FoundryAdapter.tryGetFlag<boolean>(
+        TidyFlags.tryGetFlag<boolean>(
           item,
           TidyFlags.actionFilterOverride.key
         ) ?? undefined
@@ -28,18 +27,14 @@ export class TidyFlags {
     },
     /** Sets the item's Action Filter Override setting. */
     set(item: Item5e, value: boolean): Promise<void> {
-      return FoundryAdapter.setFlag(
-        item,
-        TidyFlags.actionFilterOverride.key,
-        value
-      );
+      return TidyFlags.setFlag(item, TidyFlags.actionFilterOverride.key, value);
     },
     /**
      * Clears the item's Action Filter Override setting,
      * meaning the item should use the standard Action List logic
      * for inclusion or exclusion. */
     unset(item: Item5e) {
-      return FoundryAdapter.unsetFlag(item, TidyFlags.actionFilterOverride.key);
+      return TidyFlags.unsetFlag(item, TidyFlags.actionFilterOverride.key);
     },
   };
 
@@ -48,15 +43,15 @@ export class TidyFlags {
     prop: TidyFlags.getFlagPropertyPath('actionSection'),
     get(item: Item5e): string | undefined {
       return (
-        FoundryAdapter.tryGetFlag<string>(item, TidyFlags.actionSection.key) ??
+        TidyFlags.tryGetFlag<string>(item, TidyFlags.actionSection.key) ??
         undefined
       );
     },
     set(item: Item5e, value: string) {
-      return FoundryAdapter.setFlag(item, TidyFlags.actionSection.key, value);
+      return TidyFlags.setFlag(item, TidyFlags.actionSection.key, value);
     },
     unset(item: Item5e) {
-      return FoundryAdapter.unsetFlag(item, TidyFlags.actionSection.key);
+      return TidyFlags.unsetFlag(item, TidyFlags.actionSection.key);
     },
   };
 
@@ -67,7 +62,7 @@ export class TidyFlags {
     /** Gets the document sheet's section configuration. `undefined` means to use the default settings. */
     get(document: any): SheetTabSectionConfigs | undefined {
       return (
-        FoundryAdapter.tryGetFlag<SheetTabSectionConfigs>(
+        TidyFlags.tryGetFlag<SheetTabSectionConfigs>(
           document,
           TidyFlags.sectionConfig.key
         ) ?? undefined
@@ -75,18 +70,14 @@ export class TidyFlags {
     },
     /** Sets the document sheet's configuration. */
     set(document: any, value: SheetTabSectionConfigs) {
-      return FoundryAdapter.setFlag(
-        document,
-        TidyFlags.sectionConfig.key,
-        value
-      );
+      return TidyFlags.setFlag(document, TidyFlags.sectionConfig.key, value);
     },
     /**
      * Clears the document sheet's section config,
      * meaning the target actor should use default settings.
      * */
     unset(document: any) {
-      return FoundryAdapter.unsetFlag(document, TidyFlags.sectionConfig.key);
+      return TidyFlags.unsetFlag(document, TidyFlags.sectionConfig.key);
     },
   };
 
@@ -95,15 +86,33 @@ export class TidyFlags {
     prop: TidyFlags.getFlagPropertyPath('section'),
     get(item: Item5e): string | undefined {
       return (
-        FoundryAdapter.tryGetFlag<string>(item, TidyFlags.section.key) ??
-        undefined
+        TidyFlags.tryGetFlag<string>(item, TidyFlags.section.key) ?? undefined
       );
     },
     set(item: Item5e, value: string) {
-      return FoundryAdapter.setFlag(item, TidyFlags.section.key, value);
+      return TidyFlags.setFlag(item, TidyFlags.section.key, value);
     },
     unset(item: Item5e) {
-      return FoundryAdapter.unsetFlag(item, TidyFlags.section.key);
+      return TidyFlags.unsetFlag(item, TidyFlags.section.key);
     },
   };
+
+  static tryGetFlag<T>(flagged: any, flagName: string) {
+    return flagged.getFlag(CONSTANTS.MODULE_ID, flagName) as
+      | T
+      | null
+      | undefined;
+  }
+
+  static setFlag(
+    flagged: any,
+    flagName: string,
+    value: unknown
+  ): Promise<void> {
+    return flagged.setFlag(CONSTANTS.MODULE_ID, flagName, value);
+  }
+
+  static unsetFlag(flagged: any, flagName: string): Promise<void> {
+    return flagged.unsetFlag(CONSTANTS.MODULE_ID, flagName);
+  }
 }

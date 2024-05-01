@@ -18,6 +18,7 @@
   import { settingStore } from 'src/settings/settings';
   import { ActorItemRuntime } from 'src/runtime/ActorItemRuntime';
   import { declareLocation } from 'src/types/location-awareness.types';
+  import { TidyFlags } from 'src/foundry/TidyFlags';
 
   export let section: InventorySection;
   export let items: Item5e[];
@@ -152,7 +153,8 @@
           />
         {/if}
 
-        {#if FoundryAdapter.tryGetFlag(item, 'favorite')}
+        <!-- TODO: Put this in itemContext -->
+        {#if TidyFlags.tryGetFlag(item, 'favorite')}
           <GridPaneFavoriteIcon />
         {/if}
 

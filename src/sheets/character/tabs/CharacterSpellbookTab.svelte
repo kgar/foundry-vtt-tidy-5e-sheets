@@ -22,6 +22,7 @@
   import PinnedFilterToggles from 'src/components/filter/PinnedFilterToggles.svelte';
   import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
   import HorizontalLineSeparator from 'src/components/layout/HorizontalLineSeparator.svelte';
+  import { TidyFlags } from 'src/foundry/TidyFlags';
 
   let context = getContext<Readable<CharacterSheetContext>>('context');
 
@@ -30,12 +31,12 @@
   let searchCriteria: string = '';
 
   let layoutMode: ItemLayoutMode;
-  $: layoutMode = FoundryAdapter.tryGetFlag($context.actor, 'spellbook-grid')
+  $: layoutMode = TidyFlags.tryGetFlag($context.actor, 'spellbook-grid')
     ? 'grid'
     : 'list';
 
   $: selectedClassFilter =
-    FoundryAdapter.tryGetFlag($context.actor, 'classFilter') ?? '';
+    TidyFlags.tryGetFlag($context.actor, 'classFilter') ?? '';
 
   function tryFilterByClass(spells: any[]) {
     if (
@@ -47,7 +48,7 @@
 
     return spells.filter(
       (spell) =>
-        FoundryAdapter.tryGetFlag(spell, 'parentClass') === selectedClassFilter,
+        TidyFlags.tryGetFlag(spell, 'parentClass') === selectedClassFilter,
     );
   }
 

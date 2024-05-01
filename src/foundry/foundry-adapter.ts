@@ -14,6 +14,7 @@ import { SettingsProvider } from 'src/settings/settings';
 import { debug, error, warn } from 'src/utils/logging';
 import { clamp } from 'src/utils/numbers';
 import FloatingContextMenu from 'src/context-menu/FloatingContextMenu';
+import { TidyFlags } from './TidyFlags';
 
 export const FoundryAdapter = {
   isFoundryV10() {
@@ -137,18 +138,6 @@ export const FoundryAdapter = {
   },
   isEmpty(obj: any) {
     return isEmpty(obj);
-  },
-  tryGetFlag<T>(flagged: any, flagName: string) {
-    return flagged.getFlag(CONSTANTS.MODULE_ID, flagName) as
-      | T
-      | null
-      | undefined;
-  },
-  setFlag(flagged: any, flagName: string, value: unknown): Promise<void> {
-    return flagged.setFlag(CONSTANTS.MODULE_ID, flagName, value);
-  },
-  unsetFlag(flagged: any, flagName: string): Promise<void> {
-    return flagged.unsetFlag(CONSTANTS.MODULE_ID, flagName);
   },
   getClassIdentifier(item: Item5e): string {
     return item.system.identifier || item.name.slugify({ strict: true });
@@ -424,7 +413,7 @@ export const FoundryAdapter = {
       return spell.img;
     }
 
-    const parentClass = FoundryAdapter.tryGetFlag<string>(spell, 'parentClass');
+    const parentClass = TidyFlags.tryGetFlag<string>(spell, 'parentClass');
 
     const classImage =
       parentClass && 'actorClassesToImages' in context
@@ -545,16 +534,14 @@ export const FoundryAdapter = {
       return false;
     }
 
-    return (
-      FoundryAdapter.tryGetFlag<boolean | null>(document, 'favorite') ?? false
-    );
+    return TidyFlags.tryGetFlag<boolean | null>(document, 'favorite') ?? false;
   },
   toggleFavorite(document: any) {
     const favorited = FoundryAdapter.isDocumentFavorited(document);
     if (favorited) {
-      FoundryAdapter.unsetFlag(document, 'favorite');
+      TidyFlags.unsetFlag(document, 'favorite');
     } else {
-      FoundryAdapter.setFlag(document, 'favorite', true);
+      TidyFlags.setFlag(document, 'favorite', true);
     }
   },
   isActorSheetUnlocked(actor: any): boolean {
@@ -577,7 +564,7 @@ export const FoundryAdapter = {
    * @returns whether the sheet should be editable per the sheet lock feature
    */
   isSheetUnlocked(actor: any) {
-    return FoundryAdapter.tryGetFlag<boolean>(actor, 'allow-edit') ?? true;
+    return TidyFlags.tryGetFlag<boolean>(actor, 'allow-edit') ?? true;
   },
   allowCharacterEffectsManagement(actor: any) {
     return (

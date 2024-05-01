@@ -8,7 +8,6 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import { settingStore } from 'src/settings/settings';
-  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { CONSTANTS } from 'src/constants';
   import UtilityToolbar from 'src/components/utility-bar/UtilityToolbar.svelte';
   import UtilityToolbarCommand from 'src/components/utility-bar/UtilityToolbarCommand.svelte';
@@ -16,6 +15,7 @@
   import PinnedFilterToggles from 'src/components/filter/PinnedFilterToggles.svelte';
   import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
   import FilterMenu from 'src/components/filter/FilterMenu.svelte';
+  import { TidyFlags } from 'src/foundry/TidyFlags';
 
   let context = getContext<Readable<CharacterSheetContext>>('context');
 
@@ -60,7 +60,7 @@
       <SkillsList
         actor={$context.actor}
         toggleable={$settingStore.toggleEmptyCharacterSkills}
-        expanded={!!FoundryAdapter.tryGetFlag($context.actor, 'skillsExpanded')}
+        expanded={!!TidyFlags.tryGetFlag($context.actor, 'skillsExpanded')}
         toggleField="flags.{CONSTANTS.MODULE_ID}.skillsExpanded"
       />
       {#if !$settingStore.moveTraitsBelowCharacterResources}

@@ -3,11 +3,7 @@ import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import { ActionListRuntime } from 'src/runtime/action-list/ActionListRuntime';
 import { SettingsProvider } from 'src/settings/settings';
 import type { Item5e } from 'src/types/item.types';
-import type {
-  ActionItem,
-  ActionSection,
-  Actor5e,
-} from 'src/types/types';
+import type { ActionItem, ActionSection, Actor5e } from 'src/types/types';
 import { isNil } from 'src/utils/data';
 import { scaleCantripDamageFormula, simplifyFormula } from 'src/utils/formula';
 import { debug, error } from 'src/utils/logging';
@@ -189,8 +185,10 @@ export function isItemInActionList(item: Item5e): boolean {
       ) {
         return false;
       }
-      const isReaction = item.system.activation?.type === CONSTANTS.ACTIVATION_COST_REACTION;
-      const isBonusAction = item.system.activation?.type === CONSTANTS.ACTIVATION_COST_BONUS;
+      const isReaction =
+        item.system.activation?.type === CONSTANTS.ACTIVATION_COST_REACTION;
+      const isBonusAction =
+        item.system.activation?.type === CONSTANTS.ACTIVATION_COST_BONUS;
 
       //ASSUMPTION: If the spell causes damage, it will have damageParts
       const isDamageDealer = item.system.damage?.parts?.length > 0;
@@ -413,7 +411,7 @@ export class Actions {
 }
 
 export function actorUsesActionFeature(actor: Actor5e) {
-  const selectedTabIds = FoundryAdapter.tryGetFlag<string[] | undefined>(
+  const selectedTabIds = TidyFlags.tryGetFlag<string[] | undefined>(
     actor,
     'selected-tabs'
   );

@@ -50,6 +50,7 @@
   import { DocumentTabSectionConfigApplication } from 'src/applications/section-config/DocumentTabSectionConfigApplication';
   import ItemControl from 'src/components/item-list/controls/ItemControl.svelte';
   import { NpcSheetRuntime } from 'src/runtime/NpcSheetRuntime';
+  import { TidyFlags } from 'src/foundry/TidyFlags';
 
   let context = getContext<Readable<NpcSheetContext>>('context');
 
@@ -62,15 +63,15 @@
 
   function toggleLayout() {
     if (layoutMode === 'grid') {
-      FoundryAdapter.unsetFlag($context.actor, 'spellbook-grid');
+      TidyFlags.unsetFlag($context.actor, 'spellbook-grid');
       return;
     }
 
-    FoundryAdapter.setFlag($context.actor, 'spellbook-grid', true);
+    TidyFlags.setFlag($context.actor, 'spellbook-grid', true);
   }
 
   let layoutMode: ItemLayoutMode;
-  $: layoutMode = FoundryAdapter.tryGetFlag($context.actor, 'spellbook-grid')
+  $: layoutMode = TidyFlags.tryGetFlag($context.actor, 'spellbook-grid')
     ? 'grid'
     : 'list';
 
@@ -134,7 +135,7 @@
     <SkillsList
       actor={$context.actor}
       toggleable={!$settingStore.alwaysShowNpcSkills}
-      expanded={!!FoundryAdapter.tryGetFlag($context.actor, 'skillsExpanded')}
+      expanded={!!TidyFlags.tryGetFlag($context.actor, 'skillsExpanded')}
       toggleField="flags.{CONSTANTS.MODULE_ID}.skillsExpanded"
     />
     {#if !$settingStore.moveTraitsBelowNpcResources}

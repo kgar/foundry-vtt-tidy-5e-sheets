@@ -5,7 +5,6 @@
     type CharacterSheetContext,
     type RenderableClassicControl,
   } from 'src/types/types';
-  import { formatAsModifier } from 'src/utils/formatting';
   import ItemEditControl from '../../../components/item-list/controls/ItemEditControl.svelte';
   import ItemDeleteControl from '../../../components/item-list/controls/ItemDeleteControl.svelte';
   import ItemTable from '../../../components/item-list/v1/ItemTable.svelte';
@@ -37,6 +36,7 @@
   import type { Item5e } from 'src/types/item.types';
   import ClassicControls from 'src/sheets/shared/ClassicControls.svelte';
   import LevelUpDropdown from 'src/sheets/actor/LevelUpDropdown.svelte';
+  import { TidyFlags } from 'src/foundry/TidyFlags';
 
   let context = getContext<Readable<CharacterSheetContext>>('context');
 
@@ -195,7 +195,7 @@
                     </ItemName>
                   </ItemTableCell>
                   <!-- TODO: Handle more gracefully -->
-                  {#if $settingStore.showIconsNextToTheItemName && FoundryAdapter.tryGetFlag(item, 'favorite')}
+                  {#if $settingStore.showIconsNextToTheItemName && TidyFlags.tryGetFlag(item, 'favorite')}
                     <InlineFavoriteIcon />
                   {/if}
                   {#if section.showUsesColumn}

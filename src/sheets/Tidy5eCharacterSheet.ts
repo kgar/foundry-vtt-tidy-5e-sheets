@@ -258,10 +258,7 @@ export class Tidy5eCharacterSheet
     let maxPreparedSpellsTotal = 0;
     try {
       const formula =
-        FoundryAdapter.tryGetFlag(
-          this.actor,
-          'maxPreparedSpells'
-        )?.toString() ?? '';
+        TidyFlags.tryGetFlag(this.actor, 'maxPreparedSpells')?.toString() ?? '';
 
       if (formula?.trim() !== '') {
         const roll = await Roll.create(
@@ -378,12 +375,9 @@ export class Tidy5eCharacterSheet
             ),
             iconClass: `fas fa-boxes-stacked fa-fw`,
             execute: () => {
-              FoundryAdapter.unsetFlag(this.actor, 'showContainerPanel');
+              TidyFlags.unsetFlag(this.actor, 'showContainerPanel');
             },
-            visible: !!FoundryAdapter.tryGetFlag(
-              this.actor,
-              'showContainerPanel'
-            ),
+            visible: !!TidyFlags.tryGetFlag(this.actor, 'showContainerPanel'),
           },
           {
             title: FoundryAdapter.localize(
@@ -391,12 +385,9 @@ export class Tidy5eCharacterSheet
             ),
             iconClass: `fas fa-box fa-fw`,
             execute: () => {
-              FoundryAdapter.setFlag(this.actor, 'showContainerPanel', true);
+              TidyFlags.setFlag(this.actor, 'showContainerPanel', true);
             },
-            visible: !FoundryAdapter.tryGetFlag(
-              this.actor,
-              'showContainerPanel'
-            ),
+            visible: !TidyFlags.tryGetFlag(this.actor, 'showContainerPanel'),
           },
           {
             title: FoundryAdapter.localize('TIDY5E.Commands.ExpandAll'),
@@ -421,17 +412,17 @@ export class Tidy5eCharacterSheet
           {
             title: FoundryAdapter.localize('TIDY5E.ListLayout'),
             iconClass: 'fas fa-th-list fa-fw toggle-list',
-            visible: !FoundryAdapter.tryGetFlag(this.actor, 'inventory-grid'),
+            visible: !TidyFlags.tryGetFlag(this.actor, 'inventory-grid'),
             execute: () => {
-              FoundryAdapter.setFlag(this.actor, 'inventory-grid', true);
+              TidyFlags.setFlag(this.actor, 'inventory-grid', true);
             },
           },
           {
             title: FoundryAdapter.localize('TIDY5E.GridLayout'),
             iconClass: 'fas fa-th-large fa-fw toggle-grid',
-            visible: !!FoundryAdapter.tryGetFlag(this.actor, 'inventory-grid'),
+            visible: !!TidyFlags.tryGetFlag(this.actor, 'inventory-grid'),
             execute: () => {
-              FoundryAdapter.unsetFlag(this.actor, 'inventory-grid');
+              TidyFlags.unsetFlag(this.actor, 'inventory-grid');
             },
           },
           {
@@ -532,17 +523,17 @@ export class Tidy5eCharacterSheet
           {
             title: FoundryAdapter.localize('TIDY5E.ListLayout'),
             iconClass: 'fas fa-th-list fa-fw toggle-list',
-            visible: !FoundryAdapter.tryGetFlag(this.actor, 'spellbook-grid'),
+            visible: !TidyFlags.tryGetFlag(this.actor, 'spellbook-grid'),
             execute: () => {
-              FoundryAdapter.setFlag(this.actor, 'spellbook-grid', true);
+              TidyFlags.setFlag(this.actor, 'spellbook-grid', true);
             },
           },
           {
             title: FoundryAdapter.localize('TIDY5E.GridLayout'),
             iconClass: 'fas fa-th-large fa-fw toggle-grid',
-            visible: !!FoundryAdapter.tryGetFlag(this.actor, 'spellbook-grid'),
+            visible: !!TidyFlags.tryGetFlag(this.actor, 'spellbook-grid'),
             execute: () => {
-              FoundryAdapter.unsetFlag(this.actor, 'spellbook-grid');
+              TidyFlags.unsetFlag(this.actor, 'spellbook-grid');
             },
           },
           {
@@ -923,7 +914,7 @@ export class Tidy5eCharacterSheet
       originalContext: defaultDocumentContext,
       owner: this.actor.isOwner,
       showContainerPanel:
-        FoundryAdapter.tryGetFlag(this.actor, 'showContainerPanel') === true &&
+        TidyFlags.tryGetFlag(this.actor, 'showContainerPanel') === true &&
         Array.from(defaultDocumentContext.items).some(
           (i: Item5e) => i.type === CONSTANTS.ITEM_TYPE_CONTAINER
         ),
@@ -960,7 +951,7 @@ export class Tidy5eCharacterSheet
 
     let tabs = await CharacterSheetRuntime.getTabs(context);
 
-    const selectedTabs = FoundryAdapter.tryGetFlag<string[]>(
+    const selectedTabs = TidyFlags.tryGetFlag<string[]>(
       context.actor,
       'selected-tabs'
     );

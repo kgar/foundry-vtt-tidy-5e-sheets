@@ -14,6 +14,7 @@
   import { CONSTANTS } from 'src/constants';
   import { settingStore } from 'src/settings/settings';
   import ItemProperties from '../parts/ItemProperties.svelte';
+  import { TidyFlags } from 'src/foundry/TidyFlags';
 
   let context = getContext<Readable<ItemSheetContext>>('context');
 
@@ -36,7 +37,7 @@
       id={inputId}
       document={$context.item}
       field="flags.{CONSTANTS.MODULE_ID}.parentClass"
-      value={FoundryAdapter.tryGetFlag($context.item, 'parentClass') ?? ''}
+      value={TidyFlags.tryGetFlag($context.item, 'parentClass') ?? ''}
       disabled={!$context.editable}
     >
       <option value="">&mdash;</option>
@@ -157,7 +158,7 @@
       checked={$context.system.preparation.prepared}
       disabled={!$context.editable}
       greenCheckboxWidthOverride="{localize('DND5E.SpellPrepared').length +
-            4}ch"
+        4}ch"
     >
       {localize('DND5E.SpellPrepared')}
     </Checkbox>

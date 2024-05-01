@@ -53,6 +53,7 @@ import { SheetPreferencesRuntime } from 'src/runtime/user-preferences/SheetPrefe
 import { Tidy5eBaseActorSheet } from './Tidy5eBaseActorSheet';
 import { DocumentTabSectionConfigApplication } from 'src/applications/section-config/DocumentTabSectionConfigApplication';
 import { SheetSections } from 'src/features/sections/SheetSections';
+import { TidyFlags } from 'src/foundry/TidyFlags';
 
 export class Tidy5eVehicleSheet
   extends dnd5e.applications.actor.ActorSheet5eVehicle
@@ -306,7 +307,7 @@ export class Tidy5eVehicleSheet
 
     let tabs = await VehicleSheetRuntime.getTabs(context);
 
-    const selectedTabs = FoundryAdapter.tryGetFlag<string[]>(
+    const selectedTabs = TidyFlags.tryGetFlag<string[]>(
       context.actor,
       'selected-tabs'
     );

@@ -33,6 +33,7 @@
   import type { Item5e } from 'src/types/item.types';
   import ClassicControls from 'src/sheets/shared/ClassicControls.svelte';
   import ConcentrationOverlayIcon from './ConcentrationOverlayIcon.svelte';
+  import { TidyFlags } from 'src/foundry/TidyFlags';
 
   let context =
     getContext<Readable<CharacterSheetContext | NpcSheetContext>>('context');
@@ -203,7 +204,7 @@
               <ItemUses item={spell} />
             </ItemTableCell>
           {/if}
-          {#if allowFavorites && $settingStore.showIconsNextToTheItemName && FoundryAdapter.tryGetFlag(spell, 'favorite')}
+          {#if allowFavorites && $settingStore.showIconsNextToTheItemName && TidyFlags.tryGetFlag(spell, 'favorite')}
             <InlineFavoriteIcon />
           {/if}
           <ItemTableCell baseWidth={spellComponentsBaseWidth} cssClass="no-gap">

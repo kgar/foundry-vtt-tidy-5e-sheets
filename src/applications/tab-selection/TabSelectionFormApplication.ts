@@ -12,6 +12,7 @@ import { NpcSheetRuntime } from 'src/runtime/NpcSheetRuntime';
 import { CharacterSheetRuntime } from 'src/runtime/CharacterSheetRuntime';
 import { VehicleSheetRuntime } from 'src/runtime/VehicleSheetRuntime';
 import { TabManager } from 'src/runtime/tab/TabManager';
+import { TidyFlags } from 'src/foundry/TidyFlags';
 
 export type TabSelectionItem = {
   id: string;
@@ -101,7 +102,7 @@ export default class TabSelectionFormApplication extends SvelteFormApplicationBa
 
   getData() {
     const selectedTabIds =
-      FoundryAdapter.tryGetFlag<string[]>(this.actor, 'selected-tabs') ??
+      TidyFlags.tryGetFlag<string[]>(this.actor, 'selected-tabs') ??
       this.getDefaultTabIds(this.actor);
 
     let availableTabs: TabSelectionItem[] = this.registeredTabs
@@ -128,7 +129,7 @@ export default class TabSelectionFormApplication extends SvelteFormApplicationBa
   }
 
   async useDefault() {
-    await FoundryAdapter.unsetFlag(this.actor, 'selected-tabs');
+    await TidyFlags.unsetFlag(this.actor, 'selected-tabs');
     this.close();
   }
 
@@ -150,7 +151,7 @@ export default class TabSelectionFormApplication extends SvelteFormApplicationBa
   async save() {
     const context = get(this.context);
 
-    await FoundryAdapter.setFlag(
+    await TidyFlags.setFlag(
       this.actor,
       'selected-tabs',
       context.selected.map((t) => t.id)

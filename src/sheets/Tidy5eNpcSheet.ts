@@ -14,7 +14,6 @@ import type {
   Utilities,
   ActiveEffect5e,
   NpcAbilitySection,
-  SpellbookSection,
 } from 'src/types/types';
 import { writable } from 'svelte/store';
 import NpcSheet from './npc/NpcSheet.svelte';
@@ -213,10 +212,7 @@ export class Tidy5eNpcSheet
     let maxPreparedSpellsTotal = 0;
     try {
       const formula =
-        FoundryAdapter.tryGetFlag(
-          this.actor,
-          'maxPreparedSpells'
-        )?.toString() ?? '';
+        TidyFlags.tryGetFlag(this.actor, 'maxPreparedSpells')?.toString() ?? '';
 
       if (formula?.trim() !== '') {
         const roll = await Roll.create(
@@ -229,7 +225,7 @@ export class Tidy5eNpcSheet
       error('Unable to calculate max prepared spells', false, e);
     }
 
-    const showLegendaryToolbarFlagValue = FoundryAdapter.tryGetFlag(
+    const showLegendaryToolbarFlagValue = TidyFlags.tryGetFlag(
       this.actor,
       'show-legendary-toolbar'
     );
@@ -251,7 +247,7 @@ export class Tidy5eNpcSheet
             ),
             iconClass: 'ra ra-player',
             execute: async () => {
-              await FoundryAdapter.setFlag(
+              await TidyFlags.setFlag(
                 this.actor,
                 'show-legendary-toolbar',
                 true
@@ -265,7 +261,7 @@ export class Tidy5eNpcSheet
             ),
             iconClass: 'ra ra-monster-skull',
             execute: async () => {
-              await FoundryAdapter.setFlag(
+              await TidyFlags.setFlag(
                 this.actor,
                 'show-legendary-toolbar',
                 false
@@ -448,17 +444,17 @@ export class Tidy5eNpcSheet
           {
             title: FoundryAdapter.localize('TIDY5E.ListLayout'),
             iconClass: 'fas fa-th-list fa-fw toggle-list',
-            visible: !FoundryAdapter.tryGetFlag(this.actor, 'spellbook-grid'),
+            visible: !TidyFlags.tryGetFlag(this.actor, 'spellbook-grid'),
             execute: () => {
-              FoundryAdapter.setFlag(this.actor, 'spellbook-grid', true);
+              TidyFlags.setFlag(this.actor, 'spellbook-grid', true);
             },
           },
           {
             title: FoundryAdapter.localize('TIDY5E.GridLayout'),
             iconClass: 'fas fa-th-large fa-fw toggle-grid',
-            visible: !!FoundryAdapter.tryGetFlag(this.actor, 'spellbook-grid'),
+            visible: !!TidyFlags.tryGetFlag(this.actor, 'spellbook-grid'),
             execute: () => {
-              FoundryAdapter.unsetFlag(this.actor, 'spellbook-grid');
+              TidyFlags.unsetFlag(this.actor, 'spellbook-grid');
             },
           },
           {
@@ -741,7 +737,7 @@ export class Tidy5eNpcSheet
 
     let tabs = await NpcSheetRuntime.getTabs(context);
 
-    const selectedTabs = FoundryAdapter.tryGetFlag<string[]>(
+    const selectedTabs = TidyFlags.tryGetFlag<string[]>(
       context.actor,
       'selected-tabs'
     );
