@@ -12,7 +12,7 @@ sectionsTest.beforeEach(async ({ page }) => {
 });
 
 sectionsTest.describe('Tidy Custom Sections: Core Functionality', async () => {
-  let itemTypesToTest: {
+  const itemTypesToTest: {
     type: string;
     name: string;
     tabId: string;
@@ -42,7 +42,7 @@ sectionsTest.describe('Tidy Custom Sections: Core Functionality', async () => {
     },
   ];
 
-  for (let itemTestInfo of itemTypesToTest) {
+  for (const itemTestInfo of itemTypesToTest) {
     sectionsTest(`item: ${itemTestInfo.name}`, async ({ page, data }) => {
       const characterSheet = new SheetHelper(page, data.sectionTestCharacter);
       // API create item on actor
@@ -72,7 +72,7 @@ sectionsTest.describe('Tidy Custom Sections: Core Functionality', async () => {
       await characterSheet.tab(itemTestInfo.tabId);
 
       const $itemTableRow = characterSheet.$sheet.locator(
-        `[data-tab-contents-for="${itemTestInfo.tabId}"] [data-item-id=${item.id}]`
+        `[data-tab-contents-for="${itemTestInfo.tabId}"] [data-item-id="${item.id}"]`
       );
 
       const itemTableRowTextContent = await $itemTableRow.textContent();
@@ -160,7 +160,7 @@ sectionsTest.describe('Tidy Custom Sections: Core Functionality', async () => {
       await characterSheet.tab(CONSTANTS.TAB_ACTOR_ACTIONS);
 
       const $actionItemTableRow = characterSheet.$sheet.locator(
-        `[data-tab-contents-for="${CONSTANTS.TAB_ACTOR_ACTIONS}"] [data-item-id=${item.id}]`
+        `[data-tab-contents-for="${CONSTANTS.TAB_ACTOR_ACTIONS}"] [data-item-id="${item.id}"]`
       );
 
       const isInCustomActionSection = $actionItemTableRow.evaluate(

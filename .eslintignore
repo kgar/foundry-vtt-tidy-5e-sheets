@@ -1,0 +1,7 @@
+node_modules/
+test-results/
+playwright-report summary.json
+.vscode/*
+.DS_Store
+Thumbs.db
+*_spec3.json

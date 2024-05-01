@@ -11,7 +11,7 @@ export class SheetHelper {
     this.page = page;
     this.ref = ref;
     this.$sheet = page.locator(
-      `[data-sheet-module="${CONSTANTS.MODULE_ID}"][id*=${ref.id}]`
+      `[data-sheet-module="${CONSTANTS.MODULE_ID}"][id*="${ref.id}"]`
     );
   }
 
@@ -26,7 +26,7 @@ export class SheetHelper {
   }
 
   async tab(tabId: string) {
-    const $tab = this.$sheet.locator(`nav [data-tab-id=${tabId}]`);
+    const $tab = this.$sheet.locator(`nav [data-tab-id="${tabId}"]`);
     await $tab.click();
   }
 }

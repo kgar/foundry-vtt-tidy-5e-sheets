@@ -10,7 +10,7 @@ async function globalSetup(config: FullConfig) {
 
   console.log('Global Setup: beginning');
   const { baseURL, storageState } = config.projects[0].use;
-  const browser = await chromium.launch({ headless: false });
+  const browser = await chromium.launch();
   const page = await browser.newPage({ baseURL });
 
   const authPage = new ServerAuthenticationPage(page);
@@ -62,7 +62,7 @@ async function globalSetup(config: FullConfig) {
   await browser.close();
 
   if (errors.length) {
-    for (let error of errors) {
+    for (const error of errors) {
       console.error(error);
     }
     throw new Error('Global setup failed. See error logs in the console.');

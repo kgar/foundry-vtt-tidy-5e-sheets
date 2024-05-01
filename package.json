@@ -13,13 +13,21 @@
     "check-watch": "svelte-check --watch --tsconfig ./tsconfig.json",
     "refresh-docs": "typedoc --options ./typedoc.json",
     "link-create": "node symlink-module-build-dir.js",
-    "link-remove": "node symlink-module-build-dir.js --clean"
+    "link-remove": "node symlink-module-build-dir.js --clean",
+    "lint-tests": "eslint tests/**/*.ts",
+    "lint-tests-fix": "eslint tests/**/*.ts --fix",
+    "e2e": "npm run lint-tests && playwright test"
   },
   "devDependencies": {
+    "@eslint/js": "^9.1.1",
     "@playwright/test": "^1.43.1",
     "@sveltejs/vite-plugin-svelte": "^2.4.6",
     "@tsconfig/svelte": "^5.0.2",
+    "@typescript-eslint/eslint-plugin": "^7.8.0",
+    "@typescript-eslint/parser": "^7.8.0",
     "dotenv": "^16.3.2",
+    "eslint": "^8.57.0",
+    "eslint-plugin-playwright": "^1.6.0",
     "fs-extra": "^11.2.0",
     "sass": "^1.69.5",
     "svelte": "^4.2.7",
@@ -28,7 +36,8 @@
     "terser": "^5.24.0",
     "tslib": "^2.6.2",
     "typedoc": "^0.25.7",
-    "typescript": "^5.2.2",
+    "typescript": "^5.4.5",
+    "typescript-eslint": "^7.8.0",
     "vite": "^4.5.2",
     "yargs": "^17.7.2"
   },

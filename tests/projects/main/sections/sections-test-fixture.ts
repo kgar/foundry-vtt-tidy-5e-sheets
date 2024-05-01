@@ -14,7 +14,7 @@ type SectionsRefs = {
 /**
  * A test fixture which contains worker-scoped game data specifically for section tests.
  */
-export let sectionsTest = test.extend<{}, { data: SectionsRefs }>({
+export const sectionsTest = test.extend<object, { data: SectionsRefs }>({
   data: [
     async ({ browser }, use) => {
       const page = await browser.newPage();
@@ -54,7 +54,7 @@ export async function initSectionsData(
 
       const backpackId = backpack.id;
 
-      let itemUpdates: Record<string, any>[] = [];
+      const itemUpdates: Record<string, any>[] = [];
       character.items.forEach((item: any) => {
         if (item.type === 'loot') {
           itemUpdates.push({

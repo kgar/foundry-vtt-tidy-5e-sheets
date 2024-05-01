@@ -43,7 +43,7 @@ export class SetupPage {
       confirmDialogLocator.locator('[data-button=yes]');
 
     this.$worldListItem = this.page.locator(
-      `#worlds-list [data-package-id=${this.testWorldTitle}]`
+      `#worlds-list [data-package-id="${this.testWorldTitle}"]`
     );
 
     this.$deleteWorldContextMenuOption = this.page

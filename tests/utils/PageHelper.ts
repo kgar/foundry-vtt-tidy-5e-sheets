@@ -51,22 +51,26 @@ export class PageHelper {
     await page.waitForFunction(() => !!window['game']?.view);
     const gameView = await page.evaluate(() => window['game']?.view);
     switch (gameView) {
-      case 'auth':
+      case 'auth': {
         const authPage = new ServerAuthenticationPage(page);
         await authPage.isReady();
         return authPage;
-      case 'setup':
+      }
+      case 'setup': {
         const setupPage = new SetupPage(page);
         await setupPage.isReady();
         return setupPage;
-      case 'join':
+      }
+      case 'join': {
         const joinPage = new JoinPage(page);
         await joinPage.isReady();
         return joinPage;
-      case 'game':
+      }
+      case 'game': {
         const gamePage = new GamePage(page);
         await gamePage.isReady();
         return gamePage;
+      }
     }
     return undefined;
   }
