@@ -43,7 +43,7 @@ export async function initSectionsData(
 
   // TODO: Put each item item in the backpack
   const characterBackpack = await gamePage.page.evaluate(
-    async (): Promise<DocumentRef> => {
+    async ({ sectionTestCharacter }): Promise<DocumentRef> => {
       const character = await fromUuid(sectionTestCharacter.uuid);
 
       const backpack: any = Array.from(character.items).find(
@@ -70,7 +70,8 @@ export async function initSectionsData(
         uuid: backpack.uuid,
         name: backpack.name,
       };
-    }
+    },
+    { sectionTestCharacter }
   );
 
   const sectionTestVehicle = await gamePage.page.evaluate(

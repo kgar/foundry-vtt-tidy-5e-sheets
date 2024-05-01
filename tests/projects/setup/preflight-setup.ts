@@ -38,7 +38,9 @@ test.describe('pre-flight checkup', () => {
     test.expect(dnd5eIsInstalled).toBeTruthy();
   });
 
-  test('a fresh test world is set up and ready to use', async () => {
+  test('a fresh test world is set up and ready to use', async ({
+    storageState,
+  }) => {
     const setupPage = new SetupPage(page);
     await setupPage.ensureTestWorldDeleted();
     await setupPage.ensureTestWorldCreated();
@@ -46,5 +48,6 @@ test.describe('pre-flight checkup', () => {
     const gamePage = await joinPage.joinAsGm();
     // Apply all setups here
     await applySetups(gamePage);
+    await page.context().storageState({ path: storageState as string });
   });
 });
