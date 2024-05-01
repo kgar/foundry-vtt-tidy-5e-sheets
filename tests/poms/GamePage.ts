@@ -56,13 +56,17 @@ export class GamePage {
           },
         });
 
-        // Disable canvas
-        await game.settings.set('core', 'noCanvas', true);
-
         // Ensure Tidy is activated
         const settings = game.settings.get('core', 'moduleConfiguration');
         settings[constants.MODULE_ID] = true;
         await game.settings.set('core', 'moduleConfiguration', { ...settings });
+
+        // Unless expressly testing migrations, keep the migration tally maxed out
+        await game.settings.set(
+          constants.MODULE_ID,
+          'migrationsConfirmationTally',
+          Number.MAX_SAFE_INTEGER
+        );
       },
       { constants: CONSTANTS }
     );
