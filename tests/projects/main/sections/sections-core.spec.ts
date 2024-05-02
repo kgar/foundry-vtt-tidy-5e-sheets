@@ -3,16 +3,17 @@
 import { CONSTANTS } from 'src/constants';
 import { Inventory } from 'src/features/sections/Inventory';
 import { PageHelper } from 'tests/utils/PageHelper';
-import { sectionsTest } from './sections-test-fixture';
 import type { DocumentRef } from 'tests/tests.types';
 import { SheetHelper } from 'tests/utils/SheetHelper';
 import { TidyFlags } from 'src/foundry/TidyFlags';
+import test from '@playwright/test';
+import { sectionTestDataProvider } from './sections-test-data';
 
-sectionsTest.beforeEach(async ({ page }) => {
+test.beforeEach(async ({ page }) => {
   await PageHelper.routeToTestGame(page);
 });
 
-sectionsTest.describe('Tidy Custom Sections: Core Functionality', () => {
+test.describe('Tidy Custom Sections: Core Functionality', () => {
   const itemTypesToTest: {
     type: string;
     name: string;
@@ -46,8 +47,10 @@ sectionsTest.describe('Tidy Custom Sections: Core Functionality', () => {
     },
   ];
 
+  const data = sectionTestDataProvider.get();
+
   for (const itemTestInfo of itemTypesToTest) {
-    sectionsTest(`item: ${itemTestInfo.name}`, async ({ page, data }) => {
+    test(`item: ${itemTestInfo.name}`, async ({ page }) => {
       const characterSheet = new SheetHelper(page, data.sectionTestCharacter);
       // API create item on actor
       const item = await page.evaluate(
@@ -91,7 +94,7 @@ sectionsTest.describe('Tidy Custom Sections: Core Functionality', () => {
       const theItemUnderTestHasTheExpectedName =
         itemTableRowTextContent?.includes(item.name);
 
-      sectionsTest
+      test
         .expect(
           theItemUnderTestHasTheExpectedName,
           `item should have been successfully located in item tables`
@@ -107,7 +110,7 @@ sectionsTest.describe('Tidy Custom Sections: Core Functionality', () => {
         }
       );
 
-      sectionsTest
+      test
         .expect(
           isInDefaultSection,
           `item should be in default section with key "${itemTestInfo.type}"`
@@ -130,7 +133,7 @@ sectionsTest.describe('Tidy Custom Sections: Core Functionality', () => {
 
       await $sectionInput.scrollIntoViewIfNeeded();
 
-      await sectionsTest
+      await test
         .expect($sectionInput, 'item custom section input must be available')
         .toBeVisible();
 
@@ -139,7 +142,7 @@ sectionsTest.describe('Tidy Custom Sections: Core Functionality', () => {
 
       await $actionSectionInput.scrollIntoViewIfNeeded();
 
-      await sectionsTest
+      await test
         .expect(
           $actionSectionInput,
           'item custom action section input must be available'
@@ -160,7 +163,7 @@ sectionsTest.describe('Tidy Custom Sections: Core Functionality', () => {
         }
       );
 
-      sectionsTest
+      test
         .expect(
           isInCustomSection,
           `item should be in custom section with key "${itemTestInfo.customSection}"`
@@ -183,7 +186,7 @@ sectionsTest.describe('Tidy Custom Sections: Core Functionality', () => {
         }
       );
 
-      sectionsTest
+      test
         .expect(
           isInCustomActionSection,
           `item should be in custom section with key "${itemTestInfo.customActionSection}"`

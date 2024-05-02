@@ -2,6 +2,7 @@ import { chromium, type FullConfig } from '@playwright/test';
 import { establishTestLocalStorage } from './projects/setup/localStorageSetup';
 import { ServerAuthenticationPage } from './poms/ServerAuthenticationPage';
 import { PageHelper } from './utils/PageHelper';
+import { setups } from './global-setups-index';
 
 const { ADMIN_PASSWORD = 'a server auth password is required' } = process.env;
 
@@ -57,6 +58,12 @@ async function globalSetup(config: FullConfig) {
   await gamePage.page.reload();
   await gamePage.page.waitForLoadState();
   await gamePage.isReady();
+
+  for (let setup of setups) {
+    console.log(`Global Setup: initializing test data for env key ${setup.envProp}`);
+    const data = await setup.initTestData(gamePage);
+    process.env[setup.envProp] = JSON.stringify(data);
+  }
 
   await page.context().storageState({ path: storageState as string });
   await browser.close();

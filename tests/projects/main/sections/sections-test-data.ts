@@ -1,8 +1,7 @@
-import test from '@playwright/test';
 import { CONSTANTS } from 'src/constants';
+import { TestDataProvider } from 'tests/TestDataProvider';
 import type { GamePage } from 'tests/poms/GamePage';
 import type { DocumentRef } from 'tests/tests.types';
-import { PageHelper } from 'tests/utils/PageHelper';
 
 type SectionsRefs = {
   sectionTestCharacter: DocumentRef;
@@ -11,21 +10,10 @@ type SectionsRefs = {
   sectionTestOwnedContainer: DocumentRef;
 };
 
-/**
- * A test fixture which contains worker-scoped game data specifically for section tests.
- */
-export const sectionsTest = test.extend<object, { data: SectionsRefs }>({
-  data: [
-    async ({ browser }, use) => {
-      const page = await browser.newPage();
-      const gamePage = await PageHelper.routeToTestGame(page);
-      const data = await initSectionsData(gamePage);
-      await page.close();
-      await use(data);
-    },
-    { scope: 'worker' },
-  ],
-});
+export const sectionTestDataProvider = new TestDataProvider<SectionsRefs>(
+  'SectionsTestData',
+  initSectionsData
+);
 
 export async function initSectionsData(
   gamePage: GamePage
@@ -43,7 +31,6 @@ export async function initSectionsData(
     },
   });
 
-  // TODO: Put each item item in the backpack
   const characterBackpack = await gamePage.page.evaluate(
     async ({ sectionTestCharacter }): Promise<DocumentRef> => {
       const character = await fromUuid(sectionTestCharacter.uuid);
@@ -52,20 +39,22 @@ export async function initSectionsData(
         (i: any) => i.name === 'Backpack'
       );
 
-      const backpackId = backpack.id;
+      // TODO: Put a brand new instance of each item type in the backpack
 
-      const itemUpdates: Record<string, any>[] = [];
-      character.items.forEach((item: any) => {
-        if (item.type === 'loot') {
-          itemUpdates.push({
-            _id: item.id,
-            system: {
-              container: backpackId,
-            },
-          });
-        }
-      });
-      await character.updateEmbeddedDocuments('Item', itemUpdates);
+      // const backpackId = backpack.id;
+
+      // const itemUpdates: Record<string, any>[] = [];
+      // character.items.forEach((item: any) => {
+      //   if (item.type === 'loot') {
+      //     itemUpdates.push({
+      //       _id: item.id,
+      //       system: {
+      //         container: backpackId,
+      //       },
+      //     });
+      //   }
+      // });
+      // await character.updateEmbeddedDocuments('Item', itemUpdates);
 
       return {
         id: backpack.id,
