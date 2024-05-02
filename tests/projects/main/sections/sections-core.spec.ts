@@ -2,9 +2,12 @@ import { CONSTANTS } from 'src/constants';
 import { Inventory } from 'src/features/sections/Inventory';
 import { PageHelper } from 'tests/utils/PageHelper';
 import type { DocumentRef } from 'tests/tests.types';
-import { SheetHelper } from 'tests/utils/SheetHelper';
+import {
+  SheetHelper,
+  type SheetHelperItemCreationArgs,
+} from 'tests/helpers/SheetHelper';
 import { TidyFlags } from 'src/foundry/TidyFlags';
-import test, { type Page } from '@playwright/test';
+import test, { expect, type Page } from '@playwright/test';
 import { sectionTestDataProvider } from './sections-test-data';
 import { NpcSheetSections } from 'src/features/sections/NpcSheetSections';
 
@@ -21,46 +24,157 @@ test.beforeEach(async ({ page }) => {
   await PageHelper.routeToTestGame(page);
 });
 
-test.describe('Tidy Custom Sections: Core Functionality', () => {
-  const data = sectionTestDataProvider.get();
+const data = sectionTestDataProvider.get();
 
-  test.describe('characters', () => {
-    const characterItemTypesToTest: CustomSectionItemParameters[] = [
-      ...Inventory.inventoryItemTypes.map((t) => ({
-        type: t,
-        name: `Custom Section Test ${t}`,
+type DefaultSectionTestParams = {
+  itemCreationArgs: SheetHelperItemCreationArgs;
+  tabId: string;
+  sectionKey: string;
+};
+test.describe('section core functionality', () => {
+  test.describe('character', () => {
+    const itemsToTest: DefaultSectionTestParams[] = [
+      ...Inventory.inventoryItemTypes.map((itemType) => ({
+        itemCreationArgs: {
+          name: `Test ${itemType}`,
+          type: itemType,
+        },
         tabId: CONSTANTS.TAB_CHARACTER_INVENTORY,
-        customSection: `Custom ${t}`,
-        customActionSection: `Custom Action ${t}`,
+        sectionKey: itemType,
       })),
       {
-        type: CONSTANTS.ITEM_TYPE_SPELL,
-        name: `Custom Section Test ${CONSTANTS.ITEM_TYPE_SPELL}`,
+        itemCreationArgs: {
+          name: 'Test lvl 1 spell',
+          type: CONSTANTS.ITEM_TYPE_SPELL,
+          system: {
+            level: 1,
+          },
+        },
+        sectionKey: 'spell1',
         tabId: CONSTANTS.TAB_CHARACTER_SPELLBOOK,
-        customSection: `Custom ${CONSTANTS.ITEM_TYPE_SPELL}`,
-        customActionSection: `Custom Action ${CONSTANTS.ITEM_TYPE_SPELL}`,
-        defaultSection: 'spell1',
       },
       {
-        type: CONSTANTS.ITEM_TYPE_FEAT,
-        name: `Custom Section Test ${CONSTANTS.ITEM_TYPE_FEAT}`,
+        itemCreationArgs: {
+          name: 'Test active feature',
+          type: CONSTANTS.ITEM_TYPE_FEAT,
+          system: {
+            activation: {
+              type: CONSTANTS.ACTIVATION_COST_ACTION,
+            },
+          },
+        },
+        sectionKey: 'active',
         tabId: CONSTANTS.TAB_CHARACTER_FEATURES,
-        customSection: `Custom ${CONSTANTS.ITEM_TYPE_FEAT}`,
-        customActionSection: `Custom Action ${CONSTANTS.ITEM_TYPE_FEAT}`,
-        defaultSection: 'passive',
+      },
+      {
+        itemCreationArgs: {
+          name: 'Test passive feature',
+          type: CONSTANTS.ITEM_TYPE_FEAT,
+        },
+        sectionKey: 'passive',
+        tabId: CONSTANTS.TAB_CHARACTER_FEATURES,
       },
     ];
 
-    for (const itemTestInfo of characterItemTypesToTest) {
-      test(`item: ${itemTestInfo.name}`, async ({ page }) => {
-        await verifyCoreCustomSectionFunctionality(
+    for (let itemToTest of itemsToTest) {
+      test(`item type ${itemToTest.itemCreationArgs.type} defaults to section key ${itemToTest.sectionKey}`, async ({
+        page,
+      }) => {
+        // arrange
+        const characterSheetHelper = new SheetHelper(
           page,
-          data.sectionTestCharacter,
-          itemTestInfo
+          data.sectionTestCharacter
         );
+
+        // act
+        const item = await characterSheetHelper.createEmbeddedItem(
+          page,
+          itemToTest.itemCreationArgs
+        );
+
+        // assert
+        await characterSheetHelper.tab(itemToTest.tabId);
+        expect(
+          await itemExistsInSection({
+            sheetHelper: characterSheetHelper,
+            itemRef: item,
+            page,
+            sectionKey: itemToTest.sectionKey,
+            tabId: itemToTest.tabId,
+          })
+        ).toBeTruthy();
+      });
+
+      test(`item type ${itemToTest.itemCreationArgs.type} can be put in a custom section`, async ({
+        page,
+      }) => {
+        // arrange
+        const customSectionKey = `Custom Section ${itemToTest.sectionKey}`;
+        const customSectionName = `Custom Section ${itemToTest.itemCreationArgs.name}`;
+        const characterSheetHelper = new SheetHelper(
+          page,
+          data.sectionTestCharacter
+        );
+        const item = await characterSheetHelper.createEmbeddedItem(page, {
+          ...itemToTest.itemCreationArgs,
+          name: customSectionName,
+        });
+        const itemSheetHelper = new SheetHelper(page, item);
+
+        // act
+        await itemSheetHelper.showSheet();
+        await itemSheetHelper.tab(CONSTANTS.TAB_ITEM_DESCRIPTION_ID);
+        const $sectionInput = itemSheetHelper.$sheet.locator(
+          `[data-tidy-field="${TidyFlags.section.prop}"]`
+        );
+        await $sectionInput.fill(customSectionKey);
+        await $sectionInput.press('Tab');
+
+        // assert
+        await characterSheetHelper.showSheet();
+        await characterSheetHelper.tab(itemToTest.tabId);
+        expect(
+          await itemExistsInSection({
+            sheetHelper: characterSheetHelper,
+            itemRef: item,
+            page,
+            sectionKey: customSectionKey,
+            tabId: itemToTest.tabId,
+          })
+        ).toBeTruthy();
       });
     }
   });
+});
+
+async function itemExistsInSection(args: {
+  sheetHelper: SheetHelper;
+  page: Page;
+  tabId: string;
+  itemRef: DocumentRef;
+  sectionKey: string;
+}) {
+  const { sheetHelper, page, tabId, itemRef, sectionKey } = args;
+
+  await sheetHelper.showSheet();
+  await sheetHelper.tab(args.tabId);
+
+  const $row = page.locator(
+    `[data-tab-contents-for="${tabId}"] [data-item-id="${itemRef.id}"][data-tidy-table-row]`
+  );
+  const rowText = await $row.textContent();
+  const actualSectionKey = await $row.evaluate((row) =>
+    row
+      .closest('[data-tidy-section-key]')
+      ?.getAttribute('data-tidy-section-key')
+  );
+
+  expect(rowText).toContain(itemRef.name);
+  expect(actualSectionKey).toEqual(sectionKey);
+}
+
+test.describe('Tidy Custom Sections: Core Functionality', () => {
+  const data = sectionTestDataProvider.get();
 
   test.describe('NPCs', () => {
     const npcItemTypesToTest: CustomSectionItemParameters[] = [
@@ -258,7 +372,6 @@ async function applyCustomSectionsToItem(
   await itemSheet.tab(CONSTANTS.TAB_ITEM_DESCRIPTION_ID);
 
   const $sectionInput = itemSheet.$sheet.locator(
-    // TODO: Move the flag management code to TidyFlags so it doesn't rely on FoundryAdapter; then restore these references.
     `[data-tidy-field="${TidyFlags.section.prop}"]`
   );
   const $actionSectionInput = itemSheet.$sheet.locator(
