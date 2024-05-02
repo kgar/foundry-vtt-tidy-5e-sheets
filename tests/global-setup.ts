@@ -7,7 +7,7 @@ import { setups } from './global-setups-index';
 const { ADMIN_PASSWORD = 'a server auth password is required' } = process.env;
 
 async function globalSetup(config: FullConfig) {
-  const errors = [];
+  const errors: any[] = [];
 
   console.log('Global Setup: beginning');
   const { baseURL, storageState } = config.projects[0].use;
@@ -59,10 +59,16 @@ async function globalSetup(config: FullConfig) {
   await gamePage.page.waitForLoadState();
   await gamePage.isReady();
 
-  for (let setup of setups) {
-    console.log(`Global Setup: initializing test data for env key ${setup.envProp}`);
-    const data = await setup.initTestData(gamePage);
-    process.env[setup.envProp] = JSON.stringify(data);
+  for (const setup of setups) {
+    console.log(
+      `Global Setup: initializing test data for env key ${setup.envProp}`
+    );
+    try {
+      const data = await setup.initTestData(gamePage);
+      process.env[setup.envProp] = JSON.stringify(data);
+    } catch (e) {
+      errors.push(e);
+    }
   }
 
   await page.context().storageState({ path: storageState as string });

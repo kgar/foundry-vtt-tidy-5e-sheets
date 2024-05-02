@@ -7,9 +7,9 @@ import {
   type SheetHelperItemCreationArgs,
 } from 'tests/helpers/SheetHelper';
 import { TidyFlags } from 'src/foundry/TidyFlags';
-import test, { expect, type Page } from '@playwright/test';
-import { sectionTestDataProvider } from './sections-test-data';
+import { expect, type Page } from '@playwright/test';
 import { NpcSheetSections } from 'src/features/sections/NpcSheetSections';
+import { sectionsTest } from './sections-test-fixture';
 
 type CustomSectionItemParameters = {
   type: string;
@@ -20,19 +20,17 @@ type CustomSectionItemParameters = {
   defaultSection?: string;
 };
 
-test.beforeEach(async ({ page }) => {
+sectionsTest.beforeEach(async ({ page }) => {
   await PageHelper.routeToTestGame(page);
 });
-
-const data = sectionTestDataProvider.get();
 
 type DefaultSectionTestParams = {
   itemCreationArgs: SheetHelperItemCreationArgs;
   tabId: string;
   sectionKey: string;
 };
-test.describe('section core functionality', () => {
-  test.describe('character', () => {
+sectionsTest.describe('sections core functionality', () => {
+  sectionsTest.describe('character', () => {
     const itemsToTest: DefaultSectionTestParams[] = [
       ...Inventory.inventoryItemTypes.map((itemType) => ({
         itemCreationArgs: {
@@ -76,75 +74,88 @@ test.describe('section core functionality', () => {
       },
     ];
 
-    for (let itemToTest of itemsToTest) {
-      test.describe(`item: ${itemToTest.itemCreationArgs.name} | type ${itemToTest.itemCreationArgs.type}`, () => {
-        test(`item defaults to section key ${itemToTest.sectionKey}`, async ({
-          page,
-        }) => {
-          // arrange
-          const characterSheetHelper = new SheetHelper(
-            page,
-            data.sectionTestCharacter
+    for (const itemToTest of itemsToTest) {
+      sectionsTest.describe(
+        `item: "${itemToTest.itemCreationArgs.name}" | type "${itemToTest.itemCreationArgs.type}"`,
+        () => {
+          sectionsTest(
+            `defaults to section key "${itemToTest.sectionKey}"`,
+            async ({ page, data }) => {
+              // arrange
+              const characterSheetHelper = new SheetHelper(
+                page,
+                data.sectionTestCharacter
+              );
+
+              // act
+              const item = await characterSheetHelper.createEmbeddedItem(
+                page,
+                itemToTest.itemCreationArgs
+              );
+
+              // assert
+              await characterSheetHelper.showSheet();
+              await characterSheetHelper.tab(itemToTest.tabId);
+              await verifyItemExistsInSection({
+                sheetHelper: characterSheetHelper,
+                itemRef: item,
+                page,
+                sectionKey: itemToTest.sectionKey,
+                tabId: itemToTest.tabId,
+              });
+            }
           );
 
-          // act
-          const item = await characterSheetHelper.createEmbeddedItem(
-            page,
-            itemToTest.itemCreationArgs
+          sectionsTest(
+            `can be placed in custom section`,
+            async ({ page, data }) => {
+              // arrange
+              const customSectionKey = `Custom Section ${itemToTest.sectionKey}`;
+              const customSectionName = `Custom Section ${itemToTest.itemCreationArgs.name}`;
+              const characterSheetHelper = new SheetHelper(
+                page,
+                data.sectionTestCharacter
+              );
+              const item = await characterSheetHelper.createEmbeddedItem(page, {
+                ...itemToTest.itemCreationArgs,
+                name: customSectionName,
+              });
+              const itemSheetHelper = new SheetHelper(page, item);
+
+              // act
+              await itemSheetHelper.showSheet();
+              await itemSheetHelper.tab(CONSTANTS.TAB_ITEM_DESCRIPTION_ID);
+              const $sectionInput = itemSheetHelper.$sheet.locator(
+                `[data-tidy-field="${TidyFlags.section.prop}"]`
+              );
+              await $sectionInput.fill(customSectionKey);
+              await $sectionInput.press('Tab');
+
+              // assert
+              await characterSheetHelper.showSheet();
+              await characterSheetHelper.tab(itemToTest.tabId);
+              await verifyItemExistsInSection({
+                sheetHelper: characterSheetHelper,
+                itemRef: item,
+                page,
+                sectionKey: customSectionKey,
+                tabId: itemToTest.tabId,
+              });
+            }
           );
-
-          // assert
-          await characterSheetHelper.showSheet();
-          await characterSheetHelper.tab(itemToTest.tabId);
-          await verifyItemExistsInSection({
-            sheetHelper: characterSheetHelper,
-            itemRef: item,
-            page,
-            sectionKey: itemToTest.sectionKey,
-            tabId: itemToTest.tabId,
-          });
-        });
-
-        test(`Given custom section key ${itemToTest.sectionKey}, item is placed in custom section`, async ({
-          page,
-        }) => {
-          // arrange
-          const customSectionKey = `Custom Section ${itemToTest.sectionKey}`;
-          const customSectionName = `Custom Section ${itemToTest.itemCreationArgs.name}`;
-          const characterSheetHelper = new SheetHelper(
-            page,
-            data.sectionTestCharacter
-          );
-          const item = await characterSheetHelper.createEmbeddedItem(page, {
-            ...itemToTest.itemCreationArgs,
-            name: customSectionName,
-          });
-          const itemSheetHelper = new SheetHelper(page, item);
-
-          // act
-          await itemSheetHelper.showSheet();
-          await itemSheetHelper.tab(CONSTANTS.TAB_ITEM_DESCRIPTION_ID);
-          const $sectionInput = itemSheetHelper.$sheet.locator(
-            `[data-tidy-field="${TidyFlags.section.prop}"]`
-          );
-          await $sectionInput.fill(customSectionKey);
-          await $sectionInput.press('Tab');
-
-          // assert
-          await characterSheetHelper.showSheet();
-          await characterSheetHelper.tab(itemToTest.tabId);
-          await verifyItemExistsInSection({
-            sheetHelper: characterSheetHelper,
-            itemRef: item,
-            page,
-            sectionKey: customSectionKey,
-            tabId: itemToTest.tabId,
-          });
-        });
-      });
+        }
+      );
 
       // TODO: Do the custom test for each relevant tab (not each relevant item), using localization keys for the section names; verify localizeable
     }
+  });
+
+  sectionsTest.describe('NPC', () => {
+
+  });
+  
+  sectionsTest.describe('vehicle', () => {
+
   });
 });
 
@@ -174,10 +185,8 @@ async function verifyItemExistsInSection(args: {
   expect(actualSectionKey).toEqual(sectionKey);
 }
 
-test.describe('Tidy Custom Sections: Core Functionality', () => {
-  const data = sectionTestDataProvider.get();
-
-  test.describe('NPCs', () => {
+sectionsTest.describe('Tidy Custom Sections: Core Functionality', () => {
+  sectionsTest.describe('NPCs', () => {
     const npcItemTypesToTest: CustomSectionItemParameters[] = [
       ...NpcSheetSections.abilitiesItemTypes.map((t) => ({
         type: t,
@@ -203,7 +212,7 @@ test.describe('Tidy Custom Sections: Core Functionality', () => {
     ];
 
     for (const itemTestInfo of npcItemTypesToTest) {
-      test(`item: ${itemTestInfo.name}`, async ({ page }) => {
+      sectionsTest(`item: ${itemTestInfo.name}`, async ({ page, data }) => {
         await verifyCoreCustomSectionFunctionality(
           page,
           data.sectionTestNpc,
@@ -213,7 +222,7 @@ test.describe('Tidy Custom Sections: Core Functionality', () => {
     }
   });
 
-  test.describe('vehicles', () => {
+  sectionsTest.describe('vehicles', () => {
     // Vehicles are a special case, in that the action tab is the only custom section content they support at present
     const vehicleItemTypesToTest: CustomSectionItemParameters[] = [
       ...Inventory.inventoryItemTypes.map((t) => ({
@@ -242,7 +251,7 @@ test.describe('Tidy Custom Sections: Core Functionality', () => {
     ];
 
     for (const itemTestInfo of vehicleItemTypesToTest) {
-      test(`item: ${itemTestInfo.name}`, async ({ page }) => {
+      sectionsTest(`item: ${itemTestInfo.name}`, async ({ page, data }) => {
         // arrange
         const item = await createItem(
           page,
@@ -287,7 +296,7 @@ async function verifyCoreCustomSectionFunctionality(
     item.name
   );
 
-  test
+  sectionsTest
     .expect(
       theItemUnderTestHasTheExpectedName,
       `item should have been successfully located in item tables`
@@ -303,7 +312,7 @@ async function verifyCoreCustomSectionFunctionality(
     }
   );
 
-  test
+  sectionsTest
     .expect(
       isInDefaultSection,
       `item should be in default section with key "${itemTestInfo.type}"`
@@ -323,7 +332,7 @@ async function verifyCoreCustomSectionFunctionality(
     }
   );
 
-  test
+  sectionsTest
     .expect(
       isInCustomSection,
       `item should be in custom section with key "${itemTestInfo.customSection}"`
@@ -353,7 +362,7 @@ async function verifyCustomActionSection(
     }
   );
 
-  test
+  sectionsTest
     .expect(
       isInCustomActionSection,
       `item should be in custom action section with key "${itemTestInfo.customActionSection}"`
@@ -381,7 +390,7 @@ async function applyCustomSectionsToItem(
 
   await $sectionInput.scrollIntoViewIfNeeded();
 
-  await test
+  await sectionsTest
     .expect($sectionInput, 'item custom section input must be available')
     .toBeVisible();
 
@@ -390,7 +399,7 @@ async function applyCustomSectionsToItem(
 
   await $actionSectionInput.scrollIntoViewIfNeeded();
 
-  await test
+  await sectionsTest
     .expect(
       $actionSectionInput,
       'item custom action section input must be available'
