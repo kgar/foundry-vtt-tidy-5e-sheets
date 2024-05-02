@@ -77,72 +77,76 @@ test.describe('section core functionality', () => {
     ];
 
     for (let itemToTest of itemsToTest) {
-      test(`item type ${itemToTest.itemCreationArgs.type} defaults to section key ${itemToTest.sectionKey}`, async ({
-        page,
-      }) => {
-        // arrange
-        const characterSheetHelper = new SheetHelper(
+      test.describe(`item: ${itemToTest.itemCreationArgs.name} | type ${itemToTest.itemCreationArgs.type}`, () => {
+        test(`item defaults to section key ${itemToTest.sectionKey}`, async ({
           page,
-          data.sectionTestCharacter
-        );
-
-        // act
-        const item = await characterSheetHelper.createEmbeddedItem(
-          page,
-          itemToTest.itemCreationArgs
-        );
-
-        // assert
-        await characterSheetHelper.tab(itemToTest.tabId);
-        expect(
-          await itemExistsInSection({
-            sheetHelper: characterSheetHelper,
-            itemRef: item,
+        }) => {
+          // arrange
+          const characterSheetHelper = new SheetHelper(
             page,
-            sectionKey: itemToTest.sectionKey,
-            tabId: itemToTest.tabId,
-          })
-        ).toBeTruthy();
-      });
+            data.sectionTestCharacter
+          );
 
-      test(`item type ${itemToTest.itemCreationArgs.type} can be put in a custom section`, async ({
-        page,
-      }) => {
-        // arrange
-        const customSectionKey = `Custom Section ${itemToTest.sectionKey}`;
-        const customSectionName = `Custom Section ${itemToTest.itemCreationArgs.name}`;
-        const characterSheetHelper = new SheetHelper(
-          page,
-          data.sectionTestCharacter
-        );
-        const item = await characterSheetHelper.createEmbeddedItem(page, {
-          ...itemToTest.itemCreationArgs,
-          name: customSectionName,
+          // act
+          const item = await characterSheetHelper.createEmbeddedItem(
+            page,
+            itemToTest.itemCreationArgs
+          );
+
+          // assert
+          await characterSheetHelper.tab(itemToTest.tabId);
+          expect(
+            await itemExistsInSection({
+              sheetHelper: characterSheetHelper,
+              itemRef: item,
+              page,
+              sectionKey: itemToTest.sectionKey,
+              tabId: itemToTest.tabId,
+            })
+          ).toBeTruthy();
         });
-        const itemSheetHelper = new SheetHelper(page, item);
 
-        // act
-        await itemSheetHelper.showSheet();
-        await itemSheetHelper.tab(CONSTANTS.TAB_ITEM_DESCRIPTION_ID);
-        const $sectionInput = itemSheetHelper.$sheet.locator(
-          `[data-tidy-field="${TidyFlags.section.prop}"]`
-        );
-        await $sectionInput.fill(customSectionKey);
-        await $sectionInput.press('Tab');
-
-        // assert
-        await characterSheetHelper.showSheet();
-        await characterSheetHelper.tab(itemToTest.tabId);
-        expect(
-          await itemExistsInSection({
-            sheetHelper: characterSheetHelper,
-            itemRef: item,
+        test(`Given custom section key ${itemToTest.sectionKey}, item is placed in custom section`, async ({
+          page,
+        }) => {
+          // arrange
+          const customSectionKey = `Custom Section ${itemToTest.sectionKey}`;
+          const customSectionName = `Custom Section ${itemToTest.itemCreationArgs.name}`;
+          const characterSheetHelper = new SheetHelper(
             page,
-            sectionKey: customSectionKey,
-            tabId: itemToTest.tabId,
-          })
-        ).toBeTruthy();
+            data.sectionTestCharacter
+          );
+          const item = await characterSheetHelper.createEmbeddedItem(page, {
+            ...itemToTest.itemCreationArgs,
+            name: customSectionName,
+          });
+          const itemSheetHelper = new SheetHelper(page, item);
+
+          // act
+          await itemSheetHelper.showSheet();
+          await itemSheetHelper.tab(CONSTANTS.TAB_ITEM_DESCRIPTION_ID);
+          const $sectionInput = itemSheetHelper.$sheet.locator(
+            `[data-tidy-field="${TidyFlags.section.prop}"]`
+          );
+          await $sectionInput.fill(customSectionKey);
+          await $sectionInput.press('Tab');
+
+          // assert
+          await characterSheetHelper.showSheet();
+          await characterSheetHelper.tab(itemToTest.tabId);
+          expect(
+            await itemExistsInSection({
+              sheetHelper: characterSheetHelper,
+              itemRef: item,
+              page,
+              sectionKey: customSectionKey,
+              tabId: itemToTest.tabId,
+            })
+          ).toBeTruthy();
+        });
       });
+
+      // TODO: Do the custom test for each relevant tab (not each relevant item), using localization keys for the section names; verify localizeable
     }
   });
 });
