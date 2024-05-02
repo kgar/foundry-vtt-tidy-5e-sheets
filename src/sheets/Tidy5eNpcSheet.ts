@@ -765,7 +765,7 @@ export class Tidy5eNpcSheet
   protected _prepareItems(context: NpcSheetContext) {
     // Categorize Items as Features and Spells
     const features: Record<string, NpcAbilitySection> = {
-      weapons: {
+      [CONSTANTS.NPC_ABILITY_SECTION_WEAPONS]: {
         label: game.i18n.localize('DND5E.AttackPl'),
         items: [],
         hasActions: true,
@@ -777,7 +777,7 @@ export class Tidy5eNpcSheet
         key: 'weapons',
         show: true,
       },
-      actions: {
+      [CONSTANTS.NPC_ABILITY_SECTION_ACTIONS]: {
         label: game.i18n.localize('DND5E.ActionPl'),
         items: [],
         hasActions: true,
@@ -789,7 +789,7 @@ export class Tidy5eNpcSheet
         key: 'actions',
         show: true,
       },
-      passive: {
+      [CONSTANTS.NPC_ABILITY_SECTION_PASSIVE]: {
         label: game.i18n.localize('DND5E.Features'),
         items: [],
         dataset: { type: CONSTANTS.ITEM_TYPE_FEAT },
@@ -797,7 +797,7 @@ export class Tidy5eNpcSheet
         key: 'passive',
         show: true,
       },
-      equipment: {
+      [CONSTANTS.NPC_ABILITY_SECTION_EQUIPMENT]: {
         label: game.i18n.localize('DND5E.Inventory'),
         items: [],
         dataset: { type: CONSTANTS.ITEM_TYPE_LOOT },
@@ -805,7 +805,7 @@ export class Tidy5eNpcSheet
         key: 'equipment',
         show: true,
       },
-      classes: {
+      [CONSTANTS.NPC_ABILITY_SECTION_CLASSES]: {
         label: `${CONFIG.Item.typeLabels.class}Pl`,
         items: [],
         dataset: { type: CONSTANTS.ITEM_TYPE_CLASS },

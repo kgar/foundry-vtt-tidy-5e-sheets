@@ -1,7 +1,7 @@
 import { CONSTANTS } from 'src/constants';
+import { TidyFlags } from 'src/foundry/TidyFlags';
 import type { Item5e } from 'src/types/item.types';
 import type { NpcAbilitySection } from 'src/types/types';
-import { TidyFlags } from 'src/api';
 
 export class NpcSheetSections {
   static get abilitiesItemTypes() {

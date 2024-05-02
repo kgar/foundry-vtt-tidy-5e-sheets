@@ -26,6 +26,14 @@ export class SheetHelper {
   }
 
   async tab(tabId: string) {
+    if (
+      await this.$sheet
+        .locator(`[data-tab-contents-for="${tabId}"]`)
+        .isVisible()
+    ) {
+      return;
+    }
+
     const $tab = this.$sheet.locator(`nav [data-tab-id="${tabId}"]`);
     await $tab.click();
   }
