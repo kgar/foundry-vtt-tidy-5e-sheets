@@ -6,7 +6,7 @@ import {
 
 export const sectionsTest = test.extend<object, { data: SectionsTestData }>({
   data: [
-    async (_, use) => {
+    async ({}, use) => {
       const data = sectionTestDataProvider.get();
       await use(data);
     },
