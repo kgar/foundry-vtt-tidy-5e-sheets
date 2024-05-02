@@ -3,21 +3,21 @@ import { TestDataProvider } from 'tests/TestDataProvider';
 import type { GamePage } from 'tests/poms/GamePage';
 import type { DocumentRef } from 'tests/tests.types';
 
-type SectionsRefs = {
+export type SectionsTestData = {
   sectionTestCharacter: DocumentRef;
   sectionTestNpc: DocumentRef;
   sectionTestVehicle: DocumentRef;
   sectionTestOwnedContainer: DocumentRef;
 };
 
-export const sectionTestDataProvider = new TestDataProvider<SectionsRefs>(
+export const sectionTestDataProvider = new TestDataProvider<SectionsTestData>(
   'SectionsTestData',
   initSectionsData
 );
 
 export async function initSectionsData(
   gamePage: GamePage
-): Promise<SectionsRefs> {
+): Promise<SectionsTestData> {
   const sectionTestCharacter = await gamePage.importStarterHero('Akra', {
     name: 'Sections Test Character',
     flags: {
