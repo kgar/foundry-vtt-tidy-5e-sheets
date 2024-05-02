@@ -94,16 +94,15 @@ test.describe('section core functionality', () => {
           );
 
           // assert
+          await characterSheetHelper.showSheet();
           await characterSheetHelper.tab(itemToTest.tabId);
-          expect(
-            await itemExistsInSection({
-              sheetHelper: characterSheetHelper,
-              itemRef: item,
-              page,
-              sectionKey: itemToTest.sectionKey,
-              tabId: itemToTest.tabId,
-            })
-          ).toBeTruthy();
+          await verifyItemExistsInSection({
+            sheetHelper: characterSheetHelper,
+            itemRef: item,
+            page,
+            sectionKey: itemToTest.sectionKey,
+            tabId: itemToTest.tabId,
+          });
         });
 
         test(`Given custom section key ${itemToTest.sectionKey}, item is placed in custom section`, async ({
@@ -134,15 +133,13 @@ test.describe('section core functionality', () => {
           // assert
           await characterSheetHelper.showSheet();
           await characterSheetHelper.tab(itemToTest.tabId);
-          expect(
-            await itemExistsInSection({
-              sheetHelper: characterSheetHelper,
-              itemRef: item,
-              page,
-              sectionKey: customSectionKey,
-              tabId: itemToTest.tabId,
-            })
-          ).toBeTruthy();
+          await verifyItemExistsInSection({
+            sheetHelper: characterSheetHelper,
+            itemRef: item,
+            page,
+            sectionKey: customSectionKey,
+            tabId: itemToTest.tabId,
+          });
         });
       });
 
@@ -151,7 +148,7 @@ test.describe('section core functionality', () => {
   });
 });
 
-async function itemExistsInSection(args: {
+async function verifyItemExistsInSection(args: {
   sheetHelper: SheetHelper;
   page: Page;
   tabId: string;
