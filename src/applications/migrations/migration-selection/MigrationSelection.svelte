@@ -55,7 +55,7 @@
   </div>
   <div role="presentation" class="scroll-container">
     <TidyTable
-      location="bulk-selection"
+      key="bulk-selection"
       toggleable={false}
       --grid-template-columns={gridTemplateColumns}
     >

@@ -45,10 +45,9 @@ export class SheetHelper {
   }
 
   async createEmbeddedItem(
-    page: Page,
     documentData: SheetHelperItemCreationArgs
   ): Promise<DocumentRef> {
-    return await page.evaluate(
+    return await this.page.evaluate(
       async ({
         documentData,
         parentUuid,

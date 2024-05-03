@@ -143,7 +143,7 @@
           class="container-contents-list-section"
           style="--grid-template-columns: {gridTemplateColumns};"
         >
-          <TidyTable location={section.label}>
+          <TidyTable key={section.key}>
             <svelte:fragment slot="header">
               <TidyTableHeaderRow>
                 <TidyTableHeaderCell primary={true}>

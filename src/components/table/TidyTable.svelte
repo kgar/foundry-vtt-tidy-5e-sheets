@@ -6,19 +6,22 @@
   import { getContext } from 'svelte';
   import type { MessageBus } from 'src/types/types';
 
-  export let location: string;
+  export let key: string;
   export let toggleable: boolean = true;
 
   const messageBus = getContext<MessageBus>('messageBus');
   const tabId = getContext<string | undefined>('tabId');
-  declareLocation('item-table', location);
+  declareLocation('item-table', key);
 
   const expandCollapseService = ExpandCollapseService.initService(toggleable);
 
   $: expandedState = expandCollapseService.state;
 
   $: {
-    if ($messageBus?.tabId === tabId && $messageBus?.message === CONSTANTS.MESSAGE_BUS_EXPAND_ALL) {
+    if (
+      $messageBus?.tabId === tabId &&
+      $messageBus?.message === CONSTANTS.MESSAGE_BUS_EXPAND_ALL
+    ) {
       expandCollapseService.set(true);
     }
     if (
@@ -33,6 +36,7 @@
 <section
   class="tidy-table"
   data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_TABLE}
+  data-tidy-section-key={key}
 >
   <!-- svelte-ignore a11y-no-static-element-interactions -->
   <!-- svelte-ignore a11y-click-events-have-key-events -->
