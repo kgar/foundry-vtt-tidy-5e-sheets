@@ -803,5 +803,6 @@
   "TIDY5E.UseDefaultDialog": {
     "title": "Confirm: Use Default",
     "text": "Are you sure you wish to use default?"
-  }
+  },
+  "TIDY5E.LocalizationTestKey": "Localization Test Key"
 }
