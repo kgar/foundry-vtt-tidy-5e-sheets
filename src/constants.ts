@@ -211,6 +211,9 @@ export const CONSTANTS = {
     /** A list-based tabular representation of items (e.g., equipment, loot, spells, etc.). */
     ITEM_TABLE: 'item-table',
 
+    /** The header row of an item table. */
+    ITEM_TABLE_HEADER_ROW: 'item-table-header-row',
+
     /** A row in an item table. */
     ITEM_TABLE_ROW: 'item-table-row',
 
