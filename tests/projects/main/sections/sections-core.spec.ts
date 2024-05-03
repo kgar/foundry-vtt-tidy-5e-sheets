@@ -1,23 +1,17 @@
 import { CONSTANTS } from 'src/constants';
 import { Inventory } from 'src/features/sections/Inventory';
 import { PageHelper } from 'tests/utils/PageHelper';
-import type { DocumentRef } from 'tests/tests.types';
-import {
-  SheetHelper,
-  type SheetHelperItemCreationArgs,
-} from 'tests/helpers/SheetHelper';
+import { SheetHelper } from 'tests/helpers/SheetHelper';
 import { TidyFlags } from 'src/foundry/TidyFlags';
-import { expect, type Page } from '@playwright/test';
+import { type Page } from '@playwright/test';
 import { NpcSheetSections } from 'src/features/sections/NpcSheetSections';
 import { sectionsTest } from './sections-test-fixture';
-import type { SectionsTestData } from './sections-test-data';
-
-type DefaultSectionTestParams = {
-  itemCreationArgs: SheetHelperItemCreationArgs;
-  tabId: string;
-  sectionKey: string;
-  sectionLabel?: string;
-};
+import type { DefaultSectionTestParams } from './sections.spec.types';
+import {
+  testDefaultSection,
+  testCustomSection,
+  verifyItemExistsInSection,
+} from './sections-shared';
 
 let page: Page;
 
@@ -83,7 +77,16 @@ sectionsTest.describe('sections core functionality', () => {
       sectionsTest.describe(
         `item: "${itemToTest.itemCreationArgs.name}" | type "${itemToTest.itemCreationArgs.type}"`,
         () => {
-          testDefaultSection(itemToTest, 'sectionTestCharacter');
+          sectionsTest(
+            `${itemToTest.itemCreationArgs.name} defaults to section key "${itemToTest.sectionKey}"`,
+            async ({ data }) => {
+              await testDefaultSection(
+                itemToTest,
+                new SheetHelper(page, data.sectionTestCharacter)
+              );
+            }
+          );
+
           const favoriteItemToTest = structuredClone(itemToTest);
           favoriteItemToTest.tabId = CONSTANTS.TAB_CHARACTER_ATTRIBUTES;
           favoriteItemToTest.itemCreationArgs = {
@@ -95,120 +98,68 @@ sectionsTest.describe('sections core functionality', () => {
               },
             },
           };
-          testDefaultSection(favoriteItemToTest, 'sectionTestCharacter');
+          sectionsTest(
+            `${favoriteItemToTest.itemCreationArgs.name} defaults to section key "${favoriteItemToTest.sectionKey}"`,
+            async ({ data }) => {
+              await testDefaultSection(
+                favoriteItemToTest,
+                new SheetHelper(page, data.sectionTestCharacter)
+              );
+            }
+          );
+
           const itemWithCustomSection = structuredClone(itemToTest);
           itemWithCustomSection.itemCreationArgs.name = `Custom Section ${itemToTest.itemCreationArgs.name}`;
           itemWithCustomSection.sectionKey = `Custom Section ${itemToTest.sectionKey}`;
-          testCustomSection(
-            itemWithCustomSection,
-            'sectionTestCharacter',
-            'section'
+          sectionsTest(
+            `${itemWithCustomSection.itemCreationArgs.name} can be assigned to custom section "${itemWithCustomSection.sectionKey}"`,
+            async ({ data }) => {
+              await testCustomSection(
+                itemWithCustomSection,
+                new SheetHelper(page, data.sectionTestCharacter),
+                'section'
+              );
+            }
           );
-          {
-            const favoriteWithCustomSection = structuredClone(itemToTest);
-            favoriteWithCustomSection.itemCreationArgs.name = `Favorite Custom Section ${itemToTest.itemCreationArgs.name}`;
-            favoriteWithCustomSection.sectionKey = `Custom Section ${itemToTest.sectionKey}`;
-            favoriteWithCustomSection.tabId =
-              CONSTANTS.TAB_CHARACTER_ATTRIBUTES;
-            favoriteWithCustomSection.itemCreationArgs = {
-              ...itemToTest.itemCreationArgs,
-              flags: {
-                ['tidy5e-sheet']: {
-                  [TidyFlags.favorite.key]: true,
-                },
+
+          const favoriteWithCustomSection = structuredClone(itemToTest);
+          favoriteWithCustomSection.itemCreationArgs.name = `Favorite Custom Section ${itemToTest.itemCreationArgs.name}`;
+          favoriteWithCustomSection.sectionKey = `Custom Section ${itemToTest.sectionKey}`;
+          favoriteWithCustomSection.tabId = CONSTANTS.TAB_CHARACTER_ATTRIBUTES;
+          favoriteWithCustomSection.itemCreationArgs = {
+            ...itemToTest.itemCreationArgs,
+            flags: {
+              ['tidy5e-sheet']: {
+                [TidyFlags.favorite.key]: true,
               },
-            };
-            testCustomSection(
-              favoriteWithCustomSection,
-              'sectionTestCharacter',
-              'section'
-            );
-          }
+            },
+          };
+          sectionsTest(
+            `${favoriteWithCustomSection.itemCreationArgs.name} can be assigned to custom section "${favoriteWithCustomSection.sectionKey}"`,
+            async ({ data }) => {
+              await testCustomSection(
+                favoriteWithCustomSection,
+                new SheetHelper(page, data.sectionTestCharacter),
+                'section'
+              );
+            }
+          );
+
           const itemWithCustomActionSection = structuredClone(itemToTest);
           itemWithCustomActionSection.itemCreationArgs.name = `Custom Action Section ${itemToTest.itemCreationArgs.name}`;
           itemWithCustomActionSection.sectionKey = `Custom Action Section ${itemToTest.sectionKey}`;
           itemWithCustomActionSection.tabId = CONSTANTS.TAB_ACTOR_ACTIONS;
-          testCustomSection(
-            itemWithCustomActionSection,
-            'sectionTestCharacter',
-            'actionSection'
+          sectionsTest(
+            `${itemWithCustomActionSection.itemCreationArgs.name} can be assigned to custom section "${itemWithCustomActionSection.sectionKey}"`,
+            async ({ data }) => {
+              await testCustomSection(
+                itemWithCustomActionSection,
+                new SheetHelper(page, data.sectionTestCharacter),
+                'actionSection'
+              );
+            }
           );
         }
-      );
-    }
-
-    // TODO: the localization aspect should be happening in getData() prep, because label and key are separate from each other, so label can be localized ahead of time
-    const localizableItemsToTest: DefaultSectionTestParams[] = [
-      {
-        itemCreationArgs: {
-          name: `Localization weapon test`,
-          type: CONSTANTS.ITEM_TYPE_WEAPON,
-          flags: {
-            ['tidy5e-sheet']: {
-              [TidyFlags.section.key]: 'TIDY5E.LocalizationTestKey',
-              [TidyFlags.favorite.key]: true,
-            },
-          },
-        },
-        sectionKey: 'TIDY5E.LocalizationTestKey',
-        sectionLabel: 'Localization Test Key',
-        tabId: CONSTANTS.TAB_CHARACTER_INVENTORY,
-      },
-      {
-        itemCreationArgs: {
-          name: `Localization spell test`,
-          type: CONSTANTS.ITEM_TYPE_SPELL,
-          flags: {
-            ['tidy5e-sheet']: {
-              [TidyFlags.section.key]: 'TIDY5E.LocalizationTestKey',
-              [TidyFlags.favorite.key]: true,
-            },
-          },
-        },
-        sectionKey: 'TIDY5E.LocalizationTestKey',
-        sectionLabel: 'Localization Test Key',
-        tabId: CONSTANTS.TAB_CHARACTER_SPELLBOOK,
-      },
-      {
-        itemCreationArgs: {
-          name: `Localization feature test`,
-          type: CONSTANTS.ITEM_TYPE_FEAT,
-          flags: {
-            ['tidy5e-sheet']: {
-              [TidyFlags.section.key]: 'TIDY5E.LocalizationTestKey',
-              [TidyFlags.favorite.key]: true,
-            },
-          },
-        },
-        sectionKey: 'TIDY5E.LocalizationTestKey',
-        sectionLabel: 'Localization Test Key',
-        tabId: CONSTANTS.TAB_CHARACTER_FEATURES,
-      },
-    ];
-
-    for (const itemToTest of localizableItemsToTest) {
-      const itemWithCustomSection = structuredClone(itemToTest);
-      testCustomSection(
-        itemWithCustomSection,
-        'sectionTestCharacter',
-        'section'
-      );
-
-      const favoriteWithCustomSection = structuredClone(itemToTest);
-      favoriteWithCustomSection.itemCreationArgs.name = `Favorite ${itemToTest.itemCreationArgs.name}`;
-      favoriteWithCustomSection.tabId = CONSTANTS.TAB_CHARACTER_ATTRIBUTES;
-      testCustomSection(
-        favoriteWithCustomSection,
-        'sectionTestCharacter',
-        'section'
-      );
-
-      const itemWithCustomActionSection = structuredClone(itemToTest);
-      itemWithCustomActionSection.tabId = CONSTANTS.TAB_ACTOR_ACTIONS;
-      testCustomSection(
-        itemWithCustomActionSection,
-        'sectionTestCharacter',
-        'actionSection'
       );
     }
   });
@@ -268,7 +219,7 @@ sectionsTest.describe('sections core functionality', () => {
           itemWithCustomSection.itemCreationArgs.name = `Custom Section ${itemToTest.itemCreationArgs.name}`;
           itemWithCustomSection.sectionKey = `Custom Section ${itemToTest.sectionKey}`;
           sectionsTest(
-            `can be assigned custom section "${itemWithCustomSection.sectionKey}"`,
+            `can be assigned custom section section "${itemWithCustomSection.sectionKey}"`,
             async ({ data }) => {
               // arrange
               const characterSheetHelper = new SheetHelper(
@@ -309,56 +260,6 @@ sectionsTest.describe('sections core functionality', () => {
         }
       );
     }
-
-    const containerItemLocalizationTest: DefaultSectionTestParams = {
-      itemCreationArgs: {
-        name: 'Container Localization Test',
-        type: CONSTANTS.ITEM_TYPE_WEAPON,
-      },
-      sectionKey: 'TIDY5E.LocalizationTestKey',
-      sectionLabel: 'Localization Test Key',
-      tabId: CONSTANTS.TAB_CONTAINER_CONTENTS,
-    };
-
-    sectionsTest(
-      `can be assigned custom section "${containerItemLocalizationTest.sectionKey}"`,
-      async ({ data }) => {
-        // arrange
-        const characterSheetHelper = new SheetHelper(
-          page,
-          data.sectionTestCharacter
-        );
-        const containerSheetHelper = new SheetHelper(
-          page,
-          data.sectionTestOwnedContainer
-        );
-        const item = await characterSheetHelper.createEmbeddedItem({
-          ...containerItemLocalizationTest.itemCreationArgs,
-          system: { container: data.sectionTestOwnedContainer.id },
-        });
-        const itemSheetHelper = new SheetHelper(page, item);
-
-        // act
-        await itemSheetHelper.showSheet();
-        await itemSheetHelper.tab(CONSTANTS.TAB_ITEM_DESCRIPTION_ID);
-        const $sectionInput = itemSheetHelper.$sheet.locator(
-          `[data-tidy-field="${TidyFlags.section.prop}"]`
-        );
-        await $sectionInput.fill(containerItemLocalizationTest.sectionKey);
-        await $sectionInput.press('Tab');
-
-        // assert
-        await containerSheetHelper.showSheet();
-        await containerSheetHelper.tab(containerItemLocalizationTest.tabId);
-        await verifyItemExistsInSection({
-          sheetHelper: containerSheetHelper,
-          itemRef: item,
-          tabId: containerItemLocalizationTest.tabId,
-          sectionKey: containerItemLocalizationTest.sectionKey,
-          sectionLabel: containerItemLocalizationTest.sectionLabel,
-        });
-      }
-    );
   });
 
   sectionsTest.describe('NPC', () => {
@@ -414,30 +315,47 @@ sectionsTest.describe('sections core functionality', () => {
       sectionsTest.describe(
         `item: "${itemToTest.itemCreationArgs.name}" | type "${itemToTest.itemCreationArgs.type}"`,
         () => {
-          testDefaultSection(itemToTest, 'sectionTestNpc');
+          sectionsTest(
+            `${itemToTest.itemCreationArgs.name} defaults to section key "${itemToTest.sectionKey}"`,
+            async ({ data }) => {
+              await testDefaultSection(
+                itemToTest,
+                new SheetHelper(page, data.sectionTestNpc)
+              );
+            }
+          );
 
           const itemWithCustomSection = structuredClone(itemToTest);
           itemWithCustomSection.itemCreationArgs.name = `Custom Section ${itemToTest.itemCreationArgs.name}`;
           itemWithCustomSection.sectionKey = `Custom Section ${itemToTest.sectionKey}`;
-          testCustomSection(itemWithCustomSection, 'sectionTestNpc', 'section');
+          sectionsTest(
+            `${itemWithCustomSection.itemCreationArgs.name} can be assigned custom section "${itemWithCustomSection.sectionKey}"`,
+            async ({ data }) => {
+              await testCustomSection(
+                itemWithCustomSection,
+                new SheetHelper(page, data.sectionTestNpc),
+                'section'
+              );
+            }
+          );
 
           const itemWithCustomActionSection = structuredClone(itemToTest);
           itemWithCustomActionSection.itemCreationArgs.name = `Custom Action Section ${itemToTest.itemCreationArgs.name}`;
           itemWithCustomActionSection.sectionKey = `Custom Action Section ${itemToTest.sectionKey}`;
           itemWithCustomActionSection.tabId = CONSTANTS.TAB_ACTOR_ACTIONS;
-          testCustomSection(
-            itemWithCustomActionSection,
-            'sectionTestNpc',
-            'actionSection'
+          sectionsTest(
+            `${itemWithCustomActionSection.itemCreationArgs.name} can be assigned custom section "${itemWithCustomActionSection.sectionKey}"`,
+            async ({ data }) => {
+              await testCustomSection(
+                itemWithCustomActionSection,
+                new SheetHelper(page, data.sectionTestNpc),
+                'actionSection'
+              );
+            }
           );
         }
       );
     }
-
-    // TODO: test localization key section for
-    // - Abilities
-    // - Spellbook
-    // - Actions
   });
 
   sectionsTest.describe('vehicle', () => {
@@ -469,128 +387,16 @@ sectionsTest.describe('sections core functionality', () => {
     ];
 
     for (let itemToTest of itemsToTest) {
-      testCustomSection(itemToTest, 'sectionTestVehicle', 'actionSection');
+      sectionsTest(
+        `${itemToTest.itemCreationArgs.name} can be assigned custom section "${itemToTest.sectionKey}"`,
+        async ({ data }) => {
+          await testCustomSection(
+            itemToTest,
+            new SheetHelper(page, data.sectionTestVehicle),
+            'actionSection'
+          );
+        }
+      );
     }
-
-    // TODO: test localization key section for
-    // - Actions
   });
 });
-
-function testDefaultSection(
-  itemToTest: DefaultSectionTestParams,
-  testDataKey: keyof SectionsTestData
-) {
-  sectionsTest(
-    `${itemToTest.itemCreationArgs.name} defaults to section key "${itemToTest.sectionKey}"`,
-    async ({ data }) => {
-      // arrange
-      const sheetHelper = new SheetHelper(page, data[testDataKey]);
-
-      // act
-      const item = await sheetHelper.createEmbeddedItem(
-        itemToTest.itemCreationArgs
-      );
-
-      // assert
-      await sheetHelper.showSheet();
-      await sheetHelper.tab(itemToTest.tabId);
-      await verifyItemExistsInSection({
-        sheetHelper: sheetHelper,
-        itemRef: item,
-        tabId: itemToTest.tabId,
-        sectionKey: itemToTest.sectionKey,
-        sectionLabel: itemToTest.sectionLabel,
-      });
-    }
-  );
-}
-
-function testCustomSection(
-  itemToTest: DefaultSectionTestParams,
-  testDataKey: keyof SectionsTestData,
-  sectionType: 'section' | 'actionSection'
-) {
-  sectionsTest(
-    `${itemToTest.itemCreationArgs.name} can be assigned custom ${sectionType} "${itemToTest.sectionKey}"`,
-    async ({ data }) => {
-      if (
-        itemToTest.itemCreationArgs.type === 'spell' &&
-        itemToTest.itemCreationArgs.name.toLocaleLowerCase().includes('localiz')
-      ) {
-        debugger;
-      }
-
-      // arrange
-      const sheetHelper = new SheetHelper(page, data[testDataKey]);
-      const item = await sheetHelper.createEmbeddedItem(
-        itemToTest.itemCreationArgs
-      );
-      const itemSheetHelper = new SheetHelper(page, item);
-
-      // act
-      await itemSheetHelper.showSheet();
-      await itemSheetHelper.tab(CONSTANTS.TAB_ITEM_DESCRIPTION_ID);
-      const $sectionInput = itemSheetHelper.$sheet.locator(
-        `[data-tidy-field="${TidyFlags[sectionType].prop}"]`
-      );
-      await $sectionInput.fill(itemToTest.sectionKey);
-      await $sectionInput.press('Tab');
-
-      // assert
-      await sheetHelper.showSheet();
-      await sheetHelper.tab(itemToTest.tabId);
-      await verifyItemExistsInSection({
-        sheetHelper: sheetHelper,
-        itemRef: item,
-        tabId: itemToTest.tabId,
-        sectionKey: itemToTest.sectionKey,
-        sectionLabel: itemToTest.sectionLabel,
-      });
-    }
-  );
-}
-
-async function verifyItemExistsInSection(args: {
-  sheetHelper: SheetHelper;
-  tabId: string;
-  itemRef: DocumentRef;
-  sectionKey: string;
-  sectionLabel: string | undefined;
-}) {
-  const { sheetHelper, tabId, itemRef, sectionKey, sectionLabel } = args;
-
-  await sheetHelper.showSheet();
-  await sheetHelper.tab(args.tabId);
-
-  const $tab = sheetHelper.$sheet.locator(`[data-tab-contents-for="${tabId}"]`);
-  const $row = $tab.locator(
-    `[data-item-id="${itemRef.id}"][data-tidy-table-row]`
-  );
-  const rowText = await $row.textContent();
-  const actualSectionKey = await $row.evaluate((row) =>
-    row
-      .closest('[data-tidy-section-key]')
-      ?.getAttribute('data-tidy-section-key')
-  );
-
-  if (sectionLabel) {
-    const sectionHeaderRowText =
-      (await $row.evaluate(
-        (row, { actualSectionKey, constants }) =>
-          row
-            .closest(`[data-tidy-section-key="${actualSectionKey}"]`)
-            ?.querySelector(
-              `[data-tidy-sheet-part="${constants.SHEET_PARTS.ITEM_TABLE_HEADER_ROW}"], [data-tidy-sheet-part="${constants.SHEET_PARTS.TABLE_HEADER_ROW}"]`
-            )?.textContent,
-        { actualSectionKey, constants: CONSTANTS }
-      )) ?? '🚫';
-    expect(sectionHeaderRowText?.toLowerCase()).toContain(
-      sectionLabel.toLowerCase()
-    );
-  }
-
-  expect(rowText).toContain(itemRef.name);
-
-  expect(actualSectionKey).toEqual(sectionKey);
-}
