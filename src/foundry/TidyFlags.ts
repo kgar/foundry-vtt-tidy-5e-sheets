@@ -81,6 +81,19 @@ export class TidyFlags {
     },
   };
 
+  static favorite = {
+    key: 'favorite' as const,
+    prop: TidyFlags.getFlagPropertyPath('favorite'),
+    get(item: Item5e): boolean | undefined {
+      return (
+        TidyFlags.tryGetFlag<boolean>(item, TidyFlags.favorite.key) ?? undefined
+      );
+    },
+    unset(item: Item5e) {
+      return TidyFlags.unsetFlag(item, TidyFlags.favorite.key);
+    },
+  };
+
   static section = {
     key: 'section' as const,
     prop: TidyFlags.getFlagPropertyPath('section'),
