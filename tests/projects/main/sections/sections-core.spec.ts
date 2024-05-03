@@ -10,6 +10,7 @@ import { TidyFlags } from 'src/foundry/TidyFlags';
 import { expect, type Page } from '@playwright/test';
 import { NpcSheetSections } from 'src/features/sections/NpcSheetSections';
 import { sectionsTest } from './sections-test-fixture';
+import type { SectionsTestData } from './sections-test-data';
 
 type CustomSectionItemParameters = {
   type: string;
@@ -78,70 +79,25 @@ sectionsTest.describe('sections core functionality', () => {
       sectionsTest.describe(
         `item: "${itemToTest.itemCreationArgs.name}" | type "${itemToTest.itemCreationArgs.type}"`,
         () => {
-          sectionsTest(
-            `defaults to section key "${itemToTest.sectionKey}"`,
-            async ({ page, data }) => {
-              // arrange
-              const characterSheetHelper = new SheetHelper(
-                page,
-                data.sectionTestCharacter
-              );
+          testSection(itemToTest, 'sectionTestCharacter');
 
-              // act
-              const item = await characterSheetHelper.createEmbeddedItem(
-                page,
-                itemToTest.itemCreationArgs
-              );
-
-              // assert
-              await characterSheetHelper.showSheet();
-              await characterSheetHelper.tab(itemToTest.tabId);
-              await verifyItemExistsInSection({
-                sheetHelper: characterSheetHelper,
-                itemRef: item,
-                page,
-                sectionKey: itemToTest.sectionKey,
-                tabId: itemToTest.tabId,
-              });
-            }
+          const itemWithCustomSection = structuredClone(itemToTest);
+          itemWithCustomSection.itemCreationArgs.name = `Custom Section ${itemToTest.itemCreationArgs.name}`;
+          itemWithCustomSection.sectionKey = `Custom Section ${itemToTest.sectionKey}`;
+          testCustomSection(
+            itemWithCustomSection,
+            'sectionTestCharacter',
+            'section'
           );
 
-          sectionsTest(
-            `can be placed in custom section`,
-            async ({ page, data }) => {
-              // arrange
-              const customSectionKey = `Custom Section ${itemToTest.sectionKey}`;
-              const customSectionName = `Custom Section ${itemToTest.itemCreationArgs.name}`;
-              const characterSheetHelper = new SheetHelper(
-                page,
-                data.sectionTestCharacter
-              );
-              const item = await characterSheetHelper.createEmbeddedItem(page, {
-                ...itemToTest.itemCreationArgs,
-                name: customSectionName,
-              });
-              const itemSheetHelper = new SheetHelper(page, item);
-
-              // act
-              await itemSheetHelper.showSheet();
-              await itemSheetHelper.tab(CONSTANTS.TAB_ITEM_DESCRIPTION_ID);
-              const $sectionInput = itemSheetHelper.$sheet.locator(
-                `[data-tidy-field="${TidyFlags.section.prop}"]`
-              );
-              await $sectionInput.fill(customSectionKey);
-              await $sectionInput.press('Tab');
-
-              // assert
-              await characterSheetHelper.showSheet();
-              await characterSheetHelper.tab(itemToTest.tabId);
-              await verifyItemExistsInSection({
-                sheetHelper: characterSheetHelper,
-                itemRef: item,
-                page,
-                sectionKey: customSectionKey,
-                tabId: itemToTest.tabId,
-              });
-            }
+          const itemWithCustomActionSection = structuredClone(itemToTest);
+          itemWithCustomActionSection.itemCreationArgs.name = `Custom Action Section ${itemToTest.itemCreationArgs.name}`;
+          itemWithCustomActionSection.sectionKey = `Custom Action Section ${itemToTest.sectionKey}`;
+          itemWithCustomActionSection.tabId = CONSTANTS.TAB_ACTOR_ACTIONS;
+          testCustomSection(
+            itemWithCustomActionSection,
+            'sectionTestCharacter',
+            'actionSection'
           );
         }
       );
@@ -151,13 +107,150 @@ sectionsTest.describe('sections core functionality', () => {
   });
 
   sectionsTest.describe('NPC', () => {
+    const itemsToTest: DefaultSectionTestParams[] = [
+      ...NpcSheetSections.abilitiesItemTypes.map((itemType) => ({
+        itemCreationArgs: {
+          name: `Test ${itemType}`,
+          type: itemType,
+        },
+        tabId: CONSTANTS.TAB_NPC_ABILITIES,
+        sectionKey:
+          itemType === CONSTANTS.ITEM_TYPE_WEAPON
+            ? CONSTANTS.NPC_ABILITY_SECTION_WEAPONS
+            : itemType === CONSTANTS.ITEM_TYPE_FEAT
+            ? CONSTANTS.NPC_ABILITY_SECTION_PASSIVE
+            : CONSTANTS.NPC_ABILITY_SECTION_EQUIPMENT,
+      })),
+      {
+        itemCreationArgs: {
+          name: 'Test lvl 1 spell',
+          type: CONSTANTS.ITEM_TYPE_SPELL,
+          system: {
+            level: 1,
+          },
+        },
+        sectionKey: 'spell1',
+        tabId: CONSTANTS.TAB_NPC_SPELLBOOK,
+      },
+      {
+        itemCreationArgs: {
+          name: 'Test action',
+          type: CONSTANTS.ITEM_TYPE_FEAT,
+          system: {
+            activation: {
+              type: CONSTANTS.ACTIVATION_COST_ACTION,
+            },
+          },
+        },
+        sectionKey: CONSTANTS.NPC_ABILITY_SECTION_ACTIONS,
+        tabId: CONSTANTS.TAB_NPC_ABILITIES,
+      },
+      {
+        itemCreationArgs: {
+          name: 'Test passive feature',
+          type: CONSTANTS.ITEM_TYPE_FEAT,
+        },
+        sectionKey: 'passive',
+        tabId: CONSTANTS.TAB_NPC_ABILITIES,
+      },
+    ];
 
-  });
-  
-  sectionsTest.describe('vehicle', () => {
+    for (const itemToTest of itemsToTest) {
+      sectionsTest.describe(
+        `item: "${itemToTest.itemCreationArgs.name}" | type "${itemToTest.itemCreationArgs.type}"`,
+        () => {
+          testSection(itemToTest, 'sectionTestNpc');
 
+          const itemWithCustomSection = structuredClone(itemToTest);
+          itemWithCustomSection.itemCreationArgs.name = `Custom Section ${itemToTest.itemCreationArgs.name}`;
+          itemWithCustomSection.sectionKey = `Custom Section ${itemToTest.sectionKey}`;
+          testCustomSection(itemWithCustomSection, 'sectionTestNpc', 'section');
+
+          const itemWithCustomActionSection = structuredClone(itemToTest);
+          itemWithCustomActionSection.itemCreationArgs.name = `Custom Action Section ${itemToTest.itemCreationArgs.name}`;
+          itemWithCustomActionSection.sectionKey = `Custom Action Section ${itemToTest.sectionKey}`;
+          itemWithCustomActionSection.tabId = CONSTANTS.TAB_ACTOR_ACTIONS;
+          testCustomSection(
+            itemWithCustomActionSection,
+            'sectionTestNpc',
+            'actionSection'
+          );
+        }
+      );
+    }
   });
+
+  sectionsTest.describe('vehicle', () => {});
 });
+
+async function testSection(
+  itemToTest: DefaultSectionTestParams,
+  testDataKey: keyof SectionsTestData
+) {
+  sectionsTest(
+    `defaults to section key "${itemToTest.sectionKey}"`,
+    async ({ page, data }) => {
+      // arrange
+      const characterSheetHelper = new SheetHelper(page, data[testDataKey]);
+
+      // act
+      const item = await characterSheetHelper.createEmbeddedItem(
+        page,
+        itemToTest.itemCreationArgs
+      );
+
+      // assert
+      await characterSheetHelper.showSheet();
+      await characterSheetHelper.tab(itemToTest.tabId);
+      await verifyItemExistsInSection({
+        sheetHelper: characterSheetHelper,
+        itemRef: item,
+        page,
+        sectionKey: itemToTest.sectionKey,
+        tabId: itemToTest.tabId,
+      });
+    }
+  );
+}
+
+async function testCustomSection(
+  itemToTest: DefaultSectionTestParams,
+  testDataKey: keyof SectionsTestData,
+  sectionType: 'section' | 'actionSection'
+) {
+  sectionsTest(
+    `defaults to section key "${itemToTest.sectionKey}"`,
+    async ({ page, data }) => {
+      // arrange
+      const sheetHelper = new SheetHelper(page, data[testDataKey]);
+      const item = await sheetHelper.createEmbeddedItem(
+        page,
+        itemToTest.itemCreationArgs
+      );
+      const itemSheetHelper = new SheetHelper(page, item);
+
+      // act
+      await itemSheetHelper.showSheet();
+      await itemSheetHelper.tab(CONSTANTS.TAB_ITEM_DESCRIPTION_ID);
+      const $sectionInput = itemSheetHelper.$sheet.locator(
+        `[data-tidy-field="${TidyFlags[sectionType].prop}"]`
+      );
+      await $sectionInput.fill(itemToTest.sectionKey);
+      await $sectionInput.press('Tab');
+
+      // assert
+      await sheetHelper.showSheet();
+      await sheetHelper.tab(itemToTest.tabId);
+      await verifyItemExistsInSection({
+        sheetHelper: sheetHelper,
+        itemRef: item,
+        page,
+        sectionKey: itemToTest.sectionKey,
+        tabId: itemToTest.tabId,
+      });
+    }
+  );
+}
 
 async function verifyItemExistsInSection(args: {
   sheetHelper: SheetHelper;
@@ -186,41 +279,6 @@ async function verifyItemExistsInSection(args: {
 }
 
 sectionsTest.describe('Tidy Custom Sections: Core Functionality', () => {
-  sectionsTest.describe('NPCs', () => {
-    const npcItemTypesToTest: CustomSectionItemParameters[] = [
-      ...NpcSheetSections.abilitiesItemTypes.map((t) => ({
-        type: t,
-        name: `Custom Section Test ${t}`,
-        tabId: CONSTANTS.TAB_NPC_ABILITIES,
-        customSection: `Custom ${t}`,
-        customActionSection: `Custom Action ${t}`,
-        defaultSection:
-          t === CONSTANTS.ITEM_TYPE_WEAPON
-            ? CONSTANTS.NPC_ABILITY_SECTION_WEAPONS
-            : t === CONSTANTS.ITEM_TYPE_FEAT
-            ? CONSTANTS.NPC_ABILITY_SECTION_PASSIVE
-            : CONSTANTS.NPC_ABILITY_SECTION_EQUIPMENT,
-      })),
-      {
-        type: CONSTANTS.ITEM_TYPE_SPELL,
-        name: `Custom Section Test ${CONSTANTS.ITEM_TYPE_SPELL}`,
-        tabId: CONSTANTS.TAB_NPC_SPELLBOOK,
-        customSection: `Custom ${CONSTANTS.ITEM_TYPE_SPELL}`,
-        customActionSection: `Custom Action ${CONSTANTS.ITEM_TYPE_SPELL}`,
-        defaultSection: 'spell1',
-      },
-    ];
-
-    for (const itemTestInfo of npcItemTypesToTest) {
-      sectionsTest(`item: ${itemTestInfo.name}`, async ({ page, data }) => {
-        await verifyCoreCustomSectionFunctionality(
-          page,
-          data.sectionTestNpc,
-          itemTestInfo
-        );
-      });
-    }
-  });
 
   sectionsTest.describe('vehicles', () => {
     // Vehicles are a special case, in that the action tab is the only custom section content they support at present
