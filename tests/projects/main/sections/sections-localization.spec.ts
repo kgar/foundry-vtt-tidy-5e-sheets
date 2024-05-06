@@ -10,6 +10,7 @@ import {
   verifyItemExistsInSection,
 } from './sections-shared';
 import { NpcSheetSections } from 'src/features/sections/NpcSheetSections';
+import { Inventory } from 'src/features/sections/Inventory';
 
 let page: Page;
 
@@ -183,8 +184,39 @@ sectionsTest.describe('NPC', () => {
 });
 
 sectionsTest.describe('vehicle', () => {
-  // TODO: test localization key section for
-  // - Actions
+  const itemsToTest: DefaultSectionTestParams[] = [
+    ...Inventory.inventoryItemTypes.map((t) => ({
+      itemCreationArgs: {
+        name: `Custom Action Section Test ${t}`,
+        type: t,
+      },
+      tabId: CONSTANTS.TAB_ACTOR_ACTIONS,
+      sectionKey: 'TIDY5E.LocalizationTestKey',
+      sectionLabel: 'Localization Test Key',
+    })),
+    {
+      itemCreationArgs: {
+        name: `Custom Action Section Test ${CONSTANTS.ITEM_TYPE_SPELL}`,
+        type: CONSTANTS.ITEM_TYPE_SPELL,
+      },
+      tabId: CONSTANTS.TAB_ACTOR_ACTIONS,
+      sectionKey: 'TIDY5E.LocalizationTestKey',
+      sectionLabel: 'Localization Test Key',
+    },
+    {
+      itemCreationArgs: {
+        name: `Custom Section Test ${CONSTANTS.ITEM_TYPE_FEAT}`,
+        type: CONSTANTS.ITEM_TYPE_FEAT,
+      },
+      tabId: CONSTANTS.TAB_ACTOR_ACTIONS,
+      sectionKey: 'TIDY5E.LocalizationTestKey',
+      sectionLabel: 'Localization Test Key',
+    },
+  ];
+
+  for (let itemToTest of itemsToTest) {
+    runAllVehicleTests(itemToTest);
+  }
 });
 
 sectionsTest.describe('container', () => {
@@ -293,6 +325,22 @@ function runAllNpcTests(itemToTest: DefaultSectionTestParams) {
     }
   );
 
+  const itemWithCustomActionSection = structuredClone(itemToTest);
+  itemWithCustomActionSection.tabId = CONSTANTS.TAB_ACTOR_ACTIONS;
+
+  sectionsTest(
+    `${itemWithCustomActionSection.itemCreationArgs.name} can be localized on action list`,
+    async ({ data }) => {
+      await testCustomSection(
+        itemWithCustomActionSection,
+        new SheetHelper(page, data.sectionTestNpc),
+        'actionSection'
+      );
+    }
+  );
+}
+
+function runAllVehicleTests(itemToTest: DefaultSectionTestParams) {
   const itemWithCustomActionSection = structuredClone(itemToTest);
   itemWithCustomActionSection.tabId = CONSTANTS.TAB_ACTOR_ACTIONS;
 
