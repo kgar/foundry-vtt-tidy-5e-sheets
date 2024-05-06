@@ -1,7 +1,4 @@
-import {
-  SheetHelper,
-  type SheetHelperItemCreationArgs,
-} from 'tests/helpers/SheetHelper';
+import { SheetHelper } from 'tests/helpers/SheetHelper';
 import { sectionsTest } from './sections-test-fixture';
 import type { Page } from '@playwright/test';
 import { PageHelper } from 'tests/utils/PageHelper';
@@ -163,19 +160,66 @@ async function runDragDropOrderTest({
 }
 
 type RunSidebarDropToSheetTestParams = {
-  item: SheetHelperItemCreationArgs;
+  itemRef: DocumentRef;
   sheetHelper: SheetHelper;
   tabId: string;
+  sectionKey: string;
 };
 
 async function runSidebarDropToSheetTest({
-  item,
+  itemRef,
   sheetHelper,
   tabId,
+  sectionKey,
 }: RunSidebarDropToSheetTestParams) {
-  // Create sidebar item
-  // Open Items sidebar tab and search for target item
-  // Open sheet to target tab
-  // Drag item onto sheet by sudebar item ID
+  // Prepare sidebar for drag and drop
+  const $sidebarNavActorsOption = page.locator(
+    `#sidebar nav [data-tab="actors"]`
+  );
+  const $sidebarActorsSection = page.locator(
+    `#sidebar section [data-tab="actors"]`
+  );
+  const $sidebarSearch = $sidebarActorsSection.locator(`input[name="search"]`);
+  await $sidebarNavActorsOption.click();
+  await $sidebarSearch.fill(itemRef.name);
+  await $sidebarSearch.press('Tab');
+  const $sidebarItem = $sidebarActorsSection.locator(
+    `[data-document-id="${itemRef.id}"]`
+  );
+
+  // Prepare sheet for drag and drop
+  await sheetHelper.showSheet();
+  await sheetHelper.tab(tabId);
+  const $tabContents = sheetHelper.$sheet.locator(
+    `[data-tab-contents-for="${tabId}"]`
+  );
+
+  // Drag item onto sheet
+  await $sidebarItem.dragTo($tabContents);
+
   // Verify the sheet now has the item with the custom section
+  const newItem = await sheetHelper.$sheet.evaluate(
+    async (sheet, { itemName, itemOwnerUuid }) => {
+      const item = (await fromUuid(itemOwnerUuid))?.items.find(
+        (i: any) => i.name === itemName
+      );
+
+      const tableEntry = sheet.querySelector(
+        `[data-item-id="${item.id}"]:is([data-tidy-table-row], [data-tidy-grid-item])`
+      );
+
+      const sectionName = tableEntry
+        ?.closest('[data-tidy-section-key]')
+        ?.getAttribute('data-tidy-section-key');
+
+      return {
+        itemExists: !!item,
+        itemSection: sectionName,
+      };
+    },
+    { itemName: itemRef.name, itemOwnerUuid: sheetHelper.ref.uuid }
+  );
+
+  sectionsTest.expect(newItem.itemExists).toBeTruthy();
+  sectionsTest.expect(newItem.itemSection).toEqual(sectionKey);
 }

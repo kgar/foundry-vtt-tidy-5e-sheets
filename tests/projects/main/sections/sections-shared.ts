@@ -78,8 +78,8 @@ export async function verifyItemExistsInSection(args: {
     `[data-item-id="${itemRef.id}"]:is([data-tidy-table-row], [data-tidy-grid-item])`
   );
 
-  const actualSectionKey = await $tableEntry.evaluate((row) =>
-    row
+  const actualSectionKey = await $tableEntry.evaluate((entry) =>
+    entry
       .closest('[data-tidy-section-key]')
       ?.getAttribute('data-tidy-section-key')
   );
