@@ -386,7 +386,7 @@ sectionsTest.describe('sections core functionality', () => {
       },
     ];
 
-    for (let itemToTest of itemsToTest) {
+    for (const itemToTest of itemsToTest) {
       sectionsTest(
         `${itemToTest.itemCreationArgs.name} can be assigned custom section "${itemToTest.sectionKey}"`,
         async ({ data }) => {

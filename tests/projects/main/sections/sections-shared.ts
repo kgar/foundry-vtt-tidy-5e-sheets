@@ -33,13 +33,6 @@ export async function testCustomSection(
   sheetHelper: SheetHelper,
   sectionType: 'section' | 'actionSection'
 ) {
-  if (
-    itemToTest.itemCreationArgs.type === 'spell' &&
-    itemToTest.itemCreationArgs.name.toLocaleLowerCase().includes('localiz')
-  ) {
-    debugger;
-  }
-
   // arrange
   const item = await sheetHelper.createEmbeddedItem(
     itemToTest.itemCreationArgs

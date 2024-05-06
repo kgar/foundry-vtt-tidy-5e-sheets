@@ -214,7 +214,7 @@ sectionsTest.describe('vehicle', () => {
     },
   ];
 
-  for (let itemToTest of itemsToTest) {
+  for (const itemToTest of itemsToTest) {
     runAllVehicleTests(itemToTest);
   }
 });
