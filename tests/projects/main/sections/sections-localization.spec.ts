@@ -9,6 +9,7 @@ import {
   testCustomSection,
   verifyItemExistsInSection,
 } from './sections-shared';
+import { NpcSheetSections } from 'src/features/sections/NpcSheetSections';
 
 let page: Page;
 
@@ -103,8 +104,81 @@ sectionsTest.describe('character', () => {
 
 sectionsTest.describe('NPC', () => {
   // TODO: test localization key section for
-  // - Abilities
-  // - Spellbook
+  // - Abilities -
+  const itemsToTest: DefaultSectionTestParams[] = [
+    ...NpcSheetSections.abilitiesItemTypes.map((itemType) => ({
+      itemCreationArgs: {
+        name: `Test ${itemType}`,
+        type: itemType,
+      },
+      tabId: CONSTANTS.TAB_NPC_ABILITIES,
+      sectionKey: 'TIDY5E.LocalizationTestKey',
+      sectionLabel: 'Localization Test Key',
+    })),
+    {
+      itemCreationArgs: {
+        name: 'Test action',
+        type: CONSTANTS.ITEM_TYPE_FEAT,
+        system: {
+          activation: {
+            type: CONSTANTS.ACTIVATION_COST_ACTION,
+          },
+        },
+      },
+      sectionKey: 'TIDY5E.LocalizationTestKey',
+      sectionLabel: 'Localization Test Key',
+      tabId: CONSTANTS.TAB_NPC_ABILITIES,
+    },
+    {
+      itemCreationArgs: {
+        name: 'Test passive feature',
+        type: CONSTANTS.ITEM_TYPE_FEAT,
+      },
+      sectionKey: 'TIDY5E.LocalizationTestKey',
+      sectionLabel: 'Localization Test Key',
+      tabId: CONSTANTS.TAB_NPC_ABILITIES,
+    },
+  ];
+  const spellToTest = {
+    itemCreationArgs: {
+      name: 'Test lvl 1 spell',
+      type: CONSTANTS.ITEM_TYPE_SPELL,
+      system: {
+        level: 1,
+      },
+    },
+    sectionKey: 'TIDY5E.LocalizationTestKey',
+    sectionLabel: 'Localization Test Key',
+    tabId: CONSTANTS.TAB_NPC_SPELLBOOK,
+  };
+
+  const listItemsToTest = [...itemsToTest, spellToTest];
+  const gridItemsToTest = [spellToTest];
+
+  sectionsTest.describe('list', () => {
+    sectionsTest.beforeAll(async ({ data }) => {
+      await new SheetHelper(page, data.sectionTestCharacter).setToListView();
+    });
+
+    for (const itemToTest of listItemsToTest) {
+      runAllNpcTests(itemToTest);
+    }
+  });
+
+  sectionsTest.describe('grid', () => {
+    sectionsTest.beforeAll(async ({ data }) => {
+      await new SheetHelper(page, data.sectionTestCharacter).setToGridView();
+    });
+
+    sectionsTest.afterAll(async ({ data }) => {
+      await new SheetHelper(page, data.sectionTestCharacter).setToListView();
+    });
+
+    for (const itemToTest of gridItemsToTest) {
+      runAllNpcTests(itemToTest);
+    }
+  });
+
   // - Actions
 });
 
@@ -201,6 +275,33 @@ function runAllCharacterTests(itemToTest: DefaultSectionTestParams) {
       await testCustomSection(
         itemWithCustomActionSection,
         new SheetHelper(page, data.sectionTestCharacter),
+        'actionSection'
+      );
+    }
+  );
+}
+
+function runAllNpcTests(itemToTest: DefaultSectionTestParams) {
+  sectionsTest(
+    `${itemToTest.itemCreationArgs.name} can be localized`,
+    async ({ data }) => {
+      await testCustomSection(
+        itemToTest,
+        new SheetHelper(page, data.sectionTestNpc),
+        'section'
+      );
+    }
+  );
+
+  const itemWithCustomActionSection = structuredClone(itemToTest);
+  itemWithCustomActionSection.tabId = CONSTANTS.TAB_ACTOR_ACTIONS;
+
+  sectionsTest(
+    `${itemWithCustomActionSection.itemCreationArgs.name} can be localized on action list`,
+    async ({ data }) => {
+      await testCustomSection(
+        itemWithCustomActionSection,
+        new SheetHelper(page, data.sectionTestNpc),
         'actionSection'
       );
     }
