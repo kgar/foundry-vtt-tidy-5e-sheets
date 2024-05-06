@@ -42,7 +42,7 @@
             })}
           {:else}
             <span class="spell-primary-column-label">
-              {section.label}
+              {localize(section.label)}
             </span>
           {/if}
           {#if section.usesSlots}

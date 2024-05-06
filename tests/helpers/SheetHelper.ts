@@ -75,4 +75,28 @@ export class SheetHelper {
       }
     );
   }
+
+  async setToGridView() {
+    await this.updateDocument({
+      [TidyFlags.inventoryGrid.prop]: true,
+      [TidyFlags.spellbookGrid.prop]: true,
+    });
+  }
+
+  async setToListView() {
+    await this.updateDocument({
+      [TidyFlags.inventoryGrid.prop]: false,
+      [TidyFlags.spellbookGrid.prop]: false,
+    });
+  }
+
+  async updateDocument(data: object) {
+    await this.page.evaluate(
+      async ({ uuid, data }) => {
+        const actor = await fromUuid(uuid);
+        actor.update(data);
+      },
+      { uuid: this.ref.uuid, data }
+    );
+  }
 }

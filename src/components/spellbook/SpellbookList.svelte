@@ -117,7 +117,7 @@
       <ItemTableHeaderRow>
         <ItemTableColumn primary={true}>
           <span class="spell-primary-column-label">
-            {section.label}
+            {localize(section.label)}
           </span>
           {#if section.usesSlots}
             <SpellSlotManagement {section} />

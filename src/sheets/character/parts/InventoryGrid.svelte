@@ -126,6 +126,7 @@
         data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_USE_COMMAND}
         data-item-id={item.id}
         tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+        data-tidy-grid-item
       >
         <div class="item-name">
           <div

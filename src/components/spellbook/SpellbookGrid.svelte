@@ -84,7 +84,7 @@
       <ItemTableHeaderRow>
         <ItemTableColumn primary={true}>
           <span class="spell-primary-column-label">
-            {section.label}
+            {localize(section.label)}
           </span>
           {#if section.usesSlots}
             <SpellSlotManagement {section} />
@@ -121,6 +121,7 @@
           data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_USE_COMMAND}
           data-item-id={spell.id}
           tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+          data-tidy-grid-item
         >
           {#if TidyFlags.tryGetFlag(spell, 'favorite')}
             <GridPaneFavoriteIcon />

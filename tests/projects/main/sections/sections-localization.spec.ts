@@ -15,6 +15,7 @@ let page: Page;
 sectionsTest.beforeAll(async ({ browser }) => {
   await page?.close();
   page = await browser.newPage();
+  await PageHelper.routeToTestGame(page);
 });
 
 sectionsTest.afterAll(async () => {
@@ -75,47 +76,29 @@ sectionsTest.describe('character', () => {
     },
   ];
 
-  for (const itemToTest of localizableItemsToTest) {
-    sectionsTest(
-      `${itemToTest.itemCreationArgs.name} can be localized`,
-      async ({ data }) => {
-        await testCustomSection(
-          itemToTest,
-          new SheetHelper(page, data.sectionTestCharacter),
-          'section'
-        );
-      }
-    );
+  sectionsTest.describe('list', () => {
+    sectionsTest.beforeAll(async ({ data }) => {
+      await new SheetHelper(page, data.sectionTestCharacter).setToListView();
+    });
 
-    const favoriteWithCustomSection = structuredClone(itemToTest);
-    favoriteWithCustomSection.itemCreationArgs.name = `Favorite ${itemToTest.itemCreationArgs.name}`;
-    favoriteWithCustomSection.tabId = CONSTANTS.TAB_CHARACTER_ATTRIBUTES;
+    for (const itemToTest of localizableItemsToTest) {
+      runAllCharacterTests(itemToTest);
+    }
+  });
 
-    sectionsTest(
-      `${favoriteWithCustomSection.itemCreationArgs.name} can be localized`,
-      async ({ data }) => {
-        await testCustomSection(
-          favoriteWithCustomSection,
-          new SheetHelper(page, data.sectionTestCharacter),
-          'section'
-        );
-      }
-    );
+  sectionsTest.describe('grid', () => {
+    sectionsTest.beforeAll(async ({ data }) => {
+      await new SheetHelper(page, data.sectionTestCharacter).setToGridView();
+    });
 
-    const itemWithCustomActionSection = structuredClone(itemToTest);
-    itemWithCustomActionSection.tabId = CONSTANTS.TAB_ACTOR_ACTIONS;
+    sectionsTest.afterAll(async ({ data }) => {
+      await new SheetHelper(page, data.sectionTestCharacter).setToListView();
+    });
 
-    sectionsTest(
-      `${itemWithCustomActionSection.itemCreationArgs.name} can be localized on action list`,
-      async ({ data }) => {
-        await testCustomSection(
-          itemWithCustomActionSection,
-          new SheetHelper(page, data.sectionTestCharacter),
-          'actionSection'
-        );
-      }
-    );
-  }
+    for (const itemToTest of localizableItemsToTest) {
+      runAllCharacterTests(itemToTest);
+    }
+  });
 });
 
 sectionsTest.describe('NPC', () => {
@@ -181,3 +164,45 @@ sectionsTest.describe('container', () => {
     }
   );
 });
+
+function runAllCharacterTests(itemToTest: DefaultSectionTestParams) {
+  sectionsTest(
+    `${itemToTest.itemCreationArgs.name} can be localized`,
+    async ({ data }) => {
+      await testCustomSection(
+        itemToTest,
+        new SheetHelper(page, data.sectionTestCharacter),
+        'section'
+      );
+    }
+  );
+
+  const favoriteWithCustomSection = structuredClone(itemToTest);
+  favoriteWithCustomSection.itemCreationArgs.name = `Favorite ${itemToTest.itemCreationArgs.name}`;
+  favoriteWithCustomSection.tabId = CONSTANTS.TAB_CHARACTER_ATTRIBUTES;
+
+  sectionsTest(
+    `${favoriteWithCustomSection.itemCreationArgs.name} can be localized`,
+    async ({ data }) => {
+      await testCustomSection(
+        favoriteWithCustomSection,
+        new SheetHelper(page, data.sectionTestCharacter),
+        'section'
+      );
+    }
+  );
+
+  const itemWithCustomActionSection = structuredClone(itemToTest);
+  itemWithCustomActionSection.tabId = CONSTANTS.TAB_ACTOR_ACTIONS;
+
+  sectionsTest(
+    `${itemWithCustomActionSection.itemCreationArgs.name} can be localized on action list`,
+    async ({ data }) => {
+      await testCustomSection(
+        itemWithCustomActionSection,
+        new SheetHelper(page, data.sectionTestCharacter),
+        'actionSection'
+      );
+    }
+  );
+}

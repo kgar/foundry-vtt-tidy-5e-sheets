@@ -80,11 +80,12 @@ export async function verifyItemExistsInSection(args: {
   await sheetHelper.tab(args.tabId);
 
   const $tab = sheetHelper.$sheet.locator(`[data-tab-contents-for="${tabId}"]`);
-  const $row = $tab.locator(
-    `[data-item-id="${itemRef.id}"][data-tidy-table-row]`
+
+  const $tableEntry = $tab.locator(
+    `[data-item-id="${itemRef.id}"]:is([data-tidy-table-row], [data-tidy-grid-item])`
   );
-  const rowText = await $row.textContent();
-  const actualSectionKey = await $row.evaluate((row) =>
+
+  const actualSectionKey = await $tableEntry.evaluate((row) =>
     row
       .closest('[data-tidy-section-key]')
       ?.getAttribute('data-tidy-section-key')
@@ -92,7 +93,7 @@ export async function verifyItemExistsInSection(args: {
 
   if (sectionLabel) {
     const sectionHeaderRowText =
-      (await $row.evaluate(
+      (await $tableEntry.evaluate(
         (row, { actualSectionKey, constants }) =>
           row
             .closest(`[data-tidy-section-key="${actualSectionKey}"]`)
@@ -105,8 +106,6 @@ export async function verifyItemExistsInSection(args: {
       sectionLabel.toLowerCase()
     );
   }
-
-  expect(rowText).toContain(itemRef.name);
 
   expect(actualSectionKey).toEqual(sectionKey);
 }

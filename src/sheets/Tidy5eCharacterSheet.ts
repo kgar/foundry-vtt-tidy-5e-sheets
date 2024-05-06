@@ -412,17 +412,17 @@ export class Tidy5eCharacterSheet
           {
             title: FoundryAdapter.localize('TIDY5E.ListLayout'),
             iconClass: 'fas fa-th-list fa-fw toggle-list',
-            visible: !TidyFlags.tryGetFlag(this.actor, 'inventory-grid'),
+            visible: !TidyFlags.inventoryGrid.get(this.actor),
             execute: () => {
-              TidyFlags.setFlag(this.actor, 'inventory-grid', true);
+              TidyFlags.inventoryGrid.set(this.actor);
             },
           },
           {
             title: FoundryAdapter.localize('TIDY5E.GridLayout'),
             iconClass: 'fas fa-th-large fa-fw toggle-grid',
-            visible: !!TidyFlags.tryGetFlag(this.actor, 'inventory-grid'),
+            visible: !!TidyFlags.inventoryGrid.get(this.actor),
             execute: () => {
-              TidyFlags.unsetFlag(this.actor, 'inventory-grid');
+              TidyFlags.inventoryGrid.unset(this.actor);
             },
           },
           {
@@ -523,17 +523,17 @@ export class Tidy5eCharacterSheet
           {
             title: FoundryAdapter.localize('TIDY5E.ListLayout'),
             iconClass: 'fas fa-th-list fa-fw toggle-list',
-            visible: !TidyFlags.tryGetFlag(this.actor, 'spellbook-grid'),
+            visible: !TidyFlags.spellbookGrid.get(this.actor),
             execute: () => {
-              TidyFlags.setFlag(this.actor, 'spellbook-grid', true);
+              TidyFlags.spellbookGrid.set(this.actor);
             },
           },
           {
             title: FoundryAdapter.localize('TIDY5E.GridLayout'),
             iconClass: 'fas fa-th-large fa-fw toggle-grid',
-            visible: !!TidyFlags.tryGetFlag(this.actor, 'spellbook-grid'),
+            visible: !!TidyFlags.spellbookGrid.get(this.actor),
             execute: () => {
-              TidyFlags.unsetFlag(this.actor, 'spellbook-grid');
+              TidyFlags.spellbookGrid.unset(this.actor);
             },
           },
           {

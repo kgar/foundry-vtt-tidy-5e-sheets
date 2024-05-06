@@ -63,15 +63,15 @@
 
   function toggleLayout() {
     if (layoutMode === 'grid') {
-      TidyFlags.unsetFlag($context.actor, 'spellbook-grid');
+      TidyFlags.spellbookGrid.unset($context.actor);
       return;
     }
 
-    TidyFlags.setFlag($context.actor, 'spellbook-grid', true);
+    TidyFlags.spellbookGrid.set($context.actor);
   }
 
   let layoutMode: ItemLayoutMode;
-  $: layoutMode = TidyFlags.tryGetFlag($context.actor, 'spellbook-grid')
+  $: layoutMode = TidyFlags.spellbookGrid.get($context.actor)
     ? 'grid'
     : 'list';
 

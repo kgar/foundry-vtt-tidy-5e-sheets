@@ -30,7 +30,7 @@
   let searchCriteria: string = '';
 
   let layoutMode: ItemLayoutMode;
-  $: layoutMode = TidyFlags.tryGetFlag($context.actor, 'inventory-grid')
+  $: layoutMode = TidyFlags.inventoryGrid.get($context.actor)
     ? 'grid'
     : 'list';
 

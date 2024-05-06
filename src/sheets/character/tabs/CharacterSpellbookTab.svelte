@@ -31,7 +31,7 @@
   let searchCriteria: string = '';
 
   let layoutMode: ItemLayoutMode;
-  $: layoutMode = TidyFlags.tryGetFlag($context.actor, 'spellbook-grid')
+  $: layoutMode = TidyFlags.spellbookGrid.get($context.actor)
     ? 'grid'
     : 'list';
 

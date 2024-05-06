@@ -55,6 +55,23 @@ export class TidyFlags {
     },
   };
 
+  static inventoryGrid = {
+    key: 'inventory-grid',
+    prop: TidyFlags.getFlagPropertyPath('inventory-grid'),
+    get(document: any): boolean {
+      return (
+        TidyFlags.tryGetFlag<boolean>(document, TidyFlags.inventoryGrid.key) ===
+        true
+      );
+    },
+    set(document: any) {
+      return TidyFlags.setFlag(document, TidyFlags.inventoryGrid.key, true);
+    },
+    unset(document: any) {
+      return TidyFlags.unsetFlag(document, TidyFlags.inventoryGrid.key);
+    },
+  };
+
   /** Determines the order of item table sections for a given document sheet. */
   static sectionConfig = {
     key: 'sheet-section-config' as const,
@@ -107,6 +124,23 @@ export class TidyFlags {
     },
     unset(item: Item5e) {
       return TidyFlags.unsetFlag(item, TidyFlags.section.key);
+    },
+  };
+
+  static spellbookGrid = {
+    key: 'spellbook-grid',
+    prop: TidyFlags.getFlagPropertyPath('spellbook-grid'),
+    get(document: any): boolean {
+      return (
+        TidyFlags.tryGetFlag<boolean>(document, TidyFlags.spellbookGrid.key) ===
+        true
+      );
+    },
+    set(document: any) {
+      return TidyFlags.setFlag(document, TidyFlags.spellbookGrid.key, true);
+    },
+    unset(document: any) {
+      return TidyFlags.unsetFlag(document, TidyFlags.spellbookGrid.key);
     },
   };
 
