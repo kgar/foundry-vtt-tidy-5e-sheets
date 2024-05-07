@@ -293,7 +293,7 @@ async function runSidebarDropToSheetTest({
   const newItem = await sheetHelper.$sheet.evaluate(
     async (sheet, { itemName, itemOwnerUuid }) => {
       const itemOwner = await fromUuid(itemOwnerUuid);
-      const item = (itemOwner?.items ?? itemOwner?.system.contents).find(
+      const item = (itemOwner?.items ?? itemOwner?.system?.contents)?.find(
         (i: any) => i.name === itemName
       );
 
