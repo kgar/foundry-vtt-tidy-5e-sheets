@@ -6,6 +6,7 @@ import { CONSTANTS } from 'src/constants';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import type { DocumentRef } from 'tests/tests.types';
 import { delay } from 'src/utils/asynchrony';
+import { WorldHelper } from 'tests/helpers/WorldHelper';
 
 let page: Page;
 
@@ -119,6 +120,98 @@ sectionsTest.describe(
   }
 );
 
+sectionsTest.describe(
+  'drag and drop sidebar item with custom section creates the item with the custom section included',
+  () => {
+    sectionsTest('character inventory', async ({ data }) => {
+      const sectionKey =
+        'Test Drop Sidebar to Character Inventory Custom Section';
+      const worldHelper = new WorldHelper(page);
+      const itemRef = await worldHelper.createItem({
+        name: 'Test PC Inventory Drop From Sidebar',
+        type: CONSTANTS.ITEM_TYPE_LOOT,
+        flags: {
+          [CONSTANTS.MODULE_ID]: {
+            [TidyFlags.section.key]: sectionKey,
+          },
+        },
+      });
+
+      await runSidebarDropToSheetTest({
+        itemRef: itemRef,
+        sectionKey: sectionKey,
+        sheetHelper: new SheetHelper(page, data.sectionTestCharacter),
+        tabId: CONSTANTS.TAB_CHARACTER_INVENTORY,
+      });
+    });
+
+    sectionsTest('NPC abilities', async ({ data }) => {
+      const sectionKey = 'Test Drop Sidebar to NPC Abilities Custom Section';
+      const worldHelper = new WorldHelper(page);
+      const itemRef = await worldHelper.createItem({
+        name: 'Test NPC Inventory Drop From Sidebar',
+        type: CONSTANTS.ITEM_TYPE_LOOT,
+        flags: {
+          [CONSTANTS.MODULE_ID]: {
+            [TidyFlags.section.key]: sectionKey,
+          },
+        },
+      });
+
+      await runSidebarDropToSheetTest({
+        itemRef: itemRef,
+        sectionKey: sectionKey,
+        sheetHelper: new SheetHelper(page, data.sectionTestNpc),
+        tabId: CONSTANTS.TAB_NPC_ABILITIES,
+      });
+    });
+
+    sectionsTest('vehicle actions', async ({ data }) => {
+      const sectionKey = 'Test Drop Sidebar to Vehicle Actions Custom Section';
+      const worldHelper = new WorldHelper(page);
+      const itemRef = await worldHelper.createItem({
+        name: 'Test Vehicle Action Drop From Sidebar',
+        type: CONSTANTS.ITEM_TYPE_CONSUMABLE,
+        flags: {
+          [CONSTANTS.MODULE_ID]: {
+            [TidyFlags.actionSection.key]: sectionKey,
+            [TidyFlags.actionFilterOverride.key]: true,
+          },
+        },
+      });
+
+      await runSidebarDropToSheetTest({
+        itemRef: itemRef,
+        sectionKey: sectionKey,
+        sheetHelper: new SheetHelper(page, data.sectionTestVehicle),
+        tabId: CONSTANTS.TAB_ACTOR_ACTIONS,
+      });
+    });
+
+    sectionsTest('container contents', async ({ data }) => {
+      const sectionKey =
+        'Test Drop Sidebar to Container Contents Custom Section';
+      const worldHelper = new WorldHelper(page);
+      const itemRef = await worldHelper.createItem({
+        name: 'Test Container Inventory Drop From Sidebar',
+        type: CONSTANTS.ITEM_TYPE_LOOT,
+        flags: {
+          [CONSTANTS.MODULE_ID]: {
+            [TidyFlags.section.key]: sectionKey,
+          },
+        },
+      });
+
+      await runSidebarDropToSheetTest({
+        itemRef: itemRef,
+        sectionKey: sectionKey,
+        sheetHelper: new SheetHelper(page, data.sectionTestOwnedContainer),
+        tabId: CONSTANTS.TAB_CONTAINER_CONTENTS,
+      });
+    });
+  }
+);
+
 type RunDragDropOrderTestParams = {
   firstItemRef: DocumentRef;
   secondItemRef: DocumentRef;
@@ -172,21 +265,6 @@ async function runSidebarDropToSheetTest({
   tabId,
   sectionKey,
 }: RunSidebarDropToSheetTestParams) {
-  // Prepare sidebar for drag and drop
-  const $sidebarNavActorsOption = page.locator(
-    `#sidebar nav [data-tab="actors"]`
-  );
-  const $sidebarActorsSection = page.locator(
-    `#sidebar section [data-tab="actors"]`
-  );
-  const $sidebarSearch = $sidebarActorsSection.locator(`input[name="search"]`);
-  await $sidebarNavActorsOption.click();
-  await $sidebarSearch.fill(itemRef.name);
-  await $sidebarSearch.press('Tab');
-  const $sidebarItem = $sidebarActorsSection.locator(
-    `[data-document-id="${itemRef.id}"]`
-  );
-
   // Prepare sheet for drag and drop
   await sheetHelper.showSheet();
   await sheetHelper.tab(tabId);
@@ -194,13 +272,28 @@ async function runSidebarDropToSheetTest({
     `[data-tab-contents-for="${tabId}"]`
   );
 
+  // Prepare sidebar for drag and drop
+  await page.locator(`#sidebar nav [data-tab="items"]`).click();
+  const $sidebarActorsSection = page.locator(
+    `#sidebar section[data-tab="items"]`
+  );
+  const $sidebarSearch = $sidebarActorsSection.locator(`input[name="search"]`);
+  await $sidebarSearch.clear();
+  await $sidebarSearch.fill(itemRef.name);
+  await $sidebarSearch.press('Tab');
+  const $sidebarItem = $sidebarActorsSection.locator(
+    `[data-document-id="${itemRef.id}"]`
+  );
+
   // Drag item onto sheet
   await $sidebarItem.dragTo($tabContents);
+  await delay(100);
 
   // Verify the sheet now has the item with the custom section
   const newItem = await sheetHelper.$sheet.evaluate(
     async (sheet, { itemName, itemOwnerUuid }) => {
-      const item = (await fromUuid(itemOwnerUuid))?.items.find(
+      const itemOwner = await fromUuid(itemOwnerUuid);
+      const item = (itemOwner?.items ?? itemOwner?.system.contents).find(
         (i: any) => i.name === itemName
       );
 
