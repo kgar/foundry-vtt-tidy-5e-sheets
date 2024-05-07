@@ -13,21 +13,6 @@ import {
   verifyItemExistsInSection,
 } from './sections-shared';
 
-let page: Page;
-
-sectionsTest.beforeAll(async ({ browser }) => {
-  await page?.close();
-  page = await browser.newPage();
-});
-
-sectionsTest.afterAll(async () => {
-  await page?.close();
-});
-
-sectionsTest.beforeEach(async () => {
-  await PageHelper.routeToTestGame(page);
-});
-
 sectionsTest.describe('sections core functionality', () => {
   sectionsTest.describe('character', () => {
     const itemsToTest: DefaultSectionTestParams[] = [
@@ -79,10 +64,10 @@ sectionsTest.describe('sections core functionality', () => {
         () => {
           sectionsTest(
             `${itemToTest.itemCreationArgs.name} defaults to section key "${itemToTest.sectionKey}"`,
-            async ({ data }) => {
+            async ({ data, sectionPage }) => {
               await testDefaultSection(
                 itemToTest,
-                new SheetHelper(page, data.sectionTestCharacter)
+                new SheetHelper(sectionPage, data.sectionTestCharacter)
               );
             }
           );
@@ -100,10 +85,10 @@ sectionsTest.describe('sections core functionality', () => {
           };
           sectionsTest(
             `${favoriteItemToTest.itemCreationArgs.name} defaults to section key "${favoriteItemToTest.sectionKey}"`,
-            async ({ data }) => {
+            async ({ data, sectionPage }) => {
               await testDefaultSection(
                 favoriteItemToTest,
-                new SheetHelper(page, data.sectionTestCharacter)
+                new SheetHelper(sectionPage, data.sectionTestCharacter)
               );
             }
           );
@@ -113,10 +98,10 @@ sectionsTest.describe('sections core functionality', () => {
           itemWithCustomSection.sectionKey = `Custom Section ${itemToTest.sectionKey}`;
           sectionsTest(
             `${itemWithCustomSection.itemCreationArgs.name} can be assigned to custom section "${itemWithCustomSection.sectionKey}"`,
-            async ({ data }) => {
+            async ({ data, sectionPage }) => {
               await testCustomSection(
                 itemWithCustomSection,
-                new SheetHelper(page, data.sectionTestCharacter),
+                new SheetHelper(sectionPage, data.sectionTestCharacter),
                 'section'
               );
             }
@@ -136,10 +121,10 @@ sectionsTest.describe('sections core functionality', () => {
           };
           sectionsTest(
             `${favoriteWithCustomSection.itemCreationArgs.name} can be assigned to custom section "${favoriteWithCustomSection.sectionKey}"`,
-            async ({ data }) => {
+            async ({ data, sectionPage }) => {
               await testCustomSection(
                 favoriteWithCustomSection,
-                new SheetHelper(page, data.sectionTestCharacter),
+                new SheetHelper(sectionPage, data.sectionTestCharacter),
                 'section'
               );
             }
@@ -151,10 +136,10 @@ sectionsTest.describe('sections core functionality', () => {
           itemWithCustomActionSection.tabId = CONSTANTS.TAB_ACTOR_ACTIONS;
           sectionsTest(
             `${itemWithCustomActionSection.itemCreationArgs.name} can be assigned to custom section "${itemWithCustomActionSection.sectionKey}"`,
-            async ({ data }) => {
+            async ({ data, sectionPage }) => {
               await testCustomSection(
                 itemWithCustomActionSection,
-                new SheetHelper(page, data.sectionTestCharacter),
+                new SheetHelper(sectionPage, data.sectionTestCharacter),
                 'actionSection'
               );
             }
@@ -185,14 +170,14 @@ sectionsTest.describe('sections core functionality', () => {
         () => {
           sectionsTest(
             `defaults to section key "${itemToTest.sectionKey}"`,
-            async ({ data }) => {
+            async ({ data, sectionPage }) => {
               // arrange
               const characterSheetHelper = new SheetHelper(
-                page,
+                sectionPage,
                 data.sectionTestCharacter
               );
               const containerSheetHelper = new SheetHelper(
-                page,
+                sectionPage,
                 data.sectionTestOwnedContainer
               );
 
@@ -220,21 +205,21 @@ sectionsTest.describe('sections core functionality', () => {
           itemWithCustomSection.sectionKey = `Custom Section ${itemToTest.sectionKey}`;
           sectionsTest(
             `can be assigned custom section section "${itemWithCustomSection.sectionKey}"`,
-            async ({ data }) => {
+            async ({ data, sectionPage }) => {
               // arrange
               const characterSheetHelper = new SheetHelper(
-                page,
+                sectionPage,
                 data.sectionTestCharacter
               );
               const containerSheetHelper = new SheetHelper(
-                page,
+                sectionPage,
                 data.sectionTestOwnedContainer
               );
               const item = await characterSheetHelper.createEmbeddedItem({
                 ...itemWithCustomSection.itemCreationArgs,
                 system: { container: data.sectionTestOwnedContainer.id },
               });
-              const itemSheetHelper = new SheetHelper(page, item);
+              const itemSheetHelper = new SheetHelper(sectionPage, item);
 
               // act
               await itemSheetHelper.showSheet();
@@ -317,10 +302,10 @@ sectionsTest.describe('sections core functionality', () => {
         () => {
           sectionsTest(
             `${itemToTest.itemCreationArgs.name} defaults to section key "${itemToTest.sectionKey}"`,
-            async ({ data }) => {
+            async ({ data, sectionPage }) => {
               await testDefaultSection(
                 itemToTest,
-                new SheetHelper(page, data.sectionTestNpc)
+                new SheetHelper(sectionPage, data.sectionTestNpc)
               );
             }
           );
@@ -330,10 +315,10 @@ sectionsTest.describe('sections core functionality', () => {
           itemWithCustomSection.sectionKey = `Custom Section ${itemToTest.sectionKey}`;
           sectionsTest(
             `${itemWithCustomSection.itemCreationArgs.name} can be assigned custom section "${itemWithCustomSection.sectionKey}"`,
-            async ({ data }) => {
+            async ({ data, sectionPage }) => {
               await testCustomSection(
                 itemWithCustomSection,
-                new SheetHelper(page, data.sectionTestNpc),
+                new SheetHelper(sectionPage, data.sectionTestNpc),
                 'section'
               );
             }
@@ -345,10 +330,10 @@ sectionsTest.describe('sections core functionality', () => {
           itemWithCustomActionSection.tabId = CONSTANTS.TAB_ACTOR_ACTIONS;
           sectionsTest(
             `${itemWithCustomActionSection.itemCreationArgs.name} can be assigned custom section "${itemWithCustomActionSection.sectionKey}"`,
-            async ({ data }) => {
+            async ({ data, sectionPage }) => {
               await testCustomSection(
                 itemWithCustomActionSection,
-                new SheetHelper(page, data.sectionTestNpc),
+                new SheetHelper(sectionPage, data.sectionTestNpc),
                 'actionSection'
               );
             }
@@ -389,10 +374,10 @@ sectionsTest.describe('sections core functionality', () => {
     for (const itemToTest of itemsToTest) {
       sectionsTest(
         `${itemToTest.itemCreationArgs.name} can be assigned custom section "${itemToTest.sectionKey}"`,
-        async ({ data }) => {
+        async ({ data, sectionPage }) => {
           await testCustomSection(
             itemToTest,
-            new SheetHelper(page, data.sectionTestVehicle),
+            new SheetHelper(sectionPage, data.sectionTestVehicle),
             'actionSection'
           );
         }

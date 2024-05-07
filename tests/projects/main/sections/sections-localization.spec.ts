@@ -12,22 +12,6 @@ import {
 import { NpcSheetSections } from 'src/features/sections/NpcSheetSections';
 import { Inventory } from 'src/features/sections/Inventory';
 
-let page: Page;
-
-sectionsTest.beforeAll(async ({ browser }) => {
-  await page?.close();
-  page = await browser.newPage();
-  await PageHelper.routeToTestGame(page);
-});
-
-sectionsTest.afterAll(async () => {
-  await page?.close();
-});
-
-sectionsTest.beforeEach(async () => {
-  await PageHelper.routeToTestGame(page);
-});
-
 sectionsTest.describe('character', () => {
   // TODO: the localization aspect should be happening in getData() prep, because label and key are separate from each other, so label can be localized ahead of time
   const localizableItemsToTest: DefaultSectionTestParams[] = [
@@ -79,8 +63,11 @@ sectionsTest.describe('character', () => {
   ];
 
   sectionsTest.describe('list', () => {
-    sectionsTest.beforeAll(async ({ data }) => {
-      await new SheetHelper(page, data.sectionTestCharacter).setToListView();
+    sectionsTest.beforeAll(async ({ data, sectionPage }) => {
+      await new SheetHelper(
+        sectionPage,
+        data.sectionTestCharacter
+      ).setToListView();
     });
 
     for (const itemToTest of localizableItemsToTest) {
@@ -89,12 +76,18 @@ sectionsTest.describe('character', () => {
   });
 
   sectionsTest.describe('grid', () => {
-    sectionsTest.beforeAll(async ({ data }) => {
-      await new SheetHelper(page, data.sectionTestCharacter).setToGridView();
+    sectionsTest.beforeAll(async ({ data, sectionPage }) => {
+      await new SheetHelper(
+        sectionPage,
+        data.sectionTestCharacter
+      ).setToGridView();
     });
 
-    sectionsTest.afterAll(async ({ data }) => {
-      await new SheetHelper(page, data.sectionTestCharacter).setToListView();
+    sectionsTest.afterAll(async ({ data, sectionPage }) => {
+      await new SheetHelper(
+        sectionPage,
+        data.sectionTestCharacter
+      ).setToListView();
     });
 
     for (const itemToTest of localizableItemsToTest) {
@@ -157,8 +150,11 @@ sectionsTest.describe('NPC', () => {
   const gridItemsToTest = [spellToTest];
 
   sectionsTest.describe('list', () => {
-    sectionsTest.beforeAll(async ({ data }) => {
-      await new SheetHelper(page, data.sectionTestCharacter).setToListView();
+    sectionsTest.beforeAll(async ({ data, sectionPage }) => {
+      await new SheetHelper(
+        sectionPage,
+        data.sectionTestCharacter
+      ).setToListView();
     });
 
     for (const itemToTest of listItemsToTest) {
@@ -167,12 +163,18 @@ sectionsTest.describe('NPC', () => {
   });
 
   sectionsTest.describe('grid', () => {
-    sectionsTest.beforeAll(async ({ data }) => {
-      await new SheetHelper(page, data.sectionTestCharacter).setToGridView();
+    sectionsTest.beforeAll(async ({ data, sectionPage }) => {
+      await new SheetHelper(
+        sectionPage,
+        data.sectionTestCharacter
+      ).setToGridView();
     });
 
-    sectionsTest.afterAll(async ({ data }) => {
-      await new SheetHelper(page, data.sectionTestCharacter).setToListView();
+    sectionsTest.afterAll(async ({ data, sectionPage }) => {
+      await new SheetHelper(
+        sectionPage,
+        data.sectionTestCharacter
+      ).setToListView();
     });
 
     for (const itemToTest of gridItemsToTest) {
@@ -232,21 +234,21 @@ sectionsTest.describe('container', () => {
 
   sectionsTest(
     `can be assigned custom section "${containerItemLocalizationTest.sectionKey}"`,
-    async ({ data }) => {
+    async ({ data, sectionPage }) => {
       // arrange
       const characterSheetHelper = new SheetHelper(
-        page,
+        sectionPage,
         data.sectionTestCharacter
       );
       const containerSheetHelper = new SheetHelper(
-        page,
+        sectionPage,
         data.sectionTestOwnedContainer
       );
       const item = await characterSheetHelper.createEmbeddedItem({
         ...containerItemLocalizationTest.itemCreationArgs,
         system: { container: data.sectionTestOwnedContainer.id },
       });
-      const itemSheetHelper = new SheetHelper(page, item);
+      const itemSheetHelper = new SheetHelper(sectionPage, item);
 
       // act
       await itemSheetHelper.showSheet();
@@ -274,10 +276,10 @@ sectionsTest.describe('container', () => {
 function runAllCharacterTests(itemToTest: DefaultSectionTestParams) {
   sectionsTest(
     `${itemToTest.itemCreationArgs.name} can be localized`,
-    async ({ data }) => {
+    async ({ data, sectionPage }) => {
       await testCustomSection(
         itemToTest,
-        new SheetHelper(page, data.sectionTestCharacter),
+        new SheetHelper(sectionPage, data.sectionTestCharacter),
         'section'
       );
     }
@@ -289,10 +291,10 @@ function runAllCharacterTests(itemToTest: DefaultSectionTestParams) {
 
   sectionsTest(
     `${favoriteWithCustomSection.itemCreationArgs.name} can be localized`,
-    async ({ data }) => {
+    async ({ data, sectionPage }) => {
       await testCustomSection(
         favoriteWithCustomSection,
-        new SheetHelper(page, data.sectionTestCharacter),
+        new SheetHelper(sectionPage, data.sectionTestCharacter),
         'section'
       );
     }
@@ -303,10 +305,10 @@ function runAllCharacterTests(itemToTest: DefaultSectionTestParams) {
 
   sectionsTest(
     `${itemWithCustomActionSection.itemCreationArgs.name} can be localized on action list`,
-    async ({ data }) => {
+    async ({ data, sectionPage }) => {
       await testCustomSection(
         itemWithCustomActionSection,
-        new SheetHelper(page, data.sectionTestCharacter),
+        new SheetHelper(sectionPage, data.sectionTestCharacter),
         'actionSection'
       );
     }
@@ -316,10 +318,10 @@ function runAllCharacterTests(itemToTest: DefaultSectionTestParams) {
 function runAllNpcTests(itemToTest: DefaultSectionTestParams) {
   sectionsTest(
     `${itemToTest.itemCreationArgs.name} can be localized`,
-    async ({ data }) => {
+    async ({ data, sectionPage }) => {
       await testCustomSection(
         itemToTest,
-        new SheetHelper(page, data.sectionTestNpc),
+        new SheetHelper(sectionPage, data.sectionTestNpc),
         'section'
       );
     }
@@ -330,10 +332,10 @@ function runAllNpcTests(itemToTest: DefaultSectionTestParams) {
 
   sectionsTest(
     `${itemWithCustomActionSection.itemCreationArgs.name} can be localized on action list`,
-    async ({ data }) => {
+    async ({ data, sectionPage }) => {
       await testCustomSection(
         itemWithCustomActionSection,
-        new SheetHelper(page, data.sectionTestNpc),
+        new SheetHelper(sectionPage, data.sectionTestNpc),
         'actionSection'
       );
     }
@@ -346,10 +348,10 @@ function runAllVehicleTests(itemToTest: DefaultSectionTestParams) {
 
   sectionsTest(
     `${itemWithCustomActionSection.itemCreationArgs.name} can be localized on action list`,
-    async ({ data }) => {
+    async ({ data, sectionPage }) => {
       await testCustomSection(
         itemWithCustomActionSection,
-        new SheetHelper(page, data.sectionTestNpc),
+        new SheetHelper(sectionPage, data.sectionTestNpc),
         'actionSection'
       );
     }
