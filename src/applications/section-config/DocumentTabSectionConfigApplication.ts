@@ -63,13 +63,19 @@ export class DocumentTabSectionConfigApplication extends SvelteFormApplicationBa
             show: curr.show,
           };
         }, {}),
-        onConfirm: this._onConfirm.bind(this),
+        onSaveChanges: this._onSaveChanges.bind(this),
+        onApply: this._onApply.bind(this),
         useDefault: this._useDefault.bind(this),
       },
     });
   }
 
-  private _onConfirm(sections: DocumentTabSectionConfigItem[]) {
+  private async _onSaveChanges(sections: DocumentTabSectionConfigItem[]) {
+    await this._onApply(sections);
+    this.close();
+  }
+
+  private async _onApply(sections: DocumentTabSectionConfigItem[]) {
     const sectionConfig = TidyFlags.sectionConfig.get(this.document) ?? {};
     sectionConfig[this.tabId] = sections.reduce<Record<string, SectionConfig>>(
       (result, curr, i) => {
@@ -82,8 +88,7 @@ export class DocumentTabSectionConfigApplication extends SvelteFormApplicationBa
       },
       {}
     );
-    TidyFlags.sectionConfig.set(this.document, sectionConfig);
-    this.close();
+    await TidyFlags.sectionConfig.set(this.document, sectionConfig);
   }
 
   private _useDefault() {

@@ -4,7 +4,10 @@
   import type { DocumentTabSectionConfigItem } from './section-config.types';
 
   export let sections: DocumentTabSectionConfigItem[];
-  export let onConfirm: (
+  export let onSaveChanges: (
+    sections: DocumentTabSectionConfigItem[],
+  ) => void | Promise<void>;
+  export let onApply: (
     sections: DocumentTabSectionConfigItem[],
   ) => void | Promise<void>;
   export let useDefault: () => void | Promise<void>;
@@ -61,9 +64,22 @@
       <i class="fas fa-rotate-right" />
       {localize('TIDY5E.UseDefault')}
     </button>
-    <button type="button" on:click={(ev) => onConfirm(sections)}
-      >{localize('TIDY5E.ButtonConfirm.Text')}</button
+    <button
+      type="button"
+      on:click={(ev) => onSaveChanges(sections)}
+      class="save-changes-btn"
     >
+      <i class="fas fa-save" />
+      {localize('TIDY5E.SaveChanges')}
+    </button>
+    <button
+      type="button"
+      class="apply-changes-btn"
+      on:click={() => onApply(sections)}
+    >
+      <i class="fas fa-check" />
+      {localize('TIDY5E.ApplyChanges')}
+    </button>
   </div>
 </section>
 

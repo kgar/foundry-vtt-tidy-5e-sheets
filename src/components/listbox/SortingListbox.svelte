@@ -81,23 +81,6 @@
     );
   }
 
-  function onDragEnter(
-    ev: CustomEvent<{ item: TItem; index: number; event: DragEvent }>,
-  ) {
-    const target = ev.detail.event.currentTarget;
-    if (target instanceof HTMLElement && target.matches('[role="option"]')) {
-      target.classList.add('dragged-over');
-    }
-  }
-  function onDragLeave(
-    ev: CustomEvent<{ item: TItem; index: number; event: DragEvent }>,
-  ) {
-    const target = ev.detail.event.currentTarget;
-    if (target instanceof HTMLElement && target.matches('[role="option"]')) {
-      target.classList.remove('dragged-over');
-    }
-  }
-
   function onDrop(
     ev: CustomEvent<{ item: TItem; index: number; event: DragEvent }>,
   ) {
@@ -118,25 +101,30 @@
       return;
     }
 
-    const targetIndex = ev.detail.index;
+    const dropTargetIndex = ev.detail.index;
 
     items = items.reduce<TItem[]>((acc, item, index) => {
-      if (index === targetIndex) {
+      // When dropping onto a higher entry, the dragged should come before the target.
+      if (index === dropTargetIndex && draggedIndex > dropTargetIndex) {
         acc.push(theDragged);
       }
 
+      // The dragged item is being excluded from its original place in the list, to be placed elsewhere.
       if (index === draggedIndex) {
         return acc;
       }
 
       acc.push(item);
 
+      // When dropping onto a lower entry, the dragged should come after the target.
+      if (index === dropTargetIndex && draggedIndex < dropTargetIndex) {
+        acc.push(theDragged);
+      }
+
       return acc;
     }, []);
 
     selectedItemIndex = items.indexOf(theDragged);
-
-    onDragLeave(ev);
   }
 
   function onListboxDrop(ev: CustomEvent<{ event: DragEvent }>) {
@@ -187,8 +175,6 @@
     class="flex-1 {listboxCssClass ?? ''}"
     draggable={true}
     on:dragstart={(ev) => onDragStart(ev)}
-    on:dragenter={(ev) => onDragEnter(ev)}
-    on:dragleave={(ev) => onDragLeave(ev)}
     on:drop={(ev) => onDrop(ev)}
     on:listboxDrop={(ev) => onListboxDrop(ev)}
   >
