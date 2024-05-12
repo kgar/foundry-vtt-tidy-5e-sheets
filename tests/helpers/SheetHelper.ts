@@ -1,6 +1,7 @@
-import type { Locator, Page } from '@playwright/test';
+import type { Frame, Locator, Page } from '@playwright/test';
 import { CONSTANTS } from 'src/constants';
 import { TidyFlags } from 'src/foundry/TidyFlags';
+import { DocumentTabSectionConfigApplicationPom } from 'tests/poms/applications/DocumentTabSectionConfigApplicationPom';
 import type { DocumentRef } from 'tests/tests.types';
 
 export type SheetHelperItemCreationArgs = {
@@ -9,6 +10,10 @@ export type SheetHelperItemCreationArgs = {
 } & Record<string, any>;
 
 export class SheetHelper {
+  static sheetPart(locatable: Locator | Frame | Page, part: string) {
+    return locatable.locator(`[data-tidy-sheet-part="${part}"]`);
+  }
+
   page: Page;
   ref: DocumentRef;
   $sheet: Locator;
@@ -32,16 +37,19 @@ export class SheetHelper {
   }
 
   async tab(tabId: string) {
-    if (
-      await this.$sheet
-        .locator(`[data-tab-contents-for="${tabId}"]`)
-        .isVisible()
-    ) {
-      return;
+    const $tab = this.$sheet.locator(`nav [data-tab-id="${tabId}"]`);
+
+    const tabIsHidden = await this.getTabContentsLocator(tabId).isHidden();
+
+    if (tabIsHidden) {
+      await $tab.click();
     }
 
-    const $tab = this.$sheet.locator(`nav [data-tab-id="${tabId}"]`);
-    await $tab.click();
+    return $tab;
+  }
+
+  getTabContentsLocator(tabId: string) {
+    return this.$sheet.locator(`[data-tab-contents-for="${tabId}"]`);
   }
 
   async createEmbeddedItem(
@@ -97,6 +105,62 @@ export class SheetHelper {
         actor.update(data);
       },
       { uuid: this.ref.uuid, data }
+    );
+  }
+
+  getToolbarCommandLocator($tabContents: Locator, title: string) {
+    return SheetHelper.sheetPart(
+      $tabContents,
+      CONSTANTS.SHEET_PARTS.UTILITY_TOOLBAR_COMMAND
+    ).and($tabContents.getByTitle(title));
+  }
+
+  async openSectionConfiguration(
+    tabId: string
+  ): Promise<DocumentTabSectionConfigApplicationPom> {
+    await this.tab(tabId);
+    const $contents = this.getTabContentsLocator(tabId);
+    await this.getToolbarCommandLocator(
+      $contents,
+      'Configure Sections'
+    ).click();
+    const config = new DocumentTabSectionConfigApplicationPom(this.page);
+    await config.isReady();
+    return config;
+  }
+
+  getSectionLocator(tabId: string, sectionKey: string) {
+    return this.getTabContentsLocator(tabId).locator(
+      `[data-tidy-section-key="${sectionKey}"]`
+    );
+  }
+
+  async getSectionsInCurrentOrder(tabId: string): Promise<string[]> {
+    await this.tab(tabId);
+    const $tabContents = this.getTabContentsLocator(tabId);
+    const sectionKeyLocators = await $tabContents
+      .locator(`[data-tidy-section-key]`)
+      .all();
+
+    const sections: string[] = [];
+    for (const $key of sectionKeyLocators) {
+      sections.push((await $key.getAttribute('data-tidy-section-key')) ?? '');
+    }
+
+    return sections;
+  }
+
+  async lockSheet() {
+    await this.setFlag(TidyFlags.allowEdit.key, false);
+  }
+
+  async setFlag(flag: string, value: unknown) {
+    await this.page.evaluate(
+      async ({ uuid, constants, flag, value }) => {
+        const doc = await fromUuid(uuid);
+        await doc.setFlag(constants.MODULE_ID, flag, value);
+      },
+      { uuid: this.ref.uuid, constants: CONSTANTS, flag, value }
     );
   }
 }
