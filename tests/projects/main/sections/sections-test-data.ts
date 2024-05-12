@@ -4,6 +4,9 @@ import type { GamePage } from 'tests/poms/GamePage';
 import type { DocumentRef } from 'tests/tests.types';
 
 export type SectionsTestData = {
+  sectionConfigTestCharacter: DocumentRef;
+  sectionConfigTestNpc: DocumentRef;
+  sectionConfigTestVehicle: DocumentRef;
   sectionTestCharacter: DocumentRef;
   sectionTestNpc: DocumentRef;
   sectionTestVehicle: DocumentRef;
@@ -84,7 +87,81 @@ export async function initSectionsData(
     { constants: CONSTANTS }
   );
 
+  const sectionConfigTestCharacter = await gamePage.page.evaluate(
+    async ({ constants }): Promise<DocumentRef> => {
+      const actor = await dnd5e.documents.Actor5e.create({
+        name: 'Section Config Test Character',
+        type: constants.SHEET_TYPE_CHARACTER,
+        flags: {
+          ['tidy5e-sheet.selected-tabs']: [
+            constants.TAB_CHARACTER_ATTRIBUTES,
+            constants.TAB_CHARACTER_INVENTORY,
+            constants.TAB_CHARACTER_SPELLBOOK,
+            constants.TAB_CHARACTER_FEATURES,
+            constants.TAB_ACTOR_ACTIONS,
+          ],
+        },
+      });
+
+      return {
+        id: actor.id,
+        uuid: actor.uuid,
+        name: actor.name,
+      };
+    },
+    { constants: CONSTANTS }
+  );
+
+  const sectionConfigTestNpc = await gamePage.page.evaluate(
+    async ({ constants }): Promise<DocumentRef> => {
+      const actor = await dnd5e.documents.Actor5e.create({
+        name: 'Section Config Test NPC',
+        type: constants.SHEET_TYPE_NPC,
+        flags: {
+          ['tidy5e-sheet.selected-tabs']: [
+            constants.TAB_NPC_ABILITIES,
+            constants.TAB_NPC_SPELLBOOK,
+            constants.TAB_ACTOR_ACTIONS,
+          ],
+        },
+      });
+
+      return {
+        id: actor.id,
+        uuid: actor.uuid,
+        name: actor.name,
+      };
+    },
+    { constants: CONSTANTS }
+  );
+
+  const sectionConfigTestVehicle = await gamePage.page.evaluate(
+    async ({ constants }): Promise<DocumentRef> => {
+      const actor = await dnd5e.documents.Actor5e.create({
+        name: 'Section Config Test Vehicle',
+        type: constants.SHEET_TYPE_VEHICLE,
+        flags: {
+          ['tidy5e-sheet.selected-tabs']: [
+            constants.TAB_NPC_ABILITIES,
+            constants.TAB_NPC_SPELLBOOK,
+            constants.TAB_ACTOR_ACTIONS,
+          ],
+        },
+      });
+
+      return {
+        id: actor.id,
+        uuid: actor.uuid,
+        name: actor.name,
+      };
+    },
+    { constants: CONSTANTS }
+  );
+
   return {
+    sectionConfigTestCharacter,
+    sectionConfigTestNpc,
+    sectionConfigTestVehicle,
     sectionTestCharacter: sectionTestCharacter,
     sectionTestNpc: await gamePage.importMonster('Lich', {
       name: 'Sections Test NPC',
