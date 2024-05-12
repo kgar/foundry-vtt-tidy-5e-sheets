@@ -151,6 +151,8 @@
       title={localize('TIDY5E.Listbox.MoveUp')}
       type="button"
       disabled={selectedItemIndex === null || selectedItemIndex === 0}
+      aria-keyshortcuts="Alt+ArrowUp"
+      data-testid="sorting-listbox-move-up"
       on:click={() => moveUp()}
     >
       <i class="fas fa-angle-up"></i>
@@ -161,7 +163,9 @@
       disabled={selectedItemIndex === null ||
         items === null ||
         selectedItemIndex >= items.length - 1}
+      aria-keyshortcuts="Alt+ArrowDown"
       on:click={() => moveDown()}
+      data-testid="sorting-listbox-move-down"
     >
       <i class="fas fa-angle-down"></i>
     </button>

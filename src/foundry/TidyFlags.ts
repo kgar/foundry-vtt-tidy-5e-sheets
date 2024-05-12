@@ -55,6 +55,25 @@ export class TidyFlags {
     },
   };
 
+  /**
+   * Determines whether an actor's sheet should be editable per the sheet lock feature (default `true`).
+   * @param actor the actor
+   * @returns whether the sheet should be editable per the sheet lock feature
+   */
+  static allowEdit = {
+    key: 'allow-edit',
+    prop: TidyFlags.getFlagPropertyPath('allow-edit'),
+    get(document: any): boolean {
+      return TidyFlags.tryGetFlag<boolean>(document, 'allow-edit') ?? true;
+    },
+    set(document: any, value: boolean) {
+      return TidyFlags.setFlag(document, TidyFlags.allowEdit.key, value);
+    },
+    unset(document: any) {
+      return TidyFlags.unsetFlag(document, TidyFlags.allowEdit.key);
+    },
+  };
+
   static inventoryGrid = {
     key: 'inventory-grid',
     prop: TidyFlags.getFlagPropertyPath('inventory-grid'),

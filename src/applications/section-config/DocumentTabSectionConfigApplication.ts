@@ -41,7 +41,7 @@ export class DocumentTabSectionConfigApplication extends SvelteFormApplicationBa
     return FoundryAdapter.mergeObject(super.defaultOptions, {
       width: 650,
       height: 500,
-      id: 'tidy-5e-sheets-migration-selection',
+      id: 'tidy-5e-sheets-section-configuration',
       popOut: true,
     });
   }

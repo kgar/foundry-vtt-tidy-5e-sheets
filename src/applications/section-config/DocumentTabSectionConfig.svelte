@@ -24,14 +24,17 @@
     class="flex-1"
   >
     <svelte:fragment let:item>
-      <span class="flex-1" class:marked-as-hidden={item.show === false}
-        >{item.label}</span
+      <span
+        data-testid="section-config-item-label"
+        class="flex-1"
+        class:marked-as-hidden={item.show === false}>{item.label}</span
       >
       {#if item.show !== false}
         <button
           type="button"
           class="inline-icon-button"
           title={localize('TIDY5E.Section.ConfigDialog.hideTooltip')}
+          data-testid="section-config-hide"
           on:click={() => {
             item.show = false;
             sections = sections;
@@ -44,6 +47,7 @@
           type="button"
           class="inline-icon-button"
           title={localize('TIDY5E.Section.ConfigDialog.showTooltip')}
+          data-testid="section-config-show"
           on:click={() => {
             item.show = true;
             sections = sections;
@@ -59,6 +63,7 @@
     <button
       type="button"
       class="use-default-btn"
+      data-testid="section-config-use-default"
       on:click={(ev) => useDefault()}
     >
       <i class="fas fa-rotate-right" />
@@ -66,6 +71,7 @@
     </button>
     <button
       type="button"
+      data-testid="section-config-save-changes"
       on:click={(ev) => onSaveChanges(sections)}
       class="save-changes-btn"
     >
@@ -75,6 +81,7 @@
     <button
       type="button"
       class="apply-changes-btn"
+      data-testid="section-config-apply-changes"
       on:click={() => onApply(sections)}
     >
       <i class="fas fa-check" />

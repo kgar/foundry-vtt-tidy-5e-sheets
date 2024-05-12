@@ -11,10 +11,10 @@
   let context = getContext<Readable<ActorSheetContext>>('context');
 
   async function toggleLock() {
-    await TidyFlags.setFlag($context.actor, 'allow-edit', !allowEdit);
+    await TidyFlags.allowEdit.set($context.actor, !allowEdit);
   }
 
-  $: allowEdit = FoundryAdapter.isSheetUnlocked($context.actor);
+  $: allowEdit = TidyFlags.allowEdit.get($context.actor);
 
   $: descriptionVariable =
     hint ??

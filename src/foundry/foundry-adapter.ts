@@ -546,7 +546,7 @@ export const FoundryAdapter = {
   },
   isActorSheetUnlocked(actor: any): boolean {
     return (
-      (actor.isOwner && FoundryAdapter.isSheetUnlocked(actor)) ||
+      (actor.isOwner && TidyFlags.allowEdit.get(actor)) ||
       (FoundryAdapter.userIsGm() &&
         SettingsProvider.settings.permanentlyUnlockCharacterSheetForGm.get() &&
         actor.type === CONSTANTS.SHEET_TYPE_CHARACTER) ||
@@ -557,14 +557,6 @@ export const FoundryAdapter = {
         SettingsProvider.settings.permanentlyUnlockVehicleSheetForGm.get() &&
         actor.type === CONSTANTS.SHEET_TYPE_VEHICLE)
     );
-  },
-  /**
-   * Determines whether an actor's sheet should be editable per the sheet lock feature (default `true`).
-   * @param actor the actor
-   * @returns whether the sheet should be editable per the sheet lock feature
-   */
-  isSheetUnlocked(actor: any) {
-    return TidyFlags.tryGetFlag<boolean>(actor, 'allow-edit') ?? true;
   },
   allowCharacterEffectsManagement(actor: any) {
     return (
