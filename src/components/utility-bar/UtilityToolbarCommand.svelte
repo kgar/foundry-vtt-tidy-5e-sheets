@@ -3,7 +3,8 @@
   import { createEventDispatcher, getContext } from 'svelte';
   import type { UtilityToolbarCommandExecuteEvent } from './types';
   import { settingStore } from 'src/settings/settings';
-    import type { Readable } from 'svelte/store';
+  import type { Readable } from 'svelte/store';
+  import { CONSTANTS } from 'src/constants';
 
   export let title: string | undefined = undefined;
   export let iconClass: string | undefined = undefined;
@@ -24,6 +25,7 @@
   on:click={(ev) => dispatcher('execute', { event: ev, context: $context })}
   {title}
   tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+  data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.UTILITY_TOOLBAR_COMMAND}
 >
   {#if !isNil(iconClass, '')}
     <i class={iconClass}></i>
