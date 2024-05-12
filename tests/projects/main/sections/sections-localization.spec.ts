@@ -1,8 +1,6 @@
 import { CONSTANTS } from 'src/constants';
-import { PageHelper } from 'tests/utils/PageHelper';
 import { SheetHelper } from 'tests/helpers/SheetHelper';
 import { TidyFlags } from 'src/foundry/TidyFlags';
-import { type Page } from '@playwright/test';
 import { sectionsTest } from './sections-test-fixture';
 import type { DefaultSectionTestParams } from './sections.spec.types';
 import {

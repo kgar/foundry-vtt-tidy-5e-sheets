@@ -18,7 +18,7 @@ export const sectionsTest = test.extend<
   ],
   sectionPage: [
     async ({ browser }, use) => {
-      let page = await browser.newPage();
+      const page = await browser.newPage();
       await PageHelper.routeToTestGame(page);
       await use(page);
       await page.close();
