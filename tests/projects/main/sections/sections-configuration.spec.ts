@@ -45,27 +45,38 @@ sectionsTest.describe('character', () => {
       const testItem1 = await sheetHelper.createEmbeddedItem({
         name: 'Test Item 1',
         type: CONSTANTS.ITEM_TYPE_WEAPON,
+        flags: {
+          [CONSTANTS.MODULE_ID]: {
+            [TidyFlags.favorite.key]: true,
+          },
+        },
       });
       const testItem2 = await sheetHelper.createEmbeddedItem({
         name: 'Test Item 2',
-        type: CONSTANTS.ITEM_TYPE_EQUIPMENT,
+        type: CONSTANTS.ITEM_TYPE_SPELL,
+        flags: {
+          [CONSTANTS.MODULE_ID]: {
+            [TidyFlags.favorite.key]: true,
+          },
+        },
       });
       const testItem3 = await sheetHelper.createEmbeddedItem({
         name: 'Test Item 3',
-        type: CONSTANTS.ITEM_TYPE_WEAPON,
+        type: CONSTANTS.ITEM_TYPE_FEAT,
         flags: {
           [CONSTANTS.MODULE_ID]: {
             [TidyFlags.section.key]: customItemSection,
+            [TidyFlags.favorite.key]: true,
           },
         },
       });
 
       await runStandardSectionConfigTests({
         section1: CONSTANTS.ITEM_TYPE_WEAPON,
-        section2: CONSTANTS.ITEM_TYPE_EQUIPMENT,
+        section2: 'spell1',
         section3: customItemSection,
         sheetHelper: sheetHelper,
-        tabId: CONSTANTS.TAB_CHARACTER_INVENTORY,
+        tabId: CONSTANTS.TAB_CHARACTER_ATTRIBUTES,
       });
 
       await sheetHelper.deleteEmbeddedItem(testItem1);
@@ -83,9 +94,41 @@ sectionsTest.describe('character', () => {
   });
 
   // - Inventory
-  sectionsTest('inventory - core functionality', async ({ data }) => {
+  sectionsTest('inventory - core functionality', async ({ sectionPage, data }) => {
     // Add specific items - have at least one custom section
-    // Run the test
+    const sheetHelper = new SheetHelper(
+      sectionPage,
+      data.sectionConfigTestCharacter
+    );
+    const testItem1 = await sheetHelper.createEmbeddedItem({
+      name: 'Test Item 1',
+      type: CONSTANTS.ITEM_TYPE_WEAPON,
+    });
+    const testItem2 = await sheetHelper.createEmbeddedItem({
+      name: 'Test Item 2',
+      type: CONSTANTS.ITEM_TYPE_EQUIPMENT,
+    });
+    const testItem3 = await sheetHelper.createEmbeddedItem({
+      name: 'Test Item 3',
+      type: CONSTANTS.ITEM_TYPE_WEAPON,
+      flags: {
+        [CONSTANTS.MODULE_ID]: {
+          [TidyFlags.section.key]: customItemSection,
+        },
+      },
+    });
+
+    await runStandardSectionConfigTests({
+      section1: CONSTANTS.ITEM_TYPE_WEAPON,
+      section2: CONSTANTS.ITEM_TYPE_EQUIPMENT,
+      section3: customItemSection,
+      sheetHelper: sheetHelper,
+      tabId: CONSTANTS.TAB_CHARACTER_INVENTORY,
+    });
+
+    await sheetHelper.deleteEmbeddedItem(testItem1);
+    await sheetHelper.deleteEmbeddedItem(testItem2);
+    await sheetHelper.deleteEmbeddedItem(testItem3);
   });
 
   // - Spellbook
