@@ -86,11 +86,76 @@ sectionsTest.describe('character', () => {
   );
 
   // - Attributes - multiple sections of same name
-  sectionsTest('attributes - multi-tab section', async ({ data }) => {
+  sectionsTest('attributes - multi-tab section', async ({ sectionPage, data }) => {
     // Add specific items/spells/features and favorite them:
     // - have at least one standard section
     // - have the same custom section across inventory / spellbook / features
-    // Run the test
+    const sheetHelper = new SheetHelper(
+      sectionPage,
+      data.sectionConfigTestCharacter
+    );
+    const testItem1 = await sheetHelper.createEmbeddedItem({
+      name: 'Test Item 1',
+      type: CONSTANTS.ITEM_TYPE_WEAPON,
+      flags: {
+        [CONSTANTS.MODULE_ID]: {
+          [TidyFlags.favorite.key]: true,
+        },
+      },
+    });
+    const testItem2 = await sheetHelper.createEmbeddedItem({
+      name: 'Test Item 2',
+      type: CONSTANTS.ITEM_TYPE_SPELL,
+      flags: {
+        [CONSTANTS.MODULE_ID]: {
+          [TidyFlags.favorite.key]: true,
+        },
+      },
+    });
+    const testItem3 = await sheetHelper.createEmbeddedItem({
+      name: 'Test Item 3',
+      type: CONSTANTS.ITEM_TYPE_FEAT,
+      flags: {
+        [CONSTANTS.MODULE_ID]: {
+          [TidyFlags.section.key]: customItemSection,
+          [TidyFlags.favorite.key]: true,
+        },
+      },
+    });
+    const testItem4 = await sheetHelper.createEmbeddedItem({
+      name: 'Test Item 4',
+      type: CONSTANTS.ITEM_TYPE_WEAPON,
+      flags: {
+        [CONSTANTS.MODULE_ID]: {
+          [TidyFlags.section.key]: customItemSection,
+          [TidyFlags.favorite.key]: true,
+        },
+      },
+    });
+    const testItem5 = await sheetHelper.createEmbeddedItem({
+      name: 'Test Item 5',
+      type: CONSTANTS.ITEM_TYPE_SPELL,
+      flags: {
+        [CONSTANTS.MODULE_ID]: {
+          [TidyFlags.section.key]: customItemSection,
+          [TidyFlags.favorite.key]: true,
+        },
+      },
+    });
+
+    await runStandardSectionConfigTests({
+      section1: CONSTANTS.ITEM_TYPE_WEAPON,
+      section2: 'spell1',
+      section3: customItemSection,
+      sheetHelper: sheetHelper,
+      tabId: CONSTANTS.TAB_CHARACTER_ATTRIBUTES,
+    });
+
+    await sheetHelper.deleteEmbeddedItem(testItem1);
+    await sheetHelper.deleteEmbeddedItem(testItem2);
+    await sheetHelper.deleteEmbeddedItem(testItem3);
+    await sheetHelper.deleteEmbeddedItem(testItem4);
+    await sheetHelper.deleteEmbeddedItem(testItem5);
   });
 
   // - Inventory
