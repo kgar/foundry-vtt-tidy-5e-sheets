@@ -25,6 +25,7 @@
   >
     <svelte:fragment let:item>
       <span
+        data-section-key={item['key']}
         data-testid="section-config-item-label"
         class="flex-1"
         class:marked-as-hidden={item.show === false}>{item.label}</span

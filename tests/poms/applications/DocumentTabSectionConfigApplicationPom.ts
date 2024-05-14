@@ -12,7 +12,7 @@ export class DocumentTabSectionConfigApplicationPom {
   $configureSectionMoveItemUpButton: Locator;
   $configureSectionMoveItemDownButton: Locator;
 
-  itemLabelTestId = 'section-config-item-label';
+  sectionKeyAttribute = 'data-section-key';
   hideSectionTestId = 'section-config-hide';
   showSectionTestId = 'section-config-show';
 
@@ -53,11 +53,9 @@ export class DocumentTabSectionConfigApplicationPom {
     await this.getOption(name).click();
   }
 
-  private getOption(name: string) {
+  private getOption(key: string) {
     return this.$listboxOptions.filter({
-      has: this.$listboxOptions
-        .getByTestId(this.itemLabelTestId)
-        .filter({ hasText: name }),
+      has: this.page.locator(`[${this.sectionKeyAttribute}="${key}"]`),
     });
   }
 

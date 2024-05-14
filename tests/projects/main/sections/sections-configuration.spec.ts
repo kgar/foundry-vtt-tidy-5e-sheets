@@ -47,7 +47,7 @@ sectionsTest.describe('character', () => {
       });
       await sheetHelper.createEmbeddedItem({
         name: 'Test Item 2',
-        type: CONSTANTS.ITEM_TYPE_WEAPON,
+        type: CONSTANTS.ITEM_TYPE_EQUIPMENT,
       });
       const customItemSection = 'Custom Weapon Section';
       await sheetHelper.createEmbeddedItem({
@@ -55,7 +55,7 @@ sectionsTest.describe('character', () => {
         type: CONSTANTS.ITEM_TYPE_WEAPON,
         flags: {
           [CONSTANTS.MODULE_ID]: {
-            [TidyFlags.section.prop]: customItemSection,
+            [TidyFlags.section.key]: customItemSection,
           },
         },
       });
