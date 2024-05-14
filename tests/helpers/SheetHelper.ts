@@ -84,6 +84,18 @@ export class SheetHelper {
     );
   }
 
+  async deleteEmbeddedItem(itemRef: DocumentRef) {
+    await this.page.evaluate(
+      async ({ itemRef }) => {
+        const item = await fromUuid(itemRef.uuid);
+        await item.delete();
+      },
+      {
+        itemRef,
+      }
+    );
+  }
+
   async setToGridView() {
     await this.updateDocument({
       [TidyFlags.inventoryGrid.prop]: true,

@@ -29,6 +29,8 @@ type RunSectionConfigTestsArgs = {
   tabId: string;
 };
 
+const customItemSection = 'Custom Test Section';
+
 // Character - verify can order and show/hide sections
 sectionsTest.describe('character', () => {
   // - Attributes
@@ -40,17 +42,15 @@ sectionsTest.describe('character', () => {
         sectionPage,
         data.sectionConfigTestCharacter
       );
-      await sheetHelper.lockSheet();
-      await sheetHelper.createEmbeddedItem({
+      const testItem1 = await sheetHelper.createEmbeddedItem({
         name: 'Test Item 1',
         type: CONSTANTS.ITEM_TYPE_WEAPON,
       });
-      await sheetHelper.createEmbeddedItem({
+      const testItem2 = await sheetHelper.createEmbeddedItem({
         name: 'Test Item 2',
         type: CONSTANTS.ITEM_TYPE_EQUIPMENT,
       });
-      const customItemSection = 'Custom Weapon Section';
-      await sheetHelper.createEmbeddedItem({
+      const testItem3 = await sheetHelper.createEmbeddedItem({
         name: 'Test Item 3',
         type: CONSTANTS.ITEM_TYPE_WEAPON,
         flags: {
@@ -67,6 +67,10 @@ sectionsTest.describe('character', () => {
         sheetHelper: sheetHelper,
         tabId: CONSTANTS.TAB_CHARACTER_INVENTORY,
       });
+
+      await sheetHelper.deleteEmbeddedItem(testItem1);
+      await sheetHelper.deleteEmbeddedItem(testItem2);
+      await sheetHelper.deleteEmbeddedItem(testItem3);
     }
   );
 
@@ -148,10 +152,40 @@ async function runStandardSectionConfigTests(args: RunSectionConfigTestsArgs) {
 
   await sheetHelper.showSheet();
 
-  {
-    await resetToDefault(sheetHelper, tabId);
+  await resetToDefault(sheetHelper, tabId);
 
-    // verify initial section order - 1, 2, 3
+  // establish initial section order- sections 1-3 should be in positions 1-3
+  {
+    const defaultSectionLayout = (
+      await sheetHelper.getSectionsInCurrentOrder(tabId)
+    ).reduce<Record<string, { key: string; initialIndex: number }>>(
+      (prev, curr, i) => {
+        prev[curr] = { key: curr, initialIndex: i };
+        return prev;
+      },
+      {}
+    );
+
+    const config = await sheetHelper.openSectionConfiguration(tabId);
+
+    for (let i = 0; i < defaultSectionLayout[section1].initialIndex; i++) {
+      await config.selectSection(section1);
+      await config.$configureSectionMoveItemUpButton.click();
+    }
+    for (let i = 0; i < defaultSectionLayout[section2].initialIndex - 1; i++) {
+      await config.selectSection(section2);
+      await config.$configureSectionMoveItemUpButton.click();
+    }
+    for (let i = 0; i < defaultSectionLayout[section3].initialIndex - 2; i++) {
+      await config.selectSection(section3);
+      await config.$configureSectionMoveItemUpButton.click();
+    }
+
+    // save initial order
+    await config.$configureSectionsSaveChanges.click();
+    await delay(100);
+
+    // verify sections are in initial intended order for the test
     const sections = await sheetHelper.getSectionsInCurrentOrder(tabId);
     sectionsTest.expect(sections[0]).toEqual(section1);
     sectionsTest.expect(sections[1]).toEqual(section2);
@@ -164,7 +198,8 @@ async function runStandardSectionConfigTests(args: RunSectionConfigTestsArgs) {
     await config.selectSection(section1);
     await config.$configureSectionMoveItemDownButton.click();
     await config.selectSection(section3);
-    await config.$configureSectionMoveItemUpButton.click({ clickCount: 2 });
+    await config.$configureSectionMoveItemUpButton.click();
+    await config.$configureSectionMoveItemUpButton.click();
 
     // save new order
     await config.$configureSectionsSaveChanges.click();
