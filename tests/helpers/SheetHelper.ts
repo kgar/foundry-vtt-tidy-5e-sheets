@@ -39,9 +39,11 @@ export class SheetHelper {
   async tab(tabId: string) {
     const $tab = this.$sheet.locator(`nav [data-tab-id="${tabId}"]`);
 
-    const tabIsHidden = await this.getTabContentsLocator(tabId).isHidden();
+    const tabContentsAreHidden = await this.getTabContentsLocator(
+      tabId
+    ).isHidden();
 
-    if (tabIsHidden) {
+    if (tabContentsAreHidden) {
       await $tab.click();
     }
 

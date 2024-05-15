@@ -4,10 +4,13 @@ import type {
   ActorInventoryTypes,
   CharacterFeatureSection,
   CharacterItemPartitions,
+  FavoriteSection,
+  GenericFavoriteSection,
   InventorySection,
 } from 'src/types/types';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import { Inventory } from './Inventory';
+import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
 export class CharacterSheetSections {
   static applyInventoryItemToSection(
@@ -181,5 +184,62 @@ export class CharacterSheetSections {
     } else if (Object.keys(inventory).includes(item.type)) {
       partitions.items.push(item);
     }
+  }
+
+  static mergeDuplicateFavoriteSections(sections: FavoriteSection[]) {
+    let sectionsMap: Record<string, FavoriteSection> = {};
+    for (let section of sections) {
+      const mappedSection = sectionsMap[section.key];
+      if (!mappedSection) {
+        sectionsMap[section.key] = section;
+        continue;
+      }
+
+      const incomingItems =
+        CharacterSheetSections.getItemsFromFavoriteSection(section);
+
+      if (mappedSection.type !== CONSTANTS.CHARACTER_FAVORITE_GENERIC_SECTION) {
+        const mappedItems =
+          CharacterSheetSections.getItemsFromFavoriteSection(mappedSection);
+
+        sectionsMap[section.key] =
+          CharacterSheetSections.createGenericFavoriteSection(section.key, [
+            ...incomingItems,
+            ...mappedItems,
+          ]);
+
+        continue;
+      }
+
+      mappedSection.items.push(...incomingItems);
+    }
+
+    return Object.values(sectionsMap);
+  }
+
+  static getItemsFromFavoriteSection(section: FavoriteSection) {
+    return section.type === CONSTANTS.TAB_CHARACTER_SPELLBOOK
+      ? section.spells
+      : section.items;
+  }
+
+  static createGenericFavoriteSection(
+    key: string,
+    items: Item5e[]
+  ): GenericFavoriteSection & { type: 'generic' } {
+    return {
+      canCreate: false,
+      dataset: [],
+      items: items,
+      key: key,
+      label: FoundryAdapter.localize(key),
+      custom: {
+        creationItemTypes: [],
+        section: key,
+      },
+      isExternal: false,
+      show: true,
+      type: 'generic',
+    };
   }
 }

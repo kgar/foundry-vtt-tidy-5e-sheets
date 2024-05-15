@@ -86,115 +86,121 @@ sectionsTest.describe('character', () => {
   );
 
   // - Attributes - multiple sections of same name
-  sectionsTest('attributes - multi-tab section', async ({ sectionPage, data }) => {
-    // Add specific items/spells/features and favorite them:
-    // - have at least one standard section
-    // - have the same custom section across inventory / spellbook / features
-    const sheetHelper = new SheetHelper(
-      sectionPage,
-      data.sectionConfigTestCharacter
-    );
-    const testItem1 = await sheetHelper.createEmbeddedItem({
-      name: 'Test Item 1',
-      type: CONSTANTS.ITEM_TYPE_WEAPON,
-      flags: {
-        [CONSTANTS.MODULE_ID]: {
-          [TidyFlags.favorite.key]: true,
+  sectionsTest(
+    'attributes - multi-tab section',
+    async ({ sectionPage, data }) => {
+      // Add specific items/spells/features and favorite them:
+      // - have at least one standard section
+      // - have the same custom section across inventory / spellbook / features
+      const sheetHelper = new SheetHelper(
+        sectionPage,
+        data.sectionConfigTestCharacter
+      );
+      const testItem1 = await sheetHelper.createEmbeddedItem({
+        name: 'Test Item 1',
+        type: CONSTANTS.ITEM_TYPE_WEAPON,
+        flags: {
+          [CONSTANTS.MODULE_ID]: {
+            [TidyFlags.favorite.key]: true,
+          },
         },
-      },
-    });
-    const testItem2 = await sheetHelper.createEmbeddedItem({
-      name: 'Test Item 2',
-      type: CONSTANTS.ITEM_TYPE_SPELL,
-      flags: {
-        [CONSTANTS.MODULE_ID]: {
-          [TidyFlags.favorite.key]: true,
+      });
+      const testItem2 = await sheetHelper.createEmbeddedItem({
+        name: 'Test Item 2',
+        type: CONSTANTS.ITEM_TYPE_SPELL,
+        flags: {
+          [CONSTANTS.MODULE_ID]: {
+            [TidyFlags.favorite.key]: true,
+          },
         },
-      },
-    });
-    const testItem3 = await sheetHelper.createEmbeddedItem({
-      name: 'Test Item 3',
-      type: CONSTANTS.ITEM_TYPE_FEAT,
-      flags: {
-        [CONSTANTS.MODULE_ID]: {
-          [TidyFlags.section.key]: customItemSection,
-          [TidyFlags.favorite.key]: true,
+      });
+      const testItem3 = await sheetHelper.createEmbeddedItem({
+        name: 'Test Item 3',
+        type: CONSTANTS.ITEM_TYPE_FEAT,
+        flags: {
+          [CONSTANTS.MODULE_ID]: {
+            [TidyFlags.section.key]: customItemSection,
+            [TidyFlags.favorite.key]: true,
+          },
         },
-      },
-    });
-    const testItem4 = await sheetHelper.createEmbeddedItem({
-      name: 'Test Item 4',
-      type: CONSTANTS.ITEM_TYPE_WEAPON,
-      flags: {
-        [CONSTANTS.MODULE_ID]: {
-          [TidyFlags.section.key]: customItemSection,
-          [TidyFlags.favorite.key]: true,
+      });
+      const testItem4 = await sheetHelper.createEmbeddedItem({
+        name: 'Test Item 4',
+        type: CONSTANTS.ITEM_TYPE_WEAPON,
+        flags: {
+          [CONSTANTS.MODULE_ID]: {
+            [TidyFlags.section.key]: customItemSection,
+            [TidyFlags.favorite.key]: true,
+          },
         },
-      },
-    });
-    const testItem5 = await sheetHelper.createEmbeddedItem({
-      name: 'Test Item 5',
-      type: CONSTANTS.ITEM_TYPE_SPELL,
-      flags: {
-        [CONSTANTS.MODULE_ID]: {
-          [TidyFlags.section.key]: customItemSection,
-          [TidyFlags.favorite.key]: true,
+      });
+      const testItem5 = await sheetHelper.createEmbeddedItem({
+        name: 'Test Item 5',
+        type: CONSTANTS.ITEM_TYPE_SPELL,
+        flags: {
+          [CONSTANTS.MODULE_ID]: {
+            [TidyFlags.section.key]: customItemSection,
+            [TidyFlags.favorite.key]: true,
+          },
         },
-      },
-    });
+      });
 
-    await runStandardSectionConfigTests({
-      section1: CONSTANTS.ITEM_TYPE_WEAPON,
-      section2: 'spell1',
-      section3: customItemSection,
-      sheetHelper: sheetHelper,
-      tabId: CONSTANTS.TAB_CHARACTER_ATTRIBUTES,
-    });
+      await runStandardSectionConfigTests({
+        section1: CONSTANTS.ITEM_TYPE_WEAPON,
+        section2: 'spell1',
+        section3: customItemSection,
+        sheetHelper: sheetHelper,
+        tabId: CONSTANTS.TAB_CHARACTER_ATTRIBUTES,
+      });
 
-    await sheetHelper.deleteEmbeddedItem(testItem1);
-    await sheetHelper.deleteEmbeddedItem(testItem2);
-    await sheetHelper.deleteEmbeddedItem(testItem3);
-    await sheetHelper.deleteEmbeddedItem(testItem4);
-    await sheetHelper.deleteEmbeddedItem(testItem5);
-  });
+      await sheetHelper.deleteEmbeddedItem(testItem1);
+      await sheetHelper.deleteEmbeddedItem(testItem2);
+      await sheetHelper.deleteEmbeddedItem(testItem3);
+      await sheetHelper.deleteEmbeddedItem(testItem4);
+      await sheetHelper.deleteEmbeddedItem(testItem5);
+    }
+  );
 
   // - Inventory
-  sectionsTest('inventory - core functionality', async ({ sectionPage, data }) => {
-    // Add specific items - have at least one custom section
-    const sheetHelper = new SheetHelper(
-      sectionPage,
-      data.sectionConfigTestCharacter
-    );
-    const testItem1 = await sheetHelper.createEmbeddedItem({
-      name: 'Test Item 1',
-      type: CONSTANTS.ITEM_TYPE_WEAPON,
-    });
-    const testItem2 = await sheetHelper.createEmbeddedItem({
-      name: 'Test Item 2',
-      type: CONSTANTS.ITEM_TYPE_EQUIPMENT,
-    });
-    const testItem3 = await sheetHelper.createEmbeddedItem({
-      name: 'Test Item 3',
-      type: CONSTANTS.ITEM_TYPE_WEAPON,
-      flags: {
-        [CONSTANTS.MODULE_ID]: {
-          [TidyFlags.section.key]: customItemSection,
+  sectionsTest(
+    'inventory - core functionality',
+    async ({ sectionPage, data }) => {
+      // Add specific items - have at least one custom section
+      const sheetHelper = new SheetHelper(
+        sectionPage,
+        data.sectionConfigTestCharacter
+      );
+      const testItem1 = await sheetHelper.createEmbeddedItem({
+        name: 'Test Item 1',
+        type: CONSTANTS.ITEM_TYPE_WEAPON,
+      });
+      const testItem2 = await sheetHelper.createEmbeddedItem({
+        name: 'Test Item 2',
+        type: CONSTANTS.ITEM_TYPE_EQUIPMENT,
+      });
+      const testItem3 = await sheetHelper.createEmbeddedItem({
+        name: 'Test Item 3',
+        type: CONSTANTS.ITEM_TYPE_WEAPON,
+        flags: {
+          [CONSTANTS.MODULE_ID]: {
+            [TidyFlags.section.key]: customItemSection,
+          },
         },
-      },
-    });
+      });
 
-    await runStandardSectionConfigTests({
-      section1: CONSTANTS.ITEM_TYPE_WEAPON,
-      section2: CONSTANTS.ITEM_TYPE_EQUIPMENT,
-      section3: customItemSection,
-      sheetHelper: sheetHelper,
-      tabId: CONSTANTS.TAB_CHARACTER_INVENTORY,
-    });
+      await runStandardSectionConfigTests({
+        section1: CONSTANTS.ITEM_TYPE_WEAPON,
+        section2: CONSTANTS.ITEM_TYPE_EQUIPMENT,
+        section3: customItemSection,
+        sheetHelper: sheetHelper,
+        tabId: CONSTANTS.TAB_CHARACTER_INVENTORY,
+      });
 
-    await sheetHelper.deleteEmbeddedItem(testItem1);
-    await sheetHelper.deleteEmbeddedItem(testItem2);
-    await sheetHelper.deleteEmbeddedItem(testItem3);
-  });
+      await sheetHelper.deleteEmbeddedItem(testItem1);
+      await sheetHelper.deleteEmbeddedItem(testItem2);
+      await sheetHelper.deleteEmbeddedItem(testItem3);
+    }
+  );
 
   // - Spellbook
   sectionsTest('spellbook - core functionality', async ({ data }) => {
@@ -290,8 +296,7 @@ async function runStandardSectionConfigTests(args: RunSectionConfigTestsArgs) {
     }
 
     // save initial order
-    await config.$configureSectionsSaveChanges.click();
-    await delay(100);
+    await config.saveChanges();
 
     // verify sections are in initial intended order for the test
     const sections = await sheetHelper.getSectionsInCurrentOrder(tabId);
@@ -310,8 +315,7 @@ async function runStandardSectionConfigTests(args: RunSectionConfigTestsArgs) {
     await config.$configureSectionMoveItemUpButton.click();
 
     // save new order
-    await config.$configureSectionsSaveChanges.click();
-    await delay(100);
+    await config.saveChanges();
 
     // verify new order - 3, 2, 1
     const sections = await sheetHelper.getSectionsInCurrentOrder(tabId);
@@ -327,8 +331,7 @@ async function runStandardSectionConfigTests(args: RunSectionConfigTestsArgs) {
     await config.dragSectionTo(section3, section1);
 
     // save changes
-    await config.$configureSectionsSaveChanges.click();
-    await delay(100);
+    await config.saveChanges();
 
     // verify new order - 2, 1, 3
     const sections = await sheetHelper.getSectionsInCurrentOrder(tabId);
@@ -344,8 +347,7 @@ async function runStandardSectionConfigTests(args: RunSectionConfigTestsArgs) {
     await config.hideSection(section2);
 
     // save changes
-    await config.$configureSectionsSaveChanges.click();
-    await delay(100);
+    await config.saveChanges();
 
     // verify section visibility on sheet tab
     const sections = await sheetHelper.getSectionsInCurrentOrder(tabId);
@@ -366,5 +368,7 @@ async function resetToDefault(sheetHelper: SheetHelper, tabId: string) {
   const config = await sheetHelper.openSectionConfiguration(tabId);
   await config.$configureSectionsUseDefault.click();
   await config.$configureSectionsUseDefaultYesButton.click();
-  await delay(100);
+  await config.$configureSectionsUseDefaultYesButton.waitFor({
+    state: 'hidden',
+  });
 }

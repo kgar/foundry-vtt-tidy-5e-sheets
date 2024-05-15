@@ -1305,9 +1305,12 @@ export class Tidy5eCharacterSheet
         })),
     ];
 
-    context.favorites = SheetSections.sortKeyedSections(
-      favoriteSections,
-      sectionConfigs?.[CONSTANTS.TAB_CHARACTER_ATTRIBUTES]
+    // TODO: Revise so that there's less churn.
+    context.favorites = CharacterSheetSections.mergeDuplicateFavoriteSections(
+      SheetSections.sortKeyedSections(
+        favoriteSections,
+        sectionConfigs?.[CONSTANTS.TAB_CHARACTER_ATTRIBUTES]
+      )
     );
 
     const attributesSortMode =

@@ -57,6 +57,7 @@ export const CONSTANTS = {
     wizard: 'TIDY5E.Class.Wizard',
     custom: 'TIDY5E.Class.Custom',
   },
+  CHARACTER_FAVORITE_GENERIC_SECTION: 'generic',
   NPC_ABILITY_SECTION_WEAPONS: 'weapons',
   NPC_ABILITY_SECTION_ACTIONS: 'actions',
   NPC_ABILITY_SECTION_PASSIVE: 'passive',

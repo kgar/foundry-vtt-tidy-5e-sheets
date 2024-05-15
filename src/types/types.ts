@@ -117,6 +117,11 @@ export type InventorySection = {
   canCreate: boolean;
 } & TidySectionBase;
 
+export type GenericFavoriteSection = {
+  items: Item5e[];
+  canCreate: false;
+} & TidySectionBase;
+
 export type CharacterItemPartitions = {
   items: Item5e[];
   spells: Item5e[];
@@ -204,6 +209,9 @@ export type FavoriteSection =
   | (SpellbookSection & { type: typeof CONSTANTS.TAB_CHARACTER_SPELLBOOK })
   | (CharacterFeatureSection & {
       type: typeof CONSTANTS.TAB_CHARACTER_FEATURES;
+    })
+  | (GenericFavoriteSection & {
+      type: typeof CONSTANTS.CHARACTER_FAVORITE_GENERIC_SECTION;
     });
 
 export type CharacterSheetContext = {
@@ -319,9 +327,9 @@ export type ActionItem = {
   rangeSubtitle: string | null;
 };
 
-export type ActionSection = { 
+export type ActionSection = {
   actions: ActionItem[];
- } & TidySectionBase;
+} & TidySectionBase;
 
 export type TidyResource = {
   name: string;

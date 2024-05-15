@@ -1,4 +1,5 @@
 import type { Locator, Page } from '@playwright/test';
+import { delay } from 'src/utils/asynchrony';
 
 export class DocumentTabSectionConfigApplicationPom {
   page: Page;
@@ -21,10 +22,10 @@ export class DocumentTabSectionConfigApplicationPom {
     this.$application = page.locator('#tidy-5e-sheets-section-configuration');
     this.$listboxOptions = this.$application.getByRole('option');
     this.$configureSectionsSaveChanges = this.$application.getByTestId(
-      'section-config-apply-changes'
+      'section-config-save-changes'
     );
     this.$configureSectionsApplyChanges = this.$application.getByTestId(
-      'section-config-save-changes'
+      'section-config-apply-changes'
     );
     this.$configureSectionsUseDefault = this.$application.getByTestId(
       'section-config-use-default'
@@ -82,5 +83,12 @@ export class DocumentTabSectionConfigApplicationPom {
 
   async showSection(name: string) {
     await this.getOption(name).getByTestId(this.showSectionTestId).click();
+  }
+
+  async saveChanges() {
+    await this.$configureSectionsSaveChanges.click();
+    await this.$application.waitFor({
+      state: 'hidden',
+    });
   }
 }
