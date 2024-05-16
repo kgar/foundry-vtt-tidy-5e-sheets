@@ -33,7 +33,6 @@ const customItemSection = 'Custom Test Section';
 
 // Character - verify can order and show/hide sections
 sectionsTest.describe('character', () => {
-  // - Attributes
   sectionsTest(
     'attributes - core functionality',
     async ({ sectionPage, data }) => {
@@ -85,7 +84,6 @@ sectionsTest.describe('character', () => {
     }
   );
 
-  // - Attributes - multiple sections of same name
   sectionsTest(
     'attributes - multi-tab section',
     async ({ sectionPage, data }) => {
@@ -161,7 +159,6 @@ sectionsTest.describe('character', () => {
     }
   );
 
-  // - Inventory
   sectionsTest(
     'inventory - core functionality',
     async ({ sectionPage, data }) => {
@@ -202,7 +199,6 @@ sectionsTest.describe('character', () => {
     }
   );
 
-  // - Spellbook
   sectionsTest(
     'spellbook - core functionality',
     async ({ sectionPage, data }) => {
@@ -249,7 +245,6 @@ sectionsTest.describe('character', () => {
     }
   );
 
-  // - Features
   sectionsTest(
     'features - core functionality',
     async ({ sectionPage, data }) => {
@@ -298,7 +293,6 @@ sectionsTest.describe('character', () => {
     }
   );
 
-  // - Actions
   sectionsTest(
     'actions - core functionality',
     async ({ sectionPage, data }) => {
@@ -307,7 +301,7 @@ sectionsTest.describe('character', () => {
         sectionPage,
         data.sectionConfigTestCharacter
       );
-      // passive
+      // action
       const testItem1 = await sheetHelper.createEmbeddedItem({
         name: 'Test Item 1',
         type: CONSTANTS.ITEM_TYPE_WEAPON,
@@ -318,7 +312,7 @@ sectionsTest.describe('character', () => {
           equipped: true,
         },
       });
-      // active
+      // bonus
       const testItem2 = await sheetHelper.createEmbeddedItem({
         name: 'Test Item 2',
         type: CONSTANTS.ITEM_TYPE_SPELL,
@@ -358,45 +352,273 @@ sectionsTest.describe('character', () => {
   );
 });
 
-// Specific flows
-// - Attributes (Favorites)
-// - Given spells, features, and items with identical section names
-// - When opening the section config
-// - The sections are distinguishable
-// - somehow handle multiple duplicate sections in Favorites. Right now, this case causes the section config to error out.
-// - suggestion: add the source tab name to custom sections in favorites specifically, while maintaining the correct label
+sectionsTest.describe('NPC', () => {
+  sectionsTest(
+    'abilities - core functionality',
+    async ({ sectionPage, data }) => {
+      // Add specific abilities - have at least one custom section
+      const sheetHelper = new SheetHelper(
+        sectionPage,
+        data.sectionConfigTestNpc
+      );
+      // passive
+      const testItem1 = await sheetHelper.createEmbeddedItem({
+        name: 'Test Feat 1',
+        type: CONSTANTS.ITEM_TYPE_FEAT,
+      });
+      // actions
+      const testItem2 = await sheetHelper.createEmbeddedItem({
+        name: 'Test Feat 2',
+        type: CONSTANTS.ITEM_TYPE_FEAT,
+        system: {
+          activation: {
+            type: CONSTANTS.ACTIVATION_COST_ACTION,
+          },
+        },
+      });
+      // custom
+      const testItem3 = await sheetHelper.createEmbeddedItem({
+        name: 'Test Feat 3',
+        type: CONSTANTS.ITEM_TYPE_FEAT,
+        flags: {
+          [CONSTANTS.MODULE_ID]: {
+            [TidyFlags.section.key]: customItemSection,
+          },
+        },
+      });
 
-// sectionsTest.describe('character', () => {
-//   const itemsToCreate: SheetHelperItemCreationArgs[] = [
-//     {
-//         name: 'Item Section Config 1',
-//         type: CONSTANTS.ITEM_TYPE_LOOT
-//     }
-//   ]
-//     const items: DocumentRef[] = [];
-//   sectionsTest.beforeAll(() => {
-//     // Set up items with sections in specific order.
-//     const sheetHelper =
-//   });
+      await runStandardSectionConfigTests({
+        section1: CONSTANTS.NPC_ABILITY_SECTION_PASSIVE,
+        section2: CONSTANTS.NPC_ABILITY_SECTION_ACTIONS,
+        section3: customItemSection,
+        sheetHelper: sheetHelper,
+        tabId: CONSTANTS.TAB_NPC_ABILITIES,
+      });
 
-//   sectionsTest.afterAll(() => {
-//     // Remove all items from this test.
-//   });
-// });
+      await sheetHelper.deleteEmbeddedItem(testItem1);
+      await sheetHelper.deleteEmbeddedItem(testItem2);
+      await sheetHelper.deleteEmbeddedItem(testItem3);
+    }
+  );
 
-// Character - verify sections can reorder via drag-and-drop
-// - Attributes
+  sectionsTest(
+    'spellbook - core functionality',
+    async ({ sectionPage, data }) => {
+      // Add specific spells - have at least one custom section
+      const sheetHelper = new SheetHelper(
+        sectionPage,
+        data.sectionConfigTestNpc
+      );
+      const testItem1 = await sheetHelper.createEmbeddedItem({
+        name: 'Test Spell 1',
+        type: CONSTANTS.ITEM_TYPE_SPELL,
+        system: {
+          level: 0,
+        },
+      });
+      const testItem2 = await sheetHelper.createEmbeddedItem({
+        name: 'Test Spell 2',
+        type: CONSTANTS.ITEM_TYPE_SPELL,
+        system: {
+          level: 1,
+        },
+      });
+      const testItem3 = await sheetHelper.createEmbeddedItem({
+        name: 'Test Spell 3',
+        type: CONSTANTS.ITEM_TYPE_SPELL,
+        flags: {
+          [CONSTANTS.MODULE_ID]: {
+            [TidyFlags.section.key]: customItemSection,
+          },
+        },
+      });
 
-// NPC - verify can order and show/hide sections
-// - Abilities
-// - Spellbook
-// - Actions
+      await runStandardSectionConfigTests({
+        section1: 'spell0',
+        section2: 'spell1',
+        section3: customItemSection,
+        sheetHelper: sheetHelper,
+        tabId: CONSTANTS.TAB_NPC_SPELLBOOK,
+      });
 
-// Vehicle - verify can order and show/hide sections
-// - Actions
+      await sheetHelper.deleteEmbeddedItem(testItem1);
+      await sheetHelper.deleteEmbeddedItem(testItem2);
+      await sheetHelper.deleteEmbeddedItem(testItem3);
+    }
+  );
 
-// Container - verify can order and show/hide sections
-// - Contents
+  sectionsTest(
+    'actions - core functionality',
+    async ({ sectionPage, data }) => {
+      // Add specific action items - have at least one custom section
+      const sheetHelper = new SheetHelper(
+        sectionPage,
+        data.sectionConfigTestNpc
+      );
+      // action
+      const testItem1 = await sheetHelper.createEmbeddedItem({
+        name: 'Test Item 1',
+        type: CONSTANTS.ITEM_TYPE_WEAPON,
+        system: {
+          activation: {
+            type: CONSTANTS.ACTIVATION_COST_ACTION,
+          },
+          equipped: true,
+        },
+      });
+      // bonus
+      const testItem2 = await sheetHelper.createEmbeddedItem({
+        name: 'Test Item 2',
+        type: CONSTANTS.ITEM_TYPE_SPELL,
+        system: {
+          activation: {
+            type: CONSTANTS.ACTIVATION_COST_BONUS,
+          },
+          preparation: {
+            mode: CONSTANTS.SPELL_PREPARATION_MODE_PREPARED,
+          },
+        },
+      });
+      // custom
+      const testItem3 = await sheetHelper.createEmbeddedItem({
+        name: 'Test Item 3',
+        type: CONSTANTS.ITEM_TYPE_LOOT,
+        flags: {
+          [CONSTANTS.MODULE_ID]: {
+            [TidyFlags.actionSection.key]: customItemSection,
+            [TidyFlags.actionFilterOverride.key]: true,
+          },
+        },
+      });
+
+      await runStandardSectionConfigTests({
+        section1: CONSTANTS.ACTIVATION_COST_ACTION,
+        section2: CONSTANTS.ACTIVATION_COST_BONUS,
+        section3: customItemSection,
+        sheetHelper: sheetHelper,
+        tabId: CONSTANTS.TAB_ACTOR_ACTIONS,
+      });
+
+      await sheetHelper.deleteEmbeddedItem(testItem1);
+      await sheetHelper.deleteEmbeddedItem(testItem2);
+      await sheetHelper.deleteEmbeddedItem(testItem3);
+    }
+  );
+});
+
+sectionsTest.describe('vehicle', () => {
+  sectionsTest(
+    'actions - core functionality',
+    async ({ sectionPage, data }) => {
+      // Add specific action items - have at least one custom section
+      const sheetHelper = new SheetHelper(
+        sectionPage,
+        data.sectionConfigTestVehicle
+      );
+      // action
+      const testItem1 = await sheetHelper.createEmbeddedItem({
+        name: 'Test Item 1',
+        type: CONSTANTS.ITEM_TYPE_WEAPON,
+        system: {
+          activation: {
+            type: CONSTANTS.ACTIVATION_COST_ACTION,
+          },
+          equipped: true,
+        },
+      });
+      // bonus
+      const testItem2 = await sheetHelper.createEmbeddedItem({
+        name: 'Test Item 2',
+        type: CONSTANTS.ITEM_TYPE_SPELL,
+        system: {
+          activation: {
+            type: CONSTANTS.ACTIVATION_COST_BONUS,
+          },
+          preparation: {
+            mode: CONSTANTS.SPELL_PREPARATION_MODE_PREPARED,
+          },
+        },
+      });
+      // custom
+      const testItem3 = await sheetHelper.createEmbeddedItem({
+        name: 'Test Item 3',
+        type: CONSTANTS.ITEM_TYPE_LOOT,
+        flags: {
+          [CONSTANTS.MODULE_ID]: {
+            [TidyFlags.actionSection.key]: customItemSection,
+            [TidyFlags.actionFilterOverride.key]: true,
+          },
+        },
+      });
+
+      await runStandardSectionConfigTests({
+        section1: CONSTANTS.ACTIVATION_COST_ACTION,
+        section2: CONSTANTS.ACTIVATION_COST_BONUS,
+        section3: customItemSection,
+        sheetHelper: sheetHelper,
+        tabId: CONSTANTS.TAB_ACTOR_ACTIONS,
+      });
+
+      await sheetHelper.deleteEmbeddedItem(testItem1);
+      await sheetHelper.deleteEmbeddedItem(testItem2);
+      await sheetHelper.deleteEmbeddedItem(testItem3);
+    }
+  );
+});
+
+sectionsTest.describe('container', () => {
+  sectionsTest(
+    'contents - core functionality',
+    async ({ sectionPage, data }) => {
+      // Add specific items - have at least one custom section
+      const characterSheetHelper = new SheetHelper(
+        sectionPage,
+        data.sectionConfigTestCharacter
+      );
+      const testItem1 = await characterSheetHelper.createEmbeddedItem({
+        name: 'Test Item 1',
+        type: CONSTANTS.ITEM_TYPE_WEAPON,
+        system: {
+          container: data.sectionTestOwnedContainer.id,
+        },
+      });
+      const testItem2 = await characterSheetHelper.createEmbeddedItem({
+        name: 'Test Item 2',
+        type: CONSTANTS.ITEM_TYPE_EQUIPMENT,
+        system: {
+          container: data.sectionTestOwnedContainer.id,
+        },
+      });
+      const testItem3 = await characterSheetHelper.createEmbeddedItem({
+        name: 'Test Item 3',
+        type: CONSTANTS.ITEM_TYPE_WEAPON,
+        system: {
+          container: data.sectionTestOwnedContainer.id,
+        },
+        flags: {
+          [CONSTANTS.MODULE_ID]: {
+            [TidyFlags.section.key]: customItemSection,
+          },
+        },
+      });
+
+      await runStandardSectionConfigTests({
+        section1: CONSTANTS.ITEM_TYPE_WEAPON,
+        section2: CONSTANTS.ITEM_TYPE_EQUIPMENT,
+        section3: customItemSection,
+        sheetHelper: new SheetHelper(
+          sectionPage,
+          data.sectionTestOwnedContainer
+        ),
+        tabId: CONSTANTS.TAB_CONTAINER_CONTENTS,
+      });
+
+      await characterSheetHelper.deleteEmbeddedItem(testItem1);
+      await characterSheetHelper.deleteEmbeddedItem(testItem2);
+      await characterSheetHelper.deleteEmbeddedItem(testItem3);
+    }
+  );
+});
 
 async function runStandardSectionConfigTests(args: RunSectionConfigTestsArgs) {
   const { sheetHelper, section1, section2, section3, tabId } = args;
