@@ -575,25 +575,30 @@ sectionsTest.describe('container', () => {
         sectionPage,
         data.sectionConfigTestCharacter
       );
+
+      const testContainer = await characterSheetHelper.createEmbeddedItem({
+        name: 'Test Container',
+        type: CONSTANTS.ITEM_TYPE_CONTAINER,
+      });
       const testItem1 = await characterSheetHelper.createEmbeddedItem({
         name: 'Test Item 1',
         type: CONSTANTS.ITEM_TYPE_WEAPON,
         system: {
-          container: data.sectionTestOwnedContainer.id,
+          container: testContainer.id,
         },
       });
       const testItem2 = await characterSheetHelper.createEmbeddedItem({
         name: 'Test Item 2',
         type: CONSTANTS.ITEM_TYPE_EQUIPMENT,
         system: {
-          container: data.sectionTestOwnedContainer.id,
+          container: testContainer.id,
         },
       });
       const testItem3 = await characterSheetHelper.createEmbeddedItem({
         name: 'Test Item 3',
         type: CONSTANTS.ITEM_TYPE_WEAPON,
         system: {
-          container: data.sectionTestOwnedContainer.id,
+          container: testContainer.id,
         },
         flags: {
           [CONSTANTS.MODULE_ID]: {
@@ -606,16 +611,14 @@ sectionsTest.describe('container', () => {
         section1: CONSTANTS.ITEM_TYPE_WEAPON,
         section2: CONSTANTS.ITEM_TYPE_EQUIPMENT,
         section3: customItemSection,
-        sheetHelper: new SheetHelper(
-          sectionPage,
-          data.sectionTestOwnedContainer
-        ),
+        sheetHelper: new SheetHelper(sectionPage, testContainer),
         tabId: CONSTANTS.TAB_CONTAINER_CONTENTS,
       });
 
       await characterSheetHelper.deleteEmbeddedItem(testItem1);
       await characterSheetHelper.deleteEmbeddedItem(testItem2);
       await characterSheetHelper.deleteEmbeddedItem(testItem3);
+      await characterSheetHelper.deleteEmbeddedItem(testContainer);
     }
   );
 });

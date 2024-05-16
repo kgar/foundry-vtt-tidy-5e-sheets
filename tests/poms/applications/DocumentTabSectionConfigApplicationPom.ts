@@ -60,9 +60,10 @@ export class DocumentTabSectionConfigApplicationPom {
   }
 
   async dragSectionTo(sourceSectionName: string, targetSectionName: string) {
-    return await this.getOption(sourceSectionName).dragTo(
+    await this.getOption(sourceSectionName).dragTo(
       this.getOption(targetSectionName)
     );
+    await this.page.waitForTimeout(250);
   }
 
   async getSectionsInCurrentOrder(): Promise<string[]> {
