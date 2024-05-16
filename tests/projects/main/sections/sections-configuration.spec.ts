@@ -299,10 +299,63 @@ sectionsTest.describe('character', () => {
   );
 
   // - Actions
-  sectionsTest('actions - core functionality', async ({ data }) => {
-    // Add specific items - have at least one custom section
-    // Run the test
-  });
+  sectionsTest(
+    'actions - core functionality',
+    async ({ sectionPage, data }) => {
+      // Add specific action items - have at least one custom section
+      const sheetHelper = new SheetHelper(
+        sectionPage,
+        data.sectionConfigTestCharacter
+      );
+      // passive
+      const testItem1 = await sheetHelper.createEmbeddedItem({
+        name: 'Test Item 1',
+        type: CONSTANTS.ITEM_TYPE_WEAPON,
+        system: {
+          activation: {
+            type: CONSTANTS.ACTIVATION_COST_ACTION,
+          },
+          equipped: true,
+        },
+      });
+      // active
+      const testItem2 = await sheetHelper.createEmbeddedItem({
+        name: 'Test Item 2',
+        type: CONSTANTS.ITEM_TYPE_SPELL,
+        system: {
+          activation: {
+            type: CONSTANTS.ACTIVATION_COST_BONUS,
+          },
+          preparation: {
+            mode: CONSTANTS.SPELL_PREPARATION_MODE_PREPARED,
+          },
+        },
+      });
+      // custom
+      const testItem3 = await sheetHelper.createEmbeddedItem({
+        name: 'Test Item 3',
+        type: CONSTANTS.ITEM_TYPE_LOOT,
+        flags: {
+          [CONSTANTS.MODULE_ID]: {
+            [TidyFlags.actionSection.key]: customItemSection,
+            [TidyFlags.actionFilterOverride.key]: true,
+          },
+        },
+      });
+
+      await runStandardSectionConfigTests({
+        section1: CONSTANTS.ACTIVATION_COST_ACTION,
+        section2: CONSTANTS.ACTIVATION_COST_BONUS,
+        section3: customItemSection,
+        sheetHelper: sheetHelper,
+        tabId: CONSTANTS.TAB_ACTOR_ACTIONS,
+      });
+
+      await sheetHelper.deleteEmbeddedItem(testItem1);
+      await sheetHelper.deleteEmbeddedItem(testItem2);
+      await sheetHelper.deleteEmbeddedItem(testItem3);
+    }
+  );
 });
 
 // Specific flows
@@ -361,16 +414,12 @@ async function runStandardSectionConfigTests(args: RunSectionConfigTestsArgs) {
       section2,
       section3,
     ].entries()) {
-      let currentPositions = (
-        // instead, get listbox options in current order
-        await config.getOptionsInCurrentOrder()
-      ).reduce<Record<string, { key: string; currentIndex: number }>>(
-        (prev, curr, i) => {
-          prev[curr] = { key: curr, currentIndex: i };
-          return prev;
-        },
-        {}
-      );
+      let currentPositions = (await config.getOptionsInCurrentOrder()).reduce<
+        Record<string, { key: string; currentIndex: number }>
+      >((prev, curr, i) => {
+        prev[curr] = { key: curr, currentIndex: i };
+        return prev;
+      }, {});
 
       await config.selectSection(section);
 
