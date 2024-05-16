@@ -211,7 +211,7 @@ export type FavoriteSection =
       type: typeof CONSTANTS.TAB_CHARACTER_FEATURES;
     })
   | (GenericFavoriteSection & {
-      type: typeof CONSTANTS.CHARACTER_FAVORITE_GENERIC_SECTION;
+      type: typeof CONSTANTS.CHARACTER_FAVORITE_SECTION_GENERIC;
     });
 
 export type CharacterSheetContext = {

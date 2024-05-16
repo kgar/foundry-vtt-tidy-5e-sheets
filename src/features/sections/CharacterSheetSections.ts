@@ -60,7 +60,7 @@ export class CharacterSheetSections {
         dataset: { type: CONSTANTS.ITEM_TYPE_RACE },
         showRequirementsColumn: true,
         canCreate: true,
-        key: 'race',
+        key: CONSTANTS.CHARACTER_FEAT_SECTION_RACE,
         show: true,
         ...options,
       },
@@ -71,7 +71,7 @@ export class CharacterSheetSections {
         dataset: { type: CONSTANTS.ITEM_TYPE_BACKGROUND },
         showRequirementsColumn: true,
         canCreate: true,
-        key: 'background',
+        key: CONSTANTS.CHARACTER_FEAT_SECTION_BACKGROUND,
         show: true,
         ...options,
       },
@@ -83,7 +83,7 @@ export class CharacterSheetSections {
         isClass: true,
         showLevelColumn: true,
         canCreate: true,
-        key: 'classes',
+        key: CONSTANTS.CHARACTER_FEAT_SECTION_CLASSES,
         show: true,
         ...options,
       },
@@ -93,13 +93,13 @@ export class CharacterSheetSections {
         hasActions: true,
         dataset: {
           type: CONSTANTS.ITEM_TYPE_FEAT,
-          'system.activation.type': 'action',
+          'system.activation.type': CONSTANTS.ACTIVATION_COST_ACTION,
         },
         showRequirementsColumn: true,
         showUsagesColumn: true,
         showUsesColumn: true,
         canCreate: true,
-        key: 'active',
+        key: CONSTANTS.CHARACTER_FEAT_SECTION_ACTIVE,
         show: true,
         ...options,
       },
@@ -110,7 +110,7 @@ export class CharacterSheetSections {
         dataset: { type: CONSTANTS.ITEM_TYPE_FEAT },
         showRequirementsColumn: true,
         canCreate: true,
-        key: 'passive',
+        key: CONSTANTS.CHARACTER_FEAT_SECTION_PASSIVE,
         show: true,
         ...options,
       },
@@ -198,7 +198,7 @@ export class CharacterSheetSections {
       const incomingItems =
         CharacterSheetSections.getItemsFromFavoriteSection(section);
 
-      if (mappedSection.type !== CONSTANTS.CHARACTER_FAVORITE_GENERIC_SECTION) {
+      if (mappedSection.type !== CONSTANTS.CHARACTER_FAVORITE_SECTION_GENERIC) {
         const mappedItems =
           CharacterSheetSections.getItemsFromFavoriteSection(mappedSection);
 

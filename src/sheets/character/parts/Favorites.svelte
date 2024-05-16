@@ -35,7 +35,7 @@
         />
       {/if}
       <!-- TODO: Cut a copy of the Favorite Features component and custom tailor it for the generic section -->
-      {#if section.type === CONSTANTS.TAB_CHARACTER_FEATURES || section.type === CONSTANTS.CHARACTER_FAVORITE_GENERIC_SECTION}
+      {#if section.type === CONSTANTS.TAB_CHARACTER_FEATURES || section.type === CONSTANTS.CHARACTER_FAVORITE_SECTION_GENERIC}
         {@const visibleItemIdSubset = FoundryAdapter.searchItems(
           searchCriteria,
           section.items,
