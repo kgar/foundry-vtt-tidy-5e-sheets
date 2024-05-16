@@ -354,29 +354,33 @@ async function runStandardSectionConfigTests(args: RunSectionConfigTestsArgs) {
 
   // establish initial section order- sections 1-3 should be in positions 1-3
   {
-    const defaultSectionLayout = (
-      await sheetHelper.getSectionsInCurrentOrder(tabId)
-    ).reduce<Record<string, { key: string; initialIndex: number }>>(
-      (prev, curr, i) => {
-        prev[curr] = { key: curr, initialIndex: i };
-        return prev;
-      },
-      {}
-    );
-
     const config = await sheetHelper.openSectionConfiguration(tabId);
 
-    for (let i = 0; i < defaultSectionLayout[section1].initialIndex; i++) {
-      await config.selectSection(section1);
-      await config.$configureSectionMoveItemUpButton.click();
-    }
-    for (let i = 0; i < defaultSectionLayout[section2].initialIndex - 1; i++) {
-      await config.selectSection(section2);
-      await config.$configureSectionMoveItemUpButton.click();
-    }
-    for (let i = 0; i < defaultSectionLayout[section3].initialIndex - 2; i++) {
-      await config.selectSection(section3);
-      await config.$configureSectionMoveItemUpButton.click();
+    for (const [intendedPosition, section] of [
+      section1,
+      section2,
+      section3,
+    ].entries()) {
+      let currentPositions = (
+        // instead, get listbox options in current order
+        await config.getOptionsInCurrentOrder()
+      ).reduce<Record<string, { key: string; currentIndex: number }>>(
+        (prev, curr, i) => {
+          prev[curr] = { key: curr, currentIndex: i };
+          return prev;
+        },
+        {}
+      );
+
+      await config.selectSection(section);
+
+      for (
+        let i = 0;
+        i < currentPositions[section].currentIndex - intendedPosition;
+        i++
+      ) {
+        await config.$configureSectionMoveItemUpButton.click();
+      }
     }
 
     // save initial order

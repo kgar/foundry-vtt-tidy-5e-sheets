@@ -78,7 +78,7 @@
       role="option"
       aria-selected={selectedItemIndex === i}
       class:focused={selectedItemIndex === i}
-      class="flex-row small=gap align-items-center"
+      class="flex-row small-gap align-items-center"
       on:click={() => selectItemAt(i)}
       on:keydown={(ev) => handleListboxKeyDown(ev)}
       {draggable}

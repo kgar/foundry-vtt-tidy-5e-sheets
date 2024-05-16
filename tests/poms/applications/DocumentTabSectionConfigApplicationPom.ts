@@ -1,5 +1,4 @@
 import type { Locator, Page } from '@playwright/test';
-import { delay } from 'src/utils/asynchrony';
 
 export class DocumentTabSectionConfigApplicationPom {
   page: Page;
@@ -90,5 +89,15 @@ export class DocumentTabSectionConfigApplicationPom {
     await this.$application.waitFor({
       state: 'hidden',
     });
+  }
+
+  async getOptionsInCurrentOrder(): Promise<string[]> {
+    return await this.$application.evaluate(async (app) =>
+      Array.from(
+        app.querySelectorAll(
+          '[role="listbox"] [role="option"] [data-section-key]'
+        )
+      ).map((el, i) => el.getAttribute('data-section-key') ?? '')
+    );
   }
 }
