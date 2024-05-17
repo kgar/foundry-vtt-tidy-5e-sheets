@@ -42,23 +42,6 @@ export async function initSectionsData(
         (i: any) => i.name === 'Backpack'
       );
 
-      // TODO: Put a brand new instance of each item type in the backpack
-
-      // const backpackId = backpack.id;
-
-      // const itemUpdates: Record<string, any>[] = [];
-      // character.items.forEach((item: any) => {
-      //   if (item.type === 'loot') {
-      //     itemUpdates.push({
-      //       _id: item.id,
-      //       system: {
-      //         container: backpackId,
-      //       },
-      //     });
-      //   }
-      // });
-      // await character.updateEmbeddedDocuments('Item', itemUpdates);
-
       return {
         id: backpack.id,
         uuid: backpack.uuid,
