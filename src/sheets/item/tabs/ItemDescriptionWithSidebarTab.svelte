@@ -3,7 +3,10 @@
   import Select from 'src/components/inputs/Select.svelte';
   import SelectOptions from 'src/components/inputs/SelectOptions.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { ItemSheetContext } from 'src/types/item.types';
+  import type {
+    ContainerSheetContext,
+    ItemSheetContext,
+  } from 'src/types/item.types';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import HorizontalLineSeparator from 'src/components/layout/HorizontalLineSeparator.svelte';
@@ -13,8 +16,12 @@
   import OpenSheetEditor from 'src/components/editor/OpenSheetEditor.svelte';
   import SheetEditor from 'src/components/editor/SheetEditor.svelte';
   import { CONSTANTS } from 'src/constants';
+  import ItemFormGroup from '../form/ItemFormGroup.svelte';
+  import TextInput from 'src/components/inputs/TextInput.svelte';
+  import { TidyFlags } from 'src/foundry/TidyFlags';
 
-  let context = getContext<Readable<ItemSheetContext>>('context');
+  let context =
+    getContext<Readable<ItemSheetContext | ContainerSheetContext>>('context');
 
   function onEditorActivation(node: HTMLElement) {
     if (editorIsActive) {
@@ -23,7 +30,7 @@
       return;
     }
 
-    $context.activateFoundryJQueryListeners(node);
+    $context.activateEditors(node, { bindSecrets: false });
     editorIsActive = true;
   }
 
@@ -39,10 +46,6 @@
   }
 
   const localize = FoundryAdapter.localize;
-
-  function activateProseMirrorListeners(node: HTMLElement) {
-    $context.activateFoundryJQueryListeners(node);
-  }
 </script>
 
 <div
@@ -160,6 +163,41 @@
         </ol>
       </section>
     {/if}
+
+    <div class="flex-column small-gap">
+      <ItemFormGroup
+        labelText={localize('TIDY5E.Section.Label')}
+        field={TidyFlags.section.prop}
+        cssClass="section"
+        let:inputId
+      >
+        <TextInput
+          document={$context.item}
+          field={TidyFlags.section.prop}
+          id={inputId}
+          placeholder={localize('TIDY5E.Section.Default')}
+          value={TidyFlags.section.get($context.item) ?? ''}
+          selectOnFocus={true}
+          title={localize('TIDY5E.Section.Tooltip')}
+        ></TextInput>
+      </ItemFormGroup>
+      <ItemFormGroup
+        labelText={localize('TIDY5E.Section.ActionLabel')}
+        field={TidyFlags.actionSection.prop}
+        cssClass="section"
+        let:inputId
+      >
+        <TextInput
+          document={$context.item}
+          field={TidyFlags.actionSection.prop}
+          id={inputId}
+          placeholder={localize('TIDY5E.Section.Default')}
+          value={TidyFlags.actionSection.get($context.item) ?? ''}
+          selectOnFocus={true}
+          title={localize('TIDY5E.Section.ActionTooltip')}
+        ></TextInput>
+      </ItemFormGroup>
+    </div>
   </div>
 
   <VerticalLineSeparator />
@@ -173,7 +211,7 @@
     <RerenderAfterFormSubmission
       andOnValueChange={$context.enriched.unidentified}
     >
-      <div class="flexrow" role="presentation" use:activateProseMirrorListeners>
+      <div class="flexrow" role="presentation" use:$context.activateEditors>
         <SheetEditor
           content={$context.enriched.unidentified}
           editable={$context.editable}

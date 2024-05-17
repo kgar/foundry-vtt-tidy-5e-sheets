@@ -22,6 +22,7 @@
   import Dnd5eIcon from 'src/components/icon/Dnd5eIcon.svelte';
   import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
   import PinnedFilterToggles from 'src/components/filter/PinnedFilterToggles.svelte';
+  import { TidyFlags } from 'src/foundry/TidyFlags';
 
   let context = getContext<Readable<ActorSheetContext>>('context');
 
@@ -60,13 +61,13 @@
 </UtilityToolbar>
 
 <div class="actions-tab-container scroll-container flex-column small-gap">
-  {#each Object.entries($context.actions) as [actionType, itemSet] (actionType)}
-    {#if itemSet.size}
-      <ItemTable location={actionType}>
+  {#each $context.actions as section (section.key)}
+    {#if section.actions.length && section.show}
+      <ItemTable key={section.key}>
         <svelte:fragment slot="header">
           <ItemTableHeaderRow>
             <ItemTableColumn primary={true}>
-              {FoundryAdapter.getActivationTypeLabel(actionType)}
+              {section.label}
             </ItemTableColumn>
             <ItemTableColumn baseWidth="6.25rem"
               >{localize('DND5E.Range')}</ItemTableColumn
@@ -85,7 +86,7 @@
         <svelte:fragment slot="body">
           {@const filteredActionItems = FoundryAdapter.getFilteredActionItems(
             searchCriteria,
-            itemSet,
+            section.actions,
           )}
           {#each filteredActionItems as actionItem (actionItem.item.id)}
             <ItemTableRow
@@ -109,8 +110,7 @@
                   useActiveEffectsMarker={false}
                 >
                   {@const spellClass = FoundryAdapter.getClassLabel(
-                    FoundryAdapter.tryGetFlag(actionItem.item, 'parentClass') ??
-                      '',
+                    TidyFlags.tryGetFlag(actionItem.item, 'parentClass') ?? '',
                   )}
                   <div class="flex-1 min-width-0">
                     <div

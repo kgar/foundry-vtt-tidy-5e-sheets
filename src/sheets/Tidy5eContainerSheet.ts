@@ -1,5 +1,6 @@
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type {
+  ContainerSection,
   ContainerSheetContext,
   ItemChatData,
   ItemDescription,
@@ -7,6 +8,7 @@ import type {
 import type {
   ExpandedItemData,
   ExpandedItemIdToLocationsMap,
+  InventorySection,
   ItemCardStore,
   LocationToSearchTextMap,
   MessageBus,
@@ -39,6 +41,11 @@ import { SheetPreferencesService } from 'src/features/user-preferences/SheetPref
 import { CONSTANTS } from 'src/constants';
 import { AsyncMutex } from 'src/utils/mutex';
 import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
+import { DocumentTabSectionConfigApplication } from 'src/applications/section-config/DocumentTabSectionConfigApplication';
+import { ContainerSheetSections } from 'src/features/sections/ContainerSheetSections';
+import { SheetSections } from 'src/features/sections/SheetSections';
+import { TidyFlags } from 'src/foundry/TidyFlags';
+import { Inventory } from 'src/features/sections/Inventory';
 
 export class Tidy5eKgarContainerSheet
   extends dnd5e.applications.item.ContainerSheet
@@ -138,6 +145,12 @@ export class Tidy5eKgarContainerSheet
   async getData(options = {}) {
     const defaultDocumentContext = await super.getData(this.options);
 
+    // Backfill required section data
+    Object.assign(defaultDocumentContext.inventory.contents, {
+      show: true,
+      key: CONSTANTS.TAB_CONTAINER_SECTION_CONTENTS,
+    });
+
     const containerPreferences = SheetPreferencesService.getByType(
       this.item.type
     );
@@ -165,6 +178,48 @@ export class Tidy5eKgarContainerSheet
       debug('Sorting/Filtering error troubleshooting info', {
         defaultDocumentContext,
       });
+    }
+
+    // Partition into sections
+    const items = defaultDocumentContext.inventory.contents.items;
+
+    let sections = Inventory.inventoryItemTypes.reduce<
+      Record<string, ContainerSection>
+    >((acc, itemType) => {
+      acc[itemType] = {
+        items: [],
+        label: Inventory.getInventoryTypeLabel(itemType),
+        dataset: {},
+        key: itemType,
+        show: true,
+      };
+
+      return acc;
+    }, {});
+
+    for (let item of items) {
+      ContainerSheetSections.applyContentsItemToSection(sections, item);
+    }
+
+    const sectionConfigs = TidyFlags.sectionConfig.get(this.item);
+
+    // Sort Sections
+    defaultDocumentContext.inventory.sections = SheetSections.sortKeyedSections(
+      Object.values(sections),
+      sectionConfigs?.[CONSTANTS.TAB_CONTAINER_CONTENTS]
+    );
+
+    // Trim Empty Sections
+    defaultDocumentContext.inventory.sections =
+      defaultDocumentContext.inventory.sections.filter(
+        (section: ContainerSection) => section.items.length
+      );
+
+    // Apply Show/Hide
+    for (let section of defaultDocumentContext.inventory.sections) {
+      section.show =
+        sectionConfigs?.[CONSTANTS.TAB_CONTAINER_CONTENTS]?.[section.key]
+          ?.show !== false && section.items.length;
     }
 
     const itemDescriptions: ItemDescription[] = [];
@@ -200,7 +255,7 @@ export class Tidy5eKgarContainerSheet
     tabs.push(...customTabs);
 
     // Utilities
-    let utilities: Utilities = {
+    let utilities: Utilities<ContainerSheetContext> = {
       [CONSTANTS.TAB_CONTAINER_CONTENTS]: {
         utilityToolbarCommands: [
           {
@@ -231,6 +286,23 @@ export class Tidy5eKgarContainerSheet
             },
             visible: contentsSortMode === 'm',
           },
+          {
+            title: FoundryAdapter.localize(
+              'TIDY5E.Utilities.ConfigureSections'
+            ),
+            iconClass: 'fas fa-cog',
+            execute: ({ context }) => {
+              new DocumentTabSectionConfigApplication({
+                document: context.item,
+                // Provide a way to build the necessary config, perhaps within the application constructor. We've got all the info we need in order to perform the operation.
+                sections: context.inventory.sections,
+                tabId: CONSTANTS.TAB_CONTAINER_CONTENTS,
+                tabTitle: ItemSheetRuntime.getTabTitle(
+                  CONSTANTS.TAB_CONTAINER_CONTENTS
+                ),
+              }).render(true);
+            },
+          },
         ],
       },
     };
@@ -239,10 +311,8 @@ export class Tidy5eKgarContainerSheet
     const context: ContainerSheetContext = {
       ...defaultDocumentContext,
       appId: this.appId,
-      activateFoundryJQueryListeners: (node: HTMLElement) => {
-        this._activateCoreListeners($(node));
-        super.activateListeners($(node));
-      },
+      activateEditors: (node, options) =>
+        FoundryAdapter.activateEditors(node, this, options?.bindSecrets),
       customContent: await ItemSheetRuntime.getContent(defaultDocumentContext),
       filterData: this.itemFilterService.getDocumentItemFilterData(),
       filterPins: ItemFilterRuntime.defaultFilterPins[this.item.type],

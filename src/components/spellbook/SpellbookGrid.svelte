@@ -5,6 +5,7 @@
     type CharacterSheetContext,
     type ItemCardStore,
     type NpcSheetContext,
+    type SpellbookSection,
   } from 'src/types/types';
   import ItemTable from '../item-list/v1/ItemTable.svelte';
   import ItemTableColumn from '../item-list/v1/ItemTableColumn.svelte';
@@ -18,8 +19,9 @@
   import { declareLocation } from 'src/types/location-awareness.types';
   import SpellSlotManagement from './SpellSlotManagement.svelte';
   import ConcentrationOverlayIcon from './ConcentrationOverlayIcon.svelte';
+  import { TidyFlags } from 'src/foundry/TidyFlags';
 
-  export let section: any;
+  export let section: SpellbookSection;
   export let spells: Item5e[];
   export let cssClass: string | null = null;
   /**
@@ -77,12 +79,12 @@
 </script>
 
 <section class="spellbook-grid {cssClass}">
-  <ItemTable location={section.label}>
+  <ItemTable key={section.key}>
     <svelte:fragment slot="header">
       <ItemTableHeaderRow>
         <ItemTableColumn primary={true}>
           <span class="spell-primary-column-label">
-            {section.label}
+            {localize(section.label)}
           </span>
           {#if section.usesSlots}
             <SpellSlotManagement {section} />
@@ -119,8 +121,9 @@
           data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_USE_COMMAND}
           data-item-id={spell.id}
           tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+          data-tidy-grid-item
         >
-          {#if FoundryAdapter.tryGetFlag(spell, 'favorite')}
+          {#if TidyFlags.tryGetFlag(spell, 'favorite')}
             <GridPaneFavoriteIcon />
           {/if}
           <div class="spell-name">

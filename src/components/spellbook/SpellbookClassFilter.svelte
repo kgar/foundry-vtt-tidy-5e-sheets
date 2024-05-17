@@ -1,5 +1,6 @@
 <script lang="ts">
   import { CONSTANTS } from 'src/constants';
+  import { TidyFlags } from 'src/foundry/TidyFlags';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { settingStore } from 'src/settings/settings';
   import {
@@ -24,7 +25,7 @@
   const localize = FoundryAdapter.localize;
 
   $: selectedClassFilter =
-    FoundryAdapter.tryGetFlag($context.actor, 'classFilter') ?? '';
+    TidyFlags.tryGetFlag($context.actor, 'classFilter') ?? '';
 </script>
 
 <select

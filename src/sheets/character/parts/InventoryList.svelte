@@ -22,6 +22,7 @@
   import type { Readable } from 'svelte/store';
   import type {
     CharacterSheetContext,
+    InventorySection,
     RenderableClassicControl,
   } from 'src/types/types';
   import AmmoSelector from '../../actor/AmmoSelector.svelte';
@@ -30,11 +31,12 @@
   import { coalesce } from 'src/utils/formatting';
   import TextInput from 'src/components/inputs/TextInput.svelte';
   import ClassicControls from 'src/sheets/shared/ClassicControls.svelte';
+  import { TidyFlags } from 'src/foundry/TidyFlags';
 
   export let primaryColumnName: string;
   export let items: Item5e[];
+  export let section: InventorySection;
   export let extraInventoryRowClasses: string = '';
-  export let section: any = undefined;
   export let lockControls: boolean = false;
   export let allowFavoriteIconNextToName: boolean = true;
   export let includeWeightColumn: boolean = true;
@@ -125,7 +127,7 @@
 </script>
 
 <section class="inventory-list-section">
-  <ItemTable location={section?.label ?? primaryColumnName}>
+  <ItemTable key={section.key}>
     <svelte:fragment slot="header">
       <ItemTableHeaderRow>
         <ItemTableColumn primary={true}>
@@ -208,7 +210,7 @@
                 </div>
               {/if}
             </ItemTableCell>
-            {#if FoundryAdapter.tryGetFlag(item, 'favorite') && allowFavoriteIconNextToName}
+            {#if TidyFlags.tryGetFlag(item, 'favorite') && allowFavoriteIconNextToName}
               <InlineFavoriteIcon />
             {/if}
           {/if}
@@ -260,7 +262,7 @@
           {/if}
         </ItemTableRow>
       {/each}
-      {#if $context.unlocked && section}
+      {#if $context.unlocked && section.canCreate}
         <ItemTableFooter actor={$context.actor} {section} isItem={true} />
       {/if}
     </svelte:fragment>

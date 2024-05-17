@@ -16,6 +16,14 @@
 
   const migrations = [
     {
+      label: localize('TIDY5E.Settings.Migrations.CcssToTidy.sectionTitle'),
+      migrationTallyVersion: 3,
+      onClick: () =>
+        new BulkMigrationsApplication(
+          CONSTANTS.TAB_MIGRATIONS_CCSS_TO_TIDY,
+        ).render(true),
+    },
+    {
       label: localize('TIDY5E.Settings.Migrations.NpcDeathSaves.sectionTitle'),
       migrationTallyVersion: 2,
       onClick: () =>

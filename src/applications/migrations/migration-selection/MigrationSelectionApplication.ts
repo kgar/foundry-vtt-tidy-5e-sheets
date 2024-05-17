@@ -13,8 +13,18 @@ export class MigrationSelectionApplication<
   _params: MigrationSelectionParams<T>;
   _onClose?: Function;
 
-  constructor(params: MigrationSelectionParams<T>, onClose?: Function) {
-    super();
+  constructor(
+    params: MigrationSelectionParams<T>,
+    onClose?: Function,
+    options?: any
+  ) {
+    super(
+      {},
+      FoundryAdapter.mergeObject(
+        MigrationSelectionApplication.defaultOptions,
+        options
+      )
+    );
     this._params = params;
     this._onClose = onClose;
   }

@@ -1,7 +1,6 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import SheetEditor from 'src/components/editor/SheetEditor.svelte';
-
   import type { NpcSheetContext } from 'src/types/types';
   import { CONSTANTS } from 'src/constants';
   import { getContext } from 'svelte';
@@ -9,21 +8,17 @@
   import ContentEditableFormField from 'src/components/inputs/ContentEditableFormField.svelte';
   import RerenderAfterFormSubmission from 'src/components/utility/RerenderAfterFormSubmission.svelte';
   import { settingStore } from 'src/settings/settings';
+  import { TidyFlags } from 'src/foundry/TidyFlags';
 
   let context = getContext<Readable<NpcSheetContext>>('context');
 
   const localize = FoundryAdapter.localize;
 
-  function activateProseMirrorListeners(node: HTMLElement) {
-    $context.activateFoundryJQueryListeners(node);
-  }
-
   $: showNpcPersonalityInfo =
-    FoundryAdapter.tryGetFlag($context.actor, 'showNpcPersonalityInfo') ??
-    false;
+    TidyFlags.tryGetFlag($context.actor, 'showNpcPersonalityInfo') ?? false;
 
   function togglePersonalityInfo() {
-    FoundryAdapter.setFlag(
+    TidyFlags.setFlag(
       $context.actor,
       'showNpcPersonalityInfo',
       !showNpcPersonalityInfo,
@@ -40,42 +35,42 @@
   $: bioFields = [
     {
       flag: 'gender',
-      value: FoundryAdapter.tryGetFlag($context.actor, 'gender'),
+      value: TidyFlags.tryGetFlag($context.actor, 'gender'),
       text: 'DND5E.Gender',
     },
     {
       flag: 'age',
-      value: FoundryAdapter.tryGetFlag($context.actor, 'age'),
+      value: TidyFlags.tryGetFlag($context.actor, 'age'),
       text: 'DND5E.Age',
     },
     {
       flag: 'height',
-      value: FoundryAdapter.tryGetFlag($context.actor, 'height'),
+      value: TidyFlags.tryGetFlag($context.actor, 'height'),
       text: 'DND5E.Height',
     },
     {
       flag: 'weight',
-      value: FoundryAdapter.tryGetFlag($context.actor, 'weight'),
+      value: TidyFlags.tryGetFlag($context.actor, 'weight'),
       text: 'DND5E.Weight',
     },
     {
       flag: 'eyes',
-      value: FoundryAdapter.tryGetFlag($context.actor, 'eyes'),
+      value: TidyFlags.tryGetFlag($context.actor, 'eyes'),
       text: 'DND5E.Eyes',
     },
     {
       flag: 'skin',
-      value: FoundryAdapter.tryGetFlag($context.actor, 'skin'),
+      value: TidyFlags.tryGetFlag($context.actor, 'skin'),
       text: 'DND5E.Skin',
     },
     {
       flag: 'hair',
-      value: FoundryAdapter.tryGetFlag($context.actor, 'hair'),
+      value: TidyFlags.tryGetFlag($context.actor, 'hair'),
       text: 'DND5E.Hair',
     },
     {
       flag: 'faith',
-      value: FoundryAdapter.tryGetFlag($context.actor, 'faith'),
+      value: TidyFlags.tryGetFlag($context.actor, 'faith'),
       text: 'DND5E.Faith',
     },
   ];
@@ -127,12 +122,10 @@
             class:limited={$context.showLimitedSheet}
           >
             <RerenderAfterFormSubmission
-              andOnValueChange={FoundryAdapter.tryGetFlag(
-                $context.actor,
-                'trait',
-              ) ?? ''}
+              andOnValueChange={TidyFlags.tryGetFlag($context.actor, 'trait') ??
+                ''}
             >
-              <article use:activateProseMirrorListeners>
+              <article use:$context.activateEditors>
                 <div class="section-titles biopage">
                   {localize('DND5E.PersonalityTraits')}
                 </div>
@@ -144,12 +137,10 @@
               </article>
             </RerenderAfterFormSubmission>
             <RerenderAfterFormSubmission
-              andOnValueChange={FoundryAdapter.tryGetFlag(
-                $context.actor,
-                'ideal',
-              ) ?? ''}
+              andOnValueChange={TidyFlags.tryGetFlag($context.actor, 'ideal') ??
+                ''}
             >
-              <article use:activateProseMirrorListeners>
+              <article use:$context.activateEditors>
                 <div class="section-titles biopage">
                   {localize('DND5E.Ideals')}
                 </div>
@@ -161,12 +152,10 @@
               </article>
             </RerenderAfterFormSubmission>
             <RerenderAfterFormSubmission
-              andOnValueChange={FoundryAdapter.tryGetFlag(
-                $context.actor,
-                'bond',
-              ) ?? ''}
+              andOnValueChange={TidyFlags.tryGetFlag($context.actor, 'bond') ??
+                ''}
             >
-              <article use:activateProseMirrorListeners>
+              <article use:$context.activateEditors>
                 <div class="section-titles biopage">
                   {localize('DND5E.Bonds')}
                 </div>
@@ -178,12 +167,10 @@
               </article>
             </RerenderAfterFormSubmission>
             <RerenderAfterFormSubmission
-              andOnValueChange={FoundryAdapter.tryGetFlag(
-                $context.actor,
-                'flaw',
-              ) ?? ''}
+              andOnValueChange={TidyFlags.tryGetFlag($context.actor, 'flaw') ??
+                ''}
             >
-              <article use:activateProseMirrorListeners>
+              <article use:$context.activateEditors>
                 <div class="section-titles biopage">
                   {localize('DND5E.Flaws')}
                 </div>
@@ -200,13 +187,14 @@
           class="right-notes note-entries"
           class:limited={$context.showLimitedSheet}
         >
+          <!-- TODO: Offload this kind of thing to itemContext -->
           <RerenderAfterFormSubmission
-            andOnValueChange={FoundryAdapter.tryGetFlag(
+            andOnValueChange={TidyFlags.tryGetFlag(
               $context.actor,
               'appearance',
             ) ?? ''}
           >
-            <article class="appearance-notes" use:activateProseMirrorListeners>
+            <article class="appearance-notes" use:$context.activateEditors>
               <div class="section-titles biopage">
                 {localize('DND5E.Appearance')}
               </div>
@@ -220,7 +208,7 @@
           <RerenderAfterFormSubmission
             andOnValueChange={$context.system.details.biography.value}
           >
-            <article class="biography-notes" use:activateProseMirrorListeners>
+            <article class="biography-notes" use:$context.activateEditors>
               <div class="section-titles">
                 {localize('DND5E.Background')}/{localize('DND5E.Biography')}
               </div>

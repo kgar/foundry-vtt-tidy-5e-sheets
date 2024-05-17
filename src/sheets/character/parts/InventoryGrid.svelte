@@ -1,6 +1,7 @@
 <script lang="ts">
   import type {
     CharacterSheetContext,
+    InventorySection,
     ItemCardStore,
     NpcSheetContext,
   } from 'src/types/types';
@@ -17,8 +18,9 @@
   import { settingStore } from 'src/settings/settings';
   import { ActorItemRuntime } from 'src/runtime/ActorItemRuntime';
   import { declareLocation } from 'src/types/location-awareness.types';
+  import { TidyFlags } from 'src/foundry/TidyFlags';
 
-  export let section: any;
+  export let section: InventorySection;
   export let items: Item5e[];
   /**
    * An optional subset of item IDs which will hide all other items not included in this set.
@@ -87,7 +89,7 @@
   declareLocation('inventory-grid');
 </script>
 
-<ItemTable location={section.label}>
+<ItemTable key={section.key}>
   <svelte:fragment slot="header">
     <ItemTableHeaderRow>
       <ItemTableColumn primary={true}>
@@ -124,6 +126,7 @@
         data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_USE_COMMAND}
         data-item-id={item.id}
         tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+        data-tidy-grid-item
       >
         <div class="item-name">
           <div
@@ -143,15 +146,16 @@
           </div>
         </div>
 
-        {#if ctx?.attunement && !FoundryAdapter.concealDetails(item)}
+        {#if 'attunement' in ctx && !FoundryAdapter.concealDetails(item)}
           <i
             class="fas fa-sun icon-attuned {ctx.attunement?.cls ??
               ''} no-pointer-events"
-            title={localize(ctx.attunement?.title)}
+            title={localize(ctx.attunement?.title ?? '')}
           />
         {/if}
 
-        {#if FoundryAdapter.tryGetFlag(item, 'favorite')}
+        <!-- TODO: Put this in itemContext -->
+        {#if TidyFlags.tryGetFlag(item, 'favorite')}
           <GridPaneFavoriteIcon />
         {/if}
 

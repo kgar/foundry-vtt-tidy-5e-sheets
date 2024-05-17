@@ -438,10 +438,6 @@
         "name": "Abilita Debug",
         "hint": "Stampa i messaggi di debug sulla console."
     },
-    "TIDY5E.Settings.SortFavoriteItemsAlphabetically": {
-        "name": "Ordina Alfabeticamente Preferiti",
-        "hint": "Ordina i preferiti in ordine alfabetico."
-    },
     "TIDY5E.Settings.PermanentlyUnlockCharacterSheetForGM": {
         "name": "Scheda del personaggio: sempre sbloccato per il DM",
         "hint": "Tratta la scheda del personaggio come se fosse sempre sbloccata, indipendentemente dall'impostazione del blocco. Il DM può sempre modificare il personaggio, ma può anche attivare/disattivare il blocco/sblocco per un giocatore che possiede anche il personaggio.",

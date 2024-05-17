@@ -1161,22 +1161,6 @@ export function createSettings() {
         },
       },
 
-      sortFavoriteItemsAlphabetically: {
-        options: {
-          name: 'TIDY5E.Settings.SortFavoriteItemsAlphabetically.name',
-          hint: 'TIDY5E.Settings.SortFavoriteItemsAlphabetically.hint',
-          scope: 'world',
-          config: false,
-          default: false,
-          type: Boolean,
-        },
-        get() {
-          return FoundryAdapter.getTidySetting<boolean>(
-            'sortFavoriteItemsAlphabetically'
-          );
-        },
-      },
-
       lockMoneyChanges: {
         options: {
           name: 'TIDY5E.Settings.LockMoneyChanges.name',

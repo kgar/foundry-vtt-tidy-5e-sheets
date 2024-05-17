@@ -1,7 +1,7 @@
 import type {
   ActionItem,
   ActiveEffect5e,
-  ActorSheetContext,
+  AttunementContext,
   CharacterSheetContext,
   ClassSummary,
   DropdownListOption,
@@ -14,6 +14,7 @@ import { SettingsProvider } from 'src/settings/settings';
 import { debug, error, warn } from 'src/utils/logging';
 import { clamp } from 'src/utils/numbers';
 import FloatingContextMenu from 'src/context-menu/FloatingContextMenu';
+import { TidyFlags } from './TidyFlags';
 
 export const FoundryAdapter = {
   isFoundryV10() {
@@ -138,20 +139,8 @@ export const FoundryAdapter = {
   isEmpty(obj: any) {
     return isEmpty(obj);
   },
-  tryGetFlag<T>(flagged: any, flagName: string) {
-    return flagged.getFlag(CONSTANTS.MODULE_ID, flagName) as
-      | T
-      | null
-      | undefined;
-  },
-  setFlag(flagged: any, flagName: string, value: unknown): Promise<void> {
-    return flagged.setFlag(CONSTANTS.MODULE_ID, flagName, value);
-  },
-  unsetFlag(flagged: any, flagName: string): Promise<void> {
-    return flagged.unsetFlag(CONSTANTS.MODULE_ID, flagName);
-  },
   getClassIdentifier(item: Item5e): string {
-    return item.system.identifier || item.name.slugify({strict: true});
+    return item.system.identifier || item.name.slugify({ strict: true });
   },
   getClassAndSubclassSummaries(actor: Actor5e): Map<string, ClassSummary> {
     return actor.items.reduce(
@@ -222,7 +211,7 @@ export const FoundryAdapter = {
 
     entityWithSheet.sheet.render(true);
   },
-  createItem({ type, ...dataset }: Record<string, any>, actor: Actor5e) {
+  createItem({ type, ...data }: Record<string, any>, actor: Actor5e) {
     // Check to make sure the newly created class doesn't take player over level cap
     if (
       type === 'class' &&
@@ -235,14 +224,16 @@ export const FoundryAdapter = {
       return null;
     }
 
-    const itemData = {
-      name: FoundryAdapter.localize('DND5E.ItemNew', {
-        type: FoundryAdapter.localize(CONFIG.Item.typeLabels[type]),
-      }),
-      type,
-      system: foundry.utils.expandObject({ ...dataset }),
-    };
-    delete itemData.system.type;
+    const itemData = foundry.utils.mergeObject(
+      {
+        name: FoundryAdapter.localize('DND5E.ItemNew', {
+          type: FoundryAdapter.localize(CONFIG.Item.typeLabels[type]),
+        }),
+        type,
+      },
+      foundry.utils.expandObject({ ...data })
+    );
+
     return actor.createEmbeddedDocuments('Item', [itemData]);
   },
   async onLevelChange(
@@ -365,7 +356,9 @@ export const FoundryAdapter = {
 
     return classes.join(' ');
   },
-  getSpellAttackModAndTooltip(context: ActorSheetContext) {
+  getSpellAttackModAndTooltip(
+    context: CharacterSheetContext | NpcSheetContext
+  ) {
     let actor = context.actor;
     let formula = Roll.replaceFormulaData(
       actor.system.bonuses.rsak.attack,
@@ -420,11 +413,12 @@ export const FoundryAdapter = {
       return spell.img;
     }
 
-    const parentClass = FoundryAdapter.tryGetFlag<string>(spell, 'parentClass');
+    const parentClass = TidyFlags.tryGetFlag<string>(spell, 'parentClass');
 
-    const classImage = parentClass
-      ? context.actorClassesToImages[parentClass]
-      : undefined;
+    const classImage =
+      parentClass && 'actorClassesToImages' in context
+        ? context.actorClassesToImages[parentClass]
+        : undefined;
 
     return classImage ?? spell.img;
   },
@@ -444,8 +438,8 @@ export const FoundryAdapter = {
         .map((item) => item.id)
     );
   },
-  getFilteredActionItems(searchCriteria: string, items: Set<ActionItem>) {
-    return Array.from(items).filter(
+  getFilteredActionItems(searchCriteria: string, items: ActionItem[]) {
+    return items.filter(
       (x: ActionItem) =>
         searchCriteria.trim() === '' ||
         x.item?.name?.toLowerCase().includes(searchCriteria.toLowerCase())
@@ -540,21 +534,19 @@ export const FoundryAdapter = {
       return false;
     }
 
-    return (
-      FoundryAdapter.tryGetFlag<boolean | null>(document, 'favorite') ?? false
-    );
+    return TidyFlags.tryGetFlag<boolean | null>(document, 'favorite') ?? false;
   },
   toggleFavorite(document: any) {
     const favorited = FoundryAdapter.isDocumentFavorited(document);
     if (favorited) {
-      FoundryAdapter.unsetFlag(document, 'favorite');
+      TidyFlags.unsetFlag(document, 'favorite');
     } else {
-      FoundryAdapter.setFlag(document, 'favorite', true);
+      TidyFlags.setFlag(document, 'favorite', true);
     }
   },
   isActorSheetUnlocked(actor: any): boolean {
     return (
-      (actor.isOwner && FoundryAdapter.isSheetUnlocked(actor)) ||
+      (actor.isOwner && TidyFlags.allowEdit.get(actor)) ||
       (FoundryAdapter.userIsGm() &&
         SettingsProvider.settings.permanentlyUnlockCharacterSheetForGm.get() &&
         actor.type === CONSTANTS.SHEET_TYPE_CHARACTER) ||
@@ -565,14 +557,6 @@ export const FoundryAdapter = {
         SettingsProvider.settings.permanentlyUnlockVehicleSheetForGm.get() &&
         actor.type === CONSTANTS.SHEET_TYPE_VEHICLE)
     );
-  },
-  /**
-   * Determines whether an actor's sheet should be editable per the sheet lock feature (default `true`).
-   * @param actor the actor
-   * @returns whether the sheet should be editable per the sheet lock feature
-   */
-  isSheetUnlocked(actor: any) {
-    return FoundryAdapter.tryGetFlag(actor, 'allow-edit') ?? true;
   },
   allowCharacterEffectsManagement(actor: any) {
     return (
@@ -1188,9 +1172,7 @@ export const FoundryAdapter = {
     cls: 'attuned',
     title: 'DND5E.AttunementAttuned',
   },
-  getAttunementContext(
-    item: Item5e
-  ): { icon: string; cls: string; title: string } | undefined {
+  getAttunementContext(item: Item5e): AttunementContext | undefined {
     return item.system.attunement === CONFIG.DND5E.attunementTypes.REQUIRED
       ? FoundryAdapter.attunementContextRequired
       : item.system.attunement === CONFIG.DND5E.attunementTypes.ATTUNED
@@ -1268,5 +1250,28 @@ export const FoundryAdapter = {
       app.document instanceof dnd5e.documents.Actor5e &&
       app._concentration?.effects.has(effect)
     );
+  },
+  activateEditors(node: HTMLElement, sheet: any, bindSecrets: boolean = true) {
+    try {
+      const nodes = node.matches(
+        CONSTANTS.TEXT_EDITOR_ACTIVATION_ELEMENT_SELECTOR
+      )
+        ? [node]
+        : Array.from(
+            node.querySelectorAll<HTMLElement>(
+              CONSTANTS.TEXT_EDITOR_ACTIVATION_ELEMENT_SELECTOR
+            )
+          );
+
+      for (let editorDiv of nodes) {
+        sheet._activateEditor(editorDiv);
+      }
+      if (bindSecrets) {
+        sheet._secrets.forEach((s: any) => s.bind(node));
+      }
+    } catch (e) {
+      error('An error occurred while activating text editors', false, e);
+      debug('Text editor error trobuleshooting info', { node, sheet });
+    }
   },
 };

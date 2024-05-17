@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { TidyFlags } from 'src/foundry/TidyFlags';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { settingStore } from 'src/settings/settings';
   import type { ActorSheetContext } from 'src/types/types';
@@ -10,10 +11,10 @@
   let context = getContext<Readable<ActorSheetContext>>('context');
 
   async function toggleLock() {
-    await FoundryAdapter.setFlag($context.actor, 'allow-edit', !allowEdit);
+    await TidyFlags.allowEdit.set($context.actor, !allowEdit);
   }
 
-  $: allowEdit = FoundryAdapter.isSheetUnlocked($context.actor);
+  $: allowEdit = TidyFlags.allowEdit.get($context.actor);
 
   $: descriptionVariable =
     hint ??

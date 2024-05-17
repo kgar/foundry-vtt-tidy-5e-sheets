@@ -7,14 +7,11 @@
   import type { Readable } from 'svelte/store';
   import RerenderAfterFormSubmission from '../../../components/utility/RerenderAfterFormSubmission.svelte';
   import TextInput from '../../../components/inputs/TextInput.svelte';
+  import { TidyFlags } from 'src/foundry/TidyFlags';
 
   let context = getContext<Readable<CharacterSheetContext>>('context');
 
   const localize = FoundryAdapter.localize;
-
-  function activateProseMirrorListeners(node: HTMLElement) {
-    $context.activateFoundryJQueryListeners(node);
-  }
 </script>
 
 <div class="scroll-container journal-container">
@@ -23,18 +20,15 @@
     class:limited={$context.showLimitedSheet}
   >
     <RerenderAfterFormSubmission
-      andOnValueChange={FoundryAdapter.tryGetFlag(
-        $context.actor,
-        'notes1.value',
-      ) ?? ''}
+      andOnValueChange={TidyFlags.tryGetFlag($context.actor, 'notes1.value') ??
+        ''}
     >
-      <article use:activateProseMirrorListeners>
+      <article use:$context.activateEditors>
         <div class="section-titles">
           <TextInput
             document={$context.actor}
             field="flags.{CONSTANTS.MODULE_ID}.notes1.name"
-            value={FoundryAdapter.tryGetFlag($context.actor, 'notes1.name') ??
-              ''}
+            value={TidyFlags.tryGetFlag($context.actor, 'notes1.name') ?? ''}
             placeholder={localize('TIDY5E.JournalPersonsOfInterest')}
             selectOnFocus={true}
             stopChangePropagation={true}
@@ -49,18 +43,15 @@
       </article>
     </RerenderAfterFormSubmission>
     <RerenderAfterFormSubmission
-      andOnValueChange={FoundryAdapter.tryGetFlag(
-        $context.actor,
-        'notes2.value',
-      ) ?? ''}
+      andOnValueChange={TidyFlags.tryGetFlag($context.actor, 'notes2.value') ??
+        ''}
     >
-      <article use:activateProseMirrorListeners>
+      <article use:$context.activateEditors>
         <div class="section-titles">
           <TextInput
             document={$context.actor}
             field="flags.{CONSTANTS.MODULE_ID}.notes2.name"
-            value={FoundryAdapter.tryGetFlag($context.actor, 'notes2.name') ??
-              ''}
+            value={TidyFlags.tryGetFlag($context.actor, 'notes2.name') ?? ''}
             placeholder={localize('TIDY5E.JournalLocationsOfInterest')}
             selectOnFocus={true}
             stopChangePropagation={true}
@@ -75,18 +66,15 @@
       </article>
     </RerenderAfterFormSubmission>
     <RerenderAfterFormSubmission
-      andOnValueChange={FoundryAdapter.tryGetFlag(
-        $context.actor,
-        'notes3.value',
-      ) ?? ''}
+      andOnValueChange={TidyFlags.tryGetFlag($context.actor, 'notes3.value') ??
+        ''}
     >
-      <article use:activateProseMirrorListeners>
+      <article use:$context.activateEditors>
         <div class="section-titles">
           <TextInput
             document={$context.actor}
             field="flags.{CONSTANTS.MODULE_ID}.notes3.name"
-            value={FoundryAdapter.tryGetFlag($context.actor, 'notes3.name') ??
-              ''}
+            value={TidyFlags.tryGetFlag($context.actor, 'notes3.name') ?? ''}
             placeholder={localize('TIDY5E.JournalQuests')}
             selectOnFocus={true}
             stopChangePropagation={true}
@@ -101,18 +89,15 @@
       </article>
     </RerenderAfterFormSubmission>
     <RerenderAfterFormSubmission
-      andOnValueChange={FoundryAdapter.tryGetFlag(
-        $context.actor,
-        'notes4.value',
-      ) ?? ''}
+      andOnValueChange={TidyFlags.tryGetFlag($context.actor, 'notes4.value') ??
+        ''}
     >
-      <article use:activateProseMirrorListeners>
+      <article use:$context.activateEditors>
         <div class="section-titles">
           <TextInput
             document={$context.actor}
             field="flags.{CONSTANTS.MODULE_ID}.notes4.name"
-            value={FoundryAdapter.tryGetFlag($context.actor, 'notes4.name') ??
-              ''}
+            value={TidyFlags.tryGetFlag($context.actor, 'notes4.name') ?? ''}
             placeholder={localize('TIDY5E.JournalMisc')}
             selectOnFocus={true}
             stopChangePropagation={true}
@@ -132,12 +117,10 @@
     class:limited={$context.showLimitedSheet}
   >
     <RerenderAfterFormSubmission
-      andOnValueChange={FoundryAdapter.tryGetFlag(
-        $context.actor,
-        'notes.value',
-      ) ?? ''}
+      andOnValueChange={TidyFlags.tryGetFlag($context.actor, 'notes.value') ??
+        ''}
     >
-      <article class="journal-notes" use:activateProseMirrorListeners>
+      <article class="journal-notes" use:$context.activateEditors>
         <div class="section-titles">{localize('TIDY5E.JournalEntries')}</div>
         <SheetEditor
           content={$context.notesEnrichedHtml}

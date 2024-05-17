@@ -65,28 +65,28 @@ export const defaultItemFilters = {
   },
   ritual: {
     name: 'ritual',
-    predicate: (item) => item.system.properties.has('ritual'),
+    predicate: (item) => item.system.properties?.has('ritual') === true,
     text: 'DND5E.Ritual',
   },
   concentration: {
     name: 'concentration',
-    predicate: (item) => item.system.properties.has('concentration'),
+    predicate: (item) => item.system.properties?.has('concentration') === true,
     text: 'DND5E.Concentration',
     abbreviation: 'DND5E.AbbreviationConc',
   },
   verbal: {
     name: 'verbal',
-    predicate: (item) => item.system.properties.has('vocal'),
+    predicate: (item) => item.system.properties?.has('vocal') === true,
     text: 'DND5E.ComponentVerbal',
   },
   somatic: {
     name: 'somatic',
-    predicate: (item) => item.system.properties.has('somatic'),
+    predicate: (item) => item.system.properties?.has('somatic') === true,
     text: 'DND5E.ComponentSomatic',
   },
   material: {
     name: 'material',
-    predicate: (item) => item.system.properties.has('material'),
+    predicate: (item) => item.system.properties?.has('material') === true,
     text: 'DND5E.ComponentMaterial',
   },
   prepared: {

@@ -1,9 +1,16 @@
 import type { ComponentType, SvelteComponent } from 'svelte';
-import type { CustomContent, Tab, Utilities } from './types';
+import type { CustomContent, Tab, TidySectionBase, Utilities } from './types';
 import type { DocumentPreparationWarning } from './types';
-import type { DocumentFilters, RegisteredEquipmentTypeGroup } from 'src/runtime/item/item.types';
+import type {
+  DocumentFilters,
+  RegisteredEquipmentTypeGroup,
+} from 'src/runtime/item/item.types';
 
 export type ItemSheetContext = {
+  activateEditors: (
+    node: HTMLElement,
+    options?: { bindSecrets?: boolean }
+  ) => void;
   customContent: CustomContent[];
   customEquipmentTypeGroups: RegisteredEquipmentTypeGroup[];
   /**
@@ -44,16 +51,27 @@ export type ItemCardContentComponent = ComponentType<
   >
 >;
 
+export type ContainerItemContext = {
+  totalWeight?: number;
+  isStack?: boolean;
+};
+
 export type ContainerSheetContext = {
+  activateEditors: (
+    node: HTMLElement,
+    options?: { bindSecrets?: boolean }
+  ) => void;
   appId: string;
-  activateFoundryJQueryListeners: (node: HTMLElement) => void;
   filterData: DocumentFilters;
+  itemContext: Record<string, ContainerItemContext>;
   itemDescriptions: ItemDescription[];
   lockItemQuantity: boolean;
   customContent: CustomContent[];
   originalContext: unknown;
   owner: boolean;
   tabs: Tab[];
-  utilities: Utilities;
+  utilities: Utilities<ContainerSheetContext>;
   viewableWarnings: DocumentPreparationWarning[];
 } & Record<string, any>;
+
+export type ContainerSection = { items: Item5e[] } & TidySectionBase;

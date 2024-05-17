@@ -13,6 +13,7 @@
   import { settingStore } from 'src/settings/settings';
   import ExhaustionInput from 'src/sheets/actor/ExhaustionInput.svelte';
   import { ActiveEffectsHelper } from 'src/utils/active-effect';
+  import { TidyFlags } from 'src/foundry/TidyFlags';
 
   let context = getContext<Readable<NpcSheetContext>>('context');
 
@@ -21,7 +22,7 @@
     $context.actor?.system?.attributes?.hp?.max !== 0;
 
   function onLevelSelected(event: CustomEvent<{ level: number }>) {
-    FoundryAdapter.setFlag($context.actor, 'exhaustion', event.detail.level);
+    TidyFlags.setFlag($context.actor, 'exhaustion', event.detail.level);
   }
 </script>
 
@@ -39,7 +40,7 @@
   {/if}
   {#if $settingStore.useExhaustion && $settingStore.exhaustionConfig.type === 'specific'}
     <ExhaustionTracker
-      level={FoundryAdapter.tryGetFlag($context.actor, 'exhaustion') ?? 0}
+      level={TidyFlags.tryGetFlag($context.actor, 'exhaustion') ?? 0}
       radiusClass={$context.useRoundedPortraitStyle ? 'rounded' : 'top-left'}
       on:levelSelected={onLevelSelected}
       exhaustionConfig={$settingStore.exhaustionConfig}
@@ -50,7 +51,7 @@
     />
   {:else if $settingStore.useExhaustion && $settingStore.exhaustionConfig.type === 'open'}
     <ExhaustionInput
-      level={FoundryAdapter.tryGetFlag($context.actor, 'exhaustion') ?? 0}
+      level={TidyFlags.tryGetFlag($context.actor, 'exhaustion') ?? 0}
       radiusClass={$context.useRoundedPortraitStyle ? 'rounded' : 'top-left'}
       on:levelSelected={onLevelSelected}
       isActiveEffectApplied={ActiveEffectsHelper.isActiveEffectAppliedToField(

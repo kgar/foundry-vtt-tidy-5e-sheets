@@ -4,20 +4,15 @@
   import type { Readable } from 'svelte/store';
   import type { VehicleSheetContext } from 'src/types/types';
   import RerenderAfterFormSubmission from 'src/components/utility/RerenderAfterFormSubmission.svelte';
-  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
   let context = getContext<Readable<VehicleSheetContext>>('context');
-
-  function activateProseMirrorListeners(node: HTMLElement) {
-    $context.activateFoundryJQueryListeners(node);
-  }
 </script>
 
 <div class="note-entries" data-tidy-track-scroll-y>
   <RerenderAfterFormSubmission
     andOnValueChange={$context.system.details.biography.value}
   >
-    <article class="biography-notes" use:activateProseMirrorListeners>
+    <article class="biography-notes" use:$context.activateEditors>
       <SheetEditor
         content={$context.biographyHTML}
         target="system.details.biography.value"

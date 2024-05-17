@@ -438,10 +438,6 @@
         "name": "Activer le débogage",
         "hint": "Affiche les messages de débogage sur la console."
     },
-    "TIDY5E.Settings.SortFavoriteItemsAlphabetically": {
-        "name": "Trier les favoris par ordre alphabétique",
-        "hint": "Classe les favoris par ordre alphabétique."
-    },
     "TIDY5E.Settings.PermanentlyUnlockCharacterSheetForGM": {
         "name": "Feuille de personnage : Toujours déverrouillée pour le MJ",
         "hint": "Traitez la feuille de personnage comme si elle était toujours déverrouillée, quel que soit le paramètre de verrouillage. Le MJ peut toujours modifier le personnage, mais il peut également activer le verrouillage/déverrouillage pour un joueur qui possède également le personnage.",

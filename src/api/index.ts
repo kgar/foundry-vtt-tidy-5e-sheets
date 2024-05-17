@@ -21,3 +21,5 @@ export * from './tab/SvelteTab';
 export * from './Tidy5eSheetsApi';
 export type { OnRenderTabParams } from '../types/types.ts';
 export type { SheetLayout } from '../runtime/types.ts';
+export * from 'src/foundry/TidyFlags';
+export * from 'src/features/sections/sections.types';

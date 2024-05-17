@@ -6,23 +6,23 @@
   import VehicleHitPoints from './VehicleHitPoints.svelte';
   import VehicleDamageAndMishapThresholds from './VehicleDamageAndMishapThresholds.svelte';
   import ExhaustionTracker from 'src/sheets/actor/ExhaustionTracker.svelte';
-  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import VehicleMovement from './VehicleMovement.svelte';
   import { settingStore } from 'src/settings/settings';
   import ExhaustionInput from 'src/sheets/actor/ExhaustionInput.svelte';
   import { ActiveEffectsHelper } from 'src/utils/active-effect';
+  import { TidyFlags } from 'src/foundry/TidyFlags';
 
   let context = getContext<Readable<VehicleSheetContext>>('context');
 
   function onLevelSelected(event: CustomEvent<{ level: number }>) {
-    FoundryAdapter.setFlag($context.actor, 'exhaustion', event.detail.level);
+    TidyFlags.setFlag($context.actor, 'exhaustion', event.detail.level);
   }
 </script>
 
 <ActorProfile useHpOverlay={$settingStore.useHpOverlayVehicle}>
   {#if $settingStore.useExhaustion && $settingStore.vehicleExhaustionConfig.type === 'specific'}
     <ExhaustionTracker
-      level={FoundryAdapter.tryGetFlag($context.actor, 'exhaustion') ?? 0}
+      level={TidyFlags.tryGetFlag($context.actor, 'exhaustion') ?? 0}
       radiusClass={$context.useRoundedPortraitStyle ? 'rounded' : 'top-left'}
       on:levelSelected={onLevelSelected}
       exhaustionConfig={$settingStore.vehicleExhaustionConfig}
@@ -33,7 +33,7 @@
     />
   {:else if $settingStore.useExhaustion && $settingStore.vehicleExhaustionConfig.type === 'open'}
     <ExhaustionInput
-      level={FoundryAdapter.tryGetFlag($context.actor, 'exhaustion') ?? 0}
+      level={TidyFlags.tryGetFlag($context.actor, 'exhaustion') ?? 0}
       radiusClass={$context.useRoundedPortraitStyle ? 'rounded' : 'top-left'}
       on:levelSelected={onLevelSelected}
       isActiveEffectApplied={ActiveEffectsHelper.isActiveEffectAppliedToField(
@@ -44,7 +44,7 @@
   {/if}
   {#if $settingStore.useVehicleMotion}
     <VehicleMovement
-      motion={FoundryAdapter.tryGetFlag($context.actor, 'motion') === true}
+      motion={TidyFlags.tryGetFlag($context.actor, 'motion') === true}
       radiusClass={$context.useRoundedPortraitStyle ? 'rounded' : 'top-right'}
       animate={true}
     />

@@ -14,13 +14,14 @@
   import FilterMenu from 'src/components/filter/FilterMenu.svelte';
   import PinnedFilterToggles from 'src/components/filter/PinnedFilterToggles.svelte';
   import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
+  import { TidyFlags } from 'src/foundry/TidyFlags';
 
   let context = getContext<Readable<NpcSheetContext>>('context');
 
   let searchCriteria: string = '';
 
   let layoutMode: ItemLayoutMode;
-  $: layoutMode = FoundryAdapter.tryGetFlag($context.actor, 'spellbook-grid')
+  $: layoutMode = TidyFlags.spellbookGrid.get($context.actor)
     ? 'grid'
     : 'list';
 
@@ -57,25 +58,27 @@
   {#if noSpellLevels}
     <NoSpells editable={$context.unlocked} />
   {:else}
-    {#each $context.spellbook as section (section.label)}
-      {@const visibleItemIdSubset = FoundryAdapter.searchItems(
-        searchCriteria,
-        section.spells,
-      )}
-      {#if (searchCriteria.trim() === '' && $context.unlocked) || visibleItemIdSubset.size > 0}
-        {#if layoutMode === 'list'}
-          <SpellbookList
-            allowFavorites={false}
-            spells={section.spells}
-            {section}
-            {visibleItemIdSubset}
-          />
-        {:else}
-          <SpellbookGrid
-            spells={section.spells}
-            {section}
-            {visibleItemIdSubset}
-          />
+    {#each $context.spellbook as section (section.key)}
+      {#if section.show}
+        {@const visibleItemIdSubset = FoundryAdapter.searchItems(
+          searchCriteria,
+          section.spells,
+        )}
+        {#if (searchCriteria.trim() === '' && $context.unlocked) || visibleItemIdSubset.size > 0}
+          {#if layoutMode === 'list'}
+            <SpellbookList
+              allowFavorites={false}
+              spells={section.spells}
+              {section}
+              {visibleItemIdSubset}
+            />
+          {:else}
+            <SpellbookGrid
+              spells={section.spells}
+              {section}
+              {visibleItemIdSubset}
+            />
+          {/if}
         {/if}
       {/if}
     {/each}

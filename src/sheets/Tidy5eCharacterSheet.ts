@@ -23,6 +23,11 @@ import {
   type ContainerPanelItemContext,
   type ContainerCapacityContext,
   type ActiveEffect5e,
+  type ActorInventoryTypes,
+  type CharacterItemPartitions,
+  type CharacterFeatureSection,
+  type CharacterItemContext,
+  type SpellbookSection,
 } from 'src/types/types';
 import {
   applySheetAttributesToWindow,
@@ -36,7 +41,7 @@ import type { Item5e, ItemChatData } from 'src/types/item.types';
 import { CharacterSheetRuntime } from 'src/runtime/CharacterSheetRuntime';
 import {
   actorUsesActionFeature,
-  getActorActions,
+  getActorActionSections,
 } from 'src/features/actions/actions';
 import { isNil } from 'src/utils/data';
 import { CustomContentRenderer } from './CustomContentRenderer';
@@ -52,9 +57,18 @@ import type { Dnd5eActorCondition } from 'src/foundry/foundry-and-system';
 import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
 import { SheetPreferencesRuntime } from 'src/runtime/user-preferences/SheetPreferencesRuntime';
 import { Tidy5eBaseActorSheet } from './Tidy5eBaseActorSheet';
+import { CharacterSheetSections } from 'src/features/sections/CharacterSheetSections';
+import { SheetSections } from 'src/features/sections/SheetSections';
+import { TidyFlags } from 'src/api';
+import { DocumentTabSectionConfigApplication } from 'src/applications/section-config/DocumentTabSectionConfigApplication';
+import { ActorSheetCustomSectionMixin } from './mixins/Tidy5eBaseActorSheetMixins';
+import { ItemUtils } from 'src/utils/ItemUtils';
+import { Inventory } from 'src/features/sections/Inventory';
 
 export class Tidy5eCharacterSheet
-  extends dnd5e.applications.actor.ActorSheet5eCharacter
+  extends ActorSheetCustomSectionMixin(
+    dnd5e.applications.actor.ActorSheet5eCharacter
+  )
   implements
     SheetTabCacheable,
     SheetExpandedItemsCacheable,
@@ -196,6 +210,10 @@ export class Tidy5eCharacterSheet
     const characterPreferences = SheetPreferencesService.getByType(
       this.actor.type
     );
+
+    const attributesSortMode =
+      characterPreferences.tabs?.[CONSTANTS.TAB_CHARACTER_ATTRIBUTES]?.sort ??
+      'm';
     const inventorySortMode =
       characterPreferences.tabs?.[CONSTANTS.TAB_CHARACTER_INVENTORY]?.sort ??
       'm';
@@ -207,74 +225,6 @@ export class Tidy5eCharacterSheet
       'm';
     const actionListSortMode =
       characterPreferences.tabs?.[CONSTANTS.TAB_ACTOR_ACTIONS]?.sort ?? 'm';
-
-    try {
-      for (let section of defaultDocumentContext.inventory) {
-        // TODO: When I fully take over section preparation, move this filter() step higher up so that it is not looping in individual sections
-        let inventory = this.itemFilterService.filter(
-          section.items,
-          CONSTANTS.TAB_CHARACTER_INVENTORY
-        );
-        if (inventorySortMode === 'a') {
-          inventory = inventory.toSorted((a, b) =>
-            a.name.localeCompare(b.name)
-          );
-        }
-        section.items = inventory;
-      }
-
-      for (let section of defaultDocumentContext.spellbook) {
-        // TODO: When I fully take over section preparation, move this filter() step higher up so that it is not looping in individual sections
-        let spellbook = this.itemFilterService.filter(
-          section.spells,
-          CONSTANTS.TAB_CHARACTER_SPELLBOOK
-        );
-        if (spellbookSortMode === 'a') {
-          spellbook = spellbook.toSorted((a, b) =>
-            a.name.localeCompare(b.name)
-          );
-        }
-        section.spells = spellbook;
-      }
-
-      for (let section of defaultDocumentContext.features) {
-        // TODO: When I fully take over section preparation, move this filter() step higher up so that it is not looping in individual sections
-        let features = this.itemFilterService.filter(
-          section.items,
-          CONSTANTS.TAB_CHARACTER_FEATURES
-        );
-        if (featureSortMode === 'a' && !section.isClass) {
-          features = features.toSorted((a, b) => a.name.localeCompare(b.name));
-        }
-        if (featureSortMode === 'a' && section.isClass) {
-          features = features
-            .filter((f) => f.type === CONSTANTS.ITEM_TYPE_CLASS)
-            .toSorted((a, b) => a.name.localeCompare(b.name))
-            .reduce((prev, classItem) => {
-              prev.push(classItem);
-              const subclass = features.find(
-                (f) =>
-                  f.type === CONSTANTS.ITEM_TYPE_SUBCLASS &&
-                  f.system.classIdentifier === classItem.system.identifier
-              );
-              if (subclass) {
-                prev.push(subclass);
-              }
-              return prev;
-            }, []);
-        }
-        section.items = features;
-      }
-    } catch (e) {
-      error(
-        'An error occurred while sorting and filtering section data',
-        false,
-        e
-      );
-      debug('Sorting/Filtering error troubleshooting info', {
-        defaultDocumentContext,
-      });
-    }
 
     const unlocked =
       FoundryAdapter.isActorSheetUnlocked(this.actor) &&
@@ -305,22 +255,10 @@ export class Tidy5eCharacterSheet
       this.actor
     );
 
-    const sections = defaultDocumentContext.features.map((section: any) => ({
-      ...section,
-      showLevelColumn: !section.hasActions && section.isClass,
-      showRequirementsColumn: !section.isClass && !section.columns?.length,
-      showSourceColumn: !section.columns?.length,
-      showUsagesColumn: section.hasActions,
-      showUsesColumn: section.hasActions,
-    }));
-
     let maxPreparedSpellsTotal = 0;
     try {
       const formula =
-        FoundryAdapter.tryGetFlag(
-          this.actor,
-          'maxPreparedSpells'
-        )?.toString() ?? '';
+        TidyFlags.tryGetFlag(this.actor, 'maxPreparedSpells')?.toString() ?? '';
 
       if (formula?.trim() !== '') {
         const roll = await Roll.create(
@@ -335,7 +273,74 @@ export class Tidy5eCharacterSheet
 
     // TODO: Make a builder for this
     // TODO: Extract to runtime?
-    let utilities: Utilities = {
+    let utilities: Utilities<CharacterSheetContext> = {
+      [CONSTANTS.TAB_CHARACTER_ATTRIBUTES]: {
+        utilityToolbarCommands: [
+          {
+            title: FoundryAdapter.localize('SIDEBAR.SortModeAlpha'),
+            iconClass: 'fa-solid fa-arrow-down-a-z fa-fw',
+            execute: async () => {
+              await SheetPreferencesService.setDocumentTypeTabPreference(
+                this.actor.type,
+                CONSTANTS.TAB_CHARACTER_ATTRIBUTES,
+                'sort',
+                'm'
+              );
+            },
+            visible: attributesSortMode === 'a',
+          },
+          {
+            title: FoundryAdapter.localize('SIDEBAR.SortModeManual'),
+            iconClass: 'fa-solid fa-arrow-down-short-wide fa-fw',
+            execute: async () => {
+              await SheetPreferencesService.setDocumentTypeTabPreference(
+                this.actor.type,
+                CONSTANTS.TAB_CHARACTER_ATTRIBUTES,
+                'sort',
+                'a'
+              );
+            },
+            visible: attributesSortMode === 'm',
+          },
+          {
+            title: FoundryAdapter.localize('TIDY5E.Commands.ExpandAll'),
+            iconClass: 'fas fa-angles-down',
+            execute: () =>
+              // TODO: Use app.messageBus
+              this.messageBus.set({
+                tabId: CONSTANTS.TAB_CHARACTER_ATTRIBUTES,
+                message: CONSTANTS.MESSAGE_BUS_EXPAND_ALL,
+              }),
+          },
+          {
+            title: FoundryAdapter.localize('TIDY5E.Commands.CollapseAll'),
+            iconClass: 'fas fa-angles-up',
+            execute: () =>
+              // TODO: Use app.messageBus
+              this.messageBus.set({
+                tabId: CONSTANTS.TAB_CHARACTER_ATTRIBUTES,
+                message: CONSTANTS.MESSAGE_BUS_COLLAPSE_ALL,
+              }),
+          },
+          {
+            title: FoundryAdapter.localize(
+              'TIDY5E.Utilities.ConfigureSections'
+            ),
+            iconClass: 'fas fa-cog',
+            execute: ({ context }) => {
+              new DocumentTabSectionConfigApplication({
+                document: context.actor,
+                // Provide a way to build the necessary config, perhaps within the application constructor. We've got all the info we need in order to perform the operation.
+                sections: context.favorites,
+                tabId: CONSTANTS.TAB_CHARACTER_ATTRIBUTES,
+                tabTitle: CharacterSheetRuntime.getTabTitle(
+                  CONSTANTS.TAB_CHARACTER_ATTRIBUTES
+                ),
+              }).render(true);
+            },
+          },
+        ],
+      },
       [CONSTANTS.TAB_CHARACTER_INVENTORY]: {
         utilityToolbarCommands: [
           {
@@ -370,12 +375,9 @@ export class Tidy5eCharacterSheet
             ),
             iconClass: `fas fa-boxes-stacked fa-fw`,
             execute: () => {
-              FoundryAdapter.unsetFlag(this.actor, 'showContainerPanel');
+              TidyFlags.unsetFlag(this.actor, 'showContainerPanel');
             },
-            visible: !!FoundryAdapter.tryGetFlag(
-              this.actor,
-              'showContainerPanel'
-            ),
+            visible: !!TidyFlags.tryGetFlag(this.actor, 'showContainerPanel'),
           },
           {
             title: FoundryAdapter.localize(
@@ -383,12 +385,9 @@ export class Tidy5eCharacterSheet
             ),
             iconClass: `fas fa-box fa-fw`,
             execute: () => {
-              FoundryAdapter.setFlag(this.actor, 'showContainerPanel', true);
+              TidyFlags.setFlag(this.actor, 'showContainerPanel', true);
             },
-            visible: !FoundryAdapter.tryGetFlag(
-              this.actor,
-              'showContainerPanel'
-            ),
+            visible: !TidyFlags.tryGetFlag(this.actor, 'showContainerPanel'),
           },
           {
             title: FoundryAdapter.localize('TIDY5E.Commands.ExpandAll'),
@@ -413,17 +412,33 @@ export class Tidy5eCharacterSheet
           {
             title: FoundryAdapter.localize('TIDY5E.ListLayout'),
             iconClass: 'fas fa-th-list fa-fw toggle-list',
-            visible: !FoundryAdapter.tryGetFlag(this.actor, 'inventory-grid'),
+            visible: !TidyFlags.inventoryGrid.get(this.actor),
             execute: () => {
-              FoundryAdapter.setFlag(this.actor, 'inventory-grid', true);
+              TidyFlags.inventoryGrid.set(this.actor);
             },
           },
           {
             title: FoundryAdapter.localize('TIDY5E.GridLayout'),
             iconClass: 'fas fa-th-large fa-fw toggle-grid',
-            visible: !!FoundryAdapter.tryGetFlag(this.actor, 'inventory-grid'),
+            visible: !!TidyFlags.inventoryGrid.get(this.actor),
             execute: () => {
-              FoundryAdapter.unsetFlag(this.actor, 'inventory-grid');
+              TidyFlags.inventoryGrid.unset(this.actor);
+            },
+          },
+          {
+            title: FoundryAdapter.localize(
+              'TIDY5E.Utilities.ConfigureSections'
+            ),
+            iconClass: 'fas fa-cog',
+            execute: ({ context }) => {
+              new DocumentTabSectionConfigApplication({
+                document: context.actor,
+                sections: context.inventory,
+                tabId: CONSTANTS.TAB_CHARACTER_INVENTORY,
+                tabTitle: CharacterSheetRuntime.getTabTitle(
+                  CONSTANTS.TAB_CHARACTER_INVENTORY
+                ),
+              }).render(true);
             },
           },
         ],
@@ -508,17 +523,33 @@ export class Tidy5eCharacterSheet
           {
             title: FoundryAdapter.localize('TIDY5E.ListLayout'),
             iconClass: 'fas fa-th-list fa-fw toggle-list',
-            visible: !FoundryAdapter.tryGetFlag(this.actor, 'spellbook-grid'),
+            visible: !TidyFlags.spellbookGrid.get(this.actor),
             execute: () => {
-              FoundryAdapter.setFlag(this.actor, 'spellbook-grid', true);
+              TidyFlags.spellbookGrid.set(this.actor);
             },
           },
           {
             title: FoundryAdapter.localize('TIDY5E.GridLayout'),
             iconClass: 'fas fa-th-large fa-fw toggle-grid',
-            visible: !!FoundryAdapter.tryGetFlag(this.actor, 'spellbook-grid'),
+            visible: !!TidyFlags.spellbookGrid.get(this.actor),
             execute: () => {
-              FoundryAdapter.unsetFlag(this.actor, 'spellbook-grid');
+              TidyFlags.spellbookGrid.unset(this.actor);
+            },
+          },
+          {
+            title: FoundryAdapter.localize(
+              'TIDY5E.Utilities.ConfigureSections'
+            ),
+            iconClass: 'fas fa-cog',
+            execute: ({ context }) => {
+              new DocumentTabSectionConfigApplication({
+                document: context.actor,
+                sections: context.spellbook,
+                tabId: CONSTANTS.TAB_CHARACTER_SPELLBOOK,
+                tabTitle: CharacterSheetRuntime.getTabTitle(
+                  CONSTANTS.TAB_CHARACTER_SPELLBOOK
+                ),
+              }).render(true);
             },
           },
         ],
@@ -571,6 +602,22 @@ export class Tidy5eCharacterSheet
                 message: CONSTANTS.MESSAGE_BUS_COLLAPSE_ALL,
               }),
           },
+          {
+            title: FoundryAdapter.localize(
+              'TIDY5E.Utilities.ConfigureSections'
+            ),
+            iconClass: 'fas fa-cog',
+            execute: ({ context }) => {
+              new DocumentTabSectionConfigApplication({
+                document: context.actor,
+                sections: context.features,
+                tabId: CONSTANTS.TAB_CHARACTER_FEATURES,
+                tabTitle: CharacterSheetRuntime.getTabTitle(
+                  CONSTANTS.TAB_CHARACTER_FEATURES
+                ),
+              }).render(true);
+            },
+          },
         ],
       },
       [CONSTANTS.TAB_ACTOR_ACTIONS]: {
@@ -620,6 +667,22 @@ export class Tidy5eCharacterSheet
                 tabId: CONSTANTS.TAB_ACTOR_ACTIONS,
                 message: CONSTANTS.MESSAGE_BUS_COLLAPSE_ALL,
               }),
+          },
+          {
+            title: FoundryAdapter.localize(
+              'TIDY5E.Utilities.ConfigureSections'
+            ),
+            iconClass: 'fas fa-cog',
+            execute: ({ context }) => {
+              new DocumentTabSectionConfigApplication({
+                document: context.actor,
+                sections: context.actions,
+                tabId: CONSTANTS.TAB_ACTOR_ACTIONS,
+                tabTitle: CharacterSheetRuntime.getTabTitle(
+                  CONSTANTS.TAB_ACTOR_ACTIONS
+                ),
+              }).render(true);
+            },
           },
         ],
       },
@@ -683,12 +746,8 @@ export class Tidy5eCharacterSheet
 
     let containerPanelItems: ContainerPanelItemContext[] = [];
     try {
-      let containers = Array.from<Item5e>(this.actor.items.values())
-        .filter(
-          (i: Item5e) =>
-            i.type === CONSTANTS.ITEM_TYPE_CONTAINER &&
-            !this.actor.items.has(i.system.container)
-        )
+      let containers = defaultDocumentContext.items
+        .filter((i: Item5e) => i.type === CONSTANTS.ITEM_TYPE_CONTAINER)
         .toSorted((a: Item5e, b: Item5e) => a.sort - b.sort);
 
       for (let container of containers) {
@@ -709,11 +768,9 @@ export class Tidy5eCharacterSheet
 
     const context: CharacterSheetContext = {
       ...defaultDocumentContext,
-      activateFoundryJQueryListeners: (node: HTMLElement) => {
-        this._activateCoreListeners($(node));
-        super.activateListeners($(node));
-      },
-      actions: getActorActions(this.actor, this.itemFilterService),
+      activateEditors: (node, options) =>
+        FoundryAdapter.activateEditors(node, this, options?.bindSecrets),
+      actions: getActorActionSections(this.actor, this.itemFilterService),
       actorClassesToImages: getActorClassesToImages(this.actor),
       actorPortraitCommands:
         ActorPortraitRuntime.getEnabledPortraitMenuCommands(this.actor),
@@ -761,7 +818,6 @@ export class Tidy5eCharacterSheet
         defaultDocumentContext
       ),
       editable: defaultDocumentContext.editable,
-      features: sections,
       filterData: this.itemFilterService.getDocumentItemFilterData(),
       filterPins: ItemFilterRuntime.defaultFilterPins[this.actor.type],
       flawEnrichedHtml: await FoundryAdapter.enrichHtml(
@@ -858,8 +914,8 @@ export class Tidy5eCharacterSheet
       originalContext: defaultDocumentContext,
       owner: this.actor.isOwner,
       showContainerPanel:
-        FoundryAdapter.tryGetFlag(this.actor, 'showContainerPanel') === true &&
-        Array.from(this.actor.items).some(
+        TidyFlags.tryGetFlag(this.actor, 'showContainerPanel') === true &&
+        Array.from(defaultDocumentContext.items).some(
           (i: Item5e) => i.type === CONSTANTS.ITEM_TYPE_CONTAINER
         ),
       showLimitedSheet: FoundryAdapter.showLimitedSheet(this.actor),
@@ -895,7 +951,7 @@ export class Tidy5eCharacterSheet
 
     let tabs = await CharacterSheetRuntime.getTabs(context);
 
-    const selectedTabs = FoundryAdapter.tryGetFlag<string[]>(
+    const selectedTabs = TidyFlags.tryGetFlag<string[]>(
       context.actor,
       'selected-tabs'
     );
@@ -921,10 +977,404 @@ export class Tidy5eCharacterSheet
     return context;
   }
 
-  // TODO: Consume in Native CCSS branch
-  protected _prepareItem(item: Item5e, ctx: any) {
-    super._prepareItem(item, ctx);
-    if ( this._concentration.items.has(item) ) ctx.concentration = true;
+  protected _prepareItems(context: CharacterSheetContext) {
+    // Categorize items as inventory, spellbook, features, and classes
+    const inventory: ActorInventoryTypes = {};
+    const favoriteInventory: ActorInventoryTypes = {};
+    for (const type of Inventory.inventoryItemTypes) {
+      inventory[type] = {
+        label: Inventory.getInventoryTypeLabel(type),
+        items: [],
+        dataset: { type },
+        canCreate: true,
+        key: type,
+        show: true,
+      };
+      favoriteInventory[type] = {
+        label: Inventory.getInventoryTypeLabel(type),
+        items: [],
+        dataset: { type },
+        canCreate: false,
+        key: type,
+        show: true,
+      };
+    }
+
+    // Partition items by category
+    let {
+      items,
+      spells,
+      feats,
+      races,
+      backgrounds,
+      classes,
+      subclasses,
+      favorites,
+    } = Array.from(this.actor.items).reduce(
+      (
+        obj: CharacterItemPartitions & { favorites: CharacterItemPartitions },
+        item: Item5e
+      ) => {
+        const { quantity, uses, recharge } = item.system;
+
+        // Item details
+        const ctx = (context.itemContext[item.id] ??= {});
+        ctx.isStack = Number.isNumeric(quantity) && quantity !== 1;
+        ctx.attunement = FoundryAdapter.getAttunementContext(item);
+
+        // Item usage
+        ctx.hasUses = item.hasLimitedUses;
+        ctx.isOnCooldown =
+          recharge && !!recharge.value && recharge.charged === false;
+        ctx.isDepleted = ctx.isOnCooldown && ctx.hasUses && uses.value > 0;
+        ctx.hasTarget = item.hasAreaTarget || item.hasIndividualTarget;
+
+        // Unidentified items
+        ctx.concealDetails =
+          !game.user.isGM && item.system.identified === false;
+
+        // Item grouping
+        const [originId] =
+          item.getFlag('dnd5e', 'advancementOrigin')?.split('.') ?? [];
+        const group = this.actor.items.get(originId);
+        switch (group?.type) {
+          case 'race':
+            ctx.group = 'race';
+            break;
+          case 'background':
+            ctx.group = 'background';
+            break;
+          case 'class':
+            ctx.group = group.identifier;
+            break;
+          case 'subclass':
+            ctx.group = group.class?.identifier ?? 'other';
+            break;
+          default:
+            ctx.group = 'other';
+        }
+
+        // Individual item preparation
+        this._prepareItem(item, ctx);
+
+        const isWithinContainer = this.actor.items.has(item.system.container);
+
+        // Classify items into types
+        if (!isWithinContainer) {
+          CharacterSheetSections.partitionItem(item, obj, inventory);
+        }
+
+        if (FoundryAdapter.isDocumentFavorited(item)) {
+          CharacterSheetSections.partitionItem(
+            item,
+            obj.favorites,
+            favoriteInventory
+          );
+        }
+
+        return obj;
+      },
+      {
+        items: [] as Item5e[],
+        spells: [] as Item5e[],
+        feats: [] as Item5e[],
+        races: [] as Item5e[],
+        backgrounds: [] as Item5e[],
+        classes: [] as Item5e[],
+        subclasses: [] as Item5e[],
+        favorites: {
+          items: [] as Item5e[],
+          spells: [] as Item5e[],
+          feats: [] as Item5e[],
+          races: [] as Item5e[],
+          backgrounds: [] as Item5e[],
+          classes: [] as Item5e[],
+          subclasses: [] as Item5e[],
+        },
+      }
+    );
+
+    const characterPreferences = SheetPreferencesService.getByType(
+      this.actor.type
+    );
+
+    // Organize items
+    // Section the items by type
+    for (let i of items) {
+      const ctx = (context.itemContext[i.id] ??= {});
+      ctx.totalWeight = i.system.totalWeight?.toNearest(0.1);
+      CharacterSheetSections.applyInventoryItemToSection(inventory, i, {
+        canCreate: true,
+      });
+    }
+
+    // Section favorite items by type
+    for (let i of favorites.items) {
+      const ctx = (context.itemContext[i.id] ??= {});
+      ctx.totalWeight = i.system.totalWeight?.toNearest(0.1);
+      CharacterSheetSections.applyInventoryItemToSection(favoriteInventory, i, {
+        canCreate: false,
+      });
+    }
+
+    // Organize Spellbook and count the number of prepared spells (excluding always, at will, cantrips, etc...)
+    // Count prepared spells
+    const nPrepared = spells.filter((spell) => {
+      const prep = spell.system.preparation;
+      return (
+        spell.system.level > 0 && prep.mode === 'prepared' && prep.prepared
+      );
+    }).length;
+
+    // Section spells
+    // TODO: Take over `_prepareSpellbook` and
+    // - have custom sectioning built right into the process
+    // - set up `key` in the spellbook prep code, just like `prop`
+    const spellbook = SheetSections.prepareTidySpellbook(
+      context,
+      spells,
+      {
+        canCreate: true,
+      },
+      this
+    );
+
+    // Section Favorite Spells
+    const favoriteSpellbook = SheetSections.prepareTidySpellbook(
+      context,
+      favorites.spells,
+      {
+        canCreate: false,
+      },
+      this
+    );
+
+    // Process Special Feature Item Context
+    classes = SheetSections.prepareClassItems(
+      context,
+      classes,
+      subclasses,
+      this.actor
+    );
+
+    // Put unmatched subclasses into features so they don't disappear
+    for (const subclass of subclasses) {
+      feats.push(subclass);
+      const message = game.i18n.format('DND5E.SubclassMismatchWarn', {
+        name: subclass.name,
+        class: subclass.system.classIdentifier,
+      });
+      context.warnings.push({ message, type: 'warning' });
+    }
+
+    // Process Special Favorite Feature Item Context
+    favorites.classes = SheetSections.prepareClassItems(
+      context,
+      favorites.classes,
+      favorites.subclasses,
+      this.actor
+    );
+
+    for (const subclass of favorites.subclasses) {
+      favorites.feats.push(subclass);
+    }
+
+    // Section Features
+    const features: Record<string, CharacterFeatureSection> =
+      CharacterSheetSections.buildFeaturesSections(
+        races,
+        backgrounds,
+        classes,
+        feats,
+        {
+          canCreate: true,
+        }
+      );
+
+    // Section favorite features
+    const favoriteFeatures: Record<string, CharacterFeatureSection> =
+      CharacterSheetSections.buildFeaturesSections(
+        favorites.races,
+        favorites.backgrounds,
+        favorites.classes,
+        favorites.feats,
+        { canCreate: false }
+      );
+
+    // Assign, sort sections, sort items, and return
+    const sectionConfigs = TidyFlags.sectionConfig.get(this.actor);
+
+    context.inventory = SheetSections.sortKeyedSections(
+      Object.values(inventory),
+      sectionConfigs?.[CONSTANTS.TAB_CHARACTER_INVENTORY]
+    );
+
+    const inventorySortMode =
+      characterPreferences.tabs?.[CONSTANTS.TAB_CHARACTER_INVENTORY]?.sort ??
+      'm';
+
+    context.inventory.forEach((section) => {
+      // Sort Inventory
+      ItemUtils.sortItems(section.items, inventorySortMode);
+
+      // TODO: Collocate Inventory Sub Items
+      // Filter Inventory
+      section.items = this.itemFilterService.filter(
+        section.items,
+        CONSTANTS.TAB_CHARACTER_INVENTORY
+      );
+
+      // Apply visibility from configuration
+      section.show =
+        sectionConfigs?.[CONSTANTS.TAB_CHARACTER_INVENTORY]?.[section.key]
+          ?.show !== false;
+    });
+
+    context.spellbook = SheetSections.sortKeyedSections(
+      spellbook,
+      sectionConfigs?.[CONSTANTS.TAB_CHARACTER_SPELLBOOK]
+    );
+
+    const spellbookSortMode =
+      characterPreferences.tabs?.[CONSTANTS.TAB_CHARACTER_SPELLBOOK]?.sort ??
+      'm';
+
+    context.spellbook.forEach((section) => {
+      // Sort Spellbook
+      ItemUtils.sortItems(section.spells, spellbookSortMode);
+
+      // TODO: Collocate Spellbook Sub Items
+      // Filter Spellbook
+      section.spells = this.itemFilterService.filter(
+        section.spells,
+        CONSTANTS.TAB_CHARACTER_SPELLBOOK
+      );
+
+      // Apply visibility from configuration
+      section.show =
+        sectionConfigs?.[CONSTANTS.TAB_CHARACTER_SPELLBOOK]?.[section.key]
+          ?.show !== false;
+    });
+
+    context.features = SheetSections.sortKeyedSections(
+      Object.values(features),
+      sectionConfigs?.[CONSTANTS.TAB_CHARACTER_FEATURES]
+    );
+
+    const featureSortMode =
+      characterPreferences.tabs?.[CONSTANTS.TAB_CHARACTER_FEATURES]?.sort ??
+      'm';
+
+    context.features.forEach((section) => {
+      // Sort Features
+      ItemUtils.sortItems(section.items, featureSortMode);
+
+      // Collocate Feature Sub Items
+      section.items = SheetSections.collocateSubItems(context, section.items);
+
+      // Filter Features
+      section.items = this.itemFilterService.filter(
+        section.items,
+        CONSTANTS.TAB_CHARACTER_FEATURES
+      );
+
+      // Apply visibility from configuration
+      section.show =
+        sectionConfigs?.[CONSTANTS.TAB_CHARACTER_FEATURES]?.[section.key]
+          ?.show !== false;
+    });
+
+    const favoriteSections = [
+      ...Object.values(favoriteInventory)
+        .filter((i) => i.items.length)
+        .map((i) => ({
+          ...i,
+          type: CONSTANTS.TAB_CHARACTER_INVENTORY,
+        })),
+      ...Object.values(favoriteFeatures)
+        .filter((i) => i.items.length)
+        .map((i) => ({
+          ...i,
+          type: CONSTANTS.TAB_CHARACTER_FEATURES,
+        })),
+      ...favoriteSpellbook
+        .filter((s: SpellbookSection) => s.spells.length)
+        .map((s: SpellbookSection) => ({
+          ...s,
+          type: CONSTANTS.TAB_CHARACTER_SPELLBOOK,
+        })),
+    ];
+
+    // TODO: Revise so that there's less churn.
+    context.favorites = CharacterSheetSections.mergeDuplicateFavoriteSections(
+      SheetSections.sortKeyedSections(
+        favoriteSections,
+        sectionConfigs?.[CONSTANTS.TAB_CHARACTER_ATTRIBUTES]
+      )
+    );
+
+    const attributesSortMode =
+      characterPreferences.tabs?.[CONSTANTS.TAB_CHARACTER_ATTRIBUTES]?.sort ??
+      'm';
+
+    context.favorites.forEach((section) => {
+      let items = 'spells' in section ? section.spells : section.items;
+      // Sort Favorites
+      ItemUtils.sortItems(items, attributesSortMode);
+
+      // TODO: Collocate Favorite Sub Items
+      // Filter Favorites
+      items = this.itemFilterService.filter(
+        items,
+        CONSTANTS.TAB_CHARACTER_ATTRIBUTES
+      );
+      if ('spells' in section) {
+        section.spells = items;
+      } else {
+        section.items = items;
+      }
+
+      // Apply visibility from configuration
+      section.show =
+        sectionConfigs?.[CONSTANTS.TAB_CHARACTER_ATTRIBUTES]?.[section.key]
+          ?.show !== false;
+    });
+
+    context.preparedSpells = nPrepared;
+  }
+
+  /**
+   * A helper method to establish the displayed preparation state for an item.
+   * @param {Item5e} item     Item being prepared for display.
+   * @param {object} context  Context data for display.
+   * @protected
+   */
+  protected _prepareItem(item: Item5e, context: CharacterItemContext) {
+    if (item.type === CONSTANTS.ITEM_TYPE_SPELL) {
+      const prep = item.system.preparation || {};
+      const isAlways = prep.mode === 'always';
+      const isPrepared = !!prep.prepared;
+      context.toggleClass = isPrepared ? 'active' : '';
+      if (isAlways) {
+        context.toggleClass = 'fixed';
+        context.toggleTitle = CONFIG.DND5E.spellPreparationModes.always.label;
+      } else if (isPrepared) {
+        context.toggleTitle = CONFIG.DND5E.spellPreparationModes.prepared.label;
+      } else {
+        context.toggleTitle = game.i18n.localize('DND5E.SpellUnprepared');
+      }
+
+      if (this._concentration.items.has(item)) {
+        context.concentration = true;
+      }
+    } else {
+      const isActive = !!item.system.equipped;
+      context.toggleClass = isActive ? 'active' : '';
+      context.toggleTitle = game.i18n.localize(
+        isActive ? 'DND5E.Equipped' : 'DND5E.Unequipped'
+      );
+      context.canToggle = 'equipped' in item.system;
+    }
   }
 
   private async setExpandedItemData() {
@@ -955,7 +1405,7 @@ export class Tidy5eCharacterSheet
   async _onDropSingleItem(itemData: any) {
     // Create a Consumable spell scroll on the Inventory tab
     if (
-      itemData.type === 'spell' &&
+      itemData.type === CONSTANTS.ITEM_TYPE_SPELL &&
       this.currentTabId === CONSTANTS.TAB_CHARACTER_INVENTORY
     ) {
       const options: Record<string, unknown> = {};
@@ -1003,6 +1453,10 @@ export class Tidy5eCharacterSheet
   private async _renderSheet(force?: boolean, options = {}) {
     await this.setExpandedItemData();
     const data = await this.getData();
+    SheetSections.accountForExternalSections(
+      ['actions', 'favorites', 'inventory', 'spellbook', 'features'],
+      data
+    );
     this.context.set(data);
 
     if (force) {
@@ -1156,7 +1610,7 @@ export class Tidy5eCharacterSheet
 function getActorClassesToImages(actor: Actor5e): Record<string, string> {
   let actorClassesToImages: Record<string, string> = {};
   for (let item of actor.items) {
-    if (item.type == 'class') {
+    if (item.type == CONSTANTS.ITEM_TYPE_CLASS) {
       let className = item.name.toLowerCase();
       let classImg = item.img;
       actorClassesToImages[className] = classImg;

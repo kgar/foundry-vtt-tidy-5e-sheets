@@ -57,8 +57,20 @@ export const CONSTANTS = {
     wizard: 'TIDY5E.Class.Wizard',
     custom: 'TIDY5E.Class.Custom',
   },
+  CHARACTER_FAVORITE_SECTION_GENERIC: 'generic',
+  CHARACTER_FEAT_SECTION_BACKGROUND: 'background',
+  CHARACTER_FEAT_SECTION_CLASSES: 'classes',
+  CHARACTER_FEAT_SECTION_ACTIVE: 'active',
+  CHARACTER_FEAT_SECTION_PASSIVE: 'passive',
+  CHARACTER_FEAT_SECTION_RACE: 'race',
+  NPC_ABILITY_SECTION_WEAPONS: 'weapons',
+  NPC_ABILITY_SECTION_ACTIONS: 'actions',
+  NPC_ABILITY_SECTION_PASSIVE: 'passive',
+  NPC_ABILITY_SECTION_EQUIPMENT: 'equipment',
+  NPC_ABILITY_SECTION_CLASSES: 'classes',
   TAB_OPTION_CLASS: 'tab-option',
   TAB_CONTAINER_CONTENTS: 'contents',
+  TAB_CONTAINER_SECTION_CONTENTS: 'contents',
   TAB_ITEM_DESCRIPTION_ID: 'description',
   TAB_ITEM_DETAILS_ID: 'details',
   TAB_ITEM_ADVANCEMENT_ID: 'advancement',
@@ -73,6 +85,7 @@ export const CONSTANTS = {
   TAB_MIGRATIONS_V1_ONBOARDING: 'v1-onboarding',
   TAB_MIGRATIONS_CHARACTER_BIOGRAPHY: 'character-bio',
   TAB_MIGRATIONS_NPC_DEATH: 'npc-death',
+  TAB_MIGRATIONS_CCSS_TO_TIDY: 'ccss-to-tidy',
   TAB_NPC_ABILITIES: 'attributes',
   TAB_NPC_SPELLBOOK: 'spellbook',
   TAB_NPC_EFFECTS: 'effects',
@@ -204,6 +217,9 @@ export const CONSTANTS = {
     /** A list-based tabular representation of items (e.g., equipment, loot, spells, etc.). */
     ITEM_TABLE: 'item-table',
 
+    /** The header row of an item table. */
+    ITEM_TABLE_HEADER_ROW: 'item-table-header-row',
+
     /** A row in an item table. */
     ITEM_TABLE_ROW: 'item-table-row',
 
@@ -308,14 +324,18 @@ export const CONSTANTS = {
 
     /** A toolbar that usually sits at the top of a section of content, providing features like search, filtering, etc. */
     UTILITY_TOOLBAR: 'utility-toolbar',
+
+    /** A toolbar command, usually a button */
+    UTILITY_TOOLBAR_COMMAND: 'utility-toolbar-command',
   },
   ACTIVATION_COST_ACTION: 'action',
   ACTIVATION_COST_BONUS: 'bonus',
-  ACTIVATION_COST_REACTION: 'reaction',
+  ACTIVATION_COST_CREW: 'crew',
+  ACTIVATION_COST_LAIR: 'lair',
   ACTIVATION_COST_LEGENDARY: 'legendary',
   ACTIVATION_COST_MYTHIC: 'mythic',
-  ACTIVATION_COST_LAIR: 'lair',
-  ACTIVATION_COST_CREW: 'crew',
+  ACTIVATION_COST_NONE: 'none',
+  ACTIVATION_COST_REACTION: 'reaction',
   ACTIVATION_COST_SPECIAL: 'special',
   LIMITED_USES_PER_CHARGES: 'charges',
   LIMITED_USES_PER_DAWN: 'dawn',
@@ -326,4 +346,5 @@ export const CONSTANTS = {
   SHEET_SETTINGS_OPTION_NONE: 'none',
   SHEET_SETTINGS_OPTION_GM_ONLY: 'gm-only',
   SHEET_SETTINGS_OPTION_GM_AND_OWNERS: 'gm-and-owners',
+  TEXT_EDITOR_ACTIVATION_ELEMENT_SELECTOR: '.editor-content[data-edit]',
 } as const;

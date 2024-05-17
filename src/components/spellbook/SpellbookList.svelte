@@ -5,6 +5,7 @@
     type CharacterSheetContext,
     type NpcSheetContext,
     type RenderableClassicControl,
+    type SpellbookSection,
   } from 'src/types/types';
   import ItemDeleteControl from '../item-list/controls/ItemDeleteControl.svelte';
   import ItemEditControl from '../item-list/controls/ItemEditControl.svelte';
@@ -32,10 +33,11 @@
   import type { Item5e } from 'src/types/item.types';
   import ClassicControls from 'src/sheets/shared/ClassicControls.svelte';
   import ConcentrationOverlayIcon from './ConcentrationOverlayIcon.svelte';
+  import { TidyFlags } from 'src/foundry/TidyFlags';
 
   let context =
     getContext<Readable<CharacterSheetContext | NpcSheetContext>>('context');
-  export let section: any;
+  export let section: SpellbookSection;
   export let spells: any[];
   export let allowFavorites: boolean = true;
   export let cssClass: string | null = null;
@@ -110,12 +112,12 @@
 </script>
 
 <section class="spellbook-list-section {cssClass}">
-  <ItemTable location={section.label}>
+  <ItemTable key={section.key}>
     <svelte:fragment slot="header">
       <ItemTableHeaderRow>
         <ItemTableColumn primary={true}>
           <span class="spell-primary-column-label">
-            {section.label}
+            {localize(section.label)}
           </span>
           {#if section.usesSlots}
             <SpellSlotManagement {section} />
@@ -202,7 +204,7 @@
               <ItemUses item={spell} />
             </ItemTableCell>
           {/if}
-          {#if allowFavorites && $settingStore.showIconsNextToTheItemName && FoundryAdapter.tryGetFlag(spell, 'favorite')}
+          {#if allowFavorites && $settingStore.showIconsNextToTheItemName && TidyFlags.tryGetFlag(spell, 'favorite')}
             <InlineFavoriteIcon />
           {/if}
           <ItemTableCell baseWidth={spellComponentsBaseWidth} cssClass="no-gap">

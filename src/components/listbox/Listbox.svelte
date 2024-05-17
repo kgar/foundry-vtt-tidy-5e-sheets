@@ -1,16 +1,28 @@
-<script lang="ts">
+<script lang="ts" generics="TItem extends Record<string, unknown>">
+  import { flip } from 'svelte/animate';
+  import { crossfade } from 'svelte/transition';
   import { createEventDispatcher } from 'svelte';
 
-  export let items: any[];
+  const [send, receive] = crossfade({});
+
+  export let items: TItem[];
   export let labelProp: string;
   export let valueProp: string;
   export let selectedItemIndex: number | null = null;
+  export let draggable = false;
 
   let idRandomizer = Math.random().toString().substring(2);
 
   const dispatcher = createEventDispatcher<{
     select: number;
     keydown: KeyboardEvent & { currentTarget: HTMLElement };
+    dragstart: { item: TItem; index: number; event: DragEvent };
+    dragend: { item: TItem; index: number; event: DragEvent };
+    listboxDrop: { event: DragEvent };
+    drop: { item: TItem; index: number; event: DragEvent };
+    dragover: { item: TItem; index: number; event: DragEvent };
+    dragenter: { item: TItem; index: number; event: DragEvent };
+    dragleave: { item: TItem; index: number; event: DragEvent };
   }>();
 
   let listbox: HTMLElement;
@@ -58,6 +70,7 @@
     : null}
   tabindex="0"
   on:keydown={handleListboxKeyDown}
+  on:drop={(ev) => dispatcher('listboxDrop', { event: ev })}
 >
   {#each items as item, i (item[valueProp])}
     <li
@@ -65,10 +78,30 @@
       role="option"
       aria-selected={selectedItemIndex === i}
       class:focused={selectedItemIndex === i}
+      class="flex-row small-gap align-items-center"
       on:click={() => selectItemAt(i)}
       on:keydown={(ev) => handleListboxKeyDown(ev)}
+      {draggable}
+      on:dragstart={(ev) =>
+        dispatcher('dragstart', { event: ev, item, index: i })}
+      on:dragend={(ev) => dispatcher('dragend', { event: ev, item, index: i })}
+      on:drop={(ev) => dispatcher('drop', { event: ev, item, index: i })}
+      on:dragover={(ev) =>
+        dispatcher('dragover', { event: ev, item, index: i })}
+      on:dragenter={(ev) =>
+        dispatcher('dragenter', { event: ev, item, index: i })}
+      on:dragleave={(ev) =>
+        dispatcher('dragleave', { event: ev, item, index: i })}
+      animate:flip={{ duration: 150 }}
+      in:receive={{ key: item[valueProp] }}
+      out:send={{ key: item[valueProp] }}
     >
-      {item[labelProp]}
+      {#if draggable}
+        <i class="drag-grip fa-solid fa-grip-lines fa-fw"></i>
+      {/if}
+      <slot {item}>
+        {item[labelProp]}
+      </slot>
     </li>
   {/each}
 </ul>
@@ -89,6 +122,15 @@
   .listbox li {
     list-style-type: none;
     padding: 0.5rem;
+
+    &:has(.drag-grip) {
+      cursor: pointer;
+    }
+
+    .drag-grip {
+      font-size: 0.625rem;
+      color: var(--t5e-tertiary-color);
+    }
   }
   .listbox [role='option'].focused {
     background-color: var(--t5e-faint-color);

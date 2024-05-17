@@ -1,6 +1,10 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import type { CharacterSheetContext, ItemLayoutMode } from 'src/types/types';
+  import type {
+    CharacterSheetContext,
+    ItemLayoutMode,
+    SpellbookSection,
+  } from 'src/types/types';
   import SpellbookList from '../../../components/spellbook/SpellbookList.svelte';
   import SpellbookFooter from '../../../components/spellbook/SpellbookFooter.svelte';
   import SpellbookGrid from '../../../components/spellbook/SpellbookGrid.svelte';
@@ -17,6 +21,8 @@
   import FilterMenu from 'src/components/filter/FilterMenu.svelte';
   import PinnedFilterToggles from 'src/components/filter/PinnedFilterToggles.svelte';
   import { ItemFilterRuntime } from 'src/runtime/item/ItemFilterRuntime';
+  import HorizontalLineSeparator from 'src/components/layout/HorizontalLineSeparator.svelte';
+  import { TidyFlags } from 'src/foundry/TidyFlags';
 
   let context = getContext<Readable<CharacterSheetContext>>('context');
 
@@ -25,12 +31,12 @@
   let searchCriteria: string = '';
 
   let layoutMode: ItemLayoutMode;
-  $: layoutMode = FoundryAdapter.tryGetFlag($context.actor, 'spellbook-grid')
+  $: layoutMode = TidyFlags.spellbookGrid.get($context.actor)
     ? 'grid'
     : 'list';
 
   $: selectedClassFilter =
-    FoundryAdapter.tryGetFlag($context.actor, 'classFilter') ?? '';
+    TidyFlags.tryGetFlag($context.actor, 'classFilter') ?? '';
 
   function tryFilterByClass(spells: any[]) {
     if (
@@ -42,7 +48,7 @@
 
     return spells.filter(
       (spell) =>
-        FoundryAdapter.tryGetFlag(spell, 'parentClass') === selectedClassFilter,
+        TidyFlags.tryGetFlag(spell, 'parentClass') === selectedClassFilter,
     );
   }
 
@@ -50,7 +56,8 @@
 
   $: noSpells =
     $context.spellbook.reduce(
-      (count: number, section: any) => count + section.spells.length,
+      (count: number, section: SpellbookSection) =>
+        count + section.spells.length,
       0,
     ) === 0;
 
@@ -92,17 +99,27 @@
   {#if noSpellLevels}
     <NoSpells editable={$context.unlocked} />
   {:else}
-    {#each $context.spellbook as section (section.label)}
-      {@const classSpells = tryFilterByClass(section.spells)}
-      {@const visibleItemIdSubset = FoundryAdapter.searchItems(
-        searchCriteria,
-        classSpells,
-      )}
-      {#if (searchCriteria.trim() === '' && $context.unlocked) || visibleItemIdSubset.size > 0}
-        {#if layoutMode === 'list'}
-          <SpellbookList spells={classSpells} {section} {visibleItemIdSubset} />
-        {:else}
-          <SpellbookGrid spells={classSpells} {section} {visibleItemIdSubset} />
+    {#each $context.spellbook as section (section.key)}
+      {#if section.show}
+        {@const classSpells = tryFilterByClass(section.spells)}
+        {@const visibleItemIdSubset = FoundryAdapter.searchItems(
+          searchCriteria,
+          classSpells,
+        )}
+        {#if (searchCriteria.trim() === '' && $context.unlocked) || visibleItemIdSubset.size > 0}
+          {#if layoutMode === 'list'}
+            <SpellbookList
+              spells={classSpells}
+              {section}
+              {visibleItemIdSubset}
+            />
+          {:else}
+            <SpellbookGrid
+              spells={classSpells}
+              {section}
+              {visibleItemIdSubset}
+            />
+          {/if}
         {/if}
       {/if}
     {/each}

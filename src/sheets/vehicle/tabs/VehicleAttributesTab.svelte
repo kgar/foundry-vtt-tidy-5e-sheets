@@ -5,6 +5,7 @@
   import type { Readable } from 'svelte/store';
   import type {
     RenderableClassicControl,
+    VehicleFeatureSection,
     VehicleSheetContext,
   } from 'src/types/types';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
@@ -51,7 +52,7 @@
   };
 
   $: noFeatures = !$context.features.some(
-    (section: any) => section.items.length,
+    (section: VehicleFeatureSection) => section.items.length,
   );
 
   declareLocation('attributes');
@@ -115,9 +116,9 @@
         {localize('TIDY5E.EmptySection')}
       </Notice>
     {:else}
-      {#each $context.features as section}
+      {#each $context.features as section (section.key)}
         {#if $context.unlocked || section.items.length}
-          <ItemTable location={section.label}>
+          <ItemTable key={section.key}>
             <svelte:fragment slot="header">
               <ItemTableHeaderRow>
                 <ItemTableColumn primary={true}>
@@ -191,11 +192,12 @@
                       {:else if ctx?.hasUses}
                         <ItemUses {item} />
                       {:else}
+                        <!-- TODO: Figure out how to make this work in a custom section. -->
                         <ItemAddUses {item} />
                       {/if}
                     </ItemTableCell>
                     <ItemTableCell baseWidth="7.5rem">
-                      {#if item.system.activation.type}
+                      {#if item.system.activation?.type}
                         <span>{item.labels?.activation ?? ''}</span>
                       {/if}
                     </ItemTableCell>

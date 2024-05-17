@@ -9,6 +9,7 @@
   import { error } from 'src/utils/logging';
   import TraitSectionTags from './TraitSectionTags.svelte';
   import TraitSectionModifications from './TraitSectionModifications.svelte';
+  import { TidyFlags } from 'src/foundry/TidyFlags';
 
   let context = getContext<Readable<ActorSheetContext>>('context');
   export let toggleable: boolean;
@@ -17,14 +18,13 @@
 
   $: traitsExpanded =
     !toggleable ||
-    FoundryAdapter.tryGetFlag<boolean>($context.actor, 'traitsExpanded') ===
-      true;
+    TidyFlags.tryGetFlag<boolean>($context.actor, 'traitsExpanded') === true;
 
   function toggleTraitsExpanded() {
     if (traitsExpanded) {
-      FoundryAdapter.unsetFlag($context.actor, 'traitsExpanded');
+      TidyFlags.unsetFlag($context.actor, 'traitsExpanded');
     } else {
-      FoundryAdapter.setFlag($context.actor, 'traitsExpanded', true);
+      TidyFlags.setFlag($context.actor, 'traitsExpanded', true);
     }
   }
 
@@ -38,7 +38,7 @@
 
 <div
   class="traits"
-  class:expanded={FoundryAdapter.tryGetFlag($context.actor, 'traitsExpanded')}
+  class:expanded={TidyFlags.tryGetFlag($context.actor, 'traitsExpanded')}
 >
   {#if useSenses && $context.senses}
     {@const senses = getTags($context.senses)}

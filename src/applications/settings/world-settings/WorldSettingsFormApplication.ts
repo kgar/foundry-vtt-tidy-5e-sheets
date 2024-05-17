@@ -52,8 +52,6 @@ export class WorldSettingsFormApplication extends SvelteFormApplicationBase {
         useNpcEncumbranceBar: currentSettings.useNpcEncumbranceBar,
         useVehicleEncumbranceBar: currentSettings.useVehicleEncumbranceBar,
         showPlayerName: currentSettings.showPlayerName,
-        sortFavoriteItemsAlphabetically:
-          currentSettings.sortFavoriteItemsAlphabetically,
         showExpandedLimitedView: currentSettings.showExpandedLimitedView,
         itemCardsFixKey: currentSettings.itemCardsFixKey,
         useCircularPortraitStyle: currentSettings.useCircularPortraitStyle,
