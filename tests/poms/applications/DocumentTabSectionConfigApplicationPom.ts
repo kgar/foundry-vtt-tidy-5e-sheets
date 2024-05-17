@@ -98,7 +98,7 @@ export class DocumentTabSectionConfigApplicationPom {
         app.querySelectorAll(
           '[role="listbox"] [role="option"] [data-section-key]'
         )
-      ).map((el, i) => el.getAttribute('data-section-key') ?? '')
+      ).map((el) => el.getAttribute('data-section-key') ?? '')
     );
   }
 }

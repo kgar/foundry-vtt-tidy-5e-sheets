@@ -15,5 +15,6 @@ module.exports = {
     '@typescript-eslint/no-explicit-any': 0,
     '@typescript-eslint/no-floating-promises': 2,
     '@typescript-eslint/no-misused-promises': 2,
+    'playwright/no-wait-for-timeout': 0,
   },
 };

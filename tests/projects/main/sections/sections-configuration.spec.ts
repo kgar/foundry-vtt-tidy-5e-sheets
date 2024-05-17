@@ -1,15 +1,9 @@
-import type { Page } from '@playwright/test';
-import { PageHelper } from 'tests/utils/PageHelper';
 import { sectionsTest } from './sections-test-fixture';
-import type { DocumentRef } from 'tests/tests.types';
 import {
   SheetHelper,
-  type SheetHelperItemCreationArgs,
 } from 'tests/helpers/SheetHelper';
 import { CONSTANTS } from 'src/constants';
-import { delay } from 'src/utils/asynchrony';
 
-import { Inventory } from 'src/features/sections/Inventory';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 
 // Test Flow:
@@ -639,7 +633,7 @@ async function runStandardSectionConfigTests(args: RunSectionConfigTestsArgs) {
       section2,
       section3,
     ].entries()) {
-      let currentPositions = (await config.getOptionsInCurrentOrder()).reduce<
+      const currentPositions = (await config.getOptionsInCurrentOrder()).reduce<
         Record<string, { key: string; currentIndex: number }>
       >((prev, curr, i) => {
         prev[curr] = { key: curr, currentIndex: i };
