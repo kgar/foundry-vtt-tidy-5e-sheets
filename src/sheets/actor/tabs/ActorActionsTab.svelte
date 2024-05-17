@@ -60,16 +60,6 @@
   {/each}
 </UtilityToolbar>
 
-<!-- <button
-  on:click={() =>
-    new SectionOrderManagerApplication({
-      actor: $context.actor,
-      sections: $context.actions,
-      tabId: CONSTANTS.TAB_NPC_SPELLBOOK,
-      tabTitle: CharacterSheetRuntime.getTabTitle(CONSTANTS.TAB_NPC_SPELLBOOK),
-    }).render(true)}>👊</button
-> -->
-
 <div class="actions-tab-container scroll-container flex-column small-gap">
   {#each $context.actions as section (section.key)}
     {#if section.actions.length && section.show}
