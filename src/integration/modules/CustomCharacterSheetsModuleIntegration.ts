@@ -1,3 +1,4 @@
+import type { Tidy5eSheetsApi } from 'src/api';
 import type { ModuleIntegrationBase } from '../ModuleIntegrationBase';
 
 export class CustomCharacterSheetsModuleIntegration
@@ -6,10 +7,12 @@ export class CustomCharacterSheetsModuleIntegration
   get moduleId(): string {
     return 'custom-character-sheet-sections';
   }
-  init(): void {
+  init(api: Tidy5eSheetsApi): void {
     Hooks.on(
       'custom-character-sheet-sections.preCustomSectionGetData',
-      () => false
+      (data: any) => {
+        return !api.isTidy5eSheet(data.actor.sheet);
+      }
     );
   }
 }
