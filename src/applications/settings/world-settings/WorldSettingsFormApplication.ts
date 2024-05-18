@@ -86,6 +86,7 @@ export class WorldSettingsFormApplication extends SvelteFormApplicationBase {
           currentSettings.itemIdentificationPermission,
         includeFlagsInSpellScrollCreation:
           currentSettings.includeFlagsInSpellScrollCreation,
+        useTidySpellSchoolIcons: currentSettings.useTidySpellSchoolIcons,
       },
       defaultCharacterTabs: this.mapTabSelectionFields(
         CharacterSheetRuntime.getAllRegisteredTabs(),

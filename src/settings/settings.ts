@@ -1839,6 +1839,23 @@ export function createSettings() {
         representsCssVariable: '--t5e-magic-accent-color',
       },
 
+      // Icons
+      useTidySpellSchoolIcons: {
+        options: {
+          name: 'TIDY5E.Settings.UseTidySpellSchoolIcons.name',
+          hint: 'TIDY5E.Settings.UseTidySpellSchoolIcons.hint',
+          scope: 'world',
+          type: Boolean,
+          default: true,
+          config: false,
+        },
+        get() {
+          return FoundryAdapter.getTidySetting<boolean>(
+            'useTidySpellSchoolIcons'
+          );
+        },
+      },
+
       debug: {
         options: {
           name: `TIDY5E.Settings.Debug.name`,
