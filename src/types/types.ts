@@ -247,6 +247,7 @@ export type CharacterSheetContext = {
 export type NpcAbilitySection = {
   canCreate: boolean;
   custom?: CustomSectionOptions;
+  isClass?: boolean;
 } & FeatureSection;
 
 export type NpcItemContext = {
@@ -267,7 +268,7 @@ export type NpcSheetContext = {
   biographyEnrichedHtml: string;
   bondEnrichedHtml: string;
   encumbrance: any;
-  features: FeatureSection[];
+  features: NpcAbilitySection[];
   flawEnrichedHtml: string;
   hideEmptySpellbook: boolean;
   idealEnrichedHtml: string;

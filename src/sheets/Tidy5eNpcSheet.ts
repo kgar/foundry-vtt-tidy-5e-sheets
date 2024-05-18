@@ -812,6 +812,7 @@ export class Tidy5eNpcSheet
         canCreate: true,
         key: 'classes',
         show: true,
+        isClass: true,
       },
     };
 
@@ -857,6 +858,14 @@ export class Tidy5eNpcSheet
       subclasses,
       this.actor
     );
+
+    for (const subclass of subclasses) {
+      const message = game.i18n.format('DND5E.SubclassMismatchWarn', {
+        name: subclass.name,
+        class: subclass.system.classIdentifier,
+      });
+      context.warnings.push({ message, type: 'warning' });
+    }
 
     other = [...other, ...subclasses];
 
