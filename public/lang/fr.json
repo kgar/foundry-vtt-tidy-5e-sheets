@@ -777,7 +777,8 @@
     "TIDY5E.GenericErrorNotification": "Une erreur s'est produite lors de l'exécution de cette action. Voir la console F12 devtools pour plus de détails.",
     "TIDY5E.Section": {
         "Label": "Section",
-        "Default": "Section par défaut"
+        "Default": "Section par défaut",
+        "ActionLabel": "Section Action"
     },
     "TIDY5E.Utilities.ConfigureSections": "Configurer les sections"
 }
