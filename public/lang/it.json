@@ -573,7 +573,7 @@
             "Explanation": "Sono disponibili le nuove migrazioni dei dati di Tidy 5e Sheets. Verifica il {boldStart}Menu di Configurazione delle Migrazioni{boldEnd} per saperne di più.",
             "Button.DoNotShowAgain": "Non mostrare più",
             "DoNotShowAgain.ConfirmMessage": "Confermato. Questo messaggio non verrà più visualizzato finché non sarà disponibile un'altra migrazione.",
-            "Explanation2": "NB: Le migrazioni spostano i dati originariamente archiviati da Tidy 5e Sheets nei campi dati ufficialmente supportati dal sistema. Se non mancano dati sulle tue schede dopo l'aggiornamento di Tidy 5e Sheets, non è necessaria alcuna migrazione."
+            "Explanation2": "NB: Le migrazioni spostano i dati da un luogo a un altro. A volte, i dati originariamente archiviati da Tidy 5e Sheets devono essere spostati nei campi dati ufficialmente supportati dal sistema. In altri casi, Tidy può adottare funzionalità da un altro modulo e, di conseguenza, può essere fornita una comoda migrazione per facilitare la transizione. Se non mancano dati sui tuoi fogli dopo l'aggiornamento di Tidy 5e Sheets, non è necessaria alcuna migrazione."
         },
         "OptionsHeader": "Opzioni di Migrazione",
         "OptionOverwrite.Text": "Sovrascrivi",
@@ -594,7 +594,20 @@
             "selectionDialogTitle": "Migrazione: Tiri Salvezza PNG",
             "sectionTitle": "Tiri Salvezza PNG"
         },
-        "UnlinkedExplanation": "Questa migrazione offre la possibilità di migrare i documenti dei token non collegati nella scena corrente. È possibile eseguire la migrazione su scene aggiuntive secondo necessità."
+        "UnlinkedExplanation": "Questa migrazione offre la possibilità di migrare i documenti dei token non collegati nella scena corrente. È possibile eseguire la migrazione su scene aggiuntive secondo necessità.",
+        "CcssToTidy": {
+            "selectionDialogTitle": "Migrazione: da CCSS a Tidy 5e",
+            "section": "Sezione",
+            "explanation2": "{boldStart}NB{boldEnd}: CCSS ha la priorità con le sezioni personalizzate. Per disabilitare CCSS per un elemento, assicurati di utilizzare l'opzione per eliminare i flag interessati o cancellare manualmente il valore della sezione personalizzata CCSS.",
+            "overwrite": "Sovrascrivi",
+            "deleteFlags": "Elimina i flag CCSS interessati",
+            "explanation1": "Tidy 5e ora supporta nativamente le sezioni personalizzate e fornisce funzionalità aggiuntive relative alle sezioni personalizzate. Questa migrazione copierà i nomi delle sezioni Custom Character Sheet Sections (CCSS) nella sezione delle impostazioni di Tidy.",
+            "sectionTitle": "Da CCSS a Tidy 5e",
+            "ccss": "CCSS",
+            "overwriteTooltip": "Abilita per sovrascrivere il flag di sezione Tidy esistente. Se deselezionati, solo i flag Tidy vuoti riceveranno i dati CCSS migrati.",
+            "deleteFlagsTooltip": "Durante la migrazione da CCSS alle sezioni personalizzate Tidy, i flag CCSS rimangono attivi per impostazione predefinita. Seleziona questa opzione per rimuovere questi flag."
+        },
+        "Parent": "Genitore"
     },
     "TIDY5E.ItemFilters.MenuTooltip.Filters": "Filtri",
     "TIDY5E.Settings.ColorPickerMagicAccent": {
@@ -761,5 +774,23 @@
         "name": "Imposta Tidy come scheda predefinita",
         "buttonLabel": "Imposta Tidy come scheda predefinita"
     },
-    "TIDY5E.GenericErrorNotification": "Si è verificato un errore durante l'esecuzione di questa azione. Vedi la console devtools per maggiori dettagli."
+    "TIDY5E.GenericErrorNotification": "Si è verificato un errore durante l'esecuzione di questa azione. Vedi la console devtools per maggiori dettagli.",
+    "TIDY5E.Utilities.ConfigureSections": "Configura sezioni",
+    "TIDY5E.Section": {
+        "Default": "Sezione predefinita",
+        "Label": "Sezione",
+        "ConfigDialog": {
+            "hideTooltip": "Nascondi questa sezione",
+            "title": "Configura Sezione: {tabTitle}",
+            "showTooltip": "Mostra questa sezione"
+        },
+        "Tooltip": "Specifica una sezione personalizzata per questo elemento quando viene inserito in un foglio attore o lascialo vuoto per il comportamento predefinito.",
+        "ActionLabel": "Sezione Azioni",
+        "ActionTooltip": "Specifica una sezione personalizzata per questo elemento quando viene inserito nella scheda Azioni oppure lasciala vuota per il comportamento predefinito."
+    },
+    "TIDY5E.LocalizationTestKey": "Tasto Prova Localizzazione",
+    "TIDY5E.UseDefaultDialog": {
+        "title": "Conferma: usa predefinito",
+        "text": "Sei sicuro di voler utilizzare l'impostazione predefinita?"
+    }
 }
