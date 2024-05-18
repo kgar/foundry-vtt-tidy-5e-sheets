@@ -190,19 +190,19 @@
         "hint": "Determina como a exaustão do veículo é configurada e apresentada na ficha de veículo.",
         "AtLeastOneLevelRequiredErrorMessage": "É necessário pelo menos um nível de exaustão de veículo."
     },
-  "TIDY5E.WorldSettings.TabItem": {
-    "tabLabel": "Item"
-  },
-  "TIDY5E.WorldSettings.ItemIdentificationPermission": {
-    "name": "Permissão de Identificação de Item",
-    "hint": "Determina qual tipo de usuário consegue acessar a os controles de UI para identificar itens.",
-    "options.GmOnly": "Apenas MJ",
-    "options.GmAndOwners": "MJ and Donos do Item"
-  },
-  "TIDY5E.WorldSettings.IncludeFlagsInSpellScrollCreation": {
-    "name": "Incluir Flags na Criação de Pergaminhos de Magia",
-    "hint": "Às vezes, algumas magias podem conter informações especiais de outros módulos, que pode ser útil transportá-la para o pergaminho. Habilite para copiar todas as informações baseadas em flags para o pergaminho, no momento da criação dele."
-  },
+    "TIDY5E.WorldSettings.TabItem": {
+        "tabLabel": "Item"
+    },
+    "TIDY5E.WorldSettings.ItemIdentificationPermission": {
+        "name": "Permissão de Identificação de Item",
+        "hint": "Determina qual tipo de usuário consegue acessar a os controles de UI para identificar itens.",
+        "options.GmOnly": "Apenas MJ",
+        "options.GmAndOwners": "MJ and Donos do Item"
+    },
+    "TIDY5E.WorldSettings.IncludeFlagsInSpellScrollCreation": {
+        "name": "Incluir Flags na Criação de Pergaminhos de Magia",
+        "hint": "Às vezes, algumas magias podem conter informações especiais de outros módulos, que pode ser útil transportá-la para o pergaminho. Habilite para copiar todas as informações baseadas em flags para o pergaminho, no momento da criação dele."
+    },
     "TIDY5E.WorldSettings.TabSheetLock": {
         "tabLabel": "Bloqueio de Ficha",
         "header": "Opções de Bloqueio",
