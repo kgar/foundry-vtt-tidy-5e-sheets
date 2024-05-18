@@ -71,9 +71,7 @@
   }
 
   let layoutMode: ItemLayoutMode;
-  $: layoutMode = TidyFlags.spellbookGrid.get($context.actor)
-    ? 'grid'
-    : 'list';
+  $: layoutMode = TidyFlags.spellbookGrid.get($context.actor) ? 'grid' : 'list';
 
   let showNoSpellsView = false;
   const localize = FoundryAdapter.localize;
@@ -212,6 +210,9 @@
                       {item}
                     >
                       {#if ctx.parent}&rdsh;{/if}
+                      {#if !section.isClass && item.type === 'subclass'}
+                        <i class="fa-solid fa-link-slash align-self-center"></i>
+                      {/if}
                       <span
                         class="truncate"
                         data-tidy-item-name={item.name}
