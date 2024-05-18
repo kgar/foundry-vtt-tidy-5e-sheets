@@ -99,6 +99,7 @@ export const CONSTANTS = {
   TAB_WORLD_SETTINGS_CHARACTER: 'world-settings-character',
   TAB_WORLD_SETTINGS_NPC: 'world-settings-npc',
   TAB_WORLD_SETTINGS_VEHICLE: 'world-settings-vehicle',
+  TAB_WORLD_SETTINGS_ICONS: 'world-settings-icons',
   TAB_WORLD_SETTINGS_ITEM: 'world-settings-item',
   TAB_WORLD_SETTINGS_EXHAUSTION: 'world-settings-exhaustion',
   TAB_WORLD_SETTINGS_SHEETLOCK: 'world-settings-sheet-lock',

@@ -16,6 +16,7 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import TabContents from 'src/components/tabs/TabContents.svelte';
   import Tabs from 'src/components/tabs/Tabs.svelte';
+  import IconsWorldSettingsTab from './tabs/IconsWorldSettingsTab.svelte';
 
   let selectedTabId: string;
   let functions = getContext<WorldSettingsFunctions>('functions');
@@ -75,6 +76,14 @@
       title: 'TIDY5E.WorldSettings.TabSheetLock.tabLabel',
       content: {
         component: SheetLockWorldSettingsTab,
+        type: 'svelte',
+      },
+    },
+    {
+      id: CONSTANTS.TAB_WORLD_SETTINGS_ICONS,
+      title: 'TIDY5E.WorldSettings.TabIcons.tabLabel',
+      content: {
+        component: IconsWorldSettingsTab,
         type: 'svelte',
       },
     },

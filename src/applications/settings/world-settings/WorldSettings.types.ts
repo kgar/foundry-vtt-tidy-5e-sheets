@@ -38,6 +38,7 @@ export type WorldSettingsContext = {
     initialVehicleSheetTab: CurrentSettings['initialVehicleSheetTab'];
     itemIdentificationPermission: CurrentSettings['itemIdentificationPermission'];
     includeFlagsInSpellScrollCreation: CurrentSettings['includeFlagsInSpellScrollCreation'];
+    useTidySpellSchoolIcons: CurrentSettings['useTidySpellSchoolIcons'];
   };
   defaultNpcTabs: DefaultTabSelectionFields;
   defaultCharacterTabs: DefaultTabSelectionFields;
