@@ -21,9 +21,7 @@
   let searchCriteria: string = '';
 
   let layoutMode: ItemLayoutMode;
-  $: layoutMode = TidyFlags.spellbookGrid.get($context.actor)
-    ? 'grid'
-    : 'list';
+  $: layoutMode = TidyFlags.spellbookGrid.get($context.actor) ? 'grid' : 'list';
 
   $: noSpellLevels = !$context.spellbook.length;
 
@@ -64,7 +62,7 @@
           searchCriteria,
           section.spells,
         )}
-        {#if (searchCriteria.trim() === '' && $context.unlocked) || visibleItemIdSubset.size > 0}
+        {#if (searchCriteria.trim() === '' && $context.unlocked) || visibleItemIdSubset.size > 0 || !!section.slots}
           {#if layoutMode === 'list'}
             <SpellbookList
               allowFavorites={false}
