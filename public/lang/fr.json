@@ -778,7 +778,26 @@
     "TIDY5E.Section": {
         "Label": "Section",
         "Default": "Section par défaut",
-        "ActionLabel": "Section Action"
+        "ActionLabel": "Section Action",
+        "ConfigDialog": {
+            "hideTooltip": "Masquer cette section",
+            "title": "Configurer la section : {tabTitle}",
+            "showTooltip": "Afficher cette section"
+        },
+        "ActionTooltip": "Spécifiez une section personnalisée pour cet élément lorsqu'il est placé dans l'onglet Actions, ou laissez-la vide pour un comportement par défaut.",
+        "Tooltip": "Spécifiez une section personnalisée pour cet élément lorsqu'il est placé dans une fiche d'acteur, ou laissez-la vide pour un comportement par défaut."
     },
-    "TIDY5E.Utilities.ConfigureSections": "Configurer les sections"
+    "TIDY5E.Utilities.ConfigureSections": "Configurer les sections",
+    "TIDY5E.WorldSettings.TabIcons": {
+        "tabLabel": "Icones"
+    },
+    "TIDY5E.UseDefaultDialog": {
+        "title": "Confirmer : Utiliser par défaut",
+        "text": "Êtes-vous sûr de vouloir utiliser la valeur par défaut ?"
+    },
+    "TIDY5E.LocalizationTestKey": "Clé de test de localisation",
+    "TIDY5E.Settings.UseTidySpellSchoolIcons": {
+        "hint": "Utilisez les icônes sélectionnées par Tidy pour les écoles de magie. Pour personnaliser les icônes des écoles de magie via CONFIG.DND5E ou d'autres modules, désactivez cette option. Pour étendre les icônes personnalisées des écoles de sorts de Tidy, reportez-vous à la documentation de l'API de Tidy.",
+        "name": "Utiliser les icônes d'écoles de Tidy"
+    }
 }
