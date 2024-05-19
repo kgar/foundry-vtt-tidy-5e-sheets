@@ -686,7 +686,6 @@
       "ccss": "CCSS",
       "section": "Section",
       "explanation1": "Tidy 5e now natively supports custom sections and provides additional features around custom sections. This migration will copy Custom Character Sheet Sections (CCSS) section names into Tidy's section setup.",
-      "explanation2": "{boldStart}Note{boldEnd}: CCSS takes priority with custom sectioning. To disable CCSS for an item, be sure to use the option to delete affected flags, or manually clear the CCSS custom section value.",
       "overwrite": "Overwrite",
       "overwriteTooltip": "Enable to overwrite existing Tidy section flag. If unchecked, only empty Tidy flags will receive migrated CCSS data.",
       "deleteFlags": "Delete Affected CCSS Flags",
