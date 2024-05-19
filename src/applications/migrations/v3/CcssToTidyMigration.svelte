@@ -153,12 +153,6 @@
   </h2>
   <div class="callout-banner">
     <p>{localize('TIDY5E.Settings.Migrations.CcssToTidy.explanation1')}</p>
-    <p>
-      {@html localize('TIDY5E.Settings.Migrations.CcssToTidy.explanation2', {
-        boldStart: '<strong>',
-        boldEnd: '</strong>',
-      })}
-    </p>
   </div>
   <p>{localize('TIDY5E.Settings.Migrations.UnlinkedExplanation')}</p>
   <h3>{localize('TIDY5E.Settings.Migrations.OptionsHeader')}</h3>
