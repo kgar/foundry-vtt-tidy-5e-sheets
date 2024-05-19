@@ -637,7 +637,7 @@
         "Notification": {
             "Title": "Tarjetas Tidy 5e: Migraciones disponibles",
             "Explanation": "Ya están disponibles las nuevas migraciones de datos de Tidy 5e Sheets. Consulte el menú Migraciones de {boldStart}configuración{boldEnd} para obtener más información.",
-            "Explanation2": "Nota: Las migraciones mueven los datos almacenados originalmente por las Hojas Tidy 5e a los campos de datos oficialmente soportados por el sistema. Si no le faltan datos en sus hojas después de actualizar Hojas Tidy 5e, entonces no es necesaria ninguna migración.",
+            "Explanation2": "Nota: Las migraciones mueven datos de un lugar a otro. A veces, los datos almacenados originalmente por Tidy 5e Sheets deben trasladarse a los campos de datos oficialmente soportados por el sistema. En otros casos, Tidy puede adoptar funcionalidades de otro módulo, y como resultado, se puede proporcionar una migración conveniente para facilitar la transición. Si no le faltan datos en sus hojas después de actualizar las Hojas Tidy 5e, entonces no es necesaria ninguna migración.",
             "Button.DoNotShowAgain": "No volver a mostrar",
             "DoNotShowAgain.ConfirmMessage": "Confirmado. Este mensaje no volverá a aparecer hasta que haya otra migración disponible."
         },
@@ -660,7 +660,19 @@
             "sectionTitle": "Salvaciones por muerte de PNJ",
             "selectionDialogTitle": "Migración: Salvaciones por muerte de PNJ"
         },
-        "UnlinkedExplanation": "Esta migración ofrece la opción de migrar documentos token no vinculados en la escena actual. Puede ejecutar la migración en escenas adicionales según sea necesario."
+        "UnlinkedExplanation": "Esta migración ofrece la opción de migrar documentos token no vinculados en la escena actual. Puede ejecutar la migración en escenas adicionales según sea necesario.",
+        "CcssToTidy": {
+            "overwrite": "Sobrescribir",
+            "selectionDialogTitle": "Migración: CCSS a Tidy 5e",
+            "ccss": "CCSS",
+            "section": "Sección",
+            "deleteFlags": "Eliminar indicadores CCSS afectados",
+            "sectionTitle": "CCSS para Tidy 5e",
+            "explanation1": "Tidy 5e ahora soporta de forma nativa secciones personalizadas y proporciona características adicionales en torno a las secciones personalizadas. Esta migración copiará los nombres de sección de las Secciones Personalizadas de la Hoja de Personajes (CCSS) en la configuración de secciones de Tidy.",
+            "overwriteTooltip": "Habilite la opción de sobrescribir el indicador de sección Tidy existente. Si no está marcado, solo los indicadores Tidy vacíos recibirán datos CCSS migrados.",
+            "deleteFlagsTooltip": "Al migrar de CCSS a secciones personalizadas de Tidy, las banderas CCSS permanecen en su lugar de forma predeterminada. Marque esta opción para eliminar esas banderas."
+        },
+        "Parent": "Padre"
     },
     "TIDY5E.Settings.ColorPickerScrollbarTrack": {
         "name": "Trayectoria de la barra de desplazamiento"
@@ -736,5 +748,30 @@
         "explanation": "Seleccione todos los tipos de documentos en los que prefiere que la hojas de Tidy 5e sean las predeterminadas.",
         "hint": "Si desea establecer las Hojas de Tidy 5e como predeterminadas para uno o más tipos de documentos, pero el menú de configuración de las hojas predeterminadas del núcleo no funciona como se espera, utilice este menú para seleccionar sus preferencias."
     },
-    "TIDY5E.GenericErrorNotification": "Se ha producido un error al realizar esta acción. Consulte la consola devtools para obtener más detalles."
+    "TIDY5E.GenericErrorNotification": "Se ha producido un error al realizar esta acción. Consulte la consola devtools para obtener más detalles.",
+    "TIDY5E.Section": {
+        "ActionLabel": "Sección de acción",
+        "ConfigDialog": {
+            "hideTooltip": "Ocultar esta sección",
+            "title": "Configurar sección: {tabTitle}",
+            "showTooltip": "Mostrar esta sección"
+        },
+        "Default": "Sección predeterminada",
+        "Label": "Sección",
+        "Tooltip": "Especifique una sección personalizada para este elemento cuando lo coloque en una hoja de actor o déjela en blanco para un comportamiento predeterminado.",
+        "ActionTooltip": "Especifique una sección personalizada para este elemento cuando lo coloque en la pestaña Acciones o déjela en blanco para un comportamiento predeterminado."
+    },
+    "TIDY5E.Settings.UseTidySpellSchoolIcons": {
+        "name": "Utilice iconos de Tidy Spell School",
+        "hint": "Utiliza los iconos seleccionados por Tidy para las escuelas de hechizos. Para personalizar los iconos de las escuelas de hechizos a través de CONFIG.DND5E o a través de otros módulos, desactiva esta opción. Para ampliar los iconos personalizados de las escuelas de hechizos de Tidy, consulta la documentación de la API de Tidy."
+    },
+    "TIDY5E.UseDefaultDialog": {
+        "title": "Confirmar: Usar predeterminado",
+        "text": "¿Está seguro de que desea utilizar el valor predeterminado?"
+    },
+    "TIDY5E.WorldSettings.TabIcons": {
+        "tabLabel": "Íconos"
+    },
+    "TIDY5E.Utilities.ConfigureSections": "Configurar secciones",
+    "TIDY5E.LocalizationTestKey": "Botón de ubicación de prueba"
 }
