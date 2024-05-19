@@ -4,7 +4,6 @@ import type {
   Tab,
 } from 'src/types/types';
 import CharacterAttributesTab from 'src/sheets/character/tabs/CharacterAttributesTab.svelte';
-import CharacterInventoryTab from 'src/sheets/character/tabs/CharacterInventoryTab.svelte';
 import CharacterSpellbookTab from 'src/sheets/character/tabs/CharacterSpellbookTab.svelte';
 import CharacterFeaturesTab from 'src/sheets/character/tabs/CharacterFeaturesTab.svelte';
 import CharacterEffectsTab from 'src/sheets/character/tabs/CharacterEffectsTab.svelte';
@@ -18,6 +17,7 @@ import { TabManager } from './tab/TabManager';
 import type { ActorTabRegistrationOptions } from 'src/api/api.types';
 import { CustomContentManager } from './content/CustomContentManager';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+import ActorInventoryTab from 'src/sheets/actor/tabs/ActorInventoryTab.svelte';
 
 export class CharacterSheetRuntime {
   private static _content: RegisteredContent<CharacterSheetContext>[] = [];
@@ -44,8 +44,13 @@ export class CharacterSheetRuntime {
       id: CONSTANTS.TAB_CHARACTER_INVENTORY,
       title: 'DND5E.Inventory',
       content: {
-        component: CharacterInventoryTab,
+        component: ActorInventoryTab,
         type: 'svelte',
+        getProps() {
+          return {
+            tabId: CONSTANTS.TAB_CHARACTER_INVENTORY,
+          };
+        },
       },
       layout: 'classic',
     },

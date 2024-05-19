@@ -13,35 +13,6 @@ import { Inventory } from './Inventory';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
 export class CharacterSheetSections {
-  static applyInventoryItemToSection(
-    inventory: Record<string, InventorySection>,
-    item: Item5e,
-    customSectionOptions: Partial<InventorySection>
-  ) {
-    const customSectionName = TidyFlags.section.get(item);
-
-    if (!customSectionName) {
-      inventory[item.type].items.push(item);
-      return;
-    }
-
-    const customSection: InventorySection = (inventory[customSectionName] ??= {
-      dataset: { [TidyFlags.section.prop]: customSectionName },
-      items: [],
-      label: customSectionName,
-      canCreate: true,
-      key: customSectionName,
-      custom: {
-        section: customSectionName,
-        creationItemTypes: Inventory.inventoryItemTypes,
-      },
-      show: true,
-      ...customSectionOptions,
-    });
-
-    customSection.items.push(item);
-  }
-
   static buildFeaturesSections(
     races: any[],
     backgrounds: any[],
