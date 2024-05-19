@@ -318,11 +318,11 @@
         "hint": "Oculta exaustão e inspiração se cair a 0 PV, mas ainda aparece ao passar o mouse."
     },
     "TIDY5E.Settings.ShowInspirationOnHover": {
-        "name": "Mostrar indicador de inspiração apenas ao passar o cursor",
+        "name": "Mostrar Indicador de Inspiração Apenas ao Passar o Cursor",
         "hint": "Mostra o indicador de inspiração somente ao passar o cursor sobre o retrato."
     },
     "TIDY5E.Settings.ShowExhaustionOnHover": {
-        "name": "Mostrar Indicador de Exaustão Apenas sob Cursor",
+        "name": "Mostrar Indicador de Exaustão Apenas ao Passar o Cursor",
         "hint": "Mostra o rastreador de exaustão somente ao passar o cursor sobre o retrato."
     },
     "TIDY5E.Settings.UseHpBar": {
