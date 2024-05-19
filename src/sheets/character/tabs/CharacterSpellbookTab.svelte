@@ -106,7 +106,7 @@
           searchCriteria,
           classSpells,
         )}
-        {#if (searchCriteria.trim() === '' && $context.unlocked) || visibleItemIdSubset.size > 0}
+        {#if (searchCriteria.trim() === '' && $context.unlocked) || visibleItemIdSubset.size > 0 || !!section.slots}
           {#if layoutMode === 'list'}
             <SpellbookList
               spells={classSpells}
