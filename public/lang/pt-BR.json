@@ -215,6 +215,9 @@
     "TIDY5E.WorldSettings.TabMisc": {
         "tabLabel": "Opções de MJ"
     },
+    "TIDY5E.WorldSettings.TabIcons": {
+        "tabLabel": "Ícones"
+      },
     "TIDY5E.Settings.MulticlassSpellbookFilterLabel": "Filtro de Grimório Multiclasse",
     "TIDY5E.WorldSettings.Menu": {
         "name": "Configurações do Mundo",
@@ -579,6 +582,10 @@
         "name": "Permitir Sobreposição de PV Máximo",
         "hint": "Permite que o Mestre altere manualmente o PV máximo na ficha do personagem."
     },
+    "TIDY5E.Settings.UseTidySpellSchoolIcons": {
+        "name": "Usar Ícones de Escolas de Magia do Tidy",
+        "hint": "Use os ícones de escolas de magia escolhidos à mão do Tidy. Para personalizar ícones de escolas de magia através do CONFIG.DND5E ou por outros módulos, desative esta opção. Para estender os ícones personalizados de escolas de magia do Tidy, consulte a documentação da API do Tidy."
+      },
     "TIDY5E.Settings.Reset": {
         "name": "Redefinir Configurações para Padrão",
         "hint": "Isso redefinirá todas as configurações de volta para o padrão do sistema de jogo ativo. Isso afeta apenas as configurações de escopo \"mundo\", como opções do MJ.",
@@ -635,12 +642,24 @@
             "sectionTitle": "Salvaguardas Contra Morte de PnJs",
             "selectionDialogTitle": "Migração: Salvaguardas Contra Morte de PnJs"
         },
+        "CcssToTidy": {
+            "sectionTitle": "CCSS para Tidy 5e",
+            "selectionDialogTitle": "Migração: CCSS para Tidy 5e",
+            "ccss": "CCSS",
+            "section": "Sessão",
+            "explanation1": "O Tidy 5e agora suporta nativamente sessões personalizadas e providencia características opcionais para sessões personalizadas. Essa migração irá copiar os nomes das sessões do Custom Character Sheet Sections (CCSS) para as configurações de sessão do Tidy.",
+            "overwrite": "Substituir",
+            "overwriteTooltip": "Habilite para substituir flags existentes do Tidy. Se desmarcado, apenas flags vazias do Tidy irão receber os dados de migração do CCSS.",
+            "deleteFlags": "Deletar Flags Afetadas do CCSS",
+            "deleteFlagsTooltip": "Ao migrar as sessões personalizadas do CCSS para o Tidy, as flags do CCSS permanecem no lugar, por padrão. Marque esta opção para remover estas flags."
+          },
         "UnlinkedExplanation": "Esta migração oferece a opção de migrar documentos token desvinculados no cenário atual. Você pode executar a migração em cenas adicionais conforme necessário.",
         "Selection": {
             "TotalSelectedLabel": "Total Selecionado: {total}",
             "ToMigrate": "Para Migrar",
             "SelectAllNoneTooltip": "Selecione tudo ou nenhum"
-        }
+        },
+        "Parent": "Pai"
     },
     "TIDY5E.Settings.SheetPreferences": {
         "name": "Definir Tidy como Ficha Padrão",
@@ -667,10 +686,6 @@
     "TIDY5E.Settings.Debug": {
         "name": "Ativar Depuração",
         "hint": "Imprime mensagens de depuração no console."
-    },
-    "TIDY5E.Settings.SortFavoriteItemsAlphabetically": {
-        "name": "Classificar Favoritos Alfabéticamente",
-        "hint": "Classifica os favoritos em ordem alfabética."
     },
     "TIDY5E.Settings.PermanentlyUnlockCharacterSheetForGM": {
         "name": "Ficha de Personagem: Sempre Desbloqueado para MJ",
@@ -739,5 +754,23 @@
     "TIDY5E.Utilities.GMTools": "Ferramentas de MJ",
     "TIDY5E.Utilities.IdentifyAll": "Identifique Todos os Itens",
     "TIDY5E.Utilities.MarkAllAsUnidentified": "Marcar Todos os Itens como Não Identificados",
-    "TIDY5E.GenericErrorNotification": "Ocorreu um erro ao executar esta ação. Veja o console do devtools para mais detalhes."
+    "TIDY5E.GenericErrorNotification": "Ocorreu um erro ao executar esta ação. Veja o console do devtools para mais detalhes.",
+    "TIDY5E.Utilities.ConfigureSections": "Configurar Sessões",
+    "TIDY5E.Section": {
+      "Default": "Sessão Padrão",
+      "Label": "Sessão",
+      "Tooltip": "Especifique uma sessão personalizada para este item quando colocado na ficha de um ator, ou deixe vazio para comportamento padrão.",
+      "ActionLabel": "Sessão de Ação",
+      "ActionTooltip": "Especifique uma sessão personalizada para este item quando colocado na aba Ação, ou deixe vazio para comportamento padrão.",
+      "ConfigDialog": {
+        "title": "Configurar Sessão: {tabTitle}",
+        "showTooltip": "Exibir esta sessão",
+        "hideTooltip": "Esconder esta sessão"
+      }
+    },
+    "TIDY5E.UseDefaultDialog": {
+      "title": "Confirmar: Usar Padrão",
+      "text": "Tem certeza que quer usar o padrão?"
+    },
+    "TIDY5E.LocalizationTestKey": "Teste de Localização de Chave"
 }
