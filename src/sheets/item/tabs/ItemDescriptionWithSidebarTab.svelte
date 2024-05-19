@@ -118,7 +118,6 @@
           >
             <SelectOptions
               data={$context.config.currencies}
-              valueProp="abbreviation"
               labelProp="abbreviation"
             />
           </Select>
