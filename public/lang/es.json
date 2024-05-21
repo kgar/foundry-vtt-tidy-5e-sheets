@@ -773,5 +773,6 @@
         "tabLabel": "Íconos"
     },
     "TIDY5E.Utilities.ConfigureSections": "Configurar secciones",
-    "TIDY5E.LocalizationTestKey": "Botón de ubicación de prueba"
+    "TIDY5E.LocalizationTestKey": "Botón de ubicación de prueba",
+    "TIDY5E.RollRecharge.Hint": "{rechargeLabel} (Mayús+Clic para saltar la tirada y recargar al instante) "
 }
