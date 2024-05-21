@@ -6,7 +6,7 @@
   export let item: Item5e;
   export let ctx: any;
 
-  $: isAttuned = item.system.attunement === 2;
+  $: isAttuned = item.system.attuned;
 
   function toggleAttuned() {
     const actor = item.actor;
@@ -16,17 +16,17 @@
 
     const currentAttunementCount = actor.system.attributes.attunement.value;
 
-    if (item.system.attunement == 2) {
-      item.update({ 'system.attunement': 1 });
+    if (item.system.attuned) {
+      item.update({ 'system.attuned': false });
     } else {
       if (currentAttunementCount >= actor.system.attributes.attunement.max) {
         ui.notifications.warn(
           `${FoundryAdapter.localize('TIDY5E.AttunementWarning', {
             number: currentAttunementCount,
-          })}`
+          })}`,
         );
       } else {
-        item.update({ 'system.attunement': 2 });
+        item.update({ 'system.attuned': true });
       }
     }
   }
@@ -34,7 +34,7 @@
 
 <ItemControl
   title={ctx?.attunement?.title}
-  iconCssClass="fas fa-sun {!isAttuned ? 'not-attuned' : 'attuned'}"
+  iconCssClass="fas fa-sun {ctx?.attunement?.cls}"
   active={isAttuned}
   onclick={toggleAttuned}
 />

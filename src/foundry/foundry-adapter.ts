@@ -1162,10 +1162,10 @@ export const FoundryAdapter = {
       SettingsProvider.settings.useClassicControlsForCharacter.get()
     );
   },
-  attunementContextRequired: {
+  attunementContextApplicable: {
     icon: 'fa-sun',
     cls: 'not-attuned',
-    title: 'DND5E.AttunementRequired',
+    title: 'ERROR: This should be replaced with valid attunement type text',
   },
   attunementContextAttune: {
     icon: 'fa-sun',
@@ -1173,9 +1173,12 @@ export const FoundryAdapter = {
     title: 'DND5E.AttunementAttuned',
   },
   getAttunementContext(item: Item5e): AttunementContext | undefined {
-    return item.system.attunement === CONFIG.DND5E.attunementTypes.REQUIRED
-      ? FoundryAdapter.attunementContextRequired
-      : item.system.attunement === CONFIG.DND5E.attunementTypes.ATTUNED
+    return !!item.system.attunement && !item.system.attuned
+      ? {
+          ...FoundryAdapter.attunementContextApplicable,
+          title: CONFIG.DND5E.attunementTypes[item.system.attunement],
+        }
+      : !!item.system.attunement && item.system.attuned
       ? FoundryAdapter.attunementContextAttune
       : undefined;
   },

@@ -188,23 +188,19 @@ function getItemContextOptions(item: Item5e) {
 
   // Toggle Attunement State
   if (
-    'attunement' in item.system &&
-    item.system.attunement !== CONFIG.DND5E.attunementTypes.NONE &&
+    !!item.system.attunement &&
     !FoundryAdapter.concealDetails(item)
   ) {
-    const isAttuned =
-      item.system.attunement === CONFIG.DND5E.attunementTypes.ATTUNED;
     options.push({
-      name: isAttuned
+      name: item.system.attuned
         ? 'TIDY5E.ContextMenuActionUnattune'
         : 'TIDY5E.ContextMenuActionAttune',
-      icon: isAttuned
+      icon: item.system.attuned
         ? "<i class='fas fa-sun fa-fw' style='color: var(--t5e-warning-accent-color);'></i>"
         : "<i class='fas fa-sun fa-fw'></i>",
       callback: () =>
         item.update({
-          'system.attunement':
-            CONFIG.DND5E.attunementTypes[isAttuned ? 'REQUIRED' : 'ATTUNED'],
+          'system.attuned': !item.system.attuned,
         }),
     });
   }
