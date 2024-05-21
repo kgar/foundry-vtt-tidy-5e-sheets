@@ -64,7 +64,7 @@
         id={`${$context.appId}-system-attuned`}
         document={$context.item}
         field="system.attuned"
-        value={$context.system.attuned}
+        checked={$context.system.attuned}
         disabled={!$context.editable || !$context.system.attunement}
         title={localize('DND5E.AttunementAttuned')}
       ></Checkbox>
