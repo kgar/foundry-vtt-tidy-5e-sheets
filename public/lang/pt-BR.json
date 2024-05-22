@@ -772,5 +772,6 @@
       "title": "Confirmar: Usar Padrão",
       "text": "Tem certeza que quer usar o padrão?"
     },
+    "TIDY5E.RollRecharge.Hint": "{rechargeLabel} (Shift+Clique para pular a rolagem e recarregar instantaneamente) ",
     "TIDY5E.LocalizationTestKey": "Teste de Localização de Chave"
 }
