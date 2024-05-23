@@ -810,5 +810,6 @@
     "title": "Confirm: Use Default",
     "text": "Are you sure you wish to use default?"
   },
+  "TIDY5E.RollRecharge.Hint": "{rechargeLabel} (Shift+Click to skip the roll and instantly recharge) ",
   "TIDY5E.LocalizationTestKey": "Localization Test Key"
 }

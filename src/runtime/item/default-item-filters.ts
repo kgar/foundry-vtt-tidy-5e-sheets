@@ -116,7 +116,7 @@ export const defaultItemFilters = {
   },
   canUse: {
     name: 'canUse',
-    predicate: (item) => ItemUtils.hasAvailableUses(item),
+    predicate: (item) => ItemUtils.canUse(item),
     text: 'TIDY5E.ItemFilters.CanUse',
   },
   equipped: {

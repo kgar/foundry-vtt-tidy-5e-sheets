@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import { settingStore } from 'src/settings/settings';
   import type { Item5e } from 'src/types/item.types';
   import type { ActorSheetContext } from 'src/types/types';
@@ -7,14 +8,26 @@
 
   export let item: Item5e;
 
+  const localize = FoundryAdapter.localize;
+
+  $: rechargeLabel =
+    item.system.recharge?.charged === false
+      ? localize('TIDY5E.RollRecharge.Hint', {
+          rechargeLabel: item.labels?.recharge ?? '',
+        })
+      : item.labels?.recharge ?? '';
+
   let context = getContext<Readable<ActorSheetContext>>('context');
 </script>
 
 <button
   type="button"
   class="item-list-button"
-  title={item.labels?.recharge ?? ''}
-  on:click={() => item.rollRecharge()}
+  title={rechargeLabel}
+  on:click={(ev) =>
+    ev.shiftKey
+      ? item.update({ 'system.recharge.charged': true })
+      : item.rollRecharge()}
   disabled={!$context.owner}
   tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
 >
