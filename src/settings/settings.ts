@@ -85,7 +85,7 @@ export type Tidy5eSetting = {
     /**
      * The default value
      */
-    default: any;
+    default?: any;
     /**
      * Executes when the value of this Setting changes
      * @param data the new value
@@ -199,9 +199,12 @@ export function createSettings() {
           hint: 'TIDY5E.Settings.DefaultTheme.hint',
           scope: 'world',
           config: true,
-          type: String,
-          choices: () => getCoreThemes(false),
-          default: CONSTANTS.THEME_ID_DEFAULT_LIGHT,
+          type: new foundry.data.fields.StringField({
+            required: true,
+            blank: false,
+            initial: CONSTANTS.THEME_ID_DEFAULT_LIGHT,
+            choices: () => getCoreThemes(false),
+          }),
           onChange: (data: string) => {
             const theme = getThemeOrDefault(data);
 
@@ -223,9 +226,12 @@ export function createSettings() {
           hint: 'TIDY5E.Settings.SheetTheme.hint',
           scope: 'client',
           config: true,
-          type: String,
-          choices: () => getCoreThemes(true),
-          default: CONSTANTS.THEME_ID_DEFAULT,
+          type: new foundry.data.fields.StringField({
+            required: true,
+            blank: false,
+            initial: CONSTANTS.THEME_ID_DEFAULT,
+            choices: () => getCoreThemes(true),
+          }),
           onChange: (
             data: string,
             colorPickerEnabledOverride: boolean | null = null

@@ -625,7 +625,7 @@ export const FoundryAdapter = {
     return game.modules.get(moduleId);
   },
   debounce(callback: Function, delay: number): Function {
-    return debounce(callback, delay);
+    return foundry.utils.debounce(callback, delay);
   },
   roll(
     formula: string,
