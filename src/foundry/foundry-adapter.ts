@@ -131,13 +131,13 @@ export const FoundryAdapter = {
     });
   },
   mergeObject<T>(original: T, ...args: any[]) {
-    return mergeObject(original, ...args) as T;
+    return foundry.utils.mergeObject(original, ...args) as T;
   },
   expandObject(data: any) {
-    return expandObject(data);
+    return foundry.utils.expandObject(data);
   },
   isEmpty(obj: any) {
-    return isEmpty(obj);
+    return foundry.utils.isEmpty(obj);
   },
   getClassIdentifier(item: Item5e): string {
     return item.system.identifier || item.name.slugify({ strict: true });
