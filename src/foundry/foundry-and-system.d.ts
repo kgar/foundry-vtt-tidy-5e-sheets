@@ -53,7 +53,7 @@ declare global {
   }
 
   interface Math {
-    clamped: (num: number, min: number, max: number) => number;
+    clamp: (num: number, min: number, max: number) => number;
   }
 
   interface NumberConstructor {

@@ -21,7 +21,7 @@
 </script>
 
 <div
-  class="info-card {item.attunement?.cls ?? ''}"
+  class="info-card inventory {item.attunement?.cls ?? ''}"
   class:magic-item={item.system.properties?.has('mgc')}
   class:equipped={item.system.equipped}
   data-item-id={item._id}
@@ -64,7 +64,7 @@
   <div class="info-card-amount">
     <span class="info-weight"
       ><b>{localize('DND5E.Weight')}:</b>
-      {item.system.weight}
+      {item.system.weight.value}
       {weightUnit}</span
     >
     <span class="info-quantity"
