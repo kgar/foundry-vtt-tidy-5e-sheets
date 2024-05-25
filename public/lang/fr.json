@@ -799,5 +799,6 @@
     "TIDY5E.Settings.UseTidySpellSchoolIcons": {
         "hint": "Utilisez les icônes sélectionnées par Tidy pour les écoles de magie. Pour personnaliser les icônes des écoles de magie via CONFIG.DND5E ou d'autres modules, désactivez cette option. Pour étendre les icônes personnalisées des écoles de sorts de Tidy, reportez-vous à la documentation de l'API de Tidy.",
         "name": "Utiliser les icônes d'écoles de Tidy"
-    }
+    },
+    "TIDY5E.RollRecharge.Hint": "{rechargeLabel} (Shift+Click pour sauter le rouleau et recharger instantanément) "
 }
