@@ -49,6 +49,7 @@
   {...datasetAttributes}
   disabled={disabled || activeEffectApplied}
   data-tidy-field={field}
+  class={$$props.class ?? ''}
 >
   <slot />
 </select>

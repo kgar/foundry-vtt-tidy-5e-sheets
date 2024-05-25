@@ -444,6 +444,22 @@ input[type='checkbox'] {
       &.spell-preparation-mode {
         gap: 0.25rem;
       }
+      
+      &.flex-wrap {
+        flex-wrap: wrap;
+      }
+
+      gap: 0.25rem;
+
+      > * {
+        &.flex-basis-full {
+          flex-basis: 100%;
+        }
+
+        &.qty-flex-basis {
+          flex: 0 0 2rem;
+        }
+      }
     }
 
     &.stacked {
