@@ -303,6 +303,61 @@
     </div>
   </ItemFormGroup>
 
+  {#if $context.system.isEnchantment}
+    <ItemFormGroup labelText={localize('DND5E.Enchantment.Label')}>
+      <div class="form-fields">
+        <button class="config-button">
+          <i class="fa-solid fa-gear" aria-hidden="true"></i>
+          {localize('DND5E.Enchantment.Action.Configure')}
+        </button>
+      </div>
+      {#if $context.appliedEnchantments.length}
+        <ul class="separated-list dnd5e2">
+          {#each $context.appliedEnchantments as ae}
+            <li class="item" data-enchantment-uuid={ae.enchantment.uuid}>
+              <div class="details flexrow">
+                <img class="gold-icon" src={ae.item.img} alt={ae.name} />
+                <span class="name">
+                  {#if ae.actor}
+                    {localize('DND5E.Enchantment.Items.Entry', {
+                      item: ae.name,
+                      actor: ae.actor.name,
+                    })}
+                  {:else}
+                    {ae.name}
+                  {/if}
+                </span>
+                <div class="list-controls flexrow">
+                  {#if ae.item.isOwner}
+                    <button
+                      type="button"
+                      class="unbutton"
+                      data-action="view"
+                      data-uuid={ae.item.uuid}
+                      data-tooltip="DND5E.ItemView"
+                      aria-label={localize('DND5E.ItemView')}
+                    >
+                      <i class="fa-solid fa-eye" aria-hidden="true"></i>
+                    </button>
+                    <button
+                      type="button"
+                      class="enchantment-button unbutton"
+                      data-action="removeEnchantment"
+                      data-tooltip="DND5E.Enchantment.Action.Remove"
+                      aria-label={localize('DND5E.Enchantment.Action.Remove')}
+                    >
+                      <i class="fa-solid fa-rotate-left" aria-hidden="true"></i>
+                    </button>
+                  {/if}
+                </div>
+              </div>
+            </li>
+          {/each}
+        </ul>
+      {/if}
+    </ItemFormGroup>
+  {/if}
+
   {#if $context.system.actionType === 'summ'}
     <ItemFormGroup
       labelText={localize('DND5E.Summoning.Label')}
