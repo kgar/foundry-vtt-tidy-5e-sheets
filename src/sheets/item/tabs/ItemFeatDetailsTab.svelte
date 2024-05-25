@@ -10,8 +10,8 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import Select from 'src/components/inputs/Select.svelte';
   import ItemFormGroup from '../form/ItemFormGroup.svelte';
-  import { mapPropertiesToSave } from 'src/utils/system-properties';
   import ItemProperties from '../parts/ItemProperties.svelte';
+  import TextInput from 'src/components/inputs/TextInput.svelte';
 
   let context = getContext<Readable<ItemSheetContext>>('context');
 
@@ -67,6 +67,73 @@
 >
   <ItemProperties />
 </ItemFormGroup>
+
+<h3 class="form-header">{localize('DND5E.Prerequisites.Header')}</h3>
+
+<ItemFormGroup
+  labelText={localize('DND5E.Prerequisites.FIELDS.prerequisites.level.label')}
+  field="system.prerequisites.level"
+  let:inputId
+>
+  <NumberInput
+    id={inputId}
+    document={$context.item}
+    field="system.prerequisites.level"
+    value={$context.system.prerequisites.level}
+    disabled={!$context.editable}
+    step="1"
+  />
+
+  <p class="hint">
+    {localize('DND5E.Prerequisites.FIELDS.prerequisites.level.hint')}
+  </p>
+</ItemFormGroup>
+
+{#if $context.system.isEnchantmentSource}
+  <h3 class="form-header">{localize('DND5E.Enchantment.Label')}</h3>
+
+  <ItemFormGroup
+    labelText={localize('DND5E.Enchantment.FIELDS.enchantment.items.max.label')}
+    field="system.enchantment.items.max"
+    let:inputId
+  >
+    <TextInput
+      id={inputId}
+      document={$context.item}
+      field="system.enchantment.items.max"
+      value={$context.source.enchantment.items.max}
+      disabled={!$context.editable}
+    />
+    <p class="hint">
+      {localize('DND5E.Enchantment.FIELDS.enchantment.items.max.hint')}
+    </p>
+  </ItemFormGroup>
+
+  <ItemFormGroup
+    labelText={localize(
+      'DND5E.Enchantment.FIELDS.enchantment.items.period.label',
+    )}
+    field="system.enchantment.items.period"
+    let:inputId
+  >
+    <Select
+      id={inputId}
+      document={$context.item}
+      field="system.enchantment.items.period"
+      value={$context.system.enchantment.items.period}
+      blankValue=""
+    >
+      <SelectOptions
+        blank={localize('DND5E.UsesPeriods.Never')}
+        data={$context.config.enchantmentPeriods}
+        labelProp="label"
+      />
+      <p class="hint">
+        {localize('DND5E.Enchantment.FIELDS.enchantment.items.period.hint')}
+      </p>
+    </Select>
+  </ItemFormGroup>
+{/if}
 
 <h3 class="form-header">{localize('DND5E.FeatureUsage')}</h3>
 
