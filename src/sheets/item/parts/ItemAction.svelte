@@ -304,47 +304,59 @@
   </ItemFormGroup>
 
   {#if $context.system.isEnchantment}
-    <ItemFormGroup labelText={localize('DND5E.Enchantment.Label')}>
+    <ItemFormGroup
+      labelText={localize('DND5E.Enchantment.Label')}
+      cssClass="enchantment"
+    >
       <div class="form-fields">
-        <button class="config-button">
+        <button
+          type="button"
+          class="inline-transparent-button no-wrap highlight-on-hover"
+          on:click={() => FoundryAdapter.openEnchantmentConfig($context.item)}
+        >
           <i class="fa-solid fa-gear" aria-hidden="true"></i>
           {localize('DND5E.Enchantment.Action.Configure')}
         </button>
       </div>
       {#if $context.appliedEnchantments.length}
-        <ul class="separated-list dnd5e2">
+        <ul class="separated-list">
           {#each $context.appliedEnchantments as ae}
             <li class="item" data-enchantment-uuid={ae.enchantment.uuid}>
               <div class="details flexrow">
-                <img class="gold-icon" src={ae.item.img} alt={ae.name} />
+                <img class="list-icon" src={ae.item.img} alt={ae.name} />
                 <span class="name">
                   {#if ae.actor}
-                    {localize('DND5E.Enchantment.Items.Entry', {
+                    {@html localize('DND5E.Enchantment.Items.Entry', {
                       item: ae.name,
                       actor: ae.actor.name,
                     })}
                   {:else}
-                    {ae.name}
+                    {@html ae.name}
                   {/if}
                 </span>
                 <div class="list-controls flexrow">
                   {#if ae.item.isOwner}
                     <button
                       type="button"
-                      class="unbutton"
-                      data-action="view"
+                      class="transparent-button"
                       data-uuid={ae.item.uuid}
                       data-tooltip="DND5E.ItemView"
                       aria-label={localize('DND5E.ItemView')}
+                      on:click={() =>
+                        FoundryAdapter.renderFromUuid(ae.item.uuid)}
                     >
                       <i class="fa-solid fa-eye" aria-hidden="true"></i>
                     </button>
                     <button
                       type="button"
-                      class="enchantment-button unbutton"
-                      data-action="removeEnchantment"
+                      class="transparent-button"
                       data-tooltip="DND5E.Enchantment.Action.Remove"
                       aria-label={localize('DND5E.Enchantment.Action.Remove')}
+                      on:click={() =>
+                        FoundryAdapter.removeEnchantment(
+                          ae.enchantment.uuid,
+                          $context.item.sheet,
+                        )}
                     >
                       <i class="fa-solid fa-rotate-left" aria-hidden="true"></i>
                     </button>
@@ -374,7 +386,6 @@
             id={inputId}
             type="button"
             class="inline-transparent-button no-wrap highlight-on-hover"
-            data-action="summoning"
             tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
             on:click={() => FoundryAdapter.openSummonConfig($context.item)}
           >

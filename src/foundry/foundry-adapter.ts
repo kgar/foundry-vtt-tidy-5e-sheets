@@ -12,9 +12,9 @@ import type { Actor5e } from 'src/types/types';
 import type { Item5e } from 'src/types/item.types';
 import { SettingsProvider } from 'src/settings/settings';
 import { debug, error, warn } from 'src/utils/logging';
-import { clamp } from 'src/utils/numbers';
 import FloatingContextMenu from 'src/context-menu/FloatingContextMenu';
 import { TidyFlags } from './TidyFlags';
+import EnchantmentConfig from './shims/EnchantmentConfig';
 
 export const FoundryAdapter = {
   isFoundryV10() {
@@ -1202,5 +1202,20 @@ export const FoundryAdapter = {
       error('An error occurred while activating text editors', false, e);
       debug('Text editor error trobuleshooting info', { node, sheet });
     }
+  },
+  async openEnchantmentConfig(item: Item5e) {
+    // TODO: Replace with dnd5e.application.item.EnchantmentConfig when this issue is resolved: https://github.com/foundryvtt/dnd5e/issues/3624
+    // @ts-ignore
+    return new EnchantmentConfig(item).render(true);
+  },
+  async renderFromUuid(uuid: string, force: boolean = true) {
+    const doc = await fromUuid(uuid);
+    return doc?.sheet?.render(force);
+  },
+  async removeEnchantment(enchantmentUuid: string, app: any) {
+    const enchantment = fromUuidSync(enchantmentUuid);
+    if (!enchantment) return;
+    await enchantment.delete();
+    await app.render();
   },
 };
