@@ -318,7 +318,7 @@
           {localize('DND5E.Enchantment.Action.Configure')}
         </button>
       </div>
-      {#if $context.appliedEnchantments.length}
+      {#if $context.appliedEnchantments?.length}
         <ul class="separated-list">
           {#each $context.appliedEnchantments as ae}
             <li class="item" data-enchantment-uuid={ae.enchantment.uuid}>
