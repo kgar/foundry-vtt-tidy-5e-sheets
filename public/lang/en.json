@@ -672,6 +672,10 @@
     "OptionDeleteFlags.Text": "Delete Affected Tidy Flags",
     "OptionDeleteFlags.Tooltip": "When migrating from custom Tidy flag data to official system data, the flags remain in place by default. Check this option to remove those flags.",
     "ButtonMigration.Text": "Migrate",
+    "Compendium.Label": "Compendium",
+    "MigrateCompendia.Label": "Migrate Compendia",
+    "MigrateCompendia.SelectionDialogTitle": "Select Compendia to Migrate",
+    "Compendia.TotalEntriesLabel": "Total Entries",
     "CharacterBiography": {
       "sectionTitle": "Character Biography",
       "selectionDialogTitle": "Migration: Character Biography"
