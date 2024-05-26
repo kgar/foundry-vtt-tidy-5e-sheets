@@ -196,7 +196,7 @@
             propPath: 'label',
             onClick: (target) => game.packs.get(target.id).render(true),
           },
-          name: localize('TIDY5E.Settings.Migrations.Compendium.Label'),
+          name: localize('TIDY5E.Settings.Migrations.MigrateCompendia.CompendiumLabel'),
         },
         {
           cellWidth: '5rem',
@@ -268,7 +268,7 @@
       type="button"
       on:click={(ev) => migrateCompendia()}
       disabled={migrating}
-      >{localize('TIDY5E.Settings.Migrations.MigrateCompendia.Label')}</button
+      >{localize('TIDY5E.Settings.Migrations.MigrateCompendia.Title')}</button
     >
     <button type="button" on:click={(ev) => migrate()} disabled={migrating}
       >{localize('TIDY5E.Settings.Migrations.ButtonMigration.Text')}</button
