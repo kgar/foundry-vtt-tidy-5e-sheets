@@ -94,7 +94,7 @@
 <ItemFormGroup
   cssClass="stacked"
   labelText={localize('DND5E.SpellMaterials')}
-  field=""
+  field="system.materials.value"
   let:inputId
 >
   <TextInput

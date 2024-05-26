@@ -472,7 +472,7 @@ input[type='checkbox'] {
         grid-template-columns: repeat(auto-fit, minmax(10.625rem, 1fr));
         gap: 0.125rem;
 
-        > label:not(.checkbox) {
+        > :not(.checkbox) {
           grid-column: 1 / -1;
         }
       }

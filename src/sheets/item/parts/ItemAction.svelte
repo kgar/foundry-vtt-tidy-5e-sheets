@@ -162,60 +162,62 @@
       <i class="fas fa-plus" />
     </button>
   </h4>
-  <ol class="damage-parts form-group">
-    {#each damageParts as [formula, damageType], i}
-      <li
-        class="damage-part flexrow"
-        data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.DAMAGE_PART_CONTAINER}
-        data-tidy-damage-part-index={i}
-      >
-        <input
-          id="{$context.appId}-system-damage-part-{i}-0"
-          type="text"
-          bind:value={formula}
-          data-formula-editor
-          on:change={() => saveDamageFormulae()}
-          disabled={!$context.editable}
-          data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.DAMAGE_PART_FORMULA}
-          data-tidy-field={`system.damage.part-${i}-0`}
-        />
-        <select
-          id="{$context.appId}-system-damage-part-{i}-1"
-          bind:value={damageType}
-          data-formula-editor
-          on:change={() => saveDamageFormulae()}
-          disabled={!$context.editable}
-          data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.DAMAGE_PART_TYPE}
-          data-tidy-field={`system.damage.part-${i}-1`}
+  {#if damageParts?.length}
+    <ol class="damage-parts form-group">
+      {#each damageParts as [formula, damageType], i}
+        <li
+          class="damage-part flexrow"
+          data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.DAMAGE_PART_CONTAINER}
+          data-tidy-damage-part-index={i}
         >
-          <option value="">{localize('DND5E.None')}</option>
-          <optgroup label={localize('DND5E.Damage')}>
-            <SelectOptions
-              data={$context.config.damageTypes}
-              labelProp="label"
-            />
-          </optgroup>
-          <optgroup label={localize('DND5E.Healing')}>
-            <SelectOptions
-              data={$context.config.healingTypes}
-              labelProp="label"
-            />
-          </optgroup>
-        </select>
-        <button
-          type="button"
-          class="damage-formula-control delete-damage"
-          on:click={() => deleteDamageFormula(i)}
-          disabled={!$context.editable}
-          data-tidy-sheet-part={CONSTANTS.SHEET_PARTS
-            .DAMAGE_PART_DELETE_COMMAND}
-          tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
-        >
-          <i class="fas fa-minus" />
-        </button>
-      </li>
-    {/each}
-  </ol>
+          <input
+            id="{$context.appId}-system-damage-part-{i}-0"
+            type="text"
+            bind:value={formula}
+            data-formula-editor
+            on:change={() => saveDamageFormulae()}
+            disabled={!$context.editable}
+            data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.DAMAGE_PART_FORMULA}
+            data-tidy-field={`system.damage.part-${i}-0`}
+          />
+          <select
+            id="{$context.appId}-system-damage-part-{i}-1"
+            bind:value={damageType}
+            data-formula-editor
+            on:change={() => saveDamageFormulae()}
+            disabled={!$context.editable}
+            data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.DAMAGE_PART_TYPE}
+            data-tidy-field={`system.damage.part-${i}-1`}
+          >
+            <option value="">{localize('DND5E.None')}</option>
+            <optgroup label={localize('DND5E.Damage')}>
+              <SelectOptions
+                data={$context.config.damageTypes}
+                labelProp="label"
+              />
+            </optgroup>
+            <optgroup label={localize('DND5E.Healing')}>
+              <SelectOptions
+                data={$context.config.healingTypes}
+                labelProp="label"
+              />
+            </optgroup>
+          </select>
+          <button
+            type="button"
+            class="damage-formula-control delete-damage"
+            on:click={() => deleteDamageFormula(i)}
+            disabled={!$context.editable}
+            data-tidy-sheet-part={CONSTANTS.SHEET_PARTS
+              .DAMAGE_PART_DELETE_COMMAND}
+            tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+          >
+            <i class="fas fa-minus" />
+          </button>
+        </li>
+      {/each}
+    </ol>
+  {/if}
 
   {#if $context.system.damage.parts.length}
     <ItemFormGroup

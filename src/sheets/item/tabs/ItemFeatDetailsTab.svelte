@@ -164,6 +164,7 @@
         field="system.recharge.charged"
         checked={$context.system.recharge.charged}
         disabled={!$context.editable}
+        greenCheckboxWidthOverride="{localize('DND5E.Charged').length + 4}ch"
       >
         {localize('DND5E.Charged')}
       </Checkbox>
