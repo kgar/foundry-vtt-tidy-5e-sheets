@@ -106,24 +106,26 @@
               </div>
               <div class="item-controls active-effect-controls flexrow">
                 {#if $context.editable}
-                  <button
-                    type="button"
-                    class="active-effect-control inline-transparent-button"
-                    title={effect.disabled
-                      ? 'DND5E.EffectEnable'
-                      : 'DND5E.EffectDisable'}
-                    on:click={() =>
-                      effect.update({ disabled: !effect.disabled })}
-                    tabindex={$settingStore.useAccessibleKeyboardSupport
-                      ? 0
-                      : -1}
-                  >
-                    <i
-                      class="fas"
-                      class:fa-check={effect.disabled}
-                      class:fa-times={!effect.disabled}
-                    />
-                  </button>
+                  {#if section.type !== 'enchantment'}
+                    <button
+                      type="button"
+                      class="active-effect-control inline-transparent-button"
+                      title={effect.disabled
+                        ? 'DND5E.EffectEnable'
+                        : 'DND5E.EffectDisable'}
+                      on:click={() =>
+                        effect.update({ disabled: !effect.disabled })}
+                      tabindex={$settingStore.useAccessibleKeyboardSupport
+                        ? 0
+                        : -1}
+                    >
+                      <i
+                        class="fas"
+                        class:fa-check={effect.disabled}
+                        class:fa-times={!effect.disabled}
+                      />
+                    </button>
+                  {/if}
                   <button
                     type="button"
                     class="active-effect-control inline-transparent-button"
