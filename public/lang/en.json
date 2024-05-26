@@ -675,7 +675,7 @@
     "Compendium.Label": "Compendium",
     "MigrateCompendia.Label": "Migrate Compendia",
     "MigrateCompendia.SelectionDialogTitle": "Select Compendia to Migrate",
-    "Compendia.TotalEntriesLabel": "Total Entries",
+    "MigrateCompendia.TotalEntriesLabel": "Total Entries",
     "CharacterBiography": {
       "sectionTitle": "Character Biography",
       "selectionDialogTitle": "Migration: Character Biography"

@@ -213,7 +213,7 @@
             propPath: 'size',
           },
           name: localize(
-            'TIDY5E.Settings.Migrations.Compendia.TotalEntriesLabel',
+            'TIDY5E.Settings.Migrations.MigrateCompendia.TotalEntriesLabel',
           ),
         },
       ],
