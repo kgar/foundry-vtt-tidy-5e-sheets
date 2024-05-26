@@ -142,6 +142,7 @@ export class ItemSheetRuntime {
       Sheet: RaceSheet,
       defaultTabs: () => [
         itemSheetTabs.raceDescription,
+        itemSheetTabs.raceDetails,
         itemSheetTabs.advancement,
       ],
     },
