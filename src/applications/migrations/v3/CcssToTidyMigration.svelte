@@ -1,6 +1,6 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { debug, error, notify } from 'src/utils/logging';
+  import { debug, error } from 'src/utils/logging';
   import { MigrationSelectionApplication } from '../migration-selection/MigrationSelectionApplication';
   import type { Item5e } from 'src/types/item.types';
   import {
@@ -196,7 +196,9 @@
             propPath: 'label',
             onClick: (target) => game.packs.get(target.id).render(true),
           },
-          name: localize('TIDY5E.Settings.Migrations.MigrateCompendia.CompendiumLabel'),
+          name: localize(
+            'TIDY5E.Settings.Migrations.MigrateCompendia.CompendiumLabel',
+          ),
         },
         {
           cellWidth: '5rem',
