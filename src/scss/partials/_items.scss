@@ -444,7 +444,7 @@ input[type='checkbox'] {
       &.spell-preparation-mode {
         gap: 0.25rem;
       }
-      
+
       &.flex-wrap {
         flex-wrap: wrap;
       }
@@ -475,6 +475,10 @@ input[type='checkbox'] {
         > :not(.checkbox) {
           grid-column: 1 / -1;
         }
+      }
+
+      &:not(:has(> *)) {
+        display: none;
       }
     }
 

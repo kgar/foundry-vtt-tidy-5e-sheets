@@ -10,6 +10,7 @@
   import ItemProperties from '../parts/ItemProperties.svelte';
   import ContentConcealer from 'src/components/content-concealment/ContentConcealer.svelte';
   import Checkbox from 'src/components/inputs/Checkbox.svelte';
+  import ItemActivation from '../parts/ItemActivation.svelte';
 
   let context = getContext<Readable<ItemSheetContext>>('context');
 
@@ -136,6 +137,9 @@
       disabled={!$context.editable}
     />
   </ItemFormGroup>
+
+  <h3 class="form-header">{localize('DND5E.ItemToolUsage')}</h3>
+  <ItemActivation />
 
   <ItemFormGroup
     cssClass="stacked"
