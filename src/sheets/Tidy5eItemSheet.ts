@@ -132,6 +132,7 @@ export class Tidy5eKgarItemSheet
       customContent: await ItemSheetRuntime.getContent(defaultDocumentContext),
       customEquipmentTypeGroups:
         ItemSheetRuntime.getCustomEquipmentTypeGroups(),
+      itemOverrides: new Set<string>(this._getItemOverrides()),
       healthPercentage: getPercentage(
         this.item?.system?.hp?.value,
         this.item?.system?.hp?.max

@@ -16,6 +16,18 @@
 
   const localize = FoundryAdapter.localize;
 
+  $: damagePartsAreEnchanted = $context.itemOverrides.has(
+    'system.damage.parts',
+  );
+
+  $: damageIsEnchanted = !!FoundryAdapter.getProperty(
+    $context.item.overrides,
+    'system.damage.parts',
+  );
+  $: enchantedTooltip = damageIsEnchanted
+    ? localize('DND5E.Enchantment.Warning.Override')
+    : null;
+
   function addDamageFormula() {
     const damage = $context.item.system.damage;
     return $context.item.update({
@@ -156,8 +168,9 @@
       type="button"
       class="damage-formula-control add-damage"
       on:click={() => addDamageFormula()}
-      disabled={!$context.editable}
+      disabled={!$context.editable || damageIsEnchanted}
       tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+      data-tooltip={enchantedTooltip}
     >
       <i class="fas fa-plus" />
     </button>
@@ -176,18 +189,20 @@
             bind:value={formula}
             data-formula-editor
             on:change={() => saveDamageFormulae()}
-            disabled={!$context.editable}
+            disabled={!$context.editable || damageIsEnchanted}
             data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.DAMAGE_PART_FORMULA}
             data-tidy-field={`system.damage.part-${i}-0`}
+            data-tooltip={enchantedTooltip}
           />
           <select
             id="{$context.appId}-system-damage-part-{i}-1"
             bind:value={damageType}
             data-formula-editor
             on:change={() => saveDamageFormulae()}
-            disabled={!$context.editable}
+            disabled={!$context.editable || damageIsEnchanted}
             data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.DAMAGE_PART_TYPE}
             data-tidy-field={`system.damage.part-${i}-1`}
+            data-tooltip={enchantedTooltip}
           >
             <option value="">{localize('DND5E.None')}</option>
             <optgroup label={localize('DND5E.Damage')}>
@@ -207,10 +222,11 @@
             type="button"
             class="damage-formula-control delete-damage"
             on:click={() => deleteDamageFormula(i)}
-            disabled={!$context.editable}
+            disabled={!$context.editable || damageIsEnchanted}
             data-tidy-sheet-part={CONSTANTS.SHEET_PARTS
               .DAMAGE_PART_DELETE_COMMAND}
             tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
+            data-tooltip={enchantedTooltip}
           >
             <i class="fas fa-minus" />
           </button>
