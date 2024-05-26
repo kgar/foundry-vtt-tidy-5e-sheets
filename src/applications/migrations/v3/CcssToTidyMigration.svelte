@@ -1,6 +1,6 @@
 <script lang="ts">
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
-  import { error } from 'src/utils/logging';
+  import { debug, error } from 'src/utils/logging';
   import { MigrationSelectionApplication } from '../migration-selection/MigrationSelectionApplication';
   import type { Item5e } from 'src/types/item.types';
   import {
@@ -69,9 +69,7 @@
 
             migrating = false;
             ui.notifications.info(
-              FoundryAdapter.localize(
-                'TIDY5E.Settings.Migrations.migrationCompleteMessage',
-              ),
+              localize('TIDY5E.Settings.Migrations.migrationCompleteMessage'),
             );
             resetOptions();
           },
@@ -139,6 +137,95 @@
     }
   }
 
+  // TODO: Extract compendium migration to share for future (and past) migrations.
+  type CompendiumToMigrate = {
+    label: string;
+    type: string;
+    id: string;
+    size: number;
+  };
+
+  async function migrateCompendia() {
+    const compendiaForMigrating = Array.from(game.packs.values())
+      .filter((c: any) => !c.locked && c.documentName === 'Item')
+      .map((c: any) => ({
+        label: c.metadata.label,
+        type: c.metadata.type,
+        id: c.metadata.id,
+        size: c.index.size,
+      }));
+
+    new MigrationSelectionApplication<CompendiumToMigrate>({
+      onConfirm: async (selected) => {
+        ui.notifications.info(
+          localize(`TIDY5E.Settings.Migrations.migrationBeginningMessage`),
+        );
+        for (const compendium of selected) {
+          debug(`Migrating compendium "${compendium.label}"...`);
+          try {
+            const items = await game.packs.get(compendium.id).getDocuments();
+            for (const item of items) {
+              await migrateCcssToTidyForItem({
+                item: item,
+                overwrite: overwrite,
+                clearCcssFlagData: deleteFlags,
+              });
+            }
+            debug(`Compendium "${compendium.label}" migration successful.`);
+          } catch (e) {
+            error(
+              localize('TIDY5E.Settings.Migrations.migrationErrorMessage'),
+              true,
+            );
+            error(
+              `Error while migrating compendium "${compendium.label}"`,
+              false,
+              e,
+            );
+          }
+        }
+        ui.notifications.info(
+          localize(`TIDY5E.Settings.Migrations.migrationCompleteMessage`),
+        );
+      },
+      columns: [
+        {
+          cellWidth: 'primary',
+          field: {
+            type: 'simple',
+            propPath: 'label',
+            onClick: (target) => game.packs.get(target.id).render(true),
+          },
+          name: localize(
+            'TIDY5E.Settings.Migrations.MigrateCompendia.CompendiumLabel',
+          ),
+        },
+        {
+          cellWidth: '5rem',
+          field: {
+            type: 'contextual',
+            getText: (c) => localize(`DOCUMENT.${c.type}`),
+          },
+          name: localize('Type'),
+        },
+        {
+          cellWidth: '10rem',
+          field: {
+            type: 'simple',
+            propPath: 'size',
+          },
+          name: localize(
+            'TIDY5E.Settings.Migrations.MigrateCompendia.TotalEntriesLabel',
+          ),
+        },
+      ],
+      documents: compendiaForMigrating,
+      title: localize(
+        'TIDY5E.Settings.Migrations.MigrateCompendia.SelectionDialogTitle',
+      ),
+    }).render(true);
+  }
+
   function resetOptions() {
     overwrite = false;
     deleteFlags = false;
@@ -178,9 +265,17 @@
     </label>
   </div>
 
-  <button type="button" on:click={(ev) => migrate()} disabled={migrating}
-    >{localize('TIDY5E.Settings.Migrations.ButtonMigration.Text')}</button
-  >
+  <footer class="flex-row small-gap">
+    <button
+      type="button"
+      on:click={(ev) => migrateCompendia()}
+      disabled={migrating}
+      >{localize('TIDY5E.Settings.Migrations.MigrateCompendia.Title')}</button
+    >
+    <button type="button" on:click={(ev) => migrate()} disabled={migrating}
+      >{localize('TIDY5E.Settings.Migrations.ButtonMigration.Text')}</button
+    >
+  </footer>
 </section>
 
 <style lang="scss">
@@ -195,7 +290,7 @@
     margin-bottom: 0.5rem;
   }
 
-  button {
+  footer {
     margin-top: auto;
   }
 
