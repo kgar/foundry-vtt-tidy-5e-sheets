@@ -607,7 +607,11 @@
             "overwriteTooltip": "Abilita per sovrascrivere il flag di sezione Tidy esistente. Se deselezionati, solo i flag Tidy vuoti riceveranno i dati CCSS migrati.",
             "deleteFlagsTooltip": "Durante la migrazione da CCSS alle sezioni personalizzate Tidy, i flag CCSS rimangono attivi per impostazione predefinita. Seleziona questa opzione per rimuovere questi flag."
         },
-        "Parent": "Genitore"
+        "Parent": "Genitore",
+        "MigrateCompendia.CompendiumLabel": "Compendio",
+        "MigrateCompendia.SelectionDialogTitle": "Seleziona Compendio da Migrare",
+        "MigrateCompendia.TotalEntriesLabel": "Totale Elementi",
+        "MigrateCompendia.Title": "Migrare Compendio"
     },
     "TIDY5E.ItemFilters.MenuTooltip.Filters": "Filtri",
     "TIDY5E.Settings.ColorPickerMagicAccent": {
