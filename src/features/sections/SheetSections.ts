@@ -120,6 +120,16 @@ export class SheetSections {
       (prev, curr) => {
         const key = curr.prop ?? '';
         curr.key = key;
+
+        // Tidy passes the dataset directly to the item creation code, rather than planting it on the HTML.
+        // When Tidy fully takes over its own spellbook preparation, eliminate the need for this correcting patch.
+        curr.dataset['system'] = {
+          level: curr.dataset.level,
+          preparationMode: curr.dataset.preparationMode,
+        };
+        delete curr.dataset.level;
+        delete curr.dataset.preparationMode;
+
         prev[key] = curr;
         return prev;
       },
@@ -204,8 +214,11 @@ export class SheetSections {
     }, []);
   }
 
-  static accountForExternalSections(props: string[], data: Record<string, any>) {
-    props.forEach(prop => {
+  static accountForExternalSections(
+    props: string[],
+    data: Record<string, any>
+  ) {
+    props.forEach((prop) => {
       const sectionCollection = data[prop];
       sectionCollection?.forEach((section: any) => {
         if (!isNil(section.key)) {
@@ -215,8 +228,8 @@ export class SheetSections {
         section.key = SheetSections.getSectionKey(section);
         section.canCreate = false;
         section.show = true;
-      }) 
-    })
+      });
+    });
   }
 
   static getSectionKey(section: TidySectionBase) {

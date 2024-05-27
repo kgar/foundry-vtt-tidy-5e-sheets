@@ -12,6 +12,7 @@
   import Select from 'src/components/inputs/Select.svelte';
   import ItemProperties from '../parts/ItemProperties.svelte';
   import ContentConcealer from 'src/components/content-concealment/ContentConcealer.svelte';
+  import Checkbox from 'src/components/inputs/Checkbox.svelte';
 
   let context = getContext<Readable<ItemSheetContext>>('context');
 
@@ -59,6 +60,14 @@
       field="system.attunement"
       let:inputId
     >
+      <Checkbox
+        id={`${$context.appId}-system-attuned`}
+        document={$context.item}
+        field="system.attuned"
+        checked={$context.system.attuned}
+        disabled={!$context.editable || !$context.system.attunement}
+        title={localize('DND5E.AttunementAttuned')}
+      ></Checkbox>
       <Select
         id={inputId}
         document={$context.item}
@@ -66,7 +75,10 @@
         value={$context.system.attunement}
         disabled={!$context.editable}
       >
-        <SelectOptions data={$context.config.attunements} />
+        <SelectOptions
+          data={$context.config.attunementTypes}
+          blank={localize('DND5E.AttunementNone')}
+        />
       </Select>
     </ItemFormGroup>
 

@@ -132,6 +132,7 @@ export class Tidy5eKgarItemSheet
       customContent: await ItemSheetRuntime.getContent(defaultDocumentContext),
       customEquipmentTypeGroups:
         ItemSheetRuntime.getCustomEquipmentTypeGroups(),
+      itemOverrides: new Set<string>(this._getItemOverrides()),
       healthPercentage: getPercentage(
         this.item?.system?.hp?.value,
         this.item?.system?.hp?.max
@@ -157,6 +158,9 @@ export class Tidy5eKgarItemSheet
 
   private _renderMutex = new AsyncMutex();
   async _render(force?: boolean, options = {}) {
+    if (typeof options !== 'object') {
+      options = {};
+    }
     await this._renderMutex.lock(async () => {
       await this._renderSheet(force, options);
     });

@@ -56,8 +56,8 @@ export async function migrateBiographicalFlagsToV2Data(
   const { document, overwrite, clearBiographicalFlagData } = params;
   let diff: Record<string, any> = {};
   for (let { system, tidy, tidyDelete } of mappings) {
-    const systemValue = getProperty(document, system) ?? '';
-    const tidyValue = getProperty(document, tidy) ?? '';
+    const systemValue = foundry.utils.getProperty(document, system) ?? '';
+    const tidyValue = foundry.utils.getProperty(document, tidy) ?? '';
     if (isNil(systemValue, '') || overwrite) {
       diff[system] = tidyValue;
     }

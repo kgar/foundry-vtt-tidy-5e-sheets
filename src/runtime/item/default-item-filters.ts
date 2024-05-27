@@ -176,16 +176,26 @@ export function getSpellSchoolFiltersAsObject(): Record<string, ItemFilter> {
 export function getAttunementFilters(): ItemFilter[] {
   return [
     {
+      name: 'attunement-optional',
+      predicate: (item) =>
+        !FoundryAdapter.concealDetails(item) &&
+        item.system.attunement === CONSTANTS.ATTUNEMENT_OPTIONAL,
+      text: CONFIG.DND5E.attunementTypes[CONSTANTS.ATTUNEMENT_OPTIONAL],
+    },
+    {
       name: 'attunement-required',
       predicate: (item) =>
-        !FoundryAdapter.concealDetails(item) && item.system.attunement === 1,
-      text: CONFIG.DND5E.attunements[1],
+        !FoundryAdapter.concealDetails(item) &&
+        item.system.attunement === CONSTANTS.ATTUNEMENT_REQUIRED,
+      text: CONFIG.DND5E.attunementTypes[CONSTANTS.ATTUNEMENT_REQUIRED],
     },
     {
       name: 'attuned',
       predicate: (item) =>
-        !FoundryAdapter.concealDetails(item) && item.system.attunement === 2,
-      text: CONFIG.DND5E.attunements[2],
+        !FoundryAdapter.concealDetails(item) &&
+        !!item.system.attunement &&
+        item.system.attuned,
+      text: 'DND5E.AttunementAttuned',
     },
   ];
 }

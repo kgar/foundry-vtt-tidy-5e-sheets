@@ -35,7 +35,7 @@
     title={localize('DND5E.HitPointsTempMax')}
     disabled={!$context.editable}
   />
-  {#if $context.editable && !$context.lockSensitiveFields}
+  {#if $context.editable && $context.unlocked}
     <button
       type="button"
       class="inline-icon-button"

@@ -23,7 +23,7 @@
   $: canPrepare = FoundryAdapter.canPrepareSpell(item);
 </script>
 
-<div class="info-card {spellRowClasses}" data-item-id={item._id}>
+<div class="info-card spellbook {spellRowClasses}" data-item-id={item._id}>
   <p class="info-card-name">{item.name}</p>
   {#if item.labels?.school || ($context.owner && canPrepare)}
     <div class="info-card-states">

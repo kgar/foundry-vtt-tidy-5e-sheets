@@ -318,6 +318,7 @@ export class Tidy5eKgarContainerSheet
       filterPins: ItemFilterRuntime.defaultFilterPins[this.item.type],
       identifiedName: FoundryAdapter.getIdentifiedName(this.item),
       itemDescriptions,
+      itemOverrides: new Set<string>(this._getItemOverrides()),
       lockItemQuantity: FoundryAdapter.shouldLockItemQuantity(),
       originalContext: defaultDocumentContext,
       tabs: tabs,
@@ -352,6 +353,9 @@ export class Tidy5eKgarContainerSheet
 
   private _renderMutex = new AsyncMutex();
   async _render(force?: boolean, options = {}) {
+    if (typeof options !== 'object') {
+      options = {};
+    }
     await this._renderMutex.lock(async () => {
       await this._renderSheet(force, options);
     });

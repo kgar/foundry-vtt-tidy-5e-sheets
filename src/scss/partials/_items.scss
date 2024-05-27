@@ -408,7 +408,8 @@ input[type='checkbox'] {
     padding-right: 0.5rem;
   }
 
-  /* Compatibility selector */ & > .tab {
+  /* Compatibility selector */
+  & > .tab {
     padding-right: 0.75rem;
   }
   .form-header {
@@ -443,6 +444,22 @@ input[type='checkbox'] {
       &.spell-preparation-mode {
         gap: 0.25rem;
       }
+
+      &.flex-wrap {
+        flex-wrap: wrap;
+      }
+
+      gap: 0.25rem;
+
+      > * {
+        &.flex-basis-full {
+          flex-basis: 100%;
+        }
+
+        &.qty-flex-basis {
+          flex: 0 0 2rem;
+        }
+      }
     }
 
     &.stacked {
@@ -455,9 +472,13 @@ input[type='checkbox'] {
         grid-template-columns: repeat(auto-fit, minmax(10.625rem, 1fr));
         gap: 0.125rem;
 
-        > label:not(.checkbox) {
+        > :not(.checkbox) {
           grid-column: 1 / -1;
         }
+      }
+
+      &:not(:has(> *)) {
+        display: none;
       }
     }
 
@@ -888,5 +909,24 @@ ol.info {
   li.notification {
     box-shadow: none;
     list-style: none;
+  }
+}
+
+:is(.enchantment, .summoning).form-group .separated-list {
+  flex: 1 0 100%;
+  .list-icon {
+    flex: 0 0 2rem;
+    width: 2rem;
+    height: 2rem;
+  }
+  .name {
+    flex: 1 0 10.9375rem;
+    text-align: start;
+  }
+  .details {
+    align-items: center;
+  }
+  .list-controls button {
+    --size: 2rem;
   }
 }

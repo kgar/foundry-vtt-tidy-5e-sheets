@@ -12,9 +12,9 @@ import type { Actor5e } from 'src/types/types';
 import type { Item5e } from 'src/types/item.types';
 import { SettingsProvider } from 'src/settings/settings';
 import { debug, error, warn } from 'src/utils/logging';
-import { clamp } from 'src/utils/numbers';
 import FloatingContextMenu from 'src/context-menu/FloatingContextMenu';
 import { TidyFlags } from './TidyFlags';
+import EnchantmentConfig from './shims/EnchantmentConfig';
 
 export const FoundryAdapter = {
   isFoundryV10() {
@@ -131,13 +131,13 @@ export const FoundryAdapter = {
     });
   },
   mergeObject<T>(original: T, ...args: any[]) {
-    return mergeObject(original, ...args) as T;
+    return foundry.utils.mergeObject(original, ...args) as T;
   },
   expandObject(data: any) {
-    return expandObject(data);
+    return foundry.utils.expandObject(data);
   },
   isEmpty(obj: any) {
-    return isEmpty(obj);
+    return foundry.utils.isEmpty(obj);
   },
   getClassIdentifier(item: Item5e): string {
     return item.system.identifier || item.name.slugify({ strict: true });
@@ -625,7 +625,7 @@ export const FoundryAdapter = {
     return game.modules.get(moduleId);
   },
   debounce(callback: Function, delay: number): Function {
-    return debounce(callback, delay);
+    return foundry.utils.debounce(callback, delay);
   },
   roll(
     formula: string,
@@ -633,80 +633,6 @@ export const FoundryAdapter = {
     rollFnOptions: any = {}
   ): Promise<any> {
     return new Roll(formula, rollData).roll(rollFnOptions);
-  },
-  async d20Roll({
-    parts = [],
-    data = {},
-    event,
-    advantage,
-    disadvantage,
-    critical = 20,
-    fumble = 1,
-    targetValue,
-    elvenAccuracy,
-    halflingLucky,
-    reliableTalent,
-    fastForward,
-    chooseModifier = false,
-    template,
-    title,
-    dialogOptions,
-    chatMessage = true,
-    messageData = {},
-    rollMode,
-    flavor,
-  }: any = {}) {
-    // Handle input arguments
-    const formula = ['1d20'].concat(parts).join(' + ');
-    const { advantageMode, isFF } = CONFIG.Dice.D20Roll.determineAdvantageMode({
-      advantage,
-      disadvantage,
-      fastForward,
-      event,
-    });
-    const defaultRollMode = rollMode || game.settings.get('core', 'rollMode');
-    if (chooseModifier && !isFF) {
-      data.mod = '@mod';
-      if ('abilityCheckBonus' in data)
-        data.abilityCheckBonus = '@abilityCheckBonus';
-    }
-
-    // Construct the D20Roll instance
-    const roll = new CONFIG.Dice.D20Roll(formula, data, {
-      flavor: flavor || title,
-      advantageMode,
-      defaultRollMode,
-      rollMode,
-      critical,
-      fumble,
-      targetValue,
-      elvenAccuracy,
-      halflingLucky,
-      reliableTalent,
-    });
-
-    // Prompt a Dialog to further configure the D20Roll
-    if (!isFF) {
-      const configured = await roll.configureDialog(
-        {
-          title,
-          chooseModifier,
-          defaultRollMode,
-          defaultAction: advantageMode,
-          defaultAbility: data?.item?.ability || data?.defaultAbility,
-          template,
-        },
-        dialogOptions
-      );
-      if (configured === null) return null;
-    } else roll.options.rollMode ??= defaultRollMode;
-
-    // Evaluate the configured roll
-    await roll.evaluate({ async: true });
-
-    // Create a Chat Message
-    if (roll && chatMessage) await roll.toMessage(messageData);
-    return roll;
   },
   async rollNpcHitDie(
     actor: Actor5e,
@@ -1162,10 +1088,10 @@ export const FoundryAdapter = {
       SettingsProvider.settings.useClassicControlsForCharacter.get()
     );
   },
-  attunementContextRequired: {
+  attunementContextApplicable: {
     icon: 'fa-sun',
     cls: 'not-attuned',
-    title: 'DND5E.AttunementRequired',
+    title: 'ERROR: This should be replaced with valid attunement type text',
   },
   attunementContextAttune: {
     icon: 'fa-sun',
@@ -1173,9 +1099,12 @@ export const FoundryAdapter = {
     title: 'DND5E.AttunementAttuned',
   },
   getAttunementContext(item: Item5e): AttunementContext | undefined {
-    return item.system.attunement === CONFIG.DND5E.attunementTypes.REQUIRED
-      ? FoundryAdapter.attunementContextRequired
-      : item.system.attunement === CONFIG.DND5E.attunementTypes.ATTUNED
+    return !!item.system.attunement && !item.system.attuned
+      ? {
+          ...FoundryAdapter.attunementContextApplicable,
+          title: CONFIG.DND5E.attunementTypes[item.system.attunement],
+        }
+      : !!item.system.attunement && item.system.attuned
       ? FoundryAdapter.attunementContextAttune
       : undefined;
   },
@@ -1273,5 +1202,20 @@ export const FoundryAdapter = {
       error('An error occurred while activating text editors', false, e);
       debug('Text editor error trobuleshooting info', { node, sheet });
     }
+  },
+  async openEnchantmentConfig(item: Item5e) {
+    // TODO: Replace with dnd5e.application.item.EnchantmentConfig when this issue is resolved: https://github.com/foundryvtt/dnd5e/issues/3624
+    // @ts-ignore
+    return new EnchantmentConfig(item).render(true);
+  },
+  async renderFromUuid(uuid: string, force: boolean = true) {
+    const doc = await fromUuid(uuid);
+    return doc?.sheet?.render(force);
+  },
+  async removeEnchantment(enchantmentUuid: string, app: any) {
+    const enchantment = fromUuidSync(enchantmentUuid);
+    if (!enchantment) return;
+    await enchantment.delete();
+    await app.render();
   },
 };

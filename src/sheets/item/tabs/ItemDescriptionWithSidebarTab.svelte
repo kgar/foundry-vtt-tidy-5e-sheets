@@ -77,14 +77,14 @@
       {/if}
 
       <div class="form-group">
-        <label for="{$context.appId}-{$context.item.id}-weight"
+        <label for="{$context.appId}-{$context.item.id}-weight-value"
           >{localize('DND5E.Weight')}</label
         >
         <NumberInput
-          id="{$context.appId}-{$context.item.id}-weight"
-          value={$context.system.weight}
+          id="{$context.appId}-{$context.item.id}-weight-value"
+          value={$context.system.weight.value}
           step="any"
-          field="system.weight"
+          field="system.weight.value"
           document={$context.item}
           disabled={!$context.editable}
           selectOnFocus={true}

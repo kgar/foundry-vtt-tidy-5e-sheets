@@ -163,7 +163,7 @@
             <svelte:fragment slot="body">
               {#each section.items as item (item.id)}
                 {@const ctx = $context.itemContext[item.id]}
-                {@const weight = ctx?.totalWeight ?? item.system.weight}
+                {@const weight = ctx?.totalWeight ?? item.system.weight.value}
                 <ItemTableRowV2
                   {item}
                   hidden={!visibleItemIdSubset.has(item.id)}

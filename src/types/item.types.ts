@@ -22,6 +22,7 @@ export type ItemSheetContext = {
   lockItemQuantity: boolean;
   originalContext: unknown;
   owner: boolean;
+  itemOverrides: Set<string>;
   tabs: Tab[];
   viewableWarnings: DocumentPreparationWarning[];
 } & Record<string, any>;
@@ -65,6 +66,7 @@ export type ContainerSheetContext = {
   filterData: DocumentFilters;
   itemContext: Record<string, ContainerItemContext>;
   itemDescriptions: ItemDescription[];
+  itemOverrides: Set<string>;
   lockItemQuantity: boolean;
   customContent: CustomContent[];
   originalContext: unknown;

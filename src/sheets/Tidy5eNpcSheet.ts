@@ -218,7 +218,7 @@ export class Tidy5eNpcSheet
         const roll = await Roll.create(
           formula,
           this.actor.getRollData()
-        ).evaluate({ async: true });
+        ).evaluate();
         maxPreparedSpellsTotal = roll.total;
       }
     } catch (e) {
@@ -1019,6 +1019,9 @@ export class Tidy5eNpcSheet
 
   private _renderMutex = new AsyncMutex();
   async _render(force?: boolean, options = {}) {
+    if (typeof options !== 'object') {
+      options = {};
+    }
     await this._renderMutex.lock(async () => {
       await this._renderSheet(force, options);
     });
