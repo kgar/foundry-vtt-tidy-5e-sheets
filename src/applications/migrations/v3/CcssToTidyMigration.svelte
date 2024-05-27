@@ -265,7 +265,7 @@
     </label>
   </div>
 
-  <footer class="flex-row small-gap">
+  <footer class="flex-row extra-small-gap">
     <button
       type="button"
       on:click={(ev) => migrateCompendia()}
