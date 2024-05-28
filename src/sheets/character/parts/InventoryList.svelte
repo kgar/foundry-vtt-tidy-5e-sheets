@@ -210,7 +210,7 @@
                 </div>
               {/if}
             </ItemTableCell>
-            {#if TidyFlags.tryGetFlag(item, 'favorite') && allowFavoriteIconNextToName}
+            {#if FoundryAdapter.isDocumentFavorited(item) && allowFavoriteIconNextToName}
               <InlineFavoriteIcon />
             {/if}
           {/if}

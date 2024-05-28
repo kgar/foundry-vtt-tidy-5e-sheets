@@ -20,7 +20,6 @@ sectionsTest.describe('character', () => {
         flags: {
           ['tidy5e-sheet']: {
             [TidyFlags.section.key]: 'TIDY5E.LocalizationTestKey',
-            [TidyFlags.favorite.key]: true,
           },
         },
       },
@@ -35,7 +34,6 @@ sectionsTest.describe('character', () => {
         flags: {
           ['tidy5e-sheet']: {
             [TidyFlags.section.key]: 'TIDY5E.LocalizationTestKey',
-            [TidyFlags.favorite.key]: true,
           },
         },
       },
@@ -50,7 +48,6 @@ sectionsTest.describe('character', () => {
         flags: {
           ['tidy5e-sheet']: {
             [TidyFlags.section.key]: 'TIDY5E.LocalizationTestKey',
-            [TidyFlags.favorite.key]: true,
           },
         },
       },
@@ -275,10 +272,15 @@ function runAllCharacterTests(itemToTest: DefaultSectionTestParams) {
   sectionsTest(
     `${itemToTest.itemCreationArgs.name} can be localized`,
     async ({ data, sectionPage }) => {
+      const sheetHelper = new SheetHelper(
+        sectionPage,
+        data.sectionTestCharacter
+      );
       await testCustomSection(
         itemToTest,
-        new SheetHelper(sectionPage, data.sectionTestCharacter),
-        'section'
+        sheetHelper,
+        'section',
+        async (item) => await sheetHelper.addFavoriteItem(item.uuid)
       );
     }
   );

@@ -31,12 +31,14 @@ export async function testDefaultSection(
 export async function testCustomSection(
   itemToTest: DefaultSectionTestParams,
   sheetHelper: SheetHelper,
-  sectionType: 'section' | 'actionSection'
+  sectionType: 'section' | 'actionSection',
+  onItemCreated?: (item: DocumentRef) => Promise<void>
 ) {
   // arrange
   const item = await sheetHelper.createEmbeddedItem(
     itemToTest.itemCreationArgs
   );
+  onItemCreated?.(item);
   const itemSheetHelper = new SheetHelper(sheetHelper.page, item);
 
   // act

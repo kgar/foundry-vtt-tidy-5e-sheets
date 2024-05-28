@@ -530,18 +530,31 @@ export const FoundryAdapter = {
     );
   },
   isDocumentFavorited(document: any) {
-    if (!document) {
-      return false;
+    if ('favorites' in document?.parent?.system) {
+      const relativeUuid = document.getRelativeUUID(document.parent);
+      return document.parent.system.favorites.some(
+        (f: any) => f.id === relativeUuid
+      );
     }
 
-    return TidyFlags.tryGetFlag<boolean | null>(document, 'favorite') ?? false;
+    return false;
   },
+  // TODO: Require the type: 'item' | 'effect'
   toggleFavorite(document: any) {
+    const actor = document.parent;
+
+    if (!actor || !actor.system?.addFavorite) {
+      return;
+    }
+
     const favorited = FoundryAdapter.isDocumentFavorited(document);
     if (favorited) {
-      TidyFlags.unsetFlag(document, 'favorite');
+      actor.system.removeFavorite(document.getRelativeUUID(actor));
     } else {
-      TidyFlags.setFlag(document, 'favorite', true);
+      actor.system.addFavorite({
+        type: 'item',
+        id: document.getRelativeUUID(actor),
+      });
     }
   },
   isActorSheetUnlocked(actor: any): boolean {

@@ -155,7 +155,7 @@
         {/if}
 
         <!-- TODO: Put this in itemContext -->
-        {#if TidyFlags.tryGetFlag(item, 'favorite')}
+        {#if FoundryAdapter.isDocumentFavorited(item)}
           <GridPaneFavoriteIcon />
         {/if}
 

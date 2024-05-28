@@ -204,7 +204,8 @@
               <ItemUses item={spell} />
             </ItemTableCell>
           {/if}
-          {#if allowFavorites && $settingStore.showIconsNextToTheItemName && TidyFlags.tryGetFlag(spell, 'favorite')}
+          <!-- TODO: Put `isFavorite` in itemContext; maybe even create `effectContext` and add this, too; propagate usage everywhere -->
+          {#if allowFavorites && $settingStore.showIconsNextToTheItemName && FoundryAdapter.isDocumentFavorited(spell)}
             <InlineFavoriteIcon />
           {/if}
           <ItemTableCell baseWidth={spellComponentsBaseWidth} cssClass="no-gap">

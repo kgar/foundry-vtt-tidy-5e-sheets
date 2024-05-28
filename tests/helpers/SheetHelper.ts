@@ -177,4 +177,17 @@ export class SheetHelper {
       { uuid: this.ref.uuid, constants: CONSTANTS, flag, value }
     );
   }
+
+  async addFavoriteItem(itemUuid: string) {
+    await this.page.evaluate(
+      async ({ uuid }) => {
+        const doc = await fromUuid(uuid);
+        await doc.parent?.system?.addFavorite?.({
+          id: doc.getRelativeUUID(doc.parent),
+          type: 'item',
+        });
+      },
+      { uuid: itemUuid }
+    );
+  }
 }

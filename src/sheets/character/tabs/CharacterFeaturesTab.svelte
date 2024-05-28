@@ -195,7 +195,7 @@
                     </ItemName>
                   </ItemTableCell>
                   <!-- TODO: Handle more gracefully -->
-                  {#if $settingStore.showIconsNextToTheItemName && TidyFlags.tryGetFlag(item, 'favorite')}
+                  {#if $settingStore.showIconsNextToTheItemName && FoundryAdapter.isDocumentFavorited(item)}
                     <InlineFavoriteIcon />
                   {/if}
                   {#if section.showUsesColumn}
