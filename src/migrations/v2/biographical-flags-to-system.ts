@@ -6,7 +6,7 @@ type TidyFlagToSystemMigrationMapping = {
   tidyDelete: string;
 };
 
-type BiographicalFlagsToV2MigrationParams = {
+type BiographicalFlagsToSystemMigrationParams = {
   document: any;
   overwrite: boolean;
   clearBiographicalFlagData: boolean;
@@ -50,8 +50,8 @@ const mappings: TidyFlagToSystemMigrationMapping[] = [
   },
 ];
 
-export async function migrateBiographicalFlagsToV2Data(
-  params: BiographicalFlagsToV2MigrationParams
+export async function migrateBiographicalFlagsToSystemData(
+  params: BiographicalFlagsToSystemMigrationParams
 ) {
   const { document, overwrite, clearBiographicalFlagData } = params;
   let diff: Record<string, any> = {};

@@ -2,7 +2,7 @@
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
   import type { Actor5e } from 'src/types/types';
   import { debug, error } from 'src/utils/logging';
-  import { migrateNpcDeathFlagsToV2 } from './npc-death-flags-to-v2';
+  import { migrateNpcDeathFlagsToSystem } from './npc-death-flags-to-system';
   import { MigrationSelectionApplication } from '../migration-selection/MigrationSelectionApplication';
   import { CONSTANTS } from 'src/constants';
 
@@ -107,7 +107,7 @@
   async function migrateActor(actor: Actor5e) {
     try {
       debug(`Migrating actor ${actor?.name}...`);
-      migrateNpcDeathFlagsToV2({
+      migrateNpcDeathFlagsToSystem({
         npc: actor,
         overwrite: overwrite,
         clearDeathFlagData: deleteFlags,
