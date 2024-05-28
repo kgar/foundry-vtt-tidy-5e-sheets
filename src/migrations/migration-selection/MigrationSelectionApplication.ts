@@ -1,5 +1,5 @@
 import type { SvelteComponent } from 'svelte';
-import SvelteFormApplicationBase from '../../SvelteFormApplicationBase';
+import SvelteFormApplicationBase from 'src/applications/SvelteFormApplicationBase';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import MigrationSelection from './MigrationSelection.svelte';
 import type {

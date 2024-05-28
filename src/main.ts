@@ -9,8 +9,8 @@ import { CONSTANTS } from './constants';
 import { Tidy5eSheetsApi } from './api/Tidy5eSheetsApi';
 import '../public/rpg-awesome/style/rpg-awesome.min.css';
 import { initRuntime } from './runtime/runtime-init';
-import MigrationNotificationFormApplication from './applications/migrations/notification/MigrationNotificationFormApplication';
-import { MigrationTally } from './applications/migrations/MigrationTally';
+import MigrationNotificationFormApplication from 'src/migrations/notification/MigrationNotificationFormApplication';
+import { MigrationTally } from 'src/migrations/MigrationTally';
 import { Tidy5eKgarContainerSheet } from './sheets/Tidy5eContainerSheet';
 import { setupModuleIntegrations } from './integration/integration';
 
