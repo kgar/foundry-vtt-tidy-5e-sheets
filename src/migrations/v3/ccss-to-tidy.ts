@@ -33,7 +33,9 @@ export async function migrateCcssToTidyForItem({
     }
 
     if (clearCcssFlagData) {
-      item.unsetFlag('custom-character-sheet-sections', 'sectionName');
+      item.update({
+        'flags.custom-character-sheet-sections.-=sectionName': null,
+      });
     }
   } catch (e) {
     error('An error occurred while migrating CCSS data from item.', false, e);
