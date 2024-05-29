@@ -211,7 +211,7 @@
                 </div>
               {/if}
             </ItemTableCell>
-            {#if FoundryAdapter.isDocumentFavorited(item) && allowFavoriteIconNextToName}
+            {#if 'favoriteId' in ctx && !!ctx.favoriteId && allowFavoriteIconNextToName}
               <InlineFavoriteIcon />
             {/if}
           {/if}

@@ -155,7 +155,7 @@
         {/if}
 
         <!-- TODO: Put this in itemContext -->
-        {#if FoundryAdapter.isDocumentFavorited(item)}
+        {#if 'favoriteId' in ctx && !!ctx.favoriteId}
           <GridPaneFavoriteIcon />
         {/if}
 

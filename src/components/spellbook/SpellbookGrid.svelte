@@ -123,7 +123,7 @@
           tabindex={$settingStore.useAccessibleKeyboardSupport ? 0 : -1}
           data-tidy-grid-item
         >
-          {#if FoundryAdapter.isDocumentFavorited(spell)}
+          {#if 'favoriteId' in ctx && !!ctx.favoriteId}
             <GridPaneFavoriteIcon />
           {/if}
           <div class="spell-name">

@@ -194,8 +194,8 @@
                         ></i>{/if}
                     </ItemName>
                   </ItemTableCell>
-                  <!-- TODO: Handle more gracefully -->
-                  {#if $settingStore.showIconsNextToTheItemName && FoundryAdapter.isDocumentFavorited(item)}
+                  <!-- TODO: Handle more gracefully; it is sitting outside of any table cell -->
+                  {#if $settingStore.showIconsNextToTheItemName && 'favoriteId' in ctx && !!ctx.favoriteId}
                     <InlineFavoriteIcon />
                   {/if}
                   {#if section.showUsesColumn}
