@@ -64,7 +64,10 @@ import { DocumentTabSectionConfigApplication } from 'src/applications/section-co
 import { ActorSheetCustomSectionMixin } from './mixins/Tidy5eBaseActorSheetMixins';
 import { ItemUtils } from 'src/utils/ItemUtils';
 import { Inventory } from 'src/features/sections/Inventory';
-import type { CharacterFavorite } from 'src/foundry/dnd5e.types';
+import type {
+  CharacterFavorite,
+  UnsortedCharacterFavorite,
+} from 'src/foundry/dnd5e.types';
 
 export class Tidy5eCharacterSheet
   extends ActorSheetCustomSectionMixin(
@@ -1591,85 +1594,85 @@ export class Tidy5eCharacterSheet
     );
   }
 
-  // async _onDrop(event: DragEvent & { target: HTMLElement }) {
-  //   if (!event.target.closest('[data-tidy-favorites]'))
-  //     return super._onDrop(event);
-  //   const dragData = event.dataTransfer?.getData('application/json');
-  //   if (!dragData) return super._onDrop(event);
-  //   let data;
-  //   try {
-  //     data = JSON.parse(dragData);
-  //   } catch (e) {
-  //     console.error(e);
-  //     return;
-  //   }
+  async _onDrop(event: DragEvent & { target: HTMLElement }) {
+    if (!event.target.closest('[data-tidy-favorites]'))
+      return super._onDrop(event);
+    const dragData = event.dataTransfer?.getData('text/plain');
+    if (!dragData) return super._onDrop(event);
+    let data;
+    try {
+      data = JSON.parse(dragData);
+    } catch (e) {
+      console.error(e);
+      return;
+    }
 
-  //   let type = 'item' as const;
-  //   let id = (await fromUuid(data.uuid)).getRelativeUUID(this.actor);
+    let type = 'item' as const;
+    let id = (await fromUuid(data.uuid)).getRelativeUUID(this.actor);
 
-  //   return this._onDropFavorite(event, { type, id });
-  // }
+    return this._onDropFavorite(event, { type, id });
+  }
 
-  // /* -------------------------------------------- */
-  // /* Favorites
-  // /* -------------------------------------------- */
+  /* -------------------------------------------- */
+  /* Favorites
+  /* -------------------------------------------- */
 
-  // /**
-  //  * Handle an owned item or effect being dropped in the favorites area.
-  //  * @param {PointerEvent} event         The triggering event.
-  //  * @param {ActorFavorites5e} favorite  The favorite that was dropped.
-  //  * @returns {Promise<Actor5e>|void}
-  //  * @protected
-  //  */
-  // _onDropFavorite(
-  //   event: DragEvent & { target: HTMLElement },
-  //   favorite: UnsortedCharacterFavorite
-  // ) {
-  //   if (this.actor.system.hasFavorite(favorite.id))
-  //     return this._onSortFavorites(event, favorite.id);
-  //   // If we don't own the item, handle onDrop and then turn around and add it as a favorite?
-  //   return this.actor.system.addFavorite(favorite);
-  // }
+  /**
+   * Handle an owned item or effect being dropped in the favorites area.
+   * @param {PointerEvent} event         The triggering event.
+   * @param {ActorFavorites5e} favorite  The favorite that was dropped.
+   * @returns {Promise<Actor5e>|void}
+   * @protected
+   */
+  _onDropFavorite(
+    event: DragEvent & { target: HTMLElement },
+    favorite: UnsortedCharacterFavorite
+  ) {
+    if (this.actor.system.hasFavorite(favorite.id))
+      return this._onSortFavorites(event, favorite.id);
+    // If we don't own the item, handle onDrop and then turn around and add it as a favorite?
+    return this.actor.system.addFavorite(favorite);
+  }
 
-  // /**
-  //  * Handle re-ordering the favorites list.
-  //  * @param {DragEvent} event  The drop event.
-  //  * @param {string} srcId     The identifier of the dropped favorite.
-  //  * @returns {Promise<Actor5e>|void}
-  //  * @protected
-  //  */
-  // _onSortFavorites(event: DragEvent & { target: HTMLElement }, srcId: string) {
-  //   const targetId = event.target
-  //     ?.closest('[data-item-id]')
-  //     ?.getAttribute('[data-item-id]');
-  //   if (!targetId) return;
-  //   let source;
-  //   let target;
-  //   if (srcId === targetId) return;
-  //   const siblings = this.actor.system.favorites.filter(
-  //     (f: CharacterFavorite) => {
-  //       if (f.id === targetId) target = f;
-  //       else if (f.id === srcId) source = f;
-  //       return f.id !== srcId;
-  //     }
-  //   );
-  //   const updates = SortingHelpers.performIntegerSort(source, {
-  //     target,
-  //     siblings,
-  //   });
-  //   const favorites = this.actor.system.favorites.reduce(
-  //     (map: Map<string, CharacterFavorite>, f: CharacterFavorite) =>
-  //       map.set(f.id, { ...f }),
-  //     new Map<string, CharacterFavorite>()
-  //   );
-  //   for (const { target, update } of updates) {
-  //     const favorite = favorites.get(target.id);
-  //     foundry.utils.mergeObject(favorite, update);
-  //   }
-  //   return this.actor.update({
-  //     'system.favorites': Array.from(favorites.values()),
-  //   });
-  // }
+  /**
+   * Handle re-ordering the favorites list.
+   * @param {DragEvent} event  The drop event.
+   * @param {string} srcId     The identifier of the dropped favorite.
+   * @returns {Promise<Actor5e>|void}
+   * @protected
+   */
+  _onSortFavorites(event: DragEvent & { target: HTMLElement }, srcId: string) {
+    const targetId = event.target
+      ?.closest('[data-favorite-id]')
+      ?.getAttribute('data-favorite-id');
+    if (!targetId) return;
+    let source;
+    let target;
+    if (srcId === targetId) return;
+    const siblings = this.actor.system.favorites.filter(
+      (f: CharacterFavorite) => {
+        if (f.id === targetId) target = f;
+        else if (f.id === srcId) source = f;
+        return f.id !== srcId;
+      }
+    );
+    const updates = SortingHelpers.performIntegerSort(source, {
+      target,
+      siblings,
+    });
+    const favorites = this.actor.system.favorites.reduce(
+      (map: Map<string, CharacterFavorite>, f: CharacterFavorite) =>
+        map.set(f.id, { ...f }),
+      new Map<string, CharacterFavorite>()
+    );
+    for (const { target, update } of updates) {
+      const favorite = favorites.get(target.id);
+      foundry.utils.mergeObject(favorite, update);
+    }
+    return this.actor.update({
+      'system.favorites': Array.from(favorites.values()),
+    });
+  }
 
   /* -------------------------------------------- */
   /* SheetTabCacheable
