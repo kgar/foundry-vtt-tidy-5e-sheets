@@ -15,7 +15,7 @@
   const localize = FoundryAdapter.localize;
 </script>
 
-<div class="flex-column small-gap">
+<div class="flex-column small-gap" data-tidy-favorites>
   <!--  TODO: Sort favorites based on setting during data item preparation -->
   {#each $context.favorites as section}
     {#if section.show}
