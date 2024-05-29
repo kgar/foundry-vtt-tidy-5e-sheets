@@ -27,10 +27,13 @@ export async function migrateFavoritesToSystem({
     );
 
     for (const favorite of tidyFavorites) {
-      pc.system.addFavorite({ id: favorite.getRelativeUUID(pc), type: 'item' });
+      await pc.system.addFavorite({
+        id: favorite.getRelativeUUID(pc),
+        type: 'item',
+      });
 
       if (clearFavoriteFlagData) {
-        TidyFlags.unsetFlag(favorite, tidyFlagFavorite);
+        await TidyFlags.unsetFlag(favorite, tidyFlagFavorite);
       }
     }
   } catch (e) {
