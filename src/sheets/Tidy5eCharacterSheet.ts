@@ -1334,7 +1334,15 @@ export class Tidy5eCharacterSheet
     context.favorites.forEach((section) => {
       let items = 'spells' in section ? section.spells : section.items;
       // Sort Favorites
-      ItemUtils.sortItems(items, attributesSortMode);
+      if (attributesSortMode === 'm') {
+        const getSort = (item: Item5e) =>
+          favoritesIdMap.get(item.getRelativeUUID(this.actor))?.sort ??
+          Number.MAX_SAFE_INTEGER;
+
+        items.sort((a, b) => getSort(a) - getSort(b));
+      } else {
+        ItemUtils.sortItems(items, attributesSortMode);
+      }
 
       // TODO: Collocate Favorite Sub Items
       // Filter Favorites
