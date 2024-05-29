@@ -64,6 +64,7 @@ import { DocumentTabSectionConfigApplication } from 'src/applications/section-co
 import { ActorSheetCustomSectionMixin } from './mixins/Tidy5eBaseActorSheetMixins';
 import { ItemUtils } from 'src/utils/ItemUtils';
 import { Inventory } from 'src/features/sections/Inventory';
+import type { CharacterFavorite } from 'src/foundry/dnd5e.types';
 
 export class Tidy5eCharacterSheet
   extends ActorSheetCustomSectionMixin(
@@ -1000,6 +1001,15 @@ export class Tidy5eCharacterSheet
       };
     }
 
+    const favoritesIdMap: Map<string, CharacterFavorite> =
+      this.actor.system.favorites.reduce(
+        (map: Map<string, CharacterFavorite>, f: CharacterFavorite) => {
+          map.set(f.id, f);
+          return map;
+        },
+        new Map<string, CharacterFavorite>()
+      );
+
     // Partition items by category
     let {
       items,
@@ -1064,7 +1074,11 @@ export class Tidy5eCharacterSheet
           CharacterSheetSections.partitionItem(item, obj, inventory);
         }
 
-        if (FoundryAdapter.isDocumentFavorited(item)) {
+        const favoritedItem = favoritesIdMap.get(
+          item.getRelativeUUID(this.actor)
+        );
+        if (favoritedItem?.type === 'item') {
+          ctx.favoriteId = favoritedItem.id;
           CharacterSheetSections.partitionItem(
             item,
             obj.favorites,

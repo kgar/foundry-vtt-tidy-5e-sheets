@@ -191,6 +191,7 @@ export type CharacterItemContext = {
   availableLevels?: AvailableLevel[];
   canToggle?: boolean;
   concealDetails?: boolean;
+  favoriteId?: string;
   group?: string;
   hasTarget?: boolean;
   hasUses?: boolean;

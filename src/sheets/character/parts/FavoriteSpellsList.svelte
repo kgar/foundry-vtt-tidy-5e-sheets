@@ -79,6 +79,7 @@
           cssClass={FoundryAdapter.getSpellRowClasses(spell)}
           hidden={visibleItemIdSubset !== null &&
             !visibleItemIdSubset.has(spell.id)}
+          favoriteId={ctx.favoriteId}
         >
           <ItemTableCell primary={true} title={spell.name}>
             <ItemUseButton

@@ -21,6 +21,7 @@
 
   export let item: Item5e | null = null;
   export let effect: ActiveEffect5e | ActiveEffectContext | null = null;
+  export let favoriteId: string | null = null;
   export let contextMenu: { type: string; uuid: string } | null = null;
   export let cssClass: string = '';
   export let itemCardContentTemplate: ItemCardContentComponent | null = null;
@@ -162,6 +163,7 @@
   data-tidy-table-row
   data-tidy-sheet-part={CONSTANTS.SHEET_PARTS.ITEM_TABLE_ROW}
   data-tidy-item-type={item?.type ?? 'unknown'}
+  data-favorite-id={favoriteId ?? null}
 >
   <div class="item-table-row {cssClass ?? ''}">
     <slot {toggleSummary} />
