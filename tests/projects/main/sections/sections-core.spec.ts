@@ -81,7 +81,8 @@ sectionsTest.describe('sections core functionality', () => {
             async ({ data, sectionPage }) => {
               await testDefaultSection(
                 favoriteItemToTest,
-                new SheetHelper(sectionPage, data.sectionTestCharacter)
+                new SheetHelper(sectionPage, data.sectionTestCharacter),
+                async (item, helper) => await helper.addFavoriteItem(item.uuid)
               );
             }
           );
@@ -95,7 +96,7 @@ sectionsTest.describe('sections core functionality', () => {
               await testCustomSection(
                 itemWithCustomSection,
                 new SheetHelper(sectionPage, data.sectionTestCharacter),
-                'section',
+                'section'
               );
             }
           );
@@ -119,7 +120,7 @@ sectionsTest.describe('sections core functionality', () => {
                 favoriteWithCustomSection,
                 sheetHelper,
                 'section',
-                async (item) => await sheetHelper.addFavoriteItem(item.uuid)
+                async (item, helper) => await helper.addFavoriteItem(item.uuid)
               );
             }
           );

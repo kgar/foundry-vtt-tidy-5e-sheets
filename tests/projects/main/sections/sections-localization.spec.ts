@@ -280,7 +280,7 @@ function runAllCharacterTests(itemToTest: DefaultSectionTestParams) {
         itemToTest,
         sheetHelper,
         'section',
-        async (item) => await sheetHelper.addFavoriteItem(item.uuid)
+        async (item, helper) => await helper.addFavoriteItem(item.uuid)
       );
     }
   );
@@ -295,7 +295,8 @@ function runAllCharacterTests(itemToTest: DefaultSectionTestParams) {
       await testCustomSection(
         favoriteWithCustomSection,
         new SheetHelper(sectionPage, data.sectionTestCharacter),
-        'section'
+        'section',
+        async (item, helper) => await helper.addFavoriteItem(item.uuid)
       );
     }
   );
@@ -322,7 +323,8 @@ function runAllNpcTests(itemToTest: DefaultSectionTestParams) {
       await testCustomSection(
         itemToTest,
         new SheetHelper(sectionPage, data.sectionTestNpc),
-        'section'
+        'section',
+        async (item, helper) => await helper.addFavoriteItem(item.uuid)
       );
     }
   );
