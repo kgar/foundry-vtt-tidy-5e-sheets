@@ -672,7 +672,11 @@
             "overwriteTooltip": "Habilite la opción de sobrescribir el indicador de sección Tidy existente. Si no está marcado, solo los indicadores Tidy vacíos recibirán datos CCSS migrados.",
             "deleteFlagsTooltip": "Al migrar de CCSS a secciones personalizadas de Tidy, las banderas CCSS permanecen en su lugar de forma predeterminada. Marque esta opción para eliminar esas banderas."
         },
-        "Parent": "Padre"
+        "Parent": "Padre",
+        "MigrateCompendia.CompendiumLabel": "Compendio",
+        "MigrateCompendia.Title": "Migrar compendios",
+        "MigrateCompendia.TotalEntriesLabel": "Total de entradas",
+        "MigrateCompendia.SelectionDialogTitle": "Seleccionar compendios para migrar"
     },
     "TIDY5E.Settings.ColorPickerScrollbarTrack": {
         "name": "Trayectoria de la barra de desplazamiento"
