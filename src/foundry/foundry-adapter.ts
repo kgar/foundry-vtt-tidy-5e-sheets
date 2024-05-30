@@ -540,7 +540,7 @@ export const FoundryAdapter = {
     return false;
   },
   // TODO: Require the type: 'item' | 'effect'
-  toggleFavorite(document: any) {
+  async toggleFavorite(document: any) {
     const actor = document.parent;
 
     if (!actor || !actor.system?.addFavorite) {
@@ -549,9 +549,9 @@ export const FoundryAdapter = {
 
     const favorited = FoundryAdapter.isDocumentFavorited(document);
     if (favorited) {
-      actor.system.removeFavorite(document.getRelativeUUID(actor));
+      await actor.system.removeFavorite(document.getRelativeUUID(actor));
     } else {
-      actor.system.addFavorite({
+      await actor.system.addFavorite({
         type: 'item',
         id: document.getRelativeUUID(actor),
       });

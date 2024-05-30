@@ -1624,14 +1624,14 @@ export class Tidy5eCharacterSheet
    * @returns {Promise<Actor5e>|void}
    * @protected
    */
-  _onDropFavorite(
+  async _onDropFavorite(
     event: DragEvent & { target: HTMLElement },
     favorite: UnsortedCharacterFavorite
   ) {
     if (this.actor.system.hasFavorite(favorite.id))
-      return this._onSortFavorites(event, favorite.id);
+      return await this._onSortFavorites(event, favorite.id);
     // If we don't own the item, handle onDrop and then turn around and add it as a favorite?
-    return this.actor.system.addFavorite(favorite);
+    return await this.actor.system.addFavorite(favorite);
   }
 
   /**
@@ -1641,7 +1641,10 @@ export class Tidy5eCharacterSheet
    * @returns {Promise<Actor5e>|void}
    * @protected
    */
-  _onSortFavorites(event: DragEvent & { target: HTMLElement }, srcId: string) {
+  async _onSortFavorites(
+    event: DragEvent & { target: HTMLElement },
+    srcId: string
+  ) {
     const targetId = event.target
       ?.closest('[data-favorite-id]')
       ?.getAttribute('data-favorite-id');
@@ -1669,7 +1672,7 @@ export class Tidy5eCharacterSheet
       const favorite = favorites.get(target.id);
       foundry.utils.mergeObject(favorite, update);
     }
-    return this.actor.update({
+    return await this.actor.update({
       'system.favorites': Array.from(favorites.values()),
     });
   }
