@@ -1,7 +1,5 @@
 import { sectionsTest } from './sections-test-fixture';
-import {
-  SheetHelper,
-} from 'tests/helpers/SheetHelper';
+import { SheetHelper } from 'tests/helpers/SheetHelper';
 import { CONSTANTS } from 'src/constants';
 
 import { TidyFlags } from 'src/foundry/TidyFlags';
@@ -38,31 +36,23 @@ sectionsTest.describe('character', () => {
       const testItem1 = await sheetHelper.createEmbeddedItem({
         name: 'Test Item 1',
         type: CONSTANTS.ITEM_TYPE_WEAPON,
-        flags: {
-          [CONSTANTS.MODULE_ID]: {
-            [TidyFlags.favorite.key]: true,
-          },
-        },
       });
+      await sheetHelper.addFavoriteItem(testItem1.uuid);
       const testItem2 = await sheetHelper.createEmbeddedItem({
         name: 'Test Item 2',
         type: CONSTANTS.ITEM_TYPE_SPELL,
-        flags: {
-          [CONSTANTS.MODULE_ID]: {
-            [TidyFlags.favorite.key]: true,
-          },
-        },
       });
+      await sheetHelper.addFavoriteItem(testItem2.uuid);
       const testItem3 = await sheetHelper.createEmbeddedItem({
         name: 'Test Item 3',
         type: CONSTANTS.ITEM_TYPE_FEAT,
         flags: {
           [CONSTANTS.MODULE_ID]: {
             [TidyFlags.section.key]: customItemSection,
-            [TidyFlags.favorite.key]: true,
           },
         },
       });
+      await sheetHelper.addFavoriteItem(testItem3.uuid);
 
       await runStandardSectionConfigTests({
         section1: CONSTANTS.ITEM_TYPE_WEAPON,
@@ -90,52 +80,44 @@ sectionsTest.describe('character', () => {
       );
       const testItem1 = await sheetHelper.createEmbeddedItem({
         name: 'Test Item 1',
-        type: CONSTANTS.ITEM_TYPE_WEAPON,
-        flags: {
-          [CONSTANTS.MODULE_ID]: {
-            [TidyFlags.favorite.key]: true,
-          },
-        },
+        type: CONSTANTS.ITEM_TYPE_WEAPON
       });
+      await sheetHelper.addFavoriteItem(testItem1.uuid);
       const testItem2 = await sheetHelper.createEmbeddedItem({
         name: 'Test Item 2',
         type: CONSTANTS.ITEM_TYPE_SPELL,
-        flags: {
-          [CONSTANTS.MODULE_ID]: {
-            [TidyFlags.favorite.key]: true,
-          },
-        },
       });
+      await sheetHelper.addFavoriteItem(testItem2.uuid);
       const testItem3 = await sheetHelper.createEmbeddedItem({
         name: 'Test Item 3',
         type: CONSTANTS.ITEM_TYPE_FEAT,
         flags: {
           [CONSTANTS.MODULE_ID]: {
             [TidyFlags.section.key]: customItemSection,
-            [TidyFlags.favorite.key]: true,
           },
         },
       });
+      await sheetHelper.addFavoriteItem(testItem3.uuid);
       const testItem4 = await sheetHelper.createEmbeddedItem({
         name: 'Test Item 4',
         type: CONSTANTS.ITEM_TYPE_WEAPON,
         flags: {
           [CONSTANTS.MODULE_ID]: {
             [TidyFlags.section.key]: customItemSection,
-            [TidyFlags.favorite.key]: true,
           },
         },
       });
+      await sheetHelper.addFavoriteItem(testItem4.uuid);
       const testItem5 = await sheetHelper.createEmbeddedItem({
         name: 'Test Item 5',
         type: CONSTANTS.ITEM_TYPE_SPELL,
         flags: {
           [CONSTANTS.MODULE_ID]: {
             [TidyFlags.section.key]: customItemSection,
-            [TidyFlags.favorite.key]: true,
           },
         },
       });
+      await sheetHelper.addFavoriteItem(testItem5.uuid);
 
       await runStandardSectionConfigTests({
         section1: CONSTANTS.ITEM_TYPE_WEAPON,

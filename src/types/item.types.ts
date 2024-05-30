@@ -55,6 +55,7 @@ export type ItemCardContentComponent = ComponentType<
 export type ContainerItemContext = {
   totalWeight?: number;
   isStack?: boolean;
+  favoriteId?: string;
 };
 
 export type ContainerSheetContext = {

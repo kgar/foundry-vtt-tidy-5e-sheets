@@ -701,6 +701,10 @@
       "ToMigrate": "To Migrate",
       "SelectAllNoneTooltip": "Select all or none"
     },
+    "FavoritesToSystem": {
+      "sectionTitle": "Character Favorites",
+      "selectionDialogTitle": "Migration: Character Favorites to System"
+    },
     "Parent": "Parent"
   },
   "TIDY5E.Settings.SheetPreferences": {

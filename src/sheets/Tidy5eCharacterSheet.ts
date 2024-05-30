@@ -64,6 +64,10 @@ import { DocumentTabSectionConfigApplication } from 'src/applications/section-co
 import { ActorSheetCustomSectionMixin } from './mixins/Tidy5eBaseActorSheetMixins';
 import { ItemUtils } from 'src/utils/ItemUtils';
 import { Inventory } from 'src/features/sections/Inventory';
+import type {
+  CharacterFavorite,
+  UnsortedCharacterFavorite,
+} from 'src/foundry/dnd5e.types';
 
 export class Tidy5eCharacterSheet
   extends ActorSheetCustomSectionMixin(
@@ -1000,6 +1004,15 @@ export class Tidy5eCharacterSheet
       };
     }
 
+    const favoritesIdMap: Map<string, CharacterFavorite> =
+      this.actor.system.favorites.reduce(
+        (map: Map<string, CharacterFavorite>, f: CharacterFavorite) => {
+          map.set(f.id, f);
+          return map;
+        },
+        new Map<string, CharacterFavorite>()
+      );
+
     // Partition items by category
     let {
       items,
@@ -1064,7 +1077,11 @@ export class Tidy5eCharacterSheet
           CharacterSheetSections.partitionItem(item, obj, inventory);
         }
 
-        if (FoundryAdapter.isDocumentFavorited(item)) {
+        const favoritedItem = favoritesIdMap.get(
+          item.getRelativeUUID(this.actor)
+        );
+        if (favoritedItem?.type === 'item') {
+          ctx.favoriteId = favoritedItem.id;
           CharacterSheetSections.partitionItem(
             item,
             obj.favorites,
@@ -1320,7 +1337,15 @@ export class Tidy5eCharacterSheet
     context.favorites.forEach((section) => {
       let items = 'spells' in section ? section.spells : section.items;
       // Sort Favorites
-      ItemUtils.sortItems(items, attributesSortMode);
+      if (attributesSortMode === 'm') {
+        const getSort = (item: Item5e) =>
+          favoritesIdMap.get(item.getRelativeUUID(this.actor))?.sort ??
+          Number.MAX_SAFE_INTEGER;
+
+        items.sort((a, b) => getSort(a) - getSort(b));
+      } else {
+        ItemUtils.sortItems(items, attributesSortMode);
+      }
 
       // TODO: Collocate Favorite Sub Items
       // Filter Favorites
@@ -1567,6 +1592,89 @@ export class Tidy5eCharacterSheet
       'height',
       height
     );
+  }
+
+  async _onDrop(event: DragEvent & { target: HTMLElement }) {
+    if (!event.target.closest('[data-tidy-favorites]'))
+      return super._onDrop(event);
+    const dragData = event.dataTransfer?.getData('text/plain');
+    if (!dragData) return super._onDrop(event);
+    let data;
+    try {
+      data = JSON.parse(dragData);
+    } catch (e) {
+      console.error(e);
+      return;
+    }
+
+    let type = 'item' as const;
+    let id = (await fromUuid(data.uuid)).getRelativeUUID(this.actor);
+
+    return this._onDropFavorite(event, { type, id });
+  }
+
+  /* -------------------------------------------- */
+  /* Favorites
+  /* -------------------------------------------- */
+
+  /**
+   * Handle an owned item or effect being dropped in the favorites area.
+   * @param {PointerEvent} event         The triggering event.
+   * @param {ActorFavorites5e} favorite  The favorite that was dropped.
+   * @returns {Promise<Actor5e>|void}
+   * @protected
+   */
+  async _onDropFavorite(
+    event: DragEvent & { target: HTMLElement },
+    favorite: UnsortedCharacterFavorite
+  ) {
+    if (this.actor.system.hasFavorite(favorite.id))
+      return await this._onSortFavorites(event, favorite.id);
+    // If we don't own the item, handle onDrop and then turn around and add it as a favorite?
+    return await this.actor.system.addFavorite(favorite);
+  }
+
+  /**
+   * Handle re-ordering the favorites list.
+   * @param {DragEvent} event  The drop event.
+   * @param {string} srcId     The identifier of the dropped favorite.
+   * @returns {Promise<Actor5e>|void}
+   * @protected
+   */
+  async _onSortFavorites(
+    event: DragEvent & { target: HTMLElement },
+    srcId: string
+  ) {
+    const targetId = event.target
+      ?.closest('[data-favorite-id]')
+      ?.getAttribute('data-favorite-id');
+    if (!targetId) return;
+    let source;
+    let target;
+    if (srcId === targetId) return;
+    const siblings = this.actor.system.favorites.filter(
+      (f: CharacterFavorite) => {
+        if (f.id === targetId) target = f;
+        else if (f.id === srcId) source = f;
+        return f.id !== srcId;
+      }
+    );
+    const updates = SortingHelpers.performIntegerSort(source, {
+      target,
+      siblings,
+    });
+    const favorites = this.actor.system.favorites.reduce(
+      (map: Map<string, CharacterFavorite>, f: CharacterFavorite) =>
+        map.set(f.id, { ...f }),
+      new Map<string, CharacterFavorite>()
+    );
+    for (const { target, update } of updates) {
+      const favorite = favorites.get(target.id);
+      foundry.utils.mergeObject(favorite, update);
+    }
+    return await this.actor.update({
+      'system.favorites': Array.from(favorites.values()),
+    });
   }
 
   /* -------------------------------------------- */

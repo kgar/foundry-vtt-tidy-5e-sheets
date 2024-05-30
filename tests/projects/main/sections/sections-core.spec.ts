@@ -75,18 +75,14 @@ sectionsTest.describe('sections core functionality', () => {
           favoriteItemToTest.itemCreationArgs = {
             ...itemToTest.itemCreationArgs,
             name: `Favorite ${itemToTest.itemCreationArgs.name}`,
-            flags: {
-              ['tidy5e-sheet']: {
-                [TidyFlags.favorite.key]: true,
-              },
-            },
           };
           sectionsTest(
             `${favoriteItemToTest.itemCreationArgs.name} defaults to section key "${favoriteItemToTest.sectionKey}"`,
             async ({ data, sectionPage }) => {
               await testDefaultSection(
                 favoriteItemToTest,
-                new SheetHelper(sectionPage, data.sectionTestCharacter)
+                new SheetHelper(sectionPage, data.sectionTestCharacter),
+                async (item, helper) => await helper.addFavoriteItem(item.uuid)
               );
             }
           );
@@ -111,19 +107,20 @@ sectionsTest.describe('sections core functionality', () => {
           favoriteWithCustomSection.tabId = CONSTANTS.TAB_CHARACTER_ATTRIBUTES;
           favoriteWithCustomSection.itemCreationArgs = {
             ...itemToTest.itemCreationArgs,
-            flags: {
-              ['tidy5e-sheet']: {
-                [TidyFlags.favorite.key]: true,
-              },
-            },
           };
           sectionsTest(
             `${favoriteWithCustomSection.itemCreationArgs.name} can be assigned to custom section "${favoriteWithCustomSection.sectionKey}"`,
             async ({ data, sectionPage }) => {
+              const sheetHelper = new SheetHelper(
+                sectionPage,
+                data.sectionTestCharacter
+              );
+
               await testCustomSection(
                 favoriteWithCustomSection,
-                new SheetHelper(sectionPage, data.sectionTestCharacter),
-                'section'
+                sheetHelper,
+                'section',
+                async (item, helper) => await helper.addFavoriteItem(item.uuid)
               );
             }
           );

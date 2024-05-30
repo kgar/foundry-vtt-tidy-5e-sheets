@@ -177,6 +177,7 @@
           cssClass={getInventoryRowClasses(item)}
           hidden={visibleItemIdSubset !== null &&
             !visibleItemIdSubset.has(item.id)}
+          favoriteId={ctx.favoriteId}
         >
           <ItemTableCell primary={true} title={itemName}>
             <ItemUseButton disabled={!$context.editable} {item} />
@@ -210,7 +211,7 @@
                 </div>
               {/if}
             </ItemTableCell>
-            {#if TidyFlags.tryGetFlag(item, 'favorite') && allowFavoriteIconNextToName}
+            {#if 'favoriteId' in ctx && !!ctx.favoriteId && allowFavoriteIconNextToName}
               <InlineFavoriteIcon />
             {/if}
           {/if}

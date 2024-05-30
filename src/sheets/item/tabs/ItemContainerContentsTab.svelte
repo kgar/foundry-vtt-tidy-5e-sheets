@@ -207,7 +207,7 @@
                         />
                       {/if}
                     {/if}
-                    {#if FoundryAdapter.isDocumentFavorited(item)}
+                    {#if !!ctx.favoriteId}
                       <InlineFavoriteIcon />
                     {/if}
                   </TidyTableCell>

@@ -88,6 +88,7 @@ export const CONSTANTS = {
   TAB_MIGRATIONS_CHARACTER_BIOGRAPHY: 'character-bio',
   TAB_MIGRATIONS_NPC_DEATH: 'npc-death',
   TAB_MIGRATIONS_CCSS_TO_TIDY: 'ccss-to-tidy',
+  TAB_MIGRATIONS_FAVORITES_TO_SYSTEM: 'favorites-to-system',
   TAB_NPC_ABILITIES: 'attributes',
   TAB_NPC_SPELLBOOK: 'spellbook',
   TAB_NPC_EFFECTS: 'effects',

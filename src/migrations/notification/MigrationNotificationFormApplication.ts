@@ -1,8 +1,8 @@
 import type { SvelteComponent } from 'svelte';
-import SvelteFormApplicationBase from '../../SvelteFormApplicationBase';
+import SvelteFormApplicationBase from 'src/applications/SvelteFormApplicationBase';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import MigrationNotification from './MigrationNotification.svelte';
-import { MigrationTally } from 'src/applications/migrations/MigrationTally';
+import { MigrationTally } from 'src/migrations/MigrationTally';
 
 export default class MigrationNotificationFormApplication extends SvelteFormApplicationBase {
   static get defaultOptions() {

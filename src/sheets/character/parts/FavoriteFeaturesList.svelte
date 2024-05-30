@@ -59,6 +59,7 @@
         }}
         hidden={visibleItemIdSubset !== null &&
           !visibleItemIdSubset.has(item.id)}
+        favoriteId={ctx.favoriteId}
       >
         <ItemTableCell primary={true} title={item.name}>
           <ItemUseButton disabled={!$context.editable} {item} />

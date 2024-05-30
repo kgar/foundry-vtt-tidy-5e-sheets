@@ -204,7 +204,7 @@
               <ItemUses item={spell} />
             </ItemTableCell>
           {/if}
-          {#if allowFavorites && $settingStore.showIconsNextToTheItemName && TidyFlags.tryGetFlag(spell, 'favorite')}
+          {#if allowFavorites && $settingStore.showIconsNextToTheItemName && 'favoriteId' in ctx && !!ctx.favoriteId}
             <InlineFavoriteIcon />
           {/if}
           <ItemTableCell baseWidth={spellComponentsBaseWidth} cssClass="no-gap">
