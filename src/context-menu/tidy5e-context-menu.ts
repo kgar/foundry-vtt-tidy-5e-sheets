@@ -71,8 +71,15 @@ function onItemContext(element: HTMLElement) {
 }
 
 function getActiveEffectContextOptions(effect: any, app: any) {
-  const actor = effect.actor ? effect.actor : effect.parent;
-  if (!actor?.isOwner || !SettingsProvider.settings.useContextMenu.get()) {
+  const effectParent = effect.parent;
+
+  // Assumption: Either the effect belongs to the character or is transferred from an item.
+  const actor = effectParent.actor ?? effectParent;
+
+  if (
+    !effectParent?.isOwner ||
+    !SettingsProvider.settings.useContextMenu.get()
+  ) {
     return [];
   }
 
@@ -87,6 +94,9 @@ function getActiveEffectContextOptions(effect: any, app: any) {
     effect,
     app
   );
+
+  const isFav = FoundryAdapter.isEffectFavorited(effect);
+  const favoriteIcon = 'fa-bookmark';
 
   let tidy5eKgarContextOptions = [
     {
@@ -130,6 +140,21 @@ function getActiveEffectContextOptions(effect: any, app: any) {
       icon: '<dnd5e-icon src="systems/dnd5e/icons/svg/break-concentration.svg"></dnd5e-icon>',
       condition: () => isConcentrationEffect,
       callback: () => app.document.endConcentration(effect),
+      group: 'state',
+    },
+    {
+      name: isFav ? 'TIDY5E.RemoveFavorite' : 'TIDY5E.AddFavorite',
+      icon: isFav
+        ? `<i class='fas ${favoriteIcon} fa-fw' style='color: var(--t5e-warning-accent-color)'></i>`
+        : `<i class='fas ${favoriteIcon} fa-fw inactive'></i>`,
+      condition: () => 'favorites' in actor.system,
+      callback: () => {
+        if (!effect) {
+          warn(`tidy5e-context-menu | Effect Not Found.`);
+          return;
+        }
+        FoundryAdapter.toggleFavoriteEffect(effect);
+      },
       group: 'state',
     },
   ];
@@ -187,10 +212,7 @@ function getItemContextOptions(item: Item5e) {
   }
 
   // Toggle Attunement State
-  if (
-    !!item.system.attunement &&
-    !FoundryAdapter.concealDetails(item)
-  ) {
+  if (!!item.system.attunement && !FoundryAdapter.concealDetails(item)) {
     options.push({
       name: item.system.attuned
         ? 'TIDY5E.ContextMenuActionUnattune'
@@ -248,9 +270,9 @@ function getItemContextOptions(item: Item5e) {
     itemParentIsActor && itemParent.type === CONSTANTS.SHEET_TYPE_CHARACTER;
   if (isCharacter) {
     // Add favorites to context menu
-    let isFav = FoundryAdapter.isDocumentFavorited(item);
+    let isFav = FoundryAdapter.isItemFavorited(item);
 
-    let favoriteIcon = 'fa-bookmark';
+    const favoriteIcon = 'fa-bookmark';
 
     options.push({
       name: isFav ? 'TIDY5E.RemoveFavorite' : 'TIDY5E.AddFavorite',
@@ -258,15 +280,11 @@ function getItemContextOptions(item: Item5e) {
         ? `<i class='fas ${favoriteIcon} fa-fw' style='color: var(--t5e-warning-accent-color)'></i>`
         : `<i class='fas ${favoriteIcon} fa-fw inactive'></i>`,
       callback: () => {
-        // const item_id = ev[0].dataset.itemId; //ev.currentTarget.closest('[data-item-id]').dataset.itemId;
-        // const item = actor.items.get(item_id);
         if (!item) {
-          warn(
-            `tidy5e-context-menu | _getItemContextOptions | Item no founded!`
-          );
+          warn(`tidy5e-context-menu | Item Not Found`);
           return;
         }
-        FoundryAdapter.toggleFavorite(item);
+        FoundryAdapter.toggleFavoriteItem(item);
       },
     });
   }

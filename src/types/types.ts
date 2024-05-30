@@ -560,4 +560,14 @@ export type DamageModificationContextEntry = {
 export type ActiveEffect5e = any;
 
 // TODO: Get the real typings for this
-export type ActiveEffectContext = any;
+export type ActiveEffectContext = {
+  id: string;
+  name: string;
+  img: string;
+  disabled: boolean;
+  duration: number;
+  source: any;
+  parentId: string;
+  durationParts: string | string[];
+  hasTooltip: boolean;
+};

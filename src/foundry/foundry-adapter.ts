@@ -1,6 +1,7 @@
 import type {
   ActionItem,
   ActiveEffect5e,
+  ActiveEffectContext,
   AttunementContext,
   CharacterSheetContext,
   ClassSummary,
@@ -529,25 +530,75 @@ export const FoundryAdapter = {
       }`
     );
   },
-  isDocumentFavorited(document: any) {
-    if ('favorites' in document?.parent?.system) {
-      const relativeUuid = document.getRelativeUUID(document.parent);
-      return document.parent.system.favorites.some(
-        (f: any) => f.id === relativeUuid
-      );
+  isActiveEffectContextFavorited(context: ActiveEffectContext) {
+    const actor = context.source?.actor ?? context.source;
+
+    if (actor?.documentName !== CONSTANTS.DOCUMENT_NAME_ACTOR) {
+      return false;
     }
 
-    return false;
+    const effect = FoundryAdapter.getEffect({
+      document: actor,
+      effectId: context.id,
+      parentId: context.parentId,
+    });
+
+    return FoundryAdapter.isEffectFavorited(effect);
   },
-  // TODO: Require the type: 'item' | 'effect'
-  async toggleFavorite(document: any) {
-    const actor = document.parent;
+  getEffectActor(effect: ActiveEffect5e) {
+    return (
+      // Item-Owned
+      effect.parent?.actor ??
+      // Actor-Owned
+      effect.parent
+    );
+  },
+  isEffectFavorited(effect: ActiveEffect5e) {
+    const actor = FoundryAdapter.getEffectActor(effect);
+
+    if (
+      actor?.documentName === CONSTANTS.DOCUMENT_NAME_ACTOR &&
+      'favorites' in actor.system
+    ) {
+      const relativeUuid = effect.getRelativeUUID(actor);
+      return actor.system.favorites.some((f: any) => f.id === relativeUuid);
+    }
+  },
+  async toggleFavoriteEffect(effect: ActiveEffect5e) {
+    const actor = FoundryAdapter.getEffectActor(effect);
 
     if (!actor || !actor.system?.addFavorite) {
       return;
     }
 
-    const favorited = FoundryAdapter.isDocumentFavorited(document);
+    const favorited = FoundryAdapter.isEffectFavorited(effect);
+    if (favorited) {
+      await actor.system.removeFavorite(effect.getRelativeUUID(actor));
+    } else {
+      await actor.system.addFavorite({
+        type: 'effect',
+        id: effect.getRelativeUUID(actor),
+      });
+    }
+  },
+  isItemFavorited(document: any) {
+    const actor = document.actor;
+
+    if (actor && 'favorites' in actor.system) {
+      const relativeUuid = document.getRelativeUUID(actor);
+      return actor.system.favorites.some((f: any) => f.id === relativeUuid);
+    }
+
+    return false;
+  },
+  async toggleFavoriteItem(document: any) {
+    const actor = document.actor;
+
+    if (!actor || !actor.system?.addFavorite) {
+      return;
+    }
+
+    const favorited = FoundryAdapter.isItemFavorited(document);
     if (favorited) {
       await actor.system.removeFavorite(document.getRelativeUUID(actor));
     } else {
