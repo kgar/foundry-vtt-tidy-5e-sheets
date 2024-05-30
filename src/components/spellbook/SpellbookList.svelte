@@ -204,7 +204,6 @@
               <ItemUses item={spell} />
             </ItemTableCell>
           {/if}
-          <!-- TODO: Put `isFavorite` in itemContext; maybe even create `effectContext` and add this, too; propagate usage everywhere -->
           {#if allowFavorites && $settingStore.showIconsNextToTheItemName && 'favoriteId' in ctx && !!ctx.favoriteId}
             <InlineFavoriteIcon />
           {/if}
