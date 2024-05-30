@@ -46,6 +46,7 @@ import { ContainerSheetSections } from 'src/features/sections/ContainerSheetSect
 import { SheetSections } from 'src/features/sections/SheetSections';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import { Inventory } from 'src/features/sections/Inventory';
+import type { CharacterFavorite } from 'src/foundry/dnd5e.types';
 
 export class Tidy5eKgarContainerSheet
   extends dnd5e.applications.item.ContainerSheet
@@ -144,6 +145,14 @@ export class Tidy5eKgarContainerSheet
 
   async getData(options = {}) {
     const defaultDocumentContext = await super.getData(this.options);
+
+    this.item.actor?.system?.favorites?.forEach((f: CharacterFavorite) => {
+      const item = fromUuidSync(f.id, { relative: this.item.actor });
+      const ctx = defaultDocumentContext.itemContext[item.id];
+      if (ctx) {
+        ctx.favoriteId = f.id;
+      }
+    });
 
     // Backfill required section data
     Object.assign(defaultDocumentContext.inventory.contents, {
