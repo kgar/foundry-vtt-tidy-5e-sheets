@@ -86,12 +86,6 @@ Hooks.once('ready', async () => {
   const api = Tidy5eSheetsApi._getApi();
   tidy5eModule.api = api;
 
-  // TODO: Remove after taking over the live module ID
-  const prodTidy5eModule = FoundryAdapter.getModule('tidy5e-sheet');
-  if (prodTidy5eModule) {
-    prodTidy5eModule.api = tidy5eModule.api;
-  }
-
   Hooks.callAll(CONSTANTS.HOOK_TIDY5E_SHEETS_READY, api);
 
   setupModuleIntegrations(api);
