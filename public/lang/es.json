@@ -676,7 +676,10 @@
         "MigrateCompendia.CompendiumLabel": "Compendio",
         "MigrateCompendia.Title": "Migrar compendios",
         "MigrateCompendia.TotalEntriesLabel": "Total de entradas",
-        "MigrateCompendia.SelectionDialogTitle": "Seleccionar compendios para migrar"
+        "MigrateCompendia.SelectionDialogTitle": "Seleccionar compendios para migrar",
+        "FavoritesToSystem": {
+            "sectionTitle": "Personajes favoritos"
+        }
     },
     "TIDY5E.Settings.ColorPickerScrollbarTrack": {
         "name": "Trayectoria de la barra de desplazamiento"
