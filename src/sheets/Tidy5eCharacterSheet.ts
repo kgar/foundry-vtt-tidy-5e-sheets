@@ -28,6 +28,7 @@ import {
   type CharacterFeatureSection,
   type CharacterItemContext,
   type SpellbookSection,
+  type FavoriteSection,
 } from 'src/types/types';
 import {
   applySheetAttributesToWindow,
@@ -770,6 +771,80 @@ export class Tidy5eCharacterSheet
       );
     }
 
+    // TODO: Add Effects to Favorites Sections
+
+    // TODO: Move all section config applications to here
+    // Apply Section Configs
+    const sectionConfigs = TidyFlags.sectionConfig.get(this.actor);
+
+    const favoritesIdMap: Map<string, CharacterFavorite> =
+      this._getFavoritesIdMap();
+
+    // Favorites
+    defaultDocumentContext.favorites =
+      CharacterSheetSections.mergeDuplicateFavoriteSections(
+        SheetSections.sortKeyedSections(
+          defaultDocumentContext.favorites,
+          sectionConfigs?.[CONSTANTS.TAB_CHARACTER_ATTRIBUTES]
+        )
+      );
+
+    (defaultDocumentContext.favorites as FavoriteSection[]).forEach(
+      (section) => {
+        if ('effects' in section) {
+          let effects = section.effects.map((s) =>
+            FoundryAdapter.getEffect({
+              document: this.actor,
+              effectId: s.id,
+              parentId: s.parentId,
+            })
+          );
+
+          // Sort Favorite Effects
+          if (attributesSortMode === 'm') {
+            const getSort = (effects: Item5e) =>
+              favoritesIdMap.get(effects.getRelativeUUID(this.actor))?.sort ??
+              Number.MAX_SAFE_INTEGER;
+
+            effects.sort((a, b) => getSort(a) - getSort(b));
+          } else {
+            ItemUtils.sortItems(effects, attributesSortMode);
+          }
+
+          // TODO: Filter Favorite Effects ?
+        } else {
+          let items = 'spells' in section ? section.spells : section.items;
+          // Sort Favorites Items
+          if (attributesSortMode === 'm') {
+            const getSort = (item: Item5e) =>
+              favoritesIdMap.get(item.getRelativeUUID(this.actor))?.sort ??
+              Number.MAX_SAFE_INTEGER;
+
+            items.sort((a, b) => getSort(a) - getSort(b));
+          } else {
+            ItemUtils.sortItems(items, attributesSortMode);
+          }
+
+          // TODO: Collocate Favorite Sub Items
+          // Filter Favorite Items
+          items = this.itemFilterService.filter(
+            items,
+            CONSTANTS.TAB_CHARACTER_ATTRIBUTES
+          );
+          if ('spells' in section) {
+            section.spells = items;
+          } else {
+            section.items = items;
+          }
+        }
+
+        // Apply visibility from configuration
+        section.show =
+          sectionConfigs?.[CONSTANTS.TAB_CHARACTER_ATTRIBUTES]?.[section.key]
+            ?.show !== false;
+      }
+    );
+
     const context: CharacterSheetContext = {
       ...defaultDocumentContext,
       activateEditors: (node, options) =>
@@ -1005,13 +1080,7 @@ export class Tidy5eCharacterSheet
     }
 
     const favoritesIdMap: Map<string, CharacterFavorite> =
-      this.actor.system.favorites.reduce(
-        (map: Map<string, CharacterFavorite>, f: CharacterFavorite) => {
-          map.set(f.id, f);
-          return map;
-        },
-        new Map<string, CharacterFavorite>()
-      );
+      this._getFavoritesIdMap();
 
     // Partition items by category
     let {
@@ -1323,49 +1392,19 @@ export class Tidy5eCharacterSheet
     ];
 
     // TODO: Revise so that there's less churn.
-    context.favorites = CharacterSheetSections.mergeDuplicateFavoriteSections(
-      SheetSections.sortKeyedSections(
-        favoriteSections,
-        sectionConfigs?.[CONSTANTS.TAB_CHARACTER_ATTRIBUTES]
-      )
-    );
-
-    const attributesSortMode =
-      characterPreferences.tabs?.[CONSTANTS.TAB_CHARACTER_ATTRIBUTES]?.sort ??
-      'm';
-
-    context.favorites.forEach((section) => {
-      let items = 'spells' in section ? section.spells : section.items;
-      // Sort Favorites
-      if (attributesSortMode === 'm') {
-        const getSort = (item: Item5e) =>
-          favoritesIdMap.get(item.getRelativeUUID(this.actor))?.sort ??
-          Number.MAX_SAFE_INTEGER;
-
-        items.sort((a, b) => getSort(a) - getSort(b));
-      } else {
-        ItemUtils.sortItems(items, attributesSortMode);
-      }
-
-      // TODO: Collocate Favorite Sub Items
-      // Filter Favorites
-      items = this.itemFilterService.filter(
-        items,
-        CONSTANTS.TAB_CHARACTER_ATTRIBUTES
-      );
-      if ('spells' in section) {
-        section.spells = items;
-      } else {
-        section.items = items;
-      }
-
-      // Apply visibility from configuration
-      section.show =
-        sectionConfigs?.[CONSTANTS.TAB_CHARACTER_ATTRIBUTES]?.[section.key]
-          ?.show !== false;
-    });
+    context.favorites = Array.from(favoriteSections.values());
 
     context.preparedSpells = nPrepared;
+  }
+
+  private _getFavoritesIdMap(): Map<string, CharacterFavorite> {
+    return this.actor.system.favorites.reduce(
+      (map: Map<string, CharacterFavorite>, f: CharacterFavorite) => {
+        map.set(f.id, f);
+        return map;
+      },
+      new Map<string, CharacterFavorite>()
+    );
   }
 
   /**
