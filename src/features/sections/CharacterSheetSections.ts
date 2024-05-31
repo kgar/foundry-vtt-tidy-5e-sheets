@@ -7,6 +7,7 @@ import type {
   FavoriteSection,
   GenericFavoriteSection,
   InventorySection,
+  TypedEffectFavoriteSection,
 } from 'src/types/types';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import { Inventory } from './Inventory';
@@ -186,10 +187,19 @@ export class CharacterSheetSections {
     }
   }
 
+  // TODO: Figure out how to handle effects with section names that collide with items
   static mergeDuplicateFavoriteSections(sections: FavoriteSection[]) {
-    let sectionsMap: Record<string, FavoriteSection> = {};
+    let sectionsMap: Record<
+      string,
+      Exclude<FavoriteSection, TypedEffectFavoriteSection>
+    > = {};
     for (let section of sections) {
+      if (section.type === CONSTANTS.TAB_CHARACTER_EFFECTS) {
+        continue;
+      }
+
       const mappedSection = sectionsMap[section.key];
+
       if (!mappedSection) {
         sectionsMap[section.key] = section;
         continue;
@@ -217,7 +227,9 @@ export class CharacterSheetSections {
     return Object.values(sectionsMap);
   }
 
-  static getItemsFromFavoriteSection(section: FavoriteSection) {
+  static getItemsFromFavoriteSection(
+    section: Exclude<FavoriteSection, TypedEffectFavoriteSection>
+  ) {
     return section.type === CONSTANTS.TAB_CHARACTER_SPELLBOOK
       ? section.spells
       : section.items;

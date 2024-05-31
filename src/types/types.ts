@@ -122,6 +122,11 @@ export type GenericFavoriteSection = {
   canCreate: false;
 } & TidySectionBase;
 
+export type EffectFavoriteSection = {
+  effects: ActiveEffectContext[];
+  canCreate: false;
+} & TidySectionBase;
+
 export type CharacterItemPartitions = {
   items: Item5e[];
   spells: Item5e[];
@@ -205,12 +210,17 @@ export type CharacterItemContext = {
   parent?: Item5e;
 };
 
+export type TypedEffectFavoriteSection = (EffectFavoriteSection & {
+  type: typeof CONSTANTS.TAB_CHARACTER_EFFECTS;
+});
+
 export type FavoriteSection =
   | (InventorySection & { type: typeof CONSTANTS.TAB_CHARACTER_INVENTORY })
   | (SpellbookSection & { type: typeof CONSTANTS.TAB_CHARACTER_SPELLBOOK })
   | (CharacterFeatureSection & {
       type: typeof CONSTANTS.TAB_CHARACTER_FEATURES;
     })
+  | TypedEffectFavoriteSection
   | (GenericFavoriteSection & {
       type: typeof CONSTANTS.CHARACTER_FAVORITE_SECTION_GENERIC;
     });
