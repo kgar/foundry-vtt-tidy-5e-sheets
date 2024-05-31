@@ -678,7 +678,8 @@
         "MigrateCompendia.TotalEntriesLabel": "Total de entradas",
         "MigrateCompendia.SelectionDialogTitle": "Seleccionar compendios para migrar",
         "FavoritesToSystem": {
-            "sectionTitle": "Personajes favoritos"
+            "sectionTitle": "Personajes favoritos",
+            "selectionDialogTitle": "Migración: personajes favoritos al sistema"
         }
     },
     "TIDY5E.Settings.ColorPickerScrollbarTrack": {
