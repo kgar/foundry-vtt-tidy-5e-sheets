@@ -5,7 +5,6 @@
   import { settingStore } from 'src/settings/settings';
   import type { ItemSheetContext } from 'src/types/item.types';
   import type { CharacterSheetContext } from 'src/types/types';
-  import { warn } from 'src/utils/logging';
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
 
@@ -17,13 +16,6 @@
   const localize = FoundryAdapter.localize;
 
   function onAddClicked(section: any) {
-    const unsupported = FoundryAdapter.isFoundryV10() && $context.item.isOwned;
-    if (unsupported)
-      return warn(
-        'Managing Active Effects within an Owned Item is not currently supported and will be added in a subsequent update.',
-        true,
-      );
-
     const owner = $context.item;
 
     return FoundryAdapter.addEffect(section.type, owner);

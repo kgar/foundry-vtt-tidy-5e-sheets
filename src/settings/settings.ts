@@ -107,7 +107,7 @@ export let settingStore: Writable<CurrentSettings>;
 
 export function createSettings() {
   // TODO: Remove this when Foundry V12 or later is the minimum version.
-  const isV12OrNewer = foundry.utils.isNewerVersion(game.version, 12);
+  const isV12OrNewer = FoundryAdapter.isFoundryV12OrHigher();
 
   return {
     menus: {

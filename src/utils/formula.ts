@@ -53,7 +53,9 @@ export function simplifyFormula(
     const simplifiedTerms = roll.terms.map((t: any) =>
       t.isIntermediate
         ? new NumericTerm({
-            number: t.evaluateSync().total,
+            number: FoundryAdapter.isFoundryV12OrHigher()
+              ? t.evaluateSync().total
+              : t.evaluate({ async: false }).total,
             options: t.options,
           })
         : t
@@ -228,7 +230,9 @@ function calculateDeterministicBonus(rawBonus: string): number {
 
   let bonusTotal = 0;
   if (Roll.validate(bonusRoll.formula)) {
-    bonusTotal = bonusRoll.evaluateSync().total;
+    bonusTotal = FoundryAdapter.isFoundryV12OrHigher()
+      ? bonusRoll.evaluateSync().total
+      : bonusRoll.evaluate({ async: false }).total;
   }
   return bonusTotal;
 }
@@ -260,7 +264,9 @@ export function getDcTooltip(actor: Actor5e) {
   const rawBonus = actor.system.bonuses.spell.dc?.toString()?.trim();
   if (!isNil(rawBonus, '') && Roll.validate(rawBonus)) {
     const bonusRoll = new Roll(rawBonus);
-    bonusRoll.evaluateSync();
+    FoundryAdapter.isFoundryV12OrHigher()
+      ? bonusRoll.evaluateSync()
+      : bonusRoll.evaluate({ async: false });
     const bonusTotal = bonusRoll.total;
 
     if (bonusTotal !== 0) {
