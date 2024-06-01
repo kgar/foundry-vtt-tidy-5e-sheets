@@ -29,6 +29,7 @@ import {
   type CharacterItemContext,
   type SpellbookSection,
   type FavoriteSection,
+  type EffectFavoriteSection,
 } from 'src/types/types';
 import {
   applySheetAttributesToWindow,
@@ -771,11 +772,43 @@ export class Tidy5eCharacterSheet
       );
     }
 
-    // TODO: Add Effects to Favorites Sections
-
     // TODO: Move all section config applications to here
+
     // Apply Section Configs
     const sectionConfigs = TidyFlags.sectionConfig.get(this.actor);
+
+    // TODO: Add Effects to Favorites Sections
+    let effectsSection: EffectFavoriteSection = {
+      canCreate: false,
+      dataset: {},
+      effects: [],
+      key: 'tidy.effects',
+      label: 'TODO: Label IT!',
+      show: true,
+    };
+    const favoriteEffects = (
+      this.actor.system.favorites as CharacterFavorite[]
+    ).filter((f) => f.type === 'effect');
+
+    for (const f of favoriteEffects) {
+      const favorite = fromUuidSync(f.id, { relative: this.actor });
+      const data = await favorite.getFavoriteData();
+
+      effectsSection.effects.push({
+        effectId: favorite.id,
+        id: f.id,
+        img: data.img,
+        sort: f.sort,
+        subtitle: data.subtitle,
+        suppressed: data.suppressed,
+        title: data.title,
+        toggle: { applicable: true, value: data.toggle },
+      });
+    }
+
+    if (effectsSection.effects.length) {
+      defaultDocumentContext.favorites.push(effectsSection);
+    }
 
     const favoritesIdMap: Map<string, CharacterFavorite> =
       this._getFavoritesIdMap();
@@ -793,11 +826,7 @@ export class Tidy5eCharacterSheet
       (section) => {
         if ('effects' in section) {
           let effects = section.effects.map((s) =>
-            FoundryAdapter.getEffect({
-              document: this.actor,
-              effectId: s.id,
-              parentId: s.parentId,
-            })
+            fromUuidSync(s.id, { relative: this.actor })
           );
 
           // Sort Favorite Effects

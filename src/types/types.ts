@@ -123,7 +123,7 @@ export type GenericFavoriteSection = {
 } & TidySectionBase;
 
 export type EffectFavoriteSection = {
-  effects: ActiveEffectContext[];
+  effects: FavoriteEffectContext[];
   canCreate: false;
 } & TidySectionBase;
 
@@ -210,9 +210,23 @@ export type CharacterItemContext = {
   parent?: Item5e;
 };
 
-export type TypedEffectFavoriteSection = (EffectFavoriteSection & {
+export type TypedEffectFavoriteSection = EffectFavoriteSection & {
   type: typeof CONSTANTS.TAB_CHARACTER_EFFECTS;
-});
+};
+
+export type FavoriteEffectContext = {
+  effectId: string;
+  id: string;
+  img: string;
+  sort: number;
+  subtitle: string;
+  suppressed: boolean;
+  title: string;
+  toggle: {
+    applicable: boolean;
+    value: boolean;
+  };
+};
 
 export type FavoriteSection =
   | (InventorySection & { type: typeof CONSTANTS.TAB_CHARACTER_INVENTORY })
