@@ -790,8 +790,15 @@ export class Tidy5eCharacterSheet
       this.actor.system.favorites as CharacterFavorite[]
     ).filter((f) => f.type === 'effect');
 
+    // TODO: Do I need to remove active effects from favorites when they are no longer available on the sheet?
+    // Or does the system do this?
     for (const favoriteEffect of favoriteEffects) {
       const effect = fromUuidSync(favoriteEffect.id, { relative: this.actor });
+
+      if (!effect) {
+        continue;
+      }
+
       const data = await effect.getFavoriteData();
 
       effectsSection.effects.push({

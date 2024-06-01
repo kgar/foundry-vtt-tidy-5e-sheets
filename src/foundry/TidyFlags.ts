@@ -1,6 +1,7 @@
 import type { Item5e } from 'src/types/item.types';
 import type { SheetTabSectionConfigs } from 'src/features/sections/sections.types';
 import { CONSTANTS } from 'src/constants';
+import { isNil } from 'src/utils/data';
 
 /** Manages Tidy flags. */
 export class TidyFlags {
@@ -106,7 +107,33 @@ export class TidyFlags {
         return undefined;
       }
 
-      // TODO: Flatten props until SheetTabSectionConfigs shape achieved
+      for (let section of Object.values(sectionConfigs)) {
+        // Account for how localized keys are stored. For each top-level property, flatten until SheetTabSectionConfigs shape achieved.
+        for (let [key, value] of Object.entries(section)) {
+          if (Object.getOwnPropertyNames(value).length > 1) {
+            continue;
+          }
+
+          let newKey = key;
+          let newValue: any = value;
+
+          while (true) {
+            const propNames = Object.getOwnPropertyNames(newValue);
+
+            let currentPropAtDepth = propNames[0];
+            if (isNil(currentPropAtDepth) || propNames.length > 1) {
+              break;
+            }
+
+            newKey += '.' + currentPropAtDepth;
+            newValue = newValue[currentPropAtDepth];
+          }
+
+          delete section[key];
+          section[newKey] = newValue;
+        }
+      }
+
       return sectionConfigs;
     },
     /** Sets the document sheet's configuration. */
