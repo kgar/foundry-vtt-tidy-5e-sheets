@@ -834,10 +834,7 @@ export class Tidy5eCharacterSheet
       });
     }
 
-    // Effect sections can't currently save properly because
-    // the section config is turning strings with dots into
-    // properties at depth. Change the save operation so that keys are not spread into property depth.
-    // This must be done because of localization keys.
+    // TODO: Support effects drag-and-drop manual sort and alphabetical sort
     defaultDocumentContext.favorites = SheetSections.sortKeyedSections(
       defaultDocumentContext.favorites,
       sectionConfigs?.[CONSTANTS.TAB_CHARACTER_ATTRIBUTES]
