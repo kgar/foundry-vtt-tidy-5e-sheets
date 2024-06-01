@@ -27,8 +27,8 @@
 
   const localize = FoundryAdapter.localize;
 
-  function toggleEffect(effect: FavoriteEffectContext): void {
-    throw new Error('Function not implemented.');
+  function toggleEffect(context: FavoriteEffectContext): void {
+    context.effect.update({ disabled: !context.effect.disabled });
   }
 
   const subtitleColumnWidth = '5rem';
