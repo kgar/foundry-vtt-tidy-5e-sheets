@@ -790,24 +790,21 @@ export class Tidy5eCharacterSheet
       this.actor.system.favorites as CharacterFavorite[]
     ).filter((f) => f.type === 'effect');
 
-    for (const f of favoriteEffects) {
-      const favorite = fromUuidSync(f.id, { relative: this.actor });
-      const data = await favorite.getFavoriteData();
+    for (const favoriteEffect of favoriteEffects) {
+      const effect = fromUuidSync(favoriteEffect.id, { relative: this.actor });
+      const data = await effect.getFavoriteData();
 
       effectsSection.effects.push({
-        effectId: favorite.id,
-        id: f.id,
+        effectId: effect.id,
+        effect: effect,
+        id: favoriteEffect.id,
         img: data.img,
-        sort: f.sort,
+        sort: favoriteEffect.sort,
         subtitle: data.subtitle,
         suppressed: data.suppressed,
         title: data.title,
         toggle: { applicable: true, value: data.toggle },
       });
-    }
-
-    if (effectsSection.effects.length) {
-      defaultDocumentContext.favorites.push(effectsSection);
     }
 
     const favoritesIdMap: Map<string, CharacterFavorite> =
@@ -816,11 +813,24 @@ export class Tidy5eCharacterSheet
     // Favorites
     defaultDocumentContext.favorites =
       CharacterSheetSections.mergeDuplicateFavoriteSections(
-        SheetSections.sortKeyedSections(
-          defaultDocumentContext.favorites,
-          sectionConfigs?.[CONSTANTS.TAB_CHARACTER_ATTRIBUTES]
-        )
+        defaultDocumentContext.favorites
       );
+
+    if (effectsSection.effects.length) {
+      (defaultDocumentContext.favorites as FavoriteSection[]).push({
+        ...effectsSection,
+        type: CONSTANTS.TAB_CHARACTER_EFFECTS,
+      });
+    }
+
+    // Effect sections can't currently save properly because
+    // the section config is turning strings with dots into
+    // properties at depth. Change the save operation so that keys are not spread into property depth.
+    // This must be done because of localization keys.
+    defaultDocumentContext.favorites = SheetSections.sortKeyedSections(
+      defaultDocumentContext.favorites,
+      sectionConfigs?.[CONSTANTS.TAB_CHARACTER_ATTRIBUTES]
+    );
 
     (defaultDocumentContext.favorites as FavoriteSection[]).forEach(
       (section) => {

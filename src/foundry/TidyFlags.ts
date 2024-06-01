@@ -97,12 +97,17 @@ export class TidyFlags {
     prop: TidyFlags.getFlagPropertyPath('sheet-section-config'),
     /** Gets the document sheet's section configuration. `undefined` means to use the default settings. */
     get(document: any): SheetTabSectionConfigs | undefined {
-      return (
-        TidyFlags.tryGetFlag<SheetTabSectionConfigs>(
-          document,
-          TidyFlags.sectionConfig.key
-        ) ?? undefined
+      const sectionConfigs = TidyFlags.tryGetFlag<SheetTabSectionConfigs>(
+        document,
+        TidyFlags.sectionConfig.key
       );
+
+      if (!sectionConfigs) {
+        return undefined;
+      }
+
+      // TODO: Flatten props until SheetTabSectionConfigs shape achieved
+      return sectionConfigs;
     },
     /** Sets the document sheet's configuration. */
     set(document: any, value: SheetTabSectionConfigs) {

@@ -7,6 +7,7 @@
   import { getContext } from 'svelte';
   import type { Readable } from 'svelte/store';
   import { CONSTANTS } from 'src/constants';
+  import FavoriteEffectsList from './FavoriteEffectsList.svelte';
 
   export let searchCriteria: string = '';
 
@@ -56,6 +57,9 @@
           spells={section.spells}
           {visibleItemIdSubset}
         />
+      {/if}
+      {#if section.type === CONSTANTS.TAB_CHARACTER_EFFECTS}
+        <FavoriteEffectsList {section} />
       {/if}
     {/if}
   {/each}

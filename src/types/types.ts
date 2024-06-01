@@ -214,7 +214,9 @@ export type TypedEffectFavoriteSection = EffectFavoriteSection & {
   type: typeof CONSTANTS.TAB_CHARACTER_EFFECTS;
 };
 
+// TODO: Trim to minimum necessary
 export type FavoriteEffectContext = {
+  effect: ActiveEffect5e;
   effectId: string;
   id: string;
   img: string;
