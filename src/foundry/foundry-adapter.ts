@@ -18,8 +18,8 @@ import { TidyFlags } from './TidyFlags';
 import EnchantmentConfig from './shims/EnchantmentConfig';
 
 export const FoundryAdapter = {
-  isFoundryV10() {
-    return game.dnd5e.isV10;
+  isFoundryV12OrHigher() {
+    return foundry.utils.isNewerVersion(game.version, 12);
   },
   deepClone(obj: any) {
     return foundry.utils.deepClone(obj);
