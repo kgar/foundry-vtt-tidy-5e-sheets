@@ -611,7 +611,11 @@
         "MigrateCompendia.CompendiumLabel": "Compendio",
         "MigrateCompendia.SelectionDialogTitle": "Seleziona Compendio da Migrare",
         "MigrateCompendia.TotalEntriesLabel": "Totale Elementi",
-        "MigrateCompendia.Title": "Migrare Compendio"
+        "MigrateCompendia.Title": "Migrare Compendio",
+        "FavoritesToSystem": {
+            "sectionTitle": "Preferiti dei Personaggi",
+            "selectionDialogTitle": "Migrazione: Preferiti dei Personaggi a Sistema"
+        }
     },
     "TIDY5E.ItemFilters.MenuTooltip.Filters": "Filtri",
     "TIDY5E.Settings.ColorPickerMagicAccent": {
