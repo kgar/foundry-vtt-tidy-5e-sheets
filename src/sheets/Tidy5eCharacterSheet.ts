@@ -783,7 +783,7 @@ export class Tidy5eCharacterSheet
       dataset: {},
       effects: [],
       key: 'tidy.effects',
-      label: 'TODO: Label IT!',
+      label: 'DND5E.Effects',
       show: true,
     };
     const favoriteEffects = (
@@ -800,6 +800,10 @@ export class Tidy5eCharacterSheet
       }
 
       const data = await effect.getFavoriteData();
+
+      if (data.suppressed) {
+        data.subtitle = game.i18n.localize('DND5E.Suppressed');
+      }
 
       effectsSection.effects.push({
         effectId: effect.id,

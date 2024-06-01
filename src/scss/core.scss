@@ -319,6 +319,15 @@
       }
     }
   }
+
+  .favorite-effects {
+    .tidy-switch {
+      --tidy-switch-scale: 0.75;
+    }
+    .suppressed .item-table-cell {
+      color: var(--t5e-tertiary-color);
+    }
+  }
 }
 
 @import './partials/floating-context-menu';

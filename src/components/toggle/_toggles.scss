@@ -79,7 +79,9 @@
     }
 
     &[aria-checked='true'] {
-      background-color: var(--t5e-primary-accent-color);
+      &:not([disabled]) {
+        background-color: var(--t5e-primary-accent-color);
+      }
 
       &::before {
         transform: translateX(
