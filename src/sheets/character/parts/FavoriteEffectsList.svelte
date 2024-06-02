@@ -50,42 +50,42 @@
     </ItemTableHeaderRow>
   </svelte:fragment>
   <svelte:fragment slot="body">
-    {#each section.effects as effect (effect.effectId)}
+    {#each section.effects as effectContext (effectContext.effectId)}
       <ItemTableRow
-        effect={effect.effect}
+        effect={effectContext.effect}
         on:mousedown={(event) =>
-          FoundryAdapter.editOnMiddleClick(event.detail, effect.effect)}
+          FoundryAdapter.editOnMiddleClick(event.detail, effectContext.effect)}
         contextMenu={{
           type: CONSTANTS.CONTEXT_MENU_TYPE_EFFECTS,
-          uuid: effect.effect.uuid,
+          uuid: effectContext.effect.uuid,
         }}
         hidden={visibleEffectIdSubset !== null &&
-          !visibleEffectIdSubset.has(effect.effectId)}
-        favoriteId={effect.id}
-        cssClass={effect.suppressed ? 'suppressed' : ''}
+          !visibleEffectIdSubset.has(effectContext.effect.id)}
+        favoriteId={effectContext.id}
+        cssClass={effectContext.suppressed ? 'suppressed' : ''}
       >
         <ItemTableCell
           primary={true}
           attributes={{
             'data-tidy-effect-name-container': true,
-            'data-effect-id': effect.id,
+            'data-effect-id': effectContext.id,
           }}
         >
-          <ItemImage src={effect.img} />
+          <ItemImage src={effectContext.img} />
           <span
             class="align-self-center truncate"
-            data-tidy-effect-name={effect.effect.name}
-            >{effect.effect.name}</span
+            data-tidy-effect-name={effectContext.effect.name}
+            >{effectContext.effect.name}</span
           >
         </ItemTableCell>
         <ItemTableCell baseWidth={subtitleColumnWidth}>
-          {effect.subtitle ?? ''}
+          {effectContext.subtitle ?? ''}
         </ItemTableCell>
         <ItemTableCell baseWidth={controlsColumnWidth}>
           <TidySwitch
-            disabled={effect.suppressed}
-            value={effect.toggle.value}
-            on:change={() => toggleEffect(effect)}
+            disabled={effectContext.suppressed}
+            value={effectContext.toggle.value}
+            on:change={() => toggleEffect(effectContext)}
           />
         </ItemTableCell>
       </ItemTableRow>

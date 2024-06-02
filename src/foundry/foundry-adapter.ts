@@ -439,6 +439,20 @@ export const FoundryAdapter = {
         .map((item) => item.id)
     );
   },
+  searchEffects(
+    searchCriteria: string,
+    effects: ActiveEffect5e[]
+  ): Set<string> {
+    return new Set(
+      effects
+        .filter(
+          (effect: any) =>
+            searchCriteria.trim() === '' ||
+            effect.name.toLowerCase().includes(searchCriteria.toLowerCase())
+        )
+        .map((effect) => effect.id)
+    );
+  },
   getFilteredActionItems(searchCriteria: string, items: ActionItem[]) {
     return items.filter(
       (x: ActionItem) =>

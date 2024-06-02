@@ -59,7 +59,11 @@
         />
       {/if}
       {#if section.type === CONSTANTS.TAB_CHARACTER_EFFECTS}
-        <FavoriteEffectsList {section} />
+        {@const visibleEffectIdSubset = FoundryAdapter.searchEffects(
+          searchCriteria,
+          section.effects.map((e) => e.effect),
+        )}
+        <FavoriteEffectsList {section} {visibleEffectIdSubset} />
       {/if}
     {/if}
   {/each}
