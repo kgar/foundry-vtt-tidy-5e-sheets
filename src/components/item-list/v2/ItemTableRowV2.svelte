@@ -19,6 +19,7 @@
   import ItemSummary from '../ItemSummary.svelte';
   import ExpandableContainer from 'src/components/expandable/ExpandableContainer.svelte';
   import { FoundryAdapter } from 'src/foundry/foundry-adapter';
+  import { TidyHooks } from 'src/foundry/TidyHooks';
 
   export let item: Item5e | null = null;
   export let contextMenu: { type: string; uuid: string } | null = null;
@@ -61,7 +62,7 @@
   }
 
   async function onMouseEnter(event: Event) {
-    Hooks.callAll(CONSTANTS.HOOK_TIDY5E_SHEETS_ITEM_HOVER_ON, event, item);
+    TidyHooks.tidy5eSheetsItemHoverOn(event, item);
 
     if (!item?.getChatData || !$settingStore.itemCardsForAllItems) {
       return;
@@ -75,7 +76,7 @@
   }
 
   async function onMouseLeave(event: Event) {
-    Hooks.callAll(CONSTANTS.HOOK_TIDY5E_SHEETS_ITEM_HOVER_OFF, event, item);
+    TidyHooks.tidy5eSheetsItemHoverOff(event, item);
 
     card?.update((card) => {
       card.item = null;

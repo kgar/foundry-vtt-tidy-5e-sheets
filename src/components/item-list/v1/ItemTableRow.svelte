@@ -18,6 +18,7 @@
   } from 'src/types/item.types';
   import { settingStore } from 'src/settings/settings';
   import { CONSTANTS } from 'src/constants';
+  import { TidyHooks } from 'src/foundry/TidyHooks';
 
   export let item: Item5e | null = null;
   export let effect: ActiveEffect5e | ActiveEffectContext | null = null;
@@ -57,7 +58,7 @@
   }
 
   async function onMouseEnter(event: Event) {
-    Hooks.callAll(CONSTANTS.HOOK_TIDY5E_SHEETS_ITEM_HOVER_ON, event, item);
+    TidyHooks.tidy5eSheetsItemHoverOn(event, item);
 
     if (!item?.getChatData || !$settingStore.itemCardsForAllItems) {
       return;
@@ -71,7 +72,7 @@
   }
 
   async function onMouseLeave(event: Event) {
-    Hooks.callAll(CONSTANTS.HOOK_TIDY5E_SHEETS_ITEM_HOVER_OFF, event, item);
+    TidyHooks.tidy5eSheetsItemHoverOff(event, item);
 
     card?.update((card) => {
       card.item = null;

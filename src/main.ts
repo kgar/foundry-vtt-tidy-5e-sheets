@@ -13,6 +13,7 @@ import MigrationNotificationFormApplication from 'src/migrations/notification/Mi
 import { MigrationTally } from 'src/migrations/MigrationTally';
 import { Tidy5eKgarContainerSheet } from './sheets/Tidy5eContainerSheet';
 import { setupModuleIntegrations } from './integration/integration';
+import { TidyHooks } from './foundry/TidyHooks';
 
 Hooks.once('init', () => {
   DocumentSheetConfig.registerSheet(
@@ -86,7 +87,7 @@ Hooks.once('ready', async () => {
   const api = Tidy5eSheetsApi._getApi();
   tidy5eModule.api = api;
 
-  Hooks.callAll(CONSTANTS.HOOK_TIDY5E_SHEETS_READY, api);
+  TidyHooks.tidy5eSheetsReady(api);
 
   setupModuleIntegrations(api);
 
