@@ -22,6 +22,7 @@ import { CustomContentRenderer } from './CustomContentRenderer';
 import { SettingsProvider } from 'src/settings/settings';
 import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
 import { AsyncMutex } from 'src/utils/mutex';
+import { CONSTANTS } from 'src/constants';
 
 export class Tidy5eKgarItemSheet
   extends dnd5e.applications.item.ItemSheet5e
@@ -80,7 +81,11 @@ export class Tidy5eKgarItemSheet
      * @param {jQuery} html                      The HTML element to which the context options are attached.
      * @param {ContextMenuEntry[]} entryOptions  The context menu entries.
      */
-    Hooks.call('dnd5e.getItemAdvancementContext', html, contextOptions);
+    Hooks.call(
+      CONSTANTS.HOOK_DND5E_GET_ITEM_ADVANCEMENT_CONTEXT,
+      html,
+      contextOptions
+    );
     if (contextOptions)
       FoundryAdapter.createContextMenu(
         html,
@@ -188,7 +193,7 @@ export class Tidy5eKgarItemSheet
       );
       await this.renderCustomContent({ data, isFullRender: true });
       Hooks.callAll(
-        'tidy5e-sheet.renderItemSheet',
+        CONSTANTS.HOOK_TIDY5E_SHEETS_RENDER_ITEM_SHEET,
         this,
         this.element.get(0),
         data,
@@ -206,7 +211,7 @@ export class Tidy5eKgarItemSheet
       applyTitleToWindow(this.title, this.element.get(0));
       await this.renderCustomContent({ data, isFullRender: false });
       Hooks.callAll(
-        'tidy5e-sheet.renderItemSheet',
+        CONSTANTS.HOOK_TIDY5E_SHEETS_RENDER_ITEM_SHEET,
         this,
         this.element.get(0),
         data,

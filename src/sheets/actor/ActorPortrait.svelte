@@ -20,7 +20,11 @@
     event: MouseEvent & { currentTarget: EventTarget & HTMLElement },
   ) {
     if (
-      !Hooks.call('tidy5e-sheet.preOpenActorPortraitFilePicker', context, event)
+      !Hooks.call(
+        CONSTANTS.HOOK_TIDY5E_SHEETS_PRE_OPEN_ACTOR_PORTRAIT_FILE_PICKER,
+        context,
+        event,
+      )
     ) {
       return;
     }

@@ -49,7 +49,7 @@ function onItemContext(element: HTMLElement) {
     // TODO: Leverage the API to aggregate any registered context menu options; pass in the context of the current item for reference.
     ui.context.menuItems = getActiveEffectContextOptions(effect, app);
     Hooks.call(
-      'dnd5e.getActiveEffectContextOptions',
+      CONSTANTS.HOOK_DND5E_GET_ACTIVE_EFFECT_CONTEXT_OPTIONS,
       effect,
       ui.context.menuItems
     );
@@ -62,7 +62,7 @@ function onItemContext(element: HTMLElement) {
 
     // TODO: Leverage the API to aggregate any registered context menu options; pass in the context of the current item for reference.
     ui.context.menuItems = getItemContextOptions(item);
-    Hooks.call('dnd5e.getItemContextOptions', item, ui.context.menuItems);
+    Hooks.call(CONSTANTS.HOOK_DND5E_GET_ITEM_CONTEXT_OPTIONS, item, ui.context.menuItems);
   } else {
     warn(
       `Unable to show context menu. The menu type ${contextMenuType} is not supported. Put a [data-context-menu] attribute on the target entity and implement the handler where this warning appears.`

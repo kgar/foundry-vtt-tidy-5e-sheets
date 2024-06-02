@@ -30,6 +30,8 @@ import {
   type SpellbookSection,
   type FavoriteSection,
   type EffectFavoriteSection,
+  type InventorySection,
+  type FeatureSection,
 } from 'src/types/types';
 import {
   applySheetAttributesToWindow,
@@ -772,128 +774,6 @@ export class Tidy5eCharacterSheet
       );
     }
 
-    // TODO: Move all section config applications to here
-
-    // Apply Section Configs
-    const sectionConfigs = TidyFlags.sectionConfig.get(this.actor);
-
-    // TODO: Add Effects to Favorites Sections
-    let effectsSection: EffectFavoriteSection = {
-      canCreate: false,
-      dataset: {},
-      effects: [],
-      key: 'tidy.effects',
-      label: 'DND5E.Effects',
-      show: true,
-    };
-    const favoriteEffects = (
-      this.actor.system.favorites as CharacterFavorite[]
-    ).filter((f) => f.type === 'effect');
-
-    // TODO: Do I need to remove active effects from favorites when they are no longer available on the sheet?
-    // Or does the system do this?
-    for (const favoriteEffect of favoriteEffects) {
-      const effect = fromUuidSync(favoriteEffect.id, { relative: this.actor });
-
-      if (!effect) {
-        continue;
-      }
-
-      const data = await effect.getFavoriteData();
-
-      if (data.suppressed) {
-        data.subtitle = game.i18n.localize('DND5E.Suppressed');
-      }
-
-      effectsSection.effects.push({
-        effectId: effect.id,
-        effect: effect,
-        id: favoriteEffect.id,
-        img: data.img,
-        sort: favoriteEffect.sort,
-        subtitle: data.subtitle,
-        suppressed: data.suppressed,
-        title: data.title,
-        toggle: { applicable: true, value: data.toggle },
-      });
-    }
-
-    const favoritesIdMap: Map<string, CharacterFavorite> =
-      this._getFavoritesIdMap();
-
-    // Favorites
-    defaultDocumentContext.favorites =
-      CharacterSheetSections.mergeDuplicateFavoriteSections(
-        defaultDocumentContext.favorites
-      );
-
-    if (effectsSection.effects.length) {
-      (defaultDocumentContext.favorites as FavoriteSection[]).push({
-        ...effectsSection,
-        type: CONSTANTS.TAB_CHARACTER_EFFECTS,
-      });
-    }
-
-    // TODO: Support effects drag-and-drop manual sort and alphabetical sort
-    defaultDocumentContext.favorites = SheetSections.sortKeyedSections(
-      defaultDocumentContext.favorites,
-      sectionConfigs?.[CONSTANTS.TAB_CHARACTER_ATTRIBUTES]
-    );
-
-    (defaultDocumentContext.favorites as FavoriteSection[]).forEach(
-      (section) => {
-        if ('effects' in section) {
-          let effectContexts = section.effects;
-
-          // Sort Favorite Effects
-          if (attributesSortMode === 'm') {
-            const getSort = (effects: Item5e) =>
-              favoritesIdMap.get(effects.getRelativeUUID(this.actor))?.sort ??
-              Number.MAX_SAFE_INTEGER;
-
-            effectContexts.sort(
-              (a, b) => getSort(a.effect) - getSort(b.effect)
-            );
-          } else {
-            effectContexts.sort((a, b) =>
-              a.effect.name.localeCompare(b.effect.name)
-            );
-          }
-
-          // TODO: Filter Favorite Effects ?
-        } else {
-          let items = 'spells' in section ? section.spells : section.items;
-          // Sort Favorites Items
-          if (attributesSortMode === 'm') {
-            const getSort = (item: Item5e) =>
-              favoritesIdMap.get(item.getRelativeUUID(this.actor))?.sort ??
-              Number.MAX_SAFE_INTEGER;
-
-            items.sort((a, b) => getSort(a) - getSort(b));
-          } else {
-            ItemUtils.sortItems(items, attributesSortMode);
-          }
-
-          // TODO: Collocate Favorite Sub Items
-          // Filter Favorite Items
-          items = this.itemFilterService.filter(
-            items,
-            CONSTANTS.TAB_CHARACTER_ATTRIBUTES
-          );
-          if ('spells' in section) {
-            section.spells = items;
-          } else {
-            section.items = items;
-          }
-        }
-
-        // Apply visibility from configuration
-        section.show =
-          sectionConfigs?.[CONSTANTS.TAB_CHARACTER_ATTRIBUTES]?.[section.key]
-            ?.show !== false;
-      }
-    );
-
     const context: CharacterSheetContext = {
       ...defaultDocumentContext,
       activateEditors: (node, options) =>
@@ -1099,6 +979,215 @@ export class Tidy5eCharacterSheet
     }
 
     context.tabs = tabs;
+
+    Hooks.callAll(
+      CONSTANTS.HOOK_TIDY5E_SHEETS_PRE_CONFIGURE_SECTIONS,
+      this,
+      context,
+      this.element
+    );
+
+    // Apply Section Configs
+    const sectionConfigs = TidyFlags.sectionConfig.get(this.actor);
+
+    // TODO: Add Effects to Favorites Sections
+    let effectsSection: EffectFavoriteSection = {
+      canCreate: false,
+      dataset: {},
+      effects: [],
+      key: 'tidy.effects',
+      label: 'DND5E.Effects',
+      show: true,
+    };
+    const favoriteEffects = (
+      this.actor.system.favorites as CharacterFavorite[]
+    ).filter((f) => f.type === 'effect');
+
+    // TODO: Do I need to remove active effects from favorites when they are no longer available on the sheet?
+    // Or does the system do this?
+    for (const favoriteEffect of favoriteEffects) {
+      const effect = fromUuidSync(favoriteEffect.id, { relative: this.actor });
+
+      if (!effect) {
+        continue;
+      }
+
+      const data = await effect.getFavoriteData();
+
+      if (data.suppressed) {
+        data.subtitle = game.i18n.localize('DND5E.Suppressed');
+      }
+
+      effectsSection.effects.push({
+        effectId: effect.id,
+        effect: effect,
+        id: favoriteEffect.id,
+        img: data.img,
+        sort: favoriteEffect.sort,
+        subtitle: data.subtitle,
+        suppressed: data.suppressed,
+        title: data.title,
+        toggle: { applicable: true, value: data.toggle },
+      });
+    }
+
+    const favoritesIdMap: Map<string, CharacterFavorite> =
+      this._getFavoritesIdMap();
+
+    // Favorites
+    defaultDocumentContext.favorites =
+      CharacterSheetSections.mergeDuplicateFavoriteSections(
+        defaultDocumentContext.favorites
+      );
+
+    if (effectsSection.effects.length) {
+      (defaultDocumentContext.favorites as FavoriteSection[]).push({
+        ...effectsSection,
+        type: CONSTANTS.TAB_CHARACTER_EFFECTS,
+      });
+    }
+
+    // Apply Section Configs: Inventory
+
+    defaultDocumentContext.inventory = SheetSections.sortKeyedSections(
+      defaultDocumentContext.inventory,
+      sectionConfigs?.[CONSTANTS.TAB_CHARACTER_INVENTORY]
+    );
+
+    (defaultDocumentContext.inventory as InventorySection[]).forEach(
+      (section) => {
+        // Sort Inventory
+        ItemUtils.sortItems(section.items, inventorySortMode);
+
+        // TODO: Collocate Inventory Sub Items
+        // Filter Inventory
+        section.items = this.itemFilterService.filter(
+          section.items,
+          CONSTANTS.TAB_CHARACTER_INVENTORY
+        );
+
+        // Apply visibility from configuration
+        section.show =
+          sectionConfigs?.[CONSTANTS.TAB_CHARACTER_INVENTORY]?.[section.key]
+            ?.show !== false;
+      }
+    );
+
+    // Apply Section Configs: Spellbook
+
+    defaultDocumentContext.spellbook = SheetSections.sortKeyedSections(
+      defaultDocumentContext.spellbook,
+      sectionConfigs?.[CONSTANTS.TAB_CHARACTER_SPELLBOOK]
+    );
+
+    (defaultDocumentContext.spellbook as SpellbookSection[]).forEach(
+      (section) => {
+        // Sort Spellbook
+        ItemUtils.sortItems(section.spells, spellbookSortMode);
+
+        // TODO: Collocate Spellbook Sub Items
+        // Filter Spellbook
+        section.spells = this.itemFilterService.filter(
+          section.spells,
+          CONSTANTS.TAB_CHARACTER_SPELLBOOK
+        );
+
+        // Apply visibility from configuration
+        section.show =
+          sectionConfigs?.[CONSTANTS.TAB_CHARACTER_SPELLBOOK]?.[section.key]
+            ?.show !== false;
+      }
+    );
+
+    // Apply Section Configs: Features
+
+    defaultDocumentContext.features = SheetSections.sortKeyedSections(
+      defaultDocumentContext.features,
+      sectionConfigs?.[CONSTANTS.TAB_CHARACTER_FEATURES]
+    );
+
+    (defaultDocumentContext.features as FeatureSection[]).forEach((section) => {
+      // Sort Features
+      ItemUtils.sortItems(section.items, featureSortMode);
+
+      // Collocate Feature Sub Items
+      section.items = SheetSections.collocateSubItems(
+        defaultDocumentContext,
+        section.items
+      );
+
+      // Filter Features
+      section.items = this.itemFilterService.filter(
+        section.items,
+        CONSTANTS.TAB_CHARACTER_FEATURES
+      );
+
+      // Apply visibility from configuration
+      section.show =
+        sectionConfigs?.[CONSTANTS.TAB_CHARACTER_FEATURES]?.[section.key]
+          ?.show !== false;
+    });
+
+    // Apply Section Configs: Favorites
+
+    defaultDocumentContext.favorites = SheetSections.sortKeyedSections(
+      defaultDocumentContext.favorites,
+      sectionConfigs?.[CONSTANTS.TAB_CHARACTER_ATTRIBUTES]
+    );
+
+    (defaultDocumentContext.favorites as FavoriteSection[]).forEach(
+      (section) => {
+        if ('effects' in section) {
+          let effectContexts = section.effects;
+
+          // Sort Favorite Effects
+          if (attributesSortMode === 'm') {
+            const getSort = (effects: Item5e) =>
+              favoritesIdMap.get(effects.getRelativeUUID(this.actor))?.sort ??
+              Number.MAX_SAFE_INTEGER;
+
+            effectContexts.sort(
+              (a, b) => getSort(a.effect) - getSort(b.effect)
+            );
+          } else {
+            effectContexts.sort((a, b) =>
+              a.effect.name.localeCompare(b.effect.name)
+            );
+          }
+
+          // TODO: Filter Favorite Effects ?
+        } else {
+          let items = 'spells' in section ? section.spells : section.items;
+          // Sort Favorites Items
+          if (attributesSortMode === 'm') {
+            const getSort = (item: Item5e) =>
+              favoritesIdMap.get(item.getRelativeUUID(this.actor))?.sort ??
+              Number.MAX_SAFE_INTEGER;
+
+            items.sort((a, b) => getSort(a) - getSort(b));
+          } else {
+            ItemUtils.sortItems(items, attributesSortMode);
+          }
+
+          // TODO: Collocate Favorite Sub Items
+          // Filter Favorite Items
+          items = this.itemFilterService.filter(
+            items,
+            CONSTANTS.TAB_CHARACTER_ATTRIBUTES
+          );
+          if ('spells' in section) {
+            section.spells = items;
+          } else {
+            section.items = items;
+          }
+        }
+
+        // Apply visibility from configuration
+        section.show =
+          sectionConfigs?.[CONSTANTS.TAB_CHARACTER_ATTRIBUTES]?.[section.key]
+            ?.show !== false;
+      }
+    );
 
     debug('Character Sheet context data', context);
 
@@ -1336,90 +1425,15 @@ export class Tidy5eCharacterSheet
         { canCreate: false }
       );
 
-    // Assign, sort sections, sort items, and return
-    const sectionConfigs = TidyFlags.sectionConfig.get(this.actor);
+    // Apply sections to their section lists
 
-    context.inventory = SheetSections.sortKeyedSections(
-      Object.values(inventory),
-      sectionConfigs?.[CONSTANTS.TAB_CHARACTER_INVENTORY]
-    );
+    context.inventory = Object.values(inventory);
 
-    const inventorySortMode =
-      characterPreferences.tabs?.[CONSTANTS.TAB_CHARACTER_INVENTORY]?.sort ??
-      'm';
+    context.spellbook = spellbook;
 
-    context.inventory.forEach((section) => {
-      // Sort Inventory
-      ItemUtils.sortItems(section.items, inventorySortMode);
+    context.features = Object.values(features);
 
-      // TODO: Collocate Inventory Sub Items
-      // Filter Inventory
-      section.items = this.itemFilterService.filter(
-        section.items,
-        CONSTANTS.TAB_CHARACTER_INVENTORY
-      );
-
-      // Apply visibility from configuration
-      section.show =
-        sectionConfigs?.[CONSTANTS.TAB_CHARACTER_INVENTORY]?.[section.key]
-          ?.show !== false;
-    });
-
-    context.spellbook = SheetSections.sortKeyedSections(
-      spellbook,
-      sectionConfigs?.[CONSTANTS.TAB_CHARACTER_SPELLBOOK]
-    );
-
-    const spellbookSortMode =
-      characterPreferences.tabs?.[CONSTANTS.TAB_CHARACTER_SPELLBOOK]?.sort ??
-      'm';
-
-    context.spellbook.forEach((section) => {
-      // Sort Spellbook
-      ItemUtils.sortItems(section.spells, spellbookSortMode);
-
-      // TODO: Collocate Spellbook Sub Items
-      // Filter Spellbook
-      section.spells = this.itemFilterService.filter(
-        section.spells,
-        CONSTANTS.TAB_CHARACTER_SPELLBOOK
-      );
-
-      // Apply visibility from configuration
-      section.show =
-        sectionConfigs?.[CONSTANTS.TAB_CHARACTER_SPELLBOOK]?.[section.key]
-          ?.show !== false;
-    });
-
-    context.features = SheetSections.sortKeyedSections(
-      Object.values(features),
-      sectionConfigs?.[CONSTANTS.TAB_CHARACTER_FEATURES]
-    );
-
-    const featureSortMode =
-      characterPreferences.tabs?.[CONSTANTS.TAB_CHARACTER_FEATURES]?.sort ??
-      'm';
-
-    context.features.forEach((section) => {
-      // Sort Features
-      ItemUtils.sortItems(section.items, featureSortMode);
-
-      // Collocate Feature Sub Items
-      section.items = SheetSections.collocateSubItems(context, section.items);
-
-      // Filter Features
-      section.items = this.itemFilterService.filter(
-        section.items,
-        CONSTANTS.TAB_CHARACTER_FEATURES
-      );
-
-      // Apply visibility from configuration
-      section.show =
-        sectionConfigs?.[CONSTANTS.TAB_CHARACTER_FEATURES]?.[section.key]
-          ?.show !== false;
-    });
-
-    const favoriteSections = [
+    context.favorites = [
       ...Object.values(favoriteInventory)
         .filter((i) => i.items.length)
         .map((i) => ({
@@ -1439,9 +1453,6 @@ export class Tidy5eCharacterSheet
           type: CONSTANTS.TAB_CHARACTER_SPELLBOOK,
         })),
     ];
-
-    // TODO: Revise so that there's less churn.
-    context.favorites = Array.from(favoriteSections.values());
 
     context.preparedSpells = nPrepared;
   }
@@ -1595,7 +1606,7 @@ export class Tidy5eCharacterSheet
       );
       await this.renderCustomContent({ data, isFullRender: true });
       Hooks.callAll(
-        'tidy5e-sheet.renderActorSheet',
+        CONSTANTS.HOOK_TIDY5E_SHEETS_RENDER_ACTOR_SHEET,
         this,
         this.element.get(0),
         data,
@@ -1614,7 +1625,7 @@ export class Tidy5eCharacterSheet
       applyTitleToWindow(this.title, this.element.get(0));
       await this.renderCustomContent({ data, isFullRender: false });
       Hooks.callAll(
-        'tidy5e-sheet.renderActorSheet',
+        CONSTANTS.HOOK_TIDY5E_SHEETS_RENDER_ACTOR_SHEET,
         this,
         this.element.get(0),
         data,

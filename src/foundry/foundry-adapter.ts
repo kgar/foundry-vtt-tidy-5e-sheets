@@ -748,8 +748,12 @@ export const FoundryAdapter = {
      * @returns {boolean}                   Explicitly return `false` to prevent hit die from being rolled.
      */
     if (
-      Hooks.call('dnd5e.preRollHitDie', actor, rollConfig, denomination) ===
-      false
+      Hooks.call(
+        CONSTANTS.HOOK_DND5E_PRE_ROLL_HIT_DIE,
+        actor,
+        rollConfig,
+        denomination
+      ) === false
     )
       return;
 
@@ -780,7 +784,10 @@ export const FoundryAdapter = {
      * @param {object} updates.class  Updates that will be applied to the class.
      * @returns {boolean}             Explicitly return `false` to prevent updates from being performed.
      */
-    if (Hooks.call('dnd5e.rollHitDie', actor, roll, updates) === false)
+    if (
+      Hooks.call(CONSTANTS.HOOK_DND5E_ROLL_HIT_DIE, actor, roll, updates) ===
+      false
+    )
       return roll;
 
     // Re-evaluate dhp in the event that it was changed in the previous hook
@@ -1015,8 +1022,12 @@ export const FoundryAdapter = {
   },
   actorTryUseItem(item: Item5e, config: any = {}, options: any = {}) {
     const suppressItemUse =
-      Hooks.call('tidy5e-sheet.actorPreUseItem', item, config, options) ===
-      false;
+      Hooks.call(
+        CONSTANTS.HOOK_TIDY5E_SHEETS_ACTOR_PRE_USE_ITEM,
+        item,
+        config,
+        options
+      ) === false;
 
     if (suppressItemUse) {
       return;
@@ -1026,7 +1037,11 @@ export const FoundryAdapter = {
   },
   onActorItemButtonContextMenu(item: Item5e, options: { event: Event }) {
     // Allow another module to react to a context menu action on the item use button.
-    Hooks.callAll('tidy5e-sheet.actorItemUseContextMenu', item, options);
+    Hooks.callAll(
+      CONSTANTS.HOOK_TIDY5E_SHEETS_ACTOR_ITEM_USE_CONTEXT_MENU,
+      item,
+      options
+    );
   },
   /**
    * Fires appropriate hooks related to tab selection and reports whether tab selection was cancelled.
@@ -1036,7 +1051,7 @@ export const FoundryAdapter = {
    */
   onTabSelecting(app: any & { currentTabId: string }, newTabId: string) {
     const canProceed = Hooks.call(
-      'tidy5e-sheet.preSelectTab',
+      CONSTANTS.HOOK_TIDY5E_SHEETS_PRE_SELECT_TAB,
       app,
       app.element.get(0),
       {
@@ -1051,7 +1066,7 @@ export const FoundryAdapter = {
 
     setTimeout(() => {
       Hooks.callAll(
-        'tidy5e-sheet.selectTab',
+        CONSTANTS.HOOK_TIDY5E_SHEETS_SELECT_TAB,
         app,
         app.element.get(0),
         newTabId

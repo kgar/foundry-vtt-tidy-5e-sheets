@@ -386,7 +386,7 @@ export class Tidy5eKgarContainerSheet
       );
       await this.renderCustomContent({ data, isFullRender: true });
       Hooks.callAll(
-        'tidy5e-sheet.renderItemSheet',
+        CONSTANTS.HOOK_TIDY5E_SHEETS_RENDER_ITEM_SHEET,
         this,
         this.element.get(0),
         data,
@@ -404,7 +404,7 @@ export class Tidy5eKgarContainerSheet
       applyTitleToWindow(this.title, this.element.get(0));
       await this.renderCustomContent({ data, isFullRender: false });
       Hooks.callAll(
-        'tidy5e-sheet.renderItemSheet',
+        CONSTANTS.HOOK_TIDY5E_SHEETS_RENDER_ITEM_SHEET,
         this,
         this.element.get(0),
         data,

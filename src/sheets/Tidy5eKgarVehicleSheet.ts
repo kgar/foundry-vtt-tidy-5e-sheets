@@ -637,7 +637,7 @@ export class Tidy5eVehicleSheet
       );
       await this.renderCustomContent({ data, isFullRender: true });
       Hooks.callAll(
-        'tidy5e-sheet.renderActorSheet',
+        CONSTANTS.HOOK_TIDY5E_SHEETS_RENDER_ACTOR_SHEET,
         this,
         this.element.get(0),
         data,
@@ -656,7 +656,7 @@ export class Tidy5eVehicleSheet
       applyTitleToWindow(this.title, this.element.get(0));
       await this.renderCustomContent({ data, isFullRender: false });
       Hooks.callAll(
-        'tidy5e-sheet.renderActorSheet',
+        CONSTANTS.HOOK_TIDY5E_SHEETS_RENDER_ACTOR_SHEET,
         this,
         this.element.get(0),
         data,

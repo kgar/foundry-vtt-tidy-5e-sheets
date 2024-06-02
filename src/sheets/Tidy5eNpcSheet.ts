@@ -1053,7 +1053,7 @@ export class Tidy5eNpcSheet
       );
       await this.renderCustomContent({ data, isFullRender: true });
       Hooks.callAll(
-        'tidy5e-sheet.renderActorSheet',
+        CONSTANTS.HOOK_TIDY5E_SHEETS_RENDER_ACTOR_SHEET,
         this,
         this.element.get(0),
         data,
@@ -1072,7 +1072,7 @@ export class Tidy5eNpcSheet
       applyTitleToWindow(this.title, this.element.get(0));
       await this.renderCustomContent({ data, isFullRender: false });
       Hooks.callAll(
-        'tidy5e-sheet.renderActorSheet',
+        CONSTANTS.HOOK_TIDY5E_SHEETS_RENDER_ACTOR_SHEET,
         this,
         this.element.get(0),
         data,
@@ -1186,7 +1186,10 @@ export class Tidy5eNpcSheet
      * @param {RestConfiguration} config  Configuration options for the rest.
      * @returns {boolean}                 Explicitly return `false` to prevent the rest from being started.
      */
-    if (Hooks.call('dnd5e.preShortRest', this.actor, config) === false) {
+    if (
+      Hooks.call(CONSTANTS.HOOK_DND5E_PRE_SHORT_REST, this.actor, config) ===
+      false
+    ) {
       return;
     }
 

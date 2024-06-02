@@ -1,3 +1,4 @@
+import { CONSTANTS } from 'src/constants';
 import type { ContextMenuPositionInfo } from './context-menu.types';
 
 /**
@@ -19,7 +20,7 @@ export default class FloatingContextMenu extends ContextMenu {
 
     if (
       !Hooks.call(
-        'tidy5e-sheet.prepareFloatingContextMenuPosition',
+        CONSTANTS.HOOK_TIDY5E_SHEETS_PREPARE_FLOATING_CONTEXT_MENU_POSITION,
         positionInfo
       )
     ) {
