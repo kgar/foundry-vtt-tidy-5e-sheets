@@ -843,9 +843,7 @@ export class Tidy5eCharacterSheet
     (defaultDocumentContext.favorites as FavoriteSection[]).forEach(
       (section) => {
         if ('effects' in section) {
-          let effects = section.effects.map((s) =>
-            fromUuidSync(s.id, { relative: this.actor })
-          );
+          let effectContexts = section.effects;
 
           // Sort Favorite Effects
           if (attributesSortMode === 'm') {
@@ -853,9 +851,13 @@ export class Tidy5eCharacterSheet
               favoritesIdMap.get(effects.getRelativeUUID(this.actor))?.sort ??
               Number.MAX_SAFE_INTEGER;
 
-            effects.sort((a, b) => getSort(a) - getSort(b));
+            effectContexts.sort(
+              (a, b) => getSort(a.effect) - getSort(b.effect)
+            );
           } else {
-            ItemUtils.sortItems(effects, attributesSortMode);
+            effectContexts.sort((a, b) =>
+              a.effect.name.localeCompare(b.effect.name)
+            );
           }
 
           // TODO: Filter Favorite Effects ?
