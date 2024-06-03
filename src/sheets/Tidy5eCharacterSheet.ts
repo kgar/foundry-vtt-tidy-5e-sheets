@@ -721,7 +721,7 @@ export class Tidy5eCharacterSheet
           if (conditionIds.has(effect.id) && !effect.duration.remaining)
             return arr;
           const { id, name, img, disabled, duration } = effect;
-          let source = await effect.getSource();
+          let source = (await effect.getSource()) ?? this.actor;
           // If the source is an ActiveEffect from another Actor, note the source as that Actor instead.
           if (
             source instanceof dnd5e.documents.ActiveEffect5e &&
