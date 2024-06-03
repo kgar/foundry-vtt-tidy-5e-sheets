@@ -1130,13 +1130,6 @@ export class Tidy5eNpcSheet
   async _onShortRest(event: Event) {
     event.preventDefault();
     await this._onSubmit(event);
-    if (SettingsProvider.settings.showNpcRestInChat.get()) {
-      let obj = {
-        dialog: true,
-        chat: false,
-      };
-      return this.shortRest(obj);
-    }
     return this.shortRest();
   }
 
