@@ -86,6 +86,14 @@ export class TidyHooks {
     Hooks.callAll(hookName, app, element, data, forced);
   }
 
+  /**
+   *
+   * @param app the sheet application instance
+   * @param element the sheet HTML element
+   * @param data the data context from `getData()`
+   * @param forced `true` when performing a full re-render; `false` when performing a partial re-render
+   * @param hookName this hook's registered name
+   */
   static tidy5eSheetsRenderActorSheet(
     app: any,
     element: HTMLElement,
@@ -96,15 +104,28 @@ export class TidyHooks {
     Hooks.callAll(hookName, app, element, data, forced);
   }
 
+  /**
+   * Sheet item/effect sections are about to be configured. Use this hook to inject additional items, sections, etc., or to adjust context data.
+   * @param app the sheet application instance
+   * @param element the sheet HTML element
+   * @param data the data context from `getData()`
+   * @param hookName this hook's registered name
+   */
   static tidy5eSheetsPreConfigureSections(
     app: any,
-    context: CharacterSheetContext | NpcSheetContext | ContainerSheetContext,
     element: HTMLElement,
+    data: CharacterSheetContext | NpcSheetContext | ContainerSheetContext,
     hookName: typeof CONSTANTS.HOOK_TIDY5E_SHEETS_PRE_CONFIGURE_SECTIONS = CONSTANTS.HOOK_TIDY5E_SHEETS_PRE_CONFIGURE_SECTIONS
   ) {
-    Hooks.callAll(hookName, app, context, element);
+    Hooks.callAll(hookName, app, element, data);
   }
 
+  /**
+   * Resources have been prepared. Use this hook to adjust them and/or add new resources.
+   * @param tidyResources the resources that have been prepared for the sheet
+   * @param actor the affected actor
+   * @param hookName this hook's registered name
+   */
   static tidy5eSheetsPrepareResources(
     tidyResources: TidyResource[],
     actor: Actor5e,
@@ -113,6 +134,13 @@ export class TidyHooks {
     Hooks.callAll(hookName, tidyResources, actor);
   }
 
+  /**
+   * A tab has been selected on the sheet.
+   * @param app the sheet application instances
+   * @param element the sheet's HTML element
+   * @param newTabId the selected tab ID
+   * @param hookName this hook's registered name
+   */
   static tidy5eSheetsSelectTab(
     app: any,
     element: HTMLElement,
@@ -122,6 +150,14 @@ export class TidyHooks {
     Hooks.callAll(hookName, app, element, newTabId);
   }
 
+  /**
+   * A tab is about to be selected.
+   * @param app the sheet application instances
+   * @param element the sheet's HTML element
+   * @param data the current tab ID before selecting the new tab, and the new tab ID to be selected
+   * @param hookName this hook's registered name
+   * @returns `false` to cancel tabbing
+   */
   static tidy5eSheetsPreSelectTab(
     app: any,
     element: HTMLElement,
@@ -131,6 +167,12 @@ export class TidyHooks {
     return Hooks.call(hookName, app, element, data);
   }
 
+  /**
+   * The context menu is about to show for a given item on a sheet.
+   * @param item the item document instance
+   * @param options the mouse event which triggered the context menu
+   * @param hookName this hook's registered name
+   */
   static tidy5eSheetsActorItemUseContextMenu(
     item: Item5e,
     options: { event: Event },
@@ -140,9 +182,9 @@ export class TidyHooks {
   }
 
   /**
-   * Declares when Tidy 5e Sheets is ready to be used and customized.
+   * Tidy 5e Sheets is ready to be used and customized.
    * @param api The Tidy 5e Sheets API, used for customizing and registering content with Tidy 5e Sheets.
-   * @param hookName The name of the hook which is invoked.
+   * @param hookName this hook's registered name
    */
   static tidy5eSheetsReady(
     api: Tidy5eSheetsApi,
@@ -152,10 +194,10 @@ export class TidyHooks {
   }
 
   /**
-   * Declares when a user has hovered over an item, typically on an item table row.
+   * A user has hovered over an item, typically on an item table row.
    * @param event The triggering mouse event.
    * @param item The hovered-over item.
-   * @param hookName The name of the hook which is invoked.
+   * @param hookName this hook's registered name
    */
   static tidy5eSheetsItemHoverOn(
     event: Event,
@@ -166,10 +208,10 @@ export class TidyHooks {
   }
 
   /**
-   * Declares when a user has hovered off an item, typically from an item table row.
+   * A user has hovered off an item, typically from an item table row.
    * @param event The triggering mouse event.
    * @param item The item which is no longer hovered.
-   * @param hookName The name of the hook which is invoked.
+   * @param hookName this hook's registered name
    */
   static tidy5eSheetsItemHoverOff(
     event: Event,
@@ -180,9 +222,9 @@ export class TidyHooks {
   }
 
   /**
-   * Declares when the floating context menu's positioning is being determined.
+   * The floating context menu's positioning is being determined.
    * @param positionInfo context menu positioning info, used for determining where to put the context menu
-   * @param hookName The name of the hook which is invoked.
+   * @param hookName this hook's registered name
    * @returns `true` to allow the menu to show, `false` to prevent the default menu from showing
    */
   static tidy5eSheetsPrepareFloatingContextMenuPosition(
@@ -192,6 +234,13 @@ export class TidyHooks {
     return Hooks.call(hookName, positionInfo);
   }
 
+  /**
+   * The active effect context menu has established its options and is about to show.
+   * @param effect the active effect document instance
+   * @param menuItems the menu items for this active effect
+   * @param hookName this hook's registered name
+   * @returns `true` to allow the menu to show, `false` to prevent the default menu from showing
+   */
   static dnd5eGetActiveEffectContextOptions(
     effect: ActiveEffect5e,
     menuItems: ContextMenuEntry[],
@@ -200,6 +249,13 @@ export class TidyHooks {
     return Hooks.call(hookName, effect, menuItems);
   }
 
+  /**
+   * The item context menu has established its options and is about to show.
+   * @param item
+   * @param menuItems
+   * @param hookName this hook's registered name
+   * @returns `true` to allow the menu to show, `false` to prevent the default menu from showing
+   */
   static dnd5eGetItemContextOptions(
     item: Item5e,
     menuItems: ContextMenuEntry[],
@@ -208,6 +264,14 @@ export class TidyHooks {
     return Hooks.call(hookName, item, menuItems);
   }
 
+  /**
+   * A hit die roll is about to occur.
+   * @param actor the affected actor
+   * @param rollConfig the configuration for the roll
+   * @param denomination the roll denomination
+   * @param hookName this hook's registered name
+   * @returns `true` to allow the roll, `false` to prevent it
+   */
   static dnd5ePreRollHitDie(
     actor: Actor5e,
     rollConfig: RollConfig,
@@ -226,7 +290,8 @@ export class TidyHooks {
    * @param {object} updates
    * @param {object} updates.actor  Updates that will be applied to the actor.
    * @param {object} updates.class  Updates that will be applied to the class.
-   * @returns {boolean}             Explicitly return `false` to prevent updates from being performed.
+   * @param hookName this hook's registered name
+   * @returns `true` to allow the roll, `false` to prevent it
    */
   static dnd5eRollHitDie(
     actor: Actor5e,
@@ -237,6 +302,14 @@ export class TidyHooks {
     return Hooks.call(hookName, actor, roll, updates);
   }
 
+  /**
+   * An item is about to be used by an actor.
+   * @param item the affected item document instance
+   * @param config any configuration for the item use
+   * @param options any options for the item use
+   * @param hookName this hook's registered name
+   * @returns `true` to allow the item use, `false` to prevent it
+   */
   static tidy5eSheetsActorPreUseItem(
     item: Item5e,
     config: any,

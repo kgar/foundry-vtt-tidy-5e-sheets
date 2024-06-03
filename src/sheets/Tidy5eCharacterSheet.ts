@@ -977,8 +977,8 @@ export class Tidy5eCharacterSheet
 
     TidyHooks.tidy5eSheetsPreConfigureSections(
       this,
-      context,
-      this.element.get(0)
+      this.element.get(0),
+      context
     );
 
     // Apply Section Configs
