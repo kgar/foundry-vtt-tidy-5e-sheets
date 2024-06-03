@@ -1,4 +1,4 @@
-import { TidyFlags } from 'src/api';
+import { TidyFlags } from 'src/foundry/TidyFlags';
 import type { Item5e } from 'src/types/item.types';
 import { isNil } from 'src/utils/data';
 import { debug, error } from 'src/utils/logging';

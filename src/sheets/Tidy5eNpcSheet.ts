@@ -51,10 +51,12 @@ import { SheetPreferencesRuntime } from 'src/runtime/user-preferences/SheetPrefe
 import { Tidy5eBaseActorSheet } from './Tidy5eBaseActorSheet';
 import { SheetSections } from 'src/features/sections/SheetSections';
 import { NpcSheetSections } from 'src/features/sections/NpcSheetSections';
-import { TidyFlags } from 'src/api';
 import { DocumentTabSectionConfigApplication } from 'src/applications/section-config/DocumentTabSectionConfigApplication';
 import { ActorSheetCustomSectionMixin } from './mixins/Tidy5eBaseActorSheetMixins';
 import { ItemUtils } from 'src/utils/ItemUtils';
+import type { RestConfiguration } from 'src/foundry/dnd5e.types';
+import { TidyFlags } from 'src/foundry/TidyFlags';
+import { TidyHooks } from 'src/foundry/TidyHooks';
 
 export class Tidy5eNpcSheet
   extends ActorSheetCustomSectionMixin(dnd5e.applications.actor.ActorSheet5eNPC)
@@ -1052,8 +1054,7 @@ export class Tidy5eNpcSheet
         this.element.get(0)
       );
       await this.renderCustomContent({ data, isFullRender: true });
-      Hooks.callAll(
-        CONSTANTS.HOOK_TIDY5E_SHEETS_RENDER_ACTOR_SHEET,
+      TidyHooks.tidy5eSheetsRenderActorSheet(
         this,
         this.element.get(0),
         data,
@@ -1071,8 +1072,7 @@ export class Tidy5eNpcSheet
     await maintainCustomContentInputFocus(this, async () => {
       applyTitleToWindow(this.title, this.element.get(0));
       await this.renderCustomContent({ data, isFullRender: false });
-      Hooks.callAll(
-        CONSTANTS.HOOK_TIDY5E_SHEETS_RENDER_ACTOR_SHEET,
+      TidyHooks.tidy5eSheetsRenderActorSheet(
         this,
         this.element.get(0),
         data,
@@ -1163,11 +1163,13 @@ export class Tidy5eNpcSheet
 
   /**
    * Take a short rest, possibly spending hit dice and recovering resources, item uses, and pact slots.
-   * @param {RestConfiguration} [config]  Configuration options for a short rest.
-   * @returns {Promise<RestResult>}       A Promise which resolves once the short rest workflow has completed.
+   * @param config configurations which determine various aspects of the rest
+   * @returns
    */
-  async shortRest(config: any = {}) {
-    config = FoundryAdapter.mergeObject(
+  async shortRest(
+    config: Partial<RestConfiguration> = {}
+  ): Promise<unknown | undefined> {
+    const restConfig: RestConfiguration = FoundryAdapter.mergeObject(
       {
         dialog: true,
         chat: SettingsProvider.settings.showNpcRestInChat.get(),
@@ -1178,18 +1180,7 @@ export class Tidy5eNpcSheet
       config
     );
 
-    /**
-     * A hook event that fires before a short rest is started.
-     * @function dnd5e.preShortRest
-     * @memberof hookEvents
-     * @param {Actor5e} actor             The actor that is being rested.
-     * @param {RestConfiguration} config  Configuration options for the rest.
-     * @returns {boolean}                 Explicitly return `false` to prevent the rest from being started.
-     */
-    if (
-      Hooks.call(CONSTANTS.HOOK_DND5E_PRE_SHORT_REST, this.actor, config) ===
-      false
-    ) {
+    if (TidyHooks.dnd5ePreShortRest(this.actor, restConfig) === false) {
       return;
     }
 

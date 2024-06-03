@@ -18,7 +18,7 @@
   import { settingStore } from 'src/settings/settings';
   import { ActorItemRuntime } from 'src/runtime/ActorItemRuntime';
   import { declareLocation } from 'src/types/location-awareness.types';
-  import { TidyFlags } from 'src/foundry/TidyFlags';
+  import { TidyHooks } from 'src/foundry/TidyHooks';
 
   export let section: InventorySection;
   export let items: Item5e[];
@@ -53,7 +53,7 @@
   }
 
   async function onMouseEnter(event: Event, item: Item5e) {
-    Hooks.callAll(CONSTANTS.HOOK_TIDY5E_SHEETS_ITEM_HOVER_ON, event, item);
+    TidyHooks.tidy5eSheetsItemHoverOn(event, item);
 
     card.update((card) => {
       card.item = item;
@@ -62,7 +62,7 @@
   }
 
   async function onMouseLeave(event: Event, item: Item5e) {
-    Hooks.callAll(CONSTANTS.HOOK_TIDY5E_SHEETS_ITEM_HOVER_OFF, event, item);
+    TidyHooks.tidy5eSheetsItemHoverOff(event, item);
 
     card.update((card) => {
       card.item = null;

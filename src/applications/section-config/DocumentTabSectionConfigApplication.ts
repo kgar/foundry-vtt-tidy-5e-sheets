@@ -3,9 +3,10 @@ import SvelteFormApplicationBase from '../SvelteFormApplicationBase';
 import DocumentTabSectionConfig from './DocumentTabSectionConfig.svelte';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type { Actor5e, TidySectionBase } from 'src/types/types';
-import { TidyFlags, type SectionConfig } from 'src/api';
 import type { DocumentTabSectionConfigItem } from './section-config.types';
 import type { Item5e } from 'src/types/item.types';
+import { TidyFlags } from 'src/foundry/TidyFlags';
+import type { SectionConfig } from 'src/features/sections/sections.types';
 
 type SectionConfigConstructorArgs = {
   document: Actor5e | Item5e;

@@ -1,4 +1,4 @@
-import type { RenderScheme } from 'src/api';
+import type { RenderScheme } from 'src/api/api.types';
 import { CONSTANTS } from 'src/constants';
 
 export function wrapCustomHtmlForRendering(

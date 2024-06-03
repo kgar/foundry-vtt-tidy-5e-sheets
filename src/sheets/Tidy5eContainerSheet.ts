@@ -47,6 +47,7 @@ import { SheetSections } from 'src/features/sections/SheetSections';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import { Inventory } from 'src/features/sections/Inventory';
 import type { CharacterFavorite } from 'src/foundry/dnd5e.types';
+import { TidyHooks } from 'src/foundry/TidyHooks';
 
 export class Tidy5eKgarContainerSheet
   extends dnd5e.applications.item.ContainerSheet
@@ -385,8 +386,7 @@ export class Tidy5eKgarContainerSheet
         this.element.get(0)
       );
       await this.renderCustomContent({ data, isFullRender: true });
-      Hooks.callAll(
-        CONSTANTS.HOOK_TIDY5E_SHEETS_RENDER_ITEM_SHEET,
+      TidyHooks.tidy5eSheetsRenderItemSheet(
         this,
         this.element.get(0),
         data,
@@ -403,8 +403,7 @@ export class Tidy5eKgarContainerSheet
     maintainCustomContentInputFocus(this, async () => {
       applyTitleToWindow(this.title, this.element.get(0));
       await this.renderCustomContent({ data, isFullRender: false });
-      Hooks.callAll(
-        CONSTANTS.HOOK_TIDY5E_SHEETS_RENDER_ITEM_SHEET,
+      TidyHooks.tidy5eSheetsRenderItemSheet(
         this,
         this.element.get(0),
         data,

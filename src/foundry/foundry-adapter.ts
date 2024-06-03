@@ -16,6 +16,7 @@ import { debug, error, warn } from 'src/utils/logging';
 import FloatingContextMenu from 'src/context-menu/FloatingContextMenu';
 import { TidyFlags } from './TidyFlags';
 import EnchantmentConfig from './shims/EnchantmentConfig';
+import { TidyHooks } from './TidyHooks';
 
 export const FoundryAdapter = {
   isFoundryV12OrHigher() {
@@ -748,14 +749,10 @@ export const FoundryAdapter = {
      * @returns {boolean}                   Explicitly return `false` to prevent hit die from being rolled.
      */
     if (
-      Hooks.call(
-        CONSTANTS.HOOK_DND5E_PRE_ROLL_HIT_DIE,
-        actor,
-        rollConfig,
-        denomination
-      ) === false
-    )
+      TidyHooks.dnd5ePreRollHitDie(actor, rollConfig, denomination) === false
+    ) {
       return;
+    }
 
     const roll = await FoundryAdapter.roll(
       rollConfig.formula,
@@ -773,22 +770,7 @@ export const FoundryAdapter = {
       //   class: {"system.hitDiceUsed": cls.system.hitDiceUsed + 1}
     };
 
-    /**
-     * A hook event that fires after a hit die has been rolled for an Actor, but before updates have been performed.
-     * @function dnd5e.rollHitDie
-     * @memberof hookEvents
-     * @param {Actor5e} actor         Actor for which the hit die has been rolled.
-     * @param {Roll} roll             The resulting roll.
-     * @param {object} updates
-     * @param {object} updates.actor  Updates that will be applied to the actor.
-     * @param {object} updates.class  Updates that will be applied to the class.
-     * @returns {boolean}             Explicitly return `false` to prevent updates from being performed.
-     */
-    if (
-      Hooks.call(CONSTANTS.HOOK_DND5E_ROLL_HIT_DIE, actor, roll, updates) ===
-      false
-    )
-      return roll;
+    if (TidyHooks.dnd5eRollHitDie(actor, roll, updates) === false) return roll;
 
     // Re-evaluate dhp in the event that it was changed in the previous hook
     const updateOptions = {
@@ -1022,12 +1004,7 @@ export const FoundryAdapter = {
   },
   actorTryUseItem(item: Item5e, config: any = {}, options: any = {}) {
     const suppressItemUse =
-      Hooks.call(
-        CONSTANTS.HOOK_TIDY5E_SHEETS_ACTOR_PRE_USE_ITEM,
-        item,
-        config,
-        options
-      ) === false;
+      TidyHooks.tidy5eSheetsActorPreUseItem(item, config, options) === false;
 
     if (suppressItemUse) {
       return;
@@ -1037,11 +1014,7 @@ export const FoundryAdapter = {
   },
   onActorItemButtonContextMenu(item: Item5e, options: { event: Event }) {
     // Allow another module to react to a context menu action on the item use button.
-    Hooks.callAll(
-      CONSTANTS.HOOK_TIDY5E_SHEETS_ACTOR_ITEM_USE_CONTEXT_MENU,
-      item,
-      options
-    );
+    TidyHooks.tidy5eSheetsActorItemUseContextMenu(item, options);
   },
   /**
    * Fires appropriate hooks related to tab selection and reports whether tab selection was cancelled.
@@ -1050,8 +1023,7 @@ export const FoundryAdapter = {
    * @returns `true` to indicate proceeding with tab change; `false` to halt tab change
    */
   onTabSelecting(app: any & { currentTabId: string }, newTabId: string) {
-    const canProceed = Hooks.call(
-      CONSTANTS.HOOK_TIDY5E_SHEETS_PRE_SELECT_TAB,
+    const canProceed = TidyHooks.tidy5eSheetsPreSelectTab(
       app,
       app.element.get(0),
       {
@@ -1065,12 +1037,7 @@ export const FoundryAdapter = {
     }
 
     setTimeout(() => {
-      Hooks.callAll(
-        CONSTANTS.HOOK_TIDY5E_SHEETS_SELECT_TAB,
-        app,
-        app.element.get(0),
-        newTabId
-      );
+      TidyHooks.tidy5eSheetsSelectTab(app, app.element.get(0), newTabId);
     });
 
     return true;

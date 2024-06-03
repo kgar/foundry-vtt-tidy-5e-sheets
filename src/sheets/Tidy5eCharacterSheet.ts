@@ -30,8 +30,6 @@ import {
   type SpellbookSection,
   type FavoriteSection,
   type EffectFavoriteSection,
-  type InventorySection,
-  type FeatureSection,
 } from 'src/types/types';
 import {
   applySheetAttributesToWindow,
@@ -63,7 +61,6 @@ import { SheetPreferencesRuntime } from 'src/runtime/user-preferences/SheetPrefe
 import { Tidy5eBaseActorSheet } from './Tidy5eBaseActorSheet';
 import { CharacterSheetSections } from 'src/features/sections/CharacterSheetSections';
 import { SheetSections } from 'src/features/sections/SheetSections';
-import { TidyFlags } from 'src/api';
 import { DocumentTabSectionConfigApplication } from 'src/applications/section-config/DocumentTabSectionConfigApplication';
 import { ActorSheetCustomSectionMixin } from './mixins/Tidy5eBaseActorSheetMixins';
 import { ItemUtils } from 'src/utils/ItemUtils';
@@ -72,6 +69,8 @@ import type {
   CharacterFavorite,
   UnsortedCharacterFavorite,
 } from 'src/foundry/dnd5e.types';
+import { TidyHooks } from 'src/foundry/TidyHooks';
+import { TidyFlags } from 'src/foundry/TidyFlags';
 
 export class Tidy5eCharacterSheet
   extends ActorSheetCustomSectionMixin(
@@ -257,11 +256,7 @@ export class Tidy5eCharacterSheet
       })
     );
 
-    Hooks.callAll(
-      CONSTANTS.HOOK_TIDY5E_SHEETS_PREPARE_RESOURCES,
-      tidyResources,
-      this.actor
-    );
+    TidyHooks.tidy5eSheetsPrepareResources(tidyResources, this.actor);
 
     let maxPreparedSpellsTotal = 0;
     try {
@@ -980,11 +975,10 @@ export class Tidy5eCharacterSheet
 
     context.tabs = tabs;
 
-    Hooks.callAll(
-      CONSTANTS.HOOK_TIDY5E_SHEETS_PRE_CONFIGURE_SECTIONS,
+    TidyHooks.tidy5eSheetsPreConfigureSections(
       this,
       context,
-      this.element
+      this.element.get(0)
     );
 
     // Apply Section Configs
@@ -1594,8 +1588,7 @@ export class Tidy5eCharacterSheet
         this.element.get(0)
       );
       await this.renderCustomContent({ data, isFullRender: true });
-      Hooks.callAll(
-        CONSTANTS.HOOK_TIDY5E_SHEETS_RENDER_ACTOR_SHEET,
+      TidyHooks.tidy5eSheetsRenderActorSheet(
         this,
         this.element.get(0),
         data,
@@ -1613,8 +1606,7 @@ export class Tidy5eCharacterSheet
     await maintainCustomContentInputFocus(this, async () => {
       applyTitleToWindow(this.title, this.element.get(0));
       await this.renderCustomContent({ data, isFullRender: false });
-      Hooks.callAll(
-        CONSTANTS.HOOK_TIDY5E_SHEETS_RENDER_ACTOR_SHEET,
+      TidyHooks.tidy5eSheetsRenderActorSheet(
         this,
         this.element.get(0),
         data,

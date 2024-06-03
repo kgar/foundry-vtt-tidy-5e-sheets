@@ -8,7 +8,7 @@ import { SettingsProvider } from 'src/settings/settings';
 import type { Item5e } from 'src/types/item.types';
 import { warn } from 'src/utils/logging';
 import { TidyFlags } from 'src/foundry/TidyFlags';
-import { TidyHooks } from 'src/api';
+import { TidyHooks } from 'src/foundry/TidyHooks';
 
 export function initTidy5eContextMenu(
   sheet: any,

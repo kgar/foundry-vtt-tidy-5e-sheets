@@ -22,7 +22,7 @@ import { CustomContentRenderer } from './CustomContentRenderer';
 import { SettingsProvider } from 'src/settings/settings';
 import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
 import { AsyncMutex } from 'src/utils/mutex';
-import { CONSTANTS } from 'src/constants';
+import { TidyHooks } from 'src/foundry/TidyHooks';
 
 export class Tidy5eKgarItemSheet
   extends dnd5e.applications.item.ItemSheet5e
@@ -74,18 +74,9 @@ export class Tidy5eKgarItemSheet
 
     // Advancement context menu
     const contextOptions = this._getAdvancementContextMenuOptions();
-    /**
-     * A hook event that fires when the context menu for the advancements list is constructed.
-     * @function dnd5e.getItemAdvancementContext
-     * @memberof hookEvents
-     * @param {jQuery} html                      The HTML element to which the context options are attached.
-     * @param {ContextMenuEntry[]} entryOptions  The context menu entries.
-     */
-    Hooks.call(
-      CONSTANTS.HOOK_DND5E_GET_ITEM_ADVANCEMENT_CONTEXT,
-      html,
-      contextOptions
-    );
+
+    TidyHooks.dnd5eGetItemAdvancementContext(html, contextOptions);
+
     if (contextOptions)
       FoundryAdapter.createContextMenu(
         html,
@@ -192,8 +183,7 @@ export class Tidy5eKgarItemSheet
         this.element.get(0)
       );
       await this.renderCustomContent({ data, isFullRender: true });
-      Hooks.callAll(
-        CONSTANTS.HOOK_TIDY5E_SHEETS_RENDER_ITEM_SHEET,
+      TidyHooks.tidy5eSheetsRenderItemSheet(
         this,
         this.element.get(0),
         data,
@@ -210,8 +200,7 @@ export class Tidy5eKgarItemSheet
     await maintainCustomContentInputFocus(this, async () => {
       applyTitleToWindow(this.title, this.element.get(0));
       await this.renderCustomContent({ data, isFullRender: false });
-      Hooks.callAll(
-        CONSTANTS.HOOK_TIDY5E_SHEETS_RENDER_ITEM_SHEET,
+      TidyHooks.tidy5eSheetsRenderItemSheet(
         this,
         this.element.get(0),
         data,

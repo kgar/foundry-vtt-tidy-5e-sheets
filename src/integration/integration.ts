@@ -1,8 +1,8 @@
-import type { Tidy5eSheetsApi } from 'src/api';
 import { PopoutModuleIntegration } from './modules/PopoutModuleIntegration';
 import type { ModuleIntegrationBase } from './ModuleIntegrationBase';
 import { error } from 'src/utils/logging';
 import { CustomCharacterSheetsModuleIntegration } from './modules/CustomCharacterSheetsModuleIntegration';
+import type { Tidy5eSheetsApi } from 'src/api/Tidy5eSheetsApi';
 
 const moduleIntegrations: ModuleIntegrationBase[] = [
   new PopoutModuleIntegration(),
