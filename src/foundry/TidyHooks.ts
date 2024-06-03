@@ -1,6 +1,9 @@
 import type { Tidy5eSheetsApi } from 'src/api';
 import { CONSTANTS } from 'src/constants';
 import type { ContextMenuPositionInfo } from 'src/context-menu/context-menu.types';
+import type { ActiveEffect5e } from 'src/types/types';
+import type { ContextMenuEntry } from './foundry.types';
+import type { Item5e } from 'src/types/item.types';
 
 /** Manages all Hook usage in Tidy 5e Sheets */
 export class TidyHooks {
@@ -56,4 +59,22 @@ export class TidyHooks {
   ): boolean {
     return Hooks.call(hookName, positionInfo);
   }
+
+  static dnd5eGetActiveEffectContextOptions(
+    effect: ActiveEffect5e,
+    menuItems: ContextMenuEntry[],
+    hookName: typeof CONSTANTS.HOOK_DND5E_GET_ACTIVE_EFFECT_CONTEXT_OPTIONS = CONSTANTS.HOOK_DND5E_GET_ACTIVE_EFFECT_CONTEXT_OPTIONS
+  ) {
+    Hooks.call(hookName, effect, menuItems);
+  }
+
+  static dnd5eGetItemContextOptions(
+    item: Item5e,
+    menuItems: ContextMenuEntry[],
+    hookName: typeof CONSTANTS.HOOK_DND5E_GET_ITEM_CONTEXT_OPTIONS = CONSTANTS.HOOK_DND5E_GET_ITEM_CONTEXT_OPTIONS
+  ) {
+    Hooks.call(hookName, item, menuItems);
+  }
+
+  
 }

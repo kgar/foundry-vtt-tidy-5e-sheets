@@ -8,6 +8,7 @@ import { SettingsProvider } from 'src/settings/settings';
 import type { Item5e } from 'src/types/item.types';
 import { warn } from 'src/utils/logging';
 import { TidyFlags } from 'src/foundry/TidyFlags';
+import { TidyHooks } from 'src/api';
 
 export function initTidy5eContextMenu(
   sheet: any,
@@ -48,11 +49,7 @@ function onItemContext(element: HTMLElement) {
 
     // TODO: Leverage the API to aggregate any registered context menu options; pass in the context of the current item for reference.
     ui.context.menuItems = getActiveEffectContextOptions(effect, app);
-    Hooks.call(
-      CONSTANTS.HOOK_DND5E_GET_ACTIVE_EFFECT_CONTEXT_OPTIONS,
-      effect,
-      ui.context.menuItems
-    );
+    TidyHooks.dnd5eGetActiveEffectContextOptions(effect, ui.context.menuItems);
   }
   // Items
   else if (contextMenuType === CONSTANTS.CONTEXT_MENU_TYPE_ITEMS) {
@@ -61,8 +58,8 @@ function onItemContext(element: HTMLElement) {
     if (!item) return;
 
     // TODO: Leverage the API to aggregate any registered context menu options; pass in the context of the current item for reference.
-    ui.context.menuItems = getItemContextOptions(item);
-    Hooks.call(CONSTANTS.HOOK_DND5E_GET_ITEM_CONTEXT_OPTIONS, item, ui.context.menuItems);
+  ui.context.menuItems = getItemContextOptions(item);
+    TidyHooks.dnd5eGetItemContextOptions(item, ui.context.menuItems);
   } else {
     warn(
       `Unable to show context menu. The menu type ${contextMenuType} is not supported. Put a [data-context-menu] attribute on the target entity and implement the handler where this warning appears.`
