@@ -759,6 +759,69 @@ export class Tidy5eNpcSheet
 
     context.tabs = tabs;
 
+    TidyHooks.tidy5eSheetsPreConfigureSections(
+      this,
+      this.element.get(0),
+      context
+    );
+
+    // Apply Section Configs
+    // ------------------------------------------------------------
+
+    const sectionConfigs = TidyFlags.sectionConfig.get(this.actor);
+
+    context.features = SheetSections.sortKeyedSections(
+      context.features,
+      sectionConfigs?.[CONSTANTS.TAB_NPC_ABILITIES]
+    );
+
+    context.features.forEach((section) => {
+      // Sort Features
+      ItemUtils.sortItems(section.items, abilitiesSortMode);
+
+      // Collocate Feature Sub Items
+      section.items = SheetSections.collocateSubItems(context, section.items);
+
+      // Filter Features
+      section.items = this.itemFilterService.filter(
+        section.items,
+        CONSTANTS.TAB_NPC_ABILITIES
+      );
+
+      // Apply visibility from configuration
+      section.show =
+        sectionConfigs?.[CONSTANTS.TAB_NPC_ABILITIES]?.[section.key]?.show !==
+        false;
+    });
+
+    context.spellbook = SheetSections.sortKeyedSections(
+      context.spellbook,
+      sectionConfigs?.[CONSTANTS.TAB_NPC_SPELLBOOK]
+    );
+
+    const showSpellbookTab =
+      SettingsProvider.settings.showSpellbookTabNpc.get();
+
+    const spellbookTabId = showSpellbookTab
+      ? CONSTANTS.TAB_NPC_SPELLBOOK
+      : CONSTANTS.TAB_NPC_ABILITIES;
+
+    context.spellbook.forEach((section) => {
+      // Sort Spellbook
+      ItemUtils.sortItems(section.spells, spellbookSortMode);
+
+      // TODO: Collocate Spellbook Sub Items
+      // Filter Spellbook
+      section.spells = this.itemFilterService.filter(
+        section.spells,
+        spellbookTabId
+      );
+
+      // Apply visibility from configuration
+      section.show =
+        sectionConfigs?.[spellbookTabId]?.[section.key]?.show !== false;
+    });
+
     debug('NPC Sheet context data', context);
 
     return context;
@@ -912,66 +975,8 @@ export class Tidy5eNpcSheet
       this
     );
 
-    // Assign, sort sections, and return
-    const sectionConfigs = TidyFlags.sectionConfig.get(this.actor);
-
-    context.features = SheetSections.sortKeyedSections(
-      Object.values(features),
-      sectionConfigs?.[CONSTANTS.TAB_NPC_ABILITIES]
-    );
-
-    const abilitiesSortMode =
-      npcPreferences.tabs?.[CONSTANTS.TAB_NPC_ABILITIES]?.sort ?? 'm';
-
-    context.features.forEach((section) => {
-      // Sort Features
-      ItemUtils.sortItems(section.items, abilitiesSortMode);
-
-      // Collocate Feature Sub Items
-      section.items = SheetSections.collocateSubItems(context, section.items);
-
-      // Filter Features
-      section.items = this.itemFilterService.filter(
-        section.items,
-        CONSTANTS.TAB_NPC_ABILITIES
-      );
-
-      // Apply visibility from configuration
-      section.show =
-        sectionConfigs?.[CONSTANTS.TAB_NPC_ABILITIES]?.[section.key]?.show !==
-        false;
-    });
-
-    context.spellbook = SheetSections.sortKeyedSections(
-      spellbook,
-      sectionConfigs?.[CONSTANTS.TAB_NPC_SPELLBOOK]
-    );
-
-    const showSpellbookTab =
-      SettingsProvider.settings.showSpellbookTabNpc.get();
-
-    const spellbookTabId = showSpellbookTab
-      ? CONSTANTS.TAB_NPC_SPELLBOOK
-      : CONSTANTS.TAB_NPC_ABILITIES;
-
-    const spellbookSortMode =
-      npcPreferences.tabs?.[spellbookTabId]?.sort ?? 'm';
-
-    context.spellbook.forEach((section) => {
-      // Sort Spellbook
-      ItemUtils.sortItems(section.spells, spellbookSortMode);
-
-      // TODO: Collocate Spellbook Sub Items
-      // Filter Spellbook
-      section.spells = this.itemFilterService.filter(
-        section.spells,
-        spellbookTabId
-      );
-
-      // Apply visibility from configuration
-      section.show =
-        sectionConfigs?.[spellbookTabId]?.[section.key]?.show !== false;
-    });
+    context.features = Object.values(features);
+    context.spellbook = spellbook;
   }
 
   private async setExpandedItemData() {
