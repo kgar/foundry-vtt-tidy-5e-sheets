@@ -17,6 +17,8 @@ export const CONSTANTS = {
   HOOK_TIDY5E_SHEETS_RENDER_ACTOR_SHEET: `tidy5e-sheet.renderActorSheet`,
   HOOK_TIDY5E_SHEETS_RENDER_ITEM_SHEET: `tidy5e-sheet.renderItemSheet`,
   HOOK_TIDY5E_SHEETS_PREPARE_FLOATING_CONTEXT_MENU_POSITION: `tidy5e-sheet.prepareFloatingContextMenuPosition`,
+  HOOK_TIDY5E_SHEETS_PRE_CREATE_ITEM: `tidy5e-sheet.preCreateItem`,
+  HOOK_TIDY5E_SHEETS_PRE_CREATE_ACTIVE_EFFECT: `tidy5e-sheet.preCreateActiveEffect`,
   HOOK_DND5E_GET_ACTIVE_EFFECT_CONTEXT_OPTIONS: `dnd5e.getActiveEffectContextOptions`,
   HOOK_DND5E_GET_ITEM_CONTEXT_OPTIONS: `dnd5e.getItemContextOptions`,
   HOOK_DND5E_PRE_ROLL_HIT_DIE: `dnd5e.preRollHitDie`,
