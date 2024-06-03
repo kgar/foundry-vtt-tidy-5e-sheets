@@ -1,4 +1,4 @@
-import type { ItemSummaryCommand } from 'src/api';
+import type { ItemSummaryCommand } from 'src/api/api.types';
 import type { RegisteredItemSummaryCommand } from './types';
 import type { Item5e } from 'src/types/item.types';
 

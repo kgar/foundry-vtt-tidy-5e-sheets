@@ -20,6 +20,7 @@
   import SpellSlotManagement from './SpellSlotManagement.svelte';
   import ConcentrationOverlayIcon from './ConcentrationOverlayIcon.svelte';
   import { TidyFlags } from 'src/foundry/TidyFlags';
+  import { TidyHooks } from 'src/foundry/TidyHooks';
 
   export let section: SpellbookSection;
   export let spells: Item5e[];
@@ -42,7 +43,7 @@
   const localize = FoundryAdapter.localize;
 
   async function onMouseEnter(event: Event, item: Item5e) {
-    Hooks.callAll(CONSTANTS.HOOK_TIDY5E_SHEETS_ITEM_HOVER_ON, event, item);
+    TidyHooks.tidy5eSheetsItemHoverOn(event, item);
 
     card.update((card) => {
       card.item = item;
@@ -51,7 +52,7 @@
   }
 
   async function onMouseLeave(event: Event, item: Item5e) {
-    Hooks.callAll(CONSTANTS.HOOK_TIDY5E_SHEETS_ITEM_HOVER_OFF, event, item);
+    TidyHooks.tidy5eSheetsItemHoverOff(event, item);
 
     card.update((card) => {
       card.item = null;

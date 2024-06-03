@@ -9,7 +9,7 @@
     migrateCcssToTidyForItem,
   } from './ccss-to-tidy';
   import { isNil } from 'src/utils/data';
-  import { TidyFlags } from 'src/api';
+  import { TidyFlags } from 'src/foundry/TidyFlags';
 
   let migrating = false;
   let overwrite = false;

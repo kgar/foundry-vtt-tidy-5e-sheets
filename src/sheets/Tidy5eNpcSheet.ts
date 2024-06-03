@@ -51,10 +51,12 @@ import { SheetPreferencesRuntime } from 'src/runtime/user-preferences/SheetPrefe
 import { Tidy5eBaseActorSheet } from './Tidy5eBaseActorSheet';
 import { SheetSections } from 'src/features/sections/SheetSections';
 import { NpcSheetSections } from 'src/features/sections/NpcSheetSections';
-import { TidyFlags } from 'src/api';
 import { DocumentTabSectionConfigApplication } from 'src/applications/section-config/DocumentTabSectionConfigApplication';
 import { ActorSheetCustomSectionMixin } from './mixins/Tidy5eBaseActorSheetMixins';
 import { ItemUtils } from 'src/utils/ItemUtils';
+import type { RestConfiguration } from 'src/foundry/dnd5e.types';
+import { TidyFlags } from 'src/foundry/TidyFlags';
+import { TidyHooks } from 'src/foundry/TidyHooks';
 
 export class Tidy5eNpcSheet
   extends ActorSheetCustomSectionMixin(dnd5e.applications.actor.ActorSheet5eNPC)
@@ -757,6 +759,69 @@ export class Tidy5eNpcSheet
 
     context.tabs = tabs;
 
+    TidyHooks.tidy5eSheetsPreConfigureSections(
+      this,
+      this.element.get(0),
+      context
+    );
+
+    // Apply Section Configs
+    // ------------------------------------------------------------
+
+    const sectionConfigs = TidyFlags.sectionConfig.get(this.actor);
+
+    context.features = SheetSections.sortKeyedSections(
+      context.features,
+      sectionConfigs?.[CONSTANTS.TAB_NPC_ABILITIES]
+    );
+
+    context.features.forEach((section) => {
+      // Sort Features
+      ItemUtils.sortItems(section.items, abilitiesSortMode);
+
+      // Collocate Feature Sub Items
+      section.items = SheetSections.collocateSubItems(context, section.items);
+
+      // Filter Features
+      section.items = this.itemFilterService.filter(
+        section.items,
+        CONSTANTS.TAB_NPC_ABILITIES
+      );
+
+      // Apply visibility from configuration
+      section.show =
+        sectionConfigs?.[CONSTANTS.TAB_NPC_ABILITIES]?.[section.key]?.show !==
+        false;
+    });
+
+    context.spellbook = SheetSections.sortKeyedSections(
+      context.spellbook,
+      sectionConfigs?.[CONSTANTS.TAB_NPC_SPELLBOOK]
+    );
+
+    const showSpellbookTab =
+      SettingsProvider.settings.showSpellbookTabNpc.get();
+
+    const spellbookTabId = showSpellbookTab
+      ? CONSTANTS.TAB_NPC_SPELLBOOK
+      : CONSTANTS.TAB_NPC_ABILITIES;
+
+    context.spellbook.forEach((section) => {
+      // Sort Spellbook
+      ItemUtils.sortItems(section.spells, spellbookSortMode);
+
+      // TODO: Collocate Spellbook Sub Items
+      // Filter Spellbook
+      section.spells = this.itemFilterService.filter(
+        section.spells,
+        spellbookTabId
+      );
+
+      // Apply visibility from configuration
+      section.show =
+        sectionConfigs?.[spellbookTabId]?.[section.key]?.show !== false;
+    });
+
     debug('NPC Sheet context data', context);
 
     return context;
@@ -910,66 +975,8 @@ export class Tidy5eNpcSheet
       this
     );
 
-    // Assign, sort sections, and return
-    const sectionConfigs = TidyFlags.sectionConfig.get(this.actor);
-
-    context.features = SheetSections.sortKeyedSections(
-      Object.values(features),
-      sectionConfigs?.[CONSTANTS.TAB_NPC_ABILITIES]
-    );
-
-    const abilitiesSortMode =
-      npcPreferences.tabs?.[CONSTANTS.TAB_NPC_ABILITIES]?.sort ?? 'm';
-
-    context.features.forEach((section) => {
-      // Sort Features
-      ItemUtils.sortItems(section.items, abilitiesSortMode);
-
-      // Collocate Feature Sub Items
-      section.items = SheetSections.collocateSubItems(context, section.items);
-
-      // Filter Features
-      section.items = this.itemFilterService.filter(
-        section.items,
-        CONSTANTS.TAB_NPC_ABILITIES
-      );
-
-      // Apply visibility from configuration
-      section.show =
-        sectionConfigs?.[CONSTANTS.TAB_NPC_ABILITIES]?.[section.key]?.show !==
-        false;
-    });
-
-    context.spellbook = SheetSections.sortKeyedSections(
-      spellbook,
-      sectionConfigs?.[CONSTANTS.TAB_NPC_SPELLBOOK]
-    );
-
-    const showSpellbookTab =
-      SettingsProvider.settings.showSpellbookTabNpc.get();
-
-    const spellbookTabId = showSpellbookTab
-      ? CONSTANTS.TAB_NPC_SPELLBOOK
-      : CONSTANTS.TAB_NPC_ABILITIES;
-
-    const spellbookSortMode =
-      npcPreferences.tabs?.[spellbookTabId]?.sort ?? 'm';
-
-    context.spellbook.forEach((section) => {
-      // Sort Spellbook
-      ItemUtils.sortItems(section.spells, spellbookSortMode);
-
-      // TODO: Collocate Spellbook Sub Items
-      // Filter Spellbook
-      section.spells = this.itemFilterService.filter(
-        section.spells,
-        spellbookTabId
-      );
-
-      // Apply visibility from configuration
-      section.show =
-        sectionConfigs?.[spellbookTabId]?.[section.key]?.show !== false;
-    });
+    context.features = Object.values(features);
+    context.spellbook = spellbook;
   }
 
   private async setExpandedItemData() {
@@ -1052,8 +1059,7 @@ export class Tidy5eNpcSheet
         this.element.get(0)
       );
       await this.renderCustomContent({ data, isFullRender: true });
-      Hooks.callAll(
-        'tidy5e-sheet.renderActorSheet',
+      TidyHooks.tidy5eSheetsRenderActorSheet(
         this,
         this.element.get(0),
         data,
@@ -1071,8 +1077,7 @@ export class Tidy5eNpcSheet
     await maintainCustomContentInputFocus(this, async () => {
       applyTitleToWindow(this.title, this.element.get(0));
       await this.renderCustomContent({ data, isFullRender: false });
-      Hooks.callAll(
-        'tidy5e-sheet.renderActorSheet',
+      TidyHooks.tidy5eSheetsRenderActorSheet(
         this,
         this.element.get(0),
         data,
@@ -1156,11 +1161,13 @@ export class Tidy5eNpcSheet
 
   /**
    * Take a short rest, possibly spending hit dice and recovering resources, item uses, and pact slots.
-   * @param {RestConfiguration} [config]  Configuration options for a short rest.
-   * @returns {Promise<RestResult>}       A Promise which resolves once the short rest workflow has completed.
+   * @param config configurations which determine various aspects of the rest
+   * @returns
    */
-  async shortRest(config: any = {}) {
-    config = FoundryAdapter.mergeObject(
+  async shortRest(
+    config: Partial<RestConfiguration> = {}
+  ): Promise<unknown | undefined> {
+    const restConfig: RestConfiguration = FoundryAdapter.mergeObject(
       {
         dialog: true,
         chat: SettingsProvider.settings.showNpcRestInChat.get(),
@@ -1171,15 +1178,7 @@ export class Tidy5eNpcSheet
       config
     );
 
-    /**
-     * A hook event that fires before a short rest is started.
-     * @function dnd5e.preShortRest
-     * @memberof hookEvents
-     * @param {Actor5e} actor             The actor that is being rested.
-     * @param {RestConfiguration} config  Configuration options for the rest.
-     * @returns {boolean}                 Explicitly return `false` to prevent the rest from being started.
-     */
-    if (Hooks.call('dnd5e.preShortRest', this.actor, config) === false) {
+    if (TidyHooks.dnd5ePreShortRest(this.actor, restConfig) === false) {
       return;
     }
 

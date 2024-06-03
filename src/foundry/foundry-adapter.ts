@@ -1,6 +1,7 @@
 import type {
   ActionItem,
   ActiveEffect5e,
+  ActiveEffectContext,
   AttunementContext,
   CharacterSheetContext,
   ClassSummary,
@@ -15,6 +16,7 @@ import { debug, error, warn } from 'src/utils/logging';
 import FloatingContextMenu from 'src/context-menu/FloatingContextMenu';
 import { TidyFlags } from './TidyFlags';
 import EnchantmentConfig from './shims/EnchantmentConfig';
+import { TidyHooks } from './TidyHooks';
 
 export const FoundryAdapter = {
   isFoundryV12OrHigher() {
@@ -438,6 +440,20 @@ export const FoundryAdapter = {
         .map((item) => item.id)
     );
   },
+  searchEffects(
+    searchCriteria: string,
+    effects: ActiveEffect5e[]
+  ): Set<string> {
+    return new Set(
+      effects
+        .filter(
+          (effect: any) =>
+            searchCriteria.trim() === '' ||
+            effect.name.toLowerCase().includes(searchCriteria.toLowerCase())
+        )
+        .map((effect) => effect.id)
+    );
+  },
   getFilteredActionItems(searchCriteria: string, items: ActionItem[]) {
     return items.filter(
       (x: ActionItem) =>
@@ -529,25 +545,75 @@ export const FoundryAdapter = {
       }`
     );
   },
-  isDocumentFavorited(document: any) {
-    if ('favorites' in document?.parent?.system) {
-      const relativeUuid = document.getRelativeUUID(document.parent);
-      return document.parent.system.favorites.some(
-        (f: any) => f.id === relativeUuid
-      );
+  isActiveEffectContextFavorited(context: ActiveEffectContext) {
+    const actor = context.source?.actor ?? context.source;
+
+    if (actor?.documentName !== CONSTANTS.DOCUMENT_NAME_ACTOR) {
+      return false;
     }
 
-    return false;
+    const effect = FoundryAdapter.getEffect({
+      document: actor,
+      effectId: context.id,
+      parentId: context.parentId,
+    });
+
+    return FoundryAdapter.isEffectFavorited(effect);
   },
-  // TODO: Require the type: 'item' | 'effect'
-  async toggleFavorite(document: any) {
-    const actor = document.parent;
+  getEffectActor(effect: ActiveEffect5e) {
+    return (
+      // Item-Owned
+      effect.parent?.actor ??
+      // Actor-Owned
+      effect.parent
+    );
+  },
+  isEffectFavorited(effect: ActiveEffect5e) {
+    const actor = FoundryAdapter.getEffectActor(effect);
+
+    if (
+      actor?.documentName === CONSTANTS.DOCUMENT_NAME_ACTOR &&
+      'favorites' in actor.system
+    ) {
+      const relativeUuid = effect.getRelativeUUID(actor);
+      return actor.system.favorites.some((f: any) => f.id === relativeUuid);
+    }
+  },
+  async toggleFavoriteEffect(effect: ActiveEffect5e) {
+    const actor = FoundryAdapter.getEffectActor(effect);
 
     if (!actor || !actor.system?.addFavorite) {
       return;
     }
 
-    const favorited = FoundryAdapter.isDocumentFavorited(document);
+    const favorited = FoundryAdapter.isEffectFavorited(effect);
+    if (favorited) {
+      await actor.system.removeFavorite(effect.getRelativeUUID(actor));
+    } else {
+      await actor.system.addFavorite({
+        type: 'effect',
+        id: effect.getRelativeUUID(actor),
+      });
+    }
+  },
+  isItemFavorited(document: any) {
+    const actor = document.actor;
+
+    if (actor && 'favorites' in actor.system) {
+      const relativeUuid = document.getRelativeUUID(actor);
+      return actor.system.favorites.some((f: any) => f.id === relativeUuid);
+    }
+
+    return false;
+  },
+  async toggleFavoriteItem(document: any) {
+    const actor = document.actor;
+
+    if (!actor || !actor.system?.addFavorite) {
+      return;
+    }
+
+    const favorited = FoundryAdapter.isItemFavorited(document);
     if (favorited) {
       await actor.system.removeFavorite(document.getRelativeUUID(actor));
     } else {
@@ -683,10 +749,10 @@ export const FoundryAdapter = {
      * @returns {boolean}                   Explicitly return `false` to prevent hit die from being rolled.
      */
     if (
-      Hooks.call('dnd5e.preRollHitDie', actor, rollConfig, denomination) ===
-      false
-    )
+      TidyHooks.dnd5ePreRollHitDie(actor, rollConfig, denomination) === false
+    ) {
       return;
+    }
 
     const roll = await FoundryAdapter.roll(
       rollConfig.formula,
@@ -704,19 +770,7 @@ export const FoundryAdapter = {
       //   class: {"system.hitDiceUsed": cls.system.hitDiceUsed + 1}
     };
 
-    /**
-     * A hook event that fires after a hit die has been rolled for an Actor, but before updates have been performed.
-     * @function dnd5e.rollHitDie
-     * @memberof hookEvents
-     * @param {Actor5e} actor         Actor for which the hit die has been rolled.
-     * @param {Roll} roll             The resulting roll.
-     * @param {object} updates
-     * @param {object} updates.actor  Updates that will be applied to the actor.
-     * @param {object} updates.class  Updates that will be applied to the class.
-     * @returns {boolean}             Explicitly return `false` to prevent updates from being performed.
-     */
-    if (Hooks.call('dnd5e.rollHitDie', actor, roll, updates) === false)
-      return roll;
+    if (TidyHooks.dnd5eRollHitDie(actor, roll, updates) === false) return roll;
 
     // Re-evaluate dhp in the event that it was changed in the previous hook
     const updateOptions = {
@@ -950,8 +1004,7 @@ export const FoundryAdapter = {
   },
   actorTryUseItem(item: Item5e, config: any = {}, options: any = {}) {
     const suppressItemUse =
-      Hooks.call('tidy5e-sheet.actorPreUseItem', item, config, options) ===
-      false;
+      TidyHooks.tidy5eSheetsActorPreUseItem(item, config, options) === false;
 
     if (suppressItemUse) {
       return;
@@ -961,7 +1014,7 @@ export const FoundryAdapter = {
   },
   onActorItemButtonContextMenu(item: Item5e, options: { event: Event }) {
     // Allow another module to react to a context menu action on the item use button.
-    Hooks.callAll('tidy5e-sheet.actorItemUseContextMenu', item, options);
+    TidyHooks.tidy5eSheetsActorItemUseContextMenu(item, options);
   },
   /**
    * Fires appropriate hooks related to tab selection and reports whether tab selection was cancelled.
@@ -970,8 +1023,7 @@ export const FoundryAdapter = {
    * @returns `true` to indicate proceeding with tab change; `false` to halt tab change
    */
   onTabSelecting(app: any & { currentTabId: string }, newTabId: string) {
-    const canProceed = Hooks.call(
-      'tidy5e-sheet.preSelectTab',
+    const canProceed = TidyHooks.tidy5eSheetsPreSelectTab(
       app,
       app.element.get(0),
       {
@@ -985,12 +1037,7 @@ export const FoundryAdapter = {
     }
 
     setTimeout(() => {
-      Hooks.callAll(
-        'tidy5e-sheet.selectTab',
-        app,
-        app.element.get(0),
-        newTabId
-      );
+      TidyHooks.tidy5eSheetsSelectTab(app, app.element.get(0), newTabId);
     });
 
     return true;

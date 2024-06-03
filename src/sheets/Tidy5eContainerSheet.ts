@@ -47,6 +47,7 @@ import { SheetSections } from 'src/features/sections/SheetSections';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import { Inventory } from 'src/features/sections/Inventory';
 import type { CharacterFavorite } from 'src/foundry/dnd5e.types';
+import { TidyHooks } from 'src/foundry/TidyHooks';
 
 export class Tidy5eKgarContainerSheet
   extends dnd5e.applications.item.ContainerSheet
@@ -210,26 +211,7 @@ export class Tidy5eKgarContainerSheet
       ContainerSheetSections.applyContentsItemToSection(sections, item);
     }
 
-    const sectionConfigs = TidyFlags.sectionConfig.get(this.item);
-
-    // Sort Sections
-    defaultDocumentContext.inventory.sections = SheetSections.sortKeyedSections(
-      Object.values(sections),
-      sectionConfigs?.[CONSTANTS.TAB_CONTAINER_CONTENTS]
-    );
-
-    // Trim Empty Sections
-    defaultDocumentContext.inventory.sections =
-      defaultDocumentContext.inventory.sections.filter(
-        (section: ContainerSection) => section.items.length
-      );
-
-    // Apply Show/Hide
-    for (let section of defaultDocumentContext.inventory.sections) {
-      section.show =
-        sectionConfigs?.[CONSTANTS.TAB_CONTAINER_CONTENTS]?.[section.key]
-          ?.show !== false && section.items.length;
-    }
+    defaultDocumentContext.inventory.sections = Object.values(sections);
 
     const itemDescriptions: ItemDescription[] = [];
     itemDescriptions.push({
@@ -338,9 +320,36 @@ export class Tidy5eKgarContainerSheet
         ) ?? [],
     };
 
-    debug(`Container Sheet context data`, context);
+    TidyHooks.tidy5eSheetsPreConfigureSections(
+      this,
+      this.element.get(0),
+      context
+    );
 
-    // TODO: Add hook for preparing Tidy-specific context data
+    // Apply Section Configs
+    // ------------------------------------------------------------
+
+    const sectionConfigs = TidyFlags.sectionConfig.get(this.item);
+
+    // Sort Sections
+    context.inventory.sections = SheetSections.sortKeyedSections(
+      context.inventory.sections,
+      sectionConfigs?.[CONSTANTS.TAB_CONTAINER_CONTENTS]
+    );
+
+    // Trim Empty Sections
+    context.inventory.sections = context.inventory.sections.filter(
+      (section: ContainerSection) => section.items.length
+    );
+
+    // Apply Show/Hide
+    for (let section of context.inventory.sections) {
+      section.show =
+        sectionConfigs?.[CONSTANTS.TAB_CONTAINER_CONTENTS]?.[section.key]
+          ?.show !== false && section.items.length;
+    }
+
+    debug(`Container Sheet context data`, context);
 
     return context;
   }
@@ -385,8 +394,7 @@ export class Tidy5eKgarContainerSheet
         this.element.get(0)
       );
       await this.renderCustomContent({ data, isFullRender: true });
-      Hooks.callAll(
-        'tidy5e-sheet.renderItemSheet',
+      TidyHooks.tidy5eSheetsRenderItemSheet(
         this,
         this.element.get(0),
         data,
@@ -403,8 +411,7 @@ export class Tidy5eKgarContainerSheet
     maintainCustomContentInputFocus(this, async () => {
       applyTitleToWindow(this.title, this.element.get(0));
       await this.renderCustomContent({ data, isFullRender: false });
-      Hooks.callAll(
-        'tidy5e-sheet.renderItemSheet',
+      TidyHooks.tidy5eSheetsRenderItemSheet(
         this,
         this.element.get(0),
         data,

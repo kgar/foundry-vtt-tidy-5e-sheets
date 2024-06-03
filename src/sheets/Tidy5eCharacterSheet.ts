@@ -29,6 +29,7 @@ import {
   type CharacterItemContext,
   type SpellbookSection,
   type FavoriteSection,
+  type EffectFavoriteSection,
 } from 'src/types/types';
 import {
   applySheetAttributesToWindow,
@@ -60,7 +61,6 @@ import { SheetPreferencesRuntime } from 'src/runtime/user-preferences/SheetPrefe
 import { Tidy5eBaseActorSheet } from './Tidy5eBaseActorSheet';
 import { CharacterSheetSections } from 'src/features/sections/CharacterSheetSections';
 import { SheetSections } from 'src/features/sections/SheetSections';
-import { TidyFlags } from 'src/api';
 import { DocumentTabSectionConfigApplication } from 'src/applications/section-config/DocumentTabSectionConfigApplication';
 import { ActorSheetCustomSectionMixin } from './mixins/Tidy5eBaseActorSheetMixins';
 import { ItemUtils } from 'src/utils/ItemUtils';
@@ -69,6 +69,8 @@ import type {
   CharacterFavorite,
   UnsortedCharacterFavorite,
 } from 'src/foundry/dnd5e.types';
+import { TidyHooks } from 'src/foundry/TidyHooks';
+import { TidyFlags } from 'src/foundry/TidyFlags';
 
 export class Tidy5eCharacterSheet
   extends ActorSheetCustomSectionMixin(
@@ -254,11 +256,7 @@ export class Tidy5eCharacterSheet
       })
     );
 
-    Hooks.callAll(
-      CONSTANTS.HOOK_TIDY5E_SHEETS_PREPARE_RESOURCES,
-      tidyResources,
-      this.actor
-    );
+    TidyHooks.tidy5eSheetsPrepareResources(tidyResources, this.actor);
 
     let maxPreparedSpellsTotal = 0;
     try {
@@ -723,7 +721,7 @@ export class Tidy5eCharacterSheet
           if (conditionIds.has(effect.id) && !effect.duration.remaining)
             return arr;
           const { id, name, img, disabled, duration } = effect;
-          let source = await effect.getSource();
+          let source = (await effect.getSource()) ?? this.actor;
           // If the source is an ActiveEffect from another Actor, note the source as that Actor instead.
           if (
             source instanceof dnd5e.documents.ActiveEffect5e &&
@@ -770,80 +768,6 @@ export class Tidy5eCharacterSheet
         e
       );
     }
-
-    // TODO: Add Effects to Favorites Sections
-
-    // TODO: Move all section config applications to here
-    // Apply Section Configs
-    const sectionConfigs = TidyFlags.sectionConfig.get(this.actor);
-
-    const favoritesIdMap: Map<string, CharacterFavorite> =
-      this._getFavoritesIdMap();
-
-    // Favorites
-    defaultDocumentContext.favorites =
-      CharacterSheetSections.mergeDuplicateFavoriteSections(
-        SheetSections.sortKeyedSections(
-          defaultDocumentContext.favorites,
-          sectionConfigs?.[CONSTANTS.TAB_CHARACTER_ATTRIBUTES]
-        )
-      );
-
-    (defaultDocumentContext.favorites as FavoriteSection[]).forEach(
-      (section) => {
-        if ('effects' in section) {
-          let effects = section.effects.map((s) =>
-            FoundryAdapter.getEffect({
-              document: this.actor,
-              effectId: s.id,
-              parentId: s.parentId,
-            })
-          );
-
-          // Sort Favorite Effects
-          if (attributesSortMode === 'm') {
-            const getSort = (effects: Item5e) =>
-              favoritesIdMap.get(effects.getRelativeUUID(this.actor))?.sort ??
-              Number.MAX_SAFE_INTEGER;
-
-            effects.sort((a, b) => getSort(a) - getSort(b));
-          } else {
-            ItemUtils.sortItems(effects, attributesSortMode);
-          }
-
-          // TODO: Filter Favorite Effects ?
-        } else {
-          let items = 'spells' in section ? section.spells : section.items;
-          // Sort Favorites Items
-          if (attributesSortMode === 'm') {
-            const getSort = (item: Item5e) =>
-              favoritesIdMap.get(item.getRelativeUUID(this.actor))?.sort ??
-              Number.MAX_SAFE_INTEGER;
-
-            items.sort((a, b) => getSort(a) - getSort(b));
-          } else {
-            ItemUtils.sortItems(items, attributesSortMode);
-          }
-
-          // TODO: Collocate Favorite Sub Items
-          // Filter Favorite Items
-          items = this.itemFilterService.filter(
-            items,
-            CONSTANTS.TAB_CHARACTER_ATTRIBUTES
-          );
-          if ('spells' in section) {
-            section.spells = items;
-          } else {
-            section.items = items;
-          }
-        }
-
-        // Apply visibility from configuration
-        section.show =
-          sectionConfigs?.[CONSTANTS.TAB_CHARACTER_ATTRIBUTES]?.[section.key]
-            ?.show !== false;
-      }
-    );
 
     const context: CharacterSheetContext = {
       ...defaultDocumentContext,
@@ -1050,6 +974,203 @@ export class Tidy5eCharacterSheet
     }
 
     context.tabs = tabs;
+
+    TidyHooks.tidy5eSheetsPreConfigureSections(
+      this,
+      this.element.get(0),
+      context
+    );
+
+    // Apply Section Configs
+    // ------------------------------------------------------------
+
+    const sectionConfigs = TidyFlags.sectionConfig.get(this.actor);
+
+    let effectsSection: EffectFavoriteSection = {
+      canCreate: false,
+      dataset: {},
+      effects: [],
+      key: 'tidy.effects',
+      label: 'DND5E.Effects',
+      show: true,
+    };
+    const favoriteEffects = (
+      this.actor.system.favorites as CharacterFavorite[]
+    ).filter((f) => f.type === 'effect');
+
+    // TODO: Do I need to remove active effects from favorites when they are no longer available on the sheet?
+    // Or does the system do this?
+    for (const favoriteEffect of favoriteEffects) {
+      const effect = fromUuidSync(favoriteEffect.id, { relative: this.actor });
+
+      if (!effect) {
+        continue;
+      }
+
+      const data = await effect.getFavoriteData();
+
+      if (data.suppressed) {
+        data.subtitle = game.i18n.localize('DND5E.Suppressed');
+      }
+
+      effectsSection.effects.push({
+        effectId: effect.id,
+        effect: effect,
+        id: favoriteEffect.id,
+        img: data.img,
+        sort: favoriteEffect.sort,
+        subtitle: data.subtitle,
+        suppressed: data.suppressed,
+        title: data.title,
+        toggle: { applicable: true, value: data.toggle },
+      });
+    }
+
+    const favoritesIdMap: Map<string, CharacterFavorite> =
+      this._getFavoritesIdMap();
+
+    // Favorites
+    context.favorites = CharacterSheetSections.mergeDuplicateFavoriteSections(
+      context.favorites
+    );
+
+    if (effectsSection.effects.length) {
+      (context.favorites as FavoriteSection[]).push({
+        ...effectsSection,
+        type: CONSTANTS.TAB_CHARACTER_EFFECTS,
+      });
+    }
+
+    // Apply Section Configs: Inventory
+
+    context.inventory = SheetSections.sortKeyedSections(
+      context.inventory,
+      sectionConfigs?.[CONSTANTS.TAB_CHARACTER_INVENTORY]
+    );
+
+    context.inventory.forEach((section) => {
+      // Sort Inventory
+      ItemUtils.sortItems(section.items, inventorySortMode);
+
+      // TODO: Collocate Inventory Sub Items
+      // Filter Inventory
+      section.items = this.itemFilterService.filter(
+        section.items,
+        CONSTANTS.TAB_CHARACTER_INVENTORY
+      );
+
+      // Apply visibility from configuration
+      section.show =
+        sectionConfigs?.[CONSTANTS.TAB_CHARACTER_INVENTORY]?.[section.key]
+          ?.show !== false;
+    });
+
+    // Apply Section Configs: Spellbook
+
+    context.spellbook = SheetSections.sortKeyedSections(
+      context.spellbook,
+      sectionConfigs?.[CONSTANTS.TAB_CHARACTER_SPELLBOOK]
+    );
+
+    context.spellbook.forEach((section) => {
+      // Sort Spellbook
+      ItemUtils.sortItems(section.spells, spellbookSortMode);
+
+      // TODO: Collocate Spellbook Sub Items
+      // Filter Spellbook
+      section.spells = this.itemFilterService.filter(
+        section.spells,
+        CONSTANTS.TAB_CHARACTER_SPELLBOOK
+      );
+
+      // Apply visibility from configuration
+      section.show =
+        sectionConfigs?.[CONSTANTS.TAB_CHARACTER_SPELLBOOK]?.[section.key]
+          ?.show !== false;
+    });
+
+    // Apply Section Configs: Features
+
+    context.features = SheetSections.sortKeyedSections(
+      context.features,
+      sectionConfigs?.[CONSTANTS.TAB_CHARACTER_FEATURES]
+    );
+
+    context.features.forEach((section) => {
+      // Sort Features
+      ItemUtils.sortItems(section.items, featureSortMode);
+
+      // Collocate Feature Sub Items
+      section.items = SheetSections.collocateSubItems(context, section.items);
+
+      // Filter Features
+      section.items = this.itemFilterService.filter(
+        section.items,
+        CONSTANTS.TAB_CHARACTER_FEATURES
+      );
+
+      // Apply visibility from configuration
+      section.show =
+        sectionConfigs?.[CONSTANTS.TAB_CHARACTER_FEATURES]?.[section.key]
+          ?.show !== false;
+    });
+
+    // Apply Section Configs: Favorites
+
+    context.favorites = SheetSections.sortKeyedSections(
+      context.favorites,
+      sectionConfigs?.[CONSTANTS.TAB_CHARACTER_ATTRIBUTES]
+    );
+
+    (context.favorites as FavoriteSection[]).forEach((section) => {
+      if ('effects' in section) {
+        let effectContexts = section.effects;
+
+        // Sort Favorite Effects
+        if (attributesSortMode === 'm') {
+          const getSort = (effects: Item5e) =>
+            favoritesIdMap.get(effects.getRelativeUUID(this.actor))?.sort ??
+            Number.MAX_SAFE_INTEGER;
+
+          effectContexts.sort((a, b) => getSort(a.effect) - getSort(b.effect));
+        } else {
+          effectContexts.sort((a, b) =>
+            a.effect.name.localeCompare(b.effect.name)
+          );
+        }
+
+        // TODO: Filter Favorite Effects ?
+      } else {
+        let items = 'spells' in section ? section.spells : section.items;
+        // Sort Favorites Items
+        if (attributesSortMode === 'm') {
+          const getSort = (item: Item5e) =>
+            favoritesIdMap.get(item.getRelativeUUID(this.actor))?.sort ??
+            Number.MAX_SAFE_INTEGER;
+
+          items.sort((a, b) => getSort(a) - getSort(b));
+        } else {
+          ItemUtils.sortItems(items, attributesSortMode);
+        }
+
+        // TODO: Collocate Favorite Sub Items
+        // Filter Favorite Items
+        items = this.itemFilterService.filter(
+          items,
+          CONSTANTS.TAB_CHARACTER_ATTRIBUTES
+        );
+        if ('spells' in section) {
+          section.spells = items;
+        } else {
+          section.items = items;
+        }
+      }
+
+      // Apply visibility from configuration
+      section.show =
+        sectionConfigs?.[CONSTANTS.TAB_CHARACTER_ATTRIBUTES]?.[section.key]
+          ?.show !== false;
+    });
 
     debug('Character Sheet context data', context);
 
@@ -1287,90 +1408,15 @@ export class Tidy5eCharacterSheet
         { canCreate: false }
       );
 
-    // Assign, sort sections, sort items, and return
-    const sectionConfigs = TidyFlags.sectionConfig.get(this.actor);
+    // Apply sections to their section lists
 
-    context.inventory = SheetSections.sortKeyedSections(
-      Object.values(inventory),
-      sectionConfigs?.[CONSTANTS.TAB_CHARACTER_INVENTORY]
-    );
+    context.inventory = Object.values(inventory);
 
-    const inventorySortMode =
-      characterPreferences.tabs?.[CONSTANTS.TAB_CHARACTER_INVENTORY]?.sort ??
-      'm';
+    context.spellbook = spellbook;
 
-    context.inventory.forEach((section) => {
-      // Sort Inventory
-      ItemUtils.sortItems(section.items, inventorySortMode);
+    context.features = Object.values(features);
 
-      // TODO: Collocate Inventory Sub Items
-      // Filter Inventory
-      section.items = this.itemFilterService.filter(
-        section.items,
-        CONSTANTS.TAB_CHARACTER_INVENTORY
-      );
-
-      // Apply visibility from configuration
-      section.show =
-        sectionConfigs?.[CONSTANTS.TAB_CHARACTER_INVENTORY]?.[section.key]
-          ?.show !== false;
-    });
-
-    context.spellbook = SheetSections.sortKeyedSections(
-      spellbook,
-      sectionConfigs?.[CONSTANTS.TAB_CHARACTER_SPELLBOOK]
-    );
-
-    const spellbookSortMode =
-      characterPreferences.tabs?.[CONSTANTS.TAB_CHARACTER_SPELLBOOK]?.sort ??
-      'm';
-
-    context.spellbook.forEach((section) => {
-      // Sort Spellbook
-      ItemUtils.sortItems(section.spells, spellbookSortMode);
-
-      // TODO: Collocate Spellbook Sub Items
-      // Filter Spellbook
-      section.spells = this.itemFilterService.filter(
-        section.spells,
-        CONSTANTS.TAB_CHARACTER_SPELLBOOK
-      );
-
-      // Apply visibility from configuration
-      section.show =
-        sectionConfigs?.[CONSTANTS.TAB_CHARACTER_SPELLBOOK]?.[section.key]
-          ?.show !== false;
-    });
-
-    context.features = SheetSections.sortKeyedSections(
-      Object.values(features),
-      sectionConfigs?.[CONSTANTS.TAB_CHARACTER_FEATURES]
-    );
-
-    const featureSortMode =
-      characterPreferences.tabs?.[CONSTANTS.TAB_CHARACTER_FEATURES]?.sort ??
-      'm';
-
-    context.features.forEach((section) => {
-      // Sort Features
-      ItemUtils.sortItems(section.items, featureSortMode);
-
-      // Collocate Feature Sub Items
-      section.items = SheetSections.collocateSubItems(context, section.items);
-
-      // Filter Features
-      section.items = this.itemFilterService.filter(
-        section.items,
-        CONSTANTS.TAB_CHARACTER_FEATURES
-      );
-
-      // Apply visibility from configuration
-      section.show =
-        sectionConfigs?.[CONSTANTS.TAB_CHARACTER_FEATURES]?.[section.key]
-          ?.show !== false;
-    });
-
-    const favoriteSections = [
+    context.favorites = [
       ...Object.values(favoriteInventory)
         .filter((i) => i.items.length)
         .map((i) => ({
@@ -1390,9 +1436,6 @@ export class Tidy5eCharacterSheet
           type: CONSTANTS.TAB_CHARACTER_SPELLBOOK,
         })),
     ];
-
-    // TODO: Revise so that there's less churn.
-    context.favorites = Array.from(favoriteSections.values());
 
     context.preparedSpells = nPrepared;
   }
@@ -1545,8 +1588,7 @@ export class Tidy5eCharacterSheet
         this.element.get(0)
       );
       await this.renderCustomContent({ data, isFullRender: true });
-      Hooks.callAll(
-        'tidy5e-sheet.renderActorSheet',
+      TidyHooks.tidy5eSheetsRenderActorSheet(
         this,
         this.element.get(0),
         data,
@@ -1564,8 +1606,7 @@ export class Tidy5eCharacterSheet
     await maintainCustomContentInputFocus(this, async () => {
       applyTitleToWindow(this.title, this.element.get(0));
       await this.renderCustomContent({ data, isFullRender: false });
-      Hooks.callAll(
-        'tidy5e-sheet.renderActorSheet',
+      TidyHooks.tidy5eSheetsRenderActorSheet(
         this,
         this.element.get(0),
         data,

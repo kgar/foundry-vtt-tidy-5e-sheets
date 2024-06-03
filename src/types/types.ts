@@ -123,7 +123,7 @@ export type GenericFavoriteSection = {
 } & TidySectionBase;
 
 export type EffectFavoriteSection = {
-  effects: ActiveEffectContext[];
+  effects: FavoriteEffectContext[];
   canCreate: false;
 } & TidySectionBase;
 
@@ -210,9 +210,25 @@ export type CharacterItemContext = {
   parent?: Item5e;
 };
 
-export type TypedEffectFavoriteSection = (EffectFavoriteSection & {
+export type TypedEffectFavoriteSection = EffectFavoriteSection & {
   type: typeof CONSTANTS.TAB_CHARACTER_EFFECTS;
-});
+};
+
+// TODO: Trim to minimum necessary
+export type FavoriteEffectContext = {
+  effect: ActiveEffect5e;
+  effectId: string;
+  id: string;
+  img: string;
+  sort: number;
+  subtitle: string;
+  suppressed: boolean;
+  title: string;
+  toggle: {
+    applicable: boolean;
+    value: boolean;
+  };
+};
 
 export type FavoriteSection =
   | (InventorySection & { type: typeof CONSTANTS.TAB_CHARACTER_INVENTORY })
@@ -570,4 +586,14 @@ export type DamageModificationContextEntry = {
 export type ActiveEffect5e = any;
 
 // TODO: Get the real typings for this
-export type ActiveEffectContext = any;
+export type ActiveEffectContext = {
+  id: string;
+  name: string;
+  img: string;
+  disabled: boolean;
+  duration: number;
+  source: any;
+  parentId: string;
+  durationParts: string | string[];
+  hasTooltip: boolean;
+};

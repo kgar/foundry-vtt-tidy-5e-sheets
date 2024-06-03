@@ -1,5 +1,5 @@
-import { TidyFlags } from 'src/api';
 import { CONSTANTS } from 'src/constants';
+import { TidyFlags } from 'src/foundry/TidyFlags';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 import type { Item5e } from 'src/types/item.types';
 import type { Actor5e } from 'src/types/types';

@@ -23,8 +23,6 @@
     : [];
 
   function createForCustom(custom: CustomSectionOptions) {
-    // TODO: Support fast-forwarding item creation when there's only one type available.
-    // This will require a breaking model change to `dataset`.
     if (!custom.creationItemTypes.length) {
       return;
     }
