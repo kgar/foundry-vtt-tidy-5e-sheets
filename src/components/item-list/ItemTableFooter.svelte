@@ -1,4 +1,5 @@
 <script lang="ts" generics="TSection extends TidySectionBase">
+  import { TidyHooks } from 'src/foundry/TidyHooks';
   import type {
     Actor5e,
     CustomSectionOptions,
@@ -33,14 +34,19 @@
         actor,
       );
     } else {
-      Item.implementation.createDialog(
-        { ...section.dataset },
-        {
-          parent: actor,
-          pack: actor.pack,
-          types: custom.creationItemTypes,
-        },
-      );
+      const createData = { ...section.dataset };
+
+      if (
+        !TidyHooks.tidy5eSheetsPreCreateItem(actor, createData, game.user.id)
+      ) {
+        return;
+      }
+
+      Item.implementation.createDialog(createData, {
+        parent: actor,
+        pack: actor.pack,
+        types: custom.creationItemTypes,
+      });
     }
   }
 

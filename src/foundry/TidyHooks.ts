@@ -318,4 +318,42 @@ export class TidyHooks {
   ): boolean {
     return Hooks.call(hookName, item, config, options);
   }
+
+  /**
+   * An item is about to be created for an owning document.
+   * This was initiated specifically through Tidy 5e Sheets,
+   * whether directly by the user, or indirectly through some user interaction.
+   * @param owner the owning document instance which will receive the created item
+   * @param createData the data used to create it
+   * @param userId the user who initiated the creation
+   * @param hookName this hook's registered name
+   * @returns `true` to allow the item creation, `false` to prevent it
+   */
+  static tidy5eSheetsPreCreateItem(
+    owner: any,
+    createData: object,
+    userId: string,
+    hookName: typeof CONSTANTS.HOOK_TIDY5E_SHEETS_PRE_CREATE_ITEM = CONSTANTS.HOOK_TIDY5E_SHEETS_PRE_CREATE_ITEM
+  ): boolean {
+    return Hooks.call(hookName, owner, createData, userId);
+  }
+
+  /**
+   * An active effect is about to be created for an owning document.
+   * This was initiated specifically through Tidy 5e Sheets,
+   * whether directly by the user, or indirectly through some user interaction.
+   * @param owner the owning document instance which will receive the created effect
+   * @param createData the data used to create it
+   * @param userId the user who initiated the creation
+   * @param hookName this hook's registered name
+   * @returns `true` to allow the effect creation, `false` to prevent it
+   */
+  static tidy5eSheetsPreCreateActiveEffect(
+    owner: any,
+    createData: object,
+    userId: string,
+    hookName: typeof CONSTANTS.HOOK_TIDY5E_SHEETS_PRE_CREATE_ACTIVE_EFFECT = CONSTANTS.HOOK_TIDY5E_SHEETS_PRE_CREATE_ACTIVE_EFFECT
+  ): boolean {
+    return Hooks.call(hookName, owner, createData, userId);
+  }
 }
