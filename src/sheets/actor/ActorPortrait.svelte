@@ -20,7 +20,7 @@
   function openPortraitPicker(
     event: MouseEvent & { currentTarget: EventTarget & HTMLElement },
   ) {
-    if (!TidyHooks.tidy5eSheetsPreOpenActorPortraitFilePicker(context, event)) {
+    if (!TidyHooks.tidy5eSheetsPreOpenActorPortraitFilePicker($context, event)) {
       return;
     }
     const rect = event.currentTarget.getBoundingClientRect();

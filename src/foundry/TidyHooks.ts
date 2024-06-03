@@ -21,8 +21,15 @@ import type { Readable } from 'svelte/store';
 
 /** Manages all Hook usage in Tidy 5e Sheets */
 export class TidyHooks {
+  /**
+   * The portrait picker is about to open.
+   * @param context the actor sheet data from `getData()`
+   * @param event the triggering event
+   * @param hookName this hook's registered name
+   * @returns
+   */
   static tidy5eSheetsPreOpenActorPortraitFilePicker(
-    context: Readable<ActorSheetContext>,
+    context: ActorSheetContext,
     event: MouseEvent & { currentTarget: EventTarget & HTMLElement },
     hookName: typeof CONSTANTS.HOOK_TIDY5E_SHEETS_PRE_OPEN_ACTOR_PORTRAIT_FILE_PICKER = CONSTANTS.HOOK_TIDY5E_SHEETS_PRE_OPEN_ACTOR_PORTRAIT_FILE_PICKER
   ): boolean {
@@ -30,11 +37,12 @@ export class TidyHooks {
   }
 
   /**
-   * A hook event that fires before a short rest is started.
+   * A short rest is about to start.
    * @function dnd5e.preShortRest
    * @memberof hookEvents
    * @param {Actor5e} actor             The actor that is being rested.
    * @param {RestConfiguration} config  Configuration options for the rest.
+   * @param hookName this hook's registered name
    * @returns {boolean}                 Explicitly return `false` to prevent the rest from being started.
    */
   static dnd5ePreShortRest(
@@ -46,10 +54,11 @@ export class TidyHooks {
   }
 
   /**
-   * A hook event that fires when the context menu for the advancements list is constructed.
+   * The context menu for the advancements list has been constructed.
    * @memberof hookEvents
    * @param {jQuery} html                      The HTML element to which the context options are attached.
    * @param {ContextMenuEntry[]} entryOptions  The context menu entries.
+   * @param hookName this hook's registered name
    */
   static dnd5eGetItemAdvancementContext(
     html: any,
@@ -59,6 +68,14 @@ export class TidyHooks {
     return Hooks.call(hookName, html, contextOptions);
   }
 
+  /**
+   * The item sheet has rendered all content and registered custom content. Is called on partial and full renders.
+   * @param app the target item sheet application class instance
+   * @param element the item sheet's HTML element
+   * @param data the data context from `getData()`
+   * @param forced `true` when performing a full re-render; `false` when performing a partial re-render
+   * @param hookName this hook's registered name
+   */
   static tidy5eSheetsRenderItemSheet(
     app: any,
     element: HTMLElement,
