@@ -58,7 +58,7 @@ function onItemContext(element: HTMLElement) {
     if (!item) return;
 
     // TODO: Leverage the API to aggregate any registered context menu options; pass in the context of the current item for reference.
-  ui.context.menuItems = getItemContextOptions(item);
+    ui.context.menuItems = getItemContextOptions(item);
     TidyHooks.dnd5eGetItemContextOptions(item, ui.context.menuItems);
   } else {
     warn(
@@ -340,7 +340,11 @@ function getItemContextOptions(item: Item5e) {
       options.push({
         name: 'DND5E.ContextMenuActionDelete',
         icon: "<i class='fas fa-trash fa-fw' style='color: var(--t5e-warning-accent-color);'></i>",
-        callback: () => FoundryAdapter.onActorItemDelete(itemParent, item),
+        callback: () => {
+          return itemParent
+            ? FoundryAdapter.onActorItemDelete(itemParent, item)
+            : item.deleteDialog();
+        },
       });
     }
   }
