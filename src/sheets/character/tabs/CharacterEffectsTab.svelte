@@ -50,6 +50,7 @@
         component: EffectFavoriteControl,
         props: ({ effect }) => ({
           effect: effect,
+          actor: $context.actor,
         }),
       },
       {
@@ -118,54 +119,58 @@
               </ItemTableHeaderRow>
             </svelte:fragment>
             <svelte:fragment slot="body">
-              {#each section.effects as effect}
+              {#each section.effects as effectContext}
                 <ItemTableRow
                   on:mousedown={(event) =>
                     FoundryAdapter.editOnMiddleClick(
                       event.detail,
                       FoundryAdapter.getEffect({
                         document: $context.actor,
-                        effectId: effect.id,
-                        parentId: effect.parentId,
+                        effectId: effectContext.id,
+                        parentId: effectContext.parentId,
                       }),
                     )}
                   contextMenu={{
                     type: CONSTANTS.CONTEXT_MENU_TYPE_EFFECTS,
-                    uuid: effect.uuid,
+                    uuid: effectContext.uuid,
                   }}
                   getDragData={() =>
                     FoundryAdapter.getEffect({
                       document: $context.actor,
-                      effectId: effect.id,
-                      parentId: effect.parentId,
+                      effectId: effectContext.id,
+                      parentId: effectContext.parentId,
                     })?.toDragData()}
-                  {effect}
+                  effect={effectContext}
                 >
                   <ItemTableCell
                     primary={true}
                     attributes={{
                       'data-tidy-effect-name-container': true,
-                      'data-effect-id': effect.id,
+                      'data-effect-id': effectContext.id,
                     }}
                   >
-                    <ItemImage src={effect.img} />
+                    <ItemImage src={effectContext.img} />
                     <span
                       class="align-self-center truncate"
-                      data-tidy-effect-name={effect.name}>{effect.name}</span
+                      data-tidy-effect-name={effectContext.name}
+                      >{effectContext.name}</span
                     >
                   </ItemTableCell>
-                  {#if FoundryAdapter.isEffectFavorited(effect) && $settingStore.showIconsNextToTheItemName}
+                  {#if FoundryAdapter.isActiveEffectContextFavorited(effectContext, $context.actor) && $settingStore.showIconsNextToTheItemName}
                     <InlineFavoriteIcon />
                   {/if}
                   <ItemTableCell baseWidth="12.5rem"
-                    >{effect.source?.name ?? ''}</ItemTableCell
+                    >{effectContext.source?.name ?? ''}</ItemTableCell
                   >
                   <ItemTableCell baseWidth="7.5rem"
-                    >{effect.duration?.label ?? ''}</ItemTableCell
+                    >{effectContext.duration?.label ?? ''}</ItemTableCell
                   >
                   {#if $context.editable && $context.useClassicControls && $context.allowEffectsManagement}
                     <ItemTableCell baseWidth={classicControlsColumnWidth}>
-                      <ClassicControls {controls} params={{ effect: effect }} />
+                      <ClassicControls
+                        {controls}
+                        params={{ effect: effectContext }}
+                      />
                     </ItemTableCell>
                   {/if}
                 </ItemTableRow>

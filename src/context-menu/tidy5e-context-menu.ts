@@ -92,7 +92,7 @@ function getActiveEffectContextOptions(effect: any, app: any) {
     app
   );
 
-  const isFav = FoundryAdapter.isEffectFavorited(effect);
+  const isFav = FoundryAdapter.isEffectFavorited(effect, actor);
   const favoriteIcon = 'fa-bookmark';
 
   let tidy5eKgarContextOptions = [
