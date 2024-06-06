@@ -560,10 +560,8 @@ export const FoundryAdapter = {
       }`
     );
   },
-  isActiveEffectContextFavorited(context: ActiveEffectContext) {
-    const actor = context.source?.actor ?? context.source;
-
-    if (actor?.documentName !== CONSTANTS.DOCUMENT_NAME_ACTOR) {
+  isActiveEffectContextFavorited(context: ActiveEffectContext, actor: Actor5e) {
+    if (!actor) {
       return false;
     }
 
@@ -573,7 +571,7 @@ export const FoundryAdapter = {
       parentId: context.parentId,
     });
 
-    return FoundryAdapter.isEffectFavorited(effect);
+    return FoundryAdapter.isEffectFavorited(effect, actor);
   },
   getEffectActor(effect: ActiveEffect5e) {
     return (
@@ -583,9 +581,7 @@ export const FoundryAdapter = {
       effect.parent
     );
   },
-  isEffectFavorited(effect: ActiveEffect5e) {
-    const actor = FoundryAdapter.getEffectActor(effect);
-
+  isEffectFavorited(effect: ActiveEffect5e, actor: Actor5e) {
     if (
       actor?.documentName === CONSTANTS.DOCUMENT_NAME_ACTOR &&
       'favorites' in actor.system
@@ -601,7 +597,7 @@ export const FoundryAdapter = {
       return;
     }
 
-    const favorited = FoundryAdapter.isEffectFavorited(effect);
+    const favorited = FoundryAdapter.isEffectFavorited(effect, actor);
     if (favorited) {
       await actor.system.removeFavorite(effect.getRelativeUUID(actor));
     } else {
@@ -616,7 +612,7 @@ export const FoundryAdapter = {
 
     if (actor && 'favorites' in actor.system) {
       const relativeUuid = document.getRelativeUUID(actor);
-      return actor.system.favorites.some((f: any) => f.id === relativeUuid);
+      return actor.system.hasFavorite(relativeUuid);
     }
 
     return false;
