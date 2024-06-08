@@ -201,6 +201,10 @@
       --t5e-tidy-table-row-background: var(--t5e-atwill-background);
     }
 
+    :global(.tidy-table-row.ritual-only) {
+      --t5e-tidy-table-row-background: var(--t5e-ritual-only-background);
+    }
+
     :global(.tidy-table-row.innate) {
       --t5e-tidy-table-row-background: var(--t5e-innate-background);
     }

@@ -164,6 +164,18 @@ export const themeVariables = {
     type: 'todo',
     group: 'todo',
   },
+  '--t5e-ritual-only-background': {
+    type: 'todo',
+    group: 'todo',
+  },
+  '--t5e-ritual-only-outline-color': {
+    type: 'todo',
+    group: 'todo',
+  },
+  '--t5e-ritual-only-accent-color': {
+    type: 'todo',
+    group: 'todo',
+  },
   '--t5e-innate-background': {
     type: 'todo',
     group: 'todo',

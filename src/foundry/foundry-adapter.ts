@@ -366,6 +366,12 @@ export const FoundryAdapter = {
     }
 
     if (
+      spell.system.preparation.mode === CONSTANTS.SPELL_PREPARATION_MODE_RITUAL
+    ) {
+      classes.push('ritual-only');
+    }
+
+    if (
       spell.system.preparation.mode === CONSTANTS.SPELL_PREPARATION_MODE_INNATE
     ) {
       classes.push('innate');

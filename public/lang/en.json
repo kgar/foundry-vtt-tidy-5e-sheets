@@ -589,6 +589,15 @@
   "TIDY5E.Settings.ColorPickerAtWillAccent": {
     "name": "At Will Accent"
   },
+  "TIDY5E.Settings.ColorPickerRitualOnly": {
+    "name": "Ritual Only"
+  },
+  "TIDY5E.Settings.ColorPickerRitualOnlyOutline": {
+    "name": "Ritual Only Outline"
+  },
+  "TIDY5E.Settings.ColorPickerRitualOnlyAccent": {
+    "name": "Ritual Only Accent"
+  },
   "TIDY5E.Settings.ColorPickerInnate": {
     "name": "Innate"
   },
