@@ -1720,6 +1720,50 @@ export function createSettings() {
         representsCssVariable: '--t5e-atwill-accent-color',
       },
 
+      colorPickerRitualOnly: {
+        options: {
+          name: 'TIDY5E.Settings.ColorPickerRitualOnly.name',
+          scope: 'client',
+          type: String,
+          default: defaultLightTheme.variables['--t5e-ritual-only-background'],
+          config: false,
+        },
+        get() {
+          return FoundryAdapter.getTidySetting<string>('colorPickerRitualOnly');
+        },
+        representsCssVariable: '--t5e-ritual-only-background',
+      },
+      colorPickerRitualOnlyOutline: {
+        options: {
+          name: 'TIDY5E.Settings.ColorPickerRitualOnlyOutline.name',
+          scope: 'client',
+          type: String,
+          default: defaultLightTheme.variables['--t5e-ritual-only-outline-color'],
+          config: false,
+        },
+        get() {
+          return FoundryAdapter.getTidySetting<string>(
+            'colorPickerRitualOnlyOutline'
+          );
+        },
+        representsCssVariable: '--t5e-ritual-only-outline-color',
+      },
+      colorPickerRitualOnlyAccent: {
+        options: {
+          name: 'TIDY5E.Settings.ColorPickerRitualOnlyAccent.name',
+          scope: 'client',
+          type: String,
+          default: defaultLightTheme.variables['--t5e-ritual-only-accent-color'],
+          config: false,
+        },
+        get() {
+          return FoundryAdapter.getTidySetting<string>(
+            'colorPickerRitualOnlyAccent'
+          );
+        },
+        representsCssVariable: '--t5e-ritual-only-accent-color',
+      },
+
       colorPickerInnate: {
         options: {
           name: 'TIDY5E.Settings.ColorPickerInnate.name',

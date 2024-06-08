@@ -26,6 +26,10 @@
   &.at-will .info-card-name {
     background: var(--t5e-atwill-background);
   }
+  
+  &.ritual-only .info-card-name {
+    background: var(--t5e-ritual-only-background);
+  }
 
   &.innate .info-card-name {
     background: var(--t5e-innate-background);

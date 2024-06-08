@@ -208,6 +208,10 @@
       &.at-will {
         --t5e-item-table-row-background: var(--t5e-atwill-background);
       }
+      
+      &.ritual-only {
+        --t5e-item-table-row-background: var(--t5e-ritual-only-background);
+      }
 
       &.innate {
         --t5e-item-table-row-background: var(--t5e-innate-background);

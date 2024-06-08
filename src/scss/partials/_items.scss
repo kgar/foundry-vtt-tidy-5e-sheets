@@ -538,11 +538,12 @@ input[type='checkbox'] {
     }
 
     input:disabled {
-      background: transparent;
+      background: rgba(255, 255, 255, 0.035);      
       color: var(--t5e-secondary-color);
 
       &:hover {
         border: none !important;
+        box-shadow: none !important;
       }
     }
 

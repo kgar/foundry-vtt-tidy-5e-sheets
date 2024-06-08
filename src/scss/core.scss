@@ -328,6 +328,39 @@
       color: var(--t5e-tertiary-color);
     }
   }
+
+  /* Secret Sections */
+  section.secret {
+    padding: 0 0.3125rem;
+    border-top: 0.0625rem solid var(--t5e-separator-color);
+    border-bottom: 0.0625rem solid var(--t5e-separator-color);
+  }
+
+  &:where([data-tidy-theme-type='light']) section.secret {
+    background: rgba(53, 0, 121, 0.05);
+  }
+
+  &:where([data-tidy-theme-type='light']) section.secret.revealed {
+    background: rgba(0, 53, 0, 0.05);
+  }
+
+  &:where([data-tidy-theme-type='dark']) section.secret {
+    background: rgba(73, 29, 37, 0.35);
+  }
+
+  &:where([data-tidy-theme-type='dark']) section.secret.revealed {
+    background: hsla(120, 100%, 10%, 0.15);
+  }
+
+  section.secret button.reveal {
+    width: unset;
+    line-height: unset;
+    padding: 0 1rem;
+    margin-top: 8px;
+    font-size: var(--font-size-13);
+    border-style: solid;
+    border-width: 1px;
+  }
 }
 
 @import './partials/floating-context-menu';

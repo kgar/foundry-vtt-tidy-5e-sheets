@@ -33,6 +33,7 @@ import {
 } from 'src/types/types';
 import {
   applySheetAttributesToWindow,
+  applyThemeDataAttributeToWindow,
   applyTitleToWindow,
   blurUntabbableButtonsOnClick,
   maintainCustomContentInputFocus,
@@ -147,8 +148,9 @@ export class Tidy5eCharacterSheet
         if (first) return;
         this.render();
       }),
-      settingStore.subscribe(() => {
+      settingStore.subscribe((s) => {
         if (first) return;
+        applyThemeDataAttributeToWindow(s.colorScheme, this.element.get(0));
         this.render();
       }),
       this.messageBus.subscribe((m) => {

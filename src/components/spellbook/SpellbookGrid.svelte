@@ -247,6 +247,17 @@
           }
         }
 
+        &.ritual-only {
+          box-shadow: 0 0 0 0.125rem var(--t5e-ritual-only-outline-color);
+          background-color: var(--t5e-ritual-only-background);
+
+          .spell-image {
+            box-shadow: 0 0 0.0625rem 0.0625rem inset
+              var(--t5e-ritual-only-accent-color);
+            border-radius: 0.3125rem;
+          }
+        }
+
         &.innate {
           box-shadow: 0 0 0 0.125rem var(--t5e-innate-outline);
           background-color: var(--t5e-innate-background);

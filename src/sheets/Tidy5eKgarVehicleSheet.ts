@@ -25,6 +25,7 @@ import VehicleSheet from './vehicle/VehicleSheet.svelte';
 import { initTidy5eContextMenu } from 'src/context-menu/tidy5e-context-menu';
 import {
   applySheetAttributesToWindow,
+  applyThemeDataAttributeToWindow,
   applyTitleToWindow,
   blurUntabbableButtonsOnClick,
   maintainCustomContentInputFocus,
@@ -115,8 +116,9 @@ export class Tidy5eVehicleSheet
         if (first) return;
         this.render();
       }),
-      settingStore.subscribe(() => {
+      settingStore.subscribe((s) => {
         if (first) return;
+        applyThemeDataAttributeToWindow(s.colorScheme, this.element.get(0));
         this.render();
       }),
       this.messageBus.subscribe((m) => {

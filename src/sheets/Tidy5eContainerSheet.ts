@@ -25,6 +25,7 @@ import { get, writable } from 'svelte/store';
 import { CustomContentRenderer } from './CustomContentRenderer';
 import {
   applySheetAttributesToWindow,
+  applyThemeDataAttributeToWindow,
   applyTitleToWindow,
   maintainCustomContentInputFocus,
 } from 'src/utils/applications';
@@ -95,8 +96,9 @@ export class Tidy5eKgarContainerSheet
         if (first) return;
         this.render();
       }),
-      settingStore.subscribe(() => {
+      settingStore.subscribe((s) => {
         if (first) return;
+        applyThemeDataAttributeToWindow(s.colorScheme, this.element.get(0));
         this.render();
       }),
       this.messageBus.subscribe((m) => {
@@ -463,6 +465,7 @@ export class Tidy5eKgarContainerSheet
       );
     } finally {
       this.component?.$destroy();
+      this.subscriptionsService.unsubscribeAll();
       return super.close(...args);
     }
   }

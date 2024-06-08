@@ -20,6 +20,7 @@ import NpcSheet from './npc/NpcSheet.svelte';
 import { CONSTANTS } from 'src/constants';
 import {
   applySheetAttributesToWindow,
+  applyThemeDataAttributeToWindow,
   applyTitleToWindow,
   blurUntabbableButtonsOnClick,
   maintainCustomContentInputFocus,
@@ -125,8 +126,9 @@ export class Tidy5eNpcSheet
         if (first) return;
         this.render();
       }),
-      settingStore.subscribe(() => {
+      settingStore.subscribe((s) => {
         if (first) return;
+        applyThemeDataAttributeToWindow(s.colorScheme, this.element.get(0));
         this.render();
       }),
       this.messageBus.subscribe((m) => {
