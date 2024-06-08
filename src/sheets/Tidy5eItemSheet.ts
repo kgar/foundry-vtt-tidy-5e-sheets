@@ -9,6 +9,7 @@ import TypeNotFoundSheet from './item/TypeNotFoundSheet.svelte';
 import type { SheetStats, SheetTabCacheable, Tab } from 'src/types/types';
 import {
   applySheetAttributesToWindow,
+  applyThemeDataAttributeToWindow,
   applyTitleToWindow,
   maintainCustomContentInputFocus,
 } from 'src/utils/applications';
@@ -19,10 +20,11 @@ import { isNil } from 'src/utils/data';
 import { ItemSheetRuntime } from 'src/runtime/item/ItemSheetRuntime';
 import { TabManager } from 'src/runtime/tab/TabManager';
 import { CustomContentRenderer } from './CustomContentRenderer';
-import { SettingsProvider } from 'src/settings/settings';
+import { SettingsProvider, settingStore } from 'src/settings/settings';
 import { SheetPreferencesService } from 'src/features/user-preferences/SheetPreferencesService';
 import { AsyncMutex } from 'src/utils/mutex';
 import { TidyHooks } from 'src/foundry/TidyHooks';
+import { StoreSubscriptionsService } from 'src/features/store/StoreSubscriptionsService';
 
 export class Tidy5eKgarItemSheet
   extends dnd5e.applications.item.ItemSheet5e
@@ -33,9 +35,12 @@ export class Tidy5eKgarItemSheet
     lastSubmissionTime: null,
   });
   currentTabId: string | undefined = undefined;
+  subscriptionsService: StoreSubscriptionsService;
 
   constructor(item: Item5e, ...args: any[]) {
     super(item, ...args);
+    
+    this.subscriptionsService = new StoreSubscriptionsService();
   }
 
   get template() {
@@ -50,6 +55,16 @@ export class Tidy5eKgarItemSheet
 
   component: SvelteComponent | undefined;
   activateListeners(html: any) {
+    let first = true;
+    this.subscriptionsService.registerSubscriptions(
+      settingStore.subscribe((s) => {
+        if (first) return;
+        applyThemeDataAttributeToWindow(s.colorScheme, this.element.get(0));
+        this.render();
+      })
+    );
+    first = false;
+
     const node = html.get(0);
 
     const context = new Map<any, any>([
@@ -252,6 +267,7 @@ export class Tidy5eKgarItemSheet
       );
     } finally {
       this.component?.$destroy();
+      this.subscriptionsService.unsubscribeAll();
       return super.close(...args);
     }
   }
