@@ -34,7 +34,11 @@ export class CharacterSheetSections {
       key: customSectionName,
       custom: {
         section: customSectionName,
-        creationItemTypes: Inventory.inventoryItemTypes,
+        // TODO: parameterize the function so that this is not being done in a loop
+        // TODO: Consider providing a global derived store for supported item types in proper order, and each sheet that performs a render can refresh the item section type store.
+        creationItemTypes: Object.keys(
+          Inventory.getInventoryMetadataSections()
+        ),
       },
       show: true,
       ...customSectionOptions,

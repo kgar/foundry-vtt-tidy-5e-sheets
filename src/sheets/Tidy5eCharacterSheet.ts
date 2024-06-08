@@ -1181,26 +1181,12 @@ export class Tidy5eCharacterSheet
 
   protected _prepareItems(context: CharacterSheetContext) {
     // Categorize items as inventory, spellbook, features, and classes
-    const inventory: ActorInventoryTypes = {};
-    const favoriteInventory: ActorInventoryTypes = {};
-    for (const type of Inventory.inventoryItemTypes) {
-      inventory[type] = {
-        label: Inventory.getInventoryTypeLabel(type),
-        items: [],
-        dataset: { type },
-        canCreate: true,
-        key: type,
-        show: true,
-      };
-      favoriteInventory[type] = {
-        label: Inventory.getInventoryTypeLabel(type),
-        items: [],
-        dataset: { type },
+    const inventory: ActorInventoryTypes =
+      Inventory.getInventoryMetadataSections();
+    const favoriteInventory: ActorInventoryTypes =
+      Inventory.getInventoryMetadataSections({
         canCreate: false,
-        key: type,
-        show: true,
-      };
-    }
+      });
 
     const favoritesIdMap: Map<string, CharacterFavorite> =
       this._getFavoritesIdMap();
