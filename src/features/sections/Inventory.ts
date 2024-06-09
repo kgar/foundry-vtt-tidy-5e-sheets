@@ -2,18 +2,6 @@ import { CONSTANTS } from 'src/constants';
 import type { InventorySection } from 'src/types/types';
 
 export class Inventory {
-  // TODO: Consider providing this kind of list specifically for testing so that tests can be prepared before having access to the Page object.
-  // static get inventoryItemTypes() {
-  //   return [
-  //     CONSTANTS.ITEM_TYPE_WEAPON,
-  //     CONSTANTS.ITEM_TYPE_EQUIPMENT,
-  //     CONSTANTS.ITEM_TYPE_CONSUMABLE,
-  //     CONSTANTS.ITEM_TYPE_TOOL,
-  //     CONSTANTS.ITEM_TYPE_CONTAINER,
-  //     CONSTANTS.ITEM_TYPE_LOOT,
-  //   ];
-  // }
-
   static getInventoryMetadataSections(
     options?: Partial<InventorySection>
   ): Record<string, InventorySection> {

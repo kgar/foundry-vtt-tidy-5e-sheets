@@ -8,7 +8,7 @@ import {
   verifyItemExistsInSection,
 } from './sections-shared';
 import { NpcSheetSections } from 'src/features/sections/NpcSheetSections';
-import { Inventory } from 'src/features/sections/Inventory';
+import { InventoryHelpers } from 'tests/helpers/inventory';
 
 sectionsTest.describe('character', () => {
   // TODO: the localization aspect should be happening in getData() prep, because label and key are separate from each other, so label can be localized ahead of time
@@ -182,7 +182,7 @@ sectionsTest.describe('NPC', () => {
 
 sectionsTest.describe('vehicle', () => {
   const itemsToTest: DefaultSectionTestParams[] = [
-    ...Inventory.inventoryItemTypes.map((t) => ({
+    ...InventoryHelpers.getSupportedInventoryTypesForTest().map((t) => ({
       itemCreationArgs: {
         name: `Custom Action Section Test ${t}`,
         type: t,

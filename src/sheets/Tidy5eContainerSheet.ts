@@ -197,20 +197,6 @@ export class Tidy5eKgarContainerSheet
 
     let sections = Inventory.getInventoryMetadataSections();
 
-    // let sections = Inventory.inventoryItemTypes.reduce<
-    //   Record<string, ContainerSection>
-    // >((acc, itemType) => {
-    //   acc[itemType] = {
-    //     items: [],
-    //     label: Inventory.getInventoryTypeLabel(itemType),
-    //     dataset: {},
-    //     key: itemType,
-    //     show: true,
-    //   };
-
-    //   return acc;
-    // }, {});
-
     for (let item of items) {
       ContainerSheetSections.applyContentsItemToSection(sections, item);
     }

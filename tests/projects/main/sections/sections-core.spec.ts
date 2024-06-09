@@ -1,5 +1,4 @@
 import { CONSTANTS } from 'src/constants';
-import { Inventory } from 'src/features/sections/Inventory';
 import { SheetHelper } from 'tests/helpers/SheetHelper';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import { NpcSheetSections } from 'src/features/sections/NpcSheetSections';
@@ -10,18 +9,21 @@ import {
   testCustomSection,
   verifyItemExistsInSection,
 } from './sections-shared';
+import { InventoryHelpers } from 'tests/helpers/inventory';
 
 sectionsTest.describe('sections core functionality', () => {
   sectionsTest.describe('character', () => {
     const itemsToTest: DefaultSectionTestParams[] = [
-      ...Inventory.inventoryItemTypes.map((itemType) => ({
-        itemCreationArgs: {
-          name: `Test ${itemType}`,
-          type: itemType,
-        },
-        tabId: CONSTANTS.TAB_CHARACTER_INVENTORY,
-        sectionKey: itemType,
-      })),
+      ...InventoryHelpers.getSupportedInventoryTypesForTest().map(
+        (itemType) => ({
+          itemCreationArgs: {
+            name: `Test ${itemType}`,
+            type: itemType,
+          },
+          tabId: CONSTANTS.TAB_CHARACTER_INVENTORY,
+          sectionKey: itemType,
+        })
+      ),
       {
         itemCreationArgs: {
           name: 'Test lvl 1 spell',
@@ -146,7 +148,7 @@ sectionsTest.describe('sections core functionality', () => {
 
   sectionsTest.describe('container', () => {
     const itemsToTest: DefaultSectionTestParams[] = [
-      ...Inventory.inventoryItemTypes.map<DefaultSectionTestParams>(
+      ...InventoryHelpers.getSupportedInventoryTypesForTest().map<DefaultSectionTestParams>(
         (itemType) => ({
           itemCreationArgs: {
             name: `Test ${itemType}`,
@@ -340,7 +342,7 @@ sectionsTest.describe('sections core functionality', () => {
 
   sectionsTest.describe('vehicle', () => {
     const itemsToTest: DefaultSectionTestParams[] = [
-      ...Inventory.inventoryItemTypes.map((t) => ({
+      ...InventoryHelpers.getSupportedInventoryTypesForTest().map((t) => ({
         itemCreationArgs: {
           name: `Custom Action Section Test ${t}`,
           type: t,
