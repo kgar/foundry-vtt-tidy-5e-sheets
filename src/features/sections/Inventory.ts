@@ -1,9 +1,8 @@
-import { CONSTANTS } from 'src/constants';
 import type { InventorySection } from 'src/types/types';
 
 export class Inventory {
   static getInventoryMetadataSections(
-    options?: Partial<InventorySection>
+    options: Partial<InventorySection> = {}
   ): Record<string, InventorySection> {
     const inventoryTypes = Object.entries(CONFIG.Item.dataModels)
       .filter(([, model]: [any, any]) => model.metadata?.inventoryItem)
@@ -24,6 +23,7 @@ export class Inventory {
         show: true,
         custom: undefined,
         isExternal: false,
+        ...options,
       };
     }
 

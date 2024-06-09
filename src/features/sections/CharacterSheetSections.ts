@@ -10,13 +10,13 @@ import type {
   TypedEffectFavoriteSection,
 } from 'src/types/types';
 import { TidyFlags } from 'src/foundry/TidyFlags';
-import { Inventory } from './Inventory';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
 export class CharacterSheetSections {
   static applyInventoryItemToSection(
     inventory: Record<string, InventorySection>,
     item: Item5e,
+    defaultInventoryTypes: string[],
     customSectionOptions: Partial<InventorySection>
   ) {
     const customSectionName = TidyFlags.section.get(item);
@@ -34,11 +34,7 @@ export class CharacterSheetSections {
       key: customSectionName,
       custom: {
         section: customSectionName,
-        // TODO: parameterize the function so that this is not being done in a loop
-        // TODO: Consider providing a global derived store for supported item types in proper order, and each sheet that performs a render can refresh the item section type store.
-        creationItemTypes: Object.keys(
-          Inventory.getInventoryMetadataSections()
-        ),
+        creationItemTypes: [...defaultInventoryTypes],
       },
       show: true,
       ...customSectionOptions,

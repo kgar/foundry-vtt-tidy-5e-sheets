@@ -1289,27 +1289,37 @@ export class Tidy5eCharacterSheet
       }
     );
 
-    const characterPreferences = SheetPreferencesService.getByType(
-      this.actor.type
+    const inventoryTypes = Object.keys(
+      Inventory.getInventoryMetadataSections()
     );
 
     // Organize items
     // Section the items by type
-    for (let i of items) {
-      const ctx = (context.itemContext[i.id] ??= {});
-      ctx.totalWeight = i.system.totalWeight?.toNearest(0.1);
-      CharacterSheetSections.applyInventoryItemToSection(inventory, i, {
-        canCreate: true,
-      });
+    for (let item of items) {
+      const ctx = (context.itemContext[item.id] ??= {});
+      ctx.totalWeight = item.system.totalWeight?.toNearest(0.1);
+      CharacterSheetSections.applyInventoryItemToSection(
+        inventory,
+        item,
+        inventoryTypes,
+        {
+          canCreate: true,
+        }
+      );
     }
 
     // Section favorite items by type
-    for (let i of favorites.items) {
-      const ctx = (context.itemContext[i.id] ??= {});
-      ctx.totalWeight = i.system.totalWeight?.toNearest(0.1);
-      CharacterSheetSections.applyInventoryItemToSection(favoriteInventory, i, {
-        canCreate: false,
-      });
+    for (let item of favorites.items) {
+      const ctx = (context.itemContext[item.id] ??= {});
+      ctx.totalWeight = item.system.totalWeight?.toNearest(0.1);
+      CharacterSheetSections.applyInventoryItemToSection(
+        favoriteInventory,
+        item,
+        inventoryTypes,
+        {
+          canCreate: false,
+        }
+      );
     }
 
     // Organize Spellbook and count the number of prepared spells (excluding always, at will, cantrips, etc...)
