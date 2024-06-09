@@ -1,19 +1,24 @@
 import type { InventorySection } from 'src/types/types';
 
 export class Inventory {
-  static getInventoryMetadataSections(
+  static getDefaultInventoryTypes(): string[] {
+    return Object.entries(CONFIG.Item.dataModels)
+      .filter(([, model]: [string, any]) => model.metadata?.inventoryItem)
+      .sort(
+        ([, lhs]: [string, any], [, rhs]: [string, any]) =>
+          lhs.metadata.inventoryOrder - rhs.metadata.inventoryOrder
+      )
+      .map((entry) => entry[0]);
+  }
+
+  static getDefaultInventorySections(
     options: Partial<InventorySection> = {}
   ): Record<string, InventorySection> {
-    const inventoryTypes = Object.entries(CONFIG.Item.dataModels)
-      .filter(([, model]: [any, any]) => model.metadata?.inventoryItem)
-      .sort(
-        ([, lhs]: [any, any], [, rhs]: [any, any]) =>
-          lhs.metadata.inventoryOrder - rhs.metadata.inventoryOrder
-      );
+    const inventoryTypes = Inventory.getDefaultInventoryTypes();
 
     const inventory: Record<string, InventorySection> = {};
 
-    for (const [type] of inventoryTypes) {
+    for (const type of inventoryTypes) {
       inventory[type] = {
         canCreate: true,
         dataset: { type },
@@ -28,9 +33,5 @@ export class Inventory {
     }
 
     return inventory;
-  }
-
-  static getInventoryTypeLabel(type: string) {
-    return `${CONFIG.Item.typeLabels[type]}Pl`;
   }
 }

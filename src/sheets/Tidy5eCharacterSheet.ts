@@ -1182,9 +1182,9 @@ export class Tidy5eCharacterSheet
   protected _prepareItems(context: CharacterSheetContext) {
     // Categorize items as inventory, spellbook, features, and classes
     const inventory: ActorInventoryTypes =
-      Inventory.getInventoryMetadataSections();
+      Inventory.getDefaultInventorySections();
     const favoriteInventory: ActorInventoryTypes =
-      Inventory.getInventoryMetadataSections({
+      Inventory.getDefaultInventorySections({
         canCreate: false,
       });
 
@@ -1289,10 +1289,7 @@ export class Tidy5eCharacterSheet
       }
     );
 
-    const inventoryTypes = Object.keys(
-      Inventory.getInventoryMetadataSections()
-    );
-
+    const inventoryTypes = Inventory.getDefaultInventoryTypes();
     // Organize items
     // Section the items by type
     for (let item of items) {

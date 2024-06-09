@@ -195,7 +195,7 @@ export class Tidy5eKgarContainerSheet
     // Partition into sections
     const items = defaultDocumentContext.inventory.contents.items;
 
-    let sections = Inventory.getInventoryMetadataSections();
+    let sections = Inventory.getDefaultInventorySections();
 
     for (let item of items) {
       ContainerSheetSections.applyContentsItemToSection(sections, item);
