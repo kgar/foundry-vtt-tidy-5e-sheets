@@ -195,19 +195,7 @@ export class Tidy5eKgarContainerSheet
     // Partition into sections
     const items = defaultDocumentContext.inventory.contents.items;
 
-    let sections = Inventory.inventoryItemTypes.reduce<
-      Record<string, ContainerSection>
-    >((acc, itemType) => {
-      acc[itemType] = {
-        items: [],
-        label: Inventory.getInventoryTypeLabel(itemType),
-        dataset: {},
-        key: itemType,
-        show: true,
-      };
-
-      return acc;
-    }, {});
+    let sections = Inventory.getDefaultInventorySections();
 
     for (let item of items) {
       ContainerSheetSections.applyContentsItemToSection(sections, item);

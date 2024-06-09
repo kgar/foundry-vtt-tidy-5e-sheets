@@ -10,13 +10,13 @@ import type {
   TypedEffectFavoriteSection,
 } from 'src/types/types';
 import { TidyFlags } from 'src/foundry/TidyFlags';
-import { Inventory } from './Inventory';
 import { FoundryAdapter } from 'src/foundry/foundry-adapter';
 
 export class CharacterSheetSections {
   static applyInventoryItemToSection(
     inventory: Record<string, InventorySection>,
     item: Item5e,
+    defaultInventoryTypes: string[],
     customSectionOptions: Partial<InventorySection>
   ) {
     const customSectionName = TidyFlags.section.get(item);
@@ -34,7 +34,7 @@ export class CharacterSheetSections {
       key: customSectionName,
       custom: {
         section: customSectionName,
-        creationItemTypes: Inventory.inventoryItemTypes,
+        creationItemTypes: [...defaultInventoryTypes],
       },
       show: true,
       ...customSectionOptions,

@@ -1181,26 +1181,12 @@ export class Tidy5eCharacterSheet
 
   protected _prepareItems(context: CharacterSheetContext) {
     // Categorize items as inventory, spellbook, features, and classes
-    const inventory: ActorInventoryTypes = {};
-    const favoriteInventory: ActorInventoryTypes = {};
-    for (const type of Inventory.inventoryItemTypes) {
-      inventory[type] = {
-        label: Inventory.getInventoryTypeLabel(type),
-        items: [],
-        dataset: { type },
-        canCreate: true,
-        key: type,
-        show: true,
-      };
-      favoriteInventory[type] = {
-        label: Inventory.getInventoryTypeLabel(type),
-        items: [],
-        dataset: { type },
+    const inventory: ActorInventoryTypes =
+      Inventory.getDefaultInventorySections();
+    const favoriteInventory: ActorInventoryTypes =
+      Inventory.getDefaultInventorySections({
         canCreate: false,
-        key: type,
-        show: true,
-      };
-    }
+      });
 
     const favoritesIdMap: Map<string, CharacterFavorite> =
       this._getFavoritesIdMap();
@@ -1303,27 +1289,34 @@ export class Tidy5eCharacterSheet
       }
     );
 
-    const characterPreferences = SheetPreferencesService.getByType(
-      this.actor.type
-    );
-
+    const inventoryTypes = Inventory.getDefaultInventoryTypes();
     // Organize items
     // Section the items by type
-    for (let i of items) {
-      const ctx = (context.itemContext[i.id] ??= {});
-      ctx.totalWeight = i.system.totalWeight?.toNearest(0.1);
-      CharacterSheetSections.applyInventoryItemToSection(inventory, i, {
-        canCreate: true,
-      });
+    for (let item of items) {
+      const ctx = (context.itemContext[item.id] ??= {});
+      ctx.totalWeight = item.system.totalWeight?.toNearest(0.1);
+      CharacterSheetSections.applyInventoryItemToSection(
+        inventory,
+        item,
+        inventoryTypes,
+        {
+          canCreate: true,
+        }
+      );
     }
 
     // Section favorite items by type
-    for (let i of favorites.items) {
-      const ctx = (context.itemContext[i.id] ??= {});
-      ctx.totalWeight = i.system.totalWeight?.toNearest(0.1);
-      CharacterSheetSections.applyInventoryItemToSection(favoriteInventory, i, {
-        canCreate: false,
-      });
+    for (let item of favorites.items) {
+      const ctx = (context.itemContext[item.id] ??= {});
+      ctx.totalWeight = item.system.totalWeight?.toNearest(0.1);
+      CharacterSheetSections.applyInventoryItemToSection(
+        favoriteInventory,
+        item,
+        inventoryTypes,
+        {
+          canCreate: false,
+        }
+      );
     }
 
     // Organize Spellbook and count the number of prepared spells (excluding always, at will, cantrips, etc...)

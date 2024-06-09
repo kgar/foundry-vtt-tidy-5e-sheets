@@ -6,7 +6,8 @@ import { Inventory } from 'src/features/sections/Inventory';
 
 export function getItemCardContentTemplate(item: Item5e) {
   // TODO: Make item type to Card Content Template mod-able via the API.
-  const intentoryItems = new Set(Inventory.inventoryItemTypes);
+  const inventoryTypes = Inventory.getDefaultInventoryTypes();
+  const intentoryItems = new Set(inventoryTypes);
 
   if (intentoryItems.has(item?.type)) {
     return InventoryItemCardContent;
