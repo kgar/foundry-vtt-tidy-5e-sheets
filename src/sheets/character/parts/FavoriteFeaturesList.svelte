@@ -61,7 +61,7 @@
           !visibleItemIdSubset.has(item.id)}
         favoriteId={ctx.favoriteId}
       >
-        <ItemTableCell primary={true} title={item.name}>
+        <ItemTableCell primary={true}>
           <ItemUseButton disabled={!$context.editable} {item} />
           <ItemName
             on:toggle={() => toggleSummary($context.actor)}
