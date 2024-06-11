@@ -81,7 +81,7 @@
             !visibleItemIdSubset.has(spell.id)}
           favoriteId={ctx.favoriteId}
         >
-          <ItemTableCell primary={true} title={spell.name}>
+          <ItemTableCell primary={true}>
             <ItemUseButton
               disabled={!$context.editable}
               item={spell}
