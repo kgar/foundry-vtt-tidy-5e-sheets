@@ -400,7 +400,7 @@
         "name": "Bordo a Volontà"
     },
     "TIDY5E.Settings.ColorPickerAtWillAccent": {
-        "name": "Colore a Volontà"
+        "name": "Colore A Volontà"
     },
     "TIDY5E.Settings.ColorPickerInnate": {
         "name": "Innato"
@@ -808,5 +808,14 @@
         "name": "Usa Icone Scuola Magia di Tidy",
         "hint": "Usa le icone selezionate da Tidy per le scuole di magia. Per personalizzare le icone della scuola di magia tramite CONFIG.DND5E o tramite altri moduli, disabilita questa opzione. Per estendere le icone personalizzate della scuola di magia di Tidy, fai riferimento alla documentazione dell'API Tidy."
     },
-    "TIDY5E.RollRecharge.Hint": "{rechargeLabel} (Shift+Click per saltare il tiro e ricaricare subito) "
+    "TIDY5E.RollRecharge.Hint": "{rechargeLabel} (Shift+Click per saltare il tiro e ricaricare subito) ",
+    "TIDY5E.Settings.ColorPickerRitualOnlyOutline": {
+        "name": "Bordo Solo Rituale"
+    },
+    "TIDY5E.Settings.ColorPickerRitualOnly": {
+        "name": "Solo Rituale"
+    },
+    "TIDY5E.Settings.ColorPickerRitualOnlyAccent": {
+        "name": "Colore Solo Rituale"
+    }
 }

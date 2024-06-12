@@ -785,5 +785,11 @@
     "TIDY5E.RollRecharge.Hint": "{rechargeLabel} (Mayús+Clic para saltar la tirada y recargar al instante) ",
     "TIDY5E.Settings.ColorPickerRitualOnly": {
         "name": "Solo rituales"
+    },
+    "TIDY5E.Settings.ColorPickerRitualOnlyOutline": {
+        "name": "Trazado de Solo Rituales"
+    },
+    "TIDY5E.Settings.ColorPickerRitualOnlyAccent": {
+        "name": "Acento de Solo Rituales"
     }
 }
