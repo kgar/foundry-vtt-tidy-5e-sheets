@@ -46,6 +46,11 @@ export class CharacterSheetRuntime {
       content: {
         component: ActorInventoryTab,
         type: 'svelte',
+        getProps() {
+          return {
+            tabId: CONSTANTS.TAB_CHARACTER_INVENTORY,
+          };
+        },
       },
       layout: 'classic',
     },
