@@ -793,7 +793,7 @@ export class Tidy5eCharacterSheet
         }
       ),
       conditions: conditions,
-      containerPanelItems: Inventory.getContainerPanelItems(
+      containerPanelItems: await Inventory.getContainerPanelItems(
         defaultDocumentContext.items
       ),
       customActorTraits: CustomActorTraitsRuntime.getEnabledTraits(
