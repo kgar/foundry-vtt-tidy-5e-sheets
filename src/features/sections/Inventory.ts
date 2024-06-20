@@ -1,4 +1,3 @@
-import { error } from 'console';
 import { CONSTANTS } from 'src/constants';
 import { TidyFlags } from 'src/foundry/TidyFlags';
 import type { Item5e } from 'src/types/item.types';
@@ -7,6 +6,7 @@ import type {
   ContainerPanelItemContext,
   InventorySection,
 } from 'src/types/types';
+import { error } from 'src/utils/logging';
 
 export class Inventory {
   static getDefaultInventoryTypes(): string[] {
